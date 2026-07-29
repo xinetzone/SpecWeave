@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import sys
 
@@ -91,3 +96,4 @@ def run_check(stage: str, role: str, op_name: str,
         else:
             print_pass(f'结果: ✅ 操作被允许（{op.value}在{stage_name}阶段可由{actual_role}执行）')
             return 0
+

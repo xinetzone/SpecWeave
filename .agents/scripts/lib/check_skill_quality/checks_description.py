@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import Optional
 
 from lib.frontmatter import extract_yaml_field
@@ -50,3 +55,4 @@ def check_description(frontmatter_text: str | None) -> list[CheckResult]:
     ))
 
     return results
+

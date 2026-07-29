@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import Dict, List, Optional, Type
 
 from .checkers.base import BaseDiagramChecker
@@ -99,3 +104,4 @@ def create_default_fixer_registry() -> FixerRegistry:
     registry.register("xychart-beta", GenericFixer("xychart-beta"))
     registry.register("quadrantchart", GenericFixer("quadrantchart"))
     return registry
+

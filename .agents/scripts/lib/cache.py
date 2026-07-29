@@ -3,6 +3,12 @@
 提供跨脚本复用的 JSON 缓存加载/保存能力，支持原子写入和过期元数据。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 from datetime import datetime
 from pathlib import Path
 

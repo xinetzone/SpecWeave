@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from datetime import datetime
 from pathlib import Path
 
@@ -54,3 +60,4 @@ def extract_report_context(input_path: Path) -> dict:
             release_judgment, risk_clusters, used_fallback
         ),
     }
+

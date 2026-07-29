@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 from typing import Optional
 
@@ -26,3 +31,4 @@ def find_skill_files(root: Path, skills_dir: Path, target_path: Path | None = No
         skill_files.append(skill_md)
 
     return sorted(skill_files)
+

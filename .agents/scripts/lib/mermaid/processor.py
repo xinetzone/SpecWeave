@@ -1,5 +1,11 @@
 """Mermaid 代码块处理器。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import List, Tuple, Optional, Callable
 
 from .common import (
@@ -56,3 +62,4 @@ def process_mermaid_fences(
 
     processed_content = MERMAID_FENCE_RE.sub(_rep_block, content)
     return processed_content, all_issues, all_fixes
+

@@ -12,6 +12,12 @@
 - 可配置：技术分歧规则通过best_practice_rules配置，非硬编码
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from enum import Enum, StrEnum
 from typing import Any, Optional
@@ -517,3 +523,4 @@ class ConflictResolver:
             arbiter="orchestrator",
             access_order=order,
         )
+

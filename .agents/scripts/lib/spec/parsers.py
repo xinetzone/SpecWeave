@@ -3,6 +3,12 @@
 提供 spec.md、tasks.md、checklist.md 的解析功能，提取结构化数据。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 from typing import Any
@@ -201,3 +207,4 @@ def parse_checklist(filepath: Path) -> dict[str, Any]:
             "checkpoints": len(checkpoints),
         },
     }
+

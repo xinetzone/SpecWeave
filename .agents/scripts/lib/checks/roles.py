@@ -1,5 +1,11 @@
 """角色权限声明校验（来自 check-role-permissions.py）。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import re
 import sys
@@ -183,3 +189,4 @@ def run(project_root: Path, args) -> int:
         print_summary(0, warning_count, error_count)
 
     return 0 if error_count == 0 else 1
+

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 SKILLS_DIR = ".agents/skills"
@@ -31,3 +36,4 @@ DECISION_TREE_PATTERNS = [
 ]
 SAFETY_CHECKLIST_PATTERN = re.compile(r"安全检查清单|检查清单.*逐项", re.MULTILINE)
 CHECKLIST_ITEM_PATTERN = re.compile(r"^- \[ \]", re.MULTILINE)
+

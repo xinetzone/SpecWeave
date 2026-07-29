@@ -4,6 +4,12 @@
 本文件为薄入口垫片（thin-entry-shim模式），保持外部import路径100%不变。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 from lib.pattern_maturity.constants import (
     EXCLUDED_FILENAMES,
     MATURITY_LEVELS,
@@ -53,3 +59,4 @@ __all__ = [
     "update_readme_index_table",
     "build_report_data",
 ]
+

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import ast
 from pathlib import Path
 from typing import Optional
@@ -79,3 +84,4 @@ def collect_python_files(root_dir: Path, target_file: Path | None, target_path: 
             continue
         py_files.append(py_file)
     return sorted(set(py_files))
+

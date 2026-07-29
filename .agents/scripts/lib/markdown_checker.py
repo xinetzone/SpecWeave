@@ -4,6 +4,12 @@
 文件读取、路径解析、参数解析、结果输出等通用逻辑。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 

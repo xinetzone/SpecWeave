@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 STAGE_ORDER: dict[str, int] = {
     'S1': 1, 'S2': 2, 'S3': 3, 'S4': 4,
     'S5': 5, 'S6': 6, 'S7': 7, 'S8': 8,
@@ -24,3 +30,4 @@ STAGE_ROLES: dict[str, set[str]] = {
     'S7': {'orchestrator'},
     'S8': {'orchestrator'},
 }
+

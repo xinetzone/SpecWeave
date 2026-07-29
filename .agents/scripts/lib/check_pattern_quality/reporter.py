@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from lib.quality_report import (
@@ -15,3 +20,4 @@ def print_pattern_report(report, root_dir, verbose=False):
         results=report.results,
         verbose=verbose,
     )
+

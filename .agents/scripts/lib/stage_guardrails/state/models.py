@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 import time
 from dataclasses import dataclass, field
 from enum import Enum
@@ -56,3 +62,4 @@ class _StageRecord:
     doc_check_done: bool = False
     pdr_done: bool = False
     exit_ctx: dict = field(default_factory=dict)
+

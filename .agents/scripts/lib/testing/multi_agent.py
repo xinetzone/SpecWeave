@@ -4,6 +4,12 @@
 自动覆盖N=1,2,3,5,10等边界数量场景。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from typing import Any, Optional
 from collections.abc import Callable
@@ -418,4 +424,5 @@ def edge_scenarios() -> list[MultiAgentScenario]:
     )
 
     return scenarios
+
 

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import tomllib
 from pathlib import Path
 
@@ -73,3 +78,4 @@ def scan_toml_files(project_root: Path, exclude_dirs: set[str], toml_subdir: str
 
         result[rel] = entry
     return result
+

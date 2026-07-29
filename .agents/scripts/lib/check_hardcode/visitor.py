@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import ast
 from pathlib import Path
 
@@ -155,3 +160,4 @@ class HardcodeVisitor(StringChecksMixin, NumericChecksMixin, ast.NodeVisitor):
 
     def _already_reported(self, line: int, category: str, severity: str = "error") -> bool:
         return f"{category}:{severity}" in self._reported_on_line.get(line, set())
+

@@ -7,6 +7,12 @@
   - build_duplicate_block() 块构造辅助
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import hashlib
 from dataclasses import dataclass, field
 from pathlib import Path

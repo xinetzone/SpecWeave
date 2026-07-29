@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 PATTERNS_DIR = ".agents/docs/retrospective/patterns"
@@ -67,3 +72,4 @@ SECTION_HEADER_PATTERN = re.compile(r"^##\s+(.+)$", re.MULTILINE)
 MERMAID_PATTERN = re.compile(r"```mermaid", re.MULTILINE)
 CROSS_REFERENCE_PATTERN = re.compile(r"(?:\[[^\]]*\]\(|<a[^>]*>|`)([^)`\s]+\.md)(?:\)|</a>|`)", re.MULTILINE)
 ID_PATTERN = re.compile(r"^pattern-[a-z0-9-]+$")
+

@@ -1,5 +1,11 @@
 """Mermaid 文件扫描器。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 from typing import Set, List
 
@@ -38,3 +44,4 @@ class FileScanner:
         if any(rel.startswith(excl.replace("\\", "/")) for excl in self.exclude_dirs):
             return False
         return True
+

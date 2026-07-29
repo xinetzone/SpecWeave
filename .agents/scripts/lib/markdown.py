@@ -5,6 +5,12 @@ generate-dashboard 等脚本中重复的 Markdown 文件遍历、标题/描述�
 内联链接解析、HTML 标记区替换等逻辑，提供统一引用入口。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 
@@ -185,3 +191,4 @@ def apply_fix_to_markdown_files(
 
     print(f"\nTotal {label.lower()}: {fixed_count} files")
     return fixed_count
+

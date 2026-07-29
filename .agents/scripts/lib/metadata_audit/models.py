@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 
 
@@ -28,3 +33,4 @@ class AuditResult:
 
     def add_warning(self, category: str, file_path: str, message: str, fixable: bool = False):
         self.warnings.append(Issue('warning', category, file_path, message, fixable))
+

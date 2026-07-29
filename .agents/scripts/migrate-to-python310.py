@@ -152,14 +152,29 @@ _enforce_python310()
 
 '''
 
-# lib/ 目录下文件：使用相对导入
-LIB_VERSION_CHECK_BLOCK = '''\
-# 版本校验：导入共享库
-from .python310_version_check import enforce_python310
-
-enforce_python310()
-
-'''
+# lib/ 目录下文件：使用相对导入（根据嵌套深度动态生成点数）
+# depth=0 (lib/xxx.py)         → from .python310_version_check
+# depth=1 (lib/sub/xxx.py)     → from ..python310_version_check
+# depth=2 (lib/sub/sub/xxx.py) → from ...python310_version_check
+def _make_lib_version_check_block(file_path: Path) -> str:
+    """根据文件在lib/下的嵌套深度生成正确的相对导入版本校验块。"""
+    # 找到lib在路径中的位置，计算相对深度
+    try:
+        lib_idx = list(file_path.parts).index("lib")
+    except ValueError:
+        lib_idx = -1
+    # 相对于lib/的目录深度：文件名前面有几个部分在lib/之后
+    # e.g. lib/foo.py → parts after lib: ["foo.py"] → depth=0
+    #       lib/sub/foo.py → parts after lib: ["sub", "foo.py"] → depth=1
+    parts_after_lib = file_path.parts[lib_idx + 1:]
+    depth = len(parts_after_lib) - 1  # 减去文件名本身
+    dots = "." * (depth + 1)
+    return (
+        f"# 版本校验：相对导入共享库（depth={depth}）\n"
+        f"from {dots}python310_version_check import enforce_python310\n"
+        f"\n"
+        f"enforce_python310()\n"
+    )
 
 # scripts/ 目录下文件（非 lib）：添加lib路径后导入
 SCRIPT_VERSION_CHECK_BLOCK = '''\
@@ -192,10 +207,22 @@ def _is_script_in_scripts_dir(file_path: Optional[Path]) -> bool:
     return "scripts" in parts
 
 
+def _get_lib_depth(file_path: Path) -> int:
+    """计算文件相对于lib/目录的嵌套深度。"""
+    try:
+        lib_idx = list(file_path.parts).index("lib")
+    except ValueError:
+        return 0
+    parts_after_lib = file_path.parts[lib_idx + 1:]
+    return len(parts_after_lib) - 1
+
+
 def _get_version_check_block(file_path: Optional[Path]) -> Tuple[str, str]:
     """根据文件位置返回合适的版本校验块和描述。"""
     if _is_lib_file(file_path):
-        return LIB_VERSION_CHECK_BLOCK.rstrip("\n"), "插入相对导入版本校验(lib模式)"
+        depth = _get_lib_depth(file_path)
+        dots = "." * (depth + 1)
+        return _make_lib_version_check_block(file_path).rstrip("\n"), f"插入相对导入版本校验(lib模式, depth={depth}, import={dots}python310_version_check)"
     if _is_script_in_scripts_dir(file_path):
         return SCRIPT_VERSION_CHECK_BLOCK.rstrip("\n"), "插入路径导入版本校验(scripts模式)"
     return INLINE_VERSION_CHECK_BLOCK.rstrip("\n"), "插入内联版本校验块"

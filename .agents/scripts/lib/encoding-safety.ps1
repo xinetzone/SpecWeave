@@ -127,4 +127,470 @@ function Test-Utf8File {
     return [PSCustomObject]@{ Path=$Path; Exists=$true; HasBom=$hasBom; IsUtf8=$isUtf8; IsUtf8NoBom=($isUtf8 -and -not $hasBom); Encoding=$enc; HasGarbled=$hasGarbled; ByteLength=$bytes.Length }
 }
 
+# ==============================================================================
+# PowerShell 语法分析 — 括号深度感知（PS5.1 兼容）
+# ==============================================================================
+# 提供字符串/注释感知的代码遍历和括号深度追踪，用于安全地在脚本中插入代码
+# 而不会错误地嵌套到函数体、if块等内部。
+#
+# 设计原则：
+#   - PS5.1 兼容（不使用 ??、?:、??= 等 pwsh7+ 运算符）
+#   - 正确处理：行注释(#)、注释块(<# #>, 支持嵌套)、单引号字符串('')、
+#     双引号字符串("")、反引号转义(`)、双引号 here-string(@"..."@)、
+#     单引号 here-string(@'...'@)
+#   - 与 Python 端 lib/ps1_syntax.py 逻辑保持一致
+# ==============================================================================
+function Skip-Ps1HereString {
+    <#
+    .SYNOPSIS
+        检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
+    .DESCRIPTION
+        PowerShell here-string 语法：
+        - 双引号 here-string: @" <换行> ... <换行开头>"@
+          支持反引号 (`) 转义，变量会被展开
+        - 单引号 here-string: @' <换行> ... <换行开头>'@
+          完全字面量，不处理转义，不展开变量
+
+        检测规则：
+        1. 当前字符必须是 '@'
+        2. 下一个字符必须是 '"' 或 '''
+        3. @<quote> 之后必须紧跟换行符（可带可选 CR）
+        4. 结束标记 <quote>@ 必须在行首位置
+
+        若当前位置不是 here-string 开头，直接返回原位置（不做任何修改）。
+    .PARAMETER Content
+        要分析的 PowerShell 代码字符串。
+    .PARAMETER Position
+        当前扫描位置（0-based）。调用方需确保 Position 在有效范围内。
+    .OUTPUTS
+        [int] 若当前位置是 here-string 开头，返回 here-string 结束标记之后的位置；
+              否则返回原 Position（表示未跳过任何内容）。
+    .EXAMPLE
+        # 在逐字符遍历时安全跳过 here-string
+        $i = Skip-Ps1HereString -Content $code -Position $i
+        if ($i -ne $originalI) { continue }  # 跳过了 here-string
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=1)][int]$Position
+    )
+    $n = $Content.Length
+    $i = $Position
+
+    # 检测 @' 或 @" 后跟换行符
+    if ($i -lt $n -and $Content[$i] -eq '@' -and ($i + 1) -lt $n -and ($Content[$i + 1] -eq '"' -or $Content[$i + 1] -eq "'")) {
+        $quoteChar = $Content[$i + 1]
+        $j = $i + 2
+        # 跳过 @<quote> 后可能的 CR (\r)
+        if ($j -lt $n -and $Content[$j] -eq "`r") { $j++ }
+        # @<quote> 后必须紧跟 LF (\n) 才是 here-string
+        if ($j -lt $n -and $Content[$j] -eq "`n") {
+            # here-string 开始，跳过到结束标记
+            $i = $j + 1  # 跳过换行符
+            $endMarker0 = $quoteChar
+            $endMarker1 = '@'
+            while ($i -lt $n) {
+                # 行首检测：当前位置是文件开头，或前一个字符是 \n
+                $atLineStart = ($i -eq 0) -or ($Content[$i - 1] -eq "`n")
+                if ($atLineStart -and ($i + 1) -lt $n -and $Content[$i] -eq $endMarker0 -and $Content[$i + 1] -eq $endMarker1) {
+                    $i += 2  # 跳过结束标记 <quote>@
+                    break
+                }
+                # 双引号 here-string 支持反引号转义（如 `"、`n、`$ 等）
+                if ($quoteChar -eq '"' -and $Content[$i] -eq '`' -and ($i + 1) -lt $n) {
+                    $i += 2  # 跳过反引号及其转义的字符
+                    continue
+                }
+                $i++
+            }
+            return $i
+        }
+    }
+
+    # 不是 here-string 开头，返回原位置
+    return $Position
+}
+
+function Find-NonWhitespace {
+    <#
+    .SYNOPSIS
+        返回 start 之后第一个非空白字符的位置（与 Python 端 find_non_whitespace 对齐）。
+    .DESCRIPTION
+        空白字符包括：空格、制表符(\t)、回车符(\r)、换行符(\n)。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Position=1)][int]$Start = 0
+    )
+    $i = $Start
+    $n = $Content.Length
+    while ($i -lt $n -and ($Content[$i] -eq ' ' -or $Content[$i] -eq "`t" -or $Content[$i] -eq "`r" -or $Content[$i] -eq "`n")) {
+        $i++
+    }
+    return $i
+}
+
+function Skip-Ps1LineComments {
+    <#
+    .SYNOPSIS
+        跳过连续的行注释、空行和空白，返回下一个有意义代码的位置（与 Python 端 skip_line_comments 对齐）。
+    .DESCRIPTION
+        注意：不会跳过 #Requires 行（它是有意义的声明）。
+        支持 here-string 感知，避免将 here-string 内的 # 误判为注释。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=1)][int]$Start
+    )
+    $i = $Start
+    $n = $Content.Length
+    while ($i -lt $n) {
+        $i = Find-NonWhitespace -Content $Content -Start $i
+        if ($i -ge $n) { break }
+
+        # ── Here-string 感知：如果当前位置是 here-string 开头，先跳过它 ──
+        $prevI = $i
+        $i = Skip-Ps1HereString -Content $Content -Position $i
+        if ($i -ne $prevI) { continue }
+
+        $ch = $Content[$i]
+        # 空行（\r 已被 Find-NonWhitespace 跳过，这里只剩 \n）
+        if ($ch -eq "`n") {
+            $i++
+            continue
+        }
+        # 行注释（但不是 #Requires、不是 <# 注释块开头）
+        if ($ch -eq '#' -and (($i + 1) -ge $n -or $Content[$i + 1] -ne '<')) {
+            $isRequires = $false
+            if (($i + 8) -lt $n) {
+                $hashTag = $Content.Substring($i, [Math]::Min(9, $n - $i))
+                if ($hashTag -match '(?i)^#requires') { $isRequires = $true }
+            }
+            if ($isRequires) { break }
+            while ($i -lt $n -and $Content[$i] -ne "`n") { $i++ }
+            continue
+        }
+        # 注释块 <# ... #>（支持嵌套）
+        if (($i + 1) -lt $n -and $ch -eq '<' -and $Content[$i + 1] -eq '#') {
+            $depth = 1
+            $i += 2
+            while ($i -lt $n -and $depth -gt 0) {
+                if (($i + 1) -lt $n -and $Content[$i] -eq '<' -and $Content[$i + 1] -eq '#') {
+                    $depth++; $i += 2
+                } elseif (($i + 1) -lt $n -and $Content[$i] -eq '#' -and $Content[$i + 1] -eq '>') {
+                    $depth--; $i += 2
+                } else { $i++ }
+            }
+            continue
+        }
+        break
+    }
+    return $i
+}
+
+function Get-Ps1CodeChars {
+    <#
+    .SYNOPSIS
+        迭代字符串中的代码字符，跳过字符串和注释内容（括号深度感知基础原语）。
+    .DESCRIPTION
+        逐字符遍历 PowerShell 代码字符串，跳过注释和字符串字面量内容，
+        仅返回代码部分的字符及其位置。用于正确追踪括号深度。
+        正确处理：行注释、注释块（支持嵌套）、单/双引号字符串、反引号转义、
+        以及双/单引号 here-string (@"..."@ / @'...'@)。
+    .PARAMETER Content
+        要分析的 PowerShell 代码字符串。
+    .PARAMETER Start
+        起始位置（0-based），默认为 0。
+    .OUTPUTS
+        依次返回 [PSCustomObject]@{ Index = int; Char = char }
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Position=1)][int]$Start = 0
+    )
+    $i = $Start
+    $n = $Content.Length
+    while ($i -lt $n) {
+        $ch = $Content[$i]
+
+        # ── Here-string @'...'@ 或 @"..."@ ──
+        $prevI = $i
+        $i = Skip-Ps1HereString -Content $Content -Position $i
+        if ($i -ne $prevI) { continue }
+
+        # ── 注释块 <#...#>（支持嵌套）──
+        if ($ch -eq '<' -and ($i + 1) -lt $n -and $Content[$i + 1] -eq '#') {
+            $depth = 1
+            $i += 2
+            while ($i -lt $n -and $depth -gt 0) {
+                if (($i + 1) -lt $n -and $Content[$i] -eq '<' -and $Content[$i + 1] -eq '#') {
+                    $depth++
+                    $i += 2
+                } elseif (($i + 1) -lt $n -and $Content[$i] -eq '#' -and $Content[$i + 1] -eq '>') {
+                    $depth--
+                    $i += 2
+                } else {
+                    $i++
+                }
+            }
+            continue
+        }
+
+        # ── 行注释 #... ──
+        if ($ch -eq '#') {
+            while ($i -lt $n -and $Content[$i] -ne "`n") {
+                $i++
+            }
+            continue
+        }
+
+        # ── 单引号字符串 '...'（含 '' 转义）──
+        if ($ch -eq "'") {
+            $i++
+            while ($i -lt $n) {
+                if ($Content[$i] -eq "'") {
+                    if (($i + 1) -lt $n -and $Content[$i + 1] -eq "'") {
+                        $i += 2
+                        continue
+                    }
+                    $i++
+                    break
+                }
+                $i++
+            }
+            continue
+        }
+
+        # ── 双引号字符串 "..."（含反引号 ` 转义）──
+        if ($ch -eq '"') {
+            $i++
+            while ($i -lt $n) {
+                if ($Content[$i] -eq '`' -and ($i + 1) -lt $n) {
+                    $i += 2
+                    continue
+                }
+                if ($Content[$i] -eq '"') {
+                    $i++
+                    break
+                }
+                $i++
+            }
+            continue
+        }
+
+        [PSCustomObject]@{ Index = $i; Char = $ch }
+        $i++
+    }
+}
+
+function Get-Ps1BraceDepth {
+    <#
+    .SYNOPSIS
+        计算 PowerShell 代码在指定位置的括号深度（{ 未闭合数量）。
+    .DESCRIPTION
+        使用 Get-Ps1CodeChars 跳过字符串和注释后，统计 { 和 } 的深度。
+        返回 0 表示在顶层（可以安全插入代码）。
+    .PARAMETER Content
+        要分析的 PowerShell 代码字符串。
+    .PARAMETER EndPos
+        结束位置（0-based，不包含），默认为字符串末尾。
+    .OUTPUTS
+        [int] 括号深度。0 = 顶层，>0 = 在某个代码块内部。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Position=1)][int]$EndPos = -1
+    )
+    if ($EndPos -lt 0) { $EndPos = $Content.Length }
+    $depth = 0
+    foreach ($item in Get-Ps1CodeChars -Content $Content -Start 0) {
+        if ($item.Index -ge $EndPos) { break }
+        if ($item.Char -eq '{') { $depth++ }
+        elseif ($item.Char -eq '}') { $depth-- }
+    }
+    return $depth
+}
+
+function Find-Ps1TopLevelInsertPoint {
+    <#
+    .SYNOPSIS
+        找到 PowerShell 脚本中的顶层安全插入点（括号深度 = 0 的位置）。
+    .DESCRIPTION
+        从指定位置开始扫描，找到第一个可以安全插入代码的顶层位置。
+        正确识别：
+        - 脚本级 param()：返回 param 块结束后的位置
+        - 第一个函数定义：返回函数定义开始前的行首位置
+        - 其他顶层语句：返回语句起始的行首位置
+        完整支持 CRLF 换行符和 here-string 感知。
+    .PARAMETER Content
+        要分析的 PowerShell 代码字符串。
+    .PARAMETER SearchFrom
+        起始搜索位置（0-based），默认为 0。
+    .OUTPUTS
+        [int] 安全插入点的索引位置。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Position=1)][int]$SearchFrom = 0
+    )
+    $n = $Content.Length
+
+    # 使用统一的辅助函数跳过空白和注释（含 CRLF 和 here-string 感知）
+    $pos = Skip-Ps1LineComments -Content $Content -Start (Find-NonWhitespace -Content $Content -Start $SearchFrom)
+
+    # 检查是否以脚本级 param( 开头（且在顶层，深度=0）
+    if ($pos -lt $n) {
+        $substr = $Content.Substring($pos)
+        $paramMatch = [regex]::Match($substr, '(?i)^\s*param\s*\(')
+        if ($paramMatch.Success) {
+            $preDepth = Get-Ps1BraceDepth -Content $Content -EndPos $pos
+            if ($preDepth -eq 0) {
+                # 找到 param 块结束位置
+                $parenPos = $Content.IndexOf('(', $pos)
+                if ($parenPos -ge 0) {
+                    $pDepth = 0
+                    $pi = $parenPos
+                    while ($pi -lt $n) {
+                        $pch = $Content[$pi]
+                        # ── Here-string @'...'@ 或 @"..."@ ──
+                        $prevPi = $pi
+                        $pi = Skip-Ps1HereString -Content $Content -Position $pi
+                        if ($pi -ne $prevPi) { continue }
+                        # 跳过注释块 <#...#>（支持嵌套）
+                        if ($pch -eq '<' -and ($pi + 1) -lt $n -and $Content[$pi + 1] -eq '#') {
+                            $cDepth = 1; $pi += 2
+                            while ($pi -lt $n -and $cDepth -gt 0) {
+                                if (($pi + 1) -lt $n -and $Content[$pi] -eq '<' -and $Content[$pi + 1] -eq '#') {
+                                    $cDepth++; $pi += 2
+                                } elseif (($pi + 1) -lt $n -and $Content[$pi] -eq '#' -and $Content[$pi + 1] -eq '>') {
+                                    $cDepth--; $pi += 2
+                                } else { $pi++ }
+                            }
+                            continue
+                        }
+                        # 跳过行注释 #...
+                        if ($pch -eq '#') {
+                            while ($pi -lt $n -and $Content[$pi] -ne "`n") { $pi++ }
+                            continue
+                        }
+                        # 跳过单引号字符串
+                        if ($pch -eq "'") {
+                            $pi++
+                            while ($pi -lt $n) {
+                                if ($Content[$pi] -eq "'") {
+                                    if (($pi + 1) -lt $n -and $Content[$pi + 1] -eq "'") { $pi += 2; continue }
+                                    $pi++; break
+                                }
+                                $pi++
+                            }
+                            continue
+                        }
+                        # 跳过双引号字符串
+                        if ($pch -eq '"') {
+                            $pi++
+                            while ($pi -lt $n) {
+                                if ($Content[$pi] -eq '`' -and ($pi + 1) -lt $n) { $pi += 2; continue }
+                                if ($Content[$pi] -eq '"') { $pi++; break }
+                                $pi++
+                            }
+                            continue
+                        }
+                        if ($pch -eq '(') { $pDepth++ }
+                        elseif ($pch -eq ')') {
+                            $pDepth--
+                            if ($pDepth -eq 0) {
+                                # 跳过闭括号后空白和换行（含 CRLF 支持）
+                                $nextChar = $pi + 1
+                                while ($nextChar -lt $n -and ($Content[$nextChar] -eq ' ' -or $Content[$nextChar] -eq "`t" -or $Content[$nextChar] -eq "`r")) {
+                                    $nextChar++
+                                }
+                                if ($nextChar -lt $n -and $Content[$nextChar] -eq "`n") {
+                                    $nextChar++
+                                    $nextChar = Find-NonWhitespace -Content $Content -Start $nextChar
+                                }
+                                return $nextChar
+                            }
+                        }
+                        $pi++
+                    }
+                }
+            }
+        }
+    }
+
+    # 扫描找到第一个顶层代码位置（括号深度 = 0）
+    $braceDepth = if ($pos -gt 0) { Get-Ps1BraceDepth -Content $Content -EndPos $pos } else { 0 }
+    $i = $pos
+    while ($i -lt $n) {
+        # 行首位置
+        $lineStart = $i
+        # 跳过行首空白（仅空格和制表符，不跳过换行符——与 Python 端一致）
+        while ($i -lt $n -and ($Content[$i] -eq ' ' -or $Content[$i] -eq "`t")) { $i++ }
+
+        # 空行（\r 由后续 Skip-Ps1LineComments/Find-NonWhitespace 处理）
+        if ($i -lt $n -and $Content[$i] -eq "`n") {
+            $i++
+            continue
+        }
+
+        # 跳过连续的行注释和空行（含 here-string 感知和 CRLF 支持）
+        $oldI = $i
+        $i = Skip-Ps1LineComments -Content $Content -Start $i
+        if ($i -ge $n) { break }
+
+        # 在顶层 → 返回行首位置（安全插入点）
+        if ($braceDepth -eq 0) {
+            return $lineStart
+        }
+
+        # 扫描到行尾，追踪括号深度（Get-Ps1CodeChars 已具备完整的 here-string/字符串/注释感知）
+        $lineDone = $false
+        foreach ($item in Get-Ps1CodeChars -Content $Content -Start $i) {
+            if ($item.Char -eq '{') { $braceDepth++ }
+            elseif ($item.Char -eq '}') { $braceDepth-- }
+            if ($item.Char -eq "`n") {
+                $i = $item.Index + 1
+                $lineDone = $true
+                break
+            }
+        }
+        if (-not $lineDone) { $i = $n }
+    }
+
+    return $n
+}
+
+function Add-Ps1CodeAtTopLevel {
+    <#
+    .SYNOPSIS
+        在 PowerShell 脚本的顶层安全位置插入代码块（括号深度感知）。
+    .DESCRIPTION
+        使用 Find-Ps1TopLevelInsertPoint 找到安全插入点，将代码插入到
+        第一个顶层位置之前，避免嵌套到函数体、if 块等内部。
+    .PARAMETER Content
+        原始 PowerShell 代码字符串。
+    .PARAMETER CodeToInsert
+        要插入的代码字符串。
+    .PARAMETER SearchFrom
+        起始搜索位置，默认为 0。
+    .OUTPUTS
+        [string] 插入后的完整代码字符串。
+    #>
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true, Position=0)][string]$Content,
+        [Parameter(Mandatory=$true, Position=1)][string]$CodeToInsert,
+        [Parameter(Position=2)][int]$SearchFrom = 0
+    )
+    if (-not $CodeToInsert.EndsWith("`n")) { $CodeToInsert += "`n" }
+    $insertPoint = Find-Ps1TopLevelInsertPoint -Content $Content -SearchFrom $SearchFrom
+    return $Content.Substring(0, $insertPoint) + $CodeToInsert + $Content.Substring($insertPoint)
+}
+
 Initialize-EncodingSafety

@@ -1,5 +1,11 @@
 """序列图修复器。"""
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import List, Tuple
 
@@ -36,3 +42,4 @@ class SequenceDiagramFixer(BaseDiagramFixer):
             fixes.append("participant别名引号")
 
         return text, fixes
+

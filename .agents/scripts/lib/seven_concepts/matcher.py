@@ -1,5 +1,11 @@
 """任务场景匹配器——根据自然语言描述匹配七概念方法论场景"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .constants import WORKFLOWS, QUALITY_GATES, ANTI_PATTERN_WARNINGS
 from .models import MatchResult
 
@@ -199,3 +205,4 @@ def match_task(text: str) -> list[MatchResult]:
 
     results.sort(key=lambda r: r.confidence, reverse=True)
     return results
+

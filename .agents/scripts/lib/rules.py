@@ -17,6 +17,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 import tomllib
 from dataclasses import dataclass, field
@@ -236,3 +242,4 @@ def load_rules(rules_file: Path | str | None = None) -> FalsePositiveRules:
     rules.line_filter_patterns = _compile_patterns(line_filters.get("patterns", []))
 
     return rules
+

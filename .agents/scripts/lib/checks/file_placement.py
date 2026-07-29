@@ -22,6 +22,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import subprocess
@@ -171,3 +177,4 @@ def run_ci_check(project_root: Path | str | None = None) -> int:
 
 
 __all__ = ["run", "run_check", "run_ci_check", "CI_BLOCK_ON_MISPLACED"]
+

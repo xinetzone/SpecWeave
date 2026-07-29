@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 
@@ -27,3 +32,4 @@ def check_pattern_references(content):
     count = len(matches)
     has_refs = count > 0
     return count, has_refs
+

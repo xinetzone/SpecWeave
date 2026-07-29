@@ -1,5 +1,11 @@
 """模式成熟度工具 - 常量定义。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 DOMAIN_LABELS = {
@@ -54,3 +60,4 @@ README_STATS_TABLE_RE = re.compile(
 README_INDEX_TABLE_RE = re.compile(
     r"\|\s*(\S+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*(\d+)\s*\|"
 )
+

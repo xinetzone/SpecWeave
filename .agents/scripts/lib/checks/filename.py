@@ -1,5 +1,11 @@
 """文件名命名规范检查（来自 check-filename-convention.py）。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 import subprocess
 import sys
@@ -135,3 +141,4 @@ def run(project_root: Path, args) -> int:
     print("  3. 重新运行脚本验证")
     print("\n" + "=" * 60)
     return 1
+

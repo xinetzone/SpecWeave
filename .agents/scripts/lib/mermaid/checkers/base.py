@@ -1,5 +1,11 @@
 """Mermaid 检查器抽象基类。"""
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 
@@ -36,3 +42,4 @@ class BaseDiagramChecker(ABC):
     def _check_specific_rules(self, block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
         """检查特定图表类型的规则，子类必须实现。"""
         pass
+

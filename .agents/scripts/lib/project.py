@@ -4,6 +4,12 @@
 `Path(__file__).parent.parent.parent` 的重复硬编码问题。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from constants import NON_WORKTREE_PATH_PREFIXES
@@ -85,3 +91,4 @@ def is_non_worktree_path(path: str | Path, root: str | Path) -> bool:
         rel_str == prefix or rel_str.startswith(prefix + "/")
         for prefix in NON_WORKTREE_PATH_PREFIXES
     )
+

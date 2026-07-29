@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 DEMO_LOGS = """[SG-LOG] | level=INFO | event=STAGE_ENTER | stage=S1 | role=orchestrator | session=demo-001 | msg=进入需求接收阶段，开始明确需求边界与验收标准 | ctx={"entry_condition":"收到用户需求描述","prev_stage":null}
 [PDR-LOG] | level=INFO | event=PDR_START | stage=S1 | role=orchestrator | session=demo-001 | msg=开始前置文档读取,共3份文档待读取 | ctx={"required_count":3,"required_docs":["用户需求原始描述","项目README.md","相关历史spec"],"resume":false}
 [PDR-LOG] | level=INFO | event=PDR_DOC_READ | stage=S1 | role=orchestrator | session=demo-001 | msg=已读取: 用户需求原始描述 | ctx={"doc":"用户输入","bytes":520,"key_points":["需要用户认证功能","支持JWT"]}

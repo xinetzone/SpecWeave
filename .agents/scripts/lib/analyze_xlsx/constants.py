@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 SCRIPTS_DIR = Path(__file__).resolve().parents[2]
@@ -118,3 +124,4 @@ BASIC_INFO_KEY_MAP = {
 }
 
 RELEASE_THRESHOLD = "DI &lt;= 12 且 致命+严重 &lt;= 2"
+

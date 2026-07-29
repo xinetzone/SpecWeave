@@ -10,6 +10,12 @@
 - 向后兼容，旧条目无需强制迁移
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 from pathlib import Path
 

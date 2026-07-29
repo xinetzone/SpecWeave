@@ -1,5 +1,11 @@
 """检查框架共享定义。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 
 
@@ -20,3 +26,4 @@ class CheckResult:
     @property
     def warning_count(self) -> int:
         return len(self.warnings)
+

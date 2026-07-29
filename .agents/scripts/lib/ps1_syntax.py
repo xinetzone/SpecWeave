@@ -6,12 +6,18 @@
 设计原则：
 - 所有函数均为无状态纯函数，便于测试和组合
 - 正确处理：行注释(#)、注释块(<# #>)、单引号字符串('')、双引号字符串("")、反引号转义(`)
-- here-string (@'/@" @) 不做特殊处理（版本校验相关代码中极少使用）
+- 完整支持双引号 here-string (@" ... "@) 和单引号 here-string (@' ... '@)
 
 调试日志：设置环境变量 PS1_SYNTAX_DEBUG=1 启用详细调试输出。
 """
 
 from __future__ import annotations
+
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
 
 import logging
 import os
@@ -53,6 +59,62 @@ def set_debug(enabled: bool) -> None:
         _logger.setLevel(logging.WARNING)
 
 
+# ── 底层跳过原语 ────────────────────────────────────────────────────────────
+
+def _skip_ps1_here_string(content: str, position: int) -> int:
+    """检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
+
+    PowerShell here-string 语法：
+    - 双引号 here-string: @"<换行> ... <换行开头>"@  支持反引号 (`) 转义
+    - 单引号 here-string: @'<换行> ... <换行开头>'@  完全字面量，不处理转义
+
+    检测规则：
+    1. 当前字符必须是 '@'
+    2. 下一个字符必须是 '"' 或 "'"
+    3. @<quote> 之后必须紧跟换行符（可带可选 CR）
+    4. 结束标记 <quote>@ 必须在行首位置
+
+    Args:
+        content: 要分析的 PowerShell 代码字符串。
+        position: 当前扫描位置（0-based）。
+
+    Returns:
+        若当前位置是 here-string 开头，返回 here-string 结束标记之后的位置；
+        否则返回原 position（表示未跳过任何内容）。
+    """
+    n = len(content)
+    i = position
+
+    # 检测 @' 或 @" 后跟换行符
+    if i < n and content[i] == '@' and i + 1 < n and content[i + 1] in ('"', "'"):
+        quote_char = content[i + 1]
+        j = i + 2
+        # 跳过 @<quote> 后可能的 \r
+        if j < n and content[j] == '\r':
+            j += 1
+        # @<quote> 后必须紧跟 \n 才是 here-string
+        if j < n and content[j] == '\n':
+            _trace(f"  here-string @{quote_char} started at pos={i}")
+            i = j + 1  # 跳过换行符
+            end_marker = quote_char + '@'
+            while i < n:
+                # 行首检测：当前位置是文件开头，或前一个字符是 \n
+                at_line_start = (i == 0) or (content[i - 1] == '\n')
+                if at_line_start and content[i:i + 2] == end_marker:
+                    i += 2
+                    _trace(f"  here-string {end_marker} ended at pos={i}")
+                    break
+                # 双引号 here-string 支持反引号转义
+                if quote_char == '"' and content[i] == '`' and i + 1 < n:
+                    i += 2
+                    continue
+                i += 1
+            return i
+
+    # 不是 here-string 开头，返回原位置
+    return position
+
+
 # ── 核心迭代器 ──────────────────────────────────────────────────────────────
 
 def iter_code_chars(s: str, start: int = 0):
@@ -67,12 +129,20 @@ def iter_code_chars(s: str, start: int = 0):
     - 注释块 <# ... #>（支持嵌套）
     - 单引号字符串 '...'（含 '' 转义）
     - 双引号字符串 "..."（含反引号 ` 转义）
+    - 双引号 here-string @" ... "@（含反引号转义）
+    - 单引号 here-string @' ... '@（完全字面量）
     """
     _trace(f"iter_code_chars: start={start}, len={len(s)}")
     i = start
     n = len(s)
     while i < n:
         ch = s[i]
+
+        # ── Here-string @' ... '@ 或 @" ... "@ ──
+        new_i = _skip_ps1_here_string(s, i)
+        if new_i != i:
+            i = new_i
+            continue
 
         # ── 注释块 <# ... #> ──
         if ch == '<' and i + 1 < n and s[i + 1] == '#':
@@ -338,6 +408,12 @@ def find_param_block_end(s: str, search_from: int = 0) -> int:
     n = len(s)
     while i < n:
         ch = s[i]
+        # Here-string 跳过（@'/@" 开始的 here-string）
+        new_i = _skip_ps1_here_string(s, i)
+        if new_i != i:
+            _trace(f"    here-string skipped pos={i}-{new_i}")
+            i = new_i
+            continue
         # 简单字符串跳过（param 块内的字符串）
         if ch == "'":
             str_start = i
@@ -445,6 +521,7 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
     brace_depth = _calc_brace_depth(content[:pos]) if pos > 0 else 0
     _trace(f"  starting scan at pos={pos}, initial brace_depth={brace_depth}")
     i = pos
+    line_num = content[:pos].count('\n') + 1
     while i < len(content):
         # 行首位置
         line_start = i
@@ -453,42 +530,55 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
 
         # 空行
         if i < len(content) and content[i] == '\n':
-            _trace(f"  blank line at pos={i}")
+            _trace(f"  L{line_num}: blank line at pos={i}")
             i += 1
+            line_num += 1
             continue
 
         # 跳过注释
         old_i = i
         i = skip_line_comments(content, i)
         if i != old_i:
-            _trace(f"  skipped comments from pos={old_i} to {i}")
+            comment_lines = content[old_i:i].count('\n')
+            _trace(f"  L{line_num}: skipped comments/whitespace pos={old_i}->{i} ({comment_lines} lines)")
+            line_num += comment_lines
         if i >= len(content):
-            _trace(f"  reached end of content")
+            _trace(f"  L{line_num}: reached end of content")
             break
 
         # 如果在顶层，这就是插入点
         if brace_depth == 0:
-            context = content[line_start:line_start+50].replace('\n', '\\n')
-            _trace(f"  -> top-level code found at line_start={line_start}, context=\"{context}\"")
+            line_end = content.find('\n', i)
+            if line_end == -1:
+                line_end = len(content)
+            context = content[line_start:min(line_end, line_start + 80)].replace('\n', '\\n')
+            _trace(f"  L{line_num}: -> top-level code found at line_start={line_start}, depth=0")
+            _trace(f"    context: \"{context}\"")
             return line_start
 
-        _trace(f"  not at top level (depth={brace_depth}), scanning line at pos={i}")
+        _trace(f"  L{line_num}: not at top level (depth={brace_depth}), scanning line at pos={i}")
 
         # 扫描到行尾，追踪括号深度
+        brace_events = []
         for idx, ch in iter_code_chars(content, i):
             if ch == '{':
                 brace_depth += 1
+                brace_events.append(f"{{at{idx}->d{brace_depth}")
                 _trace(f"    {{ at pos={idx}, depth={brace_depth}")
             elif ch == '}':
                 brace_depth -= 1
+                brace_events.append(f"}}at{idx}->d{brace_depth}")
                 _trace(f"    }} at pos={idx}, depth={brace_depth}")
             if ch == '\n':
+                if brace_events:
+                    _trace(f"    line end at pos={idx}, events: {', '.join(brace_events)}, final depth={brace_depth}")
                 i = idx + 1
+                line_num += 1
                 break
         else:
             i = len(content)
 
-    _trace(f"  -> end of content, insert at pos={len(content)}")
+    _trace(f"  -> end of content at L{line_num}, insert at pos={len(content)}")
     return len(content)
 
 
@@ -506,6 +596,9 @@ def _calc_brace_depth(s: str) -> int:
 def validate_brace_balance(lines: list[str]) -> list[tuple[int, str]]:
     """检查 PowerShell 脚本的括号平衡和结构完整性。
 
+    使用 iter_code_chars 在完整内容上单次扫描，正确处理注释块、字符串、
+    转义序列等所有语法元素，避免逐行处理时的跨多行状态丢失问题。
+
     Args:
         lines: 脚本的行列表（1-indexed 错误报告）
 
@@ -514,45 +607,70 @@ def validate_brace_balance(lines: list[str]) -> list[tuple[int, str]]:
     """
     _trace(f"validate_brace_balance: {len(lines)} lines")
     errors: list[tuple[int, str]] = []
-    brace_depth = 0
-    in_function_name: str | None = None
-    function_start_line = 0
 
+    content = '\n'.join(lines)
+    n = len(content)
+    # 位置→行号映射
+    line_starts = [0]
+    for line in lines:
+        line_starts.append(line_starts[-1] + len(line) + 1)
+
+    def pos_to_line(pos: int) -> int:
+        lo, hi = 0, len(line_starts) - 1
+        while lo < hi:
+            mid = (lo + hi + 1) // 2
+            if line_starts[mid] <= pos:
+                lo = mid
+            else:
+                hi = mid - 1
+        return lo + 1
+
+    # ── 构建 code-only 缓冲区（注释/字符串替换为空格），同时计算括号深度 ──
+    code_only = [' '] * n
+    brace_depth = 0
+    brace_depth_at = [0] * (n + 1)  # brace_depth_at[i] = depth before char at pos i
+
+    for idx, ch in iter_code_chars(content):
+        code_only[idx] = ch
+        brace_depth_at[idx] = brace_depth
+        if ch == '{':
+            brace_depth += 1
+        elif ch == '}':
+            brace_depth -= 1
+            if brace_depth < 0:
+                errors.append((pos_to_line(idx), f"括号不匹配：多余的 }} 在第 {pos_to_line(idx)} 行"))
+                _trace(f"  L{pos_to_line(idx)}: ERROR - extra }} at depth {brace_depth}")
+                brace_depth = 0
+
+    code_only_str = ''.join(code_only)
+
+    # ── 版本校验函数嵌套检测 ──
     version_func_re = re.compile(
-        r'function\s+(?:Test-Pwsh7(?:Version|Requirement)|Show-Pwsh7(?:Version|Requirement)Error)\b',
+        r'function\s+(Test-Pwsh7(?:Version|Requirement)|Show-Pwsh7(?:Version|Requirement)Error)\b',
         re.IGNORECASE
     )
+    func_def_re = re.compile(r'function\s+([\w:.-]+)', re.IGNORECASE)
 
-    for idx, line in enumerate(lines, start=1):
-        code_part = strip_line_comment(line)
-
-        func_match = FUNCTION_DEF_RE.search(line)
-        if func_match and brace_depth == 0:
-            in_function_name = func_match.group(1)
-            function_start_line = idx
-            _trace(f"  L{idx}: entered function '{in_function_name}'")
-
-        version_func_match = version_func_re.search(line)
-        if version_func_match and in_function_name is not None and brace_depth > 0:
+    for vm in version_func_re.finditer(code_only_str):
+        vpos = vm.start()
+        vdepth = brace_depth_at[vpos]
+        vline = pos_to_line(vpos)
+        if vdepth > 0:
+            # 找最近的外层函数名
+            outer_func = None
+            outer_line = 0
+            for fm in func_def_re.finditer(code_only_str):
+                if fm.start() < vpos:
+                    fbrace = code_only_str.find('{', fm.end())
+                    if fbrace >= 0 and fbrace < vpos:
+                        outer_func = fm.group(1)
+                        outer_line = pos_to_line(fm.start())
             errors.append((
-                idx,
-                f"版本校验函数 '{version_func_match.group(0).strip()}' 被嵌套在函数 "
-                f"'{in_function_name}'（L{function_start_line}）内部，版本校验块必须位于顶层"
+                vline,
+                f"版本校验函数 '{vm.group(1)}' 被嵌套在函数 "
+                f"'{outer_func or '(未知)'}'（L{outer_line}）内部，版本校验块必须位于顶层"
             ))
-            _trace(f"  L{idx}: ERROR - version check function nested inside '{in_function_name}'")
-
-        for _, ch in iter_code_chars_no_comments(code_part):
-            if ch == '{':
-                brace_depth += 1
-            elif ch == '}':
-                brace_depth -= 1
-                if brace_depth == 0:
-                    _trace(f"  L{idx}: exited function '{in_function_name}'")
-                    in_function_name = None
-                elif brace_depth < 0:
-                    errors.append((idx, f"括号不匹配：多余的 }} 在第 {idx} 行"))
-                    _trace(f"  L{idx}: ERROR - extra }} at depth {brace_depth}")
-                    brace_depth = 0
+            _trace(f"  L{vline}: ERROR - version check function nested (depth={vdepth})")
 
     if brace_depth > 0:
         errors.append((0, f"括号不匹配：文件末尾有 {brace_depth} 个未闭合的 {{"))
@@ -560,3 +678,4 @@ def validate_brace_balance(lines: list[str]) -> list[tuple[int, str]]:
 
     _trace(f"validate_brace_balance: {len(errors)} errors found")
     return errors
+

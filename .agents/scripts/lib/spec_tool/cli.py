@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 from pathlib import Path
 
@@ -48,3 +53,4 @@ def main():
 
     cmd_map = {'check': cmd_check, 'format': cmd_format, 'gen-tests': cmd_gen_tests}
     return cmd_map[args.command](args)
+

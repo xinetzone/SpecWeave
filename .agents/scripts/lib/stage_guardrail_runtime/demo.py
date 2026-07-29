@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import sys
 
@@ -229,3 +234,4 @@ def run_full_flow(json_output: bool = False, strict: bool = False,
     if strict and has_warnings:
         return 1
     return 0
+

@@ -10,6 +10,12 @@
 - 所有操作对 Git 仓库无副作用（仅读取，不修改 Git 状态）
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import os
 import shutil

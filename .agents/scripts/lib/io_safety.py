@@ -31,6 +31,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import functools
 import logging
 import os
@@ -213,3 +219,4 @@ def write_file_with_retry(
         stale_max_age_sec=stale_max_age_sec,
         fsync=fsync,
     )
+

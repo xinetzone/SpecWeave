@@ -3,6 +3,12 @@
 提供核心章节检测、Requirement 完整性、验收标准、版本号与变更日志等格式检查功能。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import Any, Optional
 
@@ -386,3 +392,4 @@ def check_version_and_changelog(content: str) -> tuple[list[Issue], dict]:
         ))
 
     return issues, info
+

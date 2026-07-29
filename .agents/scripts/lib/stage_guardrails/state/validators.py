@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .constants import STAGE_NAMES, STAGE_ORDER, STAGE_ROLES, VALID_ROLES
 from .exceptions import InvalidRoleError, InvalidStageError
 
@@ -35,3 +41,4 @@ class StageValidatorMixin:
                 message=f'角色 {role} 无权执行 {stage}（{STAGE_NAMES[stage]}）阶段，该阶段负责角色为 {sorted(allowed)}',
                 details={'stage': stage, 'role': role, 'allowed_roles': sorted(allowed)},
             )
+

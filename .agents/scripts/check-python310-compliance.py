@@ -77,9 +77,9 @@ VERSION_ERROR_MSG_RE = re.compile(
     r"Python\s*版本|需要\s*Python|版本不满足|版本不支持|python3\.10|3\.10\s*或更高",
     re.IGNORECASE | re.MULTILINE
 )
-# 导入共享库
+# 导入共享库（支持绝对导入和相对导入 from ./.+/...python310_version_check）
 IMPORT_LIB_RE = re.compile(
-    r"(?:from\s+python310_version_check\s+import|import\s+python310_version_check)",
+    r"(?:from\s+\.*python310_version_check\s+import|from\s+python310_version_check\s+import|import\s+python310_version_check)",
     re.MULTILINE
 )
 ENFORCE_CALL_RE = re.compile(

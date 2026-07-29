@@ -3,6 +3,12 @@
 提供需求→任务覆盖、场景→检查点覆盖、数据一致性、交叉引用等检查功能。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from collections import Counter
 from pathlib import Path
@@ -278,3 +284,4 @@ def check_scenario_executability(
             })
 
     return {"missing_structure": missing_structure}
+

@@ -1,5 +1,11 @@
 """并发安全检查常量定义。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 DIMENSIONS = {
     "TIMEOUT": {
         "code": "CC-TIMEOUT",
@@ -83,3 +89,4 @@ I18N_EXEMPT_CALLS = {
 }
 
 I18N_DICT_METHODS = {"get", "pop", "__getitem__", "__setitem__", "__contains__", "setdefault"}
+

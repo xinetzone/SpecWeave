@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import List, Tuple
 
@@ -42,3 +47,4 @@ class SecurityChecker:
                               '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突'))
 
         return issues
+

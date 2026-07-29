@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from .constants import DEFAULT_SUMMARY_TEMPLATE, DEFAULT_TEMPLATE
@@ -70,3 +76,4 @@ def render_report(context: dict, template_path: Path | None = None) -> str:
         ),
         final_conclusion=context["final_conclusion"],
     )
+

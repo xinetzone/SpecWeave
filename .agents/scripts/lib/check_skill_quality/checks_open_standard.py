@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 from typing import Optional
@@ -208,3 +213,4 @@ def check_open_standards_compliance(skill_md: Path, content: str, frontmatter_te
     ))
 
     return results
+

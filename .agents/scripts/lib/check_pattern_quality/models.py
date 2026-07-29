@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -21,3 +26,4 @@ class PatternReport(ResultGroupMixin):
     pattern_title: str
     results: list[CheckResult] = field(default_factory=list)
     score: int = 0
+

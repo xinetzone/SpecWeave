@@ -1,5 +1,11 @@
 """场景定义数据——支持的任务场景列表"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 SCENARIOS_LIST = [
     ("里程碑/迭代/Sprint结束/版本交付", "W1", "R→I→E→C"),
     ("P0/P1故障/线上问题/Bug根因", "W2", "F→V→C→R→I→E"),
@@ -25,3 +31,4 @@ SCENARIOS_LIST = [
 def get_all_scenarios() -> list[tuple[str, str, str]]:
     """返回所有支持的场景列表"""
     return SCENARIOS_LIST
+

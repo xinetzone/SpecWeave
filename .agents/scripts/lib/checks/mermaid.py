@@ -3,6 +3,12 @@
 保持所有原有函数签名和行为，内部委托给新架构模块。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 import sys
 from pathlib import Path

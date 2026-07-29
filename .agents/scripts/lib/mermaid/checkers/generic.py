@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import List, Tuple
 
@@ -64,3 +69,4 @@ class QuadrantChecker(BaseDiagramChecker):
 
     def _check_specific_rules(self, block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
         return []
+

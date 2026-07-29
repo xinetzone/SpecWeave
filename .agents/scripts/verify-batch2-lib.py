@@ -79,9 +79,9 @@ def _print_summary(title: str, items: dict) -> None:
 
 # ── 常量 ──────────────────────────────────────────────────────
 
-# 版本校验块特征正则（lib 模式）
+# 版本校验块特征正则（lib 模式，支持多点相对导入: . / .. / ...python310_version_check）
 LIB_VERSION_CHECK_RE = re.compile(
-    r"from\s+\.python310_version_check\s+import\s+enforce_python310",
+    r"from\s+\.+python310_version_check\s+import\s+enforce_python310",
     re.MULTILINE,
 )
 LIB_ENFORCE_CALL_RE = re.compile(

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import sys
@@ -203,3 +208,4 @@ def main(argv=None):
 
     print_single_result(result, args, project_root)
     sys.exit(0 if result['scores']['overall_adoption_score'] >= 70 else 1)
+

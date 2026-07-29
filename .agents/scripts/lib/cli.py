@@ -3,6 +3,12 @@
 提供彩色终端输出、通用 argparse 参数注册等跨脚本复用的 CLI 能力。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import os
@@ -326,3 +332,4 @@ def setup_duplication_main(
     scripts_dir = resolve_scripts_dir(anchor_file)
 
     return args, threshold, window, project_root, scripts_dir
+

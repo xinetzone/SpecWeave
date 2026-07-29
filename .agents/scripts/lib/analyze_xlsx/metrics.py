@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from .constants import METRIC_KEY_MAP, STATUS_VALUE_MAP, BASIC_INFO_KEY_MAP
@@ -200,3 +206,4 @@ def build_final_conclusion(
     if used_fallback:
         prefix += " 本次结论包含降级统计结果。"
     return prefix
+

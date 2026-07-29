@@ -26,6 +26,12 @@
 """
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 from dataclasses import dataclass, field
@@ -611,3 +617,4 @@ __all__ = [
     "is_confirmed",
     "should_block_command",
 ]
+

@@ -1,5 +1,11 @@
 """格式化输出模块——将匹配结果格式化为字符串或字典"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .constants import WORKFLOWS, ANTI_PATTERN_WARNINGS
 from .models import MatchResult
 from .scenarios import get_all_scenarios
@@ -61,3 +67,4 @@ def format_match_result_dict(result: MatchResult) -> dict:
         "quality_gates": result.quality_gates,
         "anti_patterns": result.anti_patterns,
     }
+

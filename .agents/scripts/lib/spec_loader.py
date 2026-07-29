@@ -21,6 +21,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import hashlib
 import json
 import logging
@@ -1329,3 +1335,4 @@ def quick_load(task: str, project_root: Optional[Path | str] = None, **kwargs) -
     if not loader._auto_save:
         loader.save_cache()
     return result
+

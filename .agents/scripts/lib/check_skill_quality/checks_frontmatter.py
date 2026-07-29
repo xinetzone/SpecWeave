@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 from typing import Optional
 
@@ -55,3 +60,4 @@ def check_frontmatter(skill_md: Path, content: str, frontmatter_text: str | None
             ))
 
     return results
+

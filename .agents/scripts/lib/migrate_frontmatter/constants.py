@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 
@@ -9,3 +14,4 @@ EXCLUDE_DIRS = {".git", "vendor", ".temp", "__pycache__", "node_modules", ".venv
 TOML_STORAGE_DIR = ".meta/toml"
 BACKUP_DIR = ".meta/backup"
 BASELINE_MANIFEST_PATH = ".meta/baseline-manifest.json"
+

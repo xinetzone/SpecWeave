@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from lib.cli import print_pass
@@ -46,3 +51,4 @@ def run_export_logs(output_path: str, enable_color: bool = True) -> int:
     print(f'  拦截次数: {rt.interception_count}')
     print(f'  文件大小: {len(content.encode("utf-8"))} bytes')
     return 0
+
