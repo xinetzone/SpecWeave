@@ -22,6 +22,8 @@ tags: ["cmake", "atomization", "modularization", "build-system", "refactoring"]
 | **静态验证** | ✅ 全部通过 |
 | **构建测试** | ✅ py314+MSVC 环境验证通过（configure/build/40个C++测试全过） |
 | **P0验证** | ✅ 2026-07-29完成 |
+| **P1模式入库** | ✅ 2026-07-29完成（3个模式文档+最佳实践指南+自动化检查脚本） |
+| **自动化防护** | ✅ 32个pytest回归测试用例（FindBLAS命名冲突检测） |
 
 ## 一、事实还原（R阶段）
 
@@ -63,6 +65,9 @@ tags: ["cmake", "atomization", "modularization", "build-system", "refactoring"]
 10. **P3参数校验**：为所有公共函数添加友好参数校验
 11. **P0构建验证**：py314+MSVC环境验证，发现并修复第3个致命Bug（FindBLAS命名冲突→重命名为DetectBLAS）
 12. **全量测试通过**：configure/build/40个C++测试全部通过
+13. **自动化防护**：创建check-cmake-naming.py检查工具+32个pytest回归测试，防止Find<Name>.cmake命名冲突复发
+14. **P1模式入库**：3个CMake模式萃取入库（四层架构/公共配置函数/平台操作封装）到code-patterns/
+15. **最佳实践指南**：生成CMake模块化重构最佳实践指南（10章节+验收清单），沉淀到knowledge/best-practices/
 
 ## 二、根因洞察（I阶段）
 
@@ -216,9 +221,36 @@ tags: ["cmake", "atomization", "modularization", "build-system", "refactoring"]
 | 优先级 | 行动项 | 验收标准 | 状态 |
 |--------|--------|---------|------|
 | **P0** | 在conda+MSVC环境中运行构建测试验证功能等价 | cmake configure成功、编译成功、40/40 C++测试通过 | ✅ 2026-07-29完成（py314+MSVC，发现并修复FindBLAS命名冲突Bug） |
-| **P1** | 将CMake四层模块化架构模式沉淀到模式库 | 创建pattern文档，包含触发场景、核心步骤、反模式、代码模板 | ⏳ 待执行 |
+| **P1** | 将CMake四层模块化架构模式沉淀到模式库 | 创建pattern文档，包含触发场景、核心步骤、反模式、代码模板 | ✅ 2026-07-29完成（3个模式入库+最佳实践指南+自动化检查脚本） |
+| **P1a** | 创建FindBLAS命名冲突自动化检查脚本与回归测试 | check-cmake-naming.py检测工具+32个pytest测试用例，防止命名冲突复发 | ✅ 2026-07-29完成（commit 3e3ebce9） |
+| **P1b** | 生成CMake模块化重构最佳实践指南 | 整合3个模式为10章节操作手册（诊断/架构/两轮策略/函数/平台/验收/陷阱），更新best-practices索引 | ✅ 2026-07-29完成（commit 4218088e） |
 | **P2** | 审查其他CMakeLists.txt是否适用同样的模块化方法 | 检查projects/和apps/下的CMake项目，列出可以应用此模式的清单 | ⏳ 待执行 |
 | **P3** | 为cmake函数添加参数校验 | caffe_ffi_configure_target检查target是否存在，给出友好错误提示 | ✅ 2026-07-29完成（18个函数/宏全部添加校验） |
+
+## 四.一、知识沉淀成果（E→闭环）
+
+P1行动项完成后共产生以下可复用资产：
+
+### 模式库（code-patterns/）
+
+| 模式文档 | 路径 | 成熟度 |
+|---------|------|--------|
+| CMake四层模块化架构 | [cmake-four-layer-modular-architecture.md](../../../patterns/code-patterns/cmake-four-layer-modular-architecture.md) | L1 |
+| CMake公共目标配置函数 | [cmake-public-target-config-function.md](../../../patterns/code-patterns/cmake-public-target-config-function.md) | L1 |
+| CMake平台特定操作封装 | [cmake-platform-specific-operation-encapsulation.md](../../../patterns/code-patterns/cmake-platform-specific-operation-encapsulation.md) | L1 |
+
+### 自动化防护（scripts/）
+
+| 脚本 | 路径 | 测试用例 |
+|------|------|---------|
+| CMake命名规范检查 | [cmake_naming.py](../../../../../scripts/lib/checks/cmake_naming.py) | 32个pytest用例 |
+| 回归测试 | [test_checks_cmake_naming.py](../../../../../scripts/tests/test_checks_cmake_naming.py) | 覆盖FindBLAS冲突/Detect替代/大小写/目录名等场景 |
+
+### 最佳实践指南（knowledge/）
+
+| 指南 | 路径 | 章节数 |
+|------|------|--------|
+| CMake模块化重构最佳实践 | [cmake-modularization-best-practices.md](../../../../knowledge/best-practices/cmake-modularization-best-practices.md) | 10章（含验收清单+常见陷阱） |
 
 ## 五、经验总结
 
