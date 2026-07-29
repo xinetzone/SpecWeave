@@ -1,7 +1,7 @@
 # Caffe-FFI 验证检查清单
 
 > **更新日期**: 2026-07-29
-> **验证状态**: ✅ M1-M4核心里程碑完成并原子提交归档（C++模式101 passed, 1 skipped；纯Python模式83 passed, 19 skipped, 0 failed；零拷贝Demo实测10M元素加速3749×），M5（C++测试/Conda/ASan）待后续补充
+> **验证状态**: ✅ M1-M5核心里程碑：M1-M4全部完成，M5 Task 12(C++单元测试40/40)和Task 13(Conda配置)已完成，仅Task 17(ASan)待Linux/GCC环境；C++模式pytest 101 passed, 1 skipped；纯Python模式83 passed, 19 skipped, 0 failed；零拷贝Demo实测10M元素加速3749×
 
 ## 构建系统验证
 - [x] CMakeLists.txt 存在且正确配置 C++17 标准
@@ -34,9 +34,15 @@
 - [x] Net 使用 Map<String, int64_t> 存储名称索引
 - [x] Net Forward 返回 Map<String, Blob>
 - [x] 内存分配使用 tvm::ffi::Tensor::FromNDAlloc + 自定义 CPUMemAlloc
-- [x] 使用 TVM_FFI_DLL_EXPORT_TYPED_FUNC 导出13个全局函数
-- [x] 13个关键函数使用TVM FFI类型（String/Shape/Array/Map）
+- [x] 使用 TVM_FFI_DLL_EXPORT_TYPED_FUNC 导出14个全局函数
+- [x] 14个关键函数使用TVM FFI类型（String/Shape/Array/Map）
 - [x] `using namespace tvm::ffi` 仅在 namespace caffe_ffi 内部使用
+- [x] 反射系统完整补全：Blob 28个方法、Layer 8个方法、Net 16个方法，共52个公共方法注册
+- [x] 所有反射注册方法附带docstring，C++为唯一可信源
+- [x] Windows DLL边界问题修复：LayerRegistry::Registry()唯一实现移至layer_factory.cpp（堆分配单例）
+- [x] Protobuf跨DLL解析隔离：ReadNetParamsFromTextString/File在DLL内实现
+- [x] Python MRO反射查找修复：_native_method()遍历__mro__查找基类方法
+- [x] C++单元测试发现的两个Critical Bug已修复（DLL双实例+Protobuf跨DLL崩溃）
 
 ## Proto 集成验证
 - [x] proto/caffe/proto/caffe.proto 包含20个Layer所需的核心消息类型
@@ -161,8 +167,13 @@
 - [x] pytest 纯Python模式运行结果：83 passed, 19 skipped, 0 failed in 2.16s（无C++扩展时正确skip）
 - [x] TestBlobMemoryCounters添加@require_cpp_extension标记修复纯Python模式误报（原7个测试fail→skip）
 - [x] C++ test_dlopen 测试存在
-- [ ] C++ ctest单元测试通过（待编写）
-- [ ] C++ Blob/Layer/Net单元测试（待编写）
+- [x] C++ header-only轻量测试框架实现（tests/cpp/test_harness.hpp，~100行0依赖，不依赖gtest）
+- [x] C++测试核心宏实现：TEST/EXPECT_EQ/EXPECT_NE/EXPECT_TRUE/EXPECT_FALSE/EXPECT_NEAR
+- [x] C++ Blob单元测试（test_blob.cpp）：22个测试用例全部通过
+- [x] C++ Net单元测试（test_net.cpp）：18个测试用例全部通过
+- [x] C++测试入口（test_main.cpp）：运行所有测试并返回exit code
+- [x] CMake配置caffe_ffi_tests可执行目标，链接必要依赖
+- [x] C++ ctest单元测试通过：40/40 tests passed（Blob 22个+Net 18个）
 - [ ] 端到端真实模型推理测试（如LeNet/MNIST，需完整环境）
 
 ## 性能基准验证
@@ -212,10 +223,13 @@
 - [x] 性能基准示例（examples/benchmark_performance.py + examples/zero_copy_vs_copy_demo.py）
 - [x] 核心公共API（Blob/Layer/Net）有Doxygen注释
 - [x] OPTIMIZATION_REPORT.md 优化报告完整（中文版本）
+- [x] P1_OPTIMIZATION_REPORT_20260729.md P1优化报告（反射系统+DLL边界+C++单元测试）
+- [x] TASK_EXECUTION_SUMMARY_20260729.md 10章任务执行总结报告
 - [x] TEAM_SHARING_SUMMARY.md 团队分享总结
 - [x] FFI_ZEROCOPY_REFACTOR_CHECKLIST.md 跨模块零拷贝改造检查清单（P0/P1/P2）
 - [x] caffe_slim_zerocopy_refactor_draft.md caffe-slim零拷贝改造完整代码草案（含8类日志标签）
 - [x] FFI_ZEROCOPY_PATTERN_EXTRACTION.md FFI零拷贝可复用模式萃取（4个模式+反模式警示）
+- [x] 代码已按Conventional Commits规范完成原子提交归档（5个commit：核心代码P0/文档P0/示例P0/P1优化/测试标记修复）
 - [ ] 文档说明BLAS配置选项
 - [ ] 模型迁移指南
 
