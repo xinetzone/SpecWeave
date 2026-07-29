@@ -101,6 +101,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [conversion-point-debug-tracing.md](conversion-point-debug-tracing.md) | 数据转换点调试追踪：关键边界插入shape+dtype+值范围日志，快速定位精度丢失/shape mismatch/静默截断 | L2 已验证 | 数据预处理管道、模型推理链路、类型转换密集代码 |
 | [structured-lightweight-logging.md](structured-lightweight-logging.md) | 结构化轻量日志：字段固定顺序+管道符分隔+一行一事件，grep/awk可直接分析，无需日志框架 | L1 实验性 | CLI工具、Shell脚本、性能敏感路径日志 |
 | [three-layer-performance-optimization.md](three-layer-performance-optimization.md) | 三层性能优化方法论：算法→工程→编译逐级优化，先profiling再优化，避免过早优化陷阱 | L1 实验性 | 性能调优、计算密集型代码优化 |
+| [cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md) | CMake四层模块化架构：选项→依赖→函数→目标分层拆分，两轮重构策略（物理拆分+逻辑抽象），include顺序即依赖声明 | L1 实验性 | CMakeLists.txt超过100行的C/C++项目模块化，多目标（库+测试+示例）构建 |
+| [cmake-public-target-config-function.md](cmake-public-target-config-function.md) | CMake公共目标配置函数：封装target_*为带VISIBILITY参数+完整参数校验的function()，消除跨文件重复配置 | L1 实验性 | 多目标CMake项目重复编译配置消除，PUBLIC/PRIVATE/INTERFACE可见性控制 |
+| [cmake-platform-specific-operation-encapsulation.md](cmake-platform-specific-operation-encapsulation.md) | CMake平台特定操作封装：平台专用文件+细粒度函数+聚合函数+通用工具三级API，统一参数校验宏 | L1 实验性 | Windows DLL复制、macOS rpath设置、跨平台构建操作封装 |
 
 ## 成熟度定义
 
