@@ -110,6 +110,7 @@ RUN echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTH
         libopenblas \
         "cmake>=3.26" \
         "ninja>=1.13" \
+        make \
         cxx-compiler \
     && conda activate caffe-ffi && \
     echo "[BUILD] conda env 'caffe-ffi' created, Python: $(python --version)" && \
@@ -328,6 +329,41 @@ if [ ! -d "$CAFFE_FFI_SRC_DIR" ] && [ -d "${SRC_ROOT}/caffe-ffi" ]; then
     CAFFE_FFI_SRC_DIR="${SRC_ROOT}/caffe-ffi"
 fi
 
+# ── Fix CRLF line endings in source files (Windows/WSL mount issue) ──
+# When source is mounted from Windows/NTFS, shell scripts and autotools
+# configure files may have CRLF (\r\n) line endings that break Linux builds.
+# Convert all text files under critical 3rdparty/ and build directories to LF.
+fix_crlf() {
+    local dir="$1"
+    if [ ! -d "$dir" ]; then return 0; fi
+    local count=0
+    # Fix known autotools scripts and build files by extension pattern
+    while IFS= read -r -d '' f; do
+        if grep -q $'\r' "$f" 2>/dev/null; then
+            sed -i 's/\r$//' "$f"
+            count=$((count + 1))
+        fi
+    done < <(find "$dir" -type f \( -name 'configure' -o -name 'config.sub' -o -name 'config.guess' \
+        -o -name 'install-sh' -o -name 'missing' -o -name 'depcomp' -o -name 'compile' \
+        -o -name 'ltmain.sh' -o -name '*.sh' -o -name '*.ac' -o -name '*.am' \
+        -o -name '*.in' -o -name '*.cmake' -o -name 'CMakeLists.txt' -o -name '*.py' \) -print0 2>/dev/null)
+    # Also scan 3rdparty directories more broadly for any files with CRLF (autotools
+    # helper scripts may not have standard extensions)
+    if [ -d "$dir/3rdparty" ]; then
+        while IFS= read -r -d '' f; do
+            if grep -q $'\r' "$f" 2>/dev/null; then
+                sed -i 's/\r$//' "$f"
+                count=$((count + 1))
+            fi
+        done < <(find "$dir/3rdparty" -type f -text -print0 2>/dev/null)
+    fi
+    if [ $count -gt 0 ]; then
+        log_info "Fixed CRLF→LF in $count file(s) under $dir"
+    fi
+}
+fix_crlf "$TVM_FFI_SRC_DIR"
+fix_crlf "$CAFFE_FFI_SRC_DIR"
+
 # ── tvm-ffi: standard pip -e install ──
 do_editable_install "tvm-ffi" "$TVM_FFI_SRC_DIR"
 
@@ -339,7 +375,7 @@ if [ -n "$TVM_FFI_CMAKE_DIR" ]; then
     CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-Dcaffe-ffi_DIR=${TVM_FFI_CMAKE_DIR}"
     log_info "caffe-ffi: using tvm-ffi cmake dir: $TVM_FFI_CMAKE_DIR"
 fi
-CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCMAKE_PREFIX_PATH=$CONDA_PREFIX"
+CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCMAKE_PREFIX_PATH=$CONDA_PREFIX;-DCAFFE_FFI_BUILD_TESTS=OFF"
 do_editable_install "caffe-ffi" "$CAFFE_FFI_SRC_DIR" "$CAFFE_FFI_CMAKE_ARGS"
 
 # ── Update ldconfig for newly built .so files (root only) ──
