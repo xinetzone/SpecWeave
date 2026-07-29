@@ -157,20 +157,20 @@ related_patterns: [
 
 ### 模式1：Bash统一结构化日志库模式
 - **模式ID**：bash-unified-structured-logging
-- **沉淀位置**：[patterns/code-patterns/bash-unified-structured-logging.md](../../patterns/code-patterns/bash-unified-structured-logging.md)（L2-validated）
+- **沉淀位置**：[patterns/code-patterns/bash-unified-structured-logging.md](../../../patterns/code-patterns/bash-unified-structured-logging.md)（L2-validated）
 - **核心**：独立lib/logging.sh通过source加载，支持text/json双格式、三类结构化输出（log/metric/event）、级别过滤、上下文字段
 - **反模式**：每个脚本自定义echo格式、日志无结构化、不同脚本成功/失败判断不一致
 - **推广状态**：已推广到5个apps（caffe-ffi-jupyter/docker-ssh-dind/jupyter-ssh-base/pytorch-base/xmnn-runtime）
 
 ### 模式2：PowerShell→WSL跨Shell包装器模式
 - **模式ID**：powershell-wsl-cross-shell-wrapper
-- **沉淀位置**：[patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md](../../patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md)（L2-validated）
+- **沉淀位置**：[patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md](../../../patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md)（L2-validated）
 - **核心**：PowerShell脚本自动检测wsl.exe、自动路径转换、Docker预检、参数透传、退出码透传
 - **反模式**：要求用户手动"进入WSL终端→cd→执行"、硬编码路径、不做环境预检
 
 ### 模式3：WSL2 Docker方案决策模式
 - **模式ID**：wsl2-docker-selection-decision
-- **沉淀位置**：[patterns/code-patterns/wsl2-docker-selection-decision.md](../../patterns/code-patterns/wsl2-docker-selection-decision.md)（L2-validated）
+- **沉淀位置**：[patterns/code-patterns/wsl2-docker-selection-decision.md](../../../patterns/code-patterns/wsl2-docker-selection-decision.md)（L2-validated）
 - **核心**：基于11项实测指标的决策矩阵，按场景（新手/编译/CI/Windows容器等）推荐方案
 - **反模式**：不说明两种方案差异、同时启用两种Docker、不提示文件系统位置对性能的影响
 
