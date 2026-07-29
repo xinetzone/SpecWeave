@@ -109,9 +109,80 @@
 - [x] scripts/build.sh包含WSL/Linux环境检测警告
 - [x] scripts/build.sh包含--verify参数，验证SSH/Jupyter服务状态、caffe_ffi导入、_caffe_ffi.so共享库ldd解析、Jupyter kernelspec、numpy/protobuf导入
 
+## 统一结构化日志库验证
+- [x] scripts/lib/logging.sh存在（Bash统一日志库）
+- [x] scripts/lib/logging.ps1存在（PowerShell统一日志库，API对齐）
+- [x] 日志库支持INFO/WARN/ERROR/DEBUG四个级别
+- [x] 日志库支持--log-format=text/json格式切换
+- [x] 日志库支持--log-level级别控制
+- [x] 日志库支持--log-json快捷开关
+- [x] JSON日志包含统一字段：timestamp, level, script, message
+- [x] 日志库设计便于自动化监控平台接入
+
+## 部署脚本验证
+- [x] scripts/wsl-deploy.sh存在（WSL一键部署脚本）
+- [x] scripts/deploy.ps1存在（Windows PowerShell部署脚本）
+- [x] wsl-deploy.sh集成统一结构化日志库
+- [x] deploy.ps1支持WSL自动检测和路径转换（Windows→WSL）
+- [x] wsl-deploy.sh全流程自动化：环境检测→基础镜像构建→应用镜像构建→容器启动→健康检查→验证
+- [x] 部署脚本支持--cn国内镜像源参数
+- [x] 部署脚本支持--no-cache无缓存构建
+- [x] 部署脚本支持--verify构建后自动验证
+- [x] 部署脚本支持--log-format/--log-level/--log-json日志控制参数
+
+## 诊断脚本验证
+- [x] scripts/diagnose.sh存在（WSL/Linux诊断脚本）
+- [x] scripts/diagnose.ps1存在（Windows诊断脚本，自动WSL检测）
+- [x] 诊断脚本集成统一结构化日志库
+- [x] 诊断项覆盖：WSL状态、Docker服务、基础镜像、端口占用、容器状态、共享库依赖、Jupyter内核
+- [x] 诊断脚本提供错误定位提示和修复建议
+
+## build.sh升级验证
+- [x] scripts/build.sh已升级集成scripts/lib/logging.sh
+- [x] build.sh原有echo输出已替换为统一日志函数调用
+- [x] build.sh支持--log-format/--log-level/--log-json参数
+- [x] build.sh原有功能（--cn/--no-cache/--verify）保持不变
+
+## WSL部署指南文档验证
+- [x] WSL-DEPLOY-GUIDE.md存在
+- [x] 包含WSL2安装配置说明
+- [x] 包含Docker安装方案对比（Docker Desktop vs 原生Docker）
+- [x] 包含Docker Desktop vs原生Docker性能对比数据表格
+- [x] 包含一键部署步骤（wsl-deploy.sh）
+- [x] 包含手动部署步骤
+- [x] 包含验证方法
+- [x] 包含常见问题排查章节
+- [x] 包含诊断工具使用说明
+- [x] 应用文档版本标注机制：frontmatter包含last_verified和versions_validated
+- [x] 包含内联<!-- verified: YYYY-MM-DD -->验证注释
+- [x] 附录C：版本兼容性表
+- [x] Ubuntu版本推荐24.04/26.04
+
+## 跨项目PowerShell包装器验证
+- [x] apps/jupyter-ssh-base/scripts/build.ps1存在（遵循PowerShell-WSL包装器模式）
+- [x] apps/pytorch-base/build.ps1存在（遵循PowerShell-WSL包装器模式）
+- [x] apps/xmnn-runtime/docker/build.ps1存在（遵循PowerShell-WSL包装器模式）
+- [x] 包装器统一模式：WSL检测→发行版选择→路径转换→参数透传→Docker检查→结构化日志
+
+## 文档规范模板验证
+- [x] .agents/templates/shell-snippets/deployment-guide-comparison-section.md存在（方案对比小节模板）
+- [x] .agents/templates/shell-snippets/docs-version-annotation.md存在（版本标注机制模板）
+- [x] .agents/templates/shell-snippets/README.md已更新包含新模板索引
+- [x] 方案对比模板包含：性能对比表、场景推荐矩阵、已知坑点
+- [x] 版本标注模板包含：frontmatter规范、内联注释、兼容性附录
+
+## 自动化验证流程验证
+- [x] wsl-deploy.sh集成完整验证流程，覆盖所有programmatic AC
+- [x] 验证项包含：基础镜像构建、应用镜像构建、容器启动、SSH连接、Jupyter访问、caffe_ffi导入、共享库ldd检查、内核注册
+- [x] diagnose.sh提供详细故障诊断能力
+- [x] WSL-DEPLOY-GUIDE.md包含手动验证步骤和排错指南
+- [x] 用户可一键执行：`bash scripts/wsl-deploy.sh`(WSL) 或 `.\scripts\deploy.ps1`(PowerShell)
+
 ## 静态语法验证（programmatic）
 - [x] 所有Python文件py_compile通过（无语法错误）
 - [x] Dockerfile基本语法检查通过（FROM/RUN/COPY/CMD等指令合法）
 - [x] JSON文件（CMakePresets.json）语法有效
 - [x] YAML文件（environment.yml, docker-compose.yml）语法有效
+- [x] PowerShell脚本基本语法检查通过
+- [x] Bash脚本基本语法检查通过（source引用正确）
 - [x] vendor/caffe/caffe-ffi原始文件未被修改或删除
