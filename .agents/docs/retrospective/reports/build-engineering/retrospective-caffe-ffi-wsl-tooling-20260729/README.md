@@ -20,12 +20,13 @@ related_patterns: [
 
 对 `apps/caffe-ffi-jupyter/` 的 WSL 部署工具链进行四项改进：(1) Ubuntu版本从22.04更新到24.04/26.04；(2) 统一 wsl-deploy.sh 和 diagnose.sh 的日志格式，支持 JSON Lines 结构化输出以接入自动化监控平台；(3) 补充 Docker Desktop vs 原生 Docker 在 WSL2 中的性能对比数据；(4) 创建 PowerShell 包装器支持从 Windows 直接调用 WSL 脚本。
 
-**关键数据**：
-- 新建文件：3个（[lib/logging.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/lib/logging.sh)、[deploy.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/deploy.ps1)、[diagnose.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/diagnose.ps1)）
-- 修改文件：3个（[wsl-deploy.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/wsl-deploy.sh)、[diagnose.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/diagnose.sh)、[WSL-DEPLOY-GUIDE.md](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/WSL-DEPLOY-GUIDE.md)）
-- 日志库规模：254行，支持 text/json 双格式 + metric/event/summary 三类结构化输出
+**关键数据**（v2最终版本，经实测验证）：
+- 新建文件：8个（[lib/logging.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/lib/logging.sh)、[lib/logging.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/lib/logging.ps1)、[deploy.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/deploy.ps1)、[diagnose.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/diagnose.ps1) + 4个其他apps的lib/logging.sh）
+- 修改文件：8个（wsl-deploy.sh、diagnose.sh、WSL-DEPLOY-GUIDE.md + 其他5个apps脚本统一日志重构）
+- 日志库规模：Bash版173行、PowerShell版149行，支持 text/json 双格式 + metric/event/summary 三类结构化输出
+- 推广范围：5个apps完成统一日志集成（caffe-ffi-jupyter、docker-ssh-dind、jupyter-ssh-base、pytorch-base、xmnn-runtime）
 - 性能对比表：11项实测指标 + 7种场景选择建议
-- 文档新增：约300行（Docker对比+PowerShell说明+监控集成附录）
+- 模式沉淀：3个L2-validated代码模式 + 3个shell-snippets模板
 
 ---
 
@@ -42,12 +43,16 @@ related_patterns: [
 
 | 文件路径 | 操作 | 说明 |
 |----------|------|------|
-| `scripts/lib/logging.sh` | 新建 | 254行统一结构化日志库 |
-| `scripts/deploy.ps1` | 新建 | 220行PowerShell部署包装器 |
-| `scripts/diagnose.ps1` | 新建 | 105行PowerShell诊断包装器 |
-| `scripts/wsl-deploy.sh` | 修改 | 替换自定义日志为统一日志库，新增3个日志参数 |
-| `scripts/diagnose.sh` | 修改 | 替换自定义日志为统一日志库，新增3个日志参数 |
+| `scripts/lib/logging.sh` | 新建 | 173行统一结构化日志库（Bash） |
+| `scripts/lib/logging.ps1` | 新建 | 149行统一结构化日志库（PowerShell） |
+| `scripts/deploy.ps1` | 新建 | 325行PowerShell部署包装器 |
+| `scripts/diagnose.ps1` | 新建 | 211行PowerShell诊断包装器 |
+| `scripts/wsl-deploy.sh` | 修改 | 替换自定义日志为统一日志库，集成log_metric/log_event，626行 |
+| `scripts/diagnose.sh` | 修改 | 替换自定义日志为统一日志库，集成log_event，544行 |
 | `WSL-DEPLOY-GUIDE.md` | 修改 | 新增Docker性能对比、PowerShell用法、监控集成附录 |
+| 其他4个apps的lib/logging.sh | 新建 | docker-ssh-dind/jupyter-ssh-base/pytorch-base/xmnn-runtime各168行 |
+| 其他5个apps脚本 | 修改 | dind.sh/check-env.sh/build.sh等替换为统一日志 |
+| `.agents/templates/shell-snippets/` | 新建 | bash-structured-logging.sh、powershell-wsl-wrapper.ps1、powershell-structured-logging.ps1 3个模板 + README |
 
 ### F03. 统一日志库（lib/logging.sh）功能清单
 
@@ -152,18 +157,56 @@ related_patterns: [
 
 ### 模式1：Bash统一结构化日志库模式
 - **模式ID**：bash-unified-structured-logging
-- **沉淀位置**：待写入 `patterns/code-patterns/bash-unified-structured-logging.md`
+- **沉淀位置**：[patterns/code-patterns/bash-unified-structured-logging.md](../../patterns/code-patterns/bash-unified-structured-logging.md)（L2-validated）
 - **核心**：独立lib/logging.sh通过source加载，支持text/json双格式、三类结构化输出（log/metric/event）、级别过滤、上下文字段
 - **反模式**：每个脚本自定义echo格式、日志无结构化、不同脚本成功/失败判断不一致
+- **推广状态**：已推广到5个apps（caffe-ffi-jupyter/docker-ssh-dind/jupyter-ssh-base/pytorch-base/xmnn-runtime）
 
 ### 模式2：PowerShell→WSL跨Shell包装器模式
 - **模式ID**：powershell-wsl-cross-shell-wrapper
-- **沉淀位置**：待写入 `patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md`
+- **沉淀位置**：[patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md](../../patterns/code-patterns/powershell-wsl-cross-shell-wrapper.md)（L2-validated）
 - **核心**：PowerShell脚本自动检测wsl.exe、自动路径转换、Docker预检、参数透传、退出码透传
 - **反模式**：要求用户手动"进入WSL终端→cd→执行"、硬编码路径、不做环境预检
 
 ### 模式3：WSL2 Docker方案决策模式
 - **模式ID**：wsl2-docker-selection-decision
-- **沉淀位置**：待写入 `patterns/code-patterns/wsl2-docker-selection-decision.md`
+- **沉淀位置**：[patterns/code-patterns/wsl2-docker-selection-decision.md](../../patterns/code-patterns/wsl2-docker-selection-decision.md)（L2-validated）
 - **核心**：基于11项实测指标的决策矩阵，按场景（新手/编译/CI/Windows容器等）推荐方案
 - **反模式**：不说明两种方案差异、同时启用两种Docker、不提示文件系统位置对性能的影响
+
+---
+
+## A·改进行动项（G4质量门：原子化、可验证、有责任人）
+
+| 编号 | 行动项 | 优先级 | 责任人 | 状态 | 验证方式 |
+|------|--------|--------|--------|------|----------|
+| A01 | 为其他WSL项目（jupyter-ssh-base等）补充PowerShell包装器 | 低 | developer | 待执行 | deploy.ps1存在且能成功调用wsl.exe |
+| A02 | 将PowerShell日志库推广到deploy.ps1/diagnose.ps1（目前仅Bash脚本集成） | 中 | developer | 待执行 | ps1脚本输出JSON Lines格式日志 |
+| A03 | 部署指南模板增加"方案对比"小节规范 | 中 | architect | 待执行 | 新建部署类文档包含决策矩阵 |
+| A04 | 文档版本标注机制：硬编码版本号旁标注"最后验证日期" | 低 | documentation | 待执行 | grep检查无裸版本号 |
+| A05 | 原子提交流程中设置`pull.rebase=true`防止意外merge commit | 高 | orchestrator | **已执行** | git config pull.rebase true |
+
+### A05执行记录
+
+本次原子提交过程中意外产生了脏merge commit（`e8b2bc9e`），根因是`pull.rebase=false`导致自动pull时创建merge commit而非rebase，且工作区未暂存变更被混入merge commit。已执行修复：
+1. 创建backup分支保存原始状态
+2. reset --hard到upstream/main干净状态
+3. cherry-pick正确commit + checkout恢复遗漏文件
+4. amend修复最终commit
+5. 验证提交历史线性、文件内容一致
+
+**预防措施**：在原子提交前设置`git config pull.rebase true`，避免merge commit污染线性历史。
+
+---
+
+## 质量门验证记录
+
+| 质量门 | 标准 | 验证方法 | 结果 |
+|--------|------|----------|------|
+| G1（事实无因果词） | R阶段纯客观描述，无"因为/导致/所以" | 人工审查F01-F08 | ✅ 通过 |
+| G2（洞察四元组完整） | 现象+根因+影响+建议 | 审查I01-I04 | ✅ 通过 |
+| G3（模式可迁移） | 触发条件+核心步骤+反模式 | 审查3个模式文档 | ✅ 通过（L2-validated） |
+| G4（行动项原子化） | 单一职责、可独立验证 | 审查A01-A05 | ✅ 通过 |
+| 数据验证三查法-关键数据 | 行数/文件数/提交数实际统计 | `Get-Content`/`git show --stat` | ✅ 通过（已更新为实测值） |
+| 数据验证三查法-file:///链接 | 链接指向真实文件 | `Test-Path`验证 | ✅ 通过 |
+| 数据验证三查法-章节结构 | 预期章节完整存在 | 标题层级检查 | ✅ 通过（R/I/E/A四段完整） |
