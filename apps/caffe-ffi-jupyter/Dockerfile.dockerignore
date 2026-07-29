@@ -1,86 +1,47 @@
-# Docker build ignore for caffe-ffi-jupyter
-# Build context: SpecWeave root
-# Required source: projects/xuanspace/libs/caffe-ffi/
-# The Dockerfile is passed via -f flag and doesn't need to be in context
+# Dockerfile.dockerignore for caffe-ffi-jupyter
+# Build context: SpecWeave root (context: ../..)
+#
+# Design: This Dockerfile does NOT COPY any source files from the build context:
+#   - Builder: installs via conda + pip (tvm-ffi from PyPI)
+#   - Runtime: copies /opt/conda from builder stage; entrypoint is inline heredoc
+#   - Source code (caffe-ffi, tvm-ffi) mounted at runtime via volumes
+# Excluding large directories to minimize build context transfer.
 
-# Version control
-.git
-.gitmodules
+# Version control internals
+.git/
 
-# IDE and OS
-.vscode
-.idea
+# Large source trees — mounted at runtime, not COPY'd during build
+projects/
+vendor/
+external/
+playground/
+
+# Documentation and non-essential assets
+docs/
+sdk/
+docker/
+*.md
+
+# Python/agent temp/caches
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.temp/
+.trae/
+.agents/
+node_modules/
+.vscode/
+.idea/
+
+# OS / misc
 .DS_Store
 Thumbs.db
-
-# Agent/trajectory/temp files
-.trae
-.agents
-.temp
-temp
-*.log
-*.bak
-
-# Apps directory - Dockerfile passed via -f, not from context
-apps
-
-# Vendor and external (git submodules, not needed)
-vendor
-external
-playground
-
-# Documentation and specs
-docs
-*.md
-!projects/xuanspace/libs/caffe-ffi/README.md
-!projects/xuanspace/libs/caffe-ffi/CHANGELOG.md
-!projects/xuanspace/libs/caffe-ffi/**/*.md
-
-# Projects: only include xuanspace/libs/caffe-ffi
-projects/*
-!projects/xuanspace/
-projects/xuanspace/*
-!projects/xuanspace/libs/
-projects/xuanspace/libs/*
-!projects/xuanspace/libs/caffe-ffi/
-!projects/xuanspace/libs/caffe-ffi/**
-
-# Exclude build artifacts within caffe-ffi
-projects/xuanspace/libs/caffe-ffi/build
-projects/xuanspace/libs/caffe-ffi/dist
-projects/xuanspace/libs/caffe-ffi/_skbuild
-projects/xuanspace/libs/caffe-ffi/**/__pycache__
-projects/xuanspace/libs/caffe-ffi/**/__pycache__/**
-projects/xuanspace/libs/caffe-ffi/**/*.pyc
-projects/xuanspace/libs/caffe-ffi/.temp
-projects/xuanspace/libs/caffe-ffi/**/.gitkeep
-projects/xuanspace/libs/caffe-ffi/**/*.egg-info
-projects/xuanspace/libs/caffe-ffi/**/*.egg-info/**
-projects/xuanspace/libs/caffe-ffi/**/*.so
-projects/xuanspace/libs/caffe-ffi/**/*.pyd
-
-# Global build artifacts
-**/build
-**/dist
-**/__pycache__
-**/*.pyc
-**/*.pyo
-**/.pytest_cache
-**/.mypy_cache
-**/_skbuild
-**/*.egg-info
-
-# Package manager caches
-.conda
-**/conda-bld
-node_modules
-.npm
-.yarn
-
-# Large binary files (not needed for source build)
 *.tar.gz
 *.tar.bz2
 *.zip
+*.whl
 *.pt
 *.pth
 *.pkl
@@ -88,4 +49,3 @@ node_modules
 *.npz
 *.h5
 *.hdf5
-*.whl

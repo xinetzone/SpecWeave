@@ -8,15 +8,21 @@ services:
         PIP_MIRROR: ${PIP_MIRROR:-official}
         CONDA_MIRROR: ${CONDA_MIRROR:-official}
         PYTHON_VERSION: "3.14"
+        BASE_IMAGE: ${BASE_IMAGE:-jupyter-ssh-base:1.1}
     image: caffe-ffi-jupyter:latest
     container_name: caffe-ffi-jupyter
     ports:
       - "2222:22"      # SSH
       - "8888:8888"    # Jupyter Notebook
     volumes:
-      - ./workspace:/workspace
-      # 开发模式：挂载源码目录以支持实时编辑（取消注释启用）
-      # - ../../projects/xuanspace/libs/caffe-ffi:/workspace/caffe-ffi:cached
+      # 挂载整个 SpecWeave 仓库到 /SpecWeave（不在 /workspace 下，避免启动时 chown -R 递归）
+      # entrypoint 自动检测以下路径并执行 pip install -e：
+      #   - /SpecWeave/projects/xuanspace/vendor/tvm-ffi
+      #   - /SpecWeave/projects/xuanspace/libs/caffe-ffi
+      # 也可通过环境变量 TVM_FFI_SRC_DIR / CAFFE_FFI_SRC_DIR 覆盖
+      - ../..:/SpecWeave:cached
+      # /workspace 使用 Docker 命名卷（Jupyter 工作目录，启动快，chown 无性能问题）
+      - workspace:/workspace
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
@@ -25,13 +31,15 @@ services:
       - GRANT_SUDO=yes
       - ALLOW_ROOT_SSH=no
       - DEBUG=0
+      # 告知 editable-install.sh 源码挂载位置
+      - WORKSPACE_DIR=/SpecWeave
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 120s
     tty: true
     stdin_open: true
 
