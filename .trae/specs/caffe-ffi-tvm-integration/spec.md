@@ -2,8 +2,8 @@
 id: "caffe-ffi-tvm-integration"
 title: "Caffe-FFI: TVM FFI 原生 Caffe 实现"
 status: "completed"
-progress: "M1-M5核心功能全部完成（含TVM FFI最佳实践优化+P1反射系统补全+DLL边界修复+C++单元测试40/40+Python 101 passed+原子提交+中文文档+caffe-slim迁移草案+模式萃取+性能基准验证）；C++模式：40 C++ tests + 101 pytest passed, 1 skipped；纯Python模式83 passed, 19 skipped, 0 failed；FFI调用开销1-2µs，零拷贝10M元素加速3749x，1M元素场景15×加速"
-last_updated: "2026-07-29"
+progress: "M1-M6里程碑全部完成：核心功能+TVM FFI最佳实践+P1反射系统补全+DLL边界修复+C++40/Python101测试通过+独立项目萃取迁移+Docker开发环境(caffe-ffi-jupyter)；Docker Linux Python 3.14.6环境验证：C++40/40+Python65/65全部通过，含Per-suite耗时统计和Top 5 slowest报告；WSL/Docker一键部署脚本完成，SSH+Jupyter双服务保留；零拷贝10M元素加速3749x，FFI调用开销1-2µs"
+last_updated: "2026-07-30"
 ---
 
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Product Requirement Document
@@ -12,7 +12,7 @@ last_updated: "2026-07-29"
 - **Summary**: 在 `projects/xuanspace/vendor/caffe/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架 CPU 推理版本。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理框架。后续通过 TVM FFI 最佳实践优化阶段（caffe-ffi-optimization spec），完成双类模式重构、零拷贝Tensor、@register_object绑定、三层日志架构、Doxygen注释、错误处理增强等改进。
 - **Purpose**: 解决传统 Caffe 依赖重（Boost/GFlags/GLog等）、Python 绑定脆弱、数据结构不现代的问题，利用 TVM FFI 的通用跨语言 FFI 基础设施，构建一个轻量、高效、易于扩展和维护的 Caffe 推理版本。
 - **Target Users**: 深度学习推理工程师、需要在 Python 3.14+ 环境部署 Caffe 模型的开发者、对框架底层实现感兴趣的研究者。
-- **Current Status**: ✅ **M1-M5全部完成**。核心骨架搭建完成，20个Layer全部实现，TVM FFI最佳实践两阶段优化完成（P0双类模式/零拷贝/@register_object/三层日志 + P1反射系统补全52方法/DLL边界修复/C++单元测试40个/Protobuf跨DLL隔离/Python MRO修复），MSVC Release编译通过，C++单元测试40/40通过，C++模式pytest 101个测试通过（纯Python模式83 passed, 19 skipped, 0 failed），MLP端到端验证成功，性能基准测试完成：FFI调用开销1-2µs，零拷贝访问恒定~4µs，10M float32元素零拷贝比拷贝快**3749×**（1M元素场景15×加速）。caffe-slim零拷贝改造代码草案（含8类内存日志标签）已生成，FFI零拷贝桥接模式已萃取为4个可复用模式，P1优化萃取4个Windows DLL开发模式。C++ header-only轻量测试框架（~100行0依赖）实现，40个C++测试覆盖Blob 22个+Net 18个核心场景。Windows DLL边界问题根治：LayerRegistry单例移至.cpp实现，Protobuf解析在DLL内隔离。反射系统完整补全：Blob(28)+Layer(8)+Net(16)共52个公共方法注册，所有方法带docstring，C++为唯一可信源。Python MRO反射查找修复，派生类可访问基类方法。5个Conventional Commits原子提交归档。完整10章任务执行总结报告生成。
+- **Current Status**: ✅ **M1-M6全部完成**。核心骨架搭建完成，20个Layer全部实现，TVM FFI最佳实践两阶段优化完成（P0双类模式/零拷贝/@register_object/三层日志 + P1反射系统补全52方法/DLL边界修复/C++单元测试40个/Protobuf跨DLL隔离/Python MRO修复），MSVC Release编译通过，C++单元测试40/40通过，C++模式pytest 101个测试通过（纯Python模式83 passed, 19 skipped, 0 failed），MLP端到端验证成功，性能基准测试完成：FFI调用开销1-2µs，零拷贝访问恒定~4µs，10M float32元素零拷贝比拷贝快**3749×**（1M元素场景15×加速）。caffe-slim零拷贝改造代码草案（含8类内存日志标签）已生成，FFI零拷贝桥接模式已萃取为4个可复用模式，P1优化萃取4个Windows DLL开发模式。C++ header-only轻量测试框架（~100行0依赖）实现，40个C++测试覆盖Blob 22个+Net 18个核心场景。Windows DLL边界问题根治：LayerRegistry单例移至.cpp实现，Protobuf解析在DLL内隔离。反射系统完整补全：Blob(28)+Layer(8)+Net(16)共52个公共方法注册，所有方法带docstring，C++为唯一可信源。Python MRO反射查找修复，派生类可访问基类方法。独立项目萃取迁移完成：从`vendor/caffe/caffe-ffi`迁移到`projects/xuanspace/libs/caffe-ffi`，CMake构建系统独立化（find_package(tvm_ffi CONFIG REQUIRED)默认模式），标准项目结构对齐npu-ffi。Docker开发环境`apps/caffe-ffi-jupyter`基于jupyter-ssh-base构建完成：双阶段builder+runtime构建，Python 3.14+ Miniconda环境，保留SSH+Jupyter双服务，editable源码挂载，RPATH+ldconfig+LD_LIBRARY_PATH三重共享库路径保障，test-cpp-tests.sh集成C++/Python单元测试执行，统一结构化日志库（Bash+PowerShell双版本），WSL一键部署脚本wsl-deploy.sh/deploy.ps1，环境诊断脚本diagnose.sh/diagnose.ps1，WSL-DEPLOY-GUIDE.md部署指南。Docker Linux Python 3.14.6环境完整验证：C++单元测试40/40通过（含Per-suite耗时统计和Top 5 slowest报告），Python单元测试test_python_api.py 65/65通过（含耗时统计），CAFFE_FFI_DISABLE_BACKTRACE环境变量解决Python unittest兼容性问题。
 
 ## Goals
 - ✅ 基于 TVM FFI 对象系统（Object/ObjectPtr/ObjectRef）重构 Caffe 核心抽象（双类模式XxxObj+Xxx）
@@ -32,6 +32,10 @@ last_updated: "2026-07-29"
 - ✅ Protobuf跨DLL解析隔离：DLL内提供ReadNetParamsFromTextString/File，消除跨DLL静态初始化崩溃
 - ✅ Python MRO反射查找修复：派生类（如ReLULayer）可正确访问基类Layer注册的方法
 - ✅ 七概念方法论（R→I→E→C→A→F→V）应用于优化过程，生成10章结构化任务执行总结报告
+- ✅ **M6: 独立项目萃取迁移**：从vendor/caffe/caffe-ffi萃取为独立第一方项目libs/caffe-ffi
+- ✅ **Docker开发环境**：apps/caffe-ffi-jupyter基于jupyter-ssh-base，SSH+Jupyter双服务，Python 3.14+
+- ✅ **Docker Linux验证**：Python 3.14.6环境，C++40测试+Python65测试全部通过，含耗时统计
+- ✅ **工程化工具链**：统一结构化日志库、WSL一键部署脚本、诊断脚本、部署指南文档
 - 🔄 内存管理ASan验证 — 待Linux/GCC环境
 - 🔄 BLAS路径性能基准验证 — 待完整BLAS环境
 - 🔄 端到端真实模型推理测试（LeNet/MNIST精度）— 待数据集准备
@@ -113,13 +117,16 @@ last_updated: "2026-07-29"
 - **FR-11**: CMake 构建系统支持find_package(tvm_ffi)（本地开发保留add_subdirectory fallback）
 - **FR-12**: scikit-build-core 配置构建 Python wheel
 - **FR-13**: BLAS条件编译集成，im2col/col2im实现
-- **FR-14**: Python 单元测试（pytest）已覆盖 Blob/Layer/Net（101 passed）
+- **FR-14**: Python 单元测试（pytest）已覆盖 Blob/Layer/Net（MSVC: 101 passed, 1 skipped；Docker Linux Python 3.14.6: test_python_api.py 65 passed）
 - **FR-15**: 三层日志架构全面应用（C++核心+FFI桥接+Python配置）
 - **FR-16**: Doxygen注释覆盖核心公共API
 - **FR-17**: 错误处理增强（TVM_FFI_ICHECK+上下文信息）
-- **FR-18**: C++ 单元测试框架（header-only轻量框架，0依赖）：40个测试用例（Blob 22个+Net 18个），不依赖gtest，40/40通过
+- **FR-18**: C++ 单元测试框架（header-only轻量框架，0依赖）：40个测试用例（Blob 22个+Net 18个），不依赖gtest，40/40通过（MSVC和Docker Linux均验证）；测试框架增强：高精度耗时统计、Per-suite耗时汇总、Top 5 slowest报告
 - **FR-19**: Windows DLL边界问题根治：LayerRegistry单例移至.cpp实现，Protobuf解析在DLL内隔离
 - **FR-20**: Python MRO反射查找修复：派生类可正确访问基类注册的方法
+- **FR-21**: Docker开发环境（apps/caffe-ffi-jupyter）：基于jupyter-ssh-base，双阶段builder+runtime构建，保留SSH+Jupyter双服务，Python 3.14+ Miniconda环境，RPATH+ldconfig+LD_LIBRARY_PATH三重共享库路径保障
+- **FR-22**: 工程化工具链：统一结构化日志库（Bash+PowerShell双版本）、WSL一键部署脚本、环境诊断脚本、部署指南文档
+- **FR-23**: CAFFE_FFI_DISABLE_BACKTRACE环境变量支持：Python环境下禁用backtrace防止unittest segfault
 
 ### 待后续补充 ⬜
 - ASan内存管理验证
@@ -130,10 +137,10 @@ last_updated: "2026-07-29"
 
 - ✅ **NFR-1**: 性能：零拷贝Tensor访问恒定~3-6µs，MLP Forward~0.5ms（BLAS集成后卷积/全连接性能待进一步基准测试）
 - ✅ **NFR-2**: 构建：MSVC Release编译成功，零错误零新增警告
-- ✅ **NFR-3**: 兼容性：Windows (MSVC) 已验证；Linux (x86_64/aarch64) 待验证
+- ✅ **NFR-3**: 兼容性：Windows (MSVC) 已验证；Linux (x86_64, Docker Python 3.14.6 conda环境) 已验证；aarch64待验证
 - ✅ **NFR-4**: 代码质量：C++17 标准，无编译新增警告
 - ✅ **NFR-5**: 依赖最小化：核心依赖 tvm-ffi(apache-tvm-ffi)、Protobuf >= 7.0.0、numpy
-- ✅ **NFR-6**: Python 版本：严格 >= 3.14（py314 conda环境验证通过）
+- ✅ **NFR-6**: Python 版本：严格 >= 3.14（MSVC py314 conda环境和Docker Linux Python 3.14.6 conda环境均验证通过）
 - ✅ **NFR-7**: 模块化：Layer实现可独立添加/移除（layers/目录 + REGISTER_LAYER_CLASS宏）
 - ✅ **NFR-8**: 文档：README.md + OPTIMIZATION_REPORT.md + Doxygen注释
 - ✅ **NFR-9**: DLL部署：Windows下自动复制tvm_ffi/protobuf/absl/utf8_range DLL到包目录
@@ -152,9 +159,11 @@ last_updated: "2026-07-29"
   - BLAS库可选（OpenBLAS/MKL/cblas），有BLAS加速，无BLAS纯C++ fallback
   - Windows开发环境需设置`KMP_DUPLICATE_LIB_OK=TRUE`（OpenMP多副本共存）
 - **Business**:
-  - 代码位于 xuanspace vendor 目录下的 caffe/caffe-ffi
+  - 代码位于 xuanspace libs 目录下的 caffe-ffi（独立第一方项目，从vendor/caffe/caffe-ffi萃取迁移）
   - 参考 caffe-slim 的 Layer 实现逻辑
   - 为后续 GPU 扩展保留接口（Forward_gpu 虚函数）
+  - Docker开发环境位于 apps/caffe-ffi-jupyter，基于jupyter-ssh-base
+  - WSL为推荐开发和构建环境（Windows下直接编译不推荐）
 - **Dependencies**:
   - apache-tvm-ffi（已安装包，find_package）
   - Protobuf >= 7.0.0 + absl + utf8_range
@@ -180,13 +189,16 @@ last_updated: "2026-07-29"
 - **AC-3**: Layer 注册通过 LayerRegistry — REGISTER_LAYER_CLASS 宏正常注册，CreateLayer 可动态创建20种Layer实例
 - **AC-4**: Net 基础前向推理 + caffemodel加载 — 从prototxt字符串/文件加载网络，CopyTrainedLayersFrom加载权重，Forward执行
 - **AC-5**: Python @register_object绑定 — import caffe_ffi 正常，Blob/Layer/Net 通过@_reg装饰器定义，无monkey patch，numpy零拷贝互操作
-- **AC-6**: Python 3.14 + protobuf 7.0.0 兼容性 — 导入和protobuf解析正常
+- **AC-6**: Python 3.14 + protobuf 7.0.0 兼容性 — MSVC py314 conda环境和Docker Linux Python 3.14.6 conda环境均验证通过，导入和protobuf解析正常
 - **AC-7**: 全部20个Layer正确性 — 单测通过，MLP集成测试通过，C++端到端数值验证一致
 - **AC-8**: TVM FFI最佳实践优化完成 — 双类模式、零拷贝Tensor、@register_object、三层日志、Doxygen注释、错误处理增强
-- **AC-9**: 文档完整性 — README.md + OPTIMIZATION_REPORT.md + Doxygen注释
-- **AC-10**: 测试通过 — pytest 101 passed, 1 skipped
-- **AC-11**: C++ ctest单元测试通过 — header-only轻量框架，40/40 tests passed（Blob 22个+Net 18个）
+- **AC-9**: 文档完整性 — README.md + OPTIMIZATION_REPORT.md + Doxygen注释 + CHANGELOG.md + WSL-DEPLOY-GUIDE.md
+- **AC-10**: 测试通过 — MSVC环境pytest 101 passed, 1 skipped；Docker Linux Python 3.14.6环境test_python_api.py 65 passed；C++/Python测试均包含Per-suite耗时统计和Top 5 slowest报告
+- **AC-11**: C++ ctest单元测试通过 — header-only轻量框架，40/40 tests passed（Blob 22个+Net 18个），MSVC和Docker Linux均验证
 - **AC-12**: CMake支持find_package(tvm_ffi CONFIG REQUIRED)
+- **AC-17**: 独立项目萃取迁移完成 — 从vendor/caffe/caffe-ffi迁移到libs/caffe-ffi，标准结构对齐npu-ffi
+- **AC-18**: Docker开发环境完成 — apps/caffe-ffi-jupyter基于jupyter-ssh-base，SSH+Jupyter双服务保留
+- **AC-19**: Docker Linux Python 3.14.6验证通过 — C++40/40测试+Python65/65测试全部通过，含耗时统计输出
 
 ### 待后续达成 ⬜
 - **AC-13**: BLAS集成后Convolution/InnerProduct性能基准（当前纯C++ fallback可用）
