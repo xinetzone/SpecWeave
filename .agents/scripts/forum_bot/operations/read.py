@@ -2,6 +2,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import TYPE_CHECKING, Any
 
 from ..auth import check_login
@@ -64,3 +77,4 @@ def do_read(topic_id: int, headless: bool = True, debug: bool = False) -> None:
         ok(f"帖子读取完成 (正文长度: {len(body_text)} 字符)")
         logger.info("  📊 帖子 #%d: 标题=%s, 正文长度=%d", topic_id, title[:40], len(body_text))
         browser.close()
+

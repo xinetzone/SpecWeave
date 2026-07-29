@@ -21,6 +21,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import sys
 from dataclasses import dataclass, field, asdict
@@ -802,3 +808,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

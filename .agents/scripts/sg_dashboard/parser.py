@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 from pathlib import Path
 from typing import Optional
@@ -62,3 +75,4 @@ def collect_log_files(log_dir: Path) -> list[Path]:
     for ext in ('*.log', '*.txt'):
         files.extend(log_dir.glob(ext))
     return sorted(files)
+

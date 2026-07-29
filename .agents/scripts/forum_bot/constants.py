@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 FORUM_URL = "https://" + "forum.trae.cn"
@@ -37,3 +50,4 @@ SELECTOR_EDIT_BTN = ".post-action-menu__edit"
 SELECTOR_SAVE_BTN = "button.btn-primary"
 SELECTOR_REMOVE_DRAFT = ".remove-draft"
 SELECTOR_USER_AVATAR = 'a[href^="/u/"]'
+

@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from collections import Counter
 
 from .constants import STAGE_NAMES, STAGE_ORDER
@@ -38,3 +51,4 @@ def generate_mermaid_bar_chart(stage_intercept: dict, stage_pass: dict) -> str:
              f'    bar [{", ".join(str(v) for v in pass_vals)}]',
              f'    bar [{", ".join(str(v) for v in intercept_vals)}]']
     return '\n'.join(lines)
+
