@@ -15,18 +15,75 @@ from __future__ import annotations
 
 
 # 模块版本
-__version__ = "1.1.0"
+__version__ = "1.2.0"
+
+import logging
+import os
+import re
+import sys
+
+
+# ── 版本感知类型 ────────────────────────────────────────────────────────────
+
+Ps1Version = str  # Literal['5.1', '7.x', 'auto']
+
+_PS_VERSION_RE = re.compile(r'#Requires\s+-Version\s+(\d+)', re.IGNORECASE)
+_PS_EDITION_RE = re.compile(r'#Requires\s+-PSEdition\s+(\w+)', re.IGNORECASE)
+_PS7_VARS = re.compile(r'\$Is(Windows|Linux|MacOS)\b')
+_PS7_OPS = re.compile(r'\?\?=?')
+
+
+def detect_ps_version_from_content(content: str) -> str:
+    """从脚本内容启发式推断目标 PowerShell 版本。
+
+    检测规则（按优先级）：
+    1. #Requires -Version 7 → '7.x'
+    2. #Requires -PSEdition Core → '7.x'
+    3. #Requires -Version 5 → '5.1'
+    4. #Requires -PSEdition Desktop → '5.1'
+    5. 含 $IsWindows/$IsLinux/$IsMacOS 自动变量 → '7.x'
+    6. 含 ?? 或 ??= 运算符 → '7.x'
+    7. 其他 → '7.x'（默认跨平台模式）
+
+    Returns:
+        '5.1' 或 '7.x'
+    """
+    m = _PS_VERSION_RE.search(content)
+    if m:
+        ver = m.group(1)
+        if ver.startswith('7'):
+            return '7.x'
+        if ver.startswith('5'):
+            return '5.1'
+    m = _PS_EDITION_RE.search(content)
+    if m:
+        edition = m.group(1).lower()
+        if edition == 'core':
+            return '7.x'
+        if edition == 'desktop':
+            return '5.1'
+    if _PS7_VARS.search(content):
+        return '7.x'
+    if _PS7_OPS.search(content):
+        return '7.x'
+    return '7.x'
+
+
+def _resolve_target_version(content: str, target_version: str = 'auto') -> str:
+    """解析 target_version 参数：'auto' 时自动检测，否则返回指定版本。
+
+    Returns:
+        '5.1' 或 '7.x'
+    """
+    if target_version == 'auto':
+        return detect_ps_version_from_content(content)
+    return target_version
 
 
 # 版本校验：相对导入共享库（depth=0）
 from .python310_version_check import enforce_python310
 
 enforce_python310()
-
-import logging
-import os
-import re
-import sys
 
 # ── 调试日志配置 ─────────────────────────────────────────────────────────────
 # 环境变量 PS1_SYNTAX_DEBUG=1 启用调试日志
