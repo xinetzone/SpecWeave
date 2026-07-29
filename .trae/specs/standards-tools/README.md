@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（13/20 完成）
+**主题状态**：🔧 进行中（14/21 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -32,6 +32,7 @@
 | [check-academic-sources](check-academic-sources/spec.md) | 📋 待启动 | 0% | [.agents/scripts/check-academic-sources.py](../../../.agents/scripts/check-academic-sources.py) | 学术来源自动验证脚本：通过CrossRef API验证DOI存在性、元数据一致性比对（标题/作者/年份模糊匹配），支持缓存与并发，只读不修改文件，不做引用计数/自动修复（MVP范围L0+L1+L2） |
 | [create-seven-concepts-deeptutor-wiki-tutorial](create-seven-concepts-deeptutor-wiki-tutorial/spec.md) | 📋 待启动 | 0% | [docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/](../../../.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/README.md) | 七概念理论与DeepTutor实践案例Wiki教程：整合R-I-E-C-A-F-V七概念方法论与港大DeepTutor开源AI学习工作空间案例，采用SVA事实核查+术语漂移防御，原子化文档结构，含理论阐述/案例详解/融合分析/学习路径/实践练习 |
 | [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/spec.md) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../.agents/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
+| [establish-pwsh7-windows-standard](establish-pwsh7-windows-standard/spec.md) | ✅ 完成 | 100% | [.agents/scripts/lib/pwsh7-version-check.ps1](../../../.agents/scripts/lib/pwsh7-version-check.ps1) [.agents/templates/pwsh7-script-template.ps1](../../../.agents/templates/pwsh7-script-template.ps1) [.agents/scripts/check-pwsh7-compliance.py](../../../.agents/scripts/check-pwsh7-compliance.py) [.agents/scripts/migrate-to-pwsh7.py](../../../.agents/scripts/migrate-to-pwsh7.py) [.agents/scripts/ci-check.ps1](../../../.agents/scripts/ci-check.ps1) [.agents/docs/development-standards.md](../../../.agents/docs/development-standards.md) [.agents/global-core-rules.md](../../../.agents/global-core-rules.md) [.agents/ONBOARDING.md](../../../.agents/ONBOARDING.md) | Windows PowerShell 7统一规范（pwsh7）：所有.ps1脚本必须使用pwsh7.4+执行，包含自包含版本校验代码块、标准脚本模板、合规性检查工具、批量迁移脚本、CI集成（过渡期warn-only），禁止使用PowerShell 5 |
 
 ---
 
@@ -64,6 +65,9 @@ flowchart LR
     subgraph S8 ["第八阶段：子模块治理升级"]
         AVFG["adjust-vendor-flexloop-governance<br/>✅ 完成"]
     end
+    subgraph S9 ["第九阶段：Windows脚本标准化"]
+        EPWS["establish-pwsh7-windows-standard<br/>✅ 完成"]
+    end
     SFNC --> CSC
     CSC --> SSE
     SFNC --> OTPA
@@ -72,6 +76,7 @@ flowchart LR
     ASM --> EVCF
     EVCF --> EFAP
     EFAP --> AVFG
+    AVFG --> EPWS
     style SFNC fill:#d4edda,stroke:#28a745
     style CSC fill:#d4edda,stroke:#28a745
     style SSE fill:#d4edda,stroke:#28a745
@@ -81,6 +86,7 @@ flowchart LR
     style EVCF fill:#d4edda,stroke:#28a745
     style EFAP fill:#d4edda,stroke:#28a745
     style AVFG fill:#d4edda,stroke:#28a745
+    style EPWS fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明
@@ -94,6 +100,7 @@ flowchart LR
 7. **establish-vendor-collaboration-framework**：在共享库和脚本架构稳定后，建立外部子模块（git submodule）协同集成框架，含边界划分、版本控制、深度验证、测试隔离、模式萃取
 8. **explore-forum-auto-posting**：在项目工具链稳定后，探索外部平台（forum.trae.cn）自动化操作能力，验证integrated_browser MCP方案，产出知识库操作指南
 9. **adjust-vendor-flexloop-governance**：在vendor协同框架基础上，将flexloop从第三方只读子模块升级为自有协作子模块，支持main分支跟踪、双模式检查、条件导入沙箱、反向依赖检测与运行时隔离
+10. **establish-pwsh7-windows-standard**：在Windows编码环境修复后，制定Windows平台PowerShell 7统一执行规范，通过版本校验代码块、标准模板、自动化检查、CI集成确保所有脚本使用pwsh7.4+，提供批量迁移工具，设置2周过渡期warn-only模式
 
 ---
 
@@ -123,6 +130,10 @@ flowchart LR
 | MDI工具链 | [.agents/scripts/mdi/](../../../.agents/scripts/mdi/README.md) | Markdown Interface工具链：parser.py（markdown-it-py AST解析）、validator.py（规范验证）、generator.py（多语言代码生成），支持Python/TypeScript/OpenAPI/MCP/CLI/Markdown导出 |
 | Tuya IPC最小闭环指南 | [docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md](../../../.agents/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.md) | 涂鸦IPC最小闭环跑通路径：端-云-手机全流程步骤、可观测验收标准、Mermaid依赖关系图、常见问题排查索引 |
 | 第一性原理知识图谱生成器 | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [知识图谱HTML](../../../.agents/docs/knowledge/learning/first-principles/12-knowledge-graph.html) | 从Markdown知识档案自动提取概念/人物/事件/文档/时期节点和关系，生成vis-network交互式力导向图HTML，支持筛选/搜索/详情/邻居高亮/离线降级 |
+| pwsh7版本校验代码块 | [.agents/scripts/lib/pwsh7-version-check.ps1](../../../.agents/scripts/lib/pwsh7-version-check.ps1) | 自包含PowerShell版本检测逻辑，兼容PowerShell 5.1和pwsh7，检测失败时显示友好错误和安装命令 |
+| pwsh7标准脚本模板 | [.agents/templates/pwsh7-script-template.ps1](../../../.agents/templates/pwsh7-script-template.ps1) | 标准pwsh7脚本模板，包含版本校验、UTF-8编码、错误处理、结构化日志等规范 |
+| pwsh7合规性检查器 | [.agents/scripts/check-pwsh7-compliance.py](../../../.agents/scripts/check-pwsh7-compliance.py) | 自动化PowerShell脚本合规性检查，支持--warn-only和--strict模式，检测版本声明、校验代码块、豁免注释 |
+| pwsh7批量迁移工具 | [.agents/scripts/migrate-to-pwsh7.py](../../../.agents/scripts/migrate-to-pwsh7.py) | 现有脚本批量迁移工具，支持--dry-run预览和--apply执行，自动添加版本声明和校验代码块 |
 
 ---
 
@@ -224,6 +235,10 @@ standards-tools/
 │   ├── tasks.md
 │   └── checklist.md
 ├── establish-mermaid-management-system/
+│   ├── spec.md
+│   ├── tasks.md
+│   └── checklist.md
+├── establish-pwsh7-windows-standard/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md

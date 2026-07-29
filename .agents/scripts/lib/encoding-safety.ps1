@@ -1,24 +1,66 @@
 #Requires -Version 5.1
+# ==============================================================================
 # SpecWeave PowerShell Encoding Safety Library
+# ==============================================================================
 # UTF-8 No BOM safe write functions for PS5.1/7.x, following Write-First principle.
 # Avoids PS5.1 default encoding pitfalls (GBK/UTF-16LE/UTF8-BOM).
-# Usage: . "$PSScriptRoot/../lib/encoding-safety.ps1"
+#
+# 依赖：dot-source 共享版本校验库 pwsh7-version-check.ps1（同目录）
+# 使用方法：. "$PSScriptRoot/../lib/encoding-safety.ps1"
+# ==============================================================================
+
+# 引入共享版本校验库（幂等安全，多次 dot-source 不会重复定义）
+. "$PSScriptRoot/pwsh7-version-check.ps1"
+
+# 直接运行时执行版本校验（dot-source 时由调用方负责）
+if ($MyInvocation.InvocationName -ne '.') {
+    if (-not (Test-Pwsh7Version)) {
+        Show-Pwsh7VersionError
+    }
+}
 
 if (-not (Get-Variable -Name 'Utf8NoBomSingleton' -Scope Script -ErrorAction SilentlyContinue)) {
     $script:Utf8NoBomSingleton = [System.Text.UTF8Encoding]::new($false)
 }
 
+# ==============================================================================
+# 编码安全初始化
+# ==============================================================================
 function Initialize-EncodingSafety {
     [CmdletBinding()]
     param()
+
+    # 编码状态诊断日志（仅在 Verbose 模式下输出，方便排查编码问题）
+    if ($VerbosePreference -ne 'SilentlyContinue' -or $env:SPECWEAVE_ENCODING_DEBUG) {
+        $cpBefore = 0
+        try { $cpBefore = [Console]::OutputEncoding.CodePage } catch {}
+        Write-Host "[EncodingSafety] Before init:" -ForegroundColor DarkGray
+        Write-Host "  Console.OutputEncoding = $([Console]::OutputEncoding.WebName) (CP $cpBefore)" -ForegroundColor DarkGray
+        Write-Host "  Console.InputEncoding  = $([Console]::InputEncoding.WebName)" -ForegroundColor DarkGray
+        Write-Host "  OutputEncoding         = $($global:OutputEncoding.WebName)" -ForegroundColor DarkGray
+        Write-Host "  PYTHONIOENCODING       = $env:PYTHONIOENCODING" -ForegroundColor DarkGray
+        Write-Host "  PSDefault Encoding     = $($PSDefaultParameterValues['*:Encoding'])" -ForegroundColor DarkGray
+    }
+
     try { chcp 65001 > $null 2>&1 } catch {}
-    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-    [Console]::InputEncoding  = [System.Text.Encoding]::UTF8
-    $global:OutputEncoding    = [System.Text.Encoding]::UTF8
+    [Console]::OutputEncoding = $script:Utf8NoBomSingleton
+    [Console]::InputEncoding  = $script:Utf8NoBomSingleton
+    $global:OutputEncoding    = $script:Utf8NoBomSingleton
     $env:PYTHONIOENCODING = 'utf-8'
     $env:PYTHONUTF8       = '1'
     if ($PSVersionTable.PSVersion.Major -ge 7) {
         $PSDefaultParameterValues['*:Encoding'] = 'utf8'
+    }
+
+    if ($VerbosePreference -ne 'SilentlyContinue' -or $env:SPECWEAVE_ENCODING_DEBUG) {
+        $cpAfter = 0
+        try { $cpAfter = [Console]::OutputEncoding.CodePage } catch {}
+        Write-Host "[EncodingSafety] After init:" -ForegroundColor DarkGray
+        Write-Host "  Console.OutputEncoding = $([Console]::OutputEncoding.WebName) (CP $cpAfter)" -ForegroundColor DarkGray
+        Write-Host "  Console.InputEncoding  = $([Console]::InputEncoding.WebName)" -ForegroundColor DarkGray
+        Write-Host "  OutputEncoding         = $($global:OutputEncoding.WebName)" -ForegroundColor DarkGray
+        Write-Host "  PYTHONIOENCODING       = $env:PYTHONIOENCODING" -ForegroundColor DarkGray
+        Write-Host "  PSDefault Encoding     = $($PSDefaultParameterValues['*:Encoding'])" -ForegroundColor DarkGray
     }
 }
 

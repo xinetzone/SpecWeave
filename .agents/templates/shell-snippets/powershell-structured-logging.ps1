@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     PowerShell 统一结构化日志库片段
@@ -19,6 +19,8 @@
     Log-Metric -Name "duration_seconds" -Value 42.5 -Unit "seconds"
 #>
 
+#Requires -Version 5.1
+
 # ── 默认配置（调用方可覆盖） ──
 if (-not $LogService)     { $LogService = "ps-script" }
 if (-not $LogFormat)      { $LogFormat = "text" }       # text | json
@@ -30,6 +32,50 @@ if (-not $LogFields)      { $LogFields = @{} }          # 持久上下文字段�
 # ── 级别映射 ──
 $script:LogLevelMap = @{ DEBUG = 0; INFO = 1; WARN = 2; ERROR = 3 }
 
+# ==============================================================================
+# 版本校验（自包含，兼容 PS5.1/pwsh7.4+）
+# ==============================================================================
+function Test-Pwsh7Requirement {
+    [CmdletBinding()]
+    param([switch]$PassThru)
+    $isCore = $false; $currentVersion = $null; $edition = 'Desktop'; $versionOk = $false
+    if ($PSVersionTable.ContainsKey('PSEdition')) { $edition = $PSVersionTable.PSEdition }
+    $isCore = ($edition -eq 'Core')
+    if ($PSVersionTable.ContainsKey('PSVersion')) { $currentVersion = $PSVersionTable.PSVersion }
+    if ($isCore -and $null -ne $currentVersion) {
+        $majorOk = ($currentVersion.Major -gt 7)
+        $minorOk = ($currentVersion.Major -eq 7 -and $currentVersion.Minor -ge 4)
+        $versionOk = ($majorOk -or $minorOk)
+    }
+    $result = [PSCustomObject]@{
+        IsCore = $isCore; PSEdition = $edition; PSVersion = $currentVersion
+        VersionOk = $versionOk; IsSupported = ($isCore -and $versionOk)
+    }
+    if ($PassThru) { return $result }
+    return $result.IsSupported
+}
+
+function Show-Pwsh7RequirementError {
+    [CmdletBinding()]
+    param()
+    $checkResult = Test-Pwsh7Requirement -PassThru
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "  错误：PowerShell 版本不支持" -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "  当前 PSEdition : $($checkResult.PSEdition)" -ForegroundColor Yellow
+    Write-Host "  当前 PSVersion : $($checkResult.PSVersion)" -ForegroundColor Yellow
+    Write-Host "  需要 PowerShell 7.4+。安装：winget install Microsoft.PowerShell" -ForegroundColor Yellow
+    Write-Host ""
+    exit 1
+}
+
+if ($MyInvocation.InvocationName -ne '.') {
+    if (-not (Test-Pwsh7Requirement)) { Show-Pwsh7RequirementError }
+}
+
+# ── 工具函数 ──
 function Get-LogTimestamp {
     return [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
 }

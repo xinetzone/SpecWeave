@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     路径迁移CI检查脚本 - 在CI环境中自动检测旧路径残留或执行路径迁移
 .DESCRIPTION
@@ -27,6 +27,8 @@
     .\path-migration-ci.ps1 -OldPath "old/path" -NewPath "new/path" -Execute -AutoCommit
 #>
 
+#Requires -Version 5.1
+
 # ==============================================================================
 # Parameters (must be first executable statement after comment-based help)
 # ==============================================================================
@@ -49,6 +51,95 @@ param(
 
     [int]$Threshold = 0
 )
+
+# ==============================================================================
+# 版本校验（自包含，不依赖外部 lib 文件）
+# 兼容 Windows PowerShell 5.1 和 PowerShell 7.4+
+# 注意：版本检测逻辑在 param() 之后立即执行
+# ==============================================================================
+function Test-Pwsh7Requirement {
+    [CmdletBinding()]
+    param(
+        [switch]$PassThru
+    )
+
+    $isCore = $false
+    $currentVersion = $null
+    $edition = 'Desktop'
+    $versionOk = $false
+
+    if ($PSVersionTable.ContainsKey('PSEdition')) {
+        $edition = $PSVersionTable.PSEdition
+    }
+    $isCore = ($edition -eq 'Core')
+
+    if ($PSVersionTable.ContainsKey('PSVersion')) {
+        $currentVersion = $PSVersionTable.PSVersion
+    }
+
+    if ($isCore -and $null -ne $currentVersion) {
+        $majorOk = ($currentVersion.Major -gt 7)
+        $minorOk = ($currentVersion.Major -eq 7 -and $currentVersion.Minor -ge 4)
+        $versionOk = ($majorOk -or $minorOk)
+    }
+
+    $result = [PSCustomObject]@{
+        IsCore      = $isCore
+        PSEdition   = $edition
+        PSVersion   = $currentVersion
+        VersionOk   = $versionOk
+        IsSupported = ($isCore -and $versionOk)
+    }
+
+    if ($PassThru) {
+        return $result
+    }
+
+    return $result.IsSupported
+}
+
+function Show-Pwsh7RequirementError {
+    [CmdletBinding()]
+    param()
+
+    $checkResult = Test-Pwsh7Requirement -PassThru
+
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "  错误：PowerShell 版本不支持" -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    Write-Host "  当前 PowerShell 信息：" -ForegroundColor Yellow
+    Write-Host "    PSEdition : $($checkResult.PSEdition)"
+    Write-Host "    PSVersion : $($checkResult.PSVersion)"
+    Write-Host ""
+
+    Write-Host "  问题说明：" -ForegroundColor Yellow
+    Write-Host "    本脚本需要 PowerShell 7.4 或更高版本（pwsh7）。"
+    Write-Host "    当前运行的是旧版本或不兼容版本。"
+    Write-Host ""
+
+    Write-Host "  安装命令：" -ForegroundColor Yellow
+    Write-Host "    winget install Microsoft.PowerShell"
+    Write-Host ""
+
+    Write-Host "  文档提示：" -ForegroundColor Yellow
+    Write-Host "    请参考项目 ONBOARDING.md 配置开发环境。"
+    Write-Host ""
+
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    exit 1
+}
+
+if ($MyInvocation.InvocationName -ne '.') {
+    $supported = Test-Pwsh7Requirement
+    if (-not $supported) {
+        Show-Pwsh7RequirementError
+    }
+}
 
 $ErrorActionPreference = "Stop"
 

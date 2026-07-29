@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     Caffe-FFI 容器故障诊断 PowerShell 包装器
@@ -35,6 +35,8 @@
     # 诊断并自动修复，JSON格式输出
 #>
 
+#Requires -Version 5.1
+
 [CmdletBinding()]
 param(
     [string]$Container = "caffe-ffi-jupyter",
@@ -51,6 +53,95 @@ param(
     [string]$Distribution = "",
     [switch]$Help
 )
+
+# ==============================================================================
+# 版本校验（自包含，不依赖外部 lib 文件）
+# 兼容 Windows PowerShell 5.1 和 PowerShell 7.4+
+# 注意：版本检测逻辑在 param() 之后立即执行
+# ==============================================================================
+function Test-Pwsh7Requirement {
+    [CmdletBinding()]
+    param(
+        [switch]$PassThru
+    )
+
+    $isCore = $false
+    $currentVersion = $null
+    $edition = 'Desktop'
+    $versionOk = $false
+
+    if ($PSVersionTable.ContainsKey('PSEdition')) {
+        $edition = $PSVersionTable.PSEdition
+    }
+    $isCore = ($edition -eq 'Core')
+
+    if ($PSVersionTable.ContainsKey('PSVersion')) {
+        $currentVersion = $PSVersionTable.PSVersion
+    }
+
+    if ($isCore -and $null -ne $currentVersion) {
+        $majorOk = ($currentVersion.Major -gt 7)
+        $minorOk = ($currentVersion.Major -eq 7 -and $currentVersion.Minor -ge 4)
+        $versionOk = ($majorOk -or $minorOk)
+    }
+
+    $result = [PSCustomObject]@{
+        IsCore      = $isCore
+        PSEdition   = $edition
+        PSVersion   = $currentVersion
+        VersionOk   = $versionOk
+        IsSupported = ($isCore -and $versionOk)
+    }
+
+    if ($PassThru) {
+        return $result
+    }
+
+    return $result.IsSupported
+}
+
+function Show-Pwsh7RequirementError {
+    [CmdletBinding()]
+    param()
+
+    $checkResult = Test-Pwsh7Requirement -PassThru
+
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "  错误：PowerShell 版本不支持" -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    Write-Host "  当前 PowerShell 信息：" -ForegroundColor Yellow
+    Write-Host "    PSEdition : $($checkResult.PSEdition)"
+    Write-Host "    PSVersion : $($checkResult.PSVersion)"
+    Write-Host ""
+
+    Write-Host "  问题说明：" -ForegroundColor Yellow
+    Write-Host "    本脚本需要 PowerShell 7.4 或更高版本（pwsh7）。"
+    Write-Host "    当前运行的是旧版本或不兼容版本。"
+    Write-Host ""
+
+    Write-Host "  安装命令：" -ForegroundColor Yellow
+    Write-Host "    winget install Microsoft.PowerShell"
+    Write-Host ""
+
+    Write-Host "  文档提示：" -ForegroundColor Yellow
+    Write-Host "    请参考项目 ONBOARDING.md 配置开发环境。"
+    Write-Host ""
+
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    exit 1
+}
+
+if ($MyInvocation.InvocationName -ne '.') {
+    $supported = Test-Pwsh7Requirement
+    if (-not $supported) {
+        Show-Pwsh7RequirementError
+    }
+}
 
 if ($Help) { Get-Help $MyInvocation.MyCommand.Path -Full; exit 0 }
 
@@ -143,11 +234,14 @@ if (-not $wslExe) {
 }
 
 if (-not $Distribution) {
-    $wslList = wsl.exe --list --verbose 2>&1
+    # wsl.exe 输出 UTF-16 LE，需清理 NUL 字符和空行
+    $wslListRaw = wsl.exe --list --verbose 2>&1
+    $wslList = @($wslListRaw | ForEach-Object { ($_ -replace "`0", "").Trim() } | Where-Object { $_ -and $_ -notmatch '^NAME\s+STATE' })
     $ubuntuDistros = $wslList | Where-Object { $_ -match 'Ubuntu' } | ForEach-Object {
-        if ($_ -match '^\s*(\*?\s*)?(Ubuntu[\w.-]*)\s+') { $matches[2].Trim() }
+        $cleaned = $_ -replace '^\*?\s*', ''
+        if ($cleaned -match '^([^\s]+)') { $matches[1] }
     }
-    if ($ubuntuDistros) {
+    if ($ubuntuDistros.Count -gt 0) {
         $Distribution = $ubuntuDistros[0]
     } else {
         Write-ErrOut "未找到 Ubuntu WSL 发行版"

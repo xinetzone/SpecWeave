@@ -1,5 +1,96 @@
-# CI/CD pipeline check script
+﻿# CI/CD pipeline check script
 # Usage: .\ci-check.ps1
+
+#Requires -Version 5.1
+
+# ==============================================================================
+# 版本校验（自包含，不依赖外部 lib 文件）
+# 兼容 Windows PowerShell 5.1 和 PowerShell 7.4+
+# 注意：版本检测逻辑在 param() 之后立即执行
+# ==============================================================================
+function Test-Pwsh7Requirement {
+    [CmdletBinding()]
+    param(
+        [switch]$PassThru
+    )
+
+    $isCore = $false
+    $currentVersion = $null
+    $edition = 'Desktop'
+    $versionOk = $false
+
+    if ($PSVersionTable.ContainsKey('PSEdition')) {
+        $edition = $PSVersionTable.PSEdition
+    }
+    $isCore = ($edition -eq 'Core')
+
+    if ($PSVersionTable.ContainsKey('PSVersion')) {
+        $currentVersion = $PSVersionTable.PSVersion
+    }
+
+    if ($isCore -and $null -ne $currentVersion) {
+        $majorOk = ($currentVersion.Major -gt 7)
+        $minorOk = ($currentVersion.Major -eq 7 -and $currentVersion.Minor -ge 4)
+        $versionOk = ($majorOk -or $minorOk)
+    }
+
+    $result = [PSCustomObject]@{
+        IsCore      = $isCore
+        PSEdition   = $edition
+        PSVersion   = $currentVersion
+        VersionOk   = $versionOk
+        IsSupported = ($isCore -and $versionOk)
+    }
+
+    if ($PassThru) {
+        return $result
+    }
+
+    return $result.IsSupported
+}
+
+function Show-Pwsh7RequirementError {
+    [CmdletBinding()]
+    param()
+
+    $checkResult = Test-Pwsh7Requirement -PassThru
+
+    Write-Host ""
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host "  错误：PowerShell 版本不支持" -ForegroundColor Red
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    Write-Host "  当前 PowerShell 信息：" -ForegroundColor Yellow
+    Write-Host "    PSEdition : $($checkResult.PSEdition)"
+    Write-Host "    PSVersion : $($checkResult.PSVersion)"
+    Write-Host ""
+
+    Write-Host "  问题说明：" -ForegroundColor Yellow
+    Write-Host "    本脚本需要 PowerShell 7.4 或更高版本（pwsh7）。"
+    Write-Host "    当前运行的是旧版本或不兼容版本。"
+    Write-Host ""
+
+    Write-Host "  安装命令：" -ForegroundColor Yellow
+    Write-Host "    winget install Microsoft.PowerShell"
+    Write-Host ""
+
+    Write-Host "  文档提示：" -ForegroundColor Yellow
+    Write-Host "    请参考项目 ONBOARDING.md 配置开发环境。"
+    Write-Host ""
+
+    Write-Host "========================================" -ForegroundColor Red
+    Write-Host ""
+
+    exit 1
+}
+
+if ($MyInvocation.InvocationName -ne '.') {
+    $supported = Test-Pwsh7Requirement
+    if (-not $supported) {
+        Show-Pwsh7RequirementError
+    }
+}
 
 $ErrorActionPreference = "Stop"
 
@@ -16,7 +107,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 19
+$totalSteps = 20
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -233,6 +324,32 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 Write-Host "  PASS (all mandatory log chains closed)" -ForegroundColor Green
+Write-Host ""
+
+# 20. Check PowerShell 7 compliance (pwsh7标准：过渡期warn-only，到期自动切换--strict)
+$pwsh7EnforceDate = [datetime]"2026-08-12"
+$pwsh7Now = Get-Date
+if ($pwsh7Now -ge $pwsh7EnforceDate) {
+    Write-Host "[20/$totalSteps] Check PowerShell 7 compliance (pwsh7 standard, STRICT mode)..." -ForegroundColor Yellow
+    python "$root\.agents\scripts\check-pwsh7-compliance.py" --strict
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "ERROR: pwsh7 compliance check failed (strict mode enforced since $pwsh7EnforceDate)" -ForegroundColor Red
+        exit 1
+    }
+    Write-Host "  PASS" -ForegroundColor Green
+}
+else {
+    $daysRemaining = ($pwsh7EnforceDate - $pwsh7Now).Days
+    Write-Host "[20/$totalSteps] Check PowerShell 7 compliance (pwsh7 standard, WARN-ONLY mode, $daysRemaining days until strict on $pwsh7EnforceDate)..." -ForegroundColor Yellow
+    python "$root\.agents\scripts\check-pwsh7-compliance.py" --warn-only
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "WARN: pwsh7 compliance check failed (non-blocking during transition period, $daysRemaining days remaining)" -ForegroundColor Yellow
+        Write-Host "  After $pwsh7EnforceDate this will become ERROR-blocking" -ForegroundColor Yellow
+    }
+    else {
+        Write-Host "  PASS" -ForegroundColor Green
+    }
+}
 Write-Host ""
 
 Write-Host "========================================" -ForegroundColor Cyan

@@ -1,6 +1,6 @@
 ---
-version: "2.3"
-last_updated: "2026-07-05"
+version: "2.4"
+last_updated: "2026-07-29"
 schema: "l0-onboarding-v1"
 layer: "L0"
 max_lines: 100
@@ -13,6 +13,16 @@ x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 
 ---
 
+## 环境准备
+```
+Windows 必需：pwsh7.4+（PowerShell 7）
+  安装：winget install Microsoft.PowerShell
+  验证：pwsh --version  （应显示 7.4.x 或更高）
+  VS Code：Ctrl+Shift+P → "Terminal: Select Default Profile" → PowerShell
+```
+
+---
+
 ## 快速开始（3 步）
 ```
 1. 读本文件 ✅  2. 读capability-registry.md  3. 按路由表定位能力，按需加载L2文档
@@ -20,7 +30,7 @@ x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 
 ---
 
-## 核心实践（793次提交验证·15条）
+## 核心实践（793次提交验证·16条）
 
 | # | 实践 | 一句话说明 |
 |---|------|-----------|
@@ -39,6 +49,7 @@ x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 | 13 | 单元测试保障质量 | 关键脚本/工具配单元测试，防回归 |
 | 14 | 三区域边界模型 | vendor/flexloop子模块治理，核心区轻量化 |
 | 15 | 问题驱动治理演化 | 治理规则来自真实问题抽象，而非预设 |
+| 16 | pwsh7统一标准 | Windows脚本必须用pwsh7.4+，禁止PowerShell 5 |
 
 > 💡 详细说明见 [development-standards.md](docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
 

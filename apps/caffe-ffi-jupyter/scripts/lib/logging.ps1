@@ -1,4 +1,4 @@
-#Requires -Version 5.1
+﻿#Requires -Version 5.1
 <#
 .SYNOPSIS
     PowerShell 统一结构化日志库
@@ -17,6 +17,8 @@
       Log-Event -Event "start"
       Log-Metric -Name "duration" -Value 1.5 -Unit "s"
 #>
+
+#Requires -Version 5.1
 
 # ── 避免重复加载 ──
 if ($script:__LOGGING_PS1_LOADED) { return }
@@ -43,6 +45,12 @@ if (-not (Get-Variable -Name LogFields -Scope Script -ErrorAction SilentlyContin
 }
 
 $script:LogLevelMap = @{ DEBUG = 0; INFO = 1; WARN = 2; ERROR = 3 }
+
+# 版本校验：引用共享库
+. "$PSScriptRoot/pwsh7-version-check.ps1"
+if ($MyInvocation.InvocationName -ne '.') {
+    if (-not (Test-Pwsh7Requirement)) { Show-Pwsh7RequirementError }
+}
 
 function script:Get-LogTimestamp {
     [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")

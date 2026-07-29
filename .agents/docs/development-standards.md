@@ -102,7 +102,7 @@ x-toml-ref: "../../.meta/toml/docs/development-standards.toml"
    ```
 7. **重复检测**：脚本开发完成后运行 `python check-duplication.py`，确保未引入新的跨文件重复代码
 8. **Linter 自生验证**：新开发检查类脚本（linter/checker/validator）提交前必须通过 [tool-self-validation 检查清单](retrospective/patterns/methodology-patterns/tools-automation/tool-self-validation.md)的7项验证（自扫描→真阳性修复→误报过滤→信噪比≥30%→输出可用→CI兼容→边界场景）
-9. **PowerShell脚本编码**：生成或修改 `.ps1` 文件时必须使用 `lib/powershell.py` 中的 `write_ps1_script()` 函数（自动写入UTF-8 BOM + CRLF换行），禁止直接用 `open(..., 'w')` 写入.ps1文件，避免PowerShell 5.x下的编码解析错误
+9. **PowerShell脚本编码**：生成或修改 `.ps1` 文件时必须使用 `lib/powershell.py` 中的 `write_ps1_script()` 函数（自动写入UTF-8 BOM + CRLF换行），禁止直接用 `open(..., 'w')` 写入.ps1文件。UTF-8 BOM是必须的，因为版本校验代码块需要在Windows PowerShell 5.1中正确运行以显示友好错误信息
 10. **CI门禁工具默认静默日志架构**：所有集成到CI/CD流水线或pre-commit钩子的检查类脚本（linter/checker/validator/gate），必须采用「默认静默+分级verbose」日志架构：
     - **默认模式（无-v）**：业务结果通过 `print()` 输出到stdout（PASS/FAIL/拦截模板），诊断日志完全静默（NullHandler + level=CRITICAL+1），禁止任何日志前缀泄漏到stderr——CI系统消费stdout做门禁判定，诊断日志会被视为噪音
     - **-v（INFO）**：关键流程节点日志（启动/结束/最终判定结果/阻断触发原因）输出到stderr，使用 `[%(levelname)s] %(name)s: %(message)s` 格式
@@ -116,6 +116,16 @@ x-toml-ref: "../../.meta/toml/docs/development-standards.toml"
     - **去重后排序截断**：去重后按严重度降序排列，截断到Top N（建议5个），避免信息过载
     - **DEBUG日志记录统计**：在-vv模式记录去重计数（如"去重后显示5/11个信号"），便于验证去重逻辑正确性
     - **可解释权重算法**：多信号需选择"最主要"类别/项时，使用可解释的权重算法（如严重度平方加权 `Σseverity²`）替代 `next(iter(set))` 等依赖迭代顺序的非确定性选择，同分平局时按预定义类别优先级打破平局，并在DEBUG日志中输出权重分布便于审计
+12. **PowerShell 7统一规范（pwsh7）**：所有Windows平台PowerShell脚本必须使用PowerShell 7.4+（pwsh7）执行，严禁使用PowerShell 5或其他版本。具体要求：
+    - **版本声明**：新脚本必须使用标准模板 `.agents/templates/pwsh7-script-template.ps1`，模板包含自包含版本校验代码（在PowerShell 5.1中显示友好错误并退出）
+    - **声明模式**：
+      - 推荐模式（友好错误）：`#Requires -Version 5.1` + 自包含版本校验代码块（检测PSEdition=Core且版本≥7.4，不符则显示安装指引并exit 1）
+      - 简单模式（默认错误）：`#Requires -Version 7.0`（直接依赖PowerShell默认错误提示，用户体验较差）
+    - **豁免机制**：确实无法迁移的脚本在文件头部添加 `# PWSH7-EXEMPT: <原因>` 注释，需注明理由和审批人
+    - **排除范围**：`vendor/`、`projects/`（git submodule）目录下的脚本不受本规范约束
+    - **合规检查**：运行 `python .agents/scripts/check-pwsh7-compliance.py` 检查合规性；CI流水线第20步已集成检查（过渡期使用--warn-only模式，2周后切换为--strict阻塞模式）
+    - **禁止使用pwsh7专属语法**：版本校验代码块本身不能使用`??`、`?:`、`??=`等pwsh7专属运算符，否则在PowerShell 5.1中会解析失败无法显示友好错误
+    - **迁移现有脚本**：过渡期内批量迁移现有脚本，添加版本校验代码块，迁移脚本可参考标准模板
 
 ## 提交规范
 

@@ -1,24 +1,31 @@
-﻿#Requires -Version 5.1
-<#
-.SYNOPSIS
-    SpecWeave 项目级PowerShell配置文件 - UTF-8编码环境设置。
-.DESCRIPTION
-    设置控制台编码为UTF-8，确保中文输出正常。
-    可通过 Install-Profile.ps1 安装到用户PowerShell Profile自动加载。
-    同时将 .agents/scripts/ 加入 PYTHONPATH，确保 sitecustomize.py 被 Python 自动加载。
-.NOTES
-    编码: UTF-8 BOM + CRLF
-    兼容: PowerShell 5.1 / 7.x
-#>
-
 #Requires -Version 5.1
+# ==============================================================================
+# SpecWeave PowerShell 7 版本校验库（可复用共享模块）
+# ==============================================================================
+# 检测当前运行环境是否为 PowerShell 7.4+ (pwsh7)。
+# 兼容 Windows PowerShell 5.1（用于显示错误）和 PowerShell 7+。
+# 不使用 pwsh7 专属语法（??、?:、??= 等）。
+#
+# 使用方法：
+#   . "$PSScriptRoot/pwsh7-version-check.ps1"     # 在同目录 lib 脚本中
+#   . "$PSScriptRoot/../lib/pwsh7-version-check.ps1"  # 在 scripts/ 目录脚本中
+#
+# 提供函数：
+#   Test-Pwsh7Version [-PassThru]   # 检测是否满足 pwsh7.4+ 要求
+#   Show-Pwsh7VersionError          # 显示友好错误信息并 exit 1
+#   Test-Pwsh7Requirement           # Test-Pwsh7Version 的别名（向后兼容）
+#   Show-Pwsh7RequirementError      # Show-Pwsh7VersionError 的别名（向后兼容）
+#
+# 幂等安全：多次 dot-source 不会重复定义函数或产生副作用。
+# ==============================================================================
 
-# ==============================================================================
-# 版本校验（自包含，不依赖外部 lib 文件）
-# 兼容 Windows PowerShell 5.1 和 PowerShell 7.4+
-# 注意：版本检测逻辑在 param() 之后立即执行
-# ==============================================================================
-function Test-Pwsh7Requirement {
+# 幂等守卫：已加载则跳过
+if (Get-Variable -Name 'Pwsh7VersionCheckLoaded' -Scope Script -ErrorAction SilentlyContinue) {
+    return
+}
+$script:Pwsh7VersionCheckLoaded = $true
+
+function Test-Pwsh7Version {
     [CmdletBinding()]
     param(
         [switch]$PassThru
@@ -59,11 +66,11 @@ function Test-Pwsh7Requirement {
     return $result.IsSupported
 }
 
-function Show-Pwsh7RequirementError {
+function Show-Pwsh7VersionError {
     [CmdletBinding()]
     param()
 
-    $checkResult = Test-Pwsh7Requirement -PassThru
+    $checkResult = Test-Pwsh7Version -PassThru
 
     Write-Host ""
     Write-Host "========================================" -ForegroundColor Red
@@ -96,29 +103,23 @@ function Show-Pwsh7RequirementError {
 }
 
 if ($MyInvocation.InvocationName -ne '.') {
-    $supported = Test-Pwsh7Requirement
+    $supported = Test-Pwsh7Version
     if (-not $supported) {
-        Show-Pwsh7RequirementError
+        Show-Pwsh7VersionError
     }
 }
 
-cmd /c chcp 65001 > $null
-
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-[Console]::InputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
-
-$env:PYTHONIOENCODING = 'utf-8'
-$env:PYTHONUTF8 = '1'
-
-# 将 profile.ps1 所在目录（.agents/scripts/）加入 PYTHONPATH，使 Python 启动时自动加载 sitecustomize.py
-$profileDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-if ($env:PYTHONPATH) {
-    if ($env:PYTHONPATH -notlike "*$profileDir*") {
-        $env:PYTHONPATH = "$env:PYTHONPATH;$profileDir"
-    }
-} else {
-    $env:PYTHONPATH = $profileDir
+# ==============================================================================
+# 向后兼容别名（wrapper 函数，确保旧脚本中使用的旧名称仍然有效）
+# ==============================================================================
+function Test-Pwsh7Requirement {
+    [CmdletBinding()]
+    param([switch]$PassThru)
+    Test-Pwsh7Version @PSBoundParameters
 }
 
-Write-Host "[UTF-8] 编码环境已就绪" -ForegroundColor Green
+function Show-Pwsh7RequirementError {
+    [CmdletBinding()]
+    param()
+    Show-Pwsh7VersionError
+}
