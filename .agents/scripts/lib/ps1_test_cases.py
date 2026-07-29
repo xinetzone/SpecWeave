@@ -83,6 +83,16 @@ class HereStringCase:
     content: str
     position: int
     expected_new_pos: int
+    target_version: str = 'auto'
+
+
+@dataclass
+class VersionDetectCase:
+    """版本检测测试用例。"""
+    id: str
+    name: str
+    content: str
+    expected_version: str  # '5.1' 或 '7.x'
 
 
 # ── 辅助函数：构建 here-string 内容 ──────────────────────────────────────────
@@ -843,6 +853,94 @@ HERE_STRING_CASES: list[HereStringCase] = [
         position=0,
         expected_new_pos=len(_hs_double(["hello `\"@ not end cr", "world cr"], newline="\r")),
     ),
+    HereStringCase(
+        id="hs_51_reject_cr_newline",
+        name="PS5.1模式：CR-only换行不被识别为here-string换行",
+        content=_hs_double(["cr line"], newline="\r"),
+        position=0,
+        expected_new_pos=0,
+        target_version='5.1',
+    ),
+    HereStringCase(
+        id="hs_51_crlf_newline",
+        name="PS5.1模式：CRLF换行正常识别",
+        content=_hs_double(["crlf line"], newline="\r\n"),
+        position=0,
+        expected_new_pos=len(_hs_double(["crlf line"], newline="\r\n")),
+        target_version='5.1',
+    ),
+    HereStringCase(
+        id="hs_7x_cr_newline",
+        name="PS7.x模式：CR-only换行正常识别",
+        content=_hs_double(["cr line"], newline="\r"),
+        position=0,
+        expected_new_pos=len(_hs_double(["cr line"], newline="\r")),
+        target_version='7.x',
+    ),
+]
+
+
+VERSION_DETECT_CASES: list[VersionDetectCase] = [
+    VersionDetectCase(
+        id="ver_requires_7",
+        name="#Requires -Version 7 检测为 7.x",
+        content="#Requires -Version 7\nWrite-Host 'hello'\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_requires_7_1",
+        name="#Requires -Version 7.1 检测为 7.x",
+        content="#Requires -Version 7.1\n'hello'\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_requires_5",
+        name="#Requires -Version 5 检测为 5.1",
+        content="#Requires -Version 5\nGet-Process\n",
+        expected_version="5.1",
+    ),
+    VersionDetectCase(
+        id="ver_requires_5_1",
+        name="#Requires -Version 5.1 检测为 5.1",
+        content="#Requires -Version 5.1\nGet-Service\n",
+        expected_version="5.1",
+    ),
+    VersionDetectCase(
+        id="ver_edition_core",
+        name="#Requires -PSEdition Core 检测为 7.x",
+        content="#Requires -PSEdition Core\nGet-Date\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_edition_desktop",
+        name="#Requires -PSEdition Desktop 检测为 5.1",
+        content="#Requires -PSEdition Desktop\nGet-ChildItem\n",
+        expected_version="5.1",
+    ),
+    VersionDetectCase(
+        id="ver_var_iswindows",
+        name="含 $IsWindows 自动变量检测为 7.x",
+        content="if ($IsWindows) { 'win' } else { 'other' }\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_var_islinux",
+        name="含 $IsLinux 自动变量检测为 7.x",
+        content="if ($IsLinux) { 'linux' }\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_op_coalesce",
+        name="含 ?? 运算符检测为 7.x",
+        content="$x = $null; $result = $x ?? 'default'\n",
+        expected_version="7.x",
+    ),
+    VersionDetectCase(
+        id="ver_default_7x",
+        name="无特征时默认 7.x（跨平台默认）",
+        content="Write-Host 'Hello World'\nGet-Date\n",
+        expected_version="7.x",
+    ),
 ]
 
 
@@ -862,6 +960,7 @@ def export_cases_as_json() -> dict:
         "brace_depth_cases": [_case_to_dict(c) for c in BRACE_DEPTH_CASES],
         "insert_code_cases": [_case_to_dict(c) for c in INSERT_CODE_CASES],
         "here_string_cases": [_case_to_dict(c) for c in HERE_STRING_CASES],
+        "version_detect_cases": [_case_to_dict(c) for c in VERSION_DETECT_CASES],
     }
 
 
@@ -886,6 +985,7 @@ def main() -> int:
         print(f"  Brace depth cases:  {len(BRACE_DEPTH_CASES)}")
         print(f"  Insert code cases:  {len(INSERT_CODE_CASES)}")
         print(f"  Here-string cases:  {len(HERE_STRING_CASES)}")
+        print(f"  Version detect cases: {len(VERSION_DETECT_CASES)}")
         return 0
     print("Usage: python -m lib.ps1_test_cases --export-json")
     return 1

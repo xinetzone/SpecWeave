@@ -28,11 +28,14 @@ from lib.ps1_syntax import (
     skip_whitespace_and_comments,
     _calc_brace_depth,
     _skip_ps1_here_string,
+    detect_ps_version_from_content,
+    _resolve_target_version,
 )
 from lib.ps1_test_cases import (
     INSERT_POINT_CASES,
     BRACE_DEPTH_CASES,
     HERE_STRING_CASES,
+    VERSION_DETECT_CASES,
 )
 
 
@@ -110,8 +113,63 @@ def test_calc_brace_depth(case):
 )
 def test_skip_ps1_here_string(case):
     """测试 here-string 跳过原语。"""
-    new_pos = _skip_ps1_here_string(case.content, case.position)
+    new_pos = _skip_ps1_here_string(case.content, case.position, target_version=case.target_version)
     assert new_pos == case.expected_new_pos, (
         f"new_pos={new_pos}, expected {case.expected_new_pos}\n"
         f"position={case.position}, content length={len(case.content)}"
     )
+
+
+# ── 版本检测测试 ──────────────────────────────────────────────────────────
+
+@pytest.mark.parametrize("case", VERSION_DETECT_CASES, ids=lambda c: c.id)
+def test_detect_ps_version(case):
+    """测试从内容启发式检测 PowerShell 版本。"""
+    result = detect_ps_version_from_content(case.content)
+    assert result == case.expected_version, (
+        f"[{case.id}] {case.name}: expected {case.expected_version}, got {result}"
+    )
+
+
+class TestTargetVersionModes:
+    """target_version 参数模式测试。"""
+
+    def test_resolve_auto_detects_7x(self):
+        """auto 模式：含 ?? 运算符应检测为 7.x。"""
+        content = "$x = $null; $y = $x ?? 5"
+        assert _resolve_target_version(content, 'auto') == '7.x'
+
+    def test_resolve_auto_detects_51(self):
+        """auto 模式：#Requires -Version 5 应检测为 5.1。"""
+        content = "#Requires -Version 5\nGet-Process"
+        assert _resolve_target_version(content, 'auto') == '5.1'
+
+    def test_resolve_explicit_51(self):
+        """显式指定 5.1 应返回 5.1（即使内容有 7.x 特征）。"""
+        content = "$x = $y ?? 1"
+        assert _resolve_target_version(content, '5.1') == '5.1'
+
+    def test_resolve_explicit_7x(self):
+        """显式指定 7.x 应返回 7.x。"""
+        content = "#Requires -Version 5\n"
+        assert _resolve_target_version(content, '7.x') == '7.x'
+
+    def test_target_version_51_here_string_cr(self):
+        """5.1 模式下 CR-only 换行的 here-string 不应被识别。"""
+        content = '@"\rline\r"@'
+        pos_7x = _skip_ps1_here_string(content, 0, target_version='7.x')
+        assert pos_7x == len(content)
+        pos_51 = _skip_ps1_here_string(content, 0, target_version='5.1')
+        assert pos_51 == 0
+
+    def test_target_version_7x_here_string_cr(self):
+        """7.x 模式下 CR-only 换行的 here-string 应被正确跳过。"""
+        content = '@"\rhello\r"@'
+        pos = _skip_ps1_here_string(content, 0, target_version='7.x')
+        assert pos == len(content)
+
+    def test_target_version_51_here_string_crlf(self):
+        """5.1 模式下 CRLF 换行的 here-string 应被正确跳过。"""
+        content = '@"\r\nhello\r\n"@'
+        pos = _skip_ps1_here_string(content, 0, target_version='5.1')
+        assert pos == len(content)
