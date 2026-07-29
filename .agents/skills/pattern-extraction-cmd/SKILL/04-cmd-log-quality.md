@@ -9,6 +9,8 @@ x-toml-ref: "../../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL/
 ## 9. 执行日志（CMD-LOG）
 
 遵循项目 [CMD-LOG命令集执行日志规范](../../../rules/cmd-log-specification.md)，使用统一前缀+键值对+JSON上下文格式。
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 
 ### 9.1 基本标识
 

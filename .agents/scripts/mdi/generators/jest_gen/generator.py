@@ -13,7 +13,7 @@ from pathlib import Path
 
 from mdi.models import MDIDocument, Interface
 from mdi.generators.base import BaseGenerator
-from mdi.generators.utils import sanitize_identifier
+from mdi.generators.utils import sanitize_identifier, classify_parameters
 
 from .context import _TestContext
 from .codegen import (
@@ -92,9 +92,7 @@ class JestGenerator(BaseGenerator):
         method = iface.method.upper()
         desc_name = iface.summary or f"{method} {iface.path}"
 
-        path_params = [p for p in iface.parameters if p.location == "path"]
-        query_params = [p for p in iface.parameters if p.location == "query"]
-        body_params = [p for p in iface.parameters if p.location not in ("path", "query", "header", "cookie")]
+        path_params, query_params, body_params = classify_parameters(iface)
         func_prefix_val = self._func_prefix(iface)
 
         logger.debug(

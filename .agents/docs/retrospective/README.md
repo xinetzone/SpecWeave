@@ -62,7 +62,7 @@ docs/retrospective/
 │   │   ├── retrospective-report-readme-subagent-extraction/ · 子代理提取
 │   │   ├── retrospective-report-refactor-retrospective-docs/ · 复盘文档体系重构
 │   │   └── retrospective-report-reports-atomization-comprehensive-20260624/ · reports/ 目录全面原子化
-│   ├── insight-extraction/             ← 洞察与萃取（32 份原子化报告 + 9 份独立洞察卡片）
+│   ├── insight-extraction/             ← 洞察与萃取（33 份原子化报告 + 9 份独立洞察卡片）
 │   │   ├── meta-methodology/           ← 元方法论与复盘体系自省（13 份）
 │   │   ├── external-learning/          ← 外部开源项目与技术文章学习（6 份）
 │   │   ├── iot-ecosystem/              ← IoT 智能家居生态（9 份）
@@ -236,12 +236,13 @@ docs/retrospective/
 - [retrospective-session-insight-extraction-readme-evolution-20260624/](reports/insight-extraction/meta-methodology/retrospective-session-insight-extraction-readme-evolution-20260624/README.md) — README 演进洞察（10 轮会话分析）
 - [retrospective-xinet-chaos-multiproject-analysis-20260625/](reports/insight-extraction/meta-methodology/retrospective-xinet-chaos-multiproject-analysis-20260625/README.md) — xinet混沌多项目分析
 
-- **external-learning/ 外部学习（5份）**
+- **external-learning/ 外部学习（6份）**
 - [retrospective-ai-code-assistant-project-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/README.md) — AI 编程学习助手项目代码分析复盘（含 MVP 最小架构、提示词分层设计、陌生项目理解信息优先级）
 - [retrospective-architecture-priority-20260629/](reports/insight-extraction/external-learning/retrospective-architecture-priority-20260629/README.md) — 架构优先级评估
 - [retrospective-deer-flow-2-learning-20260625/](reports/insight-extraction/external-learning/retrospective-deer-flow-2-learning-20260625/README.md) — DeerFlow 2.0 开源 Agent Harness 学习复盘（含 Super Agent Harness 架构范式、Markdown Skills 系统、Sub-agents 并行执行、Context Engineering、Sandbox 隔离机制、8 维度架构对比）
 - [retrospective-firecrawl-learning-20260629/](reports/insight-extraction/external-learning/retrospective-firecrawl-learning-20260629/README.md) — Firecrawl系统学习复盘（AI网页数据接口）
 - [retrospective-zhujian-wudao-specs-analysis-20260625/](reports/insight-extraction/external-learning/retrospective-zhujian-wudao-specs-analysis-20260625/README.md) — 竹简悟道 Specs 文档体系深度分析复盘（含文档五层架构、洞察两档结构、滚动复盘八步、Spec 九节叙事弧、双受众萃取模型、体道链泛化认知模型、文档熵增三策等 8 个核心元洞察）
+- [retrospective-github-cli-wiki-20260724/](reports/insight-extraction/external-learning/retrospective-github-cli-wiki-20260724/README.md) — GitHub CLI Wiki 教程创建里程碑复盘（含多源学习、原子化提交、Spec驱动质量保障 3 个可复用模式）
 
 - **iot-ecosystem/ IoT生态系统（9份）**
 - [retrospective-home-assistant-core-analysis-20260630/](reports/insight-extraction/iot-ecosystem/retrospective-home-assistant-core-analysis-20260630/README.md) — Home Assistant Core源码复盘

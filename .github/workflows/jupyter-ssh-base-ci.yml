@@ -1,0 +1,232 @@
+name: Jupyter SSH Base CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/jupyter-ssh-base/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/jupyter-ssh-base/**'
+  workflow_dispatch:
+    inputs:
+      push_to_registry:
+        description: 'Push image to GHCR?'
+        type: boolean
+        default: false
+      scan_image:
+        description: 'Run Trivy security scan?'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE_NAME: jupyter-ssh-base
+  IMAGE_TAG: '1.1'
+
+defaults:
+  run:
+    working-directory: apps/jupyter-ssh-base
+
+jobs:
+  # ===========================================================================
+  # Job 1: Build — 构建 Docker 镜像 + 结构验证
+  # ===========================================================================
+  build:
+    name: Build & Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          DOCKER_BUILDKIT=1 docker build \
+            --build-arg APT_MIRROR=official \
+            --build-arg PIP_MIRROR=official \
+            -t "${IMAGE_NAME}:${IMAGE_TAG}" \
+            .
+
+      - name: Verify image size
+        run: |
+          IMAGE_SIZE=$(docker images --format '{{.Size}}' "${IMAGE_NAME}:${IMAGE_TAG}" | head -1)
+          echo "Image size: ${IMAGE_SIZE}"
+          # 镜像大小应 < 800MB
+          SIZE_BYTES=$(docker image inspect "${IMAGE_NAME}:${IMAGE_TAG}" --format='{{.Size}}')
+          if [ "$SIZE_BYTES" -gt 800000000 ]; then
+            echo "::warning::Image size exceeds 800MB: ${IMAGE_SIZE}"
+          fi
+
+      - name: Verify build info
+        run: |
+          docker run --rm "${IMAGE_NAME}:${IMAGE_TAG}" cat /etc/jupyter-ssh-build-info
+
+      - name: Verify entrypoint syntax
+        run: |
+          docker run --rm --entrypoint bash "${IMAGE_NAME}:${IMAGE_TAG}" -n /usr/local/bin/entrypoint.sh
+          echo "[OK] entrypoint.sh syntax valid"
+
+      - name: Verify healthcheck syntax
+        run: |
+          docker run --rm --entrypoint bash "${IMAGE_NAME}:${IMAGE_TAG}" -n /usr/local/bin/healthcheck.sh
+          echo "[OK] healthcheck.sh syntax valid"
+
+      - name: Save image for downstream jobs
+        run: |
+          docker save "${IMAGE_NAME}:${IMAGE_TAG}" -o /tmp/jupyter-ssh-base.tar
+
+      - name: Upload image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp/jupyter-ssh-base.tar
+          retention-days: 1
+
+  # ===========================================================================
+  # Job 2: Test — 启动容器 + 6 项健康检查 + SSH PATH 测试
+  # ===========================================================================
+  test:
+    name: Healthcheck & SSH PATH Tests
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: docker load -i /tmp/jupyter-ssh-base.tar
+        working-directory: ${{ github.workspace }}
+
+      - name: Install sshpass
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq sshpass
+
+      - name: Run healthcheck tests
+        run: |
+          bash scripts/healthcheck-test.sh
+        working-directory: apps/jupyter-ssh-base
+        env:
+          IMAGE_TAG: '1.1'
+
+      - name: Run SSH non-interactive PATH tests
+        run: |
+          bash scripts/test-ssh-noninteractive-path.sh --skip-build
+        working-directory: apps/jupyter-ssh-base
+        env:
+          IMAGE_TAG: 'test-ssh-path'
+
+      - name: Cleanup test containers
+        if: always()
+        run: |
+          docker rm -f jupyter-ssh-test 2>/dev/null || true
+          docker rm -f test-ssh-path-* 2>/dev/null || true
+        working-directory: ${{ github.workspace }}
+
+  # ===========================================================================
+  # Job 3: Scan — Trivy 安全扫描（手动触发或发布前）
+  # ===========================================================================
+  scan:
+    name: Security Scan (Trivy)
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 10
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.scan_image == 'true'
+
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: docker load -i /tmp/jupyter-ssh-base.tar
+        working-directory: ${{ github.workspace }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'jupyter-ssh-base:1.1'
+          format: 'table'
+          exit-code: '0'
+          severity: 'CRITICAL,HIGH'
+          timeout: '5m'
+
+      - name: Run Trivy with SARIF output
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'jupyter-ssh-base:1.1'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  # ===========================================================================
+  # Job 4: Push — 推送到 GitHub Container Registry（手动触发或 tag 推送）
+  # ===========================================================================
+  push:
+    name: Push to GHCR
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    timeout-minutes: 10
+    if: |
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.push_to_registry == 'true') ||
+      startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docker-image
+          path: /tmp
+
+      - name: Load Docker image
+        run: docker load -i /tmp/jupyter-ssh-base.tar
+        working-directory: ${{ github.workspace }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push to GHCR
+        uses: docker/build-push-action@v6
+        with:
+          context: apps/jupyter-ssh-base
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/jupyter-ssh-base:${{ env.IMAGE_TAG }}
+            ghcr.io/${{ github.repository_owner }}/jupyter-ssh-base:latest
+          build-args: |
+            APT_MIRROR=official
+            PIP_MIRROR=official
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

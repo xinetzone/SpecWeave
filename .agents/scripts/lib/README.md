@@ -59,3 +59,50 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 - [共享库引力定律](../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
 - [临时sys.path修改](../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)
+
+---
+
+## Windows 平台陷阱（Gotchas）
+
+### python -c 命令行长度限制
+
+**问题**：Windows 命令行对单条命令的长度有限制（约 32160 字符）。使用 `python -c "<长脚本>"` 执行多行 Python 代码时，超过此限制会导致命令被截断或报错。
+
+**触发场景**：
+- 在 Shell 工具中直接执行多行 Python 代码（`python -c "..."`）
+- 代码中包含长字符串、多行数据结构、复杂逻辑
+- 重构后验证代码正确性时的批量测试脚本
+
+**解决方案**：将长脚本写入临时文件再执行。
+
+```python
+# ❌ 错误：超过长度限制
+python -c "import xxx; ... (超长代码) ..."
+
+# ✅ 正确：写入临时文件执行
+import tempfile, os
+with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False, encoding='utf-8') as f:
+    f.write(long_script_code)
+    temp_path = f.name
+try:
+    import subprocess, sys
+    result = subprocess.run([sys.executable, temp_path], capture_output=True, text=True, encoding='utf-8')
+    print(result.stdout)
+    if result.returncode != 0:
+        print(result.stderr, file=sys.stderr)
+finally:
+    os.unlink(temp_path)
+```
+
+**在 Shell 工具中的实践**：
+
+```powershell
+# 将脚本写入临时文件
+@"
+<script content>
+"@ | Out-File -FilePath _temp_script.py -Encoding utf8
+python _temp_script.py
+Remove-Item _temp_script.py  # 执行后清理（遵循临时文件清理约束）
+```
+
+> **来源**：seven-concepts-cmd 重构复盘（2026-07-23），执行行数字数统计脚本时遇到 32160 字符限制。

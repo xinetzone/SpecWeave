@@ -10,6 +10,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 
 | 模式 | 说明 | 成熟度 | 适用场景 |
 |------|------|--------|---------|
+| [docker-modular-build-orchestration.md](docker-modular-build-orchestration.md) | Docker 模块化构建编排四层架构：CMake目标→独立上下文→嵌入式验证→一键运行脚本，支持多镜像依赖管理 | L2 已验证 | 多 Docker 镜像构建、C++/Python 深度学习项目镜像化、Docker 开发环境标准化 |
 | [dual-interface-repository.md](dual-interface-repository.md) | AI Skill 仓库的双界面架构：根目录面向人类，子目录面向 AI Agent | L2 已验证 | AI Skill/Plugin/Tool 项目的仓库结构设计 |
 | [cascade-update-topology.md](cascade-update-topology.md) | 多对多文件级联更新的拓扑排序，最小跳数优先原则 | L2 已验证 | 新建规范文件后的索引级联更新 |
 | [cascade-update-prerequisite-check.md](cascade-update-prerequisite-check.md) | 级联更新拓扑的前提检查，目标目录索引文件存在性验证 | L1 实验性 | 模式入库前的目录状态检查 |
@@ -18,6 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [incremental-regression-verification.md](incremental-regression-verification.md) | 增量式回归验证，每次变更后验证受影响范围 | L2 已验证 | 文档/代码修改后的质量保障 |
 | [perception-check-report-model.md](perception-check-report-model.md) | 感知-检查-报告三层诊断模型 | L2 已验证 | 问题诊断与状态感知 |
 | [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
+| [provenance-driven-trust.md](provenance-driven-trust.md) | 溯源驱动信任：无人值守系统的机器可验证信任基础设施——内容校验码+仅追加日志+机器可验证Sign-off凭证+自积累知识库，信任建立在不可篡改溯源链而非智能体自我声明之上 | L1-draft | 无人值守自主系统、AI辅助软件工程、DevOps流水线、自动化内容生成、供应链安全 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
@@ -43,6 +45,11 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [multi-agent-closed-loop-execution.md](multi-agent-closed-loop-execution.md) | 多智能体闭环执行与自动重规划：观察-思考-行动循环+Convergence收敛点+失败自动replan，从失败点恢复而非从零开始 | L1 实验性 | UI自动化、机器人控制、API编排、RPA、任何不确定环境下的Agent任务执行 |
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
 | [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
+| [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
+| [dependency-shimming-layer.md](dependency-shimming-layer.md) | 依赖裁剪适配层：compat/头文件shim零侵入替换重依赖，依赖四分类法+三层shim（别名/内联/空桩）+渐进式裁剪，源文件零修改即可从10依赖降到3依赖 | L2 已验证 | 大型C++库裁剪、开源fork适配、跨平台移植、微服务拆分防腐层、渐进式重构 |
+| [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
+| [declarative-op-compiler-backend.md](declarative-op-compiler-backend.md) | 声明式算子+编译器后端：Python DSL描述"算什么"，TVM/MLIR编译器自动生成多后端代码，N+M替代N×M，性能关键路径保留手写kernel override，自动算子融合与全局优化 | L3 可复用 | ML框架多硬件后端、数据库查询优化器、着色器/图形渲染、信号处理编解码、DSL编译器设计 |
+| [four-step-extension-recipe.md](four-step-extension-recipe.md) | 扩展四步法：Schema/IDL扩展→代码/绑定生成→核心逻辑实现→测试矩阵验证，5类测试保障（序列化往返/prototxt解析/默认值/数值正确性/工具兼容性），降低第三方贡献门槛 | L2 已验证 | 框架插件/算子/中间件扩展、IDE插件开发、Web框架端点扩展、游戏引擎组件注册、可扩展平台设计 |
 
 ## 成熟度定义
 

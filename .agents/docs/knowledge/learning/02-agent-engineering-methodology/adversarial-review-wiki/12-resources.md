@@ -204,7 +204,7 @@ status: "completed"
 | 文档 | 路径 | 简介 |
 |------|------|------|
 | 知识库总览 | [00-overview.md](00-overview.md) | 项目简介、可信度评级、阅读路径 |
-| 核心概念定义 | [01-core-concepts.md](01-core-concepts.md) | 对抗性审查精确定义、两大分支、四大攻击者角色 |
+| 核心概念定义 | [01-core-concepts.md](01-core-concepts.md) | 对抗性审查精确定义、两大分支、五大攻击者角色 |
 | 哲学起源 | [02-philosophy-origins.md](02-philosophy-origins.md) | 证伪主义、红队历史、认知心理学革命 |
 | 认知偏差防御 | [04-cognitive-biases-defense.md](04-cognitive-biases-defense.md) | 10+类认知偏差识别与防御 |
 | 行业标准 | [06-industry-standards.md](06-industry-standards.md) | OWASP/NIST/MITRE/EU AI Act详解 |

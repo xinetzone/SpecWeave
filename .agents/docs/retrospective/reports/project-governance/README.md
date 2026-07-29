@@ -15,7 +15,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/projec
 |------|------|---------|
 | [comprehensive-reviews/](comprehensive-reviews/README.md) | 项目级综合复盘，覆盖全周期里程碑与核心发现 | 5 份 |
 | [documentation-governance/](documentation-governance/README.md) | 文档体系治理，包括结构优化、命名规范、渲染修复、链接校验 | 9 份 |
-| [tools-and-automation/](tools-and-automation/README.md) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取 | 7 份 |
+| [tools-and-automation/](tools-and-automation/README.md) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取、CI门禁工具修复 | 8 份 |
 | [process-and-compliance/](process-and-compliance/README.md) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵与短指令上下文重建 | 7 份 |
 | [dependency-governance/](dependency-governance/README.md) | 依赖与子模块治理，含 Git submodule 双模式治理框架、边界模型、访问控制 | 1 份 |
 | [archiving-and-migration/](archiving-and-migration/README.md) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
@@ -74,6 +74,7 @@ flowchart LR
 | [retrospective-forum-bot-logging-20260629/](tools-and-automation/retrospective-forum-bot-logging-20260629/README.md) | 2026-06-29 | 论坛自动化脚本开发与日志增强复盘 |
 | [retrospective-forum-posting-skill-optimization-20260629/](tools-and-automation/retrospective-forum-posting-skill-optimization-20260629/README.md) | 2026-06-29 | 论坛发帖Skill优化复盘，含五要素模型、三层路由任务预检、可用性启发式结构守卫等6个元洞察 |
 | [retrospective-git-local-clone-bug-20260701/](tools-and-automation/retrospective-git-local-clone-bug-20260701/README.md) | 2026-07-01 | Windows 本地路径 `git clone` 触发 Git refs 事务内部异常（`BUG: refs/files-backend.c:3174`），沉淀最小破坏处置协议与 `--no-local` 规避路径 |
+| [retrospective-risk-interceptor-logging-fix-20260728/](tools-and-automation/retrospective-risk-interceptor-logging-fix-20260728/README.md) | 2026-07-28 | 风险拦截器日志测试与跨平台兼容性修复，11项问题修复+2条开发标准落地，萃取默认静默日志架构、严重度平方加权、跨Shell三生态覆盖等6个候选模式 |
 
 ### [process-and-compliance/](process-and-compliance/README.md) — 流程与合规治理
 
@@ -127,7 +128,7 @@ project-governance/
 │   ├── retrospective-mermaid-rendering-regression-20260629/ · Mermaid治理失效复盘
 │   ├── retrospective-mermaid-governance-closure-20260629/ · Mermaid治理闭环执行
 │   └── retrospective-report-document-dedup-insights-20260626/ · 文档去重洞察复盘
-├── tools-and-automation/                        ← 工具与自动化治理（7份）
+├── tools-and-automation/                        ← 工具与自动化治理（8份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-tool-entropy-nonlinear-optimization/ · 工具熵非线性优化
 │   ├── retrospective-report-code-wiki-generation/ · Code Wiki生成
@@ -135,7 +136,8 @@ project-governance/
 │   ├── retrospective-test-plan-and-atomic-commit-20260629/ · 测试计划与原子提交
 │   ├── retrospective-forum-bot-logging-20260629/ · 论坛自动化脚本
 │   ├── retrospective-forum-posting-skill-optimization-20260629/ · 论坛发帖Skill优化
-│   └── retrospective-git-local-clone-bug-20260701/ · Git本地克隆异常排查复盘
+│   ├── retrospective-git-local-clone-bug-20260701/ · Git本地克隆异常排查复盘
+│   └── retrospective-risk-interceptor-logging-fix-20260728/ · 风险拦截器日志修复与跨平台兼容性
 ├── process-and-compliance/                      ← 流程与合规治理（7份）
 │   ├── README.md                                · 主题索引
 │   ├── retrospective-report-create-apps-directory/ · apps/工作空间创建

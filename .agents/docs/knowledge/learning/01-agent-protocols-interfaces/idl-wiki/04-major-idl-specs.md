@@ -56,6 +56,8 @@ message GetUserRequest { int64 id = 1; }
 - `protoc-gen-go/java/python` 等多语言插件
 - `grpcurl`：gRPC 调试工具，类比 curl
 
+> 📖 **深度阅读**：关于 Protobuf 从 proto1 到 proto3 再到 Editions 的完整版本演进历史、各版本核心特性差异对比、选型决策指南和迁移路径，请参阅 [Protobuf版本演进知识库](../protobuf-wiki/README.md)（七概念方法论产出，含版本时间轴、12维度对比矩阵、功能演进史、选型决策树、迁移检查清单）。
+
 ## 3.2 Apache Thrift（Facebook，2007）
 
 **起源背景**：Facebook 于 2007 年为解决跨语言服务开发问题而设计，同年开源并进入 Apache 孵化器，2008 年成为顶级项目。

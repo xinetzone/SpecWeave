@@ -26,6 +26,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/pattern-extraction-cmd/SKILL.tom
 | [CMD-LOG执行日志与质量安全清单](SKILL/04-cmd-log-quality.md) | ptrn-前缀Session格式、S0-S5步骤编号、特有事件定义、日志示例、12项质量门 |
 | [错误处理、Gotchas陷阱与参考速查表](SKILL/05-errors-gotchas-reference.md) | 常见问题处理、反直觉陷阱、关键参考速查表、版本历史 |
 
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，
+> 禁止在CMD_START之前输出任何其他内容。详见 [CMD-LOG执行日志规范](SKILL/04-cmd-log-quality.md)。
+
 ---
 
 ## 相关模式

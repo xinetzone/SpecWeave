@@ -19,8 +19,9 @@ from mdi.generators.utils import (
     escape_docstring,
     make_interface_name,
     map_python_type,
-    snake_to_pascal,
+    parse_default_value,
     sanitize_identifier,
+    snake_to_pascal,
 )
 
 
@@ -179,7 +180,7 @@ class CLIGenerator(BaseGenerator):
             py_type = self._click_type(param.type)
             help_str = param.description.replace("'", "\\'") if param.description else ""
             decorator_parts = [f"'{opt_name}'", f"type={py_type}"]
-            default_val = self._parse_default(param.default, param.type) if param.default is not None else None
+            default_val = parse_default_value(param.default, param.type) if param.default is not None else None
             is_flag = (param.type == "boolean" or param.location == "flag")
             if is_flag:
                 decorator_parts = [f"'{opt_name}'", "is_flag=True"]
@@ -223,25 +224,6 @@ class CLIGenerator(BaseGenerator):
         if type_lower in ("boolean", "bool"):
             return "click.BOOL"
         return "click.STRING"
-
-    def _parse_default(self, default_str: str | None, type_str: str | None) -> Any:
-        """解析默认值字符串为对应Python类型。"""
-        if default_str is None:
-            return None
-        type_lower = (type_str or "").lower()
-        if type_lower in ("boolean", "bool"):
-            return default_str.lower() in ("true", "yes", "1")
-        if type_lower in ("integer", "int"):
-            try:
-                return int(default_str)
-            except ValueError:
-                return default_str
-        if type_lower in ("number", "float"):
-            try:
-                return float(default_str)
-            except ValueError:
-                return default_str
-        return default_str
 
     def _generate_main(self, doc: MDIDocument, module_name: str) -> str:
         """生成__main__.py入口文件。"""

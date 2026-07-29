@@ -1,0 +1,15 @@
+.git
+.trae
+.agents
+__pycache__
+*.pyc
+.env
+.env.*
+workspace/
+notebooks/
+*.md
+!README.md
+.gitkeep
+tests/
+tmp/
+logs/

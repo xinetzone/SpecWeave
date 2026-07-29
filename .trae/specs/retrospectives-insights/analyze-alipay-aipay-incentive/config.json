@@ -1,0 +1,48 @@
+{
+  "_comment": "支付宝AI支付激励计划 - 状态监控配置文件（竹简悟道）",
+  "_usage": "primary_domain设为你的自定义备案域名；填入阿里云AccessKey后可启用实名认证查询",
+
+  "domain": "zhujianwudao.cn",
+  "domains": {
+    "platform": "zhujianwudao.meoo.run",
+    "custom_unusable": "zhujianwudao.app",
+    "custom_target": "zhujianwudao.cn"
+  },
+
+  "aliyun_access_key_id": "",
+  "aliyun_access_key_secret": "",
+
+  "_ak_help": {
+    "how_to_get": "如何获取阿里云AccessKey：",
+    "step1": "登录阿里云控制台 → 右上角头像 → AccessKey管理",
+    "step2": "建议创建RAM子用户并授予 AliyunDomainReadOnlyAccess 权限（只读域名信息，更安全）",
+    "step3": "不要使用主账号AK！创建RAM用户时只给只读权限即可"
+  },
+
+  "_current_status": {
+    "app_name": "竹简悟道",
+    "app_description": "基于《道德经》的AI智慧对话，诸子百家多智能体论道",
+    "tech_stack": "React + TanStack Router PWA",
+    "hosting_platform": "meoo.com (meoo.run, 阿里云杭州CDN)",
+    "platform_domain": "zhujianwudao.meoo.run (正常运行, HTTPS✅, DNS✅)",
+    "app_domain": "zhujianwudao.app (已购买但无法ICP备案-.app后缀未获工信部批复, DNS未配置)",
+    "target_domain": "zhujianwudao.cn (待购买, 用于ICP备案+支付宝接入)",
+    "platform_custom_domain": true,
+    "has_icp": false,
+    "has_payment": false,
+    "ai_models": ["GLM-5", "Kimi K2.5", "Qwen 3.6 Plus", "Qwen 3.5 Plus", "DeepSeek V3.2", "MiniMax M2.5"]
+  },
+
+  "_action_items": [
+    "DONE: 确认meoo.com支持自定义域名绑定",
+    "TODAY: 购买zhujianwudao.cn域名（阿里云）",
+    "TODAY: 提交域名实名认证（个人身份证）",
+    "TODAY-TOMORROW: 购买阿里云轻量应用服务器（≥3个月, 用于备案）",
+    "AFTER_REALNAME: 提交ICP备案申请（个人备案）",
+    "WAITING: 等待备案审核（7-20工作日）",
+    "AFTER_BEIAN: 在meoo后台绑定zhujianwudao.cn",
+    "AFTER_BEIAN: 配置DNS CNAME解析到meoo",
+    "PARALLEL: 开发支付功能（会员/次数包）",
+    "PARALLEL: 注册支付宝开放平台账号"
+  ]
+}

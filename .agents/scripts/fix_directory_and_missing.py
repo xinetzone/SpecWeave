@@ -145,7 +145,7 @@ def fix_single_path(path_str: str, md_dir: Path) -> str:
 
         # 检查是否是 task-reports/ 开头的路径
         if path_part.startswith("task-reports/"):
-            task_target = ROOT / "docs/retrospective/reports" / path_part
+            task_target = ROOT / ".agents/docs/retrospective/reports" / path_part
             if task_target.exists():
                 if task_target.is_dir():
                     readme = task_target / "README.md"
@@ -199,33 +199,9 @@ def fix_frontmatter(content: str, md_path: Path) -> str:
 
 
 def main():
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "check_links",
-        ROOT / ".agents" / "scripts" / "check-links.py"
-    )
-    check_links = importlib.util.module_from_spec(spec)
-    sys.modules["check_links"] = check_links
-    spec.loader.exec_module(check_links)
+    from lib.markdown import apply_fix_to_markdown_files
 
-    from lib.markdown import find_markdown_files
-
-    docs = ROOT / "docs"
-    md_files = find_markdown_files(docs)
-
-    fixed_count = 0
-    for md_path in md_files:
-        content = md_path.read_text(encoding="utf-8")
-        original = content
-
-        content = fix_frontmatter(content, md_path)
-
-        if content != original:
-            md_path.write_text(content, encoding="utf-8", newline="")
-            fixed_count += 1
-            print(f"  Fixed: {md_path.relative_to(ROOT)}")
-
-    print(f"\nTotal fixed: {fixed_count} files")
+    apply_fix_to_markdown_files(ROOT, fix_frontmatter)
 
 
 if __name__ == "__main__":

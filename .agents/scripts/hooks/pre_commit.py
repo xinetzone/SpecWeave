@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测 + 并发模块安全八维检查
+Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测 + 模式V2质量 + 并发模块安全八维检查
 在 git commit 前自动扫描高风险问题并阻断提交。
 
 检查链路（按快速失败原则排序，前置检查更快且面向仓库整体状态）：
   1. 关键配置文件放置校验（受管文件被错误放置到根目录时阻塞）
   2. .temp/ 临时文件生命周期检查（只读，超 30 天内容阻塞提交）
   3. 敏感信息检测（密码/密钥/Token 等）
-  4. 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）
+  4. 模式文档V2质量检查（创新类模式必须含失败案例+反目标用户分析）
+  5. 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）
 
 使用方式：
   1. 通过 install-hooks.py 自动安装（推荐）
@@ -24,6 +25,9 @@ Pre-commit 钩子入口：放置校验 + .temp 生命周期 + 敏感信息检测
     SENSITIVE_CHECK_SKIP=1     完全跳过敏感信息检查
     SENSITIVE_CHECK_WARN_ONLY=1  检测高风险但只警告不阻断（紧急修复用）
     SKIP=sensitive-info-check  同上（兼容 pre-commit 框架习惯）
+  模式质量V2检查：
+    PATTERN_QUALITY_CHECK_SKIP=1 完全跳过模式V2质量检查
+    SKIP=pattern-quality-check   同上
   并发安全检查：
     CONCURRENT_CHECK_SKIP=1       完全跳过并发安全检查
     CONCURRENT_CHECK_WARN_ONLY=1  检测到错误只警告不阻断
@@ -319,6 +323,90 @@ def _run_sensitive_check(project_root: Path, scripts_dir: Path, staged_files: li
     return 0
 
 
+def _run_pattern_quality_check(project_root: Path, scripts_dir: Path, staged_files: list[Path]) -> int:
+    """模式文档V2质量检查：创新/跨领域类模式必须包含失败案例+反目标用户分析。
+
+    仅检查暂存中被修改的模式文档（.md文件在patterns/目录下）。
+    """
+    skip = _env_truthy("PATTERN_QUALITY_CHECK_SKIP")
+    if not skip:
+        skip_env = os.environ.get("SKIP", "").strip().lower()
+        skip = "pattern-quality" in skip_env
+
+    print("=" * 60)
+    print("🔬 模式文档V2质量检查 (Pre-commit Hook)")
+    print("=" * 60)
+    if skip:
+        print(f"\n⚠️  检测到跳过标记，已跳过模式质量检查。")
+        print()
+        return 0
+
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+
+    pattern_files = [
+        f for f in staged_files
+        if ".agents/docs/retrospective/patterns/" in str(f).replace("\\", "/")
+        and str(f).endswith(".md")
+    ]
+
+    if not pattern_files:
+        print("\n✅ 本次提交无模式文档变更，跳过检查。\n")
+        return 0
+
+    print(f"\n📋 待检查模式文件: {len(pattern_files)} 个")
+    for f in pattern_files:
+        print(f"   - {f}")
+
+    try:
+        from lib.check_pattern_quality.checker import check_pattern
+    except ImportError as exc:
+        print(f"\n⚠️  无法加载模式质量检查模块，跳过: {exc}")
+        print()
+        return 0
+
+    errors = []
+    for rel_path in pattern_files:
+        abs_path = project_root / rel_path
+        if not abs_path.exists():
+            continue
+        try:
+            report = check_pattern(abs_path, project_root)
+            file_errors = [
+                r for r in report.results
+                if not r.passed and r.severity == "error"
+                and r.name.startswith("innovation.")
+            ]
+            if file_errors:
+                errors.append((rel_path, file_errors))
+        except Exception as e:
+            print(f"   ⚠️  检查 {rel_path} 时出错: {e}")
+
+    print()
+    if errors:
+        print(f"❌ 检测到 {len(errors)} 个模式文档V2质量不达标，提交已阻断！")
+        print("-" * 60)
+        for rel_path, errs in errors:
+            print(f"\n  📄 {rel_path}:")
+            for err in errs:
+                print(f"     ✗ {err.message}")
+        print("\n💡 修复方法:")
+        print("  创新/跨领域类模式V2强制要求:")
+        print("  1. 至少1个真实失败案例（章节标题含「失败案例」）")
+        print("  2. 至少3类反目标用户/场景分析（章节标题含「不适用/反目标/边界场景」）")
+        print("  3. 建议补充早期预警信号表（≥5个信号）")
+        print("  4. 明确标注适用边界/前提条件")
+        print("  参考: .agents/prompts/reverse-adaptation-innovation-v2-addendum.md")
+        print("\n🔓 临时跳过方式（仅限紧急情况）:")
+        print("  PATTERN_QUALITY_CHECK_SKIP=1 git commit")
+        print("  git commit --no-verify  (跳过所有钩子，最不推荐)")
+        print("=" * 60)
+        return 1
+
+    print("✅ 模式文档V2质量检查通过。\n")
+    return 0
+
+
 def main() -> int:
     project_root = find_project_root()
     scripts_dir = project_root / ".agents" / "scripts"
@@ -350,6 +438,10 @@ def main() -> int:
     result = _run_sensitive_check(project_root, scripts_dir, staged_files)
     if result != 0:
         return result
+
+    pat_result = _run_pattern_quality_check(project_root, scripts_dir, staged_files)
+    if pat_result != 0:
+        return pat_result
 
     try:
         from hooks.concurrent_check import run_concurrent_check

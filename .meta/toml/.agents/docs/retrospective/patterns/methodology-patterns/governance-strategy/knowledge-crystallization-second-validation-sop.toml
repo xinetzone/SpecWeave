@@ -1,0 +1,13 @@
+id = "knowledge-crystallization-second-validation-sop"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "detailed"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-crystallization-second-validation-sop.md"
+
+[bindings]
+rules = []
+references = ["meta-retrospective-closed-loop", "orchestration-execution-layering", "style-anchoring-consistency", "strong-constraint-self-check", "root-cause-diagnosis", "phased-rollout-validation"]
+skills = []

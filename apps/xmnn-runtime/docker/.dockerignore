@@ -1,0 +1,13 @@
+*.pyc
+__pycache__
+.git
+.gitignore
+*.md
+!docker/CONFIG.md
+tests/
+docs/
+*.egg-info
+.mypy_cache
+.pytest_cache
+.trae/
+.agents/

@@ -6,6 +6,9 @@ param(
     [string]$TestUrl = "https://mp.weixin.qq.com/s/5Hwn3et9k-XtEATC-SDR6A"
 )
 
+. (Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "lib\encoding-safety.ps1")
+
+
 Write-Host "=== 微信公众号内容提取验证 ===" -ForegroundColor Cyan
 
 # 1. 检查 defuddle 是否可用
@@ -30,7 +33,7 @@ $tempFile = [System.IO.Path]::GetTempPath() + "wechat-test-" + (Get-Date -Format
 try {
     $result = npx defuddle $TestUrl 2>&1 | Out-String
     if ($result.Length -gt 100) {
-        $result | Out-File -FilePath $tempFile -Encoding UTF8
+        [System.IO.File]::WriteAllText($tempFile, $result, $Utf8NoBomSingleton)
         Write-Host "  提取成功: $(($result | Select-String -Pattern '\S').Count) 行内容" -ForegroundColor Green
         Write-Host "  临时文件: $tempFile" -ForegroundColor Gray
     } else {

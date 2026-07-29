@@ -110,6 +110,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/export-report-cmd/SKILL.toml"
 ## 7. 执行日志（CMD-LOG）
 
 执行导出报告命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 - `cmd=export-report`，session前缀 `exprt-YYYYMMDD-<topic>`
 - 步骤编号 S0-S6（启动→验证源报告→准备内容→格式转换→生成文件→归档索引→链接验证）
 - 9个特有事件：`SOURCE_INVALID`、`SOURCE_VALID`、`METADATA_EXTRACTED`、`FORMAT_CONVERT`、`CONVERT_FAILED`、`FILE_WRITTEN`、`INDEX_UPDATED`、`LINKS_CHECKED`、`BROKEN_LINKS`

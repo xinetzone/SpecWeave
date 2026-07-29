@@ -122,6 +122,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomic-commit-cmd/SKILL.toml"
 ## 7. 执行日志（CMD-LOG）
 
 执行原子提交命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 - `cmd=atomic-commit`，session前缀 `cmt-YYYYMMDD-<short-hash>`
 - 步骤编号 S0-S6（启动→检查范围→预提交验证→构建信息→执行提交→结果验证→推送通知）
 - 关键特有事件：`SCOPE_CHECK`、`UNRELATED_FILES`、`SENSITIVE_FILE`、`TEMP_FILE_FOUND`、`VENDOR_CHANGE`、`CHECK_FAIL`、`VERIFICATION_BLOCKED`、`COMMIT_MSG_BUILT`、`COMMIT_EXECUTED`、`COMMIT_FAILED`

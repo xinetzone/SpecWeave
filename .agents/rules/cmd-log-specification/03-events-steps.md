@@ -167,6 +167,63 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/cmd-log-specification/03-events-s
 ```
 
 
+## 8. 强制日志纪律（不可跳过）
+
+> **背景**：基于2026-07-28对抗审查wiki同步任务复盘发现，执行命令集/Skill门面时跳过S0 CMD_START首条日志，导致执行链路断裂、事后复盘无法追踪完整过程。此问题属于流程执行偏差，违反规范设计初衷，特此制定强制纪律条款。
+
+### 8.1 首条日志铁律
+
+**触发场景**：调用任何已注册CMD-LOG的命令集Skill门面（retrospective/insight/export-report/atomization/atomic-commit/mermaid/pattern-extraction）时。
+
+| 条款 | 内容 | 级别 |
+|------|------|------|
+| **铁律一** | **S0 CMD_START 必须是命令集执行后的第一条输出**。在CMD_START日志行输出之前，禁止执行任何实质性操作（文件读写、代码修改、工具调用、网络请求、脚本执行），也禁止输出任何非CMD-LOG格式的内容。 | 🔴 强制 |
+| **铁律二** | CMD_START 必须包含完整的 `ctx` 字段，记录本次执行的关键参数（命令类型、作用范围、触发来源、目标文件/目录等），确保仅通过S0日志即可理解本次命令"要做什么"。 | 🔴 强制 |
+| **铁律三** | 步骤连续性：步骤之间必须成对出现 `STEP_ENTER` → 业务执行 → `STEP_COMPLETE`，禁止跳过STEP_ENTER直接执行步骤内容（轻量DEBUG日志除外）。 | 🟡 强烈建议 |
+| **铁律四** | CMD_COMPLETE / CMD_ERROR 必须是命令集执行的最后一条输出，且必须与开头的CMD_START具有相同的 `session` ID，形成闭环。 | 🔴 强制 |
+| **铁律五** | 如果命令执行过程中因异常中断或流程违规而未输出CMD_COMPLETE/CMD_ERROR，必须在后续任务复盘中手动补全CMD-LOG链路（参见§8.4事后补全规范）。 | 🟡 强烈建议 |
+
+### 8.2 违规判定标准
+
+出现以下任一情况即判定为日志断裂违规：
+
+1. ❌ 命令集被调用后，第一条输出不是 `[CMD-LOG] | level=INFO | cmd=<name> | step=S0 | event=CMD_START | ...`
+2. ❌ 执行过程中出现实质性工具调用（Edit/Write/Shell/Read等），但此前未输出对应步骤的STEP_ENTER
+3. ❌ 命令执行结束（提交完成/报告生成/文件输出）但未输出CMD_COMPLETE
+4. ❌ 输出了STEP_ENTER但对应步骤未输出STEP_COMPLETE就直接进入下一步骤（异常中断除外，但异常时须输出CMD_ERROR）
+5. ❌ session ID在执行过程中发生变化（同一命令调用内session必须唯一且不变）
+
+### 8.3 正确示例 vs 错误示例
+
+**✅ 正确**：
+```
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S0 | event=CMD_START | session=cmt-20260728-abc123 | msg=开始原子提交：修复wiki链接错误 | ctx={"files":"docs/wiki.md","type":"fix","dry_run":false}
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S1 | event=STEP_ENTER | session=cmt-20260728-abc123 | msg=进入步骤S1：三查暂存验证
+...（执行git status检查）
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S1 | event=STEP_COMPLETE | session=cmt-20260728-abc123 | msg=步骤S1完成：暂存区2个文件，范围清晰
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S4 | event=COMMIT_EXECUTED | session=cmt-20260728-abc123 | msg=提交执行成功：commit a1b2c3d
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S5 | event=CMD_COMPLETE | session=cmt-20260728-abc123 | msg=原子提交完成：commit a1b2c3d，2文件变更 | ctx={"commit":"a1b2c3d","result":"success"}
+```
+
+**❌ 错误（首条日志缺失）**：
+```
+（直接开始执行git status/Edit等操作，没有任何CMD_START输出）
+$ git status
+On branch main...
+[CMD-LOG] | level=INFO | cmd=atomic-commit | step=S4 | event=COMMIT_EXECUTED | ...
+（缺少S0-S3的日志链，无法追溯执行过程）
+```
+
+### 8.4 事后补全规范
+
+若因流程违规导致日志断裂（如本次事件），必须：
+
+1. 创建任务复盘目录（`retrospective-<topic>-<date>/execution-retrospective.md`）
+2. 在复盘中按时间线补全完整的CMD-LOG链路（使用反引号包裹，标注 `[事后补全]`）
+3. 在"根因分析"章节明确标注"日志断裂违规"及根因
+4. 在"预防措施"章节引用本节规范，承诺后续遵守
+5. 提交补全文件本身也必须遵守CMD-LOG规范
+
 ---
 
 ## 相关模式

@@ -1,0 +1,91 @@
+# Docker build ignore for caffe-ffi-jupyter
+# Build context: SpecWeave root
+# Required source: projects/xuanspace/libs/caffe-ffi/
+# The Dockerfile is passed via -f flag and doesn't need to be in context
+
+# Version control
+.git
+.gitmodules
+
+# IDE and OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Agent/trajectory/temp files
+.trae
+.agents
+.temp
+temp
+*.log
+*.bak
+
+# Apps directory - Dockerfile passed via -f, not from context
+apps
+
+# Vendor and external (git submodules, not needed)
+vendor
+external
+playground
+
+# Documentation and specs
+docs
+*.md
+!projects/xuanspace/libs/caffe-ffi/README.md
+!projects/xuanspace/libs/caffe-ffi/CHANGELOG.md
+!projects/xuanspace/libs/caffe-ffi/**/*.md
+
+# Projects: only include xuanspace/libs/caffe-ffi
+projects/*
+!projects/xuanspace/
+projects/xuanspace/*
+!projects/xuanspace/libs/
+projects/xuanspace/libs/*
+!projects/xuanspace/libs/caffe-ffi/
+!projects/xuanspace/libs/caffe-ffi/**
+
+# Exclude build artifacts within caffe-ffi
+projects/xuanspace/libs/caffe-ffi/build
+projects/xuanspace/libs/caffe-ffi/dist
+projects/xuanspace/libs/caffe-ffi/_skbuild
+projects/xuanspace/libs/caffe-ffi/**/__pycache__
+projects/xuanspace/libs/caffe-ffi/**/__pycache__/**
+projects/xuanspace/libs/caffe-ffi/**/*.pyc
+projects/xuanspace/libs/caffe-ffi/.temp
+projects/xuanspace/libs/caffe-ffi/**/.gitkeep
+projects/xuanspace/libs/caffe-ffi/**/*.egg-info
+projects/xuanspace/libs/caffe-ffi/**/*.egg-info/**
+projects/xuanspace/libs/caffe-ffi/**/*.so
+projects/xuanspace/libs/caffe-ffi/**/*.pyd
+
+# Global build artifacts
+**/build
+**/dist
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/.pytest_cache
+**/.mypy_cache
+**/_skbuild
+**/*.egg-info
+
+# Package manager caches
+.conda
+**/conda-bld
+node_modules
+.npm
+.yarn
+
+# Large binary files (not needed for source build)
+*.tar.gz
+*.tar.bz2
+*.zip
+*.pt
+*.pth
+*.pkl
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.whl

@@ -1,0 +1,13 @@
+id = "style-anchoring-consistency"
+domain = "methodology"
+layer = "methodology"
+maturity = "L1"
+validation_count = 3
+reuse_count = 0
+documentation_level = "standard"
+source = "docs/retrospective/patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md"
+
+[bindings]
+rules = []
+references = ["convention-driven-creation", "wiki-pre-creation-three-checks", "format-evidence-over-memory-pattern"]
+skills = []

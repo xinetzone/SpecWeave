@@ -1,0 +1,9 @@
+.git
+.gitignore
+*.ps1
+*.md
+.DS_Store
+Thumbs.db
+__pycache__
+*.tmp
+*~

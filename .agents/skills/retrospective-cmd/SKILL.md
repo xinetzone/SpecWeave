@@ -109,6 +109,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/retrospective-cmd/SKILL.toml"
 ## 7. 执行日志（CMD-LOG）
 
 执行复盘命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 - `cmd=retrospective`，session前缀 `retr-YYYYMMDD-<topic>`
 - 步骤编号 S0-S5（启动→收集事实→分析→提炼洞察→生成报告→归档沉淀）
 - 6个特有事件：`KEY_FINDING`、`PATTERN_EXTRACTED`、`ACTION_ITEM`、`REPORT_GENERATED`、`DATA_INSUFFICIENT`、`PATTERN_SKIPPED`

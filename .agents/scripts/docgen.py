@@ -17,17 +17,23 @@
 """
 
 import argparse
+import json
 import re
 import ssl
 import subprocess
 import sys
 import urllib.error
 import urllib.request
-from dataclasses import dataclass
-from datetime import date
+from dataclasses import dataclass, asdict
+from datetime import date, timedelta
 from pathlib import Path
+from typing import Optional
 
 from constants import ROOT_FILES, TARGETS, MANUAL_DESCRIPTIONS, EXCLUDED_DIRS
+
+
+class StatsSourceError(Exception):
+    pass
 from lib.atomic_write import atomic_write_text
 from lib.frontmatter import parse_frontmatter_unified
 from lib.markdown import (
@@ -254,6 +260,8 @@ def _dash_scan_themes(specs_root: Path) -> list[ThemeStatus]:
             d for d in theme_dir.iterdir()
             if d.is_dir() and d.name not in EXCLUDED_DIRS and (d / "tasks.md").exists()
         ])
+        if not spec_dirs and (theme_dir / "tasks.md").exists():
+            spec_dirs = [theme_dir]
         specs = [_dash_scan_spec(d) for d in spec_dirs]
         themes.append(ThemeStatus(name=theme_dir.name, specs=specs))
     return themes
@@ -611,7 +619,19 @@ def _stats_count_role_files(path: Path) -> int:
 
 def _stats_collect(root: Path) -> ProjectStats:
     agents = root / ".agents"
-    patterns_root = root / "docs" / "retrospective" / "patterns"
+    patterns_root = agents / "docs" / "retrospective" / "patterns"
+
+    critical_paths = [
+        (agents / "scripts", "自动化脚本目录"),
+        (agents / "skills", "Skill 目录"),
+        (agents / "rules", "规则目录"),
+        (agents / "commands", "指令集目录"),
+        (agents / "roles", "角色目录"),
+        (patterns_root, "模式库目录"),
+    ]
+    for path, desc in critical_paths:
+        if not path.exists():
+            raise StatsSourceError(f"统计源路径不存在: {path} ({desc})")
 
     commit_count = _stats_count_commits(root)
     pattern_count = _stats_count_md_files(patterns_root, exclude_readme=True)
@@ -637,6 +657,57 @@ def _stats_collect(root: Path) -> ProjectStats:
     )
 
 
+STATS_ANOMALY_FIELDS = ("commit_count", "pattern_count", "script_count", "rule_count", "command_count")
+STATS_ANOMALY_THRESHOLD = 0.5
+
+
+def _stats_load_snapshot(path: Path) -> Optional[dict]:
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def _stats_save_snapshot(stats: ProjectStats, path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    snapshot = {
+        "commit_count": stats.commit_count,
+        "pattern_count": stats.pattern_count,
+        "script_count": stats.script_count,
+        "skill_count": stats.skill_count,
+        "rule_count": stats.rule_count,
+        "command_count": stats.command_count,
+        "role_count": stats.role_count,
+        "core_entry_count": stats.core_entry_count,
+        "last_updated": stats.last_updated,
+    }
+    path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _stats_validate_with_snapshot(stats: ProjectStats, snapshot_path: Path) -> list:
+    prev = _stats_load_snapshot(snapshot_path)
+    if prev is None:
+        return []
+    warnings = []
+    for field in STATS_ANOMALY_FIELDS:
+        old_val = prev.get(field)
+        new_val = getattr(stats, field)
+        if old_val is None or old_val == 0:
+            continue
+        if new_val < old_val * STATS_ANOMALY_THRESHOLD:
+            warnings.append(
+                f"  ⚠️  {field} 从 {old_val} 降至 {new_val}（降幅 {old_val - new_val}，可能异常，请人工确认）"
+            )
+    if warnings:
+        print("\n[STATS-WARN] 环比异常检测发现以下指标降幅 >50%:", file=sys.stderr)
+        for w in warnings:
+            print(w, file=sys.stderr)
+        print("（如有误报可忽略；如路径迁移/重构导致，请确认计数源路径正确）\n", file=sys.stderr)
+    return warnings
+
+
 def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
     return (
         f"本体系经过 **{stats.commit_count}+ 次真实提交** 持续迭代验证，"
@@ -649,7 +720,7 @@ def _stats_generate_readme_snippet(stats: ProjectStats) -> str:
     )
 
 
-def _stats_generate_agents_changelog_entry(stats: ProjectStats) -> str:
+def _stats_generate_changelog_entry(stats: ProjectStats) -> str:
     base = (
         f"- {stats.last_updated} | docs | 核心数据自动更新：提交数{stats.commit_count}+、"
         f"模式{stats.pattern_count}+、脚本{stats.script_count}+、"
@@ -689,22 +760,34 @@ def _stats_update_badges(content: str, stats: ProjectStats) -> tuple[str, list[s
     badge_replacements = [
         (r"(\[!\[Issues\]\(https://img\.shields\.io/badge/issues-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.issues}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Issues={gc.issues}"),
+         f"Issues={gc.issues}", gc.fetched),
         (r"(\[!\[Pull Requests\]\(https://img\.shields\.io/badge/PRs-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.prs}{m.group(2)}" if gc.fetched else m.group(0),
-         f"PRs={gc.prs}"),
+         f"PRs={gc.prs}", gc.fetched),
         (r"(\[!\[Stars\]\(https://img\.shields\.io/badge/stars-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.stars}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Stars={gc.stars}"),
+         f"Stars={gc.stars}", gc.fetched),
         (r"(\[!\[Forks\]\(https://img\.shields\.io/badge/forks-)[^-]+(-[a-z]+\.svg\))",
          lambda m: f"{m.group(1)}{gc.forks}{m.group(2)}" if gc.fetched else m.group(0),
-         f"Forks={gc.forks}"),
+         f"Forks={gc.forks}", gc.fetched),
+        (r"(\[scripts-badge\]: https://img\.shields\.io/badge/脚本-)[^-]+(-blue\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.script_count}%2B{m.group(2)}",
+         f"脚本={stats.script_count}+", True),
+        (r"(\[skills-badge\]: https://img\.shields\.io/badge/Skills-)[^-]+(-success\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.skill_count}{m.group(2)}",
+         f"Skills={stats.skill_count}", True),
+        (r"(\[rules-badge\]: https://img\.shields\.io/badge/规则-)[^-]+(-orange\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.rule_count}%2B{m.group(2)}",
+         f"规则={stats.rule_count}+", True),
+        (r"(\[commands-badge\]: https://img\.shields\.io/badge/指令集-)[^-]+(-purple\?style=flat)",
+         lambda m: f"{m.group(1)}{stats.command_count}{m.group(2)}",
+         f"指令集={stats.command_count}", True),
     ]
 
     new_content = content
-    for pattern, replacer, desc in badge_replacements:
+    for pattern, replacer, desc, should_log in badge_replacements:
         new_content, count = re.subn(pattern, replacer, new_content, count=1)
-        if count > 0 and gc.fetched:
+        if count > 0 and should_log:
             updates.append(desc)
 
     return new_content, updates
@@ -719,26 +802,35 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
     content = readme.read_text(encoding="utf-8")
     snippet = _stats_generate_readme_snippet(stats)
 
-    pattern = re.compile(
+    new_content = content
+    snippet_updated = False
+
+    for pattern_str in [
+        r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(.agents/docs/project-overview\.md\)。",
         r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(docs/project-overview\.md\)。",
-        re.DOTALL,
-    )
-    new_content, count = pattern.subn(snippet, content, count=1)
-    if count == 0:
-        print("  警告: README.md 中未找到核心数据描述段落，跳过")
-        return False
+    ]:
+        pattern = re.compile(pattern_str, re.DOTALL)
+        new_content, count = pattern.subn(snippet, new_content, count=1)
+        if count > 0:
+            snippet_updated = True
+            break
+
+    if not snippet_updated:
+        print("  提示: README.md 中未找到核心数据描述段落（仅更新徽章）")
 
     new_content, badge_updates = _stats_update_badges(new_content, stats)
 
     changed = new_content != content
     if changed:
         atomic_write_text(readme, new_content, encoding="utf-8")
-        local_msg = f"提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+"
-        badge_msg = ", ".join(badge_updates) if badge_updates else ""
-        msg = f"  已更新: {readme} ({local_msg}"
-        if badge_msg:
-            msg += f", {badge_msg}"
-        msg += ")"
+        parts = []
+        if snippet_updated:
+            parts.append(f"提交{stats.commit_count}+, 模式{stats.pattern_count}+, 脚本{stats.script_count}+")
+        if badge_updates:
+            parts.append(", ".join(badge_updates))
+        msg = f"  已更新: {readme}"
+        if parts:
+            msg += f" ({'; '.join(parts)})"
         print(msg)
         return True
     else:
@@ -746,39 +838,42 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
         return True
 
 
-def _stats_update_agents_changelog(root: Path, stats: ProjectStats) -> bool:
-    agents = root / "AGENTS.md"
-    if not agents.exists():
-        print(f"  跳过: {agents} 不存在")
+def _stats_update_changelog_archive(root: Path, stats: ProjectStats) -> bool:
+    archive = root / ".agents" / "docs" / "retrospective" / "reports" / "project-governance" / "documentation-governance" / "agents-manifest-changelog-archive.md"
+    if not archive.exists():
+        print(f"  跳过: {archive} 不存在")
         return False
 
-    content = agents.read_text(encoding="utf-8")
+    content = archive.read_text(encoding="utf-8")
     changelog_marker = "<!-- changelog -->"
     idx = content.find(changelog_marker)
     if idx == -1:
-        print("  警告: AGENTS.md 中未找到 <!-- changelog --> 标记")
+        print("  警告: 归档文件中未找到 <!-- changelog --> 标记")
         return False
 
-    entry = _stats_generate_agents_changelog_entry(stats)
+    entry = _stats_generate_changelog_entry(stats)
     today_prefix = f"- {stats.last_updated} | docs | 核心数据自动更新"
 
     after_marker = content[idx + len(changelog_marker):]
-    if today_prefix in after_marker.split("\n")[1] if "\n" in after_marker else False:
-        lines = after_marker.split("\n")
-        for i, line in enumerate(lines):
-            if line.startswith(today_prefix):
-                lines[i] = entry
-                break
-        new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
-        atomic_write_text(agents, new_content, encoding="utf-8")
-        print(f"  已更新今日条目: {agents}")
-        return True
+    lines = after_marker.split("\n")
+    today_line_idx = None
+    for i, line in enumerate(lines):
+        if line.startswith(today_prefix):
+            today_line_idx = i
+            break
 
-    insert_pos = idx + len(changelog_marker)
-    new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
-    atomic_write_text(agents, new_content, encoding="utf-8")
-    print(f"  已新增条目: {agents}")
-    return True
+    if today_line_idx is not None:
+        lines[today_line_idx] = entry
+        new_content = content[:idx + len(changelog_marker)] + "\n".join(lines)
+        atomic_write_text(archive, new_content, encoding="utf-8")
+        print(f"  已更新今日条目: {archive}")
+        return True
+    else:
+        insert_pos = idx + len(changelog_marker)
+        new_content = content[:insert_pos] + "\n" + entry + content[insert_pos:]
+        atomic_write_text(archive, new_content, encoding="utf-8")
+        print(f"  已新增条目: {archive}")
+        return True
 
 
 def cmd_stats(args) -> int:
@@ -788,7 +883,15 @@ def cmd_stats(args) -> int:
         return 1
 
     print("收集项目统计数据...")
-    stats = _stats_collect(root)
+    try:
+        stats = _stats_collect(root)
+    except StatsSourceError as e:
+        print(f"错误: {e}", file=sys.stderr)
+        return 1
+
+    snapshot_path = root / ".agents" / ".stats-cache.json"
+    anomaly_warnings = _stats_validate_with_snapshot(stats, snapshot_path)
+
     print(f"  Git 提交数:     {stats.commit_count}+")
     print(f"  可复用模式:     {stats.pattern_count}+")
     print(f"  Python 脚本:    {stats.script_count}+")
@@ -811,10 +914,135 @@ def cmd_stats(args) -> int:
     print("\n更新核心文档...")
     results = []
     results.append(("README.md", _stats_update_readme(root, stats)))
-    results.append(("AGENTS.md", _stats_update_agents_changelog(root, stats)))
+    results.append(("changelog-archive", _stats_update_changelog_archive(root, stats)))
+
+    _stats_save_snapshot(stats, snapshot_path)
 
     updated = sum(1 for _, ok in results if ok)
     print(f"\n完成: 已更新 {updated} 个文件")
+
+    if getattr(args, 'strict_anomaly', False) and anomaly_warnings:
+        print(f"\n[STATS-ERROR] 严格模式：检测到 {len(anomaly_warnings)} 个环比异常，返回退出码 2", file=sys.stderr)
+        return 2
+
+    return 0
+
+
+# ============================================================
+# weekly 子命令：周迭代数据快照
+# ============================================================
+
+def _weekly_count_test_commits(root: Path, days: int = 7) -> int:
+    since = date.today() - timedelta(days=days)
+    try:
+        result = subprocess.run(
+            ["git", "log", f"--since={since.isoformat()}", "--pretty=format:%s"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding="utf-8",
+        )
+        if result.returncode != 0:
+            return 0
+        count = 0
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            if line.startswith("test(") or line.startswith("test:") or line.startswith("test "):
+                count += 1
+        return count
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return 0
+
+
+def _weekly_collect(root: Path, days: int = 7) -> dict:
+    commit_count_total = _stats_count_commits(root)
+    since = date.today() - timedelta(days=days)
+    until = date.today()
+
+    commits_by_type = {
+        "feat": 0,
+        "fix": 0,
+        "refactor": 0,
+        "docs": 0,
+        "test": 0,
+        "chore": 0,
+        "other": 0,
+    }
+    commit_count_week = 0
+
+    try:
+        result = subprocess.run(
+            ["git", "log", f"--since={since.isoformat()}", "--pretty=format:%s"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            timeout=30,
+            encoding="utf-8",
+        )
+        if result.returncode == 0:
+            for line in result.stdout.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                commit_count_week += 1
+                matched = False
+                for t in ["feat", "fix", "refactor", "docs", "test", "chore"]:
+                    if line.startswith(f"{t}(") or line.startswith(f"{t}:") or line.startswith(f"{t} "):
+                        commits_by_type[t] += 1
+                        matched = True
+                        break
+                if not matched:
+                    commits_by_type["other"] += 1
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        pass
+
+    test_commit_count = _weekly_count_test_commits(root, days)
+    test_commit_ratio = round(test_commit_count / commit_count_week * 100, 1) if commit_count_week > 0 else 0.0
+
+    return {
+        "commit_count_total": commit_count_total,
+        "commit_count_week": commit_count_week,
+        "commits_by_type": commits_by_type,
+        "test_commit_count": test_commit_count,
+        "test_commit_ratio": test_commit_ratio,
+        "period_days": days,
+        "period_start": since.isoformat(),
+        "period_end": until.isoformat(),
+    }
+
+
+def cmd_weekly(args) -> int:
+    root = args.path or resolve_project_root(__file__)
+    days = getattr(args, "days", 7)
+
+    if not root.exists():
+        print(f"错误: 项目根目录不存在: {root}", file=sys.stderr)
+        return 1
+
+    stats = _weekly_collect(root, days)
+
+    print("=" * 60)
+    print("周迭代数据摘要")
+    print("=" * 60)
+    print(f"统计周期: {stats['period_start']} ~ {stats['period_end']} (最近{stats['period_days']}天)")
+    print(f"项目总提交数: {stats['commit_count_total']}")
+    print(f"本周提交数:   {stats['commit_count_week']}")
+    print()
+    print("提交类型分布:")
+    max_count = max(stats['commits_by_type'].values()) if stats['commits_by_type'] else 0
+    for t, count in stats['commits_by_type'].items():
+        bar_len = int(count / max_count * 20) if max_count > 0 else 0
+        bar = "█" * bar_len
+        print(f"  {t:<8} {count:>3} {bar}")
+    print()
+    print(f"测试相关提交: {stats['test_commit_count']} ({stats['test_commit_ratio']}%)")
+    if stats['test_commit_ratio'] < 20 and stats['commit_count_week'] > 0:
+        print("  💡 提示: 测试提交占比较低，建议补充测试覆盖")
+    print()
+    print("使用模板进行周复盘: python docgen.py weekly --days 7")
+    print("=" * 60)
+
     return 0
 
 
@@ -879,9 +1107,15 @@ def main():
 
     p_stats = subparsers.add_parser('stats', help='统计并更新 README.md/AGENTS.md 核心数据指标')
     add_common_args(p_stats)
+    p_stats.add_argument('--strict-anomaly', action='store_true', dest='strict_anomaly',
+                         help='严格模式：环比异常（关键指标降幅>50%%）时返回退出码2，不阻断文件更新')
 
     p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps + stats')
     add_common_args(p_all)
+
+    p_weekly = subparsers.add_parser('weekly', help='生成本周数据快照，辅助周复盘')
+    add_common_args(p_weekly)
+    p_weekly.add_argument('--days', type=int, default=7, help='统计最近N天（默认7天）')
 
     args = parser.parse_args()
 
@@ -891,6 +1125,7 @@ def main():
         'apps': cmd_apps,
         'stats': cmd_stats,
         'all': cmd_all,
+        'weekly': cmd_weekly,
     }
 
     if not args.command:

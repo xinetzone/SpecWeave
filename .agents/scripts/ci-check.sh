@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=18
+TOTAL=19
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -203,6 +203,15 @@ if ! python3 -c "import sys; sys.path.insert(0, '$ROOT/.agents/scripts'); from l
     exit 1
 fi
 echo -e "  ${GREEN}PASS (14-30 day warnings are non-blocking)${NC}"
+echo ""
+
+# 19. Check CMD-LOG v1.3.0 compliance (强制日志纪律：5条铁律)
+echo -e "${YELLOW}[19/$TOTAL] Check CMD-LOG v1.3.0 compliance (mandatory log discipline)...${NC}"
+if ! python3 "$ROOT/.agents/scripts/check-cmd-log-compliance.py"; then
+    echo -e "  ${RED}ERROR: CMD-LOG compliance check failed (log chain broken or mandatory rules violated)${NC}"
+    exit 1
+fi
+echo -e "  ${GREEN}PASS (all mandatory log chains closed)${NC}"
 echo ""
 
 echo -e "${CYAN}========================================${NC}"

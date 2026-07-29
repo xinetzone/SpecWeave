@@ -2,11 +2,13 @@
 id: "navigation-hub-filename-contract"
 domain: "methodology"
 layer: "methodology"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 3
 reuse_count: 0
-documentation_level: "basic"
-source: "../../../reports/project-reports/idl-wiki-tutorial-retro-20260704.md#洞察1+洞察4"
+documentation_level: "standard"
+source: 
+  - "../../../reports/project-reports/idl-wiki-tutorial-retro-20260704.md#洞察1+洞察4"
+  - "../../../reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/execution-retrospective.md#四过程问题与修复记录"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.toml"
 rules: []
 references: []
@@ -16,6 +18,7 @@ related_patterns:
   -   - "spec-mode-doc-creation-workflow"
   -   - "bidirectional-navigation-links"
   -   - "link-decay-laws"
+  -   - "medium-task-merged-delegation-strategy"
 ---
 # 导航枢纽文件名契约模式：全局清单 vs 局部清单
 
@@ -162,6 +165,32 @@ general_purpose_task(
 **部分成功**：主 agent 在分派 `00-overview.md` 时提供了部分文件名约束，但仍有一处导航文件名偏差（`05-practice` vs `05-comparison`），主进程在即时验证阶段 10 秒修正。
 
 **对比分析**：该案例主 agent 部分使用了全局契约（列出了文件名但未完整覆盖），断链数 1；IDL Wiki 案例未使用全局契约，断链数 10。断链数与契约完整度负相关。
+
+### 案例3：i-have-adhd Wiki教程（2026-07-28，第三次验证）
+
+**任务背景**：8个批次sub-agent创建11个Wiki文件（10章节+README索引），主题簇合并委派
+
+**失败过程**：
+- Task1子代理创建README.md时，预设了5个文件名（如`03-exception-scenarios.md`、`05-persistence-mechanism.md`）
+- 后续主题簇子代理在实际创建文件时，根据内容细化调整了文件名（改为`03-exceptions-and-checklist.md`、`05-always-on-mechanism.md`等共5处）
+- Task11最终质量门验证时发现并修正5处断链
+
+**关键差异**：本案例中README和00-overview都充当了导航枢纽文件，且采用了主题簇合并委派策略（多个章节由同一子代理在一个任务中创建），子代理在创建章节时自然调整文件名但未同步更新Task1创建的README索引——说明即使不并行，跨任务委派也会产生文件名漂移。
+
+**验证数据**：
+- 导航枢纽文件（README.md + 00-overview.md）断链数：5
+- 分章文件（01-09）内部断链数：0
+- 断链集中率：100%（全部在导航枢纽文件），与本模式预测一致
+
+### 两阶段索引维护法（实践增强）
+
+基于案例3的经验，在全局文件名契约基础上，推荐采用**两阶段索引维护**降低修复成本：
+
+1. **阶段一（规划时）**：README/导航枢纽只列章节标题和序号，文件名标注"以实际创建为准"（而非Task1就写死）
+2. **阶段二（实现时）**：每个章节子代理在创建md文件的同一任务中，同步更新README对应行的文件名链接
+3. **最终关卡**：运行link-check做全量验证作为最后防线
+
+这比"Task1一次性写死所有文件名"更灵活——子代理可以根据内容自然调整文件名，同时索引不会断链。
 
 ## 反模式
 

@@ -1,0 +1,941 @@
+{
+  "scan_date": "2026-07-19",
+  "scan_dir": "D:\\spaces\\SpecWeave\\.agents\\docs\\retrospective\\reports\\insight-extraction",
+  "threshold": 15,
+  "window": 3,
+  "duplicate_count": 46,
+  "total_duplicate_lines": 4116,
+  "files_affected": 48,
+  "duplicates": [
+    {
+      "fingerprint": "5a8ef582bd67bfba",
+      "line_count": 104,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 152,
+          "end_line": 255,
+          "preview": "**观点名称**：先做用户规模，再考虑商业化\n\n采用\"普通用户完全免费+API付费\"的分层商业模式：C端用户免费使用以最大化获客和口碑传播，通过API向B端/开发者用户收费覆盖成本。这种模式的核心是先验证产品价值、积累用户基础，商业化是水到渠成的结果而非首要目标。\n\n开发者明确表示\"md2card可能不是一款成功的商业化产品\"，但1.5万月活用户是宝贵的资产——可以基于其用户基础快速推广新产品。当"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/success-factors.md",
+          "start_line": 3,
+          "end_line": 106,
+          "preview": "date: \"2026-07-07\"\ntype: \"success-factors-analysis\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insigh"
+        }
+      ]
+    },
+    {
+      "fingerprint": "b556db6a61e0ee76",
+      "line_count": 102,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/architecture-insight.md",
+          "start_line": 3,
+          "end_line": 104,
+          "preview": "title: \"架构洞察\"\nsource: \"insight-extraction.md#第三章架构洞察\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-2"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 182,
+          "end_line": 283,
+          "preview": "**效果**：新模型适配时间 < 1 天，多提供商无缝切换\n\n---\n\n## 第三章：架构洞察\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "e78856acd56e006d",
+      "line_count": 86,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 109,
+          "preview": "用户通过 `/spec` 命令触发学习任务,要求学习并理解卡兹克(数字生命卡兹克公众号)撰写的微信公众号文章\"Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查\"。该文章系统阐述了两类高价值 Prompt 工程方法论:第一性原理 Prompt(打断类比推理,回归本质)和对抗式审查 Prompt(多 Agent 攻击者视角,主动发现缺陷),并提出了\"第一性原理管生成 + 对"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 111,
+          "preview": "\n### 1.2 项目目标\n\n- 学习：完整提取并深度理解火山引擎CUA产品架构、技术特性、接入方式\n- 洞察：提炼关键技术洞察（UI自动化范式演进、五层架构设计、多模态执行机制等）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 22,
+          "end_line": 90,
+          "preview": "### 1.3 交付物清单\n\n| 交付物 | 路径 | 状态 |\n|--------|------|------|\n| wiki 文档 | `docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md` | 已完成（434 行，10 章节） |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 28,
+          "end_line": 130,
+          "preview": "\n- **技术深度**：完整提取并理解ClawHub Skill包（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）的使用方式\n- **API覆盖**：深度解析RunAgentTaskOneStep API的完整参数体系、JSONL流式输出格式\n- **部署落地**：覆盖OpenClaw开源AI代理平台部署、双模式鉴权（Ark代理/AK-SK）"
+        }
+      ]
+    },
+    {
+      "fingerprint": "7f22fd4c9ec4445a",
+      "line_count": 82,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 475,
+          "end_line": 556,
+          "preview": "| 一个周末完成 MVP | ⚠️ 特定条件经验 | 低 |\n| 零成本获客实现月活 1.5 万 | ⚠️ 特定条件经验 | 低 |\n| 踩中 AI 爆发期三重痛点窗口 | ❌ 特定条件经验 | 极低 |\n| 复用前作 Markdown 编译核心代码 | ❌ 特定条件经验 | 低 |\n| V2EX 首发即获大量博主推荐 | ❌ 特定条件经验 | 极低 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/specweave-comparison.md",
+          "start_line": 3,
+          "end_line": 84,
+          "preview": "date: \"2026-07-07\"\ntype: \"specweave-comparison\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-ex"
+        }
+      ]
+    },
+    {
+      "fingerprint": "a3fbd4d196525b8d",
+      "line_count": 76,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 99,
+          "preview": "用户通过 `/spec` 命令触发学习任务,要求学习并理解卡兹克(数字生命卡兹克公众号)撰写的微信公众号文章\"Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查\"。该文章系统阐述了两类高价值 Prompt 工程方法论:第一性原理 Prompt(打断类比推理,回归本质)和对抗式审查 Prompt(多 Agent 攻击者视角,主动发现缺陷),并提出了\"第一性原理管生成 + 对"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 99,
+          "preview": "\n### 1.2 项目目标\n\n- 学习：完整提取并深度理解火山引擎CUA产品架构、技术特性、接入方式\n- 洞察：提炼关键技术洞察（UI自动化范式演进、五层架构设计、多模态执行机制等）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 22,
+          "end_line": 79,
+          "preview": "### 1.3 交付物清单\n\n| 交付物 | 路径 | 状态 |\n|--------|------|------|\n| wiki 文档 | `docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md` | 已完成（434 行，10 章节） |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 28,
+          "end_line": 117,
+          "preview": "\n- **技术深度**：完整提取并理解ClawHub Skill包（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）的使用方式\n- **API覆盖**：深度解析RunAgentTaskOneStep API的完整参数体系、JSONL流式输出格式\n- **部署落地**：覆盖OpenClaw开源AI代理平台部署、双模式鉴权（Ark代理/AK-SK）"
+        }
+      ]
+    },
+    {
+      "fingerprint": "48b9479cf7725b9d",
+      "line_count": 75,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 72,
+          "end_line": 146,
+          "preview": "本报告基于微信公众号「独立开发前线」对独立开发者「狂奔滴小马」的深度采访，系统分析了其产品 md2card 从一个周末开发的 MVP 到月活 1.5 万的完整历程。md2card 是一款免费的 Markdown 转知识卡片工具，精准切中了 AI 大爆发时代用户\"将 AI 输出的 Markdown 内容快速分享到社交平台\"的真实痛点。\n\n核心故事脉络：开发者基于前作 MDXNotes 的 Markd"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/core-insights.md",
+          "start_line": 3,
+          "end_line": 77,
+          "preview": "date: \"2026-07-07\"\ntype: \"core-insights\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extractio"
+        }
+      ]
+    },
+    {
+      "fingerprint": "3188d025428a9dff",
+      "line_count": 73,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 381,
+          "end_line": 453,
+          "preview": "6. **持续积累**：每个新产品都为未来的产品积累更多可复用资产，形成正向循环\n\n**关键要点**：速度来自积累而非冲刺；复用不只是代码；技术栈一致性很重要；核心能力模块化；站在肩膀上而非从零开始。\n\n**md2card 案例**：直接复用了MDXNotes的Markdown编译核心代码能力；技术栈（NextJS + TailwindCSS）与前作完全一致；公众号排版经验为卡片排版提供设计积累；"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/critical-analysis.md",
+          "start_line": 3,
+          "end_line": 75,
+          "preview": "date: \"2026-07-07\"\ntype: \"critical-analysis\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extra"
+        }
+      ]
+    },
+    {
+      "fingerprint": "3a369ed84f210c96",
+      "line_count": 64,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 3,
+          "end_line": 66,
+          "preview": "date: \"2026-07-07\"\ntype: \"insight-report\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extracti"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/learning-notes.md",
+          "start_line": 3,
+          "end_line": 66,
+          "preview": "date: \"2026-07-07\"\ntype: \"learning-notes\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extracti"
+        }
+      ]
+    },
+    {
+      "fingerprint": "41f52becd6744a54",
+      "line_count": 58,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 81,
+          "preview": "用户通过 `/spec` 命令触发学习任务,要求学习并理解卡兹克(数字生命卡兹克公众号)撰写的微信公众号文章\"Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查\"。该文章系统阐述了两类高价值 Prompt 工程方法论:第一性原理 Prompt(打断类比推理,回归本质)和对抗式审查 Prompt(多 Agent 攻击者视角,主动发现缺陷),并提出了\"第一性原理管生成 + 对"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 83,
+          "preview": "\n### 1.2 项目目标\n\n- 学习：完整提取并深度理解火山引擎CUA产品架构、技术特性、接入方式\n- 洞察：提炼关键技术洞察（UI自动化范式演进、五层架构设计、多模态执行机制等）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 22,
+          "end_line": 67,
+          "preview": "### 1.3 交付物清单\n\n| 交付物 | 路径 | 状态 |\n|--------|------|------|\n| wiki 文档 | `docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md` | 已完成（434 行，10 章节） |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 28,
+          "end_line": 98,
+          "preview": "\n- **技术深度**：完整提取并理解ClawHub Skill包（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）的使用方式\n- **API覆盖**：深度解析RunAgentTaskOneStep API的完整参数体系、JSONL流式输出格式\n- **部署落地**：覆盖OpenClaw开源AI代理平台部署、双模式鉴权（Ark代理/AK-SK）"
+        }
+      ]
+    },
+    {
+      "fingerprint": "85ad4d5891f0d323",
+      "line_count": 51,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 289,
+          "end_line": 339,
+          "preview": "4. **工具调用架构**：统一的 Tool Registry，硬件工具 + 软件工具\n\n---\n\n## 第四章：方法论总结\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/methodology-summary.md",
+          "start_line": 3,
+          "end_line": 53,
+          "preview": "title: \"方法论总结\"\nsource: \"insight-extraction.md#第四章方法论总结\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis"
+        }
+      ]
+    },
+    {
+      "fingerprint": "23a991204fdf364f",
+      "line_count": 47,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 70,
+          "preview": "用户通过 `/spec` 命令触发学习任务,要求学习并理解卡兹克(数字生命卡兹克公众号)撰写的微信公众号文章\"Vibe Coding 两大神级 Prompt——第一性原理 + 对抗式审查\"。该文章系统阐述了两类高价值 Prompt 工程方法论:第一性原理 Prompt(打断类比推理,回归本质)和对抗式审查 Prompt(多 Agent 攻击者视角,主动发现缺陷),并提出了\"第一性原理管生成 + 对"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 70,
+          "preview": "\n### 1.2 项目目标\n\n- 学习：完整提取并深度理解火山引擎CUA产品架构、技术特性、接入方式\n- 洞察：提炼关键技术洞察（UI自动化范式演进、五层架构设计、多模态执行机制等）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 22,
+          "end_line": 55,
+          "preview": "### 1.3 交付物清单\n\n| 交付物 | 路径 | 状态 |\n|--------|------|------|\n| wiki 文档 | `docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md` | 已完成（434 行，10 章节） |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 28,
+          "end_line": 85,
+          "preview": "\n- **技术深度**：完整提取并理解ClawHub Skill包（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）的使用方式\n- **API覆盖**：深度解析RunAgentTaskOneStep API的完整参数体系、JSONL流式输出格式\n- **部署落地**：覆盖OpenClaw开源AI代理平台部署、双模式鉴权（Ark代理/AK-SK）"
+        }
+      ]
+    },
+    {
+      "fingerprint": "499051207e627c1c",
+      "line_count": 44,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/export-suggestions.md",
+          "start_line": 313,
+          "end_line": 356,
+          "preview": "| ui-automation-three-generations-framework | UI自动化三代范式分析框架 | product-analysis | L2 | 2 | 中 | 待创建 |\n\n### 3.2 更新模式\n\n| 模式ID | 模式名称 | 更新内容 | 优先级 | 状态 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/export-suggestions.md",
+          "start_line": 390,
+          "end_line": 437,
+          "preview": "\n### 3.2 更新/补充现有模式\n\n| 模式ID/位置 | 模式名称 | 更新内容 | 优先级 | 状态 |\n|---------|---------|---------|--------|------|\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "6ca30f6018f3e640",
+      "line_count": 44,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/insight-extraction.md",
+          "start_line": 451,
+          "end_line": 494,
+          "preview": "4. 补充\"按内容重要性+页面类型选择策略\"的决策矩阵\n\n**更新位置**：`web-content-extraction-fallback-chain.md`（如模式尚未创建，则创建时包含这部分内容）\n\n**成熟度建议**：L2 已验证（validation_count=2）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/insight-extraction.md",
+          "start_line": 393,
+          "end_line": 438,
+          "preview": "**核心内容**：分析AI Agent平台/Skill生态类产品时，从五层架构分析：①Skill包管理层（包命名、版本管理、分发平台）→ ②运行时平台（开源/闭源、部署模式、扩展能力）→ ③Skill本身（能力实现、接口定义、工具注册）→ ④接入方式（API/CLI/SDK/UI、云端vs本地）→ ⑤基础设施（依赖模型、存储方案、鉴权体系）。重点关注\"开源平台+商业Skill\"混合模式的架构优劣势"
+        }
+      ]
+    },
+    {
+      "fingerprint": "ad3fe779cb484588",
+      "line_count": 42,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-retrospective.md",
+          "start_line": 243,
+          "end_line": 284,
+          "preview": "**经验教训**：\n- 多语言文档需要建立完整的维护机制\n- 文档更新时应同步更新所有语言版本\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 274,
+          "end_line": 315,
+          "preview": "- 应建立子模块版本锁定机制\n- 应定期检查子模块更新和安全公告\n- 应建立子模块镜像仓库，确保可用性\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "f8a6d170a43b59fd",
+      "line_count": 42,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 28,
+          "end_line": 69,
+          "preview": "---\n\n## 第二章：知识点提炼\n\n### 第一节：技术知识\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/tech-knowledge.md",
+          "start_line": 3,
+          "end_line": 44,
+          "preview": "title: \"技术知识\"\nsource: \"insight-extraction.md#第二章知识点提炼\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analys"
+        }
+      ]
+    },
+    {
+      "fingerprint": "6d05d366fb4cc725",
+      "line_count": 38,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 139,
+          "end_line": 176,
+          "preview": "**优势**：内存占用小、协议栈完整、实时性好\n\n---\n\n### 第四节：问题解决知识\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/problem-solving-knowledge.md",
+          "start_line": 3,
+          "end_line": 40,
+          "preview": "title: \"问题解决知识\"\nsource: \"insight-extraction.md#第二章知识点提炼\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-anal"
+        }
+      ]
+    },
+    {
+      "fingerprint": "2e375a447042f989",
+      "line_count": 36,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-agency-deep-learning-analysis-20260706/execution-retrospective.md",
+          "start_line": 24,
+          "end_line": 59,
+          "preview": "### 1.3 交付物清单\n\n| 交付物 | 路径 | 状态 |\n|--------|------|------|\n| AI Agent 原子化设计分析报告 | `analysis/ai-agent-atomic-design-analysis.md` | 已完成 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/execution-retrospective.md",
+          "start_line": 31,
+          "end_line": 60,
+          "preview": "\n### 1.2 学习目标\n\n1. 理解 Anthropic Skills 的核心机制与设计理念\n2. 梳理 AI 知识喂给的四代演进脉络\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "071972645a757dbe",
+      "line_count": 31,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-phase-details.md",
+          "start_line": 228,
+          "end_line": 258,
+          "preview": "- 4个核心模式（含核心理念、适用场景、实现步骤）\n- 知识点提炼\n\n**阶段备注**：模式萃取完整，每个模式都有清晰的实施步骤。\n\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/phases/phase-6-suggestions-risk.md",
+          "start_line": 1,
+          "end_line": 31,
+          "preview": "---\nid: \"tuyaopen-phase-6-suggestions\"\ntitle: \"Phase 6：改进建议与风险预警\"\nsource: \"execution-retrospective.md#phase-6改进建议与风险预警\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/repor"
+        }
+      ]
+    },
+    {
+      "fingerprint": "b7bb67f2056f02cf",
+      "line_count": 31,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 103,
+          "end_line": 133,
+          "preview": "**适用场景**：嵌入式项目构建、大型 C/C++ 项目\n\n---\n\n### 第三节：工具/框架知识\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/engineering-tool-knowledge.md",
+          "start_line": 29,
+          "end_line": 59,
+          "preview": "**优势**：构建速度快、跨平台支持好、配置灵活\n\n**适用场景**：嵌入式项目构建、大型 C/C++ 项目\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "b3de4dee365c2de3",
+      "line_count": 30,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/export-suggestions.md",
+          "start_line": 10,
+          "end_line": 39,
+          "preview": "\n> **项目名称**：火山引擎Computer Use Agent (CUA)文档学习与深度分析\n> **建议日期**：2026-07-07\n> **报告类型**：导出建议（export-suggestions）\n> **提交哈希**：9231967f\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/export-suggestions.md",
+          "start_line": 9,
+          "end_line": 35,
+          "preview": "## 一、导出内容清单\n\n### 1.1 已完成产出物\n\n| 产出物 | 路径 | 状态 | 复用价值 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/export-suggestions.md",
+          "start_line": 10,
+          "end_line": 44,
+          "preview": "\n> **项目名称**：火山引擎Mobile Use Agent (MUA) Skill与API技术实现指南学习\n> **建议日期**：2026-07-07\n> **报告类型**：导出建议（export-suggestions）\n> **提交哈希**：51901700\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "e4c31d224bdd689a",
+      "line_count": 28,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 261,
+          "end_line": 288,
+          "preview": "API付费覆盖成本（自我造血）+ 用户资产积累（未来新产品基础）\n```\n\n**核心成功公式**：\n> **成功 = 前作技术积累（缩短开发周期）× AI辅助开发（提升开发效率）× 精准时机窗口（需求爆发）× 极致产品体验（零摩擦转化）× 轻量获客策略（自然增长）× 务实商业模式（可持续运营）**\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/methodologies.md",
+          "start_line": 3,
+          "end_line": 30,
+          "preview": "date: \"2026-07-07\"\ntype: \"methodology-extraction\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-"
+        }
+      ]
+    },
+    {
+      "fingerprint": "bcf89394e7520ad5",
+      "line_count": 28,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 224,
+          "end_line": 251,
+          "preview": "\n**可复用经验**:\n1. Markdown 文档内部链接必须使用相对路径，保证文档可移植性\n2. file:/// 绝对路径仅用于 AI 对话输出（Code References 规范），不可用于文档内部\n3. 做决策时要警惕类比推理，回归第一性原理（查阅规范、追溯本质要求）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 213,
+          "end_line": 243,
+          "preview": "| 适用场景 | 最佳场景、不适用场景、典型案例 |\n| 商业化 | 定价模式、开放程度、生态成熟度 |\n| 发展趋势 | 技术路线、演进方向、市场定位 |\n\n**可复用经验**：产品对标分析可采用\"技术-能力-成本-场景-商业-趋势\"六维对比框架，确保对比全面且有决策参考价值。\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 153,
+          "end_line": 177,
+          "preview": "## 四、质量验收\n\n### 4.1 产出物质量\n\n| 产出物 | 验收标准 | 实际质量 | 评分 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 268,
+          "end_line": 301,
+          "preview": "**可复用经验**：\n1. 多URL学习任务使用web-extraction-report批量处理，效率和格式一致性更好\n2. **原始提取内容必须独立持久化保存**（不要只保留分析后的结果），便于溯源核查和后续补充\n3. 采用\"原始抓取→深度分析→最终文档\"三阶段流程，比边提取边写更有条理、质量更高\n4. 不同平台（官方文档+第三方社区）的内容结构差异大，先统一提取再整合分析是更稳妥的方案\n  "
+        }
+      ]
+    },
+    {
+      "fingerprint": "79cc2156d3b67314",
+      "line_count": 27,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d1-classification.md",
+          "start_line": 1,
+          "end_line": 27,
+          "preview": "---\nid: \"tuyaopen-decision-d1\"\ntitle: \"决策 D1：分类归属判定\"\nsource: \"execution-retrospective.md#决策-d1分类归属判定\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extract"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 51,
+          "end_line": 77,
+          "preview": "| D3 | Phase 4 | 应用案例选择：MimiClaw 作为核心案例 | 选择决策 | 中 |\n| D4 | Phase 5 | 模式萃取数量：4个核心模式 vs 更多模式 | 萃取决策 | 中 |\n| D5 | Phase 6 | 改进建议优先级：高3条/中2条/低1条 | 优先级决策 | 高 |\n\n### 决策详情\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "985bc7665ec64734",
+      "line_count": 27,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d3-case-selection.md",
+          "start_line": 1,
+          "end_line": 27,
+          "preview": "---\nid: \"tuyaopen-decision-d3\"\ntitle: \"决策 D3：应用案例选择\"\nsource: \"execution-retrospective.md#决策-d3应用案例选择\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extract"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 110,
+          "end_line": 136,
+          "preview": "**事后评估**：\n- **正确性**：✅ 正确\n- **经验启示**：架构分析应深入到核心价值所在的层级\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "f7a44a06501be859",
+      "line_count": 26,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-retrospective.md",
+          "start_line": 286,
+          "end_line": 311,
+          "preview": "| 改进建议 | 提出改进方向 | 6条改进建议、4个风险预警 | 100% | ✓ |\n| 报告质量 | 结构清晰、内容翔实 | 四文件标准结构、内容完整 | 100% | ✓ |\n\n**综合评分**：\n- **总体达成度**: 100%（等级：优秀）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 317,
+          "end_line": 342,
+          "preview": "| 改进建议 | 提出改进方向 | 6条改进建议、7个风险预警 | 100% | ✓ |\n| 报告质量 | 结构清晰、内容翔实 | 四文件标准结构、内容完整 | 100% | ✓ |\n\n**综合评分**：\n- **总体达成度**: 100%（等级：优秀）\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "5a7b2b4b734ac829",
+      "line_count": 26,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d2-architecture-depth.md",
+          "start_line": 1,
+          "end_line": 26,
+          "preview": "---\nid: \"tuyaopen-decision-d2\"\ntitle: \"决策 D2：架构分析深度\"\nsource: \"execution-retrospective.md#决策-d2架构分析深度\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extract"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 81,
+          "end_line": 106,
+          "preview": "- **正确性**：✅ 正确\n- **如果有遗憾**：无\n- **经验启示**：外部项目分析报告应根据核心内容（方法论萃取 vs 竞品策略）选择分类\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "2a647b97bc585b1e",
+      "line_count": 26,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d4-pattern-count.md",
+          "start_line": 1,
+          "end_line": 26,
+          "preview": "---\nid: \"tuyaopen-decision-d4\"\ntitle: \"决策 D4：模式萃取数量\"\nsource: \"execution-retrospective.md#决策-d4模式萃取数量\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extract"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 140,
+          "end_line": 165,
+          "preview": "**事后评估**：\n- **正确性**：✅ 正确\n- **经验启示**：选择最具代表性的案例进行深度分析，能获得更多可复用知识\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "7e73acf1e39318f5",
+      "line_count": 26,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d5-priority.md",
+          "start_line": 1,
+          "end_line": 26,
+          "preview": "---\nid: \"tuyaopen-decision-d5\"\ntitle: \"决策 D5：改进建议优先级\"\nsource: \"execution-retrospective.md#决策-d5改进建议优先级\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extra"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 169,
+          "end_line": 194,
+          "preview": "**事后评估**：\n- **正确性**：✅ 正确\n- **经验启示**：模式萃取应追求深度而非数量，确保每个模式都有足够的可复用价值\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "5f19011899f85141",
+      "line_count": 25,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 562,
+          "end_line": 586,
+          "preview": "| 文档媒介 | 10. 扩大格式自动化处理范围（frontmatter/结构/图表） |\n| 文档媒介 | 11. 模板定义必填结构，给予内容表达自由度 |\n| 文档媒介 | 12. 通过高质量实际案例引导规范采纳 |\n\n**对 SpecWeave 最大的启示不是\"放松规范\"，而是\"让规范更聪明\"**——在需要探索的地方提供足够的自由度（`.temp/`、L0豁免、渐进式披露），在需要稳定的地方"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/practical-recommendations.md",
+          "start_line": 3,
+          "end_line": 27,
+          "preview": "date: \"2026-07-07\"\ntype: \"practical-recommendations\"\nsource: \"微信公众号「独立开发前线」- 《独立开发前线｜狂奔滴小马：周末做的 md2card，月活 1.5 万》\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insig"
+        }
+      ]
+    },
+    {
+      "fingerprint": "1b12bc90da4afc36",
+      "line_count": 23,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-extraction.md",
+          "start_line": 75,
+          "end_line": 97,
+          "preview": "**优势**：代码复用率高、平台适配快\n\n---\n\n### 第二节：工程化技术栈\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/engineering-tool-knowledge.md",
+          "start_line": 3,
+          "end_line": 25,
+          "preview": "title: \"工程化与工具知识\"\nsource: \"insight-extraction.md#第二章知识点提炼\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-an"
+        }
+      ]
+    },
+    {
+      "fingerprint": "bbcb46f744658709",
+      "line_count": 23,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-retrospective.md",
+          "start_line": 114,
+          "end_line": 136,
+          "preview": "- **经验启示**：多语言文档应采用独立文件模式，便于维护和切换\n\n---\n\n#### 决策 D3：模式萃取数量\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/decisions/decision-d4-pattern-count.md",
+          "start_line": 3,
+          "end_line": 25,
+          "preview": "title: \"决策 D4：模式萃取数量\"\nsource: \"execution-retrospective.md#决策-d4模式萃取数量\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 142,
+          "end_line": 164,
+          "preview": "- **经验启示**：选择最具代表性的案例进行深度分析，能获得更多可复用知识\n\n---\n\n#### 决策 D4：模式萃取数量\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "cb4ed7695e88782d",
+      "line_count": 21,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-agency-deep-learning-analysis-20260706/execution-retrospective.md",
+          "start_line": 39,
+          "end_line": 59,
+          "preview": "## 二、复盘环节\n\n### 2.1 实施过程回顾\n\n```mermaid\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-skills-article-learning-20260629/execution-retrospective.md",
+          "start_line": 43,
+          "end_line": 60,
+          "preview": "| 文章核心内容总结 | 对话内 Markdown | ✅ 已完成 |\n| 执行复盘报告 | Markdown | ✅ 本文件 |\n| 洞察萃取报告 | Markdown | ✅ 已完成 |\n| 导出建议报告 | Markdown | ✅ 已完成 |\n| 报告导航 README | Markdown | ✅ 已完成 |\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/execution-retrospective.md",
+          "start_line": 42,
+          "end_line": 68,
+          "preview": "| 复盘报告五件套 | 本目录 | ✅ 已完成 | 5 个文件 | 2026-07-08 |\n| 洞察原子文件 | [insights/](insights/README.md) | ✅ 已完成 | **11 个洞察原子文件**(4类) | 2026-07-13 |\n| 洞察索引归档 | [insights/README.md](insights/README.md) | ✅ 已完成 | 链接引用"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/execution-retrospective.md",
+          "start_line": 37,
+          "end_line": 68,
+          "preview": "| 任务计划 | [tasks.md](../../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 已完成 | 239行，11个任务 |\n| 验收清单 | [checklist.md](../../../../../../../.tr"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mobile-use-agent-learning-20260707/execution-retrospective.md",
+          "start_line": 33,
+          "end_line": 53,
+          "preview": "## 二、复盘环节\n\n### 2.1 实施过程回顾\n\n```mermaid\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/execution-retrospective.md",
+          "start_line": 44,
+          "end_line": 83,
+          "preview": "| URL提取内容1-5 | extracted-content-1~5.md | 已完成 | 合计634行 |\n| 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-m"
+        }
+      ]
+    },
+    {
+      "fingerprint": "177dfe2866da39f0",
+      "line_count": 20,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-smart-life-learning-20260630/insight-action-backlog.md",
+          "start_line": 5,
+          "end_line": 24,
+          "preview": "type: insight-action-backlog\nsource: \"external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/insight-action-backlog.md",
+          "start_line": 5,
+          "end_line": 24,
+          "preview": "type: insight-action-backlog\nsource: \"external: 模板引用-comprehensive-retrospective-template/insight-action-backlog.md\"\nx-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins"
+        }
+      ]
+    },
+    {
+      "fingerprint": "c8681da9be83b243",
+      "line_count": 19,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/insight-action-backlog.md",
+          "start_line": 1,
+          "end_line": 19,
+          "preview": "---\ntitle: TuyaOpen项目复盘与洞察 - 洞察行动项 Backlog\nversion: \"1.0\"\ndate: 2026-07-06\ntype: insight-action-backlog\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/insight-action-backlog.md",
+          "start_line": 1,
+          "end_line": 13,
+          "preview": "---\ntitle: TuyaOpen目录全链路复盘 - 洞察行动项 Backlog\nversion: \"1.0\"\ndate: 2026-07-06\ntype: insight-action-backlog\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-directory-theme-reorganization-20260703/insight-action-backlog.md",
+          "start_line": 1,
+          "end_line": 18,
+          "preview": "---\ntitle: insight-extraction目录主题划分复盘 - 洞察行动项 Backlog\nversion: \"1.0\"\ndate: 2026-07-06\ntype: insight-action-backlog\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "d95240132148e55b",
+      "line_count": 17,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-cua-learning-20260707/export-suggestions.md",
+          "start_line": 283,
+          "end_line": 299,
+          "preview": "\n**责任人**：orchestrator\n**预计工作量**：5分钟\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-volcengine-mua-skill-api-guide-20260707/export-suggestions.md",
+          "start_line": 357,
+          "end_line": 373,
+          "preview": "\n**责任人**：orchestrator\n**预计工作量**：5分钟\n\n---\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "194056f6d19b1271",
+      "line_count": 16,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuya-home-assistant-learning-20260630/execution-retrospective.md",
+          "start_line": 7,
+          "end_line": 22,
+          "preview": "# Tuya Home Assistant 项目分析执行过程复盘\n\n> **⚠️ 项目已废弃**：Tuya Integration (v2) 代码已不再维护，仅保留文档。完整演进链：Tuya Integration (v2, 废弃) → Smart Life (Beta, 废弃) → Home Assistant Core 2024.2+ (当前方案)\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.md",
+          "start_line": 5,
+          "end_line": 20,
+          "preview": "x-toml-ref: \"../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/execution-retrospective.toml\"\n---\n# TuyaOpen 项"
+        }
+      ]
+    },
+    {
+      "fingerprint": "23e49528f1f94928",
+      "line_count": 16,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/meta-methodology/retrospective-export-suggestions-execution-20260702/insight-action-backlog.md",
+          "start_line": 1,
+          "end_line": 16,
+          "preview": "---\ntitle: 导出建议执行复盘 - 洞察行动项 Backlog\nversion: \"1.0\"\ndate: 2026-07-06\ntype: insight-action-backlog\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-env-and-build-20260702/insight-action-backlog.md",
+          "start_line": 1,
+          "end_line": 19,
+          "preview": "---\ntitle: LLVM Dev环境与构建任务复盘 - 洞察行动项 Backlog\nversion: \"1.0\"\ndate: 2026-07-06\ntype: insight-action-backlog\n  ..."
+        }
+      ]
+    },
+    {
+      "fingerprint": "3dd51eadf19eead3",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 343,
+          "end_line": 357,
+          "preview": "3. **第三步：用户自发传播**：通过产品体验（免费、好用、零门槛）激发用户自发推荐和分享\n4. **第四步：SEO/AI推荐被动流量**：随着品牌知名度提升，搜索引擎和AI助手开始主动推荐产品\n5. **持续迭代**：根据用户反馈优化产品，让增长飞轮越转越快\n\n**关键要点**：首发渠道要精准；内容即营销；产品自身带传播属性；零摩擦体验促进推荐；不急于付费推广。\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/methodologies.md",
+          "start_line": 93,
+          "end_line": 107,
+          "preview": "**关键要点**：首发渠道要精准；内容即营销；产品自身带传播属性；零摩擦体验促进推荐；不急于付费推广。\n\n**md2card 案例**：在V2EX发布完成冷启动，获得大量博主推荐；在小红书、公众号发布使用技巧和视频，零付费推广；当前大部分用户为自主访问，形成自增长效应；小部分来自AI推荐和SEO；零成本实现月活1.5万。\n\n**适用边界**：适用于工具类产品、开发者工具、内容创作者工具；不适用于面"
+        }
+      ]
+    },
+    {
+      "fingerprint": "61a038ea44e1b169",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 361,
+          "end_line": 375,
+          "preview": "4. **开放API付费**：提供API接口，向需要批量处理或集成能力的用户收费\n5. **实现自我造血**：用API收入覆盖服务器等运营成本，让产品可以持续稳定运行\n6. **积累用户资产**：将免费用户视为宝贵资产——他们是未来新产品的潜在用户基础\n\n**关键要点**：免费层要给足；付费用户画像要清晰；先验证价值再商业化；自我造血是底线；用户资产>短期收入。\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/methodologies.md",
+          "start_line": 113,
+          "end_line": 127,
+          "preview": "**关键要点**：免费层要给足；付费用户画像要清晰；先验证价值再商业化；自我造血是底线；用户资产>短期收入。\n\n**md2card 案例**：普通用户完全免费、免登录、不消耗Token；API付费面向有批量处理/系统集成需求的用户；收入虽少但已能覆盖服务器成本；开发者清醒认识到工具类产品C端ARPU低；更看重1.5万月活作为未来新产品的推广基础。\n\n**适用边界**：适用于工具类产品、开发者工具、"
+        }
+      ]
+    },
+    {
+      "fingerprint": "45470825237b3511",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/analysis-report.md",
+          "start_line": 649,
+          "end_line": 663,
+          "preview": "采用\"C端普通用户免费（最大化获客和口碑）+ B端/API用户付费（覆盖成本/商业化）\"的轻量分层商业模式：\n1. **免费层设计**：核心功能全免费——免登录就能用、基础使用不收费、不需要用户配置API Key、导出/下载等核心操作不限制；免费层给足才能最大化获客和口碑（免费用户是口碑传播者，他们生成的内容是活广告）。\n2. **成本控制**：让免费用户\"用得起\"——前端渲染优先减少服务器压力、"
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-md2card-indie-dev-20260707/practical-recommendations.md",
+          "start_line": 100,
+          "end_line": 114,
+          "preview": "4. **商业化节奏**：阶段一（0→1万月活）专心做产品做增长完全不考虑收费；阶段二（1万→5万月活）开放API付费目标是覆盖服务器成本实现\"自我造血\"；阶段三（5万月活以上）再考虑更多商业化可能性；接受工具类C端ARPU低的现实，用户资产比短期收入重要。\n\n**关键提醒**：不要过早收费（产品没做好用户没积累就收费只会吓跑用户）；免费≠低质量（免费用户是口碑传播核心）；清晰界定免费和付费边界（"
+        }
+      ]
+    },
+    {
+      "fingerprint": "6226c213380c0c7b",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 11,
+          "end_line": 25,
+          "preview": "---\n\n## 第一章：改进建议清单\n\n### 🔴 高优先级建议（立即执行）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-1-documentation.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-1\"\ntitle: \"建议 1：增强文档体系建设\"\nsource: \"export-suggestions.md#建议-1增强文档体系建设\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extractio"
+        }
+      ]
+    },
+    {
+      "fingerprint": "9cc041bdbf5d7623",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 29,
+          "end_line": 43,
+          "preview": "**实施难度**：中（需要架构师 + 文档工程师）\n\n**实施时间**：1-2 周\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-2-test-coverage.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-2\"\ntitle: \"建议 2：完善单元测试覆盖\"\nsource: \"export-suggestions.md#建议-2完善单元测试覆盖\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extractio"
+        }
+      ]
+    },
+    {
+      "fingerprint": "a39d77388d0922d1",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 47,
+          "end_line": 61,
+          "preview": "**实施难度**：中（需要测试工程师）\n\n**实施时间**：2-3 周\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-3-error-handling.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-3\"\ntitle: \"建议 3：优化错误处理机制\"\nsource: \"export-suggestions.md#建议-3优化错误处理机制\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extractio"
+        }
+      ]
+    },
+    {
+      "fingerprint": "1d8cd7626604ca0c",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 67,
+          "end_line": 81,
+          "preview": "**实施时间**：1 周\n\n---\n\n### 🟡 中优先级建议（近期规划）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-4-performance-monitoring.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-4\"\ntitle: \"建议 4：增加性能监控能力\"\nsource: \"export-suggestions.md#建议-4增加性能监控能力\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extractio"
+        }
+      ]
+    },
+    {
+      "fingerprint": "c2d063cd017eda5c",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 85,
+          "end_line": 99,
+          "preview": "**实施难度**：中\n\n**实施时间**：2 周\n\n---\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-5-security.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-5\"\ntitle: \"建议 5：增强安全能力\"\nsource: \"export-suggestions.md#建议-5增强安全能力\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/io"
+        }
+      ]
+    },
+    {
+      "fingerprint": "df4b1c150bae5c54",
+      "line_count": 15,
+      "occurrences": [
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/export-suggestions.md",
+          "start_line": 105,
+          "end_line": 119,
+          "preview": "**实施时间**：3-4 周\n\n---\n\n### 🟢 低优先级建议（长期优化）\n  ..."
+        },
+        {
+          "file": ".agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/suggestions/suggestion-6-community.md",
+          "start_line": 1,
+          "end_line": 15,
+          "preview": "---\nid: \"tuyaopen-suggestion-6\"\ntitle: \"建议 6：构建开发者社区\"\nsource: \"export-suggestions.md#建议-6构建开发者社区\"\nx-toml-ref: \"../../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/"
+        }
+      ]
+    }
+  ]
+}

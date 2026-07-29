@@ -29,6 +29,7 @@ date: "2026-07-09"
 | [公理系统一致性第一性原理（Axiom System: Consistency Enables Composability）](axiom-system-consistency-principle.md) | 公理系统一致性第一性原理（Axiom System: Consistency Enables Composability） | L2 | `第一性原理` `公理系统` `一致性` |
 | [规范自举性驱动持续演化](bootstrap-driven-self-evolution.md) | 规范自举性驱动持续演化 | L2 | `meta-methodology` `lifecycle` `bootstrap` |
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
+| [有界迭代预算：长时程自主系统的强制收敛契约](bounded-iteration-budget.md) | 在设计长时程运行、无人值守的自主系统时，必须为每个可能进入循环的子流程设置明确的、强制执行的硬性迭代预算，配合中央预算账本统一管理，并允许跨阶段回溯反馈但要求修改后重验证；预算不是限制优化而是强制收敛契约，从机制上杜绝无限循环、token消耗黑洞、局部最优陷阱。 | L1-draft | `迭代预算` `强制收敛` `长时程自主` `多智能体治理` `token黑洞防护` `熔断机制` `跨阶段反馈` `收敛契约` |
 | [能力复制边界判断法](capability-replication-boundary.md) | 能力复制边界判断法 | L1 | `能力迁移` `产业转移` `组织扩张` |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
@@ -66,6 +67,7 @@ date: "2026-07-09"
 | ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | "实现→审查→加固"三段式SOP：核心机制类代码开发流程 | L2 |  |
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
+| [知识沉淀二次验证SOP](knowledge-crystallization-second-validation-sop.md) | 新萃取L2模式入库后执行R→I→V→E四阶段二次验证，暴露单案例确认偏误盲区，包含8个Task、6类必查视角、截断规则，将模式从"看起来对"提升到"经得起攻击" | L1 | `二次验证` `元复盘` `确认偏误` `SOP` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |  |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
@@ -78,6 +80,7 @@ date: "2026-07-09"
 | [MVP未验证代码债务模式（MVP Unvalidated Code Debt）](mvp-unvalidated-code-debt.md) | MVP未验证代码债务模式（MVP Unvalidated Code Debt） | - |  |
 | [不重构清单：明确划定不改动边界防止范围蔓延](no-touch-list.md) | 不重构清单：明确划定不改动边界防止范围蔓延 | L2 |  |
 | [缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost）](nonlinear-correction-cost.md) | 缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost） | L2 | `非线性成本` `缺陷放大` `质量左移` |
+| [编排-执行分层法：主代理规划+子代理执行的职责分离模式](orchestration-execution-layering.md) | 复杂任务主代理制定Spec三件套、委托子代理在bounded context内完成撰写、逐项验证结果后推进质量门，实现内容创作与流程控制解耦，防止上下文溢出和主代理自欺 | L1 | `编排分层` `子代理` `职责分离` `质量门` |
 | [模式渐进式工具提取：L1实验阶段即可提取轻量工具](pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量工具 | L1 | `pattern-tooling` `progressive-extraction` `checklist` |
 | [方法论推广渐进式验证模式](phased-rollout-validation.md) | 方法论推广渐进式验证模式 | L2 |  |
 | [践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law）](practice-gap-recursive-practice.md) | 践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law） | L3 | `践行鸿沟` `递归践行` `认知偏差` |
@@ -107,7 +110,9 @@ date: "2026-07-09"
 | [规范层纵深防御模型：安全设计前置](spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
+| [强约束语言自检启发式](strong-constraint-self-check.md) | 撰写规则类文档时Grep"必须/禁止"等强约束词，从4个固定视角（非目标用户/极端场景/规则冲突/创意场景）逐条追问反例，柔化有例外的规则；包含3个检查点（源文件V阶段/模式入库前/提示词模板同步时）防止V→E修正回环缺失 | L1 | `强约束` `反例搜索` `多检查点` `规则柔化` |
 | [结构阅读先行（Structure-First Extension）](structure-first-extension.md) | 结构阅读先行（Structure-First Extension） | L3 |  |
+| [风格锚定一致性保证法](style-anchoring-consistency.md) | 新增内容前先读同目录1-2个现有高质量条目作为风格锚，按5维（章节结构/YAML字段/表格格式/语言风格/深度粒度）识别隐式约定后撰写，写完并置对比检查；铁律是必须同目录锚定，禁止跨目录比较 | L1 | `风格锚定` `一致性` `同目录原则` `隐式约定` |
 | [子代理职责分层模式](subagent-responsibility-layering.md) | Subagent的本质是职责分层而非简单分工，主代理专注判断和归纳，子代理负责高噪音强搜索弱决策工作，核心机制是上下文污染隔离。职责分层架构分为主代理（决策层：目标判断、归纳收敛、最终决策、结果摘要）和子代理（执行层：日志检索、文件搜索、测试缺口分析、代码审查、数据采集、模式匹配）。操作步骤包括定义子代理角色、建立摘要传递协议、实现上下文污染隔离。反模式包括子代理=并行加速、主代理亲自做搜索、子代理返回原始数据。迁移验证覆盖七概念执行流程、代码审查平台、数据分析报告生成、团队项目管理。 | L1 | `Subagent` `职责分层` `上下文隔离` |
 | [任务类型优先索引模式（Task-Type-First Indexing）](task-type-first-indexing.md) | 任务类型优先索引模式（Task-Type-First Indexing） | L1 |  |
 | [技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks）](tech-selection-three-checks.md) | 技术选型「偏好-惯例-本质」三查法（Preference-Convention-Essence Three Checks） | L2 | `decision-making` `tech-selection` `three-checks` |
@@ -127,8 +132,10 @@ date: "2026-07-09"
 | [两阶段开发模式（Two-Phase Development: Validate First, Optimize Later）](two-phase-development.md) | 两阶段开发模式（Two-Phase Development: Validate First, Optimize Later） | - |  |
 | [第三方供应商全生命周期治理模型](vendor-lifecycle-governance.md) | 第三方供应商全生命周期治理模型 | L1 |  |
 | [版本涟漪Grep清扫模式：单点更新后的多点引用同步](version-ripple-grep-sweep.md) | 版本涟漪Grep清扫模式：单点更新后的多点引用同步 | L1 | `version-control` `consistency` `grep` |
+| [前沿编译器/解释器版本兼容性最小修复法](compiler-version-compatibility.md) | 前沿编译器/解释器（如GCC 14、Python 3.14）新版本兼容性问题的三步最小化修复法：错误类型区分（严格检查/版本元数据/功能缺失）→最小改动（编译选项/版本约束放宽/单函数补丁）→验证套件确认，避免大版本回退或深度重构 | L1 | `compiler-compatibility` `version-upgrade` `minimal-fix` `gcc` `python` |
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
+| [对称目录结构设计（Symmetric Directory Structure）](symmetric-directory-structure.md) | 对称目录结构设计：为同构区域定义最小结构模板+新增区域对称检查表，消除"临时例外"累积的结构性技术债务，入口先行、规范按需扩展 | L3 | `架构对称性` `目录结构` `技术债务预防` |
 
 ## 📁 子目录导航
 

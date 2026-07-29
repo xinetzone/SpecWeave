@@ -67,6 +67,14 @@ date: "2026-07-09"
 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) | B2B/旗舰产品信息源分层采集规范（五层信息源优先级策略） | `信息采集` `B2B` `SOP` `多源验证` `Defuddle` |
 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) | AI拟人化互动服务极端情绪干预机制技术实施方案（合规方案） | `合规` `安全` `AI安全` `危机干预` |
 | [symbol-visibility-control.md](symbol-visibility-control.md) | C/C++共享库符号可见性控制最佳实践（--exclude-libs,ALL精确控制、静态注册保护、5大反模式） | `C/C++` `linker` `symbol-visibility` `shared-library` `LLVM` `TVM` `CMake` |
+| [trae-agent-sandbox-guide.md](trae-agent-sandbox-guide.md) | TRAE Agent 沙箱配置与使用最佳实践指南（运行模式选择、白名单策略、sandbox.json模板、网络控制、场景实践） | `sandbox` `security` `agent-environment` `configuration` `trae` `newbie-guide` |
+| [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) | Python大版本升级破坏性变更检查清单（multiprocessing默认行为变更、弃用/移除模块、AST节点变更、checklist） | `Python` `version-upgrade` `compatibility` `multiprocessing` `breaking-changes` |
+| [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) | 编译型Python包数据文件生命周期管理（Nuitka/Cython数据文件复制、wheel验证、运行时环境变量设置） | `Python` `Nuitka` `Cython` `wheel` `data-files` `packaging` `TVM` |
+| [docker-declarative-first-principle.md](docker-declarative-first-principle.md) | Docker镜像更新的声明式优先原则（Dockerfile vs docker commit对比、显式ENTRYPOINT/CMD设置、构建决策指南） | `Docker` `Dockerfile` `declarative` `image-build` `containerization` |
+| [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) | Wrapper脚本注入模式（编译型包运行时兼容性修复、runpy.run_path透明转交、过渡性修复策略） | `Python` `wrapper` `runpy` `compiled-package` `runtime-patch` `compatibility` |
+| [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) | DataLoader Pickle序列化问题诊断SOP（5步流程+6种不可序列化模式+3种修复方案+跨启动模式验证矩阵） | `Python` `pickle` `serialization` `multiprocessing` `DataLoader` `diagnosis` `SOP` |
+| [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) | Caffe-Slim TVM FFI环境调试与错误排查手册（6个环境问题完整诊断链、一键验证脚本、WSL配置脚本、准确率判据） | `C++` `FFI` `tvm-ffi` `caffe` `WSL` `shared-library` `ABI` `DL` `troubleshooting` `environment` |
+| [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) | CMake项目模块化重构最佳实践（四层架构+两轮重构策略+公共函数封装+平台操作封装+验收清单） | `CMake` `build-system` `modularization` `refactoring` `cross-platform` `best-practice` `C/C++` |
 
 ---
 
@@ -74,7 +82,7 @@ date: "2026-07-09"
 
 | 场景分类 | 推荐阅读路径 |
 |---------|-------------|
-| 🔧 工具链/环境配置 | [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md) |
+| 🔧 工具链/环境配置 | [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md) → [trae-agent-sandbox-guide.md](trae-agent-sandbox-guide.md) |
 | 🧵 并发编程 | [concurrent-code-safety-review.md](concurrent-code-safety-review.md) → [eight-dimensions-concurrent-safety-spec.md](eight-dimensions-concurrent-safety-spec.md) → [ast-static-analysis-disambiguation.md](ast-static-analysis-disambiguation.md) |
 | 📊 文档/可视化 | [mermaid-guide.md](mermaid-guide.md) |
 | ✏️ 编辑/重构 | [multi-file-edit-reliability.md](multi-file-edit-reliability.md) |
@@ -83,6 +91,13 @@ date: "2026-07-09"
 | 📋 信息采集 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) |
 | 🛡️ 合规安全 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) |
 | 📐 方法论治理 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) |
+| 🐍 Python升级 | [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
+| 📦 编译包管理 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
+| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) |
+| 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
+| 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
+| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
+| 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 
 ---
 

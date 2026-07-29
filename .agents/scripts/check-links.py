@@ -33,6 +33,7 @@ from lib.link_fixer import is_code_fence_context, INLINE_LINK_RE
 from lib.cli import add_common_args, setup_safe_output
 from lib.markdown import find_markdown_files
 from lib.atomic_write import atomic_write_json
+from lib.cache import get_cache_path, load_cache, save_cache
 
 # 匹配引用式链接定义: [ref]: url
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
@@ -98,33 +99,19 @@ def _is_skipped_link_target(url: str) -> bool:
     return False
 
 
-def _get_cache_path(project_root: Path) -> Path:
+def _resolve_cache_path(project_root: Path) -> Path:
     """获取外部链接检查缓存文件路径。"""
-    cache_dir = project_root / CACHE_DIR_NAME
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    return cache_dir / CACHE_FILE_NAME
+    return get_cache_path(project_root, CACHE_FILE_NAME, CACHE_DIR_NAME)
 
 
-def load_cache(project_root: Path) -> dict:
+def _links_load_cache(project_root: Path) -> dict:
     """加载外部链接检查缓存。"""
-    cache_path = _get_cache_path(project_root)
-    if not cache_path.exists():
-        return {}
-    try:
-        with open(cache_path, encoding="utf-8") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, OSError):
-        return {}
+    return load_cache(_resolve_cache_path(project_root))
 
 
-def save_cache(project_root: Path, cache: dict):
+def _links_save_cache(project_root: Path, cache: dict):
     """保存外部链接检查缓存（原子写入，支持多进程并发）。"""
-    cache_path = _get_cache_path(project_root)
-    cache["_metadata"] = {
-        "updated_at": datetime.now().isoformat(),
-        "ttl_days": CACHE_TTL_DAYS,
-    }
-    atomic_write_json(cache_path, cache, ensure_ascii=False, indent=2)
+    save_cache(_resolve_cache_path(project_root), cache, CACHE_TTL_DAYS)
 
 
 def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
@@ -925,7 +912,7 @@ def main(argv=None) -> int:
             return 1
 
     if args.clear_cache:
-        cache_path = _get_cache_path(project_root)
+        cache_path = _resolve_cache_path(project_root)
         if cache_path.exists():
             cache_path.unlink()
             print(f"已清除外部链接缓存: {cache_path}")
@@ -1042,7 +1029,7 @@ def main(argv=None) -> int:
         unique_urls = set(u for _, _, u, _ in external_links)
         print(f"\n2. 检查外部链接（共 {len(unique_urls)} 个唯一 URL，超时 {args.timeout}s）...")
 
-        cache = load_cache(project_root) if not args.no_cache else {}
+        cache = _links_load_cache(project_root) if not args.no_cache else {}
         cache.pop("_metadata", None)
 
         for url in unique_urls:
@@ -1071,7 +1058,7 @@ def main(argv=None) -> int:
                     }
 
             if not args.no_cache:
-                save_cache(project_root, cache)
+                _links_save_cache(project_root, cache)
 
         for file_path, text, url, line_num in external_links:
             status, error = url_results.get(url, (0, "未检查"))

@@ -11,7 +11,8 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/patterns/README.t
 | 目录 | 层级 | 说明 | 入口 |
 |------|------|------|------|
 | architecture-patterns/ | 架构层 | 文件依赖拓扑、级联更新策略、系统结构设计 | [README.md](architecture-patterns/README.md) |
-| code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略 | [README.md](code-patterns/README.md) |
+| code-patterns/ | 代码层 | 具体代码编写、文件操作、编辑策略、构建部署 | [README.md](code-patterns/README.md) |
+| process-patterns/ | 流程层 | 标准化工作流程、操作SOP、执行步骤模板 | [README.md](process-patterns/README.md) |
 | methodology-patterns/ | 方法论层 | 按主题分为8个子目录（复盘知识/外部研究/文档架构/工具自动化/治理策略/AI协作/创意设计/产品增长） | [README.md](methodology-patterns/README.md) |
 | analysis-cards/ | 分析工具层 | 轻量级分析卡片：判断矩阵、信号清单、分级模型，用于竞品分析/产品评估快速决策 | [README.md](analysis-cards/README.md) |
 
@@ -116,13 +117,17 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 32 | 8 | 10 | 0 | 0 |
-| code-patterns/ | 49 | 4 | 5 | 0 | 2 |
-| methodology-patterns/ | 299 | 69 | 45 | 11 | 2 |
+| architecture-patterns/ | 42 | 8 | 11 | 3 | 0 |
+| code-patterns/ | 104 | 4 | 6 | 0 | 2 |
+| process-patterns/ | 10 | 8 | 2 | 0 | 0 |
+| methodology-patterns/ | 397 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **380** | **81** | **60** | **11** | **4** |
+| **合计** | **543** | **81** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）
+> - XMNN pyproject.toml依赖审计复盘（1个L1流程模式入库+1个L1→L2代码模式升级+规范集成）：process-patterns/`python-wheel-dependency-audit-wda4`（L1，WDA-4四步法：静态扫描→动态补全→格式验证→端到端验证）；code-patterns/`compiled-wheel-runtime-image-build`（L1→L2，补充依赖最小化策略/SSOT原则/2个反模式，3案例验证）；已集成至development-standards.md新增"Python Wheel打包与依赖管理规范"章节
+> - daoflows/caffe开源项目知识沉淀（4个架构模式入库，ADR标准格式）：architecture-patterns/`dependency-shimming-layer`（L2，依赖裁剪适配层，compat/shim零侵入渐进式重构）；architecture-patterns/`c-abi-dynamic-binding`（L3，C ABI动态语言绑定，纯C ABI+不透明句柄+DLPack零拷贝）；architecture-patterns/`declarative-op-compiler-backend`（L3，声明式算子+编译器后端，N+M替代N×M多后端支持）；architecture-patterns/`four-step-extension-recipe`（L2，扩展四步法，Schema→生成→实现→5类测试矩阵）
 > - 知乎 637007780 系统性学习与知识萃取复盘（1个L1新模式入库+1个L1→L2模式升级）：research-knowledge/`small-sample-analysis-methodology`（L1）；research-knowledge/`external-website-analysis-fallback-strategy`（L1→L2，新增知乎反爬突破案例）
 > - 火山引擎方舟大模型平台入门文档分析（1个方法论模式入库+3个分析卡片入库+2个模式升级）：research-knowledge/`entry-doc-mirror-analysis`（L1）；analysis-cards/`dual-track-sdk-strategy-framework`（L1）、`default-config-values-probe`（L1）、`feature-layering-maturity-framework`（L1）；ai-collaboration/`subagent-atomic-task-template`升级（validation_count 3→4）；research-knowledge/`external-website-analysis-fallback-strategy`补充/docs/路径预判信号（validation_count 5→6）
 > - 向日葵AI开发者生态Wiki系统学习（2个架构模式入库+3个方法论模式入库）：architecture-patterns/`four-layer-ai-capability-architecture`（L1）、`zero-update-client-design`（L1）；ai-collaboration/`skill-progressive-disclosure-encapsulation`（L1）、`visual-operation-closed-loop`（L1）、`skill-standardized-workflow-pattern`（L1）
@@ -145,6 +150,8 @@ skills = []
 > - 并发安全检查器报告原子化与数据漂移修正（2个方法论模式入库+1个模式增强）：document-architecture/`spec-narrative-separation`（技术规格与叙述报告分离原则，L2）、governance-strategy/`data-validation-four-checks`（量化数据验证四查法，L2）；ai-collaboration/`edit-verify-separation`增强为L2（补充"可复用资产自身验证"5.1章节，元层验证发现模式文件复制错误数据7→9处、2565→2334，增加放大效应风险分析）
 > - 第一性原理交互式知识图谱(ACT-011)复盘（1个架构模式+2个代码模式入库）：architecture-patterns/`markdown-to-knowledge-graph`（L2，Markdown→知识图谱四层混合策略）；code-patterns/`python-script-three-layer-arch`（L2，主脚本+数据模块+模板三层架构）、`css-grid-visualization-zero-dimension`（L2，Grid/Flex可视化容器零尺寸白屏陷阱含预防模板）
 > - 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
+> - Docker模板升级+验证闭环方法论编排复盘（2个代码模式+1个流程模式+1个方法论模式入库）：code-patterns/`dockerfile-python-code-safe-embedding`（L2，Dockerfile中Python代码安全嵌入三方案）、process-patterns/`container-verify-script-permission-model`（L2，容器验证脚本权限安全模型含mkdtemp+显式chmod）、methodology-patterns/governance-strategy/`template-placeholder-granularity-design`（L2，模板占位符粒度设计三类型+命名规范）；skeleton模板升级6项：USER root、双sed源替换、UID/GID冲突处理、chown conda bin、chmod 2775、三个新占位符
+> - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
 
 ## 使用方式
 

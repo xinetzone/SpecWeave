@@ -85,7 +85,10 @@ flowchart TD
 | 节点内换行使用`<br/>` | 2处 | C节点和G节点使用<br/>换行说明 |
 | **Mermaid代码行数** | 26行→19行 | 净减7行，更简洁 |
 
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S0 | event=CMD_START | session=retro-20260710-mermaid-fix-first-principles | msg=开始复盘：Mermaid列表触发问题第一性原理修复 | ctx={"retro_topic":"mermaid-list-fix-first-principles","retro_type":"task"}
 [CMD-LOG] | level=INFO | cmd=retrospective | step=S1 | event=KEY_FINDING | session=retro-20260710-mermaid-fix-first-principles | msg=事实收集完成：问题定位准确，修复后check-mermaid验证通过 | ctx={"error_type":"mermaid_list_trigger","root_cause_identified":true,"fix_lines":18,"validation_passed":true}
+[CMD-LOG] | level=INFO | cmd=retrospective | step=S5 | event=CMD_COMPLETE | session=retro-20260710-mermaid-fix-first-principles | msg=复盘完成：mermaid列表触发Bug定位+18行修复+check-mermaid验证通过 | ctx={"duration":"~30min","error_type":"mermaid_list_trigger","fix_lines":18,"validation_passed":true}
+
 
 ---
 

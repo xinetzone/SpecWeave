@@ -5,3 +5,8 @@
 [submodule "vendor/ark-cli"]
 	path = vendor/ark-cli
 	url = git@github.com:volcengine/ark-cli.git
+
+[submodule "projects/xuanspace"]
+	path = projects/xuanspace
+	url = git@github.com:xinetzone/xuanspace.git
+	branch = main

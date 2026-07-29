@@ -19,8 +19,12 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [periodic-check-caching.md](periodic-check-caching.md) | 定期检查类工具缓存机制，可配置TTL/--no-cache/--clear-cache，HTTP请求从10-20秒降至<1秒 | L1 实验性 | CLI检查工具、外部资源访问工具、CI脚本 |
 | [parallel-subprocess-observability.md](parallel-subprocess-observability.md) | 并行子进程全链路可观测模式：命令参数精简+ThreadPoolExecutor并行+三阶段日志+加速比自证，子模块检查耗时↓68% | L2 已验证 | 多目标批量检查CLI、子模块管理工具、多服务健康检查、批量文件处理 |
 | [dual-channel-tiered-logging.md](dual-channel-tiered-logging.md) | 分级日志双轨输出模式：控制台INFO+文件DEBUG，含语义化日志函数、静态资源过滤、Handler级别控制 | L2 已验证 | CLI工具、自动化脚本、浏览器自动化 |
+| [bash-unified-structured-logging.md](bash-unified-structured-logging.md) | Bash脚本统一结构化日志库：独立lib/logging.sh通过source加载，支持text/json双格式+log/metric/event/summary四类API+级别过滤+上下文字段，适配监控平台采集 | L2 已验证 | Bash/Shell部署脚本、CI/CD流水线脚本、WSL/Linux运维脚本、需要JSON Lines输出的自动化工具 |
 | [tuyaopen-tos-cli-command-registry.md](tuyaopen-tos-cli-command-registry.md) | 单入口 + 子命令注册表模式（click + 字典注册），便于工具链多子命令扩展 | L1 实验性 | 工具链CLI、脚手架CLI、多子命令程序 |
 | [check-and-restore.md](check-and-restore.md) | 检查函数状态恢复模式：检测前保存状态→优先就地检测→必要时导航后恢复URL，遵循CQS原则 | L2 已验证 | 浏览器自动化状态检查、API客户端、数据库操作 |
+| [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
+| [cross-platform-backtrace-leak-diagnosis.md](cross-platform-backtrace-leak-diagnosis.md) | 跨平台堆栈回溯泄漏源定位：构造时捕获调用栈+析构TRACE输出+Windows DbgHelp/Linux execinfo双平台+编译期开关零开销，形成检测→定位完整诊断闭环 | L2 已验证 | C++原生扩展FFI项目内存泄漏诊断、跨平台C++开发、需要精确定位泄漏源的调试场景 |
+| [cpp-object-wrapper-lazy-init-check.md](cpp-object-wrapper-lazy-init-check.md) | C++对象包装延迟初始化防御：公共方法入口第一行检查!defined()/!valid()，首次初始化作为独立分支处理，避免空指针解引用 | L1 候选 | 包装第三方值类型对象(TVM Tensor/optional/FFI句柄)、默认构造+延迟初始化模式 |
 | [cross-platform-encoding-enforcement.md](cross-platform-encoding-enforcement.md) | 跨平台输出编码三层防御体系：入口编码设置+防御性能力检测+Unicode/ASCII适配输出，避免Windows GBK终端崩溃 | L2 已验证 | Python CLI工具、跨平台脚本、subprocess调用 |
 | [defensive-attribute-access.md](defensive-attribute-access.md) | 外部对象防御性属性访问：getattr→callable→try-except三层防护，应对属性不存在/None/不可调用/抛异常场景 | L2 已验证 | CLI工具库、stream操作、插件接口、mock环境下的防御性编程 |
 | [direct-file-write-over-shell-pipe.md](direct-file-write-over-shell-pipe.md) | 文档生成直写文件优先：避免 Windows PowerShell 文本管道在落盘阶段污染中文内容 | L1 实验性 | README/报告生成、Markdown导出、知识库条目写回 |
@@ -28,12 +32,14 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [path-anchor-semantization.md](path-anchor-semantization.md) | 路径锚点语义化：每级parent赋予语义变量名，避免链式.parent.parent计算差一级的常见bug | L1 实验性 | 项目内路径计算、脚本路径定位、包根目录查找 |
 | [async-setup-future-deduplication.md](async-setup-future-deduplication.md) | 装配并发去重：以组件key维护Future并复用，确保并发装配一致结果/一致失败 | L1 实验性 | 插件/组件装配、依赖闭包、并发初始化 |
 | [bulk-replace-zero-omission-verify.md](bulk-replace-zero-omission-verify.md) | 批量替换零遗漏验证：replace_all后全局Grep旧字符串确认零匹配，低成本高收益质量门禁（ROI>60x） | L2 已验证 | 全局重命名/重构、跨文件格式统一、配置项变更后 |
+| [dockerfile-python-code-safe-embedding.md](dockerfile-python-code-safe-embedding.md) | Dockerfile中Python代码安全嵌入：RUN中禁止多行缩进Python代码块，提供单行格式/临时脚本/COPY+RUN三种方案 | L2 已验证 | Dockerfile内嵌Python验证代码、Docker模板编写、构建时ldd/import/功能测试 |
 | [skill-three-part-structure.md](skill-three-part-structure.md) | 技能三分结构：SKILL最小入口 + references按需长文档 + scripts可执行动作 | L1 实验性 | AI Skills 设计、工作流知识包、可执行SOP沉淀 |
 | [script-json-output-contract.md](script-json-output-contract.md) | 脚本可编排输出契约：统一 --json 输出字段与退出码，避免输出不可解析 | L1 实验性 | CLI脚本、Agent编排、CI工具 |
 | [session-file-externalization.md](session-file-externalization.md) | 会话外部化：用 session file 解耦多命令状态，支持跨进程协同 | L1 实验性 | start/tail/stop 工具、后台守护脚本 |
 | [path-traversal-guard.md](path-traversal-guard.md) | 路径越界防护：realpath/resolve + 前缀校验，阻断任意路径访问 | L1 实验性 | 接受路径参数的脚本、批量检查/修复工具 |
 | [pre-kill-identity-verification.md](pre-kill-identity-verification.md) | 停止前身份校验：kill 前先校验 cmdline 属于目标进程，避免误杀 | L2 已验证 | stop/kill 类脚本、后台监控工具 |
 | [example-driven-test-generation.md](example-driven-test-generation.md) | 示例驱动测试生成：从文档代码块提取真实测试数据，配合检查清单→断言转换，解决文档漂移 | L1 实验性 | API文档→测试代码生成、接口测试自动化 |
+| [framework-parameter-semantics-verification.md](framework-parameter-semantics-verification.md) | 框架参数语义验证：DL算子测试前必查源码确认参数行为（广播/默认值/维度语义），防止凭直觉写错误参考实现 | L2 已验证 | DL框架(Caffe/PyTorch/TF)算子正确性测试、API行为验证 |
 | [structured-doc-diff-semver.md](structured-doc-diff-semver.md) | 结构化文档Diff与SemVer建议：字段级对比→严重性分级→影响分析→版本建议 | L1 实验性 | IDL/配置Schema版本管理、API变更审查 |
 | [directive-state-machine-parsing.md](directive-state-machine-parsing.md) | Directive参数状态机解析：首行匹配→选项行状态机→正文识别三阶段解析MyST扩展语法，避免巨型正则 | L1 实验性 | Markdown自定义扩展语法解析、多类型directive统一解析框架 |
 | [checklist-to-assertion-conversion.md](checklist-to-assertion-conversion.md) | 检查清单→断言转换：关键词分类（前置/断言/后置/注释）+专项正则提取，将人类验收标准转为测试步骤 | L1 实验性 | 文档驱动测试生成、Docs-as-Tests工具链 |
@@ -62,6 +68,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [exception-precision-guards.md](exception-precision-guards.md) | 异常精确性守卫：只捕获可恢复异常，TypeError/AttributeError等编程错误自然抛出 | L2 已验证 | 配置加载、IO操作、库函数异常处理 |
 | [idempotent-shell-config.md](idempotent-shell-config.md) | Shell幂等配置修改：先删后增+set -euo pipefail+原子替换，重复执行结果一致 | L2 已验证 | 系统配置修改、安装脚本、Dockerfile配置 |
 | [command-injection-prevention.md](command-injection-prevention.md) | 命令构造防注入：列表形式优先，必须shell时shlex.quote每个嵌入变量 | L2 已验证 | subprocess调用外部命令、docker/ssh/git等 |
+| [shell-nested-quote-file-based-strategy.md](shell-nested-quote-file-based-strategy.md) | 多层命令嵌套的文件化规避策略：写入脚本文件→挂载到容器→执行→文件系统读取输出，避免>3层引号转义和sandbox输出过滤 | L1 实验性 | CI/CD/sandbox环境多层命令嵌套、跨PowerShell/bash/docker执行 |
 | [lightweight-multi-dimensional-recommender.md](lightweight-multi-dimensional-recommender.md) | 无依赖轻量级多维度推荐算法：4维加权评分+字符bigram Jaccard+类型相容性矩阵，<500节点规模Top1准确率100% | L2 已验证 | 知识图谱关联推荐、标签推荐、相关文档推荐、中小规模实体匹配 |
 | [configurable-by-default-principle.md](configurable-by-default-principle.md) | 可配置性默认原则：业务规则/阈值/关键词通过构造函数注入，提供合理默认值但允许覆盖，避免硬编码 | L2 已验证 | 仲裁/调度/评分类核心机制、可复用库、多环境适配模块 |
 | [git-bundle-offline-clone.md](git-bundle-offline-clone.md) | Git Bundle离线克隆五步法：预检→SHA256校验→分支预览→并行克隆→状态验证，配套PowerShell一键脚本 | L1 实验性 | 离线代码交付、网络受限环境、U盘/移动硬盘介质交付、代码审计 |
@@ -71,11 +78,41 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [python-implicit-dependency-detection.md](python-implicit-dependency-detection.md) | Python包隐式依赖检测四步法：静态扫描import→逐层import测试→检查安装状态→分层安装策略，应对Python import惰性链式触发的"洋葱式发现" | L1 实验性 | Python wheel运行时镜像构建、新环境依赖验证、pyproject.toml隐式依赖排查 |
 | [docker-commit-config-reset.md](docker-commit-config-reset.md) | docker commit 入口配置显式重置：--change清空ENTRYPOINT/CMD，避免保活配置泄漏到提交镜像 | L1 实验性 | docker commit增量更新镜像、热修复镜像 |
 | [shell-cleanup-non-blocking.md](shell-cleanup-non-blocking.md) | Shell脚本清理操作非阻塞模式：三种清理策略（非致命/延迟/root级），应对sticky bit+set -e组合导致的脚本中断 | L1 实验性 | Shell脚本文件清理、Docker导出脚本、set -e脚本 |
+| [codegen-triple-safety.md](codegen-triple-safety.md) | 代码生成三保险模式：工具版本锁+多路径一次生成+运行时闭环验证，应对编译器版本漂移、多副本不一致、编译成功但运行时失败三类陷阱 | L1 实验性 | Protobuf/gRPC/FlatBuffers/Thrift等IDL代码生成、GraphQL codegen、ORM自动生成、数据库迁移脚本 |
+| [api-reference-verification.md](api-reference-verification.md) | API参考验证三步法：查参考实现→查API签名→查调用示例，消除基于经验假设引入的冗余transpose/reshape操作 | L2 已验证 | DL框架算子使用、数据处理库axis参数、通道顺序处理、数学库矩阵布局 |
+| [try-prepare-merge.md](try-prepare-merge.md) | TryPrepare判定准备合并模式：_try_prepare_X()函数一次完成校验+参数计算，返回参数元组或None元组，消除判定函数与准备函数的重复计算 | L2 已验证 | 格式转换、条件编译、可选优化、类型转换、快路径尝试+回退逻辑 |
+| [tvm-ffi-python-wrapper-dual-mode.md](tvm-ffi-python-wrapper-dual-mode.md) | TVM-FFI Python Wrapper双模式包装五要素：继承Object+_type_key+__slots__+__new__初始化+_is_native双模式分发，解决C++返回对象绕过__init__导致的属性缺失 | L1 候选 | TVM-FFI/Pybind11 C++对象Python绑定、FFI包装类、双模式（原生+纯Python后备）对象 |
+| [conda-custom-channels-mirror.md](conda-custom-channels-mirror.md) | Conda镜像源精确映射：custom_channels逐channel显式声明替代channel_alias全局替换，避免镜像服务路径结构调整导致的静默404 | L2 已验证 | Docker构建conda环境、CI/CD流水线、开发机condarc配置、企业内网镜像 |
+| [python-314-multiprocessing-fork-compat.md](python-314-multiprocessing-fork-compat.md) | Python 3.14 Multiprocessing Fork兼容模式：wrapper脚本注入+set_start_method强制fork，应对forkserver默认变更导致lambda不可pickle | L1 实验性 | Python 3.14+项目迁移、DataLoader worker启动失败、编译型包兼容性修复 |
+| [pickle-serialization-source-fix.md](pickle-serialization-source-fix.md) | Pickle序列化源码层修复模式：模块级命名类替换lambda，从源头消除不可pickle对象（治本），与运行时兼容层互补 | L2 已验证 | 可改源码的lambda/闭包pickle修复、DataLoader transform序列化、Python 3.14 forkserver兼容 |
+| [python-package-version-standard-api.md](python-package-version-standard-api.md) | Python包版本验证标准API：使用importlib.metadata.version()替代__version__属性访问，应对PEP 517/518/621新构建后端不再注入__version__的兼容性问题 | L2 已验证 | Dockerfile包验证、CI安装验证、跨Python版本项目、安装脚本/healthcheck |
+| [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
+| [env-var-alias-backward-compat.md](env-var-alias-backward-compat.md) | 环境变量别名向后兼容：检查新变量是否仍为Dockerfile ENV默认值（而非检查是否为空），解决旧变量名在重命名后静默失效的问题 | L2 已验证 | Docker镜像ENTRYPOINT脚本、配置文件迁移、CLI选项重命名 |
+| [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH修复：三层配置（ENV+environment+profile.d），解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行 |
+| [docker-image-offline-export-distribution.md](docker-image-offline-export-distribution.md) | Docker镜像离线构建-验证-导出-分发六步标准流程：环境预检→构建→G1功能验证→导出+校验→G3删除-加载-再验证→交付，三重质量门确保离线分发包可用 | L2 已验证 | Docker镜像离线分发、内网隔离环境部署、CI镜像归档、新机器交付 |
+| [wsl-docker-command-safety.md](wsl-docker-command-safety.md) | WSL环境下Docker操作安全命令模式：简单命令直传避免bash -c嵌套、路径统一/mnt/格式、复杂操作脚本化，解决PowerShell→wsl→bash三层变量展开陷阱 | L2 已验证 | Windows+WSL2 Docker操作、wsl.exe跨层调用Docker、PowerShell执行Docker命令 |
+| [powershell-wsl-cross-shell-wrapper.md](powershell-wsl-cross-shell-wrapper.md) | PowerShell→WSL跨Shell包装器模式：自动检测wsl.exe+发行版自动选择+Windows↔WSL路径转换+Docker预检+参数透传+退出码传递，消除"先进入WSL终端"的认知负担 | L2 已验证 | WSL2部署脚本Windows入口、CI/CD Windows runner调用Linux工具链、跨环境自动化脚本 |
+| [wsl2-docker-selection-decision.md](wsl2-docker-selection-decision.md) | WSL2 Docker方案决策模式：11项实测性能基准+7种场景决策矩阵+文件系统性能提示+常见陷阱（credential helper/9p协议/systemd），解决Docker Desktop vs 原生Docker选型困惑 | L2 已验证 | WSL2部署指南Docker环境章节、Windows开发环境搭建、DevOps环境选型、CI/CD runner配置 |
+| [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) | Dockerfile构建时与运行时配置分离原则：RUN层处理静态安装/编译/复制，ENTRYPOINT处理动态密钥/配置/权限，验证服务必须经过ENTRYPOINT完整启动链 | L2 已验证 | 多阶段Dockerfile设计、容器化服务镜像、SSH/TLS密钥安全、ENTRYPOINT脚本编写 |
+| [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
+| [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) | 深度学习零拷贝分批推理防御：pad→forward→copy=True→slice四步法+单样本一致性校验，解决DLPack/zero-copy view在下一批forward后被静默覆盖的陷阱 | L2 已验证 | DL推理API无自动批处理、C++推理引擎Python绑定、Caffe/ONNX Runtime/TensorRT分批推理 |
+| [pretrained-model-download-validation.md](pretrained-model-download-validation.md) | 预训练模型多源下载与多级验证：≥3源URL fallback+大小预估+magic bytes检测+加载验证+准确率校验，应对GitHub LFS pointer/截断文件/HTML错误页 | L2 已验证 | .caffemodel/.pth/.onnx/.safetensors下载、CI模型获取、不可靠网络环境、教学模型获取 |
+| [cross-language-three-layer-logging.md](cross-language-three-layer-logging.md) | 跨语言三层协调日志：C++ RAII Logger+编译期零开销闸门+FFI薄桥接+Python统一配置入口，一个setup_debug()同时控制两层日志粒度 | L3 可复用 | C/C++/Rust原生扩展+Python绑定、pybind11/tvm-ffi/PyO3跨语言项目、深度学习框架 |
+| [resource-counter-primitive-binding.md](resource-counter-primitive-binding.md) | 资源计数器原语绑定（RAII资源追踪）：计数器增减绑定到最低层Alloc/Free原语，而非高层业务代码，原子操作+调用点日志+线程安全，杜绝高层遗漏导致的计数偏差 | L2 已验证 | FFI原生扩展内存管理、RAII资源生命周期追踪、跨语言内存泄漏检测基础设施 |
+| [zero-copy-tensor-verification.md](zero-copy-tensor-verification.md) | 零拷贝张量访问四维验证：类型/形状一致→写入回读→拷贝隔离→持久共享，确保DLPack/FFI张量视图的内存共享语义正确而非意外拷贝或悬挂指针 | L2 已验证 | DLPack/FFI零拷贝张量共享、C++/Python跨语言张量视图、tvm-ffi/pybind11/PyO3张量绑定、in-place修改语义验证 |
+| [ffi-memory-leak-autouse-fixture.md](ffi-memory-leak-autouse-fixture.md) | FFI内存测试自动泄漏检测：pytest autouse fixture通过基线对比（字节数+对象数双维度）+强制GC+opt-out机制，零侵入自动检测原生内存泄漏 | L2 已验证 | C/C++/Rust原生扩展Python绑定测试、FFI层内存泄漏CI门禁、RAII正确性验证 |
+| [conversion-point-debug-tracing.md](conversion-point-debug-tracing.md) | 数据转换点调试追踪：关键边界插入shape+dtype+值范围日志，快速定位精度丢失/shape mismatch/静默截断 | L2 已验证 | 数据预处理管道、模型推理链路、类型转换密集代码 |
+| [structured-lightweight-logging.md](structured-lightweight-logging.md) | 结构化轻量日志：字段固定顺序+管道符分隔+一行一事件，grep/awk可直接分析，无需日志框架 | L1 实验性 | CLI工具、Shell脚本、性能敏感路径日志 |
+| [three-layer-performance-optimization.md](three-layer-performance-optimization.md) | 三层性能优化方法论：算法→工程→编译逐级优化，先profiling再优化，避免过早优化陷阱 | L1 实验性 | 性能调优、计算密集型代码优化 |
+| [cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md) | CMake四层模块化架构：选项→依赖→函数→目标分层拆分，两轮重构策略（物理拆分+逻辑抽象），include顺序即依赖声明 | L1 实验性 | CMakeLists.txt超过100行的C/C++项目模块化，多目标（库+测试+示例）构建 |
+| [cmake-public-target-config-function.md](cmake-public-target-config-function.md) | CMake公共目标配置函数：封装target_*为带VISIBILITY参数+完整参数校验的function()，消除跨文件重复配置 | L1 实验性 | 多目标CMake项目重复编译配置消除，PUBLIC/PRIVATE/INTERFACE可见性控制 |
+| [cmake-platform-specific-operation-encapsulation.md](cmake-platform-specific-operation-encapsulation.md) | CMake平台特定操作封装：平台专用文件+细粒度函数+聚合函数+通用工具三级API，统一参数校验宏 | L1 实验性 | Windows DLL复制、macOS rpath设置、跨平台构建操作封装 |
 
 ## 成熟度定义
 
 | 等级 | 定义 | 验证条件 |
 |------|------|---------|
+| L1 候选 | 仅 1 次成功案例，标记为candidate待验证 | 验证次数 = 1，等待第二案例 |
 | L1 实验性 | 仅 1 次成功案例，待更多验证 | 验证次数 = 1 |
 | L2 已验证 | ≥ 2 次成功案例，模式稳定 | 验证次数 ≥ 2 |
 | L3 可复用 | 已被其他任务复用，有文档化示例 | 复用次数 ≥ 1 |

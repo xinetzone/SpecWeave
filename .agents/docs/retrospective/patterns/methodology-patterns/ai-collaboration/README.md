@@ -15,6 +15,7 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
+| [行动优先输出范式（Action-First Output Paradigm）](action-first-output-paradigm.md) | 默认结论前置、分层展开的Agent输出结构，包含答案第一行、步骤编号单步、进度重述、压制离题四大规则，以及首屏核心区/中间详细区/可选补充区黄金结构 | L2 | `AI输出` `行动优先` `结论前置` `结构化输出` |
 | [对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern）](adversarial-review-prompt-pattern.md) | 对抗式审查 Prompt 模式（Adversarial Review Prompt Pattern） | L2 | `提示词工程` `对抗式审查` `代码审查` |
 | [AI Agent 工作手册模式：.agents/ 目录让智能体高效参与项目](ai-agent-workspace-handbook.md) | AI Agent 工作手册模式：.agents/ 目录让智能体高效参与项目 | - |  |
 | [AI Skill 判断层设计模式](ai-skill-judgment-layer.md) | AI Skill 判断层设计模式 | L2 |  |

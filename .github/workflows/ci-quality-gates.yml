@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-benchmark pyyaml markdown-it-py mdit-py-plugins openpyxl
+          pip install pytest pytest-benchmark pytest-cov pyyaml markdown-it-py mdit-py-plugins openpyxl
 
       - name: Verify script syntax
         working-directory: .agents/scripts
@@ -58,9 +58,9 @@ jobs:
           python -m py_compile check-version-ripple.py
           python -m py_compile check-spec-output-archive.py
 
-      - name: Run unit tests
+      - name: Run unit tests with coverage
         working-directory: .agents/scripts
-        run: python -m pytest tests/ -v --tb=short
+        run: python -m pytest tests/ -v --tb=short --cov=. --cov-report=term
 
       - name: "[1/16] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)"
         run: python .agents/scripts/repo-check.py all

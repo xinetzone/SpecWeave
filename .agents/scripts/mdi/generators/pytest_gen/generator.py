@@ -8,6 +8,7 @@ from mdi.generators.base import BaseGenerator
 from mdi.generators.utils import (
     make_interface_name,
     sanitize_identifier,
+    classify_parameters,
 )
 
 from .context import _TestContext
@@ -76,9 +77,7 @@ class PytestGenerator(BaseGenerator):
         method = iface.method.upper()
         class_name = method.title() + make_interface_name(iface.name or iface.path)
 
-        path_params = [p for p in iface.parameters if p.location == "path"]
-        query_params = [p for p in iface.parameters if p.location == "query"]
-        body_params = [p for p in iface.parameters if p.location not in ("path", "query", "header", "cookie")]
+        path_params, query_params, body_params = classify_parameters(iface)
         func_prefix_val = helpers.func_prefix(iface)
 
         logger.debug(

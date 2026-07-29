@@ -141,7 +141,7 @@ README.md（索引入口）
 | 02 | [02-philosophy-origins.md](02-philosophy-origins.md) | 思想源头追溯 | 科学革命怀疑主义、波普尔证伪主义、双盲同行评审、军事红队起源、认知心理学革命、LLM红队测试现代发展。 | 进阶 | 3 |
 | 03 | [03-methodology-framework.md](03-methodology-framework.md) | 方法论框架 | 知识研究七模块协议、AI协作/代码审查五步法、两大场景检查维度、适用边界与7类反模式。 | 进阶 | 4 |
 | 04 | [04-cognitive-biases-defense.md](04-cognitive-biases-defense.md) | 认知偏差防御 | 审查场景12类高频认知偏差（确认偏差/幸存者偏差/权威崇拜等）、识别特征、防御措施、检查项。 | 进阶 | 5 |
-| 05 | [05-checklists-templates.md](05-checklists-templates.md) | 检查清单与工具模板 | 五维验证清单、四大攻击者角色Prompt模板、代码审查Checklist、验证日志模板、最小可行审查指南。 | 进阶 | 6 |
+| 05 | [05-checklists-templates.md](05-checklists-templates.md) | 检查清单与工具模板 | 五维验证清单、五大攻击者角色Prompt模板、代码审查Checklist、验证日志模板、最小可行审查指南。 | 进阶 | 6 |
 | 06 | [06-industry-standards.md](06-industry-standards.md) | 行业标准与合规要求 | OWASP LLM Top 10、NIST AI RMF、MITRE ATLAS/ATT&CK、EU AI Act、ISO/IEC 42001、Google代码审查标准。 | 专业 | 7 |
 | 07 | [07-open-source-tools.md](07-open-source-tools.md) | 开源工具链指南 | Garak(NVIDIA)/PyRIT(Microsoft)/Promptfoo(OpenAI)/Inspect AI/DeepTeam/Purple Llama(Meta)六大工具详解、工具对比矩阵、CI/CD集成。 | 进阶 | 8 |
 | 08 | [08-practice-cases.md](08-practice-cases.md) | 实战案例集 | AIHOT 40Agent审查案例（OOM死循环/未来时间污染/性能炸弹）、OpenAI/NVIDIA/Microsoft/Anthropic红队实践案例。 | 入门-进阶 | 9 |

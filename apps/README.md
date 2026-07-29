@@ -1,5 +1,7 @@
 # apps/ -- 应用开发工作空间
 
+> **AI 智能体入口**：[AGENTS.md](AGENTS.md) — apps 区域智能体路由与资产索引，.agents/ 目录为元数据容器。
+
 ## 一、用途与定位
 
 `apps/` 目录是本项目中**新应用的专用开发工作空间**，用于存放独立应用程序的源代码、资源文件与相关配置。每个应用在此目录下拥有独立的子目录，享有完整的生命周期管理。
@@ -51,7 +53,12 @@ apps/<app-name>/
 |---|---|---|
 | `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
+| `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
+| `jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](jupyter-ssh-base/README.md) |
 | `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
+| `pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](pytorch-base/README.md) |
+| `tests/` | tests 应用 | `tests/`（暂无 README） |
+| `xmnn-runtime/` | xmnn-runtime 应用 | `xmnn-runtime/`（暂无 README） |
 | `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
 
 <!-- APPS_TABLE_END -->

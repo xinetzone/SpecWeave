@@ -12,22 +12,23 @@ x-toml-ref: "../../.meta/toml/.agents/prompts/README.toml"
 
 ```
 .agents/prompts/
-├── README.md                    # 本文件，使用说明
+├── README.md                              # 本文件，使用说明
+├── pattern-adversarial-review-addendum.md # 模式对抗审查补充攻击视角（治理/架构类V阶段必选）
 ├── orchestrator/
-│   ├── system-prompt.md         # 编排协调者系统提示词
-│   └── few-shot.md              # 编排协调者 Few-shot 示例
+│   ├── system-prompt.md                   # 编排协调者系统提示词
+│   └── few-shot.md                        # 编排协调者 Few-shot 示例
 ├── architect/
-│   ├── system-prompt.md         # 架构师系统提示词
-│   └── few-shot.md              # 架构师 Few-shot 示例
+│   ├── system-prompt.md                   # 架构师系统提示词
+│   └── few-shot.md                        # 架构师 Few-shot 示例
 ├── developer/
-│   ├── system-prompt.md         # 开发者系统提示词
-│   └── few-shot.md              # 开发者 Few-shot 示例
+│   ├── system-prompt.md                   # 开发者系统提示词
+│   └── few-shot.md                        # 开发者 Few-shot 示例
 ├── reviewer/
-│   ├── system-prompt.md         # 代码审查者系统提示词
-│   └── few-shot.md              # 代码审查者 Few-shot 示例
+│   ├── system-prompt.md                   # 代码审查者系统提示词
+│   └── few-shot.md                        # 代码审查者 Few-shot 示例
 └── tester/
-    ├── system-prompt.md         # 测试工程师系统提示词
-    └── few-shot.md              # 测试工程师 Few-shot 示例
+    ├── system-prompt.md                   # 测试工程师系统提示词
+    └── few-shot.md                        # 测试工程师 Few-shot 示例
 ```
 
 ## 文件说明
@@ -61,3 +62,11 @@ x-toml-ref: "../../.meta/toml/.agents/prompts/README.toml"
 | 开发者 | roles/developer.md | prompts/developer/system-prompt.md | prompts/developer/few-shot.md |
 | 代码审查者 | roles/reviewer.md | prompts/reviewer/system-prompt.md | prompts/reviewer/few-shot.md |
 | 测试工程师 | roles/tester.md | prompts/tester/system-prompt.md | prompts/tester/few-shot.md |
+
+## 补充提示词（Addendum Prompts）
+
+补充提示词不绑定特定角色，而是在特定场景下附加到主提示词之后使用：
+
+| 补充提示词 | 用途 | 触发场景 |
+|---|---|---|
+| [pattern-adversarial-review-addendum.md](pattern-adversarial-review-addendum.md) | 模式对抗审查补充攻击视角 | 七概念V阶段审查治理策略/架构模式时，在常规三视角基础上追加递归爆炸、信任根、自积累负反馈三个必选攻击视角 |

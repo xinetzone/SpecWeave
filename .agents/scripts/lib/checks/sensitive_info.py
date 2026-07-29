@@ -194,8 +194,8 @@ def _is_comment_note_context(line: str) -> bool:
 def _has_nosec_marker(line: str) -> bool:
     """检查行尾是否包含 nosec 或 sensitive-ignore 标记。
 
-    支持的标记（不区分大小写）：
-    - # nosec、# sensitive-ignore（Python/Shell/Ruby 等）
+    支持的标记（不区分大小写，nosec 后可跟任意文本如 B105 编号）：
+    - # nosec、# nosec B105、# sensitive-ignore（Python/Shell/Ruby 等）
     - // nosec（C/C++/Java/JS/TS 等）
     - /* nosec */（C 风格块注释行尾）
     - <!-- nosec -->（HTML/XML 注释）
@@ -204,13 +204,13 @@ def _has_nosec_marker(line: str) -> bool:
     """
     nosec_pattern = re.compile(
         r'(?:'
-        r'#\s*(?:nosec|sensitive-ignore)'
-        r'|//\s*(?:nosec|sensitive-ignore)'
+        r'#\s*(?:nosec|sensitive-ignore)\b'
+        r'|//\s*(?:nosec|sensitive-ignore)\b'
         r'|/\*\s*(?:nosec|sensitive-ignore)\s*\*/'
         r'|<!--\s*(?:nosec|sensitive-ignore)\s*-->'
-        r'|%%\s*(?:nosec|sensitive-ignore)'
-        r'|--\s*(?:nosec|sensitive-ignore)'
-        r')\s*$',
+        r'|%%\s*(?:nosec|sensitive-ignore)\b'
+        r'|--\s*(?:nosec|sensitive-ignore)\b'
+        r')',
         re.IGNORECASE
     )
     return bool(nosec_pattern.search(line))
@@ -219,6 +219,24 @@ def _has_nosec_marker(line: str) -> bool:
 def _contains_chinese(s: str) -> bool:
     """检查字符串是否包含中文字符。"""
     return bool(re.search(r'[\u4e00-\u9fa5]', s))
+
+
+# Shell 变量引用模式：${VAR}、$VAR、${VAR:-default}、${VAR:+alt}、${VAR%pattern} 等
+_SHELL_VAR_REF_RE = re.compile(r'\$\{?[A-Za-z_][A-Za-z0-9_]*')
+
+
+def _is_shell_variable_reference(value: str) -> bool:
+    """检查值是否为 shell 变量引用（而非硬编码值）。
+
+    匹配 ${VAR}、$VAR、${VAR:-default}、${VAR:+alt} 等 shell 变量展开语法。
+    这类引用值来源于环境变量或外部配置，不应视为硬编码敏感信息。
+
+    参数:
+        value: 从引号中提取的值字符串。
+    返回:
+        True 如果值以 shell 变量引用开头（整个值实际来源于变量）。
+    """
+    return bool(_SHELL_VAR_REF_RE.search(value))
 
 
 def _is_all_dots(s: str) -> bool:
@@ -602,6 +620,8 @@ def scan_file(file_path: Path) -> list[Finding]:
                             continue
                         if _contains_chinese(pwd_value):
                             continue
+                        if _is_shell_variable_reference(pwd_value):
+                            continue
 
                 if rule.type == API_KEY:
                     if (match_str.startswith('api_key') or match_str.startswith('apikey') or
@@ -615,6 +635,8 @@ def scan_file(file_path: Path) -> list[Finding]:
                             if ' ' in value:
                                 continue
                             if _contains_chinese(value):
+                                continue
+                            if _is_shell_variable_reference(value):
                                 continue
 
                 if rule.type == PHONE:

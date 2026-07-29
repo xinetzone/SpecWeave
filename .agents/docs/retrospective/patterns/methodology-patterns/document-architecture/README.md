@@ -60,6 +60,7 @@ date: "2026-07-09"
 | [教程认知阶梯：技术教程六层结构设计法](tutorial-cognitive-ladder.md) | 教程认知阶梯：技术教程六层结构设计法 | L2 |  |
 | [双阶段加工策略（Two-Phase Processing）](two-phase-processing.md) | 双阶段加工策略（Two-Phase Processing） | L1 |  |
 | [技术wiki四层需求结构：从新手到资深用户的全场景教程框架](tech-wiki-four-layer-need-structure.md) | 技术wiki四层需求结构（动机层→上手层→问题层→原理层），14章标准结构模板，覆盖"为什么学→怎么快速用→遇到问题怎么办→为什么这么设计"四层认知需求，1次验证（WeasyPrint完整教程14章节） | L1 | `wiki` `tutorial` `cognitive-ladder` `documentation-structure` |
+| [入口对比表模式（Entry Comparison Table Pattern）](entry-comparison-table.md) | 入口对比表模式：高密度对比表设计（行=实体/列=维度/单元格=图标短语/最后一列=链接闭环），让读者一眼看清多个同构实体的关键差异和边界 | L3 | `文档架构` `信息密度` `边界清晰化` `对比表` |
 
 
 <!-- README_INDEX_END -->

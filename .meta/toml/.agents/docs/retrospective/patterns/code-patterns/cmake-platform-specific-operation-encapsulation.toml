@@ -1,0 +1,13 @@
+id = "cmake-platform-specific-operation-encapsulation"
+domain = "code"
+layer = "code"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "comprehensive"
+source = "caffe-ffi CMakeLists.txt第二轮深度原子化复盘 (2026-07-29)"
+
+[bindings]
+rules = []
+references = ["cmake-four-layer-modular-architecture", "cmake-public-target-config-function", "conda-windows-cmake-dual-path"]
+skills = []

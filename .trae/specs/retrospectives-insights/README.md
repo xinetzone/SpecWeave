@@ -2,7 +2,7 @@
 
 本主题包含对已完成任务/项目进行系统性复盘、问题诊断、经验萃取、方法论分析的规格文档。回顾性分析与知识沉淀类 spec 均归入此主题。
 
-**主题状态**：🔧 进行中（50+ 已完成，4 待启动）
+**主题状态**：🔧 进行中（50+ 已完成，1 进行中，4 待启动）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[retrospectives-insights-task-template.md](../../../.agents/templates/theme-templates/retrospectives-insights-task-template.md)
 
@@ -56,6 +56,8 @@
 | [harness-engineering-seven-concepts-analysis](harness-engineering-seven-concepts-analysis/spec.md) | ✅ 完成 | 100% | [复盘报告](../../../.agents/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.md) | 使用七概念方法论对《新ClaudeCode和Codex变得越来越强的5个Harness设计》进行系统性分析：59条事实清单、3条核心洞察、2个方法论模式（Harness架构分层/子代理职责分层）、6条对抗审查意见，所有质量门(G1-G3+V)均通过 |
 | [analyze-cursor-cloud-agents-article](analyze-cursor-cloud-agents-article/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/README.md)（spec/tasks/checklist保留在本目录） | Cursor Cloud Agents微信公众号文章深度洞察：视频化开发、代码审查瓶颈转移、多模型并行化（管道变宽）、Agent自我意识、定价三阶段跃迁五大核心观点，7个关键概念定义，16个关键数据点，权威性/准确性/时效性三维质量评估，四类角色行动建议 |
 | [analyze-meoo-contest-page](analyze-meoo-contest-page/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-meoo-contest-page-analysis-20260714/README.md)（spec/tasks/checklist保留在本目录） | 秒悟（Meoo）产品启航赛活动落地页七维度全面分析：内容呈现、用户体验、信息架构、视觉设计、交互功能、技术实现、商业价值七个维度的优势/不足评估与24项优化建议，三阶段优化路线图（P0快速修复2-4h/P1短期1-3d/P2长期迭代），识别4项P0级转化漏斗断点（无h1/CTA语义错误/评审标准缺失/无倒计时），沉淀活动落地页时间敏感度分析与转化漏斗断点优先原则 |
+| [analyze-i-have-adhd-article](analyze-i-have-adhd-article/spec.md) | ✅ 完成 | 100% | [分析报告](analyze-i-have-adhd-article/analysis-report.md) | 2026-07-28 · AI交互设计/逆向适配创新 · 《I Have ADHD》ADHD患者辅助技术文章深度分析，从特殊群体辅助方法反向推导通用AI输出优化，沉淀行动优先输出范式和逆向适配创新两个方法论模式 |
+| [retrospective-i-have-adhd-second-round-validation](retrospective-i-have-adhd-second-round-validation/spec.md) | ✅ 完成 | 100% | [4个L1新模式+4个TOML+V2模式更新](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) | 2026-07-28 · 元复盘/模式验证 · i-have-adhd知识沉淀二次验证复盘：R→I→V→E全链路，审计3条执行模式遵循度、V2对抗审查暴露4个边界盲区+4个失败案例、9项P0修复+3个5-Whys根因、萃取知识沉淀二次验证SOP入库，4个L1模式独立文档化 |
 
 ---
 

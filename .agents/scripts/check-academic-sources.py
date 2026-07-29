@@ -37,6 +37,7 @@ from lib.project import resolve_project_root
 from lib.cli import add_common_args, print_pass, print_warn, print_error, print_header, print_summary
 from lib.markdown import find_markdown_files
 from lib.atomic_write import atomic_write_json
+from lib.cache import get_cache_path, load_cache, save_cache
 
 CROSSREF_API_URL = "https://" + "api.crossref.org/works/{doi}"
 CACHE_DIR_NAME = ".agents/cache"
@@ -96,30 +97,16 @@ def text_similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, normalize_text(a), normalize_text(b)).ratio()
 
 
-def _get_cache_path(project_root: Path) -> Path:
-    cache_dir = project_root / CACHE_DIR_NAME
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    return cache_dir / CACHE_FILE_NAME
+def _resolve_cache_path(project_root: Path) -> Path:
+    return get_cache_path(project_root, CACHE_FILE_NAME, CACHE_DIR_NAME)
 
 
-def load_cache(project_root: Path) -> dict:
-    cache_path = _get_cache_path(project_root)
-    if not cache_path.exists():
-        return {}
-    try:
-        with open(cache_path, encoding="utf-8") as f:
-            return json.load(f)
-    except (json.JSONDecodeError, OSError):
-        return {}
+def _academic_load_cache(project_root: Path) -> dict:
+    return load_cache(_resolve_cache_path(project_root))
 
 
-def save_cache(project_root: Path, cache: dict):
-    cache_path = _get_cache_path(project_root)
-    cache["_metadata"] = {
-        "updated_at": datetime.now().isoformat(),
-        "ttl_days": CACHE_TTL_DAYS,
-    }
-    atomic_write_json(cache_path, cache, ensure_ascii=False, indent=2)
+def _academic_save_cache(project_root: Path, cache: dict):
+    save_cache(_resolve_cache_path(project_root), cache, CACHE_TTL_DAYS)
 
 
 def is_cache_valid(entry: dict, ttl_days: int = CACHE_TTL_DAYS) -> bool:
@@ -490,7 +477,7 @@ def main():
     print(f"提取到 {len(all_identifiers)} 个学术ID：{doi_count} 个DOI，{arxiv_count} 个arXiv")
     print()
 
-    cache = load_cache(project_root)
+    cache = _academic_load_cache(project_root)
     use_cache = not args.no_cache
 
     results = []
@@ -519,7 +506,7 @@ def main():
                     ident = futures[future]
                     print_error(f"验证{ident['id']}时发生异常: {e}")
 
-    save_cache(project_root, cache)
+    _academic_save_cache(project_root, cache)
 
     stats = {"pass": 0, "warn": 0, "error": 0, "skipped": 0, "info": 0}
     for r in results:

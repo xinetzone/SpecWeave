@@ -3,10 +3,12 @@ id: docker-commit-config-reset
 title: docker commit 入口配置显式重置
 type: code-pattern
 date: 2026-07-18
-maturity: L1-draft
+maturity: L1
 source: retrospective-docker-commit-entrypoint-fix-20260718
 related_patterns: [docker-container-session-raii.md, compiled-wheel-runtime-image-build.md]
-tags: [Docker, docker-commit, ENTRYPOINT, CMD, 镜像构建, 容器化]
+tags: [Docker, docker-commit, ENTRYPOINT, CMD, 镜像构建, 容器化, Dockerfile, declarative]
+validation_count: 2
+reuse_count: 1
 ---
 
 # docker commit 入口配置显式重置
@@ -49,3 +51,56 @@ tags: [Docker, docker-commit, ENTRYPOINT, CMD, 镜像构建, 容器化]
 - 如果镜像确实需要自定义ENTRYPOINT（如客户端镜像的entrypoint.sh做UID/GID适配），应使用 `--change='ENTRYPOINT ["/path/to/entrypoint.sh"]'` 设置正确的入口脚本，而非清空
 - 多阶段构建（multi-stage build）是比docker commit更好的增量更新方案，支持可复现构建
 - docker commit适合快速原型和临时验证，正式发布应使用Dockerfile
+
+## 实际案例
+
+### 案例1：xmnn-client ENTRYPOINT 泄漏（首次验证，源案例）
+
+**项目**：xmnn-client Docker 镜像增量更新
+**问题**：使用 `docker run --entrypoint tail -f /dev/null` 启动保活容器 → `docker exec` 安装依赖 → `docker commit` 保存镜像，结果 `tail -f /dev/null` 泄漏为永久 ENTRYPOINT
+**修复**：`docker commit --change='ENTRYPOINT []' --change='CMD ["/bin/bash"]'`
+**验证**：`docker inspect` 确认 ENTRYPOINT 为空，CMD 为 bash
+
+### 案例2：xmnn-client PyTorch 集成中的 Dockerfile 替代方案（本次复盘验证）
+
+**项目**：xmnn-client:1.2.2-alpha PyTorch 2.13.0 集成
+**问题**：使用 `docker commit` 更新镜像后，ENTRYPOINT 被覆盖为 `tail`，导致容器启动后假死。即使通过 `--change` 修复 ENTRYPOINT，仍存在以下问题：
+1. docker commit 继承的运行时状态不透明，难以审计
+2. 每次更新都需要手动指定 `--change` 参数，容易遗漏
+3. 镜像不可重复构建，无法追溯构建过程
+
+**修复方案**：放弃 docker commit，改用 Dockerfile 声明式构建
+
+```dockerfile
+FROM nuitka-gcc-llvm:latest
+
+# 安装 PyTorch 和依赖
+RUN pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cpu
+RUN pip install onnx2pytorch tabulate
+
+# 安装 xmnn wheel
+COPY xmnn-1.2.2-cp314-cp314-linux_x86_64.whl /tmp/
+RUN pip install /tmp/xmnn-1.2.2-cp314-cp314-linux_x86_64.whl
+
+# 创建 sitecustomize.py（Python 3.14 multiprocessing fork 兼容）
+RUN mkdir -p $(python -c "import site; print(site.getusersitepackages())") && \
+    echo 'import multiprocessing; multiprocessing.set_start_method("fork", force=True)' \
+    > $(python -c "import site; print(site.getusersitepackages())")/sitecustomize.py
+
+# 显式声明入口（避免继承问题）
+ENTRYPOINT []
+CMD ["bash"]
+```
+
+**验证结果**：
+- ✅ 镜像可重复构建
+- ✅ ENTRYPOINT/CMD 配置正确
+- ✅ 构建过程可审计（Dockerfile 即文档）
+- ✅ 无临时配置泄漏
+
+**教训**：Docker 镜像更新应优先使用 Dockerfile 声明式构建，docker commit 仅用于快速原型验证。详见归档文档 [docker-declarative-first-principle.md](../../../../knowledge/best-practices/docker-declarative-first-principle.md)
+
+## Changelog
+
+- **2026-07-18** (v1.0.0): 初始版本，从 xmnn-client ENTRYPOINT 泄漏修复萃取，单案例验证，标记 L1-draft
+- **2026-07-23** (v1.1.0): 补充 Dockerfile 替代方案案例（案例2），强调声明式优先原则，验证计数 1→2，maturity 升级为 L1。来源：retrospective-xmnn-pytorch-integration-20260723

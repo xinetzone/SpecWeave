@@ -43,9 +43,9 @@
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
 [python-link]: .agents/docs/tech-stack.md
-[scripts-badge]: https://img.shields.io/badge/脚本-360%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-27-success?style=flat
-[rules-badge]: https://img.shields.io/badge/规则-130%2B-orange?style=flat
+[scripts-badge]: https://img.shields.io/badge/脚本-354%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-18-success?style=flat
+[rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
 [commands-badge]: https://img.shields.io/badge/指令集-14-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
 [gitcode-link]: https://gitcode.com/daoCollective/SpecWeave
@@ -231,6 +231,8 @@ flowchart LR
 | [项目结构](.agents/docs/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
 | [技术栈与环境](.agents/docs/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
 | [验证与自动化](.agents/docs/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
+| [可复用模式库](.agents/docs/retrospective/patterns/README.md) | 架构师/开发者 | 380+经过验证的架构模式、代码模式、方法论模式 |
+| [架构模式索引](.agents/docs/retrospective/patterns/architecture-patterns/README.md) | 架构师 | 42个系统架构设计可复用模式（含Caffe现代化改造4个新ADR） |
 | [泛化与资产复用](.agents/docs/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
 | [项目蓝图](.agents/docs/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
 | [贡献指南](CONTRIBUTING.md) | 想参与贡献 | 如何提建议、报问题、提交代码 |

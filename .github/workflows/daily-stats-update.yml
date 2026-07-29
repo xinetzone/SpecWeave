@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   update-stats:
@@ -30,9 +31,27 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run docgen stats
+      - name: Run docgen stats (strict anomaly mode)
+        id: stats_run
         working-directory: .agents/scripts
-        run: python docgen.py stats
+        run: |
+          set +e
+          python docgen.py stats --strict-anomaly 2>stats-anomaly.txt
+          STATS_EXIT=$?
+          set -e
+          echo "exit_code=$STATS_EXIT" >> "$GITHUB_OUTPUT"
+          echo "anomaly_detected=$([ $STATS_EXIT -eq 2 ] && echo 'true' || echo 'false')" >> "$GITHUB_OUTPUT"
+          echo "fatal_error=$([ $STATS_EXIT -eq 1 ] && echo 'true' || echo 'false')" >> "$GITHUB_OUTPUT"
+
+      - name: Check stats fatal error
+        if: steps.stats_run.outputs.fatal_error == 'true'
+        run: |
+          echo "::error::docgen stats 致命错误（退出码1），统计源路径不存在"
+          if [ -f .agents/scripts/stats-anomaly.txt ]; then
+            echo "stderr 内容:"
+            cat .agents/scripts/stats-anomaly.txt
+          fi
+          exit 1
 
       - name: Check for changes
         id: changes
@@ -54,3 +73,58 @@ jobs:
           git add README.md AGENTS.md
           git commit -m "chore(docs): 自动更新核心数据统计 [skip ci]"
           git push
+
+      - name: Create anomaly alert issue
+        if: steps.stats_run.outputs.anomaly_detected == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const anomalyFile = path.join('.agents', 'scripts', 'stats-anomaly.txt');
+            let anomalyContent = '';
+            try {
+              anomalyContent = fs.readFileSync(anomalyFile, 'utf-8');
+            } catch (e) {
+              anomalyContent = '(无法读取异常详情文件)';
+            }
+            const today = new Date().toISOString().slice(0, 10);
+            const codeFence = '```';
+            const body = [
+              '## 🚨 Stats Anomaly Detected (' + today + ')',
+              '',
+              'docgen stats 严格模式检测到关键指标环比降幅超过 50%，文件已更新但需要人工确认。',
+              '',
+              '### 异常详情',
+              codeFence,
+              anomalyContent,
+              codeFence,
+              '',
+              '### 排查指引',
+              '1. 检查 `.agents/.stats-cache.json` 中的上一次快照数据',
+              '2. 确认是否有目录迁移/重构导致统计源路径变更',
+              '3. 如为合法变更（如大规模重构），删除 `.agents/.stats-cache.json` 重置基线',
+              '4. 如为异常（路径断链），参考 `automated-stats-three-defense-lines` 模式修复',
+              '5. 确认修复后关闭本 issue',
+              '',
+              '> 本issue由 daily-stats-update workflow 自动创建，退出码=2（严格模式异常）'
+            ].join('\n');
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'stats-anomaly'
+            });
+            const existing = issues.find(i => i.title.includes(today));
+            if (existing) {
+              console.log('Anomaly issue for today already exists: #' + existing.number);
+              return;
+            }
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Stats Anomaly Detected - ' + today,
+              body: body,
+              labels: ['stats-anomaly', 'automated', 'bug']
+            });

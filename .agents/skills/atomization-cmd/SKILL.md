@@ -111,6 +111,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/atomization-cmd/SKILL.toml"
 ## 7. 执行日志（CMD-LOG）
 
 执行原子化命令集时，必须按 [CMD-LOG规范](../../rules/cmd-log-specification.md) 输出结构化日志：
+> ⚠️ **铁律一（🔴强制）**：S0 CMD_START 必须是命令集执行后的**第一条输出**，禁止在CMD_START之前输出任何其他内容（包括调试信息、中间结果）。违反将导致日志链路断裂，CI步骤19（CMD-LOG合规检查）失败。
+
 - `cmd=atomization`，session前缀 `atom-YYYYMMDD-<filename>`
 - 步骤编号 S0-S6（启动→源文件分析→制定方案→执行拆分→更新引用→收尾验证→索引更新）
 - 关键特有事件：`PRECHECK_RESULT`、`DUPLICATE_FOUND`、`SPLIT_PLAN`、`OVER_SPLIT_WARN`、`FILE_CREATED`、`LINK_FIXED`、`FINALIZE_RUN`、`BROKEN_LINKS_FOUND`、`RESIDUAL_FOUND`

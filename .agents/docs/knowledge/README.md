@@ -2,8 +2,8 @@
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：679
-- **分类数**：56
+- **总条目数**：693
+- **分类数**：57
 - **标签数**：1449
 
 ## 快速导航
@@ -20,6 +20,7 @@
 | reference | 3 | [reference](category-index.md#reference) |
 | research | 1 | [research](category-index.md#research) |
 | standards | 1 | [standards](category-index.md#standards) |
+| tech | 14 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
 | unknown | 80 | [unknown](category-index.md#unknown) |
 
@@ -32,6 +33,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [TVM FFI 中文 Wiki 教程总览](tech/tvm-ffi-wiki/00-overview.md) | 2026-07-28 | tech |
 | [从 Prompt 到 Loop：四层工程打造稳定可控的 AI Agent](learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md) | 2026-07-14 | unknown |
 | [七概念×DeepTutor实践教程 - 概述](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/00-overview.md) | 2026-07-14 | unknown |
 | [七概念×DeepTutor实践教程 - 术语表](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/glossary.md) | 2026-07-14 | unknown |

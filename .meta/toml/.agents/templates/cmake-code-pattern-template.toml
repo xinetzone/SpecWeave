@@ -1,0 +1,5 @@
+id = "cmake-code-pattern-template"
+title = "CMake代码模式文档模板"
+type = "template"
+template_for = "code-patterns"
+source = "cmake-four-layer-modular-architecture, cmake-public-target-config-function, cmake-platform-specific-operation-encapsulation"

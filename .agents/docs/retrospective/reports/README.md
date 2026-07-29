@@ -158,7 +158,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-report-cofounder-role-marker/` | 联合创始角色特殊标记复盘，含零侵入扩展范式与双点一致原则 |
 | `retrospective-report-teams-module/` | 团队管理模块创建复盘，含约定驱动创建、规范层纵深防御、自举规范 |
 
-### project-governance/（36 份 + 1 独立报告）
+### project-governance/（37 份 + 1 独立报告）
 
 | 报告名称（原子化目录） | 简要说明 |
 |---|---|
@@ -198,6 +198,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-short-command-context-rehydration-20260701/` | 短指令在新会话中的上下文重建与参数澄清复盘，沉淀“对象/交付”二槽位与跨会话澄清守则 |
 | `retrospective-skill-facades-encoding-robustness-20260701/` | Skill命令门面化与编码鲁棒性修复复盘，5个高频脚本Skill化封装、50+单元测试、28个性能基准、6个Windows编码边界问题修复，防御性属性访问L2模式萃取 |
 | `agent-skills-standards-adoption-20260702/` | Agent Skills开放标准采用复盘，wiki v1.2（15章原子化）+13技能合规检查100%通过+CI集成+60个evals测试用例+Gotchas章节全覆盖，Learn-Validate-Adopt治理模式沉淀 |
+| `retrospective-risk-interceptor-logging-fix-20260728/` | 风险拦截器日志测试与跨平台兼容性修复复盘：-vv白盒测试发现4项逻辑缺陷+Windows三生态5种危险模式+编码回退链+format正则修复，11项问题修复+2条开发标准落地，萃取默认静默日志架构、严重度平方加权、展示层二元组去重、跨Shell危险命令检测、多编码回退链、首Bug主动闭环6个候选模式 |
 | `reports-duplication-optimization-report.md` | 复盘报告体系重复内容优化报告（独立报告，无对应目录） |
 
 ### competitive-analysis/（52 份）
@@ -283,12 +284,14 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 | `retrospective-first-principles-knowledge-system-20260710/` | 第一性原理知识体系v1.0→v1.7构建项目系统性复盘：9个文件（4主报告+5支撑分析，v1.2），完整时间线（8版本/15commit/35文件/4609行）、12核心决策5-Whys分析、10个问题深度复盘、14个方法论应用、10条关键洞察（9条高度普适）、7条改进建议、7个元洞察、SOP模板v1.3沉淀、元复盘checklist（`.agents/checklists/meta-retrospective-checklist.md`）创建，行动项100%闭环，验证"做事→复盘→元复盘→修复→方法论迭代"完整闭环 |
 
-### task-reports/（24 份）
+### task-reports/（25 份）
 
 任务执行复盘目录，存放以单文件或原子化目录形式交付的单次任务完整复盘报告。
 
 | 文件/目录 | 简要说明 | 日期 | 类型 |
 |---|---|---|---|
+| `retrospective-alipay-aipay-windows-install-20260723.md` | 支付宝AI Pay Skill Windows安装任务复盘（R→I→E→Export）：alipay-cli跨平台兼容性断裂/Agent沙箱网络限制/多组件安装分层验证3条核心洞察，萃取Windows环境Unix-only CLI安装处理/沙箱联网命令预授权/多组件安装状态分层验证3个L1可复用模式，G1-G3质量门全部通过 | 2026-07-23 | task |
+| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：方法论编排场景4知识沉淀，3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成四位一体知识闭环，G1-G4质量门全部通过 | 2026-07-23 | task |
 | `retrospective-sidebar-ui-beautification-20260714.md` | 竹简悟道右侧侧边栏UI美化七概念复盘（R→I→F→E→C）：Tailwind v4动态className检测盲区根因分析、内联样式保底模式/CSS渲染诊断五步/书斋清供侧边栏设计参数3个可复用模式萃取，frontend-design Skill视觉闭环验证 | 2026-07-14 | task |
 | `retrospective-mermaid-funnel-redesign-pdf-export-20260711/` | Mermaid五品漏斗图重绘与PDF导出任务复盘：修正"工艺品→公益品"笔误、重绘五品漏斗Mermaid图（5层信任分层+直线连接+渐变色系）、开发并完善三段式PDF导出脚本（Pandoc+Mermaid.js+Playwright），萃取"三段式中文PDF导出法"L1可复用模式 | 2026-07-11 | task |
 | `retrospective-mermaid-automation-toolchain-20260711/` | Mermaid自动化工具链+会议分析全流程复盘：从一画开天会议记录分析出发，问题驱动迭代交付2个自动化脚本（export-md-to-pdf.py+mermaid-full-scan.py，552行）、1个人工修复指南（1089行），自动修复67处Mermaid语法错误，完成私密报告目录迁移；核心洞察：工具链建设是问题驱动的自然演化而非预先规划 | 2026-07-11 | task |
@@ -322,6 +325,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|
 | `retrospective-tvm-ffi-wiki-tutorial-20260705/` | TVM FFI跨语言FFI框架Wiki教程复盘，17个文档/约5870行交付，Shell管道耗尽/WebFetch超时/Read超时三重故障下完成，Vendor高层文档优先研究法、工具故障三级降级、主题分组并行写作3个可复用模式萃取（2个P0/L2） |
 | `retrospective-agent-proto-wiki-20260703/` | Agent通信协议Wiki教程复盘，13个文档/4286行/34个Mermaid图交付，Spec Mode三段式（PRD→tasks→checklist）零章节遗漏验证，子agent自包含约束、类比锚点教学法等6个可复用模式萃取 |
+| `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成「运行时兼容层+源码层修复+升级检查+诊断SOP」四位一体知识闭环，G1-G4质量门全部通过 |
 
 ### standards-tools/（1 份）
 
@@ -538,6 +542,8 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-08 | `retrospective-ai-regulation-analysis-20260708/` | competitive-analysis |
 | 2026-07-08 | `retrospective-trae-v3-3-74-release-analysis-20260708/` | competitive-analysis |
 | 2026-07-09 | `retrospective-generate-readme-tool-20260709/` | task-reports |
+| 2026-07-23 | `retrospective-alipay-aipay-windows-install-20260723.md` | task-reports |
+| 2026-07-23 | `retrospective-pickle-sedimentation-20260723/` | task-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
