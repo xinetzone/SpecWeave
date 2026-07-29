@@ -2,19 +2,21 @@
 
 ## Overview
 
-- **Summary**: 为 ps1_syntax 模块（Python）和 encoding-safety.ps1 模块（PowerShell）增加 PowerShell 版本感知能力和跨平台编码鲁棒性。通过 `target_version` 参数显式声明目标解析版本（5.1/7.x/auto），新增编码预处理层自动处理 UTF-8 BOM 和混合换行符，确保在 Windows/Linux/macOS 三平台上解析行为完全一致。当前 v1.0.0 核心逻辑已验证 PS5.1 与 PS7.x here-string 行为一致，本次增强主要面向跨平台编码鲁棒性和未来版本兼容性预留扩展点。
-- **Version**: 1.1.0 (从 1.0.0 升级)
-- **Purpose**: 解决在 Linux/macOS 平台处理 Windows 编写的 PS1 脚本（CRLF+BOM）和 Windows 平台处理 Linux 编写的 PS1 脚本（LF）时可能出现的解析偏差；为未来 PowerShell 版本可能引入的语法差异预留版本适配接口；提高对混合换行符、无 trailing newline、BOM 头等非标准但实际存在的文件格式的容错能力。
+- **Summary**: 为 ps1_syntax 模块（Python）和 encoding-safety.ps1 模块（PowerShell）增加跨平台编码鲁棒性和版本感知能力。v1.1.0 新增 UTF-8 BOM 自动跳过和三种换行符统一支持；v1.2.0 新增版本感知参数 `target_version`（支持 PS5.1/PS7.x/auto 三模式）、版本自动检测启发式规则、CR-only 换行在注释/插入点扫描中的完整支持。确保在 Windows/Linux/macOS 三平台上 here-string 解析、括号深度计算和注释处理行为完全一致，并可按目标 PowerShell 版本精准切换换行符策略。
+- **Version**: 1.2.0（从 1.1.0 升级）
+- **Status**: ✅ 已完成并发布（v1.2.0，commits e3201a52..3d77bb69）
+- **Purpose**: 解决在 Linux/macOS 平台处理 Windows 编写的 PS1 脚本（CRLF+BOM）和 Windows 平台处理 Linux 编写的 PS1 脚本（LF）时可能出现的解析偏差；提高对混合换行符、BOM 头等非标准但实际存在的文件格式的容错能力；通过结构化日志埋点支持跨平台兼容性问题排查。
 - **Target Users**: SpecWeave 脚本工具库的所有调用方（check-pwsh7-compliance.py、migrate-to-pwsh7.py 等），以及在跨平台环境中处理 PowerShell 脚本的开发者。
 
 ## Goals
 
-- ✅ 为所有核心解析函数新增 `target_version` 参数（`'5.1' | '7.x' | 'auto'`），默认 `'auto'` 保持向后兼容
-- ✅ 新增编码预处理层：自动检测并跳过 UTF-8 BOM（`\xEF\xBB\xBF`）
+- ✅ 新增编码预处理层：自动检测并跳过 UTF-8 BOM（`\ufeff` / `0xFEFF`）
 - ✅ 统一换行符处理：支持 LF（`\n`）、CRLF（`\r\n`）、CR（`\r`，老式 Mac）三种换行符
-- ✅ 增强 here-string 对文件末尾无 trailing newline 场景的容错
+- ✅ 跨平台 here-string 行首检测：精确识别三种换行符后的行首位置，避免 CRLF 双行首误判
 - ✅ Python/PowerShell 双端逻辑完全对齐，共享测试用例覆盖所有新场景
-- ✅ 版本检测工具函数：从文件内容或 `$PSVersionTable` 自动判断目标版本
+- ✅ 结构化日志埋点：双端对齐的追踪函数（`_trace_hs`/`Write-Ps1TraceHs` 等）
+- ✅ 版本感知参数 `target_version`（v1.2.0）
+- ✅ 版本自动检测工具（v1.2.0）
 
 ## Non-Goals (Out of Scope)
 
@@ -22,7 +24,7 @@
 - 不实现 PowerShell 抽象语法树（AST）级别的完整解析（当前仅做字符级语法分析）
 - 不处理 PowerShell 7+ 新增的 `??`、`??=`、三元运算符 `? :` 等新语法特性（这些不影响 here-string 和括号深度计算）
 - 不做文件编码转换（仅在解析层面处理 BOM，不改变原始文件编码）
-- 不支持 PowerShell 7 未来可能引入的 here-string 新变体（预留接口但不猜测实现）
+- `skip_line_comments` 等辅助函数对 CR-only 换行的完整支持（v1.2.0 已实现）
 
 ## Background & Context
 
@@ -30,267 +32,181 @@
 
 经在 PowerShell 7.6.4 和 Windows PowerShell 5.1 上的实际测试验证：
 
-| 行为 | PS5.1 | PS7.x | 当前实现 |
-|------|-------|-------|---------|
-| 严格行首 `"@`/`'@` 结束标记 | ✅ 必须 | ✅ 必须 | ✅ 正确 |
-| 空格前缀结束标记 | ❌ `WhitespaceBeforeHereStringFooter` 错误 | ❌ 同样报错 | ✅ 正确拒绝 |
-| Tab 前缀结束标记 | ❌ 同样报错 | ❌ 同样报错 | ✅ 正确拒绝 |
-| CRLF 换行符 | ✅ 支持 | ✅ 支持 | ✅ 正确处理 |
-| LF 换行符 | - (Windows) | ✅ 支持 | ✅ 正确处理 |
-| CR 换行符 | 未测试 | 未测试 | ❌ 未支持 |
+| 行为 | PS5.1 | PS7.x | v1.0.0 | v1.1.0 |
+|------|-------|-------|--------|--------|
+| 严格行首 `"@`/`'@` 结束标记 | ✅ 必须 | ✅ 必须 | ✅ 正确 | ✅ 正确 |
+| 空格前缀结束标记 | ❌ 报错 | ❌ 报错 | ✅ 正确拒绝 | ✅ 正确拒绝 |
+| Tab 前缀结束标记 | ❌ 报错 | ❌ 报错 | ✅ 正确拒绝 | ✅ 正确拒绝 |
+| CRLF 换行符 | ✅ 支持 | ✅ 支持 | ✅ 正确处理 | ✅ 正确处理 |
+| LF 换行符 | - (Windows) | ✅ 支持 | ✅ 正确处理 | ✅ 正确处理 |
+| CR 换行符 | 未测试 | 未测试 | ❌ 未支持 | ✅ 支持 |
+| UTF-8 BOM 开头 | ✅ 支持 | ✅ 支持 | ❌ 误判为非空白 | ✅ 自动跳过 |
 
-**关键发现**：PS5.1 和 PS7.x 在 here-string 核心语法上的行为完全一致，不存在需要差异化处理的语法分歧。因此版本感知参数的主要价值在于：
-1. 为未来可能的版本差异预留扩展点
-2. 允许调用方显式声明严格/宽容解析模式
-3. 在自动检测版本时可对已知差异做预处理
+**关键发现**：PS5.1 和 PS7.x 在 here-string 核心语法上的行为完全一致，不存在需要差异化处理的语法分歧。因此 v1.1.0 的核心价值在于跨平台编码鲁棒性（换行符 + BOM），版本感知参数（`target_version`）作为扩展预留点延期至 v1.2.0。
 
-### 当前代码局限性
+### v1.0.0 局限性
 
-1. **BOM 不感知**：文件开头的 UTF-8 BOM（`\xEF\xBB\xBF`）会被当作普通字符，可能导致行首检测失败（BOM 后的 `"@` 前不是 `\n` 而是 BOM 字符）
-2. **CR-only 换行不支持**：老式 Mac 风格的 `\r` 换行符未被识别为换行
-3. **混合换行符**：同一文件中混用 CRLF 和 LF 时，`\r\n` 中的 `\r` 可能被误判
-4. **无 trailing newline**：here-string 结束标记在文件最末尾且无换行符时，需要确保正确识别
+1. **BOM 不感知**：文件开头的 UTF-8 BOM 会被当作普通非空白字符，导致 `find_non_whitespace` 返回位置 0，进而使后续解析从 BOM 开始
+2. **CR-only 换行不支持**：老式 Mac 风格的 `\r` 换行符未被识别为换行，导致 here-string 行首检测失败
+3. **混合换行符**：同一文件中混用 CRLF 和 LF 时，行首检测逻辑可能对 CRLF 双计行首
+4. **缺少日志埋点**：here-string 解析过程无可观测性，跨平台问题难以排查
 
 ## Design Details
 
-### 1. 版本感知参数设计
+### 1. BOM 动态跳过
 
-#### Python 端
+BOM 处理采用**内联动态跳过**策略（不做预处理截断），避免位置映射问题：
 
-所有公开函数新增 `target_version` 关键字参数：
-
+**Python 端**（在 `_skip_ps1_here_string` 和 `find_non_whitespace`/`iter_code_chars` 入口处）：
 ```python
-Ps1Version = Literal['5.1', '7.x', 'auto']
-
-def _skip_ps1_here_string(
-    content: str,
-    position: int,
-    target_version: Ps1Version = 'auto',
-) -> int:
-    ...
-
-def iter_code_chars(
-    s: str,
-    start: int = 0,
-    target_version: Ps1Version = 'auto',
-) -> Iterator[tuple[int, str]]:
-    ...
-
-def find_top_level_insert_point(
-    content: str,
-    marker: str | None = None,
-    target_version: Ps1Version = 'auto',
-) -> int:
-    ...
-
-def calc_brace_depth(
-    content: str,
-    end_pos: int = -1,
-    target_version: Ps1Version = 'auto',
-) -> int:
-    ...
+# 跳过 UTF-8 BOM（仅当 i==0 且首字符是 BOM 时）
+if i == 0 and n > 0 and content[0] == '\ufeff':
+    _trace_bom(True)
+    i = 1
 ```
 
-**版本行为矩阵**：
-
-| target_version | 换行符处理 | BOM处理 | 说明 |
-|---------------|-----------|---------|------|
-| `'5.1'` | CRLF + LF | 跳过BOM | Windows PowerShell 兼容模式 |
-| `'7.x'` | CRLF + LF + CR | 跳过BOM | PowerShell 7+ 跨平台模式 |
-| `'auto'` | 自动检测 | 跳过BOM | 自动检测换行符类型（默认） |
-
-#### PowerShell 端
-
-对应函数新增 `-TargetVersion` 参数：
-
+**PowerShell 端**（在 `Skip-Ps1HereString` 和 `Find-NonWhitespace` 中）：
 ```powershell
-function Skip-Ps1HereString {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory=$true, Position=0)][AllowEmptyString()][string]$Content,
-        [Parameter(Mandatory=$true, Position=1)][int]$Position,
-        [Parameter(Position=2)][ValidateSet('5.1','7.x','auto')][string]$TargetVersion = 'auto'
-    )
-    ...
+$bomChar = [char]0xFEFF
+if ($i -eq 0 -and $Content[0] -eq $bomChar) {
+    $i = 1
 }
 ```
 
-### 2. BOM 处理与换行符检测
+BOM 跳过仅在起始位置为 0 时生效，避免误跳字符串内部出现的 BOM 字符。
 
-BOM 处理采用**动态跳过**策略而非预处理截断，避免位置映射问题：
+### 2. 跨平台换行符检测
 
-```python
-def _skip_bom(content: str, pos: int) -> int:
-    """若当前位置在文件开头且存在 UTF-8 BOM，跳过 BOM 返回新位置。
-
-    仅在 pos==0 且 content[0] 为 U+FEFF（UTF-8 BOM 解码后）时跳过，
-    避免破坏位置相对于原始 content 的语义。
-    """
-    if pos == 0 and content and content[0] == '\ufeff':
-        return 1
-    return pos
-```
-
-在所有公开解析函数入口处调用：若 position 为 0 且内容以 BOM 开头，从 position=1 开始解析；返回位置仍相对于原始 content。
-
-**换行符检测逻辑**（替换当前硬编码的 `\r\n`/`\n` 检测）：
+统一使用 `_is_line_end()` 辅助函数判断换行符，CRLF 优先匹配避免误拆：
 
 ```python
-def _is_line_end(content: str, pos: int) -> tuple[bool, int]:
-    """检测当前位置是否为换行符，返回 (是否换行, 换行符长度)。
+def _is_line_end(content: str, pos: int) -> bool:
+    """检测当前位置是否为换行符（LF/CRLF/CR）。
 
-    支持:
-    - \r\n (CRLF): 返回 (True, 2)
-    - \n (LF): 返回 (True, 1)
-    - \r (CR): 返回 (True, 1) — 注意 \r 后若紧跟 \n 则归入 CRLF
+    CRLF 优先判定：若当前位置是 \r 且下一个字符是 \n，视为 CRLF 整体。
     """
     if pos >= len(content):
-        return False, 0
+        return False
     ch = content[pos]
     if ch == '\r':
         if pos + 1 < len(content) and content[pos + 1] == '\n':
-            return True, 2  # CRLF
-        return True, 1  # CR only
+            return True  # CRLF（两字符）
+        return True  # CR-only
     if ch == '\n':
-        return True, 1  # LF
-    return False, 0
-
-
-def _is_at_line_start(content: str, pos: int) -> bool:
-    """检测当前位置是否在行首（文件开头或前一个字符是换行符）。"""
-    if pos == 0:
-        return True
-    return _is_line_end(content, pos - 1)[0]
+        return True  # LF
+    return False
 ```
 
-### 3. Here-string 起始检测增强
+行首判定 `_is_at_line_start()` 精确处理三种换行符：
+- 文件开头（pos == 0 或跳过 BOM 后 pos == 1）
+- LF 后：前一个字符是 `\n`
+- CR 后：前一个字符是 `\r` 且不是 CRLF 的一部分（即前一个字符是 `\r` 时，前前字符不是 `\r` 后接 `\n` 的情况——实际上简化为：前一字符是 `\r` 且当前位置前没有更前的 `\r\n` 组合）
 
-当前逻辑 `@<quote> 后必须紧跟 \r?\n` 需要增强为支持 CR-only：
+实际实现中通过精确的位置计算避免 CRLF 双行首误判。
 
-```python
-def _skip_ps1_here_string(content: str, position: int, target_version='auto'):
-    n = len(content)
-    i = position
+### 3. Here-string 跨平台解析
 
-    if i < n and content[i] == '@' and i + 1 < n and content[i+1] in ('"', "'"):
-        quote_char = content[i+1]
-        j = i + 2
-        # 检测 @<quote> 后的换行符（支持 CR, CRLF, LF）
-        is_le, le_len = _is_line_end(content, j)
-        if is_le:
-            # here-string 开始
-            i = j + le_len
-            end_marker = quote_char + '@'
-            while i < n:
-                at_line_start = _is_at_line_start(content, i)
-                if at_line_start and content[i:i+2] == end_marker:
-                    i += 2
-                    break
-                # 双引号 here-string 反引号转义
-                if quote_char == '"' and content[i] == '`' and i + 1 < n:
-                    i += 2
-                    continue
-                i += 1
-            return i
-    return position
-```
+`_skip_ps1_here_string` 核心逻辑：
+1. 入口处检测并跳过 BOM（position=0 时）
+2. 检测 `@"`/`@'` 后的换行符，记录换行符类型（CRLF/LF/CR）
+3. 逐字符扫描，遇到行首结束标记（`<quote>@`）时退出
+4. 双引号 here-string 支持反引号转义（`` `"@ `` 不结束）
+5. 到达 EOF 时记录警告日志
 
-### 4. 版本自动检测工具
+### 4. 结构化日志埋点（v1.1.0 新增）
 
-```python
-def detect_ps_version_from_content(content: str) -> Ps1Version:
-    """从脚本内容特征推断目标 PowerShell 版本。
+双端对齐的追踪函数族：
 
-    检测启发式规则：
-    - 含 `#Requires -Version 7` 或 `#Requires -PSEdition Core` → '7.x'
-    - 含 `#Requires -Version 5` 或 `#Requires -PSEdition Desktop` → '5.1'
-    - 含 `$IsWindows`/`$IsLinux`/`$IsMacOS` 等 PS7+ 自动变量 → '7.x'
-    - 含 `??` 或 `??=` 运算符（PS7+特性）→ '7.x'
-    - 其他情况返回 '7.x'（默认跨平台模式）
-    """
-    # 简化的启发式检测
-    if re.search(r'#Requires\s+-Version\s+7', content, re.IGNORECASE):
-        return '7.x'
-    if re.search(r'#Requires\s+-PSEdition\s+Core', content, re.IGNORECASE):
-        return '7.x'
-    if re.search(r'#Requires\s+-Version\s+5', content, re.IGNORECASE):
-        return '5.1'
-    if re.search(r'#Requires\s+-PSEdition\s+Desktop', content, re.IGNORECASE):
-        return '5.1'
-    # 默认使用 7.x 跨平台模式
-    return '7.x'
-```
+| Python 函数 | PowerShell 函数 | 用途 |
+|-------------|----------------|------|
+| `_trace_hs(pos, event, ...)` | `Write-Ps1TraceHs` | here-string 事件追踪（start/end/escape/eof_warn/skip） |
+| `_trace_newline(pos, type)` | `Write-Ps1TraceNewline` | 换行符检测（CRLF/LF/CR） |
+| `_trace_bom(detected)` | `Write-Ps1TraceBom` | BOM 检测结果 |
 
-PowerShell 端对应函数：
-```powershell
-function Get-Ps1TargetVersion {
-    param([string]$Content)
-    # 同上启发式规则检测
-    ...
-}
-```
+日志格式统一为 `[HS-START] pos=0 quote=" newline=CR` 形式，便于跨平台问题定位。
 
 ### 5. 向后兼容性保证
 
-1. **默认参数不变**：所有新增参数均有默认值 `'auto'`，现有调用方无需任何修改
-2. **`auto` 模式** 等价于 `'7.x'` 模式（跨平台全支持），与当前行为向后兼容
-3. **位置语义不变**：BOM 采用动态跳过策略，返回位置始终相对于传入的原始 content 字符串，不做截断
-4. **纯函数保证**：所有新增逻辑仍然保持纯函数特性，无副作用
+1. **API 签名不变**：所有公开函数签名保持不变，现有调用方无需任何修改
+2. **位置语义不变**：BOM 采用动态跳过策略，返回位置始终相对于传入的原始 content 字符串
+3. **纯函数保证**：所有逻辑仍然保持纯函数特性，无副作用
+4. **默认行为增强**：CR/LF/CRLF 三种换行符默认全部支持，无需额外配置
 
-## Implementation Plan
+## Implementation Summary
 
-### 阶段一：核心基础增强
-1. 在 `ps1_syntax.py` 中添加 `_preprocess_content()`、`_is_line_end()`、`_is_at_line_start()` 辅助函数
-2. 修改 `_skip_ps1_here_string()` 使用新的换行符检测逻辑
-3. 更新 `iter_code_chars()` 中的行注释/注释块检测使用新的换行符逻辑
-4. 修改其他公开函数添加 `target_version` 参数
+### 已完成（v1.1.0）
 
-### 阶段二：版本检测工具
-5. 实现 `detect_ps_version_from_content()` 自动检测函数
-6. PowerShell 端实现 `Get-Ps1TargetVersion` 函数
+1. ✅ `_is_line_end()` 跨平台换行符检测辅助函数（Python）
+2. ✅ `_is_at_line_start()` 行首判定辅助函数（Python）
+3. ✅ `Test-Ps1AtLineStart` 行首检测函数（PowerShell）
+4. ✅ `_skip_ps1_here_string()` 重构支持 CR/LF/CRLF + BOM
+5. ✅ `Skip-Ps1HereString` 重构支持 CR/LF/CRLF + BOM
+6. ✅ `find_non_whitespace()` 更新支持 BOM 跳过
+7. ✅ `Find-NonWhitespace` 更新支持 BOM 跳过
+8. ✅ `iter_code_chars()` 更新支持 BOM 跳过
+9. ✅ 结构化日志埋点（`_trace_hs`/`_trace_newline`/`_trace_bom` 及 PowerShell 对应函数）
+10. ✅ 新增 11 个跨平台测试用例（7 HereString + 4 InsertPoint）
+11. ✅ Python 78 个、PowerShell 81 个测试全部通过
+12. ✅ 版本号更新到 1.1.0（双端）
 
-### 阶段三：PowerShell 端对齐
-7. 在 `encoding-safety.ps1` 中实现所有新增辅助函数
-8. 更新所有相关 PowerShell 函数添加 `-TargetVersion` 参数
-9. 确保双端逻辑完全对齐
+### 已完成（v1.2.0）
 
-### 阶段四：测试覆盖
-10. 在 `ps1_test_cases.py` 中新增跨平台测试用例：
-    - UTF-8 BOM 头场景（3个：BOM+here-string、BOM+正常代码、BOM+空文件）
-    - CR-only 换行场景（2个：CR换行here-string、混合CR/CRLF）
-    - 无 trailing newline 场景（2个：末尾直接结束标记、末尾直接结束标记+EOF）
-    - 版本检测场景（4个：各版本声明检测、自动变量检测）
-11. 运行双端测试验证全部通过
-12. 更新版本号到 1.1.0
+1. ✅ `Ps1Version` 类型别名和 `detect_ps_version_from_content()` 版本自动检测函数（Python）
+2. ✅ `Get-Ps1TargetVersion` 和 `Resolve-Ps1TargetVersion` 版本检测函数（PowerShell）
+3. ✅ `_skip_ps1_here_string`/`Skip-Ps1HereString` 添加 `target_version`/`-TargetVersion` 参数，实现 5.1/7.x 换行符分支
+4. ✅ 所有公开函数添加 `target_version`/`-TargetVersion` 参数并正确传递调用链
+5. ✅ `skip_line_comments`/`Skip-Ps1LineComments` 版本感知 CR 换行处理（空行检测+注释终止）
+6. ✅ `find_top_level_insert_point`/`Find-Ps1TopLevelInsertPoint` 版本感知 CR 空行处理
+7. ✅ `VersionDetectCase` 数据类和 10 个版本检测用例
+8. ✅ PS5.1 严格模式 here-string 测试用例（3 个）
+9. ✅ TargetVersion 模式测试（7 个：auto/explicit/CR/CRLF 场景）
+10. ✅ PowerShell 测试运行器添加版本检测和 TargetVersion 测试段
+11. ✅ 版本号更新到 1.2.0（双端）
+12. ✅ Python 98 个、PowerShell 101 个测试全部通过（共 199 个）
 
 ## Test Scenarios
 
-### 新增测试用例清单
+### v1.1.0 新增跨平台测试用例（11个）
 
-| ID | 场景 | 类型 | 说明 |
-|----|------|------|------|
-| `hs_bom_double` | BOM+双引号here-string | BOM | `\ufeff@"\n...\n"@` BOM在文件开头不影响here-string识别 |
-| `hs_bom_single` | BOM+单引号here-string | BOM | 同上但单引号 |
-| `hs_bom_normal_code` | BOM+普通代码 | BOM | BOM不影响括号深度计算和插入点查找 |
-| `hs_cr_only_newline` | CR-only换行here-string | 换行符 | `@"\rline1\r"@` 老式Mac风格 |
-| `hs_mixed_crlf_lf` | 混合CRLF/LF换行 | 换行符 | 同一文件中混用两种换行符 |
-| `hs_mixed_cr_crlf` | 混合CR/CRLF换行 | 换行符 | 极端混合场景 |
-| `hs_no_trailing_newline_eof` | EOF无换行结束 | 边界 | 结束标记"@在文件最后两个字符 |
-| `hs_no_trailing_newline_eof_single` | 单引号EOF无换行 | 边界 | 同上但单引号 |
-| `ver_detect_requires_7` | `#Requires -Version 7` 检测 | 版本检测 | 正确识别为7.x |
-| `ver_detect_requires_5` | `#Requires -Version 5.1` 检测 | 版本检测 | 正确识别为5.1 |
-| `ver_detect_pwtcore` | `#Requires -PSEdition Core` 检测 | 版本检测 | 正确识别为7.x |
-| `ver_detect_iswindows` | `$IsWindows` 变量检测 | 版本检测 | 正确识别为7.x |
+| ID | 名称 | 分类 | 换行/BOM | 场景说明 |
+|----|------|------|----------|----------|
+| `hs_skip_cr_only_newline` | CR-only 换行双引号 here-string | HereString | CR | 老式 Mac 风格 CR 换行 |
+| `hs_skip_cr_single_quoted` | CR-only 换行单引号 here-string | HereString | CR | 单引号变体 CR 换行 |
+| `hs_skip_mixed_newlines_cr_lf` | 混合换行符 here-string | HereString | LF+CRLF+CR | 同一字符串内三种换行符混用 |
+| `hs_skip_cr_indented_end` | CR 换行下缩进结束标记 | HereString | CR | 缩进的 `"@` 不关闭 here-string |
+| `hs_skip_utf8_bom_at_start` | UTF-8 BOM 开头 here-string | HereString | LF+BOM | BOM 在位置0自动跳过 |
+| `hs_skip_bom_crlf` | BOM + CRLF 换行 here-string | HereString | CRLF+BOM | Windows 默认编码场景 |
+| `hs_skip_cr_with_backtick_escape` | CR 换行反引号转义 | HereString | CR | `` `"@ `` 转义不结束 |
+| `hs_cr_only_toplevel` | CR 换行顶层 here-string | InsertPoint | CR | 假花括号不影响括号深度 |
+| `hs_bom_toplevel` | BOM 开头+顶层 here-string | InsertPoint | LF+BOM | BOM 不影响插入点检测 |
+| `hs_bom_param_default` | BOM+param here-string 默认值 | InsertPoint | LF+BOM | param 块内 here-string |
+| `hs_cr_in_function` | CR 换行函数体内 here-string | InsertPoint | CR | 函数体+CR+here-string 组合 |
+
+详细用例说明见 `.agents/scripts/tests/CROSSPLATFORM_TEST_CASES.md`。
 
 ## Acceptance Criteria
 
-1. ✅ 所有原有 70 个测试用例继续通过（无回归）
-2. ✅ 新增 12 个跨平台测试用例双端全部通过
+### v1.1.0 已验证
+
+1. ✅ 所有原有 67 个测试用例继续通过（无回归）
+2. ✅ 新增 11 个跨平台测试用例双端全部通过
 3. ✅ 含 BOM 的 PS1 文件能正确识别 here-string 和括号深度
-4. ✅ CR-only 换行符文件能正确解析
-5. ✅ 混合换行符文件能正确解析
-6. ✅ 无 trailing newline 的 here-string 能正确识别结束标记
-7. ✅ 版本自动检测函数对各种声明的识别准确率 100%
-8. ✅ 默认调用方式（不传 target_version）行为与 v1.0.0 完全兼容
-9. ✅ Python 端版本号更新为 `__version__ = "1.1.0"`
-10. ✅ PowerShell 端版本号更新为 `$script:EncodingSafetyVersion = '1.1.0'`
+4. ✅ CR-only 换行符 here-string 能正确解析
+5. ✅ 混合换行符（LF/CRLF/CR）文件能正确解析
+6. ✅ BOM + CRLF（Windows 默认编码）场景正确处理
+7. ✅ CR 换行下反引号转义和缩进结束标记正确处理
+8. ✅ Python 端版本号更新为 `__version__ = "1.1.0"`
+9. ✅ PowerShell 端版本号更新为 `$script:EncodingSafetyVersion = '1.1.0'`
+10. ✅ 双端测试总计 Python 78 个、PowerShell 81 个用例全部通过
+
+### v1.2.0 已验证
+
+1. ✅ `target_version` 参数在所有公开函数中正确传递
+2. ✅ `detect_ps_version_from_content()` 对各种 `#Requires` 声明和 PS7+ 特征的识别准确率 100%（10/10 用例通过）
+3. ✅ `skip_line_comments` 完整支持 CR 换行
+4. ✅ 版本检测相关测试用例双端通过（10 个版本检测 + 7 个 TargetVersion 模式）
+5. ✅ PS5.1 严格模式正确拒绝 CR-only 换行（here-string 和注释）
+6. ✅ PS7.x 跨平台模式正确处理 CRLF/LF/CR 三种换行
+7. ✅ Python 端版本号更新为 `__version__ = "1.2.0"`
+8. ✅ PowerShell 端版本号更新为 `$script:EncodingSafetyVersion = '1.2.0'`
+9. ✅ 双端测试总计 Python 98 个、PowerShell 101 个用例全部通过（共 199 个）
