@@ -4,17 +4,15 @@
 # 功能：从基础镜像构建到最终 Python 导入验证的全流程自动化
 # 使用：bash scripts/wsl-deploy.sh [OPTIONS]
 # 必须在 WSL2/Linux 环境中执行（从 SpecWeave 根目录或任意位置均可）
+# 日志格式：默认 text（人类可读），使用 --log-format=json 输出 JSON Lines 适配监控平台
 # =============================================================================
 set -euo pipefail
 
-# ── 颜色定义 ──
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-NC='\033[0m' # No Color
+# ── 确定脚本目录并加载统一日志库 ──
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/logging.sh
+source "${SCRIPT_DIR}/lib/logging.sh"
+LOG_SERVICE="caffe-ffi-deploy"
 
 # ── 默认参数 ──
 USE_CN_MIRRORS=false
@@ -31,22 +29,14 @@ JUPYTER_TOKEN="deploy-token"
 REBUILD=false
 CLEANUP=false
 
-# ── 日志函数 ──
-log_info()  { echo -e "${GREEN}[INFO]${NC}  $*"; }
-log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $*"; }
-log_step()  { echo -e "\n${BOLD}${BLUE}━━━ $* ━━━${NC}\n"; }
-log_ok()    { echo -e "${GREEN}  ✔ $*${NC}"; }
-log_fail()  { echo -e "${RED}  ✘ $*${NC}"; }
-
 # ── 用法 ──
 usage() {
     cat << EOF
-${BOLD}Caffe-FFI WSL 一键部署脚本${NC}
+${_CLR_BOLD}Caffe-FFI WSL 一键部署脚本${_CLR_RESET}
 
 用法: bash scripts/wsl-deploy.sh [选项]
 
-${BOLD}选项:${NC}
+${_CLR_BOLD}选项:${_CLR_RESET}
   --cn                 使用国内镜像源（apt: aliyun, pip: aliyun, conda: tuna）
   --no-cache           构建时禁用 Docker 缓存
   --skip-base          跳过基础镜像(jupyter-ssh-base)检查/构建
@@ -59,15 +49,24 @@ ${BOLD}选项:${NC}
   --password PASS      SSH 密码（默认: deploy-test）
   --token TOKEN        Jupyter Token（默认: deploy-token）
   -v, --verbose        详细输出
+  --log-format FMT     日志格式: text (默认) | json
+  --log-level LEVEL    日志级别: DEBUG|INFO|WARN|ERROR (默认: INFO)
+  --log-json           JSON 同时输出到 stdout
   -h, --help           显示帮助信息
 
-${BOLD}示例:${NC}
+${_CLR_BOLD}监控平台集成:${_CLR_RESET}
+  JSON 事件日志默认写入: /tmp/caffe-ffi-events.jsonl
+  使用 --log-format=json 将主输出切换为 JSON Lines 格式
+  使用 --log-json 同时在 stdout 输出 JSON 和 text 格式
+
+${_CLR_BOLD}示例:${_CLR_RESET}
   bash scripts/wsl-deploy.sh --cn                 # 国内用户一键部署
   bash scripts/wsl-deploy.sh --cn --cleanup       # 国内用户部署+验证后自动清理
   bash scripts/wsl-deploy.sh --rebuild --no-cache # 强制重建
   bash scripts/wsl-deploy.sh --skip-run           # 仅构建不运行
+  bash scripts/wsl-deploy.sh --cn --log-format=json  # 监控平台用 JSON 输出
 
-${BOLD}前置条件:${NC}
+${_CLR_BOLD}前置条件:${_CLR_RESET}
   - WSL2 (Ubuntu 24.04/26.04 推荐) 或原生 Linux
   - Docker Engine 已安装且运行中
   - Docker BuildKit 支持（Docker 18.09+）
@@ -75,9 +74,13 @@ ${BOLD}前置条件:${NC}
 EOF
 }
 
-# ── 解析命令行参数 ──
+# ── 解析命令行参数（含日志相关参数） ──
+_args=()
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --log-format=*) LOG_FORMAT="${1#*=}"; shift ;;
+        --log-level=*)  LOG_LEVEL="${1#*=}"; shift ;;
+        --log-json)     LOG_JSON_STDOUT=1; shift ;;
         --cn)              USE_CN_MIRRORS=true; shift ;;
         --no-cache)        NO_CACHE="--no-cache"; shift ;;
         --skip-base)       SKIP_BASE_BUILD=true; shift ;;
@@ -91,12 +94,12 @@ while [[ $# -gt 0 ]]; do
         --token)           JUPYTER_TOKEN="$2"; shift 2 ;;
         -v|--verbose)      VERBOSE=true; shift ;;
         -h|--help)         usage; exit 0 ;;
-        *) echo "未知选项: $1"; usage; exit 1 ;;
+        *) _args+=("$1"); shift ;;
     esac
 done
+set -- "${_args[@]:-}"
 
-# ── 确定脚本和项目根目录 ──
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# ── 确定项目根目录（SCRIPT_DIR 已在加载日志库时定义） ──
 APP_DIR="$(dirname "$SCRIPT_DIR")"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
@@ -108,6 +111,13 @@ fi
 
 BUILD_SCRIPT="$APP_DIR/scripts/build.sh"
 BASE_BUILD_SCRIPT="$PROJECT_ROOT/apps/jupyter-ssh-base/scripts/build.sh"
+
+# ── 记录启动事件 ──
+DEPLOY_START_TIME=$(date +%s)
+log_set_field "container" "$CONTAINER_NAME"
+log_set_field "image_tag" "$IMAGE_TAG"
+log_set_field "cn_mirrors" "$USE_CN_MIRRORS"
+log_event "deploy_start" "ssh_port=$SSH_PORT" "jupyter_port=$JUPYTER_PORT"
 
 # =============================================================================
 # 阶段 0: 环境预检（Environment Pre-flight Check）
