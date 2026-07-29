@@ -368,7 +368,7 @@ def _skip_ps1_here_string(content: str, position: int, target_version: str = 'au
 
 # ── 核心迭代器 ──────────────────────────────────────────────────────────────
 
-def iter_code_chars(s: str, start: int = 0):
+def iter_code_chars(s: str, start: int = 0, target_version: str = 'auto'):
     """迭代字符串中的代码字符，跳过字符串和注释内容。
 
     Yields:
@@ -392,11 +392,12 @@ def iter_code_chars(s: str, start: int = 0):
     # 跳过 UTF-8 BOM（如果从位置0开始且首字符是BOM）
     if i == 0 and n > 0 and s[0] == '\ufeff':
         i = 1
+    resolved_ver = _resolve_target_version(s, target_version)
     while i < n:
         ch = s[i]
 
         # ── Here-string @' ... '@ 或 @" ... "@ ──
-        new_i = _skip_ps1_here_string(s, i)
+        new_i = _skip_ps1_here_string(s, i, target_version)
         if new_i != i:
             i = new_i
             continue
@@ -423,7 +424,13 @@ def iter_code_chars(s: str, start: int = 0):
         # ── 行注释 #...（非 #! shebang 和非 <# 注释块开头）──
         if ch == '#':
             comment_start = i
-            while i < n and s[i] != '\n':
+            while i < n:
+                c = s[i]
+                if c == '\n':
+                    break
+                if c == '\r':
+                    if resolved_ver == '7.x' or (i + 1 < n and s[i + 1] == '\n'):
+                        break
                 i += 1
             _trace(f"  line comment skipped pos={comment_start}-{i}")
             continue
@@ -466,7 +473,7 @@ def iter_code_chars(s: str, start: int = 0):
         i += 1
 
 
-def iter_code_chars_no_comments(s: str, start: int = 0):
+def iter_code_chars_no_comments(s: str, start: int = 0, target_version: str = 'auto'):
     """迭代代码字符（仅跳过字符串，不跳过注释）。
 
     适用于已经在逐行处理、注释已单独处理的场景。
@@ -511,7 +518,7 @@ def iter_code_chars_no_comments(s: str, start: int = 0):
 
 # ── 空白和注释跳过 ──────────────────────────────────────────────────────────
 
-def find_non_whitespace(s: str, start: int = 0) -> int:
+def find_non_whitespace(s: str, start: int = 0, target_version: str = 'auto') -> int:
     """返回 start 之后第一个非空白字符的位置。
 
     自动跳过位置 0 处的 UTF-8 BOM（\ufeff）。
@@ -526,22 +533,38 @@ def find_non_whitespace(s: str, start: int = 0) -> int:
     return i
 
 
-def skip_line_comments(s: str, start: int) -> int:
+def skip_line_comments(s: str, start: int, target_version: str = 'auto') -> int:
     """跳过连续的行注释和空行，返回下一个有意义代码的位置。
 
     注意：不会跳过 #Requires 行（它是有意义的声明）。
     """
     _trace(f"skip_line_comments: start={start}")
+    resolved_ver = _resolve_target_version(s, target_version)
     i = start
     while i < len(s):
-        i = find_non_whitespace(s, i)
+        i = find_non_whitespace(s, i, target_version)
         if i >= len(s):
             _trace(f"  reached end of string at pos={i}")
             break
-        # 空行
+        # 空行检测（版本感知）
+        is_blank = False
         if s[i] == '\n':
-            _trace(f"  blank line at pos={i}")
+            is_blank = True
             i += 1
+        elif s[i] == '\r':
+            if resolved_ver == '7.x':
+                is_blank = True
+                if i + 1 < len(s) and s[i + 1] == '\n':
+                    i += 2  # CRLF
+                else:
+                    i += 1  # CR only
+            else:
+                # 5.1 模式：CR 必须后跟 LF 才算换行
+                if i + 1 < len(s) and s[i + 1] == '\n':
+                    is_blank = True
+                    i += 2  # CRLF
+        if is_blank:
+            _trace(f"  blank line at pos={i}")
             continue
         # 行注释（但不是 #Requires）
         if s[i] == '#' and (i + 1 >= len(s) or s[i + 1] != '<'):
@@ -549,7 +572,13 @@ def skip_line_comments(s: str, start: int) -> int:
                 _trace(f"  #Requires found at pos={i}, stopping")
                 break
             comment_start = i
-            while i < len(s) and s[i] != '\n':
+            while i < len(s):
+                ch = s[i]
+                if ch == '\n':
+                    break
+                if ch == '\r':
+                    if resolved_ver == '7.x' or (i + 1 < len(s) and s[i + 1] == '\n'):
+                        break
                 i += 1
             _trace(f"  line comment skipped pos={comment_start}-{i}")
             continue
@@ -574,9 +603,9 @@ def skip_line_comments(s: str, start: int) -> int:
     return i
 
 
-def skip_whitespace_and_comments(s: str, start: int = 0) -> int:
+def skip_whitespace_and_comments(s: str, start: int = 0, target_version: str = 'auto') -> int:
     """跳过空白和注释，返回下一个代码字符的位置。"""
-    result = skip_line_comments(s, find_non_whitespace(s, start))
+    result = skip_line_comments(s, find_non_whitespace(s, start, target_version), target_version)
     _trace(f"skip_whitespace_and_comments: start={start} -> {result}")
     return result
 
@@ -646,7 +675,7 @@ def find_matching_close(s: str, open_pos: int, open_ch: str = '{', close_ch: str
     return -1
 
 
-def find_param_block_end(s: str, search_from: int = 0) -> int:
+def find_param_block_end(s: str, search_from: int = 0, target_version: str = 'auto') -> int:
     """找到 param(...) 块的结束位置（闭括号之后）。
 
     返回值指向闭括号 ) 之后的位置（跳过尾随空白和换行），找不到返回 -1。
@@ -672,7 +701,7 @@ def find_param_block_end(s: str, search_from: int = 0) -> int:
     while i < n:
         ch = s[i]
         # Here-string 跳过（@'/@" 开始的 here-string）
-        new_i = _skip_ps1_here_string(s, i)
+        new_i = _skip_ps1_here_string(s, i, target_version)
         if new_i != i:
             _trace(f"    here-string skipped pos={i}-{new_i}")
             i = new_i
@@ -749,7 +778,7 @@ FUNCTION_DEF_RE = re.compile(r'^\s*function\s+([\w:.-]+)', re.MULTILINE | re.IGN
 PARAM_START_RE = re.compile(r'param\s*\(', re.MULTILINE | re.IGNORECASE)
 
 
-def find_top_level_insert_point(content: str, search_from: int) -> int:
+def find_top_level_insert_point(content: str, search_from: int, target_version: str = 'auto') -> int:
     """在 search_from 之后找到顶层（brace_depth=0）的代码插入点。
 
     正确识别：
@@ -760,18 +789,19 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
     这修复了迁移工具将版本校验块错误插入函数体内 param 之后的 bug。
     """
     _trace(f"find_top_level_insert_point: search_from={search_from}, content_len={len(content)}")
-    pos = skip_whitespace_and_comments(content, search_from)
+    resolved_ver = _resolve_target_version(content, target_version)
+    pos = skip_whitespace_and_comments(content, search_from, target_version)
 
     # 检查是否以脚本级 param( 开头
     param_match = PARAM_START_RE.match(content, pos)
     if param_match:
         # 验证这是脚本级 param 而非函数内 param：
         # 检查 pos 之前的 brace_depth 是否为 0
-        pre_depth = _calc_brace_depth(content[:pos])
+        pre_depth = _calc_brace_depth(content[:pos], target_version)
         _trace(f"  param( found at pos={param_match.start()}, pre_depth={pre_depth}")
         if pre_depth == 0:
             _trace(f"  -> this is a script-level param, finding block end")
-            param_end = find_param_block_end(content, param_match.start())
+            param_end = find_param_block_end(content, param_match.start(), target_version)
             if param_end > 0:
                 _trace(f"  -> insert after param block at pos={param_end}")
                 return param_end
@@ -781,7 +811,7 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
             _trace(f"  -> param is inside a block (depth={pre_depth}), not script-level")
 
     # 扫描找到第一个顶层代码位置
-    brace_depth = _calc_brace_depth(content[:pos]) if pos > 0 else 0
+    brace_depth = _calc_brace_depth(content[:pos], target_version) if pos > 0 else 0
     _trace(f"  starting scan at pos={pos}, initial brace_depth={brace_depth}")
     i = pos
     line_num = content[:pos].count('\n') + 1
@@ -791,16 +821,31 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
         while i < len(content) and content[i] in ' \t':
             i += 1
 
-        # 空行
-        if i < len(content) and content[i] == '\n':
-            _trace(f"  L{line_num}: blank line at pos={i}")
-            i += 1
-            line_num += 1
-            continue
+        # 空行检测（版本感知）
+        if i < len(content):
+            is_blank = False
+            if content[i] == '\n':
+                is_blank = True
+                i += 1
+            elif content[i] == '\r':
+                if resolved_ver == '7.x':
+                    is_blank = True
+                    if i + 1 < len(content) and content[i + 1] == '\n':
+                        i += 2
+                    else:
+                        i += 1
+                else:
+                    if i + 1 < len(content) and content[i + 1] == '\n':
+                        is_blank = True
+                        i += 2
+            if is_blank:
+                _trace(f"  L{line_num}: blank line at pos={i}")
+                line_num += 1
+                continue
 
         # 跳过注释
         old_i = i
-        i = skip_line_comments(content, i)
+        i = skip_line_comments(content, i, target_version)
         if i != old_i:
             comment_lines = content[old_i:i].count('\n')
             _trace(f"  L{line_num}: skipped comments/whitespace pos={old_i}->{i} ({comment_lines} lines)")
@@ -823,7 +868,7 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
 
         # 扫描到行尾，追踪括号深度
         brace_events = []
-        for idx, ch in iter_code_chars(content, i):
+        for idx, ch in iter_code_chars(content, i, target_version):
             if ch == '{':
                 brace_depth += 1
                 brace_events.append(f"{{at{idx}->d{brace_depth}")
@@ -832,7 +877,13 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
                 brace_depth -= 1
                 brace_events.append(f"}}at{idx}->d{brace_depth}")
                 _trace(f"    }} at pos={idx}, depth={brace_depth}")
+            is_line_end = False
             if ch == '\n':
+                is_line_end = True
+            elif ch == '\r':
+                if resolved_ver == '7.x' or (idx + 1 < len(content) and content[idx + 1] == '\n'):
+                    is_line_end = True
+            if is_line_end:
                 if brace_events:
                     _trace(f"    line end at pos={idx}, events: {', '.join(brace_events)}, final depth={brace_depth}")
                 i = idx + 1
@@ -845,10 +896,10 @@ def find_top_level_insert_point(content: str, search_from: int) -> int:
     return len(content)
 
 
-def _calc_brace_depth(s: str) -> int:
+def _calc_brace_depth(s: str, target_version: str = 'auto') -> int:
     """计算字符串中的括号深度（正数表示有未闭合的 {）。"""
     depth = 0
-    for _, ch in iter_code_chars(s):
+    for _, ch in iter_code_chars(s, target_version=target_version):
         if ch == '{':
             depth += 1
         elif ch == '}':
