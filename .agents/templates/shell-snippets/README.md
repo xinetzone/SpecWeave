@@ -7,8 +7,11 @@
 | 模板文件 | 用途 | 对应模式 |
 |----------|------|----------|
 | [bash-structured-logging.sh](bash-structured-logging.sh) | Bash 统一结构化日志库（text+json双格式，metric/event/summary） | bash-unified-structured-logging |
+| [powershell-structured-logging.ps1](powershell-structured-logging.ps1) | PowerShell 统一结构化日志库（text+json双格式，metric/event/summary） | powershell-structured-logging |
 | [powershell-wsl-wrapper.ps1](powershell-wsl-wrapper.ps1) | PowerShell→WSL 跨Shell脚本包装器（自动检测+路径转换+参数透传） | powershell-wsl-cross-shell-wrapper |
 | [wsl2-docker-selection.md](wsl2-docker-selection.md) | WSL2 Docker 方案选择文档模板（性能对比表+决策矩阵） | wsl2-docker-selection-decision |
+| [deployment-guide-comparison-section.md](deployment-guide-comparison-section.md) | 部署指南"方案对比"小节通用规范模板 | documentation-best-practice |
+| [docs-version-annotation.md](docs-version-annotation.md) | 文档版本标注机制规范（解决硬编码版本漂移问题） | documentation-best-practice |
 
 ## 快速复用
 
