@@ -236,7 +236,7 @@ def _is_at_line_start(content: str, pos: int, start_pos: int) -> bool:
     return False
 
 
-def _skip_ps1_here_string(content: str, position: int) -> int:
+def _skip_ps1_here_string(content: str, position: int, target_version: str = 'auto') -> int:
     """检测当前位置是否为 PowerShell here-string 开头，若是则跳过整个 here-string。
 
     PowerShell here-string 语法：
@@ -252,6 +252,9 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
     Args:
         content: 要分析的 PowerShell 代码字符串。
         position: 当前扫描位置（0-based）。若为 0 且首字符是 BOM，自动跳过 BOM。
+        target_version:
+            目标 PowerShell 版本。'5.1'=仅 CRLF+LF（严格 Windows 兼容）;
+            '7.x'=CRLF+LF+CR（跨平台）; 'auto'=自动检测版本。默认 'auto'。
 
     Returns:
         若当前位置是 here-string 开头，返回 here-string 结束标记之后的位置；
@@ -272,18 +275,31 @@ def _skip_ps1_here_string(content: str, position: int) -> int:
         quote_char = content[i + 1]
         j = i + 2
 
-        # 跨平台换行符检测：LF / CRLF / CR
+        # 解析目标版本（auto 模式自动检测）
+        resolved_ver = _resolve_target_version(content, target_version)
+
+        # 根据目标版本决定支持的换行符类型
         nl_type = None
         if j < n:
-            if content[j] == '\r' and j + 1 < n and content[j + 1] == '\n':
-                nl_type = "CRLF"
-                j += 2  # 跳过 CR+LF
-            elif content[j] == '\n':
-                nl_type = "LF"
-                j += 1
-            elif content[j] == '\r':
-                nl_type = "CR"
-                j += 1
+            if resolved_ver == '5.1':
+                # PS5.1 严格模式：仅 CRLF 和 LF（Windows 原生）
+                if content[j] == '\r' and j + 1 < n and content[j + 1] == '\n':
+                    nl_type = "CRLF"
+                    j += 2
+                elif content[j] == '\n':
+                    nl_type = "LF"
+                    j += 1
+            else:
+                # PS7.x 跨平台模式：LF / CRLF / CR 均支持
+                if content[j] == '\r' and j + 1 < n and content[j + 1] == '\n':
+                    nl_type = "CRLF"
+                    j += 2
+                elif content[j] == '\n':
+                    nl_type = "LF"
+                    j += 1
+                elif content[j] == '\r':
+                    nl_type = "CR"
+                    j += 1
 
         if nl_type:
             content_start = j  # here-string 内容起始位置
