@@ -1,29 +1,60 @@
-"""Mermaid 语法安全检查。
+"""Mermaid 语法安全检查（兼容层）。
 
-支持的图表类型与检测规则：
-- flowchart/graph：空行、节点引号、subgraph格式、边标签引号、列表触发
-- stateDiagram-v2：空行、迁移标签引号（: 后）、状态描述引号、note文本引号、列表触发
-- sequenceDiagram：空行、participant别名引号、消息文本引号
-- classDiagram：空行、类名引号、关系标签引号、方法/属性格式、换行符
-- erDiagram：空行、实体名引号、关系标签引号、属性格式、换行符
-- pie：空行（标签自带引号）
-- gantt：空行（title/section/任务名裸文本合法）
-- mindmap：空行、节点文本列表触发、形状包裹节点引号
-- timeline/xychart-beta/quadrantChart：空行检测
-
-安全检测（适用于所有图表类型）：
-- click 事件绑定、危险 HTML 标签（script/img/iframe/svg/object/embed）
-- HTML 事件处理器属性（on*）、javascript: 协议 URL
-- end 作为节点 ID（与 Mermaid 保留字冲突）
+保持所有原有函数签名和行为，内部委托给新架构模块。
 """
 
-import re
 import sys
-import difflib
 from pathlib import Path
+from typing import List, Tuple
 
 from constants import EXCLUDED_DIRS, ANSI_RED, ANSI_YELLOW, ANSI_GREEN, ANSI_RESET, ANSI_CYAN
 from lib.project import is_non_worktree_path
+
+from lib.mermaid.common import (
+    MERMAID_FENCE_RE,
+    CHINESE_CHARS_RE,
+    LIST_TRIGGER_RE,
+    SPECIAL_CHARS,
+    detect_diagram_type as _new_detect_diagram_type,
+    text_needs_quotes as _new_text_needs_quotes,
+    state_text_needs_quotes as _new_state_text_needs_quotes,
+    has_list_trigger as _new_has_list_trigger,
+    line_from_offset as _new_line_from_offset,
+    strip_inline_comment as _new_strip_inline_comment,
+    check_empty_lines as _new_check_empty_lines,
+    check_backslash_n as _new_check_backslash_n,
+    fix_backslash_n as _new_fix_backslash_n,
+    fix_empty_lines as _new_fix_empty_lines,
+    check_list_trigger as _new_check_list_trigger,
+    strip_mindmap_shape as _new_strip_mindmap_shape,
+)
+from lib.mermaid.checkers import (
+    FlowchartChecker,
+    StateDiagramChecker,
+    SequenceDiagramChecker,
+    ClassDiagramChecker,
+    ErDiagramChecker,
+    MindmapChecker,
+    SecurityChecker,
+    PieChecker,
+    GanttChecker,
+    TimelineChecker,
+    XyChartChecker,
+    QuadrantChecker,
+)
+from lib.mermaid.fixers import (
+    FlowchartFixer,
+    StateDiagramFixer,
+    SequenceDiagramFixer,
+    ClassDiagramFixer,
+    ErDiagramFixer,
+    MindmapFixer,
+    PieFixer,
+    GanttFixer,
+    GenericFixer,
+)
+from lib.mermaid.scanner import FileScanner
+from lib.mermaid.runner import MermaidRunner, ConsoleColors, _set_debug as _runner_set_debug
 
 _DEBUG = False
 _DEBUG_CTX: dict = {}
@@ -32,6 +63,7 @@ _DEBUG_CTX: dict = {}
 def _set_debug(enabled: bool) -> None:
     global _DEBUG
     _DEBUG = enabled
+    _runner_set_debug(enabled)
 
 
 def _debug_enter(file_rel: str, start_line: int, dia_type: str) -> None:
@@ -48,1073 +80,146 @@ def _debug_log(stage: str, msg: str) -> None:
     dt = _DEBUG_CTX.get("type", "?")
     print(f"  [DEBUG:{dt}] {f}:L{sl} [{stage}] {msg}", file=sys.stderr)
 
-MERMAID_FENCE_RE = re.compile(r"(```mermaid\s*\n)(.*?)(```)", re.DOTALL)
-CHINESE_CHARS_RE = re.compile(r"[\u4e00-\u9fff]")
-SPECIAL_CHARS = "@#≥≤+"
-LIST_TRIGGER_RE = re.compile(r'^[-*+]\s|^\d+[.．、]\s')
-
-
-def _detect_diagram_type(block_text: str) -> str:
-    first_line = block_text.strip().split("\n")[0].strip()
-    if not first_line:
-        return "unknown"
-    diagram_type = first_line.split()[0].lower()
-    if diagram_type in ("flowchart", "graph"):
-        return "flowchart"
-    if diagram_type.startswith("statediagram"):
-        return "stateDiagram"
-    if diagram_type == "sequencediagram":
-        return "sequenceDiagram"
-    if diagram_type == "classdiagram":
-        return "classDiagram"
-    if diagram_type == "erdiagram":
-        return "erDiagram"
-    if diagram_type == "pie":
-        return "pie"
-    if diagram_type == "gantt":
-        return "gantt"
-    if diagram_type in ("timeline", "mindmap", "xychart-beta", "quadrantchart"):
-        return diagram_type
-    return "flowchart"
-
-
-def _text_needs_quotes(ntxt: str) -> bool:
-    if ntxt.startswith('"') and ntxt.endswith('"'):
-        return False
-    if ntxt.startswith("'") and ntxt.endswith("'"):
-        return False
-    return bool(CHINESE_CHARS_RE.search(ntxt) or any(c in ntxt for c in SPECIAL_CHARS) or " " in ntxt.strip())
-
-
-def _has_list_trigger(text: str) -> bool:
-    stripped = text.strip().strip('"').strip("'")
-    return bool(LIST_TRIGGER_RE.match(stripped))
-
-
-def _state_text_needs_quotes(ntxt: str) -> bool:
-    if ntxt.startswith('"') and ntxt.endswith('"'):
-        return False
-    if ntxt.startswith("'") and ntxt.endswith("'"):
-        return False
-    if " " in ntxt.strip():
-        return True
-    dangerous = ":;{}|->"
-    return any(c in ntxt for c in dangerous)
-
-
-def _find_md_files(root_dir: Path, exclude_dirs: set[str]) -> list[Path]:
-    files = []
-    for md in root_dir.rglob("*.md"):
-        parts = set(md.parts)
-        if EXCLUDED_DIRS & parts:
-            continue
-        if is_non_worktree_path(md, root_dir):
-            continue
-        try:
-            rel = md.relative_to(root_dir).as_posix()
-        except ValueError:
-            rel = str(md)
-        if any(rel.startswith(excl.replace("\\", "/")) for excl in exclude_dirs):
-            continue
-        files.append(md)
-    return files
-
-
-def _line_from_offset(content: str, offset: int) -> int:
-    return content[:offset].count("\n") + 1
-
-
-def _check_empty_lines(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = []
-    if "\n\n" in block_text or "\n \n" in block_text:
-        issues.append((start_line, "error", "Mermaid 代码块内存在空行，可能导致解析中断"))
-    return issues
-
-
-def _check_backslash_n(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = []
-    for i, line in enumerate(block_text.split("\n")):
-        code_part = _strip_inline_comment(line)
-        if not code_part.strip():
-            continue
-        j = 0
-        while True:
-            idx = code_part.find("\\n", j)
-            if idx == -1:
-                break
-            issues.append((start_line + i, "error",
-                          f'节点/标签文本中使用了 \\n 换行符，应使用 <br/> 而非 \\n'))
-            j = idx + 2
-    return issues
-
-
-def _fix_backslash_n(text: str) -> str:
-    lines = text.split("\n")
-    result = []
-    for line in lines:
-        stripped = line.lstrip()
-        if stripped.startswith("%%"):
-            result.append(line)
-            continue
-        if "%%" in line:
-            code, comment = line.split("%%", 1)
-            result.append(code.replace("\\n", "<br/>") + "%%" + comment)
-        else:
-            result.append(line.replace("\\n", "<br/>"))
-    return "\n".join(result)
-
-
-def _check_security(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    """检测 Mermaid 安全违规，适用于所有图表类型。
-
-    检测规则：
-    - click 事件绑定（JavaScript 回调注入风险）
-    - <script> 标签（XSS 风险）
-    - 危险 HTML 标签（img/iframe/svg/object/embed）
-    - HTML 事件处理器属性（onclick/onerror/onload 等）
-    - javascript: 协议 URL
-    - end 作为节点 ID（与 Mermaid 保留字冲突）
-    """
-    issues = []
-    dangerous_tags = re.compile(r'<\s*(script|img|iframe|svg|object|embed)\b', re.IGNORECASE)
-    event_handler = re.compile(r'\son\w+\s*=', re.IGNORECASE)
-    click_pat = re.compile(r'^\s*click\s+\S+', re.IGNORECASE)
-    js_url_pat = re.compile(r'javascript\s*:', re.IGNORECASE)
-    end_as_node = re.compile(r'(^|[^a-zA-Z0-9_])end\s*[\(\[\{<]', re.IGNORECASE)
-
-    for i, line in enumerate(block_text.split("\n")):
-        code_part = _strip_inline_comment(line)
-        if not code_part.strip():
-            continue
-        lb = start_line + i
-
-        if click_pat.match(code_part):
-            issues.append((lb, "error",
-                          "禁止使用 click 事件绑定，存在 JavaScript 回调注入风险"))
-
-        tag_m = dangerous_tags.search(code_part)
-        if tag_m:
-            issues.append((lb, "error",
-                          f"禁止使用危险 HTML 标签 <{tag_m.group(1)}>，存在安全风险"))
-
-        if event_handler.search(code_part):
-            issues.append((lb, "error",
-                          "禁止使用 HTML 事件处理器属性（on*），存在 XSS 风险"))
-
-        if js_url_pat.search(code_part):
-            issues.append((lb, "error",
-                          '禁止使用 javascript: 协议 URL，存在 XSS 风险'))
-
-        if end_as_node.search(code_part):
-            issues.append((lb, "error",
-                          '禁止使用 "end" 作为节点 ID，与 Mermaid 保留字冲突'))
-
-    return issues
-
-
-def _strip_inline_comment(line: str) -> str:
-    """移除行内 Mermaid 注释（%% 后的内容），返回代码部分。纯注释行返回空字符串。"""
-    stripped = line.lstrip()
-    if stripped.startswith("%%"):
-        return ""
-    if "%%" in line:
-        return line.split("%%", 1)[0]
-    return line
-
-
-def _check_list_trigger(text: str, line_offset: int, start_line: int,
-                        context: str) -> tuple[int, str, str] | None:
-    if _has_list_trigger(text):
-        return (start_line + line_offset, "warning",
-                f'{context}文本「{text.strip()[:20]}」以列表标记开头，可能触发Markdown列表解析')
-    return None
-
-
-def _fix_flowchart(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    text = block_text
-
-    newline_before = text.count("\n")
-    text = re.sub(r"\n[ \t]*\n+", "\n", text)
-    if text.count("\n") < newline_before:
-        fixes.append("空行")
-
-    node_shapes = [
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(\(([^\)\"]+?)\)\)", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}(("{m.group(3)}"))', "圆形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(\[([^\]\"]+?)\]\)", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}(["{m.group(3)}"])', "体育场形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\[\[([^\]\"]+?)\]\]", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}[["{m.group(3)}"]]', "子程序形状"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)>\(([^\)\"]+?)\)", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}>("{m.group(3)}")', "标签形状"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\[([^\]\"]+?)\]", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}["{m.group(3)}"]', "矩形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\{([^\}\"]+?)\}", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}{{"{m.group(3)}"}}', "菱形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(([^\)\"(<]+?)\)", re.MULTILINE),
-         lambda m: f'{m.group(1)}{m.group(2)}("{m.group(3)}")', "圆角矩形"),
-    ]
-
-    def _wrap_node(pat, rep_fn, shape_name):
-        nonlocal text
-        def _rep(m):
-            ntxt = m.group(3)
-            if _text_needs_quotes(ntxt):
-                return rep_fn(m)
-            return m.group(0)
-        text_new = pat.sub(_rep, text)
-        return text_new
-
-    for pat, rep_fn, shape_name in node_shapes:
-        text_new = _wrap_node(pat, rep_fn, shape_name)
-        if text_new != text:
-            fixes.append(f"{shape_name}节点引号")
-        text = text_new
-
-    arrow_pat = re.compile(
-        r"(-\.->|==>|-->|-\.-|===|---|<-->|<==>|<-\.->|<--|<==|<-\.-|==|--|-\.)"
-        r"\|([^\"|][^|]*?)\|"
-    )
-
-    def _arrow_rep(m):
-        arrow, label = m.group(1), m.group(2)
-        if _text_needs_quotes(label) or label in ("是", "否"):
-            return f'{arrow}|"{label}"|'
-        return m.group(0)
-
-    text_before = text
-    text = arrow_pat.sub(_arrow_rep, text)
-    if text != text_before:
-        fixes.append("边标签引号")
-
-    text_before = text
-    text = _fix_backslash_n(text)
-    if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
-
-    return text, fixes
-
-
-def _check_flowchart(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-
-    sub_pat = re.compile(r"^(\s*subgraph\s+)([^\s\[\"]+)(.*)$", re.MULTILINE)
-    for m in sub_pat.finditer(block_text):
-        sid = m.group(2).strip()
-        rest = m.group(3).strip()
-        lb = block_text[:m.start()].count("\n") + 1
-        if CHINESE_CHARS_RE.search(sid) or "\uff1a" in sid or " " in sid:
-            issues.append((start_line + lb - 1, "error",
-                          f'subgraph 使用裸ID「{sid}」，应使用 subgraph EN_ID ["中文标题"] 格式'))
-        if rest and not rest.startswith("["):
-            if CHINESE_CHARS_RE.search(rest) or any(c in rest for c in "：（()"):
-                issues.append((start_line + lb - 1, "error",
-                              f'subgraph 标题「{rest[:20]}」缺少方括号，应使用 subgraph EN_ID ["标题"] 格式'))
-
-    node_checks = [
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(\(([^\)\"]+?)\)\)", re.MULTILINE), "圆形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(\[([^\]\"]+?)\]\)", re.MULTILINE), "体育场形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\[\[([^\]\"]+?)\]\]", re.MULTILINE), "子程序"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)>\(([^\)\"]+?)\)", re.MULTILINE), "标签形状"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\[([^\]\"]+?)\]", re.MULTILINE), "矩形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\{([^\}\"]+?)\}", re.MULTILINE), "菱形"),
-        (re.compile(r"(^|[^a-zA-Z0-9_\"])([A-Za-z][A-Za-z0-9_]*)\(([^\)\"(<]+?)\)", re.MULTILINE), "圆角矩形"),
-    ]
-
-    for pat, shape_name in node_checks:
-        for m in pat.finditer(block_text):
-            ntxt = m.group(3)
-            lb = block_text[:m.start()].count("\n") + 1
-            if _text_needs_quotes(ntxt):
-                issues.append((start_line + lb - 1, "error",
-                              f'{shape_name}节点含中文/特殊字符/空格但未加双引号：{ntxt[:20]}'))
-            w = _check_list_trigger(ntxt, lb - 1, start_line, f'{shape_name}节点')
-            if w:
-                issues.append(w)
-
-    arrow_pat = re.compile(
-        r"(-\.->|==>|-->|-\.-|===|---|<-->|<==>|<-\.->|<--|<==|<-\.-|==|--|-\.)\|([^|]*?)\|"
-    )
-    for m in arrow_pat.finditer(block_text):
-        label = m.group(2)
-        lb = block_text[:m.start()].count("\n") + 1
-        if not (label.startswith('"') and label.endswith('"')):
-            if _text_needs_quotes(label) or label in ("是", "否"):
-                issues.append((start_line + lb - 1, "error",
-                              f'边标签「{label[:20]}」含中文/特殊字符但未加双引号'))
-        w = _check_list_trigger(label, lb - 1, start_line, '边标签')
-        if w:
-            issues.append(w)
-
-    style_pat = re.compile(r"^\s*style\s+\w+\s+", re.MULTILINE)
-    for m in style_pat.finditer(block_text):
-        lb = block_text[:m.start()].count("\n") + 1
-        line = block_text[m.start():].split("\n")[0]
-        if CHINESE_CHARS_RE.search(line):
-            issues.append((start_line + lb - 1, "warning",
-                          'style 语句含中文字符，可能导致解析错误'))
-
-    issues.extend(_check_backslash_n(block_text, start_line))
-
-    return issues
-
-
-def _strip_mindmap_shape(text: str) -> str:
-    t = text.strip()
-    if t.startswith("<!--") and t.endswith("-->"):
-        return ""
-    dual_delims = [
-        (r'^\(\((.+)\)\)$', 1),
-        (r'^\(\[(.+)\]\)$', 1),
-        (r'^\[\[(.+)\]\]$', 1),
-        (r'^>\((.+)\)$', 1),
-    ]
-    for pat, grp in dual_delims:
-        m = re.match(pat, t)
-        if m:
-            return m.group(grp)
-    single_delims = [
-        (r'^\((.+)\)$', 1),
-        (r'^\[(.+)\]$', 1),
-        (r'^\{(.+)\}$', 1),
-    ]
-    id_dual = re.match(r'^([A-Za-z][A-Za-z0-9_]*)(\(\(|\(\[|\[\[|>\()(.+?)(\)\)|\)\]|\]\]|\))$', t)
-    if id_dual:
-        return id_dual.group(3)
-    id_single = re.match(r'^([A-Za-z][A-Za-z0-9_]*)(\(|\[|\{)(.+?)(\)|\]|\})$', t)
-    if id_single:
-        return id_single.group(3)
-    for pat, grp in single_delims:
-        m = re.match(pat, t)
-        if m:
-            return m.group(grp)
-    return t
-
-
-def _fix_state_diagram(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    text = block_text
-
-    newline_before = text.count("\n")
-    text = re.sub(r"\n[ \t]*\n+", "\n", text)
-    if text.count("\n") < newline_before:
-        fixes.append("空行")
-        _debug_log("fix:空行", f"移除 {newline_before - text.count(chr(10))} 个空行")
-
-    state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
-
-    def _state_label_rep(m):
-        indent, sid, label = m.group(1), m.group(2), m.group(3).strip()
-        needs_q = _state_text_needs_quotes(label)
-        _debug_log("fix:state-label", f"sid={sid!r} label={label!r} needs_quotes={needs_q}")
-        if needs_q:
-            return f'{indent}{sid} : "{label}"'
-        return m.group(0)
-
-    text_before = text
-    text = state_label_pat.sub(_state_label_rep, text)
-    if text != text_before:
-        fixes.append("状态描述引号")
-
-    note_pat = re.compile(r"^(\s*note\s+(?:right|left|over)\s+of\s+\S+\s*:\s*)(.+)$", re.MULTILINE)
-
-    def _note_rep(m):
-        prefix, note_text = m.group(1), m.group(2).strip()
-        needs_q = _state_text_needs_quotes(note_text)
-        _debug_log("fix:note", f"prefix={prefix.rstrip()!r} note_text={note_text!r} needs_quotes={needs_q}")
-        if needs_q:
-            return f'{prefix}"{note_text}"'
-        return m.group(0)
-
-    text_before = text
-    text = note_pat.sub(_note_rep, text)
-    if text != text_before:
-        fixes.append("note文本引号")
-
-    trans_pat = re.compile(
-        r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:"
-        + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$",
-        re.MULTILINE,
-    )
-
-    def _trans_label_rep(m):
-        prefix, label = m.group(1), m.group(2).strip()
-        from_match = re.match(r"^\s*(\S+)\s*-->", prefix)
-        from_s = from_match.group(1) if from_match else "?"
-        to_match = re.search(r"-->\s*(\S+)\s*:", prefix)
-        to_s = to_match.group(1) if to_match else "?"
-        needs_q = _state_text_needs_quotes(label)
-        _debug_log("fix:trans-label", f"{from_s} --> {to_s} : label={label!r} needs_quotes={needs_q}")
-        if needs_q:
-            return f'{prefix}"{label}"'
-        return m.group(0)
-
-    text_before = text
-    text = trans_pat.sub(_trans_label_rep, text)
-    if text != text_before:
-        fixes.append("迁移标签引号")
-
-    text_before = text
-    text = _fix_backslash_n(text)
-    if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
-
-    return text, fixes
-
-
-def _check_state_diagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-    if issues:
-        _debug_log("check:空行", f"发现 {len(issues)} 个空行问题，起始行L{start_line}")
-
-    state_label_pat = re.compile(r"^(\s*state\s+)(\S+)\s*:\s*(.+)$", re.MULTILINE)
-    for m in state_label_pat.finditer(block_text):
-        label = m.group(3).strip()
-        sid = m.group(2)
-        lb = block_text[:m.start()].count("\n") + 1
-        needs_q = _state_text_needs_quotes(label)
-        has_list = _has_list_trigger(label)
-        _debug_log("check:state-label", f"L{lb} sid={sid!r} label={label!r} needs_quotes={needs_q} list_trigger={has_list}")
-        if needs_q:
-            issues.append((start_line + lb - 1, "error",
-                          f'state 描述「{label[:20]}」含空格/特殊字符但未加双引号'))
-        if has_list:
-            w = _check_list_trigger(label, lb - 1, start_line, 'state描述')
-            if w:
-                issues.append(w)
-
-    note_pat = re.compile(r"^(\s*note\s+(?:right|left|over)\s+of\s+\S+\s*:\s*)(.+)$", re.MULTILINE)
-    for m in note_pat.finditer(block_text):
-        note_text = m.group(2).strip()
-        prefix = m.group(1).strip()
-        lb = block_text[:m.start()].count("\n") + 1
-        needs_q = _state_text_needs_quotes(note_text)
-        has_list = _has_list_trigger(note_text)
-        _debug_log("check:note", f"L{lb} prefix={prefix!r} note={note_text!r} needs_quotes={needs_q} list_trigger={has_list}")
-        if needs_q:
-            issues.append((start_line + lb - 1, "error",
-                          f'note 文本「{note_text[:20]}」含空格/特殊字符但未加双引号'))
-        if has_list:
-            w = _check_list_trigger(note_text, lb - 1, start_line, 'note文本')
-            if w:
-                issues.append(w)
-
-    trans_pat = re.compile(
-        r"^(\s*(?:" + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*-->\s*(?:"
-        + r'"[^"]*"' + r"|\[[\*]\]|\S+)\s*:\s*)(.+)$",
-        re.MULTILINE,
-    )
-    for m in trans_pat.finditer(block_text):
-        label = m.group(2).strip()
-        prefix_stripped = m.group(1).strip()
-        lb = block_text[:m.start()].count("\n") + 1
-        needs_q = _state_text_needs_quotes(label)
-        has_list = _has_list_trigger(label)
-        from_match_t = re.match(r'^("?[^"\s]+"?|\[[\*]\])\s*-->', prefix_stripped)
-        to_match_t = re.search(r'-->\s*("?[^"\s]+"?|\[[\*]\])\s*:', prefix_stripped)
-        from_s = from_match_t.group(1) if from_match_t else "?"
-        to_s = to_match_t.group(1) if to_match_t else "?"
-        _debug_log("check:trans-label", f"L{lb} {from_s} --> {to_s} : label={label!r} needs_quotes={needs_q}(warn) list_trigger={has_list}")
-        if needs_q:
-            issues.append((start_line + lb - 1, "warning",
-                          f'迁移标签「{label[:20]}」含空格/特殊字符，建议加双引号'))
-        if has_list:
-            w = _check_list_trigger(label, lb - 1, start_line, '迁移标签')
-            if w:
-                issues.append(w)
-
-    lines = block_text.split("\n")
-    _debug_log("check:逐行扫描", f"共 {len(lines)} 行")
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if not stripped or stripped.startswith("stateDiagram") or stripped in ("{", "}"):
-            _debug_log(f"L{i+1}", f"跳过(空行/图声明/花括号): {stripped[:40]!r}")
-            continue
-        lb = i + 1
-        if re.match(r'^direction\s+\w+$', stripped):
-            _debug_log(f"L{lb}", f"跳过(方向指令): {stripped!r}")
-            continue
-
-        composite_as = re.match(r'^state\s+"([^"]*)"\s+as\s+(\S+)\s*\{?$', stripped)
-        if composite_as:
-            cname, cid = composite_as.group(1), composite_as.group(2)
-            has_list = _has_list_trigger(cname)
-            _debug_log(f"L{lb}", f"复合状态(as格式): name={cname!r} id={cid!r} list_trigger={has_list}")
-            if has_list:
-                w = _check_list_trigger(cname, i, start_line, '复合状态名')
-                if w:
-                    issues.append(w)
-            continue
-
-        composite_bare = re.match(r'^state\s+(\S+)\s*\{?$', stripped)
-        if composite_bare:
-            sid = composite_bare.group(1)
-            is_quoted = sid.startswith('"') and sid.endswith('"')
-            needs_q = _state_text_needs_quotes(sid)
-            _debug_log(f"L{lb}", f"复合状态(裸ID): sid={sid!r} quoted={is_quoted} needs_quotes={needs_q}")
-            if is_quoted:
-                inner = sid[1:-1]
-                if _has_list_trigger(inner):
-                    w = _check_list_trigger(sid, i, start_line, '复合状态名')
-                    if w:
-                        issues.append(w)
-            elif needs_q:
-                issues.append((start_line + lb - 1, "error",
-                              f'state ID「{sid[:20]}」含空格/特殊字符，应使用 state "名称" as EN_ID 格式'))
-            continue
-
-        if re.match(r'^(?:note\s|end\s*note)', stripped):
-            _debug_log(f"L{lb}", f"跳过(note块): {stripped[:40]!r}")
-            continue
-
-        if "-->" in stripped:
-            trans_line_re = re.compile(
-                r'^\s*((?:"[^"]*")|\[[\*]\]|\S+)\s*-->\s*((?:"[^"]*")|\[[\*]\]|\S+)(?:\s*:\s*(.+))?\s*$'
-            )
-            tm = trans_line_re.match(stripped)
-            if tm:
-                from_s, to_s, lbl = tm.group(1), tm.group(2), tm.group(3)
-                _debug_log(f"L{lb}", f"转换行解析: from={from_s!r} to={to_s!r} label={lbl!r}")
-                for stk_pos, stk in [("from", from_s), ("to", to_s)]:
-                    if stk == "[*]":
-                        _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} -> 起始/结束符，跳过")
-                        continue
-                    is_quoted = stk.startswith('"') and stk.endswith('"')
-                    if is_quoted:
-                        _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} -> 已加引号，跳过引号检查")
-                        continue
-                    needs_q = _state_text_needs_quotes(stk)
-                    has_list = _has_list_trigger(stk)
-                    _debug_log(f"L{lb}", f"  状态名[{stk_pos}]={stk!r} needs_quotes={needs_q} list_trigger={has_list}")
-                    if needs_q:
-                        issues.append((start_line + lb - 1, "error",
-                                      f'状态名「{stk[:20]}」含空格/特殊字符但未加双引号'))
-                    elif has_list:
-                        w = _check_list_trigger(stk, i, start_line, '状态名')
-                        if w:
-                            issues.append(w)
-            else:
-                _debug_log(f"L{lb}", f"转换行正则未匹配: {stripped[:60]!r}")
-            continue
-
-        _debug_log(f"L{lb}", f"未匹配任何规则: {stripped[:60]!r}")
-
-    _debug_log("check:summary", f"stateDiagram检查完成，累计问题 {len(issues)} 个")
-    issues.extend(_check_backslash_n(block_text, start_line))
-    return issues
-
-
-def _fix_sequence_diagram(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    text = block_text
-
-    newline_before = text.count("\n")
-    text = re.sub(r"\n[ \t]*\n+", "\n", text)
-    if text.count("\n") < newline_before:
-        fixes.append("空行")
-
-    participant_pat = re.compile(
-        r"^(\s*participant\s+)(\S+)\s+as\s+(.+)$", re.MULTILINE
-    )
-
-    def _part_rep(m):
-        indent, pid, alias = m.group(1), m.group(2), m.group(3).strip()
-        if _text_needs_quotes(alias) and not (alias.startswith('"') and alias.endswith('"')):
-            return f'{indent}{pid} as "{alias}"'
-        return m.group(0)
-
-    text_before = text
-    text = participant_pat.sub(_part_rep, text)
-    if text != text_before:
-        fixes.append("participant别名引号")
-
-    return text, fixes
-
-
-def _check_sequence_diagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-
-    participant_pat = re.compile(
-        r"^\s*participant\s+(\S+)\s+as\s+(.+)$", re.MULTILINE
-    )
-    for m in participant_pat.finditer(block_text):
-        alias = m.group(2).strip()
-        lb = block_text[:m.start()].count("\n") + 1
-        if _text_needs_quotes(alias) and not (alias.startswith('"') and alias.endswith('"')):
-            issues.append((start_line + lb - 1, "error",
-                          f'participant 别名「{alias[:20]}」含中文/空格但未加双引号'))
-
-    return issues
-
-
-def _fix_classDiagram(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    lines = block_text.split("\n")
-    result_lines = []
-    rel_operators = ["<|--", "*--", "o--", "-->", "<--", "--*", "--o", "<.-", ".->", "--"]
-
-    for line in lines:
-        stripped = line.strip()
-        if not stripped:
-            continue
-
-        code_part = _strip_inline_comment(line)
-        code_stripped = code_part.strip()
-        indent = line[:len(line) - len(line.lstrip())]
-        comment = ""
-        if "%%" in line and not line.lstrip().startswith("%%"):
-            code_part, comment = line.split("%%", 1)
-            comment = "%%" + comment
-            code_stripped = code_part.strip()
-
-        if not code_stripped or code_stripped == "classDiagram" or code_stripped.lower().startswith("classdiagram"):
-            result_lines.append(line)
-            continue
-
-        if code_stripped in ("{", "}"):
-            result_lines.append(indent + code_stripped + comment)
-            continue
-
-        class_def = re.match(r'^(\s*class\s+)("?[A-Za-z][A-Za-z0-9_]*"?|[^\s{]+)(\s*\{?\s*)$', code_part)
-        if class_def:
-            prefix, cname, rest = class_def.group(1), class_def.group(2), class_def.group(3)
-            is_quoted = cname.startswith('"') and cname.endswith('"')
-            if not is_quoted and _text_needs_quotes(cname):
-                cname = f'"{cname}"'
-                if "类名引号" not in fixes:
-                    fixes.append("类名引号")
-            result_lines.append(prefix.rstrip() + " " + cname + rest.rstrip() + comment)
-            continue
-
-        has_rel = any(op in code_stripped for op in rel_operators)
-        if has_rel:
-            colon_pos = code_part.rfind(":")
-            label_part = ""
-            rel_part = code_part
-            if colon_pos != -1:
-                label_part = code_part[colon_pos + 1:]
-                rel_part = code_part[:colon_pos]
-                label_text = label_part.strip()
-                if label_text and not (label_text.startswith('"') and label_text.endswith('"')):
-                    if _text_needs_quotes(label_text):
-                        label_part = f' "{label_text}"'
-                        if "关系标签引号" not in fixes:
-                            fixes.append("关系标签引号")
-
-            found_op = None
-            op_pos = -1
-            for op in rel_operators:
-                pos = rel_part.find(op)
-                if pos != -1:
-                    found_op = op
-                    op_pos = pos
-                    break
-
-            if found_op:
-                left = rel_part[:op_pos].strip()
-                right = rel_part[op_pos + len(found_op):].strip()
-
-                def _quote_name(name):
-                    if not name:
-                        return name
-                    if name.startswith('"') and name.endswith('"'):
-                        return name
-                    if _text_needs_quotes(name):
-                        if "类名引号" not in fixes:
-                            fixes.append("类名引号")
-                        return f'"{name}"'
-                    return name
-
-                left = _quote_name(left)
-                right = _quote_name(right)
-                new_line = f"{indent}{left} {found_op} {right}"
-                if colon_pos != -1:
-                    new_line += f" :{label_part}"
-                result_lines.append(new_line.rstrip() + comment)
-                continue
-
-        result_lines.append(line)
-
-    text = "\n".join(result_lines)
-
-    newline_before = block_text.count("\n")
-    if text.count("\n") < newline_before:
-        if "空行" not in fixes:
-            fixes.insert(0, "空行")
-
-    text_before = text
-    text = _fix_backslash_n(text)
-    if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
-
-    return text, fixes
-
-
-def _check_classDiagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-
-    lines = block_text.split("\n")
-    in_class_braces = False
-    brace_depth = 0
-
-    class_def_pat = re.compile(r'^\s*class\s+("?[A-Za-z][A-Za-z0-9_]*"?|[^\s{]+)(\s*\{?\s*)$')
-    member_pat = re.compile(r'^\s*([+\-#~])?\s*(?:([A-Za-z_][A-Za-z0-9_<>]*)\s+)?([A-Za-z_][A-Za-z0-9_]*)(\([^)]*\))?(\s*[A-Za-z_][A-Za-z0-9_<>]*)?\s*("[^"]*")?\s*$')
-    rel_operators = ["<|--", "*--", "o--", "-->", "<--", "--*", "--o", "<.-", ".->", "--"]
-
-    for i, line in enumerate(lines):
-        code_part = _strip_inline_comment(line)
-        stripped = code_part.strip()
-        if not stripped:
-            continue
-        lb = i + 1
-
-        if stripped == "classDiagram" or stripped.lower().startswith("classdiagram"):
-            continue
-
-        if stripped in ("{", "}"):
-            if stripped == "{":
-                brace_depth += 1
-                in_class_braces = True
-            else:
-                brace_depth -= 1
-                if brace_depth <= 0:
-                    in_class_braces = False
-                    brace_depth = 0
-            continue
-
-        if in_class_braces:
-            if not member_pat.match(stripped):
-                is_annotation = stripped.startswith("<<") and stripped.endswith(">>")
-                if not is_annotation:
-                    issues.append((start_line + lb - 1, "warning",
-                                  f'类成员行格式可能不正确：{stripped[:40]}'))
-            continue
-
-        cm = class_def_pat.match(stripped)
-        if cm:
-            cname = cm.group(1)
-            rest = cm.group(2)
-            is_quoted = cname.startswith('"') and cname.endswith('"')
-            if not is_quoted and _text_needs_quotes(cname):
-                issues.append((start_line + lb - 1, "error",
-                              f'类名「{cname[:20]}」含中文/空格/特殊字符但未加双引号'))
-            if "{" in rest:
-                brace_depth += 1
-                in_class_braces = True
-            continue
-
-        has_rel_op = any(op in stripped for op in rel_operators)
-        if has_rel_op:
-            colon_pos = stripped.rfind(":")
-            label = None
-            rel_part = stripped
-            if colon_pos != -1:
-                label = stripped[colon_pos + 1:].strip()
-                rel_part = stripped[:colon_pos]
-
-            found_op = None
-            op_pos = -1
-            for op in rel_operators:
-                pos = rel_part.find(op)
-                if pos != -1:
-                    found_op = op
-                    op_pos = pos
-                    break
-
-            if found_op:
-                left = rel_part[:op_pos].strip()
-                right = rel_part[op_pos + len(found_op):].strip()
-
-                for side_name in [left, right]:
-                    if not side_name:
-                        continue
-                    is_quoted = side_name.startswith('"') and side_name.endswith('"')
-                    if not is_quoted and _text_needs_quotes(side_name):
-                        issues.append((start_line + lb - 1, "error",
-                                      f'类名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
-
-            if label:
-                is_quoted = label.startswith('"') and label.endswith('"')
-                if not is_quoted and _text_needs_quotes(label):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
-            continue
-
-    issues.extend(_check_backslash_n(block_text, start_line))
-    return issues
-
-
-def _fix_erDiagram(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    lines = block_text.split("\n")
-    result_lines = []
-    er_rel_ops = [
-        "||--o{", "||--||", "}o--o{", "}o--||", "|o--o{", "|o--||",
-        "||--}|", "|o--o|", "|o--}", "|--o{", "|--||",
-        "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--"
-    ]
-    er_rel_ops_sorted = sorted(er_rel_ops, key=len, reverse=True)
-
-    for line in lines:
-        stripped = line.strip()
-        if not stripped:
-            continue
-
-        code_part = _strip_inline_comment(line)
-        indent = line[:len(line) - len(line.lstrip())]
-        comment = ""
-        if "%%" in line and not line.lstrip().startswith("%%"):
-            code_part, comment = line.split("%%", 1)
-            comment = "%%" + comment
-
-        code_stripped = code_part.strip()
-        if not code_stripped or code_stripped == "erDiagram" or code_stripped.lower().startswith("erdiagram"):
-            result_lines.append(line)
-            continue
-
-        if code_stripped in ("{", "}"):
-            result_lines.append(indent + code_stripped + comment)
-            continue
-
-        entity_def = re.match(r'^(\s*)([A-Z][A-Z0-9_]*|"[^"]*"|[^\s{]+)(\s*\{?\s*)$', code_part)
-        if entity_def and ":" not in code_stripped:
-            prefix, ename, rest = entity_def.group(1), entity_def.group(2), entity_def.group(3)
-            is_upper_id = ename.isupper() and ename.replace("_", "").isalnum()
-            is_quoted = ename.startswith('"') and ename.endswith('"')
-            if not is_upper_id and not is_quoted and _text_needs_quotes(ename):
-                ename = f'"{ename}"'
-                if "实体名引号" not in fixes:
-                    fixes.append("实体名引号")
-            result_lines.append(prefix + ename + rest.rstrip() + comment)
-            continue
-
-        has_rel = False
-        found_op = None
-        op_pos = -1
-        for op in er_rel_ops_sorted:
-            pos = code_part.find(op)
-            if pos != -1:
-                has_rel = True
-                found_op = op
-                op_pos = pos
-                break
-
-        if has_rel:
-            colon_pos = code_part.rfind(":")
-            label_part = ""
-            rel_part = code_part
-            if colon_pos != -1:
-                label_part = code_part[colon_pos + 1:]
-                rel_part = code_part[:colon_pos]
-                label_text = label_part.strip()
-                if label_text and not (label_text.startswith('"') and label_text.endswith('"')):
-                    if _text_needs_quotes(label_text):
-                        label_part = f' "{label_text}"'
-                        if "关系标签引号" not in fixes:
-                            fixes.append("关系标签引号")
-
-            left = rel_part[:op_pos].strip()
-            right = rel_part[op_pos + len(found_op):].strip()
-
-            def _quote_entity(name):
-                if not name:
-                    return name
-                if name.startswith('"') and name.endswith('"'):
-                    return name
-                is_upper = name.isupper() and name.replace("_", "").isalnum()
-                if not is_upper and _text_needs_quotes(name):
-                    if "实体名引号" not in fixes:
-                        fixes.append("实体名引号")
-                    return f'"{name}"'
-                return name
-
-            left = _quote_entity(left)
-            right = _quote_entity(right)
-            new_line = f"{indent}{left} {found_op} {right}"
-            if colon_pos != -1:
-                new_line += f" :{label_part}"
-            result_lines.append(new_line.rstrip() + comment)
-            continue
-
-        result_lines.append(line)
-
-    text = "\n".join(result_lines)
-
-    newline_before = block_text.count("\n")
-    if text.count("\n") < newline_before:
-        if "空行" not in fixes:
-            fixes.insert(0, "空行")
-
-    text_before = text
-    text = _fix_backslash_n(text)
-    if text != text_before:
-        fixes.append("换行符(\\n→<br/>)")
-
-    return text, fixes
-
-
-def _check_erDiagram(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-
-    lines = block_text.split("\n")
-    in_entity_braces = False
-    brace_depth = 0
-
-    entity_pat = re.compile(r'^\s*([A-Z][A-Z0-9_]*|"[^"]*"|[^\s{]+)(\s*\{?\s*)$')
-    er_rel_ops = [
-        "||--o{", "||--||", "}o--o{", "}o--||", "|o--o{", "|o--||",
-        "||--}|", "|o--o|", "|o--}", "|--o{", "|--||",
-        "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--"
-    ]
-    er_rel_ops_sorted = sorted(er_rel_ops, key=len, reverse=True)
-    attr_pat = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_]*|[A-Za-z_][A-Za-z0-9_]*\[\])\s+([A-Za-z_][A-Za-z0-9_]*)(\s+"[^"]*")?(\s+[A-Za-z]+)?\s*$')
-
-    for i, line in enumerate(lines):
-        code_part = _strip_inline_comment(line)
-        stripped = code_part.strip()
-        if not stripped:
-            continue
-        lb = i + 1
-
-        if stripped == "erDiagram" or stripped.lower().startswith("erdiagram"):
-            continue
-
-        if stripped in ("{", "}"):
-            if stripped == "{":
-                brace_depth += 1
-                in_entity_braces = True
-            else:
-                brace_depth -= 1
-                if brace_depth <= 0:
-                    in_entity_braces = False
-                    brace_depth = 0
-            continue
-
-        if in_entity_braces:
-            if not attr_pat.match(stripped):
-                issues.append((start_line + lb - 1, "warning",
-                              f'实体属性行格式可能不正确：{stripped[:40]}'))
-            continue
-
-        em = entity_pat.match(stripped)
-        if em and ":" not in stripped:
-            ename = em.group(1)
-            rest = em.group(2)
-            is_upper_id = ename.isupper() and ename.replace("_", "").isalnum()
-            is_quoted = ename.startswith('"') and ename.endswith('"')
-            if not is_upper_id and not is_quoted:
-                if CHINESE_CHARS_RE.search(ename) or " " in ename or any(c in ename for c in SPECIAL_CHARS):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'实体名「{ename[:20]}」含中文/空格/特殊字符但未加双引号，或非全大写英文ID格式'))
-            if "{" in rest:
-                brace_depth += 1
-                in_entity_braces = True
-            continue
-
-        has_rel = False
-        found_op = None
-        op_pos = -1
-        for op in er_rel_ops_sorted:
-            pos = stripped.find(op)
-            if pos != -1:
-                has_rel = True
-                found_op = op
-                op_pos = pos
-                break
-
-        if has_rel:
-            colon_pos = stripped.rfind(":")
-            label = None
-            rel_part = stripped
-            if colon_pos != -1:
-                label = stripped[colon_pos + 1:].strip()
-                rel_part = stripped[:colon_pos]
-
-            left = rel_part[:op_pos].strip()
-            right = rel_part[op_pos + len(found_op):].strip()
-
-            for side_name in [left, right]:
-                if not side_name:
-                    continue
-                is_quoted = side_name.startswith('"') and side_name.endswith('"')
-                is_upper = side_name.isupper() and side_name.replace("_", "").isalnum()
-                if not is_upper and not is_quoted:
-                    if CHINESE_CHARS_RE.search(side_name) or " " in side_name or any(c in side_name for c in SPECIAL_CHARS):
-                        issues.append((start_line + lb - 1, "error",
-                                      f'实体名「{side_name[:20]}」含中文/空格/特殊字符但未加双引号'))
-
-            if label:
-                is_quoted = label.startswith('"') and label.endswith('"')
-                if not is_quoted and _text_needs_quotes(label):
-                    issues.append((start_line + lb - 1, "error",
-                                  f'关系标签「{label[:20]}」含中文/空格但未加双引号'))
-            continue
-
-    issues.extend(_check_backslash_n(block_text, start_line))
-    return issues
-
-
-def _fix_mindmap(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    text = block_text
-    newline_before = text.count("\n")
-    text = re.sub(r"\n[ \t]*\n+", "\n", text)
-    if text.count("\n") < newline_before:
-        fixes.append("空行")
-    return text, fixes
-
-
-def _check_mindmap(block_text: str, start_line: int) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-    lines = block_text.split("\n")
-    for i, line in enumerate(lines):
-        stripped = line.strip()
-        if not stripped:
-            continue
-        if stripped == "mindmap" or stripped.startswith("mindmap"):
-            if i == 0 or (i == 0 and stripped.lower().startswith("mindmap")):
-                continue
-        if stripped.startswith("mindmap"):
-            continue
-        node_text = _strip_mindmap_shape(stripped)
-        if not node_text:
-            continue
-        lb = i + 1
-        w = _check_list_trigger(node_text, i, start_line, 'mindmap节点')
-        if w:
-            issues.append(w)
-        if ":" in node_text and not node_text.startswith('"'):
-            issues.append((start_line + lb - 1, "warning",
-                          f'mindmap节点「{node_text[:20]}」含冒号，可能导致解析错误，建议避免'))
-    return issues
-
-
-def _fix_generic(block_text: str) -> tuple[str, list[str]]:
-    fixes = []
-    text = block_text
-    newline_before = text.count("\n")
-    text = re.sub(r"\n[ \t]*\n+", "\n", text)
-    if text.count("\n") < newline_before:
-        fixes.append("空行")
-    return text, fixes
-
-
-def _check_generic(block_text: str, start_line: int, dia_type: str) -> list[tuple[int, str, str]]:
-    issues = _check_empty_lines(block_text, start_line)
-
-    if dia_type == "pie":
-        pass
-    elif dia_type == "gantt":
-        title_pat = re.compile(r"^\s*title\s+(.+)$", re.MULTILINE)
-        for m in title_pat.finditer(block_text):
-            title_text = m.group(1).strip()
-            if title_text.startswith('"') or title_text.startswith("'"):
-                lb = block_text[:m.start()].count("\n") + 1
-                issues.append((start_line + lb - 1, "warning",
-                              'gantt title 不需要引号包裹，Mermaid会自动解析'))
-
-    return issues
+
+_detect_diagram_type = _new_detect_diagram_type
+_text_needs_quotes = _new_text_needs_quotes
+_state_text_needs_quotes = _new_state_text_needs_quotes
+_has_list_trigger = _new_has_list_trigger
+_line_from_offset = _new_line_from_offset
+_strip_inline_comment = _new_strip_inline_comment
+_check_empty_lines = _new_check_empty_lines
+_check_backslash_n = _new_check_backslash_n
+_fix_backslash_n = _new_fix_backslash_n
+_check_list_trigger = _new_check_list_trigger
+_strip_mindmap_shape = _new_strip_mindmap_shape
+
+
+def _fix_empty_lines(text: str) -> str:
+    return _new_fix_empty_lines(text)
+
+
+def _check_security(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    checker = SecurityChecker()
+    return checker.check(block_text, start_line)
+
+
+_fc = FlowchartChecker()
+_sc = StateDiagramChecker()
+_seq = SequenceDiagramChecker()
+_cls = ClassDiagramChecker()
+_er = ErDiagramChecker()
+_mm = MindmapChecker()
+_pie = PieChecker()
+_gantt = GanttChecker()
+_timeline = TimelineChecker()
+_xy = XyChartChecker()
+_quad = QuadrantChecker()
+
+
+def _check_flowchart(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _fc.check(block_text, start_line)
+
+
+def _check_state_diagram(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _sc.check(block_text, start_line)
+
+
+def _check_sequence_diagram(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _seq.check(block_text, start_line)
+
+
+def _check_classDiagram(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _cls.check(block_text, start_line)
+
+
+def _check_erDiagram(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _er.check(block_text, start_line)
+
+
+def _check_mindmap(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _mm.check(block_text, start_line)
+
+
+def _check_pie(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _pie.check(block_text, start_line)
+
+
+def _check_gantt(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _gantt.check(block_text, start_line)
+
+
+def _check_timeline(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _timeline.check(block_text, start_line)
+
+
+def _check_xychart(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _xy.check(block_text, start_line)
+
+
+def _check_quadrant(block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
+    return _quad.check(block_text, start_line)
+
+
+def _check_generic(block_text: str, start_line: int, dia_type: str) -> List[Tuple[int, str, str]]:
+    checker_map = {
+        "pie": _pie,
+        "gantt": _gantt,
+        "timeline": _timeline,
+        "xychart-beta": _xy,
+        "quadrantChart": _quad,
+        "quadrantchart": _quad,
+    }
+    checker = checker_map.get(dia_type, GenericFixer(dia_type))
+    if hasattr(checker, 'check'):
+        return checker.check(block_text, start_line)
+    return _check_empty_lines(block_text, start_line)
+
+
+_ff = FlowchartFixer()
+_sf = StateDiagramFixer()
+_seqf = SequenceDiagramFixer()
+_clsf = ClassDiagramFixer()
+_erf = ErDiagramFixer()
+_mmf = MindmapFixer()
+_pief = PieFixer()
+_ganttf = GanttFixer()
+_genf = GenericFixer()
+
+
+def _fix_flowchart(block_text: str) -> Tuple[str, List[str]]:
+    return _ff.fix(block_text)
+
+
+def _fix_state_diagram(block_text: str) -> Tuple[str, List[str]]:
+    return _sf.fix(block_text)
+
+
+def _fix_sequence_diagram(block_text: str) -> Tuple[str, List[str]]:
+    return _seqf.fix(block_text)
+
+
+def _fix_classDiagram(block_text: str) -> Tuple[str, List[str]]:
+    return _clsf.fix(block_text)
+
+
+def _fix_erDiagram(block_text: str) -> Tuple[str, List[str]]:
+    return _erf.fix(block_text)
+
+
+def _fix_mindmap(block_text: str) -> Tuple[str, List[str]]:
+    return _mmf.fix(block_text)
+
+
+def _fix_pie(block_text: str) -> Tuple[str, List[str]]:
+    return _pief.fix(block_text)
+
+
+def _fix_gantt(block_text: str) -> Tuple[str, List[str]]:
+    return _ganttf.fix(block_text)
+
+
+def _fix_generic(block_text: str) -> Tuple[str, List[str]]:
+    return _genf.fix(block_text)
 
 
 DIAGRAM_FIXERS = {
@@ -1131,6 +236,7 @@ DIAGRAM_FIXERS = {
     "quadrantchart": _fix_generic,
 }
 
+
 DIAGRAM_CHECKERS = {
     "flowchart": _check_flowchart,
     "stateDiagram": _check_state_diagram,
@@ -1146,12 +252,23 @@ DIAGRAM_CHECKERS = {
 }
 
 
+def _find_md_files(root_dir: Path, exclude_dirs: set[str]) -> List[Path]:
+    scanner = FileScanner(root_dir, exclude_dirs)
+    return scanner.scan()
+
+
+def process_mermaid_fences(*args, **kwargs):
+    from lib.mermaid.processor import process_mermaid_fences as pmf
+    return pmf(*args, **kwargs)
+
+
 def _process_file(file_path: Path, root_dir: Path, fix: bool, dry_run: bool
-                  ) -> tuple[list[tuple[int, str, str]], int, list[tuple[str, str]]]:
+                  ) -> Tuple[List[Tuple[int, str, str]], int, List[Tuple[str, str]]]:
+    import difflib
     content = file_path.read_text(encoding="utf-8")
-    all_issues: list[tuple[int, str, str]] = []
+    all_issues: List[Tuple[int, str, str]] = []
     total_fixes = 0
-    diffs: list[tuple[str, str]] = []
+    diffs: List[Tuple[str, str]] = []
 
     def _rep_block(m):
         nonlocal total_fixes
