@@ -67,6 +67,12 @@ _log_ts() {
     date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u
 }
 
+_log_ensure_dir() {
+    # 确保 JSON 输出目录存在
+    local d; d="$(dirname "$LOG_JSON_OUTPUT")"
+    [ -d "$d" ] || mkdir -p "$d" 2>/dev/null || true
+}
+
 # ── 上下文字段（自动附加到JSON日志） ──
 LOG_STAGE=""
 LOG_STEP_NUM=""
@@ -91,7 +97,7 @@ _log_emit() {
 
     # ── JSON Lines 输出 ──
     if [ "$LOG_FORMAT" = "json" ] || [ "${LOG_JSON_STDOUT:-0}" = "1" ]; then
-        local json="\"ts\":\"$ts\",\"level\":\"${level^^}\",\"service\":\"$LOG_SERVICE\",\"message\":\"${message//\"/\\\"}\""
+        local json="\"ts\":\"$ts\",\"level\":\"${level,,}\",\"service\":\"$LOG_SERVICE\",\"message\":\"${message//\"/\\\"}\""
         [ -n "$LOG_STAGE" ] && json="$json,\"stage\":\"$LOG_STAGE\""
         [ -n "$LOG_STEP_NUM" ] && json="$json,\"step\":$LOG_STEP_NUM"
         [ -n "$LOG_STEP_TOTAL" ] && json="$json,\"step_total\":$LOG_STEP_TOTAL"
@@ -101,6 +107,7 @@ _log_emit() {
             eval "local fvv=\$$fv"
             json="$json,\"${fk}\":\"${fvv//\"/\\\"}\""
         done
+        _log_ensure_dir
         echo "{$json}" >> "$LOG_JSON_OUTPUT"
         [ "${LOG_JSON_STDOUT:-0}" = "1" ] && echo "{$json}"
     fi
@@ -145,6 +152,7 @@ log_metric() {
     # 示例: log_metric "build_duration" 42 "seconds"
     local name="$1" value="$2" unit="${3:-}"
     local ts; ts=$(_log_ts)
+    _log_ensure_dir
     local line="{\"ts\":\"$ts\",\"type\":\"metric\",\"service\":\"$LOG_SERVICE\",\"metric\":\"$name\",\"value\":$value,\"unit\":\"$unit\"}"
     echo "$line" >> "$LOG_JSON_OUTPUT"
     [ "${LOG_JSON_STDOUT:-0}" = "1" ] && echo "$line"
@@ -159,6 +167,7 @@ log_event() {
     local ts; ts=$(_log_ts)
     local kv=""
     for p in "$@"; do kv="$kv,\"${p%%=*}\":\"${p#*=}\""; done
+    _log_ensure_dir
     local line="{\"ts\":\"$ts\",\"type\":\"event\",\"service\":\"$LOG_SERVICE\",\"event\":\"$event\"$kv}"
     echo "$line" >> "$LOG_JSON_OUTPUT"
     [ "${LOG_JSON_STDOUT:-0}" = "1" ] && echo "$line"
@@ -171,6 +180,7 @@ log_summary() {
     # 示例: log_summary 8 0 8 280 "success"
     local pass="$1" fail="$2" total="$3" duration="$4" status="$5"
     local ts; ts=$(_log_ts)
+    _log_ensure_dir
     local line="{\"ts\":\"$ts\",\"type\":\"summary\",\"service\":\"$LOG_SERVICE\",\"passed\":$pass,\"failed\":$fail,\"total\":$total,\"duration_seconds\":$duration,\"status\":\"$status\"}"
     echo "$line" >> "$LOG_JSON_OUTPUT"
     if [ "$LOG_FORMAT" != "json" ] || [ "${LOG_JSON_STDOUT:-0}" = "1" ]; then

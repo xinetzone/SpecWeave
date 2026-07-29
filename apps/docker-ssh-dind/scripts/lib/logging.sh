@@ -25,13 +25,11 @@
 #   eval "$(log_parse_args "$@")"                 # 解析日志参数并重置 $@
 # =============================================================================
 
-# ── 默认配置（调用方可在 source 后覆盖） ──
 LOG_FORMAT="${LOG_FORMAT:-text}"
 LOG_LEVEL="${LOG_LEVEL:-INFO}"
 LOG_SERVICE="${LOG_SERVICE:-bash-script}"
 LOG_JSON_OUTPUT="${LOG_JSON_OUTPUT:-/tmp/${LOG_SERVICE}-events.jsonl}"
 
-# ── 颜色（仅 TTY 或强制模式） ──
 if [ -t 1 ] || [ "${LOG_FORCE_COLOR:-0}" = "1" ]; then
     _CLR_RESET='\033[0m'; _CLR_RED='\033[0;31m'; _CLR_GREEN='\033[0;32m'
     _CLR_YELLOW='\033[1;33m'; _CLR_BLUE='\033[0;34m'; _CLR_CYAN='\033[0;36m'
@@ -53,12 +51,10 @@ _log_is_enabled() {
 _log_ts() { date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u; }
 _log_ensure_dir() { local d; d="$(dirname "$LOG_JSON_OUTPUT")"; [ -d "$d" ] || mkdir -p "$d" 2>/dev/null || true; }
 
-# ── 上下文字段 ──
 LOG_STAGE=""; LOG_STEP_NUM=""; LOG_STEP_TOTAL=""
 log_set_stage() { LOG_STAGE="$1"; [ $# -ge 3 ] && { LOG_STEP_NUM="$2"; LOG_STEP_TOTAL="$3"; }; }
 log_set_field() { export "_LOG_FIELD_${1}=${2}"; }
 
-# ── 核心输出 ──
 _log_emit() {
     local level="$1"; shift; local message="$*"
     _log_is_enabled "$level" || return 0
@@ -103,7 +99,6 @@ _log_emit() {
     fi
 }
 
-# ── 公共 API ──
 log_debug() { _log_emit DEBUG "$@"; }
 log_info()  { _log_emit INFO "$@"; }
 log_ok()    { _log_emit OK "$@"; }

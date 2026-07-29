@@ -19,6 +19,9 @@
 #   --quiet, -q           Suppress banner output in container
 #   --verbose, -v         Enable verbose debug logging
 #   --no-log-file         Don't save build log to file (logs/ directory)
+#   --log-format=FMT      Structured log format: text (default) or json
+#   --log-level=LVL       Structured log level: DEBUG/INFO/WARN/ERROR
+#   --log-json            Output JSON Lines events to stdout as well
 #   --help, -h            Show this help message
 #
 # Offline mode:
@@ -35,6 +38,37 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
+
+# =============================================================================
+# Structured JSON logging overlay (no conflict with existing log functions)
+# Provides JSON Lines events/metrics/summary to JSONL file for monitoring,
+# while preserving the script's original human-readable logging system.
+# =============================================================================
+LOG_SERVICE="pytorch-base-build"
+LOG_JSON_OUTPUT="${LOG_JSON_OUTPUT:-/tmp/pytorch-base-events.jsonl}"
+LOG_JSON_STDOUT="${LOG_JSON_STDOUT:-0}"
+LOG_FORMAT="${LOG_FORMAT:-text}"
+
+_json_ts() { date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u; }
+_json_ensure_dir() { local d; d="$(dirname "$LOG_JSON_OUTPUT")"; [ -d "$d" ] || mkdir -p "$d" 2>/dev/null || true; }
+_json_write() { _json_ensure_dir; echo "$1" >> "$LOG_JSON_OUTPUT"; [ "$LOG_JSON_STDOUT" = "1" ] && echo "$1"; }
+
+log_event() {
+    local event="$1"; shift; local ts kvs="" kv
+    ts=$(_json_ts)
+    for kv in "$@"; do kvs="$kvs,\"${kv%%=*}\":\"${kv#*=}\""; done
+    _json_write "{\"ts\":\"$ts\",\"type\":\"event\",\"service\":\"$LOG_SERVICE\",\"event\":\"$event\"${kvs}}"
+}
+log_metric() {
+    local name="$1" value="$2" unit="${3:-}" ts
+    ts=$(_json_ts)
+    _json_write "{\"ts\":\"$ts\",\"type\":\"metric\",\"service\":\"$LOG_SERVICE\",\"metric\":\"$name\",\"value\":$value,\"unit\":\"$unit\"}"
+}
+log_summary() {
+    local pass="$1" fail="$2" total="$3" dur="$4" status="$5" ts
+    ts=$(_json_ts)
+    _json_write "{\"ts\":\"$ts\",\"type\":\"summary\",\"service\":\"$LOG_SERVICE\",\"passed\":$pass,\"failed\":$fail,\"total\":$total,\"duration_seconds\":$dur,\"status\":\"$status\"}"
+}
 
 # =============================================================================
 # Step 1: Define logging functions FIRST (before any output/redirection)
@@ -164,6 +198,7 @@ on_error() {
     log_error "  Failed cmd   : ${cmd}"
     local _elapsed=$(( $(date +%s) - ${SCRIPT_START_TIME:-$(date +%s)} ))
     log_error "  Elapsed time : $(printf '%dm%ds' $((_elapsed / 60)) $((_elapsed % 60)))"
+    log_event "build_failed" "line=$line_no" "action=$LAST_ACTION" "elapsed=$_elapsed"
     echo ""
     log_error "════════════════════ Build Configuration ════════════════════"
     log_error "  Script dir  : ${SCRIPT_DIR}"
@@ -300,6 +335,21 @@ while [[ $# -gt 0 ]]; do
             NO_LOG_FILE=1
             shift
             ;;
+        --log-format=*)
+            LOG_FORMAT="${1#*=}"
+            log_info "Structured log format set to: ${LOG_FORMAT} (--log-format)"
+            shift
+            ;;
+        --log-level=*)
+            LOG_LEVEL="${1#*=}"
+            log_info "Structured log level set to: ${LOG_LEVEL} (--log-level)"
+            shift
+            ;;
+        --log-json)
+            LOG_JSON_STDOUT=1
+            log_info "Structured JSON logging to stdout enabled (--log-json)"
+            shift
+            ;;
         --help|-h)
             echo "PyTorch Base Image Build Script"
             echo "Reference: https://pytorch.org/get-started/locally/"
@@ -318,6 +368,11 @@ while [[ $# -gt 0 ]]; do
             echo "  --no-verify           Skip post-build verification"
             echo "  --verbose, -v         Enable verbose debug logging"
             echo "  --no-log-file         Don't save build log to logs/ directory"
+            echo ""
+            echo "Structured logging options:"
+            echo "  --log-format=FMT      Log format: text (default) or json"
+            echo "  --log-level=LVL       Log level: DEBUG, INFO (default), WARN, ERROR"
+            echo "  --log-json            Also output JSON Lines events to stdout"
             echo "  --help, -h            Show this help message"
             echo ""
             echo "Offline directories:"
@@ -335,6 +390,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 log_info "Argument parsing complete"
+
+log_event "build_start" "gpu=$USE_GPU" "python=$PYTHON_VERSION" "pytorch=$PYTORCH_VERSION" "cuda=$CUDA_VERSION" "offline=$OFFLINE_MODE"
 
 # =============================================================================
 # Determine architecture
@@ -705,6 +762,7 @@ echo ""
 
 BUILD_START_TIME=$(date +%s)
 log_info "Docker build started at: $(date '+%Y-%m-%d %H:%M:%S')"
+log_event "docker_build_start" "image_tag=$IMAGE_TAG" "dockerfile=$DOCKERFILE"
 
 docker build \
     -t "${IMAGE_TAG}" \
@@ -721,6 +779,8 @@ echo ""
 log_result "Docker build completed successfully!"
 log_result "Build duration: ${BUILD_MIN}m ${BUILD_SEC}s"
 log_result "Image built: ${IMAGE_TAG}"
+log_event "docker_build_complete" "duration=$BUILD_DURATION" "image_tag=$IMAGE_TAG"
+log_metric "build_duration_seconds" "$BUILD_DURATION" "seconds"
 
 # =============================================================================
 # Post-build verification (per official guide verification steps)
@@ -746,6 +806,7 @@ if [ "$NO_VERIFY" = "0" ]; then
     VERIFY_PASS=0
     VERIFY_FAIL=0
     VERIFY_START=$(date +%s)
+    log_event "verification_start"
 
     run_test() {
         local desc="$1"
@@ -841,8 +902,11 @@ if [ "$NO_VERIFY" = "0" ]; then
     fi
 
     log_result "All ${VERIFY_PASS} verification tests PASSED!"
+    log_event "verification_complete" "passed=$VERIFY_PASS" "failed=$VERIFY_FAIL" "duration=$VERIFY_DURATION"
+    log_summary
 else
     log_info "Verification skipped (--no-verify flag is set)"
+    log_event "verification_skipped"
 fi
 
 # =============================================================================
@@ -893,6 +957,9 @@ echo "╚═══════════════════════�
 echo ""
 log_result "Total build time: ${TOTAL_MIN}m ${TOTAL_SEC}s"
 log_result "Image: ${IMAGE_TAG}"
+log_event "build_complete" "status=success" "total_duration=$TOTAL_DURATION" "image_tag=$IMAGE_TAG"
+log_metric "total_duration_seconds" "$TOTAL_DURATION" "seconds"
+log_summary
 
 # Write success footer to log
 {

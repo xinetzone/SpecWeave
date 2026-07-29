@@ -4,16 +4,14 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+source "${SCRIPT_DIR}/lib/logging.sh"
+LOG_SERVICE="dind-ssh-check-env"
+LOG_JSON_OUTPUT="/tmp/dind-ssh-check-env-events.jsonl"
 
-log_info()  { echo -e "${BLUE}[INFO]${NC}  $*"; }
-log_ok()    { echo -e "${GREEN}[OK]${NC}    $*"; }
-log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $*"; }
+eval "$(log_parse_args "$@")"
+
+_start_time=$(date +%s)
+_elapsed() { echo $(( $(date +%s) - _start_time )); }
 
 OS_TYPE="unknown"
 OS_DETAIL=""
@@ -27,7 +25,7 @@ RECOMMENDED_RUNTIME=""
 READY=0
 
 detect_os() {
-    log_info "========== OS Detection =========="
+    log_step "OS Detection"
     case "$(uname -s)" in
         Linux*)
             OS_TYPE="linux"
@@ -59,12 +57,13 @@ detect_os() {
             log_warn "Unknown OS: $(uname -s)"
             ;;
     esac
+    log_event os_detected os_type="$OS_TYPE" os_detail="$OS_DETAIL" wsl_version="${WSL_VERSION:-0}"
     echo ""
 }
 
 detect_wsl() {
     [ "$OS_DETAIL" != "wsl" ] && return 0
-    log_info "========== WSL Interop Check =========="
+    log_step "WSL Interop Check"
     if [ -n "${WSL_INTEROP:-}" ] && [ -S "$WSL_INTEROP" ]; then
         log_ok "WSL interop socket available"; WSL_INTEROP_OK=1
     else
@@ -80,7 +79,7 @@ detect_wsl() {
 }
 
 detect_docker() {
-    log_info "========== Docker Detection =========="
+    log_step "Docker Detection"
     if command -v docker &>/dev/null; then
         DOCKER_VERSION=$(docker --version 2>/dev/null | head -1 || echo "unknown")
         log_ok "Docker CLI found: ${DOCKER_VERSION}"
@@ -105,11 +104,12 @@ detect_docker() {
     else
         log_warn "Docker CLI not found"
     fi
+    log_event docker_detected available="$DOCKER_AVAILABLE" mode="${DOCKER_MODE:-none}"
     echo ""
 }
 
 detect_wslc() {
-    log_info "========== WSLC (wslc.exe) Detection =========="
+    log_step "WSLC (wslc.exe) Detection"
     if [ "$OS_TYPE" = "windows" ] || [ "$OS_DETAIL" = "wsl" ]; then
         if [ "$OS_DETAIL" = "wsl" ] && [ "$WSL_INTEROP_OK" = "1" ]; then
             WSLC_PATH="wslc.exe"
@@ -128,11 +128,12 @@ detect_wslc() {
     else
         log_info "Not Windows/WSL - wslc.exe not applicable"
     fi
+    log_event wslc_detected available="$WSLC_AVAILABLE" path="${WSLC_PATH:-none}"
     echo ""
 }
 
 check_requirements() {
-    log_info "========== Summary =========="
+    log_step "Summary"
     if [ "$DOCKER_AVAILABLE" = "1" ]; then
         log_ok "Docker: AVAILABLE (recommended for full DinD)"
         READY=1; RECOMMENDED_RUNTIME="docker"
@@ -178,6 +179,8 @@ WSLC_AVAILABLE=${WSLC_AVAILABLE}
 RECOMMENDED_RUNTIME=${RECOMMENDED_RUNTIME:-none}
 READY=${READY}
 EOF
+    log_event check_complete ready="$READY" recommended_runtime="${RECOMMENDED_RUNTIME:-none}" duration=$(_elapsed)
+    log_metric check_duration $(_elapsed) seconds
     return $((1 - READY))
 }
 

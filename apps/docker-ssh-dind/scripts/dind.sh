@@ -5,23 +5,22 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$PROJECT_DIR"
 
+source "${SCRIPT_DIR}/lib/logging.sh"
+LOG_SERVICE="dind-ssh"
+LOG_JSON_OUTPUT="/tmp/dind-ssh-events.jsonl"
+
 IMAGE_NAME="dind-ssh"
 CONTAINER_NAME="dind-test"
 DEFAULT_SSH_PORT=2222
 RUNTIME=""
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-NC='\033[0m'
+log_cmd() { log_info "CMD: $*"; }
 
-log_info()  { echo -e "${BLUE}[INFO]${NC}  $*"; }
-log_ok()    { echo -e "${GREEN}[OK]${NC}    $*"; }
-log_warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $*"; }
-log_cmd()   { echo -e "${CYAN}[CMD]${NC}   $*"; }
+trap 'log_event error_exit exit_code=$? command="${COMMAND:-unknown}"' ERR
+
+_start_time=""
+_start_timer() { _start_time=$(date +%s); }
+_elapsed() { echo $(( $(date +%s) - _start_time )); }
 
 detect_runtime() {
     if [ -f .env.detected ]; then
@@ -66,6 +65,12 @@ usage() {
     echo "  --password=<pwd>              Root password (default: auto-generated)"
     echo "  --ssh-key=<key>               SSH public key for auth"
     echo ""
+    echo "Logging options:"
+    echo "  --log-format=<text|json>      Log output format (default: text)"
+    echo "  --log-level=<DEBUG|INFO|WARN|ERROR>  Log level (default: INFO)"
+    echo "  --log-json                    Also output JSON logs to stdout"
+    echo "  --log-json-output=<file>      JSON log file path (default: /tmp/dind-ssh-events.jsonl)"
+    echo ""
     echo "Examples:"
     echo "  $0 check-env"
     echo "  $0 build"
@@ -106,6 +111,8 @@ parse_args() {
             --ssh-key=*)
                 SSH_KEY="${arg#*=}"
                 ;;
+            --log-format=*|--log-level=*|--log-json|--log-json-output=*|--log-service=*)
+                ;;
             *)
                 EXTRA_ARGS="$EXTRA_ARGS $arg"
                 ;;
@@ -118,6 +125,8 @@ cmd_check_env() {
 }
 
 cmd_build() {
+    _start_timer
+    log_event cmd_build_start image="$IMAGE_NAME"
     detect_runtime
     log_info "Building image '${IMAGE_NAME}' using runtime: ${RUNTIME}"
     case "$RUNTIME" in
@@ -145,6 +154,8 @@ cmd_build() {
             ;;
     esac
     log_ok "Build complete!"
+    log_event cmd_build_complete image="$IMAGE_NAME" runtime="$RUNTIME" duration=$(_elapsed)
+    log_metric build_duration $(_elapsed) seconds
 }
 
 get_wslc_port_args() {
@@ -153,6 +164,8 @@ get_wslc_port_args() {
 }
 
 cmd_run() {
+    _start_timer
+    log_event cmd_run_start container="$CONTAINER_NAME" image="$IMAGE_NAME" port="$SSH_PORT"
     detect_runtime
     log_info "Starting container '${CONTAINER_NAME}' using runtime: ${RUNTIME}"
 
@@ -201,9 +214,13 @@ cmd_run() {
     esac
     echo ""
     log_info "SSH connection: ssh -p ${SSH_PORT} root@localhost"
+    log_event cmd_run_complete container="$CONTAINER_NAME" runtime="$RUNTIME" port="$SSH_PORT" duration=$(_elapsed)
+    log_metric run_duration $(_elapsed) seconds
 }
 
 cmd_stop() {
+    _start_timer
+    log_event cmd_stop_start container="$CONTAINER_NAME"
     detect_runtime
     log_info "Stopping container '${CONTAINER_NAME}'..."
     case "$RUNTIME" in
@@ -215,6 +232,8 @@ cmd_stop() {
             ;;
     esac
     log_ok "Container stopped"
+    log_event cmd_stop_complete container="$CONTAINER_NAME" duration=$(_elapsed)
+    log_metric stop_duration $(_elapsed) seconds
 }
 
 cmd_ssh() {
@@ -368,6 +387,8 @@ cmd_export() {
 }
 
 cmd_clean() {
+    _start_timer
+    log_event cmd_clean_start container="$CONTAINER_NAME" image="$IMAGE_NAME"
     detect_runtime
     log_warn "Cleaning up container and image..."
     case "$RUNTIME" in
@@ -382,9 +403,12 @@ cmd_clean() {
     esac
     rm -f .env.detected
     log_ok "Cleanup complete"
+    log_event cmd_clean_complete duration=$(_elapsed)
+    log_metric clean_duration $(_elapsed) seconds
 }
 
 load_env
+eval "$(log_parse_args "$@")"
 parse_args "$@"
 
 COMMAND=""
@@ -392,6 +416,8 @@ if [ -n "$EXTRA_ARGS" ]; then
     COMMAND=$(echo "$EXTRA_ARGS" | awk '{print $1}')
     EXTRA_ARGS=$(echo "$EXTRA_ARGS" | cut -d' ' -f2-)
 fi
+
+log_event script_start command="${COMMAND:-help}" args="$*"
 
 case "${COMMAND:-help}" in
     check-env)    cmd_check_env ;;

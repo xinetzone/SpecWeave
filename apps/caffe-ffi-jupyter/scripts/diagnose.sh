@@ -3,46 +3,48 @@
 # diagnose.sh — Caffe-FFI Docker 容器故障诊断与快速修复脚本
 # 功能：自动检测 protobuf 版本冲突、共享库解析失败、环境变量问题等
 # 使用：bash scripts/diagnose.sh [--container NAME] [--fix-protobuf] [--fix-ldpath]
+# 日志格式：默认 text（人类可读），使用 --log-format=json 输出 JSON Lines 适配监控平台
 # =============================================================================
 set -euo pipefail
 
-# ── 颜色定义 ──
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-CYAN='\033[0;36m'
-BOLD='\033[1m'
-NC='\033[0m'
+# ── 加载统一日志库 ──
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=lib/logging.sh
+source "${SCRIPT_DIR}/lib/logging.sh"
+LOG_SERVICE="caffe-ffi-diagnose"
 
+# ── 默认参数 ──
 CONTAINER_NAME="${CONTAINER_NAME:-caffe-ffi-jupyter}"
 FIX_PROTOBUF=false
 FIX_LDPATH=false
 FIX_ALL=false
 DUMP_INFO=false
 
-log_info()  { echo -e "${GREEN}[DIAG]${NC} $*"; }
-log_warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
-log_error() { echo -e "${RED}[ERR]${NC}  $*"; }
-log_ok()    { echo -e "${GREEN}  ✔ $*${NC}"; }
-log_fail()  { echo -e "${RED}  ✘ $*${NC}"; }
-log_section(){ echo -e "\n${BOLD}${BLUE}── $* ──${NC}\n"; }
+# log_section 是 diagnose.sh 特有的分区输出，使用 log_step
+log_section() { log_step "$*"; }
 
 usage() {
     cat << EOF
-${BOLD}Caffe-FFI 容器故障诊断与修复工具${NC}
+${_CLR_BOLD}Caffe-FFI 容器故障诊断与修复工具${_CLR_RESET}
 
 用法: bash scripts/diagnose.sh [选项]
 
-${BOLD}选项:${NC}
+${_CLR_BOLD}选项:${_CLR_RESET}
   --container NAME    指定容器名称（默认: caffe-ffi-jupyter）
   --fix-protobuf      尝试自动修复 protobuf 版本冲突
   --fix-ldpath        尝试自动修复共享库路径问题
   --fix-all           执行所有自动修复（protobuf + ldpath）
   --dump              导出完整诊断信息到文件
+  --log-format FMT    日志格式: text (默认) | json
+  --log-level LEVEL   日志级别: DEBUG|INFO|WARN|ERROR (默认: INFO)
+  --log-json          JSON 同时输出到 stdout
   -h, --help          显示帮助
 
-${BOLD}诊断能力:${NC}
+${_CLR_BOLD}监控平台集成:${_CLR_RESET}
+  JSON 事件日志默认写入: /tmp/caffe-ffi-events.jsonl
+  使用 --log-format=json 将主输出切换为 JSON Lines 格式
+
+${_CLR_BOLD}诊断能力:${_CLR_RESET}
   1. 容器运行状态检查
   2. supervisord/SSH/Jupyter 服务状态
   3. conda 环境完整性（Python版本、包列表）
@@ -54,33 +56,43 @@ ${BOLD}诊断能力:${NC}
   9. Jupyter Kernel 注册检查
   10. 构建日志分析（如可用）
 
-${BOLD}示例:${NC}
+${_CLR_BOLD}示例:${_CLR_RESET}
   bash scripts/diagnose.sh                              # 默认诊断
   bash scripts/diagnose.sh --container my-caffe         # 指定容器
   bash scripts/diagnose.sh --fix-all                    # 诊断并自动修复
   bash scripts/diagnose.sh --fix-protobuf               # 仅修复protobuf
   bash scripts/diagnose.sh --dump                       # 导出诊断报告
+  bash scripts/diagnose.sh --log-format=json            # JSON 输出供监控采集
 EOF
 }
 
+# ── 解析命令行参数 ──
+_args=()
 while [[ $# -gt 0 ]]; do
     case "$1" in
+        --log-format=*) LOG_FORMAT="${1#*=}"; shift ;;
+        --log-level=*)  LOG_LEVEL="${1#*=}"; shift ;;
+        --log-json)     LOG_JSON_STDOUT=1; shift ;;
         --container)   CONTAINER_NAME="$2"; shift 2 ;;
         --fix-protobuf) FIX_PROTOBUF=true; shift ;;
         --fix-ldpath)  FIX_LDPATH=true; shift ;;
         --fix-all)     FIX_ALL=true; FIX_PROTOBUF=true; FIX_LDPATH=true; shift ;;
         --dump)        DUMP_INFO=true; shift ;;
         -h|--help)     usage; exit 0 ;;
-        *) echo "未知选项: $1"; usage; exit 1 ;;
+        *) _args+=("$1"); shift ;;
     esac
 done
+set -- "${_args[@]:-}"
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 APP_DIR="$(dirname "$SCRIPT_DIR")"
 
 # Docker exec 快捷方式
 DEXEC="docker exec $CONTAINER_NAME bash -lc"
 CONDA_ACT="source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi &&"
+
+# ── 记录诊断启动事件 ──
+log_set_field "container" "$CONTAINER_NAME"
+log_event "diagnose_start" "fix_protobuf=$FIX_PROTOBUF" "fix_ldpath=$FIX_LDPATH" "fix_all=$FIX_ALL"
 
 DIAG_OUTPUT=""
 dump_log() {
@@ -515,15 +527,18 @@ fi
 
 # ── 总结 ──
 log_section "诊断完成"
-echo -e "${CYAN}快速修复命令参考：${NC}"
+log_event "diagnose_complete" "protobuf_ok=$([ -z "${PROTOBUF_ISSUES:-}" ] && echo true || echo false)" \
+  "ldpath_ok=$([ "${LDPATH_OK:-true}" = "true" ] && echo true || echo false)"
+echo -e "${_CLR_CYAN}快速修复命令参考：${_CLR_RESET}"
 echo "  bash scripts/diagnose.sh --container $CONTAINER_NAME --fix-all"
 echo ""
-echo -e "${CYAN}手动进入容器调试：${NC}"
+echo -e "${_CLR_CYAN}手动进入容器调试：${_CLR_RESET}"
 echo "  docker exec -it $CONTAINER_NAME bash"
 echo "  source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi"
 echo ""
-echo -e "${CYAN}重新构建镜像（终极方案）：${NC}"
+echo -e "${_CLR_CYAN}重新构建镜像（终极方案）：${_CLR_RESET}"
 echo "  bash scripts/build.sh --cn --no-cache --verify"
 echo ""
-echo -e "${CYAN}详细部署指南：${NC}"
+echo -e "${_CLR_CYAN}详细部署指南：${_CLR_RESET}"
 echo "  参见 WSL-DEPLOY-GUIDE.md"
+echo -e "${_CLR_GRAY}JSON 事件日志: ${LOG_JSON_OUTPUT}${_CLR_RESET}"

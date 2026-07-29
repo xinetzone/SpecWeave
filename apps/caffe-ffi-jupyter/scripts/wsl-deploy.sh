@@ -109,6 +109,21 @@ if $USE_CN_MIRRORS; then
     MIRROR_ARGS="--apt-mirror aliyun --pip-mirror aliyun --conda-mirror tuna"
 fi
 
+# ── 日志参数（传递给子脚本 build.sh 等） ──
+LOG_ARGS=""
+if [ "$LOG_FORMAT" != "text" ]; then
+    LOG_ARGS="$LOG_ARGS --log-format=$LOG_FORMAT"
+fi
+if [ "$LOG_LEVEL" != "INFO" ]; then
+    LOG_ARGS="$LOG_ARGS --log-level=$LOG_LEVEL"
+fi
+if [ "${LOG_JSON_STDOUT:-0}" = "1" ]; then
+    LOG_ARGS="$LOG_ARGS --log-json"
+fi
+if [ -n "$LOG_JSON_OUTPUT" ] && [ "$LOG_JSON_OUTPUT" != "/tmp/caffe-ffi-events.jsonl" ]; then
+    LOG_ARGS="$LOG_ARGS --log-json-output=$LOG_JSON_OUTPUT"
+fi
+
 BUILD_SCRIPT="$APP_DIR/scripts/build.sh"
 BASE_BUILD_SCRIPT="$PROJECT_ROOT/apps/jupyter-ssh-base/scripts/build.sh"
 
@@ -252,9 +267,9 @@ if ! $SKIP_BASE_BUILD; then
         fi
         cd "$PROJECT_ROOT/apps/jupyter-ssh-base"
         if $USE_CN_MIRRORS; then
-            bash scripts/build.sh --cn
+            bash scripts/build.sh --cn $LOG_ARGS
         else
-            bash scripts/build.sh
+            bash scripts/build.sh $LOG_ARGS
         fi
         log_ok "基础镜像构建完成"
     fi
@@ -269,14 +284,15 @@ log_step "阶段 3/7: 构建 caffe-ffi-jupyter:${IMAGE_TAG} 镜像"
 
 cd "$APP_DIR"
 
-BUILD_CMD="bash $BUILD_SCRIPT --tag $IMAGE_TAG $MIRROR_ARGS $NO_CACHE"
+BUILD_CMD="bash $BUILD_SCRIPT --tag $IMAGE_TAG $MIRROR_ARGS $NO_CACHE $LOG_ARGS"
 
 log_info "执行构建命令: $BUILD_CMD"
 echo ""
 
 START_TIME=$(date +%s)
 
-if $VERBOSE; then
+if $VERBOSE || [ "$LOG_FORMAT" = "json" ]; then
+    # JSON 模式或 verbose 模式直接输出，不做 tail 截断
     $BUILD_CMD
 else
     $BUILD_CMD 2>&1 | tee /tmp/caffe-ffi-build.log | tail -50
@@ -294,6 +310,8 @@ BUILD_DURATION=$((END_TIME - START_TIME))
 IMAGE_SIZE=$(docker images --format '{{.Size}}' "caffe-ffi-jupyter:${IMAGE_TAG}" | head -1)
 
 log_ok "镜像构建完成！耗时: ${BUILD_DURATION}s, 大小: $IMAGE_SIZE"
+log_metric "build_duration" "$BUILD_DURATION" "seconds"
+log_event "image_build_complete" "tag=$IMAGE_TAG" "size=$IMAGE_SIZE"
 
 # =============================================================================
 # 阶段 4: 启动容器
@@ -547,49 +565,62 @@ fi
 # =============================================================================
 log_step "阶段 7/7: 验证结果汇总"
 
-echo ""
-echo -e "${BOLD}┌─────────────────────────────────────────┐${NC}"
-echo -e "${BOLD}│       部署验证结果汇总                   │${NC}"
-echo -e "${BOLD}├─────────────────────────────────────────┤${NC}"
-echo -e "${BOLD}│${NC}  通过: ${GREEN}${VERIFY_PASS}${NC} 项"
-echo -e "${BOLD}│${NC}  失败: ${RED}${VERIFY_FAIL}${NC} 项"
-echo -e "${BOLD}│${NC}  总计: $((VERIFY_PASS + VERIFY_FAIL)) 项"
-echo -e "${BOLD}└─────────────────────────────────────────┘${NC}"
-echo ""
+DEPLOY_END_TIME=$(date +%s)
+DEPLOY_DURATION=$((DEPLOY_END_TIME - DEPLOY_START_TIME))
+VERIFY_TOTAL=$((VERIFY_PASS + VERIFY_FAIL))
 
 if [ $VERIFY_FAIL -eq 0 ]; then
-    echo -e "${GREEN}${BOLD}🎉 所有验证通过！Caffe-FFI 环境部署成功！${NC}"
+    DEPLOY_STATUS="success"
+else
+    DEPLOY_STATUS="failed"
+fi
+
+log_metric "verify_passed" "$VERIFY_PASS" "count"
+log_metric "verify_failed" "$VERIFY_FAIL" "count"
+log_metric "verify_total" "$VERIFY_TOTAL" "count"
+log_metric "deploy_duration" "$DEPLOY_DURATION" "seconds"
+log_event "deploy_complete" "status=$DEPLOY_STATUS" "duration=${DEPLOY_DURATION}s"
+
+log_summary "$VERIFY_PASS" "$VERIFY_FAIL" "$VERIFY_TOTAL" "$DEPLOY_DURATION" "$DEPLOY_STATUS"
+
+if [ $VERIFY_FAIL -eq 0 ]; then
+    echo -e "${_CLR_GREEN}${_CLR_BOLD}🎉 所有验证通过！Caffe-FFI 环境部署成功！${_CLR_RESET}"
     echo ""
-    echo -e "${CYAN}连接信息：${NC}"
+    echo -e "${_CLR_CYAN}连接信息：${_CLR_RESET}"
     echo "  SSH 访问:     ssh -p ${SSH_PORT} jupyteruser@localhost  (密码: ${USER_PASSWORD})"
     echo "  Jupyter 访问: http://localhost:${JUPYTER_PORT}/?token=${JUPYTER_TOKEN}"
     echo "  容器名称:     ${CONTAINER_NAME}"
     echo "  快速验证:     docker exec ${CONTAINER_NAME} bash -lc 'source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi && python -c \"import caffe_ffi; print(caffe_ffi.version())\"'"
     echo ""
-    echo -e "${CYAN}进入容器:${NC}"
+    echo -e "${_CLR_CYAN}进入容器:${_CLR_RESET}"
     echo "  docker exec -it ${CONTAINER_NAME} bash"
+    echo ""
+    echo -e "${_CLR_GRAY}JSON 事件日志: ${LOG_JSON_OUTPUT}${_CLR_RESET}"
     echo ""
 
     if $CLEANUP; then
         log_info "自动清理容器（--cleanup）..."
         docker rm -f "$CONTAINER_NAME" >/dev/null 2>&1
         log_ok "容器已清理"
+        log_event "container_cleaned" "container=$CONTAINER_NAME"
     fi
 
     exit 0
 else
-    echo -e "${RED}${BOLD}❌ ${VERIFY_FAIL} 项验证失败！${NC}"
+    echo -e "${_CLR_RED}${_CLR_BOLD}❌ ${VERIFY_FAIL} 项验证失败！${_CLR_RESET}"
     echo ""
-    echo -e "${YELLOW}故障排查命令：${NC}"
+    echo -e "${_CLR_YELLOW}故障排查命令：${_CLR_RESET}"
     echo "  1. 查看容器日志:     docker logs ${CONTAINER_NAME} 2>&1 | tail -50"
-    echo "  2. 运行诊断脚本:     bash scripts/diagnose.sh --container ${CONTAINER_NAME}"
+    echo "  2. 运行诊断脚本:     bash scripts/diagnose.sh --container ${CONTAINER_NAME} --fix-all"
     echo "  3. 进入容器调试:     docker exec -it ${CONTAINER_NAME} bash"
     echo "  4. 检查 supervisord: docker exec ${CONTAINER_NAME} supervisorctl status"
     echo ""
-    echo -e "${YELLOW}常见问题：${NC}"
+    echo -e "${_CLR_YELLOW}常见问题：${_CLR_RESET}"
     echo "  - protobuf 版本冲突:   bash scripts/diagnose.sh --container ${CONTAINER_NAME} --fix-protobuf"
     echo "  - 共享库未解析:        bash scripts/diagnose.sh --container ${CONTAINER_NAME} --fix-ldpath"
     echo "  - 详细部署指南参见:    apps/caffe-ffi-jupyter/WSL-DEPLOY-GUIDE.md"
+    echo ""
+    echo -e "${_CLR_GRAY}JSON 事件日志: ${LOG_JSON_OUTPUT}${_CLR_RESET}"
     echo ""
     exit 1
 fi
