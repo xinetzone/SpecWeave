@@ -1,0 +1,27 @@
+- [ ] Checkpoint 1: Split 层头文件 split_layer.hpp 创建完成，类定义正确（继承 Layer，ExactNumBottomBlobs=1，MinTopBlobs=1，type()="Split"）
+- [ ] Checkpoint 2: Split 层实现 split_layer.cpp 创建完成，Reshape 对每个 top 执行 ReshapeLike，Forward_cpu 执行 memcpy 拷贝
+- [ ] Checkpoint 3: REGISTER_LAYER_CLASS(Split) 宏正确使用
+- [ ] Checkpoint 4: _caffe_ffi.cc 中已添加 #include "caffe_ffi/layers/split_layer.hpp"
+- [ ] Checkpoint 5: Docker 容器中重新编译 C++ 扩展成功，无编译/链接错误
+- [ ] Checkpoint 6: 最小验证脚本确认含 Split 层的网络可构建，无 "Unknown layer type: Split" 错误
+- [ ] Checkpoint 7: test_split_topologies.py 创建，包含 8 个测试用例（1→2 split、1→3 split+Concat、真残差连接、三分支Concat、确定性、in-place分支、深层网络Split、数值精确匹配）
+- [ ] Checkpoint 8: conftest.py 的 _P2_TEST_CLASSES 和 _PERF_TEST_CLASSES 已包含 TestSplitLayer
+- [ ] Checkpoint 9: 所有 Split 测试在 Docker 中通过
+- [ ] Checkpoint 10: conftest.py 添加 CSV FileHandler，perf_trace 和 _test_timing_log 在退出时写入 CSV 行
+- [ ] Checkpoint 11: CSV 文件列：timestamp,phase,test_class,test_name,operation,elapsed_ms,delta_mem,delta_blobs,extra
+- [ ] Checkpoint 12: .temp/ 目录自动创建，CSV 文件生成于 tests/python/.temp/perf_log_<timestamp>.csv
+- [ ] Checkpoint 13: stderr 日志输出不受影响（双通道）
+- [ ] Checkpoint 14: CSV 可用 pandas 正常读取，数据列类型正确
+- [ ] Checkpoint 15: test_extreme_boundaries.py 创建，包含 TestExtremeDimensions、TestNumericalEdgeCases、TestShapeChaos、TestLifecycleStress 四个测试类
+- [ ] Checkpoint 16: 超大维度测试（batch=512/1024）通过或优雅降级
+- [ ] Checkpoint 17: NaN/Inf/零输入/负输入/极端权重测试不崩溃、不 segfault
+- [ ] Checkpoint 18: 20层深层网络 forward 通过
+- [ ] Checkpoint 19: 形状混乱交替测试通过
+- [ ] Checkpoint 20: 生命周期压力测试（50次 create/destroy）Δblobs≤2
+- [ ] Checkpoint 21: conftest.py 已包含 P2-B 测试类到性能日志
+- [ ] Checkpoint 22: 全量测试套件运行3次全部通过（P0+P1+P2-A+Split+P2-B）
+- [ ] Checkpoint 23: 无内存泄漏（session结束时Δblobs=0）
+- [ ] Checkpoint 24: CSV 文件记录数与 P1/P2 测试操作数匹配
+- [ ] Checkpoint 25: 所有临时 shell 脚本已清理
+- [ ] Checkpoint 26: 原子提交完成，commit message 遵循 Conventional Commits
+- [ ] Checkpoint 27: 代码风格与现有代码一致（命名、日志、错误处理）
