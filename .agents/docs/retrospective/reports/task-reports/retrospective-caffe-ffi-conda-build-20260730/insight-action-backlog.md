@@ -2,17 +2,20 @@
 id: "retrospective-caffe-ffi-conda-build-20260730-backlog"
 title: "洞察行动项 Backlog：caffe-ffi Conda 包构建验证"
 date: 2026-07-30
-version: "1.1"
+version: "1.2"
 type: insight-action-backlog
 status: active
 source: "caffe-ffi Conda 包构建验证复盘"
 ssot:
   retrospective_source: README.md
   insight_source: README.md#s3-洞察与模式萃取
+  verification_plan: l4-verification-plan-and-checklist.md
 ---
 # 洞察行动项 Backlog
 
-> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**6项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试、模式沉淀）+ 1项取消（绝对路径RPATH不可行）+ 1项搁置（meta.yaml注释）+ 1项低优先级待执行（macOS跨平台）。
+> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**6项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试、模式沉淀）+ 1项取消（绝对路径RPATH不可行）+ 1项搁置（meta.yaml注释）+ 1项🚧进行中（macOS跨平台代码适配完成，待实机验证）。
+>
+> 📋 **相关文档**：[L4升级验证计划与Checklist表格](l4-verification-plan-and-checklist.md) — 包含模式升级到L4所需的20个补充测试场景和可复制到任务追踪系统的Checklist表格。
 
 ## 行动项总览
 
@@ -22,7 +25,7 @@ ssot:
 | ACT-002 | meta.yaml增加`missing_dso_whitelist`详细注释 | 🟡中 | 文档 | ⏸️ 搁置 | 其他开发者理解DSO白名单用途，降低维护成本 |
 | ACT-003 | ~~RPATH改用`$PREFIX/lib`绝对路径~~ | 🟡中 | 健壮性 | ❌ 已取消 | 绝对路径触发conda-build prefix replacement "Placeholder too short"错误，方案不可行 |
 | ACT-003b | 为每个依赖.so单独计算RPATH深度，添加`$ORIGIN/../tvm_ffi/lib`跨包路径 | 🟡中 | 健壮性 | ✅ 已完成 | 不同深度的.so都能正确解析依赖，无需LD_LIBRARY_PATH |
-| ACT-004 | macOS conda包支持（`@rpath`/`@loader_path`+install_name_tool） | 🟢低 | 跨平台 | ⏳ 待执行 | macOS用户可直接使用conda包 |
+| ACT-004 | macOS conda包支持（`@rpath`/`@loader_path`+install_name_tool） | 🟢低 | 跨平台 | 🚧 代码适配完成（待实机验证） | macOS用户可直接使用conda包 |
 | ACT-005 | 将洞察/模式萃取为正式模式文档存入patterns/ | 🟡中 | 知识沉淀 | ✅ 已完成 | 模式可复用，其他scikit-build-core项目受益 |
 | ACT-006 | build.sh增加关键符号nm验证步骤（TVMFFIGetCustomAllocator） | 🟡中 | 健壮性 | ✅ 已完成 | 防止pip wheel符号缺失导致运行时崩溃 |
 | ACT-007 | 嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 | 🟡中 | 健壮性 | ✅ 已完成 | conda参数不污染子项目独立构建 |
@@ -182,24 +185,39 @@ ssot:
 
 ## 🟢 低优先级行动项
 
-### ACT-004：macOS conda 包支持
+### ACT-004：macOS conda 包支持 🚧 代码适配完成（待实机验证）
 
 - **优先级**：🟢 低
 - **来源**：复盘 §S2 瓶颈与约束
 - **责任人**：caffe-ffi 跨平台维护者
 - **预期收益**：macOS 用户可通过 conda 直接安装 caffe-ffi
+- **状态**：🚧 **代码适配完成（待macOS实机验证）**（2026-07-30 v1.3）
+- **已完成工作（代码层）**：
+  1. ✅ build.sh 添加平台检测（`uname -s`），自动识别 Linux/macOS
+  2. ✅ 跨平台工具函数封装：`get_rpath()`/`set_rpath()`/`check_symbol()`/`check_deps()`/`fix_dep_ref()`
+     - Linux: `patchelf` + `$ORIGIN` + `ldd` + `nm -D`
+     - macOS: `install_name_tool` + `@loader_path` + `otool -L` + `nm -gU`
+  3. ✅ RPATH前缀按平台选择（`$ORIGIN` vs `@loader_path`），深度计算逻辑复用
+  4. ✅ macOS额外处理：`install_name_tool -change`修复libtvm_ffi引用、设置install name id
+  5. ✅ meta.yaml 更新 build number 7，添加macOS条件依赖（`cctools`、`llvm-openmp`、`macos-sdk`）和`.dylib` DSO白名单
+  6. ✅ test-conda-build.sh 添加平台检测（osx-64/osx-arm64）、跨平台工具函数封装、Bootstrap自适应（Docker/本地miniconda/miniforge）、.dylib库查找
+- **待执行（验证层）**：
+  1. ❓ 在macOS实机（Intel或Apple Silicon）上运行`bash test-conda-build.sh`
+  2. ❓ 修复可能出现的编译错误（如libcxx版本、SDK路径、OpenBLAS/OpenMP配置差异）
+  3. ❓ 验证RPATH `@loader_path` 实际效果（是否能正确解析跨包依赖）
+  4. ❓ 验证符号命名（macOS C符号可能带下划线前缀`_TVMFFIGetCustomAllocator`）
+  5. ❓ conda-build在macOS上的prefix replacement是否仍然有placeholder问题
 - **验收标准（DoD）**：
-  1. conda-build 支持 macOS（osx-64 / osx-arm64）
-  2. RPATH 使用 `@rpath`/`@loader_path` 替代 `$ORIGIN`
-  3. patchelf 在 macOS 上使用 `install_name_tool` 替代
-  4. 在 macOS 环境中构建并通过 `otool -L` 等价验证
-  5. 跨包RPATH：`@loader_path/../tvm_ffi/lib` 等相对路径
+  1. ✅/❓ conda-build 支持 macOS（osx-64 / osx-arm64）—— 代码已适配，待实机构建通过
+  2. ✅ RPATH 使用 `@rpath`/`@loader_path` 替代 `$ORIGIN`
+  3. ✅ patchelf 在 macOS 上使用 `install_name_tool` 替代
+  4. ❓ 在 macOS 环境中构建并通过 `otool -L` 等价验证
+  5. ✅ 跨包RPATH：`@loader_path/../tvm_ffi/lib` 等相对路径
 - **前置依赖**：ACT-003b RPATH设计已稳定
-- **实施步骤**：
-  1. 在 meta.yaml 中增加 macOS 平台支持（移除 skip 限制或添加 osx 支持）
-  2. build.sh 中检测平台：Linux 用 patchelf/$ORIGIN，macOS 用 install_name_tool/@rpath
-  3. 增加 `bld.bat`（Windows）或 `build.sh` 中增加 macOS 分支
-  4. 在 macOS CI 或本地环境中验证
+- **涉及文件**：
+  - [build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)：+120行跨平台适配（平台检测+工具函数+RPATH前缀+依赖修复）
+  - [meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)：build number 7，+8行macOS条件依赖和DSO白名单
+  - [test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh)：+100行跨平台适配（平台检测+Bootstrap自适应+otool/nm封装+符号验证）
 
 ---
 
@@ -224,7 +242,7 @@ ACT-006（符号验证）── 独立可执行 ✅
 ACT-007（参数隔离）── 独立可执行 ✅
 ACT-008（单元测试）── 独立可执行，依赖backtrace禁用发现 ✅
 
-ACT-004（macOS支持）── 依赖 ACT-003b 的RPATH设计稳定 ⏳
+ACT-004（macOS支持）── 依赖 ACT-003b 的RPATH设计基础 🚧（代码适配完成，待实机验证）
 
 ACT-005（模式沉淀）── 建议在所有代码改进完成后沉淀
     （包含最终版本的最佳实践L3模式，而非中间状态）⏳

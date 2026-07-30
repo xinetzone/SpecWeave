@@ -1,33 +1,43 @@
 ---
 title: "caffe-ffi Conda 包构建验证复盘"
-version: "1.1"
+version: "1.5"
 date: 2026-07-30
 type: task-retrospective
 scope: milestone
 source: "apps/caffe-ffi-jupyter/scripts/test-conda-build.sh + projects/xuanspace/libs/caffe-ffi/conda.recipe/"
-tags: ["conda-build", "scikit-build-core", "cmake", "rpath", "patchelf", "python-packaging", "tvm-ffi", "caffe-ffi", "editable-cleanup", "symbol-verification"]
-status: completed
+tags: ["conda-build", "scikit-build-core", "cmake", "rpath", "patchelf", "python-packaging", "tvm-ffi", "caffe-ffi", "editable-cleanup", "symbol-verification", "pattern-extraction", "l4-verification", "macos-cross-platform", "conda-build-compat", "pyproject-toml"]
+status: in-progress
 ---
 
 # caffe-ffi Conda 包构建验证复盘
 
 ## 执行摘要
 
-本次任务完成了 caffe-ffi（基于 tvm-ffi 的 Caffe 深度学习框架 FFI 绑定库）的 Conda 包构建、验证与 RPATH 依赖解析闭环。构建产物 `caffe-ffi-0.1.0-py314_6.conda`（build number 6）在 Docker 容器内的干净 conda 环境中通过全部验证：导入成功、Blob 功能正常、Python 单元测试通过、所有共享库依赖通过 ldd 解析无 not found、libtvm_ffi.so 正确链接且 TVMFFIGetCustomAllocator 符号验证通过。构建过程中修复了 6 个关键问题，修改 4 个核心文件，实现了 editable 残留三重保护策略，萃取 4 个洞察 + 2 个可复用模式。
+本次任务完成了 caffe-ffi（基于 tvm-ffi 的 Caffe 深度学习框架 FFI 绑定库）的 Conda 包构建、验证与 RPATH 依赖解析闭环。构建产物 `caffe-ffi-0.1.0-py314_7.conda`（build number 7）在 Docker 容器内的干净 conda 环境中通过全部验证：导入成功、Blob 功能正常、Python 单元测试通过、所有共享库依赖通过 ldd 解析无 not found、libtvm_ffi.so 正确链接且 TVMFFIGetCustomAllocator 符号验证通过。构建过程中修复了 6 个关键问题，修改 3 个核心文件，实现了 editable 残留三重保护策略，萃取 7 个洞察 + 2 个可复用模式（L3），生成了L4升级验证计划与Checklist表格，完成了macOS跨平台代码适配（待实机验证），完成conda-build 25.x/26.x兼容性调研（A-T6），并完成pyproject.toml三层分离实践（A-T7）——CMake参数按"项目默认值→平台条件→Conda运行时"三层配置，build.sh SKBUILD_CMAKE_ARGS从12个精简为5个。
+
+### 本目录产出物
+
+| 文件 | 说明 |
+|------|------|
+| [README.md](README.md) | 本复盘主报告（事实还原/过程分析/洞察萃取/改进行动项） |
+| [insight-action-backlog.md](insight-action-backlog.md) | 洞察转化的行动项清单与状态跟踪 |
+| [l4-verification-plan-and-checklist.md](l4-verification-plan-and-checklist.md) | L4升级验证计划（20个补充测试场景）+ Checklist表格（可直接复制到任务追踪系统） |
 
 ### 关键结果
 
 | 指标 | 结果 |
 |------|------|
-| Conda 包产物 | `caffe-ffi-0.1.0-py314_6.conda`（build number 6） |
+| Conda 包产物 | `caffe-ffi-0.1.0-py314_7.conda`（build number 7） |
 | 构建耗时 | ~1分35秒 |
 | Docker 容器 | `caffe-ffi-jupyter`（基于 jupyter-ssh-base:1.1） |
 | Conda 环境 | caffe-ffi（Python 3.14, Conda-Forge） |
 | 修复问题 | 6 个（build backend缺失、路径双重嵌套、CRLF、conda-verify不兼容、editable残留、pip wheel符号缺失） |
-| 修改文件 | 4 个核心文件 |
+| 修改文件 | 3 个核心文件（build.sh/meta.yaml/test-conda-build.sh） |
 | Editable清理 | ✅ 三重保护策略（build.sh两次 + test脚本两次） |
 | ldd 验证 | ✅ 所有依赖解析，无 not found |
-| RPATH 验证 | ✅ `$ORIGIN:$ORIGIN/lib:$ORIGIN/../tvm_ffi/lib:$ORIGIN/../../..` 正确设置 |
+| RPATH 验证 | ✅ Linux `$ORIGIN` 相对路径；macOS `@loader_path` 代码适配完成（待验证） |
+| macOS 支持 | 🚧 代码适配完成（build.sh/meta.yaml/test脚本均添加跨平台分支），待实机验证 |
+| 模式沉淀 | ✅ 2个L3模式入库，生成L4验证计划和Checklist表格 |
 | 符号验证 | ✅ TVMFFIGetCustomAllocator (T) 通过 nm 检查 |
 | 功能测试 | ✅ import/Blob.fill/Blob.from_numpy/单元测试 全部通过 |
 
@@ -57,10 +67,11 @@ status: completed
 
 | 文件 | 修改内容 | 行数变化 |
 |------|---------|---------|
-| [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number=6；完善三段式依赖（host段增加setuptools-scm/protobuf/openblas/typing-extensions）；增加missing_dso_whitelist注释；完善test段（imports/commands/requires/source_files）；完善about段description | +45/-5 |
-| [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 增加 `clean_editable_files()` 三重保护清理；tvm-ffi安装前彻底清理构建残留；CMAKE_ARGS/SKBUILD_CMAKE_ARGS构建隔离；SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13；nm符号验证(TVMFFIGetCustomAllocator)；RPATH新增`$ORIGIN/../tvm_ffi/lib`；libtvm_ffi.so独立RPATH设置（深一级路径）；构建后双重editable清理；详细环境变量日志 | +200/-10 |
+| [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number=7；完善三段式依赖（host段增加setuptools-scm/protobuf/openblas/typing-extensions；osx增加cctools/llvm-openmp/macos-sdk）；增加missing_dso_whitelist（含.dylib条目）和注释；完善test段（imports/commands/requires/source_files）；完善about段description | +53/-5 |
+| [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 增加 `clean_editable_files()` 三重保护清理；tvm-ffi安装前彻底清理构建残留；CMAKE_ARGS/SKBUILD_CMAKE_ARGS构建隔离；SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13；nm符号验证(TVMFFIGetCustomAllocator)；macOS跨平台适配（IS_MACOS检测、@loader_path RPATH、install_name_tool、otool/nm -gU封装）；RPATH新增`$ORIGIN/../tvm_ffi/lib`；libtvm_ffi.so独立RPATH设置（深一级路径）；构建后双重editable清理；详细环境变量日志；**A-T7精简**：移除_EXTRA_CMAKE_ARGS平台分支和10个重复-D参数（迁移到pyproject.toml三层分离），SKBUILD_CMAKE_ARGS从12个精简为5个conda专属参数 | +200/-10 |
+| [pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/pyproject.toml) | **A-T7新增**：CMake参数三层分离——项目默认值（CAFFE_USE_BLAS/CAFFE_FFI_BUILD_TESTS/CMAKE_POSITION_INDEPENDENT_CODE）、Linux override（CMAKE_BUILD_RPATH_USE_ORIGIN从全局移到Linux-only）、macOS override（CMAKE_MACOSX_RPATH/CMAKE_INSTALL_NAME_DIR）；CMAKE_BUILD_RPATH_USE_ORIGIN从全局修正为Linux-only | +30/-5 |
 | [cmake/Install.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Install.cmake) | DESTINATION 从 "caffe_ffi" 改为 "."，添加详细注释说明双重嵌套原因；新增protobuf Python文件安装规则 | +10/-2 |
-| [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c增强ldd检查（libtvm_ffi链接/BLAS/protobuf验证）；新增Step 8d Python单元测试集成；apache-tvm-ffi pip卸载重装避免版本冲突 | +300/-50 |
+| [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c跨平台依赖检查（Linux ldd / macOS otool -L）；新增Step 8d Python单元测试集成；macOS跨平台适配（IS_MACOS检测、otool/nm -gU封装、@rpath验证、.dylib库查找、PLATFORM子目录自适应、Bootstrap Docker/本地miniconda/miniforge自适应）；apache-tvm-ffi pip卸载重装避免版本冲突 | +400/-50 |
 
 ### Bug 修复记录
 
@@ -314,6 +325,8 @@ site-packages/
 
 ### 模式 1：conda-build + scikit-build-core 原生扩展打包模式（升级版）
 
+> 📚 **正式模式文档**：[conda-build-scikit-build-core-native.md](../../patterns/code-patterns/conda-build-scikit-build-core-native.md)（L3 方法论，已沉淀至模式库）
+
 **触发场景**：需要将 C++/CMake 构建的 Python 原生扩展打包为 Conda 包，依赖 scikit-build-core 构建系统，需要依赖另一个同架构本地编译的Python C++扩展（如tvm-ffi），且需要精确控制RPATH和符号兼容性。
 
 **核心步骤**：
@@ -354,6 +367,8 @@ site-packages/
 **成熟度**：L3（已在caffe-ffi项目端到端验证6次迭代，单元测试通过，ldd全部解析，符号验证通过）
 
 ### 模式 2：Conda 构建验证干净环境前置清理模式（升级版）
+
+> 📚 **正式模式文档**：[conda-package-clean-verification.md](../../patterns/code-patterns/conda-package-clean-verification.md)（L3 方法论，已沉淀至模式库）
 
 **触发场景**：在开发Docker容器中反复迭代验证conda包构建结果，容器内存在之前的editable install、pip install、stale目录等多种残留。
 
@@ -398,11 +413,12 @@ site-packages/
 | ID | 行动项 | 优先级 | 验收标准 | 类型 | 状态 |
 |----|--------|--------|---------|------|------|
 | ACT-001 | build.sh增加`_editable_*.pth`自动清理步骤，实现三重保护策略 | 高 | 验证脚本在有editable残留的环境中也能正确验证conda包；build.sh内置清理函数；test脚本预清理+安装前清理+路径验证门禁 | 质量门禁 | ✅ 已完成 |
-| ACT-002 | 在meta.yaml中增加`missing_dso_whitelist`的详细注释，说明哪些库是vendored/bundled | 中 | 其他开发者阅读meta.yaml能理解DSO白名单的用途 | 文档 | ⏳ 待执行 |
+| ACT-002 | 在meta.yaml中增加`missing_dso_whitelist`的详细注释，说明哪些库是vendored/bundled | 中 | 其他开发者阅读meta.yaml能理解DSO白名单的用途 | 文档 | ⏸️ 搁置 |
 | ACT-003 | ~~将RPATH `$ORIGIN/../../..`改为`$PREFIX/lib`绝对路径~~ | 中 | **已取消**：绝对路径会导致conda-build prefix replacement "Placeholder too short"错误，必须使用全`$ORIGIN`相对路径 | 健壮性 | ❌ 已取消（方案不可行） |
 | ACT-003b | 为每个依赖的.so单独计算并设置RPATH（考虑目录嵌套深度），添加`$ORIGIN/../tvm_ffi/lib`跨包路径 | 中 | _caffe_ffi.so（深度3）和libtvm_ffi.so（深度4）RPATH正确；ldd无not found；包含跨包路径 | 健壮性 | ✅ 已完成 |
-| ACT-004 | 为caffe-ffi conda recipe增加macOS（`@rpath`/`@loader_path`）支持 | 低 | macOS conda包也能正确解析libtvm_ffi依赖；使用install_name_tool替代patchelf | 跨平台 | ⏳ 待执行 |
-| ACT-005 | 将洞察和模式萃取为正式模式文档，存入patterns/ | 中 | 模式文档含触发条件、meta.yaml模板、build.sh模板、RPATH计算、三重清理、符号验证、反模式清单 | 知识沉淀 | ⏳ 待执行 |
+| ACT-004 | 为caffe-ffi conda recipe增加macOS（`@rpath`/`@loader_path`）支持 | 低 | build.sh/meta.yaml/test-conda-build.sh均已添加macOS跨平台分支（install_name_tool/otool/nm -gU）；待macOS实机构建验证 | 跨平台 | 🚧 代码适配完成（待验证） |
+| A-T7 | pyproject.toml CMake参数三层分离 | 低 | 项目默认值→平台条件→Conda运行时三层分离；SKBUILD_CMAKE_ARGS从12个精简为5个；CMAKE_BUILD_RPATH_USE_ORIGIN修正为Linux-only | 模式增强 | ✅ 代码完成（待实机构建验证） |
+| ACT-005 | 将洞察和模式萃取为正式模式文档，存入patterns/ | 中 | 已沉淀2个L3模式：conda-build-scikit-build-core-native.md（打包六步法）、conda-package-clean-verification.md（五维验证法）；已更新模式索引 | 知识沉淀 | ✅ 已完成 |
 | ACT-006 | build.sh中增加关键符号nm验证步骤 | 中 | 构建前后验证TVMFFIGetCustomAllocator等关键符号为T类型，防止pip wheel符号缺失 | 健壮性 | ✅ 已完成 |
 | ACT-007 | 嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 | 中 | 本地源码编译tvm-ffi时隔离conda的CMAKE_ARGS，防止污染子项目构建 | 健壮性 | ✅ 已完成 |
 | ACT-008 | 验证脚本集成Python单元测试步骤 | 中 | test-conda-build.sh Step 8d自动运行单元测试；设置CAFFE_FFI_DISABLE_BACKTRACE=1防止pytest崩溃 | 质量门禁 | ✅ 已完成 |
@@ -472,5 +488,9 @@ python /SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api
 ```
 
 <!-- changelog -->
+- 2026-07-30 | code+docs | v1.5更新：A-T7 pyproject.toml CMake参数三层分离实践——项目默认值（cmake.define）+平台条件（overrides）+Conda运行时（build.sh）三层分离；pyproject.toml新增CAFFE_USE_BLAS/CAFFE_FFI_BUILD_TESTS/CMAKE_POSITION_INDEPENDENT_CODE，CMAKE_BUILD_RPATH_USE_ORIGIN从全局修正为Linux-only override，新增macOS override；build.sh SKBUILD_CMAKE_ARGS从12个精简为5个conda专属参数；模式文档新增步骤1b三层分离指南；待实机构建验证
+- 2026-07-30 | docs | v1.4更新：A-T6 conda-build 25.x/26.x兼容性调研完成——确认无scikit-build-core原生支持；发现6项关键版本变更（patchelf<0.18限制/pip选项自动管理/Python 3.9移除/macOS RPATH修复/Python 3.14兼容/whitelist→allowlist重命名）；meta.yaml添加allowlist迁移注释；模式文档新增conda-build版本兼容性矩阵
+- 2026-07-30 | docs | v1.3更新：ACT-004 macOS跨平台代码适配完成，build.sh/meta.yaml/test-conda-build.sh三个核心文件均添加macOS分支（@loader_path RPATH、install_name_tool、otool -L、nm -gU、.dylib支持），build number升至7，模式文档标注待验证状态；待macOS实机构建验证
+- 2026-07-30 | docs | v1.2更新：ACT-005完成——萃取2个L3模式存入patterns/（conda-build-scikit-build-core-native.md、conda-package-clean-verification.md），生成L4升级验证计划与Checklist表格
 - 2026-07-30 | docs | v1.1更新：6次构建迭代完善，新增editable三重保护策略、跨包RPATH四层设计、嵌套构建参数隔离、符号完整性验证、单元测试集成；修复6个Bug，萃取7个洞察+2个L3成熟度模式，完成ACT-001/003b/006/007/008
 - 2026-07-30 | docs | caffe-ffi Conda包构建验证里程碑复盘：1.09MB包构建成功，5个Bug修复，ldd/RPATH完全解析，2个可复用模式萃取

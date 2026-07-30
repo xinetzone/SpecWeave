@@ -108,8 +108,61 @@ requirements:
 ```
 
 **关键配置说明**：
-- `detect_binary_files_with_prefix: false`：使用 `$ORIGIN` 相对 RPATH 时必须设置，否则 conda-build 会尝试做前缀替换，在相对路径上失败
-- `missing_dso_whitelist`：本地源码编译的依赖库（不通过 conda 依赖安装）需要加入白名单，否则 conda-build 的 DSO 检查会报错
+- `detect_binary_files_with_prefix: false`：使用 `$ORIGIN`/`@loader_path` 相对 RPATH 时必须设置，否则 conda-build 会尝试做前缀替换，在相对路径上失败
+- `missing_dso_whitelist`：本地源码编译的依赖库（不通过 conda 依赖安装）需要加入白名单，否则 conda-build 的 DSO 检查会报错；conda-build ≥26.5 将重命名为 `missing_dso_allowlist`，建议同时保留两个key做前向兼容
+- macOS平台条件依赖：`cctools # [osx]`（提供install_name_tool/otool）、`llvm-openmp # [osx]`（OpenMP运行时）、`macos-sdk # [osx]`（SDK头文件）
+
+### 步骤1b：pyproject.toml 三层分离配置CMake参数
+
+CMake参数应按"项目默认值→平台条件→Conda运行时"**三层分离**原则配置，避免在build.sh中堆积大量-D参数：
+
+```toml
+# pyproject.toml
+[tool.scikit-build]
+minimum-version = "0.10"
+cmake.build-type = "Release"
+ninja.make-fallback = false
+build.verbose = true
+
+# 第一层：项目默认值（适用于所有构建环境：pip/conda/editable）
+[tool.scikit-build.cmake.define]
+CMAKE_EXPORT_COMPILE_COMMANDS = "ON"
+CAFFE_CPU_ONLY = "ON"
+CAFFE_USE_BLAS = "ON"
+CAFFE_FFI_BUILD_TESTS = "OFF"
+CMAKE_INSTALL_RPATH_USE_LINK_PATH = "ON"
+CMAKE_SKIP_BUILD_RPATH = "OFF"
+CMAKE_BUILD_WITH_INSTALL_RPATH = "ON"
+CMAKE_POSITION_INDEPENDENT_CODE = "ON"
+
+# 第二层：平台条件（通过[[tool.scikit-build.overrides]]）
+# Linux：$ORIGIN相对RPATH
+[[tool.scikit-build.overrides]]
+if.platform-system = "linux"
+[tool.scikit-build.overrides.cmake.define]
+CMAKE_BUILD_RPATH_USE_ORIGIN = "ON"
+
+# macOS：@rpath/install_name
+[[tool.scikit-build.overrides]]
+if.platform-system = "^darwin"
+[tool.scikit-build.overrides.cmake.define]
+CMAKE_MACOSX_RPATH = "ON"
+CMAKE_INSTALL_NAME_DIR = "@rpath"
+```
+
+**三层分离原则**：
+
+| 层 | 位置 | 包含参数 | 原因 |
+|---|---|---|---|
+| 项目默认值 | `[tool.scikit-build.cmake.define]` | BUILD_TYPE、CPU_ONLY、USE_BLAS、SKIP_BUILD_RPATH、POSITION_INDEPENDENT_CODE等 | 适用于所有构建环境 |
+| 平台条件 | `[[tool.scikit-build.overrides]]` | Linux: BUILD_RPATH_USE_ORIGIN；macOS: MACOSX_RPATH、INSTALL_NAME_DIR | 通过`if.platform-system`正则匹配 |
+| Conda运行时 | `build.sh SKBUILD_CMAKE_ARGS` | CMAKE_PREFIX_PATH、INSTALL_RPATH、PREFER_SYSTEM_TVM_FFI等 | 依赖运行时变量`$PREFIX`或需post-build RPATH修复 |
+
+**关键约束**：
+- ❌ **禁止**在pyproject.toml中设置`CMAKE_INSTALL_RPATH`：conda环境下RPATH由patchelf/install_name_tool在构建后重新设置，pyproject.toml中设置的值会被覆盖
+- ❌ **禁止**在pyproject.toml中设置`CMAKE_PREFIX_PATH`：该值依赖运行时`${PREFIX}`变量，不同conda环境路径不同
+- ✅ **应**在pyproject.toml中设置项目通用的CMake选项，减少build.sh中SKBUILD_CMAKE_ARGS的参数数量
+- ✅ **应**使用`if.platform-system`（值为`sys.platform`的正则匹配：`"linux"`/`"^darwin"`/`"win32"`）处理平台差异
 
 ### 步骤2：build.sh 构建前环境准备与Editable清理
 
@@ -483,19 +536,39 @@ echo "✅ All verification steps passed!"
 
 ## 待验证问题（升级L4需确认）
 
-1. **macOS支持**：`@loader_path`/`@rpath` 替代 `$ORIGIN` 的具体语法和深度计算是否一致？`install_name_tool` 替代 `patchelf` 的用法
+> 📌 **2026-07-30 更新（v1.3.0）**：
+> - (1) macOS平台代码适配完成（`@loader_path`/`install_name_tool`/`otool -L`/`nm -gU`），待实机验证（A-T1）
+> - (4) **conda-build 25.x/26.x 调研完成**（A-T6）：无scikit-build-core原生支持，但有6项兼容性注意事项
+> - (5) **pyproject.toml三层分离完成**（A-T7）：CMake参数三层分离原则已确立并实践，build.sh SKBUILD_CMAKE_ARGS从12个精简为5个；待实机构建验证
+
+1. **macOS支持**（代码适配完成，待实机验证）：`@loader_path`/`@rpath` 替代 `$ORIGIN` 的具体语法和深度计算是否一致？`install_name_tool` 替代 `patchelf` 的用法；`otool -L` 替代 `ldd`；`nm -gU` 替代 `nm -D`
 2. **Windows支持**：Windows 下无 RPATH，依赖 PATH 环境变量，如何在 conda 包中正确设置？
 3. **多架构支持**：aarch64/ppc64le 等非x86架构下patchelf和RPATH行为是否一致？
-4. **conda-build 25.x兼容性**：新版conda-build是否有对scikit-build-core的原生支持，是否可以简化某些步骤？
-5. **pyproject.toml配置**：是否可以通过pyproject.toml的`[tool.scikit-build]`配置部分cmake参数，减少build.sh中的手动操作？
+4. ~~**pyproject.toml配置**：是否可以通过pyproject.toml的`[tool.scikit-build]`配置部分cmake参数，减少build.sh中的手动操作？~~ ✅ **已解决（A-T7 v1.3.0）**：三层分离原则——项目默认值放`[tool.scikit-build.cmake.define]`，平台条件放`[[tool.scikit-build.overrides]]`，conda运行时参数保留在build.sh
+5. **pyproject.toml配置的非conda构建验证**：直接`pip install .`（非conda环境）是否使用正确的默认CMake参数？构建产物是否可正常导入？
+
+### conda-build版本兼容性矩阵
+
+| conda-build版本 | 当前模式兼容性 | 需要的适配 |
+|---|---|---|
+| ≤24.x（当前使用版本） | ✅ 完全兼容 | 无 |
+| 25.3.x | ✅ 兼容 | patchelf自动约束为<0.18，无需手动pin |
+| 25.4.x-25.10.x | ✅ 兼容 | pip install选项可简化（非必须） |
+| 25.11.x-26.0.x | ✅ 兼容 | Python ≥3.10；CMake 4兼容（当前CMake≥3.26即可） |
+| 26.1.x-26.4.x | ✅ 兼容 | macOS RPATH更可靠（先删后加） |
+| 26.5.x+ | ⚠️ 兼容（有deprecation warning） | 添加`missing_dso_allowlist`别名消除警告 |
+| 27.3+ | ❌ 需适配 | `missing_dso_whitelist`移除，必须使用`missing_dso_allowlist` |
+
+## Changelog
+
+- **2026-07-30** (v1.3.0): A-T7 pyproject.toml三层分离实践完成：新增步骤1b"pyproject.toml三层分离配置CMake参数"；CMake参数按"项目默认值→平台条件→Conda运行时"三层分离；CMAKE_BUILD_RPATH_USE_ORIGIN从全局设置修正为Linux-only override；新增macOS override（CMAKE_MACOSX_RPATH/CMAKE_INSTALL_NAME_DIR）；build.sh SKBUILD_CMAKE_ARGS从12个精简为5个；待实机构建验证
+- **2026-07-30** (v1.2.0): A-T6 conda-build 25.x/26.x兼容性调研完成：确认无scikit-build-core原生支持，新增conda-build版本兼容性矩阵；meta.yaml添加missing_dso_allowlist迁移注释
+- **2026-07-30** (v1.1.0): ACT-004 代码适配阶段：build.sh添加macOS平台检测与跨平台工具函数封装（get_rpath/set_rpath/check_symbol/check_deps/fix_dep_ref），meta.yaml添加macOS条件依赖（cctools/llvm-openmp/macos-sdk）和.dylib DSO白名单；实机构建验证待执行
+- **2026-07-30** (v1.0.0): 初始版本，从 caffe-ffi conda-build 6次迭代复盘萃取，双案例验证（主包+依赖包），标记 L3 方法论
 
 ## 与相关模式的关系
 
 - **[conda-custom-channels-mirror.md](conda-custom-channels-mirror.md)**：本模式步骤0前的环境准备可能需要镜像源配置，依赖该模式
 - **[shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md)**：本模式的符号验证是该模式的下游应用——编译时控制符号可见性，打包时验证符号完整性
 - **[cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md)**：scikit-build-core底层调用CMake，CMake模块化架构有助于构建参数隔离
-
-## Changelog
-
-- **2026-07-30** (v1.0.0): 初始版本，从 caffe-ffi conda-build 6次迭代复盘萃取，双案例验证（主包+依赖包），标记 L3 方法论
 
