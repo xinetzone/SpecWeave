@@ -59,15 +59,22 @@ done
 rm -f "$CONDA_PREFIX/lib"/libtvm_ffi* 2>/dev/null || true
 echo "  Removed stale libtvm_ffi from PREFIX/lib"
 
-# Clean editable residuals (caffe-ffi and tvm-ffi related)
+# Clean ALL editable residuals (caffe-ffi and tvm-ffi related)
 for _sp in $(python -c "import site; print(' '.join(site.getsitepackages()))" 2>/dev/null); do
-    rm -f "$_sp"/_editable_skbc_*.pth "$_sp"/_editable_skbc_*.py 2>/dev/null || true
-    rm -f "$_sp"/__editable__*.pth 2>/dev/null || true
-    rm -f "$_sp"/_editable_tvm_ffi*.pth "$_sp"/_editable_tvm_ffi*.py 2>/dev/null || true
-    # Also remove any .pth files that point to xuanspace or SpecWeave paths
-    find "$_sp" -maxdepth 1 -name "*.pth" -exec grep -l "xuanspace\|SpecWeave" {} \; 2>/dev/null | xargs rm -f 2>/dev/null || true
-    find "$_sp/__pycache__" -name "_editable_skbc_*" -delete 2>/dev/null || true
-    find "$_sp/__pycache__" -name "_editable_tvm_ffi*" -delete 2>/dev/null || true
+    # Remove all _editable* and __editable__* files (both .pth and .py)
+    _found=$(find "$_sp" -maxdepth 1 \( -name "_editable_*" -o -name "__editable__*" \) -type f 2>/dev/null)
+    if [ -n "$_found" ]; then
+        echo "  Removing editable files from $_sp:"
+        echo "$_found" | sed 's/^/    /'
+        find "$_sp" -maxdepth 1 \( -name "_editable_*" -o -name "__editable__*" \) -type f -delete 2>/dev/null || true
+    fi
+    # Also remove any .pth files that point to xuanspace or SpecWeave source paths (extra safety)
+    find "$_sp" -maxdepth 1 -name "*.pth" -type f 2>/dev/null | while read f; do
+        if grep -q "xuanspace\|SpecWeave" "$f" 2>/dev/null; then
+            echo "  Removing source-path .pth: $f"
+            rm -f "$f"
+        fi
+    done
 done
 echo "  Cleaned editable residuals"
 
@@ -146,6 +153,21 @@ conda install -y -n caffe-ffi --use-local --force-reinstall "$_PKG_PATH" 2>&1 ||
     fail "Failed to install built package"
 }
 pass "Package installed successfully"
+
+# Post-install cleanup: remove any stray editable finder files that may have been
+# created by conda/pip post-install hooks or previous build artifacts (triple-protection: stage 3)
+for _sp in $(python -c "import site; print(' '.join(site.getsitepackages()))" 2>/dev/null); do
+    # Remove all _editable* and __editable__* files (both .pth and .py, any variant)
+    find "$_sp" -maxdepth 1 \( -name "_editable_*" -o -name "__editable__*" \) -type f -delete 2>/dev/null || true
+    # Also remove any .pth files that point to source paths (extra safety)
+    find "$_sp" -maxdepth 1 -name "*.pth" -type f 2>/dev/null | while read -r f; do
+        if grep -q "xuanspace\|SpecWeave\|_skbuild" "$f" 2>/dev/null; then
+            echo "  Removing source-path .pth: $f"
+            rm -f "$f"
+        fi
+    done
+done
+echo "  Post-install cleanup done (editable files + source-path .pth)"
 echo ""
 
 # ── Step 5: Verify installation ──
@@ -312,10 +334,10 @@ echo ""
 
 # ── Step 6: Run conda package tests ──
 info "Step 6: Running conda package tests..."
-_PKG_FILE=$(find "$CONDA_PREFIX/conda-bld/linux-64" \( -name "caffe-ffi-*.tar.bz2" -o -name "caffe-ffi-*.conda" \) -type f 2>/dev/null | head -1)
+_PKG_FILE=$(find "$CONDA_PREFIX/conda-bld/linux-64" \( -name "caffe-ffi-*.tar.bz2" -o -name "caffe-ffi-*.conda" \) -type f 2>/dev/null | sort -V | tail -1)
 if [ -n "$_PKG_FILE" ] && [ -f "$_PKG_FILE" ]; then
     echo "  Testing package file: $_PKG_FILE"
-    conda-build --test "$_PKG_FILE" 2>&1 | tee "$CONDA_PREFIX/conda-bld/conda_test.log"
+    conda-build --test -c conda-forge "$_PKG_FILE" 2>&1 | tee "$CONDA_PREFIX/conda-bld/conda_test.log"
 else
     echo "  WARNING: Could not find built package tarball, skipping conda-build --test"
     echo "  (The package was installed and verified manually in Steps 4-5)"
