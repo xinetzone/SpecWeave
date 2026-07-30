@@ -1,23 +1,115 @@
 #!/bin/bash
 # =============================================================================
-# test-conda-build.sh — Conda 包一键构建验证脚本（AC-15）
-# 用法: docker exec <container> bash /path/to/test-conda-build.sh
+# test-conda-build.sh — Conda 包一键构建验证脚本（AC-15 / ACT-004 macOS支持）
+# 用法: bash /path/to/test-conda-build.sh
 #
-# 目标：AC-15 Conda环境一键构建验证
+# 目标：AC-15 Conda环境一键构建验证（Linux/macOS跨平台）
 #   - 安装 conda-build/conda-verify（如需要）
 #   - 使用 conda-build 构建 caffe-ffi conda 包
 #   - 本地安装构建好的包
 #   - 验证导入、基础功能、单元测试
 #   - 输出构建产物路径
 #
-# 构建输出：$CONDA_PREFIX/conda-bld/linux-64/caffe-ffi-*.conda
+# 跨平台支持 (ACT-004):
+#   - Linux:  ldd + nm -D + patchelf，产物输出到 linux-64/
+#   - macOS:  otool -L + nm -gU + install_name_tool，产物输出到 osx-64/ 或 osx-arm64/
+#
+# 构建输出：$CONDA_PREFIX/conda-bld/<platform>/caffe-ffi-*.conda
 # =============================================================================
 
-# ── 0. Bootstrap ──
-source /opt/conda/etc/profile.d/conda.sh
-conda activate caffe-ffi
+set -euo pipefail
 
-export PATH="$CONDA_PREFIX/bin:/opt/conda/bin:/opt/conda/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# ── 平台检测 ──
+UNAME_S=$(uname -s)
+IS_MACOS=0
+IS_LINUX=0
+if [ "$UNAME_S" = "Darwin" ]; then
+    IS_MACOS=1
+    PLATFORM_SUBDIR="osx-64"
+    # 检测Apple Silicon
+    if [ "$(uname -m)" = "arm64" ]; then
+        PLATFORM_SUBDIR="osx-arm64"
+    fi
+    echo "[test] Detected platform: macOS ($(uname -m), $PLATFORM_SUBDIR)"
+elif [ "$UNAME_S" = "Linux" ]; then
+    IS_LINUX=1
+    PLATFORM_SUBDIR="linux-64"
+    if [ "$(uname -m)" = "aarch64" ]; then
+        PLATFORM_SUBDIR="linux-aarch64"
+    fi
+    echo "[test] Detected platform: Linux ($(uname -m), $PLATFORM_SUBDIR)"
+else
+    echo "[test] WARNING: Unknown platform $UNAME_S, assuming Linux"
+    IS_LINUX=1
+    PLATFORM_SUBDIR="linux-64"
+fi
+
+# ── 跨平台工具封装 ──
+
+# check_rpath <binary> — 打印当前RPATH
+check_rpath() {
+    local binary="$1"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        otool -l "$binary" 2>/dev/null | grep -A2 LC_RPATH | grep path | awk '{print $2}' || echo "(no RPATH)"
+    else
+        patchelf --print-rpath "$binary" 2>/dev/null || echo "(no RPATH)"
+    fi
+}
+
+# check_libs <binary> — 检查依赖库，返回0=全部解析
+check_libs() {
+    local binary="$1"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        otool -L "$binary" 2>/dev/null
+        # macOS下otool -L总是返回0，需要检查是否有异常路径（非系统/非@rpath路径）
+        local bad
+        bad=$(otool -L "$binary" 2>/dev/null | grep -v "@rpath\|@loader_path\|/usr/lib\|/System/Library" | grep "/" | grep -v ":$" | grep -v "$(basename "$binary")" || true)
+        if [ -n "$bad" ]; then
+            echo "[test] WARNING: Non-portable library references found:"
+            echo "$bad"
+            return 1
+        fi
+        return 0
+    else
+        ldd "$binary" 2>/dev/null
+        if ldd "$binary" 2>&1 | grep -q "not found"; then
+            return 1
+        fi
+        return 0
+    fi
+}
+
+# check_native_symbol <binary> <symbol> — 检查符号是否为外部可见T符号
+check_native_symbol() {
+    local binary="$1"
+    local symbol="$2"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        nm -gU "$binary" 2>/dev/null | grep -E " T _?$symbol$" >/dev/null
+    else
+        nm -D "$binary" 2>/dev/null | grep -q " T $symbol$"
+    fi
+}
+
+# ── 0. Bootstrap ──
+if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
+    # Docker/Linux 环境
+    source /opt/conda/etc/profile.d/conda.sh
+    conda activate caffe-ffi
+elif [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+    # 本地conda安装
+    source "$HOME/miniconda3/etc/profile.d/conda.sh"
+    conda activate "${CONDA_ENV:-caffe-ffi}" 2>/dev/null || conda activate base
+elif [ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]; then
+    source "$HOME/miniforge3/etc/profile.d/conda.sh"
+    conda activate "${CONDA_ENV:-caffe-ffi}" 2>/dev/null || conda activate base
+elif [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+    source "$HOME/anaconda3/etc/profile.d/conda.sh"
+    conda activate "${CONDA_ENV:-caffe-ffi}" 2>/dev/null || conda activate base
+else
+    echo "WARNING: Could not find conda.sh, assuming conda is already in PATH"
+fi
+
+export PATH="$CONDA_PREFIX/bin:$PATH"
 unset CFLAGS CXXFLAGS LDFLAGS
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
@@ -69,17 +161,28 @@ clean_editable_residuals() {
     _EDITABLE_CLEANED_COUNT=$_cleaned
 }
 
-SRC_ROOT="${SRC_ROOT:-/SpecWeave}"
+# 平台自适应源根目录
+if [ -d "/SpecWeave" ]; then
+    SRC_ROOT="${SRC_ROOT:-/SpecWeave}"  # Docker/Linux bind mount
+elif [ "$IS_MACOS" -eq 1 ]; then
+    SRC_ROOT="${SRC_ROOT:-$HOME/SpecWeave}"  # macOS本地开发
+else
+    # 尝试自动检测脚本所在位置推导项目根目录
+    _SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    SRC_ROOT="${SRC_ROOT:-$(cd "$_SCRIPT_DIR/../../.." && pwd)}"
+fi
+
 CAFFE_FFI_DIR="$SRC_ROOT/projects/xuanspace/libs/caffe-ffi"
 RECIPE_DIR="$CAFFE_FFI_DIR/conda.recipe"
-CONDA_BLD_DIR="$CONDA_PREFIX/conda-bld"
+CONDA_BLD_DIR="${CONDA_BLD_DIR:-$CONDA_PREFIX/conda-bld}"
 
 echo "============================================================"
-echo " caffe-ffi Conda Build Verification (AC-15)"
+echo " caffe-ffi Conda Build Verification (AC-15 / ACT-004)"
 echo "============================================================"
+echo "  Platform:     $UNAME_S ($(uname -m), $PLATFORM_SUBDIR)"
 echo "  Source:       $CAFFE_FFI_DIR"
 echo "  Recipe dir:   $RECIPE_DIR"
-echo "  Conda env:    $CONDA_PREFIX"
+echo "  Conda env:    ${CONDA_ENV:-$CONDA_PREFIX}"
 echo "  Conda bld:    $CONDA_BLD_DIR"
 echo "  Python:       $(python --version 2>&1)"
 echo "  conda:        $(conda --version 2>&1)"
@@ -229,8 +332,8 @@ else
         _PKG_SIZE=$(du -h "$_PKG_PATH" 2>/dev/null | cut -f1)
         pass "Built package: $_PKG_PATH ($_PKG_SIZE)"
     else
-        warn "Could not auto-locate built package (check $CONDA_BLD_DIR/linux-64/)"
-        ls -la "$CONDA_BLD_DIR/linux-64/" 2>/dev/null | grep caffe-ffi || true
+        warn "Could not auto-locate built package (check $CONDA_BLD_DIR/$PLATFORM_SUBDIR/)"
+        ls -la "$CONDA_BLD_DIR/$PLATFORM_SUBDIR/" 2>/dev/null | grep caffe-ffi || true
     fi
 fi
 echo ""
@@ -345,53 +448,115 @@ else
 fi
 echo ""
 
-# 8c: Check shared library dependencies (ldd)
-echo "  Test 8c: Shared library dependencies (ldd)..."
+# 8c: Check shared library dependencies (ldd/otool)
+echo "  Test 8c: Shared library dependencies..."
+_LIB_PATTERN="_caffe_ffi*.so"
+if [ "$IS_MACOS" -eq 1 ]; then
+    _LIB_PATTERN="_caffe_ffi*.so _caffe_ffi*.dylib"
+fi
+
 _CAFFE_SO=$(python -c "
 import caffe_ffi, os, glob
-sos = glob.glob(os.path.join(os.path.dirname(caffe_ffi.__file__), '_caffe_ffi*.so'))
-print(sos[0] if sos else '')
+lib_dir = os.path.dirname(caffe_ffi.__file__)
+for pat in '$_LIB_PATTERN'.split():
+    sos = glob.glob(os.path.join(lib_dir, pat))
+    if sos:
+        print(sos[0])
+        break
 " 2>/dev/null)
 
 if [ -n "$_CAFFE_SO" ] && [ -f "$_CAFFE_SO" ]; then
     echo "    Library: $_CAFFE_SO"
-    echo "    RPATH: $(patchelf --print-rpath "$_CAFFE_SO" 2>/dev/null || echo 'N/A')"
-    echo "    --- ldd output ---"
-    ldd "$_CAFFE_SO" 2>/dev/null | sed 's/^/      /'
-    echo "    --- end ldd ---"
+    echo "    RPATH: $(check_rpath "$_CAFFE_SO")"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        echo "    --- otool -L output ---"
+    else
+        echo "    --- ldd output ---"
+    fi
+    check_libs "$_CAFFE_SO" 2>/dev/null | sed 's/^/      /'
+    echo "    --- end ---"
 
     # Check for unresolved dependencies
-    if ldd "$_CAFFE_SO" 2>/dev/null | grep -q 'not found'; then
-        echo ""
-        fail "Some shared library dependencies are NOT FOUND:"
-        ldd "$_CAFFE_SO" | grep 'not found'
+    if check_libs "$_CAFFE_SO" >/dev/null 2>&1; then
+        if [ "$IS_MACOS" -eq 1 ]; then
+            pass "Shared library references look portable (@rpath/@loader_path)"
+        else
+            pass "All shared library dependencies resolved"
+        fi
     else
-        pass "All shared library dependencies resolved"
+        if [ "$IS_MACOS" -eq 1 ]; then
+            fail "Some shared library references are non-portable:"
+        else
+            fail "Some shared library dependencies are NOT FOUND:"
+        fi
     fi
 
-    # Explicitly check libtvm_ffi.so is linked
-    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libtvm_ffi'; then
-        _TVM_FFI_LINK=$(ldd "$_CAFFE_SO" 2>/dev/null | grep -i 'libtvm_ffi' | head -1)
-        pass "libtvm_ffi.so correctly linked: $_TVM_FFI_LINK"
+    # Check for tvm-ffi library (platform-dependent name)
+    if [ "$IS_MACOS" -eq 1 ]; then
+        if otool -L "$_CAFFE_SO" 2>/dev/null | grep -qi 'libtvm_ffi'; then
+            _TVM_FFI_LINK=$(otool -L "$_CAFFE_SO" 2>/dev/null | grep -i 'libtvm_ffi' | head -1 | awk '{print $1}')
+            pass "libtvm_ffi correctly referenced: $_TVM_FFI_LINK"
+        else
+            fail "libtvm_ffi NOT found in shared library references!"
+        fi
     else
-        fail "libtvm_ffi.so NOT found in shared library dependencies!"
+        if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libtvm_ffi'; then
+            _TVM_FFI_LINK=$(ldd "$_CAFFE_SO" 2>/dev/null | grep -i 'libtvm_ffi' | head -1)
+            pass "libtvm_ffi.so correctly linked: $_TVM_FFI_LINK"
+        else
+            fail "libtvm_ffi.so NOT found in shared library dependencies!"
+        fi
     fi
 
     # Check BLAS
-    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'openblas\|blas'; then
-        pass "BLAS library linked"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        if otool -L "$_CAFFE_SO" 2>/dev/null | grep -qi 'openblas\|blas\|Accelerate'; then
+            pass "BLAS library linked"
+        else
+            warn "BLAS not directly linked (may be loaded dynamically)"
+        fi
     else
-        warn "BLAS not directly linked (may be loaded dynamically)"
+        if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'openblas\|blas'; then
+            pass "BLAS library linked"
+        else
+            warn "BLAS not directly linked (may be loaded dynamically)"
+        fi
     fi
 
     # Check protobuf
-    if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libprotobuf'; then
-        pass "libprotobuf linked"
+    if [ "$IS_MACOS" -eq 1 ]; then
+        if otool -L "$_CAFFE_SO" 2>/dev/null | grep -qi 'libprotobuf'; then
+            pass "libprotobuf linked"
+        else
+            warn "libprotobuf not directly linked (may be static or loaded dynamically)"
+        fi
     else
-        warn "libprotobuf not directly linked (may be static or loaded dynamically)"
+        if ldd "$_CAFFE_SO" 2>/dev/null | grep -qi 'libprotobuf'; then
+            pass "libprotobuf linked"
+        else
+            warn "libprotobuf not directly linked (may be static or loaded dynamically)"
+        fi
+    fi
+
+    # Check TVMFFIGetCustomAllocator symbol
+    echo "    --- Checking critical symbols ---"
+    _TVM_LIB=""
+    if [ "$IS_MACOS" -eq 1 ]; then
+        _TVM_LIB=$(python -c "import tvm_ffi, os, glob; libs=glob.glob(os.path.join(os.path.dirname(tvm_ffi.__file__),'lib','libtvm_ffi*.dylib')); print(libs[0] if libs else '')" 2>/dev/null)
+    else
+        _TVM_LIB=$(python -c "import tvm_ffi, os; print(os.path.join(os.path.dirname(tvm_ffi.__file__),'lib','libtvm_ffi.so'))" 2>/dev/null)
+    fi
+    if [ -n "$_TVM_LIB" ] && [ -f "$_TVM_LIB" ]; then
+        if check_native_symbol "$_TVM_LIB" "TVMFFIGetCustomAllocator"; then
+            pass "TVMFFIGetCustomAllocator symbol verified (T)"
+        else
+            fail "TVMFFIGetCustomAllocator symbol missing from libtvm_ffi!"
+        fi
+    else
+        warn "Could not locate libtvm_ffi for symbol check"
     fi
 else
-    fail "Could not locate _caffe_ffi.so for dependency check"
+    fail "Could not locate _caffe_ffi native library for dependency check"
 fi
 echo ""
 
