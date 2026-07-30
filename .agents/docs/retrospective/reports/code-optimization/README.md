@@ -4,6 +4,7 @@
 
 | 报告 | 日期 | 核心内容 | 萃取模式 |
 |------|------|---------|---------|
+| [retrospective-split-zerocopy-cow-milestone-20260731](retrospective-split-zerocopy-cow-milestone-20260731/README.md) | 2026-07-31 | Split层零拷贝优化Phase 1（N=1捷径）实现与验证：Blob ShareData/ShareDiff零拷贝API、Split N=1零拷贝捷径、14个C++单元测试、[SPLIT-PERF]性能埋点；Phase 2 COW方案规划（9章405行设计草稿） | FFI-Intrusive-RefCount-ZeroCopy（侵入式引用计数零拷贝别名模式）、Const-COW-Trigger（const重载驱动的写时复制触发模式） |
 | [retrospective-caffe-slim-bvlc-logging-20260727](retrospective-caffe-slim-bvlc-logging-20260727/README.md) | 2026-07-27 | Caffe-Slim BVLC兼容层日志系统增强：C++ tvm-ffi类型注册冲突修复+Docker Python3.14/GCC14兼容性问题解决+Python核心路径8个关键位置日志埋点+Docker端到端验证 | 容器化AI服务结构化日志埋点模式（L1）、前沿编译器/解释器版本兼容性最小修复法（L2） |
 | [retrospective-caffe-ops-library-extraction-20260727](retrospective-caffe-ops-library-extraction-20260727/README.md) | 2026-07-27 | Caffe算子测试库提取与网络级测试集成：从TVM测试文件提取23个Caffe单算子+4个网络级端到端测试，原子化拆分为33个文件1557行，移除TVM依赖 | 跨框架测试用例提取模式、测试目录两级架构模式、预训练模型缓存下载模式 |
 | [retrospective-caffe-slim-batch-inference-mnist-20260727](retrospective-caffe-slim-batch-inference-mnist-20260727/README.md) | 2026-07-27 | Caffe-Slim MNIST批量推理优化 | - |
