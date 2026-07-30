@@ -1,0 +1,4 @@
+artifacts/
+# 临时诊断脚本（以下划线开头）
+scripts/_check_*.sh
+scripts/_test_*.sh
