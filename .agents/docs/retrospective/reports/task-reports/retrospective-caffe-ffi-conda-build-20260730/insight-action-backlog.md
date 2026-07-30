@@ -12,18 +12,18 @@ ssot:
 ---
 # 洞察行动项 Backlog
 
-> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**5项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试）+ 1项取消（绝对路径RPATH不可行）+ 2项待执行（meta.yaml注释、模式沉淀）+ 1项低优先级待执行（macOS跨平台）。
+> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**6项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试、模式沉淀）+ 1项取消（绝对路径RPATH不可行）+ 1项搁置（meta.yaml注释）+ 1项低优先级待执行（macOS跨平台）。
 
 ## 行动项总览
 
 | ID | 行动项 | 优先级 | 类型 | 状态 | 预期收益 |
 |----|--------|--------|------|------|---------|
 | ACT-001 | build.sh增加`_editable_*`自动清理，实现三重保护策略 | 🔴高 | 质量门禁 | ✅ 已完成 | 彻底消除editable残留干扰，确保验证环境干净 |
-| ACT-002 | meta.yaml增加`missing_dso_whitelist`详细注释 | 🟡中 | 文档 | ⏳ 待执行 | 其他开发者理解DSO白名单用途，降低维护成本 |
+| ACT-002 | meta.yaml增加`missing_dso_whitelist`详细注释 | 🟡中 | 文档 | ⏸️ 搁置 | 其他开发者理解DSO白名单用途，降低维护成本 |
 | ACT-003 | ~~RPATH改用`$PREFIX/lib`绝对路径~~ | 🟡中 | 健壮性 | ❌ 已取消 | 绝对路径触发conda-build prefix replacement "Placeholder too short"错误，方案不可行 |
 | ACT-003b | 为每个依赖.so单独计算RPATH深度，添加`$ORIGIN/../tvm_ffi/lib`跨包路径 | 🟡中 | 健壮性 | ✅ 已完成 | 不同深度的.so都能正确解析依赖，无需LD_LIBRARY_PATH |
 | ACT-004 | macOS conda包支持（`@rpath`/`@loader_path`+install_name_tool） | 🟢低 | 跨平台 | ⏳ 待执行 | macOS用户可直接使用conda包 |
-| ACT-005 | 将洞察/模式萃取为正式模式文档存入patterns/ | 🟡中 | 知识沉淀 | ⏳ 待执行 | 模式可复用，其他scikit-build-core项目受益 |
+| ACT-005 | 将洞察/模式萃取为正式模式文档存入patterns/ | 🟡中 | 知识沉淀 | ✅ 已完成 | 模式可复用，其他scikit-build-core项目受益 |
 | ACT-006 | build.sh增加关键符号nm验证步骤（TVMFFIGetCustomAllocator） | 🟡中 | 健壮性 | ✅ 已完成 | 防止pip wheel符号缺失导致运行时崩溃 |
 | ACT-007 | 嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 | 🟡中 | 健壮性 | ✅ 已完成 | conda参数不污染子项目独立构建 |
 | ACT-008 | 验证脚本集成Python单元测试（CAFFE_FFI_DISABLE_BACKTRACE=1） | 🟡中 | 质量门禁 | ✅ 已完成 | 一键验证包含单元测试，防止C++ backtrace在pytest中崩溃 |
@@ -54,12 +54,14 @@ ssot:
 
 ## 🟡 中优先级行动项
 
-### ACT-002：meta.yaml增加`missing_dso_whitelist`详细注释
+### ACT-002：meta.yaml增加`missing_dso_whitelist`详细注释 ⏸️ 搁置
 
 - **优先级**：🟡 中
 - **来源**：复盘 §S1 修改文件清单 — meta.yaml missing_dso_whitelist 已有简单注释但不够详细
 - **责任人**：caffe-ffi conda recipe 维护者
 - **预期收益**：其他维护者能快速理解哪些库是 vendored/bundled、为什么需要白名单，避免误删白名单导致构建失败
+- **状态**：⏸️ **搁置**（2026-07-30，用户指示暂时搁置）
+- **搁置原因**：用户指示暂时搁置，优先执行ACT-005模式沉淀
 - **验收标准（DoD）**：
   1. `missing_dso_whitelist` 段上方有块注释说明用途（全相对RPATH不需要prefix replacement、vendored库由patchelf处理）
   2. 为每个白名单条目添加行内注释说明原因（libtvm_ffi是本地编译bundled、libopenblas/libprotobuf是conda依赖由RPATH解析）
@@ -155,25 +157,26 @@ ssot:
   - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L398-L418)（Step 8d 单元测试）
 - **关键发现**：C++层`backtrace_symbols()`在pytest环境处理Python栈帧会崩溃，必须默认禁用
 
-### ACT-005：将洞察/模式萃取为正式模式文档存入patterns/
+### ACT-005：将洞察/模式萃取为正式模式文档存入patterns/ ✅ 已完成
 
 - **优先级**：🟡 中
 - **来源**：复盘 §S3 模式1和模式2（升级版L3成熟度）+ 新增洞察3-7
 - **责任人**：方法论维护者
 - **预期收益**：其他使用 conda-build + scikit-build-core 的项目可直接参考模式，避免重复踩坑
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
 - **验收标准（DoD）**：
-  1. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-build-scikit-build-core.md`（升级版，L3）
-  2. 模式包含：触发场景、meta.yaml三段式依赖模板、build.sh模板（含参数隔离+符号验证+三重清理）、RPATH四层跨包设计、反模式清单
-  3. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-clean-environment-verification.md`（升级版，L3）
-  4. 模式包含：三重保护editable清理、路径验证门禁、多维度验证（import/功能/ldd/符号/单元测试）、backtrace禁用
-  5. 更新 patterns/ 索引
-- **涉及文件**：新模式文档 + 模式索引
-- **实施步骤**：
-  1. 参考现有模式文档格式
-  2. 提炼meta.yaml三段式依赖模板和build.sh关键配置模板（升级版）
-  3. 编写完整反模式清单（从6个Bug中提取）
-  4. 标注成熟度 L3
-  5. 更新模式索引文件
+  1. ✅ 创建模式文档 [conda-build-scikit-build-core-native.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-build-scikit-build-core-native.md)（升级版L3）
+     - 位置：`.agents/docs/retrospective/patterns/code-patterns/`（归类为code-patterns，因包含大量具体代码模板）
+     - 包含：触发场景、五层陷阱分析、conda-build三段式依赖表、六步法完整流程、build.sh/meta.yaml代码模板、RPATH深度计算公式、符号验证标准、6个反模式、12项检验标准、完整test脚本模板、迁移示例
+  2. ✅ 创建模式文档 [conda-package-clean-verification.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-package-clean-verification.md)（升级版L3）
+     - 位置：`.agents/docs/retrospective/patterns/code-patterns/`
+     - 包含：触发场景、四类假成功陷阱、PEP 660 editable四件套残留分析、五维验证法、editable清理函数、路径验证门禁、ldd+nm双重依赖检查、backtrace环境配置、全量单元测试规范、6个反模式、10项检验标准、快速验证命令清单、迁移示例
+  3. ✅ 更新 patterns/code-patterns/README.md 索引，添加两个新L3模式条目
+  4. ✅ 两个模式均标注成熟度 L3 方法论，包含完整反模式清单和检验标准
+- **涉及文件**：
+  - [conda-build-scikit-build-core-native.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-build-scikit-build-core-native.md)（新建，L3，501行）
+  - [conda-package-clean-verification.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-package-clean-verification.md)（新建，L3，507行）
+  - [code-patterns/README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/README.md#L86-L87)（更新索引，新增2行）
 
 ---
 
