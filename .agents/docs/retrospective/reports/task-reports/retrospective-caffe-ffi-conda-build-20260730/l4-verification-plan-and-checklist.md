@@ -220,6 +220,90 @@ CAFFE_FFI_DISABLE_BACKTRACE=1 python -m pytest --pyargs caffe_ffi -v
 
 ---
 
+## Part 3：Docker 跨平台交叉编译方案（A-T1/A-T2/B-T1/B-T2 前置条件解决）
+
+添加日期：2026-07-30
+
+### 方案概述
+
+- 位置：apps/caffe-ffi-cross/
+- 核心思路：利用conda-forge的交叉编译工具链（clang_osx-64、clang_win-64等）在Linux Docker容器中编译macOS/Windows conda包
+- 三层测试矩阵：
+  * L1 编译验证：conda-build成功生成目标平台包文件
+  * L2 静态验证：使用llvm-objdump/cctools(file/otool/nm)验证二进制格式、架构、符号、依赖
+  * L3 运行时验证：Windows用Wine+Windows Miniconda做smoke test；macOS需CI/真机
+
+### 验证状态更新
+
+更新A-T1/A-T2/B-T1/B-T2状态表：
+
+| 编号 | 测试场景 | L1(编译) | L2(静态) | L3(运行时) | 状态 |
+|------|---------|---------|---------|-----------|------|
+| A-T1 | macOS平台构建 | ✅ Docker交叉编译 | ✅ cctools/llvm验证 | ⏳ 待CI | 🔄 L1+L2可用 |
+| A-T2 | Windows平台构建 | ✅ Docker交叉编译 | ✅ llvm-objdump验证 | ⚠️ Wine smoke test | 🔄 L1+L2可用，L3可选 |
+| B-T1 | macOS干净环境验证 | - | ✅ 产物静态分析 | ⏳ 待CI | 🔄 L2可用 |
+| B-T2 | Windows干净环境验证 | - | ✅ 产物静态分析 | ⚠️ Wine | 🔄 L2可用，L3可选 |
+
+### 使用方式
+
+```bash
+cd apps/caffe-ffi-cross
+
+# 一键测试所有平台
+./run.sh
+
+# 仅macOS交叉编译
+./run.sh macos
+
+# 仅Windows（跳过Wine）
+./run.sh windows --no-wine
+
+# 或使用docker compose
+docker compose --profile macos run --rm macos-cross
+docker compose --profile windows run --rm win-cross
+```
+
+### 新增的检验项（跨平台场景）
+
+在Checklist A和Checklist B表格中各添加跨平台相关检验项：
+
+Checklist A新增：
+
+| 序号 | 检验项 | 验证方法 | 通过标准 | 阶段 | 责任人 | 状态 |
+|-----|--------|---------|---------|------|--------|------|
+| A13 | macOS Mach-O格式验证 | file命令检查.dylib/.so | file输出含"Mach-O 64-bit x86_64" | 构建后 | 打包者/CI | ⬜ |
+| A14 | Windows PE格式验证 | file命令检查.pyd/.dll | file输出含"PE32+ executable (DLL) x86-64" | 构建后 | 打包者/CI | ⬜ |
+| A15 | macOS依赖路径使用@loader_path | otool -L检查 | 依赖路径以@loader_path/开头，无$ORIGIN | 构建后 | CI | ⬜ |
+| A16 | Windows DLL导入表检查 | llvm-objdump -p检查 | 导入python3x.dll和必要依赖，无not found | 构建后 | CI | ⬜ |
+| A17 | 交叉编译build/host依赖分离 | 检查meta.yaml | build段有cross-python_{{ target_platform }};有build_platform!=target_platform条件 | 构建前 | 打包者 | ⬜ |
+
+Checklist B新增：
+
+| 序号 | 检验项 | 验证方法 | 通过标准 | 阶段 | 责任人 | 状态 |
+|-----|--------|---------|---------|------|--------|------|
+| B12 | macOS产物otool -L无缺失依赖 | x86_64-apple-darwin-otool -L检查 | 无not found（系统框架除外） | 验证 | QA/CI | ⬜ |
+| B13 | Windows产物DLL导出PyInit符号 | llvm-nm检查 | 存在PyInit_caffe_ffi/T导出符号 | 验证 | QA/CI | ⬜ |
+
+### 快速参考（跨平台命令）
+
+```bash
+# macOS: 检查Mach-O格式
+file $SP_DIR/caffe_ffi/_caffe_ffi*.so
+# 预期: Mach-O 64-bit x86_64 bundle
+
+# macOS: 检查依赖
+x86_64-apple-darwin20.0.0-otool -L $SP_DIR/caffe_ffi/_caffe_ffi*.so
+
+# Windows: 检查PE格式
+file $SP_DIR/caffe_ffi/_caffe_ffi*.pyd
+# 预期: PE32+ executable (DLL) x86-64, for MS Windows
+
+# Windows: 检查DLL导入
+llvm-objdump -p $SP_DIR/caffe_ffi/_caffe_ffi*.pyd | grep "DLL Name"
+```
+
+---
+
 ## 参考链接
 
 - 打包模式文档：[conda-build-scikit-build-core-native.md](../../patterns/code-patterns/conda-build-scikit-build-core-native.md)

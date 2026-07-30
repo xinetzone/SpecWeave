@@ -1,0 +1,68 @@
+# =============================================================================
+# Conda Build Configuration for macOS Cross-Compilation (linux-64 → osx-64)
+# Reference: https://conda-forge.org/docs/how-to/advanced/cross-compilation/
+# =============================================================================
+
+# ── Compilers ──
+# For cross-compilation on linux-64 targeting osx-64, we use clang_osx-64
+c_compiler:
+  - clang                      # [osx]
+  - clang                      # [win]
+  - clang_osx-64               # [linux and target_platform == "osx-64"]
+  - gcc                        # [linux and target_platform != "osx-64"]
+
+cxx_compiler:
+  - clangxx                    # [osx]
+  - clangxx                    # [win]
+  - clangxx_osx-64             # [linux and target_platform == "osx-64"]
+  - gxx                        # [linux and target_platform != "osx-64"]
+
+# ── Compiler versions ──
+c_compiler_version:
+  - 17                         # [osx]
+  - 17                         # [win]
+  - 17                         # [linux and target_platform == "osx-64"]
+  - 13                         # [linux and target_platform != "osx-64"]
+
+cxx_compiler_version:
+  - 17                         # [osx]
+  - 17                         # [win]
+  - 17                         # [linux and target_platform == "osx-64"]
+  - 13                         # [linux and target_platform != "osx-64"]
+
+# ── macOS deployment target ──
+MACOSX_DEPLOYMENT_TARGET:
+  - 10.15                      # [osx or target_platform == "osx-64"]
+
+# ── Python version ──
+python:
+  - 3.14
+
+# ── Channels ──
+channel_sources:
+  - conda-forge
+channel_targets:
+  - conda-forge main
+
+# ── Target platform ──
+# When building with --platform osx-64, conda-build sets this automatically
+# target_platform:
+#   - osx-64
+
+# ── Cross-compilation helpers ──
+# These packages provide build-side tools that produce host binaries
+cross_compiler_target_platform:
+  - osx-64                    # [linux and target_platform == "osx-64"]
+
+# ── BLAS configuration ──
+blas_impl:
+  - openblas                   # [not win]
+
+# ── Optimization flags ──
+# Conda-forge defaults for osx-64
+cflags:
+  - -O2 -pipe
+cxxflags:
+  - -O2 -pipe -stdlib=libc++   # [osx or target_platform == "osx-64"]
+ldflags:
+  - -Wl,-headerpad_max_install_names  # [osx or target_platform == "osx-64"]

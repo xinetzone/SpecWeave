@@ -1,0 +1,294 @@
+# =============================================================================
+# Caffe-FFI Windows Cross-Compile Build Image (with Wine L3 Smoke Test)
+# Multi-stage build: continuumio/miniconda3 + cross-compiler + Wine runtime
+#
+# Design:
+#   - Stage 1 (cross-builder): Linux→Windows (win-64) cross-compilation via conda-forge
+#   - Stage 2 (wine-runtime): Extends cross-builder with Wine for L3 smoke testing
+#   - Uses clang_win-64 (MSVC ABI cross-compiler) from conda-forge
+#   - Includes m2w64-sysroot_win-64 for Windows headers (windows.h, CRT)
+#   - Wine + Windows Miniconda for optional runtime smoke testing
+#   - Outputs win-64 conda packages (.pyd/.dll PE32+ format)
+#
+# Usage:
+#   Build:  docker build -f Dockerfile.win-cross -t caffe-ffi-cross-win:latest .
+#   Run:    docker run --rm -v /path/to/output:/output \
+#                     -v /path/to/caffe-ffi:/workspace/caffe-ffi \
+#                     caffe-ffi-cross-win:latest
+#
+# Volume mounts:
+#   - /workspace/caffe-ffi: source directory (if not building bundled recipe)
+#   - /output: output directory for built packages
+#
+# L3 Testing:
+#   Wine smoke test is OPTIONAL. If Wine/Miniconda works, imports are attempted.
+#   Failures in L3 do not fail the build (L3 is best-effort validation).
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Global build arguments
+# -----------------------------------------------------------------------------
+ARG APT_MIRROR=official
+ARG CONDA_MIRROR=official
+ARG PYTHON_VERSION=3.14
+ARG SKIP_WINE=0
+
+# =============================================================================
+# STAGE 1: Cross-compile build environment (no Wine)
+# =============================================================================
+FROM continuumio/miniconda3:latest AS cross-builder
+
+# Explicit, unambiguous shell: bash with errexit + pipefail
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+ARG APT_MIRROR
+ARG CONDA_MIRROR
+ARG PYTHON_VERSION
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    CONDA_DIR=/opt/conda \
+    ENV_NAME=cross-build \
+    ENV_PATH=/opt/conda/envs/cross-build \
+    PATH=/opt/conda/bin:/opt/conda/envs/cross-build/bin:$PATH \
+    CONDA_BUILD_OUTPUT_DIR=/opt/conda/conda-bld \
+    WORKSPACE_DIR=/workspace \
+    OUTPUT_DIR=/output
+
+LABEL maintainer="Caffe-FFI Cross-Compile Team" \
+      description="Caffe-FFI Linux→Windows (win-64) cross-compilation build image with conda-build" \
+      target_platform="win-64" \
+      python_version="${PYTHON_VERSION}" \
+      stage="cross-builder"
+
+# -----------------------------------------------------------------------------
+# [1/4] Configure APT mirror and install system dependencies
+# -----------------------------------------------------------------------------
+RUN echo "=== [cross-builder 1/4] Configuring APT mirror: ${APT_MIRROR} ===" && \
+    if [ "${APT_MIRROR}" = "aliyun" ]; then \
+        for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
+            if [ -f "$$f" ]; then \
+                sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g; s|http://security.debian.org|http://mirrors.aliyun.com|g' "$$f"; \
+            fi; \
+        done; \
+        echo "[BUILD] Using Aliyun APT mirror"; \
+    elif [ "${APT_MIRROR}" = "tuna" ]; then \
+        for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
+            if [ -f "$$f" ]; then \
+                sed -i 's|http://deb.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g' "$$f"; \
+            fi; \
+        done; \
+        echo "[BUILD] Using Tsinghua TUNA APT mirror"; \
+    else \
+        echo "[BUILD] Using default Debian APT sources"; \
+    fi && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        pkg-config \
+        wget \
+        ca-certificates \
+        git \
+        file \
+        xz-utils \
+        lld \
+        llvm \
+    && rm -rf /var/lib/apt/lists/* && \
+    echo "[BUILD] System packages installed" && \
+    echo "[BUILD] file:    $(file --version | head -1)" && \
+    echo "[BUILD] llvm-objdump: $(llvm-objdump --version 2>/dev/null | head -1 || echo 'available via llvm package')" && \
+    echo "[BUILD] llvm-nm:      $(llvm-nm --version 2>/dev/null | head -1 || echo 'available via llvm package')"
+
+# -----------------------------------------------------------------------------
+# [2/4] Configure conda channels and create cross-build environment
+# Reference: https://conda-forge.org/docs/how-to/advanced/cross-compilation/
+# -----------------------------------------------------------------------------
+RUN echo "=== [cross-builder 2/4] Creating cross-build conda environment (Python ${PYTHON_VERSION}) ===" && \
+    source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
+    conda config --system --set auto_activate_base false && \
+    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
+        printf 'channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\nshow_channel_urls: true\nchannel_priority: strict\nssl_verify: true\nsubdirs:\n  - linux-64\n  - win-64\n  - noarch\n' > "${CONDA_DIR}/.condarc" && \
+        echo "[BUILD] Using Tsinghua TUNA conda mirror"; \
+    else \
+        printf 'channels:\n  - conda-forge\n  - defaults\nchannel_priority: strict\nsubdirs:\n  - linux-64\n  - win-64\n  - noarch\n' > "${CONDA_DIR}/.condarc" && \
+        echo "[BUILD] Using default conda channels (conda-forge + defaults)"; \
+    fi && \
+    echo "[BUILD] .condarc subdirs configured for linux-64 (build) + win-64 (host) + noarch" && \
+    cat "${CONDA_DIR}/.condarc" && \
+    echo "[BUILD] Creating conda env with Windows cross-compilation toolchain..." && \
+    conda create -y -n cross-build -c conda-forge \
+        python="${PYTHON_VERSION}" \
+        pip setuptools wheel setuptools-scm \
+        "conda-build>=3.28" \
+        conda-verify \
+        conda-forge-pinning \
+        "cmake>=3.26" \
+        "ninja>=1.13" \
+        make \
+        patchelf \
+        clang_win-64 \
+        clangxx_win-64 \
+        cross-python_win-64 \
+        m2w64-sysroot_win-64 \
+        ucrt \
+        "scikit-build-core>=0.10" \
+        py-lief \
+    && conda activate cross-build && \
+    echo "[BUILD] conda env 'cross-build' created, Python: $(python --version)" && \
+    echo "[BUILD] Cross-compiler tools verification:" && \
+    echo "[BUILD]   clang:        $(clang --version | head -1)" && \
+    echo "[BUILD]   cmake:        $(cmake --version | head -1)" && \
+    echo "[BUILD]   ninja:        $(ninja --version)" && \
+    echo "[BUILD]   conda-build:  $(conda-build --version 2>/dev/null || echo 'checking...')" && \
+    echo "[BUILD] PE analysis tools:" && \
+    echo "[BUILD]   llvm-objdump: $(which llvm-objdump 2>/dev/null || echo 'in PATH')" && \
+    echo "[BUILD]   llvm-nm:      $(which llvm-nm 2>/dev/null || echo 'in PATH')" && \
+    echo "[BUILD] Windows cross-compiler prefix check:" && \
+    ls -la "${CONDA_PREFIX}/bin/"*w64-mingw* 2>/dev/null | head -10 || \
+    ls -la "${CONDA_PREFIX}/bin/"*clang* 2>/dev/null | head -10 || \
+    echo "[BUILD]   (cross-compiler in conda prefix, will be discovered by conda-build)" && \
+    conda clean -ya && \
+    echo "[BUILD] Cross-build conda environment ready"
+
+# -----------------------------------------------------------------------------
+# [3/4] Setup workspace, copy build configs and scripts
+# -----------------------------------------------------------------------------
+RUN echo "=== [cross-builder 3/4] Setting up workspace and build scripts ===" && \
+    mkdir -p "${WORKSPACE_DIR}" "${OUTPUT_DIR}" /opt/recipes && \
+    echo "[BUILD] Workspace directories created:" && \
+    echo "[BUILD]   WORKSPACE_DIR: ${WORKSPACE_DIR}" && \
+    echo "[BUILD]   OUTPUT_DIR:    ${OUTPUT_DIR}" && \
+    echo "[BUILD]   Recipes dir:   /opt/recipes" && \
+    echo "[BUILD] Conda-bld output: ${CONDA_BUILD_OUTPUT_DIR}"
+
+COPY conda_build_config.yaml /opt/recipes/conda_build_config.yaml
+COPY scripts/build-win-cross.sh /usr/local/bin/build-win-cross.sh
+
+RUN chmod +x /usr/local/bin/build-win-cross.sh && \
+    sed -i 's/\r$//' /usr/local/bin/build-win-cross.sh && \
+    echo "[BUILD] Build script installed: /usr/local/bin/build-win-cross.sh" && \
+    echo "[BUILD] Build config copied: /opt/recipes/conda_build_config.yaml"
+
+# -----------------------------------------------------------------------------
+# [4/4] Cross-builder verification
+# -----------------------------------------------------------------------------
+RUN echo "=== [cross-builder 4/4] Cross-builder stage verification ===" && \
+    BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
+    printf 'BUILD_DATE=%s\nBASE_IMAGE=continuumio/miniconda3:latest\nSTAGE=cross-builder\nENV_NAME=cross-build\nPYTHON_VERSION=%s\nTARGET_PLATFORM=win-64\nCONDA_BUILD_OUTPUT_DIR=%s\nPURPOSE=windows-cross-compile\n' \
+        "$BUILD_DATE" "${PYTHON_VERSION}" "${CONDA_BUILD_OUTPUT_DIR}" \
+        > /etc/caffe-ffi-cross-build-info && \
+    source "${CONDA_DIR}/etc/profile.d/conda.sh" && conda activate cross-build && \
+    echo "[BUILD] Environment summary:" && \
+    echo "  python:        $(python --version)" && \
+    echo "  conda:         $(conda --version)" && \
+    echo "  conda-build:   $(conda-build --version 2>/dev/null || true)" && \
+    echo "  cmake:         $(cmake --version | head -1)" && \
+    echo "  clang target:  $(clang --print-targets 2>&1 | grep x86_64-pc-windows || echo 'checking...')" && \
+    echo "  m2w64-sysroot: $(test -d ${CONDA_PREFIX}/x86_64-w64-mingw32/include 2>/dev/null && echo 'Windows headers present' || echo 'sysroot via conda-build')" && \
+    echo "[BUILD] ========== CROSS-BUILDER STAGE COMPLETE =========="
+
+# =============================================================================
+# STAGE 2: Wine runtime (extends cross-builder for L3 smoke testing)
+# =============================================================================
+FROM cross-builder AS wine-runtime
+
+ARG SKIP_WINE
+
+ENV WINEPREFIX=/root/.wine \
+    WINEARCH=win64 \
+    WINEDEBUG=-all \
+    WINEDLLOVERRIDES="mscoree,mshtml=" \
+    WINE_MINICONDA_PATH=C:\\miniconda3
+
+LABEL stage="wine-runtime" \
+      description="Caffe-FFI Linux→Windows cross-compile with Wine L3 smoke test"
+
+# -----------------------------------------------------------------------------
+# [wine-1/3] Enable 32-bit architecture and install Wine
+# -----------------------------------------------------------------------------
+RUN echo "=== [wine-runtime 1/3] Installing Wine ===" && \
+    if [ "${SKIP_WINE}" = "1" ]; then \
+        echo "[BUILD] SKIP_WINE=1: Wine installation skipped (cross-builder only image)"; \
+    else \
+        echo "[BUILD] Enabling i386 architecture for Wine 32-bit support..."; \
+        dpkg --add-architecture i386 && \
+        apt-get update && \
+        echo "[BUILD] Installing wine64 and dependencies (this may take a while)..."; \
+        apt-get install -y --no-install-recommends \
+            wine \
+            wine32 \
+            wine64 \
+            binfmt-support \
+            fonts-wine \
+        && rm -rf /var/lib/apt/lists/* && \
+        echo "[BUILD] Wine installed:"; \
+        wine --version; \
+    fi
+
+# -----------------------------------------------------------------------------
+# [wine-2/3] Initialize Wine prefix and install Windows Miniconda
+# -----------------------------------------------------------------------------
+RUN echo "=== [wine-runtime 2/3] Setting up Wine and Windows Miniconda ===" && \
+    if [ "${SKIP_WINE}" = "1" ]; then \
+        echo "[BUILD] SKIP_WINE=1: Skipping Wine prefix and Miniconda setup"; \
+    else \
+        echo "[BUILD] Initializing Wine 64-bit prefix at ${WINEPREFIX}..."; \
+        echo "[BUILD] (Wine prefix initialization may take a minute)"; \
+        wineboot --init 2>&1 | tail -5 || true; \
+        wineserver -w 2>/dev/null || true; \
+        echo "[BUILD] Wine prefix initialized"; \
+        echo "[BUILD] Downloading Windows Miniconda (x86_64)..."; \
+        cd /tmp && \
+        wget --timeout=300 --tries=3 -q \
+            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe" \
+            -O Miniconda3-latest-Windows-x86_64.exe && \
+        echo "[BUILD] Installing Windows Miniconda to ${WINE_MINICONDA_PATH}..."; \
+        echo "[BUILD] (Silent install: wine Miniconda3.exe /S /D=C:\miniconda3)"; \
+        wine /tmp/Miniconda3-latest-Windows-x86_64.exe /S /D=C:\\miniconda3 2>&1 | tail -10 || true; \
+        wineserver -w 2>/dev/null || true; \
+        echo "[BUILD] Windows Miniconda installation complete"; \
+        echo "[BUILD] Verifying Windows Python in Wine..."; \
+        if [ -f "${WINEPREFIX}/drive_c/miniconda3/python.exe" ]; then \
+            echo "[BUILD] Windows Python found at: C:\miniconda3\python.exe"; \
+            echo "[BUILD] Version check:"; \
+            wine C:\\miniconda3\\python.exe --version 2>&1 || echo "[BUILD] (version check may have warnings - continuing)"; \
+        else \
+            echo "[WARN] Windows python.exe not found at expected location"; \
+            echo "[WARN] L3 smoke test will be skipped at runtime"; \
+            ls -la "${WINEPREFIX}/drive_c/miniconda3/" 2>/dev/null || echo "[WARN] Miniconda directory not found"; \
+        fi; \
+        rm -f /tmp/Miniconda3-latest-Windows-x86_64.exe; \
+    fi
+
+# -----------------------------------------------------------------------------
+# [wine-3/3] Final verification and metadata
+# -----------------------------------------------------------------------------
+RUN echo "=== [wine-runtime 3/3] Final verification ===" && \
+    BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
+    if [ "${SKIP_WINE}" = "1" ]; then \
+        WINE_STATUS="skipped"; \
+    else \
+        WINE_STATUS="installed"; \
+    fi && \
+    printf 'BUILD_DATE=%s\nBASE_IMAGE=continuumio/miniconda3:latest\nSTAGE=wine-runtime\nENV_NAME=cross-build\nPYTHON_VERSION=%s\nTARGET_PLATFORM=win-64\nWINE_STATUS=%s\nWINE_PREFIX=%s\nWINE_MINICONDA=%s\nCONDA_BUILD_OUTPUT_DIR=%s\nPURPOSE=windows-cross-compile-with-l3-smoketest\n' \
+        "$BUILD_DATE" "${PYTHON_VERSION}" "${WINE_STATUS}" "${WINEPREFIX}" "${WINE_MINICONDA_PATH}" "${CONDA_BUILD_OUTPUT_DIR}" \
+        > /etc/caffe-ffi-cross-build-info && \
+    cat /etc/caffe-ffi-cross-build-info && \
+    source "${CONDA_DIR}/etc/profile.d/conda.sh" && conda activate cross-build && \
+    echo "[BUILD] Environment summary:" && \
+    echo "  python:        $(python --version)" && \
+    echo "  conda:         $(conda --version)" && \
+    echo "  conda-build:   $(conda-build --version 2>/dev/null || true)" && \
+    echo "  cmake:         $(cmake --version | head -1)" && \
+    if [ "${SKIP_WINE}" != "1" ]; then \
+        echo "  wine:          $(wine --version 2>/dev/null || echo 'checking...')"; \
+        echo "  wine python:   $(test -f ${WINEPREFIX}/drive_c/miniconda3/python.exe && echo 'present at C:\miniconda3\python.exe' || echo 'not found')"; \
+    fi && \
+    echo "[BUILD] ========== WINDOWS CROSS-COMPILE IMAGE BUILD COMPLETE =========="
+
+WORKDIR ${WORKSPACE_DIR}
+
+# Default entrypoint: run the Windows cross-compile build script
+ENTRYPOINT ["/usr/local/bin/build-win-cross.sh"]
+CMD []

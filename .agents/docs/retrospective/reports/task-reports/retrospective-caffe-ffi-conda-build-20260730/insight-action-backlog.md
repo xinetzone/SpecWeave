@@ -2,7 +2,7 @@
 id: "retrospective-caffe-ffi-conda-build-20260730-backlog"
 title: "洞察行动项 Backlog：caffe-ffi Conda 包构建验证"
 date: 2026-07-30
-version: "1.2"
+version: "1.4"
 type: insight-action-backlog
 status: active
 source: "caffe-ffi Conda 包构建验证复盘"
@@ -13,7 +13,7 @@ ssot:
 ---
 # 洞察行动项 Backlog
 
-> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**6项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试、模式沉淀）+ 1项取消（绝对路径RPATH不可行）+ 1项搁置（meta.yaml注释）+ 1项🚧进行中（macOS跨平台代码适配完成，待实机验证）。
+> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**6项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试、模式沉淀）+ 1项取消（绝对路径RPATH不可行）+ 1项搁置（meta.yaml注释）+ 1项🔄进行中（macOS/Windows跨平台L1+L2 Docker交叉编译完成，L3待CI/真机/Wine）。
 >
 > 📋 **相关文档**：[L4升级验证计划与Checklist表格](l4-verification-plan-and-checklist.md) — 包含模式升级到L4所需的20个补充测试场景和可复制到任务追踪系统的Checklist表格。
 
@@ -25,7 +25,7 @@ ssot:
 | ACT-002 | meta.yaml增加`missing_dso_whitelist`详细注释 | 🟡中 | 文档 | ⏸️ 搁置 | 其他开发者理解DSO白名单用途，降低维护成本 |
 | ACT-003 | ~~RPATH改用`$PREFIX/lib`绝对路径~~ | 🟡中 | 健壮性 | ❌ 已取消 | 绝对路径触发conda-build prefix replacement "Placeholder too short"错误，方案不可行 |
 | ACT-003b | 为每个依赖.so单独计算RPATH深度，添加`$ORIGIN/../tvm_ffi/lib`跨包路径 | 🟡中 | 健壮性 | ✅ 已完成 | 不同深度的.so都能正确解析依赖，无需LD_LIBRARY_PATH |
-| ACT-004 | macOS conda包支持（`@rpath`/`@loader_path`+install_name_tool） | 🟢低 | 跨平台 | 🚧 代码适配完成（待实机验证） | macOS用户可直接使用conda包 |
+| ACT-004 | macOS/Windows conda包支持（`@rpath`/`@loader_path`+install_name_tool+Docker交叉编译） | 🔴高 | 跨平台 | 🔄 L1+L2已通过Docker交叉编译解决（L3待CI/真机/Wine） | macOS/Windows用户可直接使用conda包，开发阶段无需macOS/Windows开发机 |
 | ACT-005 | 将洞察/模式萃取为正式模式文档存入patterns/ | 🟡中 | 知识沉淀 | ✅ 已完成 | 模式可复用，其他scikit-build-core项目受益 |
 | ACT-006 | build.sh增加关键符号nm验证步骤（TVMFFIGetCustomAllocator） | 🟡中 | 健壮性 | ✅ 已完成 | 防止pip wheel符号缺失导致运行时崩溃 |
 | ACT-007 | 嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 | 🟡中 | 健壮性 | ✅ 已完成 | conda参数不污染子项目独立构建 |
@@ -185,39 +185,50 @@ ssot:
 
 ## 🟢 低优先级行动项
 
-### ACT-004：macOS conda 包支持 🚧 代码适配完成（待实机验证）
+### ACT-004：macOS/Windows conda 包支持 🔄 L1+L2 Docker交叉编译已解决（L3待CI/真机/Wine）
 
-- **优先级**：🟢 低
+- **优先级**：🔴 高（从🟢低升级，因Docker方案大幅降低跨平台验证门槛）
 - **来源**：复盘 §S2 瓶颈与约束
 - **责任人**：caffe-ffi 跨平台维护者
-- **预期收益**：macOS 用户可通过 conda 直接安装 caffe-ffi
-- **状态**：🚧 **代码适配完成（待macOS实机验证）**（2026-07-30 v1.3）
-- **已完成工作（代码层）**：
+- **预期收益**：macOS/Windows 用户可通过 conda 直接安装 caffe-ffi；**开发阶段无需macOS/Windows开发机或CI**，L1编译+L2静态验证可在Linux Docker中完成
+- **状态**：🔄 **L1+L2已通过Docker交叉编译解决（L3待CI/真机/Wine）**（2026-07-30 v1.4）
+- **已完成工作（代码层+Docker交叉编译）**：
   1. ✅ build.sh 添加平台检测（`uname -s`），自动识别 Linux/macOS
   2. ✅ 跨平台工具函数封装：`get_rpath()`/`set_rpath()`/`check_symbol()`/`check_deps()`/`fix_dep_ref()`
      - Linux: `patchelf` + `$ORIGIN` + `ldd` + `nm -D`
      - macOS: `install_name_tool` + `@loader_path` + `otool -L` + `nm -gU`
-  3. ✅ RPATH前缀按平台选择（`$ORIGIN` vs `@loader_path`），深度计算逻辑复用
+     - Windows: 无RPATH机制，使用DLL搜索路径+`llvm-objdump`/`llvm-nm`
+  3. ✅ RPATH前缀按平台选择（`$ORIGIN` vs `@loader_path` vs Windows无RPATH），深度计算逻辑复用
   4. ✅ macOS额外处理：`install_name_tool -change`修复libtvm_ffi引用、设置install name id
-  5. ✅ meta.yaml 更新 build number 7，添加macOS条件依赖（`cctools`、`llvm-openmp`、`macos-sdk`）和`.dylib` DSO白名单
-  6. ✅ test-conda-build.sh 添加平台检测（osx-64/osx-arm64）、跨平台工具函数封装、Bootstrap自适应（Docker/本地miniconda/miniforge）、.dylib库查找
-- **待执行（验证层）**：
-  1. ❓ 在macOS实机（Intel或Apple Silicon）上运行`bash test-conda-build.sh`
-  2. ❓ 修复可能出现的编译错误（如libcxx版本、SDK路径、OpenBLAS/OpenMP配置差异）
-  3. ❓ 验证RPATH `@loader_path` 实际效果（是否能正确解析跨包依赖）
-  4. ❓ 验证符号命名（macOS C符号可能带下划线前缀`_TVMFFIGetCustomAllocator`）
-  5. ❓ conda-build在macOS上的prefix replacement是否仍然有placeholder问题
+  5. ✅ Windows适配：meta.yaml条件依赖、.pyd/.dll DSO白名单、DLL导入表验证
+  6. ✅ **Docker跨平台交叉编译方案实现**（apps/caffe-ffi-cross/）：
+     - 利用conda-forge交叉编译工具链（clang_osx-64、clang_win-64等）在Linux容器中编译macOS/Windows包
+     - L1编译验证：conda-build成功生成目标平台包文件 ✅
+     - L2静态验证：使用cctools(file/otool/nm)/llvm-objdump验证二进制格式、架构、符号、依赖 ✅
+     - L3运行时验证：Windows可用Wine+Windows Miniconda做smoke test；macOS需CI/真机
+  7. ✅ meta.yaml 更新支持交叉编译（cross-python_{{ target_platform }}、build_platform条件判断）
+  8. ✅ test-conda-build.sh 添加平台检测（osx-64/osx-arm64/win-64）、跨平台工具函数封装、Bootstrap自适应
+- **待执行（验证层 - L3运行时）**：
+  1. ⏳ macOS L3：在CI或macOS真机（Intel/Apple Silicon）上运行smoke test
+  2. ⚠️ Windows L3：Wine smoke test可选（验证基本import和函数调用），最终仍需Windows实机/CI
+  3. ❓ 验证RPATH `@loader_path` 在macOS实机的实际效果（是否能正确解析跨包依赖）
+  4. ❓ 验证Windows DLL搜索路径配置（是否需要额外PATH设置或conda activation脚本）
 - **验收标准（DoD）**：
-  1. ✅/❓ conda-build 支持 macOS（osx-64 / osx-arm64）—— 代码已适配，待实机构建通过
-  2. ✅ RPATH 使用 `@rpath`/`@loader_path` 替代 `$ORIGIN`
-  3. ✅ patchelf 在 macOS 上使用 `install_name_tool` 替代
-  4. ❓ 在 macOS 环境中构建并通过 `otool -L` 等价验证
-  5. ✅ 跨包RPATH：`@loader_path/../tvm_ffi/lib` 等相对路径
+  1. ✅ L1编译：Docker交叉编译成功生成macOS/Windows conda包
+  2. ✅ L2静态：Mach-O/PE格式验证通过、依赖检查无not found、关键符号存在
+  3. ⏳ L3运行：macOS CI/真机验证通过；Windows Wine/实机验证通过
+  4. ✅ RPATH使用平台适配方案（Linux: `$ORIGIN`、macOS: `@loader_path`、Windows: 无RPATH）
+  5. ✅ 跨包依赖：`@loader_path/../tvm_ffi/lib`等相对路径在macOS正确；Windows DLL搜索路径正确
+- **Docker方案位置**：apps/caffe-ffi-cross/
+  - 使用方式：`cd apps/caffe-ffi-cross && ./run.sh`（一键测试所有平台）
+  - 支持单独平台：`./run.sh macos` / `./run.sh windows --no-wine`
+  - docker compose profile：`docker compose --profile macos run --rm macos-cross`
 - **前置依赖**：ACT-003b RPATH设计已稳定
 - **涉及文件**：
-  - [build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)：+120行跨平台适配（平台检测+工具函数+RPATH前缀+依赖修复）
-  - [meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)：build number 7，+8行macOS条件依赖和DSO白名单
-  - [test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh)：+100行跨平台适配（平台检测+Bootstrap自适应+otool/nm封装+符号验证）
+  - [build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)：跨平台适配（平台检测+工具函数+RPATH前缀+依赖修复）
+  - [meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)：macOS/Windows条件依赖、交叉编译配置、DSO白名单
+  - [test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh)：跨平台适配（平台检测+Bootstrap自适应+otool/nm/llvm-objdump封装+符号验证）
+  - apps/caffe-ffi-cross/：Docker交叉编译方案（Dockerfile、docker-compose.yml、run.sh、交叉编译recipe）
 
 ---
 
@@ -242,7 +253,7 @@ ACT-006（符号验证）── 独立可执行 ✅
 ACT-007（参数隔离）── 独立可执行 ✅
 ACT-008（单元测试）── 独立可执行，依赖backtrace禁用发现 ✅
 
-ACT-004（macOS支持）── 依赖 ACT-003b 的RPATH设计基础 🚧（代码适配完成，待实机验证）
+ACT-004（macOS/Windows支持）── 依赖 ACT-003b 的RPATH设计基础 🔄（L1+L2 Docker交叉编译完成，L3待CI/真机/Wine）
 
 ACT-005（模式沉淀）── 建议在所有代码改进完成后沉淀
     （包含最终版本的最佳实践L3模式，而非中间状态）⏳
@@ -258,13 +269,13 @@ ACT-005（模式沉淀）── 建议在所有代码改进完成后沉淀
 | ACT-002 | ⏳ 待执行 | - | - |
 | ACT-003 | ❌ 已取消 | 2026-07-30 | 绝对路径触发"Placeholder too short"错误，不可行；替代方案ACT-003b已完成 |
 | ACT-003b | ✅ 已完成 | 2026-07-30 | _caffe_ffi.so（深度3）和libtvm_ffi.so（深度4）RPATH独立设置；新增$ORIGIN/../tvm_ffi/lib跨包路径；ldd全部解析无not found |
-| ACT-004 | ⏳ 待执行 | - | - |
+| ACT-004 | 🔄 进行中（L1+L2完成） | 2026-07-30 | Docker跨平台交叉编译方案实现（apps/caffe-ffi-cross/）：L1编译+L2静态验证在Linux Docker中完成；macOS L3需CI/真机，Windows L3可用Wine做smoke test；前置依赖"macOS/Windows开发机或CI"已解决 |
 | ACT-005 | ⏳ 待执行 | - | - |
 | ACT-006 | ✅ 已完成 | 2026-07-30 | nm -D验证TVMFFIGetCustomAllocator为T符号（安装后+RPATH设置后两次验证）；本地源码优先编译；SETUPTOOLS_SCM_PRETEND_VERSION处理版本问题 |
 | ACT-007 | ✅ 已完成 | 2026-07-30 | tvm-ffi构建和caffe-ffi构建均实现CMAKE_ARGS/SKBUILD_CMAKE_ARGS保存/清空/恢复隔离；子项目参数不被conda污染 |
 | ACT-008 | ✅ 已完成 | 2026-07-30 | test-conda-build.sh Step 8d集成单元测试；CAFFE_FFI_DISABLE_BACKTRACE=1防止pytest崩溃；测试失败直接fail |
 
-**完成率**：5/8 已完成，1/8 已取消，2/8 待执行（1个中优先级文档 + 1个低优先级跨平台）
+**完成率**：5/8 已完成，1/8 已取消，1/8 进行中（L1+L2 Docker交叉编译完成，L3待验证），1/8 搁置（文档注释）
 
 ---
 
@@ -301,6 +312,31 @@ docker exec caffe-ffi-jupyter bash -c "
 
 # ACT-002: 查看当前 meta.yaml missing_dso_whitelist
 cat projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml | grep -A10 "missing_dso"
+
+# ACT-004: Docker跨平台交叉编译（L1+L2验证）
+cd apps/caffe-ffi-cross
+
+# 一键测试所有平台（macOS+Windows）
+./run.sh
+
+# 仅macOS交叉编译+静态验证
+./run.sh macos
+
+# 仅Windows（跳过Wine smoke test）
+./run.sh windows --no-wine
+
+# 或使用docker compose
+docker compose --profile macos run --rm macos-cross
+docker compose --profile windows run --rm win-cross
+
+# 验证产物格式（在容器内或提取后）
+# macOS: file检查Mach-O格式
+file $CONDA_PREFIX/caffe-ffi/_caffe_ffi*.so
+# 预期: Mach-O 64-bit x86_64 bundle
+
+# Windows: file检查PE格式
+file $CONDA_PREFIX/caffe-ffi/_caffe_ffi*.pyd
+# 预期: PE32+ executable (DLL) x86-64, for MS Windows
 ```
 
-**行动项总结**：v1.1版本共8项行动项，其中🔴高优先级ACT-001已完成（三重保护editable清理）；🟡中优先级6项中，ACT-003b/006/007/008已完成（跨包RPATH、符号验证、参数隔离、单元测试），ACT-003已取消（绝对路径不可行），ACT-002（meta.yaml注释）和ACT-005（模式沉淀）待执行；🟢低优先级ACT-004（macOS支持）待执行。核心构建验证闭环已完成，剩余为文档完善、知识沉淀和跨平台扩展。
+**行动项总结**：v1.4版本共8项行动项，其中🔴高优先级ACT-001已完成（三重保护editable清理），ACT-004（macOS/Windows跨平台支持）L1+L2层已通过Docker交叉编译方案解决（apps/caffe-ffi-cross/），开发阶段无需macOS/Windows开发机或CI；🟡中优先级6项中，ACT-003b/005/006/007/008已完成（跨包RPATH、模式沉淀、符号验证、参数隔离、单元测试），ACT-003已取消（绝对路径不可行），ACT-002（meta.yaml注释）搁置；核心构建验证闭环已完成，跨平台L1+L2验证已解决，剩余为L3运行时验证（macOS需CI/真机，Windows可用Wine做smoke test）和文档完善。

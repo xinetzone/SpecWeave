@@ -3,7 +3,7 @@ id: "best-practices-index"
 title: "团队最佳实践库"
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/README.toml"
 category: "best-practices"
-date: "2026-07-09"
+date: "2026-07-30"
 ---
 # 团队最佳实践库
 
@@ -75,6 +75,7 @@ date: "2026-07-09"
 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) | DataLoader Pickle序列化问题诊断SOP（5步流程+6种不可序列化模式+3种修复方案+跨启动模式验证矩阵） | `Python` `pickle` `serialization` `multiprocessing` `DataLoader` `diagnosis` `SOP` |
 | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) | Caffe-Slim TVM FFI环境调试与错误排查手册（6个环境问题完整诊断链、一键验证脚本、WSL配置脚本、准确率判据） | `C++` `FFI` `tvm-ffi` `caffe` `WSL` `shared-library` `ABI` `DL` `troubleshooting` `environment` |
 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) | CMake项目模块化重构最佳实践（四层架构+两轮重构策略+公共函数封装+平台操作封装+验收清单） | `CMake` `build-system` `modularization` `refactoring` `cross-platform` `best-practice` `C/C++` |
+| [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) | conda-forge交叉编译配置完整指南（平台三元组、工具链包名、meta.yaml依赖分离、build.sh检测模式、CMAKE_ARGS传递、scikit-build-core适配、Wine测试、常见陷阱） | `conda-forge` `cross-compilation` `conda-build` `CMake` `scikit-build-core` `Docker` `Wine` `macOS` `Windows` |
 
 ---
 
@@ -93,11 +94,12 @@ date: "2026-07-09"
 | 📐 方法论治理 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) |
 | 🐍 Python升级 | [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
 | 📦 编译包管理 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
-| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) |
+| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) → [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 | 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
 | 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
 | 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
+| 🔀 conda交叉编译 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 
 ---
 
