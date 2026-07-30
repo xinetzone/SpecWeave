@@ -2,6 +2,7 @@
 id: "retrospective-caffe-ffi-conda-build-20260730-backlog"
 title: "洞察行动项 Backlog：caffe-ffi Conda 包构建验证"
 date: 2026-07-30
+version: "1.1"
 type: insight-action-backlog
 status: active
 source: "caffe-ffi Conda 包构建验证复盘"
@@ -11,112 +12,167 @@ ssot:
 ---
 # 洞察行动项 Backlog
 
-> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**1项高优先级改进**（editable残留自动清理）+ 3项中优先级改进（meta.yaml注释、RPATH健壮性、模式沉淀）+ 1项低优先级改进（macOS跨平台支持）。
+> 本文件记录从 caffe-ffi Conda 包构建验证复盘中转化的可执行行动项。核心包含：**5项已完成改进**（editable三重保护、跨包RPATH、符号验证、参数隔离、单元测试）+ 1项取消（绝对路径RPATH不可行）+ 2项待执行（meta.yaml注释、模式沉淀）+ 1项低优先级待执行（macOS跨平台）。
 
 ## 行动项总览
 
 | ID | 行动项 | 优先级 | 类型 | 状态 | 预期收益 |
 |----|--------|--------|------|------|---------|
-| ACT-001 | build.sh 增加 `_editable_*.pth` 自动清理步骤 | 🔴高 | 质量门禁 | ✅ 已完成 | 消除editable残留干扰，确保验证环境干净 |
-| ACT-002 | meta.yaml 增加 `missing_dso_whitelist` 详细注释 | 🟡中 | 文档 | ⏳ 待执行 | 其他开发者理解DSO白名单用途，降低维护成本 |
-| ACT-003 | RPATH 改进：使用 `$PREFIX/lib` 绝对路径替代 `$ORIGIN/../../..` | 🟡中 | 健壮性 | ⏳ 待执行 | 不依赖conda-build自动重定位，降低跨环境风险 |
-| ACT-004 | macOS conda 包支持（`@rpath`/`@loader_path`） | 🟢低 | 跨平台 | ⏳ 待执行 | macOS用户可直接使用conda包 |
-| ACT-005 | 将洞察/模式萃取为正式模式文档存入 patterns/ | 🟡中 | 知识沉淀 | ⏳ 待执行 | 模式可复用，其他scikit-build-core项目受益 |
+| ACT-001 | build.sh增加`_editable_*`自动清理，实现三重保护策略 | 🔴高 | 质量门禁 | ✅ 已完成 | 彻底消除editable残留干扰，确保验证环境干净 |
+| ACT-002 | meta.yaml增加`missing_dso_whitelist`详细注释 | 🟡中 | 文档 | ⏳ 待执行 | 其他开发者理解DSO白名单用途，降低维护成本 |
+| ACT-003 | ~~RPATH改用`$PREFIX/lib`绝对路径~~ | 🟡中 | 健壮性 | ❌ 已取消 | 绝对路径触发conda-build prefix replacement "Placeholder too short"错误，方案不可行 |
+| ACT-003b | 为每个依赖.so单独计算RPATH深度，添加`$ORIGIN/../tvm_ffi/lib`跨包路径 | 🟡中 | 健壮性 | ✅ 已完成 | 不同深度的.so都能正确解析依赖，无需LD_LIBRARY_PATH |
+| ACT-004 | macOS conda包支持（`@rpath`/`@loader_path`+install_name_tool） | 🟢低 | 跨平台 | ⏳ 待执行 | macOS用户可直接使用conda包 |
+| ACT-005 | 将洞察/模式萃取为正式模式文档存入patterns/ | 🟡中 | 知识沉淀 | ⏳ 待执行 | 模式可复用，其他scikit-build-core项目受益 |
+| ACT-006 | build.sh增加关键符号nm验证步骤（TVMFFIGetCustomAllocator） | 🟡中 | 健壮性 | ✅ 已完成 | 防止pip wheel符号缺失导致运行时崩溃 |
+| ACT-007 | 嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 | 🟡中 | 健壮性 | ✅ 已完成 | conda参数不污染子项目独立构建 |
+| ACT-008 | 验证脚本集成Python单元测试（CAFFE_FFI_DISABLE_BACKTRACE=1） | 🟡中 | 质量门禁 | ✅ 已完成 | 一键验证包含单元测试，防止C++ backtrace在pytest中崩溃 |
 
 ---
 
 ## 🔴 高优先级行动项
 
-### ACT-001：build.sh 增加 `_editable_*.pth` 自动清理步骤 ✅ 已完成
+### ACT-001：build.sh增加`_editable_*`自动清理步骤，实现三重保护策略 ✅ 已完成
 
 - **优先级**：🔴 高
-- **来源**：复盘 §S3 洞察3 — Editable Install 残留对 Conda 包验证的干扰
+- **来源**：复盘 §S3 洞察3 — Editable Install 残留的三重保护清理策略
 - **责任人**：caffe-ffi conda recipe 维护者
-- **预期收益**：在有 editable install 残留的开发容器中，验证脚本也能正确加载 conda 包，避免误判
-- **状态**：✅ **已完成**（2026-07-30）
+- **预期收益**：在有 editable install 残留的开发容器中，验证脚本也能正确加载 conda 包，避免误判；系统性解决PEP 660 editable残留问题
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
 - **验收标准（DoD）**：
-  1. ✅ test-conda-build.sh 在构建前（Step 1b）和安装前（Step 7a）自动查找并删除 `_editable_*.pth` 文件及对应finder模块
-  2. ✅ 清理函数 `clean_editable_residuals()` 同时清理：`_editable_skbc_*.pth/.py`、`__editable__.*.pth`、`__pycache__`缓存、pip的`direct_url.json`
-  3. ✅ 验证步骤包含加载路径检查，确认从 site-packages 加载
-  4. ✅ 在有 editable 残留的环境中运行脚本，验证能正确通过（首次运行清理3个残留文件，二次运行无残留）
+  1. ✅ build.sh内置`clean_editable_files()`函数，tvm-ffi安装后、caffe-ffi安装后各执行一次（双重保险）
+  2. ✅ test-conda-build.sh实现`clean_editable_residuals(pkg_name)`函数，Step 1b预清理 + Step 7a安装前彻底清理
+  3. ✅ 清理函数同时处理：`_editable_skbc_*.pth/.py`、`__editable__.*.pth`、`__pycache__`缓存、指向源码路径的.pth、pip的`direct_url.json`、stale包目录
+  4. ✅ Step 8a0 路径验证门禁：`__file__`必须包含`site-packages/caffe_ffi`，否则直接fail
+  5. ✅ 在有editable残留的环境中运行脚本，验证能正确通过（首次运行清理所有残留，二次运行环境已干净）
 - **涉及文件**：
-  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L186-L201)（Step 7 安装步骤）
-- **实施步骤**：
-  1. 在 Step 7（Installing built package）中，`pip uninstall` 之后增加：
-     ```bash
-     # Clean up editable install residuals
-     _ED_PTH=$(python -c "import site; print(site.getsitepackages()[0])" 2>/dev/null)
-     if [ -n "$_ED_PTH" ]; then
-         _CLEANED=$(find "$_ED_PTH" -name "_editable_*.pth" -delete -print 2>/dev/null | wc -l)
-         echo "  Cleaned $_CLEANED editable .pth file(s)"
-     fi
-     ```
-  2. 将 `conda install` 命令改为 `conda install -y --offline --use-local --force-reinstall`
-  3. 在 Step 8 验证开头增加路径检查：
-     ```bash
-     _CAFFE_FILE=$(python -c "import caffe_ffi; print(caffe_ffi.__file__)" 2>/dev/null)
-     echo "  Loading from: $_CAFFE_FILE"
-     if echo "$_CAFFE_FILE" | grep -q "site-packages"; then
-         pass "Loading from site-packages (conda package)"
-     else
-         warn "Not loading from site-packages (may be editable install residual)"
-     fi
-     ```
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L20-L34)（clean_editable_files函数，两次调用）
+  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L29-L70)（clean_editable_residuals函数，Step 1b+7a）
+  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L294-L302)（Step 8a0 路径验证门禁）
 
 ---
 
 ## 🟡 中优先级行动项
 
-### ACT-002：meta.yaml 增加 `missing_dso_whitelist` 详细注释
+### ACT-002：meta.yaml增加`missing_dso_whitelist`详细注释
 
 - **优先级**：🟡 中
-- **来源**：复盘 §S1 修改文件清单 — meta.yaml missing_dso_whitelist 缺乏说明
+- **来源**：复盘 §S1 修改文件清单 — meta.yaml missing_dso_whitelist 已有简单注释但不够详细
 - **责任人**：caffe-ffi conda recipe 维护者
-- **预期收益**：其他维护者能快速理解哪些库是 vendored/bundled，避免误删白名单导致构建失败
+- **预期收益**：其他维护者能快速理解哪些库是 vendored/bundled、为什么需要白名单，避免误删白名单导致构建失败
 - **验收标准（DoD）**：
-  1. `missing_dso_whitelist` 段每一行有 YAML 注释说明
-  2. 注释说明白名单的原因（vendored、动态加载、conda-build误报等）
+  1. `missing_dso_whitelist` 段上方有块注释说明用途（全相对RPATH不需要prefix replacement、vendored库由patchelf处理）
+  2. 为每个白名单条目添加行内注释说明原因（libtvm_ffi是本地编译bundled、libopenblas/libprotobuf是conda依赖由RPATH解析）
 - **涉及文件**：
-  - [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14-L17)
+  - [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14-L18)
 - **实施步骤**：
-  1. 在 `missing_dso_whitelist:` 上方添加块注释说明用途
+  1. 在 `missing_dso_whitelist:` 上方添加块注释：
+     ```yaml
+     # DSO whitelist: these libraries are resolved via $ORIGIN-relative RPATH at runtime.
+     # detect_binary_files_with_prefix is false because all RPATHs use $ORIGIN (no absolute prefix paths),
+     # so conda-build's binary prefix replacement is not needed and would cause "Placeholder too short" errors.
+     ```
   2. 为每个白名单条目添加行内注释
 
-### ACT-003：RPATH 改进 — 使用 `$PREFIX/lib` 绝对路径替代相对路径
+### ACT-003：~~将RPATH `$ORIGIN/../../..`改为`$PREFIX/lib`绝对路径~~ ❌ 已取消
+
+- **优先级**：~~🟡 中~~ → ❌ 取消
+- **来源**：复盘 v1.0 最初建议
+- **取消原因**：
+  - 实测使用`${PREFIX}/lib`绝对路径会触发conda-build的prefix replacement机制
+  - conda-build会尝试将构建时的PREFIX路径（如`/opt/conda/envs/caffe-ffi`）替换为安装时的PREFIX路径
+  - RPATH字符串长度超过placeholder长度限制（默认256字符），导致"Placeholder too short"构建错误
+  - **正确方案**：使用全`$ORIGIN`相对路径，精确计算每个.so的上溯级数（见ACT-003b）
+- **替代方案**：ACT-003b
+
+### ACT-003b：为每个依赖的.so单独计算并设置RPATH（考虑目录嵌套深度），添加`$ORIGIN/../tvm_ffi/lib`跨包路径 ✅ 已完成
 
 - **优先级**：🟡 中
-- **来源**：复盘 §S2 瓶颈与约束 — conda-build 自动重定位依赖
+- **来源**：复盘 §S3 洞察4 — 跨包RPATH依赖的层级计算模型
 - **责任人**：caffe-ffi 构建系统维护者
-- **预期收益**：不依赖 conda-build 的自动 RPATH 重定位行为，在不同 conda 版本/环境中更健壮
+- **预期收益**：不同深度的共享库都能通过相对RPATH正确找到依赖；无需依赖LD_LIBRARY_PATH；跨包依赖（如同级tvm_ffi/lib/）也能正确解析
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
 - **验收标准（DoD）**：
-  1. build.sh 中 NEW_RPATH 使用 `$ORIGIN:$ORIGIN/lib:${PREFIX}/lib`（当前已包含 PREFIX/lib，但验证是否被 conda-build 覆盖）
-  2. 构建后验证 RPATH 中包含 PREFIX/lib 的绝对路径
-  3. 在全新 conda 环境中安装验证 ldd 全部解析
+  1. ✅ _caffe_ffi.so RPATH: `$ORIGIN:$ORIGIN/lib:$ORIGIN/../tvm_ffi/lib:$ORIGIN/../../..`（深度3，跨包路径指向tvm_ffi/lib）
+  2. ✅ libtvm_ffi.so RPATH: `$ORIGIN:$ORIGIN/..:$ORIGIN/../../../../`（深度4，因在tvm_ffi/lib/下深一级）
+  3. ✅ 构建后patchelf --print-rpath验证RPATH正确
+  4. ✅ ldd检查所有依赖解析，无not found
+  5. ✅ 注释明确说明禁止使用绝对路径的原因
 - **涉及文件**：
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L198-L211)
-- **实施步骤**：
-  1. 检查 conda-build 是否会覆盖 build.sh 中 patchelf 设置的 RPATH
-  2. 若被覆盖，在 build.sh 末尾添加 conda-build 后的 RPATH 修复步骤（通过 post-link 脚本或调整 build.sh 执行时机）
-  3. 验证修复后 RPATH 在安装环境中正确
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L169-L190)（RPATH配置，含禁止绝对路径注释）
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L285-L315)（patchelf设置两个.so的RPATH）
+- **关键发现**：
+  - RPATH层级计算：从.so所在目录到PREFIX/lib需要的`..`个数
+  - _caffe_ffi.so在`caffe_ffi/`：caffe_ffi/ → site-packages/ → python3.14/ → lib/ = 3级`..`
+  - libtvm_ffi.so在`tvm_ffi/lib/`：lib/ → tvm_ffi/ → site-packages/ → python3.14/ → lib/ = 4级`..`
 
-### ACT-005：将洞察/模式萃取为正式模式文档存入 patterns/
+### ACT-006：build.sh中增加关键符号nm验证步骤 ✅ 已完成
 
 - **优先级**：🟡 中
-- **来源**：复盘 §S3 模式1和模式2
+- **来源**：复盘 §S3 洞察6 — 预编译Wheel的符号完整性验证
+- **责任人**：caffe-ffi 构建系统维护者
+- **预期收益**：避免PyPI wheel缺少关键符号（如TVMFFIGetCustomAllocator）导致运行时custom allocator功能失效；链接时不报错但运行时才崩溃的问题提前在构建阶段发现
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
+- **验收标准（DoD）**：
+  1. ✅ tvm-ffi安装后立即用`nm -D`验证TVMFFIGetCustomAllocator为T符号（全局文本段）
+  2. ✅ patchelf设置RPATH后再次验证符号存在
+  3. ✅ 本地源码编译tvm-ffi优先，SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13绕过git describe问题
+  4. ✅ 构建前清理tvm-ffi in-tree构建残留，确保全新编译
+- **涉及文件**：
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L136-L145)（tvm-ffi安装后符号验证）
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L277-L283)（RPATH设置后再次符号验证）
+- **关键教训**：pip安装的apache-tvm-ffi 0.1.12 wheel缺少TVMFFIGetCustomAllocator符号，导致运行时失败；必须本地源码编译+符号验证
+
+### ACT-007：嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 ✅ 已完成
+
+- **优先级**：🟡 中
+- **来源**：复盘 §S3 洞察5 — 嵌套构建时的CMAKE_ARGS隔离机制
+- **责任人**：caffe-ffi 构建系统维护者
+- **预期收益**：conda-build注入的CMAKE_ARGS（含CMAKE_INSTALL_PREFIX等）不会污染tvm-ffi等依赖的独立构建；子项目使用自己的CMake配置
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
+- **验收标准（DoD）**：
+  1. ✅ tvm-ffi构建前保存`_OLD_CMAKE_ARGS`和`_OLD_SKBUILD_CMAKE_ARGS`
+  2. ✅ 清空CMAKE_ARGS，仅追加tvm-ffi需要的特定参数（-DTVM_FFI_USE_LIBBACKTRACE=OFF）
+  3. ✅ tvm-ffi构建完成后恢复原始CMAKE_ARGS和SKBUILD_CMAKE_ARGS
+  4. ✅ caffe-ffi构建前同样隔离CMAKE_ARGS，设置独立的SKBUILD_CMAKE_ARGS
+- **涉及文件**：
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L87-L119)（tvm-ffi构建参数隔离+恢复）
+  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L175-L235)（caffe-ffi构建参数隔离+恢复）
+
+### ACT-008：验证脚本集成Python单元测试步骤 ✅ 已完成
+
+- **优先级**：🟡 中
+- **来源**：复盘 §S3 洞察7 — C++栈回溯在pytest环境中的崩溃问题
+- **责任人**：caffe-ffi 验证脚本维护者
+- **预期收益**：一键构建验证包含单元测试，功能验证更完整；默认禁用C++ backtrace防止pytest环境崩溃
+- **状态**：✅ **已完成**（2026-07-30，v1.1）
+- **验收标准（DoD）**：
+  1. ✅ test-conda-build.sh Step 8d集成Python单元测试运行
+  2. ✅ 测试前设置`CAFFE_FFI_DISABLE_BACKTRACE=1`环境变量
+  3. ✅ 测试失败时直接fail，不继续
+  4. ✅ 测试文件路径：tests/python/test_python_api.py
+- **涉及文件**：
+  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L398-L418)（Step 8d 单元测试）
+- **关键发现**：C++层`backtrace_symbols()`在pytest环境处理Python栈帧会崩溃，必须默认禁用
+
+### ACT-005：将洞察/模式萃取为正式模式文档存入patterns/
+
+- **优先级**：🟡 中
+- **来源**：复盘 §S3 模式1和模式2（升级版L3成熟度）+ 新增洞察3-7
 - **责任人**：方法论维护者
 - **预期收益**：其他使用 conda-build + scikit-build-core 的项目可直接参考模式，避免重复踩坑
 - **验收标准（DoD）**：
-  1. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-build-scikit-build-core.md`
-  2. 模式包含：触发场景、meta.yaml模板、build.sh模板、RPATH设置、反模式清单
-  3. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-clean-environment-verification.md`
-  4. 模式包含：editable残留清理、pth文件检查、路径验证、ldd验证步骤
+  1. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-build-scikit-build-core.md`（升级版，L3）
+  2. 模式包含：触发场景、meta.yaml三段式依赖模板、build.sh模板（含参数隔离+符号验证+三重清理）、RPATH四层跨包设计、反模式清单
+  3. 创建模式文档 `.agents/docs/retrospective/patterns/methodology-patterns/python-packaging/conda-clean-environment-verification.md`（升级版，L3）
+  4. 模式包含：三重保护editable清理、路径验证门禁、多维度验证（import/功能/ldd/符号/单元测试）、backtrace禁用
   5. 更新 patterns/ 索引
 - **涉及文件**：新模式文档 + 模式索引
 - **实施步骤**：
-  1. 参考现有模式文档格式（如 wheel 自包含打包模式）
-  2. 提炼 meta.yaml 三段式依赖模板和 build.sh 关键配置模板
-  3. 编写反模式清单（从本次踩坑记录中提取）
-  4. 标注成熟度 L2
+  1. 参考现有模式文档格式
+  2. 提炼meta.yaml三段式依赖模板和build.sh关键配置模板（升级版）
+  3. 编写完整反模式清单（从6个Bug中提取）
+  4. 标注成熟度 L3
   5. 更新模式索引文件
 
 ---
@@ -133,10 +189,12 @@ ssot:
   1. conda-build 支持 macOS（osx-64 / osx-arm64）
   2. RPATH 使用 `@rpath`/`@loader_path` 替代 `$ORIGIN`
   3. patchelf 在 macOS 上使用 `install_name_tool` 替代
-  4. 在 macOS 环境中构建并通过 ldd 等价验证（`otool -L`）
+  4. 在 macOS 环境中构建并通过 `otool -L` 等价验证
+  5. 跨包RPATH：`@loader_path/../tvm_ffi/lib` 等相对路径
+- **前置依赖**：ACT-003b RPATH设计已稳定
 - **实施步骤**：
   1. 在 meta.yaml 中增加 macOS 平台支持（移除 skip 限制或添加 osx 支持）
-  2. build.sh 中检测平台，Linux 用 patchelf/$ORIGIN，macOS 用 install_name_tool/@rpath
+  2. build.sh 中检测平台：Linux 用 patchelf/$ORIGIN，macOS 用 install_name_tool/@rpath
   3. 增加 `bld.bat`（Windows）或 `build.sh` 中增加 macOS 分支
   4. 在 macOS CI 或本地环境中验证
 
@@ -145,18 +203,28 @@ ssot:
 ## 行动项依赖关系
 
 ```
-ACT-001（editable残留清理）── 独立可执行，无需前置依赖
+ACT-001（editable三重保护）── 独立可执行，无需前置依赖 ✅
     │
-    └── 为 ACT-003 的RPATH验证提供干净环境基础
+    └── 为 ACT-003b 的RPATH验证提供干净环境基础 ✅
 
-ACT-002（meta.yaml注释）── 独立可执行，文档改进无代码依赖
+ACT-002（meta.yaml注释）── 独立可执行，文档改进无代码依赖 ⏳
 
-ACT-003（RPATH健壮性）── 建议在 ACT-001 完成后验证（需要干净环境）
+ACT-003（绝对路径RPATH）── ❌ 已取消（方案不可行）
+    │
+    └── 替代为 ACT-003b（相对路径RPATH深度计算）✅
 
-ACT-004（macOS支持）── 依赖 ACT-003 的RPATH改进（需要先稳定Linux RPATH）
+ACT-003b（跨包RPATH）── 依赖ACT-001干净环境 ✅
+    │
+    └── 为 ACT-004 macOS支持提供RPATH设计基础
 
-ACT-005（模式沉淀）── 建议在 ACT-001/ACT-002/ACT-003 完成后沉淀
-    （包含最终版本的最佳实践，而非中间状态）
+ACT-006（符号验证）── 独立可执行 ✅
+ACT-007（参数隔离）── 独立可执行 ✅
+ACT-008（单元测试）── 独立可执行，依赖backtrace禁用发现 ✅
+
+ACT-004（macOS支持）── 依赖 ACT-003b 的RPATH设计稳定 ⏳
+
+ACT-005（模式沉淀）── 建议在所有代码改进完成后沉淀
+    （包含最终版本的最佳实践L3模式，而非中间状态）⏳
 ```
 
 ---
@@ -165,36 +233,53 @@ ACT-005（模式沉淀）── 建议在 ACT-001/ACT-002/ACT-003 完成后沉�
 
 | ID | 状态 | 完成日期 | 验证结果 |
 |----|------|---------|---------|
-| ACT-001 | ✅ 已完成 | 2026-07-30 | Docker容器中验证通过：首次运行清理3个editable残留文件（_editable_skbc_caffe_ffi.pth + finder模块 + direct_url.json），二次运行环境已干净无残留 |
+| ACT-001 | ✅ 已完成 | 2026-07-30 | 三重保护策略实现：build.sh内置clean_editable_files()两次调用 + test脚本Step1b预清理+Step7a彻底清理；Step8a0路径验证门禁；清理覆盖.pth+.py+pyc+direct_url.json+stale目录 |
 | ACT-002 | ⏳ 待执行 | - | - |
-| ACT-003 | ⏳ 待执行 | - | - |
+| ACT-003 | ❌ 已取消 | 2026-07-30 | 绝对路径触发"Placeholder too short"错误，不可行；替代方案ACT-003b已完成 |
+| ACT-003b | ✅ 已完成 | 2026-07-30 | _caffe_ffi.so（深度3）和libtvm_ffi.so（深度4）RPATH独立设置；新增$ORIGIN/../tvm_ffi/lib跨包路径；ldd全部解析无not found |
 | ACT-004 | ⏳ 待执行 | - | - |
 | ACT-005 | ⏳ 待执行 | - | - |
+| ACT-006 | ✅ 已完成 | 2026-07-30 | nm -D验证TVMFFIGetCustomAllocator为T符号（安装后+RPATH设置后两次验证）；本地源码优先编译；SETUPTOOLS_SCM_PRETEND_VERSION处理版本问题 |
+| ACT-007 | ✅ 已完成 | 2026-07-30 | tvm-ffi构建和caffe-ffi构建均实现CMAKE_ARGS/SKBUILD_CMAKE_ARGS保存/清空/恢复隔离；子项目参数不被conda污染 |
+| ACT-008 | ✅ 已完成 | 2026-07-30 | test-conda-build.sh Step 8d集成单元测试；CAFFE_FFI_DISABLE_BACKTRACE=1防止pytest崩溃；测试失败直接fail |
+
+**完成率**：5/8 已完成，1/8 已取消，2/8 待执行（1个中优先级文档 + 1个低优先级跨平台）
 
 ---
 
 ## 快速执行参考
 
 ```bash
-# ACT-001: 验证editable清理效果
+# ACT-001/003b/006/007/008: 一键验证所有已完成改进
 cd /path/to/caffe-ffi-jupyter
-# 模拟editable残留后运行脚本
-docker exec caffe-ffi-jupyter bash -c "
-  source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi &&
-  pip install -e /SpecWeave/projects/xuanspace/libs/caffe-ffi &&
-  bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh
-"
+docker exec caffe-ffi-jupyter bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh
+# 观察输出：
+#   - Step 1b: Pre-cleaned N editable residual file(s)
+#   - Step 7a: Cleaned N editable residual file(s)
+#   - Step 8a0: PASS Loading from conda site-packages
+#   - Step 8c: PASS All shared library dependencies resolved
+#   - Step 8c: PASS libtvm_ffi.so correctly linked
+#   - Step 8d: PASS Python unit tests PASSED
 
-# ACT-002: 查看当前 meta.yaml
-cat projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml
-
-# ACT-003: 验证RPATH在安装后的实际值
+# ACT-003b: 验证RPATH在安装后的实际值（深度计算）
 docker exec caffe-ffi-jupyter bash -c "
   source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi &&
   CAFFE_SO=\$(python -c 'import caffe_ffi, glob, os; print(glob.glob(os.path.join(os.path.dirname(caffe_ffi.__file__), \"_caffe_ffi*.so\"))[0]') &&
-  echo 'RPATH:' && patchelf --print-rpath \$CAFFE_SO &&
+  TVM_SO=\$(python -c 'import tvm_ffi, os; print(os.path.join(os.path.dirname(tvm_ffi.__file__), \"lib\", \"libtvm_ffi.so\"))') &&
+  echo '_caffe_ffi.so RPATH:' && patchelf --print-rpath \$CAFFE_SO &&
+  echo 'libtvm_ffi.so RPATH:' && patchelf --print-rpath \$TVM_SO &&
   echo 'ldd check:' && ldd \$CAFFE_SO | grep 'not found' && echo FAIL || echo PASS
 "
+
+# ACT-006: 验证TVMFFIGetCustomAllocator符号
+docker exec caffe-ffi-jupyter bash -c "
+  source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi &&
+  TVM_SO=\$(python -c 'import tvm_ffi, os; print(os.path.join(os.path.dirname(tvm_ffi.__file__), \"lib\", \"libtvm_ffi.so\"))') &&
+  echo 'Symbol check:' && nm -D \$TVM_SO | grep TVMFFIGetCustomAllocator && echo 'PASS: symbol found' || echo 'FAIL: symbol missing'
+"
+
+# ACT-002: 查看当前 meta.yaml missing_dso_whitelist
+cat projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml | grep -A10 "missing_dso"
 ```
 
-**行动项总结**：5项行动项中，ACT-001（editable残留自动清理）为🔴高优先级，直接影响conda包验证的可靠性。ACT-002/003/005为🟡中优先级，分别改进文档、健壮性和知识沉淀。ACT-004为🟢低优先级跨平台扩展。建议优先执行ACT-001，其余按依赖关系逐步推进。
+**行动项总结**：v1.1版本共8项行动项，其中🔴高优先级ACT-001已完成（三重保护editable清理）；🟡中优先级6项中，ACT-003b/006/007/008已完成（跨包RPATH、符号验证、参数隔离、单元测试），ACT-003已取消（绝对路径不可行），ACT-002（meta.yaml注释）和ACT-005（模式沉淀）待执行；🟢低优先级ACT-004（macOS支持）待执行。核心构建验证闭环已完成，剩余为文档完善、知识沉淀和跨平台扩展。
