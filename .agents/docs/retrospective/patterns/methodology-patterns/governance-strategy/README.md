@@ -143,6 +143,7 @@ date: "2026-07-09"
 | [P-AGENT-SELECT-001配套评分卡：AI Agent平台选型9维度评分卡（可直接套用）](P-AGENT-SELECT-001-agent-platform-selection-scorecard.md) | P-AGENT-SELECT-001的配套工具：空白打分表+加权公式+5大平台示例打分（AgentKit 4.30/Dify 3.52/Coze 3.60/LangGraph 3.27/LlamaIndex 3.14）+决策建议矩阵+PoC验证8项清单，复制即可使用 | L1 | `选型工具` `评分卡` `可直接套用` |
 | [P-LEGACY-AI-UPGRADE-002：存量业务系统智能化改造5步SOP](P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md) | API分级→Gateway快速接入→权限映射→Harness跑通验证→MCP渐进优化5步SOP，核心原则"先接入验证价值再优化核心接口"，适用于REST/OpenAPI存量系统赋予Agent能力、SaaS集成、移动App API智能化 | L1 | `存量改造` `系统集成` `SOP` `MCP` `渐进式` |
 | [P-DEMO-TO-PROD-003：智能体从Demo到生产的12项检查清单](P-DEMO-TO-PROD-003-demo-to-prod-checklist.md) | 6维度（安全/可观测/权限/成本/性能/稳定性）×12项量化检查清单，每项有明确Pass/Fail硬指标（错误率>1%告警/P95<5s/≥50条Eval用例/≥90天日志等），含Copy-Paste版快速清单，适用于Agent/RAG/AI工作流/LLM网关生产化检查 | L1 | `生产化检查` `上线清单` `质量门` `SLA` `可观测` |
+| [P-SPEC-AC-DUAL-TRACK-004：知识类项目Spec硬软AC双轨验收模式](P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.md) | 验收标准双轨分类：硬性AC（格式/存在性/链接等客观项）100%通过，弹性AC（内容组织/深度取舍/分类方式等创作项）允许10%-15%有理由偏差，偏差必须提供三要素说明（描述+原因+等价性证明），零偏差需审查机械执行问题，适用于Wiki/文档/白皮书/PRD/研究报告等知识创作类项目验收 | L1 | `Spec验收` `双轨AC` `偏差率` `项目管理` `质量门` |
 
 ## 📁 子目录导航
 

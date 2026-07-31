@@ -11,7 +11,7 @@ documentation_level: complete
 x-toml-ref: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone.toml"
 ---
 
-> **提炼自**：[milestone-patterns.md#模式2](../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-2) —— 火山引擎AgentKit里程碑复盘E阶段萃取（对抗审查视角权重）
+> **提炼自**：[milestone-insights.md#洞察3](../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-insights.md#洞察-3)（I阶段洞察）→ [milestone-patterns.md#模式2](../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-2)（E阶段模式）—— 火山引擎AgentKit里程碑复盘萃取（对抗审查视角权重）
 
 # V阶段对抗审查「用户视角优先」权重分配模式
 
