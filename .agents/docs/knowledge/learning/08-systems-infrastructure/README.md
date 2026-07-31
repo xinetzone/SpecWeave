@@ -19,6 +19,7 @@ date: "2026-07-09"
 | [📘 WSL 完整 Wiki 教程](wsl-wiki/README.md) | 系统化 WSL 多章节 Wiki 教程（10章），整合 wsl-learning-plan 与 wsl-cli-and-architecture-wiki 两份源文档。覆盖：WSL1/2对比、安装发行版管理、快速开始、CLI完整参考（wsl.exe+wslc.exe）、核心架构与进程模型（含Mermaid架构图）、文件系统互操作、WSL Container API三语言编程（C/C++/C#）、网络配置与systemd、调试诊断与开发环境搭建、最佳实践FAQ、术语表与参考资料。 | `wsl` `wiki` `tutorial` `wsl2` `architecture` |
 | [📘 Git 高级命令 Wiki 教程](git-advanced-wiki/README.md) | 聚焦 Git 高级参数与特殊场景的 Wiki 教程（2章），重点讲解 git clone --no-local --bare 的组合语义与底层行为。覆盖：普通仓库vs裸仓库对比、本地硬链接优化机制与禁用场景、四类Git传输协议、--bare/--no-local/--mirror参数拆解、5大典型组合使用场景（中央仓库搭建/离线归档/CI隔离/完整性验证/跨文件系统迁移）、5个常见坑点排错、速查决策表。 | `git` `git-clone` `bare-repository` `wiki` `tutorial` |
 | [🔄 Git+百度网盘跨设备同步方案](git-baidu-sync/README.md) | 基于git clone --no-local --bare结合百度网盘同步空间的私有Git仓库跨设备同步完整方案。包含目录规范、跨平台配置、锁机制、日常同步脚本、冲突检测、健康检查、备份恢复、故障排查等11章文档，以及12个PowerShell/Bash双平台脚本。覆盖Windows/macOS/Linux，经对抗审查加固，含17个坑点警告和12条反模式。 | `git` `baidu-netdisk` `sync` `bare-repository` `cross-platform` `devops` |
+| [🔥 AI大模型×PowerShell 5 地狱难度 Wiki 教程](ai-powershell5-hell-wiki/README.md) | 使用R-F-I-V-E七概念方法论系统性研究AI大模型在Windows PowerShell 5.1环境下的高难度应用场景与技术挑战。覆盖脚本开发/自动化任务/系统管理三大领域24个典型失败案例，从语言设计/训练数据/执行环境三维度进行第一性原理分析，提炼14个结构化洞察，经安全专家/企业管理员/未来维护者三视角对抗审查加固，产出5个可复用模式（防御性Prompt模板/兼容性预检Checklist/安全审查Checklist/安全默认值防护/PS7语法降级转换）。共11章，含84个代码示例（30个经PS5.1语法验证通过）。 | `powershell` `powershell-5.1` `ai-coding` `compatibility` `constrained-language-mode` `security` `wiki` `tutorial` |
 
 <!-- README_INDEX_END -->
 
