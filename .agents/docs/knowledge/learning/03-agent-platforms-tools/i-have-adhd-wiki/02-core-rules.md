@@ -7,7 +7,7 @@ source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 规则详解"
 
 本章逐条详解i-have-adhd的10条输出规则。每条规则都基于第二章所述的认知科学原理设计，有明确的正反示例和设计要点。
 
-**核心源文件**：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L33-L117](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L33-L117)
+**核心源文件**：`external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L33-L117`（源项目归档路径，规则详解已迁移至本章正文）
 
 ---
 

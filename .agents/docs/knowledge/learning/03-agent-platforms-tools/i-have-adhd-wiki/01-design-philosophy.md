@@ -15,7 +15,7 @@ i-have-adhd 的设计出发点**不是简单的"让AI说短点"**，而是基于
 
 > **立场声明**：本项目采用 "No ADHD diagnosis needed" 立场——这些输出优化对所有追求效率的用户都有价值，不要求使用者自我认同或确诊任何医学状况。认知科学原理在此作为设计输入，而非诊断依据。
 
-**核心源文件**：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L23-L31](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L23-L31)
+**核心源文件**：`external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L23-L31`（源项目归档路径，五条核心事实已在本章 2.2 节列出）
 
 ## 2.2 五大核心认知事实
 

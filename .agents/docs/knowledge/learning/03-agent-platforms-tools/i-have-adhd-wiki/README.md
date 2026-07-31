@@ -9,13 +9,13 @@ source: "external/libs/i-have-adhd 知识沉淀"
 
 i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知原理设计输出规范，让AI回复"行动优先、步骤清晰、无冗余客套"。本Wiki系统梳理i-have-adhd的设计理念、核心规则、安装配置、评估体系与自定义开发方法，为Agent Skills开发者提供可复用的设计范式参考。
 
-**源项目地址**：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/)
+**源项目地址**：`external/libs/i-have-adhd/`（源项目归档路径，本 Wiki 为基于源码分析的知识沉淀副本）
 
 ## 二、章节导航
 
 | 编号 | 文件 | 标题 | 内容简介 |
 |------|------|------|---------|
-| 00 | [00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) | 一、概述 | 项目介绍、核心理念、适用人群、Before/After效果对比、文档结构索引 |
+| 00 | [00-overview.md](./00-overview.md) | 一、概述 | 项目介绍、核心理念、适用人群、Before/After效果对比、文档结构索引 |
 | 01 | 01-design-philosophy.md | 二、设计理念 | ADHD认知科学基础、五条核心事实、《The Adult ADHD Tool Kit》理论溯源、输出设计思路 |
 | 02 | 02-core-rules.md | 三、核心规则 | 10条输出规则逐条详解、正反示例对比、Pre-send检查清单、适用边界说明 |
 | 03 | 03-exceptions-and-checklist.md | 四、例外场景与自检清单 | 6种可以打破规则的场景：解释请求、危险操作、调试死循环、需求歧义、规则冲突、宿主约束，Pre-send检查清单 |
@@ -25,9 +25,9 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 | 07 | 07-customization-and-troubleshooting.md | 八、自定义开发与故障排查 | Fork修改流程、SKILL.md定制方法、私有插件市场部署、跨平台适配、常见问题排查 |
 | 08 | 08-patterns-extracted.md | 九、可复用模式萃取 | 可复用输出设计模式提炼、SpecWeave技能体系集成思考、反模式识别与避坑指南 |
 | 09 | 09-faq-and-resources.md | 十、FAQ与资源汇总 | 常见问题解答、使用技巧、故障排查、与其他输出风格Skill的对比 |
-| 10 | [10-action-first-paradigm.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) | 十一、行动优先输出范式深度解析 | 行动优先vs解释优先双范式对比、认知负荷管理5原则、输出设计决策框架、4类边界场景（非技术用户/长对话/创意写作/高风险决策）、8个破规场景 |
-| 11 | [11-reverse-adaptation-innovation.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) | 十二、逆向适配创新方法论 | "极端用户→通用设计"创新5步法、适用条件与风险点、4个工业级失败案例、7个早期预警信号、帕金森/自闭症/CBT/创伤知情4个跨领域迁移机会点 |
-| 12 | [12-design-tradeoffs-and-writing.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md) | 十三、设计取舍与技术写作借鉴 | 4个关键设计决策的trade-off分析、原文写作风格4大特点、技术开源项目写作4条技巧、核心优势与可改进空间 |
+| 10 | [10-action-first-paradigm.md](./10-action-first-paradigm.md) | 十一、行动优先输出范式深度解析 | 行动优先vs解释优先双范式对比、认知负荷管理5原则、输出设计决策框架、4类边界场景（非技术用户/长对话/创意写作/高风险决策）、8个破规场景 |
+| 11 | [11-reverse-adaptation-innovation.md](./11-reverse-adaptation-innovation.md) | 十二、逆向适配创新方法论 | "极端用户→通用设计"创新5步法、适用条件与风险点、4个工业级失败案例、7个早期预警信号、帕金森/自闭症/CBT/创伤知情4个跨领域迁移机会点 |
+| 12 | [12-design-tradeoffs-and-writing.md](./12-design-tradeoffs-and-writing.md) | 十三、设计取舍与技术写作借鉴 | 4个关键设计决策的trade-off分析、原文写作风格4大特点、技术开源项目写作4条技巧、核心优势与可改进空间 |
 
 ## 三、核心特色速览
 
@@ -56,7 +56,7 @@ i-have-adhd 是一个跨AI编程助手的Agent Skills插件，基于ADHD认知�
 ### 推荐阅读顺序
 
 **快速了解（15分钟）**：
-1. [00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) - 了解项目定位和效果对比
+1. [00-overview.md](./00-overview.md) - 了解项目定位和效果对比
 2. 02-core-rules.md - 掌握10条核心规则（待填充）
 3. 04-installation-guide.md - 安装到自己的AI编程助手体验（待填充）
 
