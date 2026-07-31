@@ -20,6 +20,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [legacy-cpp-compilation-compatibility-checklist.md](legacy-cpp-compilation-compatibility-checklist.md) | 老旧 C++ 项目编译兼容性预检清单：6项预检（BLAS/Python/OpenCV/protobuf/C++标准/Boost），在编写Dockerfile前预判兼容性问题 | L1 实验性 | 5年以上C++项目编译、深度学习框架旧版本移植、跨OS版本编译 |
 | [ops-sop-standard-template.md](ops-sop-standard-template.md) | 操作 SOP 标准化模板：从复盘报告提取可执行步骤，按"前置条件→快速开始→详细步骤→验证→故障排查→关联文档"结构组织，确保知识可执行化 | L1 实验性 | 项目复盘后需产出操作手册、技术任务标准化流程文档、知识转化闭环 |
 | [python-wheel-dependency-audit-wda4.md](python-wheel-dependency-audit-wda4.md) | Python Wheel依赖审计四步法（WDA-4）：静态import扫描→传递/动态依赖补全→声明格式验证→Docker环境同步+端到端验证，系统性确保pyproject.toml依赖声明完整 | L1 实验性 | Python wheel发布前依赖检查、requirements.txt迁移pyproject.toml、多环境依赖一致性验证、ModuleNotFoundError根因排查 |
+| [cross-migration-link-fix-sop.md](cross-migration-link-fix-sop.md) | 跨迁移断链批量修复四步桶分法（P-Link-Migrate-v1）：A桶绝对路径批处理→B桶相对路径深度自动修→C桶不存在占位降级内联→复检归零，覆盖盘符迁移/原子拆分/vendor换源场景 | L1 实验性 | 盘符/主机拷贝、原子化目录重构后、vendor大版本升级、单轮本地断链≥20且50%含盘符绝对路径 |
+| [external-url-dead-bucket-fix-sop.md](external-url-dead-bucket-fix-sop.md) | 外部URL死链分桶治理SOP（P-Link-ExtBucket-v1）：去超时噪声→按二级域分桶→A桶URL迁移纠正/B桶内联失效注记/C桶白名单保留→清缓存复检，统计口径必须三列拆分 | L1 实验性 | 外链硬错误≥10条、3+域名各≥2条、BibTeX文献管理、博客友链页死链清理 |
 
 ## 成熟度定义
 
