@@ -71,17 +71,17 @@ summary: "IDL 相关术语表、权威参考资料、按难度分级的扩展阅
 
 ### Apache Avro
 
-- Avro 规范：[avro.apache.org/docs/current/spec.html](https://avro.apache.org/docs/current/spec.html)
-- Avro IDL 语法：[avro.apache.org/docs/current/idl.html](https://avro.apache.org/docs/current/idl.html)
+- Avro 规范：`avro.apache.org/docs/current/spec.html`（原外部链接 2026-07 复检已失效：avro.apache.org/docs/current/spec.html）
+- Avro IDL 语法：`avro.apache.org/docs/current/idl.html`（原外部链接 2026-07 复检已失效：avro.apache.org/docs/current/idl.html）
 
 ### Microsoft MIDL
 
 - Microsoft MIDL 官方文档：[learn.microsoft.com/windows/win32/midl](https://learn.microsoft.com/windows/win32/midl)
-- COM IDL 语法指南：[learn.microsoft.com/windows/win32/com/interface-definitions-and-type-libraries](https://learn.microsoft.com/windows/win32/com/interface-definitions-and-type-libraries)
+- COM IDL 语法指南：`learn.microsoft.com/windows/win32/com/interface-definitions-and-type-libraries`（原外部链接 2026-07 复检已失效：learn.microsoft.com/windows/win32/com/interface-definitio...）
 
 ### OpenAPI
 
-- OpenAPI 规范：[swagger.io/spec](https://swagger.io/spec)
+- OpenAPI 规范：[swagger.io/spec](https://spec.openapis.org/oas/latest.html)
 - OpenAPI 3.1 规范文档：[spec.openapis.org/oas/v3.1.0](https://spec.openapis.org/oas/v3.1.0)
 
 ### GraphQL

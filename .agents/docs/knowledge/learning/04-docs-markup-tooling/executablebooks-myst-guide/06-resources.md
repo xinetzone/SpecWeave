@@ -56,7 +56,7 @@ title: "参考资源与链接汇总"
 - [myst-theme](https://github.com/executablebooks/myst-theme)
   MyST 网站主题组件，基于 React 构建，提供可定制的文档网站界面。
 
-- [jupyter-book/examples](https://github.com/executablebooks/jupyter-book/tree/master/examples)
+- [jupyter-book/examples](https://github.com/executablebooks/jupyter-book/tree/main/examples)
   Jupyter Book v1 官方示例集合，展示各种功能的使用方法。
 
 ## 3. 核心功能文档链接（按主题分类）
@@ -114,15 +114,15 @@ title: "参考资源与链接汇总"
 - [网站部署](https://mystmd.org/guide/deployment)
   如何将 MyST 文档部署到 GitHub Pages、Read the Docs、Netlify、Vercel 等平台。
 
-- [PDF/Word 导出](https://mystmd.org/guide/exports)
+- `PDF/Word 导出`（原外部链接 2026-07 复检已失效：mystmd.org/guide/exports）
   导出为 PDF、Word（DOCX）、LaTeX、JATS XML 等格式的配置和使用方法。
 
-- [主题模板](https://mystmd.org/guide/themes-and-templates)
+- `主题模板`（原外部链接 2026-07 复检已失效：mystmd.org/guide/themes-and-templates）
   网站主题选择、自定义主题、期刊模板使用指南。
 
 ### 交互式内容
 
-- [Jupyter Notebook 集成](https://mystmd.org/guide/jupyter-notebooks)
+- `Jupyter Notebook 集成`（原外部链接 2026-07 复检已失效：mystmd.org/guide/jupyter-notebooks）
   如何在 MyST 文档中嵌入 Jupyter Notebook，执行代码单元格，集成计算内容。
 
 - [交互式组件](https://mystmd.org/guide/interactive-notebooks)
@@ -132,10 +132,10 @@ title: "参考资源与链接汇总"
 
 ### 博客与文章
 
-- [ExecutableBooks 博客](https://executablebooks.org/en/latest/blog.html)
+- `ExecutableBooks 博客`（原外部链接 2026-07 复检已失效：executablebooks.org/en/latest/blog.html）
   官方博客，发布版本更新、功能介绍、使用案例等文章。
 
-- [MyST Markdown 发布公告](https://www.2i2c.org/blog/2023/mystmd/)
+- `MyST Markdown 发布公告`（原外部链接 2026-07 复检已失效：www.2i2c.org/blog/2023/mystmd/）
   2i2c 博客上关于 mystmd 发布的介绍文章，讲述 mystmd 的设计理念和愿景。
 
 ### 讨论区与社区渠道
@@ -151,7 +151,7 @@ title: "参考资源与链接汇总"
 
 ### 示例项目
 
-- [Jupyter Book Gallery](https://executablebooks.org/en/latest/gallery.html)
+- `Jupyter Book Gallery`（原外部链接 2026-07 复检已失效：executablebooks.org/en/latest/gallery.html）
   官方展示的使用 Jupyter Book/MyST 构建的优秀文档和书籍案例。
 
 - [MyST 文档自身](https://mystmd.org)
@@ -209,7 +209,7 @@ title: "参考资源与链接汇总"
 
 如果你有 Jupyter Book v1 使用经验，建议按以下顺序迁移：
 
-1. **了解差异**：阅读 mystmd 文档中关于 [Jupyter Book 迁移](https://mystmd.org/guide/quickstart-jupyter-book) 的说明
+1. **了解差异**：阅读 mystmd 文档中关于 `Jupyter Book 迁移`（原外部链接 2026-07 复检已失效：mystmd.org/guide/quickstart-jupyter-book） 的说明
 2. **安装 mystmd**：使用 npm 安装最新版 mystmd CLI 工具
 3. **配置迁移**：将 `_config.yml` 配置迁移到 `myst.yml`
 4. **目录迁移**：可以暂时保留 `_toc.yml`，或逐步迁移到 `myst.yml` 的 `site.nav`

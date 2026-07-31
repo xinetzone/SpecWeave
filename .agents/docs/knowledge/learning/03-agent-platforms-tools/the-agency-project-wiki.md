@@ -546,9 +546,9 @@ NEXUS-Full 模式包含七个标准化阶段：
 
 ### 工具链
 
-- **Claude Code**：[官方网站](https://www.anthropic.com/index/claude-code)
+- **Claude Code**：`官方网站`（原外部链接 2026-07 复检已失效：www.anthropic.com/index/claude-code）
 - **Cursor**：[官方网站](https://cursor.sh)
-- **Codex**：[官方网站](https://www.codex.so)
+- **Codex**：`官方网站`（原外部链接 2026-07 复检已失效：www.codex.so）
 - **Gemini CLI**：[Google AI](https://ai.google.dev/gemini-api/docs/cli)
 
 ### 社区资源
