@@ -176,3 +176,19 @@ gate_g2_passed: true
 - 证据引用全部来自 F001~F060 有效编号，覆盖 A/B/C/D/E/F 全部 6 个事实类别（超最低要求 5 类）
 - 层次感清晰：战略层洞察（AgentKit 差异化战略）→ 架构层洞察（治理外环优先、Session/Memory 经济分层）→ 实践层洞察（渐进部署路径、存量接入两阶段法）
 - 符合七概念方法论 I 阶段 G2 质量门全部要求
+
+---
+
+## E阶段：模式萃取记录
+
+> 本章节记录 I 阶段洞察向 E 阶段（Extraction/萃取）模式库的转化情况，保持洞察→模式的双向溯源。
+
+| 洞察 | 是否萃取为模式 | 模式ID | 模式类型 | 成熟度 | 模式文件路径 | 萃取决策说明 |
+|------|--------------|--------|---------|--------|------------|------------|
+| 洞察1（战略层）：三重锁定组合 | ❌ 未萃取 | — | — | — | — | 特定产品战略分析，过于具体（VeADK+Serverless+治理三板斧是火山引擎特有组合），缺乏跨场景迁移性，不具备通用模式价值 |
+| 洞察2（架构层）：治理外环包裹业务内环 | ✅ 已萃取 | `governance-outer-ring` | 架构模式 | L1 实验性 | `.agents/docs/retrospective/patterns/architecture-patterns/governance-outer-ring.md` | 通用架构设计原则：治理外环（Identity+Gateway+Observability+Evaluation）优先于业务内环，可迁移至微服务/数据平台/IoT平台等多场景 |
+| 洞察3（架构层）：Session/Memory经济分层 | ✅ 已萃取 | `data-lifecycle-economic-stratification` | 架构模式 | L1 实验性 | `.agents/docs/retrospective/patterns/architecture-patterns/data-lifecycle-economic-stratification.md` | 通用数据分层架构思想：基于经济属性（消耗品vs知识资产）分层，可迁移至CMS/数据湖/日志系统/个人知识管理等多场景 |
+| 洞察4（实践层）：CLI渐进式部署引导 | ❌ 未萃取 | — | — | — | — | 特定CLI命令设计模式，与现有`two-phase-development`（两阶段开发）思想重叠，但场景过窄（仅AgentKit CLI的launch命令），不单独萃取为新模式 |
+| 洞察5（实践层）：存量系统双轨接入两阶段法 | ✅ 已萃取 | `legacy-integration-dual-track` | 架构模式 | L1 实验性 | `.agents/docs/retrospective/patterns/architecture-patterns/legacy-integration-dual-track.md` | 通用系统集成策略：第一阶段REST快速转换只读验证价值，第二阶段数据驱动优化核心接口，可迁移至微服务网关/数据接入/多云迁移等多场景 |
+
+**萃取统计**：5条洞察中3条成功萃取为架构模式（萃取率60%），均为L1实验性（单案例验证），需在后续项目中积累≥2次验证后方可升级为L2已验证。
