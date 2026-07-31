@@ -37,6 +37,7 @@ tags: ["git", "git-clone", "bare-repository", "version-control", "tutorial", "wi
 ## 🔗 关联文档（扩展阅读）
 
 - [系统基础设施目录索引](../README.md)：本分类下其他技术主题 Wiki
+- [🔄 Git+百度网盘跨设备同步实践](../git-baidu-sync/README.md)：git clone --no-local --bare的实战应用方案，12个脚本+11章文档
 
 ---
 
