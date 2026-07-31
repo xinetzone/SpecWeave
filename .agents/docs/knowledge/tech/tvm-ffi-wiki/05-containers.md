@@ -27,14 +27,14 @@ TVM FFI 提供了一组内置容器类型，用于在 C++、Python 和 Rust 之�
 
 | 容器名称 | C++ 类型 | Python 类型 | 可变性 | 类比 Python 类型 | 头文件 |
 |---------|---------|------------|-------|-----------------|--------|
-| Array | `Array<T>` | `tvm_ffi.Array` | 不可变（COW） | `tuple` / 只读 `list` | [array.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/container/array.h) |
-| Map | `Map<K,V>` | `tvm_ffi.Map` | 不可变（COW） | `frozendict` | [map.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/container/map.h) |
+| Array | `Array<T>` | `tvm_ffi.Array` | 不可变（COW） | `tuple` / 只读 `list` | `array.h`（源项目归档路径） |
+| Map | `Map<K,V>` | `tvm_ffi.Map` | 不可变（COW） | `frozendict` | `map.h`（源项目归档路径） |
 | String | `String` | `str` | 不可变 | `str` | string.h |
 | Shape | `Shape` | `tuple` | 不可变 | 维度元组 | shape.h |
 | Tuple | `Tuple<Ts...>` | - | 不可变 | 异构固定元组 | tuple.h |
 | List | `List<T>` | `tvm_ffi.List` | 可变 | `list` | list.h |
 | Dict | `Dict<K,V>` | `tvm_ffi.Dict` | 可变 | `dict` | dict.h |
-| Tensor | `Tensor` | `tvm_ffi.Tensor` | - | `numpy.ndarray` | [tensor.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/container/tensor.h) |
+| Tensor | `Tensor` | `tvm_ffi.Tensor` | - | `numpy.ndarray` | `tensor.h`（源项目归档路径） |
 | Variant | `Variant<T...>` | - | - | 类型安全联合 | variant.h |
 
 ---

@@ -26,7 +26,7 @@ tags:
 
 > **方法论链路**：R（复盘事实采集）→ I（洞察根因分析）→ E（可复用模式萃取）→ V（多视角对抗审查）  
 > **场景识别**：知识沉淀场景（场景4），链路 R→I→E→V  
-> **分析对象**：[caffex/include/caffe](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe) 与 [caffex/src/caffe](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe) 目录结构与依赖关系
+> **分析对象**：`caffex/include/caffe`（源项目归档路径） 与 `caffex/src/caffe`（源项目归档路径） 目录结构与依赖关系
 
 ---
 
@@ -72,13 +72,13 @@ caffex/
 
 | 头文件 | 直接依赖的 caffe 头文件 | 被哪些核心头文件依赖 |
 |--------|------------------------|---------------------|
-| [common.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/common.hpp) | 无（仅依赖系统/第三方库） | 所有其他核心头文件 |
-| [syncedmem.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/syncedmem.hpp) | `common.hpp` | `blob.hpp` |
-| [blob.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/blob.hpp) | `common.hpp`, `syncedmem.hpp` | `layer.hpp`, `net.hpp`, `util/hdf5.hpp` |
-| [layer.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp) | `common.hpp`, `blob.hpp`, `layer_factory.hpp` | `net.hpp`, `layer_factory.hpp`（循环包含） |
-| [layer_factory.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp) | `common.hpp`, `layer.hpp` | `layer.hpp`（循环包含） |
-| [net.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp) | `common.hpp`, `blob.hpp`, `layer.hpp` | `solver.hpp` |
-| [solver.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/solver.hpp) | `common.hpp`, `net.hpp` | `util/signal_handler.h` |
+| `common.hpp`（源项目归档路径） | 无（仅依赖系统/第三方库） | 所有其他核心头文件 |
+| `syncedmem.hpp`（源项目归档路径） | `common.hpp` | `blob.hpp` |
+| `blob.hpp`（源项目归档路径） | `common.hpp`, `syncedmem.hpp` | `layer.hpp`, `net.hpp`, `util/hdf5.hpp` |
+| `layer.hpp`（源项目归档路径） | `common.hpp`, `blob.hpp`, `layer_factory.hpp` | `net.hpp`, `layer_factory.hpp`（循环包含） |
+| `layer_factory.hpp`（源项目归档路径） | `common.hpp`, `layer.hpp` | `layer.hpp`（循环包含） |
+| `net.hpp`（源项目归档路径） | `common.hpp`, `blob.hpp`, `layer.hpp` | `solver.hpp` |
+| `solver.hpp`（源项目归档路径） | `common.hpp`, `net.hpp` | `util/signal_handler.h` |
 
 **依赖链可视化**：
 
@@ -145,8 +145,8 @@ common.hpp (根)
 ### 洞察6：util层存在反向依赖（架构债务）
 
 - **现象**：
-  - [util/signal_handler.h](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/util/signal_handler.h#L5) 直接 `#include "caffe/solver.hpp"`，因使用了 `SolverAction::Enum`
-  - [util/hdf5.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/util/hdf5.hpp#L10) 直接 `#include "caffe/blob.hpp"`，因函数参数使用了 `Blob<Dtype>*`
+  - `util/signal_handler.h`（源项目归档路径） 直接 `#include "caffe/solver.hpp"`，因使用了 `SolverAction::Enum`
+  - `util/hdf5.hpp`（源项目归档路径） 直接 `#include "caffe/blob.hpp"`，因函数参数使用了 `Blob<Dtype>*`
 - **根因**：SignalHandler直接耦合了SolverAction枚举定义位置；HDF5工具直接操作具体的Blob类型而非泛型接口
 - **影响**：util层不再是纯底层工具，任何solver.hpp或blob.hpp的变更都会影响util编译；util无法独立复用；底层工具依赖上层业务对象违反了分层原则
 - **建议**：

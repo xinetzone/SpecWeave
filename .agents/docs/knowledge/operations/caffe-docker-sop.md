@@ -168,7 +168,7 @@ Caffe 1.0（2017）在 Ubuntu 22.04 + Python 3.10 环境下存在系统性兼容
 - Boost 版本（库命名差异）
 - C++ 标准（C++11 → C++14）
 
-详见：[老旧 C++ 项目编译兼容性预检清单](../patterns/process-patterns/legacy-cpp-compilation-compatibility-checklist.md)
+详见：`patterns/process-patterns/legacy-cpp-compilation-compatibility-checklist.md`（参考流程清单，配套资源已归档）
 
 ### 8.4 `import caffe` 失败
 
@@ -272,7 +272,7 @@ external/chaos/caffe/docker/local/
 | 文档 | 说明 |
 |------|------|
 | [RUNTIME_IMAGE_USAGE.md](../../../external/chaos/caffe/docker/local/conda/RUNTIME_IMAGE_USAGE.md) | 运行时镜像使用指南 |
-| [可参考项目索引](../../assets/reference-project-index.md) | 同类项目参考模板 |
-| [老旧 C++ 编译兼容性预检清单](../../patterns/process-patterns/legacy-cpp-compilation-compatibility-checklist.md) | 编译兼容性检查清单 |
+| `assets/reference-project-index.md`（参考索引已归档） | 同类项目参考模板 |
+| `patterns/process-patterns/legacy-cpp-compat-checklist.md`（参考清单已归档） | 编译兼容性检查清单 |
 | [复盘报告](../../retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md) | 全流程复盘 |
 | [导出报告](../../retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/export-summary.md) | 项目汇总导出 |

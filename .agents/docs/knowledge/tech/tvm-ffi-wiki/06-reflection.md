@@ -21,8 +21,8 @@ category: "tech"
 反射系统核心价值：零样板绑定、类型安全、IDE 友好（stub 生成）、dataclass 语义、双向反射。
 
 **关键头文件**：
-- [reflection/registry.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/reflection/registry.h)
-- [extra/dataclass.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/extra/dataclass.h)
+- `reflection/registry.h`（源项目归档路径）
+- `extra/dataclass.h`（源项目归档路径）
 
 ## 反射系统设计理念
 

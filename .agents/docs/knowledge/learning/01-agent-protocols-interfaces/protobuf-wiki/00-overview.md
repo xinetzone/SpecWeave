@@ -64,25 +64,25 @@ protobuf-wiki/
 > 我要写个gRPC服务，不想听历史，告诉我怎么做就行
 
 1. 读完本页TL;DR
-2. 直接读 [04-selection-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md)
-3. 遇到问题查 [02-version-comparison.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.md) 的对比矩阵
+2. 直接读 [04-selection-guide.md](./04-selection-guide.md)
+3. 遇到问题查 [02-version-comparison.md](./02-version-comparison.md) 的对比矩阵
 
 ### 阅读路径2：迁移实践者（适合要做proto2→proto3迁移，2小时）
 > 我手上有个proto2老项目要迁到proto3，需要知道风险和步骤
 
 1. 读完本页
-2. [01-version-timeline.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.md)：快速过一遍关键变化节点
-3. [02-version-comparison.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.md)：重点看presence、默认值、枚举三个维度
-4. [03-feature-evolution.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md)：理解每个功能变化的原因
-5. [05-migration-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md)：按检查清单执行
+2. [01-version-timeline.md](./01-version-timeline.md)：快速过一遍关键变化节点
+3. [02-version-comparison.md](./02-version-comparison.md)：重点看presence、默认值、枚举三个维度
+4. [03-feature-evolution.md](./03-feature-evolution.md)：理解每个功能变化的原因
+5. [05-migration-guide.md](./05-migration-guide.md)：按检查清单执行
 
 ### 阅读路径3：深度理解（适合架构师/API设计者，半天）
 > 我要设计公司的IDL规范，想理解Protobuf演进背后的设计哲学
 
 1. 完整阅读所有文档
 2. 重点关注：
-   - [03-feature-evolution.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md) 中的设计哲学三阶段
-   - [04-selection-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md) 中的可复用模式
+   - [03-feature-evolution.md](./03-feature-evolution.md) 中的设计哲学三阶段
+   - [04-selection-guide.md](./04-selection-guide.md) 中的可复用模式
 3. 思考这些模式如何应用到你自己的API/DSL设计中
 
 ---
@@ -138,9 +138,9 @@ protobuf-wiki/
 
 ## 与其他Wiki的关系
 
-- **向上导航**：[01-agent-protocols-interfaces README](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md)
+- **向上导航**：[../README.md](../README.md)
 - **idl-wiki**（待建）：通用IDL设计原则、跨格式对比（Protobuf/Thrift/JSON Schema/Avro）
-- **caffe-architecture-wiki**：Caffe深度学习框架架构解析，其中caffe.proto是proto2的典型实例，可参考本Wiki的[迁移指南](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md#caffeproto迁移成本评估)进行迁移评估
+- **caffe-architecture-wiki**：Caffe深度学习框架架构解析，其中caffe.proto是proto2的典型实例，可参考本Wiki的[迁移指南](./05-migration-guide.md#caffeproto迁移成本评估)进行迁移评估
 - **grpc-wiki**（待建）：gRPC最佳实践，其中服务定义默认使用proto3
 
 ---
@@ -155,4 +155,4 @@ protobuf-wiki/
 
 ---
 
-**下一章**：[01-version-timeline.md - 版本演进时间轴](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.md)
+**下一章**：[01-version-timeline.md - 版本演进时间轴](./01-version-timeline.md)

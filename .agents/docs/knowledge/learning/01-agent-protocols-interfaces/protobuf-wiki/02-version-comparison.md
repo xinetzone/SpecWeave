@@ -285,6 +285,6 @@ proto2发枚举值999（越界）→ proto2解析进未知字段 → proto3解�
 ---
 
 **导航**：
-- ← 上一章：[01-version-timeline.md - 版本演进时间轴](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.md)
-- ↑ 上级：[README](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md)
-- → 下一章：[03-feature-evolution.md - 核心功能演进](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md)
+- ← 上一章：[01-version-timeline.md - 版本演进时间轴](./01-version-timeline.md)
+- ↑ 上级：[README](../README.md)
+- → 下一章：[03-feature-evolution.md - 核心功能演进](./03-feature-evolution.md)

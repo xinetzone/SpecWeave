@@ -9,7 +9,7 @@ tags: ["Caffe", "反模式", "防御式编程", "代码模板", "依赖裁剪", 
 
 > 从 daoflows/caffe 现代化改造实战中萃取的8个经典陷阱，每个陷阱都包含：问题本质、错误示例、防御策略、可直接复用的代码模板。
 >
-> 配套工具：已在 [defenses.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/compat/defenses.py) 中实现为可复用的Python防御工具；C++防御模板见本文。
+> 配套工具：已在 `defenses.py`（源项目归档路径） 中实现为可复用的Python防御工具；C++防御模板见本文。
 
 ---
 
@@ -601,7 +601,7 @@ if(USE_CUDA)
 endif()
 ```
 
-**Python版适配层已实现**：见 [compat/__init__.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/compat/__init__.py)，支持延迟导入、友好错误提示、版本兼容。
+**Python版适配层已实现**：见 `compat/__init__.py`（源项目归档路径），支持延迟导入、友好错误提示、版本兼容。
 
 ---
 
@@ -941,6 +941,6 @@ void SafeNumPyOp() {
 | 文档 | 关系 |
 |------|------|
 | [07-caffe-cpp-slim-tvm-ffi-modernization.md](07-caffe-cpp-slim-tvm-ffi-modernization.md) | 反模式原始来源（Caffe现代化改造总结） |
-| [defenses.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/compat/defenses.py) | Python防御工具实现 |
-| [compat/__init__.py](file:///d:/spaces/SpecWeave/.agents/scripts/lib/compat/__init__.py) | Python依赖裁剪适配层 |
+| `defenses.py`（源项目归档路径） | Python防御工具实现 |
+| `compat/__init__.py`（源项目归档路径） | Python依赖裁剪适配层 |
 | op-extension示例代码 | 扩展四步法实战（应用了本文的防御实践） |

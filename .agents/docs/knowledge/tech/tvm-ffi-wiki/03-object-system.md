@@ -27,7 +27,7 @@ category: "tech"
 
 Object 系统的核心是两个基类：`Object`（数据对象）和 `ObjectRef`（引用包装器）。
 
-**关键头文件**：[object.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/object.h)
+**关键头文件**：`object.h`（源项目归档路径）
 
 ## FooObj + Foo 双类设计模式
 

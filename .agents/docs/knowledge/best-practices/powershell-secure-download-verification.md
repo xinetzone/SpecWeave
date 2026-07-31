@@ -58,9 +58,9 @@ pwsh -File "D:\spaces\SpecWeave\.agents\scripts\Verify-FileIntegrity.ps1" `
 
 | 工具 | 路径 | 用途 |
 |------|------|------|
-| 三重防御验证脚本 | [Verify-FileIntegrity.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/Verify-FileIntegrity.ps1) | 独立可执行脚本，对任意文件执行大小+魔数+哈希三层验证 |
-| 证书问题FAQ卡片 | [powershell-https-cert-bypass-download.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/analysis-cards/powershell-https-cert-bypass-download.md) | 详细FAQ：4种证书绕过方案、反模式陷阱、一键下载函数 |
-| WSL完整安装指南 | [wsl-distro-install-migration-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md) | WSL发行版离线安装、迁移、默认用户配置完整流程 |
+| 三重防御验证脚本 | `Verify-FileIntegrity.ps1`（源项目归档路径） | 独立可执行脚本，对任意文件执行大小+魔数+哈希三层验证 |
+| 证书问题FAQ卡片 | `powershell-https-cert-bypass-download.md`（源项目归档路径） | 详细FAQ：4种证书绕过方案、反模式陷阱、一键下载函数 |
+| WSL完整安装指南 | `wsl-distro-install-migration-guide.md`（源项目归档路径） | WSL发行版离线安装、迁移、默认用户配置完整流程 |
 
 ---
 

@@ -316,8 +316,8 @@ assert add_one(41) == 42
 
 ## 关键引用
 
-- [python/tvm_ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/python/tvm_ffi) - Python 包源码
-- [docs/guides/python_lang_guide.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/guides/python_lang_guide.md) - 官方 Python 指南
+- `python/tvm_ffi/`（源项目归档路径） - Python 包源码
+- `docs/guides/python_lang_guide.md`（源项目归档路径） - 官方 Python 指南
 
 ---
 
