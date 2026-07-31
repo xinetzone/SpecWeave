@@ -286,7 +286,8 @@
   3. C++ Blob: `DataRefCount()`/`DiffRefCount()`对numel=0的空tensor返回0
   4. C++ Blob: `Reshape()`仅在shape改变/新分配tensor时才清除共享标志，shape不变时保留COW状态（修复in-place ReLU等场景COW失效问题）
   5. C++ Blob: `ShareData`/`ShareDiff`设置共享标志，COW/Unshare/Reshape(分配新tensor时)清除标志
-  6. 全量测试: 560 passed, 1 pre-existing failure（test_create_destroy_loop_no_leak，COW关闭时也失败），1 skipped
+  6. Python Blob: 修复`_tensor_to_numpy`引用循环——将`_blob_ref`从`ctypes.cast()`返回的LP_c_float指针迁移到`arr.base.obj`（numpy内部ctypes数组对象），解决test_create_destroy_loop_no_leak内存泄漏
+  7. 全量测试: 561 passed, 0 failures, 1 skipped
 
 ### Task 12: Phase 3.2 O(1)批量refcount优化
 - **Priority**: low
