@@ -505,4 +505,196 @@ function Diag-CheckConflictsAndTemp {
 
     $bareRepo = $null
     if ($RemoteUrl -and (Test-Path $RemoteUrl -PathType Container)) {
-        $bareRepo = Di
+        $bareRepo = Diag-ResolveFullPath $RemoteUrl
+    }
+    elseif ($SRoot -and $RepoName) {
+        $bareRepo = Join-Path (Diag-ResolveFullPath $SRoot) "repos\$RepoName.git"
+    }
+
+    if (-not $bareRepo -or -not (Test-Path $bareRepo -PathType Container)) {
+        Diag-Write -Status INFO -Name "冲突扫描" -Detail "裸仓库不可访问，跳过"
+        return
+    }
+
+    $tempPatterns = @('*.tmp', '*.pack-tmp', '*.part', '*.temp', '*.downloading')
+    $tempFiles = @()
+    foreach ($pattern in $tempPatterns) {
+        try {
+            $found = Get-ChildItem -Path $bareRepo -Recurse -Filter $pattern -File -ErrorAction SilentlyContinue
+            if ($found) { $tempFiles += $found }
+        }
+        catch {}
+    }
+    try {
+        $tmpPack = Get-ChildItem -Path $bareRepo -Recurse -Filter 'tmp_pack_*' -File -ErrorAction SilentlyContinue
+        if ($tmpPack) { $tempFiles += $tmpPack }
+    }
+    catch {}
+
+    $strayLocks = @()
+    try {
+        $allLocks = Get-ChildItem -Path $bareRepo -Recurse -Filter '*.lock' -File -ErrorAction SilentlyContinue
+        foreach ($lock in $allLocks) {
+            $bname = $lock.Name
+            if ($bname -ne 'HEAD.lock' -and $bname -notmatch '^pack-.+\.lock$') {
+                $rel = $lock.FullName.Substring($bareRepo.Length).TrimStart('\', '/')
+                if ($rel -notlike 'locks\*') {
+                    $strayLocks += $lock
+                }
+            }
+        }
+    }
+    catch {}
+    if ($strayLocks) { $tempFiles += $strayLocks }
+
+    if ($tempFiles.Count -eq 0) {
+        Diag-Write -Status OK -Name "临时文件检测" -Detail "未发现.tmp/.pack-tmp等半同步文件"
+    }
+    else {
+        Diag-Write -Status ERR -Name "临时文件检测" -Detail "发现$($tempFiles.Count)个临时文件"
+        $showCount = [Math]::Min(5, $tempFiles.Count)
+        for ($i = 0; $i -lt $showCount; $i++) {
+            $rel = $tempFiles[$i].FullName.Substring($bareRepo.Length).TrimStart('\', '/')
+            Diag-Colorize "    $rel" 'DarkRed'
+        }
+        if ($tempFiles.Count -gt $showCount) {
+            Diag-Colorize "    ... 等 $($tempFiles.Count) 个" 'DarkRed'
+        }
+        Diag-Suggest "确认所有设备无Git/网盘操作后，运行 check-conflicts.ps1 -AutoClean 清理临时文件，或等待网盘同步完成"
+    }
+
+    if ($script:DiagConflictsLoaded) {
+        try {
+            $scanResult = Conflicts-Scan -BareRepoPath $bareRepo
+            if ($scanResult) {
+                if ($scanResult.HasCritical) {
+                    Diag-Write -Status ERR -Name "冲突副本扫描" -Detail "发现$($scanResult.CriticalCount)个严重冲突！（objects/pack/HEAD/packed-refs级别）"
+                    Diag-Suggest "🛑 严重！仓库可能已损坏，立即停止所有操作，从最近的.bundle备份恢复"
+                    foreach ($f in ($scanResult.CriticalFiles | Select-Object -First 5)) {
+                        Diag-Colorize "    [CRITICAL] $($f.RelativePath)" 'Red'
+                    }
+                }
+                elseif ($scanResult.WarningCount -gt 0) {
+                    Diag-Write -Status WARN -Name "冲突副本扫描" -Detail "发现$($scanResult.WarningCount)个警告级冲突"
+                    Diag-Suggest "确认无操作后人工检查并处理refs/config等冲突文件，参考故障排查手册场景15"
+                }
+                elseif ($scanResult.InfoCount -gt 0) {
+                    Diag-Write -Status INFO -Name "冲突副本扫描" -Detail "发现$($scanResult.InfoCount)个可清理的临时/无害冲突文件"
+                }
+                else {
+                    Diag-Write -Status OK -Name "冲突副本扫描" -Detail "未发现冲突文件"
+                }
+            }
+        }
+        catch {
+            Diag-Write -Status WARN -Name "冲突副本扫描" -Detail "扫描失败: $_"
+        }
+    }
+}
+
+function Diag-CheckHeadDiff {
+    param(
+        [string]$RepoPath,
+        [string]$BareRepoPath
+    )
+
+    Diag-Section "7. HEAD对比（本地 vs 网盘裸仓库）"
+
+    $localRes = Diag-InvokeGit -Arguments @('rev-parse', 'HEAD') -WorkingDirectory $RepoPath
+    if (-not $localRes.Success) {
+        Diag-Write -Status WARN -Name "本地HEAD" -Detail "无法获取（可能无提交）"
+        return
+    }
+    $localHead = ($localRes.Output | Select-Object -First 1).ToString().Trim()
+
+    if (-not $BareRepoPath -or -not (Test-Path $BareRepoPath -PathType Container)) {
+        Diag-Write -Status WARN -Name "远程HEAD" -Detail "裸仓库不可访问，无法对比"
+        return
+    }
+
+    $bareRes = Diag-InvokeGit -Arguments @('-C', $BareRepoPath, 'rev-parse', 'HEAD')
+    if (-not $bareRes.Success) {
+        Diag-Write -Status WARN -Name "远程HEAD" -Detail "无法获取（裸仓库可能为空或损坏）"
+        Diag-Write -Status INFO -Name "本地HEAD" -Detail $localHead
+        return
+    }
+    $bareHead = ($bareRes.Output | Select-Object -First 1).ToString().Trim()
+
+    Diag-Write -Status INFO -Name "本地HEAD" -Detail $localHead
+    Diag-Write -Status INFO -Name "远程HEAD" -Detail $bareHead
+
+    if ($localHead -eq $bareHead) {
+        Diag-Write -Status OK -Name "HEAD一致性" -Detail "本地与远程一致 ($($localHead.Substring(0,7)))"
+        return
+    }
+
+    $mbRes = Diag-InvokeGit -Arguments @('-C', $RepoPath, 'merge-base', $localHead, $bareHead)
+    if ($mbRes.Success) {
+        $mb = ($mbRes.Output | Select-Object -First 1).ToString().Trim()
+        if ($mb -eq $bareHead) {
+            $countRes = Diag-InvokeGit -Arguments @('-C', $RepoPath, 'rev-list', '--count', "$bareHead..$localHead")
+            $ahead = '?'
+            if ($countRes.Success) { $ahead = ($countRes.Output | Select-Object -First 1).ToString().Trim() }
+            Diag-Write -Status INFO -Name "HEAD差异" -Detail "本地领先远程 $ahead 个提交（有未push的提交）"
+            Diag-Suggest "执行 git-sync-push 推送本地提交到远程"
+        }
+        elseif ($mb -eq $localHead) {
+            $countRes = Diag-InvokeGit -Arguments @('-C', $RepoPath, 'rev-list', '--count', "$localHead..$bareHead")
+            $behind = '?'
+            if ($countRes.Success) { $behind = ($countRes.Output | Select-Object -First 1).ToString().Trim() }
+            Diag-Write -Status WARN -Name "HEAD差异" -Detail "本地落后远程 $behind 个提交（需要先pull）"
+            Diag-Suggest "执行 git-sync-pull 拉取远程最新提交"
+        }
+        else {
+            Diag-Write -Status ERR -Name "HEAD差异" -Detail "本地与远程已分叉（diverged）！本地=$($localHead.Substring(0,7)) 远程=$($bareHead.Substring(0,7))"
+            Diag-Suggest "参考故障排查手册场景20处理分叉：git stash → git fetch → git rebase baidu/main 或 git merge baidu/main"
+        }
+    }
+    else {
+        Diag-Write -Status ERR -Name "HEAD差异" -Detail "无共同祖先（unrelated histories），本地与远程可能是不同仓库"
+        Diag-Suggest "确认remote路径正确；如确是首次拉取，使用 git pull baidu main --allow-unrelated-histories（参考场景9）"
+    }
+}
+
+function Diag-CheckObjects {
+    param(
+        [string]$RepoPath,
+        [bool]$DoFull
+    )
+
+    Diag-Section "8. Git对象计数"
+
+    $countRes = Diag-InvokeGit -Arguments @('count-objects', '-v') -WorkingDirectory $RepoPath
+    if (-not $countRes.Success) {
+        Diag-Write -Status WARN -Name "对象计数" -Detail "git count-objects 执行失败"
+        return
+    }
+
+    $loose = 0
+    $packs = 0
+    $looseSize = 0
+    foreach ($line in $countRes.Output) {
+        $s = $line.ToString()
+        if ($s -match '^count: (\d+)') { $loose = [int]$Matches[1] }
+        if ($s -match '^packs: (\d+)') { $packs = [int]$Matches[1] }
+        if ($s -match '^size: (\d+)') { $looseSize = [int]$Matches[1] }
+    }
+
+    $looseSizeKB = [math]::Round($looseSize / 1024, 1)
+
+    if ($loose -ge 10000) {
+        Diag-Write -Status ERR -Name "松散对象" -Detail "$loose 个（超过10000，必须执行git gc）"
+        Diag-Suggest "执行 git gc --aggressive --prune=now 优化仓库（确认无其他设备操作后）"
+    }
+    elseif ($loose -ge 6700) {
+        Diag-Write -Status WARN -Name "松散对象" -Detail "$loose 个（超过6700，建议执行git gc）"
+        Diag-Suggest "可运行 git gc 优化仓库性能"
+    }
+    else {
+        Diag-Write -Status OK -Name "松散对象" -Detail "$loose 个 ($looseSizeKB KB)"
+    }
+
+    Diag-Write -Status INFO -Name "Pack文件" -Detail "$packs 个"
+
+    if ($DoFull -and $packs -gt 1) {
+        Diag-Write -Status WARN -Name "Pack文件数量" -Detail "$packs 个pack文件（超过1个），git gc会合并pack"
