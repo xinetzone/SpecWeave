@@ -42,3 +42,4 @@
 | [essential-contradiction-three-step.md](essential-contradiction-three-step.md) | 技术方案本质矛盾三步法：拆矛盾→列痛点→看回答，第一性原理分析框架快速穿透宣传话术抓住方案本质，区分可修复缺点与架构级硬伤，识别方案取舍和适用边界，1次验证（WeasyPrint PDF生成方案分析） | L1 |
 | [spec-anchored-questioning.md](spec-anchored-questioning.md) | Spec锚定提问法：以spec.md的FR/NFR/AC条款为锚点生成深度问题，确保审计提问可追溯、可验证、系统性，与五维验证互补构成六维审查，1次验证（对抗性审查知识库开放性提问） | L1 |
 | [five-layer-progressive-analysis.md](five-layer-progressive-analysis.md) | 五层递进分析框架：认识论→方法论→偏差→实践→边界，从"为什么"到"怎么做"再到"何时失效"的完整追问链，覆盖知识库质量全光谱，1次验证（对抗性审查知识库开放性提问） | L1 |
+| [riev-doc-learning-method.md](riev-doc-learning-method.md) | RIEV文档学习法：R(事实采集)→I(洞察提炼四元组)→E(结构化指南)→V(三视角对抗审查)+归档收尾，四段式知识沉淀流水线，含G1-G3质量门和6个反模式，2次实战验证（秒悟大使入驻指南/秒悟Meoo实训案例） | L2 |
