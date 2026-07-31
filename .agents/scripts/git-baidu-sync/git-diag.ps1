@@ -698,3 +698,363 @@ function Diag-CheckObjects {
 
     if ($DoFull -and $packs -gt 1) {
         Diag-Write -Status WARN -Name "Pack文件数量" -Detail "$packs 个pack文件（超过1个），git gc会合并pack"
+    }
+}
+
+function Diag-CheckBackup {
+    param(
+        [string]$SRoot,
+        [string]$RepoName
+    )
+
+    Diag-Section "9. 备份状态（仅Full模式）"
+
+    if (-not $SRoot -or -not $RepoName) {
+        Diag-Write -Status INFO -Name "备份检查" -Detail "跳过（SyncRoot/RepoName未知）"
+        return
+    }
+
+    $backupDir = Join-Path (Diag-ResolveFullPath $SRoot) "backups\$RepoName"
+    if (-not (Test-Path $backupDir -PathType Container)) {
+        Diag-Write -Status ERR -Name "备份目录" -Detail "备份目录不存在"
+        Diag-Suggest "执行一次 git-sync-push 会自动创建备份，或运行 git-backup.ps1 手动创建"
+        return
+    }
+
+    $bundles = Get-ChildItem -Path $backupDir -Filter '*.bundle' -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending
+    if (-not $bundles -or $bundles.Count -eq 0) {
+        Diag-Write -Status ERR -Name "备份文件" -Detail "未找到任何.bundle备份文件"
+        Diag-Suggest "运行 git-backup.ps1 创建备份"
+        return
+    }
+
+    $latest = $bundles[0]
+    $age = (Get-Date) - $latest.LastWriteTime
+    $sizeMB = [math]::Round($latest.Length / 1MB, 2)
+    Diag-Write -Status INFO -Name "最新备份" -Detail "$($latest.Name) ($sizeMB MB, $([int]$age.TotalDays)天前)"
+    Diag-Write -Status INFO -Name "备份总数" -Detail "$($bundles.Count) 个备份"
+
+    if ($age.TotalDays -gt 30) {
+        Diag-Write -Status ERR -Name "备份时效" -Detail "最新备份是$([int]$age.TotalDays)天前（超过30天），必须立即备份！"
+        Diag-Suggest "运行 git-sync-push 或 git-backup.ps1 创建新备份"
+    }
+    elseif ($age.TotalDays -gt 7) {
+        Diag-Write -Status WARN -Name "备份时效" -Detail "最新备份是$([int]$age.TotalDays)天前（超过7天），建议备份"
+    }
+    else {
+        Diag-Write -Status OK -Name "备份时效" -Detail "备份较新（$([int]$age.TotalDays)天内）"
+    }
+}
+
+function Diag-CheckRecentLogs {
+    param([string]$SRoot)
+
+    Diag-Section "10. 最近日志"
+
+    if (-not $SRoot) {
+        Diag-Write -Status INFO -Name "日志" -Detail "SyncRoot未知，跳过"
+        return
+    }
+
+    $logsDir = Join-Path (Diag-ResolveFullPath $SRoot) "logs"
+    if (-not (Test-Path $logsDir -PathType Container)) {
+        Diag-Write -Status INFO -Name "日志目录" -Detail "logs目录不存在"
+        return
+    }
+
+    $recentLogs = Get-ChildItem -Path $logsDir -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -First 3
+    if (-not $recentLogs -or $recentLogs.Count -eq 0) {
+        Diag-Write -Status INFO -Name "日志文件" -Detail "未找到日志文件"
+        return
+    }
+
+    Diag-Write -Status INFO -Name "最近日志文件" -Detail "$($recentLogs.Count) 个"
+    foreach ($log in $recentLogs) {
+        $age = (Get-Date) - $log.LastWriteTime
+        $sizeKB = [math]::Round($log.Length / 1KB, 1)
+        $ageStr = if ($age.TotalMinutes -lt 60) { "$([int]$age.TotalMinutes)分钟前" } elseif ($age.TotalHours -lt 24) { "$([int]$age.TotalHours)小时前" } else { "$([int]$age.TotalDays)天前" }
+        Diag-Colorize "    $($log.Name) - $sizeKB KB - $ageStr" 'DarkGray'
+    }
+}
+
+function Diag-CheckConfig {
+    param([string]$RepoPath)
+
+    Diag-Section "11. Git配置检查"
+
+    $os = Diag-DetectOS
+    $issues = @()
+
+    $autocrlf = ''
+    $acrRes = Diag-InvokeGit -Arguments @('config', '--get', 'core.autocrlf') -WorkingDirectory $RepoPath
+    if ($acrRes.Success -and (($acrRes.Output | Select-Object -First 1) -match '\S')) {
+        $autocrlf = ($acrRes.Output | Select-Object -First 1).ToString().Trim()
+    }
+    else {
+        $acrResG = Diag-InvokeGit -Arguments @('config', '--global', '--get', 'core.autocrlf')
+        if ($acrResG.Success) { $autocrlf = ($acrResG.Output | Select-Object -First 1).ToString().Trim() }
+    }
+    $expectedCRLF = if ($os -eq 'win') { 'true' } else { 'input' }
+    if ($autocrlf -ne $expectedCRLF) {
+        $issues += "core.autocrlf=$autocrlf (推荐$expectedCRLF)"
+    }
+
+    if ($os -ne 'win') {
+        $filemode = ''
+        $fmRes = Diag-InvokeGit -Arguments @('config', '--get', 'core.filemode') -WorkingDirectory $RepoPath
+        if ($fmRes.Success -and (($fmRes.Output | Select-Object -First 1) -match '\S')) {
+            $filemode = ($fmRes.Output | Select-Object -First 1).ToString().Trim()
+        }
+        else {
+            $fmResG = Diag-InvokeGit -Arguments @('config', '--global', '--get', 'core.filemode')
+            if ($fmResG.Success) { $filemode = ($fmResG.Output | Select-Object -First 1).ToString().Trim() }
+        }
+        if ($filemode -ne 'false') {
+            $issues += "core.filemode=$filemode (推荐false，避免跨平台权限误报)"
+        }
+    }
+
+    $quotepath = ''
+    $qpRes = Diag-InvokeGit -Arguments @('config', '--get', 'core.quotepath') -WorkingDirectory $RepoPath
+    if ($qpRes.Success -and (($qpRes.Output | Select-Object -First 1) -match '\S')) {
+        $quotepath = ($qpRes.Output | Select-Object -First 1).ToString().Trim()
+    }
+    if ($quotepath -ne 'false') {
+        $issues += "core.quotepath=$quotepath (推荐false以正确显示中文文件名)"
+    }
+
+    if ($os -eq 'win') {
+        $longpaths = ''
+        $lpRes = Diag-InvokeGit -Arguments @('config', '--get', 'core.longpaths') -WorkingDirectory $RepoPath
+        if ($lpRes.Success -and (($lpRes.Output | Select-Object -First 1) -match '\S')) {
+            $longpaths = ($lpRes.Output | Select-Object -First 1).ToString().Trim()
+        }
+        if ($longpaths -ne 'true') {
+            $issues += "core.longpaths=$longpaths (推荐true以支持长路径)"
+        }
+    }
+
+    $gcAuto = ''
+    $gcaRes = Diag-InvokeGit -Arguments @('config', '--get', 'gc.auto') -WorkingDirectory $RepoPath
+    if ($gcaRes.Success -and (($gcaRes.Output | Select-Object -First 1) -match '\S')) {
+        $gcAuto = ($gcaRes.Output | Select-Object -First 1).ToString().Trim()
+    }
+    if ($gcAuto -ne '6700') {
+        $issues += "gc.auto=$gcAuto (推荐6700)"
+    }
+
+    if ($issues.Count -eq 0) {
+        Diag-Write -Status OK -Name "Git配置" -Detail "关键配置符合推荐值"
+    }
+    else {
+        Diag-Write -Status WARN -Name "Git配置" -Detail "$($issues.Count)项配置可优化："
+        foreach ($issue in $issues) {
+            Diag-Colorize "    - $issue" 'DarkYellow'
+        }
+        Diag-Suggest "运行 setup-git-config.ps1 自动配置推荐Git设置"
+    }
+}
+
+function Diag-Summary {
+    $endTime = Get-Date
+    $elapsed = ($endTime - $script:DiagStartTime).TotalSeconds
+    $elapsedStr = "{0:F1}" -f $elapsed
+
+    Diag-Section "诊断总结"
+
+    $total = $script:DiagOks + $script:DiagWarnings + $script:DiagErrors + $script:DiagInfos
+    Diag-Colorize "  总检查项: $total" 'White'
+    Diag-Colorize "  [OK]  正常: $script:DiagOks" 'Green'
+    Diag-Colorize "  [INFO] 提示: $script:DiagInfos" 'Cyan'
+    Diag-Colorize "  [WARN] 警告: $script:DiagWarnings" 'Yellow'
+    Diag-Colorize "  [ERR]  错误: $script:DiagErrors" 'Red'
+    Diag-Colorize "  耗时: ${elapsedStr}秒" 'Gray'
+    Diag-Colorize "" 'White'
+
+    if ($script:DiagErrors -gt 0) {
+        Diag-Colorize "🛑 发现 $script:DiagErrors 个错误，必须修复后再执行push/pull！" 'Red'
+    }
+    elseif ($script:DiagWarnings -gt 0) {
+        Diag-Colorize "⚠️  发现 $script:DiagWarnings 个警告，建议关注和处理。" 'Yellow'
+    }
+    else {
+        Diag-Colorize "✅ 所有检查通过，仓库状态良好。" 'Green'
+    }
+
+    if ($script:DiagSuggestions.Count -gt 0) {
+        Diag-Colorize "`n推荐操作:" 'Cyan'
+        $idx = 1
+        foreach ($s in $script:DiagSuggestions) {
+            Diag-Colorize "  $idx. $s" 'White'
+            $idx++
+        }
+    }
+
+    Diag-Colorize "`n提示: 详细故障排查方法参考 10-troubleshooting.md" 'DarkGray'
+    Diag-Colorize "" 'White'
+
+    return @{
+        Errors = $script:DiagErrors
+        Warnings = $script:DiagWarnings
+        Oks = $script:DiagOks
+        Infos = $script:DiagInfos
+        ElapsedSeconds = $elapsed
+    }
+}
+
+function Diag-SaveOutput {
+    param(
+        [string]$SRoot,
+        [string]$RepoName
+    )
+
+    $logsDir = $null
+    if ($SRoot) {
+        $logsDir = Join-Path (Diag-ResolveFullPath $SRoot) "logs"
+    }
+    else {
+        $logsDir = Join-Path $script:DiagScriptDir "..\..\logs"
+    }
+    try {
+        $logsDir = [System.IO.Path]::GetFullPath($logsDir)
+        if (-not (Test-Path $logsDir)) {
+            New-Item -ItemType Directory -Path $logsDir -Force | Out-Null
+        }
+    }
+    catch {
+        $logsDir = $env:TEMP
+    }
+
+    $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+    $suffix = if ($RepoName) { "-$RepoName" } else { "" }
+    $outFile = Join-Path $logsDir "diag-$timestamp$suffix.txt"
+
+    $header = @(
+        "========================================",
+        "  git-diag 诊断报告",
+        "  生成时间: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')",
+        "  脚本版本: v$($script:DiagVersion)",
+        "========================================",
+        ""
+    )
+
+    try {
+        ($header + $script:DiagLogLines) | Set-Content -Path $outFile -Encoding UTF8
+        Diag-Colorize "诊断报告已保存到: $outFile" 'Cyan'
+    }
+    catch {
+        Write-Warning "无法保存诊断报告: $_"
+    }
+}
+
+function Diag-ShowUsage {
+    Write-Host @"
+git-diag.ps1 - Git 百度网盘同步一键诊断脚本 v$($script:DiagVersion)
+
+用法:
+  .\git-diag.ps1 [选项]
+
+选项:
+  -RepoPath <path>    本地工作仓库路径（默认当前目录 .）
+  -SyncRoot <path>    网盘同步根目录（可从remote自动推断）
+  -RemoteName <name>  Git remote名称（默认 baidu）
+  -Full               完整诊断模式（增加备份检查等）
+  -Output             将诊断报告保存到文件
+  -NoColor            禁用彩色输出
+  -h, --help          显示此帮助
+
+输出标记:
+  [OK]   正常项，无需处理
+  [WARN] 警告项，建议关注
+  [ERR]  错误项，必须修复后才能继续操作
+  [INFO] 提示信息，供参考
+
+示例:
+  # 快速诊断当前仓库
+  .\git-diag.ps1
+
+  # 完整诊断并保存报告
+  .\git-diag.ps1 -Full -Output
+
+  # 指定仓库路径和SyncRoot
+  .\git-diag.ps1 -RepoPath D:\projects\myrepo -SyncRoot D:\BaiduSync\git-sync
+"@
+}
+
+$script:DiagIsRunningDirectly = $false
+if ($MyInvocation.InvocationName -ne '.' -and $MyInvocation.InvocationName -ne '&') {
+    $script:DiagIsRunningDirectly = $true
+}
+elseif ($MyInvocation.MyCommand.Path -eq $PSCommandPath) {
+    $line = $MyInvocation.Line
+    if ($line -notmatch '\.\s+.*git-diag\.ps1') {
+        $script:DiagIsRunningDirectly = $true
+    }
+}
+
+if ($script:DiagIsRunningDirectly) {
+    foreach ($arg in $args) {
+        switch -Regex ($arg) {
+            '^--?h(elp)?$' { Diag-ShowUsage; exit 0 }
+            default { }
+        }
+    }
+
+    $resolvedRepo = Diag-ResolveFullPath $RepoPath
+    $remoteUrl = $null
+    $inferredSync = $null
+    if (-not $SyncRoot) {
+        $inferredSync = Diag-InferSyncRoot -RepoPath $resolvedRepo -RmName $RemoteName -OutRemoteUrl ([ref]$remoteUrl)
+        if ($inferredSync) { $SyncRoot = $inferredSync }
+    }
+    else {
+        try {
+            $urlRes = Diag-InvokeGit -Arguments @('remote', 'get-url', $RemoteName) -WorkingDirectory $resolvedRepo
+            if ($urlRes.Success) { $remoteUrl = ($urlRes.Output | Where-Object { $_ -match '\S' } | Select-Object -First 1).ToString().Trim() }
+        }
+        catch {}
+    }
+
+    $repoName = Diag-GetRepoName -RepoPath $resolvedRepo -RemoteUrl $remoteUrl
+
+    Diag-Colorize "`n========================================" 'Magenta'
+    Diag-Colorize "  git-diag v$($script:DiagVersion) - 一键诊断" 'Magenta'
+    Diag-Colorize "========================================" 'Magenta'
+    $modeStr = if ($Full) { 'full' } else { 'quick' }
+    Diag-Colorize "  仓库路径: $resolvedRepo" 'Gray'
+    if ($SyncRoot) { Diag-Colorize "  SyncRoot: $SyncRoot" 'Gray' } else { Diag-Colorize "  SyncRoot: <未指定，将尝试自动推断>" 'DarkGray' }
+    Diag-Colorize "  Remote:   $RemoteName" 'Gray'
+    if ($remoteUrl) { Diag-Colorize "  RemoteURL: $remoteUrl" 'Gray' }
+    Diag-Colorize "  模式:     $modeStr" 'Gray'
+    Diag-Colorize "========================================`n" 'Magenta'
+
+    Diag-CheckEnvironment
+    $repoOk = Diag-CheckRepoStatus -RepoPath $resolvedRepo
+    $remoteOk = Diag-CheckRemote -RepoPath $resolvedRepo -RmName $RemoteName -OutRemoteUrl ([ref]$remoteUrl)
+    if (-not $remoteUrl -and $remoteOk -eq $false) {
+    }
+    Diag-CheckSyncRoot -SRoot $SyncRoot
+    Diag-CheckLock -SRoot $SyncRoot -RepoName $repoName
+    Diag-CheckConflictsAndTemp -SRoot $SyncRoot -RepoName $repoName -RemoteUrl $remoteUrl
+    $barePath = $null
+    if ($remoteUrl -and (Test-Path $remoteUrl -PathType Container)) { $barePath = $remoteUrl }
+    elseif ($SyncRoot) { $barePath = Join-Path (Diag-ResolveFullPath $SyncRoot) "repos\$repoName.git" }
+    Diag-CheckHeadDiff -RepoPath $resolvedRepo -BareRepoPath $barePath
+    Diag-CheckObjects -RepoPath $resolvedRepo -DoFull $Full
+    if ($Full) {
+        Diag-CheckBackup -SRoot $SyncRoot -RepoName $repoName
+    }
+    Diag-CheckRecentLogs -SRoot $SyncRoot
+    Diag-CheckConfig -RepoPath $resolvedRepo
+
+    $summary = Diag-Summary
+
+    if ($Output) {
+        Diag-SaveOutput -SRoot $SyncRoot -RepoName $repoName
+    }
+
+    if ($summary.Errors -gt 0) {
+        exit 1
+    }
+    exit 0
+}
