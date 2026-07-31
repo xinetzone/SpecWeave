@@ -38,16 +38,25 @@ except ImportError:
     print("错误：需要安装playwright。请运行：pip install playwright && playwright install chromium", file=sys.stderr)
     sys.exit(1)
 
-from lib.cli import print_pass, print_warn, print_error, print_info
+from lib.cli import print_pass, print_warn, print_error
 
 
-# === 提取参数（基于实测验证的最优值）===
-DEFAULT_SCROLL_STEP = 400       # 每次滚动像素（实测600px可能导致长段落截断）
-DEFAULT_WAIT_MS = 1500          # 每步等待渲染时间（毫秒）
-DEFAULT_MAX_NO_NEW = 3          # 连续无新内容次数阈值
-DEFAULT_MAX_ITERATIONS = 30     # 最大滚动迭代次数（安全限制）
-CONTENT_MIN_LINES = 10          # 最小有效行数阈值
-CONTENT_MIN_CHARS = 200         # 最小有效字符数阈值
+def print_info(msg: str) -> None:
+    """打印信息（verbose输出）"""
+    print(f"  [INFO] {msg}")
+
+
+# === 提取参数（基于实测验证的最优值，最后验证：2026-07-31）===
+DEFAULT_SCROLL_STEP = 400           # 每次滚动像素（实测600px会导致长段落截断，400px安全）
+DEFAULT_WAIT_MS = 1500              # 每步等待渲染时间（毫秒，虚拟滚动需要）
+DEFAULT_INITIAL_WAIT_MS = 2000      # 页面加载后初始等待时间（毫秒，首屏渲染）
+DEFAULT_MAX_NO_NEW = 3              # 连续无新内容次数阈值
+DEFAULT_MAX_ITERATIONS = 30         # 最大滚动迭代次数（安全限制）
+VIRTUAL_SCROLL_RECYCLE_THRESHOLD = 800  # 虚拟滚动DOM回收阈值（scrollTop≥此值时顶部DOM开始回收）
+CONTENT_MIN_LINES = 10              # 最小有效行数阈值
+CONTENT_MIN_CHARS = 200             # 最小有效字符数阈值
+EMPTY_LINE_RATIO_THRESHOLD = 0.3    # 空行比例告警阈值
+ZERO_WIDTH_CHARS = re.compile(r'[\u200b-\u200f\u2028-\u202f\ufeff]')  # 需清理的零宽字符
 URL_PATTERN = re.compile(r'https?://[^\s\u200b\）\)】}]+')
 
 
@@ -94,12 +103,14 @@ class FeishuExtractor:
         self,
         scroll_step: int = DEFAULT_SCROLL_STEP,
         wait_ms: int = DEFAULT_WAIT_MS,
+        initial_wait_ms: int = DEFAULT_INITIAL_WAIT_MS,
         max_no_new: int = DEFAULT_MAX_NO_NEW,
         max_iterations: int = DEFAULT_MAX_ITERATIONS,
         verbose: bool = False,
     ):
         self.scroll_step = scroll_step
         self.wait_ms = wait_ms
+        self.initial_wait_ms = initial_wait_ms
         self.max_no_new = max_no_new
         self.max_iterations = max_iterations
         self.verbose = verbose
@@ -113,7 +124,7 @@ class FeishuExtractor:
         print_info(f"导航到飞书文档: {url}")
         try:
             page.goto(url, wait_until='networkidle', timeout=30000)
-            page.wait_for_timeout(2000)
+            page.wait_for_timeout(self.initial_wait_ms)  # 首屏渲染等待
         except PlaywrightTimeout:
             result.errors.append("页面加载超时，请检查URL是否正确和网络连接")
             return result
@@ -133,7 +144,11 @@ class FeishuExtractor:
         if not self._check_content_completeness(result):
             print_warn("首次提取内容可能不完整，执行二次扫描...")
             self._scroll_and_collect(page, result, direction='up')
-            page.evaluate(f"() => {{ const c = document.querySelector('{self.CONTAINER_SELECTOR}'); c.scrollTop = 0; }}")
+            page.evaluate(f"""() => {{
+                const c = document.querySelector('{self.CONTAINER_SELECTOR}');
+                c.scrollTo({{top: 0, behavior: 'auto'}});
+                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
+            }}""")
             page.wait_for_timeout(self.wait_ms)
             self._scroll_and_collect(page, result, direction='down')
 
@@ -201,73 +216,103 @@ class FeishuExtractor:
         elif self.verbose:
             print_info(f"  初始可见文本行: {initial_lines}")
 
-        # 反模式检查：检测是否误用了body/window滚动
+        # 反模式检查：检测是否误用了body/window滚动（正确行为是body不可滚动，容器可滚动）
         body_scrollable = page.evaluate("() => document.body.scrollHeight > window.innerHeight + 100")
-        checks['body_scrollable'] = body_scrollable
+        checks['antipattern_body_scroll'] = body_scrollable  # true=反模式触发（body是主滚动条）
+        if body_scrollable:
+            result.warnings.append(
+                "检测到body可滚动（反模式），飞书文档应使用.bear-web-x-container作为滚动容器。"
+                "可能是页面加载异常或布局变化。"
+            )
 
         result.anti_pattern_checks = checks
 
     def _extract_title(self, page: Page, result: ExtractionResult):
         """提取文档标题"""
-        # 优先从.ace-line第一个元素获取标题
         title = page.evaluate(f"""() => {{
             const lines = document.querySelectorAll('{self.LINE_SELECTOR}');
             return lines.length > 0 ? lines[0].innerText?.trim() : '';
         }}""")
         if title:
-            result.title = title.replace('\u200b', '').strip()
+            result.title = self._clean_text(title)
         else:
-            # fallback: document.title
-            result.title = page.title().replace(' - 飞书云文档', '').strip()
+            result.title = self._clean_text(page.title().replace(' - 飞书云文档', '').strip())
             result.warnings.append("从.ace-line获取标题失败，使用document.title作为fallback")
 
         if self.verbose:
             print_info(f"  文档标题: {result.title}")
 
+    @staticmethod
+    def _clean_text(text: str) -> str:
+        """清理零宽字符和首尾空白"""
+        return ZERO_WIDTH_CHARS.sub('', text).strip()
+
     def _scroll_and_collect(self, page: Page, result: ExtractionResult, direction: str = 'down'):
         """核心提取逻辑：分段滚动+去重保序收集。
 
-        反模式防护：
-        - 使用container.scrollTop而非window.scrollTo（反模式1）
-        - 分段滚动而非一次到底（反模式2）
-        - 使用.ace-line选择器而非h1/p等标准标签（反模式3）
-        - Set去重而非直接拼接（反模式4）
+        反模式防护（基于实测验证）：
+        - 使用container.scrollBy+scroll事件触发虚拟滚动渲染
+        - 分段滚动(400px)而非一次到底（反长段落截断）
+        - 容器作用域querySelectorAll避免UI噪音
+        - Set去重保序，处理虚拟滚动DOM回收
+        - 拆分.ace-line内部\\n换行（单个.ace-line可能包含多个视觉行）
+        - 清理全部零宽字符(\\u200b-\\u200f, \\u2028-\\u202f, \\ufeff)
+
+        虚拟滚动行为（实测）：
+        - scrollTop >= ~800px时顶部DOM开始回收
+        - scrollHeight随滚动动态增长（懒加载）
+        - DOM节点数在12-33之间波动（视口+缓冲区）
         """
-        collected = set(result.lines)  # 用已有内容初始化
+        collected = set(result.lines)
         ordered = list(result.lines)
         no_new_count = 0
         step = self.scroll_step if direction == 'down' else -self.scroll_step
+        js_selector = self.CONTAINER_SELECTOR
+        line_selector = self.LINE_SELECTOR
 
         if direction == 'up':
-            # 向上滚动时先到当前位置的上方
-            current_top = page.evaluate(f"() => document.querySelector('{self.CONTAINER_SELECTOR}').scrollTop")
-            page.evaluate(f"() => {{ const c = document.querySelector('{self.CONTAINER_SELECTOR}'); c.scrollTop = {max(0, current_top - 500)}; }}")
+            page.evaluate(f"""() => {{
+                const c = document.querySelector('{js_selector}');
+                c.scrollBy({{top: -{self.scroll_step * 2}, behavior: 'auto'}});
+                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
+            }}""")
             page.wait_for_timeout(self.wait_ms)
 
         for i in range(self.max_iterations):
-            # 收集当前可见的文本行（使用container.querySelectorAll而非document，避免UI噪音）
-            new_lines = page.evaluate(f"""() => {{
-                const c = document.querySelector('{self.CONTAINER_SELECTOR}');
+            # 收集当前可见文本行（JS端拆分内部换行+清理零宽字符）
+            new_lines_raw = page.evaluate(f"""() => {{
+                const c = document.querySelector('{js_selector}');
                 if (!c) return [];
-                return Array.from(c.querySelectorAll('{self.LINE_SELECTOR}'))
-                    .map(el => el.innerText?.trim())
-                    .filter(t => t && t.length > 0);
+                const lines = [];
+                c.querySelectorAll('{line_selector}').forEach(el => {{
+                    const text = el.innerText || '';
+                    // 拆分.ace-line内部换行（一个.ace-line可能包含<br>或块级元素导致的多行）
+                    text.split('\\n').forEach(segment => {{
+                        const clean = segment.replace(/[\\u200b-\\u200f\\u2028-\\u202f\\ufeff]/g, '').trim();
+                        if (clean) lines.push(clean);
+                    }});
+                }});
+                return lines;
             }}""")
 
             new_count = 0
-            for line in new_lines:
-                clean_line = line.replace('\u200b', '').strip()
+            new_found = []
+            for line in new_lines_raw:
+                clean_line = self._clean_text(line)
                 if clean_line and clean_line not in collected:
                     collected.add(clean_line)
-                    if direction == 'down':
-                        ordered.append(clean_line)
-                    else:
-                        ordered.insert(0, clean_line)
+                    new_found.append(clean_line)
                     new_count += 1
+
+            if direction == 'down':
+                ordered.extend(new_found)
+            else:
+                # 向上滚动时发现的新行是较早的内容，按原序插入到前面
+                for line in reversed(new_found):
+                    ordered.insert(0, line)
 
             result.scroll_iterations += 1
 
-            # 判断是否继续
             if new_count == 0:
                 no_new_count += 1
             else:
@@ -280,9 +325,9 @@ class FeishuExtractor:
                     print_info(f"  连续{self.max_no_new}次无新内容，停止滚动")
                 break
 
-            # 检查是否到达边界
+            # 检查是否到达边界（动态scrollHeight，支持懒加载增长）
             at_boundary = page.evaluate(f"""() => {{
-                const c = document.querySelector('{self.CONTAINER_SELECTOR}');
+                const c = document.querySelector('{js_selector}');
                 if ('{direction}' === 'down') {{
                     return c.scrollTop + c.clientHeight >= c.scrollHeight - 10;
                 }} else {{
@@ -290,17 +335,20 @@ class FeishuExtractor:
                 }}
             }}""")
             if at_boundary:
+                if self.verbose:
+                    print_info(f"  到达{'底部' if direction == 'down' else '顶部'}边界")
                 break
 
-            # 滚动一步
+            # 滚动一步（scrollBy + dispatchEvent 确保虚拟滚动触发渲染）
             page.evaluate(f"""() => {{
-                const c = document.querySelector('{self.CONTAINER_SELECTOR}');
-                c.scrollTop += {step};
+                const c = document.querySelector('{js_selector}');
+                c.scrollBy({{top: {step}, behavior: 'auto'}});
+                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
             }}""")
             page.wait_for_timeout(self.wait_ms)
 
         result.lines = ordered
-        result.anti_pattern_checks[f'{direction}_pass_iterations'] = i + 1 if 'i' in dir() else 0
+        result.anti_pattern_checks[f'{direction}_iterations'] = i + 1
 
     def _check_urls_preserved(self, page: Page, result: ExtractionResult):
         """反模式检查：链接保留验证
@@ -334,13 +382,13 @@ class FeishuExtractor:
         result.anti_pattern_checks.update(checks)
 
     def _check_content_completeness(self, result: ExtractionResult) -> bool:
-        """简单内容完整性启发式检查"""
+        """简单内容完整性启发式检查（在content拼接前基于lines判断）"""
         if len(result.lines) < CONTENT_MIN_LINES:
             return False
-        if result.char_count < CONTENT_MIN_CHARS:
+        content = '\n'.join(result.lines)
+        if len(content) < CONTENT_MIN_CHARS:
             return False
         # 检查是否包含常见的文档结构词
-        content = result.content
         structure_markers = ['什么是', '如何', '参与', '方向', '链接', 'http']
         found_markers = sum(1 for m in structure_markers if m in content)
         return found_markers >= 2
@@ -373,10 +421,14 @@ class FeishuExtractor:
         empty_lines = sum(1 for l in result.lines if len(l.strip()) <= 1)
         empty_ratio = empty_lines / max(result.line_count, 1)
         checks['empty_line_ratio'] = round(empty_ratio, 2)
-        if empty_ratio > 0.5:
+        if empty_ratio > EMPTY_LINE_RATIO_THRESHOLD:
             result.warnings.append(
-                f"空行比例过高({empty_ratio:.0%})，可能是选择器匹配到了装饰性元素"
+                f"空行比例过高({empty_ratio:.0%})，阈值{EMPTY_LINE_RATIO_THRESHOLD:.0%}，"
+                "可能是选择器匹配到了装饰性元素"
             )
+            checks['empty_line_ratio_ok'] = False
+        else:
+            checks['empty_line_ratio_ok'] = True
 
         # 检查是否有标题行
         has_title = any('计划' in l or '介绍' in l or '概述' in l or len(l) < 30 for l in result.lines[:5])
@@ -410,12 +462,14 @@ def extract_feishu_doc(
     headless: bool = False,
     scroll_step: int = DEFAULT_SCROLL_STEP,
     wait_ms: int = DEFAULT_WAIT_MS,
+    initial_wait_ms: int = DEFAULT_INITIAL_WAIT_MS,
     verbose: bool = False,
 ) -> ExtractionResult:
     """便捷函数：提取单个飞书文档"""
     extractor = FeishuExtractor(
         scroll_step=scroll_step,
         wait_ms=wait_ms,
+        initial_wait_ms=initial_wait_ms,
         verbose=verbose,
     )
 
@@ -461,6 +515,8 @@ def extract_feishu_doc(
             'extraction_params': {
                 'scroll_step': scroll_step,
                 'wait_ms': wait_ms,
+                'initial_wait_ms': initial_wait_ms,
+                'virtual_scroll_recycle_threshold': VIRTUAL_SCROLL_RECYCLE_THRESHOLD,
             }
         }
         meta_file.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -488,7 +544,8 @@ def main():
     parser.add_argument('--cookies', '-c', type=Path, help='cookies JSON文件路径（用于认证）')
     parser.add_argument('--headless', action='store_true', help='无头模式（默认有界面）')
     parser.add_argument('--scroll-step', type=int, default=DEFAULT_SCROLL_STEP, help=f'滚动步长(默认{DEFAULT_SCROLL_STEP}px)')
-    parser.add_argument('--wait-ms', type=int, default=DEFAULT_WAIT_MS, help=f'等待时间(默认{DEFAULT_WAIT_MS}ms)')
+    parser.add_argument('--wait-ms', type=int, default=DEFAULT_WAIT_MS, help=f'每步等待时间(默认{DEFAULT_WAIT_MS}ms)')
+    parser.add_argument('--initial-wait-ms', type=int, default=DEFAULT_INITIAL_WAIT_MS, help=f'初始加载等待(默认{DEFAULT_INITIAL_WAIT_MS}ms)')
     parser.add_argument('--verbose', '-v', action='store_true', help='详细输出')
 
     args = parser.parse_args()
@@ -505,6 +562,7 @@ def main():
         headless=args.headless,
         scroll_step=args.scroll_step,
         wait_ms=args.wait_ms,
+        initial_wait_ms=args.initial_wait_ms,
         verbose=args.verbose,
     )
 

@@ -128,11 +128,15 @@ L1 首次萃取（volcengine-agent-plan-wiki验证1次）
 
 已提供可复用的Python脚本：[feishu-doc-extract.py](../../../../scripts/feishu-doc-extract.py)，特性：
 - Playwright驱动，支持有头/无头模式
-- 集成全部7个反模式检查
-- 自动输出元数据报告（JSON格式）
+- 集成10+项反模式/质量检查（容器存在性、可滚动性、body滚动反模式、内容阈值、空行比例、URL保留、标题存在性、零宽字符清理）
+- 自动输出元数据报告（JSON格式，含完整检查结果）
 - 支持cookies文件导入认证状态
 - 双向扫描（向下→向上→向下）确保内容完整
-- 内置内容阈值检查、链接保留验证、空行比例检测
+- 自动拆分`.ace-line`内部`\n`换行（单个.ace-line可能包含多个视觉行）
+- 使用`scrollBy+dispatchEvent('scroll')`确保虚拟滚动正确触发渲染
+- 全量零宽字符清理（`\u200b-\u200f\u2028-\u202f\ufeff`）
+- 内置SaaS平台自动检测（飞书/钉钉/企微/Notion/Confluence/语雀/石墨/WPS）
+- 支持命令行参数配置滚动步长、等待时间、初始等待时间
 
 ### 实测验证结果（2026-07-31，MCP浏览器二次验证）
 
@@ -147,6 +151,10 @@ L1 首次萃取（volcengine-agent-plan-wiki验证1次）
 | 虚拟滚动DOM回收 | ⚠️ 已确认 | scrollTop≥800px时顶部内容从DOM移除，Set去重是必要防护 |
 | 长段落截断风险 | ⚠️ 已发现 | scrollStep=600px时112字段落尾部丢失9字，改为400px可避免 |
 | innerText vs textContent | 无显著差异 | 两者均能获取完整链接文本，差异仅在零宽字符处理 |
+| scrollHeight动态增长 | ⚠️ 已确认 | 初始2166px→滚动中增长到3345px（懒加载），脚本需动态读取scrollHeight |
+| `.ace-line`内部换行 | ⚠️ 已发现 | 单个`.ace-line`的innerText可能含`\n`（如段落内含软换行），需split('\n')拆分 |
+| scrollTop赋值 vs scrollBy | ⚠️ 有差异 | 直接设置scrollTop在某些场景不触发虚拟滚动渲染；推荐scrollBy+dispatchEvent |
+| 最终提取行数（400px步长） | ✅ 42-43行 | 拆分内部换行后可达43行，1494-1542字符，8个URL完整保留 |
 
 ## 代码片段
 
