@@ -104,3 +104,19 @@ gate_g2_passed: true
 - [x] 反常识发现：5条均挑战了常规认知（不是"要做好质量门"这类常识性结论）
 - [x] 证据引用：全部引用MF001-MF049范围内的有效事实编号，无悬垂引用
 - [x] 落地建议：每条建议可操作、可验证，不是空泛口号
+
+---
+
+## E阶段：模式萃取记录
+
+> 本章节记录 I 阶段洞察向 E 阶段（Extraction/萃取）模式库的转化情况，保持洞察→模式的双向溯源。
+
+| 洞察 | 是否萃取为模式 | 模式ID | 模式类型 | 成熟度 | 模式文件路径 | 萃取决策说明 |
+|------|--------------|--------|---------|--------|------------|------------|
+| 洞察1（流程方法论层）：双层架构质量保障 | ✅ 已萃取 | `knowledge-dual-layer-architecture`（P-KNOWLEDGE-DUAL-LAYER-001） | 方法论模式 | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-dual-layer-architecture.md` | 通用知识沉淀项目管理方法论：R-I-E-V中间产物层+最终产出层双架构+四道质量门，可迁移至Wiki/白皮书/研究报告/咨询交付物等多场景 |
+| 洞察2（项目管理层）：Spec硬软AC双轨验收 | ✅ 已萃取 | `spec-hard-soft-ac-dual-track`（P-SPEC-AC-DUAL-TRACK-004） | 方法论模式 | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.md` | 通用项目验收方法论：硬AC100%通过+软AC10%-15%健康偏差率+偏差三要素说明，可迁移至知识沉淀/内容创作/分析报告/PRD撰写等创作类项目 |
+| 洞察3（质量保障层）：V阶段视角权重分配 | ✅ 已萃取 | `adversarial-perspective-weighting`（P-ADVERSARIAL-PERSPECTIVE-WEIGHT-002） | 方法论模式 | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/adversarial-perspective-weighting.md` | 通用审查/评审方法论：四视角按ROI非等分分配配额+分视角采纳率健康检查，可迁移至代码评审/设计评审/文档评审/产品方案评审等各类审查场景 |
+| 洞察4（工具执行层）：首次使用预检查 | ❌ 未独立萃取 | — | — | — | — | 核心要点（首次使用前小范围验证+批量末尾复核+工具坑点记录）与现有`simple-task-high-risk`（简单任务高风险定律，L2已验证）高度重叠，作为该模式的补充验证来源而非独立新模式；批量末尾复核可在后续项目中验证后考虑是否提升为子模式 |
+| 洞察5（价值延伸层）：模式→模板即时转化 | ❌ 未独立萃取 | — | — | — | — | 核心要点（L1阶段即提取轻量工具+10-15%衍生转化预算+三条件触发模板转化）与现有`pattern-tooling-progressive-extraction`（模式渐进式工具提取）高度重叠，"衍生价值预算"视角可作为该模式的补充实践案例，"三条件触发"可后续合并至该模式 |
+
+**萃取统计**：5条洞察中3条成功萃取为方法论模式（萃取率60%），均为L1实验性（单案例验证），其中1条为本次新增（P-SPEC-AC-DUAL-TRACK-004），2条在E阶段milestone-patterns.md中已萃取入库本次归档完善溯源。2条未独立萃取的洞察均有对应现有模式覆盖，作为补充验证来源积累validation_count。
