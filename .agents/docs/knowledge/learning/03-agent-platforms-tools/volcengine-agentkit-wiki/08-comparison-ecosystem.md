@@ -170,5 +170,6 @@ flowchart LR
 
 ---
 
-**双向导航：**
-← [07 核心功能](./07-core-features-detailed.md) | [README](./README.md) | → [09 FAQ与最佳实践](./09-faq-best-practices.md)
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [07 核心功能](./07-core-features-detailed.md) | [README](./README.md) | → [09 FAQ与最佳实践](./09-faq-best-practices.md) |

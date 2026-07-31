@@ -158,5 +158,6 @@ Cloud 模式多租户采用「逻辑软隔离 + 配置硬隔离」双层机制�
 
 ---
 
-**双向导航：**
-← [08 对比](./08-comparison-ecosystem.md) | [README](./README.md) | → [10 资源与术语表](./10-resources-glossary.md)
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [08 对比](./08-comparison-ecosystem.md) | [README](./README.md) | → [10 资源与术语表](./10-resources-glossary.md) |

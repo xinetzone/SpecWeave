@@ -187,5 +187,6 @@ GitHub Issues 统一使用预设模板分类：
 
 ---
 
-**导航：**
-← [09 FAQ 与最佳实践](./09-faq-best-practices.md) | [返回目录](./README.md) | → 教程结束 🎉
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [09 FAQ 与最佳实践](./09-faq-best-practices.md) | [README](./README.md) | 教程结束 🎉 |
