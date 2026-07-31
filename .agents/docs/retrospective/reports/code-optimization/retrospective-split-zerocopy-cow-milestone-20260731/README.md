@@ -12,6 +12,17 @@ source: seven-concepts-cmd sessions sc-20260731-split-zerocopy + sc-20260731-spl
 
 # Split层零拷贝+COW优化全里程碑复盘报告
 
+## 配套文档导航
+
+| 文档 | 用途 |
+|------|------|
+| [insight-extraction.md](insight-extraction.md) | 本里程碑事实清单(F01-F50)+核心洞察(I1-I5)+可复用模式(P1-P4)萃取 |
+| [methodology-validation-summary.md](../../../guides/code-optimization/methodology-validation-summary.md) | 七概念方法论G1-G4质量门在本里程碑的验证效果总结+迁移指南 |
+| [optimization-strategy-comparison.md](../../../guides/code-optimization/optimization-strategy-comparison.md) | 跨里程碑：四种代码优化策略多维对比分析表 |
+| [optimization-beginner-guide.md](../../../guides/code-optimization/optimization-beginner-guide.md) | 新成员入门：代码优化安全操作指南+Checklist |
+| [optimization-anti-patterns-checklist.md](../../../guides/code-optimization/optimization-anti-patterns-checklist.md) | 可打印版反模式Checklist |
+| [optimization-assessment-quiz.md](../../../guides/code-optimization/optimization-assessment-quiz.md) | 考核测试题（20单选+4场景题） |
+
 ---
 
 ## 任务概览
