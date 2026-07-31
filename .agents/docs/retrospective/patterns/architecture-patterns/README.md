@@ -50,6 +50,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
 | [declarative-op-compiler-backend.md](declarative-op-compiler-backend.md) | 声明式算子+编译器后端：Python DSL描述"算什么"，TVM/MLIR编译器自动生成多后端代码，N+M替代N×M，性能关键路径保留手写kernel override，自动算子融合与全局优化 | L3 可复用 | ML框架多硬件后端、数据库查询优化器、着色器/图形渲染、信号处理编解码、DSL编译器设计 |
 | [four-step-extension-recipe.md](four-step-extension-recipe.md) | 扩展四步法：Schema/IDL扩展→代码/绑定生成→核心逻辑实现→测试矩阵验证，5类测试保障（序列化往返/prototxt解析/默认值/数值正确性/工具兼容性），降低第三方贡献门槛 | L2 已验证 | 框架插件/算子/中间件扩展、IDE插件开发、Web框架端点扩展、游戏引擎组件注册、可扩展平台设计 |
+| [governance-outer-ring.md](governance-outer-ring.md) | 治理外环包裹业务内环架构：Identity+Gateway+Observability+Evaluation四模块构成治理外环优先于业务内环（Runtime/A2A/Session-Memory/Knowledge）设计，企业级平台vs玩具级Demo的根本区分 | L1 实验性 | 企业级AI Agent平台、多租户SaaS架构、安全合规生产系统、从Demo到生产的架构演进 |
+| [data-lifecycle-economic-stratification.md](data-lifecycle-economic-stratification.md) | 数据生命周期经济分层：基于数据经济属性（消耗品vs知识资产）而非纯技术特征分层，Session类设TTL自动过期，Memory类设质量闸门+半衰期审计，避免记忆污染与治理成本浪费 | L1 实验性 | AI Agent记忆系统、CMS草稿/发布分层、数据湖热温冷分层、日志系统分层存储 |
+| [legacy-integration-dual-track.md](legacy-integration-dual-track.md) | 存量系统双轨接入两阶段法：第一阶段REST/OpenAPI快速转换一键接入（严格只读）验证价值，第二阶段基于Observability数据筛选Top 20%高频接口改造为标准协议，先接入再优化 | L1 实验性 | AI Agent平台存量系统接入、微服务API网关集成、遗留系统现代化改造、多云/混合云集成 |
 
 ## 成熟度定义
 
