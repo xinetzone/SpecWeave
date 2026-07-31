@@ -1,7 +1,7 @@
 # caffe-ffi Split层零拷贝优化 Phase 1 里程碑复盘报告 - Product Requirement Document
 
 ## Overview
-- **Summary**: 使用七概念方法论（R→I→E→C链路）对 caffe-ffi 项目 Split 层零拷贝优化 Phase 1（N=1 零拷贝捷径）进行系统性里程碑复盘，产出包含客观事实清单、核心洞察、可复用模式、原子行动项的结构化复盘报告。
+- **Summary**: 使用七概念方法论（R→I→E→C链路）对 caffe-ffi 项目 Split 层零拷贝优化 Phase 1（N=1 零拷贝捷径）及 Phase 2（N≥2 COW 扩展）进行系统性里程碑复盘，产出包含客观事实清单、核心洞察、可复用模式、原子行动项的结构化复盘报告。**Phase 2 已于 2026-07-31 全部完成（A1-A5 行动项关闭）。**
 - **Purpose**: 
   - 还原 Phase 1 从零拷贝设计到验证通过的完整过程
   - 识别开发过程中的关键决策点、踩坑经验和本质问题
@@ -18,19 +18,27 @@
 - G5: 导出完整结构化复盘报告到 caffe-ffi/docs/ 目录，包含所有阶段产出
 
 ## Non-Goals (Out of Scope)
-- 不实现 Phase 2 COW 代码（本次仅为复盘+规划指导）
-- 不修改 caffe-ffi 子项目内的源代码文件（仅在 SpecWeave 主权区 docs/ 下产出报告）
-- 不进行代码提交（本次任务无代码变更，C阶段为导出报告而非 atomic commit）
 - 不重新运行完整构建测试（基于已验证的测试结果进行复盘）
-- 不覆盖 Phase 2 COW 的详细设计实现（已有独立设计草稿 SPLIT_COW_PHASE2_DESIGN_DRAFT.md）
+- 不覆盖 Phase 3+ 的 GPU COW 或跨层 COW 优化（Phase 2 仅覆盖 CPU N≥2 Split COW）
+
+## Phase 2 完成状态（2026-07-31 追加）
+- A1-A5 全部行动项已完成，涉及 3 个 commits（`384f4da`, `09d2bcf`, `9d98c48`）
+- 新增事实 F43-F60（18 条），覆盖 Phase 2 文件变更/测试/设计文档
+- 新增洞察 I5（const/non-const 重载读写区分）和 I6（双重开关安全设计）
+- PAT-001 成熟度从 L1-draft 升级为 L2-validated（validation_count: 2→3）
+- 新增 Python 测试文件 `test_cow.py`（22 个测试用例），C++ 测试新增 20 个 COW 用例
 
 ## Background & Context
-- **前置工作**：已完成 Split 层 Phase 1 N=1 零拷贝优化，包括：
+- **前置工作**：已完成 Split 层 Phase 1 N=1 和 Phase 2 N≥2 COW 零拷贝优化，包括：
   - Blob 类新增 ShareData()/ShareDiff()/SharesDataWith()/SharesDiffWith() 方法
   - SplitLayer::Forward_cpu() N=1 路径走零拷贝捷径（refcount 共享替代 memcpy）
-  - C++ 单元测试（test_blob_zerocopy.cpp）验证指针共享和引用计数
+  - Phase 2: N≥2 路径从 memcpy 改为 ShareData()/ShareDiff() + COW 机制
+  - Blob 类新增 COW API：cpu_mutable_data()/IsDataShared()/UnshareData()/mutable_data_tensor() 等
+  - 编译期（CMake CAFFE_FFI_ENABLE_COW）+ 运行期（SetCOWEnabled()）双重 COW 开关
+  - C++ 单元测试（test_blob_zerocopy.cpp）20 个 COW 测试用例
+  - Python 测试（test_cow.py）22 个 COW 测试用例
   - Python P2-B 回归测试 29 项通过
-  - CSV 性能日志确认 Δmem=-64B（N=1 场景内存节省）
+  - CSV 性能日志确认 Δmem=-64B（N=1 场景内存节省），COW 指标列已扩展
   - Windows 一键回归测试脚本（run_p2b_regression.cmd）
   - CMake 集成测试目标
   - Phase 2 COW 设计草稿已完成
@@ -136,6 +144,8 @@
 - **Verification**: `programmatic`（检查文件存在性和路径）
 
 ## Open Questions
-- [ ] 是否需要在本次复盘中加入对抗审查（V阶段）？（当前假设为不需要，单模块标准复盘）
-- [ ] 报告文件名命名规范：是使用 `ZEROCOPY_PHASE1_RETROSPECTIVE_20260731.md` 还是其他格式？
-- [ ] 行动项是否需要分配优先级和预估工时？
+- [x] 是否需要在本次复盘中加入对抗审查（V阶段）？（已确认不需要，单模块标准复盘，Phase 2 已通过充分的 C++/Python 测试覆盖验证）
+- [x] 报告文件名命名规范：使用 `ZEROCOPY_PHASE1_RETROSPECTIVE_20260731.md`
+- [x] 行动项是否需要分配优先级和预估工时？（已分配，A1-A5 均已完成）
+- [ ] Phase 3 GPU COW 实现时机？（当前 GPU 方法为占位桩委托给 CPU，需评估 GPU 零拷贝的需求优先级）
+- [ ] N≥2 COW 在更大规模网络（如 ResNet-50/Inception）上的性能基准测试？

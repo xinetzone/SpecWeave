@@ -108,3 +108,54 @@ Split层Forward_cpu()实现中，num_top==1时走ShareData/ShareDiff零拷贝路
 3. 性能日志中必须包含"节省量"字段（如memcpy_saved），便于量化优化效果
 4. 设计后续阶段方案时，前一阶段的API（ShareData/Reshape打断共享）应自然成为后续阶段的构建块，而非需要推翻重来
 5. 对于涉及内存共享的优化，必须在注释中明确"什么操作会打断共享"（如Reshape），避免后续开发者误用
+
+---
+
+## Phase 2 COW 实现洞察（2026-07-31 追加）
+
+### I5：COW 显式打断语义——const/non-const 重载实现零成本读写意图区分
+
+**现象描述**：
+Phase 2 COW 实现中，移除了非 const 版本的 `cpu_data()`/`cpu_diff()`（F47），新增 `cpu_mutable_data()`/`cpu_mutable_diff()` 方法（F43）。const 版本的 `cpu_data() const` 保持零开销（不触发 COW），非 const 版本的 `cpu_mutable_data()` 在共享时触发 COW 克隆。测试验证 const 访问不触发 COW（F55 COWTest.ConstAccessDoesNotTriggerCOW），Python 端 `data_tensor`（const）也不触发 COW（F56 TestBlobCOWApi.test_const_data_tensor_does_not_trigger_COW）。
+
+**根因分析（5Why）**：
+- Why1：为什么需要区分 const 和 non-const 访问？→ COW 优化的核心是"延迟复制到首次写入"，需要区分读操作（安全共享）和写操作（需要私有副本）。
+- Why2：为什么不能通过其他方式区分？→ 运行时无法自动判断调用者意图——`cpu_data()` 返回 `float*` 即可读也可写，编译器无法在编译期区分。
+- Why3：为什么 const 重载是最优方案？→ C++ 的 const 成员函数重载是编译期零成本的机制——`const Blob*` 调用 `cpu_data() const`，`Blob*` 调用 `cpu_mutable_data()`，编译器自动选择正确版本。
+- Why4：为什么移除旧的非 const `cpu_data()` 而非保留并修改？→ 保留旧 API 会导致"静默共享"——开发者调用 `cpu_data()` 获取指针后写入，期望是私有拷贝但实际仍在共享，引发难以调试的数据污染。移除旧 API 强制开发者显式选择：读用 `cpu_data() const`，写用 `cpu_mutable_data()`。
+- Why5：为什么这种 API 设计是安全的？→ 遵循 PAT-001 "显式打断语义"原则——`cpu_mutable_data()` 的方法名本身就表明"我可能修改数据"，调用者明确知道这会触发 COW。这比 `cpu_data()` 后悄悄写入的隐式语义更安全。
+
+**影响评估**：
+- API 清晰度：读/写意图通过方法名显式表达，零歧义
+- 编译期安全：const 正确性由编译器保证，误用会导致编译错误而非运行时 bug
+- 迁移成本：需要将所有非 const 写调用点从 `cpu_data()` 改为 `cpu_mutable_data()`（F47），21 个 layer 源文件需要审计
+- 性能：const 路径零开销，non-const 路径仅在共享时触发一次 memcpy（与 Phase 1 行为一致）
+
+**改进建议**：
+1. 此模式应推广到其他需要延迟复制的场景——任何"读共享/写隔离"的数据结构都应使用 const/non-const 重载区分读写意图
+2. GPU 版本的 `gpu_mutable_data()`/`gpu_mutable_diff()` 当前为占位桩（委托给 CPU），后续实现 GPU COW 时应保持相同的 API 设计
+3. 在代码审查中新增检查项：任何返回非 const 指针/引用的方法，必须确认是否需要 COW 保护
+
+---
+
+### I6：双重开关安全设计——编译期+运行期 COW 控制实现渐进式风险控制
+
+**现象描述**：
+Phase 2 COW 实现同时提供了编译期开关（CMake 选项 `CAFFE_FFI_ENABLE_COW`，F51-F52）和运行期开关（`SetCOWEnabled()`/`IsCOWEnabled()`，F45）。编译期开关控制 COW 代码是否编译到二进制中（`#ifdef CAFFE_FFI_ENABLE_COW`），运行期开关在已编译 COW 代码的二进制中动态启用/禁用 COW 逻辑。两个开关独立工作，提供多层回退能力。
+
+**根因分析（5Why）**：
+- Why1：为什么需要两个开关？→ 编译期开关和运行期开关解决不同层次的问题：编译期开关用于"完全移除 COW 代码"（Phase 1 行为回退），运行期开关用于"保留 COW 代码但临时禁用"（性能对比/紧急回退）。
+- Why2：为什么不能只用运行期开关？→ 运行期开关需要一个 `if` 分支，对于性能敏感的代码路径，即使 `if (IsCOWEnabled())` 的分支预测正确率很高，仍存在微小的分支开销。编译期开关通过 `#ifdef` 完全消除分支。
+- Why3：为什么不能只用编译期开关？→ 编译期开关需要重新编译，不适合"线上紧急回退"场景——如果 COW 在生产环境出现 bug，运行期开关可以在不重新部署的情况下通过配置或 API 调用禁用 COW。
+- Why4：为什么运行期开关使用 `std::atomic<bool>`？→ `SetCOWEnabled()` 可能被多个线程调用（如 Python 多线程测试），`std::atomic<bool>` 保证线程安全的读写，且 `memory_order_relaxed` 开销极低。
+- Why5：这种双重开关设计是否过度工程？→ 对于涉及内存管理的性能优化，错误的代价是静默数据损坏（而非 crash），数据损坏比 crash 更难检测和定位。双层回退机制提供了"安全网"——Phase 2 设计草稿中已明确"编译期+运行期"回退策略（F59）。
+
+**影响评估**：
+- 风险控制：编译期 OFF = 完全回退到 Phase 1 行为；运行期 OFF = 保留 COW 代码但逻辑上回退到 Phase 1；两种回退方式覆盖不同紧急程度
+- 性能对比：编译期 OFF 的二进制与运行期 OFF 的二进制可进行 A/B 性能对比，量化 COW 分支开销
+- 调试便利：运行期开关可在单次测试中动态切换 COW 启用/禁用，无需重新编译
+
+**改进建议**：
+1. 对于任何涉及"可能出问题的新优化"的功能，应同时提供编译期和运行期开关，编译期开关用于"完全移除"，运行期开关用于"紧急禁用"
+2. 运行期开关的状态变更应记录到日志（如 `[COW] Runtime switch: ENABLED→DISABLED`），便于事后审计
+3. 长期来看，如果 COW 经过充分验证稳定，可考虑仅保留编译期开关（减少运行期分支），运行期开关作为 debug 构建保留

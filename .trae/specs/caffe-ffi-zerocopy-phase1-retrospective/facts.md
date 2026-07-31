@@ -97,3 +97,49 @@
 **F41**: Split::Forward N=1路径share_time计时单位为微秒（μs）。
 
 **F42**: Split::Forward N=1路径memcpy_saved字段值等于copy_bytes_per_top，即单次memcpy的数据量。
+
+---
+
+## Phase 2 COW 实现维度（2026-07-31 追加）
+
+### 文件变更
+
+**F43**: [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L119-L178) 新增 `cpu_mutable_data()` 和 `cpu_mutable_diff()` 方法，包含 COW 触发逻辑：当 `use_count() > 1` 时克隆张量并输出 `[COW]` 日志。
+
+**F44**: [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L232-L254) 新增 COW 查询方法：`IsDataShared()`、`IsDiffShared()`、`DataRefCount()`、`DiffRefCount()`、`UnshareData()`、`UnshareDiff()`、`mutable_data_tensor()`、`mutable_diff_tensor()`。
+
+**F45**: [blob.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp#L24-L38) 新增运行期 COW 开关声明：`SetCOWEnabled(bool)` 和 `IsCOWEnabled()`，使用 `std::atomic<bool>` 实现线程安全。
+
+**F46**: [blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) 新增 `CloneTensor()` 辅助函数（单一 COW memcpy 点），实现 `UnshareData()`、`UnshareDiff()`、`mutable_data_tensor()`、`mutable_diff_tensor()` 和运行期 COW 开关逻辑。
+
+**F47**: [blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp) 非 const 版本的 `cpu_data()` 和 `cpu_diff()` 被移除，所有写操作调用点迁移到 `cpu_mutable_data()`/`cpu_mutable_diff()`。
+
+**F48**: [_caffe_ffi.cc](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc) 新增 COW API 方法的 FFI 绑定注册：`IsDataShared()`、`DataRefCount()`、`UnshareData()`、`mutable_data_tensor()` 及其 diff 版本。
+
+**F49**: [split_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp) N≥2 路径从 memcpy 改为 `ShareData()`/`ShareDiff()` 零拷贝共享，Forward_cpu() 日志添加 `[SPLIT-PERF]` 标签。
+
+**F50**: [split_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/split_layer.hpp) 更新文档注释，反映 N≥2 COW 优化的零拷贝语义。
+
+**F51**: [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake#L12) 新增 `CAFFE_FFI_ENABLE_COW` CMake 选项，默认值为 ON。
+
+**F52**: [TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L54-L60) 集成编译期 COW 开关：`CAFFE_FFI_ENABLE_COW=ON` 时定义 `CAFFE_FFI_ENABLE_COW` 编译宏，OFF 时跳过所有 COW 代码编译。
+
+**F53**: [check_tvm_ffi_traits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_tvm_ffi_traits.py) 创建 TypeTraits 预检脚本（300行），commit `384f4da`。
+
+**F54**: [check_windows_dll.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_windows_dll.py) 创建 Windows DLL 自检脚本，commit `9d98c48`。
+
+### 测试结果
+
+**F55**: [test_blob_zerocopy.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp) C++ COW 单元测试共 20 个测试用例（10 个 COWApiTest + 6 个 COWTest + 4 个 ShareDataRefCount），覆盖 IsDataShared/DataRefCount/UnshareData/mutable_data_tensor/COW 写隔离/三向共享等场景。
+
+**F56**: [test_cow.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_cow.py) Python COW 测试共 22 个测试用例（TestBlobCOWApi 12 个 + TestSplitCOWBehavior 10 个），覆盖 N=1/N=2/N=4 Split COW 隔离、const 访问不触发、in-place ReLU 触发 COW 等场景。
+
+**F57**: [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) 新增 `cow_snapshot()` 辅助函数和 `_write_cow_csv_row()` CSV 扩展方法，COW 指标列（cow_events/cow_bytes/cow_saved_bytes）已加入性能日志。
+
+**F58**: [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py) P2B 测试类注册表新增 `TestBlobCOWApi` 和 `TestSplitCOWBehavior`。
+
+### 设计文档
+
+**F59**: `SPLIT_COW_PHASE2_DESIGN_DRAFT.md` 包含 9 个章节共 405 行，涵盖 COW 核心机制、API 变更、预期内存节省（N≥2 场景最高 87.5%）、4 阶段 16 步实施里程碑、编译期和运行期回退策略。
+
+**F60**: Phase 2 COW 实现遵循 A1→A7→A2→A3→A4→A9→A6→A5→A8 顺序，共 9 个任务全部完成，涉及 3 个 commits（`384f4da`、`09d2bcf`、`9d98c48`）。

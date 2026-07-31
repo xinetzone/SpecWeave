@@ -3,7 +3,7 @@
 > G3质量门：每个模式包含触发场景、核心步骤（3-7步）、反模式（≥3个）、检验标准、迁移示例（≥1个非当前场景）
 >
 > **归档状态**：✅ 已归档至模式库 (2026-07-31)
-> - PAT-001 → [code-patterns/ffi-intrusive-refcount-zerocopy.md](../../.agents/docs/retrospective/patterns/code-patterns/ffi-intrusive-refcount-zerocopy.md)（L2-validated, validation_count: 2）
+> - PAT-001 → [code-patterns/ffi-intrusive-refcount-zerocopy.md](../../.agents/docs/retrospective/patterns/code-patterns/ffi-intrusive-refcount-zerocopy.md)（L2-validated, validation_count: 3，Phase 2 N≥2 COW 验证通过）
 > - PAT-002 → [architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md](../../.agents/docs/retrospective/patterns/architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md)（L1-draft, validation_count: 1）
 
 ---
@@ -16,10 +16,18 @@ id: PAT-001
 title: FFI侵入式引用计数零拷贝张量共享
 type: code
 date: 2026-07-31
-maturity: L1-draft
-source: I1, I4 (Split层零拷贝Phase 1复盘)
+maturity: L2-validated
+source: I1, I4 (Split层零拷贝Phase 1复盘), I5 (Phase 2 COW const/non-const 重载)
 related_patterns: [PAT-002]
-tags: [zero-copy, tvm-ffi, refcount, tensor-sharing, performance]
+tags: [zero-copy, tvm-ffi, refcount, tensor-sharing, performance, cow]
+validation_count: 3
+validation_history:
+  - phase: "Phase 1 N=1 zero-copy"
+    date: 2026-07-30
+    result: "C++14 tests + Python29 tests passed, Δmem=-64B confirmed"
+  - phase: "Phase 2 N≥2 COW"
+    date: 2026-07-31
+    result: "C++20 COW tests + Python22 COW tests, N=2/N=4 Split COW isolation verified"
 ---
 ```
 
