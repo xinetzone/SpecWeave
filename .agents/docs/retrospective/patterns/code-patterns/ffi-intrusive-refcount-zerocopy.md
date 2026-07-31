@@ -4,14 +4,15 @@ title: "FFI侵入式引用计数零拷贝别名模式"
 type: "code-pattern"
 date: "2026-07-31"
 maturity: "L2-validated"
-source: "caffe-ffi Split层零拷贝优化Phase 1 (2026-07-31)"
+source: "caffe-ffi Split层零拷贝优化Phase 1 (2026-07-31), Spec: patterns.md PAT-001"
 related_patterns:
   - "zero-copy-tensor-verification"
   - "zero-copy-batch-inference-defense"
   - "cross-language-three-layer-logging"
   - "resource-counter-primitive-binding"
+  - "raw-pointer-ffi-smart-pointer-bridge"
 tags: ["zero-copy", "ffi", "intrusive-refcount", "tvm-ffi", "tensor", "memory-sharing", "alias", "shared-memory", "c++"]
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 ---
 
@@ -552,6 +553,7 @@ NDArray view = arr.CreateView({50, 100}, arr->dtype, 0);  // 零拷贝 view，�
 | [zero-copy-batch-inference-defense](zero-copy-batch-inference-defense.md) | 生产环境互补：零拷贝视图在分批推理中的生命周期管理 |
 | [cross-language-three-layer-logging](cross-language-three-layer-logging.md) | 调试配套：通过 C++ 侧指针日志验证共享关系 |
 | [resource-counter-primitive-binding](resource-counter-primitive-binding.md) | 基础设施：全局内存计数器验证共享期间无新分配 |
+| [raw-pointer-ffi-smart-pointer-bridge](../architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md) | API 设计配套：内部原始指针与 FFI 智能指针的桥接架构 |
 
 ---
 
