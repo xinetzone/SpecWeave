@@ -4,14 +4,17 @@ title: "FFI侵入式引用计数零拷贝别名模式"
 type: "code-pattern"
 date: "2026-07-31"
 maturity: "L2-validated"
-source: "caffe-ffi Split层零拷贝优化Phase 1 (2026-07-31), Spec: patterns.md PAT-001"
+source: "caffe-ffi Split层零拷贝优化Phase 1+2 (2026-07-31), Spec: patterns.md PAT-001/PAT-004"
 related_patterns:
+  - "const-cow-trigger"
   - "zero-copy-tensor-verification"
   - "zero-copy-batch-inference-defense"
   - "cross-language-three-layer-logging"
   - "resource-counter-primitive-binding"
   - "raw-pointer-ffi-smart-pointer-bridge"
-tags: ["zero-copy", "ffi", "intrusive-refcount", "tvm-ffi", "tensor", "memory-sharing", "alias", "shared-memory", "c++"]
+  - "platform-aware-dependency-detect"
+  - "preflight-checks-script"
+tags: ["zero-copy", "ffi", "intrusive-refcount", "tvm-ffi", "tensor", "memory-sharing", "alias", "shared-memory", "c++", "cow"]
 validation_count: 2
 reuse_count: 0
 ---
@@ -559,6 +562,14 @@ NDArray view = arr.CreateView({50, 100}, arr->dtype, 0);  // 零拷贝 view，�
 
 ## 设计决策复盘
 
+### 核心洞察：侵入式引用计数是零拷贝的最小充分机制
+
+> **I1**：利用底层框架已有的侵入式引用计数（ObjectPtr）直接赋值实现共享，比自定义共享内存方案代码量减少80%以上，且天然具备生命周期安全保证。
+>
+> **反常识**：零拷贝优化**不需要**自定义内存池或引用计数实现——底层框架的Tensor/ObjectPtr已经是引用计数的智能句柄，直接"别名赋值"即可。最初计划自定义共享层是过度设计。实践中反而遇到了自定义TypeTraits与tvm-ffi内置实现冲突的编译问题，移除自定义版本后一切正常。
+>
+> **决策原则**：后续所有跨Blob内存共享优化均**优先复用框架原生引用计数机制**，不自行实现引用计数。最小充分机制意味着：能靠框架句柄赋值解决的问题，绝不引入额外抽象层。
+
 ### 为什么不用 std::shared_ptr？
 
 1. **无法从裸指针安全构造**：`std::shared_ptr` 的控制块在堆上独立分配，从裸指针构造 `shared_ptr` 会创建第二个控制块导致 double-free。TVM FFI 框架内部大量使用 raw pointer 传递（如 Layer 的 `vector<Blob*>`），必须支持从 raw pointer 恢复引用计数。
@@ -585,13 +596,18 @@ NDArray view = arr.CreateView({50, 100}, arr->dtype, 0);  // 零拷贝 view，�
 - Phase 2 COW 设计草稿：[SPLIT_COW_PHASE2_DESIGN_DRAFT.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/SPLIT_COW_PHASE2_DESIGN_DRAFT.md)
 
 > **关联模式**：
+> - [const-cow-trigger](const-cow-trigger.md) — 进阶模式：Phase 2 COW触发，与本模式配合实现完整N≥1零拷贝方案
+> - [platform-aware-dependency-detect](platform-aware-dependency-detect.md) — 工程配套：跨平台CMake依赖检测模式
+> - [preflight-checks-script](preflight-checks-script.md) — 工程配套：构建环境预检脚本前置模式
 > - [zero-copy-tensor-verification](zero-copy-tensor-verification.md) — 零拷贝张量访问四维验证法（验证侧配套模式）
 > - [zero-copy-batch-inference-defense](zero-copy-batch-inference-defense.md) — 零拷贝视图在分批推理中的安全使用
 > - [cross-language-three-layer-logging](cross-language-three-layer-logging.md) — 跨语言三层协调日志（调试配套）
 >
-> **注**：Phase 2 N≥2 场景的 Copy-on-Write 机制（const/non-const 重载触发克隆）目前仅有设计草稿（见来源中的 Phase 2 COW 设计文档），待实现验证后将萃取为独立模式。
+> **里程碑状态**：Phase 1 N=1零拷贝 + Phase 2 N≥2 COW均已完成验证（19项C++测试 + 22项Python测试）。本模式与const-cow-trigger模式配合使用，形成完整的Split层全场景零拷贝方案。
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-07-31 | feat | 补充核心洞察I1(侵入式引用计数是零拷贝最小充分机制/反过度设计)，添加设计决策复盘章节
+- 2026-07-31 | feat | 从Split层零拷贝优化Phase 1+2里程碑复盘萃取，更新Phase 2关联模式，补充工程配套模式引用
 - 2026-07-31 | feat | 从Split层零拷贝优化Phase 1里程碑复盘萃取初始版本，五步实现法+Split实战案例+14项测试+6种迁移场景

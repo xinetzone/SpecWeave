@@ -110,6 +110,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md) | CMake四层模块化架构：选项→依赖→函数→目标分层拆分，两轮重构策略（物理拆分+逻辑抽象），include顺序即依赖声明 | L1 实验性 | CMakeLists.txt超过100行的C/C++项目模块化，多目标（库+测试+示例）构建 |
 | [cmake-public-target-config-function.md](cmake-public-target-config-function.md) | CMake公共目标配置函数：封装target_*为带VISIBILITY参数+完整参数校验的function()，消除跨文件重复配置 | L1 实验性 | 多目标CMake项目重复编译配置消除，PUBLIC/PRIVATE/INTERFACE可见性控制 |
 | [cmake-platform-specific-operation-encapsulation.md](cmake-platform-specific-operation-encapsulation.md) | CMake平台特定操作封装：平台专用文件+细粒度函数+聚合函数+通用工具三级API，统一参数校验宏 | L1 实验性 | Windows DLL复制、macOS rpath设置、跨平台构建操作封装 |
+| [const-cow-trigger.md](const-cow-trigger.md) | const重载驱动的写时复制触发模式：通过cpu_data()/cpu_mutable_data()分离const/non-const访问路径，在non-const方法中检查refcount>1时触发克隆，实现安全的零拷贝共享+写入隔离 | L2 已验证 | Blob/Tensor写时复制、零拷贝别名后的写入安全、N≥2 fan-out场景、Split/Concat等多输出层优化 |
+| [platform-aware-dependency-detect.md](platform-aware-dependency-detect.md) | 平台感知的CMake依赖检测模式：两阶段验证（头文件→库文件）+已知前缀推导（conda前缀→Library/include）+平台路径差异化处理，解决Windows conda Library/前缀与Linux系统路径不一致问题 | L2 已验证 | 跨平台CMake依赖检测、conda环境依赖查找、Windows/Linux/macOS路径差异处理、第三方库自动发现 |
+| [preflight-checks-script.md](preflight-checks-script.md) | 构建预检脚本前置模式：编译前执行环境检查脚本，主动检测TypeTraits冲突/DLL缺失/符号重复等常见陷阱，输出可操作错误信息而非晦涩编译错误 | L2 已验证 | C++/Python混合项目构建、CMake/native extension编译前环境验证、CI/CD流水线质量门禁、开发者环境快速诊断 |
 
 ## 成熟度定义
 

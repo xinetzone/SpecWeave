@@ -37,7 +37,7 @@ docs/retrospective/
 │       ├── governance-strategy/        ← 治理与优先级策略（14个）
 │       ├── ai-collaboration/           ← AI协作与提示词设计（9个）
 │       ├── creative-design/            ← 创意与设计原则（7个）
-│       └── product-growth/             ← 产品开发与竞争策略（7个）
+│   └── product-growth/             ← 产品开发与竞争策略（7个）
 ├── frameworks/                        ← 决策框架
 │   ├── directory-naming-matrix.md     · 目录命名决策矩阵
 │   ├── dependency-management-matrix.md · 临时依赖管理决策矩阵

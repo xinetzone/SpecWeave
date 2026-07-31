@@ -82,6 +82,7 @@ date: "2026-07-09"
 | [缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost）](nonlinear-correction-cost.md) | 缺陷放大与非线性纠偏成本模式（Defect Amplification & Nonlinear Correction Cost） | L2 | `非线性成本` `缺陷放大` `质量左移` |
 | [编排-执行分层法：主代理规划+子代理执行的职责分离模式](orchestration-execution-layering.md) | 复杂任务主代理制定Spec三件套、委托子代理在bounded context内完成撰写、逐项验证结果后推进质量门，实现内容创作与流程控制解耦，防止上下文溢出和主代理自欺 | L1 | `编排分层` `子代理` `职责分离` `质量门` |
 | [模式渐进式工具提取：L1实验阶段即可提取轻量工具](pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量工具 | L1 | `pattern-tooling` `progressive-extraction` `checklist` |
+| [分层渐进优化策略：安全场景先行+复杂场景后置的风险控制方法论](phased-incremental-optimization.md) | 性能优化/内存语义变更的四步渐进法：Phase 0基线建立→Phase 1数学等价场景先行→Phase 2安全机制扩展(COW/锁)→Phase 3渐进迁移，配合编译期+运行期双开关回退策略，前一阶段为后一阶段提供对照组，大幅降低调试复杂度 | L2 | `optimization` `risk-control` `phased-delivery` `incremental` `zero-copy` `cow` |
 | [方法论推广渐进式验证模式](phased-rollout-validation.md) | 方法论推广渐进式验证模式 | L2 |  |
 | [践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law）](practice-gap-recursive-practice.md) | 践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law） | L3 | `践行鸿沟` `递归践行` `认知偏差` |
 | [流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition）](process-vs-experience-intuition.md) | 流程合规 vs 经验直觉区分模式（Process Compliance vs Experience Intuition） | L2 |  |
