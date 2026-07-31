@@ -28,10 +28,11 @@ Agent平台与工具生态可分为六大类别：
 
 ---
 
-## 📚 子Wiki索引（6个专题）
+## 📚 子Wiki索引（7个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
+| **[volcengine-agentkit-wiki/](volcengine-agentkit-wiki/README.md)** | **12篇** | **火山引擎 AgentKit 企业级 AI Agent 基础设施平台 Wiki 教程**：基于七概念方法论（R-I-E-V）深度沉淀，60条事实→5条洞察→3个跨平台可复用模式→16条攻击37.5%采纳，11章从产品定义到生产化检查清单，附选型评估框架/存量改造SOP/Demo→生产12项检查，**企业智能体从0到1必读** |
 | [claude-tag-article/](claude-tag-article/00-overview.md) | 8篇 | **Claude Tag企业协作工具深度分析**：Anthropic发布的Claude Code进化版，定位团队共享AI同事，Ambient Mode主动介入、异步执行，卡帕西称其为LLM用户界面第三次重大变革，含2项已萃取L1可复用模式 |
 | [fable5-cost-optimization-wiki/](fable5-cost-optimization-wiki/README.md) | 9篇 | **Fable 5按量计费成本优化技巧**：3个开源方案（Skill蒸馏法、pxpipe文字转图片省59%~70%、包工头调度模式）+2个官方机制（缓存经济学省90%、批量接口半价），叠加可低至0.5折，含场景选型决策树和五大工程洞察 |
 | [minitest-mobile-use-wiki/](minitest-mobile-use-wiki/best-practices.md) | 4篇+2个SDK文档子目录 | **Minitest & Mobile Use官方文档系统化教程**：minitest AI QA工程师（AndroidWorld基准100%准确率全球第一）+ mobile-use开源SDK双模块完整指南，含入门/套件管理/运行测试/分类集成/参考手册五大部分+SDK六章节，附加best-practices/faq/glossary/resources |

@@ -1,14 +1,17 @@
 # 火山引擎 AgentKit Wiki 教程 - The Implementation Plan (Decomposed and Prioritized Task List)
+
 > 场景：知识沉淀（R→I→E→V链路）
 > 执行深度：standard（标准版，含对抗审查V）
 
-## [x] Task 1: R阶段 - 复盘采集事实数据（Retrospective）
+## \[x] Task 1: R阶段 - 复盘采集事实数据（Retrospective）
+
 > **完成记录**：60条事实（F001-F060），6大类每类≥5，来源标注齐全。G1质量门✅：0次因果词违规。
+
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
   - 基于已获取的 5 个官方来源（产品主页、产品简介文档、应用场景文档、VeADK 官网、AgentKit SDK官网），结构化采集客观事实
-  - 按事实类别分组：产品定位事实 / 8大功能模块事实 / VeADK技术栈事实 / SDK&CLI事实 / 应用场景事实 / 竞品与生态事实
+  - 按事实类别分组：产品定位事实 / 8大功能模块事实 / VeADK技术栈事实 / SDK\&CLI事实 / 应用场景事实 / 竞品与生态事实
   - 产出物：`facts.md`（≥35条纯客观事实，无因果推断词，通过G1质量门）
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9, AC-10, AC-11
 - **Test Requirements**:
@@ -18,8 +21,10 @@
   - `human-judgement` TR-1.4: 每条事实可溯源至明确来源（标注来源编号：S1产品主页/S2简介/S3场景/S4VeADK/S5SDK）
 - **Notes**: 这是知识沉淀的基础，事实不全会导致后续洞察有偏差。事实阶段禁止加入任何主观判断。
 
-## [x] Task 2: I阶段 - 洞察本质发现（Insight）
+## \[x] Task 2: I阶段 - 洞察本质发现（Insight）
+
 > **完成记录**：5条洞察（1战略+2架构+2实践），四元组完整。G2质量门✅：反常识3条高冲击+2条中冲击，证据引用全部有效。
+
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -35,7 +40,10 @@
   - `human-judgement` TR-2.4: 反常识发现部分确实挑战了常见认知（如"智能体平台的核心不是编排而是治理"类观点），不是常规总结
 - **Notes**: 洞察阶段的价值在于"反常识发现"——不是总结大家都知道的，而是提炼从事实中才能看到的深层规律。
 
-## [/] Task 3: E阶段 - 萃取可复用模式（Extraction）
+## \[x] Task 3: E阶段 - 萃取可复用模式（Extraction）
+
+> **完成记录**：3个模式（P-AGENT-SELECT-001 / P-LEGACY-AI-UPGRADE-002 / P-DEMO-TO-PROD-003），10条反模式，6个迁移场景。G3质量门✅：全部四要素+可迁移性验证通过。
+
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -54,7 +62,10 @@
   - `human-judgement` TR-3.5: 每个模式明确标注反模式（"不要做什么"），每个模式 ≥2 条反模式
 - **Notes**: 萃取模式的价值不在 AgentKit 本身，而在于提炼出跨平台、跨场景的通用方法论。模式的可迁移性是关键。
 
-## [ ] Task 4: V阶段 - 对抗性审查验证（Adversarial Review）
+## \[x] Task 4: V阶段 - 对抗性审查验证（Adversarial Review）
+
+> **完成记录**：4视角×4条=16条攻击，6条采纳（37.5%）。facts补充F061/F062规模声明+术语说明，insights修正2现象表述，patterns新增锁定风险维度+退出预案检查。V门✅通过。
+
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**:
@@ -70,11 +81,13 @@
 - **Test Requirements**:
   - `human-judgement` TR-4.1: 四视角齐全，每视角 ≥4 条具体攻击意见，总计 ≥16 条
   - `human-judgement` TR-4.2: 攻击意见不是客套话（如"写得不错"），而是有具体质疑点和修正建议
-  - `programmatic` TR-4.3: 采纳率 ≥30% — 统计 adversarial-review.md 中标注"已采纳"的条目比例
+  - `programmatic` TR-4.3: 采纳率 ≥30% — 统计 adversarial-review\.md 中标注"已采纳"的条目比例
   - `human-judgement` TR-4.4: 至少修正 1 个 facts 中的事实性错误/遗漏、至少修正 1 个 insights 中的逻辑漏洞、至少修正 1 个 patterns 中的可迁移性问题
 - **Notes**: V阶段是知识沉淀质量的最后保障。对抗审查越严格，最终教程的可信度越高。不要回避尖锐问题。
 
-## [ ] Task 5: 生成 00-overview + README 索引导航
+## [x] Task 5: 生成 00-overview + README 索引导航
+> **完成记录**：README.md（38行）+ 00-overview.md（97行）。4层Mermaid生态图24节点，3条阅读路径，6个知识库交叉引用。TR-5.1/TR-5.2/TR-5.3全部通过。
+
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -86,13 +99,15 @@
     - 与现有知识库 ≥6 个 wiki 的交叉引用矩阵（表格：关联 wiki/关联章节/互补关系）
 - **Acceptance Criteria Addressed**: AC-1, AC-12, AC-14, AC-15
 - **Test Requirements**:
-  - `programmatic` TR-5.1: 目录下存在 README.md 和 00-overview.md，两个文件均 < 300 行
-  - `human-judgement` TR-5.2: 00-overview.md 包含完整的 Mermaid 产品生态四层关系图（≥12 个节点）
+  - `programmatic` TR-5.1: 目录下存在 README.md 和 00-overview\.md，两个文件均 < 300 行
+  - `human-judgement` TR-5.2: 00-overview\.md 包含完整的 Mermaid 产品生态四层关系图（≥12 个节点）
   - `human-judgement` TR-5.3: 三条阅读路径明确，每路径列出章节顺序和预计总阅读时间
   - `programmatic` TR-5.4: YAML frontmatter 齐全，source 字段 = `seven-concepts: volcengine-agentkit-wiki`，category = `learning`
   - `human-judgement` TR-5.5: 交叉引用矩阵列出 ≥6 个已有 wiki，明确关联章节与互补关系
 
-## [ ] Task 6: 生成产品层文档（01-product-intro + 02-core-architecture）
+## [x] Task 6: 生成产品层文档（01-product-intro + 02-core-architecture）
+> **完成记录**：01-product-intro.md（110行）+ 02-core-architecture.md（155行）。9模块分业务内环/治理外环、6层Mermaid架构图、安全3层模型回应V阶段。AC-2/AC-3/TR-6.1-6.5全部通过。
+
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -112,12 +127,14 @@
 - **Acceptance Criteria Addressed**: AC-2, AC-3, AC-12, AC-14
 - **Test Requirements**:
   - `programmatic` TR-6.1: 两个文件均存在，每个 < 300 行
-  - `human-judgement` TR-6.2: 01 的 8 大功能模块清晰对应 Runtime/Identity/Gateway/A2A/Session/Memory/Knowledge/Observability/Evaluation（注意 Session&Memory 算两个）
+  - `human-judgement` TR-6.2: 01 的 8 大功能模块清晰对应 Runtime/Identity/Gateway/A2A/Session/Memory/Knowledge/Observability/Evaluation（注意 Session\&Memory 算两个）
   - `human-judgement` TR-6.3: 02 的 Mermaid 分层架构图 ≥6 层，每层 ≥2 个组件节点
   - `human-judgement` TR-6.4: 02 的安全三层模型每层描述 ≥2 个具体能力点，不是空泛概念
   - `programmatic` TR-6.5: 两个文件 frontmatter 规范，底部均有双向导航链接
 
-## [ ] Task 7: 生成开发工具链文档（03-veadk-framework + 04-agentkit-sdk-cli + 05-quickstart）
+## [x] Task 7: 生成开发工具链文档（03-veadk-framework + 04-agentkit-sdk-cli + 05-quickstart）
+> **完成记录**：03(159行) + 04(238行) + 05(255行)。三语言安装+18行产品矩阵+41行装饰器示例+5步HelloWorld流程。AC-4/AC-5/AC-6/TR-7.1-7.6全部通过。
+
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -148,7 +165,9 @@
   - `human-judgement` TR-7.5: 05 的 5 步流程每步命令可复制执行，预期输出明确；FAQ ≥5 条且每条有具体错误信息
   - `programmatic` TR-7.6: 三个文件 frontmatter 规范，底部均有双向导航
 
-## [ ] Task 8: 生成应用与集成文档（06-application-scenarios + 07-core-features-detailed）
+## [x] Task 8: 生成场景与功能文档（06-application-scenarios + 07-core-features-detailed）
+> **完成记录**：06(217行，6个Mermaid图，5场景每场景5小节+具体KPI) + 07(246行，6个Mermaid图，5大模块深度解析，2次知识库交叉引用)。AC-7/AC-8/TR-8.1-8.6全部通过。
+
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -177,7 +196,9 @@
   - `human-judgement` TR-8.5: 07 有明确的交叉引用：Gateway 引用 MCP 协议 wiki、A2A 引用 A2A 协议 wiki
   - `programmatic` TR-8.6: 两个文件 frontmatter 规范，底部均有双向导航
 
-## [ ] Task 9: 生成选型与资源文档（08-comparison-ecosystem + 09-faq-best-practices + 10-resources-glossary）
+## [x] Task 9: 生成对比/FAQ/资源文档（08-comparison-ecosystem + 09-faq-best-practices + 10-resources-glossary）
+> **完成记录**：08(139行，5产品对比矩阵+3Mermaid) + 09(101行，16条FAQ+12项检查清单+4条决策实践) + 10(116行，21条官方资源+37条术语)。AC-9/AC-10/AC-11/TR-9.1-9.6全部通过。
+
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -217,7 +238,9 @@
   - `human-judgement` TR-9.7: 10 的知识库交叉引用 ≥10 个，每项明确推荐章节与学习价值
   - `programmatic` TR-9.8: 三个文件 frontmatter 规范，底部均有双向导航
 
-## [ ] Task 10: 整体验证 + 链接修复 + 入库提交
+## [x] Task 10: 整体验证 + 链接修复 + 入库提交
+> **完成记录**：12文件齐全，AC-1~AC-15 全部通过（13✓ + 2⚠，0✗），G1-G3-V 4质量门通过，链接0错误（无file:///，导航链路全正确），NFR 6项合规。修正08/09/10三文件frontmatter缺失的author/summary字段。验收报告已生成：verification-report.md
+
 - **Priority**: high
 - **Depends On**: Task 5, Task 6, Task 7, Task 8, Task 9
 - **Description**:
@@ -228,16 +251,18 @@
   - （可选）运行 docgen-cmd 更新知识库索引（不在本任务必做范围，但需要确认目录位置正确）
 - **Acceptance Criteria Addressed**: AC-1, AC-12, AC-13, AC-14, AC-15
 - **Test Requirements**:
-  - `programmatic` TR-10.1: 链接检查脚本 0 errors，0 warnings（内部链接）
-  - `programmatic` TR-10.2: 12 个文件 frontmatter 字段齐全（id/title/source/category/tags/date/status/author/summary），source 字段值统一
-  - `programmatic` TR-10.3: verification-report.md 包含 AC-1 到 AC-15 逐项验证结果（✓/✗ + 备注）
-  - `human-judgement` TR-10.4: G1-G3 质量门通过记录齐全，每个质量门有具体验证方法和结果
-  - `programmatic` TR-10.5: 所有文件 < 300 行（NFR-1 合规）
+  - `programmatic` TR-10.1: 链接检查脚本 0 errors，0 warnings（内部链接）✓
+  - `programmatic` TR-10.2: 12 个文件 frontmatter 字段齐全（id/title/source/category/tags/date/status/author/summary），source 字段值统一 ✓（Task10修正3个后100%）
+  - `programmatic` TR-10.3: verification-report.md 包含 AC-1 到 AC-15 逐项验证结果（✓/✗ + 备注）✓
+  - `human-judgement` TR-10.4: G1-G3 质量门通过记录齐全，每个质量门有具体验证方法和结果 ✓（4/4通过）
+  - `programmatic` TR-10.5: 所有文件 < 300 行（NFR-1 合规）✓
 
 ## 七概念编排执行总结
+
 ```
 知识沉淀链路：R → I → E → V → 教程生成（Task5-9）→ 验证入库（Task10）
 质量门位置：G1(R阶段) → G2(I阶段) → G3(E阶段) → V门(V阶段) → G4（可选，Task10整体验证可视为G4等价）
 中间产出：facts.md / insights.md / patterns.md / adversarial-review.md / verification-report.md
 最终产出：00-overview.md ~ 10-resources-glossary.md + README.md 共 12 文件
 ```
+

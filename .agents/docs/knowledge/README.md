@@ -16,7 +16,7 @@
 | docs | 10 | [docs](category-index.md#docs) |
 | examples | 6 | [examples](category-index.md#examples) |
 | knowledge | 352 | [knowledge](category-index.md#knowledge) |
-| learning | 222 | [learning](learning/README.md) |
+| learning | 234 | [learning](learning/README.md) |
 | operations | 11 | [operations](operations/README.md) |
 | reference | 3 | [reference](category-index.md#reference) |
 | research | 1 | [research](category-index.md#research) |
@@ -34,6 +34,7 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| **[火山引擎 AgentKit 企业级 AI Agent 平台 Wiki 教程](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md)** | **2026-07-31** | **learning** |
 | [conda-forge 交叉编译配置完整指南](best-practices/conda-forge-cross-compilation-guide.md) | 2026-07-30 | best-practices |
 | [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) | 2026-07-29 | best-practices |
 | [TVM FFI 教程总览](tech/tvm-ffi-wiki/00-overview.md) | 2026-07-28 | tech |
