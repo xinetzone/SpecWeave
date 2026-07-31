@@ -207,10 +207,12 @@ RUN echo "=== [Runtime 2/5] Copying conda environment from builder ===" && \
     "${CONDA_DIR}/bin/conda" config --system --set auto_activate_base false && \
     echo "[BUILD] Conda copied: $("${CONDA_DIR}/bin/conda" --version)" && \
     test -x "${CONDA_DIR}/envs/caffe-ffi/bin/python" && \
-    echo "[BUILD] caffe-ffi env Python: $("${CONDA_DIR}/envs/caffe-ffi/bin/python" --version)" && \
-    echo "[BUILD] Configuring dynamic library search paths..." && \
+    echo "[BUILD] Activating conda environment before any Python calls..." && \
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && conda activate caffe-ffi && \
-    echo "${ENV_PATH}/lib" > /etc/ld.so.conf.d/caffe-ffi.conf && \
+    echo "[BUILD] caffe-ffi env Python: $(python --version)" && \
+    echo "[BUILD] Configuring dynamic library search paths..." && \
+    echo "${CONDA_DIR}/lib" > /etc/ld.so.conf.d/caffe-ffi.conf && \
+    echo "${ENV_PATH}/lib" >> /etc/ld.so.conf.d/caffe-ffi.conf && \
     ldconfig && \
     echo "[BUILD] ldconfig updated with caffe-ffi library paths" && \
     echo "[BUILD] Verifying base imports..." && \
