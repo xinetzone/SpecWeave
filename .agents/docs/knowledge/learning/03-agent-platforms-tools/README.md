@@ -13,11 +13,12 @@ date: "2026-07-09"
 
 ### 生态全景分类
 
-Agent平台与工具生态可分为六大类别：
+Agent平台与工具生态可分为七大类别：
 
 | 类别 | 核心方向 | 代表项目 |
 |------|---------|---------|
 | 🏢 **平台分析** | 主流厂商Agent路线图、多Agent协作平台 | Anthropic路线图、Octo、The Agency、AReaL |
+| 🇨🇳 **国内大模型平台** | 国内大模型厂商Agent订阅产品与生态 | 火山引擎方舟Agent Plan |
 | 🔒 **安全工具** | 安全审计、漏洞挖掘Agent | MopMonk扫地僧 |
 | 🔍 **代码审查** | AI代码评审、开发效率工具 | Open Code Review |
 | 🌐 **翻译工具** | 文档翻译、内容本地化 | Rainman Translate Book |
@@ -39,6 +40,7 @@ Agent平台与工具生态可分为六大类别：
 | [mopmonk-security-agent-wiki/](mopmonk-security-agent-wiki/00-overview.md) | 7篇 | **MopMonk安全Agent（扫地僧）**：CyberGym全球第七、中国第一的漏洞复现AI Agent，73.1%成功率，MiniMax M3基座，结构化记忆+记忆驱动挖掘+多Agent并行探索三大核心技术 |
 | [open-code-review-wiki/](open-code-review-wiki/00-overview.md) | 11篇 | **阿里Open Code Review开源AI代码评审工具**：确定性工程×Agent混合驱动架构，阿里内部数万开发者验证、识别数百万缺陷，F1指标在AACR-Bench领先，含安装/使用/优化/集成/评估/FAQ完整指南 |
 | [rainman-translate-book-wiki/](rainman-translate-book-wiki/00-overview.md) | 8篇 | **Rainman Translate Book整书翻译神器**：基于Claude Code Skill的开源整书翻译，8个并行子代理+术语表锁定+相邻上下文+断点续传，支持PDF/DOCX/EPUB输入，五种格式输出 |
+| [volcengine-agent-plan-wiki/](volcengine-agent-plan-wiki/README.md) | 9篇 | **火山引擎方舟Agent Plan共创计划参与指南**：一个API Key覆盖编程/生图/生视频/向量化/联网搜索的订阅制产品，五大征集方向（评测/Agent落地/应用/编程协同/探索实验）、参与流程、奖励机制、跨模态范式（语言规划→生图→生视频链路） |
 
 ---
 
@@ -184,6 +186,7 @@ echobird-wiki.md
 | 📈 **量化金融** | [quantdinger-ai-trading-wiki.md](quantdinger-ai-trading-wiki.md)（QuantDinger）→ [anthropic-financial-services-wiki.md](anthropic-financial-services-wiki.md)（Anthropic金融工具箱） |
 | 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0在线RL） |
 | 🔧 **开发环境** | [echobird-wiki.md](echobird-wiki.md)（EchoBird桌面工具）→ [trae-v3-3-74-release-notes.md](trae-v3-3-74-release-notes.md)（TRAE发布） |
+| 🇨🇳 **国内平台与多模态** | [volcengine-agent-plan-wiki/00-overview.md](volcengine-agent-plan-wiki/00-overview.md)（火山引擎方舟Agent Plan）→ [volcengine-agent-plan-wiki/06-crossmodal-paradigm.md](volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)（跨模态范式） |
 
 ---
 
