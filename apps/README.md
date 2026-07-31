@@ -52,6 +52,8 @@ apps/<app-name>/
 | 应用 | 说明 | 入口 |
 |---|---|---|
 | `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
+| `caffe-ffi-cross/` | caffe-ffi-cross 应用 | `caffe-ffi-cross/`（暂无 README） |
+| `caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](caffe-ffi-jupyter/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
 | `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
 | `jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](jupyter-ssh-base/README.md) |
