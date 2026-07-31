@@ -1,14 +1,17 @@
 ---
 id: knowledge-dual-layer-architecture
 title: 知识沉淀「中间产物→质量门→最终产出」双层架构模式
-source: AgentKit Wiki教程项目里程碑复盘（validation_count=1）
+source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-1"
 domain: methodology
 layer: governance
 maturity: L1
 validation_count: 1
 reuse_count: 0
 documentation_level: complete
+x-toml-ref: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone.toml"
 ---
+
+> **提炼自**：[milestone-patterns.md#模式1](../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-1) —— 火山引擎AgentKit里程碑复盘E阶段萃取（知识沉淀双层架构）
 
 # 知识沉淀「中间产物→质量门→最终产出」双层架构模式
 
