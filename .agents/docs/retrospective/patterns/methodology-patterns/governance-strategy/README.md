@@ -137,6 +137,10 @@ date: "2026-07-09"
 | [Wiki双轨Frontmatter规范模式](wiki-dual-track-frontmatter.md) | Wiki双轨Frontmatter规范模式 | L1 |  |
 | [Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern）](wiki-pre-creation-three-checks.md) | Wiki创作三查流程模式（Wiki Pre-Creation Three Checks Pattern） | L3 |  |
 | [对称目录结构设计（Symmetric Directory Structure）](symmetric-directory-structure.md) | 对称目录结构设计：为同构区域定义最小结构模板+新增区域对称检查表，消除"临时例外"累积的结构性技术债务，入口先行、规范按需扩展 | L3 | `架构对称性` `目录结构` `技术债务预防` |
+| [P-AGENT-SELECT-001：企业级AI Agent平台9维度选型评估框架](P-AGENT-SELECT-001-agent-platform-selection-framework.md) | 9维度加权评分框架（治理能力20%最高权重）+供应商锁定风险评估，配套独立评分卡工具（可直接套用），将Agent平台选型从主观感觉转化为可量化决策，适用于Dify/Coze/LangGraph/AgentKit等任意平台或AI基础设施选型 | L1 | `技术选型` `Agent平台` `评分框架` `决策工具` |
+| [P-AGENT-SELECT-001配套评分卡：AI Agent平台选型9维度评分卡（可直接套用）](P-AGENT-SELECT-001-agent-platform-selection-scorecard.md) | P-AGENT-SELECT-001的配套工具：空白打分表+加权公式+5大平台示例打分（AgentKit 4.30/Dify 3.52/Coze 3.60/LangGraph 3.27/LlamaIndex 3.14）+决策建议矩阵+PoC验证8项清单，复制即可使用 | L1 | `选型工具` `评分卡` `可直接套用` |
+| [P-LEGACY-AI-UPGRADE-002：存量业务系统智能化改造5步SOP](P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md) | API分级→Gateway快速接入→权限映射→Harness跑通验证→MCP渐进优化5步SOP，核心原则"先接入验证价值再优化核心接口"，适用于REST/OpenAPI存量系统赋予Agent能力、SaaS集成、移动App API智能化 | L1 | `存量改造` `系统集成` `SOP` `MCP` `渐进式` |
+| [P-DEMO-TO-PROD-003：智能体从Demo到生产的12项检查清单](P-DEMO-TO-PROD-003-demo-to-prod-checklist.md) | 6维度（安全/可观测/权限/成本/性能/稳定性）×12项量化检查清单，每项有明确Pass/Fail硬指标（错误率>1%告警/P95<5s/≥50条Eval用例/≥90天日志等），含Copy-Paste版快速清单，适用于Agent/RAG/AI工作流/LLM网关生产化检查 | L1 | `生产化检查` `上线清单` `质量门` `SLA` `可观测` |
 
 ## 📁 子目录导航
 

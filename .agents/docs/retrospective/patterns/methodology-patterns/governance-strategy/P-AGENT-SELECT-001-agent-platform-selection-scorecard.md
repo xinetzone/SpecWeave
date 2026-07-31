@@ -258,9 +258,9 @@ related_patterns: ["P-LEGACY-AI-UPGRADE-002", "P-DEMO-TO-PROD-003"]
 ## 📚 相关资源
 
 - **姊妹模式**：
-  - [P-LEGACY-AI-UPGRADE-002 存量系统改造 5 步 SOP](../P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md)：选型通过后的存量业务改造路径
-  - [P-DEMO-TO-PROD-003 Demo→生产 12 项检查清单](../P-DEMO-TO-PROD-003-demo-to-prod-checklist.md)：开发完成后上线前的生产化检查
-- **方法论来源**：[volcengine-agentkit-wiki E阶段模式萃取](../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md)
+  - [P-LEGACY-AI-UPGRADE-002 存量系统改造 5 步 SOP](P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md)：选型通过后的存量业务改造路径
+  - [P-DEMO-TO-PROD-003 Demo→生产 12 项检查清单](P-DEMO-TO-PROD-003-demo-to-prod-checklist.md)：开发完成后上线前的生产化检查
+- **方法论来源**：[volcengine-agentkit-wiki E阶段模式萃取](../../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md)
 - **评分卡版本**：v2.0（2026-07-31，V 阶段采纳供应商锁定风险维度）
 
 ---

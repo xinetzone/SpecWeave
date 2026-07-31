@@ -209,3 +209,17 @@ gate_g3_passed: true
 - 反模式总数 10 条（最低要求 7 条），覆盖选型焦虑、权限失控、质量闸门缺失等高频失败路径
 - 所有评分标准、通过标准、时间/数量指标均为可量化的硬指标，可直接落地执行
 - 符合七概念方法论 E 阶段 G3 质量门全部要求
+
+---
+
+## 模式库归档记录
+
+> 本章节记录 E 阶段模式向项目模式库的归档情况，保持模式文档→模式库的双向溯源。
+
+| 模式ID | 模式名称 | 模式类型 | 成熟度 | 归档路径 | 配套工具 |
+|--------|---------|---------|--------|---------|---------|
+| P-AGENT-SELECT-001 | 企业级AI Agent平台9维度选型评估框架 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.md` | [评分卡（可直接套用）](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-scorecard.md) |
+| P-LEGACY-AI-UPGRADE-002 | 存量业务系统智能化改造5步SOP | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md` | — |
+| P-DEMO-TO-PROD-003 | 智能体从Demo到生产的12项检查清单 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-DEMO-TO-PROD-003-demo-to-prod-checklist.md` | Copy-Paste快速检查清单（含在正文中） |
+
+**归档统计**：3个方法论模式全部归档至 `methodology-patterns/governance-strategy/` 目录，同步更新目录索引。模式1含独立可套用评分卡工具文件；模式3内含Copy-Paste版快速清单。所有模式均为L1实验性（单案例验证），与I阶段萃取的3个架构模式（governance-outer-ring / data-lifecycle-economic-stratification / legacy-integration-dual-track）形成完整的AgentKit方法论+架构双维度模式体系。
