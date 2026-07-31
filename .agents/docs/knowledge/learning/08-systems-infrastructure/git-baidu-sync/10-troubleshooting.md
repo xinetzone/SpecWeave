@@ -1477,4 +1477,218 @@ git reflog
    ```
 
 **预防措施**：
-- **永远不要使用`git push -f`/
+- **永远不要使用`git push -f`/`--force`！** 日常同步完全不需要
+- 如果确实需要（比如已经push了敏感信息），使用`--force-with-lease`更安全
+- 配置Git禁止裸force-push：
+  ```bash
+  git config --global push.default current
+  # 或设置服务器端（本方案是网盘，没有服务器端保护，靠自觉）
+  ```
+- 保护分支：在重要分支上避免强制操作
+
+---
+
+#### 场景22：想要重命名仓库/迁移到新目录
+
+**现象描述**：
+想要把仓库从`old-name`改名为`new-name`，或把SyncRoot移动到新位置。
+
+**可能原因**：
+项目重命名、磁盘空间不够迁移、目录结构调整。
+
+**诊断步骤**：
+无需诊断，这是正常操作需求。
+
+**解决方案**：
+**方案一：重命名仓库（不移动SyncRoot位置）**
+```powershell
+# 1. 确保所有设备都已push，工作区干净
+git status
+# 在所有设备上确认工作区clean并已push
+
+# 2. 重命名裸仓库目录
+$syncRoot = <SyncRoot路径>
+$oldBare = Join-Path $syncRoot "repos\old-name.git"
+$newBare = Join-Path $syncRoot "repos\new-name.git"
+Rename-Item $oldBare "new-name.git"
+
+# 3. 在所有工作仓库更新remote URL
+git remote set-url baidu $newBare
+
+# 4. 重命名备份目录（可选）
+$oldBackup = Join-Path $syncRoot "backups\old-name"
+$newBackup = Join-Path $syncRoot "backups\new-name"
+if (Test-Path $oldBackup) { Rename-Item $oldBackup "new-name" }
+
+# 5. 重命名锁文件（可选）
+$oldLock = Join-Path $syncRoot "locks\old-name.lock.json"
+if (Test-Path $oldLock) { Remove-Item $oldLock -Force }  # 锁是临时的，直接删除即可
+
+# 6. 验证
+git remote -v
+git-sync-push
+git-sync-pull
+```
+
+**方案二：迁移整个SyncRoot到新位置**
+```powershell
+# 1. 所有设备push并停止操作
+# 2. 等待网盘完全同步
+# 3. 在所有设备上：
+#    - 退出百度网盘客户端
+#    - 移动/复制SyncRoot目录到新位置
+#    - 重新配置百度网盘同步新目录
+# 4. 在所有工作仓库更新remote路径
+# （可以写个脚本批量更新，或者重新clone更简单）
+
+# 或者更简单的方式：
+# 在新SyncRoot位置初始化后，对每台设备每个仓库：
+# 旧的remote改成新路径，或者用clone-repo重新克隆
+```
+
+**更安全的迁移方式**：
+1. 在新位置初始化新的同步目录结构
+2. 在当前完好的工作仓库上，把remote设为**两个**：
+   ```bash
+   git remote add baidu-new <新路径>
+   git push baidu-new --all
+   git push baidu-new --tags
+   ```
+3. 验证新仓库正常后，所有设备切换到新remote：
+   ```bash
+   git remote remove baidu
+   git remote rename baidu-new baidu
+   ```
+4. 确认所有设备都切换后，删除旧目录
+
+**预防措施**：
+- 命名前想好，尽量避免重命名
+- 重命名/迁移前所有设备都push
+- 迁移后逐一验证仓库可正常push/pull
+
+---
+
+#### 场景23：如何在新设备上快速开始工作
+
+**现象描述**：
+买了新电脑/重装系统，需要把同步的仓库拉下来开始工作。
+
+**可能原因**：
+新设备环境搭建。
+
+**解决方案**：
+1. **准备工作（在新设备上）**：
+   - 安装Git
+   - 安装百度网盘客户端，登录并等待同步完全完成（等所有文件下载到本地）
+   - 运行setup-git-config配置Git环境
+   ```powershell
+   .\setup-git-config.ps1
+   ```
+
+2. **克隆仓库（推荐方式，用封装脚本）**：
+   ```powershell
+   # 进入脚本目录
+   cd d:\AI\.agents\scripts\git-baidu-sync
+   
+   # 克隆单个仓库
+   .\clone-repo.ps1 -RepoName <repo名> -SyncRoot <SyncRoot路径> -TargetPath <本地工作目录>
+   
+   # 示例：
+   .\clone-repo.ps1 -RepoName myproject -SyncRoot D:\BaiduSync\git-sync -TargetPath D:\projects\myproject
+   ```
+
+3. **手动方式（了解原理）**：
+   ```bash
+   # 1. 创建工作目录
+   mkdir -p ~/projects/myproject
+   cd ~/projects/myproject
+   
+   # 2. 克隆
+   git clone <SyncRoot>/repos/myproject.git .
+   
+   # 3. 验证
+   git status
+   git log --oneline -3
+   ```
+
+4. **验证安装**：
+   ```powershell
+   # 运行快速诊断
+   .\git-diag.ps1 -RepoPath <工作目录>
+   # 应显示无错误
+   
+   # 测试pull（应该已经是最新）
+   .\git-sync-pull.ps1
+   ```
+
+**注意事项**：
+- 不要手动`git init`然后`git remote add`，用clone
+- 第一次push如果报unrelated histories，参考场景9用--allow-unrelated-histories（但用正确的clone流程不会出现）
+- 所有设备上的Git配置（autocrlf等）要一致，用setup-git-config脚本统一配置
+
+---
+
+#### 场景24：如何废弃一个仓库（归档）
+
+**现象描述**：
+项目结束不再需要同步，想要归档仓库，释放网盘空间但保留历史。
+
+**解决方案**：
+1. **最后一次备份**：
+   ```powershell
+   # 在任意设备的工作仓库
+   .\git-backup.ps1 -RepoPath <工作仓库路径> -SyncRoot <SyncRoot>
+   # 这会创建一个.bundle文件作为最终备份
+   ```
+
+2. **导出归档（可选但推荐）**：
+   ```bash
+   # 创建一个完整的bundle归档，包含所有分支标签
+   git bundle create <repo名>-archive-$(date +%Y%m%d).bundle --all
+   
+   # 也可以导出为tar.gz压缩包
+   cd ..
+   tar -czf <repo名>-archive-$(date +%Y%m%d).tar.gz <repo名>/
+   ```
+
+3. **从网盘同步中移除**：
+   ```powershell
+   # 1. 所有设备删除工作目录（可选，或保留本地副本）
+   
+   # 2. （可选）在网盘客户端中把该仓库目录从同步列表移除
+   
+   # 3. 删除网盘上的裸仓库（等确认归档备份已妥善保存后！）
+   # Remove-Item <SyncRoot>\repos\<repo名>.git -Recurse -Force
+   # Remove-Item <SyncRoot>\backups\<repo名> -Recurse -Force
+   # Remove-Item <SyncRoot>\locks\<repo名>.lock.json -Force -ErrorAction SilentlyContinue
+   ```
+   **注意**：删除是永久的！一定要确认归档备份已复制到安全位置（不要只放在同一个网盘里！）
+
+4. **本地工作仓库处理**：
+   - 可以保留本地目录继续作为普通Git仓库使用
+   - 或删除baiduremote：`git remote remove baidu`
+   - 或整个删除本地目录
+
+**归档最佳实践**：
+- 归档文件至少保存到两个不同的位置（本地移动硬盘+云存储）
+- 在归档文件名中包含日期
+- 可以导出一份静态HTML文档（用gitinstaweb或其他工具）方便不装Git也能查看代码
+- 保留.bundle文件就可以随时恢复完整仓库历史
+
+---
+
+## 附录：常用命令速查表
+
+| 操作 | PowerShell命令 | Bash命令 |
+|------|---------------|---------|
+| 快速诊断 | `.\git-diag.ps1` | `./git-diag.sh` |
+| 完整诊断 | `.\git-diag.ps1 -Full` | `./git-diag.sh --full` |
+| 健康检查 | `.\git-doctor.ps1 -Mode full` | `./git-doctor.sh --mode full` |
+| 冲突扫描 | `.\check-conflicts.ps1 -RepoName <r> -SyncRoot <s>` | `./check-conflicts.sh -RepoName <r> -SyncRoot <s>` |
+| 检查锁 | `.\lock-utils.ps1 → Lock-Check <r>` | `source lock-utils.sh; _lock_check <r>` |
+| 强制解锁 | `.\force-unlock.ps1 -RepoName <r> -SyncRoot <s>` | `./force-unlock.sh -RepoName <r> -SyncRoot <s>` |
+| Push | `.\git-sync-push.ps1` | `./git-sync-push.sh` |
+| Pull | `.\git-sync-pull.ps1` | `./git-sync-pull.sh` |
+| 创建备份 | `.\git-backup.ps1` | `./git-backup.sh` |
+| 新设备克隆 | `.\clone-repo.ps1 ...` | `./clone-repo.sh ...` |
+| 配置Git | `.\setup-git-config.ps1` | `./setup-git-config.sh` |
