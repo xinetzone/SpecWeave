@@ -327,7 +327,7 @@ WeasyPrint 不执行 JavaScript，无法直接渲染 Mermaid。有三种解决�
 
 ### 方案1：Pandoc Lua Filter 预渲染为图片（推荐）
 
-使用 [pandoc-mermaid-filter](https://github.com/TheMrSheep/pandoc-mermaid-filter) 或自己写一个简单的 Lua filter，在 Pandoc 转换阶段调用 mmdc（mermaid-cli）把代码块转为图片。
+使用 `pandoc-mermaid-filter`（原外部链接 2026-07 复检已失效：github.com/TheMrSheep/pandoc-mermaid-filter） 或自己写一个简单的 Lua filter，在 Pandoc 转换阶段调用 mmdc（mermaid-cli）把代码块转为图片。
 
 ### 方案2：先转 HTML 再后处理（项目中已有实现）
 

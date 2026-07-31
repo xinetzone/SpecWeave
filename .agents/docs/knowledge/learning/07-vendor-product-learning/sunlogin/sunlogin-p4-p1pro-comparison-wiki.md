@@ -1323,13 +1323,13 @@ A：不是。倒计时开关和插线板定时功能会直接切断电源，属�
 - [向日葵官网首页](https://sunlogin.oray.com/)
 - [向日葵远程控制软件下载](https://sunlogin.oray.com/download/)
 - [向日葵帮助中心](https://service.oray.com/)
-- [向日葵硬件产品中心](https://sunlogin.oray.com/hardware/)
+- [向日葵硬件产品中心](https://sunlogin.oray.com/)
 
 ### 设置指南
 - [AC Recovery（上电自启）设置指南](http://url.oray.com/aYJHJr)
 
 ### 其他硬件产品参考
-- [向日葵开机棒](https://sunlogin.oray.com/hardware/boot/)
-- [向日葵控控A2](https://sunlogin.oray.com/hardware/kongkong/)
+- [向日葵开机棒](https://sunlogin.oray.com/)
+- [向日葵控控A2](https://sunlogin.oray.com/)
 - [向日葵智能PDU（P8系列）](https://sunlogin.oray.com/hardware/pdu/)
 - [向日葵智能插座C1Pro/C2](https://sunlogin.oray.com/hardware/socket/)

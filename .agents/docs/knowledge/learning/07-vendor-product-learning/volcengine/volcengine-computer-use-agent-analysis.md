@@ -1307,5 +1307,5 @@ CUA提出的「对话即办事」不仅仅是营销口号，代表了一种新�
 - [火山引擎HiAgent平台分析](../../06-business-trends-analysis/volcengine-hiagent-platform-analysis.md) - 企业级Agent平台
 
 ### 行业参考
-- [Anthropic Computer Use](https://www.anthropic.com/news/computer-use) - 海外标杆产品
+- `Anthropic Computer Use`（原外部链接 2026-07 复检已失效：www.anthropic.com/news/computer-use） - 海外标杆产品
 - [Jeddak AICC 文档](https://www.volcengine.com/docs/85010/1408106) - 密钥管理方案

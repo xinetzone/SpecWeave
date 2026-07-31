@@ -334,7 +334,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,l
 ## 参考资源
 
 - [TVM符号可见性修复复盘](../../retrospective/reports/bugfix/retrospective-tvm-symbol-visibility-fix-20260718/README.md)
-- [LLVM Linker Documentation](https://llvm.org/docs/Linker.html)
+- `LLVM Linker Documentation`（原外部链接 2026-07 复检已失效：llvm.org/docs/Linker.html）
 - [GCC Visibility Documentation](https://gcc.gnu.org/wiki/Visibility)
 - [ELF Symbol Visibility](https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.symtab.html)
 

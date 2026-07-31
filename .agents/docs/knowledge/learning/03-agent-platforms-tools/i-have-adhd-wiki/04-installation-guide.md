@@ -8,7 +8,7 @@ source: external/libs/i-have-adhd/INSTALL.md 安装文档整理
 
 ## 5.1 安装概述
 
-**i-have-adhd** 技能支持当前主流的 AI 编程助手平台，遵循 [Agent Skills](https://github.com/anthropics/agent-skills) 开放标准，核心规则文件 `SKILL.md` 在多数平台上可直接复用，无需格式转换。
+**i-have-adhd** 技能支持当前主流的 AI 编程助手平台，遵循 `Agent Skills`（原外部链接 2026-07 复检已失效：github.com/anthropics/agent-skills） 开放标准，核心规则文件 `SKILL.md` 在多数平台上可直接复用，无需格式转换。
 
 **支持的平台列表**：
 1. Claude Code（Anthropic 官方 CLI）
