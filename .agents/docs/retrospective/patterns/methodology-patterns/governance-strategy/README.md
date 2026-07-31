@@ -68,6 +68,7 @@ date: "2026-07-09"
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [知识沉淀二次验证SOP](knowledge-crystallization-second-validation-sop.md) | 新萃取L2模式入库后执行R→I→V→E四阶段二次验证，暴露单案例确认偏误盲区，包含8个Task、6类必查视角、截断规则，将模式从"看起来对"提升到"经得起攻击" | L1 | `二次验证` `元复盘` `确认偏误` `SOP` |
+| [知识沉淀「中间产物→质量门→最终产出」双层架构模式](knowledge-dual-layer-architecture.md) | R-I-E-V四阶段中间产物层（40%工作量）+最终产出层（60%工作量），四道质量门（G1/G2/G3/V）逐级拦截问题，反模式包括边想边写跳过中间产物、V阶段走过场、不记录不采纳理由；适用于Wiki教程、技术文档、白皮书、研究报告、咨询交付物等知识沉淀类项目 | L1 | `知识沉淀` `质量门` `双层架构` `R-I-E-V` `文档创作` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |  |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
@@ -95,6 +96,7 @@ date: "2026-07-09"
 | [根因诊断模式](root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
 | [自指性规范体系（Self-Referential Specification System）](self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
+| [V阶段对抗审查「用户视角优先」权重分配模式](adversarial-perspective-weighting.md) | 对抗审查四视角按ROI非等分分配配额（用户/决策者高配额4-5条、魔鬼/未来低配额2-3条，总12-16条），三要素攻击质量检查（攻击对象+理由+修正建议），分视角采纳率健康检查（用户/决策者≥40%、魔鬼/未来≥20%，总30%-40%），禁止脱离上下文的逻辑诡辩和过度超前需求；适用于代码评审、设计评审、文档评审、产品方案评审等各类审查场景 | L1 | `对抗审查` `V阶段` `视角权重` `采纳率` `评审质量` |
 | [七概念方法论自举对抗性审查报告](seven-concepts-adversarial-review.md) | 七概念方法论自举对抗性审查报告 | L2 | `方法论` `七概念` `治理策略` |
 | [七概念五种核心组合应用流程](seven-concepts-core-workflows.md) | 七概念五种核心组合应用流程 | L2 | `方法论` `七概念` `治理策略` |
 | [七概念交互机制与接口规范](seven-concepts-interaction-spec.md) | 七概念交互机制与接口规范 | L2 | `方法论` `七概念` `治理策略` |

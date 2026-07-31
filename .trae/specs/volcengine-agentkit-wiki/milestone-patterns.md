@@ -170,3 +170,16 @@ gate_g3_passed: true
 - [x] 反模式数量：每个模式≥2个反模式，说明"不要做什么"
 - [x] 证据支撑：2个模式均来自本项目真实数据（V阶段采纳率分布、返工成本观察）
 - [x] 抽象层级合适：既不是本项目特有细节，也不是空泛方法论，处于"可直接套用"的抽象层级
+
+---
+
+## 模式库归档记录
+
+> 本章节记录 E 阶段模式向项目模式库的归档情况，保持模式文档→模式库的双向溯源。
+
+| 模式ID | 模式名称 | 模式类型 | 成熟度 | 归档路径 | 备注 |
+|--------|---------|---------|--------|---------|------|
+| P-KNOWLEDGE-DUAL-LAYER-001 | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-dual-layer-architecture.md` | 含案例验证章节（V阶段采纳率37.5%数据） |
+| P-ADVERSARIAL-PERSPECTIVE-WEIGHT-002 | V阶段对抗审查「用户视角优先」权重分配模式 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/adversarial-perspective-weighting.md` | 含案例验证章节（四视角采纳率分布数据） |
+
+**归档统计**：2个方法论模式均已归档至 `methodology-patterns/governance-strategy/` 目录，同步更新目录索引。两个模式在E阶段萃取时已自动入库（含案例验证数据），本次归档操作完成：①source字段精确化（添加锚点链接至milestone-patterns.md）；②x-toml-ref字段补充；③"提炼自"溯源引用添加；④README索引补录。两个模式与AgentKit Wiki常规E阶段归档的6个模式（3架构+3方法论）形成完整的R→I→E里程碑方法论体系。
