@@ -30,6 +30,7 @@ date: "2026-07-09"
 | [细粒度最小权限模式](fine-grained-least-privilege.md) | 细粒度最小权限模式 | L1 | `security` `least-privilege` `permission-model` |
 | [一等公民抽象模式](first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
+| [PS5防御性Prompt模板模式（PS5-Defensive-Prompt）](ps5-defensive-prompt.md) | PS5防御性Prompt模板模式：完整版系统Prompt（7大约束：版本/禁用语法/API/编码/CLM/安全/质量）+精简版快速Prompt+3种场景变体（脚本开发/CI-CD/系统管理），解决AI默认生成PS7+语法在Windows PowerShell 5.1下ParserError问题 | L1 | `powershell` `defensive-prompt` `ai-coding` `version-compatibility` `clm` `security` `prompt-engineering` |
 | [生成-验证闭环模式（Generation-Validation Closed Loop）](generation-validation-closed-loop.md) | 生成-验证闭环模式（Generation-Validation Closed Loop） | L2 | `生成-验证闭环` `first-principles` `adversarial-review` |
 | [Gotchas 领域特化：在通用模板框架上补充模块特有陷阱](gotchas-domain-specialization.md) | Gotchas 领域特化：在通用模板框架上补充模块特有陷阱 | L1 |  |
 | [诚实承认局限性信任构建策略](honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略 | L1 | `信任构建` `局限性承认` `诚实沟通` |
