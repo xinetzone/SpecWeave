@@ -42,7 +42,7 @@ rm ~/.claude/.i-have-adhd-always
 
 ### hooks.json 配置解析
 
-钩子配置位于 `file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/hooks.json`：
+钩子配置位于 `external/libs/i-have-adhd/hooks/hooks.json`（源项目归档路径，已在下方提供完整 JSON）：
 
 ```json
 {
@@ -76,7 +76,7 @@ rm ~/.claude/.i-have-adhd-always
 
 ### always-on.sh 脚本工作原理
 
-脚本位于 `file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/hooks/always-on.sh`，采用纯 POSIX sh 编写，保证跨平台兼容（macOS/Linux 的 sh、Windows 的 Git Bash）。
+脚本位于 `external/libs/i-have-adhd/hooks/always-on.sh`（源项目归档路径，采用纯 POSIX sh 编写，保证跨平台兼容：macOS/Linux 的 sh、Windows 的 Git Bash）。
 
 **完整脚本带注释**：
 

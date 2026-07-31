@@ -16,7 +16,7 @@ i-have-adhd的10条输出规则是为了降低认知摩擦、提升执行效率�
 - 打破规则时，保持"行动优先、闭环明确"的核心形式
 - 安全优先于简洁，任务优先于格式
 
-**核心源文件**：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L119-L142](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L119-L142)
+**核心源文件**：`external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md#L119-L142`（源项目归档路径，六条例外场景已在本章 4.2 节列出）
 
 ---
 
