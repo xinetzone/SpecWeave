@@ -414,11 +414,11 @@ TVM FFI 的 C ABI 稳定性来自三个设计原则：
 
 ## 关键参考
 
-- [any.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/any.h) - Any 和 AnyView 的完整实现
-- [object.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/object.h) - Object、ObjectPtr、ObjectRef 及类型注册宏
-- [function.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/function.h) - Function、FunctionObj、FromTyped 模板元编程
-- [c_api.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/c_api.h) - C ABI 结构体定义、类型标签枚举、公共 API
-- [src/ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/src/ffi) - 运行时实现源码
+- `any.h`（源项目归档路径） - Any 和 AnyView 的完整实现
+- `object.h`（源项目归档路径） - Object、ObjectPtr、ObjectRef 及类型注册宏
+- `function.h`（源项目归档路径） - Function、FunctionObj、FromTyped 模板元编程
+- `c_api.h`（源项目归档路径） - C ABI 结构体定义、类型标签枚举、公共 API
+- `src/ffi/`（源项目归档路径） - 运行时实现源码
 
 ---
 

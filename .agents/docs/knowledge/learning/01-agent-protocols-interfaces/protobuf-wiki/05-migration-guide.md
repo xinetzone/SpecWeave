@@ -292,5 +292,5 @@ Google正在开发Prototiller自动化迁移工具，它可以：
 ---
 
 **导航**：
-- ← 上一章：[04-selection-guide.md - 选型决策指南](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md)
-- ↑ 上级：[README](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md)
+- ← 上一章：[04-selection-guide.md - 选型决策指南](./04-selection-guide.md)
+- ↑ 上级：[README](../README.md)

@@ -14,7 +14,7 @@ source: ".trae/specs/docker-cross-platform-test/research-report.md"
 
 > **调研日期**：2026-07-30
 > **目标**：从 linux-64 构建 osx-64/osx-arm64/win-64 平台包的完整配置方案
-> **来源**：Docker跨平台构建测试任务调研产出（[spec.md](../../../.trae/specs/docker-cross-platform-test/spec.md)）
+> **来源**：Docker跨平台构建测试任务调研产出（[spec.md](../../../../.trae/specs/docker-cross-platform-test/spec.md)）
 
 ---
 

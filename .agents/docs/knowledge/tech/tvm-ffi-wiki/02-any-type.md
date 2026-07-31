@@ -324,8 +324,8 @@ Any owned = view;        // 自动转换为持有所有权的 String 对象
 
 ## 关键头文件
 
-- [any.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/any.h) - Any/AnyView 类定义
-- [c_api.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/c_api.h) - TVMFFIAny C ABI 结构体和类型索引定义
+- `any.h`（源项目归档路径） - Any/AnyView 类定义
+- `c_api.h`（源项目归档路径） - TVMFFIAny C ABI 结构体和类型索引定义
 
 ---
 

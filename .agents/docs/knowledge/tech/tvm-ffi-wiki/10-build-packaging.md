@@ -321,11 +321,11 @@ LIB = load_lib_module(package="my-ffi-extension", target_name="my_ffi_extension"
 
 ## 关键引用
 
-- [CMakeLists.txt](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/CMakeLists.txt)
-- [cmake/Utils/Library.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/cmake/Utils/Library.cmake)
-- [cmake/tvm_ffi-config.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/cmake/tvm_ffi-config.cmake)
-- [examples/python_packaging/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/python_packaging)
-- [pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/pyproject.toml)
+- `CMakeLists.txt`（源项目归档路径）
+- `cmake/Utils/Library.cmake`（源项目归档路径）
+- `cmake/tvm_ffi-config.cmake`（源项目归档路径）
+- `examples/python_packaging/`（源项目归档路径）
+- `pyproject.toml`（源项目归档路径）
 
 ---
 

@@ -28,8 +28,8 @@ tags:
 
 > **方法论链路**：R（复盘事实采集）→ I（洞察根因分析）→ E（可复用模式萃取）→ V（多视角对抗审查）
 > **场景识别**：知识沉淀场景（场景4），链路 R→I→E→V
-> **触发点**：[caffe.proto:1](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L1-L1) 第1行 `syntax = "proto2";` 引发对 proto2/proto3 区别的系统性分析
-> **分析对象**：[python/protos/caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto)（外层包装proto）与 [caffex/src/caffe/proto/caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto)（原始proto）
+> **触发点**：`caffe.proto:1`（源项目归档路径） 第1行 `syntax = "proto2";` 引发对 proto2/proto3 区别的系统性分析
+> **分析对象**：`python/protos/caffe.proto`（源项目归档路径）（外层包装proto）与 `caffex/src/caffe/proto/caffe.proto`（源项目归档路径）（原始proto）
 
 ---
 
@@ -37,7 +37,7 @@ tags:
 
 ### 1.1 语法声明与基础特征
 
-基于 [caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L1-L200) 实际代码和 Protocol Buffers 官方文档，采集以下客观事实：
+基于 `caffe.proto`（源项目归档路径） 实际代码和 Protocol Buffers 官方文档，采集以下客观事实：
 
 | 编号 | 事实类别 | proto2 事实 | proto3 事实 |
 |------|---------|------------|------------|
@@ -51,14 +51,14 @@ tags:
 | F08 | JSON 映射 | 无标准 JSON 映射规范 | 定义了标准的 JSON 映射规则（包括字段名 camelCase 转换、null 处理等） |
 | F09 | 未知字段 | 默认保留未知字段 | 3.5 之前版本丢弃未知字段；3.5+ 恢复保留未知字段 |
 | F10 | 分组语法 | 支持 `group` 关键字（已废弃） | 完全移除 `group` 语法 |
-| F11 | caffe.proto 实例 | caffe.proto 第1行声明 `syntax = "proto2";`；广泛使用 `optional`+`[default = ...]`（如 [FillerParameter](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L43-L62)）；`repeated` 字段显式标注 `[packed = true]`（如 [BlobShape](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L6-L8)） | 同文件中无 proto3 语法特征 |
+| F11 | caffe.proto 实例 | caffe.proto 第1行声明 `syntax = "proto2";`；广泛使用 `optional`+`[default = ...]`（如 `FillerParameter`（源项目归档路径））；`repeated` 字段显式标注 `[packed = true]`（如 `BlobShape`（源项目归档路径）） | 同文件中无 proto3 语法特征 |
 | F12 | 字段 presence | `optional` 字段追踪显式 presence（has_xxx() 方法） | 非 `optional` 的 singular 基础类型字段不追踪 presence；等于默认值时不序列化 |
 | F13 | 版本演进 | proto2 是首个公开发布版本（2008年开源） | proto3 于 2016 年随 gRPC 推广正式发布；最新演进方向为 Editions 版本化机制（`edition = "2023"/"2024"`）替代 proto2/proto3 二分法 |
 | F14 | 线格式兼容性 | 与 proto3 在相同字段编号和类型时二进制线格式基本兼容；group字段不兼容 | 与 proto2 线格式基本兼容，但闭合枚举vs开放枚举的处理方式有差异 |
 
 ### 1.2 caffe.proto 中 proto2 特征实例
 
-以下从 [caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto) 中提取典型的 proto2 语法用法：
+以下从 `caffe.proto`（源项目归档路径） 中提取典型的 proto2 语法用法：
 
 **optional + default 值（配置DSL的核心用法）**：
 
@@ -165,7 +165,7 @@ message FillerParameter {
 - **长期新项目**：优先选官方的版本化统一机制（如 Protobuf Editions），避免锁死在二分法中
 
 **步骤4：迁移风险检查清单**
-基于 [caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto) 这类 proto2 遗留文件，迁移到 proto3 的检查清单：
+基于 `caffe.proto`（源项目归档路径） 这类 proto2 遗留文件，迁移到 proto3 的检查清单：
 - [ ] 所有 `required` 字段需替换为 `optional` + 业务层校验，或在 Editions 中显式设 `LEGACY_REQUIRED`
 - [ ] 所有 `[default = xxx]` 需移除，业务代码中不再依赖自定义默认值；如果默认值语义重要，在应用层处理
 - [ ] 所有 `[packed = true]` 在 proto3 中可移除（默认已开启），但需确认线格式兼容性（proto3 解析器能读 proto2 的非packed repeated，反之亦然）
@@ -272,9 +272,9 @@ message FillerParameter {
 
 ## 六、给 Caffe 维护者的实用结论
 
-[caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L1-L1) 使用 `syntax = "proto2"` 是合理的场景适配：
+`caffe.proto`（源项目归档路径） 使用 `syntax = "proto2"` 是合理的场景适配：
 
-1. **配置DSL本质**：Caffe 的 prototxt 是网络配置的声明式DSL，不是RPC协议。proto2 的 `optional ... [default = xxx]` 大大简化了配置书写——例如 [FillerParameter](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto#L43-L62) 中每个参数都有合理默认值，用户只需覆盖非默认项。
+1. **配置DSL本质**：Caffe 的 prototxt 是网络配置的声明式DSL，不是RPC协议。proto2 的 `optional ... [default = xxx]` 大大简化了配置书写——例如 `FillerParameter`（源项目归档路径） 中每个参数都有合理默认值，用户只需覆盖非默认项。
 2. **extensions 机制依赖**：Caffe 的 LayerParameter 使用 proto2 extensions 机制注册各种层的 xxx_param（ConvolutionParameter、PoolingParameter 等），这是 proto3 直接移除的特性，迁移到 proto3 需要重构为 `Any` 或 `oneof`，工作量大且收益低。
 3. **无演进压力**：Caffe 作为经典第一代框架，目前处于稳定维护状态，prototxt 格式是其历史资产的一部分，没有动力去迁移一个稳定工作的配置系统。
 
@@ -310,5 +310,5 @@ Caffe 选择 proto2 是配置DSL场景的正确匹配，不是技术债务。理
 | proto2 官方语言指南 | https://protobuf.dev/programming-guides/proto2/ |
 | Field Presence 应用笔记 | https://protobuf.dev/programming-guides/field_presence/ |
 | Protobuf Editions 概览 | https://protobuf.com.cn/editions/overview |
-| Caffe 源码（caffex） | [caffex/](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex) |
-| Caffe proto 定义 | [caffe.proto (python)](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto) / [caffe.proto (src)](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto) |
+| Caffe 源码（caffex） | `caffex/`（源项目归档路径） |
+| Caffe proto 定义 | `caffe.proto (python)`（源项目归档路径） / `caffe.proto (src)`（源项目归档路径） |

@@ -261,7 +261,7 @@ compat/
 
 **目标**：替换 `boost::shared_ptr`/`weak_ptr`/`make_shared` 等。
 
-**实现**（[smart_ptr.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/include/caffe/compat/smart_ptr.hpp)）：
+**实现**（`smart_ptr.hpp`（源项目归档路径））：
 ```cpp
 namespace caffe {
 using std::shared_ptr;        // ← 把std::shared_ptr注入caffe命名空间
@@ -281,7 +281,7 @@ using std::enable_shared_from_this;
 - 编译器名字查找时，在 `caffe::` 作用域内找到 `using std::shared_ptr;`
 - 自动解析为 `std::shared_ptr`，**业务代码不需要任何 `std::` 前缀或 `boost::` 替换**
 
-验证：[layer_factory.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/layer_factory.cpp) 中的 `return shared_ptr<Layer<Dtype> >(new ConvolutionLayer<Dtype>(param));` 与caffex完全一致，无需修改。
+验证：`layer_factory.cpp`（源项目归档路径） 中的 `return shared_ptr<Layer<Dtype> >(new ConvolutionLayer<Dtype>(param));` 与caffex完全一致，无需修改。
 
 #### 5.2.2 logging.hpp：宏委托法（最复杂的替换）
 
@@ -538,7 +538,7 @@ blob.cpp
 - `util/math_functions.hpp` → `#include "caffe/compat/math.hpp"`（caffe_nextafter）
 - `util/blocking_queue.hpp` → thread.hpp + smart_ptr.hpp
 
-**结果**：像 [blob.cpp:24](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/blob.cpp#L24) 中的 `CHECK_LE(shape.size(), kMaxBlobAxes);` 这样的代码，不需要任何修改就编译通过——它通过 common.hpp 的传递 include 已经获得了 CHECK 宏定义，宏在预处理阶段展开为 TVM FFI 调用。
+**结果**：像 `blob.cpp:24`（源项目归档路径） 中的 `CHECK_LE(shape.size(), kMaxBlobAxes);` 这样的代码，不需要任何修改就编译通过——它通过 common.hpp 的传递 include 已经获得了 CHECK 宏定义，宏在预处理阶段展开为 TVM FFI 调用。
 
 ### 5.4 零侵入验证：代码对比
 

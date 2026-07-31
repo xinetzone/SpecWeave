@@ -255,7 +255,7 @@ sed -i 's/syntax = "proto2"/syntax = "proto3"/g' *.proto
 ```
 **为什么错**：
 - 线格式兼容，但语义不兼容——presence丢失、默认值变化、枚举行为变化都可能导致静默bug
-- 正确做法：看[05-migration-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md)，按检查清单逐项验证
+- 正确做法：看[05-migration-guide.md](./05-migration-guide.md)，按检查清单逐项验证
 
 ---
 
@@ -310,6 +310,6 @@ enum Role {
 ---
 
 **导航**：
-- ← 上一章：[03-feature-evolution.md - 核心功能演进](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md)
-- ↑ 上级：[README](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md)
-- → 下一章：[05-migration-guide.md - 迁移指南](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md)
+- ← 上一章：[03-feature-evolution.md - 核心功能演进](./03-feature-evolution.md)
+- ↑ 上级：[README](../README.md)
+- → 下一章：[05-migration-guide.md - 迁移指南](./05-migration-guide.md)
