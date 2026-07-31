@@ -1,9 +1,9 @@
 ---
-id: "feishu-doc-dom-extraction"
+id: "feishu-doc-extraction"
 source: "../../reports/task-reports/retrospective-volcengine-agent-plan-wiki-20260731/insight-extraction.md#洞察1"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/feishu-doc-dom-extraction.toml"
 maturity: "L1"
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
@@ -11,7 +11,7 @@ related_patterns:
   -   - "tool-failure-three-tier-degradation"
   -   - "browser-evaluate-dom-extraction"
 ---
-> **来源**：从火山引擎Agent Plan共创计划Wiki教程生成任务复盘萃取，首次在飞书Wiki提取中验证
+> **来源**：从火山引擎Agent Plan共创计划Wiki教程生成任务复盘萃取，首版在飞书Wiki提取中验证，v2在同一文档中通过MCP浏览器二次验证选择器稳定性
 
 # 飞书云文档DOM提取模式（Feishu/Lark Cloud Document DOM Extraction Pattern）
 
@@ -104,13 +104,49 @@ L1 首次萃取（volcengine-agent-plan-wiki验证1次）
 
 | 元素 | 选择器 | 说明 |
 |------|--------|------|
-| 正文滚动容器 | `.bear-web-x-container` | 飞书文档的自定义可滚动区域（替代window滚动） |
-| 文本行容器 | `.ace-line` | 每一行文本对应一个.ace-line元素，包含该行的完整innerText |
-| 标题识别 | `.ace-line`的子元素class/style | 通过子元素的字体大小/粗细判断标题层级（可选增强） |
+| 正文滚动容器 | `.bear-web-x-container` | 飞书文档的自定义可滚动区域（替代window滚动），class含`catalogue-opened docx-in-wiki width-transition`等变体 |
+| 文本行容器 | `.ace-line` | 每一行文本对应一个.ace-line元素，包含该行的完整innerText（含子span中的链接文本） |
+| 标题识别 | `.ace-line`的子元素class/style | 通过子元素的字体大小/粗细判断标题层级（可选增强），第一个.ace-line通常是文档标题 |
+
+### 提取参数（实测验证最优值）
+
+| 参数 | 推荐值 | 实测对比 |
+|------|--------|---------|
+| scrollStep | **400px** | 600px可能导致长段落尾部文字被虚拟滚动裁剪（实测"等能力时，你会创造出什么？"被截为"等能"） |
+| waitMs | **1500ms** | 1000ms在网络较慢时可能内容未完全渲染 |
+| maxNoNew | **3** | 连续3次无新内容判定到底部 |
+| 选择器作用域 | `container.querySelectorAll()` | 避免`document.querySelectorAll()`选中侧边栏/工具栏UI元素 |
+| 二次扫描 | 推荐 | 向下提取到底后，执行向上补扫+再次向下扫描，修复虚拟滚动遗漏 |
+
+> **⚠️ 虚拟滚动行为（实测）**：飞书使用虚拟滚动回收视口外DOM节点。当scrollTop=800时，距顶部约800px以上的`.ace-line`元素会被从DOM中移除（但Set去重已在其可见时捕获了文本）。滚回顶部后需要等待1.5-2秒让内容重新渲染。
 
 ### 提取算法
 
 **核心思路**：定位滚动容器 → 重置到顶部 → 分段向下滚动 → 每次滚动后提取当前可见的`.ace-line`文本 → Set去重保序 → 拼接完整文本。
+
+### 自动化脚本
+
+已提供可复用的Python脚本：[feishu-doc-extract.py](../../../../scripts/feishu-doc-extract.py)，特性：
+- Playwright驱动，支持有头/无头模式
+- 集成全部7个反模式检查
+- 自动输出元数据报告（JSON格式）
+- 支持cookies文件导入认证状态
+- 双向扫描（向下→向上→向下）确保内容完整
+- 内置内容阈值检查、链接保留验证、空行比例检测
+
+### 实测验证结果（2026-07-31，MCP浏览器二次验证）
+
+| 检查项 | 结果 | 备注 |
+|--------|------|------|
+| `.bear-web-x-container` 选择器 | ✅ 通过 | DIV元素，class含变体catalogue-opened docx-in-wiki |
+| `.ace-line` 选择器 | ✅ 通过 | 初始可见15-17行，虚拟滚动时动态增减 |
+| 五大方向emoji标记 | ✅ 全部识别 | 🔬🤖🎨💻🌱均正确出现在.ace-line文本中 |
+| 8个官方URL | ✅ 全部保留 | subscribe/console + 6个docs链接均在innerText中 |
+| 标题提取 | ✅ 正确 | 首行.ace-line为文档标题 |
+| 容器scrollHeight | 3267px | clientHeight 624px（视口高度） |
+| 虚拟滚动DOM回收 | ⚠️ 已确认 | scrollTop≥800px时顶部内容从DOM移除，Set去重是必要防护 |
+| 长段落截断风险 | ⚠️ 已发现 | scrollStep=600px时112字段落尾部丢失9字，改为400px可避免 |
+| innerText vs textContent | 无显著差异 | 两者均能获取完整链接文本，差异仅在零宽字符处理 |
 
 ## 代码片段
 
@@ -131,15 +167,15 @@ async function extractFeishuDocContent() {
   // Step 3: 分段滚动+提取
   const collected = new Set();
   const orderedLines = [];
-  const scrollStep = 600;      // 每次滚动像素
-  const waitMs = 1000;         // 每次滚动后等待渲染时间
+  const scrollStep = 400;      // 每次滚动像素（实测：600px可能截断长段落，400px安全）
+  const waitMs = 1500;         // 每次滚动后等待渲染时间（实测：1000ms不够稳定）
   let noNewCount = 0;          // 连续无新内容计数
   const maxNoNew = 3;          // 连续maxNoNew次无新内容判定到底
 
   while (noNewCount < maxNoNew) {
     const before = collected.size;
 
-    // 提取当前可见的所有.ace-line文本（在容器内查询，避免UI噪音）
+    // 在容器内查询.ace-line（避免侧边栏UI噪音）
     container.querySelectorAll('.ace-line').forEach(line => {
       const text = line.innerText?.trim();
       if (text && !collected.has(text)) {
@@ -200,30 +236,32 @@ async def extract_feishu_content(page, url: str) -> str:
         async () => {
             const container = document.querySelector('.bear-web-x-container');
             if (!container) return { error: 'container not found' };
-            
+
             container.scrollTop = 0;
-            await new Promise(r => setTimeout(r, 1500));
-            
+            await new Promise(r => setTimeout(r, 2000));  // 增加初始等待
+
             const collected = new Set();
             const orderedLines = [];
             let noNewCount = 0;
-            
+            const scrollStep = 400;  // 实测：400px避免长段落截断
+
             while (noNewCount < 3) {
                 const before = collected.size;
-                document.querySelectorAll('.ace-line').forEach(line => {
+                // 容器作用域查询，避免UI噪音
+                container.querySelectorAll('.ace-line').forEach(line => {
                     const t = line.innerText?.trim();
                     if (t && !collected.has(t)) {
                         collected.add(t);
                         orderedLines.push(t);
                     }
                 });
-                
+
                 noNewCount = collected.size === before ? noNewCount + 1 : 0;
-                
+
                 if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) break;
-                
-                container.scrollTop += 600;
-                await new Promise(r => setTimeout(r, 1000));
+
+                container.scrollTop += scrollStep;
+                await new Promise(r => setTimeout(r, 1500));  // 实测：1500ms确保渲染
             }
             
             return { content: orderedLines.join('\\n'), lines: orderedLines.length };
@@ -255,22 +293,23 @@ async function extractFeishu(url, cookies) {
     if (!container) return null;
     
     container.scrollTop = 0;
-    await new Promise(r => setTimeout(r, 1500));
-    
+    await new Promise(r => setTimeout(r, 2000));
+
     const collected = new Set();
     const lines = [];
     let noNew = 0;
-    
+    const scrollStep = 400;  // 实测安全值
+
     while (noNew < 3) {
       const before = collected.size;
-      document.querySelectorAll('.ace-line').forEach(el => {
+      container.querySelectorAll('.ace-line').forEach(el => {
         const t = el.innerText?.trim();
         if (t && !collected.has(t)) { collected.add(t); lines.push(t); }
       });
       noNew = collected.size === before ? noNew + 1 : 0;
       if (container.scrollTop + container.clientHeight >= container.scrollHeight - 10) break;
-      container.scrollTop += 600;
-      await new Promise(r => setTimeout(r, 1000));
+      container.scrollTop += scrollStep;
+      await new Promise(r => setTimeout(r, 1500));
     }
     return lines.join('\n');
   });
