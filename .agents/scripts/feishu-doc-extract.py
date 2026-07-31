@@ -1,20 +1,16 @@
 #!/usr/bin/env python3
-"""飞书云文档内容提取脚本 - 遵循feishu-doc-dom-extraction模式。
+"""SaaS云文档内容提取CLI（飞书/钉钉/企微等）。
 
-功能：
-- 使用Playwright自动登录（需预先配置cookies或已登录的browser context）
-- 自动定位.bear-web-x-container滚动容器和.ace-line文本行
-- 分段滚动+去重保序提取完整正文
-- 反模式检查：验证选择器可用性、内容完整性、链接保留度
-- 输出纯文本和元数据报告
-- 遵循feishu-doc-dom-extraction模式的所有反模式防护
+基于lib.saas_doc_extractor共享库，原feishu-doc-extract.py重构为多平台通用CLI。
 
 使用方式：
-  python feishu-doc-extract.py <url> [--output dir] [--cookies file] [--headless]
+  python feishu-doc-extract.py <url> [--output dir] [--cookies file] [--headless] [--platform feishu|dingtalk|wecom|...]
 
-前置条件：
-  pip install playwright
-  playwright install chromium
+示例：
+  python feishu-doc-extract.py https://bytedance.larkoffice.com/wiki/xxx
+  python feishu-doc-extract.py https://feishu.cn/docx/xxx --output ./extracted --cookies cookies.json
+  python feishu-doc-extract.py https://xxx.feishu.cn/docx/xxx --headless -v
+  python feishu-doc-extract.py https://alidocs.dingtalk.com/xxx --platform dingtalk
 """
 
 from __future__ import annotations
@@ -23,8 +19,6 @@ import argparse
 import json
 import re
 import sys
-import time
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
@@ -33,492 +27,112 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 try:
-    from playwright.sync_api import sync_playwright, Page, Browser, TimeoutError as PlaywrightTimeout
+    from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
 except ImportError:
     print("错误：需要安装playwright。请运行：pip install playwright && playwright install chromium", file=sys.stderr)
     sys.exit(1)
 
 from lib.cli import print_pass, print_warn, print_error
+from lib.saas_doc_extractor import (
+    ExtractionConfig,
+    CONTENT_MIN_CHARS,
+    CONTENT_MIN_LINES,
+    EMPTY_LINE_RATIO_THRESHOLD,
+    detect_platform,
+    extract_urls,
+    get_platform_config,
+    list_supported_platforms,
+    SaasDocExtractor,
+)
 
 
-def print_info(msg: str) -> None:
-    """打印信息（verbose输出）"""
-    print(f"  [INFO] {msg}")
-
-
-# === 提取参数（基于实测验证的最优值，最后验证：2026-07-31）===
-DEFAULT_SCROLL_STEP = 400           # 每次滚动像素（实测600px会导致长段落截断，400px安全）
-DEFAULT_WAIT_MS = 1500              # 每步等待渲染时间（毫秒，虚拟滚动需要）
-DEFAULT_INITIAL_WAIT_MS = 2000      # 页面加载后初始等待时间（毫秒，首屏渲染）
-DEFAULT_MAX_NO_NEW = 3              # 连续无新内容次数阈值
-DEFAULT_MAX_ITERATIONS = 30         # 最大滚动迭代次数（安全限制）
-VIRTUAL_SCROLL_RECYCLE_THRESHOLD = 800  # 虚拟滚动DOM回收阈值（scrollTop≥此值时顶部DOM开始回收）
-CONTENT_MIN_LINES = 10              # 最小有效行数阈值
-CONTENT_MIN_CHARS = 200             # 最小有效字符数阈值
-EMPTY_LINE_RATIO_THRESHOLD = 0.3    # 空行比例告警阈值
-ZERO_WIDTH_CHARS = re.compile(r'[\u200b-\u200f\u2028-\u202f\ufeff]')  # 需清理的零宽字符
-URL_PATTERN = re.compile(r'https?://[^\s\u200b\）\)】}]+')
-
-
-@dataclass
-class ExtractionResult:
-    """飞书文档提取结果"""
-    url: str
-    title: str = ""
-    content: str = ""
-    lines: list[str] = field(default_factory=list)
-    urls_found: list[str] = field(default_factory=list)
-    scroll_iterations: int = 0
-    total_scroll_height: int = 0
-    warnings: list[str] = field(default_factory=list)
-    errors: list[str] = field(default_factory=list)
-    anti_pattern_checks: dict = field(default_factory=dict)
-    extraction_time_ms: int = 0
-
-    @property
-    def char_count(self) -> int:
-        return len(self.content)
-
-    @property
-    def line_count(self) -> int:
-        return len(self.lines)
-
-    @property
-    def success(self) -> bool:
-        return len(self.errors) == 0 and self.char_count >= CONTENT_MIN_CHARS
-
-
-class FeishuExtractor:
-    """飞书云文档提取器，集成反模式检查"""
-
-    # 反模式1：使用window滚动而非容器滚动
-    # 反模式2：一次滚到底部
-    # 反模式3：使用标准HTML标签选择器
-    # 反模式4：不做去重
-    # 反模式5：source字段使用衍生URL
-    CONTAINER_SELECTOR = '.bear-web-x-container'
-    LINE_SELECTOR = '.ace-line'
-
-    def __init__(
-        self,
-        scroll_step: int = DEFAULT_SCROLL_STEP,
-        wait_ms: int = DEFAULT_WAIT_MS,
-        initial_wait_ms: int = DEFAULT_INITIAL_WAIT_MS,
-        max_no_new: int = DEFAULT_MAX_NO_NEW,
-        max_iterations: int = DEFAULT_MAX_ITERATIONS,
-        verbose: bool = False,
-    ):
-        self.scroll_step = scroll_step
-        self.wait_ms = wait_ms
-        self.initial_wait_ms = initial_wait_ms
-        self.max_no_new = max_no_new
-        self.max_iterations = max_iterations
-        self.verbose = verbose
-
-    def extract(self, page: Page, url: str) -> ExtractionResult:
-        """执行完整提取流程"""
-        result = ExtractionResult(url=url)
-        start_time = time.time()
-
-        # Step 1: 导航到页面
-        print_info(f"导航到飞书文档: {url}")
-        try:
-            page.goto(url, wait_until='networkidle', timeout=30000)
-            page.wait_for_timeout(self.initial_wait_ms)  # 首屏渲染等待
-        except PlaywrightTimeout:
-            result.errors.append("页面加载超时，请检查URL是否正确和网络连接")
-            return result
-
-        # Step 2: 反模式检查 - 验证容器选择器可用性
-        self._check_container(page, result)
-        if result.errors:
-            return result
-
-        # Step 3: 提取标题
-        self._extract_title(page, result)
-
-        # Step 4: 分段滚动提取（向下）
-        self._scroll_and_collect(page, result, direction='down')
-
-        # Step 5: 反模式检查 - 双向扫描验证（回到顶部再向下做二次扫描补全）
-        if not self._check_content_completeness(result):
-            print_warn("首次提取内容可能不完整，执行二次扫描...")
-            self._scroll_and_collect(page, result, direction='up')
-            page.evaluate(f"""() => {{
-                const c = document.querySelector('{self.CONTAINER_SELECTOR}');
-                c.scrollTo({{top: 0, behavior: 'auto'}});
-                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
-            }}""")
-            page.wait_for_timeout(self.wait_ms)
-            self._scroll_and_collect(page, result, direction='down')
-
-        # Step 6: 反模式检查 - 链接保留验证
-        self._check_urls_preserved(page, result)
-
-        # Step 7: 反模式检查 - 内容阈值验证
-        self._check_content_thresholds(result)
-
-        # Step 8: 拼接最终内容
-        result.content = '\n'.join(result.lines)
-        result.extraction_time_ms = int((time.time() - start_time) * 1000)
-
-        return result
-
-    def _check_container(self, page: Page, result: ExtractionResult):
-        """反模式检查：验证滚动容器和文本行选择器可用性"""
-        checks = {}
-
-        # 检查容器是否存在
-        container_exists = page.evaluate(f"() => !!document.querySelector('{self.CONTAINER_SELECTOR}')")
-        checks['container_exists'] = container_exists
-        if not container_exists:
-            result.errors.append(
-                f"未找到滚动容器 '{self.CONTAINER_SELECTOR}'。"
-                "可能原因：页面未完全加载、飞书更新了DOM结构、不是飞书文档页面、需要登录认证。"
-            )
-            result.anti_pattern_checks = checks
-            return
-
-        # 获取容器信息
-        container_info = page.evaluate(f"""() => {{
-            const c = document.querySelector('{self.CONTAINER_SELECTOR}');
-            return {{
-                tag: c.tagName,
-                scrollHeight: c.scrollHeight,
-                clientHeight: c.clientHeight,
-                className: c.className.substring(0, 100)
-            }};
-        }}""")
-        checks['container_info'] = container_info
-        result.total_scroll_height = container_info['scrollHeight']
-
-        if self.verbose:
-            print_info(f"  容器: {container_info['tag']}, 滚动高度: {container_info['scrollHeight']}px, 可见高度: {container_info['clientHeight']}px")
-
-        # 反模式检查：容器是否可滚动
-        if container_info['scrollHeight'] <= container_info['clientHeight']:
-            result.warnings.append(
-                f"容器scrollHeight({container_info['scrollHeight']}) <= clientHeight({container_info['clientHeight']})，"
-                "内容可能无需滚动即可完整显示，或页面未完全渲染"
-            )
-            checks['container_scrollable'] = False
-        else:
-            checks['container_scrollable'] = True
-
-        # 检查初始.ace-line
-        initial_lines = page.evaluate(f"() => document.querySelectorAll('{self.LINE_SELECTOR}').length")
-        checks['initial_ace_lines'] = initial_lines
-        if initial_lines == 0:
-            result.warnings.append(
-                f"初始状态下未找到任何 '{self.LINE_SELECTOR}' 元素。"
-                "可能需要等待更长时间让内容渲染，或飞书更新了文本行class名。"
-            )
-        elif self.verbose:
-            print_info(f"  初始可见文本行: {initial_lines}")
-
-        # 反模式检查：检测是否误用了body/window滚动（正确行为是body不可滚动，容器可滚动）
-        body_scrollable = page.evaluate("() => document.body.scrollHeight > window.innerHeight + 100")
-        checks['antipattern_body_scroll'] = body_scrollable  # true=反模式触发（body是主滚动条）
-        if body_scrollable:
-            result.warnings.append(
-                "检测到body可滚动（反模式），飞书文档应使用.bear-web-x-container作为滚动容器。"
-                "可能是页面加载异常或布局变化。"
-            )
-
-        result.anti_pattern_checks = checks
-
-    def _extract_title(self, page: Page, result: ExtractionResult):
-        """提取文档标题"""
-        title = page.evaluate(f"""() => {{
-            const lines = document.querySelectorAll('{self.LINE_SELECTOR}');
-            return lines.length > 0 ? lines[0].innerText?.trim() : '';
-        }}""")
-        if title:
-            result.title = self._clean_text(title)
-        else:
-            result.title = self._clean_text(page.title().replace(' - 飞书云文档', '').strip())
-            result.warnings.append("从.ace-line获取标题失败，使用document.title作为fallback")
-
-        if self.verbose:
-            print_info(f"  文档标题: {result.title}")
-
-    @staticmethod
-    def _clean_text(text: str) -> str:
-        """清理零宽字符和首尾空白"""
-        return ZERO_WIDTH_CHARS.sub('', text).strip()
-
-    def _scroll_and_collect(self, page: Page, result: ExtractionResult, direction: str = 'down'):
-        """核心提取逻辑：分段滚动+去重保序收集。
-
-        反模式防护（基于实测验证）：
-        - 使用container.scrollBy+scroll事件触发虚拟滚动渲染
-        - 分段滚动(400px)而非一次到底（反长段落截断）
-        - 容器作用域querySelectorAll避免UI噪音
-        - Set去重保序，处理虚拟滚动DOM回收
-        - 拆分.ace-line内部\\n换行（单个.ace-line可能包含多个视觉行）
-        - 清理全部零宽字符(\\u200b-\\u200f, \\u2028-\\u202f, \\ufeff)
-
-        虚拟滚动行为（实测）：
-        - scrollTop >= ~800px时顶部DOM开始回收
-        - scrollHeight随滚动动态增长（懒加载）
-        - DOM节点数在12-33之间波动（视口+缓冲区）
-        """
-        collected = set(result.lines)
-        ordered = list(result.lines)
-        no_new_count = 0
-        step = self.scroll_step if direction == 'down' else -self.scroll_step
-        js_selector = self.CONTAINER_SELECTOR
-        line_selector = self.LINE_SELECTOR
-
-        if direction == 'up':
-            page.evaluate(f"""() => {{
-                const c = document.querySelector('{js_selector}');
-                c.scrollBy({{top: -{self.scroll_step * 2}, behavior: 'auto'}});
-                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
-            }}""")
-            page.wait_for_timeout(self.wait_ms)
-
-        for i in range(self.max_iterations):
-            # 收集当前可见文本行（JS端拆分内部换行+清理零宽字符）
-            new_lines_raw = page.evaluate(f"""() => {{
-                const c = document.querySelector('{js_selector}');
-                if (!c) return [];
-                const lines = [];
-                c.querySelectorAll('{line_selector}').forEach(el => {{
-                    const text = el.innerText || '';
-                    // 拆分.ace-line内部换行（一个.ace-line可能包含<br>或块级元素导致的多行）
-                    text.split('\\n').forEach(segment => {{
-                        const clean = segment.replace(/[\\u200b-\\u200f\\u2028-\\u202f\\ufeff]/g, '').trim();
-                        if (clean) lines.push(clean);
-                    }});
-                }});
-                return lines;
-            }}""")
-
-            new_count = 0
-            new_found = []
-            for line in new_lines_raw:
-                clean_line = self._clean_text(line)
-                if clean_line and clean_line not in collected:
-                    collected.add(clean_line)
-                    new_found.append(clean_line)
-                    new_count += 1
-
-            if direction == 'down':
-                ordered.extend(new_found)
-            else:
-                # 向上滚动时发现的新行是较早的内容，按原序插入到前面
-                for line in reversed(new_found):
-                    ordered.insert(0, line)
-
-            result.scroll_iterations += 1
-
-            if new_count == 0:
-                no_new_count += 1
-            else:
-                no_new_count = 0
-                if self.verbose:
-                    print_info(f"  {direction} 迭代{i+1}: +{new_count}行, 总计{len(ordered)}行")
-
-            if no_new_count >= self.max_no_new:
-                if self.verbose:
-                    print_info(f"  连续{self.max_no_new}次无新内容，停止滚动")
-                break
-
-            # 检查是否到达边界（动态scrollHeight，支持懒加载增长）
-            at_boundary = page.evaluate(f"""() => {{
-                const c = document.querySelector('{js_selector}');
-                if ('{direction}' === 'down') {{
-                    return c.scrollTop + c.clientHeight >= c.scrollHeight - 10;
-                }} else {{
-                    return c.scrollTop <= 10;
-                }}
-            }}""")
-            if at_boundary:
-                if self.verbose:
-                    print_info(f"  到达{'底部' if direction == 'down' else '顶部'}边界")
-                break
-
-            # 滚动一步（scrollBy + dispatchEvent 确保虚拟滚动触发渲染）
-            page.evaluate(f"""() => {{
-                const c = document.querySelector('{js_selector}');
-                c.scrollBy({{top: {step}, behavior: 'auto'}});
-                c.dispatchEvent(new Event('scroll', {{bubbles: true}}));
-            }}""")
-            page.wait_for_timeout(self.wait_ms)
-
-        result.lines = ordered
-        result.anti_pattern_checks[f'{direction}_iterations'] = i + 1
-
-    def _check_urls_preserved(self, page: Page, result: ExtractionResult):
-        """反模式检查：链接保留验证
-
-        验证提取的文本中是否包含URL（飞书文档中的链接通常以内嵌文本形式保留在.ace-line的innerText中）
-        """
-        full_text = '\n'.join(result.lines)
-        urls = URL_PATTERN.findall(full_text)
-        result.urls_found = list(set(urls))  # 去重
-
-        checks = {
-            'urls_found_count': len(result.urls_found),
-            'urls_found': result.urls_found[:20],  # 最多记录20个
-        }
-
-        # 检查页面中实际存在的链接数
-        page_link_count = page.evaluate(f"""() => {{
-            const c = document.querySelector('{self.CONTAINER_SELECTOR}');
-            return c ? c.querySelectorAll('a[href]').length : 0;
-        }}""")
-        checks['page_link_elements'] = page_link_count
-
-        if page_link_count > 0 and len(result.urls_found) == 0:
-            result.warnings.append(
-                f"页面中检测到{page_link_count}个链接元素，但提取文本中未发现URL。"
-                "可能原因：链接使用了特殊渲染方式（如飞书卡片链接），需手动检查。"
-            )
-        elif self.verbose:
-            print_info(f"  提取到URL: {len(result.urls_found)}个")
-
-        result.anti_pattern_checks.update(checks)
-
-    def _check_content_completeness(self, result: ExtractionResult) -> bool:
-        """简单内容完整性启发式检查（在content拼接前基于lines判断）"""
-        if len(result.lines) < CONTENT_MIN_LINES:
-            return False
-        content = '\n'.join(result.lines)
-        if len(content) < CONTENT_MIN_CHARS:
-            return False
-        # 检查是否包含常见的文档结构词
-        structure_markers = ['什么是', '如何', '参与', '方向', '链接', 'http']
-        found_markers = sum(1 for m in structure_markers if m in content)
-        return found_markers >= 2
-
-    def _check_content_thresholds(self, result: ExtractionResult):
-        """反模式检查：内容阈值验证"""
-        checks = {}
-
-        # 最小行数检查
-        if result.line_count < CONTENT_MIN_LINES:
-            result.warnings.append(
-                f"提取行数({result.line_count})低于最小阈值({CONTENT_MIN_LINES})。"
-                "内容可能不完整，建议检查选择器或增大等待时间。"
-            )
-            checks['min_lines'] = False
-        else:
-            checks['min_lines'] = True
-
-        # 最小字符数检查
-        if result.char_count < CONTENT_MIN_CHARS:
-            result.warnings.append(
-                f"提取字符数({result.char_count})低于最小阈值({CONTENT_MIN_CHARS})。"
-                "内容可能不完整。"
-            )
-            checks['min_chars'] = False
-        else:
-            checks['min_chars'] = True
-
-        # 检查空行比例（过多空行说明提取有问题）
-        empty_lines = sum(1 for l in result.lines if len(l.strip()) <= 1)
-        empty_ratio = empty_lines / max(result.line_count, 1)
-        checks['empty_line_ratio'] = round(empty_ratio, 2)
-        if empty_ratio > EMPTY_LINE_RATIO_THRESHOLD:
-            result.warnings.append(
-                f"空行比例过高({empty_ratio:.0%})，阈值{EMPTY_LINE_RATIO_THRESHOLD:.0%}，"
-                "可能是选择器匹配到了装饰性元素"
-            )
-            checks['empty_line_ratio_ok'] = False
-        else:
-            checks['empty_line_ratio_ok'] = True
-
-        # 检查是否有标题行
-        has_title = any('计划' in l or '介绍' in l or '概述' in l or len(l) < 30 for l in result.lines[:5])
-        checks['has_title_like_first_lines'] = has_title
-
-        result.anti_pattern_checks.update(checks)
-
-    @staticmethod
-    def detect_saas_platform(url: str) -> Optional[str]:
-        """检测URL属于哪个SaaS平台，返回平台标识或None"""
-        domain_checks = {
-            'feishu': ['bytedance.larkoffice.com', 'feishu.cn', 'larksuite.com'],
-            'dingtalk': ['dingtalk.com', 'alidocs.dingtalk.com'],
-            'wecom': ['work.weixin.qq.com', 'doc.weixin.qq.com'],
-            'notion': ['notion.site', 'notion.so'],
-            'confluence': ['atlassian.net', 'confluence'],
-            'yuque': ['yuque.com'],
-            'shimo': ['shimo.im'],
-            'wps': ['kdocs.cn', 'wps.cn'],
-        }
-        for platform, domains in domain_checks.items():
-            if any(d in url for d in domains):
-                return platform
-        return None
-
-
-def extract_feishu_doc(
+def extract_doc(
     url: str,
     output_dir: Optional[Path] = None,
     cookies_file: Optional[Path] = None,
     headless: bool = False,
-    scroll_step: int = DEFAULT_SCROLL_STEP,
-    wait_ms: int = DEFAULT_WAIT_MS,
-    initial_wait_ms: int = DEFAULT_INITIAL_WAIT_MS,
+    platform_name: Optional[str] = None,
+    scroll_step: Optional[int] = None,
+    wait_ms: Optional[int] = None,
+    initial_wait_ms: Optional[int] = None,
+    max_iterations: Optional[int] = None,
+    bidirectional: bool = True,
     verbose: bool = False,
-) -> ExtractionResult:
-    """便捷函数：提取单个飞书文档"""
-    extractor = FeishuExtractor(
-        scroll_step=scroll_step,
-        wait_ms=wait_ms,
-        initial_wait_ms=initial_wait_ms,
-        verbose=verbose,
-    )
+):
+    """提取单个SaaS云文档（多平台通用入口）。"""
+    # 检测平台
+    detected = detect_platform(url)
+    if platform_name:
+        if detected and detected != platform_name:
+            print_warn(f"URL检测为{detected}，但手动指定为{platform_name}，使用手动指定")
+        pname = platform_name
+    elif detected:
+        pname = detected
+    else:
+        pname = 'feishu'
+        print_warn(f"无法自动识别URL所属平台，默认使用feishu。可用平台：{[n for n,_,_ in list_supported_platforms()]}")
+
+    platform_cfg = get_platform_config(pname)
+    if not platform_cfg:
+        print_error(f"未知平台: {pname}")
+        print_error(f"支持平台: {[n for n,_,_ in list_supported_platforms()]}")
+        sys.exit(1)
+
+    config_kwargs = {"verbose": verbose, "bidirectional_scan": bidirectional}
+    if scroll_step is not None:
+        config_kwargs["scroll_step"] = scroll_step
+    if wait_ms is not None:
+        config_kwargs["wait_ms"] = wait_ms
+    if initial_wait_ms is not None:
+        config_kwargs["initial_wait_ms"] = initial_wait_ms
+    if max_iterations is not None:
+        config_kwargs["max_iterations"] = max_iterations
+    extraction_cfg = ExtractionConfig(**config_kwargs)
+
+    extractor = SaasDocExtractor(platform_cfg, extraction_cfg)
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=headless)
         context = browser.new_context(viewport={'width': 1280, 'height': 800})
 
-        # 加载cookies（如果提供）
         if cookies_file and cookies_file.exists():
             cookies = json.loads(cookies_file.read_text(encoding='utf-8'))
             context.add_cookies(cookies)
             if verbose:
-                print_info(f"已加载cookies: {cookies_file}")
+                print(f"  [INFO] 已加载cookies: {cookies_file}")
 
         page = context.new_page()
-        result = extractor.extract(page, url)
 
+        if verbose:
+            print(f"  [INFO] 导航到{platform_cfg.display_name}: {url}")
+        try:
+            page.goto(url, wait_until='networkidle', timeout=30000)
+        except PlaywrightTimeout:
+            from lib.saas_doc_extractor import ExtractionResult
+            result = ExtractionResult(url=url, platform=pname)
+            result.errors.append("页面加载超时，请检查URL是否正确和网络连接")
+            browser.close()
+            return result
+
+        # 执行提取（核心逻辑在SaasDocExtractor中）
+        result = extractor.extract(page, url)
         browser.close()
+
+    # 提取URLs（JS端innerText中已包含，Python端二次提取兼容fallback）
+    if result.content:
+        result.urls_found = extract_urls(result.content)
 
     # 保存输出
     if output_dir and result.success:
         output_dir.mkdir(parents=True, exist_ok=True)
-        # 生成文件名
         title_slug = re.sub(r'[^\w\u4e00-\u9fff-]', '-', result.title)[:50].strip('-')
         if not title_slug:
-            title_slug = 'feishu-doc'
+            title_slug = f'{pname}-doc'
         output_file = output_dir / f"{title_slug}.txt"
         output_file.write_text(result.content, encoding='utf-8')
 
-        # 保存元数据报告
         meta_file = output_dir / f"{title_slug}.meta.json"
-        meta = {
-            'url': result.url,
-            'title': result.title,
-            'char_count': result.char_count,
-            'line_count': result.line_count,
-            'urls_found': result.urls_found,
-            'scroll_iterations': result.scroll_iterations,
-            'warnings': result.warnings,
-            'errors': result.errors,
-            'anti_pattern_checks': result.anti_pattern_checks,
-            'extraction_time_ms': result.extraction_time_ms,
-            'extraction_params': {
-                'scroll_step': scroll_step,
-                'wait_ms': wait_ms,
-                'initial_wait_ms': initial_wait_ms,
-                'virtual_scroll_recycle_threshold': VIRTUAL_SCROLL_RECYCLE_THRESHOLD,
-            }
-        }
+        meta = result.to_meta_dict(extractor.cfg)
         meta_file.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding='utf-8')
 
         if verbose:
@@ -530,39 +144,58 @@ def extract_feishu_doc(
 
 def main():
     parser = argparse.ArgumentParser(
-        description='飞书云文档内容提取工具（遵循feishu-doc-dom-extraction模式）',
+        description='SaaS云文档内容提取工具（支持飞书/钉钉/企微/语雀/Notion/Confluence/石墨/WPS）',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例：
   python feishu-doc-extract.py https://bytedance.larkoffice.com/wiki/xxx
-  python feishu-doc-extract.py https://feishu.cn/docx/xxx --output ./extracted --cookies cookies.json
-  python feishu-doc-extract.py https://xxx.feishu.cn/docx/xxx --headless --verbose
+  python feishu-doc-extract.py https://feishu.cn/docx/xxx --output ./extracted
+  python feishu-doc-extract.py https://alidocs.dingtalk.com/xxx --platform dingtalk -v
+  python feishu-doc-extract.py <url> --no-bidirectional -v
         """
     )
-    parser.add_argument('url', help='飞书文档URL')
+    parser.add_argument('url', nargs='?', help='文档URL')
     parser.add_argument('--output', '-o', type=Path, help='输出目录')
     parser.add_argument('--cookies', '-c', type=Path, help='cookies JSON文件路径（用于认证）')
     parser.add_argument('--headless', action='store_true', help='无头模式（默认有界面）')
-    parser.add_argument('--scroll-step', type=int, default=DEFAULT_SCROLL_STEP, help=f'滚动步长(默认{DEFAULT_SCROLL_STEP}px)')
-    parser.add_argument('--wait-ms', type=int, default=DEFAULT_WAIT_MS, help=f'每步等待时间(默认{DEFAULT_WAIT_MS}ms)')
-    parser.add_argument('--initial-wait-ms', type=int, default=DEFAULT_INITIAL_WAIT_MS, help=f'初始加载等待(默认{DEFAULT_INITIAL_WAIT_MS}ms)')
+    parser.add_argument('--platform', '-p', type=str, default=None,
+                        help=f'手动指定平台（{[n for n,_,_ in list_supported_platforms()]}，默认自动检测）')
+    parser.add_argument('--scroll-step', type=int, default=None,
+                        help='滚动步长(px)，默认使用平台推荐值(飞书400)')
+    parser.add_argument('--wait-ms', type=int, default=None,
+                        help='每步等待时间(ms)，默认使用平台推荐值(飞书1500)')
+    parser.add_argument('--initial-wait-ms', type=int, default=None,
+                        help='初始加载等待(ms)，默认使用平台推荐值(飞书2000)')
+    parser.add_argument('--max-iterations', type=int, default=None,
+                        help='最大滚动迭代次数，默认30')
+    parser.add_argument('--no-bidirectional', action='store_true',
+                        help='禁用双向扫描（更快但可能遗漏虚拟滚动回收内容）')
     parser.add_argument('--verbose', '-v', action='store_true', help='详细输出')
+    parser.add_argument('--list-platforms', action='store_true', help='列出所有支持的平台并退出')
 
     args = parser.parse_args()
 
-    # 检测平台
-    platform = FeishuExtractor.detect_saas_platform(args.url)
-    if platform != 'feishu':
-        print_warn(f"URL未识别为飞书域名(检测到: {platform})，仍尝试提取...")
+    if args.list_platforms:
+        print("支持的平台：")
+        for name, display, verified in list_supported_platforms():
+            status = "✓ 已验证" if verified else "○ 候选配置"
+            print(f"  {name:12s} ({display:8s}) {status}")
+        return 0
 
-    result = extract_feishu_doc(
+    if not args.url:
+        parser.error("缺少url参数")
+
+    result = extract_doc(
         url=args.url,
         output_dir=args.output,
         cookies_file=args.cookies,
         headless=args.headless,
+        platform_name=args.platform,
         scroll_step=args.scroll_step,
         wait_ms=args.wait_ms,
         initial_wait_ms=args.initial_wait_ms,
+        max_iterations=args.max_iterations,
+        bidirectional=not args.no_bidirectional,
         verbose=args.verbose,
     )
 
@@ -570,23 +203,26 @@ def main():
     print()
     print("=" * 60)
     if result.success:
-        print_pass(f"提取成功！")
-        print(f"  标题: {result.title}")
-        print(f"  字符数: {result.char_count}")
-        print(f"  行数: {result.line_count}")
-        print(f"  URL数: {len(result.urls_found)}")
-        print(f"  迭代轮次: {result.scroll_iterations}")
-        print(f"  耗时: {result.extraction_time_ms}ms")
+        print_pass("提取成功！")
     else:
-        print_error(f"提取失败！")
-        for err in result.errors:
-            print_error(f"  错误: {err}")
+        print_error("提取失败！")
 
-    if result.warnings:
-        for w in result.warnings:
-            print_warn(f"  警告: {w}")
+    print(f"  平台: {result.platform}")
+    if result.title:
+        print(f"  标题: {result.title}")
+    print(f"  字符数: {result.char_count}")
+    print(f"  行数: {result.line_count}")
+    print(f"  URL数: {len(result.urls_found)}")
+    print(f"  滚动迭代: {result.scroll_iterations}")
+    print(f"  耗时: {result.extraction_time_ms}ms")
+    if result.used_fallback_container or result.used_fallback_line:
+        print_warn(f"  使用了fallback选择器: container={result.container_selector_used}, line={result.line_selector_used}")
 
-    # 输出内容预览
+    for err in result.errors:
+        print_error(f"  [错误] {err}")
+    for w in result.warnings:
+        print_warn(f"  [警告] {w}")
+
     if args.verbose and result.lines:
         print("\n内容预览（前5行）：")
         for i, line in enumerate(result.lines[:5]):
