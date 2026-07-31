@@ -160,4 +160,6 @@ VeADK 三语言 SDK 均在 GitHub 开源，接受社区 Issue 与 Pull Request �
 
 掌握 VeADK 开发框架后，下一章将进入 AgentKit SDK & CLI 工具链的学习，了解如何基于装饰器式 API 优雅开发智能体应用，以及如何使用 CLI 命令实现一键初始化、构建、部署与运行。
 
-← [02 架构](./02-core-architecture.md) | [README](./README.md) | → [04 SDK & CLI](./04-agentkit-sdk-cli.md)
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [02 架构](./02-core-architecture.md) | [README](./README.md) | → [04 SDK & CLI](./04-agentkit-sdk-cli.md) |

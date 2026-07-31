@@ -239,4 +239,6 @@ flowchart TD
 
 掌握工具链的使用方法后，下一章将进入快速入门指南，通过 5 步标准 HelloWorld 流程从零构建第一个可运行的智能体应用，并附上典型场景代码片段与常见报错排查方案。
 
-← [03 VeADK](./03-veadk-framework.md) | [README](./README.md) | → [05 快速入门](./05-quickstart.md)
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [03 VeADK](./03-veadk-framework.md) | [README](./README.md) | → [05 快速入门](./05-quickstart.md) |

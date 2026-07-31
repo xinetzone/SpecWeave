@@ -256,4 +256,6 @@ if __name__ == "__main__":
 
 本章提供了 AgentKit 从环境准备到云端上线的完整快速入门路径：前置条件清单逐项验证环境与账号；5 步标准 HelloWorld 流程（安装→初始化→配置→本地启动→云端部署）确保 15 分钟端到端跑通；三个典型场景代码片段（业务工具/知识库问答/多 Agent 协作）可作为二次开发起点；5 条高频 FAQ 覆盖常见错误 SOP 排障；三条进阶路线引导读者按角色深入学习。
 
-← [04 SDK & CLI](./04-agentkit-sdk-cli.md) | [README](./README.md) | → [06 应用场景](./06-application-scenarios.md)
+| 上一章 | 返回目录 | 下一章 |
+|--------|---------|--------|
+| ← [04 SDK & CLI](./04-agentkit-sdk-cli.md) | [README](./README.md) | → [06 应用场景](./06-application-scenarios.md) |
