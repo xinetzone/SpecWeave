@@ -912,3 +912,569 @@ chcp
 ls | cat -v  # Git Bash
 ```
 
+**解决方案**：
+1. **配置Git支持中文路径**：
+   ```bash
+   # 所有平台都执行
+   git config --global core.quotepath false
+   git config --global i18n.commitencoding utf-8
+   git config --global i18n.logoutputencoding utf-8
+   ```
+
+2. **设置终端为UTF-8（Windows PowerShell）**：
+   ```powershell
+   # 当前临时设置
+   chcp 65001
+   [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+   
+   # 永久设置：在PowerShell配置文件中添加
+   notepad $PROFILE
+   # 添加上述两行后保存
+   ```
+
+3. **使用Git Bash/WSL**：
+   - Git Bash对中文支持通常比PowerShell/cmd更好
+   - 或使用Windows Terminal，配置默认编码为UTF-8
+
+**预防措施**：
+- 安装Git后第一时间配置中文支持（setup-git-config脚本会自动配置）
+- 使用Windows Terminal代替旧版cmd/powershell.exe
+- 尽量使用英文文件名可彻底避免此类问题
+
+---
+
+### 仓库损坏类
+
+#### 场景13：git fsck报"error: corrupt loose object"或"missing blob"
+
+**现象描述**：
+运行`git fsck --full`时报错：
+```
+error: corrupt loose object 'abc123...'
+fatal: object abc123... is corrupted
+error: missing blob def456...
+broken link from    tree ...
+```
+
+**可能原因**：
+1. 网盘同步冲突导致object文件损坏
+2. 写入过程中磁盘满/断电
+3. 裸仓库冲突文件（(1)文件）被错误保留/删除
+4. 磁盘坏道
+
+**诊断步骤**：
+```bash
+# 1. 运行完整fsck，记录所有错误
+cd <工作仓库路径>
+git fsck --full 2>&1 | tee fsck-errors.log
+
+# 2. 检查裸仓库是否有冲突文件（这是最常见原因！）
+.\check-conflicts.ps1 -RepoName <repo名> -SyncRoot <SyncRoot>
+# 如果有CRITICAL级别的objects/pack/冲突，确认同步冲突导致
+```
+
+**解决方案**：
+🛑 **严重错误！停止所有push/pull操作。**
+
+1. **有备份时的标准恢复流程**：
+   - 参考场景7"从备份恢复"的完整流程
+   - 这是最安全可靠的方案
+
+2. **尝试修复（仅当没有备份时，不保证成功）**：
+   ```bash
+   # 1. 首先在所有设备停止操作！
+   
+   # 2. 备份当前损坏的仓库（两个备份：工作区+裸仓库）
+   cp -r <裸仓库路径> <裸仓库路径>.broken-backup-$(date +%Y%m%d)
+   
+   # 3. 尝试从其他完好的设备push重建
+   # 找一台本地仓库完好、git fsck通过的设备
+   # 在该设备上：
+   git fsck --full  # 确认本地完好
+   # 备份并重命名损坏的裸仓库
+   # 从该设备重新init裸仓库并push
+   
+   # 4. 如果只有当前设备，尝试从pack恢复
+   # （复杂操作，成功率不高，建议优先从备份恢复）
+   ```
+
+**预防措施**：
+- 每次push自动创建.bundle备份，不要禁用备份功能
+- 定期运行git-doctor全量检查
+- 避免在网盘同步时强制关机
+
+---
+
+#### 场景14：git status报"fatal: bad object HEAD"
+
+**现象描述**：
+执行任何git命令都输出：
+```
+fatal: bad object HEAD
+fatal: Not a valid object name HEAD
+```
+或进入仓库时提示处于detached HEAD状态但commit不存在。
+
+**可能原因**：
+1. HEAD文件指向的ref不存在或损坏
+2. refs/heads/main分支文件损坏
+3. 网盘冲突导致refs文件出现冲突副本
+4. HEAD被直接修改损坏
+
+**诊断步骤**：
+```bash
+# 1. 查看HEAD文件内容
+cat .git/HEAD
+# 正常应为: ref: refs/heads/main
+
+# 2. 检查refs/heads目录
+ls -la .git/refs/heads/
+# 检查是否有 main (1) 或 冲突版本 文件
+ls -la <裸仓库>/refs/heads/
+
+# 3. 查看reflog（可能救命）
+git reflog
+# 如果reflog还在，可以找到最后一个有效的commit
+```
+
+**解决方案**：
+🛑 **严重级别问题。**
+
+1. **reflog可恢复的情况**：
+   ```bash
+   # 如果git reflog还能看到历史
+   git reflog
+   # 找到最后一个正常的commit（通常是HEAD@{0}之前的）
+   # 例如abc1234是最后一个好commit
+   
+   # 备份当前状态
+   cp -r .git .git.bad-head-backup
+   
+   # 重置HEAD到好的commit
+   git reset --hard abc1234
+   
+   # 然后检查裸仓库的状态，可能需要重建裸仓库
+   ```
+
+2. **裸仓库refs冲突导致**：
+   - 检查裸仓库 `refs/heads/` 目录，是否有 `main (1)` 或 `main (冲突版本)` 文件
+   - 如果有，**不要直接删除！** 先备份整个裸仓库
+   - 对比两个文件内容：
+     ```powershell
+     Get-Content <裸仓库>\refs\heads\main
+     Get-Content <裸仓库>\refs\heads\main` (1)
+     ```
+   - 如果两个内容都是有效的commit hash，选择时间更新的那个（或从备份恢复）
+
+3. **从备份恢复**（最安全）：
+   - 同场景7的备份恢复流程
+
+**预防措施**：
+- 不要手动编辑.git/目录下的文件
+- 运行check-conflicts发现HEAD/packed-refs冲突时立即处理
+- 正常push/pull流程不会导致HEAD损坏，通常与网盘冲突或手动修改有关
+
+---
+
+#### 场景15：网盘目录出现大量"(1)"、"(冲突版本)"文件
+
+**现象描述**：
+在文件资源管理器中查看网盘同步目录时，发现大量文件名带后缀：
+- `HEAD (1)`
+- `pack-abc123.pack (冲突版本)`
+- `config (来自 DESKTOP-XXX)`
+- `tmp_pack_xyz (2).tmp`
+
+**可能原因**：
+1. 两台设备同时修改同一文件，网盘创建冲突副本
+2. 文件被锁定时网盘尝试写入失败，创建冲突版本
+3. Git操作与网盘同步竞态
+4. 锁机制失效导致并发push
+
+**诊断步骤**：
+```powershell
+# 1. 立即运行冲突检测
+.\check-conflicts.ps1 -RepoName <repo名> -SyncRoot <SyncRoot>
+# 重点关注CRITICAL级别：
+# - objects/pack/下的冲突 = 严重，仓库损坏
+# - HEAD/packed-refs冲突 = 严重
+# - refs/下冲突 = 警告，需要人工处理
+```
+
+**解决方案**：
+根据冲突分类处理：
+
+1. **CRITICAL（红色/严重）冲突 - objects/pack/HEAD/packed-refs**：
+   - 🛑 停止所有操作
+   - 按场景7流程从备份恢复
+   - **不要手动删除这些冲突文件！**
+
+2. **WARNING（黄色/警告）冲突 - refs/config/hooks**：
+   - 确认所有设备都没有在执行push/pull
+   - 检查锁状态：`Lock-Check`应显示无锁
+   - 对比原文件和冲突文件：
+     ```powershell
+     # 例如refs/heads/main冲突
+     $orig = Get-Content "$bareRepo\refs\heads\main"
+     $conflict = Get-Content "$bareRepo\refs\heads\main (1)"
+     Write-Host "原始: $orig"
+     Write-Host "冲突: $conflict"
+     ```
+   - 通常保留时间更新的那个是正确的（或从所有设备pull后确认哪个hash最新）
+   - 人工确认后重命名/删除冲突文件：
+     ```powershell
+     # 先备份
+     Copy-Item "$bareRepo\refs\heads\main (1)" "$bareRepo\refs\heads\main (1).backup"
+     # 确认正确后删除冲突副本
+     Remove-Item "$bareRepo\refs\heads\main (1)"
+     ```
+
+3. **INFO（蓝色/提示）冲突 - .tmp临时文件**：
+   - 确认无Git进程后可以安全清理
+   - `.\check-conflicts.ps1 -RepoName <repo名> -SyncRoot <SyncRoot> -AutoClean`
+
+**预防措施**：
+- 锁机制就是为了防止并发push产生冲突，不要跳过锁检查
+- push完成等待脚本返回再关机
+- 发现冲突及时处理，不要积累
+
+---
+
+#### 场景16：refs/heads/main (冲突版本)导致分支丢失
+
+**现象描述**：
+push/pull时报分支不存在，或git branch不显示main分支，但在refs/heads目录看到`main (1)`或`main (冲突版本)`文件。
+
+**可能原因**：
+1. 并发push导致refs文件冲突
+2. 网盘同步refs文件时被中断
+3. Git写入refs时恰好坏同步
+
+**诊断步骤**：
+```bash
+# 1. 列出所有refs文件
+ls -la <裸仓库>/refs/heads/
+ls -la <工作仓库>/.git/refs/heads/
+
+# 2. 查看packed-refs文件
+cat <裸仓库>/packed-refs
+cat <工作仓库>/.git/packed-refs
+
+# 3. 从reflog查找最后有效的commit
+git reflog
+```
+
+**解决方案**：
+1. **找到正确的commit hash**：
+   ```powershell
+   # 读取所有冲突的refs文件内容
+   $refDir = Join-Path <裸仓库> "refs\heads"
+   Get-ChildItem $refDir -Filter "main*" | ForEach-Object {
+       $hash = (Get-Content $_.FullName -Raw).Trim()
+       Write-Host "$($_.Name): $hash"
+       # 验证这个hash是否存在
+       git -C <裸仓库> cat-file -t $hash 2>&1
+   }
+   ```
+
+2. **恢复refs文件**：
+   ```powershell
+   # 假设正确的hash是abc123def456...
+   # 先备份
+   Copy-Item $refDir\main* $refDir\..\..\backups\refs-backup\ -Recurse -Force
+   
+   # 删除冲突版本
+   Remove-Item "$refDir\main (*" -Force
+   Remove-Item "$refDir\main *冲突*" -Force
+   
+   # 写入正确的hash
+   "abc123def456..." | Set-Content "$refDir\main" -Encoding UTF8 -NoNewline
+   
+   # 验证
+   git -C <裸仓库> rev-parse main
+   git -C <裸仓库> fsck --full
+   ```
+
+3. **如果所有refs文件都无效**：
+   - 从reflog找到最后一个有效commit
+   - 或按场景7从备份恢复
+
+**预防措施**：
+- 锁机制正常工作时不应出现此问题
+- 不要在push过程中关闭电脑
+- 定期检查refs目录是否有冲突文件
+
+---
+
+### 跨平台类
+
+#### 场景17：Windows上正常，Linux/macOS上git status显示所有shell脚本权限变更
+
+**现象描述**：
+在Windows上clone/push一切正常，在Linux/macOS上pull后，所有`.sh`文件显示已修改，`git diff`显示：
+```
+diff --git a/script.sh b/script.sh
+old mode 100644
+new mode 100755
+```
+
+**可能原因**：
+1. core.filemode=true（默认）记录了文件可执行位
+2. Windows不支持Unix权限，push时权限位丢失
+3. 不同设备umask设置不同
+
+**诊断步骤**：
+```bash
+# 检查filemode配置
+git config --get core.filemode
+# 预期在Linux/macOS也应该是false（对于网盘同步方案）
+```
+
+**解决方案**：
+1. **全局配置（推荐）**：
+   ```bash
+   # 在Linux/macOS上执行（Windows不需要，默认不支持权限）
+   git config --global core.filemode false
+   ```
+
+2. **单个仓库配置**：
+   ```bash
+   git config core.filemode false
+   ```
+
+3. **修复已有的权限变更记录**：
+   ```bash
+   git config core.filemode false
+   git reset --hard HEAD  # 丢弃权限变更的"修改"
+   ```
+
+**预防措施**：
+- 在所有非Windows设备上设置 `core.filemode false`
+- setup-git-config脚本会自动配置
+- 可执行权限问题：需要执行权限的脚本在clone后手动chmod +x，或在仓库中说明
+
+---
+
+#### 场景18：大小写文件名冲突（File.txt和file.txt在Linux上是两个文件，Windows上合并）
+
+**现象描述**：
+- Windows上工作正常，但Linux/macOS pull时报文件冲突
+- 或反过来：Linux上创建了File.txt和file.txt，Windows上只看到一个，另一个"消失"
+- push时报告"will be replaced by merge"或类似大小写冲突
+
+**可能原因**：
+1. Windows/macOS默认文件系统不区分大小写（NTFS/HFS+默认）
+2. Linux ext4/xfs区分大小写
+3. 重命名文件时只改了大小写，Git未正确识别
+
+**诊断步骤**：
+```bash
+# 列出当前目录所有文件，检查大小写重复
+ls | sort -f | uniq -di
+# Git Bash/WSL:
+find . -maxdepth 1 -type f | tr '[:upper:]' '[:lower:]' | sort | uniq -d
+```
+
+**解决方案**：
+1. **重命名解决冲突**：
+   ```bash
+   # 方案：用临时名中转，确保所有平台都能识别
+   git mv File.txt File.txt.tmp
+   git commit -m "rename: temp name to avoid case conflict"
+   git mv File.txt.tmp file_renamed.txt
+   git commit -m "rename: final name"
+   git push baidu
+   ```
+
+2. **Windows上强制大小写敏感（高级）**：
+   ```powershell
+   # Windows 10 1803+支持目录级别大小写敏感
+   # 以管理员运行PowerShell：
+   fsutil.exe file setCaseSensitiveInfo <仓库路径> enable
+   # 注意：这只影响新创建的文件，且需要所有协作者都做同样设置
+   ```
+
+3. **预防规则**：
+   - 项目中文件名统一使用小写，用短横线/下划线分隔
+   - 重命名时一定用`git mv`而不是直接在资源管理器重命名
+   - 代码Review时检查文件名大小写
+
+**预防措施**：
+- 团队约定文件名命名规范（建议全小写+短横线）
+- 配置Git配置项：
+  ```bash
+  git config --global core.ignorecase false  # 在区分大小写的系统上
+  ```
+- 避免仅大小写不同的文件名
+
+---
+
+#### 场景19：符号链接变成普通文本文件
+
+**现象描述**：
+- 在Linux/macOS创建的符号链接（symlink），在Windows上pull后变成普通文本文件
+- 文件内容就是链接目标路径，而不是指向目标文件
+
+**可能原因**：
+1. Windows文件系统/或Git配置不支持符号链接
+2. 创建链接时没有管理员权限
+3. core.symlinks配置为false
+
+**诊断步骤**：
+```bash
+# 检查symlinks配置
+git config --get core.symlinks
+
+# 检查文件类型（Git Bash/Linux）
+ls -la <symlink文件>
+# 符号链接开头显示 l，普通文件显示 -
+file <symlink文件>
+```
+
+**解决方案**：
+1. **Windows启用符号链接支持**：
+   - 启用Windows开发者模式（设置→更新和安全→开发者选项→开发人员模式）
+   - 或以管理员身份运行Git/终端
+   - 配置Git支持符号链接：
+     ```powershell
+     git config --global core.symlinks true
+     ```
+   - 重新pull/clone仓库
+
+2. **不使用符号链接（兼容性最好）**：
+   - 如果跨平台需求强烈，避免在仓库中使用符号链接
+   - 用脚本、构建工具或复制文件代替
+   - 文档中说明如何手动创建链接
+
+3. **修复已变文件的符号链接**：
+   ```bash
+   # Linux/macOS
+   git reset --hard HEAD
+   # 如果core.symlinks配置正确应该能恢复
+   ```
+
+**预防措施**：
+- 评估项目是否真的需要符号链接，能避免就避免
+- Windows用户启用开发者模式
+- 团队统一core.symlinks配置
+
+---
+
+### 日常使用类
+
+#### 场景20：忘记在A设备push就关电脑，B设备上做了新提交（分叉）
+
+**现象描述**：
+在设备A做了提交但没push就关机了，在设备B继续工作做了新提交并push。后来打开设备A，push时被non-fast-forward拒绝，git log显示历史分叉。
+
+**可能原因**：
+典型的多设备未同步场景，两台设备各自有独立提交。
+
+**诊断步骤**：
+```bash
+# 1. 在设备A，fetch远程查看分叉情况
+git fetch baidu
+git log --oneline --graph --left-right HEAD...baidu/main
+# < 开头是设备A的本地提交
+# > 开头是设备B已push的提交
+
+# 2. 查看分叉点
+git merge-base HEAD baidu/main
+```
+
+**解决方案**：
+有两种处理方式，根据提交性质选择：
+
+1. **方式一：rebase（保持线性历史，推荐）**：
+   ```bash
+   # 在设备A
+   git stash  # 如果有未提交修改
+   git fetch baidu
+   git rebase baidu/main
+   # 如果有冲突，解决冲突：
+   # 编辑冲突文件，然后
+   git add <解决的文件>
+   git rebase --continue
+   # 重复直到rebase完成
+   git stash pop  # 恢复stash
+   git-sync-push
+   ```
+   **注意**：rebase会重写本地未push提交的hash，如果这些提交已经在其他地方被基于开发，不要rebase。但此处A设备的提交从未push过，所以是安全的。
+
+2. **方式二：merge（保留合并点，简单）**：
+   ```bash
+   git stash
+   git fetch baidu
+   git merge baidu/main
+   # 解决冲突
+   git add <解决的文件>
+   git commit  # 或使用默认合并信息
+   git stash pop
+   git-sync-push
+   ```
+   这会产生一个merge commit，历史有分叉合并点。
+
+**预防措施**：
+- 离开设备前一定push（`git-sync-push`）
+- 养成"关机前push，开机后pull"的习惯
+- 或设置定时自动push（个人项目可以，团队项目慎重）
+
+---
+
+#### 场景21：误执行了git push -f强制推送覆盖了远程
+
+**现象描述**：
+错误执行了`git push -f`（force push），覆盖了远程的提交，其他设备pull时发现自己的提交不见了，或提示unrelated histories。
+
+**可能原因**：
+手误执行了强制推送，或误以为需要force。
+
+**诊断步骤**：
+```bash
+# 1. 不要做任何多余操作，先看reflog
+# 在执行force-push的设备上：
+git reflog
+# 找到force-push之前HEAD的位置，通常是HEAD@{1}
+# 例如输出：
+# abc1234 (HEAD -> main) HEAD@{0}: push: forcing main to ... (forced update)
+# def5678 HEAD@{1}: commit: 我之前正确的提交
+```
+
+**解决方案**：
+⚠️ **时间就是生命，越快恢复越好，不要继续操作！**
+
+1. **在force-push的设备上立即恢复（最简单）**：
+   ```bash
+   # 找到force前的位置
+   git reflog
+   # 假设HEAD@{1}是force-push前的状态
+   git reset --hard HEAD@{1}
+   # （注意：这会丢弃工作区修改，如果有需要先stash）
+   
+   # 强制推回去恢复远程！
+   git push baidu main --force
+   
+   # 验证远程恢复后，通知所有其他设备执行：
+   # git fetch baidu
+   # git reset --hard baidu/main  # 注意：丢弃本地未push提交！
+   ```
+
+2. **force-push的设备已关闭/找不到了**：
+   从备份恢复：
+   ```powershell
+   # 查找force-push之前的备份文件
+   # 备份按时间命名，选force-push时间之前的那个
+   Get-ChildItem <SyncRoot>\backups\<repo名>\*.bundle | Sort-Object LastWriteTime -Descending
+   ```
+   按场景7的备份恢复流程操作。
+
+3. **其他设备上恢复（本地还有旧提交）**：
+   ```bash
+   # 在还没pull的其他设备上（幸运的话）
+   git reflog
+   git branch recovery <旧提交hash>
+   # 然后从recovery分支push或bundle
+   ```
+
+**预防措施**：
+- **永远不要使用`git push -f`/
