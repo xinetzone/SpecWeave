@@ -1,0 +1,15 @@
+- [x] C-1: MSVC 环境变量正确导入（cl.exe 可用，kernel32.lib 在 LIB 路径中，py314 在 PATH 中）
+- [x] C-2: CMake configure 退出码为 0，无 Error 输出
+- [x] C-3: CMake configure 无 "could not resolve DLL path" WARNING（证明 _caffe_ffi_resolve_imported_dll 正确解析了 tvm_ffi DLL 路径）
+- [x] C-4: build/build.ninja 生成成功
+- [x] C-5: cmake --build build 退出码为 0，编译零错误
+- [x] C-6: build/_caffe_ffi.dll 存在
+- [x] C-7: build/caffe_ffi_tests.exe 存在
+- [x] C-8: build/ 目录中存在 tvm_ffi.dll（证明 DLL 复制修复生效）
+- [x] C-9: build/ 目录中存在 abseil 和 protobuf 运行时 DLLs（abseil_dll.dll 大小与 conda 版本一致 2,001,920 字节）
+- [x] C-10: caffe_ffi_tests.exe 可启动（无 0xC0000135/0xC0000139 DLL 错误）
+- [x] C-11: 使用 filter 参数运行测试时过滤功能正常（BlobTest 23/23, SoftmaxWithLossTest 5/5）
+- [x] C-12: 至少一个使用 EXPECT_EQ/EXPECT_NEAR + << 流式消息的测试用例被执行（SoftmaxWithLossTest.BackwardGradientUniform 等）
+- [x] C-13: 运行时无 AssertHelper 导致的 terminate/double-free/异常崩溃（196/196 测试通过，独立编译测试14/14通过）
+- [x] C-14: assert_helper.hpp 仅依赖标准库头文件（<cmath>, <sstream>, <stdexcept>, <string>, <type_traits>, <utility>）
+- [x] C-15: test_harness.hpp 中 using 声明与 assert_helper.hpp 的导出一致
