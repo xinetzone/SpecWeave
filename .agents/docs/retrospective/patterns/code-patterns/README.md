@@ -127,6 +127,11 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [ffi-fallback-diagnostics.md](ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：_FFIInitDiagnostics诊断对象+record_*方法分类记录+入口预设状态+公开get_init_diagnostics() API+CAFFE_FFI_STRICT_INIT严格模式，消除原生扩展静默降级反模式 | L2 已验证 | pybind11/tvm-ffi/nanobind/cffi等C/C++原生扩展Python绑定的初始化降级诊断、CI验证原生扩展加载 |
 | [python-editable-import-isolation.md](python-editable-import-isolation.md) | Python editable install三层导入隔离：meta_path editable finder清理 + sys.path真实源码目录移除 + sys.modules缓存清除，配合subprocess隔离进程，解决scikit-build-core/setuptools/hatchling finder绕过sys.path问题 | L2 已验证 | 测试原生扩展缺失降级行为、CI验证wheel而非editable行为、最小化Python环境集成测试 |
 | [protobuf-text-minimal-parser.md](protobuf-text-minimal-parser.md) | Protobuf文本格式最小解析器：5种Token类型(str/num/ident/{/})Tokenizer + 深度计数嵌套跳过 + 目标字段提取，约140行零依赖解析prototxt拓扑结构 | L1 实验性 | prototxt/pbtxt拓扑提取、DAG可视化验证工具、零依赖CI脚本、不需要完整protobuf语义的调试场景 |
+| [numpy-reference-first.md](numpy-reference-first.md) | Numpy参考实现先行：写C++/框架测试前先用numpy实现纯Python参考版本，独立验证参考正确性后再对比目标实现，防止"测试本身写错" | L2 已验证 | 深度学习算子测试、数值计算函数测试、跨框架一致性验证、所有涉及浮点正确性的单元测试 |
+| [three-layer-test-validation.md](three-layer-test-validation.md) | 三层测试验证法：known values精确验证 + 随机数据numpy匹配 + repeated forward确定性验证，从点到面覆盖正确性 | L2 已验证 | 深度学习算子forward测试、数学库验证、数值计算函数测试 |
+| [explicit-split-multi-consumer.md](explicit-split-multi-consumer.md) | 多消费者显式Split：zero-copy/COW极简数据流框架中，同一blob被>1个layer消费时必须显式插入Split层，遵循框架命名约定 | L2 已验证 | caffe-ffi等极简DL框架测试、Rust所有权系统、显式内存管理数据流引擎 |
+| [perf-trace-instrumentation.md](perf-trace-instrumentation.md) | perf_trace性能埋点集成：上下文管理器封装关键阶段，自动采集Δtime/Δmem/Δblobs，[PERF]统一前缀+固定字段顺序+结构化k=v | L2 已验证 | pytest测试套件、性能基准测试、FFI原生扩展测试、需要细粒度性能剖析的测试 |
+| [separate-nets-independent-ops.md](separate-nets-independent-ops.md) | 独立操作分离Net：同一层的不同参数变体/独立操作各自创建独立Net实例，提取公共构造函数+参数化测试，避免blob消费冲突和状态污染 | L2 已验证 | DL框架算子对比测试、参数组合遍历测试、有单消费/状态副作用的框架测试 |
 
 ## 成熟度定义
 
