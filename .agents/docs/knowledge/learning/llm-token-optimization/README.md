@@ -150,7 +150,7 @@ flowchart LR
 5. [08-meta-analysis.md](08-meta-analysis.md)全文 → 理解知识体系元结构
 6. [09-constraints.md](09-constraints.md)全文 → 建立约束意识
 7. [references.md](references.md) → 深入阅读原始论文和文档
-8. 建立持续监控-优化-验证闭环（参考模式P-001步骤5）
+8. 建立持续监控-优化-验证闭环（参考[渐进式优化模式P-001](../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-optimization-pattern.md)步骤5）
 
 ---
 
@@ -184,6 +184,7 @@ flowchart LR
 - [📚 文档首页](../../../../README.md)
 - [📖 术语表](glossary.md)
 - [📚 参考文献](references.md)
+- [🧩 方法论模式库（AI协作类）](../../../retrospective/patterns/methodology-patterns/ai-collaboration/README.md) — 5个最佳实践模式+7个反模式已归档至此
 
 ---
 
