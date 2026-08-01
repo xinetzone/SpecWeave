@@ -1,3 +1,13 @@
+---
+version: 1.0
+source: "https://mp.weixin.qq.com/s/RUATqoajM5ZtbKZyNBW9hw"
+title: "「同样的token,换个分法」文章原始内容归档"
+author: "海哥说事儿（微信公众号）"
+date: "2026-07-05"
+type: "source-archive"
+related-report: "./analysis-report.md"
+---
+
 # 文章内容归档
 
 ## 文章基本信息
