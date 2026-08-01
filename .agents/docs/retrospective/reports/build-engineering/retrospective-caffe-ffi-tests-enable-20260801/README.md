@@ -289,6 +289,6 @@ MSVC 编译器（`cl.exe`）不像 GCC/Clang 内置标准库路径，它依赖�
 [CMD-LOG] exprt-20260801-caffe-ffi-tests S0 CMD_START type=retrospective format=markdown
 [CMD-LOG] exprt-20260801-caffe-ffi-tests S4 FORMAT_CONVERT format=markdown
 [CMD-LOG] exprt-20260801-caffe-ffi-tests S5 FILE_WRITTEN path=build-engineering/retrospective-caffe-ffi-tests-enable-20260801/README.md
-[CMD-LOG] sc-20260801-caffe-ffi-tests-enable S5 CONCEPT_COMPLETED concept=C commit=21c923ad gate=G4 PASSED
+[CMD-LOG] sc-20260801-caffe-ffi-tests-enable S5 CONCEPT_COMPLETED concept=C commit=a0e4736d gate=G4 PASSED
 [CMD-LOG] sc-20260801-caffe-ffi-tests-enable S6 CHAIN_COMPLETED deliverable=README.md+2patterns gate=G4 PASSED
 ```
