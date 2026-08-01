@@ -1,0 +1,125 @@
+{
+  "skill": "token-optimize-cmd",
+  "queries": [
+    {
+      "prompt": "token优化",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "怎么省token",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "降低LLM推理成本",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "prompt优化减少token",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "设计缓存策略减少token",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "上下文压缩方案",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "模型路由策略",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "长文档处理token优化",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "Token成本太高怎么降本",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "review一下这个token优化方案",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "制定token优化路线图",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "Mermaid流程图怎么画",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "提交代码",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "跑一下CI检查",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "做个项目复盘",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "train"
+    },
+    {
+      "prompt": "Token使用优化，推理成本降本",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "LLM API费用太高怎么优化",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "按需加载懒加载架构指导",
+      "expected": true,
+      "type": "should-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "检查断链",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    },
+    {
+      "prompt": "优化首页加载速度",
+      "expected": false,
+      "type": "should-not-trigger",
+      "source": "validation"
+    }
+  ]
+}
