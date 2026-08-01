@@ -51,7 +51,7 @@
 ## Constraints
 - **Technical**: 
   - 输出格式为Markdown (.md)
-  - 文件保存到docs/knowledge/learning/目录下
+  - 文件保存到`.agents/docs/knowledge/learning/`目录下（遵循项目路径解析规则：`docs/`→`.agents/docs/`）
   - 文件名遵循kebab-case命名规范
 - **Business**: 
   - 仅基于提供的URL内容进行分析，不添加外部信息
@@ -118,9 +118,25 @@
 ### AC-8: 文件格式与位置正确
 - **Given**: 学习笔记生成完成
 - **When**: 保存文件
-- **Then**: 文件必须保存为Markdown格式，位于docs/knowledge/learning/目录，文件名符合kebab-case规范
+- **Then**: 文件必须保存为Markdown格式，位于`.agents/docs/knowledge/learning/`目录，文件名符合kebab-case规范
 - **Verification**: `programmatic`
 
-## Open Questions
-- [ ] 学习笔记是否需要添加执行摘要/快速参考章节？
-- [ ] 是否需要在笔记末尾添加检查清单或快速参考卡？
+## Open Questions（已闭环）
+- [x] 学习笔记是否需要添加执行摘要/快速参考章节？——**已添加**：文档开头包含"执行摘要"章节
+- [x] 是否需要在笔记末尾添加检查清单或快速参考卡？——**已添加**：8.2节包含8大领域快速检查清单，8.3节包含四阶段学习路径建议
+
+---
+
+## 验收记录
+
+| 项 | 值 |
+|---|---|
+| **验收状态** | ✅ 通过 |
+| **验收日期** | 2026-08-01 |
+| **验收方法论** | 七概念方法论编排（R→I→E→C里程碑验收链路） |
+| **产出文件** | `.agents/docs/knowledge/learning/atomgit-ai-best-practices.md` |
+| **产出规模** | 4390行，68个代码块，9大章节，16个术语表 |
+| **KE-4质量等级** | A级（术语解释16个+全场景标注+⚠️标记突出+≥3处交叉引用+术语表+检查清单） |
+| **AC满足度** | 8/8 AC全部满足，Open Questions 2/2闭环 |
+| **额外增值** | 执行摘要、8大领域快速检查清单、四阶段学习路径建议 |
+| **沉淀模式** | WC-SLN-v1（网页内容→结构化学习笔记模式库），已入库至 `docs/retrospective/reports/milestone/web-content-learning-notes-patterns-20260801.md` |
