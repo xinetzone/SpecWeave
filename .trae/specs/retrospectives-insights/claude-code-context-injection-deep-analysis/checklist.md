@@ -51,3 +51,12 @@
 - [x] Checkpoint 36: 语言专业规范，符合中文书面表达
 - [x] Checkpoint 37: 所有内容准确，无曲解原文含义，无添加原文未提及的不实信息
 - [x] Checkpoint 38: 逻辑清晰、层次分明，未读过原文的读者能够理解核心内容
+
+## 知识沉淀与规范更新检查
+- [x] Checkpoint 39: 元复盘完成，包含复盘+洞察+萃取+更新完整闭环
+- [x] Checkpoint 40: subagent-output-quality-checklist.md升级到v1.1.0，新增输出完整性约束、任务粒度原则、事不过二兜底策略
+- [x] Checkpoint 41: subagent-atomic-task-template.md升级到v2.0.0，成熟度L1→L2，扩展为文档+分析双场景，新增四要素扩展模板
+- [x] Checkpoint 42: .agents/templates/README.md索引更新，反映规范变更
+- [x] Checkpoint 43: 元复盘报告和知识更新清单创建完成
+- [x] Checkpoint 44: 原复盘报告闭环状态更新为✅已完成
+- [x] Checkpoint 45: 4条P0级强制约束新增并可在未来子代理委派中应用
