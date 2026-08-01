@@ -236,7 +236,7 @@ message(STATUS "[caffe_ffi] C++ test sources: ${CAFFE_FFI_CPP_TEST_SRCS}")
 
 | 编号 | 行动项 | 优先级 | 状态 | 验证方式 |
 |------|--------|--------|------|----------|
-| A01 | 在 caffe-ffi 其他使用 `list(REMOVE_ITEM)` 的 CMake 文件中补充诊断输出 | 中 | 待执行 | grep 检查所有 REMOVE_ITEM 后均有 message(STATUS) |
+| A01 | 在 caffe-ffi 其他使用 `list(REMOVE_ITEM)` 的 CMake 文件中补充诊断输出 | 中 | ✅ 已完成 | grep确认caffe-ffi无其他REMOVE_ITEM；Tests.cmake已替换为诊断输出 |
 | A02 | 在 caffe-ffi CMake 中添加 protoc 版本与 libprotobuf 版本一致性校验 | 中 | 待执行 | 跨版本 protoc 配置时 CMake 报错而非编译时报错 |
 | A03 | 在 caffe-ffi README/开发文档中标注推荐 MSVC 版本范围（避免预览版） | 低 | 待执行 | 文档明确写出"已测试 MSVC 版本：14.4x（VS 2022）" |
 | A04 | WSL 构建使用独立 conda 环境（与 Windows conda 隔离），避免 protoc 路径污染 | 高 | 待执行 | `which protoc` 在 WSL build 目录内指向 WSL 本地安装 |
