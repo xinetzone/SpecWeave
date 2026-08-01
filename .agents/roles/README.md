@@ -17,6 +17,7 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 | 开发者 | developer | engineering | implementation | 标准 | 代码实现、重构 |
 | 代码审查者 | reviewer | quality | assurance | 标准 | 质量审查、规范校验 |
 | 测试工程师 | tester | quality | verification | 标准 | 测试编写、覆盖率 |
+| Token优化专家 | token-optimizer | optimization | specialist | 💡 专家 | LLM Token优化方案、成本-质量-延迟权衡、缓存策略、优化评审 |
 | 论文写作指导者 | thesis-advisor | academic | guidance | 标准 | 语言学专业论文写作流程指导 |
 | 联合创始者 | co-founder | governance | founding | 🏛️ 联合创始 | 愿景确立、协作契约奠基 |
 
@@ -38,6 +39,7 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 ├── developer.md                 # 开发者
 ├── reviewer.md                 # 代码审查者
 ├── tester.md                    # 测试工程师
+├── token-optimizer.md           # 💡 Token优化专家
 └── thesis-advisor.md             # 论文写作指导者
 ```
 
