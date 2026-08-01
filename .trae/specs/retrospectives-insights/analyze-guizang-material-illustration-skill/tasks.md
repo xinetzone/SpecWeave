@@ -10,10 +10,10 @@
   - 保持正文段落结构完整
 - **Acceptance Criteria Addressed**: [AC-1]
 - **Test Requirements**:
-  - `programmatic` TR-1.1: article-content.md文件存在于spec目录下
+  - `programmatic` TR-1.1: article-content.md文件存在（归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/）
   - `programmatic` TR-1.2: 文件包含标题、作者、发布时间、GitHub地址、安装命令
   - `human-judgement` TR-1.3: 正文内容完整无缺失，无明显的微信互动按钮文字残留
-- **Notes**: 直接使用browser_evaluate提取的innerText内容进行保存
+- **Notes**: 直接使用browser_evaluate提取的innerText内容进行保存；完成后归档至标准reports目录
 
 ## [x] Task 2: 提炼核心问题与价值主张
 - **Priority**: high
@@ -118,11 +118,11 @@
   - 所有内部引用使用相对路径
 - **Acceptance Criteria Addressed**: [AC-8]
 - **Test Requirements**:
-  - `programmatic` TR-8.1: analysis-report.md文件存在
+  - `programmatic` TR-8.1: analysis-report.md文件存在（归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/）
   - `programmatic` TR-8.2: YAML frontmatter包含id、title、date、type、source、theme字段
   - `human-judgement` TR-8.3: 报告结构完整，逻辑流畅，可读性强
   - `human-judgement` TR-8.4: 所有分析结论有原文依据支撑
-- **Notes**: 参考同类分析报告的结构和深度
+- **Notes**: 参考同类分析报告的结构和深度；完成后归档至标准reports目录，spec目录仅保留三件套
 
 ## [x] Task 9: 七概念方法论编排与模式沉淀
 - **Priority**: medium
@@ -142,3 +142,21 @@
   - `human-judgement` TR-9.3: 对抗审查已执行，模式文档已根据审查修正
   - `human-judgement` TR-9.4: analysis-report.md已更新模式沉淀章节
 - **Notes**: 模式成熟度初始为L1，待自有项目验证后升级L2
+
+## [x] Task 10: 归档路径修正
+- **Priority**: high
+- **Depends On**: Task 9
+- **Description**:
+  - 将 article-content.md 和 analysis-report.md 从 spec 目录迁移至标准 reports 归档目录
+  - 归档目录：.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
+  - 创建归档 README.md（含任务背景、核心指标、文件索引、changelog）
+  - 修复 analysis-report.md 中的相对路径引用
+  - 更新 tasks.md 和 checklist.md 的文件位置说明
+  - spec 目录仅保留 spec.md/tasks.md/checklist.md 三件套作为过程产物
+- **Acceptance Criteria Addressed**: [归档规范]
+- **Test Requirements**:
+  - `programmatic` TR-10.1: article-content.md 和 analysis-report.md 已迁移至正确归档目录
+  - `programmatic` TR-10.2: 归档目录下存在 README.md
+  - `programmatic` TR-10.3: spec 目录下仅保留三件套（spec.md/tasks.md/checklist.md）
+  - `human-judgement` TR-10.4: 所有相对路径引用正确
+- **Notes**: 遵循既有归档先例（tutti/codex等），spec目录为过程产物，reports目录为最终交付物

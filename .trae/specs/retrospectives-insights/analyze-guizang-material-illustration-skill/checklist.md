@@ -53,10 +53,12 @@
 
 ## 文件结构验证
 - [x] spec.md 存在且内容完整
-- [x] tasks.md 存在且所有9个任务状态已更新为完成
+- [x] tasks.md 存在且所有10个任务状态已更新为完成
 - [x] checklist.md 存在且所有检查项已标记
-- [x] article-content.md 存在
-- [x] analysis-report.md 存在
+- [x] article-content.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
+- [x] analysis-report.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
+- [x] 归档目录存在 README.md（含任务背景、核心指标、文件索引、changelog）
+- [x] spec 目录仅保留三件套（spec.md/tasks.md/checklist.md）作为过程产物
 
 ## 模式沉淀验证（2026-08-01 更新）
 - [x] 七概念方法论编排已执行（知识沉淀场景 R→I→E→V）
