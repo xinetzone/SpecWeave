@@ -1,9 +1,11 @@
 ---
-title: "Karpathy LLM Wiki 知识库方案文章深度洞察分析报告"
-source: "wuhiufan《Karpathy发了一条推文2000万人看了，我照着他的方法搭了个知识库》"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-karpathy-llm-wiki-article/analysis-report.toml"
-source_url: "微信公众号文章（defuddle 提取）"
-analyzed_at: "2026-07-07"
+id: karpathy-llm-wiki-analysis-20260707
+title: Karpathy LLM Wiki 知识库方案文章深度洞察分析报告
+date: 2026-07-07
+type: knowledge-base
+source: wuhiufan《Karpathy发了一条推文2000万人看了，我照着他的方法搭了个知识库》(微信公众号文章) + Karpathy X推文(2026-04-02) + GitHub Gist
+status: completed
+version: "1.0"
 tags:
   - knowledge-management
   - llm-wiki
