@@ -380,7 +380,7 @@ author: "AI Analysis"
 ### 萃取模式：提示词到产品七步法
 
 **模式ID**：`prompt-to-product-seven-steps`
-**存储位置**：[prompt-to-product-seven-steps.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/prompt-to-product-seven-steps.md)
+**存储位置**：[prompt-to-product-seven-steps.md](../../../../patterns/methodology-patterns/ai-collaboration/prompt-to-product-seven-steps.md)
 **成熟度**：L1（单案例验证，待自有项目复用后升级L2）
 
 **模式核心**：从"一段能跑的提示词"到"稳定可用的产品级Skill"需要七层工程化加工：
@@ -393,9 +393,9 @@ author: "AI Analysis"
 7. 交付前QA闭环（解决质量底线问题）
 
 **与现有模式的关系**：
-- 与 [skill-five-elements-model.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 互补：五要素定义Skill文档**长什么样**，七步法定义Skill**怎么造出来**
-- 与 [generation-validation-closed-loop.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/generation-validation-closed-loop.md) 互补：生成-验证闭环是七步法步骤7（QA）在单次生成层面的具体实现
-- 与 [honest-limitation-acknowledgment.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md) 配套：七步法完成后用此模式明确"不能做什么"
+- 与 [skill-five-elements-model.md](../../../../patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 互补：五要素定义Skill文档**长什么样**，七步法定义Skill**怎么造出来**
+- 与 [generation-validation-closed-loop.md](../../../../patterns/methodology-patterns/ai-collaboration/generation-validation-closed-loop.md) 互补：生成-验证闭环是七步法步骤7（QA）在单次生成层面的具体实现
+- 与 [honest-limitation-acknowledgment.md](../../../../patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md) 配套：七步法完成后用此模式明确"不能做什么"
 
 **对抗审查记录**：
 - 已通过5视角对抗审查（新手/老手/跨领域/极端场景/反例）

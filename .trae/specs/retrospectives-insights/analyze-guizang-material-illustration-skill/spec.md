@@ -6,7 +6,7 @@ type: "insight-analysis"
 source: "https://mp.weixin.qq.com/s/H-NlNfk7N0cYotjD5yJs8Q?from=industrynews&color_scheme=light#rd"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-guizang-material-illustration-skill/spec.toml"
 theme: "retrospectives-insights"
-version: "1.0"
+version: "1.1"
 ---
 # 歸藏材质插画 Skill 开源文章深度洞察分析 Spec
 
@@ -14,6 +14,7 @@ version: "1.0"
 - **Summary**: 对歸藏发布的《开源一个非常漂亮的文章配图 Skill》微信公众号文章进行系统性学习与深度洞察分析。该文章介绍了 guizang-material-illustration 这个开源 Skill，它能将文章、笔记、数据或产品说明转化为带中文标签的3D材质风格解释图。分析将涵盖内容提取、核心观点提炼、技术实现细节萃取、Skill开发方法论总结、适用场景分析、以及对AI内容创作和Skill开发生态的启示。
 - **Purpose**: 提炼"从提示词到产品级Skill的工程化方法论"、"统一视觉语言体系设计"、"语义抽取vs截图换皮"等核心洞察，为SpecWeave体系内的Skill开发、视觉设计规范、AI生成内容质量控制提供参考。
 - **Target Users**: SpecWeave项目团队、AI Skill开发者、内容创作者、对AI图像生成和Prompt Engineering感兴趣的技术人员
+- **归档位置**: `.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/`
 
 ## Goals
 - 完整提取并清理文章内容，识别其信息结构
