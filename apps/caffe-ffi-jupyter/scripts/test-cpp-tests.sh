@@ -257,15 +257,25 @@ _PY_TEST_FILE="$CAFFE_FFI_DIR/tests/python/test_python_api.py"
 # segfaults caused by backtrace_symbols() crashing on Python interpreter frames
 export CAFFE_FFI_DISABLE_BACKTRACE=1
 
-# Copy the freshly built _caffe_ffi.so to the editable install location if it exists
+# Ensure python can find the caffe_ffi package from source tree BEFORE copying .so
+export PYTHONPATH="$CAFFE_FFI_DIR/python:${PYTHONPATH:-}"
+
+# Copy the freshly built _caffe_ffi.so into the source tree's python package dir
+# so that _find_lib_path() can locate it via Path(__file__).parent (first search dir).
+_PY_PKG_DIR="$CAFFE_FFI_DIR/python/caffe_ffi"
+if [ -d "$_PY_PKG_DIR" ]; then
+    cp "$_CAFFE_FFI_SO" "$_PY_PKG_DIR/" 2>/dev/null && \
+        echo "  Copied _caffe_ffi.so to package dir: $_PY_PKG_DIR/"
+else
+    warn "Python package dir not found at $_PY_PKG_DIR"
+fi
+
+# Also attempt to copy to an editable install location if one exists
 _CAFFE_FFI_PY_DIR=$(python -c 'import caffe_ffi, os; print(os.path.dirname(caffe_ffi.__file__))' 2>/dev/null || echo "")
-if [ -n "$_CAFFE_FFI_PY_DIR" ] && [ -d "$_CAFFE_FFI_PY_DIR" ]; then
+if [ -n "$_CAFFE_FFI_PY_DIR" ] && [ -d "$_CAFFE_FFI_PY_DIR" ] && [ "$_CAFFE_FFI_PY_DIR" != "$_PY_PKG_DIR" ]; then
     cp "$_CAFFE_FFI_SO" "$_CAFFE_FFI_PY_DIR/" 2>/dev/null && \
         echo "  Updated _caffe_ffi.so in editable install at $_CAFFE_FFI_PY_DIR"
 fi
-
-# Ensure python can also find the caffe_ffi package from source tree
-export PYTHONPATH="$CAFFE_FFI_DIR/python:${PYTHONPATH:-}"
 
 if [ -f "$_PY_TEST_FILE" ]; then
     echo ""
