@@ -38,6 +38,10 @@ date: "2026-07-09"
 | [「辅助人工」而非「全自动」的人机协作设计](human-in-the-loop-augmentation.md) | 「辅助人工」而非「全自动」的人机协作设计 | L2 | `人机协作` `Human-in-the-loop` `AI辅助` |
 | [隔离优于共享模式](isolation-over-sharing.md) | 隔离优于共享模式 | - |  |
 | [Markdown即接口：用Markdown同时承载人类阅读与机器调用](markdown-as-interface.md) | Markdown即接口：用Markdown同时承载人类阅读与机器调用 | L4 |  |
+| [分层缓存模式（Layered Caching Pattern）](layered-caching-pattern.md) | 三层缓存架构（系统提示层/会话记忆层/语义相似层），整体成本降低60-85%，TTFT降低50-80%，适用于多轮对话、代码助手、Agent等有大量重复内容的场景 | L2 | `LLM` `Token优化` `缓存` `Prompt Caching` `语义缓存` |
+| [按需加载懒加载模式（Lazy Loading Pattern）](lazy-loading-pattern.md) | 初始只加载元数据，真正需要时才加载完整内容，MCP场景token降低46.9%+，适用于多工具Agent、代码助手、RAG系统 | L2 | `LLM` `Token优化` `懒加载` `MCP` `按需加载` |
+| [LLM Token优化反模式集](llm-token-optimization-anti-patterns.md) | 7个最常见的Token优化反模式（过度压缩/为优化而优化/忽略缓存预热/一刀切/忽视输出/无限重试/不监控），附现象、根因、正确做法、真实案例 | L2 | `LLM` `Token优化` `反模式` `陷阱` `误区` |
+| [分层分治MapReduce模式（MapReduce Divide and Conquer）](mapreduce-divide-conquer.md) | 超长文档处理模式：语义分块→并行Map→递归Reduce，100K文档成本降低70-85%，解决O(n²)复杂度和Lost in the Middle问题 | L2 | `LLM` `Token优化` `长上下文` `MapReduce` `分治` |
 | [中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy）](medium-task-merged-delegation-strategy.md) | 中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy） | L2 | `子代理委派` `任务合并` `任务拆分` |
 | [模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化](module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化 | L1 |  |
 | [导航枢纽文件名契约模式：全局清单 vs 局部清单](navigation-hub-filename-contract.md) | [引言内容] | L1 |  |
@@ -46,7 +50,9 @@ date: "2026-07-09"
 | [输出格式-协作能力映射（Output Format – Collaboration Capability Mapping）](output-format-collaboration-capability.md) | 输出格式-协作能力映射（Output Format – Collaboration Capability Mapping） | - |  |
 | [决策前三查检查清单（Pre-Decision Three Checks）](pre-decision-three-checks.md) | 决策前三查检查清单（Pre-Decision Three Checks） | L2 | `决策检查` `第一性原理` `防错机制` |
 | [上下文渐进式披露（Progressive Context Disclosure）](progressive-context-disclosure.md) | 上下文渐进式披露（Progressive Context Disclosure） | L2 |  |
+| [渐进式优化模式（Progressive Optimization Pattern）](progressive-optimization-pattern.md) | 按ROI分层递进优化：可观测性→Quick Wins→场景化优化→高级优化→持续迭代，5步实现85-95%成本降低，适用于所有LLM成本优化场景 | L2 | `LLM` `Token优化` `渐进式优化` `ROI` `成本优化` |
 | [渐进式模板化（Progressive Templating）](progressive-templating.md) | 渐进式模板化（Progressive Templating） | L1 |  |
+| [质量-成本动态平衡模式（Quality-Cost Dynamic Balance）](quality-cost-dynamic-balance.md) | 三级模型路由+分级压缩+A/B测试，在质量约束下最小化成本，成本降低40-85%且质量保持率>95%，解决一刀切问题 | L2 | `LLM` `Token优化` `质量平衡` `模型路由` `A/B测试` |
 | [references/ 渐进式披露：通过引用已有知识文档避免内容重复](references-progressive-disclosure.md) | references/ 渐进式披露：通过引用已有知识文档避免内容重复 | L1 |  |
 | [Skill 发现协议增强 SOP](skill-discovery-protocol.md) | Skill 发现协议增强 SOP | L1 |  |
 | [Skill 五要素模型（Skill Five Elements Model）](skill-five-elements-model.md) | Skill 五要素模型（Skill Five Elements Model） | L1 |  |
