@@ -4,16 +4,16 @@
 
 ## 报告列表
 
-| 报告ID | 里程碑名称 | 日期 | 方法论 | 核心成果 | 链接 |
-|--------|-----------|------|--------|---------|------|
-| loop-engineering-milestone-20260801 | AI Agent Harness与Loop Engineering知识沉淀里程碑 | 2026-08-01 | MILESTONE-KNOWLEDGE-CLOOP-001 | 知识库+技能门面+专家角色+模式库四类资产，MILESTONE-KNOWLEDGE-CLOOP-001模式跨领域验证成功 | [loop-engineering-milestone-acceptance-20260801.md](loop-engineering-milestone-acceptance-20260801.md) |
-| milestone-knowledge-scaling-20260801 | SpecWeave知识沉淀与方法论体系规模化里程碑 | 2026-08-01 | 七概念R→I→E→C | 150个spec目录、Token优化飞轮验证、ACT自迭代激活 | [specweave-knowledge-scaling-milestone-20260801.md](specweave-knowledge-scaling-milestone-20260801.md) |
+| 报告ID | 里程碑名称 | 日期 | 状态 | 方法论 | 核心成果 | 链接 |
+|--------|-----------|------|------|--------|---------|------|
+| loop-engineering-milestone-20260801 | AI Agent Harness与Loop Engineering知识沉淀里程碑 | 2026-08-01 | ✅ 已验收 | MILESTONE-KNOWLEDGE-CLOOP-001 | 知识库+技能门面+专家角色+模式库四类资产，MILESTONE-KNOWLEDGE-CLOOP-001模式跨领域验证成功，硬软AC双轨100%通过 | [loop-engineering-milestone-acceptance-20260801.md](loop-engineering-milestone-acceptance-20260801.md) |
+| milestone-knowledge-scaling-20260801 | SpecWeave知识沉淀与方法论体系规模化里程碑 | 2026-08-01 | ✅ 已关闭 | 七概念R→I→E→C | 150个spec目录、Token优化飞轮验证、ACT自迭代激活、6项行动项100%落地交付7个资产文件 | [specweave-knowledge-scaling-milestone-20260801.md](specweave-knowledge-scaling-milestone-20260801.md) |
 
 ## 知识沉淀里程碑模式库
 
-| 模式ID | 模式名称 | 日期 | 链接 |
-|--------|---------|------|------|
-| MILESTONE-KNOWLEDGE-CLOOP-001 | 里程碑级知识沉淀闭环模式（Loop Engineering领域验证版） | 2026-08-01 | [loop-engineering-patterns-20260801.md](loop-engineering-patterns-20260801.md) |
+| 模式ID | 模式名称 | 日期 | 验证领域 | 标准流程文档 | 领域验证文档 |
+|--------|---------|------|---------|------------|------------|
+| MILESTONE-KNOWLEDGE-CLOOP-001 | 里程碑级知识沉淀闭环模式 | 2026-08-01 | Loop Engineering | [milestone-breakthrough-assetization-process.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md) | [loop-engineering-patterns-20260801.md](loop-engineering-patterns-20260801.md) |
 
 ## 归档规范
 
