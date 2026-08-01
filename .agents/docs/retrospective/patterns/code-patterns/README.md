@@ -113,7 +113,9 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [conversion-point-debug-tracing.md](conversion-point-debug-tracing.md) | 数据转换点调试追踪：关键边界插入shape+dtype+值范围日志，快速定位精度丢失/shape mismatch/静默截断 | L2 已验证 | 数据预处理管道、模型推理链路、类型转换密集代码 |
 | [structured-lightweight-logging.md](structured-lightweight-logging.md) | 结构化轻量日志：字段固定顺序+管道符分隔+一行一事件，grep/awk可直接分析，无需日志框架 | L1 实验性 | CLI工具、Shell脚本、性能敏感路径日志 |
 | [three-layer-performance-optimization.md](three-layer-performance-optimization.md) | 三层性能优化方法论：算法→工程→编译逐级优化，先profiling再优化，避免过早优化陷阱 | L1 实验性 | 性能调优、计算密集型代码优化 |
+| [build-failure-layered-triage.md](build-failure-layered-triage.md) | 构建失败分层排查法：L0环境层(30秒)→L1工具链层(2分钟)→L2项目层(5分钟+)三层递进排查，含决策树+PowerShell/Bash检查脚本+8语言迁移表 | L2 已验证 | C/C++/Rust/CUDA等编译型语言构建失败排查、跨平台/跨环境构建问题、编译器内部错误诊断 |
 | [cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md) | CMake四层模块化架构：选项→依赖→函数→目标分层拆分，两轮重构策略（物理拆分+逻辑抽象），include顺序即依赖声明 | L1 实验性 | CMakeLists.txt超过100行的C/C++项目模块化，多目标（库+测试+示例）构建 |
+| [cmake-list-removal-diagnostic-output.md](cmake-list-removal-diagnostic-output.md) | CMake列表变更诊断输出：REMOVE_ITEM/FILTER后必打message(STATUS)输出列表长度+内容+排除原因，消除"隐形文件排除"，含简单/条件/过滤三套模板 | L2 已验证 | CMake GLOB收集后排除文件、条件分支排除源文件/测试、CI构建日志可观测性 |
 | [cmake-public-target-config-function.md](cmake-public-target-config-function.md) | CMake公共目标配置函数：封装target_*为带VISIBILITY参数+完整参数校验的function()，消除跨文件重复配置 | L1 实验性 | 多目标CMake项目重复编译配置消除，PUBLIC/PRIVATE/INTERFACE可见性控制 |
 | [cmake-platform-specific-operation-encapsulation.md](cmake-platform-specific-operation-encapsulation.md) | CMake平台特定操作封装：平台专用文件+细粒度函数+聚合函数+通用工具三级API，统一参数校验宏 | L1 实验性 | Windows DLL复制、macOS rpath设置、跨平台构建操作封装 |
 | [const-cow-trigger.md](const-cow-trigger.md) | const重载驱动的写时复制触发模式：通过cpu_data()/cpu_mutable_data()分离const/non-const访问路径，在non-const方法中检查refcount>1时触发克隆，实现安全的零拷贝共享+写入隔离 | L2 已验证 | Blob/Tensor写时复制、零拷贝别名后的写入安全、N≥2 fan-out场景、Split/Concat等多输出层优化 |

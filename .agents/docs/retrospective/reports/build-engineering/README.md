@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（13份）
+## 报告清单（14份）
 
 | 报告名称（原子化目录） | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-caffe-ffi-tests-enable-20260801/` | Caffe-FFI C++测试套件启用：清除Tests.cmake中静默排除test_net.cpp/test_insert_splits.cpp的REMOVE_ITEM块，替换为诊断输出；MSVC预览版PDB锁定问题诊断；跨环境protobuf版本污染分析；萃取2个L2方法论模式 | 2026-08-01 |
 | `retrospective-caffe-ffi-wsl-tooling-20260729/` | Caffe-FFI WSL部署工具链优化：统一结构化日志库(Bash+PowerShell)、PowerShell→WSL跨Shell包装器、Docker Desktop vs原生Docker性能对比决策矩阵，萃取3个L2代码模式 | 2026-07-29 |
 | `retrospective-cmake-atomization-caffe-ffi-round2-20260729/` | CMake原子化重构第二轮（待补充） | 2026-07-29 |
 | `retrospective-caffe-ffi-logging-python-wrapper-20260728/` | Caffe-FFI 5级结构化日志框架添加与Python Wrapper TVM-FFI对象模型兼容性修复，LeNet端到端验证通过 | 2026-07-28 |
@@ -29,7 +30,8 @@ type: "index"
 
 ## 主题分类
 
-### Caffe-FFI 系列（4份）
+### Caffe-FFI 系列（5份）
+- C++测试套件启用（清除REMOVE_ITEM+MSVC诊断）
 - WSL部署工具链优化（统一日志+跨Shell+Docker决策）
 - CMake原子化重构第二轮
 - protobuf>=7 集成构建
