@@ -25,6 +25,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
 | [cross-platform-backtrace-leak-diagnosis.md](cross-platform-backtrace-leak-diagnosis.md) | 跨平台堆栈回溯泄漏源定位：构造时捕获调用栈+析构TRACE输出+Windows DbgHelp/Linux execinfo双平台+编译期开关零开销，形成检测→定位完整诊断闭环 | L2 已验证 | C++原生扩展FFI项目内存泄漏诊断、跨平台C++开发、需要精确定位泄漏源的调试场景 |
 | [cpp-object-wrapper-lazy-init-check.md](cpp-object-wrapper-lazy-init-check.md) | C++对象包装延迟初始化防御：公共方法入口第一行检查!defined()/!valid()，首次初始化作为独立分支处理，避免空指针解引用 | L1 候选 | 包装第三方值类型对象(TVM Tensor/optional/FFI句柄)、默认构造+延迟初始化模式 |
+| [cpp-iife-assertion-macro.md](cpp-iife-assertion-macro.md) | C++ IIFE+AssertHelper流式断言宏：IIFE表达式+临时对象析构抛异常+operator<<链式消息，替代do-while模式实现gtest风格CHECK宏，含5个GOTCHA陷阱（移动构造/noexcept(false)/引用捕获/括号保护/宏重定义） | L2 已验证 | C++自定义断言/CHECK宏、测试框架断言、生产环境检查宏、需要<<流式消息的宏封装 |
 | [cross-platform-encoding-enforcement.md](cross-platform-encoding-enforcement.md) | 跨平台输出编码三层防御体系：入口编码设置+防御性能力检测+Unicode/ASCII适配输出，避免Windows GBK终端崩溃 | L2 已验证 | Python CLI工具、跨平台脚本、subprocess调用 |
 | [defensive-attribute-access.md](defensive-attribute-access.md) | 外部对象防御性属性访问：getattr→callable→try-except三层防护，应对属性不存在/None/不可调用/抛异常场景 | L2 已验证 | CLI工具库、stream操作、插件接口、mock环境下的防御性编程 |
 | [direct-file-write-over-shell-pipe.md](direct-file-write-over-shell-pipe.md) | 文档生成直写文件优先：避免 Windows PowerShell 文本管道在落盘阶段污染中文内容 | L1 实验性 | README/报告生成、Markdown导出、知识库条目写回 |
@@ -117,6 +118,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [const-cow-trigger.md](const-cow-trigger.md) | const重载驱动的写时复制触发模式：通过cpu_data()/cpu_mutable_data()分离const/non-const访问路径，在non-const方法中检查refcount>1时触发克隆，实现安全的零拷贝共享+写入隔离 | L2 已验证 | Blob/Tensor写时复制、零拷贝别名后的写入安全、N≥2 fan-out场景、Split/Concat等多输出层优化 |
 | [platform-aware-dependency-detect.md](platform-aware-dependency-detect.md) | 平台感知的CMake依赖检测模式：两阶段验证（头文件→库文件）+已知前缀推导（conda前缀→Library/include）+平台路径差异化处理，解决Windows conda Library/前缀与Linux系统路径不一致问题 | L2 已验证 | 跨平台CMake依赖检测、conda环境依赖查找、Windows/Linux/macOS路径差异处理、第三方库自动发现 |
 | [preflight-checks-script.md](preflight-checks-script.md) | 构建预检脚本前置模式：编译前执行环境检查脚本，主动检测TypeTraits冲突/DLL缺失/符号重复等常见陷阱，输出可操作错误信息而非晦涩编译错误 | L2 已验证 | C++/Python混合项目构建、CMake/native extension编译前环境验证、CI/CD流水线质量门禁、开发者环境快速诊断 |
+| [progressive-interface-extension.md](progressive-interface-extension.md) | 框架接口渐进式扩展三阶段：默认存根（WARN/THROW非纯虚）→分批按优先级实现子类→调用路径激活时切换为强制，避免N个子类同时编译失败的大爆炸 | L1 候选 | C++基类虚方法添加、插件系统新API、SDK版本升级、框架功能分期上线、影响≥3个子类的接口变更 |
+| [single-pass-perf-instrumentation.md](single-pass-perf-instrumentation.md) | 单次遍历性能统计日志埋点三原则：计算+统计单次遍历融合（禁止O(2N)二次遍历cache miss）、栈上零分配、循环外日志输出；结构化[TAG]标签+固定字段顺序+k=v格式 | L1 候选 | 深度学习算子/数值计算/图像处理/音频DSP/数据库扫描/ETL等大数组计算密集场景的性能监控埋点 |
 
 ## 成熟度定义
 
