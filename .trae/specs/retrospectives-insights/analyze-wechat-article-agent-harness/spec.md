@@ -125,5 +125,11 @@ source: "https://mp.weixin.qq.com/s/BZOvL_4Uei-zFGY3Ossi9w?from=industrynews&col
   - 4个行业趋势深度洞察（模型中心→系统工程、试错成本→0、代码机制易迁移、双层元优化）
   - 三类角色（个人开发者/技术管理者/企业）的具体行动建议
   - 3个风险警示（理解债、认知让渡、盲目建Loop成本浪费）
-- **中间分析文件**：6个结构化分析文档（内容清洗、核心论点数据、结构分析、方法论分析、趋势洞察、实践启示）
+- **中间分析文件**：6个结构化分析文档（位于 `.agents/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/supporting-analysis/`）：
+  - cleaned-content.md（内容清洗）
+  - core-arguments-data.md（核心论点数据）
+  - structure-analysis.md（结构分析）
+  - methodology-analysis.md（方法论分析）
+  - trend-insights.md（趋势洞察）
+  - practical-implications.md（实践启示）
 - **验收标准**：AC-1至AC-6全部通过
