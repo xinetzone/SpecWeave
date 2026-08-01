@@ -108,39 +108,11 @@ maturity: "validated"
 
 ### 模式E1：FFI边界零拷贝Tensor交互双模式选择模式
 
-**元数据**
-- 模式ID：ffi-zerocopy-tensor-dual-mode-v1
-- 触发场景：跨语言FFI边界传递张量/数组，需要零拷贝访问
-- 适用环境：C++/Python FFI（TVM FFI/pybind11/ctypes等）
-- 抽象层级：FFI内存管理模式
-- 来源：本次COW修复（F05、F09、F10）+ 历史零拷贝模式经验
-- 支撑案例数：≥2（DLPack引用计数问题 + ctypes生命周期问题）
-
-**双模式决策表**
-
-| 模式 | 实现方式 | 引用计数 | 生命周期安全 | 适用场景 |
-|------|----------|----------|-------------|----------|
-| **协议模式** | np.from_dlpack / DLPack标准协议 | 自动+1 | 框架保证安全 | 大多数常规场景，愿意接受引用计数开销 |
-| **裸指针模式** | ctypes直接从data_ptr()构造 | 不增加 | 手动绑定引用到稳定对象 | 需要精确控制引用计数（如COW），愿意手动管理生命周期 |
-
-**裸指针模式核心步骤**
-
-1. 获取tensor的裸数据指针 `ptr = tensor.data_ptr()` 和形状 `shape = tensor.shape`
-2. 持有tensor对象直到numpy数组生命周期结束（不能过早del）
-3. 用`np.ctypeslib.as_array(cptr, shape=shape)`构造数组
-4. **关键**：将保持tensor/父对象生命周期的引用绑定到`arr.base.obj`（当base是memoryview时）或`arr.base`，**绝不能**绑定到ctypes.cast()返回的临时指针
-5. 设置`arr.setflags(write=True)`允许原地修改
-
-**反模式**
-
-| 反模式 | 后果 | 正确做法 |
-|--------|------|----------|
-| 裸指针模式下把生命周期引用绑在ctypes.cast()返回值上 | 引用循环，内存泄漏 | 绑在arr.base.obj或arr.base上 |
-| 裸指针模式下过早del tensor对象 | 悬垂指针，段错误/数据损坏 | 保持tensor引用通过base间接持有 |
-| 在需要精确use_count语义时使用DLPack模式 | use_count虚高，COW逻辑错误 | 使用裸指针模式手动管理 |
-| 裸指针模式不设置setflags(write=True) | 只读数组，in-place操作失败 | 显式开启可写标志 |
-
-**迁移验证**：✅ pybind11裸指针交互 ✅ C数组Python封装 ⚠️ GPU tensor需额外考虑设备同步
+**状态**：✅ 已正式入库（L2-validated）
+- **模式ID**：`ffi-zerocopy-tensor-dual-mode`
+- **归档位置**：[ffi-zerocopy-tensor-dual-mode.md](../../../patterns/code-patterns/ffi-zerocopy-tensor-dual-mode.md)
+- **成熟度**：L2-validated（2个支撑案例，已在caffe-ffi COW机制中完整验证）
+- **核心结论**：FFI边界numpy零拷贝转换存在双模式——协议模式（默认，安全但引用计数+1）和裸指针模式（精确引用计数但需手动管理生命周期），裸指针模式的生命周期引用必须绑定到`arr.base.obj`而非ctypes临时指针。
 
 ---
 
@@ -217,3 +189,4 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 <!-- changelog -->
 - 2026-08-01 | retrospective | 初始版本：Task 11 test_cow.py修复里程碑复盘，含25条事实、4条核心洞察、1个正式模式、1个候选洞察
 - 2026-08-01 | docs | 补充提交记录b55b7da3，更新changelog
+- 2026-08-01 | feat(patterns): 模式E1正式入库为ffi-zerocopy-tensor-dual-mode（L2-validated），复盘报告更新为归档引用
