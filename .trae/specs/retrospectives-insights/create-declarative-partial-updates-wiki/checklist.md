@@ -35,3 +35,15 @@
 - [x] Checkpoint 33: 文档语言通俗易懂，适合不同技术水平读者
 - [x] Checkpoint 34: 适当位置引用原文内容作为参考依据
 - [x] Checkpoint 35: 客观说明当前处于实验阶段不可用于生产环境
+
+---
+
+## 复盘质量保障检查点（R→I→E→C 里程碑复盘新增）
+
+> 以下检查点基于 2026-07-04 里程碑复盘产出，用于指导未来类似任务的质量保障
+
+- [x] Checkpoint 36: Open Questions 已全部关闭（2个问题标记为 Out of Scope 并说明原因）
+- [x] Checkpoint 37: 复盘洞察已记录到 spec.md（3条洞察，每条含四元组：陈述/证据/反常识/行动）
+- [x] Checkpoint 38: 可复用模式已萃取（2个模式：Web内容学习Wiki创建模式、实施与验证分离模式）
+- [x] Checkpoint 39: 并行执行优化建议已记录到 tasks.md（5个并行分组方案）
+- [x] Checkpoint 40: 质量保障建议已记录到 tasks.md（3条建议：实施验证分离/Open Questions闭环/格式预检）

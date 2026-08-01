@@ -171,6 +171,37 @@ tags: ["declarative-partial-updates", "html", "chrome", "web-platform", "streami
 - **Verification**: `programmatic`
 - **Notes**: 遵循现有索引格式
 
-## Open Questions
-- [ ] 是否需要补充 W3C/WHATWG 标准化进展信息？
-- [ ] 是否需要添加与其他浏览器厂商立场的对比？
+## Open Questions（已关闭）
+
+> 以下 Open Questions 在里程碑复盘（R→I→E→C）中处理完毕。
+
+- [x] 是否需要补充 W3C/WHATWG 标准化进展信息？
+  - **处理结论**：Out of Scope。本教程定位为技术科普与概念预研，不涉及标准制定流程深度讨论。已在 Non-Goals 中明确"不涉及 W3C/WHATWG 标准制定流程的详细讨论"。
+- [x] 是否需要添加与其他浏览器厂商立场的对比？
+  - **处理结论**：Out of Scope。当前能力由 Chrome 独家推进，其他浏览器厂商立场尚不明确，强行对比会引入未验证信息。已在 Non-Goals 中明确"不涉及非 Chrome 浏览器的实现计划"。
+
+## 复盘洞察（R→I→E→C 里程碑复盘产出）
+
+> 复盘时间：2026-07-04 | 复盘链路：R（事实采集）→ I（洞察分析）→ E（模式萃取）→ C（行动项更新）
+
+### 核心洞察
+
+| 洞察编号 | 陈述 | 证据 | 反常识 | 行动 |
+|---------|------|------|--------|------|
+| INS-1 | 13个任务全部采用线性依赖，整个 spec 无法并行执行 | tasks.md 中所有任务的 Depends On 都指向前一个任务 | 章节内容编写可并行，只需最后统一整合 | 未来类似任务将独立章节分组并行执行 |
+| INS-2 | 文档创建与验证由不同 agent 执行，形成有效制衡 | 创建由 sub-agent A 完成，验证由独立 sub-agent B 完成 | 自我验证容易产生盲区，独立验证更客观 | 将"实施与验证分离"作为标准实践固化 |
+| INS-3 | Open Questions 未在执行过程中被处理 | spec.md 末尾有 2 个未勾选的 Open Questions | Open Questions 应在 spec 生命周期内被明确处理 | 已在本次复盘中关闭，标记为 Out of Scope |
+
+### 可复用模式
+
+**模式1：Web 内容学习 Wiki 教程创建模式**
+- 触发场景：需要系统学习网页内容并创建结构化教程文档
+- 核心步骤：defuddle 提取 → 参考现有格式 → 创建完整 Wiki → 包含评估与见解 → 更新索引
+- 反模式：跳过 defuddle / 不参考现有格式 / 使用 TOML frontmatter / 不更新索引
+- 迁移验证：已在 text-to-cad-wiki、mopmonk-wiki 等多次验证
+
+**模式2：实施与验证分离模式**
+- 触发场景：需要创建高质量文档并确保符合所有验收标准
+- 核心步骤：sub-agent A 创建 → 独立 sub-agent B 验证 → 反馈主 agent → 修复未通过项
+- 反模式：自我验证 / 跳过验证 / 验证 agent 参与创建
+- 迁移验证：可迁移到任何需要质量保障的文档创建场景
