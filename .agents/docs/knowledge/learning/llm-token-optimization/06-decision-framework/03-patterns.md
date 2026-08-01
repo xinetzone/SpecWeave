@@ -580,11 +580,28 @@ MapReduce是分布式计算经典范式，可迁移到：
 
 ---
 
+## 📦 模式库归档
+
+> 本文档中的5个最佳实践模式已通过萃取流程（extraction-cmd）沉淀为正式可复用模式，归档至方法论模式库，成熟度 **L2（已验证）**。
+
+| 模式ID | 模式名称 | 验证案例数 | 模式库链接 |
+|--------|---------|-----------|-----------|
+| P-001 | 渐进式优化模式 | 9个跨行业案例 | [progressive-optimization-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-optimization-pattern.md) |
+| P-002 | 分层缓存模式 | 5个案例（Copilot/Kapden/Cursor等） | [layered-caching-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/layered-caching-pattern.md) |
+| P-003 | 质量-成本动态平衡模式 | 4个案例（Copilot/Zomato/Himanshu等） | [quality-cost-dynamic-balance.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/quality-cost-dynamic-balance.md) |
+| P-004 | 按需加载懒加载模式 | 4个案例（Cursor/Copilot/Postman等） | [lazy-loading-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/lazy-loading-pattern.md) |
+| P-005 | 分层分治MapReduce模式 | 3个研究/工业案例 | [mapreduce-divide-conquer.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/mapreduce-divide-conquer.md) |
+
+**说明**：本文档作为知识库学习材料保留详细的原理阐述和案例说明；模式库中的文档采用标准化模式模板，包含触发场景、核心规则、实施检查清单、反例警示、跨领域迁移验证，适用于项目中直接复用。
+
+---
+
 ## 🔗 相关资源
 
 - [⬅️ 返回：决策框架总览](00-framework-overview.md)
 - [➡️ 下一篇：反模式与误区](04-anti-patterns.md)
 - [📊 案例研究验证模式效果](../04-cases/01-case-studies.md)
+- [📚 方法论模式库索引](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/README.md)
 
 ---
 

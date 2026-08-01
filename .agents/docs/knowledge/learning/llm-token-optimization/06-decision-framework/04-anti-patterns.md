@@ -327,11 +327,29 @@ reuse_count: 0
 
 ---
 
+## 📦 反模式集归档
+
+> 本文档中的7个反模式已通过萃取流程（extraction-cmd）整合为正式反模式集，归档至方法论模式库，成熟度 **L2（已验证）**，包含9个跨行业真实踩坑案例验证。
+
+| 反模式集 | 覆盖反模式 | 验证案例数 | 模式库链接 |
+|---------|-----------|-----------|-----------|
+| LLM Token优化反模式集 | AP-001~AP-007（全部7个反模式） | 9个踩坑案例 | [llm-token-optimization-anti-patterns.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/llm-token-optimization-anti-patterns.md) |
+
+**反模式集包含**：
+- 结构化问题-根因-症状-解决方案模板
+- 早期识别信号（如何提前发现正在踩坑）
+- 预防措施与检查清单
+- 真实踩坑案例复盘
+- 与5个最佳实践模式的配对关系
+
+---
+
 ## 🔗 相关资源
 
 - [⬅️ 返回：最佳实践模式](03-patterns.md)
 - [➡️ 下一篇：快速启动Checklist](05-quick-checklist.md)
 - [⚠️ 模式与反模式配对参考](03-patterns.md)
+- [📚 方法论模式库索引](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/README.md)
 
 ---
 
