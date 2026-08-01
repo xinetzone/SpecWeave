@@ -111,7 +111,9 @@ Dynamic Workflows的解决思路不是"让模型更聪明"或"写更好的prompt
 
 ## 二、可复用模式识别
 
-### 模式候选1：上下文生命周期管理原则
+### 模式候选1：上下文生命周期管理原则 ✅ 已归档
+
+> **归档状态**：已正式萃取为模式 [context-lifecycle-layering.md](../../../../patterns/methodology-patterns/ai-collaboration/context-lifecycle-layering.md)，成熟度L2，3个验证案例
 
 | 项目 | 内容 |
 |---|---|
@@ -120,7 +122,7 @@ Dynamic Workflows的解决思路不是"让模型更聪明"或"写更好的prompt
 | 核心原则 | 不同类型的指令/规范/约束应该有不同的生命周期管理策略——从全程在场到按需加载到懒加载到隔离执行到代码硬护栏 |
 | 决策框架 | 事实→全局入口文件；流程→懒加载技能；护栏→代码级Hook；脏活→隔离子代理 |
 | 反模式 | 将所有内容都塞进全局入口文件导致膨胀；将安全约束写在提示词中期望模型自觉；让主会话承担所有搜索和阅读任务 |
-| 成熟度建议 | L2（在Claude Code中已验证，在SpecWeave中部分实现） |
+| 成熟度 | L2（在Claude Code中已验证，在SpecWeave中部分实现，子代理截断问题修正再次验证） |
 
 ### 模式候选2：对抗验证工作流
 
@@ -182,4 +184,5 @@ Dynamic Workflows的解决思路不是"让模型更聪明"或"写更好的prompt
 ## Changelog
 
 <!-- changelog -->
+- 2026-08-01 | extract | 模式候选1"上下文生命周期管理原则"正式萃取入库为 context-lifecycle-layering.md（L2成熟度，3个验证案例）
 - 2026-07-04 | create | 初始创建洞察萃取报告（v1.0）

@@ -23,6 +23,7 @@ date: "2026-07-09"
 | [分批创作+独立质检模式](batched-creation-independent-review.md) | 分批创作+独立质检模式 | L2 |  |
 | [双语提示词工程（Bilingual Prompt Engineering）](bilingual-prompt-engineering.md) | 双语提示词工程（Bilingual Prompt Engineering） | L2 |  |
 | [Context 恢复协议重执行模式（Context Recovery Protocol Rerun）](context-recovery-protocol.md) | Context 恢复协议重执行模式（Context Recovery Protocol Rerun） | L2 |  |
+| [上下文生命周期分层管理模式（Context Lifecycle Layering）](context-lifecycle-layering.md) | 五层生命周期光谱：从全局事实→局部规则→懒加载技能→隔离执行→代码硬护栏，沿"信任模型→机制保障"连续光谱排列，解决全局文件膨胀、护栏提示词化、主会话干脏活等问题 | L2 | `agent架构` `上下文管理` `生命周期分层` `护栏下沉` `子代理隔离` |
 | [双区开发模型](dual-zone-development-model.md) | 双区开发模型 | L2 |  |
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
