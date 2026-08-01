@@ -68,12 +68,18 @@ maturity: "validated"
 
 ### 洞察I1：共享状态与引用计数是两个正交概念，不能用单一条件判断
 
+**状态**：✅ 已正式入库（L2-validated）
+- **模式ID**：`cow-shared-state-refcount-dual-semantics`
+- **归档位置**：[cow-shared-state-refcount-dual-semantics.md](../../../patterns/code-patterns/cow-shared-state-refcount-dual-semantics.md)
+- **成熟度**：L2-validated（2个支撑案例：Task 11 IsDataShared修复 + A3/A5 Owner COW Bug修复）
+- **核心结论**：共享状态标志（`data_shared_`，角色语义：Owner/Borrower）与引用计数（`use_count`，活跃度语义：当前持有者数量）是正交概念——IsDataShared()查询必须双条件满足（`data_shared_ && use_count>1`），COW触发条件只用`use_count>1`（安全优先，Owner写入也需克隆保护Borrower视图）。
+
 | 维度 | 内容 |
 |------|------|
-| **陈述** | Blob"是否通过ShareData借出tensor"（共享状态标志）与"tensor当前被多少对象持有"（use_count引用计数）是两个正交概念，IsDataShared()必须同时满足两个条件：data_shared_为true且use_count>1 |
-| **证据** | F03、F07、F18、F19 |
-| **反常识** | 直觉认为"use_count>1"就意味着"被共享了"，但两个Blob互相ShareData后双方use_count都是2，此时源Blob并不处于"被共享后需要COW"的状态——借出方在借出后自己继续使用是正常行为，借入方才需要在修改时触发COW。单一use_count条件无法区分所有者和共享者角色 |
-| **下次行动** | 实现引用计数相关的共享语义时，必须引入独立的状态标志位区分角色，不能仅依赖引用计数数值；共享状态标志必须在正确的时机设置和清除 |
+| **陈述** | Blob"是否通过ShareData借出tensor"（共享状态标志）与"tensor当前被多少对象持有"（use_count引用计数）是两个正交概念，IsDataShared()必须同时满足两个条件：data_shared_为true且use_count>1；COW触发条件只需use_count>1，不依赖data_shared_标志 |
+| **证据** | F03、F07、F18、F19（+ A3/A5迁移中发现的Owner COW Bug） |
+| **反常识** | 直觉认为"use_count>1"就意味着"被共享了"，但两个Blob互相ShareData后双方use_count都是2，此时源Blob并不处于"被共享后需要COW"的状态——借出方在借出后自己继续使用是正常行为，借入方才需要在修改时触发COW。更反常识的是：Owner在有Borrower时写入也需要触发COW来保护Borrower视图，因此COW触发条件不能用data_shared_做前置判断 |
+| **下次行动** | 实现引用计数相关的共享语义时，必须引入独立的状态标志位区分角色（用于查询API），COW触发条件保守使用use_count>1（安全门控不需要区分角色）；共享状态标志必须在正确的时机设置和清除（ShareData设、COW/Unshare/Reshape清） |
 
 ### 洞察I2：numpy ctypes指针生命周期管理陷阱——临时指针对象上绑定引用会形成循环
 
@@ -190,3 +196,4 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 - 2026-08-01 | retrospective | 初始版本：Task 11 test_cow.py修复里程碑复盘，含25条事实、4条核心洞察、1个正式模式、1个候选洞察
 - 2026-08-01 | docs | 补充提交记录b55b7da3，更新changelog
 - 2026-08-01 | feat(patterns): 模式E1正式入库为ffi-zerocopy-tensor-dual-mode（L2-validated），复盘报告更新为归档引用
+- 2026-08-01 | feat(patterns): 洞察I1正式入库为cow-shared-state-refcount-dual-semantics（L2-validated），整合A3/A5 Owner COW Bug修正，COW触发条件修正为仅use_count>1，IsDataShared保留双条件

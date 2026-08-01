@@ -7,6 +7,7 @@ maturity: "L2-validated"
 source: "caffe-ffi Split层零拷贝优化Phase 2 COW实现 (2026-07-31)"
 related_patterns:
   - "ffi-intrusive-refcount-zerocopy"
+  - "cow-shared-state-refcount-dual-semantics"
   - "cpp-object-wrapper-lazy-init-check"
   - "resource-counter-primitive-binding"
 tags: ["cow", "copy-on-write", "const-correctness", "c++", "zero-copy", "memory-sharing", "api-design", "mutable-semantics"]
@@ -161,9 +162,12 @@ inline float* Blob::cpu_mutable_data() {
 
 **要点**：
 1. `use_count() > 1` 是唯一的克隆条件——refcount=1 说明内存是私有的，直接返回指针零开销
-2. 克隆后新 tensor 的 refcount=1（只有当前 Blob 持有），后续写入不会再触发 COW
-3. 旧 tensor refcount 自动递减——如果还有其他共享者，旧内存继续存活（它们的数据不受影响）
-4. 编译期宏 `CAFFE_FFI_ENABLE_COW` 保护——关闭时直接走旧路径，可一键回退
+2. **Owner写入也会触发COW**：当Owner（data_shared_=false）的tensor被其他Blob借入后use_count>1，Owner调用mutable_data()同样必须克隆——保护Borrower的视图不被Owner写入污染（详见 [cow-shared-state-refcount-dual-semantics](cow-shared-state-refcount-dual-semantics.md)）
+3. 克隆后新 tensor 的 refcount=1（只有当前 Blob 持有），后续写入不会再触发 COW，且data_shared_设为false（成为新tensor的Owner）
+4. 旧 tensor refcount 自动递减——如果还有其他共享者，旧内存继续存活（它们的数据不受影响）
+5. 编译期宏 `CAFFE_FFI_ENABLE_COW` 保护——关闭时直接走旧路径，可一键回退
+
+> ⚠️ **重要**：`data_shared_`标志用于IsDataShared()查询语义（精确回答"我是否借入了数据"），**不用于gating COW触发**。COW触发条件只用`use_count() > 1`（安全优先，保守策略）。双条件分离设计详见 [cow-shared-state-refcount-dual-semantics](cow-shared-state-refcount-dual-semantics.md)。
 
 ### 步骤 3：Reshape/形状变更无条件私有化
 
@@ -506,5 +510,6 @@ def test_n2_split_cow_after_inplace_relu(self):
 ## Changelog
 
 <!-- changelog -->
+- 2026-08-01 | fix | 补充Owner COW要点和data_shared_正交性说明，添加cow-shared-state-refcount-dual-semantics交叉引用，COW触发条件明确为仅use_count>1
 - 2026-07-31 | feat | 补充核心洞察I2(零成本const抽象)和I5(显式断标语义)，强化设计决策分析
 - 2026-07-31 | feat | 从Split层零拷贝优化Phase 2 COW实现里程碑复盘萃取初始版本，六步实现法+in-place ReLU实战案例+19 C++/22 Python测试+8条反模式+9条检验标准
