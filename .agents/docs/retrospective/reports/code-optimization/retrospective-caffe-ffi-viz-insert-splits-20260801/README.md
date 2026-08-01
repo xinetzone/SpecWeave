@@ -7,9 +7,11 @@ task_type: tooling
 tags: [caffe-ffi, insert-splits, dag, visualization, protobuf, python, graph-transform, testing-tools]
 status: completed
 verification: passed
+archived: true
+archive_date: 2026-08-01
 source: InsertSplits DAG visualizer Python script development session
 session_id: sc-20260801-viz-insert-splits
-methodology: seven-concepts R→I→E→C milestone retrospective
+methodology: seven-concepts R→I→E→C→A milestone retrospective (full closed loop)
 ---
 
 # caffe-ffi InsertSplits DAG可视化脚本开发里程碑复盘
@@ -244,15 +246,43 @@ G3质量门检查：
 | G2 | 洞察四元组完整（陈述+证据+反常识+行动） | ✅ 通过（3条洞察均完整） |
 | G3 | 模式可迁移（触发场景+步骤+反模式+迁移验证） | ✅ 通过（2个模式均满足） |
 | G4 | 行动项原子化（单一职责+可验证） | ✅ 通过（A1已完成，A2/A3待执行，各自独立可验证） |
+| G5 | 知识沉淀归档完成（模式入库+索引更新） | ✅ 通过（2模式+1最佳实践已入库，3个索引已更新） |
 
 ---
 
-## S6：交付物清单
+## S6：知识沉淀与归档
+
+### 模式入库
+
+| 模式ID | 模式名称 | 类型 | 入库路径 | 成熟度 |
+|--------|---------|------|---------|--------|
+| graph-transform-validator-architecture | 图变换验证工具四段式架构 | 架构模式 | [patterns/architecture-patterns/graph-transform-validator-architecture.md](../../../patterns/architecture-patterns/graph-transform-validator-architecture.md) | L1 实验性 |
+| protobuf-text-minimal-parser | Protobuf文本格式最小解析器 | 代码模式 | [patterns/code-patterns/protobuf-text-minimal-parser.md](../../../patterns/code-patterns/protobuf-text-minimal-parser.md) | L1 实验性 |
+
+### 洞察入库
+
+| 洞察主题 | 入库路径 |
+|---------|---------|
+| DAG图变换算法验证最佳实践（3个核心洞察+检查清单） | [knowledge/best-practices/dag-graph-transform-verification.md](../../../knowledge/best-practices/dag-graph-transform-verification.md) |
+
+### 索引更新
+
+以下索引文件已同步更新，新增条目可被检索：
+- `.agents/docs/retrospective/patterns/architecture-patterns/README.md`
+- `.agents/docs/retrospective/patterns/code-patterns/README.md`
+- `.agents/docs/knowledge/best-practices/README.md`（含快速导航分类）
+
+---
+
+## S7：交付物清单
 
 | 文件 | 说明 |
 |------|------|
 | [viz_insert_splits.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/viz_insert_splits.py) | InsertSplits DAG可视化主脚本（1047行，零依赖） |
 | 本报告 | 里程碑复盘报告（.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/） |
+| [graph-transform-validator-architecture.md](../../../patterns/architecture-patterns/graph-transform-validator-architecture.md) | 架构模式：图变换验证工具四段式架构 |
+| [protobuf-text-minimal-parser.md](../../../patterns/code-patterns/protobuf-text-minimal-parser.md) | 代码模式：Protobuf文本格式最小解析器 |
+| [dag-graph-transform-verification.md](../../../knowledge/best-practices/dag-graph-transform-verification.md) | 最佳实践：DAG图变换算法验证（3个洞察+检查清单） |
 
 ---
 
@@ -280,4 +310,6 @@ python scripts/viz_insert_splits.py --mode native --case InputLayerThreeConsumer
 
 ```
 [CMD-LOG] | level=INFO | cmd=seven-concepts | step=S8 | event=CHAIN_COMPLETED | session=sc-20260801-viz-insert-splits | chain=R→I→E→C | gates_passed=4 | insights=3 | patterns=2 | action_items=3 | status=completed
+[CMD-LOG] | level=INFO | cmd=extraction | step=S6 | event=PATTERN_STORED | session=extr-20260801-graph-transform | patterns_stored=2 | best_practices_stored=1 | indexes_updated=3 | status=completed
+[CMD-LOG] | level=INFO | cmd=seven-concepts | step=S9 | event=FULL_CHAIN_COMPLETED | session=sc-20260801-viz-insert-splits | chain=R→I→E→C→A(归档) | gates_passed=5 | insights=3 | patterns=2 | best_practices=1 | action_items=3 | closed_loop=true | status=completed
 ```

@@ -126,6 +126,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [single-pass-perf-instrumentation.md](single-pass-perf-instrumentation.md) | 单次遍历性能统计日志埋点三原则：计算+统计单次遍历融合（禁止O(2N)二次遍历cache miss）、栈上零分配、循环外日志输出；结构化[TAG]标签+固定字段顺序+k=v格式 | L1 候选 | 深度学习算子/数值计算/图像处理/音频DSP/数据库扫描/ETL等大数组计算密集场景的性能监控埋点 |
 | [ffi-fallback-diagnostics.md](ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：_FFIInitDiagnostics诊断对象+record_*方法分类记录+入口预设状态+公开get_init_diagnostics() API+CAFFE_FFI_STRICT_INIT严格模式，消除原生扩展静默降级反模式 | L2 已验证 | pybind11/tvm-ffi/nanobind/cffi等C/C++原生扩展Python绑定的初始化降级诊断、CI验证原生扩展加载 |
 | [python-editable-import-isolation.md](python-editable-import-isolation.md) | Python editable install三层导入隔离：meta_path editable finder清理 + sys.path真实源码目录移除 + sys.modules缓存清除，配合subprocess隔离进程，解决scikit-build-core/setuptools/hatchling finder绕过sys.path问题 | L2 已验证 | 测试原生扩展缺失降级行为、CI验证wheel而非editable行为、最小化Python环境集成测试 |
+| [protobuf-text-minimal-parser.md](protobuf-text-minimal-parser.md) | Protobuf文本格式最小解析器：5种Token类型(str/num/ident/{/})Tokenizer + 深度计数嵌套跳过 + 目标字段提取，约140行零依赖解析prototxt拓扑结构 | L1 实验性 | prototxt/pbtxt拓扑提取、DAG可视化验证工具、零依赖CI脚本、不需要完整protobuf语义的调试场景 |
 
 ## 成熟度定义
 

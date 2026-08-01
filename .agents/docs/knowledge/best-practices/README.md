@@ -77,6 +77,7 @@ date: "2026-07-30"
 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) | CMake项目模块化重构最佳实践（四层架构+两轮重构策略+公共函数封装+平台操作封装+验收清单） | `CMake` `build-system` `modularization` `refactoring` `cross-platform` `best-practice` `C/C++` |
 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) | conda-forge交叉编译配置完整指南（平台三元组、工具链包名、meta.yaml依赖分离、build.sh检测模式、CMAKE_ARGS传递、scikit-build-core适配、Wine测试、常见陷阱） | `conda-forge` `cross-compilation` `conda-build` `CMake` `scikit-build-core` `Docker` `Wine` `macOS` `Windows` |
 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) | 归档搭配Wiki联动机制指南（定位区别、升级判定标准、双向关联机制、Wiki化SOP、模板参考、质量检查清单） | `archive` `wiki` `knowledge-management` `retrospective` `知识沉淀` `归档升级` |
+| [dag-graph-transform-verification.md](dag-graph-transform-verification.md) | DAG图变换算法验证最佳实践（索引体系优先于字符串key、零依赖最小解析器、分析阶段独立化三大洞察+检查清单） | `dag` `graph-transform` `visualization` `verification` `caffe` `insert-splits` `in-place` `protobuf` `parser` |
 
 ---
 
@@ -89,6 +90,7 @@ date: "2026-07-30"
 | 📊 文档/可视化 | [mermaid-guide.md](mermaid-guide.md) |
 | ✏️ 编辑/重构 | [multi-file-edit-reliability.md](multi-file-edit-reliability.md) |
 | 🔍 Parser开发 | [parser-complexity-budget.md](parser-complexity-budget.md) |
+| 🕸️ DAG/图变换验证 | [dag-graph-transform-verification.md](dag-graph-transform-verification.md) |
 | 🪝 Git钩子 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 | 📋 信息采集 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) |
 | 🛡️ 合规安全 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) |
