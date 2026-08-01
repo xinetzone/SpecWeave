@@ -185,8 +185,8 @@ completion_date: "2026-08-01"
 | Task 7-8 | E→C（萃取→交付） | 29,800字最终综合报告（retrospective-report.md）+ 全量验证 |
 
 **交付统计**：
-- 中间分析文档：6份
-- 最终报告：1份（约29,800字）
+- 中间分析文档：6份（位于 `.agents/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/supporting-analysis/`）
+- 最终报告：1份（约29,800字，位于 `.agents/docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.md`）
 - 核心论点：5个
 - 关键数据点：19个
 - 事实/观点/引用分类：38条
