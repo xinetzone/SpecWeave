@@ -36,6 +36,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/README.toml"
 | 知识沉淀 | knowledge-sedimentation | 知识体系化沉淀方法论：范围定义→事实采集→洞察提炼→结构化→反模式→对抗审查→索引入库，六步闭环+六道质量门 | [自我萃取](../modules/self-extraction.md) |
 | ⭐ 方法论编排 | seven-concepts | 基于R-I-E-C-A-F-V七概念方法论的元编排引擎：场景自动识别→概念组合决策→流程编排→质量门串联 | [自我演进体系](../modules/README.md) |
 | 🎯 行动优先输出 | action-first | 工具性交互场景输出范式：结论前置/步骤编号/进度重述/信噪比最大化四大规则+黄金三层结构，横切所有指令集输出层 | [AI协作模式](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) |
+| Token优化 | token-optimize | LLM Token使用优化全生命周期指导：P0禁令预检→浪费审计→模式选择→方案设计→评审→效果评估→持续优化 | [Token优化技能](../skills/token-optimize-cmd/SKILL.md) |
 
 ## 治理流程RACI责任分配总览
 
