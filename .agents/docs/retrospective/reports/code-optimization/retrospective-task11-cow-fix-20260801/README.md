@@ -188,6 +188,7 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 |------|--------|------|------|
 | xuanspace | 619630a | fix(caffe-ffi) | _tensor_to_numpy引用循环修复——_blob_ref从ctypes临时指针迁移到arr.base.obj解决内存泄漏 |
 | SpecWeave | 309ec12d | docs(caffe-ffi) | 完成Task 11——test_cow.py全部21项修复+内存泄漏修复记录 |
+| SpecWeave | b55b7da3 | docs(retrospective) | Task 11里程碑复盘报告——R-I-E结构化复盘含25条事实4条洞察1个正式模式1个候选洞察 |
 
 ---
 
@@ -215,3 +216,4 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 
 <!-- changelog -->
 - 2026-08-01 | retrospective | 初始版本：Task 11 test_cow.py修复里程碑复盘，含25条事实、4条核心洞察、1个正式模式、1个候选洞察
+- 2026-08-01 | docs | 补充提交记录b55b7da3，更新changelog
