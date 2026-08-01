@@ -11,7 +11,7 @@
 - ✅ **已完成**：修复DataRefCount()/DiffRefCount()在空tensor时错误返回0的bug（移除numel()>0条件）
 - ✅ **已完成（代码已具备）**：cpu_mutable_diff() COW检查已受IsCOWEnabled()运行时开关保护
 - ✅ **已完成（代码已具备）**：修复ShareDiff后data/diff shape不一致问题（Reshape同步）
-- **待验证**：更新两方共享COW测试为三方场景以匹配正确语义
+- ⏳ **待执行**：更新6个使用旧语义的测试用例（两方共享期待COW→三方共享）
 - **待验证**：确保所有COW相关测试通过，无回归
 
 ## Non-Goals (Out of Scope)
@@ -66,7 +66,9 @@ COW逻辑**始终编译进**代码，通过运行时开关`SetCOWEnabled()/IsCOW
 - **FR-4** ✅: DataRefCount()/DiffRefCount()修正：tensor.defined()即返回use_count()，移除`numel() > 0`条件
 - **FR-5** ✅: ShareDiff()后保持data/diff shape一致性（Reshape同步，代码已实现）
 - **FR-6** ✅: UnshareData()/UnshareDiff()保持原语义不变（use_count>1即执行克隆）
-- **FR-7** ⏳: 验证测试场景正确覆盖两方直通、三方COW的语义
+- **FR-7** ⏳: 更新6个使用旧COW语义的测试用例（两方共享期待COW→三方共享）
+- **FR-8** ⏳: 添加N=1两方共享in-place直通的正向测试用例
+- **FR-9** ⏳: 验证所有测试场景正确覆盖两方直通、三方COW的语义
 
 ## Non-Functional Requirements
 - **NFR-1**: 只读访问路径（cpu_data/cpu_diff）零额外开销
@@ -136,6 +138,24 @@ COW逻辑**始终编译进**代码，通过运行时开关`SetCOWEnabled()/IsCOW
 - **When**: 运行所有测试
 - **Then**: 全部通过
 - **Verification**: `programmatic`
+
+### AC-9: 两方共享（use_count=2）不触发COW（N=1 in-place直通）
+- **Given**: Blob a和b两方共享（b->ShareData(a)），use_count=2
+- **When**: 调用b->cpu_mutable_data()写入值
+- **Then**: 不触发COW（指针不变），a的数据立即可见（in-place修改）
+- **Verification**: `programmatic`
+
+### AC-10: 旧语义测试用例已更新为三方共享场景
+- **Given**: 以下6个测试用例原先使用两方共享期待COW
+  - ZeroCopyTest.ShareDataMutationVisibleToBoth
+  - COWApiTest.MutableDataTensorTriggersCOW
+  - COWApiTest.MutableDiffTensorTriggersCOW
+  - COWApiTest.COWWriteIsolation
+  - ShareDataRefCount.ShareDataAfterCOW（两处两方COW）
+  - ZeroCopyTest.ShareDataAndDiffFromDifferentSources（data路径COW）
+- **When**: 检查这些测试用例
+- **Then**: 全部更新为三方共享场景（添加第三个共享者c），验证use_count=3时COW正确触发
+- **Verification**: `programmatic` + `human-judgment`
 
 ## Open Questions
 - [x] ShareDiffWithDifferentShapes中data tensor shape同步方案：采用方案A——ShareDiff时shape不匹配则Reshape（代码已实现此方案，与ShareData行为对称）
