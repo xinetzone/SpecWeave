@@ -373,4 +373,35 @@ author: "AI Analysis"
 
 ---
 
+## 十、模式沉淀（2026-08-01 更新）
+
+通过七概念方法论编排（知识沉淀场景），本案例的核心经验已萃取为可复用模式：
+
+### 萃取模式：提示词到产品七步法
+
+**模式ID**：`prompt-to-product-seven-steps`
+**存储位置**：[prompt-to-product-seven-steps.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/prompt-to-product-seven-steps.md)
+**成熟度**：L1（单案例验证，待自有项目复用后升级L2）
+
+**模式核心**：从"一段能跑的提示词"到"稳定可用的产品级Skill"需要七层工程化加工：
+1. 场景细分与模板化（解决覆盖问题）
+2. 建立统一设计语言（解决一致性问题）
+3. 知识盲区补全机制（解决准确性问题）
+4. 反模式识别与规避（解决重复踩坑问题）
+5. 约束条件精确化（解决稳定性问题）
+6. 语义层处理而非表面美化（解决深度问题）
+7. 交付前QA闭环（解决质量底线问题）
+
+**与现有模式的关系**：
+- 与 [skill-five-elements-model.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) 互补：五要素定义Skill文档**长什么样**，七步法定义Skill**怎么造出来**
+- 与 [generation-validation-closed-loop.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/generation-validation-closed-loop.md) 互补：生成-验证闭环是七步法步骤7（QA）在单次生成层面的具体实现
+- 与 [honest-limitation-acknowledgment.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md) 配套：七步法完成后用此模式明确"不能做什么"
+
+**对抗审查记录**：
+- 已通过5视角对抗审查（新手/老手/跨领域/极端场景/反例）
+- 已补充：适用边界说明、90分钟快速入门、步骤3vs步骤6区别澄清、迭代回退机制、可选步骤8持续迭代
+
+---
+
 *本报告基于2026年7月8日歸藏发布的公开文章内容分析完成，所有引用均来自原文。*
+*模式沉淀更新于2026年8月1日，通过七概念方法论编排完成。*
