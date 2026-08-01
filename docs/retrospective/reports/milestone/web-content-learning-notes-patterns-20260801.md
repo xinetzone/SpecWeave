@@ -1,15 +1,15 @@
 ---
-id: web-content-learning-notes-patterns-v1.0
+id: web-content-learning-notes-patterns-v1.1
 title: 网页内容→结构化学习笔记 模式库
-version: 1.0.0
+version: 1.1.0
 date: 2026-08-01
 author: 七概念方法论编排引擎
 category: Knowledge Engineering
-tags: [web-extraction, learning-notes, structured-documentation, spec-mode, knowledge-enhancement, patterns, best-practices]
+tags: [web-extraction, learning-notes, structured-documentation, spec-mode, knowledge-enhancement, patterns, best-practices, validation-separation, open-questions-closure]
 status: stable
-source: "3个跨案例对比分析（AtomGit最佳实践/Karpathy LLM Wiki/火山引擎vendor笔记）"
-maturity: L2（验证2次：AtomGit案例+Karpathy案例）
-validation_count: 2
+source: "3个跨案例对比分析（AtomGit最佳实践/Karpathy LLM Wiki/Declarative Partial Updates Wiki）"
+maturity: L3（验证3次：AtomGit案例+Karpathy案例+Declarative PU案例，跨案例验证一致）
+validation_count: 3
 reuse_count: 0
 documentation_level: complete
 ---
@@ -179,7 +179,7 @@ documentation_level: complete
 
 #### 迁移验证场景
 
-**场景1：AI平台最佳实践指南（本次验证）**
+**场景1：AI平台最佳实践指南（首次验证）**
 - 任务：AtomGit AI平台8大领域最佳实践学习笔记
 - 体案：4390行，68个代码块，9个章节
 - Spec拆分：10个原子任务（框架→8个内容章节→总结验证）
@@ -190,6 +190,30 @@ documentation_level: complete
 - 体量：788行，12个分析维度
 - Spec拆分：9个主任务+多个子任务，33个检查点
 - 效果：维度完备无重叠，批判性思考充分，与内部体系对照分析深入
+
+**场景3：技术博客学习Wiki教程（Declarative PU案例验证）**
+- 任务：微信公众号文章《HTML 最值得关注的一次升级：声明式局部更新》学习Wiki教程
+- 体量：约850行，11个章节，8个FAQ，6个个人见解
+- Spec拆分：13个原子任务（框架→10个内容章节→索引更新），35个检查点
+- 特殊实践：首次采用"创建sub-agent + 独立验证sub-agent"分离模式（详见BP-3）
+- 效果：35个检查点全部通过，内容评估三维完整，个人见解有深度
+
+#### 适用边界（v1.1更新）
+
+✅ **必须使用完整模式**：>1000行、含大量代码示例、多章节、需要团队协作或多轮迭代的文档
+
+✅ **推荐使用完整模式**（v1.1新增）：≥5章节且>200行的中型文档——案例3证明11章节850行同样受益于完整Spec流程
+
+✅ **推荐使用标准模式**：200-1000行、中等复杂度的专题笔记
+
+❌ **过度工程不适用**：<200行的简单信息卡片、单段内容摘要、临时笔记
+
+#### Open Questions 闭环要求（v1.1新增）
+
+Spec三层规划中的 spec.md 如果包含 Open Questions，必须满足：
+- 每个Open Question在checklist验证前被明确处理（解答或标记为Out of Scope并说明原因）
+- 禁止在任务执行过程中忽略Open Questions
+- 建议在checklist中增加"Open Questions已全部闭环"检查点
 
 ---
 
@@ -272,7 +296,7 @@ KE-4覆盖度 → 文档等级
 
 #### 迁移验证场景
 
-**场景1：AI平台最佳实践笔记（本次验证）**
+**场景1：AI平台最佳实践笔记（首次验证）**
 - KE-4实现：16个术语解释、所有主要节有适用场景、⚠️标记突出、3处交叉引用+术语表
 - 质量等级：A级
 - 效果：可直接作为AtomGit平台的学习材料使用
@@ -280,6 +304,105 @@ KE-4覆盖度 → 文档等级
 **场景2：技术方案深度分析（Karpathy案例验证）**
 - KE-4实现：关键概念解释、场景分析隐含在对照分析中、局限性/风险明确标注（8项）、与SpecWeave内部体系关联
 - 质量等级：A级（分析维度更丰富，术语和风险标注充分）
+
+**场景3：技术博客学习Wiki教程（Declarative PU案例验证）**
+- KE-4实现：技术术语解释（Declarative Partial Updates/Shadow DOM/SSE等）、7类适用场景表格、实验阶段警告多处标注、资源链接章节交叉引用官方文档
+- 质量等级：A级（8个FAQ+6个个人见解增强了知识深度）
+- 效果：35个检查点全部通过，内容评估三维完整
+
+---
+
+### BP-3：实施与验证分离模式（Implementation-Verification Separation, IVS）
+
+| 属性 | 值 |
+|------|-----|
+| 模式ID | BP-3 |
+| 模式名称 | 实施与验证分离（IVS: Implementation-Verification Separation） |
+| 领域 | 质量保证 & 流程工程 |
+| 优先级 | P1（所有Spec驱动文档）/ P0（>1000行大型文档） |
+| 首次验证 | 案例3（Declarative PU Wiki，2026-08-01） |
+
+#### 问题场景
+
+Spec驱动文档创建流程中，创建者自我验证容易产生盲区：
+- 格式盲区：创建者习惯了自己的格式选择，看不出与项目规范的不一致
+- 遗漏盲区：创建者记得"应该有这个章节"但实际可能漏写，自我检查时大脑会"补全"记忆
+- 逻辑盲区：创建者理解自己的逻辑链条，但读者可能无法跟随——自我验证无法发现
+- 标准盲区：创建者可能潜意识降低标准（"差不多就行了"），独立验证者按检查清单严格判断
+
+#### 核心解决方案
+
+**三步分离验证流程**：
+
+**步骤1：创建者完成实施**
+- sub-agent A（或主agent）按tasks.md逐章完成文档创建
+- 创建者可以边创建边自检，但不作为最终验收依据
+
+**步骤2：独立验证者执行验证**
+- 由独立的sub-agent B（或另一个agent会话）执行验证
+- 验证者只看checklist.md和最终文档，不看创建过程中的上下文
+- 逐项检查每个检查点，返回"通过/未通过+原因"
+
+**步骤3：反馈修复闭环**
+- 验证结果反馈给主agent
+- 未通过的检查点创建修复任务
+- 修复后重新验证（可只验证未通过项）
+
+#### 工作流示意图
+
+```
+┌─────────────────────────────────────────────────┐
+│  阶段1：实施（sub-agent A）                      │
+│  按 tasks.md 逐章创建 → 自检 → 标记完成           │
+└──────────────────────┬──────────────────────────┘
+                       ▼
+┌─────────────────────────────────────────────────┐
+│  阶段2：独立验证（sub-agent B）                   │
+│  只看 checklist.md + 最终文档 → 逐项验证 → 报告    │
+└──────────────────────┬──────────────────────────┘
+                       ▼
+┌─────────────────────────────────────────────────┐
+│  阶段3：反馈修复（主 agent）                      │
+│  收集未通过项 → 创建修复任务 → 重新验证            │
+└─────────────────────────────────────────────────┘
+```
+
+#### 适用边界
+
+✅ **必须使用**：>1000行大型文档、多人协作项目、对外交付文档
+
+✅ **推荐使用**：所有Spec驱动文档（200行以上）、有35+检查点的任务
+
+🔘 **可选使用**：<200行简单文档（创建者自检+主agent抽查即可）
+
+❌ **不适用**：纯个人笔记、临时草稿、实验性代码
+
+#### 反模式（不要这么做）
+
+- ❌ **自我验证跳过独立验证**：创建者标记"已验证"但实际只自检——盲区无法发现
+- ❌ **验证者参与创建**：验证者同时参与文档编写，失去独立性
+- ❌ **验证者看创建上下文**：验证者看了创建过程会受"确认偏误"影响
+- ❌ **验证后不修复**：发现未通过项但不创建修复任务——验证失去意义
+
+#### 检验标准
+
+- [ ] 验证者与创建者是不同的agent/会话
+- [ ] 验证者未参与文档创建过程
+- [ ] 每个检查点有明确的"通过/未通过"判定
+- [ ] 未通过的检查点有修复任务并已闭环
+- [ ] 最终所有检查点全部通过
+
+#### 迁移验证场景
+
+**场景1：技术博客学习Wiki教程（首次验证）**
+- 任务：Declarative Partial Updates Wiki教程创建
+- 实施：sub-agent A创建11章节文档
+- 验证：独立sub-agent B验证35个检查点
+- 效果：35个检查点全部通过，验证报告详细列出每项判定和依据
+
+**待验证场景**：
+- 场景2：>1000行大型文档的验证分离（需未来案例验证）
+- 场景3：多人协作项目的验证分离（需未来案例验证）
 
 ---
 
@@ -376,17 +499,51 @@ KE-4覆盖度 → 文档等级
 
 ---
 
+### AP-4：Open Questions 不闭环模式（Unclosed Open Questions）
+
+| 属性 | 值 |
+|------|-----|
+| 反模式ID | AP-4 |
+| 反模式名称 | Open Questions 不闭环（Unclosed Open Questions） |
+| 严重等级 | P2 |
+| 首次识别 | 案例3（Declarative PU Wiki，2026-08-01） |
+
+#### 识别信号
+
+- spec.md 包含 Open Questions，但 tasks.md 中没有处理这些问题的任务
+- checklist.md 没有"Open Questions 已闭环"检查点
+- 任务全部完成后，Open Questions 仍为未勾选状态
+- 复盘时才发现 Open Questions 被忽略
+
+#### 后果
+
+- 未决问题遗留：spec 生命周期结束后，Open Questions 仍未被处理
+- 完整性受损：文档可能遗漏本应包含的内容（如果 Open Questions 答案为"是"）
+- 可追溯性降低：未来读者不知道为什么这些问题没有被处理
+- 潜在返工：如果后续发现这些问题需要处理，可能需要重新启动 spec
+
+#### 修复方案
+
+在 BP-1 的 Spec 三层规划中增加 Open Questions 闭环要求：
+1. spec.md 中的每个 Open Question 必须在 checklist 验证前被明确处理
+2. 处理方式：解答（转为需求）或标记为 Out of Scope（说明原因）
+3. 在 checklist.md 中增加"Open Questions 已全部闭环"检查点
+4. 复盘时检查 Open Questions 是否被正确处理
+
+---
+
 ## 附录：快速参考卡
 
-### 网页→学习笔记标准流程（6步速查）
+### 网页→学习笔记标准流程（7步速查，v1.1更新）
 
 0. **内容预检**：判断源内容质量/类型，低质量跳过或仅做摘要
 1. **锚定格式**：读取同目录1-2个文档，对齐风格
 2. **选择模式**：按体量决策树选择轻量/标准/完整模式
-3. **规划Spec**：写spec.md（需求+AC）、tasks.md（原子任务）、checklist.md（检查点）
+3. **规划Spec**：写spec.md（需求+AC+Open Questions）、tasks.md（原子任务）、checklist.md（检查点+Open Questions闭环检查）
 4. **逐章生成**：按依赖顺序逐章完成，三态标记追踪
 5. **增强KE-4**：根据体量添加对应数量的知识增强要素
-6. **验证交付**：按checklist逐项检查，运行自动化验证
+6. **独立验证**（v1.1新增，BP-3）：由独立agent验证checklist，非创建者自检
+7. **闭环交付**：处理Open Questions（解答或Out of Scope）→ 修复未通过项 → 最终验证通过
 
 ### 投入产出参考
 
