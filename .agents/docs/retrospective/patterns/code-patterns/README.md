@@ -120,6 +120,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [preflight-checks-script.md](preflight-checks-script.md) | 构建预检脚本前置模式：编译前执行环境检查脚本，主动检测TypeTraits冲突/DLL缺失/符号重复等常见陷阱，输出可操作错误信息而非晦涩编译错误 | L2 已验证 | C++/Python混合项目构建、CMake/native extension编译前环境验证、CI/CD流水线质量门禁、开发者环境快速诊断 |
 | [progressive-interface-extension.md](progressive-interface-extension.md) | 框架接口渐进式扩展三阶段：默认存根（WARN/THROW非纯虚）→分批按优先级实现子类→调用路径激活时切换为强制，避免N个子类同时编译失败的大爆炸 | L1 候选 | C++基类虚方法添加、插件系统新API、SDK版本升级、框架功能分期上线、影响≥3个子类的接口变更 |
 | [single-pass-perf-instrumentation.md](single-pass-perf-instrumentation.md) | 单次遍历性能统计日志埋点三原则：计算+统计单次遍历融合（禁止O(2N)二次遍历cache miss）、栈上零分配、循环外日志输出；结构化[TAG]标签+固定字段顺序+k=v格式 | L1 候选 | 深度学习算子/数值计算/图像处理/音频DSP/数据库扫描/ETL等大数组计算密集场景的性能监控埋点 |
+| [ffi-fallback-diagnostics.md](ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：_FFIInitDiagnostics诊断对象+record_*方法分类记录+入口预设状态+公开get_init_diagnostics() API+CAFFE_FFI_STRICT_INIT严格模式，消除原生扩展静默降级反模式 | L2 已验证 | pybind11/tvm-ffi/nanobind/cffi等C/C++原生扩展Python绑定的初始化降级诊断、CI验证原生扩展加载 |
+| [python-editable-import-isolation.md](python-editable-import-isolation.md) | Python editable install三层导入隔离：meta_path editable finder清理 + sys.path真实源码目录移除 + sys.modules缓存清除，配合subprocess隔离进程，解决scikit-build-core/setuptools/hatchling finder绕过sys.path问题 | L2 已验证 | 测试原生扩展缺失降级行为、CI验证wheel而非editable行为、最小化Python环境集成测试 |
 
 ## 成熟度定义
 
