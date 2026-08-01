@@ -20,7 +20,7 @@ date: "2026-08-01"
 | 低秩适应 | LoRA (Low-Rank Adaptation) | 参数高效微调技术，仅训练低秩矩阵而非全模型，大幅降低微调成本 |
 | 量化低秩适应 | QLoRA (Quantized LoRA) | LoRA的量化版本，在4/8bit量化模型上进行微调，进一步降低显存需求 |
 | 投机解码 | Speculative Decoding | 使用小模型草稿、大模型验证的方式加速推理，不损失生成质量 |
-| 提示词缓存 | Prompt Caching | 缓存系统提示词和前缀的KV Cache，避免重复计算相同前缀的注意力 |
+| 提示词缓存 | Prompt Caching | 缓存系统提示词和前缀的KV Cache，避免重复计算相同前缀的注意力，也称自动前缀缓存(APC) |
 | 首Token时间 | TTFT (Time To First Token) | 用户发送请求到收到第一个响应Token的时间延迟，衡量系统响应速度 |
 | 每Token输出时间 | TPOT (Time Per Output Token) | 生成每个后续Token所需的平均时间，衡量生成吞吐量 |
 | O(n²)复杂度 | O(n²) Complexity | 自注意力机制的时间/空间复杂度特性，序列长度翻倍计算量翻四倍 |
@@ -39,6 +39,16 @@ date: "2026-08-01"
 | Map-Reduce | Map-Reduce | 分布式处理范式，在长上下文处理中用于分块处理后聚合结果 |
 | 分块 | Chunking | 将长文本拆分为固定或动态大小的块以适应上下文窗口限制的处理技术 |
 | 重排序 | Reranker | 对检索结果进行二次排序的模型，提升检索相关性和最终生成质量 |
+| 连续批处理 | Continuous Batching | vLLM等推理引擎采用的批处理技术，动态组合请求实现高GPU利用率（80-95%） |
+| 自动前缀缓存 | APC (Automatic Prefix Caching) | 推理引擎自动识别并缓存相同前缀的KV缓存，无需应用层手动配置 |
+| 黄金测试集 | Golden Test Set | 用于评估优化前后质量变化的标准测试数据集，覆盖典型场景和边缘case |
+| 任务准确率保持率 | ARR (Accuracy Retention Rate) | 优化后任务准确率相对于基线的保留比例，是质量护栏核心指标 |
+| 优化反弹 | Optimization Bounce | 优化上线后随着业务变化、提示词修改、模型更新，成本悄悄涨回优化前水平的现象 |
+| 概念操作化三层递进 | Concept Operationalization | 将复杂概念分解为入门（识别问题）→深入（掌握方法）→精通（内化为直觉）三个学习层次 |
+| 约束驱动设计 | Constraint-Driven Design | 通过"负面清单"划定不可逾越边界，在边界内给予最大自主空间的设计方法 |
+| 前台-后台分离 | Frontend-Backend Separation | 文档撰写原则：后台文档完整冗余可执行，前台文档压缩提炼3分钟可感知 |
+| ROI | ROI (Return on Investment) | 投资回报率，衡量优化投入的人力时间相对于成本节省的回收周期 |
+| A/B测试 | A/B Testing | 将流量分组对照实验，科学衡量优化对质量/成本/延迟的影响 |
 
 ---
 <!-- created on 2026-08-01 -->
