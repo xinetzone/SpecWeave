@@ -1,7 +1,7 @@
 # Tasks
 
 - [x] Task 1: 创建 Anthropic Agent 路线图学习 wiki 教程文档主框架
-  - [x] SubTask 1.1: 在 `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.1: 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
   - [x] SubTask 1.2: 编写"文章背景与核心论点"章节，阐述Opus 4.8发布一周后产品线曝光、六条产品线指向"Claude走出聊天框"、Anthropic内部名言"智能公司而非编程公司"、AI从聊天Bot向超级智能体生态转型
 
 - [x] Task 2: 编写 Conway 永久在线智能体章节
@@ -82,7 +82,7 @@
   - [x] SubTask 11.1: 汇总相关资源链接为Markdown标准格式：①原文链接（微信公众号新智元）②TestingCatalog原始爆料文章链接③X平台相关讨论（@chetaslua推文）④Anthropic官方产品页面⑤Claude Code相关资源⑥OpenAI官方博客（GPT-5相关更新）
 
 - [x] Task 12: 在知识库索引中登记新文档
-  - [x] SubTask 12.1: 在 `docs/knowledge/README.md` 的 learning 类目下追加 Anthropic Agent 路线图学习 wiki 条目，包含文档标题、摘要、日期、标签与相对路径链接
+  - [x] SubTask 12.1: 在 `.agents/docs/knowledge/README.md` 的 learning 类目下追加 Anthropic Agent 路线图学习 wiki 条目，包含文档标题、摘要、日期、标签与相对路径链接
   - [x] SubTask 12.2: 更新统计摘要数字（总条目数、learning类目数量相应+1）
 
 - [x] Task 13: 验证与质量检查
@@ -93,14 +93,22 @@
   - [x] SubTask 13.5: 检查Mermaid产品线全景图语法正确，可正常渲染
   - [x] SubTask 13.6: 明确区分代码挖掘信息（可信度较高）与GPT-5.6传闻（可信度较低），不将传闻当作确定事实
 
+- [x] Task 14: 七概念方法论复盘与文档更新
+  - [x] SubTask 14.1: R阶段客观事实采集（35条事实，通过G1质量门）
+  - [x] SubTask 14.2: I阶段洞察分析（5条核心洞察，通过G2质量门）
+  - [x] SubTask 14.3: E阶段模式萃取（1个可复用模式，通过G3质量门）
+  - [x] SubTask 14.4: C阶段spec文档更新（路径修正、复盘记录补充）
+
 # Task Dependencies
 - Task 1 是所有后续任务的前置（先有文档骨架才能填充内容）
 - Task 2、Task 3、Task 4、Task 5、Task 6、Task 7、Task 8、Task 9、Task 10、Task 11 可在 Task 1 完成后并行编写（不同章节相互独立）
 - Task 12 依赖 Task 1 完成（需要文档路径稳定后再登记索引）
 - Task 13 依赖所有前置任务完成
+- Task 14 依赖所有前置任务完成
 
 # 预估统计
-- 预估文档字数：约 5000–7000 字（实际中文字符约10505字，内容详实）
+- 预估文档字数：深度分析类wiki 8000–12000 字（实际中文字符约10865字，内容详实）
+- 文档实际路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
 - 预估章节数量：13 个（一至十二+结语）
 - FAQ 数量：10 个（Q1-Q10）
 - 预估表格数量：至少 2 个（核心信息汇总表、对比表）
