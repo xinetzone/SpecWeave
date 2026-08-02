@@ -4,19 +4,19 @@
 Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏界面字符串中挖出至少六条重磅产品线——Conway永久在线智能体、Orbit主动助手、Operon科研平台、BugCrawl代码审计、文件级记忆系统、多语言语音模式，同时GPT-5.6也在悄悄内测。这标志着AI正在走出聊天框，从被动响应转向主动工作、永久在线、垂直专精的Agent生态时代。需要系统学习该网页内容并沉淀为一份结构清晰、通俗易懂的wiki教程，便于读者理解Anthropic的Agent战略布局和即将到来的AI工作流变革。
 
 ## What Changes
-- 新增 wiki 教程文档 `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md`，作为 Anthropic Agent 产品线路线图的系统性学习资料
+- 新增 wiki 教程文档 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，作为 Anthropic Agent 产品线路线图的系统性学习资料
 - 文档包含目录导航系统，覆盖文章背景、Conway永久在线智能体、文件级记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计、生态护城河升级、GPT-5.6竞争、行业影响分析等核心内容
 - 整理关键功能点、技术架构、产品定位与战略意义
 - 提供内容三维评估（专业性/准确性/时效性）与个人洞察分析
 - 汇总相关资源链接（原文、TestingCatalog原始爆料、相关产品页面）
-- 在 `docs/knowledge/README.md` 知识库索引中登记新增的学习文档
+- 在 `.agents/docs/knowledge/README.md` 知识库索引中登记新增的学习文档
 - **BREAKING**: 无破坏性变更（纯新增文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md`
-  - 修改 `docs/knowledge/README.md`（追加索引条目）
+  - 新增 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
+  - 修改 `.agents/docs/knowledge/README.md`（追加索引条目）
 
 ## Background & Context
 - **产品来源**: TestingCatalog从Claude代码引用和隐藏界面字符串中挖掘的未发布产品线
@@ -30,7 +30,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
 
 #### Scenario: 用户打开文档导航
 - **WHEN** 用户打开 `anthropic-agent-roadmap-wiki.md`
@@ -214,10 +214,10 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 - **AND** 链接以 Markdown 标准链接格式呈现
 
 ### Requirement: 知识库索引登记
-系统 SHALL 在 `docs/knowledge/README.md` 的学习类目下登记新增的 Anthropic Agent 路线图学习文档条目。
+系统 SHALL 在 `.agents/docs/knowledge/README.md` 的学习类目下登记新增的 Anthropic Agent 路线图学习文档条目。
 
 #### Scenario: 索引可发现
-- **WHEN** 用户浏览 `docs/knowledge/README.md`
+- **WHEN** 用户浏览 `.agents/docs/knowledge/README.md`
 - **THEN** 能够在 learning 类目下看到 Anthropic Agent 路线图学习 wiki 的条目
 - **AND** 条目包含文档标题与相对路径链接
 
@@ -226,13 +226,14 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 - **NFR-2**: 在适当位置引用原网页内容作为参考依据，区分已证实信息（代码挖掘）和传闻信息（GPT-5.6）
 - **NFR-3**: 文档结构清晰，使用 Markdown 标准标题层级（H1/H2/H3）、列表、表格、引用块
 - **NFR-4**: 文件命名遵循 kebab-case 纯英文规范（`anthropic-agent-roadmap-wiki.md`），通过 `python .agents/scripts/check-filename-convention.py` 校验
-- **NFR-5**: 文档篇幅适中（预估 4000–6000 字），重点突出，避免冗余
+- **NFR-5**: 文档篇幅适中（预估 8000–12000 字，深度分析类wiki实际篇幅约10000字），重点突出，避免冗余
 - **NFR-6**: 客观呈现爆料信息的不确定性，不将传闻当作确定事实
 
 ## Constraints
 - **Technical**: 文档必须使用 Markdown 格式，遵循项目命名规范，frontmatter 使用 YAML 格式
 - **Business**: 基于公开爆料文章内容创建，明确标注哪些是代码挖掘信息、哪些是传闻、哪些是分析推测
 - **Dependencies**: 网页内容已通过 defuddle 工具成功获取并解析
+- **Environment**: Windows PowerShell环境下，含`&amp;`符号的URL需使用单引号包裹或使用defuddle parse子命令，避免命令解析错误
 
 ## Assumptions
 - 读者对 AI Agent、Claude、大语言模型有基础认知
@@ -244,7 +245,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 ### AC-1: Wiki 教程文档创建完成
 - **Given**: spec.md 中定义的所有功能需求已明确
 - **When**: 所有任务完成并通过验证
-- **Then**: `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md` 包含目录导航、背景概述、Conway详解、文件记忆、Orbit、Operon、BugCrawl、生态升级、GPT-5.6竞争、行业洞察、内容评估、FAQ、资源链接等完整章节
+- **Then**: `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 包含目录导航、背景概述、Conway详解、文件记忆、Orbit、Operon、BugCrawl、生态升级、GPT-5.6竞争、行业洞察、内容评估、FAQ、资源链接等完整章节
 - **Verification**: `human-judgment`
 
 ### AC-2: Conway 永久在线智能体讲解完整
@@ -303,7 +304,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 
 ### AC-11: 知识库索引已登记
 - **Given**: wiki 文档创建完成
-- **When**: 用户浏览 `docs/knowledge/README.md`
+- **When**: 用户浏览 `.agents/docs/knowledge/README.md`
 - **Then**: learning 类目下出现 Anthropic Agent 路线图学习文档条目
 - **Verification**: `programmatic`
 
@@ -314,5 +315,52 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 - **Verification**: `programmatic`
 
 ## Open Questions
-- [ ] 是否需要在文档中加入 Mermaid 产品路线图或架构图来可视化产品线关系？（倾向：加入1张产品线全景图增强可读性）
-- [ ] 是否需要在文档中加入与Claude Tag（之前发布的企业协作产品）的对比分析？（倾向：在Orbit章节简要对比，不单独开章节）
+- [x] Mermaid产品全景图：已在第九章开头加入，采用四层架构flowchart TB设计
+- [x] Orbit与Claude Tag对比：已在4.5小节加入简要对比分析
+
+## 执行复盘（七概念方法论）
+
+### 客观事实清单（R阶段）
+- F01: 主文档实际存放路径为`.agents/docs/knowledge/learning/03-agent-platforms-tools/`，初始spec错误写为`docs/knowledge/learning/`
+- F02: 初始NFR-5预估字数4000-6000字，实际最终文档约10865中文字符
+- F03: Windows PowerShell环境下，含`&amp;`符号的URL直接使用defuddle命令会导致解析错误
+- F04: 微信公众号文章URL包含查询参数和锚点，使用defuddle parse子命令更稳定
+- F05: Mermaid产品线全景图采用四层架构flowchart TB设计，在第九章开头插入
+- F06: Orbit与Claude Tag对比分析在4.5小节完成，未单独开章节
+- F07: 文档实际包含13个主要章节，超出初始预估
+- F08: FAQ实际覆盖10个问题，符合预期
+- F09: 核心信息汇总表包含5列7条目，符合预期
+- F10: defuddle工具成功获取并解析微信公众号文章正文
+- F11: 文件名`anthropic-agent-roadmap-wiki.md`通过kebab-case命名规范校验
+- F12: frontmatter包含title、source、date、tags、category、status、author、summary共8个字段
+- F13: 文档格式参考现有wiki风格，使用📋目录emoji、中文数字编号章节
+- F14: 知识库索引已在`.agents/docs/knowledge/README.md`中登记
+- F15: 文档明确区分了代码挖掘信息（可信度较高）与GPT-5.6传闻（可信度较低）
+
+### 核心洞察（I阶段）
+- **I1**: 路径配置错误 → 事前路径验证不足 → 所有涉及文件路径的spec在创建时需先确认实际目录结构 → 在Background章节明确标注正确路径
+- **I2**: 字数预估严重偏低 → 深度分析类wiki的篇幅预估缺乏历史数据参考 → 建立深度分析类wiki的字数基准（8000-12000字） → NFR-5更新为更准确的预估
+- **I3**: PowerShell命令兼容性问题 → 跨平台命令执行未考虑Windows环境差异 → Windows环境下含特殊字符的URL需特殊处理 → Constraints新增Environment约束
+- **I4**: defuddle使用方式优化 → 直接传URL vs parse子命令的适用场景不清晰 → 含查询参数的复杂URL优先使用parse子命令 → 形成工具使用最佳实践
+- **I5**: 可视化增强提升可读性 → Mermaid图能有效降低复杂产品线关系的理解成本 → 技术分析类wiki应至少包含1张架构/关系图 → 在需求中明确可视化要求
+
+### 可复用模式（E阶段）
+
+#### 模式名称：微信公众号深度文章结构化学习wiki创建模式
+
+**核心要点**：
+1. **路径先行**：创建spec前先确认知识库实际目录结构，避免路径配置错误
+2. **篇幅基准**：深度分析类wiki预估字数8000-12000字，而非普通wiki的4000-6000字
+3. **工具适配**：Windows PowerShell环境下，含`&amp;`等特殊字符的URL使用单引号包裹或defuddle parse子命令
+4. **可视化标配**：技术分析类wiki至少包含1张Mermaid架构/关系全景图，放在核心分析章节开头
+5. **对比增强**：涉及相似产品时在相关章节加入简要对比，无需单独开章节
+6. **可信度分层**：明确区分代码挖掘/官方发布/社区传闻等不同信息来源的可信度
+7. **格式一致性**：参考现有wiki风格，使用统一的emoji、编号、引用块格式
+
+**反模式清单（6条）**：
+1. ❌ **反模式1**：不验证实际目录结构就写路径 → 导致所有路径引用错误，后续批量修改成本高
+2. ❌ **反模式2**：所有wiki都按4000-6000字预估 → 深度分析类内容会被人为压缩，影响质量
+3. ❌ **反模式3**：Windows环境直接拼接含特殊字符的URL → PowerShell解析错误导致工具调用失败
+4. ❌ **反模式4**：纯文字堆砌没有可视化 → 复杂产品关系难以理解，读者阅读体验差
+5. ❌ **反模式5**：把传闻当作确定事实写 → 损害文档可信度，需明确标注信息来源和可信度
+6. ❌ **反模式6**：不参考现有文档格式风格 → 破坏知识库整体一致性，读者体验割裂
