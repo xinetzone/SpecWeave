@@ -1,7 +1,7 @@
 ---
 title: caffe-ffi P3-B阶段测试里程碑复盘报告
 date: 2026-07-31
-last_updated: 2026-07-31
+last_updated: 2026-08-01
 category: code-optimization
 task_type: testing
 tags: [caffe-ffi, testing, p3b, scale, bias, eltwise, concat, dropout, softmaxwithloss, accuracy, blob-consumption, numpy-reference]
@@ -9,6 +9,7 @@ status: completed
 verification: passed
 source: test(p3b) session covering Scale/Bias/Eltwise/Concat/Dropout/SoftmaxWithLoss/Accuracy layers
 commit: d1acc7b
+action_items_progress: ACT-01=done, ACT-02=done(issue-found), ACT-03=done
 ---
 
 # caffe-ffi P3-B阶段测试里程碑复盘报告
@@ -162,13 +163,19 @@ commit: d1acc7b
 
 ### 可复用模式
 
-| 模式 | 描述 | 适用场景 |
-|------|------|---------|
-| numpy-ref-first | 先写numpy参考实现，验证参考正确后再写C++测试 | 所有数值计算层测试 |
-| three-layer-validation | known values + numpy random match + repeated determinism | 所有层forward测试 |
-| explicit-split-for-multi-consumer | 多消费者blob必须显式Split | 所有组合/管道网络测试 |
-| perf_trace_integration | 每个关键步骤（Net构建、forward）用ptrace包裹记录耗时和内存 | 所有性能敏感测试 |
-| separate-nets-for-independent-ops | 独立操作使用独立net避免blob消费冲突 | 同一层不同参数组合对比测试 |
+> ✅ **模式已归档**：以下5个模式已通过 extraction-cmd 萃取并入库至模式库，成熟度 L2-validated（P3-A + P3-B 双案例验证）。
+
+| 模式ID | 模式名称 | 描述 | 适用场景 | 模式库链接 |
+|--------|---------|------|---------|-----------|
+| `numpy-reference-first` | Numpy参考实现先行 | 先写numpy参考实现，验证参考正确后再写C++测试 | 所有数值计算层测试 | [numpy-reference-first.md](../../../patterns/code-patterns/numpy-reference-first.md) |
+| `three-layer-test-validation` | 三层测试验证法 | known values + numpy random match + repeated determinism 三层覆盖 | 所有层forward测试 | [three-layer-test-validation.md](../../../patterns/code-patterns/three-layer-test-validation.md) |
+| `explicit-split-multi-consumer` | 多消费者显式Split | 多消费者blob必须显式Split（遵循caffe-ffi命名约定） | 所有组合/管道网络测试 | [explicit-split-multi-consumer.md](../../../patterns/code-patterns/explicit-split-multi-consumer.md) |
+| `perf-trace-instrumentation` | perf_trace性能埋点集成 | 每个关键步骤（Net构建、forward）用ptrace包裹记录耗时/内存/Blob数 | 所有性能敏感测试 | [perf-trace-instrumentation.md](../../../patterns/code-patterns/perf-trace-instrumentation.md) |
+| `separate-nets-independent-ops` | 独立操作分离Net | 独立操作使用独立net避免blob消费冲突，参数化遍历 | 同一层不同参数组合对比测试 | [separate-nets-independent-ops.md](../../../patterns/code-patterns/separate-nets-independent-ops.md) |
+
+**测试模板**：基于 `three-layer-test-validation` + `numpy-reference-first` 模式生成的可复用测试模板已创建：
+[test_layer_template_three_layer_validation.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_layer_template_three_layer_validation.py)
+（以ReLU层为例，包含完整的L1-L4四层测试结构和perf_trace集成示例）
 
 ### 系统性问题
 
@@ -180,13 +187,164 @@ commit: d1acc7b
 
 ## S4：行动项
 
-| 编号 | 优先级 | 行动项 | 验收标准 | 类型 |
-|------|:------:|--------|----------|------|
-| ACT-01 | P1 | 在测试README或conftest文档中记录single-consumer blob模型约束和Split使用模式 | 新贡献者阅读后能正确处理多消费者场景 | 文档 |
-| ACT-02 | P1 | P3-C阶段测试启动前，先grep确认目标层（Self-Attention/Positional Encoding或替代层）是否已实现 | 避免再次出现方向偏移 | 流程改进 |
-| ACT-03 | P2 | 将"三层验证法+numpy参考先行"模式提取为测试模板文件 | 新测试文件可直接复制模板填空 | 工具 |
-| ACT-04 | P2 | 考虑测试中Net复用机制（如session级Net缓存）以减少~100s构建开销 | P3-B类测试套件运行时间降低50%以上 | 性能优化 |
-| ACT-05 | P3 | 实现RNN/LSTM层后，补充原始P3-B目标的RNN/LSTM forward测试 | RNN/LSTM层测试覆盖达到与Scale/Eltwise同等水平 | 功能+测试 |
+| 编号 | 优先级 | 行动项 | 验收标准 | 类型 | 状态 |
+|------|:------:|--------|----------|------|:----:|
+| ACT-01 | P1 | 在测试README或conftest文档中记录single-consumer blob模型约束和Split使用模式 | 新贡献者阅读后能正确处理多消费者场景 | 文档 | ✅ **已完成** |
+| ACT-02 | P1 | P3-C阶段测试启动前，先grep确认目标层（Self-Attention/Positional Encoding或替代层）是否已实现 | 避免再次出现方向偏移 | 流程改进 | ✅ **已完成**（发现新问题：见下方检查结果） |
+| ACT-03 | P2 | 将"三层验证法+numpy参考先行"模式提取为测试模板文件 | 新测试文件可直接复制模板填空 | 工具 | ✅ **已完成** |
+| ACT-04 | P2 | 测试中Net复用机制（如session级Net缓存）以减少~100s构建开销 | P3-B类测试套件运行时间降低50%以上 | 性能优化 | 📋 **有计划**（待执行） |
+| ACT-05 | P3 | 实现RNN/LSTM层后，补充原始P3-B目标的RNN/LSTM forward测试 | RNN/LSTM层测试覆盖达到与Scale/Eltwise同等水平 | 功能+测试 | 📋 **有计划**（待执行） |
+
+### ACT-02 P3-C启动前检查结果（2026-08-01）
+
+**层实现状态检查（grep确认）：**
+
+| P3-C目标层 | C++源文件 | 状态 |
+|-----------|----------|:----:|
+| ReLU | `layers/relu_layer.cpp` | ✅ 已实现 |
+| Sigmoid | `layers/sigmoid_layer.cpp` | ✅ 已实现 |
+| TanH | `layers/tanh_layer.cpp` | ✅ 已实现 |
+| ELU | `layers/elu_layer.cpp` | ✅ 已实现 |
+| PReLU | `layers/prelu_layer.cpp` | ✅ 已实现 |
+| InnerProduct | `layers/inner_product_layer.cpp` | ✅ 已实现 |
+| Softmax（独立） | `layers/softmax_layer.cpp` | ✅ 已实现 |
+| Flatten | `layers/flatten_layer.cpp` | ✅ 已实现 |
+| Reshape | `layers/reshape_layer.cpp` | ✅ 已实现 |
+| Self-Attention/PE | 无新层，组合已有层（InnerProduct+Scale+Softmax+Eltwise+Concat+Bias+Split） | ✅ 无需新层 |
+
+**结论**：P3-C所有目标层均已实现（Transformer组件通过组合已有层实现），不存在P3-A那样的方向偏移问题。
+
+**🚨 检查中发现的新问题：**
+
+| 问题 | 严重度 | 详情 |
+|------|:------:|------|
+| P3-B/P3-C测试类缺少`@require_cpp_extension`装饰器 | **P1-Bug** | 10个P3-B测试类 + 12个P3-C测试类均未装饰，C++扩展不可用时测试不会被skip，而是运行Python-only fallback返回标量0，产生误导性FAIL而非SKIP |
+| 当前环境C++扩展未加载 | P0-环境 | Python 3.13.9 < 要求3.14+；`_caffe_ffi` DLL/pyd未在任何搜索路径中找到；需使用Python 3.14环境重新编译安装 |
+| `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 |
+
+### ACT-04 执行计划：Net复用性能优化
+
+**问题分析**：
+- P3-B测试套件共50个用例，每个用例独立创建Net（~0.7-1.5ms/Net）+ Forward（~0.4-0.8ms），Net构建约占总耗时~60%
+- 加上pytest fixture开销（~680ms/test），总计~100s
+- 同一网络结构被反复创建销毁（如5个ReLU测试用例创建5个不同的Net）
+
+**实施方案（分两个阶段）：**
+
+**阶段1：测试辅助层Net缓存（推荐，风险低）**
+在 `caffe_test_helpers.py` 中添加LRU缓存的Net工厂：
+```python
+from functools import lru_cache
+
+@lru_cache(maxsize=64)
+def _make_net_cached(prototxt_str: str):
+    """缓存已解析的Net，避免相同prototxt重复解析构建。"""
+    param = net_param_from_string(prototxt_str)
+    return net_from_param(param)
+```
+- 相同prototxt字符串的测试用例共享同一个Net对象（Forward是幂等的，不修改权重）
+- 注意：涉及权重重置的测试（如weights_unchanged）需要clone Net或使用独立工厂
+- **预期收益**：测试套件总耗时降低30-50%
+
+**阶段2：conftest session-scoped Net池（高级）**
+- 对参数化测试（如同一层不同参数变体）使用session级fixture缓存Net
+- 不同测试函数间共享基础Net结构，通过`CopyTrainedLayersFrom`或权重注入重置
+- **风险**：需要确保测试间无状态泄漏（权重、blob数据）
+- **预期收益**：额外降低20-30%
+
+**前置依赖**：
+1. 修复P3-B/P3-C测试类的`@require_cpp_extension`装饰器缺失问题
+2. C++扩展可用（Python 3.14环境编译安装）
+
+**验收标准**：
+- 同一prototxt的Net只构建一次（可通过perf_trace日志验证`Δtime`）
+- P3-B测试套件运行时间降低50%以上（从~100s到<50s）
+- 所有测试结果不变（无状态泄漏）
+
+### ACT-05 执行计划：RNN/LSTM层实现+测试
+
+**现状**：
+- `src/caffe_ffi/layers/` 中无任何RNN/LSTM/Recurrent相关文件（grep确认）
+- Caffe原生有`recurrent_layer.cpp`、`rnn_layer.cpp`、`lstm_layer.cpp`三个层
+- RNN/LSTM依赖内部递归unroll，实现复杂度远高于现有逐元素层
+
+**实施步骤：**
+
+**阶段1：基础Recurrent层框架（预计3-5天）**
+1. 创建 `include/caffe_ffi/layers/recurrent_layer.hpp` + `src/caffe_ffi/layers/recurrent_layer.cpp`
+   - 实现RecurrentLayer的unroll机制：将时序网络展开为DAG
+   - 注册`REGISTER_LAYER_CLASS(Recurrent)`
+2. 创建rnn_layer.hpp/cpp：基于RecurrentLayer的简单RNN（tanh激活）
+3. 在CMake TargetBuild.cmake中添加新源文件（需确认源文件收集方式——可能是GLOB或显式列表）
+4. 编译验证：新层注册成功，Net能解析含RNN层的prototxt
+
+**阶段2：LSTM层（预计3-5天）**
+1. 创建lstm_layer.hpp/cpp：实现LSTM门控单元（input/forget/output gate + cell state）
+2. LSTM单元内部由InnerProduct+Sigmoid/TanH+Eltwise（逐元素乘加）组合
+3. 支持`lstm_param` protobuf参数（num_output、weight_filler、bias_filler、clipping_threshold）
+4. 单元测试：前向传播numpy参考验证
+
+**阶段3：测试覆盖（预计1-2天）**
+1. 参照三层验证法模板，为RNN/LSTM编写：
+   - 已知值验证（手动计算小序列）
+   - Numpy随机匹配（batch_size × seq_len × input_dim随机输入）
+   - 确定性（重复Forward结果一致）
+   - 梯度反向测试（若实现Backward）
+2. 测试覆盖要求：
+   - RNN：不同hidden_dim、不同seq_len、batch_size=1和N、双向/单向
+   - LSTM：同上 + 有/无peephole连接、有/无clipping
+
+**前置依赖**：
+- Python 3.14环境编译环境就绪
+- 现有层（InnerProduct、Sigmoid、TanH、Eltwise、Split、Concat）前向/反向均正确——这些是RNN/LSTM的基础构件
+- InnerProduct层Backward已验证（RNN/LSTM反向需要通过BPTR）
+
+**依赖关系图**：
+```
+现有层(InnerProduct/Sigmoid/TanH/Eltwise) → RecurrentLayer → RNNLayer → LSTMLayer
+                                                                          ↓
+                                                              三层验证法测试模板
+```
+
+**风险与缓解**：
+| 风险 | 概率 | 缓解措施 |
+|------|:----:|---------|
+| Caffe的Recurrent unroll机制复杂，依赖内部Net嵌套 | 高 | 先阅读BVLC/Caffe `recurrent_layer.cpp`源码画状态机图 |
+| Protobuf定义缺失RNNParameter/LSTMParameter | 中 | 先检查`proto/caffe.proto`是否已包含这些message，缺失则补充 |
+| LSTM反向传播(BPTT)调试困难 | 高 | 前向先通过再做反向；使用数值梯度检验(ε=1e-5) |
+| 时序数据的memory开销（长序列unroll） | 中 | 限制测试seq_len≤10，避免OOM |
+
+---
+
+## 后续活动（2026-08-01）
+
+### 模式萃取归档（extraction-cmd）
+
+里程碑完成后，对报告中"可复用模式"部分执行了标准化模式萃取流程（六步法）：
+
+- **S1 案例收集**：P3-A（Conv/Pool/BN测试）+ P3-B（Scale/Bias/Eltwise等7层测试）双案例支撑
+- **S2 本质抽象**：剥离具体项目特征，提炼5个可迁移模式
+- **S3 结构化模板**：按标准模板填充（触发场景+核心步骤+反模式+检验标准+迁移示例）
+- **S4 反模式提炼**：每个正模式配对3-5个反模式（常见误用场景）
+- **S5 迁移验证**：每个模式提供5个跨领域迁移示例（如编译器测试、API测试、序列化测试等）
+- **S6 入库**：存入 `docs/retrospective/patterns/code-patterns/`，更新模式库索引
+
+### 产出物
+
+| 产出物 | 路径 | 说明 |
+|--------|------|------|
+| 5个模式文档 | `.agents/docs/retrospective/patterns/code-patterns/` | numpy-reference-first、three-layer-test-validation、explicit-split-multi-consumer、perf-trace-instrumentation、separate-nets-independent-ops |
+| 测试模板 | [test_layer_template_three_layer_validation.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_layer_template_three_layer_validation.py) | 基于三层验证法的可复用测试脚本模板（ReLU层示例） |
+| 模式库索引更新 | [code-patterns/README.md](../../../patterns/code-patterns/README.md) | 新增5个L2-validated模式条目 |
+| **测试指南更新（ACT-01）** | [TESTING_GUIDELINES.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/testing/TESTING_GUIDELINES.md) | 新增§4「核心架构约束：Single-Consumer Blob模型」章节，版本升级至v1.2.0 |
+
+### 行动项执行记录
+
+| 日期 | 行动项 | 执行结果 |
+|------|--------|---------|
+| 2026-07-31 | ACT-03 | ✅ 已完成：三层验证法测试模板已创建 |
+| 2026-08-01 | ACT-01 | ✅ 已完成：在TESTING_GUIDELINES.md新增§4章节，包含约束说明、错误症状、两种处理方式（独立Net/显式Split）、命名约定、自检清单，并在反模式表和提交前检查清单中补充了Single-Consumer检查项；参考文件表新增P3-B范本和模板文件；文档版本升级至v1.2.0 |
+| 2026-08-01 | ACT-02 | ✅ 已完成：grep确认P3-C全部9个目标层（ReLU/Sigmoid/TanH/ELU/PReLU/InnerProduct/Softmax/Flatten/Reshape）均有.cpp实现，Transformer组件通过组合已有层实现无需新C++层；检查中发现3个新问题：P1-P3B/P3C测试类缺@require_cpp_extension装饰器、P0-Python3.14环境缺失C++扩展未编译、P2-Python-only fallback返回标量0无错误提示 |
 
 ---
 

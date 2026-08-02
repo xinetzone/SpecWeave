@@ -25,6 +25,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [cpp-nullstream-logging.md](cpp-nullstream-logging.md) | C++ NullStream零开销日志：NullStream模板吸收所有<<输出+组件标签宏+编译期开关+运行时级别控制，禁用时编译通过且零开销 | L1 候选 | C++轻量日志系统（不引入spdlog/glog等第三方库）、深度学习框架、条件编译调试 |
 | [cross-platform-backtrace-leak-diagnosis.md](cross-platform-backtrace-leak-diagnosis.md) | 跨平台堆栈回溯泄漏源定位：构造时捕获调用栈+析构TRACE输出+Windows DbgHelp/Linux execinfo双平台+编译期开关零开销，形成检测→定位完整诊断闭环 | L2 已验证 | C++原生扩展FFI项目内存泄漏诊断、跨平台C++开发、需要精确定位泄漏源的调试场景 |
 | [cpp-object-wrapper-lazy-init-check.md](cpp-object-wrapper-lazy-init-check.md) | C++对象包装延迟初始化防御：公共方法入口第一行检查!defined()/!valid()，首次初始化作为独立分支处理，避免空指针解引用 | L1 候选 | 包装第三方值类型对象(TVM Tensor/optional/FFI句柄)、默认构造+延迟初始化模式 |
+| [cpp-iife-assertion-macro.md](cpp-iife-assertion-macro.md) | C++ IIFE+AssertHelper流式断言宏：IIFE表达式+临时对象析构抛异常+operator<<链式消息，替代do-while模式实现gtest风格CHECK宏，含5个GOTCHA陷阱（移动构造/noexcept(false)/引用捕获/括号保护/宏重定义） | L2 已验证 | C++自定义断言/CHECK宏、测试框架断言、生产环境检查宏、需要<<流式消息的宏封装 |
 | [cross-platform-encoding-enforcement.md](cross-platform-encoding-enforcement.md) | 跨平台输出编码三层防御体系：入口编码设置+防御性能力检测+Unicode/ASCII适配输出，避免Windows GBK终端崩溃 | L2 已验证 | Python CLI工具、跨平台脚本、subprocess调用 |
 | [defensive-attribute-access.md](defensive-attribute-access.md) | 外部对象防御性属性访问：getattr→callable→try-except三层防护，应对属性不存在/None/不可调用/抛异常场景 | L2 已验证 | CLI工具库、stream操作、插件接口、mock环境下的防御性编程 |
 | [direct-file-write-over-shell-pipe.md](direct-file-write-over-shell-pipe.md) | 文档生成直写文件优先：避免 Windows PowerShell 文本管道在落盘阶段污染中文内容 | L1 实验性 | README/报告生成、Markdown导出、知识库条目写回 |
@@ -107,16 +108,34 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [resource-counter-primitive-binding.md](resource-counter-primitive-binding.md) | 资源计数器原语绑定（RAII资源追踪）：计数器增减绑定到最低层Alloc/Free原语，而非高层业务代码，原子操作+调用点日志+线程安全，杜绝高层遗漏导致的计数偏差 | L2 已验证 | FFI原生扩展内存管理、RAII资源生命周期追踪、跨语言内存泄漏检测基础设施 |
 | [zero-copy-tensor-verification.md](zero-copy-tensor-verification.md) | 零拷贝张量访问四维验证：类型/形状一致→写入回读→拷贝隔离→持久共享，确保DLPack/FFI张量视图的内存共享语义正确而非意外拷贝或悬挂指针 | L2 已验证 | DLPack/FFI零拷贝张量共享、C++/Python跨语言张量视图、tvm-ffi/pybind11/PyO3张量绑定、in-place修改语义验证 |
 | [ffi-intrusive-refcount-zerocopy.md](ffi-intrusive-refcount-zerocopy.md) | FFI侵入式引用计数零拷贝别名模式：利用TVM FFI Tensor/ObjectPtr已有的侵入式refcount，通过句柄赋值实现Blob/NDArray间零拷贝共享，无需自定义引用计数或内存池 | L2 已验证 | Layer间张量传递、Blob/NDArray数据共享、DLPack跨框架互操作、in-place优化（ReLU/Dropout）、梯度共享、C++ FFI原生扩展 |
+| [ffi-zerocopy-tensor-dual-mode.md](ffi-zerocopy-tensor-dual-mode.md) | FFI边界零拷贝Tensor交互双模式选择：协议模式(np.from_dlpack默认安全)与裸指针模式(ctypes精确引用计数)二选一，裸指针模式五步安全清单+4个反模式（含ctypes临时指针引用循环陷阱） | L2 已验证 | Python/C++ FFI边界numpy数组转换、COW引用计数敏感场景、pybind11/TVM FFI/C数组封装、需要精确use_count的零拷贝交互 |
 | [ffi-memory-leak-autouse-fixture.md](ffi-memory-leak-autouse-fixture.md) | FFI内存测试自动泄漏检测：pytest autouse fixture通过基线对比（字节数+对象数双维度）+强制GC+opt-out机制，零侵入自动检测原生内存泄漏 | L2 已验证 | C/C++/Rust原生扩展Python绑定测试、FFI层内存泄漏CI门禁、RAII正确性验证 |
 | [conversion-point-debug-tracing.md](conversion-point-debug-tracing.md) | 数据转换点调试追踪：关键边界插入shape+dtype+值范围日志，快速定位精度丢失/shape mismatch/静默截断 | L2 已验证 | 数据预处理管道、模型推理链路、类型转换密集代码 |
 | [structured-lightweight-logging.md](structured-lightweight-logging.md) | 结构化轻量日志：字段固定顺序+管道符分隔+一行一事件，grep/awk可直接分析，无需日志框架 | L1 实验性 | CLI工具、Shell脚本、性能敏感路径日志 |
 | [three-layer-performance-optimization.md](three-layer-performance-optimization.md) | 三层性能优化方法论：算法→工程→编译逐级优化，先profiling再优化，避免过早优化陷阱 | L1 实验性 | 性能调优、计算密集型代码优化 |
+| [build-failure-layered-triage.md](build-failure-layered-triage.md) | 构建失败分层排查法：L0环境层(30秒)→L1工具链层(2分钟)→L2项目层(5分钟+)三层递进排查，含决策树+PowerShell/Bash检查脚本+8语言迁移表 | L2 已验证 | C/C++/Rust/CUDA等编译型语言构建失败排查、跨平台/跨环境构建问题、编译器内部错误诊断 |
 | [cmake-four-layer-modular-architecture.md](cmake-four-layer-modular-architecture.md) | CMake四层模块化架构：选项→依赖→函数→目标分层拆分，两轮重构策略（物理拆分+逻辑抽象），include顺序即依赖声明 | L1 实验性 | CMakeLists.txt超过100行的C/C++项目模块化，多目标（库+测试+示例）构建 |
+| [cmake-list-removal-diagnostic-output.md](cmake-list-removal-diagnostic-output.md) | CMake列表变更诊断输出：REMOVE_ITEM/FILTER后必打message(STATUS)输出列表长度+内容+排除原因，消除"隐形文件排除"，含简单/条件/过滤三套模板 | L2 已验证 | CMake GLOB收集后排除文件、条件分支排除源文件/测试、CI构建日志可观测性 |
 | [cmake-public-target-config-function.md](cmake-public-target-config-function.md) | CMake公共目标配置函数：封装target_*为带VISIBILITY参数+完整参数校验的function()，消除跨文件重复配置 | L1 实验性 | 多目标CMake项目重复编译配置消除，PUBLIC/PRIVATE/INTERFACE可见性控制 |
 | [cmake-platform-specific-operation-encapsulation.md](cmake-platform-specific-operation-encapsulation.md) | CMake平台特定操作封装：平台专用文件+细粒度函数+聚合函数+通用工具三级API，统一参数校验宏 | L1 实验性 | Windows DLL复制、macOS rpath设置、跨平台构建操作封装 |
 | [const-cow-trigger.md](const-cow-trigger.md) | const重载驱动的写时复制触发模式：通过cpu_data()/cpu_mutable_data()分离const/non-const访问路径，在non-const方法中检查refcount>1时触发克隆，实现安全的零拷贝共享+写入隔离 | L2 已验证 | Blob/Tensor写时复制、零拷贝别名后的写入安全、N≥2 fan-out场景、Split/Concat等多输出层优化 |
+| [cow-shared-state-refcount-dual-semantics.md](cow-shared-state-refcount-dual-semantics.md) | COW共享状态标志与引用计数双重语义：IsDataShared()查询用双条件(data_shared_&&use_count>1)区分Owner/Borrower角色，COW触发只用use_count>1保守安全，七步实现+7反模式（含Owner写入保护） | L2 已验证 | 侵入式引用计数COW实现、FFI原生扩展内存管理、Owner/Borrower角色区分、零拷贝别名写入安全 |
 | [platform-aware-dependency-detect.md](platform-aware-dependency-detect.md) | 平台感知的CMake依赖检测模式：两阶段验证（头文件→库文件）+已知前缀推导（conda前缀→Library/include）+平台路径差异化处理，解决Windows conda Library/前缀与Linux系统路径不一致问题 | L2 已验证 | 跨平台CMake依赖检测、conda环境依赖查找、Windows/Linux/macOS路径差异处理、第三方库自动发现 |
 | [preflight-checks-script.md](preflight-checks-script.md) | 构建预检脚本前置模式：编译前执行环境检查脚本，主动检测TypeTraits冲突/DLL缺失/符号重复等常见陷阱，输出可操作错误信息而非晦涩编译错误 | L2 已验证 | C++/Python混合项目构建、CMake/native extension编译前环境验证、CI/CD流水线质量门禁、开发者环境快速诊断 |
+| [progressive-interface-extension.md](progressive-interface-extension.md) | 框架接口渐进式扩展三阶段：默认存根（WARN/THROW非纯虚）→分批按优先级实现子类→调用路径激活时切换为强制，避免N个子类同时编译失败的大爆炸 | L1 候选 | C++基类虚方法添加、插件系统新API、SDK版本升级、框架功能分期上线、影响≥3个子类的接口变更 |
+| [single-pass-perf-instrumentation.md](single-pass-perf-instrumentation.md) | 单次遍历性能统计日志埋点三原则：计算+统计单次遍历融合（禁止O(2N)二次遍历cache miss）、栈上零分配、循环外日志输出；结构化[TAG]标签+固定字段顺序+k=v格式 | L1 候选 | 深度学习算子/数值计算/图像处理/音频DSP/数据库扫描/ETL等大数组计算密集场景的性能监控埋点 |
+| [ffi-fallback-diagnostics.md](ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：_FFIInitDiagnostics诊断对象+record_*方法分类记录+入口预设状态+公开get_init_diagnostics() API+CAFFE_FFI_STRICT_INIT严格模式，消除原生扩展静默降级反模式 | L2 已验证 | pybind11/tvm-ffi/nanobind/cffi等C/C++原生扩展Python绑定的初始化降级诊断、CI验证原生扩展加载 |
+| [python-editable-import-isolation.md](python-editable-import-isolation.md) | Python editable install三层导入隔离：meta_path editable finder清理 + sys.path真实源码目录移除 + sys.modules缓存清除，配合subprocess隔离进程，解决scikit-build-core/setuptools/hatchling finder绕过sys.path问题 | L2 已验证 | 测试原生扩展缺失降级行为、CI验证wheel而非editable行为、最小化Python环境集成测试 |
+| [protobuf-text-minimal-parser.md](protobuf-text-minimal-parser.md) | Protobuf文本格式最小解析器：5种Token类型(str/num/ident/{/})Tokenizer + 深度计数嵌套跳过 + 目标字段提取，约140行零依赖解析prototxt拓扑结构 | L1 实验性 | prototxt/pbtxt拓扑提取、DAG可视化验证工具、零依赖CI脚本、不需要完整protobuf语义的调试场景 |
+| [numpy-reference-first.md](numpy-reference-first.md) | Numpy参考实现先行：写C++/框架测试前先用numpy实现纯Python参考版本，独立验证参考正确性后再对比目标实现，防止"测试本身写错" | L2 已验证 | 深度学习算子测试、数值计算函数测试、跨框架一致性验证、所有涉及浮点正确性的单元测试 |
+| [three-layer-test-validation.md](three-layer-test-validation.md) | 三层测试验证法：known values精确验证 + 随机数据numpy匹配 + repeated forward确定性验证，从点到面覆盖正确性 | L2 已验证 | 深度学习算子forward测试、数学库验证、数值计算函数测试 |
+| [explicit-split-multi-consumer.md](explicit-split-multi-consumer.md) | 多消费者显式Split：zero-copy/COW极简数据流框架中，同一blob被>1个layer消费时必须显式插入Split层，遵循框架命名约定 | L2 已验证 | caffe-ffi等极简DL框架测试、Rust所有权系统、显式内存管理数据流引擎 |
+| [perf-trace-instrumentation.md](perf-trace-instrumentation.md) | perf_trace性能埋点集成：上下文管理器封装关键阶段，自动采集Δtime/Δmem/Δblobs，[PERF]统一前缀+固定字段顺序+结构化k=v | L2 已验证 | pytest测试套件、性能基准测试、FFI原生扩展测试、需要细粒度性能剖析的测试 |
+| [separate-nets-independent-ops.md](separate-nets-independent-ops.md) | 独立操作分离Net：同一层的不同参数变体/独立操作各自创建独立Net实例，提取公共构造函数+参数化测试，避免blob消费冲突和状态污染 | L2 已验证 | DL框架算子对比测试、参数组合遍历测试、有单消费/状态副作用的框架测试 |
+| [multi-strategy-auto-discovery.md](multi-strategy-auto-discovery.md) | 多策略自动发现：策略注册表→候选收集→有效性验证→版本匹配→名称偏好→兜底返回，解决跨机器环境路径差异问题 | L2 已验证 | 跨机器可移植脚本、构建工具环境自动发现、Conda/VS/JDK等外部依赖定位 |
+| [version-priority-sorting.md](version-priority-sorting.md) | 版本优先级排序：版本号归一化→发行渠道优先级→多键排序→有效性过滤，解决多版本工具共存时的版本选择问题 | L2 已验证 | 多版本开发工具共存（VS/Python/JDK）、构建工具链版本选择、SDK版本管理 |
+| [path-length-recovery.md](path-length-recovery.md) | PATH长度自动恢复：首次尝试→失败检测→环境快照→PATH精简→重试加载→路径合并→日志记录，解决Windows cmd.exe 8191字符限制 | L2 已验证 | Windows MSVC/Intel/CUDA等大型开发环境加载、DevShell初始化、批处理脚本命令行超长 |
+| [thin-wrapper-pattern.md](thin-wrapper-pattern.md) | 薄包装模式：通用核心抽取→极薄参数映射层→参数透传→共享模块→约定优于配置，实现N个项目共用一套构建逻辑 | L2 已验证 | 多项目构建脚本、微服务部署脚本、CI/CD流水线模板、相似工具链配置 |
 
 ## 成熟度定义
 

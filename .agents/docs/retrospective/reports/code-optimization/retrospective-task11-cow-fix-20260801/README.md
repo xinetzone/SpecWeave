@@ -68,12 +68,18 @@ maturity: "validated"
 
 ### 洞察I1：共享状态与引用计数是两个正交概念，不能用单一条件判断
 
+**状态**：✅ 已正式入库（L2-validated）
+- **模式ID**：`cow-shared-state-refcount-dual-semantics`
+- **归档位置**：[cow-shared-state-refcount-dual-semantics.md](../../../patterns/code-patterns/cow-shared-state-refcount-dual-semantics.md)
+- **成熟度**：L2-validated（2个支撑案例：Task 11 IsDataShared修复 + A3/A5 Owner COW Bug修复）
+- **核心结论**：共享状态标志（`data_shared_`，角色语义：Owner/Borrower）与引用计数（`use_count`，活跃度语义：当前持有者数量）是正交概念——IsDataShared()查询必须双条件满足（`data_shared_ && use_count>1`），COW触发条件只用`use_count>1`（安全优先，Owner写入也需克隆保护Borrower视图）。
+
 | 维度 | 内容 |
 |------|------|
-| **陈述** | Blob"是否通过ShareData借出tensor"（共享状态标志）与"tensor当前被多少对象持有"（use_count引用计数）是两个正交概念，IsDataShared()必须同时满足两个条件：data_shared_为true且use_count>1 |
-| **证据** | F03、F07、F18、F19 |
-| **反常识** | 直觉认为"use_count>1"就意味着"被共享了"，但两个Blob互相ShareData后双方use_count都是2，此时源Blob并不处于"被共享后需要COW"的状态——借出方在借出后自己继续使用是正常行为，借入方才需要在修改时触发COW。单一use_count条件无法区分所有者和共享者角色 |
-| **下次行动** | 实现引用计数相关的共享语义时，必须引入独立的状态标志位区分角色，不能仅依赖引用计数数值；共享状态标志必须在正确的时机设置和清除 |
+| **陈述** | Blob"是否通过ShareData借出tensor"（共享状态标志）与"tensor当前被多少对象持有"（use_count引用计数）是两个正交概念，IsDataShared()必须同时满足两个条件：data_shared_为true且use_count>1；COW触发条件只需use_count>1，不依赖data_shared_标志 |
+| **证据** | F03、F07、F18、F19（+ A3/A5迁移中发现的Owner COW Bug） |
+| **反常识** | 直觉认为"use_count>1"就意味着"被共享了"，但两个Blob互相ShareData后双方use_count都是2，此时源Blob并不处于"被共享后需要COW"的状态——借出方在借出后自己继续使用是正常行为，借入方才需要在修改时触发COW。更反常识的是：Owner在有Borrower时写入也需要触发COW来保护Borrower视图，因此COW触发条件不能用data_shared_做前置判断 |
+| **下次行动** | 实现引用计数相关的共享语义时，必须引入独立的状态标志位区分角色（用于查询API），COW触发条件保守使用use_count>1（安全门控不需要区分角色）；共享状态标志必须在正确的时机设置和清除（ShareData设、COW/Unshare/Reshape清） |
 
 ### 洞察I2：numpy ctypes指针生命周期管理陷阱——临时指针对象上绑定引用会形成循环
 
@@ -108,39 +114,11 @@ maturity: "validated"
 
 ### 模式E1：FFI边界零拷贝Tensor交互双模式选择模式
 
-**元数据**
-- 模式ID：ffi-zerocopy-tensor-dual-mode-v1
-- 触发场景：跨语言FFI边界传递张量/数组，需要零拷贝访问
-- 适用环境：C++/Python FFI（TVM FFI/pybind11/ctypes等）
-- 抽象层级：FFI内存管理模式
-- 来源：本次COW修复（F05、F09、F10）+ 历史零拷贝模式经验
-- 支撑案例数：≥2（DLPack引用计数问题 + ctypes生命周期问题）
-
-**双模式决策表**
-
-| 模式 | 实现方式 | 引用计数 | 生命周期安全 | 适用场景 |
-|------|----------|----------|-------------|----------|
-| **协议模式** | np.from_dlpack / DLPack标准协议 | 自动+1 | 框架保证安全 | 大多数常规场景，愿意接受引用计数开销 |
-| **裸指针模式** | ctypes直接从data_ptr()构造 | 不增加 | 手动绑定引用到稳定对象 | 需要精确控制引用计数（如COW），愿意手动管理生命周期 |
-
-**裸指针模式核心步骤**
-
-1. 获取tensor的裸数据指针 `ptr = tensor.data_ptr()` 和形状 `shape = tensor.shape`
-2. 持有tensor对象直到numpy数组生命周期结束（不能过早del）
-3. 用`np.ctypeslib.as_array(cptr, shape=shape)`构造数组
-4. **关键**：将保持tensor/父对象生命周期的引用绑定到`arr.base.obj`（当base是memoryview时）或`arr.base`，**绝不能**绑定到ctypes.cast()返回的临时指针
-5. 设置`arr.setflags(write=True)`允许原地修改
-
-**反模式**
-
-| 反模式 | 后果 | 正确做法 |
-|--------|------|----------|
-| 裸指针模式下把生命周期引用绑在ctypes.cast()返回值上 | 引用循环，内存泄漏 | 绑在arr.base.obj或arr.base上 |
-| 裸指针模式下过早del tensor对象 | 悬垂指针，段错误/数据损坏 | 保持tensor引用通过base间接持有 |
-| 在需要精确use_count语义时使用DLPack模式 | use_count虚高，COW逻辑错误 | 使用裸指针模式手动管理 |
-| 裸指针模式不设置setflags(write=True) | 只读数组，in-place操作失败 | 显式开启可写标志 |
-
-**迁移验证**：✅ pybind11裸指针交互 ✅ C数组Python封装 ⚠️ GPU tensor需额外考虑设备同步
+**状态**：✅ 已正式入库（L2-validated）
+- **模式ID**：`ffi-zerocopy-tensor-dual-mode`
+- **归档位置**：[ffi-zerocopy-tensor-dual-mode.md](../../../patterns/code-patterns/ffi-zerocopy-tensor-dual-mode.md)
+- **成熟度**：L2-validated（2个支撑案例，已在caffe-ffi COW机制中完整验证）
+- **核心结论**：FFI边界numpy零拷贝转换存在双模式——协议模式（默认，安全但引用计数+1）和裸指针模式（精确引用计数但需手动管理生命周期），裸指针模式的生命周期引用必须绑定到`arr.base.obj`而非ctypes临时指针。
 
 ---
 
@@ -188,6 +166,7 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 |------|--------|------|------|
 | xuanspace | 619630a | fix(caffe-ffi) | _tensor_to_numpy引用循环修复——_blob_ref从ctypes临时指针迁移到arr.base.obj解决内存泄漏 |
 | SpecWeave | 309ec12d | docs(caffe-ffi) | 完成Task 11——test_cow.py全部21项修复+内存泄漏修复记录 |
+| SpecWeave | b55b7da3 | docs(retrospective) | Task 11里程碑复盘报告——R-I-E结构化复盘含25条事实4条洞察1个正式模式1个候选洞察 |
 
 ---
 
@@ -215,3 +194,6 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 
 <!-- changelog -->
 - 2026-08-01 | retrospective | 初始版本：Task 11 test_cow.py修复里程碑复盘，含25条事实、4条核心洞察、1个正式模式、1个候选洞察
+- 2026-08-01 | docs | 补充提交记录b55b7da3，更新changelog
+- 2026-08-01 | feat(patterns): 模式E1正式入库为ffi-zerocopy-tensor-dual-mode（L2-validated），复盘报告更新为归档引用
+- 2026-08-01 | feat(patterns): 洞察I1正式入库为cow-shared-state-refcount-dual-semantics（L2-validated），整合A3/A5 Owner COW Bug修正，COW触发条件修正为仅use_count>1，IsDataShared保留双条件

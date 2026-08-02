@@ -18,3 +18,4 @@
 | [self-reference-blindspot-defense.md](self-reference-blindspot-defense.md) | 自引用盲点防御清单 | 防范文档自引用导致的逻辑盲点 |
 | [dl-framework-op-correctness-test-checklist.md](dl-framework-op-correctness-test-checklist.md) | 深度学习框架算子正确性测试检查清单 | Caffe/PyTorch/TF等DL框架算子正确性单元测试编写 |
 | [pattern-extraction-hardening-checklist.md](pattern-extraction-hardening-checklist.md) | 新模式萃取补强检查清单 | 七概念E阶段萃取模式后、V阶段对抗审查前，自检递归风险/参数可落地性/自积累负反馈/信任链完整性（4大类17项） |
+| [framework-extension-and-perf-logging-review.md](framework-extension-and-perf-logging-review.md) | 框架扩展与性能日志代码审查清单 | 基类接口渐进式扩展、算子性能日志埋点（单遍历+GEMM多阶段适配）、Monorepo CI盲区检测，三模式快速对照CR |
