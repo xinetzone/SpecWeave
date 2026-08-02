@@ -426,17 +426,22 @@ def _make_net_cached(prototxt_str: str):
    - 非常紧的阈值断言（`< 1e-30`/`> 1-1e-30`级别）
 
    **审计结论**：
-   - ✅ 仅发现1个bug（已修复）：`test_sigmoid_float32_saturation_exact`中sigmoid(±80)的断言与float32 ULP行为矛盾
+   - ✅ 发现2个精度问题（均已修复）：
+     1. `test_sigmoid_float32_saturation_exact`中sigmoid(±80)的断言与float32 ULP行为矛盾
+     2. `test_elu_numerical_gradient`中ELU在x≈0拐点处中心差分截断误差超rtol=1e-3（rel_err=0.26%）
    - ✅ sigmoid_known_values中`> 1-1e-7`和`< 1e-30`阈值是安全的宽松断言（sigmoid(±100)确实精确饱和为1.0/0.0，但阈值足够宽松不会误报）
    - ✅ tanh_known_values中`> 1-1e-7`/`< -1+1e-7`阈值安全（tanh(±100)精确饱和为±1.0，阈值宽松）
    - ✅ sigmoid/tanh/ELU反向传播饱和测试均使用宽松阈值（`<1e-4`/`<0.01`/`<0.02`），无ULP风险
    - ✅ softmax极端值测试（one-hot large input=100）使用`>0.9999`的宽松断言，安全
    - ✅ softmax_loss完美预测测试（logit=100）使用`<1e-4`宽松阈值，安全
    - ✅ ReLU死亡神经元梯度断言`dx == 0.0`是精确零（乘法截断），非近似，安全
+   - ✅ PReLU/ReLU/Sigmoid/TanH数值梯度测试（rtol=1e-3）在各自随机种子下稳定通过
    - ✅ Dropout推理identity测试（ratio=0.5/0.9输出等于输入）经过确定性验证，安全
    - ✅ numpy匹配测试均使用`rtol=1e-5, atol=1e-6`的合理容差，安全
 
-   **关键经验**：float32中ULP(1.0)≈1.2e-7，任何涉及"接近1.0但不等于1.0"的断言在x>~17（sigmoid）或|x|>~9（tanh）时都会失败，因为结果已精确舍入为1.0。饱和区断言应使用`== 1.0`/`== 0.0`（精确饱和）或宽松不等式（如`> 0.9999999`），不能使用`> 1-ε`（ε<ULP/2）来断言"非常接近但不等于"。
+   **关键经验**：
+   1. **ULP饱和**：float32中ULP(1.0)≈1.2e-7，任何涉及"接近1.0但不等于1.0"的断言在x>~17（sigmoid）或|x|>~9（tanh）时都会失败，因为结果已精确舍入为1.0。饱和区断言应使用`== 1.0`/`== 0.0`（精确饱和）或宽松不等式（如`> 0.9999999`），不能使用`> 1-ε`（ε<ULP/2）来断言"非常接近但不等于"。
+   2. **C¹拐点差分误差**：对于在x=0处C¹连续但C²不连续的激活函数（如ELU：f(x)=x for x>0, f(x)=α(eˣ-1) for x≤0），中心差分跨拐点时截断误差为O(h)而非O(h²)，因为泰勒展开在拐点两侧使用不同的表达式。rtol=1e-3与h=1e-3配合时可能在个别元素上超界，应适当放宽至rtol=5e-3或在采样时避开x≈0附近。
 
 ---
 
@@ -462,3 +467,5 @@ def _make_net_cached(prototxt_str: str):
 | 提交 | 内容 |
 |------|------|
 | d1acc7b | test(p3b): 新增Scale/Bias/Eltwise/Concat/Dropout/SoftmaxWithLoss/Accuracy层P3-B阶段测试用例（50个用例，1232行变更） |
+| 1b45083 | test(p3c): 添加@require_cpp_extension装饰器（24类），修复sigmoid饱和断言，补充conftest.py遗漏注册（4 files, +41/-11） |
+| 92fb41b | test(precision): 修复ELU数值梯度C¹拐点精度(rtol=5e-3)，补全activation_backward等3个文件遗漏的@require_cpp_extension装饰器（4 files, +25/-2） |
