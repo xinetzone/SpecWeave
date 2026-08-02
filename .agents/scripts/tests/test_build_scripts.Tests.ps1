@@ -171,6 +171,42 @@ Describe "Build Scripts - File Existence and Thin Wrapper Validation" {
         $moduleFile = Join-Path $script:repoScripts "lib" "NativeBuild.psm1"
     }
 
+    It "VsDevShell.psm1 module exists" {
+        $vsModulePath = Join-Path $script:libDir "VsDevShell.psm1"
+        Test-Path $vsModulePath | Should -Be $true
+    }
+
+    It "VsDevShell.psm1 exports exactly 4 expected functions" {
+        $vsModule = Get-Module VsDevShell
+        if (-not $vsModule) {
+            Import-Module (Join-Path $script:libDir "VsDevShell.psm1") -Force
+            $vsModule = Get-Module VsDevShell
+        }
+        $vsModule | Should -Not -BeNullOrEmpty
+        $vsExported = $vsModule.ExportedFunctions.Keys
+        $vsExpected = @(
+            "Find-VisualStudio", "Enter-MsvcDevShell",
+            "Convert-VsVersionDirToNumber", "Get-VsEditionPriority"
+        )
+        foreach ($fn in $vsExpected) {
+            $vsExported -contains $fn | Should -Be $true -Because "VsDevShell should export function $fn"
+        }
+    }
+
+    It "PathPattern.psm1 module exists" {
+        $ppModulePath = Join-Path $script:libDir "PathPattern.psm1"
+        Test-Path $ppModulePath | Should -Be $true
+    }
+
+    It "PathPattern.psm1 exports exactly 1 expected function" {
+        Import-Module (Join-Path $script:libDir "PathPattern.psm1") -Force
+        $ppModule = Get-Module PathPattern
+        $ppModule | Should -Not -BeNullOrEmpty
+        $ppExported = @($ppModule.ExportedFunctions.Keys)
+        $ppExported.Count | Should -Be 1
+        $ppExported -contains "Resolve-PathPattern" | Should -Be $true
+    }
+
     It "NativeBuild.psm1 module exists" {
         Test-Path $moduleFile | Should -Be $true
     }
@@ -243,6 +279,8 @@ Describe "Build Scripts - No Hardcoded Paths" {
             (Join-Path $script:repoScripts "build_demo_ffi.ps1"),
             (Join-Path $script:repoScripts "build_xuan_ext_demo.ps1"),
             (Join-Path $script:repoScripts "lib" "NativeBuild.psm1"),
+            (Join-Path $script:repoScripts "lib" "VsDevShell.psm1"),
+            (Join-Path $script:repoScripts "lib" "PathPattern.psm1"),
             (Join-Path $script:repoScripts "verify_native_ext.ps1"),
             (Join-Path $script:repoScripts "verify_caffe_ffi.ps1"),
             (Join-Path $script:repoScripts "build_caffe_ffi.bat")

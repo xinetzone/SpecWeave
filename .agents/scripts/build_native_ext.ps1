@@ -87,8 +87,8 @@ Log-OK  "Project name: $detectedName"
 Write-Host ""
 
 Log-Info "Discovering conda environment..."
-Log-Info "  Hint='$CondaEnv'  MinVersion=$PythonMinVersion  NamePattern='$CondaEnvNamePattern'"
-$condaPrefix = Find-CondaEnvPython -Hint $CondaEnv -MinVersion $PythonMinVersion -NamePattern $CondaEnvNamePattern
+Log-Info "  Hint='$CondaEnv'  MinVersion=$PythonMinVersion  NamePattern='$CondaEnvNamePattern'  Verbose=$VerboseBuild"
+$condaPrefix = Find-CondaEnvPython -Hint $CondaEnv -MinVersion $PythonMinVersion -NamePattern $CondaEnvNamePattern -VerboseLog:$VerboseBuild
 $pyExe = Join-Path $condaPrefix "python.exe"
 $pyVer = & $pyExe --version 2>&1
 Log-OK  "Conda env:    $condaPrefix"

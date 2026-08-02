@@ -1,5 +1,6 @@
 # NativeBuild.psm1 - Shared module for native C++ extension build scripts
-# Provides auto-discovery of project directories, conda environments, and Visual Studio installations.
+# Provides auto-discovery of project directories and conda environments.
+# VS discovery/DevShell loading delegated to VsDevShell.psm1 (re-exported for backward compat).
 #
 # Usage (dot-source):
 #   Import-Module "$PSScriptRoot/../lib/NativeBuild.psm1"
@@ -9,39 +10,12 @@
 
 Set-StrictMode -Version Latest
 
-# ── Path Resolution Helpers ──────────────────────────────────────────────
+# Re-export generic utility functions from shared modules
+Import-Module (Join-Path $PSScriptRoot "VsDevShell.psm1")
+Import-Module (Join-Path $PSScriptRoot "PathPattern.psm1")
 
-function Resolve-PathPattern {
-    <#
-    .SYNOPSIS
-        Resolves a relative path pattern (with * wildcards) against a base directory.
-    .DESCRIPTION
-        Walks segment by segment; '*' matches any single directory level.
-    #>
-    param(
-        [string]$BaseDir,
-        [string[]]$Segments
-    )
-    $current = @($BaseDir)
-    foreach ($seg in $Segments) {
-        $next = [System.Collections.Generic.List[string]]::new()
-        foreach ($dir in $current) {
-            if ($seg -eq "*") {
-                foreach ($d in (Get-ChildItem -Path $dir -Directory -ErrorAction SilentlyContinue)) {
-                    $next.Add($d.FullName)
-                }
-            } else {
-                $candidate = Join-Path $dir $seg
-                if (Test-Path $candidate -PathType Container) {
-                    $next.Add($candidate)
-                }
-            }
-        }
-        $current = $next.ToArray()
-        if ($current.Count -eq 0) { return @() }
-    }
-    return $current
-}
+# ── Path Resolution Helpers (re-exported from PathPattern) ───────────────
+# Resolve-PathPattern is imported from PathPattern.psm1
 
 function Test-NativeProject {
     <#
@@ -287,39 +261,62 @@ function Find-CondaEnvPython {
         Minimum Python version as double (default 3.14).
     .PARAMETER NamePattern
         Regex pattern to prefer environment names matching this (e.g. "314|py314").
+    .PARAMETER VerboseLog
+        Write detailed discovery logs to host.
     #>
     param(
         [string]$Hint = "",
         [double]$MinVersion = 3.14,
-        [string]$NamePattern = ""
+        [string]$NamePattern = "",
+        [switch]$VerboseLog
     )
 
+    function Write-C { param([string]$Msg) if ($VerboseLog) { Write-Host "  [CONDA] $Msg" -ForegroundColor DarkGray } }
+
+    Write-C "Find-CondaEnvPython start: Hint='$Hint' MinVersion=$MinVersion NamePattern='$NamePattern'"
+
     if ($Hint) {
+        Write-C "Branch: explicit Hint provided, trying as direct path first"
         # Check as direct path
         $pyCandidates = [System.Collections.Generic.List[string]]::new()
         $pyCandidates.Add((Join-Path $Hint "python.exe"))
         $pyCandidates.Add([IO.Path]::Combine($Hint, "Scripts", "python.exe"))
         foreach ($pyPath in $pyCandidates) {
+            Write-C "  Checking path candidate: $pyPath"
             if (Test-Path $pyPath) {
                 $ver = Get-PythonVersion -PythonExe $pyPath
+                Write-C "  Found python.exe, version=$ver"
                 if ($ver -ge $MinVersion) {
+                    Write-C "  Version OK, returning (Resolve-Path): $(Split-Path $pyPath)"
                     return (Resolve-Path (Split-Path $pyPath)).Path
                 }
                 Write-Warning "Conda env at $Hint has Python $ver, need >= $MinVersion"
+            } else {
+                Write-C "  Not found: $pyPath"
             }
         }
         # Check as env name across all conda roots
-        foreach ($cr in (Get-CondaRoots)) {
+        Write-C "Branch: Hint not a direct path, searching as env name across conda roots"
+        $roots = Get-CondaRoots
+        Write-C "  Found $($roots.Count) conda root(s)"
+        foreach ($cr in $roots) {
+            Write-C "  Checking root: $cr"
             $envPath = [IO.Path]::Combine($cr, "envs", $Hint)
-            if (Test-Path (Join-Path $envPath "python.exe")) {
-                $ver = Get-PythonVersion -PythonExe (Join-Path $envPath "python.exe")
+            $envPy = Join-Path $envPath "python.exe"
+            Write-C "    Trying env: $envPy"
+            if (Test-Path $envPy) {
+                $ver = Get-PythonVersion -PythonExe $envPy
+                Write-C "    Found python.exe, version=$ver"
                 if ($ver -ge $MinVersion) {
+                    Write-C "    Version OK, returning: $envPath"
                     return (Resolve-Path $envPath).Path
                 }
             }
             if ($Hint -eq "base" -and (Test-Path (Join-Path $cr "python.exe"))) {
                 $ver = Get-PythonVersion -PythonExe (Join-Path $cr "python.exe")
+                Write-C "    Checking base env at $cr, version=$ver"
                 if ($ver -ge $MinVersion) {
+                    Write-C "    Base env version OK, returning: $cr"
                     return (Resolve-Path $cr).Path
                 }
             }
@@ -327,324 +324,108 @@ function Find-CondaEnvPython {
         throw "Conda environment '$Hint' not found or does not have Python $MinVersion+. Specify the full path."
     }
 
-    # Currently activated conda env
+    # Currently activated conda env - only use if it matches name pattern (if specified) AND version
     if ($env:CONDA_PREFIX) {
+        Write-C "Branch: CONDA_PREFIX is set: $env:CONDA_PREFIX"
         $curPy = Join-Path $env:CONDA_PREFIX "python.exe"
         if (Test-Path $curPy) {
             $ver = Get-PythonVersion -PythonExe $curPy
-            if ($ver -ge $MinVersion) {
-                Write-Host "  Using active conda env: $env:CONDA_PREFIX"
+            $curName = Split-Path $env:CONDA_PREFIX -Leaf
+            $nameMatches = -not $NamePattern -or $curName -match $NamePattern
+            Write-C "  Active env name='$curName' version=$ver nameMatches=$nameMatches"
+            if ($ver -ge $MinVersion -and $nameMatches) {
+                Write-Host "  Using active conda env: $env:CONDA_PREFIX" -ForegroundColor Cyan
                 return $env:CONDA_PREFIX
             }
-            Write-Host "  Active conda env has Python $ver (need >= $MinVersion), searching..."
+            if ($ver -ge $MinVersion) {
+                Write-Host "  Active conda env has Python $ver but name doesn't match pattern '$NamePattern', searching..." -ForegroundColor DarkYellow
+            } else {
+                Write-Host "  Active conda env has Python $ver (need >= $MinVersion), searching..." -ForegroundColor DarkYellow
+            }
+        } else {
+            Write-C "  CONDA_PREFIX set but python.exe not found at $curPy"
         }
+    } else {
+        Write-C "Branch: no active CONDA_PREFIX, proceeding to full search"
     }
 
     # Search all conda roots
-    $candidates = [System.Collections.Generic.List[string]]::new()
-    foreach ($cr in (Get-CondaRoots)) {
-        if (Test-Path (Join-Path $cr "python.exe")) {
-            $candidates.Add($cr)
+    Write-C "Branch: full search across all conda roots"
+    $candidates = [System.Collections.Generic.List[object]]::new()
+    $roots = Get-CondaRoots
+    Write-C "  Found $($roots.Count) conda root(s) to scan"
+    foreach ($cr in $roots) {
+        Write-C "  Scanning root: $cr"
+        # Check base env
+        $basePy = Join-Path $cr "python.exe"
+        if (Test-Path $basePy) {
+            $ver = Get-PythonVersion -PythonExe $basePy
+            $baseName = Split-Path $cr -Leaf
+            $nameMatch = if ($NamePattern) { $baseName -match $NamePattern } else { $false }
+            if ($ver -ge $MinVersion) {
+                Write-C "    Base env: name='$baseName' version=$ver nameMatch=$nameMatch → ADD"
+                $candidates.Add([pscustomobject]@{
+                    Path = $cr
+                    Name = $baseName
+                    Version = $ver
+                    IsNameMatch = $nameMatch
+                })
+            } else {
+                Write-C "    Base env: version=$ver < $MinVersion → SKIP"
+            }
         }
         $envsDir = Join-Path $cr "envs"
         if (Test-Path $envsDir) {
-            foreach ($envDir in (Get-ChildItem $envsDir -Directory -ErrorAction SilentlyContinue)) {
-                if (Test-Path (Join-Path $envDir.FullName "python.exe")) {
-                    $candidates.Add($envDir.FullName)
+            $envDirs = Get-ChildItem $envsDir -Directory -ErrorAction SilentlyContinue
+            Write-C "    envs/ dir: $($envDirs.Count) subdirectories"
+            foreach ($envDir in $envDirs) {
+                $pyPath = Join-Path $envDir.FullName "python.exe"
+                if (Test-Path $pyPath) {
+                    $ver = Get-PythonVersion -PythonExe $pyPath
+                    $nameMatch = if ($NamePattern) { $envDir.Name -match $NamePattern } else { $false }
+                    if ($ver -ge $MinVersion) {
+                        Write-C "      env '$($envDir.Name)': version=$ver nameMatch=$nameMatch → ADD"
+                        $candidates.Add([pscustomobject]@{
+                            Path = $envDir.FullName
+                            Name = $envDir.Name
+                            Version = $ver
+                            IsNameMatch = $nameMatch
+                        })
+                    } else {
+                        Write-C "      env '$($envDir.Name)': version=$ver < $MinVersion → SKIP"
+                    }
                 }
             }
-        }
-    }
-
-    $fallback = $null
-    foreach ($cand in $candidates) {
-        $ver = Get-PythonVersion -PythonExe (Join-Path $cand "python.exe")
-        if ($ver -ge $MinVersion) {
-            $name = Split-Path $cand -Leaf
-            if ($NamePattern -and $name -match $NamePattern) {
-                Write-Host "  Found Python $MinVersion+ env: $name ($cand)"
-                return $cand
-            }
-            if (-not $fallback) { $fallback = $cand }
-        }
-    }
-    if ($fallback) {
-        $name = Split-Path $fallback -Leaf
-        Write-Host "  Found Python $MinVersion+ env: $name ($fallback)"
-        return $fallback
-    }
-
-    throw "No conda environment with Python $MinVersion+ found. Activate one or use -CondaEnv to specify."
-}
-
-# ── Visual Studio Discovery ──────────────────────────────────────────────
-
-function Convert-VsVersionDirToNumber {
-    <# .SYNOPSIS Converts a VS version directory name to a comparable numeric version. #>
-    param([string]$VersionDirName)
-    # Year-based directories (e.g. "2022") map to internal VS major versions
-    $yearMap = @{ "2022" = 17; "2019" = 16; "2017" = 15; "2015" = 14; "2013" = 12 }
-    if ($yearMap.ContainsKey($VersionDirName)) { return $yearMap[$VersionDirName] }
-    # Numeric directories (e.g. "18" for VS 18 / 2026 Insiders) used directly
-    if ($VersionDirName -match '^(\d+)$') { return [int]$Matches[1] }
-    return 0
-}
-
-function Get-VsEditionPriority {
-    <# .SYNOPSIS Returns a priority score for a VS edition name (higher = preferred). #>
-    param([string]$EditionName)
-    $en = $EditionName.ToLower()
-    if ($en -match 'insiders|canary') { return 4 }      # Bleeding edge
-    if ($en -match 'preview') { return 3 }              # Preview channel
-    if ($en -match 'enterprise') { return 2 }           # Enterprise (most features)
-    if ($en -match 'professional') { return 1 }         # Professional
-    if ($en -match 'community|buildtools') { return 0 } # Community/Build Tools
-    return -1
-}
-
-function Find-VisualStudio {
-    <#
-    .SYNOPSIS
-        Finds Visual Studio installation with C++ tools, preferring the newest version
-        and Insiders/Preview editions.
-    .DESCRIPTION
-        Multi-strategy discovery:
-        1. vswhere.exe (official method) - requires VC.Tools.x86.x64 component
-        2. Directory scan of Program Files (handles Insiders/Preview editions not registered with vswhere)
-        3. Environment variables (VSINSTALLDIR, VCToolsInstallDir)
-
-        All valid candidates (those with DevShell.dll) are collected across strategies,
-        then sorted by: version number (descending) → edition priority (descending).
-        This ensures VS 2026 Insiders (v18) is selected over VS 2022 (v17) even when both exist.
-    .PARAMETER Hint
-        Explicit VS installation path to use.
-    .PARAMETER VerboseLog
-        Write detailed discovery logs to host.
-    #>
-    param(
-        [string]$Hint = "",
-        [switch]$VerboseLog
-    )
-
-    function Write-D { param([string]$Msg) if ($VerboseLog) { Write-Host "  [VS] $Msg" } }
-
-    if ($Hint) {
-        $devShell = [IO.Path]::Combine($Hint, "Common7", "Tools", "Microsoft.VisualStudio.DevShell.dll")
-        if (Test-Path $devShell) {
-            Write-D "Using explicit Hint: $Hint"
-            return (Resolve-Path $Hint).Path
-        }
-        throw "DevShell.dll not found in '$Hint'. Is this a valid VS installation?"
-    }
-
-    # Collect all valid candidates across strategies
-    $candidates = [System.Collections.Generic.List[object]]::new()
-    $seen = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
-
-    function Add-Candidate {
-        param([string]$Path, [string]$Source, [string]$VersionDir = "", [string]$EditionName = "")
-        $devShell = [IO.Path]::Combine($Path, "Common7", "Tools", "Microsoft.VisualStudio.DevShell.dll")
-        if (-not (Test-Path $devShell)) { return }
-        $fullPath = (Resolve-Path $Path).Path
-        if ($seen.Add($fullPath)) {
-            # Extract version/edition from path if not provided
-            if (-not $VersionDir -or -not $EditionName) {
-                $rel = $fullPath -replace [regex]::Escape("Microsoft Visual Studio\"), ""
-                $parts = $rel.Split([char]'\', [char]'/')
-                if (-not $VersionDir -and $parts.Count -ge 1) { $VersionDir = $parts[0] }
-                if (-not $EditionName -and $parts.Count -ge 2) { $EditionName = $parts[1] }
-            }
-            $verNum = Convert-VsVersionDirToNumber -VersionDirName $VersionDir
-            $edPriority = Get-VsEditionPriority -EditionName $EditionName
-            $candidates.Add([pscustomobject]@{
-                Path = $fullPath; Source = $Source; VersionDir = $VersionDir
-                Edition = $EditionName; VersionNum = $verNum; EdPriority = $edPriority
-            }) | Out-Null
-        }
-    }
-
-    # Strategy 1: vswhere.exe
-    Write-D "Strategy 1: vswhere.exe"
-    foreach ($pfName in @("ProgramFiles(x86)", "ProgramFiles")) {
-        $pf = [Environment]::GetEnvironmentVariable($pfName)
-        if (-not $pf) { continue }
-        $vw = [IO.Path]::Combine($pf, "Microsoft Visual Studio", "Installer", "vswhere.exe")
-        if (-not (Test-Path $vw)) { Write-D "  vswhere not found at $vw"; continue }
-        Write-D "  vswhere at $vw"
-        foreach ($req in @("Microsoft.VisualStudio.Component.VC.Tools.x86.x64", "")) {
-            $vwArgs = @("-latest", "-products", "*", "-property", "installationPath")
-            if ($req) { $vwArgs = @("-latest", "-products", "*", "-requires", $req, "-property", "installationPath") }
-            $vsPath = & $vw @vwArgs 2>$null | Select-Object -First 1
-            if ($vsPath) {
-                $trimmed = $vsPath.Trim()
-                if ($trimmed) { Add-Candidate -Path $trimmed -Source "vswhere" }
-            }
-        }
-    }
-
-    # Strategy 2: Directory scan
-    Write-D "Strategy 2: Directory scan"
-    foreach ($pfName in @("ProgramFiles", "ProgramFiles(x86)")) {
-        $pf = [Environment]::GetEnvironmentVariable($pfName)
-        if (-not $pf) { continue }
-        $vsBase = Join-Path $pf "Microsoft Visual Studio"
-        if (-not (Test-Path $vsBase)) { continue }
-        Write-D "  Scanning $vsBase"
-        $versionDirs = Get-ChildItem $vsBase -Directory -ErrorAction SilentlyContinue
-        foreach ($versionDir in $versionDirs) {
-            Write-D "    Version dir: $($versionDir.Name)"
-            $foundInVersion = $false
-            foreach ($editionDir in (Get-ChildItem $versionDir.FullName -Directory -ErrorAction SilentlyContinue)) {
-                $devShell = [IO.Path]::Combine($editionDir.FullName, "Common7", "Tools", "Microsoft.VisualStudio.DevShell.dll")
-                if (Test-Path $devShell) {
-                    Add-Candidate -Path $editionDir.FullName -Source "dir-scan" -VersionDir $versionDir.Name -EditionName $editionDir.Name
-                    Write-D "      $($editionDir.Name): valid DevShell"
-                    $foundInVersion = $true
-                }
-            }
-            # Version dir itself might be an edition (e.g. "18/Insiders")
-            if (-not $foundInVersion) {
-                $devShell = [IO.Path]::Combine($versionDir.FullName, "Common7", "Tools", "Microsoft.VisualStudio.DevShell.dll")
-                if (Test-Path $devShell) {
-                    Add-Candidate -Path $versionDir.FullName -Source "dir-scan" -VersionDir $versionDir.Name -EditionName $versionDir.Name
-                    Write-D "      (self): valid DevShell"
-                }
-            }
-        }
-    }
-
-    # Strategy 3: Environment variables
-    Write-D "Strategy 3: Environment variables"
-    foreach ($envVar in @("VSINSTALLDIR", "VCToolsInstallDir")) {
-        $ev = [Environment]::GetEnvironmentVariable($envVar)
-        if (-not $ev) { continue }
-        Write-D "  $envVar = $ev"
-        $vsDir = if ($envVar -eq "VCToolsInstallDir") {
-            Split-Path (Split-Path (Split-Path $ev -Parent) -Parent) -Parent
         } else {
-            $ev.TrimEnd('\', '/')
+            Write-C "    No envs/ subdirectory"
         }
-        if ($vsDir) { Add-Candidate -Path $vsDir -Source "env:$envVar" }
     }
 
+    Write-C "  Total candidates collected: $($candidates.Count)"
     if ($candidates.Count -eq 0) {
-        throw "No Visual Studio installation with DevShell found. Use -VsPath to specify it explicitly."
+        throw "No conda environment with Python $MinVersion+ found. Activate one or use -CondaEnv to specify."
     }
 
-    # Sort by: VersionNum DESC → EdPriority DESC → Path (stable)
-    $sorted = $candidates | Sort-Object -Property @{Expression={$_.VersionNum};Descending=$true}, @{Expression={$_.EdPriority};Descending=$true}, Path
-
+    # Sort: name match first (DESC), then version (DESC) to prefer newest matching version
+    $sorted = $candidates | Sort-Object -Property @{Expression={$_.IsNameMatch};Descending=$true}, @{Expression={$_.Version};Descending=$true}, Name
     if ($VerboseLog) {
-        Write-D "Found $($candidates.Count) VS installation(s):"
+        Write-C "  Sorted candidates (best first):"
         for ($i = 0; $i -lt $sorted.Count; $i++) {
             $c = $sorted[$i]
             $marker = if ($i -eq 0) { "→" } else { " " }
-            Write-D "  $marker v$($c.VersionNum) [$($c.Edition)] (pri=$($c.EdPriority)) via $($c.Source): $($c.Path)"
+            $matchTag = if ($c.IsNameMatch) { " [NAME-MATCH]" } else { "" }
+            Write-C "    $marker $($c.Name) v$($c.Version)$matchTag at $($c.Path)"
         }
     }
-
     $best = $sorted[0]
-    Write-Host "  Using Visual Studio v$($best.VersionNum) [$($best.Edition)]: $($best.Path)" -ForegroundColor Cyan
+    $matchDesc = if ($best.IsNameMatch) { " (name match)" } else { "" }
+    Write-Host "  Found Python $($best.Version)+ env: $($best.Name) ($($best.Path))$matchDesc" -ForegroundColor Cyan
     return $best.Path
 }
 
-# ── MSVC DevShell Loading ────────────────────────────────────────────────
-
-function Enter-MsvcDevShell {
-    <#
-    .SYNOPSIS
-        Loads MSVC build environment via Visual Studio DevShell, with automatic PATH trimming.
-    .DESCRIPTION
-        On Windows, Enter-VsDevShell invokes cmd.exe internally which has an 8191-char
-        command-line limit. When PATH exceeds this, VsDevCmd.bat fails with "输入行太长"
-        (input line too long) but does NOT throw a terminating error — it prints the
-        message and returns, leaving env vars in a partially-corrupted state.
-
-        This function:
-        1. Attempts DevShell load with current PATH
-        2. Captures stderr to detect the "input line too long" error (Chinese + English)
-        3. Verifies cl.exe is actually available after loading
-        4. On failure, saves all VS-related env vars, trims PATH to system essentials, retries
-        5. After successful load, conda paths are prepended by the caller
-    .PARAMETER VsInstallPath
-        Path to Visual Studio installation.
-    .PARAMETER Arch
-        Target architecture (default amd64).
-    #>
-    param(
-        [string]$VsInstallPath,
-        [string]$Arch = "amd64"
-    )
-
-    $systemRoot = $env:SystemRoot
-    $devShellDll = [IO.Path]::Combine($VsInstallPath, "Common7", "Tools", "Microsoft.VisualStudio.DevShell.dll")
-    Import-Module $devShellDll
-
-    # Internal helper: attempt DevShell load and verify cl.exe exists
-    function Try-LoadDevShell {
-        param([string]$VsPath, [string]$TargetArch)
-        $output = Enter-VsDevShell -VsInstallPath $VsPath -SkipAutomaticLocation -DevCmdArguments "-arch=$TargetArch -host_arch=$TargetArch" 2>&1
-        foreach ($o in $output) {
-            if ($o -is [System.Management.Automation.ErrorRecord]) {
-                $msg = $o.ToString()
-                if ($msg -match "输入行太长|input line is too long|command line|too long") {
-                    throw "PATH_TOO_LONG"
-                }
-            }
-        }
-        $clCmd = Get-Command cl -ErrorAction SilentlyContinue
-        if (-not $clCmd) {
-            throw "CL_NOT_FOUND_AFTER_DEVSHELL"
-        }
-    }
-
-    # Build minimal system PATH (cmd.exe + PowerShell + core system tools)
-    function Get-MinimalSystemPath {
-        $parts = [System.Collections.Generic.List[string]]::new()
-        $parts.Add([IO.Path]::Combine($systemRoot, "System32"))
-        $parts.Add($systemRoot)
-        $parts.Add([IO.Path]::Combine($systemRoot, "System32", "Wbem"))
-        $parts.Add([IO.Path]::Combine($systemRoot, "System32", "WindowsPowerShell", "v1.0"))
-        $pwshCmd = Get-Command pwsh -ErrorAction SilentlyContinue
-        if ($pwshCmd -and $pwshCmd.Source) {
-            $pwshDir = Split-Path $pwshCmd.Source -Parent
-            if ($pwshDir) { $parts.Add($pwshDir) }
-        }
-        return ($parts | Select-Object -Unique) -join ";"
-    }
-
-    # Save env vars that DevShell modifies (for rollback on retry)
-    $vsEnvVars = @("PATH", "LIB", "INCLUDE", "LIBPATH", "DevEnvDir", "VCINSTALLDIR", "VSINSTALLDIR")
-    $savedEnv = @{}
-    foreach ($ev in $vsEnvVars) {
-        $savedEnv[$ev] = [Environment]::GetEnvironmentVariable($ev)
-    }
-
-    $fullPath = $env:PATH
-
-    try {
-        Try-LoadDevShell -VsPath $VsInstallPath -TargetArch $Arch
-        Write-Host "  DevShell loaded with full PATH ($($fullPath.Length) chars)"
-    } catch {
-        Write-Host "  DevShell failed with full PATH ($($fullPath.Length) chars): $($_.Exception.Message)"
-        Write-Host "  Restoring env and retrying with trimmed PATH..."
-        # Rollback env vars to pre-DevShell state
-        foreach ($ev in $vsEnvVars) {
-            if ($null -eq $savedEnv[$ev]) {
-                [Environment]::SetEnvironmentVariable($ev, $null)
-            } else {
-                [Environment]::SetEnvironmentVariable($ev, $savedEnv[$ev])
-            }
-        }
-        $env:PATH = Get-MinimalSystemPath
-        try {
-            Try-LoadDevShell -VsPath $VsInstallPath -TargetArch $Arch
-            Write-Host "  DevShell loaded with trimmed PATH ($($env:PATH.Length) chars)"
-        } catch {
-            throw "Failed to load MSVC DevShell after PATH trim. $($_.Exception.Message)"
-        }
-    }
-}
+# ── Module Exports ───────────────────────────────────────────────────────
+# VS functions (Find-VisualStudio, Enter-MsvcDevShell, Convert-VsVersionDirToNumber, Get-VsEditionPriority)
+# are re-exported from VsDevShell.psm1
 
 Export-ModuleMember -Function @(
     "Resolve-PathPattern",
