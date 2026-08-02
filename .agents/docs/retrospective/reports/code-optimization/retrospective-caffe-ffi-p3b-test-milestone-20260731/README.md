@@ -812,3 +812,62 @@ pytest tests/python/test_activation_backward.py test_inner_product_backward.py t
 3. **精度测试检查清单** - 7项必查项（饱和区断言、精确相等、梯度阈值、超越函数容差等）
 
 **沉淀来源**：caffe-ffi P3-C阶段浮点数精度审计中发现的sigmoid饱和断言矛盾、ELU拐点差分误差两个问题，L2级验证（已在209个测试用例中验证有效）。
+
+---
+
+## P3-C Backward实现阶段：BatchNorm + Conv Backward验证（2026-08-03）
+
+### ACT-10完成：BatchNorm Backward_cpu实现
+
+**完成状态**：✅ 已完成（commit `4732a0b`）
+
+**实现内容**：
+- [batch_norm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/batch_norm_layer.hpp)：添加`Backward_cpu`声明
+- [batch_norm_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/batch_norm_layer.cpp)：实现Backward_cpu（~72行），核心公式`dX = dy * inv_std[c]`，其中`inv_std[c] = 1/sqrt(max(var[c]*sf, 0) + eps)`
+- 测试覆盖：11个测试用例（已知值、解析梯度对比numpy、数值梯度检查、零梯度、per-channel缩放、scale_factor、eps效应、形状/确定性/前向不变性）
+- numpy参考：[_numpy_bn_reference.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/_numpy_bn_reference.py)（12个自测试通过）
+
+### Conv Backward测试：13个用例 + 🔴 发现关键Bug
+
+**意外发现**：在编写Conv Backward测试时，首次调用`net.backward()`触发Windows access violation崩溃（exit code 3221225477）。
+
+**根因分析**：
+- [base_conv_layer.cpp#L111](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/base_conv_layer.cpp#L111)：`BaseConvolutionLayer::LayerSetUp`缺少`param_propagate_down_.resize(this->blobs_.size(), true)`初始化
+- Backward_cpu中直接访问`this->param_propagate_down_[0]`和`this->param_propagate_down_[1]`，但向量大小为0，导致越界访问
+- 此Bug影响所有继承BaseConvolutionLayer的层：**ConvolutionLayer**和**DeconvolutionLayer**
+- 其他可学习层（InnerProduct、Bias、BatchNorm、PReLU、Scale）均在各自LayerSetUp末尾正确初始化了`param_propagate_down_`
+
+**修复**：在base_conv_layer.cpp的LayerSetUp末尾添加一行初始化（与其他5个层保持一致），并添加CRITICAL注释说明。
+
+**预防措施**（[prevent: test-case]）：
+- 新增13个Conv Backward测试用例（1x1/3x3/padding/stride/groups/无bias、数值梯度dX/dW/db），第一时间发现此类崩溃
+- Conv Backward测试覆盖了：解析梯度对比numpy参考（im2col/col2im实现）、中心有限差分数值梯度、零梯度、已知值、形状/确定性/前向不变性
+- numpy参考：[_numpy_conv_reference.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/_numpy_conv_reference.py)（含im2col/col2im/GEMM前向反向，groups支持，自测试通过）
+
+### 回归测试结果
+
+| 测试集 | 结果 | 说明 |
+|--------|------|------|
+| BN Backward (11) | ✅ 全通过 | 新增 |
+| Conv Backward (13) | ✅ 全通过 | 新增（含bug验证） |
+| IP Backward (23) | ✅ 全通过 | 已有，无回归 |
+| P3-A Conv/Pool/BN Forward (24) | ✅ 全通过 | 已有，无回归 |
+| **核心路径小计** | **71/71** | Backward + 相关Forward |
+| 全量pytest (829) | 797 passed, 31 failed | 31个失败均为Python API问题（net.Forward大写F返回Blob对象、lazy allocation等），与C++ Backward修改无关 |
+
+### 提交记录
+
+| 提交 | 内容 |
+|------|------|
+| 4732a0b | feat(layers): 实现BatchNorm反向传播并补充Conv/BN反向梯度测试（7 files, +1447行），修复base_conv_layer中param_propagate_down_未初始化导致Conv/Deconv Backward崩溃的Bug |
+
+### 🐛 Bug模式沉淀：LayerSetup中param_propagate_down_初始化缺失
+
+**模式特征**：新增带可学习参数（blobs_）的Layer时，LayerSetUp中创建blobs_后忘记初始化`param_propagate_down_`向量，导致Backward首次访问越界崩溃。
+
+**检查清单**（添加新Layer时必查）：
+1. [ ] 如果Layer有blobs_（权重/偏置），必须在LayerSetUp末尾调用`this->param_propagate_down_.resize(this->blobs_.size(), true)`
+2. [ ] 这行代码应该在所有blobs_[0]/blobs_[1]创建完成之后、LayerSetUp返回之前
+3. [ ] 编写第一个Backward测试时，优先使用最简单配置（1x1、无bias、极小输入）快速触发此路径
+
+**已正确初始化的层**：InnerProduct、Bias、BatchNorm、PReLU、Scale、BaseConvolution（已修复）
