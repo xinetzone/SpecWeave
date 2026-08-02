@@ -196,10 +196,13 @@ coverage: 25/25 C++ layers (100%)
 | ACT-01 | P1 | 在测试README或conftest文档中记录single-consumer blob模型约束和Split使用模式 | 新贡献者阅读后能正确处理多消费者场景 | 文档 | ✅ **已完成** |
 | ACT-02 | P1 | P3-C阶段测试启动前，先grep确认目标层（Self-Attention/Positional Encoding或替代层）是否已实现 | 避免再次出现方向偏移 | 流程改进 | ✅ **已完成**（发现新问题，见下方状态更新） |
 | ACT-03 | P2 | 将"三层验证法+numpy参考先行"模式提取为测试模板文件 | 新测试文件可直接复制模板填空 | 工具 | ✅ **已完成** |
-| ACT-04 | P2 | 测试中Net复用机制（如session级Net缓存）以减少~100s构建开销 | P3-B类测试套件运行时间降低50%以上 | 性能优化 | 📋 **有计划**（待执行） |
+| ACT-04 | P2 | 测试性能优化（perf_trace基础设施GC开销优化） | P3-B类测试套件运行时间降低50%以上 | 性能优化 | ✅ **已完成**（2026-08-03，实际加速16.2x，超额完成） |
 | ACT-05 | P3 | 实现RNN/LSTM层后，补充原始P3-B目标的RNN/LSTM forward测试 | RNN/LSTM层测试覆盖达到与Scale/Eltwise同等水平 | 功能+测试 | 📋 **有计划**（待执行） |
 | ACT-06 | P0 | 构建Windows本地C++扩展编译环境（Python 3.14 + VS 2026 Insiders + 自动化构建脚本） | 一条命令成功编译_caffe_ffi.dll，pytest可加载C++扩展运行真实forward | 基础设施 | ✅ **已完成**（2026-08-02） |
 | ACT-07 | P1 | 为P3-B(8个)/P3-C(16个)共24个测试类添加@require_cpp_extension装饰器 | C++扩展不可用时测试SKIP而非FAIL，避免误导 | 缺陷修复 | ✅ **已完成**（2026-08-02） |
+| ACT-08 | P1 | Python-only fallback模式改进：_py_forward/_py_backward抛出明确RuntimeError而非返回空dict/零值 | 导入时RuntimeWarning+调用时RuntimeError+安装指引，避免误导性FAIL | 缺陷修复 | ✅ **已完成**（2026-08-02） |
+| ACT-09 | P0 | P3-C核心层Backward梯度验证（数值梯度检查） | 已实现Backward_cpu的层（InnerProduct/Conv/Pooling/SoftmaxWithLoss等）全部通过解析梯度vs numpy参考+中心有限差分数值梯度双重验证 | 测试 | 🔄 **进行中**（2026-08-03：InnerProduct✅ 23/23通过；其余层待验证） |
+| ACT-10 | P0 | 实现BatchNorm层Backward_cpu（inference模式，全局统计量） | dX = dy / sqrt(σ²+ε) per-channel scaling；配套测试（解析梯度+数值梯度+确定性）通过 | 功能+测试 | 📋 **有计划**（待执行，详细计划见下方） |
 
 ### ACT-02 P3-C启动前检查结果（2026-08-01）
 
@@ -228,97 +231,381 @@ coverage: 25/25 C++ layers (100%)
 | 当前环境C++扩展未加载 | P0-环境 | Python 3.13.9 < 要求3.14+；`_caffe_ffi` DLL/pyd未在任何搜索路径中找到；需使用Python 3.14环境重新编译安装 | ✅ **已解决**（ACT-06）：本地py314 conda环境（Python 3.14.3）+ VS 2026 Insiders v18编译工具链就绪；自动化构建脚本`build_caffe_ffi.ps1`开发完成，支持自动发现项目目录/Conda环境/VS安装路径，解决了PATH长度截断和DevShell静默失败问题；35/35编译目标通过，`_caffe_ffi.dll`成功生成并安装为editable wheel |
 | `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 | ✅ **已修复**（ACT-08）：在`projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_core.py`中新增三层防护：①模块导入时若C++扩展不可用发出`RuntimeWarning`一次；②`_py_forward()`（Forward()路径stub）和`_py_backward()`（no-op stub）改为抛出`RuntimeError`并附带明确安装指引；③`_forward_pure_python()`在空网（无layers无output blobs）时抛出`RuntimeError`，在配置了blobs但未覆盖计算时发出一次性`RuntimeWarning`；67个test_net.py测试+57个activation测试全部通过无回归 |
 
-### ACT-04 执行计划：Net复用性能优化
+### ACT-04 执行结果：perf_trace基础设施GC开销优化（2026-08-03）
 
-**问题分析**：
-- P3-B测试套件共50个用例，每个用例独立创建Net（~0.7-1.5ms/Net）+ Forward（~0.4-0.8ms），Net构建约占总耗时~60%
-- 加上pytest fixture开销（~680ms/test），总计~100s
-- 同一网络结构被反复创建销毁（如5个ReLU测试用例创建5个不同的Net）
+**🔑 关键洞察：原假设错误——瓶颈不在Net构建**
 
-**实施方案（分两个阶段）：**
+使用七概念方法论（I→F→A→C→V链路）系统性分析后发现：
 
-**阶段1：测试辅助层Net缓存（推荐，风险低）**
-在 `caffe_test_helpers.py` 中添加LRU缓存的Net工厂：
-```python
-from functools import lru_cache
+| 操作 | 耗时 | 占比 |
+|------|------|------|
+| Net创建（prototxt解析+C++构建） | **0.5ms** | 0.02% |
+| Forward计算 | **0.03ms** | 0.001% |
+| `perf_trace` 3轮完整GC（gen0+1+2×3） | **150ms/次** | 主要开销 |
+| `pytest_runtest_setup` 5轮完整GC（泄漏检测） | **250ms/次** | 主要开销 |
+| RSS峰值采样线程创建/销毁 | **1.6ms/block** | 次要 |
+| CSV文件每行flush | I/O syscall | 次要 |
+| C++ InsertSplits日志输出 | ~15行/Net | 次要 |
 
-@lru_cache(maxsize=64)
-def _make_net_cached(prototxt_str: str):
-    """缓存已解析的Net，避免相同prototxt重复解析构建。"""
-    param = net_param_from_string(prototxt_str)
-    return net_from_param(param)
+**根因**：`perf_trace()`上下文管理器和`pytest_runtest_setup`泄漏检测钩子在每次进入/退出时都执行激进的分代GC（3-5轮gen0+gen1+gen2），单次完整GC约150ms，每个P3-B测试触发8-12次GC调用。Net创建本身仅0.5ms，完全不是瓶颈。
+
+**实际优化方案（4项改动，均在conftest.py）**：
+
+1. **分层GC策略**：`_mem_bytes_blobs(gc_mode="quick"|"full"|"off")`替代硬编码的3轮full GC
+   - `quick`（默认）：仅`gc.collect(0)`一轮gen0收集，~1-2ms
+   - `full`：2轮gen0+1+2（原5轮→2轮），用于精确泄漏检测
+   - `off`：不做GC，用于微基准测试
+   - 环境变量`CAFFE_FFI_PERF_GC_MODE=full`可强制full GC
+
+2. **perf_trace优化**：
+   - 默认使用quick GC
+   - RSS峰值采样线程改为可选（`rss_peak=False`默认），避免短block的线程创建/销毁开销
+   - RSS采样间隔从0.5ms增大到10ms（启用时）
+
+3. **CSV写入缓冲**：从每行flush改为每20行flush，END行强制flush，atexit保证退出时flush
+
+4. **C++日志抑制**：测试运行时默认设C++日志级别为ERROR（`CAFFE_FFI_CPP_LOG_LEVEL=4`），抑制InsertSplits噪声输出
+
+**优化效果**：
+
+| 指标 | 优化前 | 优化后 | 加速比 |
+|------|--------|--------|--------|
+| P3-B单文件(50测试)总耗时 | **134.34s** | **8.27s** | **16.2x** |
+| 单测试call时间 | 0.9-2.8s | 0.00-0.01s | **~200x** |
+| 单测试setup时间 | 0.58-0.72s | 0.16-0.21s | **3.7x** |
+| P3全套件(176测试) | 未测(预估>400s) | 28.3s | — |
+| 验收标准(降低50%) | 目标<67s | 8.27s | **超额330%** |
+
+**环境变量开关**（调试/CI可按需启用完整检测）：
+- `CAFFE_FFI_PERF_GC_MODE=full`：启用完整GC（精确泄漏检测，~150ms/block）
+- `CAFFE_FFI_LEAKCHECK_GC=quick`：快速泄漏检测（~2ms/test）
+- `CAFFE_FFI_LEAKCHECK_GC=off`：关闭泄漏检测GC（最快，~μs）
+- `CAFFE_FFI_CPP_LOG_LEVEL=3`：恢复WARN级别C++日志（显示InsertSplits）
+
+**教训沉淀**：性能优化必须先测量再行动——原方案假设"Net创建是瓶颈"准备引入LRU缓存，但微基准测试证明Net创建仅0.5ms，真正的开销在观测基础设施本身（profiler overhead）。**"测量，不要猜"**是性能优化的第一原则。
+
+### ACT-05 可行性评估：RNN/LSTM层实现+测试（2026-08-03 更新）
+
+**现状核查**（grep确认，2026-08-03）：
+- `src/caffe_ffi/layers/` 现有25个注册层（ReLU/Sigmoid/TanH/Convolution/Pooling/InnerProduct/Scale/Bias/Eltwise/Concat/Softmax/SoftmaxWithLoss/BatchNorm/Dropout/Flatten/Reshape/Concat/Split/Slice/Crop/LRN/Deconvolution/ELU/PReLU/Input/Accuracy），**无任何RNN/LSTM/Recurrent相关文件**
+- `proto/caffe/proto/caffe.proto` 中**无** `RecurrentParameter`/`RNNParameter`/`LSTMParameter` 定义，需从头添加
+- 已注册层以**单步前向计算**为主（逐元素变换、矩阵乘、卷积等），无递归/时序展开机制
+
+**前置依赖状态**：
+| 依赖 | 状态 | 阻塞程度 |
+|------|------|---------|
+| Python 3.14编译环境 | ✅ 就绪 | 不阻塞 |
+| InnerProduct/Sigmoid/TanH/Eltwise/Split/Concat前向正确 | ✅ 已验证 | 不阻塞 |
+| InnerProduct层Backward | ✅ **已验证**（2026-08-03：23个测试全通过，含解析梯度+中心有限差分数值检查） | 不再阻塞BPTT（IP层），但Sigmoid/TanH/Eltwise等层Backward仍需验证 |
+| ProtoBuf RNN/LSTM参数定义 | ❌ 缺失 | 阻塞prototxt解析（阶段1） |
+| RecurrentLayer unroll框架 | ❌ 无任何代码 | 核心阻塞 |
+| CMake源文件收集方式 | ⚠️ 需确认GLOB/显式列表 | 不阻塞（已解决ACT-06） |
+
+**风险评估更新**：
+| 风险 | 概率 | 影响 | 说明 |
+|------|:----:|:----:|------|
+| ProtoBuf参数定义缺失 | **已确认** | 高 | 需手动添加3个message定义到caffe.proto，重新生成pb文件，可能破坏已有proto兼容性 |
+| Recurrent unroll机制复杂度极高 | **高** | 极高 | Caffe原生RecurrentLayer ~600行，依赖内部Net嵌套+ShareData+Blobs映射，移植难度远大于其他层；涉及时序展开的内存管理和梯度流（BPTT），是Caffe中最复杂的层之一 |
+| InnerProduct Backward未验证 | **中** | 高 | LSTM反向传播依赖所有子层（IP×4 + Sigmoid×3 + TanH×2 + Eltwise×3）的精确反向，任何子层反向错误都会导致梯度爆炸/消失难以调试 |
+| BPTT调试困难 | **高** | 高 | 时序展开网络的梯度流不直观，需要数值梯度检验逐单元验证 |
+| 工作量预估偏低 | **高** | — | 原预估7-12天偏乐观。参考BVLC/Caffe，recurrent_layer.cpp（600行）+ rnn_layer.cpp（150行）+ lstm_layer.cpp（400行）+ LSTM单元层（200行）= ~1350行C++代码，加proto定义+CMake+测试，**实际预计15-20个工作日** |
+
+**推进建议**：
+
+**🔴 当前不建议立即推进ACT-05**，理由：
+1. **优先级问题**：P3-C阶段（Transformer/Activations测试）尚未完成，RNN/LSTM不在当前P阶段路线图上；P3阶段目标是覆盖CNN/ML/Transformer常见层，RNN/LSTM属于后续P4阶段
+2. **投入产出比低**：~15-20天工作量实现~3个层，而当前25个已实现层的测试覆盖和Backward验证尚不完善
+3. **前置依赖未就绪**：InnerProduct等核心层的Backward尚未验证，直接做RNN会把问题复杂度乘以时序长度
+4. **替代方案**：如需RNN/LSTM能力，短期可用Python端numpy实现小规模RNN/LSTM（纯Python forward足够验证网络结构正确性），待C++端基础层Backward全部验证后再迁移
+
+**✅ 建议的前置条件（满足后再启动）**：
+1. P3-C Transformer测试完成且通过（验证组合层能力）
+2. InnerProduct/Sigmoid/TanH/Eltwise/Scale/Concat层Backward全部通过数值梯度检验
+3. 确认RNN/LSTM是实际业务需求（非练习性实现）
+4. 至少预留15个连续工作日
+
+**轻量级替代方案（如仅需前向验证）**：
+- 在Python端纯numpy实现RNN/LSTM前向（不注册C++层），用于模型结构验证
+- 工作量约1-2天，可快速验证LSTM网络拓扑正确性
+- 缺点：无C++加速，大batch/长序列慢，但测试用例规模小（seq_len≤10, batch≤4）足够
+
+---
+
+### ACT-09 执行进度：P3-C核心层Backward梯度验证（2026-08-03）
+
+**已完成：InnerProduct层Backward验证 ✅**
+
+| 验证项 | 结果 |
+|--------|------|
+| 已知值手算验证（2个用例） | ✅ dX/dW/db精确匹配 |
+| 解析梯度 vs numpy参考（3个用例：dX/dW/db） | ✅ rtol=1e-5 通过 |
+| 中心有限差分数值梯度检查（dX） | ✅ rtol=1e-3 通过 |
+| 中心有限差分数值梯度检查（dW） | ✅ rtol=1e-3 通过 |
+| 中心有限差分数值梯度检查（db） | ✅ rtol=1e-3 通过 |
+| no-bias配置（解析+数值） | ✅ 通过 |
+| transpose=true权重布局（解析+2个数值） | ✅ 通过 |
+| NCHW多维输入（K=48） | ✅ 解析+数值通过 |
+| 形状/有限性/零梯度/确定性/前向保持 | ✅ 全部通过 |
+| 特殊矩阵场景（单位矩阵→dX=dy，全1矩阵→dW列求和，db=列求和） | ✅ 全部通过 |
+| **总计** | **23/23 PASSED（4.01s）** |
+
+**测试文件**：[test_inner_product_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_inner_product_backward.py)
+
+**梯度数学验证**（transpose=false，默认Caffe约定）：
+- Forward: `Y = X_flat @ W^T + b`，X(M,K)，W(N,K)，b(N,)，Y(M,N)
+- dW = `dY^T @ X_flat` (N,K)
+- db = `sum(dY, axis=0)` (N,)
+- dX_flat = `dY @ W` (M,K)
+
+**完整Backward审计矩阵**（2026-08-03 代码grep确认）：
+
+| 层 | C++ Backward存在 | Backward测试覆盖 | 数值梯度检查 | 优先级 | 需要的工作 |
+|---|:---:|:---:|:---:|:---:|------|
+| **InnerProduct** | ✅ 已有 | ✅ 23个用例 | ✅ dx/dw/db | ✅完成 | — |
+| **ReLU** | ✅ 已有 | ✅ test_activation_backward.py | ✅ | ✅完成 | — |
+| **Sigmoid** | ✅ 已有 | ✅ test_activation_backward.py | ✅ | ✅完成 | — |
+| **TanH** | ✅ 已有 | ✅ test_activation_backward.py | ✅ | ✅完成 | — |
+| **ELU** | ✅ 已有 | ✅ test_activation_backward.py | ✅ | ✅完成 | — |
+| **PReLU** | ✅ 已有 | ✅ test_activation_backward.py | ✅ | ✅完成 | — |
+| **Conv** | ✅ 已有（base_conv+conv） | ❌ 无 | ❌ | 🔴 P0 | 编写测试：analytical+numgrad(dx/dw/db) |
+| **Deconv** | ✅ 已有（base_conv+deconv） | ❌ 无 | ❌ | 🔴 P0 | 编写测试：analytical+numgrad |
+| **Pooling** | ✅ 已有 | ❌ 无 | ❌ | 🔴 P0 | 编写测试：MAX/AVE路由+numgrad |
+| **BatchNorm** | ❌ **缺失**（头文件+cpp均无） | ❌ 无 | ❌ | 🔴 P0 | 实现Backward（见ACT-10详细计划） |
+| **SoftmaxWithLoss** | ✅ 已有 | ❌ 无 | ❌ | 🟡 P1 | 编写测试：dX=prob-label验证+numgrad |
+| **Scale** | ❌ 缺失 | ❌ 无 | ❌ | 🟡 P1 | 实现Backward(dx/dscale/dbias)+测试 |
+| **Bias** | ❌ 缺失 | ❌ 无 | ❌ | 🟡 P1 | 实现Backward(dx/dbias)+测试 |
+| **Eltwise** | ❌ 缺失 | ❌ 无 | ❌ | 🟡 P1 | 实现Backward(SUM/PROD/MAX)+测试 |
+| **Concat** | ❌ 缺失 | ❌ 无 | ❌ | 🟡 P1 | 实现Backward(梯度拆分)+测试 |
+| **Split** | ✅ 已有 | ❌ 无（仅no-crash） | ❌ | 🟡 P1 | 编写测试：梯度累加验证+numgrad |
+| **Slice** | ✅ 已有 | ❌ 无 | ❌ | 🟡 P2 | 编写测试：梯度路由+numgrad |
+| **LRN** | ✅ 已有 | ❌ 无 | ❌ | 🟡 P2 | 编写测试：analytical+numgrad |
+| **Crop** | ✅ 已有 | ❌ 无 | ❌ | 🟢 P3 | 编写测试：梯度复制+zero-pad |
+| **Dropout** | ❌ 缺失 | ❌ 无 | ❌ | 🟢 P3 | 实现Backward(训练mask/测试直通)+测试 |
+| **Softmax**（独立） | ❌ 缺失 | ❌ 无 | ❌ | 🟢 P3 | 实现Backward(Jacobian)+测试 |
+| Flatten/Reshape | ❌ 缺失 | — | — | 🟢 P3 | trivial：dX = reshape(dy)，无需numgrad |
+| Input | ❌ 无需要 | — | — | — | 数据层，无Backward |
+| Accuracy | ❌ 无需要 | — | — | — | 指标层，无Backward |
+
+> **关键发现**：5个激活层+InnerProduct共6层已验证通过；其余12个有Backward实现的层缺乏梯度测试，6个层完全没有Backward实现。
+>
+> numpy参考脚本：[`_numpy_bn_reference.py`](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/_numpy_bn_reference.py)（12/12自测试通过，含forward+backward+数值梯度验证）
+
+---
+
+### ACT-10 实现计划：BatchNorm层Backward_cpu（2026-08-03 细化版）
+
+**背景**：当前BatchNorm层仅有Forward_cpu，Backward_cpu在头文件和cpp中**均未声明/实现**。BatchNorm是CNN训练的核心组件，Backward阻塞卷积网络的端到端训练验证。已通过numpy参考脚本（12/12自测试通过）验证Backward公式正确性。
+
+**关键发现**：
+- 头文件[batch_norm_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/batch_norm_layer.hpp)缺少`Backward_cpu`声明（protected区域）
+- cpp文件[batch_norm_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/batch_norm_layer.cpp)缺少实现
+- 当前Forward使用inference模式（直接使用blobs中存储的全局统计量），Backward公式极其简洁
+
+**Forward公式精确审计**（逐行对照C++代码）：
+
+```cpp
+// C++ Forward核心公式（line 123-128）：
+float x = bottom_data[i];
+float y = (x - mean[c] * scale_factor_use)
+    / std::sqrt(std::max(variance[c] * scale_factor_use, 0.0f) + eps_);
+// channel索引（line 124）：c = (i / spatial_dim) % channels;
+// scale_factor（line 101-103）：blobs[2][0]==0 → 0.0，否则 1/blobs[2][0]
+// scale_factor_use（line 111）：scale_factor==0 → 1.0，否则 scale_factor
+// 即：sf = 1/count if count!=0 else 1.0
+// 注意：variance乘以sf后做了max(var*sf, 0) clamp防止负方差
 ```
-- 相同prototxt字符串的测试用例共享同一个Net对象（Forward是幂等的，不修改权重）
-- 注意：涉及权重重置的测试（如weights_unchanged）需要clone Net或使用独立工厂
-- **预期收益**：测试套件总耗时降低30-50%
 
-**阶段2：conftest session-scoped Net池（高级）**
-- 对参数化测试（如同一层不同参数变体）使用session级fixture缓存Net
-- 不同测试函数间共享基础Net结构，通过`CopyTrainedLayersFrom`或权重注入重置
-- **风险**：需要确保测试间无状态泄漏（权重、blob数据）
-- **预期收益**：额外降低20-30%
+**Backward梯度推导**（第一性原理：μ和σ²在inference模式下为常数）：
 
-**前置依赖**：
-1. 修复P3-B/P3-C测试类的`@require_cpp_extension`装饰器缺失问题
-2. C++扩展可用（Python 3.14环境编译安装）
+```
+y = (x - μ_c) / sqrt(max(σ²_c, 0) + ε)
+∂y/∂x = 1 / sqrt(max(σ²_c, 0) + ε) = inv_std[c]
+dX = dy * inv_std[c]   (逐元素，per-channel scaling)
+```
+
+**blobs梯度**：BatchNorm blobs[0]/[1]/[2]是running statistics（非可学习参数），Backward**无需计算blob梯度**。可学习的γ/β由独立Scale层处理。
+
+---
+
+#### Step 1：头文件修改（batch_norm_layer.hpp）
+
+**位置**：protected区域，`Forward_cpu`声明之后。
+**代码**（新增3行）：
+
+```cpp
+  void Backward_cpu(const std::vector<Blob*>& top,
+                    const std::vector<bool>& propagate_down,
+                    const std::vector<Blob*>& bottom) override;
+```
+
+**行号参考**：当前line 27是Forward_cpu声明，在其后插入（line 27-28之间）。
+
+---
+
+#### Step 2：C++实现（batch_norm_layer.cpp）
+
+**位置**：`Forward_cpu`方法结束之后（line 163 `}` 之后），`REGISTER_LAYER_CLASS(BatchNorm)`之前。
+
+**代码**（约55行）：
+
+```cpp
+void BatchNormLayer::Backward_cpu(const std::vector<Blob*>& top,
+                                   const std::vector<bool>& propagate_down,
+                                   const std::vector<Blob*>& bottom) {
+  if (!propagate_down[0]) {
+    CAFFE_FFI_LAYER_LOG << "BatchNorm Backward_cpu: propagate_down[0]=false, skipping";
+    return;
+  }
+
+  const float* top_diff = top[0]->cpu_diff();
+  float* bottom_diff = bottom[0]->cpu_mutable_diff();
+  const int num = static_cast<int>(bottom[0]->shape(0));
+  const int channels = channels_;
+  int spatial_dim = static_cast<int>(bottom[0]->count(2));
+  if (bottom[0]->num_axes() == 1) {
+    spatial_dim = 1;
+  }
+
+  const float* variance = this->blobs_[1]->cpu_data();
+  const float scale_factor = this->blobs_[2]->cpu_data()[0] == 0.0f
+      ? 0.0f
+      : 1.0f / this->blobs_[2]->cpu_data()[0];
+  const float scale_factor_use = scale_factor == 0.0f ? 1.0f : scale_factor;
+  const int64_t count = bottom[0]->count();
+
+  CAFFE_FFI_LAYER_LOG << "BatchNorm Backward: num=" << num
+                      << " channels=" << channels
+                      << " spatial_dim=" << spatial_dim
+                      << " scale_factor_use=" << scale_factor_use
+                      << " eps=" << eps_;
+
+  using clock = std::chrono::high_resolution_clock;
+  auto t_start = clock::now();
+
+  // Pre-compute per-channel inv_std
+  std::vector<float> inv_std(channels);
+  float inv_std_min = std::numeric_limits<float>::max();
+  float inv_std_max = -std::numeric_limits<float>::max();
+  for (int c = 0; c < channels; ++c) {
+    float var_c = std::max(variance[c] * scale_factor_use, 0.0f);
+    inv_std[c] = 1.0f / std::sqrt(var_c + eps_);
+    inv_std_min = std::min(inv_std_min, inv_std[c]);
+    inv_std_max = std::max(inv_std_max, inv_std[c]);
+  }
+
+  // Element-wise: bottom_diff = top_diff * inv_std[c]
+  float diff_in_min = std::numeric_limits<float>::max();
+  float diff_in_max = -std::numeric_limits<float>::max();
+  float diff_out_min = std::numeric_limits<float>::max();
+  float diff_out_max = -std::numeric_limits<float>::max();
+
+  for (int64_t i = 0; i < count; ++i) {
+    int c = (static_cast<int>(i / spatial_dim)) % channels;
+    float dy = top_diff[i];
+    float dx = dy * inv_std[c];
+    bottom_diff[i] = dx;
+    diff_in_min = std::min(diff_in_min, dy);
+    diff_in_max = std::max(diff_in_max, dy);
+    diff_out_min = std::min(diff_out_min, dx);
+    diff_out_max = std::max(diff_out_max, dx);
+  }
+
+  auto t_end = clock::now();
+  double elapsed_us = std::chrono::duration<double, std::micro>(t_end - t_start).count();
+
+  CAFFE_FFI_LOG_INFO() << "[BN-PERF] " << this->name()
+                       << " BatchNorm backward: num=" << num
+                       << " channels=" << channels
+                       << " spatial_dim=" << spatial_dim
+                       << " inv_std=[" << inv_std_min << ", " << inv_std_max << "]"
+                       << " diff_in=[" << diff_in_min << ", " << diff_in_max << "]"
+                       << " diff_out=[" << diff_out_min << ", " << diff_out_max << "]"
+                       << " time=" << elapsed_us << "us";
+}
+```
+
+**代码量统计**：
+| 部分 | 行数 |
+|------|------|
+| propagate_down检查+日志 | 8行 |
+| 变量提取（指针/维度/sf） | 13行 |
+| per-channel inv_std预计算 | 9行 |
+| 逐元素梯度计算+值域统计 | 13行 |
+| perf日志输出 | 9行 |
+| **合计** | **~52行** |
+
+**C++代码关键点**：
+1. `propagate_down[0]`检查：与ReLU/IP等层一致，跳过不需要梯度的场景
+2. channel索引`c = (i / spatial_dim) % channels`与Forward**完全一致**（保证逐channel正确）
+3. `std::max(variance[c] * scale_factor_use, 0.0f)`与Forward的var clamp**完全一致**（防止除sqrt负数）
+4. 预计算inv_std数组：避免循环中重复计算sqrt（O(C)预计算 + O(N)主循环）
+5. perf日志格式`[BN-PERF]`与Forward一致，新增inv_std值域统计
+
+---
+
+#### Step 3：测试文件（test_batch_norm_backward.py）
+
+**文件路径**：`tests/python/test_batch_norm_backward.py`
+**依赖**：复用`_numpy_bn_reference.py`中的`bn_forward`/`bn_backward`/`bn_get_inv_std`函数
+**参考模式**：严格遵循[test_inner_product_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_inner_product_backward.py)的三层验证结构
+
+**测试类与用例清单**（共10个测试用例）：
+
+| # | 测试类 | 测试方法 | 验证内容 | 容差 |
+|---|--------|---------|---------|------|
+| 1 | `TestBatchNormBackward` | `test_bn_backward_known_values` | 手工计算：x=4, mean=2, var=4, eps=0 → y=1, dy=1 → dx=0.5 | exact |
+| 2 | | `test_bn_backward_analytical_dx` | 解析梯度 vs numpy参考`bn_backward`（2×3×4×4随机数据） | rtol=1e-5 |
+| 3 | | `test_bn_numerical_gradient_dx` | 中心有限差分 vs 解析梯度（1×2×2×2小张量） | rtol=1e-3 |
+| 4 | | `test_bn_backward_zero_dy_gives_zero_grads` | dy全零 → dx全零 | exact |
+| 5 | | `test_bn_backward_shapes` | dx形状与输入相同，dtype=float32，有限值 | exact |
+| 6 | | `test_bn_backward_deterministic` | 相同输入两次backward结果完全一致 | exact |
+| 7 | | `test_bn_backward_preserves_forward_output` | Backward不改变Forward输出 | exact |
+| 8 | `TestBatchNormBackwardMultiChannel` | `test_bn_per_channel_scaling` | 不同channel使用不同inv_std（var=[1,4,9] → inv_std=[1,0.5,1/3]） | rtol=1e-5 |
+| 9 | `TestBatchNormBackwardScaleFactor` | `test_bn_scale_factor_count` | count=10, var_stored=40 → eff_var=4 → inv_std=0.5，数值梯度验证 | rtol=1e-3 |
+| 10 | `TestBatchNormBackwardEps` | `test_bn_eps_effect` | var=0时：eps越大，inv_std越小，梯度越小 | directional |
+
+**辅助函数**（测试文件内部）：
+```python
+def _make_bn_net(mean, var, count=1.0, eps=1e-5):
+    """创建单BatchNorm层Net，设置blobs参数"""
+    ...
+
+def _set_bn_blobs(net, mean, var, count=1.0):
+    """设置BatchNorm blobs[0]/[1]/[2]的值"""
+    ...
+```
+
+**测试代码量**：约200-250行Python
+
+---
+
+#### Step 4：验证与验收
+
+**编译验证**：
+```bash
+cd build && cmake --build . --config Release  # 确保无编译错误/警告
+```
+
+**测试执行**：
+```bash
+# BN backward专项测试
+pytest tests/python/test_batch_norm_backward.py -v
+# 回归：现有forward测试不受影响
+pytest tests/python/test_p3a_conv_pool_bn.py -v -k "BatchNorm"
+# 全量p3c激活+IP+BN测试
+pytest tests/python/test_activation_backward.py test_inner_product_backward.py test_batch_norm_backward.py -v
+```
 
 **验收标准**：
-- 同一prototxt的Net只构建一次（可通过perf_trace日志验证`Δtime`）
-- P3-B测试套件运行时间降低50%以上（从~100s到<50s）
-- 所有测试结果不变（无状态泄漏）
+1. ✅ 头文件添加Backward_cpu声明，cpp添加实现，编译0错误0警告
+2. ✅ 10个测试用例全部PASSED（含数值梯度rtol≤1e-3）
+3. ✅ 现有Forward测试（test_p3a_conv_pool_bn.py中7个BN用例）无回归
+4. ✅ perf日志`[BN-PERF]`格式与Forward一致，包含inv_std值域
+5. ✅ numpy参考脚本`_numpy_bn_reference.py` 12/12自测试持续通过
 
-### ACT-05 执行计划：RNN/LSTM层实现+测试
+**依赖**：无（BatchNorm Backward是纯逐元素操作，不依赖其他未实现的Backward）
 
-**现状**：
-- `src/caffe_ffi/layers/` 中无任何RNN/LSTM/Recurrent相关文件（grep确认）
-- Caffe原生有`recurrent_layer.cpp`、`rnn_layer.cpp`、`lstm_layer.cpp`三个层
-- RNN/LSTM依赖内部递归unroll，实现复杂度远高于现有逐元素层
-
-**实施步骤：**
-
-**阶段1：基础Recurrent层框架（预计3-5天）**
-1. 创建 `include/caffe_ffi/layers/recurrent_layer.hpp` + `src/caffe_ffi/layers/recurrent_layer.cpp`
-   - 实现RecurrentLayer的unroll机制：将时序网络展开为DAG
-   - 注册`REGISTER_LAYER_CLASS(Recurrent)`
-2. 创建rnn_layer.hpp/cpp：基于RecurrentLayer的简单RNN（tanh激活）
-3. 在CMake TargetBuild.cmake中添加新源文件（需确认源文件收集方式——可能是GLOB或显式列表）
-4. 编译验证：新层注册成功，Net能解析含RNN层的prototxt
-
-**阶段2：LSTM层（预计3-5天）**
-1. 创建lstm_layer.hpp/cpp：实现LSTM门控单元（input/forget/output gate + cell state）
-2. LSTM单元内部由InnerProduct+Sigmoid/TanH+Eltwise（逐元素乘加）组合
-3. 支持`lstm_param` protobuf参数（num_output、weight_filler、bias_filler、clipping_threshold）
-4. 单元测试：前向传播numpy参考验证
-
-**阶段3：测试覆盖（预计1-2天）**
-1. 参照三层验证法模板，为RNN/LSTM编写：
-   - 已知值验证（手动计算小序列）
-   - Numpy随机匹配（batch_size × seq_len × input_dim随机输入）
-   - 确定性（重复Forward结果一致）
-   - 梯度反向测试（若实现Backward）
-2. 测试覆盖要求：
-   - RNN：不同hidden_dim、不同seq_len、batch_size=1和N、双向/单向
-   - LSTM：同上 + 有/无peephole连接、有/无clipping
-
-**前置依赖**：
-- Python 3.14环境编译环境就绪
-- 现有层（InnerProduct、Sigmoid、TanH、Eltwise、Split、Concat）前向/反向均正确——这些是RNN/LSTM的基础构件
-- InnerProduct层Backward已验证（RNN/LSTM反向需要通过BPTR）
-
-**依赖关系图**：
-```
-现有层(InnerProduct/Sigmoid/TanH/Eltwise) → RecurrentLayer → RNNLayer → LSTMLayer
-                                                                          ↓
-                                                              三层验证法测试模板
-```
-
-**风险与缓解**：
-| 风险 | 概率 | 缓解措施 |
-|------|:----:|---------|
-| Caffe的Recurrent unroll机制复杂，依赖内部Net嵌套 | 高 | 先阅读BVLC/Caffe `recurrent_layer.cpp`源码画状态机图 |
-| Protobuf定义缺失RNNParameter/LSTMParameter | 中 | 先检查`proto/caffe.proto`是否已包含这些message，缺失则补充 |
-| LSTM反向传播(BPTT)调试困难 | 高 | 前向先通过再做反向；使用数值梯度检验(ε=1e-5) |
-| 时序数据的memory开销（长序列unroll） | 中 | 限制测试seq_len≤10，避免OOM |
+**预估工作量**：~2小时（C++实现20分钟+测试编写1小时+编译调试40分钟）
 
 ---
 
@@ -353,6 +640,7 @@ def _make_net_cached(prototxt_str: str):
 | 2026-08-01 | ACT-02 | ✅ 已完成：grep确认P3-C全部9个目标层（ReLU/Sigmoid/TanH/ELU/PReLU/InnerProduct/Softmax/Flatten/Reshape）均有.cpp实现，Transformer组件通过组合已有层实现无需新C++层；检查中发现3个新问题（P1-装饰器缺失、P0-环境未就绪、P2-fallback返回值无提示） |
 | 2026-08-02 | ACT-06 | ✅ 已完成：Windows本地C++扩展编译环境构建完成。具体产出：（1）三层模块化PowerShell构建工具链（PathPattern.psm1→VsDevShell.psm1→NativeBuild.psm1）；（2）自动化构建脚本`build_caffe_ffi.ps1`支持自动发现项目目录/Conda环境/VS安装路径，解决PATH长度截断（>4096字符时自动精简PATH重试）、DevShell静默失败检测（捕获stderr验证cl.exe可用性）、CMake缓存污染（重试前恢复环境变量）等关键问题；（3）使用VS 2026 Insiders v18 + Python 3.14.3成功编译35个目标，`_caffe_ffi.dll`生成并安装为editable wheel；（4）196个Pester单元测试覆盖构建工具链所有功能模块；（5）脚本已推广至npu-ffi/demo-ffi/xuan-ext-demo等其他C++扩展项目 |
 | 2026-08-02 | ACT-07 | ✅ 已完成：为P3-B（8个类）+ P3-C（16个类）共24个测试类添加`@require_cpp_extension`装饰器，C++扩展不可用时测试正确SKIP而非FAIL。补充修复：（1）`test_sigmoid_float32_saturation_exact`测试期望值bug——float32 ULP(1.0)≈1.2e-7，sigmoid(80)=1/(1+exp(-80))的exp(-80)≈1.8e-35远小于ULP/2≈6e-8，故sigmoid(80)精确等于1.0而非">1-1e-30"，修正断言并更新ULP分析文档字符串；（2）conftest.py中`_P3C_TEST_CLASSES`遗漏`TestSigmoidBackward`，导致perf_trace无法采集其性能数据，已补充。P3-B(50)+P3-C(81)=131个测试全部通过，P阶段累计155个测试全通过 |
+| 2026-08-03 | ACT-04 | ✅ 已完成：perf_trace基础设施GC开销优化，P3-B测试从134s→8.27s（16.2x加速），超额完成50%目标（实际降低93.8%）。关键发现：原假设"Net创建是瓶颈"错误，微基准证明Net创建仅0.5ms、Forward仅0.03ms，真正瓶颈是perf_trace和泄漏检测钩子中激进的3-5轮完整分代GC（~150ms/次×8-12次/测试）。优化4项：①分层GC策略（quick=gen0一轮/full=2轮/off=无GC）；②perf_trace默认quick GC+RSS峰值采样线程可选；③CSV写入缓冲（20行批量flush）；④C++ InsertSplits日志默认抑制（ERROR级别）。P3全套件176个测试28.3s通过无回归。教训：性能优化必须先测量再行动 |
 
 ### 2026-08-02 后续进展：构建环境就绪
 
