@@ -43,6 +43,18 @@ Write-Host "║   Native C++ Extension Builder (scikit-build)║" -ForegroundCol
 Write-Host "╚══════════════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 Log-Step "Build started $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+Log-Info "Effective parameters:"
+Log-Info "  ProjectDir     = '$ProjectDir'"
+Log-Info "  ProjectName    = '$ProjectName'"
+Log-Info "  CondaEnv       = '$CondaEnv'"
+Log-Info "  VsPath         = '$VsPath'"
+Log-Info "  Arch           = '$Arch'"
+Log-Info "  BuildType      = '$BuildType'"
+Log-Info "  PythonMinVer   = $PythonMinVersion"
+Log-Info "  CondaPattern   = '$CondaEnvNamePattern'"
+Log-Info "  CMakeArgs      = $($CMakeArgs.Count) items"
+Log-Info "  CleanDirs      = $($CleanDirs -join ', ')"
+Log-Info "  NoClean        = $NoClean  NoVerify=$NoVerify  VerboseBuild=$VerboseBuild"
 Write-Host ""
 
 # ── Phase 1: Auto-discover paths ──
@@ -121,6 +133,12 @@ if (-not $NoClean) {
 Log-Step "Phase 3/6: Loading MSVC DevShell environment"
 $pathBefore = $env:PATH.Length
 Log-Info "PATH length before DevShell: $pathBefore chars"
+Log-Info "VS install:   $vsInstallPath"
+Log-Info "DevShell.dll: $devShellDll"
+if (-not (Test-Path $devShellDll)) {
+    throw "DevShell.dll not found at: $devShellDll`nIs Visual Studio with C++ workload installed?"
+}
+Log-Info "Loading DevShell module and entering VS dev environment ($Arch)..."
 Enter-MsvcDevShell -VsInstallPath $vsInstallPath -Arch $Arch
 $pathAfter = $env:PATH.Length
 $clCmd = Get-Command cl -ErrorAction SilentlyContinue
@@ -128,9 +146,9 @@ if ($clCmd) {
     $clVer = & cl 2>&1 | Select-Object -First 1
     Log-OK  "MSVC DevShell loaded ($Arch)"
     Log-Info "cl.exe: $($clCmd.Source)"
-    Log-Info "PATH length after DevShell: $pathAfter chars"
+    Log-Info "PATH length after DevShell: $pathAfter chars (delta: $($pathAfter - $pathBefore))"
 } else {
-    throw "MSVC DevShell loaded but cl.exe not found in PATH!"
+    throw "MSVC DevShell loaded but cl.exe not found in PATH!`nCheck that the 'Desktop development with C++' workload is installed in Visual Studio."
 }
 Write-Host ""
 

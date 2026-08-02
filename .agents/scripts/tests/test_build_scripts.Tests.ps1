@@ -3,12 +3,13 @@
 # Run with: pwsh -NoProfile -Command "Invoke-Pester -Path .agents/scripts/tests/test_build_scripts.Tests.ps1 -Output Detailed"
 
 BeforeAll {
-    # Test file is at .agents/scripts/tests/ → scriptsDir = .agents/scripts/
+    # Test file is at .agents/scripts/tests/ → go up 3 levels for repo root
     $scriptsDir = Split-Path -Parent $PSCommandPath
     $modulePath = [IO.Path]::GetFullPath((Join-Path $scriptsDir ".." "lib" "NativeBuild.psm1"))
     Import-Module $modulePath -Force
-    $script:repoScripts = [IO.Path]::GetFullPath((Join-Path $scriptsDir ".."))
-    $script:workspaceRoot = [IO.Path]::GetFullPath((Join-Path $scriptsDir ".." ".."))
+    $script:repoScripts   = [IO.Path]::GetFullPath((Join-Path $scriptsDir ".."))
+    $script:workspaceRoot = [IO.Path]::GetFullPath((Join-Path $scriptsDir ".." ".." ".."))
+    $script:libDir        = Join-Path $script:repoScripts "lib"
 }
 
 Describe "NativeBuild Module - Path Resolution" {
@@ -224,7 +225,8 @@ Describe "Build Scripts - File Existence and Thin Wrapper Validation" {
         $expected = @(
             "Resolve-PathPattern", "Test-NativeProject", "Find-NativeProject",
             "Get-PythonVersion", "Get-CondaRootFromEnv", "Get-CondaRoots",
-            "Find-CondaEnvPython", "Find-VisualStudio", "Enter-MsvcDevShell"
+            "Find-CondaEnvPython", "Find-VisualStudio", "Enter-MsvcDevShell",
+            "Convert-VsVersionDirToNumber", "Get-VsEditionPriority"
         )
         foreach ($fn in $expected) {
             $exported -contains $fn | Should -Be $true -Because "function $fn should be exported"
@@ -287,5 +289,215 @@ Describe "Parameter Combinations - Discovery Integration Test" {
             $actual = [IO.Path]::GetFullPath($result)
             $actual | Should -Be $expected
         }
+    }
+}
+
+Describe "NativeBuild Module - VS Version Utilities" {
+    It "Convert-VsVersionDirToNumber maps year-based dirs correctly" {
+        Convert-VsVersionDirToNumber -VersionDirName "2022" | Should -Be 17
+        Convert-VsVersionDirToNumber -VersionDirName "2019" | Should -Be 16
+        Convert-VsVersionDirToNumber -VersionDirName "2017" | Should -Be 15
+        Convert-VsVersionDirToNumber -VersionDirName "2015" | Should -Be 14
+        Convert-VsVersionDirToNumber -VersionDirName "2013" | Should -Be 12
+    }
+
+    It "Convert-VsVersionDirToNumber uses numeric dirs directly" {
+        Convert-VsVersionDirToNumber -VersionDirName "18" | Should -Be 18
+        Convert-VsVersionDirToNumber -VersionDirName "17" | Should -Be 17
+        Convert-VsVersionDirToNumber -VersionDirName "19" | Should -Be 19
+    }
+
+    It "Convert-VsVersionDirToNumber returns 0 for unknown" {
+        Convert-VsVersionDirToNumber -VersionDirName "Installer" | Should -Be 0
+        Convert-VsVersionDirToNumber -VersionDirName "Shared" | Should -Be 0
+        Convert-VsVersionDirToNumber -VersionDirName "" | Should -Be 0
+    }
+
+    It "Convert-VsVersionDirToNumber ensures v18 > v17 (Insiders > 2022)" {
+        $v18 = Convert-VsVersionDirToNumber -VersionDirName "18"
+        $v17 = Convert-VsVersionDirToNumber -VersionDirName "2022"
+        $v18 | Should -BeGreaterThan $v17
+    }
+
+    It "Get-VsEditionPriority ranks Insiders highest" {
+        Get-VsEditionPriority -EditionName "Insiders" | Should -Be 4
+        Get-VsEditionPriority -EditionName "Canary" | Should -Be 4
+    }
+
+    It "Get-VsEditionPriority ranks Preview above Enterprise" {
+        Get-VsEditionPriority -EditionName "Preview" | Should -Be 3
+        Get-VsEditionPriority -EditionName "Enterprise" | Should -Be 2
+        (Get-VsEditionPriority -EditionName "Preview") | Should -BeGreaterThan (Get-VsEditionPriority -EditionName "Enterprise")
+    }
+
+    It "Get-VsEditionPriority ranks stable editions correctly" {
+        Get-VsEditionPriority -EditionName "Professional" | Should -Be 1
+        Get-VsEditionPriority -EditionName "Community" | Should -Be 0
+        Get-VsEditionPriority -EditionName "BuildTools" | Should -Be 0
+    }
+
+    It "Get-VsEditionPriority is case-insensitive and returns -1 for unknown" {
+        Get-VsEditionPriority -EditionName "insiders" | Should -Be 4
+        Get-VsEditionPriority -EditionName "ENTERPRISE" | Should -Be 2
+        Get-VsEditionPriority -EditionName "Unknown" | Should -Be -1
+    }
+}
+
+Describe "Thin Wrapper Scripts - Parameter Validation" {
+    BeforeAll {
+        $wrappers = @(
+            @{ File="build_caffe_ffi.ps1";     ProjectName="caffe-ffi";     MinVersion=3.14; Pattern="314" },
+            @{ File="build_npu_ffi.ps1";       ProjectName="npu-ffi";       MinVersion=3.13; Pattern="31" },
+            @{ File="build_demo_ffi.ps1";      ProjectName="demo-ffi";      MinVersion=3.13; Pattern="31" },
+            @{ File="build_xuan_ext_demo.ps1"; ProjectName="xuan-ext-demo"; MinVersion=3.14; Pattern="314" }
+        )
+    }
+
+    It "Each wrapper references build_native_ext.ps1 and correct project name" {
+        foreach ($w in $wrappers) {
+            $path = Join-Path $script:repoScripts $w.File
+            Test-Path $path | Should -Be $true -Because "$($w.File) should exist"
+            $content = Get-Content $path -Raw
+            $content | Should -Match "build_native_ext\.ps1" -Because "$($w.File) should call generic builder"
+            $content | Should -Match ([regex]::Escape($w.ProjectName)) -Because "$($w.File) should specify project $($w.ProjectName)"
+        }
+    }
+
+    It "Each wrapper passes @args for transparent parameter forwarding" {
+        foreach ($w in $wrappers) {
+            $path = Join-Path $script:repoScripts $w.File
+            $content = Get-Content $path -Raw
+            $content | Should -Match '@args' -Because "$($w.File) should forward extra arguments via @args"
+        }
+    }
+
+    It "Each wrapper uses ErrorActionPreference Stop" {
+        foreach ($w in $wrappers) {
+            $path = Join-Path $script:repoScripts $w.File
+            $content = Get-Content $path -Raw
+            $content | Should -Match 'ErrorActionPreference\s*=\s*"Stop"' -Because "$($w.File) should stop on errors"
+        }
+    }
+
+    It "Each wrapper exits with propagated exit code" {
+        foreach ($w in $wrappers) {
+            $path = Join-Path $script:repoScripts $w.File
+            $content = Get-Content $path -Raw
+            # Must capture LASTEXITCODE after builder call and exit with it
+            $content | Should -Match '\$LASTEXITCODE' -Because "$($w.File) should capture builder exit code"
+            $content | Should -Match 'exit\s+\$' -Because "$($w.File) should exit with a code"
+        }
+    }
+}
+
+Describe "Cross-Project Discovery - Compatibility Check" {
+    BeforeAll {
+        $projects = @(
+            @{ Name="caffe-ffi";     Dir=(Join-Path $script:workspaceRoot "projects" "xuanspace" "libs" "caffe-ffi") },
+            @{ Name="npu-ffi";       Dir=(Join-Path $script:workspaceRoot "projects" "xuanspace" "libs" "npu-ffi") },
+            @{ Name="demo-ffi";      Dir=(Join-Path $script:workspaceRoot "projects" "xuanspace" "libs" "demo-ffi") },
+            @{ Name="xuan-ext-demo"; Dir=(Join-Path $script:workspaceRoot "projects" "xuanspace" "libs" "xuan-ext-demo") }
+        )
+    }
+
+    It "All native project directories exist with pyproject.toml" {
+        foreach ($p in $projects) {
+            Test-Path $p.Dir | Should -Be $true -Because "$($p.Name) dir should exist"
+            Test-Path (Join-Path $p.Dir "pyproject.toml") | Should -Be $true -Because "$($p.Name) should have pyproject.toml"
+        }
+    }
+
+    It "All projects use scikit_build_core build backend" {
+        foreach ($p in $projects) {
+            $tomlPath = Join-Path $p.Dir "pyproject.toml"
+            if (Test-Path $tomlPath) {
+                $content = Get-Content $tomlPath -Raw
+                $content | Should -Match "scikit.build" -Because "$($p.Name) should use scikit-build backend"
+            }
+        }
+    }
+
+    It "Find-NativeProject discovers each project from scripts directory" {
+        foreach ($p in $projects) {
+            if (Test-Path $p.Dir) {
+                $result = Find-NativeProject -ProjectName $p.Name -ScriptDir $script:repoScripts
+                $result | Should -Not -BeNullOrEmpty -Because "should find $($p.Name)"
+                [IO.Path]::GetFullPath($result) | Should -Be ([IO.Path]::GetFullPath($p.Dir))
+            }
+        }
+    }
+
+    It "Test-NativeProject validates each project correctly" {
+        foreach ($p in $projects) {
+            if (Test-Path $p.Dir) {
+                Test-NativeProject -Dir $p.Dir -ProjectName $p.Name | Should -Be $true
+            }
+        }
+    }
+}
+
+Describe "Parameter Combinations - Build Script Parameters" {
+    It "build_native_ext.ps1 defines all expected parameters" {
+        $builderPath = Join-Path $script:repoScripts "build_native_ext.ps1"
+        $content = Get-Content $builderPath -Raw
+        $expectedParams = @(
+            "ProjectDir", "ProjectName", "CondaEnv", "VsPath", "Arch",
+            "BuildType", "PythonMinVersion", "CondaEnvNamePattern",
+            "CMakeArgs", "CleanDirs", "NoClean", "NoVerify", "VerboseBuild"
+        )
+        foreach ($param in $expectedParams) {
+            $pattern = [regex]::Escape("`$$param")
+            $content | Should -Match $pattern -Because "build_native_ext.ps1 should define -$param parameter"
+        }
+    }
+
+    It "build_native_ext.ps1 defaults to amd64 architecture" {
+        $builderPath = Join-Path $script:repoScripts "build_native_ext.ps1"
+        $content = Get-Content $builderPath -Raw
+        $content | Should -Match '\$Arch\s*=\s*"amd64"'
+    }
+
+    It "build_native_ext.ps1 defaults to Release build type" {
+        $builderPath = Join-Path $script:repoScripts "build_native_ext.ps1"
+        $content = Get-Content $builderPath -Raw
+        $content | Should -Match '\$BuildType\s*=\s*"Release"'
+    }
+
+    It "build_native_ext.ps1 imports NativeBuild module from relative lib path" {
+        $builderPath = Join-Path $script:repoScripts "build_native_ext.ps1"
+        $content = Get-Content $builderPath -Raw
+        $content | Should -Match "lib.*NativeBuild\.psm1"
+        $content | Should -Match "Import-Module"
+    }
+
+    It "build_native_ext.ps1 has all 6 build phases logged" {
+        $builderPath = Join-Path $script:repoScripts "build_native_ext.ps1"
+        $content = Get-Content $builderPath -Raw
+        1..6 | ForEach-Object {
+            $phase = $_
+            $content | Should -Match "Phase $phase/6" -Because "should log Phase $phase/6"
+        }
+    }
+}
+
+Describe "Verify Scripts - Smoke Test Validation" {
+    It "verify_native_ext.ps1 exists and imports the built module" {
+        $verifyPath = Join-Path $script:repoScripts "verify_native_ext.ps1"
+        Test-Path $verifyPath | Should -Be $true
+        $content = Get-Content $verifyPath -Raw
+        $content | Should -Match "import"
+    }
+
+    It "verify_caffe_ffi.ps1 exists" {
+        $verifyPath = Join-Path $script:repoScripts "verify_caffe_ffi.ps1"
+        Test-Path $verifyPath | Should -Be $true
+    }
+
+    It "batch launcher calls pwsh with -File flag" {
+        $batPath = Join-Path $script:repoScripts "build_caffe_ffi.bat"
+        Test-Path $batPath | Should -Be $true
+        $content = Get-Content $batPath -Raw
+        $content | Should -Match "pwsh"
+        $content | Should -Match "\-File"
     }
 }

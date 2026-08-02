@@ -655,5 +655,7 @@ Export-ModuleMember -Function @(
     "Get-CondaRoots",
     "Find-CondaEnvPython",
     "Find-VisualStudio",
-    "Enter-MsvcDevShell"
+    "Enter-MsvcDevShell",
+    "Convert-VsVersionDirToNumber",
+    "Get-VsEditionPriority"
 )
