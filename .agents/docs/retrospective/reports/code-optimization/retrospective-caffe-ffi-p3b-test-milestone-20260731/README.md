@@ -226,7 +226,7 @@ coverage: 25/25 C++ layers (100%)
 |------|:------:|------|------|
 | P3-B/P3-C测试类缺少`@require_cpp_extension`装饰器 | **P1-Bug** | 10个P3-B测试类 + 12个P3-C测试类均未装饰，C++扩展不可用时测试不会被skip，而是运行Python-only fallback返回标量0，产生误导性FAIL而非SKIP | ✅ **已修复**（ACT-07）：为P3-B的8个类（TestScaleLayers/TestBiasLayers/TestEltwiseLayers/TestConcatLayers/TestDropoutLayers/TestSoftmaxWithLossLayers/TestAccuracyLayers/TestScaleBiasEltwiseCombination）和P3-C的16个类（11个activations_ip类含TestSigmoidBackward + 5个transformer类）全部添加了装饰器；同时补充conftest.py中缺失的TestSigmoidBackward到_P3C_TEST_CLASSES集合 |
 | 当前环境C++扩展未加载 | P0-环境 | Python 3.13.9 < 要求3.14+；`_caffe_ffi` DLL/pyd未在任何搜索路径中找到；需使用Python 3.14环境重新编译安装 | ✅ **已解决**（ACT-06）：本地py314 conda环境（Python 3.14.3）+ VS 2026 Insiders v18编译工具链就绪；自动化构建脚本`build_caffe_ffi.ps1`开发完成，支持自动发现项目目录/Conda环境/VS安装路径，解决了PATH长度截断和DevShell静默失败问题；35/35编译目标通过，`_caffe_ffi.dll`成功生成并安装为editable wheel |
-| `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 | 📋 **待改进**：低优先级，建议在fallback路径添加warning日志或RuntimeError提示"C++ extension not available, running in stub mode" |
+| `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 | ✅ **已修复**（ACT-08）：在`projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_core.py`中新增三层防护：①模块导入时若C++扩展不可用发出`RuntimeWarning`一次；②`_py_forward()`（Forward()路径stub）和`_py_backward()`（no-op stub）改为抛出`RuntimeError`并附带明确安装指引；③`_forward_pure_python()`在空网（无layers无output blobs）时抛出`RuntimeError`，在配置了blobs但未覆盖计算时发出一次性`RuntimeWarning`；67个test_net.py测试+57个activation测试全部通过无回归 |
 
 ### ACT-04 执行计划：Net复用性能优化
 
