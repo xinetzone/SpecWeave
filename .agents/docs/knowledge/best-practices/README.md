@@ -72,12 +72,15 @@ date: "2026-07-30"
 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) | 编译型Python包数据文件生命周期管理（Nuitka/Cython数据文件复制、wheel验证、运行时环境变量设置） | `Python` `Nuitka` `Cython` `wheel` `data-files` `packaging` `TVM` |
 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) | Docker镜像更新的声明式优先原则（Dockerfile vs docker commit对比、显式ENTRYPOINT/CMD设置、构建决策指南） | `Docker` `Dockerfile` `declarative` `image-build` `containerization` |
 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) | Wrapper脚本注入模式（编译型包运行时兼容性修复、runpy.run_path透明转交、过渡性修复策略） | `Python` `wrapper` `runpy` `compiled-package` `runtime-patch` `compatibility` |
+| [vsdevshell-api-reference.md](vsdevshell-api-reference.md) | VsDevShell PowerShell模块API参考（Find-VisualStudio/Enter-MsvcDevShell完整参数说明、设计模式、集成指南、FAQ、PATH截断自动恢复机制） | `PowerShell` `MSVC` `Visual-Studio` `DevShell` `API-reference` `build-tools` `PATH-limit` `windows` |
 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) | DataLoader Pickle序列化问题诊断SOP（5步流程+6种不可序列化模式+3种修复方案+跨启动模式验证矩阵） | `Python` `pickle` `serialization` `multiprocessing` `DataLoader` `diagnosis` `SOP` |
 | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) | Caffe-Slim TVM FFI环境调试与错误排查手册（6个环境问题完整诊断链、一键验证脚本、WSL配置脚本、准确率判据） | `C++` `FFI` `tvm-ffi` `caffe` `WSL` `shared-library` `ABI` `DL` `troubleshooting` `environment` |
 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) | CMake项目模块化重构最佳实践（四层架构+两轮重构策略+公共函数封装+平台操作封装+验收清单） | `CMake` `build-system` `modularization` `refactoring` `cross-platform` `best-practice` `C/C++` |
 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) | conda-forge交叉编译配置完整指南（平台三元组、工具链包名、meta.yaml依赖分离、build.sh检测模式、CMAKE_ARGS传递、scikit-build-core适配、Wine测试、常见陷阱） | `conda-forge` `cross-compilation` `conda-build` `CMake` `scikit-build-core` `Docker` `Wine` `macOS` `Windows` |
 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) | 归档搭配Wiki联动机制指南（定位区别、升级判定标准、双向关联机制、Wiki化SOP、模板参考、质量检查清单） | `archive` `wiki` `knowledge-management` `retrospective` `知识沉淀` `归档升级` |
 | [dag-graph-transform-verification.md](dag-graph-transform-verification.md) | DAG图变换算法验证最佳实践（索引体系优先于字符串key、零依赖最小解析器、分析阶段独立化三大洞察+检查清单） | `dag` `graph-transform` `visualization` `verification` `caffe` `insert-splits` `in-place` `protobuf` `parser` |
+| [powershell-nativebuild-refactoring-summary.md](powershell-nativebuild-refactoring-summary.md) | NativeBuild三层架构重构总结（6大挑战解决方案、YAGNI原则、196测试覆盖、PowerShell模块化最佳实践、跨脚本代码扫描评估） | `PowerShell` `modularization` `refactoring` `NativeBuild` `MSVC` `Conda` `build-system` `three-layer-architecture` `retrospective` `team-learning` |
+| [powershell-nativebuild-faq.md](powershell-nativebuild-faq.md) | PowerShell NativeBuild构建常见问题FAQ（20个坑点：PATH 8191限制、VS多版本选择、UTF-16编码、DevShell静默失败、$args陷阱、硬编码路径、CI配置等） | `PowerShell` `NativeBuild` `MSVC` `Conda` `troubleshooting` `faq` `VS-DevShell` `PATH-limit` `hardcoded-paths` `windows` |
 
 ---
 
@@ -104,6 +107,7 @@ date: "2026-07-30"
 | 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 | 🔀 conda交叉编译 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 📚 知识管理 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) |
+| 🔷 PowerShell/Windows构建 | [powershell-nativebuild-refactoring-summary.md](powershell-nativebuild-refactoring-summary.md) → [powershell-nativebuild-faq.md](powershell-nativebuild-faq.md) → [vsdevshell-api-reference.md](vsdevshell-api-reference.md) |
 
 ---
 
