@@ -175,6 +175,7 @@ x = rng.randn(...) * 2.0 + 1.0  # 全部>0，完全避开负半轴
 
 - **原始复盘报告**：[retrospective-caffe-ffi-p3b-test-milestone-20260731](../../retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md)
 - **精度修复与ELU专项复盘**：[retrospective-float-precision-elu-kink-20260802](../../retrospective/reports/code-optimization/retrospective-float-precision-elu-kink-20260802/README.md)
+- **批量加固总结报告**：[report-batch-hardening-float-precision-20260802](../../retrospective/reports/code-optimization/report-batch-hardening-float-precision-20260802/README.md)
 - **验证案例**：caffe-ffi P3-C/D阶段测试（test_p3c_activations_ip.py, test_activation_backward.py, test_p3d_slice_crop_deconv_lrn.py）
 - **ELU C¹拐点专项测试**：test_elu_kink_stability.py（24个专项用例，覆盖C⁰/C¹连续性、O(h)误差缩放、阈值鲁棒性）
 - **发现问题**：sigmoid(80)饱和断言矛盾（已修复）、tanh(±100)饱和断言同类问题（已修复）、ELU x≈0拐点中心差分截断误差（rtol已放宽至5e-3）
