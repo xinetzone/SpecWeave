@@ -1,0 +1,42 @@
+---
+id: "methodology-patterns-index"
+title: "方法论模式库索引"
+date: "2026-07-04"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/README.toml"
+---
+# 方法论模式库索引
+
+> 本目录存放经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式。每个模式均通过G1-G4质量门与V对抗审查。
+
+## 模式清单
+
+| 模式ID | 模式名称 | 成熟度 | 验证次数 | 复用次数 | 触发场景 |
+|--------|---------|--------|---------|---------|---------|
+| bp-dual-layer | [双层分析报告结构](dual-layer-analysis-report.md) | L2-validated | 3 | 15 | 需要对网页/文章/技术内容进行"既理解内容又提炼洞察"的双目标分析时 |
+| bp-subagent-std | [子代理分析任务标准化指令](subagent-standardized-instruction.md) | L2-validated | 3 | 3 | 需要委派子代理执行复杂多步骤分析任务时 |
+
+## 成熟度等级说明
+
+| 等级 | 名称 | 标准 |
+|------|------|------|
+| L1-draft | 假设性模式 | 单案例,待验证 |
+| L2-validated | 已验证模式 | ≥2案例,已在本项目验证 |
+| L3-mature | 成熟模式 | 跨项目验证,有明确边界条件 |
+| L4-optimized | 优化模式 | 经过对抗审查,工具化/自动化支持 |
+
+## 模式入库流程
+
+1. **R阶段（复盘）**:采集案例事实,≥2个独立案例
+2. **I阶段（洞察）**:提炼跨案例共性,形成四元组洞察（现象+根因+影响+建议）
+3. **E阶段（萃取）**:按标准模板结构化模式（触发场景+核心做法+反模式+检验标准+迁移示例）
+4. **V阶段（对抗审查）**:多视角攻击验证,≥5条审查意见,采纳≥2条修正
+5. **入库**:创建模式文档+更新本索引+创建TOML元数据
+
+详见 [萃取指令集](../../../../.agents/commands/extraction.md) 与 [七概念方法论编排指令集](../../../../.agents/commands/seven-concepts.md)。
+
+## 关联资源
+
+- 七概念方法论体系索引（如存在，待创建）
+- [网页内容→结构化学习笔记 模式库](../../reports/milestone/web-content-learning-notes-patterns-20260801.md)
+- [萃取指令集](../../../../.agents/commands/extraction.md)
+- [七概念方法论编排指令集](../../../../.agents/commands/seven-concepts.md)
