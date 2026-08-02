@@ -4,7 +4,6 @@ title: "子代理分析任务标准化指令模板"
 type: "template"
 date: "2026-07-04"
 source: "BP-SUBAGENT-STD模式(L2-validated)"
-x-toml-ref: "../../.meta/toml/.agents/templates/subagent-analysis-instruction-template.toml"
 tags: ["subagent", "analysis", "instruction", "template", "standardized"]
 ---
 # 子代理分析任务标准化指令模板

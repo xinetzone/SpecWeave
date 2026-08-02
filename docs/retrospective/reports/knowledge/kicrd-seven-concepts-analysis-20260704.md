@@ -2,7 +2,6 @@
 id: "seven-concepts-analysis-kicrd"
 title: "七概念方法论编排分析报告"
 source: "seven-concepts-cmd Skill → 知识沉淀场景(R→I→E→V链路)"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/knowledge/kicrd-seven-concepts-analysis-20260704.toml"
 date: "2026-07-04"
 scenario: "knowledge"
 chain: "R→I→E→V"
