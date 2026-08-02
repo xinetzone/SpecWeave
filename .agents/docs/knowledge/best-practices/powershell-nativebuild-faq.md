@@ -156,12 +156,12 @@ try {
 
 **症状**：脚本在我机器上能跑，在别人机器/CI/其他盘符上就报路径不存在。
 
-**根因**：硬编码 `D:\Users\xinzo\...`、`C:\Users\XXX\...` 这类绝对路径直接绑定了特定用户的目录结构。
+**根因**：硬编码 `<USER_HOME>\...`、`C:\Users\XXX\...` 这类绝对路径直接绑定了特定用户的目录结构。
 
 **修复方案（已在NativeBuild中全部消除）**：
 ```powershell
 # 反模式 ❌
-$condaPath = "D:\Users\xinzo\anaconda3"
+$condaPath = "<USER_HOME>\anaconda3"
 $scriptDir = "D:\spaces\SpecWeave\.agents\scripts"
 
 # 正确模式 ✅

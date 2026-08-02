@@ -43,7 +43,7 @@ source: "../../retrospective/reports/build-engineering/retrospective-nativebuild
 
 | 问题 | 具体表现 |
 |------|---------|
-| **硬编码路径** | 脚本中直接写死 `D:\Users\xinzo\anaconda3`、`D:\spaces\SpecWeave` 等绝对路径，仅能在开发者本机运行 |
+| **硬编码路径** | 脚本中直接写死 `<USER_HOME>\anaconda3`、`D:\spaces\SpecWeave` 等绝对路径，仅能在开发者本机运行 |
 | **职责混杂** | VS发现、DevShell加载、Conda环境发现、项目发现、C++编译、pip安装全部混在一个文件中 |
 | **无法复用** | VS/DevShell相关逻辑（约200行）是通用Windows C++构建能力，但被Conda/scikit-build逻辑耦合，其他脚本无法使用 |
 | **测试困难** | 单文件结构导致无法独立测试VS发现或Conda发现，只能端到端测试 |
