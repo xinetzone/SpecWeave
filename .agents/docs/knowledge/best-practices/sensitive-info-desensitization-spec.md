@@ -23,12 +23,12 @@
 
 本次修复的5处真实个人路径位于文档示例中，均已替换为标准化占位符：
 
-| 文件 | 修复前 | 修复后 | 风险等级 |
+| 文件 | 修复前（个人路径） | 修复后（标准占位符） | 风险等级 |
 |------|--------|--------|----------|
-| `powershell-nativebuild-faq.md` | `D:\Users\xinzo\` | `<USER_HOME>\` | MEDIUM |
-| `powershell-nativebuild-faq.md` | `D:\Users\xinzo\.conda\envs\builder` | `%USERPROFILE%\.conda\envs\builder` | MEDIUM |
-| `powershell-nativebuild-faq.md` | `D:\Users\xinzo\anaconda3\envs\vsbuild\python.exe` | `%USERPROFILE%\anaconda3\envs\vsbuild\python.exe` | MEDIUM |
-| `multi-strategy-auto-discovery.md` | `D:\Users\xinzo\.trae-cn\memory` | `<memory_folder>` | MEDIUM |
+| `powershell-nativebuild-faq.md` | `<个人主目录>\` | `<USER_HOME>\` | MEDIUM |
+| `powershell-nativebuild-faq.md` | `<个人主目录>\.conda\envs\builder` | `%USERPROFILE%\.conda\envs\builder` | MEDIUM |
+| `powershell-nativebuild-faq.md` | `<个人主目录>\anaconda3\envs\vsbuild\python.exe` | `%USERPROFILE%\anaconda3\envs\vsbuild\python.exe` | MEDIUM |
+| `multi-strategy-auto-discovery.md` | `<个人主目录>\.trae-cn\memory` | `<memory_folder>` | MEDIUM |
 | `...`（其他历史文档） | 个人路径 | `<USER_HOME>` / `~/` / `%USERPROFILE%` | MEDIUM |
 
 **修复标准**：
@@ -173,8 +173,8 @@ _SHELL_CMD_AFTER_PATH_RE = re.compile(
 
 | 场景 | Windows | Unix/macOS | 错误示例 |
 |------|---------|------------|----------|
-| 用户主目录 | `%USERPROFILE%` | `~/` 或 `$HOME/` | `C:\Users\xinzo\` |
-| 项目目录 | 相对路径 `./` 或 `<repo_root>/` | 相对路径 `./` | `D:\spaces\SpecWeave\` |
+| 用户主目录 | `%USERPROFILE%` | `~/` 或 `$HOME/` | `C:\Users\<真实用户名>\` |
+| 项目目录 | 相对路径 `./` 或 `<repo_root>/` | 相对路径 `./` | 硬编码绝对路径 |
 | 文档示例 | `<USER_HOME>\` 或 `C:\Users\<用户名>\` | `/home/<用户名>/` | 使用真实用户名 |
 | 配置文件 | `%APPDATA%\`、`%LOCALAPPDATA%\` | `~/.config/`、`~/.local/` | 硬编码个人路径 |
 
