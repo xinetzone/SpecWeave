@@ -1,15 +1,15 @@
 ---
 title: caffe-ffi P3-B阶段测试里程碑复盘报告
 date: 2026-07-31
-last_updated: 2026-08-01
+last_updated: 2026-08-02
 category: code-optimization
 task_type: testing
-tags: [caffe-ffi, testing, p3b, scale, bias, eltwise, concat, dropout, softmaxwithloss, accuracy, blob-consumption, numpy-reference]
+tags: [caffe-ffi, testing, p3b, p3c, scale, bias, eltwise, concat, dropout, softmaxwithloss, accuracy, activations, transformer, blob-consumption, numpy-reference, build-automation, float-precision, coverage-audit]
 status: completed
 verification: passed
 source: test(p3b) session covering Scale/Bias/Eltwise/Concat/Dropout/SoftmaxWithLoss/Accuracy layers
 commit: d1acc7b
-action_items_progress: ACT-01=done, ACT-02=done(issue-found), ACT-03=done
+action_items_progress: ACT-01=done, ACT-02=done(P0-resolved/P1-resolved/P2-pending), ACT-03=done, ACT-06=done, ACT-07=done
 ---
 
 # caffe-ffi P3-B阶段测试里程碑复盘报告
@@ -81,11 +81,13 @@ action_items_progress: ACT-01=done, ACT-02=done(issue-found), ACT-03=done
 | test_p3b_eltwise_scale.py（本次新增） | **50** |
 | test_p2b_regression.py | 22 |
 | test_p3a_conv_pool_bn.py | 24 |
+| test_p3c_activations_ip.py（P3-C阶段） | 68 |
+| test_p3c_transformer.py（P3-C阶段） | 13 |
 | test_cow.py | 21 |
 | test_extreme_inputs.py | 26 |
 | test_complex_topologies.py | 25 |
 | 其他（6个文件） | 61 |
-| **总计** | **542** |
+| **总计** | **623** |
 
 ---
 
@@ -190,10 +192,12 @@ action_items_progress: ACT-01=done, ACT-02=done(issue-found), ACT-03=done
 | 编号 | 优先级 | 行动项 | 验收标准 | 类型 | 状态 |
 |------|:------:|--------|----------|------|:----:|
 | ACT-01 | P1 | 在测试README或conftest文档中记录single-consumer blob模型约束和Split使用模式 | 新贡献者阅读后能正确处理多消费者场景 | 文档 | ✅ **已完成** |
-| ACT-02 | P1 | P3-C阶段测试启动前，先grep确认目标层（Self-Attention/Positional Encoding或替代层）是否已实现 | 避免再次出现方向偏移 | 流程改进 | ✅ **已完成**（发现新问题：见下方检查结果） |
+| ACT-02 | P1 | P3-C阶段测试启动前，先grep确认目标层（Self-Attention/Positional Encoding或替代层）是否已实现 | 避免再次出现方向偏移 | 流程改进 | ✅ **已完成**（发现新问题，见下方状态更新） |
 | ACT-03 | P2 | 将"三层验证法+numpy参考先行"模式提取为测试模板文件 | 新测试文件可直接复制模板填空 | 工具 | ✅ **已完成** |
 | ACT-04 | P2 | 测试中Net复用机制（如session级Net缓存）以减少~100s构建开销 | P3-B类测试套件运行时间降低50%以上 | 性能优化 | 📋 **有计划**（待执行） |
 | ACT-05 | P3 | 实现RNN/LSTM层后，补充原始P3-B目标的RNN/LSTM forward测试 | RNN/LSTM层测试覆盖达到与Scale/Eltwise同等水平 | 功能+测试 | 📋 **有计划**（待执行） |
+| ACT-06 | P0 | 构建Windows本地C++扩展编译环境（Python 3.14 + VS 2026 Insiders + 自动化构建脚本） | 一条命令成功编译_caffe_ffi.dll，pytest可加载C++扩展运行真实forward | 基础设施 | ✅ **已完成**（2026-08-02） |
+| ACT-07 | P1 | 为P3-B(8个)/P3-C(16个)共24个测试类添加@require_cpp_extension装饰器 | C++扩展不可用时测试SKIP而非FAIL，避免误导 | 缺陷修复 | ✅ **已完成**（2026-08-02） |
 
 ### ACT-02 P3-C启动前检查结果（2026-08-01）
 
@@ -214,13 +218,13 @@ action_items_progress: ACT-01=done, ACT-02=done(issue-found), ACT-03=done
 
 **结论**：P3-C所有目标层均已实现（Transformer组件通过组合已有层实现），不存在P3-A那样的方向偏移问题。
 
-**🚨 检查中发现的新问题：**
+**🚨 检查中发现的新问题（2026-08-01）及状态更新（2026-08-02）：**
 
-| 问题 | 严重度 | 详情 |
-|------|:------:|------|
-| P3-B/P3-C测试类缺少`@require_cpp_extension`装饰器 | **P1-Bug** | 10个P3-B测试类 + 12个P3-C测试类均未装饰，C++扩展不可用时测试不会被skip，而是运行Python-only fallback返回标量0，产生误导性FAIL而非SKIP |
-| 当前环境C++扩展未加载 | P0-环境 | Python 3.13.9 < 要求3.14+；`_caffe_ffi` DLL/pyd未在任何搜索路径中找到；需使用Python 3.14环境重新编译安装 |
-| `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 |
+| 问题 | 严重度 | 2026-08-01 状态 | 2026-08-02 更新 |
+|------|:------:|------|------|
+| P3-B/P3-C测试类缺少`@require_cpp_extension`装饰器 | **P1-Bug** | 10个P3-B测试类 + 12个P3-C测试类均未装饰，C++扩展不可用时测试不会被skip，而是运行Python-only fallback返回标量0，产生误导性FAIL而非SKIP | ✅ **已修复**（ACT-07）：为P3-B的8个类（TestScaleLayers/TestBiasLayers/TestEltwiseLayers/TestConcatLayers/TestDropoutLayers/TestSoftmaxWithLossLayers/TestAccuracyLayers/TestScaleBiasEltwiseCombination）和P3-C的16个类（11个activations_ip类含TestSigmoidBackward + 5个transformer类）全部添加了装饰器；同时补充conftest.py中缺失的TestSigmoidBackward到_P3C_TEST_CLASSES集合 |
+| 当前环境C++扩展未加载 | P0-环境 | Python 3.13.9 < 要求3.14+；`_caffe_ffi` DLL/pyd未在任何搜索路径中找到；需使用Python 3.14环境重新编译安装 | ✅ **已解决**（ACT-06）：本地py314 conda环境（Python 3.14.3）+ VS 2026 Insiders v18编译工具链就绪；自动化构建脚本`build_caffe_ffi.ps1`开发完成，支持自动发现项目目录/Conda环境/VS安装路径，解决了PATH长度截断和DevShell静默失败问题；35/35编译目标通过，`_caffe_ffi.dll`成功生成并安装为editable wheel |
+| `_py_forward`/`_forward_pure_python`返回空dict/标量0 | P2-健壮性 | Python-only fallback模式返回`{}`或全零blob，缺乏明确的错误提示，容易误导 | 📋 **待改进**：低优先级，建议在fallback路径添加warning日志或RuntimeError提示"C++ extension not available, running in stub mode" |
 
 ### ACT-04 执行计划：Net复用性能优化
 
@@ -344,7 +348,95 @@ def _make_net_cached(prototxt_str: str):
 |------|--------|---------|
 | 2026-07-31 | ACT-03 | ✅ 已完成：三层验证法测试模板已创建 |
 | 2026-08-01 | ACT-01 | ✅ 已完成：在TESTING_GUIDELINES.md新增§4章节，包含约束说明、错误症状、两种处理方式（独立Net/显式Split）、命名约定、自检清单，并在反模式表和提交前检查清单中补充了Single-Consumer检查项；参考文件表新增P3-B范本和模板文件；文档版本升级至v1.2.0 |
-| 2026-08-01 | ACT-02 | ✅ 已完成：grep确认P3-C全部9个目标层（ReLU/Sigmoid/TanH/ELU/PReLU/InnerProduct/Softmax/Flatten/Reshape）均有.cpp实现，Transformer组件通过组合已有层实现无需新C++层；检查中发现3个新问题：P1-P3B/P3C测试类缺@require_cpp_extension装饰器、P0-Python3.14环境缺失C++扩展未编译、P2-Python-only fallback返回标量0无错误提示 |
+| 2026-08-01 | ACT-02 | ✅ 已完成：grep确认P3-C全部9个目标层（ReLU/Sigmoid/TanH/ELU/PReLU/InnerProduct/Softmax/Flatten/Reshape）均有.cpp实现，Transformer组件通过组合已有层实现无需新C++层；检查中发现3个新问题（P1-装饰器缺失、P0-环境未就绪、P2-fallback返回值无提示） |
+| 2026-08-02 | ACT-06 | ✅ 已完成：Windows本地C++扩展编译环境构建完成。具体产出：（1）三层模块化PowerShell构建工具链（PathPattern.psm1→VsDevShell.psm1→NativeBuild.psm1）；（2）自动化构建脚本`build_caffe_ffi.ps1`支持自动发现项目目录/Conda环境/VS安装路径，解决PATH长度截断（>4096字符时自动精简PATH重试）、DevShell静默失败检测（捕获stderr验证cl.exe可用性）、CMake缓存污染（重试前恢复环境变量）等关键问题；（3）使用VS 2026 Insiders v18 + Python 3.14.3成功编译35个目标，`_caffe_ffi.dll`生成并安装为editable wheel；（4）196个Pester单元测试覆盖构建工具链所有功能模块；（5）脚本已推广至npu-ffi/demo-ffi/xuan-ext-demo等其他C++扩展项目 |
+| 2026-08-02 | ACT-07 | ✅ 已完成：为P3-B（8个类）+ P3-C（16个类）共24个测试类添加`@require_cpp_extension`装饰器，C++扩展不可用时测试正确SKIP而非FAIL。补充修复：（1）`test_sigmoid_float32_saturation_exact`测试期望值bug——float32 ULP(1.0)≈1.2e-7，sigmoid(80)=1/(1+exp(-80))的exp(-80)≈1.8e-35远小于ULP/2≈6e-8，故sigmoid(80)精确等于1.0而非">1-1e-30"，修正断言并更新ULP分析文档字符串；（2）conftest.py中`_P3C_TEST_CLASSES`遗漏`TestSigmoidBackward`，导致perf_trace无法采集其性能数据，已补充。P3-B(50)+P3-C(81)=131个测试全部通过，P阶段累计155个测试全通过 |
+
+### 2026-08-02 后续进展：构建环境就绪
+
+**背景**：ACT-02发现的P0级问题（C++扩展不可用）阻塞了所有真实forward测试验证。2026-08-02完成了Windows本地构建环境搭建，打通了从源码到可测试DLL的完整链路。
+
+**关键成果**：
+
+1. **构建工具链模块化（3层架构）**：
+   - **L0 PathPattern.psm1**：纯函数路径解析模块，零依赖，支持`*`单层匹配和`**`多层递归匹配，46个单元测试
+   - **L1 VsDevShell.psm1**：Visual Studio开发环境加载模块，多策略VS发现（vswhere JSON→目录扫描→环境变量），版本优先级排序（VS 2026 Insiders > VS 2022 > Build Tools），PATH长度恢复机制，33个单元测试
+   - **L2 NativeBuild.psm1**：业务层构建模块，Conda环境五级回退发现链、Python 3.14自动选择、CMake Configure/Build/Install/Verify全流程编排、详细阶段日志，117个单元测试
+
+2. **关键问题修复**：
+   - **PATH截断问题**：Conda+VS+系统PATH叠加超过Windows 4096字符限制时，自动精简到核心路径重试
+   - **DevShell静默失败**：通过捕获Enter-VsDevShell的stderr输出并后置验证`cl.exe`是否在PATH中，避免"假成功"
+   - **CMake缓存污染**：重试前备份并恢复关键环境变量（CC/CXX/CMAKE_GENERATOR等），防止前次失败配置污染后续构建
+
+3. **可复用模式沉淀**（已归档至模式库，L2-validated）：
+   - `multi-strategy-auto-discovery`：多策略自动发现（显式hint→活跃环境→目录扫描→版本/名称过滤）
+   - `version-priority-sorting`：版本优先级排序（名称匹配优先→版本号降序→版本新旧排序）
+   - `path-length-recovery`：PATH长度超限恢复（检测→精简→重试→还原）
+   - `thin-wrapper-pattern`：薄包装器模式（通用脚本+项目级薄包装，避免代码复制）
+
+4. **P3-C测试验证结果**（2026-08-02，ACT-06/ACT-07完成后）：
+   - P3-C阶段测试文件已存在：`test_p3c_activations_ip.py`（68个用例，覆盖ReLU/Sigmoid/TanH/ELU/PReLU/InnerProduct/Softmax/Flatten/Reshape + Sigmoid反向传播，共11个测试类）和`test_p3c_transformer.py`（13个用例，覆盖Positional Encoding/Self-Attention/Transformer Encoder Block，共5个测试类）
+   - **全部81个P3-C测试用例通过**（80个初始通过 + 1个测试期望值bug修复后通过）
+   - 修复的测试bug：`test_sigmoid_float32_saturation_exact`中sigmoid(80)的断言期望值错误——float32的ULP(1.0)≈1.2e-7，exp(-80)≈1.8e-35远小于ULP/2≈6e-8，所以sigmoid(80)在float32中精确等于1.0，原断言`sigmoid(80) > 1.0-1e-30`在数学上正确但与float32实际行为矛盾；修正为`== 1.0`并更新了文档字符串中的ULP分析
+   - 补充修复：conftest.py中`_P3C_TEST_CLASSES`缺少`TestSigmoidBackward`，导致该类的perf_trace性能数据无法被采集，已补充
+   - **P阶段总测试验证结果**：P3-A(24) + P3-B(50) + P3-C(81) = **155个测试全部通过**，总耗时P3-B约133s、P3-C约185s（含Net构建+Forward+perf_trace开销）
+
+5. **C++层覆盖度审计**（2026-08-02）：
+
+   | # | 层名 | C++源文件 | 测试覆盖 | 测试阶段 |
+   |---|------|----------|:--------:|---------|
+   | 1 | Input | input_layer.cpp | ✅ 隐式覆盖 | 基础设施（所有Net测试使用） |
+   | 2 | Convolution | conv_layer.cpp | ✅ 直接测试 | P3-A (TestConvolutionLayers) |
+   | 3 | Pooling | pooling_layer.cpp | ✅ 直接测试 | P3-A (TestPoolingLayers) |
+   | 4 | BatchNorm | batch_norm_layer.cpp | ✅ 直接测试 | P3-A (TestBatchNormLayers) |
+   | 5 | ReLU | relu_layer.cpp | ✅ 直接测试 | P3-C (TestReLULayers) + backward |
+   | 6 | Sigmoid | sigmoid_layer.cpp | ✅ 直接测试 | P3-C (TestSigmoidLayers) + backward |
+   | 7 | TanH | tanh_layer.cpp | ✅ 直接测试 | P3-C (TestTanHLayers) + backward |
+   | 8 | ELU | elu_layer.cpp | ✅ 直接测试 | P3-C (TestELULayers) + backward |
+   | 9 | PReLU | prelu_layer.cpp | ✅ 直接测试 | P3-C (TestPReLULayers) |
+   | 10 | InnerProduct | inner_product_layer.cpp | ✅ 直接测试 | P3-C (TestInnerProductLayers) |
+   | 11 | Softmax | softmax_layer.cpp | ✅ 直接测试 | P3-C (TestSoftmaxLayers) |
+   | 12 | Flatten | flatten_layer.cpp | ✅ 直接测试 | P3-C (TestFlattenLayers) |
+   | 13 | Reshape | reshape_layer.cpp | ✅ 直接测试 | P3-C (TestReshapeLayers) |
+   | 14 | Scale | scale_layer.cpp | ✅ 直接测试 | P3-B (TestScaleLayers) |
+   | 15 | Bias | bias_layer.cpp | ✅ 直接测试 | P3-B (TestBiasLayers) |
+   | 16 | Eltwise | eltwise_layer.cpp | ✅ 直接测试 | P3-B (TestEltwiseLayers) |
+   | 17 | Concat | concat_layer.cpp | ✅ 直接测试 | P3-B (TestConcatLayers) |
+   | 18 | Dropout | dropout_layer.cpp | ✅ 直接测试 | P3-B (TestDropoutLayers) |
+   | 19 | SoftmaxWithLoss | softmax_loss_layer.cpp | ✅ 直接测试 | P3-B (TestSoftmaxWithLossLayers) |
+   | 20 | Accuracy | accuracy_layer.cpp | ✅ 直接测试 | P3-B (TestAccuracyLayers) |
+   | 21 | Split | split_layer.cpp | ✅ 直接测试 | P2-B (TestSplitTopologies/TestSplitCOWBehavior) |
+   | 22 | Slice | slice_layer.cpp | ❌ 未覆盖 | — |
+   | 23 | Crop | crop_layer.cpp | ❌ 未覆盖 | — |
+   | 24 | Deconvolution | deconv_layer.cpp | ❌ 未覆盖 | — |
+   | 25 | LRN | lrn_layer.cpp | ❌ 未覆盖 | — |
+
+   **覆盖率**：21/25 = 84%，未覆盖的4层（Slice/Crop/Deconvolution/LRN）为边缘/专用层。
+   - Slice：Split的反向操作（沿通道维度切分），优先级中等
+   - Crop：裁剪操作，主要用于语义分割等任务，优先级低
+   - Deconvolution：转置卷积，Conv的对称操作，测试方法论同Conv，优先级中等
+   - LRN：Local Response Normalization，现代架构已很少使用（被BN取代），优先级低
+   - 核心模块覆盖：blob.cpp（test_blob.py）、net.cpp（全量测试）、layer_factory.cpp（隐式覆盖）均有充分测试
+
+6. **浮点数精度审计结果**（2026-08-02）：
+
+   对P3-B/P3-C阶段及test_activation_backward.py中的所有浮点数精度敏感断言进行了系统审计，重点检查：
+   - 激活函数饱和区断言（sigmoid/tanh/ELU/softmax的极端值测试）
+   - 精确相等断言（`== 0.0`/`== 1.0`）
+   - 非常紧的阈值断言（`< 1e-30`/`> 1-1e-30`级别）
+
+   **审计结论**：
+   - ✅ 仅发现1个bug（已修复）：`test_sigmoid_float32_saturation_exact`中sigmoid(±80)的断言与float32 ULP行为矛盾
+   - ✅ sigmoid_known_values中`> 1-1e-7`和`< 1e-30`阈值是安全的宽松断言（sigmoid(±100)确实精确饱和为1.0/0.0，但阈值足够宽松不会误报）
+   - ✅ tanh_known_values中`> 1-1e-7`/`< -1+1e-7`阈值安全（tanh(±100)精确饱和为±1.0，阈值宽松）
+   - ✅ sigmoid/tanh/ELU反向传播饱和测试均使用宽松阈值（`<1e-4`/`<0.01`/`<0.02`），无ULP风险
+   - ✅ softmax极端值测试（one-hot large input=100）使用`>0.9999`的宽松断言，安全
+   - ✅ softmax_loss完美预测测试（logit=100）使用`<1e-4`宽松阈值，安全
+   - ✅ ReLU死亡神经元梯度断言`dx == 0.0`是精确零（乘法截断），非近似，安全
+   - ✅ Dropout推理identity测试（ratio=0.5/0.9输出等于输入）经过确定性验证，安全
+   - ✅ numpy匹配测试均使用`rtol=1e-5, atol=1e-6`的合理容差，安全
+
+   **关键经验**：float32中ULP(1.0)≈1.2e-7，任何涉及"接近1.0但不等于1.0"的断言在x>~17（sigmoid）或|x|>~9（tanh）时都会失败，因为结果已精确舍入为1.0。饱和区断言应使用`== 1.0`/`== 0.0`（精确饱和）或宽松不等式（如`> 0.9999999`），不能使用`> 1-ε`（ε<ULP/2）来断言"非常接近但不等于"。
 
 ---
 
@@ -355,6 +447,13 @@ def _make_net_cached(prototxt_str: str):
 | [test_p3b_eltwise_scale.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3b_eltwise_scale.py) | P3-B测试文件（1224行，50个用例，7个numpy参考实现） |
 | [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py#L444-L451) | 注册_P3B_TEST_CLASSES到perf_trace性能采集 |
 | [net.cpp#L155](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/net.cpp#L155) | single-consumer blob模型的核心实现（available_blobs->erase） |
+| [build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1) | Windows自动化构建脚本（自动发现环境、VS、项目路径，支持参数化） |
+| [NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) | L2构建业务模块（Conda发现、Python选择、CMake流程编排） |
+| [VsDevShell.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/VsDevShell.psm1) | L1 VS环境加载模块（多策略发现、版本排序、PATH恢复） |
+| [PathPattern.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/PathPattern.psm1) | L0路径解析模块（纯函数，通配符匹配） |
+| [test_build_scripts.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_build_scripts.Tests.ps1) | 构建脚本Pester单元测试（117个用例） |
+| [test_vsdevshell.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_vsdevshell.Tests.ps1) | VsDevShell模块单元测试（33个用例） |
+| [test_pathpattern.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_pathpattern.Tests.ps1) | PathPattern模块单元测试（46个用例） |
 
 ---
 
