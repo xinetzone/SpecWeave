@@ -2,7 +2,6 @@
 id: "methodology-patterns-index"
 title: "方法论模式库索引"
 date: "2026-07-04"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/README.toml"
 ---
 # 方法论模式库索引
 
