@@ -153,6 +153,92 @@ x = rng.randn(...) * 2.0 + 1.0  # 全部>0，完全避开负半轴
 | ELU | x=0 | f'(0⁻)=α, f'(0⁺)=1（α=1时C¹连续） |
 | Softplus | x≈0（软拐点） | f'(x)→0 for x→-∞, f'(x)→1 for x→+∞（实际上C^∞） |
 
+### 2.6 共享Helper函数：`avoid_c1_discontinuity`
+
+为统一C¹不连续拐点防护逻辑，项目提供了可复用的helper函数：
+
+```python
+from .caffe_test_helpers import avoid_c1_discontinuity
+```
+
+**函数签名：**
+
+```python
+def avoid_c1_discontinuity(
+    x: np.ndarray,
+    h: float = 1e-3,
+    kink_points: float | tuple[float, ...] = 0.0,
+    margin: float = 2.0,
+) -> np.ndarray:
+```
+
+**参数说明：**
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `x` | `np.ndarray` | 必填 | 输入数组，返回其拷贝（不修改原数组） |
+| `h` | `float` | `1e-3` | 中心差分步长 |
+| `kink_points` | `float \| tuple[float, ...]` | `0.0` | C¹不连续拐点位置，多数激活函数为`0.0`；多拐点函数传入tuple |
+| `margin` | `float` | `2.0` | 安全边距（以h为单位），默认2.0确保`x±h`均在拐点同侧 |
+
+**使用示例：**
+
+```python
+from .caffe_test_helpers import avoid_c1_discontinuity
+
+EPS = 1e-3  # 中心差分步长
+
+# LeakyReLU/PReLU数值梯度测试——标准用法
+x = rng.randn(1, 1, 3, 4).astype(np.float32) * 2.0
+x = avoid_c1_discontinuity(x, h=EPS)  # 一行完成拐点推离
+
+# 多拐点函数（如未来实现的分段函数有多个不可导点）
+x = avoid_c1_discontinuity(x, h=EPS, kink_points=(-1.0, 0.0, 1.0))
+
+# 自定义安全边距（默认margin=2.0已足够，一般不需要修改）
+x = avoid_c1_discontinuity(x, h=EPS, margin=3.0)  # 3h安全边距
+```
+
+**函数特性：**
+- ✅ **幂等安全**：多次调用结果一致
+- ✅ **符号保留**：推离时点保持在拐点原侧
+- ✅ **类型不变**：返回数组shape和dtype与输入一致
+- ✅ **零依赖**：仅依赖numpy
+- ✅ **多拐点支持**：可传入tuple处理多个不连续点
+
+### 2.7 拐点防护策略选择决策树
+
+新增分段激活函数数值梯度测试时，按此决策树选择正确策略：
+
+```
+测试的激活函数在数值梯度采样区间内是否有C¹不连续点（导数跳变）？
+├─ 否（Sigmoid/TanH/Softplus/Exp/Log等C¹光滑函数）
+│   └─ 无需特殊防护，按超越函数容差使用rtol=1e-3即可
+│
+└─ 是（存在导数跳变的分段点）
+    ├─ C¹是否连续？（即f'(kink⁻) == f'(kink⁺)？）
+    │   ├─ 是（如ELU α=1在x=0处，左右导数均为1）
+    │   │   └─ 策略B：放宽rtol到5e-3，无需推离拐点
+    │   │       （二阶导数跳变导致O(h)截断误差而非O(1)）
+    │   │
+    │   └─ 否（如ReLU/LeakyReLU/PReLU/Threshold）
+    │       └─ 策略A：必须推离拐点
+    │           ├─ 推荐：调用 avoid_c1_discontinuity(x, h=h)
+    │           ├─ 替代（仅单侧测试）：偏移输入到全正/全负侧（如 x = randn*2 + 1.0）
+    │           └─ 🚫 禁止：仅靠放宽rtol——导数跳变产生O(1)误差，无法通过任何rtol吸收
+    │
+    └─ 不确定？
+        └─ 保守按C¹不连续处理，使用avoid_c1_discontinuity（安全无副作用）
+```
+
+### 2.8 CI门禁
+
+项目CI流水线包含自动检查（`scripts/check_c1_kink_protection.py`），在lint阶段运行：
+- 检测测试C¹不连续激活函数（LeakyReLU/PReLU）且包含数值梯度检查的文件
+- 验证是否调用了`avoid_c1_discontinuity`或有`# c1-kink-ok`豁免注释
+- 专项拐点测试文件（文件名匹配`*kink*stability*`）自动豁免
+- 违规将导致CI失败，阻止PR合并
+
 ---
 
 ## 3. 精度测试检查清单
@@ -162,8 +248,10 @@ x = rng.randn(...) * 2.0 + 1.0  # 全部>0，完全避开负半轴
 - [ ] **饱和区断言**：是否存在对sigmoid/tanh/softmax极端输入值使用`< 1e-30`或`> 1-1e-30`等违反ULP的断言？正向饱和(x≥17)用`== 1.0`，负向精确零(x≤-89)用`== 0.0`，中等负值(-89<x<-17)用`< threshold`
 - [ ] **sigmoid正负饱和不对称**：正向饱和阈值x≈17（ULP舍入），负向精确零阈值x≈-89（exp溢出），不可对称套用
 - [ ] **精确相等断言**：`== 0.0`/`== 1.0`是否确实是精确值（乘法截断/ULP饱和/exp溢出），而非近似值？
-- [ ] **C¹不连续拐点防护**：ReLU/LeakyReLU/PReLU数值梯度测试中，是否将|x|<2h的点推离拐点？不可仅靠放宽rtol
+- [ ] **C¹不连续拐点防护**：ReLU/LeakyReLU/PReLU数值梯度测试中，是否调用了`avoid_c1_discontinuity`或使用了等价偏移策略？不可仅靠放宽rtol
 - [ ] **C¹连续拐点阈值**：ELU(α=1)等C¹连续拐点处的中心差分rtol是否≥5e-3？
+- [ ] **共享helper使用**：新增C¹不连续激活函数数值梯度测试时，是否使用了`caffe_test_helpers.avoid_c1_discontinuity`而非手写推离逻辑？
+- [ ] **CI门禁合规**：新增测试文件是否通过`python scripts/check_c1_kink_protection.py tests/python/`检查？
 - [ ] **超越函数容差**：涉及exp/log/pow/sqrt的断言rtol是否≥1e-3？
 - [ ] **GEMM容差**：矩阵乘法/卷积的断言rtol是否≥1e-4？
 - [ ] **确定性种子**：随机输入是否使用固定seed以保证可复现？
@@ -176,6 +264,9 @@ x = rng.randn(...) * 2.0 + 1.0  # 全部>0，完全避开负半轴
 - **原始复盘报告**：[retrospective-caffe-ffi-p3b-test-milestone-20260731](../../retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md)
 - **精度修复与ELU专项复盘**：[retrospective-float-precision-elu-kink-20260802](../../retrospective/reports/code-optimization/retrospective-float-precision-elu-kink-20260802/README.md)
 - **批量加固总结报告**：[report-batch-hardening-float-precision-20260802](../../retrospective/reports/code-optimization/report-batch-hardening-float-precision-20260802/README.md)
+- **C¹拐点防护推广覆盖率报告**：[report-c1-kink-protection-rollout-20260802](../../retrospective/reports/code-optimization/report-c1-kink-protection-rollout-20260802/README.md)
 - **验证案例**：caffe-ffi P3-C/D阶段测试（test_p3c_activations_ip.py, test_activation_backward.py, test_p3d_slice_crop_deconv_lrn.py）
+- **共享Helper函数**：[caffe_test_helpers.py: avoid_c1_discontinuity](../../../../projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340)
+- **CI检查脚本**：[check_c1_kink_protection.py](../../../../projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py)
 - **ELU C¹拐点专项测试**：test_elu_kink_stability.py（24个专项用例，覆盖C⁰/C¹连续性、O(h)误差缩放、阈值鲁棒性）
-- **发现问题**：sigmoid(80)饱和断言矛盾（已修复）、tanh(±100)饱和断言同类问题（已修复）、ELU x≈0拐点中心差分截断误差（rtol已放宽至5e-3）
+- **发现问题**：sigmoid(80)饱和断言矛盾（已修复）、tanh(±100)饱和断言同类问题（已修复）、ELU x≈0拐点中心差分截断误差（rtol已放宽至5e-3）、LeakyReLU/PReLU C¹不连续拐点flake风险（已统一使用avoid_c1_discontinuity防护）
