@@ -516,7 +516,7 @@ def _make_net_cached(prototxt_str: str):
 
 ## 附录A：浮点数精度测试技术指南
 
-📄 **本文档已原子化迁移为独立最佳实践指南**：[float-precision-testing-guide.md](../../../knowledge/best-practices/float-precision-testing-guide.md)
+📄 **本文档已原子化迁移为独立最佳实践指南**：[float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md)
 
 该指南包含以下内容（可独立查阅引用）：
 1. **float32 ULP与饱和区断言规则** - ULP背景、饱和阈值表、正确/错误断言示例、阈值选型参考表
