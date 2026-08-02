@@ -132,6 +132,10 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [explicit-split-multi-consumer.md](explicit-split-multi-consumer.md) | 多消费者显式Split：zero-copy/COW极简数据流框架中，同一blob被>1个layer消费时必须显式插入Split层，遵循框架命名约定 | L2 已验证 | caffe-ffi等极简DL框架测试、Rust所有权系统、显式内存管理数据流引擎 |
 | [perf-trace-instrumentation.md](perf-trace-instrumentation.md) | perf_trace性能埋点集成：上下文管理器封装关键阶段，自动采集Δtime/Δmem/Δblobs，[PERF]统一前缀+固定字段顺序+结构化k=v | L2 已验证 | pytest测试套件、性能基准测试、FFI原生扩展测试、需要细粒度性能剖析的测试 |
 | [separate-nets-independent-ops.md](separate-nets-independent-ops.md) | 独立操作分离Net：同一层的不同参数变体/独立操作各自创建独立Net实例，提取公共构造函数+参数化测试，避免blob消费冲突和状态污染 | L2 已验证 | DL框架算子对比测试、参数组合遍历测试、有单消费/状态副作用的框架测试 |
+| [multi-strategy-auto-discovery.md](multi-strategy-auto-discovery.md) | 多策略自动发现：策略注册表→候选收集→有效性验证→版本匹配→名称偏好→兜底返回，解决跨机器环境路径差异问题 | L2 已验证 | 跨机器可移植脚本、构建工具环境自动发现、Conda/VS/JDK等外部依赖定位 |
+| [version-priority-sorting.md](version-priority-sorting.md) | 版本优先级排序：版本号归一化→发行渠道优先级→多键排序→有效性过滤，解决多版本工具共存时的版本选择问题 | L2 已验证 | 多版本开发工具共存（VS/Python/JDK）、构建工具链版本选择、SDK版本管理 |
+| [path-length-recovery.md](path-length-recovery.md) | PATH长度自动恢复：首次尝试→失败检测→环境快照→PATH精简→重试加载→路径合并→日志记录，解决Windows cmd.exe 8191字符限制 | L2 已验证 | Windows MSVC/Intel/CUDA等大型开发环境加载、DevShell初始化、批处理脚本命令行超长 |
+| [thin-wrapper-pattern.md](thin-wrapper-pattern.md) | 薄包装模式：通用核心抽取→极薄参数映射层→参数透传→共享模块→约定优于配置，实现N个项目共用一套构建逻辑 | L2 已验证 | 多项目构建脚本、微服务部署脚本、CI/CD流水线模板、相似工具链配置 |
 
 ## 成熟度定义
 
