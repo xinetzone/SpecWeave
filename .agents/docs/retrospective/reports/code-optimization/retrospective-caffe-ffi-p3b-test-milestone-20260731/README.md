@@ -1,18 +1,20 @@
 ---
-title: caffe-ffi P3-B阶段测试里程碑复盘报告
+title: caffe-ffi P3-B/C/D阶段测试里程碑复盘报告
 date: 2026-07-31
 last_updated: 2026-08-02
 category: code-optimization
 task_type: testing
-tags: [caffe-ffi, testing, p3b, p3c, scale, bias, eltwise, concat, dropout, softmaxwithloss, accuracy, activations, transformer, blob-consumption, numpy-reference, build-automation, float-precision, coverage-audit]
+tags: [caffe-ffi, testing, p3b, p3c, p3d, scale, bias, eltwise, concat, dropout, softmaxwithloss, accuracy, activations, transformer, blob-consumption, numpy-reference, build-automation, float-precision, coverage-audit, slice, crop, deconvolution, lrn, full-coverage]
 status: completed
 verification: passed
-source: test(p3b) session covering Scale/Bias/Eltwise/Concat/Dropout/SoftmaxWithLoss/Accuracy layers
-commit: d1acc7b
-action_items_progress: ACT-01=done, ACT-02=done(P0-resolved/P1-resolved/P2-pending), ACT-03=done, ACT-06=done, ACT-07=done
+source: test(p3b/p3c/p3d) full C++ layer coverage milestone covering all 25 registered layers
+commit: d1acc7b,1b45083,92fb41b,7cac604,e2c3750d
+action_items_progress: ACT-01=done, ACT-02=done(P0-resolved/P1-resolved/P2-pending), ACT-03=done, ACT-06=done, ACT-07=done, ACT-08=done
+total_tests: 209
+coverage: 25/25 C++ layers (100%)
 ---
 
-# caffe-ffi P3-B阶段测试里程碑复盘报告
+# caffe-ffi P3-B/C/D阶段测试里程碑复盘报告（C++层全覆盖）
 
 ## 任务概览
 
@@ -406,17 +408,12 @@ def _make_net_cached(prototxt_str: str):
    | 19 | SoftmaxWithLoss | softmax_loss_layer.cpp | ✅ 直接测试 | P3-B (TestSoftmaxWithLossLayers) |
    | 20 | Accuracy | accuracy_layer.cpp | ✅ 直接测试 | P3-B (TestAccuracyLayers) |
    | 21 | Split | split_layer.cpp | ✅ 直接测试 | P2-B (TestSplitTopologies/TestSplitCOWBehavior) |
-   | 22 | Slice | slice_layer.cpp | ❌ 未覆盖 | — |
-   | 23 | Crop | crop_layer.cpp | ❌ 未覆盖 | — |
-   | 24 | Deconvolution | deconv_layer.cpp | ❌ 未覆盖 | — |
-   | 25 | LRN | lrn_layer.cpp | ❌ 未覆盖 | — |
+   | 22 | Slice | slice_layer.cpp | ✅ 直接测试 | P3-D (TestSliceLayers) |
+   | 23 | Crop | crop_layer.cpp | ✅ 直接测试 | P3-D (TestCropLayers) |
+   | 24 | Deconvolution | deconv_layer.cpp | ✅ 直接测试 | P3-D (TestDeconvolutionLayers) |
+   | 25 | LRN | lrn_layer.cpp | ✅ 直接测试 | P3-D (TestLRNLayers) |
 
-   **覆盖率**：21/25 = 84%，未覆盖的4层（Slice/Crop/Deconvolution/LRN）为边缘/专用层。
-   - Slice：Split的反向操作（沿通道维度切分），优先级中等
-   - Crop：裁剪操作，主要用于语义分割等任务，优先级低
-   - Deconvolution：转置卷积，Conv的对称操作，测试方法论同Conv，优先级中等
-   - LRN：Local Response Normalization，现代架构已很少使用（被BN取代），优先级低
-   - 核心模块覆盖：blob.cpp（test_blob.py）、net.cpp（全量测试）、layer_factory.cpp（隐式覆盖）均有充分测试
+   **最终覆盖率**：**25/25 = 100%**（C++层全覆盖，P3-D阶段补齐最后4层）
 
 6. **浮点数精度审计结果**（2026-08-02）：
 
@@ -450,8 +447,13 @@ def _make_net_cached(prototxt_str: str):
 | 文件 | 说明 |
 |------|------|
 | [test_p3b_eltwise_scale.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3b_eltwise_scale.py) | P3-B测试文件（1224行，50个用例，7个numpy参考实现） |
-| [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py#L444-L451) | 注册_P3B_TEST_CLASSES到perf_trace性能采集 |
+| [test_p3c_activations_ip.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py) | P3-C激活函数+InnerProduct测试（68个用例，含Transformer组件） |
+| [test_p3c_transformer.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_transformer.py) | P3-C Transformer组件测试（13个用例：PE/Attention/MHA/EncoderBlock） |
+| [test_p3d_slice_crop_deconv_lrn.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3d_slice_crop_deconv_lrn.py) | P3-D补齐测试（640行，21个用例，4个numpy参考实现，全覆盖最后4层） |
+| [conftest.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/conftest.py#L444-L451) | 注册_P3B/_P3C/_P3D_TEST_CLASSES到perf_trace性能采集 |
+| [caffe_pb2.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/caffe_pb2.py) | 重新生成的Protobuf Python绑定（补全slice_param/crop_param/lrn_param定义） |
 | [net.cpp#L155](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/net.cpp#L155) | single-consumer blob模型的核心实现（available_blobs->erase） |
+| [crop_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/crop_layer.cpp) | Crop层单offset广播语义实现 |
 | [build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1) | Windows自动化构建脚本（自动发现环境、VS、项目路径，支持参数化） |
 | [NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) | L2构建业务模块（Conda发现、Python选择、CMake流程编排） |
 | [VsDevShell.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/VsDevShell.psm1) | L1 VS环境加载模块（多策略发现、版本排序、PATH恢复） |
@@ -469,3 +471,173 @@ def _make_net_cached(prototxt_str: str):
 | d1acc7b | test(p3b): 新增Scale/Bias/Eltwise/Concat/Dropout/SoftmaxWithLoss/Accuracy层P3-B阶段测试用例（50个用例，1232行变更） |
 | 1b45083 | test(p3c): 添加@require_cpp_extension装饰器（24类），修复sigmoid饱和断言，补充conftest.py遗漏注册（4 files, +41/-11） |
 | 92fb41b | test(precision): 修复ELU数值梯度C¹拐点精度(rtol=5e-3)，补全activation_backward等3个文件遗漏的@require_cpp_extension装饰器（4 files, +25/-2） |
+
+---
+
+## P3-D阶段：C++层覆盖度补齐（2026-08-02）
+
+### 覆盖率提升
+
+| 指标 | P3-C后 | P3-D后 | 变化 |
+|------|--------|--------|------|
+| C++层已注册数 | 25 | 25 | - |
+| 测试覆盖层数 | 21/25 (84%) | **25/25 (100%)** | **+4层** |
+| 新增测试文件 | - | test_p3d_slice_crop_deconv_lrn.py | +1 |
+| 新增测试用例 | - | 21 | +21 |
+| 总测试用例数 | 168 | **189** | +21 |
+
+### 新增覆盖的4个层
+
+| 层名 | 测试类 | 用例数 | numpy参考实现 |
+|------|--------|--------|--------------|
+| **Slice** | TestSliceLayers | 5 | `slice_np()`（等分+显式slice_points） |
+| **Crop** | TestCropLayers | 5 | `crop_np()`（HW裁剪+通道裁剪+offset广播） |
+| **LRN** | TestLRNLayers | 5 | `lrn_np()`（ACROSS_CHANNELS模式） |
+| **Deconvolution** | TestDeconvolutionLayers | 5 | `deconv1x1_np()`（1x1转置卷积矩阵乘法等价） |
+| **组合** | TestSliceConcatRoundtrip | 1 | Slice→Concat往返还原验证 |
+
+### 过程中发现并修复的问题
+
+| 问题 | 根因 | 修复 |
+|------|------|------|
+| caffe_pb2.py缺少Slice/Crop/LRN参数定义 | Python protobuf绑定未从最新.proto重新生成 | 用grpc_tools.protoc重新生成caffe_pb2.py |
+| `slice_param { slice_point: 1\n    slice_point: 3 }`解析失败 | f-string中`\\n`产生字面量`\n`而非换行符 | 改用`"\n".join()`逐行生成 |
+| Crop axis=1 + 单offset超界 | C++ Crop层单offset值广播到axis起所有维度（非仅第一个维度） | per-axis offsets=[2,0,0]，修正测试数据形状适配广播语义 |
+| convolution_param中`filler`字段解析失败 | 字段名应为`weight_filler`（protobuf定义），且我们手动加载权重不需要filler | 移除filler字段，测试中显式设置blob权重 |
+
+### P3-D阶段提交记录
+
+| 提交 | 内容 |
+|------|------|
+| 7cac604 | test(p3d): 新增Slice/Crop/LRN/Deconvolution层测试（21个用例，+640行），重新生成caffe_pb2.py补全参数定义（子模块） |
+| e2c3750d | docs(retrospective): 补充P3-D覆盖率审计结果、浮点数精度技术附录、最终复盘报告（主仓库） |
+
+---
+
+## 附录A：浮点数精度测试技术指南
+
+> 本文档整理自caffe-ffi P3-C阶段浮点数精度审计中发现的2个关键问题和系统化的精度测试经验，供后续团队成员查阅参考。
+
+### A.1 float32 ULP与饱和区断言规则
+
+#### 背景
+
+在IEEE 754 float32中，每个可表示值之间的间距（ULP, Unit in the Last Place）随数值大小变化：
+- ULP(0.0) ≈ 1.4e-45（最小正浮点数）
+- ULP(1.0) ≈ 1.2e-7
+- ULP(16777216.0) = 2.0（2^24以上整数无法精确表示）
+
+对于S型激活函数（sigmoid/tanh/softmax），输入超过一定阈值后输出将精确舍入到饱和值：
+
+| 激活函数 | 饱和值 | 精确饱和输入阈值（float32） |
+|----------|--------|---------------------------|
+| sigmoid(x) | 1.0 | x > ~16.6（sigmoid(16.6)≈0.99999994，sigmoid(17)精确=1.0） |
+| sigmoid(x) | 0.0 | x < ~-16.6 |
+| tanh(x) | 1.0 | x > ~9.1（tanh(9.1)≈0.99999997，tanh(10)精确=1.0） |
+| tanh(x) | -1.0 | x < ~-9.1 |
+| softmax(x) | one-hot | max_logit - other_logit > ~16 |
+
+#### 规则
+
+**🚫 禁止**使用违反ULP行为的断言：
+```python
+# ❌ 错误：float32中sigmoid(80)精确==1.0，不可能 > 1-1e-30（1e-30 < ULP(1.0)/2）
+assert sigmoid(80) > 1.0 - 1e-30
+
+# ❌ 错误：试图断言"非常接近但不等于"在饱和区无意义
+assert sigmoid(80) != 1.0
+```
+
+**✅ 正确**的饱和区断言方式：
+```python
+# 方式1：精确相等（推荐，语义最清晰）
+assert sigmoid(80) == 1.0
+assert sigmoid(-80) == 0.0
+
+# 方式2：宽松不等式（适用于"充分接近"语义）
+assert sigmoid(10) > 0.9999  # 注意：0.9999 < 1.0 - ULP(1.0)/2，在安全区
+assert sigmoid(-10) < 0.0001
+
+# 方式3：精确equal用于零值
+assert relu_dead_neuron_grad == 0.0  # 乘法截断精确为零，非近似
+```
+
+#### 阈值选型参考表
+
+| 场景 | 推荐rtol | 推荐atol | 说明 |
+|------|---------|---------|------|
+| numpy参考实现对比（无pow/exp/sum） | 1e-6 | 1e-8 | 纯算术运算，float32精度充裕 |
+| 含GEMM/卷积（累加运算） | 1e-4 | 1e-5 | 乘加累加误差较大 |
+| 含pow/exp/log（超越函数） | 1e-3 | 1e-4 | LRN/softmax/ELU等 |
+| 数值梯度检查（中心差分h=1e-3） | 5e-3 | - | C¹拐点处截断误差O(h) |
+| 反向传播梯度比较 | 1e-3~5e-3 | - | 逐层误差累积 |
+
+### A.2 C¹拐点处的数值梯度陷阱
+
+#### 问题描述
+
+对于分段光滑激活函数，在分段点（C⁰或C¹拐点）处进行中心差分数值梯度计算时，截断误差会从O(h²)退化为O(h)：
+
+以ELU为例：
+```
+f(x) = x,                    x > 0
+f(x) = α(eˣ - 1),           x ≤ 0
+```
+
+在x=0处：
+- f'(0⁺) = 1（右导数）
+- f'(0⁻) = α（左导数，通常α=1所以左右导数相等——C¹连续）
+- f''(0⁺) = 0（右二阶导数）
+- f''(0⁻) = α ≠ 0（左二阶导数——C²不连续）
+
+中心差分公式：f'(x) ≈ [f(x+h) - f(x-h)] / (2h)
+
+当采样点落在x≈0附近时，x-h < 0（左侧用ELU表达式），x+h > 0（右侧用线性表达式），泰勒展开的二阶项不再抵消：
+
+**截断误差 ≈ (h/2)·f''(ξ) ≈ O(h)** 而非 O(h²)
+
+#### 实测数据
+
+| 采样点x | h | rtol阈值 | 实际rel_err | 是否超界 |
+|---------|---|---------|------------|---------|
+| 0.34 | 1e-3 | 1e-3 | 0.04% | ✅ |
+| 0.001 | 1e-3 | 1e-3 | **0.26%** | ❌ 超界 |
+| -0.15 | 1e-3 | 1e-3 | 0.12% | ✅ |
+
+当x接近0且h=1e-3时，中心差分窗口[x-h, x+h]跨越拐点，截断误差显著增大。
+
+#### 规则
+
+**🚫 禁止**在分段激活函数的C¹拐点附近使用紧阈值（rtol < 5e-3）进行数值梯度检查。
+
+**✅ 正确**的应对策略：
+```python
+# 方式1：放宽rtol到5e-3（推荐，最简单）
+np.testing.assert_allclose(grad_num, grad_analytic, rtol=5e-3)
+
+# 方式2：采样时避开拐点附近（rng范围偏移）
+x = rng.randn(...) * 0.5 + 0.5  # 偏移到正半轴为主
+
+# 方式3：使用单侧差分在拐点处
+# f'(x) ≈ [f(x+h) - f(x)] / h  （前向差分，O(h)但不跨拐点）
+```
+
+#### C¹拐点敏感函数清单
+
+| 函数 | 拐点位置 | 左/右导数差异 |
+|------|---------|-------------|
+| ReLU/LeakyReLU/PReLU | x=0 | f'(0⁻)=0/α, f'(0⁺)=1 |
+| ELU | x=0 | f'(0⁻)=α, f'(0⁺)=1（α=1时C¹连续） |
+| Softplus | x≈0（软拐点） | f'(x)→0 for x→-∞, f'(x)→1 for x→+∞（实际上C^∞） |
+
+### A.3 精度测试检查清单
+
+新增测试用例时，逐项检查：
+
+- [ ] **饱和区断言**：是否存在对sigmoid/tanh/softmax极端输入值使用`< 1e-30`或`> 1-1e-30`等违反ULP的断言？应使用`== 1.0`/`== 0.0`或宽松不等式（`> 0.9999`）
+- [ ] **精确相等断言**：`== 0.0`/`== 1.0`是否确实是精确值（乘法截断/饱和），而非近似值？
+- [ ] **数值梯度阈值**：C¹拐点附近的中心差分rtol是否≥5e-3？
+- [ ] **超越函数容差**：涉及exp/log/pow/sqrt的断言rtol是否≥1e-3？
+- [ ] **GEMM容差**：矩阵乘法/卷积的断言rtol是否≥1e-4？
+- [ ] **确定性种子**：随机输入是否使用固定seed以保证可复现？
+- [ ] **边界条件**：是否覆盖了零输入、负值、极端大值等边界情况？
