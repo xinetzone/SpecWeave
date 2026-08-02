@@ -85,11 +85,20 @@ SYSTEM_WIN_USERS = {
     "public", "default", "all users", "default user", "defaultuser0",
     "user", "admin", "xxx", "test", "demo", "shared", "guest",
     "wdagutilityaccount", "$user", "{username}", "<user>",
+    # 文档占位符用户名（通用示例，非真实个人路径）
+    "you", "yourname", "your_name", "otheruser", "john doe", "john",
+    "jane", "jane doe", "用户名", "你的用户名", "用户名目录",
 }
 
 SYSTEM_UNIX_USERS = {
     "user", "admin", "xxx", "test", "demo", "shared", "root",
     "$user", "{username}", "<user>",
+    # 文档占位符用户名（通用示例，非真实个人路径）
+    "you", "yourname", "your_name", "otheruser", "dev", "zhangsan",
+    "lisi", "wangwu", "zhaoliu", "john", "jane", "john doe",
+    "ai", "conda_user", "conda", # Dockerfile中常见容器内固定用户
+    # shell命令语法误匹配保护：当/home/后直接跟shell语法时（ls /home/ && ...），正则会错误匹配
+    # 这些由_is_shell_command_context()函数处理
 }
 
 GIT_SSH_DOMAINS = {"github.com", "gitlab.com", "bitbucket.org", "gitee.com", "gitcode.com"}
@@ -305,11 +314,79 @@ def _is_valid_path_username(username: str) -> bool:
         return False
     if re.match(r'^[<${].*[>}]$', username):
         return False
-    if re.search(r'[`/\\<>:"|?*{}]', username):
+    # Windows非法文件名字符 + shell特殊字符（防止误匹配shell命令语法）
+    _shell_special_chars = r'[`/\\<>:"|?*{}()$;&|#\'"]'
+    if re.search(_shell_special_chars, username):
         return False
-    if username.startswith(".") or username.endswith("."):
+    # 用户名不能以shell特殊字符开头（空格可以在中间但不能在开头结尾）
+    if username.startswith(" ") or username.endswith(" "):
+        return False
+    if username.startswith("-") or username.startswith("'") or username.startswith('"'):
         return False
     return True
+
+
+# Shell命令语法检测：路径后紧跟shell分隔符表示这是目录列举而非用户路径
+# 例如: ls /home/ && echo ...  或  cd /Users/; ls ...
+_SHELL_CMD_AFTER_PATH_RE = re.compile(
+    r'^\s*(?:&&|\|\||;|\||\)|&\s*echo|\s+ls\s|\s+cd\s|\s+echo\s|\s+cat\s|\s+rm\s|\s+cp\s|\s+mv\s)',
+)
+
+
+def _is_shell_command_context(line: str, match_end: int, path_sep: str = "/") -> bool:
+    """检查路径匹配是否处于shell命令语法上下文中（误匹配保护）。
+
+    检测以下场景（路径后紧跟shell语法，说明是目录操作而非用户home目录）：
+    1. ls /home/ && echo '---' ... （列举/home/目录后执行其他命令）
+    2. cd /Users/; pwd （分号分隔多条命令）
+    3. for d in /home/*/; do ... （通配符列举）
+    4. /home/ && ls /etc/wsl.conf （路径后直接跟&&等shell操作符）
+
+    参数:
+        line: 当前行文本
+        match_end: 路径匹配结束位置（路径末尾斜杠后）
+        path_sep: 路径分隔符（/ 或 \\）
+    返回:
+        True 如果是shell命令上下文（应跳过此匹配）
+    """
+    after_match = line[match_end:]
+    # 如果匹配后紧跟shell操作符/命令分隔符，说明是目录列举而非用户路径
+    if _SHELL_CMD_AFTER_PATH_RE.match(after_match):
+        return True
+    # 如果路径后面直接跟 * 通配符（如 /home/*/），是shell glob模式
+    if after_match.startswith("*"):
+        return True
+    # 如果路径后面是空格然后紧跟路径分隔符（如 /home/ /etc/），是多路径参数
+    if re.match(r'^\s+[/\\]', after_match):
+        return True
+    return False
+
+
+# Dockerfile指令检测
+_DOCKERFILE_INSTRUCTIONS_RE = re.compile(
+    r'^\s*(?:FROM|RUN|CMD|ENTRYPOINT|ENV|ARG|WORKDIR|COPY|ADD|USER|VOLUME|EXPOSE|LABEL|MAINTAINER|ONBUILD|STOPSIGNAL|HEALTHCHECK|SHELL)\s',
+    re.IGNORECASE
+)
+
+
+def _is_dockerfile_context(file_path: Path, line: str) -> bool:
+    """检查当前行是否在Dockerfile上下文中。
+
+    Dockerfile中ENTRYPOINT/ENV/RUN指令里的/home/<user>/是容器内固定路径，
+    不是开发者宿主机个人路径，不应被脱敏。
+
+    参数:
+        file_path: 文件路径
+        line: 当前行文本
+    返回:
+        True 如果是Dockerfile上下文
+    """
+    # 文件名是Dockerfile或.dockerfile扩展名
+    name_lower = file_path.name.lower()
+    if name_lower == "dockerfile" or name_lower.endswith(".dockerfile"):
+        if _DOCKERFILE_INSTRUCTIONS_RE.match(line):
+            return True
+    return False
 
 
 RULES: list[Rule] = [
@@ -604,6 +681,12 @@ def scan_file(file_path: Path) -> list[Finding]:
                         is_fixable = False
 
                 if rule.type in (PERSONAL_PATH_WIN, PERSONAL_PATH_UNIX):
+                    # Shell命令上下文检测：路径后紧跟shell语法说明是目录列举而非用户路径
+                    if _is_shell_command_context(line, match_end, "/" if rule.type == PERSONAL_PATH_UNIX else "\\"):
+                        continue
+                    # Dockerfile上下文检测：容器内固定用户路径不应脱敏
+                    if _is_dockerfile_context(file_path, line):
+                        continue
                     if rule.type == PERSONAL_PATH_WIN and len(m.groups()) >= 2:
                         username = m.group(2)
                         if not _is_valid_path_username(username):
