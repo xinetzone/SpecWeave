@@ -122,6 +122,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P3 |
+| **归档状态** | ✅ 已归档为模式 [usage-feedback-self-optimization-loop](../../../../.agents/docs/retrospective/patterns/architecture-patterns/usage-feedback-self-optimization-loop.md)（L2成熟度，7个验证案例，含OODA/PDCA/PID经典溯源+L0-L5成熟度模型，commit 待提交） |
 | **触发场景** | Headroom内置learn命令，能从实际使用中学习哪些压缩策略有效、哪些会导致信息丢失，自动更新配置文件（CLAUDE.md/AGENTS.md）持续优化 |
 | **核心发现** | 最好的系统不是一次性设计完美的，而是能从实际使用中持续学习进化的。通过闭环反馈机制，系统越用越好，形成正向飞轮。 |
 | **可复用价值** | 适用于：所有需要长期运行、效果依赖实际使用场景的系统，包括推荐系统、搜索引擎、缓存策略、压缩配置、提示词工程、Agent行为优化等。 |
