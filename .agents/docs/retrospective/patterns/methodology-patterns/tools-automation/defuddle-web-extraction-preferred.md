@@ -235,6 +235,8 @@ flowchart TD
 
 ## PowerShell URL 处理注意事项
 
+> **环境适用性**：本章节为 **Windows PowerShell 环境专用**。Linux/Mac 的 bash/zsh 不存在此问题（双引号即可阻止 `&` 被解析）。Windows 用户使用 PowerShell 时必须遵循以下规则；使用 CMD 或 WSL 的 bash 时可部分放宽。
+
 在 Windows PowerShell 环境中使用 defuddle 时，URL 中的特殊字符会被 PowerShell 解释，必须正确处理才能正确传递 URL。
 
 **需要注意的特殊字符**：

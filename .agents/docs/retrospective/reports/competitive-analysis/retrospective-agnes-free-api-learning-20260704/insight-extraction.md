@@ -119,17 +119,17 @@ maturity: "L2-verified"
 
 | 优先级 | 建议 | 验收标准 | 类型 | 状态 |
 |--------|------|---------|------|------|
-| 高 | 在 defuddle-web-extraction-preferred 模式中补充 PowerShell URL 引号处理注意事项 | 模式中新增"Windows PowerShell URL 必须用单引号包裹"小节和案例 3 | 模式升级 | ⏳ 待落地 |
-| 高 | 在 spec-mode-doc-creation-workflow 模式中补充"tasks.md 初始标记规范" | 模式中新增"tasks.md 初始标记为 [ ]，实施阶段才勾选为 [x]"规范 | 模式升级 | ⏳ 待落地 |
-| 高 | 在 spec-mode-doc-creation-workflow 模式中新增"深度分析任务"适用场景和案例 | 模式中新增深度分析任务的 spec 规划要点和 AC 包含"深度见解"维度 | 模式扩展 | ⏳ 待落地 |
-| 中 | 升级 format-evidence-over-memory-pattern 模式，新增 spec 格式参考案例 2 | 模式中 validation_count 1→2，新增 spec 场景应用案例 | 模式升级 | ⏳ 待落地 |
+| 高 | 在 defuddle-web-extraction-preferred 模式中补充 PowerShell URL 引号处理注意事项 | 模式中新增"Windows PowerShell URL 必须用单引号包裹"小节和案例 3 | 模式升级 | ✅ 已落地 |
+| 高 | 在 spec-mode-doc-creation-workflow 模式中补充"tasks.md 初始标记规范" | 模式中新增"tasks.md 初始标记为 [ ]，实施阶段才勾选为 [x]"规范 | 模式升级 | ✅ 已落地 |
+| 高 | 在 spec-mode-doc-creation-workflow 模式中新增"深度分析任务"适用场景和案例 | 模式中新增深度分析任务的 spec 规划要点和 AC 包含"深度见解"维度 | 模式扩展 | ✅ 已落地 |
+| 中 | 升级 format-evidence-over-memory-pattern 模式，新增 spec 格式参考案例 2 | 模式中 validation_count 1→2，新增 spec 场景应用案例 | 模式升级 | ✅ 已落地 |
 | 低 | 将"复盘+洞察+萃取+导出+原子提交"组合命令工作流沉淀为模式 | 多次验证后创建新模式或封装为 Skill | 模式沉淀 | ⏳ 待多次验证 |
 
 ---
 
 ## 落地验证
 
-本次 5 条洞察中 4 条已映射至现有模式升级（待执行升级操作），1 条待多次验证后沉淀：
+本次 5 条洞察中 4 条已映射至现有模式升级（已执行升级操作），1 条待多次验证后沉淀：
 
 1. **defuddle-web-extraction-preferred.md**：升级 validation_count 2→3，新增 PowerShell URL 注意事项和案例 3
 2. **spec-mode-doc-creation-workflow.md**：升级 validation_count 2→3，新增案例 3、任务标记规范、深度分析任务适用场景
