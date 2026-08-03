@@ -1,7 +1,9 @@
 id = "headroom-context-compression-wiki"
 title = "Headroom AI Agent上下文压缩中间件完整学习教程"
 category = "learning"
-date = "2026-07-04"
+date = "2026-08-03"
 version = "1.0"
-status = "draft"
+status = "published"
 source = "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
+description = "系统学习Headroom——AI Agent与LLM之间的上下文压缩中间件，涵盖6种压缩算法、CCR可逆机制、4种接入方式、跨Agent记忆、自学习进化等核心功能"
+tags = ["headroom", "context-compression", "token-efficiency", "ai-agent", "mcp", "context-engineering", "llm-optimization"]
