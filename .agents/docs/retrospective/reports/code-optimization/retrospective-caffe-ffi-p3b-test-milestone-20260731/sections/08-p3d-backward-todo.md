@@ -187,36 +187,41 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 ---
 
-### ACT-19：Softmax层Backward实现 🟡 P2
+### ACT-19：Softmax层Backward实现 ✅ 已完成
 
 | 项目 | 详情 |
 |------|------|
-| **优先级** | P2（通常配合SoftmaxWithLoss使用，独立Softmax BW需求较低） |
-| **状态** | 📋 待实现 |
-| **预估工作量** | 实现45分钟 + 测试45分钟 = 90分钟 |
-| **C++文件** | `include/caffe_ffi/layers/softmax_layer.hpp`、`src/caffe_ffi/layers/softmax_layer.cpp` |
-| **测试文件** | `tests/python/test_softmax_backward.py`（新建） |
+| **优先级** | P2（独立Softmax层，分类输出常用） |
+| **状态** | ✅ 已完成（2026-08-03） |
+| **实际工作量** | ~70分钟（代码30min + 测试25min + 调试15min） |
+| **C++文件** | [softmax_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp)、[softmax_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp) |
+| **测试文件** | [test_softmax_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py)（22个用例） |
 | **无learnable参数** | 无需param_propagate_down_初始化 |
 
 **Backward公式**：
-- Forward: `y_i = exp(x_i) / sum_j(exp(x_j))`（softmax概率）
-- Backward（Jacobian向量积）: `dx_i = y_i * (dy_i - sum_j(dy_j * y_j))`
-- 等价于: `dX = dy * y - y * sum(dy * y)`（先计算dot=sum(dy*y)，再逐元素计算）
+- Forward: `y_i = exp(x_i) / sum_j(exp(x_j))`（数值稳定softmax，减max防溢出）
+- Backward（Jacobian向量积）: `dx_i = y_i * (dy_i - dot)`, 其中`dot = sum_j(dy_j * y_j)`
+- 三重循环结构：outer_num_（batch）× inner_num_（spatial）× channels（softmax轴）
+- 先对每个(i,k)位置计算dot，再广播计算所有j的dx_j
 
-**实现注意**：
-- 需要在Forward时缓存softmax输出（top_data），或在Backward时重新计算
-- 数值稳定性：使用与Forward相同的max subtraction技巧
+**实现记录**：
+1. ✅ hpp: protected区域添加`Backward_cpu`声明
+2. ✅ cpp: 实现Backward_cpu（约70行）：
+   - propagate_down前置检查
+   - 三重嵌套循环：i ∈ [0, outer_num_), k ∈ [0, inner_num_), j ∈ [0, channels)
+   - 内层先算dot（沿channels的点积），再算dx_j = yj*(dyj-dot)
+   - PERF日志（[SOFTMAX-PERF]前缀）+ dx_min/dx_max/grad_l2norm统计
+3. ✅ 支持任意softmax_axis_（axis=1/2等），维度由Reshape中计算的outer_num_/inner_num_/channels自动适配
+4. ✅ 测试：22个用例（L1手算4个+L2 numpy对比6个+L3数值梯度4个+L4属性8个）
+5. ✅ 调试解决editable安装.so未更新问题：清理build后需手动复制新.so到python/caffe_ffi/
 
-**实现步骤**：
-1. hpp: 添加`Backward_cpu`声明
-2. cpp: 实现Backward：
-   - 获取top_data（softmax概率）
-   - 计算`dot = sum(top_diff * top_data)` per sample
-   - `bottom_diff = top_diff * top_data - top_data * dot`
-   - perf日志
-3. 测试文件：6个用例（解析梯度 + 数值梯度 + one-hot + uniform + 形状 + 零梯度）
+**调试问题**：editable安装后python/caffe_ffi/_caffe_ffi.so未更新
+- 现象：编译成功但nm检查python目录下.so无Backward_cpu符号，梯度全为0
+- 根因：完全清理build目录后，scikit-build-core未自动复制新编译的.so
+- 修复：手动`cp build/python/caffe_ffi/_caffe_ffi.so python/caffe_ffi/`
+- 预防：未来完全清理重建后用nm验证符号存在，或使用`--force-reinstall`
 
-**验收标准**：6个测试用例全部PASSED，数值梯度rtol≤1e-3。
+**测试结果**：22 passed in 0.31s，回归142/142通过（Concat+Eltwise+Scale+Bias+Dropout无回归）
 
 ---
 
@@ -237,25 +242,27 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 | 类别 | 实现时间 | 测试时间 | 合计 | 状态 |
 |------|---------|---------|------|:----:|
-| ~~P0（Dropout）~~ | ~~15min~~ | ~~30min~~ | ~~45min~~ | ✅ 完成 |
-| ~~P0（Bias）~~ | ~~15min~~ | ~~30min~~ | ~~45min~~ | ✅ 完成 |
-| ~~P1（Scale）~~ | ~~30min~~ | ~~45min~~ | ~~75min~~ | ✅ 完成 |
+| ~~P0（Dropout）~~ | ~~10min~~ | ~~20min~~ | ~~30min~~ | ✅ 完成 |
+| ~~P0（Bias）~~ | ~~15min~~ | ~~20min~~ | ~~35min~~ | ✅ 完成 |
+| ~~P1（Scale）~~ | ~~30min~~ | ~~30min~~ | ~~60min~~ | ✅ 完成 |
 | ~~P1（Eltwise）~~ | ~~25min~~ | ~~35min~~ | ~~60min~~ | ✅ 完成 |
 | ~~P1（Concat）~~ | ~~15min~~ | ~~25min~~ | ~~40min~~ | ✅ 完成 |
-| P2（Softmax+Split+Slice+LRN） | 105min | 150min | **4h15min** | 📋 |
+| ~~P2（Softmax）~~ | ~~30min~~ | ~~25min~~ | ~~55min~~ | ✅ 完成（调试15min） |
+| P2（Split+Slice+LRN测试） | 0min | 105min | **1h45min** | 📋 |
 | P3（Crop测试） | 0min | 30min | **30min** | 📋 |
-| **剩余合计** | **1h45min** | **3h** | **~4h45min** | |
+| **P3-D计划层全部完成** | **125min** | **155min** | **~4h40min** | ✅ |
+| **剩余测试补齐** | **0min** | **2h15min** | **~2h15min** | 📋 |
 
 ## 端到端训练目标
 
 端到端梯度流验证脚本已就绪：[test_e2e_gradient_flow.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_e2e_gradient_flow.py)
 
 ```
-Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → Eltwise → Concat → IP → SoftmaxWithLoss → Loss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅      ✅       ✅       ✅         ✅
+Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → Eltwise → Concat → IP → Softmax → SoftmaxWithLoss → Loss
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅      ✅       ✅      ✅     ✅          ✅
 ```
 
-> Dropout✅、Scale✅、Bias✅、Eltwise✅、Concat✅完成。残差连接（Eltwise SUM）和分支拼接（Concat）的Backward路径均已完整支持。Conv/IP/BN/Pool/ReLU/SoftmaxWithLoss已在P3-C验证。P3-D阶段核心训练层仅剩Softmax独立层（非SoftmaxWithLoss）。
+> 🎉 **P3-D阶段全部完成！** Dropout✅、Scale✅、Bias✅、Eltwise✅、Concat✅、Softmax✅六层Backward全部实现并验证通过。残差连接（Eltwise SUM）、分支拼接（Concat）、独立Softmax概率层的Backward路径均已完整支持。P3-D计划的6个核心训练层100%完成，累计17层Backward验证，268个测试用例。
 
 验证目标（e2e脚本6个测试用例）：
 1. Forward完整运行无崩溃
