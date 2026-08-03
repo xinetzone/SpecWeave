@@ -22,7 +22,7 @@
 - [x] 通知用户审核规划文档（已批准）
 
 ## L4 文档生成（已完成）
-- [x] 创建wiki目录：docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/
+- [x] 创建wiki目录：.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/
 - [x] 创建索引页papi-jiang-solo-ip-trend-wiki.md（含导航表格、文章元信息）
 - [x] 创建所有原子章节文件并添加YAML frontmatter
 - [x] 填充00-overview.md（概述：背景、核心主题、学习目标、文档导航）
@@ -37,7 +37,7 @@
 - [x] 添加所有原子文件之间的内部相对链接
 - [x] **子代理产出验收**：按5点检查清单逐项验证frontmatter格式（全部通过）
 - [x] 运行文件名规范检查（人工验证：kebab-case纯英文，两位数字前缀正确）
-- [x] 更新知识库索引docs/knowledge/README.md添加本教程入口（06-business-trends-analysis分类）
+- [x] 更新知识库索引.agents/docs/knowledge/learning/06-business-trends-analysis/README.md添加本教程入口（06-business-trends-analysis分类）
 
 ## L5 元数据与链接修复（已完成）
 - [x] 运行fix-x-toml-ref.py自动修复x-toml-ref路径并创建缺失TOML文件（10个原子文件+索引页）
@@ -50,7 +50,7 @@
 - [x] 创建完整复盘报告（4文档：README/execution-retrospective/insight-extraction/export-suggestions）
 - [x] 萃取3条核心洞察（流水线成熟度、模板跨领域通用性、工具降级策略）
 - [x] 执行行动计划：更新wiki-pre-creation-three-checks(L3)和context-recovery-protocol(L2)两个模式
-- [x] 更新复盘报告索引docs/retrospective/reports/README.md
+- [x] 更新复盘报告索引.agents/docs/retrospective/reports/README.md
 - [x] 补充内容价值说明中的知识关联细节（5个关联维度+具体链接）
 - [x] 所有复盘与模式更新均原子提交
 
@@ -62,7 +62,7 @@
 - **Priority**: high
 - **Depends On**: L3完成
 - **Description**:
-  - 创建docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md作为索引页
+  - 创建.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md作为索引页
   - 包含文章元信息（标题、来源URL、作者、发布时间）
   - 包含完整的文档导航表格，链接到各原子章节
   - 添加正确的YAML frontmatter（id/title/category/tags/date/status/source/x-toml-ref）
@@ -233,7 +233,7 @@
 - **Description**:
   - 运行fix-x-toml-ref.py为所有文件创建TOML元数据并修复路径
   - 运行文件名规范人工验证（因脚本参数问题，降级为人工验证）
-  - 更新docs/knowledge/README.md索引
+  - 更新.agents/docs/knowledge/learning/06-business-trends-analysis/README.md索引
 - **Acceptance Criteria Addressed**: AC-8, AC-9, AC-10
 - **Test Requirements**:
   - `programmatic` TR-11.1: fix-x-toml-ref.py执行成功无错误 ✅
@@ -270,7 +270,8 @@ Wiki教程任务完成必须满足以下全部条件：
 | 元数据配套 | .meta/toml/镜像路径下有对应TOML文件 | fix-x-toml-ref.py --create-toml | ✅ 11个TOML文件全部创建 |
 | 原子化结构 | 已采用原子化拆分：索引页+目录+两位数字前缀原子文件 | 文件结构检查 | ✅ 结构正确，路径在06-business-trends-analysis分类下 |
 | 链接有效 | 所有内部相对路径可到达，无断链 | 人工验证 | ✅ 双向交叉链接已建立 |
-| 原子提交 | 多次原子提交，单一职责 | git log验证 | ✅ 6次原子提交（9c5b7eea/7f7917fa/8fb11d80/c7c4fff4/b2e17479/本次spec更新） |
+| 原子提交 | 多次原子提交，单一职责 | git log验证 | ✅ 7次原子提交（9c5b7eea/7f7917fa/8fb11d80/c7c4fff4/b2e17479/706eb4e4/本次status更新） |
 | 命名规范 | 文件名kebab-case、纯英文、两位数字前缀 | 人工验证 | ✅ 全部通过 |
-| 知识库索引 | docs/knowledge/README.md已更新添加本教程 | README检查 | ✅ 已更新，分类正确 |
+| 知识库索引 | .agents/docs/knowledge/learning/06-business-trends-analysis/README.md已更新添加本教程 | README检查 | ✅ 已更新，分类正确 |
 | 复盘报告 | 创建完整复盘报告，萃取洞察并执行行动计划 | 复盘流程 | ✅ 4文档复盘报告+2个模式更新已完成 |
+| 文档状态 | Wiki+复盘报告status标记为completed | frontmatter检查 | ✅ 14个文件status已更新为completed |

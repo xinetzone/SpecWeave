@@ -48,7 +48,7 @@
 - [x] status标记为completed（已从draft更新为completed）
 
 ## 知识库集成
-- [x] docs/knowledge/README.md已更新，在06-business-trends-analysis分类中添加本教程条目
+- [x] .agents/docs/knowledge/learning/06-business-trends-analysis/README.md已更新，在06-business-trends-analysis分类中添加本教程条目
 - [x] README条目格式与现有条目一致（标题、摘要、日期、标签）
 - [x] 条目链接指向索引页papi-jiang-solo-ip-trend-wiki.md
 - [x] 与AI变现完整指南建立双向交叉链接（知识关联网络已建立）

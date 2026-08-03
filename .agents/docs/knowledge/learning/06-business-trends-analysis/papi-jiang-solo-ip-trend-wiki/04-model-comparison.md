@@ -4,7 +4,8 @@ title: "Papi酱关闭公司回归个人IP：模式深度对比"
 category: "learning"
 tags: ["papi-jiang", "个人IP", "MCN", "模式对比", "超级个体", "平台机构", "商业模式"]
 date: "2026-07-04"
-status: "draft"
+status: "completed"
+completed_date: "2026-07-06"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.toml"
 ---
