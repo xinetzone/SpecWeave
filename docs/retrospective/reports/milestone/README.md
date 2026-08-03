@@ -11,6 +11,7 @@
 | milestone-knowledge-scaling-20260801 | SpecWeave知识沉淀与方法论体系规模化里程碑 | 2026-08-01 | ✅ 已关闭 | 七概念R→I→E→C | 150个spec目录、Token优化飞轮验证、ACT自迭代激活、6项行动项100%落地交付7个资产文件 | [specweave-knowledge-scaling-milestone-20260801.md](specweave-knowledge-scaling-milestone-20260801.md) |
 | milestone-karpathy-llm-wiki-analysis-20260707 | Karpathy LLM Wiki 文章分析任务 | 2026-07-07 | ✅ 已完成 | 七概念R→I→E→V→C | 25条客观事实、3条核心洞察、2个可复用模式(SDIA-001+EKI-001)、5项原子行动项，全部5道质量门通过 | [karpathy-llm-wiki-analysis-retrospective-20260707.md](karpathy-llm-wiki-analysis-retrospective-20260707.md) |
 | milestone-session-atomic-commit-insight-20260706 | 原子提交+洞察萃取会话 | 2026-07-06 | ✅ 已完成 | 七概念R→I→E→C | 20条客观事实、3条核心洞察(非预期自动化风险P0+路径层级陷阱P1+重扫描盲区验证P1)、1个新模式候选(非预期自动化防御L1)+2个已有模式验证、4项原子行动项，G1-G4质量门全部通过 | [session-atomic-commit-insight-extraction-20260706.md](session-atomic-commit-insight-extraction-20260706.md) |
+| milestone-four-engineering-concepts-wiki-20260704 | 四大工程概念 Wiki 教程创建任务 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→C | 25条客观事实、3条核心洞察(格式示例保障+非零退出码处理+流程成熟度)、1个模式候选(网页文章→Wiki教程标准流程)、3项原子行动项，G1-G4质量门全部通过 | [four-engineering-concepts-wiki-retrospective-20260704.md](four-engineering-concepts-wiki-retrospective-20260704.md) |
 
 ## 知识沉淀里程碑模式库
 
