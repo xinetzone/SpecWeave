@@ -23,6 +23,10 @@ services:
       - ../..:/SpecWeave:cached
       # /workspace 使用 Docker 命名卷（Jupyter 工作目录，启动快，chown 无性能问题）
       - workspace:/workspace
+      # 覆盖容器内的构建脚本（修复版：跳过重复构建、修复libopenblas/backtrace问题）
+      - ./scripts/editable-install.sh:/usr/local/bin/editable-install.sh:ro
+      # 覆盖容器内的健康检查脚本（修复版：protobuf ABI roundtrip测试）
+      - ./scripts/container-healthcheck.sh:/usr/local/bin/container-healthcheck.sh:ro
     environment:
       - TZ=Asia/Shanghai
       - LANG=zh_CN.UTF-8
@@ -35,7 +39,7 @@ services:
       - WORKSPACE_DIR=/SpecWeave
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8888/api"]
+      test: ["CMD", "/usr/local/bin/container-healthcheck.sh"]
       interval: 30s
       timeout: 10s
       retries: 3
