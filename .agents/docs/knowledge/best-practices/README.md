@@ -82,6 +82,7 @@ date: "2026-07-30"
 | [powershell-nativebuild-refactoring-summary.md](powershell-nativebuild-refactoring-summary.md) | NativeBuild三层架构重构总结（6大挑战解决方案、YAGNI原则、196测试覆盖、PowerShell模块化最佳实践、跨脚本代码扫描评估） | `PowerShell` `modularization` `refactoring` `NativeBuild` `MSVC` `Conda` `build-system` `three-layer-architecture` `retrospective` `team-learning` |
 | [powershell-nativebuild-faq.md](powershell-nativebuild-faq.md) | PowerShell NativeBuild构建常见问题FAQ（20个坑点：PATH 8191限制、VS多版本选择、UTF-16编码、DevShell静默失败、$args陷阱、硬编码路径、CI配置等） | `PowerShell` `NativeBuild` `MSVC` `Conda` `troubleshooting` `faq` `VS-DevShell` `PATH-limit` `hardcoded-paths` `windows` |
 | [test-infra-performance-optimization.md](test-infra-performance-optimization.md) | 测试基础设施性能优化最佳实践（分层GC/观测开销预算化/批量缓冲I/O/日志抑制，16.2x加速实战，核心原则"测量不猜"） | `performance` `gc` `profiling` `pytest` `observability` `test-infrastructure` `caffe-ffi` `buffered-io` `measure-dont-guess` |
+| [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) | Caffe-FFI Layer开发必查：param_propagate_down_初始化陷阱（Backward越界崩溃根因、正确写法、6项检查清单、测试预防措施） | `caffe-ffi` `layer` `backward` `bug-pattern` `initialization` `segfault` `access-violation` `c++` `best-practice` |
 
 ---
 
@@ -104,7 +105,7 @@ date: "2026-07-30"
 | 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) → [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 | 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
-| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) → [float-precision-testing-guide.md](float-precision-testing-guide.md) → [test-infra-performance-optimization.md](test-infra-performance-optimization.md) |
+| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) → [float-precision-testing-guide.md](float-precision-testing-guide.md) → [test-infra-performance-optimization.md](test-infra-performance-optimization.md) → [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) |
 | 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 | 🔀 conda交叉编译 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 📚 知识管理 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) |

@@ -641,6 +641,15 @@ pytest tests/python/test_activation_backward.py test_inner_product_backward.py t
 | 2026-08-02 | ACT-06 | ✅ 已完成：Windows本地C++扩展编译环境构建完成。具体产出：（1）三层模块化PowerShell构建工具链（PathPattern.psm1→VsDevShell.psm1→NativeBuild.psm1）；（2）自动化构建脚本`build_caffe_ffi.ps1`支持自动发现项目目录/Conda环境/VS安装路径，解决PATH长度截断（>4096字符时自动精简PATH重试）、DevShell静默失败检测（捕获stderr验证cl.exe可用性）、CMake缓存污染（重试前恢复环境变量）等关键问题；（3）使用VS 2026 Insiders v18 + Python 3.14.3成功编译35个目标，`_caffe_ffi.dll`生成并安装为editable wheel；（4）196个Pester单元测试覆盖构建工具链所有功能模块；（5）脚本已推广至npu-ffi/demo-ffi/xuan-ext-demo等其他C++扩展项目 |
 | 2026-08-02 | ACT-07 | ✅ 已完成：为P3-B（8个类）+ P3-C（16个类）共24个测试类添加`@require_cpp_extension`装饰器，C++扩展不可用时测试正确SKIP而非FAIL。补充修复：（1）`test_sigmoid_float32_saturation_exact`测试期望值bug——float32 ULP(1.0)≈1.2e-7，sigmoid(80)=1/(1+exp(-80))的exp(-80)≈1.8e-35远小于ULP/2≈6e-8，故sigmoid(80)精确等于1.0而非">1-1e-30"，修正断言并更新ULP分析文档字符串；（2）conftest.py中`_P3C_TEST_CLASSES`遗漏`TestSigmoidBackward`，导致perf_trace无法采集其性能数据，已补充。P3-B(50)+P3-C(81)=131个测试全部通过，P阶段累计155个测试全通过 |
 | 2026-08-03 | ACT-04 | ✅ 已完成：perf_trace基础设施GC开销优化，P3-B测试从134s→8.27s（16.2x加速），超额完成50%目标（实际降低93.8%）。关键发现：原假设"Net创建是瓶颈"错误，微基准证明Net创建仅0.5ms、Forward仅0.03ms，真正瓶颈是perf_trace和泄漏检测钩子中激进的3-5轮完整分代GC（~150ms/次×8-12次/测试）。优化4项：①分层GC策略（quick=gen0一轮/full=2轮/off=无GC）；②perf_trace默认quick GC+RSS峰值采样线程可选；③CSV写入缓冲（20行批量flush）；④C++ InsertSplits日志默认抑制（ERROR级别）。P3全套件176个测试28.3s通过无回归。教训：性能优化必须先测量再行动 |
+| 2026-08-03 | ACT-08 | ✅ 已完成：InnerProduct Backward完整验证，23个测试用例（解析梯度dX/dW/db+transpose/bias/no-bias/NCHW+数值梯度）全部通过；numpy参考实现自洽验证通过 |
+| 2026-08-03 | ACT-09 | ✅ 已完成：_grad_check_utils梯度验证工具库自测与性能优化，支持中心差分/前向差分、自动参数检测、批量梯度检查 |
+| 2026-08-03 | ACT-10 | ✅ 已完成：BatchNorm Backward_cpu实现+11个测试用例全部通过，numpy参考自洽验证通过 |
+| 2026-08-03 | **Bug修复** | ✅ 已完成：发现并修复`base_conv_layer.cpp`中`param_propagate_down_`未初始化导致Conv/Deconv Backward崩溃Bug，添加CRITICAL注释并沉淀为独立Wiki文章 |
+| 2026-08-03 | **Conv BW** | ✅ 已完成：Conv层Backward验证18个测试用例（1x1/3x3/padding/stride/dilation/groups/无bias/数值梯度dX/dW/db）全部通过，numpy参考含im2col/col2im/GEMM实现 |
+| 2026-08-03 | ACT-11 | 📋 **待执行**：Pooling Backward测试（MAX/AVE梯度路由验证+数值梯度） |
+| 2026-08-03 | ACT-12 | 📋 **待执行**：Deconv Backward数值梯度测试 |
+| 2026-08-03 | ACT-13 | 📋 **待执行**：SoftmaxWithLoss数值梯度测试补齐 |
+| 2026-08-03 | P3-D计划 | ✅ 已完成：P3-D Backward实现阶段计划制定（Dropout/Bias/Scale/Eltwise/Concat/Softmax共6层实现+Pooling/Deconv等测试补齐），含详细测试用例清单和工作量估算（~10.5h） |
 
 ### 2026-08-02 后续进展：构建环境就绪
 
@@ -871,3 +880,188 @@ pytest tests/python/test_activation_backward.py test_inner_product_backward.py t
 3. [ ] 编写第一个Backward测试时，优先使用最简单配置（1x1、无bias、极小输入）快速触发此路径
 
 **已正确初始化的层**：InnerProduct、Bias、BatchNorm、PReLU、Scale、BaseConvolution（已修复）
+
+---
+
+## P3-C Backward覆盖度审计（2026-08-03）
+
+### Backward实现状态矩阵
+
+| # | 层名 | Forward | Backward实现 | 数值梯度测试 | 优先级 |
+|---|------|:-------:|:-----------:|:-----------:|:------:|
+| 1 | ReLU | ✅ | ✅ | ✅ (test_activation_backward) | ✅ |
+| 2 | Sigmoid | ✅ | ✅ | ✅ (test_activation_backward) | ✅ |
+| 3 | TanH | ✅ | ✅ | ✅ (test_activation_backward) | ✅ |
+| 4 | ELU | ✅ | ✅ | ✅ (test_activation_backward) | ✅ |
+| 5 | PReLU | ✅ | ✅ | ✅ (test_activation_backward) | ✅ |
+| 6 | InnerProduct | ✅ | ✅ | ✅ (test_inner_product_backward, 23 tests) | ✅ |
+| 7 | BatchNorm | ✅ | ✅ | ✅ (test_batch_norm_backward, 11 tests) | ✅ |
+| 8 | Convolution | ✅ | ✅ | ✅ (test_conv_backward, 18 tests) | ✅ |
+| 9 | Deconvolution | ✅ | ✅ | ⚠️ 无独立bw测试（P3-D覆盖） | 🟡 P1 |
+| 10 | Pooling(MAX/AVE) | ✅ | ✅ | ❌ 无bw测试 | 🔴 P0 |
+| 11 | SoftmaxWithLoss | ✅ | ✅ | ⚠️ P3-B有基础dX测试，无数值梯度 | 🟡 P1 |
+| 12 | LRN | ✅ | ✅ | ❌ 无bw测试 | 🟡 P2 |
+| 13 | Slice | ✅ | ✅ | ❌ 无bw测试 | 🟡 P2 |
+| 14 | Crop | ✅ | ✅ | ❌ 无bw测试 | 🟡 P2 |
+| 15 | Split | ✅ | ✅ | ❌ 无bw测试（identity分发，简单） | 🟢 P3 |
+| 16 | Dropout | ✅ | ❌ 缺失 | - | 🔴 P0（最简单） |
+| 17 | Bias | ✅ | ❌ 缺失 | - | 🔴 P0 |
+| 18 | Scale | ✅ | ❌ 缺失 | - | 🟡 P1 |
+| 19 | Eltwise | ✅ | ❌ 缺失 | - | 🟡 P1 |
+| 20 | Concat | ✅ | ❌ 缺失 | - | 🟡 P1 |
+| 21 | Softmax | ✅ | ❌ 缺失 | - | 🟡 P2 |
+| - | Accuracy/Input/Flatten/Reshape | ✅ | 🟢 不需要 | - | - |
+
+### P3-C遗留待办（Backward数值梯度测试补齐）
+
+| 行动项 | 优先级 | 内容 | 预估工作量 |
+|--------|:------:|------|-----------|
+| ACT-11 | 🔴 P0 | **Pooling Backward测试**：MAX（winner路由）/AVE（均匀分配），含数值梯度dx验证 | ~45分钟 |
+| ACT-12 | 🟡 P1 | **Deconv Backward测试**：验证Deconv的dX/dW/db数值梯度 | ~1小时 |
+| ACT-13 | 🟡 P1 | **SoftmaxWithLoss数值梯度**：补充dx的中心差分验证 | ~30分钟 |
+| ACT-14 | 🟢 P3 | Split/Crop/Slice/LRN基础backward测试（简单路由/identity） | ~1小时 |
+
+> 注：Split的Backward是多个top梯度求和（分发梯度到同一bottom），Slice是按通道拆分梯度，Crop是空间裁剪梯度路由——逻辑简单但需测试覆盖以防越界。
+
+---
+
+## P3-D Backward实现阶段计划（2026-08-03 制定）
+
+### 阶段目标
+完成剩余6个层的Backward实现+测试，达到**所有训练必需层100% Backward覆盖**，能够端到端训练简单CNN（Conv→BN→ReLU→Pool→IP→SoftmaxWithLoss）。
+
+### 层优先级排序（按依赖关系和训练必需度）
+
+#### 🔴 P0：Dropout（最简单，inference模式identity）
+- **现状**：Forward是identity copy（inference模式），无Backward
+- **Backward公式**：inference模式下dy直接pass-through，dX = dy
+- **无参数**（dropout_ratio是超参数非learnable）
+- **预估**：~15分钟实现，~30分钟测试
+- **测试用例清单**：
+  1. `test_dropout_backward_identity`：dy全1 → dx全1（解析梯度精确验证）
+  2. `test_dropout_numerical_gradient_dx`：中心差分验证dX
+  3. `test_dropout_backward_zero_dy`：dy全0 → dx全0
+  4. `test_dropout_backward_shapes`：dx形状与输入一致
+  5. `test_dropout_backward_deterministic`：两次backward结果一致
+  6. `test_dropout_preserves_forward`：Forward+Backward链式不改变Forward结果
+
+#### 🔴 P0：Bias层（逐元素加偏置，简单加法）
+- **现状**：Forward是y = x + bias（广播加法），无Backward
+- **已有param_propagate_down_初始化** ✅（line 52）
+- **Backward公式**：
+  - dX = dy（bias是加法，梯度直接传过）
+  - d_bias = sum over outer_dim × inner_dim（对非bias维度求和）
+- **有1个learnable参数**（blobs_[0]）
+- **预估**：~30分钟实现，~45分钟测试
+- **测试用例清单**：
+  1. `test_bias_backward_analytical_dx`：解析梯度dy → dx=dy精确验证
+  2. `test_bias_backward_analytical_dbias`：dbias = sum(dy, axis=外维+内维) 与numpy对比
+  3. `test_bias_numerical_gradient_dx`：中心差分dX验证（rtol=1e-3）
+  4. `test_bias_numerical_gradient_dbias`：中心差分dbias验证（rtol=1e-3）
+  5. `test_bias_backward_zero_dy`：dy全0 → dx全0, dbias全0
+  6. `test_bias_backward_shapes`：dx/db形状正确
+  7. `test_bias_backward_per_channel`：per-channel bias (axis=1, num_axes=1)
+  8. `test_bias_backward_positional`：positional bias (axis=1, num_axes=2, e.g. Transformer PE)
+
+#### 🟡 P1：Scale层（逐元素缩放+可选bias）
+- **现状**：Forward是y = alpha * x + beta（alpha和beta都是learnable），无Backward
+- **Backward公式**：
+  - dX = dy * alpha
+  - d_alpha = sum(dy * x) over broadcast dimensions
+  - d_beta = sum(dy) over broadcast dimensions（如果有bias_term）
+- **最多2个learnable参数**（alpha必填，beta可选）
+- **预估**：~45分钟实现，~1小时测试
+- **测试用例清单**：
+  1. `test_scale_backward_analytical_dx`：dx = dy*alpha 与numpy对比
+  2. `test_scale_backward_analytical_dscale`：dscale = sum(dy*x) 验证
+  3. `test_scale_backward_analytical_dbias`：dbias = sum(dy) 验证
+  4. `test_scale_numerical_gradient_dx`：中心差分dX（rtol=1e-3）
+  5. `test_scale_numerical_gradient_dscale`：中心差分dscale（rtol=1e-3）
+  6. `test_scale_numerical_gradient_dbias`：中心差分dbias（rtol=1e-3）
+  7. `test_scale_backward_no_bias`：bias_term=false时无dbias
+  8. `test_scale_backward_zero_dy`：零梯度测试
+  9. `test_scale_backward_shapes`：形状一致性
+
+#### 🟡 P1：Eltwise层（SUM/PROD/MAX逐元素操作）
+- **现状**：Forward支持SUM/PROD/MAX三种操作，无Backward
+- **无learnable参数**
+- **Backward公式**：
+  - SUM: dX[i] = dy[i] for each bottom i（梯度等分/按coeff分）
+  - PROD: dX[i] = dy * prod(X[j] for j≠i)（乘积的导数是其他输入之积）
+  - MAX: dX[winner] = dy, 其他0（类似Max Pooling但在层间）
+- **预估**：~1小时实现（三种操作），~1小时测试
+- **测试用例清单**：
+  1. `test_eltwise_sum_backward`：SUM模式dX = dy验证
+  2. `test_eltwise_prod_backward`：PROD模式dX = dy * other_inputs乘积
+  3. `test_eltwise_max_backward`：MAX模式gradient路由
+  4. `test_eltwise_numerical_gradient_sum`：SUM数值梯度
+  5. `test_eltwise_numerical_gradient_prod`：PROD数值梯度
+  6. `test_eltwise_numerical_gradient_max`：MAX数值梯度
+  7. `test_eltwise_backward_coeff`：带coeff的SUM梯度验证
+  8. `test_eltwise_backward_shapes`：多输入梯度形状
+
+#### 🟡 P1：Concat层（通道拼接）
+- **现状**：Forward沿指定axis拼接多个bottom，无Backward
+- **无learnable参数**
+- **Backward公式**：沿concat轴拆分dy，每个bottom_i获得对应的slice
+- **预估**：~30分钟实现，~45分钟测试
+- **测试用例清单**：
+  1. `test_concat_backward_split`：dX按通道拆分，sum(concat(dX)) == dy
+  2. `test_concat_backward_numerical`：中心差分验证
+  3. `test_concat_backward_zero_dy`：零梯度
+  4. `test_concat_backward_shapes`：各bottom dX形状对应
+  5. `test_concat_forward_backward_roundtrip`：Forward→Backward往返还原
+  6. `test_concat_multi_input`：3+个输入的gradient分发
+
+#### 🟡 P2：Softmax层（独立softmax，通常配合SoftmaxWithLoss使用）
+- **现状**：Forward是softmax = exp(x)/sum(exp(x))，无Backward
+- **无learnable参数**
+- **Backward公式**：dX = dy * y - y * sum(dy * y)（Jacobian向量积）
+  - 等价于：dx_i = y_i * (dy_i - sum_j(dy_j * y_j))
+- **预估**：~45分钟实现，~45分钟测试
+- **测试用例清单**：
+  1. `test_softmax_backward_analytical`：dX解析公式与numpy对比
+  2. `test_softmax_numerical_gradient`：中心差分验证（rtol=1e-3）
+  3. `test_softmax_backward_onehot`：one-hot dy梯度
+  4. `test_softmax_backward_uniform`：均匀dy的梯度
+  5. `test_softmax_backward_shapes`：形状一致性
+  6. `test_softmax_backward_zero_dy`：零梯度
+
+#### P0遗留：Pooling Backward测试
+（实现在pooling_layer.cpp中已有，仅缺测试）
+- **测试用例清单**：
+  1. `test_pool_max_backward_known`：2x2 max已知值winner路由验证
+  2. `test_pool_ave_backward_known`：2x2 ave均匀分配验证（1/4）
+  3. `test_pool_max_numerical_gradient_dx`：MAX pooling数值梯度（rtol=1e-3）
+  4. `test_pool_ave_numerical_gradient_dx`：AVE pooling数值梯度（rtol=1e-3）
+  5. `test_pool_global_backward`：global pooling梯度
+  6. `test_pool_pad_stride_backward`：带pad/stride的梯度验证
+  7. `test_pool_backward_zero_dy`：零梯度
+  8. `test_pool_backward_shapes`：形状一致性
+  9. `test_pool_overlapping_windows`：重叠窗口的梯度累积
+  10. `test_pool_backward_preserves_forward`：前向不变性
+
+### 端到端训练验证目标
+所有P0+P1层Backward完成后，可以构建一个端到端训练验证Net：
+```
+Data → Conv → BatchNorm → ReLU → Pooling → 
+IP → ReLU → Dropout → IP → SoftmaxWithLoss → Loss
+```
+验证：
+1. Forward完整运行无崩溃
+2. Backward完整运行无崩溃
+3. Loss随训练步下降（梯度有效性验证）
+4. 权重梯度范数非零且稳定（非NaN/Inf）
+
+### 预估总工作量
+| 层 | 实现 | 测试 | 合计 |
+|----|------|------|------|
+| Dropout | 15min | 30min | 45min |
+| Bias | 30min | 45min | 75min |
+| Pooling测试 | 0（已有） | 60min | 60min |
+| Scale | 45min | 60min | 105min |
+| Eltwise | 60min | 60min | 120min |
+| Concat | 30min | 45min | 75min |
+| Softmax | 45min | 45min | 90min |
+| ACT-12/13 (Deconv/SoftmaxLoss) | 0 | 60min | 60min |
+| **合计** | **3h45min** | **6h45min** | **~10.5h** |
