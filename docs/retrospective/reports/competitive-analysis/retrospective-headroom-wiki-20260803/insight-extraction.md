@@ -81,6 +81,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I6 |
+| **归档状态** | ✅ 已归档为模式 [classic-patterns-reuse-heuristic](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md)（L2成熟度，6个验证案例，commit 待提交） |
 | **触发场景** | Headroom将压缩后的上下文作为热数据常驻LLM上下文窗口，原始上下文作为冷数据存储在外部，需要时按需检索加载 |
 | **核心发现** | 这不是新发明，而是计算机体系结构中Cache分层思想（CPU Cache → 内存 → 磁盘）、数据库冷热分离、CDN缓存等经典模式在AI上下文管理中的直接复用。 |
 | **可复用价值** | 经典计算机科学思想具有强大的跨领域迁移能力。遇到AI领域的"新问题"时，先想想传统CS领域是否已经有成熟解决方案。 |
