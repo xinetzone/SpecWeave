@@ -11,8 +11,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | 指标 | 数值 |
 |------|------|
-| 总 Wiki 数 | 63 |
-| 原子化 Wiki | 24 |
+| 总 Wiki 数 | 64 |
+| 原子化 Wiki | 25 |
 | 单文件 Wiki | 39 |
 | 主题数 | 8（含 2 个厂商二级子目录）+ 1 个跨领域专题 |
 | 文件总数 | ~309 |
@@ -68,6 +68,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | Wiki | 说明 | 链接 |
 |------|------|------|
 | **火山引擎 AgentKit 企业级 AI Agent 平台** | 12章完整Wiki教程：七概念方法论沉淀，3个跨平台可复用模式，企业智能体从0到1必读 | **[volcengine-agentkit-wiki](03-agent-platforms-tools/volcengine-agentkit-wiki/README.md)** |
+| **Intelligent Terminal Wiki 教程** | 13章完整Wiki教程：Microsoft AI-native Windows Terminal深度解析，Helper+Master架构、ACP协议、COM集成、Autofix等核心技术 | **[intelligent-terminal-wiki](intelligent-terminal-wiki/README.md)** |
 | Anthropic Agent 产品路线图 | Conway/Orbit/Operon/BugCrawl 等六条产品线解析 | [anthropic-agent-roadmap-wiki.md](03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md) |
 | Anthropic 金融服务 Agent 工具箱 | 华尔街 AI 金融 Agent 工具箱完整教程 | [anthropic-financial-services-wiki.md](03-agent-platforms-tools/anthropic-financial-services-wiki.md) |
 | AReaL 2.0 自演进 Agent | 蚂蚁集团在线强化学习基础设施 | [areal-agent-rl-wiki.md](03-agent-platforms-tools/areal-agent-rl-wiki.md) |
