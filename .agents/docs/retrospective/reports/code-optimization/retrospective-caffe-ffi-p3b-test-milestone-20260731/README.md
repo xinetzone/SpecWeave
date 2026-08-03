@@ -10,7 +10,7 @@ verification: passed
 source: P3-B/C/D full C++ layer coverage + Backward gradient validation milestone
 commit: d1acc7b,1b45083,92fb41b,7cac604,e2c3750d,4f36fea,4732a0b,42bdcb9,30ae2d1,a51c405,3dea945,fdd650b
 total_tests: ">900"
-coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient validated (118 tests)"
+coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient validated (190 tests)"
 ---
 
 # caffe-ffi P3-B/C/D阶段测试里程碑复盘
@@ -19,13 +19,15 @@ coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient valid
 
 | 项目 | 内容 |
 |------|------|
-| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: Dropout Backward实现+5层计划 |
+| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: Dropout/Scale/Bias/Pooling Backward+3层待实现 |
 | **工作目录** | `projects/xuanspace/libs/caffe-ffi/` |
-| **方法论** | numpy参考实现 + 三层验证法 + 中心有限差分数值梯度 + perf_trace性能采集 |
+| **方法论** | numpy参考实现 + 三层验证法 + 中心有限差分数值梯度 + perf_trace性能采集 + I→F→V→C问题解决链路 |
 | **Forward覆盖** | ✅ 25/25 C++层100%覆盖（176个P阶段测试） |
-| **Backward验证** | ✅ 12层Backward梯度验证通过（118个测试用例） |
+| **Backward验证** | ✅ 14层Backward梯度验证通过（190个测试用例，Docker验证） |
+| **P3-D进度** | Dropout✅ / Scale✅ / Bias✅ / Pooling✅(CEIL模式修复) / 3层待实现（Eltwise/Concat/Softmax） |
+| **端到端验证** | ✅ e2e梯度流验证通过（Loss下降+参数梯度非零，Conv→BN→ReLU→Pool→IP→ReLU→Dropout→Scale→Bias→IP→Loss） |
 | **性能优化** | ✅ P3-B测试套件16.2x加速（134s→8.27s） |
-| **Bug发现与修复** | 1个P0-Critical（param_propagate_down_未初始化） |
+| **Bug发现与修复** | 2个P0-Critical（param_propagate_down_未初始化、Pooling CEIL模式numpy参考默认值不匹配） |
 
 ## 文档导航
 
@@ -45,8 +47,11 @@ coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient valid
 
 | # | 文档 | 内容 |
 |---|------|------|
-| 06 | **[Dropout Backward实现记录](sections/06-p3d-backward-plan.md)** | ⭐ Dropout层Backward实现完成（20个测试通过） |
-| 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 5层Backward实现TODO（Bias/Scale/Eltwise/Concat/Softmax） |
+| 06 | **[P3-D Backward主计划](sections/06-p3d-backward-plan.md)** | ⭐ Dropout/Scale/Bias/Pooling Backward完成记录，端到端网络状态 |
+| 10 | **[Scale Backward实现记录](sections/10-p3d-scale-backward.md)** | Scale层Backward实现（25个测试Docker验证通过） |
+| 11 | **[Bias Backward实现记录](sections/11-p3d-bias-backward.md)** | Bias层Backward实现（19个测试Docker验证通过） |
+| 12 | **[Pooling CEIL模式回归修复](sections/12-p3d-pooling-ceil-mode-fix.md)** | ⭐ Pooling CEIL/FLOOR模式shape不匹配根因分析与修复（28个测试通过） |
+| 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 3层Backward实现TODO（Eltwise/Concat/Softmax） |
 
 ### 知识沉淀
 
@@ -61,6 +66,7 @@ coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient valid
 | [param_propagate_down_初始化检查清单](../../../../knowledge/best-practices/caffe-ffi-param-propagate-down-initialization.md) | Layer初始化陷阱预防 |
 | [测试基础设施性能优化](../../../../knowledge/best-practices/test-infra-performance-optimization.md) | "测量不要猜"原则+分层GC策略 |
 | [浮点数精度测试指南](../../../../knowledge/best-practices/float-precision-testing-guide.md) | ULP饱和规则+C¹拐点防护 |
+| [numpy参考实现默认值对齐原则](../../../../knowledge/best-practices/numpy-reference-default-alignment.md) | 框架枚举默认值对齐+显式优于隐式+反向验证shape |
 
 ## Backward覆盖矩阵
 
@@ -72,13 +78,15 @@ coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient valid
 | 4 | ELU | ✅ | ✅ | ✅ | ✅ |
 | 5 | PReLU | ✅ | ✅ | ✅ | ✅ |
 | 6 | InnerProduct | ✅ | ✅ | ✅ (23) | ✅ |
-| 7 | BatchNorm | ✅ | ✅(新) | ✅ (11) | ✅ |
+| 7 | BatchNorm | ✅ | ✅ | ✅ (11) | ✅ |
 | 8 | Convolution | ✅ | ✅ | ✅ (25) | ✅ |
 | 9 | Deconvolution | ✅ | ✅ | ✅ (10) | ✅ |
-| 10 | Pooling(MAX/AVE) | ✅ | ✅ | ✅ (17) | ✅ |
+| 10 | Pooling(MAX/AVE) | ✅ | ✅ | ✅ (28) | ✅ |
 | 11 | SoftmaxWithLoss | ✅ | ✅ | ✅ (12) | ✅ |
-| 12 | Dropout | ✅ | ✅(新) | ✅ (20) | ✅ |
-| **已验证合计** | **12层** | | | **118 tests** | |
+| 12 | Dropout | ✅ | ✅ | ✅ (20) | ✅ |
+| 13 | Scale | ✅ | ✅ | ✅ (25) | ✅ |
+| 14 | Bias | ✅ | ✅ | ✅ (19) | ✅ |
+| **已验证合计** | **14层✅** | | | **190 tests✅** | |
 
 ## P3-D待实现Backward层
 
@@ -87,12 +95,13 @@ coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient valid
 | 优先级 | 层 | 预估 | Backward公式 | 状态 |
 |:------:|-----|------|-------------|:----:|
 | ✅ 完成 | ~~Dropout~~ | 30min | dX = dy (inference identity) | ✅ |
-| 🔴 P0 | Bias | 75min | dX=dy, d_bias=sum(dy) | 📋 |
-| 🟡 P1 | Scale | 105min | dX=dy·α, dα=sum(dy·x), dβ=sum(dy) | 📋 |
+| ✅ 完成 | ~~Scale~~ | ~75min | dX=dy·α, dα=sum(dy·x), dβ=sum(dy) | ✅ |
+| ✅ 完成 | ~~Bias~~ | ~45min | dX=dy, d_bias=sum(dy) | ✅ |
+| ✅ 完成 | ~~Pooling(回归修复)~~ | ~20min | CEIL模式对齐，numpy参考默认值修复 | ✅ |
 | 🟡 P1 | Eltwise | 120min | SUM: dx=dy; PROD: dx=dy·∏others; MAX: winner路由 | 📋 |
 | 🟡 P1 | Concat | 75min | dX=沿axis拆分dy | 📋 |
 | 🟡 P2 | Softmax | 90min | dx=y·(dy-Σ(dy·y)) | 📋 |
-| | **剩余合计** | **~7.75h** | | |
+| | **剩余合计** | **~4.75h** | | |
 
 ## 关键提交记录
 

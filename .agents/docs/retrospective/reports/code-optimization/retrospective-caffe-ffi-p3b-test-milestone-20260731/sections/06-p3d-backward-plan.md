@@ -199,11 +199,35 @@ Dropout成为第12个完成Backward验证的层，Backward验证层数从11→12
 2. Dropout是最简单的identity层，无参数、无复杂数学
 3. 测试框架`_grad_check_utils`已成熟，数值梯度测试可快速套用
 
-## 7. 后续影响
+## 7. P3-D阶段进展（2026-08-03更新）
 
-- **端到端训练网络解锁**：Dropout Backward完成后，可构建训练网络：
-  ```
-  Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → IP → SoftmaxWithLoss
-         ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅       ✅         ✅
-  ```
-- **下一个目标**：Bias层（P0优先级，预估75分钟）
+Dropout/Scale/Bias/Pooling四个层的Backward均已完成并通过Docker验证，Pooling层CEIL模式回归已修复：
+
+| 层 | 测试用例 | 状态 | 耗时 |
+|----|---------|------|------|
+| Dropout | 20/20 | ✅ 完成 | ~30min |
+| Scale | 25/25 | ✅ 完成 | ~75min |
+| Bias | 19/19 | ✅ 完成 | ~45min |
+| Pooling | 28/28 | ✅ 完成（含CEIL模式回归修复） | P3-C已实现+P3-D修复~20min |
+
+### Pooling CEIL模式回归修复记录
+
+在Scale/Bias完成后运行回归测试时，发现Pooling层1/28测试失败：`test_ave_boundary_pool_size_correction`。根因是numpy参考实现默认`ceil_mode=False`（FLOOR模式），而C++ Caffe默认使用CEIL模式，导致输出shape不匹配。
+
+**修复内容**：
+1. numpy参考默认`ceil_mode`改为True，与C++对齐
+2. 修正测试用例dy shape从(1,1,1,2)→(1,1,2,2)（CEIL输出）
+3. 新增4个区域断言验证完整窗口/边界窗口/重叠中心梯度值
+
+**详细记录**：[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)
+
+**端到端训练网络当前状态**：
+```
+Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → IP → SoftmaxWithLoss → Loss
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅     ✅         ✅
+```
+
+Backward验证层数从11→14，测试用例从98→190（P3-C 98 + P3-D 92）。
+
+**下一个目标**：Eltwise层（P1优先级，预估120分钟，需处理SUM/PROD/MAX三种操作，MAX需要winner mask）
+详见[08-p3d-backward-todo.md](08-p3d-backward-todo.md)和[10-p3d-scale-backward.md](10-p3d-scale-backward.md)、[11-p3d-bias-backward.md](11-p3d-bias-backward.md)、[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)。
