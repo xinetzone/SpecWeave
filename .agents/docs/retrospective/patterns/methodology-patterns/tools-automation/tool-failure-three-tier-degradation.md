@@ -6,14 +6,15 @@ created_date: "2026-07-05"
 source: "../../../reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.toml"
 tags: ["工具故障", "降级策略", "错误恢复", "Shell管道耗尽", "IDE超时", "故障处理", "反模式", "sub-agent", "defuddle", "WebFetch", "网页提取"]
-trigger_conditions: ["Shell命令执行失败（管道耗尽os error 231）", "WebFetch/网络请求超时", "Read/Write工具IDE timeout", "连续2次同类工具调用失败", "MCP工具无响应", "基础设施不稳定环境", "defuddle返回exit code 126", "网页提取工具失败"]
+trigger_conditions: ["Shell命令执行失败（管道耗尽os error 231）", "WebFetch/网络请求超时", "Read/Write工具IDE timeout", "连续2次同类工具调用失败", "MCP工具无响应", "基础设施不稳定环境", "defuddle返回exit code 126", "网页提取工具失败", "工具参数记忆错误/用法不确定", "脚本调用参数不熟悉"]
 problem_solved: "遇到Shell管道耗尽、网络超时、IDE命令超时、网页提取工具失败等工具层故障时，本能反应是反复重试失败的工具，导致任务卡死、时间浪费。本模式提供预定义的三级降级策略，遇到故障时立即有序切换方案，而非反复重试。"
-validation_count: 2
-reuse_count: 2
+validation_count: 3
+reuse_count: 3
 ---
 > **来源**：TVM FFI Wiki教程创建复盘（2026-07-05）——在Shell管道耗尽、WebFetch超时、Read超时三重故障同时发生时，通过三级降级策略成功完成17个文档交付
 > **二次验证**：火山引擎Viking AI搜索推荐产品学习复盘（2026-07-06）——defuddle返回exit code 126时，立即降级使用WebFetch成功提取网页内容
-> **验证次数**：2次成功实战验证（极端恶劣环境下的TVM FFI Wiki任务 + Windows环境defuddle兼容性问题场景）
+> **三次验证**：Papi酱商业趋势Wiki任务（2026-07-06）——check-filename-convention.py脚本参数记忆错误时，不调试脚本直接采用人工验证兜底（20秒完成，零错误）
+> **验证次数**：3次成功实战验证（极端恶劣环境下的TVM FFI Wiki任务 + Windows环境defuddle兼容性问题场景 + 工具参数记忆错误人工兜底场景）
 
 # 工具故障三级降级策略
 
@@ -21,7 +22,7 @@ reuse_count: 2
 方法论模式（工具自动化/故障处理）
 
 ## 成熟度
-L2 已验证（2次成功实战验证：极端恶劣环境下的TVM FFI Wiki任务 + Windows环境defuddle兼容性问题场景）
+L2 已验证（3次成功实战验证：极端恶劣环境TVM FFI Wiki + Windows defuddle兼容性 + 工具参数错误人工兜底）
 
 ## 适用场景
 
@@ -31,6 +32,7 @@ L2 已验证（2次成功实战验证：极端恶劣环境下的TVM FFI Wiki任�
 | WebFetch/网络工具故障 | ✅ 核心场景 | 网页抓取超时、403/404、连接失败 |
 | Read/Write文件工具故障 | ✅ 核心场景 | IDE timeout、文件读取失败、写入超时 |
 | MCP工具/浏览器工具故障 | ✅ 核心场景 | MCP服务器无响应、浏览器操作超时 |
+| 工具参数记忆错误/用法不确定 | ✅ 扩展场景 | 脚本参数记不清、--help也出错时，快速切换到人工验证兜底 |
 | 偶发单次失败 | ⚠️ 部分适用 | 先快速重试1次排除临时波动，不要立即降级 |
 | 代码逻辑错误/Bug | ❌ 不适用 | 降级解决不了代码bug，需要修复bug本身 |
 | 用户输入错误/参数错误 | ❌ 不适用 | 需要纠正输入，不是降级能解决的 |
