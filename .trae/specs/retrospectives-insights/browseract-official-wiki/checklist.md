@@ -1,0 +1,30 @@
+# BrowserAct 官网完整学习教程 - 验证清单
+
+- [x] Checkpoint 1: Wiki文档文件已创建在正确路径（.agents/docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.md）
+- [x] Checkpoint 2: 文档包含符合规范的YAML frontmatter（title/source/date/tags字段完整）
+- [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
+- [x] Checkpoint 4: 准确引用官网标语"Build reusable web scrapers in the cloud, or give your local Agent a browser."
+- [x] Checkpoint 5: 清晰说明BrowserAct从CLI到双模式平台的产品进化
+- [x] Checkpoint 6: Cloud vs Local双模式使用对比表格，两种模式特点说明完整
+- [x] Checkpoint 7: Cloud模式特点（无需安装/云端运行/可复用爬虫）说明准确
+- [x] Checkpoint 8: Local模式特点（本地Agent浏览器/实时连接/CLI）说明准确
+- [x] Checkpoint 9: 包含工作流步骤日志描述（Connected→Pages opened→Extracted→Task complete）
+- [x] Checkpoint 10: 7大核心功能（提示词→爬虫/浏览器选择/自适应/受保护页面/平台集成/住宅代理/结构化输出）每个都有清晰说明
+- [x] Checkpoint 11: 工作流程以Amazon无线耳机采集为示例贯穿始终
+- [x] Checkpoint 12: 包含真实状态提示文本（Environment ready/Page verification passed/Done 18 seconds等）
+- [x] Checkpoint 13: 4大使用场景（产品供应商/客户竞品/线索生成/创作者新品就业）每个都有详细说明
+- [x] Checkpoint 14: 每个场景列出典型采集数据点
+- [x] Checkpoint 15: SkillHub（技能市场）定位说明准确
+- [x] Checkpoint 16: Templates/Data API/Multi-Account Social/LinkedIn Scraper/Affiliate各生态模块都有说明
+- [x] Checkpoint 17: Zapier/n8n/Make三大自动化平台集成说明准确
+- [x] Checkpoint 18: Claude Code/Codex/Cursor三个本地Agent支持说明准确
+- [x] Checkpoint 19: 列出8家云合作伙伴（AWS/Azure/GCP/Oracle/阿里云/华为云/BytePlus/百度智能云）
+- [x] Checkpoint 20: Cloud和Local两种快速开始方式都有步骤说明
+- [x] Checkpoint 21: 资源链接分类清晰（官方资源/产品入口/专项工具/社交联系/法律）
+- [x] Checkpoint 22: 包含与之前browseract-wiki.md（公众号版）的互链参考
+- [x] Checkpoint 23: 官网链接正确
+- [x] Checkpoint 24: 03-agent-platforms-tools/README.md已更新，根级文档索引新增BrowserAct官网教程条目
+- [x] Checkpoint 25: 知识库索引条目格式与现有条目一致，包含标题/一句话摘要/核心价值
+- [x] Checkpoint 26: 文档语言通俗易懂，适合不同技术水平读者
+- [x] Checkpoint 27: 内容基于官网公开信息，无未验证的猜测
+- [x] Checkpoint 28: 客观呈现产品能力，不夸大不贬低
