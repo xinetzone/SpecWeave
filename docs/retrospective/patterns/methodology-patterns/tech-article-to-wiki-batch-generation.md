@@ -4,11 +4,11 @@ title: "技术文章Wiki化批量生成模式"
 type: "process"
 date: "2026-08-03"
 maturity: "L2-validated"
-source: "七概念方法论编排·里程碑复盘(sc-20260803-harness-wiki)"
+source: "七概念方法论编排·里程碑复盘(sc-20260803-harness-wiki) + 知识沉淀(sc-20260704-libtv-knowledge)"
 related_patterns: ["bp-subagent-std"]
 tags: ["wiki", "knowledge-management", "subagent", "batch-generation", "quality-gates", "defuddle", "docgen", "link-checking", "harness-engineering"]
-validation_count: 5
-reuse_count: 5
+validation_count: 6
+reuse_count: 6
 documentation_level: "complete"
 abstract_level: "L3-process"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/tech-article-to-wiki-batch-generation.toml"
@@ -24,7 +24,25 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 - 当需要将一篇长技术文章/微信公众号文章/技术博客/行业报告转化为团队内部可复用的原子化Wiki结构时
 - 适用于：技术概念学习、方法论沉淀、工具教程、行业趋势分析、产品哲学解读等需要章节独立引用的知识沉淀场景
-- 不适用于：短篇文章（<500行，无需原子化拆分）、创意写作（标准化流程会限制创造力）、实时性强的新闻资讯（无需沉淀为结构化Wiki）
+- 不适用于：创意写作（标准化流程会限制创造力）、实时性强的新闻资讯（无需沉淀为结构化Wiki）
+- **短篇文章（<500行）**：使用单文件轻量变体（见下方"变体选择决策点"），而非完全跳过本模式
+
+## 变体选择决策点
+
+在执行核心做法前，先判断使用哪种变体：
+
+```
+文章行数 < 500 行 或 无需章节独立引用？
+├─ 是 → 单文件轻量变体：执行步骤 1-4 + 8（步骤 5-7 简化）
+│   - 步骤 5：子智能体生成 1 个文件而非 10+ 原子文件
+│   - 步骤 6：跳过 fix-x-toml-ref.py（用 TOML frontmatter）+ 跳过 docgen.py（手动编辑索引）
+│   - 步骤 7：跳过 check-links.py（单文件无跨文件引用）+ 保留 check-filename-convention.py
+└─ 否 → 批量原子化变体：执行完整 8 步流程
+```
+
+**变体选择依据**（经 6 个案例验证）：
+- 批量变体（5 案例）：文章 ≥ 800 行，需章节独立引用，产出 10+ 原子文件
+- 单文件变体（1 案例：LibTV Wiki）：文章 < 500 行，无需章节独立引用，产出 1 个完整文档
 
 ## 核心做法（8步标准化流程）
 
@@ -120,13 +138,14 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 ## 验证案例
 
-| 案例编号 | 任务 | 验证日期 | 结果 |
-|---------|------|---------|------|
-| harness-wiki | Harness Engineering系统性学习Wiki（10原子文件，1111行） | 2026-07-04 | ✅ 5点验收首次通过，1个断链修复后零问题 |
-| four-engineering | 四大工程概念Wiki教程 | 2026-07-04 | ✅ 流程验证通过，子代理首次即正确使用YAML |
-| longcat-agent | LongCat Agent/Loop Engineering学习Wiki | 2026-07 | ✅ 模式复用成功 |
-| mopmonk-security | MopMonk多Agent安全护栏Wiki | 2026-07 | ✅ 模式复用成功 |
-| rainman-book | RainMan翻译书籍Wiki | 2026-07 | ✅ 模式复用成功 |
+| 案例编号 | 任务 | 验证日期 | 结果 | 变体 |
+|---------|------|---------|------|------|
+| harness-wiki | Harness Engineering系统性学习Wiki（10原子文件，1111行） | 2026-07-04 | ✅ 5点验收首次通过，1个断链修复后零问题 | 批量 |
+| four-engineering | 四大工程概念Wiki教程 | 2026-07-04 | ✅ 流程验证通过，子代理首次即正确使用YAML | 批量 |
+| longcat-agent | LongCat Agent/Loop Engineering学习Wiki | 2026-07 | ✅ 模式复用成功 | 批量 |
+| mopmonk-security | MopMonk多Agent安全护栏Wiki | 2026-07 | ✅ 模式复用成功 | 批量 |
+| rainman-book | RainMan翻译书籍Wiki | 2026-07 | ✅ 模式复用成功 | 批量 |
+| libtv-wiki | LibTV AI短剧创作工具学习Wiki（单文件，4500字） | 2026-07-04 | ✅ 单次交付合格，无返工 | 单文件 |
 
 ## 配套工具清单
 
@@ -152,10 +171,12 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 |------|------|------|
 | v1.0 | 2026-07-04 | 四大工程概念Wiki复盘首次萃取5步流程 |
 | v2.0 | 2026-08-03 | Harness Engineering Wiki复盘升级为8步流程，增加验收清单、三道质量门禁、链接检查修复后重跑、现有wiki文件清单等关键步骤 |
+| v3.0 | 2026-07-04 | LibTV Wiki知识沉淀新增"变体选择决策点"，区分批量原子化变体与单文件轻量变体；validation_count 5→6；触发场景更新（短篇文章使用单文件变体而非跳过本模式） |
 
 ## 关联资源
 
 - [Harness Engineering Wiki里程碑复盘报告](../../reports/milestone/harness-engineering-wiki-retrospective-20260803.md)
 - [四大工程概念Wiki里程碑复盘](../../reports/milestone/four-engineering-concepts-wiki-retrospective-20260704.md)
+- [LibTV Wiki知识沉淀报告](../../reports/knowledge/libtv-wiki-knowledge-precipitation-20260704.md)
 - [子代理分析任务标准化指令模式](subagent-standardized-instruction.md)
 - 子代理Wiki交付检查清单：[`.agents/templates/subagent-wiki-delivery-checklist.md`](../../../../.agents/templates/subagent-wiki-delivery-checklist.md)
