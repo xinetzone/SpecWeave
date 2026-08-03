@@ -13,6 +13,7 @@ date: "2026-07-04"
 |--------|---------|--------|---------|---------|---------|
 | bp-dual-layer | [双层分析报告结构](dual-layer-analysis-report.md) | L2-validated | 3 | 15 | 需要对网页/文章/技术内容进行"既理解内容又提炼洞察"的双目标分析时 |
 | bp-subagent-std | [子代理分析任务标准化指令](subagent-standardized-instruction.md) | L2-validated | 3 | 3 | 需要委派子代理执行复杂多步骤分析任务时 |
+| bp-content-funnel | [内容漏斗分析模式](content-funnel-analysis.md) | L1-draft | 1 | 1 | 需要对技术文章/行业报告进行递进式深度分析时 |
 | bp-tech-article-to-wiki-batch | [技术文章Wiki化批量生成](tech-article-to-wiki-batch-generation.md) | L2-validated | 5 | 5 | 需要将长技术文章/教程转化为原子化Wiki结构时 |
 
 ## 成熟度等级说明
