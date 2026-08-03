@@ -7,8 +7,8 @@ maturity: "L1-draft"
 source: "七概念方法论编排·知识沉淀(sc-20260803-three-ai-tools)"
 related_patterns: ["bp-tech-article-to-wiki-batch", "bp-subagent-std"]
 tags: ["knowledge-management", "rag", "agent-skills", "token-optimization", "compilation-vs-retrieval", "ai-agent", "knowledge-base"]
-validation_count: 1
-reuse_count: 0
+validation_count: 2
+reuse_count: 1
 documentation_level: "complete"
 abstract_level: "L2-architecture"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/knowledge-compilation.toml"
@@ -108,7 +108,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 | 案例编号 | 任务 | 验证日期 | 结果 |
 |---------|------|---------|------|
-| book-to-skill | book-to-skill开源项目（256K token技术书籍） | 2026-08-03 | ✅ 单次查询从77,866 token降至5,000 token（15.6倍提升），编译成本约1美元 |
+| book-to-skill | book-to-skill开源项目（256K token技术书籍） | 2026-08-03 | ✅ 单次查询从77,866 token降至5,000 token（极端对比15.6倍提升），编译成本约1美元 |
+| seven-concepts-compiled | 七概念方法论多文档→自包含编译Skill（10个源文件→365行单文件） | 2026-08-03 | ✅ 编译产物365行~4800 token，运行时无需回溯源文件；决策树/质量门/反模式全部结构化可直接执行 |
 
 ## 与现有技术路线的对比
 
@@ -144,12 +145,14 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| v1.1 | 2026-08-03 | 规范化修复：添加配套工具清单、与现有模式关系章节、related_patterns关联、15.6倍数据加注极端场景说明；完成首次模式复用（编译七概念方法论） |
 | v1.0 | 2026-08-03 | 从三个AI工具文章七概念分析中首次萃取，基于book-to-skill项目验证 |
 
 ## 关联资源
 
 - [三个热门AI工具七概念知识沉淀报告](../learning/three-ai-tools-learning-wiki/seven-concepts-report.md)
 - [三个热门AI工具Wiki教程](../learning/three-ai-tools-wiki.md)
+- [编译产物示例：七概念方法论编译Skill](../../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)（知识编译模式首次复用案例）
 - book-to-skill项目：https://github.com/virgiliojr94/book-to-skill
 - Agent Client Protocol (ACP)：intelligent-terminal使用的开放协议
 - Agent Skills开放标准：book-to-skill输出遵循的标准格式

@@ -18,7 +18,7 @@ date: "2026-07-04"
 | bp-offline-first-architecture | [离线优先架构模式](offline-first-architecture.md) | L1-draft | 1 | 1 | 系统需要在离线状态下保证完整功能可用时 |
 | bp-lowering-barriers-creates-markets | [降低门槛即创造市场模式](lowering-barriers-creates-markets.md) | L1-draft | 1 | 1 | 技术方案成熟但安装配置复杂度阻碍大规模采用时 |
 | bp-tech-article-to-wiki-batch | [技术文章Wiki化批量生成](tech-article-to-wiki-batch-generation.md) | L2-validated | 5 | 5 | 需要将长技术文章/教程转化为原子化Wiki结构时 |
-| bp-knowledge-compilation | [知识编译模式](knowledge-compilation.md) | L1-draft | 1 | 0 | 高频深度使用的结构化知识源（技术书籍/手册/规范）需要比RAG更高的token效率时 |
+| bp-knowledge-compilation | [知识编译模式](knowledge-compilation.md) | L1-draft | 2 | 1 | 高频深度使用的结构化知识源（技术书籍/手册/规范）需要比RAG更高的token效率时。[案例：七概念方法论编译](../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)（10个源文件→365行~4800token自包含Skill） |
 
 ## 成熟度等级说明
 
