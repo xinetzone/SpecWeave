@@ -117,12 +117,12 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 42 | 8 | 11 | 3 | 0 |
-| code-patterns/ | 104 | 4 | 6 | 0 | 2 |
+| architecture-patterns/ | 51 | 8 | 11 | 3 | 0 |
+| code-patterns/ | 142 | 4 | 6 | 0 | 2 |
 | process-patterns/ | 10 | 8 | 2 | 0 | 0 |
-| methodology-patterns/ | 397 | 69 | 45 | 11 | 2 |
+| methodology-patterns/ | 423 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **543** | **81** | **62** | **14** | **4** |
+| **合计** | **616** | **81** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
 > - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）

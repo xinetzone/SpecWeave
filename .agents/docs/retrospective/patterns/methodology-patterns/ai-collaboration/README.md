@@ -28,6 +28,7 @@ date: "2026-07-09"
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
 | [外部内容事实验证](external-content-fact-verification.md) | 外部内容事实验证 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` |
+| [外部技术文章学习三阶段闭环（LAV模型）](external-tech-article-learning-closed-loop.md) | Learn-Aapply-Verify三阶段闭环：L阶段API逐行比对防推测、A阶段知识落地判断强制关联本地场景、V阶段R→I→E最小闭环+路径规范，解决学习类文档三重断层（API准确性/本地关联/完成判定） | L1 | `ai-collaboration` `knowledge-management` `learning` `technical-article` `closed-loop` `lav-model` |
 | [细粒度最小权限模式](fine-grained-least-privilege.md) | 细粒度最小权限模式 | L1 | `security` `least-privilege` `permission-model` |
 | [一等公民抽象模式](first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
