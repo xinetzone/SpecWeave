@@ -154,37 +154,36 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 ---
 
-### ACT-18：Concat层Backward实现 🟡 P1
+### ACT-18：Concat层Backward实现 ✅ 已完成
 
 | 项目 | 详情 |
 |------|------|
-| **优先级** | P1（通道拆分，Slice反向操作） |
-| **状态** | 📋 待实现 |
-| **预估工作量** | 实现30分钟 + 测试45分钟 = 75分钟 |
-| **C++文件** | `include/caffe_ffi/layers/concat_layer.hpp`、`src/caffe_ffi/layers/concat_layer.cpp` |
-| **测试文件** | `tests/python/test_concat_backward.py`（新建） |
+| **优先级** | P1（通道拼接，Slice反向操作） |
+| **状态** | ✅ 已完成（2026-08-03） |
+| **实际工作量** | ~50分钟（代码15min + 测试25min + 文档10min） |
+| **C++文件** | [concat_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp)、[concat_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) |
+| **测试文件** | [test_concat_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py)（24个用例） |
 | **无learnable参数** | 无需param_propagate_down_初始化 |
 
 **Backward公式**：
-- Forward: 沿concat_axis拼接多个bottom → 一个top
-- Backward: 沿同一axis将top_diff拆分到各bottom_diff
-- `dX[i] = slice(dy, concat_axis, offset_i, offset_i + channels_i)`
+- Forward: 沿concat_axis拼接多个bottom → 一个top（利用outer_count_×inner_count_分块memcpy）
+- Backward: 沿同一axis将top_diff切片复制到各bottom_diff（Forward的精确逆操作）
+- `dX_i = slice(dy, concat_axis, offsets[i], offsets[i+1])`
+- 利用Forward已缓存的`concat_offsets_`、`outer_count_`、`inner_count_`高效完成memcpy
 
-**实现注意**：
-- 需要记录每个bottom在concat轴上的offset（Forward时已知）
-- 类似于Slice的Forward，但方向相反
+**实现记录**：
+1. ✅ hpp: protected区域添加`Backward_cpu`声明（Forward已声明，Backward缺失补充）
+2. ✅ cpp: 实现Backward_cpu（约60行）：
+   - propagate_down前置检查
+   - 遍历每个bottom，按outer_count_分块memcpy（与Forward方向相反）
+   - src_offset = (n * total_concat + offset_concat) * inner_count_（top_diff中该bottom的位置）
+   - dst_offset = n * copy_size（bottom_diff起始位置）
+   - PERF日志（[CONCAT-PERF]前缀）+ 值域统计
+3. ✅ 无memset清零：memcpy覆盖每个bottom的全部元素，无需预先清零
+4. ✅ 测试：24个用例（L1手算4个+L2 numpy对比8个+L3数值梯度5个+L4属性7个）
+5. ✅ 支持任意axis（0/1/2/3）、任意数量输入（2/3/4个）、不等尺寸拼接
 
-**实现步骤**：
-1. hpp: 添加`Backward_cpu`声明
-2. cpp: 实现Backward：
-   - 遍历每个bottom
-   - 计算在concat轴上的起止位置
-   - 将对应slice复制到底部diff
-   - 支持axis=0/1/2/3
-   - perf日志
-3. 测试文件：6个用例（拆分验证 + 数值梯度 + 零梯度 + 形状 + 往返还原 + 多输入）
-
-**验收标准**：6个测试用例全部PASSED，数值梯度rtol≤1e-3。
+**测试结果**：24 passed in 0.38s，回归120/120通过（Eltwise+Scale+Bias+Dropout无回归）
 
 ---
 
@@ -242,21 +241,21 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | ~~P0（Bias）~~ | ~~15min~~ | ~~30min~~ | ~~45min~~ | ✅ 完成 |
 | ~~P1（Scale）~~ | ~~30min~~ | ~~45min~~ | ~~75min~~ | ✅ 完成 |
 | ~~P1（Eltwise）~~ | ~~25min~~ | ~~35min~~ | ~~60min~~ | ✅ 完成 |
-| P1（Concat） | 30min | 45min | **75min** | 📋 |
+| ~~P1（Concat）~~ | ~~15min~~ | ~~25min~~ | ~~40min~~ | ✅ 完成 |
 | P2（Softmax+Split+Slice+LRN） | 105min | 150min | **4h15min** | 📋 |
 | P3（Crop测试） | 0min | 30min | **30min** | 📋 |
-| **剩余合计** | **2h15min** | **3h45min** | **~6h** | |
+| **剩余合计** | **1h45min** | **3h** | **~4h45min** | |
 
 ## 端到端训练目标
 
 端到端梯度流验证脚本已就绪：[test_e2e_gradient_flow.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_e2e_gradient_flow.py)
 
 ```
-Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → IP → SoftmaxWithLoss → Loss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅     ✅         ✅
+Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → Eltwise → Concat → IP → SoftmaxWithLoss → Loss
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅      ✅       ✅       ✅         ✅
 ```
 
-> Dropout✅、Scale✅、Bias✅完成，端到端Backward路径中除Softmax本身外均已实现。Conv/IP/BN/Pool/ReLU已验证，Dropout/Scale/Bias测试全部通过。
+> Dropout✅、Scale✅、Bias✅、Eltwise✅、Concat✅完成。残差连接（Eltwise SUM）和分支拼接（Concat）的Backward路径均已完整支持。Conv/IP/BN/Pool/ReLU/SoftmaxWithLoss已在P3-C验证。P3-D阶段核心训练层仅剩Softmax独立层（非SoftmaxWithLoss）。
 
 验证目标（e2e脚本6个测试用例）：
 1. Forward完整运行无崩溃

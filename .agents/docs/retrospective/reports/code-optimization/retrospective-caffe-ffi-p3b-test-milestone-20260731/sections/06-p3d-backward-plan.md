@@ -199,35 +199,40 @@ Dropout成为第12个完成Backward验证的层，Backward验证层数从11→12
 2. Dropout是最简单的identity层，无参数、无复杂数学
 3. 测试框架`_grad_check_utils`已成熟，数值梯度测试可快速套用
 
-## 7. P3-D阶段进展（2026-08-03更新）
+## 7. P3-D阶段进展（2026-08-03更新，Concat完成后）
 
-Dropout/Scale/Bias/Pooling四个层的Backward均已完成并通过Docker验证，Pooling层CEIL模式回归已修复：
+Dropout/Scale/Bias/Pooling/Eltwise/Concat六个层的Backward均已完成并通过Docker验证：
 
-| 层 | 测试用例 | 状态 | 耗时 |
-|----|---------|------|------|
-| Dropout | 20/20 | ✅ 完成 | ~30min |
-| Scale | 25/25 | ✅ 完成 | ~75min |
-| Bias | 19/19 | ✅ 完成 | ~45min |
-| Pooling | 28/28 | ✅ 完成（含CEIL模式回归修复） | P3-C已实现+P3-D修复~20min |
+| 层 | 测试用例 | 状态 | 耗时 | 关键特性 |
+|----|---------|------|------|---------|
+| Dropout | 20/20 | ✅ 完成 | ~30min | identity直通 |
+| Scale | 25/25 | ✅ 完成 | ~75min | dα/dβ广播求和 |
+| Bias | 19/19 | ✅ 完成 | ~45min | dbias广播求和 |
+| Pooling | 28/28 | ✅ 完成 | P3-C+~20min修复 | winner追踪/CEIL模式 |
+| Eltwise | 32/32 | ✅ 完成 | ~70min | SUM/PROD/MAX三模式+winner mask |
+| **Concat** | **24/24** | **✅ 完成** | **~50min** | **沿axis切片反向memcpy** |
 
 ### Pooling CEIL模式回归修复记录
 
-在Scale/Bias完成后运行回归测试时，发现Pooling层1/28测试失败：`test_ave_boundary_pool_size_correction`。根因是numpy参考实现默认`ceil_mode=False`（FLOOR模式），而C++ Caffe默认使用CEIL模式，导致输出shape不匹配。
+详见[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)。
 
-**修复内容**：
-1. numpy参考默认`ceil_mode`改为True，与C++对齐
-2. 修正测试用例dy shape从(1,1,1,2)→(1,1,2,2)（CEIL输出）
-3. 新增4个区域断言验证完整窗口/边界窗口/重叠中心梯度值
+### Eltwise Backward实现记录
 
-**详细记录**：[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)
+Eltwise层支持SUM/PROD/MAX三种逐元素操作，MAX模式通过`max_idx_`缓存winner索引实现winner-take-all梯度路由。PROD模式使用除法快速路径+除零保护fallback。32/32测试通过，回归120/120通过（含Concat）。
 
-**端到端训练网络当前状态**：
+**详细记录**：[13-p3d-eltwise-backward.md](13-p3d-eltwise-backward.md)
+
+### Concat Backward实现记录
+
+Concat层沿指定axis拼接多个输入，Backward是Forward的精确逆操作——沿同一axis将top_diff切片memcpy到各bottom_diff。利用Forward已缓存的`concat_offsets_`、`outer_count_`、`inner_count_`高效完成，无需额外内存分配。24/24测试通过，支持任意axis和任意数量输入。
+
+**端到端训练网络图**：
 ```
-Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → IP → SoftmaxWithLoss → Loss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅     ✅         ✅
+Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → Eltwise → Concat → IP → SoftmaxWithLoss → Loss
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅      ✅     ✅      ✅       ✅       ✅         ✅
 ```
 
-Backward验证层数从11→14，测试用例从98→190（P3-C 98 + P3-D 92）。
+> 残差连接（ResNet-style F(x)+x via Eltwise SUM）和分支拼接（Inception-style via Concat）的Backward路径均已完整支持。Backward验证层数从11→16，测试用例从98→246（P3-C 98 + P3-D 148）。
 
-**下一个目标**：Eltwise层（P1优先级，预估120分钟，需处理SUM/PROD/MAX三种操作，MAX需要winner mask）
-详见[08-p3d-backward-todo.md](08-p3d-backward-todo.md)和[10-p3d-scale-backward.md](10-p3d-scale-backward.md)、[11-p3d-bias-backward.md](11-p3d-bias-backward.md)、[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)。
+**下一个目标**：Softmax独立层（P2优先级，预估90分钟）
+详见[08-p3d-backward-todo.md](08-p3d-backward-todo.md)和[10-p3d-scale-backward.md](10-p3d-scale-backward.md)、[11-p3d-bias-backward.md](11-p3d-bias-backward.md)、[12-p3d-pooling-ceil-mode-fix.md](12-p3d-pooling-ceil-mode-fix.md)、[13-p3d-eltwise-backward.md](13-p3d-eltwise-backward.md)。
