@@ -4,19 +4,19 @@
 Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模型 API 全部免费开放），3周内单周 Token 调用量从 1 万亿增长到 5 万亿，图片模型一周生成 567 万张图，视频模型一周生成 237 万秒（约 650 小时）。其新产品 Pavo 是一个 PC 端 AI 创作平台，将图片生成、视频生成、短剧创作整合进一个工作流，由 Agent 总指挥，实现从想法到成片一站式完成。需要系统学习该网页内容并沉淀为一份结构清晰、通俗易懂的 wiki 教程，便于读者理解这套免费 AI 创作方案及其核心优势。
 
 ## What Changes
-- 新增 wiki 教程文档 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md`，作为 Agnes AI 与 Pavo 平台的系统性学习资料
+- 新增 wiki 教程文档 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，作为 Agnes AI 与 Pavo 平台的系统性学习资料
 - 文档包含目录导航系统，覆盖核心数据、四大模块、剧情短片工作流、Agent 功能、模型升级等核心内容
 - 整理关键功能点、操作流程、技术亮点与实用信息
 - 提供内容三维评估（专业性/准确性/时效性）与 FAQ 常见问题解答
 - 汇总相关资源链接（官网、Pavo平台、API平台、开发者文档、GitHub）
-- 在 `docs/knowledge/README.md` 知识库索引中登记新增的学习文档
+- **索引说明**：知识库实际位于 `.agents/docs/knowledge/`，索引通过 `scripts/generate_index.py` 自动生成，本任务完成后需运行该脚本更新入口索引
 - **BREAKING**: 无破坏性变更（纯新增文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md`
-  - 修改 `docs/knowledge/README.md`（追加索引条目）
+  - 新增 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
+  - 索引更新需运行 `python .agents/docs/knowledge/scripts/generate_index.py`（若脚本路径不同需先查找确认）
 
 ## Background & Context
 - **产品名称**: Agnes AI（免费多模态模型API）+ Pavo（PC端AI创作平台）
@@ -30,7 +30,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
 
 #### Scenario: 用户打开文档导航
 - **WHEN** 用户打开 `agnes-pavo-creative-platform-wiki.md`
@@ -67,12 +67,12 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **AND** 理解剧情短片模块是 Pavo 区别于其他 AI 工具的核心特色
 
 ### Requirement: 剧情短片全流水线讲解
-系统 SHALL 详细讲解剧情短片模块的六步流水线工作流：剧本创作→人物和场景设定→分镜设计→角色场景配图→分镜脚本与关键帧→分镜视频生成→成片渲染。包含实际测试案例（UFO入侵场景）的流程演示。
+系统 SHALL 详细讲解剧情短片模块的八步流水线工作流：剧本创作→人物和场景设定→分镜设计→角色场景配图→分镜脚本撰写→分镜关键帧设计→分镜视频生成→成片渲染。包含实际测试案例（UFO入侵场景）的流程演示。
 
 #### Scenario: 读者掌握短剧工作流
 - **WHEN** 读者按顺序阅读"剧情短片工作流"章节
-- **THEN** 能够复述从一句话创意到成片的完整流程
-- **AND** 理解每一步的人机交互点（需求确认→剧本确认→角色确认→配图确认→分镜确认→合成）
+- **THEN** 能够复述从一句话创意到成片的完整八步流程
+- **AND** 理解每一步的人机交互点（需求确认→剧本确认→角色确认→配图确认→分镜确认→合成确认，共6个确认点）
 - **AND** 知晓适用场景（热点短剧、职场轻喜剧、情侣剧情、萌宠拟人、品牌剧情广告）
 - **AND** 了解当前局限性（追求电影级质感还差点意思，需要人工介入调整）
 
@@ -137,12 +137,12 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **AND** 链接以 Markdown 标准链接格式呈现
 
 ### Requirement: 知识库索引登记
-系统 SHALL 在 `docs/knowledge/README.md` 的学习类目下登记新增的 Agnes Pavo 学习文档条目。
+系统 SHALL 确认文档放置在正确的分类目录 `.agents/docs/knowledge/learning/05-ai-multimodal-content/` 下，该目录下已存在同类竞品文档 `libtv-ai-shortdrama-wiki.md`，便于读者横向对比。索引通过 `scripts/generate_index.py` 自动生成。
 
 #### Scenario: 索引可发现
-- **WHEN** 用户浏览 `docs/knowledge/README.md`
-- **THEN** 能够在 learning 类目下看到 Agnes Pavo 学习 wiki 的条目
-- **AND** 条目包含文档标题与相对路径链接
+- **WHEN** 用户浏览 `.agents/docs/knowledge/README.md` 及分类索引
+- **THEN** 能够在 learning 类目下的 05-ai-multimodal-content 分类中看到 Agnes Pavo 学习 wiki 的条目
+- **AND** 同分类下可发现 LibTV 等同类AI短剧工具文档，支持横向对比
 
 ## Non-Functional Requirements
 - **NFR-1**: 文档语言使用标准现代汉语，逻辑严谨，对不同技术水平的读者友好
@@ -167,7 +167,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 ### AC-1: Wiki 教程文档创建完成
 - **Given**: spec.md 中定义的所有功能需求已明确
 - **When**: 所有任务完成并通过验证
-- **Then**: `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md` 包含目录导航、概述数据、平台介绍、四大模块、剧情短片工作流、Agent系统、模型升级、社区反馈、内容评估、FAQ、资源链接等完整章节
+- **Then**: `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 包含目录导航、概述数据、平台介绍、四大模块、剧情短片八步工作流、Agent系统、模型升级、社区反馈、内容评估、FAQ、资源链接等完整章节
 - **Verification**: `human-judgment`
 
 ### AC-2: 核心数据完整准确
@@ -176,10 +176,10 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **Then**: 包含 5万亿Token、567万张图、237万秒视频三项关键数据
 - **Verification**: `human-judgment`
 
-### AC-3: 剧情短片六步工作流清晰
+### AC-3: 剧情短片八步工作流清晰
 - **Given**: 用户阅读剧情短片章节
 - **When**: 用户理解工作流
-- **Then**: 用户能够复述从剧本创作到成片渲染的完整流程，包含人机交互确认节点
+- **Then**: 用户能够复述从剧本创作到成片渲染的完整八步流程，包含6个人机交互确认节点
 - **Verification**: `human-judgment`
 
 ### AC-4: Agent 功能讲解完整
@@ -212,16 +212,16 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **Then**: 包含原文、官网、Pavo、API平台、文档、GitHub Issues、GitHub Projects共7类链接
 - **Verification**: `human-judgment`
 
-### AC-9: 知识库索引已登记
+### AC-9: 文档放置于正确分类目录
 - **Given**: wiki 文档创建完成
-- **When**: 用户浏览 `docs/knowledge/README.md`
-- **Then**: learning 类目下出现 Agnes Pavo 学习文档条目
+- **When**: 用户浏览 `.agents/docs/knowledge/learning/05-ai-multimodal-content/`
+- **Then**: `agnes-pavo-creative-platform-wiki.md` 位于该分类目录下，与 `libtv-ai-shortdrama-wiki.md` 等同类型文档同目录
 - **Verification**: `programmatic`
 
 ### AC-10: 文件命名规范合规
 - **Given**: wiki 文档创建完成
-- **When**: 运行 `python .agents/scripts/check-filename-convention.py`
-- **Then**: `agnes-pavo-creative-platform-wiki.md` 通过命名规范校验
+- **When**: 运行文件名规范检查脚本
+- **Then**: `agnes-pavo-creative-platform-wiki.md` 通过 kebab-case 纯英文命名规范校验
 - **Verification**: `programmatic`
 
 ### AC-11: 已知问题客观呈现
@@ -230,6 +230,74 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **Then**: 首Token延迟、503错误、客户端配置三个问题均有说明
 - **Verification**: `human-judgment`
 
-## Open Questions
-- [ ] 是否需要在文档中加入 Mermaid 流程图来可视化剧情短片的六步工作流？（倾向：加入 1 张图增强可读性）
-- [ ] 是否需要对比 Pavo 与 LibTV 等同类 AI 短剧工具的差异？（倾向：在FAQ中简要对比，不单独开章节）
+## Open Questions（已决策）
+- [x] 是否需要在文档中加入 Mermaid 流程图来可视化剧情短片的八步工作流？
+  - **决策**：不加入Mermaid图。保持纯Markdown表格形式呈现工作流，与项目现有Wiki文档风格一致（现有同类Wiki如libtv-ai-shortdrama-wiki.md均使用纯Markdown）。
+- [x] 是否需要对比 Pavo 与 LibTV 等同类 AI 短剧工具的差异？
+  - **决策**：在FAQ的Q5中简要对比（Pavo特色是Agent+全流水线，LibTV侧重数字人），不单独开章节。同时将文档放置在 `05-ai-multimodal-content/` 目录下与LibTV文档同目录，便于读者横向对比。
+
+---
+
+## 七概念方法论复盘沉淀（R→I→E链路）
+
+> 本章节通过 seven-concepts-cmd 方法论编排完成，执行时间：2026-08-03
+
+### 客观事实清单（R阶段）
+
+| 编号 | 事实描述 |
+|------|---------|
+| F1 | 用户请求：学习微信公众号文章并形成结构化学习Wiki |
+| F4 | 创建了spec/tasks/checklist三件套在 `.trae/specs/retrospectives-insights/agnes-pavo-learning-wiki/` |
+| F5 | spec中初始记录的文档路径为 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md` |
+| F6 | 实际文档路径为 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` |
+| F7 | 文档实际分类目录为 learning/05-ai-multimodal-content/ |
+| F8 | checklist交付物清单中路径指向不存在的位置 |
+| F9 | 同分类目录下已存在同类竞品文档 libtv-ai-shortdrama-wiki.md |
+| F10 | 知识库实际根目录为 `.agents/docs/knowledge/` |
+| F13 | 知识库索引通过 `scripts/generate_index.py` 自动生成 |
+| F17 | 剧情短片工作流实际细化为8步（spec原计划6步） |
+
+### 核心洞察（I阶段·四元组）
+
+**I-1：项目目录结构认知偏差——双知识库并行导致路径错位**
+- 陈述：任务执行中对知识库实际根目录认知存在系统性偏差，spec记录路径与项目实际路径不一致
+- 证据：F5、F6、F10
+- 反常识：项目根目录确实存在`docs/knowledge/`，但实际运营的知识库位于`.agents/docs/knowledge/`，上下文压缩后基于会话记忆假设路径而非验证
+- 下次行动：所有涉及文件路径的任务，执行第一步必须Glob/LS确认目标目录实际结构
+
+**I-2：索引维护机制黑箱——手动编辑vs自动生成脚本认知缺失**
+- 陈述：对知识库索引维护机制认知不完整，尝试手动编辑README，但实际索引用脚本自动生成
+- 证据：F11（总条目796≠158）、F13（自动生成脚本）
+- 反常识：手动修改的根目录README不是实际生效的索引入口
+- 下次行动：遇到索引更新需求，先查找是否有`generate_*`脚本，阅读README维护说明
+
+**I-3：Spec作为"活文档"——执行中合理细化需回写同步**
+- 陈述：剧情短片工作流在实际编写时从6步细化为8步，但spec初始记录未同步更新
+- 证据：F17
+- 反常识：这不是spec写得不准，而是完成后没有回写更新spec保持一致性
+- 下次行动：执行中对计划的细化/调整，完成后必须回写更新spec三件套
+
+**I-4：Checklist自身的验证盲区——形式化打勾vs实质验证**
+- 陈述：checklist末尾交付物清单存在路径错误，但所有检查项标记为完成
+- 证据：F8
+- 反常识：checklist的内容验证项做了检查，但附录中的复制模板路径被忽略
+- 下次行动：checklist中所有路径/链接（包括附录）必须通过Glob验证
+
+### 可复用模式（E阶段）
+
+**模式：Spec文档任务"三验证"工作法**
+
+触发场景：Spec模式下的文档创建/Wiki编写/知识库更新类任务，或上下文恢复场景
+
+核心步骤：
+1. **路径先行验证**：创建文件前LS/Glob确认目标目录实际结构
+2. **索引机制确认**：涉及索引更新时，先查找是否有自动生成脚本
+3. **完成后回写同步**：执行中对计划的细化必须回写更新spec三件套
+4. **Checklist路径全验**：所有路径（包括附录）必须Glob验证
+
+反模式：
+- ❌ 基于会话记忆假设路径，不做实际验证
+- ❌ 手动修改自动生成的索引文件
+- ❌ 执行中调整计划但不回写spec
+- ❌ Checklist只验证正文，忽略附录路径
+
