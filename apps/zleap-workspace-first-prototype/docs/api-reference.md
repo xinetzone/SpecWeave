@@ -110,6 +110,10 @@ python main.py          # 运行完整演示
 python -m unittest discover -s tests -p "test_*.py" -v   # 运行全部测试
 ```
 
+## 3.1 Postman 导入文件
+
+> 本文件接口清单已映射为 HTTP 风格端点，生成 Postman 集合导入文件 `docs/postman-collection.json`（7 个模块文件夹、17 个请求）。导入方法：Postman → Import → 选择该 JSON 文件。`base_url` 变量默认 `http://localhost:8000`，服务化后可改为实际地址。
+
 ## 4. 目录结构
 
 ```

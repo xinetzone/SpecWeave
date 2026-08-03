@@ -1,0 +1,244 @@
+{
+  "info": {
+    "name": "Zleap-Agent Workspace-first 原型 API",
+    "description": "从 docs/api-reference.md 提取的核心接口清单，映射为 HTTP 风格端点，便于服务化后导入 Postman 调试。\n\n覆盖 8 大模块：Workspace / WorkspaceRegistry / ContextAssembler / ToolRegistry / MemoryManager / RuntimeRecorder / BoundaryChecker / ModelRouter（多模型路由 P0）。\n\n注意：当前原型为 Python 库实现，无真实 HTTP 服务；本集合中各请求 URL 为规划的服务化端点，字段来自 api-reference.md 的方法签名。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Workspace",
+      "item": [
+        {
+          "name": "注册工作区",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/workspaces",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\",\n  \"name\": \"财务报销工作区\",\n  \"workspace_prompt\": \"处理敏感票据，走本地模型\",\n  \"model\": \"local-model\",\n  \"permission\": \"finance\",\n  \"private\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "查询工作区",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/workspaces/:workspace_id",
+            "header": [],
+            "body": { "mode": "raw", "raw": "" }
+          }
+        },
+        {
+          "name": "绑定工具到工作区",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/workspaces/:workspace_id/tools",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tool\": \"process_receipt\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Context（上下文装配）",
+      "item": [
+        {
+          "name": "装配上下文",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/context/assemble",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\",\n  \"load_mode\": \"prefetch\",\n  \"include_history\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "上下文转文本",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/context/to-text",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"context\": {}\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tools（工具注册）",
+      "item": [
+        {
+          "name": "注册工具到全局池",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/tools",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tool\": {\n    \"name\": \"read_file\",\n    \"schema\": \"{}\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "绑定工具到工作区",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/tools/bind",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"web\",\n  \"tool_name\": \"search_web\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Memory（记忆管理）",
+      "item": [
+        {
+          "name": "写入记忆",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/memory/write",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"partition\": \"task\",\n  \"key\": \"当前项目\",\n  \"value\": \"Zleap-Agent Harness 学习\"\n}"
+            }
+          }
+        },
+        {
+          "name": "读取分区",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/memory/partition/:partition",
+            "header": [],
+            "body": { "mode": "raw", "raw": "" }
+          }
+        },
+        {
+          "name": "写入经验（准入规则）",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/memory/experience",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"可复用流程：先切工作区再组装上下文\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Runtime（运行轨迹）",
+      "item": [
+        {
+          "name": "记录轨迹",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/runtime/record",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\",\n  \"action\": \"调用工具 process_receipt\",\n  \"context_snapshot\": {},\n  \"result\": \"ok\"\n}"
+            }
+          }
+        },
+        {
+          "name": "轨迹审计",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/runtime/audit?workspace_id=finance",
+            "header": [],
+            "body": { "mode": "raw", "raw": "" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boundary（边界检查）",
+      "item": [
+        {
+          "name": "设置模型白名单",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/boundary/models",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\",\n  \"models\": [\"local-model\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "全量边界检查",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/boundary/check",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ModelRouter（多模型路由 P0）",
+      "item": [
+        {
+          "name": "路由（返回目标模型）",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/router/route",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workspace_id\": \"finance\",\n  \"task\": \"处理一份客户财务票据\",\n  \"task_type\": \"\",\n  \"complexity\": 0.9\n}"
+            }
+          }
+        },
+        {
+          "name": "注册路由策略",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/router/strategy",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"strategy\": {\n    \"name\": \"DataBoundaryStrategy\",\n    \"priority\": 100\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "查询路由轨迹",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/router/trace",
+            "header": [],
+            "body": { "mode": "raw", "raw": "" }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ]
+}
