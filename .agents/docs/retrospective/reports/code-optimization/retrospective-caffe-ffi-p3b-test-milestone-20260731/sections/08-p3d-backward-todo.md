@@ -12,7 +12,7 @@ source: "retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md#p3-d-back
 
 ## 概述
 
-P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层共**6层**。本清单按优先级排序，目标是实现所有训练必需层的Backward，支持端到端CNN训练。
+P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层共**5层**（Dropout已完成）。本清单按优先级排序，目标是实现所有训练必需层的Backward，支持端到端CNN训练。
 
 ### 完成定义（DoD）
 
@@ -30,31 +30,28 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 ## 待办事项
 
-### ACT-14：Dropout层Backward实现 🔴 P0
+### ACT-14：Dropout层Backward实现 ✅ 已完成
 
 | 项目 | 详情 |
 |------|------|
 | **优先级** | P0（最简单，无参数，identity pass-through） |
-| **状态** | 📋 待实现 |
-| **预估工作量** | 实现15分钟 + 测试30分钟 = 45分钟 |
-| **C++文件** | `include/caffe_ffi/layers/dropout_layer.hpp`、`src/caffe_ffi/layers/dropout_layer.cpp` |
-| **测试文件** | `tests/python/test_dropout_backward.py`（新建） |
+| **状态** | ✅ 已完成（2026-08-03） |
+| **实际工作量** | ~30分钟（实现10min + 编译5min + 测试10min + 文档5min） |
+| **C++文件** | [dropout_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp)、[dropout_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp) |
+| **测试文件** | [test_dropout_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py)（20个用例） |
 
 **Backward公式**：
 - 当前实现仅支持inference模式（Forward是identity copy）
 - inference模式下：`dX = dy`（梯度直通pass-through）
 - 无learnable参数，无`param_propagate_down_`需要初始化
 
-**实现步骤**：
-1. hpp: protected区域添加`Backward_cpu`声明
-2. cpp: Forward_cpu之后添加`Backward_cpu`实现：
-   - `propagate_down[0]`检查
-   - `count = bottom[0]->count()`
-   - inplace或memcpy：`bottom_diff[i] = top_diff[i]`（identity）
-   - perf日志：count、diff值域、耗时
-3. 测试文件：6个用例（见06-p3d-backward-plan.md）
+**实现记录**：
+1. ✅ hpp: protected区域添加`Backward_cpu`声明
+2. ✅ cpp: 实现Backward_cpu：propagate_down检查 + memcpy（非inplace时）+ perf日志
+3. ✅ 测试：20个用例全部通过（identity验证 + 4种ratio + 2D/3D/4D形状 + 数值梯度 + inplace测试）
+4. ✅ 无回归
 
-**验收标准**：6个测试用例全部PASSED，数值梯度rtol≤1e-3。
+**测试结果**：20 passed in 0.19s，详见[06-p3d-backward-plan.md](06-p3d-backward-plan.md)。
 
 ---
 
@@ -235,13 +232,14 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 ## 工作量汇总
 
-| 类别 | 实现时间 | 测试时间 | 合计 |
-|------|---------|---------|------|
-| P0（Dropout+Bias） | 45min | 75min | **2h** |
-| P1（Scale+Eltwise+Concat） | 135min | 165min | **5h** |
-| P2（Softmax+Split+Slice+LRN） | 105min | 150min | **4h15min** |
-| P3（Crop测试） | 0min | 30min | **30min** |
-| **合计** | **4h45min** | **7h** | **~11h45min** |
+| 类别 | 实现时间 | 测试时间 | 合计 | 状态 |
+|------|---------|---------|------|:----:|
+| ~~P0（Dropout）~~ | ~~15min~~ | ~~30min~~ | ~~45min~~ | ✅ 完成 |
+| P0（Bias） | 30min | 45min | **1h15min** | 📋 |
+| P1（Scale+Eltwise+Concat） | 135min | 165min | **5h** | 📋 |
+| P2（Softmax+Split+Slice+LRN） | 105min | 150min | **4h15min** | 📋 |
+| P3（Crop测试） | 0min | 30min | **30min** | 📋 |
+| **剩余合计** | **4h30min** | **6h30min** | **~11h** | |
 
 ## 端到端训练目标
 
@@ -249,8 +247,10 @@ P0+P1层Backward完成后，可构建端到端训练验证网络：
 
 ```
 Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → IP → SoftmaxWithLoss → Loss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅      ✅(P0)    ✅         ✅
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅       ✅         ✅
 ```
+
+> Dropout已完成（✅），当前端到端Backward路径中除Softmax本身外均已验证，可进行梯度传播测试。
 
 验证目标：
 1. Forward完整运行无崩溃
