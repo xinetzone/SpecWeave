@@ -125,6 +125,21 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 **核心洞察**：RAG和知识编译不是互斥关系，而是互补关系——知识系统应该区分"冷数据/临时查询"（用RAG）和"热数据/高频参考"（用编译式Skill），两者结合实现成本与效果的最优平衡。
 
+## 配套工具清单
+
+| 工具/方法 | 路径/来源 | 用途 |
+|----------|----------|------|
+| book-to-skill | https://github.com/virgiliojr94/book-to-skill | 技术书籍→Agent Skills编译工具（参考实现） |
+| Claude Code / Codex | Anthropic / OpenAI | 支持Agent Skills标准的Agent运行时 |
+| defuddle | `npx defuddle parse <url> --md` | 网页内容提取（编译前的原始材料获取） |
+| 大模型深度分析 | Sonnet 4.5 / Opus等强推理模型 | 执行一次性深度编译（提取框架/命名方法/反模式） |
+
+## 与现有模式的关系
+
+- **本模式与[技术文章Wiki化批量生成模式](tech-article-to-wiki-batch-generation.md)（bp-tech-article-to-wiki-batch）的关系**：两者都是知识沉淀模式，但定位不同——Wiki化批量生成解决的是"单篇长文→多文件原子Wiki"的结构转化问题，产出是人类可读的文档；知识编译解决的是"结构化知识→Agent可调用Skill"的效率优化问题，产出是AI可直接推理的结构化技能。两者可以结合：先用Wiki化批量生成整理人类知识库，再对高频使用的核心Wiki进行知识编译供Agent调用。
+
+- **本模式与[子代理标准化指令模式](subagent-standardized-instruction.md)（bp-subagent-std）的关系**：知识编译的执行（步骤2-4深度编译）可以通过子代理标准化指令模式来实现高质量批处理——子代理在完整prompt约束下一次性完成深度编译，比逐章节分析效果更好。
+
 ## 演进历史
 
 | 版本 | 日期 | 变更 |
