@@ -1,0 +1,3 @@
+id = "classic-patterns-reuse-heuristic"
+title = "经典模式优先复用启发式（Classic Patterns First Heuristic）"
+maturity = "L2"
