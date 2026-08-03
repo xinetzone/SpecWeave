@@ -1,6 +1,7 @@
 ---
 id: "seven-concepts-analysis-kicrd"
 title: "七概念方法论编排分析报告"
+type: "knowledge"
 source: "seven-concepts-cmd Skill → 知识沉淀场景(R→I→E→V链路)"
 date: "2026-07-04"
 scenario: "knowledge"
