@@ -5,13 +5,13 @@ type: "methodology"
 date: "2026-07-04"
 maturity: "L2-validated"
 source: "七概念方法论编排·知识沉淀场景(sc-20260704-kicrd-analysis)"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/dual-layer-analysis-report.toml"
 related_patterns: ["bp-subagent-std"]
 tags: ["content-analysis", "knowledge-engineering", "wechat-article", "structured-report", "dual-layer"]
 validation_count: 3
 reuse_count: 15
 documentation_level: "complete"
 ---
-
 # 双层分析报告结构（Content-Insight Dual Layer）
 
 ## 触发场景

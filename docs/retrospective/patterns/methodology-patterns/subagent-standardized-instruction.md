@@ -5,13 +5,13 @@ type: "methodology"
 date: "2026-07-04"
 maturity: "L2-validated"
 source: "七概念方法论编排·知识沉淀场景(sc-20260704-kicrd-analysis)"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/subagent-standardized-instruction.toml"
 related_patterns: ["bp-dual-layer"]
 tags: ["subagent", "agent-engineering", "quality-assurance", "instruction-template", "delegation"]
 validation_count: 3
 reuse_count: 3
 documentation_level: "complete"
 ---
-
 # 子代理分析任务标准化指令（Standardized Subagent Analysis Instruction）
 
 ## 触发场景

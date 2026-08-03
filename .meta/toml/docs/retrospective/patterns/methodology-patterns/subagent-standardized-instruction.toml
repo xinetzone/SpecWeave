@@ -1,0 +1,5 @@
+id = "bp-subagent-std"
+title = "子代理分析任务标准化指令（Standardized Subagent Analysis Instruction）"
+category = "retrospective/patterns/methodology-patterns"
+date = "2026-07-02"
+version = "1.0"

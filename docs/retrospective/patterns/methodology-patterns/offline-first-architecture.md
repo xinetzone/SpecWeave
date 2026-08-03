@@ -5,13 +5,13 @@ type: "methodology"
 date: "2026-08-03"
 maturity: "L1-draft"
 source: "analyze-wechat-article-3dnk → Project N.O.M.A.D 深度分析（七概念方法论编排·知识沉淀场景）"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/offline-first-architecture.toml"
 related_patterns: ["bp-content-funnel", "bp-integration-over-invention"]
 tags: ["offline-first", "architecture", "resilience", "edge-computing", "data-sovereignty"]
 validation_count: 1
 reuse_count: 1
 documentation_level: "complete"
 ---
-
 # 离线优先架构模式（Offline-first Architecture）
 
 ## 触发场景
