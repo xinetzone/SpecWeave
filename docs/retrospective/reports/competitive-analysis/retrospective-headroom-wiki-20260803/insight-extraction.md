@@ -55,7 +55,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I4 |
-| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，6个验证案例，commit e3a3bf32 → P2增强提交待补） |
+| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，6个验证案例，commit e3a3bf32 + 13590d49增强） |
 | **触发场景** | Headroom不使用单一压缩算法处理所有内容，而是先通过分类器识别内容类型（代码/对话/文档/结构化数据），再路由到对应的压缩策略 |
 | **核心发现** | 异构数据的特征差异巨大，"一刀切"的单一算法必然在某些类型上表现很差。先分类再处理的两阶段架构，能在每个细分场景选用最优策略，整体效果远优于万能方案。 |
 | **可复用价值** | 这是通用的异构数据处理范式，适用于：文档处理、日志分析、API网关路由、缓存策略、错误处理等几乎所有需要处理多种输入类型的系统。 |
@@ -109,7 +109,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P2 |
-| **归档状态** | 🔄 合并增强至 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（补充专家池原理+4种组合模式+第6个验证案例，L2成熟度，validation_count 5→6，commit 待提交） |
+| **归档状态** | 🔄 合并增强至 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（补充专家池原理+4种组合模式+第6个验证案例，L2成熟度，validation_count 5→6，commit 13590d49） |
 | **触发场景** | Headroom集成了多种压缩算法（摘要、抽取、代码保留、实体链接等），通过路由层智能选择，而非依赖某一种"最好"的算法 |
 | **核心发现** | 没有万能算法，每个算法都有其擅长的场景和边界条件。通过"算法池+智能路由"的组合架构，可以在不同场景下选用最优算法，整体表现超越任何单一算法。 |
 | **可复用价值** | 适用于：压缩算法、序列化格式、序列化策略、推荐算法、搜索排序、异常处理重试策略等需要针对不同场景选择策略的系统。 |
