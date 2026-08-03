@@ -44,9 +44,9 @@
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
 [python-link]: .agents/docs/tech-stack.md
 [scripts-badge]: https://img.shields.io/badge/脚本-395%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-18-success?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-20-success?style=flat
 [rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
-[commands-badge]: https://img.shields.io/badge/指令集-14-purple?style=flat
+[commands-badge]: https://img.shields.io/badge/指令集-15-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
 [gitcode-link]: https://gitcode.com/daoCollective/SpecWeave
 [docs-badge]: https://img.shields.io/badge/docs-online-brightgreen
