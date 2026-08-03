@@ -3,9 +3,10 @@ title = "Wiki子代理委派与产出验收检查清单"
 category = "templates"
 tags = ["checklist", "subagent", "wiki", "quality-gate", "frontmatter", "验收清单", "质量门禁"]
 date = "2026-07-04"
-version = "1.0"
-source = "retrospective-mopmonk-wiki-20260704"
+version = "1.1"
+source = "retrospective-mopmonk-wiki-20260704, retrospective-sunlogin-camera-su1-wiki-20260704, retrospective-sunlogin-bootbox-analysis-20260704, milestone-four-engineering-concepts-wiki-20260704"
 part_of = "wiki-tutorial-standardization"
 changelog = [
-  "2026-07-04 | initial | 基于MopMonk Wiki教程复盘创建，包含强制前置步骤、子代理交付自检、主代理5点验收检查"
+  "2026-07-04 | initial | 基于MopMonk Wiki教程复盘创建，包含强制前置步骤、子代理交付自检、主代理5点验收检查",
+  "2026-07-04 | v1.1 | 基于四大工程概念Wiki复盘洞察I-1升级：新增强制前置步骤4（frontmatter格式示例+反模式警告）、主代理验收从8点升级为9点（新增第0项委派前检查）"
 ]
