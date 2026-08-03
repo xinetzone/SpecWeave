@@ -55,7 +55,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I4 |
-| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，5个验证案例，commit 待提交） |
+| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，5个验证案例，commit e3a3bf32） |
 | **触发场景** | Headroom不使用单一压缩算法处理所有内容，而是先通过分类器识别内容类型（代码/对话/文档/结构化数据），再路由到对应的压缩策略 |
 | **核心发现** | 异构数据的特征差异巨大，"一刀切"的单一算法必然在某些类型上表现很差。先分类再处理的两阶段架构，能在每个细分场景选用最优策略，整体效果远优于万能方案。 |
 | **可复用价值** | 这是通用的异构数据处理范式，适用于：文档处理、日志分析、API网关路由、缓存策略、错误处理等几乎所有需要处理多种输入类型的系统。 |
