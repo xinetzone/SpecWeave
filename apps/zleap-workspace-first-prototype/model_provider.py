@@ -16,7 +16,8 @@ from __future__ import annotations
 import logging
 import random
 import time
-from typing import Any, Dict, Optional
+from collections import deque
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,48 @@ class ModelProvider:
     子类实现 `invoke` 方法，决定如何调用目标模型。
     提供 `get_latency_ms()` 报告最近一次调用的耗时（毫秒），
     供延迟量测体系读取。
+
+    支持 P2 延迟预算（T1）：`p99_budget_ms` 设定 p99 延迟预算，
+    通过 `record_latency_ms()` 记录样本、`p99_latency_ms()` 计算 p99、
+    `is_within_budget()` 判定是否超预算，供路由层降级决策。
     """
+
+    # 延迟样本窗口大小（用于 p99 计算）
+    LATENCY_HISTORY_SIZE = 500
+
+    def __init__(self) -> None:
+        self._latency_history: deque = deque(maxlen=self.LATENCY_HISTORY_SIZE)
+        self.p99_budget_ms: float = 0.0  # 0 表示未设预算
+
+    # ---- 延迟预算（P2 T1） ----
+    def set_p99_budget(self, budget_ms: float) -> None:
+        """设置 p99 延迟预算（毫秒）。0 表示不设预算。"""
+        self.p99_budget_ms = budget_ms
+
+    def record_latency_ms(self, latency_ms: float) -> None:
+        """记录一次调用延迟样本（供 p99 计算）。"""
+        self._latency_history.append(latency_ms)
+
+    def p99_latency_ms(self) -> float:
+        """计算当前延迟样本的 p99（毫秒）。样本不足时返回最近一次延迟。"""
+        if not self._latency_history:
+            return 0.0
+        s = sorted(self._latency_history)
+        k = (len(s) - 1) * 0.99
+        lo = int(k)
+        hi = min(lo + 1, len(s) - 1)
+        frac = k - lo
+        return s[lo] * (1 - frac) + s[hi] * frac
+
+    def is_within_budget(self) -> bool:
+        """判断当前 p99 是否在预算内（未设预算视为通过）。"""
+        if self.p99_budget_ms <= 0:
+            return True
+        return self.p99_latency_ms() <= self.p99_budget_ms
+
+    def latency_samples(self) -> List[float]:
+        """返回当前延迟样本列表。"""
+        return list(self._latency_history)
 
     def invoke(self, model: str, prompt: str, **kwargs: Any) -> str:
         """调用指定模型，返回生成文本。
@@ -51,6 +93,7 @@ class _TimedProviderMixin:
     """计时包装 Mixin：记录最近一次 `invoke` 的耗时。
 
     用于延迟量测，不侵入调用逻辑。
+    自动将每次调用耗时记入延迟历史（供 p99 预算计算）。
     """
 
     def __init__(self) -> None:
@@ -63,7 +106,11 @@ class _TimedProviderMixin:
         """执行 fn 并记录耗时（毫秒）。"""
         start = time.perf_counter()
         result = fn()
-        self._last_latency_ms = (time.perf_counter() - start) * 1000.0
+        latency = (time.perf_counter() - start) * 1000.0
+        self._last_latency_ms = latency
+        # 记录到历史，供 p99 预算计算（若基类已初始化）
+        if hasattr(self, "_latency_history"):
+            self.record_latency_ms(latency)
         return result
 
 

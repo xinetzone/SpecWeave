@@ -90,5 +90,46 @@ class TestRemoteProviderJitter(unittest.TestCase):
         self.assertEqual(provider._jitter_ms, 50)
 
 
+class TestLatencyBudget(unittest.TestCase):
+    """验证 P2 T1 延迟预算功能。"""
+
+    def _build_provider(self, latency_ms: int) -> LocalProvider:
+        provider = LocalProvider(latency_ms=latency_ms)
+        for _ in range(30):  # 预热样本
+            provider.invoke("local-model", "任务")
+        return provider
+
+    def test_under_budget_passes(self):
+        """延迟 10ms、预算 20ms，应判定在预算内。"""
+        provider = self._build_provider(latency_ms=10)
+        provider.set_p99_budget(20)
+        self.assertTrue(provider.is_within_budget())
+
+    def test_over_budget_fails(self):
+        """延迟 100ms、预算 50ms，应判定超预算。"""
+        provider = self._build_provider(latency_ms=100)
+        provider.set_p99_budget(50)
+        self.assertFalse(provider.is_within_budget())
+
+    def test_no_budget_passes(self):
+        """未设预算（默认 0），应视为通过。"""
+        provider = self._build_provider(latency_ms=100)
+        self.assertTrue(provider.is_within_budget())
+
+    def test_p99_latency_computation(self):
+        """p99 应逼近最大延迟样本值。"""
+        provider = self._build_provider(latency_ms=50)
+        p99 = provider.p99_latency_ms()
+        self.assertGreaterEqual(p99, 50.0)
+        self.assertLess(p99, 60.0)
+
+    def test_latency_samples_recorded(self):
+        """每次 invoke 应记录延迟样本。"""
+        provider = LocalProvider(latency_ms=5)
+        for _ in range(10):
+            provider.invoke("local-model", "任务")
+        self.assertEqual(len(provider.latency_samples()), 10)
+
+
 if __name__ == "__main__":
     unittest.main()
