@@ -1,0 +1,5 @@
+id = "bp-dual-engine-uncertainty-certainty"
+title = "不确定性探索+确定性校验双引擎架构模式（Dual-Engine Uncertainty-Certainty Pattern）"
+category = "retrospective/patterns/methodology-patterns"
+date = "2026-07-07"
+version = "1.0"
