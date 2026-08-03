@@ -60,6 +60,7 @@
 | [retrospective-i-have-adhd-second-round-validation](retrospective-i-have-adhd-second-round-validation/spec.md) | ✅ 完成 | 100% | [4个L1新模式+4个TOML+V2模式更新](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) | 2026-07-28 · 元复盘/模式验证 · i-have-adhd知识沉淀二次验证复盘：R→I→V→E全链路，审计3条执行模式遵循度、V2对抗审查暴露4个边界盲区+4个失败案例、9项P0修复+3个5-Whys根因、萃取知识沉淀二次验证SOP入库，4个L1模式独立文档化 |
 | [analyze-wechat-article-causal-ai](analyze-wechat-article-causal-ai/spec.md) | ✅ 完成 | 100% | [分析报告+七概念报告](../../../docs/knowledge/learning/analyze-wechat-article-causal-ai/) | 2026-07-07 · 因果AI/世界模型 · 新智元"因果AI与世界模型"文章七概念方法论分析：109条事实清单、5条核心洞察（因果是世界模型底层密码/社会行为系统世界模型扩展/因果驱动闭环将可解释内嵌/干预载体重新定义工程组件角色/文章软文倾向识别）、4视角10条对抗审查意见采纳6条，所有质量门(G1/G2/V)均通过 |
 | [analyze-tencent-hunyuan-hy3-release](analyze-tencent-hunyuan-hy3-release/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-tencent-hunyuan-hy3-analysis-20260801/README.md)（spec/tasks/checklist保留在本目录） | 2026-08-01 · 大模型行业/产品发布 · 腾讯混元Hy3正式发布文章深度洞察：以小参数比肩2-5倍旗舰模型、三大生产级体验改进（幻觉率12.5%→5.4%/MRCR 42.9%→75.1%）、8个内部产品反馈验证、Apache 2.0开源+1/4/0.25元低价API，提炼五大行业趋势判断和五个可复用认知模型 |
+| [analyze-wechat-article-7a2l](analyze-wechat-article-7a2l/spec.md) | ✅ 完成 | 100% | [analysis-report.md](analyze-wechat-article-7a2l/analysis-report.md) | 孙敦灿《Agent评测体系化》文章深度分析：10章完整拆解Agent评测工程化方法论（指标分层P0/P1/P2、连续成功率vs至少一次成功率、规则>LLM>人工三层评分、RCA五步根因链路、六大质量资产库沉淀），5个核心观点深度解析、20个关键概念定义、5个核心要点总结 |
 
 ---
 
@@ -245,6 +246,11 @@ retrospectives-insights/
 │   ├── spec.md
 │   ├── tasks.md
 │   └── checklist.md
+├── analyze-wechat-article-7a2l/
+│   ├── spec.md
+│   ├── tasks.md
+│   ├── checklist.md
+│   └── analysis-report.md
 └── sunlogin-tuya-comparison-analysis/
     ├── spec.md
     ├── tasks.md
