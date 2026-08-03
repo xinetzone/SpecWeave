@@ -96,6 +96,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P1 |
+| **归档状态** | ✅ 已归档为模式 [transparent-interceptor-middleware](../../../../.agents/docs/retrospective/patterns/architecture-patterns/transparent-interceptor-middleware.md)（L2成熟度，8个验证案例，commit 待提交） |
 | **触发场景** | Headroom作为Harness层中间件，位于LLM API调用链路上，对应用代码和LLM本身完全透明，无需修改任何一端即可实现上下文压缩 |
 | **核心发现** | 拦截器模式通过在调用链路中插入透明代理层，实现横切关注点（压缩、缓存、日志、限流、重试等）的统一处理，符合开闭原则（对扩展开放，对修改关闭）。 |
 | **可复用价值** | 这是最成熟的架构模式之一，适用于：API网关、RPC拦截器、HTTP中间件、ORM钩子、消息队列过滤器等所有需要在不修改核心逻辑的情况下增强功能的场景。 |
