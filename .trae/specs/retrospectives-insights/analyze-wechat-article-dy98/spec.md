@@ -1,7 +1,7 @@
 # Orca 多代理协作 IDE 文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview
-- **Summary**: 对微信公众号"开源日记"发布的 Orca 多代理协作 ADE 介绍文章（URL: https://mp.weixin.qq.com/s/Dy98TQc4mAit7P0pxRheJw）进行系统性学习与深度洞察分析。文章系统介绍了 Orca（Stably.ai 出品，YC 背书）——一个将 Git Worktree 作为 ADE 一等公民的 AI 原生代理开发环境（Agent Development Environment），涵盖并行 Worktree 多代理隔离执行、手机端远程监控、WebGL 终端分屏、设计模式（截图+DOM 上下文）、GitHub/Linear 原生集成、拖拽文件交互等六大核心功能，并分析了其学习成本、磁盘占用、手机端功能限制、需自备 AI 订阅等实际使用注意事项。**⚠️ 对抗性审查已完成**（见 [adversarial-review.md](adversarial-review.md)），修正了关键数据偏差（Star 数 10771→34341）、术语校准（IDE→ADE）、补充了 YC 背景，并对行业趋势类结论标注了不确定性。
+- **Summary**: 对微信公众号"开源日记"发布的 Orca 多代理协作 ADE 介绍文章（URL: https://mp.weixin.qq.com/s/Dy98TQc4mAit7P0pxRheJw）进行系统性学习与深度洞察分析。文章系统介绍了 Orca（Stably.ai 出品，YC 背书）——一个将 Git Worktree 作为 ADE 一等公民的 AI 原生代理开发环境（Agent Development Environment），涵盖并行 Worktree 多代理隔离执行、手机端远程监控、WebGL 终端分屏、设计模式（截图+DOM 上下文）、GitHub/Linear 原生集成、拖拽文件交互等六大核心功能，并分析了其学习成本、磁盘占用、手机端功能限制、需自备 AI 订阅等实际使用注意事项。**⚠️ 对抗性审查已完成**（见 [adversarial-review.md](../../../../docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md)），修正了关键数据偏差（Star 数 10771→34341）、术语校准（IDE→ADE）、补充了 YC 背景，并对行业趋势类结论标注了不确定性。
 - **Purpose**: 通过系统性学习与深度洞察分析，准确把握 Orca 的技术特性与使用方式，挖掘"Git Worktree 作为 IDE 一等公民"这一设计范式在 AI 编码时代的变革意义，理解多代理并行协作、隔离执行、实时对比择优的工作流价值，以及"IDE 从代码编辑器向代理编排器"演进的行业趋势，为技术选型、工具链优化、开发流程改进提供有价值的洞察依据。
 - **Target Users**: AI 辅助开发实践者、IDE 工具选型决策者、多代理协作研究者、开源工具爱好者
 
@@ -82,7 +82,7 @@
 
 ## Adversarial Review（对抗性审查）
 
-本次分析已通过七概念方法论的 V（对抗性审查）质量门。详见 [adversarial-review.md](adversarial-review.md)。
+本次分析已通过七概念方法论的 V（对抗性审查）质量门。详见 [adversarial-review.md](../../../../docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md)。
 
 ### 审查发现的关键问题
 

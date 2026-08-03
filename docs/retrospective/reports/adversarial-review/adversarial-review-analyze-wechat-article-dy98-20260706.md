@@ -1,7 +1,7 @@
 ---
 id: "adversarial-review-orca-analysis-20260706"
 title: "Orca 文章分析对抗性审查报告"
-source: ".trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.md"
+source: "docs/retrospective/reports/competitive-analysis/analyze-wechat-article-dy98-20260706/analysis-report.md"
 date: "2026-07-06"
 scenario: "knowledge-research"
 depth: "standard"

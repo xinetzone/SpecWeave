@@ -181,6 +181,6 @@
 - **Test Requirements**:
   - `human-judgement` TR-9.1: 审查意见 ≥ 5 条且具体（实际 8 条）
   - `human-judgement` TR-9.2: 至少采纳 2 条修正（实际采纳 8 条）
-  - `human-judgement` TR-9.3: 审查报告归档至 spec 目录（adversarial-review.md）
+  - `human-judgement` TR-9.3: 审查报告归档至 docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md
   - `human-judgement` TR-9.4: spec.md 和 checklist.md 同步更新
 - **Notes**: V 门是七概念方法论知识沉淀场景（R→I→E→V→入库）的第四阶段，对已完成的分析进行系统性证伪，确保结论经得起质疑
