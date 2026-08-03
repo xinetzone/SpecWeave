@@ -107,10 +107,23 @@ x-toml-ref: "../../.meta/toml/.agents/commands/retrospective.toml"
 
 | 产出物 | 格式 | 存储位置 |
 |--------|------|---------|
-| 复盘报告 | Markdown | `docs/retrospective/reports/` |
+| 里程碑复盘报告 | Markdown | `docs/retrospective/reports/milestone/<topic>-retrospective-<YYYYMMDD>.md` |
+| 知识沉淀复盘报告 | Markdown | `docs/retrospective/reports/knowledge/` |
+| 项目治理复盘报告 | Markdown | `docs/retrospective/reports/project-governance/` |
 | 可复用模式 | TOML frontmatter + Markdown | `docs/retrospective/patterns/` |
 | 改进行动项 | Markdown | `docs/retrospective/actions/` |
 | 执行摘要 | Markdown | 报告开头 |
+
+### 重要目录边界约束
+
+- **`.trae/specs/<theme-subdir>/` 目录仅保留规划过程文件**：
+  - ✅ 必须存在：`spec.md`（PRD需求文档）、`tasks.md`（任务拆解）、`checklist.md`（验收清单）
+  - ❌ 禁止存放：`retrospective.md`（复盘报告）、最终产出的知识文档、TOML元数据
+  - **理由**：`.trae/specs/`是规划过程的临时工作区，最终知识产出归入`docs/`知识管理体系，便于复用和检索
+
+- **里程碑复盘报告命名规范**：`<kebab-case-topic>-retrospective-<YYYYMMDD>.md`
+  - 示例：`harness-engineering-wiki-retrospective-20260803.md`
+  - 日期使用复盘完成日期，便于时间排序
 
 ## 质量验收
 
