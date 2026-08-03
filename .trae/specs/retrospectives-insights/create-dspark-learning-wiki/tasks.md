@@ -1,7 +1,7 @@
 # Tasks
 
 - [x] Task 1: 创建 DSpark 论文学习 wiki 教程文档主框架
-  - [x] SubTask 1.1: 在 `docs/knowledge/learning/dspark-paper-wiki.md` 创建文档骨架，包含 H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.1: 在 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md` 创建文档骨架，包含 H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
   - [x] SubTask 1.2: 编写"论文主旨"章节，阐述 DSpark 的核心观点（系统工程与模型协同设计）、基线对比说明（MTP-1）、60%–85% 速度提升的语境
 - [x] Task 2: 编写 10 个核心概念递进式讲解章节
   - [x] SubTask 2.1: 编写概念 1「批处理解码（Batching in LLM Decoding）」：GPU 显存带宽瓶颈、连续批处理原理、与推测解码的关联
@@ -29,7 +29,7 @@
 - [x] Task 7: 编写资源链接汇总章节
   - [x] SubTask 7.1: 汇总原文链接、论文 PDF、DeepSpec GitHub、参考推文（Dmytro Dzhulgakov、Hikari_07_jp）为 Markdown 标准链接格式
 - [x] Task 8: 在知识库索引中登记新文档
-  - [x] SubTask 8.1: 在 `docs/knowledge/README.md` 的 learning 类目下追加 DSpark 论文学习 wiki 条目，包含文档标题与相对路径链接
+  - [x] SubTask 8.1: 在 `.agents/docs/knowledge/README.md` 的 learning 类目下追加 DSpark 论文学习 wiki 条目，包含文档标题与相对路径链接
 - [x] Task 9: 验证与质量检查
   - [x] SubTask 9.1: 运行 `python .agents/scripts/check-filename-convention.py` 确认 `dspark-paper-wiki.md` 通过命名规范校验
   - [x] SubTask 9.2: 人工检查文档目录导航锚点是否全部可跳转、10 个概念章节是否完整、性能数据是否标注基线、FAQ 是否覆盖至少 5 个问题、资源链接是否有效

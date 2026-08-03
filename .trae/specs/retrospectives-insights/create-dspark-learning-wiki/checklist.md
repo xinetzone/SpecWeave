@@ -1,7 +1,7 @@
 # Checklist
 
 ## 文档结构与导航
-- [x] `docs/knowledge/learning/dspark-paper-wiki.md` 文件已创建
+- [x] `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md` 文件已创建
 - [x] 文档顶部包含完整目录导航系统，覆盖所有章节
 - [x] 目录条目均为可点击的锚点链接，能跳转到对应章节
 - [x] 使用标准 Markdown 标题层级（H1/H2/H3）组织内容
@@ -61,7 +61,7 @@
 - [x] 所有链接以 Markdown 标准链接格式呈现
 
 ## 知识库索引登记
-- [x] `docs/knowledge/README.md` 的 learning 类目下出现 DSpark 学习文档条目
+- [x] `.agents/docs/knowledge/README.md` 的 learning 类目下出现 DSpark 学习文档条目
 - [x] 条目包含文档标题与相对路径链接
 
 ## 规范合规性
