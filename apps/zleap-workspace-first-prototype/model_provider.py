@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import logging
+import random
 import time
 from typing import Any, Dict, Optional
 
@@ -100,11 +101,16 @@ class RemoteProvider(_TimedProviderMixin, ModelProvider):
     真实接入时替换 `_call` 内的 HTTP 请求即可（当前为 mock 占位），
     保持路由层与供应商解耦。
 
+    支持模拟真实网络延迟：`latency_ms` 为基准延迟，`jitter_ms` 为抖动幅度，
+    每次调用实际延迟 = 基准 + 均匀随机抖动（[−jitter, +jitter]），
+    模拟真实网络的波动特性（如 200ms 基准 ± 50ms 抖动）。
+
     Args:
         base_url: 远程模型服务地址
         api_key: API 密钥（默认空）
         timeout: 请求超时（秒）
-        latency_ms: 模拟网络延迟（毫秒），默认 0
+        latency_ms: 基准网络延迟（毫秒），默认 0
+        jitter_ms: 抖动幅度（毫秒），默认 0（无波动）
     """
 
     def __init__(
@@ -113,6 +119,7 @@ class RemoteProvider(_TimedProviderMixin, ModelProvider):
         api_key: str = "",
         timeout: float = 30.0,
         latency_ms: int = 0,
+        jitter_ms: int = 0,
     ) -> None:
         _TimedProviderMixin.__init__(self)
         ModelProvider.__init__(self)
@@ -120,17 +127,29 @@ class RemoteProvider(_TimedProviderMixin, ModelProvider):
         self.api_key = api_key
         self.timeout = timeout
         self._latency_ms = latency_ms
+        self._jitter_ms = jitter_ms
+
+    def _simulate_delay(self) -> None:
+        """模拟一次网络延迟（含抖动）。"""
+        if self._latency_ms <= 0:
+            return
+        if self._jitter_ms > 0:
+            # 实际延迟 = 基准 + 均匀随机抖动（[−jitter, +jitter]），下限为 0
+            delay = self._latency_ms + random.uniform(-self._jitter_ms, self._jitter_ms)
+            delay = max(0.0, delay)
+        else:
+            delay = float(self._latency_ms)
+        time.sleep(delay / 1000.0)
 
     def invoke(self, model: str, prompt: str, **kwargs: Any) -> str:
         """调用远程模型。
 
-        当前为 mock 占位（注入延迟 + 返回固定文本），
+        当前为 mock 占位（注入波动延迟 + 返回固定文本），
         真实接入时在此处发起 HTTP 请求即可。
         """
 
         def _call() -> str:
-            if self._latency_ms > 0:
-                time.sleep(self._latency_ms / 1000.0)
+            self._simulate_delay()
             logger.info(
                 "[RemoteProvider] 调用 model=%s prompt_length=%d",
                 model, len(prompt),
@@ -162,6 +181,7 @@ def build_default_provider(
             api_key=kwargs.get("api_key", ""),
             timeout=kwargs.get("timeout", 30.0),
             latency_ms=latency_ms,
+            jitter_ms=kwargs.get("jitter_ms", 0),
         )
     return LocalProvider(
         latency_ms=latency_ms,
