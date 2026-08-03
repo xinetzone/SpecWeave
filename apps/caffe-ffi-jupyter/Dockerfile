@@ -435,9 +435,10 @@ COPY apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /usr/local/bin/test-cpp-te
 COPY apps/caffe-ffi-jupyter/scripts/test-asan.sh /usr/local/bin/test-asan.sh
 COPY apps/caffe-ffi-jupyter/scripts/test-blas-bench.sh /usr/local/bin/test-blas-bench.sh
 COPY apps/caffe-ffi-jupyter/scripts/test-conda-build.sh /usr/local/bin/test-conda-build.sh
-RUN chmod +x /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh /usr/local/bin/test-conda-build.sh && \
-    sed -i 's/\r$//' /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh /usr/local/bin/test-conda-build.sh && \
-    echo "[BUILD] test scripts installed to /usr/local/bin/: test-cpp-tests.sh, test-asan.sh, test-blas-bench.sh, test-conda-build.sh"
+COPY apps/caffe-ffi-jupyter/scripts/check-cpp-extension-deps.sh /usr/local/bin/check-cpp-extension-deps.sh
+RUN chmod +x /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh /usr/local/bin/test-conda-build.sh /usr/local/bin/check-cpp-extension-deps.sh && \
+    sed -i 's/\r$//' /usr/local/bin/test-cpp-tests.sh /usr/local/bin/test-asan.sh /usr/local/bin/test-blas-bench.sh /usr/local/bin/test-conda-build.sh /usr/local/bin/check-cpp-extension-deps.sh && \
+    echo "[BUILD] test scripts installed to /usr/local/bin/: test-cpp-tests.sh, test-asan.sh, test-blas-bench.sh, test-conda-build.sh, check-cpp-extension-deps.sh"
 
 # -----------------------------------------------------------------------------
 # [Runtime 4/5] Configure conda auto-activation and Jupyter kernel
