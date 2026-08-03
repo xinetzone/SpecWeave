@@ -110,8 +110,30 @@ maturity: "L2-verified"
 - 为任务后处理提供标准化工作流参考
 
 **行动建议**：
-1. **中优**：将组合命令工作流沉淀为模式（待多次验证后）
+1. **中优**：将组合命令工作流沉淀为模式（待结构化后）
 2. **低优**：考虑创建一个 Skill 封装这个组合工作流
+
+**ROI 量化指标**（本次任务实测）：
+
+| 指标 | 数值 | 说明 |
+|------|------|------|
+| 产出文件数 | 12 个 | 4 复盘报告 + 3 模式升级 + 3 TOML 元数据 + 2 其他 |
+| 总耗时 | ~30 分钟 | 含复盘+洞察+萃取+导出+原子提交全流程 |
+| 模式升级数 | 4 个 | defuddle/spec-mode/format-evidence + 1 TOML 补全 |
+| 平均每文件耗时 | ~2.5 分钟 | 含思考+编写+验证 |
+| 对比"写个总结"增量价值 | +10 个文件 | 简单总结仅产出 1 个文件，组合命令产出 12 个 |
+
+**结构化要素待补清单**（七概念 F 阶段产出——需补全后方可沉淀为模式）：
+
+| 要素 | 当前状态 | 待补内容 |
+|------|---------|---------|
+| 触发条件 | ✅ 已有 | 任何重要任务完成后 |
+| 核心步骤 | ✅ 已有 | 复盘→洞察→萃取→导出→原子提交 |
+| 反模式 | ❌ 缺失 | 待补充：何种任务不适合此组合命令（如紧急修复、临时笔记） |
+| 迁移验证 | ❌ 缺失 | 待补充：至少 2 个不同类型任务的验证案例 |
+| 适用边界 | ❌ 缺失 | 待补充：任务复杂度阈值、ROI 判断标准 |
+
+> **修正说明**（七概念 F 阶段）：原状态"待多次验证"修正为"待结构化"——即使多次验证，若不补充反模式/迁移验证/适用边界三要素，仍无法通过 G3 质量门（模式可迁移性检查），无法沉淀为可复用模式。
 
 ---
 
@@ -123,18 +145,18 @@ maturity: "L2-verified"
 | 高 | 在 spec-mode-doc-creation-workflow 模式中补充"tasks.md 初始标记规范" | 模式中新增"tasks.md 初始标记为 [ ]，实施阶段才勾选为 [x]"规范 | 模式升级 | ✅ 已落地 |
 | 高 | 在 spec-mode-doc-creation-workflow 模式中新增"深度分析任务"适用场景和案例 | 模式中新增深度分析任务的 spec 规划要点和 AC 包含"深度见解"维度 | 模式扩展 | ✅ 已落地 |
 | 中 | 升级 format-evidence-over-memory-pattern 模式，新增 spec 格式参考案例 2 | 模式中 validation_count 1→2，新增 spec 场景应用案例 | 模式升级 | ✅ 已落地 |
-| 低 | 将"复盘+洞察+萃取+导出+原子提交"组合命令工作流沉淀为模式 | 多次验证后创建新模式或封装为 Skill | 模式沉淀 | ⏳ 待多次验证 |
+| 低 | 将"复盘+洞察+萃取+导出+原子提交"组合命令工作流沉淀为模式 | 结构化后创建新模式或封装为 Skill | 模式沉淀 | ⏳ 待结构化 |
 
 ---
 
 ## 落地验证
 
-本次 5 条洞察中 4 条已映射至现有模式升级（已执行升级操作），1 条待多次验证后沉淀：
+本次 5 条洞察中 4 条已映射至现有模式升级（已执行升级操作），1 条待结构化后沉淀：
 
 1. **defuddle-web-extraction-preferred.md**：升级 validation_count 2→3，新增 PowerShell URL 注意事项和案例 3
 2. **spec-mode-doc-creation-workflow.md**：升级 validation_count 2→3，新增案例 3、任务标记规范、深度分析任务适用场景
 3. **format-evidence-over-memory-pattern.md**：升级 validation_count 1→2，新增 spec 格式参考案例 2
-4. **组合命令工作流闭环**：暂不沉淀，待多次验证
+4. **组合命令工作流闭环**：暂不沉淀，待结构化
 
 ### 模式沉淀映射
 
@@ -144,6 +166,6 @@ maturity: "L2-verified"
 | 洞察 2：Spec 任务标记规范 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 2→3，新增案例 3 和任务标记规范） | L2 → L2 |
 | 洞察 3：Spec 模式适用于深度分析 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（新增"深度分析任务"适用场景） | L2 → L2 |
 | 洞察 4：同系列 spec 格式参考 | [format-evidence-over-memory-pattern.md](../../../patterns/methodology-patterns/governance-strategy/format-evidence-over-memory-pattern.md) | 升级（validation_count 1→2，新增 spec 格式参考案例 2） | L2 → L2 |
-| 洞察 5：组合命令工作流闭环 | （暂不沉淀，待多次验证） | - | - |
+| 洞察 5：组合命令工作流闭环 | （暂不沉淀，待结构化） | - | - |
 
-**成熟度说明**：本洞察集 4 条洞察映射至现有 L2 模式的升级（增加 validation_count 和案例），1 条洞察待多次验证后沉淀。升级操作强化了现有模式的可复用性和场景覆盖度，未引入新模式但提升了模式库的成熟度。
+**成熟度说明**：本洞察集 4 条洞察映射至现有 L2 模式的升级（增加 validation_count 和案例），1 条洞察待结构化后沉淀。升级操作强化了现有模式的可复用性和场景覆盖度，未引入新模式但提升了模式库的成熟度。
