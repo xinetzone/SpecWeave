@@ -4,18 +4,18 @@
 DeepSeek 梁文锋署名的新论文 DSpark 在 LLM 推理加速领域取得显著突破（单用户速度提升 85%、高并发场景有效吞吐翻 4 倍），但其技术细节涉及系统工程与模型协同设计的复杂权衡。Fireworks AI 联合创始人兼 CTO、PyTorch 核心维护者 Dmytro Dzhulgakov 已将整篇论文梳理为 10 个递进式概念。需要系统学习并沉淀为一份结构清晰、通俗易懂的 wiki 教程，便于团队不同技术水平的成员快速理解这套端到端推理加速方案。
 
 ## What Changes
-- 新增 wiki 教程文档 `docs/knowledge/learning/dspark-paper-wiki.md`，作为 DSpark 论文的系统性学习资料
+- 新增 wiki 教程文档 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md`，作为 DSpark 论文的系统性学习资料
 - 文档包含目录导航系统，覆盖 10 个核心概念的递进式讲解
 - 整理论文的关键性能数据、对比基线、工程权衡点
 - 提供 DeepSpec 开源训练库的使用指引与资源链接
-- 在 `docs/knowledge/README.md` 知识库索引中登记新增的学习文档
+- 在 `.agents/docs/knowledge/README.md` 知识库索引中登记新增的学习文档
 - **BREAKING**: 无破坏性变更（纯新增文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `docs/knowledge/learning/dspark-paper-wiki.md`
-  - 修改 `docs/knowledge/README.md`（追加索引条目）
+  - 新增 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md`
+  - 修改 `.agents/docs/knowledge/README.md`（追加索引条目）
 
 ## Background & Context
 - **论文**: DSpark（梁文锋署名的 DeepSeek 新论文）
@@ -30,7 +30,7 @@ DeepSeek 梁文锋署名的新论文 DSpark 在 LLM 推理加速领域取得显�
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `docs/knowledge/learning/dspark-paper-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
 
 #### Scenario: 用户打开文档导航
 - **WHEN** 用户打开 `dspark-paper-wiki.md`
@@ -99,10 +99,10 @@ DeepSeek 梁文锋署名的新论文 DSpark 在 LLM 推理加速领域取得显�
 - **AND** 链接以 Markdown 标准链接格式呈现
 
 ### Requirement: 知识库索引登记
-系统 SHALL 在 `docs/knowledge/README.md` 的学习类目下登记新增的 DSpark 学习文档条目。
+系统 SHALL 在 `.agents/docs/knowledge/README.md` 的学习类目下登记新增的 DSpark 学习文档条目。
 
 #### Scenario: 索引可发现
-- **WHEN** 用户浏览 `docs/knowledge/README.md`
+- **WHEN** 用户浏览 `.agents/docs/knowledge/README.md`
 - **THEN** 能够在 learning 类目下看到 DSpark 论文学习 wiki 的条目
 - **AND** 条目包含文档标题与相对路径链接
 
@@ -128,7 +128,7 @@ DeepSeek 梁文锋署名的新论文 DSpark 在 LLM 推理加速领域取得显�
 ### AC-1: Wiki 教程文档创建完成
 - **Given**: spec.md 中定义的所有功能需求已明确
 - **When**: 所有任务完成并通过验证
-- **Then**: `docs/knowledge/learning/dspark-paper-wiki.md` 包含目录导航、论文主旨、10 个核心概念、性能数据、工程权衡、DeepSpec 指引、FAQ、资源链接等完整章节
+- **Then**: `.agents/docs/knowledge/learning/02-agent-engineering-methodology/dspark-paper-wiki.md` 包含目录导航、论文主旨、10 个核心概念、性能数据、工程权衡、DeepSpec 指引、FAQ、资源链接等完整章节
 - **Verification**: `human-judgment`
 
 ### AC-2: 目录导航系统可用
@@ -175,7 +175,7 @@ DeepSeek 梁文锋署名的新论文 DSpark 在 LLM 推理加速领域取得显�
 
 ### AC-9: 知识库索引已登记
 - **Given**: wiki 文档创建完成
-- **When**: 用户浏览 `docs/knowledge/README.md`
+- **When**: 用户浏览 `.agents/docs/knowledge/README.md`
 - **Then**: learning 类目下出现 DSpark 学习文档条目
 - **Verification**: `programmatic`
 
