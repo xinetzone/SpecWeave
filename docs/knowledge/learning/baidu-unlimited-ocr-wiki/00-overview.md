@@ -4,7 +4,7 @@ title: "百度 Unlimited-OCR 长文档解析技术完全指南 — 概述"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
 date: "2026-08-03"
 category: "learning"
-tags: ["OCR","R-SWA","长文档处理","MoE","小模型","注意力机制","DeepEncoder"]
+tags: ["OCR","R-SWA","长文档处理","MoE","小模型","注意力机制","DeepEncoder","vLLM","SGLang"]
 ---
 
 # 百度 Unlimited-OCR 长文档解析技术完全指南 — 概述
@@ -29,6 +29,9 @@ tags: ["OCR","R-SWA","长文档处理","MoE","小模型","注意力机制","Deep
 Unlimited-OCR是百度最新开源的端到端长文档OCR模型，其核心定位是通过任务定制架构设计，从根本上解决长文档解析的记忆丢失和速度衰减问题。
 
 - **GitHub地址**：https://github.com/baidu/Unlimited-OCR
+- **arXiv论文**：[Unlimited OCR Works](https://arxiv.org/abs/2606.23050)（2606.23050）
+- **Hugging Face模型**：https://huggingface.co/baidu/Unlimited-OCR
+- **ModelScope模型**：https://modelscope.cn/models/PaddlePaddle/Unlimited-OCR
 - **核心参数**：3B总参数（MoE稀疏激活架构），实际激活仅500M（约5亿）
 - **基准成绩**：OmniDocBench v1.5 93.23%、v1.6 93.92%（端到端SOTA）
 - **核心反差**：500M激活参数（约为Qwen3-VL的1/470）反超235B Qwen3-VL 4.08个百分点
@@ -50,7 +53,9 @@ Unlimited-OCR是百度最新开源的端到端长文档OCR模型，其核心定�
 | **MoE稀疏激活** | 3B总参数提供足够知识容量，500M激活参数保证推理速度，实现容量与效率解耦 |
 | **40+页长文档支持** | 无记忆丢失、无速度下降、无内容重复，Distinct-35达97%几乎无重复生成 |
 | **恒定推理速度** | 每步注意力计算范围固定，TPS不随输出长度下降，真正实现"越用越稳" |
-| **两种推理方式** | Transformers快速上手、SGLang高性能部署，满足开发调试与生产环境不同需求 |
+| **两种推理方式** | Transformers快速上手、SGLang高性能部署、vLLM生产部署，满足开发调试到大规模生产不同需求 |
+| **批量推理脚本** | 内置infer.py支持目录/PDF自动批量处理，自动管理SGLang服务生命周期，默认8并发 |
+| **双图像模式** | gundam模式（单图高精度，640裁剪）和base模式（多页/PDF，1024不裁剪），自适应不同场景 |
 
 ---
 
@@ -73,7 +78,7 @@ Unlimited-OCR是百度最新开源的端到端长文档OCR模型，其核心定�
 | 00 | [概述](00-overview.md)（当前页） | 背景痛点、项目简介、核心特性、R-SWA架构图、阅读路径 | ⭐ |
 | 01 | [核心架构与设计理念](01-core-architecture.md) | R-SWA非对称注意力原理、DeepEncoder视觉编码、固定KV cache、免费午餐解读 | ⭐⭐ |
 | 02 | [性能数据与基准测试](02-performance-data.md) | OmniDocBench基准对比、长文档表现、推理效率TPS、参数效率反差解读 | ⭐⭐ |
-| 03 | [快速上手指南](03-quick-start.md) | PyMuPDF前置处理、Transformers方式、SGLang高性能部署、两种方式对比选型 | ⭐ |
+| 03 | [快速上手指南](03-quick-start.md) | 环境要求、gundam/base双图像模式、Transformers/SGLang/vLLM三种部署、infer.py批量推理、选型建议 | ⭐ |
 | 04 | [局限性与风险提示](04-limitations-risks.md) | 5大局限性分析、项目成熟度评估、适用场景建议、风险提示 | ⭐⭐ |
 | 05 | [架构创新深度启示](05-architecture-insights.md) | 归纳偏置力量、"软遗忘"哲学、静态/动态信息分区、视觉token不稀释原理 | ⭐⭐⭐⭐ |
 | 06 | [可迁移模式与行业启示](06-transferable-patterns.md) | MoE效率哲学、小模型路线、R-SWA迁移性分析（代码/客服等场景）、技术传播模式 | ⭐⭐⭐⭐ |

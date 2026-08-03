@@ -4,7 +4,7 @@ title: "百度 Unlimited-OCR 总结与常见问题"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
 date: "2026-08-03"
 category: "learning"
-tags: ["OCR","总结","FAQ","速查表","资源"]
+tags: ["OCR","总结","FAQ","速查表","资源","vLLM","SGLang","批量推理"]
 ---
 
 # 百度 Unlimited-OCR 总结与常见问题
@@ -37,23 +37,32 @@ Unlimited-OCR用符合OCR任务本质的"抄书注意力"设计（R-SWA非对称
 |------|---------|
 | **项目名称** | 百度 Unlimited-OCR |
 | **GitHub地址** | https://github.com/baidu/Unlimited-OCR |
+| **arXiv论文** | https://arxiv.org/abs/2606.23050 |
+| **Hugging Face** | https://huggingface.co/baidu/Unlimited-OCR |
+| **环境要求** | Python 3.12.3 + CUDA 12.9 + NVIDIA GPU（bfloat16） |
 | **核心参数** | 总参数3B，激活参数500M（MoE稀疏激活） |
 | **核心创新** | R-SWA（Reference Sliding Window Attention）非对称注意力机制 |
-| **关键技术1** | R-SWA：参考侧全可见，输出侧滑窗128 token，固定大小KV cache |
+| **关键技术1** | R-SWA：参考侧全可见，输出侧滑窗128 token（单图）/1024 token（多页），固定大小KV cache |
 | **关键技术2** | DeepEncoder：1024×1024页面→256视觉token（16倍压缩），一次性编码不参与状态转移 |
+| **图像模式** | gundam（单图：image_size=640, crop=True, ngram_window=128）/ base（多页PDF：image_size=1024, crop=False, ngram_window=1024） |
 | **基准成绩** | OmniDocBench v1.5: 93.23%，v1.6: 93.92%（端到端SOTA） |
 | **核心反差** | 500M激活参数（1/470）反超235B Qwen3-VL（89.15%→93.23%） |
 | **长文档能力** | 40+页文档一次性解析，20页编辑距离0.057，40+页<0.11，Distinct-35 97% |
 | **推理效率** | 输出6144 token时TPS 7847，领先DeepSeek-OCR 35%，速度不随输出长度下降 |
+| **上下文长度** | max_length=32768 |
 | **训练成本** | 基于DeepSeek-OCR继续训练约4000步 |
-| **使用方式1** | Transformers：快速上手，`pip install torch transformers pymupdf`，适合开发调试 |
-| **使用方式2** | SGLang：高性能推理，`python -m sglang.launch_server --model-path baidu/Unlimited-OCR --port 30000`，OpenAI-compatible API |
+| **使用方式1** | Transformers：快速上手，精确依赖见03章，适合开发调试 |
+| **使用方式2** | SGLang：高性能服务部署，端口10000，需定制wheel+kernels==0.11.7，OpenAI-compatible API |
+| **使用方式3** | vLLM：生产级部署，官方Docker镜像（vllm/vllm-openai:unlimited-ocr），K8s友好 |
+| **批量推理** | infer.py内置脚本：自动管理SGLang服务、8并发、5次重试、大文件优先、TPS统计 |
+| **SGLang关键参数** | --attention-backend fa3 --page-size 1 --mem-fraction-static 0.8 --enable-custom-logit-processor --disable-overlap-schedule |
 | **前置处理** | PDF需先用PyMuPDF转图片（DPI=300），不能直接识别PDF |
-| **主要局限1** | 仅Base/Gundam两种模式，多页只有Base模式能用（严重程度：中） |
+| **主要局限1** | 输入仅支持图片格式（PDF需转换）（严重程度：中） |
 | **主要局限2** | 上下文约32K，超长文档需自行分段（严重程度：中） |
-| **主要局限3** | PDF需转图片（严重程度：中） |
+| **主要局限3** | 仅支持结构化解析/全文OCR两种模式（严重程度：低） |
 | **主要局限4** | 必须GPU，无CPU方案（严重程度：高） |
-| **主要局限5** | 无明确开源协议，商用需核实授权（严重程度：高） |
+| **主要局限5** | MIT协议开源（宽松，允许商用，需保留版权声明）（严重程度：低） |
+| **生态支持** | Transformers/SGLang/vLLM推理、ms-swift微调训练、百度云部署、HuggingFace/ModelScope模型下载 |
 | **核心洞察1** | 机制创新远胜参数堆砌（500M打败235B） |
 | **核心洞察2** | "选择性遗忘"是智能的一部分，智能不只是记忆 |
 | **核心洞察3** | 静态/动态信息分区是架构关键 |
@@ -82,9 +91,15 @@ Unlimited-OCR用符合OCR任务本质的"抄书注意力"设计（R-SWA非对称
 
 **A**: 不能，当前版本必须使用GPU推理，没有提供CPU推理方案。500M激活参数虽然不大，但仍需要GPU支持。消费级GPU（如RTX 3090/4090）即可运行。
 
-### Q4: 商用需要注意什么？
+### Q4: 开源协议是什么？商用需要注意什么？
 
-**A**: 最重要的是开源协议问题——当前GitHub仓库中**没有明确的LICENSE文件**，商用前务必通过官方渠道联系百度确认授权条款。在协议明确前，不建议直接集成到商业产品中。
+**A**: Unlimited-OCR采用**MIT License**开源（见仓库LICENSE文件），这是非常宽松的开源协议：
+- ✅ 允许商业使用
+- ✅ 允许修改、分发、私有化部署
+- ✅ 无需开源你的衍生代码
+- ⚠️ 唯一要求：在你的产品中保留原始版权声明
+
+这意味着你可以放心地将Unlimited-OCR集成到商业产品中。
 
 ### Q5: 和DeepSeek-OCR什么关系？
 
@@ -96,10 +111,32 @@ Unlimited-OCR用符合OCR任务本质的"抄书注意力"设计（R-SWA非对称
 
 ### Q7: 40+页文档怎么处理？
 
-**A**: Unlimited-OCR原生支持40+页文档一次性解析，20页时编辑距离0.057，40+页时<0.11，精度保持稳定。如果你的文档特别长（超过上下文窗口约32K），建议：
+**A**: Unlimited-OCR原生支持40+页文档一次性解析（base模式，ngram_window=1024），20页时编辑距离0.057，40+页时<0.11，精度保持稳定。如果你的文档特别长（超过上下文窗口约32K），建议：
 1. 按章节或自然分段点拆分文档
 2. 段间保留1-2页重叠，避免断页处信息丢失
 3. 后处理时合并分段结果
+
+### Q8: gundam模式和base模式有什么区别？怎么选？
+
+**A**: 两种模式针对不同场景优化：
+- **gundam模式**（image_size=640, crop_mode=True, ngram_window=128）：单张图片高精度识别，裁剪后聚焦核心区域，适合单页照片/截图等场景
+- **base模式**（image_size=1024, crop_mode=False, ngram_window=1024）：多页PDF/长文档解析，不裁剪保证整页信息完整，长滑窗保证跨页连贯性
+- **选择原则**：单张图片用gundam，多页PDF或批量处理必须用base
+
+### Q9: 如何批量处理大量文档？
+
+**A**: 使用项目内置的`infer.py`脚本，这是最方便的批量处理方式：
+```bash
+python infer.py --pdf your_doc.pdf --output_dir ./outputs --concurrency 8 --image_mode base
+```
+infer.py会自动启动/管理SGLang服务器、并发处理请求、失败自动重试（最多5次）、最后输出TPS统计报告，无需手动管理服务生命周期。
+
+### Q10: 生产环境推荐哪种部署方式？
+
+**A**: 根据团队基础设施选择：
+- **中小规模/快速上线**：使用SGLang + infer.py，部署简单，内置批量处理能力
+- **大规模生产/已有vLLM栈**：使用官方vLLM Docker镜像（`vllm/vllm-openai:unlimited-ocr`），配合K8s编排，成熟稳定
+- **不推荐直接用Transformers方式部署生产服务**：没有并发处理和服务化能力，仅适合开发调试
 
 ---
 
@@ -107,8 +144,12 @@ Unlimited-OCR用符合OCR任务本质的"抄书注意力"设计（R-SWA非对称
 
 ### 4.1 项目资源
 - **GitHub仓库**：https://github.com/baidu/Unlimited-OCR （官方代码、示例、最新更新）
-- **Hugging Face模型**：baidu/Unlimited-OCR （模型权重下载）
-- **原文公众号文章**：见本教程source链接（"闷声干了票大的"，原文更生动）
+- **arXiv论文**：[Unlimited OCR Works](https://arxiv.org/abs/2606.23050)（2606.23050，技术细节）
+- **Hugging Face模型**：https://huggingface.co/baidu/Unlimited-OCR （模型权重下载）
+- **ModelScope模型**：https://modelscope.cn/models/PaddlePaddle/Unlimited-OCR （国内镜像）
+- **vLLM官方Recipe**：https://recipes.vllm.ai/baidu/Unlimited-OCR （生产部署指南）
+- **百度云服务**：已上线百度云OCR服务（无需自建GPU即可使用）
+- **ms-swift微调**：支持使用ms-swift框架进行微调训练
 
 ### 4.2 相关技术延伸
 - **R-SWA原理深入**：重读01-02章理解非对称注意力设计细节
@@ -131,7 +172,7 @@ Unlimited-OCR用符合OCR任务本质的"抄书注意力"设计（R-SWA非对称
 | 00 | [概述](00-overview.md) | 背景痛点、项目简介、核心特性、阅读路径 |
 | 01 | [核心架构与设计理念](01-core-architecture.md) | R-SWA原理、"人抄书"类比、软遗忘哲学、静态/动态分区 |
 | 02 | [性能数据与基准测试](02-performance-data.md) | OmniDocBench基准、长文档表现、TPS效率对比 |
-| 03 | [快速上手指南](03-quick-start.md) | PyMuPDF转图片、Transformers/SGLang两种方式、对比选型 |
+| 03 | [快速上手指南](03-quick-start.md) | 环境要求、gundam/base双模式、Transformers/SGLang/vLLM三种部署、infer.py批量推理 |
 | 04 | [局限性与风险提示](04-limitations-risks.md) | 5大局限性、成熟度评估、适用场景评级、风险规避 |
 | 05 | [架构创新深度启示](05-architecture-insights.md) | 归纳偏置、软遗忘哲学、静态/动态洞见、注意力机制演进 |
 | 06 | [可迁移模式与行业启示](06-transferable-patterns.md) | MoE哲学、专用/通用分化、4000步创新路径、R-SWA迁移性分析 |
