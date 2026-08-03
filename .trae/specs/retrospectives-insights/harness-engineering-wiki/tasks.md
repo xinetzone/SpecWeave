@@ -326,3 +326,9 @@
 ### 问题修复记录
 1. **断链修复**：09-resources.md引用了不存在的zleap-agent-harness-learning-analysis.md，已修复该链接
 2. **内部wiki链接路径修正**：09-resources.md中本项目内wiki链接路径有误（指向子目录/00-overview.md而非父目录的wiki索引页），已修正为直接指向*-wiki.md索引页
+
+### 复盘报告
+- **报告位置**：docs/retrospective/reports/milestone/harness-engineering-wiki-retrospective-20260803.md
+- **方法论**：七概念 R→I→E→V→C 链路（里程碑复盘，含对抗审查）
+- **核心产出**：33条事实、3条洞察、1个可复用模式（技术文章Wiki化批量生成模式）、3个行动项
+- **位置修正记录**：retrospective.md最初错误放置在.trae/specs/目录下，已修正为docs/retrospective/reports/milestone/标准位置
