@@ -1,17 +1,27 @@
 ---
 id: "data-lifecycle-economic-stratification"
-source: "../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察3"
+source:
+  - "../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察3"
+  - "../../../reports/competitive-analysis/retrospective-headroom-wiki-20260803/insight-extraction.md"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/data-lifecycle-economic-stratification.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
   - "metadata-layering"
   - "provenance-driven-trust"
   - "lifecycle-protocol-three-phase"
+  - "reversibility-guarantee"
+  - "classic-patterns-reuse-heuristic"
+  - "transparent-interceptor-middleware"
+aliases:
+  - "memory-pyramid"
+  - "hierarchical-storage"
+  - "multi-tier-memory"
+tags: ["分层存储", "记忆金字塔", "冷热分层", "Cache层次", "AI Agent记忆"]
 ---
-> **提炼自**：[insights.md#洞察3](../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察3) —— 火山引擎AgentKit核心洞察（Session/Memory拆分的经济学本质）
+> **提炼自**：2个独立案例（火山引擎AgentKit Session/Memory拆分 + Headroom L0-L4记忆金字塔）
 
 # 数据生命周期经济分层架构（Data Lifecycle Economic Stratification）
 
@@ -21,7 +31,68 @@ related_patterns:
 
 ## 成熟度
 
-L1 实验性（火山引擎AgentKit Session/Memory模块设计验证，单案例待更多场景验证）
+L2 已验证（2次验证来源：2026-07 火山引擎AgentKit Session/Memory拆分 + 2026-08 Headroom L0-L4记忆金字塔）
+
+## 两种分层视角：经济属性二分 vs 访问速度多级
+
+本模式有两种互补的分层视角，适用于不同设计阶段：
+
+| 视角 | 分层依据 | 层级数 | 适用阶段 |
+|------|---------|-------|---------|
+| **经济属性二分法** | 数据价值曲线和治理成本 | 2层（Session/Memory） | 早期架构设计——先区分消耗品与知识资产 |
+| **访问速度金字塔** | 访问频率、速度、成本 | 3-5层（L0-L4） | 详细设计——精细控制每层内容与访问策略 |
+
+两者不是互斥的：先做经济属性二分（大方向对），再在每层内做访问速度细分（精细优化）。
+
+### 视角B：访问速度金字塔（L0-L4五级模型）
+
+当需要更精细地控制Agent记忆系统的性能/成本/质量trade-off时，采用5级金字塔模型（类比CPU存储层次结构）：
+
+```
+          ┌─────────────────────────────────┐
+          │  L0: 即时上下文（寄存器级）       │ ← 正在用的，直接在LLM窗口里
+          │  当前对话、当前任务关键信息       │
+          └──────────────┬──────────────────┘
+                         │ 不够了向下取
+          ┌──────────────▼──────────────────┐
+          │  L1: 精简摘要（缓存级）           │ ← 压缩后的历史、摘要
+          │  压缩后的历史对话、文件摘要       │
+          └──────────────┬──────────────────┘
+                         │ 需要细节向下取
+          ┌──────────────▼──────────────────┐
+          │  L2: 本地索引（内存级）           │ ← 元数据、content_id索引
+          │  原始数据的元数据、索引、映射表   │
+          └──────────────┬──────────────────┘
+                         │ 根据索引定位
+          ┌──────────────▼──────────────────┐
+          │  L3: 原始数据（磁盘级）           │ ← 完整原始内容，按需取回
+          │  完整的原始文件、日志、对话历史   │
+          └──────────────┬──────────────────┘
+                         │ 需要跨项目经验
+          ┌──────────────▼──────────────────┐
+          │  L4: 共享记忆（分布式存储级）     │ ← 跨Agent/跨项目经验
+          │  跨Agent/跨项目的可复用经验库     │
+          └─────────────────────────────────┘
+```
+
+| 层级 | 类比计算机 | 内容 | 位置 | 访问速度 | Token成本 | 访问频率 |
+|------|-----------|------|------|---------|----------|---------|
+| **L0: 即时上下文** | 寄存器 | 当前对话、当前任务关键信息 | LLM上下文窗口 | 即时 | 极高 | 90% |
+| **L1: 精简摘要** | CPU缓存 | 压缩后的历史对话、文件摘要、关键结论 | 压缩后的上下文 | 快 | 低 | 90%（与L0共用） |
+| **L2: 本地索引** | 内存 | 原始数据的元数据、索引、content_id映射 | 本地SQLite/文件 | 快（本地调用） | 0（不送LLM） | 8% |
+| **L3: 原始数据** | 磁盘 | 完整的原始文件、日志、对话历史 | 本地缓存 | 较慢（按需取回） | 按需付费 | 8%（通过L2索引） |
+| **L4: 共享记忆** | 网络/分布式缓存 | 跨Agent/跨项目的可复用经验 | 向量数据库 | 较慢（语义检索） | 按需付费 | 2% |
+
+**访问频率分布**（经验值）：
+- 90%的时间只用L0+L1（日常精简对话）
+- 8%的时间需要L2→L3（细节回查）
+- 2%的时间需要L4（跨项目经验复用）
+
+**关键设计原则**：
+1. **逐级向下访问**：优先使用上层，上层不够才向下取，不跳级
+2. **原始数据不下沉到L0/L1**：完整原始数据不直接进LLM上下文，通过L2索引按需取回（与[reversibility-guarantee.md](reversibility-guarantee.md)的CCR机制一致）
+3. **Token成本递增**：越往下层，访问的Token成本越高，因此必须按需取回而非全量加载
+4. **经典CS复用**：这是CPU Cache层次结构（寄存器→L1/L2/L3缓存→内存→磁盘→网络）在AI记忆系统的直接映射（符合[classic-patterns-reuse-heuristic.md](../methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md)）
 
 ## 适用场景
 
@@ -174,6 +245,7 @@ Memory层数据必须定期执行"知识半衰期"审计：
 - **场景3（日志系统）**：实时日志（Session，ELK热节点，TTL 7天）vs 审计日志（Memory，持久化+权限控制）vs 归档日志（冷存储）
 - **场景4（个人知识管理）**：收件箱/快速笔记（Session，每周整理）vs 永久笔记（Memory，双向链接+定期回顾）vs 归档资料（冷存储）
 - **场景5（跨领域类比）**：人类记忆——工作记忆（短期，约7±2个信息块）vs 长期记忆（经海马体巩固）vs 遗忘（无用信息自然衰减）
+- **场景6（Headroom LLM上下文管理）**：L0即时上下文（窗口内）/ L1压缩摘要（压缩后送LLM）/ L2本地索引（SQLite元数据）/ L3原始数据（本地缓存按需取回）/ L4共享记忆（向量库跨项目复用），90/8/2访问分布
 
 ## 与现有模式的关系
 
@@ -182,3 +254,12 @@ Memory层数据必须定期执行"知识半衰期"审计：
 | [metadata-layering.md](metadata-layering.md) | 思想同源 | 元数据分层是内容-元数据二分法，本模式是基于经济价值的数据二分法，分层思想相通 |
 | [provenance-driven-trust.md](provenance-driven-trust.md) | 协同模式 | 来源驱动信任是Memory层数据可信度评估的具体方法 |
 | [lifecycle-protocol-three-phase.md](lifecycle-protocol-three-phase.md) | 架构类比 | 生命周期协议三阶段是协议/功能的生命周期，本模式是数据的生命周期分层 |
+| [reversibility-guarantee.md](reversibility-guarantee.md) | 紧密协同 | L3原始数据保留+按需取回是可逆设计在记忆系统的直接应用（CCR机制） |
+| [classic-patterns-reuse-heuristic.md](../methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md) | 经典溯源 | L0-L4金字塔是CPU Cache层次结构的经典CS思想在AI领域的复用 |
+| [transparent-interceptor-middleware.md](transparent-interceptor-middleware.md) | 实现手段 | L0/L1层的压缩和注入通过透明中间件实现，不侵入业务逻辑 |
+| CPU Cache Hierarchy | 经典起源 | 寄存器→L1/L2/L3缓存→内存→磁盘→网络存储的层次化设计是计算机体系结构的经典智慧 |
+
+## Changelog
+
+- 2026-08-03 | enhance | 补充Headroom L0-L4记忆金字塔模型（第二种分层视角），新增5级访问速度金字塔+90/8/2访问频率分布+4条设计原则+场景6，maturity L1→L2，validation_count 1→2
+- 2026-07 | create | 初始版本，从火山引擎AgentKit洞察提炼，经济属性二分法+两层闸门设计，L1成熟度
