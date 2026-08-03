@@ -9,7 +9,7 @@ tags: ["minit2i", "文生图", "何恺明", "极简主义", "transformer", "减�
 
 # MiniT2I极简文生图模型 — 概述与学习目标
 
-> 一句话摘要：MiniT2I是何恺明团队发布的极简像素空间文生图模型，通过移除VAE、AdaLN、私有数据、RL/DPO和辅助损失这五大"标配"组件，证明纯粹的朴素Transformer即可在学术级算力上达到SOTA级性能，标志着文生图领域从"堆料"到"提纯"的范式转移。
+> 一句话摘要：MiniT2I是何恺明团队发布的极简像素空间文生图模型，使用冻结FLAN-T5-Large文本编码器，通过移除VAE、AdaLN、私有数据、RL/DPO和辅助损失这五大"标配"组件，证明纯粹的朴素Transformer即可在学术级算力上达到SOTA级性能，标志着文生图领域从"堆料"到"提纯"的范式转移。
 
 ---
 
@@ -117,7 +117,7 @@ graph LR
         M5[8张H100×3天<br/>学术级算力]
     end
 
-    Results["性能结果<br/>GenEval: 0.87<br/>DPG-Bench: 84.2<br/>FID降低26.7%（生成质量提升）<br/>计算量降低58.7%"]
+    Results["性能结果<br/>GenEval: 0.873 (B/16), 0.883 (L/16)<br/>DPG-Bench: 84.2 (B/16), 85.9 (L/16)<br/>FID降低26.7%（生成质量提升）<br/>计算量降低58.7%"]
 
     Traditional --> Subtractions
     Subtractions --> MiniT2I
@@ -175,6 +175,20 @@ graph LR
 4. 参考第7章资源阅读原论文和代码
 
 > 完成此路径后，你将能够将MiniT2I的研究方法论应用到自己的工作中。
+
+---
+
+## 8. 代码与资源链接
+
+| 资源类型 | 链接/说明 |
+|---------|----------|
+| 官方技术博客 | https://peppaking8.github.io/#/post/minit2i |
+| 官方JAX/Flax代码仓库 | https://github.com/PeppaKing8/minit2i-jax（TPU导向，完整训练/评估代码） |
+| 本地代码副本 | 已在 `d:\AI\external\tools\minit2i-jax\` |
+| Hugging Face权重（JAX） | [MiniT2I/MiniT2I-B-16-jax](https://huggingface.co/MiniT2I/MiniT2I-B-16-jax)、[MiniT2I/MiniT2I-L-16-jax](https://huggingface.co/MiniT2I/MiniT2I-L-16-jax) |
+| 社区PyTorch实现 | [Hope7Happiness/minit2i-torch](https://github.com/Hope7Happiness/minit2i-torch)（支持Diffusers推理和LoRA微调） |
+| Mean Flow 4步蒸馏 | 在官方代码的 `mean_flow_distill` 分支提供MiniT2I-B/16-MF检查点 |
+| 论文作者 | Xianbang Wang, Hanhong Zhao, Yiyang Lu, Kangyang Zhou, Linrui Ma, Kaiming He |
 
 ---
 
