@@ -4,7 +4,8 @@ title: "Papi酱关闭公司回归个人IP：概述与学习目标"
 category: "learning"
 tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而美", "商业模式", "卢松松"]
 date: "2026-07-04"
-status: "draft"
+status: "completed"
+completed_date: "2026-07-06"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/00-overview.toml"
 ---

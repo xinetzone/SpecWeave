@@ -15,7 +15,7 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 - **Summary**: 系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，理解Papi酱从单人网红到MCN机构再回归7人小团队的完整十年历程，梳理文章核心观点、关键论据、时间线数据，创建一份结构清晰的创业趋势观察wiki文档，帮助读者理解内容创业从"做大做强"到"小而美个人IP"的范式转变。
 - **Purpose**: 为内容创业者、自媒体从业者、个人IP运营者提供一份系统的趋势分析资料，帮助理解当前创业环境下"把公司做小，把IP做大"的核心思路，避免盲目扩张的陷阱。
 - **Target Users**: 内容创业者、自媒体从业者、MCN机构运营者、个人IP打造者、中小企业主、对创业趋势感兴趣的读者。
-- **Actual Path**: 文档实际放置在`docs/knowledge/learning/06-business-trends-analysis/`分类目录下（原计划`docs/knowledge/learning/`，按商业趋势分类归档）
+- **Actual Path**: 文档实际放置在`.agents/docs/knowledge/learning/06-business-trends-analysis/`分类目录下（AI智能体知识库目录，按商业趋势分类归档）
 
 ## Goals
 - 创建包含目录导航系统的wiki教程文档
@@ -56,7 +56,7 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 - **FR-8**: 编写总结章节，回顾核心要点和关键takeaway
 - **FR-9**: 编写常见问题解答章节
 - **FR-10**: 编写相关资源链接章节
-- **FR-11**: 更新知识库索引（docs/knowledge/README.md）添加本教程入口
+- **FR-11**: 更新知识库索引（.agents/docs/knowledge/learning/06-business-trends-analysis/README.md）添加本教程入口
 
 ## Non-Functional Requirements
 - **NFR-1**: 语言客观中立，不做价值判断，只呈现事实和观点
@@ -66,7 +66,7 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 - **NFR-5**: 适合不同层次读者：既有创业者能共鸣，普通读者也能理解
 
 ## Constraints
-- **Technical**: 文档必须使用Markdown格式，遵循项目命名规范，放置在docs/knowledge/learning/06-business-trends-analysis/目录下（商业趋势分类）
+- **Technical**: 文档必须使用Markdown格式，遵循项目命名规范，放置在.agents/docs/knowledge/learning/06-business-trends-analysis/目录下（AI智能体知识库，商业趋势分类）
 - **Business**: 基于公开文章内容创建，不编造未提及的信息，对网传信息标注存疑
 - **Dependencies**: 依赖已提取的网页内容，无需额外网络请求
 
@@ -82,7 +82,7 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 - **When**: 所有任务完成并通过验证
 - **Then**: wiki教程包含索引页+原子化章节结构，覆盖概述/案例全景/核心观点/行业观察/深度分析/创业启示/总结/FAQ/资源链接等完整内容
 - **Verification**: `human-judgment`
-- **Notes**: 文档放置在docs/knowledge/learning/目录下，采用原子化目录结构
+- **Notes**: 文档放置在.agents/docs/knowledge/learning/06-business-trends-analysis/目录下，采用原子化目录结构
 
 ### AC-2: 目录导航系统完整可用
 - **Given**: 用户打开wiki索引页
@@ -132,8 +132,8 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 
 ### AC-9: 知识库索引更新完成
 - **Given**: wiki文档创建完成
-- **When**: 查看docs/knowledge/README.md
-- **Then**: 学习分类中新增本教程条目，包含标题、摘要、日期和标签
+- **When**: 查看.agents/docs/knowledge/learning/06-business-trends-analysis/README.md
+- **Then**: 商业趋势分类中新增本教程条目，包含标题、摘要、日期和标签
 - **Verification**: `programmatic`
 
 ### AC-10: 文件名规范合规
@@ -145,7 +145,7 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 ## Open Questions
 - [x] 是否需要补充更多小而美创业的实际案例？→ **决策：不做**，当前4+案例已足够说明趋势，更多案例可在未来迭代中补充
 - [x] 是否需要增加AI时代个人IP的新机遇分析章节？→ **决策：不做**，保持Wiki聚焦原文主题，AI相关内容在AI变现Wiki中已覆盖，可通过交叉链接关联
-- [x] 文档最终放置路径？→ **决策：放置在`docs/knowledge/learning/06-business-trends-analysis/`分类目录下，按商业趋势主题归类**
+- [x] 文档最终放置路径？→ **决策：放置在`.agents/docs/knowledge/learning/06-business-trends-analysis/`分类目录下，按商业趋势主题归类**
 
 ## 原子化决策
 
@@ -167,6 +167,6 @@ tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而�
 | TOML元数据文件 | 11个 | 索引页+10原子文件（含spec元数据） |
 | 复盘报告 | 4个 | README/execution/insight/export |
 | 模式更新 | 2个 | wiki-pre-creation-three-checks(L3)、context-recovery-protocol(L2) |
-| 知识库索引更新 | 1处 | docs/knowledge/README.md新增条目 |
-| 原子提交次数 | 6次 | 9c5b7eea/7f7917fa/8fb11d80/c7c4fff4/b2e17479 + 本次spec更新 |
+| 知识库索引更新 | 1处 | .agents/docs/knowledge/learning/06-business-trends-analysis/README.md新增条目 |
+| 原子提交次数 | 7次 | 9c5b7eea/7f7917fa/8fb11d80/c7c4fff4/b2e17479/706eb4e4/本次status更新 |
 | 总代码行数 | ~672行 | Wiki文档正文 |

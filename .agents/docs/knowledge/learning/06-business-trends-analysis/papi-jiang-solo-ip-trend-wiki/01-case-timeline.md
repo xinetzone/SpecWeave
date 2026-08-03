@@ -4,7 +4,8 @@ title: "Papi酱关闭公司回归个人IP：案例全景与时间线"
 category: "learning"
 tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "时间线", "papitube", "泰洋川禾"]
 date: "2026-07-04"
-status: "draft"
+status: "completed"
+completed_date: "2026-07-06"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.toml"
 ---

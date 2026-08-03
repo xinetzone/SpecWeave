@@ -5,7 +5,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-busine
 category: "learning"
 tags: ["papi-jiang", "个人IP", "内容创业", "MCN", "创业趋势", "小而美", "商业模式", "卢松松"]
 date: "2026-07-04"
-status: "draft"
+status: "completed"
+completed_date: "2026-07-06"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
 summary: "系统学习卢松松博客文章《Papi酱把公司全关了，只留七个人》，通过Papi酱十年创业完整时间线，解析\"把公司做小，把IP做大\"的创业新趋势，包含超级IP回归个人案例分析、个人IP vs 平台机构对比、小而美创业模式实践启示。"
 ---
