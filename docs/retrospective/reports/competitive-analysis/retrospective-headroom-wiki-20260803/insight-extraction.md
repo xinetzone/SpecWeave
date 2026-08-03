@@ -68,6 +68,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I5 |
+| **归档状态** | ✅ 已归档为模式 [reversibility-guarantee](../../../../.agents/docs/retrospective/patterns/architecture-patterns/reversibility-guarantee.md)（L2成熟度，6个验证案例，commit 待提交） |
 | **触发场景** | Headroom的CCR（Context Compression & Recovery）机制不直接丢弃原始上下文，而是以可恢复的方式压缩，需要时可完整还原 |
 | **核心发现** | 传统摘要式压缩是信息有损的，一旦压缩错误或需要细节，原始信息永久丢失。可逆设计虽然有一定的存储/计算开销，但保留了"后悔权"，在不确定场景下稳健性大幅提升。 |
 | **可复用价值** | 适用于所有信息压缩、数据聚合、日志处理、状态同步等场景。本质是"在效率和可回溯性之间做权衡"，可逆设计选择了长期稳健性。 |
