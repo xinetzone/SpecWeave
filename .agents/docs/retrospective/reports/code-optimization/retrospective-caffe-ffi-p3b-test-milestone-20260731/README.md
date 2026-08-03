@@ -10,7 +10,7 @@ verification: passed
 source: P3-B/C/D full C++ layer coverage + Backward gradient validation milestone
 commit: d1acc7b,1b45083,92fb41b,7cac604,e2c3750d,4f36fea,4732a0b,42bdcb9,30ae2d1,a51c405,3dea945,fdd650b
 total_tests: ">900"
-coverage: "25/25 C++ layers Forward (100%), 11/17 layers Backward gradient validated (98 tests)"
+coverage: "25/25 C++ layers Forward (100%), 12/17 layers Backward gradient validated (118 tests)"
 ---
 
 # caffe-ffi P3-B/C/D阶段测试里程碑复盘
@@ -19,11 +19,11 @@ coverage: "25/25 C++ layers Forward (100%), 11/17 layers Backward gradient valid
 
 | 项目 | 内容 |
 |------|------|
-| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: 全覆盖+Backward实现计划 |
+| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: Dropout Backward实现+5层计划 |
 | **工作目录** | `projects/xuanspace/libs/caffe-ffi/` |
 | **方法论** | numpy参考实现 + 三层验证法 + 中心有限差分数值梯度 + perf_trace性能采集 |
 | **Forward覆盖** | ✅ 25/25 C++层100%覆盖（176个P阶段测试） |
-| **Backward验证** | ✅ 11层Backward梯度验证通过（98个测试用例） |
+| **Backward验证** | ✅ 12层Backward梯度验证通过（118个测试用例） |
 | **性能优化** | ✅ P3-B测试套件16.2x加速（134s→8.27s） |
 | **Bug发现与修复** | 1个P0-Critical（param_propagate_down_未初始化） |
 
@@ -41,12 +41,12 @@ coverage: "25/25 C++ layers Forward (100%), 11/17 layers Backward gradient valid
 | 05 | [Backward验证基础设施](sections/05-backward-test-infrastructure.md) | _grad_check_utils工具库、C¹拐点防护、numpy参考实现 |
 | 07 | **[P3-C Backward验证技术报告](sections/07-p3c-backward-validation-report.md)** | ⭐ 98个测试/11层覆盖的详细技术复盘 |
 
-### P3-D后续计划
+### P3-D实施记录与计划
 
 | # | 文档 | 内容 |
 |---|------|------|
-| 06 | [Dropout Backward实现计划](sections/06-p3d-backward-plan.md) | Dropout层Backward详细实现方案（首个P0目标） |
-| 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 6层Backward实现TODO（Dropout/Bias/Scale/Eltwise/Concat/Softmax） |
+| 06 | **[Dropout Backward实现记录](sections/06-p3d-backward-plan.md)** | ⭐ Dropout层Backward实现完成（20个测试通过） |
+| 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 5层Backward实现TODO（Bias/Scale/Eltwise/Concat/Softmax） |
 
 ### 知识沉淀
 
@@ -77,21 +77,22 @@ coverage: "25/25 C++ layers Forward (100%), 11/17 layers Backward gradient valid
 | 9 | Deconvolution | ✅ | ✅ | ✅ (10) | ✅ |
 | 10 | Pooling(MAX/AVE) | ✅ | ✅ | ✅ (17) | ✅ |
 | 11 | SoftmaxWithLoss | ✅ | ✅ | ✅ (12) | ✅ |
-| **已验证合计** | **11层** | | | **98 tests** | |
+| 12 | Dropout | ✅ | ✅(新) | ✅ (20) | ✅ |
+| **已验证合计** | **12层** | | | **118 tests** | |
 
 ## P3-D待实现Backward层
 
 详见 [P3-D Backward待办清单](sections/08-p3d-backward-todo.md)：
 
-| 优先级 | 层 | 预估 | Backward公式 |
-|:------:|-----|------|-------------|
-| 🔴 P0 | Dropout | 45min | dX = dy (inference identity) |
-| 🔴 P0 | Bias | 75min | dX=dy, d_bias=sum(dy) |
-| 🟡 P1 | Scale | 105min | dX=dy·α, dα=sum(dy·x), dβ=sum(dy) |
-| 🟡 P1 | Eltwise | 120min | SUM: dx=dy; PROD: dx=dy·∏others; MAX: winner路由 |
-| 🟡 P1 | Concat | 75min | dX=沿axis拆分dy |
-| 🟡 P2 | Softmax | 90min | dx=y·(dy-Σ(dy·y)) |
-| | **合计** | **~8.5h** | |
+| 优先级 | 层 | 预估 | Backward公式 | 状态 |
+|:------:|-----|------|-------------|:----:|
+| ✅ 完成 | ~~Dropout~~ | 30min | dX = dy (inference identity) | ✅ |
+| 🔴 P0 | Bias | 75min | dX=dy, d_bias=sum(dy) | 📋 |
+| 🟡 P1 | Scale | 105min | dX=dy·α, dα=sum(dy·x), dβ=sum(dy) | 📋 |
+| 🟡 P1 | Eltwise | 120min | SUM: dx=dy; PROD: dx=dy·∏others; MAX: winner路由 | 📋 |
+| 🟡 P1 | Concat | 75min | dX=沿axis拆分dy | 📋 |
+| 🟡 P2 | Softmax | 90min | dx=y·(dy-Σ(dy·y)) | 📋 |
+| | **剩余合计** | **~7.75h** | | |
 
 ## 关键提交记录
 
@@ -122,5 +123,7 @@ P0+P1层Backward完成后，可构建端到端训练验证网络：
 
 ```
 Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → IP → SoftmaxWithLoss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅      📋(P0)    ✅         ✅
+       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅       ✅         ✅
 ```
+
+> Dropout Backward完成后，上述网络的Backward路径已全部打通（除Softmax本身外均已验证），可进行端到端梯度传播测试。
