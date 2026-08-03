@@ -310,9 +310,9 @@
 
 | 产出物 | 文件路径 | 状态 |
 |--------|---------|------|
-| 原文存档 | article-content.md | ✅ 已完成 |
-| Wiki文档 | docs/knowledge/learning/three-ai-tools-wiki.md | ✅ 已完成 |
-| 七概念报告 | seven-concepts-report.md | ✅ 已完成（本文件） |
+| 原文存档 | [article-content.md](article-content.md) | ✅ 已完成 |
+| Wiki文档 | [../three-ai-tools-wiki.md](../three-ai-tools-wiki.md) | ✅ 已完成 |
+| 七概念报告 | [seven-concepts-report.md](seven-concepts-report.md) | ✅ 已完成（本文件） |
 
 ### 质量门记录
 
