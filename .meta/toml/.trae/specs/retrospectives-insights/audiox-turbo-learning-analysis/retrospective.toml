@@ -1,0 +1,27 @@
+id = "audiox-turbo-retrospective"
+title = "AudioX-Turbo学习Wiki七概念方法论复盘"
+date = "2026-08-03"
+session = "sc-20260803-audiox-turbo"
+scenario = "knowledge"
+chain = "R→I→E→V"
+maturity = "L1-experimental"
+category = "retrospective"
+tags = ["seven-concepts", "wiki", "knowledge-precipitation", "audiox-turbo", "method-orchestrator"]
+
+[stats]
+facts_count = 15
+insights_count = 3
+patterns_count = 2
+adversarial_attacks = 5
+adversarial_adopted = 5
+gates_passed = 4
+
+[artifacts]
+wiki_document = "docs/knowledge/learning/audiox-turbo-audio-generation-wiki.md"
+wiki_lines = 525
+spec_document = ".trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md"
+spec_lines = 331
+
+[patterns_extracted]
+bp_single_file_wiki_nine_sections = "L2-validated"
+bp_spec_content_boundary = "L1-experimental"
