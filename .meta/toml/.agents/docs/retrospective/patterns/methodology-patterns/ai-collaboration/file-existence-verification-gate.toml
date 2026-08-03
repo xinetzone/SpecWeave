@@ -1,0 +1,3 @@
+id = "file-existence-verification-gate"
+title = "文件存在性验证门模式（File Existence Verification Gate）"
+maturity = "L2"
