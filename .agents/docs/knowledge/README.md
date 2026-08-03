@@ -2,7 +2,7 @@
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：795
+- **总条目数**：796
 - **分类数**：60
 - **标签数**：1574
 
@@ -45,6 +45,7 @@
 | [Container 容器类型](tech/tvm-ffi-wiki/05-containers.md) | 2026-07-28 | tech |
 | [Reflection 反射系统](tech/tvm-ffi-wiki/06-reflection.md) | 2026-07-28 | tech |
 | [Module 模块系统](tech/tvm-ffi-wiki/07-module-system.md) | 2026-07-28 | tech |
+| [Rainman Translate Book Wiki 教程](learning/03-agent-platforms-tools/rainman-translate-book-wiki.md) | 2026-07-04 | learning |
 
 ## 相关资源
 

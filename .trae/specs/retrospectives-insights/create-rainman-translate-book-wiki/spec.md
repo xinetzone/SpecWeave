@@ -48,7 +48,7 @@ tags: ["rainman-translate-book", "claude-code", "book-translation", "ai-translat
 - **FR-7**: 编写核心价值总结章节，分析项目的设计思路和适用场景
 - **FR-8**: 编写常见问题解答章节
 - **FR-9**: 编写相关资源链接章节
-- **FR-10**: 更新知识库索引（docs/knowledge/README.md）添加本教程入口
+- **FR-10**: 更新知识库索引（.agents/docs/knowledge/README.md）添加本教程入口
 
 ## Non-Functional Requirements
 - **NFR-1**: 文档语言通俗易懂，逻辑严谨，适合不同技术水平的读者
@@ -58,7 +58,7 @@ tags: ["rainman-translate-book", "claude-code", "book-translation", "ai-translat
 - **NFR-5**: 技术术语准确，关键概念提供清晰解释
 
 ## Constraints
-- **Technical**: 文档必须使用 Markdown 格式，遵循项目命名规范，放置在 docs/knowledge/learning/ 目录下
+- **Technical**: 文档必须使用 Markdown 格式，遵循项目命名规范，实际放置在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/` 目录下（遵循项目现有 wiki 文件约定，同类 Agent 平台工具 wiki 均位于此目录）
 - **Business**: 基于公开文章内容创建，不得添加未验证的信息，客观说明项目局限性
 - **Dependencies**: 依赖已获取的网页内容，无需额外网络请求
 
@@ -75,7 +75,7 @@ tags: ["rainman-translate-book", "claude-code", "book-translation", "ai-translat
 - **When**: 所有任务完成并通过验证
 - **Then**: wiki 教程文档包含目录导航、项目概述、核心功能、安装指南、使用流程、局限性、价值总结、FAQ 和资源链接等完整章节
 - **Verification**: `human-judgment`
-- **Notes**: 文档应放置在 docs/knowledge/learning/ 目录下，采用原子化目录结构
+- **Notes**: 文档实际放置在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/` 目录下，采用原子化目录结构（索引页 + 8 个原子文件 + 9 个 TOML 元数据文件）
 
 ### AC-2: 目录导航系统可用
 - **Given**: 用户打开 wiki 教程索引页
@@ -128,10 +128,51 @@ tags: ["rainman-translate-book", "claude-code", "book-translation", "ai-translat
 
 ### AC-9: 知识库索引更新完成
 - **Given**: wiki 文档创建完成
-- **When**: 查看 docs/knowledge/README.md
+- **When**: 查看 .agents/docs/knowledge/README.md
 - **Then**: 学习分类中新增 Rainman Translate Book 教程条目，包含标题、摘要、日期和标签
 - **Verification**: `programmatic`
 - **Notes**: 遵循现有索引格式
+
+## Retrospective Insights（七概念方法论 R→I 阶段产出）
+
+> 执行时间：2026-07-04 | 方法论链路：R→I→E→V | 质量门：G1 通过（事实无因果词）
+
+### R 阶段：事实采集
+
+| 编号 | 事实 |
+|------|------|
+| F01 | Spec 初始定义输出路径为 `docs/knowledge/learning/` |
+| F02 | 子代理实际创建文件于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/` |
+| F03 | 该目录下已有 30+ 个同类 Agent 平台工具 wiki 条目 |
+| F04 | 共创建 18 个文件：1 索引页 + 8 原子文件（00-07）+ 9 TOML 元数据 |
+| F05 | 所有文件 frontmatter 使用 YAML（---）格式，id/title/source/x-toml-ref 四字段完整 |
+| F06 | 验证工具全部通过：fix-x-toml-ref（0 错误）、check-filename（全部通过）、check-links（15 本地引用有效） |
+| F07 | 原子提交尚未执行 |
+| F08 | 知识库索引（.agents/docs/knowledge/README.md）中尚未添加本教程条目 |
+| F09 | 原子文件 x-toml-ref 路径为 6 层上级（`../../../../../../`），指向 `.meta/toml/.agents/...` |
+
+### I 阶段：洞察分析
+
+**洞察 1：Spec 输出路径与实际项目约定不一致**（G2 通过：四元组完整）
+
+- **现象**：spec 定义 `docs/knowledge/learning/`，子代理实际输出到 `.agents/docs/knowledge/learning/03-agent-platforms-tools/`
+- **根因**：子代理读取了同目录现有 wiki 文件（如 mopmonk），发现同类内容均位于 `.agents/` 下，因此遵循了项目实际约定。spec 中的路径定义未与项目实际目录结构对齐。
+- **影响**：spec 文档与实际产出之间存在路径不一致。此问题已通过本次 spec 更新修正。
+- **建议**：未来创建 spec 时，应先读取项目实际目录结构确认路径约定，而非仅凭记忆或通用规范定义路径。
+
+**洞察 2：子代理的"格式一致性优先"行为是正确的**（G2 通过）
+
+- **现象**：子代理根据上下文环境（同目录现有文件）自主选择了输出路径和格式
+- **根因**：子代理遵循了项目 memory 中的"格式一致性优先原则"——以现有同类文档的实际做法为权威标准
+- **影响**：验证了"格式一致性优先原则"在子代理委派场景下的有效性。子代理正确地优先参考了现有文件而非 spec 中的路径描述。
+- **建议**：委派子代理时，路径使用绝对路径以减少歧义；同时信任子代理的格式一致性判断。
+
+**洞察 3：知识库索引更新需要关注实际 README 位置**
+
+- **现象**：spec 中引用 `docs/knowledge/README.md`，但实际知识库 README 位于 `.agents/docs/knowledge/README.md`
+- **根因**：项目知识库管理系统的实际入口在 `.agents/` 下，而非根目录 `docs/`
+- **影响**：索引条目尚未添加到实际 README 中，需要补充。
+- **建议**：更新 tasks.md 中 L4 的知识库索引更新任务，明确指向 `.agents/docs/knowledge/README.md`
 
 ## Open Questions
 - [ ] 是否需要补充 GitHub 仓库的更多细节（如 Star 数、License 等）？
