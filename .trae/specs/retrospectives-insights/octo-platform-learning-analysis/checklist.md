@@ -99,3 +99,9 @@
 - [x] Checkpoint 59: 文档结构清晰，便于阅读和导航
 - [x] Checkpoint 60: 技术术语准确，关键概念提供清晰解释
 - [x] Checkpoint 61: 文档命名符合 kebab-case 规范（octo-platform-wiki.md）
+
+## Open Questions 跟踪闭环（七概念方法论复盘产出）
+
+- [x] Checkpoint 62: spec.md 的 3 个 Open Questions 均有初步分析结论（OQ-1/OQ-2/OQ-3）
+- [x] Checkpoint 63: 每个 Open Question 有明确的决策状态（待确认/另立 spec/建议暂不处理）
+- [x] Checkpoint 64: Open Questions 跟踪机制已建立（tasks.md Task 13 + checklist.md Checkpoint 62-64）
