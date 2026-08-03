@@ -29,7 +29,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I2 |
-| **归档状态** | ✅ 已归档为模式 [relative-path-systematic-construction](../../../../.agents/docs/retrospective/patterns/code-patterns/relative-path-systematic-construction.md)（L2成熟度，4个验证案例，commit 待提交） |
+| **归档状态** | ✅ 已归档为模式 [relative-path-systematic-construction](../../../../.agents/docs/retrospective/patterns/code-patterns/relative-path-systematic-construction.md)（L2成熟度，4个验证案例，commit 69c4ee5b） |
 | **触发场景** | 编写x-toml-ref引用时，多次出现相对路径层级错误，导致MD文件无法正确关联TOML元数据 |
 | **核心发现** | 相对路径不是凭记忆估算的，必须以MD文件的实际目录位置为起点，逐级向上（../）数到共同祖先，再向下到TOML位置。目录深度超过4层时记忆错误率极高。 |
 | **可复用价值** | 适用于所有跨目录相对路径引用场景，包括Markdown链接、import语句、配置文件引用等。 |
@@ -42,7 +42,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I3 |
-| **归档状态** | ✅ 已归档为模式 [example-first-alignment](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.md)（L2成熟度，5个验证案例，commit 待提交） |
+| **归档状态** | ✅ 已归档为模式 [example-first-alignment](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.md)（L2成熟度，5个验证案例，commit 69c4ee5b） |
 | **触发场景** | 任务初期尝试从零设计Wiki格式，进展缓慢；找到github-cli-wiki成熟示例后，快速对齐章节结构、命名规范、TOML字段，效率大幅提升 |
 | **核心发现** | 格式对齐是文档创作的主要隐性成本之一。成熟示例提供了"什么是好的"的具象参照，避免了反复试错，不仅提升速度，还保证了风格一致性。 |
 | **可复用价值** | 适用于所有结构化文档创作、代码模板复用、配置文件编写等场景。"找参考"是效率提升的第一杠杆。 |
