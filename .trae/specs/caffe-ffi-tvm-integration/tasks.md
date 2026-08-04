@@ -521,7 +521,7 @@
 ## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: ⬜ 待开始
+- **Status**: ⬜ 待开始（已拆分子任务，见下）
 - **Description**:
   - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
   - 更多归一化层：L2Norm/InstanceNorm等
@@ -529,6 +529,34 @@
   - 训练模式Dropout：训练/测试双模式行为
   - 目标：向40+层（v0.2.0 Beta）演进
 - **Acceptance Criteria Addressed**: AC-7d
+
+#### Task 32 子任务拆分（共 9 个原子子任务，按层族分组）
+
+> 构建采用 `file(GLOB layers/*.cpp)` 自动收集，新增层无需改 CMakeLists；每层独立可验证。激活/归一化/损失层族之间相互独立可并行；Dropout 训练模式涉及既有层，须保持 inference 默认行为。
+
+**S1 激活层（NeuronLayer 子类，4 个独立子任务）**
+- `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）
+- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）
+- `TS32-A3` Softsign：`x/(1+|x|)`
+- `TS32-A4` AbsValue：`|x|`（x=0 拐点，同样 C¹ 防护）
+
+**S2 归一化层（2 个独立子任务）**
+- `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数
+- `TS32-N2` InstanceNorm：per-instance 均值/方差，无 affine 或可选用 affine
+
+**S3 损失层（2 个独立子任务）**
+- `TS32-L1` MarginRanking：pairwise margin 排序损失
+- `TS32-L2` Hinge：hinge 损失（可选 inner_product 交互）
+
+**S4 训练模式 Dropout（1 个子任务）**
+- `TS32-D1` inverted dropout + mask 缓存 + 训练/测试模式切换（默认 inference 行为不变）
+
+**每个子任务 DoD（复用 P3 三层验证方法论）**
+- proto 字段（如需，沿用 `LayerParameter` 内嵌 message 模式）
+- C++ 头文件 + 源文件（`Forward_cpu`/`Backward_cpu`/`LayerSetUp`，`REGISTER_LAYER_CLASS` 注册）
+- 测试文件 `tests/python/test_<layer>_backward.py`：L0-L3 梯度验证（复用 `_grad_check_utils`；分段层用 `avoid_c1_discontinuity`）
+- 全量回归通过（无回归）
+- 全部完成后向 40+ 层（v0.2.0 Beta）演进
 
 ## [ ] Task 33: P4-训练工程化（训练API封装/模型序列化/应用示例）
 - **Priority**: medium

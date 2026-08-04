@@ -170,7 +170,7 @@ last_updated: "2026-08-04"
 
 #### P4 (规划中) — 优化与扩展
 - **性能优化**：全量层性能基准、GEMM加速（BLAS/MKL后端）、多线程并行（OpenMP）、COW全量应用
-- **能力扩展**：更多激活层（LeakyReLU/GELU/Softplus）、更多归一化层（GroupNorm/LayerNorm/InstanceNorm）、更多损失层（Hinge/Euclidean/Multi-Logistic）、训练模式Dropout
+- **能力扩展**：更多激活层（LeakyReLU/Softplus/Softsign/AbsValue）、更多归一化层（L2Norm/InstanceNorm）、更多损失层（MarginRanking/Hinge）、训练模式Dropout（详见 [tasks.md Task 32 子任务拆分](tasks.md#L521-559)）
 - **工程化**：训练API封装（Trainer/Solver）、模型序列化（.caffemodel兼容）、更多应用示例（ResNet/分类/回归）、文档完善
 - **里程碑**：M1性能基线+GEMM加速、M2多线程+内存优化、M3能力扩展、M4工程化
 - **详细路线图**：[P4 阶段路线图](p4-roadmap.md)（P4-1~12 任务分解、依赖、风险与 DoD）

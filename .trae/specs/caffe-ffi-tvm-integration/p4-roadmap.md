@@ -39,10 +39,10 @@ P3 阶段完成 19 类层 Backward 实现与验证，892 个 Backward 测试 + L
 
 | 任务 | 目标 | 验收标准 |
 |------|------|---------|
-| P4-5 | 更多激活层 | LeakyReLU/GELU/Softplus 等 Backward |
-| P4-6 | 更多归一化层 | GroupNorm/LayerNorm/InstanceNorm |
-| P4-7 | 更多损失层 | Hinge/Euclidean/Multi-Logistic Loss |
-| P4-8 | 训练模式 Dropout | 实现 inverted dropout + mask 缓存 + 训练/测试模式切换 |
+| P4-5 | 更多激活层 | LeakyReLU/Softplus/Softsign/AbsValue Backward（TS32-A1~A4，LeakyReLU/Abs 含 C¹ 拐点防护） |
+| P4-6 | 更多归一化层 | L2Norm/InstanceNorm（TS32-N1~N2） |
+| P4-7 | 更多损失层 | MarginRanking/Hinge Loss（TS32-L1~L2） |
+| P4-8 | 训练模式 Dropout | 实现 inverted dropout + mask 缓存 + 训练/测试模式切换（TS32-D1） |
 
 ### P2 - 工程化（应用与集成）
 
