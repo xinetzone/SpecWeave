@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📖 阅读贡献指南
+    url: https://github.com/xinetzone/SpecWeave/blob/main/CONTRIBUTING.md
+    about: 第一次贡献？请先阅读贡献指南，了解如何提交PR
+  - name: 🚀 Good First Issue
+    url: https://github.com/xinetzone/SpecWeave/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+    about: 想贡献但不知道从哪里开始？查看适合新人的入门任务
+  - name: 💬 讨论区
+    url: https://github.com/xinetzone/SpecWeave/discussions
+    about: 有想法想讨论？前往 Discussions 交流
