@@ -521,7 +521,7 @@
 ## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: ⬜ 待开始（已拆分子任务，见下）
+- **Status**: 🔄 进行中（S1 激活层：Softsign/Softplus 已完成，待 LeakyReLU/AbsValue）
 - **Description**:
   - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
   - 更多归一化层：L2Norm/InstanceNorm等
@@ -536,8 +536,8 @@
 
 **S1 激活层（NeuronLayer 子类，4 个独立子任务，按推荐实现顺序分组）**
 > 顺序按「平滑度」分组：先做平滑无拐点层（Softsign/Softplus，复用普通梯度校验模板），再相邻做 C¹ 拐点层（LeakyReLU/AbsValue，复用 `avoid_c1_discontinuity` 路径），减少上下文切换。4 个均无硬依赖，可并行。
-- `TS32-A3` Softsign：`x/(1+|x|)`（平滑，无拐点，最简单）
-- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）（平滑，无拐点）
+- `TS32-A3` Softsign：`x/(1+|x|)`（平滑，无拐点，最简单）✅ 已完成（feat+test，15 测试通过）
+- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）（平滑，无拐点）✅ 已完成（feat+test，15 测试通过）
 - `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）
 - `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）
 
