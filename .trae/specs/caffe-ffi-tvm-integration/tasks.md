@@ -521,7 +521,7 @@
 ## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: 🔄 进行中（S1 激活层：Softsign/Softplus 已完成，待 LeakyReLU/AbsValue）
+- **Status**: 🔄 进行中（S1 激活层：Softsign/Softplus/LeakyReLU 已完成，待 AbsValue）
 - **Description**:
   - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
   - 更多归一化层：L2Norm/InstanceNorm等
@@ -538,8 +538,8 @@
 > 顺序按「平滑度」分组：先做平滑无拐点层（Softsign/Softplus，复用普通梯度校验模板），再相邻做 C¹ 拐点层（LeakyReLU/AbsValue，复用 `avoid_c1_discontinuity` 路径），减少上下文切换。4 个均无硬依赖，可并行。
 - `TS32-A3` Softsign：`x/(1+|x|)`（平滑，无拐点，最简单）✅ 已完成（feat+test，15 测试通过）
 - `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）（平滑，无拐点）✅ 已完成（feat+test，15 测试通过）
-- `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）
-- `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）
+- `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）✅ 已完成（feat+test，14 测试通过）
+- `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）⬜ 待实现（无硬依赖；LeakyReLU 完成后为 S1 组最后一个待实现项，紧随其后执行）
 
 **S2 归一化层（2 个独立子任务）**
 - `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数
