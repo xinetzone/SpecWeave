@@ -510,13 +510,62 @@
 ## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: ⬜ 待开始
+- **Status**: 🔄 进行中（TS31-B1 多线程 OpenMP 集成完成 + TS31-B2 分层 benchmark 体系建立并量化收益；剩余 TS31-B3 BLAS 后端、TS31-B4 COW 推广）
 - **Description**:
   - BLAS后端：复用/接通OpenBLAS路径，完成Conv/InnerProduct gemm性能基准对比
   - 多线程：OpenMP并行化卷积/池化/全连接等计算密集层
   - COW推广：将COW零拷贝共享推广到更多层与场景（如Split/Concat后端）
   - 性能基准体系：建立P0/P1/P2分层benchmark，量化优化收益
 - **Acceptance Criteria Addressed**: NFR-1, AC-13
+
+#### Task 31 子任务拆分（共 4 个原子子任务，按优化收益递减排序）
+
+> 构建采用 `file(GLOB layers/*.cpp)` 自动收集 + CMake 选项（`CAFFE_USE_OPENMP`/`CAFFE_USE_BLAS`）开关，每子任务独立可验证。性能优化须先测量再优化，因此先建立 benchmark 基线再优化。
+
+**S1 多线程 OpenMP 集成（TS31-B1）✅ 已完成**
+- 新增构建选项 `CAFFE_USE_OPENMP`（默认 ON，OFF 时强制串行执行），见 [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
+- OpenMP 检测与回退：`find_package(OpenMP)`，编译器不支持时自动回退串行，见 [Dependencies.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Dependencies.cmake#L114-L127)
+- 编译/链接接入：`/openmp`(MSVC) / `${OpenMP_CXX_FLAGS}`(GCC/Clang) + `OpenMP::OpenMP_CXX` + `CAFFE_USE_OPENMP` 宏，见 [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake)
+- 并行化点（无跨线程写竞争）：
+  - 纯 C++ GEMM/GEMV fallback：并行化 M（行）维，见 [math_utils.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L99-L162)
+  - Pooling：并行化 batch（n）维；**注意**：MSVC 默认 `/openmp` 不支持 min/max reduction 子句（需 `/openmp:llvm`），`in_min/in_max` 改为独立串行统计，见 [pooling_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp#L166-L233)
+  - Eltwise：并行化 count 维（PROD/SUM/MAX），见 [eltwise_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L181-L246)
+- **DoD**：`.temp/_benchmark_openmp.sh`（OpenMP 重建+benchmark）与 `.temp/_benchmark_serial.sh`（OpenMP OFF 基线）双脚本，Docker 内验证通过
+
+**S2 分层 benchmark 体系（TS31-B2）✅ 已完成**
+- 新增 [benchmark_compute.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/benchmark_compute.py)，三层量化：
+  - **P0 microbenchmark**：GEMM（InnerProduct）FLOPs/s 原始吞吐
+  - **P1 layer benchmark**：单层 Forward 平均耗时（Pooling / Eltwise）
+  - **P2 network benchmark**：端到端 MLP Forward 耗时
+- 关键修复：benchmark 输入须匹配层维度（InnerProduct 2-D `[batch, in_d]`、Pooling/Eltwise 4-D `[n,c,h,w]`），原来传 1-D 腌平列表导致 `axis 1 out of range` 报错
+- 关键设计：batch 取较大值（16/8）使 OpenMP 并行维（GEMM 的 M、Pooling 的 n）足够大，否则 batch=1 无并行收益、仅剩线程开销，无法体现优化
+- **Docker 实测（`OMP_NUM_THREADS=4`，GEMM 为纯 C++ fallback）**：
+
+| Benchmark | OpenMP(4thr) | Serial | 加速比 |
+|---|---|---|---|
+| IP 16x512x512 | 1.001ms / 8.38 GFLOPS | 2.035ms / 4.12 GFLOPS | **2.03x** |
+| IP 16x1024x1024 | 4.037ms / 8.31 GFLOPS | 9.205ms / 3.65 GFLOPS | **2.28x** |
+| IP 8x2048x1024 | 6.545ms / 5.13 GFLOPS | 11.582ms / 2.90 GFLOPS | **1.77x** |
+| IP 8x4096x1024 | 13.344ms / 5.03 GFLOPS | 25.169ms / 2.67 GFLOPS | **1.89x** |
+| Pooling 8x64x56x56 | 6.409ms | 7.673ms | 1.20x |
+| Pooling 8x128x28x28 | 2.964ms | 3.796ms | 1.28x |
+| Pooling 16x256x14x14 | 2.863ms | 3.722ms | 1.30x |
+| Eltwise 8x64x56x56 | 5.296ms | 5.723ms | 1.08x |
+| Eltwise 16x512x14x14 | 5.285ms | 5.623ms | 1.06x |
+| MLP Forward(bs=1) | 0.565ms | 0.569ms | ~1.0x |
+
+- **结论**：GEMM（InnerProduct）收益最显著（1.77–2.28x，GFLOPS 最高 8.38）；Pooling 1.20–1.30x；Eltwise 受内存带宽限制仅 +6–8%；MLP(bs=1) 无并行工作、无收益。Eltwise 后续可考虑 SIMD/vectorization 而非线程并行。
+- **DoD**：`.temp/_benchmark_openmp.sh` + `.temp/_benchmark_serial.sh` 双脚本可复现对比
+
+**S3 BLAS 后端（TS31-B3）⬜ 待开始**
+- 复用/接通 OpenBLAS 路径（`CAFFE_USE_BLAS` 已存在），完成 Conv/InnerProduct GEMM 性能基准对比（OpenBLAS vs 纯 C++ fallback vs OpenMP）
+- 预期：GEMM 在 BLAS 多线程下应显著高于纯 C++ OpenMP fallback
+- **DoD**：`Conv/InnerProduct` 基准对比表 + 数据落盘
+
+**S4 COW 推广（TS31-B4）⬜ 待开始**
+- 将 COW 零拷贝共享（`ShareData`/`ShareDiff`）推广到更多层与场景（Split/Concat 后端、in-place 等）
+- 参考 SplitLayer COW 模式，保留隔离语义
+- **DoD**：COW 覆盖层清单 + 回归测试通过
 
 ## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
