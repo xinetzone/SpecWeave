@@ -136,6 +136,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [version-priority-sorting.md](version-priority-sorting.md) | 版本优先级排序：版本号归一化→发行渠道优先级→多键排序→有效性过滤，解决多版本工具共存时的版本选择问题 | L2 已验证 | 多版本开发工具共存（VS/Python/JDK）、构建工具链版本选择、SDK版本管理 |
 | [path-length-recovery.md](path-length-recovery.md) | PATH长度自动恢复：首次尝试→失败检测→环境快照→PATH精简→重试加载→路径合并→日志记录，解决Windows cmd.exe 8191字符限制 | L2 已验证 | Windows MSVC/Intel/CUDA等大型开发环境加载、DevShell初始化、批处理脚本命令行超长 |
 | [thin-wrapper-pattern.md](thin-wrapper-pattern.md) | 薄包装模式：通用核心抽取→极薄参数映射层→参数透传→共享模块→约定优于配置，实现N个项目共用一套构建逻辑 | L2 已验证 | 多项目构建脚本、微服务部署脚本、CI/CD流水线模板、相似工具链配置 |
+| [editable-install-stale-so.md](editable-install-stale-so.md) | Editable安装stale .so处理：重编译后对比build/与源码树editable路径的.so符号并显式复制刷新，应对editable install不自动更新编译产物 | L1 实验性 | C++/Cython扩展+editable install开发、重新编译后测试行为未跟随、scikit-build-core构建 |
+| [cxx-build-regression-verification.md](cxx-build-regression-verification.md) | C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功 | L1 实验性 | 跨平台C++项目(CMake+scikit-build)构建/重构回归验证、"编译产物可配置特性"回归、CI里程碑闭环 |
 
 ## 成熟度定义
 

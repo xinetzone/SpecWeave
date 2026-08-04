@@ -118,11 +118,11 @@ skills = []
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
 | architecture-patterns/ | 51 | 8 | 11 | 3 | 0 |
-| code-patterns/ | 142 | 4 | 6 | 0 | 2 |
+| code-patterns/ | 144 | 6 | 6 | 0 | 2 |
 | process-patterns/ | 10 | 8 | 2 | 0 | 0 |
 | methodology-patterns/ | 423 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **616** | **81** | **62** | **14** | **4** |
+| **合计** | **618** | **83** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
 > - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）
@@ -152,6 +152,7 @@ skills = []
 > - 此前已包含全链原子化、元级复盘萃取模式，以及 methodology-analysis-report 原子化的 8 个 L1 模式。
 > - Docker模板升级+验证闭环方法论编排复盘（2个代码模式+1个流程模式+1个方法论模式入库）：code-patterns/`dockerfile-python-code-safe-embedding`（L2，Dockerfile中Python代码安全嵌入三方案）、process-patterns/`container-verify-script-permission-model`（L2，容器验证脚本权限安全模型含mkdtemp+显式chmod）、methodology-patterns/governance-strategy/`template-placeholder-granularity-design`（L2，模板占位符粒度设计三类型+命名规范）；skeleton模板升级6项：USER root、双sed源替换、UID/GID冲突处理、chown conda bin、chmod 2775、三个新占位符
 > - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
+> - caffe-ffi CMake原子化重构里程碑复盘（2个L1代码模式入库）：code-patterns/`editable-install-stale-so`（L1，editable安装stale .so处理：重编译后对比build/与源码树路径的.so符号并显式复制刷新，含protobuf descriptor重复注册反模式）；code-patterns/`cxx-build-regression-verification`（L1，C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功）
 
 ## 使用方式
 
