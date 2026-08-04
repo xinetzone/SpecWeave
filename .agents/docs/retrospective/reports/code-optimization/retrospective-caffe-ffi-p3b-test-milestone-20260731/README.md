@@ -52,6 +52,7 @@ coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient valid
 | 11 | **[Bias Backward实现记录](sections/11-p3d-bias-backward.md)** | Bias层Backward实现（19个测试Docker验证通过） |
 | 12 | **[Pooling CEIL模式回归修复](sections/12-p3d-pooling-ceil-mode-fix.md)** | ⭐ Pooling CEIL/FLOOR模式shape不匹配根因分析与修复（28个测试通过） |
 | 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 3层Backward实现TODO（Eltwise/Concat/Softmax） |
+| 18 | **[P3-D遗留测试补齐报告](sections/18-p3d-test-completion-report.md)** | ⭐ Split/Slice/LRN/Crop Backward测试补齐，P3-D全套219测试通过 |
 
 ### 知识沉淀
 

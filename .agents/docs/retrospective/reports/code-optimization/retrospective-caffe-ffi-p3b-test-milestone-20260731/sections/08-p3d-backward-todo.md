@@ -4,7 +4,7 @@ date: 2026-08-03
 category: code-optimization
 task_type: planning
 tags: [caffe-ffi, backward, p3d, todo, implementation-plan]
-status: in-progress
+status: complete
 source: "retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md#p3-d-backward"
 ---
 
@@ -231,10 +231,10 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 | 行动项 | 优先级 | 层 | 预估 | 说明 |
 |--------|:------:|-----|------|------|
-| ACT-20 | 🟡 P2 | Split | 30分钟 | 梯度累加验证（多个top梯度求和到底部）+ 数值梯度 |
-| ACT-21 | 🟡 P2 | Slice | 30分钟 | 梯度路由验证（按slice_point分发）+ 数值梯度 |
-| ACT-22 | 🟡 P2 | LRN | 45分钟 | 局部响应归一化梯度 + 数值梯度（公式较复杂） |
-| ACT-23 | 🟢 P3 | Crop | 30分钟 | 梯度复制+zero-pad验证（裁剪区域复制梯度，其余为0） |
+| ACT-20 | 🟡 P2 | Split | 30分钟 | ✅ 梯度累加验证（多个top梯度求和到底部）+ 数值梯度 |
+| ACT-21 | 🟡 P2 | Slice | 30分钟 | ✅ 梯度路由验证（按slice_point分发）+ 数值梯度 |
+| ACT-22 | 🟡 P2 | LRN | 45分钟 | ✅ 局部响应归一化梯度 + 数值梯度（公式较复杂） |
+| ACT-23 | 🟢 P3 | Crop | 30分钟 | ✅ 梯度复制+zero-pad验证（裁剪区域复制梯度，其余为0） |
 
 ---
 
@@ -248,10 +248,10 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | ~~P1（Eltwise）~~ | ~~25min~~ | ~~35min~~ | ~~60min~~ | ✅ 完成 |
 | ~~P1（Concat）~~ | ~~15min~~ | ~~25min~~ | ~~40min~~ | ✅ 完成 |
 | ~~P2（Softmax）~~ | ~~30min~~ | ~~25min~~ | ~~55min~~ | ✅ 完成（调试15min） |
-| P2（Split+Slice+LRN测试） | 0min | 105min | **1h45min** | 📋 |
-| P3（Crop测试） | 0min | 30min | **30min** | 📋 |
+| ~~P2（Split+Slice+LRN测试）~~ | ~~0min~~ | ~~105min~~ | ~~1h45min~~ | ✅ 完成 |
+| ~~P3（Crop测试）~~ | ~~0min~~ | ~~30min~~ | ~~30min~~ | ✅ 完成（19个用例） |
 | **P3-D计划层全部完成** | **125min** | **155min** | **~4h40min** | ✅ |
-| **剩余测试补齐** | **0min** | **2h15min** | **~2h15min** | 📋 |
+| **剩余测试补齐** | **0min** | **2h15min** | **~2h15min** | ✅ 完成（Split+Slice+LRN+Crop累计69个用例） |
 
 ## 端到端训练目标
 
