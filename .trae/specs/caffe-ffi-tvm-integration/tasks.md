@@ -485,18 +485,24 @@
 - **Acceptance Criteria Addressed**: AC-33, AC-16
 - **Test Results**: LeNet on MNIST test acc 97.95%，loss 2.32→0.04（-98.3%），无NaN
 
-## [ ] Task 30: RNN/LSTM层实现（远期）
+## [x] Task 30: RNN/LSTM层实现（分阶段：Phase 1 纯Python前向已完成）
 - **Priority**: low
 - **Depends On**: Task 28
-- **Status**: ⬜ 待开始
+- **Status**: ✅ Phase 1（纯Python前向推理）已完成；⬜ Phase 2（C++实现）待启动
 - **Description**:
-  - caffe.proto扩展RecurrentParameter
-  - RecurrentLayer实现（~1350行C++，参考caffe-slim/caffe）
-  - LSTMUnit/LSTMLayer
-  - RNNLayer
-  - numpy参考实现已就绪（_numpy_rnn_reference.py）
-  - 工作量预估：15-20工作日（原估7-12天严重低估）
-  - 建议：若仅需前向推理，短期可用numpy纯Python方案
+  - **Phase 1（已完成，2026-08-04）**：纯 Python 前向推理方案，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md)
+    - 新增 `caffe_ffi.sequence` 子模块：`RNN`/`LSTM` 类（vanilla RNN tanh/relu、LSTM 4门、双向、初始状态、batch_first）
+    - Caffe 风格打包权重加载：`load_weights(W, b, fmt="caffe")`（`(4*H, D+H)` + `(4*H,)` 经 `pack/unpack_lstm_weights_caffe` 解包）
+    - `_numpy_rnn_reference.py` 从 tests 提升为 `caffe_ffi.sequence._numpy_rnn_reference` 内部实现（函数签名/行为兼容，8个自测试通过）
+    - 测试 `tests/python/test_sequence_forward.py` 16 用例通过（已知值/布局/形状/双向/Caffe打包/末态/numpy自洽）
+    - 示例 `examples/rnn_forward.py` 可独立运行
+  - **Phase 2（待启动）**：C++ 实现
+    - caffe.proto扩展RecurrentParameter
+    - RecurrentLayer实现（~1350行C++，参考caffe-slim/caffe）
+    - LSTMUnit/LSTMLayer
+    - RNNLayer
+    - 工作量预估：15-20工作日（原估7-12天严重低估）
+  - 注：Phase 1 仅前向推理，不含 Backward 梯度；Phase 2 将以 Phase 1 数值结果作为基准
 - **Acceptance Criteria Addressed**: AC-RNN
 
 ## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
@@ -576,7 +582,7 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
                                                                           │
                                                                           └→ Task 28 (M9-Backward验证✅: 19类层892测试)
                                                                                    │
-                                                                                   └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM⬜)
+                                                                                   └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM: Phase1纯Python✅, Phase2 C++⬜)
                                                                                               │
                                                                                               └→ Task 31 (P4性能优化⬜)
                                                                                               └→ Task 32 (P4能力扩展⬜)
