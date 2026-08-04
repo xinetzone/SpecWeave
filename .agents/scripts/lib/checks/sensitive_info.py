@@ -793,8 +793,24 @@ def scan_directory(
 
     all_findings: list[Finding] = []
 
-    for path in root.rglob("*"):
-        if not path.is_file():
+    try:
+        paths = list(root.rglob("*"))
+    except OSError as e:
+        # rglob 遍历过程中可能因目录符号链接/权限异常抛出 OSError，
+        # 容错跳过该遍历错误，避免全量扫描中断。
+        print_warn(f"目录遍历跳过（{e}）: {root}")
+        paths = []
+
+    for path in paths:
+        try:
+            is_file = path.is_file()
+        except OSError as e:
+            # 断裂符号链接（如 Windows 下指向不存在目标的 venv/lib64）调用
+            # stat/is_file 会抛出 OSError，识别为不可访问节点并跳过。
+            print_warn(f"跳过不可访问节点（{e}）: {path}")
+            continue
+
+        if not is_file:
             continue
 
         rel_parts = path.relative_to(root).parts
