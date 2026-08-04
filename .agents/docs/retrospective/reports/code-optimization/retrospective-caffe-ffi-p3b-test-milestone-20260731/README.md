@@ -1,33 +1,35 @@
 ---
-title: caffe-ffi P3-B/C/D阶段测试里程碑复盘
+title: caffe-ffi P3-B/C/D/E阶段测试里程碑复盘
 date: 2026-07-31
-last_updated: 2026-08-03
+last_updated: 2026-08-04
 category: code-optimization
 task_type: testing
-tags: [caffe-ffi, testing, p3b, p3c, p3d, backward, numerical-gradient]
+tags: [caffe-ffi, testing, p3b, p3c, p3d, p3e, backward, numerical-gradient]
 status: completed
 verification: passed
-source: P3-B/C/D full C++ layer coverage + Backward gradient validation milestone
+source: P3-B/C/D/E full C++ layer coverage + Backward gradient validation milestone
 commit: d1acc7b,1b45083,92fb41b,7cac604,e2c3750d,4f36fea,4732a0b,42bdcb9,30ae2d1,a51c405,3dea945,fdd650b
-total_tests: ">900"
-coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient validated (190 tests)"
+total_tests: "1646"
+coverage: "25/25 C++ layers Forward (100%), 19/19 layers Backward gradient validated (892 tests)"
 ---
 
-# caffe-ffi P3-B/C/D阶段测试里程碑复盘
+# caffe-ffi P3-B/C/D/E阶段测试里程碑复盘
 
 ## 里程碑概览
 
 | 项目 | 内容 |
 |------|------|
-| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: Dropout/Scale/Bias/Pooling Backward+3层待实现 |
+| **阶段目标** | P3-B: 7层Forward → P3-C: 核心层Backward验证 → P3-D: 6层Backward实现 → P3-E: 验证闭环+端到端训练 |
 | **工作目录** | `projects/xuanspace/libs/caffe-ffi/` |
 | **方法论** | numpy参考实现 + 三层验证法 + 中心有限差分数值梯度 + perf_trace性能采集 + I→F→V→C问题解决链路 |
 | **Forward覆盖** | ✅ 25/25 C++层100%覆盖（176个P阶段测试） |
-| **Backward验证** | ✅ 14层Backward梯度验证通过（190个测试用例，Docker验证） |
-| **P3-D进度** | Dropout✅ / Scale✅ / Bias✅ / Pooling✅(CEIL模式修复) / 3层待实现（Eltwise/Concat/Softmax） |
-| **端到端验证** | ✅ e2e梯度流验证通过（Loss下降+参数梯度非零，Conv→BN→ReLU→Pool→IP→ReLU→Dropout→Scale→Bias→IP→Loss） |
+| **Backward验证** | ✅ 19/19层Backward梯度验证通过（892个测试用例） |
+| **P3-D进度** | ✅ Dropout/Scale/Bias/Eltwise/Concat/Softmax 六层Backward全部实现 |
+| **P3-E进度** | ✅ 全覆盖缺口补齐 + 31个失败测试修复 + LeNet端到端训练 |
+| **端到端验证** | ✅ LeNet on MNIST 训练 **test acc 97.95%**，loss 2.32→0.04 |
+| **全量测试** | ✅ 1646 passed, 1 skipped |
 | **性能优化** | ✅ P3-B测试套件16.2x加速（134s→8.27s） |
-| **Bug发现与修复** | 2个P0-Critical（param_propagate_down_未初始化、Pooling CEIL模式numpy参考默认值不匹配） |
+| **Bug发现与修复** | 2个P0-Critical + 31个失败测试（28 Blob协议 + 3 CI宏） |
 
 ## 文档导航
 
@@ -52,7 +54,19 @@ coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient valid
 | 11 | **[Bias Backward实现记录](sections/11-p3d-bias-backward.md)** | Bias层Backward实现（19个测试Docker验证通过） |
 | 12 | **[Pooling CEIL模式回归修复](sections/12-p3d-pooling-ceil-mode-fix.md)** | ⭐ Pooling CEIL/FLOOR模式shape不匹配根因分析与修复（28个测试通过） |
 | 08 | **[P3-D Backward待办清单](sections/08-p3d-backward-todo.md)** | ⭐ 3层Backward实现TODO（Eltwise/Concat/Softmax） |
+| 13 | **[Eltwise Backward实现记录](sections/13-p3d-eltwise-backward.md)** | Eltwise层Backward实现（32个测试Docker验证通过） |
+| 14 | **[Concat Backward实现记录](sections/14-p3d-concat-backward.md)** | Concat层Backward实现（24个测试Docker验证通过） |
+| 15 | **[Softmax Backward实现记录](sections/15-p3d-softmax-backward.md)** | Softmax层Backward实现（22个测试Docker验证通过） |
+| 16 | **[P3-D阶段完成总结](sections/16-p3d-phase-complete-summary.md)** | P3-D 6层Backward全部完成，17层验证/268测试 |
 | 18 | **[P3-D遗留测试补齐报告](sections/18-p3d-test-completion-report.md)** | ⭐ Split/Slice/LRN/Crop Backward测试补齐，P3-D全套219测试通过 |
+
+### P3-E验证闭环与总复盘
+
+| # | 文档 | 内容 |
+|---|------|------|
+| 17 | **[P3-E Backward实现计划](sections/17-p3e-backward-implementation-plan.md)** | ⭐ P3-E验证与闭环阶段计划（遗留修复+全覆盖+端到端训练） |
+| 19 | **[P3阶段总复盘](sections/19-p3-phase-retrospective.md)** | ⭐ P3全阶段复盘（R→I→E→V），4大洞察+3个可复用模式 |
+| 20 | **[P4路线图](sections/20-p4-roadmap.md)** | ⭐ P4优化与扩展规划（性能/能力/工程化） |
 
 ### 知识沉淀
 
@@ -80,29 +94,43 @@ coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient valid
 | 5 | PReLU | ✅ | ✅ | ✅ | ✅ |
 | 6 | InnerProduct | ✅ | ✅ | ✅ (23) | ✅ |
 | 7 | BatchNorm | ✅ | ✅ | ✅ (11) | ✅ |
-| 8 | Convolution | ✅ | ✅ | ✅ (25) | ✅ |
+| 8 | Convolution | ✅ | ✅ | ✅ (30) | ✅ |
 | 9 | Deconvolution | ✅ | ✅ | ✅ (10) | ✅ |
 | 10 | Pooling(MAX/AVE) | ✅ | ✅ | ✅ (28) | ✅ |
 | 11 | SoftmaxWithLoss | ✅ | ✅ | ✅ (12) | ✅ |
 | 12 | Dropout | ✅ | ✅ | ✅ (20) | ✅ |
 | 13 | Scale | ✅ | ✅ | ✅ (25) | ✅ |
 | 14 | Bias | ✅ | ✅ | ✅ (19) | ✅ |
-| **已验证合计** | **14层✅** | | | **190 tests✅** | |
+| 15 | Eltwise(SUM/PROD/MAX) | ✅ | ✅ | ✅ (32) | ✅ |
+| 16 | Concat | ✅ | ✅ | ✅ (24) | ✅ |
+| 17 | Softmax | ✅ | ✅ | ✅ (22) | ✅ |
+| 18 | Split | ✅ | ✅ | ✅ (17) | ✅ |
+| 19 | Slice | ✅ | ✅ | ✅ (20) | ✅ |
+| 20 | LRN | ✅ | ✅ | ✅ (13) | ✅ |
+| 21 | Crop | ✅ | ✅ | ✅ (19) | ✅ |
+| 22 | Flatten | ✅ | ✅ | ✅ (243) | ✅ |
+| 23 | Reshape | ✅ | ✅ | ✅ (291) | ✅ |
+| **已验证合计** | **23类层✅** | | | **892 tests✅** | |
 
-## P3-D待实现Backward层
+## P3-D/E 完成状态
 
-详见 [P3-D Backward待办清单](sections/08-p3d-backward-todo.md)：
+P3-D 六层（Eltwise/Concat/Softmax/Dropout/Scale/Bias）与 P3-E 全覆盖缺口（Split/Slice/LRN/Crop/Flatten/Reshape）**全部完成**，详见 [P3-D Backward待办清单](sections/08-p3d-backward-todo.md)：
 
-| 优先级 | 层 | 预估 | Backward公式 | 状态 |
-|:------:|-----|------|-------------|:----:|
-| ✅ 完成 | ~~Dropout~~ | 30min | dX = dy (inference identity) | ✅ |
-| ✅ 完成 | ~~Scale~~ | ~75min | dX=dy·α, dα=sum(dy·x), dβ=sum(dy) | ✅ |
-| ✅ 完成 | ~~Bias~~ | ~45min | dX=dy, d_bias=sum(dy) | ✅ |
-| ✅ 完成 | ~~Pooling(回归修复)~~ | ~20min | CEIL模式对齐，numpy参考默认值修复 | ✅ |
-| 🟡 P1 | Eltwise | 120min | SUM: dx=dy; PROD: dx=dy·∏others; MAX: winner路由 | 📋 |
-| 🟡 P1 | Concat | 75min | dX=沿axis拆分dy | 📋 |
-| 🟡 P2 | Softmax | 90min | dx=y·(dy-Σ(dy·y)) | 📋 |
-| | **剩余合计** | **~4.75h** | | |
+| 层 | Backward实现 | 测试数 | 状态 |
+|----|:---:|:---:|:----:|
+| Dropout | ✅ | 20 | ✅ |
+| Scale | ✅ | 25 | ✅ |
+| Bias | ✅ | 19 | ✅ |
+| Eltwise | ✅ | 32 | ✅ |
+| Concat | ✅ | 24 | ✅ |
+| Softmax | ✅ | 22 | ✅ |
+| Split | ✅ | 17 | ✅ |
+| Slice | ✅ | 20 | ✅ |
+| LRN | ✅ | 13 | ✅ |
+| Crop | ✅ | 19 | ✅ |
+| Flatten | ✅ | 243 | ✅ |
+| Reshape | ✅ | 291 | ✅ |
+| **合计** | **12层** | **745** | **全部完成** |
 
 ## 关键提交记录
 
@@ -127,13 +155,18 @@ coverage: "25/25 C++ layers Forward (100%), 14/17 layers Backward gradient valid
 | dee68225 | docs(retrospective): Bug Wiki+性能优化最佳实践指南 |
 | 445365f5 | docs(retrospective): P3-C Backward验证进度更新 |
 
-## 端到端训练目标
+## 端到端训练验证（P3-E 完成）
 
-P0+P1层Backward完成后，可构建端到端训练验证网络：
+✅ **LeNet on MNIST 端到端训练已完成**（`examples/lenet_mnist_train.py`）：
 
 ```
-Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → IP → SoftmaxWithLoss
-       ✅    ✅   ✅    ✅     ✅    ✅     ✅       ✅       ✅         ✅
+Data → Conv(20) → Pool(MAX) → Conv(50) → Pool(MAX) → IP(500) → ReLU → IP(10) → SoftmaxWithLoss
 ```
 
-> Dropout Backward完成后，上述网络的Backward路径已全部打通（除Softmax本身外均已验证），可进行端到端梯度传播测试。
+| 指标 | 结果 |
+|------|------|
+| Train Loss | 2.32 → 0.04（**-98.3%**） |
+| Test Accuracy | **97.95%**（≥ 97% 达标） |
+| 梯度健康 | 无 NaN/Inf，权重收敛 |
+
+> 端到端训练证明 19 类层 Backward 组合后梯度流正确，可作为 Backward 阶段终极验收标准。详见 [P3-E 验收报告](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)。
