@@ -150,8 +150,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 ## 关联资源
 
-- [三个热门AI工具七概念知识沉淀报告](../../../knowledge/learning/three-ai-tools-learning-wiki/seven-concepts-report.md)
-- [三个热门AI工具Wiki教程](../../../knowledge/learning/three-ai-tools-wiki.md)
+- [三个热门AI工具七概念知识沉淀报告](../learning/three-ai-tools-learning-wiki/seven-concepts-report.md)
+- [三个热门AI工具Wiki教程](../learning/three-ai-tools-wiki.md)
 - [编译产物示例：七概念方法论编译Skill](../../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)（知识编译模式首次复用案例）
 - book-to-skill项目：https://github.com/virgiliojr94/book-to-skill
 - Agent Client Protocol (ACP)：intelligent-terminal使用的开放协议

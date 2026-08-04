@@ -57,7 +57,6 @@ Agent平台与工具生态可分为七大类别：
 | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md) | AReaL 2.0：蚂蚁开源Agent在线强化学习自演进基础设施 | Agent自演进三大支柱、Agent-compute微服务架构、Online RL工作流，让Agent越用越强的关键基础设施 |
 | [echobird-wiki.md](echobird-wiki.md) | EchoBird百灵鸟：AI Agent桌面管理工具（解决60%用户安装配置痛点） | Tauri+Rust桌面应用、Model Nexus统一模型配置中心、四大场景（安装修复/本地模型/AI项目/应用管理） |
 | [browseract-wiki.md](browseract-wiki.md) | BrowserAct：Product Hunt日榜第一，让Agent真正能操作浏览器 | 解决登录验证/人机接力/多任务并发/环境隔离五大网页执行痛点、Skill Forge流程沉淀为可复用技能 |
-| [browseract-official-wiki.md](browseract-official-wiki.md) | BrowserAct官网完整教程：Cloud+Local双模式Agent浏览器平台 | 官网最新形态：Cloud云端可复用爬虫+Local本地Agent浏览器双模式、SkillHub技能市场、Data API、Zapier/n8n/Make集成、8家云合作伙伴、Amazon耳机采集18秒完成20条数据演示 |
 
 ### 🔒 安全与代码工具
 
@@ -184,7 +183,7 @@ echobird-wiki.md
 | ✅ **代码审查** | [open-code-review-wiki/00-overview.md](open-code-review-wiki/00-overview.md)（混合驱动架构）→ [open-code-review-wiki/04-optimizations.md](open-code-review-wiki/04-optimizations.md)（四大优化） |
 | 📖 **整书翻译** | [rainman-translate-book-wiki/01-core-concepts.md](rainman-translate-book-wiki/01-core-concepts.md)（五大核心功能）→ [rainman-translate-book-wiki/03-usage.md](rainman-translate-book-wiki/03-usage.md)（使用流程） |
 | 📱 **移动测试** | [minitap-official-wiki.md](minitap-official-wiki.md)（产品全景）→ [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md)（架构解析） |
-| 🌐 **浏览器自动化** | [browseract-wiki.md](browseract-wiki.md)（公众号版CLI核心能力）→ [browseract-official-wiki.md](browseract-official-wiki.md)（官网完整版Cloud+Local双模式） |
+| 🌐 **浏览器自动化** | [browseract-wiki.md](browseract-wiki.md)（BrowserAct） |
 | 📈 **量化金融** | [quantdinger-ai-trading-wiki.md](quantdinger-ai-trading-wiki.md)（QuantDinger）→ [anthropic-financial-services-wiki.md](anthropic-financial-services-wiki.md)（Anthropic金融工具箱） |
 | 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0在线RL） |
 | 🔧 **开发环境** | [echobird-wiki.md](echobird-wiki.md)（EchoBird桌面工具）→ [trae-v3-3-74-release-notes.md](trae-v3-3-74-release-notes.md)（TRAE发布） |

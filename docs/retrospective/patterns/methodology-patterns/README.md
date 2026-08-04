@@ -18,7 +18,7 @@ date: "2026-07-04"
 | bp-integration-over-invention | [整合优于发明模式](integration-over-invention.md) | L1-draft | 1 | 1 | 存在多个互补开源工具但组合使用门槛高时 |
 | bp-offline-first-architecture | [离线优先架构模式](offline-first-architecture.md) | L1-draft | 1 | 1 | 系统需要在离线状态下保证完整功能可用时 |
 | bp-lowering-barriers-creates-markets | [降低门槛即创造市场模式](lowering-barriers-creates-markets.md) | L1-draft | 1 | 1 | 技术方案成熟但安装配置复杂度阻碍大规模采用时 |
-| bp-tech-article-to-wiki-batch | [技术文章Wiki化批量生成](tech-article-to-wiki-batch-generation.md) | L2-validated | 6 | 6 | 需要将长技术文章/教程转化为原子化Wiki结构时（含单文件轻量变体） |
+| bp-knowledge-compilation | [知识编译模式](knowledge-compilation.md) | L1-draft | 2 | 1 | 高频深度使用的结构化知识源（技术书籍/手册/规范）需要比RAG更高的token效率时。[案例：七概念方法论编译](../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)（10个源文件→365行~4800token自包含Skill） |
 | bp-knowledge-compilation | [知识编译模式](knowledge-compilation.md) | L1-draft | 2 | 1 | 高频深度使用的结构化知识源（技术书籍/手册/规范）需要比RAG更高的token效率时。[案例：七概念方法论编译](../../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)（10个源文件→365行~4800token自包含Skill） |
 | bp-dual-engine-uncertainty-certainty | [不确定性探索+确定性校验双引擎架构](dual-engine-uncertainty-certainty.md) | L2-validated | 2 | 1 | 高风险AI应用场景（改错即故障）中，AI正确率不足但存在确定性程序校验通道时 |
 | bp-evaluation-driven-self-evolution | [评测驱动的自进化闭环](evaluation-driven-self-evolution.md) | L2-validated | 2 | 1 | AI系统需要持续优化而非一次性交付，且输出可明确判定对错时 |
