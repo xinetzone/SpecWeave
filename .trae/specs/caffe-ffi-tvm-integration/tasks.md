@@ -313,11 +313,14 @@
 - **Description**:
   - 完整迁移vendor/caffe/caffe-ffi到projects/xuanspace/libs/caffe-ffi
   - 标准项目结构对齐libs/npu-ffi
-  - CMake原子化重构（9个模块化.cmake文件）
+  - CMake原子化重构（10个模块化.cmake文件）
   - CMakePresets.json、scripts/dev.sh/dev.ps1、conda.recipe/
   - AGENTS.md、LICENSE(BSD-2-Clause)、CHANGELOG.md
 - **Acceptance Criteria Addressed**: AC-17
 - **Post-optimization notes**: 2026-08-04 在 WSL docker 镜像（caffe-ffi-jupyter，conda env caffe-ffi，Python 3.14.6，cmake 4.4.1/ninja 1.13.2/gcc 14.3.0）下验证 CMake原子化重构构建通过：10个模块化 cmake 文件齐全，scikit-build-core 构建 `_caffe_ffi.so` 成功，`import caffe_ffi` 正常（version 0.1.0）
+  - **完整 P3 回归验证**（2026-08-04 10:20）：COW + Phase3 宏启用（`CAFFE_FFI_ENABLE_COW=1 CAFFE_FFI_ENABLE_COW_PHASE3=1`）下运行 `pytest tests/python -q`，**1646 passed, 1 skipped, 0 failures（10.52s）**，确认 CMake 重构后所有 P3 用例在 WSL 环境通过
+  - **关键步骤**：① 验证 COW_PHASE3 宏已编译进 `_caffe_ffi.so`（`strings` 检查 `lazy_reshape=` 符号）；② 修复 editable install 路径下 stale `.so` 问题——将 `build/python/caffe_ffi/_caffe_ffi.so` 复制到源码树 `python/caffe_ffi/`，解决加载旧库（缺 COW_PHASE3 符号）导致 lazy allocation 测试失败；③ 确认 lazy allocation 触发（N≥16 时 Split 层使用 `SetShapeOnly`，`test_n16_boundary`/`test_split_n64_lazy_reshape`/`test_large_n_triggers_lazy_allocation` 通过）
+  - **注意**：`import caffe_ffi._caffe_ffi`（显式子模块导入）会触发 protobuf descriptor 重复注册崩溃（`File already exists in database: caffe/proto/caffe.proto`），回归脚本须避免该诊断用法
 
 ## [x] Task 19: M6-Docker开发环境创建（apps/caffe-ffi-jupyter）
 - **Priority**: high

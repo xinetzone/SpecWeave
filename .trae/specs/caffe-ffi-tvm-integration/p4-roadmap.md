@@ -11,6 +11,7 @@ source: "retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md#p4-roadma
 # P4 阶段路线图：优化与扩展
 
 > 前置阶段：P3（Backward 实现与验证）已圆满收官
+> 前置验证依据：CMake 重构 WSL 回归 **1646 用例通过**，详见 [里程碑总结报告](../../../projects/xuanspace/libs/caffe-ffi/docs/summaries/MILESTONE_SUMMARY_CMake_REFACTOR_WSL_REGRESSION_20260804.md)
 > 规划日期：2026-08-04
 > 状态：规划中（planned）
 > 对应规划：spec.md P4 小节、tasks.md Task 31-33

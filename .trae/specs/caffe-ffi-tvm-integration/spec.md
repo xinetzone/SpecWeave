@@ -13,7 +13,7 @@ last_updated: "2026-08-04"
 - **Purpose**: 解决传统 Caffe 依赖重（Boost/GFlags/GLog等）、Python 绑定脆弱、数据结构不现代的问题，利用 TVM FFI 的通用跨语言 FFI 基础设施，构建一个轻量、高效、易于扩展和维护的 Caffe 推理与训练版本，支持零拷贝张量共享、写时复制（COW）内存安全、自动计算图变换（InsertSplits）。
 - **Target Users**: 深度学习推理/训练工程师、需要在 Python 3.14+ 环境部署和微调 Caffe 模型的开发者、对框架底层实现感兴趣的研究者。
 - **Current Status**: 🔄 **M1-M9：M1-M9全部完成，P4（优化/扩展）规划中**。
-  - **M1-M6 (v0.1.0, 2026-07-29~30)**：20个Layer全部实现、TVM FFI最佳实践两阶段优化（双类模式/零拷贝/@register_object/三层日志 + 反射系统补全52方法/DLL边界修复）、MSVC Release编译通过、C++单元测试40/40通过、Docker开发环境(caffe-ffi-jupyter)、Docker Linux Python 3.14.6验证C++40/40+Python65/65全部通过。
+  - **M1-M6 (v0.1.0, 2026-07-29~30)**：20个Layer全部实现、TVM FFI最佳实践两阶段优化（双类模式/零拷贝/@register_object/三层日志 + 反射系统补全52方法/DLL边界修复）、MSVC Release编译通过、C++单元测试40/40通过、Docker开发环境(caffe-ffi-jupyter)、Docker Linux Python 3.14.6验证C++40/40+Python65/65全部通过。**CMake原子化重构（10个模块化cmake文件）由独立项目萃取迁移产出，2026-08-04在WSL docker验证通过**（详见 [MILESTONE_SUMMARY_CMake_REFACTOR_WSL_REGRESSION_20260804](../../../projects/xuanspace/libs/caffe-ffi/docs/summaries/MILESTONE_SUMMARY_CMake_REFACTOR_WSL_REGRESSION_20260804.md)）。
   - **M7 (v1.1.0, 2026-07-30)**：Copy-on-Write (COW) 零拷贝张量共享机制（ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*自动COW克隆）、内存生命周期追踪工具(caffe_ffi.tools.memory)、21个COW测试用例、修复_tensor_to_numpy引用循环泄漏、Reshape COW失效修复、Docker Linux 561/562测试通过。
   - **M8 (v1.2.0, 2026-07-31)**：InsertSplits自动图变换（多消费方自动插入Split层）、18个边界情况测试、扩展至25个Layer（新增Crop/Deconv/LRN/Slice/Split）、P3-C Transformer测试套件(13个测试)、Sigmoid饱和精度修复（float32次正规数）、核心层诊断日志增强、InsertSplits算法文档、测试指南文档。
   - **M9 (P3阶段, 2026-08-01~2026-08-04 完成)**：Backward反向传播支持——**19类层Backward全部实现并验证（892个测试）**、LeNet on MNIST端到端训练(test acc **97.95%**)、P3-B/C/D/E四阶段闭环、P3-E验收报告+P3总复盘+P4路线图、GitHub Actions CI流水线(Linux/macOS/Windows三平台+Debug/Release+C++测试+ruff lint+C¹静态检查+COW_PHASE3宏)、测试基础设施性能优化(16.2x加速)、SetShapeOnly零拷贝reshape API、numpy RNN/LSTM参考实现、perf_monitor性能监控基础设施。
@@ -191,7 +191,7 @@ last_updated: "2026-08-04"
 - **BLAS集成**: 条件编译CAFFE_USE_BLAS，有BLAS用cblas_sgemm/gemv，无BLAS用纯C++ fallback；im2col/col2im已实现
 - **COW机制**: ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*自动克隆、内存追踪工具
 - **InsertSplits**: 自动图变换Pass、18边界情况测试、与原生Caffe对齐
-- **CMake构建**: 9个模块化CMake文件、find_package(tvm_ffi CONFIG REQUIRED)默认、本地开发add_subdirectory fallback、tvm_ffi_configure_target()、Windows DLL精细复制
+- **CMake构建**: 10个模块化CMake文件（Tests/WindowsDllCopy/TargetBuild/ProtoCompile/Options/Install/DetectOpenBLAS/DetectBLAS/Dependencies/CompilerConfig）、find_package(tvm_ffi CONFIG REQUIRED)默认、本地开发add_subdirectory fallback、tvm_ffi_configure_target()、Windows DLL精细复制
 - **CI/CD**: GitHub Actions三平台流水线、ccache加速、wheel构建
 - **测试**: C++ header-only框架（含高精度耗时统计+Per-suite汇总+Top 5 slowest）、Python pytest（561/562通过）、测试基础设施16.2x性能优化、C¹拐点防护检查
 - **性能基准**: 零拷贝恒定~4µs访问、10M元素加速3749×、COW O(1)共享、P3-B测试16.2x加速
