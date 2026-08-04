@@ -1,10 +1,11 @@
 # caffex vs caffe-ffi 技术差距分析报告
 
-> **分析日期**: 2026-07-31
+> **分析日期**: 2026-07-31（**更新**: 2026-08-04）
 > **分析对象**: 
 > - **caffex**（基线）: `projects/xuanspace/vendor/caffe/caffex/` — 原版 BVLC Caffe 完整框架
-> - **caffe-ffi**（分析目标）: `projects/xuanspace/libs/caffe-ffi/` — 基于 TVM FFI 的零拷贝推理引擎
+> - **caffe-ffi**（分析目标）: `projects/xuanspace/libs/caffe-ffi/` — 基于 TVM FFI 的零拷贝推理引擎（现已具备训练能力）
 > **方法论**: 七概念方法论（R-I-E链路），G1-G3质量门已通过
+> **更新说明**: 基于 P4 Task 31/32/33 完成后代码现状刷新——算子从 21 增至 36（补齐 Deconv/Slice/Crop/LRN/LSTM/RNN 等大量 P0/P1 算子），新增 Solver 训练 API 与序列化模块，训练定位由"刻意不实现"转为"已实现基础训练能力"。
 
 ---
 
@@ -12,14 +13,14 @@
 
 | 维度 | caffex (BVLC Caffe) | caffe-ffi |
 |------|---------------------|-----------|
-| **定位** | 完整深度学习框架（训练+推理） | 轻量级推理引擎（Inference-only） |
+| **定位** | 完整深度学习框架（训练+推理） | 轻量级推理引擎（现具备基础训练能力） |
 | **命名空间** | `namespace caffe` | `namespace caffe_ffi` |
 | **数据类型** | 模板 `template <typename Dtype>`（支持float/double） | 固定 `float`（硬编码） |
 | **内存管理** | `shared_ptr<SyncedMemory>`（CPU/GPU同步内存） | `ObjectPtr<Blob>` + TVM Tensor（侵入式引用计数） |
 | **GPU支持** | ✅ 完整CUDA+cuDNN（56个.cu文件，10种cuDNN加速层） | ❌ 纯CPU（`gpu_mutable_*`为委托CPU的占位桩） |
-| **训练支持** | ✅ Solver框架（SGD/Nesterov/AdaGrad/RMSProp/AdaDelta/Adam共6种） | ❌ 无Solver，纯推理 |
+| **训练支持** | ✅ Solver框架（SGD/Nesterov/AdaGrad/RMSProp/AdaDelta/Adam共6种） | ✅ 新增Solver（SGD/Adam优化器+Step/MultiStep/Exp/Cosine调度器+fit/step/validate训练循环，Task 33新增） |
 | **Python绑定** | pycaffe（boost.python） | TVM FFI（零拷贝DLPack互操作） |
-| **核心创新** | — | 零拷贝ShareData/ShareDiff、COW写时复制、BatchShareData批量引用计数、SetShapeOnly延迟分配 |
+| **核心创新** | — | 零拷贝ShareData/ShareDiff、COW写时复制、BatchShareData批量引用计数、SetShapeOnly延迟分配、Solver训练API、模型序列化 |
 
 ---
 
@@ -29,53 +30,74 @@
 
 | 指标 | caffex | caffe-ffi | 覆盖率 |
 |------|--------|-----------|--------|
-| 层头文件总数 | 77个 | 21个 | 27.3% |
-| 层实现文件(.cpp) | 75个 | 21个 | 28.0% |
+| 层头文件总数 | 77个 | 58个 | 75.3% |
+| 层实现文件(.cpp) | 75个 | 59个 | 78.7% |
 | CUDA实现文件(.cu) | 56个 | 0个 | 0% |
 | cuDNN加速层 | 10种 | 0种 | 0% |
-| **具体算子（排除基类/cuDNN包装）** | **~61个** | **21个** | **34.4%** |
+| **具体算子（排除基类/cuDNN包装）** | **~61个** | **56个** | **91.8%** |
 
-### 2.2 已实现算子清单（caffe-ffi，21个）
+> 基类（`base_conv_layer`/`neuron_layer`/`lstm_unit`）不单独统计，仅计入派生的具体算子。已注册具体层共 **56 个**（`REGISTER_LAYER_CLASS` 注册，2026-08-04 P1 补齐后实测）。
 
-#### 视觉层（Vision Layers）— 2个
+### 2.2 已实现算子清单（caffe-ffi，56个）
+
+#### 视觉层（Vision Layers）— 6个
 | 算子 | 文件 | 说明 |
 |------|------|------|
-| Convolution | [conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/conv_layer.hpp) | 卷积层 |
-| Pooling | [pooling_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/pooling_layer.hpp) | 池化层（最大/平均） |
+| Convolution | [conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/conv_layer.hpp) | 卷积层（继承BaseConvolutionLayer） |
+| Deconvolution | [deconv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/deconv_layer.hpp) | 反卷积/转置卷积（P0，Task 31新增） |
+| Pooling | [pooling_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/pooling_layer.hpp) | 池化层（最大/平均，MAX梯度路由/AVE归一化） |
+| LRN | [lrn_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lrn_layer.hpp) | 局部响应归一化（P0，Task 31新增） |
+| Slice | [slice_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/slice_layer.hpp) | 通道维度切分（P0，Task 31新增） |
+| Crop | [crop_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/crop_layer.hpp) | 裁剪对齐（P0，Task 31新增） |
 
-#### 激活层（Activation/Neuron Layers）— 5个
+#### 激活层（Neuron Layers）— 9个
 | 算子 | 文件 | 说明 |
 |------|------|------|
 | ReLU | [relu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/relu_layer.hpp) | 修正线性单元 |
+| LeakyReLU | [leaky_relu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/leaky_relu_layer.hpp) | 带泄漏ReLU（Task 31新增） |
 | Sigmoid | [sigmoid_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/sigmoid_layer.hpp) | Sigmoid激活 |
 | TanH | [tanh_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/tanh_layer.hpp) | 双曲正切激活 |
 | ELU | [elu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/elu_layer.hpp) | 指数线性单元 |
 | PReLU | [prelu_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/prelu_layer.hpp) | 参数化ReLU |
+| AbsVal | [absval_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/absval_layer.hpp) | 绝对值激活（P1，Task 31新增） |
+| Softplus | [softplus_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softplus_layer.hpp) | Softplus激活（P1，Task 31新增） |
+| Softsign | [softsign_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softsign_layer.hpp) | Softsign激活（P1，Task 31新增） |
 
-#### 损失层（Loss Layers）— 2个
+#### 损失层（Loss Layers）— 4个
 | 算子 | 文件 | 说明 |
 |------|------|------|
 | SoftmaxWithLoss | [softmax_loss_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_loss_layer.hpp) | Softmax+交叉熵损失（训练/推理评估用） |
 | Accuracy | [accuracy_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/accuracy_layer.hpp) | 分类准确率（评估指标层） |
+| Hinge | [hinge_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/hinge_layer.hpp) | Hinge损失（SVM风格，Task 32新增） |
+| MarginRanking | [margin_ranking_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/margin_ranking_layer.hpp) | 排序损失（Task 32新增） |
 
-#### 归一化层（Normalization Layers）— 2个
+#### 归一化层（Normalization Layers）— 4个
 | 算子 | 文件 | 说明 |
 |------|------|------|
 | BatchNorm | [batch_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/batch_norm_layer.hpp) | 批归一化 |
-| Scale | [scale_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp) | 缩放+平移（通常配合BN使用） |
+| Scale | [scale_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp) | 缩放+平移（恒等时COW优化） |
+| L2Norm | [l2_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/l2_norm_layer.hpp) | L2归一化（Task 32新增） |
+| InstanceNorm | [instance_norm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/instance_norm_layer.hpp) | 实例归一化（Task 32新增） |
 
 #### 公共/工具层（Common Layers）— 9个
 | 算子 | 文件 | 说明 |
 |------|------|------|
 | InnerProduct | [inner_product_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/inner_product_layer.hpp) | 全连接层 |
 | Concat | [concat_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp) | 拼接层 |
-| Dropout | [dropout_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp) | Dropout正则化 |
-| Eltwise | [eltwise_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp) | 逐元素操作（加/乘/取最大） |
+| Dropout | [dropout_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp) | Dropout正则化（推理COW零拷贝） |
+| Eltwise | [eltwise_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp) | 逐元素操作（加/乘/取最大，MAX梯度路由） |
 | Flatten | [flatten_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/flatten_layer.hpp) | 展平层 |
 | Reshape | [reshape_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/reshape_layer.hpp) | 维度重塑 |
-| Bias | [bias_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp) | 偏置加法（支持broadcasting） |
-| Split | [split_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/split_layer.hpp) | 张量分裂（零拷贝路径） |
+| Bias | [bias_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp) | 偏置加法（支持broadcasting，恒等COW） |
+| Split | [split_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/split_layer.hpp) | 张量分裂（零拷贝路径，SetShapeOnly延迟分配） |
 | Softmax | [softmax_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp) | Softmax概率输出 |
+
+#### 循环层（Recurrent Layers）— 3个
+| 算子 | 文件 | 说明 |
+|------|------|------|
+| LSTM | [lstm_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_layer.hpp) | 长短期记忆网络（Task 31新增） |
+| LSTMUnit | [lstm_unit.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/lstm_unit.hpp) | LSTM单元（Task 31新增） |
+| RNN | [rnn_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/rnn_layer.hpp) | 循环神经网络（Task 31新增） |
 
 #### 数据层（Data Layers）— 1个
 | 算子 | 文件 | 说明 |
@@ -84,38 +106,32 @@
 
 ### 2.3 缺失算子清单（按优先级分级）
 
-#### P0 — 推理核心CNN必需（ResNet/VGG/MobileNet等经典模型依赖）
+> **P0 已全部补齐**（2026-08-04）：Deconvolution/LRN/Slice/Crop 均在 Task 31 中实现，经典 CNN 推理覆盖能力（AlexNet/VGG/GoogLeNet/ResNet/FCN）已完整。
+
+#### P1 — 常见推理场景使用（已全部补齐 ✅ 2026-08-04）
+
+> **P1 已全部补齐**：以下 20 个算子均在 P1 补齐任务中实现并注册（`REGISTER_LAYER_CLASS`），含 140 个单元测试用例验证 forward/backward/数值梯度/注册。SPP 层已补充注册。
 
 | 算子 | caffex头文件 | 缺失影响 | 推理场景必要性 |
 |------|-------------|----------|---------------|
-| **Deconvolution** | `deconv_layer.hpp` | 无法运行反卷积/上采样卷积（语义分割、GAN、检测模型中的反卷积层） | ⭐⭐⭐（分割/检测模型必需） |
-| **LRN** | `lrn_layer.hpp` | 无法运行AlexNet、CaffeNet、GoogLeNet（Inception v1）等经典模型 | ⭐⭐（AlexNet/GoogLeNet必需，新模型少用） |
-| **Slice** | `slice_layer.hpp` | 无法在通道维度切分张量（Inception模块、多分支拓扑必需） | ⭐⭐⭐（Inception/多分支模型必需） |
-| **Crop** | `crop_layer.hpp` | 无法运行FCN语义分割、U-Net等需要裁剪对齐的模型 | ⭐⭐（分割模型必需） |
-
-#### P1 — 常见推理场景使用
-
-| 算子 | caffex头文件 | 缺失影响 | 推理场景必要性 |
-|------|-------------|----------|---------------|
-| **ReLU衍生: Threshold/Power** | `threshold_layer.hpp`, `power_layer.hpp` | 无法支持阈值激活、幂次变换 | ⭐⭐ |
-| **AbsVal** | `absval_layer.hpp` | 绝对值激活 | ⭐⭐ |
-| **BNLL** | `bnll_layer.hpp` | BNLL激活函数（二项式正态对数似然） | ⭐（旧模型可能使用） |
-| **Clip** | `clip_layer.hpp` | 张量裁剪到指定范围（ReLU6等） | ⭐⭐（MobileNet V2/V3的ReLU6） |
-| **Exp/Log** | `exp_layer.hpp`, `log_layer.hpp` | 指数/对数运算（Softmax变体、概率计算） | ⭐⭐ |
-| **MVN** | `mvn_layer.hpp` | 均值方差归一化 | ⭐（某些模型使用） |
-| **Reduction** | `reduction_layer.hpp` | 张量规约（求和/均值/最大值等沿轴操作） | ⭐⭐ |
-| **Tile** | `tile_layer.hpp` | 张量复制扩展（broadcasting操作） | ⭐⭐ |
-| **Silence** | `silence_layer.hpp` | 屏蔽无用top blob（某些模型拓扑需要） | ⭐（兼容性层） |
-| **Parameter** | `parameter_layer.hpp` | 可学习参数层（模型参数作为输入） | ⭐（某些架构使用） |
-| **Im2col** | `im2col_layer.hpp` | im2col变换（通常作为卷积内部操作） | ⭐（一般不独立出现） |
-| **Swish** | `swish_layer.hpp` | Swish/SiLU激活（EfficientNet等新模型） | ⭐⭐（新SOTA模型使用） |
-| **SigmoidCrossEntropyLoss** | `sigmoid_cross_entropy_loss_layer.hpp` | 多标签分类损失 | ⭐⭐（多标签任务必需） |
-| **EuclideanLoss** | `euclidean_loss_layer.hpp` | 欧氏距离/L2损失（回归任务） | ⭐⭐（回归/超分等任务需要评估） |
-| **SPP** | `spp_layer.hpp` | 空间金字塔池化（SPPNet） | ⭐（特定模型使用） |
-| **BatchReindex** | `batch_reindex_layer.hpp` | batch维度重索引 | ⭐（特定架构使用） |
-| **Filter** | `filter_layer.hpp` | 按索引过滤bottom blob | ⭐（特定架构使用） |
-| **Embed** | `embed_layer.hpp` | 嵌入层（NLP/词嵌入） | ⭐⭐（NLP/推荐模型） |
-| **ArgMax** | `argmax_layer.hpp` | 取最大值索引（后处理/评估） | ⭐⭐（分类后处理常用） |
+| ~~Threshold/Power~~ | `threshold_layer.hpp`, `power_layer.hpp` | 阈值激活、幂次变换 | ⭐⭐ |
+| ~~BNLL~~ | `bnll_layer.hpp` | BNLL激活函数 | ⭐ |
+| ~~Clip~~ | `clip_layer.hpp` | 张量裁剪（ReLU6等，MobileNet V2/V3） | ⭐⭐ |
+| ~~Exp/Log~~ | `exp_layer.hpp`, `log_layer.hpp` | 指数/对数运算（Softmax变体、概率计算） | ⭐⭐ |
+| ~~MVN~~ | `mvn_layer.hpp` | 均值方差归一化 | ⭐ |
+| ~~Reduction~~ | `reduction_layer.hpp` | 张量规约（求和/均值/最大值沿轴） | ⭐⭐ |
+| ~~Tile~~ | `tile_layer.hpp` | 张量复制扩展（broadcasting） | ⭐⭐ |
+| ~~Silence~~ | `silence_layer.hpp` | 屏蔽无用top blob | ⭐ |
+| ~~Parameter~~ | `parameter_layer.hpp` | 可学习参数层 | ⭐ |
+| ~~Im2col~~ | `im2col_layer.hpp` | im2col变换（通常作为卷积内部操作） | ⭐ |
+| ~~Swish~~ | `swish_layer.hpp` | Swish/SiLU激活（EfficientNet等新模型） | ⭐⭐ |
+| ~~SigmoidCrossEntropyLoss~~ | `sigmoid_cross_entropy_loss_layer.hpp` | 多标签分类损失 | ⭐⭐ |
+| ~~EuclideanLoss~~ | `euclidean_loss_layer.hpp` | 欧氏距离/L2损失（回归任务） | ⭐⭐ |
+| ~~SPP~~ | `spp_layer.hpp` | 空间金字塔池化（SPPNet） | ⭐ |
+| ~~BatchReindex~~ | `batch_reindex_layer.hpp` | batch维度重索引 | ⭐ |
+| ~~Filter~~ | `filter_layer.hpp` | 按索引过滤bottom blob | ⭐ |
+| ~~Embed~~ | `embed_layer.hpp` | 嵌入层（NLP/词嵌入） | ⭐⭐ |
+| ~~ArgMax~~ | `argmax_layer.hpp` | 取最大值索引（后处理/评估） | ⭐⭐ |
 
 #### P2 — 训练专用/冷门/数据输入层（推理引擎通常不需要）
 
@@ -128,9 +144,8 @@
 | WindowData | `window_data_layer.hpp` | 检测窗口数据层，旧检测框架专用 |
 | DummyData | `dummy_data_layer.hpp` | 调试用占位数据层 |
 | Python Layer | `python_layer.hpp` | 自定义Python层（可通过ffi扩展考虑） |
-| LSTM/RNN/Recurrent | `lstm_layer.hpp`, `rnn_layer.hpp`, `recurrent_layer.hpp` | RNN类，纯CNN推理引擎暂不需要 |
+| Recurrent（通用基类） | `recurrent_layer.hpp` | 已实现LSTM/RNN/LSTMUnit子类，通用Recurrent基类未作为独立层注册 |
 | ContrastiveLoss | `contrastive_loss_layer.hpp` | 对比损失（训练专用） |
-| HingeLoss | `hinge_loss_layer.hpp` | Hinge损失（SVM风格，训练专用） |
 | InfogainLoss | `infogain_loss_layer.hpp` | 信息增益损失（训练专用） |
 | MultinomialLogisticLoss | `multinomial_logistic_loss_layer.hpp` | 多项式逻辑损失（训练专用） |
 | Upsample | `upsample_layer.hpp` | 上采样层（可用Deconv或Interp替代，较新） |
@@ -184,7 +199,7 @@
 **关键洞察**：
 - caffe-ffi的Layer基类**大幅简化**，去除了Dtype模板、GPU虚函数、Phase、AllowForceBackward等训练相关机制
 - Backward_cpu从"必须实现的纯虚函数"降级为"可选的默认空实现"，反映了推理引擎定位
-- `_type_child_slots = 32` + `_type_child_slots_can_overflow = true` 说明TVM FFI类型系统预留了32个子类槽位，当前21个算子在范围内
+- `_type_child_slots = 32` + `_type_child_slots_can_overflow = true` 说明TVM FFI类型系统预留了32个子类槽位，当前36个算子在范围内（溢出可自动扩展）
 - caffex有`neuron_layer.hpp`作为激活层基类（封装了常见的逐元素操作Reshape逻辑），caffe-ffi没有此基类——每个激活层独立实现
 
 ### 3.3 Net（网络容器）差异
@@ -196,10 +211,10 @@
 | **Forward输入** | 无输入参数（通过`input_blobs()`预先填充） | `Forward(inputs: Map<String, Tensor>)`（DLPack字典传入） |
 | **Forward输出** | `vector<Blob<Dtype>*>&`（原始指针数组） | `Map<String, ObjectPtr<Blob>>`（命名字典） |
 | **ForwardFrom/To** | ✅ From/To/FromTo + Prefilled变体 | ✅ FromTo |
-| **Backward** | ✅ 完整反向传播 | ✅ API存在但各层Backward_cpu默认空实现 |
+| **Backward** | ✅ 完整反向传播 | ✅ API存在，36个算子均实现Backward_cpu梯度（Task 31/32补齐） |
 | **ForwardBackward** | ✅ 一步完成前向+反向 | ❌ |
 | **Reshape** | ✅ 全网络Reshape（传播形状变化） | ❌ |
-| **Update** | ✅ 更新参数（调用Blob::Update） | ❌ 无Solver |
+| **Update** | ✅ 更新参数（调用Blob::Update） | ⚠️ Net 无 Update 方法；Solver 在 Python 层调用 Blob::Update |
 | **CopyTrainedLayersFrom** | ✅ binary proto/HDF5 | ✅ binary proto/text file |
 | **ShareWeights/ShareTrainedLayersWith** | ✅ 权重共享 | ❌ |
 | **ToProto/ToHDF5** | ✅ 序列化 | ToProto（通过Layer::ToProto） |
@@ -224,18 +239,22 @@
 
 | 维度 | caffex | caffe-ffi |
 |------|--------|-----------|
-| **solver.hpp** | ✅ 存在，完整优化器框架 | ❌ 完全不存在 |
-| **sgd_solvers.hpp** | ✅ 6种优化器 | ❌ |
-| **solver_factory.hpp** | ✅ Solver工厂 | ❌ |
-| **训练流程** | Forward→Backward→Update循环 | 仅Forward |
+| **solver.hpp** | ✅ 存在，完整优化器框架（C++） | ⚠️ C++无Solver框架；Python层新增 `solver.py`（Task 33） |
+| **sgd_solvers.hpp** | ✅ 6种优化器（SGD/Nesterov/AdaGrad/RMSProp/AdaDelta/Adam） | ⚠️ Python层实现 `SGD`/`Adam` 优化器（`Optimizer`基类，weight_decay/momentum/Nesterov支持） |
+| **solver_factory.hpp** | ✅ Solver工厂 | ❌ 无工厂（Python直接实例化） |
+| **学习率调度器** | ✅ 内置 | ✅ `StepLR`/`MultiStepLR`/`ExponentialLR`/`CosineAnnealingLR`（Python） |
+| **训练流程** | Forward→Backward→Update循环（C++） | ✅ `Solver.fit()`/`step()`/`validate()`（Python封装，复用C++ Backward_cpu+Update） |
+| **序列化** | ✅ ToProto/ToHDF5 | ✅ `serialization.py`（`save_net`/`load_net`/`weights_to_dict`/`dict_to_weights`，caffemodel round-trip） |
+
+**关键洞察**：caffe-ffi 的 Solver 采用**Python 层实现**而非 C++ 框架——训练循环（`fit`/`step`/`validate`）在 Python 中编排，复用 C++ 的 `Backward_cpu` 与 `Blob::Update` 原语。这保持了 C++ 核心的精简，同时通过 Python 补齐了训练能力。相比 caffex 的 6 种优化器，当前仅实现 SGD/Adam 2 种，但优化器/调度器架构可扩展。
 
 ### 3.5 Python接口对比
 
 | 维度 | caffex (pycaffe) | caffe-ffi |
 |------|-----------------|-----------|
 | **绑定技术** | boost.python | TVM FFI |
-| **核心类** | Blob/Layer/Net/Solver/Classifier/Detector | Blob/Layer/Net |
-| **IO模块** | io.py（读取二进制/文本proto、LEVELDB/LMDB） | io.py（读取prototxt/caffemodel） |
+| **核心类** | Blob/Layer/Net/Solver/Classifier/Detector | Blob/Layer/Net/**Solver**（`solver.py`新增） |
+| **IO模块** | io.py（读取二进制/文本proto、LEVELDB/LMDB） | io.py（读取prototxt/caffemodel）+ **serialization.py**（权重/模型序列化） |
 | **绘图工具** | draw.py（绘制网络结构图） | ❌ 无 |
 | **坐标映射** | coord_map.py（CPU/GPU坐标映射） | ❌ 无（纯CPU） |
 | **检测器** | detector.py（目标检测封装） | ❌ 无 |
@@ -254,11 +273,10 @@
 
 | 模块 | caffex对应文件 | 缺失影响 | 推理引擎是否需要 |
 |------|---------------|----------|-----------------|
-| **Solver优化器** | `solver.hpp`, `sgd_solvers.hpp`, `solver_factory.hpp` | 无法训练模型 | ❌ 推理引擎不需要（加载预训练权重即可） |
 | **GPU/CUDA/cuDNN** | `util/cudnn.hpp`, `util/gpu_util.cuh`, `util/mkl_alternate.hpp`, 56个.cu文件 | 无法GPU加速推理 | ⚠️ 长期需要（P2路线图） |
 | **SyncedMemory** | `syncedmem.hpp`（CPU/GPU自动内存同步） | N/A | ❌ caffe-ffi用TVM Tensor替代，设计更优 |
 | **DataTransformer** | `data_transformer.hpp` | 无内置数据预处理/均值减法/缩放 | ⚠️ 推理侧在Python端预处理，可接受 |
-| **Filler** | `filler.hpp`（权重初始化：Gaussian/Xavier/MSRA等） | 无法随机初始化权重 | ❌ 推理时加载预训练权重 |
+| **Filler** | `filler.hpp`（权重初始化：Gaussian/Xavier/MSRA等） | 无法随机初始化权重 | ⚠️ 训练时需初始化权重（`dict_to_weights`可加载，随机初始化待补） |
 | **数据库IO** | `util/db.hpp`, `util/db_leveldb.hpp`, `util/db_lmdb.hpp` | 无法读取LEVELDB/LMDB | ❌ 推理不需要（读取caffemodel即可） |
 | **HDF5 IO** | `util/hdf5.hpp`, `hdf5_data_layer.hpp`, `hdf5_output_layer.hpp` | 无法HDF5格式读写 | ❌ 推理不需要 |
 | **BlockingQueue** | `util/blocking_queue.hpp`（多线程数据预取队列） | N/A | ❌ 推理无数据预取需求 |
@@ -273,6 +291,8 @@
 | **Matlab绑定** | `matlab/`目录 | 无法Matlab调用 | ❌ Python为主 |
 | **多GPU并行** | `parallel.hpp` | 无法多GPU | ❌ 当前不需要 |
 | **Proto升级工具** | `util/upgrade_proto.cpp` | N/A | ⚠️ 可能需要兼容旧模型 |
+
+> **说明**：原"完全缺失"的 **Solver 优化器** 已移除——caffe-ffi 现通过 Python 层 `solver.py` 提供基础训练能力（SGD/Adam + 学习率调度器 + `fit`/`step`/`validate`），不再完全缺失。C++ 层仍无 Solver 框架，这是"Python 层训练"的架构选择。
 
 ### 4.2 caffe-ffi特有的创新模块（caffex没有）
 
@@ -323,49 +343,52 @@
 
 ### 5.1 LayerParameter字段数量
 
-| 维度 | caffex | caffe-ffi |
-|------|--------|-----------|
-| V0LayerParameter | ✅ 兼容旧版 | ❌ 已移除 |
-| 层参数字段数 | ~48个（含35+个层类型参数） | ~20个（对应21个已实现层） |
-| AccuracyParam | ✅ | ✅ |
-| ConvolutionParam | ✅ | ✅ |
-| PoolingParam | ✅ | ✅ |
-| InnerProductParam | ✅ | ✅ |
-| ReLUParam/ELUParam/PReLUParam | ✅ | ✅ |
-| SigmoidParam/TanHParam/SoftmaxParam | ✅ | ✅ |
-| DropoutParam | ✅ | ✅ |
-| ConcatParam/EltwiseParam | ✅ | ✅ |
-| BatchNormParam/ScaleParam/BiasParam | ✅ | ✅ |
-| FlattenParam/ReshapeParam | ✅ | ✅ |
-| SoftmaxWithLoss/SoftmaxParam | ✅ | ✅ |
-| SplitParam/InputParam | ✅（InputParameter） | ✅ |
-| DeconvolutionParam | ✅ | ❌ 缺失 |
-| LRNParameter | ✅ | ❌ 缺失 |
-| SliceParameter | ✅ | ❌ 缺失 |
-| CropParameter | ✅ | ❌ 缺失 |
-| MVNParameter | ✅ | ❌ 缺失 |
-| PowerParameter | ✅ | ❌ 缺失 |
-| ExpParameter/LogParameter | ✅ | ❌ 缺失 |
-| ClipParameter/ThresholdParameter | ✅ | ❌ 缺失 |
-| ReductionParameter | ✅ | ❌ 缺失 |
-| TileParameter | ✅ | ❌ 缺失 |
-| EmbedParameter | ✅ | ❌ 缺失 |
-| SPPParameter | ✅ | ❌ 缺失 |
-| HDF5OutputParameter | ✅ | ❌ 缺失（训练不需要） |
-| PythonParameter | ✅ | ❌ 缺失 |
-| RecurrentParameter/LSTMParameter | ✅ | ❌ 缺失 |
-| WindowDataParameter/MemoryDataParameter | ✅ | ❌ 缺失 |
-| ImageDataParameter/DataParameter | ✅ | ❌ 缺失 |
-| DummyDataParameter | ✅ | ❌ 缺失 |
-| ContrastiveLossParameter | ✅ | ❌ 缺失（训练专用） |
-| HingeLossParameter | ✅ | ❌ 缺失（训练专用） |
-| InfogainLossParameter | ✅ | ❌ 缺失（训练专用） |
-| SigmoidCrossEntropyLossParameter | ✅ | ❌ 缺失 |
-| EuclideanLossParameter | ✅ | ❌ 缺失 |
-| MultiStage/Level/Include/Exclude | ✅ | ❌ 缺失（phase过滤） |
-| ParamSpec（lr_mult/decay_mult） | ✅ | ❌ 简化（无Solver故不需要） |
-| TransformationParameter | ✅（DataTransformer用） | ❌ 无DataTransformer |
-| DetectionOutputParameter | ✅ | ❌ 缺失（SSD层不在caffex中，是后期扩展） |
+> **更新**（2026-08-04）：随 Task 31/32 及 P1 补齐实现，proto 层参数从 21 个扩展至 **46 个** message。P1 新增 16 个参数（Threshold/Power/Clip/Exp/Log/Swish/MVN/Reduction/Tile/Im2col/ArgMax/SPP/Embed/BatchReindex/Filter/SigmoidCrossEntropyLoss）+ ParameterParameter。Deconvolution 层**复用 ConvolutionParameter**（与 BVLC Caffe 同一设计），无需独立参数。
+
+**已实现的层参数（caffe-ffi，46 个 message）**
+
+| 参数 | caffex | caffe-ffi | 备注 |
+|------|--------|-----------|------|
+| NetParameter / LayerParameter | ✅ | ✅ | 网络/层核心参数 |
+| ConvolutionParameter | ✅ | ✅ | 同时驱动 Conv/Deconv 层 |
+| PoolingParameter | ✅ | ✅ | |
+| InnerProductParameter | ✅ | ✅ | |
+| ReLUParameter / LeakyReLUParameter | ✅ | ✅ | LeakyReLU 为 Task 31 新增 |
+| ELUParameter / PReLUParameter | ✅ | ✅ | |
+| SigmoidParameter / TanHParameter / SoftmaxParameter | ✅ | ✅ | |
+| DropoutParameter | ✅ | ✅ | |
+| ConcatParameter / EltwiseParameter / FlattenParameter | ✅ | ✅ | |
+| ReshapeParameter / InputParameter | ✅ | ✅ | |
+| BatchNormParameter / ScaleParameter / BiasParameter | ✅ | ✅ | |
+| AccuracyParameter / LossParameter | ✅ | ✅ | LossParameter 为损失层公共参数 |
+| SliceParameter / CropParameter / LRNParameter | ✅ | ✅ | Task 31 新增（P0） |
+| RecurrentParameter | ✅ | ✅ | Task 31 新增（驱动 LSTM/RNN） |
+| L2NormParameter / InstanceNormParameter | ✅ | ✅ | Task 32 新增 |
+| MarginRankingParameter / HingeParameter | ✅ | ✅ | Task 32 新增（损失层） |
+| ThresholdParameter / PowerParameter | ✅ | ✅ | P1 新增（阈值/幂次激活） |
+| ClipParameter / ExpParameter / LogParameter | ✅ | ✅ | P1 新增（裁剪/指数/对数） |
+| SwishParameter / MVNParameter | ✅ | ✅ | P1 新增（Swish激活/均值方差归一化） |
+| ReductionParameter / TileParameter | ✅ | ✅ | P1 新增（规约/复制） |
+| Im2colParameter / ArgMaxParameter | ✅ | ✅ | P1 新增（im2col/取最大值索引） |
+| SPPParameter / EmbedParameter | ✅ | ✅ | P1 新增（金字塔池化/嵌入） |
+| BatchReindexParameter / FilterParameter | ✅ | ✅ | P1 新增（batch重索引/过滤） |
+| SigmoidCrossEntropyLossParameter | ✅ | ✅ | P1 新增（多标签损失） |
+| ParameterParameter | ❌ | ✅ | P1 新增（可学习参数层，caffex 经 DummyData 声明） |
+| **层参数字段数** | ~48 个 | **46 个** | 覆盖率约 95.8% |
+
+**仍缺失的层参数（caffex 有、caffe-ffi 无）**
+
+| 参数 | caffex | caffe-ffi | 缺失影响 |
+|------|--------|-----------|----------|
+| DeconvolutionParameter（独立） | — | N/A | 复用 ConvolutionParameter，无需独立参数 |
+| ContrastiveLossParameter / InfogainLossParameter / MultinomialLogisticLossParameter | ✅ | ❌ | 训练专用损失（P2） |
+| DataParameter / ImageDataParameter / MemoryDataParameter / WindowDataParameter / DummyDataParameter | ✅ | ❌ | 数据输入层（推理用 Python 传入） |
+| HDF5OutputParameter | ✅ | ❌ | HDF5 I/O |
+| PythonParameter | ✅ | ❌ | 自定义 Python 层 |
+| MultiStage/Level/Include/Exclude | ✅ | ❌ | 训练 phase 过滤 |
+| ParamSpec（lr_mult/decay_mult） | ✅ | ❌ | 简化（Solver 在 Python 层，参数级 lr/decay 未实现） |
+| TransformationParameter | ✅ | ❌ | 无 DataTransformer |
+| DetectionOutputParameter | ✅ | ❌ | SSD 后期扩展层 |
 
 ---
 
@@ -391,7 +414,7 @@ caffex/                              caffe-ffi/
 ├── docs/ (GitHub Pages)             ├── docs/
 ├── examples/                        ├── examples/
 ├── include/caffe/                   ├── include/caffe_ffi/
-│   ├── layers/ (77个hpp)            │   ├── layers/ (21个hpp)
+│   ├── layers/ (77个hpp)            │   ├── layers/ (38个hpp)
 │   ├── test/                        │   ├── blob.hpp
 │   ├── util/ (18+个hpp)             │   ├── common.hpp
 │   ├── blob.hpp                     │   ├── error.hpp
@@ -412,7 +435,7 @@ caffex/                              caffe-ffi/
 ├── python/caffe/                   │   └── caffe/proto/caffe_pb2.py
 │   ├── test/                       ├── scripts/
 │   ├── __init__.py                 ├── src/caffe_ffi/
-│   ├── _caffe.cpp (boost.python)   │   ├── layers/ (21个cpp)
+│   ├── _caffe.cpp (boost.python)   │   ├── layers/ (39个cpp)
 │   ├── classifier.py               │   ├── blob.cpp/layer.cpp/layer_factory.cpp
 │   ├── coord_map.py                │   ├── net.cpp
 │   ├── detector.py                 │   └── _caffe_ffi.cc (FFI注册)
@@ -475,17 +498,20 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 
 ### 7.3 关键设计决策（刻意差异vs待补全）
 
+> **更新**（2026-08-04）：随 Task 33 新增 Solver 训练 API，原"无Solver/训练"的刻意设计定位已更新为"Python 层训练"架构选择。
+
 | 差异 | 类型 | 说明 |
 |------|------|------|
-| 无Solver/训练 | **刻意设计** | caffe-ffi定位为推理引擎 |
+| 训练能力（Solver） | **Python 层训练** | C++ 核心保持精简，Solver 在 Python 层实现（`solver.py`：SGD/Adam + 4 种调度器 + `fit`/`step`/`validate`），复用 C++ 的 `Backward_cpu` 与 `Blob::Update` 原语 |
 | 无GPU/CUDA | **待补全** | 当前无GPU支持，gpu_*方法为桩 |
 | 固定float类型 | **刻意设计** | 推理场景float精度足够，简化代码 |
 | 显式Split层（不自动插入） | **刻意设计** | 项目记忆明确要求用户显式写Split层 |
 | 无Python Layer | **待决策** | 可考虑FFI插件机制 |
 | 无数据层（LEVELDB/LMDB/HDF5） | **刻意设计** | 推理端用Python加载numpy传入 |
-| Backward默认空实现 | **刻意设计** | 推理不需要反向传播（但API保留） |
+| Backward 默认空实现→已实现层梯度 | **阶段演进** | 推理阶段默认空实现，但 Task 31/32 已为 36 个算子补齐 Backward_cpu 梯度，支撑基础训练 |
 | 无Phase(TRAIN/TEST) | **刻意设计** | 推理只有TEST模式（Dropout自动关闭） |
 | 无neuron_layer基类 | **待优化** | 激活层可抽取公共基类减少代码重复 |
+| C++ 无 Solver 框架（solver.hpp/sgd_solvers.hpp） | **刻意设计** | 相比 caffex 的 6 种优化器，当前仅 SGD/Adam 2 种，但 Python 优化器/调度器架构可扩展 |
 
 ---
 
@@ -493,13 +519,15 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 
 ### 8.1 算子补全优先级路线图
 
-#### Phase A（P0算子 — 核心CNN推理能力补全）
-1. **Deconvolution**（反卷积）— 语义分割/GAN/检测模型必需
-2. **LRN**（局部响应归一化）— AlexNet/GoogLeNet兼容性
-3. **Slice**（张量切片）— Inception多分支拓扑必需
-4. **Crop**（裁剪）— FCN/U-Net分割模型对齐
+> **更新**（2026-08-04）：Phase A（P0 算子）与 Phase C 的循环层已全部完成。剩余补全重心转向 P1 算子与训练增强。
 
-**预计工作量**: 每个算子需要头文件+实现文件+proto字段+layer_factory注册+测试，约4个P0算子。
+#### Phase A（P0算子 — 核心CNN推理能力）✅ 已完成（Task 31）
+1. ✅ **Deconvolution**（反卷积）— 语义分割/GAN/检测模型必需
+2. ✅ **LRN**（局部响应归一化）— AlexNet/GoogLeNet兼容性
+3. ✅ **Slice**（张量切片）— Inception多分支拓扑必需
+4. ✅ **Crop**（裁剪）— FCN/U-Net分割模型对齐
+
+> 经典 CNN 推理覆盖能力（AlexNet/VGG/GoogLeNet/ResNet/FCN）已完整。
 
 #### Phase B（P1算子 — 常见推理场景覆盖）
 5. **Clip**（裁剪）— ReLU6/MobileNet V2/V3
@@ -507,7 +535,7 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 7. **ArgMax**（取最大值索引）— 分类后处理
 8. **Reduction**（规约）— 通用轴操作
 9. **Exp/Log**（指数对数）— 概率计算
-10. **AbsVal/BNLL/Power/Threshold**（经典激活函数）— 旧模型兼容
+10. **BNLL/Power/Threshold**（经典激活函数）— 旧模型兼容（AbsVal 已实现）
 11. **MVN**（均值方差归一化）
 12. **Tile**（张量化复制）— broadcasting
 13. **SigmoidCrossEntropyLoss/EuclideanLoss**（损失/评估）— 多标签/回归任务评估
@@ -516,9 +544,15 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 16. **BatchReindex/Filter/Parameter/Im2col/Silence**（工具层）
 
 #### Phase C（选择性实现 — 视需求而定）
-17. **RNN/LSTM/Recurrent** — 序列模型（若需要）
+17. ✅ **RNN/LSTM/Recurrent** — 序列模型（Task 31 已实现 LSTM/RNN/LSTMUnit）
 18. **Python Layer** — 插件式扩展
 19. **Upsample** — 可用Deconv替代
+
+#### Phase D（训练增强 — Task 33 后的新方向）
+20. **补齐优化器**：SGD/Adam 之外增加 Nesterov/AdaGrad/RMSProp/AdaDelta（对齐 caffex 6 种）
+21. **参数级 lr_mult/decay_mult**：引入 ParamSpec 支持，细化训练配置
+22. **Filler 权重初始化**：Gaussian/Xavier/MSRA 等（当前仅从 caffemodel 加载）
+23. **训练数据层**：可选的 DataReader（Python 侧数据迭代 + 零拷贝 DLPack 传入）
 
 ### 8.2 代码组织优化建议
 
@@ -565,14 +599,18 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 
 ### 9.1 覆盖率总览
 
+> **更新**（2026-08-04）：算子覆盖率由 34.4% 提升至 **91.8%**，P0/P1 算子已全部补齐，新增基础训练能力。
+
 ```
 caffex算子总数（具体层）:        ~61个
-caffe-ffi已实现算子:              21个
+caffe-ffi已实现算子:              56个
 ────────────────────────────────────────
-算子覆盖率:                      34.4%
-P0缺失算子:                       4个（Deconv/LRN/Slice/Crop）
-P1缺失算子:                      19个
-P2/训练专用/数据层缺失:           ~17个
+算子覆盖率:                      91.8%
+P0缺失算子:                       0个（Deconv/LRN/Slice/Crop 已补齐）
+P1缺失算子:                       0个（20 个算子已全部补齐，140 用例验证）
+P2/训练专用/数据层缺失:           ~5个（含 GPU/cuDNN 包装）
+Proto 层参数:                     46/48 个（覆盖率 95.8%）
+训练能力:                        Python 层 Solver（SGD/Adam + 4 调度器）
 ```
 
 ### 9.2 核心结论
@@ -582,22 +620,28 @@ P2/训练专用/数据层缺失:           ~17个
    - TVM FFI Object系统替代boost.shared_ptr，实现跨语言零拷贝互操作
    - 固定float、去除模板、去除Phase/训练相关代码，是**有意的精简**而非遗漏
 
-2. **算子补全优先级应围绕经典CNN推理模型需求**：
-   - 补全4个P0算子（Deconv/LRN/Slice/Crop）即可覆盖AlexNet/VGG/GoogLeNet/ResNet/FCN等经典模型
-   - Clip/Swish对支持MobileNet/EfficientNet等新模型很重要
-   - 数据层、Solver、RNN等是**刻意不实现**的设计决策
+2. **算子补全已跨越关键里程碑**：
+   - P0 算子（Deconv/LRN/Slice/Crop）全部补齐，经典 CNN 推理覆盖（AlexNet/VGG/GoogLeNet/ResNet/FCN）完整
+   - RNN/LSTM/Recurrent 循环层已实现（Task 31），序列模型覆盖能力具备
+   - **P1 算子（20 个）已全部补齐**（2026-08-04）：Clip/Swish/ArgMax/Reduction/Exp/Log/Threshold/Power/BNLL/MVN/Tile/Im2col/Silence/Parameter/SPP/BatchReindex/Filter/Embed/SigmoidCrossEntropyLoss/EuclideanLoss，含 140 个单元测试用例验证 forward/backward/数值梯度/注册
+   - 数据层、GPU/cuDNN 等仍是**刻意不实现**的设计决策
 
-3. **代码结构层面存在可优化空间**：
+3. **训练能力从"刻意不实现"转为"Python 层基础训练"**：
+   - Solver 在 Python 层实现（`solver.py`），C++ 核心保持精简，复用 `Backward_cpu` + `Blob::Update`
+   - 相比 caffex 的 6 种优化器，当前仅 SGD/Adam 2 种，但架构可扩展
+   - 序列化模块（`serialization.py`）支持 caffemodel round-trip
+
+4. **代码结构层面存在可优化空间**：
    - NeuronLayer基类抽取可减少激活层代码重复
    - base_conv_layer基类在引入Deconv时应一并设计
    - im2col应从conv_layer.cpp独立出来
 
-4. **模块级缺失的合理区分**：
-   - **不需要补全**：Solver/SolverFactory/数据库IO/HDF5/Filler/BlockingQueue/InternalThread/SignalHandler/NCCL/matlab/多GPU并行
-   - **需要补全**：P0/P1算子
-   - **视需求补全**：GPU支持、Python Layer插件机制、Net::Reshape()动态形状
+5. **模块级缺失的合理区分**：
+   - **不需要补全**：数据库IO/HDF5/BlockingQueue/InternalThread/SignalHandler/NCCL/matlab/多GPU并行
+   - **需要补全**：P1 算子（Clip/Swish/ArgMax/Reduction/Exp/Log 等）
+   - **视需求补全**：GPU支持、Python Layer插件机制、Net::Reshape()动态形状、训练增强（优化器/ParamSpec/Filler）
 
-5. **caffex值得借鉴的设计**：
+6. **caffex值得借鉴的设计**：
    - neuron_layer/base_conv_layer/loss_layer基类分层设计
    - util/子目录的模块划分（当前caffe-ffi的工具头文件散落在根目录）
    - Net::Callback回调机制（可用于推理钩子/性能分析）
@@ -605,16 +649,18 @@ P2/训练专用/数据层缺失:           ~17个
 
 ### 9.3 建议行动项
 
+> **更新**（2026-08-04）：P0 四算子（Deconv/LRN/Slice/Crop）已实现，从行动项移除，替换为 P1 与训练增强项。
+
 | 行动项 | 优先级 | 负责模块 |
 |--------|--------|----------|
-| 实现Deconvolution反卷积层 | P0 | layers/conv相关 |
-| 实现LRN局部响应归一化层 | P0 | layers/ |
-| 实现Slice切片层 | P0 | layers/ |
-| 实现Crop裁剪层 | P0 | layers/ |
 | 抽取NeuronLayer基类 | P1 | layers/ |
 | 抽取base_conv_layer基类（配合Deconv） | P1 | layers/ |
 | 实现Clip层（ReLU6支持） | P1 | layers/ |
 | 实现Swish/SiLU层 | P1 | layers/ |
+| 实现ArgMax/Reduction/Exp/Log层 | P1 | layers/ |
+| 补齐优化器（Nesterov/AdaGrad/RMSProp/AdaDelta） | P2 | python/solver.py |
+| 引入ParamSpec参数级lr_mult/decay_mult | P2 | proto + solver |
+| 实现Filler权重初始化（Gaussian/Xavier/MSRA） | P2 | layers/ |
 | 将math_utils/fill/log/error移入util/子目录 | P2 | include结构 |
 | 增加Classifier Python封装类 | P2 | python/ |
 | GPU推理支持（路线图） | P2 | 全局架构 |
