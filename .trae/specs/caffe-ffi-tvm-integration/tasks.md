@@ -510,7 +510,7 @@
 ## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: 🔄 进行中（TS31-B1 多线程 OpenMP 集成完成 + TS31-B2 分层 benchmark 体系建立并量化收益；剩余 TS31-B3 BLAS 后端、TS31-B4 COW 推广）
+- **Status**: 🔄 进行中（TS31-B1 OpenMP + TS31-B2 分层 benchmark + TS31-B3 BLAS 后端均已完成并实测；剩余 TS31-B4 COW 推广）
 - **Description**:
   - BLAS后端：复用/接通OpenBLAS路径，完成Conv/InnerProduct gemm性能基准对比
   - 多线程：OpenMP并行化卷积/池化/全连接等计算密集层
@@ -557,10 +557,20 @@
 - **结论**：GEMM（InnerProduct）收益最显著（1.77–2.28x，GFLOPS 最高 8.38）；Pooling 1.20–1.30x；Eltwise 受内存带宽限制仅 +6–8%；MLP(bs=1) 无并行工作、无收益。Eltwise 后续可考虑 SIMD/vectorization 而非线程并行。
 - **DoD**：`.temp/_benchmark_openmp.sh` + `.temp/_benchmark_serial.sh` 双脚本可复现对比
 
-**S3 BLAS 后端（TS31-B3）⬜ 待开始**
-- 复用/接通 OpenBLAS 路径（`CAFFE_USE_BLAS` 已存在），完成 Conv/InnerProduct GEMM 性能基准对比（OpenBLAS vs 纯 C++ fallback vs OpenMP）
-- 预期：GEMM 在 BLAS 多线程下应显著高于纯 C++ OpenMP fallback
-- **DoD**：`Conv/InnerProduct` 基准对比表 + 数据落盘
+**S3 BLAS 后端（TS31-B3）✅ 已完成**
+- 复用/接通 OpenBLAS 路径（`CAFFE_USE_BLAS` 已存在），完成 InnerProduct GEMM 性能基准对比（OpenBLAS vs 纯 C++ fallback vs OpenMP）
+- **关键修复**：`DetectOpenBLAS.cmake` 的 libopenblas-dev 多架构头文件检测 bug——Debian/Ubuntu 系统包把 `cblas.h` 放在 `/usr/include/<triplet>/`（如 `x86_64-linux-gnu/cblas.h`），原搜索后缀仅 `include`/`include/openblas` 导致 `find_path` 无法命中，误判 BLAS 未找到而回退纯 C++ fallback。已补充 `x86_64-linux-gnu` 及 `openblas-pthread` 后缀，见 [DetectOpenBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake#L113-L127)
+- **Docker 实测（`OMP_NUM_THREADS=4`, `OPENBLAS_NUM_THREADS=4`，GEMM 为 InnerProduct）**：
+
+| Benchmark | Serial C++ | OpenMP C++ | OpenBLAS | BLAS vs OM | BLAS vs Serial |
+|---|---|---|---|---|---|
+| IP 16x512x512 | 2.035ms / 4.12 GFLOPS | 1.001ms / 8.38 GFLOPS | 0.661ms / **12.69 GFLOPS** | 1.51x | **3.08x** |
+| IP 16x1024x1024 | 9.205ms / 3.65 GFLOPS | 4.037ms / 8.31 GFLOPS | 2.522ms / **13.30 GFLOPS** | 1.60x | **3.65x** |
+| IP 8x2048x1024 | 11.582ms / 2.90 GFLOPS | 6.545ms / 5.13 GFLOPS | 5.021ms / 6.68 GFLOPS | 1.30x | 2.30x |
+| IP 8x4096x1024 | 25.169ms / 2.67 GFLOPS | 13.344ms / 5.03 GFLOPS | 10.384ms / 6.46 GFLOPS | 1.28x | 2.42x |
+
+- **结论**：OpenBLAS 为 GEMM 最优方案——16 行 batch 场景 12.69–13.30 GFLOPS，较纯 C++ OpenMP（8.38）再提升 1.51–1.60x，较 Serial 提升 3.08–3.65x；8 行 batch（K 更大）场景提升 1.28–1.30x。整体收益排序：**OpenBLAS > OpenMP 纯 C++ > Serial**。注意：multiarch 头文件检测 bug 未修复前，OpenBLAS 实际未链接、回退到纯 C++ OpenMP，结果与 OpenMP 列一致（8.38 GFLOPS 假象），修复后 GFLOPS 才跳升至 12.69+。
+- **DoD**：`.temp/_benchmark_blas.sh`（BLAS+OpenMP 重建+benchmark）可复现；`ldd` 确认 `libopenblas.so.0` 已链接
 
 **S4 COW 推广（TS31-B4）⬜ 待开始**
 - 将 COW 零拷贝共享（`ShareData`/`ShareDiff`）推广到更多层与场景（Split/Concat 后端、in-place 等）
