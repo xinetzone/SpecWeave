@@ -18,3 +18,7 @@
 - [x] 03-agent-platforms-tools README 子Wiki索引已更新
 - [x] 链接检查通过，无断链
 - [x] 文件名遵循 kebab-case 规范，无中文
+- [x] (v1.1) 结合本地源码校准 API 细节，修正 model.md/defineTool/approval/connections 等过时写法
+- [x] (v1.1) 补充沙箱后端、defineDynamic、defineSchedule、defineEval、lib/connections/evals 等遗漏内容
+- [x] (v1.1) 术语表新增 defineAgent/defineTool/defineSkill/defineSchedule/defineEval/defineDynamic/approval/credential brokering
+- [x] (v1.1) 链接检查与文件名规范校验通过

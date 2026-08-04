@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "nextjs-for-agents", "filesystem-firs
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "面向前端与 AI 开发者的 Vercel Eve 开源 Agent 框架结构化 wiki 教程，覆盖产品定位（Next.js for Agents）、目录即 Agent 设计哲学、九大生产级能力、与 Mastra/LangGraph 对比、快速上手、工程化理念与趋势洞察、FAQ 与术语表。"
+summary: "面向前端与 AI 开发者的 Vercel Eve 开源 Agent 框架结构化 wiki 教程，覆盖产品定位（Next.js for Agents）、目录即 Agent 设计哲学、九大生产级能力、与 Mastra/LangGraph 对比、快速上手、工程化理念与趋势洞察、FAQ 与术语表。已结合本地源码（external/tools/eve）校准 API 细节。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -43,11 +43,11 @@ eve_version_target: "2026 public preview"
 
 ## 内容快照声明
 
-> 本教程基于 2026 年 6-8 月的 5 个公开来源整理而成（nixapi 深度解析博客、知乎两篇分析、掘金工程化解读、Vercel 官方产品页），为结构化知识快照性质。Eve 目前处于 public preview / beta 阶段，框架、API、文档和行为可能持续变化，后续请以官方文档为准。
+> 本教程基于 2026 年 6-8 月的 5 个公开来源整理而成（nixapi 深度解析博客、知乎两篇分析、掘金工程化解读、Vercel 官方产品页），为结构化知识快照性质。v1.1 起已结合本地源码 `external/tools/eve` 的官方文档（docs/）对 API 细节进行校准（如 `agent.ts` 的 `defineAgent`、`defineTool`、`defineSchedule`、`defineEval`、`approval` 策略、沙箱后端等），修正了早期公开资料中的过时写法。Eve 目前处于 public preview / beta 阶段，框架、API、文档和行为可能持续变化，后续请以官方文档为准。
 
 | 元数据 | 值 |
 |--------|-----|
-| Wiki 版本 | **v1.0** |
+| Wiki 版本 | **v1.1**（源码校准版） |
 | 覆盖 Eve 阶段 | public preview（2026-08 快照） |
 | 最后验证日期 | 2026-08-04 |
 | 文件总数 | 11（README + 10 章教程） |

@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "quickstart", "npm", "deploy"]
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 快速上手指南：官方九步上手流程、五步快速开始、最小指令先行、部署与本地开发说明。"
+summary: "Eve 快速上手指南：官方九步上手流程、五步快速开始（agent.ts 定义模型、defineTool 定义工具）、最小指令先行、部署与本地开发说明。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -42,29 +42,48 @@ npx eve@latest init my-agent
 cd my-agent
 ```
 
-### 步骤 2：定义模型（model.md）
+### 步骤 2：定义模型（agent/agent.ts）
 
-```
-gpt-4o
+> ⚠️ **注意**：早期公开资料中提到的 `model.md` 写法已废弃。当前源码中，模型配置统一放在 `agent/agent.ts`，通过 `defineAgent` 声明。
+
+```ts title="agent/agent.ts"
+import { defineAgent } from "eve";
+
+export default defineAgent({
+  model: "openai/gpt-5.4-mini",
+});
 ```
 
-支持通过 Vercel AI Gateway 的 provider fallback：
-
-```
-anthropic/claude-sonnet-4
-# fallback: openai/gpt-4o
-```
-
-### 步骤 3：定义工具（tools/search.ts）
+模型 ID 走 Vercel AI Gateway 路由，例如 `anthropic/claude-sonnet-5`、`openai/gpt-5.4-mini`。若要直接调用某供应商并按代码配置，可传入供应商的 `LanguageModel`：
 
 ```ts
-export default async function search({ query }: { query: string }) {
-  const results = await fetch(`https://api.example.com/search?q=${query}`);
-  return results.json();
-}
+import { anthropic } from "@ai-sdk/anthropic";
+import { defineAgent } from "eve";
+
+export default defineAgent({
+  model: anthropic("claude-opus-4-8"),
+});
 ```
 
-文件名即工具名，自动注册，无需装饰器或配置。
+> 注意 Gateway ID 用点号（`anthropic/claude-opus-4.8`），供应商原生 ID 用连字符（`claude-opus-4-8`）。`agent.ts` 可省略（此时默认 `anthropic/claude-sonnet-5`），但一旦存在就必填 `model`。
+
+### 步骤 3：定义工具（agent/tools/search.ts）
+
+```ts title="agent/tools/search.ts"
+import { defineTool } from "eve/tools";
+import { z } from "zod";
+
+export default defineTool({
+  description: "Search the example API by query.",
+  inputSchema: z.object({ query: z.string().min(1) }),
+  async execute({ query }, ctx) {
+    const results = await fetch(`https://api.example.com/search?q=${query}`);
+    return results.json();
+  },
+});
+```
+
+文件名即工具名（`search.ts` → 工具 `search`），自动注册，无需装饰器或配置。工具定义需含 `description`（写给模型看的说明）、`inputSchema`（Zod schema，必填，无输入用 `z.object({})`）、`execute(input, ctx)`（实现，可同步或异步）。
 
 ### 步骤 4：部署
 
@@ -102,7 +121,7 @@ city in the world.
 
 ## 本章小结
 
-本章提供了三种快速上手路径：官方九步流程（从 instructions 到 schedules 的渐进构建）、五步快速开始（init→model→tools→deploy）、最小指令先行（一份 instructions.md 即可运行）。并说明了本地开发（dev 模式可观测）与生产部署（vercel deploy 零改动）的差异。
+本章提供了三种快速上手路径：官方九步流程（从 instructions 到 schedules 的渐进构建）、五步快速开始（init → agent.ts 定义模型 → defineTool 定义工具 → deploy）、最小指令先行（一份 instructions.md 即可运行）。并说明了本地开发（dev 模式可观测）与生产部署（vercel deploy 零改动）的差异。其中模型配置与工具定义已按源码校准为 `defineAgent` 与 `defineTool` 写法。
 
 下一章将进入竞品对比与选型。
 

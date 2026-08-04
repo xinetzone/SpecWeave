@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "instructions", "tools", "skills", "s
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 目录结构详解：agent.ts 模型配置、instructions.md 指令、tools 工具、skills 技能、sandbox 沙箱五大核心能力。"
+summary: "Eve 目录结构详解：agent.ts 模型/运行时配置（defineAgent）、instructions.md 指令、tools 工具、skills 技能、sandbox 沙箱（四后端）、lib/connections/evals 补充。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -21,23 +21,27 @@ Eve 的 "一个 Agent 就是一个目录" 设计，核心体现在 `agent/` 目�
 
 ```
 my-agent/
-└── agent/
-    ├── agent.ts          # 模型与运行时配置
-    ├── instructions.md   # 始终生效的系统指令
-    ├── tools/            # TypeScript 工具（文件名即工具名）
-    ├── skills/           # Markdown 操作手册（按需加载）
-    ├── sandbox/          # 沙箱配置（可选）
-    ├── subagents/        # 子 Agent
-    ├── channels/         # 多渠道入口
-    ├── connections/      # 服务认证连接
-    └── schedules/        # 定时任务
+├── agent/
+│   ├── agent.ts          # 模型与运行时配置
+│   ├── instructions.md   # 始终生效的系统指令
+│   ├── tools/            # TypeScript 工具（文件名即工具名）
+│   ├── skills/           # Markdown 操作手册（按需加载）
+│   ├── sandbox/          # 沙箱配置（可选）
+│   ├── subagents/        # 子 Agent
+│   ├── channels/         # 多渠道入口
+│   ├── connections/      # 服务认证连接
+│   ├── schedules/        # 定时任务
+│   └── lib/              # 共享代码（被 agent 文件引用）
+└── evals/                # 评测（放在 agent/ 旁）
 ```
+
+> **路径即能力名**：文件路径决定能力名，`agent/tools/get_weather.ts` → 工具 `get_weather`，`agent/connections/linear.ts` → 连接 `linear`。connections、skills、subagents 同理，无需在定义里重复写 `name`/`id`。
 
 ## agent.ts：模型与运行时配置
 
-`agent.ts` 用于选择模型或配置运行时。Eve 默认使用一个默认模型，当你需要自定义模型时添加 `agent.ts`。
+`agent.ts` 通过 `defineAgent` 选择模型并配置运行时行为。Eve 默认使用 `anthropic/claude-sonnet-5`，当你需要自定义模型或运行时配置时添加 `agent.ts`。
 
-```ts
+```ts title="agent/agent.ts"
 import { defineAgent } from "eve";
 
 export default defineAgent({
@@ -45,12 +49,19 @@ export default defineAgent({
 });
 ```
 
-Eve 通过 Vercel AI Gateway 调模型，天然支持 provider fallback（模型故障时自动切换）。例如在 `model.md` 中可配置：
+> ⚠️ 早期公开资料中提到的 `model.md` 写法已废弃。当前源码中模型配置统一放在 `agent.ts`，通过 `defineAgent` 声明；`agent.ts` 一旦存在，`model` 必填。
 
-```
-anthropic/claude-sonnet-4
-# fallback: openai/gpt-4o
-```
+除了 `model`，`defineAgent` 还支持以下常配置项：
+
+| 字段 | 作用 | 示例 |
+|------|------|------|
+| `reasoning` | 推理强度（`"provider-default"`/`"none"`/`"low"`/`"medium"`/`"high"`/`"xhigh"`） | `reasoning: "high"` |
+| `compaction` | 上下文压缩阈值（默认 0.9，接近上下文窗口时自动总结旧轮次） | `compaction: { thresholdPercent: 0.75 }` |
+| `limits` | 运行时上限（会话 token 预算、会话超时） | `limits: { maxInputTokensPerSession: 200_000 }` |
+| `experimental.workflow.world` | 自托管时的 Workflow 世界包 | `experimental: { workflow: { world: "@workflow/world-postgres" } }` |
+| `outputSchema` | 任务模式（subagent/schedule/远程任务）的结构化返回类型 | Standard Schema 或 JSON Schema |
+
+模型 ID 走 Vercel AI Gateway 路由，天然支持 provider fallback（模型故障时自动切换，如 `anthropic/claude-sonnet-5`）。若要直接调用供应商并按代码配置，可传入供应商的 `LanguageModel`。
 
 ## instructions.md：始终生效的系统指令
 
@@ -121,21 +132,51 @@ Eve 的沙箱设计态度是：**不是禁止 Agent 写代码，而是默认它�
 
 默认情况下，每个 Agent 都包含一个隔离沙箱和文件工具。本地开发可以使用 Docker、microsandbox 或 just-bash 等适配器；部署到 Vercel 后，执行环境可以切换到 Vercel Sandbox，而无需改写 Agent 的业务逻辑。
 
-如需自定义沙箱后端，可添加 `sandbox/sandbox.ts`：
+如需自定义沙箱后端，可添加 `sandbox.ts`（简写）或 `sandbox/sandbox.ts`（需同时 seed 文件时用文件夹布局）：
 
-```ts
-import { defineSandbox, vercelSandboxBackend } from "eve/sandbox";
+```ts title="agent/sandbox/sandbox.ts"
+import { defineSandbox } from "eve/sandbox";
+import { vercel } from "eve/sandbox/vercel";
 
 export default defineSandbox({
-  backend: vercelSandboxBackend({
-    runtime: "node24",
-  }),
+  backend: vercel({ resources: { vcpus: 2 } }),
+  async bootstrap({ use }) {
+    const sandbox = await use();
+    await sandbox.run({ command: "apt-get install -y jq" });
+  },
+  async onSession({ use }) {
+    await use({ networkPolicy: "deny-all" });
+  },
 });
 ```
 
+**沙箱后端**：Eve 内置四个后端，`backend` 省略时用 `defaultBackend()` 按优先级自动选择。
+
+| 后端 | 运行位置 | 说明 |
+|------|---------|------|
+| `vercel()` | Vercel Sandbox | 托管微 VM，硬件级隔离，支持域名级网络策略与凭证代理 |
+| `docker()` | 本地 Docker 容器 | 经 `docker` CLI 驱动，长生命周期容器 |
+| `microsandbox()` | 本地轻量 VM | 最接近托管 Vercel Sandbox 的本地方案 |
+| `justbash()` | 纯 JS 解释器 | 无守护进程/VM，但无真实二进制与网络隔离 |
+
+`defaultBackend()` 优先级：Vercel Sandbox（部署在 Vercel 时）→ Docker（守护进程可达时）→ microsandbox（宿主支持时）→ just-bash。
+
+**生命周期钩子**：`bootstrap({ use })` 模板级，每次构建模板时运行一次（克隆仓库、装依赖、seed 文件）；`onSession({ use, ctx })` 会话级，每次会话运行一次（设网络策略、写用户特定文件）。**/workspace 跨轮次持久**：同一持久会话的 `/workspace` 在轮次间保留，重启/重新部署不丢失。
+
+**网络策略**：默认 `allow-all`；生产环境应配置 `deny-all` 或显式 `allow` 列表，或在 `onSession` 中收紧。凭证代理（credential brokering）在防火墙层注入认证头，密钥永不进入沙箱进程。
+
+## lib/：共享代码
+
+`lib/` 存放被 agent 文件（工具、指令、钩子）引用的共享 TypeScript 代码。它不注册任何能力，只是一个普通代码目录。当多个工具需要复用同一段逻辑（如 `lib/prompts.ts`、`lib/tenant.ts`）时，放在这里即可，应用运行时可直接 import。
+
+## connections/ 与 evals/：外部连接与评测
+
+- `connections/`：MCP 与 OpenAPI 外部服务连接，文件名即连接名（`agent/connections/linear.ts` → `linear`）。模型永不直接看到 URL 或凭证。详见 [03 生产级能力](./03-production-capabilities.md)。
+- `evals/`：位于 `agent/` 旁，存放评测检查（`.eval.ts` 文件），用 `defineEval` 定义，跑 `eve eval` 验证行为回归。详见 [03 生产级能力](./03-production-capabilities.md)。
+
 ## 本章小结
 
-本章详解了 Eve 目录结构的五大核心能力：`agent.ts`（模型配置）、`instructions.md`（系统性指令）、`tools/`（文件即工具）、`skills/`（按需加载的 Markdown 操作手册）、`sandbox/`（隔离执行）。核心是"文件约定 + 自动发现"——开发者只需按约定放置文件，框架自动完成组合。
+本章详解了 Eve 目录结构：`agent.ts`（模型与运行时配置）、`instructions.md`（系统性指令）、`tools/`（文件即工具）、`skills/`（按需加载的 Markdown 操作手册）、`sandbox/`（隔离执行、四后端）、`lib/`（共享代码）、`connections/` 与 `evals/`（外部连接与评测）。核心是"文件约定 + 自动发现"——开发者只需按约定放置文件，框架自动完成组合。
 
 下一章将进入生产级能力，详解 durable execution、人工审批、connections、channels、tracing 与 evals。
 

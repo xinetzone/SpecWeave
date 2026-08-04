@@ -43,6 +43,14 @@
   - [x] SubTask 10.1: 更新 03-agent-platforms-tools README 子Wiki索引
   - [x] SubTask 10.2: 运行链接检查脚本，修复所有断链
   - [x] SubTask 10.3: 校验 frontmatter 与文件名规范
+- [x] Task 11: 结合本地源码校准 API 细节（v1.1）
+  - [x] SubTask 11.1: 分析 `external/tools/eve/docs/` 源码文档，识别与现有 wiki 的差距
+  - [x] SubTask 11.2: 修正 05-quickstart 的 model.md→agent.ts、tools→defineTool 示例
+  - [x] SubTask 11.3: 修正 02-directory 的 agent.ts fallback、sandbox 后端、补充 lib/connections/evals
+  - [x] SubTask 11.4: 修正 03-production 的 approvals、connections 示例，补充 evals 代码
+  - [x] SubTask 11.5: 补充 04-advanced 的 defineDynamic、隔离边界、defineSchedule
+  - [x] SubTask 11.6: 更新 README/00/09 版本与术语表，校准 spec 版本
+  - [x] SubTask 11.7: 运行链接检查与文件名规范校验
 
 # Task Dependencies
 - [Task 2] 依赖 [Task 1]（目录骨架就绪）

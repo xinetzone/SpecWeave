@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "subagents", "schedules", "multi-agen
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 进阶能力详解：subagents（子 Agent 委派）、schedules（定时任务）、以及多 Agent 协作实战模式（AI 内容运营团队案例）。"
+summary: "Eve 进阶能力详解：subagents（子 Agent 委派、defineDynamic 条件可用、隔离边界）、schedules（defineSchedule、markdown/run 两种形式）、多 Agent 协作实战模式。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -17,10 +17,9 @@ eve_version_target: "2026 public preview"
 
 ## Subagents：子 Agent 委派
 
-Eve 支持子 Agent。子 Agent 仍然是一个目录，可以有自己的 instructions、tools、skills、模型和沙箱。主 Agent 把它当作工具调用，子 Agent 在干净的上下文中完成任务，再把结果交还给主 Agent。
+Eve 支持两种委派方式：根 Agent 内置的 `agent` 工具（运行一份根 Agent 副本）和声明的子 Agent（拥有独立目录的专家）。子 Agent 仍然是一个目录，可以有自己的 instructions、tools、skills、模型和沙箱。主 Agent 把它当作工具调用，子 Agent 在干净的上下文中完成任务，再把结果交还给主 Agent。
 
-```ts
-// subagents/investigator.ts
+```ts title="agent/subagents/investigator/agent.ts"
 import { defineAgent } from "eve";
 
 export default defineAgent({
@@ -28,6 +27,32 @@ export default defineAgent({
   model: "openai/gpt-5.4",
 });
 ```
+
+**`description` 必填**：主 Agent 靠它决定是否委派，缺少 `description` 的子 Agent 会被编译器拒绝。子 Agent 目录下可含 `instructions.md`、`tools/`、`skills/`、`sandbox/` 甚至嵌套 `subagents/`（`schedules/` 是根 Agent 独有，子 Agent 不支持）。
+
+### 条件可用：defineDynamic
+
+若要某子 Agent 只在特定会话/轮次暴露，可在其 `agent.ts` 中导出 `defineDynamic`。返回 `defineAgent` 配置则暴露该子 Agent，返回 nil 则从父 Agent 的工具面中移除：
+
+```ts title="agent/subagents/researcher/agent.ts"
+import { defineAgent, defineDynamic } from "eve";
+
+export default defineDynamic({
+  events: {
+    "session.started": (_event, ctx) =>
+      ctx.session.auth.current?.attributes.research === true
+        ? defineAgent({
+            description: "Investigate ambiguous questions before the parent responds.",
+            model: "anthropic/claude-opus-4.8",
+          })
+        : null,
+  },
+});
+```
+
+### 隔离边界
+
+声明的子 Agent **不继承**根 Agent 的任何已创作槽位（instructions/tools/connections/skills/sandbox/hooks），缺失槽位回退到框架默认值而非根 Agent 的版本。同名子 Agent 与工具会冲突（`researcher` 子 Agent 与 `researcher` 工具同名时，Eve 在构建期拒绝静态冲突）。子 Agent 每次调用都启动独立的子会话与子流，父流通过 `subagent.called` / `subagent.completed` 控制事件追踪。
 
 **子 Agent 的价值并不是把一个头像变成五个头像，而是两个更实际的问题：**
 
@@ -42,11 +67,22 @@ export default defineAgent({
 
 这种隔离不仅能减少上下文污染，也能缩小每个 Agent 的权限范围。
 
-> ⚠️ 不过，能拆不等于应该拆。子 Agent 会增加模型调用、延迟和结果汇总成本。如果一个工具调用就能完成的任务，没必要为了"多 Agent"三个字绕上一圈。
+> ⚠️ 不过，能拆不等于应该拆。子 Agent 会增加模型调用、延迟和结果汇总成本。如果一个工具调用就能完成的任务，没必要为了"多 Agent"三个字绕上一圈。当任务只需一个可选操作手册时，用 skill 比子 Agent 更轻。
 
 ## Schedules：定时任务
 
-Eve 提供 schedule 能力，使 Agent 可以定时执行任务，通过 cron 语法定义。这让 Agent 从"交互式工具"扩展为"后台运行的自动化系统"。
+Eve 提供 schedule 能力，使 Agent 可以定时执行任务，通过 cron 语法定义。这让 Agent 从"交互式工具"扩展为"后台运行的自动化系统"。每个 schedule 是一个文件，提供 `defineSchedule` 的 `cron` 加上 `markdown`（fire-and-forget 提示）或 `run`（处理函数）二者之一。Schedules 是根 Agent 独有，子 Agent 不支持。
+
+```ts title="agent/schedules/heartbeat.ts"
+import { defineSchedule } from "eve/schedules";
+
+export default defineSchedule({
+  cron: "*/5 * * * *",
+  markdown: "Pull open Linear issues and POST a summary to the metrics endpoint.",
+});
+```
+
+也可用纯 Markdown 文件（frontmatter 只取 `cron`，正文即提示词）：
 
 ```markdown
 ---
@@ -57,13 +93,33 @@ Send the user a daily weather
 digest for their saved cities.
 ```
 
+需要把结果投递到某个渠道时，用 `run` 处理函数 + `receive` 交接给 channel：
+
+```ts title="agent/schedules/critical-alerts.ts"
+import { defineSchedule } from "eve/schedules";
+import slack from "../channels/slack";
+
+export default defineSchedule({
+  cron: "* * * * *",
+  async run({ receive, waitUntil, appAuth }) {
+    waitUntil(
+      receive(slack, {
+        message: "Check for new critical alerts. Report only when there are any.",
+        target: { channelId: "C0123ABC" },
+        auth: appAuth,
+      }),
+    );
+  },
+});
+```
+
 典型应用场景：
 - 每天生成报告；
 - 定期执行数据总结；
 - 周期性触发外部工具；
 - 每周摘要。
 
-Schedules 基于 Vercel Workflows，工作在没有活跃会话的情况下也能持久地继续执行。
+Schedules 基于 Vercel Workflows，工作在没有活跃会话的情况下也能持久地继续执行。部署到 Vercel 时，每个 schedule 变成 Vercel Cron Job（UTC 时区）；`eve dev` 不会按 cron 触发，可用开发专用分发路由 `curl -X POST http://localhost:2000/eve/v1/dev/schedules/<name>` 手动触发。
 
 ## 多 Agent 协作实战：AI 内容运营团队
 

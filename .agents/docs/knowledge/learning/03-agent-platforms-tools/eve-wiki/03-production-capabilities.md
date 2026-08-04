@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "durable-execution", "sandbox", "appr
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 六大生产级能力详解：durable execution（持久化执行）、人工审批（human-in-the-loop approvals）、connections（安全连接）、channels（多渠道）、tracing（可观测）、evals（评测）。"
+summary: "Eve 六大生产级能力详解：durable execution（持久化执行）、人工审批（approval: always/once/never）、connections（defineMcpClientConnection）、channels（多渠道）、tracing（可观测）、evals（defineEval 评测）。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -37,16 +37,22 @@ Agent 能调用工具，不代表每个工具都应该自动执行。查询订�
 
 Eve 内置了 **human-in-the-loop approval**。Agent 遇到需要人工确认的动作时，工作流可以暂停；用户批准或拒绝后，再从当前状态继续。更重要的是，审批不只存在于某个专用后台——Eve 的 channel 可以把审批映射到实际交互界面，例如在 Slack 中显示按钮。
 
-```ts
-// tools/delete-database.ts
-export const config = { requireApproval: true };
+```ts title="agent/tools/refund_charge.ts"
+import { defineTool } from "eve/tools";
+import { always } from "eve/tools/approval";
+import { z } from "zod";
 
-export default async function deleteDatabase({ confirm }: { confirm: boolean }) {
-  // 执行前会暂停，等待人工在 Vercel Dashboard 批准
-  if (!confirm) throw new Error("Approval required");
-  return db.delete();
-}
+export default defineTool({
+  description: "Refund a charge.",
+  inputSchema: z.object({ chargeId: z.string(), amount: z.number() }),
+  approval: always(), // 或 once() / never() / 自定义策略
+  async execute(input) {
+    return refund(input);
+  },
+});
 ```
+
+`eve/tools/approval` 提供三个便捷策略：`always()`（每次都要审批）、`once()`（同会话首次审批）、`never()`（放行）。审批触发时，工作流**持久暂停**（durable park），人类批准/拒绝后从当前状态恢复。
 
 这会迫使开发者认真回答一个问题：**Agent 的自动化边界究竟画在哪里？** 一个实用的起点是：
 - 读取与分析操作可以自动执行；
@@ -57,31 +63,22 @@ export default async function deleteDatabase({ confirm }: { confirm: boolean }) 
 
 ## Connections：安全连接，模型不接触凭证
 
-连接外部系统时，Eve 通过 Vercel Connect 处理 OAuth 授权、同意页面和 token 刷新，让模型不直接看到连接地址和凭据。
+连接外部系统时，Eve 通过 Vercel Connect 处理 OAuth 授权、同意页面和 token 刷新，让模型不直接看到连接地址和凭据。连接定义在 `agent/connections/` 下，文件名即连接名。
 
-```json
-// connections/slack.json
-{
-  "type": "mcp",
-  "server": "https://mcp-slack.example.com",
-  "auth": "vercel-connect"
-}
-```
-
-服务端也可以使用 `defineMcpClientConnection` 定义 MCP 客户端连接：
-
-```ts
+```ts title="agent/connections/linear.ts"
 import { connect } from "@vercel/connect/eve";
 import { defineMcpClientConnection } from "eve/connections";
 
 export default defineMcpClientConnection({
-  url: "https://mcp.linear.app/sse",
+  url: "https://mcp.linear.app/mcp",
   description: "Linear workspace: issues, projects, cycles, and comments.",
-  auth: connect("linear"),
+  auth: connect("linear/myagent"),
 });
 ```
 
-模型永远看不到 URL 或凭证，Vercel Connect 自动处理 OAuth 和 token 刷新。支持 Slack、GitHub、Snowflake、Salesforce、Notion、Linear 等服务。
+`connect("linear/myagent")` 是用户级交互式 OAuth 的简写：Eve 在每次工具调用前为当前用户解析 token，未授权时发出 `authorization.required` 事件，回调完成后恢复被暂停的轮次。也可用 `connect({ connector: "linear/myagent", principalType: "app" })` 做应用级（共享）连接，或 `auth: { getToken }` 做静态 token。
+
+模型通过内置 `connection_search` 发现工具，用限定名 `<connection>__<tool>` 调用（如 `linear__list_issues`）。模型永远看不到 URL 或凭证，Vercel Connect 自动处理 OAuth 和 token 刷新。支持 Slack、GitHub、Snowflake、Salesforce、Notion、Linear 等服务。
 
 ## Channels：多渠道接入
 
@@ -108,10 +105,24 @@ Agent 运行后，每次模型调用、工具调用以及沙箱命令都可以�
 
 instructions、skills 和 tools 都是代码库中的文件，一次看似无害的修改也可能改变 Agent 行为。Eve 提供评测能力（`eve eval`），可以在本地运行，也可以接入 CI，把行为回归挡在部署之前。
 
-```ts
-// 定义带评分标准的测试套件
-// 每次部署和按计划运行评测
+评测定义在应用根目录的 `evals/` 下，用 `defineEval` 定义。`evals/` 目录需含一个 `evals.config.ts` 声明共享默认值（judge 模型、reporters 等）。
+
+```ts title="evals/weather/brooklyn-forecast.eval.ts"
+import { defineEval } from "eve/evals";
+import { includes } from "eve/evals/expect";
+
+export default defineEval({
+  description: "Basic message and tool-usage coverage for the weather agent.",
+  async test(t) {
+    await t.send("What is the weather in Brooklyn?");
+    t.succeeded();
+    t.calledTool("get_weather");
+    t.check(t.reply, includes("Sunny"));
+  },
+});
 ```
+
+`test(t)` 驱动 Agent 走真实会话，`t` 既驱动又断言：`t.send` 发消息、`t.succeeded()` 断言运行完成、`t.calledTool` 断言调用了某工具、`t.check` 断言回复内容。评测与 CI 集成后，改一句 instructions 就能确认旧能力没有悄悄退化。
 
 它能回答：改了一句 instructions，怎么确认旧能力没有悄悄退化？Eve 把评测当作回归测试来管。
 

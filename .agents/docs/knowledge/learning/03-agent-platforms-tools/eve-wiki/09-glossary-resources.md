@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "glossary", "resources", "references"
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 核心术语表（≥15 个）与参考资源清单（5 个来源 + 官方文档 + 知识库交叉引用）。"
+summary: "Eve 核心术语表（≥15 个）与参考资源清单（5 个来源 + 本地源码 + 官方文档 + 知识库交叉引用）。"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
@@ -45,6 +45,14 @@ eve_version_target: "2026 public preview"
 | Agent Harness（智能体运行底座） | 支撑 Agent 运行所需的模型之外的全部基础设施（状态、权限、工具、执行环境、反馈、审计、验证）。 |
 | AI Gateway（AI 网关） | 统一管理模型供应商调用、路由与观测的网关层。 |
 | provider fallback（模型供应商回退） | 当主模型供应商不可用时，自动切换到备用供应商的容错机制。 |
+| defineAgent | 在 `agent/agent.ts` 中声明 Agent 运行时配置（模型、推理强度、压缩、限额）的类型化函数。 |
+| defineTool | 在 `agent/tools/*.ts` 中定义工具的类型化函数，含 `inputSchema` 与 `execute`。 |
+| defineSkill | 在 `agent/skills/*.ts` 中定义带类型化行为的技能的类型化函数。 |
+| defineSchedule | 在 `agent/schedules/*.ts` 中定义定时任务（`cron` + `markdown`/`run`）的类型化函数。 |
+| defineEval | 在 `evals/*.eval.ts` 中定义评测的类型化函数，用 `test(t)` 驱动并断言。 |
+| defineDynamic | 按会话/轮次动态解析模型、技能、子 Agent 的类型化函数，基于 `ctx.session.auth` 决定暴露范围。 |
+| approval（审批策略） | 工具或连接可配置的审批策略（`always()`/`once()`/`never()`），触发时工作流持久暂停等待人工确认。 |
+| credential brokering（凭证代理） | 在沙箱防火墙层注入认证头的方式，使模型可访问需认证的出口，而密钥永不进入沙箱进程。 |
 
 ## 参考资源
 
@@ -57,6 +65,7 @@ eve_version_target: "2026 public preview"
 | 知乎分析二 | https://zhuanlan.zhihu.com/p/2050951746332124853 |
 | 掘金工程化解读 | https://juejin.cn/post/7657863114352754726 |
 | Vercel 官方产品页 | https://vercel.com/eve |
+| 本地源码官方文档 | `external/tools/eve/docs/`（v1.1 起用于校准 API 细节） |
 
 ### 官方资源
 

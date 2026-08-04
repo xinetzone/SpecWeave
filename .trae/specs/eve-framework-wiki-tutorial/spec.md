@@ -3,7 +3,7 @@ id: "eve-framework-wiki-tutorial-spec"
 title: "Vercel Eve 开源 Agent 框架 Wiki 教程"
 source: "multi-source: nixapi博客 + 知乎两篇 + 掘金 + vercel.com/eve"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/eve-framework-wiki-tutorial/spec.toml"
-version: "1.0"
+version: "1.1"
 date: "2026-08-04"
 scenario: "learning-wiki"
 ---
@@ -11,7 +11,7 @@ scenario: "learning-wiki"
 # Vercel Eve 开源 Agent 框架 Wiki 教程 - Product Requirement Document
 
 ## Overview
-- **Summary**: 基于七概念方法论（R-I-E-V 知识沉淀链路），对 5 个 Eve 框架来源（nixapi 深度解析博客、知乎两篇分析、掘金工程化解读、Vercel 官方产品页）进行系统性学习与交叉对比，生成一份完整、原子化、可维护的 Infrastructure Wiki 教程，沉淀至 `knowledge/learning/03-agent-platforms-tools/eve-wiki/`。
+- **Summary**: 基于七概念方法论（R-I-E-V 知识沉淀链路），对 5 个 Eve 框架来源（nixapi 深度解析博客、知乎两篇分析、掘金工程化解读、Vercel 官方产品页）进行系统性学习与交叉对比，生成一份完整、原子化、可维护的 Infrastructure Wiki 教程，沉淀至 `knowledge/learning/03-agent-platforms-tools/eve-wiki/`。v1.1 起结合本地源码 `external/tools/eve/docs/` 校准 API 细节（defineAgent/defineTool/defineSchedule/defineEval/approval/沙箱后端等），修正早期公开资料中的过时写法。
 - **Purpose**: 帮助前端开发者、AI 应用开发者、架构师系统理解 Eve 框架的定位（"Next.js for Agents"）、核心设计（目录即 Agent）、九大生产级能力（指令/工具/技能/沙箱/渠道/连接/子Agent/定时/评测/持久化）、与 Mastra/LangGraph 的对比、生产落地建议，以及其反映的 Agent 工程化趋势。
 - **Target Users**: 前端开发者、AI 应用开发者、技术架构师、技术决策者、AI Agent 领域研究者
 

@@ -7,9 +7,9 @@ tags: ["eve", "vercel", "agent-framework", "wiki教程", "nextjs-for-agents"]
 date: "2026-08-04"
 status: "stable"
 author: "seven-concepts knowledge-scenario"
-summary: "Eve 教程体系全景：Eve 产品生态 Mermaid 图 + 10 章导航表 + 3 条阅读路径 + 知识库交叉引用矩阵"
+summary: "Eve 教程体系全景：Eve 产品生态 Mermaid 图 + 10 章导航表 + 3 条阅读路径 + 知识库交叉引用矩阵（v1.1 已结合本地源码校准 API 细节）"
 last_verified: "2026-08-04"
-wiki_version: "1.0"
+wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
 
