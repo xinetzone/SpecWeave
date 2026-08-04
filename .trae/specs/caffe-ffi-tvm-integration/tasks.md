@@ -534,11 +534,12 @@
 
 > 构建采用 `file(GLOB layers/*.cpp)` 自动收集，新增层无需改 CMakeLists；每层独立可验证。激活/归一化/损失层族之间相互独立可并行；Dropout 训练模式涉及既有层，须保持 inference 默认行为。
 
-**S1 激活层（NeuronLayer 子类，4 个独立子任务）**
+**S1 激活层（NeuronLayer 子类，4 个独立子任务，按推荐实现顺序分组）**
+> 顺序按「平滑度」分组：先做平滑无拐点层（Softsign/Softplus，复用普通梯度校验模板），再相邻做 C¹ 拐点层（LeakyReLU/AbsValue，复用 `avoid_c1_discontinuity` 路径），减少上下文切换。4 个均无硬依赖，可并行。
+- `TS32-A3` Softsign：`x/(1+|x|)`（平滑，无拐点，最简单）
+- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）（平滑，无拐点）
 - `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）
-- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）
-- `TS32-A3` Softsign：`x/(1+|x|)`
-- `TS32-A4` AbsValue：`|x|`（x=0 拐点，同样 C¹ 防护）
+- `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）
 
 **S2 归一化层（2 个独立子任务）**
 - `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数
