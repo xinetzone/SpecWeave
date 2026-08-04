@@ -317,6 +317,7 @@
   - CMakePresets.json、scripts/dev.sh/dev.ps1、conda.recipe/
   - AGENTS.md、LICENSE(BSD-2-Clause)、CHANGELOG.md
 - **Acceptance Criteria Addressed**: AC-17
+- **Post-optimization notes**: 2026-08-04 在 WSL docker 镜像（caffe-ffi-jupyter，conda env caffe-ffi，Python 3.14.6，cmake 4.4.1/ninja 1.13.2/gcc 14.3.0）下验证 CMake原子化重构构建通过：10个模块化 cmake 文件齐全，scikit-build-core 构建 `_caffe_ffi.so` 成功，`import caffe_ffi` 正常（version 0.1.0）
 
 ## [x] Task 19: M6-Docker开发环境创建（apps/caffe-ffi-jupyter）
 - **Priority**: high
