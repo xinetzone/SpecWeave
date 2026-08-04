@@ -1,11 +1,11 @@
 # Tasks
 
 > **最近更新**: 2026-08-04
-> **状态**: ⬜ 待实现（Phase 2：C++ Recurrent 层 + Backward 梯度验证）
+> **状态**: 🔄 实现中（Tasks 1-4 已完成并编译通过；Task 5 测试待运行）
 > **范围**: 含 Backward/BPTT。梯度验证遵循 L0-L1-L2-L3 三层法（见 spec.md 梯度验证标准）。
 > **前置**: Phase 1（`caffe-ffi-rnn-lstm-phase1`）纯 Python 前向已完成，作为 Forward 数值基准。
 
-## [ ] Task 1: 扩展 `caffe.proto` 新增 `RecurrentParameter`
+## [x] Task 1: 扩展 `caffe.proto` 新增 `RecurrentParameter`
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -13,7 +13,7 @@
   - 重新生成并提交 `caffe_pb2.py`（protobuf 预生成 pb2.py 提交仓库，开箱即用）
 - **Acceptance Criteria Addressed**: proto 定义可用，网络可解析
 
-## [ ] Task 2: 新增 numpy backward 参考实现（`_numpy_rnn_reference` 扩展）
+## [x] Task 2: 新增 numpy backward 参考实现（`_numpy_rnn_reference` 扩展）
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -22,7 +22,7 @@
   - 前向函数签名/行为保持兼容（Phase 1 的 16 测试与 8 自测试继续通过）
 - **Acceptance Criteria Addressed**: L2 验证真值可用
 
-## [ ] Task 3: 实现 `RecurrentLayer`/`RNNLayer`（前向 + Backward）
+## [x] Task 3: 实现 `RecurrentLayer`/`RNNLayer`（前向 + Backward）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -31,12 +31,12 @@
   - 前向数值与 Phase 1 对齐（`rtol ≤ 1e-5`）
 - **Acceptance Criteria Addressed**: RNN 前向 + Backward 实现
 
-## [ ] Task 4: 实现 `LSTMUnit`/`LSTMLayer`（前向 + Backward）
+## [x] Task 4: 实现 `LSTMUnit`/`LSTMLayer`（前向 + Backward）
 - **Priority**: high
-- **Depends On**: Task 1
+- **Depends On**: Task 3, Task 1
 - **Description**:
-  - `LSTMUnit`：单步 LSTM 单元（i/f/o/g 四门）
-  - `LSTMLayer`：LSTM 序列层，时间步展开，前向 + BPTT Backward
+  - `LSTMUnit`：单步 LSTM 单元（i/f/o/g 四门），可独立实现
+  - `LSTMLayer`：LSTM 序列层，**复用 `RecurrentLayer` 基类的时间步展开**，前向 + BPTT Backward
   - 前向数值与 Phase 1 对齐（`rtol ≤ 1e-5`）
 - **Acceptance Criteria Addressed**: LSTM 前向 + Backward 实现
 
@@ -60,8 +60,17 @@
 
 # Task Dependencies
 
-- Task 1 → Task 3/4
-- Task 2 → Task 5
+- Task 1 → Task 3
+- Task 3 → Task 4（`LSTMLayer` 复用 `RecurrentLayer` 基类的时间步展开，故 Task 4 须在 Task 3 之后）
+- Task 2 → Task 5（独立，可与 Task 1 并行）
 - Task 3/4 → Task 5
 - Task 5 → Task 6
-- Task 2 独立（可与 Task 1 并行）；Task 3/4 可并行（依赖 Task 1）
+- Task 2 独立（可与 Task 1 并行）；但**建议 Task 2 排在 Task 3/4 之前**，确保 numpy backward 参考基于数学公式独立编写（非 C++ 翻译），避免被 C++ 实现污染
+- Task 3 与 Task 4 **不并行**：Task 4 依赖 Task 3 的 `RecurrentLayer` 基类（LSTMUnit 单元本身可独立，但 LSTMLayer 序列层复用基类）
+
+# Task 4-6 依赖检查结论
+
+- **Task 4 依赖调整**：原 `Depends On: Task 1` → 改为 `Task 3, Task 1`。因 `LSTMLayer` 继承/复用 `RecurrentLayer` 基类（spec 明确定位为"通用 RNN 基类"承担时间步展开），必须先实现基类。
+- **Task 5 依赖正确**：依赖 Task 3/4（C++ 层）+ Task 2（numpy backward 参考），三者齐备才能做 L0-L3 验证。
+- **Task 6 依赖正确**：文档更新须在测试通过（Task 5）之后，避免文档与实现状态不一致。
+- **实现顺序**：Task 1 → Task 3 → Task 4 → Task 5 → Task 6，Task 2 与 Task 1 并行（且建议先于 Task 3/4 完成）。
