@@ -8,11 +8,12 @@
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — ✅ 完成
 >   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台(含COW_PHASE3宏)、C¹拐点防护、测试16.2x优化、P3-B/C/D/E四阶段闭环 — ✅ 完成
 > **测试结果**:
->   - 全量测试: 1646 passed, 1 skipped, 0 failures
->   - Docker Linux Python 3.14.6: 1646 passed / 1 skipped
+>   - 全量测试: 1814 passed, 1 skipped, 0 failures（S5 Dropout COW 优化后）
+>   - Docker Linux Python 3.14.6: 1814 passed / 1 skipped
 >   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过（含COW_PHASE3宏）
 >   - C++测试: 8个测试文件覆盖Blob/Net/Neuron/InsertSplits/Deconv/ZeroCopy/ObjectPtr/符号导出
 >   - P3-E验收报告 + P3阶段总复盘 + P4路线图已生成
+>   - **S5 Dropout 推理 COW 优化**: 推理模式非 inplace 用 `ShareData`/`ShareDiff` 零拷贝替换 O(n) memcpy，新增 6 个 COW 测试（TestDropoutCOWBehavior），全量回归通过
 > **性能验证**:
 >   - 零拷贝恒定~4µs访问，10M元素加速3749×
 >   - COW共享O(1)
@@ -88,6 +89,7 @@
 - [x] test_reshape_loop_no_leak: 500次reshape循环零泄漏
 - [x] 21个COW测试用例全部通过（API/拓扑/snapshot/refcount/forward场景）
 - [x] SplitLayer Forward 使用ShareData()零拷贝共享
+- [x] **Dropout 推理模式 COW 零拷贝优化（S5）**: 非 inplace 推理 Forward 用 `ShareData`/Backward 用 `ShareDiff` 替换 O(n) memcpy，新增 6 个 COW 测试（TestDropoutCOWBehavior），训练/inplace 路径行为不变
 
 ## Proto 集成验证
 - [x] proto/caffe/proto/caffe.proto 包含25个Layer所需的核心消息类型（含Crop/Deconv/LRN/Slice/Split参数）

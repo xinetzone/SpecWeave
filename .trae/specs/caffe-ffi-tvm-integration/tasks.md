@@ -8,8 +8,8 @@
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — 已完成
 >   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台、P3-B/C/D/E四阶段闭环 — 已完成
 > **测试结果**: 
->   - 全量测试: 1646 passed, 1 skipped, 0 failures
->   - Docker Linux Python 3.14.6: 1646 passed/1 skipped
+>   - 全量测试: 1814 passed, 1 skipped, 0 failures（S5 Dropout 推理 COW 优化后）
+>   - Docker Linux Python 3.14.6: 1814 passed/1 skipped
 >   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过（含COW_PHASE3宏）
 >   - C++测试: header-only框架，覆盖Blob/Net/NeuronLayers/InsertSplits/Deconv/ZeroCopy/符号导出
 > **性能验证**:
@@ -521,7 +521,7 @@
 ## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: 🔄 进行中（S1 激活层四层全部完成：Softsign/Softplus/LeakyReLU/AbsValue）
+- **Status**: 🔄 进行中（S1 激活层四层全部完成：Softsign/Softplus/LeakyReLU/AbsValue；S4 Dropout 训练模式完成；S5 Dropout 推理 COW 优化完成）
 - **Description**:
   - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
   - 更多归一化层：L2Norm/InstanceNorm等
@@ -530,7 +530,7 @@
   - 目标：向40+层（v0.2.0 Beta）演进
 - **Acceptance Criteria Addressed**: AC-7d
 
-#### Task 32 子任务拆分（共 9 个原子子任务，按层族分组）
+#### Task 32 子任务拆分（共 10 个原子子任务，按层族分组）
 
 > 构建采用 `file(GLOB layers/*.cpp)` 自动收集，新增层无需改 CMakeLists；每层独立可验证。激活/归一化/损失层族之间相互独立可并行；Dropout 训练模式涉及既有层，须保持 inference 默认行为。
 
@@ -550,7 +550,16 @@
 - `TS32-L2` Hinge：hinge 损失（可选 inner_product 交互）
 
 **S4 训练模式 Dropout（1 个子任务）**
-- `TS32-D1` inverted dropout + mask 缓存 + 训练/测试模式切换（默认 inference 行为不变）
+- `TS32-D1` inverted dropout + mask 缓存 + 训练/测试模式切换（默认 inference 行为不变）✅ 已完成（feat+test，34 测试通过，含 `test_dropout_backward.py` 训练模式类）
+
+**S5 Dropout 推理模式 COW 零拷贝优化（1 个子任务）**
+- `TS32-D2` 推理模式（`!train`）非 inplace 场景用 COW 零拷贝共享替换 O(n) memcpy：
+  - Forward：`top[0]->ShareData(bottom[0])`（O(1) 引用计数共享，拷贝延迟到首个下游可变访问，保留 memcpy 的隔离语义）
+  - Backward：`bottom[0]->ShareDiff(top[0])`（同理，逆拓扑序保证 top[0].diff 已就绪）
+  - 参考 SplitLayer COW 模式（`ShareData`/`ShareDiff`），训练模式与 inplace 路径行为不变
+  - 新增 6 个 COW 测试（`test_cow.py::TestDropoutCOWBehavior`）：零拷贝共享/恒等保持/下游 in-place ReLU COW 隔离/backward diff 共享/训练模式不共享/inplace 不共享
+  - 全量回归通过（1814 passed, 1 skipped）
+- **DoD**：`_s5_dropout_cow_rebuild.sh` 重建脚本 + 全量回归通过
 
 **每个子任务 DoD（复用 P3 三层验证方法论）**
 - proto 字段（如需，沿用 `LayerParameter` 内嵌 message 模式）
