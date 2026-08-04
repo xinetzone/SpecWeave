@@ -29,10 +29,11 @@ Agent平台与工具生态可分为七大类别：
 
 ---
 
-## 📚 子Wiki索引（8个专题）
+## 📚 子Wiki索引（10个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
+| **[zleap-agent-wiki/](zleap-agent-wiki/README.md)** | **9篇** | **Zleap-Agent workspace-first Agent Harness Wiki 教程**：面向本地模型与 OpenAI-compatible 模型的 Agent 运行时，核心哲学"Workspace Is All Agents Need"，8章从核心架构到快速上手，详解 Workspace 隔离（main/work、数据库唯一真源）、Context 稳定/半稳定/可变三块组装与缓存断点不变量、分区记忆系统（person/event/experience + RRF 多路径召回）、Skill/工具权限（request_approval/full_access）、ConversationService 统一多入口运行时、IM 网关（飞书/微信）与定时任务，附 FAQ 与术语表 |
 | **[volcengine-agentkit-wiki/](volcengine-agentkit-wiki/README.md)** | **12篇** | **火山引擎 AgentKit 企业级 AI Agent 基础设施平台 Wiki 教程**：基于七概念方法论（R-I-E-V）深度沉淀，60条事实→5条洞察→3个跨平台可复用模式→16条攻击37.5%采纳，11章从产品定义到生产化检查清单，附选型评估框架/存量改造SOP/Demo→生产12项检查，**企业智能体从0到1必读** |
 | [orca-wiki/](orca-wiki/README.md) | 8篇 | **Orca 多代理 AI 编排器 Wiki 教程**：面向 100x 构建者的 AI 编排器（Stably.ai 出品、YC 背书、MIT 开源），并排运行 Codex/Claude Code/OpenCode/Pi 各自隔离 git worktree 统一跟踪，详解八大核心功能（移动 Companion/并行 Worktree/终端分屏/设计模式/GitHub&Linear/SSH Worktree/注释 AI Diff/拖拽文件）、Orca CLI 与多 Agent 编排（Run/Task/Dispatch/worker_done）、29 款支持的 Agent 清单与快速上手 |
 | [claude-tag-article/](claude-tag-article/00-overview.md) | 8篇 | **Claude Tag企业协作工具深度分析**：Anthropic发布的Claude Code进化版，定位团队共享AI同事，Ambient Mode主动介入、异步执行，卡帕西称其为LLM用户界面第三次重大变革，含2项已萃取L1可复用模式 |
