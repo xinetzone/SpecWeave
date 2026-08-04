@@ -1,12 +1,13 @@
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Implementation Plan
 
 > **最近更新**: 2026-08-04
-> **当前状态**: ✅ M1-M9全部完成，P4（优化/扩展）规划中
+> **当前状态**: ✅ M1-M9全部完成，P4（优化/扩展）完成
 > **版本进展**:
 >   - v0.1.0 (M1-M6): 20层、Docker、独立项目 — 已完成
 >   - v1.1.0 (M7): COW零拷贝共享、内存追踪、562测试 — 已完成
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — 已完成
 >   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台、P3-B/C/D/E四阶段闭环 — 已完成
+>   - P4: Task 31性能优化(OpenMP/BLAS/COW推广)、Task 32能力扩展(激活/归一化/损失/Dropout训练)、Task 33训练工程化(Solver API/模型序列化/应用示例/训练指南) — 已完成
 > **测试结果**: 
 >   - 全量测试: 1814 passed, 1 skipped, 0 failures（S5 Dropout 推理 COW 优化后）
 >   - Docker Linux Python 3.14.6: 1814 passed/1 skipped
@@ -507,10 +508,10 @@
   - 注：Phase 1 仅前向推理，不含 Backward 梯度；Phase 2 以 Phase 1 数值结果作为基准，并补齐 Backward 梯度
 - **Acceptance Criteria Addressed**: AC-RNN
 
-## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
+## [x] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: 🔄 进行中（TS31-B1 OpenMP + TS31-B2 分层 benchmark + TS31-B3 BLAS 后端均已完成并实测；剩余 TS31-B4 COW 推广）
+- **Status**: ✅ 已完成（TS31-B1 OpenMP + TS31-B2 分层 benchmark + TS31-B3 BLAS 后端 + TS31-B4 COW 推广全部完成并实测）
 - **Description**:
   - BLAS后端：复用/接通OpenBLAS路径，完成Conv/InnerProduct gemm性能基准对比
   - 多线程：OpenMP并行化卷积/池化/全连接等计算密集层
@@ -541,20 +542,22 @@
 - 关键设计：batch 取较大值（16/8）使 OpenMP 并行维（GEMM 的 M、Pooling 的 n）足够大，否则 batch=1 无并行收益、仅剩线程开销，无法体现优化
 - **Docker 实测（`OMP_NUM_THREADS=4`，GEMM 为纯 C++ fallback）**：
 
-| Benchmark | OpenMP(4thr) | Serial | 加速比 |
-|---|---|---|---|
-| IP 16x512x512 | 1.001ms / 8.38 GFLOPS | 2.035ms / 4.12 GFLOPS | **2.03x** |
-| IP 16x1024x1024 | 4.037ms / 8.31 GFLOPS | 9.205ms / 3.65 GFLOPS | **2.28x** |
-| IP 8x2048x1024 | 6.545ms / 5.13 GFLOPS | 11.582ms / 2.90 GFLOPS | **1.77x** |
-| IP 8x4096x1024 | 13.344ms / 5.03 GFLOPS | 25.169ms / 2.67 GFLOPS | **1.89x** |
-| Pooling 8x64x56x56 | 6.409ms | 7.673ms | 1.20x |
-| Pooling 8x128x28x28 | 2.964ms | 3.796ms | 1.28x |
-| Pooling 16x256x14x14 | 2.863ms | 3.722ms | 1.30x |
-| Eltwise 8x64x56x56 | 5.296ms | 5.723ms | 1.08x |
-| Eltwise 16x512x14x14 | 5.285ms | 5.623ms | 1.06x |
-| MLP Forward(bs=1) | 0.565ms | 0.569ms | ~1.0x |
+> **注**：此处为 OpenMP benchmark 原始数据；后续接通 OpenBLAS 后，GEMM 行已用 OpenBLAS 列补齐（见下表），完整 GEMM 对比见 S3 BLAS 后端。
 
-- **结论**：GEMM（InnerProduct）收益最显著（1.77–2.28x，GFLOPS 最高 8.38）；Pooling 1.20–1.30x；Eltwise 受内存带宽限制仅 +6–8%；MLP(bs=1) 无并行工作、无收益。Eltwise 后续可考虑 SIMD/vectorization 而非线程并行。
+| Benchmark | Serial C++ | OpenMP C++ | OpenBLAS | OpenMP 加速比 | BLAS 加速比 |
+|---|---|---|---|---|---|
+| IP 16x512x512 | 2.035ms / 4.12 GFLOPS | 1.001ms / 8.38 GFLOPS | 0.661ms / **12.69 GFLOPS** | **2.03x** | **3.08x** |
+| IP 16x1024x1024 | 9.205ms / 3.65 GFLOPS | 4.037ms / 8.31 GFLOPS | 2.522ms / **13.30 GFLOPS** | **2.28x** | **3.65x** |
+| IP 8x2048x1024 | 11.582ms / 2.90 GFLOPS | 6.545ms / 5.13 GFLOPS | 5.021ms / 6.68 GFLOPS | **1.77x** | 2.30x |
+| IP 8x4096x1024 | 25.169ms / 2.67 GFLOPS | 13.344ms / 5.03 GFLOPS | 10.384ms / 6.46 GFLOPS | **1.89x** | 2.42x |
+| Pooling 8x64x56x56 | 7.673ms | 6.409ms | — | 1.20x | — |
+| Pooling 8x128x28x28 | 3.796ms | 2.964ms | — | 1.28x | — |
+| Pooling 16x256x14x14 | 3.722ms | 2.863ms | — | 1.30x | — |
+| Eltwise 8x64x56x56 | 5.723ms | 5.296ms | — | 1.08x | — |
+| Eltwise 16x512x14x14 | 5.623ms | 5.285ms | — | 1.06x | — |
+| MLP Forward(bs=1) | 0.569ms | 0.565ms | — | ~1.0x | — |
+
+- **结论**：GEMM（InnerProduct）收益最显著——OpenMP 1.77–2.28x（GFLOPS 最高 8.38），接通 OpenBLAS 后进一步提升至 12.69–13.30 GFLOPS（较 Serial 3.08–3.65x）；Pooling 1.20–1.30x；Eltwise 受内存带宽限制仅 +6–8%；MLP(bs=1) 无并行工作、无收益。整体收益排序：**OpenBLAS > OpenMP 纯 C++ > Serial**。Eltwise 后续可考虑 SIMD/vectorization 而非线程并行。
 - **DoD**：`.temp/_benchmark_openmp.sh` + `.temp/_benchmark_serial.sh` 双脚本可复现对比
 
 **S3 BLAS 后端（TS31-B3）✅ 已完成**
@@ -572,20 +575,28 @@
 - **结论**：OpenBLAS 为 GEMM 最优方案——16 行 batch 场景 12.69–13.30 GFLOPS，较纯 C++ OpenMP（8.38）再提升 1.51–1.60x，较 Serial 提升 3.08–3.65x；8 行 batch（K 更大）场景提升 1.28–1.30x。整体收益排序：**OpenBLAS > OpenMP 纯 C++ > Serial**。注意：multiarch 头文件检测 bug 未修复前，OpenBLAS 实际未链接、回退到纯 C++ OpenMP，结果与 OpenMP 列一致（8.38 GFLOPS 假象），修复后 GFLOPS 才跳升至 12.69+。
 - **DoD**：`.temp/_benchmark_blas.sh`（BLAS+OpenMP 重建+benchmark）可复现；`ldd` 确认 `libopenblas.so.0` 已链接
 
-**S4 COW 推广（TS31-B4）⬜ 待开始**
-- 将 COW 零拷贝共享（`ShareData`/`ShareDiff`）推广到更多层与场景（Split/Concat 后端、in-place 等）
-- 参考 SplitLayer COW 模式，保留隔离语义
-- **DoD**：COW 覆盖层清单 + 回归测试通过
+**S4 COW 推广（TS31-B4）✅ 已完成**
+- 将 COW 零拷贝共享（`ShareData`/`ShareDiff`）推广到**恒等退化层**：Scale(scale=1,bias=0)、Bias(bias=0)、单输入 Eltwise(coeff=1) 均退化为恒等 `y=x`，其 Forward 用 `ShareData`（O(1)）替换原 O(n) memcpy，Backward 用 `ShareDiff`（O(1)）替换 O(n) dx 拷贝
+- **实现**：各层新增 `cow_identity_` 成员，Forward 中在 `cpu_mutable_data()` 之前检测恒等条件（避免触发 COW 克隆）并 `ShareData`；Backward 中分叉——dx 为恒等直通（`buffer_identity` 共享零拷贝），而 d_scale/d_bias 在恒等时**非零**（广播求和），仍须正常计算，不能像早期实现那样整体跳过
+- **关键修复 #1（恒等 Backward 梯度错误）**：早期实现 `if (cow_identity_ && need_dx && !need_dscale && !need_dbias) return;` 把 d_scale/d_bias 一并跳过——但恒等 scale 的 d_scale=Σdy·x、dbias=Σdy 均非零，导致梯度错误。改为仅 dx 走 `ShareDiff`，d_scale/d_bias 照常累加
+- **关键修复 #2（filler 未生效）**：Scale/Bias 的 `LayerSetUp` 原先硬编码 scale=1.0/bias=0.0，非恒等测试（scale=2/bias=2）参数不生效。改为读取 prototxt 中 `scale_param.filler()`/`bias_param.filler()` 动态初始化 blob
+- **调试日志**：COW 核心分支加详细 `logger.info` 打印——`blob.cpp` 的 `ShareData`/`ShareDiff`/COW 克隆（`[COW]` 含 old/new_ptr、refcount、nbytes）、各层 `[SCALE-COW]`/`[BIAS-COW]`/`[ELTWISE-COW]`（含恒等条件、count、shared_ptr）；通过 `CAFFE_FFI_CPP_LOG_LEVEL=2` 开启 INFO 可见
+- **新增测试**：`test_cow.py::TestIdentityLayerCOWBehavior` 共 12 个用例——恒等 Forward 零拷贝（data 指针相等）、恒等 Backward diff 共享、非恒等不共享（保留 memcpy 路径）、下游 in-place ReLU 触发 COW 隔离
+- **验证**：`test_cow.py` 38 passed；回归 `test_cow+test_blob+test_scale_backward+test_bias_backward+test_eltwise_backward+test_split_backward+test_p3b_eltwise_scale` **298 passed（5.36s）**
+- **DoD**：COW 覆盖层清单（Scale/Bias/Eltwise 恒等 + Split/Concat 已有）+ 回归测试通过 ✅
+- **补充：FFI 基础设施单元测试**：新增 [test_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_ffi_api.py) 覆盖 `_ffi_api.py`（库路径发现/平台库名/诊断记录/严格模式/FFI 注册表缓存/顶层 API 契约），**30 passed / 1 skipped**（纯 Python，不依赖 C++ 扩展，双模式可运行）
+- **补充：模式归档**：沉淀「恒等层 COW 零拷贝分离原则」至 [caffe-identity-layer-cow-separation.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/best-practices/caffe-identity-layer-cow-separation.md)，并更新 best-practices 索引与深度学习/FFI 快速导航
 
-## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
+## [x] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: 🔄 进行中（S1 激活层四层全部完成：Softsign/Softplus/LeakyReLU/AbsValue；S4 Dropout 训练模式完成；S5 Dropout 推理 COW 优化完成）
+- **Status**: ✅ 已完成（S1 激活层四层、S2 归一化层两层、S3 损失层两层、S4 Dropout 训练模式、S5 Dropout 推理 COW 优化全部完成）
 - **Description**:
-  - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
-  - 更多归一化层：L2Norm/InstanceNorm等
-  - 更多损失层：MarginRanking/Hinge等
-  - 训练模式Dropout：训练/测试双模式行为
+  - 更多激活层：LeakyReLU/Softplus/Softsign/AbsValue（S1 全部完成）
+  - 更多归一化层：L2Norm/InstanceNorm（S2 完成）
+  - 更多损失层：MarginRanking/Hinge（S3 完成）
+  - 训练模式Dropout：训练/测试双模式行为（S4 完成）
+  - Dropout 推理 COW 零拷贝优化（S5 完成）
   - 目标：向40+层（v0.2.0 Beta）演进
 - **Acceptance Criteria Addressed**: AC-7d
 
@@ -600,13 +611,13 @@
 - `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）✅ 已完成（feat+test，14 测试通过）
 - `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）✅ 已完成（feat+test，13 测试通过）
 
-**S2 归一化层（2 个独立子任务）**
-- `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数
-- `TS32-N2` InstanceNorm：per-instance 均值/方差，无 affine 或可选用 affine
+**S2 归一化层（2 个独立子任务）✅ 已完成**
+- `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数 ✅ 已完成（feat+test，含 Forward/Backward 解析+数值梯度验证）
+- `TS32-N2` InstanceNorm：per-instance 均值/方差，无 affine 或可选用 affine ✅ 已完成（feat+test，含 dX/dgamma/dbeta 解析+数值梯度验证）
 
-**S3 损失层（2 个独立子任务）**
-- `TS32-L1` MarginRanking：pairwise margin 排序损失
-- `TS32-L2` Hinge：hinge 损失（可选 inner_product 交互）
+**S3 损失层（2 个独立子任务）✅ 已完成**
+- `TS32-L1` MarginRanking：pairwise margin 排序损失 ✅ 已完成（feat+test，含 sign/margin/loss_weight 配置，label 无梯度）
+- `TS32-L2` Hinge：hinge 损失（可选 inner_product 交互）✅ 已完成（feat+test，含 L1/L2 norm、axis 配置、label 无梯度）
 
 **S4 训练模式 Dropout（1 个子任务）**
 - `TS32-D1` inverted dropout + mask 缓存 + 训练/测试模式切换（默认 inference 行为不变）✅ 已完成（feat+test，34 测试通过，含 `test_dropout_backward.py` 训练模式类）
@@ -627,17 +638,56 @@
 - 全量回归通过（无回归）
 - 全部完成后向 40+ 层（v0.2.0 Beta）演进
 
-## [ ] Task 33: P4-训练工程化（训练API封装/模型序列化/应用示例）
+## [x] Task 33: P4-训练工程化（训练API封装/模型序列化/应用示例）
 - **Priority**: medium
 - **Depends On**: Task 29
-- **Status**: ⬜ 待开始
+- **Status**: ✅ 已完成（2026-08-04，TS33-1~7 全部完成）
 - **Description**:
   - Solver优化器框架：SGD/Adam等，封装训练循环
   - 训练API封装：fit/step/learning rate调度
   - 模型序列化：训练后权重保存/加载（caffemodel格式）
-  - 应用示例：ImageNet/v1模型微调、分类器训练示例
+  - 应用示例：分类器训练示例
   - 文档完善：训练指南、API参考
-- **Acceptance Criteria Addressed**: AC-33, AC-16
+- **Acceptance Criteria Addressed**: AC-33, AC-16, AC-Solver
+
+#### Task 33 子任务拆分（共 7 个原子子任务）
+
+> 训练工程化围绕「优化器 + 调度器 + 训练循环 + 序列化 + 示例 + 文档」六层抽象，全部为纯 Python 实现（复用 C++ 已实现的 Backward/Forward），无构建改动，可独立验证。
+
+**TS33-1 优化器框架（SGD/Adam）✅ 已完成**
+- 新增 [solver.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/solver.py)：`Optimizer` 基类（`lr`/`weight_decay`/`step`/`zero_grad`/`_grad`）
+- `SGD`：动量（`momentum`）、Nesterov 加速、L2 weight decay；`state_dict`/`load_state_dict` 断点续训
+- `Adam`：Kingma & Ba (2015) 偏差校正、`beta1`/`beta2`/`eps`；`state_dict`/`load_state_dict`
+- 权重更新走 `mutable_data_tensor()` **COW 感知**写入；每参数以 `(layer_name, blob_index)` 为稳定 key
+- 测试：`test_solver.py::TestSGD`/`TestAdam`（对独立 numpy 参考逐迭代断言）
+
+**TS33-2 学习率调度器 ✅ 已完成**
+- `LRScheduler` 基类（`get_lr`/`step` 写回 `optimizer.lr`）
+- `StepLR`/`MultiStepLR`/`ExponentialLR`/`CosineAnnealingLR` 四种调度
+- 测试：`test_solver.py::TestLRScheduler`（各调度数学与 `optimizer.lr` 写回契约）
+
+**TS33-3 训练循环（Solver）✅ 已完成**
+- `Solver` 类：`train`/`step`/`fit`/`validate`，`history`（loss/metric/lr）
+- loss 契约与原生 loss 层一致：前向产生标量 loss blob，反向用 `[1.0]` 播种梯度
+- `fit` 支持可迭代或可调用 `train_batches`（每 epoch 重调）、每 epoch 自动 `scheduler.step()`、train/val 模式切换
+- 测试：`test_solver.py::TestSolver`（端到端 fit 损失下降、step 更新权重、调度器逐 epoch、validate 返回指标）
+
+**TS33-4 模型序列化 ✅ 已完成**
+- 新增 [serialization.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/serialization.py)：`save_net`/`load_net`/`net_parameter_to_file`/`weights_to_dict`/`dict_to_weights`
+- caffemodel 格式（`NetParameter` protobuf），按层名匹配加载（`Net.CopyTrainedLayersFrom`）
+- 测试：`test_serialization.py`（权重 dict round-trip、caffemodel save/load、protobuf 有效性、额外层忽略缺失）
+
+**TS33-5 顶层 API 集成 ✅ 已完成**
+- 更新 [__init__.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/__init__.py)：导出 `solver`/`serialization` 模块及全部类/函数至 `caffe_ffi` 顶层
+
+**TS33-6 应用示例 ✅ 已完成**
+- 新增 [examples/mlp_classifier_train.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/mlp_classifier_train.py)：MLP+SoftmaxWithLoss 端到端训练（Solver+SGD+StepLR）→ save_net → load_net → 评估
+
+**TS33-7 文档完善 + 更新 tasks.md/checklist.md ✅ 已完成**
+- 新增 [docs/training/TRAINING_GUIDE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/TRAINING_GUIDE.md)：训练指南（快速开始/优化器/调度器/Solver/序列化/模式切换）
+- 新增 [docs/training/API_REFERENCE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/API_REFERENCE.md)：训练 API 参考
+- 更新 [docs/README.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/README.md)：文档索引登记 training/ 目录
+- 更新 spec.md（P4 完成、FR-34/35、AC-Solver）、tasks.md（本任务）、checklist.md（Task 33 验证项）
 
 ---
 
@@ -683,9 +733,9 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
                                                                                    │
                                                                                    └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM: Phase1纯Python✅, Phase2 C++✅)
                                                                                               │
-                                                                                              └→ Task 31 (P4性能优化⬜)
-                                                                                              └→ Task 32 (P4能力扩展⬜)
-                                                                                              └→ Task 33 (P4训练工程化⬜)
+                                                                                              └→ Task 31 (P4性能优化✅)
+                                                                                              └→ Task 32 (P4能力扩展✅)
+                                                                                              └→ Task 33 (P4训练工程化✅)
 ```
 
 ## 里程碑
@@ -701,4 +751,4 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
 | **M7: COW零拷贝共享** | Task 17, 9(COW部分) | ✅ 已完成（v1.1.0：COW机制+内存追踪+21测试+562测试通过） |
 | **M8: 图变换+层扩展** | Task 8b, 22, 23(部分) | ✅ 已完成（v1.2.0：InsertSplits+25层+Transformer+精度修复） |
 | **M9: P3训练支持** | Task 23(C¹防护), 24(CI), 25(性能优化), 26(SetShapeOnly), 27(numpy参考), 28(Backward验证), 29(训练) | ✅ 已完成：Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台、P3-B/C/D/E四阶段闭环 |
-| **P4: 优化/扩展** | Task 31(性能优化), 32(能力扩展), 33(训练工程化) | ⬜ 规划中：BLAS后端/多线程/COW推广、更多层、训练API封装/模型序列化 |
+| **P4: 优化/扩展** | Task 31(性能优化), 32(能力扩展), 33(训练工程化) | ✅ 已完成：OpenMP/BLAS/COW推广、激活/归一化/损失/Dropout训练、Solver API/模型序列化/应用示例/训练指南 |

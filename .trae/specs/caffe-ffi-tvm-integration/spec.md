@@ -2,7 +2,7 @@
 id: "caffe-ffi-tvm-integration"
 title: "Caffe-FFI: TVM FFI 原生 Caffe 实现"
 status: "in-progress"
-progress: "M1-M9里程碑：M1-M6(v0.1.0基础完成)、M7(v1.1.0 COW零拷贝共享+内存追踪+562测试)、M8(v1.2.0 InsertSplits图变换+25层+P3-C Transformer)、M9(P3训练支持阶段完成：Backward已实现19类层892个测试，LeNet on MNIST端到端训练97.95%精度，CI流水线三平台含COW_PHASE3宏，C¹拐点防护，测试基础设施16.2x性能优化)；全量测试1646 passed/1 skipped；P3-B/C/D/E四阶段全部闭环，P3-E验收报告+P3总复盘+P4路线图已生成；GitHub Actions CI覆盖Linux/macOS/Windows三平台"
+progress: "M1-M9里程碑：M1-M6(v0.1.0基础完成)、M7(v1.1.0 COW零拷贝共享+内存追踪+562测试)、M8(v1.2.0 InsertSplits图变换+25层+P3-C Transformer)、M9(P3训练支持阶段完成：Backward已实现19类层892个测试，LeNet on MNIST端到端训练97.95%精度，CI流水线三平台含COW_PHASE3宏，C¹拐点防护，测试基础设施16.2x性能优化)；P4完成：Task 31性能优化(OpenMP/BLAS/COW推广+b benchmark)、Task 32能力扩展(激活/归一化/损失/Dropout训练模式)、Task 33训练工程化(Solver API+模型序列化+应用示例+训练指南)；全量测试1646 passed/1 skipped；P3-B/C/D/E四阶段全部闭环，P3-E验收报告+P3总复盘+P4路线图已生成；GitHub Actions CI覆盖Linux/macOS/Windows三平台"
 last_updated: "2026-08-04"
 ---
 
@@ -12,7 +12,10 @@ last_updated: "2026-08-04"
 - **Summary**: 在 `projects/xuanspace/libs/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架（从vendor/caffe/caffe-ffi萃取迁移为独立第一方项目）。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理与训练框架。项目已完成M1-M6基础功能、M7 COW零拷贝共享机制、M8 InsertSplits图变换、M9(P3) Backward反向传播与LeNet端到端训练，当前处于P4（性能优化/更多层支持/应用示例）规划阶段。
 - **Purpose**: 解决传统 Caffe 依赖重（Boost/GFlags/GLog等）、Python 绑定脆弱、数据结构不现代的问题，利用 TVM FFI 的通用跨语言 FFI 基础设施，构建一个轻量、高效、易于扩展和维护的 Caffe 推理与训练版本，支持零拷贝张量共享、写时复制（COW）内存安全、自动计算图变换（InsertSplits）。
 - **Target Users**: 深度学习推理/训练工程师、需要在 Python 3.14+ 环境部署和微调 Caffe 模型的开发者、对框架底层实现感兴趣的研究者。
-- **Current Status**: 🔄 **M1-M9：M1-M9全部完成，P4（优化/扩展）规划中**。
+- **Current Status**: 🟢 **M1-M9全部完成，P4（优化/扩展）完成**。
+  - **P4-Task 31 (性能优化, 2026-08-04 完成)**：OpenMP多线程（GEMM 1.77-2.28x、Pooling 1.20-1.30x）、分层benchmark体系、OpenBLAS后端（GEMM 12.69-13.30 GFLOPS，较Serial 3.08-3.65x）、COW推广至恒等层（Scale/Bias/Eltwise）。
+  - **P4-Task 32 (能力扩展, 2026-08-04 完成)**：LeakyReLU/Softplus/Softsign/AbsValue激活、L2Norm/InstanceNorm归一化、MarginRanking/Hinge损失、训练模式Dropout（含推理COW优化）。
+  - **P4-Task 33 (训练工程化, 2026-08-04 完成)**：`caffe_ffi.solver`（SGD/Adam优化器、LR调度器、Solver训练循环）、`caffe_ffi.serialization`（save_net/load_net/weights round-trip）、MLP分类器训练示例、训练指南+API参考。
   - **M1-M6 (v0.1.0, 2026-07-29~30)**：20个Layer全部实现、TVM FFI最佳实践两阶段优化（双类模式/零拷贝/@register_object/三层日志 + 反射系统补全52方法/DLL边界修复）、MSVC Release编译通过、C++单元测试40/40通过、Docker开发环境(caffe-ffi-jupyter)、Docker Linux Python 3.14.6验证C++40/40+Python65/65全部通过。**CMake原子化重构（10个模块化cmake文件）由独立项目萃取迁移产出，2026-08-04在WSL docker验证通过**（详见 [MILESTONE_SUMMARY_CMake_REFACTOR_WSL_REGRESSION_20260804](../../../projects/xuanspace/libs/caffe-ffi/docs/summaries/MILESTONE_SUMMARY_CMake_REFACTOR_WSL_REGRESSION_20260804.md)）。
   - **M7 (v1.1.0, 2026-07-30)**：Copy-on-Write (COW) 零拷贝张量共享机制（ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*自动COW克隆）、内存生命周期追踪工具(caffe_ffi.tools.memory)、21个COW测试用例、修复_tensor_to_numpy引用循环泄漏、Reshape COW失效修复、Docker Linux 561/562测试通过。
   - **M8 (v1.2.0, 2026-07-31)**：InsertSplits自动图变换（多消费方自动插入Split层）、18个边界情况测试、扩展至25个Layer（新增Crop/Deconv/LRN/Slice/Split）、P3-C Transformer测试套件(13个测试)、Sigmoid饱和精度修复（float32次正规数）、核心层诊断日志增强、InsertSplits算法文档、测试指南文档。
@@ -47,9 +50,9 @@ last_updated: "2026-08-04"
 - ✅ 端到端真实模型推理+微调测试（LeNet/MNIST精度97.95%）— 已完成
 - ✅ RNN/LSTM层 Phase 1（纯Python前向推理）— 已完成（`caffe_ffi.sequence` 子模块，RNN/LSTM 类、双向、Caffe打包权重加载、16测试通过、示例可运行，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md)）
 - ✅ RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）— 已完成（`test_recurrent_backward.py` 29用例L0-L3全梯度验证，全量回归1692 passed/1 skipped，详见 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)）
-- ⬜ Solver训练流程（SGD/Adam等优化器）
+- ✅ **Solver训练流程（SGD/Adam等优化器）** — 已完成（Task 33，`caffe_ffi.solver`：SGD/Adam优化器、StepLR/MultiStepLR/ExponentialLR/CosineAnnealingLR调度器、Solver训练循环；`caffe_ffi.serialization`：save_net/load_net/weights_to_dict/dict_to_weights；Test 33端到端训练+保存/加载示例、训练指南+API参考文档）
 - ⬜ v0.2.0(Beta)：40+层、三平台CI全覆盖、性能benchmark体系
-- 🔄 **P4（优化/扩展）规划中**：性能优化（BLAS后端/多线程/COW推广）、能力扩展（更多激活/归一化/损失层/训练模式Dropout）、工程化（训练API封装/模型序列化/应用示例/文档完善）
+- ✅ **P4工程化（训练API封装/模型序列化/应用示例/文档完善）** — 已完成（Task 33）；性能优化（BLAS后端/多线程/COW推广）、能力扩展（更多激活/归一化/损失层/训练模式Dropout）已完成（Task 31/32）
 
 ## Non-Goals (Out of Scope)
 - CUDA/GPU 支持（第一阶段仅 CPU，GPU 可作为未来扩展）
@@ -168,11 +171,11 @@ last_updated: "2026-08-04"
 - **COW Phase 2/3设计**：Split层COW集成、SetShapeOnly与COW协同
 - **全量测试结果**：1646 passed, 1 skipped, 0 failures（Docker Linux + 本地py314验证）
 
-#### P4 (规划中) — 优化与扩展
-- **性能优化**：全量层性能基准、GEMM加速（BLAS/MKL后端）、多线程并行（OpenMP）、COW全量应用
-- **能力扩展**：更多激活层（LeakyReLU/Softplus/Softsign/AbsValue）、更多归一化层（L2Norm/InstanceNorm）、更多损失层（MarginRanking/Hinge）、训练模式Dropout（详见 [tasks.md Task 32 子任务拆分](tasks.md#L521-559)）
-- **工程化**：训练API封装（Trainer/Solver）、模型序列化（.caffemodel兼容）、更多应用示例（ResNet/分类/回归）、文档完善
-- **里程碑**：M1性能基线+GEMM加速、M2多线程+内存优化、M3能力扩展、M4工程化
+#### P4 (已完成, 2026-08-04) — 优化与扩展
+- **性能优化 (Task 31 完成)**：OpenMP多线程（GEMM/Pooling/Eltwise）、分层benchmark体系（P0/P1/P2）、OpenBLAS后端（GEMM 12.69-13.30 GFLOPS）、COW推广至恒等层（Scale/Bias/Eltwise）
+- **能力扩展 (Task 32 完成)**：更多激活层（LeakyReLU/Softplus/Softsign/AbsValue）、更多归一化层（L2Norm/InstanceNorm）、更多损失层（MarginRanking/Hinge）、训练模式Dropout（含推理COW优化）
+- **工程化 (Task 33 完成)**：训练API封装（Solver/SGD/Adam/调度器）、模型序列化（`.caffemodel`兼容）、应用示例（MLP分类器训练）、训练指南+API参考
+- **里程碑**：M1性能基线+GEMM加速、M2多线程+内存优化、M3能力扩展、M4工程化 — 均已达成
 - **详细路线图**：[P4 阶段路线图](p4-roadmap.md)（P4-1~12 任务分解、依赖、风险与 DoD）
 
 ### 已实现的核心功能
@@ -236,12 +239,13 @@ last_updated: "2026-08-04"
 ### 已完成 ✅
 - **FR-32**: Backward梯度完整数值验证：Conv/Pooling/SoftmaxWithLoss等19类层Backward与numpy参考对比
 - **FR-33**: 训练循环最小可用：LeNet/MNIST端到端训练验证，test acc 97.95%
+- **FR-34**: **Solver训练API**：`caffe_ffi.solver` 提供 `SGD`/`Adam` 优化器（含动量/Nesterov/偏差校正/weight_decay/state_dict）、`StepLR`/`MultiStepLR`/`ExponentialLR`/`CosineAnnealingLR` 调度器、`Solver` 训练循环（step/fit/validate/train），COW感知权重更新
+- **FR-35**: **模型序列化**：`caffe_ffi.serialization` 提供 `save_net`/`load_net`/`net_parameter_to_file`/`weights_to_dict`/`dict_to_weights`，caffemodel格式权重保存/加载（按层名匹配）
 
 ### 待后续补充 ⬜
-- InnerProduct/Conv使用BLAS gemm的性能基准验证
-- Solver优化器（SGD/Adam等）
+- InnerProduct/Conv使用BLAS gemm的性能基准验证（P4已建立benchmark体系，BLAS后端理论对比见 Task 31）
 - 更多层支持（GELU/GroupNorm/LayerNorm等）
-- 训练API封装（Trainer/Solver）与模型序列化
+- 分布式训练/GPU支持（Non-Goal）
 
 ## Non-Functional Requirements
 
@@ -329,10 +333,12 @@ last_updated: "2026-08-04"
 - **AC-16**: 端到端真实模型推理+训练（LeNet/MNIST>95%精度）— 97.95%达成
 
 ### 待后续达成 ⬜
-- **AC-13**: BLAS集成后Convolution/InnerProduct性能基准
+- **AC-13**: BLAS集成后Convolution/InnerProduct性能基准（P4已建立benchmark体系，见 Task 31）
 - **AC-14**: 内存管理ASan验证
-- **AC-RNN**: RNN/LSTM层实现
-- **AC-Solver**: Solver优化器实现
+
+### 已达成 ✅
+- **AC-RNN**: RNN/LSTM层实现（Phase 1 纯Python前向 + Phase 2 C++/Backward，见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md) 与 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)）
+- **AC-Solver**: Solver优化器实现（SGD/Adam优化器、学习率调度器、Solver训练循环、模型序列化、应用示例、训练指南，Task 33）
 
 ## Open Questions (Resolved & Remaining)
 
@@ -355,7 +361,9 @@ last_updated: "2026-08-04"
 - [x] LeNet/MNIST端到端训练能否达标？→ 已达97.95%精度，损失2.32→0.04
 
 ### 待解决
-- [ ] Conv/Pooling Backward的BLAS后端在Linux环境下的性能验证
-- [ ] 是否需要提供从caffemodel到numpy权重字典的导出工具？
-- [ ] RNN/LSTM的proto定义是否需要扩展？
-- [ ] P4阶段性能优化优先级（BLAS后端/多线程/COW推广）如何排序？
+- [ ] Conv/Pooling Backward的BLAS后端在Linux环境下的性能验证（P4已建立benchmark，见 Task 31）
+- [ ] P4阶段性能优化优先级（BLAS后端/多线程/COW推广）如何排序？（已按 Task 31-33 完成：多线程→BLAS→COW推广→能力扩展→训练工程化）
+
+### 已解决
+- [x] 是否需要提供从caffemodel到numpy权重字典的导出工具？→ 已提供 `weights_to_dict`/`dict_to_weights`（Task 33）
+- [x] RNN/LSTM的proto定义是否需要扩展？→ 已扩展 `RecurrentParameter`（Phase 2）
