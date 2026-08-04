@@ -56,6 +56,7 @@ apps/<app-name>/
 | `caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](caffe-ffi-jupyter/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
 | `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
+| `eve-minimal-agent/` | Vercel Eve 最小可运行 Agent 示例，演示文件系统即接口设计哲学。 | [README.md](eve-minimal-agent/README.md) |
 | `jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](jupyter-ssh-base/README.md) |
 | `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
 | `pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](pytorch-base/README.md) |
