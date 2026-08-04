@@ -306,6 +306,7 @@
   - 使用 AddressSanitizer 编译运行测试，验证 ObjectPtr 引用计数在 Net 销毁时正确释放、COW 引用计数正确性
 - **Acceptance Criteria Addressed**: AC-14
 - **Test Results**: ASan 构建验证 1647 passed / 1 skipped / 0 ASan 内存安全错误；内存泄漏专项 test_memory_leak.py 16 passed（零泄漏）；COW 21 passed；非 ASan 默认构建回归 1647 passed / 1 skipped
+- **Report**: ASan 完整验证报告已归档至 [ASAN_VERIFICATION_REPORT_20260804.md](../../../projects/xuanspace/libs/caffe-ffi/docs/setup/ASAN_VERIFICATION_REPORT_20260804.md)；in-place 内存安全规范见 [INPLACE_MEMORY_SAFETY_STANDARD.md](../../../projects/xuanspace/libs/caffe-ffi/docs/design/INPLACE_MEMORY_SAFETY_STANDARD.md)
 - **Notes**:
   - ASan 构建需用 `-O1`（ASan 推荐优化级别）并清空 conda 默认 CFLAGS/CXXFLAGS，规避 GNU ld 在 `-O3+ASan+--gc-sections` 下的 `bad reloc symbol index` 链接 bug（与代码无关）
   - Python 解释器退出时其分配器缓存会触发 ASan 泄漏误报，故 `ASAN_OPTIONS=detect_leaks=0`，泄漏检测由项目 `total_allocated_bytes()` 计数器承担；ASan 核心价值是检测内存安全错误（溢出/UAF/双重释放）

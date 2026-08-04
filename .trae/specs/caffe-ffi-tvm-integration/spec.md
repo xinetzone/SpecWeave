@@ -42,7 +42,7 @@ last_updated: "2026-08-04"
 - ✅ perf_monitor性能监控基础设施
 - ✅ **M9(P3训练支持)已完成**：Backward反向传播完整实现与验证——19类层892个测试，核心层(InnerProduct/BN/SoftmaxWithLoss/激活/Conv/Pooling/结构层)梯度已验证，LeNet on MNIST端到端训练97.95%精度
 - ✅ 核心层Backward完整测试覆盖（P0: Conv/Pooling; P1: SoftmaxWithLoss/Split; P2: 其余层）——19类层892测试全部通过
-- 🔄 内存管理ASan验证 — 待Linux/GCC环境
+- ✅ 内存管理ASan验证 — 已完成（2026-08-04，ASan 构建 1647 passed / 0 内存安全错误，发现并修复 in-place InnerProduct 堆越界读）
 - 🔄 BLAS路径性能基准验证 — 待完整BLAS环境
 - ✅ 端到端真实模型推理+微调测试（LeNet/MNIST精度97.95%）— 已完成
 - ⬜ RNN/LSTM层实现（proto定义+RecurrentLayer，numpy参考实现已就绪）
@@ -237,7 +237,6 @@ last_updated: "2026-08-04"
 - **FR-33**: 训练循环最小可用：LeNet/MNIST端到端训练验证，test acc 97.95%
 
 ### 待后续补充 ⬜
-- ASan内存管理正式验证
 - InnerProduct/Conv使用BLAS gemm的性能基准验证
 - RNN/LSTM层C++实现（numpy参考已就绪）
 - Solver优化器（SGD/Adam等）
