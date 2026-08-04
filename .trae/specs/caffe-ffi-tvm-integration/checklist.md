@@ -466,7 +466,7 @@
 - [ ] ASan内存管理正式验证（Linux/GCC环境）
 - [ ] BLAS路径性能基准对比（需完整BLAS环境）
 - [x] RNN/LSTM层 Phase 1（纯Python前向）：`caffe_ffi.sequence` 子模块、RNN/LSTM类、双向、Caffe打包权重加载、test_sequence_forward.py 16用例通过、examples/rnn_forward.py 可运行
-- [ ] RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer，numpy参考已就绪）
+- [x] RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）：test_recurrent_backward.py 29用例通过（L0-L1-L2-L3全梯度验证）、全量回归1692 passed/1 skipped
 - [ ] Solver优化器框架（SGD/Adam等）
 - [ ] P4性能优化：BLAS后端/多线程/COW推广
 - [ ] P4能力扩展：更多激活/归一化/损失层、训练模式Dropout

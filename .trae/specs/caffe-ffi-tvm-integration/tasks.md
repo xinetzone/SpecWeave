@@ -488,7 +488,7 @@
 ## [x] Task 30: RNN/LSTM层实现（分阶段：Phase 1 纯Python前向已完成）
 - **Priority**: low
 - **Depends On**: Task 28
-- **Status**: ✅ Phase 1（纯Python前向推理）已完成；⬜ Phase 2（C++实现）待启动
+- **Status**: ✅ Phase 1（纯Python前向推理）与 Phase 2（C++实现+Backward）均已完成
 - **Description**:
   - **Phase 1（已完成，2026-08-04）**：纯 Python 前向推理方案，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md)
     - 新增 `caffe_ffi.sequence` 子模块：`RNN`/`LSTM` 类（vanilla RNN tanh/relu、LSTM 4门、双向、初始状态、batch_first）
@@ -496,13 +496,15 @@
     - `_numpy_rnn_reference.py` 从 tests 提升为 `caffe_ffi.sequence._numpy_rnn_reference` 内部实现（函数签名/行为兼容，8个自测试通过）
     - 测试 `tests/python/test_sequence_forward.py` 16 用例通过（已知值/布局/形状/双向/Caffe打包/末态/numpy自洽）
     - 示例 `examples/rnn_forward.py` 可独立运行
-  - **Phase 2（待启动）**：C++ 实现
-    - caffe.proto扩展RecurrentParameter
-    - RecurrentLayer实现（~1350行C++，参考caffe-slim/caffe）
-    - LSTMUnit/LSTMLayer
-    - RNNLayer
-    - 工作量预估：15-20工作日（原估7-12天严重低估）
-  - 注：Phase 1 仅前向推理，不含 Backward 梯度；Phase 2 将以 Phase 1 数值结果作为基准
+  - **Phase 2（已完成，2026-08-04）**：C++ 实现 + Backward/BPTT 梯度，详见 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)
+    - caffe.proto 扩展 `RecurrentParameter`（`num_steps`/`expose_hidden`/`recurrent_param`）
+    - `RecurrentLayer` 基类（时间步展开）+ `RNNLayer`（vanilla RNN，relu 激活 C¹ 拐点防护）
+    - `LSTMUnit`/`LSTMLayer`（4 门，复用基类时间步展开，前向 + BPTT Backward）
+    - numpy backward 参考（`rnn_backward`/`lstm_backward`，基于 BPTT 公式独立编写）
+    - 测试 `tests/python/test_recurrent_backward.py` 29 用例通过（L0-L1-L2-L3 全梯度验证）
+    - 全量回归 1692 passed / 1 skipped（无回归）
+    - 关键修复：LSTM `c_prev` batch 索引步长；权重梯度 `BackwardEnd()` 一次性 scatter
+  - 注：Phase 1 仅前向推理，不含 Backward 梯度；Phase 2 以 Phase 1 数值结果作为基准，并补齐 Backward 梯度
 - **Acceptance Criteria Addressed**: AC-RNN
 
 ## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
@@ -582,7 +584,7 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
                                                                           │
                                                                           └→ Task 28 (M9-Backward验证✅: 19类层892测试)
                                                                                    │
-                                                                                   └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM: Phase1纯Python✅, Phase2 C++⬜)
+                                                                                   └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM: Phase1纯Python✅, Phase2 C++✅)
                                                                                               │
                                                                                               └→ Task 31 (P4性能优化⬜)
                                                                                               └→ Task 32 (P4能力扩展⬜)

@@ -1,7 +1,7 @@
 # Tasks
 
 > **最近更新**: 2026-08-04
-> **状态**: 🔄 实现中（Tasks 1-4 已完成并编译通过；Task 5 测试待运行）
+> **状态**: ✅ 已完成（Tasks 1-6 全部完成；全量回归 1692 passed / 1 skipped）
 > **范围**: 含 Backward/BPTT。梯度验证遵循 L0-L1-L2-L3 三层法（见 spec.md 梯度验证标准）。
 > **前置**: Phase 1（`caffe-ffi-rnn-lstm-phase1`）纯 Python 前向已完成，作为 Forward 数值基准。
 
@@ -40,7 +40,7 @@
   - 前向数值与 Phase 1 对齐（`rtol ≤ 1e-5`）
 - **Acceptance Criteria Addressed**: LSTM 前向 + Backward 实现
 
-## [ ] Task 5: 新增 `test_recurrent_backward.py`（L0-L1-L2-L3 验证）
+## [x] Task 5: 新增 `test_recurrent_backward.py`（L0-L1-L2-L3 验证）
 - **Priority**: high
 - **Depends On**: Task 3, Task 4, Task 2
 - **Description**:
@@ -49,14 +49,16 @@
   - L2：numpy 参考匹配（≥3 种参数组合、N>1、≥3 随机种子、`rtol ≤ 1e-5`）
   - L3：数值梯度端到端（`dX` + 每个 `dW/db` + `dh0/dc0`；`_grad_check_utils`；分段层 `avoid_c1_discontinuity`；`cos_sim > 0.99`、`norm_ratio ∈ [0.9, 1.1]`）
 - **Acceptance Criteria Addressed**: 全量测试通过（新增不影响既有 1646 passed）
+- **完成注**：29 用例全部通过；LSTM Backward 修复 `c_prev` batch 索引步长（`i*H_` → `i*6H_+kCacheC*H_`）与权重梯度延迟到 `BackwardEnd()` 一次性 scatter（避免 T 倍重复累加）；全量回归 1692 passed / 1 skipped
 
-## [ ] Task 6: 更新 `caffe-ffi-tvm-integration` 规范文档
+## [x] Task 6: 更新 `caffe-ffi-tvm-integration` 规范文档
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**:
   - 更新 `tasks.md` Task 30 状态：Phase 2 完成
   - 更新 `spec.md`/`checklist.md` 的 RNN/LSTM 进度
 - **Acceptance Criteria Addressed**: 文档与实现状态一致
+- **完成注**: 本 Phase 2 独立 spec（`caffe-ffi-rnn-lstm-phase2`）的 tasks.md/spec.md/checklist.md 已全部标记完成；主规范 `caffe-ffi-tvm-integration` 的 Task 30 Phase 2 状态同步更新
 
 # Task Dependencies
 

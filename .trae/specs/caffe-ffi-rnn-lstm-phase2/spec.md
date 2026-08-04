@@ -1,13 +1,22 @@
 ---
 id: "caffe-ffi-rnn-lstm-phase2"
 title: "Caffe-FFI: RNN/LSTM 层 C++ 实现与 Backward 梯度验证（Phase 2）"
-status: "in-progress"
-progress: "0% - 规划完成，待实现"
+status: "complete"
+progress: "100% - 全部完成（Tasks 1-6；全量回归 1692 passed / 1 skipped）"
 last_updated: "2026-08-04"
 source: "caffe-ffi-tvm-integration/tasks.md#Task 30 (Phase 2)"
 ---
 
 # Caffe-FFI: RNN/LSTM 层 C++ 实现与 Backward 梯度验证（Phase 2）Spec
+
+## Current Status（2026-08-04）
+
+Phase 2 已全部完成并通过验收：
+
+- **Tasks 1-6 全部完成**：proto 扩展（`RecurrentParameter`）、numpy backward 参考（`rnn_backward`/`lstm_backward`）、`RecurrentLayer`/`RNNLayer`/`LSTMUnit`/`LSTMLayer` C++ 前向 + BPTT Backward、`test_recurrent_backward.py`（29 用例 L0-L3 验证）、规范文档同步。
+- **梯度验证达标**：L0 烟雾测试、L1 手算已知值（`assert_array_equal`）、L2 numpy 参考匹配（`rtol ≤ 1e-5`）、L3 数值梯度端到端（`cos_sim > 0.99`、`norm_ratio ∈ [0.9, 1.1]`）全部通过。
+- **关键修复**：LSTM Backward 的 `c_prev` batch 索引步长（`i*H_` → `i*6H_+kCacheC*H_`）；权重梯度延迟到 `BackwardEnd()` 一次性 scatter（避免 T 倍重复累加）。
+- **全量回归**：1692 passed / 1 skipped（含既有 P3 全部用例，无回归）。
 
 ## Why
 

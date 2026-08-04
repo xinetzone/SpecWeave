@@ -46,7 +46,7 @@ last_updated: "2026-08-04"
 - 🔄 BLAS路径性能基准验证 — 待完整BLAS环境
 - ✅ 端到端真实模型推理+微调测试（LeNet/MNIST精度97.95%）— 已完成
 - ✅ RNN/LSTM层 Phase 1（纯Python前向推理）— 已完成（`caffe_ffi.sequence` 子模块，RNN/LSTM 类、双向、Caffe打包权重加载、16测试通过、示例可运行，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md)）
-- ⬜ RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer，numpy参考已就绪）
+- ✅ RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）— 已完成（`test_recurrent_backward.py` 29用例L0-L3全梯度验证，全量回归1692 passed/1 skipped，详见 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)）
 - ⬜ Solver训练流程（SGD/Adam等优化器）
 - ⬜ v0.2.0(Beta)：40+层、三平台CI全覆盖、性能benchmark体系
 - 🔄 **P4（优化/扩展）规划中**：性能优化（BLAS后端/多线程/COW推广）、能力扩展（更多激活/归一化/损失层/训练模式Dropout）、工程化（训练API封装/模型序列化/应用示例/文档完善）
@@ -239,7 +239,6 @@ last_updated: "2026-08-04"
 
 ### 待后续补充 ⬜
 - InnerProduct/Conv使用BLAS gemm的性能基准验证
-- RNN/LSTM层C++实现（numpy参考已就绪）
 - Solver优化器（SGD/Adam等）
 - 更多层支持（GELU/GroupNorm/LayerNorm等）
 - 训练API封装（Trainer/Solver）与模型序列化
