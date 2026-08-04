@@ -2,21 +2,21 @@
 id: "caffe-ffi-tvm-integration"
 title: "Caffe-FFI: TVM FFI 原生 Caffe 实现"
 status: "in-progress"
-progress: "M1-M9里程碑：M1-M6(v0.1.0基础完成)、M7(v1.1.0 COW零拷贝共享+内存追踪+562测试)、M8(v1.2.0 InsertSplits图变换+25层+P3-C Transformer)、M9(P3训练支持阶段进行中：Backward已实现16层，InnerProduct/BN/激活函数梯度验证通过，CI流水线三平台，C¹拐点防护，测试基础设施16.2x性能优化)；Docker Linux Python 3.14.6环境561/562测试通过；GitHub Actions CI覆盖Linux/macOS/Windows三平台"
-last_updated: "2026-08-03"
+progress: "M1-M9里程碑：M1-M6(v0.1.0基础完成)、M7(v1.1.0 COW零拷贝共享+内存追踪+562测试)、M8(v1.2.0 InsertSplits图变换+25层+P3-C Transformer)、M9(P3训练支持阶段完成：Backward已实现19类层892个测试，LeNet on MNIST端到端训练97.95%精度，CI流水线三平台含COW_PHASE3宏，C¹拐点防护，测试基础设施16.2x性能优化)；全量测试1646 passed/1 skipped；P3-B/C/D/E四阶段全部闭环，P3-E验收报告+P3总复盘+P4路线图已生成；GitHub Actions CI覆盖Linux/macOS/Windows三平台"
+last_updated: "2026-08-04"
 ---
 
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Product Requirement Document
 
 ## Overview
-- **Summary**: 在 `projects/xuanspace/libs/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架（从vendor/caffe/caffe-ffi萃取迁移为独立第一方项目）。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理与训练框架。项目已完成M1-M6基础功能、M7 COW零拷贝共享机制、M8 InsertSplits图变换，当前处于M9 P3阶段：Backward反向传播实现与训练支持。
+- **Summary**: 在 `projects/xuanspace/libs/caffe-ffi` 目录下创建一个以 TVM FFI 为核心基础设施的 Caffe 深度学习框架（从vendor/caffe/caffe-ffi萃取迁移为独立第一方项目）。该实现深度整合 TVM FFI 的对象系统、容器库、反射注册和内存管理机制，替代传统 Caffe 的 STL 容器和 Boost.Python/pybind11 绑定，提供现代化、跨语言、高性能的推理与训练框架。项目已完成M1-M6基础功能、M7 COW零拷贝共享机制、M8 InsertSplits图变换、M9(P3) Backward反向传播与LeNet端到端训练，当前处于P4（性能优化/更多层支持/应用示例）规划阶段。
 - **Purpose**: 解决传统 Caffe 依赖重（Boost/GFlags/GLog等）、Python 绑定脆弱、数据结构不现代的问题，利用 TVM FFI 的通用跨语言 FFI 基础设施，构建一个轻量、高效、易于扩展和维护的 Caffe 推理与训练版本，支持零拷贝张量共享、写时复制（COW）内存安全、自动计算图变换（InsertSplits）。
 - **Target Users**: 深度学习推理/训练工程师、需要在 Python 3.14+ 环境部署和微调 Caffe 模型的开发者、对框架底层实现感兴趣的研究者。
-- **Current Status**: 🔄 **M1-M9：M1-M8全部完成，M9(P3 Backward)进行中**。
+- **Current Status**: 🔄 **M1-M9：M1-M9全部完成，P4（优化/扩展）规划中**。
   - **M1-M6 (v0.1.0, 2026-07-29~30)**：20个Layer全部实现、TVM FFI最佳实践两阶段优化（双类模式/零拷贝/@register_object/三层日志 + 反射系统补全52方法/DLL边界修复）、MSVC Release编译通过、C++单元测试40/40通过、Docker开发环境(caffe-ffi-jupyter)、Docker Linux Python 3.14.6验证C++40/40+Python65/65全部通过。
   - **M7 (v1.1.0, 2026-07-30)**：Copy-on-Write (COW) 零拷贝张量共享机制（ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*自动COW克隆）、内存生命周期追踪工具(caffe_ffi.tools.memory)、21个COW测试用例、修复_tensor_to_numpy引用循环泄漏、Reshape COW失效修复、Docker Linux 561/562测试通过。
   - **M8 (v1.2.0, 2026-07-31)**：InsertSplits自动图变换（多消费方自动插入Split层）、18个边界情况测试、扩展至25个Layer（新增Crop/Deconv/LRN/Slice/Split）、P3-C Transformer测试套件(13个测试)、Sigmoid饱和精度修复（float32次正规数）、核心层诊断日志增强、InsertSplits算法文档、测试指南文档。
-  - **M9 (P3阶段, 2026-08-01~进行中)**：Backward反向传播支持——16个Layer已实现Backward(ReLU/Sigmoid/TanH/PReLU/ELU/InnerProduct/BatchNorm/SoftmaxWithLoss/Conv/Pooling/Split/Slice/Crop/Deconv/LRN/Scale)、激活函数梯度C¹拐点防护(avoid_c1_discontinuity helper)、InnerProduct Backward梯度解析验证通过(23个测试)、BatchNorm Backward实现与测试、SoftmaxWithLoss Backward测试完成、[ACTIVATION-PERF]调试日志、GitHub Actions CI流水线(Linux/macOS/Windows三平台+Debug/Release+C++测试+ruff lint+C¹静态检查)、测试基础设施性能优化(分层GC/CSV缓冲/C++日志抑制，P3-B测试134s→8.27s，16.2x加速)、SetShapeOnly零拷贝reshape API、numpy RNN/LSTM参考实现(_numpy_rnn_reference.py，8个自测试)、perf_monitor性能监控基础设施。
+  - **M9 (P3阶段, 2026-08-01~2026-08-04 完成)**：Backward反向传播支持——**19类层Backward全部实现并验证（892个测试）**、LeNet on MNIST端到端训练(test acc **97.95%**)、P3-B/C/D/E四阶段闭环、P3-E验收报告+P3总复盘+P4路线图、GitHub Actions CI流水线(Linux/macOS/Windows三平台+Debug/Release+C++测试+ruff lint+C¹静态检查+COW_PHASE3宏)、测试基础设施性能优化(16.2x加速)、SetShapeOnly零拷贝reshape API、numpy RNN/LSTM参考实现、perf_monitor性能监控基础设施。
 
 ## Goals
 - ✅ 基于 TVM FFI 对象系统（Object/ObjectPtr/ObjectRef）重构 Caffe 核心抽象（双类模式XxxObj+Xxx）
@@ -40,14 +40,15 @@ last_updated: "2026-08-03"
 - ✅ C¹拐点防护：avoid_c1_discontinuity helper函数、ELU/PReLU/LeakyReLU数值梯度稳定性
 - ✅ SetShapeOnly API：零拷贝形状修改（不重新分配内存）
 - ✅ perf_monitor性能监控基础设施
-- 🔄 **M9(P3进行中)**：Backward反向传播完整实现与验证——16层已实现，核心层(InnerProduct/BN/SoftmaxWithLoss/激活)梯度已验证，Conv/Pooling等计算密集层Backward待验证
-- 🔄 核心层Backward完整测试覆盖（P0: Conv/Pooling; P1: SoftmaxWithLoss/Split; P2: 其余层）
+- ✅ **M9(P3训练支持)已完成**：Backward反向传播完整实现与验证——19类层892个测试，核心层(InnerProduct/BN/SoftmaxWithLoss/激活/Conv/Pooling/结构层)梯度已验证，LeNet on MNIST端到端训练97.95%精度
+- ✅ 核心层Backward完整测试覆盖（P0: Conv/Pooling; P1: SoftmaxWithLoss/Split; P2: 其余层）——19类层892测试全部通过
 - 🔄 内存管理ASan验证 — 待Linux/GCC环境
 - 🔄 BLAS路径性能基准验证 — 待完整BLAS环境
-- 🔄 端到端真实模型推理+微调测试（LeNet/MNIST精度）— 待数据集准备
+- ✅ 端到端真实模型推理+微调测试（LeNet/MNIST精度97.95%）— 已完成
 - ⬜ RNN/LSTM层实现（proto定义+RecurrentLayer，numpy参考实现已就绪）
 - ⬜ Solver训练流程（SGD/Adam等优化器）
 - ⬜ v0.2.0(Beta)：40+层、三平台CI全覆盖、性能benchmark体系
+- 🔄 **P4（优化/扩展）规划中**：性能优化（BLAS后端/多线程/COW推广）、能力扩展（更多激活/归一化/损失层/训练模式Dropout）、工程化（训练API封装/模型序列化/应用示例/文档完善）
 
 ## Non-Goals (Out of Scope)
 - CUDA/GPU 支持（第一阶段仅 CPU，GPU 可作为未来扩展）
@@ -127,13 +128,17 @@ last_updated: "2026-08-03"
 - InsertSplits Pass 2b详细日志（外部输入split移动前后层顺序）
 - 文档：INSERT_SPLITS_GRAPH_TRANSFORM.md算法参考、TESTING_GUIDELINES.md测试指南
 
-#### M9 (P3, 2026-08-01~进行中) — 训练支持里程碑
-- **Backward反向传播**（16个Layer已实现）：
+#### M9 (P3, 2026-08-01~2026-08-04 完成) — 训练支持里程碑
+- **Backward反向传播**（19类层全部实现并验证，892个测试）：
   - 激活函数：ReLU/Sigmoid/TanH/PReLU/ELU（含C¹拐点防护）
   - 核心层：InnerProduct（梯度解析验证通过，23个测试）、BatchNorm（实现+测试）、SoftmaxWithLoss（测试完成）
-  - 卷积/池化：Conv/Pooling（代码已有，待数值验证）
-  - 结构层：Split/Slice/Crop/Deconv/LRN/Scale（代码已有，待完整验证）
+  - 卷积/池化：Conv/Pooling（数值验证完成）
+  - 结构层：Split/Slice/Crop/Deconv/LRN/Scale/Bias/Concat/Eltwise/Reshape/Flatten（完整验证）
   - [ACTIVATION-PERF]调试日志：diff_in/diff_out/time结构化输出
+- **端到端训练**：LeNet on MNIST 训练 test acc **97.95%**（loss 2.32→0.04，-98.3%），证明19类层Backward组合后梯度流正确
+- **P3-B/C/D/E四阶段闭环**：P3-E验收报告、P3阶段总复盘、P4路线图已生成
+- **31个失败测试修复**：28个Blob对象协议问题（net.Forward()→net.forward()）+ 3个构建缺宏问题（CAFFE_FFI_ENABLE_COW_PHASE3）
+- **CI回归基线修复**：ci.yml构建矩阵/cpp-tests/nightly三处添加-DCAFFE_FFI_ENABLE_COW_PHASE3=ON
 - **C¹拐点防护**：
   - `avoid_c1_discontinuity` helper函数：将|x-kink|<margin*h的点推离拐点
   - 支持多拐点、幂等安全
@@ -160,6 +165,14 @@ last_updated: "2026-08-03"
 - **numpy参考实现**：_numpy_bn_reference.py(BatchNorm)、_numpy_rnn_reference.py(RNN/LSTM，8个自测试通过)
 - **构建兼容性修复**：Protobuf版本/编译器flag兼容、跨机器构建设置指南
 - **COW Phase 2/3设计**：Split层COW集成、SetShapeOnly与COW协同
+- **全量测试结果**：1646 passed, 1 skipped, 0 failures（Docker Linux + 本地py314验证）
+
+#### P4 (规划中) — 优化与扩展
+- **性能优化**：全量层性能基准、GEMM加速（BLAS/MKL后端）、多线程并行（OpenMP）、COW全量应用
+- **能力扩展**：更多激活层（LeakyReLU/GELU/Softplus）、更多归一化层（GroupNorm/LayerNorm/InstanceNorm）、更多损失层（Hinge/Euclidean/Multi-Logistic）、训练模式Dropout
+- **工程化**：训练API封装（Trainer/Solver）、模型序列化（.caffemodel兼容）、更多应用示例（ResNet/分类/回归）、文档完善
+- **里程碑**：M1性能基线+GEMM加速、M2多线程+内存优化、M3能力扩展、M4工程化
+- **详细路线图**：[P4 阶段路线图](p4-roadmap.md)（P4-1~12 任务分解、依赖、风险与 DoD）
 
 ### 已实现的核心功能
 - **Blob**: 双类模式(BlobObj+Blob)，Tensor(DLPack)存储data/diff，COW零拷贝共享，CPUMemAlloc自定义分配器，支持Reshape/SetShapeOnly/FromProto/ToProto/Update/ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*，通过DLPack实现numpy零拷贝互操作，内存生命周期追踪
@@ -212,23 +225,24 @@ last_updated: "2026-08-03"
 - **FR-23**: CAFFE_FFI_DISABLE_BACKTRACE环境变量支持
 - **FR-24**: **COW零拷贝共享机制**：ShareData/ShareDiff/Unshare/IsShared/RefCount/mutable_*自动克隆、CAFFE_FFI_ENABLE_COW环境变量、内存追踪工具
 - **FR-25**: **InsertSplits自动图变换**：多消费方Blob自动插入Split层、18边界情况测试、与原生Caffe行为对齐、viz_insert_splits.py可视化验证
-- **FR-26**: **Backward反向传播**：16个Layer的Backward_cpu实现，Net::backward()逆序执行
+- **FR-26**: **Backward反向传播**：19类层Backward_cpu实现，Net::backward()逆序执行，892个测试验证
 - **FR-27**: **C¹拐点防护**：avoid_c1_discontinuity helper、CI静态检查、ELU拐点稳定性测试
-- **FR-28**: **GitHub Actions CI**：Linux/macOS/Windows三平台、Release/Debug、C++/Python测试、lint、wheel构建
+- **FR-28**: **GitHub Actions CI**：Linux/macOS/Windows三平台、Release/Debug、C++/Python测试、lint、wheel构建、COW_PHASE3宏
 - **FR-29**: **SetShapeOnly API**：零拷贝形状修改（不重新分配内存）
 - **FR-30**: **perf_monitor性能监控**基础设施
 - **FR-31**: **测试基础设施性能优化**：分层GC、CSV缓冲、perf_trace采样优化
 
-### 进行中 🔄
-- **FR-32**: Backward梯度完整数值验证：Conv/Pooling/SoftmaxWithLoss等核心层Backward与numpy参考对比
-- **FR-33**: 训练循环最小可用：简单SGD更新、LeNet/MNIST端到端训练验证
+### 已完成 ✅
+- **FR-32**: Backward梯度完整数值验证：Conv/Pooling/SoftmaxWithLoss等19类层Backward与numpy参考对比
+- **FR-33**: 训练循环最小可用：LeNet/MNIST端到端训练验证，test acc 97.95%
 
 ### 待后续补充 ⬜
 - ASan内存管理正式验证
 - InnerProduct/Conv使用BLAS gemm的性能基准验证
 - RNN/LSTM层C++实现（numpy参考已就绪）
 - Solver优化器（SGD/Adam等）
-- 端到端真实模型训练验证（LeNet/MNIST精度）
+- 更多层支持（GELU/GroupNorm/LayerNorm等）
+- 训练API封装（Trainer/Solver）与模型序列化
 
 ## Non-Functional Requirements
 
@@ -285,7 +299,7 @@ last_updated: "2026-08-03"
 - ✅ Python-only fallback模式正常工作
 - ✅ COW机制在in-place ReLU、Split多消费方等复杂场景下正确工作
 - ✅ InsertSplits与原生Caffe行为完全对齐（18边界情况验证）
-- ✅ 16个Layer的Backward实现可在Python 3.14/GCC 14环境编译通过
+- ✅ 19类Layer的Backward实现可在Python 3.14/GCC 14环境编译通过（892个测试验证）
 
 ## Acceptance Criteria
 
@@ -308,16 +322,16 @@ last_updated: "2026-08-03"
 - **AC-24**: COW机制验证通过 — 21个测试、内存压力测试零泄漏、in-place场景正确
 - **AC-25**: InsertSplits验证通过 — 18个边界情况测试、与原生Caffe对齐、DAG仿真交叉验证
 - **AC-27**: C¹拐点防护验证通过 — avoid_c1_discontinuity helper、CI静态检查、ELU稳定性测试
-- **AC-28**: GitHub Actions CI三平台通过 — Linux/macOS/Windows、Release/Debug、C++/Python/lint/wheel
+- **AC-28**: GitHub Actions CI三平台通过 — Linux/macOS/Windows、Release/Debug、C++/Python/lint/wheel、COW_PHASE3宏
 
-### 🔄 进行中
-- **AC-26**: Backward梯度正确性 — 激活函数/InnerProduct/BN已验证，Conv/Pooling等计算密集层待完整数值验证
-- **AC-33**: 端到端训练最小可用 — LeNet/MNIST训练精度验证
+### ✅ 已达成
+- **AC-26**: Backward梯度正确性 — 19类层Backward全部验证通过（892个测试）
+- **AC-33**: 端到端训练最小可用 — LeNet/MNIST训练精度97.95%验证通过
+- **AC-16**: 端到端真实模型推理+训练（LeNet/MNIST>95%精度）— 97.95%达成
 
 ### 待后续达成 ⬜
 - **AC-13**: BLAS集成后Convolution/InnerProduct性能基准
 - **AC-14**: 内存管理ASan验证
-- **AC-16**: 端到端真实模型推理+训练（LeNet/MNIST>95%精度）
 - **AC-RNN**: RNN/LSTM层实现
 - **AC-Solver**: Solver优化器实现
 
@@ -337,8 +351,12 @@ last_updated: "2026-08-03"
 - [x] InsertSplits如何处理多外部输入？→ 先收集所有外部输入split，在position 0批量插入
 - [x] C¹不连续激活函数的数值梯度如何稳定？→ avoid_c1_discontinuity推离拐点+CI静态检查
 - [x] 测试基础设施性能瓶颈在哪？→ 不在业务逻辑（Net创建0.5ms），而在观测基础设施（GC/线程/IO）——分层GC+缓冲优化16.2x
+- [x] net.Forward()与net.forward()返回类型差异？→ 大写Forward返回Blob对象，小写forward返回numpy数组，测试需统一用forward或用to_numpy()兼容
+- [x] Conv/Pooling Backward能否通过数值验证？→ 已通过，19类层Backward全部892个测试验证
+- [x] LeNet/MNIST端到端训练能否达标？→ 已达97.95%精度，损失2.32→0.04
 
 ### 待解决
 - [ ] Conv/Pooling Backward的BLAS后端在Linux环境下的性能验证
 - [ ] 是否需要提供从caffemodel到numpy权重字典的导出工具？
 - [ ] RNN/LSTM的proto定义是否需要扩展？
+- [ ] P4阶段性能优化优先级（BLAS后端/多线程/COW推广）如何排序？

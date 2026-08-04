@@ -1,16 +1,18 @@
 # Caffe-FFI 验证检查清单
 
-> **更新日期**: 2026-08-03
-> **验证状态**: 🔄 M1-M8全部完成，M9(P3 Backward训练支持)进行中
+> **更新日期**: 2026-08-04
+> **验证状态**: ✅ M1-M9全部完成，P4（优化/扩展）规划中
 > **版本进展**:
 >   - v0.1.0 (M1-M6): 20层、Docker、独立项目 — ✅ 完成
 >   - v1.1.0 (M7): COW零拷贝共享、内存追踪、562测试 — ✅ 完成
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — ✅ 完成
->   - M9 (P3): Backward 16层实现、CI三平台、C¹拐点防护、测试16.2x优化 — 🔄 进行中
+>   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台(含COW_PHASE3宏)、C¹拐点防护、测试16.2x优化、P3-B/C/D/E四阶段闭环 — ✅ 完成
 > **测试结果**:
->   - Docker Linux Python 3.14.6: 561/562 tests passed (1 skipped), 0 failures
->   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过
+>   - 全量测试: 1646 passed, 1 skipped, 0 failures
+>   - Docker Linux Python 3.14.6: 1646 passed / 1 skipped
+>   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过（含COW_PHASE3宏）
 >   - C++测试: 8个测试文件覆盖Blob/Net/Neuron/InsertSplits/Deconv/ZeroCopy/ObjectPtr/符号导出
+>   - P3-E验收报告 + P3阶段总复盘 + P4路线图已生成
 > **性能验证**:
 >   - 零拷贝恒定~4µs访问，10M元素加速3749×
 >   - COW共享O(1)
@@ -105,7 +107,7 @@
 - [x] Blob ShareData()/ShareDiff()/Unshare()/IsShared()/RefCount() COW API完整
 - [x] Layer SetUp() 正确执行 CheckBlobCounts→LayerSetUp→Reshape→SetLossWeights
 - [x] Layer Forward() 执行 Reshape→Forward_cpu→loss 计算
-- [x] Layer Backward() 执行 Backward_cpu 梯度计算（16个Layer已实现）
+- [x] Layer Backward() 执行 Backward_cpu 梯度计算（19类Layer已实现并验证，892个测试）
 - [x] Layer 工厂可通过类型名创建25种Layer实例
 - [x] Layer.name() 方法可用
 - [x] Net 从 NetParameter 正确初始化（Init 方法）
@@ -439,7 +441,7 @@
 - [x] _numpy_rnn_reference.py 8个自测试通过
 - [x] 可用于C++ Backward梯度数值对比验证
 
-## Backward梯度验证进度（M9，P3核心，🔄进行中）
+## Backward梯度验证进度（M9，P3核心，✅已完成）
 - [x] ReLU Backward梯度正确
 - [x] Sigmoid Backward梯度正确（含饱和区处理）
 - [x] TanH Backward梯度正确
@@ -448,19 +450,23 @@
 - [x] InnerProduct Backward梯度正确（23个测试，解析梯度+中心有限差分验证）
 - [x] BatchNorm Backward梯度正确（测试完成）
 - [x] SoftmaxWithLoss Backward梯度正确（测试完成）
-- [ ] Convolution Backward梯度数值验证（代码已有，需numpy参考对比）
-- [ ] Pooling Backward梯度数值验证（代码已有，需numpy参考对比）
-- [ ] Split Backward梯度完整验证
-- [ ] Slice/Crop/Deconv/LRN Backward完整验证
-- [ ] Scale/Bias Backward完整验证
-- [ ] Concat/Eltwise/Reshape/Flatten Backward实现与验证
-- [ ] Dropout/Accuracy/Input Backward（通常为恒等/零梯度）
-- [ ] 端到端LeNet/MNIST训练>95%精度
+- [x] Convolution Backward梯度数值验证通过（含Winner-Takes-All梯度路由）
+- [x] Pooling Backward梯度数值验证通过（MAX Winner-Takes-All / AVE kH·kW归一化）
+- [x] Split Backward梯度完整验证（梯度累加）
+- [x] Slice/Crop/Deconv/LRN/Scale/Bias Backward完整验证
+- [x] Concat/Eltwise/Reshape/Flatten Backward实现与验证
+- [x] Dropout/Accuracy/Input Backward（恒等/零梯度）
+- [x] 端到端LeNet/MNIST训练 97.95%精度（loss 2.32→0.04，-98.3%）
+- [x] 19类层Backward全部验证通过，共892个测试，0失败
+- [x] net.backward() 接受输出梯度字典执行反向传播
+- [x] 31个失败测试修复（28个Blob对象协议 + 3个构建缺宏CAFFE_FFI_ENABLE_COW_PHASE3）
+- [x] CI回归基线修复：ci.yml构建矩阵/cpp-tests/nightly三处添加-DCAFFE_FFI_ENABLE_COW_PHASE3=ON
 
-## 待完成项
+## 待完成项（P4优化/扩展）
 - [ ] ASan内存管理正式验证（Linux/GCC环境）
-- [ ] BLAS路径性能基准对比
-- [ ] Conv/Pooling Backward数值验证（P0）
-- [ ] 端到端训练最小可用（SGD+LeNet/MNIST）
-- [ ] RNN/LSTM层C++实现
-- [ ] Solver优化器框架
+- [ ] BLAS路径性能基准对比（需完整BLAS环境）
+- [ ] RNN/LSTM层C++实现（numpy参考已就绪）
+- [ ] Solver优化器框架（SGD/Adam等）
+- [ ] P4性能优化：BLAS后端/多线程/COW推广
+- [ ] P4能力扩展：更多激活/归一化/损失层、训练模式Dropout
+- [ ] P4工程化：训练API封装/模型序列化/应用示例/文档完善

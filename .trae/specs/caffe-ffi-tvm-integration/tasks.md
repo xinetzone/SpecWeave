@@ -1,25 +1,27 @@
 # Caffe-FFI: 基于 TVM FFI 的 Caffe 深度学习框架 - Implementation Plan
 
-> **最近更新**: 2026-08-03
-> **当前状态**: 🔄 M1-M8全部完成，M9(P3 Backward训练支持)进行中
+> **最近更新**: 2026-08-04
+> **当前状态**: ✅ M1-M9全部完成，P4（优化/扩展）规划中
 > **版本进展**:
 >   - v0.1.0 (M1-M6): 20层、Docker、独立项目 — 已完成
 >   - v1.1.0 (M7): COW零拷贝共享、内存追踪、562测试 — 已完成
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — 已完成
->   - M9 (P3): Backward反向传播(16层已实现)、CI三平台、C¹拐点防护、测试基础设施16.2x优化 — 进行中
+>   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台、P3-B/C/D/E四阶段闭环 — 已完成
 > **测试结果**: 
->   - Docker Linux Python 3.14.6: 561/562 tests passed (1 skipped), 0 failures
->   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过
+>   - 全量测试: 1646 passed, 1 skipped, 0 failures
+>   - Docker Linux Python 3.14.6: 1646 passed/1 skipped
+>   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过（含COW_PHASE3宏）
 >   - C++测试: header-only框架，覆盖Blob/Net/NeuronLayers/InsertSplits/Deconv/ZeroCopy/符号导出
 > **性能验证**:
 >   - 零拷贝恒定~4µs访问，10M元素加速3749×
 >   - COW共享O(1)
 >   - P3-B测试套件134s→8.27s（16.2x加速，通过分层GC/CSV缓冲/日志抑制）
+>   - LeNet on MNIST训练test acc 97.95%（loss 2.32→0.04）
 > **关键成果**:
 >   - M1-M6: 20层、双类模式、零拷贝、@register_object、三层日志、反射52方法、DLL边界修复、C++测试40/40、Docker环境
 >   - M7: COW机制(Share/Unshare/IsShared/RefCount/mutable_*自动克隆)、内存追踪工具、21个COW测试、引用循环泄漏修复
 >   - M8: InsertSplits 18边界测试、25层(+Crop/Deconv/LRN/Slice/Split)、P3-C Transformer 13测试、Sigmoid饱和精度修复、InsertSplits算法文档
->   - M9: Backward 16层实现、InnerProduct BN激活梯度验证、C¹拐点防护(avoid_c1_discontinuity+CI静态检查)、GitHub Actions CI三平台、[ACTIVATION-PERF]日志、SetShapeOnly API、perf_monitor、numpy RNN参考实现
+>   - M9: Backward 19类层892测试、LeNet/MNIST训练97.95%、C¹拐点防护、CI三平台(含COW_PHASE3宏)、SetShapeOnly API、perf_monitor、numpy RNN参考实现、P3-E验收报告+P3总复盘+P4路线图
 
 ---
 
@@ -445,31 +447,33 @@
 - **Acceptance Criteria Addressed**: AC-26
 - **Deliverables**: _numpy_bn_reference.py, _numpy_rnn_reference.py, caffe_test_helpers.py
 
-## [~] Task 28: M9-Backward梯度完整验证（P3核心）
+## [x] Task 28: M9-Backward梯度完整验证（P3核心）
 - **Priority**: high
 - **Depends On**: Task 5, Task 6, Task 7, Task 8, Task 8b, Task 23, Task 27
-- **Status**: 🔄 进行中
+- **Status**: ✅ 已完成（2026-08-04，19类层892个测试通过）
 - **Description**:
   - P0已完成：激活函数(ReLU/Sigmoid/TanH/PReLU/ELU)梯度+C¹拐点防护、InnerProduct梯度解析验证(23测试)、BatchNorm梯度测试、SoftmaxWithLoss梯度测试
-  - P0待验证：Convolution Backward、Pooling Backward（代码已有，需numpy参考对比）
-  - P1待验证：Split Backward、Slice/Crop/Deconv/LRN/Scale/Bias Backward（代码已有，需完整测试）
-  - P2待实现/验证：Concat/Eltwise/Reshape/Flatten/Dropout/Accuracy/Input Backward
+  - P0已完成：Convolution Backward、Pooling Backward（数值验证完成）
+  - P1已完成：Split Backward、Slice/Crop/Deconv/LRN/Scale/Bias Backward（完整验证）
+  - P2已完成：Concat/Eltwise/Reshape/Flatten Backward（完整验证）
   - numpy参考对比：中心有限差分+解析梯度验证
   - [ACTIVATION-PERF]日志结构验证
+  - 31个失败测试修复（28个Blob对象协议 + 3个构建缺宏）
 - **Acceptance Criteria Addressed**: AC-26
-- **Deliverables**: test_*_backward.py系列测试文件
-- **Remaining**: Conv/Pooling数值验证是P0核心阻塞项
+- **Deliverables**: test_*_backward.py系列测试文件（19个）
+- **Test Results**: 19类层Backward全部验证通过，892个测试，0失败
 
-## [ ] Task 29: M9-端到端训练最小可用
+## [x] Task 29: M9-端到端训练最小可用
 - **Priority**: high
 - **Depends On**: Task 28
-- **Status**: ⬜ 待开始
+- **Status**: ✅ 已完成（2026-08-04，LeNet on MNIST test acc 97.95%）
 - **Description**:
   - 简单SGD更新（权重data -= lr * diff）
-  - LeNet/MNIST端到端训练验证
-  - 训练精度目标：>95%
-  - 可选：Solver框架基础接口
+  - LeNet/MNIST端到端训练验证（examples/lenet_mnist_train.py）
+  - 训练精度目标：>95% → 实测97.95%
+  - 可选：Solver框架基础接口（P4规划）
 - **Acceptance Criteria Addressed**: AC-33, AC-16
+- **Test Results**: LeNet on MNIST test acc 97.95%，loss 2.32→0.04（-98.3%），无NaN
 
 ## [ ] Task 30: RNN/LSTM层实现（远期）
 - **Priority**: low
@@ -484,6 +488,41 @@
   - 工作量预估：15-20工作日（原估7-12天严重低估）
   - 建议：若仅需前向推理，短期可用numpy纯Python方案
 - **Acceptance Criteria Addressed**: AC-RNN
+
+## [ ] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ⬜ 待开始
+- **Description**:
+  - BLAS后端：复用/接通OpenBLAS路径，完成Conv/InnerProduct gemm性能基准对比
+  - 多线程：OpenMP并行化卷积/池化/全连接等计算密集层
+  - COW推广：将COW零拷贝共享推广到更多层与场景（如Split/Concat后端）
+  - 性能基准体系：建立P0/P1/P2分层benchmark，量化优化收益
+- **Acceptance Criteria Addressed**: NFR-1, AC-13
+
+## [ ] Task 32: P4-能力扩展（更多激活/归一化/损失层）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ⬜ 待开始
+- **Description**:
+  - 更多激活层：LeakyReLU/Softplus/Softsign/绝对值等
+  - 更多归一化层：L2Norm/InstanceNorm等
+  - 更多损失层：MarginRanking/Hinge等
+  - 训练模式Dropout：训练/测试双模式行为
+  - 目标：向40+层（v0.2.0 Beta）演进
+- **Acceptance Criteria Addressed**: AC-7d
+
+## [ ] Task 33: P4-训练工程化（训练API封装/模型序列化/应用示例）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ⬜ 待开始
+- **Description**:
+  - Solver优化器框架：SGD/Adam等，封装训练循环
+  - 训练API封装：fit/step/learning rate调度
+  - 模型序列化：训练后权重保存/加载（caffemodel格式）
+  - 应用示例：ImageNet/v1模型微调、分类器训练示例
+  - 文档完善：训练指南、API参考
+- **Acceptance Criteria Addressed**: AC-33, AC-16
 
 ---
 
@@ -525,9 +564,13 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
                                                                           ├→ Task 26 (M9-SetShapeOnly/perf_monitor✅)
                                                                           ├→ Task 27 (M9-numpy参考实现✅)
                                                                           │
-                                                                          └→ Task 28 (M9-Backward验证🔄: 16层已实现, Conv/Pooling待验证)
+                                                                          └→ Task 28 (M9-Backward验证✅: 19类层892测试)
                                                                                    │
-                                                                                   └→ Task 29 (端到端训练⬜) ─→ Task 30 (RNN/LSTM⬜)
+                                                                                   └→ Task 29 (端到端训练✅: LeNet 97.95%) ─→ Task 30 (RNN/LSTM⬜)
+                                                                                              │
+                                                                                              └→ Task 31 (P4性能优化⬜)
+                                                                                              └→ Task 32 (P4能力扩展⬜)
+                                                                                              └→ Task 33 (P4训练工程化⬜)
 ```
 
 ## 里程碑
@@ -542,4 +585,5 @@ Task 1 (骨架/构建) ─→ Task 2 (Proto) ─┐
 | **M6: 独立项目+Docker环境** | Task 18, 19, 20, 21 | ✅ 已完成（vendor→libs迁移、Docker、工具链、验证） |
 | **M7: COW零拷贝共享** | Task 17, 9(COW部分) | ✅ 已完成（v1.1.0：COW机制+内存追踪+21测试+562测试通过） |
 | **M8: 图变换+层扩展** | Task 8b, 22, 23(部分) | ✅ 已完成（v1.2.0：InsertSplits+25层+Transformer+精度修复） |
-| **M9: P3训练支持** | Task 23(C¹防护), 24(CI), 25(性能优化), 26(SetShapeOnly), 27(numpy参考), **28(Backward验证🔄)**, 29(训练⬜) | 🔄 进行中：Backward 16层已实现，CI/性能/数值稳定性已完成，核心层梯度验证收尾中 |
+| **M9: P3训练支持** | Task 23(C¹防护), 24(CI), 25(性能优化), 26(SetShapeOnly), 27(numpy参考), 28(Backward验证), 29(训练) | ✅ 已完成：Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台、P3-B/C/D/E四阶段闭环 |
+| **P4: 优化/扩展** | Task 31(性能优化), 32(能力扩展), 33(训练工程化) | ⬜ 规划中：BLAS后端/多线程/COW推广、更多层、训练API封装/模型序列化 |
