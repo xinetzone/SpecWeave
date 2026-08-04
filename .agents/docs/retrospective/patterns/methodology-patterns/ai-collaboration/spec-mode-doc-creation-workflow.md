@@ -1,9 +1,9 @@
 ---
 id: "spec-mode-doc-creation-workflow"
-source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2 + ../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2 + external: 不存在-retrospective-volcengine-double-product-learning-20260706/insight-extraction.md + ../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察5 + ../../../reports/competitive-analysis/retrospective-papi-jiang-wiki-20260706/insight-extraction.md"
+source: "../../../reports/task-reports/retrospective-tech-interface-wiki-20260703/insight-extraction.md#关键洞察2 + ../../../reports/competitive-analysis/retrospective-text-to-cad-learning-20260704/insight-extraction.md#洞察2 + external: 不存在-retrospective-volcengine-double-product-learning-20260706/insight-extraction.md + ../../../reports/competitive-analysis/retrospective-volcengine-agentkit-learning-20260707/insight-extraction.md#洞察5"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.toml"
 maturity: "L2"
-validation_count: 7
+validation_count: 6
 ---
 > **Papi酱Wiki商业领域验证（2026-07-06）**：Papi酱回归个人IP创业趋势观察Wiki任务——商业趋势类Wiki零返工交付，验证了本模式的跨领域适用性，Spec→子代理→验收→元数据→提交全流程顺畅。
 # Spec Mode文档创建工作流：前置规划→原子执行→门禁验证
@@ -81,18 +81,10 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 2. 逐章创建内容文件，保持每章<300行
 3. 每个文件包含完整YAML frontmatter（id/title/category/tags/date/status/author/summary）
 4. 每章添加上一章/下一章/目录的双向导航链接
-5. **推荐做法：将所有原子文件一次性委托给单个子代理批量创建**（详见下方子代理委托策略）
+5. 需要并行的内容（如多个独立章节）可使用多个子代理并行执行
 
-**子代理委托策略**（两种模式，推荐策略A）：
-
-**策略A（推荐）：单代理批量创建所有原子文件**——经过Papi酱Wiki（9文件零返工）、火山引擎AgentKit（9模块零返工）等多次验证，单个子代理一次性接收所有原子文件的创建任务（含路径、frontmatter模板、章节大纲、导航约束），效率更高、上下文一致性更好、文件间导航链接错误率更低。适用条件：
-- 所有原子文件属于同一主题、遵循同一格式规范
-- 文件间有明确的前后导航关系（如Wiki教程的01→02→03章节序列）
-- 子代理任务描述中提供完整的文件清单和每个文件的详细大纲
-
-**策略B：多代理并行创建**——每个子代理负责一个原子文件，适用于章节间完全独立、无导航依赖的场景（如多个独立主题的并列分析）。
-
-**两种策略通用要求**：
+**子代理委托要点**：
+- 每个子代理只负责一个原子文件
 - 提供精确的文件路径（绝对路径）
 - 提供完整的frontmatter模板（不要让子代理猜字段）
 - 提供结构化的章节大纲（具体到二级标题）
@@ -232,7 +224,7 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 
 "帮我写API章节"这种模糊描述，子代理不知道路径、不知道frontmatter格式、不知道章节结构、不知道要写多少行，返回结果几乎肯定需要重写。
 
-**正确做法**：给子代理的任务描述必须包含：精确路径+完整frontmatter模板+结构化大纲+导航约束+硬约束。对于有前后导航关系的原子文件集（如Wiki教程章节），推荐**策略A：单代理批量创建所有原子文件**（见阶段3子代理委托策略），子代理保持上下文一致性可确保导航链接零错误。使用[subagent-atomic-task-template.md](subagent-atomic-task-template.md)模式。
+**正确做法**：给子代理的任务描述必须包含：精确路径+完整frontmatter模板+结构化大纲+导航约束+硬约束。使用[subagent-atomic-task-template.md](subagent-atomic-task-template.md)模式。
 
 ### 反模式4：全部写完才验证
 
@@ -314,19 +306,6 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 - 委派时需提供完整的源内容（提取后的干净文本），而非让子代理自行获取
 - 需提供详细的分析任务描述（要求覆盖的维度、深度见解的数量、章节结构等）
 - 明确产出是对话输出，无需创建文件，避免子代理误解任务形态
-
-**深度分析任务特殊门禁标准（七概念方法论 V 阶段对抗审查产出）**：
-
-深度分析任务的门禁标准与文档创建任务不同——不检查文件大小/链接完整性，而是检查以下 4 项：
-
-| 门禁标准 | 检查内容 | 验证方式 |
-|---------|---------|---------|
-| 见解有迁移价值 | 每个深度见解必须有原文依据 + 超越原文的延伸（不能只复述原文） | 人工判断：删掉原文依据后，延伸部分是否仍有独立价值？ |
-| 覆盖多维度分析 | 分析覆盖≥3个维度（如经济/技术/生态/工程/用户/商业等） | checklist 检查：维度清单全部打勾 |
-| 核心要点有原文依据 | 每个核心要点能在原文中找到对应支撑 | 逐条核对：要点 ↔ 原文段落映射 |
-| 见解深度有对比基准 | 深度见解需明确"超越原文表面的认知增量"是什么 | 人工判断：如果删掉这个见解，读者会缺失什么认知？ |
-
-> **反模式**：仅用"检查点全部打勾"来判断深度分析质量——检查点覆盖≠分析深度，深度分析必须包含人工判断环节。
 
 ### 形态B：文件产出（保存至知识库）
 
@@ -432,21 +411,3 @@ L2完成后再进入阶段1的规范阅读和Spec规划。
 5. **产出物决策正确**：用户明确要求"形成结构化的学习笔记与深度洞察报告"，因此选择形态B保存文件至`docs/knowledge/learning/`目录，符合决策矩阵
 
 **总耗时**：约51分钟（不含后续复盘），产出13章结构化学习笔记+6个Mermaid图表+Spec三件套，无结构性返工。学习笔记保存至知识库可供后续查阅。
-
-## 案例6：Papi酱个人IP趋势Wiki（第六次验证，单代理批量创建策略验证）
-
-| 阶段 | 耗时 | 产出物 |
-|------|------|--------|
-| 阶段0 内容提取 | ~5min | defuddle提取微信公众号文章（Papi酱关闭公司回归个人IP商业分析） |
-| 阶段1 规范阅读+格式检查 | ~3min | 参考claude-tag-article.md格式，确认06-business-trends-analysis新分类目录 |
-| 阶段2 Spec三件套 | ~10min | spec.md(12个验收标准) + tasks.md(12任务) + checklist.md(格式/内容/结构/集成/提交5维度验证) |
-| 阶段3 原子执行 | ~15min | **单代理批量创建**：委派单个子代理一次性创建索引页+8个原子章节文件（共9文件），零返工 |
-| 阶段4-5 验证+归档 | ~10min | 元数据修复+链接验证+文件名验证+知识库索引更新+原子提交 |
-
-**关键发现**：
-1. **单代理批量创建策略验证成功**：将9个原子文件一次性委托给单个子代理，子代理保持上下文一致性，8个原子文件的双向导航链接全部正确，frontmatter格式统一，零返工通过验收。相比"每个文件一个子代理"的策略，减少了8次子代理调用开销和导航一致性风险
-2. **跨领域通用性验证**：商业趋势类Wiki（非技术类）首次完整执行Spec Mode工作流，认知阶梯八章结构（概述→案例→观点→观察→分析→启示→总结→FAQ）在商业领域同样适用
-3. **concept-comparison-tutorial-structure模式超预期**：15维度个人IP vs 平台机构对比表成为文档核心亮点，超出spec预期
-4. **工具降级兜底有效**：check-filename-convention.py参数记忆错误时，人工验证兜底（20秒完成），未造成返工
-
-**总耗时**：约43分钟（不含后续复盘+洞察萃取），产出9个Wiki文件（672行）+Spec三件套+4个复盘文件，全程零结构性返工。

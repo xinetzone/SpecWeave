@@ -14,7 +14,7 @@ validation_count: 7
 方法论模式 → 治理策略
 
 ## 成熟度
-L2 已验证（基于6次实践验证，覆盖格式维度与路径维度：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件、2026-07-04 sunlogin-smart-socket wiki零错误验证、2026-07-04 sunlogin-p4-p1pro wiki零错误验证、2026-07-04 longcat-agent-learning wiki零错误验证、2026-07-04 rainman-translate-book wiki路径维度验证，已落地wiki-spec-template.md强制前置检查，并特化为三查流程L3模式）
+L2 已验证（基于5次实践验证：2026-07-04 text-to-cad wiki任务frontmatter格式错误事件、2026-07-04 agnes-free-api-learning spec格式参考事件、2026-07-04 sunlogin-smart-socket wiki零错误验证、2026-07-04 sunlogin-p4-p1pro wiki零错误验证、2026-07-04 longcat-agent-learning wiki零错误验证，已落地wiki-spec-template.md强制前置检查，并特化为三查流程L3模式）
 
 ## 适用场景
 - 委派子代理创建新文件时
@@ -23,7 +23,6 @@ L2 已验证（基于6次实践验证，覆盖格式维度与路径维度：2026
 - 加入新项目或新目录时
 - 创建新的 spec 文件时（参考同系列现有 spec 的格式约定）
 - 任何需要确定文档/代码格式的场景
-- **在 spec.md 中声明目标文件路径时**（路径维度——spec 中声明的相对路径可能与项目实际目录约定不一致，需以实际目录结构为权威）
 
 ## 问题背景
 
@@ -143,14 +142,6 @@ flowchart LR
 - **执行情况**：创建前先读取 `mopmonk-security-agent-wiki/00-overview.md` 和 `01-core-concepts.md` 确认 frontmatter 格式
 - **结果**：9个文件 frontmatter 格式一次正确，0个需修复
 - **教训**：连续5次验证确认：格式参照优先是防错效果最稳定的机制，30秒投入避免5-10分钟修复
-
-### 案例6：Rainman Translate Book wiki任务（路径维度验证，第6次正面验证）
-
-- **任务背景**：2026-07-04 创建 Rainman Translate Book Agent wiki 教程（1索引页 + 8原子文件 + 9 TOML），spec.md 中声明输出路径为 `docs/knowledge/learning/`
-- **执行情况**：子代理读取同目录现有 wiki 文件（如 mopmonk），发现同类 Agent 平台工具 wiki 实际均位于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/`，因此遵循了实际目录约定而非 spec 中声明的路径
-- **结果**：文件创建于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/`，格式全部正确，但 spec 中声明的路径与实际产出位置不一致
-- **教训**：**"证据优先于记忆"原则不仅适用于格式维度，同样适用于路径维度**——spec 中声明的相对路径可能基于记忆或通用规范，而实际项目目录约定（同类文档实际所在位置）才是权威。子代理正确遵循了实际目录约定（格式/路径一致性优先），但 spec 创建者需在 spec 中提前声明与实际目录结构一致的路径，或事后同步修正 spec 以反映实际产出位置。
-- **证据优先的双维度**：格式（frontmatter分隔符/结构）+ 路径（目标目录位置）都应以实际同类文档为准，而非 spec 声明或记忆。
 
 ## 关联资源
 

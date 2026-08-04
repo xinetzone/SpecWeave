@@ -138,22 +138,3 @@ wiki-spec-template最初是为技术类教程（开源项目、API文档、工�
 | tutorial-cognitive-ladder | L2 | 保持L2，reuse_count+1 | 跨领域（技术→商业）通用性验证 |
 
 **新建模式建议**：本次无必须新建的模式。现有模式库已经覆盖了wiki生产全流程，本次主要是验证成熟度。
-
----
-
-## 归档状态（2026-08-03）
-
-> ✅ **已归档入库** | 归档日期：2026-08-03
-
-所有洞察和模式更新建议已落实到模式库：
-
-| 模式 | 更新内容 | 验证后计数 |
-|------|---------|-----------|
-| spec-mode-doc-creation-workflow | validation_count 5→6，添加Papi酱跨领域验证案例（无reuse_count字段） | VC=6 |
-| dual-quality-gate-subagent | validation_count 4→5, reuse_count 0→1，添加零返工验证案例 | VC=5, RC=1 |
-| tutorial-cognitive-ladder | validation_count 2→3, reuse_count 0→1，添加商业领域验证案例 | VC=3, RC=1 |
-| concept-comparison-tutorial-structure | validation_count 1→2, reuse_count 0→1，maturity保持L1（商业领域首次验证） | VC=2, RC=1 |
-| format-evidence-over-memory-pattern | validation_count 6→7，添加脚本参数记忆错误场景的验证说明（无reuse_count字段） | VC=7 |
-| tool-failure-three-tier-degradation | validation_count 2→3, reuse_count 2→3, 扩展trigger_conditions和适用场景表（新增"工具参数记忆错误/用法不确定"场景） | VC=3, RC=3 |
-
-**归档结论**：3条核心洞察全部落地，6个模式完成增量更新，1个模式扩展适用场景，无新模式创建。
