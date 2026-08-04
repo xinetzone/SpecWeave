@@ -57,7 +57,8 @@ Agent平台与工具生态可分为七大类别：
 | [anthropic-agent-roadmap-wiki.md](anthropic-agent-roadmap-wiki.md) | Anthropic Agent产品线路线图：Conway永久在线智能体等六条产品线 | 从Claude代码挖掘出的Conway/文件记忆/Orbit/Operon/BugCrawl六大产品线，走出聊天框的战略转型 |
 | [octo-platform-wiki.md](octo-platform-wiki.md) | 明略科技Octo平台：Private AI时代多Agent协作基础设施 | O.C.T.O.四维度框架、Matter事项承载、Taste偏好进化、六种协作模式，人与Agent同等身份的消息主体 |
 | [the-agency-project-wiki.md](the-agency-project-wiki.md) | The Agency项目：一人组建一支Agent军团（11.9万Star） | 16个部门完整AI角色库、Frontmatter元数据定义、工作流设计、桌面客户端/Claude Code/Cursor多种使用方式 |
-| [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md) | AReaL 2.0：蚂蚁开源Agent在线强化学习自演进基础设施 | Agent自演进三大支柱、Agent-compute微服务架构、Online RL工作流，让Agent越用越强的关键基础设施 |
+| [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md) | AReaL 2.0：蚂蚁开源Agent在线强化学习自演进基础设施 | Agent自演进三大支柱、Agent-compute微服务架构、Online RL工作流，让Agent越用越强的关键基础设施（概念篇） |
+| [areal-official-practical-wiki.md](areal-official-practical-wiki.md) | AReaL 2.0官方实战教程：从安装到在线RL微服务部署 | 基于官网+文档+本地源码v2.0，1500+行完整教程：Docker/源码安装、GSM8K快速开始、16种RL算法矩阵、三大训练引擎对比、v2.0四大微服务架构详解、Online RL OpenAI兼容API实战、areal CLI命令参考、最佳实践与FAQ（实战篇） |
 | [echobird-wiki.md](echobird-wiki.md) | EchoBird百灵鸟：AI Agent桌面管理工具（解决60%用户安装配置痛点） | Tauri+Rust桌面应用、Model Nexus统一模型配置中心、四大场景（安装修复/本地模型/AI项目/应用管理） |
 | [browseract-wiki.md](browseract-wiki.md) | BrowserAct：Product Hunt日榜第一，让Agent真正能操作浏览器 | 解决登录验证/人机接力/多任务并发/环境隔离五大网页执行痛点、Skill Forge流程沉淀为可复用技能 |
 
@@ -112,13 +113,15 @@ anthropic-agent-roadmap-wiki.md
   → octo-platform-wiki.md
   → the-agency-project-wiki.md
   → areal-agent-rl-wiki.md
+  → areal-official-practical-wiki.md
 ```
 
 1. 先看Anthropic六条产品线，理解从对话到永久在线Agent的演进
 2. 学习Claude Tag的团队协作模式与Ambient Mode
 3. 研究Octo的Private AI多Agent协作基础设施
 4. 了解The Agency的Agent角色库组织方式
-5. 深入AReaL的Agent自演进与在线RL基础设施
+5. 深入AReaL的Agent自演进与在线RL基础设施（概念篇）
+6. 跟随AReaL官方实战教程完成从安装到在线RL微服务部署（实战篇）
 
 ### 路径二：垂直领域Agent实战路径
 
@@ -188,7 +191,7 @@ echobird-wiki.md
 | 📱 **移动测试** | [minitap-official-wiki.md](minitap-official-wiki.md)（产品全景）→ [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md)（架构解析） |
 | 🌐 **浏览器自动化** | [browseract-wiki.md](browseract-wiki.md)（BrowserAct） |
 | 📈 **量化金融** | [quantdinger-ai-trading-wiki.md](quantdinger-ai-trading-wiki.md)（QuantDinger）→ [anthropic-financial-services-wiki.md](anthropic-financial-services-wiki.md)（Anthropic金融工具箱） |
-| 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0在线RL） |
+| 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0概念篇）→ [areal-official-practical-wiki.md](areal-official-practical-wiki.md)（AReaL 2.0实战篇） |
 | 🔧 **开发环境** | [echobird-wiki.md](echobird-wiki.md)（EchoBird桌面工具）→ [trae-v3-3-74-release-notes.md](trae-v3-3-74-release-notes.md)（TRAE发布） |
 | 🇨🇳 **国内平台与多模态** | [volcengine-agent-plan-wiki/00-overview.md](volcengine-agent-plan-wiki/00-overview.md)（火山引擎方舟Agent Plan）→ [volcengine-agent-plan-wiki/06-crossmodal-paradigm.md](volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)（跨模态范式） |
 
