@@ -66,7 +66,8 @@ coverage: "25/25 C++ layers Forward (100%), 19/19 layers Backward gradient valid
 |---|------|------|
 | 17 | **[P3-E Backward实现计划](sections/17-p3e-backward-implementation-plan.md)** | ⭐ P3-E验证与闭环阶段计划（遗留修复+全覆盖+端到端训练） |
 | 19 | **[P3阶段总复盘](sections/19-p3-phase-retrospective.md)** | ⭐ P3全阶段复盘（R→I→E→V），4大洞察+3个可复用模式 |
-| 20 | **[P4路线图](sections/20-p4-roadmap.md)** | ⭐ P4优化与扩展规划（性能/能力/工程化） |
+
+> P4 路线图已移至规划区：[caffe-ffi-tvm-integration/p4-roadmap.md](../../../../../../.trae/specs/caffe-ffi-tvm-integration/p4-roadmap.md)
 
 ### 知识沉淀
 

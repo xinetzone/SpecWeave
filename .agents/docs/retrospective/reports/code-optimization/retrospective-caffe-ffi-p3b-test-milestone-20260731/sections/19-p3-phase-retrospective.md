@@ -143,6 +143,6 @@ P3 阶段（Backward 实现与验证）**圆满收官**：
 ## 附：相关文档
 
 - [P3-E 验收报告](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)
-- [P4 路线图](20-p4-roadmap.md)
+- [P4 路线图](../../../../../../../.trae/specs/caffe-ffi-tvm-integration/p4-roadmap.md)
 - [P3-D Backward 待办清单](08-p3d-backward-todo.md)
 - [P3-E 实现计划](17-p3e-backward-implementation-plan.md)

@@ -1,7 +1,7 @@
 ---
 title: P4 阶段路线图——优化与扩展
 date: 2026-08-04
-category: code-optimization
+category: caffe-ffi
 task_type: roadmap
 tags: [caffe-ffi, p4, roadmap, optimization, planning]
 status: planned
@@ -13,6 +13,7 @@ source: "retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md#p4-roadma
 > 前置阶段：P3（Backward 实现与验证）已圆满收官
 > 规划日期：2026-08-04
 > 状态：规划中（planned）
+> 对应规划：spec.md P4 小节、tasks.md Task 31-33
 
 ---
 
@@ -103,5 +104,5 @@ P4 阶段完成标准：
 
 ## 六、附：相关文档
 
-- [P3 阶段总复盘](19-p3-phase-retrospective.md)
-- [P3-E 验收报告](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)
+- [P3 阶段总复盘](../../../.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/sections/19-p3-phase-retrospective.md)
+- [P3-E 验收报告](../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)
