@@ -294,17 +294,22 @@
 - **Acceptance Criteria Addressed**: AC-24
 - **Test Results**: 21/21 COW tests passed, 500-cycle stress test zero leak
 
-## [ ] Task 17b: ASan内存管理验证
+## [x] Task 17b: ASan内存管理验证
 - **Priority**: medium
 - **Depends On**: Task 17
-- **Status**: ⬜ 待开始（内存计数器已实现，ASan正式验证待Linux/GCC环境）
+- **Status**: ✅ 已完成（2026-08-04）
 - **Description**:
   - total_allocated_bytes()/live_blob_count()内存计数器已实现
-  - 使用AddressSanitizer（-fsanitize=address）编译运行测试
-  - 验证ObjectPtr引用计数在Net销毁时正确释放
-  - COW引用计数正确性验证
+  - 新增 `CAFFE_FFI_ENABLE_ASAN` CMake 选项（默认 OFF）与 GCC/Clang/MSVC 编译/链接标志（`-fsanitize=address -fno-omit-frame-pointer`）
+  - 新增 ASan 演示用例：`examples/asan_demo.cpp`（leak_demo/heap_overflow_demo）、`tests/cpp/test_asan_demo.cpp`（受宏守卫）
+  - 新增 `docs/setup/ASAN_REPORT_READING_GUIDE.md` 报告解读指南
+  - 使用 AddressSanitizer 编译运行测试，验证 ObjectPtr 引用计数在 Net 销毁时正确释放、COW 引用计数正确性
 - **Acceptance Criteria Addressed**: AC-14
-- **Notes**: 内存计数器和压力测试表明无明显泄漏，ASan正式验证待执行
+- **Test Results**: ASan 构建验证 1647 passed / 1 skipped / 0 ASan 内存安全错误；内存泄漏专项 test_memory_leak.py 16 passed（零泄漏）；COW 21 passed；非 ASan 默认构建回归 1647 passed / 1 skipped
+- **Notes**:
+  - ASan 构建需用 `-O1`（ASan 推荐优化级别）并清空 conda 默认 CFLAGS/CXXFLAGS，规避 GNU ld 在 `-O3+ASan+--gc-sections` 下的 `bad reloc symbol index` 链接 bug（与代码无关）
+  - Python 解释器退出时其分配器缓存会触发 ASan 泄漏误报，故 `ASAN_OPTIONS=detect_leaks=0`，泄漏检测由项目 `total_allocated_bytes()` 计数器承担；ASan 核心价值是检测内存安全错误（溢出/UAF/双重释放）
+  - **发现并修复真实堆越界读**：`test_inplace_chain_forward` 中 in-place InnerProduct（`ip3` 层 num_output 4→2 改变尺寸）在 `InnerProductLayer::Forward_cpu` 触发 heap-buffer-overflow——in-place Reshape 截断共享缓冲区后按旧尺寸读取数据。根因修复：`InnerProductLayer::Reshape` 增加 in-place 安全守卫，当 bottom==top 且输出 count≠输入 count 时抛错拒绝；同步修正测试 prototxt（ip3 改为非 in-place）并新增负向测试 `test_inplace_inner_product_shape_change_rejected` 锁定守卫
 
 ## [x] Task 18: M6-独立项目萃取迁移（vendor→libs）
 - **Priority**: high
