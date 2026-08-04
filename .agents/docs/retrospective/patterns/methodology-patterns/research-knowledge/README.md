@@ -43,3 +43,4 @@
 | [spec-anchored-questioning.md](spec-anchored-questioning.md) | Spec锚定提问法：以spec.md的FR/NFR/AC条款为锚点生成深度问题，确保审计提问可追溯、可验证、系统性，与五维验证互补构成六维审查，1次验证（对抗性审查知识库开放性提问） | L1 |
 | [five-layer-progressive-analysis.md](five-layer-progressive-analysis.md) | 五层递进分析框架：认识论→方法论→偏差→实践→边界，从"为什么"到"怎么做"再到"何时失效"的完整追问链，覆盖知识库质量全光谱，1次验证（对抗性审查知识库开放性提问） | L1 |
 | [riev-doc-learning-method.md](riev-doc-learning-method.md) | RIEV文档学习法：R(事实采集)→I(洞察提炼四元组)→E(结构化指南)→V(三视角对抗审查)+归档收尾，四段式知识沉淀流水线，含G1-G3质量门和6个反模式，2次实战验证（秒悟大使入驻指南/秒悟Meoo实训案例） | L2 |
+| [methodology-overflow-paradigm.md](methodology-overflow-paradigm.md) | 方法论溢出范式：技术演进不是"全新领域全新范式"，而是"成熟方法论向新领域溢出"，学习新领域最快方式是寻找新旧领域方法论映射，预判新领域赢家（擅长既有领域工程化的玩家），1次验证（Vercel Eve前端方法论迁移） | L1 |

@@ -31,24 +31,24 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 
 ## 知识沉淀建议
 
-### 待沉淀模式（L1实验性）
+### 已沉淀模式（于2026-08-04正式入库）
 
-本次洞察萃取识别出3个有价值的模式候选，建议在后续任务中验证后正式入库：
+本次洞察萃取识别出的3个模式候选已正式入库，从"待验证候选"转为"已入库模式"：
 
 1. **demo-prod-six-layer-model（Demo-Prod六层能力模型）**
-   - 位置建议：`docs/retrospective/patterns/architecture-patterns/`
+   - 入库位置：[`docs/retrospective/patterns/architecture-patterns/demo-prod-six-layer-model.md`](../../../patterns/architecture-patterns/demo-prod-six-layer-model.md)
    - 价值：为AI应用从Demo到生产提供架构评估框架
-   - 验证机会：后续分析其他生产级Agent框架时验证六层模型的普适性
+   - 后续验证：分析其他生产级Agent框架时验证六层模型的普适性（L1→L2需2次验证）
 
 2. **three-tier-tool-fallback（三级工具回退链）**
-   - 位置建议：`docs/retrospective/patterns/methodology-patterns/tools-automation/`
+   - 入库位置：[`docs/retrospective/patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md`](../../../patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md)
    - 价值：为网页内容提取等工具使用场景提供标准回退策略
-   - 验证机会：后续网页提取任务中主动应用并验证
+   - 后续验证：后续网页提取任务中主动应用并验证（L1→L2需2次验证）
 
 3. **tool-skill-separation（工具Skill职责分离）**
-   - 位置建议：`docs/retrospective/patterns/architecture-patterns/`
+   - 入库位置：[`docs/retrospective/patterns/architecture-patterns/tool-skill-separation.md`](../../../patterns/architecture-patterns/tool-skill-separation.md)
    - 价值：Agent架构设计中"能力层/知识层"分离的通用原则
-   - 验证机会：后续分析其他Agent框架或设计Agent系统时应用验证
+   - 后续验证：分析其他Agent框架或设计Agent系统时应用验证（L1→L2需2次验证）
 
 ### 关联知识更新
 
@@ -61,7 +61,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 |--------|--------|------|---------|
 | 🟢 低优 | 实际安装体验Eve框架，创建一个简单Demo Agent | 技术实践 | 下次有Agent开发需求时 |
 | 🟢 低优 | 对比分析LangChain/CrewAI/AutoGen等框架，验证六层能力模型的普适性 | 技术研究 | 后续框架对比任务中 |
-| 🟢 低优 | 如沉淀模式，按照模式成熟度标准（L1→L2需2次验证）逐步升级 | 知识沉淀 | 后续任务中自然验证 |
+| 🟢 低优 | 按模式成熟度标准（L1→L2需2次验证）逐步升级已入库模式 | 知识沉淀 | ✅ 已完成入库（2026-08-04），待后续任务自然验证后升级 |
 
 ## 导出检查清单
 

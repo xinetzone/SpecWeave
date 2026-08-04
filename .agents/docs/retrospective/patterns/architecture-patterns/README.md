@@ -54,6 +54,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [data-lifecycle-economic-stratification.md](data-lifecycle-economic-stratification.md) | 数据生命周期经济分层：基于数据经济属性（消耗品vs知识资产）而非纯技术特征分层，Session类设TTL自动过期，Memory类设质量闸门+半衰期审计，避免记忆污染与治理成本浪费 | L1 实验性 | AI Agent记忆系统、CMS草稿/发布分层、数据湖热温冷分层、日志系统分层存储 |
 | [legacy-integration-dual-track.md](legacy-integration-dual-track.md) | 存量系统双轨接入两阶段法：第一阶段REST/OpenAPI快速转换一键接入（严格只读）验证价值，第二阶段基于Observability数据筛选Top 20%高频接口改造为标准协议，先接入再优化 | L1 实验性 | AI Agent平台存量系统接入、微服务API网关集成、遗留系统现代化改造、多云/混合云集成 |
 | [graph-transform-validator-architecture.md](graph-transform-validator-architecture.md) | 图变换验证工具四段式架构：最小Parser→独立Analyzer→忠实Transformer→双视图Visualizer，零依赖验证DAG变换正确性（before/after对比） | L1 实验性 | 深度学习框架图变换Pass验证、编译器IR变换验证、DAG结构变换调试、可视化验证工具 |
+| [demo-prod-six-layer-model.md](demo-prod-six-layer-model.md) | Demo-Prod六层能力模型：可靠性→可观测性→安全性→可维护性→可扩展性→可部署性，从Demo到生产需要补全六层能力底座而非优化 | L1 实验性 | AI应用/Agent框架生产就绪度评估、技术选型决策、团队能力建设评估 |
+| [tool-skill-separation.md](tool-skill-separation.md) | 工具与Skill职责分离：能力层（Tools，稳定通用）与知识层（Skills，易变业务）分离，按变化频率隔离，让变化频率不同的东西以不同节奏演进 | L1 实验性 | Agent架构设计、知识管理系统、能力与知识分层、软件架构"代码与配置分离" |
 
 ## 成熟度定义
 
