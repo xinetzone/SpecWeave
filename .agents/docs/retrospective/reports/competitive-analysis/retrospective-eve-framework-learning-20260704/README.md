@@ -3,8 +3,9 @@ id: "retrospective-eve-framework-learning-20260704-readme"
 title: "Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-eve"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.toml"
-version: "1.2"
+version: "1.3"
 date: "2026-07-04"
+last_updated: "2026-08-04"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
 ---
@@ -44,6 +45,7 @@ template_upgrade: "2026-07-06 v1.2"
 | [insight-extraction.md](insight-extraction.md) | 洞察萃取：4个核心洞察+4个模式入库+3个认知模型+2个方法论模式验证 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：报告格式、归档位置、后续行动项 |
 | [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：4项行动计划（IMP-002/004已完成、IMP-001部分完成、IMP-003进行中） |
+| [framework-comparison-validation.md](framework-comparison-validation.md) | 🔬 Demo-Prod六层模型跨框架验证报告：LangGraph+CrewAI双框架对比，模型普适性验证通过（2026-08-04新增） |
 
 ## 后续延伸学习（2026-08-04）
 
@@ -52,6 +54,7 @@ template_upgrade: "2026-07-06 v1.2"
 - **源码学习与校准**：深度阅读本地源码 `external/tools/eve/docs/`，校正了公开资料中的过时写法（`model.md`→`defineAgent`、`requireApproval`→`approval: always()`、连接定义方式等），沉淀为 [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md)（10章，v1.1）。
 - **跨框架对比**：对比了 **Eve 与 LangGraph** 在子 Agent 管理上的实现差异（声明式文件目录约定 vs 编程式图抽象），印证了洞见1的"方法论迁移"判断。
 - **模式沉淀**：从洞察中提取并入库了 **4 个 L1 模式**（methodology-overflow-paradigm、demo-prod-six-layer-model、three-tier-tool-fallback、tool-skill-separation），详见 [insight-extraction.md](insight-extraction.md)。
+- **🔬 六层模型普适性验证**（本次新增）：系统性对比 **LangChain/LangGraph 1.0** 与 **CrewAI** 两大主流Agent框架，按六层能力模型逐项验证，结论为**普适性验证通过**（5/6层完全验证，L3补充分层实现说明），详见 [framework-comparison-validation.md](framework-comparison-validation.md)。
 
 ## 关联报告
 
