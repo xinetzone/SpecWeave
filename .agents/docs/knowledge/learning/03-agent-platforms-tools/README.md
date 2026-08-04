@@ -29,10 +29,11 @@ Agent平台与工具生态可分为七大类别：
 
 ---
 
-## 📚 子Wiki索引（9个专题）
+## 📚 子Wiki索引（12个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
+| **[echobird-wiki/](echobird-wiki/README.md)** | **13篇** | **EchoBird 源码级 Agent 桌面管理工具 Wiki 教程**：基于官网与本地源码（external/tools/EchoBird，v5.6.0）深度解析，覆盖产品定位、Tauri+Rust 架构、Model Nexus 模型中心、四大核心场景、本地大模型（vLLM/SGLang/llama.cpp）、Codex Proxy 协议转换、工具注册表、高级功能、快速上手、对比趋势与 FAQ 术语表，**源码级 Agent 桌面工具工程实现必读** |
 | **[eve-wiki/](eve-wiki/README.md)** | **11篇** | **Vercel Eve 开源 Agent 框架 Wiki 教程**：本期"Next.js for Agents"（filesystem-first，一个 Agent 就是一个目录），覆盖产品定位、目录结构与九大生产级能力（durable execution/沙箱/人工审批/连接/多通道/追踪/评测）、与 Mastra/LangGraph 竞品对比选型、快速上手、工程化理念与趋势洞察（Demo→生产、工程底座竞争） |
 | **[langgraph-implementation-roadmap.md](langgraph-implementation-roadmap.md)** | **单篇完整路线图** | **LangGraph 生产级落地实施路线图**：从环境配置（Python/TS双栈选型）、核心组件选型矩阵（State/Checkpointer/Tools/Memory/部署）、四阶段迁移计划（PoC→试点→生产化→规模化，12-16周）、风险回滚策略到六层能力对齐检查清单，**团队引入LangGraph从0到生产必读** |
 | **[volcengine-agentkit-wiki/](volcengine-agentkit-wiki/README.md)** | **12篇** | **火山引擎 AgentKit 企业级 AI Agent 基础设施平台 Wiki 教程**：基于七概念方法论（R-I-E-V）深度沉淀，60条事实→5条洞察→3个跨平台可复用模式→16条攻击37.5%采纳，11章从产品定义到生产化检查清单，附选型评估框架/存量改造SOP/Demo→生产12项检查，**企业智能体从0到1必读** |
