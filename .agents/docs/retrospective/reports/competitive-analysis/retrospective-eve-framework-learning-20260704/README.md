@@ -3,7 +3,7 @@ id: "retrospective-eve-framework-learning-20260704-readme"
 title: "Vercel Eve前端Agent框架深度学习·行业趋势洞察复盘"
 source: "external: 目录无README-../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-eve"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.toml"
-version: "1.1"
+version: "1.2"
 date: "2026-07-04"
 scenario: "B-single-day-medium"
 template_upgrade: "2026-07-06 v1.2"
@@ -41,9 +41,17 @@ template_upgrade: "2026-07-06 v1.2"
 | 章节 | 说明 |
 |------|------|
 | [execution-retrospective.md](execution-retrospective.md) | 执行过程复盘：Spec规划→内容提取→逐层分析→结构化输出→主题README更新 |
-| [insight-extraction.md](insight-extraction.md) | 洞察萃取：4个核心洞察+3个认知模型+2个方法论模式验证 |
+| [insight-extraction.md](insight-extraction.md) | 洞察萃取：4个核心洞察+4个模式入库+3个认知模型+2个方法论模式验证 |
 | [export-suggestions.md](export-suggestions.md) | 导出建议：报告格式、归档位置、后续行动项 |
-| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：4项行动计划（全部低优待自然验证） |
+| [insight-action-backlog.md](insight-action-backlog.md) | 行动项跟踪：4项行动计划（IMP-002/004已完成、IMP-001部分完成、IMP-003进行中） |
+
+## 后续延伸学习（2026-08-04）
+
+本次复盘已从"单篇文章分析"延伸为"完整框架学习闭环"，后续阶段产出如下：
+
+- **源码学习与校准**：深度阅读本地源码 `external/tools/eve/docs/`，校正了公开资料中的过时写法（`model.md`→`defineAgent`、`requireApproval`→`approval: always()`、连接定义方式等），沉淀为 [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md)（10章，v1.1）。
+- **跨框架对比**：对比了 **Eve 与 LangGraph** 在子 Agent 管理上的实现差异（声明式文件目录约定 vs 编程式图抽象），印证了洞见1的"方法论迁移"判断。
+- **模式沉淀**：从洞察中提取并入库了 **4 个 L1 模式**（methodology-overflow-paradigm、demo-prod-six-layer-model、three-tier-tool-fallback、tool-skill-separation），详见 [insight-extraction.md](insight-extraction.md)。
 
 ## 关联报告
 
@@ -52,3 +60,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [spec-driven-development.md](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md) — 本次验证的方法论模式：Spec驱动开发
 - [two-stage-outline-then-expand.md](../../../patterns/methodology-patterns/ai-collaboration/two-stage-outline-then-expand.md) — 本次验证的方法论模式：两阶段先大纲后展开
 - [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) — 本次触发工具回退链
+- [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md) — 本次延伸沉淀的结构化框架教程
