@@ -37,7 +37,7 @@
 - [x] 运行 fix-x-toml-ref.py 自动修复 x-toml-ref 路径
 - [x] 运行文件名规范检查：`python .agents/scripts/check-filename-convention.py`
 - [x] 更新知识库索引 .agents/docs/knowledge/README.md（添加条目到最近更新表和学习分类索引）
-- [x] 原子提交（wiki 文件已在 commit 912907f3 提交；本次清理提交 5ed950b5 移除旧路径孤儿 TOML）
+- [ ] 原子提交（commit: docs(knowledge): 创建 Rainman Translate Book Wiki 教程）
 
 ## L5 收尾验证
 - [x] 运行 fix-x-toml-ref.py 确保所有 x-toml-ref 路径正确

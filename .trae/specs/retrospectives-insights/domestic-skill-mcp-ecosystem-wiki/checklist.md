@@ -1,7 +1,6 @@
 # 国内 Skill/MCP 生态盘点学习与 Wiki 教程文档 - 验证清单
 
 - [x] Checkpoint 1: Wiki 文档文件已创建在正确路径（docs/knowledge/learning/domestic-skill-mcp-ecosystem-wiki.md）
-  > ⚠️ 复盘修正（sc-20260704）：文件实际创建于 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/`，非预期路径。详见 [seven-concepts-report.md](seven-concepts-report.md) 洞察1。原验证为虚假通过。
 - [x] Checkpoint 2: 文档包含符合规范的 YAML frontmatter（---包裹，title/source/date/tags 字段完整）
 - [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
 - [x] Checkpoint 4: 概念入门章节清晰解释 Skill/MCP/CLI 三种集成方式的定义与差异
@@ -29,7 +28,6 @@
 - [x] Checkpoint 26: 资源链接章节包含原文链接和 16 个品牌的官方平台/GitHub 链接
 - [x] Checkpoint 27: 资源链接按行业分类组织（餐饮/出行/跑腿/办公协作/支付/内容创作）
 - [x] Checkpoint 28: docs/knowledge/README.md 已更新，learning 分类新增本教程条目
-  > ⚠️ 复盘修正（sc-20260704）：docs/knowledge/README.md 文件当前不存在，索引更新未生效。详见 [seven-concepts-report.md](seven-concepts-report.md) 行动项 A5。
 - [x] Checkpoint 29: 知识库索引条目格式与现有条目一致，包含标题/摘要/日期/标签
 - [x] Checkpoint 30: 文档语言通俗易懂，适合不同技术水平读者（开发者/产品经理/研究者）
 - [x] Checkpoint 31: 适当位置引用原文内容作为参考依据
