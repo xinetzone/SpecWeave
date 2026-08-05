@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atomic Emergence — 原子涌现</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    display: flex;
+    overflow: hidden;
+  }
+  #sidebar {
+    width: 300px;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    padding: 24px 20px;
+    overflow-y: auto;
+    flex-shrink: 0;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+  }
+  #sidebar h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  #sidebar .subtitle {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #adb5bd;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f3f5;
+  }
+  .control-group {
+    margin-bottom: 16px;
+  }
+  .control-group label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #495057;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .value-display {
+    font-size: 11px;
+    color: #6c757d;
+    background: #f8f9fa;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: 'SF Mono', Monaco, monospace;
+  }
+  input[type="range"] {
+    width: 100%;
+    height: 4px;
+    -webkit-appearance: none;
+    background: #e9ecef;
+    border-radius: 2px;
+    outline: none;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #4f46e5;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(79,70,229,0.3);
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: #4f46e5;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 3px rgba(79,70,229,0.3);
+  }
+  .seed-display {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4f46e5;
+    background: #ede9fe;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 12px;
+    font-family: 'SF Mono', Monaco, monospace;
+  }
+  .button-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .btn {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    background: #ffffff;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .btn:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+  }
+  .btn-primary {
+    background: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+  }
+  .btn-primary:hover {
+    background: #4338ca;
+    border-color: #4338ca;
+  }
+  .jump-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .jump-row input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: 'SF Mono', Monaco, monospace;
+    outline: none;
+  }
+  .jump-row input:focus {
+    border-color: #4f46e5;
+  }
+  #canvas-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+  }
+  #canvas-container canvas {
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+  .footer-note {
+    font-size: 10px;
+    color: #ced4da;
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.5;
+  }
+  .color-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .color-item {
+    flex: 1;
+    text-align: center;
+  }
+  .color-item label {
+    font-size: 10px;
+    color: #6c757d;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .color-item input[type="color"] {
+    width: 100%;
+    height: 28px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1>Atomic Emergence</h1>
+  <div class="subtitle">原子涌现 · 从简单到复杂的计算美学</div>
+
+  <div class="section-title">Seed</div>
+  <div class="seed-display" id="seedDisplay">Seed: 12345</div>
+  <div class="button-row">
+    <button class="btn" onclick="prevSeed()">◀ Prev</button>
+    <button class="btn" onclick="randomSeed()">🎲 Random</button>
+    <button class="btn" onclick="nextSeed()">Next ▶</button>
+  </div>
+  <div class="jump-row">
+    <input type="number" id="seedInput" placeholder="输入种子..." min="1">
+    <button class="btn btn-primary" onclick="jumpSeed()">Go</button>
+  </div>
+
+  <div class="section-title">Parameters</div>
+  <div class="control-group">
+    <label>Atomic Agents <span class="value-display" id="agentsVal">1500</span></label>
+    <input type="range" id="agents" min="200" max="4000" step="100" value="1500" oninput="updateParam('agents', this.value)">
+  </div>
+  <div class="control-group">
+    <label>Noise Octaves <span class="value-display" id="octavesVal">4</span></label>
+    <input type="range" id="octaves" min="1" max="6" step="1" value="4" oninput="updateParam('octaves', this.value)">
+  </div>
+  <div class="control-group">
+    <label>Phase Coupling <span class="value-display" id="couplingVal">0.6</span></label>
+    <input type="range" id="coupling" min="0" max="1" step="0.05" value="0.6" oninput="updateParam('coupling', this.value)">
+  </div>
+  <div class="control-group">
+    <label>Decay Rate <span class="value-display" id="decayVal">0.97</span></label>
+    <input type="range" id="decay" min="0.90" max="0.995" step="0.005" value="0.97" oninput="updateParam('decay', this.value)">
+  </div>
+  <div class="control-group">
+    <label>Flow Speed <span class="value-display" id="speedVal">1.5</span></label>
+    <input type="range" id="speed" min="0.2" max="4" step="0.1" value="1.5" oninput="updateParam('speed', this.value)">
+  </div>
+  <div class="control-group">
+    <label>Trail Length <span class="value-display" id="trailVal">40</span></label>
+    <input type="range" id="trail" min="5" max="120" step="5" value="40" oninput="updateParam('trail', this.value)">
+  </div>
+
+  <div class="section-title">Actions</div>
+  <div class="button-row">
+    <button class="btn btn-primary" onclick="regenerate()">🔄 Regenerate</button>
+    <button class="btn" onclick="resetParams()">↺ Reset</button>
+  </div>
+  <button class="btn" style="width:100%;" onclick="savePNG()">📥 Download PNG</button>
+
+  <div class="footer-note">
+    原子组件的涌现之美<br>
+    Inspired by deep learning atomic design
+  </div>
+</div>
+
+<div id="canvas-container"></div>
+
+<script>
+let seed = 12345;
+let params = {
+  agents: 1500,
+  octaves: 4,
+  coupling: 0.6,
+  decay: 0.97,
+  speed: 1.5,
+  trail: 40
+};
+
+let agents = [];
+let fieldScale = 0.003;
+let time = 0;
+let zoff = 0;
+
+function setup() {
+  let c = createCanvas(900, 900);
+  c.parent('canvas-container');
+  resetSketch();
+  noStroke();
+}
+
+function resetSketch() {
+  randomSeed(seed);
+  noiseSeed(seed);
+  time = 0;
+  zoff = 0;
+  agents = [];
+  for (let i = 0; i < params.agents; i++) {
+    agents.push({
+      x: random(width),
+      y: random(height),
+      px: 0,
+      py: 0,
+      phase: random(TWO_PI),
+      life: 0,
+      maxLife: random(200, 600),
+      hueShift: random(-0.1, 0.1)
+    });
+    agents[i].px = agents[i].x;
+    agents[i].py = agents[i].y;
+    agents[i].life = random(agents[i].maxLife);
+  }
+  background(15, 15, 35);
+}
+
+function draw() {
+  background(15, 15, 35, 255 * (1 - params.decay));
+  zoff += 0.0015 * params.speed;
+
+  let ns = params.octaves;
+  let coup = params.coupling;
+  let speed = params.speed;
+
+  for (let a of agents) {
+    a.px = a.x;
+    a.py = a.y;
+
+    let nx = a.x * fieldScale;
+    let ny = a.y * fieldScale;
+
+    let angle = noise(nx, ny, zoff) * TWO_PI * ns;
+
+    let phaseNoise = noise(nx + 100, ny + 100, zoff) * TWO_PI;
+    a.phase = lerp(a.phase, phaseNoise, coup * 0.02);
+
+    angle += Math.sin(a.phase) * coup * 0.8;
+
+    let vx = Math.cos(angle) * speed;
+    let vy = Math.sin(angle) * speed;
+
+    a.x += vx;
+    a.y += vy;
+    a.life++;
+
+    if (a.x < 0 || a.x > width || a.y < 0 || a.y > height || a.life > a.maxLife) {
+      a.x = random(width);
+      a.y = random(height);
+      a.px = a.x;
+      a.py = a.y;
+      a.life = 0;
+      a.phase = random(TWO_PI);
+      a.maxLife = random(200, 600);
+    }
+
+    let lifeRatio = a.life / a.maxLife;
+    let stability = sin(lifeRatio * PI);
+    let turbulence = noise(a.x * 0.005, a.y * 0.005, zoff * 0.5);
+
+    let r = lerp(40, 210, stability);
+    let g = lerp(90, 170, stability * (1 - turbulence * 0.5));
+    let b = lerp(180, 80, stability);
+
+    let alpha = stability * 0.6 * (1 - lifeRatio * 0.3);
+
+    stroke(r, g, b, alpha);
+    strokeWeight(0.8);
+    line(a.px, a.py, a.x, a.y);
+  }
+
+  time++;
+  if (time % 300 === 0) {
+    zoff += 0.5;
+  }
+}
+
+function updateParam(key, val) {
+  val = parseFloat(val);
+  params[key] = val;
+  document.getElementById(key + 'Val').textContent = val;
+  if (key === 'agents') {
+    let oldCount = agents.length;
+    agents = agents.slice(0, val);
+    while (agents.length < val) {
+      agents.push({
+        x: random(width),
+        y: random(height),
+        px: 0, py: 0,
+        phase: random(TWO_PI),
+        life: 0,
+        maxLife: random(200, 600),
+        hueShift: random(-0.1, 0.1)
+      });
+      agents[agents.length - 1].px = agents[agents.length - 1].x;
+      agents[agents.length - 1].py = agents[agents.length - 1].y;
+      agents[agents.length - 1].life = random(agents[agents.length - 1].maxLife);
+    }
+  }
+  if (key === 'decay') {
+    resetSketch();
+  }
+}
+
+function setSeed(newSeed) {
+  seed = newSeed;
+  document.getElementById('seedDisplay').textContent = 'Seed: ' + seed;
+  resetSketch();
+}
+
+function nextSeed() { setSeed(seed + 1); }
+function prevSeed() { setSeed(Math.max(1, seed - 1)); }
+function randomSeed() { setSeed(floor(random(1, 999999))); }
+function jumpSeed() {
+  let val = parseInt(document.getElementById('seedInput').value);
+  if (val > 0) setSeed(val);
+}
+
+function regenerate() {
+  resetSketch();
+}
+
+function resetParams() {
+  params = { agents: 1500, octaves: 4, coupling: 0.6, decay: 0.97, speed: 1.5, trail: 40 };
+  document.getElementById('agents').value = 1500;
+  document.getElementById('octaves').value = 4;
+  document.getElementById('coupling').value = 0.6;
+  document.getElementById('decay').value = 0.97;
+  document.getElementById('speed').value = 1.5;
+  document.getElementById('trail').value = 40;
+  document.getElementById('agentsVal').textContent = '1500';
+  document.getElementById('octavesVal').textContent = '4';
+  document.getElementById('couplingVal').textContent = '0.6';
+  document.getElementById('decayVal').textContent = '0.97';
+  document.getElementById('speedVal').textContent = '1.5';
+  document.getElementById('trailVal').textContent = '40';
+  resetSketch();
+}
+
+function savePNG() {
+  saveCanvas('atomic-emergence-seed-' + seed, 'png');
+}
+</script>
+
+</body>
+</html>
