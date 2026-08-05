@@ -547,7 +547,7 @@ TVM-FFI 在 PyCaffe 中的角色:
 | `docker/modules/pycaffe/scripts/verify-pycaffe.sh`（源项目归档路径） | 修改 | io→SKIP，新增data_types/transforms/tvm_ffi/caffeproto验证 |
 | `python/pycaffe/CMakeLists.txt`（源项目归档路径） | 修改 | 版本号1.0.0、_caffe_cpp.so命名、RPATH、install排除.so、tvm_ffi_shared安装 |
 | `python/pycaffe/python/pycaffe/_caffe.py`（源项目归档路径） | 修改 | _top_ids/_bottom_ids改为类方法，_BlobWrapper封装 |
-| [docker/modules/README.md](file:///d:spaces/SpecWeave/external/chaos/caffe/docker/modules/README.md) | 修改 | 独立构建架构文档 |
+| [docker/modules/README.md](../../../../modules/) | 修改 | 独立构建架构文档 |
 
 ## 附录 B: 验证结果详情
 

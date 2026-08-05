@@ -27,7 +27,7 @@ Windows Terminal 主体通过 C++/WinRT 实现 Agent 功能的深度集成，集
 - 事件路由
 - 窗口/标签/窗格状态查询
 
-> **来源**：[`SharedWta.h` 头部注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L6-L26)
+> **来源**：[`SharedWta.h` 头部注释](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L6-L26)
 
 ---
 
@@ -37,16 +37,16 @@ Agent 相关 C++ 代码分布在 `src/cascadia/` 下的多个目录中：
 
 | 目录 | 文件 | 职责 |
 |------|------|------|
-| **TerminalApp/** | [`SharedWta.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h) / [`SharedWta.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) | wta-master 进程单例、引用计数、Job Object、崩溃检测 |
-| | [`AgentPaneContent.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.h) / [`AgentPaneContent.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.cpp) / `AgentPaneContent.xaml` / `AgentPaneContent.idl` | Agent Pane XAML chrome 包装器、顶部状态栏、图标、autofix 状态 |
-| | [`Tab.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.h) / [`Tab.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp) | Tab 级 Agent Pane 查找、stash/restore、per-tab agent override |
-| | [`TerminalPage.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.h) / [`TerminalPage.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.cpp) / [`TerminalPage.Protocol.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.Protocol.cpp) | 主页面逻辑、Agent Pane 创建/销毁、事件处理、Protocol 方法实现 |
-| | [`TabManagement.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp) | Tab 初始化、pre-warm 触发、跨窗口拖拽重命名 |
-| | [`AppActionHandlers.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp) | Agent 相关快捷键 action 处理（OpenAgentPane、FocusAgentPane 等） |
-| | [`AgentPaneLog.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneLog.h) | Agent Pane 调试日志宏 |
-| | [`AgentPaneDragStash.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneDragStash.h) | 跨窗口拖拽 stash 状态 |
-| **WindowsTerminal/** | [`TerminalProtocolComServer.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h) / [`TerminalProtocolComServer.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp) | 经典 COM 进程外服务器、MTA 线程、事件 fan-out、BoundedDispatchQueue |
-| **TerminalProtocol/** | [`TerminalProtocol.idl`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl) | WinRT IDL 协议结构定义（WindowInfo/TabInfo/PaneInfo 等）、`IProtocolServer` / `IProtocolEventCallback` 接口 |
+| **TerminalApp/** | [`SharedWta.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h) / [`SharedWta.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) | wta-master 进程单例、引用计数、Job Object、崩溃检测 |
+| | [`AgentPaneContent.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.h) / [`AgentPaneContent.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.cpp) / `AgentPaneContent.xaml` / `AgentPaneContent.idl` | Agent Pane XAML chrome 包装器、顶部状态栏、图标、autofix 状态 |
+| | [`Tab.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.h) / [`Tab.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp) | Tab 级 Agent Pane 查找、stash/restore、per-tab agent override |
+| | [`TerminalPage.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.h) / [`TerminalPage.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.cpp) / [`TerminalPage.Protocol.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TerminalPage.Protocol.cpp) | 主页面逻辑、Agent Pane 创建/销毁、事件处理、Protocol 方法实现 |
+| | [`TabManagement.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp) | Tab 初始化、pre-warm 触发、跨窗口拖拽重命名 |
+| | [`AppActionHandlers.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp) | Agent 相关快捷键 action 处理（OpenAgentPane、FocusAgentPane 等） |
+| | [`AgentPaneLog.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneLog.h) | Agent Pane 调试日志宏 |
+| | [`AgentPaneDragStash.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneDragStash.h) | 跨窗口拖拽 stash 状态 |
+| **WindowsTerminal/** | [`TerminalProtocolComServer.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h) / [`TerminalProtocolComServer.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp) | 经典 COM 进程外服务器、MTA 线程、事件 fan-out、BoundedDispatchQueue |
+| **TerminalProtocol/** | [`TerminalProtocol.idl`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl) | WinRT IDL 协议结构定义（WindowInfo/TabInfo/PaneInfo 等）、`IProtocolServer` / `IProtocolEventCallback` 接口 |
 | | `ProtocolParsing.h` | SendEvent 路由分类解析 |
 | **TerminalSettingsModel/** | `GlobalAppSettings.idl` / `MTSMSettings.h` | 全局设置模型、Agent 相关配置属性 |
 | **TerminalSettingsEditor/** | `AIAgents.xaml` / `AIAgents.cpp` / `AIAgents.h` / `AIAgentsViewModel.h` | 设置 UI 中的 AI Agents 配置页面 |
@@ -110,7 +110,7 @@ TerminalPage 实现多个 `On*` 回调，由 `TerminalProtocolComServer` 的 UI 
 | `OnRestartAgentStackRequested` | `/restart` 命令，重启整个 wta 栈 |
 | `OnAgentPaneRestartRequested` | master 检测到 helper 崩溃，重新 spawn helper |
 
-> **来源**：[`TerminalProtocolComServer.cpp` 事件分发](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1120-L1442)、[`AppActionHandlers.cpp` Agent 处理](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp#L1636-L1770)
+> **来源**：[`TerminalProtocolComServer.cpp` 事件分发](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1120-L1442)、[`AppActionHandlers.cpp` Agent 处理](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp#L1636-L1770)
 
 ---
 
@@ -120,7 +120,7 @@ TerminalPage 实现多个 `On*` 回调，由 `TerminalProtocolComServer` 的 UI 
 
 ### 5.4.1 核心设计原则
 
-[`SharedWta.h` 头部注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L6-L26)明确了设计契约：
+[`SharedWta.h` 头部注释](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L6-L26)明确了设计契约：
 
 1. **单例 per Terminal 进程**：一个 Windows Terminal 进程（可包含多个窗口）只有一个 wta-master
 2. **引用计数生命周期**：每个 Agent Pane `AcquirePane()` → refcount++，`ReleasePane()` → refcount--；最后一个释放时通过 Job Object 终止 master
@@ -146,7 +146,7 @@ bool _degraded{ false };              // 崩溃降级锁存器
 
 ### 5.4.3 CREATE_SUSPENDED 竞态防护
 
-[`_SpawnLocked()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L244-L433) 使用 `CREATE_SUSPENDED` 标志创建子进程，这是关键的竞态防护：
+[`_SpawnLocked()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L244-L433) 使用 `CREATE_SUSPENDED` 标志创建子进程，这是关键的竞态防护：
 
 ```cpp
 // SharedWta.cpp:319-324
@@ -176,7 +176,7 @@ Job Object 设置 `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` 标志：
 
 ### 5.4.5 Crash Detection 与 Degraded 状态
 
-[`_OnProcessExited()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L466-L523) 是线程池等待回调，在 master 意外退出时执行：
+[`_OnProcessExited()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L466-L523) 是线程池等待回调，在 master 意外退出时执行：
 
 1. **Stale callback 检测**：回调携带注册时的 PID，如果与当前 `_pid` 不匹配说明是旧 master 的回调，直接返回（避免 ABA 问题）
 2. **状态清理**：重置 `_process`、`_job`、`_waitHandle`
@@ -189,11 +189,11 @@ Job Object 设置 `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` 标志：
 
 ### 5.4.6 多窗口 Fan-out 去重
 
-[`Restart()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L127-L192) 有 500ms 去重窗口：
+[`Restart()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L127-L192) 有 500ms 去重窗口：
 
 `/restart` 通过 COM 广播到所有窗口，每个窗口的 UI 线程都会调用 `SharedWta::Restart()`。如果不去重，窗口 B 的 Restart 会杀死窗口 A 刚 spawn 的新 master。使用 `_lastRestartRequest` 时间戳，500ms 内的重复 Restart() 直接返回 true（no-op）。
 
-> **来源**：[`SharedWta.cpp` 完整实现](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L1-L524)、[`SharedWta.h` 详细注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L1-L227)
+> **来源**：[`SharedWta.cpp` 完整实现](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L1-L524)、[`SharedWta.h` 详细注释](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.h#L1-L227)
 
 ---
 
@@ -218,7 +218,7 @@ Job Object 设置 `JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE` 标志：
 
 ### 5.5.2 MTA 线程模型
 
-[`s_StartListening()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L44-L94) 在专用 MTA 线程上注册 COM 类工厂：
+[`s_StartListening()`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L44-L94) 在专用 MTA 线程上注册 COM 类工厂：
 
 ```cpp
 // TerminalProtocolComServer.cpp:59-88
@@ -295,7 +295,7 @@ struct _DeliveryState
 | **事件** | `Subscribe` / `Unsubscribe` | 订阅/取消事件回调 |
 | | `SendEvent` | 客户端→WT 发送事件（restart/autofix/agent_state 等） |
 
-> **来源**：[`TerminalProtocolComServer.cpp` 完整实现](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1-L1443)、[`TerminalProtocolComServer.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h#L1-L143)、[`TerminalProtocol.idl`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl#L1-L135)
+> **来源**：[`TerminalProtocolComServer.cpp` 完整实现](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1-L1443)、[`TerminalProtocolComServer.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h#L1-L143)、[`TerminalProtocol.idl`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl#L1-L135)
 
 ---
 
@@ -375,7 +375,7 @@ void ApplyAutofixState(AutofixState state, const hstring& paneId,
 
 通过 `SetPendingRenameFromTabId()` / `TakePendingRenameFromTabId()` 暂存跨窗口拖拽前的源 Tab StableId。拖拽完成后新窗口的 Tab 初始化完成时，发送 `tab_renamed` WT 事件让 wta-helper 更新 `--owner-tab-id` 绑定。
 
-> **来源**：[`AgentPaneContent.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.cpp#L1-L493)、[`AgentPaneContent.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.h#L1-L197)
+> **来源**：[`AgentPaneContent.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.cpp#L1-L493)、[`AgentPaneContent.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AgentPaneContent.h#L1-L197)
 
 ---
 
@@ -398,7 +398,7 @@ Stash 模型只修改 XAML 视觉树，**底层 ConPTY、TermControl、wta-helpe
 
 ### 5.7.2 StashAgentPane 实现
 
-[`Tab::StashAgentPane()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592)：
+[`Tab::StashAgentPane()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592)：
 
 ```cpp
 void Tab::StashAgentPane()
@@ -423,7 +423,7 @@ void Tab::StashAgentPane()
 
 ### 5.7.3 RestoreStashedAgentPane 实现
 
-[`Tab::RestoreStashedAgentPane()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2650+)：
+[`Tab::RestoreStashedAgentPane()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2650+)：
 
 ```cpp
 bool Tab::RestoreStashedAgentPane(SplitDirection /*direction*/)
@@ -452,7 +452,7 @@ bool Tab::RestoreStashedAgentPane(SplitDirection /*direction*/)
 | `HasStashedAgentPane()` | 查询是否有 stashed agent pane |
 | `SetAgentChipOverride()` | 覆盖 "Agent" 蓝色芯片标注的目标 Pane |
 
-> **来源**：[`Tab.cpp` Stash/Restore 实现](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2527-L2660)、[`Tab.h` Agent 相关声明](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.h#L105-L166)
+> **来源**：[`Tab.cpp` Stash/Restore 实现](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2527-L2660)、[`Tab.h` Agent 相关声明](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.h#L105-L166)
 
 ---
 
@@ -474,7 +474,7 @@ Pre-warm 后：
 
 ### 5.8.2 Pre-warm 触发点
 
-[`TabManagement.cpp` `_InitializeTab` 延迟执行](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L375)：
+[`TabManagement.cpp` `_InitializeTab` 延迟执行](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L375)：
 
 Pre-warm 在 Tab 初始化的低优先级 dispatcher tick 中触发：
 
@@ -513,7 +513,7 @@ Pre-warm 在 Tab 初始化的低优先级 dispatcher tick 中触发：
 
 ### 5.8.5 持久化跳过
 
-注意：pre-warmed agent pane **不**持久化到保存的窗口布局（[`Pane.cpp:150-162`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L150-L162)）。
+注意：pre-warmed agent pane **不**持久化到保存的窗口布局（[`Pane.cpp:150-162`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L150-L162)）。
 
 原因：
 - 保存的命令行包含上次运行时 master 的管道名（已失效）
@@ -523,7 +523,7 @@ Pre-warm 在 Tab 初始化的低优先级 dispatcher tick 中触发：
 
 所以 Pane 序列化时，如果 split 的一个子节点是 agent leaf，折叠 split 只序列化另一个子节点。
 
-> **来源**：[`TabManagement.cpp` pre-warm 逻辑](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L380)、[`Pane.cpp` 持久化过滤](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L146-L162)
+> **来源**：[`TabManagement.cpp` pre-warm 逻辑](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L380)、[`Pane.cpp` 持久化过滤](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L146-L162)
 
 ---
 

@@ -12,9 +12,9 @@ date: "2026-08-03"
 Intelligent Terminal（Windows Terminal Fork）是一个 **AI-native** 的终端应用，采用 **Helper+Master 多进程架构**，实现了 AI Agent（Copilot、Claude、Gemini、自定义Agent）与终端工作流的深度集成。
 
 > **R阶段事实来源**：架构基于以下设计文档与源码实现：
-> - [external/libs/intelligent-terminal/AGENTS.md](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L47-L92)
-> - [external/libs/intelligent-terminal/tools/wta/OVERVIEW.md](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L25-L130)
-> - [external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L12-L39)
+> - [external/libs/intelligent-terminal/AGENTS.md](../../../../../external/libs/intelligent-terminal/AGENTS.md#L47-L92)
+> - [external/libs/intelligent-terminal/tools/wta/OVERVIEW.md](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L25-L130)
+> - [external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L12-L39)
 
 **核心设计原则**：
 - **单进程多窗口**：一个 `WindowsTerminal.exe` 进程承载 N 个窗口（`WindowEmperor → AppHost[] → TerminalWindow → TerminalPage`）
@@ -39,7 +39,7 @@ Intelligent Terminal（Windows Terminal Fork）是一个 **AI-native** 的终端
 | **wtcli.exe** | C++ | COM客户端：连接IProtocolServer，执行WT操作（列Pane、捕获输出、创建Tab等） | 每次调用（短生命周期），`listen`模式长期运行 |
 | **Shell命令** | 各种 | pwsh、cargo、git等实际执行工具的进程 | 用户/Agent spawn，执行完成退出 |
 
-> **来源**：[tools/wta/OVERVIEW.md 进程清单](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L233-L257)
+> **来源**：[tools/wta/OVERVIEW.md 进程清单](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L233-L257)
 
 ### 进程关系图
 
@@ -76,7 +76,7 @@ flowchart TD
     style AGENT fill:#34A853,color:#fff
 ```
 
-> **来源**：架构图改编自 [AGENTS.md 架构段](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L49-L62) 和 [OVERVIEW.md 架构图](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L104-L130)
+> **来源**：架构图改编自 [AGENTS.md 架构段](../../../../../external/libs/intelligent-terminal/AGENTS.md#L49-L62) 和 [OVERVIEW.md 架构图](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L104-L130)
 
 **进程拓扑说明**：
 - WindowsTerminal 是根进程，内部运行 `WindowEmperor` 管理多窗口
@@ -104,8 +104,8 @@ flowchart TD
 | **WinRT IDL** | TerminalProtocol.idl | COM接口定义，生成WinRT投影 |
 
 > **来源**：
-> - [tools/wta/OVERVIEW.md 技术栈](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L175-L186)
-> - [AGENTS.md 核心组件](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L7-L14)
+> - [tools/wta/OVERVIEW.md 技术栈](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L175-L186)
+> - [AGENTS.md 核心组件](../../../../../external/libs/intelligent-terminal/AGENTS.md#L7-L14)
 
 ---
 
@@ -185,7 +185,7 @@ flowchart LR
     style CLIHelpers fill:#f3e8fd,stroke:#9334e6
 ```
 
-> **来源**：组件划分基于 [AGENTS.md 关键文件表](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L94-L109) 和 [OVERVIEW.md 核心模块](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L134-L149)
+> **来源**：组件划分基于 [AGENTS.md 关键文件表](../../../../../external/libs/intelligent-terminal/AGENTS.md#L94-L109) 和 [OVERVIEW.md 核心模块](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L134-L149)
 
 **核心组件职责**：
 
@@ -248,7 +248,7 @@ sequenceDiagram
     Helper->>Helper: pane_open=true<br/>用户可开始输入
 ```
 
-> **来源**：生命周期描述基于 [Multi-window-agent-pane.md §6 生命周期](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L330-L412) 和 [AGENTS.md Pre-warming](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L74-L92)
+> **来源**：生命周期描述基于 [Multi-window-agent-pane.md §6 生命周期](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L330-L412) 和 [AGENTS.md Pre-warming](../../../../../external/libs/intelligent-terminal/AGENTS.md#L74-L92)
 
 ### 关闭流程时序图
 
@@ -291,7 +291,7 @@ sequenceDiagram
     Note over Master: Master崩溃时:<br/>SharedWta::_OnProcessExited 触发<br/>下次AcquirePane时respawn<br/>Helper检测断线显示banner<br/>支持/reconnect重新连接
 ```
 
-> **来源**：关闭流程和崩溃恢复基于 [Multi-window-agent-pane.md §6 Pane close](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L391-L472)
+> **来源**：关闭流程和崩溃恢复基于 [Multi-window-agent-pane.md §6 Pane close](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L391-L472)
 
 ---
 
@@ -326,7 +326,7 @@ sequenceDiagram
   - crossterm的`ReadConsoleInputW`解析器无法工作
   - 需要手写VT→KeyEvent解析器，无法支持方向键、Ctrl组合、Tab、IME、Bracketed Paste、鼠标
 
-> **来源**：问题陈述见 [Multi-window-agent-pane.md §问题背景](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L108-L140)，M3-M6技术障碍见 [§设计历史](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L41-L106)
+> **来源**：问题陈述见 [Multi-window-agent-pane.md §问题背景](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L108-L140)，M3-M6技术障碍见 [§设计历史](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L41-L106)
 
 ### 方案对比
 
@@ -336,7 +336,7 @@ sequenceDiagram
 | **方案B：单例+匿名管道+手写VT解析** | 单例wta + 匿名管道 + vte级手写VT解析器 | **⚠️ 可行但技术债高**。~3-5天交付可用解析器，但需要持续扩展才能支持IME/Bracketed Paste/鼠标；自定义事件协议、自定义解析器、自定义per-pane writer任务、自定义resize消息，持续累积维护成本 |
 | **方案Z：Helper+Master（选中）** | per-pane wta-helper作为conpty子进程 + per-process wta-master单例多路复用 | **✅ 选中**。复用90%现有wta代码；丢弃~1500 LOC M3-M6自定义层；~11-16天交付 |
 
-> **来源**：方案对比见 [Multi-window-agent-pane.md §方案评估表](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L59-L66)
+> **来源**：方案对比见 [Multi-window-agent-pane.md §方案评估表](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L59-L66)
 
 ### 设计决策理由（I阶段洞察）
 
@@ -358,7 +358,7 @@ sequenceDiagram
 **6. 架构可演进性**
 > 未来扩展（per-pane不同Agent、per-pane沙箱、per-pane资源限制）都自然支持——无非是"给Helper不同cmdline参数"或"Master spawn第二个Agent CLI"。线协议已具备扩展性。
 
-> **🔍 I阶段洞察来源**：选择理由基于 [Multi-window-agent-pane.md §Z选择理由](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L67-L88) 的事实陈述，结合分布式系统设计原则推演。
+> **🔍 I阶段洞察来源**：选择理由基于 [Multi-window-agent-pane.md §Z选择理由](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L67-L88) 的事实陈述，结合分布式系统设计原则推演。
 
 ---
 
@@ -378,7 +378,7 @@ Intelligent Terminal的Agent架构经历了从单进程到Helper+Master的清晰
 | **Post-Z (B12-B20)** | 多窗口路由硬化 | per-tab + per-window严格事件路由 | 实现`owner_tab_id`/`window_id`路由键、switch_tab_session owner-lock、tab_renamed跨窗口拖拽rekey |
 | **Post-Z (B4-B11)** | Stash/Restore替代Destroy | Agent Pane toggle = stash而非destroy | Tab::StashAgentPane/RestoreStashedAgentPane，Helper/ConPTY/ACP/history跨toggle保留 |
 
-> **来源**：演进历史基于 [Multi-window-agent-pane.md §设计历史](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L41-L106) 和 [§实现计划](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L694-L818)
+> **来源**：演进历史基于 [Multi-window-agent-pane.md §设计历史](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L41-L106) 和 [§实现计划](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L694-L818)
 
 **架构演进中的保留资产**：
 M3-M6的工作并非全部浪费，以下组件直接复用于Z方案：
@@ -430,7 +430,7 @@ flowchart LR
     style P fill:#FBBC05,color:#000
 ```
 
-> **来源**：数据流基于 [Multi-window-agent-pane.md §Per-tab session creation](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L374-L389) 和 [AGENTS.md Autofix pipeline](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L111-L128)
+> **来源**：数据流基于 [Multi-window-agent-pane.md §Per-tab session creation](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L374-L389) 和 [AGENTS.md Autofix pipeline](../../../../../external/libs/intelligent-terminal/AGENTS.md#L111-L128)
 
 ### Autofix数据流（被动检测）
 
@@ -460,7 +460,7 @@ wta-helper (via wtcli listen --json)
 | WT COM事件 | 无状态，即时路由 | 即发即弃 |
 | 日志（结构化tracing） | `%LocalCache%\IntelligentTerminal\logs\<pkgver>\` | per-version目录，3天轮转 |
 
-> **日志布局来源**：[AGENTS.md 日志与运行时数据布局](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L178-L288)
+> **日志布局来源**：[AGENTS.md 日志与运行时数据布局](../../../../../external/libs/intelligent-terminal/AGENTS.md#L178-L288)
 
 ---
 

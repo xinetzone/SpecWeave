@@ -19,7 +19,7 @@ date: "2026-08-03"
 4. **Session 路由表**：维护 `SessionId → Helper` 映射，确保 agent 通知准确送达所属 helper
 5. **崩溃检测与恢复**：检测 agent CLI 或 helper 断开，触发自动恢复机制
 
-> **来源**：[tools/wta/src/master/mod.rs 头部注释](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1-L38)、[OVERVIEW.md §wta-master](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L42-L59)
+> **来源**：[tools/wta/src/master/mod.rs 头部注释](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1-L38)、[OVERVIEW.md §wta-master](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L42-L59)
 
 **单例模式要点**：
 
@@ -35,19 +35,19 @@ date: "2026-08-03"
 
 | 文件 | 职责 | 代码行数 |
 |------|------|----------|
-| [`mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | Master 核心实现：启动流程、连接处理、消息路由、Session 管理 | ~3400 行 |
-| [`config.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/config.rs) | Master 配置结构体：agent 命令、agent_id、允许列表 | 6 行 |
-| [`tests.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/tests.rs) | 单元测试（内嵌于 mod.rs 末尾） | 集成于 mod.rs |
+| [`mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | Master 核心实现：启动流程、连接处理、消息路由、Session 管理 | ~3400 行 |
+| [`config.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/config.rs) | Master 配置结构体：agent 命令、agent_id、允许列表 | 6 行 |
+| [`tests.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/tests.rs) | 单元测试（内嵌于 mod.rs 末尾） | 集成于 mod.rs |
 
 **关键依赖模块**：
 
 | 模块 | 位置 | 用途 |
 |------|------|------|
-| ACP 连接兼容层 | [`protocol/acp/conn.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs) | `ClientLink`/`AgentLink` 封装，提供旧版连接 API |
-| Agent spawn | [`protocol/acp/spawn.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/spawn.rs) | `spawn_agent_process_for_source` 跨平台 agent 进程启动 |
-| Session Registry | [`session_registry.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/session_registry.rs) | 内存中 Session 注册表，维护会话元数据 |
+| ACP 连接兼容层 | [`protocol/acp/conn.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs) | `ClientLink`/`AgentLink` 封装，提供旧版连接 API |
+| Agent spawn | [`protocol/acp/spawn.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/spawn.rs) | `spawn_agent_process_for_source` 跨平台 agent 进程启动 |
+| Session Registry | [`session_registry.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/session_registry.rs) | 内存中 Session 注册表，维护会话元数据 |
 
-> **来源**：[tools/wta/src/master/ 目录](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/)
+> **来源**：[tools/wta/src/master/ 目录](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/)
 
 ---
 
@@ -122,7 +122,7 @@ sequenceDiagram
     end
 ```
 
-> **来源**：[`run_master_mode()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1507-L1568)、[`run_master_loop()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1808-L2034)
+> **来源**：[`run_master_mode()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1507-L1568)、[`run_master_loop()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1808-L2034)
 
 **关键启动要点**：
 
@@ -139,13 +139,13 @@ Agent CLI 采用**池化懒加载**策略：master 维护 `AgentCmdKey → Arc<O
 
 ### Spawn 流程
 
-[`get_or_spawn_agent()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2164-L2195) 实现了安全的并发 spawn：
+[`get_or_spawn_agent()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2164-L2195) 实现了安全的并发 spawn：
 
 1. **键计算**：通过 `agent_cmd_key(command, source)` 生成 `"{source}\0{command}"` 格式的唯一键
 2. **OnceCell 竞争**：两个 helper 同时请求相同 agent 时，在 per-key `OnceCell` 上序列化，只有一个执行 spawn，另一个 await 同一个 `AgentCli`
 3. **不同 Agent 并行**：不同 agent 的 spawn 完全并行，外层 `Mutex` 仅在 get/insert `OnceCell` 时持有，绝不跨 await
 
-### [`spawn_one_agent()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2202-L2479) 详细步骤
+### [`spawn_one_agent()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2202-L2479) 详细步骤
 
 ```rust
 async fn spawn_one_agent(state, key, agent_cmd, agent_id, source) -> Result<Arc<AgentCli>> {
@@ -204,14 +204,14 @@ async fn spawn_one_agent(state, key, agent_cmd, agent_id, source) -> Result<Arc<
 
 | 机制 | 实现位置 | 说明 |
 |------|----------|------|
-| **I/O 循环 reaper** | [`spawn_one_agent` L2347-L2366](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2347-L2366) | ACP 连接 I/O 循环结束时调用 `reap_agent` 从池中移除 |
-| **子进程 wait reaper** | [`spawn_one_agent` L2424-L2437](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2424-L2437) | `child.wait().await` 返回时调用 `reap_agent` |
-| **池清理** | [`reap_agent()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2486-L2500) | 从 `state.agents` 移除，清空该 agent 的 orphaned_sessions |
-| **初始化失败清理** | [`spawn_one_agent` L2402-L2418](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2402-L2418) | init 失败/超时时 kill 子进程，stderr 日志提升为 warning |
+| **I/O 循环 reaper** | [`spawn_one_agent` L2347-L2366](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2347-L2366) | ACP 连接 I/O 循环结束时调用 `reap_agent` 从池中移除 |
+| **子进程 wait reaper** | [`spawn_one_agent` L2424-L2437](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2424-L2437) | `child.wait().await` 返回时调用 `reap_agent` |
+| **池清理** | [`reap_agent()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2486-L2500) | 从 `state.agents` 移除，清空该 agent 的 orphaned_sessions |
+| **初始化失败清理** | [`spawn_one_agent` L2402-L2418](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2402-L2418) | init 失败/超时时 kill 子进程，stderr 日志提升为 warning |
 
 **关键设计决策**：Agent CLI 死亡**不**终止 master 进程，仅从池中移除该 agent。其他 agent 的 helper 继续正常工作；下一个请求该 agent 的 helper 将触发重新 spawn。
 
-> **来源**：[`AgentCli` 结构体](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L343-L365)、[`spawn_one_agent` 完整实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2202-L2479)
+> **来源**：[`AgentCli` 结构体](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L343-L365)、[`spawn_one_agent` 完整实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2202-L2479)
 
 ---
 
@@ -229,7 +229,7 @@ GUID 由 C++ 侧 `SharedWta` 生成，确保每个 WT 进程唯一。
 
 ### 管道安全
 
-[`build_pipe_security_attributes()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1748-L1785) 实现了纵深防御安全机制：
+[`build_pipe_security_attributes()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1748-L1785) 实现了纵深防御安全机制：
 
 1. **获取当前用户 SID**：`current_user_sid_string()` 通过 Win32 API `OpenProcessToken` → `GetTokenInformation` → `ConvertSidToStringSidW` 获取
 2. **构建 SDDL 字符串**：
@@ -242,7 +242,7 @@ GUID 由 C++ 侧 `SharedWta` 生成，确保每个 WT 进程唯一。
 
 ### Accept 循环
 
-[`run_master_loop` L1987-L2033](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1987-L2033) 实现标准 Windows 命名管道 accept 模式：
+[`run_master_loop` L1987-L2033](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1987-L2033) 实现标准 Windows 命名管道 accept 模式：
 
 ```rust
 loop {
@@ -271,13 +271,13 @@ loop {
 - 每个 helper 连接在独立的 `spawn_local` 任务中处理，互不阻塞
 - `live_helpers` 原子计数器跟踪并发连接数，connect/disconnect 均打日志
 
-> **来源**：[`create_master_pipe_instance()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1791-L1806)、[`PipeSecurity` 结构体](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1654-L1677)
+> **来源**：[`create_master_pipe_instance()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1791-L1806)、[`PipeSecurity` 结构体](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1654-L1677)
 
 ---
 
 ## 3.6 MuxConnection 处理
 
-每个 helper 连接由独立的 [`serve_helper()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2505-L2712) 任务处理，构成 master 的 per-helper 多路复用连接。
+每个 helper 连接由独立的 [`serve_helper()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2505-L2712) 任务处理，构成 master 的 per-helper 多路复用连接。
 
 ### serve_helper 流程
 
@@ -373,7 +373,7 @@ async fn serve_helper(helper_id: HelperId, pipe: NamedPipeServer, state: Arc<Mas
 - 防止高吞吐的 chunk streaming 阻塞低频率的 live-set 广播
 - `tokio::select!` 可以直接分派到对应写入方法，无需 enum 判别
 
-> **来源**：[`serve_helper()` 完整实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2505-L2712)、[`NOTIF_CHANNEL_CAPACITY` 常量](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L44-L50)
+> **来源**：[`serve_helper()` 完整实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2505-L2712)、[`NOTIF_CHANNEL_CAPACITY` 常量](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L44-L50)
 
 ---
 
@@ -420,7 +420,7 @@ Master 是一个**透明双向代理**，在 helper 和 Agent CLI 之间路由�
 
 ### Helper→Agent 方向（请求转发）
 
-由 [`HelperHandler`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L813-L946) 处理，每个 helper 拥有独立实例：
+由 [`HelperHandler`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L813-L946) 处理，每个 helper 拥有独立实例：
 
 | ACP 方法 | 处理方式 | 关键增强 |
 |----------|----------|----------|
@@ -436,7 +436,7 @@ Master 是一个**透明双向代理**，在 helper 和 Agent CLI 之间路由�
 
 ### Agent→Helper 方向（通知/请求路由）
 
-由 [`MasterClient`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L392-L790) 处理，全局唯一实例：
+由 [`MasterClient`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L392-L790) 处理，全局唯一实例：
 
 | ACP 方法 | 路由方式 | 关键保护 |
 |----------|----------|----------|
@@ -446,7 +446,7 @@ Master 是一个**透明双向代理**，在 helper 和 Agent CLI 之间路由�
 
 ### 背压与流控设计
 
-[`session_notification`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L513-L665) 的背压处理是 master 最关键的可靠性设计之一：
+[`session_notification`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L513-L665) 的背压处理是 master 最关键的可靠性设计之一：
 
 1. **使用 `try_send` 而非 `send().await`**：helper 管道慢时绝不阻塞 agent CLI 的 I/O 循环——队头阻塞会冻结所有共享该 master 的 helper
 2. **有界队列（1024）**：防止 helper 完全卡住时内存无限制增长
@@ -454,7 +454,7 @@ Master 是一个**透明双向代理**，在 helper 和 Agent CLI 之间路由�
 4. **`consecutive_drops` 计数器**：跟踪连续丢弃的 chunk 数，恢复时汇总报告
 5. **rebind 竞态保护**：`try_send` 返回 `Closed` 时，先检查 `helper_id` 是否仍匹配再删除路由，防止 helper A 断开→helper B 用相同 SessionId rebind 时误删新路由
 
-> **来源**：[`HelperHandler` 实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L948-L1505)、[`MasterClient` 实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L465-L790)、[`notification_kind()` 日志标签](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L795-L808)
+> **来源**：[`HelperHandler` 实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L948-L1505)、[`MasterClient` 实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L465-L790)、[`notification_kind()` 日志标签](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L795-L808)
 
 ---
 
@@ -464,7 +464,7 @@ Session 路由是 master 的核心状态，由 `MasterStateInner.session_to_help
 
 ### HelperRoute 结构
 
-[`HelperRoute`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L91-L115) 是 per-session 路由条目：
+[`HelperRoute`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L91-L115) 是 per-session 路由条目：
 
 ```rust
 struct HelperRoute {
@@ -481,7 +481,7 @@ struct HelperRoute {
 
 ### 路由原子性保证
 
-**new_session 原子记录**（[`HelperHandler::new_session` L1061-L1075](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1061-L1075)）：
+**new_session 原子记录**（[`HelperHandler::new_session` L1061-L1075](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1061-L1075)）：
 
 ```rust
 // 响应返回给 helper BEFORE 记录路由？NO！
@@ -498,7 +498,7 @@ self.state.registry.upsert(info.clone()).await;
 
 **为什么必须先记录再返回？** Agent 实现可能在 `session/new` 响应返回前就开始发送 `session_notification`（例如立即发送 "thinking" chunk）。如果先返回响应再记录路由，这些早期通知会命中"unknown SessionId" 被丢弃——用户可见症状是"恢复会话时看不到历史回滚"。
 
-**load_session 预注册**（[`HelperHandler::load_session` L1187-L1200](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1187-L1200)）更激进——因为 SessionId 是请求输入（已知），在**发送 load 请求之前**就预注册路由，解决 agent 回放历史 burst 通知的竞态：
+**load_session 预注册**（[`HelperHandler::load_session` L1187-L1200](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1187-L1200)）更激进——因为 SessionId 是请求输入（已知），在**发送 load 请求之前**就预注册路由，解决 agent 回放历史 burst 通知的竞态：
 
 ```rust
 // 与 new_session 不同，load_session 的 SessionId 已知——预注册！
@@ -513,14 +513,14 @@ self.state.registry.upsert(info.clone()).await;
 
 当 helper 断开（Tab 关闭）但其共享 Agent CLI 仍加载着该会话时，该会话成为"孤儿"：
 
-1. [`serve_helper` L2666-L2684](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2666-L2684) 断开清理时，将 victims 记录到 `orphaned_sessions[agent.cmd_key]`
+1. [`serve_helper` L2666-L2684](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2666-L2684) 断开清理时，将 victims 记录到 `orphaned_sessions[agent.cmd_key]`
 2. 仅当该 agent CLI 实例**仍是**池中的 live 实例（`Arc::ptr_eq` 检查）时记录——崩溃后重启的 CLI 不继承孤儿
-3. 下次 `load_session` 时，[`is_orphan_rebind` 快速路径](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1211-L1216)直接重绑定，**不**重新发 `session/load`——因为 CLI 已经加载了，重发会被拒绝 "already loaded" 或（中途有 turn 时）卡在 "Resuming…" 挂起
-4. 未跟踪的孤儿（早于此 master 版本）通过错误消息子串匹配 [`is_already_loaded_error()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L453-L463) 兜底
+3. 下次 `load_session` 时，[`is_orphan_rebind` 快速路径](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1211-L1216)直接重绑定，**不**重新发 `session/load`——因为 CLI 已经加载了，重发会被拒绝 "already loaded" 或（中途有 turn 时）卡在 "Resuming…" 挂起
+4. 未跟踪的孤儿（早于此 master 版本）通过错误消息子串匹配 [`is_already_loaded_error()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L453-L463) 兜底
 
 ### Helper 断开清理
 
-[`drop_sessions_for_helper()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2751-L2789) 在 helper 断开时执行完整清理：
+[`drop_sessions_for_helper()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2751-L2789) 在 helper 断开时执行完整清理：
 
 1. 收集该 helper 所有 SessionId（持有 `session_to_helper` 锁一次遍历）
 2. 从 `session_to_helper` 中移除（`retain`）
@@ -529,7 +529,7 @@ self.state.registry.upsert(info.clone()).await;
 
 锁顺序文档：始终先拿 `session_to_helper` 锁再碰 `registry`，保持 helper-disconnect 清理路径单线程化。registry 内部是 sub-µs 的同步 HashMap 操作，不会重入 `session_to_helper`，因此持锁跨 await 是安全的。
 
-> **来源**：[`MasterStateInner` 文档注释](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L158)、[`HelperRoute` 结构体](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L91-L115)、[`drop_sessions_for_helper()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2751-L2789)
+> **来源**：[`MasterStateInner` 文档注释](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L158)、[`HelperRoute` 结构体](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L91-L115)、[`drop_sessions_for_helper()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2751-L2789)
 
 ---
 
@@ -539,27 +539,27 @@ Master 实现了多层崩溃检测与自动恢复机制。
 
 ### Master 自身崩溃（C++ 侧检测）
 
-Master 进程生命周期由 C++ [`SharedWta`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) 管理：
+Master 进程生命周期由 C++ [`SharedWta`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) 管理：
 
 1. **Job Object  containment**：master 通过 `AssignToJobObject` 分配到 Job Object，配置 `KILL_ON_JOB_CLOSE`，确保 WT 退出时 master 被强制清理
 2. **进程退出回调**：`_OnProcessExited` 处理 master 进程退出事件
 3. **下次 AcquirePane 时 respawn**：master 崩溃后不立即重启，而是在下一次 `AcquirePane()` 请求时延迟 respawn——给系统时间稳定，避免崩溃循环
-4. **Helper 侧检测**：helper 通过 [`conn.rs` 中 `TransportDeath` 机制](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L287-L310) 检测管道断开，显示重连 banner，用户可 `/restart` 恢复
+4. **Helper 侧检测**：helper 通过 [`conn.rs` 中 `TransportDeath` 机制](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L287-L310) 检测管道断开，显示重连 banner，用户可 `/restart` 恢复
 
 ### Agent CLI 崩溃恢复
 
 由 master 自身处理（C++ 侧无感知）：
 
 1. **双重 reaper**：
-   - I/O 循环 reaper（[`spawn_one_agent` L2347-L2366](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2347-L2366)）：ACP 连接 I/O 结束时触发
-   - 子进程 wait reaper（[L2424-L2437](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2424-L2437)）：进程退出时触发
+   - I/O 循环 reaper（[`spawn_one_agent` L2347-L2366](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2347-L2366)）：ACP 连接 I/O 结束时触发
+   - 子进程 wait reaper（[L2424-L2437](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2424-L2437)）：进程退出时触发
 2. **`reap_agent()`**：从 agents 池中移除，清空该 agent 的 orphaned_sessions
 3. **幂等重试**：持有旧 `Arc<AgentCli>` 的 helper 下次请求时出错（pane 重建）；新 helper 请求该 agent 时 `get_or_spawn_agent` 发现空槽，重新 spawn
 4. **Master 不退出**：单个 agent 崩溃不影响其他 agent 的 helper——多 Agent 池设计保证故障隔离
 
 ### Helper 崩溃恢复
 
-[`serve_helper` 末尾的恢复逻辑](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)：
+[`serve_helper` 末尾的恢复逻辑](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)：
 
 ```rust
 // 崩溃恢复：如果 helper 有 owner_tab_id，通知 C++ 重新预热
@@ -578,7 +578,7 @@ if let Some(recovery) = recovery {
 
 ### Transport Death 检测
 
-[`conn.rs` 中 `DeathWatchRead`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L314-L342) 解决 ACP 1.0 SDK 的一个关键缺陷：
+[`conn.rs` 中 `DeathWatchRead`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L314-L342) 解决 ACP 1.0 SDK 的一个关键缺陷：
 
 - **问题**：ACP 1.0 `connect_with` 在 clean EOF（如 `taskkill` 杀进程）时不返回，只在读错误时返回，导致 `handle_io` 永远不 resolve，pane 卡在 "Connected" 状态
 - **方案**：包装 `AsyncRead`，第一次读到 `Ok(0)`（非空 buffer 上的 0 字节读 = 真 EOF）或 `Err(_)` 时触发 `TransportDeath` latch，`main_fn` 中 `death.wait().await` 完成，`connect_with` 返回，`handle_io` resolve
@@ -598,7 +598,7 @@ fn poll_read(...) -> Poll<io::Result<usize>> {
 }
 ```
 
-> **来源**：[`emit_restart_agent_pane()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2718-L2727)、[`TransportDeath` 测试](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L498-L595)、[`HelperRecoveryMeta`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L369-L378)
+> **来源**：[`emit_restart_agent_pane()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2718-L2727)、[`TransportDeath` 测试](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L498-L595)、[`HelperRecoveryMeta`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L369-L378)
 
 ---
 
@@ -606,7 +606,7 @@ fn poll_read(...) -> Poll<io::Result<usize>> {
 
 ### MasterConfig
 
-[`config.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/config.rs)：
+[`config.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/config.rs)：
 
 ```rust
 #[derive(Debug)]
@@ -619,7 +619,7 @@ pub(crate) struct MasterConfig {
 
 ### HelperId
 
-[`mod.rs:70-71`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L70-L71)：
+[`mod.rs:70-71`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L70-L71)：
 
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -628,7 +628,7 @@ pub(crate) struct HelperId(u64);  // 单调递增计数器，仅用于日志和�
 
 ### MasterStateInner
 
-核心共享状态（[`mod.rs:120-327`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L327)）：
+核心共享状态（[`mod.rs:120-327`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L327)）：
 
 | 字段 | 类型 | 用途 |
 |------|------|------|
@@ -653,7 +653,7 @@ pub(crate) struct HelperId(u64);  // 单调递增计数器，仅用于日志和�
 
 ### AgentCli
 
-[`mod.rs:343-365`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L343-L365)：
+[`mod.rs:343-365`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L343-L365)：
 
 ```rust
 struct AgentCli {
@@ -667,7 +667,7 @@ struct AgentCli {
 
 ### HelperRecoveryMeta
 
-[`mod.rs:369-378`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L369-L378)：
+[`mod.rs:369-378`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L369-L378)：
 
 ```rust
 #[derive(Debug, Clone, Default)]
@@ -687,9 +687,9 @@ pub(crate) struct HelperRecoveryMeta {
 
 ### AgentCmdKey
 
-类型别名：`type AgentCmdKey = String;`，格式为 `"{source}\0{command}"`，由 [`agent_cmd_key()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L336-L338) 生成。使用空字节分隔确保不会与命令行参数中的字符冲突。
+类型别名：`type AgentCmdKey = String;`，格式为 `"{source}\0{command}"`，由 [`agent_cmd_key()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L336-L338) 生成。使用空字节分隔确保不会与命令行参数中的字符冲突。
 
-> **来源**：所有结构体定义均位于 [`tools/wta/src/master/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs)
+> **来源**：所有结构体定义均位于 [`tools/wta/src/master/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs)
 
 ---
 

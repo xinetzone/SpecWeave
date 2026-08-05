@@ -422,6 +422,6 @@ main_builder.add_edge("research", "write")
 
 1. [LangGraph官方文档](https://langchain-ai.github.io/langgraph/)
 2. [LangGraph Platform部署指南](https://langchain-ai.github.io/langgraph/cloud/)
-3. [Demo-Prod六层能力模型验证报告](../retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/framework-comparison-validation.md)
+3. [Demo-Prod六层能力模型验证报告](../../../retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/framework-comparison-validation.md)
 4. Experience 2245098：Windows环境下LangGraph架构裁决与最小PoC经验
 5. Experience 1635063：LangGraph核心概念与StateGraph实践

@@ -26,7 +26,7 @@ Helper+Master Multiplexer（Helper+Master多路复用器模式）
 
 M3-M6阶段尝试"单例wta + 匿名管道 + DuplicateHandle"方案时遇到根本技术障碍：跨进程ConPTY输入不可行——`CreatePseudoConsole`不向conpty子进程外暴露slave HANDLE，对端进程只能读到原始VT字节，无法获得结构化`INPUT_RECORD`，需要手写VT→KeyEvent解析器，无法支持方向键、Ctrl组合、IME、Bracketed Paste、鼠标等完整控制台语义。
 
-> **来源**：[Multi-window-agent-pane.md §问题背景](../../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L108-L140)
+> **来源**：[Multi-window-agent-pane.md §问题背景](../../../../../external/libs/intelligent-terminal/doc/specs/Multi-window-agent-pane.md#L108-L140)
 
 ### 解决方案
 
@@ -57,10 +57,10 @@ Windows Terminal (单进程多窗口)
 
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
-| SharedWta单例 | [`src/cascadia/TerminalApp/SharedWta.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) | 引用计数、Job Object、CREATE_SUSPENDED、崩溃检测 |
-| Master Mux核心 | [`tools/wta/src/master/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | ACP多路复用、Session路由、Agent CLI池化 |
-| Helper入口 | [`tools/wta/src/helper/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs) | Helper启动、TUI初始化、管道连接 |
-| 多窗口管理 | [`src/cascadia/WindowsTerminal/WindowEmperor.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/WindowEmperor.cpp) | Monarch模式、跨窗口Tab拖拽 |
+| SharedWta单例 | [`src/cascadia/TerminalApp/SharedWta.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp) | 引用计数、Job Object、CREATE_SUSPENDED、崩溃检测 |
+| Master Mux核心 | [`tools/wta/src/master/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | ACP多路复用、Session路由、Agent CLI池化 |
+| Helper入口 | [`tools/wta/src/helper/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs) | Helper启动、TUI初始化、管道连接 |
+| 多窗口管理 | [`src/cascadia/WindowsTerminal/WindowEmperor.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/WindowEmperor.cpp) | Monarch模式、跨窗口Tab拖拽 |
 
 ### 适用场景
 
@@ -124,7 +124,7 @@ COM as Integration Surface（COM作为唯一进程间集成面模式）
 
 Intelligent Terminal早期版本考虑过多种方案，最终选择经典COM作为唯一集成表面。
 
-> **来源**：[TerminalProtocolComServer.cpp 头部注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1-L43)
+> **来源**：[TerminalProtocolComServer.cpp 头部注释](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp#L1-L43)
 
 ### 解决方案
 
@@ -149,9 +149,9 @@ Intelligent Terminal早期版本考虑过多种方案，最终选择经典COM作
 
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
-| COM服务器 | [`src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp) | MTA注册、BoundedDispatchQueue、AgileReference、事件fan-out |
-| COM服务器头文件 | [`src/cascadia/WindowsTerminal/TerminalProtocolComServer.h`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h) | _DeliveryState、s_maxQueuedEvents=4096 |
-| IDL接口定义 | [`src/cascadia/TerminalProtocol/TerminalProtocol.idl`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl) | IProtocolServer、IProtocolEventCallback、所有结构体 |
+| COM服务器 | [`src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.cpp) | MTA注册、BoundedDispatchQueue、AgileReference、事件fan-out |
+| COM服务器头文件 | [`src/cascadia/WindowsTerminal/TerminalProtocolComServer.h`](../../../../../external/libs/intelligent-terminal/src/cascadia/WindowsTerminal/TerminalProtocolComServer.h) | _DeliveryState、s_maxQueuedEvents=4096 |
+| IDL接口定义 | [`src/cascadia/TerminalProtocol/TerminalProtocol.idl`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalProtocol/TerminalProtocol.idl) | IProtocolServer、IProtocolEventCallback、所有结构体 |
 | wtcli客户端 | [`src/cascadia/WtClient/WtClient.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/WtClient/WtClient.cpp) | CoCreateInstance、WT_COM_CLSID读取、方法调用 |
 
 ### 适用场景
@@ -217,7 +217,7 @@ Per-tab Pre-warm（每Tab预启动隐藏Pane模式）
 1. **激活延迟**：用户按Ctrl+Shift+.打开Agent Pane时才启动——需要spawn ConPTY → spawn wta-helper → helper连接master → ACP握手 → TUI渲染，整个过程1-3秒，用户感知明显卡顿
 2. **后台功能不可用**：Autofix等被动检测功能需要helper进程运行才能监听命令失败事件；如果用户从未打开过Agent Pane，打开新Tab运行命令出错时Autofix完全无法工作
 
-> **来源**：[TabManagement.cpp pre-warm注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L240)
+> **来源**：[TabManagement.cpp pre-warm注释](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L240)
 
 ### 解决方案
 
@@ -254,11 +254,11 @@ RestoreStashedAgentPane() → 仅XAML视觉unhide → 即时显示
 
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
-| Pre-warm触发 | [`src/cascadia/TerminalApp/TabManagement.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L380) | _InitializeTab中低优先级触发、_AutoCreateHiddenAgentPaneShared |
-| Stash实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592) | StashAgentPane、HidePane、焦点恢复 |
-| Restore实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2660) | RestoreStashedAgentPane、显式FocusPane |
-| 持久化过滤 | [`src/cascadia/TerminalApp/Pane.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L146-L162) | 序列化时折叠agent leaf，避免持久化死连接 |
-| Helper start-stashed | [`tools/wta/src/helper/config.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/config.rs) | --start-stashed命令行标志解析 |
+| Pre-warm触发 | [`src/cascadia/TerminalApp/TabManagement.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/TabManagement.cpp#L226-L380) | _InitializeTab中低优先级触发、_AutoCreateHiddenAgentPaneShared |
+| Stash实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592) | StashAgentPane、HidePane、焦点恢复 |
+| Restore实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2660) | RestoreStashedAgentPane、显式FocusPane |
+| 持久化过滤 | [`src/cascadia/TerminalApp/Pane.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp#L146-L162) | 序列化时折叠agent leaf，避免持久化死连接 |
+| Helper start-stashed | [`tools/wta/src/helper/config.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/config.rs) | --start-stashed命令行标志解析 |
 
 ### 适用场景
 
@@ -319,7 +319,7 @@ Agent Pane的toggle（打开/关闭）如果采用"关闭即销毁"模型，会�
 3. **Autofix中断**：stash期间helper终止，无法监听命令失败事件，Autofix停止工作
 4. **跨toggle状态断裂**：toggle过程中如果有in-flight请求（正在流式响应），销毁会导致响应中断、状态不一致
 
-> **来源**：[AGENTS.md Pre-warming & Stash](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L74-L92)
+> **来源**：[AGENTS.md Pre-warming & Stash](../../../../../external/libs/intelligent-terminal/AGENTS.md#L74-L92)
 
 ### 解决方案
 
@@ -359,11 +359,11 @@ RestoreStashedAgentPane()
 
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
-| Stash实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592) | StashAgentPane、HidePane、延迟焦点恢复 |
-| Restore实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2660) | RestoreStashedAgentPane、显式FocusPane |
-| Pane Hide/Restore | [`src/cascadia/TerminalApp/Pane.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp) | HidePane、RestorePane、视觉树操作 |
-| Toggle action | [`src/cascadia/TerminalApp/AppActionHandlers.cpp`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp#L1636-L1770) | _HandleOpenAgentPane、_OpenOrReuseAgentPane统一入口 |
-| Helper pane_open | [`tools/wta/src/app/tab_state.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs) | TabSession.pane_open字段 |
+| Stash实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2530-L2592) | StashAgentPane、HidePane、延迟焦点恢复 |
+| Restore实现 | [`src/cascadia/TerminalApp/Tab.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Tab.cpp#L2605-L2660) | RestoreStashedAgentPane、显式FocusPane |
+| Pane Hide/Restore | [`src/cascadia/TerminalApp/Pane.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/Pane.cpp) | HidePane、RestorePane、视觉树操作 |
+| Toggle action | [`src/cascadia/TerminalApp/AppActionHandlers.cpp`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/AppActionHandlers.cpp#L1636-L1770) | _HandleOpenAgentPane、_OpenOrReuseAgentPane统一入口 |
+| Helper pane_open | [`tools/wta/src/app/tab_state.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs) | TabSession.pane_open字段 |
 
 ### 适用场景
 
@@ -435,7 +435,7 @@ Protocol Double-hop（协议双跳代理解耦模式）
 
 直接让每个Helper直连Agent CLI不可行——Agent CLI是第三方实现（Copilot/Claude/Gemini），无法修改其代码支持多路复用。
 
-> **来源**：[OVERVIEW.md ACP双跳架构](../../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L104-L130)
+> **来源**：[OVERVIEW.md ACP双跳架构](../../../../../external/libs/intelligent-terminal/tools/wta/OVERVIEW.md#L104-L130)
 
 ### 解决方案
 
@@ -514,12 +514,12 @@ Agent CLI完全感知不到有多个Helper——它只看到一个ACP client（m
 
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
-| Master双角色 | [`tools/wta/src/master/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | HelperHandler（面向Helper的ACP agent）、MasterClient（面向Agent的ACP client） |
-| ACP连接兼容层 | [`tools/wta/src/protocol/acp/conn.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs) | ClientLink、AgentLink、spawn_client、spawn_agent、byte_streams抽象 |
-| 路由原子性 | [`tools/wta/src/master/mod.rs:1061-1075`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1061-L1075) | new_session响应前插入路由 |
-| 背压控制 | [`tools/wta/src/master/mod.rs:513-665`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L513-L665) | session_notification try_send、丢包限流、consecutive_drops |
-| Orphan处理 | [`tools/wta/src/master/mod.rs:2666-2684`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2666-L2684) | serve_helper断开清理、orphaned_sessions记录 |
-| ACP Client SDK | [`tools/wta/src/protocol/acp/client.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/client.rs) | WtaClient、prompt_forwarding、ACP协议实现 |
+| Master双角色 | [`tools/wta/src/master/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | HelperHandler（面向Helper的ACP agent）、MasterClient（面向Agent的ACP client） |
+| ACP连接兼容层 | [`tools/wta/src/protocol/acp/conn.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs) | ClientLink、AgentLink、spawn_client、spawn_agent、byte_streams抽象 |
+| 路由原子性 | [`tools/wta/src/master/mod.rs:1061-1075`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1061-L1075) | new_session响应前插入路由 |
+| 背压控制 | [`tools/wta/src/master/mod.rs:513-665`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L513-L665) | session_notification try_send、丢包限流、consecutive_drops |
+| Orphan处理 | [`tools/wta/src/master/mod.rs:2666-2684`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2666-L2684) | serve_helper断开清理、orphaned_sessions记录 |
+| ACP Client SDK | [`tools/wta/src/protocol/acp/client.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/client.rs) | WtaClient、prompt_forwarding、ACP协议实现 |
 
 ### 适用场景
 
@@ -603,7 +603,7 @@ Package-private State/Cache Split（包私有状态/缓存分离存储模式）
 
 Intelligent Terminal运行时数据目录包含多种数据，生命周期差异显著。
 
-> **来源**：[AGENTS.md 运行时数据布局](../../../../../../external/libs/intelligent-terminal/AGENTS.md#L178-L288)
+> **来源**：[AGENTS.md 运行时数据布局](../../../../../external/libs/intelligent-terminal/AGENTS.md#L178-L288)
 
 ### 解决方案
 
@@ -659,11 +659,11 @@ Intelligent Terminal运行时数据目录包含多种数据，生命周期差异
 | 组件 | 文件路径 | 关键实现 |
 |------|----------|----------|
 | 运行时路径 | [`tools/wta/src/paths.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/paths.rs) | STATE根目录、Cache目录、logs目录计算 |
-| 会话持久化 | [`tools/wta/src/session_registry.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/session_registry.rs) | agent-pane-sessions.jsonl读写、JSONL追加 |
-| Master缓存 | [`tools/wta/src/master/mod.rs:120-327`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L327) | MasterStateInner中cached_init_resp(OnceLock)、host_list_cache(2s TTL) |
-| Pipe发现文件 | [`tools/wta/src/master/mod.rs:1808-2034`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1808-L2034) | MasterPipeDiscoveryGuard Drop实现 |
-| Agent stderr日志 | [`tools/wta/src/master/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | AgentStderrLog per-key日志文件 |
-| 日志配置 | [`tools/wta/src/logging.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/logging.rs) | tracing初始化、per-version日志目录 |
+| 会话持久化 | [`tools/wta/src/session_registry.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/session_registry.rs) | agent-pane-sessions.jsonl读写、JSONL追加 |
+| Master缓存 | [`tools/wta/src/master/mod.rs:120-327`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L120-L327) | MasterStateInner中cached_init_resp(OnceLock)、host_list_cache(2s TTL) |
+| Pipe发现文件 | [`tools/wta/src/master/mod.rs:1808-2034`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L1808-L2034) | MasterPipeDiscoveryGuard Drop实现 |
+| Agent stderr日志 | [`tools/wta/src/master/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs) | AgentStderrLog per-key日志文件 |
+| 日志配置 | [`tools/wta/src/logging.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/logging.rs) | tracing初始化、per-version日志目录 |
 
 ### 适用场景
 
@@ -751,7 +751,7 @@ spawn子进程并放入Job Object存在微秒级竞态窗口：
 
 这是一个极端但真实的bug窗口——在高频崩溃场景或Job Object配置错误时容易复现。
 
-> **来源**：[SharedWta.cpp CREATE_SUSPENDED注释](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L319-L324)
+> **来源**：[SharedWta.cpp CREATE_SUSPENDED注释](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L319-L324)
 
 ### 解决方案
 
@@ -773,7 +773,7 @@ spawn子进程并放入Job Object存在微秒级竞态窗口：
 
 ### 源码位置
 
-[`src/cascadia/TerminalApp/SharedWta.cpp:_SpawnLocked()`](../../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L244-L433)
+[`src/cascadia/TerminalApp/SharedWta.cpp:_SpawnLocked()`](../../../../../external/libs/intelligent-terminal/src/cascadia/TerminalApp/SharedWta.cpp#L244-L433)
 
 ### 反模式警示
 

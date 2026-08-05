@@ -50,7 +50,7 @@ date: "2026-08-03"
 - master 检测到 helper 断开后，通过 WT 协议事件 `restart_agent_pane` 通知 C++ 侧重新 spawn helper
 - master 崩溃时，helper 检测到管道断开进入 `transport_lost` 状态，仅保留 `/restart` 命令可用，用户可通过 `/restart` 触发整个栈重启
 
-> **来源**：[`tools/wta/src/helper/mod.rs` 头部注释](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs#L1-L12)、[`app.rs` 中 `transport_lost` 字段](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)
+> **来源**：[`tools/wta/src/helper/mod.rs` 头部注释](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs#L1-L12)、[`app.rs` 中 `transport_lost` 字段](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)
 
 ---
 
@@ -60,34 +60,34 @@ Helper 与 TUI 相关代码分布在以下位置：
 
 | 路径 | 职责 | 主要内容 |
 |------|------|----------|
-| [`helper/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs) | Helper 模块入口 | `run_helper_mode()` 入口函数，导出 `HelperConfig` |
-| [`helper/runtime.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs) | Helper 运行时实现 | TUI 初始化、事件循环启动、ACP 管道连接、WT 协议连接 |
-| [`helper/config.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/config.rs) | Helper 配置 | `HelperConfig` 结构体，解析命令行参数 |
-| [`app.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs) | TUI 应用核心 | `App` 状态结构体、事件处理、slash command 分发 |
-| [`app/tab_state.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs) | Tab 会话状态 | `TabSession`、`ChatMessage`、`Scroll`、`PermissionState` |
-| [`app/turn_state.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs) | Turn 生命周期状态机 | `TurnState` 枚举、`SubmittedPrompt`、`TurnOutcome` |
-| [`app/input_edit.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/input_edit.rs) | 输入编辑器 | 光标移动、文本编辑、输入历史 |
-| [`app/autofix.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/autofix.rs) | Autofix 状态机 | 错误检测、自动修复触发 |
-| [`ui/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/mod.rs) | UI 模块入口 | 模块声明、导出 render 函数 |
-| [`ui/layout.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs) | 布局渲染 | 主布局函数 `render()`、区域分割 |
-| [`ui/chat.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs) | 聊天视图 | 消息渲染、滚动、spinner |
-| [`ui/input.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/input.rs) | 输入框 | 输入编辑器渲染、光标 |
-| [`ui/permission.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/permission.rs) | 权限弹窗 | 工具调用权限确认卡片 |
-| [`ui/command_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/command_popup.rs) | Slash command 弹窗 | 自动补全候选列表、`/help` 覆盖层 |
-| [`ui/agents_view.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agents_view.rs) | Session 管理视图 | `/sessions` 列表渲染 |
-| [`ui/model_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/model_popup.rs) | Model 选择弹窗 | `/model` picker |
-| [`ui/agent_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agent_popup.rs) | Agent 选择弹窗 | `/agent` picker |
-| [`ui/recommendations.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/recommendations.rs) | 推荐卡片 | 修复建议选择面板 |
-| [`ui/setup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/setup.rs) | 安装/设置向导 | 首次运行、agent 缺失时的向导 |
-| [`ui/auth.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/auth.rs) | 认证界面 | Copilot device-code 登录 |
-| [`ui/debug_panel.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/debug_panel.rs) | 调试面板 | 内部调试信息展示 |
-| [`ui/popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/popup.rs) | 弹窗基元 | 通用弹窗渲染辅助函数 |
-| [`ui/card.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/card.rs) | 卡片组件 | 带边框的卡片基元 |
-| [`ui/shimmer.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/shimmer.rs) | 加载动画 | shimmer 骨架屏动画 |
-| [`commands.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs) | Slash command 注册表 | 命令定义、解析、前缀匹配 |
-| [`event.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs) | 输入事件读取 | crossterm 事件循环、tick 定时器 |
+| [`helper/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/mod.rs) | Helper 模块入口 | `run_helper_mode()` 入口函数，导出 `HelperConfig` |
+| [`helper/runtime.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs) | Helper 运行时实现 | TUI 初始化、事件循环启动、ACP 管道连接、WT 协议连接 |
+| [`helper/config.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/config.rs) | Helper 配置 | `HelperConfig` 结构体，解析命令行参数 |
+| [`app.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs) | TUI 应用核心 | `App` 状态结构体、事件处理、slash command 分发 |
+| [`app/tab_state.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs) | Tab 会话状态 | `TabSession`、`ChatMessage`、`Scroll`、`PermissionState` |
+| [`app/turn_state.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs) | Turn 生命周期状态机 | `TurnState` 枚举、`SubmittedPrompt`、`TurnOutcome` |
+| [`app/input_edit.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/input_edit.rs) | 输入编辑器 | 光标移动、文本编辑、输入历史 |
+| [`app/autofix.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/autofix.rs) | Autofix 状态机 | 错误检测、自动修复触发 |
+| [`ui/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/mod.rs) | UI 模块入口 | 模块声明、导出 render 函数 |
+| [`ui/layout.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs) | 布局渲染 | 主布局函数 `render()`、区域分割 |
+| [`ui/chat.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs) | 聊天视图 | 消息渲染、滚动、spinner |
+| [`ui/input.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/input.rs) | 输入框 | 输入编辑器渲染、光标 |
+| [`ui/permission.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/permission.rs) | 权限弹窗 | 工具调用权限确认卡片 |
+| [`ui/command_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/command_popup.rs) | Slash command 弹窗 | 自动补全候选列表、`/help` 覆盖层 |
+| [`ui/agents_view.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agents_view.rs) | Session 管理视图 | `/sessions` 列表渲染 |
+| [`ui/model_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/model_popup.rs) | Model 选择弹窗 | `/model` picker |
+| [`ui/agent_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agent_popup.rs) | Agent 选择弹窗 | `/agent` picker |
+| [`ui/recommendations.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/recommendations.rs) | 推荐卡片 | 修复建议选择面板 |
+| [`ui/setup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/setup.rs) | 安装/设置向导 | 首次运行、agent 缺失时的向导 |
+| [`ui/auth.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/auth.rs) | 认证界面 | Copilot device-code 登录 |
+| [`ui/debug_panel.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/debug_panel.rs) | 调试面板 | 内部调试信息展示 |
+| [`ui/popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/popup.rs) | 弹窗基元 | 通用弹窗渲染辅助函数 |
+| [`ui/card.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/card.rs) | 卡片组件 | 带边框的卡片基元 |
+| [`ui/shimmer.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/shimmer.rs) | 加载动画 | shimmer 骨架屏动画 |
+| [`commands.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs) | Slash command 注册表 | 命令定义、解析、前缀匹配 |
+| [`event.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs) | 输入事件读取 | crossterm 事件循环、tick 定时器 |
 
-> **来源**：[`ui/mod.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/mod.rs#L1-L24)、[`app.rs` 模块声明](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L54-L69)
+> **来源**：[`ui/mod.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/mod.rs#L1-L24)、[`app.rs` 模块声明](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L54-L69)
 
 ---
 
@@ -200,12 +200,12 @@ sequenceDiagram
 
 **关键启动要点**：
 
-1. **Pane 身份自发现**：[`discover_pane_identity()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L86-L134) 通过 `wt_list_windows` → `wt_list_tabs` → `wt_list_panes` 枚举所有 pane，匹配自身 PID 找到 `pane_id`/`window_id`
-2. **TUI 恢复守卫**：[`TuiRestoreGuard`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166) RAII guard 确保 panic/错误时正确恢复终端（disable raw mode、leave alternate screen、恢复光标）
-3. **错误直接退出**：TUI 启动失败时 [`process::exit(1)`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L227)，不返回 Err——因为此时终端状态可能已被破坏
-4. **管道重连预置**：启动时即调用 [`set_master_pipe_acp_params()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L723-L732) 预存管道名，认证后重连无需重新解析命令行
+1. **Pane 身份自发现**：[`discover_pane_identity()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L86-L134) 通过 `wt_list_windows` → `wt_list_tabs` → `wt_list_panes` 枚举所有 pane，匹配自身 PID 找到 `pane_id`/`window_id`
+2. **TUI 恢复守卫**：[`TuiRestoreGuard`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166) RAII guard 确保 panic/错误时正确恢复终端（disable raw mode、leave alternate screen、恢复光标）
+3. **错误直接退出**：TUI 启动失败时 [`process::exit(1)`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L227)，不返回 Err——因为此时终端状态可能已被破坏
+4. **管道重连预置**：启动时即调用 [`set_master_pipe_acp_params()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L723-L732) 预存管道名，认证后重连无需重新解析命令行
 
-> **来源**：[`run_default_tui_over_pipe()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L26-L83)、[`run_acp_tui_mode()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L168-L230)
+> **来源**：[`run_default_tui_over_pipe()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L26-L83)、[`run_acp_tui_mode()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L168-L230)
 
 ---
 
@@ -215,7 +215,7 @@ sequenceDiagram
 
 ### App 核心字段（全局）
 
-[`App` 结构体](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L825-L1048) 关键字段：
+[`App` 结构体](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L825-L1048) 关键字段：
 
 | 字段 | 类型 | 用途 |
 |------|------|------|
@@ -235,7 +235,7 @@ sequenceDiagram
 
 ### TabSession 状态（per-Tab）
 
-[`TabSession` 结构体](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L185-L300) 包含单个 Tab 的所有状态：
+[`TabSession` 结构体](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L185-L300) 包含单个 Tab 的所有状态：
 
 ```rust
 pub struct TabSession {
@@ -283,7 +283,7 @@ pub struct TabSession {
 
 ### Turn 状态机
 
-[`TurnState` 枚举](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs#L16-L34) 是显式的 per-turn 生命周期状态机：
+[`TurnState` 枚举](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs#L16-L34) 是显式的 per-turn 生命周期状态机：
 
 ```mermaid
 stateDiagram-v2
@@ -332,7 +332,7 @@ stateDiagram-v2
 
 ### ChatMessage 类型
 
-[`ChatMessage` 枚举](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L14-L42) 表示聊天区域中的单条消息：
+[`ChatMessage` 枚举](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L14-L42) 表示聊天区域中的单条消息：
 
 - `User(String)`：用户消息
 - `Agent(String)`：agent 回复
@@ -345,7 +345,7 @@ stateDiagram-v2
 
 ### 输入编辑器状态
 
-输入编辑器状态在 [`app/input_edit.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/input_edit.rs) 中实现，核心状态存储在 `TabSession` 中：
+输入编辑器状态在 [`app/input_edit.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/input_edit.rs) 中实现，核心状态存储在 `TabSession` 中：
 
 - `input: String`：当前输入文本
 - `cursor_pos: usize`：光标位置（字节偏移）
@@ -353,13 +353,13 @@ stateDiagram-v2
 - `command_popup_candidates`：slash command 自动补全候选列表
 - `INPUT_HISTORY_MAX_ENTRIES`：历史最大条数
 
-> **来源**：[`App::new()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L1124-L1200)、[`TabSession` 完整定义](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L185-L300)、[`TurnState` 状态转换方法](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs#L80-L169)
+> **来源**：[`App::new()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L1124-L1200)、[`TabSession` 完整定义](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/tab_state.rs#L185-L300)、[`TurnState` 状态转换方法](../../../../../external/libs/intelligent-terminal/tools/wta/src/app/turn_state.rs#L80-L169)
 
 ---
 
 ## 4.5 TUI 视图层架构
 
-UI 采用分层模块化设计，[`ui::render()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L9-L258) 是唯一的渲染入口，根据 `AppMode` 和 `current_view` 分派到对应子模块。
+UI 采用分层模块化设计，[`ui::render()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L9-L258) 是唯一的渲染入口，根据 `AppMode` 和 `current_view` 分派到对应子模块。
 
 ### 组件关系图
 
@@ -414,7 +414,7 @@ graph TD
 
 ### 主布局结构（Chat 模式）
 
-[`layout.rs` 中主分割逻辑](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L150-L162) 使用 Ratatui 的 `Layout` 垂直分割：
+[`layout.rs` 中主分割逻辑](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L150-L162) 使用 Ratatui 的 `Layout` 垂直分割：
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -448,36 +448,36 @@ graph TD
 
 | 组件 | 文件 | 职责 |
 |------|------|------|
-| **chat** | [`ui/chat.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs) | 渲染 `completed_turns` + 流式响应，处理滚动、spinner 动画、打字机 reveal 效果 |
-| **input** | [`ui/input.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/input.rs) | 渲染输入框、光标、slack command 前缀高亮、粘贴指示 |
-| **permission** | [`ui/permission.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/permission.rs) | 工具调用权限确认卡片，显示 Allow/Deny/AlwaysAllow 选项，支持 y/n 快捷键 |
-| **command_popup** | [`ui/command_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/command_popup.rs) | Slash command 自动补全下拉框，紧贴输入框上方；`/help` 全屏覆盖层 |
-| **model_popup** | [`ui/model_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/model_popup.rs) | `/model` 模型选择弹窗，列出 agent 广告的模型 |
-| **agent_popup** | [`ui/agent_popup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agent_popup.rs) | `/agent` agent 选择弹窗，显示已安装且策略允许的 agent |
-| **agents_view** | [`ui/agents_view.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agents_view.rs) | `/sessions` 全屏幕 session 管理列表，显示 live/history sessions，支持搜索、过滤、resume |
-| **recommendations** | [`ui/recommendations.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/recommendations.rs) | 推荐选择卡片，显示 autofix 修复建议，支持键盘导航和执行 |
-| **setup** | [`ui/setup.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/setup.rs) | 首次运行/agent 缺失设置向导，提供安装、登录、重试选项 |
-| **auth** | [`ui/auth.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/auth.rs) | Copilot device-code 认证界面，显示验证码和 URL |
-| **shimmer** | [`ui/shimmer.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/shimmer.rs) | 加载骨架屏动画，session list 刷新时显示 |
+| **chat** | [`ui/chat.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs) | 渲染 `completed_turns` + 流式响应，处理滚动、spinner 动画、打字机 reveal 效果 |
+| **input** | [`ui/input.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/input.rs) | 渲染输入框、光标、slack command 前缀高亮、粘贴指示 |
+| **permission** | [`ui/permission.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/permission.rs) | 工具调用权限确认卡片，显示 Allow/Deny/AlwaysAllow 选项，支持 y/n 快捷键 |
+| **command_popup** | [`ui/command_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/command_popup.rs) | Slash command 自动补全下拉框，紧贴输入框上方；`/help` 全屏覆盖层 |
+| **model_popup** | [`ui/model_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/model_popup.rs) | `/model` 模型选择弹窗，列出 agent 广告的模型 |
+| **agent_popup** | [`ui/agent_popup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agent_popup.rs) | `/agent` agent 选择弹窗，显示已安装且策略允许的 agent |
+| **agents_view** | [`ui/agents_view.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/agents_view.rs) | `/sessions` 全屏幕 session 管理列表，显示 live/history sessions，支持搜索、过滤、resume |
+| **recommendations** | [`ui/recommendations.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/recommendations.rs) | 推荐选择卡片，显示 autofix 修复建议，支持键盘导航和执行 |
+| **setup** | [`ui/setup.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/setup.rs) | 首次运行/agent 缺失设置向导，提供安装、登录、重试选项 |
+| **auth** | [`ui/auth.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/auth.rs) | Copilot device-code 认证界面，显示验证码和 URL |
+| **shimmer** | [`ui/shimmer.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/shimmer.rs) | 加载骨架屏动画，session list 刷新时显示 |
 
 **设计要点**：
 
 1. **弹窗锚定**：所有弹窗（command/model/agent）都锚定在输入框上方（`chunks[7]`），而不是屏幕固定位置——短聊天时弹窗不会飘到屏幕中间
 2. **Help 覆盖层最高**：`/help` 覆盖层最后渲染，位于所有组件之上，Esc 始终可关闭
-3. **宽度感知截断**：[`truncate_to_width()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L265-L293) 使用 `unicode-width` 按显示宽度截断 CJK 字符，避免宽字符越界
+3. **宽度感知截断**：[`truncate_to_width()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L265-L293) 使用 `unicode-width` 按显示宽度截断 CJK 字符，避免宽字符越界
 4. **双频动画**：120ms `Tick` 驱动 spinner（~8fps），33ms `RevealTick` 驱动打字机效果（~30fps），分离频率减少不必要的全屏重绘
 
-> **来源**：[`ui::render()` 完整实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L9-L258)、[`render_activity()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs)
+> **来源**：[`ui::render()` 完整实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/layout.rs#L9-L258)、[`render_activity()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/ui/chat.rs)
 
 ---
 
 ## 4.6 Slash Commands 实现
 
-Slash command 系统由三部分组成：注册表（[`commands.rs`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs)）、输入时前缀匹配（自动补全弹窗）、Enter 时分发执行（[`App::handle_slash_command()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)）。
+Slash command 系统由三部分组成：注册表（[`commands.rs`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs)）、输入时前缀匹配（自动补全弹窗）、Enter 时分发执行（[`App::handle_slash_command()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)）。
 
 ### 命令注册表
 
-[`commands::REGISTRY`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L83-L135) 是静态数组，定义所有支持的命令：
+[`commands::REGISTRY`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L83-L135) 是静态数组，定义所有支持的命令：
 
 | 命令 | 类型 | 功能 | 参数 |
 |------|------|------|------|
@@ -494,7 +494,7 @@ Slash command 系统由三部分组成：注册表（[`commands.rs`](../../../..
 
 ### 解析流程
 
-[`commands::classify()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L245-L264) 是 Enter 键处理入口，返回三分类结果：
+[`commands::classify()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L245-L264) 是 Enter 键处理入口，返回三分类结果：
 
 ```
 输入文本 → trim_start() → strip_prefix('/')?
@@ -513,20 +513,20 @@ Slash command 系统由三部分组成：注册表（[`commands.rs`](../../../..
 
 ### 自动补全机制
 
-输入时通过 [`commands::is_command_prefix()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L339-L348) 判断是否显示补全弹窗：
+输入时通过 [`commands::is_command_prefix()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L339-L348) 判断是否显示补全弹窗：
 
 1. 输入以 `/` 开头，且斜杠后**没有空白**时触发
-2. 使用 [`commands::matches(prefix)`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L277-L283) 前缀过滤注册表（大小写不敏感）
+2. 使用 [`commands::matches(prefix)`](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L277-L283) 前缀过滤注册表（大小写不敏感）
 3. 候选列表显示在输入框上方，Tab/Shift+Tab 导航，Enter 或空格选中
 4. `/agent ` 和 `/move ` 有二级补全：agent id 列表和位置列表
 
 ### Transport Lost 特殊处理
 
-[`app.rs` 中 `transport_lost` 逻辑](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)：当 master 管道断开时，自动补全候选列表**仅显示 `/restart`**，其他命令隐藏而非灰显——输入其他命令会被拒绝并显示重连提示。这是因为除了 `/restart` 走 wtcli→COM 通道（不经过已断开的管道），其他命令都需要与 master 通信。
+[`app.rs` 中 `transport_lost` 逻辑](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)：当 master 管道断开时，自动补全候选列表**仅显示 `/restart`**，其他命令隐藏而非灰显——输入其他命令会被拒绝并显示重连提示。这是因为除了 `/restart` 走 wtcli→COM 通道（不经过已断开的管道），其他命令都需要与 master 通信。
 
 ### `/restart` 跨进程机制
 
-Helper 模式下 `/restart` 不重启自身，而是通过 [`spawn_restart_agent_stack_forwarder()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L240-L258) 发送 WT 协议事件：
+Helper 模式下 `/restart` 不重启自身，而是通过 [`spawn_restart_agent_stack_forwarder()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L240-L258) 发送 WT 协议事件：
 
 ```rust
 let evt = serde_json::json!({
@@ -542,7 +542,7 @@ C++ 侧 `SharedWta::Restart()` 收到后：
 2. 在同一管道名上重新 spawn master
 3. 重新 toggle 活动 Tab 的 agent pane，新 helper 自动连接到新 master
 
-> **来源**：[`commands.rs` 完整定义](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L1-L500+)、[`CommandKind` 文档注释](../../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L12-L58)
+> **来源**：[`commands.rs` 完整定义](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L1-L500+)、[`CommandKind` 文档注释](../../../../../external/libs/intelligent-terminal/tools/wta/src/commands.rs#L12-L58)
 
 ---
 
@@ -556,17 +556,17 @@ Helper 使用基于 `tokio::select!` 的异步事件循环，所有事件先转�
 
 | 事件源 | 任务位置 | 事件类型 |
 |--------|----------|----------|
-| **crossterm 输入** | [`event::read_crossterm_events()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L43-L137) | `Key(KeyEvent)` / `Mouse(MouseEvent)` / `Resize(w,h)` / `FocusChanged(bool)` |
+| **crossterm 输入** | [`event::read_crossterm_events()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L43-L137) | `Key(KeyEvent)` / `Mouse(MouseEvent)` / `Resize(w,h)` / `FocusChanged(bool)` |
 | **Tick 定时器** | 同上（120ms 间隔） | `Tick` |
 | **RevealTick 定时器** | 同上（33ms 间隔） | `RevealTick` |
-| **WT 协议事件** | [`helper/runtime.rs` 后台 reader](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L313-L395) | `WtEvent { method, pane_id, tab_id, params }` |
-| **ACP 客户端** | [`run_acp_client_over_pipe()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/client.rs) 后台任务 | `AgentConnected` / `AgentMessageChunk` / `AgentMessageEnd` / `AgentError` / `PermissionRequest` 等 |
+| **WT 协议事件** | [`helper/runtime.rs` 后台 reader](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L313-L395) | `WtEvent { method, pane_id, tab_id, params }` |
+| **ACP 客户端** | [`run_acp_client_over_pipe()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/client.rs) 后台任务 | `AgentConnected` / `AgentMessageChunk` / `AgentMessageEnd` / `AgentError` / `PermissionRequest` 等 |
 | **Debug 管道** | debug_rx 转发任务 | `DebugPipeMessage(DebugMessage)` |
 | **推荐执行器** | recommendation executor 后台任务 | `RecommendationExecuted` 等 |
 
 ### Crossterm 事件过滤
 
-[`map_crossterm_event()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L16-L41) 做关键过滤：
+[`map_crossterm_event()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L16-L41) 做关键过滤：
 
 - **只处理 `KeyEventKind::Press`**：release 和 repeat 事件被丢弃，否则每个按键会触发两次
 - **鼠标事件白名单**：只转发滚轮、左键按下/拖动/释放，用于聊天区滚动，不窃取 Up/Down 给输入历史
@@ -575,7 +575,7 @@ Helper 使用基于 `tokio::select!` 的异步事件循环，所有事件先转�
 
 ### 错误恢复：crossterm 流重建
 
-[`read_crossterm_events()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L80-L108) 实现了 ConPTY 瞬态错误恢复：
+[`read_crossterm_events()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L80-L108) 实现了 ConPTY 瞬态错误恢复：
 
 - ConPTY 在 pane 隐藏/恢复、OS 回收伪控制台缓冲时可能返回瞬态读错误
 - 连续错误计数 < 8 时：记录 warn，继续循环（不杀死 TUI）
@@ -608,13 +608,13 @@ loop {
 
 **事件处理核心方法**：
 
-- [`App::handle_event()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app_events.rs)：主事件分发
-- [`App::handle_key()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app_keys.rs)：按键处理（输入编辑、快捷键、导航）
-- [`App::handle_slash_command()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：slash command 执行
-- [`App::apply_acp_event()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：ACP 消息处理（chunk、permission、plan 等）
-- [`App::handle_wt_event()`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：WT 协议事件处理（tab_changed、connection_state、agent_event 等）
+- [`App::handle_event()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app_events.rs)：主事件分发
+- [`App::handle_key()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app_keys.rs)：按键处理（输入编辑、快捷键、导航）
+- [`App::handle_slash_command()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：slash command 执行
+- [`App::apply_acp_event()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：ACP 消息处理（chunk、permission、plan 等）
+- [`App::handle_wt_event()`](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs)：WT 协议事件处理（tab_changed、connection_state、agent_event 等）
 
-> **来源**：[`event.rs` 完整实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L1-L200)、[`AppEvent` 定义](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app_contracts/event.rs)
+> **来源**：[`event.rs` 完整实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/event.rs#L1-L200)、[`AppEvent` 定义](../../../../../external/libs/intelligent-terminal/tools/wta/src/app_contracts/event.rs)
 
 ---
 
@@ -635,14 +635,14 @@ Helper 架构实现了多层崩溃检测与隔离，确保单点故障不蔓延�
 
 Helper 依赖 ACP 连接层的 `TransportDeath` 机制检测 master 断开：
 
-1. **DeathWatchRead**：[`DeathWatchRead`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L314-L342) 包装管道读端，第一次检测到真 EOF（`Ok(0)` on non-empty buffer）或错误时触发 `TransportDeath` latch
+1. **DeathWatchRead**：[`DeathWatchRead`](../../../../../external/libs/intelligent-terminal/tools/wta/src/protocol/acp/conn.rs#L314-L342) 包装管道读端，第一次检测到真 EOF（`Ok(0)` on non-empty buffer）或错误时触发 `TransportDeath` latch
 2. **AgentError 传播**：ACP 客户端任务检测到传输死亡，发送 `AppEvent::AgentError { failure: TransportLost, ... }`
 3. **状态转移**：`App::handle_event` 将 `transport_lost` 设为 `true`，重绘 UI 显示断开横幅
 4. **命令过滤**：slash command 补全列表过滤为仅 `/restart`，其他命令输入被拒绝并提示
 
 ### Master 侧 Helper 崩溃恢复
 
-[`serve_helper()` 末尾的恢复逻辑](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)：
+[`serve_helper()` 末尾的恢复逻辑](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)：
 
 ```rust
 // helper 断开时（正常退出或崩溃）
@@ -678,7 +678,7 @@ C++ 侧 `OnAgentPaneRestartRequested` 处理：
 
 ### TUI 终端状态保护
 
-[`TuiRestoreGuard`](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166) RAII guard 确保即使 panic 也恢复终端：
+[`TuiRestoreGuard`](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166) RAII guard 确保即使 panic 也恢复终端：
 
 ```rust
 impl Drop for TuiRestoreGuard {
@@ -699,7 +699,7 @@ impl Drop for TuiRestoreGuard {
 - 正常退出路径主动调用 `disarm()` 后手动清理（按正确顺序）
 - panic/unwind 时 Drop 自动执行，用户不会留在损坏的 raw mode/alt screen
 
-> **来源**：[`TuiRestoreGuard` 实现](../../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166)、[`transport_lost` 处理](../../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)、[Master helper 恢复逻辑](../../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)
+> **来源**：[`TuiRestoreGuard` 实现](../../../../../external/libs/intelligent-terminal/tools/wta/src/helper/runtime.rs#L136-L166)、[`transport_lost` 处理](../../../../../external/libs/intelligent-terminal/tools/wta/src/app.rs#L905-L915)、[Master helper 恢复逻辑](../../../../../external/libs/intelligent-terminal/tools/wta/src/master/mod.rs#L2693-L2709)
 
 ---
 

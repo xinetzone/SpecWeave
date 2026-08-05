@@ -14,7 +14,7 @@ summary: "WeasyPrint Python API完全指南：5个核心类、多种输入源（
 
 ## 6.1 核心类
 
-WeasyPrint 的公共 API 仅暴露 5 个入口（见 [__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py#L88-L90)）：
+WeasyPrint 的公共 API 仅暴露 5 个入口（见 [__init__.py](../../../mdi/generated/case1/__init__.py#L88-L90)）：
 
 | 类/常量 | 作用 |
 |---------|------|

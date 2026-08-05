@@ -613,7 +613,7 @@ def get_controller(ctx: MobileUseContext) -> MobileDeviceController:
 
 ### 7.1 ToolWrapper：延迟初始化+上下文注入
 
-**文件**: `tool_wrapper.py` | [index.py](../../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L1-L67)
+**文件**: `tool_wrapper.py` | [index.py](../../../../../projects/xuanspace/.test-venv/Lib/site-packages/scikit_build_core/file_api/model/index.py#L1-L67)
 
 mobile-use 没有直接创建 LangChain BaseTool 实例，而是使用 **ToolWrapper 模式**：
 
@@ -635,7 +635,7 @@ class CompositeToolWrapper:
 
 ### 7.2 工具注册中心
 
-[index.py#L27-L49](../../../../../external/tools/scikit-build-core/src/scikit_build_core/file_api/model/index.py#L27-L49) 定义了所有可用工具：
+[index.py#L27-L49](../../../../../projects/xuanspace/.test-venv/Lib/site-packages/scikit_build_core/file_api/model/index.py#L27-L49) 定义了所有可用工具：
 
 ```python
 EXECUTOR_WRAPPERS_TOOLS = [

@@ -12,7 +12,7 @@ summary: "WeasyPrint六步渲染管线深度解析：HTML解析→CSS解析→CS
 ---
 # 架构深度解析：六步渲染管线
 
-通过源码分析（[__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py)、[document.py](../../../../../../external/WeasyPrint/weasyprint/document.py)），WeasyPrint 的渲染过程是一个清晰的**六步管线**：
+通过源码分析（[__init__.py](../../../mdi/generated/case1/__init__.py)、[document.py](../../../../../../external/WeasyPrint/weasyprint/document.py)），WeasyPrint 的渲染过程是一个清晰的**六步管线**：
 
 ```
 Step 1: HTML 解析    →  DOM 树 (ElementTree)
@@ -25,7 +25,7 @@ Step 6: 绘制输出     →  PDF 字节流
 
 ### 3.1 Step 1: HTML 解析
 
-**入口**: [HTML.__init__()](../../../../../../external/WeasyPrint/weasyprint/__init__.py#L158-L183)
+**入口**: [HTML.__init__()](../../../mdi/generated/case1/__init__.py#L158-L183)
 
 关键设计：
 - **智能源检测**：`select_source()` 自动判断输入类型（文件名/URL/file object/string）
@@ -36,7 +36,7 @@ Step 6: 绘制输出     →  PDF 字节流
 
 ### 3.2 Step 2: CSS 解析
 
-**入口**: [CSS.__init__()](../../../../../../external/WeasyPrint/weasyprint/__init__.py#L287-L319)
+**入口**: [CSS.__init__()](../../../mdi/generated/case1/__init__.py#L287-L319)
 
 关键设计：
 - **多源样式表**：UA → PH（呈现提示）→ User → Author
@@ -46,7 +46,7 @@ Step 6: 绘制输出     →  PDF 字节流
 
 ### 3.3 Step 3: CSS 应用（级联与计算）
 
-**入口**: [StyleFor](../../../../../../external/WeasyPrint/weasyprint/css/__init__.py#L60-L100)
+**入口**: [StyleFor](../../../mdi/generated/case1/__init__.py#L60-L100)
 
 这是 CSS 规范中最复杂的部分，对应 CSS 值计算的六个阶段：
 
@@ -59,18 +59,18 @@ Step 6: 绘制输出     →  PDF 字节流
 
 ### 3.4 Step 4: 格式化结构构建（盒树）
 
-**入口**: [build_formatting_structure()](../../../../../../external/WeasyPrint/weasyprint/formatting_structure/build.py#L63-L94)
+**入口**: [build_formatting_structure()](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L63-L94)
 
 将 DOM 元素树转换为 CSS 视觉格式化模型中的盒树：
 
-- **盒类型映射**（[BOX_TYPE_FROM_DISPLAY](../../../../../../external/WeasyPrint/weasyprint/formatting_structure/build.py#L18-L42)）：block→BlockBox, inline→InlineBox, table→TableBox, flex→FlexBox, grid→GridBox 等
+- **盒类型映射**（[BOX_TYPE_FROM_DISPLAY](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L18-L42)）：block→BlockBox, inline→InlineBox, table→TableBox, flex→FlexBox, grid→GridBox 等
 - **匿名盒创建**：表格/Flex/Grid 缺失的包装盒，Block-Inline 混排时的匿名盒
 - **文本处理**：空白折叠、文本变换、引号替换
 - **替换元素**：`<img>`/`<svg>`/`<embed>`/`<object>` 通过 `@handler` 装饰器注册
 
 ### 3.5 Step 5: 布局排版（多遍分页）
 
-**入口**: [layout_document()](../../../../../../external/WeasyPrint/weasyprint/layout/__init__.py#L103-L216)
+**入口**: [layout_document()](../../../mdi/generated/case1/__init__.py#L103-L216)
 
 这是 WeasyPrint 最核心的部分——**分页布局**。
 
@@ -90,17 +90,17 @@ for loop in range(max_loops):  # 最多 8 遍
 
 | 模块 | 职责 |
 |------|------|
-| [page.py](../../../../../../external/WeasyPrint/weasyprint/layout/page.py) | 页面创建、边距盒、分页决策 |
-| [block.py](../../../../../../external/WeasyPrint/weasyprint/layout/block.py) | 块级布局、行盒、浮动 |
-| [inline.py](../../../../../../external/WeasyPrint/weasyprint/layout/inline.py) | 行内布局、文本断行 |
-| [table.py](../../../../../../external/WeasyPrint/weasyprint/layout/table.py) | 表格布局、边框折叠 |
+| [page.py](../../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) | 页面创建、边距盒、分页决策 |
+| [block.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/markdown_it/rules_core/block.py) | 块级布局、行盒、浮动 |
+| [inline.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/markdown_it/rules_core/inline.py) | 行内布局、文本断行 |
+| [table.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/rich/table.py) | 表格布局、边框折叠 |
 | [flex.py](../../../../../../external/WeasyPrint/weasyprint/layout/flex.py) / [grid.py](../../../../../../external/WeasyPrint/weasyprint/layout/grid.py) | Flex/Grid 布局 |
 | [absolute.py](../../../../../../external/WeasyPrint/weasyprint/layout/absolute.py) | 绝对/固定定位 |
 | [float.py](../../../../../../external/WeasyPrint/weasyprint/layout/float.py) / [column.py](../../../../../../external/WeasyPrint/weasyprint/layout/column.py) | 浮动/多栏 |
 
 ### 3.6 Step 6: 绘制与 PDF 生成
 
-**入口**: [draw_page()](../../../../../../external/WeasyPrint/weasyprint/draw/__init__.py#L18-L28) → [generate_pdf()](../../../../../../external/WeasyPrint/weasyprint/pdf/__init__.py)
+**入口**: [draw_page()](../../../mdi/generated/case1/__init__.py#L18-L28) → [generate_pdf()](../../../mdi/generated/case1/__init__.py)
 
 按 CSS z-index 叠放顺序绘制：页面背景 → 根元素 → 负z-index → 块背景边框 → 浮动 → 行内 → z-index:auto/0 → 正z-index。最终通过 **Cairo** 渲染到 PDF 表面，**pydyf** 生成 PDF 指令流。
 
