@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>Caffe 两实现（caffe-ffi / caffex）综合对比测试可视化</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+  body { font-family: "Microsoft YaHei", Arial, sans-serif; margin: 20px; background:#f7f8fa; }
+  h2 { color: #1f2d3d; }
+  .chart { width: 100%; height: 520px; background:#fff; border-radius:8px; margin-bottom:30px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+  .note { color:#666; font-size:13px; margin-bottom:6px; }
+</style>
+</head>
+<body>
+<h2>Caffe 两实现对比测试可视化</h2>
+<p class="note">环境：caffe-ffi (py3.14, caffe-ffi-jupyter 容器) vs caffex (py3.10, caffe-cpu:origin-runtime 容器)。均为 CPU 容器，绝对延迟受容器资源影响，仅作相对参考。</p>
+
+<h3>1. 算子平均延迟对比（ms，30 次迭代均值）</h3>
+<div class="chart" id="c1"></div>
+
+<h3>2. 算子吞吐量对比（FPS）</h3>
+<div class="chart" id="c2"></div>
+
+<h3>3. 算子精度对比（caffe-ffi vs caffex 最大绝对误差）</h3>
+<p class="note">误差为 0 表示精确一致；非零为浮点实现差异（数量级 1e-7 属正常，由不同累加顺序/实现导致）。</p>
+<div class="chart" id="c3"></div>
+
+<h3>4. CPU 占用率对比（推理过程平均/峰值，% 相对整机多核）</h3>
+<p class="note">通过 /proc 采样推理进程 CPU 占用。caffex 峰值 870% 表明其使用 OpenMP 多核并行（最高 16 核）；caffe-ffi 峰值 70.89% 主要为单/低线程。平均值反映稳态占用。</p>
+<div class="chart" id="c4"></div>
+
+<h3>5. 网络级 Top-K 分类一致性（InceptionV1，同一固定输入）</h3>
+<p class="note">caffex 输出有限概率、Top-1=#904；caffe-ffi 因权重加载缺陷（A-001）Top-5 概率全为 NaN，Top-K 结果无效、与 caffex 不一致。</p>
+<div class="chart" id="c5"></div>
+
+<h3>6. 关键异常提示</h3>
+<div style="background:#fff5f5;border-left:4px solid #e02424;padding:14px 16px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.05)">
+<b>异常 A-001</b>：caffe-ffi 的 <code>read_net(proto, caffemodel)</code> 未加载 caffemodel 真实权重（conv1 权重全 1.0/std=0），导致 InceptionV1/MobileNetV2 网络推理输出指数放大至 Inf/NaN。算子级测试（net_from_param 无 caffemodel）不受影响，故算子精度对比仍有效。
+</div>
+
+<script>
+var ops = ["convolution", "pooling", "relu", "sigmoid", "tanh", "softmax", "inner_product", "batchnorm", "lrn", "eltwise_sum", "concat"];
+var ffi_ms = [0.6179, 5.0059, 0.4559, 0.4346, 0.453, 0.459, 4.6457, 0.6104, 0.6443, 8.015, 0.8049];
+var cx_ms = [0.6084, 0.4495, 0.3028, 0.5182, 0.5525, 0.3465, 1.0199, 0.3282, 0.3967, 0.5541, 0.5325];
+var ffi_fps = [1618.35, 199.76, 2193.37, 2300.86, 2207.53, 2178.88, 215.25, 1638.28, 1552.12, 124.77, 1242.36];
+var cx_fps = [1643.65, 2224.94, 3303.02, 1929.75, 1810.06, 2886.19, 980.52, 3047.38, 2520.69, 1804.63, 1877.81];
+var err_ops = ["convolution", "pooling", "pooling_ave", "relu", "sigmoid", "tanh", "softmax", "eltwise_sum", "eltwise_max", "inner_product", "batchnorm", "lrn", "prelu", "elu", "swish", "dropout", "flatten", "concat", "slice"];
+var err_vals = [9.5367431640625e-07, 0.0, 0.0, 0.0, 5.960464477539063e-08, 5.960464477539063e-08, 0.0, 0.0, 0.0, 1.1920928955078125e-07, 0.0, 0.0, 0.0, 0.0, 2.384185791015625e-07, 0.0, 0.0, 0.0, 0.0];
+
+var cpu_labels = ["caffe-ffi", "caffex"];
+var cpu_avg = [10.08, 25.89];
+var cpu_peak = [70.89, 870.0];
+var cpu_ncpu = [16, 16];
+
+var colors = { ffi: '#409EFF', cx: '#67C23A' };
+
+function mkBar(id, series) {
+  var c = echarts.init(document.getElementById(id));
+  c.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['caffe-ffi', 'caffex'] },
+    grid: { left: 60, right: 30, bottom: 60, top: 40 },
+    xAxis: { type: 'category', data: ops, axisLabel: { rotate: 30 } },
+    yAxis: { type: 'value' },
+    series: series
+  });
+  return c;
+}
+
+mkBar('c1', [
+  { name: 'caffe-ffi', type: 'bar', data: ffi_ms, itemStyle: { color: colors.ffi } },
+  { name: 'caffex', type: 'bar', data: cx_ms, itemStyle: { color: colors.cx } }
+]);
+
+mkBar('c2', [
+  { name: 'caffe-ffi', type: 'bar', data: ffi_fps, itemStyle: { color: colors.ffi } },
+  { name: 'caffex', type: 'bar', data: cx_fps, itemStyle: { color: colors.cx } }
+]);
+
+var c3 = echarts.init(document.getElementById('c3'));
+c3.setOption({
+  tooltip: { trigger: 'axis' },
+  grid: { left: 80, right: 30, bottom: 60, top: 40 },
+  xAxis: { type: 'category', data: err_ops, axisLabel: { rotate: 30 } },
+  yAxis: { type: 'log', name: 'log(最大绝对误差)' },
+  series: [{ name: 'max_abs_err', type: 'bar', data: err_vals, itemStyle: { color: '#F56C6C' } }]
+});
+
+var c4 = echarts.init(document.getElementById('c4'));
+c4.setOption({
+  tooltip: { trigger: 'axis' },
+  legend: { data: ['平均占用', '峰值占用'] },
+  grid: { left: 60, right: 30, bottom: 40, top: 40 },
+  xAxis: { type: 'category', data: cpu_labels },
+  yAxis: { type: 'value', name: 'CPU 占用率(%)' },
+  series: [
+    { name: '平均占用', type: 'bar', data: cpu_avg, itemStyle: { color: '#409EFF' } },
+    { name: '峰值占用', type: 'bar', data: cpu_peak, itemStyle: { color: '#F56C6C' } }
+  ]
+});
+
+var c5 = echarts.init(document.getElementById('c5'));
+c5.setOption({
+  tooltip: { trigger: 'item' },
+  grid: { left: 60, right: 30, bottom: 40, top: 40 },
+  xAxis: { type: 'category', data: ['caffex(有效)', 'caffe-ffi(无效)'] },
+  yAxis: { type: 'value', name: 'Top-1 概率' },
+  series: [{
+    name: 'Top-1 概率',
+    type: 'bar',
+    data: [0.0012, null],
+    itemStyle: { color: ['#67C23A', '#F56C6C'] },
+    label: { show: true, position: 'top', formatter: function(p){ return p.value == null ? 'NaN' : p.value; } }
+  }]
+});
+
+window.addEventListener('resize', function() {
+  var arr = ['c1','c2','c3','c4','c5'];
+  arr.forEach(function(id){ var c = echarts.getInstanceByDom(document.getElementById(id)); if(c) c.resize(); });
+});
+</script>
+</body>
+</html>
