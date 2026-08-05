@@ -24,6 +24,7 @@ date: "2026-07-04"
 | bp-evaluation-driven-self-evolution | [评测驱动的自进化闭环](evaluation-driven-self-evolution.md) | L2-validated | 2 | 1 | AI系统需要持续优化而非一次性交付，且输出可明确判定对错时 |
 | bp-responsibility-transfer-governance | [责任转移治理模式](responsibility-transfer-governance.md) | L2-validated | 2 | 1 | 业务方因风险收益不对等缺乏治理动力，平台方能构建可靠自动化系统兜底时 |
 | bp-error-blacklist-monotonic-evolution | [错误黑名单单调进化模式](error-blacklist-monotonic-evolution.md) | L2-validated | 2 | 1 | 系统需持续提升可靠性，且"重犯已知错误"是主要故障来源时 |
+| bp-cross-framework-atomic-analysis | [跨框架原子化设计分析模式](cross-framework-atomic-analysis.md) | L1-draft | 1 | 0 | AI Agent 库需引入跨框架设计方法论（如原子化设计）并回写到具体 Agent 时 |
 
 ## 成熟度等级说明
 
