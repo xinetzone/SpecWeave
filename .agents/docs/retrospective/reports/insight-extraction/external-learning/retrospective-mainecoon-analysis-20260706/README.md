@@ -63,7 +63,7 @@ generated: "2026-07-06"
 | spec.md | [原始任务目录](../../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 8 项 Requirements 规格文档 |
 | tasks.md | [原始任务目录](../../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 8 Task，43 子任务清单（已全部勾选）|
 | checklist.md | [原始任务目录](../../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md) | 41 项验证检查清单（已全部勾选）|
-| analysis-report.md | [原始任务目录](../../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md) | 14 章节深度分析报告（25KB） |
+| analysis-report.md | [归档目录](../../../../../../../docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.md) | 14 章节深度分析报告（25KB） |
 | _article_ff4S2ZTY.md | [原始任务目录](../../../../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md) | 原文缓存（defuddle 提取）|
 
 ## 本目录文件索引

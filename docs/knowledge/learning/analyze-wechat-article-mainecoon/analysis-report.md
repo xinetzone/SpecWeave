@@ -2,7 +2,7 @@
 id: "analyze-mainecoon-social-world-model-article-analysis-report"
 title: "MaineCoon 实时音视频模型文章深度洞察分析报告"
 source: "[_article_ff4S2ZTY.md](../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md)"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.toml"
 spec: "[spec.md](../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)"
 tasks: "[tasks.md](../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md)"
 version: 1.1
