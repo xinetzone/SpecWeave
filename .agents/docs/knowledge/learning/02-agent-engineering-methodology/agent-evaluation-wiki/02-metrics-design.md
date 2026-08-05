@@ -13,6 +13,8 @@ references: 22
 
 # 第2章：指标体系设计
 
+> **方法论视角**：如需从"能力/效率/安全/人本商业"四维框架（含北极星与分层原则）的方法论视角理解本主题，可参阅 [方法论Wiki · 模块3 关键指标体系](../agent-eval-methodology-wiki/03-metrics/03-metrics-overview.md)。
+
 ---
 
 ## 2.1 指标体系概述

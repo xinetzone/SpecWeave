@@ -13,6 +13,8 @@ references: 22
 
 # 第1章：评测理论基础
 
+> **方法论视角**：如需从"为什么评测/评测成熟度与误区"的方法论链路视角理解本主题，可参阅 [方法论Wiki · 模块1 方法论概述](../agent-eval-methodology-wiki/01-overview/01-methodology-overview.md)。
+
 ---
 
 ## 1.1 Agent评测标准定义（Wikipedia风格）

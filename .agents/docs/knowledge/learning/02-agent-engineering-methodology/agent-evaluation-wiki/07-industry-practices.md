@@ -13,6 +13,8 @@ references: 22
 
 # 第7章：行业实践案例
 
+> **方法论视角**：如需按"背景/做法/成果/经验教训/可复用要点"五要素阅读 8 个企业案例，可参阅 [方法论Wiki · 模块5 行业案例分析](../agent-eval-methodology-wiki/05-cases/05-cases-overview.md)。
+
 ---
 
 ## 7.1 案例1：Coding Agent评测（SWE-bench实践）

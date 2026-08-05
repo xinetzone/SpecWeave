@@ -42,6 +42,11 @@ AI工程方法论遵循**瓶颈外移规律**：每当模型变强一截，整�
 | [agent-evaluation-wiki/](agent-evaluation-wiki/00-overview.md) | 12篇 | **Agent评测体系化建设方法论**：AI Agent评测完整方法论教程，从理论基础到工程实践全覆盖——评测维度框架、指标体系设计（14大类80+指标）、20+主流基准（SWE-bench/GAIA/WebArena等）、自动化评测框架（LangSmith/DeepEval/Braintrust等6大框架对比）、人工评估方法论、数据治理、五大行业案例、工具选型、CI/CD五门门禁持续评测体系，含38个权威参考来源 |
 | [agent-eval-methodology-wiki/](agent-eval-methodology-wiki/README.md) | 17篇 | **Agent评测方法论（七概念驱动）**：基于R-F-I-E-V方法论链路的评测体系化建设Wiki教程——核心框架6大对比、四维指标体系（能力/效率/安全/人本，53项指标）、八阶段实施落地、8个行业案例、22条FAQ，含R阶段63条事实清单、F/I阶段6公理3洞察、V阶段四视角对抗审查、完整创作过程记录与知乎文章 |
 
+> **💡 同主题双入口引导**：`agent-evaluation-wiki` 与 `agent-eval-methodology-wiki` 同为主标题"Agent评测体系化建设方法论"，但定位互补、互为参阅——
+> - **📘 agent-evaluation-wiki（工程手册）**：面向落地，按评测生命周期组织（理论基础/指标/基准/框架/人工评估/数据治理/工具/持续评测），是**教程主体与长期维护**入口。
+> - **📐 agent-eval-methodology-wiki（方法论创作档案）**：面向方法论链路（R-F-I-E-V）与创作过程，核心价值在附录产出与知乎文章，教程模块为方法论视角的补充总览。
+> - 新手落地评测 → 从 **工程手册** 开始；想理解方法论如何构建 → 从 **创作档案** 开始。
+
 ---
 
 ## 📄 根级文档索引（11篇专题）

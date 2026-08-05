@@ -13,6 +13,8 @@ references: 22
 
 # 第9章：持续评测体系
 
+> **方法论视角**：如需从"评测体系如何分阶段落地"（八阶段流程）的方法论视角理解本主题，可参阅 [方法论Wiki · 模块4 八阶段实施步骤](../agent-eval-methodology-wiki/04-implementation/04-implementation-overview.md)。
+
 ---
 
 ## 9.1 持续评测概述

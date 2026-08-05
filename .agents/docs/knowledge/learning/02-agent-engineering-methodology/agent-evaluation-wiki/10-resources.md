@@ -12,6 +12,8 @@ summary: "AI Agent评测核心术语表、权威参考来源分类整理、按�
 
 # 第10章：术语表与参考资源
 
+> **方法论视角**：如需从方法论链路视角速查核心术语与 FAQ 解答，可参阅 [方法论Wiki · 术语表](../agent-eval-methodology-wiki/glossary.md)与[常见问题解答](../agent-eval-methodology-wiki/06-faq/06-faq-overview.md)。
+
 ---
 
 ## 10.1 核心术语表

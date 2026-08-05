@@ -13,6 +13,8 @@ references: 22
 
 # 第4章：自动化评测框架
 
+> **方法论视角**：如需从"评测框架测什么/用什么环境/怎么判定"的方法论视角对比 HELM/MT-Bench/AgentBench 等框架，可参阅 [方法论Wiki · 模块2 核心评测框架对比](../agent-eval-methodology-wiki/02-frameworks/02-core-frameworks.md)。
+
 ---
 
 ## 4.1 自动化评测概述

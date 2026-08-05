@@ -13,6 +13,8 @@ references: 10
 
 # 模块2：核心评测框架对比
 
+> **方法论视角**：本模块从评测框架的"测什么/用什么环境/怎么判定"视角对比六大框架。若需落地的自动化评测工具选型（LangSmith/Braintrust/DeepEval 等对比）与基准测试集构建，请参阅 [工程手册 · 第4章 自动化评测框架](../../agent-evaluation-wiki/04-automated-evaluation.md)与[第3章 基准测试构建](../../agent-evaluation-wiki/03-benchmark-construction.md)。
+
 ## 2.1 为什么需要对比框架
 
 评测框架（Evaluation Framework）是承载评测体系的基础设施——它决定了"测什么能力、用什么环境、怎么判定结果"。选错框架，评测体系会"地基倾斜"：要么测不到真实能力，要么无法复现，要么成本失控。
