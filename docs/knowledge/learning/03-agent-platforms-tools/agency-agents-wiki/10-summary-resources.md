@@ -53,8 +53,9 @@ tags: ["agency-agents", "the-agency", "ai-agent", "summary", "resources", "gloss
 
 1. 读 [概述](00-overview.md) 理解 The Agency 是什么。
 2. 按 [文件夹架构](01-architecture.md) 了解仓库如何组织 Agent。
-3. 跟着 [使用示例](06-usage-examples.md) 安装激活第一个 Agent。
-4. 遇到问题查 [FAQ](08-faq-troubleshooting.md)。
+3. 跟着 [快速上手演示](quickstart-demo-guide.md) 走一遍"克隆 → 预览 → 安装 → 激活"的完整流程。
+4. 深入 [使用示例](06-usage-examples.md) 学习更多安装激活与组合技巧。
+5. 遇到问题查 [FAQ](08-faq-troubleshooting.md)。
 
 > 完成此路径后，你能在常用 AI 助手中按需激活 The Agency 的 Agent。
 
@@ -191,6 +192,7 @@ The Agency 把"搭建一支 AI 专家团队"这件事，从**手写提示词**�
 | 08 | 常见问题解答 | [08-faq-troubleshooting.md](08-faq-troubleshooting.md) |
 | 09 | 最佳实践指南 | [09-best-practices.md](09-best-practices.md) |
 | 10 | 总结与资源（本文） | [10-summary-resources.md](10-summary-resources.md) |
+| 📖 | 新开发者快速上手演示（配套） | [quickstart-demo-guide.md](quickstart-demo-guide.md) |
 
 ---
 
