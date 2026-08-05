@@ -408,8 +408,8 @@ echo "✓ Conda package tests passed"
 ## 📁 相关文件参考
 
 本次实践的完整代码参考：
-- 构建脚本：[build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)
-- 元数据：[meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)
-- BLAS检测：[DetectBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectBLAS.cmake)
-- 完整验证脚本：[full-clean-rebuild.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh)
-- 验证报告：[conda-build-verification-report.md](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/conda-build-verification-report.md)
+- 构建脚本：[build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)
+- 元数据：[meta.yaml](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)
+- BLAS检测：[DetectBLAS.cmake](../../projects/xuanspace/libs/caffe-ffi/cmake/DetectBLAS.cmake)
+- 完整验证脚本：[full-clean-rebuild.sh](../../apps/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh)
+- 验证报告：[conda-build-verification-report.md](../../apps/caffe-ffi-jupyter/conda-build-verification-report.md)

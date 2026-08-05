@@ -298,5 +298,5 @@ readelf -d /path/to/lib.so | grep -i runpath
 
 ## 📁 相关文件
 
-- 最佳实践清单：[conda-build-best-practices.md](file:///d:/spaces/SpecWeave/.agents/checklists/conda-build-best-practices.md#3-rpath-与共享库处理检查)
-- caffe-ffi实现参考：[build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L273-L303)
+- 最佳实践清单：[conda-build-best-practices.md](conda-build-best-practices.md#3-rpath-与共享库处理检查)
+- caffe-ffi实现参考：[build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L273-L303)
