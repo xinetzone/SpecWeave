@@ -29,7 +29,7 @@ status: "draft"
 | [03-metrics/03-metrics-security.md](03-metrics/03-metrics-security.md) | 安全维度指标：IETF四层安全框架关键20项 | 进阶 |
 | [03-metrics/03-metrics-human-commercial.md](03-metrics/03-metrics-human-commercial.md) | 人本与商业维度指标：CSAT/NPS/ROI等9项 | 进阶 |
 | [04-implementation/04-implementation-overview.md](04-implementation/04-implementation-overview.md) | 八阶段实施步骤：每阶段输入/输出/工具/验收/坑点，0-8周落地清单 | 进阶-实践 |
-| [05-cases/05-cases-overview.md](05-cases/05-cases-overview.md) | 8个行业案例：OpenAI/LangChain/Nubank/AWS等实践 | 实践 |
+| [05-cases/05-cases-overview.md](05-cases/05-cases-overview.md) | 8个行业案例（OpenAI/LangChain/Nubank/AWS等）：每案例六要素解析（背景/做法/成果/方法论映射/反模式/可复用要点）+ 公理映射对比 | 实践 |
 | [06-faq/06-faq-overview.md](06-faq/06-faq-overview.md) | 常见问题解答：22条FAQ，覆盖选型/实施/踩坑三类 | 参考 |
 | [appendices/fact-list.md](appendices/fact-list.md) | R阶段事实清单：63条客观事实（F-001~F-063） | 附录 |
 | [appendices/first-principles-and-insights.md](appendices/first-principles-and-insights.md) | F/I阶段分析：6条公理、假设剥离、3条核心洞察 | 附录 |
