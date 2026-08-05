@@ -24,6 +24,17 @@ x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/repor
 | **反常识** | OKF 过去主推 RDF/SPARQL 作为开放知识的查询标准，但这是"专家友好"不是"开发者友好"——大多数工程师会 GraphQL 但不会 SPARQL。降低查询门槛比追求语义完美更重要，GraphQL 可能是开放知识大众化的关键缺失拼图。 |
 | **行动建议** | (1) 定义开放知识 GraphQL 接口规范（OKF-GQL），包含分页、错误处理、许可标注等标准字段；(2) 提供适配器，将常见开放数据格式（CSV/JSON/RDF）自动包装为 GraphQL 端点；(3) 构建开放知识 GraphQL 网关，实现跨源联邦查询。 |
 
+---
+
+## 📦 已萃取为可复用模式
+
+> 本洞察的核心思想已沉淀为架构级模式，可供其他项目直接复用：
+
+**[📐 GraphQL联邦开放知识网关模式](../../../../../patterns/architecture-patterns/graphql-federated-knowledge-gateway.md)**  
+*跨源开放知识的统一查询层：用GraphQL联邦替代SPARQL，降低开发者门槛，让开放数据真正可用*
+
+---
+
 ## 组合方式
 
 - 🌐 **联邦查询网关**：多个开放数据源各自实现 GraphQL 接口，网关层通过 Federation 拼接成统一知识图

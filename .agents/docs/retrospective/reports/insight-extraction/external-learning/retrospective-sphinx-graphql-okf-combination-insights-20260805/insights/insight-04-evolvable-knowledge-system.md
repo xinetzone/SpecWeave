@@ -24,6 +24,20 @@ x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/repor
 | **反常识** | 我们通常把"文档工具"、"API 协议"、"开放理念"看作三个不相关领域，但在 AI 原生时代，**知识必须同时满足：人类可读写（结构化文档工具）、机器可查询（GraphQL）、合法可共享（OKF）**——缺任何一个维度，知识就无法在 AI agents 网络中自由流动。这三个东西看似不相关，其实是下一代知识基础设施的三层缺一不可。 |
 | **行动建议** | 启动"Open Knowledge Fabric"参考实现项目，提供双路径工具链：(1) Sphinx 扩展套件（GraphQL 导出+OKF 元数据），适合 Python 生态和多格式出版场景；(2) MDX 插件套件（GraphQL 组件+OKF 元数据），适合 JS 生态和交互式文档；(3) 开放知识 GraphQL 网关；(4) 贡献治理与许可合规工具链；(5) 分别提供 Sphinx 和 MDX 两种最小可行知识站模板，一键启动三者融合的知识站点。 |
 
+---
+
+## 📦 模式组合应用（愿景层，不单独萃取）
+
+> 本洞察是前三个架构模式的三位一体组合，代表知识基础设施的愿景态，不单独沉淀为新模式：
+
+| 层 | 复用模式 | 链接 |
+|----|---------|------|
+| 生产层 | 文档工具链开放元数据嵌入 | [📐 toolchain-embedded-open-metadata](../../../../../patterns/architecture-patterns/toolchain-embedded-open-metadata.md) |
+| 接口层 | 文档即可查询API + GraphQL联邦开放知识网关 | [📐 document-as-queryable-api](../../../../../patterns/architecture-patterns/document-as-queryable-api.md) · [📐 graphql-federated-knowledge-gateway](../../../../../patterns/architecture-patterns/graphql-federated-knowledge-gateway.md) |
+| 协议层 | OKF开放协议（社会/法律/技术三层） | OKF理念参考，未沉淀为代码模式 |
+
+---
+
 ## 三者分层架构
 
 | 层 | 组件 | 职责 |

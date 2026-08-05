@@ -99,13 +99,13 @@ generated: "2026-08-05"
 
 > 📂 **原子化洞察**：每条洞察已提取为独立文件，完整四元组内容见 [insights/ 目录](insights/README.md)
 
-| 编号 | 洞察标题 | 核心结论 | 深度 | 独立文件 |
-|------|---------|---------|------|---------|
-| 1 | 可查询文档 | 结构化文档工具 + GraphQL = 文档既是人读网页，也是机器可查询的知识图 API | 应用层 | [insight-01](insights/insight-01-queryable-documentation.md) |
-| 2 | 可追溯开放文档 | 结构化文档工具 + OKF = 开放属性嵌入生产工具链，从"公开"进化为真正的"开放" | 应用层 | [insight-02](insights/insight-02-traceable-open-documentation.md) |
-| 3 | 开放知识查询层 | GraphQL + OKF = 跨源开放知识统一查询网关，降低门槛比追求语义完美更重要 | 架构层 | [insight-03](insights/insight-03-open-knowledge-query-layer.md) |
-| 4 | 可进化开放知识系统 | 三者全组合 = 文档/API/开放协议三位一体的AI原生知识基础设施 | 愿景层 | [insight-04](insights/insight-04-evolvable-knowledge-system.md) |
-| 5（反洞察）| 伪需求识别 | 7种组合中有2种是伪需求，组合价值评估三原则避免为组合而组合 | 元层 | [insight-05](insights/insight-05-anti-insight-pseudo-needs.md) |
+| 编号 | 洞察标题 | 核心结论 | 深度 | 独立文件 | 模式沉淀 |
+|------|---------|---------|------|---------|---------|
+| 1 | 可查询文档 | 结构化文档工具 + GraphQL = 文档既是人读网页，也是机器可查询的知识图 API | 应用层 | [insight-01](insights/insight-01-queryable-documentation.md) | ✅ [文档即可查询API](../../../../patterns/architecture-patterns/document-as-queryable-api.md) |
+| 2 | 可追溯开放文档 | 结构化文档工具 + OKF = 开放属性嵌入生产工具链，从"公开"进化为真正的"开放" | 应用层 | [insight-02](insights/insight-02-traceable-open-documentation.md) | ✅ [工具链开放元数据嵌入](../../../../patterns/architecture-patterns/toolchain-embedded-open-metadata.md) |
+| 3 | 开放知识查询层 | GraphQL + OKF = 跨源开放知识统一查询网关，降低门槛比追求语义完美更重要 | 架构层 | [insight-03](insights/insight-03-open-knowledge-query-layer.md) | ✅ [GraphQL联邦开放知识网关](../../../../patterns/architecture-patterns/graphql-federated-knowledge-gateway.md) |
+| 4 | 可进化开放知识系统 | 三者全组合 = 文档/API/开放协议三位一体的AI原生知识基础设施 | 愿景层 | [insight-04](insights/insight-04-evolvable-knowledge-system.md) | 🧩 组合态（1+2+3） |
+| 5（反洞察）| 伪需求识别 | 7种组合中有2种是伪需求，组合价值评估三原则避免为组合而组合 | 元层 | [insight-05](insights/insight-05-anti-insight-pseudo-needs.md) | ✅ [组合价值三重检验](../../../../patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md) |
 
 ---
 

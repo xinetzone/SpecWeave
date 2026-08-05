@@ -36,6 +36,17 @@ x-toml-ref: "../../../../../../../../.meta/toml/.agents/docs/retrospective/repor
 | **开发者动量（2026）** | 稳定但增长缓慢，Python 社区和官方文档主流 | 增长强劲，Docusaurus/Next.js/Astro 等现代文档站首选 |
 | **选型建议** | Python 项目、需要 PDF/多格式出版、技术书籍/官方规范文档 | JS 项目、需要交互式组件、仅需 HTML 输出、面向前端开发者的文档站 |
 
+---
+
+## 📦 已萃取为可复用模式
+
+> 本洞察的核心思想已沉淀为架构级模式，可供其他项目直接复用：
+
+**[📐 文档即可查询 API 模式](../../../../../patterns/architecture-patterns/document-as-queryable-api.md)**  
+*技术文档的查询优先架构：文档既是人读网页，也是机器可查询的知识图 API*
+
+---
+
 ## 组合方式
 
 - 🔨 **Sphinx 构建时组合**：Sphinx 构建时提取文档元数据，生成静态 GraphQL Schema 文件（schema.gql）+ 静态查询响应（适合纯静态站点）
