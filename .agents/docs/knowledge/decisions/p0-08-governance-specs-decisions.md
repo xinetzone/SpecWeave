@@ -32,7 +32,7 @@ archive_history:
 
 ## 来源
 
-- 决策集合来源目录：[`.trae/specs/`](file:///d:/spaces/chaos/.trae/specs)
+- 决策集合来源目录：[`.trae/specs/`](../../superpowers/specs/)
 - 上游收敛方案：[p0-archive-baseline-plan.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/p0-archive-baseline-plan.md)
 - 上游优先级分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
 

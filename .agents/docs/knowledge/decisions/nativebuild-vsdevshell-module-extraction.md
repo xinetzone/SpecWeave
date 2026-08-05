@@ -136,8 +136,8 @@ VsDevShell提取已经完成了最有价值的通用化（解决了跨项目MSVC
 
 ## 参考文件
 
-- 通用模块：[VsDevShell.psm1](../../scripts/lib/VsDevShell.psm1)
-- C++构建模块：[NativeBuild.psm1](../../scripts/lib/NativeBuild.psm1)
-- VsDevShell测试：[test_vsdevshell.Tests.ps1](../../scripts/tests/test_vsdevshell.Tests.ps1)
-- 完整复盘报告：[retrospective-nativebuild-automation-20260802](../retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/README.md)
+- 通用模块：[VsDevShell.psm1](../../../scripts/lib/VsDevShell.psm1)
+- C++构建模块：[NativeBuild.psm1](../../../scripts/lib/NativeBuild.psm1)
+- VsDevShell测试：[test_vsdevshell.Tests.ps1](../../../scripts/tests/test_vsdevshell.Tests.ps1)
+- 完整复盘报告：[retrospective-nativebuild-automation-20260802](../../retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/)
 - 相关模式：多策略自动发现、版本优先级排序、PATH长度自动恢复、薄包装模式
