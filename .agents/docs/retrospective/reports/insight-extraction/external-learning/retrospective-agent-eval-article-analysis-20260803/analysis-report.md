@@ -324,3 +324,23 @@ Agent与传统软件的本质差异（非确定性、黑盒化、错误级联）
 
 ### 要点5：闭环的终点是资产沉淀，不是单次报告
 评测的最终目的不是出一份好看的报告，而是建立"发现问题→定位根因→产出修复→验证效果→沉淀资产"的持续运转机制。一条Badcase要转化为回归用例、配置修复、训练数据三类资产；最终沉淀六大质量资产库（用例库、Trace库、根因标签库、修复建议库、Judge校准集、回归集），让Agent迭代脱离"个人经验+临时救火"模式。
+
+---
+
+## 第六部分：沉淀可复用模式（L1级）
+
+基于本文方法论，通过七概念方法论编排（R→I→E→V），萃取3个可跨场景复用的方法论模式（L1成熟度，单案例验证）：
+
+| 模式ID | 模式名称 | 核心思想 | 模式文件路径 |
+|--------|---------|---------|-------------|
+| dialog-agent-four-layer-evaluation | 对话Agent四层评测模式 | 从Turn/Session/Trace/Outcome四层递进评测，重点防御假阳性 | [methodology-patterns/ai-collaboration/dialog-agent-four-layer-evaluation.md](../../../../patterns/methodology-patterns/ai-collaboration/dialog-agent-four-layer-evaluation.md) |
+| layered-priority-dimension-reduction | 分层分级降维模式 | 复杂系统通过多维度2-3层优先级分级，降低决策复杂度，高优先级先执行快速拦截 | [methodology-patterns/governance-strategy/layered-priority-dimension-reduction.md](../../../../patterns/methodology-patterns/governance-strategy/layered-priority-dimension-reduction.md) |
+| quality-asset-accumulation-loop | 质量资产沉淀闭环模式 | 发现→定位→修复→验证→沉淀资产闭环，一条Badcase产出三类反馈，六类资产持续积累实现边际成本递减 | [methodology-patterns/governance-strategy/quality-asset-accumulation-loop.md](../../../../patterns/methodology-patterns/governance-strategy/quality-asset-accumulation-loop.md) |
+
+### 萃取说明
+
+- **萃取时间**：2026-08-05
+- **萃取方法论**：七概念方法论编排（知识沉淀场景 R→I→E→V）
+- **成熟度**：L1（单案例验证，来源：孙敦灿《Agent评测体系化》文章）
+- **对抗审查**：已通过四视角对抗审查，采纳4条意见修正（补充术语解释、分阶段落地、Hello World示例、适用边界说明、量化收益前提条件）
+- **升级路径**：在≥2个不同项目/场景验证后可升级为L2成熟度
