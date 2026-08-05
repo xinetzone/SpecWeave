@@ -30,6 +30,7 @@ date: "2026-07-09"
 | [外部内容事实验证](external-content-fact-verification.md) | 外部内容事实验证 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` |
 | [外部技术文章学习三阶段闭环（LAV模型）](external-tech-article-learning-closed-loop.md) | Learn-Aapply-Verify三阶段闭环：L阶段API逐行比对防推测、A阶段知识落地判断强制关联本地场景、V阶段R→I→E最小闭环+路径规范，解决学习类文档三重断层（API准确性/本地关联/完成判定） | L1 | `ai-collaboration` `knowledge-management` `learning` `technical-article` `closed-loop` `lav-model` |
 | [细粒度最小权限模式](fine-grained-least-privilege.md) | 细粒度最小权限模式 | L1 | `security` `least-privilege` `permission-model` |
+| [对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation）](dialog-agent-four-layer-evaluation.md) | Turn/Session/Trace/Outcome四层递进评测架构，Trace层横切防御假阳性，分层筛查提高评测效率，附分阶段落地建议和7个反模式 | L1 | `Agent评测` `对话系统` `四层架构` `质量保障` `假阳性防御` `分层防御` |
 | [一等公民抽象模式](first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
 | [PS5防御性Prompt模板模式（PS5-Defensive-Prompt）](ps5-defensive-prompt.md) | PS5防御性Prompt模板模式：完整版系统Prompt（7大约束：版本/禁用语法/API/编码/CLM/安全/质量）+精简版快速Prompt+3种场景变体（脚本开发/CI-CD/系统管理），解决AI默认生成PS7+语法在Windows PowerShell 5.1下ParserError问题 | L1 | `powershell` `defensive-prompt` `ai-coding` `version-compatibility` `clm` `security` `prompt-engineering` |
