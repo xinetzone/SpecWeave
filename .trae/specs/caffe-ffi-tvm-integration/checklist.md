@@ -1,18 +1,20 @@
 # Caffe-FFI 验证检查清单
 
 > **更新日期**: 2026-08-04
-> **验证状态**: ✅ M1-M9全部完成，P4（优化/扩展）规划中
+> **验证状态**: ✅ M1-M9全部完成，P4（优化/扩展）完成
 > **版本进展**:
 >   - v0.1.0 (M1-M6): 20层、Docker、独立项目 — ✅ 完成
 >   - v1.1.0 (M7): COW零拷贝共享、内存追踪、562测试 — ✅ 完成
 >   - v1.2.0 (M8): InsertSplits图变换、25层、P3-C Transformer — ✅ 完成
 >   - M9 (P3): Backward 19类层892测试、LeNet/MNIST训练97.95%、CI三平台(含COW_PHASE3宏)、C¹拐点防护、测试16.2x优化、P3-B/C/D/E四阶段闭环 — ✅ 完成
+>   - P4: Task 31性能优化(OpenMP/BLAS/COW推广)、Task 32能力扩展(激活/归一化/损失/Dropout训练)、Task 33训练工程化(Solver API/模型序列化/应用示例/训练指南) — ✅ 完成
 > **测试结果**:
->   - 全量测试: 1646 passed, 1 skipped, 0 failures
->   - Docker Linux Python 3.14.6: 1646 passed / 1 skipped
+>   - 全量测试: 1814 passed, 1 skipped, 0 failures（S5 Dropout COW 优化后）
+>   - Docker Linux Python 3.14.6: 1814 passed / 1 skipped
 >   - GitHub Actions CI: Linux/macOS/Windows三平台验证通过（含COW_PHASE3宏）
 >   - C++测试: 8个测试文件覆盖Blob/Net/Neuron/InsertSplits/Deconv/ZeroCopy/ObjectPtr/符号导出
 >   - P3-E验收报告 + P3阶段总复盘 + P4路线图已生成
+>   - **S5 Dropout 推理 COW 优化**: 推理模式非 inplace 用 `ShareData`/`ShareDiff` 零拷贝替换 O(n) memcpy，新增 6 个 COW 测试（TestDropoutCOWBehavior），全量回归通过
 > **性能验证**:
 >   - 零拷贝恒定~4µs访问，10M元素加速3749×
 >   - COW共享O(1)
@@ -88,6 +90,7 @@
 - [x] test_reshape_loop_no_leak: 500次reshape循环零泄漏
 - [x] 21个COW测试用例全部通过（API/拓扑/snapshot/refcount/forward场景）
 - [x] SplitLayer Forward 使用ShareData()零拷贝共享
+- [x] **Dropout 推理模式 COW 零拷贝优化（S5）**: 非 inplace 推理 Forward 用 `ShareData`/Backward 用 `ShareDiff` 替换 O(n) memcpy，新增 6 个 COW 测试（TestDropoutCOWBehavior），训练/inplace 路径行为不变
 
 ## Proto 集成验证
 - [x] proto/caffe/proto/caffe.proto 包含25个Layer所需的核心消息类型（含Crop/Deconv/LRN/Slice/Split参数）
@@ -464,9 +467,38 @@
 
 ## 待完成项（P4优化/扩展）
 - [ ] ASan内存管理正式验证（Linux/GCC环境）
-- [ ] BLAS路径性能基准对比（需完整BLAS环境）
-- [ ] RNN/LSTM层C++实现（numpy参考已就绪）
-- [ ] Solver优化器框架（SGD/Adam等）
-- [ ] P4性能优化：BLAS后端/多线程/COW推广
-- [ ] P4能力扩展：更多激活/归一化/损失层、训练模式Dropout
-- [ ] P4工程化：训练API封装/模型序列化/应用示例/文档完善
+- [ ] BLAS后端在完整BLAS环境的最终性能基准（P4已建立benchmark体系，见 Task 31）
+- [x] RNN/LSTM层 Phase 1（纯Python前向）：`caffe_ffi.sequence` 子模块、RNN/LSTM类、双向、Caffe打包权重加载、test_sequence_forward.py 16用例通过、examples/rnn_forward.py 可运行
+- [x] RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）：test_recurrent_backward.py 29用例通过（L0-L1-L2-L3全梯度验证）、全量回归1692 passed/1 skipped
+- [x] Solver优化器框架（SGD/Adam等）— 已完成（Task 33）
+- [x] P4性能优化：BLAS后端/多线程/COW推广 — 已完成（Task 31）
+- [x] P4能力扩展：更多激活/归一化/损失层、训练模式Dropout — 已完成（Task 32）
+- [x] P4工程化：训练API封装/模型序列化/应用示例/文档完善 — 已完成（Task 33）
+
+## P4-Task 33 训练工程化验证（2026-08-04）
+- [x] `caffe_ffi.solver` 模块存在：`Optimizer`/`SGD`/`Adam`/`LRScheduler`/`StepLR`/`MultiStepLR`/`ExponentialLR`/`CosineAnnealingLR`/`Solver`
+- [x] SGD 支持动量/Nesterov/weight_decay，与独立 numpy 参考逐迭代一致
+- [x] Adam 支持偏差校正/beta1/beta2/eps，与独立 numpy 参考一致
+- [x] SGD/Adam 提供 state_dict/load_state_dict 断点续训
+- [x] 四种学习率调度器（StepLR/MultiStepLR/ExponentialLR/CosineAnnealingLR）数学正确并写回 optimizer.lr
+- [x] Solver 支持 step（单步）/fit（多 epoch）/validate（验证）/train（模式切换），history 记录 loss/metric/lr
+- [x] Solver 权重更新走 `mutable_data_tensor()` COW 感知写入
+- [x] `caffe_ffi.serialization` 模块存在：save_net/load_net/net_parameter_to_file/weights_to_dict/dict_to_weights
+- [x] caffemodel 格式 weights 保存/加载 round-trip 正确（按层名匹配）
+- [x] weights_to_dict/dict_to_weights 权重字典 round-trip 正确（未知 key 忽略）
+- [x] 顶层 `caffe_ffi.__init__.py` 导出 solver/serialization 及全部类/函数
+- [x] 应用示例 `examples/mlp_classifier_train.py`：端到端训练 + save_net + load_net + 评估
+- [x] 测试 `tests/python/test_solver.py`：优化器/调度器/Solver 测试通过
+- [x] 测试 `tests/python/test_serialization.py`：权重字典与 caffemodel round-trip 测试通过
+- [x] 文档 `docs/training/TRAINING_GUIDE.md`（训练指南）与 `docs/training/API_REFERENCE.md`（API参考）存在
+- [x] `docs/README.md` 文档索引登记 training/ 目录
+
+## P4 验证清单（Task 31/32 补充）
+- [x] OpenMP 多线程：GEMM 1.77-2.28x、Pooling 1.20-1.30x、Eltwise +6-8%
+- [x] OpenBLAS 后端：GEMM 12.69-13.30 GFLOPS（较 Serial 3.08-3.65x）
+- [x] COW 推广至恒等层（Scale/Bias/Eltwise）：12 个 COW 测试通过
+- [x] 新增激活层 LeakyReLU/Softplus/Softsign/AbsValue 全部通过
+- [x] 新增归一化层 L2Norm/InstanceNorm 全部通过
+- [x] 新增损失层 MarginRanking/Hinge 全部通过
+- [x] 训练模式 Dropout（inverted dropout + mask 缓存）34 测试通过
+- [x] Dropout 推理 COW 零拷贝优化（6 个 COW 测试）全量回归 1814 passed

@@ -62,6 +62,7 @@ date: "2026-07-09"
 | [五要素Skill格式标准化：从通用工具文档到项目标准Skill的改造](five-factor-skill-format-standardization.md) | 五要素Skill格式标准化：从通用工具文档到项目标准Skill的改造 | L1 |  |
 | [五层治理体系架构模式](five-layer-governance-architecture.md) | 五层治理体系架构模式 | L2 |  |
 | [格式证据优先于记忆模式（Format Evidence Over Memory Pattern）](format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式（Format Evidence Over Memory Pattern） | L2 |  |
+| [四维留余框架：不确定环境下长期存续的冗余管理策略](four-dimension-margin-framework.md) | 源自康百万家族400年跨代存续经验的本质还原：留余不是道德说教而是冗余原则的文化编码——用确定的小损失防范不确定的大灾难。天地人时四维矩阵（能力冗余/合规冗余/利益冗余/选项冗余）+ 5条行动原则 + 3个反模式（伪留余/单维留余/静态留余）+ 6学科跨文明映射 + 5领域迁移验证。核心洞察：留余是保险而非投资，四维缺一不可，逆境验真伪。 | L1 | `风险管理` `冗余` `决策` `文化智慧` `安全边际` `长期主义` `反脆弱` `韧性` |
 | [外部依赖四不原则](four-negatives-external-dependency.md) | 外部依赖四不原则 | L3 | `governance` `external-dependency` `vendor` |
 | [治理基建四层递进模型](governance-four-layer-progressive.md) | 治理基建四层递进模型 | L2 |  |
 | [治理演化三阶段：修复→预防→闭环](governance-three-stage-evolution.md) | 治理演化三阶段：修复→预防→闭环 | L2 | `meta-methodology` `governance` `quality` |
