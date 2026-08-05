@@ -210,6 +210,10 @@ if [ -n "$TVM_FFI_CMAKE_DIR" ]; then
     log_info "caffe-ffi: using tvm-ffi cmake dir: $TVM_FFI_CMAKE_DIR"
 fi
 CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCMAKE_PREFIX_PATH=$CONDA_PREFIX;-DCAFFE_FFI_BUILD_TESTS=OFF"
+# Phase 3 大规模 N COW 优化（batch 引用计数、lazy reshape）——必须显式置 ON，
+# 否则 split_layer.cpp 中 #ifdef CAFFE_FFI_ENABLE_COW_PHASE3 的 lazy reshape 分支不编译，
+# 导致 N>=16 的 SetShapeOnly 延迟分配测试失败（见 editable-install 历史坑记录）。
+CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCAFFE_FFI_ENABLE_COW_PHASE3=ON"
 do_editable_install "caffe-ffi" "$CAFFE_FFI_SRC_DIR" "$CAFFE_FFI_CMAKE_ARGS"
 
 # ── Update ldconfig for newly built .so files (root only) ──
