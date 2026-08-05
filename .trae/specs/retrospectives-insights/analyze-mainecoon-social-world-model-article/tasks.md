@@ -51,6 +51,25 @@
   - [x] SubTask 8.3: 添加总结与展望章节,凝练核心洞察(Social World Model 范式、三角困境突破、AI 交互演进方向)
   - [x] SubTask 8.4: 输出最终 Markdown 报告到 `d:\spaces\SpecWeave\.trae\specs\retrospectives-insights\analyze-mainecoon-social-world-model-article\analysis-report.md`
 
+- [x] Task 9: 七概念方法论增强分析（R-I-E-C-A-F-V）
+  - [x] SubTask 9.1: R阶段事实审查与G1质量门校验（26条事实，0因果词，G1通过）
+  - [x] SubTask 9.2: I阶段洞察四元组校验与G2质量门（G2不通过→补充F-xxx证据引用和行动建议→G2通过）
+  - [x] SubTask 9.3: E阶段模式可迁移性校验与G3质量门（G3不通过→补充触发场景/步骤/反模式/迁移验证→G3通过）
+  - [x] SubTask 9.4: F阶段Social World Model第一性原理分析（6个假设剥离+4条公理+重构方案）
+  - [x] SubTask 9.5: V阶段4视角对抗审查（魔鬼代言人/新人/老板/未来，审查意见≥20条，P0/P1/P2分级）
+  - [x] SubTask 9.6: 更新analysis-report.md（新增Chapter 15、事实编号表、四元组、结构化要素）
+  - [x] SubTask 9.7: 更新spec.md（MODIFIED Requirements）和tasks.md/checklist.md
+
+- [x] Task 10: 七概念分析产出转化（决策摘要+批判性评论+任务审查）
+  - [x] SubTask 10.1: 整理4条公理与3个P0级发现为决策摘要（decision-summary.md），供团队直接使用
+  - [x] SubTask 10.2: 基于F+V洞察生成批判性评论草稿（critical-review-draft.md），含可信底座/致命盲点/价值边界三维度
+  - [x] SubTask 10.3: 审查tasks.md是否有待办事项需基于七概念分析结果更新或重新排序（审查结论：Task 1-9均已完成，新增Task 10记录本次产出转化，Task Dependencies已补充Task 9→Task 10依赖链，无需重新排序）
+
+- [x] Task 11: 最终报告整合与知识库同步
+  - [x] SubTask 11.1: 合并决策摘要与批判性评论草稿为最终报告（final-report.md），含执行摘要+4公理+3P0+批判性评论+行动项
+  - [x] SubTask 11.2: 创建知识库wiki页面（docs/knowledge/learning/mainecoon-social-world-model-wiki.md），含模型概况+4公理+3P0+场景评估+竞争格局
+  - [x] SubTask 11.3: 验证文件路径合规（0处file:///绝对路径）
+
 # Task Dependencies
 
 - Task 1 → Task 2, Task 3, Task 4(内容预处理是后续分析的基础)
@@ -58,3 +77,6 @@
 - Task 6 可与 Task 2/3/4/5 并行(评估类任务相对独立)
 - Task 7 依赖 Task 2-6 完成(批判性思考需要全面分析基础)
 - Task 8 依赖 Task 1-7 全部完成(报告是所有分析的整合输出)
+- Task 9 依赖 Task 8 完成(七概念方法论增强需要完整分析报告作为输入)
+- Task 10 依赖 Task 9 完成(决策摘要与批判性评论基于F+V阶段产出)
+- Task 11 依赖 Task 10 完成(最终报告整合需要决策摘要与批判性评论作为输入)
