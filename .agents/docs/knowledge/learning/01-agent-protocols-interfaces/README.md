@@ -26,7 +26,7 @@ Agent协议与接口技术栈分为四层抽象：
 
 ---
 
-## 📚 子Wiki索引（8个专题）
+## 📚 子Wiki索引（9个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
@@ -38,6 +38,7 @@ Agent协议与接口技术栈分为四层抽象：
 | [interface-api-abi-protocol-wiki/](interface-api-abi-protocol-wiki/00-overview.md) | 7篇 | **四层接口抽象概念辨析**：通用软件开发视角的Interface/API/ABI/Protocol四层抽象，厘清易混淆概念，建立系统技术认知框架 |
 | [tvm-ffi-wiki/](tvm-ffi-wiki/README.md) | 16篇 | **TVM FFI详解**：Apache TVM项目独立跨语言FFI框架，稳定C ABI、类型擦除值系统、引用计数对象系统、打包函数调用约定、多语言绑定（C++/Python/Rust） |
 | [protobuf-wiki/](protobuf-wiki/README.md) | 7篇 | **Protocol Buffers版本演进深度指南**：七概念方法论产出，覆盖proto1→proto2→proto3→Editions完整版本史、12维度三版对比矩阵、6大核心功能演进、选型决策树、迁移风险清单（含Caffe实例） |
+| [okf-wiki/](okf-wiki/00-overview.md) | 8篇 | **OKF开放知识格式完整指南**：Google Cloud 2026年6月发布的Agent知识层标准，极简Markdown+YAML格式，人和Agent共读，Git原生。覆盖设计哲学、格式规范、5分钟Quickstart、Agent四层架构定位、8种方案对比、企业落地四阶段路径 |
 
 ---
 
