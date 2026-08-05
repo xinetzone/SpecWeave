@@ -3,7 +3,7 @@
 **版本**：v1.0  
 **更新日期**：2026-06-02  
 **适用范围**：SpecWeave 项目内所有文档、脚本、配置文件  
-**关联工具**：[`check-sensitive-info.py`](../../scripts/check-sensitive-info.py)
+**关联工具**：[`check-sensitive-info.py`](../../../scripts/check-sensitive-info.py)
 
 ---
 
@@ -209,7 +209,7 @@ path = "C:\\Users\\xinzo\\anaconda3"  # nosec: 测试用例真实路径样本
 
 ### 7.1 测试套件位置
 
-- **新增误报测试**：[`tests/test_sensitive_info_shell.Tests.py`](../../scripts/tests/test_sensitive_info_shell.Tests.py)
+- **新增误报测试**：[`tests/test_sensitive_info_shell.Tests.py`](../../../scripts/tests/test_sensitive_info_shell.Tests.py)
 - **原有综合测试**：`tests/test_sensitive_info.py`
 
 ### 7.2 测试覆盖要求

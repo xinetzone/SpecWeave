@@ -25,14 +25,14 @@ tags: ["windows", "compatibility", "powershell", "encoding", "cross-platform", "
 ### 一、编码问题（5项）
 
 - [ ] **WC-001**：所有Markdown/代码/配置文件统一使用UTF-8编码（无BOM）
-- [ ] **WC-002**：Git提交中文commit message时，使用 [git-commit-utf8.py](../../scripts/git-commit-utf8.py) 工具，避免PowerShell 5默认GBK编码导致乱码
+- [ ] **WC-002**：Git提交中文commit message时，使用 [git-commit-utf8.py](../../../scripts/git-commit-utf8.py) 工具，避免PowerShell 5默认GBK编码导致乱码
 - [ ] **WC-003**：PowerShell脚本开头显式声明 `# -*- coding: utf-8 -*-`，读取文件时显式指定 `-Encoding UTF8`
 - [ ] **WC-004**：Python源码文件第一行添加 `# -*- coding: utf-8 -*-`，open()函数调用显式指定 `encoding='utf-8'`
 - [ ] **WC-005**：避免在文件路径、文件名中使用中文和特殊字符，统一使用kebab-case英文命名（运行 `python .agents/scripts/check-filename-convention.py` 验证）
 
 **工具引用**：
-- [git-commit-utf8.py](../../scripts/git-commit-utf8.py)：Windows中文提交安全工具
-- [check-filename-convention.py](../../scripts/check-filename-convention.py)：文件名规范检查
+- [git-commit-utf8.py](../../../scripts/git-commit-utf8.py)：Windows中文提交安全工具
+- [check-filename-convention.py](../../../scripts/check-filename-convention.py)：文件名规范检查
 
 ### 二、PowerShell差异（5项）
 
@@ -44,7 +44,7 @@ tags: ["windows", "compatibility", "powershell", "encoding", "cross-platform", "
 
 **参考文档**：
 - [PowerShell兼容性防御研究](powershell-compatibility-research.md)（待补充）
-- [pwsh7-windows-standard](../../docs/retrospective/reports/project-governance/standards-governance/retrospective-pwsh7-windows-standard-20260729/README.md)：PowerShell 7标准化复盘
+- [pwsh7-windows-standard](../../retrospective/reports/project-governance/standards-governance/retrospective-pwsh7-windows-standard-20260729/)：PowerShell 7标准化复盘
 
 ### 三、路径处理（3项）
 
@@ -59,7 +59,7 @@ tags: ["windows", "compatibility", "powershell", "encoding", "cross-platform", "
 
 ### 五、工具版本（3项）
 
-- [ ] **WC-016**：Python版本统一使用3.10+，运行 `python --version` 验证（参考 [python310-unification](../../docs/retrospective/reports/project-governance/standards-governance/retrospective-python310-unification-20260730/README.md)）
+- [ ] **WC-016**：Python版本统一使用3.10+，运行 `python --version` 验证（参考 [python310-unification](../../retrospective/reports/project-governance/standards-governance/retrospective-python310-unification-20260730/)）
 - [ ] **WC-017**：Git版本不低于2.30，确保支持sparse-checkout等新特性
 - [ ] **WC-018**：Node.js、Rust、Go等工具版本通过 `.nvmrc`/`rust-toolchain`/`go.mod` 显式声明，避免版本差异
 

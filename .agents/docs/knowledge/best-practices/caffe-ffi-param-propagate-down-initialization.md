@@ -146,6 +146,6 @@ def test_conv_backward_no_crash():
 
 ## 7. 相关资源
 
-- **Bug发现与修复过程**：参见[P3-C里程碑复盘文档](../retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731.md)中"P3-C Backward实现阶段"章节
+- **Bug发现与修复过程**：参见[P3-C里程碑复盘文档](../../retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/)中"P3-C Backward实现阶段"章节
 - **测试模板**：`tests/python/test_layer_template_three_layer_validation.py`（包含Backward不崩溃的基础测试）
 - **梯度检查工具**：`tests/python/_grad_check_utils.py`（数值梯度验证工具，可发现Backward计算错误）

@@ -312,12 +312,12 @@ function Enter-MsvcDevShell {
 
 | 脚本 | 行数 | 类型 | 硬编码路径 | 代码重复 | 模块化状态 |
 |------|------|------|-----------|---------|-----------|
-| [build_native_ext.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_native_ext.ps1) | 260 | C++扩展构建 | ✅ 无 | - | ✅ 已模块化（使用NativeBuild） |
-| [build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1) | ~15 | 薄包装 | ✅ 无 | - | ✅ 薄包装 |
-| [pytorch-base/build.ps1](file:///d:/spaces/SpecWeave/apps/pytorch-base/build.ps1) | 420 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [xmnn-runtime/docker/build.ps1](file:///d:/spaces/SpecWeave/apps/xmnn-runtime/docker/build.ps1) | 369 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [jupyter-ssh-base/scripts/build.ps1](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/scripts/build.ps1) | 409 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [caffe-ffi-jupyter/scripts/lib/common.ps1](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/lib/common.ps1) | 244 | Docker/WSL公共库 | ✅ 无 | - | ✅ 已模块化 |
+| [build_native_ext.ps1](../../../scripts/build_native_ext.ps1) | 260 | C++扩展构建 | ✅ 无 | - | ✅ 已模块化（使用NativeBuild） |
+| [build_caffe_ffi.ps1](../../../scripts/build_caffe_ffi.ps1) | ~15 | 薄包装 | ✅ 无 | - | ✅ 薄包装 |
+| [pytorch-base/build.ps1](../../../../apps/pytorch-base/build.ps1) | 420 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [xmnn-runtime/docker/build.ps1](../../../../apps/xmnn-runtime/docker/build.ps1) | 369 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [jupyter-ssh-base/scripts/build.ps1](../../../../apps/jupyter-ssh-base/scripts/build.ps1) | 409 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [caffe-ffi-jupyter/scripts/lib/common.ps1](../../../../apps/caffe-ffi-jupyter/scripts/lib/common.ps1) | 244 | Docker/WSL公共库 | ✅ 无 | - | ✅ 已模块化 |
 
 ### 7.2 重复代码分析
 
@@ -397,19 +397,19 @@ pytorch-base、xmnn-runtime、jupyter-ssh-base三个脚本中重复的代码块�
 
 | 文件 | 行数 | 函数数 | 说明 |
 |------|------|--------|------|
-| [PathPattern.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/PathPattern.psm1) | ~80 | 1 | L0基础层：分段通配符目录解析 |
-| [VsDevShell.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/VsDevShell.psm1) | ~250 | 4 | L1工具层：VS发现+DevShell加载 |
-| [NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) | ~350 | 7 | L2业务层：Conda+项目发现 |
+| [PathPattern.psm1](../../../scripts/lib/PathPattern.psm1) | ~80 | 1 | L0基础层：分段通配符目录解析 |
+| [VsDevShell.psm1](../../../scripts/lib/VsDevShell.psm1) | ~250 | 4 | L1工具层：VS发现+DevShell加载 |
+| [NativeBuild.psm1](../../../scripts/lib/NativeBuild.psm1) | ~350 | 7 | L2业务层：Conda+项目发现 |
 
 ### 应用层脚本（`.agents/scripts/`）
 
 | 文件 | 行数 | 说明 |
 |------|------|------|
-| [build_native_ext.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_native_ext.ps1) | ~260 | 通用C++扩展构建器（6阶段流程） |
-| [build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1) | ~15 | caffe-ffi薄包装 |
-| [build_npu_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_npu_ffi.ps1) | ~15 | npu_ffi薄包装 |
-| [build_demo_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_demo_ffi.ps1) | ~15 | demo_ffi薄包装 |
-| [build_xuan_ext_demo.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_xuan_ext_demo.ps1) | ~15 | xuan_ext_demo薄包装 |
+| [build_native_ext.ps1](../../../scripts/build_native_ext.ps1) | ~260 | 通用C++扩展构建器（6阶段流程） |
+| [build_caffe_ffi.ps1](../../../scripts/build_caffe_ffi.ps1) | ~15 | caffe-ffi薄包装 |
+| [build_npu_ffi.ps1](../../../scripts/build_npu_ffi.ps1) | ~15 | npu_ffi薄包装 |
+| [build_demo_ffi.ps1](../../../scripts/build_demo_ffi.ps1) | ~15 | demo_ffi薄包装 |
+| [build_xuan_ext_demo.ps1](../../../scripts/build_xuan_ext_demo.ps1) | ~15 | xuan_ext_demo薄包装 |
 
 ### 测试文件（`.agents/scripts/tests/`）
 
