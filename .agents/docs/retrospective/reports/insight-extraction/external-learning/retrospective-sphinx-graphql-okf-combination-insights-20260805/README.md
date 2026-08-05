@@ -2,8 +2,8 @@
 id: "retrospective-sphinx-graphql-okf-combination-insights-20260805-readme"
 title: "结构化文档工具 × GraphQL × OKF 组合洞察分析·归档"
 source: "seven-concepts session: sc-20260805-sphinx-graphql-okf-insights"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/README.toml"
-version: "1.1"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/README.toml"
+version: "1.3"
 generated: "2026-08-05"
 ---
 # 结构化文档工具 × GraphQL × OKF 组合洞察分析·归档
@@ -12,7 +12,7 @@ generated: "2026-08-05"
 > **方法论**：七概念方法论编排（F→V→I 链路，创新突破场景）
 > **归档日期**：2026-08-05
 > **任务类型**：跨领域技术组合的第一性原理分析 + 对抗审查 + 核心洞察输出
-> **闭环状态**：✅ 本质拆解→4视角对抗审查→5条洞察输出→MDX补充修订→归档 五步闭环完成
+> **闭环状态**：✅ 本质拆解→4视角对抗审查→5条洞察输出→MDX补充修订→洞察原子化归档 六步闭环完成
 
 ## 任务背景
 
@@ -47,6 +47,7 @@ generated: "2026-08-05"
 |------|------|
 | [README.md](README.md) | 本文件：任务背景、核心指标、洞察摘要、导航 |
 | [insight-extraction.md](insight-extraction.md) | 完整 5 条洞察（四元组格式）+ F 阶段本质拆解 + V 阶段对抗审查全记录 + Sphinx/MDX 选型对比 + 组合价值矩阵 |
+| [insights/](insights/README.md) | 原子化洞察目录：5条独立洞察文件，每条聚焦一个核心主题（含1条反洞察） |
 
 ## 关键洞察摘要（全量见 insight-extraction.md）
 
@@ -73,10 +74,13 @@ generated: "2026-08-05"
 | F 第一性原理 | ✅ | 3 个概念本质公理识别 + 7 类组合空间重构 |
 | V 对抗审查 | ✅ | 4 视角覆盖，16 个攻击点，采纳 5 条修正（V 门通过） |
 | I 洞察 | ✅ | 5 条四元组洞察（含 2 条反洞察） |
+| I 洞察原子化 | ✅ | insights/ 目录：5条独立洞察文件 + 索引 |
 | S99 导出 | ✅ | 本目录归档 + 索引更新 |
 
 ## Changelog
 
 <!-- changelog -->
+- 2026-08-05 | update | v1.3：insight-extraction.md 精简冗余：I阶段完整洞察内容替换为摘要索引表（完整四元组见原子化文件），文件从~280行精简至173行，消除重复
+- 2026-08-05 | update | v1.2：完成洞察原子化归档，新增 insights/ 目录，包含5条独立洞察文件（4条正向洞察+1条反洞察）及索引README.md；更新x-toml-ref路径层级；闭环状态升级为六步闭环
 - 2026-08-05 | update | v1.1：补充 MDX 对比分析，将生产层从"Sphinx 单一实现"修正为"Sphinx/MDX 双路径"，更新洞察1/2/4及组合矩阵、行动建议；新增 Sphinx vs MDX 选型对比表（7维度）
 - 2026-08-05 | create | 初始归档（v1.0）：完成 F 本质拆解、V 4 视角对抗审查、I 5 条核心洞察输出，包含组合价值矩阵和分场景行动建议

@@ -35,6 +35,7 @@ date: "2026-07-09"
 | [能力复制边界判断法](capability-replication-boundary.md) | 能力复制边界判断法 | L1 | `能力迁移` `产业转移` `组织扩张` |
 | [章节类型分层文件大小策略](chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
+| [组合价值评估三原则（Combination Value Triple Test）](combination-value-triple-test.md) | 评估技术/概念组合价值的三问测试：①是否解决真实痛点？②现有方案为何没解决好？③复杂度增加是否小于价值？任一答"否"即判定为伪需求，避免为组合而组合、过度设计、复杂度盲区等陷阱 | L1-draft | `决策门禁` `组合评估` `反过度设计` `ROI` `伪需求识别` |
 | [指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern）](command-knowledge-link.md) | 指令集↔知识库关联对应性前提（Command-Knowledge Link Pattern） | L2 |  |
 | [指令集与Skill边界判断（Command vs Skill Boundary）](command-vs-skill-boundary.md) | 指令集与Skill边界判断（Command vs Skill Boundary） | L1 | `command-set` `skill` `boundary-judgment` |
 | [提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）](commit-quality-gate-staging-inspection.md) | 提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection） | L2 |  |

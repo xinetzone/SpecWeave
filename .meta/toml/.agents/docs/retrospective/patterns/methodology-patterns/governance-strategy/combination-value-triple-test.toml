@@ -1,0 +1,11 @@
+id = "combination-value-triple-test"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "seven-concepts session: sc-20260805-sphinx-graphql-okf-insights (insight #5)"
+title = "组合价值评估三原则（Combination Value Triple Test）"
+date = "2026-08-05"
+version = "1.0.0"

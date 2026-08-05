@@ -1,0 +1,6 @@
+id = "document-as-queryable-api"
+title = "文档即可查询API模式"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-08-05"
+version = "1.0"
+maturity = "L1-draft"
