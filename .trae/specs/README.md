@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/README.md) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/README.md) | 19 | 13 | 2 | 4 | 68% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/README.md) | 20 | 13 | 2 | 5 | 65% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/README.md) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/README.md) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/README.md) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **59** | **53** | **2** | **4** | **90%** | — |
+| **合计** | **60** | **53** | **2** | **5** | **88%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -28,12 +28,13 @@
 - [ ] [explore-forum-auto-posting](standards-tools/explore-forum-auto-posting/spec.md)：forum.trae.cn 论坛自动化操作（知识库文档已完成，Skill封装与收尾待完成）
 - [ ] [markdown-as-interface-research](standards-tools/markdown-as-interface-research/spec.md)：Markdown即接口深度研究（Parser/Validator/Generator已完成，测试生成器/验证案例/研究报告待完成）
 
-### 待启动（4 项）
+### 待启动（5 项）
 
 - [ ] [migrate-toml-frontmatter-to-yaml](standards-tools/migrate-toml-frontmatter-to-yaml/spec.md)：TOML→YAML frontmatter 全面迁移
 - [ ] [create-tvm-ffi-wiki-tutorial](standards-tools/create-tvm-ffi-wiki-tutorial/spec.md)：TVM FFI 完整 Wiki 教程（源码研究+官方文档学习+16章节教程编写）
 - [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/spec.md)：项目全面敏感信息脱敏检查与自动化检测工具
 - [ ] [check-academic-sources](standards-tools/check-academic-sources/spec.md)：学术来源自动验证脚本（CrossRef API元数据验证、DOI存在性检查、标题/作者/年份一致性比对）
+- [ ] [create-agent-eval-methodology-wiki](standards-tools/create-agent-eval-methodology-wiki/spec.md)：Agent评测体系化建设方法论Wiki教程+知乎文章（七概念方法论编排，6大框架对比+四维指标+八阶段流程+8个案例+创作全流程记录）
 
 ---
 
