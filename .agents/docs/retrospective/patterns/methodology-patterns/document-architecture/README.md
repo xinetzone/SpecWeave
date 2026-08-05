@@ -24,6 +24,7 @@ date: "2026-07-09"
 | [文档原子化分类处置决策树模式](classification-disposition-decision-tree.md) | 文档原子化分类处置决策树模式 | L2 |  |
 | [认知闭环划分原则（Cognitive Closure Document Split）](cognitive-closure-document-split.md) | 认知闭环划分原则（Cognitive Closure Document Split） | - |  |
 | [概念对比中心教程结构：多易混技术概念讲解法](concept-comparison-tutorial-structure.md) | 概念对比中心教程结构：多易混技术概念讲解法 | L1 |  |
+| [工程方法论文章七技法（Engineering Article Seven Techniques）](engineering-article-seven-techniques.md) | 反直觉破题→分层贯穿→划重点先行→原则+落地锚点→反模式穿插→单案例贯穿→闭环收尾，七技法形成"抓注意力→管复杂度→促行动"完整阅读体验闭环，7个反模式+7条检验标准+分阶段应用建议 | L1 | `技术写作` `工程方法论` `文章结构` `反模式` `分层表达` `案例贯穿` `闭环思维` |
 | [内容-入口-索引三位一体原则](content-entry-index-trinity.md) | 内容-入口-索引三位一体原则 | L1 | `document-architecture` `readme` `knowledge-base` |
 | [文档内容迁移的标准操作流程（content-migration-workflow）](content-migration-workflow.md) | 文档内容迁移的标准操作流程（content-migration-workflow） | L2 |  |
 | [文档原子化U型演进曲线（Document Atomization U-Curve）](document-atomization-u-curve.md) | 文档原子化U型演进曲线（Document Atomization U-Curve） | - |  |
