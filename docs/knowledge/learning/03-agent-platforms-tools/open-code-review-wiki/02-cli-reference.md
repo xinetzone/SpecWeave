@@ -415,7 +415,7 @@ ocr viewer --addr 127.0.0.1:8080
 
 启动后，浏览器访问 `http://localhost:5483`（或自定义地址）即可浏览历史评审会话，支持查看评论、行号定位、建议 diff 渲染等。
 
-> 详细的会话查看器说明见第 8 章[会话查看器与可观测性](08-viewer-telemetry.md)。
+> 详细的会话查看器说明见第 7 章[会话持久化、遥测与查看器](07-session-telemetry.md)。
 
 ---
 
@@ -472,7 +472,7 @@ sequenceDiagram
     Host->>Host: 应用/展示评论
 ```
 
-> 详细的委托模式与 Agent 集成说明见第 7 章[委托模式与 Agent 集成](07-delegate-agent-skill.md)。
+> 详细的委托模式与 Agent 集成说明见第 8 章[集成与扩展](08-integrations.md)。
 
 ---
 
@@ -545,7 +545,7 @@ ocr config model
 
 启动交互式 model 选择 TUI，列出当前 provider 支持的模型供选择。
 
-> 完整的 key 参考、schema 与示例见第 5 章[配置参考](05-configuration.md)。
+> 完整的 key 参考、schema 与示例见第 4 章[LLM 协议与 Provider](04-llm-providers.md)。
 
 ---
 
@@ -648,7 +648,7 @@ Rule:
 ────────────────────────────────────────
 ```
 
-可用于排查"为什么我的自定义规则没触发？"——完整的优先级说明见第 4 章[审查规则系统](04-review-rules.md)。
+可用于排查"为什么我的自定义规则没触发？"——完整的优先级说明见第 6 章[审查规则系统](06-review-rules.md)。
 
 ---
 
@@ -870,11 +870,11 @@ ocr review --from main --to feature -b "$(gh pr view --json body -q .body)"
 
 ## 13. 另见
 
-- [快速开始](03-quick-start.md)——安装并完成首次评审
-- [配置参考](05-configuration.md)——参数背后的环境变量与 config key
-- [审查规则系统](04-review-rules.md)——`--rule` 参数与规则解析
-- [委托模式与 Agent 集成](07-delegate-agent-skill.md)——从 agent 与 CI 调用 `ocr review`
+- [安装与配置](01-installation.md)——安装并完成首次评审
+- [LLM 协议与 Provider](04-llm-providers.md)——参数背后的环境变量与 config key
+- [审查规则系统](06-review-rules.md)——`--rule` 参数与规则解析
+- [集成与扩展](08-integrations.md)——从 agent 与 CI 调用 `ocr review`
 
 ---
 
-- ← [返回目录](00-overview.md) | [上一章：安装与配置](01-installation.md) | [下一章：快速开始](03-quick-start.md) →
+- ← [返回目录](00-overview.md) | [上一章：安装与配置](01-installation.md) | [下一章：核心架构](03-architecture.md) →

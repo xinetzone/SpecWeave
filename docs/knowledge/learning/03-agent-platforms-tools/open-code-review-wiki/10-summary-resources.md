@@ -500,14 +500,14 @@ graph LR
 | 章节 | 文件 | 内容 |
 |------|------|------|
 | 00 | [00-overview.md](./00-overview.md) | 概述与学习目标 |
-| 01 | [01-core-concepts.md](./01-core-concepts.md) | 核心概念与设计理念 |
-| 02 | [02-installation.md](./02-installation.md) | 安装与配置指南 |
+| 01 | [01-installation.md](./01-installation.md) | 安装与配置指南 |
+| 02 | [02-cli-reference.md](./02-cli-reference.md) | CLI 命令参考 |
 | 03 | [03-architecture.md](./03-architecture.md) | 核心架构 |
-| 04 | [04-optimizations.md](./04-optimizations.md) | 关键技术优化 |
-| 05 | [05-integrations.md](./05-integrations.md) | 集成与高级用法 |
-| 06 | [06-effectiveness.md](./06-effectiveness.md) | 效果验证与质量评估 |
-| 07 | [07-limitations.md](./07-limitations.md) | 局限性与对比 |
-| 08 | [08-summary.md](./08-summary.md) | 总结与展望 |
+| 04 | [04-llm-providers.md](./04-llm-providers.md) | LLM 协议与 Provider |
+| 05 | [05-tools-mcp.md](./05-tools-mcp.md) | 内置工具与 MCP 集成 |
+| 06 | [06-review-rules.md](./06-review-rules.md) | 审查规则系统 |
+| 07 | [07-session-telemetry.md](./07-session-telemetry.md) | 会话持久化、遥测与查看器 |
+| 08 | [08-integrations.md](./08-integrations.md) | 集成与扩展 |
 | 09 | [09-faq-troubleshooting.md](./09-faq-troubleshooting.md) | FAQ 与排错 |
 | 10 | [10-summary-resources.md](./10-summary-resources.md) | 总结、术语表与资源（本章） |
 

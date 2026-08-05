@@ -519,7 +519,7 @@ Rule:
 ────────────────────────────────────────
 ```
 
-> 详细的规则系统说明见第 4 章[审查规则系统](04-review-rules.md)。
+> 详细的规则系统说明见第 6 章[审查规则系统](06-review-rules.md)。
 
 ---
 
@@ -621,11 +621,11 @@ ocr review --preview
 [ocr] Preview complete. 9 file(s) would be reviewed.
 ```
 
-> 如果输出 `Preview complete` 且文件列表正确，说明 OCR 安装成功且能正常读取 Git 仓库。下一步是配置 LLM provider，详见第 3 章[快速开始](03-quick-start.md)。
+> 如果输出 `Preview complete` 且文件列表正确，说明 OCR 安装成功且能正常读取 Git 仓库。下一步是配置 LLM provider，详见第 4 章[LLM 协议与 Provider](04-llm-providers.md)。
 
 ### 10.4 验证 LLM 连接（配置后）
 
-完成 LLM 配置后（见第 3 章），使用 `ocr llm test` 验证连接：
+完成 LLM 配置后（见第 4 章），使用 `ocr llm test` 验证连接：
 
 ```bash
 ocr llm test

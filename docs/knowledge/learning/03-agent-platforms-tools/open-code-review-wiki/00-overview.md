@@ -100,14 +100,14 @@ OCR 的基准测试基于真实场景构建：从 **50** 个热门开源仓库�
 | 00 | [概述](00-overview.md)（当前页） | 教程总览、Benchmark、架构图、核心特性 | ⭐ |
 | 01 | [安装与配置](01-installation.md) | 四种安装方式、状态目录、规则文件、卸载 | ⭐ |
 | 02 | [CLI 命令参考](02-cli-reference.md) | 10 个子命令、review 三种模式、JSON 输出 | ⭐⭐ |
-| 03 | [快速开始](03-quick-start.md) | 首次配置 LLM、运行第一次审查、解读输出 | ⭐⭐ |
-| 04 | [审查规则系统](04-review-rules.md) | 四层规则优先级、JSON 规则文件、glob 模式 | ⭐⭐⭐ |
-| 05 | [配置参考](05-configuration.md) | config.json schema、环境变量、provider 配置 | ⭐⭐⭐ |
-| 06 | [CI/CD 集成](06-cicd-integration.md) | GitHub Actions、GitLab CI、Gerrit、GitFlic | ⭐⭐⭐ |
-| 07 | [委托模式与 Agent 集成](07-delegate-agent-skill.md) | delegate 模式、Claude Code/Cursor/Codex 插件 | ⭐⭐⭐⭐ |
-| 08 | [会话查看器与可观测性](08-viewer-telemetry.md) | Web UI 会话回放、OpenTelemetry 集成 | ⭐⭐⭐ |
-| 09 | [MCP Server 与扩展工具](09-mcp-server.md) | MCP 协议扩展、自定义工具集 | ⭐⭐⭐⭐ |
-| 10 | [FAQ 与最佳实践](10-faq-best-practices.md) | 常见问题、性能调优、团队落地经验 | ⭐⭐ |
+| 03 | [核心架构](03-architecture.md) | 六阶段流水线、Agent 模块、三区内存压缩 | ⭐⭐⭐ |
+| 04 | [LLM 协议与 Provider](04-llm-providers.md) | 19 个内置 Provider、Endpoint 解析、Token 计数 | ⭐⭐⭐ |
+| 05 | [内置工具与 MCP 集成](05-tools-mcp.md) | 6 个内置工具、Registry 机制、MCP 扩展 | ⭐⭐⭐ |
+| 06 | [审查规则系统](06-review-rules.md) | 四层规则优先级、JSON 规则文件、glob 模式 | ⭐⭐⭐ |
+| 07 | [会话持久化、遥测与查看器](07-session-telemetry.md) | JSONL 会话日志、OpenTelemetry、本地查看器 | ⭐⭐⭐ |
+| 08 | [集成与扩展](08-integrations.md) | CI/CD、委托模式、Agent Skill、VS Code 扩展 | ⭐⭐⭐⭐ |
+| 09 | [FAQ 与排错](09-faq-troubleshooting.md) | 常见问题、错误信息、排错思路 | ⭐⭐ |
+| 10 | [总结、术语表与资源](10-summary-resources.md) | 知识体系、速查表、术语表、资源链接 | ⭐ |
 
 ---
 
@@ -209,38 +209,38 @@ OCR 的核心设计理念是将确定性工程与 Agent 结合，各司其职。
 ### 🟢 初学者路径（入门 → 日常使用）
 
 ```
-01-installation → 02-cli-reference → 03-quick-start
+01-installation → 02-cli-reference → 03-architecture
 ```
 
 1. 先从 [安装与配置](01-installation.md) 开始，完成环境搭建
 2. 浏览 [CLI 命令参考](02-cli-reference.md)，了解命令体系
-3. 跟着 [快速开始](03-quick-start.md) 运行第一次审查
+3. 通过 [核心架构](03-architecture.md) 理解审查流水线如何工作
 
 > 完成此路径后，你将能在本地对工作区变更、分支差异、单次 commit 进行 AI 代码审查。
 
 ### 🔵 CI/CD 路径（流水线集成 → 团队落地）
 
 ```
-01-installation → 05-configuration → 06-cicd-integration → 04-review-rules
+01-installation → 04-llm-providers → 08-integrations → 06-review-rules
 ```
 
 1. 完成安装与 LLM 配置
-2. 掌握 [配置参考](05-configuration.md)，理解环境变量与 config.json
-3. 学习 [CI/CD 集成](06-cicd-integration.md)，嵌入流水线门禁
-4. 制定团队 [审查规则](04-review-rules.md)，落地规范
+2. 掌握 [LLM 协议与 Provider](04-llm-providers.md)，理解环境变量与 config key
+3. 学习 [集成与扩展](08-integrations.md)，嵌入流水线门禁
+4. 制定团队 [审查规则](06-review-rules.md)，落地规范
 
 > 完成此路径后，你将能在 GitHub Actions / GitLab CI 中自动审查每个 PR。
 
 ### 🟣 Agent 集成路径（AI 工作流闭环）
 
 ```
-00 → 02 → 07-delegate-agent-skill → 09-mcp-server
+00 → 02 → 08-integrations → 05-tools-mcp
 ```
 
 1. 理解 OCR 的核心设计（本文）
 2. 掌握命令体系与 JSON 输出
-3. 学习 [委托模式](07-delegate-agent-skill.md)，让 Claude Code/Cursor 直接调用
-4. 扩展 [MCP Server](09-mcp-server.md)，接入自定义工具
+3. 学习 [集成与扩展](08-integrations.md)，让 Claude Code/Cursor 直接调用
+4. 扩展 [内置工具与 MCP 集成](05-tools-mcp.md)，接入自定义工具
 
 > 完成此路径后，你将能将 OCR 作为 Skill 集成到 AI 编程助手中，实现"AI 写代码 + AI 审代码"的闭环。
 
