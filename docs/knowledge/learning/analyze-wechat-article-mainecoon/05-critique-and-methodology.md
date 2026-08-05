@@ -180,7 +180,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 
 ## 15. 七概念方法论分析（F+V）
 
-> 本章节应用七概念方法论中的 F（第一性原理）与 V（对抗审查）两个阶段。完整知识库版本见 [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)，最终报告整合见 [final-report.md](final-report.md)。
+> 本章节应用七概念方法论中的 F（第一性原理）与 V（对抗审查）两个阶段，是 F+V 分析的权威源。知识库速查版本见 [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)，决策速查卡见 [decision-summary.md](decision-summary.md)，批判性评论见 [critical-review-draft.md](critical-review-draft.md)。
 
 ### 15.1 第一性原理分析（F）
 

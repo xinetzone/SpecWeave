@@ -32,10 +32,9 @@ atomized: 2026-08-05
 
 ### 关联文档
 
-- [critical-review-draft.md](critical-review-draft.md)：批判性评论草稿
-- [decision-summary.md](decision-summary.md)：决策摘要
-- [final-report.md](final-report.md)：最终报告（整合决策摘要与批判性评论，七概念方法论全链路产出）
-- [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)：Social World Model 知识库（基于 §15 萃取）
+- [critical-review-draft.md](critical-review-draft.md)：批判性评论（叙事视角，链接至 [05](05-critique-and-methodology.md) §15 深度分析）
+- [decision-summary.md](decision-summary.md)：决策摘要（表格速查，链接至 [05](05-critique-and-methodology.md) §15 深度分析）
+- [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)：Social World Model 知识库（场景评估表+竞争格局表，链接至 [00](00-article-overview.md)/[05](05-critique-and-methodology.md) 深度内容）
 
 ### 已萃取的方法论模式
 
