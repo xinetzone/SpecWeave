@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/README.md) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/README.md) | 20 | 13 | 2 | 5 | 65% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/README.md) | 21 | 13 | 2 | 6 | 62% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/README.md) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/README.md) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/README.md) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **60** | **53** | **2** | **5** | **88%** | — |
+| **合计** | **61** | **53** | **2** | **6** | **87%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -35,6 +35,7 @@
 - [ ] [sensitive-info-sanitization-audit](standards-tools/sensitive-info-sanitization-audit/spec.md)：项目全面敏感信息脱敏检查与自动化检测工具
 - [ ] [check-academic-sources](standards-tools/check-academic-sources/spec.md)：学术来源自动验证脚本（CrossRef API元数据验证、DOI存在性检查、标题/作者/年份一致性比对）
 - [ ] [create-agent-eval-methodology-wiki](standards-tools/create-agent-eval-methodology-wiki/spec.md)：Agent评测体系化建设方法论Wiki教程+知乎文章（七概念方法论编排，6大框架对比+四维指标+八阶段流程+8个案例+创作全流程记录）
+- [ ] [create-graphql-wiki-tutorial](standards-tools/create-graphql-wiki-tutorial/spec.md)：GraphQL 完整 Wiki 教程（官方文档学习+核心概念+查询语言+类型系统+执行机制+Python生态工具+最佳实践，≥10章节原子化文档）
 
 ---
 
