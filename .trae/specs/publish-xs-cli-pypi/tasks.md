@@ -15,13 +15,13 @@
   - [x] 3.1 编写 `.github/workflows/release.yml`：`on: push: tags: ["xs-cli-v*"]`，构建 sdist+wheel，`twine upload` 到 PyPI
   - [x] 3.2 使用 `PYPI_TOKEN` secret 上传 PyPI；预留 `PYPI_TEST_TOKEN` 的 TestPyPI dry-run 步骤
 
-- [ ] Task 4: 本地构建、校验与安装验证
-  - [ ] 4.1 在 `tools/xs/` 运行 `python -m build` 生成 sdist + wheel
-  - [ ] 4.2 运行 `twine check dist/*` 校验元数据
-  - [ ] 4.3 在干净 venv 中 `pip install dist/xs_cli*.whl` 并运行 `xs --version`、`xs --help` 验证 CLI 可用
+- [x] Task 4: 本地构建、校验与安装验证
+  - [x] 4.1 在 `tools/xs/` 运行 `python -m build` 生成 sdist + wheel
+  - [x] 4.2 运行 `twine check dist/*` 校验元数据
+  - [x] 4.3 在干净 venv 中 `pip install dist/xs_cli*.whl` 并运行 `xs --version`、`xs --help` 验证 CLI 可用
 
 - [ ] Task 5: TestPyPI dry-run 发布验证
-  - [ ] 5.1 上传到 TestPyPI 并确认安装成功（可选，需凭据）
+  - [ ] 5.1 上传到 TestPyPI 并确认安装成功（可选，需凭据；依赖 `PYPI_TEST_TOKEN` secret，需用户配置后通过 release.yml 的 dry-run job 手动触发）
 
 # Task Dependencies
 - [Task 2] 依赖 [Task 1]（版本单源化先行，避免元数据与版本冲突）
