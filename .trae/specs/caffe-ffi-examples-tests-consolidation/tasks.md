@@ -53,8 +53,8 @@ source: "spec.md（caffe-ffi-examples-tests-consolidation）"
 - [ ] SubTask 5.4: 全量回归 `python -m pytest tests/python/ -v` 确认无回归（需 P0 环境）
 
 ## Task 6: 原子提交交付
-- [ ] SubTask 6.1: 按原子提交规范提交（迁移脚本 + 文档引用 + 配置），提交信息中文描述"为什么"
-- [ ] SubTask 6.2: 提交后运行 `git show --stat` 确认文件列表与预期一致
+- [x] SubTask 6.1: 按原子提交规范提交（迁移脚本 + 文档引用 + 配置），提交信息中文描述"为什么"
+- [x] SubTask 6.2: 提交后运行 `git show --stat` 确认文件列表与预期一致（xuanspace e51268f / parent 855886d1 + f1351f11，两仓库均干净）
 
 # Task Dependencies
 - [Task 4] 依赖 [Task 1] 与 [Task 2]（文档引用指向迁移后的目标路径）
