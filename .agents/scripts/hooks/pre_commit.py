@@ -361,6 +361,7 @@ def _run_pattern_quality_check(project_root: Path, scripts_dir: Path, staged_fil
         f for f in staged_files
         if ".agents/docs/retrospective/patterns/" in str(f).replace("\\", "/")
         and str(f).endswith(".md")
+        and Path(f).name not in {"README.md", "CATEGORIES.md"}
     ]
 
     if not pattern_files:
