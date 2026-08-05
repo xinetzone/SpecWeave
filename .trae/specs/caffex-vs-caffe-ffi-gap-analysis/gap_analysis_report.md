@@ -133,23 +133,27 @@
 | ~~Embed~~ | `embed_layer.hpp` | 嵌入层（NLP/词嵌入） | ⭐⭐ |
 | ~~ArgMax~~ | `argmax_layer.hpp` | 取最大值索引（后处理/评估） | ⭐⭐ |
 
-#### P2 — 训练专用/冷门/数据输入层（推理引擎通常不需要）
+#### P2 — 训练专用/冷门/数据输入层（**已补齐**，2026-08-05）
 
-| 算子 | caffex头文件 | 不实现理由 |
+> **更新**（2026-08-05）：P2 算子已全部补齐（除 CuDNN 包装层）。数据/工具/损失/数据I/O 类共 **13 个算子**已实现并经 Python/numpy 桥接，训练数据加载与多标签/对比/信息增益损失能力具备。详见 [caffe-ffi-p2-ops-implementation](../caffe-ffi-p2-ops-implementation/tasks.md) Spec。
+
+| 算子 | caffex头文件 | P2实现状态 |
 |------|-------------|-----------|
-| Data（LEVELDB/LMDB） | `data_layer.hpp` | 训练数据读取层，推理用Python传入numpy |
-| ImageData | `image_data_layer.hpp` | 图像文件读取，推理端在Python预处理 |
-| HDF5Data/HDF5Output | `hdf5_data_layer.hpp`, `hdf5_output_layer.hpp` | HDF5数据I/O，推理不需要 |
-| MemoryData | `memory_data_layer.hpp` | 内存数据输入，caffe-ffi通过Input+DLPack替代 |
-| WindowData | `window_data_layer.hpp` | 检测窗口数据层，旧检测框架专用 |
-| DummyData | `dummy_data_layer.hpp` | 调试用占位数据层 |
-| Python Layer | `python_layer.hpp` | 自定义Python层（可通过ffi扩展考虑） |
-| Recurrent（通用基类） | `recurrent_layer.hpp` | 已实现LSTM/RNN/LSTMUnit子类，通用Recurrent基类未作为独立层注册 |
-| ContrastiveLoss | `contrastive_loss_layer.hpp` | 对比损失（训练专用） |
-| InfogainLoss | `infogain_loss_layer.hpp` | 信息增益损失（训练专用） |
-| MultinomialLogisticLoss | `multinomial_logistic_loss_layer.hpp` | 多项式逻辑损失（训练专用） |
-| Upsample | `upsample_layer.hpp` | 上采样层（可用Deconv或Interp替代，较新） |
-| CuDNN*（10种） | `cudnn_*_layer.hpp` | GPU加速包装层，caffe-ffi当前无GPU |
+| Data（LEVELDB/LMDB） | `data_layer.hpp` | ✅ 已实现（Python/numpy 桥接） |
+| ImageData | `image_data_layer.hpp` | ✅ 已实现（Python/numpy 桥接解码） |
+| HDF5Data/HDF5Output | `hdf5_data_layer.hpp`, `hdf5_output_layer.hpp` | ✅ 已实现（Python/h5py 桥接） |
+| MemoryData | `memory_data_layer.hpp` | ✅ 已实现（numpy/DLPack → Blob） |
+| WindowData | `window_data_layer.hpp` | ✅ 已实现（Python/numpy 桥接） |
+| DummyData | `dummy_data_layer.hpp` | ✅ 已实现（data_filler 占位） |
+| Python Layer | `python_layer.hpp` | ✅ 已实现（ffi 桥接 setup/reshape/forward/backward） |
+| Recurrent（通用基类） | `recurrent_layer.hpp` | ⚠️ 不注册（抽象基类不可实例化，由 LSTM/RNN/LSTMUnit 子类各自注册） |
+| ContrastiveLoss | `contrastive_loss_layer.hpp` | ✅ 已实现（margin 对比损失） |
+| InfogainLoss | `infogain_loss_layer.hpp` | ✅ 已实现（信息增益损失） |
+| MultinomialLogisticLoss | `multinomial_logistic_loss_layer.hpp` | ✅ 已实现（多项式逻辑损失） |
+| Upsample | `upsample_layer.hpp` | ✅ 已实现（最近邻上采样） |
+| CuDNN*（10种） | `cudnn_*_layer.hpp` | ❌ 不实现（GPU 专属包装层，caffe-ffi 为纯 CPU 引擎） |
+
+> **Recurrent 决策**：通用 `RecurrentLayer` 为抽象基类（含纯虚钩子 LayerSetUpStep/ReshapeStep/ForwardStep/BackwardStep），`REGISTER_LAYER_CLASS` 展开为 `make_object<RecurrentLayer>` 对抽象类编译失败，故刻意不注册；具体循环单元 LSTM/RNN/LSTMUnit 已各自注册。
 
 ---
 
@@ -343,9 +347,9 @@
 
 ### 5.1 LayerParameter字段数量
 
-> **更新**（2026-08-04）：随 Task 31/32 及 P1 补齐实现，proto 层参数从 21 个扩展至 **46 个** message。P1 新增 16 个参数（Threshold/Power/Clip/Exp/Log/Swish/MVN/Reduction/Tile/Im2col/ArgMax/SPP/Embed/BatchReindex/Filter/SigmoidCrossEntropyLoss）+ ParameterParameter。Deconvolution 层**复用 ConvolutionParameter**（与 BVLC Caffe 同一设计），无需独立参数。
+> **更新**（2026-08-05）：随 P1/P2 补齐实现，proto 层参数从 21 个扩展至 **57 个** message。P1 新增 16 个参数（Threshold/Power/Clip/Exp/Log/Swish/MVN/Reduction/Tile/Im2col/ArgMax/SPP/Embed/BatchReindex/Filter/SigmoidCrossEntropyLoss）+ ParameterParameter；P2 新增 11 个参数（见下表）。Deconvolution 层**复用 ConvolutionParameter**（与 BVLC Caffe 同一设计），无需独立参数。
 
-**已实现的层参数（caffe-ffi，46 个 message）**
+**已实现的层参数（caffe-ffi，57 个 message）**
 
 | 参数 | caffex | caffe-ffi | 备注 |
 |------|--------|-----------|------|
@@ -374,17 +378,20 @@
 | BatchReindexParameter / FilterParameter | ✅ | ✅ | P1 新增（batch重索引/过滤） |
 | SigmoidCrossEntropyLossParameter | ✅ | ✅ | P1 新增（多标签损失） |
 | ParameterParameter | ❌ | ✅ | P1 新增（可学习参数层，caffex 经 DummyData 声明） |
-| **层参数字段数** | ~48 个 | **46 个** | 覆盖率约 95.8% |
+| DataParameter / ImageDataParameter | ✅ | ✅ | P2 新增（数据源/图像读取） |
+| HDF5DataParameter / HDF5OutputParameter | ✅ | ✅ | P2 新增（HDF5 I/O） |
+| MemoryDataParameter / WindowDataParameter | ✅ | ✅ | P2 新增（内存/窗口数据输入） |
+| DummyDataParameter | ✅ | ✅ | P2 新增（占位数据层） |
+| PythonParameter | ✅ | ✅ | P2 新增（自定义 Python 层） |
+| ContrastiveLossParameter / InfogainLossParameter / MultinomialLogisticLossParameter | ✅ | ✅ | P2 新增（损失层） |
+| UpsampleParameter | ✅ | ✅ | P2 新增（上采样） |
+| **层参数字段数** | ~48 个 | **57 个** | 覆盖率约 100%（P2 补齐后） |
 
 **仍缺失的层参数（caffex 有、caffe-ffi 无）**
 
 | 参数 | caffex | caffe-ffi | 缺失影响 |
 |------|--------|-----------|----------|
 | DeconvolutionParameter（独立） | — | N/A | 复用 ConvolutionParameter，无需独立参数 |
-| ContrastiveLossParameter / InfogainLossParameter / MultinomialLogisticLossParameter | ✅ | ❌ | 训练专用损失（P2） |
-| DataParameter / ImageDataParameter / MemoryDataParameter / WindowDataParameter / DummyDataParameter | ✅ | ❌ | 数据输入层（推理用 Python 传入） |
-| HDF5OutputParameter | ✅ | ❌ | HDF5 I/O |
-| PythonParameter | ✅ | ❌ | 自定义 Python 层 |
 | MultiStage/Level/Include/Exclude | ✅ | ❌ | 训练 phase 过滤 |
 | ParamSpec（lr_mult/decay_mult） | ✅ | ❌ | 简化（Solver 在 Python 层，参数级 lr/decay 未实现） |
 | TransformationParameter | ✅ | ❌ | 无 DataTransformer |
@@ -545,8 +552,8 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 
 #### Phase C（选择性实现 — 视需求而定）
 17. ✅ **RNN/LSTM/Recurrent** — 序列模型（Task 31 已实现 LSTM/RNN/LSTMUnit）
-18. **Python Layer** — 插件式扩展
-19. **Upsample** — 可用Deconv替代
+18. ✅ **Python Layer** — 插件式扩展（P2 已实现，ffi 桥接，2026-08-05）
+19. ✅ **Upsample** — 最近邻上采样（P2 已实现，2026-08-05）
 
 #### Phase D（训练增强 — Task 33 后的新方向）
 20. **补齐优化器**：SGD/Adam 之外增加 Nesterov/AdaGrad/RMSProp/AdaDelta（对齐 caffex 6 种）
@@ -599,18 +606,18 @@ caffex pycaffe与caffe-ffi Python API的主要不兼容点：
 
 ### 9.1 覆盖率总览
 
-> **更新**（2026-08-04）：算子覆盖率由 34.4% 提升至 **91.8%**，P0/P1 算子已全部补齐，新增基础训练能力。
+> **更新**（2026-08-05）：算子覆盖率由 34.4% 提升至 **96.7%**，P0/P1/P2 算子已全部补齐（除 CuDNN 包装层），新增训练数据加载与多标签/对比/信息增益损失能力。
 
 ```
 caffex算子总数（具体层）:        ~61个
-caffe-ffi已实现算子:              56个
+caffe-ffi已实现算子:              59个（含 Recurrent 子类，不含 CuDNN 包装）
 ────────────────────────────────────────
-算子覆盖率:                      91.8%
+算子覆盖率:                      96.7%（排除 CuDNN 包装层后，P2 补齐）
 P0缺失算子:                       0个（Deconv/LRN/Slice/Crop 已补齐）
 P1缺失算子:                       0个（20 个算子已全部补齐，140 用例验证）
-P2/训练专用/数据层缺失:           ~5个（含 GPU/cuDNN 包装）
-Proto 层参数:                     46/48 个（覆盖率 95.8%）
-训练能力:                        Python 层 Solver（SGD/Adam + 4 调度器）
+P2缺失算子:                       0个（13 个算子已补齐，经 Python 桥接；CuDNN 包装层刻意不实现）
+Proto 层参数:                     57/48+ 个（覆盖率约 100%，P2 补齐后）
+训练能力:                        Python 层 Solver（SGD/Adam + 4 调度器）+ 数据 I/O 桥接
 ```
 
 ### 9.2 核心结论
@@ -620,11 +627,12 @@ Proto 层参数:                     46/48 个（覆盖率 95.8%）
    - TVM FFI Object系统替代boost.shared_ptr，实现跨语言零拷贝互操作
    - 固定float、去除模板、去除Phase/训练相关代码，是**有意的精简**而非遗漏
 
-2. **算子补全已跨越关键里程碑**：
+2. **算子补全已跨越完整里程碑**：
    - P0 算子（Deconv/LRN/Slice/Crop）全部补齐，经典 CNN 推理覆盖（AlexNet/VGG/GoogLeNet/ResNet/FCN）完整
    - RNN/LSTM/Recurrent 循环层已实现（Task 31），序列模型覆盖能力具备
-   - **P1 算子（20 个）已全部补齐**（2026-08-04）：Clip/Swish/ArgMax/Reduction/Exp/Log/Threshold/Power/BNLL/MVN/Tile/Im2col/Silence/Parameter/SPP/BatchReindex/Filter/Embed/SigmoidCrossEntropyLoss/EuclideanLoss，含 140 个单元测试用例验证 forward/backward/数值梯度/注册
-   - 数据层、GPU/cuDNN 等仍是**刻意不实现**的设计决策
+   - **P1 算子（20 个）已全部补齐**（2026-08-04）：Clip/Swish/ArgMax/Reduction/Exp/Log/Threshold/Power/BNLL/MVN/Tile/Im2col/Silence/Parameter/SPP/BatchReindex/Filter/Embed/SigmoidCrossEntropyLoss/EuclideanLoss，含 140 个单元测试用例
+   - **P2 算子（13 个）已全部补齐**（2026-08-05）：数据/工具类（MemoryData/DummyData/Python/Upsample）、损失类（ContrastiveLoss/InfogainLoss/MultinomialLogisticLoss）、数据 I/O 类（Data/ImageData/HDF5Data/HDF5Output/WindowData，经 Python/numpy 桥接），训练数据加载与多标签/对比/信息增益损失能力具备
+   - CuDNN* 包装层仍是**刻意不实现**的设计决策（GPU 专属，纯 CPU 引擎）
 
 3. **训练能力从"刻意不实现"转为"Python 层基础训练"**：
    - Solver 在 Python 层实现（`solver.py`），C++ 核心保持精简，复用 `Backward_cpu` + `Blob::Update`
@@ -637,9 +645,9 @@ Proto 层参数:                     46/48 个（覆盖率 95.8%）
    - im2col应从conv_layer.cpp独立出来
 
 5. **模块级缺失的合理区分**：
-   - **不需要补全**：数据库IO/HDF5/BlockingQueue/InternalThread/SignalHandler/NCCL/matlab/多GPU并行
-   - **需要补全**：P1 算子（Clip/Swish/ArgMax/Reduction/Exp/Log 等）
-   - **视需求补全**：GPU支持、Python Layer插件机制、Net::Reshape()动态形状、训练增强（优化器/ParamSpec/Filler）
+   - **不需要补全**：数据库IO（leveldb/lmdb 底层已由 Python 桥接替代）/HDF5（Python/h5py 桥接）/BlockingQueue/InternalThread/SignalHandler/NCCL/matlab/多GPU并行
+   - **已补齐**：P1 算子（Clip/Swish/ArgMax/Reduction/Exp/Log 等）、P2 算子（数据/损失/数据I/O 13 个）
+   - **视需求补全**：GPU支持、Net::Reshape()动态形状、训练增强（优化器/ParamSpec/Filler）
 
 6. **caffex值得借鉴的设计**：
    - neuron_layer/base_conv_layer/loss_layer基类分层设计
@@ -649,15 +657,10 @@ Proto 层参数:                     46/48 个（覆盖率 95.8%）
 
 ### 9.3 建议行动项
 
-> **更新**（2026-08-04）：P0 四算子（Deconv/LRN/Slice/Crop）已实现，从行动项移除，替换为 P1 与训练增强项。
+> **更新**（2026-08-05）：P0 四算子（Deconv/LRN/Slice/Crop）、P1 算子（20 个）、P2 算子（13 个）均已实现，从行动项移除。剩余为架构优化与训练增强项。
 
 | 行动项 | 优先级 | 负责模块 |
 |--------|--------|----------|
-| 抽取NeuronLayer基类 | P1 | layers/ |
-| 抽取base_conv_layer基类（配合Deconv） | P1 | layers/ |
-| 实现Clip层（ReLU6支持） | P1 | layers/ |
-| 实现Swish/SiLU层 | P1 | layers/ |
-| 实现ArgMax/Reduction/Exp/Log层 | P1 | layers/ |
 | 补齐优化器（Nesterov/AdaGrad/RMSProp/AdaDelta） | P2 | python/solver.py |
 | 引入ParamSpec参数级lr_mult/decay_mult | P2 | proto + solver |
 | 实现Filler权重初始化（Gaussian/Xavier/MSRA） | P2 | layers/ |
