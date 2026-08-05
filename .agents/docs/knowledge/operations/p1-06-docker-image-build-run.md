@@ -31,7 +31,7 @@ archive_history:
 
 ## 来源
 
-- 源文件：[docker/index.md](file:///d:/spaces/chaos/docker/index.md)
+- 源文件：[docker/index.md](../docs-separation-guide/index.md)
 - 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
 
 ## 归档目标

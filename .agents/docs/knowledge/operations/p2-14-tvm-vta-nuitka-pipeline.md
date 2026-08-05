@@ -32,8 +32,8 @@ archive_history:
 
 ## 来源
 
-- 根说明：[hub/sync/AGENTS.md](file:///d:/spaces/chaos/hub/sync/AGENTS.md)
-- 子项目说明：[hub/sync/notebook/AGENTS.md](file:///d:/spaces/chaos/hub/sync/notebook/AGENTS.md)
+- 根说明：[hub/sync/AGENTS.md](../../../../external/chaos/npuusertools/AGENTS.md)
+- 子项目说明：[hub/sync/notebook/AGENTS.md](../../../../external/chaos/npuusertools/AGENTS.md)
 - 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
 
 ## 归档目标

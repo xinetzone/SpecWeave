@@ -271,7 +271,7 @@ external/chaos/caffe/docker/local/
 
 | 文档 | 说明 |
 |------|------|
-| [RUNTIME_IMAGE_USAGE.md](../../../external/chaos/caffe/docker/local/conda/RUNTIME_IMAGE_USAGE.md) | 运行时镜像使用指南 |
+| [RUNTIME_IMAGE_USAGE.md](../../../../external/chaos/npu_tvm/docker/local/conda/RUNTIME_IMAGE_USAGE.md) | 运行时镜像使用指南 |
 | `assets/reference-project-index.md`（参考索引已归档） | 同类项目参考模板 |
 | `patterns/process-patterns/legacy-cpp-compat-checklist.md`（参考清单已归档） | 编译兼容性检查清单 |
 | [复盘报告](../../retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md) | 全流程复盘 |

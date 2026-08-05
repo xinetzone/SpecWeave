@@ -33,7 +33,7 @@ archive_history:
 ## 来源
 
 - 源文件：[DaoMind/DEPLOYMENT-GUIDE.md](file:///d:/spaces/chaos/daoApps/DaoMind/DEPLOYMENT-GUIDE.md)
-- 项目概览：[p1-09-daomind-project-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/tech/p1-09-daomind-project-overview.md)
+- 项目概览：[p1-09-daomind-project-overview.md](../tech/p1-09-daomind-project-overview.md)
 - 上游分析：[workspace-archive-priority-analysis.md](file:///d:/spaces/chaos/tasks/business-domains/knowledge-archive/workspace-archive-priority-analysis.md)
 
 ## 归档目标

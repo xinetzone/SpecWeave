@@ -184,11 +184,11 @@ class PlatformConfig:
 
 | 文件 | 职责 |
 |------|------|
-| [lib/saas_doc_extractor/__init__.py](lib/saas_doc_extractor/__init__.py) | 公共API导出 |
-| [lib/saas_doc_extractor/models.py](lib/saas_doc_extractor/models.py) | PlatformConfig/ExtractionResult/AntiPatternReport数据模型 |
-| [lib/saas_doc_extractor/platforms.py](lib/saas_doc_extractor/platforms.py) | 8个平台配置注册表 |
-| [lib/saas_doc_extractor/text_cleaner.py](lib/saas_doc_extractor/text_cleaner.py) | 零宽字符清理/行拆分/URL提取 |
-| [lib/saas_doc_extractor/anti_patterns.py](lib/saas_doc_extractor/anti_patterns.py) | 11项反模式检查逻辑 |
-| [lib/saas_doc_extractor/extractor.py](lib/saas_doc_extractor/extractor.py) | 核心提取器（PageProtocol协议+SaasDocExtractor） |
-| [feishu-doc-extract.py](feishu-doc-extract.py) | CLI入口（已重构为多平台通用） |
-| [tests/test_saas_doc_extractor.py](tests/test_saas_doc_extractor.py) | 64个单元测试（mock驱动） |
+| [lib/saas_doc_extractor/__init__.py](../mdi/generated/case1/__init__.py) | 公共API导出 |
+| [lib/saas_doc_extractor/models.py](../../../scripts/lib/saas_doc_extractor/models.py) | PlatformConfig/ExtractionResult/AntiPatternReport数据模型 |
+| [lib/saas_doc_extractor/platforms.py](../../../scripts/lib/saas_doc_extractor/platforms.py) | 8个平台配置注册表 |
+| [lib/saas_doc_extractor/text_cleaner.py](../../../scripts/lib/saas_doc_extractor/text_cleaner.py) | 零宽字符清理/行拆分/URL提取 |
+| [lib/saas_doc_extractor/anti_patterns.py](../../../scripts/lib/saas_doc_extractor/anti_patterns.py) | 11项反模式检查逻辑 |
+| [lib/saas_doc_extractor/extractor.py](../../../scripts/lib/saas_doc_extractor/extractor.py) | 核心提取器（PageProtocol协议+SaasDocExtractor） |
+| [feishu-doc-extract.py](../../../scripts/feishu-doc-extract.py) | CLI入口（已重构为多平台通用） |
+| [tests/test_saas_doc_extractor.py](../../../scripts/tests/test_saas_doc_extractor.py) | 64个单元测试（mock驱动） |
