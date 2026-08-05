@@ -129,6 +129,9 @@
 - **Verification**: `programmatic`
 
 ## Open Questions
-- [ ] wiki教程最终存放目录：确认是 `.agents/docs/knowledge/ai-agent/` 下还是其他位置？
-- [ ] 知乎文章是否需要模拟知乎平台的格式（如分割线、引用样式等）？
-- [ ] 创作过程记录是作为wiki的单独章节、附录，还是独立文档？
+
+> 以下问题在创作执行阶段已全部解决，记录决策结果供追溯。
+
+- [x] **wiki教程最终存放目录**：`.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-eval-methodology-wiki/`（归属于「Agent工程方法论」专题，与工程手册 `agent-evaluation-wiki/` 互为参阅）
+- [x] **知乎文章是否模拟知乎平台格式**：是。产出 `zhihu-article-seven-concepts-wiki-creation-publish.md` 为发布版，去除YAML frontmatter与内部链接，可直接粘贴知乎编辑器
+- [x] **创作过程记录的形式**：独立文档，存放于 `appendices/creation-process-record.md`，完整覆盖资料收集/框架搭建/内容撰写/审核修订四阶段
