@@ -25,13 +25,15 @@ date: "2026-07-04"
 | bp-responsibility-transfer-governance | [责任转移治理模式](responsibility-transfer-governance.md) | L2-validated | 2 | 1 | 业务方因风险收益不对等缺乏治理动力，平台方能构建可靠自动化系统兜底时 |
 | bp-error-blacklist-monotonic-evolution | [错误黑名单单调进化模式](error-blacklist-monotonic-evolution.md) | L2-validated | 2 | 1 | 系统需持续提升可靠性，且"重犯已知错误"是主要故障来源时 |
 | bp-cross-framework-atomic-analysis | [跨框架原子化设计分析模式](cross-framework-atomic-analysis.md) | L1-draft | 1 | 0 | AI Agent 库需引入跨框架设计方法论（如原子化设计）并回写到具体 Agent 时 |
+| bp-layered-chained-spec | [分层链式规格模式](layered-chained-spec.md) | L1.5 | 1 | 0 | AI编程/多代理协作中需将vibe coding转化为"按图施工"工程流程时。案例：GitHub Spec Kit六命令+SpecWeave三件套双案例萃取 |
 
 ## 成熟度等级说明
 
 | 等级 | 名称 | 标准 |
 |------|------|------|
 | L1-draft | 假设性模式 | 单案例,待验证 |
-| L2-validated | 已验证模式 | ≥2案例,已在本项目验证 |
+| L1.5 | 同谱系双案例 | 同一方法论谱系的两个独立实现互为验证,待第三方独立案例升级L2 |
+| L2-validated | 已验证模式 | ≥2独立案例,已在本项目验证 |
 | L3-mature | 成熟模式 | 跨项目验证,有明确边界条件 |
 | L4-optimized | 优化模式 | 经过对抗审查,工具化/自动化支持 |
 
