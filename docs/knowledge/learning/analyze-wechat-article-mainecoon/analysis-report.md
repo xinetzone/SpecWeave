@@ -35,6 +35,7 @@ atomized: 2026-08-05
 - [critical-review-draft.md](critical-review-draft.md)：批判性评论（叙事视角，链接至 [05](05-critique-and-methodology.md) §15 深度分析）
 - [decision-summary.md](decision-summary.md)：决策摘要（表格速查，链接至 [05](05-critique-and-methodology.md) §15 深度分析）
 - [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)：Social World Model 知识库（场景评估表+竞争格局表，链接至 [00](00-article-overview.md)/[05](05-critique-and-methodology.md) 深度内容）
+- [archive-content-value-assessment.md](archive-content-value-assessment.md)：§5 内容价值评估归档（独立文档，2026-08-05）
 
 ### 已萃取的方法论模式
 

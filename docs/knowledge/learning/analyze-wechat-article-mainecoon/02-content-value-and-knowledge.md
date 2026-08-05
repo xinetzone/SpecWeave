@@ -15,6 +15,8 @@ atomized_from: "analysis-report.md"
 
 ## 5. 内容价值评估
 
+> **已归档**：本节已归档为独立文档 [archive-content-value-assessment.md](archive-content-value-assessment.md)（2026-08-05）。以下为原文保留。
+
 ### 5.1 对行业的启示价值(高)
 
 #### 5.1.1 范式定义价值
