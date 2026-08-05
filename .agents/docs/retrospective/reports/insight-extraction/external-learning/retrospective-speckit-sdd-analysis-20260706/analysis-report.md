@@ -1,16 +1,23 @@
 ---
 title: "GitHub Spec Kit 与规格驱动开发文章深度洞察分析报告"
 source: "微信公众号文章《九秋拾序：GitHub Spec Kit 与规格驱动开发》"
-x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-github-speckit-article/analysis-report.toml"
+archived: "2026-08-05"
 source_url: "https://mp.weixin.qq.com/s/FhPzW3qXG_1siHWKrrBy2g"
 analysis_date: "2026-07-06"
 analyzer: "SpecWeave Insight Agent"
 analysis_type: "外部方法论工具研究 / 同构体系对照"
 verification_method: "SpecWeave 三件套对照 + 多源交叉（推文+仓库+官方博客+Reddit）"
+seven_concepts_output: "../../../../2026-07-06-github-speckit-sdd-seven-concepts.md"
+extracted_pattern: "../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md"
+status: "archived"
 ---
 # GitHub Spec Kit 与规格驱动开发文章深度洞察分析报告
 
 > 本报告对一篇介绍 GitHub Spec Kit（规格驱动开发工具包）的微信公众号文章进行 13 维度深度洞察分析。由于 Spec Kit 与 SpecWeave 同属"规格驱动开发（SDD）"方法论谱系，本报告在第 13 章对二者进行了深度双向对照，对照深度高于一般外部产品分析。
+>
+> **七概念方法论编排产出**：[2026-07-06-github-speckit-sdd-seven-concepts.md](../../../../2026-07-06-github-speckit-sdd-seven-concepts.md)
+>
+> **萃取可复用模式**：[分层链式规格](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md)
 
 ---
 
@@ -440,10 +447,10 @@ SDD 方法论（规格先行、分阶段、Markdown 规格载体）的时效性*
 
 | Spec Kit | SpecWeave | 对照分析 |
 |----------|-----------|---------|
-| 六命令必须按顺序走（顺序依赖） | [stage-guardrails/02-standard-stages.md](../../../../.agents/rules/stage-guardrails/02-standard-stages.md)：8 阶段序列不可跳过 | **同向**：两者都强制阶段顺序。SpecWeave 的 8 阶段（①需求接收→②方案设计→③任务分配→④代码实现→⑤测试编写→⑥代码审查→⑦合并代码→⑧完成确认）比 Spec Kit 的 6 命令更细粒度——Spec Kit 的 implement 对应 SpecWeave 的 ④⑤⑥⑦⑧ 五个阶段。 |
-| 顺序执行（依赖用户纪律） | [stage-guardrails/04-interception-approval.md](../../../../.agents/rules/stage-guardrails/04-interception-approval.md)：越界显式拦截 + 跳转审批 | **SpecWeave 更严格**：Spec Kit 的顺序执行依赖用户自觉；SpecWeave 有显式拦截机制（"⚠️ 阶段守卫拦截：当前为【X阶段】，【Y操作】属于【Z阶段】"）和跳转审批流程（正向跳过/逆向回退均需审批）。SpecWeave 的强制力更强。 |
-| `/speckit.constitution`（定宪法，全局约束） | [.agents/global-core-rules.md](../../../../.agents/global-core-rules.md)（13 条全局核心规则） | **同构**：两者都定义"不可商量规矩"全局穿透。差异：Spec Kit 的 constitution 是项目级（每个项目自定），SpecWeave 的 global-core-rules 是系统级（13 条覆盖启动协议、沟通语言、按需读取、Mermaid 优先、歧义澄清、Spec 目录规范、三阶段递进、元文档优先、修复即闭环等）。SpecWeave 的 constitution 更成熟但更重，Spec Kit 的更轻量更项目化。 |
-| `/speckit.clarify`（AI 主动提问澄清，独立阶段） | [ai-coding-guidelines.md 原则一](../../../../.agents/rules/ai-coding-guidelines.md)（歧义主动澄清，贯穿原则）+ global-core-rules"歧义主动澄清" | **同向异构**：两者都要求 AI 主动澄清。差异：Spec Kit 的 clarify 是**独立阶段**（有结构化产出）；SpecWeave 的澄清是**贯穿原则**（散落在各阶段）。SpecWeave 的原则更灵活（任何阶段都可澄清），但缺少 clarify 阶段的结构化产出记录。**SpecWeave 可借鉴**：将澄清提升为可选阶段，产出结构化澄清记录。 |
+| 六命令必须按顺序走（顺序依赖） | [stage-guardrails/02-standard-stages.md](../../../../../../rules/stage-guardrails/02-standard-stages.md)：8 阶段序列不可跳过 | **同向**：两者都强制阶段顺序。SpecWeave 的 8 阶段（①需求接收→②方案设计→③任务分配→④代码实现→⑤测试编写→⑥代码审查→⑦合并代码→⑧完成确认）比 Spec Kit 的 6 命令更细粒度——Spec Kit 的 implement 对应 SpecWeave 的 ④⑤⑥⑦⑧ 五个阶段。 |
+| 顺序执行（依赖用户纪律） | [stage-guardrails/04-interception-approval.md](../../../../../../rules/stage-guardrails/04-interception-approval.md)：越界显式拦截 + 跳转审批 | **SpecWeave 更严格**：Spec Kit 的顺序执行依赖用户自觉；SpecWeave 有显式拦截机制（"⚠️ 阶段守卫拦截：当前为【X阶段】，【Y操作】属于【Z阶段】"）和跳转审批流程（正向跳过/逆向回退均需审批）。SpecWeave 的强制力更强。 |
+| `/speckit.constitution`（定宪法，全局约束） | [global-core-rules.md](../../../../../../global-core-rules.md)（13 条全局核心规则） | **同构**：两者都定义"不可商量规矩"全局穿透。差异：Spec Kit 的 constitution 是项目级（每个项目自定），SpecWeave 的 global-core-rules 是系统级（13 条覆盖启动协议、沟通语言、按需读取、Mermaid 优先、歧义澄清、Spec 目录规范、三阶段递进、元文档优先、修复即闭环等）。SpecWeave 的 constitution 更成熟但更重，Spec Kit 的更轻量更项目化。 |
+| `/speckit.clarify`（AI 主动提问澄清，独立阶段） | [ai-coding-guidelines.md 原则一](../../../../../../rules/ai-coding-guidelines.md)（歧义主动澄清，贯穿原则）+ global-core-rules"歧义主动澄清" | **同向异构**：两者都要求 AI 主动澄清。差异：Spec Kit 的 clarify 是**独立阶段**（有结构化产出）；SpecWeave 的澄清是**贯穿原则**（散落在各阶段）。SpecWeave 的原则更灵活（任何阶段都可澄清），但缺少 clarify 阶段的结构化产出记录。**SpecWeave 可借鉴**：将澄清提升为可选阶段，产出结构化澄清记录。 |
 
 ### 13.3 Sub-Agent 执行对照
 
@@ -463,10 +470,10 @@ SDD 方法论（规格先行、分阶段、Markdown 规格载体）的时效性*
 #### 13.4.2 SpecWeave → Spec Kit 可借鉴（SpecWeave 的成熟度优势）
 
 1. **7 主题分类体系**：SpecWeave 的 `.trae/specs/` 按 7 大主题（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival）分类，每个 spec 归属明确主题，有归类决策树。Spec Kit 的六命令产出文档缺乏主题分类，项目规模增大后文档组织会混乱。SpecWeave 的主题分类是更成熟的治理体系。
-2. **原子化拆分**：SpecWeave 有 [atomization-cmd](../../../../.agents/skills/README.md) Skill 封装文档原子化拆分，确保单一职责。Spec Kit 的每步产出虽是 Markdown，但未强调原子化，单个文档可能职责过载。
-3. **链接校验工具链**：SpecWeave 有 [link-check-cmd](../../../../.agents/skills/README.md) Skill 做 Markdown 链接有效性检查与自动修复。Spec Kit 的链式喂给依赖文档间引用，若无链接校验，断链风险高。SpecWeave 的工具链是更成熟的质量保障。
+2. **原子化拆分**：SpecWeave 有 [atomization-cmd](../../../../../../skills/atomization-cmd/) Skill 封装文档原子化拆分，确保单一职责。Spec Kit 的每步产出虽是 Markdown，但未强调原子化，单个文档可能职责过载。
+3. **链接校验工具链**：SpecWeave 有 [link-check-cmd](../../../../../../skills/link-check-cmd/) Skill 做 Markdown 链接有效性检查与自动修复。Spec Kit 的链式喂给依赖文档间引用，若无链接校验，断链风险高。SpecWeave 的工具链是更成熟的质量保障。
 4. **checklist.md 显式验收门禁**：SpecWeave 的 checklist.md（40+ 检查点逐项勾选）是显式验收门禁，Spec Kit 的 implement 阶段依赖人工 review，无结构化 checklist。这是 SpecWeave 的显著优势。
-5. **阶段守卫显式拦截机制**：SpecWeave 的 [04-interception-approval.md](../../../../.agents/rules/stage-guardrails/04-interception-approval.md) 有标准拦截输出格式与跳转审批流程，Spec Kit 的顺序执行依赖用户纪律。SpecWeave 的强制力更强、可审计性更高。
+5. **阶段守卫显式拦截机制**：SpecWeave 的 [04-interception-approval.md](../../../../../../rules/stage-guardrails/04-interception-approval.md) 有标准拦截输出格式与跳转审批流程，Spec Kit 的顺序执行依赖用户纪律。SpecWeave 的强制力更强、可审计性更高。
 6. **8 阶段细粒度**：SpecWeave 的 8 阶段（含独立的测试编写、代码审查、合并代码、完成确认）比 Spec Kit 的 6 命令更细粒度，特别是把"测试"和"审查"独立为阶段，质量保障更结构化。
 
 ### 13.5 对照总结
@@ -527,29 +534,45 @@ GitHub Spec Kit 是一个**把规格驱动开发（SDD）封装为六命令链�
 
 ## 附录：分析依据
 
-### A. SpecWeave 对照文档（已读取）
+### A. 七概念方法论编排产出
 
-| 文档 | 路径 | 用途 |
-|------|------|------|
-| 全局核心规则 | `d:\spaces\SpecWeave\.agents\global-core-rules.md` | 对照 constitution（13 条 vs 项目级宪法） |
-| 阶段守卫规则 | `d:\spaces\SpecWeave\.agents\rules\stage-guardrails.md` | 对照六命令顺序执行 |
-| 标准阶段序列 | `d:\spaces\SpecWeave\.agents\rules\stage-guardrails\02-standard-stages.md` | 对照 6 命令 vs 8 阶段 |
-| 跨阶段拦截与跳转审批 | `d:\spaces\SpecWeave\.agents\rules\stage-guardrails\04-interception-approval.md` | 对照顺序执行强制力 |
-| AI 编码行为准则 | `d:\spaces\SpecWeave\.agents\rules\ai-coding-guidelines.md` | 对照 clarify（原则一歧义主动澄清） |
-| Specs 全局看板 | `d:\spaces\SpecWeave\.trae\specs\README.md` | 对照 7 主题分类体系 |
-| AGENTS.md 启动协议 | `d:\spaces\SpecWeave\AGENTS.md` | 对照 constitution 的系统级形态 |
+| 产出物 | 路径 |
+|--------|------|
+| 七概念复盘报告 | [2026-07-06-github-speckit-sdd-seven-concepts.md](../../../../2026-07-06-github-speckit-sdd-seven-concepts.md) |
+| 萃取模式：分层链式规格 | [layered-chained-spec.md](../../../../patterns/methodology-patterns/governance-strategy/layered-chained-spec.md) |
 
-### B. 分析方法说明
+### B. SpecWeave 对照文档（已读取）
+
+| 文档 | 路径（工作区相对路径） | 用途 |
+|------|----------------------|------|
+| 全局核心规则 | `.agents/global-core-rules.md` | 对照 constitution（13 条 vs 项目级宪法） |
+| 阶段守卫规则 | `.agents/rules/stage-guardrails.md` | 对照六命令顺序执行 |
+| 标准阶段序列 | `.agents/rules/stage-guardrails/02-standard-stages.md` | 对照 6 命令 vs 8 阶段 |
+| 跨阶段拦截与跳转审批 | `.agents/rules/stage-guardrails/04-interception-approval.md` | 对照顺序执行强制力 |
+| AI 编码行为准则 | `.agents/rules/ai-coding-guidelines.md` | 对照 clarify（原则一歧义主动澄清） |
+| Specs 全局看板 | `.trae/specs/README.md` | 对照 7 主题分类体系 |
+| AGENTS.md 启动协议 | `AGENTS.md` | 对照 constitution 的系统级形态 |
+
+### C. 分析方法说明
 
 - 本报告基于**单源文章+多源引用**分析，文章内嵌的推文/仓库/官方博客/Reddit 构成多源交叉，但最终均指向 github/spec-kit 同一项目，缺乏独立第三方评测。
 - 对照分析严格基于 SpecWeave 实际文档内容，所有引用路径均经读取验证。
 - 按照 SpecWeave 三角验证法 SOP，完整的外部工具研究应补充第二源（项目 README）和第三源（独立评测），本报告为文章洞察分析，未执行完整三角验证，结论涉及项目能力边界的部分标注"待验证"。
 - 报告中的"无法独立验证"项（118K 星标实时数据、海盗语模板、"一两天 +20K"时间窗口）已显式标注。
 
-### C. 待后续验证项
+### D. 待后续验证项
 
 - [ ] 访问 https://github.com/spec-kit 核实 118K 星标与仓库现状
 - [ ] 实际安装 Spec Kit 在 Claude Code/Cursor 中验证六命令能力边界
 - [ ] 核实 Den Delimarsky 个人博客 den.dev 的 John Lam 研究起点原文
 - [ ] 补充第二源（Spec Kit 官方 README）与第三源（独立评测）进行三角验证
 - [ ] 核实 Reddit r/ClaudeCode 板块原帖与回复的代表性
+
+### E. 归档说明（2026-08-05）
+
+本分析报告原存放于 `.trae/specs/retrospectives-insights/analyze-github-speckit-article/`（过程工作区），不符合最终产出归档规范。`.trae/specs/` 目录仅用于存放 spec.md、tasks.md、checklist.md 等规划过程文件；最终分析报告应归档至 `.agents/docs/retrospective/reports/insight-extraction/external-learning/`。
+
+本次归档修正：
+- 原路径：`.trae/specs/retrospectives-insights/analyze-github-speckit-article/analysis-report.md`（已删除）
+- 新路径：`.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-speckit-sdd-analysis-20260706/analysis-report.md`（本文件）
+- 同步完成：七概念复盘报告归档 + 分层链式规格模式入库
