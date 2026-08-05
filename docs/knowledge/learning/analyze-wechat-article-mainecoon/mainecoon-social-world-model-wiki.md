@@ -129,11 +129,11 @@ Social 的核心是双向信息流（用户→AI→用户→AI），而非模态
 
 ## 7. 相关资源
 
-- 完整分析报告：[analysis-report.md](../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md)（v1.1，15章节）
-- 最终整合报告：[final-report.md](../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/final-report.md)
-- 决策摘要：[decision-summary.md](../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/decision-summary.md)
-- 批判性评论草稿：[critical-review-draft.md](../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/critical-review-draft.md)
-- 方法论模式：三角困境→架构级解决框架（`docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md`）
+- 完整分析报告：[analysis-report.md](analysis-report.md)（v1.1，15章节）
+- 最终整合报告：[final-report.md](final-report.md)
+- 决策摘要：[decision-summary.md](decision-summary.md)
+- 批判性评论草稿：[critical-review-draft.md](critical-review-draft.md)
+- 方法论模式：三角困境→架构级解决框架（[trilemma-architectural-resolution.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)）
 
 ---
 

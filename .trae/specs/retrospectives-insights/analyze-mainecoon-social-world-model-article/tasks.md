@@ -49,7 +49,7 @@
   - [x] SubTask 8.1: 编写报告框架(14个章节:基本信息/核心观点/论证逻辑/信息结构/内容价值/关键知识点/技术突破深度解析/应用场景可行性/洞见萃取/可靠性/时效性/专业性/批判性思考/与 SpecWeave 关联)
   - [x] SubTask 8.2: 填充各章节内容,确保逻辑连贯、论据充分、数据准确引用
   - [x] SubTask 8.3: 添加总结与展望章节,凝练核心洞察(Social World Model 范式、三角困境突破、AI 交互演进方向)
-  - [x] SubTask 8.4: 输出最终 Markdown 报告到 `d:\spaces\SpecWeave\.trae\specs\retrospectives-insights\analyze-mainecoon-social-world-model-article\analysis-report.md`
+  - [x] SubTask 8.4: 输出最终 Markdown 报告到 `../../../../docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.md`
 
 - [x] Task 9: 七概念方法论增强分析（R-I-E-C-A-F-V）
   - [x] SubTask 9.1: R阶段事实审查与G1质量门校验（26条事实，0因果词，G1通过）
@@ -67,7 +67,7 @@
 
 - [x] Task 11: 最终报告整合与知识库同步
   - [x] SubTask 11.1: 合并决策摘要与批判性评论草稿为最终报告（final-report.md），含执行摘要+4公理+3P0+批判性评论+行动项
-  - [x] SubTask 11.2: 创建知识库wiki页面（docs/knowledge/learning/mainecoon-social-world-model-wiki.md），含模型概况+4公理+3P0+场景评估+竞争格局
+  - [x] SubTask 11.2: 创建知识库wiki页面（docs/knowledge/learning/analyze-wechat-article-mainecoon/mainecoon-social-world-model-wiki.md），含模型概况+4公理+3P0+场景评估+竞争格局
   - [x] SubTask 11.3: 验证文件路径合规（0处file:///绝对路径）
 
 # Task Dependencies
