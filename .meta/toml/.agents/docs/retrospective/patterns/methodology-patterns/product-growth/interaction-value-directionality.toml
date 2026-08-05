@@ -1,0 +1,13 @@
+id = "interaction-value-directionality"
+domain = "methodology"
+layer = "product-growth"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-critical-review-20260805/insight-extraction.md#洞察三"
+
+[bindings]
+rules = []
+references = ["vertical-scenario-ai-three-elements", "system-equation-validation", "falsifiable-claim-evaluation"]
+skills = []

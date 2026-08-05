@@ -14,6 +14,7 @@
 
 | 模式文件 | 一句话说明 | 成熟度 |
 |---------|-----------|-------|
+| [feasibility-claim-evaluation.md](falsifiable-claim-evaluation.md) | 可证伪愿景检验法：评估技术主张时，分水岭不是指标数字精确性，而是指标是否定义了可证伪验收标准；四类状态分级（技术事实/待验证/待公开/营销话术）+上下文校准防误杀，1次验证（MaineCoon批判性审查） | L1 |
 | [adversarial-review-protocol.md](adversarial-review-protocol.md) | 对抗性审查协议：六模块框架（来源三级分类+可信度四级评分+五维验证+九种偏差清单+异常标记+验证日志），质量内建而非事后质检，实现77.3%一级来源、0D级内容 | L2 |
 | [knowledge-archive-four-layer.md](knowledge-archive-four-layer.md) | 知识档案四层架构：规则层(00)→领域内容层(01-N)→跨领域整合层→索引层(README)，规则先行、内容解耦、整合后置、索引最后，解决索引过早固化问题 | L2 |
 | [cross-domain-semantic-drift.md](cross-domain-semantic-drift.md) | 跨领域语义漂移防御：Spec阶段概念扫描→歧义术语显式标注→术语表单一事实源，解决跨领域知识整合中"同一术语不同含义"的隐性陷阱，防御可降低15%+返工 | L2 |
