@@ -19,6 +19,9 @@
 - Affected code: `projects/xuanspace/libs/caffe-ffi/`（proto / include / src / tests / python pb2）
 - 构建：proto 变更需重新编译（protoc 自动生成），pb2 需手动同步提交
 - 数据 I/O 层通过 Python/numpy 桥接，**不引入** leveldb/lmdb/OpenCV/HDF5 等 C++ 外部依赖
+- 运行时修复：静态回调注册表（`DataIOCallbackRegistry`/`PythonCallbackRegistry`）持 Python 引用，解释器关闭前未清理会 segfault；通过 `ClearDataIOCallback()`/`ClearPythonLayerCallback()` + atexit hook 修复
+- CI 集成：nightly 新增 TVM-FFI 依赖检查（`scripts/ci_check_tvmffi.py`）与 P2 数据 I/O 算子测试（`test_p2_data_io_ops.py`）
+- 正确性修复（Task 7 测试驱动暴露）：`ContrastiveLoss` Backward 非 legacy y==0 分支缺因子 2（`-2*(margin-dist_sq)` → `-4*(margin-dist_sq)`，`d(dist_sq)/da=2*diff`）；FULL 归一化由 `num*dim` 修正为 `num`（标量每样本损失，outer_num*inner_num = num*1）。均在 P0 环境以数值梯度校验确认
 
 ## ADDED Requirements
 
