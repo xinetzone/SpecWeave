@@ -144,6 +144,14 @@ for (int param_id = 0; param_id < layer_param.param_size(); ++param_id) {
 | 验证脚本 | ✅ 已提供 | `a001_verify_fix.py`（权重真实性 / 无 NaN / caffex 对齐） |
 
 **补验路径**（在容器 `caffe-ffi-jupyter` 内，测试网络用 `external/chaos/xmtools/models/hub/caffe/resnet50_caffe/`）：
+
+**方式一（推荐，一键脚本）**——容器内已挂载 `/SpecWeave`，直接运行：
+```bash
+bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/run-a001-verify.sh
+# 跳过重编译（.so 已含修复）：REBUILD=0 bash .../run-a001-verify.sh
+```
+
+**方式二（逐步）**：
 ```bash
 cd /SpecWeave/projects/xuanspace/libs/caffe-ffi
 pip install -e . --no-build-isolation   # 需本地 tvm-ffi 源码
@@ -151,7 +159,12 @@ python /SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/a001_verify_fix.
     --proto /SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe/ResNet-50-deploy.prototxt \
     --caffemodel /SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe/ResNet-50-model.caffemodel
 ```
-预期：`res2a_branch1` 权重 std>0 且非全 1.0；全网络无 NaN/Inf；与 caffex 各层输出对齐。
+预期：`conv1` 权重 std>0 且非全 1.0；全网络无 NaN/Inf；与 caffex 各层输出对齐。
+
+**宿主侧 docker exec 启动命令**（在 WSL/宿主命令行）：
+```bash
+docker exec -it caffe-ffi-jupyter bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/run-a001-verify.sh
+```
 
 ---
 

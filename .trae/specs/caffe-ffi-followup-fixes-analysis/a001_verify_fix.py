@@ -3,20 +3,26 @@
 """A-001 修复验证脚本：确认 caffe-ffi read_net 真正加载 caffemodel 真实权重。
 
 在 WSL 容器 caffe-ffi-jupyter（Python 3.14）内重编译 native 扩展后运行：
-    python a001_verify_fix.py
+    python a001_verify_fix.py                          # 默认用 hub/caffe/resnet50_caffe
+    python a001_verify_fix.py --proto P --caffemodel C  # 指定网络
+    python a001_verify_fix.py --layer-name conv1        # 指定首卷积权重层名
 
 三项断言：
-  1) conv1/7x7_s2 权重真实（std>0 且非全 1.0）—— 修复前为 constant=1.0 / std=0
+  1) 首卷积层权重真实（std>0 且非全 1.0）—— 修复前为 constant=1.0 / std=0
   2) 全网络 forward 无 NaN/Inf —— 修复前指数放大至 Inf/NaN
   3) 与 caffex（原生 Caffe）关键层输出对齐
 """
 import os
 import sys
+import argparse
 import numpy as np
 
-MODEL_DIR = "/SpecWeave/.trae/specs/caffe-comprehensive-comparison-test/test-assets/models"
-PROTO = os.path.join(MODEL_DIR, "inceptionv1.prototxt")
-CAFFEMODEL = os.path.join(MODEL_DIR, "inceptionv1.caffemodel")
+# 默认测试模型网络：用户指定 hub/caffe/resnet50_caffe（224x224 深度网络，
+# 权重错误会被逐层放大到 Inf/NaN，最能暴露 A-001）。
+DEFAULT_MODEL_DIR = "/SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe"
+DEFAULT_PROTO = os.path.join(DEFAULT_MODEL_DIR, "ResNet-50-deploy.prototxt")
+DEFAULT_CAFFEMODEL = os.path.join(DEFAULT_MODEL_DIR, "ResNet-50-model.caffemodel")
+DEFAULT_LAYER = "conv1"
 
 import caffe_ffi
 
@@ -30,11 +36,11 @@ def check(cond, msg):
         failures.append(msg)
 
 
-def get_conv1_blob(net):
-    """返回 conv1/7x7_s2 的权重数组（numpy float64）。"""
+def get_layer_blob(net, layer_name):
+    """返回指定层的第一个 multi-dim 权重数组（numpy float64）。"""
     for ln in net.layers_array():
         nm = getattr(ln, "name", ln)
-        if "conv1/7x7_s2" in str(nm):
+        if str(nm) == layer_name:
             for b in ln.blobs:
                 arr = np.asarray(b.data, dtype=np.float64)
                 if arr.ndim >= 2 and arr.size > 0:
@@ -43,6 +49,19 @@ def get_conv1_blob(net):
 
 
 def main():
+    ap = argparse.ArgumentParser(description="A-001 修复验证")
+    ap.add_argument("--proto", default=DEFAULT_PROTO, help="prototxt 路径")
+    ap.add_argument("--caffemodel", default=DEFAULT_CAFFEMODEL, help="caffemodel 路径")
+    ap.add_argument("--layer-name", default=DEFAULT_LAYER, help="首卷积权重层名")
+    args = ap.parse_args()
+
+    PROTO = os.path.abspath(args.proto)
+    CAFFEMODEL = os.path.abspath(args.caffemodel)
+    LAYER = args.layer_name
+
+    print(f"model: {CAFFEMODEL}")
+    print(f"  proto : {PROTO}")
+    print(f"  layer : {LAYER}")
     print("caffe_ffi:", caffe_ffi.__version__,
           "native:", caffe_ffi.is_available())
     if not caffe_ffi.is_available():
@@ -51,13 +70,13 @@ def main():
 
     # ---- 1. 权重真实性 ----
     net = caffe_ffi.read_net(PROTO, CAFFEMODEL)
-    w = get_conv1_blob(net)
-    check(w is not None, "找到 conv1/7x7_s2 权重 blob")
+    w = get_layer_blob(net, LAYER)
+    check(w is not None, f"找到 {LAYER} 权重 blob")
     if w is not None:
-        print(f"  conv1 weight shape={w.shape} "
+        print(f"  {LAYER} weight shape={w.shape} "
               f"max-abs={np.abs(w).max():.4e} std={w.std():.4e}")
-        check(w.size > 0 and w.std() > 1e-6, "conv1 权重 std>0（非默认 constant=1.0）")
-        check(not np.allclose(w, 1.0), "conv1 权重不全为 1.0")
+        check(w.size > 0 and w.std() > 1e-6, f"{LAYER} 权重 std>0（非默认 constant=1.0）")
+        check(not np.allclose(w, 1.0), f"{LAYER} 权重不全为 1.0")
 
     # ---- 2. 无 NaN/Inf ----
     rng = np.random.default_rng(0)
