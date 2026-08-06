@@ -968,12 +968,14 @@ Proto 层参数:                     57/48+ 个（覆盖率约 100%，P2 补齐�
 | 输出无 NaN/Inf | ✅ | 无 | ✅ PASS |
 | PERF_LOG=OFF 编译+导入 | ✅ | _caffe_ffi.so 3.6MB，导入正常 | ✅ PASS |
 | OpenBLAS openmp 变体 | ✅ | openmp_hd680484_0 | ✅ PASS |
-| pytest 核心测试无回归 | ✅ | 2108 passed, 3 skipped | ✅ PASS |
+| pytest 核心测试无回归 | ✅ | 2109 passed, 11 skipped, 0 failed | ✅ PASS（零失败） |
 | JupyterLab/SSH 服务 | ✅ | Jupyter port 8888 响应正常，SSHD 运行中 | ✅ PASS |
 
-**pytest 失败分析**（9 个失败均非本次优化引入的回归）：
-- 8 个 `test_phase3_log_aggregation.py` 失败：测试断言 PERF 日志聚合输出，但 Release 模式 PERF_LOG=OFF 条件编译移除了 PERF 日志——这是**预期行为**，这些测试应在 Debug 构建（PERF_LOG=ON）下运行，或添加构建类型标记
-- 1 个 `test_alexnet.py::test_forward_Alexnet`：protobuf 版本兼容性问题（预存在）
+**pytest 验证结果（2026-08-06 22:14 CST）**：
+- ✅ **零失败**：2109 passed, 11 skipped
+- 8 个 `test_phase3_log_aggregation.py` PERF 依赖测试：Release 模式自动跳过（添加了运行时 PERF_LOG 检测 + `@skipif_no_perf_log`）
+- 3 个其他跳过：C++ 扩展不可用环境跳过
+- 1 个 `test_alexnet.py`：**已修复**——根因是 `urllib.request.urlretrieve` 下载大文件截断（本地95MB vs 服务器233MB），改进 `_download_model()` 添加 Content-Length 校验和重试
 - ops/ 目录 29 个测试文件：预存在 ImportError（`cannot import name 'L' from 'utils'`），非本次修改引入
 
 ### 11.5 后续优化方向（P2）
