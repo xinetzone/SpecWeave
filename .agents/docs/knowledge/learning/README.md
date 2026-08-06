@@ -90,6 +90,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | HTML 声明式局部更新 | Chrome Declarative Partial Updates 能力解析 | [declarative-partial-updates-wiki.md](04-docs-markup-tooling/declarative-partial-updates-wiki.md) |
 | ExecutableBooks MyST 指南 | MyST Markdown 生态与实践（7 章 + 示例） | [executablebooks-myst-guide-wiki.md](04-docs-markup-tooling/executablebooks-myst-guide-wiki.md) |
 | MyST Markdown 完整教程 | 17 章 MyST Markdown 从入门到精通 | [myst-markdown-tutorial/](04-docs-markup-tooling/myst-markdown-tutorial/README.md) |
+| Mermaid 官方文档教程 | 17 种图表类型语法 + 配置主题 + 集成生态（10 章） | [mermaid-wiki/](04-docs-markup-tooling/mermaid-wiki/README.md) |
 | scikit-build-core Python 构建 | CMake 驱动的现代 Python 构建工具（6 章） | [scikit-build-core-wiki/](04-docs-markup-tooling/scikit-build-core-wiki/README.md) |
 
 ### 05 AI 多模态内容
