@@ -139,9 +139,10 @@ for (int param_id = 0; param_id < layer_param.param_size(); ++param_id) {
 | `net.cpp` 修复落地 | ✅ 已完成 | `Init()` 中 SetUp 后复制 blob data |
 | Python 层调整 | ✅ 无需 | `_merge_weights` 已正确，无需改动 `io.py` |
 | 静态正确性核查 | ✅ 已完成 | 类型/字段/宏确认，无诊断错误 |
-| native 重编译 | ⚠️ 未执行 | 构建环境为容器 `caffe-ffi-jupyter`（Python 3.14），本机无 Docker、WSL 无该 conda env |
-| 运行级推理验证 | ⚠️ 未执行 | 依赖重编译后的 `_caffe_ffi.so`；宿主 Windows Python 3.13 无法加载 Linux `.so` |
-| 验证脚本 | ✅ 已提供 | `a001_verify_fix.py`（权重真实性 / 无 NaN / caffex 对齐） |
+| native 重编译 | ✅ 已完成（`main`） | 容器 `caffe-ffi-jupyter` 内卸载后强制重编译，`_caffe_ffi.so` 含 A-001 修复，依赖已解析 |
+| native 推理验证（回归测试） | ✅ 已完成 | `TestReadNetExternalWeights` 2 passed + `test_serialization.py` 全量 8 passed |
+| 运行级网络推理验证（a001_verify_fix.py / resnet50_caffe） | ⚠️ 未执行 | 依赖重编译后的 `.so`（已就绪），可运行 `a001_verify_fix.py` 做端到端网络对齐验证 |
+| 验证脚本 | ✅ 已提供 | `a001_verify_fix.py`（权重真实性 / 无 NaN / caffex 对齐）+ `TestReadNetExternalWeights` 回归测试 |
 
 **补验路径**（在容器 `caffe-ffi-jupyter` 内，测试网络用 `external/chaos/xmtools/models/hub/caffe/resnet50_caffe/`）：
 
@@ -176,6 +177,14 @@ docker exec -it caffe-ffi-jupyter bash /SpecWeave/apps/caffe-ffi-jupyter/scripts
 
 现状：`libs/caffe-ffi/tests/python/test_serialization.py` 仅覆盖内部 round-trip（`weights_to_dict`/`save_net`/`load_net`），**未覆盖** `read_net(prototxt, caffemodel)` 外部权重加载路径——正是 A-001 暴露的盲区。若无该用例，未来重构 `net.cpp` 或 `io.py` 时 A-001 会无声复发。
 
+**✅ 已闭环（2026-08-06，提交 `a39431f` on `main`）**：新增 `TestReadNetExternalWeights` 类两个用例（核心回归守卫 + 健全性检查），已在容器 `caffe-ffi-jupyter`（Python 3.14）重编译 native 扩展后通过：
+
+- `test_loads_caffemodel_weights_not_default_filler` —— 经 `read_net(proto, caffemodel)` 加载后，断言 fc1 权重 == 已知非默认值（vs 默认 constant=1.0），**核心回归守卫**；
+- `test_forward_no_nan_inf_with_external_weights` —— 外部加载真实权重后完整 forward 无 NaN/Inf，健全性检查。
+- 运行结果：`2 passed`（单类）/ `8 passed`（test_serialization.py 全量）。
+
+> 注意（分支对齐）：此前测试提交 `b5856eb` 落在分离 HEAD（无 A-001 修复），已 cherry-pick 至 `main`（`a39431f`），确保测试与修复在同一分支、CI 可直接守护。
+
 **补充用例**（`test_serialization.py` 新增）：
 ```python
 @require_cpp_extension
@@ -205,15 +214,20 @@ def test_read_net_loads_caffemodel_weights(tmp_path):
 - **精度/性能**：`TextFormat` 对 repeated float 的文本往返存在精度与解析开销；
 - **规模化**：更大模型（ResNet-101/VGG16）下该路径可能成为加载瓶颈。
 
-**结论**：这不是 A-001 的根因（根因已在 C++ 修复），但会在真实大模型上放大加载成本。**建议保留为后续优化项**，不阻塞当前修复：
+**结论**：这不是 A-001 的根因（根因已在 C++ 修复），但会在真实大模型上放大加载成本。
 
-- 方案 A（推荐，改动小）：新增 FFI `NewNetFromParamBinary`，接收 `param.SerializeToString()` 二进制 bytes，C++ 端 `ParseFromArray` 解析，绕过文本序列化。
-- 方案 B（更优，改动大）：新增 FFI `NewNetFromModel(proto_str, caffemodel_bytes)`，C++ 内部解析 prototxt 结构 + caffemodel 二进制权重并合并，与 native Caffe 语义一致。
+- 方案 A（推荐，改动小）：新增 FFI `NewNetFromParamBinary`，接收 `param.SerializeToString()` 二进制 bytes，C++ 端 `ParseFromArray` 解析，绕过文本序列化。✅ **已实现并验证**（见下）。
+- 方案 B（更优，改动大）：新增 FFI `NewNetFromModel(proto_str, caffemodel_bytes)`，C++ 内部解析 prototxt 结构 + caffemodel 二进制权重并合并，与 native Caffe 语义一致。**未实现**，保留为可选项。
+
+> **方案 A 实现记录（2026-08-06）**：
+> - C++：`_caffe_ffi.cc` 新增 `NewNetFromParamBinary(const Bytes&)`，`ParseFromArray` 解析后 `make_object<Net>`；注册 `caffe_ffi.NewNetFromParamBinary` 并导出符号。
+> - Python：`io.py` 新增 `_new_net_from_param()`，优先走二进制路径（`param.SerializeToString()`），回退文本路径（`NewNetFromProtoString`），再回退纯 Python 构建；`read_net`/`net_from_param` 均改用它。
+> - 验证：容器内强制重编译 `.so` 并覆盖源码目录旧 `.so` 后，`NewNetFromParamBinary` 注册成功；序列化回归 8 passed；ResNet-50 端到端 ALL PASS。
 
 ### 6.3 优先级建议
 
-| 项 | 优先级 | 说明 |
-|---|---|---|
-| 重编译 native + `a001_verify_fix.py` 运行级验证 | **P0** | 修复闭环的最终落点，阻塞验收 |
-| 回归测试用例（§6.1） | **P1** | 防止复发，`[prevent: test-case]` |
-| 文本序列化加固（§6.2 方案 A/B） | **P2** | 规模化性能优化，非阻塞 |
+| 项 | 优先级 | 状态 | 说明 |
+|---|---|---|---|
+| 重编译 native + `a001_verify_fix.py` 运行级验证 | **P0** | ✅ 已完成 | 容器内强制重编译 `.so`；ResNet-50 端到端验证 **ALL PASS**（conv1 std=0.111、全网络无 NaN/Inf；caffex 对齐因 pycaffe 未装而 SKIP） |
+| 回归测试用例（§6.1） | **P1** | ✅ 已完成 | `TestReadNetExternalWeights` 2 passed + 全量 8 passed，提交 `a39431f` on `main` |
+| 文本序列化加固（§6.2 方案 A） | **P2** | ✅ 已完成 | 新增 `NewNetFromParamBinary` + `_new_net_from_param` 二进制路径；重编译复验注册成功、回归 8 passed、端到端 ALL PASS |
