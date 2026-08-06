@@ -102,9 +102,9 @@
 
 ## Phase 5: C（原子提交）— 交付
 
-- [ ] Task 17: 原子化提交所有文档
-  - [ ] 17.1 每个 Task（4-15）独立提交，提交信息遵循 Conventional Commits 规范（`docs(mermaid-wiki): <subject>` 中文描述"为什么"）
-  - [ ] 17.2 README 导航更新单独提交
+- [x] Task 17: 原子化提交所有文档
+  - [x] 17.1 每个 Task（4-15）独立提交，提交信息遵循 Conventional Commits 规范（`docs(mermaid-wiki): <subject>` 中文描述"为什么"）
+  - [x] 17.2 README 导航更新单独提交
 
 # Task Dependencies
 
