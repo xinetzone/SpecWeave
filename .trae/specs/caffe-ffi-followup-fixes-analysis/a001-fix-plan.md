@@ -123,11 +123,12 @@ for (int param_id = 0; param_id < layer_param.param_size(); ++param_id) {
 修复点即 `Net::Init()` 中 `SetUp` 后新增的复制循环；`FromProto` 逻辑已被 `CopyTrainedLayersFrom` 长期使用，属成熟路径。
 
 ### 4.2 运行级验证（需容器重编译后执行，脚本已提供 `a001_verify_fix.py`）
-用预训练 InceptionV1（`test-assets/models/inceptionv1.caffemodel` / `inceptionv1.prototxt`）：
+**测试模型网络**：`external/chaos/xmtools/models/hub/caffe/resnet50_caffe/`
+（`ResNet-50-deploy.prototxt` + `ResNet-50-model.caffemodel`，224×224 深度网络，权重错误会被逐层放大到 Inf/NaN，最能暴露 A-001）。备用网络：`face_rec/weight/faceRec.caffemodel`、`person/` 等 hub/caffe 下任意带真实权重的模型。
 
-1. **权重真实性**：`caffe_ffi.read_net(proto, caffemodel)` 后取 `conv1/7x7_s2` 的权重 blob，断言 `std > 0` 且 `abs(max) != 1.0`（修复前该权重重置为 constant=1.0，std=0；修复后为真实小数值）。
+1. **权重真实性**：`caffe_ffi.read_net(proto, caffemodel)` 后取 `res2a_branch1` 的权重 blob，断言 `std > 0` 且 `abs(max) != 1.0`（修复前该权重重置为 constant=1.0，std=0；修复后为真实小数值）。
 2. **无 NaN/Inf**：对随机/真实输入 `forward()`，遍历所有 blob 断言无 NaN/Inf。
-3. **与 caffex 对齐**：用原生 `caffe.Net`（caffex）加载同一模型 + 同一输入，对比各层输出（尤其 `inception_3a/output` … `inception_5a/output` 与最终 `prob`）的 max-abs / first8 数值，容差内一致。
+3. **与 caffex 对齐**：用原生 `caffe.Net`（caffex）加载同一模型 + 同一输入，对比各层输出（尤其 `res2a`…`res5c` 各 block 输出与最终 `prob`）的 max-abs / first8 数值，容差内一致。
 
 ---
 
@@ -142,13 +143,15 @@ for (int param_id = 0; param_id < layer_param.param_size(); ++param_id) {
 | 运行级推理验证 | ⚠️ 未执行 | 依赖重编译后的 `_caffe_ffi.so`；宿主 Windows Python 3.13 无法加载 Linux `.so` |
 | 验证脚本 | ✅ 已提供 | `a001_verify_fix.py`（权重真实性 / 无 NaN / caffex 对齐） |
 
-**补验路径**（在容器 `caffe-ffi-jupyter` 内）：
+**补验路径**（在容器 `caffe-ffi-jupyter` 内，测试网络用 `external/chaos/xmtools/models/hub/caffe/resnet50_caffe/`）：
 ```bash
 cd /SpecWeave/projects/xuanspace/libs/caffe-ffi
 pip install -e . --no-build-isolation   # 需本地 tvm-ffi 源码
-python /SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/a001_verify_fix.py
+python /SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/a001_verify_fix.py \
+    --proto /SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe/ResNet-50-deploy.prototxt \
+    --caffemodel /SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe/ResNet-50-model.caffemodel
 ```
-预期：`conv1/7x7_s2` 权重 std>0 且非全 1.0；全网络无 NaN/Inf；与 caffex 各层输出对齐。
+预期：`res2a_branch1` 权重 std>0 且非全 1.0；全网络无 NaN/Inf；与 caffex 各层输出对齐。
 
 ---
 
