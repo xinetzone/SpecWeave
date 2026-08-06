@@ -49,14 +49,14 @@ summary: "Mermaid 六种可视化图表完整指南：gantt 甘特图（dateForm
 ```mermaid
 gantt
     dateFormat YYYY-MM-DD
-    title "项目排期计划"
+    title 项目排期计划
     axisFormat %Y-%m-%d
     tickInterval 1week
     excludes weekends
-    section "需求"
+    section 需求
     需求分析 : done, a1, 2026-08-01, 3d
     原型设计 : active, a2, after a1, 2d
-    section "开发"
+    section 开发
     前端开发 : crit, a3, after a2, 5d
     后端开发 : crit, a4, after a2, 5d
     发布上线 : milestone, a5, after a3, 0d
@@ -66,20 +66,20 @@ gantt
 
 ### 1.3 Vertical Markers 与紧凑模式
 
-- **Vertical Markers（垂直标记线）**：`vert` 关键字，不占行。
+- **Vertical Markers（垂直标记线）**：`vert` 作为任务标签使用（如 `标记线 : vert, id, 日期, 时长`），渲染为垂直线而不占用任务行空间。
 - **紧凑模式（多任务同行）**：通过前置 YAML 配置 `displayMode`。
 - **Today marker**：`todayMarker` 键设置样式，设为 `off` 隐藏。
 
 ```mermaid
 gantt
     dateFormat YYYY-MM-DD
-    title "带垂直标记线的甘特图"
+    title 带垂直标记线的甘特图
     todayMarker off
     excludes weekends
-    section "任务"
+    section 任务
     任务一 : done, t1, 2026-08-01, 2d
     任务二 : active, t2, after t1, 3d
-    vert 2026-08-05
+    截止线 : vert, v1, 2026-08-05, 1d
 ```
 
 ---
@@ -93,7 +93,7 @@ gantt
 基本饼图示例：
 
 ```mermaid
-pie title "浏览器市场份额"
+pie title 浏览器市场份额
     "Chrome" : 60
     "Firefox" : 25
     "Safari" : 15
@@ -102,7 +102,7 @@ pie title "浏览器市场份额"
 带 `showData` 显示实际数值：
 
 ```mermaid
-pie showData title "市场份额（含数值）"
+pie showData title 市场份额（含数值）
     "Chrome" : 60.5
     "Firefox" : 24.5
     "Edge" : 15
@@ -125,7 +125,7 @@ config:
     donutHole: 0.5
     legendPosition: bottom
 ---
-pie title "环形图示例"
+pie title 环形图示例
     "类别A" : 40
     "类别B" : 35
     "类别C" : 25
@@ -139,16 +139,16 @@ pie title "环形图示例"
 
 ```mermaid
 journey
-    title "我的工作日"
-    section "早晨"
+    title 我的工作日
+    section 早晨
     起床: 3: 我
     洗漱: 4: 我
     通勤: 2: 我
-    section "工作"
+    section 工作
     早会: 3: 我, 同事
     编码开发: 5: 我
     代码评审: 4: 我, 同事
-    section "下班"
+    section 下班
     通勤回家: 2: 我
     休息: 5: 我
 ```
@@ -165,12 +165,12 @@ journey
 
 ```mermaid
 timeline
-    title "项目里程碑"
+    title 项目里程碑
     2026年 : 立项
-    section "开发阶段"
+    section 开发阶段
     2026-08 : 需求评审 : 原型设计
     2026-09 : 编码开发
-    section "发布阶段"
+    section 发布阶段
     2026-10 : 测试
     2026-11 : 正式发布
 ```
@@ -179,7 +179,7 @@ timeline
 
 ```mermaid
 timeline
-    title "历史进程（上下方向）"
+    title 历史进程（上下方向）
     direction TD
     2020 : 事件A
     2021 : 事件B
@@ -192,18 +192,20 @@ timeline
 
 ## 5. sankey（桑基图）
 
-图表以 `sankey` 关键字起始（v10.3.0+，实验性图表）。语法接近纯 CSV：需 3 列（`source`、`target`、`value`）；允许无逗号分隔的空行；逗号需用双引号包裹；双引号用成对双引号转义。
+图表以 `sankey` 关键字起始（v10.3.0+，实验性图表）。语法接近纯 CSV：需 3 列（`source`、`target`、`value`）；允许无逗号分隔的空行；节点名含逗号时需用双引号包裹；双引号用成对双引号转义。
+
+> **注意**：当前版本（v11.x）Sankey 解析器对 Unicode（中文）节点名支持不完善，建议使用英文/拼音节点名。
 
 配置项：`width`、`height`、`linkColor`、`nodeAlignment`。`linkColor` 取值 `source`、`target`、`gradient`（渐变）或十六进制颜色；`nodeAlignment` 取值 `justify`、`center`、`left`、`right`。
 
 ```mermaid
 sankey
-    "煤炭", "电力", 100
-    "天然气", "电力", 80
-    "电力", "居民", 120
-    "电力", "工业", 60
-    "居民", "损耗", 10
-    "工业", "损耗", 15
+    Coal, Electricity, 100
+    Gas, Electricity, 80
+    Electricity, Residential, 120
+    Electricity, Industry, 60
+    Residential, Loss, 10
+    Industry, Loss, 15
 ```
 
 > **说明**：每行三列分别表示 source、target、value；value 为数值，流向从左到右分配，宽度与 value 成比例。
@@ -216,7 +218,7 @@ sankey
 
 ```mermaid
 quadrantChart
-    title "产品竞争力分析"
+    title 产品竞争力分析
     x-axis "低价格" --> "高价格"
     y-axis "低质量" --> "高质量"
     quadrant-1 "明星产品"

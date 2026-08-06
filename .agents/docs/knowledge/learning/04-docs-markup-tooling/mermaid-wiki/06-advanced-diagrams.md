@@ -82,30 +82,30 @@ gitGraph TB:
   - Type 枚举：`requirement`、`functionalRequirement`、`interfaceRequirement`、`performanceRequirement`、`physicalRequirement`、`designConstraint`。
   - Risk 枚举：`Low`、`Medium`、`High`。
   - VerificationMethod 枚举：`Analysis`、`Inspection`、`Test`、`Demonstration`。
-- **Element 定义**：`element 名称 { type: ...; docref: ... }`。
+- **Element 定义**：`element 名称 { type: ...; docRef: ... }`。
 - **Relationship**：`{源} - <类型> -> {目标}`；类型为 `contains`、`copies`、`derives`、`satisfies`、`verifies`、`refines`、`traces`。
 - 方向：`direction`，`TB`(默认)/`BT`/`LR`/`RL`。
 
 ```mermaid
 requirementDiagram
-    requirement 登录功能 {
+    requirement "登录功能" {
         id: R1
         text: "用户能够登录系统"
-        risk: Medium
-        verifymethod: Test
+        risk: high
+        verifymethod: test
     }
-    functionalRequirement 安全校验 {
+    functionalRequirement "安全校验" {
         id: R2
         text: "密码需加密存储"
-        risk: High
-        verifymethod: Inspection
+        risk: high
+        verifymethod: inspection
     }
-    element 登录接口 {
+    element "登录接口" {
         type: "API"
-        docref: "login-api.md"
+        docRef: "login-api.md"
     }
-    登录功能 - contains -> 安全校验
-    登录功能 - satisfies -> 登录接口
+    "登录功能" - contains -> "安全校验"
+    "登录接口" - satisfies -> "登录功能"
 ```
 
 ---
@@ -178,7 +178,7 @@ block
 
 ```mermaid
 block
-    A(["圆角"]) --> B["方形"]
+    A("圆角") --> B["方形"]
     B --> C{{"六边形"}}
     style A fill:#f9f
 ```
@@ -202,7 +202,7 @@ C4Context 精简示例：
 
 ```mermaid
 C4Context
-    title "仓储系统上下文"
+    title 仓储系统上下文
     Person(Customer, "客户", "浏览与下单")
     System(Warehouse, "仓储系统", "管理库存与订单")
     System_Ext(Payment, "支付系统", "处理支付")
@@ -214,7 +214,7 @@ C4Container 精简示例：
 
 ```mermaid
 C4Container
-    title "仓储系统容器视图"
+    title 仓储系统容器视图
     System_Boundary(Web, "Web 应用") {
         Container(Frontend, "前端", "SPA", "浏览器界面")
         Container(Backend, "后端", "API 服务", "业务逻辑")
@@ -242,25 +242,30 @@ C4Container
 
 ```mermaid
 zenuml
-    Client -> Server : "请求数据"
-    Server -> DB : "查询"
-    DB -> Server : "返回结果"
-    Server -> Client : "响应"
+    Client -> Server: 请求数据
+    Server -> DB: 查询
+    DB -> Server: 返回结果
+    Server -> Client: 响应
 ```
 
-带 `if` 条件的示例：
+带 `if` 条件的示例（中文条件需用引号包裹）：
 
 ```mermaid
 zenuml
-    Client -> Server : "登录"
-    if (校验通过) {
-        Server -> Client : "成功"
+    Client -> Server: 登录
+    if ("校验通过") {
+        Server -> Client: 成功
     } else {
-        Server -> Client : "失败"
+        Server -> Client: 失败
     }
 ```
 
-> **说明**：`A -> B : "消息"` 表示同步消息；嵌套块用 `{ }` 包裹；`//` 为注释。zenuml 集成采用实验性懒加载/异步渲染。
+> **说明**：
+> - **异步消息**：`A -> B: 消息`（箭头前后有空格），消息文本支持中文。
+> - **同步方法调用**：`A.method()` 语法，可用 `{ }` 嵌套；方法名需为英文（中文方法名解析异常）。
+> - **条件/循环**：`if`/`while`/`for` 等条件中的中文文本需用双引号包裹（如 `if ("校验通过")`），否则条件文本无法显示。
+> - **注释**：`// comment` 渲染在消息/片段上方，支持 Markdown。
+> - **插件要求**：zenuml 采用实验性懒加载/异步渲染，**需额外注册外部插件**才能使用（通过 `mermaid.registerExternalDiagrams([zenuml])` 注册 `@mermaid-js/mermaid-zenuml`）。未注册插件时预览环境会显示"渲染失败"，这是正常现象，不代表语法错误。
 
 ---
 

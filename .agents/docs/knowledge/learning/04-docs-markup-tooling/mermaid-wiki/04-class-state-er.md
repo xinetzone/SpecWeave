@@ -30,7 +30,7 @@ summary: "Mermaid 结构型图表（classDiagram 类图、stateDiagram-v2 状态
 - **显式定义**：`class Animal`。
 - **隐式定义**：通过关系自动创建，如 `Vehicle <|-- Car`。
 
-类名只能由字母数字（含 unicode）、下划线、短横线组成。若要给类设置自定义标签或含特殊字符的类名，可用 `class "标签" as 类名` 或反引号转义。
+类名只能由字母数字（含 unicode）、下划线、短横线组成。若要给类设置自定义标签或含特殊字符的类名，可用方括号语法 `class ID["标签文本"]`，或反引号转义类名。
 
 ### 1.2 成员定义
 
@@ -45,7 +45,7 @@ summary: "Mermaid 结构型图表（classDiagram 类图、stateDiagram-v2 状态
 
 ```mermaid
 classDiagram
-    class "动物" as Animal
+    class Animal["动物"]
     class Animal {
         +String name
         +int age
@@ -58,8 +58,8 @@ classDiagram
         +getName() string
         +$staticCount int
     }
-    class "狗" as Dog
-    Dog <|-- Animal
+    class Dog["狗"]
+    Animal <|-- Dog
 ```
 
 ### 1.3 关系类型（8 种）
@@ -73,55 +73,61 @@ classDiagram
 
 关系标签语法为 `[classA][Arrow][ClassB]:LabelText`。双向关系可写成 `[关系类型][连线][关系类型]`，如 `<|`、`*`、`o`、`>`、`<`、`|>` 与 `--`（实线）/`..`（虚线）。Lollipop 接口写法：`bar ()-- foo`。
 
-以下示例覆盖全部 8 种关系类型，关系标签含中文时用双引号包裹：
+以下示例覆盖全部 8 种关系类型，关系标签直接跟在冒号后：
 
 ```mermaid
 classDiagram
-    class "车辆" as Vehicle
-    class "汽车" as Car
-    class "引擎" as Engine
-    class "轮胎" as Wheel
-    class "方向盘" as Steering
-    class "司机" as Driver
-    class "可行驶" as Drivable
-    Vehicle <|-- Car : "继承"
-    Car *-- Engine : "组合"
-    Car o-- Wheel : "聚合"
-    Car --> Steering : "关联"
-    Car -- Driver : "链接"
-    Car ..> Fuel : "依赖"
-    Car ..|> Drivable : "实现"
-    Car .. Fuel : "虚线"```
+    class Vehicle["车辆"]
+    class Car["汽车"]
+    class Engine["引擎"]
+    class Wheel["轮胎"]
+    class Steering["方向盘"]
+    class Driver["司机"]
+    class Fuel["燃料"]
+    class Drivable["可行驶"]
+    Vehicle <|-- Car : 继承
+    Car *-- Engine : 组合
+    Car o-- Wheel : 聚合
+    Car --> Steering : 关联
+    Car -- Driver : 链接
+    Car ..> Fuel : 依赖
+    Car ..|> Drivable : 实现
+    Car .. Fuel : 虚线
+```
 
 ### 1.4 基数、注解与命名空间
 
 - **基数/多重性（Cardinality）**：`1`、`0..1`、`1..*`、`*`、`n`、`0..n`、`1..n`；置于箭头两侧引号内，格式 `[classA] "基数1" [Arrow] "基数2" [ClassB]:LabelText`。
-- **注解**：`<<Interface>>`、`<<Abstract>>`、`<<Service>>`、`<<Enumeration>>` 等，可内联、单独行或嵌套结构。
+- **注解**：`<<interface>>`、`<<abstract>>`、`<<service>>`、`<<enumeration>>` 等（均为小写），可内联、单独行或嵌套结构。
 - **命名空间**：`namespace 名称 { ... }`；v11.15.0+ 支持方括号标签与点号嵌套；可用配置 `hierarchicalNamespaces: false` 切换紧凑渲染。
 
 基数示例：
 
 ```mermaid
 classDiagram
-    class "客户" as Customer
-    class "订单" as Order
-    "Customer "1"" --> ""1..*" Order" : "下单"
-    "Customer "0..1"" --> ""*" Order" : "历史订单"```
+    class Customer["客户"]
+    class Order["订单"]
+    Customer "1" --> "1..*" Order : 下单
+    Customer "0..1" --> "*" Order : 历史订单
+```
 
 注解与命名空间示例：
 
 ```mermaid
 classDiagram
     namespace Base {
-        class "动物" as Animal
-        class "狗" as Dog
+        class Animal["动物"]
+        class Dog["狗"]
     }
-    <<Interface>> IMove
-    class "汽车" as Car
+    class IMove {
+        <<interface>>
+    }
+    class Car["汽车"]
     Car ..|> IMove
-    Dog -- "|> Animal"```
+    Animal <|-- Dog
+```
 
-> **安全编码提示**：类名/状态名/节点 ID 一律用纯英文；中文只放在标签（`class "中文" as ID`）与关系标签的双引号中。代码块内禁止空行。
+> **安全编码提示**：类名/状态名/节点 ID 一律用纯英文；中文只放在标签（方括号语法 `class ID["中文"]`）或关系标签中。代码块内禁止空行。
 
 ---
 
@@ -141,9 +147,9 @@ classDiagram
 ```mermaid
 stateDiagram-v2
     [*] --> Idle
-    state Idle : "空闲"
-    Idle --> Running : "start"
-    state Running : "运行中"
+    state Idle : 空闲
+    Idle --> Running : start
+    state Running : 运行中
     Running --> Idle
     Running --> [*]
 ```
@@ -183,8 +189,8 @@ stateDiagram-v2
     A --> Join
     B --> Join
     Join --> Decide
-    Decide --> Done : "是"
-    Decide --> Retry : "否"
+    Decide --> Done : 是
+    Decide --> Retry : 否
     Retry --> Fork
     Done --> [*]
 ```
@@ -199,9 +205,9 @@ Note 示例：
 ```mermaid
 stateDiagram-v2
     [*] --> A
-    A --> B : "处理"
-    note right of A : "这是状态 A 的说明 换行用 br"
-    note left of B : "这是状态 B 的说明"
+    A --> B : 处理
+    note right of A : 这是状态 A 的说明<br/>换行用 br 标签
+    note left of B : 这是状态 B 的说明
     B --> [*]
 ```
 
@@ -219,8 +225,8 @@ stateDiagram-v2
 
 ```mermaid
 erDiagram
-    CUSTOMER ||--o{ ORDER : "places"
-    ORDER ||--|{ LINE_ITEM : "contains"
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE_ITEM : contains
     CUSTOMER {
         int id PK
         string name
@@ -236,7 +242,8 @@ erDiagram
         string product_code
         int quantity
         float price
-    }```
+    }
+```
 
 ### 3.2 关系基数（crow's foot）与识别
 
@@ -250,8 +257,8 @@ erDiagram
 ```mermaid
 erDiagram
     direction LR
-    "客户" ||--o{ "订单" : "创建"
-    "订单" ||--|{ "订单项" : "包含"
+    "客户" ||--o{ "订单" : 创建
+    "订单" ||--|{ "订单项" : 包含
     "客户" {
         int id PK
         string 姓名
@@ -267,7 +274,8 @@ erDiagram
         string 商品编码
         int 数量
         float 单价
-    }```
+    }
+```
 
 > **安全编码提示**：ER 实体名若含空格或中文，一律用双引号包裹；属性名中文可直接书写在 `{ }` 块内。
 
