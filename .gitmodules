@@ -15,6 +15,6 @@
 	url = git@github.com:GoogleCloudPlatform/knowledge-catalog.git
 [submodule "vendor/awesome-okf"]
 	path = vendor/awesome-okf
-	url = https://github.com/yzfly/awesome-okf.git
+	url = git@github.com:yzfly/awesome-okf.git
 	branch = main
 	shallow = true
