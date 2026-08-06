@@ -1,0 +1,70 @@
+# =============================================================================
+# caffe-ffi 生产高可用（HA）部署 — 阶段1：单机多副本 + HAProxy 负载均衡
+#
+# 用法：
+#   cd d:/spaces/SpecWeave
+#   docker compose -f .trae/specs/caffe-ffi-conv-v4-milestone/deploy/docker-compose-ha.yml \
+#     up -d --scale caffe-ffi-prod=3
+#   docker compose -f ... ps
+#   docker compose -f ... down
+#
+# 说明：
+#   - caffe-ffi-prod 为无状态推理服务，通过 --scale 拉多副本
+#   - 副本不发布宿主端口（仅容器网络内），由 HAProxy 统一对外转发
+#   - HAProxy 采用主动健康检查（GET /health），故障副本自动摘除
+#   - 真实推理服务必须暴露 HTTP /health 端点（返回 2xx 视为健康）
+#
+# 容量规划：副本数 × OMP_NUM_THREADS(4) ≤ 物理核数，避免 CPU 配额超订
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # 推理服务副本（无状态，--scale 控制数量）
+  # ---------------------------------------------------------------------------
+  caffe-ffi-prod:
+    image: caffe-ffi-prod:latest
+    restart: unless-stopped
+    # 部署 Profile（延迟敏感）
+    environment:
+      DEPLOY_PROFILE: "latency"
+      OMP_NUM_THREADS: "4"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_WAIT_POLICY: "PASSIVE"
+      OMP_SCHEDULE: "static"
+      KMP_DUPLICATE_LIB_OK: "TRUE"
+      GLOG_minloglevel: "2"
+      PYTHONUNBUFFERED: "1"
+      TZ: "Asia/Shanghai"
+    # 资源限制：每副本 4 核 / 4GB（与 OMP_NUM_THREADS=4 对齐）
+    cpus: "4.0"
+    mem_limit: 4g
+    pids_limit: 512
+    # 模型与配置：多副本共享只读挂载
+    volumes:
+      - ./models:/app/models:ro
+      - ./config:/app/config:ro
+    # 真实推理服务入口（必须暴露 /health 供 HAProxy 健康检查）
+    command: ["python", "/app/serve.py", "--model", "/app/models/model.caffemodel"]
+    networks:
+      - caffe-ffi-net
+
+  # ---------------------------------------------------------------------------
+  # 负载均衡器（主动健康检查 + 轮询分发）
+  # ---------------------------------------------------------------------------
+  haproxy:
+    image: haproxy:2.9
+    container_name: caffe-ffi-haproxy
+    restart: unless-stopped
+    ports:
+      - "8080:8080"      # 对外推理入口
+      - "8404:8404"      # 统计页 http://localhost:8404/stats (admin:admin)
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - caffe-ffi-prod
+    networks:
+      - caffe-ffi-net
+
+networks:
+  caffe-ffi-net:
+    driver: bridge

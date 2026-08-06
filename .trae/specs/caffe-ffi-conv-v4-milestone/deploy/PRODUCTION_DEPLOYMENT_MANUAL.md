@@ -149,15 +149,99 @@ command: ["python", "/app/serve.py", "--model", "/app/models/model.caffemodel"]
 
 ---
 
-## 7. 故障排查
+## 7. 故障排查指南
 
-| 症状 | 排查方向 |
-|------|---------|
-| 容器 crash-loop | 检查 `command` 是否被替换为真实服务；`sleep infinity` 不应崩溃 |
-| 实际 FPS 远低于预期 | 检查 `OPENBLAS_NUM_THREADS` 是否被覆盖为 >1 |
-| P99 抖动明显 | 检查 `--cpus` 与 `OMP_NUM_THREADS` 是否匹配、CPU 是否限流 |
-| 多线程无加速 | 小模型（<64×64）强制 `OMP=1`（如 fgvsirfeature_ssd） |
-| `caffe_ffi` 导入失败 | 检查 conda 环境、`ldd` 共享库解析、`KMP_DUPLICATE_LIB_OK` |
+> 采用「分层排查法」：先定层（L0 容器层 → L1 环境层 → L2 应用层），再逐层定位根因，避免在错误层浪费时间。
+
+### 7.1 诊断工具速查
+
+| 工具 | 用途 |
+|------|------|
+| `docker compose -f ... ps` | 查看容器运行状态 |
+| `docker inspect -f '{{.State.Health.Status}}' caffe-ffi-prod` | 查看健康检查状态 |
+| `docker compose -f ... logs -f caffe-ffi-prod` | 查看应用日志 |
+| `docker inspect -f '{{.State.ExitCode}} {{.State.Error}}' caffe-ffi-prod` | 查看退出码与错误 |
+| `docker exec caffe-ffi-prod bash /usr/local/bin/entrypoint.sh --healthcheck` | 手动触发健康检查 |
+| `docker exec caffe-ffi-prod cat /sys/fs/cgroup/cpu.max` | 查看 CPU 配额（cgroup v2） |
+
+### 7.2 容器启动失败
+
+**排查流程**：
+
+```
+容器启动失败
+├─ 无法启动（一直 Exited） → 看退出码
+│   ├─ ExitCode=0 → command 执行完就退出（如 sleep infinity 被替换成一次性命令）
+│   ├─ ExitCode=1/2 → 应用启动报错 → 看 logs
+│   ├─ ExitCode=137(OOM kill) → 内存超限 → 调大 mem_limit 或降副本
+│   └─ ExitCode=139(段错误) → C++ 扩展崩溃 → 查 ldd / KMP_DUPLICATE_LIB_OK
+├─ crash-loop（反复重启） → 见下方「crash-loop 专项」
+└─ 启动但 Unhealthy → 见下方「健康检查失败专项」
+```
+
+**crash-loop 专项**：
+
+| 根因 | 判断方法 | 解决 |
+|------|---------|------|
+| `command` 被替换为不常驻进程 | 日志显示启动后立即退出，ExitCode=0 | 恢复 `sleep infinity` 或改为常驻服务 |
+| 环境变量未生效（Python 内 os.environ 覆盖失败） | 容器内 `echo $OMP_NUM_THREADS` 为空 | 在 Dockerfile/entrypoint 设置，勿在 Python 内设置 |
+| 共享库缺失 | `docker exec ... ldd <caffe_ffi._caffe_ffi.so> | grep 'not found'` | 检查 `LD_LIBRARY_PATH`、`ldconfig` |
+
+**健康检查失败专项**：
+
+```
+docker inspect -f '{{.State.Health.Status}}' caffe-ffi-prod   # 若为 unhealthy
+docker inspect -f '{{.State.Health.Log}}' caffe-ffi-prod       # 看失败原因
+docker exec caffe-ffi-prod bash /usr/local/bin/entrypoint.sh --healthcheck  # 手动复现
+```
+
+常见原因：`caffe_ffi` 导入失败（conda 环境/共享库）、`protobuf` ABI 不匹配（串行化 roundtrip 崩溃）。
+
+### 7.3 性能异常
+
+**排查流程**：
+
+```
+性能异常
+├─ FPS 远低于预期 →
+│   ├─ OPENBLAS_NUM_THREADS>1？ → 小 GEMM 3-11x 退化 → 强制 =1
+│   ├─ CPU 被限流？ → cpu.max 是否 < 设置值 → 副本数×cpus≤物理核数
+│   └─ 小模型(<64×64)多线程？ → fgvsirfeature_ssd 应 OMP=1
+├─ P99 抖动大(CV%>10%) →
+│   ├─ OMP_WAIT_POLICY=ACTIVE？ → 延迟场景应 PASSIVE
+│   ├─ CPU 限流/同机争抢？ → 检查配额与同机负载
+│   └─ Inception 大 batch？ → 参考抖动缓解方案
+└─ 多线程无加速 →
+    ├─ 层输出通道<32？ → 自适应线程数自动单线程（正常）
+    └─ 物理核不足？ → OMP 不超物理核数
+```
+
+**环境变量验证命令**：
+
+```bash
+docker exec caffe-ffi-prod bash -lc 'echo OMP=$OMP_NUM_THREADS; echo BLAS=$OPENBLAS_NUM_THREADS; echo WAIT=$OMP_WAIT_POLICY'
+```
+
+**关键检查项（按优先级）**：
+
+| 优先级 | 检查 | 通过标准 |
+|--------|------|---------|
+| P0 | `OPENBLAS_NUM_THREADS` | 必须=1 |
+| P0 | CPU 配额 | `cpu.max` 与 `--cpus` 一致，未限流 |
+| P1 | `OMP_WAIT_POLICY`（延迟场景） | PASSIVE |
+| P1 | `OMP_PROC_BIND` | 未设置 |
+| P2 | 线程数与物理核对齐 | `OMP_NUM_THREADS` ≤ 物理核数 |
+| P2 | 同机资源争抢 | 无其他高 CPU 容器 |
+
+### 7.4 禁用项清单（性能退化根因）
+
+| 禁用项 | 现象 |
+|--------|------|
+| ❌ `OPENBLAS_NUM_THREADS>1` | FPS 3-11x 退化 |
+| ❌ `OMP_WAIT_POLICY=ACTIVE`（延迟场景） | CPU 空转、抖动 |
+| ❌ `OMP_PROC_BIND=CLOSE/SPREAD` | P/E 核负载不均 |
+| ❌ `OMP_SCHEDULE=runtime` | 行为不可预测 |
+| ❌ `KMP_AFFINITY=compact...` | 兼容性问题，可能崩溃 |
 
 ---
 
@@ -173,4 +257,5 @@ command: ["python", "/app/serve.py", "--model", "/app/models/model.caffemodel"]
 
 ---
 
-> 完整性能数据与三 Profile 决策依据详见 [deployment_config_guide](deployment_config_guide.md) 与技术总结 `caffe-ffi-conv-v4-optimization-summary.md`。
+> 完整性能数据与三 Profile 决策依据详见 [deployment_config_guide](../deployment_config_guide.md) 与技术总结 `caffe-ffi-conv-v4-optimization-summary.md`。
+> 多副本 + 负载均衡的高可用部署详见 [HA_DEPLOYMENT_PLAN.md](HA_DEPLOYMENT_PLAN.md)（含 `docker-compose-ha.yml` 与 `haproxy.cfg`）。
