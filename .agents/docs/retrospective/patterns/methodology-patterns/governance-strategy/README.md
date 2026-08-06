@@ -76,6 +76,7 @@ date: "2026-07-09"
 | [知识沉淀「中间产物→质量门→最终产出」双层架构模式](knowledge-dual-layer-architecture.md) | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | L1 |  |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [分层分级降维模式（Layered Priority Dimension Reduction）](layered-priority-dimension-reduction.md) | 分层分级降维模式（Layered Priority Dimension Reduction） | L1 | `分层架构` `优先级分级` `复杂系统` |
+| [分层修复验证法（Layered Repair Verification）](layered-repair-verification.md) | 分层修复验证法（Layered Repair Verification） | L1 | `分层修复` `验证闭环` `缺陷分层` `修复方法论` |
 | [Learn-Validate-Adopt：外部标准采用三步法](learn-validate-adopt.md) | Learn-Validate-Adopt：外部标准采用三步法 | L1 |  |
 | [本地依赖缓存代理体系：多层缓存加速构建](local-dependency-cache-proxy.md) | 本地依赖缓存代理体系：多层缓存加速构建 | L1-draft |  |
 | [元方法论自举行动计划——七概念触发匹配CLI工具](meta-bootstrap-action-plan.md) | 元方法论自举行动计划——七概念触发匹配CLI工具 | L1 | `行动计划` `元方法论` `自举验证` |
