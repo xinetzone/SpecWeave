@@ -47,13 +47,13 @@
 | 测试类别 | 通过 | 失败 | 跳过 | 说明 |
 |----------|------|------|------|------|
 | 所有层 backward 梯度检查 | 545 | 0 | 0 | 29个修改层全部覆盖 |
-| 网络级端到端测试 | 208 | 1 | 0 | 1个预存在AlexNet protobuf问题 |
-| pytest 核心测试（非ops/） | 2108 | 9 | 3 | 8个PERF日志聚合测试预期失败（Release模式） |
+| 网络级端到端测试 | 209 | 0 | 0 | AlexNet已修复（模型下载截断问题） |
+| pytest 核心测试（非ops/） | 2109 | 0 | 11 | 8个PERF日志测试Release模式自动跳过 |
 
-**失败分析**：9个失败均非本次优化引入的回归：
-- 8个 `test_phase3_log_aggregation.py`：Release模式 PERF_LOG=OFF 条件编译移除了 PERF 日志，测试断言 PERF 输出——**预期行为**，需添加 build-type 标记
-- 1个 `test_alexnet.py`：protobuf 模型文件损坏（预存在）
-- ops/ 目录 29个文件：预存在 `from utils import L` ImportError
+**修复记录**：
+- ✅ AlexNet protobuf 错误：根因是 `urllib.request.urlretrieve` 下载大文件时网络中断导致截断（本地95MB vs 服务器233MB），改进 `_download_model()` 添加 Content-Length 校验和自动重试
+- ✅ PERF 日志测试 Release 兼容：添加运行时 PERF_LOG 检测（通过 fd 级 stdout 捕获判断），8个 PERF 依赖测试在 Release 模式下自动跳过，4个功能正确性测试始终运行
+- ops/ 目录 29个文件：预存在 `from utils import L` ImportError（非本次优化引入）
 
 ---
 
@@ -63,8 +63,8 @@
 
 | 仓库 | 文件数 | 新增行 | 删除行 |
 |------|--------|--------|--------|
-| projects/xuanspace（caffe-ffi） | 31 | +643 | -209 |
-| SpecWeave（apps/caffe-ffi-jupyter） | 3 | +11 | -1 |
+| projects/xuanspace（caffe-ffi 核心+测试工具） | 33 | +700 | -220 |
+| SpecWeave（apps/caffe-ffi-jupyter） | 3 | +420 | -2 |
 | SpecWeave（spec 文档） | 4 | 新增 | — |
 
 ### 2.2 五项优化措施
@@ -169,9 +169,19 @@
 
 ## 五、遗留事项（P2）
 
-1. **完整 docker build 验证**：基于更新后的 Dockerfile 执行完整镜像构建
-2. **caffex 公平对比**：在相同4线程配置下重测 caffex 性能
-3. **im2col 并行化**：3×3/7×7 卷积的 im2col 可尝试 OpenMP 并行（ResNet50 多为 1×1 卷积，收益有限）
-4. **batch>1 并行**：batch 维度通道并行留待后续
-5. **PERF_LOG 测试标记**：给 log aggregation 测试添加 `@pytest.mark.perf_log` 标记
-6. **ops/ 测试修复**：修复 29 个 ops/ 测试文件的预存在 ImportError
+> 已完成：#5 PERF_LOG测试标记、AlexNet模型下载截断修复
+
+| # | 方向 | 优先级 | 预期收益 | 复杂度 |
+|---|------|--------|----------|--------|
+| 1 | 完整 docker build 验证 | **P0** | 确保从零构建可用，CI/CD可靠 | 中 |
+| 2 | caffex 公平对比（同4线程配置） | P1 | 验证性能声明的准确性 | 低 |
+| 3 | ops/ 测试修复（29个ImportError） | P1 | 消除测试盲区，防止回归 | 中 |
+| 4 | batch>1 维度并行 | P2 | 服务端批量推理场景 | 高 |
+| 5 | im2col OpenMP并行化 | P3 | ResNet50多为1×1卷积，收益有限 | 中 |
+
+**优先级建议**：
+1. **#1 完整 docker build**：当前 Dockerfile 修改后未做端到端重建验证，新用户/CI按文档构建可能失败
+2. **#2 caffex 公平对比**：当前138.4ms vs caffex 272ms 的对比存在变量不匹配（caffex线程配置未知），需在相同4线程下验证
+3. **#3 ops/ 测试修复**：29个测试文件静默失败（ImportError），可能掩盖算子层回归
+4. **#4 batch>1 并行**：面向服务端场景，当前单张推理目标已达成
+5. **#5 im2col 并行**：ResNet50 中 3×3/7×7 卷积占比小，预期收益<5%
