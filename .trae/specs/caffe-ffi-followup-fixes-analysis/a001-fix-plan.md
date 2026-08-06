@@ -149,3 +149,55 @@ pip install -e . --no-build-isolation   # 需本地 tvm-ffi 源码
 python /SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/a001_verify_fix.py
 ```
 预期：`conv1/7x7_s2` 权重 std>0 且非全 1.0；全网络无 NaN/Inf；与 caffex 各层输出对齐。
+
+---
+
+## 6. 方案审阅补缺（2026-08-06）
+
+对既有方案做对抗审查补缺，识别出两块**缺失内容**，作为后续开发任务的一部分：
+
+### 6.1 缺口一：缺回归测试（防止复发）
+
+现状：`libs/caffe-ffi/tests/python/test_serialization.py` 仅覆盖内部 round-trip（`weights_to_dict`/`save_net`/`load_net`），**未覆盖** `read_net(prototxt, caffemodel)` 外部权重加载路径——正是 A-001 暴露的盲区。若无该用例，未来重构 `net.cpp` 或 `io.py` 时 A-001 会无声复发。
+
+**补充用例**（`test_serialization.py` 新增）：
+```python
+@require_cpp_extension
+def test_read_net_loads_caffemodel_weights(tmp_path):
+    # 构造含已知权重的小型 caffemodel（如 InnerProduct），
+    # read_net(proto, caffemodel) 后断言权重 == 已知值（非占位），forward 无 NaN。
+    proto = SIMPLE_MLP_PROTO  # 复用既有 MLP prototxt
+    net0 = make_net()
+    # 写入已知权重（非 1.0），导出为 caffemodel
+    fc1 = net0.layer_by_name("fc1").blobs[0]
+    fc1.data_tensor[:] = np.linspace(0.1, 0.9, fc1.data_tensor.size, dtype=np.float32)
+    caffemodel = tmp_path / "model.caffemodel"
+    save_net(net0, caffemodel)
+    # 经 read_net 外部加载路径重建
+    net = read_net(proto_path, caffemodel)
+    loaded = net.layer_by_name("fc1").blobs[0].data_tensor
+    np.testing.assert_allclose(loaded, fc1.data_tensor, rtol=1e-5)  # 非占位
+    assert not np.any(np.isnan(loaded)) and not np.any(np.isinf(loaded))
+```
+> 说明：用例需落在 Python 3.14+ 环境（py314 或 `caffe-ffi-jupyter`），并 `@require_cpp_extension` 门控。
+
+### 6.2 缺口二：大权重文本序列化隐患（性能/规模化）
+
+现状：`io.py::read_net` 用 `text_format.MessageToString(param)` 将**含全部权重**的 `NetParameter` 序列化为**文本**，再经 `NewNetFromProtoString` 传回 C++ 解析。对抗审查识别出该机制在规模化下的风险：
+
+- **体积膨胀**：InceptionV1 权重数百万 float，转 ASCII 后字符串可达几十~上百 MB；
+- **精度/性能**：`TextFormat` 对 repeated float 的文本往返存在精度与解析开销；
+- **规模化**：更大模型（ResNet-101/VGG16）下该路径可能成为加载瓶颈。
+
+**结论**：这不是 A-001 的根因（根因已在 C++ 修复），但会在真实大模型上放大加载成本。**建议保留为后续优化项**，不阻塞当前修复：
+
+- 方案 A（推荐，改动小）：新增 FFI `NewNetFromParamBinary`，接收 `param.SerializeToString()` 二进制 bytes，C++ 端 `ParseFromArray` 解析，绕过文本序列化。
+- 方案 B（更优，改动大）：新增 FFI `NewNetFromModel(proto_str, caffemodel_bytes)`，C++ 内部解析 prototxt 结构 + caffemodel 二进制权重并合并，与 native Caffe 语义一致。
+
+### 6.3 优先级建议
+
+| 项 | 优先级 | 说明 |
+|---|---|---|
+| 重编译 native + `a001_verify_fix.py` 运行级验证 | **P0** | 修复闭环的最终落点，阻塞验收 |
+| 回归测试用例（§6.1） | **P1** | 防止复发，`[prevent: test-case]` |
+| 文本序列化加固（§6.2 方案 A/B） | **P2** | 规模化性能优化，非阻塞 |
