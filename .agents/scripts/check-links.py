@@ -5,6 +5,7 @@
 - 相对路径层级自动校正（目录迁移后 ../ 层数不对的问题）
 - 目录链接尾部斜杠补全
 - 文件名重命名映射
+- 加粗包裹的尖括号自动链接（**<url>**）规范化为标准链接 **[text](url)**
 - 外部链接检查：HEAD 请求 + GET Range 回退、结果缓存、并发检测"""
 
 
@@ -49,6 +50,10 @@ from lib.cache import get_cache_path, load_cache, save_cache
 REF_LINK_RE = re.compile(r"^\s*\[([^\]]+)\]:\s*(.+)$", re.MULTILINE)
 # 匹配引用式链接使用: [text][ref]
 REF_USAGE_RE = re.compile(r"\[([^\]]*)\]\[([^\]]*)\]")
+# 匹配加粗包裹的尖括号自动链接: **<url>**（如 **<https://example.com/>**）。
+# 此类写法在部分 Markdown 渲染器与检查器中无法被识别为可点击/可校验的链接，
+# 应在解析时纳入外部链接检查，并在 --fix 模式下规范化为 **[text](url)**。
+BOLD_AUTOLINK_RE = re.compile(r"\*\*<([^>]+)>\*\*")
 
 
 CURLY_PLACEHOLDER_RE = re.compile(r"\{[^}]+\}")
@@ -203,6 +208,16 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
             text = m.group(1)
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, ref_defs[ref_id], line_num))
+
+    # 解析加粗包裹的尖括号自动链接: **<url>**（如 **<https://example.com/>**）。
+    # 这类写法等价于加粗的自动链接，应纳入外部链接检查。
+    for m in BOLD_AUTOLINK_RE.finditer(content):
+        if is_code_fence_context(content, m.start()):
+            continue
+        url = m.group(1).strip()
+        if url and not url.startswith("#") and not is_template_placeholder(url):
+            line_num = content[: m.start()].count("\n") + 1
+            links.append((url, url, line_num))
 
     return links
 
@@ -816,6 +831,65 @@ def print_frontmatter_fix_report(fixes: list[FrontmatterFix], dry_run: bool = Fa
             print(f"    ... 其余 {len(file_fixes) - 5} 处省略")
 
 
+def fix_bold_autolinks(md_files: list[Path], dry_run: bool = False) -> list[tuple[Path, int]]:
+    """将加粗包裹的尖括号自动链接 **<url>** 规范化为标准 Markdown 链接 **[text](url)**。
+
+    转换后可见文本仍为原 URL 内容（去除尖括号），因此不改变语义，仅使其成为
+    可被 Markdown 渲染器与 check-links.py 正确识别与校验的可点击链接。
+
+    Args:
+        md_files: 待处理的 Markdown 文件列表。
+        dry_run: True=仅预览不写入文件。
+
+    Returns:
+        修复记录列表 [(文件路径, 修复处数), ...]。
+    """
+    fixes: list[tuple[Path, int]] = []
+    for md_path in md_files:
+        try:
+            content = md_path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+
+        parts: list[str] = []
+        last = 0
+        count = 0
+        for m in BOLD_AUTOLINK_RE.finditer(content):
+            if is_code_fence_context(content, m.start()):
+                # 代码围栏内的文本原样保留，不修复
+                parts.append(content[last:m.end()])
+                last = m.end()
+                continue
+            url = m.group(1).strip()
+            if not url or url.startswith("#") or is_template_placeholder(url):
+                # 锚点/占位符不处理，原样保留
+                parts.append(content[last:m.end()])
+                last = m.end()
+                continue
+            parts.append(content[last:m.start()])
+            parts.append(f"**[{url}]({url})**")
+            last = m.end()
+            count += 1
+
+        if count == 0:
+            continue
+        parts.append(content[last:])
+        new_content = "".join(parts)
+        if not dry_run and new_content != content:
+            md_path.write_text(new_content, encoding="utf-8", newline="")
+        fixes.append((md_path, count))
+    return fixes
+
+
+def print_bold_autolink_report(fixes: list[tuple[Path, int]], dry_run: bool = False) -> None:
+    """打印加粗自动链接规范化修复报告。"""
+    mode = "预览" if dry_run else "已修复"
+    total = sum(c for _, c in fixes)
+    print(f"\n  加粗自动链接规范化（{mode}）: 共 {total} 处")
+    for file_path, count in fixes:
+        print(f"    {file_path}: {count} 处")
+
+
 def main(argv=None) -> int:
     setup_safe_output()
     parser = argparse.ArgumentParser(
@@ -985,6 +1059,14 @@ def main(argv=None) -> int:
                 print_frontmatter_fix_report(fm_fixes, dry_run=dry_run)
             else:
                 print("  未发现可自动修复的 frontmatter 路径问题。")
+
+        # 加粗包裹的尖括号自动链接规范化（**<url>** → **[text](url)**）
+        print(f"\n0.2 {mode_str} 加粗自动链接规范化...")
+        ba_fixes = fix_bold_autolinks(md_files, dry_run=dry_run)
+        if ba_fixes:
+            print_bold_autolink_report(ba_fixes, dry_run=dry_run)
+        else:
+            print("  未发现需要规范化的加粗自动链接。")
 
     # 解析所有链接
     all_links: list[tuple[Path, str, str, int]] = []  # (文件, 文本, URL, 行号)
