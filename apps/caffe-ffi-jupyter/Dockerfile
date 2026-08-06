@@ -107,7 +107,7 @@ RUN echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTH
         "libprotobuf>=7.0.0" \
         "protobuf>=7.0.0" \
         zlib \
-        libopenblas \
+        libopenblas=*=*openmp* \
         "cmake>=3.26" \
         "ninja>=1.13" \
         make \
@@ -173,6 +173,8 @@ ENV CONDA_DIR=/opt/conda \
     PATH=/opt/conda/bin:/opt/conda/envs/caffe-ffi/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     LD_LIBRARY_PATH=/opt/conda/envs/caffe-ffi/lib:${LD_LIBRARY_PATH} \
     CONDA_DEFAULT_ENV=caffe-ffi \
+    OMP_NUM_THREADS=4 \
+    OPENBLAS_NUM_THREADS=1 \
     WORKSPACE_DIR=/workspace
 
 # -----------------------------------------------------------------------------
