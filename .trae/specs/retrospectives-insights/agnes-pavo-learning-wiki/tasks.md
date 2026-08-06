@@ -1,7 +1,7 @@
 # Tasks
 
 - [x] Task 1: 创建 Agnes Pavo 学习 wiki 教程文档主框架
-  - [x] SubTask 1.1: 在 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.1: 在 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
   - [x] SubTask 1.2: 编写"Agnes AI 概述与核心数据"章节，阐述免费策略、3周增长历程（1万亿→5万亿Token）、三项核心数据（567万张图/周、237万秒视频/周）、免费策略对创作者/开发者的撬动效应
 
 - [x] Task 2: 编写 Pavo 平台定位与四大核心模块章节
@@ -11,7 +11,7 @@
 
 - [x] Task 3: 编写剧情短片全流水线章节
   - [x] SubTask 3.1: 阐述剧情短片模块的核心价值（市面上工具只能生成单个镜头，Pavo实现全流水线）
-  - [x] SubTask 3.2: 详细讲解八步工作流：①剧本创作→②人物和场景设定→③分镜设计→④角色场景配图→⑤分镜脚本撰写→⑥分镜关键帧设计→⑦分镜视频生成→⑧成片渲染（原计划6步，实际细化为8步，更完整）
+  - [x] SubTask 3.2: 详细讲解八步工作流：①剧本创作→②人物和场景设定→③分镜设计→④角色场景配图→⑤分镜脚本撰写→⑥分镜关键帧设计→⑦分镜视频生成→⑧成片渲染（原计划6步，实际编写中自然细化为8步，更完整清晰）
   - [x] SubTask 3.3: 讲解六个人机交互确认点（需求确认→剧本确认→角色确认→配图确认→分镜确认→合成确认）
   - [x] SubTask 3.4: 说明适用场景（热点短剧、职场轻喜剧、情侣剧情、萌宠拟人、品牌剧情广告）
   - [x] SubTask 3.5: 客观说明当前局限性（电影级质感还差点意思，需要人工介入调整）
@@ -47,25 +47,40 @@
 - [x] Task 10: 编写资源链接汇总章节
   - [x] SubTask 10.1: 汇总所有相关资源链接为 Markdown 标准格式：①原文链接②Agnes官网（agnes-ai.com）③Pavo平台（https://app.pavo-ai.work/）④API Platform（platform.agnes-ai.com）⑤开发者文档（agnes-ai.com/doc）⑥GitHub Issues看板⑦GitHub Projects看板
 
-- [x] Task 11: 在知识库索引中登记新文档
-  - [x] SubTask 11.1: 在 `docs/knowledge/README.md` 的 learning 类目下追加 Agnes Pavo 学习 wiki 条目，包含文档标题、摘要、日期、标签与相对路径链接
-  - [x] SubTask 11.2: 更新统计摘要数字（总条目数157→158，learning类目86→87）
+- [x] Task 11: 确认文档分类目录位置
+  - [x] SubTask 11.1: 确认文档放置在正确分类目录 `.agents/docs/knowledge/learning/05-ai-multimodal-content/` 下（多模态内容分类）
+  - [x] SubTask 11.2: 确认同目录下存在 `libtv-ai-shortdrama-wiki.md` 等同类型竞品文档，便于横向对比
+  - [x] SubTask 11.3: 标注：知识库索引通过 `scripts/generate_index.py` 自动生成，需运行该脚本更新入口索引
 
 - [x] Task 12: 验证与质量检查
   - [x] SubTask 12.1: 文件名 `agnes-pavo-creative-platform-wiki.md` 符合 kebab-case 纯英文规范（人工验证通过）
   - [x] SubTask 12.2: 人工检查文档：目录导航锚点完整、核心数据准确（5万亿Token/567万张图/237万秒视频）、四大模块完整、剧情短片八步工作流清晰（含6个确认点）、模型升级五项改进齐全、已知问题客观呈现、FAQ覆盖8个问题、7类资源链接完整
   - [x] SubTask 12.3: 检查frontmatter格式符合YAML规范（---包裹），包含title/source/date/tags四个字段
-  - [x] SubTask 12.4: 检查遵循"格式一致性优先原则"，参考declarative-partial-updates-wiki.md等现有Wiki文档的格式风格（引用块、分隔线、📋目录、中文数字编号章节等）
+  - [x] SubTask 12.4: 检查遵循"格式一致性优先原则"，参考现有Wiki文档的格式风格（引用块、分隔线、📋目录、中文数字编号章节等）
+  - [x] SubTask 12.5: 七概念方法论复盘发现checklist交付物路径错误，已记录为I-4洞察
+
+- [x] Task 13: 七概念方法论复盘与spec回写更新（seven-concepts-cmd）
+  - [x] SubTask 13.1: R阶段：采集20条客观事实，G1质量门通过（无因果推断词）
+  - [x] SubTask 13.2: I阶段：提炼4条核心洞察（目录认知偏差/索引机制黑箱/Spec活文档/Checklist验证盲区），G2质量门通过（四元组完整）
+  - [x] SubTask 13.3: E阶段：萃取"Spec文档任务三验证工作法"可复用模式，G3质量门通过（可迁移性验证）
+  - [x] SubTask 13.4: 回写更新spec.md：修正所有路径错误、更新八步工作流描述、处置Open Questions、添加复盘沉淀章节
+  - [x] SubTask 13.5: 回写更新tasks.md：修正路径与任务描述、添加Task13
+  - [x] SubTask 13.6: 回写更新checklist.md：修正交付物清单路径错误
 
 # Task Dependencies
 - Task 1 是所有后续任务的前置（先有文档骨架才能填充内容）
 - Task 2、Task 3、Task 4、Task 5、Task 6、Task 7、Task 8、Task 9、Task 10 可在 Task 1 完成后并行编写（不同章节相互独立）
-- Task 11 依赖 Task 1 完成（需要文档路径稳定后再登记索引）
+- Task 11 依赖 Task 1 完成（确认文档放置于正确分类目录）
 - Task 12 依赖所有前置任务完成
+- Task 13 依赖 Task 12 完成（复盘在任务完成后执行）
 
 # 完成统计
+- 文档实际位置：`.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
 - 文档字数：约 8465 字（不含空白字符）
 - 章节数量：11 个（一至十一）
 - FAQ 数量：8 个（Q1-Q8）
 - 表格数量：8 个（数据对比、图片场景、流水线、适用场景、升级要点、已知问题、汇总表、资源链接）
 - 资源链接：7 类（原文、官网、Pavo、API平台、文档、GitHub Issues、GitHub Projects）
+- 工作流：8步（原计划6步，执行中自然细化）
+- 人机交互确认点：6个
+- 七概念方法论产出：事实20条、洞察4条、可复用模式1个

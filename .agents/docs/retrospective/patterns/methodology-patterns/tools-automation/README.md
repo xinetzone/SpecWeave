@@ -59,6 +59,7 @@ date: "2026-07-09"
 | [工具工作流组合效应（Tool Workflow Composition）](tool-workflow-composition.md) | 工具工作流组合效应（Tool Workflow Composition） | L1 |  |
 | [工具链演进的五阶段成熟度模型（toolchain-maturity）](toolchain-maturity.md) | 工具链演进的五阶段成熟度模型（toolchain-maturity） | L1 |  |
 | [验证层级语义缺口模式（Validation Semantic Gap）](validation-semantic-gap.md) | 验证层级语义缺口模式（Validation Semantic Gap） | L2 | `验证缺口` `语义验证` `三层验证` |
+| [网页内容提取三级回退链（Three-Tier Web Content Extraction Fallback Chain）](three-tier-tool-fallback.md) | 网页内容提取三级回退链，便利性优先+逐层回退：专用工具→通用工具→浏览器工具 | L1 | `网页提取` `回退链` `工具分层` |
 
 
 <!-- README_INDEX_END -->

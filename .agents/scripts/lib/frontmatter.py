@@ -8,6 +8,12 @@
 新增统一入口：parse_frontmatter_unified() 自动识别格式、解析 x-toml-ref 外部引用并合并元数据。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 import tomllib
@@ -528,3 +534,4 @@ def parse_frontmatter_unified(
 
     metadata, _ = split_frontmatter_and_content(content, base_dir=path.parent)
     return metadata
+

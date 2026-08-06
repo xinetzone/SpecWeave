@@ -14,8 +14,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-age
 
 ### 本地资源
 - **本地源码副本**：[external/agentskills](../../../../../../external/agentskills/README.md)
-- **验证工具源码**：[skills-ref/src/skills_ref/__init__.py](../../../../../../external/agentskills/skills-ref/src/skills_ref/__init__.py)（位于 `external/agentskills/` 下）
-- **验证工具测试**：[skills-ref/tests](../../../../../../external/anthropics/claude-quickstarts/browser-use-demo/tests/README.md)
+- **验证工具源码**：[skills-ref/src/skills_ref/__init__.py](../../../mdi/generated/case1/__init__.py)（位于 `external/agentskills/` 下）
+- **验证工具测试**：[skills-ref/tests](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/tests/)
 - **官方文档副本**：[docs/](../../../README.md)
 
 ### 本项目相关

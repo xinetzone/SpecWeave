@@ -407,6 +407,6 @@ repeated int32 legacy_ids = 2 [features.repeated_field_encoding = EXPANDED];  //
 ---
 
 **导航**：
-- ← 上一章：[02-version-comparison.md - 三版对比矩阵](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.md)
-- ↑ 上级：[README](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md)
-- → 下一章：[04-selection-guide.md - 选型决策指南](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md)
+- ← 上一章：[02-version-comparison.md - 三版对比矩阵](./02-version-comparison.md)
+- ↑ 上级：[README](../README.md)
+- → 下一章：[04-selection-guide.md - 选型决策指南](./04-selection-guide.md)

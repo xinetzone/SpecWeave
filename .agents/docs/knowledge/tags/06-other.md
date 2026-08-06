@@ -3,7 +3,11 @@
 - [返回标签索引总览](README.md)
 - [返回知识库首页](../README.md)
 
-> 本页收录 **563** 个标签。
+> 本页收录 **576** 个标签。
+
+## .wslconfig
+
+- [网络、配置管理与systemd](../learning/08-systems-infrastructure/wsl-wiki/07-network-config-systemd.md)
 
 ## @page
 
@@ -263,6 +267,10 @@
 
 - [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
 
+## 代码模板
+
+- [08-eight-anti-patterns-defensive-templates](../learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md)
+
 ## 仪表板
 
 - [手动编写用户故事](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
@@ -315,6 +323,11 @@
 ## 低代码
 
 - [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+
+## 依赖裁剪
+
+- [07-caffe-cpp-slim-tvm-ffi-modernization](../learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md)
+- [08-eight-anti-patterns-defensive-templates](../learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md)
 
 ## 便携
 
@@ -442,15 +455,15 @@
 ## 分析
 
 - [DeepTutor优缺点评价](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/04-pros-cons.md)
-- [七概念×DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
-- [R 复盘在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md)
-- [I 洞察在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md)
-- [E 萃取在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md)
-- [C 原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
-- [A 原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
-- [F 第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
-- [V 对抗性审查在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md)
-- [七概念组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
+- [七概念→DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
+- [R复盘在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md)
+- [I洞察在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md)
+- [E萃取在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md)
+- [C原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
+- [A原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
+- [F第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
+- [V对抗性审查在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md)
+- [组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
 
 ## 分辨率帧率
 
@@ -555,12 +568,12 @@
 ## 原子化
 
 - [A - 原子化 (Atomization)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/05-a-atomization.md)
-- [A 原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
+- [A原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
 
 ## 原子提交
 
 - [C - 原子提交 (Atomic Commit)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/04-c-atomic-commit.md)
-- [C 原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
+- [C原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
 
 ## 参数
 
@@ -568,7 +581,6 @@
 
 ## 参考
 
-- [延伸阅读与参考资源](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md)
 - [CLI命令参考](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md)
 - [MCP工具参考](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md)
 - [Mini命令参考](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md)
@@ -616,6 +628,10 @@
 ## 双轨定位
 
 - [双轨产品策略解析](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/07-dual-track-strategy.md)
+
+## 反模式
+
+- [08-eight-anti-patterns-defensive-templates](../learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md)
 
 ## 反爬
 
@@ -724,7 +740,7 @@
 ## 复盘
 
 - [R - 复盘 (Retrospective)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/01-r-retrospective.md)
-- [R 复盘在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md)
+- [R复盘在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md)
 - [Claude Tag：知识沉淀闭环](../learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md)
 
 ## 复盘闭环
@@ -829,6 +845,10 @@
 
 - [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
 
+## 学习指南
+
+- [分阶段阅读路径](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md)
+
 ## 学习目标
 
 - [概述与学习目标](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
@@ -839,12 +859,12 @@
 
 ## 学习路径
 
-- [分层次阅读路径指南](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md)
 - [概述与学习路径](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/00-overview.md)
 - [相关资源链接](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/15-resources.md)
 
 ## 安全
 
+- [PowerShell安全下载文件最佳实践——三重防御验证指南](../best-practices/powershell-secure-download-verification.md)
 - [策略引擎（Policy Engine）：规则红线与强制约束](../learning/02-agent-engineering-methodology/harness-seven-components-wiki/06-policy-engine.md)
 
 ## 安全加密
@@ -921,7 +941,7 @@
 ## 实践
 
 - [DeepTutor快速开始](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/03-quick-start.md)
-- [实践练习题](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md)
+- [实践练习](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md)
 
 ## 实践指南
 
@@ -955,7 +975,7 @@
 ## 对抗性审查
 
 - [V - 对抗性审查 (Adversarial Review)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/07-v-adversarial-review.md)
-- [V 对抗性审查在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md)
+- [V对抗性审查在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md)
 
 ## 对比分析
 
@@ -988,7 +1008,7 @@
 
 ## 工作流
 
-- [七概念组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
+- [组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
 
 ## 工作流自动化
 
@@ -996,7 +1016,7 @@
 
 ## 工具
 
-- [学习自检清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
+- [自学质量检查清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
 
 ## 工具封装
 
@@ -1085,7 +1105,7 @@
 
 ## 延伸阅读
 
-- [延伸阅读与参考资源](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md)
+- [延伸阅读](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md)
 
 ## 开发者生态
 
@@ -1143,7 +1163,7 @@
 
 ## 总览
 
-- [七概念×DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
+- [七概念→DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
 
 ## 意图对齐
 
@@ -1303,6 +1323,10 @@
 - [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
+## 文件下载
+
+- [PowerShell安全下载文件最佳实践——三重防御验证指南](../best-practices/powershell-secure-download-verification.md)
+
 ## 文件传输
 
 - [Q2Pro产品详解](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md)
@@ -1360,14 +1384,7 @@
 
 ## 映射
 
-- [七概念×DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
-- [R 复盘在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md)
-- [I 洞察在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md)
-- [E 萃取在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md)
-- [C 原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
-- [A 原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
-- [F 第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
-- [V 对抗性审查在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md)
+- [七概念→DeepTutor映射总览表](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md)
 
 ## 智能vs交付
 
@@ -1411,6 +1428,7 @@
 
 ## 最佳实践
 
+- [PowerShell安全下载文件最佳实践——三重防御验证指南](../best-practices/powershell-secure-download-verification.md)
 - [最佳实践](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md)
 
 ## 服务页面分析
@@ -1424,10 +1442,30 @@
 - [stage-guardrails-guide](../stage-guardrails-guide.md)
 - [three-layer-routing](../three-layer-routing.md)
 - [VENDOR-INTEGRATION](../VENDOR-INTEGRATION.md)
+- [配置文件放置治理与 .temp/ 临时文件约定](../best-practices/config-file-placement-convention.md)
+- [目录迁移五步法检查清单](../best-practices/directory-migration-checklist.md)
 - [L2 渐进式披露机制优化建议](../best-practices/l2-progressive-disclosure-optimization.md)
 - [L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录（P0+P1+P2完成）](../best-practices/l2-progressive-disclosure-performance.md)
 - [spec-loader-cold-start-storm-contingency](../best-practices/spec-loader-cold-start-storm-contingency.md)
 - [spec-loader-config-guide](../best-practices/spec-loader-config-guide.md)
+- [文档标题](../docs-separation-guide/DOC_TEMPLATE.md)
+- [格式规范指南](../docs-separation-guide/FORMAT_GUIDE.md)
+- [文档分离方案知识库](../docs-separation-guide/index.md)
+- [知识图谱示例](../docs-separation-guide/KNOWLEDGE_GRAPH_EXAMPLE.md)
+- [维护指南](../docs-separation-guide/MAINTENANCE_GUIDE.md)
+- [通用知识](../docs-separation-guide/general/index.md)
+- [七概念方法论](../docs-separation-guide/general/domain/index.md)
+- [第一性原理](../docs-separation-guide/general/philosophy/index.md)
+- [变更日志](../docs-separation-guide/tech/changelog.md)
+- [部署指南](../docs-separation-guide/tech/deploy.md)
+- [核心功能](../docs-separation-guide/tech/features.md)
+- [核心知识](../docs-separation-guide/tech/index.md)
+- [项目概述](../docs-separation-guide/tech/intro.md)
+- [快速开始](../docs-separation-guide/tech/quickstart.md)
+- [API 参考](../docs-separation-guide/tech/api/index.md)
+- [设计哲学](../docs-separation-guide/topics/design-philosophy.md)
+- [深度研究](../docs-separation-guide/topics/index.md)
+- [行业分析](../docs-separation-guide/topics/industry-analysis.md)
 - [OKR制定指南Wiki手册](../learning/okr-guide.md)
 - [00、概述与背景](../learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md)
 - [01、MCP协议详解：Model Context Protocol](../learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.md)
@@ -1456,6 +1494,12 @@
 - [技术上无效的 YAML——冒号破坏了解析](../learning/01-agent-protocols-interfaces/agent-skills-wiki/12-client-implementation.md)
 - [13-resources](../learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md)
 - [My Skill](../learning/01-agent-protocols-interfaces/agent-skills-wiki/14-quick-reference.md)
+- [Protobuf Wiki - 总览](../learning/01-agent-protocols-interfaces/protobuf-wiki/00-overview.md)
+- [Protobuf Wiki - 版本演进时间轴](../learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.md)
+- [Protobuf Wiki - 三版对比矩阵](../learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.md)
+- [Protobuf Wiki - 核心功能演进](../learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md)
+- [Protobuf Wiki - 选型决策指南](../learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md)
+- [Protobuf Wiki - 迁移指南](../learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md)
 - [dspark-paper-wiki](../learning/02-agent-engineering-methodology/dspark-paper-wiki.md)
 - [别再逼Agent一次做对了](../learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md)
 - [00、概述与背景](../learning/02-agent-engineering-methodology/adversarial-review-wiki/00-overview.md)
@@ -1528,6 +1572,19 @@
 - [常见问题解答](../learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/06-faq.md)
 - [资源与参考链接](../learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/07-resources.md)
 - [天才程序员体验卡+5！](../learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/article-content.md)
+- [一、概述](../learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md)
+- [二、设计理念](../learning/03-agent-platforms-tools/i-have-adhd-wiki/01-design-philosophy.md)
+- [三、核心规则](../learning/03-agent-platforms-tools/i-have-adhd-wiki/02-core-rules.md)
+- [四、例外场景与自检清单](../learning/03-agent-platforms-tools/i-have-adhd-wiki/03-exceptions-and-checklist.md)
+- [五、跨平台安装指南](../learning/03-agent-platforms-tools/i-have-adhd-wiki/04-installation-guide.md)
+- [六、持久化机制详解](../learning/03-agent-platforms-tools/i-have-adhd-wiki/05-always-on-mechanism.md)
+- [七、评估框架与质量保障](../learning/03-agent-platforms-tools/i-have-adhd-wiki/06-evaluation-framework.md)
+- [八、自定义开发与故障排查](../learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md)
+- [九、可复用模式萃取](../learning/03-agent-platforms-tools/i-have-adhd-wiki/08-patterns-extracted.md)
+- [十、FAQ与资源汇总](../learning/03-agent-platforms-tools/i-have-adhd-wiki/09-faq-and-resources.md)
+- [十一、行动优先输出范式深度解析](../learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md)
+- [十二、逆向适配创新方法论](../learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md)
+- [十三、设计取舍与技术写作借鉴](../learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
 - [教程概述与学习目标](../learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md)
 - [核心概念解析（一）：CyberGym、Harness与PoC](../learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md)
 - [MiniMax M3基座：国产开源的六边形战士](../learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md)
@@ -1593,6 +1650,27 @@
 - [模板：学术论文模板](../learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/paper-template.md)
 - [模板：技术文档模板](../learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.md)
 - [示例：卡片、下拉与标签页](../learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/ui-components-demo.md)
+- [一、概述](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/00-overview.md)
+- [二、历史沿革](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/02-history.md)
+- [三、经典证明方法](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/03-proof-methods.md)
+- [四、勾股数](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/04-pythagorean-triples.md)
+- [五、推广与扩展](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/05-generalizations.md)
+- [六、应用领域](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/06-applications.md)
+- [七、文化意义](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/07-cultural-significance.md)
+- [八、常见问题与误解](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/08-faqs.md)
+- [九、学习资源](../learning/04-mathematics-foundations/pythagorean-theorem-wiki/09-resources.md)
+- [一、概述](../learning/05-academic-skills/thesis-writing-wiki/00-overview.md)
+- [二、全流程时间线](../learning/05-academic-skills/thesis-writing-wiki/01-full-process-timeline.md)
+- [三、选题与开题](../learning/05-academic-skills/thesis-writing-wiki/02-topic-selection-and-proposal.md)
+- [四、文献综述](../learning/05-academic-skills/thesis-writing-wiki/03-literature-review.md)
+- [五、研究方法](../learning/05-academic-skills/thesis-writing-wiki/04-research-methods.md)
+- [六、论文结构与各章写作](../learning/05-academic-skills/thesis-writing-wiki/05-paper-structure.md)
+- [七、格式规范与排版](../learning/05-academic-skills/thesis-writing-wiki/06-formatting-and-style.md)
+- [八、修改与润色](../learning/05-academic-skills/thesis-writing-wiki/07-revision-and-polishing.md)
+- [九、答辩准备](../learning/05-academic-skills/thesis-writing-wiki/08-defense-preparation.md)
+- [十、常见问题与避坑指南](../learning/05-academic-skills/thesis-writing-wiki/09-faqs-and-pitfalls.md)
+- [十一、资源与工具](../learning/05-academic-skills/thesis-writing-wiki/10-resources-and-tools.md)
+- [十二、社会语言学视频资源](../learning/05-academic-skills/thesis-writing-wiki/11-sociolinguistics-video-resources.md)
 - [ian-xiaohei-illustrations](../learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md)
 - [火山引擎方舟大模型平台入门文档深度分析报告](../learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md)
 - [cleaned-article](../learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/cleaned-article.md)
@@ -1616,6 +1694,11 @@
 - [向日葵Wiki移动端远程控制功能更新执行过程复盘](../learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.md)
 - [向日葵Wiki移动端远程控制更新导出建议与后续方向](../learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.md)
 - [向日葵Wiki移动端远程控制更新洞察萃取](../learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.md)
+- [Caffe include/src 目录依赖关系系统性分析](../learning/caffe-architecture-wiki/03-include-src-dependency-analysis.md)
+- [Protocol Buffers proto2 与 proto3 语法区别系统性分析](../learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md)
+- [05-docker-pycaffe-standalone-build-postmortem](../learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md)
+- [06-examples-test-diff-analysis-report](../learning/caffe-architecture-wiki/06-examples-test-diff-analysis-report.md)
+- [Caffe-Slim 全面架构分析与compat层零侵入替换机制](../learning/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.md)
 - [对抗性审查标准与验证流程](../learning/first-principles/00-adversarial-review-protocol.md)
 - [第一性原理的哲学起源与发展历程](../learning/first-principles/01-philosophy-origins.md)
 - [物理学中的第一性原理](../learning/first-principles/02-physics-applications.md)
@@ -1689,6 +1772,14 @@
 - [OKR评分与复盘模板](../learning/okr-wiki/templates/review-templates.md)
 - [隐藏关键词设置教程](../learning/okr-wiki/tools/hidden-keyword-setting.md)
 - [权限管理与安全设置](../learning/okr-wiki/tools/permission-management.md)
+- [文件操作 CLI 工具](../mdi/examples/file-cli.md)
+- [数据生成 API](../mdi/examples/generate-api.md)
+- [博客平台 GraphQL API](../mdi/examples/graphql-blog-cn.md)
+- [Blog GraphQL API](../mdi/examples/graphql-blog.md)
+- [Todo API](../mdi/examples/todo-api.md)
+- [用户管理 API](../mdi/examples/user-api.md)
+- [用户管理 API](../mdi/generated/case1/user-management-api.md)
+- [文件操作 CLI 工具](../mdi/generated/case3/file-cli.md)
 - [MDI研究报告 - 执行摘要](../mdi-research/00-executive-summary.md)
 - [MDI研究报告 - 可行性分析](../mdi-research/01-feasibility-analysis.md)
 - [MDI研究报告 - 生态对比分析](../mdi-research/02-ecosystem-comparison.md)
@@ -1711,6 +1802,10 @@
 - [11、MDI：Markdown Document Interface](../myst-unified-ecosystem/11-mdi.md)
 - [12、关系全景：11个概念的形式化关系与交互](../myst-unified-ecosystem/12-relationships.md)
 - [discourse-api-research](../operations/discourse-api-research.md)
+- [找三个人杠一遍：对抗评审标准化SOP](../quality-assurance/adversarial-review-sop.md)
+- [如何高效啃技术文档？七概念实战案例](../quality-assurance/reading-tech-docs-case.md)
+- [知识评审清单模板（2份开箱即用）](../quality-assurance/review-checklist-templates.md)
+- [没人帮你杠？四种自己给自己挑错的方法](../quality-assurance/solo-review-methods.md)
 - [knowledge-entry-template](../templates/knowledge-entry-template.md)
 
 ## 术语
@@ -1762,6 +1857,10 @@
 ## 架构模式
 
 - [无网远程控制核心技术原理](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md)
+
+## 架构设计
+
+- [F第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
 
 ## 标准化
 
@@ -1818,6 +1917,10 @@
 - [Knowledge Center + Learning Space 模块](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/02-modules/03-knowledge-learning.md)
 - [Memory + Settings 模块](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/02-modules/04-memory-settings.md)
 
+## 模块设计
+
+- [A原子化在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md)
+
 ## 模型推理
 
 - [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
@@ -1844,6 +1947,10 @@
 
 - [Claude Tag 文章知识捕获](../learning/03-agent-platforms-tools/claude-tag-article.md)
 - [Claude Tag：知识沉淀闭环](../learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.md)
+
+## 模式切换
+
+- [C原子提交在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md)
 
 ## 模式对比
 
@@ -1885,7 +1992,7 @@
 ## 洞察
 
 - [I - 洞察 (Insight)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/02-i-insight.md)
-- [I 洞察在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md)
+- [I洞察在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md)
 
 ## 流程自动化
 
@@ -1930,7 +2037,7 @@
 
 ## 清单
 
-- [学习自检清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
+- [自学质量检查清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
 
 ## 渐进式披露
 
@@ -1990,6 +2097,10 @@
 ## 独立分控
 
 - [向日葵智能插线板P4（4G版）与P1Pro（WiFi版）对比学习教程](../learning/07-vendor-product-learning/sunlogin/sunlogin-p4-p1pro-comparison-wiki.md)
+
+## 现代化重构
+
+- [07-caffe-cpp-slim-tvm-ffi-modernization](../learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md)
 
 ## 理论
 
@@ -2225,7 +2336,7 @@
 - [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/douyin-vibecoding-guide-analysis.md)
 - [Vibe Coding 两大神级 Prompt](../learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 - [F - 第一性原理 (First Principles)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/06-f-first-principles.md)
-- [F 第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
+- [F第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
 - [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 等保2.0
@@ -2258,7 +2369,7 @@
 
 ## 练习
 
-- [实践练习题](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md)
+- [实践练习](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md)
 
 ## 组件设计
 
@@ -2266,7 +2377,7 @@
 
 ## 组合
 
-- [七概念组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
+- [组合工作流分析](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md)
 
 ## 经验总结
 
@@ -2320,6 +2431,10 @@
 
 - [能力范围](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md)
 
+## 脚本工具
+
+- [PowerShell安全下载文件最佳实践——三重防御验证指南](../best-practices/powershell-secure-download-verification.md)
+
 ## 自动化
 
 - [从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察](../best-practices/pdf-export-mermaid-automation-insights.md)
@@ -2342,7 +2457,7 @@
 
 ## 自检
 
-- [学习自检清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
+- [自学质量检查清单](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md)
 
 ## 自由
 
@@ -2365,7 +2480,7 @@
 ## 萃取
 
 - [E - 萃取 (Extraction)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/03-e-extraction.md)
-- [E 萃取在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md)
+- [E萃取在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md)
 
 ## 葵码登录
 
@@ -2471,6 +2586,10 @@
 
 - [用户交互流程分析](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/06-user-flow.md)
 
+## 证书验证
+
+- [PowerShell安全下载文件最佳实践——三重防御验证指南](../best-practices/powershell-secure-download-verification.md)
+
 ## 评价
 
 - [DeepTutor优缺点评价](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/04-pros-cons.md)
@@ -2520,7 +2639,7 @@
 ## 资源
 
 - [延伸资源与推荐阅读](../learning/02-agent-engineering-methodology/harness-seven-components-wiki/12-resources.md)
-- [延伸阅读与参考资源](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md)
+- [延伸阅读](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md)
 - [资源链接](../learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.md)
 
 ## 资源链接
@@ -2749,9 +2868,13 @@
 
 - [概述与学习目标](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)
 
-## 阅读指南
+## 阅读路径
 
-- [分层次阅读路径指南](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md)
+- [分阶段阅读路径](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md)
+
+## 防御式编程
+
+- [08-eight-anti-patterns-defensive-templates](../learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md)
 
 ## 防浪涌
 
@@ -2838,4 +2961,4 @@
 
 ---
 
-*索引自动生成于 2026-07-14 23:23:55*
+*索引自动生成于 2026-07-30 17:21:04*

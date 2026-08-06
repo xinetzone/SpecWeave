@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import pytest
 
 from mdi.parser import MDIParser
@@ -273,3 +285,4 @@ baseUrl: https://api.example.com
             assert doc.title, f"Failed to parse {sf.name}"
             for w in doc.warnings:
                 assert "directive" not in w.lower() or True, f"Unexpected directive warning in {sf.name}: {w}"
+

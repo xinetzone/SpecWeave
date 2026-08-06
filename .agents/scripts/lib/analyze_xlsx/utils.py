@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 
@@ -33,3 +39,4 @@ def load_workbook(input_path: Path):
         return openpyxl.load_workbook(input_path, data_only=True)
     except Exception as exc:
         raise RuntimeError(f"无法读取工作簿: {input_path}") from exc
+

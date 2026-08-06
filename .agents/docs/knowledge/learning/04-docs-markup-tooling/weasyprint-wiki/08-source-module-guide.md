@@ -12,7 +12,7 @@ summary: "WeasyPrint源码模块完整导览：css/、formatting_structure/、la
 ---
 # 源码模块导览
 
-WeasyPrint 源码入口（[weasyprint/__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py)）及其主包目录按功能清晰分层：
+WeasyPrint 源码入口（[weasyprint/__init__.py](../../../mdi/generated/case1/__init__.py)）及其主包目录按功能清晰分层：
 
 ```
 weasyprint/
@@ -109,13 +109,13 @@ weasyprint/
 
 ### 源码阅读路径建议
 
-1. **从入口开始**：先读 [__init__.py](../../../../../../external/WeasyPrint/weasyprint/__init__.py) 理解公共 API
+1. **从入口开始**：先读 [__init__.py](../../../mdi/generated/case1/__init__.py) 理解公共 API
 2. **理解渲染流程**：读 [document.py](../../../../../../external/WeasyPrint/weasyprint/document.py) 的 `Document.render()` 方法了解六步管线
-3. **CSS 级联**：读 [css/__init__.py](../../../../../../external/WeasyPrint/weasyprint/css/__init__.py) 的 `StyleFor` 类
-4. **盒树构建**：读 [formatting_structure/build.py](../../../../../../external/WeasyPrint/weasyprint/formatting_structure/build.py)
-5. **布局核心**：读 [layout/__init__.py](../../../../../../external/WeasyPrint/weasyprint/layout/__init__.py) 的 `layout_document()` 和 `make_all_pages()`
-6. **页面布局**：深入 [layout/page.py](../../../../../../external/WeasyPrint/weasyprint/layout/page.py) 理解分页和边距盒
-7. **绘制输出**：读 [draw/__init__.py](../../../../../../external/WeasyPrint/weasyprint/draw/__init__.py) 和 [pdf/__init__.py](../../../../../../external/WeasyPrint/weasyprint/pdf/__init__.py)
+3. **CSS 级联**：读 [css/__init__.py](../../../mdi/generated/case1/__init__.py) 的 `StyleFor` 类
+4. **盒树构建**：读 [formatting_structure/build.py](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py)
+5. **布局核心**：读 [layout/__init__.py](../../../mdi/generated/case1/__init__.py) 的 `layout_document()` 和 `make_all_pages()`
+6. **页面布局**：深入 [layout/page.py](../../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) 理解分页和边距盒
+7. **绘制输出**：读 [draw/__init__.py](../../../mdi/generated/case1/__init__.py) 和 [pdf/__init__.py](../../../mdi/generated/case1/__init__.py)
 
 ---
 

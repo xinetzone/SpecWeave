@@ -632,8 +632,8 @@ A: 不建议。SU1工作温度为0-40°C，且无防水设计，仅适合室内�
 - [向日葵USB远程摄像头SU1官方产品页](https://sunlogin.oray.com/hardware/camera-su1) - 产品详细介绍、规格参数、购买入口
 - [向日葵远程控制软件下载](https://sunlogin.oray.com/download) - Windows/macOS/Android/iOS各平台客户端下载
 - [向日葵官网首页](https://sunlogin.oray.com) - 贝锐向日葵官方网站，了解完整产品线
-- [向日葵管理平台](https://sunlogin.oray.com/management) - 设备管理、远程访问后台管理入口
-- [向日葵硬件产品总览](https://sunlogin.oray.com/hardware) - 向日葵全系列智能硬件产品展示
+- [向日葵管理平台](https://sunlogin.oray.com/) - 设备管理、远程访问后台管理入口
+- [向日葵硬件产品总览](https://sunlogin.oray.com/) - 向日葵全系列智能硬件产品展示
 
 ---
 

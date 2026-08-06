@@ -18,6 +18,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/reports/projec
 | [tools-and-automation/](tools-and-automation/README.md) | 工具与自动化治理，含工具熵优化、自动化文档生成、共享代码库提取、CI门禁工具修复 | 8 份 |
 | [process-and-compliance/](process-and-compliance/README.md) | 流程与合规治理，覆盖工作空间创建、建议执行闭环、启动协议合规、阶段守卫、数据安全治理、RACI责任矩阵与短指令上下文重建 | 7 份 |
 | [dependency-governance/](dependency-governance/README.md) | 依赖与子模块治理，含 Git submodule 双模式治理框架、边界模型、访问控制 | 1 份 |
+| [standards-governance/](standards-governance/README.md) | 标准规范建立与推广，含运行时版本强制规范的跨语言验证与工具链建设 | 2 份 |
 | [archiving-and-migration/](archiving-and-migration/README.md) | 归档与内容迁移，含历史内容萃取、参赛作品归档、Demo流程探索 | 4 份 |
 
 ## 主题关系图
@@ -28,10 +29,13 @@ flowchart LR
     CR -->|"驱动治理方向"| TA["工具与自动化治理<br/>tools-and-automation"]
     CR -->|"驱动治理方向"| PC["流程与合规治理<br/>process-and-compliance"]
     CR -->|"驱动治理方向"| DEPG["依赖治理<br/>dependency-governance"]
+    CR -->|"驱动治理方向"| SG["标准规范治理<br/>standards-governance"]
     DG -->|"沉淀后归档"| AM["归档与迁移<br/>archiving-and-migration"]
     TA -->|"沉淀后归档"| AM
     PC -->|"沉淀后归档"| AM
     DEPG -->|"沉淀后归档"| AM
+    SG -->|"沉淀后归档"| AM
+    TA -->|"工具支撑"| SG
     AM -->|"历史经验反哺"| CR
 ```
 
@@ -94,6 +98,13 @@ flowchart LR
 |------|------|---------|
 | [retrospective-vendor-flexloop-governance-adjustment-20260629/](dependency-governance/retrospective-vendor-flexloop-governance-adjustment-20260629/README.md) | 2026-06-29 | flexloop子模块从第三方只读升级为自有协作模式，建立双模式子模块治理框架，萃取5个可复用模式（双模式治理、存量暴露效应、跨平台编码、条件导入、路径锚点） |
 
+### [standards-governance/](standards-governance/README.md) — 标准规范治理
+
+| 报告 | 日期 | 核心内容 |
+|------|------|---------|
+| [retrospective-pwsh7-windows-standard-20260729/](standards-governance/retrospective-pwsh7-windows-standard-20260729/README.md) | 2026-07-29 | PowerShell 7.4+统一规范建立，28个脚本全部合规，萃取runtime-version-enforcement可复用模式 |
+| [retrospective-python310-unification-20260730/](standards-governance/retrospective-python310-unification-20260730/README.md) | 2026-07-30 | Python 3.10+版本统一迁移完成，.agents/scripts/目录566个文件全部合规，验证runtime-version-enforcement模式跨语言可复用性 |
+
 ### [archiving-and-migration/](archiving-and-migration/README.md) — 归档与内容迁移
 
 | 报告 | 日期 | 核心内容 |
@@ -150,6 +161,10 @@ project-governance/
 ├── dependency-governance/                       ← 依赖与子模块治理（1份）
 │   ├── README.md                                · 主题索引
 │   └── retrospective-vendor-flexloop-governance-adjustment-20260629/ · flexloop双模式治理
+├── standards-governance/                        ← 标准规范治理（2份）
+│   ├── README.md                                · 主题索引
+│   ├── retrospective-pwsh7-windows-standard-20260729/ · PowerShell 7统一规范
+│   └── retrospective-python310-unification-20260730/ · Python 3.10+版本统一迁移
 └── archiving-and-migration/                     ← 归档与内容迁移（4份）
     ├── README.md                                · 主题索引
     ├── retrospective-export-20260623/           · 导出卡片
@@ -167,6 +182,7 @@ project-governance/
 | 学习工具设计与自动化决策 | tools-and-automation/ → 共享库提取 → 工具熵优化 → 工具自测效应 |
 | 了解开发流程与合规要求 | process-and-compliance/ → apps目录创建 → 阶段守卫 → RACI责任矩阵 → 数据安全治理体系 |
 | 管理外部依赖与子模块 | dependency-governance/ → 双模式治理框架 → 三区域边界模型 → 沙箱隔离 |
+| 了解开发规范与版本统一 | standards-governance/ → runtime-version-enforcement模式 → pwsh7/Python版本治理实践 |
 | 查找历史项目与归档内容 | archiving-and-migration/ → 按归档类型选择 |
 | 快速获取可复用模式与洞察 | 各报告目录下的 insight-extraction.md 和 suggestions/ 子目录 |
 

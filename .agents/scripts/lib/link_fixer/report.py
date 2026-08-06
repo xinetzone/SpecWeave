@@ -5,6 +5,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from .models import LinkFix
@@ -50,3 +56,4 @@ def print_fix_report(fixes: list[LinkFix], dry_run: bool = True) -> None:
         for fix in file_fixes:
             print(f"  L{fix.line_num}: [{fix.link_text}] {fix.old_url}")
             print(f"         → {fix.new_url}  [{fix.fix_type}]")
+

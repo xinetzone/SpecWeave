@@ -9,6 +9,19 @@
 - find_duplicates: 端到端重复检测（无重复、有重复、阈值过滤）
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import importlib.util
 import sys
 from pathlib import Path
@@ -300,3 +313,4 @@ class TestDuplicateBlockAndOccurrence:
         p = Path("test.py")
         block.occurrences.append(Occurrence(p, 1, 3, "a=1"))
         assert len(block.occurrences) == 1
+

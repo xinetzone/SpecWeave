@@ -6,6 +6,19 @@ Playwright通过browser模块延迟导入。
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 from typing import TYPE_CHECKING, Any
 
@@ -132,3 +145,4 @@ def do_login(headless: bool = False, debug: bool = False) -> None:
             fail("登录似乎未成功，请重试（检查是否显示了用户名头像）")
 
         browser.close()
+

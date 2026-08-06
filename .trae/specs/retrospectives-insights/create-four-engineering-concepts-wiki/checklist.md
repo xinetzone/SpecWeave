@@ -50,3 +50,14 @@
 - [x] 文件命名为 kebab-case 纯英文，无中文字符
 - [x] 引用原话时使用引用块（>）并标注人物身份
 - [x] 章节逻辑递进，四站解析顺序为 Prompt → Context → Harness → Loop
+
+## 七概念方法论编排复盘验证（R→I→E→C）
+- [x] 复盘报告已创建于 docs/retrospective/reports/milestone/four-engineering-concepts-wiki-retrospective-20260704.md
+- [x] 复盘报告 frontmatter 包含 id/date/type/status/source/milestone-name/methodology/quality-gates 字段
+- [x] docs/retrospective/reports/milestone/README.md 索引已更新
+- [x] R阶段：事实清单≥20条，无因果推断词（G1通过）
+- [x] I阶段：3条核心洞察，每条含四元组（陈述/证据/反常识/下次行动）（G2通过）
+- [x] E阶段：模式候选包含触发场景+核心步骤+反模式+迁移验证（G3通过）
+- [x] C阶段：3个原子行动项，每项单一职责、可验证、可独立交付（G4通过）
+- [x] 复盘报告包含 CMD-LOG 执行日志
+- [x] 复盘报告含 meta_type: retrospective 标记

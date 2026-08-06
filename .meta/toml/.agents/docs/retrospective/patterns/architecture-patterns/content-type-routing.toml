@@ -1,0 +1,3 @@
+id = "content-type-routing"
+title = "内容类型路由模式（Content-Type Routing / Classify-Then-Dispatch / Expert Pool Routing）"
+maturity = "L2"

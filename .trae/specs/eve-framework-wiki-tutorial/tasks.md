@@ -1,0 +1,61 @@
+# Tasks
+
+- [x] Task 1: 创建 eve-wiki 目录骨架与 README 总览
+  - [x] SubTask 1.1: 创建 `knowledge/learning/03-agent-platforms-tools/eve-wiki/` 目录
+  - [x] SubTask 1.2: 编写 README.md（教程定位、10章导航表、3条阅读路径、交叉引用矩阵）
+  - [x] SubTask 1.3: 编写 00 总览与知识地图（Eve 生态全景 Mermaid 图、章节导航）
+- [x] Task 2: 编写产品介绍与核心概念章（01）
+  - [x] SubTask 2.1: 定义 Eve 定位（"Next.js for Agents"、与 AI SDK/Agent Loop 的层次区分）
+  - [x] SubTask 2.2: 剖析"一个 Agent 就是一个目录"（filesystem-first）设计哲学
+  - [x] SubTask 2.3: 梳理目录结构与九大核心能力模块总览
+- [x] Task 3: 编写目录结构与核心能力章（02）
+  - [x] SubTask 3.1: 详解 agent.ts / instructions.md
+  - [x] SubTask 3.2: 详解 tools/（文件即工具、TypeScript 定义、schema）
+  - [x] SubTask 3.3: 详解 skills/（Markdown 操作手册、按需加载）
+  - [x] SubTask 3.4: 详解 sandbox/（沙箱隔离、跨本地/生产后端）
+- [x] Task 4: 编写生产级能力章（03）
+  - [x] SubTask 4.1: 详解 durable execution（Workflow SDK、checkpoint、暂停/恢复）
+  - [x] SubTask 4.2: 详解 human-in-the-loop approvals（审批边界、channel 映射）
+  - [x] SubTask 4.3: 详解 connections（Vercel Connect、OAuth、token 管理）
+  - [x] SubTask 4.4: 详解 channels（多渠道接入、8+ 通道）
+  - [x] SubTask 4.5: 详解 tracing 与 evals（OpenTelemetry、评测回归）
+- [x] Task 5: 编写进阶能力章（04）
+  - [x] SubTask 5.1: 详解 subagents（子 Agent 委派、上下文隔离、权限最小化）
+  - [x] SubTask 5.2: 详解 schedules（定时任务、cron 语法）
+  - [x] SubTask 5.3: 详解多 Agent 协作与内容团队实战模式（S2 案例）
+- [x] Task 6: 编写快速上手指南章（05）
+  - [x] SubTask 6.1: 官方九步上手流程（S5）
+  - [x] SubTask 6.2: 五步快速开始（S1）+ 最小指令先行（S2）
+  - [x] SubTask 6.3: 部署与本地开发说明
+- [x] Task 7: 编写竞品对比与选型章（06）
+  - [x] SubTask 7.1: Eve vs Mastra vs LangGraph 多维对比表
+  - [x] SubTask 7.2: 关键差异与适用团队边界
+  - [x] SubTask 7.3: 选型决策树与不适合的场景
+- [x] Task 8: 编写工程化理念与趋势洞察章（07）
+  - [x] SubTask 8.1: "Demo 关注能不能跑，生产关注能不能管"的工程哲学
+  - [x] SubTask 8.2: Agent 工程化趋势（从模型竞争到工程底座竞争）
+  - [x] SubTask 8.3: 前端工程化经验向 AI 领域迁移的洞察
+- [x] Task 9: 编写 FAQ、术语表与参考资源章（08-09）
+  - [x] SubTask 9.1: 编写 FAQ（常见问题、适用范围、局限性）
+  - [x] SubTask 9.2: 编写术语表（≥15 个核心术语）
+  - [x] SubTask 9.3: 编写参考资源（5 个来源链接 + 官方文档 + 知识库交叉引用）
+- [x] Task 10: 更新索引与链接检查
+  - [x] SubTask 10.1: 更新 03-agent-platforms-tools README 子Wiki索引
+  - [x] SubTask 10.2: 运行链接检查脚本，修复所有断链
+  - [x] SubTask 10.3: 校验 frontmatter 与文件名规范
+- [x] Task 11: 结合本地源码校准 API 细节（v1.1）
+  - [x] SubTask 11.1: 分析 `external/tools/eve/docs/` 源码文档，识别与现有 wiki 的差距
+  - [x] SubTask 11.2: 修正 05-quickstart 的 model.md→agent.ts、tools→defineTool 示例
+  - [x] SubTask 11.3: 修正 02-directory 的 agent.ts fallback、sandbox 后端、补充 lib/connections/evals
+  - [x] SubTask 11.4: 修正 03-production 的 approvals、connections 示例，补充 evals 代码
+  - [x] SubTask 11.5: 补充 04-advanced 的 defineDynamic、隔离边界、defineSchedule
+  - [x] SubTask 11.6: 更新 README/00/09 版本与术语表，校准 spec 版本
+  - [x] SubTask 11.7: 运行链接检查与文件名规范校验
+
+# Task Dependencies
+- [Task 2] 依赖 [Task 1]（目录骨架就绪）
+- [Task 3-5] 依赖 [Task 2]（核心概念定义）
+- [Task 6] 依赖 [Task 3-5]（能力详解就绪）
+- [Task 7-8] 依赖 [Task 6]（上手理解就绪）
+- [Task 9] 依赖 [Task 7-8]（内容完整）
+- [Task 10] 依赖 [Task 1-9]（全部内容就绪）

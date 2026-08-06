@@ -12,6 +12,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 import sys
@@ -328,3 +334,4 @@ def list_addenda_summary(result: LoadResult) -> str:
         for a, reason in result.addenda_skipped:
             lines.append(f"  - [{a.category}] {a.name} ({reason})")
     return "\n".join(lines)
+

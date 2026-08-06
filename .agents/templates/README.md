@@ -35,6 +35,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [cmake-code-pattern-template.md](cmake-code-pattern-template.md) | CMake代码模式文档模板 | 萃取自3个CMake模式（四层架构/公共配置函数/平台操作封装）的共性结构，专用于编写CMake构建系统类代码模式入库文档。9章节标准结构（概述→触发场景→核心步骤→反模式→检验标准→迁移验证→适用条件），配套TOML元数据模板 |
 | [spec-templates/](spec-templates/README.md) | Spec 实战模板库 | 萃取自真实项目的完整 Spec 模板包（含 spec.md/tasks.md/checklist.md），针对特定任务类型提供预定义结构，目前包含 C++ 依赖瘦身模板 |
 | [self-accumulating-mechanism-template.md](self-accumulating-mechanism-template.md) | 自积累机制负反馈设计模板 | 设计含"自学习/知识库/经验库/自适应"等正向积累特性的系统时，强制配套的负反馈设计模板（条目生命周期/置信度区间/防错误复合/冷启动策略），附完整示例与5条设计原则 |
+| [legacy-system-ai-upgrade-kickoff-template.md](legacy-system-ai-upgrade-kickoff-template.md) | 存量系统智能化改造项目启动文档 | 基于七概念方法论 P-LEGACY-AI-UPGRADE-002 模式（5步SOP：API分级→Gateway接入→权限映射→Harness验证→MCP渐进优化）+ P-DEMO-TO-PROD-003 模式（12项生产检查）联合设计的可填写项目启动文档。含项目元信息/ SMART 目标/非目标/API分级矩阵/5步执行甘特表/RACI分工/4条反模式红线签字/风险矩阵/6阶段Gate/12项生产检查清单/会议机制/术语表。适用于工单/CRM/ERP/审批/订单等任意REST业务系统的 Agent 智能化改造项目，不绑定特定Agent平台。 |
 
 ## 主题任务模板
 

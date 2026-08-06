@@ -1,5 +1,18 @@
 """check-sensitive-info 单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import tempfile
 from pathlib import Path
@@ -656,6 +669,27 @@ class TestDirectoryScan:
         findings = scan_file(bin_file)
         assert len(findings) == 0
 
+    def test_scan_directory_handles_broken_symlink(self, tmp_path):
+        """扫描含断裂符号链接的目录不应崩溃（OSError 容错）。
+
+        回归：Windows 下 vendor 内指向不存在目标的符号链接（如
+        pycaffe/venv/lib64）曾导致 is_file() 抛 OSError 使全量扫描中断。
+        """
+        target = tmp_path / "nonexistent_target.txt"
+        link = tmp_path / "broken_link.txt"
+        try:
+            link.symlink_to(target)
+        except (OSError, NotImplementedError):
+            pytest.skip("无法创建符号链接（需要权限或平台不支持）")
+
+        normal_file = tmp_path / "normal.py"
+        normal_file.write_text("# 联系电话：" + "138" + "1234" + "5678" + "\n", encoding="utf-8")
+
+        # 不应抛异常，且正常文件仍被扫描
+        findings = scan_directory(tmp_path)
+        finding_files = {f.file.name for f in findings}
+        assert "normal.py" in finding_files
+
 
 class TestFindingDataclass:
     """Finding 数据类测试。"""
@@ -729,3 +763,4 @@ class TestFindingDataclass:
                     assert findings_by_type[t].fixable is False, f"{t} should not be fixable"
         finally:
             f.unlink()
+

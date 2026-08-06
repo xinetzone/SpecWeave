@@ -3,6 +3,12 @@
 提供终端彩色报告和 JSON 报告生成功能。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 from typing import Any
 
@@ -218,3 +224,4 @@ def print_format_summary_text(results: list):
         print(f"\n评分低于 80 分的 spec:")
         for r in low_score:
             print(f"  - {r.spec_path}: 评分 {r.score}/100")
+

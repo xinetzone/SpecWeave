@@ -26,8 +26,8 @@ category: "tech"
 4. **稳定 ABI**：C 调用约定保证跨编译器兼容
 
 **关键头文件**：
-- [function.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/function.h)
-- [c_api.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/c_api.h)
+- `function.h`（源项目归档路径）
+- `c_api.h`（源项目归档路径）
 
 ## Packed Function 调用约定
 

@@ -312,7 +312,7 @@ MaineCoon 的突破方法并非在三角困境内做权衡，而是通过架构�
 
 本文档为知识库条目，提取 MaineCoon 实时音视频模型的核心知识点。完整的深度洞察分析（含 14 章节结构化报告、论证逻辑分析、信息来源可靠性评估、批判性思考、与 SpecWeave 关联分析等）见下方分析报告。
 
-**深度分析报告**：[MaineCoon 实时音视频模型文章深度洞察分析报告](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md)
+**深度分析报告**：[MaineCoon 实时音视频模型文章深度洞察分析报告](../../../../../docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.md)
 
 ### 8.1 核心洞察凝练
 
@@ -328,7 +328,7 @@ MaineCoon 的突破方法并非在三角困境内做权衡，而是通过架构�
 
 ### 8.2 引用文档
 
-- [分析报告原文](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md)：完整的 14 章节深度洞察分析报告
+- [分析报告原文](../../../../../docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.md)：完整的 14 章节深度洞察分析报告
 - [分析任务规格](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)：分析任务规格定义
 - [原文链接](https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA)：微信公众号文章《MaineCoon:实时音视频基础模型》（作者：阿颖）
 

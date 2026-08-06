@@ -147,3 +147,20 @@
   - `human-judgement` TR-10.3: 成果完整
 - **Notes**: 最终交付前的全面检查
 - **Completion Notes**: 已完成。38个检查点全部通过；复盘-洞察-萃取-导出-提交全链路闭环。
+
+## [x] Task 11: 知识沉淀与规范体系更新
+- **Priority**: high
+- **Depends On**: Task 10
+- **Description**: 
+  - 执行元复盘：对复盘工作流本身进行复盘
+  - 立即落地高优先级行动项IMP-003：更新子代理委派规范体系
+  - 沉淀可复用模式：将子代理任务粒度原则、事不过二兜底策略、分析类任务四要素模板入库
+  - 更新spec状态：标记所有任务完成
+- **Acceptance Criteria Addressed**: [新增知识沉淀闭环]
+- **Test Requirements**:
+  - `human-judgement` TR-11.1: subagent-output-quality-checklist.md升级到v1.1.0，包含输出完整性约束、任务粒度原则、事不过二兜底策略
+  - `human-judgement` TR-11.2: subagent-atomic-task-template.md升级到v2.0.0（L1→L2），扩展为文档+分析双场景，新增四要素扩展模板
+  - `human-judgement` TR-11.3: 元复盘报告创建完成，包含知识更新清单
+  - `human-judgement` TR-11.4: 所有变更通过质量门检查
+- **Notes**: 基于"复盘+洞察+萃取+更新"工作流执行，将复盘洞察立即转化为规范升级，而非仅停留在报告层面
+- **Completion Notes**: 已完成。3个核心规范文件重大升级（subagent-output-quality-checklist v1.1.0、subagent-atomic-task-template v2.0.0 L1→L2、templates/README索引更新）；4条P0级强制约束新增（输出完整性、任务粒度、事不过二、分析类四要素）；元复盘报告和知识更新清单创建完成；原复盘报告闭环状态更新为✅已完成。

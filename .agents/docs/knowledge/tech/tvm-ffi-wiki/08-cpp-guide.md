@@ -393,10 +393,10 @@ try {
 
 ## 关键引用
 
-- [tvm_ffi.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/tvm_ffi.h)
-- [examples/quickstart/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/quickstart)
-- [cpp_lang_guide.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/guides/cpp_lang_guide.md)
-- [cpp_tooling.rst](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/packaging/cpp_tooling.rst)
+- `tvm_ffi.h`（源项目归档路径）
+- `examples/quickstart/`（源项目归档路径）
+- `cpp_lang_guide.md`（源项目归档路径）
+- `cpp_tooling.rst`（源项目归档路径）
 
 ---
 

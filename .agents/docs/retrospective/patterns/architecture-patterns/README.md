@@ -48,8 +48,16 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
 | [dependency-shimming-layer.md](dependency-shimming-layer.md) | 依赖裁剪适配层：compat/头文件shim零侵入替换重依赖，依赖四分类法+三层shim（别名/内联/空桩）+渐进式裁剪，源文件零修改即可从10依赖降到3依赖 | L2 已验证 | 大型C++库裁剪、开源fork适配、跨平台移植、微服务拆分防腐层、渐进式重构 |
 | [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
+| [zerocopy-cow-readwrite-separation.md](zerocopy-cow-readwrite-separation.md) | 零拷贝COW读写分离模式：const/non-const编译期区分读写意图+引用计数O(1)共享+写时自动克隆+分层增量上线+双重开关回退，在读多写少场景实现性能与安全的平衡 | L2 已验证 | 深度学习框架张量传递、大对象IPC、消息队列广播、协作文档编辑、不可变数据结构、操作系统内存管理 |
 | [declarative-op-compiler-backend.md](declarative-op-compiler-backend.md) | 声明式算子+编译器后端：Python DSL描述"算什么"，TVM/MLIR编译器自动生成多后端代码，N+M替代N×M，性能关键路径保留手写kernel override，自动算子融合与全局优化 | L3 可复用 | ML框架多硬件后端、数据库查询优化器、着色器/图形渲染、信号处理编解码、DSL编译器设计 |
 | [four-step-extension-recipe.md](four-step-extension-recipe.md) | 扩展四步法：Schema/IDL扩展→代码/绑定生成→核心逻辑实现→测试矩阵验证，5类测试保障（序列化往返/prototxt解析/默认值/数值正确性/工具兼容性），降低第三方贡献门槛 | L2 已验证 | 框架插件/算子/中间件扩展、IDE插件开发、Web框架端点扩展、游戏引擎组件注册、可扩展平台设计 |
+| [governance-outer-ring.md](governance-outer-ring.md) | 治理外环包裹业务内环架构：Identity+Gateway+Observability+Evaluation四模块构成治理外环优先于业务内环（Runtime/A2A/Session-Memory/Knowledge）设计，企业级平台vs玩具级Demo的根本区分 | L1 实验性 | 企业级AI Agent平台、多租户SaaS架构、安全合规生产系统、从Demo到生产的架构演进 |
+| [data-lifecycle-economic-stratification.md](data-lifecycle-economic-stratification.md) | 数据生命周期经济分层：基于数据经济属性（消耗品vs知识资产）而非纯技术特征分层，Session类设TTL自动过期，Memory类设质量闸门+半衰期审计，避免记忆污染与治理成本浪费 | L1 实验性 | AI Agent记忆系统、CMS草稿/发布分层、数据湖热温冷分层、日志系统分层存储 |
+| [legacy-integration-dual-track.md](legacy-integration-dual-track.md) | 存量系统双轨接入两阶段法：第一阶段REST/OpenAPI快速转换一键接入（严格只读）验证价值，第二阶段基于Observability数据筛选Top 20%高频接口改造为标准协议，先接入再优化 | L1 实验性 | AI Agent平台存量系统接入、微服务API网关集成、遗留系统现代化改造、多云/混合云集成 |
+| [graph-transform-validator-architecture.md](graph-transform-validator-architecture.md) | 图变换验证工具四段式架构：最小Parser→独立Analyzer→忠实Transformer→双视图Visualizer，零依赖验证DAG变换正确性（before/after对比） | L1 实验性 | 深度学习框架图变换Pass验证、编译器IR变换验证、DAG结构变换调试、可视化验证工具 |
+| [demo-prod-six-layer-model.md](demo-prod-six-layer-model.md) | Demo-Prod六层能力模型：可靠性→可观测性→安全性→可维护性→可扩展性→可部署性，从Demo到生产需要补全六层能力底座而非优化 | L1 实验性 | AI应用/Agent框架生产就绪度评估、技术选型决策、团队能力建设评估 |
+| [tool-skill-separation.md](tool-skill-separation.md) | 工具与Skill职责分离：能力层（Tools，稳定通用）与知识层（Skills，易变业务）分离，按变化频率隔离，让变化频率不同的东西以不同节奏演进 | L1 实验性 | Agent架构设计、知识管理系统、能力与知识分层、软件架构"代码与配置分离" |
+| [document-as-queryable-api.md](document-as-queryable-api.md) | 文档即可查询API：结构化文档AST→GraphQL Schema自动生成，文档同时是人类可读页面和机器可查询知识接口，Sphinx/MDX双实现路径 | L1-draft | 大型API平台文档、框架文档、AI原生知识库、需要多维度检索的开发者门户 |
 
 ## 成熟度定义
 

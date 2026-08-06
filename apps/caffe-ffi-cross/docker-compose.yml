@@ -1,0 +1,80 @@
+# =============================================================================
+# caffe-ffi 跨平台编译环境
+# =============================================================================
+#
+# 使用方法：
+#   1. 复制 .env.example 为 .env，根据需要修改镜像源配置
+#   2. 构建并运行 macOS 交叉编译：
+#        docker compose --profile macos run --rm macos-cross
+#   3. 构建并运行 Windows 交叉编译：
+#        docker compose --profile windows run --rm win-cross
+#   4. 使用一键测试脚本运行两个平台：
+#        ./scripts/test-cross-build.sh
+#
+# 环境变量说明：
+#   APT_MIRROR       - apt 镜像源（official / aliyun / tsinghua 等）
+#   CONDA_MIRROR     - conda 镜像源（official / aliyun / tsinghua 等）
+#   PIP_MIRROR       - pip 镜像源（official / aliyun / tsinghua 等）
+#   SKIP_SDK_DOWNLOAD - 跳过 macOS SDK 下载（用于离线场景，需手动挂载 SDK）
+#   MACOS_SDK_PATH   - 本地 macOS SDK 路径（默认 ./macos-sdk）
+#   SKIP_WINE        - 跳过 Wine 安装（加速镜像构建，默认 0）
+#   SKIP_WINE_TEST   - 跳过 Windows 编译后的 Wine 测试（默认 0）
+# =============================================================================
+
+services:
+  # macOS 交叉编译容器（one-shot 任务）
+  macos-cross:
+    build:
+      context: .
+      dockerfile: Dockerfile.macos-cross
+      args:
+        APT_MIRROR: ${APT_MIRROR:-official}
+        CONDA_MIRROR: ${CONDA_MIRROR:-official}
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+        PYTHON_VERSION: "3.14"
+        SKIP_SDK_DOWNLOAD: ${SKIP_SDK_DOWNLOAD:-0}
+    image: caffe-ffi-cross-macos:latest
+    container_name: caffe-ffi-macos-cross
+    volumes:
+      # 源码只读挂载（cached 模式优化 macOS/Windows 性能）
+      - ../../projects/xuanspace/libs/caffe-ffi:/workspace/caffe-ffi:cached
+      # 编译输出目录
+      - ./output/macos:/output
+      # macOS SDK 挂载（离线场景使用，设置 SKIP_SDK_DOWNLOAD=1 时需要）
+      - ${MACOS_SDK_PATH:-./macos-sdk}:/opt/MacOSX11.3.sdk
+    environment:
+      - TZ=Asia/Shanghai
+      - CAFFE_FFI_RECIPE_DIR=/workspace/caffe-ffi/conda.recipe
+      - OUTPUT_DIR=/output
+    tty: true
+    stdin_open: true
+    profiles: ["build", "macos"]
+    # 默认入口：执行 build-macos-cross.sh（one-shot 任务，完成后退出）
+
+  # Windows 交叉编译容器（one-shot 任务）
+  win-cross:
+    build:
+      context: .
+      dockerfile: Dockerfile.win-cross
+      args:
+        APT_MIRROR: ${APT_MIRROR:-official}
+        CONDA_MIRROR: ${CONDA_MIRROR:-official}
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+        PYTHON_VERSION: "3.14"
+        SKIP_WINE: ${SKIP_WINE:-0}
+    image: caffe-ffi-cross-win:latest
+    container_name: caffe-ffi-win-cross
+    volumes:
+      # 源码只读挂载
+      - ../../projects/xuanspace/libs/caffe-ffi:/workspace/caffe-ffi:cached
+      # 编译输出目录
+      - ./output/windows:/output
+    environment:
+      - TZ=Asia/Shanghai
+      - CAFFE_FFI_RECIPE_DIR=/workspace/caffe-ffi/conda.recipe
+      - OUTPUT_DIR=/output
+      - SKIP_WINE_TEST=${SKIP_WINE_TEST:-0}
+    tty: true
+    stdin_open: true
+    profiles: ["build", "windows"]
+    # 默认入口：执行 build-win-cross.sh（one-shot 任务，完成后退出）

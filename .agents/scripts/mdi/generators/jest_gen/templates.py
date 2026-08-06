@@ -5,6 +5,18 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 from __future__ import annotations
 
 
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 def generate_jest_config() -> str:
     return (
         "/**\n"
@@ -49,3 +61,4 @@ def generate_placeholder_tests() -> list[str]:
     lines.append("});")
     lines.append("")
     return lines
+

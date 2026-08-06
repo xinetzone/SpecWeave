@@ -1,5 +1,18 @@
 """lib.checks.gitignore 单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import subprocess
 from pathlib import Path
@@ -231,3 +244,4 @@ class TestRun:
         out = capsys.readouterr().out
         assert "通过: 所有" in out
         assert "失败: git status" in out
+

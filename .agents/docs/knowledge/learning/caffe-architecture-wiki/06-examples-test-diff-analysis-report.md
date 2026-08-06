@@ -67,7 +67,7 @@ EX-12  PASS  Python modules importable (2 modules)
 - `examples/siamese/linreg.prototxt` — 含 `#` 行注释且注释中有单引号
 
 **修复方案**:
-在 [test_examples_common.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/examples-test/scripts/test_examples_common.sh#L188-L248) 的 `check_brackets_balanced()` 函数中增加**注释状态机**：
+在 `test_examples_common.sh`（源项目归档路径） 的 `check_brackets_balanced()` 函数中增加**注释状态机**：
 - `#` 单行注释：遇到 `#`（非字符串内）时进入行注释状态，遇到 `\n` 退出
 - `//` 单行注释（C++风格，兼容未来扩展）
 - `/* */` 块注释（C风格，兼容未来扩展）
@@ -99,7 +99,7 @@ EX-12  PASS  Python modules importable (2 modules)
 - `examples/pycaffe/layers/pascal_multilabel_datalayers.py` — Python 2 语法
 
 **修复方案**:
-在 [test_examples_unified.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/examples-test/scripts/test_examples_unified.sh#L148-L170) 中将 Python 语法检查逻辑改为**容错模式**：
+在 `test_examples_unified.sh`（源项目归档路径） 中将 Python 语法检查逻辑改为**容错模式**：
 - 退出码 0：Python 3 语法正确 → 计数为 OK
 - 退出码 2：检测到 Python 2 特征（`Missing parentheses in call to 'print'` 错误消息，或文件中包含 `print ` / `xrange` 关键词）→ 计数为 SKIP
 - 退出码 1：其他语法错误 → 计数为 FAIL
@@ -147,7 +147,7 @@ data/ilsvrc12/get_ilsvrc_aux.sh\r
 - （以及其他可能被 CRLF 污染的 .sh 文件）
 
 **修复方案**:
-在 [test_examples_common.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/examples-test/scripts/test_examples_common.sh#L255-L267) 的 `check_shell_syntax()` 函数中增加**CRLF 预处理**：
+在 `test_examples_common.sh`（源项目归档路径） 的 `check_shell_syntax()` 函数中增加**CRLF 预处理**：
 
 ```bash
 check_shell_syntax() {

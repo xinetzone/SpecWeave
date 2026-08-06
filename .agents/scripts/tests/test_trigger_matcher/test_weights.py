@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from trigger_matcher import (
     TriggerTier,
     Logger,
@@ -256,3 +268,4 @@ class TestWeightLoadDecision:
         result = match_input("今天天气真好", all_tiers, silent_logger)
         assert result["highest_signal"] is None
         assert result["highest_weight"] == 0
+

@@ -1,0 +1,5 @@
+id = "bp-error-blacklist-monotonic-evolution"
+title = "错误黑名单单调进化模式（Error Blacklist Monotonic Evolution Pattern）"
+category = "retrospective/patterns/methodology-patterns"
+date = "2026-07-07"
+version = "1.0"

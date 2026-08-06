@@ -9,6 +9,19 @@
 本文件同时作为使用示例，可直接参考编写仲裁/调度类模块的边界测试。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import pytest
 
 from lib.testing import (
@@ -264,3 +277,4 @@ class TestTemplateUsableForConflictResolver:
         result = resolver.resolve(report, agents=agents)
         loads = {aid: info["load"] for aid, info in agents.items()}
         assert loads[result.winner] == min(loads.values())
+

@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 import time
 from typing import Optional
 
@@ -107,3 +113,4 @@ class StageStateManager(StageValidatorMixin, StageTransitionMixin, StageJumpMixi
                 'reason': self._pending_jump.reason,
             } if self._pending_jump else None,
         }
+

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 
@@ -21,3 +26,4 @@ def check_no_file_url(content: str, make_result) -> list:
             else f"发现{file_url_count}处file:///绝对路径（应使用相对路径）",
         )
     ]
+

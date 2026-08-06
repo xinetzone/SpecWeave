@@ -1,5 +1,11 @@
 """并发安全AST访问器 - 实现八维检查法。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import ast
 import logging
 import re
@@ -915,3 +921,4 @@ class ConcurrentSafetyVisitor(ast.NodeVisitor):
                 )
             else:
                 logger.debug("[LEAK] 池 %s: self成员变量，跳过泄漏检查", pool_var)
+

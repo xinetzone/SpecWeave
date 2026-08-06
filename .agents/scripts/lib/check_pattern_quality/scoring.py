@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 def calculate_score(report):
     score = 100
 
@@ -12,3 +17,4 @@ def calculate_score(report):
             score -= 1
 
     return max(0, min(100, score))
+

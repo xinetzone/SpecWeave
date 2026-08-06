@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """第一性原理知识图谱生成脚本。解析Markdown文档提取节点和关系，生成交互式vis-network HTML知识图谱。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import re
@@ -557,3 +567,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
+

@@ -1,5 +1,5 @@
 ---
-version: "2.4"
+version: "2.5"
 last_updated: "2026-07-29"
 schema: "l0-onboarding-v1"
 layer: "L0"
@@ -15,10 +15,16 @@ x-toml-ref: "../.meta/toml/.agents/ONBOARDING.toml"
 
 ## 环境准备
 ```
-Windows 必需：pwsh7.4+（PowerShell 7）
-  安装：winget install Microsoft.PowerShell
-  验证：pwsh --version  （应显示 7.4.x 或更高）
-  VS Code：Ctrl+Shift+P → "Terminal: Select Default Profile" → PowerShell
+Windows 必需：
+  1. pwsh7.4+（PowerShell 7）
+     安装：winget install Microsoft.PowerShell
+     验证：pwsh --version  （应显示 7.4.x 或更高）
+     VS Code：Ctrl+Shift+P → "Terminal: Select Default Profile" → PowerShell
+
+  2. Python 3.10+（治理脚本要求）
+     安装：winget install Python.Python.3.12
+     验证：python --version  （应显示 3.10.x 或更高）
+     注意：业务代码(projects/xuanspace)要求 Python 3.14+
 ```
 
 ---
@@ -30,7 +36,7 @@ Windows 必需：pwsh7.4+（PowerShell 7）
 
 ---
 
-## 核心实践（793次提交验证·16条）
+## 核心实践（800+次提交验证·17条）
 
 | # | 实践 | 一句话说明 |
 |---|------|-----------|
@@ -50,6 +56,7 @@ Windows 必需：pwsh7.4+（PowerShell 7）
 | 14 | 三区域边界模型 | vendor/flexloop子模块治理，核心区轻量化 |
 | 15 | 问题驱动治理演化 | 治理规则来自真实问题抽象，而非预设 |
 | 16 | pwsh7统一标准 | Windows脚本必须用pwsh7.4+，禁止PowerShell 5 |
+| 17 | Python 3.10+统一标准 | .agents/scripts下脚本必须要求Python 3.10+，禁止低版本运行 |
 
 > 💡 详细说明见 [development-standards.md](docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
 
@@ -82,3 +89,13 @@ Windows 必需：pwsh7.4+（PowerShell 7）
 📋 上下文已建立：已读 AGENTS.md、ONBOARDING.md（L0）、capability-registry.md（L1）
 任务类型：<类型>  将使用：<对应能力>
 ```
+
+---
+
+<!-- TODO: 待确认事项占位符
+  - [ ] CI集成时间线：是否设置2周过渡期（2026-08-12后strict），与pwsh7保持一致？
+  - [ ] global-core-rules.md同步更新：新增Python 3.10+强制规范条款
+  - [ ] development-standards.md更新：Python编码规范章节补充版本要求
+  - [ ] 版本范围确认：.agents/scripts治理脚本3.10+，业务代码3.14+，划分是否合理？
+  - [ ] 迁移批量执行：确认后运行 migrate-to-python310.py --apply 批量迁移现有脚本
+-->

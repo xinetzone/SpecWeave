@@ -5,6 +5,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 FILE_URL_RE = re.compile(
@@ -25,3 +31,4 @@ TEMPLATE_URL_PATTERNS = [
 
 _GENERIC_FILENAMES = {"README.md", "index.md", ".gitkeep"}
 _DIR_FILENAMES = {"README.md"}
+

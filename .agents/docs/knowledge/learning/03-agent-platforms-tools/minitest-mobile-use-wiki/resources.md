@@ -35,16 +35,16 @@ summary: "汇总minitest和mobile-use SDK的官方资源链接，包括文档、
 | 章节 | 链接 |
 |---|---|
 | 入门指南 | [https://www.minitap.ai/docs/minitest/get-started](https://www.minitap.ai/docs/minitest/get-started) |
-| 什么是minitest | [https://www.minitap.ai/docs/minitest/get-started/what-is-minitest](https://www.minitap.ai/docs/minitest/get-started/what-is-minitest) |
+| 什么是minitest | `https://www.minitap.ai/docs/minitest/get-started/what-is-minitest`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/minitest/get-started/what-is-minitest） |
 | 认识Mini | [https://www.minitap.ai/docs/minitest/get-started/meet-mini](https://www.minitap.ai/docs/minitest/get-started/meet-mini) |
 | 快速开始 | [https://www.minitap.ai/docs/minitest/get-started/quickstart](https://www.minitap.ai/docs/minitest/get-started/quickstart) |
-| 用户故事解析 | [https://www.minitap.ai/docs/minitest/suite/anatomy-of-a-story](https://www.minitap.ai/docs/minitest/suite/anatomy-of-a-story) |
-| 编写用户故事 | [https://www.minitap.ai/docs/minitest/suite/authoring-stories](https://www.minitap.ai/docs/minitest/suite/authoring-stories) |
+| 用户故事解析 | `https://www.minitap.ai/docs/minitest/suite/anatomy-of-a-story`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/minitest/suite/anatomy-of-a-story） |
+| 编写用户故事 | `https://www.minitap.ai/docs/minitest/suite/authoring-stories`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/minitest/suite/authoring-stories） |
 | Mini维护套件 | [https://www.minitap.ai/docs/minitest/suite/mini-maintains-your-suite](https://www.minitap.ai/docs/minitest/suite/mini-maintains-your-suite) |
 | 提供构建 | [https://www.minitap.ai/docs/minitest/runs/builds](https://www.minitap.ai/docs/minitest/runs/builds) |
 | 触发运行 | [https://www.minitap.ai/docs/minitest/runs/triggering-a-run](https://www.minitap.ai/docs/minitest/runs/triggering-a-run) |
 | 运行报告 | [https://www.minitap.ai/docs/minitest/runs/run-report](https://www.minitap.ai/docs/minitest/runs/run-report) |
-| 问题分类 | [https://www.minitap.ai/docs/minitest/triage/triaging-issues](https://www.minitap.ai/docs/minitest/triage/triaging-issues) |
+| 问题分类 | `https://www.minitap.ai/docs/minitest/triage/triaging-issues`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/minitest/triage/triaging-issues） |
 | Mini建议 | [https://www.minitap.ai/docs/minitest/triage/suggestions](https://www.minitap.ai/docs/minitest/triage/suggestions) |
 | Cursor/Claude集成 | [https://www.minitap.ai/docs/minitest/integrations/cursor-and-claude](https://www.minitap.ai/docs/minitest/integrations/cursor-and-claude) |
 | GitHub集成 | [https://www.minitap.ai/docs/minitest/integrations/github](https://www.minitap.ai/docs/minitest/integrations/github) |
@@ -54,7 +54,7 @@ summary: "汇总minitest和mobile-use SDK的官方资源链接，包括文档、
 | 术语表 | [https://www.minitap.ai/docs/minitest/reference/glossary](https://www.minitap.ai/docs/minitest/reference/glossary) |
 | MCP工具 | [https://www.minitap.ai/docs/minitest/reference/mcp-tools](https://www.minitap.ai/docs/minitest/reference/mcp-tools) |
 | Mini命令 | [https://www.minitap.ai/docs/minitest/reference/mini-commands](https://www.minitap.ai/docs/minitest/reference/mini-commands) |
-| GitHub Action | [https://www.minitap.ai/docs/minitest/reference/github-action](https://www.minitap.ai/docs/minitest/reference/github-action) |
+| GitHub Action | `https://www.minitap.ai/docs/minitest/reference/github-action`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/minitest/reference/github-action） |
 
 #### mobile-use SDK 文档
 
@@ -62,16 +62,16 @@ summary: "汇总minitest和mobile-use SDK的官方资源链接，包括文档、
 |---|---|
 | SDK介绍 | [https://www.minitap.ai/docs/mobile-use-sdk/introduction](https://www.minitap.ai/docs/mobile-use-sdk/introduction) |
 | 安装指南 | [https://www.minitap.ai/docs/mobile-use-sdk/installation](https://www.minitap.ai/docs/mobile-use-sdk/installation) |
-| 本地快速开始 | [https://www.minitap.ai/docs/mobile-use-sdk/local-quickstart](https://www.minitap.ai/docs/mobile-use-sdk/local-quickstart) |
+| 本地快速开始 | `https://www.minitap.ai/docs/mobile-use-sdk/local-quickstart`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/mobile-use-sdk/local-quickstart） |
 | 平台快速开始 | [https://www.minitap.ai/docs/mobile-use-sdk/platform-quickstart](https://www.minitap.ai/docs/mobile-use-sdk/platform-quickstart) |
 | 云设备快速开始 | [https://www.minitap.ai/docs/mobile-use-sdk/cloud-quickstart](https://www.minitap.ai/docs/mobile-use-sdk/cloud-quickstart) |
 | BrowserStack快速开始 | [https://www.minitap.ai/docs/mobile-use-sdk/browserstack-quickstart](https://www.minitap.ai/docs/mobile-use-sdk/browserstack-quickstart) |
-| iOS真机设置 | [https://www.minitap.ai/docs/mobile-use-sdk/physical-ios-setup](https://www.minitap.ai/docs/mobile-use-sdk/physical-ios-setup) |
+| iOS真机设置 | `https://www.minitap.ai/docs/mobile-use-sdk/physical-ios-setup`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/mobile-use-sdk/physical-ios-setup） |
 | 架构概览 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/overview](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/overview) |
 | Agent核心类 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent) |
-| Builder模式 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/builder-pattern](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/builder-pattern) |
+| Builder模式 | `https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/builder-pattern`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/mobile-use-sdk/core-concepts/builder-...） |
 | 可观测性 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/observability](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/observability) |
-| Agent配置 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent-profiles](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent-profiles) |
+| Agent配置 | `https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent-profiles`（原外部链接 2026-07 复检已失效：www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent-pr...） |
 | 任务定义 | [https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/tasks](https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/tasks) |
 | 示例代码 | [https://www.minitap.ai/docs/mobile-use-sdk/examples](https://www.minitap.ai/docs/mobile-use-sdk/examples) |
 | SDK参考 | [https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference](https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference) |

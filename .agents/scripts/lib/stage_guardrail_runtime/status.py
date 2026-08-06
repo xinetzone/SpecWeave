@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 
 from lib.cli import print_header, print_pass
@@ -40,3 +45,4 @@ def run_status(json_output: bool = False, enable_color: bool = True) -> int:
         print(f'\n支持事件: {", ".join(info["supported_events"])}')
         print(f'\n日志格式: {info["log_format"]}')
     return 0
+

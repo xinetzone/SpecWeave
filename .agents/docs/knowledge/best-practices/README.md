@@ -3,7 +3,7 @@ id: "best-practices-index"
 title: "团队最佳实践库"
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/README.toml"
 category: "best-practices"
-date: "2026-07-09"
+date: "2026-07-30"
 ---
 # 团队最佳实践库
 
@@ -72,9 +72,24 @@ date: "2026-07-09"
 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) | 编译型Python包数据文件生命周期管理（Nuitka/Cython数据文件复制、wheel验证、运行时环境变量设置） | `Python` `Nuitka` `Cython` `wheel` `data-files` `packaging` `TVM` |
 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) | Docker镜像更新的声明式优先原则（Dockerfile vs docker commit对比、显式ENTRYPOINT/CMD设置、构建决策指南） | `Docker` `Dockerfile` `declarative` `image-build` `containerization` |
 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) | Wrapper脚本注入模式（编译型包运行时兼容性修复、runpy.run_path透明转交、过渡性修复策略） | `Python` `wrapper` `runpy` `compiled-package` `runtime-patch` `compatibility` |
+| [vsdevshell-api-reference.md](vsdevshell-api-reference.md) | VsDevShell PowerShell模块API参考（Find-VisualStudio/Enter-MsvcDevShell完整参数说明、设计模式、集成指南、FAQ、PATH截断自动恢复机制） | `PowerShell` `MSVC` `Visual-Studio` `DevShell` `API-reference` `build-tools` `PATH-limit` `windows` |
 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) | DataLoader Pickle序列化问题诊断SOP（5步流程+6种不可序列化模式+3种修复方案+跨启动模式验证矩阵） | `Python` `pickle` `serialization` `multiprocessing` `DataLoader` `diagnosis` `SOP` |
 | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) | Caffe-Slim TVM FFI环境调试与错误排查手册（6个环境问题完整诊断链、一键验证脚本、WSL配置脚本、准确率判据） | `C++` `FFI` `tvm-ffi` `caffe` `WSL` `shared-library` `ABI` `DL` `troubleshooting` `environment` |
 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) | CMake项目模块化重构最佳实践（四层架构+两轮重构策略+公共函数封装+平台操作封装+验收清单） | `CMake` `build-system` `modularization` `refactoring` `cross-platform` `best-practice` `C/C++` |
+| [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) | conda-forge交叉编译配置完整指南（平台三元组、工具链包名、meta.yaml依赖分离、build.sh检测模式、CMAKE_ARGS传递、scikit-build-core适配、Wine测试、常见陷阱） | `conda-forge` `cross-compilation` `conda-build` `CMake` `scikit-build-core` `Docker` `Wine` `macOS` `Windows` |
+| [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) | 归档搭配Wiki联动机制指南（定位区别、升级判定标准、双向关联机制、Wiki化SOP、模板参考、质量检查清单） | `archive` `wiki` `knowledge-management` `retrospective` `知识沉淀` `归档升级` |
+| [dag-graph-transform-verification.md](dag-graph-transform-verification.md) | DAG图变换算法验证最佳实践（索引体系优先于字符串key、零依赖最小解析器、分析阶段独立化三大洞察+检查清单） | `dag` `graph-transform` `visualization` `verification` `caffe` `insert-splits` `in-place` `protobuf` `parser` |
+| [powershell-nativebuild-refactoring-summary.md](powershell-nativebuild-refactoring-summary.md) | NativeBuild三层架构重构总结（6大挑战解决方案、YAGNI原则、196测试覆盖、PowerShell模块化最佳实践、跨脚本代码扫描评估） | `PowerShell` `modularization` `refactoring` `NativeBuild` `MSVC` `Conda` `build-system` `three-layer-architecture` `retrospective` `team-learning` |
+| [powershell-nativebuild-faq.md](powershell-nativebuild-faq.md) | PowerShell NativeBuild构建常见问题FAQ（20个坑点：PATH 8191限制、VS多版本选择、UTF-16编码、DevShell静默失败、$args陷阱、硬编码路径、CI配置等） | `PowerShell` `NativeBuild` `MSVC` `Conda` `troubleshooting` `faq` `VS-DevShell` `PATH-limit` `hardcoded-paths` `windows` |
+| [test-infra-performance-optimization.md](test-infra-performance-optimization.md) | 测试基础设施性能优化最佳实践（分层GC/观测开销预算化/批量缓冲I/O/日志抑制，16.2x加速实战，核心原则"测量不猜"） | `performance` `gc` `profiling` `pytest` `observability` `test-infrastructure` `caffe-ffi` `buffered-io` `measure-dont-guess` |
+| [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) | Caffe-FFI Layer开发必查：param_propagate_down_初始化陷阱（Backward越界崩溃根因、正确写法、6项检查清单、测试预防措施） | `caffe-ffi` `layer` `backward` `bug-pattern` `initialization` `segfault` `access-violation` `c++` `best-practice` |
+| [float-precision-testing-guide.md](float-precision-testing-guide.md) | 浮点数精度测试指南（ULP饱和规则、C¹/ C²连续性与数值差分精度关系、C¹拐点防护函数avoid_c1_discontinuity、阈值选型表） | `floating-point` `numerical-gradient` `ULP` `C1-continuity` `testing` `precision` `caffe-ffi` |
+| [caffe-pooling-max-gradient-routing.md](caffe-pooling-max-gradient-routing.md) | Caffe MAX Pooling梯度路由Winner-Takes-All模式（最大值索引追踪、重叠累加、padding边界、手算验证、numpy参考、测试矩阵） | `caffe-ffi` `pooling` `max-pool` `backward` `gradient-routing` `winner-takes-all` `c++` `testing` |
+| [caffe-pooling-ave-gradient-routing.md](caffe-pooling-ave-gradient-routing.md) | Caffe AVE Pooling梯度路由均匀分配模式（归一化系数、padding稀释、梯度累加、与MAX对比、数值梯度友好性） | `caffe-ffi` `pooling` `ave-pool` `backward` `gradient-routing` `uniform-distribution` `c++` `testing` |
+| [hand-computed-gradient-verification.md](hand-computed-gradient-verification.md) | 手算梯度已知值验证方法论（L1层验证：小输入设计、网格手算法、交叉验证、常见手算错误防护、跨层模板） | `testing` `backward` `gradient` `known-values` `hand-computed` `verification` `numpy` `test-pattern` `caffe-ffi` |
+| [numerical-gradient-diagnostic-logging.md](numerical-gradient-diagnostic-logging.md) | 数值梯度诊断日志规范（6类自动检测WARNING、worst邻域输出、SNR/C¹拐点检测、日志级别控制、典型失败模式识别） | `debugging` `numerical-gradient` `logging` `diagnostics` `observability` `grad-check` `caffe-ffi` `pytest` |
+| [caffe-layer-backward-validation-workflow.md](caffe-layer-backward-validation-workflow.md) | Caffe层Backward验证标准工作流（L0烟雾→L1手算→L2 numpy匹配→L3数值梯度，含每层模板/阈值/检查清单/常见失败模式） | `caffe-ffi` `backward` `testing` `workflow` `three-layer-validation` `gradient-check` `c++` `numpy` `numerical-gradient` |
+| [caffe-identity-layer-cow-separation.md](caffe-identity-layer-cow-separation.md) | 恒等层 COW 零拷贝分离原则（输入梯度 dX 与参数梯度 dparam 分离、filler 初始化、dX 与 dparam 隔离、4个陷阱+检查清单） | `caffe-ffi` `cow` `zerocopy` `scale` `bias` `eltwise` `backward` `gradient` `bug-pattern` `c++` `identity-layer` |
 
 ---
 
@@ -87,17 +102,21 @@ date: "2026-07-09"
 | 📊 文档/可视化 | [mermaid-guide.md](mermaid-guide.md) |
 | ✏️ 编辑/重构 | [multi-file-edit-reliability.md](multi-file-edit-reliability.md) |
 | 🔍 Parser开发 | [parser-complexity-budget.md](parser-complexity-budget.md) |
+| 🕸️ DAG/图变换验证 | [dag-graph-transform-verification.md](dag-graph-transform-verification.md) |
 | 🪝 Git钩子 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 | 📋 信息采集 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) |
 | 🛡️ 合规安全 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) |
 | 📐 方法论治理 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) |
 | 🐍 Python升级 | [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
 | 📦 编译包管理 | [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
-| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) |
+| 🐳 Docker构建 | [docker-declarative-first-principle.md](docker-declarative-first-principle.md) → [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 | 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
-| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
+| 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) → [float-precision-testing-guide.md](float-precision-testing-guide.md) → [test-infra-performance-optimization.md](test-infra-performance-optimization.md) → [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) → [caffe-layer-backward-validation-workflow.md](caffe-layer-backward-validation-workflow.md) → [caffe-pooling-max-gradient-routing.md](caffe-pooling-max-gradient-routing.md) → [caffe-pooling-ave-gradient-routing.md](caffe-pooling-ave-gradient-routing.md) → [caffe-identity-layer-cow-separation.md](caffe-identity-layer-cow-separation.md) → [hand-computed-gradient-verification.md](hand-computed-gradient-verification.md) → [numerical-gradient-diagnostic-logging.md](numerical-gradient-diagnostic-logging.md) |
 | 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
+| 🔀 conda交叉编译 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
+| 📚 知识管理 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) |
+| 🔷 PowerShell/Windows构建 | [powershell-nativebuild-refactoring-summary.md](powershell-nativebuild-refactoring-summary.md) → [powershell-nativebuild-faq.md](powershell-nativebuild-faq.md) → [vsdevshell-api-reference.md](vsdevshell-api-reference.md) |
 
 ---
 

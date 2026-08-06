@@ -26,7 +26,7 @@ AI工程方法论遵循**瓶颈外移规律**：每当模型变强一截，整�
 
 ---
 
-## 📚 子Wiki索引（9个专题）
+## 📚 子Wiki索引（11个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
@@ -39,6 +39,13 @@ AI工程方法论遵循**瓶颈外移规律**：每当模型变强一截，整�
 | [adversarial-review-wiki/](adversarial-review-wiki/00-overview.md) | 15篇 | **对抗性审查方法论知识库**：证伪主义驱动的质量保障方法论，两大应用场景（知识研究+AI协作代码审查），七模块验证协议、12类认知偏差防御、六大开源工具、AIHOT实战案例，自举验证达标（一级来源75.0%、🟢A级69.8%、关键事实100%交叉验证） |
 | [seven-concepts-prompt-wiki/](seven-concepts-prompt-wiki/00-overview.md) | 16篇 | **七概念×GPT-5.6新Prompt工程范式**：OpenAI官方Prompting指南+SpecWeave七概念方法论（R-I-E-C-A-F-V）深度整合，GCOB四要素框架、10条减法原则、6组Before/After对照、Chat/Work/Codex三场景实战（含8个Codex模板）、25个反模式、6个可复制模板、一页纸速查表，Token减少41-66%、Eval提升10-15% |
 | [seven-concepts-deeptutor-wiki/](seven-concepts-deeptutor-wiki/00-overview.md) | 33篇 | **七概念×DeepTutor实践教程**：七概念方法论与HKUDS开源AI学习助手DeepTutor的深度映射分析，理论→案例→融合分析→实践四段式结构，38个术语表、42个CLN精确引文、三层"哪里体现→机制→好处"分析框架、3条核心组合链路（R→I→E/A→V→C/F→V→I）、分级练习与20项自检清单 |
+| [agent-evaluation-wiki/](agent-evaluation-wiki/00-overview.md) | 12篇 | **Agent评测体系化建设方法论**：AI Agent评测完整方法论教程，从理论基础到工程实践全覆盖——评测维度框架、指标体系设计（14大类80+指标）、20+主流基准（SWE-bench/GAIA/WebArena等）、自动化评测框架（LangSmith/DeepEval/Braintrust等6大框架对比）、人工评估方法论、数据治理、五大行业案例、工具选型、CI/CD五门门禁持续评测体系，含38个权威参考来源 |
+| [agent-eval-methodology-wiki/](agent-eval-methodology-wiki/README.md) | 17篇 | **Agent评测方法论（七概念驱动）**：基于R-F-I-E-V方法论链路的评测体系化建设Wiki教程——核心框架6大对比、四维指标体系（能力/效率/安全/人本，53项指标）、八阶段实施落地、8个行业案例、22条FAQ，含R阶段63条事实清单、F/I阶段6公理3洞察、V阶段四视角对抗审查、完整创作过程记录与知乎文章 |
+
+> **💡 同主题双入口引导**：`agent-evaluation-wiki` 与 `agent-eval-methodology-wiki` 同为主标题"Agent评测体系化建设方法论"，但定位互补、互为参阅——
+> - **📘 agent-evaluation-wiki（工程手册）**：面向落地，按评测生命周期组织（理论基础/指标/基准/框架/人工评估/数据治理/工具/持续评测），是**教程主体与长期维护**入口。
+> - **📐 agent-eval-methodology-wiki（方法论创作档案）**：面向方法论链路（R-F-I-E-V）与创作过程，核心价值在附录产出与知乎文章，教程模块为方法论视角的补充总览。
+> - 新手落地评测 → 从 **工程手册** 开始；想理解方法论如何构建 → 从 **创作档案** 开始。
 
 ---
 

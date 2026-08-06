@@ -90,3 +90,35 @@
 - Task 4 depends on Task 3
 - Task 5 depends on Task 4
 - Task 6 depends on Task 5
+
+---
+
+## Methodology Orchestration Notes (Seven Concepts)
+
+> 本章节由 seven-concepts-cmd 方法论编排引擎追加，记录 R→I→E→C 链路对任务执行过程的方法论验证。
+
+### R 阶段验证（事实采集）
+
+- **F4 关联 Task 1**：defuddle 第一次执行失败的事实记录在 Task 1 的执行过程中，URL 含 `&` 字符在 PowerShell 中被截断
+- **F5 关联 Task 1**：第二次使用单引号包裹 URL 成功，Task 1 最终完成
+- **F6 关联 Task 2-6**：Sub-Agent 一次性产出9章节分析报告，Task 2-6 在 Sub-Agent 委派中同步完成
+
+### I 阶段验证（洞察提炼）
+
+- **洞察 I1 关联 Task 5**：Task 5（深度见解提炼）的完成验证了 Spec Mode 对深度分析任务的适用性
+- **洞察 I2 关联 Task 1**：Task 1（网页内容提取）的 defuddle 执行问题提炼出 PowerShell URL 引号处理洞察
+- **洞察 I3 关联 tasks.md 自身**：tasks.md 的标记状态变化（[ ] → [x]）提炼出"初始标记应为 [ ]"的流程规范
+
+### E 阶段验证（模式萃取）
+
+- **模式 E1（spec-mode-deep-analysis-extension）**：从 Task 2-6 的分析维度划分经验中萃取
+- **模式 E2（powershell-url-quoting）**：从 Task 1 的 defuddle 执行问题中萃取
+
+### G1-G4 质量门通过记录
+
+| 质量门 | 检查内容 | 结果 | 关联任务 |
+|--------|---------|------|---------|
+| G1 | 事实无因果词 | ✅ 通过 | Task 1-6 执行过程事实记录 |
+| G2 | 洞察四元组完整 | ✅ 通过 | Task 5 深度见解提炼 |
+| G3 | 模式可迁移 | ✅ 通过 | Task 2-6 分析方法论 |
+| G4 | 行动项原子化 | ✅ 通过 | tasks.md 任务拆分 |

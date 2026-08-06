@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import TYPE_CHECKING
 
 from ..constants import (
@@ -167,3 +180,4 @@ def validate_why_explanations(content: str, report: ValidationReport) -> None:
             f"Why解释不足：关键MUST类规则{must_count}个，但Why解释仅{why_count}个",
             suggestion="在关键MUST规则后添加 '> **为什么...**' 引用块解释设计意图，帮助理解边界情况",
         )
+

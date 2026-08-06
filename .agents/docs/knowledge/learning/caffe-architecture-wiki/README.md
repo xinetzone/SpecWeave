@@ -12,7 +12,7 @@ methodology: "七概念方法论 R→I→E→V 知识沉淀链路"
 
 Caffe（Convolutional Architecture for Fast Feature Embedding）是 Berkeley AI Research (BAIR) 于2014年发布的第一代工业级开源深度学习框架。核心设计理念：expression（表达力）、speed（速度）、modularity（模块化）。本分析从架构师视角出发，聚焦核心抽象层次与设计模式，不涉及算法调优或具体模型训练。
 
-源码根目录：[caffex](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex)
+源码根目录：`caffex`（源项目归档路径）
 
 ## 核心架构思维导图
 
@@ -136,7 +136,7 @@ mindmap
 
 ### 2.1 SyncedMemory：CPU/GPU 透明内存同步
 
-[syncedmem.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/syncedmem.hpp#L57-L91)
+`syncedmem.hpp`（源项目归档路径）
 
 SyncedMemory 是 Caffe 最底层的内存抽象，封装了 CPU 主机内存与 GPU 设备内存之间的同步管理。其核心设计是一个**四状态机**：
 
@@ -154,7 +154,7 @@ SyncedMemory 是 Caffe 最底层的内存抽象，封装了 CPU 主机内存与 
 
 ### 2.2 Blob：多维张量与数据/梯度对偶存储
 
-[blob.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/blob.hpp#L23-L278)
+`blob.hpp`（源项目归档路径）
 
 Blob 是 Caffe 的基本计算单元，封装了多维数组的存储、形状管理与序列化。核心特征：
 
@@ -168,60 +168,60 @@ Blob 是 Caffe 的基本计算单元，封装了多维数组的存储、形状�
 
 ### 2.3 Layer：计算单元的契约式设计
 
-[layer.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L32-L476)
+`layer.hpp`（源项目归档路径）
 
 Layer 是 Caffe 的计算单元抽象，采用经典的**NVI（Non-Virtual Interface）模板方法模式**实现契约式设计：
 
-- **SetUp 生命周期（非虚函数，模板方法）**：[layer.hpp:67-73](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L67-L73) 定义了标准初始化流程：`CheckBlobCounts()` → `LayerSetUp()` → `Reshape()` → `SetLossWeights()`，子类不可覆盖此流程
-- **Forward/Backward 模板方法**：[layer.hpp:126-127](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L126-L127) 和 [layer.hpp:150-152](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L150-L152) 为非虚内联函数，统一处理 Reshape、设备分派（switch(Caffe::mode())）、loss 加权计算，子类只需实现 `Forward_cpu/gpu` 和 `Backward_cpu/gpu` 虚函数
+- **SetUp 生命周期（非虚函数，模板方法）**：`layer.hpp:67-73`（源项目归档路径） 定义了标准初始化流程：`CheckBlobCounts()` → `LayerSetUp()` → `Reshape()` → `SetLossWeights()`，子类不可覆盖此流程
+- **Forward/Backward 模板方法**：`layer.hpp:126-127`（源项目归档路径） 和 `layer.hpp:150-152`（源项目归档路径） 为非虚内联函数，统一处理 Reshape、设备分派（switch(Caffe::mode())）、loss 加权计算，子类只需实现 `Forward_cpu/gpu` 和 `Backward_cpu/gpu` 虚函数
 - **虚扩展点**：`LayerSetUp()`（层特定初始化）、`Reshape()`（纯虚，输出形状推断）、`Forward_cpu()`（纯虚）、`Forward_gpu()`（默认fallback到CPU）、`Backward_cpu()`（纯虚）、`Backward_gpu()`（默认fallback到CPU）
 - **契约函数**：通过 `ExactNumBottomBlobs()/MinBottomBlobs()/MaxBottomBlobs()/ExactNumTopBlobs()/MinTopBlobs()/MaxTopBlobs()/EqualNumBottomTopBlobs()/AutoTopBlobs()` 等虚函数声明输入输出契约，`CheckBlobCounts()` 在 SetUp 时自动验证
-- **loss\_weight 机制**：[layer.hpp:389-403](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L389-L403) 在 SetUp 时将 loss\_weight 写入 top blob 的 diff\_ 区域，作为反向传播梯度的起点（上游梯度初始值），Forward 时通过点积计算标量 loss
+- **loss\_weight 机制**：`layer.hpp:389-403`（源项目归档路径） 在 SetUp 时将 loss\_weight 写入 top blob 的 diff\_ 区域，作为反向传播梯度的起点（上游梯度初始值），Forward 时通过点积计算标量 loss
 - **参数管理**：`blobs_` 向量存储层的可学习参数（权重、偏置），`param_propagate_down_` 控制每个参数是否需要梯度
 
 ### 2.4 Net：声明式DAG计算图
 
-[net.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp#L24-L340)
+`net.hpp`（源项目归档路径）
 
 Net 将多个 Layer 连接成有向无环图（DAG），负责网络拓扑构建与按序执行：
 
 - **layers\_/blobs\_ 向量**：`layers_` 存储网络中所有层的 shared\_ptr，`blobs_` 存储所有中间激活 blob（含参数 blob），通过 `layer_names_/blob_names_` 和对应的 index map 按名查找
 - **DAG 拓扑构建 Init()**：从 NetParameter 解析层定义，通过 `AppendTop()`/`AppendBottom()` 建立 blob 名称到实际存储的映射，`available_blobs` 集合追踪当前可用的中间结果，自动处理扇入扇出
 - **按序执行**：`ForwardFromTo(start, end)` 按拓扑顺序从 start 层到 end 层依次调用 Forward，`BackwardFromTo(start, end)` 逆序调用 Backward；`Forward()`/`Backward()` 默认执行全网络
-- **ShareWeights 权重共享**：[net.hpp:100](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp#L100) 通过 ParamSpec 的 name 字段实现跨层参数共享，共享底层 SyncedMemory
-- **Callback 钩子机制**：[net.hpp:231-253](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp#L231-L253) 提供 `before_forward_/after_forward_/before_backward_/after_backward_` 回调注入点，支持在执行前后插入自定义逻辑（如调试、计时、快照）
+- **ShareWeights 权重共享**：`net.hpp:100`（源项目归档路径） 通过 ParamSpec 的 name 字段实现跨层参数共享，共享底层 SyncedMemory
+- **Callback 钩子机制**：`net.hpp:231-253`（源项目归档路径） 提供 `before_forward_/after_forward_/before_backward_/after_backward_` 回调注入点，支持在执行前后插入自定义逻辑（如调试、计时、快照）
 - **参数管理**：`params_` 收集所有可学习参数，`learnable_params_` 过滤出需要更新的参数（考虑共享与 lr\_mult=0），`params_lr_/params_weight_decay_` 存储每个参数的学习率和权重衰减系数
 - **CopyTrainedLayersFrom**：支持从预训练模型拷贝权重，用于微调（fine-tuning）
 
 ### 2.5 Solver：优化策略与训练循环
 
-[solver.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/solver.hpp#L42-L134)
+`solver.hpp`（源项目归档路径）
 
 Solver 封装优化算法与训练循环，是训练流程的入口：
 
 - **Solve/Step 训练循环**：`Solve()` 是训练主入口，循环调用 `Step(iters)` 执行指定次数的迭代；每次迭代执行 ForwardBackward → ApplyUpdate
-- **ApplyUpdate 纯虚函数**：[solver.hpp:98](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/solver.hpp#L98) 是优化策略的扩展点，不同求解器（SGD、Adam、RMSProp等）通过覆盖此方法实现具体的参数更新规则
+- **ApplyUpdate 纯虚函数**：`solver.hpp:98`（源项目归档路径） 是优化策略的扩展点，不同求解器（SGD、Adam、RMSProp等）通过覆盖此方法实现具体的参数更新规则
 - **Snapshot/Resume 快照**：`Snapshot()` 保存模型权重（.caffemodel）和求解器状态（.solverstate），`Restore()` 从快照恢复继续训练，支持训练中断后无缝续训
-- **SolverAction 回调**：[solver.hpp:21-33](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/solver.hpp#L21-L33) 通过 `action_request_function_` 支持外部请求 STOP 或 SNAPSHOT（如 Ctrl+C 信号处理），优雅中断训练
+- **SolverAction 回调**：`solver.hpp:21-33`（源项目归档路径） 通过 `action_request_function_` 支持外部请求 STOP 或 SNAPSHOT（如 Ctrl+C 信号处理），优雅中断训练
 - **train/test net 管理**：`net_` 是训练网络，`test_nets_` 是多个测试网络，`TestAll()/Test()` 定期在测试集上评估
-- **Callback 钩子**：[solver.hpp:78-89](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/solver.hpp#L78-L89) 提供 `on_start()/on_gradients_ready()` 回调点，支持学习率调度、日志记录等扩展
+- **Callback 钩子**：`solver.hpp:78-89`（源项目归档路径） 提供 `on_start()/on_gradients_ready()` 回调点，支持学习率调度、日志记录等扩展
 - **损失平滑**：`smoothed_loss_` 对损失做指数移动平均，稳定显示
 
 ### 2.6 LayerRegistry：自注册工厂
 
-[layer\_factory.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L56-L137)
+`layer\_factory.hpp`（源项目归档路径）
 
 LayerRegistry 实现了经典的**自注册工厂模式**，无需修改工厂代码即可扩展新层：
 
-- **静态 map 单例**：[layer\_factory.hpp:61-64](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L61-L64) `Registry()` 返回函数内静态的 `CreatorRegistry`（map\<string, Creator>）单例，程序启动时自动初始化
-- **LayerRegisterer 构造时自注册**：[layer\_factory.hpp:117-124](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L117-L124) 注册器类的构造函数调用 `AddCreator()`，利用全局静态变量在 main() 之前构造的特性实现自动注册
-- **REGISTER\_LAYER\_CLASS 宏**：[layer\_factory.hpp:131-137](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L131-L137) 一行代码完成类的注册——自动生成 Creator 函数并为 float/double 两种类型分别实例化注册器
+- **静态 map 单例**：`layer\_factory.hpp:61-64`（源项目归档路径） `Registry()` 返回函数内静态的 `CreatorRegistry`（map\<string, Creator>）单例，程序启动时自动初始化
+- **LayerRegisterer 构造时自注册**：`layer\_factory.hpp:117-124`（源项目归档路径） 注册器类的构造函数调用 `AddCreator()`，利用全局静态变量在 main() 之前构造的特性实现自动注册
+- **REGISTER\_LAYER\_CLASS 宏**：`layer\_factory.hpp:131-137`（源项目归档路径） 一行代码完成类的注册——自动生成 Creator 函数并为 float/double 两种类型分别实例化注册器
 - **REGISTER\_LAYER\_CREATOR 宏**：支持自定义工厂函数（用于需要多后端选择的层，如 Convolution 层选择 cuDNN 实现）
-- **CreateLayer 工厂方法**：[layer\_factory.hpp:75-84](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L75-L84) 根据 LayerParameter 中的 type 字符串查找 Creator 并构造 Layer 实例，类型不存在时给出友好错误提示和已知类型列表
+- **CreateLayer 工厂方法**：`layer\_factory.hpp:75-84`（源项目归档路径） 根据 LayerParameter 中的 type 字符串查找 Creator 并构造 Layer 实例，类型不存在时给出友好错误提示和已知类型列表
 
 ### 2.7 Caffe 单例：全局运行时环境
 
-[common.hpp](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/common.hpp#L102-L189)
+`common.hpp`（源项目归档路径）
 
 Caffe 类是线程局部的单例，持有全局运行时状态：
 
@@ -233,17 +233,17 @@ Caffe 类是线程局部的单例，持有全局运行时状态：
 
 ### 2.8 Protocol Buffers：声明式配置驱动
 
-[caffe.proto](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto)
+`caffe.proto`（源项目归档路径）
 
 Caffe 使用 Google Protocol Buffers（proto2）作为所有配置的序列化格式，实现声明式配置驱动：
 
-- **BlobProto**：[caffe.proto:10-22](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L10-L22) Blob 的序列化格式，含 shape、data、diff 字段，支持 float/double 精度
-- **LayerParameter**：[caffe.proto:326-349](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L326-L349) 层配置，包含 name、type、bottom、top、loss\_weight、param、blobs 等通用字段，以及各种层的 xxx\_param 扩展字段（如 ConvolutionParameter、PoolingParameter）
-- **NetParameter**：[caffe.proto:64-96](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L64-L96) 网络配置，包含 name、input、layer 列表、state、force\_backward 等
-- **SolverParameter**：[caffe.proto:102-258](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L102-L258) 求解器配置，包含 net、train\_net、test\_net、base\_lr、lr\_policy、max\_iter、momentum、weight\_decay、snapshot 等优化超参数
-- **ParamSpec**：[caffe.proto:299-320](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L299-L320) 参数规格，含 name（权重共享）、lr\_mult、decay\_mult、share\_mode
-- **Phase 枚举**：[caffe.proto:268-271](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L268-L271) TRAIN/TEST 两阶段，通过 NetStateRule 实现条件包含/排除层
-- **NetState/NetStateRule**：[caffe.proto:273-295](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L273-L295) 支持按 phase、level、stage 灵活配置网络结构，实现一个 prototxt 多场景复用
+- **BlobProto**：`caffe.proto:10-22`（源项目归档路径） Blob 的序列化格式，含 shape、data、diff 字段，支持 float/double 精度
+- **LayerParameter**：`caffe.proto:326-349`（源项目归档路径） 层配置，包含 name、type、bottom、top、loss\_weight、param、blobs 等通用字段，以及各种层的 xxx\_param 扩展字段（如 ConvolutionParameter、PoolingParameter）
+- **NetParameter**：`caffe.proto:64-96`（源项目归档路径） 网络配置，包含 name、input、layer 列表、state、force\_backward 等
+- **SolverParameter**：`caffe.proto:102-258`（源项目归档路径） 求解器配置，包含 net、train\_net、test\_net、base\_lr、lr\_policy、max\_iter、momentum、weight\_decay、snapshot 等优化超参数
+- **ParamSpec**：`caffe.proto:299-320`（源项目归档路径） 参数规格，含 name（权重共享）、lr\_mult、decay\_mult、share\_mode
+- **Phase 枚举**：`caffe.proto:268-271`（源项目归档路径） TRAIN/TEST 两阶段，通过 NetStateRule 实现条件包含/排除层
+- **NetState/NetStateRule**：`caffe.proto:273-295`（源项目归档路径） 支持按 phase、level、stage 灵活配置网络结构，实现一个 prototxt 多场景复用
 - **xxx\_param 扩展**：每种 Layer 类型有自己的 Param 消息（约50+种），通过 protobuf 的扩展机制注册到 LayerParameter
 
 ## 三、数据流与执行机制
@@ -252,7 +252,7 @@ Caffe 使用 Google Protocol Buffers（proto2）作为所有配置的序列化�
 
 前向传播的调用链为：`Net::Forward(&loss)` → `ForwardFromTo(0, layers_.size()-1)` → 按拓扑顺序逐层调用 `Layer::Forward(bottom, top)`
 
-Layer::Forward 内部执行流程：[layer.hpp:413-446](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L413-L446)
+Layer::Forward 内部执行流程：`layer.hpp:413-446`（源项目归档路径）
 
 1. 调用 `Reshape(bottom, top)` 根据输入形状调整输出形状
 2. `switch (Caffe::mode())` 分派到设备实现
@@ -266,7 +266,7 @@ Layer::Forward 内部执行流程：[layer.hpp:413-446](file:///d:/spaces/SpecWe
 
 反向传播的调用链为：`Net::Backward()` → `BackwardFromTo(layers_.size()-1, 0)` → 逆拓扑序逐层调用 `Layer::Backward(top, propagate_down, bottom)`
 
-Layer::Backward 内部执行流程：[layer.hpp:448-462](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L448-L462)
+Layer::Backward 内部执行流程：`layer.hpp:448-462`（源项目归档路径）
 
 1. `switch (Caffe::mode())` 分派到设备实现
    - CPU 模式：调用 `Backward_cpu(top, propagate_down, bottom)`
@@ -314,7 +314,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 4. 只读访问时若目标位置不是 head，触发同步拷贝；可写访问时标记其他位置过期
 5. 状态通常包括：未初始化、head 在 A、head 在 B、已同步
 
-**Caffe 证据**：SyncedMemory [syncedmem.hpp:57-91](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/syncedmem.hpp#L57-L91) 定义了四状态（UNINITIALIZED/HEAD\_AT\_CPU/HEAD\_AT\_GPU/SYNCED），通过 cpu\_data()/mutable\_cpu\_data()/gpu\_data()/mutable\_gpu\_data() 访问器自动触发 to\_cpu()/to\_gpu() 同步。
+**Caffe 证据**：SyncedMemory `syncedmem.hpp:57-91`（源项目归档路径） 定义了四状态（UNINITIALIZED/HEAD\_AT\_CPU/HEAD\_AT\_GPU/SYNCED），通过 cpu\_data()/mutable\_cpu\_data()/gpu\_data()/mutable\_gpu\_data() 访问器自动触发 to\_cpu()/to\_gpu() 同步。
 
 **反模式**：
 
@@ -343,7 +343,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 4. 一个宏，在每个具体实现类的编译单元中定义一个静态注册器实例，利用全局静态对象在 main() 之前构造的特性完成自注册
 5. 工厂的 Create 方法根据标识符查找创建函数并实例化对象
 
-**Caffe 证据**：LayerRegistry [layer\_factory.hpp:56-113](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L56-L113) 提供 Registry() 单例、AddCreator()、CreateLayer()；LayerRegisterer [layer\_factory.hpp:117-124](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L117-L124) 在构造时注册；REGISTER\_LAYER\_CLASS 宏 [layer\_factory.hpp:131-137](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer_factory.hpp#L131-L137) 为 float/double 双精度自动生成注册代码。
+**Caffe 证据**：LayerRegistry `layer\_factory.hpp:56-113`（源项目归档路径） 提供 Registry() 单例、AddCreator()、CreateLayer()；LayerRegisterer `layer\_factory.hpp:117-124`（源项目归档路径） 在构造时注册；REGISTER\_LAYER\_CLASS 宏 `layer\_factory.hpp:131-137`（源项目归档路径） 为 float/double 双精度自动生成注册代码。
 
 **反模式**：
 
@@ -373,7 +373,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 4. 两份存储在物理上独立、在逻辑上对偶，使用相同的形状/索引方式
 5. 对偶结构天然支持链式组合，无需额外的"梯度tape"或"Wengert list"
 
-**Caffe 证据**：Blob [blob.hpp:270-271](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/blob.hpp#L270-L271) 内部持有 data\_ 和 diff\_ 两个 SyncedMemory；Forward 读 bottom data 写 top data（[layer.hpp:419](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L419)），Backward 读 top diff 写 bottom diff 和 param diff（[layer.hpp:454](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L454)）；loss\_weight 写入 top diff 作为反向起点（[layer.hpp:399-400](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L399-L400)）。
+**Caffe 证据**：Blob `blob.hpp:270-271`（源项目归档路径） 内部持有 data\_ 和 diff\_ 两个 SyncedMemory；Forward 读 bottom data 写 top data（`layer.hpp:419`（源项目归档路径）），Backward 读 top diff 写 bottom diff 和 param diff（`layer.hpp:454`（源项目归档路径））；loss\_weight 写入 top diff 作为反向起点（`layer.hpp:399-400`（源项目归档路径））。
 
 **反模式**：
 
@@ -403,7 +403,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 4. 基类统一在非虚接口中处理横切关注点：参数校验、日志、缓存、同步、设备分派、状态管理等
 5. 契约检查函数（如输入输出数量检查）在基类流程中自动执行，子类只需通过虚函数声明契约
 
-**Caffe 证据**：Layer::SetUp [layer.hpp:67-73](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L67-L73) 是非虚函数，固定执行 CheckBlobCounts→LayerSetUp→Reshape→SetLossWeights；Layer::Forward [layer.hpp:413-446](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/layer.hpp#L413-L446) 是非虚函数，统一处理 Reshape、switch(mode) 设备分派、loss 点积计算；子类只实现 Forward\_cpu/Forward\_gpu/Backward\_cpu/Backward\_gpu 等私有虚函数；ExactNumBottomBlobs 等契约虚函数由 CheckBlobCounts 自动验证。
+**Caffe 证据**：Layer::SetUp `layer.hpp:67-73`（源项目归档路径） 是非虚函数，固定执行 CheckBlobCounts→LayerSetUp→Reshape→SetLossWeights；Layer::Forward `layer.hpp:413-446`（源项目归档路径） 是非虚函数，统一处理 Reshape、switch(mode) 设备分派、loss 点积计算；子类只实现 Forward\_cpu/Forward\_gpu/Backward\_cpu/Backward\_gpu 等私有虚函数；ExactNumBottomBlobs 等契约虚函数由 CheckBlobCounts 自动验证。
 
 **反模式**：
 
@@ -434,7 +434,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 5. 支持条件包含/排除节点（根据阶段、模式等）
 6. 节点间的中间产物统一由容器管理，节点只声明依赖不关心数据存放位置
 
-**Caffe 证据**：NetParameter [caffe.proto:64-96](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/src/caffe/proto/caffe.proto#L64-L96) 通过 repeated LayerParameter 声明层列表；每个 LayerParameter 含 bottom/top 名称列表；Net::Init() 通过 AppendTop/AppendBottom [net.hpp:258-267](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp#L258-L267) 利用 available\_blobs 集合解析名称引用建立连接；FilterNet [net.hpp:224-225](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/net.hpp#L224-L225) 根据 NetStateRule 过滤层；Callback 钩子支持在不修改核心执行代码的情况下扩展行为。
+**Caffe 证据**：NetParameter `caffe.proto:64-96`（源项目归档路径） 通过 repeated LayerParameter 声明层列表；每个 LayerParameter 含 bottom/top 名称列表；Net::Init() 通过 AppendTop/AppendBottom `net.hpp:258-267`（源项目归档路径） 利用 available\_blobs 集合解析名称引用建立连接；FilterNet `net.hpp:224-225`（源项目归档路径） 根据 NetStateRule 过滤层；Callback 钩子支持在不修改核心执行代码的情况下扩展行为。
 
 **反模式**：
 
@@ -463,7 +463,7 @@ Layer 实现者完全不需要关心数据当前在哪一端、是否需要拷�
 3. **手动 data/diff 双存储**：每个 Blob 显式维护 data\_ 和 diff\_ 两个 SyncedMemory，新增对偶量（如二阶导、动量、方差）需要修改 Blob 类本身。现代自动微分框架通过 Variable/Tensor 类统一管理值与任意数量的梯度槽（gradient slots）。
 4. **Forward\_cpu/gpu 手动双后端**：每个运算需要写两遍几乎相同的实现（CPU和GPU），代码冗余度高，容易引入后端不一致 bug。现代方案（如 TVM、MLIR、Triton、CUDA Graphs）使用统一中间表示自动生成多后端代码，或使用单源编译器（如 SYCL、HIP）。
 5. **Proto2 文本静态 DAG**：网络结构通过 prototxt 静态声明，不支持控制流（循环、条件分支），所有层的拓扑在初始化时固定；RNN/LSTM 需要静态展开为有限步长。2026 年的主流框架都支持动态图（define-by-run）和静态控制流算子。
-6. **boost::shared\_ptr 依赖**：Caffe 大量使用 boost::shared\_ptr（[common.hpp:4](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/common.hpp#L4)、[common.hpp:79](file:///d:/spaces/SpecWeave/external/chaos/caffe/caffex/include/caffe/common.hpp#L79)），而 C++11 标准已引入 std::shared\_ptr；选择 boost 是出于 2014 年 CUDA 编译器对 C++11 支持不完善的妥协。现代项目应使用标准库智能指针。
+6. **boost::shared\_ptr 依赖**：Caffe 大量使用 boost::shared\_ptr（`common.hpp:4`（源项目归档路径）、`common.hpp:79`（源项目归档路径）），而 C++11 标准已引入 std::shared\_ptr；选择 boost 是出于 2014 年 CUDA 编译器对 C++11 支持不完善的妥协。现代项目应使用标准库智能指针。
 
 ### 5.2 永恒架构原则（2026年仍然成立）
 

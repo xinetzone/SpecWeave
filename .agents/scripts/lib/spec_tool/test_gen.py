@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 
@@ -156,3 +161,4 @@ def cmd_gen_tests(args) -> int:
     print()
     print_summary(total, 0, 0)
     return 0
+

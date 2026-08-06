@@ -1,7 +1,7 @@
 # Orca 多代理协作 IDE 文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview
-- **Summary**: 对微信公众号"开源日记"发布的 Orca 多代理协作 IDE 介绍文章（URL: https://mp.weixin.qq.com/s/Dy98TQc4mAit7P0pxRheJw）进行系统性学习与深度洞察分析。文章系统介绍了 Orca（Stably.ai 出品）——一个将 Git Worktree 作为 IDE 一等公民的 AI 原生开发环境，涵盖并行 Worktree 多代理隔离执行、手机端远程监控、WebGL 终端分屏、设计模式（截图+DOM 上下文）、GitHub/Linear 原生集成、拖拽文件交互等六大核心功能，并分析了其学习成本、磁盘占用、手机端功能限制、需自备 AI 订阅等实际使用注意事项。
+- **Summary**: 对微信公众号"开源日记"发布的 Orca 多代理协作 ADE 介绍文章（URL: https://mp.weixin.qq.com/s/Dy98TQc4mAit7P0pxRheJw）进行系统性学习与深度洞察分析。文章系统介绍了 Orca（Stably.ai 出品，YC 背书）——一个将 Git Worktree 作为 ADE 一等公民的 AI 原生代理开发环境（Agent Development Environment），涵盖并行 Worktree 多代理隔离执行、手机端远程监控、WebGL 终端分屏、设计模式（截图+DOM 上下文）、GitHub/Linear 原生集成、拖拽文件交互等六大核心功能，并分析了其学习成本、磁盘占用、手机端功能限制、需自备 AI 订阅等实际使用注意事项。**⚠️ 对抗性审查已完成**（见 [adversarial-review.md](../../../../docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md)），修正了关键数据偏差（Star 数 10771→34341）、术语校准（IDE→ADE）、补充了 YC 背景，并对行业趋势类结论标注了不确定性。
 - **Purpose**: 通过系统性学习与深度洞察分析，准确把握 Orca 的技术特性与使用方式，挖掘"Git Worktree 作为 IDE 一等公民"这一设计范式在 AI 编码时代的变革意义，理解多代理并行协作、隔离执行、实时对比择优的工作流价值，以及"IDE 从代码编辑器向代理编排器"演进的行业趋势，为技术选型、工具链优化、开发流程改进提供有价值的洞察依据。
 - **Target Users**: AI 辅助开发实践者、IDE 工具选型决策者、多代理协作研究者、开源工具爱好者
 
@@ -27,12 +27,15 @@
 - **文章来源**：微信公众号"开源日记"
 - **文章主题**：介绍 Orca——Stably.ai 出品的 AI 原生 IDE，将 Git Worktree 作为核心对象，实现多 AI 代理并行协作
 - **文章结构**：从作者个人痛点（多代理同时重构导致文件覆盖）引入→Orca 项目介绍→六大核心功能逐步演示→安装指南→缺点与注意事项→深度总结
-- **核心数据点**：
-  - GitHub 10771 Star
-  - 支持 25 种 CLI Agent
-  - MIT 协议开源
-  - 支持 macOS、Windows、Linux 桌面端 + 安卓/iOS 移动端
-  - 可通过 Homebrew 安装（macOS）
+- **核心数据点**（经 GitHub API 交叉验证，2026-07-06）：
+  - GitHub **34,341 Star**（⚠️ 文章来源声称 10,771，实际数据已增长 3.2 倍，来源数据严重过时）
+  - 支持 25 种 CLI Agent（⚠️ 待验证，GitHub topics 含 claude-code/codex/opencode/cursor-agent 等，未逐一核实）
+  - MIT 协议开源（✅ 已验证）
+  - 支持 macOS、Windows、Linux 桌面端 + 安卓/iOS 移动端（✅ 已验证）
+  - 可通过 Homebrew 安装（macOS）（✅ 已验证）
+  - 项目创建于 2026-03-17，7,696 次提交，1,300+ issues，1,500+ PRs（✅ 补充信息）
+  - YC 背书（YC-backed）（✅ 补充信息，文章未提及）
+  - 官方定位为 **ADE**（Agent Development Environment），非传统 IDE
 - **相关链接**：
   - 开源地址：https://github.com/stablyai/orca
   - 文章 URL：https://mp.weixin.qq.com/s/Dy98TQc4mAit7P0pxRheJw
@@ -76,6 +79,28 @@
 - 文章中的 GitHub 链接如有必要可适当访问以验证关键信息
 - 文章反映了"AI 原生 IDE"这一新兴趋势的最新实践，具有较高的行业研究价值
 - 读者具备基础的 Git、IDE、AI 代理概念认知
+
+## Adversarial Review（对抗性审查）
+
+本次分析已通过七概念方法论的 V（对抗性审查）质量门。详见 [adversarial-review.md](../../../../docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md)。
+
+### 审查发现的关键问题
+
+| 问题 | 严重度 | 状态 |
+|------|:---:|:---:|
+| Star 数据过时（10771→34341） | P0 | ✅ 已修正 |
+| 术语偏差（IDE→ADE） | P1 | ✅ 已修正 |
+| 单一来源偏差（仅一篇微信公众号文章） | P1 | ⚠️ 已标注 |
+| 行业趋势结论过度推断 | P2 | ⚠️ 已标注不确定性 |
+| 确认偏差：分析倾向于支持"IDE 进化论" | P2 | ⚠️ 已声明 |
+| 遗漏 YC 背景信息 | P2 | ✅ 已补充 |
+| 新颖性偏差：忽略同类 Worktree IDE 尝试 | P3 | ⚠️ 已标注 |
+
+### 方法论声明
+
+- **来源质量**：核心分析基于三级来源（微信公众号文章），经一级来源（GitHub API/仓库）交叉验证修正
+- **偏差声明**：分析存在确认偏差（倾向于支持"IDE 进化论"）、单源偏差（仅一篇文章）、新颖性偏差（过度强调 Orca 创新性）
+- **不确定性标注**：行业趋势类结论（"IDE 向代理编排器演进"、"多代理协作新常态"）基于单一案例推断，需多产品验证
 
 ## Acceptance Criteria
 

@@ -3,6 +3,19 @@
 定义所有Profile共有的字段和验证规则，使用关键词模糊匹配章节。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -173,3 +186,4 @@ class BaseProfile:
         cleaned = re.sub(r"^\d+\.?\d*\.?\s*", "", title.strip())
         cleaned = re.sub(r"\s+", "", cleaned)
         return cleaned.lower()
+

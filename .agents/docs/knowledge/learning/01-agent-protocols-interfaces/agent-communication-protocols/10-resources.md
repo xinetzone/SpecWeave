@@ -59,7 +59,7 @@ ANP目前暂无统一官方规范，主要基于以下W3C标准构建：
 ### ACP SDK与工具
 
 - [ACP Python SDK](https://github.com/i-am-bee/acp-sdk-python) - Python SDK，支持ACP Agent开发
-- [ACP TypeScript SDK](https://github.com/i-am-bee/acp-sdk-ts) - TypeScript SDK，Node.js环境ACP支持
+- `ACP TypeScript SDK`（原外部链接 2026-07 复检已失效：github.com/i-am-bee/acp-sdk-ts） - TypeScript SDK，Node.js环境ACP支持
 - 注：ACP设计为零SDK依赖，也可直接使用HTTP/OpenAPI原生集成
 
 ### A2A SDK与工具

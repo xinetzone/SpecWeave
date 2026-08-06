@@ -7,6 +7,16 @@
 - 文件名重命名映射
 - 外部链接检查：HEAD 请求 + GET Range 回退、结果缓存、并发检测"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import os

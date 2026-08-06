@@ -128,7 +128,7 @@ source: i-have-adhd常见问题与参考资源整理
    ```
 4. **核心原则**：所有规则都在 `SKILL.md` 一个文件里，没有隐藏硬编码，改这一个文件就改变所有行为。
 
-详细自定义流程见第八章：[file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md)
+详细自定义流程见第八章：[07-customization-and-troubleshooting.md](./07-customization-and-troubleshooting.md)
 
 ---
 
@@ -250,14 +250,14 @@ Trae 对 Agent Skills 标准的兼容性很好，核心 SKILL.md 不需要修改
 
 ### SpecWeave 相关 Wiki
 
-- **Agent Skills Wiki**: [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md)
+- **Agent Skills 开放标准 Wiki**: [../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md](../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
   - Agent Skills 标准详解、开发指南、跨平台适配
 
-- **七概念方法论**: [file:///d:/spaces/SpecWeave/.agents/commands/seven-concepts.md](file:///d:/spaces/SpecWeave/.agents/commands/seven-concepts.md)
+- **七概念方法论**: [../../../../../commands/seven-concepts.md](../../../../../commands/seven-concepts.md)
   - 本 Wiki 使用的 R-I-E-C-A-F-V 七概念方法论
   - 了解模式萃取、复盘、洞察等知识沉淀方法
 
-- **i-have-adhd Wiki 目录**: [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md)
+- **i-have-adhd Wiki 目录**: [README.md](./README.md)
   - 本 Wiki 的索引页，含所有章节链接
 
 ### 各平台插件文档
@@ -308,7 +308,7 @@ SOFTWARE.
 - ⚠️ 保留原始版权声明和许可声明（MIT License 文本）
 - ⚠️ 不使用作者名义做背书（不能说"官方推荐"之类的，除非你确实是官方）
 
-完整许可证文本见仓库根目录 LICENSE 文件：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/LICENSE](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/LICENSE)
+完整许可证文本见源项目根目录 LICENSE 文件（`external/libs/i-have-adhd/LICENSE`，源项目归档路径）：
 
 ---
 
@@ -316,13 +316,13 @@ SOFTWARE.
 
 | 章节 | 文件路径 |
 |------|---------|
-| 一、概述与设计哲学 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) |
-| 二、设计哲学与认知原理 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/01-design-philosophy.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/01-design-philosophy.md) |
-| 三、核心规则（10条详解） | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/02-core-rules.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/02-core-rules.md) |
-| 四、例外场景与自检清单 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/03-exceptions-and-checklist.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/03-exceptions-and-checklist.md) |
-| 五、多平台安装指南 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/04-installation-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/04-installation-guide.md) |
-| 六、Always-On 自动激活机制 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/05-always-on-mechanism.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/05-always-on-mechanism.md) |
-| 七、评估框架（A/B测试Rubric） | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/06-evaluation-framework.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/06-evaluation-framework.md) |
-| 八、自定义开发与故障排查 | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md) |
-| 九、可复用模式萃取（本章之前） | [file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/08-patterns-extracted.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/08-patterns-extracted.md) |
+| 一、概述与设计哲学 | [00-overview.md](./00-overview.md) |
+| 二、设计哲学与认知原理 | [01-design-philosophy.md](./01-design-philosophy.md) |
+| 三、核心规则（10条详解） | [02-core-rules.md](./02-core-rules.md) |
+| 四、例外场景与自检清单 | [03-exceptions-and-checklist.md](./03-exceptions-and-checklist.md) |
+| 五、多平台安装指南 | [04-installation-guide.md](./04-installation-guide.md) |
+| 六、Always-On 自动激活机制 | [05-always-on-mechanism.md](./05-always-on-mechanism.md) |
+| 七、评估框架（A/B测试Rubric） | [06-evaluation-framework.md](./06-evaluation-framework.md) |
+| 八、自定义开发与故障排查 | [07-customization-and-troubleshooting.md](./07-customization-and-troubleshooting.md) |
+| 九、可复用模式萃取（本章之前） | [08-patterns-extracted.md](./08-patterns-extracted.md) |
 | 十、FAQ与资源汇总（本章） | 当前文件 |

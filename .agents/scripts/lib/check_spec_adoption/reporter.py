@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import sys
 from datetime import datetime
@@ -215,3 +220,4 @@ def print_batch_json(results, global_score, global_grade, total_files, project_r
         out_path = Path(output_file)
         out_path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding='utf-8')
         print(f'\n📄 JSON报告已保存至: {out_path}', file=sys.stderr)
+

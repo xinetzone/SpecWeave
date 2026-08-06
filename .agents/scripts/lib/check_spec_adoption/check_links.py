@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from lib.markdown import parse_inline_links
@@ -39,3 +44,4 @@ def check_links(content, fpath):
             links_broken += 1
 
     return links_total, links_valid, links_broken
+

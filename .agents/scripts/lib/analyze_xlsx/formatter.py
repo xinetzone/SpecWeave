@@ -1,6 +1,11 @@
 from __future__ import annotations
 
 
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 def format_basic_info_lines(basic_info: dict[str, object]) -> str:
     return "\n".join(f"- {key}: {value}" for key, value in basic_info.items())
 
@@ -101,3 +106,4 @@ def format_blockers_lines(context: dict) -> str:
     for item in context.get("module_findings", [])[:3]:
         lines.append(f"- {item['sheet']}: {item['summary']}")
     return "\n".join(lines)
+

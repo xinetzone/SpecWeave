@@ -29,7 +29,7 @@ from constants import (
     DEFAULT_META, DESC_TRUNCATE_LENGTH, REQUIRED_FIELDS,
 )
 
-_AGENTS_SCRIPTS_DIR = _SCRIPT_DIR.parents[2] / ".agents" / "scripts"
+_AGENTS_SCRIPTS_DIR = _SCRIPT_DIR.parents[2] / "scripts"
 _frontmatter_spec = importlib.util.spec_from_file_location(
     "lib_frontmatter",
     _AGENTS_SCRIPTS_DIR / "lib" / "frontmatter.py",

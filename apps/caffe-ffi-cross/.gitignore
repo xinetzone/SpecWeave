@@ -1,0 +1,14 @@
+# Docker build and test outputs
+output/
+master-*.log
+test-report.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temp files
+*.tmp
+*.swp
+*~

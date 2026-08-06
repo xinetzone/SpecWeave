@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blob COW 修复性能分析仪表盘</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 24px;
+  min-height: 100vh;
+}
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa, #a78bfa, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header .subtitle {
+  color: #94a3b8;
+  font-size: 14px;
+}
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.kpi-card {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+.kpi-card.green::before { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.kpi-card.blue::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.kpi-card.purple::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+.kpi-card.orange::before { background: linear-gradient(90deg, #f97316, #fb923c); }
+.kpi-label {
+  font-size: 12px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.kpi-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+.kpi-unit {
+  font-size: 14px;
+  color: #64748b;
+  margin-left: 4px;
+}
+.kpi-desc {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.chart-card {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+.chart-card.full {
+  grid-column: 1 / -1;
+}
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chart-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #60a5fa;
+}
+.chart-container {
+  width: 100%;
+  height: 380px;
+}
+.chart-container.tall {
+  height: 500px;
+}
+.perf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 13px;
+}
+.perf-table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: #0f172a;
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.perf-table td {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(148, 163, 184, 0.08);
+  color: #cbd5e1;
+}
+.perf-table tr:hover td {
+  background: rgba(96, 165, 250, 0.05);
+}
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.badge.cow { background: rgba(139, 92, 246, 0.2); color: #c4b5fd; }
+.badge.layer { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+.badge.blob { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+.badge.core { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+.badge.mem { background: rgba(236, 72, 153, 0.2); color: #f9a8d4; }
+.bar-inline {
+  height: 6px;
+  background: #334155;
+  border-radius: 3px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
+}
+.bar-inline-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+.footer {
+  text-align: center;
+  margin-top: 32px;
+  color: #475569;
+  font-size: 12px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Blob COW 写时复制语义修复 · 性能分析</h1>
+  <div class="subtitle">测试环境：Docker (gcc 14.3.0, cmake 4.4.0, Release) · commit 8078237 · 2026-08-01</div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card green">
+    <div class="kpi-label">测试总数</div>
+    <div class="kpi-value">201<span class="kpi-unit">个</span></div>
+    <div class="kpi-desc">C++ 单元测试</div>
+  </div>
+  <div class="kpi-card blue">
+    <div class="kpi-label">通过率</div>
+    <div class="kpi-value">100<span class="kpi-unit">%</span></div>
+    <div class="kpi-desc">0 失败 · 201 通过</div>
+  </div>
+  <div class="kpi-card purple">
+    <div class="kpi-label">总耗时</div>
+    <div class="kpi-value">127.4<span class="kpi-unit">ms</span></div>
+    <div class="kpi-desc">全部C++测试</div>
+  </div>
+  <div class="kpi-card orange">
+    <div class="kpi-label">平均耗时</div>
+    <div class="kpi-value">0.63<span class="kpi-unit">ms/test</span></div>
+    <div class="kpi-desc">含最慢网络级测试</div>
+  </div>
+</div>
+
+<div class="charts-row">
+  <div class="chart-card">
+    <div class="chart-title"><span class="dot"></span>各测试套件总耗时 (ms)</div>
+    <div class="chart-container" id="chart-suite-total"></div>
+  </div>
+  <div class="chart-card">
+    <div class="chart-title"><span class="dot"></span>各测试套件平均用例耗时 (ms)</div>
+    <div class="chart-container" id="chart-suite-avg"></div>
+  </div>
+</div>
+
+<div class="charts-row">
+  <div class="chart-card full">
+    <div class="chart-title"><span class="dot"></span>测试套件分布与耗时对比</div>
+    <div class="chart-container tall" id="chart-scatter"></div>
+  </div>
+</div>
+
+<div class="charts-row">
+  <div class="chart-card full">
+    <div class="chart-title"><span class="dot"></span>性能数据明细</div>
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>测试套件</th>
+          <th>类型</th>
+          <th>用例数</th>
+          <th>总耗时(ms)</th>
+          <th>平均(ms)</th>
+          <th>耗时占比</th>
+        </tr>
+      </thead>
+      <tbody id="perf-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="footer">
+  Generated by SpecWeave chart-visualization · caffe-ffi COW fix performance report
+</div>
+
+<script>
+// Performance data from Docker test run (fresh rebuild with COW fix)
+const suiteData = [
+  { name: 'SoftmaxWithLossTest', category: 'layer', count: 5, total: 25.38, avg: 5.08 },
+  { name: 'COWIntegrationTest', category: 'cow', count: 10, total: 15.17, avg: 1.52 },
+  { name: 'DeconvLayerTest', category: 'layer', count: 14, total: 14.00, avg: 1.00 },
+  { name: 'ZeroCopyTest', category: 'cow', count: 18, total: 11.26, avg: 0.63 },
+  { name: 'PoolingLayerTest', category: 'layer', count: 5, total: 10.10, avg: 2.02 },
+  { name: 'NeuronLayerTest', category: 'layer', count: 6, total: 8.96, avg: 1.49 },
+  { name: 'SliceLayerZeroCopyTest', category: 'cow', count: 6, total: 6.02, avg: 1.00 },
+  { name: 'SplitBackwardTest', category: 'cow', count: 4, total: 5.86, avg: 1.47 },
+  { name: 'ShareDataRefCount', category: 'mem', count: 15, total: 4.83, avg: 0.32 },
+  { name: 'BlobTest', category: 'blob', count: 23, total: 4.37, avg: 0.19 },
+  { name: 'PReLULayerTest', category: 'layer', count: 7, total: 3.69, avg: 0.53 },
+  { name: 'COWTest', category: 'cow', count: 10, total: 3.50, avg: 0.35 },
+  { name: 'COWApiTest', category: 'cow', count: 11, total: 2.65, avg: 0.24 },
+  { name: 'COWRuntimeSwitchTest', category: 'cow', count: 11, total: 1.99, avg: 0.18 },
+  { name: 'ObjectPtrMigration', category: 'mem', count: 12, total: 1.87, avg: 0.16 },
+  { name: 'ShareDiffRefCount', category: 'mem', count: 5, total: 1.70, avg: 0.34 },
+  { name: 'ELULayerTest', category: 'layer', count: 8, total: 1.64, avg: 0.21 },
+  { name: 'ReLULayerTest', category: 'layer', count: 7, total: 1.43, avg: 0.20 },
+  { name: 'SigmoidLayerTest', category: 'layer', count: 6, total: 1.25, avg: 0.21 },
+  { name: 'TanHLayerTest', category: 'layer', count: 6, total: 1.17, avg: 0.19 },
+  { name: 'OwnerCOWTest', category: 'cow', count: 4, total: 1.17, avg: 0.29 },
+  { name: 'SymbolExport', category: 'core', count: 8, total: 0.97, avg: 0.12 }
+];
+
+const categoryMap = {
+  cow: { label: 'COW/零拷贝', color: '#a78bfa', cls: 'cow' },
+  layer: { label: 'Layer层', color: '#4ade80', cls: 'layer' },
+  blob: { label: 'Blob基础', color: '#60a5fa', cls: 'blob' },
+  core: { label: '核心/符号', color: '#fb923c', cls: 'core' },
+  mem: { label: '引用计数/内存', color: '#f472b6', cls: 'mem' }
+};
+
+const totalAll = suiteData.reduce((s, d) => s + d.total, 0);
+const maxTotal = Math.max(...suiteData.map(d => d.total));
+const maxAvg = Math.max(...suiteData.map(d => d.avg));
+
+// Chart 1: Total time per suite (horizontal bar)
+const chart1 = echarts.init(document.getElementById('chart-suite-total'));
+chart1.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, backgroundColor: '#1e293b', borderColor: '#334155', textStyle: { color: '#e2e8f0' } },
+  grid: { left: 180, right: 30, top: 10, bottom: 30 },
+  xAxis: { type: 'value', name: 'ms', axisLine: { lineStyle: { color: '#475569' } }, splitLine: { lineStyle: { color: 'rgba(71,85,105,0.3)' } }, axisLabel: { color: '#94a3b8' } },
+  yAxis: { type: 'category', data: suiteData.map(d => d.name).reverse(), axisLine: { lineStyle: { color: '#475569' } }, axisLabel: { color: '#cbd5e1', fontSize: 11 } },
+  series: [{
+    type: 'bar',
+    data: suiteData.map(d => ({
+      value: d.total,
+      itemStyle: { color: categoryMap[d.category].color, borderRadius: [0, 4, 4, 0] }
+    })).reverse(),
+    barWidth: 14,
+    label: { show: true, position: 'right', color: '#94a3b8', fontSize: 11, formatter: '{c} ms' }
+  }]
+});
+
+// Chart 2: Average time per suite (horizontal bar)
+const chart2 = echarts.init(document.getElementById('chart-suite-avg'));
+chart2.setOption({
+  backgroundColor: 'transparent',
+  tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, backgroundColor: '#1e293b', borderColor: '#334155', textStyle: { color: '#e2e8f0' } },
+  grid: { left: 180, right: 30, top: 10, bottom: 30 },
+  xAxis: { type: 'value', name: 'ms', axisLine: { lineStyle: { color: '#475569' } }, splitLine: { lineStyle: { color: 'rgba(71,85,105,0.3)' } }, axisLabel: { color: '#94a3b8' } },
+  yAxis: { type: 'category', data: [...suiteData].sort((a, b) => a.avg - b.avg).map(d => d.name), axisLine: { lineStyle: { color: '#475569' } }, axisLabel: { color: '#cbd5e1', fontSize: 11 } },
+  series: [{
+    type: 'bar',
+    data: [...suiteData].sort((a, b) => a.avg - b.avg).map(d => ({
+      value: d.avg,
+      itemStyle: { color: categoryMap[d.category].color, borderRadius: [0, 4, 4, 0] }
+    })),
+    barWidth: 14,
+    label: { show: true, position: 'right', color: '#94a3b8', fontSize: 11, formatter: '{c} ms' }
+  }]
+});
+
+// Chart 3: Scatter - test count vs total time, bubble size = avg time
+const chart3 = echarts.init(document.getElementById('chart-scatter'));
+const categories = Object.keys(categoryMap);
+chart3.setOption({
+  backgroundColor: 'transparent',
+  tooltip: {
+    backgroundColor: '#1e293b', borderColor: '#334155', textStyle: { color: '#e2e8f0' },
+    formatter: function(p) {
+      return `<b>${p.data.name}</b><br/>用例数: ${p.data.value[0]}<br/>总耗时: ${p.data.value[1]} ms<br/>平均: ${p.data.avg} ms<br/>类型: ${categoryMap[p.data.category].label}`;
+    }
+  },
+  legend: { data: categories.map(c => categoryMap[c].label), textStyle: { color: '#94a3b8' }, top: 0 },
+  grid: { left: 60, right: 40, top: 50, bottom: 50 },
+  xAxis: { name: '用例数量', nameTextStyle: { color: '#94a3b8' }, axisLine: { lineStyle: { color: '#475569' } }, splitLine: { lineStyle: { color: 'rgba(71,85,105,0.3)' } }, axisLabel: { color: '#94a3b8' } },
+  yAxis: { name: '总耗时 (ms)', nameTextStyle: { color: '#94a3b8' }, axisLine: { lineStyle: { color: '#475569' } }, splitLine: { lineStyle: { color: 'rgba(71,85,105,0.3)' } }, axisLabel: { color: '#94a3b8' } },
+  series: categories.map(cat => ({
+    name: categoryMap[cat].label,
+    type: 'scatter',
+    data: suiteData.filter(d => d.category === cat).map(d => ({
+      name: d.name,
+      value: [d.count, d.total],
+      avg: d.avg,
+      category: d.category,
+      symbolSize: Math.max(12, d.avg * 10)
+    })),
+    symbolSize: function(data) { return Math.max(12, data.avg * 10); },
+    itemStyle: { color: categoryMap[cat].color, opacity: 0.8, borderColor: '#fff', borderWidth: 1 },
+    label: { show: true, formatter: p => p.data.name, position: 'right', color: '#94a3b8', fontSize: 10 }
+  }))
+});
+
+// Performance table
+const tbody = document.getElementById('perf-table-body');
+const sorted = [...suiteData].sort((a, b) => b.total - a.total);
+sorted.forEach(d => {
+  const pct = (d.total / totalAll * 100).toFixed(1);
+  const barW = (d.total / maxTotal * 100).toFixed(1);
+  const cat = categoryMap[d.category];
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td style="font-weight:500;color:#f1f5f9">${d.name}</td>
+    <td><span class="badge ${cat.cls}">${cat.label}</span></td>
+    <td>${d.count}</td>
+    <td>${d.total.toFixed(2)}</td>
+    <td>${d.avg.toFixed(2)}</td>
+    <td>
+      <div class="bar-inline"><div class="bar-inline-fill" style="width:${barW}%"></div></div>
+      <span style="color:#64748b;font-size:11px;margin-left:6px">${pct}%</span>
+    </td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// Resize
+window.addEventListener('resize', () => {
+  chart1.resize();
+  chart2.resize();
+  chart3.resize();
+});
+</script>
+</body>
+</html>

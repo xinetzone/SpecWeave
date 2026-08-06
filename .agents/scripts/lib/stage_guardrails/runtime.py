@@ -33,6 +33,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import time
 from dataclasses import dataclass, field
 from typing import Optional
@@ -624,3 +630,4 @@ class GuardrailRuntime:
     def _get_stage_role(stage: str) -> set[str]:
         from lib.stage_guardrails.state import STAGE_ROLES
         return STAGE_ROLES.get(stage, set())
+

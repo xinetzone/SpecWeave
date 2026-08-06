@@ -53,7 +53,20 @@
 
 ## 文件结构验证
 - [x] spec.md 存在且内容完整
-- [x] tasks.md 存在且所有8个任务状态已更新为完成
+- [x] tasks.md 存在且所有10个任务状态已更新为完成
 - [x] checklist.md 存在且所有检查项已标记
-- [x] article-content.md 存在
-- [x] analysis-report.md 存在
+- [x] article-content.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
+- [x] analysis-report.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
+- [x] 归档目录存在 README.md（含任务背景、核心指标、文件索引、changelog）
+- [x] spec 目录仅保留三件套（spec.md/tasks.md/checklist.md）作为过程产物
+
+## 模式沉淀验证（2026-08-01 更新）
+- [x] 七概念方法论编排已执行（知识沉淀场景 R→I→E→V）
+- [x] 已萃取"提示词到产品七步法"模式文档（prompt-to-product-seven-steps.md）
+- [x] 模式文档包含：触发场景、7步核心做法、8个反模式、检验标准、4个跨领域迁移示例
+- [x] 对抗审查已执行（5视角：新手/老手/跨领域/极端场景/反例）
+- [x] 模式文档已根据对抗审查修正（适用边界、快速入门、步骤区别澄清、迭代回退）
+- [x] analysis-report.md 已增加"十、模式沉淀"章节
+- [x] tasks.md 已增加Task 9（模式沉淀任务）
+- [x] 模式文档已入库到正确目录（methodology-patterns/ai-collaboration/）
+- [x] 模式成熟度正确标记为L1（单案例待验证）

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -31,3 +36,4 @@ class FileReport(quality_report.ResultGroupMixin):
     @property
     def results(self):
         return self.issues
+

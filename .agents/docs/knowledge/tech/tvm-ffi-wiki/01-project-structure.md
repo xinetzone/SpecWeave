@@ -22,7 +22,7 @@ TVM FFI 采用清晰的分层目录结构，将 C++ 核心实现、Python 绑定
 
 ## 顶层目录总览
 
-TVM FFI 项目根目录位于 [file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/)，其顶层目录结构如下：
+TVM FFI 项目根目录位于 `tvm-ffi`（源项目归档路径），其顶层目录结构如下：
 
 ```mermaid
 flowchart TD
@@ -69,7 +69,7 @@ flowchart TD
 
 ### include/tvm/ffi/ — C++ 公共头文件
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/)
+**路径**：`tvm-ffi/include/tvm/ffi`（源项目归档路径）
 
 这是 TVM FFI 最核心的目录，包含所有对外暴露的 C++ 公共头文件，定义了 TVM FFI 的核心 API 和数据结构。用户项目集成 TVM FFI 时只需包含此目录。
 
@@ -102,7 +102,7 @@ flowchart TD
 
 ### src/ffi/ — C++ 实现源码
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/src/ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/src/ffi/)
+**路径**：`tvm-ffi/src/ffi`（源项目归档路径）
 
 包含 C++ 核心功能的实现代码，对应 `include/tvm/ffi/` 中声明的 API。主要子目录和文件：
 
@@ -112,7 +112,7 @@ flowchart TD
 
 ### python/tvm_ffi/ — Python 包
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/python/tvm_ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/python/tvm_ffi/)
+**路径**：`tvm-ffi/python/tvm_ffi`（源项目归档路径）
 
 TVM FFI 的 Python 绑定包，提供 Python 端 API 以及 Cython 加速实现。
 
@@ -140,7 +140,7 @@ TVM FFI 的 Python 绑定包，提供 Python 端 API 以及 Cython 加速实现�
 
 ### rust/ — Rust crate 工作区
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/rust/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/rust/)
+**路径**：`tvm-ffi/rust`（源项目归档路径）
 
 TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
@@ -154,7 +154,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### tests/ — 测试目录
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/tests/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/tests/)
+**路径**：`tvm-ffi/tests`（源项目归档路径）
 
 包含所有语言的测试用例和代码质量检查：
 
@@ -168,7 +168,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### docs/ — Sphinx 文档
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/)
+**路径**：`tvm-ffi/docs`（源项目归档路径）
 
 使用 Sphinx 构建的官方文档源文件：
 
@@ -183,7 +183,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### examples/ — 可运行示例
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/)
+**路径**：`tvm-ffi/examples`（源项目归档路径）
 
 提供多种场景的完整可运行示例代码：
 
@@ -199,7 +199,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### cmake/Utils/ — CMake 工具模块
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/cmake/Utils/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/cmake/Utils/)
+**路径**：`tvm-ffi/cmake/Utils`（源项目归档路径）
 
 包含 CMake 构建系统的工具模块：
 
@@ -216,7 +216,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### 3rdparty/ — 第三方依赖
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/3rdparty/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/3rdparty/)
+**路径**：`tvm-ffi/3rdparty`（源项目归档路径）
 
 通过 git submodule 管理的第三方依赖：
 
@@ -227,7 +227,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### addons/ — 可选插件
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/addons/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/addons/)
+**路径**：`tvm-ffi/addons`（源项目归档路径）
 
 可选的扩展插件，非核心功能，但提供额外的集成能力：
 
@@ -238,7 +238,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 ### licenses/ — 许可证文件
 
-**路径**：[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/licenses/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/licenses/)
+**路径**：`tvm-ffi/licenses`（源项目归档路径）
 
 包含第三方依赖的许可证文件：dlpack、libbacktrace、pytorch 等的 LICENSE 和 NOTICE。
 
@@ -288,7 +288,7 @@ TVM FFI 的 Rust 语言绑定，采用 Cargo workspace 组织多个 crate：
 
 在 xuanspace 项目中，TVM FFI 作为 vendor 第三方依赖存在，路径为：
 
-[file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/)
+`tvm-ffi`（源项目归档路径）
 
 作为 git submodule 管理，本地修改不会直接提交到上游 TVM FFI 仓库。如需修改 TVM FFI 本身，应向上游贡献或在 fork 中维护。
 

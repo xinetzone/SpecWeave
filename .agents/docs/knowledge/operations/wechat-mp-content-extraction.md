@@ -192,6 +192,6 @@ $content = $html.Substring($tagStart + 1, $endIdx - $tagStart - 1)
 ## 七、关联资源
 
 - [html-body-extraction.md](html-body-extraction.md) — HTML 正文提取操作指南（边界标记索引截取法）
-- [defuddle 官方文档](https://github.com/anthropics/defuddle)
+- [defuddle 官方文档](https://github.com/kepano/defuddle)
 - [ian-xiaohei 执行复盘](../../retrospective/reports/competitive-analysis/retrospective-ian-xiaohei-illustrations-learning-20260625/execution-retrospective.md)
 - [claude-tag 执行复盘](../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md)

@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 CONCEPTS = {
     "R": "复盘(Retrospective)",
     "I": "洞察(Insight)",
@@ -34,3 +39,4 @@ ANTI_PATTERN_WARNINGS = {
         "   参考：adversarial-review-prompt-pattern.md §规则类反例构造五步法",
     ],
 }
+

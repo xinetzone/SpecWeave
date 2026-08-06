@@ -1,0 +1,228 @@
+# =============================================================================
+# Caffe-FFI macOS Cross-Compile Build Image
+# Single-stage build: continuumio/miniconda3 with cross-compilation toolchain
+#
+# Design:
+#   - Pure build image (no Jupyter/SSH/runtime), only for conda package building
+#   - Linux→macOS (osx-64) cross-compilation via conda-forge cross-compiler packages
+#   - Includes macOS SDK (MacOSX11.3.sdk) with skip/download fallback
+#   - Outputs osx-64 conda packages that can be verified with Mach-O tools
+#
+# Usage:
+#   Build:  docker build -f Dockerfile.macos-cross -t caffe-ffi-cross-macos:latest .
+#   Run:    docker run --rm -v /path/to/output:/output \
+#                     -v /path/to/caffe-ffi:/workspace/caffe-ffi \
+#                     caffe-ffi-cross-macos:latest
+#
+# Volume mounts:
+#   - /workspace/caffe-ffi: source directory (if not building bundled recipe)
+#   - /output: output directory for built packages
+#
+# SDK fallback:
+#   If SDK download fails during build, use:
+#     docker build --build-arg SKIP_SDK_DOWNLOAD=1 -f Dockerfile.macos-cross ...
+#   Then mount SDK at runtime:
+#     docker run -v /path/to/MacOSX11.3.sdk:/opt/MacOSX11.3.sdk ...
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Global build arguments
+# -----------------------------------------------------------------------------
+ARG APT_MIRROR=official
+ARG CONDA_MIRROR=official
+ARG PYTHON_VERSION=3.14
+ARG SKIP_SDK_DOWNLOAD=0
+
+# =============================================================================
+# STAGE: Cross-compile build environment
+# =============================================================================
+FROM continuumio/miniconda3:latest
+
+# Explicit, unambiguous shell: bash with errexit + pipefail
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+ARG APT_MIRROR
+ARG CONDA_MIRROR
+ARG PYTHON_VERSION
+ARG SKIP_SDK_DOWNLOAD
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    CONDA_DIR=/opt/conda \
+    ENV_NAME=cross-build \
+    ENV_PATH=/opt/conda/envs/cross-build \
+    PATH=/opt/conda/bin:/opt/conda/envs/cross-build/bin:$PATH \
+    MACOSX_DEPLOYMENT_TARGET=10.15 \
+    CONDA_BUILD_SYSROOT=/opt/MacOSX11.3.sdk \
+    CONDA_BUILD_OUTPUT_DIR=/opt/conda/conda-bld \
+    WORKSPACE_DIR=/workspace \
+    OUTPUT_DIR=/output
+
+LABEL maintainer="Caffe-FFI Cross-Compile Team" \
+      description="Caffe-FFI Linux→macOS (osx-64) cross-compilation build image with conda-build" \
+      target_platform="osx-64" \
+      python_version="${PYTHON_VERSION}"
+
+# -----------------------------------------------------------------------------
+# [1/5] Configure APT mirror and install system dependencies
+# -----------------------------------------------------------------------------
+RUN echo "=== [1/5] Configuring APT mirror: ${APT_MIRROR} ===" && \
+    if [ "${APT_MIRROR}" = "aliyun" ]; then \
+        for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
+            if [ -f "$$f" ]; then \
+                sed -i 's|http://deb.debian.org|http://mirrors.aliyun.com|g; s|http://security.debian.org|http://mirrors.aliyun.com|g' "$$f"; \
+            fi; \
+        done; \
+        echo "[BUILD] Using Aliyun APT mirror"; \
+    elif [ "${APT_MIRROR}" = "tuna" ]; then \
+        for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
+            if [ -f "$$f" ]; then \
+                sed -i 's|http://deb.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.debian.org|https://mirrors.tuna.tsinghua.edu.cn|g' "$$f"; \
+            fi; \
+        done; \
+        echo "[BUILD] Using Tsinghua TUNA APT mirror"; \
+    else \
+        echo "[BUILD] Using default Debian APT sources"; \
+    fi && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        pkg-config \
+        wget \
+        ca-certificates \
+        git \
+        file \
+        xz-utils \
+    && rm -rf /var/lib/apt/lists/* && \
+    echo "[BUILD] System packages installed" && \
+    echo "[BUILD] file: $(file --version | head -1)"
+
+# -----------------------------------------------------------------------------
+# [2/5] Configure conda channels and create cross-build environment
+# Reference: https://conda-forge.org/docs/how-to/advanced/cross-compilation/
+# -----------------------------------------------------------------------------
+RUN echo "=== [2/5] Creating cross-build conda environment (Python ${PYTHON_VERSION}) ===" && \
+    source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
+    conda config --system --set auto_activate_base false && \
+    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
+        printf 'channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\nshow_channel_urls: true\nchannel_priority: strict\nssl_verify: true\nsubdirs:\n  - linux-64\n  - osx-64\n  - noarch\n' > "${CONDA_DIR}/.condarc" && \
+        echo "[BUILD] Using Tsinghua TUNA conda mirror"; \
+    else \
+        printf 'channels:\n  - conda-forge\n  - defaults\nchannel_priority: strict\nsubdirs:\n  - linux-64\n  - osx-64\n  - noarch\n' > "${CONDA_DIR}/.condarc" && \
+        echo "[BUILD] Using default conda channels (conda-forge + defaults)"; \
+    fi && \
+    echo "[BUILD] Creating conda env with cross-compilation toolchain..." && \
+    conda create -y -n cross-build -c conda-forge \
+        python="${PYTHON_VERSION}" \
+        pip setuptools wheel setuptools-scm \
+        "conda-build>=3.28" \
+        conda-verify \
+        conda-forge-pinning \
+        "cmake>=3.26" \
+        "ninja>=1.13" \
+        make \
+        patchelf \
+        cctools_osx-64 \
+        ld64_osx-64 \
+        clang_osx-64 \
+        clangxx_osx-64 \
+        ldid \
+        cross-python_osx-64 \
+        "scikit-build-core>=0.10" \
+        py-lief \
+    && conda activate cross-build && \
+    echo "[BUILD] conda env 'cross-build' created, Python: $(python --version)" && \
+    echo "[BUILD] Cross-compiler tools verification:" && \
+    echo "[BUILD]   clang: $(clang --version | head -1)" && \
+    echo "[BUILD]   cmake: $(cmake --version | head -1)" && \
+    echo "[BUILD]   ninja: $(ninja --version)" && \
+    echo "[BUILD]   conda-build: $(conda-build --version 2>/dev/null || echo 'checking...')" && \
+    echo "[BUILD] Mach-O tools (cctools_osx-64):" && \
+    echo "[BUILD]   otool: $(which x86_64-apple-darwin20.0.0-otool 2>/dev/null || which otool 2>/dev/null || echo 'in prefix')" && \
+    echo "[BUILD]   install_name_tool: $(which x86_64-apple-darwin20.0.0-install_name_tool 2>/dev/null || echo 'in prefix')" && \
+    echo "[BUILD]   llvm-nm: $(which llvm-nm 2>/dev/null || which nm 2>/dev/null || echo 'in prefix')" && \
+    conda clean -ya && \
+    echo "[BUILD] Cross-build conda environment ready"
+
+# -----------------------------------------------------------------------------
+# [3/5] Download and install macOS SDK (MacOSX11.3.sdk)
+# -----------------------------------------------------------------------------
+RUN echo "=== [3/5] Setting up macOS SDK ===" && \
+    if [ "${SKIP_SDK_DOWNLOAD}" = "1" ]; then \
+        echo "[BUILD] SKIP_SDK_DOWNLOAD=1: SDK download skipped."; \
+        echo "[BUILD] Please mount MacOSX11.3.sdk at /opt/MacOSX11.3.sdk at runtime:"; \
+        echo "[BUILD]   docker run -v /path/to/MacOSX11.3.sdk:/opt/MacOSX11.3.sdk ..."; \
+        mkdir -p /opt/MacOSX11.3.sdk; \
+    else \
+        echo "[BUILD] Downloading MacOSX11.3.sdk from GitHub..."; \
+        echo "[BUILD] Source: https://github.com/phracker/MacOSX-SDKs"; \
+        mkdir -p /opt && \
+        cd /opt && \
+        wget --timeout=120 --tries=3 -q \
+            "https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX11.3.sdk.tar.xz" \
+            -O MacOSX11.3.sdk.tar.xz || \
+        (echo "[WARN] Primary download failed, trying alternative..." && \
+         wget --timeout=120 --tries=3 -q \
+            "https://raw.githubusercontent.com/phracker/MacOSX-SDKs/master/MacOSX11.3.sdk.tar.xz" \
+            -O MacOSX11.3.sdk.tar.xz) || \
+        (echo "[ERROR] SDK download failed! Build with --build-arg SKIP_SDK_DOWNLOAD=1"; \
+         echo "[ERROR] Then mount SDK manually: -v /path/to/MacOSX11.3.sdk:/opt/MacOSX11.3.sdk"; \
+         rm -f MacOSX11.3.sdk.tar.xz; \
+         exit 1); \
+        echo "[BUILD] Extracting MacOSX11.3.sdk..."; \
+        tar -xJf MacOSX11.3.sdk.tar.xz -C /opt && \
+        rm -f MacOSX11.3.sdk.tar.xz && \
+        echo "[BUILD] macOS SDK installed at /opt/MacOSX11.3.sdk"; \
+        echo "[BUILD] SDK contents:"; \
+        ls -la /opt/MacOSX11.3.sdk/ | head -20; \
+    fi && \
+    echo "[BUILD] CONDA_BUILD_SYSROOT=${CONDA_BUILD_SYSROOT}" && \
+    echo "[BUILD] MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}" && \
+    test -d "${CONDA_BUILD_SYSROOT}" || echo "[WARN] SDK directory not present yet (will be mounted at runtime)"
+
+# -----------------------------------------------------------------------------
+# [4/5] Setup workspace, copy build configs and scripts
+# -----------------------------------------------------------------------------
+RUN echo "=== [4/5] Setting up workspace and build scripts ===" && \
+    mkdir -p "${WORKSPACE_DIR}" "${OUTPUT_DIR}" /opt/recipes && \
+    echo "[BUILD] Workspace directories created:" && \
+    echo "[BUILD]   WORKSPACE_DIR: ${WORKSPACE_DIR}" && \
+    echo "[BUILD]   OUTPUT_DIR:    ${OUTPUT_DIR}" && \
+    echo "[BUILD]   Recipes dir:   /opt/recipes" && \
+    echo "[BUILD] Conda-bld output: ${CONDA_BUILD_OUTPUT_DIR}"
+
+COPY conda_build_config.yaml /opt/recipes/conda_build_config.yaml
+COPY scripts/build-macos-cross.sh /usr/local/bin/build-macos-cross.sh
+
+RUN chmod +x /usr/local/bin/build-macos-cross.sh && \
+    sed -i 's/\r$//' /usr/local/bin/build-macos-cross.sh && \
+    echo "[BUILD] Build script installed: /usr/local/bin/build-macos-cross.sh" && \
+    echo "[BUILD] Build config copied: /opt/recipes/conda_build_config.yaml" && \
+    cat /opt/recipes/conda_build_config.yaml
+
+# -----------------------------------------------------------------------------
+# [5/5] Final verification and metadata
+# -----------------------------------------------------------------------------
+RUN echo "=== [5/5] Final verification ===" && \
+    BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
+    printf 'BUILD_DATE=%s\nBASE_IMAGE=continuumio/miniconda3:latest\nENV_NAME=cross-build\nPYTHON_VERSION=%s\nTARGET_PLATFORM=osx-64\nMACOSX_DEPLOYMENT_TARGET=%s\nCONDA_BUILD_SYSROOT=%s\nCONDA_BUILD_OUTPUT_DIR=%s\nPURPOSE=macos-cross-compile\n' \
+        "$BUILD_DATE" "${PYTHON_VERSION}" "${MACOSX_DEPLOYMENT_TARGET}" "${CONDA_BUILD_SYSROOT}" "${CONDA_BUILD_OUTPUT_DIR}" \
+        > /etc/caffe-ffi-cross-build-info && \
+    cat /etc/caffe-ffi-cross-build-info && \
+    source "${CONDA_DIR}/etc/profile.d/conda.sh" && conda activate cross-build && \
+    echo "[BUILD] Environment summary:" && \
+    echo "  python:        $(python --version)" && \
+    echo "  conda:         $(conda --version)" && \
+    echo "  conda-build:   $(conda-build --version 2>/dev/null || true)" && \
+    echo "  cmake:         $(cmake --version | head -1)" && \
+    echo "  clang target:  $(clang --print-targets 2>&1 | grep x86_64-apple || echo 'checking...')" && \
+    echo "  cctools prefix: x86_64-apple-darwin20.0.0-" && \
+    echo "  SDK check:     $(test -d ${CONDA_BUILD_SYSROOT}/usr/include && echo 'SDK headers present' || echo 'SDK will be mounted or downloaded')" && \
+    echo "[BUILD] ========== CROSS-COMPILE IMAGE BUILD COMPLETE =========="
+
+WORKDIR ${WORKSPACE_DIR}
+
+# Default entrypoint: run the macOS cross-compile build script
+ENTRYPOINT ["/usr/local/bin/build-macos-cross.sh"]
+CMD []

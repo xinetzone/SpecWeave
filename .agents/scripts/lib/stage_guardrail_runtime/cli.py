@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 
 from lib.cli import print_error, add_common_args
@@ -64,3 +69,4 @@ def main():
         return run_status(json_output=args.json, enable_color=enable_color)
 
     return 0
+

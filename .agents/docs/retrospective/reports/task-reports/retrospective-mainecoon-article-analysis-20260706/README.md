@@ -24,7 +24,7 @@ tags: [mainecoon, article-analysis, defuddle, sub-agent, social-world-model, ret
 | 任务 Spec | `.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md` |
 | 任务清单 | `.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md` |
 | 检查清单 | `.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/checklist.md` |
-| 分析报告 | `.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/analysis-report.md` |
+| 分析报告 | `docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.md` |
 | 文章原文缓存 | `.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md` |
 
 ## S1 事实收集

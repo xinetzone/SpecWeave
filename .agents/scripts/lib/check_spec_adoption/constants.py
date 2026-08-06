@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 from lib.frontmatter import _YAML_FRONTMATTER_RE
@@ -75,3 +80,4 @@ FM_ISSUE_NAMES_SHORT = {
 }
 
 NAV_PATTERNS = ['上一章', '下一章', '返回目录', 'prev', 'next', '返回索引']
+

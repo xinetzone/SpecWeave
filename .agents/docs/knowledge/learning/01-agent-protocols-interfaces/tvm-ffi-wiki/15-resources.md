@@ -14,7 +14,7 @@ tags: [tvm-ffi, ffi, build, examples, best-practices, faq, resources]
 | 资源 | 链接 | 说明 |
 |------|------|------|
 | 官方网站 | [https://tvm.apache.org/ffi/](https://tvm.apache.org/ffi/) | TVM FFI 官方文档站 |
-| GitHub 仓库 | [https://github.com/tlc-pack/tvm-ffi](https://github.com/tlc-pack/tvm-ffi) | 源码仓库，包含 issue 和 PR |
+| GitHub 仓库 | `github.com/tlc-pack/tvm-ffi`（原外部链接 2026-07 复检已失效：仓库已重命名/迁移，建议通过 tlc-pack 官方渠道确认新地址） | 原 tlc-pack 命名空间下的源码仓库（原包含 issue 和 PR），源仓库已下架，迁移方式未知，建议通过 TVM Apache 官方渠道确认新地址 |
 | Apache TVM 项目 | [https://tvm.apache.org/](https://tvm.apache.org/) | TVM 主项目，TVM FFI 的起源 |
 | DLPack 标准 | [https://github.com/dmlc/dlpack](https://github.com/dmlc/dlpack) | 张量交换开放标准 |
 | API 文档 | 见 `docs/` 目录 | Sphinx RST 格式的官方文档 |
@@ -251,10 +251,10 @@ from tvm_ffi import (
 | [pybind11](https://pybind11.readthedocs.io/) | C++ ↔ Python | 头文件库，绑定 C++ 类给 Python | pybind11 专注 C++/Python；TVM FFI 支持多语言，有反射和对象系统 |
 | [pybind11_abseil](https://github.com/pybind/pybind11_abseil) | C++ ↔ Python | pybind11 + Abseil 类型 | 同上 |
 | [cxx](https://cxx.rs/) | Rust ↔ C++ | Rust 安全的 C++ 互操作 | cxx 专注 Rust/C++；TVM FFI 支持更多语言 |
-| [wasm-bindgen](https://rustwasm.github.io/wasm-bindgen/) | Rust ↔ JS | WebAssembly 互操作 | 面向 Web 平台 |
+| `wasm-bindgen`（原外部链接 2026-07 复检已失效：rustwasm.github.io/wasm-bindgen/） | Rust ↔ JS | WebAssembly 互操作 | 面向 Web 平台 |
 | [Apache Arrow](https://arrow.apache.org/) | 跨语言 | 列式内存格式，跨语言数据交换 | Arrow 侧重数据格式；TVM FFI 侧重函数调用和对象系统 |
 | [Protocol Buffers](https://protobuf.dev/) | 跨语言 | IDL 驱动的序列化 | Protobuf 是序列化+RPC；TVM FFI 是内存级 ABI 互操作 |
-| [FlatBuffers](https://flatbuffers.google/) | 跨语言 | 零拷贝序列化 | 类似 Arrow，侧重数据序列化 |
+| [FlatBuffers](https://flatbuffers.dev/) | 跨语言 | 零拷贝序列化 | 类似 Arrow，侧重数据序列化 |
 | [COM](https://learn.microsoft.com/en-us/windows/win32/com/component-object-model--com--portal) | C++ (Windows) | 微软组件对象模型 | COM 是 Windows 平台专有；TVM FFI 跨平台 |
 | [GObject](https://docs.gtk.org/gobject/) | C | GNOME 对象系统 | GObject 用 C 实现 OOP；TVM FFI 原生 C++ |
 

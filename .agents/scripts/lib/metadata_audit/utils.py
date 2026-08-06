@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 import tomllib
 from pathlib import Path
@@ -110,3 +115,4 @@ def patch_toml_missing_fields(toml_abs: Path, md_id: str | None, title: str | No
 
     toml_abs.write_text('\n'.join(new_lines), encoding='utf-8')
     return True
+

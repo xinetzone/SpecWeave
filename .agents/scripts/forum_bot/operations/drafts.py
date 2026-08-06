@@ -2,6 +2,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import TYPE_CHECKING, Any
 
 from ..auth import _get_current_username, check_login
@@ -112,3 +125,4 @@ def do_clean_drafts(headless: bool = True, debug: bool = False) -> None:
         ok(f"清理完成，共删除 {count} 个草稿")
 
         browser.close()
+

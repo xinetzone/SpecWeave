@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -62,3 +74,4 @@ def test_lib_init_can_run_as_script() -> None:
     stdout = result.stdout or ""
     assert "# .agents/scripts/lib/ API" in stdout
     assert "lib.project" in stdout
+

@@ -78,6 +78,18 @@ category: documentation
 4. 运行docgen更新全局导航
 5. 更新统计数字（总条目数、分类数）
 
+### 步骤6：批量生成后元数据一致性检查（必做）
+当使用subagent批量生成多个wiki文件时，生成完成后必须执行以下检查：
+1. **source字段统一**：所有文件的source字段必须指向原始来源URL（如飞书wiki URL），不能错误指向衍生页面（如订阅页、控制台页）
+2. **date字段统一**：所有文件的date字段使用相同的创建日期
+3. **category字段统一**：同一wiki下所有文件的category一致
+4. **tags字段一致**：核心标签在各文件间保持一致（允许各章节添加特色标签）
+5. **id字段规范**：id遵循`<wiki-slug>-<chapter-number>`命名约定
+6. **交叉链接验证**：所有章末导航链接（prev/next/返回总览）指向存在的文件
+7. **跨wiki链接验证**：指向其他wiki的相对路径正确可达
+
+**验证方法**：使用Grep批量检查所有文件的frontmatter字段一致性，或编写简单脚本比对。
+
 ## 反模式
 
 | 反模式 | 后果 | 正确做法 |
@@ -88,6 +100,7 @@ category: documentation
 | 在vendor目录直接修改 | 无法提交，submodule冲突 | 在knowledge区独立创建Wiki |
 | 纯文字描述类型系统 | 读者理解困难 | 使用类型映射表格 |
 | 忘记发布到索引 | 文档成为孤岛，难以发现 | 更新README和导航表 |
+| 批量生成后不检查元数据 | source/date/tags各文件不一致，溯源混乱 | 执行步骤6元数据一致性检查 |
 
 ## 迁移验证
 - ✅ TVM FFI Wiki教程：14章+examples_demo.py，已发布到knowledge/tech/

@@ -18,7 +18,7 @@ category: "tech"
 
 Module系统是TVM-FFI实现插件化扩展的核心机制，它提供了动态加载编译好的动态库（.so/.dll/.dylib）的能力。通过Module系统，你可以在运行时动态加载C++函数库、即时编译源码，并将扩展打包进Python wheel。
 
-核心API定义在 [module.h](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/extra/module.h) 和 `tvm_ffi.module` 模块。
+核心API定义在 `module.h`（源项目归档路径） 和 `tvm_ffi.module` 模块。
 
 ## Module概念
 
@@ -307,11 +307,11 @@ ABI稳定性保证：
 
 ## 参考
 
-- [C++ Module API](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/extra/module.h)
-- [Python Module API](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/python/tvm_ffi/module.py)
-- [func_module.rst](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/docs/concepts/func_module.rst)
-- [inline_module示例](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/inline_module/main.py)
-- [python_packaging示例](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/examples/python_packaging/)
+- `C++ Module API`（源项目归档路径）
+- `Python Module API`（源项目归档路径）
+- `func_module.rst`（源项目归档路径）
+- `inline_module示例`（源项目归档路径）
+- `python_packaging示例`（源项目归档路径）
 
 ---
 

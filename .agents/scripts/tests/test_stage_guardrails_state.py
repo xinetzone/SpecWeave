@@ -1,5 +1,18 @@
 """StageStateManager 单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import pytest
 from pathlib import Path
@@ -371,3 +384,4 @@ class TestToDict:
         assert d['is_active'] is True
         assert d['completed_stages'] == []
         assert d['transition_count'] == 1
+

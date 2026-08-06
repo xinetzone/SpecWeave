@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import sys
 from pathlib import Path
@@ -136,3 +141,4 @@ def cmd_format(args) -> int:
                 print_format_result_text(r, args.verbose)
 
     return 1 if any(r.errors for r in results) else 0
+

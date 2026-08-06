@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 from lib.frontmatter import extract_all_yaml_fields
@@ -57,3 +62,4 @@ def init_fm_issues():
         'has_nested': 0,
         'bloated_fm': 0,
     }
+

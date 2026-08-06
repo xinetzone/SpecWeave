@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import sys
@@ -97,3 +102,4 @@ def main() -> None:
     )
 
     sys.exit(1 if total_errors > 0 else 0)
+

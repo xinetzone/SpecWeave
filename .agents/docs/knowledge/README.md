@@ -2,27 +2,28 @@
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：693
-- **分类数**：57
-- **标签数**：1449
+- **总条目数**：796
+- **分类数**：60
+- **标签数**：1574
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
 | architecture | 1 | [architecture](category-index.md#architecture) |
-| best-practices | 12 | [best-practices](best-practices/README.md) |
+| best-practices | 23 | [best-practices](best-practices/README.md) |
 | decisions | 1 | [decisions](decisions/README.md) |
-| docs | 8 | [docs](category-index.md#docs) |
-| knowledge | 346 | [knowledge](category-index.md#knowledge) |
-| learning | 211 | [learning](learning/README.md) |
+| docs | 10 | [docs](category-index.md#docs) |
+| examples | 6 | [examples](category-index.md#examples) |
+| knowledge | 352 | [knowledge](category-index.md#knowledge) |
+| learning | 234 | [learning](learning/README.md) |
 | operations | 11 | [operations](operations/README.md) |
 | reference | 3 | [reference](category-index.md#reference) |
 | research | 1 | [research](category-index.md#research) |
 | standards | 1 | [standards](category-index.md#standards) |
 | tech | 14 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 80 | [unknown](category-index.md#unknown) |
+| unknown | 146 | [unknown](category-index.md#unknown) |
 
 ## 辅助索引
 
@@ -33,17 +34,18 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [TVM FFI 中文 Wiki 教程总览](tech/tvm-ffi-wiki/00-overview.md) | 2026-07-28 | tech |
-| [从 Prompt 到 Loop：四层工程打造稳定可控的 AI Agent](learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md) | 2026-07-14 | unknown |
-| [七概念×DeepTutor实践教程 - 概述](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/00-overview.md) | 2026-07-14 | unknown |
-| [七概念×DeepTutor实践教程 - 术语表](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/glossary.md) | 2026-07-14 | unknown |
-| [R - 复盘 (Retrospective)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/01-r-retrospective.md) | 2026-07-14 | unknown |
-| [I - 洞察 (Insight)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/02-i-insight.md) | 2026-07-14 | unknown |
-| [E - 萃取 (Extraction)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/03-e-extraction.md) | 2026-07-14 | unknown |
-| [C - 原子提交 (Atomic Commit)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/04-c-atomic-commit.md) | 2026-07-14 | unknown |
-| [A - 原子化 (Atomization)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/05-a-atomization.md) | 2026-07-14 | unknown |
-| [F - 第一性原理 (First Principles)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/06-f-first-principles.md) | 2026-07-14 | unknown |
-| [V - 对抗性审查 (Adversarial Review)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/07-v-adversarial-review.md) | 2026-07-14 | unknown |
+| **[火山引擎 AgentKit 企业级 AI Agent 平台 Wiki 教程](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md)** | **2026-07-31** | **learning** |
+| [conda-forge 交叉编译配置完整指南](best-practices/conda-forge-cross-compilation-guide.md) | 2026-07-30 | best-practices |
+| [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) | 2026-07-29 | best-practices |
+| [TVM FFI 教程总览](tech/tvm-ffi-wiki/00-overview.md) | 2026-07-28 | tech |
+| [项目结构说明](tech/tvm-ffi-wiki/01-project-structure.md) | 2026-07-28 | tech |
+| [Any/AnyView 类型系统](tech/tvm-ffi-wiki/02-any-type.md) | 2026-07-28 | tech |
+| [Object 对象系统](tech/tvm-ffi-wiki/03-object-system.md) | 2026-07-28 | tech |
+| [Function 函数与全局注册表](tech/tvm-ffi-wiki/04-function-registry.md) | 2026-07-28 | tech |
+| [Container 容器类型](tech/tvm-ffi-wiki/05-containers.md) | 2026-07-28 | tech |
+| [Reflection 反射系统](tech/tvm-ffi-wiki/06-reflection.md) | 2026-07-28 | tech |
+| [Module 模块系统](tech/tvm-ffi-wiki/07-module-system.md) | 2026-07-28 | tech |
+| [Rainman Translate Book Wiki 教程](learning/03-agent-platforms-tools/rainman-translate-book-wiki.md) | 2026-07-04 | learning |
 
 ## 相关资源
 
@@ -57,6 +59,8 @@
 - [七概念视角：《微软Copilot成本困境与多模型时代》深度透视报告](../retrospective/2026-07-13-seven-concepts-copilot-multimodel-analysis.md)
 - [Agent App Marketplace Task 0 — 工作区发现协议与提示词自举协议复盘报告](../retrospective/2026-07-13-task0-workspace-protocols.md)
 - [竹简悟道·秒悟竞赛冲刺复盘报告——Trae Solo+七概念方法论实战](../retrospective/2026-07-14-meoo-contest-sprint-retro.md)
+- [SpecWeave / external/xmhub/npu_tvm 七概念正式复盘报告](../retrospective/2026-07-17-npu-tvm-seven-concepts-retro.md)
+- [Windows磁盘空间诊断与WSL虚拟磁盘优化实践复盘](../retrospective/2026-07-22-windows-disk-cleanup-wsl-optimization.md)
 - [项目硬编码问题系统性复盘报告](../retrospective/hardcode-retrospective-report.md)
 - [元方法论自举执行日志](../retrospective/meta-bootstrap-execution-log.md)
 - [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/prompt-extraction.md)
@@ -97,4 +101,4 @@
 
 ---
 
-*索引自动生成于 2026-07-14 23:23:55*
+*索引自动生成于 2026-07-30 17:21:03*

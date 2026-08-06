@@ -16,6 +16,7 @@ date: "2026-07-09"
 |------|------|------|
 | [Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流](agnes-pavo-creative-platform-wiki.md) | Agnes AI 与 Pavo 创作平台完整学习教程：免费多模态API+一站式AI短剧工作流 | `agnes-ai` `pavo` `ai-video` |
 | [Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！](animejs-threejs-adapter-analysis.md) | 学习分析《Anime.js 4.5 + Three.js，前端3D动画王炸组合来了！》一文：Anime.js 4.5 推出官方 Three.js 适配器，通过适配器模式、API扁平化和前端语法糖，解决Three.js动画六大痛点，让3D动画写起来像CSS transform一样简单。 | `animejs` `threejs` `3d-animation` |
+| [Anime.js 4.5+Three.js 适配器完整教程](animejs-threejs-adapter-wiki/README.md) | Anime.js 4.5 官方 Three.js 适配器系统性教程，从快速开始、核心概念、五大特性到实战案例、最佳实践，完整掌握3D动画开发。 | `animejs` `threejs` `3d-animation` `wiki-tutorial` |
 | [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](audiox-turbo-audio-generation-wiki.md) | AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架 | `AudioX-Turbo` `音频生成` `音乐生成` |
 | [Ian Xiaohei Illustrations（小嘿插图）学习笔记](ian-xiaohei-illustrations.md) | Ian Xiaohei Illustrations（小嘿插图）学习笔记 |  |
 | [LibTV AI 短剧创作工具学习 Wiki](libtv-ai-shortdrama-wiki.md) | LibTV AI 短剧创作工具学习 Wiki | `libtv` `ai-shortdrama` `ai-video` |

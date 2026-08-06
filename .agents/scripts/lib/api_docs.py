@@ -19,6 +19,12 @@ written = write_split_docs(Path("lib/"))
 CLI 模式：`python lib/api_docs.py --help`
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import argparse
 from pathlib import Path
@@ -211,3 +217,4 @@ if __name__ == "__main__":
         print(f"\n共写入 {len(written)} 个文件（1个索引页 + {len(written)-1}个模块文档）")
     else:
         print(generate_api_docs())
+

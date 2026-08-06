@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 
 HTTP_STATUS_CODES = {100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226,
@@ -37,3 +42,4 @@ SAFE_STRING_VALUES = {
     "r", "w", "a", "rb", "wb", "ab", "r+", "w+", "a+",
     ".", "..",
 }
+

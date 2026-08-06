@@ -20,7 +20,7 @@
 
 ## 剧情短片全流水线
 - [x] 阐述剧情短片模块的核心价值（市面工具仅生成单个镜头，Pavo实现全流水线）
-- [x] 八步工作流完整清晰：剧本创作→人物场景设定→分镜设计→角色配图→分镜脚本→关键帧设计→视频生成→成片渲染
+- [x] 八步工作流完整清晰：剧本创作→人物场景设定→分镜设计→角色配图→分镜脚本撰写→关键帧设计→视频生成→成片渲染
 - [x] 六个人机交互确认点明确（需求确认→剧本确认→角色确认→配图确认→分镜确认→合成确认）
 - [x] 适用场景覆盖：热点短剧、职场轻喜剧、情侣剧情、萌宠拟人、品牌剧情广告
 - [x] 客观说明当前局限性（电影级质感不足，需要人工介入调整）
@@ -64,10 +64,10 @@
 - [x] 包含 GitHub Projects 看板链接
 - [x] 链接以 Markdown 标准链接格式呈现
 
-## 索引登记
-- [x] `docs/knowledge/README.md` 的 learning 类目下已登记 Agnes Pavo 学习 wiki 条目
-- [x] 条目包含文档标题、摘要、日期、标签与相对路径链接
-- [x] 统计摘要数字已更新（总条目158、learning类目87）
+## 索引登记与分类
+- [x] 文档放置于正确分类目录：`.agents/docs/knowledge/learning/05-ai-multimodal-content/`
+- [x] 同目录下存在 `libtv-ai-shortdrama-wiki.md` 等同类型竞品文档，支持横向对比
+- [x] 已标注：知识库索引通过 `scripts/generate_index.py` 自动生成
 
 ## 命名规范与格式
 - [x] 文件名 `agnes-pavo-creative-platform-wiki.md` 符合 kebab-case 纯英文规范
@@ -86,5 +86,18 @@
 - [x] 主文档：[agnes-pavo-creative-platform-wiki.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 - [x] Spec文档：[spec.md](spec.md)
 - [x] 任务计划：[tasks.md](tasks.md)
-- [x] 验证清单：[checklist.md](../analyze-ai-anthropomorphic-interim-measures/checklist.md)
-- [x] 索引更新：[README.md](../../../../.agents/docs/knowledge/README.md)
+- [x] 验证清单：[checklist.md](checklist.md)
+- [x] 同目录竞品：[libtv-ai-shortdrama-wiki.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md)
+- [x] 知识库主入口：[README.md](../../../../.agents/docs/knowledge/README.md)
+
+## 七概念方法论复盘（R→I→E）
+- [x] R阶段：采集20条客观事实，G1质量门通过（无因果推断词）
+- [x] I阶段：提炼4条核心洞察（目录认知偏差/索引机制黑箱/Spec活文档/Checklist验证盲区），G2质量门通过（四元组完整）
+- [x] E阶段：萃取"Spec文档任务三验证工作法"可复用模式，G3质量门通过（可迁移性验证）
+- [x] spec.md路径错误已全部修正
+- [x] spec.md剧情短片工作流从6步更新为8步
+- [x] spec.md Open Questions已全部决策处置
+- [x] spec.md已添加七概念复盘沉淀章节（事实清单/核心洞察/可复用模式）
+- [x] tasks.md路径与任务描述已修正，添加Task13方法论复盘任务
+- [x] checklist.md交付物路径已修正（使用相对路径验证通过）
+- [x] checklist.md添加方法论验证检查项

@@ -1,5 +1,11 @@
 """Git 忽略规则检查（来自 check-gitignore.py）。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import subprocess
 import sys
 from pathlib import Path
@@ -73,3 +79,4 @@ def run(project_root: Path, args) -> int:
     print()
     print_header("验证通过: 所有临时依赖路径已被 .gitignore 覆盖")
     return 0
+

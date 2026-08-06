@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from mdi.validator import MDIValidator
 from mdi.parser import MDIParser
 from mdi.profiles import detect_profile_type
@@ -84,3 +96,4 @@ Users endpoint.
         doc = MDIParser(profile_type="webapi").parse_text(text)
         report = validator.validate_document(doc, source_path="<test>")
         assert report.profile_type == "webapi"
+

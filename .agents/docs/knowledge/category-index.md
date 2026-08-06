@@ -5,18 +5,21 @@
 
 ## 统计摘要
 
-- **总条目数**：679
+- **总条目数**：795
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 12 |
+| best-practices | 23 |
 | decisions | 1 |
 | docs | 8 |
+| docs/knowledge/mdi/generated/case1 | 1 |
+| docs/knowledge/mdi/generated/case3 | 1 |
+| examples | 6 |
 | knowledge | 40 |
 | knowledge/best-practices | 1 |
 | knowledge/learning | 5 |
-| knowledge/learning/01-agent-protocols-interfaces | 2 |
+| knowledge/learning/01-agent-protocols-interfaces | 8 |
 | knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols | 12 |
 | knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki | 15 |
 | knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki | 16 |
@@ -58,13 +61,14 @@
 | knowledge/learning/okr-wiki/scoring | 4 |
 | knowledge/learning/okr-wiki/templates | 7 |
 | knowledge/learning/okr-wiki/tools | 2 |
-| learning | 211 |
+| learning | 222 |
 | operations | 11 |
 | reference | 3 |
 | research | 1 |
 | standards | 1 |
+| tech | 14 |
 | troubleshooting | 4 |
-| unknown | 80 |
+| unknown | 146 |
 
 ## 按类别浏览
 
@@ -81,7 +85,14 @@
 | [AI拟人化互动服务极端情绪干预机制技术实施方案](best-practices/ai-anthropomorphic-crisis-intervention-implementation.md) | 针对《人工智能拟人化互动服务管理暂行办法》第13条要求，设计极端情绪/自残自杀干预机制的完整技术实施方案，包含系统架构、识别引擎、分级干预、运营后台、测试验收和7天上线排期 | 2026-07-08 | AI合规、极端情绪干预、安全机制、拟人化互动、技术方案 |
 | [Python AST静态分析实践：五类消歧法降低误报](best-practices/ast-static-analysis-disambiguation.md) | 基于并发安全检查器（六维检查法）开发实战，总结Python AST静态分析中降低误报的五类消歧策略，帮助开发者编写准确的代码检查工具。核心原则：宁可漏报，不可误报。 | 2026-07-08 | AST、static-analysis、python、false-positive、code-quality、automation |
 | [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
+| [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) |  | 2026-07-29 | CMake、modularization、build-system、refactoring、cross-platform、best-practice |
+| [编译型Python包数据文件生命周期管理](best-practices/compiled-package-data-file-lifecycle.md) | 基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Python包数据文件的完整生命周期管理方法：编译阶段显式复制、打包阶段完整性验证、运行阶段环境变量设置与文件校验。 | 2026-07-23 | Python、Nuitka、Cython、wheel、data-files、packaging、TVM、relay |
 | [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
+| [conda-forge 交叉编译配置完整指南](best-practices/conda-forge-cross-compilation-guide.md) | conda-forge 交叉编译配置完整调研报告，覆盖从 linux-64 构建 osx-64/osx-arm64/win-64 平台包的完整方案：平台三元组、工具链包名清单、conda_build_config.yaml模板、meta.yaml依赖分离、build.sh交叉编译检测、CMAKE_ARGS变量传递、scikit-build-core适配、Wine运行时测试、常见陷阱与解决方案。 | 2026-07-30 | conda-forge、cross-compilation、conda-build、CMake、scikit-build-core、Docker、Wine、macOS、Windows、toolchain、RPATH |
+| [配置文件放置治理与 .temp/ 临时文件约定](best-practices/config-file-placement-convention.md) | SpecWeave 项目关键配置文件的标准存放路径、放置决策树、Python 自动加载约定（sitecustomize.py / .pth / PYTHONPATH 关系）、sitecustomize.py 曾被错放根目录的根因分析，以及 .temp/ 临时文件的用途分类、命名规则、保留期与清理机制。 | 2026-07-18 | - |
+| [DataLoader Pickle 序列化问题诊断 SOP](best-practices/dataloader-pickle-diagnosis-sop.md) | DataLoader pickle 序列化问题诊断标准流程，整合诊断指南与检查清单精华。5 步流程 + 6 种不可序列化模式 + 3 种修复方案 + 跨启动模式验证矩阵，适用于 Python 3.14 forkserver 兼容性排查。 | 2026-07-23 | Python、pickle、serialization、multiprocessing、DataLoader、diagnosis、SOP、checklist |
+| [目录迁移五步法检查清单](best-practices/directory-migration-checklist.md) |  | 2026-07-18 | - |
+| [Docker镜像更新的声明式优先原则](best-practices/docker-declarative-first-principle.md) | 基于xmnn-client Docker commit入口配置泄漏修复实战复盘，提炼Docker镜像更新的声明式优先原则：优先使用Dockerfile声明式构建，docker commit仅用于快速原型验证，避免运行时状态隐式继承导致的配置泄漏。 | 2026-07-23 | Docker、Dockerfile、docker-commit、declarative、image-build、containerization |
 | [并发安全八维检查法技术规格](best-practices/eight-dimensions-concurrent-safety-spec.md) |  | 2026-07-08 | concurrent-safety、AST、static-analysis、eight-dimensions、check-rules、pre-commit |
 | [文件 I/O 并发安全规范：原子写入、日志模板与重试策略](best-practices/file-io-concurrency-safety.md) | 基于原子写入重构实战（11个模块统一改造、46个测试覆盖、并发成功率82%→100%），提炼文件I/O并发安全三原则：写共享文件必须原子化、日志必须分阶段计时、重试必须有限次+退避。提供决策树、日志模板、重试参数规范和完整代码示例，作为所有涉及文件写入的脚本必须遵守的开发规范。 | 2026-07-12 | concurrency、file-io、atomic-write、logging、retry-pattern、windows、defensive-programming |
 | [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。 | 2026-07-08 | git-hooks、pre-commit、architecture、cross-platform、automation |
@@ -90,6 +101,10 @@
 | [Parser 复杂度预算 Checklist](best-practices/parser-complexity-budget.md) | 基于MDI项目parser.py（1465行）重构复盘的经验总结：处理半结构化数据（Markdown/自然语言/配置文件）的Parser应预留2-3倍于Generator的时间/代码量预算，遵循三层架构拆分，并先写20+边界case测试。 | 2026-07-03 | parser、复杂度预算、semi-structured-parsing、三层架构、边界case、TDD、checklist |
 | [方法论模式第3次验证报告：模板批量升级场景](best-practices/pattern-validation-v3-template-batch-upgrade.md) | 分类处置决策树(Classification-Disposition Decision Tree)与三阶段渐进推广验证(Phased Rollout Validation)两个L2治理模式的第3次验证报告。验证场景为复盘模板v1.2批量标准化升级（61个项目），验证了模式在轻量级模板升级场景下的有效性，记录了P1批量执行后集中格式校验的新增实践。 | 2026-07-06 | pattern-validation、L2-pattern、phased-rollout、classification-disposition、batch-upgrade、governance、methodology-evolution |
 | [从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察](best-practices/pdf-export-mermaid-automation-insights.md) | 从一次Mermaid漏斗图重绘与PDF导出任务中萃取的工程经验：三段式中文Markdown+Mermaid PDF导出法、Mermaid全量扫描自动化、以及三个核心工程洞察（工具选择熟悉度偏差、无头浏览器DOM检测原则、自动化检查的免费质量提升）。 | 2026-07-11 | pdf导出、mermaid、playwright、pandoc、自动化、工程洞察、工具封装、质量保证 |
+| [Python大版本升级破坏性变更检查清单](best-practices/python-version-upgrade-compatibility-check.md) | 基于xmnn-client Python 3.14迁移实战复盘，提炼Python大版本升级的破坏性变更检查清单，重点关注multiprocessing默认行为变更、弃用/移除模块、AST节点变更等隐蔽陷阱。 | 2026-07-23 | Python、version-upgrade、compatibility、multiprocessing、breaking-changes、checklist |
+| [C/C++共享库符号可见性控制最佳实践](best-practices/symbol-visibility-control.md) | 基于TVM符号可见性控制修复实战复盘，提炼共享库符号可见性精确控制方法、--exclude-libs,ALL最佳实践、静态注册机制保护策略等核心洞察，提供完整的符号冲突诊断与修复指南。 | 2026-07-18 | C/C++、linker、symbol-visibility、shared-library、LLVM、TVM、CMake、anti-pattern |
+| [TRAE Agent 沙箱配置与使用最佳实践指南](best-practices/trae-agent-sandbox-guide.md) |  | 2026-07-20 | sandbox、security、agent-environment、configuration、trae、best-practices、newbie-guide |
+| [Wrapper脚本注入模式](best-practices/wrapper-script-injection-pattern.md) | 基于xmnn Nuitka编译包Python 3.14兼容性修复实战复盘，提炼wrapper脚本注入模式：通过纯Python包装脚本在导入编译产物前注入运行时配置，实现不侵入源码的兼容性修复。 | 2026-07-23 | Python、wrapper、runpy、compiled-package、runtime-patch、compatibility |
 
 ### decisions
 
@@ -109,6 +124,29 @@
 | [MDI研究报告 - 版本控制与变更管理最佳实践](mdi-research/05-versioning-best-practices.md) |  | 2026-07-02 | - |
 | [MDI研究报告 - 未来演进方向](mdi-research/06-future-evolution.md) |  | 2026-07-02 | - |
 | [MDI研究报告 - 结论](mdi-research/07-conclusion.md) |  | 2026-07-02 | - |
+
+### docs/knowledge/mdi/generated/case1
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [用户管理 API](mdi/generated/case1/user-management-api.md) |  | 2026-07-02 | - |
+
+### docs/knowledge/mdi/generated/case3
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [文件操作 CLI 工具](mdi/generated/case3/file-cli.md) |  | 2026-07-02 | - |
+
+### examples
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [文件操作 CLI 工具](mdi/examples/file-cli.md) |  | 2026-07-02 | - |
+| [数据生成 API](mdi/examples/generate-api.md) |  | 2026-07-02 | - |
+| [博客平台 GraphQL API](mdi/examples/graphql-blog-cn.md) |  | 2026-07-02 | - |
+| [Blog GraphQL API](mdi/examples/graphql-blog.md) |  | 2026-07-02 | - |
+| [Todo API](mdi/examples/todo-api.md) |  | 2026-07-02 | - |
+| [用户管理 API](mdi/examples/user-api.md) |  | 2026-07-02 | - |
 
 ### knowledge
 
@@ -177,6 +215,12 @@
 |------|------|------|------|
 | [Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析](learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) |  | 2026-07-04 | agent-runtime、agent-protocol、langgraph、openai-assistants、autogen、claude-sdk、mcp、thread、run、checkpoint、artifact、event、human-in-the-loop、error-recovery、multi-agent、observability |
 | [国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮](learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md) |  | 2026-07-04 | skill、mcp、cli、ai-agent、ecosystem、domestic、wechat、feishu、dingtalk、payment |
+| [Protobuf Wiki - 总览](learning/01-agent-protocols-interfaces/protobuf-wiki/00-overview.md) |  | 2026-07-23 | - |
+| [Protobuf Wiki - 版本演进时间轴](learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.md) |  | 2026-07-23 | - |
+| [Protobuf Wiki - 三版对比矩阵](learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.md) |  | 2026-07-23 | - |
+| [Protobuf Wiki - 核心功能演进](learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.md) |  | 2026-07-23 | - |
+| [Protobuf Wiki - 选型决策指南](learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.md) |  | 2026-07-23 | - |
+| [Protobuf Wiki - 迁移指南](learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.md) |  | 2026-07-23 | - |
 
 ### knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols
 
@@ -895,6 +939,17 @@
 | [TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）](learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.md) | 针对 external/TuyaOpen 工作区的可执行学习路线：先跑通 LINUX target 构建闭环，再进入硬件烧录与 AI 智能体硬件能力区。 | 2026-06-30 | tuyaopen、learning-path、iot、embedded、sdk、cli、tos |
 | [WSL CLI 命令树与架构 Wiki 参考手册](learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) | 基于 external/WSL 源码（src/windows/wslc/ + doc/docs/）深度核实的 WSL CLI 命令树、参数定义、CLI 架构四层模型与官方架构 Mermaid 源图。修正先前学习计划中关于 CLI 命令短形态的误判——list/remove 才是主名，ls/ps/rm/delete 是别名。补充 interop binfmt 机制、systemd 启动流程、wslservice COM 接口、mini_init 多通道拓扑等技术细节。所有信息均有源码文件锚点可追溯。 | 2026-07-01 | wsl、wslc、cli、command-tree、argument-definitions、architecture、mermaid、interop、systemd、wslservice、com、binfmt、hvsocket、source-verification |
 | [WSL 系统学习计划](learning/08-systems-infrastructure/wsl-learning-plan.md) | 基于 external/WSL 源码 + wsl.dev 开发者文档 + learn.microsoft.com 官方文档制定的系统学习计划，涵盖 Windows/Linux 三层架构、Linux 侧核心进程（mini_init/init/plan9/gns/relay）、Plan9/DrvFs 文件系统互操作、WSLC Container API 三语言投影（C/C#/C++ WinRT）、CMake 跨编译构建、组策略与诊断调试，包含 5 个实操练习、官方端到端示例、完整错误码表与 4 周学习路径。 | 2026-07-01 | wsl、learning-path、linux、windows、container、wslc、plan9、drvfs、cmake、sdk、diagnostics、hvsocket、gns、systemd、winrt、nuget、com、error-codes |
+| [WSL 概述与核心概念](learning/08-systems-infrastructure/wsl-wiki/00-overview.md) |  | 2026-07-20 | wsl、wsl2、overview、windows-subsystem-for-linux、introduction |
+| [安装与发行版管理](learning/08-systems-infrastructure/wsl-wiki/01-installation.md) |  | 2026-07-20 | wsl、installation、setup、distribution、upgrade、wsl2 |
+| [快速开始](learning/08-systems-infrastructure/wsl-wiki/02-quickstart.md) |  | 2026-07-20 | wsl、quickstart、getting-started、basic-commands、interop |
+| [CLI 完整命令参考](learning/08-systems-infrastructure/wsl-wiki/03-cli-reference.md) |  | 2026-07-20 | wsl、wslc、cli、command-reference、wsl.exe、container-cli、alias |
+| [核心架构与进程模型](learning/08-systems-infrastructure/wsl-wiki/04-architecture.md) |  | 2026-07-20 | wsl、wsl2、architecture、hvsocket、com、mini-init、plan9、gns、relay、mermaid |
+| [文件系统互操作](learning/08-systems-infrastructure/wsl-wiki/05-filesystem-interop.md) |  | 2026-07-20 | wsl、filesystem、drvfs、plan9、interop、wsl$、namespace、permission |
+| [WSL Container API 三语言编程接口](learning/08-systems-infrastructure/wsl-wiki/06-wslc-api.md) |  | 2026-07-20 | wsl、wslc、container-api、c-api、csharp-api、cpp-api、session、container、process、preview |
+| [网络、配置管理与systemd](learning/08-systems-infrastructure/wsl-wiki/07-network-config-systemd.md) |  | 2026-07-20 | wsl、networking、wsl.conf、.wslconfig、systemd、gns、dns、nat、mirroring |
+| [调试诊断与开发环境搭建](learning/08-systems-infrastructure/wsl-wiki/08-debugging-dev-env.md) |  | 2026-07-20 | wsl、debugging、diagnostics、development、vscode、gpu、cuda、docker、debug-shell |
+| [最佳实践与FAQ](learning/08-systems-infrastructure/wsl-wiki/09-best-practices-faq.md) |  | 2026-07-20 | wsl、best-practices、faq、troubleshooting、performance、tips |
+| [术语表与参考资料](learning/08-systems-infrastructure/wsl-wiki/10-glossary-references.md) |  | 2026-07-20 | wsl、glossary、references、terminology、cross-reference |
 | [《你以为的自由是一种幻觉》第一性原理分析](learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md) | 以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。 | 2026-07-13 | 第一性原理、AI时代认知、自由、认知悬浮、意图对齐、人机协作、知识建构 |
 
 ### operations
@@ -933,6 +988,25 @@
 |------|------|------|------|
 | [MDI Spec v1.0：Markdown即接口规范](mdi-spec-v1.0.md) |  | 2026-07-02 | - |
 
+### tech
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [TVM FFI 教程总览](tech/tvm-ffi-wiki/00-overview.md) | Apache TVM FFI 中文wiki教程总览 | 2026-07-28 | tvm-ffi、ffi、c++、python、ml-system |
+| [项目结构说明](tech/tvm-ffi-wiki/01-project-structure.md) |  | 2026-07-28 | tvm-ffi、project-structure |
+| [Any/AnyView 类型系统](tech/tvm-ffi-wiki/02-any-type.md) |  | 2026-07-28 | tvm-ffi、type-system、any、type-erasure |
+| [Object 对象系统](tech/tvm-ffi-wiki/03-object-system.md) |  | 2026-07-28 | tvm-ffi、object、reference-counting、inheritance |
+| [Function 函数与全局注册表](tech/tvm-ffi-wiki/04-function-registry.md) |  | 2026-07-28 | tvm-ffi、function、packed-func、registry |
+| [Container 容器类型](tech/tvm-ffi-wiki/05-containers.md) |  | 2026-07-28 | tvm-ffi、container、array、map、tensor |
+| [Reflection 反射系统](tech/tvm-ffi-wiki/06-reflection.md) |  | 2026-07-28 | tvm-ffi、reflection、dataclass、stubgen |
+| [Module 模块系统](tech/tvm-ffi-wiki/07-module-system.md) |  | 2026-07-28 | tvm-ffi、module、dynamic-loading、dll |
+| [C++ 开发指南](tech/tvm-ffi-wiki/08-cpp-guide.md) |  | 2026-07-28 | tvm-ffi、cpp、guide、cmake、build |
+| [Python 开发指南](tech/tvm-ffi-wiki/09-python-guide.md) |  | 2026-07-28 | tvm-ffi、python、guide、cython |
+| [构建与打包](tech/tvm-ffi-wiki/10-build-packaging.md) |  | 2026-07-28 | tvm-ffi、build、cmake、packaging、wheel |
+| [实战案例](tech/tvm-ffi-wiki/11-examples.md) |  | 2026-07-28 | tvm-ffi、examples、tutorial、kernel |
+| [常见问题解答 (FAQ)](tech/tvm-ffi-wiki/12-faq.md) |  | 2026-07-28 | tvm-ffi、faq、troubleshooting |
+| [核心源码解析（进阶）](tech/tvm-ffi-wiki/13-source-analysis.md) |  | 2026-07-28 | tvm-ffi、source-code、internals、advanced |
+
 ### troubleshooting
 
 | 标题 | 摘要 | 日期 | 标签 |
@@ -949,10 +1023,30 @@
 | [stage-guardrails-guide](stage-guardrails-guide.md) |  |  | - |
 | [three-layer-routing](three-layer-routing.md) |  |  | - |
 | [VENDOR-INTEGRATION](VENDOR-INTEGRATION.md) |  |  | - |
+| [Caffe-Slim TVM FFI 环境调试与错误排查手册](best-practices/caffe-slim-tvm-ffi-troubleshooting.md) |  | 2026-07-27 | caffe-slim、tvm-ffi、troubleshooting、ffi、python-bindings、wsl、environment-debugging、dlpack |
 | [L2 渐进式披露机制优化建议](best-practices/l2-progressive-disclosure-optimization.md) |  | 2026-07-12 | - |
 | [L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录（P0+P1+P2完成）](best-practices/l2-progressive-disclosure-performance.md) |  | 2026-07-12 | - |
+| [PowerShell安全下载文件最佳实践——三重防御验证指南](best-practices/powershell-secure-download-verification.md) |  |  | PowerShell、HTTPS、文件下载、安全、证书验证、最佳实践、脚本工具 |
 | [spec-loader-cold-start-storm-contingency](best-practices/spec-loader-cold-start-storm-contingency.md) |  |  | - |
 | [spec-loader-config-guide](best-practices/spec-loader-config-guide.md) |  |  | - |
+| [文档标题](docs-separation-guide/DOC_TEMPLATE.md) |  |  | - |
+| [格式规范指南](docs-separation-guide/FORMAT_GUIDE.md) |  |  | - |
+| [文档分离方案知识库](docs-separation-guide/index.md) |  |  | - |
+| [知识图谱示例](docs-separation-guide/KNOWLEDGE_GRAPH_EXAMPLE.md) |  |  | - |
+| [维护指南](docs-separation-guide/MAINTENANCE_GUIDE.md) |  |  | - |
+| [通用知识](docs-separation-guide/general/index.md) |  |  | - |
+| [七概念方法论](docs-separation-guide/general/domain/index.md) |  |  | - |
+| [第一性原理](docs-separation-guide/general/philosophy/index.md) |  |  | - |
+| [变更日志](docs-separation-guide/tech/changelog.md) |  |  | - |
+| [部署指南](docs-separation-guide/tech/deploy.md) |  |  | - |
+| [核心功能](docs-separation-guide/tech/features.md) |  |  | - |
+| [核心知识](docs-separation-guide/tech/index.md) |  |  | - |
+| [项目概述](docs-separation-guide/tech/intro.md) |  |  | - |
+| [快速开始](docs-separation-guide/tech/quickstart.md) |  |  | - |
+| [API 参考](docs-separation-guide/tech/api/index.md) |  |  | - |
+| [设计哲学](docs-separation-guide/topics/design-philosophy.md) |  |  | - |
+| [深度研究](docs-separation-guide/topics/index.md) |  |  | - |
+| [行业分析](docs-separation-guide/topics/industry-analysis.md) |  |  | - |
 | [抖音 Vibecoding 人气赛道·执行行动计划](learning/douyin-vibecoding-action-plan.md) |  |  | vibecoding、抖音、执行计划、行动指南、TRAE大赛 |
 | [SpecWeave 抖音VibeCoding图文·视觉设计规范](learning/douyin-vibecoding-design-spec.md) |  |  | vibecoding、抖音、设计规范、视觉设计、SpecWeave |
 | [dspark-paper-wiki](learning/02-agent-engineering-methodology/dspark-paper-wiki.md) |  |  | - |
@@ -974,19 +1068,32 @@
 | [Co-Writer + Book Engine 模块](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/02-modules/02-cowriter-book.md) |  | 2026-07-14 | DeepTutor、模块、Co-Writer、Book |
 | [Knowledge Center + Learning Space 模块](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/02-modules/03-knowledge-learning.md) |  | 2026-07-14 | DeepTutor、模块、Knowledge、Learning |
 | [Memory + Settings 模块](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/02-modules/04-memory-settings.md) |  | 2026-07-14 | DeepTutor、模块、Memory、Settings |
-| [七概念×DeepTutor映射总览表](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md) |  | 2026-07-14 | 分析、映射、总览 |
-| [R 复盘在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md) |  | 2026-07-14 | 分析、R、复盘、映射 |
-| [I 洞察在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md) |  | 2026-07-14 | 分析、I、洞察、映射 |
-| [E 萃取在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md) |  | 2026-07-14 | 分析、E、萃取、映射 |
-| [C 原子提交在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md) |  | 2026-07-14 | 分析、C、原子提交、映射 |
-| [A 原子化在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md) |  | 2026-07-14 | 分析、A、原子化、映射 |
-| [F 第一性原理在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md) |  | 2026-07-14 | 分析、F、第一性原理、映射 |
-| [V 对抗性审查在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md) |  | 2026-07-14 | 分析、V、对抗性审查、映射 |
-| [七概念组合工作流分析](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md) |  | 2026-07-14 | 分析、工作流、组合 |
-| [分层次阅读路径指南](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md) |  | 2026-07-14 | 学习路径、阅读指南 |
-| [实践练习题](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md) |  | 2026-07-14 | 练习、实践 |
-| [学习自检清单](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md) |  | 2026-07-14 | 自检、清单、工具 |
-| [延伸阅读与参考资源](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md) |  | 2026-07-14 | 延伸阅读、参考、资源 |
+| [七概念→DeepTutor映射总览表](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/00-framework-mapping.md) |  | 2026-07-14 | 分析、映射、总览 |
+| [R复盘在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/01-r-in-deeptutor.md) |  | 2026-07-14 | 分析、R、复盘、Memory |
+| [I洞察在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/02-i-in-deeptutor.md) |  | 2026-07-14 | 分析、I、洞察、Mastery Path |
+| [E萃取在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.md) |  | 2026-07-14 | 分析、E、萃取、Knowledge Center |
+| [C原子提交在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.md) |  | 2026-07-14 | 分析、C、原子提交、模式切换 |
+| [A原子化在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.md) |  | 2026-07-14 | 分析、A、原子化、模块设计 |
+| [F第一性原理在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md) |  | 2026-07-14 | 分析、F、第一性原理、架构设计 |
+| [V对抗性审查在DeepTutor中的体现](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/07-v-in-deeptutor.md) |  | 2026-07-14 | 分析、V、对抗性审查、Quiz、Mastery Path |
+| [组合工作流分析](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/08-combined-workflows.md) |  | 2026-07-14 | 分析、工作流、组合、R-I-E、A-V-C、F-V-I |
+| [分阶段阅读路径](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/00-reading-guide.md) |  | 2026-07-14 | 阅读路径、学习指南 |
+| [实践练习](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md) |  | 2026-07-14 | 练习、实践 |
+| [自学质量检查清单](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md) |  | 2026-07-14 | 自检、清单、工具 |
+| [延伸阅读](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md) |  | 2026-07-14 | 延伸阅读、资源 |
+| [一、概述](learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) |  |  | - |
+| [二、设计理念](learning/03-agent-platforms-tools/i-have-adhd-wiki/01-design-philosophy.md) |  |  | - |
+| [三、核心规则](learning/03-agent-platforms-tools/i-have-adhd-wiki/02-core-rules.md) |  |  | - |
+| [四、例外场景与自检清单](learning/03-agent-platforms-tools/i-have-adhd-wiki/03-exceptions-and-checklist.md) |  |  | - |
+| [五、跨平台安装指南](learning/03-agent-platforms-tools/i-have-adhd-wiki/04-installation-guide.md) |  |  | - |
+| [六、持久化机制详解](learning/03-agent-platforms-tools/i-have-adhd-wiki/05-always-on-mechanism.md) |  |  | - |
+| [七、评估框架与质量保障](learning/03-agent-platforms-tools/i-have-adhd-wiki/06-evaluation-framework.md) |  |  | - |
+| [八、自定义开发与故障排查](learning/03-agent-platforms-tools/i-have-adhd-wiki/07-customization-and-troubleshooting.md) |  |  | - |
+| [九、可复用模式萃取](learning/03-agent-platforms-tools/i-have-adhd-wiki/08-patterns-extracted.md) |  |  | - |
+| [十、FAQ与资源汇总](learning/03-agent-platforms-tools/i-have-adhd-wiki/09-faq-and-resources.md) |  |  | - |
+| [十一、行动优先输出范式深度解析](learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) |  |  | - |
+| [十二、逆向适配创新方法论](learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |  |  | - |
+| [十三、设计取舍与技术写作借鉴](learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md) |  |  | - |
 | [七概念方法论解析MonkeyCode开源Vibe Coding平台](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md) |  |  | 七概念、MonkeyCode、Vibe Coding、开源、私有化部署、AI编码 |
 | [第一章 - 七概念知识框架](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.md) |  |  | 七概念、R-I-E-C-A-F-V、方法论、认知框架 |
 | [第二章 - MonkeyCode产品深度解析](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md) |  |  | MonkeyCode、Vibe Coding、长亭科技、开源、私有化部署、安全审计 |
@@ -995,6 +1102,27 @@
 | [第五章 - 资源扩展链接](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/05-resources.md) |  |  | 资源链接、MonkeyCode、Vibe Coding、开源项目、私有化部署 |
 | [第六章 - 学习效果评估方法](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/06-assessment.md) |  |  | 学习评估、效果检验、知识测试、实践评估、七概念 |
 | [第七章 - 附录：七概念应用案例](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/07-seven-concepts-applied.md) |  |  | 七概念应用、实战案例、R-I-E-C-A-F-V、产品分析 |
+| [一、概述](learning/04-mathematics-foundations/pythagorean-theorem-wiki/00-overview.md) |  |  | - |
+| [二、历史沿革](learning/04-mathematics-foundations/pythagorean-theorem-wiki/02-history.md) |  |  | - |
+| [三、经典证明方法](learning/04-mathematics-foundations/pythagorean-theorem-wiki/03-proof-methods.md) |  |  | - |
+| [四、勾股数](learning/04-mathematics-foundations/pythagorean-theorem-wiki/04-pythagorean-triples.md) |  |  | - |
+| [五、推广与扩展](learning/04-mathematics-foundations/pythagorean-theorem-wiki/05-generalizations.md) |  |  | - |
+| [六、应用领域](learning/04-mathematics-foundations/pythagorean-theorem-wiki/06-applications.md) |  |  | - |
+| [七、文化意义](learning/04-mathematics-foundations/pythagorean-theorem-wiki/07-cultural-significance.md) |  |  | - |
+| [八、常见问题与误解](learning/04-mathematics-foundations/pythagorean-theorem-wiki/08-faqs.md) |  |  | - |
+| [九、学习资源](learning/04-mathematics-foundations/pythagorean-theorem-wiki/09-resources.md) |  |  | - |
+| [一、概述](learning/05-academic-skills/thesis-writing-wiki/00-overview.md) |  |  | - |
+| [二、全流程时间线](learning/05-academic-skills/thesis-writing-wiki/01-full-process-timeline.md) |  |  | - |
+| [三、选题与开题](learning/05-academic-skills/thesis-writing-wiki/02-topic-selection-and-proposal.md) |  |  | - |
+| [四、文献综述](learning/05-academic-skills/thesis-writing-wiki/03-literature-review.md) |  |  | - |
+| [五、研究方法](learning/05-academic-skills/thesis-writing-wiki/04-research-methods.md) |  |  | - |
+| [六、论文结构与各章写作](learning/05-academic-skills/thesis-writing-wiki/05-paper-structure.md) |  |  | - |
+| [七、格式规范与排版](learning/05-academic-skills/thesis-writing-wiki/06-formatting-and-style.md) |  |  | - |
+| [八、修改与润色](learning/05-academic-skills/thesis-writing-wiki/07-revision-and-polishing.md) |  |  | - |
+| [九、答辩准备](learning/05-academic-skills/thesis-writing-wiki/08-defense-preparation.md) |  |  | - |
+| [十、常见问题与避坑指南](learning/05-academic-skills/thesis-writing-wiki/09-faqs-and-pitfalls.md) |  |  | - |
+| [十一、资源与工具](learning/05-academic-skills/thesis-writing-wiki/10-resources-and-tools.md) |  |  | - |
+| [十二、社会语言学视频资源](learning/05-academic-skills/thesis-writing-wiki/11-sociolinguistics-video-resources.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
 | [微软Copilot成本困境与多模型时代产业变革深度分析报告](learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md) |  | 2026-07-09 | AI产业、微软Copilot、DeepSeek、多模型架构、成本分析、产业趋势、开源模型 |
 | [cleaned-article](learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/cleaned-article.md) |  |  | - |
@@ -1012,6 +1140,13 @@
 | [参考资料与附录](learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/06-resources.md) |  | 2026-07-14 | - |
 | [raw-content](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/raw-content.md) |  |  | - |
 | [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md) |  |  | - |
+| [Caffe include/src 目录依赖关系系统性分析](learning/caffe-architecture-wiki/03-include-src-dependency-analysis.md) |  | 2026-07-23 | - |
+| [Protocol Buffers proto2 与 proto3 语法区别系统性分析](learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) |  | 2026-07-23 | - |
+| [05-docker-pycaffe-standalone-build-postmortem](learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md) |  |  | - |
+| [06-examples-test-diff-analysis-report](learning/caffe-architecture-wiki/06-examples-test-diff-analysis-report.md) |  |  | - |
+| [07-caffe-cpp-slim-tvm-ffi-modernization](learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) |  |  | Caffe、C++、TVM、FFI、DLPack、现代化重构、依赖裁剪、Python绑定 |
+| [08-eight-anti-patterns-defensive-templates](learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md) |  |  | Caffe、反模式、防御式编程、代码模板、依赖裁剪、C++、Python |
+| [Caffe-Slim 全面架构分析与compat层零侵入替换机制](learning/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.md) |  | 2026-07-27 | - |
 | [跨文化对抗性审查标准与"反向语义漂移"防御机制](learning/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) |  |  | - |
 | [道家哲学核心概念：道、德、自然、无为](learning/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md) |  |  | - |
 | [儒家思想核心概念：本、体用、格物致知、诚](learning/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md) |  |  | - |
@@ -1024,9 +1159,14 @@
 | [术语统一表](learning/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md) |  |  | - |
 | [中西哲学根本性思维发展时间线](learning/first-principles/chinese-philosophy-parallels/10-timeline.md) |  |  | - |
 | [来源验证日志](learning/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) |  |  | - |
+| [Caffe Docker 容器构建与运行 SOP](operations/caffe-docker-sop.md) |  | 2026-07-22 | caffe、docker、sop、build、runtime、verification |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
+| [找三个人杠一遍：对抗评审标准化SOP](quality-assurance/adversarial-review-sop.md) |  |  | - |
+| [如何高效啃技术文档？七概念实战案例](quality-assurance/reading-tech-docs-case.md) |  |  | - |
+| [知识评审清单模板（2份开箱即用）](quality-assurance/review-checklist-templates.md) |  |  | - |
+| [没人帮你杠？四种自己给自己挑错的方法](quality-assurance/solo-review-methods.md) |  |  | - |
 | [knowledge-entry-template](templates/knowledge-entry-template.md) |  |  | - |
 
 ---
 
-*索引自动生成于 2026-07-14 23:23:55*
+*索引自动生成于 2026-07-30 17:21:03*

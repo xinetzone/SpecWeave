@@ -9,7 +9,7 @@ source: "external/libs/i-have-adhd 源码分析"
 
 i-have-adhd 是一个**跨AI编程助手的Agent Skills插件**，采用MIT许可协议开源，基于ADHD（注意力缺陷多动障碍）认知原理设计输出规范，帮助AI编程助手生成更适合ADHD用户阅读和执行的响应内容。
 
-**项目位置**：[file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/](file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/)
+**项目位置**：`external/libs/i-have-adhd/`（源项目归档路径，本 Wiki 为基于源码分析的知识沉淀副本）
 
 **核心定位**：阻止AI助手把答案藏在冗长的客套文字中，让输出直接面向行动。它不是简单的"精简回复"，而是根据ADHD大脑的认知特点重新塑造输出结构，降低从"理解"到"执行"的摩擦成本。
 
@@ -70,7 +70,7 @@ i-have-adhd 的设计基于ADHD认知科学的五个核心事实，这也是其1
 
 | 章节 | 文件 | 内容简介 |
 |------|------|---------|
-| 一、概述 | [00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) | 项目介绍、核心理念、适用人群、文档索引 |
+| 一、概述 | [00-overview.md](./00-overview.md) | 项目介绍、核心理念、适用人群、文档索引 |
 | 二、设计理念 | 01-design-philosophy.md | ADHD认知原理、五条核心事实、设计思路溯源 |
 | 三、核心规则 | 02-core-rules.md | 10条输出规则详解、正反示例、适用边界 |
 | 四、例外场景与自检清单 | 03-exceptions-and-checklist.md | 何时可以打破规则、6种例外情况处理、Pre-send检查清单 |
@@ -80,4 +80,4 @@ i-have-adhd 的设计基于ADHD认知科学的五个核心事实，这也是其1
 | 八、自定义开发与故障排查 | 07-customization-and-troubleshooting.md | Fork自定义、SKILL.md修改、私有版本部署、常见问题排查 |
 | 九、可复用模式萃取 | 08-patterns-extracted.md | 可复用模式提炼、SpecWeave集成思考、反模式识别 |
 | 十、FAQ与资源汇总 | 09-faq-and-resources.md | 常见问题解答、使用技巧、资源汇总 |
-| 目录索引 | [README.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md) | 完整章节列表与快速导航 |
+| 目录索引 | [README.md](./README.md) | 完整章节列表与快速导航 |

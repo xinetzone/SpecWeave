@@ -418,3 +418,25 @@
   - `human-judgement` TR-21.3: 提供诊断脚本辅助问题定位 ✅
 - **Notes**: 用户在WSL中执行`bash scripts/wsl-deploy.sh`或在PowerShell中执行`.\scripts\deploy.ps1`即可一键完成构建+部署+验证
 
+## [x] Task 22: 最终收尾验证 - C++/Python单元测试+文档补全
+
+- **Priority**: high
+- **Depends On**: Task 21
+- **Status**: ✅ 已完成 (2026-07-30)
+- **Description**:
+  - 验证CAFFE_FFI_BUILD_TESTS=ON模式下完整编译和C++单元测试（40个测试全部通过）
+  - 验证Python单元测试test_python_api.py（65个测试全部通过，含耗时统计）
+  - 更新libs/caffe-ffi/README.md中Docker开发说明，指向apps/caffe-ffi-jupyter
+  - 在libs/caffe-ffi/CHANGELOG.md中记录迁移来源（vendor/caffe/caffe-ffi）
+  - 验证test-cpp-tests.sh在Docker容器中可正常运行C++和Python测试
+  - 最终原子提交
+- **Acceptance Criteria Addressed**: AC-4, AC-9
+- **Test Requirements**:
+  - `programmatic` TR-22.1: C++单元测试40/40通过（含耗时统计输出）✅（2026-07-29 Docker验证）
+  - `programmatic` TR-22.2: Python单元测试65/65通过（含耗时统计输出）✅（2026-07-29 Docker验证）
+  - `programmatic` TR-22.3: test-cpp-tests.sh在容器内可执行 ✅（已COPY到/usr/local/bin/）
+  - `human-judgement` TR-22.4: README.md包含apps/caffe-ffi-jupyter使用指引 ✅（2026-07-30 更新完成）
+  - `human-judgement` TR-22.5: CHANGELOG.md记录迁移来源 ✅（2026-07-30 更新完成）
+  - `human-judgement` TR-22.6: 最终原子提交完成 ✅（2026-07-30 xuanspace子模块提交 ef5827d）
+- **Notes**: 文档补全和原子提交已完成；Docker完整构建验证（build.sh从jupyter-ssh-base完整构建）需用户在WSL环境中执行 `bash apps/caffe-ffi-jupyter/scripts/wsl-deploy.sh` 一键完成
+

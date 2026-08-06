@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from collections import Counter
 
 from .models import AggregateStats, LogEntry, SessionStats
@@ -80,3 +93,4 @@ def aggregate_entries(entries: list[LogEntry]) -> AggregateStats:
     stats.top_intercept_reasons = all_reasons.most_common(10)
     stats.sessions = sorted(sessions.values(), key=lambda x: x.session_id)
     return stats
+

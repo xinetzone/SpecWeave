@@ -13,11 +13,12 @@ date: "2026-07-09"
 
 ### 生态全景分类
 
-Agent平台与工具生态可分为六大类别：
+Agent平台与工具生态可分为七大类别：
 
 | 类别 | 核心方向 | 代表项目 |
 |------|---------|---------|
 | 🏢 **平台分析** | 主流厂商Agent路线图、多Agent协作平台 | Anthropic路线图、Octo、The Agency、AReaL |
+| 🇨🇳 **国内大模型平台** | 国内大模型厂商Agent订阅产品与生态 | 火山引擎方舟Agent Plan |
 | 🔒 **安全工具** | 安全审计、漏洞挖掘Agent | MopMonk扫地僧 |
 | 🔍 **代码审查** | AI代码评审、开发效率工具 | Open Code Review |
 | 🌐 **翻译工具** | 文档翻译、内容本地化 | Rainman Translate Book |
@@ -28,16 +29,23 @@ Agent平台与工具生态可分为六大类别：
 
 ---
 
-## 📚 子Wiki索引（6个专题）
+## 📚 子Wiki索引（13个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
+| **[echobird-wiki/](echobird-wiki/README.md)** | **13篇** | **EchoBird 源码级 Agent 桌面管理工具 Wiki 教程**：基于官网与本地源码（external/tools/EchoBird，v5.6.0）深度解析，覆盖产品定位、Tauri+Rust 架构、Model Nexus 模型中心、四大核心场景、本地大模型（vLLM/SGLang/llama.cpp）、Codex Proxy 协议转换、工具注册表、高级功能、快速上手、对比趋势与 FAQ 术语表，**源码级 Agent 桌面工具工程实现必读** |
+| **[eve-wiki/](eve-wiki/README.md)** | **11篇** | **Vercel Eve 开源 Agent 框架 Wiki 教程**：本期"Next.js for Agents"（filesystem-first，一个 Agent 就是一个目录），覆盖产品定位、目录结构与九大生产级能力（durable execution/沙箱/人工审批/连接/多通道/追踪/评测）、与 Mastra/LangGraph 竞品对比选型、快速上手、工程化理念与趋势洞察（Demo→生产、工程底座竞争） |
+| **[langgraph-implementation-roadmap.md](langgraph-implementation-roadmap.md)** | **单篇完整路线图** | **LangGraph 生产级落地实施路线图**：从环境配置（Python/TS双栈选型）、核心组件选型矩阵（State/Checkpointer/Tools/Memory/部署）、四阶段迁移计划（PoC→试点→生产化→规模化，12-16周）、风险回滚策略到六层能力对齐检查清单，**团队引入LangGraph从0到生产必读** |
+| **[zleap-agent-wiki/](zleap-agent-wiki/README.md)** | **9篇** | **Zleap-Agent workspace-first Agent Harness Wiki 教程**：面向本地模型与 OpenAI-compatible 模型的 Agent 运行时，核心哲学"Workspace Is All Agents Need"，8章从核心架构到快速上手，详解 Workspace 隔离（main/work、数据库唯一真源）、Context 稳定/半稳定/可变三块组装与缓存断点不变量、分区记忆系统（person/event/experience + RRF 多路径召回）、Skill/工具权限（request_approval/full_access）、ConversationService 统一多入口运行时、IM 网关（飞书/微信）与定时任务，附 FAQ 与术语表 |
+| **[volcengine-agentkit-wiki/](volcengine-agentkit-wiki/README.md)** | **12篇** | **火山引擎 AgentKit 企业级 AI Agent 基础设施平台 Wiki 教程**：基于七概念方法论（R-I-E-V）深度沉淀，60条事实→5条洞察→3个跨平台可复用模式→16条攻击37.5%采纳，11章从产品定义到生产化检查清单，附选型评估框架/存量改造SOP/Demo→生产12项检查，**企业智能体从0到1必读** |
+| [orca-wiki/](orca-wiki/README.md) | 8篇 | **Orca 多代理 AI 编排器 Wiki 教程**：面向 100x 构建者的 AI 编排器（Stably.ai 出品、YC 背书、MIT 开源），并排运行 Codex/Claude Code/OpenCode/Pi 各自隔离 git worktree 统一跟踪，详解八大核心功能（移动 Companion/并行 Worktree/终端分屏/设计模式/GitHub&Linear/SSH Worktree/注释 AI Diff/拖拽文件）、Orca CLI 与多 Agent 编排（Run/Task/Dispatch/worker_done）、29 款支持的 Agent 清单与快速上手 |
 | [claude-tag-article/](claude-tag-article/00-overview.md) | 8篇 | **Claude Tag企业协作工具深度分析**：Anthropic发布的Claude Code进化版，定位团队共享AI同事，Ambient Mode主动介入、异步执行，卡帕西称其为LLM用户界面第三次重大变革，含2项已萃取L1可复用模式 |
 | [fable5-cost-optimization-wiki/](fable5-cost-optimization-wiki/README.md) | 9篇 | **Fable 5按量计费成本优化技巧**：3个开源方案（Skill蒸馏法、pxpipe文字转图片省59%~70%、包工头调度模式）+2个官方机制（缓存经济学省90%、批量接口半价），叠加可低至0.5折，含场景选型决策树和五大工程洞察 |
 | [minitest-mobile-use-wiki/](minitest-mobile-use-wiki/best-practices.md) | 4篇+2个SDK文档子目录 | **Minitest & Mobile Use官方文档系统化教程**：minitest AI QA工程师（AndroidWorld基准100%准确率全球第一）+ mobile-use开源SDK双模块完整指南，含入门/套件管理/运行测试/分类集成/参考手册五大部分+SDK六章节，附加best-practices/faq/glossary/resources |
 | [mopmonk-security-agent-wiki/](mopmonk-security-agent-wiki/00-overview.md) | 7篇 | **MopMonk安全Agent（扫地僧）**：CyberGym全球第七、中国第一的漏洞复现AI Agent，73.1%成功率，MiniMax M3基座，结构化记忆+记忆驱动挖掘+多Agent并行探索三大核心技术 |
 | [open-code-review-wiki/](open-code-review-wiki/00-overview.md) | 11篇 | **阿里Open Code Review开源AI代码评审工具**：确定性工程×Agent混合驱动架构，阿里内部数万开发者验证、识别数百万缺陷，F1指标在AACR-Bench领先，含安装/使用/优化/集成/评估/FAQ完整指南 |
 | [rainman-translate-book-wiki/](rainman-translate-book-wiki/00-overview.md) | 8篇 | **Rainman Translate Book整书翻译神器**：基于Claude Code Skill的开源整书翻译，8个并行子代理+术语表锁定+相邻上下文+断点续传，支持PDF/DOCX/EPUB输入，五种格式输出 |
+| [volcengine-agent-plan-wiki/](volcengine-agent-plan-wiki/README.md) | 9篇 | **火山引擎方舟Agent Plan共创计划参与指南**：一个API Key覆盖编程/生图/生视频/向量化/联网搜索的订阅制产品，五大征集方向（评测/Agent落地/应用/编程协同/探索实验）、参与流程、奖励机制、跨模态范式（语言规划→生图→生视频链路） |
 
 ---
 
@@ -50,7 +58,8 @@ Agent平台与工具生态可分为六大类别：
 | [anthropic-agent-roadmap-wiki.md](anthropic-agent-roadmap-wiki.md) | Anthropic Agent产品线路线图：Conway永久在线智能体等六条产品线 | 从Claude代码挖掘出的Conway/文件记忆/Orbit/Operon/BugCrawl六大产品线，走出聊天框的战略转型 |
 | [octo-platform-wiki.md](octo-platform-wiki.md) | 明略科技Octo平台：Private AI时代多Agent协作基础设施 | O.C.T.O.四维度框架、Matter事项承载、Taste偏好进化、六种协作模式，人与Agent同等身份的消息主体 |
 | [the-agency-project-wiki.md](the-agency-project-wiki.md) | The Agency项目：一人组建一支Agent军团（11.9万Star） | 16个部门完整AI角色库、Frontmatter元数据定义、工作流设计、桌面客户端/Claude Code/Cursor多种使用方式 |
-| [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md) | AReaL 2.0：蚂蚁开源Agent在线强化学习自演进基础设施 | Agent自演进三大支柱、Agent-compute微服务架构、Online RL工作流，让Agent越用越强的关键基础设施 |
+| [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md) | AReaL 2.0：蚂蚁开源Agent在线强化学习自演进基础设施 | Agent自演进三大支柱、Agent-compute微服务架构、Online RL工作流，让Agent越用越强的关键基础设施（概念篇） |
+| [areal-official-practical-wiki.md](areal-official-practical-wiki.md) | AReaL 2.0官方实战教程：从安装到在线RL微服务部署 | 基于官网+文档+本地源码v2.0，1500+行完整教程：Docker/源码安装、GSM8K快速开始、16种RL算法矩阵、三大训练引擎对比、v2.0四大微服务架构详解、Online RL OpenAI兼容API实战、areal CLI命令参考、最佳实践与FAQ（实战篇） |
 | [echobird-wiki.md](echobird-wiki.md) | EchoBird百灵鸟：AI Agent桌面管理工具（解决60%用户安装配置痛点） | Tauri+Rust桌面应用、Model Nexus统一模型配置中心、四大场景（安装修复/本地模型/AI项目/应用管理） |
 | [browseract-wiki.md](browseract-wiki.md) | BrowserAct：Product Hunt日榜第一，让Agent真正能操作浏览器 | 解决登录验证/人机接力/多任务并发/环境隔离五大网页执行痛点、Skill Forge流程沉淀为可复用技能 |
 
@@ -105,13 +114,15 @@ anthropic-agent-roadmap-wiki.md
   → octo-platform-wiki.md
   → the-agency-project-wiki.md
   → areal-agent-rl-wiki.md
+  → areal-official-practical-wiki.md
 ```
 
 1. 先看Anthropic六条产品线，理解从对话到永久在线Agent的演进
 2. 学习Claude Tag的团队协作模式与Ambient Mode
 3. 研究Octo的Private AI多Agent协作基础设施
 4. 了解The Agency的Agent角色库组织方式
-5. 深入AReaL的Agent自演进与在线RL基础设施
+5. 深入AReaL的Agent自演进与在线RL基础设施（概念篇）
+6. 跟随AReaL官方实战教程完成从安装到在线RL微服务部署（实战篇）
 
 ### 路径二：垂直领域Agent实战路径
 
@@ -181,8 +192,9 @@ echobird-wiki.md
 | 📱 **移动测试** | [minitap-official-wiki.md](minitap-official-wiki.md)（产品全景）→ [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md)（架构解析） |
 | 🌐 **浏览器自动化** | [browseract-wiki.md](browseract-wiki.md)（BrowserAct） |
 | 📈 **量化金融** | [quantdinger-ai-trading-wiki.md](quantdinger-ai-trading-wiki.md)（QuantDinger）→ [anthropic-financial-services-wiki.md](anthropic-financial-services-wiki.md)（Anthropic金融工具箱） |
-| 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0在线RL） |
+| 🧠 **自演进Agent** | [areal-agent-rl-wiki.md](areal-agent-rl-wiki.md)（AReaL 2.0概念篇）→ [areal-official-practical-wiki.md](areal-official-practical-wiki.md)（AReaL 2.0实战篇） |
 | 🔧 **开发环境** | [echobird-wiki.md](echobird-wiki.md)（EchoBird桌面工具）→ [trae-v3-3-74-release-notes.md](trae-v3-3-74-release-notes.md)（TRAE发布） |
+| 🇨🇳 **国内平台与多模态** | [volcengine-agent-plan-wiki/00-overview.md](volcengine-agent-plan-wiki/00-overview.md)（火山引擎方舟Agent Plan）→ [volcengine-agent-plan-wiki/06-crossmodal-paradigm.md](volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)（跨模态范式） |
 
 ---
 

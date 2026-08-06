@@ -6,6 +6,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 from pathlib import Path
 from typing import Any
@@ -362,3 +375,4 @@ def diff_strings(old_content: str, new_content: str, source_name: str = "<string
     old_doc = parser.parse_text(old_content, source=source_name)
     new_doc = parser.parse_text(new_content, source=source_name)
     return diff_documents(old_doc, new_doc)
+

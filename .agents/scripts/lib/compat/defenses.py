@@ -12,6 +12,12 @@
 """
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import functools
 import inspect
@@ -466,3 +472,4 @@ __all__ = [
     "ThreadLocalState",
     "DEFENSE_CHEAT_SHEET",
 ]
+

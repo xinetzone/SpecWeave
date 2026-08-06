@@ -26,12 +26,14 @@ date: "2026-07-09"
 | [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](volcengine-kickart-marketing-creation-analysis.md) | 火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台 | `KickArt` `火山引擎` `AI视频生成` |
 | [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](volcengine-ml-platform-analysis.md) | 火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79% | `火山引擎` `机器学习平台` `MLOps` |
 | [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](volcengine-reward-plan-analysis.md) | 火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计 | `火山引擎` `方舟` `协作奖励计划` |
+| [开源EMS能源管理系统深度分析Wiki](ems-energy-management-wiki.md) | 开源EMS能源管理系统energy-management深度分析：Vue3+SpringCloud Alibaba微服务架构，支持50+工业协议，ShardingSphere分片实现秒级5万条数据处理，全链路可视化配置，代码注释率>40%。含技术架构、四大核心亮点、部署门槛、6项风险识别和11项可借鉴要点。 | `EMS` `能源管理` `开源项目` `工业互联网` `微服务` `ShardingSphere` |
 
 ## 📁 子目录导航
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [AI 商业化](ai-monetization-wiki/README.md) | 14 |  |
+| ✅ [开源EMS能源管理系统深度分析](ems-energy-management-wiki/README.md) | 3 | 基于Vue3+SpringCloud Alibaba微服务架构的开源能源管理系统深度分析，含完整10章分析报告和原文清洗版 |
 | ✅ [Papi酱单人IP趋势分析](papi-jiang-solo-ip-trend-wiki/README.md) | 10 |  |
 | ✅ [七概念印度制造业供应链风险分析](seven-concepts-india-manufacturing-wiki/README.md) | 7 | 基于七概念理论框架分析印度塔塔电子泄密事件，深入理解供应链风险分析方法论 |
 

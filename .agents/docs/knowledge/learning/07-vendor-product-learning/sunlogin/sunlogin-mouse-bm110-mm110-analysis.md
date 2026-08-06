@@ -1112,7 +1112,7 @@ A：可通过以下途径：①[点击查看更多问题解答](https://service.
 ### 帮助与支持
 - [官方更多问题解答](https://service.oray.com/question/14123.html) - 向日葵远控鼠标官方FAQ
 - [向日葵官网](https://sunlogin.oray.com/) - 向日葵远程控制官方网站
-- [向日葵硬件产品中心](https://sunlogin.oray.com/hardware) - 向日葵全系列硬件产品（开机棒/控控/PDU/鼠标等）
+- [向日葵硬件产品中心](https://sunlogin.oray.com/) - 向日葵全系列硬件产品（开机棒/控控/PDU/鼠标等）
 
 ### 相关学习资源
 - [向日葵智能PDU硬件学习教程](sunlogin-pdu-hardware-wiki.md) - 向日葵智能PDU硬件产品Wiki教程

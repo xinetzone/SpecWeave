@@ -20,6 +20,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import os
 import re
 from dataclasses import dataclass, field
@@ -641,3 +647,4 @@ class BoundaryChecker:
         if target_order < curr_order:
             return f'如需回退至{target_stage}阶段，请提交逆向回退申请（request_jump rollback {target_stage}）并经orchestrator+reviewer联合审批。'
         return f'请先完成当前阶段并退出后再进入{target_stage}阶段。'
+

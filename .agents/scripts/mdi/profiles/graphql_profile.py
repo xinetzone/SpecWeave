@@ -6,6 +6,19 @@ STATUS: EXPERIMENTAL - 实验性特性，API可能变更，未经生产环境验
 推荐Frontmatter: version, type, authors, license, endpoint, schemaPath
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 import logging
 import re
@@ -290,3 +303,4 @@ class GraphQLProfile(BaseProfile):
                      doc_name, len(results), pass_count, fail_count, error_count, warn_count)
 
         return results
+

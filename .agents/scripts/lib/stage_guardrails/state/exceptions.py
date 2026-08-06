@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=2）
+from ...python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import Optional
 
 
@@ -47,3 +53,4 @@ class UnauthorizedJumpError(TransitionError):
 class InvalidJumpError(TransitionError):
     """非法跳转（如跳至完成确认之前跳过验证）。"""
     pass
+

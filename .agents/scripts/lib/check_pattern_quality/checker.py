@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 
@@ -43,3 +48,4 @@ def check_pattern(pattern_md, root):
 
     report.score = calculate_score(report)
     return report
+

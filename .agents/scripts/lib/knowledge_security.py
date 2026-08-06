@@ -4,6 +4,12 @@
 防止路径遍历攻击、恶意输入、文件注入等安全风险。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 from pathlib import Path
@@ -403,3 +409,4 @@ def write_knowledge_entry(
         return False, f"写入文件失败: {e}"
 
     return True, ""
+

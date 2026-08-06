@@ -4,6 +4,12 @@
 使用 AES-256-GCM 认证加密，确保数据机密性和完整性。
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import base64
 import logging
 import os
@@ -347,3 +353,4 @@ def decrypt_entry(
         return decrypted_metadata, content, sec_level, all_valid
 
     return decrypted_metadata, content, "internal", all_valid
+

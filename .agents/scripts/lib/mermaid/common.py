@@ -3,6 +3,12 @@
 包含所有检查器/修复器共享的正则表达式、工具函数和常量。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import List, Tuple, Optional
 
@@ -167,3 +173,4 @@ def strip_mindmap_shape(text: str) -> str:
         if m:
             return m.group(grp)
     return t
+

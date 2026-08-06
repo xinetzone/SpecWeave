@@ -43,12 +43,14 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | pytorch-base | [apps/pytorch-base/AGENTS.md](pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
 | caffe-ffi-jupyter | [apps/caffe-ffi-jupyter/AGENTS.md](caffe-ffi-jupyter/AGENTS.md) | ❌ 无 | Caffe-FFI Jupyter 开发环境（基于jupyter-ssh-base） |
 | zhujian-wudao | [apps/zhujian-wudao/AGENTS.md](zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
+| eve-minimal-agent | —（遵循根规范） | ❌ 无 | Vercel Eve 最小可运行 Agent 示例 |
 | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
 | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
 | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 | xmnn-runtime | —（遵循根规范） | ❌ 无 | XMNN 运行时环境 |
+| cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 
 ### 嵌套优先级
 
@@ -158,9 +160,11 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/shared/ | SpecWeave 主权区 | ✅ 是 | 跨应用共享资源 |
 | apps/tests/ | SpecWeave 主权区 | ✅ 是 | 全局测试用例 |
 | apps/ai-code-assistant/ | 应用自治（遵循根规范） | ✅ 是 | AI 代码助手应用 |
+| apps/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
 | apps/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
 | apps/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
 | apps/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
+| apps/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/docker-ssh-dind/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Docker SSH DinD 环境 |
 | apps/docker-ssh-dind/AGENTS.md | 应用自治 | ✅ 是 | docker-ssh-dind 入口 |
 | apps/docker-ssh-dind/.agents/ | 应用自治 | ✅ 是 | docker-ssh-dind 规范体系 |

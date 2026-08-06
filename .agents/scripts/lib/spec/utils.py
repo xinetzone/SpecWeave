@@ -3,6 +3,12 @@
 提供关键词提取、语义匹配、路径解析、元文档检测等通用工具函数。
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from pathlib import Path
 from typing import Any
@@ -152,3 +158,4 @@ def discover_spec_dirs(project_root: Path) -> list[Path]:
                 if sub.is_dir() and (sub / "spec.md").exists():
                     result.append(sub)
     return sorted(result, key=lambda p: str(p.relative_to(specs_root)))
+

@@ -21,6 +21,19 @@ STATUS: UNVERIFIED - 未经实战验证，参考pytest_gen/mdi.parser使用
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from typing import Any
 
@@ -312,3 +325,4 @@ async def {func_name}({param_sig}):
     handler_fn.__doc__ = prompt_desc
 
     mcp.prompt(name=prompt.name, description=prompt_desc)(handler_fn)
+

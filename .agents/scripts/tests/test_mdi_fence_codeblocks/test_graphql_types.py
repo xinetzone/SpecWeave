@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 from mdi.profiles import GraphQLProfile
 
@@ -47,7 +59,6 @@ This document has no GraphQL type definitions.
         assert typedef_result is not None, "应有schema:typedef验证结果"
         assert typedef_result.passed is False, "无type定义时应为未通过（info级）"
         assert typedef_result.severity == "info"
-
 
 
 class TestRootTypeValidation:
@@ -108,7 +119,6 @@ type Mutation { createUser(name: String!): User }
         assert len(root_type_warn) == 0, "所有root type存在时不应有警告"
 
 
-
 class TestAdvancedTypeDefinitions:
     """测试GraphQL高级类型定义（input/enum/interface/union）的检测。"""
 
@@ -159,7 +169,6 @@ union SearchResult = User | Post
         assert "Role" in typedef_result.message
         assert "UserFilter" in typedef_result.message
         assert "SearchResult" in typedef_result.message
-
 
 
 class TestDeeplyNestedGraphQLTypes:
@@ -222,7 +231,6 @@ type Mutation {
         assert "Mutation" in typedef_result.message
 
 
-
 class TestMultipleGraphQLFences:
     """测试同章节/跨章节多个graphql fence的类型合并统计。"""
 
@@ -276,3 +284,4 @@ enum Role { ADMIN USER }
         assert typedef_result is not None
         assert typedef_result.passed is True
         assert "6" in typedef_result.message, f"应检测到6个类型(Query/Mutation/Subscription/User/Post/Role)，实际message: {typedef_result.message}"
+

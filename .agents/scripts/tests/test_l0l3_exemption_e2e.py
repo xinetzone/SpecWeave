@@ -13,6 +13,19 @@
 6. 豁免限制验证（baby_code=False / 正常代码 / 绕过检测）
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import pytest
 from pathlib import Path
@@ -437,3 +450,4 @@ class TestScenario7FullL0Workflow:
         )
         assert out_standard.is_intercept is True, \
             '正式代码必须重新遵循标准阶段守卫，不得延续豁免状态'
+

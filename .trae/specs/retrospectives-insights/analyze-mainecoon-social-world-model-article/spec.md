@@ -128,6 +128,22 @@ version: 1.0
 - **AND** 报告语言为中文(Markdown 格式)
 - **AND** 报告保存到 `d:\spaces\SpecWeave\.trae\specs\retrospectives-insights\analyze-mainecoon-social-world-model-article\analysis-report.md`
 
+## MODIFIED Requirements
+
+### Requirement: 七概念方法论增强分析
+
+系统 SHALL 在现有分析报告基础上，应用七概念方法论(R-I-E-C-A-F-V)进行系统性审查与增强。
+
+#### Scenario: 七概念质量门校验与增强
+
+- **WHEN** 使用七概念方法论更新分析报告
+- **THEN** 执行R(事实审查)→I(洞察校验)→E(模式校验)→F(第一性原理)→V(对抗审查)→A(原子化评估)→C(提交)链路
+- **AND** G1质量门通过（事实≥20条，无因果词）
+- **AND** G2质量门修复（洞察含四元组：陈述/证据/反常识/行动）
+- **AND** G3质量门修复（模式含触发场景/步骤/反模式/迁移验证）
+- **AND** F阶段产出Social World Model的第一性原理分析（假设剥离+公理提炼+重构方案）
+- **AND** V阶段产出4视角对抗审查（魔鬼代言人/新人/老板/未来），审查意见≥5条
+
 ## REMOVED Requirements
 
 无(新任务,无移除项)

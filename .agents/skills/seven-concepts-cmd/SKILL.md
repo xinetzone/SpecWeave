@@ -138,7 +138,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/seven-concepts-cmd/SKILL.toml"
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| 完整编排文档（RACI/决策树/质量门） | L2 | [commands/seven-concepts.md](../../commands/seven-concepts.md) | 每次使用必读 |
+| **编译方法论（运行时快速参考）** | **Compiled** | [references/compiled-methodology.md](references/compiled-methodology.md) | **运行时首选**——365行~4800 token自包含文档，含决策树/质量门/反模式/执行模板，加载此文件即可完整执行，无需回溯源文件 |
+| 完整编排文档（RACI/决策树/质量门） | L2 | [commands/seven-concepts.md](../../commands/seven-concepts.md) | 需要完整编排逻辑细节时 |
 | 萃取命令 | L2 | [commands/extraction.md](../../commands/extraction.md) | E阶段执行时 |
 | 复盘命令 | L2 | [commands/retrospective.md](../../commands/retrospective.md) | R阶段执行时 |
 | 洞察命令 | L2 | [commands/insight.md](../../commands/insight.md) | I阶段执行时 |

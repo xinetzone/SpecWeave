@@ -1,5 +1,11 @@
 """模式成熟度工具 - 模式扫描、分类与分布统计。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from collections import defaultdict
 from pathlib import Path
 
@@ -283,3 +289,4 @@ def grep_maturity_per_directory(patterns_root):
         dir_maturity[dir_name] = counts
 
     return dir_maturity
+

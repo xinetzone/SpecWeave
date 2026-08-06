@@ -5,6 +5,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -22,3 +28,4 @@ class LinkFix:
 
     def __str__(self) -> str:
         return f"  L{self.line_num}: [{self.link_text}] {self.old_url} → {self.new_url} ({self.fix_type})"
+

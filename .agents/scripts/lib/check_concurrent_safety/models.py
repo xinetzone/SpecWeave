@@ -1,5 +1,11 @@
 """并发安全检查数据模型。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -42,3 +48,4 @@ class FileReport(quality_report.ResultGroupMixin):
 
     def passed(self, threshold: int = 70) -> bool:
         return self.score >= threshold
+

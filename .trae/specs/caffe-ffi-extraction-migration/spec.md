@@ -329,3 +329,26 @@
 - [x] Windows用户如何方便地在WSL中执行部署？→ **已解决**: 已创建deploy.ps1/diagnose.ps1等PowerShell包装器，自动WSL检测和路径转换
 - [x] 部署失败如何快速定位问题？→ **已解决**: 已创建diagnose.sh/diagnose.ps1诊断脚本，提供详细的故障排查
 - [x] Docker Desktop vs 原生Docker在WSL2中如何选择？→ **已解决**: WSL-DEPLOY-GUIDE.md包含性能对比数据表格和场景推荐矩阵
+
+## Progress
+
+**状态**: ✅ 主体完成（待WSL环境Docker完整构建验证）
+**完成日期**: 2026-07-30
+**原子提交**: xuanspace子模块 ef5827d
+
+### 已完成项
+- ✅ **libs/caffe-ffi独立项目**: 完整迁移、CMake独立化、标准结构对齐npu-ffi
+- ✅ **Docker开发环境**: apps/caffe-ffi-jupyter基于jupyter-ssh-base，双阶段构建
+- ✅ **Python 3.14+支持**: conda环境、RPATH配置、运行时链接修复
+- ✅ **SSH+Jupyter双服务**: 完整保留基础镜像功能，自动conda环境激活
+- ✅ **C++单元测试**: 40/40通过（含Per-suite耗时统计和Top 5 slowest报告）
+- ✅ **Python单元测试**: 65/65通过（test_python_api.py，含耗时统计）
+- ✅ **统一结构化日志库**: Bash+PowerShell双版本，JSON输出支持
+- ✅ **一键部署脚本**: wsl-deploy.sh(WSL) + deploy.ps1(PowerShell)，集成全量验证
+- ✅ **诊断脚本**: diagnose.sh/diagnose.ps1双版本
+- ✅ **WSL部署指南**: WSL-DEPLOY-GUIDE.md含Docker方案对比和版本标注
+- ✅ **跨项目模式沉淀**: PowerShell-WSL包装器、文档版本标注、方案对比模板
+- ✅ **项目文档**: README.md(含Docker指引)、CHANGELOG.md(记录迁移来源)、LICENSE
+
+### 待用户在WSL环境执行
+- ⏳ Docker容器完整构建验证：`bash apps/caffe-ffi-jupyter/scripts/wsl-deploy.sh`

@@ -1,7 +1,7 @@
 # Checklist
 
 ## 文档结构与导航
-- [x] 文档 `docs/knowledge/learning/anthropic-agent-roadmap-wiki.md` 已创建
+- [x] 文档 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 已创建
 - [x] 文档包含 YAML frontmatter（title、source、date、tags、category、status、author、summary），使用 --- 包裹
 - [x] 文档顶部包含完整的目录导航系统，所有章节有锚点链接
 - [x] 目录导航锚点全部可跳转，无断链
@@ -100,7 +100,7 @@
 - [x] 链接以Markdown标准链接格式呈现
 
 ## 索引登记
-- [x] `docs/knowledge/README.md` 的 learning 类目下已登记 Anthropic Agent 路线图学习 wiki 条目
+- [x] `.agents/docs/knowledge/README.md` 的 learning 类目下已登记 Anthropic Agent 路线图学习 wiki 条目
 - [x] 条目包含文档标题、摘要、日期、标签与相对路径链接
 - [x] 统计摘要数字已更新（总条目数、learning类目数量）
 
@@ -118,8 +118,14 @@
 - [x] 文档篇幅约10505中文字符，内容详实重点突出（超过预期5000-7000字，属内容丰富）
 
 ## 交付物清单
-- [x] 主文档：[anthropic-agent-roadmap-wiki.md](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
-- [x] Spec文档：[spec.md](spec.md)
-- [x] 任务计划：[tasks.md](tasks.md)
-- [x] 验证清单：[checklist.md](../analyze-ai-anthropomorphic-interim-measures/checklist.md)
-- [x] 索引更新：[README.md](../../../../.agents/docs/knowledge/README.md)
+- [x] 主文档：[anthropic-agent-roadmap-wiki.md](file:///d:/AI/.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
+- [x] Spec文档：[spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/spec.md)
+- [x] 任务计划：[tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/tasks.md)
+- [x] 验证清单：[checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/checklist.md)
+- [x] 索引更新：[README.md](file:///d:/AI/.agents/docs/knowledge/README.md)
+
+## 七概念复盘检查
+- [x] R阶段事实清单采集完成，通过G1质量门（无因果词）
+- [x] I阶段5条核心洞察产出，通过G2质量门（四元组完整）
+- [x] E阶段1个可复用模式萃取，通过G3质量门（可迁移验证）
+- [x] C阶段spec三件套更新完成，路径错误已修正，复盘记录已补充

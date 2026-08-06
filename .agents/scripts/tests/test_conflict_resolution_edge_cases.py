@@ -12,6 +12,19 @@
 - 输入不被修改验证
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import math
 import pytest
 import copy
@@ -821,3 +834,4 @@ class TestEdgeScenariosComprehensive:
 
         if edge_type == "partial_match" and result.status == ResolutionStatus.RESOLVED and result.winner:
             assert required_cap in scenario.agents[result.winner].get("capabilities", []), f"{scenario.name}: winner必须具备所需能力"
+

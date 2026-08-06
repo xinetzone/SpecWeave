@@ -14,7 +14,7 @@ summary: "WeasyPrint核心依赖解析：8个Python包依赖、3个系统C库、
 
 ### 4.1 Python 包依赖
 
-从 [pyproject.toml](../../../../../../external/WeasyPrint/pyproject.toml#L14-L23)：
+从 [pyproject.toml](../../../../../../external/libs/book-to-skill/pyproject.toml#L14-L23)：
 
 | 包 | 作用 |
 |----|------|

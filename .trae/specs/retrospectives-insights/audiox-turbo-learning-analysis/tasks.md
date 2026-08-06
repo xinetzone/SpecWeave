@@ -107,14 +107,24 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/audiox-t
   - 将所有内容整合为完整的学习wiki文档
   - 文档采用YAML frontmatter格式（title/source/date/tags）
   - 文件命名遵循kebab-case规范：audiox-turbo-audio-generation-wiki.md
-  - 保存路径：docs/knowledge/learning/
+  - 保存路径：.agents/docs/knowledge/learning/（根目录docs/已废弃）
   - 创建对应的TOML元数据文件在.meta/toml/目录
-  - 更新docs/knowledge/README.md索引
+  - 验证文件实际存在且内容完整
+- **Notes**: 参考已有wiki的文档结构和格式风格；注意路径规范遵循AGENTS.md全局核心规则
+
+## [x] Task 8: 七概念方法论知识沉淀
+- **Priority**: high
+- **Depends On**: Task 7
+- **Description**:
+  - 使用seven-concepts-cmd Skill执行知识沉淀场景（R→I→E→V链路）
+  - R阶段：采集任务执行事实，识别异常（子代理虚假完成、路径错误）
+  - I阶段：通过5-Whys分析根因，提炼核心洞察
+  - E阶段：萃取可复用模式（web-article-to-learning-wiki-sop + subagent-file-operation-validation）
+  - V阶段：对抗审查，验证模式边界与完备性
+  - 生成seven-concepts-report.md存入spec目录
 - **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7]
 - **Test Requirements**:
-  - `programmatic` TR-7.1: frontmatter格式为YAML（---包裹），字段完整
-  - `programmatic` TR-7.2: 文件名符合kebab-case规范，无中文
-  - `programmatic` TR-7.3: 文件路径正确（docs/knowledge/learning/）
-  - `human-judgement` TR-7.4: 文档结构清晰，目录导航完整
-  - `programmatic` TR-7.5: 所有链接使用GitHub URL格式（非本地file:///）
-- **Notes**: 参考text-to-cad-wiki.md的文档结构和格式风格
+  - `human-judgement` TR-8.1: R/I/E/V四阶段完整，事实-洞察-模式逻辑闭环
+  - `human-judgement` TR-8.2: 萃取的模式有明确适用边界、反模式和验收标准
+  - `programmatic` TR-8.3: seven-concepts-report.md存在于spec目录
+- **Notes**: 遵循.agents/commands/seven-concepts.md编排规范

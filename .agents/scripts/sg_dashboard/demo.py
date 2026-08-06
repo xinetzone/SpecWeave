@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import random
 
 from .constants import STAGE_ORDER
@@ -225,3 +238,4 @@ def generate_demo_entries() -> list[LogEntry]:
                             {'next_stage': next_st, 'exit_criteria_met': ['done']})
 
     return entries
+

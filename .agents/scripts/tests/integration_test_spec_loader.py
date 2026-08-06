@@ -10,6 +10,19 @@
 7. 快速连续加载（模拟高频调用）
 8. 所有TASK_ROUTING路由的L2文件存在性审计
 """
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import os
 import subprocess
@@ -343,3 +356,4 @@ else:
 print("=" * 70)
 
 sys.exit(0 if failed == 0 else 1)
+

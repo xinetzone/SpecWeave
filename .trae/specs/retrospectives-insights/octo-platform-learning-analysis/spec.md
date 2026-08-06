@@ -241,6 +241,19 @@ tags: ["octo", "mininglamp", "private-ai", "agent-collaboration", "a2a", "matter
 
 ## Open Questions
 
-- [ ] 是否需要创建原子化的子目录结构来组织 Wiki 文档（参考 mopmonk-security-agent-wiki 的原子化模式）？
-- [ ] 是否需要补充明略科技其他产品（如 OpenClaw）的关联分析？
-- [ ] 是否需要将 Octo 的六种协作模式与项目内 SpecWeave/flexloop 的协作场景做对比分析？
+> **跟踪状态更新**（2026-07-04 七概念方法论复盘）：
+> - 洞察3 识别出 Open Questions 缺乏跟踪闭环机制
+> - 已在 tasks.md 新增 Task 13 跟踪闭环，在 checklist.md 新增 Checkpoint 62-64 验证
+> - 以下问题标记初步分析结论，待后续决策
+
+- [ ] **OQ-1**: 是否需要创建原子化的子目录结构来组织 Wiki 文档（参考 mopmonk-security-agent-wiki 的原子化模式）？
+  - **初步分析**: 当前 Wiki 文档 659 行，10 章节，单文件结构可读性良好。mopmonk-security-agent-wiki 采用原子化是因为内容量更大（7 个原子文件）。建议**暂不原子化**，除非未来内容增长超过 1000 行或章节间耦合度降低。
+  - **决策状态**: 待用户确认
+
+- [ ] **OQ-2**: 是否需要补充明略科技其他产品（如 OpenClaw）的关联分析？
+  - **初步分析**: OpenClaw 作为 Runtime Agent 之一已在 Wiki 中提及。深度关联分析需获取 OpenClaw 独立资料，超出本 spec 范围。建议**作为独立 spec 处理**，不在本 spec 中扩展。
+  - **决策状态**: 建议另立 spec
+
+- [ ] **OQ-3**: 是否需要将 Octo 的六种协作模式与项目内 SpecWeave/flexloop 的协作场景做对比分析？
+  - **初步分析**: SpecWeave 的 Spec 模式（proposal→tasks→checklist→implementation→verification）与 Octo 的 Pipeline 模式有相似性；flexloop 的多 Agent 协作与 Octo 的 Orchestration 维度有可比性。建议**在 docs/retrospective/patterns/ 中创建独立对比文档**，不在本 spec 中扩展。
+  - **决策状态**: 建议另立 spec

@@ -5,6 +5,19 @@
 
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import unicodedata
 
 from .constants import AI_NOTICE_KEYWORD, AI_NOTICE_TEXT
@@ -49,3 +62,4 @@ def ensure_ai_notice(content: str) -> tuple[str, bool]:
 
     logger.debug("  📏 添加声明后内容长度: %d 字符（原 %d 字符）", len(result), len(content))
     return result, True
+

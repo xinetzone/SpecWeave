@@ -1,7 +1,7 @@
 ---
 id: "subagent-wiki-delivery-checklist"
 title: "Wiki子代理委派与产出验收检查清单"
-source: "retrospective-mopmonk-wiki-20260704, retrospective-sunlogin-camera-su1-wiki-20260704, retrospective-sunlogin-bootbox-analysis-20260704"
+source: "retrospective-mopmonk-wiki-20260704, retrospective-sunlogin-camera-su1-wiki-20260704, retrospective-sunlogin-bootbox-analysis-20260704, milestone-four-engineering-concepts-wiki-20260704"
 x-toml-ref: "../../.meta/toml/.agents/templates/subagent-wiki-delivery-checklist.toml"
 ---
 # Wiki子代理委派与产出验收检查清单
@@ -61,6 +61,30 @@ title: "{{章节标题}}"
 source: "{{来源URL或父文件路径}}"
 x-toml-ref: "{{正确计算的相对路径}}"
 ---
+
+4. 【强制】在子代理指令中提供填好实际值的frontmatter格式示例+反模式警告：
+   - 必须提供填好实际值的示例（不是空模板），让子代理直接复制修改
+   - 必须包含反模式警告，明确指出"严禁使用TOML（+++）格式，必须使用YAML（---）格式"
+   - 缺失此项时，强制前置步骤检查不通过，不得委派子代理
+
+   示例（在子代理指令中必须包含类似以下内容）：
+   ```
+   ## 文档格式规范（强制遵守）
+
+   ### frontmatter 格式（必须使用 YAML，--- 包裹）
+   参考 `docs/knowledge/learning/xxx-wiki.md` 的 frontmatter 格式：
+   ```yaml
+   ---
+   id: "actual-wiki-name"
+   title: "实际中文标题"
+   source: "实际来源URL"
+   date: "2026-07-04"
+   tags: ["tag1", "tag2"]
+   x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/actual-wiki-name.toml"
+   ---
+   ```
+   **严禁使用 TOML（+++）格式，必须使用 YAML（---）格式**
+   ```
 ```
 
 ---
@@ -83,12 +107,13 @@ x-toml-ref: "{{正确计算的相对路径}}"
 
 ---
 
-## 🔍 主代理验收8点检查（接收子代理产出时必须执行）
+## 🔍 主代理验收9点检查（接收子代理产出时必须执行）
 
-> 主代理收到子代理产出后，**不要直接信任**，必须在1分钟内完成以下8点检查：
+> 主代理收到子代理产出后，**不要直接信任**，必须在1分钟内完成以下9点检查：
 
 | # | 检查项 | 检查方法 | 失败处理 |
 |---|--------|---------|---------|
+| 0 | **【委派前检查】frontmatter格式示例已提供** | 检查子代理指令中是否包含填好实际值的frontmatter示例+反模式警告（"严禁TOML"） | 未提供则补充后再委派，不得在缺失示例的情况下委派子代理 |
 | 1 | **frontmatter分隔符正确** | 打开第一个文件，看前3行：必须是`---`开头，不能是`+++` | 立即修正，通知子代理错误 |
 | 2 | **frontmatter字段类型正确且无多余** | 单文件wiki：仅title/source/date/tags；原子化wiki：含id/title/source/x-toml-ref | 删除多余字段或补全缺失字段 |
 | 3 | **x-toml-ref路径合理**（仅原子化） | 检查frontmatter中是否有x-toml-ref字段，`../`层数是否正确 | 修正路径，必要时用fix-x-toml-ref.py |
@@ -98,7 +123,8 @@ x-toml-ref: "{{正确计算的相对路径}}"
 | 7 | **三级标题编号规范**（单文件wiki） | 三级标题从x.1开始，无x.0编号 | 修正编号 |
 | 8 | **内容无工具标签污染** | 用Grep搜索`<seed:tool_call>`、`<function `、`<parameter `、`TodoWrite`、`toolcall_result`等关键词，确认文档中没有混入工具调用标签 | 立即删除所有工具标签，修复被污染的段落 |
 
-**验收通过标准**：8项全部通过，才能继续后续工作（原子化/提交/收尾）。
+**验收通过标准**：9项全部通过，才能继续后续工作（原子化/提交/收尾）。
+**第0项为委派前检查**：在委派子代理之前执行，未提供frontmatter格式示例+反模式警告的指令不得发出。
 **验收耗时**：每个文件10秒，全套检查不超过1分钟。
 **拦截率**：可拦截90%以上的低级格式错误和内容污染问题（基于四次复盘数据）。
 
@@ -118,6 +144,17 @@ x-toml-ref: "{{正确计算的相对路径}}"
    - 原子化wiki参考：docs/knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md
 
 2. frontmatter必须使用YAML格式（---分隔），禁止使用TOML格式（+++分隔）
+   【主代理必须在此处粘贴填好实际值的frontmatter示例，不可留空模板】
+   示例：
+   ---
+   id: "{{actual-wiki-name}}"
+   title: "{{实际中文标题}}"
+   source: "{{实际来源URL}}"
+   date: "{{YYYY-MM-DD}}"
+   tags: ["{{tag1}}", "{{tag2}}"]
+   x-toml-ref: "{{正确计算的相对路径}}"
+   ---
+   **严禁使用 TOML（+++）格式，必须使用 YAML（---）格式**
 
 3. frontmatter字段严格按照wiki类型使用，禁止添加额外字段：
    - 单文件wiki：title、source、date、tags（4个，禁止author/version等）

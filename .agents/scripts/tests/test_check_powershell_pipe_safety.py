@@ -1,5 +1,18 @@
 """check-powershell-pipe-safety.py 单元测试。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import importlib.util
 import sys
 from pathlib import Path
@@ -51,3 +64,4 @@ def test_collect_targets_filters_extensions(tmp_path: Path) -> None:
     targets = collect_targets(tmp_path)
     names = [p.name for p in targets]
     assert names == ["a.py", "b.ps1", "c.sh"]
+

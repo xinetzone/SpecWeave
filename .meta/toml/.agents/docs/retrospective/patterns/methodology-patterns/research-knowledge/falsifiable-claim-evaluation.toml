@@ -1,0 +1,13 @@
+id = "falsifiable-claim-evaluation"
+domain = "methodology"
+layer = "research-knowledge"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = ".agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-mainecoon-critical-review-20260805/insight-extraction.md"
+
+[bindings]
+rules = []
+references = ["trilemma-architectural-resolution", "honest-limitation-acknowledgment", "credibility-dual-track"]
+skills = []

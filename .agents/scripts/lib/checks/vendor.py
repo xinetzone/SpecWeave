@@ -19,6 +19,12 @@ CLI 用法:
     python check-vendor.py                   # 顶层入口脚本
 """
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import re
@@ -922,3 +928,4 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+

@@ -10,6 +10,12 @@
 - 返回结果包含完整性状态标记
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 import re
 from pathlib import Path

@@ -34,6 +34,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 - 适用于所有技术领域演进判断
 - 适用于个人学习路径规划（从已有经验迁移到新领域）
 
+**入库状态**：✅ 已沉淀模式 [methodology-overflow-paradigm（方法论溢出范式）](../../../patterns/methodology-patterns/research-knowledge/methodology-overflow-paradigm.md)（2026-08-04，L1）
+
 ---
 
 ### 🟠 洞察2：工具与Skill的职责分离——"能做什么"与"知道什么"的认知边界
@@ -65,6 +67,8 @@ Eve的分离设计解决了这些问题：
 - 适用于所有Agent架构设计
 - 适用于通用软件架构（变化频率隔离原则）
 - 适用于知识管理系统设计
+
+**入库状态**：✅ 已沉淀模式 [tool-skill-separation（工具Skill职责分离）](../../../patterns/architecture-patterns/tool-skill-separation.md)（2026-08-04，L1）
 
 ---
 
@@ -119,6 +123,8 @@ Eve的分离设计解决了这些问题：
 - 适用于技术选型决策（哪些能力是框架内置的，哪些需要自己拼）
 - 适用于技术团队能力建设评估
 
+**入库状态**：✅ 已沉淀模式 [demo-prod-six-layer-model（Demo-Prod六层模型）](../../../patterns/architecture-patterns/demo-prod-six-layer-model.md)（2026-08-04，L1）
+
 ---
 
 ### 🟢 洞察4：网页内容提取的三级回退链——工具可靠性分层策略
@@ -150,6 +156,8 @@ Eve的分离设计解决了这些问题：
 - 适用于通用工具选择策略（专用→通用→"万能"方案）
 - 适用于错误处理与回退机制设计
 
+**入库状态**：✅ 已沉淀模式 [three-tier-tool-fallback（三级工具回退链）](../../../patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md)（2026-08-04，L1）
+
 ---
 
 ## 模式成熟度验证
@@ -163,11 +171,12 @@ Eve的分离设计解决了这些问题：
 
 ### 新模式候选（待验证）
 
-| 模式名称 | 模式类型 | 核心思想 | 建议成熟度 |
-|----------|---------|---------|-----------|
-| demo-prod-six-layer-model（Demo-Prod六层模型） | architecture-patterns | 从Demo到生产需要补齐可靠性/可观测性/安全性/可维护性/可扩展性/可部署性六层能力 | L1（实验性，需更多案例验证） |
-| three-tier-tool-fallback（三级工具回退链） | tools-automation | 网页内容提取遵循"专用工具→通用工具→真实浏览器"的逐层回退策略 | L1（实验性） |
-| tool-skill-separation（工具Skill职责分离） | architecture-patterns | Agent设计中将"能力层（Tools）"与"知识层（Skills）"分离，按变化频率隔离 | L1（实验性） |
+| 模式名称 | 模式类型 | 核心思想 | 建议成熟度 | 入库状态 |
+|----------|---------|---------|-----------|---------|
+| [methodology-overflow-paradigm（方法论溢出范式）](../../../patterns/methodology-patterns/research-knowledge/methodology-overflow-paradigm.md) | research-knowledge | 技术演进不是"全新领域全新范式"，而是"成熟方法论向新领域溢出"，学习新领域最快方式是寻找新旧领域方法论映射 | L1（实验性，需更多案例验证） | ✅ 已入库（2026-08-04） |
+| [demo-prod-six-layer-model（Demo-Prod六层模型）](../../../patterns/architecture-patterns/demo-prod-six-layer-model.md) | architecture-patterns | 从Demo到生产需要补齐可靠性/可观测性/安全性/可维护性/可扩展性/可部署性六层能力 | L1（实验性，需更多案例验证） | ✅ 已入库（2026-08-04） |
+| [three-tier-tool-fallback（三级工具回退链）](../../../patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md) | tools-automation | 网页内容提取遵循"专用工具→通用工具→真实浏览器"的逐层回退策略 | L1（实验性） | ✅ 已入库（2026-08-04） |
+| [tool-skill-separation（工具Skill职责分离）](../../../patterns/architecture-patterns/tool-skill-separation.md) | architecture-patterns | Agent设计中将"能力层（Tools）"与"知识层（Skills）"分离，按变化频率隔离 | L1（实验性） | ✅ 已入库（2026-08-04） |
 
 ---
 
@@ -175,6 +184,6 @@ Eve的分离设计解决了这些问题：
 
 | 优先级 | 建议 | 类型 | 说明 |
 |--------|------|------|------|
-| 🟢 低优 | 沉淀网页提取三级回退链为标准操作流程 | 工具流程 | 将defuddle→WebFetch→integrated_browser的回退路径写入工具规范文档，减少未来试错成本 |
+| 🟢 低优 | 沉淀网页提取三级回退链为标准操作流程 | 工具流程 | ✅ 已完成（2026-08-04）：已沉淀为模式 [three-tier-tool-fallback](../../../patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md) 并入库，后续可直接引用 |
 | 🟢 低优 | 对Eve框架进行实际安装测试和代码实践 | 技术学习 | 本次任务仅基于文章分析，建议后续实际动手使用Eve创建一个简单Agent，验证理论理解 |
 | 🟢 低优 | 对比其他Agent框架（LangChain/CrewAI/AutoGen等） | 技术研究 | 本次任务未进行跨框架对比，建议后续补充对比分析，更清晰地看到Eve设计的优劣 |

@@ -6,6 +6,19 @@
 - CE-04: 带标题的链接[text](url "title")URL应正确解析
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 from pathlib import Path
 
@@ -148,3 +161,4 @@ class TestLinkWithTitle:
 
         checked_url, status, msg = cl.check_local_link(test_file, url)
         assert status == "ok", f"带标题的存在文件应通过检查，status='{status}', msg='{msg}'"
+

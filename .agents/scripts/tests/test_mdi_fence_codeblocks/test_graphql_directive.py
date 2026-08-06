@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 
 class TestGraphQLProfileDirectiveValidation:
@@ -75,7 +87,6 @@ type: graphql
         assert len(directive_errors) == 0, f"camelCase/下划线名称应通过验证，实际有{len(directive_errors)}个错误"
 
 
-
 class TestDirectiveEdgeCases:
     """测试directive验证的边界情况。"""
 
@@ -124,3 +135,4 @@ type: graphql
 
         directive_errors = [r for r in results if not r.passed and r.name.startswith("directive:")]
         assert len(directive_errors) == 0, f"下划线开头的名称应符合GraphQL规范，实际有{len(directive_errors)}个错误"
+

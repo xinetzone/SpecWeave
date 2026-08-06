@@ -38,5 +38,6 @@
 - [x] x-toml-ref 路径经 fix-x-toml-ref.py 自动修复验证
 
 ## 知识库索引
-- [x] docs/knowledge/README.md 学习分类中新增 Rainman Translate Book 教程条目
-- [x] 索引条目包含标题、摘要、日期和标签，格式与现有条目一致
+- [x] .agents/docs/knowledge/README.md 最近更新表中新增 Rainman Translate Book 教程条目
+- [x] 索引条目包含标题、日期和分类，格式与现有条目一致
+- [x] 总条目数已更新（795 → 796）

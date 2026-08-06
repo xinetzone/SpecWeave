@@ -16,13 +16,13 @@ source: external/libs/i-have-adhd/evals/ 评估体系分析
 
 i-have-adhd 采用**盲评 A/B 测试 + 五维评分 + 发布门槛**的完整评估框架，确保每一次规则变更都有数据支撑。
 
-评估相关文件位于 `file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/`。
+评估相关文件位于 `external/libs/i-have-adhd/evals/`（源项目归档路径，评估框架见本章正文）。
 
 ---
 
 ## 7.2 五维评分 Rubric
 
-评分标准定义在 `file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/evals/rubric.md`，采用 1-5 分制，五个维度加权计算总分。
+评分标准定义在 `external/libs/i-have-adhd/evals/rubric.md`（源项目归档路径，五维评分见 7.2 节正文），采用 1-5 分制，五个维度加权计算总分。
 
 | 维度 | 权重 | 评估内容 |
 |------|-----:|----------|
@@ -97,7 +97,7 @@ i-have-adhd 采用**盲评 A/B 测试 + 五维评分 + 发布门槛**的完整�
 
 ## 7.5 评估脚本隔离性设计
 
-评估脚本 `file:///d:/spaces/SpecWeave/external/libs/i-have-adhd/scripts/run_evals.py` 最关键的设计是**隔离性**——确保 baseline 和 candidate 在完全相同的环境下运行，排除外部干扰。
+评估脚本 `external/libs/i-have-adhd/scripts/run_evals.py`（源项目归档路径）最关键的设计是**隔离性**——确保 baseline 和 candidate 在完全相同的环境下运行，排除外部干扰。
 
 ### 为什么需要隔离
 

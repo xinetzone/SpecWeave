@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 from pathlib import Path
 
@@ -41,3 +46,4 @@ def scan_files(root_path: Path, exclude_dirs: set[str] | None = None) -> list[Pa
             toml_files.append(md_path)
 
     return toml_files
+

@@ -1,5 +1,8 @@
 # AtomGit AI社区平台最佳实践学习笔记 - The Implementation Plan (Decomposed and Prioritized Task List)
 
+> **任务状态**: ✅ 全部完成（10/10） | **验收日期**: 2026-08-01 | **验收结果**: 通过
+> **产出**: `.agents/docs/knowledge/learning/atomgit-ai-best-practices.md`（4390行，KE-4 A级）
+
 ## [x] Task 1: 学习笔记框架设计与初始化
 - **Priority**: high
 - **Depends On**: None
@@ -10,7 +13,7 @@
   - 参考现有docs/knowledge/learning/目录下的文件格式，确保风格一致
 - **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-8]
 - **Test Requirements**:
-  - `programmatic` TR-1.1: 检查文件是否创建在正确的路径（docs/knowledge/learning/atomgit-ai-best-practices.md）
+  - `programmatic` TR-1.1: 检查文件是否创建在正确的路径（.agents/docs/knowledge/learning/atomgit-ai-best-practices.md）
   - `programmatic` TR-1.2: 验证文件包含完整的8个主要章节标题
   - `human-judgement` TR-1.3: 评审目录结构是否清晰、逻辑合理
 - **Notes**: 先读取1-2个现有learning目录下的文件确认格式风格
@@ -153,6 +156,6 @@
 - **Acceptance Criteria Addressed**: [AC-8, NFR-1, NFR-2, NFR-3, NFR-4, NFR-5, NFR-6]
 - **Test Requirements**:
   - `programmatic` TR-10.1: 运行 `python .agents/scripts/check-filename-convention.py` 验证文件名
-  - `programmatic` TR-10.2: 检查文件确实位于docs/knowledge/learning/目录
+  - `programmatic` TR-10.2: 检查文件确实位于.agents/docs/knowledge/learning/目录
   - `human-judgement` TR-10.3: 最终人工审阅，确认内容质量和完整性
 - **Notes**: 参考docs/knowledge/learning/目录下现有文件确认frontmatter格式

@@ -9,6 +9,12 @@
   python -m lib.knowledge_fuzzer --scenarios path    # 仅运行路径测试
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import random
 import string
 import textwrap

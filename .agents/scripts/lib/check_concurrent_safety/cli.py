@@ -1,5 +1,11 @@
 """并发安全检查 CLI 入口模块。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import json
 import logging
@@ -146,3 +152,4 @@ def main() -> None:
     if args.fail_on_warn:
         sys.exit(1 if (total_errors > 0 or total_warns > 0) else 0)
     sys.exit(1 if total_errors > 0 else 0)
+

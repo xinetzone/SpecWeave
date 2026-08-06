@@ -1,5 +1,18 @@
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import logging
 from pathlib import Path
 
@@ -117,3 +130,4 @@ class PytestGenerator(BaseGenerator):
     def _generate_conftest(self, doc: MDIDocument) -> str:
         default_base_url = doc.frontmatter.get("baseUrl", doc.frontmatter.get("baseurl", "https://api.example.com"))
         return CONFTEST_TEMPLATE.format(default_base_url=default_base_url)
+

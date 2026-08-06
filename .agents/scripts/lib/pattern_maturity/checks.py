@@ -1,5 +1,11 @@
 """模式成熟度工具 - 各子命令检查逻辑。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import re
 from datetime import date
@@ -244,3 +250,4 @@ def cmd_check(args):
     print_pass(f'所有 {len(patterns)} 个模式文件结构完整')
     print_summary(len(patterns), 0, 0)
     return 0
+

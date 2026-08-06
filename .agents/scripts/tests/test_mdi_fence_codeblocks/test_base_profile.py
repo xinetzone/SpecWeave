@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .helpers import _parse_doc, _make_graphql_doc_md
 
 class TestBaseProfileFenceReconstruction:
@@ -111,3 +123,4 @@ class TestBaseProfileFenceReconstruction:
         )
         header = graphql_profile._format_fence_header(cb)
         assert header == 'python linenums="true"', f"带meta的header应为'python linenums=\"true\"'，实际'{header}'"
+

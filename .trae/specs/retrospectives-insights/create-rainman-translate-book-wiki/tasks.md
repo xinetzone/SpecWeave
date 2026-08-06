@@ -27,7 +27,7 @@
 - [x] 完成 checklist.md（含子代理验收 5 点检查）
 
 ## L4 文档生成（首次提交：内容创作提交）
-- [x] 创建 wiki 目录 `docs/knowledge/learning/rainman-translate-book-wiki/`
+- [x] 创建 wiki 目录 `.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/`
 - [x] 创建索引页 `rainman-translate-book-wiki.md`（含导航表格，无深度内容）
 - [x] 创建所有 8 个原子文件并添加 YAML frontmatter
 - [x] 填充各章节内容
@@ -36,7 +36,7 @@
 - [x] 创建配套 TOML 元数据文件（.meta/toml/ 镜像路径）
 - [x] 运行 fix-x-toml-ref.py 自动修复 x-toml-ref 路径
 - [x] 运行文件名规范检查：`python .agents/scripts/check-filename-convention.py`
-- [x] 更新知识库索引 docs/knowledge/README.md
+- [x] 更新知识库索引 .agents/docs/knowledge/README.md（添加条目到最近更新表和学习分类索引）
 - [ ] 原子提交（commit: docs(knowledge): 创建 Rainman Translate Book Wiki 教程）
 
 ## L5 收尾验证

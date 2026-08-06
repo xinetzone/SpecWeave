@@ -18,6 +18,19 @@
     python -m pytest .agents/scripts/tests/test_conflict_resolution_stress.py -v -m "stress" --tb=short
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import copy
 import math
 import random
@@ -566,3 +579,4 @@ class TestStressDiagnosticCompleteness:
         markers = ["缺失(None)", "类型异常(str='heavy')", "类型异常(bool=True)", "负值(-99)", "超范围(999>100)"]
         for m in markers:
             assert m in full_log, f"日志中缺少诊断信息: {m}"
+

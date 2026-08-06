@@ -1,5 +1,11 @@
 """Mermaid 检查运行器模块。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import sys
 import difflib
 from pathlib import Path
@@ -228,3 +234,4 @@ class MermaidRunner:
         if self.fix and not self.dry_run and new_content != content:
             md_path.write_text(new_content, encoding="utf-8")
         return all_issues, total_fixes, diffs
+

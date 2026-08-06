@@ -5,6 +5,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import sys
 from pathlib import Path
@@ -150,3 +156,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -168,3 +168,73 @@
 
 # Parallelizable Work
 - Task 5（核心要点提炼）与 Task 6（来源可靠性评估）可并行执行，均依赖 Task 4
+
+---
+
+# 七概念方法论编排：知识沉淀行动项（R→I→E→V 产出）
+
+> 以下任务由 seven-concepts-cmd Skill 编排生成，源自知识沉淀场景的对抗审查后行动项。完整分析见 [kicrd-seven-concepts-analysis-20260704.md](../../../../docs/retrospective/reports/knowledge/kicrd-seven-concepts-analysis-20260704.md)。
+
+## [x] Task 10: 在spec模板中增加FR-14"分析报告存档"要求
+- **Priority**: high
+- **Depends On**: None（独立行动项）
+- **Description**:
+  - 在微信公众号文章分析spec模板中增加FR-14:分析完成后将完整报告写入 `docs/retrospective/reports/knowledge/` 目录,文件命名格式为 `<任务标识>-analysis-report-<YYYYMMDD>.md`
+  - 明确区分"不创建Wiki教程文档"(Non-Goals)与"分析报告存档"(FR-14)
+  - 更新现有spec模板文档
+- **Acceptance Criteria Addressed**: [行动项A1]
+- **Test Requirements**:
+  - `human-judgement` TR-10.1: spec模板含FR-14,明确分析报告写入 `docs/retrospective/reports/knowledge/` 目录
+  - `human-judgement` TR-10.2: FR-14与Non-Goals"不创建Wiki教程"无冲突
+- **Notes**: 解决洞察1"知识沉淀链路断点"问题
+
+## [x] Task 11: 将BP-DUAL-LAYER模式提交到模式库
+- **Priority**: medium
+- **Depends On**: None（独立行动项）
+- **Description**:
+  - 将"双层分析报告结构(Content-Insight Dual Layer)"模式文档提交到方法论模式库
+  - 模式文档需包含:触发场景+核心步骤+反模式+迁移验证
+  - 标注成熟度:L2(验证3+次)
+  - 更新模式库索引
+- **Acceptance Criteria Addressed**: [行动项A2]
+- **Test Requirements**:
+  - `human-judgement` TR-11.1: 模式文档入库,含触发场景/步骤/反模式/迁移验证
+  - `human-judgement` TR-11.2: 模式库索引已更新
+- **Notes**: 解决洞察2"双层结构未萃取为正式模式"问题
+
+## [x] Task 12: 将BP-SUBAGENT-STD模式提交到模式库
+- **Priority**: medium
+- **Depends On**: None（独立行动项）
+- **Description**:
+  - 将"子代理分析任务标准化指令(Standardized Subagent Analysis Instruction)"模式文档提交到方法论模式库
+  - 模式文档需包含:触发场景+核心步骤(含指令长度约束≤2000字)+反模式+迁移验证
+  - 标注成熟度:L2(验证3+次)
+  - 更新模式库索引
+- **Acceptance Criteria Addressed**: [行动项A3]
+- **Test Requirements**:
+  - `human-judgement` TR-12.1: 模式文档入库,含指令模板/验收标准/长度约束
+  - `human-judgement` TR-12.2: 模式库索引已更新
+- **Notes**: 解决洞察3"子代理指令不完整"问题
+
+## [x] Task 13: 标准化子代理分析任务指令模板
+- **Priority**: medium
+- **Depends On**: Task 12
+- **Description**:
+  - 创建标准化的子代理分析任务指令模板文件
+  - 模板内嵌:9步分析流程+6项质量要求+输出格式规范+验收标准映射
+  - 模板长度控制在2000字以内
+  - 放置在模板目录供复用
+- **Acceptance Criteria Addressed**: [行动项A4]
+- **Test Requirements**:
+  - `human-judgement` TR-13.1: 模板文件创建,内嵌9步流程+6项质量要求+输出格式
+  - `human-judgement` TR-13.2: 模板长度≤2000字
+- **Notes**: Task 12的模式文档为指导,Task 13为实际模板文件
+
+# 七概念行动项依赖关系
+- Task 10（FR-14增加）→ 无依赖,独立执行
+- Task 11（BP-DUAL-LAYER入库）→ 无依赖,独立执行
+- Task 12（BP-SUBAGENT-STD入库）→ 无依赖,独立执行
+- Task 13（标准化指令模板）→ 依赖 Task 12（需先有模式文档作为指导）
+
+# 七概念行动项可并行工作
+- Task 10、Task 11、Task 12 三者无依赖,可并行执行

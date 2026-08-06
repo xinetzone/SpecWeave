@@ -1,3 +1,15 @@
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 from mdi.generators.utils import (
     snake_to_pascal,
     snake_to_camel,
@@ -49,3 +61,4 @@ class TestUtils:
     def test_make_interface_name(self):
         assert make_interface_name("get_users") == "GetUsers"
         assert make_interface_name("create-user") == "CreateUser"
+

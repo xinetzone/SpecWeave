@@ -146,6 +146,7 @@ tags: ["claude-code", "context-injection", "agent-engineering", "skills", "subag
 - **Then**: 报告包含：内容摘要、核心观点分析、设计哲学思考、行业价值评估、对本项目的实践启示、行动建议，逻辑严谨、有洞察力
 - **Verification**: `human-judgment`
 
-## Open Questions
-- [ ] 是否需要将学习笔记沉淀到docs/knowledge/learning/目录作为永久知识资产？
-- [ ] 是否需要对比分析文章方法论与本项目现有实现的具体差异清单？
+## Open Questions (已解决)
+- [x] 是否需要将学习笔记沉淀到docs/knowledge/learning/目录作为永久知识资产？—— 已解决：复盘报告及学习笔记已沉淀至 `.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-code-context-injection-learning-20260704/`
+- [x] 是否需要对比分析文章方法论与本项目现有实现的具体差异清单？—— 已解决：通过复盘+洞察+萃取+更新工作流，已落地4个可优化点中的子代理规范升级（subagent-output-quality-checklist v1.1.0、subagent-atomic-task-template v2.0.0 L1→L2）
+- [x] 复盘发现的子代理任务粒度问题是否需要立即修复？—— 已解决：立即更新了规范体系，新增输出完整性约束、任务粒度原则、事不过二兜底策略、分析类任务四要素模板4条P0强制约束

@@ -5,6 +5,12 @@
 
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from .constants import _DIR_FILENAMES, _GENERIC_FILENAMES
@@ -270,3 +276,4 @@ def find_target_by_stem(
         return candidates[0] if len(candidates) == 1 else None
 
     return candidates[0]
+

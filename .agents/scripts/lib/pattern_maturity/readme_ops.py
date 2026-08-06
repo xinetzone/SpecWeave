@@ -1,5 +1,11 @@
 """模式成熟度工具 - README统计表解析与更新。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import re
 from collections import OrderedDict
 from pathlib import Path
@@ -210,3 +216,4 @@ def update_readme_index_table(readme_path, declared_stats, actual_counts):
         new_lines.append(line)
 
     return '\n'.join(new_lines) + '\n'
+

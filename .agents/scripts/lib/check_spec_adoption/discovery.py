@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from pathlib import Path
 
 from lib.markdown import find_markdown_files
@@ -28,3 +33,4 @@ def collect_md_files(target_dir, exclude_dirs, exclude_files):
     if exclude_files:
         md_files = [f for f in md_files if f.name not in exclude_files]
     return md_files
+

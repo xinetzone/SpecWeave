@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Runtime 企业级选型决策矩阵</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: #1a202c;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .preset-btn {
+            padding: 10px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .preset-btn:hover {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+        .preset-btn.active {
+            border-color: #3182ce;
+            background: #bee3f8;
+            color: #2c5282;
+        }
+        .weight-slider-group {
+            margin-bottom: 20px;
+        }
+        .weight-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .weight-name {
+            font-weight: 500;
+            color: #4a5568;
+        }
+        .weight-value {
+            font-weight: 600;
+            color: #3182ce;
+            min-width: 40px;
+            text-align: right;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3182ce;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .results {
+            margin-top: 10px;
+        }
+        .framework-result {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+        .framework-result.recommended {
+            border-color: #48bb78;
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+        }
+        .framework-result.not-recommended {
+            opacity: 0.6;
+        }
+        .framework-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .framework-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .framework-score {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2d3748;
+        }
+        .framework-bar-container {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .framework-bar {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        .framework-desc {
+            font-size: 13px;
+            color: #718096;
+        }
+        .recommend-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #48bb78;
+            color: white;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #856404;
+        }
+        .info-box {
+            background: #e6f7ff;
+            border: 1px solid #91d5ff;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #0050b3;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .star {
+            color: #ecc94b;
+        }
+        .star-empty {
+            color: #e2e8f0;
+        }
+        .score-cell {
+            font-weight: 600;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Agent Runtime 企业级选型决策矩阵</h1>
+    <p class="subtitle">拖动滑块调整各维度权重，实时计算适合您企业的框架推荐 | 基于九条Protocol设计原则+五大企业级扩展维度</p>
+
+    <div class="card">
+        <div class="card-title">📋 场景预设</div>
+        <div class="preset-buttons">
+            <button class="preset-btn" onclick="applyPreset('finance')">🏦 金融/强合规</button>
+            <button class="preset-btn" onclick="applyPreset('saas')">☁️ SaaS多租户</button>
+            <button class="preset-btn" onclick="applyPreset('internal')">🏢 企业内部效能</button>
+            <button class="preset-btn" onclick="applyPreset('mvp')">🚀 创业MVP验证</button>
+            <button class="preset-btn" onclick="applyPreset('balanced')">⚖️ 均衡通用</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">⚖️ 维度权重调整（拖动滑块自定义）</div>
+        
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">🔒 安全合规（PII/审计/权限/加密）</span>
+                <span class="weight-value" id="weight-security-val">5</span>
+            </div>
+            <input type="range" id="weight-security" min="1" max="5" value="5" oninput="updateWeights()">
+        </div>
+
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">👥 多租户架构（隔离/配额/计量）</span>
+                <span class="weight-value" id="weight-multitenant-val">3</span>
+            </div>
+            <input type="range" id="weight-multitenant" min="1" max="5" value="3" oninput="updateWeights()">
+        </div>
+
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">🔧 扩展性（水平扩展/插件/存储后端）</span>
+                <span class="weight-value" id="weight-extensibility-val">4</span>
+            </div>
+            <input type="range" id="weight-extensibility" min="1" max="5" value="4" oninput="updateWeights()">
+        </div>
+
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">📊 运维管控（监控/告警/任务管理）</span>
+                <span class="weight-value" id="weight-ops-val">4</span>
+            </div>
+            <input type="range" id="weight-ops" min="1" max="5" value="4" oninput="updateWeights()">
+        </div>
+
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">🚀 部署灵活性（私有化/VPC/离线）</span>
+                <span class="weight-value" id="weight-deployment-val">4</span>
+            </div>
+            <input type="range" id="weight-deployment" min="1" max="5" value="4" oninput="updateWeights()">
+        </div>
+
+        <div class="weight-slider-group">
+            <div class="weight-label">
+                <span class="weight-name">📐 Protocol基础（九条设计原则遵循度）</span>
+                <span class="weight-value" id="weight-protocol-val">5</span>
+            </div>
+            <input type="range" id="weight-protocol" min="1" max="5" value="5" oninput="updateWeights()">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🏆 推荐结果（实时计算）</div>
+        <div class="results" id="results"></div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📊 各框架维度评分详情</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>框架</th>
+                    <th>安全合规</th>
+                    <th>多租户</th>
+                    <th>扩展性</th>
+                    <th>运维管控</th>
+                    <th>部署灵活</th>
+                    <th>Protocol基础</th>
+                </tr>
+            </thead>
+            <tbody id="score-table">
+            </tbody>
+        </table>
+        <div class="info-box">
+            💡 <strong>评分说明</strong>：⭐⭐⭐⭐⭐=开箱即用企业级 | ⭐⭐⭐⭐=少量定制可达 | ⭐⭐⭐=需要中度补全 | ⭐⭐=需要大量自建 | ⭐=基本不支持
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">📖 使用说明</div>
+        <ol style="padding-left: 20px; font-size: 14px; line-height: 2;">
+            <li>选择最接近您场景的<strong>场景预设</strong>，或手动拖动滑块调整各维度权重</li>
+            <li>权重1=该维度不重要，权重5=该维度是核心刚需</li>
+            <li>系统会根据权重实时计算加权总分，自动推荐最适合的框架</li>
+            <li>推荐结果仅供参考，最终选型请结合团队技术栈和实际POC验证</li>
+            <li>详细的企业选型指南、反模式、Checklist请返回 <a href="./10-enterprise-selection-guide.md">Markdown文档</a></li>
+        </ol>
+        <div class="warning-box">
+            ⚠️ <strong>重要提醒</strong>：即使是得分最高的LangGraph，企业级五大维度（安全/多租户/运维/等）也需要自建平台层补全。没有任何开源框架开箱即用满足企业需求，不要期待框架解决所有问题。
+        </div>
+    </div>
+
+    <a href="./10-enterprise-selection-guide.md" class="back-link">← 返回企业级选型指南</a> | 
+    <a href="./00-overview.md" class="back-link">返回Wiki总览</a>
+
+    <script>
+        // 框架评分数据（满分5星）
+        const frameworkScores = {
+            'LangGraph': { security: 3, multitenant: 3, extensibility: 4, ops: 4, deployment: 4, protocol: 42/45*5, desc: '九条Protocol原则最完整实现，生产级Checkpoint/可观测性/错误恢复；企业能力需平台层补全，推荐作为Runtime基础层首选' },
+            'OpenAI Assistants': { security: 2, multitenant: 2, extensibility: 2, ops: 3, deployment: 1, protocol: 31/45*5, desc: '托管零运维，对象建模优秀；但数据出界、无法私有化、黑盒不可控，仅适合非敏感快速原型' },
+            'OpenAI Agents SDK': { security: 1, multitenant: 1, extensibility: 3, ops: 1, deployment: 4, protocol: 24/45*5, desc: 'Guardrail设计较好，纯Python库部署灵活；无持久化无Checkpoint无可观测性，仅适合快速验证' },
+            'AutoGen': { security: 1, multitenant: 1, extensibility: 3, ops: 1, deployment: 4, protocol: 20/45*5, desc: '事件驱动多Agent模型适合大规模协作；无持久化无运维能力，适合研究和实验场景' },
+            'Claude SDK': { security: 2, multitenant: 1, extensibility: 2, ops: 1, deployment: 2, protocol: 19/45*5, desc: 'permissions/hooks控制面设计优雅；无持久化无多租户，Claude生态绑定，仅适合简单应用' }
+        };
+
+        // 场景预设权重
+        const presets = {
+            finance: { security: 5, multitenant: 4, extensibility: 4, ops: 5, deployment: 5, protocol: 5 },
+            saas: { security: 4, multitenant: 5, extensibility: 5, ops: 5, deployment: 3, protocol: 5 },
+            internal: { security: 4, multitenant: 2, extensibility: 4, ops: 4, deployment: 5, protocol: 5 },
+            mvp: { security: 2, multitenant: 1, extensibility: 3, ops: 2, deployment: 3, protocol: 4 },
+            balanced: { security: 4, multitenant: 3, extensibility: 4, ops: 4, deployment: 4, protocol: 5 }
+        };
+
+        function getWeights() {
+            return {
+                security: parseInt(document.getElementById('weight-security').value),
+                multitenant: parseInt(document.getElementById('weight-multitenant').value),
+                extensibility: parseInt(document.getElementById('weight-extensibility').value),
+                ops: parseInt(document.getElementById('weight-ops').value),
+                deployment: parseInt(document.getElementById('weight-deployment').value),
+                protocol: parseInt(document.getElementById('weight-protocol').value)
+            };
+        }
+
+        function updateWeightDisplay() {
+            const w = getWeights();
+            document.getElementById('weight-security-val').textContent = w.security;
+            document.getElementById('weight-multitenant-val').textContent = w.multitenant;
+            document.getElementById('weight-extensibility-val').textContent = w.extensibility;
+            document.getElementById('weight-ops-val').textContent = w.ops;
+            document.getElementById('weight-deployment-val').textContent = w.deployment;
+            document.getElementById('weight-protocol-val').textContent = w.protocol;
+        }
+
+        function calculateScores() {
+            const weights = getWeights();
+            const results = [];
+            const totalWeight = weights.security + weights.multitenant + weights.extensibility + weights.ops + weights.deployment + weights.protocol;
+
+            for (const [name, scores] of Object.entries(frameworkScores)) {
+                let weightedScore = 0;
+                weightedScore += scores.security * weights.security;
+                weightedScore += scores.multitenant * weights.multitenant;
+                weightedScore += scores.extensibility * weights.extensibility;
+                weightedScore += scores.ops * weights.ops;
+                weightedScore += scores.deployment * weights.deployment;
+                weightedScore += scores.protocol * weights.protocol;
+                const normalizedScore = (weightedScore / (totalWeight * 5) * 100).toFixed(1);
+                results.push({ name, score: parseFloat(normalizedScore), rawScores: scores, desc: scores.desc });
+            }
+
+            results.sort((a, b) => b.score - a.score);
+            return results;
+        }
+
+        function renderStars(rating) {
+            const full = Math.floor(rating);
+            const half = rating % 1 >= 0.5 ? 1 : 0;
+            const empty = 5 - full - half;
+            return '<span class="star">' + '★'.repeat(full) + (half ? '⯨' : '') + '</span><span class="star-empty">' + '★'.repeat(empty) + '</span>';
+        }
+
+        function getBarColor(score) {
+            if (score >= 70) return '#48bb78';
+            if (score >= 55) return '#4299e1';
+            if (score >= 40) return '#ed8936';
+            return '#a0aec0';
+        }
+
+        function renderResults() {
+            const results = calculateScores();
+            const container = document.getElementById('results');
+            let html = '';
+
+            results.forEach((r, idx) => {
+                const isRecommended = idx === 0;
+                html += `
+                <div class="framework-result ${isRecommended ? 'recommended' : (idx >= 3 ? 'not-recommended' : '')}">
+                    <div class="framework-header">
+                        <div>
+                            <span class="framework-name">${r.name}</span>
+                            ${isRecommended ? '<span class="recommend-badge">✅ 推荐</span>' : ''}
+                        </div>
+                        <div class="framework-score">${r.score}<span style="font-size:14px;color:#718096;">/100</span></div>
+                    </div>
+                    <div class="framework-bar-container">
+                        <div class="framework-bar" style="width: ${r.score}%; background: ${getBarColor(r.score)};"></div>
+                    </div>
+                    <div class="framework-desc">${r.desc}</div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+
+            // 渲染评分表格
+            const tableBody = document.getElementById('score-table');
+            let tableHtml = '';
+            const dims = ['security', 'multitenant', 'extensibility', 'ops', 'deployment', 'protocol'];
+            results.forEach(r => {
+                tableHtml += `<tr><td><strong>${r.name}</strong></td>`;
+                dims.forEach(d => {
+                    tableHtml += `<td class="score-cell">${renderStars(r.rawScores[d])}</td>`;
+                });
+                tableHtml += '</tr>';
+            });
+            tableBody.innerHTML = tableHtml;
+        }
+
+        function applyPreset(presetName) {
+            const preset = presets[presetName];
+            document.getElementById('weight-security').value = preset.security;
+            document.getElementById('weight-multitenant').value = preset.multitenant;
+            document.getElementById('weight-extensibility').value = preset.extensibility;
+            document.getElementById('weight-ops').value = preset.ops;
+            document.getElementById('weight-deployment').value = preset.deployment;
+            document.getElementById('weight-protocol').value = preset.protocol;
+            
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            updateWeights();
+        }
+
+        function updateWeights() {
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            updateWeightDisplay();
+            renderResults();
+        }
+
+        // 初始化
+        updateWeights();
+        // 默认选中均衡预设
+        document.querySelector('.preset-btn:last-child').classList.add('active');
+    </script>
+</body>
+</html>

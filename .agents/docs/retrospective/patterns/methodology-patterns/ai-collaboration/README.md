@@ -23,13 +23,18 @@ date: "2026-07-09"
 | [分批创作+独立质检模式](batched-creation-independent-review.md) | 分批创作+独立质检模式 | L2 |  |
 | [双语提示词工程（Bilingual Prompt Engineering）](bilingual-prompt-engineering.md) | 双语提示词工程（Bilingual Prompt Engineering） | L2 |  |
 | [Context 恢复协议重执行模式（Context Recovery Protocol Rerun）](context-recovery-protocol.md) | Context 恢复协议重执行模式（Context Recovery Protocol Rerun） | L2 |  |
+| [上下文生命周期分层管理模式（Context Lifecycle Layering）](context-lifecycle-layering.md) | 五层生命周期光谱：从全局事实→局部规则→懒加载技能→隔离执行→代码硬护栏，沿"信任模型→机制保障"连续光谱排列，解决全局文件膨胀、护栏提示词化、主会话干脏活等问题 | L2 | `agent架构` `上下文管理` `生命周期分层` `护栏下沉` `子代理隔离` |
 | [双区开发模型](dual-zone-development-model.md) | 双区开发模型 | L2 |  |
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
 | [外部内容事实验证](external-content-fact-verification.md) | 外部内容事实验证 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` |
+| [外部技术文章学习三阶段闭环（LAV模型）](external-tech-article-learning-closed-loop.md) | Learn-Aapply-Verify三阶段闭环：L阶段API逐行比对防推测、A阶段知识落地判断强制关联本地场景、V阶段R→I→E最小闭环+路径规范，解决学习类文档三重断层（API准确性/本地关联/完成判定） | L1 | `ai-collaboration` `knowledge-management` `learning` `technical-article` `closed-loop` `lav-model` |
 | [细粒度最小权限模式](fine-grained-least-privilege.md) | 细粒度最小权限模式 | L1 | `security` `least-privilege` `permission-model` |
+| [对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation）](dialog-agent-four-layer-evaluation.md) | Turn/Session/Trace/Outcome四层递进评测架构，Trace层横切防御假阳性，分层筛查提高评测效率，附分阶段落地建议和7个反模式 | L1 | `Agent评测` `对话系统` `四层架构` `质量保障` `假阳性防御` `分层防御` |
 | [一等公民抽象模式](first-citizen-abstraction.md) | 一等公民抽象模式 | - |  |
 | [第一性原理 Prompt 模式（First-Principles Prompt Pattern）](first-principles-prompt-pattern.md) | 第一性原理 Prompt 模式（First-Principles Prompt Pattern） | L3 | `提示词工程` `第一性原理` `Prompt模式` |
+| [PS5防御性Prompt模板模式（PS5-Defensive-Prompt）](ps5-defensive-prompt.md) | PS5防御性Prompt模板模式：完整版系统Prompt（7大约束：版本/禁用语法/API/编码/CLM/安全/质量）+精简版快速Prompt+3种场景变体（脚本开发/CI-CD/系统管理），解决AI默认生成PS7+语法在Windows PowerShell 5.1下ParserError问题 | L1 | `powershell` `defensive-prompt` `ai-coding` `version-compatibility` `clm` `security` `prompt-engineering` |
+| [提示词到产品七步法（Prompt-to-Product Seven Steps）](prompt-to-product-seven-steps.md) | 从一段能跑的提示词到产品级AI Skill的七步工程化框架：场景细分→统一设计语言→知识盲区补全→反模式规避→精确约束→语义层处理→QA闭环，解决AI生成内容的一致性、准确性、质量可控问题 | L1 | `Skill开发` `提示词工程` `产品化` `工程化方法论` `AI工具开发` `质量闭环` |
 | [生成-验证闭环模式（Generation-Validation Closed Loop）](generation-validation-closed-loop.md) | 生成-验证闭环模式（Generation-Validation Closed Loop） | L2 | `生成-验证闭环` `first-principles` `adversarial-review` |
 | [Gotchas 领域特化：在通用模板框架上补充模块特有陷阱](gotchas-domain-specialization.md) | Gotchas 领域特化：在通用模板框架上补充模块特有陷阱 | L1 |  |
 | [诚实承认局限性信任构建策略](honest-limitation-acknowledgment.md) | 诚实承认局限性信任构建策略 | L1 | `信任构建` `局限性承认` `诚实沟通` |
@@ -37,6 +42,10 @@ date: "2026-07-09"
 | [「辅助人工」而非「全自动」的人机协作设计](human-in-the-loop-augmentation.md) | 「辅助人工」而非「全自动」的人机协作设计 | L2 | `人机协作` `Human-in-the-loop` `AI辅助` |
 | [隔离优于共享模式](isolation-over-sharing.md) | 隔离优于共享模式 | - |  |
 | [Markdown即接口：用Markdown同时承载人类阅读与机器调用](markdown-as-interface.md) | Markdown即接口：用Markdown同时承载人类阅读与机器调用 | L4 |  |
+| [分层缓存模式（Layered Caching Pattern）](layered-caching-pattern.md) | 三层缓存架构（系统提示层/会话记忆层/语义相似层），整体成本降低60-85%，TTFT降低50-80%，适用于多轮对话、代码助手、Agent等有大量重复内容的场景 | L2 | `LLM` `Token优化` `缓存` `Prompt Caching` `语义缓存` |
+| [按需加载懒加载模式（Lazy Loading Pattern）](lazy-loading-pattern.md) | 初始只加载元数据，真正需要时才加载完整内容，MCP场景token降低46.9%+，适用于多工具Agent、代码助手、RAG系统 | L2 | `LLM` `Token优化` `懒加载` `MCP` `按需加载` |
+| [LLM Token优化反模式集](llm-token-optimization-anti-patterns.md) | 7个最常见的Token优化反模式（过度压缩/为优化而优化/忽略缓存预热/一刀切/忽视输出/无限重试/不监控），附现象、根因、正确做法、真实案例 | L2 | `LLM` `Token优化` `反模式` `陷阱` `误区` |
+| [分层分治MapReduce模式（MapReduce Divide and Conquer）](mapreduce-divide-conquer.md) | 超长文档处理模式：语义分块→并行Map→递归Reduce，100K文档成本降低70-85%，解决O(n²)复杂度和Lost in the Middle问题 | L2 | `LLM` `Token优化` `长上下文` `MapReduce` `分治` |
 | [中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy）](medium-task-merged-delegation-strategy.md) | 中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy） | L2 | `子代理委派` `任务合并` `任务拆分` |
 | [模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化](module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化 | L1 |  |
 | [导航枢纽文件名契约模式：全局清单 vs 局部清单](navigation-hub-filename-contract.md) | [引言内容] | L1 |  |
@@ -45,7 +54,9 @@ date: "2026-07-09"
 | [输出格式-协作能力映射（Output Format – Collaboration Capability Mapping）](output-format-collaboration-capability.md) | 输出格式-协作能力映射（Output Format – Collaboration Capability Mapping） | - |  |
 | [决策前三查检查清单（Pre-Decision Three Checks）](pre-decision-three-checks.md) | 决策前三查检查清单（Pre-Decision Three Checks） | L2 | `决策检查` `第一性原理` `防错机制` |
 | [上下文渐进式披露（Progressive Context Disclosure）](progressive-context-disclosure.md) | 上下文渐进式披露（Progressive Context Disclosure） | L2 |  |
+| [渐进式优化模式（Progressive Optimization Pattern）](progressive-optimization-pattern.md) | 按ROI分层递进优化：可观测性→Quick Wins→场景化优化→高级优化→持续迭代，5步实现85-95%成本降低，适用于所有LLM成本优化场景 | L2 | `LLM` `Token优化` `渐进式优化` `ROI` `成本优化` |
 | [渐进式模板化（Progressive Templating）](progressive-templating.md) | 渐进式模板化（Progressive Templating） | L1 |  |
+| [质量-成本动态平衡模式（Quality-Cost Dynamic Balance）](quality-cost-dynamic-balance.md) | 三级模型路由+分级压缩+A/B测试，在质量约束下最小化成本，成本降低40-85%且质量保持率>95%，解决一刀切问题 | L2 | `LLM` `Token优化` `质量平衡` `模型路由` `A/B测试` |
 | [references/ 渐进式披露：通过引用已有知识文档避免内容重复](references-progressive-disclosure.md) | references/ 渐进式披露：通过引用已有知识文档避免内容重复 | L1 |  |
 | [Skill 发现协议增强 SOP](skill-discovery-protocol.md) | Skill 发现协议增强 SOP | L1 |  |
 | [Skill 五要素模型（Skill Five Elements Model）](skill-five-elements-model.md) | Skill 五要素模型（Skill Five Elements Model） | L1 |  |

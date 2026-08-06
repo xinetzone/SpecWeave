@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 """第一性原理知识图谱静态数据模块。"""
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 NODE_CONCEPT = "concept"
 NODE_PERSON = "person"
 NODE_EVENT = "event"
@@ -127,3 +137,4 @@ def get_influenced_edges():
 
 def get_contributed_edges():
     return [{'source': s, 'target': t, 'relation': EDGE_CONTRIBUTED} for s, t in CONTRIBUTED_EDGES_RAW]
+

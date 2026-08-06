@@ -1,5 +1,11 @@
 from __future__ import annotations
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from .constants import (
     PLATFORM_RISK_PROFILES,
     PLATFORM_SEMANTIC_DEFAULTS,
@@ -179,3 +185,4 @@ def build_platform_semantic_mapping(risk_clusters: list[str]) -> list[dict[str, 
             continue
         mappings.append({"risk_label": label, **semantic})
     return mappings
+

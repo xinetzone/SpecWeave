@@ -13,6 +13,12 @@
 - 审查结果自动归档到 docs/retrospective/ 体系
 """
 
+
+# 版本校验：相对导入共享库（depth=0）
+from .python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 import logging
 import os

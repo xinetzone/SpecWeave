@@ -1,5 +1,11 @@
 """模式成熟度工具 - 评分计算与统计分析。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from typing import Any
 
 from .constants import MATURITY_LEVELS
@@ -75,3 +81,4 @@ def calculate_summary_counts(
     error_count = len(anomalies)
     pass_count = total - warn_count - error_count
     return pass_count, warn_count, error_count
+

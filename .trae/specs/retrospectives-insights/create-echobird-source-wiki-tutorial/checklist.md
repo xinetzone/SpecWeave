@@ -1,0 +1,32 @@
+# EchoBird 源码级深度学习与 Wiki 教程文档 - 验证清单
+
+- [x] Checkpoint 1: echobird-wiki/ 目录已创建于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`，包含 README.md 与 00-11 章节文件
+- [x] Checkpoint 2: 各章节文件 frontmatter 使用 YAML 格式（--- 分隔），包含 title/source/date/tags 字段（遵循 MDI v1.0）
+- [x] Checkpoint 3: README.md 目录导航包含所有章节文件链接，可跳转
+- [x] Checkpoint 4: 00-overview 概述准确反映项目定位、技术栈（Tauri+Rust）、版本（v5.6.0）
+- [x] Checkpoint 5: 01-product-positioning 定位章节与技术源码事实一致（解决安装配置痛点、配置一次到处可用）
+- [x] Checkpoint 6: 02-architecture 前后端分层解析准确（前端 src/pages、后端 src-tauri/src/services、入口 lib.rs 初始化流程）
+- [x] Checkpoint 7: 架构章节包含依赖清单（Cargo.toml 关键依赖）
+- [x] Checkpoint 8: 03-model-nexus 解析 modelDirectory.json 结构（providers/relays、baseUrl/anthropicUrl/modelId/modelIds/region）
+- [x] Checkpoint 9: 模型中心章节列出模型服务商清单（小米/DeepSeek/GLM/Kimi/OpenAI/火山引擎等 18+）
+- [x] Checkpoint 10: 模型中心章节说明"配置一次到处可用"实现机制与官方端点恢复
+- [x] Checkpoint 11: 04-core-scenarios 四大核心场景每个都有源码实现解析（前端页面 + 后端命令）
+- [x] Checkpoint 12: 场景二·一键本地大模型包含 LocalServer 页面 + local_llm 服务解析
+- [x] Checkpoint 13: 场景四·应用管理器包含 AppManager 页面 + toolsStore/tool_config_manager 解析
+- [x] Checkpoint 14: 05-local-llm 解析 vLLM/SGLang/llama.cpp 引擎选择与命令构建
+- [x] Checkpoint 15: 本地大模型章节包含 CUDA/GPU 检测、模型下载、PID 进程管理解析
+- [x] Checkpoint 16: 06-codex-proxy 解析 axum 绑定 127.0.0.1:53682 与 spawn_proxy_task
+- [x] Checkpoint 17: Codex Proxy 章节解析 Responses↔Chat 协议转换、GLM/Qwen/MiMo 厂商适配、流式处理
+- [x] Checkpoint 18: 07-tool-registry 解析 tools/ 下 25+ 工具与 config.json/paths.json 结构
+- [x] Checkpoint 19: 工具注册表章节包含 tool_manager/tool_config_manager/officialEndpoints 官方端点恢复机制
+- [x] Checkpoint 20: 08-advanced-pages 概述 AiPulse/AiCareer/MotherAgent/Skills/SSH/Feedback 等高级功能模块
+- [x] Checkpoint 21: 09-quickstart 四步快速上手完整（安装 EchoBird → 安装 Agent → 配置模型中心 → 绑定模型并启动）
+- [x] Checkpoint 22: 10-comparison-trends 包含对比与趋势洞察（可选，如有）
+- [x] Checkpoint 23: 11-faq-glossary FAQ 包含至少 8 个常见问题及解答
+- [x] Checkpoint 24: 术语表包含至少 15 个核心术语，每术语一句话白话解释（禁止用术语解释术语）
+- [x] Checkpoint 25: 03-agent-platforms-tools/README.md 子 Wiki 索引新增 echobird-wiki 目录条目（文件数、核心主题）
+- [x] Checkpoint 26: 文件命名规范检查通过（`python .agents/scripts/check-filename-convention.py`，kebab-case、纯英文、无中文字符）
+- [x] Checkpoint 27: 链接有效性检查通过（`python .agents/scripts/check-links.py`，目录锚点可跳转、外部 URL 指向正确资源）
+- [x] Checkpoint 28: 12 个 AC 全部满足
+- [x] Checkpoint 29: 文档语言通俗易懂，技术术语首现有一句话白话解释
+- [x] Checkpoint 30: 原子提交完成（Conventional Commits 规范，单一职责，工作区干净）

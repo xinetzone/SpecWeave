@@ -1,5 +1,11 @@
 """模式成熟度工具 - 报告生成。"""
 
+
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 import json
 
 from lib.cli import print_header, print_summary
@@ -247,3 +253,4 @@ def print_upgrade_json(patterns: list, stats: dict) -> None:
         ],
     }
     print(json.dumps(output, ensure_ascii=False, indent=2))
+

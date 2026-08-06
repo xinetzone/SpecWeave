@@ -166,3 +166,21 @@
 
 # Parallelizable Work
 - 本任务为线性深度分析流程，无显著可并行任务（Task 1-8 为递进式分析，前序任务输出是后序任务的基础）
+
+## [x] Task 9 (V门): 对抗性审查——七概念方法论 V 阶段
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**:
+  - 执行对抗性审查（adversarial-review），对分析报告进行系统性质疑与验证
+  - 来源三级分类：微信公众号"开源日记"→三级（Bronze），GitHub API/仓库→一级（Gold）
+  - 可信度四级评分：8 个关键事实逐一评分，发现 Star 数据 D 级（严重过时）
+  - 五维验证：来源核查/交叉验证/时效性评估/逻辑一致性审查/偏差识别
+  - 异常标记：5 项标记（🔴过时数据/⚖️争议观点×2/📚术语漂移/🔍遗漏背景）
+  - 修正输出：Star 数据更正（10771→34341）、术语校准（IDE→ADE）、YC 背景补充、偏差声明、不确定性标注
+- **Acceptance Criteria Addressed**: [V门质量标准]
+- **Test Requirements**:
+  - `human-judgement` TR-9.1: 审查意见 ≥ 5 条且具体（实际 8 条）
+  - `human-judgement` TR-9.2: 至少采纳 2 条修正（实际采纳 8 条）
+  - `human-judgement` TR-9.3: 审查报告归档至 docs/retrospective/reports/adversarial-review/adversarial-review-analyze-wechat-article-dy98-20260706.md
+  - `human-judgement` TR-9.4: spec.md 和 checklist.md 同步更新
+- **Notes**: V 门是七概念方法论知识沉淀场景（R→I→E→V→入库）的第四阶段，对已完成的分析进行系统性证伪，确保结论经得起质疑

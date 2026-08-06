@@ -244,7 +244,7 @@ quadrantChart
 | 报告来源 | 关注价值 |
 |---|---|
 | [Gartner Hype Cycle for AI](https://www.gartner.com/) | AI 技术成熟度曲线，判断技术落地窗口 |
-| [McKinsey AI Reports](https://www.mckinsey.com/ai) | AI 商业化与组织变革洞察 |
+| `McKinsey AI Reports`（原外部链接 2026-07 复检已失效：www.mckinsey.com/ai） | AI 商业化与组织变革洞察 |
 | [IDC AI Reports](https://www.idc.com/) | AI 市场规模、支出预测与厂商份额 |
 | [Stanford AI Index](https://aiindex.stanford.edu/) | 年度 AI 综合报告，学术/产业/政策全景 |
 | [a16z AI Reports](https://a16z.com/) | VC 视角的 AI 投资趋势与商业模式分析 |

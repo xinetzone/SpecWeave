@@ -104,17 +104,17 @@
 
 | 步骤 | 事件 | 文件 |
 |------|------|------|
-| 1 | 重写 Dockerfile，ubuntu:26.04 + 多阶段 | [Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile) |
-| 2 | 修复 pycaffe CMakeLists.txt 版本号 `1.0.0-slim` → `1.0.0` | [CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/CMakeLists.txt#L16) |
-| 3 | 创建 _caffe.py TVM-FFI 桥接模块 | [_caffe.py](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/python/pycaffe/_caffe.py) |
-| 4 | 更新 modules/CMakeLists.txt 添加 prepare-pycaffe-context 目标 | [CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/CMakeLists.txt#L111-L119) |
-| 5 | 创建 prepare-pycaffe-context.sh 脚本 | [prepare-pycaffe-context.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/scripts/prepare-pycaffe-context.sh) |
-| 6 | 修复 install(DIRECTORY) 排除 .so 重复安装 | [CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/CMakeLists.txt#L211-L222) |
-| 7 | 修复 UID 冲突 1000→1001 | [Dockerfile#L35](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile#L35) |
-| 8 | 添加 setuptools-scm + 禁用 libbacktrace | [Dockerfile#L87,L95](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile#L87) |
-| 9 | 修复 SKBUILD_CMAKE_ARGS 覆盖问题 | [Dockerfile#L95](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile#L95) |
-| 10 | runtime 阶段添加 libprotobuf-dev/libopenblas-dev | [Dockerfile#L137-L138](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile#L137) |
-| 11 | 更新 verify-pycaffe.sh | [verify-pycaffe.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/scripts/verify-pycaffe.sh) |
+| 1 | 重写 Dockerfile，ubuntu:26.04 + 多阶段 | `Dockerfile`（源项目归档路径） |
+| 2 | 修复 pycaffe CMakeLists.txt 版本号 `1.0.0-slim` → `1.0.0` | `CMakeLists.txt`（源项目归档路径） |
+| 3 | 创建 _caffe.py TVM-FFI 桥接模块 | `_caffe.py`（源项目归档路径） |
+| 4 | 更新 modules/CMakeLists.txt 添加 prepare-pycaffe-context 目标 | `CMakeLists.txt`（源项目归档路径） |
+| 5 | 创建 prepare-pycaffe-context.sh 脚本 | `prepare-pycaffe-context.sh`（源项目归档路径） |
+| 6 | 修复 install(DIRECTORY) 排除 .so 重复安装 | `CMakeLists.txt`（源项目归档路径） |
+| 7 | 修复 UID 冲突 1000→1001 | `Dockerfile#L35`（源项目归档路径） |
+| 8 | 添加 setuptools-scm + 禁用 libbacktrace | `Dockerfile#L87,L95`（源项目归档路径） |
+| 9 | 修复 SKBUILD_CMAKE_ARGS 覆盖问题 | `Dockerfile#L95`（源项目归档路径） |
+| 10 | runtime 阶段添加 libprotobuf-dev/libopenblas-dev | `Dockerfile#L137-L138`（源项目归档路径） |
+| 11 | 更新 verify-pycaffe.sh | `verify-pycaffe.sh`（源项目归档路径） |
 | 12 | 镜像构建成功，14 PASS / 0 FAIL | - |
 
 ### 3.3 产出物清单
@@ -541,13 +541,13 @@ TVM-FFI 在 PyCaffe 中的角色:
 
 | 文件 | 操作 | 核心变更 |
 |------|------|---------|
-| [docker/modules/pycaffe/Dockerfile](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/Dockerfile) | 重写 | 从零多阶段构建，builder/runtime分离，UBUNTU 26.04 |
-| [docker/modules/CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/CMakeLists.txt#L111-L154) | 修改 | pycaffe独立于python-module，prepare-pycaffe-context目标 |
-| [docker/modules/scripts/prepare-pycaffe-context.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/scripts/prepare-pycaffe-context.sh) | 新增 | WSL兼容的构建上下文准备脚本 |
-| [docker/modules/pycaffe/scripts/verify-pycaffe.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe/scripts/verify-pycaffe.sh) | 修改 | io→SKIP，新增data_types/transforms/tvm_ffi/caffeproto验证 |
-| [python/pycaffe/CMakeLists.txt](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/CMakeLists.txt) | 修改 | 版本号1.0.0、_caffe_cpp.so命名、RPATH、install排除.so、tvm_ffi_shared安装 |
-| [python/pycaffe/python/pycaffe/_caffe.py](file:///d:/spaces/SpecWeave/external/chaos/caffe/python/pycaffe/python/pycaffe/_caffe.py#L209-L213) | 修改 | _top_ids/_bottom_ids改为类方法，_BlobWrapper封装 |
-| [docker/modules/README.md](file:///d:spaces/SpecWeave/external/chaos/caffe/docker/modules/README.md) | 修改 | 独立构建架构文档 |
+| `docker/modules/pycaffe/Dockerfile`（源项目归档路径） | 重写 | 从零多阶段构建，builder/runtime分离，UBUNTU 26.04 |
+| `docker/modules/CMakeLists.txt`（源项目归档路径） | 修改 | pycaffe独立于python-module，prepare-pycaffe-context目标 |
+| `docker/modules/scripts/prepare-pycaffe-context.sh`（源项目归档路径） | 新增 | WSL兼容的构建上下文准备脚本 |
+| `docker/modules/pycaffe/scripts/verify-pycaffe.sh`（源项目归档路径） | 修改 | io→SKIP，新增data_types/transforms/tvm_ffi/caffeproto验证 |
+| `python/pycaffe/CMakeLists.txt`（源项目归档路径） | 修改 | 版本号1.0.0、_caffe_cpp.so命名、RPATH、install排除.so、tvm_ffi_shared安装 |
+| `python/pycaffe/python/pycaffe/_caffe.py`（源项目归档路径） | 修改 | _top_ids/_bottom_ids改为类方法，_BlobWrapper封装 |
+| [docker/modules/README.md](../../../../modules/) | 修改 | 独立构建架构文档 |
 
 ## 附录 B: 验证结果详情
 

@@ -31,37 +31,43 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 
 ## 知识沉淀建议
 
-### 待沉淀模式（L1实验性）
+### 已沉淀模式（于2026-08-04正式入库）
 
-本次洞察萃取识别出3个有价值的模式候选，建议在后续任务中验证后正式入库：
+本次洞察萃取识别出的4个模式候选已正式入库，从"待验证候选"转为"已入库模式"：
+
+0. **methodology-overflow-paradigm（方法论溢出范式）**
+   - 入库位置：[`docs/retrospective/patterns/methodology-patterns/research-knowledge/methodology-overflow-paradigm.md`](../../../patterns/methodology-patterns/research-knowledge/methodology-overflow-paradigm.md)
+   - 价值：技术演进是"成熟方法论向新领域溢出"，学习新领域最快方式是寻找新旧领域方法论映射
+   - 后续验证：分析其他跨领域技术演进案例时验证（L1→L2需2次验证）
 
 1. **demo-prod-six-layer-model（Demo-Prod六层能力模型）**
-   - 位置建议：`docs/retrospective/patterns/architecture-patterns/`
+   - 入库位置：[`docs/retrospective/patterns/architecture-patterns/demo-prod-six-layer-model.md`](../../../patterns/architecture-patterns/demo-prod-six-layer-model.md)
    - 价值：为AI应用从Demo到生产提供架构评估框架
-   - 验证机会：后续分析其他生产级Agent框架时验证六层模型的普适性
+   - 后续验证：分析其他生产级Agent框架时验证六层模型的普适性（L1→L2需2次验证）
 
 2. **three-tier-tool-fallback（三级工具回退链）**
-   - 位置建议：`docs/retrospective/patterns/methodology-patterns/tools-automation/`
+   - 入库位置：[`docs/retrospective/patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md`](../../../patterns/methodology-patterns/tools-automation/three-tier-tool-fallback.md)
    - 价值：为网页内容提取等工具使用场景提供标准回退策略
-   - 验证机会：后续网页提取任务中主动应用并验证
+   - 后续验证：后续网页提取任务中主动应用并验证（L1→L2需2次验证）
 
 3. **tool-skill-separation（工具Skill职责分离）**
-   - 位置建议：`docs/retrospective/patterns/architecture-patterns/`
+   - 入库位置：[`docs/retrospective/patterns/architecture-patterns/tool-skill-separation.md`](../../../patterns/architecture-patterns/tool-skill-separation.md)
    - 价值：Agent架构设计中"能力层/知识层"分离的通用原则
-   - 验证机会：后续分析其他Agent框架或设计Agent系统时应用验证
+   - 后续验证：分析其他Agent框架或设计Agent系统时应用验证（L1→L2需2次验证）
 
 ### 关联知识更新
 
-1. **Eve框架学习笔记**：本次分析输出在对话中，如需要可整理为独立的学习笔记文档存入`docs/knowledge/learning/`
+1. **Eve框架学习笔记**：本次分析输出已整理为 **eve-wiki 结构化教程**（10章 + README，11个文件），存入 [`docs/knowledge/learning/03-agent-platforms-tools/eve-wiki/`](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md)，并已结合本地源码校准 API 细节（v1.1）
 2. **前端开发者AI转型路径**：洞察1和洞察3可作为前端开发者学习AI Agent开发的参考框架
 
 ## 后续行动项
 
 | 优先级 | 行动项 | 类型 | 建议时间 |
 |--------|--------|------|---------|
-| 🟢 低优 | 实际安装体验Eve框架，创建一个简单Demo Agent | 技术实践 | 下次有Agent开发需求时 |
-| 🟢 低优 | 对比分析LangChain/CrewAI/AutoGen等框架，验证六层能力模型的普适性 | 技术研究 | 后续框架对比任务中 |
-| 🟢 低优 | 如沉淀模式，按照模式成熟度标准（L1→L2需2次验证）逐步升级 | 知识沉淀 | 后续任务中自然验证 |
+| 🟢 低优 | 实际安装体验Eve框架，创建一个简单Demo Agent | 技术实践 | 🔄 部分完成（已源码学习，待实际运行 Demo） |
+| 🟢 低优 | 对比分析LangChain/CrewAI/AutoGen等框架，验证六层能力模型的普适性 | 技术研究 | ✅ 已完成（2026-08-04，已对比 LangGraph 子 Agent 管理） |
+| 🟢 低优 | 按模式成熟度标准（L1→L2需2次验证）逐步升级已入库模式 | 知识沉淀 | ✅ 4个模式已入库（2026-08-04），待后续任务自然验证后升级 |
+| 🟢 低优 | 将Eve分析输出整理为学习笔记 | 知识沉淀 | ✅ 已完成（2026-08-04，eve-wiki 教程） |
 
 ## 导出检查清单
 

@@ -37,7 +37,9 @@ docs/retrospective/
 │       ├── governance-strategy/        ← 治理与优先级策略（14个）
 │       ├── ai-collaboration/           ← AI协作与提示词设计（9个）
 │       ├── creative-design/            ← 创意与设计原则（7个）
-│       └── product-growth/             ← 产品开发与竞争策略（7个）
+│   └── product-growth/             ← 产品开发与竞争策略（7个）
+├── guides/                            ← 通用指南与培训材料
+│   └── code-optimization/             ← 代码优化指南集（入门指南、Checklist、测试题、策略对比）
 ├── frameworks/                        ← 决策框架
 │   ├── directory-naming-matrix.md     · 目录命名决策矩阵
 │   ├── dependency-management-matrix.md · 临时依赖管理决策矩阵
@@ -181,6 +183,16 @@ docs/retrospective/
 - [ai-collaboration/progressive-templating.md](patterns/methodology-patterns/ai-collaboration/progressive-templating.md) — 渐进式模板化：硬编码验证→模板分离→多类型扩展三阶段
 - [retrospective-knowledge/retrospective-acceleration-effect.md](patterns/methodology-patterns/retrospective-knowledge/retrospective-acceleration-effect.md) — 复盘加速效应：高频批次复盘实现知识转化率 1×→3× 递增
 - [document-architecture/two-phase-processing.md](patterns/methodology-patterns/document-architecture/two-phase-processing.md) — 双阶段加工策略：大型文档先横切（原子化）再纵切（模块化）的固定先后顺序
+
+### [guides/](guides/README.md)
+存放面向新成员的通用培训指南、Checklist、考核题、策略对比等文档，按主题分子目录。
+
+- **code-optimization/** — 代码优化安全指南集
+  - [optimization-beginner-guide.md](guides/code-optimization/optimization-beginner-guide.md) — 新成员代码优化安全操作入门指南
+  - [optimization-anti-patterns-checklist.md](guides/code-optimization/optimization-anti-patterns-checklist.md) — 可打印反模式Checklist表格
+  - [optimization-assessment-quiz.md](guides/code-optimization/optimization-assessment-quiz.md) — 考核测试题（20单选+4场景题）
+  - [optimization-strategy-comparison.md](guides/code-optimization/optimization-strategy-comparison.md) — 四种代码优化策略多维对比
+  - [methodology-validation-summary.md](guides/code-optimization/methodology-validation-summary.md) — 七概念方法论G1-G4在代码优化中的验证效果总结
 
 ### [frameworks/](frameworks/README.md)
 存放可复用的决策框架与矩阵，帮助在不同场景下做出标准化决策。

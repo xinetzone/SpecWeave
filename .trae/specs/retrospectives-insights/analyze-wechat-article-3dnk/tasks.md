@@ -60,7 +60,7 @@
     4. 一条命令部署：将复杂配置简化为一行安装脚本，极大降低部署门槛
     5. 硬件适配分层：最低配置仅需 4GB 内存即可运行 Command Center，完整体验支持 NVIDIA GPU 加速
   - 分析每个创新点解决的核心问题与价值
-- **Acceptance Criteria Addressed**: [FR-5, FR-8, FR-9, AC-4, AC-6]
+- **Acceptance Criteria Addressed**: [FR-5, FR-7, FR-8, FR-9, AC-4, AC-6]
 - **Test Requirements**:
   - `human-judgement` TR-4.1: Docker Compose 集成范式的设计理念阐述深入
   - `human-judgement` TR-4.2: 提炼出3-5个核心技术创新点，每个创新点说明其解决的问题与价值
@@ -128,6 +128,7 @@
 - **Priority**: high
 - **Depends On**: Task 7
 - **Description**: 
+  - （注：本 Task 覆盖学习笔记层与洞察总结层两个子层，以及 7 个非功能需求。两个子层在逻辑上独立但输出上整合，故未拆分为独立 Task。如验收时发现某一层质量不达标，可追溯到对应子层进行针对性修复。）
   - 整合所有分析结果，形成结构化输出，包含两个清晰层次
   - **学习笔记层**（技术内容理解）：
     - 文章基本信息（标题、作者、发布方、URL、相关链接）

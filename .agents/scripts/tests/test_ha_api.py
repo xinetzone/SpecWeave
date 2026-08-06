@@ -12,6 +12,19 @@
 这些测试主要验证脚本的基本功能和错误处理逻辑。
 """
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import argparse
 import io
 import os
@@ -180,3 +193,4 @@ class TestCommands(TestCase):
 if __name__ == "__main__":
     import unittest
     unittest.main()
+

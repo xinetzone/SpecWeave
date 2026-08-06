@@ -1,3 +1,8 @@
+# 版本校验：相对导入共享库（depth=1）
+from ..python310_version_check import enforce_python310
+
+enforce_python310()
+
 from datetime import datetime
 from pathlib import Path
 
@@ -144,3 +149,4 @@ def compute_scores(metrics, weights=None):
     scores['weights_used'] = weights
 
     return scores
+

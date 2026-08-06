@@ -198,7 +198,7 @@
   - `human-judgement` TR-10.3: 解答清晰准确，有原文依据
 - **Notes**: FAQ 应具有实际参考价值
 
-## [ ] Task 11: 编写相关资源链接章节
+## [x] Task 11: 编写相关资源链接章节
 
 - **Priority**: medium
 - **Depends On**: Task 10
@@ -230,6 +230,22 @@
   - `human-judgement` TR-12.3: 标签设置合理
   - `programmatic` TR-12.4: 表格格式与现有条目一致
 - **Notes**: 严格遵循现有索引格式
+
+## [x] Task 13: Open Questions 跟踪闭环（七概念方法论复盘产出）
+
+- **Priority**: medium
+- **Depends On**: Task 1-12
+- **Description**:
+  - 基于七概念方法论里程碑复盘（R→I→E→C），识别出 Open Questions 缺乏跟踪闭环机制
+  - 更新 spec.md 的 Open Questions 部分，为每个问题添加初步分析结论和决策状态
+  - 在 checklist.md 中新增 Open Questions 跟踪检查点（Checkpoint 62-64）
+  - 确保每个 Open Question 有明确的后续处理路径（暂不处理/另立 spec/待用户确认）
+- **Acceptance Criteria Addressed**: 七概念方法论复盘闭环（洞察3 落地）
+- **Test Requirements**:
+  - `human-judgement` TR-13.1: spec.md 的 3 个 Open Questions 均有初步分析结论
+  - `human-judgement` TR-13.2: 每个 Open Question 有明确的决策状态（待确认/另立 spec/暂不处理）
+  - `programmatic` TR-13.3: checklist.md 新增 Checkpoint 62-64 跟踪 Open Questions 状态
+- **Notes**: 此任务由七概念方法论编排（seven-concepts-cmd）里程碑复盘流程产出，对应洞察3"Open Questions 缺乏跟踪闭环机制"
 
 # Task Dependencies
 

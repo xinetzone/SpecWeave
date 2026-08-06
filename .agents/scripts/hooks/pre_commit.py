@@ -39,6 +39,19 @@ Git 原生方式：
 """
 from __future__ import annotations
 
+
+# 版本校验：导入共享库
+import sys as _sys
+from pathlib import Path as _Path
+_lib_parent = _Path(__file__).resolve().parent
+while not (_lib_parent / "lib").is_dir():
+    _lib_parent = _lib_parent.parent
+_sys.path.insert(0, str(_lib_parent / "lib"))
+
+from python310_version_check import enforce_python310
+
+enforce_python310()
+
 import os
 import subprocess
 import sys
@@ -348,6 +361,7 @@ def _run_pattern_quality_check(project_root: Path, scripts_dir: Path, staged_fil
         f for f in staged_files
         if ".agents/docs/retrospective/patterns/" in str(f).replace("\\", "/")
         and str(f).endswith(".md")
+        and Path(f).name not in {"README.md", "CATEGORIES.md"}
     ]
 
     if not pattern_files:
@@ -453,3 +467,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
