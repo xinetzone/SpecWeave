@@ -15,7 +15,8 @@ class SecurityChecker:
         self.event_handler = re.compile(r'\son\w+\s*=', re.IGNORECASE)
         self.click_pat = re.compile(r'^\s*click\s+\S+', re.IGNORECASE)
         self.js_url_pat = re.compile(r'javascript\s*:', re.IGNORECASE)
-        self.end_as_node = re.compile(r'(^|[^a-zA-Z0-9_])end\s*[\(\[\{<]', re.IGNORECASE)
+        # 仅大小写敏感的 `end` 是 Mermaid 保留字；大写变体（End/END）官方允许作为节点 ID，不应误报
+        self.end_as_node = re.compile(r'(^|[^a-zA-Z0-9_])end\s*[\(\[\{<]')
 
     def check(self, block_text: str, start_line: int) -> List[Tuple[int, str, str]]:
         issues = []
