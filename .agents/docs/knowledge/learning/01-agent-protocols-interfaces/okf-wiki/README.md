@@ -30,7 +30,7 @@ OKF（Open Knowledge Format）是Google Cloud 2026年6月发布的开放知识�
 - **DevOps/SRE团队**：构建Runbook、故障处理手册等运维知识体系
 - **对Agent生态感兴趣的技术人员**：希望了解知识层标准发展趋势
 
-## 📄 文档索引（8篇）
+## 📄 文档索引（8篇教程 + 1案例研究）
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
@@ -42,6 +42,12 @@ OKF（Open Knowledge Format）是Google Cloud 2026年6月发布的开放知识�
 | [架构定位与Agent集成](05-architecture-and-integration.md) | Agent四层架构详解，OKF与MCP/Skills关系，知识生产消费解耦，企业落地四阶段路径 | `okf` `architecture` `integration` `mcp` |
 | [FAQ与最佳实践](06-faq-and-best-practices.md) | 12个常见问题解答、8条核心最佳实践、生产上线10项检查清单 | `okf` `faq` `checklist` |
 | [资源与术语表](07-resources-and-glossary.md) | 20+核心术语定义，官方资源链接，相关标准，项目内wiki交叉引用 | `okf` `glossary` `references` |
+
+### 📂 案例研究
+
+| 案例 | 说明 | 标签 |
+|------|------|------|
+| [Awesome OKF 深度案例分析](awesome-okf-analysis/README.md) | 使用七概念方法论分析中文OKF生态项目awesome-okf，含2个可迁移模式、4个原子行动项。适合想了解OKF实践中设计trade-off的开发者/架构师 | `okf` `case-study` `seven-concepts` `patterns` |
 
 ## 📖 阅读建议
 
