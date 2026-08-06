@@ -30,6 +30,7 @@ from knowledge_graph_data import (
     EDGE_RELATED, EDGE_INFLUENCED, EDGE_PRECEDED, EDGE_BELONGS_TO, EDGE_DEFINED_IN, EDGE_CONTRIBUTED,
     PERIOD_NODES, CONCEPT_DOC_MAP, get_influenced_edges, get_contributed_edges
 )
+from knowledge_graph_config import get_config, KnowledgeGraphConfig
 
 INLINE_LINK_RE = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
 TEMPLATE_PATH = SCRIPTS_DIR / "templates" / "knowledge-graph-generic.html"
@@ -328,8 +329,9 @@ def suggest_isolated_links_simple(nodes, edges, isolated, top_k=3):
         existing.add((e['source'], e['target']))
         existing.add((e['target'], e['source']))
     suggestions = {}
-    rn = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
-    rl = {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'}
+    config = get_config()
+    rn = config.type_labels
+    rl = config.relation_labels
     for iso in isolated:
         i_id, i_label, i_type, i_dom = iso['id'], iso['label'], iso['type'], iso.get('domain','')
         i_tok = node_tokens[i_id]
@@ -369,8 +371,9 @@ def print_isolated_suggestions_simple(suggestions):
     print("\n" + "="*60)
     print("💡 孤立节点关联建议")
     print("="*60)
-    rn = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
-    rl = {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'}
+    config = get_config()
+    rn = config.type_labels
+    rl = config.relation_labels
     for i_id, info in suggestions.items():
         label, ntype, recs = info['node_label'], info['node_type'], info['recommendations']
         print(f"\n🔍 [{rn.get(ntype,ntype)}] {label} ({i_id}):")
@@ -387,36 +390,34 @@ def print_isolated_suggestions_simple(suggestions):
             print(f"      添加: {{'source': '{i_id}', 'target': '{rec['target_id']}', 'relation': '{rec['relation']}'}}")
 
 
-NODE_COLORS = {('concept','哲学'):'#8B4513',('concept','物理学'):'#1E88E5',('concept','方法论'):'#43A047',('concept','认知科学'):'#FB8C00',('concept','通用'):'#757575'}
-NODE_TYPE_COLORS = {NODE_CONCEPT:'#757575',NODE_PERSON:'#E53935',NODE_EVENT:'#8E24AA',NODE_DOCUMENT:'#00897B',NODE_PERIOD:'#546E7A'}
-NODE_SIZES = {NODE_PERIOD:35,NODE_PERSON:22,NODE_EVENT:22,NODE_CONCEPT:18,NODE_DOCUMENT:18}
-EDGE_STYLES = {EDGE_RELATED:{'color':'#999','width':1,'dashes':False,'arrows':''},EDGE_INFLUENCED:{'color':'#1565C0','width':2,'dashes':False,'arrows':'to'},EDGE_PRECEDED:{'color':'#BBB','width':1,'dashes':False,'arrows':'to'},EDGE_BELONGS_TO:{'color':'#CCC','width':1,'dashes':[6,4],'arrows':''},EDGE_DEFINED_IN:{'color':'#4CAF50','width':1,'dashes':[2,3],'arrows':''},EDGE_CONTRIBUTED:{'color':'#FF9800','width':2,'dashes':False,'arrows':'to'}}
-TYPE_LABELS = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
-
-
 def _get_node_color(n):
-    if n['type'] == NODE_CONCEPT:
-        return NODE_COLORS.get(('concept', n.get('domain','通用')), NODE_COLORS[('concept','通用')])
-    return NODE_TYPE_COLORS.get(n['type'], '#757575')
+    config = get_config()
+    return config.get_node_color(n['type'], n.get('domain'))
 
 
 def _get_node_size(n):
-    return NODE_SIZES.get(n['type'],18) + (2 if n['type']==NODE_CONCEPT and n.get('rating')=='A' else 0)
+    config = get_config()
+    return config.get_node_size(n['type'], n.get('rating'))
 
 
-def _get_node_shape(n): return 'diamond' if n['type']==NODE_PERIOD else 'dot'
+def _get_node_shape(n):
+    config = get_config()
+    return config.get_node_shape(n['type'])
 
 
 def _transform_nodes_for_js(nodes):
+    config = get_config()
     res = []
     for n in nodes:
         c, s, sh = _get_node_color(n), _get_node_size(n), _get_node_shape(n)
         dom = n.get('domain','')
-        tl = TYPE_LABELS.get(n['type'], n['type'])
+        tl = config.get_type_label(n['type'])
         title = f"{n['label']} [{tl}·{dom}]" if n['type']==NODE_CONCEPT and dom else f"{n['label']} [{tl}]"
         jn = {'id':n['id'],'label':n['label'],'type':n['type'],'domain':dom,'title':title,
-            'color':{'background':c,'border':c,'highlight':{'background':c,'border':'#000'}},'size':s,
-            'font':{'color':'#333','size':14,'face':'sans-serif'},'shape':sh,'borderWidth':2,'borderWidthSelected':4}
+            'color':{'background':c,'border':c,'highlight':{'background':c,'border':config.highlight_border_color}},'size':s,
+            'font':config.font_dict(),'shape':sh,
+            'borderWidth':config.get_node_border_width(n['type']),
+            'borderWidthSelected':config.get_node_border_width_selected(n['type'])}
         if n['type']==NODE_CONCEPT:
             jn.update({'definition':n.get('definition',''),'source_url':n.get('source_url',''),'rating':n.get('rating','B'),'english_name':n.get('english_name','')})
         elif n['type']==NODE_PERSON:
@@ -432,65 +433,42 @@ def _transform_nodes_for_js(nodes):
 
 
 def _transform_edges_for_js(edges):
+    config = get_config()
     res = []
     for e in edges:
-        st = EDGE_STYLES.get(e['relation'], EDGE_STYLES[EDGE_RELATED])
+        st = config.get_edge_style(e['relation'])
         je = {'from':e['source'],'to':e['target'],'relation':e['relation'],
-            'color':{'color':st['color'],'highlight':st['color'],'hover':st['color']},
-            'width':st['width'],'smooth':{'enabled':True,'type':'continuous'}}
-        if st['dashes']: je['dashes'] = st['dashes']
-        if st['arrows']: je['arrows'] = {st['arrows']:{'enabled':True,'scaleFactor':0.8}}
+            'color':{'color':st.color,'highlight':st.color,'hover':st.color},
+            'width':st.width,'smooth':{'enabled':True,'type':'continuous'}}
+        if st.dashes: je['dashes'] = st.dashes
+        if st.arrows: je['arrows'] = {st.arrows:{'enabled':True,'scaleFactor':0.8}}
         res.append(je)
     return res
 
 
 def generate_html(nodes, edges, output_path, title="🕸️ 第一性原理知识图谱"):
     """生成HTML可视化文件。"""
+    config = get_config()
     jsn, jse = _transform_nodes_for_js(nodes), _transform_edges_for_js(edges)
     tpl = TEMPLATE_PATH.read_text(encoding='utf-8')
-    
+
+    subtitle = f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系"
+
     js_config = {
-        'typeColors': NODE_TYPE_COLORS,
-        'domainColors': {'哲学': '#8B4513', '物理学': '#1E88E5', '方法论': '#43A047', '认知科学': '#FB8C00', '通用': '#757575'},
-        'edgeStyles': {k: {'color': v['color'], 'dashes': v.get('dashes', False), 'arrows': v.get('arrows', '')} for k, v in EDGE_STYLES.items()},
-        'typeLabels': TYPE_LABELS,
-        'relationLabels': {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_PRECEDED:'时序先后',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献'},
-        'conceptType': 'concept',
-        'detailFieldLabels': {
-            'concept': [
-                {'key': 'english_name', 'label': '英文名'},
-                {'key': 'definition', 'label': '定义摘要'},
-                {'key': 'rating', 'label': '可信度评级', 'type': 'rating'},
-                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
-            ],
-            'person': [
-                {'key': 'period', 'label': '时期'},
-                {'key': 'contribution', 'label': '核心贡献'},
-                {'key': 'source_url', 'label': '查看源文档', 'type': 'link'},
-            ],
-            'event': [
-                {'key': 'time', 'label': '时间'},
-                {'key': 'period', 'label': '时期'},
-                {'key': 'importance', 'label': '重要程度'},
-                {'key': 'source_url', 'label': '详细说明', 'type': 'link'},
-            ],
-            'document': [
-                {'key': 'description', 'label': '简介'},
-                {'key': 'difficulty', 'label': '难度'},
-                {'key': 'source_url', 'label': '打开文档', 'type': 'link'},
-            ],
-            'period': [
-                {'key': 'time_range', 'label': '时间范围'},
-                {'key': 'description', 'label': '概述'},
-            ],
-        },
-        'subtitle': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
-        'enableEditing': True,
+        'typeColors': config.node_type_colors_dict(),
+        'domainColors': dict(config.domain_colors),
+        'edgeStyles': config.edge_styles_for_js(),
+        'typeLabels': dict(config.type_labels),
+        'relationLabels': dict(config.relation_labels),
+        'conceptType': NODE_CONCEPT,
+        'detailFieldLabels': {k: list(v) for k, v in config.detail_field_labels.items()},
+        'subtitle': subtitle,
+        'enableEditing': config.enable_editing,
     }
-    
+
     repl = {
         '__TITLE__': title,
-        '__SUBTITLE__': f"从古希腊哲学到当代商业方法论的思想传承网络 · {len(nodes)}个节点 · {len(edges)}条关系",
+        '__SUBTITLE__': subtitle,
         '__NODE_COUNT__': str(len(nodes)),
         '__EDGE_COUNT__': str(len(edges)),
         '__NODES_DATA__': json.dumps(jsn, ensure_ascii=False),
@@ -505,6 +483,7 @@ def generate_html(nodes, edges, output_path, title="🕸️ 第一性原理知�
 
 def print_statistics(nodes, edges, isolated):
     """打印图数据统计信息。"""
+    config = get_config()
     tc = defaultdict(int)
     for n in nodes: tc[n['type']] +=1
     rc = defaultdict(int)
@@ -512,14 +491,12 @@ def print_statistics(nodes, edges, isolated):
     stats = {'total_nodes':len(nodes),'total_edges':len(edges),'node_types':dict(tc),'edge_types':dict(rc),'isolated_count':len(isolated)}
     print("\n" + "="*60); print("知识图谱组装完成"); print("="*60)
     print_pass(f"总节点数: {stats['total_nodes']} 个")
-    tn = {NODE_CONCEPT:'概念',NODE_PERSON:'人物',NODE_EVENT:'事件',NODE_DOCUMENT:'文档',NODE_PERIOD:'时期'}
-    for nt,c in sorted(tc.items()): print_pass(f"  - {tn.get(nt,nt)}: {c} 个")
+    for nt,c in sorted(tc.items()): print_pass(f"  - {config.get_type_label(nt)}: {c} 个")
     print_pass(f"总边数: {stats['total_edges']} 条")
-    rn = {EDGE_RELATED:'概念相关',EDGE_INFLUENCED:'思想传承',EDGE_BELONGS_TO:'时期归属',EDGE_DEFINED_IN:'概念定义',EDGE_CONTRIBUTED:'人物贡献',EDGE_PRECEDED:'时序先后'}
-    for r,c in sorted(rc.items()): print_pass(f"  - {rn.get(r,r)}: {c} 条")
+    for r,c in sorted(rc.items()): print_pass(f"  - {config.get_relation_label(r)}: {c} 条")
     if isolated:
         print_warn(f"发现 {len(isolated)} 个孤立节点（度数为0）：")
-        for n in isolated: print_warn(f"  - [{n['type']}] {n['label']} ({n['id']})")
+        for n in isolated: print_warn(f"  - [{config.get_type_label(n['type'])}] {n['label']} ({n['id']})")
     else: print_pass("无孤立节点")
     return stats
 
