@@ -19,6 +19,9 @@
 | flexloop | main@d618849a (子模块) | owned_collab | 2026-06-27 | AgentForge AI Agent 协作框架（自有协作子模块，跟踪 main 分支） |
 | ark-cli | main@88313923 (子模块) | third_party | 2026-07-07 | 火山引擎方舟大模型平台 CLI 工具（第三方只读依赖） |
 | awesome-okf | main@f6c70627 (子模块) | third_party | 2026-08-06 | 中文OKF（Open Knowledge Format）生态项目，含7个零依赖插件与Skill集 |
+| awesome-okf-bundle | main@ebe906b7 (子模块) | third_party | 2026-08-06 | linyiru/awesome-okf 上游 OKF 列表与 bundle 构建器 |
+| awesome-okf-kit | main@5e862eeb (子模块) | third_party | 2026-08-06 | OKF bundle 注册表工具集 |
+| okf-bundle-template | main@a0883c7b (子模块) | third_party | 2026-08-06 | OKF bundle 发布模板 |
 
 ## 使用说明
 

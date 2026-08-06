@@ -90,6 +90,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-
 |------|------|---------|
 | Knowledge Catalog工具链 | [knowledge-catalog-wiki](../knowledge-catalog-wiki/README.md) | Google Cloud官方OKF参考实现、参考Agent、可视化工具、enrichment/mdcode工具箱 |
 | Awesome OKF深度案例分析 | [awesome-okf-analysis](./awesome-okf-analysis/README.md) | 中文OKF生态项目awesome-okf的七概念方法论深度分析，含零依赖CLI聚合、规范留白扩展2个可迁移模式与4个原子行动项 |
+| OKF生态基建知识 | [okf-ecosystem-wiki](./okf-ecosystem-wiki/README.md) | OKF生态基建层系统知识：生态资源图谱、bundle分发注册机制、bundle工程化发布模板、okf-kit工具链命令速查 |
 | Agent Skills Wiki | [agent-skills-wiki](../agent-skills-wiki/README.md) | Skills是程序层，OKF是知识层，互补 |
 | Agent通信协议 | [agent-communication-protocols](../agent-communication-protocols/README.md) | MCP/A2A/ACP等Agent协议，OKF与MCP互补 |
 | Harness七组件 | [harness-seven-components-wiki](../../02-agent-engineering-methodology/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位 |
