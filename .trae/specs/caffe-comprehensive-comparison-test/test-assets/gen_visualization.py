@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """生成 ECharts 单文件可视化：跨实现性能对比柱状图 + 精度误差图"""
-import json, os
+import json, os, pathlib
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(BASE, "results")
+
+# 读取本地 echarts.min.js，内联进 HTML 实现完全离线可渲染
+_echarts_path = pathlib.Path(BASE) / "echarts.min.js"
+if _echarts_path.exists():
+    ECHARTS_INLINE = _echarts_path.read_text(encoding="utf-8")
+    ECHARTS_TAG = "<script>" + ECHARTS_INLINE + "</script>"
+else:
+    # 兜底：无本地文件时回退 CDN（需联网）
+    ECHARTS_TAG = '<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>'
+    print("[warn] echarts.min.js 不存在，回退 CDN（需联网）")
 
 with open(os.path.join(RES, "bench_caffe_ffi.json")) as f: bf = json.load(f)
 with open(os.path.join(RES, "bench_caffex.json")) as f: bc = json.load(f)
@@ -37,12 +47,14 @@ cpu_avg = json.dumps([cpuffi["avg_cpu_pct"], cpucx["avg_cpu_pct"]])
 cpu_peak = json.dumps([cpuffi["peak_cpu_pct"], cpucx["peak_cpu_pct"]])
 cpu_ncpu = json.dumps([cpuffi["ncpu"], cpucx["ncpu"]])
 
+echarts_tag = ECHARTS_TAG
+
 html = f"""<!DOCTYPE html>
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
 <title>Caffe 两实现（caffe-ffi / caffex）综合对比测试可视化</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+{echarts_tag}
 <style>
   body {{ font-family: "Microsoft YaHei", Arial, sans-serif; margin: 20px; background:#f7f8fa; }}
   h2 {{ color: #1f2d3d; }}

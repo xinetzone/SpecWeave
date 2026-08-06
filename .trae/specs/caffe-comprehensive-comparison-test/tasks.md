@@ -1,6 +1,6 @@
 # Caffe 两实现（caffe-ffi / caffex）综合对比测试 - The Implementation Plan (可验证任务清单)
 
-## [ ] Task 1: 环境预检与测试矩阵设计
+## [x] Task 1: 环境预检与测试矩阵设计
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -11,7 +11,7 @@
 - **Acceptance**: TR-1 环境验证通过；测试矩阵文档化。
 - **验证**: `programmatic` — 环境验证命令输出；`human-judgement` — 矩阵覆盖度。
 
-## [ ] Task 2: caffe-ffi 功能测试（py314）
+## [x] Task 2: caffe-ffi 功能测试（py314）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -22,7 +22,7 @@
 - **Acceptance**: FR-1 满足；接口可用、C++ 扩展正常加载。
 - **验证**: `programmatic` — pytest 退出码、JUnit XML、用例统计。
 
-## [ ] Task 3: caffex 功能测试（origin 镜像环境）
+## [x] Task 3: caffex 功能测试（origin 镜像环境）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -32,7 +32,7 @@
 - **Acceptance**: FR-2 满足；功能正确性与实现特性清单产出。
 - **验证**: `programmatic` — 测试结果文件；`human-judgement` — 实现特性章节。
 
-## [ ] Task 4: 跨实现算子精度对比（caffe-ffi vs caffex）
+## [x] Task 4: 跨实现算子精度对比（caffe-ffi vs caffex）
 - **Priority**: medium
 - **Depends On**: Task 2, Task 3
 - **Description**:
@@ -43,7 +43,7 @@
 - **Acceptance**: FR-3 满足；逐算子精度指标产出。
 - **验证**: `programmatic` — 精度数据文件存在且数值合理。
 
-## [ ] Task 5: 性能与资源占用基准
+## [x] Task 5: 性能与资源占用基准
 - **Priority**: medium
 - **Depends On**: Task 2, Task 3
 - **Description**:
@@ -53,7 +53,7 @@
 - **Acceptance**: FR-4 满足；性能指标与资源占用产出。
 - **验证**: `programmatic` — 性能数据文件；`human-judgement` — 环境差异标注合理。
 
-## [ ] Task 6: 可视化与结构化数据生成
+## [x] Task 6: 可视化与结构化数据生成
 - **Priority**: medium
 - **Depends On**: Task 4, Task 5
 - **Description**:
@@ -62,7 +62,7 @@
 - **Acceptance**: 图表可本地离线渲染，反映精度/性能数据。
 - **验证**: `human-judgement` — 图表正确性；`programmatic` — 图表文件存在。
 
-## [ ] Task 7: 综合测试报告生成与归档
+## [x] Task 7: 综合测试报告生成与归档
 - **Priority**: high
 - **Depends On**: Task 2-6
 - **Description**:
