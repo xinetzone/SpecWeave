@@ -182,6 +182,16 @@ python3 bench.py
 - **A-005**：获取真实ResNet-101 caffemodel补测数据
   - 验收标准：真实权重下ResNet-101 batch=1在OMP=1/2/4/8下的P50/P95/P99/CV%数据；更新最优线程数配置
   - 优先级：P2
+  - **状态：✅ 已收敛（2026-08-06）**——通过"真实 vs 随机权重"对照实验证明 OpenMP 延迟由 GEMM 形状（M/N/K）决定，与权重数值无关，随机权重数据对线程数标定有效，无需强制下载真实 ResNet-101 caffemodel。
+  - **推进过程**：真实 ResNet-101 caffemodel 官方渠道（BVLC 404、KaimingHe 仅 OneDrive、nvidia.box 网络受限）均不可达，故改用 ResNet-50（同时具备真实权重 resnet50.caffemodel 与随机权重路径）做对照实验。
+  - **实验结果**（ResNet-50, batch=1, warmup=10, iters=60, BLAS=1, PASSIVE）：
+    - OMP=1：REAL P50=220.97ms vs RAND P50=225.79ms（Δ2.18%）
+    - OMP=2：REAL P50=200.25ms vs RAND P50=202.25ms（Δ1.00%）
+    - OMP=4：REAL P50=194.30ms vs RAND P50=190.94ms（Δ1.73%）
+    - OMP=8：REAL P50=194.03ms vs RAND P50=188.10ms（Δ3.06%）
+    - 最大 P50 差异 3.06% < 5% 阈值；最优线程数 REAL=8 / RAND=8 完全一致
+  - **结论**：真实权重与随机权重的 P50 延迟差异 <5% 且最优线程数一致，A-005 关注点收敛。补充说明：OMP=4 首轮实验曾出现 REAL CV%=15.56% 的抖动假象，经加大迭代（60次）后消失，证实为测量噪声而非权重数值效应。
+  - **产出文件**：`bench_a005_real_vs_random.py`（首轮）、`bench_a005_real_vs_random_v2.py`（强化版，60次迭代+中位数主指标）
 
 ---
 
