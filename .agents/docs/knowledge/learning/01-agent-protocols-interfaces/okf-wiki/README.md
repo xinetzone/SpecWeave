@@ -73,3 +73,4 @@ OKF（Open Knowledge Format）是Google Cloud 2026年6月发布的开放知识�
 
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
 - [📚 知识库首页](../../../../README.md)
+- [🛠️ Knowledge Catalog工具链完整指南](../knowledge-catalog-wiki/README.md) - Google Cloud官方OKF参考实现、参考Agent、可视化工具、enrichment/mdcode工具箱、示例Bundle解析

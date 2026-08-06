@@ -151,7 +151,14 @@ flowchart LR
 - 每个阶段都可以停止，成本低，不会被锁定（因为就是markdown）
 - 迁移旧文档永远放在最后，等新流程跑顺了再考虑
 
-## 5.7 与SpecWeave现有知识库的结合思考
+## 5.7 官方参考实现与工具链
+
+Google Cloud官方提供了完整的OKF参考实现和工具链——**Knowledge Catalog**，主要包括：
+
+- **参考Agent实现**：完整的OKF消费端Agent示例，展示如何发现、路由、导航和验证OKF知识，详见 [Knowledge Catalog参考Agent](../knowledge-catalog-wiki/03-reference-agent.md)
+- **工具链与可视化**：包含可视化浏览工具、enrichment自动增强工具、mdcode代码提取工具箱等，详见 [Knowledge Catalog工具链与可视化](../knowledge-catalog-wiki/04-toolchain-and-visualization.md)
+
+## 5.8 与SpecWeave现有知识库的结合思考
 
 本项目的知识库（`.agents/docs/knowledge/`）和OKF思想有天然契合点：
 - 已经在用Markdown+frontmatter的方式组织知识，和OKF核心理念一致

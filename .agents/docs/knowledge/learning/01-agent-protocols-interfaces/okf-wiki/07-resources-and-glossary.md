@@ -88,6 +88,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-
 
 | Wiki | 路径 | 关联说明 |
 |------|------|---------|
+| Knowledge Catalog工具链 | [knowledge-catalog-wiki](../knowledge-catalog-wiki/README.md) | Google Cloud官方OKF参考实现、参考Agent、可视化工具、enrichment/mdcode工具箱 |
 | Agent Skills Wiki | [agent-skills-wiki](../agent-skills-wiki/README.md) | Skills是程序层，OKF是知识层，互补 |
 | Agent通信协议 | [agent-communication-protocols](../agent-communication-protocols/README.md) | MCP/A2A/ACP等Agent协议，OKF与MCP互补 |
 | Harness七组件 | [harness-seven-components-wiki](../../02-agent-engineering-methodology/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位 |

@@ -172,6 +172,10 @@ graph TD
 
 OKF要做的，就是让这些核心资产有一个开放、可移植、可演进的载体。
 
+## 0.10 官方参考实现：Knowledge Catalog
+
+Google Cloud官方提供了OKF的完整参考实现和工具链——**Knowledge Catalog**，包含参考Agent、可视化工具、enrichment/mdcode工具箱以及示例Bundle解析。如果你想直接上手实践OKF，可以参考 [Knowledge Catalog概述](../knowledge-catalog-wiki/00-overview.md) 获取完整的工具链指南和实操示例。
+
 ---
 
 | 上一章 | 目录 | 下一章 |
