@@ -54,20 +54,21 @@ def run_bench_config(omp_schedule, omp_wait_policy, warmup_iters, memory_preallo
 
     prealloc_code = ""
     if memory_prealloc:
+        # 置于生成的子进程代码顶层（无缩进），与 f-string 中 {prealloc_code} 位置对齐
         prealloc_code = """
-    for _ in range(warmup):
-        data = np.random.rand(batch, 3, 224, 224).astype(np.float32)
-        data -= np.array(mean_vals, dtype=np.float32).reshape(1, 3, 1, 1)
-        input_blob.data = data
-        net.forward()
-"""
-    else:
-        prealloc_code = """
+for _ in range(warmup):
     data = np.random.rand(batch, 3, 224, 224).astype(np.float32)
     data -= np.array(mean_vals, dtype=np.float32).reshape(1, 3, 1, 1)
     input_blob.data = data
-    for _ in range(warmup):
-        net.forward()
+    net.forward()
+"""
+    else:
+        prealloc_code = """
+data = np.random.rand(batch, 3, 224, 224).astype(np.float32)
+data -= np.array(mean_vals, dtype=np.float32).reshape(1, 3, 1, 1)
+input_blob.data = data
+for _ in range(warmup):
+    net.forward()
 """
 
     code = f'''

@@ -158,9 +158,10 @@ jitter_best = {}
 baseline_info = {}
 improvement_info = {}
 
-best_match = re.search(r'Best config.*?:\s*(.*?)\n', jitter_text, re.DOTALL)
+best_match = re.search(r'Best config.*?:\s*\n([^\n]*)\n([^\n]*)\n', jitter_text)
 if best_match:
-    best_line = best_match.group(1).strip()
+    # 最优配置块包含两行：Schedule 行 + Avg 行，需合并解析
+    best_line = best_match.group(1).strip() + " " + best_match.group(2).strip()
     schedule_m = re.search(r'Schedule=(\S+)', best_line)
     wait_m = re.search(r'Wait=(\S+)', best_line)
     warmup_m = re.search(r'Warmup=(\S+)', best_line)
