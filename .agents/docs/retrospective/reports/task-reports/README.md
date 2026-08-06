@@ -20,6 +20,7 @@ date: "2026-07-09"
 | [Caffe 项目结构重组复盘报告](2026-07-24-caffe-project-structure-refactoring.md) | Caffe 项目结构重组复盘报告 | - | `caffe` `project-structure` `refactoring` |
 | [Caffe tvm-ffi 依赖统一迁移复盘报告](2026-07-24-caffe-tvm-ffi-dependency-migration.md) | Caffe tvm-ffi 依赖统一迁移复盘报告 | - | `caffe` `tvm-ffi` `dependency-migration` |
 | [Caffe docker/local 目录全面复盘报告](retrospective-caffe-docker-local-20260724.md) | Caffe docker/local 目录全面复盘报告 | - | `caffe` `docker` `conda` `python-3.14` |
+| [Conv v4 OpenMP并行优化里程碑复盘](retrospective-caffe-ffi-conv-v4-milestone-20260805.md) | Conv v4 OpenMP并行优化里程碑复盘：Conv层沿M维度分块并行优化、双层并行隔离配置模式、16种OMP抖动诊断组合 | L1 | `caffe-ffi` `openmp` `conv` `性能优化` `抖动诊断` |
 | [支付宝 AI Pay Skill Windows 安装任务复盘](retrospective-alipay-aipay-windows-install-20260723.md) | 支付宝 AI Pay Skill Windows 安装任务复盘 | L1 | `windows` `cli-install` `skill-setup` |
 | [analyze-wechat-article-3dnk 任务复盘报告](retrospective-analyze-wechat-article-3dnk-20260706.md) | analyze-wechat-article-3dnk 任务复盘报告 | - |  |
 | [Docker模板升级+五条红线验证+方法论编排复盘报告](retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+五条红线验证+方法论编排复盘报告 | L2 | `docker` `template` `verification` |

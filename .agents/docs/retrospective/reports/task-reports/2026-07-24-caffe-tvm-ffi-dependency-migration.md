@@ -12,7 +12,7 @@ tags: [caffe, tvm-ffi, dependency-migration, cmake, submodule, vendor]
 # Caffe tvm-ffi 依赖统一迁移复盘报告
 
 > **方法论链路**: R（复盘）→ I（洞察）→ E（萃取）
-> **源任务**: [caffe-tvm-ffi-dependency-migration spec](../../../../.trae/specs/caffe-tvm-ffi-dependency-migration/spec.md)
+> **源任务**: [caffe-tvm-ffi-dependency-migration spec](../../../../../.trae/specs/caffe-tvm-ffi-dependency-migration/spec.md)
 > **涉及项目**: `projects/xuanspace/vendor/caffe/`、`projects/xuanspace/vendor/tvm-ffi/`
 
 ---
@@ -84,7 +84,7 @@ C++ 源码引用层（_caffe.cpp）
 运行时链接层
 ```
 
-完整依赖关系图谱见 [dependency-graph.md](../../../../.trae/specs/caffe-tvm-ffi-dependency-migration/dependency-graph.md)。
+完整依赖关系图谱见 [dependency-graph.md](../../../../../.trae/specs/caffe-tvm-ffi-dependency-migration/dependency-graph.md)。
 
 > **G1 质量门**: 事实采集无因果推断词，纯客观描述。通过。
 
