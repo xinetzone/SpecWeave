@@ -11,7 +11,7 @@ summary: "Mermaid 集成与生态完整指南：mermaid-cli 命令行工具（@m
 ---
 # Mermaid 集成与生态（Integrations & Ecosystem）
 
-Mermaid 的生态覆盖**命令行批处理**（mermaid-cli）、**在线编辑器**（mermaid.live）、**前端库集成**（CDN/npm）以及**各类 Markdown 渲染器**（GitHub、飞书、VS Code 等）。本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+Mermaid 的生态覆盖**命令行批处理**（mermaid-cli）、**在线编辑器**（mermaid.live）、**前端库集成**（CDN/npm）以及**各类 Markdown 渲染器**（GitHub、飞书、VS Code 等）。本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ## mermaid-cli 命令行工具
 
@@ -69,7 +69,7 @@ mermaid-cli 使用 **JSON 格式**的配置文件，可配置主题、字体、�
 
 **mermaid.live** 是官方线上实时编辑器，即时上手、无需安装。
 
-- **地址**：https://mermaid.live/
+- **地址**：<https://mermaid.live/>
 - **仓库**：`mermaid-js/mermaid-live-editor`
 
 核心功能：

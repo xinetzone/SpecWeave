@@ -13,7 +13,7 @@ summary: "Mermaid 流程图（Flowchart）完整指南：flowchart/graph 关键�
 
 **Flowchart（流程图）** 是 Mermaid 中最常用、最直观的图表类型，它由**节点（node，几何形状）** 与**边（edge，箭头/连线）** 组成，用于表达流程、分支、决策与数据流。
 
-本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ## 关键字与方向声明
 

@@ -54,11 +54,11 @@ Mermaid 的渲染链路非常轻量：
 
 ## 4. 快速开始：用 mermaid.live 画第一张图
 
-零安装的入门方式就是使用官方在线编辑器 **mermaid.live**（https://mermaid.live/）。
+零安装的入门方式就是使用官方在线编辑器 **mermaid.live**（<https://mermaid.live/>）。
 
 **三步上手**：
 
-1. 打开 https://mermaid.live/，左侧是代码编辑区，右侧是实时渲染区。
+1. 打开 <https://mermaid.live/>，左侧是代码编辑区，右侧是实时渲染区。
 2. 在左侧输入下面的最小 flowchart 示例，右侧会**实时渲染**出对应的流程图。
 3. 修改左侧代码，右侧立即更新——所见即所得。
 

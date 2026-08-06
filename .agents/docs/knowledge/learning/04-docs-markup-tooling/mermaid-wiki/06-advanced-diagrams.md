@@ -20,7 +20,7 @@ summary: "Mermaid 六种进阶/专业图表完整指南：gitGraph Git 提交图
 - **C4（C4 架构图）**：系统/容器/组件/动态/部署多视图。
 - **zenuml（增强时序图）**：与原生时序图不同的消息/嵌套语法。
 
-本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ---
 

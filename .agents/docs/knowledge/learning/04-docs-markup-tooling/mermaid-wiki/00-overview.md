@@ -22,7 +22,7 @@ summary: "Mermaid 是基于 JavaScript 的图表绘制与可视化工具，用�
 
 每个图表类型对应一个图表「关键字」作为起始声明，例如 `flowchart`、`sequenceDiagram`、`classDiagram`、`gantt`、`erDiagram`、`journey`、`quadrantChart`、`xychart-beta`、`gitGraph` 等。
 
-> **关于官方域名**：Mermaid 官方文档实际域名为 **https://mermaid.js.org/**（语法页位于 `/syntax/<图表名>.html`，配置页位于 `/config/<配置名>.html`）。用户/任务清单中提到的 `mermaid.ai` 为其别名或跳转入口，撰写本文档时采集与访问均以 `mermaid.js.org` 为准。在线编辑器独立域名为 **https://mermaid.live/**。
+> **关于官方域名**：Mermaid 官方文档实际域名为 **[mermaid.js.org](https://mermaid.js.org/)**（语法页位于 `/syntax/<图表名>.html`，配置页位于 `/config/<配置名>.html`）。用户/任务清单中提到的 `mermaid.ai` 为其别名或跳转入口，撰写本文档时采集与访问均以 `mermaid.js.org` 为准。在线编辑器独立域名为 **[mermaid.live](https://mermaid.live/)**。
 
 ## 图表类型总览
 

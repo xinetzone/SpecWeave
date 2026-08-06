@@ -11,7 +11,7 @@ summary: "Mermaid 命令速查表：覆盖全部 17 种图表类型（flowchart/
 ---
 # Mermaid 命令速查表（Cheatsheet）
 
-本章是 Mermaid 的**快速查阅手册**，覆盖全部 17 种图表类型的关键字与核心语法行、常用配置速查、以及 mermaid.live 使用速查。所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+本章是 Mermaid 的**快速查阅手册**，覆盖全部 17 种图表类型的关键字与核心语法行、常用配置速查、以及 mermaid.live 使用速查。所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 > **排版约定**：语法行示例放在 `text` 代码块或表格中，便于快速复制与对照；`<...>` 为占位符，使用时应替换为实际内容。
 
@@ -330,7 +330,7 @@ config:
 
 ## 四、mermaid.live 使用速查
 
-**地址**：https://mermaid.live/ ｜ **仓库**：`mermaid-js/mermaid-live-editor`
+**地址**：<https://mermaid.live/> ｜ **仓库**：`mermaid-js/mermaid-live-editor`
 
 | 操作 | 说明 |
 |------|------|

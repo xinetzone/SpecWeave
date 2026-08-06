@@ -17,7 +17,7 @@ summary: "Mermaid 结构型图表（classDiagram 类图、stateDiagram-v2 状态
 - **stateDiagram-v2（状态图）**：状态机，状态、转换、复合状态、并发、分叉/汇合。
 - **erDiagram（ER 图）**：实体-关系建模，实体、属性、关系、基数（crow's foot）。
 
-本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ---
 

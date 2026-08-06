@@ -11,7 +11,7 @@ summary: "Mermaid 配置与主题完整指南：配置来源三层（默认/站�
 ---
 # Mermaid 配置与主题（Configuration & Theming）
 
-Mermaid 的配置与主题系统决定了图表的**渲染行为**（加载方式、渲染器、安全级别）与**视觉外观**（配色、字体、边框）。本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+Mermaid 的配置与主题系统决定了图表的**渲染行为**（加载方式、渲染器、安全级别）与**视觉外观**（配色、字体、边框）。本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 主题配置分两个层面：**站点级**（通过 `mermaid.initialize` 一次性全局配置）与**单图级**（通过图表顶部的 YAML frontmatter 配置）。动态、集成式的主题配置从 Mermaid v8.7.0 引入。
 

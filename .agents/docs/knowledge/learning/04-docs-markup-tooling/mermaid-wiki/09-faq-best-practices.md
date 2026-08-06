@@ -11,7 +11,7 @@ summary: "Mermaid 常见问题与最佳实践：12 个高频渲染问题的现�
 ---
 # Mermaid 常见问题与最佳实践（FAQ & Best Practices）
 
-Mermaid 用受 Markdown 启发的文本定义图表，语法简洁但**有若干容易踩的坑**。本章汇总 12 个高频问题（现象→原因→解决方案），提炼 8 条最佳实践，并与 SpecWeave 项目内的 [安全编码六规则](../../../best-practices/mermaid-guide.md) 对接。所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+Mermaid 用受 Markdown 启发的文本定义图表，语法简洁但**有若干容易踩的坑**。本章汇总 12 个高频问题（现象→原因→解决方案），提炼 8 条最佳实践，并与 SpecWeave 项目内的 [安全编码六规则](../../../best-practices/mermaid-guide.md) 对接。所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 > **提前速查**：若你只是想快速排查，可直接跳到「[与项目安全编码六规则的对接](#四、与项目安全编码六规则的对接)」，或运行项目内置的 `python .agents/scripts/check-mermaid.py --fix` 自动检测修复。
 
@@ -225,7 +225,7 @@ python .agents/scripts/check-mermaid.py --fix
 
 ### B6. 善用 mermaid.live 快速验证
 
-在 https://mermaid.live/ 左侧输入代码、右侧实时渲染，可快速验证语法、调试错误，支持导出 PNG/SVG 与分享链接。先在线验证再嵌入文档，可显著减少返工。
+在 <https://mermaid.live/> 左侧输入代码、右侧实时渲染，可快速验证语法、调试错误，支持导出 PNG/SVG 与分享链接。先在线验证再嵌入文档，可显著减少返工。
 
 ### B7. 版本锁定
 

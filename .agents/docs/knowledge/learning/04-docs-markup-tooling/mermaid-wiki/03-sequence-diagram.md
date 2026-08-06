@@ -13,7 +13,7 @@ summary: "Mermaid 时序图（Sequence Diagram）完整指南：participant/acto
 
 **Sequence Diagram（时序图）** 用于描述对象之间按时间顺序交互的消息传递过程，是表达 API 调用、异步通信、系统协作场景的利器。
 
-时序图以 `sequenceDiagram` 关键字起始。本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+时序图以 `sequenceDiagram` 关键字起始。本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ## Participant / Actor 声明与别名
 

@@ -20,7 +20,7 @@ summary: "Mermaid 六种可视化图表完整指南：gantt 甘特图（dateForm
 - **sankey（桑基图）**：流量/能量的流向分配。
 - **quadrantChart（象限图）**：二维定位分类。
 
-本教程所有事实均以 Mermaid 官方文档（https://mermaid.js.org/）为准。
+本教程所有事实均以 Mermaid 官方文档（<https://mermaid.js.org/>）为准。
 
 ---
 
