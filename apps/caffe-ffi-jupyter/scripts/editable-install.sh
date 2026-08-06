@@ -25,6 +25,12 @@ if [ -d "$CONDA_PREFIX/lib" ]; then
     fi
 fi
 
+# Verify OpenBLAS development headers are available (cblas.h required for Caffe BLAS)
+if [ ! -f "$CONDA_PREFIX/include/cblas.h" ]; then
+    log_warn "cblas.h not found in $CONDA_PREFIX/include — install 'openblas' conda package for BLAS headers"
+    log_warn "  conda install -y -c conda-forge openblas"
+fi
+
 # ── Editable install helper ──
 # Usage: do_editable_install <name> <src_dir> [extra_cmake_args]
 # Returns 0 if usable (editable OK OR pre-installed OK OR already installed), 1 only on hard failure.
