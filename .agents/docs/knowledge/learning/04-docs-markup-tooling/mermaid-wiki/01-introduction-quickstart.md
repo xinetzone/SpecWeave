@@ -62,7 +62,7 @@ Mermaid 的渲染链路非常轻量：
 2. 在左侧输入下面的最小 flowchart 示例，右侧会**实时渲染**出对应的流程图。
 3. 修改左侧代码，右侧立即更新——所见即所得。
 
-最小示例（一个 flowchart，`TD` 表示自上而下）：
+最小示例（一个 flowchart，`LR` 表示从左到右）：
 
 ```mermaid
 flowchart LR
