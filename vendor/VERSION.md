@@ -9,9 +9,13 @@
 | flexloop | main@d618849a (v0.7.2-125-gd618849) | git@gitcode.com:flexloop/flexloop.git | 2026-06-27 | Apache-2.0 | owned_collab | main | 自有协作子模块，AgentForge AI Agent 协作框架 |
 | ark-cli | main@88313923 (v1.0.3-1-g8831392) | git@github.com:volcengine/ark-cli.git | 2026-07-07 | Apache-2.0 | third_party | main | 第三方只读依赖，火山引擎方舟大模型平台 CLI 工具 |
 | awesome-okf | main@f6c70627 | https://github.com/yzfly/awesome-okf.git | 2026-08-06 | MIT | third_party | main | 中文OKF生态第三方只读依赖，含7个零依赖插件与Skill集 |
+| awesome-okf-bundle | main@ebe906b7 | git@github.com:linyiru/awesome-okf.git | 2026-08-06 | CC0-1.0 | third_party | main | linyiru/awesome-okf 上游 OKF 列表与 bundle 构建器 |
+| awesome-okf-kit | main@5e862eeb | git@github.com:vinodborole/awesome-okf-kit.git | 2026-08-06 | MIT | third_party | main | OKF bundle 注册表工具集 |
+| okf-bundle-template | main@a0883c7b | git@github.com:vinodborole/okf-bundle-template.git | 2026-08-06 | 未声明 | third_party | main | OKF bundle 发布模板 |
 
 ## 更新记录
 
+- 2026-08-06 | 引入 awesome-okf-bundle、awesome-okf-kit、okf-bundle-template 子模块（从 .chaos/libs/ 迁移至 vendor/，修复架构边界）
 - 2026-08-06 | 引入 awesome-okf 子模块（从根目录迁移至 vendor/，修复架构边界）
 - 2026-06-29 | 修复 flexloop 遗留反向依赖链接（9处失效外链），推送到 flexloop main 分支
 - 2026-06-29 | 调整 flexloop 治理模式为 owned_collab（自有协作），跟踪 main 分支

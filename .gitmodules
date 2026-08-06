@@ -18,3 +18,15 @@
 	url = git@github.com:yzfly/awesome-okf.git
 	branch = main
 	shallow = true
+[submodule "vendor/awesome-okf-bundle"]
+	path = vendor/awesome-okf-bundle
+	url = git@github.com:linyiru/awesome-okf.git
+	branch = main
+[submodule "vendor/awesome-okf-kit"]
+	path = vendor/awesome-okf-kit
+	url = git@github.com:vinodborole/awesome-okf-kit.git
+	branch = main
+[submodule "vendor/okf-bundle-template"]
+	path = vendor/okf-bundle-template
+	url = git@github.com:vinodborole/okf-bundle-template.git
+	branch = main

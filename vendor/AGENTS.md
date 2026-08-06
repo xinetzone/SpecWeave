@@ -32,6 +32,9 @@ vendor/AGENTS.md 与 vendor/.agents/ 由 SpecWeave 主权区维护,直接纳入�
 | └ apps/chaos | (flexloop 子应用) | [vendor/flexloop/apps/chaos/AGENTS.md](flexloop/apps/chaos/AGENTS.md) | 混沌态:核心开发与探索区,含完整 .agents/ 规则体系 |
 | ark-cli | third_party | 无（第三方项目） | 火山引擎方舟大模型平台 CLI 工具 |
 | awesome-okf | third_party | 无（第三方项目） | 中文 OKF 生态项目（开源知识格式工具链与插件集） |
+| awesome-okf-bundle | third_party | 无（第三方项目） | linyiru/awesome-okf 上游 OKF Awesome 列表与 bundle 构建器 |
+| awesome-okf-kit | third_party | 无（第三方项目） | OKF bundle 注册表工具集 |
+| okf-bundle-template | third_party | 无（第三方项目） | OKF bundle 发布模板 |
 | knowledge-catalog | third_party | 无（第三方项目） | Google Cloud Knowledge Catalog 元数据管理平台（第三方只读依赖） |
 
 ### 嵌套优先级
@@ -179,6 +182,9 @@ flexloop 的验证与检查脚本存放在 [vendor/flexloop/apps/chaos/.agents/s
 | vendor/flexloop/apps/chaos/.agents/skills/ | flexloop 子模块 | ❌ 否 | 9 个 skill 的本体,SpecWeave 仅跨边界调用 |
 | vendor/ark-cli/ | third_party 子模块 | ❌ 否 | 火山引擎 ark-cli 第三方只读依赖,禁止本地修改 |
 | vendor/awesome-okf/ | awesome-okf 子模块 | ❌ 否 | 中文OKF生态第三方只读依赖，禁止本地修改 |
+| vendor/awesome-okf-bundle/ | awesome-okf-bundle 子模块 | ❌ 否 | linyiru/awesome-okf 第三方只读依赖（OKF 列表与 bundle 构建器），禁止本地修改 |
+| vendor/awesome-okf-kit/ | awesome-okf-kit 子模块 | ❌ 否 | OKF bundle 注册表工具集第三方只读依赖，禁止本地修改 |
+| vendor/okf-bundle-template/ | okf-bundle-template 子模块 | ❌ 否 | OKF bundle 发布模板第三方只读依赖，禁止本地修改 |
 | vendor/knowledge-catalog/ | third_party 子模块 | ❌ 否 | Google Cloud Knowledge Catalog 第三方只读依赖,禁止本地修改 |
 
 ## 跨边界调用规范
