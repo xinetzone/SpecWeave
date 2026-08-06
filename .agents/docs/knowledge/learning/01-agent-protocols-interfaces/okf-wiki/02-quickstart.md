@@ -53,7 +53,7 @@ mkdir agent-tools-kb && cd agent-tools-kb
 
 创建`bash.md`：
 
-```markdown
+````markdown
 ---
 type: Tool
 title: Bash命令执行工具
@@ -88,13 +88,13 @@ cat config.json
 - 命令在沙箱中执行，有文件系统权限限制
 - 大文件读取请使用 [文件读取工具](./file-read.md)
 - 网页交互请使用 [浏览器自动化工具](./browser.md)
-```
+````
 
 ### Step 3: 第二个Concept - 浏览器工具
 
 创建`browser.md`：
 
-```markdown
+````markdown
 ---
 type: Tool
 title: 浏览器自动化工具
@@ -132,7 +132,7 @@ tags: [web, browser, automation, playwright]
 - 下载文件后，使用 [文件读取工具](./file-read.md) 读取
 - 批量静态抓取可配合curl通过 [Bash工具](./bash.md) 执行
 - 默认使用无头模式
-```
+````
 
 ### Step 4: 第三个Concept - 文件读取工具
 

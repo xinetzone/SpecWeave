@@ -57,7 +57,7 @@ A: OKF规范本身是MIT协议开源的，永远不会收费；Google的角色�
 
 **Q8: OKF现在有官方验证工具吗？还需要什么工具链？**
 
-A: 有在线验证器（https://okf.md/validator），浏览器中直接用，零安装零后端；目前工具链还很少：有一个Skill让Claude/Codex/Cursor生成合规Bundle；你可以很容易自己写脚本：index生成脚本（第3章给了示例）、CI检查脚本、批量frontmatter校验脚本；工具链稀缺是早期阶段的正常现象，极简格式意味着自己写工具也很简单。
+A: 有在线验证器（<https://okf.md/validator>），浏览器中直接用，零安装零后端；目前工具链还很少：有一个Skill让Claude/Codex/Cursor生成合规Bundle；你可以很容易自己写脚本：index生成脚本（第3章给了示例）、CI检查脚本、批量frontmatter校验脚本；工具链稀缺是早期阶段的正常现象，极简格式意味着自己写工具也很简单。
 
 **Q9: 中文/非英文内容支持吗？多语言怎么处理？**
 

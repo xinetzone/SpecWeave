@@ -176,7 +176,7 @@ Body中主张基于外部资料时，必须在文档末尾`# Citations`下列出
 
 ### 示例一：BigQuery表（有资源链接）
 
-```markdown
+````markdown
 ---
 type: Table
 title: Customer Orders
@@ -200,7 +200,7 @@ FROM `analytics.orders` WHERE created_at > '2026-01-01' GROUP BY 1
 ```
 # Citations
 [^1]: Data Catalog entry, updated 2026-07-15
-```
+````
 
 ### 示例二：SRE Playbook（抽象概念）
 
@@ -229,7 +229,7 @@ stale_after: P6M
 
 ### 示例三：Metric指标定义
 
-```markdown
+````markdown
 ---
 type: Metric
 title: 90天LTV
@@ -256,7 +256,7 @@ GROUP BY 1
 - 新cohort（不足90天）为预测值
 # Citations
 [^1]: Growth Metrics Spec v1.2, 2026-06-01
-```
+````
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
