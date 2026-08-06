@@ -56,7 +56,7 @@ related_facts = ["F05", "F06", "F07", "F08", "F09", "F10", "F11"]
 **1. 所有子工具零第三方依赖**
 每个子工具（如awesome-to-okf、feishu-to-okf）的pyproject.toml中 `dependencies = []`，仅使用语言标准库。如果确实需要某个库的功能，实现**优雅降级**（如validate_okf.py优先用PyYAML，ImportError时回退到内置mini解析器）。
 
-参考：[validate_okf.py](file:///d:/AI/awesome-okf/skills/okf-creator/scripts/validate_okf.py#L28-L47) 的降级策略
+参考：[validate_okf.py](file:///d:/AI/vendor/awesome-okf/skills/okf-creator/scripts/validate_okf.py#L28-L47) 的降级策略
 
 **2. 统一入口仅做分发，不嵌入业务逻辑**
 创建一个聚合CLI（myokf），通过**静态字典**映射子命令到实现，仅做参数转发和环境准备，不包含任何业务逻辑。两种分发方式：
