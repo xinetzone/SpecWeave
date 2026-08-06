@@ -109,7 +109,7 @@ Knowledge Catalog（原Google Cloud Dataplex）是Google Cloud推出的AI驱动�
 
 ```mermaid
 flowchart TB
-    subgraph 生产端["🏭 知识生产端（Production）"]
+    subgraph Producers["🏭 知识生产端 Production"]
         direction TB
         Sources["数据源<br/>（BigQuery/数据库/文档）"]
         BQPass["BQ Pass<br/>（元数据提取）"]
@@ -117,7 +117,7 @@ flowchart TB
         RefAgent["参考Agent<br/>（reference_agent）"]
     end
     
-    subgraph 知识层["📚 OKF知识层（Knowledge Layer）"]
+    subgraph KnowledgeLayer["📚 OKF知识层 Knowledge Layer"]
         direction TB
         Bundle["OKF Bundle<br/>（Git管理）"]
         Concepts["概念文档<br/>（concepts/）"]
@@ -126,7 +126,7 @@ flowchart TB
         Log["演进日志<br/>（log.md）"]
     end
     
-    subgraph 消费端["🎯 知识消费端（Consumption）"]
+    subgraph Consumers["🎯 知识消费端 Consumption"]
         direction TB
         Viz["可视化工具<br/>（viz.html/Cytoscape.js）"]
         Agent["AI Agent<br/>（直接加载上下文）"]
@@ -134,8 +134,8 @@ flowchart TB
         Search["搜索索引<br/>（向量/关键词）"]
     end
     
-    生产端 --> 知识层
-    知识层 --> 消费端
+    Producers --> KnowledgeLayer
+    KnowledgeLayer --> Consumers
     
     Sources --> BQPass
     BQPass --> RefAgent
@@ -152,9 +152,9 @@ flowchart TB
     Bundle --> Human
     Bundle --> Search
     
-    style 生产端 fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
-    style 知识层 fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
-    style 消费端 fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    style Producers fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    style KnowledgeLayer fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
+    style Consumers fill:#fff3e0,stroke:#e65100,stroke-width:2px
 ```
 
 ## 0.8 Knowledge Catalog核心组件全景图

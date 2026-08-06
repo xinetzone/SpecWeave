@@ -196,30 +196,30 @@ Knowledge Catalog平台采用四层架构，从底层格式到上层应用清晰
 
 ```mermaid
 flowchart TD
-    subgraph Layer4["第四层：应用与工具层（Applications & Tools）"]
-        A1["参考Agent\n(reference_agent)"]
-        A2["可视化工具\n(viz.html)"]
-        A3["第三方UI\n(Obsidian/Notion/MkDocs)"]
+    subgraph Layer4["第四层：应用与工具层 Applications & Tools"]
+        A1["参考Agent<br/>(reference_agent)"]
+        A2["可视化工具<br/>(viz.html)"]
+        A3["第三方UI<br/>(Obsidian/Notion/MkDocs)"]
         A4["搜索索引/图谱查看器"]
     end
 
-    subgraph Layer3["第三层：生态集成层（Ecosystem Integration）"]
+    subgraph Layer3["第三层：生态集成层 Ecosystem Integration"]
         E1["BigQuery元数据导出"]
         E2["Web文档爬取与 enrichment"]
-        E3["现有目录导入\n(Dataplex/Unity Catalog)"]
-        E4["references/ 约定\n(外部材料镜像)"]
+        E3["现有目录导入<br/>(Dataplex/Unity Catalog)"]
+        E4["references/ 约定<br/>(外部材料镜像)"]
     end
 
-    subgraph Layer2["第二层：OKF格式层（Open Knowledge Format）"]
+    subgraph Layer2["第二层：OKF格式层 Open Knowledge Format"]
         F1["Bundle目录结构"]
-        F2["Concept文件\n(YAML Frontmatter + Markdown Body)"]
-        F3["跨链接规则\n(Absolute/Relative Links)"]
-        F4["信任与生命周期\n(sources/generated/verified/status/stale_after)"]
-        F5["认证计算\n(Attested Computation)"]
+        F2["Concept文件<br/>(YAML Frontmatter + Markdown Body)"]
+        F3["跨链接规则<br/>(Absolute/Relative Links)"]
+        F4["信任与生命周期<br/>(sources/generated/verified/status/stale_after)"]
+        F5["认证计算<br/>(Attested Computation)"]
         F6["Index/Log保留文件"]
     end
 
-    subgraph Layer1["第一层：基础设施工具层（Infrastructure）"]
+    subgraph Layer1["第一层：基础设施工具层 Infrastructure"]
         I1["Git版本控制"]
         I2["文件系统"]
         I3["标准Markdown/YAML解析器"]
@@ -285,53 +285,53 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph Producers["生产者侧"]
-        Human["人类作者\n(human:id)"]
-        RefAgent["参考Agent\n(reference_agent/gemini-2.5-pro)"]
-        Pipeline["导出管道\n(process:id)"]
+        Human["人类作者<br/>(human:id)"]
+        RefAgent["参考Agent<br/>(reference_agent/gemini-2.5-pro)"]
+        Pipeline["导出管道<br/>(process:id)"]
     end
 
-    subgraph Bundle["OKF Bundle (Git仓库)"]
+    subgraph BundleNode["OKF Bundle (Git仓库)"]
         direction TB
-        IndexMD["index.md\n(渐进式披露)"]
-        LogMD["log.md\n(变更历史)"]
-        Concepts["Concept文档\n(*.md)"]
-        Computations["Attested Computation\n(type: Attested Computation)"]
-        Refs["references/\n(外部材料镜像)"]
+        IndexMD["index.md<br/>(渐进式披露)"]
+        LogMD["log.md<br/>(变更历史)"]
+        Concepts["Concept文档<br/>(*.md)"]
+        Computations["Attested Computation<br/>(type: Attested Computation)"]
+        Refs["references/<br/>(外部材料镜像)"]
 
-        Concepts -->|链接| Computations
-        Computations -->|executor/attester指向| Refs
-        IndexMD -->|列出| Concepts
-        IndexMD -->|列出| Computations
+        Concepts -->|"链接"| Computations
+        Computations -->|"executor/attester指向"| Refs
+        IndexMD -->|"列出"| Concepts
+        IndexMD -->|"列出"| Computations
     end
 
     subgraph Consumers["消费者侧"]
-        VIZ["可视化工具\n(viz.html)"]
-        LLM["LLM/Agent\n(上下文加载)"]
+        VIZ["可视化工具<br/>(viz.html)"]
+        LLM["LLM/Agent<br/>(上下文加载)"]
         Search["搜索/索引"]
-        ThirdPartyUI["第三方UI\n(Obsidian/MkDocs)"]
-        AttestRunner["认证运行器\n(执行+验证)"]
+        ThirdPartyUI["第三方UI<br/>(Obsidian/MkDocs)"]
+        AttestRunner["认证运行器<br/>(执行+验证)"]
     end
 
-    subgraph RuntimeArtifacts["运行时工件（不存储在Bundle）"]
-        Receipt["Receipt\n(执行证据：job_id/executed_sql/result)"]
-        Verdict["Verdict\n(认证结论)"]
+    subgraph RuntimeArtifacts["运行时工件 不存储在Bundle"]
+        Receipt["Receipt<br/>(执行证据：job_id/executed_sql/result)"]
+        Verdict["Verdict<br/>(认证结论)"]
     end
 
-    Human -->|编写/评审| Bundle
-    RefAgent -->|生成/丰富| Bundle
-    Pipeline -->|批量导出| Bundle
+    Human -->|"编写/评审"| BundleNode
+    RefAgent -->|"生成/丰富"| BundleNode
+    Pipeline -->|"批量导出"| BundleNode
 
-    Bundle -->|读取| VIZ
-    Bundle -->|读取| LLM
-    Bundle -->|扫描| Search
-    Bundle -->|直接浏览| ThirdPartyUI
+    BundleNode -->|"读取"| VIZ
+    BundleNode -->|"读取"| LLM
+    BundleNode -->|"扫描"| Search
+    BundleNode -->|"直接浏览"| ThirdPartyUI
 
-    Computations -->|加载契约| AttestRunner
-    AttestRunner -->|执行| Receipt
-    AttestRunner -->|运行attester| Verdict
-    Receipt -->|检查| Verdict
+    Computations -->|"加载契约"| AttestRunner
+    AttestRunner -->|"执行"| Receipt
+    AttestRunner -->|"运行attester"| Verdict
+    Receipt -->|"检查"| Verdict
 
-    style Bundle fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    style BundleNode fill:#e1f5fe,stroke:#01579b,stroke-width:2px
     style RuntimeArtifacts fill:#fff3e0,stroke:#e65100,stroke-width:1px,stroke-dasharray:5 5
 ```
 

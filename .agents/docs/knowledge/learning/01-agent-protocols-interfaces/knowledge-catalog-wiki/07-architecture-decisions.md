@@ -307,30 +307,30 @@ Google有停止早期产品的历史先例（Google Reader、Inbox、Wave、Knol
 
 ```mermaid
 flowchart TD
-    A[开始架构选型] --> B{核心需求是什么?}
+    A["开始架构选型"] --> B{"核心需求是什么?"}
     
-    B -->|强企业治理/合规/审计需求<br>预算充足| C[考虑Collibra/Alation等<br>商业数据目录]
-    B -->|已经深度使用Databricks<br>以结构化数据治理为主| D[Unity Catalog作为<br>技术元数据层]
-    B -->|非技术团队为主<br>需要所见即所得协作| E[Notion/Confluence等<br>协作Wiki]
-    B -->|Agent知识消费是核心需求<br>需要知识长期积累演进| F{进一步判断}
+    B -->|"强企业治理/合规/审计需求<br>预算充足"| C["考虑Collibra/Alation等<br>商业数据目录"]
+    B -->|"已经深度使用Databricks<br>以结构化数据治理为主"| D["Unity Catalog作为<br>技术元数据层"]
+    B -->|"非技术团队为主<br>需要所见即所得协作"| E["Notion/Confluence等<br>协作Wiki"]
+    B -->|"Agent知识消费是核心需求<br>需要知识长期积累演进"| F{"进一步判断"}
     
-    F --> G{开发者团队主导<br>接受Markdown+Git工作流?}
-    G -->|否| H[考虑其他支持Agent的<br>商业知识库平台]
-    G -->|是| I{能接受v0.2早期风险<br>愿意小范围试点?}
+    F --> G{"开发者团队主导<br>接受Markdown+Git工作流?"}
+    G -->|"否"| H["考虑其他支持Agent的<br>商业知识库平台"]
+    G -->|"是"| I{"能接受v0.2早期风险<br>愿意小范围试点?"}
     
-    I -->|否| J[观望6-12个月<br>等生态成熟再评估<br>同时可以借鉴OKF设计思想]
-    I -->|是| K{需要从零开始建知识库<br>还是已有存量系统?}
+    I -->|"否"| J["观望6-12个月<br>等生态成熟再评估<br>同时可以借鉴OKF设计思想"]
+    I -->|"是"| K{"需要从零开始建知识库<br>还是已有存量系统?"}
     
-    K -->|已有Collibra/UC/Confluence等| L[OKF作为补充层<br>双向链接共存模式<br>不替换现有系统]
-    K -->|从零开始或技术文档/Runbook为主| M[OKF/Knowledge Catalog<br>从一个小领域开始试点]
+    K -->|"已有Collibra/UC/Confluence等"| L["OKF作为补充层<br>双向链接共存模式<br>不替换现有系统"]
+    K -->|"从零开始或技术文档/Runbook为主"| M["OKF/Knowledge Catalog<br>从一个小领域开始试点"]
     
-    M --> N[是否需要美观的文档站点?]
-    N -->|是| O[OKF + MkDocs/Docusaurus<br>源文件OKF，站点用MkDocs渲染]
-    N -->|否| P[直接用OKF Bundle<br>viz.html做可视化]
+    M --> N{"是否需要美观的文档站点?"}
+    N -->|"是"| O["OKF + MkDocs/Docusaurus<br>源文件OKF，站点用MkDocs渲染"]
+    N -->|"否"| P["直接用OKF Bundle<br>viz.html做可视化"]
     
-    L --> Q[是否需要复杂语义检索?]
-    Q -->|是| R[OKF + 向量库做互补<br>OKF元数据+向量检索]
-    Q -->|否| S[直接文件系统/Git读取即可]
+    L --> Q{"是否需要复杂语义检索?"}
+    Q -->|"是"| R["OKF + 向量库做互补<br>OKF元数据+向量检索"]
+    Q -->|"否"| S["直接文件系统/Git读取即可"]
     
     style M fill:#90EE90
     style L fill:#90EE90

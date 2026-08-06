@@ -126,24 +126,24 @@ OKF Wiki在[使用模式章节](../okf-wiki/03-usage-patterns.md#31-三种典型
 
 ```mermaid
 flowchart LR
-    subgraph 数据源
-        BQ[(BigQuery)]
-        UC[Unity Catalog]
-        Collibra[Collibra]
-        Other[其他数据源]
+    subgraph DataSources["数据源"]
+        BQ[("BigQuery")]
+        UC["Unity Catalog"]
+        Collibra["Collibra"]
+        Other["其他数据源"]
     end
     
-    subgraph Knowledge Catalog工具链
-        RA[reference_agent<br/>元数据提取]
-        Enrich[enrich命令<br/>Web/LLM充实]
-        Bundle[(OKF Bundle<br/>Markdown文件)]
-        Viz[viz.html<br/>可视化]
+    subgraph KCTools["Knowledge Catalog工具链"]
+        RA["reference_agent<br/>元数据提取"]
+        Enrich["enrich命令<br/>Web/LLM充实"]
+        Bundle[("OKF Bundle<br/>Markdown文件")]
+        Viz["viz.html<br/>可视化"]
     end
     
-    subgraph 消费者
-        Agent[AI Agent<br/>数据问答]
-        Human[数据分析师<br/>浏览器查看]
-        BI[BI工具<br/>语义层]
+    subgraph ConsumersNode["消费者"]
+        Agent["AI Agent<br/>数据问答"]
+        Human["数据分析师<br/>浏览器查看"]
+        BI["BI工具<br/>语义层"]
     end
     
     BQ --> RA
@@ -322,34 +322,34 @@ OKF Wiki在[架构集成章节](../okf-wiki/05-architecture-and-integration.md#5
 
 ```mermaid
 flowchart LR
-    subgraph 生产端（Producers）
+    subgraph ProducersSide["生产端 Producers"]
         direction TB
-        P1[数据工程师<br/>手工编写指标定义]
-        P2[reference_agent<br/>自动从BQ提取元数据]
-        P3[Web Agent<br/>抓取官方文档充实]
-        P4[SRE工程师<br/>编写Runbook]
-        P5[定时Pipeline<br/>定期同步增量]
+        P1["数据工程师<br/>手工编写指标定义"]
+        P2["reference_agent<br/>自动从BQ提取元数据"]
+        P3["Web Agent<br/>抓取官方文档充实"]
+        P4["SRE工程师<br/>编写Runbook"]
+        P5["定时Pipeline<br/>定期同步增量"]
     end
     
-    subgraph 中间契约（OKF Markdown）
-        F[Bundle目录<br/>.md文件 + YAML frontmatter<br/>Git版本控制]
+    subgraph Contract["中间契约 OKF Markdown"]
+        F["Bundle目录<br/>.md文件 + YAML frontmatter<br/>Git版本控制"]
     end
     
-    subgraph 消费端（Consumers）
+    subgraph ConsumersSide["消费端 Consumers"]
         direction TB
-        C1[人<br/>GitHub/VS Code阅读]
-        C2[viz.html<br/>知识图谱可视化]
-        C3[AI Agent<br/>RAG检索问答]
-        C4[全文搜索引擎<br/>Elasticsearch/Meilisearch]
-        C5[BI工具<br/>语义层集成]
-        C6[IDE插件<br/>悬停提示文档]
+        C1["人<br/>GitHub/VS Code阅读"]
+        C2["viz.html<br/>知识图谱可视化"]
+        C3["AI Agent<br/>RAG检索问答"]
+        C4["全文搜索引擎<br/>Elasticsearch/Meilisearch"]
+        C5["BI工具<br/>语义层集成"]
+        C6["IDE插件<br/>悬停提示文档"]
     end
     
-    P1 -->|PR提交| F
-    P2 -->|自动PR| F
-    P3 -->|自动充实| F
-    P4 -->|PR提交| F
-    P5 -->|定时更新| F
+    P1 -->|"PR提交"| F
+    P2 -->|"自动PR"| F
+    P3 -->|"自动充实"| F
+    P4 -->|"PR提交"| F
+    P5 -->|"定时更新"| F
     
     F --> C1
     F --> C2
@@ -407,27 +407,27 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph 现有数据目录（治理层）
-        UC[Unity Catalog<br/>技术元数据/权限/血缘]
-        Collibra[Collibra<br/>业务术语表/数据治理]
+    subgraph ExistingCatalog["现有数据目录 治理层"]
+        UC["Unity Catalog<br/>技术元数据/权限/血缘"]
+        Collibra["Collibra<br/>业务术语表/数据治理"]
     end
     
-    subgraph OKF知识层（语义层）
-        Bundle[(OKF Bundle<br/>Git存储)]
-        Links[双向链接<br/>resource字段指向UC/Collibra]
+    subgraph OKFLayer["OKF知识层 语义层"]
+        OKFBundle[("OKF Bundle<br/>Git存储")]
+        Links["双向链接<br/>resource字段指向UC/Collibra"]
     end
     
-    subgraph 消费端
-        Agent[AI Agent<br/>优先访问OKF]
-        Human[工程师<br/>Git/IDE/viz.html]
+    subgraph OKFConsumers["消费端"]
+        AgentNode["AI Agent<br/>优先访问OKF"]
+        HumanNode["工程师<br/>Git/IDE/viz.html"]
     end
     
-    UC -->|1. 导出技术元数据| Bundle
-    Collibra -->|2. 导出业务术语| Bundle
-    Bundle -->|3. resource字段反向链接| UC
-    Bundle -->|4. 反向链接| Collibra
-    Bundle --> Agent
-    Bundle --> Human
+    UC -->|"1. 导出技术元数据"| OKFBundle
+    Collibra -->|"2. 导出业务术语"| OKFBundle
+    OKFBundle -->|"3. resource字段反向链接"| UC
+    OKFBundle -->|"4. 反向链接"| Collibra
+    OKFBundle --> AgentNode
+    OKFBundle --> HumanNode
 ```
 
 ### 6.4.3 具体集成模式
@@ -503,16 +503,16 @@ gitGraph
     commit id: "init" tag: "v1.0.0"
     branch knowledge/add-dau-metric
     checkout knowledge/add-dau-metric
-    commit id: "add DAU definition"
-    commit id: "add SQL example"
+    commit id: "add-dau-def"
+    commit id: "add-sql-example"
     checkout main
-    merge knowledge/add-dau-metric id: "merge PR #123" tag: "v1.1.0"
+    merge knowledge/add-dau-metric id: "merge-pr-123" tag: "v1.1.0"
     branch knowledge/update-runbook
     checkout knowledge/update-runbook
-    commit id: "update restart steps"
-    commit id: "add last_tested date"
+    commit id: "update-restart-steps"
+    commit id: "add-last-tested"
     checkout main
-    merge knowledge/update-runbook id: "merge PR #124" tag: "v1.1.1"
+    merge knowledge/update-runbook id: "merge-pr-124" tag: "v1.1.1"
 ```
 
 **分支命名约定**：
