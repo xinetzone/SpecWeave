@@ -83,6 +83,15 @@ fi
 
 cd "$PROJECT_DIR"
 
+# ── 加载 .env 文件（如果存在） ──
+if [ -f "$PROJECT_DIR/.env" ]; then
+    log_info "Loading build environment from .env file..."
+    set -a
+    # shellcheck source=/dev/null
+    source "$PROJECT_DIR/.env"
+    set +a
+fi
+
 # ── 设置上下文字段 ──
 log_set_field "image" "$FULL_IMAGE"
 log_set_field "apt_mirror" "$APT_MIRROR"

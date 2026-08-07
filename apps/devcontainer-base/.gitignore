@@ -1,6 +1,9 @@
 # Runtime directories
 workspace/
 
+# Local environment (contains credentials)
+.env
+
 # Docker volumes (metadata)
 *.log
 
