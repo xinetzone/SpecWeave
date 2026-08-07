@@ -23,6 +23,7 @@
 | `edit-verify-workflow-template.md`（编辑-验证分离工作流模板） | 文档编辑/重构/原子化/模式化操作时直接套用，含两阶段执行清单+验证问题报告表+四条血的教训警示 | 零 |
 | `meta-verification-checklist.md`（验证规则元自查清单） | 创建/更新检查清单/模式/SOP/验证规则时使用，8维度检查验证规则本身的覆盖完整性、自反性、可操作性，防止"安全网自己有漏洞" | 零 |
 | `tech-doc-writing-precheck.md`（技术文档编写前置检查清单） | 编写技术教程/wiki/API文档/学习笔记时开始前和提交前逐项检查：代码示例三查（公开导出/源码存在/官方文档）、链接引用规范前置确认、完整提交前自检清单，基于WeasyPrint踩坑问题沉淀 | 零 |
+| `android-fragment-viewmodel-viewbinding-template.md`（位于 patterns/code-patterns/） | 复制 → 改类名/资源名 → Navigation 注册即用，三件套骨架 | 低（5 分钟） |
 
 ## 需实例化后复用的模式
 
