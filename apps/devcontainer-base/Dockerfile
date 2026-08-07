@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # DevContainer Base - Dockerfile (Multi-stage build)
 # Project: SpecWeave Full-featured Development Container Base Image
@@ -18,8 +19,8 @@
 #   Stage 2.2/7: Docker CE 安装 (变化频率: 低)
 #   Stage 2.3/7: Podman rootless 安装 (变化频率: 低)
 #   Stage 2.4/7: COPY venv from builder + PATH 配置 (变化频率: 低)
-#   Stage 2.5/7: 用户/组/目录 + subuid/subgid + 权限 (变化频率: 中)
-#   Stage 2.6/7: 运行时目录 + 配置文件 COPY + 语法验证 (变化频率: 高)
+#   Stage 2.5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
+#   Stage 2.6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
 #   Stage 2.7/7: build-info + 清理 + 最终验证 (变化频率: 最低)
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
@@ -38,6 +39,8 @@ ARG PIP_MIRROR
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
     if [ "${APT_MIRROR}" = "aliyun" ]; then \
         sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
@@ -51,7 +54,9 @@ RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
         echo "[Builder] Using official APT sources"; \
     fi
 
-RUN echo "=== [Builder] Installing build dependencies ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== [Builder] Installing build dependencies ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -78,7 +83,8 @@ RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel
 
 COPY requirements.txt /tmp/requirements.txt
-RUN echo "=== [Builder] Installing Jupyter and Python packages ===" && \
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== [Builder] Installing Jupyter and Python packages ===" && \
     /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
     rm -f /tmp/requirements.txt && \
     echo "=== [Builder] Python packages installed ===" && \
@@ -114,13 +120,17 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ENABLE_PODMAN=no \
     ENABLE_JUPYTER=yes
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 # ═══════════════════════════════════════════════════════════════════
 # Stage 2.1/7: 系统包安装 + APT镜像 + locale/timezone 配置
 # 变化频率：最低（基础镜像确定后很少改）
 # 原则：--no-install-recommends，同层完成APT镜像配置+locale+tz+清理
 #       初始化计时器 /tmp/.build-timer
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 1/7: Install base system packages + Chinese locale ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 1/7: Install base system packages + Chinese locale ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \
@@ -181,7 +191,9 @@ RUN echo "=== Stage 1/7: Install base system packages + Chinese locale ===" && \
 # 变化频率：低（Docker版本升级时改）
 # 原则：GPG key + apt repo 配置 + 安装在同层完成，清理apt缓存
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 2/7: Install Docker CE ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 2/7: Install Docker CE ===" && \
     _STAGE_START=$(date +%s) && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
@@ -211,7 +223,9 @@ RUN echo "=== Stage 2/7: Install Docker CE ===" && \
 # 变化频率：低（Podman版本升级时改）
 # 原则：直接使用Ubuntu 26.04官方源，无需第三方repo
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 3/7: Install Podman (rootless) ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 3/7: Install Podman (rootless) ===" && \
     _STAGE_START=$(date +%s) && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -287,29 +301,24 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
     chown devuser:devuser /home/devuser/.bashrc && \
     echo "PATH=/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
     echo "[BUILD] User .bashrc and /etc/environment configured with venv PATH (PATH layer 2+3)" && \
+    echo "[BUILD] Preparing runtime directories and Docker daemon.json..." && \
+    mkdir -p /run/sshd && chmod 755 /run/sshd && \
+    mkdir -p /var/log/supervisor /etc/supervisor/conf.d /etc/docker && \
+    printf '{\n  "storage-driver": "overlay2",\n  "iptables": false,\n  "log-driver": "json-file",\n  "log-opts": {"max-size": "10m", "max-file": "3"},\n  "userland-proxy": false\n}\n' > /etc/docker/daemon.json && \
+    echo "[BUILD] Runtime directories + daemon.json ready" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
     echo "S5=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Stage 5/7 (user+subuid+perms) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "[TIMER] Stage 5/7 (user+subuid+dirs+daemon) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.6/7: 运行时目录 + daemon.json + 配置文件 COPY + 语法验证
+# Stage 2.6/7: 配置文件 COPY + 权限设置 + 语法验证
 # 变化频率：高（配置调整时改，缓存不会让前面层失效）
-# 原则：所有 COPY 集中在一处；同层 RUN 做权限 + daemon.json + 全部语法验证
+# 原则：所有 COPY 集中在一处；同层 RUN 做权限 + 全部语法验证
 #       （sshd -t、bash -n 等），构建即测试，问题早发现
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 6/7: Prepare runtime dirs + daemon config ===" && \
-    _STAGE_START=$(date +%s) && \
-    mkdir -p /run/sshd && chmod 755 /run/sshd && \
-    mkdir -p /var/log/supervisor /etc/supervisor/conf.d /etc/docker && \
-    echo "[BUILD] Runtime directories created" && \
-    echo "[BUILD] Configuring Docker daemon.json..." && \
-    printf '{\n  "storage-driver": "overlay2",\n  "iptables": false,\n  "log-driver": "json-file",\n  "log-opts": {"max-size": "10m", "max-file": "3"},\n  "userland-proxy": false\n}\n' > /etc/docker/daemon.json && \
-    cat /etc/docker/daemon.json && \
-    echo "[BUILD] Runtime dirs + daemon.json ready"
-
 COPY config/sshd_config /etc/ssh/sshd_config
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
@@ -317,7 +326,8 @@ COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_c
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 
-RUN echo "[BUILD] Installing configuration files and scripts..." && \
+RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
+    _STAGE_START=$(date +%s) && \
     chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
     chown -R devuser:devuser /workspace && \
@@ -340,7 +350,7 @@ RUN echo "[BUILD] Installing configuration files and scripts..." && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
     echo "S6=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Stage 6/7 (dirs+config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 2.7/7: 构建元数据 + 最终清理 + 最终可用性验证
@@ -411,8 +421,8 @@ RUN echo "=== Stage 7/7: Final metadata, cleanup, and verification ===" && \
     printf "║  Stage 2/7  Docker CE install          %5ds               ║\n" $_T2 && \
     printf "║  Stage 3/7  Podman rootless install    %5ds               ║\n" $_T3 && \
     printf "║  Stage 4/7  venv copy + PATH config    %5ds               ║\n" $_T4 && \
-    printf "║  Stage 5/7  user + subuid + perms      %5ds               ║\n" $_T5 && \
-    printf "║  Stage 6/7  dirs + config + validate   %5ds               ║\n" $_T6 && \
+    printf "║  Stage 5/7  user+subuid+dirs+daemon   %5ds               ║\n" $_T5 && \
+    printf "║  Stage 6/7  config + validation       %5ds               ║\n" $_T6 && \
     printf "║  Stage 7/7  metadata + final verify    %5ds               ║\n" $_T7 && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
     printf "║  RUNTIME TOTAL                         %5ds               ║\n" $_TOTAL && \
