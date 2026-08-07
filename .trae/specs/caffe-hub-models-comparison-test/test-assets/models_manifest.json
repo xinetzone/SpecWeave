@@ -1,0 +1,692 @@
+{
+  "hub_caffe_root": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe",
+  "models": [
+    {
+      "name": "fa_color_bertha",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha\\fa_color_bertha.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha\\fa_color_bertha.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        60,
+        60
+      ],
+      "config_ref_prototxt": "fa_color_bertha_xm530v200.prototxt",
+      "config_ref_caffemodel": "fa_color_bertha.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha\\fa_color_bertha.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha\\fa_color_bertha_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_color_bertha\\fa_color_bertha.caffemodel"
+      ]
+    },
+    {
+      "name": "fa_pag",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag\\fa_patricia.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag\\fa_patricia.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "fa_patricia_xm530v200.prototxt",
+      "config_ref_caffemodel": "fa_patricia.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag\\fa_patricia.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag\\fa_patricia_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_pag\\fa_patricia.caffemodel"
+      ]
+    },
+    {
+      "name": "fa_paula",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula\\fa_paula.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula\\fa_paula.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "fa_paula_xm530v200.prototxt",
+      "config_ref_caffemodel": "fa_paula.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula\\fa_paula.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula\\fa_paula_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_paula\\fa_paula.caffemodel"
+      ]
+    },
+    {
+      "name": "fa_rebecca",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca\\fa_rebecca.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca\\fa_rebecca.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "fa_rebecca_xm530v200.prototxt",
+      "config_ref_caffemodel": "fa_rebecca.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca\\fa_rebecca.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca\\fa_rebecca_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_rebecca\\fa_rebecca.caffemodel"
+      ]
+    },
+    {
+      "name": "fa_una",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una\\fa_una.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una\\fa_una.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "fa_una_xm530v200.prototxt",
+      "config_ref_caffemodel": "fa_una.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una\\fa_una.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una\\fa_una_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fa_una\\fa_una.caffemodel"
+      ]
+    },
+    {
+      "name": "faa_beatrice",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice\\faa_beatrice.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice\\faa_beatrice.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "faa_beatrice_xm530v200.prototxt",
+      "config_ref_caffemodel": "faa_beatrice.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice\\faa_beatrice.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice\\faa_beatrice_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\faa_beatrice\\faa_beatrice.caffemodel"
+      ]
+    },
+    {
+      "name": "face_rec",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_rec",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_rec\\weight\\faceRec.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_rec\\weight\\faceRec.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "weight/faceRec.prototxt",
+      "config_ref_caffemodel": "weight/faceRec.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_rec\\weight\\faceRec.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_rec\\weight\\faceRec.caffemodel"
+      ]
+    },
+    {
+      "name": "face_track_eartha",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_track_eartha",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_track_eartha\\face_track_eartha.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_track_eartha\\face_track_eartha.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "face_track_eartha.prototxt",
+      "config_ref_caffemodel": "face_track_eartha.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_track_eartha\\face_track_eartha.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\face_track_eartha\\face_track_eartha.caffemodel"
+      ]
+    },
+    {
+      "name": "fd_rebecca",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca\\fd_rebecca.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca\\fd_rebecca.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        288,
+        160
+      ],
+      "config_ref_prototxt": "fd_rebecca_xm530v200.prototxt",
+      "config_ref_caffemodel": "fd_rebecca.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca\\fd_rebecca.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca\\fd_rebecca_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca\\fd_rebecca.caffemodel"
+      ]
+    },
+    {
+      "name": "fd_rebecca_160x192",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192\\fd_rebecca.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192\\fd_rebecca.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        192,
+        160
+      ],
+      "config_ref_prototxt": "fd_rebecca_xm530v200.prototxt",
+      "config_ref_caffemodel": "fd_rebecca.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192\\fd_rebecca.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192\\fd_rebecca_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_160x192\\fd_rebecca.caffemodel"
+      ]
+    },
+    {
+      "name": "fd_rebecca_288x160",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160\\fd_rebecca.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160\\fd_rebecca.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        160,
+        288
+      ],
+      "config_ref_prototxt": "fd_rebecca_xm530v200.prototxt",
+      "config_ref_caffemodel": "fd_rebecca.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160\\fd_rebecca.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160\\fd_rebecca_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_rebecca_288x160\\fd_rebecca.caffemodel"
+      ]
+    },
+    {
+      "name": "fd_ula",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_ula",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_ula\\fd_ula_xm530v300.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_ula\\fd_ula.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        416,
+        736
+      ],
+      "config_ref_prototxt": "fd_ula_xm530v300.prototxt",
+      "config_ref_caffemodel": "fd_ula.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_ula\\fd_ula_xm530v300.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fd_ula\\fd_ula.caffemodel"
+      ]
+    },
+    {
+      "name": "fp_queena",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "fp_queena.prototxt",
+      "config_ref_caffemodel": "fp_queena.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena_org.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_queena\\fp_queena.caffemodel"
+      ]
+    },
+    {
+      "name": "fp_rae",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_rae",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_rae\\fp_rae.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_rae\\fp_rae.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "fp_rae.prototxt",
+      "config_ref_caffemodel": "fp_rae.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_rae\\fp_rae.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fp_rae\\fp_rae.caffemodel"
+      ]
+    },
+    {
+      "name": "fr_valentina",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina\\fr_valentina.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina\\fr_valentina.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "fr_valerie_xm530v200.prototxt",
+      "config_ref_caffemodel": "fr_valentina.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina\\fr_valentina.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina\\fr_valerie_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_valentina\\fr_valentina.caffemodel"
+      ]
+    },
+    {
+      "name": "fr_wallis",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis\\fr_wallis.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis\\fr_wallis.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "fr_wallis_530v200.prototxt",
+      "config_ref_caffemodel": "fr_wallis.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis\\fr_wallis.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis\\fr_wallis_530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\fr_wallis\\fr_wallis.caffemodel"
+      ]
+    },
+    {
+      "name": "head",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head\\head_sigmoid.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head\\1_new_0_0_0_1.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        288,
+        512
+      ],
+      "config_ref_prototxt": "head_sigmoid.prototxt",
+      "config_ref_caffemodel": "1_new_0_0_0_1.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head\\head.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head\\head_sigmoid.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\head\\1_new_0_0_0_1.caffemodel"
+      ]
+    },
+    {
+      "name": "models_cofw_light",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light\\face_point_resNet_v2_light_deploy.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light\\face_Point_res_v2_light_iter_240000.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "face_point_resNet_v2_light_deploy.prototxt",
+      "config_ref_caffemodel": "face_Point_res_v2_light_iter_240000.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light\\face_point_resNet_v2_light_deploy - 副本.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light\\face_point_resNet_v2_light_deploy.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\models_cofw_light\\face_Point_res_v2_light_iter_240000.caffemodel"
+      ]
+    },
+    {
+      "name": "pa_agnes",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes\\pa_agnes.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes\\pa_agnes.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "pa_agnes_xm530v200.prototxt",
+      "config_ref_caffemodel": "pa_agnes.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes\\pa_agnes.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes\\pa_agnes_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pa_agnes\\pa_agnes.caffemodel"
+      ]
+    },
+    {
+      "name": "palm",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm\\palm_det_barbara.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm\\palm_det_barbara.caffemodel",
+      "input_name": "images",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "config_ref_prototxt": "palm_det_barbara_xm530v200.prototxt",
+      "config_ref_caffemodel": "palm_det_barbara.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm\\palm_det_barbara.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm\\palm_det_barbara_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm\\palm_det_barbara.caffemodel"
+      ]
+    },
+    {
+      "name": "palm_alive_dale",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale\\palm_alive_dale.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale\\palm_alive_dale.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        120,
+        120
+      ],
+      "config_ref_prototxt": "palm_alive_dale_xm530v200.prototxt",
+      "config_ref_caffemodel": "palm_alive_dale.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale\\palm_alive_dale.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale\\palm_alive_dale_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_alive_dale\\palm_alive_dale.caffemodel"
+      ]
+    },
+    {
+      "name": "palm_ca_abigail",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail\\palm_ca_abigail.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail\\palm_ca_abigail.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        60,
+        60
+      ],
+      "config_ref_prototxt": "palm_ca_abigail_xm530v200.prototxt",
+      "config_ref_caffemodel": "palm_ca_abigail.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail\\palm_ca_abigail.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail\\palm_ca_abigail_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_ca_abigail\\palm_ca_abigail.caffemodel"
+      ]
+    },
+    {
+      "name": "palm_rec_agatha",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha\\palm_rec_agatha.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha\\palm_rec_agatha.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "palm_rec_agatha_xm530v200.prototxt",
+      "config_ref_caffemodel": "palm_rec_agatha.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha\\palm_rec_agatha.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha\\palm_rec_agatha_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\palm_rec_agatha\\palm_rec_agatha.caffemodel"
+      ]
+    },
+    {
+      "name": "pd_abigail",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail\\palm_det_adela.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail\\palm_det_adela.caffemodel",
+      "input_name": "images",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "config_ref_prototxt": "palm_det_adela_xm530v200.prototxt",
+      "config_ref_caffemodel": "palm_det_adela.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail\\palm_det_adela.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail\\palm_det_adela_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pd_abigail\\palm_det_adela.caffemodel"
+      ]
+    },
+    {
+      "name": "person",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\new_weight\\person.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\new_weight\\1_new_128_128_128_128.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        240,
+        640
+      ],
+      "config_ref_prototxt": "weight/person_sigmoid.prototxt",
+      "config_ref_caffemodel": "weight/1_new_0_0_0_1.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\new_weight\\person.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\weight\\person_sigmoid.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\new_weight\\1_new_128_128_128_128.caffemodel",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person\\weight\\1_new_0_0_0_1.caffemodel"
+      ]
+    },
+    {
+      "name": "person_noexp",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person_noexp",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person_noexp\\person_nocrop_sigmoid.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person_noexp\\person_0_0_0_1.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        448,
+        1280
+      ],
+      "config_ref_prototxt": "person_nocrop_sigmoid.prototxt",
+      "config_ref_caffemodel": "person_0_0_0_1.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person_noexp\\person_nocrop_sigmoid.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\person_noexp\\person_0_0_0_1.caffemodel"
+      ]
+    },
+    {
+      "name": "pet",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet\\pet_sigmoid.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet\\1_new_0_0_0_1.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        216,
+        384
+      ],
+      "config_ref_prototxt": "pet_sigmoid.prototxt",
+      "config_ref_caffemodel": "1_new_0_0_0_1.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet\\pet.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet\\pet_sigmoid.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pet\\1_new_0_0_0_1.caffemodel"
+      ]
+    },
+    {
+      "name": "plate",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\net\\plate_20230909.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\net\\plate_20230909.caffemodel",
+      "input_name": "input.1",
+      "input_shape": [
+        1,
+        3,
+        768,
+        640
+      ],
+      "config_ref_prototxt": "net/plate_20230909.prototxt",
+      "config_ref_caffemodel": "net/plate_20230909.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\net\\plate_20230909.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\plate_20230909.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\net\\plate_20230909.caffemodel",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\plate\\plate_20230909.caffemodel"
+      ]
+    },
+    {
+      "name": "pp_abigail",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail\\pp_abigail.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail\\pp_abigail.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        1,
+        112,
+        112
+      ],
+      "config_ref_prototxt": "pp_abigail_xm530v200.prototxt",
+      "config_ref_caffemodel": "pp_abigail.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail\\pp_abigail.prototxt",
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail\\pp_abigail_xm530v200.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\pp_abigail\\pp_abigail.caffemodel"
+      ]
+    },
+    {
+      "name": "resnet50_caffe",
+      "dir": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\resnet50_caffe",
+      "has_config": true,
+      "prototxt": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\resnet50_caffe\\ResNet-50-deploy.prototxt",
+      "caffemodel": "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\resnet50_caffe\\ResNet-50-model.caffemodel",
+      "input_name": "data",
+      "input_shape": [
+        1,
+        3,
+        224,
+        224
+      ],
+      "config_ref_prototxt": "ResNet-50-deploy.prototxt",
+      "config_ref_caffemodel": "ResNet-50-model.caffemodel",
+      "all_prototxt_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\resnet50_caffe\\ResNet-50-deploy.prototxt"
+      ],
+      "all_caffemodel_variants": [
+        "d:\\spaces\\SpecWeave\\external\\chaos\\xmtools\\models\\hub\\caffe\\resnet50_caffe\\ResNet-50-model.caffemodel"
+      ]
+    }
+  ]
+}

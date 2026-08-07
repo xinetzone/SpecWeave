@@ -190,5 +190,4 @@ spec 中明确将分析范围限定为"基于文章内容，适度延伸行业�
 ## 导航
 
 - [洞察萃取报告](../insight-extraction/standalone/insight-analyze-wechat-article-3dnk-20260706.md)
-- [分析报告源文件](../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.md)
 - [返回任务复盘索引](../README.md)

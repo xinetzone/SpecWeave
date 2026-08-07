@@ -85,11 +85,11 @@ RUN echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTH
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
     conda config --system --set auto_activate_base false && \
     if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        printf 'channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main\nshow_channel_urls: true\nchannel_priority: strict\nssl_verify: true\n' > "${CONDA_DIR}/.condarc" && \
+        printf 'channels:\n  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge\nshow_channel_urls: true\nchannel_priority: flexible\nssl_verify: true\n' > "${CONDA_DIR}/.condarc" && \
         echo "[BUILD] Using Tsinghua TUNA conda mirror"; \
     else \
-        printf 'channels:\n  - conda-forge\n  - defaults\nchannel_priority: strict\n' > "${CONDA_DIR}/.condarc" && \
-        echo "[BUILD] Using default conda channels (conda-forge + defaults)"; \
+        printf 'channels:\n  - conda-forge\nchannel_priority: flexible\n' > "${CONDA_DIR}/.condarc" && \
+        echo "[BUILD] Using conda-forge only (flexible priority)"; \
     fi && \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
         mkdir -p /root/.config/pip && \
@@ -107,13 +107,12 @@ RUN echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTH
         "libprotobuf>=7.0.0" \
         "protobuf>=7.0.0" \
         zlib \
-        libopenblas \
+        "libopenblas=*=*openmp*" \
+        openblas \
         "cmake>=3.26" \
         "ninja>=1.13" \
         make \
         cxx-compiler \
-        "conda-build>=3.28" \
-        conda-verify \
         patchelf \
     && conda activate caffe-ffi && \
     echo "[BUILD] conda env 'caffe-ffi' created, Python: $(python --version)" && \
@@ -173,6 +172,8 @@ ENV CONDA_DIR=/opt/conda \
     PATH=/opt/conda/bin:/opt/conda/envs/caffe-ffi/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     LD_LIBRARY_PATH=/opt/conda/envs/caffe-ffi/lib:${LD_LIBRARY_PATH} \
     CONDA_DEFAULT_ENV=caffe-ffi \
+    OMP_NUM_THREADS=4 \
+    OPENBLAS_NUM_THREADS=1 \
     WORKSPACE_DIR=/workspace
 
 # -----------------------------------------------------------------------------
@@ -219,7 +220,8 @@ RUN echo "=== [Runtime 2/5] Copying conda environment from builder ===" && \
     echo "[BUILD] Verifying base imports..." && \
     python -c "import numpy; print('[BUILD] numpy:', numpy.__version__)" && \
     python -c "import google.protobuf; print('[BUILD] protobuf:', google.protobuf.__version__)" && \
-    python -c "import tvm_ffi; print('[BUILD] tvm_ffi:', tvm_ffi.__version__)"
+    python -c "import tvm_ffi; print('[BUILD] tvm_ffi (PyPI wheel):', tvm_ffi.__version__)" 2>/dev/null || \
+        echo "[BUILD] tvm_ffi PyPI wheel not importable (expected — will be rebuilt from source by editable-install.sh)"
 
 # -----------------------------------------------------------------------------
 # [Runtime 3/5] Setup workspace directory + editable-install entrypoint
@@ -261,34 +263,34 @@ RUN echo "=== [Runtime 4/5] Configuring conda auto-activation and Jupyter kernel
     python -m ipykernel install --user --name=caffe-ffi --display-name="Python (caffe-ffi)" && \
     echo "[BUILD] ipykernel registered: caffe-ffi" && \
     echo "[BUILD] Checking tvm_ffi native module dependencies..." && \
-    _TVM_SO=$(python -c 'import tvm_ffi, os, glob; sos=glob.glob(os.path.join(os.path.dirname(tvm_ffi.__file__), "_tvm_ffi*.so")); print(sos[0] if sos else "")' 2>/dev/null || true) && \
+    set +e && \
+    _TVM_SO=$(python -c 'import tvm_ffi, os, glob; sos=glob.glob(os.path.join(os.path.dirname(tvm_ffi.__file__), "_tvm_ffi*.so")); print(sos[0] if sos else "")' 2>/dev/null); \
     if [ -n "$_TVM_SO" ] && [ -f "$_TVM_SO" ]; then \
         echo "[BUILD] _tvm_ffi native module: $_TVM_SO"; \
         if ldd "$_TVM_SO" 2>/dev/null | grep -q 'not found'; then \
-            echo "[WARN] Some tvm_ffi deps not found (may need LD_LIBRARY_PATH)"; \
-            ldd "$_TVM_SO" | grep 'not found'; \
+            echo "[WARN] Some tvm_ffi deps not found (will be rebuilt from source by entrypoint)"; \
         else \
             echo "[BUILD] tvm_ffi native deps OK"; \
         fi; \
     else \
-        echo "[BUILD] tvm_ffi: pure Python or no native .so found (expected for PyPI wheel)"; \
-    fi
+        echo "[BUILD] tvm_ffi: PyPI wheel not importable (expected — will be rebuilt from source by entrypoint)"; \
+    fi && \
+    set -e
 
 # -----------------------------------------------------------------------------
 # [Runtime 5/5] Final cleanup and metadata
 # -----------------------------------------------------------------------------
 RUN echo "=== [Runtime 5/5] Final cleanup ===" && \
     BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ) && \
-    printf 'BUILD_DATE=%s\nBASE_IMAGE=%s\nBUILDER=continuumio/miniconda3:latest\nCONDA_DIR=/opt/conda\nENV_NAME=caffe-ffi\nPYTHON_VERSION=%s\nSERVICES=sshd,jupyter,conda-caffe-ffi\nWORKSPACE_DIR=%s\nEDITABLE_INSTALL=auto (entrypoint)\n' "$BUILD_DATE" "${BASE_IMAGE}" "${PYTHON_VERSION}" "${WORKSPACE_DIR}" > /etc/caffe-ffi-jupyter-build-info && \
+    printf 'BUILD_DATE=%s\nBASE_IMAGE=%s\nBUILDER=continuumio/miniconda3:latest\nCONDA_DIR=%s\nENV_NAME=%s\nPYTHON_VERSION=%s\nSERVICES=sshd,jupyter,conda-caffe-ffi\nWORKSPACE_DIR=%s\nEDITABLE_INSTALL=auto (entrypoint)\n' "$BUILD_DATE" "${BASE_IMAGE}" "${CONDA_DIR}" "${ENV_NAME}" "${PYTHON_VERSION}" "${WORKSPACE_DIR}" > /etc/caffe-ffi-jupyter-build-info && \
     cat /etc/caffe-ffi-jupyter-build-info && \
     echo "[BUILD] Final verification:" && \
-    source "${CONDA_DIR}/etc/profile.d/conda.sh" && conda activate caffe-ffi && \
-    echo "  python:        $(python --version)" && \
-    echo "  conda:         $(conda --version)" && \
-    echo "  numpy:         $(python -c 'import numpy; print(numpy.__version__)')" && \
-    echo "  protobuf:      $(python -c 'import google.protobuf; print(google.protobuf.__version__)')" && \
-    echo "  tvm_ffi:       $(python -c 'import tvm_ffi; print(tvm_ffi.__version__)' 2>/dev/null || echo 'editable install pending')" && \
-    echo "  caffe_ffi:     $(python -c 'import caffe_ffi; print(caffe_ffi.__version__)' 2>/dev/null || echo 'editable install pending (mount source dir)')" && \
+    test -x "${ENV_PATH}/bin/python" && echo "  python:        $(${ENV_PATH}/bin/python --version 2>&1)" || echo "  python:        not available" && \
+    echo "  conda:         $("${CONDA_DIR}/bin/conda" --version 2>&1 || echo 'not available')" && \
+    echo "  numpy:         $(${ENV_PATH}/bin/python -c 'import numpy; print(numpy.__version__)' 2>/dev/null || echo 'pending')" && \
+    echo "  protobuf:      $(${ENV_PATH}/bin/python -c 'import google.protobuf; print(google.protobuf.__version__)' 2>/dev/null || echo 'pending')" && \
+    echo "  tvm_ffi:       $(${ENV_PATH}/bin/python -c 'import tvm_ffi; print(tvm_ffi.__version__)' 2>/dev/null || echo 'editable install pending')" && \
+    echo "  caffe_ffi:     $(${ENV_PATH}/bin/python -c 'import caffe_ffi; print(caffe_ffi.__version__)' 2>/dev/null || echo 'editable install pending (mount source dir)')" && \
     echo "[BUILD] ========== RUNTIME STAGE COMPLETE =========="
 
 WORKDIR ${WORKSPACE_DIR}

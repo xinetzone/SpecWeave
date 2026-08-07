@@ -306,7 +306,7 @@ llvm-objdump -p $SP_DIR/caffe_ffi/_caffe_ffi*.pyd | grep "DLL Name"
 
 ## 参考链接
 
-- 打包模式文档：[conda-build-scikit-build-core-native.md](../../patterns/code-patterns/conda-build-scikit-build-core-native.md)
-- 验证模式文档：[conda-package-clean-verification.md](../../patterns/code-patterns/conda-package-clean-verification.md)
+- 打包模式文档：[conda-build-scikit-build-core-native.md](../../../patterns/code-patterns/conda-build-scikit-build-core-native.md)
+- 验证模式文档：[conda-package-clean-verification.md](../../../patterns/code-patterns/conda-package-clean-verification.md)
 - 复盘主报告：[README.md](README.md)
 - 行动项Backlog：[insight-action-backlog.md](insight-action-backlog.md)

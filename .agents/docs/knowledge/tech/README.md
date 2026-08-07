@@ -3,7 +3,14 @@
 本目录收录面向开发者的技术教程、API指南、源码解析等实战类技术文档。
 
 <!-- nav-start -->
+- [caffe-ffi Conv v4 OpenMP 并行优化技术总结](caffe-ffi-conv-v4-optimization-summary.md)
 <!-- nav-end -->
+
+## 技术总结
+
+| 文档 | 简介 | 入口 |
+|------|------|------|
+| caffe-ffi Conv v4 OpenMP 并行优化技术总结 | caffe-ffi Conv 层 OpenMP 并行优化（v4）的策略、实验结果、抖动诊断与生产部署配置 | [caffe-ffi-conv-v4-optimization-summary.md](caffe-ffi-conv-v4-optimization-summary.md) |
 
 ## Wiki 教程系列
 

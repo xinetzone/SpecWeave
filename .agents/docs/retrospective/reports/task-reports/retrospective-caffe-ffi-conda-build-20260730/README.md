@@ -67,11 +67,11 @@ status: in-progress
 
 | 文件 | 修改内容 | 行数变化 |
 |------|---------|---------|
-| [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number=7；完善三段式依赖（host段增加setuptools-scm/protobuf/openblas/typing-extensions；osx增加cctools/llvm-openmp/macos-sdk）；增加missing_dso_whitelist（含.dylib条目）和注释；完善test段（imports/commands/requires/source_files）；完善about段description | +53/-5 |
-| [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 增加 `clean_editable_files()` 三重保护清理；tvm-ffi安装前彻底清理构建残留；CMAKE_ARGS/SKBUILD_CMAKE_ARGS构建隔离；SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13；nm符号验证(TVMFFIGetCustomAllocator)；macOS跨平台适配（IS_MACOS检测、@loader_path RPATH、install_name_tool、otool/nm -gU封装）；RPATH新增`$ORIGIN/../tvm_ffi/lib`；libtvm_ffi.so独立RPATH设置（深一级路径）；构建后双重editable清理；详细环境变量日志；**A-T7精简**：移除_EXTRA_CMAKE_ARGS平台分支和10个重复-D参数（迁移到pyproject.toml三层分离），SKBUILD_CMAKE_ARGS从12个精简为5个conda专属参数 | +200/-10 |
-| [pyproject.toml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/pyproject.toml) | **A-T7新增**：CMake参数三层分离——项目默认值（CAFFE_USE_BLAS/CAFFE_FFI_BUILD_TESTS/CMAKE_POSITION_INDEPENDENT_CODE）、Linux override（CMAKE_BUILD_RPATH_USE_ORIGIN从全局移到Linux-only）、macOS override（CMAKE_MACOSX_RPATH/CMAKE_INSTALL_NAME_DIR）；CMAKE_BUILD_RPATH_USE_ORIGIN从全局修正为Linux-only | +30/-5 |
-| [cmake/Install.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Install.cmake) | DESTINATION 从 "caffe_ffi" 改为 "."，添加详细注释说明双重嵌套原因；新增protobuf Python文件安装规则 | +10/-2 |
-| [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c跨平台依赖检查（Linux ldd / macOS otool -L）；新增Step 8d Python单元测试集成；macOS跨平台适配（IS_MACOS检测、otool/nm -gU封装、@rpath验证、.dylib库查找、PLATFORM子目录自适应、Bootstrap Docker/本地miniconda/miniforge自适应）；apache-tvm-ffi pip卸载重装避免版本冲突 | +400/-50 |
+| [conda.recipe/meta.yaml](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number=7；完善三段式依赖（host段增加setuptools-scm/protobuf/openblas/typing-extensions；osx增加cctools/llvm-openmp/macos-sdk）；增加missing_dso_whitelist（含.dylib条目）和注释；完善test段（imports/commands/requires/source_files）；完善about段description | +53/-5 |
+| [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 增加 `clean_editable_files()` 三重保护清理；tvm-ffi安装前彻底清理构建残留；CMAKE_ARGS/SKBUILD_CMAKE_ARGS构建隔离；SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13；nm符号验证(TVMFFIGetCustomAllocator)；macOS跨平台适配（IS_MACOS检测、@loader_path RPATH、install_name_tool、otool/nm -gU封装）；RPATH新增`$ORIGIN/../tvm_ffi/lib`；libtvm_ffi.so独立RPATH设置（深一级路径）；构建后双重editable清理；详细环境变量日志；**A-T7精简**：移除_EXTRA_CMAKE_ARGS平台分支和10个重复-D参数（迁移到pyproject.toml三层分离），SKBUILD_CMAKE_ARGS从12个精简为5个conda专属参数 | +200/-10 |
+| [pyproject.toml](../../../../../../projects/xuanspace/libs/caffe-ffi/pyproject.toml) | **A-T7新增**：CMake参数三层分离——项目默认值（CAFFE_USE_BLAS/CAFFE_FFI_BUILD_TESTS/CMAKE_POSITION_INDEPENDENT_CODE）、Linux override（CMAKE_BUILD_RPATH_USE_ORIGIN从全局移到Linux-only）、macOS override（CMAKE_MACOSX_RPATH/CMAKE_INSTALL_NAME_DIR）；CMAKE_BUILD_RPATH_USE_ORIGIN从全局修正为Linux-only | +30/-5 |
+| [cmake/Install.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Install.cmake) | DESTINATION 从 "caffe_ffi" 改为 "."，添加详细注释说明双重嵌套原因；新增protobuf Python文件安装规则 | +10/-2 |
+| [scripts/test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c跨平台依赖检查（Linux ldd / macOS otool -L）；新增Step 8d Python单元测试集成；macOS跨平台适配（IS_MACOS检测、otool/nm -gU封装、@rpath验证、.dylib库查找、PLATFORM子目录自适应、Bootstrap Docker/本地miniconda/miniforge自适应）；apache-tvm-ffi pip卸载重装避免版本冲突 | +400/-50 |
 
 ### Bug 修复记录
 
@@ -325,7 +325,7 @@ site-packages/
 
 ### 模式 1：conda-build + scikit-build-core 原生扩展打包模式（升级版）
 
-> 📚 **正式模式文档**：[conda-build-scikit-build-core-native.md](../../patterns/code-patterns/conda-build-scikit-build-core-native.md)（L3 方法论，已沉淀至模式库）
+> 📚 **正式模式文档**：[conda-build-scikit-build-core-native.md](../../../patterns/code-patterns/conda-build-scikit-build-core-native.md)（L3 方法论，已沉淀至模式库）
 
 **触发场景**：需要将 C++/CMake 构建的 Python 原生扩展打包为 Conda 包，依赖 scikit-build-core 构建系统，需要依赖另一个同架构本地编译的Python C++扩展（如tvm-ffi），且需要精确控制RPATH和符号兼容性。
 
@@ -368,7 +368,7 @@ site-packages/
 
 ### 模式 2：Conda 构建验证干净环境前置清理模式（升级版）
 
-> 📚 **正式模式文档**：[conda-package-clean-verification.md](../../patterns/code-patterns/conda-package-clean-verification.md)（L3 方法论，已沉淀至模式库）
+> 📚 **正式模式文档**：[conda-package-clean-verification.md](../../../patterns/code-patterns/conda-package-clean-verification.md)（L3 方法论，已沉淀至模式库）
 
 **触发场景**：在开发Docker容器中反复迭代验证conda包构建结果，容器内存在之前的editable install、pip install、stale目录等多种残留。
 

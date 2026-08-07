@@ -1,0 +1,85 @@
+====================================================================================================
+  InceptionV1 batch=16 Jitter Diagnosis
+  OMP_NUM_THREADS=4, OPENBLAS_NUM_THREADS=1, iters=30
+====================================================================================================
+
+📋 Total configurations to test: 16
+   Schedule strategies: 4 (static, dynamic, dynamic,1, guided)
+   Wait policies:       2 (PASSIVE, ACTIVE)
+   Warmup strategies:   2 (standard_warmup5, memory_prealloc_warmup50)
+
+[ 1/16] Testing: schedule=static     wait=PASSIVE warmup=standard_warmup5          ... OK  CV= 26.9%  Avg=1082.6ms  FPS= 14.8  (56s)
+[ 2/16] Testing: schedule=static     wait=PASSIVE warmup=memory_prealloc_warmup50  ... OK  CV= 11.5%  Avg= 951.8ms  FPS= 16.8  (98s)
+[ 3/16] Testing: schedule=static     wait=ACTIVE  warmup=standard_warmup5          ... OK  CV= 15.8%  Avg= 969.5ms  FPS= 16.5  (50s)
+[ 4/16] Testing: schedule=static     wait=ACTIVE  warmup=memory_prealloc_warmup50  ... OK  CV=  9.6%  Avg= 943.9ms  FPS= 16.9  (96s)
+[ 5/16] Testing: schedule=dynamic    wait=PASSIVE warmup=standard_warmup5          ... OK  CV=  9.8%  Avg= 926.1ms  FPS= 17.3  (47s)
+[ 6/16] Testing: schedule=dynamic    wait=PASSIVE warmup=memory_prealloc_warmup50  ... OK  CV=  9.6%  Avg= 915.6ms  FPS= 17.5  (93s)
+[ 7/16] Testing: schedule=dynamic    wait=ACTIVE  warmup=standard_warmup5          ... OK  CV= 20.1%  Avg= 959.8ms  FPS= 16.7  (49s)
+[ 8/16] Testing: schedule=dynamic    wait=ACTIVE  warmup=memory_prealloc_warmup50  ... OK  CV= 13.4%  Avg= 944.8ms  FPS= 16.9  (96s)
+[ 9/16] Testing: schedule=dynamic,1  wait=PASSIVE warmup=standard_warmup5          ... OK  CV=  9.2%  Avg= 914.8ms  FPS= 17.5  (50s)
+[10/16] Testing: schedule=dynamic,1  wait=PASSIVE warmup=memory_prealloc_warmup50  ... OK  CV= 10.6%  Avg= 874.2ms  FPS= 18.3  (91s)
+[11/16] Testing: schedule=dynamic,1  wait=ACTIVE  warmup=standard_warmup5          ... OK  CV=  9.3%  Avg= 893.1ms  FPS= 17.9  (49s)
+[12/16] Testing: schedule=dynamic,1  wait=ACTIVE  warmup=memory_prealloc_warmup50  ... OK  CV= 20.2%  Avg= 878.0ms  FPS= 18.2  (89s)
+[13/16] Testing: schedule=guided     wait=PASSIVE warmup=standard_warmup5          ... OK  CV=  9.1%  Avg= 865.8ms  FPS= 18.5  (48s)
+[14/16] Testing: schedule=guided     wait=PASSIVE warmup=memory_prealloc_warmup50  ... OK  CV=  6.9%  Avg= 868.4ms  FPS= 18.4  (87s)
+[15/16] Testing: schedule=guided     wait=ACTIVE  warmup=standard_warmup5          ... OK  CV= 18.9%  Avg= 892.1ms  FPS= 17.9  (49s)
+[16/16] Testing: schedule=guided     wait=ACTIVE  warmup=memory_prealloc_warmup50  ... OK  CV= 14.6%  Avg= 906.3ms  FPS= 17.6  (88s)
+
+====================================================================================================
+  RESULTS IN MARKDOWN TABLE
+====================================================================================================
+
+| # | OMP_SCHEDULE | OMP_WAIT_POLICY | Warmup Strategy | Avg(ms) | P50(ms) | P95(ms) | P99(ms) | Min(ms) | Max(ms) | Std(ms) | CV% | Tail(P99/P50) | FPS | vs Baseline |
+|---|-------------|----------------|-----------------|---------|---------|---------|---------|---------|---------|---------|-----|---------------|-----|-------------|
+| 1 | `static` | PASSIVE | standard_warmup5 | 1082.6 | 994.2 | 1786.6 | 2025.5 | 863.1 | 2031.8 | 291.1 | **26.9%** | 2.04x | 14.8 | +0.0% CV |
+| 2 | `static` | PASSIVE | memory_prealloc_warmup50 | 951.8 | 901.1 | 1144.4 | 1236.5 | 848.3 | 1270.0 | 109.5 | **11.5%** | 1.37x | 16.8 | +57.2% CV |
+| 3 | `static` | ACTIVE | standard_warmup5 | 969.5 | 918.4 | 1308.9 | 1449.6 | 843.1 | 1492.2 | 152.7 | **15.8%** | 1.58x | 16.5 | +41.4% CV |
+| 4 | `static` | ACTIVE | memory_prealloc_warmup50 | 943.9 | 909.1 | 1100.8 | 1181.8 | 830.4 | 1213.5 | 90.5 | **9.6%** | 1.30x | 16.9 | +64.3% CV |
+| 5 | `dynamic` | PASSIVE | standard_warmup5 | 926.1 | 892.8 | 1103.1 | 1190.4 | 816.1 | 1215.5 | 90.8 | **9.8%** | 1.33x | 17.3 | +63.6% CV |
+| 6 | `dynamic` | PASSIVE | memory_prealloc_warmup50 | 915.6 | 885.2 | 1088.2 | 1140.3 | 828.5 | 1159.8 | 87.8 | **9.6%** | 1.29x | 17.5 | +64.4% CV |
+| 7 | `dynamic` | ACTIVE | standard_warmup5 | 959.8 | 867.0 | 1277.6 | 1619.6 | 818.5 | 1742.3 | 193.0 | **20.1%** | 1.87x | 16.7 | +25.2% CV |
+| 8 | `dynamic` | ACTIVE | memory_prealloc_warmup50 | 944.8 | 909.5 | 1120.3 | 1384.1 | 823.0 | 1475.5 | 127.1 | **13.4%** | 1.52x | 16.9 | +50.0% CV |
+| 9 | `dynamic,1` | PASSIVE | standard_warmup5 | 914.8 | 875.2 | 1089.6 | 1159.8 | 824.5 | 1173.0 | 84.2 | **9.2%** | 1.32x | 17.5 | +65.8% CV |
+| 10 | `dynamic,1` | PASSIVE | memory_prealloc_warmup50 | 874.2 | 830.9 | 1064.9 | 1122.9 | 768.2 | 1145.6 | 92.7 | **10.6%** | 1.35x | 18.3 | +60.6% CV |
+| 11 | `dynamic,1` | ACTIVE | standard_warmup5 | 893.1 | 861.3 | 1035.7 | 1123.3 | 801.9 | 1158.0 | 82.7 | **9.3%** | 1.30x | 17.9 | +65.6% CV |
+| 12 | `dynamic,1` | ACTIVE | memory_prealloc_warmup50 | 878.0 | 807.7 | 1220.7 | 1497.1 | 758.8 | 1594.4 | 177.2 | **20.2%** | 1.85x | 18.2 | +25.0% CV |
+| 13 | `guided` | PASSIVE | standard_warmup5 | 865.8 | 835.6 | 1042.8 | 1104.3 | 766.5 | 1123.7 | 78.8 | **9.1%** | 1.32x | 18.5 | +66.2% CV |
+| 14 | `guided` | PASSIVE | memory_prealloc_warmup50 | 868.4 | 854.2 | 1013.9 | 1033.4 | 804.7 | 1039.2 | 60.1 | **6.9%** | 1.21x | 18.4 | +74.3% CV |
+| 15 | `guided` | ACTIVE | standard_warmup5 | 892.1 | 827.2 | 1176.4 | 1520.8 | 781.4 | 1598.7 | 168.8 | **18.9%** | 1.84x | 17.9 | +29.6% CV |
+| 16 | `guided` | ACTIVE | memory_prealloc_warmup50 | 906.3 | 846.4 | 1189.7 | 1263.5 | 783.1 | 1289.3 | 131.9 | **14.6%** | 1.49x | 17.6 | +45.9% CV |
+
+====================================================================================================
+  DIAGNOSIS CONCLUSION
+====================================================================================================
+
+📊 Baseline config (static, PASSIVE, warmup=5):
+   Avg=1082.6ms  P50=994.2ms  P99=2025.5ms  CV=26.9%  Tail=2.04x  FPS=14.8
+
+🏆 Best config (sorted by CV% ascending):
+   Schedule=guided  Wait=PASSIVE  Warmup=memory_prealloc_warmup50
+   Avg=868.4ms  P50=854.2ms  P99=1033.4ms  CV=6.9%  Tail=1.21x  FPS=18.4
+
+📈 Improvement over baseline:
+   CV reduction:        +74.3% (26.9% → 6.9%)
+   Tail ratio reduction:+40.6% (2.04x → 1.21x)
+   FPS change:          +24.6% (14.8 → 18.4)
+
+📋 Top 5 most stable configs:
+   1. CV=  6.9%  Tail=1.21x  FPS= 18.4  | sched=guided     wait=PASSIVE warmup=memory_prealloc_warmup50
+   2. CV=  9.1%  Tail=1.32x  FPS= 18.5  | sched=guided     wait=PASSIVE warmup=standard_warmup5
+   3. CV=  9.2%  Tail=1.32x  FPS= 17.5  | sched=dynamic,1  wait=PASSIVE warmup=standard_warmup5
+   4. CV=  9.3%  Tail=1.30x  FPS= 17.9  | sched=dynamic,1  wait=ACTIVE  warmup=standard_warmup5
+   5. CV=  9.6%  Tail=1.29x  FPS= 17.5  | sched=dynamic    wait=PASSIVE warmup=memory_prealloc_warmup50
+
+✅ TARGET ACHIEVED: CV% (6.9%) is below 15.0% threshold.
+   Recommendation: Use the best config above for production deployment.
+
+💡 Additional recommendations:
+   - Try setting OMP_PROC_BIND=CLOSE or OMP_PLACES=cores to reduce thread migration
+   - Lock CPU frequency (disable turbo boost) for more consistent performance
+   - Consider using numactl or taskset for CPU affinity binding on Linux
+   - For batch=16 throughput, also test batch=32 to see if larger batch amortizes overhead
+
+====================================================================================================
+  TEST COMPLETE
+====================================================================================================

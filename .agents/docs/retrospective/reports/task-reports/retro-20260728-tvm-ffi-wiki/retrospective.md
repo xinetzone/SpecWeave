@@ -29,21 +29,21 @@ type: task-retrospective
 ### 产出物清单
 | 产出物 | 路径 | 行数/大小 |
 |--------|------|-----------|
-| 教程总览 | [00-overview.md](00-overview.md) | 含章节导航、学习路线图 |
-| 项目结构 | [01-project-structure.md](01-project-structure.md) | 目录结构+各模块职责 |
-| Any类型系统 | [02-any-type.md](02-any-type.md) | DataType+Any双轨设计 |
-| 对象系统 | [03-object-system.md](03-object-system.md) | Object/ObjectRef/type_index机制 |
-| 函数注册 | [04-function-registry.md](04-function-registry.md) | PackedFunc/Registry跨语言调用 |
-| 容器类型 | [05-containers.md](05-containers.md) | Array/Map/String/List/Dict/Tensor |
-| 反射机制 | [06-reflection.md](06-reflection.md) | dataclass结构化序列化 |
-| 模块系统 | [07-module-system.md](07-module-system.md) | load_inline/load_cmake动态加载 |
-| C++开发指南 | [08-cpp-guide.md](08-cpp-guide.md) | TVM_FFI_REGISTER_OBJECT/FFI_PY_ARGUMENTS |
-| Python开发指南 | [09-python-guide.md](09-python-guide.md) | register_func/register_object/py_class |
-| 构建打包 | [10-build-packaging.md](10-build-packaging.md) | CMake/Meson/hatch/pip/conda/Docker |
-| 实战案例 | [11-examples.md](11-examples.md) | quickstart/CUDA/Tensor/扩展类型 |
-| FAQ | [12-faq.md](12-faq.md) | 编译/链接/类型/性能常见问题 |
-| 源码解析 | [13-source-analysis.md](13-source-analysis.md) | Any/Object/PackedFunc/NDArray实现原理 |
-| 可运行示例 | [examples_demo.py](examples_demo.py) | 368行Python脚本 |
+| 教程总览 | [00-overview.md](../../../../knowledge/tech/tvm-ffi-wiki/00-overview.md) | 含章节导航、学习路线图 |
+| 项目结构 | [01-project-structure.md](../../../../knowledge/tech/tvm-ffi-wiki/01-project-structure.md) | 目录结构+各模块职责 |
+| Any类型系统 | [02-any-type.md](../../../../knowledge/tech/tvm-ffi-wiki/02-any-type.md) | DataType+Any双轨设计 |
+| 对象系统 | [03-object-system.md](../../../../knowledge/tech/tvm-ffi-wiki/03-object-system.md) | Object/ObjectRef/type_index机制 |
+| 函数注册 | [04-function-registry.md](../../../../knowledge/tech/tvm-ffi-wiki/04-function-registry.md) | PackedFunc/Registry跨语言调用 |
+| 容器类型 | [05-containers.md](../../../../knowledge/tech/tvm-ffi-wiki/05-containers.md) | Array/Map/String/List/Dict/Tensor |
+| 反射机制 | [06-reflection.md](../../../../knowledge/tech/tvm-ffi-wiki/06-reflection.md) | dataclass结构化序列化 |
+| 模块系统 | [07-module-system.md](../../../../knowledge/tech/tvm-ffi-wiki/07-module-system.md) | load_inline/load_cmake动态加载 |
+| C++开发指南 | [08-cpp-guide.md](../../../../knowledge/tech/tvm-ffi-wiki/08-cpp-guide.md) | TVM_FFI_REGISTER_OBJECT/FFI_PY_ARGUMENTS |
+| Python开发指南 | [09-python-guide.md](../../../../knowledge/tech/tvm-ffi-wiki/09-python-guide.md) | register_func/register_object/py_class |
+| 构建打包 | [10-build-packaging.md](../../../../knowledge/tech/tvm-ffi-wiki/10-build-packaging.md) | CMake/Meson/hatch/pip/conda/Docker |
+| 实战案例 | [11-examples.md](../../../../knowledge/tech/tvm-ffi-wiki/11-examples.md) | quickstart/CUDA/Tensor/扩展类型 |
+| FAQ | [12-faq.md](../../../../knowledge/tech/tvm-ffi-wiki/12-faq.md) | 编译/链接/类型/性能常见问题 |
+| 源码解析 | [13-source-analysis.md](../../../../knowledge/tech/tvm-ffi-wiki/13-source-analysis.md) | Any/Object/PackedFunc/NDArray实现原理 |
+| 可运行示例 | [examples_demo.py](../../../../knowledge/tech/tvm-ffi-wiki/examples_demo.py) | 368行Python脚本 |
 | Tech分类索引 | [tech/README.md](../README.md) | 技术类文档入口 |
 
 ### 数据指标

@@ -1,0 +1,108 @@
+# =============================================================================
+# caffe-ffi 生产部署 Docker Compose — 延迟敏感场景端到端
+#
+# 用法：
+#   cd d:/spaces/SpecWeave
+#   docker compose -f .trae/specs/caffe-ffi-conv-v4-milestone/deploy/docker-compose-latency.yml up -d
+#   docker compose -f ... logs -f caffe-ffi-prod
+#   docker compose -f ... exec caffe-ffi-prod bash
+#   docker compose -f ... down
+#
+# 对应 docker run 等价命令（见 build.sh 运行提示）：
+#   docker run -d --name caffe-ffi-prod --restart=unless-stopped \
+#     --cpus=4 --memory=4g \
+#     -e DEPLOY_PROFILE=latency \
+#     -e OMP_NUM_THREADS=4 -e OPENBLAS_NUM_THREADS=1 -e OMP_WAIT_POLICY=PASSIVE \
+#     -v models:/app/models:ro -v config:/app/config:ro \
+#     -p 8080:8080 caffe-ffi-prod:latest python /app/serve.py ...
+#
+# Profile: latency（延迟敏感）— 依据技术总结 §6 Profile A
+#   适用: 实时推理、P99 SLA 严格；预期 CV%<5%, P99/P50<1.5x
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # 主推理服务（延迟敏感 Profile）
+  # ---------------------------------------------------------------------------
+  caffe-ffi-prod:
+    build:
+      context: ../../../../            # SpecWeave 根目录（deploy 向上 4 级）
+      dockerfile: .trae/specs/caffe-ffi-conv-v4-milestone/deploy/Dockerfile
+      args:
+        DEPLOY_PROFILE: "latency"       # 构建期固化默认值（记录进镜像元数据）
+        APT_MIRROR: "aliyun"            # 国内源，可按需改 official/tuna
+        PIP_MIRROR: "aliyun"
+        CONDA_MIRROR: "tuna"
+        PYTHON_VERSION: "3.14"
+    image: caffe-ffi-prod:latest
+    container_name: caffe-ffi-prod
+    restart: unless-stopped
+
+    # ── 部署 Profile（延迟敏感）— 运行时覆盖，优先级最高 ──
+    environment:
+      # 场景 Profile
+      DEPLOY_PROFILE: "latency"
+      # OpenMP 双层并行隔离（技术总结 §3/§6）
+      OMP_NUM_THREADS: "4"
+      OPENBLAS_NUM_THREADS: "1"        # 必须=1，小 GEMM 场景 3-11x 退化
+      OMP_WAIT_POLICY: "PASSIVE"       # 延迟场景禁止 ACTIVE
+      OMP_SCHEDULE: "static"
+      KMP_DUPLICATE_LIB_OK: "TRUE"
+      # 关键：不设置 OMP_PROC_BIND（混合 P/E 核让 OS 调度）
+      # ── 日志/运行时 ──
+      GLOG_minloglevel: "2"
+      PYTHONUNBUFFERED: "1"
+      TZ: "Asia/Shanghai"
+
+    # ── 资源限制（对齐 OMP_NUM_THREADS=4，避免 CPU 限流/过度订阅）──
+    cpus: "4.0"
+    mem_limit: 4g
+    pids_limit: 512
+
+    # ── 端口：推理服务监听（默认 8080，按实际服务调整）──
+    ports:
+      - "8080:8080"
+
+    # ── 模型与配置挂载（只读，防止误改）──
+    volumes:
+      - ./models:/app/models:ro
+      - ./config:/app/config:ro
+
+    # ── 启动命令 ──
+    # 默认保持容器存活（供 exec 调试/挂载交互），避免 command:["bash"] 无 stdin 立即退出导致 crash-loop。
+    # 生产替换为实际推理服务入口，例如:
+    #   command: ["python", "/app/serve.py", "--model", "/app/models/model.caffemodel"]
+    command: ["sleep", "infinity"]
+
+
+  # ---------------------------------------------------------------------------
+  # 端到端验证服务（一次性）：验证镜像环境 + 延迟敏感配置生效
+  # 用法: docker compose -f ... run --rm caffe-ffi-verify
+  # ---------------------------------------------------------------------------
+  caffe-ffi-verify:
+    image: caffe-ffi-prod:latest
+    container_name: caffe-ffi-verify
+    profiles: ["verify"]               # 仅按需启动，不随 up -d 自动拉起
+    environment:
+      DEPLOY_PROFILE: "latency"
+    command: >
+      bash -lc '
+        echo "=== 端到端验证 (latency) ===";
+        echo "--- 1. conda env ---";
+        source /opt/conda/etc/profile.d/conda.sh && conda activate caffe-ffi;
+        python -c "import sys; print(\"python\", sys.version.split()[0])";
+        echo "--- 2. caffe_ffi 导入 ---";
+        python -c "import caffe_ffi; print(\"caffe_ffi\", caffe_ffi.__version__, \"available\", caffe_ffi.is_available())";
+        echo "--- 3. OpenMP/BLAS 环境变量 ---";
+        echo "OMP_NUM_THREADS=$${OMP_NUM_THREADS}";
+        echo "OPENBLAS_NUM_THREADS=$${OPENBLAS_NUM_THREADS}";
+        echo "OMP_WAIT_POLICY=$${OMP_WAIT_POLICY}";
+        echo "OMP_PROC_BIND=$${OMP_PROC_BIND:-unset}";
+        echo "--- 4. tvm_ffi 导入 ---";
+        python -c "import tvm_ffi; print(\"tvm_ffi\", tvm_ffi.__version__)";
+        echo "=== 验证完成 ===";
+      '
+    # verify 服务不重启，run --rm 一次性
+    restart: "no"
+    cpus: "4.0"
+    mem_limit: 4g
