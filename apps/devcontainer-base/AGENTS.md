@@ -24,6 +24,7 @@
 - **非root用户**：devuser (UID 1000)，加入docker组，可选NOPASSWD sudo（通过GRANT_SUDO环境变量控制）
 - **服务端口**：sshd(22) + dockerd(unix socket) + podman(rootless unix socket) + jupyter(8888)
 - **父级工作区**：SpecWeave 根目录（`../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
+- **镜像变体**：`variants/` 目录（基于基础镜像的特殊功能变体，如 conda、conda-llvm）
 - **AI资产容器**：`.agents/` 目录（本项目特有规则/脚本/模板）
 
 ## 嵌套路由关系
@@ -54,6 +55,24 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │   └─ healthcheck.sh   ← 健康检查脚本
        ├─ docker-compose.yml   ← Compose 编排
        ├─ .env.example         ← 环境变量模板
+       ├─ variants/            ← 镜像变体目录（基于基础镜像的特殊功能镜像组）
+       │   ├─ README.md        ← 变体索引和使用指南
+       │   ├─ build.sh         ← 变体统一构建脚本（拓扑排序+依赖处理）
+       │   ├─ _template/       ← 新变体模板（复制后修改）
+       │   │   ├─ Dockerfile
+       │   │   ├─ .env.example
+       │   │   ├─ README.md
+       │   │   └─ .agents/rules/dockerfile.md
+       │   ├─ conda/           ← Miniconda3 基础环境变体
+       │   │   ├─ Dockerfile
+       │   │   ├─ .env.example
+       │   │   ├─ README.md
+       │   │   └─ .agents/rules/dockerfile.md
+       │   └─ conda-llvm/      ← conda+LLVM/clang 编译工具链变体
+       │       ├─ Dockerfile
+       │       ├─ .env.example
+       │       ├─ README.md
+       │       └─ .agents/rules/dockerfile.md
        ├─ docs/                ← 人类可读文档（最佳实践等）
        └─ README.md            ← 使用文档
 ```
@@ -72,6 +91,9 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | Jupyter配置 | [.agents/rules/services.md#jupyter-服务](.agents/rules/services.md#jupyter-服务) | venv路径、token配置、工作目录、CORS策略 |
 | SSH配置 | [.agents/rules/services.md#ssh-服务sshd](.agents/rules/services.md#ssh-服务sshd) | ED25519优先、禁用root登录、密码+密钥认证、host keys启动时生成 |
 | 镜像构建/启动/测试 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build.sh/start.sh命令、.env配置、Compose/run命令、验证流程、问题排查 |
+| 镜像变体构建/新增变体 | [variants/README.md](variants/README.md) | variants/build.sh使用、可用变体列表、新增变体模板流程 |
+| conda变体Dockerfile | [variants/conda/.agents/rules/dockerfile.md](variants/conda/.agents/rules/dockerfile.md) | Miniconda安装、/opt/conda路径、conda-init.sh、镜像源配置 |
+| conda-llvm变体Dockerfile | [variants/conda-llvm/.agents/rules/dockerfile.md](variants/conda-llvm/.agents/rules/dockerfile.md) | LLVM 22.1.8安装、clang/cmake/ninja、PATH配置 |
 | 健康检查脚本 | [.agents/rules/services.md#健康检查](.agents/rules/services.md#健康检查) | healthcheck.sh条件检查逻辑、端口检测方式 |
 | 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../.agents/global-core-rules.md) | 回退到父级工作区 |
 | Skill使用 | [../../.agents/skills/](../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
@@ -89,6 +111,11 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 服务管理规范 | [.agents/rules/services.md](.agents/rules/services.md) | supervisord/SSH/Docker/Podman/Jupyter/健康检查 |
 | 构建测试规范 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build.sh/start.sh/Compose/验证流程/问题排查 |
 | 最佳实践文档 | [docs/best-practices.md](docs/best-practices.md) | Docker DinD无冲突配置、Compose变量覆盖、镜像源切换可复用模式 |
+| 变体目录索引 | [variants/README.md](variants/README.md) | 镜像变体列表、构建命令、新增变体指南 |
+| 变体构建脚本 | [variants/build.sh](variants/build.sh) | 多变体统一构建、依赖拓扑排序、国内镜像源支持 |
+| conda变体规范 | [variants/conda/.agents/rules/dockerfile.md](variants/conda/.agents/rules/dockerfile.md) | Miniconda基础环境变体的Dockerfile规范 |
+| conda-llvm变体规范 | [variants/conda-llvm/.agents/rules/dockerfile.md](variants/conda-llvm/.agents/rules/dockerfile.md) | LLVM/clang工具链变体的Dockerfile规范 |
+| 新变体模板 | [variants/_template/](variants/_template/) | 新增变体的Dockerfile/.env/README/dockerfile.md模板 |
 
 ## 项目约束速览
 
@@ -114,7 +141,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 ## 快速开始
 
 ```bash
-# 一键构建
+# 一键构建基础镜像
 bash scripts/build.sh
 
 # 一键启动（含健康验证+SSH/Jupyter连接信息）
@@ -123,6 +150,11 @@ bash scripts/start.sh
 # 使用国内镜像源
 cp .env.example .env  # 编辑 APT_MIRROR=aliyun
 bash scripts/build.sh && bash scripts/start.sh
+
+# 构建镜像变体（在基础镜像构建完成后）
+bash variants/build.sh --variant conda --cn        # 构建 conda 变体（国内源）
+bash variants/build.sh --variant conda-llvm --cn   # 构建 conda-llvm 变体（国内源）
+bash variants/build.sh --all --cn                  # 构建所有变体
 
 # 查看状态 / 停止
 bash scripts/start.sh status
@@ -142,6 +174,7 @@ bash scripts/start.sh stop
 
 ## 变更日志
 
+- 2026-08-07 | feat | 新增 variants/ 镜像变体目录结构：统一构建脚本、conda 变体（Miniconda3）、conda-llvm 变体（LLVM 22.1.8/clang/cmake/ninja）、_template 新变体模板
 - 2026-08-07 | refactor | 将AGENTS.md中项目约束和快速开始拆分为.agents/rules/下4个原子规则文件（dockerfile/entrypoint/services/build-test）
 - 2026-08-07 | feat | 新增start.sh一键启动脚本、.env.example环境变量模板、docs/best-practices.md最佳实践、BuildKit缓存优化
 - 2026-08-07 | feat | 初始化项目结构：AGENTS.md、目录结构config/supervisor/conf.d、scripts/lib/、.dockerignore、requirements.txt
