@@ -27,7 +27,6 @@
 - `llvmdev=${LLVM_VERSION}`
 - `clangdev=${LLVM_VERSION}`
 - `clang=${LLVM_VERSION}`
-- `clang-tools-extra=${LLVM_VERSION}`
 - `lld=${LLVM_VERSION}`
 - `lldb=${LLVM_VERSION}`
 
@@ -88,7 +87,7 @@ Conda-LLVM 变体在 conda 变体的 5 个阶段之上，追加 **4 个阶段**�
   1. `source /opt/conda/etc/profile.d/conda.sh`
   2. `conda activate base`
   3. `conda install -y -c conda-forge` 安装所有包：
-     - llvmdev, clangdev, clang, clang-tools-extra, lld, lldb（版本锁定）
+     - llvmdev, clangdev, clang, lld, lldb（版本锁定）
      - cmake, ninja, make（最新版）
 - 安装后验证关键包版本（conda list 或直接运行命令）
 - 输出 `[TIMER] Stage 2/4 ...`

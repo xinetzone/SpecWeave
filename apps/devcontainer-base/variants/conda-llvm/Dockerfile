@@ -99,7 +99,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     echo "" && \
     echo "########################################################################" && \
     echo "# [CONDA-LLVM VARIANT STAGE 2/4] Install LLVM Toolchain via conda-forge" && \
-    echo "# Packages: llvmdev, clangdev, clang, clang-tools-extra, cmake, ninja, make" && \
+    echo "# Packages: llvmdev, clangdev, clang, lld, lldb, cmake, ninja, make" && \
     echo "# Version: all LLVM packages @ ${LLVM_VERSION}" && \
     echo "########################################################################" && \
     echo "" && \
@@ -116,7 +116,6 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     echo "  - llvmdev=${LLVM_VERSION}" && \
     echo "  - clangdev=${LLVM_VERSION}" && \
     echo "  - clang=${LLVM_VERSION}" && \
-    echo "  - clang-tools-extra=${LLVM_VERSION}" && \
     echo "  - lld=${LLVM_VERSION}" && \
     echo "  - lldb=${LLVM_VERSION}" && \
     echo "  - cmake (latest)" && \
@@ -127,7 +126,6 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         "llvmdev=${LLVM_VERSION}" \
         "clangdev=${LLVM_VERSION}" \
         "clang=${LLVM_VERSION}" \
-        "clang-tools-extra=${LLVM_VERSION}" \
         "lld=${LLVM_VERSION}" \
         "lldb=${LLVM_VERSION}" \
         cmake \
@@ -156,36 +154,37 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
 # 原则：创建必要的符号链接（如果llvm-config命名不一致）；
 #       创建备选激活脚本；设置权限；验证工具可用性
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
-    echo "########################################################################" && \
-    echo "# [CONDA-LLVM VARIANT STAGE 3/4] Symlinks + Init Script + Verification" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    source /opt/conda/etc/profile.d/conda.sh && \
-    conda activate base && \
-    echo "[ACTION] Verifying LLVM binaries are in PATH..." && \
-    echo "  - which llvm-config: $(which llvm-config 2>/dev/null || echo 'NOT FOUND (checking alternatives)')" && \
-    echo "  - which clang: $(which clang 2>/dev/null || echo 'NOT FOUND')" && \
-    echo "  - which clang++: $(which clang++ 2>/dev/null || echo 'NOT FOUND')" && \
-    echo "" && \
-    echo "[ACTION] Creating llvm-config symlink if needed..." && \
-    if ! command -v llvm-config >/dev/null 2>&1; then \
-        echo "[INFO] llvm-config not directly in PATH, searching for alternatives..."; \
-        LLVM_CONFIG_BIN=$(find /opt/conda/bin -name 'llvm-config*' -type f 2>/dev/null | head -1); \
-        if [ -n "$LLVM_CONFIG_BIN" ]; then \
-            echo "[INFO] Found: $LLVM_CONFIG_BIN, creating symlink..."; \
-            ln -sf "$LLVM_CONFIG_BIN" /opt/conda/bin/llvm-config; \
-            echo "[OK] llvm-config symlink created"; \
-        else \
-            echo "[WARN] Could not find llvm-config binary in /opt/conda/bin"; \
-        fi; \
-    else \
-        echo "[OK] llvm-config already available at $(which llvm-config)"; \
-    fi && \
-    echo "" && \
-    echo "[ACTION] Creating /etc/profile.d/conda-llvm-init.sh (alternative activation script)..." && \
-    cat > /etc/profile.d/conda-llvm-init.sh << 'LLVM_INIT_EOF'
+RUN <<'STAGE3_EOF'
+echo ""
+echo "########################################################################"
+echo "# [CONDA-LLVM VARIANT STAGE 3/4] Symlinks + Init Script + Verification"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+source /opt/conda/etc/profile.d/conda.sh
+conda activate base
+echo "[ACTION] Verifying LLVM binaries are in PATH..."
+echo "  - which llvm-config: $(which llvm-config 2>/dev/null || echo 'NOT FOUND (checking alternatives)')"
+echo "  - which clang: $(which clang 2>/dev/null || echo 'NOT FOUND')"
+echo "  - which clang++: $(which clang++ 2>/dev/null || echo 'NOT FOUND')"
+echo ""
+echo "[ACTION] Creating llvm-config symlink if needed..."
+if ! command -v llvm-config >/dev/null 2>&1; then
+    echo "[INFO] llvm-config not directly in PATH, searching for alternatives..."
+    LLVM_CONFIG_BIN=$(find /opt/conda/bin -name 'llvm-config*' -type f 2>/dev/null | head -1)
+    if [ -n "$LLVM_CONFIG_BIN" ]; then
+        echo "[INFO] Found: $LLVM_CONFIG_BIN, creating symlink..."
+        ln -sf "$LLVM_CONFIG_BIN" /opt/conda/bin/llvm-config
+        echo "[OK] llvm-config symlink created"
+    else
+        echo "[WARN] Could not find llvm-config binary in /opt/conda/bin"
+    fi
+else
+    echo "[OK] llvm-config already available at $(which llvm-config)"
+fi
+echo ""
+echo "[ACTION] Creating /etc/profile.d/conda-llvm-init.sh (alternative activation script)..."
+cat > /etc/profile.d/conda-llvm-init.sh << 'LLVM_INIT_EOF'
 #!/bin/bash
 # =============================================================================
 # Conda-LLVM Initialization Script for DevContainer
@@ -206,32 +205,33 @@ if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then
 fi
 
 LLVM_INIT_EOF
-    chmod +x /etc/profile.d/conda-llvm-init.sh && \
-    echo "[OK] /etc/profile.d/conda-llvm-init.sh created" && \
-    echo "" && \
-    echo "[ACTION] Ensuring /opt/conda permissions for devuser..." && \
-    chown -R root:root /opt/conda && \
-    chmod -R a+rX /opt/conda && \
-    find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
-    echo "[OK] Permissions verified" && \
-    echo "" && \
-    echo "[ACTION] Quick tool availability check (before cleanup)..." && \
-    llvm-config --version 2>&1 | head -1 && \
-    clang --version 2>&1 | head -1 && \
-    cmake --version 2>&1 | head -1 && \
-    ninja --version 2>&1 && \
-    make --version 2>&1 | head -1 && \
-    echo "[OK] Core tools accessible" && \
-    echo "" && \
-    chown devuser:devuser /home/devuser/.bashrc && \
-    echo "[OK] devuser .bashrc ownership preserved" && \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "LLVS3=$_NOW" >> /tmp/.llvm-variant-build-timer && \
-    echo "[TIMER] Stage 3/4 (symlinks+init+verify) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 3 complete'
+chmod +x /etc/profile.d/conda-llvm-init.sh
+echo "[OK] /etc/profile.d/conda-llvm-init.sh created"
+echo ""
+echo "[ACTION] Ensuring /opt/conda permissions for devuser..."
+chown -R root:root /opt/conda
+chmod -R a+rX /opt/conda
+find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
+echo "[OK] Permissions verified"
+echo ""
+echo "[ACTION] Quick tool availability check (before cleanup)..."
+llvm-config --version 2>&1 | head -1
+clang --version 2>&1 | head -1
+cmake --version 2>&1 | head -1
+ninja --version 2>&1
+make --version 2>&1 | head -1
+echo "[OK] Core tools accessible"
+echo ""
+chown devuser:devuser /home/devuser/.bashrc
+echo "[OK] devuser .bashrc ownership preserved"
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "LLVS3=$_NOW" >> /tmp/.llvm-variant-build-timer
+echo "[TIMER] Stage 3/4 (symlinks+init+verify) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s"
+echo '[OK] Stage 3 complete'
+STAGE3_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 4/4 (追加层4): build-info + 清理 + 最终验证 + 计时器汇总表
@@ -270,7 +270,7 @@ RUN echo "" && \
         "ACTIVATION_SCRIPT=/etc/profile.d/conda-llvm-init.sh" \
         "SYSTEM_VENV=/opt/venv" \
         "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-        "PACKAGES_INSTALLED=llvmdev,clangdev,clang,clang-tools-extra,lld,lldb,cmake,ninja,make" \
+        "PACKAGES_INSTALLED=llvmdev,clangdev,clang,lld,lldb,cmake,ninja,make" \
         "BUILD_TIMER=enabled" \
         > /etc/devcontainer-variant-conda-llvm-build-info && \
     echo "[OK] Build metadata written:"; \

@@ -1,6 +1,6 @@
 # DevContainer Base - Conda-LLVM 变体 (LLVM/Clang 工具链)
 
-> 基于 devcontainer-base:conda 变体的 LLVM/Clang 编译工具链镜像，在保留所有基础功能的前提下，通过 conda-forge 预装完整的 LLVM 工具链（llvmdev, clang, clang-tools-extra, lld, lldb）以及构建工具（cmake, ninja, make），直接在 conda base 环境安装，开箱即用。
+> 基于 devcontainer-base:conda 变体的 LLVM/Clang 编译工具链镜像，在保留所有基础功能的前提下，通过 conda-forge 预装完整的 LLVM 工具链（llvmdev, clang, clangdev, lld, lldb）以及构建工具（cmake, ninja, make），直接在 conda base 环境安装，开箱即用。
 
 ## ✨ 特性
 
@@ -10,7 +10,7 @@
   - supervisord 进程管理，devuser 非 root 用户 (UID 1000)
   - Miniconda3 安装在 `/opt/conda`
 - **LLVM 工具链**：LLVM/Clang 22.1.8，统一版本通过 conda-forge 安装
-  - `llvmdev`, `clangdev`, `clang`, `clang-tools-extra`, `lld`, `lldb`
+  - `llvmdev`, `clangdev`, `clang`, `lld`, `lldb`
 - **构建工具**：`cmake`, `ninja`, `make` 最新版本（conda-forge）
 - **PATH 设计**：`/opt/conda/bin` 在 PATH 最前面，llvm-config/clang/cmake/ninja 直接可用
 - **开箱即用**：无需手动激活 conda，所有编译工具直接在 PATH 中
@@ -274,7 +274,7 @@ docker run --rm devcontainer-base:conda-llvm-latest cat /etc/devcontainer-varian
 
 3. **base 环境安装**：所有 LLVM 工具直接安装在 conda base 环境中，没有创建新环境，简化使用。如需隔离环境，可以自行 `conda create -n myenv`。
 
-4. **版本一致性**：所有 LLVM 相关包（llvmdev, clangdev, clang, clang-tools-extra, lld, lldb）统一锁定到 `${LLVM_VERSION}`，避免版本不匹配问题。
+4. **版本一致性**：所有 LLVM 相关包（llvmdev, clangdev, clang, lld, lldb）统一锁定到 `${LLVM_VERSION}`，避免版本不匹配问题。
 
 5. **编译缓存**：Dockerfile 使用 BuildKit cache 挂载 `/opt/conda/pkgs`，重复构建时可大幅加速 conda 包下载和安装。
 

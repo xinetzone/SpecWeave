@@ -102,8 +102,11 @@ test_cmake_version() {
     local result
     result=$(docker_run cmake --version 2>&1)
     local cmake_ver
-    cmake_ver=$(echo "$result" | head -1 | awk '{print $3}')
-    if echo "$cmake_ver" | grep -qE "^3\."; then
+    # 容器 entrypoint 会输出服务诊断日志，cmake --version 行混在其中，
+    # 不能直接用 head -1（会取到日志行）。改为从完整输出中精确提取版本。
+    cmake_ver=$(echo "$result" | grep -oE 'cmake version [0-9]+\.[0-9]+' | head -1 | awk '{print $3}')
+    # conda-forge 现已提供 cmake 4.x；同时兼容 3.x，故匹配 ^[34]\.
+    if echo "$cmake_ver" | grep -qE "^[34]\."; then
         pass "T4: cmake --version = $cmake_ver (>= 3.x)"
         return 0
     else

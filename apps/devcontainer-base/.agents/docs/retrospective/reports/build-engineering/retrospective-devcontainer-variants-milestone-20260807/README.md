@@ -153,13 +153,34 @@ variants/
 
 ## 5. 行动项
 
-| 优先级 | 行动项 | 验收标准 |
-|--------|--------|---------|
-| 🔴 高 | 在 WSL2/Linux 环境中执行实际 Docker 构建验证 | `bash variants/scripts/build-conda-llvm.sh` 成功，21 项测试全部 PASS |
-| 🟡 中 | 提取共享 conda 配置脚本片段到 variants/shared/ | 新增 shared/scripts/conda-mirror-setup.sh，conda 和 conda-llvm Dockerfile 通过 COPY 使用 |
-| 🟡 中 | 标准化 Dockerfile 阶段结构 | 更新 _template/Dockerfile 为标准5阶段模板，对齐 conda 变体 |
-| 🟢 低 | 添加第三个变体示例（如 cuda 或 nodejs） | 验证模板可复用性，新增变体耗时 < 30 分钟 |
-| 🟢 低 | 将 variants/ 构建集成到 CI 流水线 | PR 时自动构建并运行 test-conda-llvm.sh |
+| 优先级 | 行动项 | 验收标准 | 状态 |
+|--------|--------|---------|------|
+| 🔴 高 | 在 WSL2/Linux 环境中执行实际 Docker 构建验证 | `bash variants/scripts/build-conda-llvm.sh` 成功，21 项测试全部 PASS | ✅ 已完成 (2026-08-07) |
+| 🟡 中 | 提取共享 conda 配置脚本片段到 variants/shared/ | 新增 shared/scripts/conda-mirror-setup.sh，conda 和 conda-llvm Dockerfile 通过 COPY 使用 | ✅ 已完成 |
+| 🟡 中 | 标准化 Dockerfile 阶段结构 | 更新 _template/Dockerfile 为标准5阶段模板，对齐 conda 变体 | ✅ 已完成 |
+| 🟢 低 | 添加第三个变体示例（如 cuda 或 nodejs） | 验证模板可复用性，新增变体耗时 < 30 分钟 | ⬜ 待办 |
+| 🟢 低 | 将 variants/ 构建集成到 CI 流水线 | PR 时自动构建并运行 test-conda-llvm.sh | ⬜ 待办 |
+
+### 5.1 🔴 高行动项执行记录 (2026-08-07)
+
+在 WSL2/Linux 环境中实际执行 `bash variants/scripts/build-conda-llvm.sh --tag 1.0` 构建验证，过程中发现并修复两个真实缺陷：
+
+**缺陷 1：`clang-tools-extra=22.1.8` 包在 conda-forge 不存在**
+- 现象：conda 求解环境失败，报 `PackagesNotFoundInChannelsError: clang-tools-extra=22.1.8`
+- 根因：`clang-tools-extra` 包在 conda-forge 通道中并不存在（API 确认 `{"error":"\"clang-tools-extra\" could not be found"}`）
+- 修复：从 [conda-llvm/Dockerfile](../../../../../../variants/conda-llvm/Dockerfile) 安装列表中移除该包，同步更新 README、`.env.example`、`.agents/rules/dockerfile.md` 等文档引用
+- 影响：该包不被 21 项测试与项目约束依赖，移除后其余 LLVM 包（llvmdev/clang/clangdev/lld/lldb 22.1.8）正常安装
+
+**缺陷 2：T4 cmake 测试断言过时 + 提取逻辑缺陷**
+- 现象：21 项测试中 T4 失败，`cmake version expected >= 3.x, got:`（空值）
+- 根因 A：conda-forge 现已提供 cmake 4.x（实际安装 4.4.2），测试正则 `^3\.` 只匹配 3.x
+- 根因 B：`head -1 | awk '{print $3}'` 取到容器 entrypoint 的服务诊断日志行而非 cmake 版本行，导致 `cmake_ver` 为空
+- 修复：[test-conda-llvm.sh](../../../../../../variants/scripts/test-conda-llvm.sh) 的 T4 改为从完整输出 grep `cmake version X.Y`，并接受 `^[34]\.`
+
+**构建验证结果**
+- 镜像 `devcontainer-base:conda-llvm-1.0` 构建成功（6.17GB）
+- 关键版本：llvmdev/clang/clangdev/lld/lldb 22.1.8、cmake 4.4.2、ninja 1.13.2、make 4.4.1
+- 21 项测试全部 PASS（0 FAIL）
 
 ---
 
