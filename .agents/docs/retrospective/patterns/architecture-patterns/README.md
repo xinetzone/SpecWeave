@@ -58,6 +58,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [demo-prod-six-layer-model.md](demo-prod-six-layer-model.md) | Demo-Prod六层能力模型：可靠性→可观测性→安全性→可维护性→可扩展性→可部署性，从Demo到生产需要补全六层能力底座而非优化 | L1 实验性 | AI应用/Agent框架生产就绪度评估、技术选型决策、团队能力建设评估 |
 | [tool-skill-separation.md](tool-skill-separation.md) | 工具与Skill职责分离：能力层（Tools，稳定通用）与知识层（Skills，易变业务）分离，按变化频率隔离，让变化频率不同的东西以不同节奏演进 | L1 实验性 | Agent架构设计、知识管理系统、能力与知识分层、软件架构"代码与配置分离" |
 | [document-as-queryable-api.md](document-as-queryable-api.md) | 文档即可查询API：结构化文档AST→GraphQL Schema自动生成，文档同时是人类可读页面和机器可查询知识接口，Sphinx/MDX双实现路径 | L1-draft | 大型API平台文档、框架文档、AI原生知识库、需要多维度检索的开发者门户 |
+| [five-stage-batch-pipeline.md](five-stage-batch-pipeline.md) | 批量处理五步管道：Discover→Parse→Validate→Cache→Report五阶段正交拆分，错误隔离+增量缓存+双格式输出（JSON+Markdown），单项目失败不中断整体流程 | L2 已验证 | 代码质量检查工具、文件系统扫描器、数据ETL管道、批量内容处理器、CI检查脚本 |
 
 ## 成熟度定义
 
