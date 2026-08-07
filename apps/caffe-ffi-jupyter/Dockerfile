@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # Caffe-FFI JupyterLab + SSH Image
 # Multi-stage build: continuumio/miniconda3 as builder → jupyter-ssh-base as runtime
@@ -58,7 +59,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # -----------------------------------------------------------------------------
 # [Builder 1/3] Configure APT mirror and install build dependencies
 # -----------------------------------------------------------------------------
-RUN echo "=== [Builder 1/3] Configuring APT mirror: ${APT_MIRROR} ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== [Builder 1/3] Configuring APT mirror: ${APT_MIRROR} ===" && \
     _STAGE_START=$(date +%s) && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \
     echo "[TIMER] Builder started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
@@ -98,7 +101,9 @@ RUN echo "=== [Builder 1/3] Configuring APT mirror: ${APT_MIRROR} ===" && \
 # [Builder 2/3] Configure mirrors and create caffe-ffi conda environment
 # Reference: projects/xuanspace/libs/caffe-ffi/environment.yml
 # -----------------------------------------------------------------------------
-RUN echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTHON_VERSION}) ===" && \
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== [Builder 2/3] Creating conda environment: caffe-ffi (Python ${PYTHON_VERSION}) ===" && \
     _STAGE_START=$(date +%s) && \
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
     conda config --system --set auto_activate_base false && \
@@ -226,7 +231,9 @@ ENV CONDA_DIR=/opt/conda \
 # 变化频率：低（基础镜像已有大部分系统包，这里只加caffe-ffi额外依赖）
 # 初始化运行时计时器
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== [Runtime R1/6] Installing additional runtime packages ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== [Runtime R1/6] Installing additional runtime packages ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \

@@ -1,7 +1,8 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # Docker Runtime Image 项目骨架 (dockerfile-runtime-logical-layering v1.3)
 # Pattern: 01-build-env-reuse（基础镜像环境直用）
-# Updated: 2026-04-07 — 新增构建耗时统计 + 语法验证检查点 + 分层缓存优化
+# Updated: 2026-08-07 — 新增BuildKit语法声明+缓存挂载+统一清理
 #
 # Runtime Stage Layering (6-stage pattern):
 #   Stage 1/6: 系统包 + timezone + APT镜像配置 (变化频率: 最低)
@@ -41,14 +42,16 @@ ENV PIP_INDEX_URL=https://mirrors.aliyun.com/pypi/simple \
     PATH=/opt/conda/envs/${CONDA_ENV_NAME}/bin:/opt/conda/bin:${PATH} \
     LD_LIBRARY_PATH=/opt/conda/envs/${CONDA_ENV_NAME}/lib:/opt/conda/lib:/usr/local/lib
 
-SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 1/6: 系统包安装 + timezone + APT镜像配置
 # 变化频率：最低（基础镜像确定后很少改）
 # 初始化计时器 /tmp/.build-timer
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 1/6: System packages + timezone + APT mirror ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 1/6: System packages + timezone + APT mirror ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \
@@ -77,7 +80,8 @@ RUN echo "=== Stage 1/6: System packages + timezone + APT mirror ===" && \
 # Stage 2/6: pip额外依赖安装
 # 变化频率：低（Python依赖版本升级时改）
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 2/6: Install pip dependencies ===" && \
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== Stage 2/6: Install pip dependencies ===" && \
     _STAGE_START=$(date +%s) && \
     pip install --no-cache-dir \
         {{EXTRA_PIP_PACKAGES}}; \
@@ -136,7 +140,8 @@ COPY {{WHEEL_RELATIVE_PATH}}/{{WHEEL_NAME_PATTERN}} /tmp/wheels/
 COPY docker/_{{PKG_NAME}}_init.py /tmp/_init/_{{PKG_NAME}}_init.py
 COPY docker/{{PKG_NAME}}_init.pth /tmp/_init/{{PKG_NAME}}_init.pth
 
-RUN echo "=== Stage 4/6: Install wheel + dependency verification ===" && \
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== Stage 4/6: Install wheel + dependency verification ===" && \
     _STAGE_START=$(date +%s) && \
     WHEEL_FILE=$(ls /tmp/wheels/{{WHEEL_NAME_PATTERN}} | head -1); \
     echo "Installing wheel: $WHEEL_FILE"; \
@@ -242,7 +247,7 @@ RUN echo "=== Stage 6/6: Final metadata, cleanup, and verification ===" && \
     printf "║  BUILD TOTAL                          %5ds               ║\n" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
-    rm -f /tmp/.build-timer && \
+    rm -f /tmp/.build-timer /tmp/* /var/tmp/* && \
     echo "=== {{PROJECT_NAME}} Runtime image built successfully! ==="
 
 WORKDIR ${WORKSPACE_DIR}

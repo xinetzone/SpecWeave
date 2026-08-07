@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.7
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # PyTorch Base Docker Image - Miniconda3 + Python 3.14 + PyTorch
 # =============================================================================
@@ -77,7 +77,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ENV_PATH=/opt/conda/envs/pytorch \
     ENTRYPOINT_QUIET=""
 
-SHELL ["/bin/bash", "-euxo", "pipefail", "-c"]
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 WORKDIR /workspace
 
@@ -86,7 +86,9 @@ WORKDIR /workspace
 # 变化频率：最低（基础镜像确定后很少改）
 # 初始化计时器 /tmp/.build-timer
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "" && \
     echo "########################################################################" && \
     echo "# [STAGE 1/7] System Packages + Chinese Locale" && \
     echo "# BASE_IMAGE=${BASE_IMAGE}, TZ=Asia/Shanghai, LANG=zh_CN.UTF-8" && \

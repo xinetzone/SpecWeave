@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # Jupyter SSH Base - Dockerfile (Multi-stage build)
 # Project: SpecWeave Jupyter + OpenSSH Base Image
@@ -35,6 +36,8 @@ ARG PIP_MIRROR
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
     if [ "${APT_MIRROR}" = "aliyun" ]; then \
         sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
@@ -48,7 +51,9 @@ RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
         echo "[Builder] Using official APT sources"; \
     fi
 
-RUN echo "=== [Builder] Installing build dependencies ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== [Builder] Installing build dependencies ===" && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
@@ -75,7 +80,8 @@ RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel
 
 COPY requirements.txt /tmp/requirements.txt
-RUN echo "=== [Builder] Installing Jupyter and Python packages ===" && \
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== [Builder] Installing Jupyter and Python packages ===" && \
     /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
     rm -f /tmp/requirements.txt && \
     echo "=== [Builder] Python packages installed ===" && \
@@ -107,13 +113,17 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ALLOW_ROOT_SSH=no \
     JUPYTER_ALLOW_ORIGIN=
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 # ═══════════════════════════════════════════════════════════════════
 # Stage 2.1/6: 系统包安装 + APT镜像 + locale/timezone 配置
 # 变化频率：最低（基础镜像确定后很少改）
 # 原则：--no-install-recommends，同层内完成镜像配置+locale+timezone+清理
 #       初始化计时器文件 /tmp/.build-timer（记录各阶段完成时间戳）
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 1/6: Install base system packages + Chinese locale ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 1/6: Install base system packages + Chinese locale ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \
