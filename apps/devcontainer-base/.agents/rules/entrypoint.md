@@ -5,6 +5,7 @@ source: "AGENTS.md#项目特有约束"
 ---
 # Entrypoint 启动脚本规范（devcontainer-base）
 
+<a id="基础约定"></a>
 ## 基础约定
 
 - 使用 bash（`#!/bin/bash`），开头加 `set -e` 确保错误退出

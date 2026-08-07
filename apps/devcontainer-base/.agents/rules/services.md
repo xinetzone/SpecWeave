@@ -5,6 +5,7 @@ source: "AGENTS.md#项目特有约束"
 ---
 # 服务管理规范（devcontainer-base）
 
+<a id="总体原则"></a>
 ## 总体原则
 
 - **必须使用 supervisord 管理所有服务**：sshd、dockerd、podman(rootless)、jupyter 四服务统一由 supervisord 管理
@@ -12,6 +13,7 @@ source: "AGENTS.md#项目特有约束"
 - 服务配置 `autostart=true`、`autorestart=true`，确保异常退出后自动重启
 - `startsecs` 根据服务特性设置：dockerd=15（需时间初始化存储驱动），sshd=5，jupyter=10，podman=5
 
+<a id="ssh-服务sshd"></a>
 ## SSH 服务（sshd）
 
 **配置文件**：[config/sshd_config](../../config/sshd_config)、[config/supervisor/conf.d/sshd.conf](../../config/supervisor/conf.d/sshd.conf)
@@ -23,6 +25,7 @@ source: "AGENTS.md#项目特有约束"
 - `PasswordAuthentication yes`（开发环境便利优先）
 - `PermitRootLogin no`（默认，通过环境变量可覆盖）
 
+<a id="docker-dind-服务dockerd"></a>
 ## Docker DinD 服务（dockerd）
 
 **配置文件**：[config/supervisor/conf.d/dockerd.conf](../../config/supervisor/conf.d/dockerd.conf)、`/etc/docker/daemon.json`（Dockerfile 中创建）
@@ -38,6 +41,7 @@ source: "AGENTS.md#项目特有约束"
 - devuser 加入 docker 组，可直接访问 docker.sock
 - Docker CLI 与 dockerd 版本必须匹配
 
+<a id="podman-rootless-服务"></a>
 ## Podman Rootless 服务
 
 - 以 devuser 身份运行 rootless Podman
@@ -47,6 +51,7 @@ source: "AGENTS.md#项目特有约束"
 - Podman socket 位于 `/run/user/1000/podman/podman.sock`
 - Docker CLI 和 Podman CLI 可同时使用（共存模式）
 
+<a id="jupyter-服务"></a>
 ## Jupyter 服务
 
 **配置文件**：[config/jupyter_notebook_config.py](../../config/jupyter_notebook_config.py)、[config/supervisor/conf.d/jupyter.conf](../../config/supervisor/conf.d/jupyter.conf)
@@ -60,6 +65,7 @@ source: "AGENTS.md#项目特有约束"
 - 以 devuser 身份运行（非 root）
 - 支持 Notebook 和 Lab 两种界面
 
+<a id="健康检查"></a>
 ## 健康检查
 
 **脚本**：[scripts/healthcheck.sh](../../scripts/healthcheck.sh)
