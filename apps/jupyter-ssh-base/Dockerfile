@@ -68,7 +68,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo "=== [Builder] Creating Python virtual environment ===" && \
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    echo "=== [Builder] Creating Python virtual environment ===" && \
     python3 -m venv /opt/venv && \
     echo "[INFO] Virtual environment created at /opt/venv" && \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \

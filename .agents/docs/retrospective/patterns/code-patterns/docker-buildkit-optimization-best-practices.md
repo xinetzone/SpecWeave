@@ -209,19 +209,22 @@ ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 |------|-----------|:------:|:--------------:|:---------:|:---------:|:-----------:|
 | jupyter-ssh-base | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | N/A |
 | devcontainer-base | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | N/A |
-| devcontainer-base/conda variant | Dockerfile | ✅ L1 | ✅ | ✅ | ❌¹ | ❌¹ |
+| devcontainer-base/conda variant | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | ✅ |
+| devcontainer-base/conda-llvm variant | Dockerfile | ✅ L1 | ✅ | N/A | N/A | ✅ |
 | docker-ssh-dind | Containerfile | ✅ L1 | ✅ | ✅ | N/A² | N/A |
 | pytorch-base | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | ✅ |
 | caffe-ffi-jupyter | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | ✅ |
 | caffe-ffi-cross/macos | Dockerfile.macos-cross | ✅ L1³ | ✅ | ✅³ | N/A | ✅³ |
-| caffe-ffi-cross/win | Dockerfile.win-cross | ✅ L1³ | ✅ | ✅³ | N/A | ✅³ |
+| caffe-ffi-cross/win | Dockerfile.win-cross | ✅ L1³ | ✅⁴ | ✅³ | N/A | ✅³ |
 | xmnn-runtime/docker | Dockerfile | ✅ L1 | ✅ | ✅ | ✅ | N/A |
 
-> ¹ devcontainer-base conda variant 的 Stage 2（Miniconda在线安装）使用 wget 下载安装脚本到 /tmp 后删除，pip/conda 操作在 conda 环境内执行——由于基础镜像 devcontainer-base 已有 apt/pip 缓存，且 conda install 在该阶段仅安装 python 版本，可以在后续迭代中补全。
+> ¹ devcontainer-base conda variant 已修复：Stage 2（Miniconda在线安装）已添加 `/opt/conda/pkgs` conda缓存和 `/root/.cache/pip` pip缓存，并在conda install后添加了 `conda clean -ya`。
 >
 > ² docker-ssh-dind 基于 docker:dind 镜像，不包含 pip/python，仅需 apt 缓存。
 >
-> ³ 本次修复补全的项目。
+> ³ 本次修复补全的项目（语法声明+APT/conda cache mounts）。
+>
+> ⁴ wine-runtime 第二阶段已补充 SHELL 声明（此前遗漏）。
 
 ## 性能提升数据
 

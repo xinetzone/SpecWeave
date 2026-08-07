@@ -199,6 +199,8 @@ FROM cross-builder AS wine-runtime
 
 ARG SKIP_WINE
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 ENV WINEPREFIX=/root/.wine \
     WINEARCH=win64 \
     WINEDEBUG=-all \
