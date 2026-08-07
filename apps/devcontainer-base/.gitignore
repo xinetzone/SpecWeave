@@ -1,0 +1,14 @@
+# Runtime directories
+workspace/
+
+# Docker volumes (metadata)
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
