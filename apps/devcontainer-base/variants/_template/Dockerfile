@@ -9,7 +9,7 @@
 # 1. __VARIANT_NAME__          : 变体名称（如 conda, conda-llvm）
 # 2. __VARIANT_DESCRIPTION__   : 变体描述
 # 3. __BASE_VARIANT__          : 基础变体（留空表示直接基于 devcontainer-base:latest，
-#                                或填 "conda" 表示基于 devcontainer-base:conda-${BASE_TAG}）
+#                               或填 "conda" 表示基于 devcontainer-base:conda-${BASE_TAG}）
 # 4. __EXTRA_BUILD_ARGS__      : 额外构建参数声明（如 ARG LLVM_VERSION=22.1.8）
 # 5. __EXTRA_INSTALL_STEPS__   : 额外安装阶段（用户自定义安装逻辑）
 # 6. __EXTRA_VALIDATION__      : 额外验证命令
@@ -18,9 +18,8 @@
 # 请根据实际变体需求：
 # - 修改 LABEL 中的 description 和 variant
 # - 调整 ENV 环境变量
-# - 在 __EXTRA_INSTALL_STEPS__ 区域添加自定义安装逻辑
+# - 在 Stage 2/5 或 Stage 3/5 区域添加自定义安装逻辑
 # - 在 __EXTRA_VALIDATION__ 区域添加变体特有的验证
-# - 修改 Stage 数量和命名（模板默认3个追加阶段）
 # - 更新 BUILD TIMING SUMMARY 表格中的阶段描述
 # =============================================================================
 # Build: docker build -f variants/__VARIANT_NAME__/Dockerfile -t devcontainer-base:__VARIANT_NAME__-latest .
@@ -33,10 +32,12 @@
 #          devcontainer-base:__VARIANT_NAME__-latest
 # Verify: docker run --rm devcontainer-base:__VARIANT_NAME__-latest __EXTRA_VALIDATION__
 #
-# Variant Stage Layering (additional layers on top of base image):
-#   Stage 1/3: Base verification + timer initialization
-#   Stage 2/3: __EXTRA_INSTALL_STEPS__ (custom installation)
-#   Stage 3/3: build-info + cleanup + final verification + timing summary
+# Variant Stage Layering (5 standard stages on top of base image):
+#   Stage 1/5: Base verification + timer initialization
+#   Stage 2/5: System packages + mirror source configuration
+#   Stage 3/5: __EXTRA_INSTALL_STEPS__ (custom installation)
+#   Stage 4/5: Post-install configuration (activation script, permissions)
+#   Stage 5/5: build-info + cleanup + final verification + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
@@ -49,6 +50,9 @@ __EXTRA_BUILD_ARGS__
 
 FROM devcontainer-base:__BASE_VARIANT__${BASE_TAG}
 
+# 重新声明 ARG BASE_TAG：FROM 前的 ARG 不会自动带入后续阶段，
+# 否则 build-info 中 BASE_IMAGE 会退化为空标签。
+ARG BASE_TAG
 ARG APT_MIRROR
 ARG CONDA_MIRROR
 ARG PIP_MIRROR
@@ -61,13 +65,13 @@ LABEL variant="__VARIANT_NAME__"
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 1/3: 基础环境验证 + 计时器初始化
+# Stage 1/5: 基础环境验证 + 计时器初始化
 # 变化频率：最低
 # 原则：验证基础镜像关键组件存在，初始化追加层计时器
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "" && \
     echo "########################################################################" && \
-    echo "# [__VARIANT_NAME__ VARIANT STAGE 1/3] Base Verification + Timer Init" && \
+    echo "# [__VARIANT_NAME__ VARIANT STAGE 1/5] Base Verification + Timer Init" && \
     echo "########################################################################" && \
     echo "" && \
     _STAGE_START=$(date +%s) && \
@@ -82,18 +86,66 @@ RUN echo "" && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _TOTAL=$((_NOW - $(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2))) && \
     echo "VS1=$_NOW" >> /tmp/.variant-build-timer && \
-    echo "[TIMER] Stage 1/3 (base verification) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
+    echo "[TIMER] Stage 1/5 (base verification) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
     echo '[OK] Stage 1 complete'
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/3: 自定义安装步骤
+# Stage 2/5: 系统包检查 + 镜像源配置
+# 变化频率：低
+# 原则：检查/安装系统依赖包；按 APT_MIRROR/CONDA_MIRROR/PIP_MIRROR 配置镜像源。
+#       若变体继承 conda 类基础，可调用共享脚本：
+#       COPY shared/scripts/conda-mirror-setup.sh /usr/local/bin/conda-mirror-setup.sh
+# ═══════════════════════════════════════════════════════════════════
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "" && \
+    echo "########################################################################" && \
+    echo "# [__VARIANT_NAME__ VARIANT STAGE 2/5] System Packages + Mirror Config" && \
+    echo "########################################################################" && \
+    echo "" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[ACTION] Checking required system packages..."; \
+    _INSTALL_PKGS=""; \
+    for pkg in __EXTRA_SYSTEM_PACKAGES__; do \
+        if ! dpkg -s "$pkg" >/dev/null 2>&1; then \
+            echo "[INFO] $pkg not found, will install"; \
+            _INSTALL_PKGS="$_INSTALL_PKGS $pkg"; \
+        else \
+            echo "[OK] $pkg already installed"; \
+        fi; \
+    done && \
+    if [ -n "$_INSTALL_PKGS" ]; then \
+        echo "[BUILD] Configuring APT mirror: ${APT_MIRROR}..."; \
+        if [ "${APT_MIRROR}" = "aliyun" ]; then \
+            sed -i 's|http://archive.ubuntu.com|https://mirrors.aliyun.com|g; s|http://security.ubuntu.com|https://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
+            sed -i 's|http://archive.ubuntu.com|https://mirrors.aliyun.com|g; s|http://security.ubuntu.com|https://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true; \
+        elif [ "${APT_MIRROR}" = "tuna" ]; then \
+            sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
+            sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true; \
+        fi; \
+        echo "[BUILD] Installing: $_INSTALL_PKGS"; \
+        apt-get update -qq && apt-get install -y --no-install-recommends -qq $_INSTALL_PKGS; \
+    fi; \
+    echo "[OK] System packages ready"; \
+    echo ""; \
+    echo "[INFO] __EXTRA_MIRROR_STEPS__ - Add conda/pip mirror config here (or call shared script)"; \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "VS2=$_NOW" >> /tmp/.variant-build-timer && \
+    echo "[TIMER] Stage 2/5 (system+mirror) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
+    echo '[OK] Stage 2 complete'
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 3/5: 自定义安装步骤
 # 变化频率：中
-# 原则：在此处添加变体特有的安装逻辑
+# 原则：在此处添加变体特有的核心安装逻辑（语言工具链、框架等）
 # ⚠️  请在以下区域添加你的安装代码
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "" && \
     echo "########################################################################" && \
-    echo "# [__VARIANT_NAME__ VARIANT STAGE 2/3] Custom Installation Steps" && \
+    echo "# [__VARIANT_NAME__ VARIANT STAGE 3/5] Custom Installation Steps" && \
     echo "########################################################################" && \
     echo "" && \
     _STAGE_START=$(date +%s) && \
@@ -109,19 +161,40 @@ RUN echo "" && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
-    echo "VS2=$_NOW" >> /tmp/.variant-build-timer && \
-    echo "[TIMER] Stage 2/3 (custom install) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 2 complete'
+    echo "VS3=$_NOW" >> /tmp/.variant-build-timer && \
+    echo "[TIMER] Stage 3/5 (custom install) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
+    echo '[OK] Stage 3 complete'
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 3/3: 构建元数据 + 清理 + 最终验证 + 计时器汇总表
-# 变化频率：最低
-# 原则：写入 variant build-info；清理缓存；最终验证所有关键组件；
-#       确认核心服务未被破坏；输出耗时汇总表
+# Stage 4/5: 后置配置（激活脚本 / 权限 / PATH 等）
+# 变化频率：中
+# 原则：配置环境激活脚本、PATH 优先级、用户权限等运行时行为
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "" && \
     echo "########################################################################" && \
-    echo "# [__VARIANT_NAME__ VARIANT STAGE 3/3] Final Metadata, Cleanup, Verification" && \
+    echo "# [__VARIANT_NAME__ VARIANT STAGE 4/5] Post-Install Configuration" && \
+    echo "########################################################################" && \
+    echo "" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[INFO] __EXTRA_CONFIG_STEPS__ - Add activation script / PATH / permission config here" && \
+    echo "" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "VS4=$_NOW" >> /tmp/.variant-build-timer && \
+    echo "[TIMER] Stage 4/5 (post-install config) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
+    echo '[OK] Stage 4 complete'
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 5/5: 构建元数据 + 清理 + 最终验证 + 计时器汇总表
+# 变化频率：最低
+# 原则：写入 variant build-info；清理缓存；最终验证所有关键组件；
+#       确认核心服务未被破坏；输出耗时汇总表（含 [TIMER] 标记供日志解析）
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "" && \
+    echo "########################################################################" && \
+    echo "# [__VARIANT_NAME__ VARIANT STAGE 5/5] Final Metadata, Cleanup, Verification" && \
     echo "########################################################################" && \
     echo "" && \
     _STAGE_START=$(date +%s) && \
@@ -147,7 +220,7 @@ RUN echo "" && \
     echo "[OK] Cleanup complete"; \
     echo ""; \
     echo "┌─────────────────────────────────────────────────┐"; \
-    echo "│  [VALIDATION CHECKPOINT - Stage 3/3]           │"; \
+    echo "│  [VALIDATION CHECKPOINT - Stage 5/5]           │"; \
     echo "│  Running final service + availability checks    │"; \
     echo "└─────────────────────────────────────────────────┘"; \
     echo ""; \
@@ -175,16 +248,23 @@ RUN echo "" && \
     _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
     _VS1=$(grep '^VS1=' /tmp/.variant-build-timer | cut -d= -f2) && \
     _VS2=$(grep '^VS2=' /tmp/.variant-build-timer | cut -d= -f2) && \
+    _VS3=$(grep '^VS3=' /tmp/.variant-build-timer | cut -d= -f2) && \
+    _VS4=$(grep '^VS4=' /tmp/.variant-build-timer | cut -d= -f2) && \
     _VT1=$((_VS1 - _START)) && \
     _VT2=$((_VS2 - _VS1)) && \
-    _VT3=$_ELAPSED && \
+    _VT3=$((_VS3 - _VS2)) && \
+    _VT4=$((_VS4 - _VS3)) && \
+    _VT5=$_ELAPSED && \
     _VTOTAL=$((_NOW - _START)) && \
+    echo "[TIMER] Stage 5/5 (metadata+final verify) took ${_ELAPSED}s | Variant cumulative: ${_VTOTAL}s" && \
     echo "╔══════════════════════════════════════════════════════════════╗"; \
-    echo "║  BUILD TIMING SUMMARY (__VARIANT_NAME__ Variant - 3 Stages)║"; \
+    echo "║  BUILD TIMING SUMMARY (__VARIANT_NAME__ Variant - 5 Stages)║"; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \
-    printf "║  Stage 1/3  base verification         %5ds               ║\n" $_VT1; \
-    printf "║  Stage 2/3  custom installation       %5ds               ║\n" $_VT2; \
-    printf "║  Stage 3/3  metadata+final verify     %5ds               ║\n" $_VT3; \
+    printf "║  Stage 1/5  base verification         %5ds               ║\n" $_VT1; \
+    printf "║  Stage 2/5  system+mirror config      %5ds               ║\n" $_VT2; \
+    printf "║  Stage 3/5  custom installation       %5ds               ║\n" $_VT3; \
+    printf "║  Stage 4/5  post-install config       %5ds               ║\n" $_VT4; \
+    printf "║  Stage 5/5  metadata+final verify     %5ds               ║\n" $_VT5; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \
     printf "║  VARIANT TOTAL (add-on layers)        %5ds               ║\n" $_VTOTAL; \
     echo "╚══════════════════════════════════════════════════════════════╝"; \

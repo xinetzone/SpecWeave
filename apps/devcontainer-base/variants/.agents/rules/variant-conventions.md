@@ -88,6 +88,11 @@ Conda 变体遵循"不自动激活"原则：
 ARG BASE_TAG=latest
 FROM devcontainer-base:<base-prefix>${BASE_TAG}
 
+# 重新声明 ARG BASE_TAG：FROM 前的 ARG 不会自动带入后续阶段。
+# 若 Stage 5 的 build-info 引用了 ${BASE_TAG}（如 BASE_IMAGE 字段），
+# 未重声明会退化为空标签，导致元数据不准确。所有引用 BASE_TAG 的变体必须重声明。
+ARG BASE_TAG
+
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 ARG APT_MIRROR=official

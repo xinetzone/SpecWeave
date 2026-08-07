@@ -23,12 +23,13 @@
 |------|------|------|
 | LLVM | 22.1.8 | llvmdev 核心库 + 头文件 |
 | Clang | 22.1.8 | C/C++/Objective-C 编译器 |
-| Clang Tools Extra | 22.1.8 | clang-tidy, clang-format 等 |
 | lld | 22.1.8 | LLVM 链接器 |
 | lldb | 22.1.8 | LLVM 调试器 |
 | CMake | latest | 跨平台构建系统 |
 | Ninja | latest | 快速构建系统 |
 | Make | latest | GNU Make |
+
+> 注：`clang-tools-extra` 包在 conda-forge 通道不存在，已从安装列表移除，故不列于上表。
 
 ## 📁 目录结构
 
@@ -37,6 +38,9 @@ variants/conda-llvm/
 ├── Dockerfile              # Conda-LLVM 变体构建文件（4个追加阶段）
 ├── .env.example            # 构建参数配置模板
 ├── README.md               # 本文件
+├── RELEASE.md              # 镜像发布清单（版本矩阵/验证结果/变更记录）
+├── RELEASE-GUIDE.md        # 发布操作指南（构建/验证/发布/回滚）
+├── DEPENDENCIES.md         # 依赖说明（依赖链/系统依赖/工具链包/升级指引）
 └── .agents/
     └── rules/
         └── dockerfile.md   # Dockerfile 规范说明
@@ -284,3 +288,9 @@ docker run --rm devcontainer-base:conda-llvm-latest cat /etc/devcontainer-varian
 
 - [devcontainer-base](../../README.md) - 基础镜像（SSH + Docker + Podman + Jupyter）
 - [conda variant](../conda/README.md) - Conda 基础变体（Miniconda3，venv 优先）
+
+## 📄 相关文档
+
+- [镜像发布清单](./RELEASE.md) - 版本矩阵、验证结果、变更记录
+- [发布操作指南](./RELEASE-GUIDE.md) - 构建/验证/发布/回滚全流程
+- [依赖说明](./DEPENDENCIES.md) - 依赖链、系统/工具链依赖、升级指引

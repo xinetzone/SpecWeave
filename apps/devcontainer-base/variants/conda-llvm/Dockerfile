@@ -34,6 +34,10 @@ ARG LLVM_VERSION=22.1.8
 
 FROM devcontainer-base:conda-${BASE_TAG}
 
+# 重新声明 ARG：FROM 之前的 ARG 只在构建解析 FROM 时生效，不会自动带入
+# 后续阶段。若不在 FROM 后重新声明，Stage 4 写入 build-info 时 ${BASE_TAG}
+# 会退化为空值，导致 BASE_IMAGE=devcontainer-base:conda-（缺失标签）。
+ARG BASE_TAG
 ARG APT_MIRROR
 ARG CONDA_MIRROR
 ARG PIP_MIRROR

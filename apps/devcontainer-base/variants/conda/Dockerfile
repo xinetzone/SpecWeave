@@ -36,6 +36,9 @@ ARG PYTHON_VERSION=3.14
 
 FROM devcontainer-base:${BASE_TAG}
 
+# 重新声明 ARG BASE_TAG：FROM 前的 ARG 不会自动带入后续阶段，
+# 否则 build-info 中 BASE_IMAGE 会退化为空标签。
+ARG BASE_TAG
 ARG APT_MIRROR
 ARG CONDA_MIRROR
 ARG PIP_MIRROR
@@ -120,9 +123,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # 原则：在线安装（简化版本），支持 CONDA_MIRROR 选择 tuna 或 official；
 #       -b 批处理模式，不修改 PATH，不自动激活 base；
 #       设置 auto_activate_base false
+# ⚠️  注意：此处禁止使用 --mount=type=cache,target=/opt/conda/pkgs。
+#       该缓存挂载会预创建 /opt/conda 目录，导致 Miniconda 安装器报
+#       "File or directory already exists" 而中止安装。基础 Miniconda
+#       只在镜像首次构建时安装一次，pkgs 缓存收益甚微，故不挂载缓存。
 # ═══════════════════════════════════════════════════════════════════
-RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
-    echo "" && \
+RUN echo "" && \
     echo "########################################################################" && \
     echo "# [CONDA VARIANT STAGE 2/5] Install Miniconda3 to /opt/conda" && \
     echo "# MINICONDA_VERSION=${MINICONDA_VERSION}, PYTHON_VERSION=${PYTHON_VERSION}" && \
@@ -192,86 +198,21 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/5: conda + pip 镜像源配置
 # 变化频率：低（镜像源地址变更时改）
-# 原则：根据 CONDA_MIRROR/PIP_MIRROR 参数写入 .condarc 和 pip.conf；
-#       .condarc 写入 ${CONDA_DIR}/.condarc（系统级）；
-#       pip.conf 同时配置 root 和 devuser
+# 原则：调用共享脚本 variants/shared/scripts/conda-mirror-setup.sh 完成配置，
+#       避免与其它 conda 类变体重复相同的镜像源逻辑
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
+COPY shared/scripts/conda-mirror-setup.sh /usr/local/bin/conda-mirror-setup.sh
+RUN chmod +x /usr/local/bin/conda-mirror-setup.sh && \
+    echo "" && \
     echo "########################################################################" && \
     echo "# [CONDA VARIANT STAGE 3/5] Configure Mirror Sources (conda + pip)" && \
     echo "# CONDA_MIRROR=${CONDA_MIRROR}, PIP_MIRROR=${PIP_MIRROR}" && \
     echo "########################################################################" && \
     echo "" && \
     _STAGE_START=$(date +%s) && \
-    echo "[ACTION] Writing ${CONDA_DIR}/.condarc (system-level)..."; \
-    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        echo "[INFO] Configuring conda for Tsinghua TUNA mirror"; \
-        printf '%s\n' \
-            'channels:' \
-            '  - conda-forge' \
-            '  - defaults' \
-            'show_channel_urls: true' \
-            'default_channels:' \
-            '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main' \
-            '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r' \
-            'custom_channels:' \
-            '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
-            'ssl_verify: true' \
-            'auto_activate_base: false' \
-            > "${CONDA_DIR}/.condarc"; \
-    else \
-        echo "[INFO] Configuring conda for official/default channels"; \
-        printf '%s\n' \
-            'channels:' \
-            '  - conda-forge' \
-            '  - defaults' \
-            'show_channel_urls: true' \
-            'ssl_verify: true' \
-            'auto_activate_base: false' \
-            > "${CONDA_DIR}/.condarc"; \
-    fi; \
-    echo "[OK] .condarc written:"; \
-    cat "${CONDA_DIR}/.condarc"; \
-    echo ""; \
-    echo "[ACTION] Configuring pip mirrors..."; \
-    mkdir -p /root/.config/pip /home/devuser/.config/pip; \
-    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
-        echo "[INFO] Configuring pip for Aliyun mirror"; \
-        PIP_INDEX_URL="https://mirrors.aliyun.com/pypi/simple/"; \
-        PIP_TRUSTED_HOST="mirrors.aliyun.com"; \
-    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
-        echo "[INFO] Configuring pip for Tsinghua TUNA mirror"; \
-        PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"; \
-        PIP_TRUSTED_HOST="pypi.tuna.tsinghua.edu.cn"; \
-    else \
-        echo "[INFO] Configuring pip for official PyPI"; \
-        PIP_INDEX_URL="https://pypi.org/simple/"; \
-        PIP_TRUSTED_HOST=""; \
-    fi; \
-    printf '%s\n' \
-        '[global]' \
-        "index-url = ${PIP_INDEX_URL}" \
-        "retries = 5" \
-        "timeout = 60" \
-        > /root/.config/pip/pip.conf; \
-    if [ -n "${PIP_TRUSTED_HOST}" ]; then \
-        printf '%s\n' "trusted-host = ${PIP_TRUSTED_HOST}" >> /root/.config/pip/pip.conf; \
-    fi; \
-    cp /root/.config/pip/pip.conf /home/devuser/.config/pip/pip.conf; \
-    echo "[OK] pip.conf written for root and devuser:"; \
-    cat /root/.config/pip/pip.conf; \
-    echo ""; \
-    echo "[ACTION] Setting pip config for conda base environment..."; \
-    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
-        "${CONDA_DIR}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/; \
-        "${CONDA_DIR}/bin/pip" config set global.trusted-host mirrors.aliyun.com; \
-    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
-        "${CONDA_DIR}/bin/pip" config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/; \
-        "${CONDA_DIR}/bin/pip" config set global.trusted-host pypi.tuna.tsinghua.edu.cn; \
-    fi; \
-    echo "[OK] Conda base pip configured"; \
-    "${CONDA_DIR}/bin/conda" config --show-sources; \
-    echo ""; \
+    CONDA_DIR=${CONDA_DIR} CONDA_MIRROR=${CONDA_MIRROR} PIP_MIRROR=${PIP_MIRROR} \
+        /usr/local/bin/conda-mirror-setup.sh && \
+    echo "" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
@@ -289,14 +230,15 @@ RUN echo "" && \
 #   - devuser 的 .bashrc 添加注释示例（不自动激活）
 #   - 确保 /opt/conda 权限正确（devuser 可读）
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
-    echo "########################################################################" && \
-    echo "# [CONDA VARIANT STAGE 4/5] Activation Script + Permissions" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    echo "[ACTION] Creating /etc/profile.d/conda-init.sh activation script..."; \
-    cat > /etc/profile.d/conda-init.sh << 'CONDA_INIT_EOF'
+RUN <<'STAGE4_EOF'
+echo ""
+echo "########################################################################"
+echo "# [CONDA VARIANT STAGE 4/5] Activation Script + Permissions"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+echo "[ACTION] Creating /etc/profile.d/conda-init.sh activation script..."
+cat > /etc/profile.d/conda-init.sh << 'CONDA_INIT_EOF'
 #!/bin/bash
 # =============================================================================
 # Conda Initialization Script for DevContainer Conda Variant
@@ -308,23 +250,20 @@ RUN echo "" && \
 
 if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
     source "/opt/conda/etc/profile.d/conda.sh"
-elif [ -f "/opt/conda/etc/profile.d/conda.sh" 2>/dev/null ]; then
-    . "/opt/conda/etc/profile.d/conda.sh"
 else
     echo "[WARN] conda.sh not found at /opt/conda/etc/profile.d/conda.sh" >&2
     return 1 2>/dev/null || exit 1
 fi
-
 CONDA_INIT_EOF
-    chmod +x /etc/profile.d/conda-init.sh && \
-    echo "[OK] /etc/profile.d/conda-init.sh created"; \
-    echo ""; \
-    echo "=== /etc/profile.d/conda-init.sh contents ==="; \
-    cat /etc/profile.d/conda-init.sh; \
-    echo "=== end ==="; \
-    echo ""; \
-    echo "[ACTION] Configuring devuser .bashrc (no auto-activation, example only)..."; \
-    cat >> /home/devuser/.bashrc << 'BASHRC_EOF'
+chmod +x /etc/profile.d/conda-init.sh
+echo "[OK] /etc/profile.d/conda-init.sh created"
+echo ""
+echo "=== /etc/profile.d/conda-init.sh contents ==="
+cat /etc/profile.d/conda-init.sh
+echo "=== end ==="
+echo ""
+echo "[ACTION] Configuring devuser .bashrc (no auto-activation, example only)..."
+cat >> /home/devuser/.bashrc << 'BASHRC_EOF'
 
 # ── Conda (miniconda3 at /opt/conda) ──────────────────────────────────────
 # To use conda, uncomment the following lines or run:
@@ -335,41 +274,42 @@ CONDA_INIT_EOF
 # source /etc/profile.d/conda-init.sh
 # conda activate base
 BASHRC_EOF
-    echo "[OK] devuser .bashrc updated with conda section (commented, manual activation only)"; \
-    echo ""; \
-    echo "[ACTION] Configuring root .bashrc similarly..."; \
-    cat >> /root/.bashrc << 'BASHRC_EOF'
+echo "[OK] devuser .bashrc updated with conda section (commented, manual activation only)"
+echo ""
+echo "[ACTION] Configuring root .bashrc similarly..."
+cat >> /root/.bashrc << 'BASHRC_EOF'
 
 # ── Conda (miniconda3 at /opt/conda) ──────────────────────────────────────
 # source /etc/profile.d/conda-init.sh && conda activate base
 BASHRC_EOF
-    echo "[OK] root .bashrc updated"; \
-    echo ""; \
-    echo "[ACTION] Setting /opt/conda permissions..."; \
-    chown -R root:root /opt/conda && \
-    chmod -R a+rX /opt/conda && \
-    find /opt/conda -type d -exec chmod 755 {} \; && \
-    echo "[OK] /opt/conda permissions set (world-readable, root-owned)"; \
-    echo ""; \
-    echo "[ACTION] Verifying PATH priority (venv before conda in default PATH)..."; \
-    echo "  Default PATH: $PATH"; \
-    echo "  Default python: $(which python) -> $(python --version 2>&1)"; \
-    echo "  Default pip: $(which pip) -> $(pip --version 2>&1 | awk '{print $2}')"; \
-    echo "  Conda python (absolute): /opt/conda/bin/python -> $(/opt/conda/bin/python --version 2>&1)"; \
-    echo "  System venv python (absolute): /opt/venv/bin/python -> $(/opt/venv/bin/python --version 2>&1)"; \
-    echo ""; \
-    echo "[ACTION] Verifying activation script works..."; \
-    bash -c 'source /etc/profile.d/conda-init.sh && conda --version && echo "[OK] conda activation via profile.d works in non-interactive shell"' && \
-    echo ""; \
-    chown devuser:devuser /home/devuser/.bashrc /home/devuser/.config/pip/pip.conf && \
-    echo "[OK] devuser ownership restored for .bashrc and pip.conf"; \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "VS4=$_NOW" >> /tmp/.variant-build-timer && \
-    echo "[TIMER] Stage 4/5 (activation+perms) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 4 complete'
+echo "[OK] root .bashrc updated"
+echo ""
+echo "[ACTION] Setting /opt/conda permissions..."
+chown -R root:root /opt/conda
+chmod -R a+rX /opt/conda
+find /opt/conda -type d -exec chmod 755 {} \;
+echo "[OK] /opt/conda permissions set (world-readable, root-owned)"
+echo ""
+echo "[ACTION] Verifying PATH priority (venv before conda in default PATH)..."
+echo "  Default PATH: $PATH"
+echo "  Default python: $(which python) -> $(python --version 2>&1)"
+echo "  Default pip: $(which pip) -> $(pip --version 2>&1 | awk '{print $2}')"
+echo "  Conda python (absolute): /opt/conda/bin/python -> $(/opt/conda/bin/python --version 2>&1)"
+echo "  System venv python (absolute): /opt/venv/bin/python -> $(/opt/venv/bin/python --version 2>&1)"
+echo ""
+echo "[ACTION] Verifying activation script works..."
+bash -c 'source /etc/profile.d/conda-init.sh && conda --version && echo "[OK] conda activation via profile.d works in non-interactive shell"'
+echo ""
+chown devuser:devuser /home/devuser/.bashrc /home/devuser/.config/pip/pip.conf
+echo "[OK] devuser ownership restored for .bashrc and pip.conf"
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "VS4=$_NOW" >> /tmp/.variant-build-timer
+echo "[TIMER] Stage 4/5 (activation+perms) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s"
+echo '[OK] Stage 4 complete'
+STAGE4_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 5/5: build-info + 清理 + 最终验证 + 计时器汇总表
