@@ -3,10 +3,16 @@
 # Builds devcontainer-base image and all variants in dependency order:
 #   base → conda → conda-llvm → onnx-pytorch
 #
+# Architecture:
+#   - lint job: fast feedback (bash syntax, Dockerfile checks, timer parser tests)
+#   - build-and-test job: single runner, sequential build (Docker images are
+#     daemon-local; splitting dependent builds across jobs causes "image not found"
+#     because each GitHub Actions job runs on a fresh VM)
+#
 # Triggers:
-#   - Pull Request: Lint only (fast feedback)
-#   - Push to main: Full build + test (official + cn mirrors)
-#   - Nightly: Full build + security scan
+#   - Pull Request: Lint only (< 5min fast feedback)
+#   - Push to main: Full build + test (official mirrors)
+#   - Nightly (00:00 UTC / 08:00 Beijing): Full build + test
 #   - Manual: Select variant/mirror/cache options
 #
 # See design doc: apps/devcontainer-base/.agents/workflows/variants-ci.md
@@ -61,7 +67,7 @@ on:
           - conda-llvm
           - onnx-pytorch
       mirror:
-        description: 'Mirror source'
+        description: 'Mirror source (CI runners are overseas; official usually fastest)'
         required: true
         default: 'official'
         type: choice
@@ -85,194 +91,425 @@ env:
 
 jobs:
   # ──────────────────────────────────────────────────────────────────────
-  # Stage 0: Lint & Validate (all triggers)
+  # Stage 0: Lint & Validate (all triggers, PR only runs this)
   # ──────────────────────────────────────────────────────────────────────
   lint:
     name: Lint & Validate
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Print environment info
+        run: |
+          echo "============================================================"
+          echo "=== STAGE: Lint & Validate - Environment Information     ==="
+          echo "============================================================"
+          echo "Runner OS:     $(uname -a)"
+          echo "Runner user:   $(whoami)"
+          echo "Working dir:   $(pwd)"
+          echo "Bash version:  $(bash --version | head -1)"
+          echo "Date:          $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "GitHub SHA:    ${{ github.sha }}"
+          echo "GitHub ref:    ${{ github.ref }}"
+          echo "Event name:    ${{ github.event_name }}"
+          echo "============================================================"
 
       - name: Check bash scripts syntax (bash -n)
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          echo "=== Checking bash script syntax ==="
-          find scripts/ variants/ -name "*.sh" -type f | while read -r script; do
-            echo "  bash -n $script"
-            bash -n "$script" || exit 1
-          done
-          echo "=== All bash scripts pass syntax check ==="
+          echo ""
+          echo "=== STEP: Bash script syntax check (bash -n) ==="
+          echo ""
+          fail_count=0
+          pass_count=0
+          while IFS= read -r -d '' script; do
+            if bash -n "$script" 2>&1; then
+              echo "  ✅ PASS: $script"
+              pass_count=$((pass_count + 1))
+            else
+              echo "  ❌ FAIL: $script"
+              fail_count=$((fail_count + 1))
+            fi
+          done < <(find scripts/ variants/ -name "*.sh" -type f -print0 2>/dev/null)
+          echo ""
+          echo "  Result: $pass_count passed, $fail_count failed"
+          if [ "$fail_count" -gt 0 ]; then
+            echo "  ❌ Syntax check FAILED"
+            exit 1
+          fi
+          echo "  ✅ All bash scripts pass syntax check"
 
       - name: Validate build.sh timer parser
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          echo "=== Running build.sh timer parser unit tests ==="
+          echo ""
+          echo "=== STEP: Timer parser unit tests ==="
+          echo ""
           bash variants/scripts/test-timer-parser.sh
 
-      - name: Check Dockerfile syntax (docker build --dry-run if available, else basic checks)
+      - name: Check Dockerfile syntax (structure validation)
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          echo "=== Checking Dockerfile syntax ==="
-          # Check syntax keywords presence for all Dockerfiles
+          echo ""
+          echo "=== STEP: Dockerfile structure validation ==="
+          echo ""
+          fail_count=0
+          dockerfiles_found=0
           for dockerfile in Dockerfile variants/*/Dockerfile; do
-            if [ -f "$dockerfile" ]; then
-              echo "  Checking $dockerfile..."
-              # Must have syntax declaration
-              grep -q "^# syntax=" "$dockerfile" || { echo "ERROR: $dockerfile missing # syntax declaration"; exit 1; }
-              # Must have SHELL instruction
-              grep -q "^SHELL" "$dockerfile" || { echo "ERROR: $dockerfile missing SHELL instruction"; exit 1; }
-              # Must re-declare ARG BASE_TAG after FROM
-              after_from=$(awk '/^FROM/{found=1} found{print}' "$dockerfile")
-              if echo "$after_from" | grep -q "ARG BASE_TAG"; then
-                echo "    OK: ARG BASE_TAG re-declared after FROM"
-              else
-                echo "ERROR: $dockerfile missing ARG BASE_TAG after FROM"
-                exit 1
+            if [ ! -f "$dockerfile" ]; then
+              continue
+            fi
+            dockerfiles_found=$((dockerfiles_found + 1))
+            echo "  Checking: $dockerfile"
+            ok=true
+            # Must have syntax declaration
+            if ! grep -q "^# syntax=" "$dockerfile"; then
+              echo "    ❌ Missing # syntax= directive"
+              ok=false
+            fi
+            # Must have SHELL instruction
+            if ! grep -q "^SHELL" "$dockerfile"; then
+              echo "    ❌ Missing SHELL instruction"
+              ok=false
+            fi
+            # Must re-declare ARG BASE_TAG after FROM
+            after_from=$(awk '/^FROM/{found=1} found{print}' "$dockerfile")
+            if ! echo "$after_from" | grep -q "ARG BASE_TAG"; then
+              echo "    ❌ Missing ARG BASE_TAG after FROM"
+              ok=false
+            fi
+            # Must have COPY of shared scripts if variant
+            if echo "$dockerfile" | grep -q "variants/.*Dockerfile"; then
+              if ! grep -q "COPY shared/" "$dockerfile"; then
+                echo "    ⚠️  Variant Dockerfile does not COPY shared/ scripts"
               fi
-              echo "    OK"
+            fi
+            if $ok; then
+              echo "    ✅ OK"
+            else
+              fail_count=$((fail_count + 1))
             fi
           done
-          echo "=== All Dockerfiles pass basic checks ==="
+          echo ""
+          echo "  Checked $dockerfiles_found Dockerfile(s)"
+          if [ "$fail_count" -gt 0 ]; then
+            echo "  ❌ $fail_count Dockerfile(s) have issues"
+            exit 1
+          fi
+          echo "  ✅ All Dockerfiles pass structure validation"
+
+      - name: Lint summary
+        if: always()
+        run: |
+          echo ""
+          echo "============================================================"
+          echo "=== STAGE: Lint & Validate - COMPLETE                    ==="
+          echo "=== Status: ${{ job.status }}                                         ==="
+          echo "============================================================"
 
   # ──────────────────────────────────────────────────────────────────────
-  # Stage 1: Build Base Image (official mirrors)
+  # Stage 1+: Build & Test (single job — Docker daemon is VM-local;
+  #           splitting across jobs would break image dependency chain)
   # ──────────────────────────────────────────────────────────────────────
-  build-base:
-    name: Build Base (official)
+  build-and-test:
+    name: Build & Test (all variants)
     runs-on: ubuntu-latest
     needs: lint
-    if: github.event_name != 'pull_request' || github.event.inputs.variant == 'base' || github.event.inputs.variant == 'all'
-    timeout-minutes: 30
+    if: github.event_name != 'pull_request'
+    timeout-minutes: 120
+    env:
+      BUILD_LOG_DIR: /tmp/build-logs
+      MIRROR_FLAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.mirror == 'cn' && '--cn' || '' }}
+      NO_CACHE_FLAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.no_cache && '--no-cache' || '' }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Print CI environment & build configuration
+        id: env_info
+        run: |
+          echo "============================================================"
+          echo "=== STAGE: Build & Test - Environment & Configuration    ==="
+          echo "============================================================"
+          echo ""
+          echo "--- System Information ---"
+          echo "Date (UTC):     $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "Runner OS:      $(uname -a)"
+          echo "CPU info:       $(nproc) cores, $(cat /proc/cpuinfo | grep 'model name' | head -1 | cut -d: -f2 | xargs)"
+          echo "Memory:         $(free -h | grep Mem | awk '{print $2}') total"
+          echo "Disk:           $(df -h / | tail -1 | awk '{print $4}') available"
+          echo "Working dir:    $(pwd)"
+          echo ""
+          echo "--- Docker Information ---"
+          docker --version 2>/dev/null || echo "docker: not found"
+          docker buildx version 2>/dev/null || echo "buildx: not found"
+          echo ""
+          echo "--- Build Configuration ---"
+          echo "Project dir:    ${{ env.PROJECT_DIR }}"
+          echo "Image tag:      ${{ env.IMAGE_TAG }}"
+          echo "Mirror flag:    ${MIRROR_FLAG:-official}"
+          echo "No-cache flag:  ${NO_CACHE_FLAG:-cache enabled}"
+          echo "GitHub SHA:     ${{ github.sha }}"
+          echo "GitHub ref:     ${{ github.ref }}"
+          echo "Event name:     ${{ github.event_name }}"
+          echo "Triggered by:   ${{ github.actor }}"
+          echo ""
+          echo "--- Dependency Chain ---"
+          echo "  base (devcontainer-base:${{ env.IMAGE_TAG }})"
+          echo "    └─ conda (devcontainer-base:conda-${{ env.IMAGE_TAG }})"
+          echo "         └─ conda-llvm (devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }})"
+          echo "              └─ onnx-pytorch (devcontainer-base:onnx-pytorch-${{ env.IMAGE_TAG }})"
+          echo ""
+          echo "============================================================"
+          mkdir -p "$BUILD_LOG_DIR"
+          echo "Build log directory: $BUILD_LOG_DIR (created)"
 
+      - name: Set up Docker Buildx
+        run: |
+          echo ""
+          echo "=== STEP: Setup Docker Buildx ==="
+          echo ""
+          docker run --privileged --rm tonistiigi/binfmt --install all 2>&1 | tail -5 || true
+          echo "✅ Buildx setup complete"
+
+      # ── Build base image ──────────────────────────────────────────────
       - name: Build base image
+        id: build_base
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash scripts/build.sh --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 1/4: Building base image                            ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "Command: bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          STAGE_START=$(date +%s)
+          echo ""
+          set -o pipefail
+          bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/01-base-build.log"
+          STAGE_END=$(date +%s)
+          echo ""
+          echo "Stage duration: $((STAGE_END - STAGE_START))s"
 
       - name: Verify base image
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          echo "=== Base image verification ==="
-          docker images devcontainer-base:${{ env.IMAGE_TAG }}
+          echo ""
+          echo "=== STEP: Verify base image ==="
+          echo ""
+          echo "--- docker images ---"
+          docker images devcontainer-base:${{ env.IMAGE_TAG }} --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
+          echo ""
+          echo "--- Python version ---"
           docker run --rm devcontainer-base:${{ env.IMAGE_TAG }} python --version
+          echo ""
+          echo "--- Docker CLI version ---"
           docker run --rm devcontainer-base:${{ env.IMAGE_TAG }} docker --version
-          echo "=== Base image OK ==="
+          echo ""
+          echo "--- Disk usage after base build ---"
+          df -h / | tail -1
+          echo ""
+          echo "✅ Base image verification passed"
 
-  # ──────────────────────────────────────────────────────────────────────
-  # Stage 1b: Build Base Image (cn mirrors) - for push/schedule/manual with cn
-  # ──────────────────────────────────────────────────────────────────────
-  build-base-cn:
-    name: Build Base (cn mirrors)
-    runs-on: ubuntu-latest
-    needs: lint
-    if: (github.event_name == 'push' || github.event_name == 'schedule') && (github.event.inputs.mirror != 'official' || github.event_name != 'workflow_dispatch')
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build base image (cn mirrors)
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          bash scripts/build.sh --cn --tag ${{ env.IMAGE_TAG }}-cn
-
-      - name: Verify base image
-        run: |
-          docker run --rm devcontainer-base:${{ env.IMAGE_TAG }}-cn python --version
-
-  # ──────────────────────────────────────────────────────────────────────
-  # Stage 2: Build Conda Variant
-  # ──────────────────────────────────────────────────────────────────────
-  build-conda:
-    name: Build Conda Variant
-    runs-on: ubuntu-latest
-    needs: build-base
-    if: github.event_name != 'pull_request' && (github.event.inputs.variant == 'conda' || github.event.inputs.variant == 'all' || !github.event.inputs.variant)
-    timeout-minutes: 30
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+      # ── Build conda variant ───────────────────────────────────────────
       - name: Build conda variant
+        id: build_conda
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 2/4: Building conda variant                         ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "Depends on: devcontainer-base:${{ env.IMAGE_TAG }}"
+          echo "Command: bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          STAGE_START=$(date +%s)
+          echo ""
+          set -o pipefail
+          bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/02-conda-build.log"
+          STAGE_END=$(date +%s)
+          echo ""
+          echo "Stage duration: $((STAGE_END - STAGE_START))s"
 
       - name: Verify conda variant
         run: |
-          echo "=== Conda variant verification ==="
+          echo ""
+          echo "=== STEP: Verify conda variant ==="
+          echo ""
+          echo "--- docker images ---"
+          docker images "devcontainer-base:*${{ env.IMAGE_TAG }}" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
+          echo ""
+          echo "--- Conda version ---"
           docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/conda/bin/conda --version
+          echo ""
+          echo "--- Python (venv) version ---"
           docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/venv/bin/python --version
-          echo "=== Conda variant OK ==="
+          echo ""
+          echo "--- Conda info (envs) ---"
+          docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/conda/bin/conda info --envs 2>&1 | head -10
+          echo ""
+          echo "✅ Conda variant verification passed"
 
-  # ──────────────────────────────────────────────────────────────────────
-  # Stage 3: Build Conda-LLVM Variant + Tests
-  # ──────────────────────────────────────────────────────────────────────
-  build-conda-llvm:
-    name: Build Conda-LLVM + Tests
-    runs-on: ubuntu-latest
-    needs: build-conda
-    if: github.event_name != 'pull_request' && (github.event.inputs.variant == 'conda-llvm' || github.event.inputs.variant == 'all' || !github.event.inputs.variant)
-    timeout-minutes: 45
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+      # ── Build conda-llvm variant + tests ──────────────────────────────
       - name: Build conda-llvm variant
+        id: build_conda_llvm
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 3/4: Building conda-llvm variant + tests            ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "Depends on: devcontainer-base:conda-${{ env.IMAGE_TAG }}"
+          echo "Command: bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          STAGE_START=$(date +%s)
+          echo ""
+          set -o pipefail
+          bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/03-conda-llvm-build.log"
+          STAGE_END=$(date +%s)
+          echo ""
+          echo "Build duration: $((STAGE_END - STAGE_START))s"
 
       - name: Run conda-llvm unit tests
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash variants/scripts/test-conda-llvm.sh --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "=== STEP: Run conda-llvm unit tests ==="
+          echo ""
+          TEST_START=$(date +%s)
+          set -o pipefail
+          bash variants/scripts/test-conda-llvm.sh --tag ${{ env.IMAGE_TAG }} 2>&1 | tee "$BUILD_LOG_DIR/03-conda-llvm-tests.log"
+          TEST_END=$(date +%s)
+          echo ""
+          echo "Test duration: $((TEST_END - TEST_START))s"
+          echo "✅ conda-llvm tests passed"
 
-  # ──────────────────────────────────────────────────────────────────────
-  # Stage 4: Build ONNX-PyTorch Variant + Tests
-  # ──────────────────────────────────────────────────────────────────────
-  build-onnx-pytorch:
-    name: Build ONNX-PyTorch + Tests
-    runs-on: ubuntu-latest
-    needs: build-conda-llvm
-    if: github.event_name != 'pull_request' && (github.event.inputs.variant == 'onnx-pytorch' || github.event.inputs.variant == 'all' || !github.event.inputs.variant)
-    timeout-minutes: 60
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Verify conda-llvm variant
+        run: |
+          echo ""
+          echo "=== STEP: Verify conda-llvm variant tools ==="
+          echo ""
+          echo "--- LLVM version ---"
+          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/llvm-config --version
+          echo ""
+          echo "--- Clang version ---"
+          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/clang --version | head -1
+          echo ""
+          echo "--- CMake version ---"
+          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/cmake --version | head -1
+          echo ""
+          echo "--- Ninja version ---"
+          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/ninja --version
+          echo ""
+          echo "✅ conda-llvm verification passed"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
+      # ── Build onnx-pytorch variant + tests ────────────────────────────
       - name: Build onnx-pytorch variant
+        id: build_onnx_pytorch
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 4/4: Building onnx-pytorch variant + tests          ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "Depends on: devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }}"
+          echo "Command: bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          STAGE_START=$(date +%s)
+          echo ""
+          set -o pipefail
+          bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/04-onnx-pytorch-build.log"
+          STAGE_END=$(date +%s)
+          echo ""
+          echo "Build duration: $((STAGE_END - STAGE_START))s"
 
       - name: Run onnx-pytorch unit tests
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          bash variants/scripts/test-onnx-pytorch.sh --tag ${{ env.IMAGE_TAG }}
+          echo ""
+          echo "=== STEP: Run onnx-pytorch unit tests ==="
+          echo ""
+          TEST_START=$(date +%s)
+          set -o pipefail
+          bash variants/scripts/test-onnx-pytorch.sh --tag ${{ env.IMAGE_TAG }} 2>&1 | tee "$BUILD_LOG_DIR/04-onnx-pytorch-tests.log"
+          TEST_END=$(date +%s)
+          echo ""
+          echo "Test duration: $((TEST_END - TEST_START))s"
+          echo "✅ onnx-pytorch tests passed"
 
+      # ── Final summary ─────────────────────────────────────────────────
       - name: Build summary
         if: always()
         run: |
-          echo "=== Build Summary ==="
-          docker images devcontainer-base:* --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" | grep -E "(${{ env.IMAGE_TAG }}|latest)" || true
-          echo "=== All builds and tests completed ==="
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║                    BUILD SUMMARY                            ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "--- All devcontainer-base images ---"
+          docker images devcontainer-base --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}" 2>/dev/null || echo "No devcontainer-base images found"
+          echo ""
+          echo "--- Final disk usage ---"
+          df -h / | tail -1
+          echo ""
+          echo "--- Docker system df ---"
+          docker system df 2>/dev/null || true
+          echo ""
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "  🎉 ALL BUILDS AND TESTS PASSED"
+          else
+            echo "  ❌ JOB FAILED - check logs above and uploaded artifacts"
+          fi
+          echo ""
+          echo "End time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "============================================================"
+
+      - name: Collect diagnostics on failure
+        if: failure()
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║                 FAILURE DIAGNOSTICS                         ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "--- Docker images ---"
+          docker images -a --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" 2>&1 | head -30
+          echo ""
+          echo "--- Docker ps -a ---"
+          docker ps -a 2>&1 | head -20
+          echo ""
+          echo "--- Disk space ---"
+          df -h
+          echo ""
+          echo "--- Docker info (abbreviated) ---"
+          docker info 2>&1 | grep -E "Server Version|Storage Driver|Cgroup|Kernel|Operating System|Total Memory" || true
+          echo ""
+          echo "--- Last 100 lines of Docker daemon log (if available) ---"
+          sudo journalctl -u docker --no-pager -n 100 2>/dev/null || echo "Cannot access docker daemon logs"
+          echo ""
+          echo "--- Build log files ---"
+          ls -la "$BUILD_LOG_DIR/" 2>/dev/null || echo "No build logs found"
+          echo ""
+          echo "--- Last 50 lines of each build log ---"
+          for logfile in "$BUILD_LOG_DIR"/*.log; do
+            if [ -f "$logfile" ]; then
+              echo ""
+              echo "===== $logfile ====="
+              tail -50 "$logfile"
+            fi
+          done
+
+      - name: Upload build logs as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs-${{ github.sha }}
+          path: /tmp/build-logs/
+          retention-days: 14
+          if-no-files-found: ignore

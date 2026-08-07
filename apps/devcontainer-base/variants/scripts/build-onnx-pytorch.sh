@@ -264,7 +264,7 @@ if [ "$SKIP_BUILD" = false ]; then
     build_variant_image "$VARIANT" || exit 1
 else
     log_step "Skipping build (--skip-build specified)"
-    local target_image="devcontainer-base:${VARIANT}-${TAG}"
+    target_image="devcontainer-base:${VARIANT}-${TAG}"
     if ! image_exists "$target_image"; then
         log_fatal "Image not found: ${target_image}, cannot run tests"
     fi
