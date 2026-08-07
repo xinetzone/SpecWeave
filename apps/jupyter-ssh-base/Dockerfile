@@ -10,6 +10,16 @@
 # Run:   docker run -d -p 2222:22 -p 8888:8888 -v $(pwd)/workspace:/workspace \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret jupyter-ssh-base
 # Debug: docker run -it --rm jupyter-ssh-base bash (interactive shell, no services started)
+#
+# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.3):
+#   Stage 2.1/6: 系统包安装 + APT镜像 + locale/timezone (变化频率: 最低)
+#   Stage 2.2/6: COPY venv from builder + PATH 配置 (变化频率: 低)
+#   Stage 2.3/6: 用户/组/目录创建 + 权限设置 (变化频率: 中)
+#   Stage 2.4/6: 运行时目录准备 (变化频率: 中)
+#   Stage 2.5/6: 配置文件/脚本 COPY + 语法验证 (变化频率: 高)
+#   Stage 2.6/6: build-info + 清理 + 最终验证 (变化频率: 最低)
+#
+# Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
 
 ARG APT_MIRROR=official
@@ -80,44 +90,45 @@ ARG APT_MIRROR
 
 LABEL maintainer="SpecWeave"
 LABEL description="Standardized Ubuntu 26.04 base image with OpenSSH Server + Jupyter Notebook, managed by supervisord"
-LABEL version="1.0"
+LABEL version="1.3"
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Asia/Shanghai
-ENV LANG=zh_CN.UTF-8
-ENV LANGUAGE=zh_CN:zh
-ENV LC_ALL=zh_CN.UTF-8
-ENV PATH="/opt/venv/bin:${PATH}"
-ENV NON_ROOT_USER=jupyteruser
-ENV JUPYTER_PORT=8888
-ENV SSH_PORT=22
-ENV GRANT_SUDO=no
-ENV ALLOW_ROOT_SSH=no
-ENV JUPYTER_ALLOW_ORIGIN=
+# ── 元数据层：环境变量声明（不产生层，仅元数据） ──
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8 \
+    PATH="/opt/venv/bin:${PATH}" \
+    VIRTUAL_ENV="/opt/venv" \
+    NON_ROOT_USER=jupyteruser \
+    JUPYTER_PORT=8888 \
+    SSH_PORT=22 \
+    GRANT_SUDO=no \
+    ALLOW_ROOT_SSH=no \
+    JUPYTER_ALLOW_ORIGIN=
 
-RUN echo "=== [Runtime] Configuring APT mirror: ${APT_MIRROR:-official} ===" && \
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.1/6: 系统包安装 + APT镜像 + locale/timezone 配置
+# 变化频率：最低（基础镜像确定后很少改）
+# 原则：--no-install-recommends，同层内完成镜像配置+locale+timezone+清理
+#       初始化计时器文件 /tmp/.build-timer（记录各阶段完成时间戳）
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 1/6: Install base system packages + Chinese locale ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    echo "START=$_STAGE_START" > /tmp/.build-timer && \
+    echo "[BUILD] Configuring APT mirror: ${APT_MIRROR:-official}" && \
     if [ "${APT_MIRROR}" = "aliyun" ]; then \
         sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
         sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true; \
-        echo "[Runtime] Using Aliyun APT mirror"; \
+        echo "[BUILD] Using Aliyun APT mirror"; \
     elif [ "${APT_MIRROR}" = "tuna" ]; then \
         sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
         sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true; \
-        echo "[Runtime] Using Tsinghua TUNA APT mirror"; \
+        echo "[BUILD] Using Tsinghua TUNA APT mirror"; \
     else \
-        echo "[Runtime] Using official APT sources"; \
-    fi
-
-# -----------------------------------------------------------------------------
-# [Stage 2.1] Install runtime system packages + Chinese locale
-# Packages: ca-certificates (HTTPS), curl (healthcheck), locales (zh_CN),
-#   openssh-server (SSH), openssh-client (SSH tools), procps (pgrep for healthcheck),
-#   pwgen (random passwords), python3+python3-venv (venv runtime),
-#   sudo (privilege escalation), supervisor (process manager), tini (init),
-#   tzdata (timezone), vim (editor), wget (downloads)
-# NOT included: build-essential, python3-dev, gcc (kept in builder stage only)
-# -----------------------------------------------------------------------------
-RUN echo "=== Stage 1/6: Install base system packages + Chinese locale ===" && \
+        echo "[BUILD] Using official APT sources"; \
+    fi && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -143,18 +154,22 @@ RUN echo "=== Stage 1/6: Install base system packages + Chinese locale ===" && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     echo "Asia/Shanghai" > /etc/timezone && \
     echo "[BUILD] zh_CN locale + Asia/Shanghai timezone ready" && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _TOTAL=$((_NOW - $(grep '^START=' /tmp/.build-timer | cut -d= -f2))) && \
+    echo "S1=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 1/6 (system+locale) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
-# -----------------------------------------------------------------------------
-# [Stage 2.2] Copy Python virtual environment from builder
-# -----------------------------------------------------------------------------
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.2/6: 语言运行时复制（从 builder 阶段 COPY venv）
+# 变化频率：低（依赖版本升级时改）
+# 原则：COPY --from=builder 后立即验证二进制可用，配置 profile.d
+# ═══════════════════════════════════════════════════════════════════
 COPY --from=builder /opt/venv /opt/venv
 
-ENV PATH="/opt/venv/bin:${PATH}" \
-    VIRTUAL_ENV="/opt/venv"
-
 RUN echo "=== Stage 2/6: Copy Python venv from builder ===" && \
-    echo "[BUILD] Python venv copied:" && \
+    _STAGE_START=$(date +%s) && \
     python3 --version && \
     pip --version && \
     jupyter --version && \
@@ -162,17 +177,22 @@ RUN echo "=== Stage 2/6: Copy Python venv from builder ===" && \
     echo "export PATH=/opt/venv/bin:\$PATH" > /etc/profile.d/venv.sh && \
     echo "export VIRTUAL_ENV=/opt/venv" >> /etc/profile.d/venv.sh && \
     chmod +x /etc/profile.d/venv.sh && \
-    echo "[BUILD] System-wide profile.d/venv.sh created for login shell PATH"
+    echo "[BUILD] System-wide profile.d/venv.sh created for login shell PATH" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S2=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 2/6 (venv+PATH) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
-# -----------------------------------------------------------------------------
-# [Stage 2.3] Create non-root user jupyteruser
-# Strategy:
-#   1. Check if jupyteruser already exists
-#   2. If UID 1000 is free -> create jupyteruser with UID 1000
-#   3. Else -> auto-assign next available UID
-#   4. User is in sudo group (NOPASSWD controlled at runtime via GRANT_SUDO)
-# -----------------------------------------------------------------------------
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.3/6: 用户/组/工作目录创建 + 权限设置
+# 变化频率：中（新增用户或目录时改）
+# 原则：UID 优先固定值 1000，被占用时自动 fallback；
+#       chown 在同层完成；同时写入 ~/.bashrc 和 /etc/environment
+# ═══════════════════════════════════════════════════════════════════
 RUN echo "=== Stage 3/6: Create non-root user jupyteruser ===" && \
+    _STAGE_START=$(date +%s) && \
     if getent passwd jupyteruser >/dev/null 2>&1; then \
         echo "[BUILD] User jupyteruser already exists (UID=$(id -u jupyteruser)), ensuring group membership..."; \
         usermod -aG sudo jupyteruser; \
@@ -194,39 +214,79 @@ RUN echo "=== Stage 3/6: Create non-root user jupyteruser ===" && \
     echo "export VIRTUAL_ENV=/opt/venv" >> /home/jupyteruser/.bashrc && \
     chown jupyteruser:jupyteruser /home/jupyteruser/.bashrc && \
     echo "PATH=/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
-    echo "[BUILD] User .bashrc and /etc/environment configured with venv PATH"
+    echo "[BUILD] User .bashrc and /etc/environment configured with venv PATH (PATH layer 2+3)" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S3=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 3/6 (user+perms) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
-# -----------------------------------------------------------------------------
-# [Stage 2.4] Configure SSH service
-# Host keys are cleared here, regenerated at entrypoint to ensure uniqueness per container
-# -----------------------------------------------------------------------------
-RUN echo "=== Stage 4/6: Configure SSH service ===" && \
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.4/6: 运行时空目录准备
+# 变化频率：中（新增服务需要新目录时改）
+# 原则：mkdir -p 所有 runtime 需要的空目录（/run/sshd 等必须存在
+#       但 apt 安装后可能不存在或权限不对的目录）
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 4/6: Prepare runtime directories ===" && \
+    _STAGE_START=$(date +%s) && \
     mkdir -p /run/sshd && chmod 755 /run/sshd && \
     mkdir -p /var/log/supervisor /etc/supervisor/conf.d && \
-    echo "[BUILD] Runtime directories created"
+    echo "[BUILD] Runtime directories ready: /run/sshd /var/log/supervisor /etc/supervisor/conf.d" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S4=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 4/6 (runtime dirs) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.5/6: 配置文件 + 脚本复制 + 语法验证（关键验证节点）
+# 变化频率：高（配置调整时改，缓存不会让前面的层失效）
+# 原则：所有 COPY 集中在一起；同层 RUN 做权限设置 + 全部语法验证
+#       （sshd -t、bash -n 等），构建即测试，问题早发现
+# ═══════════════════════════════════════════════════════════════════
 COPY config/sshd_config /etc/ssh/sshd_config
-RUN echo "=== Stage 5/6: Install configuration files and scripts ===" && \
-    ssh-keygen -A >/dev/null 2>&1 && \
-    echo "[BUILD] Initial SSH host keys generated (will be regenerated at entrypoint)" && \
-    echo "[BUILD] Installing supervisord and service configurations..."
-
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
 COPY config/jupyter_notebook_config.py /home/jupyteruser/.jupyter/jupyter_notebook_config.py
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh && \
+
+RUN echo "=== Stage 5/6: Install configs and validate syntax ===" && \
+    _STAGE_START=$(date +%s) && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh && \
     chown -R jupyteruser:jupyteruser /home/jupyteruser/.jupyter && \
     chown -R jupyteruser:jupyteruser /workspace && \
     echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
-    echo "[BUILD] Validating sshd_config..." && \
-    sshd -t && echo "[BUILD] sshd_config syntax: OK"
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [VALIDATION CHECKPOINT - Stage 5/6]            │" && \
+    echo "│  Running syntax validation for all configs      │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    echo "[VALIDATE 1/3] sshd -t (SSH daemon config syntax)..." && \
+    sshd -t && echo "[OK] sshd_config syntax valid" && \
+    echo "[VALIDATE 2/3] bash -n entrypoint.sh (shell syntax)..." && \
+    bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
+    echo "[VALIDATE 3/3] bash -n healthcheck.sh (shell syntax)..." && \
+    bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
+    echo "" && \
+    echo "[BUILD] All 3 syntax validation checks passed" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S5=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 5/6 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
-# -----------------------------------------------------------------------------
-# [Stage 2.5] Final configuration: build info, cleanup, verification
-# -----------------------------------------------------------------------------
-RUN echo "=== Stage 6/6: Final configuration ===" && \
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2.6/6: 构建元数据 + 最终清理 + 最终可用性验证
+# 变化频率：最低（版本发布时改）
+# 原则：写入 build-info 便于追溯；清理 apt/tmp 缓存减小镜像体积；
+#       最终验证关键命令可执行；输出耗时汇总表；删除计时器文件
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 6/6: Final metadata, cleanup, and verification ===" && \
+    _STAGE_START=$(date +%s) && \
     JUPYTER_UID=$(id -u jupyteruser) && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/jupyter-ssh-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/jupyter-ssh-build-info && \
@@ -238,24 +298,61 @@ RUN echo "=== Stage 6/6: Final configuration ===" && \
     echo "SERVICES=sshd,jupyter" >> /etc/jupyter-ssh-build-info && \
     echo "SUPERVISOR=enabled" >> /etc/jupyter-ssh-build-info && \
     echo "PYTHON_VENV=/opt/venv" >> /etc/jupyter-ssh-build-info && \
+    echo "PATH_LAYERS=4(docker-env+etc-environment+profile.d+supervisor)" >> /etc/jupyter-ssh-build-info && \
+    echo "BUILD_TIMER=enabled" >> /etc/jupyter-ssh-build-info && \
     cat /etc/jupyter-ssh-build-info && \
     echo "[BUILD] Build info written to /etc/jupyter-ssh-build-info" && \
     echo "[BUILD] Running final cleanup..." && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    echo "[BUILD] Cleanup complete" && \
-    echo "[BUILD] Running final verification..." && \
-    sshd -t && echo "[OK] sshd config valid" && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "[BUILD] APT cache cleaned" && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [FINAL VERIFICATION - Stage 6/6]               │" && \
+    echo "│  Verifying all critical binaries are runnable   │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
     supervisord --version && echo "[OK] supervisord available" && \
+    sshd -t && echo "[OK] sshd config valid" && \
     python --version && echo "[OK] python available" && \
     pip --version && echo "[OK] pip available" && \
     jupyter --version && echo "[OK] jupyter available" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     echo "" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _S1=$(grep '^S1=' /tmp/.build-timer | cut -d= -f2) && \
+    _S2=$(grep '^S2=' /tmp/.build-timer | cut -d= -f2) && \
+    _S3=$(grep '^S3=' /tmp/.build-timer | cut -d= -f2) && \
+    _S4=$(grep '^S4=' /tmp/.build-timer | cut -d= -f2) && \
+    _S5=$(grep '^S5=' /tmp/.build-timer | cut -d= -f2) && \
+    _T1=$((_S1 - _START)) && \
+    _T2=$((_S2 - _S1)) && \
+    _T3=$((_S3 - _S2)) && \
+    _T4=$((_S4 - _S3)) && \
+    _T5=$((_S5 - _S4)) && \
+    _T6=$_ELAPSED && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "╔══════════════════════════════════════════════════════════════╗" && \
+    echo "║         BUILD TIMING SUMMARY (Runtime Stage)               ║" && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  Stage 1/6  system packages + locale   %5ds               ║\n" $_T1 && \
+    printf "║  Stage 2/6  venv copy + PATH config    %5ds               ║\n" $_T2 && \
+    printf "║  Stage 3/6  user creation + perms      %5ds               ║\n" $_T3 && \
+    printf "║  Stage 4/6  runtime directories        %5ds               ║\n" $_T4 && \
+    printf "║  Stage 5/6  config + syntax validate   %5ds               ║\n" $_T5 && \
+    printf "║  Stage 6/6  metadata + final verify    %5ds               ║\n" $_T6 && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  RUNTIME TOTAL                         %5ds               ║\n" $_TOTAL && \
+    echo "╚══════════════════════════════════════════════════════════════╝" && \
+    echo "" && \
+    rm -f /tmp/.build-timer /tmp/* /var/tmp/* && \
     echo "[BUILD] ========== BUILD COMPLETE ==========" && \
     echo ""
 
+# ── 元数据声明（不产生镜像层） ──
 WORKDIR /workspace
 VOLUME ["/workspace"]
 EXPOSE 22 8888
