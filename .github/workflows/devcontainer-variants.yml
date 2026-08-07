@@ -167,11 +167,13 @@ jobs:
               echo "    ❌ Missing SHELL instruction"
               ok=false
             fi
-            # Must re-declare ARG BASE_TAG after FROM
-            after_from=$(awk '/^FROM/{found=1} found{print}' "$dockerfile")
-            if ! echo "$after_from" | grep -q "ARG BASE_TAG"; then
-              echo "    ❌ Missing ARG BASE_TAG after FROM"
-              ok=false
+            # Must re-declare ARG BASE_TAG after FROM (only for variant Dockerfiles, root Dockerfile uses ubuntu:26.04 as base)
+            if echo "$dockerfile" | grep -q "variants/.*Dockerfile"; then
+              after_from=$(awk '/^FROM/{found=1} found{print}' "$dockerfile")
+              if ! echo "$after_from" | grep -q "ARG BASE_TAG"; then
+                echo "    ❌ Missing ARG BASE_TAG after FROM"
+                ok=false
+              fi
             fi
             # Must have COPY of shared scripts if variant
             if echo "$dockerfile" | grep -q "variants/.*Dockerfile"; then
