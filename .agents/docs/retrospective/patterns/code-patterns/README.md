@@ -151,6 +151,12 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [conda-dual-path-env-management.md](conda-dual-path-env-management.md) | Conda 环境管理双路径：base更新vs独立env创建，按隔离需求选择，独立env需显式定位 | L1 实验性 | conda容器/CI环境、多项目隔离 |
 | [docker-podman-cross-platform-container.md](docker-podman-cross-platform-container.md) | Docker↔Podman跨平台容器命令统一：CLI兼容可互换+Windows VM初始化+卷挂载shell语法区分 | L1 实验性 | 跨平台容器构建、Windows Podman替代Docker |
 | [docker-volume-mount-dev-workflow.md](docker-volume-mount-dev-workflow.md) | Docker卷挂载宿主动态开发：-v $(pwd):/workspace挂载实现宿主机改码容器内运行，免重建镜像 | L1 实验性 | 容器内开发、热重载迭代 |
+| [docker-image-variant-incremental-inheritance.md](docker-image-variant-incremental-inheritance.md) | 镜像变体"基础继承+配置化"：FROM base+追加层实现增量功能，统一构建脚本拓扑排序处理变体依赖，模板驱动新增 | L1 实验性 | 多变体Docker镜像体系、基础镜像+增量变体维护、新增变体规范化 |
+| [dockerfile-build-timer-monitoring.md](dockerfile-build-timer-monitoring.md) | Dockerfile多阶段构建计时器：[TIMER]标记+日志解析+ASCII汇总表，跨RUN状态文件持久化，final stage计时不遗漏，Build duration显式追加日志 | L1 实验性 | 多阶段Dockerfile构建耗时观测与瓶颈定位、CI构建阶段报告 |
+| [docker-image-layered-verification.md](docker-image-layered-verification.md) | Docker镜像分层验证金字塔（L1-L6）：工具链→功能编译→组件深度→基础服务继承→环境隔离→配置验证，断言防过时、版本提取防取错行 | L1 实验性 | 复杂Docker镜像系统化验证、变体继承验证、CI镜像质量门禁 |
+| [field-delimiter-selection-principle.md](field-delimiter-selection-principle.md) | 字段分隔符选择原则：选数据中极不可能出现的字符（如\|）作分隔符，排除路径/URL/赋值中常见的:、/、=、空格 | L1 实验性 | 单字符串编码多字段的解析（配置/数组元素/日志格式）、shell IFS分割 |
+| [unit-test-driven-bug-fix-loop.md](unit-test-driven-bug-fix-loop.md) | 单元测试驱动Bug发现与修复闭环（测试即修复）：核心函数写不依赖环境的单测，mock覆盖所有格式变体，发现Bug立即更新mock形成发现→修复→验证闭环+回归防护 | L1 实验性 | 为已有脚本/解析器补单测发现隐藏Bug、构建流水线解析函数测试、CI轻量单测层 |
+| [governance-layer-immediate-establishment.md](governance-layer-immediate-establishment.md) | 功能完成后立即建立治理层（AGENTS.md+.agents/）：同批次建立入口+规则按单一职责原子化拆分+嵌套路由清晰定义加载顺序+父级路由表同步防链断裂 | L1 实验性 | 新增功能模块/子项目/应用交付时治理入口建立、AI智能体按路由装载模块规则、多子模块嵌套治理 |
 
 ## Android 模式命名规范
 

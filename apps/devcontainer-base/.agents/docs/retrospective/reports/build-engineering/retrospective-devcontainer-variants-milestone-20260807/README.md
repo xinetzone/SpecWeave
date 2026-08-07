@@ -120,6 +120,8 @@ variants/
 - 统一构建脚本处理依赖关系、镜像源、验证
 - 模板驱动新增，确保新变体符合规范
 
+**已归档**：可复用模式见 [docker-image-variant-incremental-inheritance.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/docker-image-variant-incremental-inheritance.md)
+
 ### 洞察 2：Dockerfile 多阶段构建中"构建计时器"模式
 
 **现象**：Docker 构建耗时长，无法快速定位哪个阶段是瓶颈。
@@ -129,6 +131,8 @@ variants/
 - 阶段结束时计算 `_ELAPSED` 并输出 `[TIMER] Stage X/Y took Ns`
 - 最终阶段输出 ASCII 汇总表
 - 构建脚本通过 tee 保存日志并解析 [TIMER] 标记
+
+**已归档**：可复用模式见 [dockerfile-build-timer-monitoring.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/dockerfile-build-timer-monitoring.md)
 
 ### 洞察 3：单元测试"分层验证"模式
 
@@ -142,12 +146,16 @@ variants/
 - L5 环境隔离验证（路径优先级、venv 完整性）
 - L6 配置验证（镜像源等配置文件存在）
 
+**已归档**：可复用模式见 [docker-image-layered-verification.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/docker-image-layered-verification.md)
+
 ### 洞察 4：字段分隔符选择原则
 
 **现象**：使用 `:` 作为数组字段分隔符时，验证命令中的路径（如 `/opt/conda/bin/conda`）会导致解析错误。
 **根因**：选择分隔符时未考虑数据内容可能包含的字符。
 **反模式**：使用数据中常见字符（`:`、`/`、`=`、空格）作为分隔符。
 **建议模式**：选择数据中极不可能出现的字符作为分隔符（如 `|` 在 shell 命令中需要转义，在描述文本中也很少出现）。
+
+**已归档**：可复用模式见 [field-delimiter-selection-principle.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/field-delimiter-selection-principle.md)
 
 ---
 
@@ -282,6 +290,8 @@ variants/
 3. 测试脚本本身也需作为代码审查对象
 4. 发现Bug后立即更新mock数据，形成"发现→修复→验证"闭环
 
+**已归档**：可复用模式见 [unit-test-driven-bug-fix-loop.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/unit-test-driven-bug-fix-loop.md)
+
 ### 洞察6：治理层（AGENTS.md + .agents/）应在功能完成后立即建立
 
 **现象**：variants/功能实现完成后，如果没有AGENTS.md路由和.agents/规范，后续维护者无法快速理解构建系统的约束和约定。
@@ -290,3 +300,5 @@ variants/
 - 规则文件按单一职责原子化拆分（build-orchestration/testing/conventions等）
 - 嵌套路由从根级到模块级清晰定义加载顺序
 - 父级路由表同步更新，确保路由链不断裂
+
+**已归档**：可复用模式见 [governance-layer-immediate-establishment.md](../../../../../../../../.agents/docs/retrospective/patterns/code-patterns/governance-layer-immediate-establishment.md)
