@@ -527,8 +527,8 @@ declare -a STAGE_LOGS=()
 
 stage_idx=0
 
-# Always build base first
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ]; then
+# Always build base first (all variants depend on base, either directly or transitively)
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ] || [ "$VARIANT" = "conda" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ]; then
     STAGES+=("base")
     STAGE_CMDS+=("bash scripts/build.sh --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/01-base-build.log")

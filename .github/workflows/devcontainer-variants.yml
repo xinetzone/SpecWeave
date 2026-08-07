@@ -30,10 +30,6 @@ on:
       - 'apps/devcontainer-base/variants/**'
       - 'apps/devcontainer-base/.agents/**'
       - '.github/workflows/devcontainer-variants.yml'
-    paths-ignore:
-      - 'apps/devcontainer-base/**/*.md'
-      - 'apps/devcontainer-base/**/README.md'
-      - 'apps/devcontainer-base/docs/**'
 
   push:
     branches: [main]
@@ -45,10 +41,6 @@ on:
       - 'apps/devcontainer-base/variants/**'
       - 'apps/devcontainer-base/.agents/**'
       - '.github/workflows/devcontainer-variants.yml'
-    paths-ignore:
-      - 'apps/devcontainer-base/**/*.md'
-      - 'apps/devcontainer-base/**/README.md'
-      - 'apps/devcontainer-base/docs/**'
 
   schedule:
     - cron: '0 0 * * *'  # Daily at 00:00 UTC (08:00 Beijing)
