@@ -37,27 +37,24 @@ echo ""
 # ── 1. 写入系统级 .condarc ──────────────────────────────────────────────────
 echo "[ACTION] Writing ${CONDA_DIR}/.condarc (system-level)..."
 if [ "${CONDA_MIRROR}" = "tuna" ]; then
-    echo "[INFO] Configuring conda for Tsinghua TUNA mirror"
+    echo "[INFO] Configuring conda for Tsinghua TUNA mirror (conda-forge only, no defaults)"
     printf '%s\n' \
         'channels:' \
         '  - conda-forge' \
-        '  - defaults' \
         'show_channel_urls: true' \
-        'default_channels:' \
-        '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main' \
-        '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r' \
+        'channel_priority: strict' \
         'custom_channels:' \
         '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
         'ssl_verify: true' \
         'auto_activate_base: false' \
         > "${CONDA_DIR}/.condarc"
 else
-    echo "[INFO] Configuring conda for official/default channels"
+    echo "[INFO] Configuring conda for official channels (conda-forge only, no defaults)"
     printf '%s\n' \
         'channels:' \
         '  - conda-forge' \
-        '  - defaults' \
         'show_channel_urls: true' \
+        'channel_priority: strict' \
         'ssl_verify: true' \
         'auto_activate_base: false' \
         > "${CONDA_DIR}/.condarc"

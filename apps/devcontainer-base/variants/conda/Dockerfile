@@ -178,8 +178,17 @@ RUN echo "" && \
     echo "[ACTION] Disabling conda base auto-activation..."; \
     "${CONDA_DIR}/bin/conda" config --system --set auto_activate_base false && \
     echo "[OK] auto_activate_base set to false (system-wide)"; \
+    echo "[ACTION] Pre-configuring conda channels (conda-forge only, strict priority)..."; \
+    "${CONDA_DIR}/bin/conda" config --system --add channels conda-forge && \
+    "${CONDA_DIR}/bin/conda" config --system --set channel_priority strict && \
+    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
+        "${CONDA_DIR}/bin/conda" config --system --set custom_channels.conda-forge https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud; \
+    fi && \
+    "${CONDA_DIR}/bin/conda" config --system --remove channels defaults 2>/dev/null || true && \
+    echo "[OK] Channels pre-configured (conda-forge only, no defaults)"; \
+    "${CONDA_DIR}/bin/conda" config --show-sources && \
     echo "[ACTION] Setting default Python version in base environment to ${PYTHON_VERSION}..."; \
-    "${CONDA_DIR}/bin/conda" install -y -n base "python=${PYTHON_VERSION}" && \
+    "${CONDA_DIR}/bin/conda" install -y -n base --override-channels -c conda-forge "python=${PYTHON_VERSION}" && \
     echo "[OK] Base environment Python set to ${PYTHON_VERSION}"; \
     "${CONDA_DIR}/bin/conda" clean -ya && \
     echo "[ACTION] Verifying conda installation..."; \

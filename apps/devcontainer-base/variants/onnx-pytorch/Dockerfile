@@ -80,7 +80,8 @@ RUN echo "" && \
     source /opt/conda/etc/profile.d/conda.sh && \
     conda config --system --add channels conda-forge && \
     conda config --system --set channel_priority strict && \
-    echo "[OK] conda-forge channel configured with strict priority" && \
+    conda config --system --remove channels defaults 2>/dev/null || true && \
+    echo "[OK] conda-forge channel configured with strict priority (no defaults)" && \
     conda config --show-sources && \
     echo "" && \
     echo "[INFO] Base image verification:" && \
