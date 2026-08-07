@@ -13,6 +13,16 @@
 #   Stage 6/6: build-info + 最终验证 + 耗时汇总表 + 清理 (变化频率: 最低)
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
+#
+# Logging Pattern (参考jupyter-ssh-base/Dockerfile):
+#   - apt-get update前: echo "[INFO] Updating APT package lists..." && apt-get update -qq
+#   - apt-get install前: echo "[INFO] Installing N system packages (...key packages...)..." && apt-get install -y --no-install-recommends -qq
+#   - apt-get install后: echo "[OK] Packages installed" && echo "[INFO] Verifying key versions:" && dpkg-query/--version
+#   - pip install前: echo "[INFO] Installing Python packages..." 并显示包列表
+#   - pip install后: echo "[OK] Packages installed" && pip list关键包
+#   - conda环境创建后: conda list关键包
+#   - 所有apt命令加-qq减少噪音输出
+#   - 保留[TIMER]和[BUILD]日志
 # 缓存设计：entrypoint等脚本变更(Stage5)不会导致wheel重装(Stage4)
 #
 # 使用方法：
@@ -61,11 +71,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
             sed -i -E 's@https?://(deb|security).debian.org@https://mirrors.aliyun.com@g' "$f" || true; \
         fi; \
     done; \
+    echo "[INFO] Updating APT package lists..." && \
     apt-get update -qq; \
+    echo "[INFO] Installing {{APT_PACKAGE_COUNT}} system packages ({{APT_KEY_PACKAGES}})..." && \
     apt-get install -y --no-install-recommends -qq \
         tzdata sudo acl passwd gosu \
         libstdc++6 libgomp1 libgcc-s1 \
         findutils; \
+    echo "[OK] System packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - tzdata: $(dpkg-query -W -f='${Version}' tzdata 2>/dev/null || echo 'N/A')" && \
+    echo "  - gosu: $(dpkg-query -W -f='${Version}' gosu 2>/dev/null || echo 'N/A')" && \
+    echo "  - libgomp1: $(dpkg-query -W -f='${Version}' libgomp1 2>/dev/null || echo 'N/A')" && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" > /etc/timezone; \
     echo "[BUILD] Timezone set to Asia/Shanghai" && \
@@ -83,8 +100,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== Stage 2/6: Install pip dependencies ===" && \
     _STAGE_START=$(date +%s) && \
+    echo "[INFO] Installing Python packages: {{EXTRA_PIP_PACKAGES}}" && \
     pip install --no-cache-dir \
         {{EXTRA_PIP_PACKAGES}}; \
+    echo "[OK] Python packages installed" && \
+    echo "[INFO] Key pip packages:" && \
+    pip list --format=columns 2>/dev/null | grep -iE '{{VERIFY_PIP_GREP_PATTERN}}' || true && \
     python -c "from importlib.metadata import version; \
 deps=[{{VERIFY_PIP_DEPS}}]; \
 [print(f'  {d}: {version(d)}') for d in deps if True]" && \
@@ -144,12 +165,13 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== Stage 4/6: Install wheel + dependency verification ===" && \
     _STAGE_START=$(date +%s) && \
     WHEEL_FILE=$(ls /tmp/wheels/{{WHEEL_NAME_PATTERN}} | head -1); \
-    echo "Installing wheel: $WHEEL_FILE"; \
+    echo "[INFO] Installing wheel: $WHEEL_FILE"; \
     pip install --no-cache-dir "$WHEEL_FILE"; \
+    echo "[OK] Wheel installed" && \
     SITE_PKGS=$(python -c "import site; print(site.getsitepackages()[0])"); \
     cp /tmp/_init/_{{PKG_NAME}}_init.py "$SITE_PKGS/"; \
     cp /tmp/_init/{{PKG_NAME}}_init.pth "$SITE_PKGS/"; \
-    echo "Verifying installation..."; \
+    echo "[INFO] Verifying installation..."; \
     python -c "from importlib.metadata import version; print('  {{PYPI_PACKAGE_NAME}}:', version('{{PYPI_PACKAGE_NAME}}'))"; \
     echo "Verifying shared library dependencies (ldd)..."; \
     for so in "$SITE_PKGS"/{{LIB_DIR}}/_libs/*.so*; do \

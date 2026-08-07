@@ -54,11 +54,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
             sed -i -E 's@https?://(deb|security).debian.org@https://mirrors.aliyun.com@g' "$f" || true; \
         fi; \
     done; \
+    echo "[INFO] Updating APT package lists..." && \
     apt-get update -qq; \
+    echo "[INFO] Installing 9 system packages (tzdata, sudo, acl, passwd, gosu, libstdc++6, libgomp1, libgcc-s1, findutils)..." && \
     apt-get install -y --no-install-recommends -qq \
         tzdata sudo acl passwd gosu \
         libstdc++6 libgomp1 libgcc-s1 \
         findutils; \
+    echo "[OK] System packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - tzdata: $(dpkg-query -W -f='${Version}' tzdata 2>/dev/null || echo 'N/A')" && \
+    echo "  - gosu: $(dpkg-query -W -f='${Version}' gosu 2>/dev/null || echo 'N/A')" && \
+    echo "  - libgomp1: $(dpkg-query -W -f='${Version}' libgomp1 2>/dev/null || echo 'N/A')" && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     echo "Asia/Shanghai" > /etc/timezone; \
     echo "[BUILD] Timezone set to Asia/Shanghai" && \
@@ -76,8 +83,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== Stage 2/6: Install pip dependencies ===" && \
     _STAGE_START=$(date +%s) && \
+    echo "[INFO] Installing Python packages: pandas, matplotlib, openpyxl, tqdm, tomlkit" && \
     pip install --no-cache-dir \
         pandas matplotlib openpyxl tqdm tomlkit; \
+    echo "[OK] Python packages installed" && \
+    echo "[INFO] Key pip packages:" && \
+    pip list --format=columns 2>/dev/null | grep -iE 'numpy|scipy|pandas|matplotlib|openpyxl|tqdm|tomlkit' || true && \
     python -c "from importlib.metadata import version; \
 deps=['numpy','scipy','pandas']; \
 [print(f'  {d}: {version(d)}') for d in deps if True]" && \
@@ -138,12 +149,13 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== Stage 4/6: Install xmnn wheel + dependency verification ===" && \
     _STAGE_START=$(date +%s) && \
     WHEEL_FILE=$(ls /tmp/wheels/xmnn-*.whl | head -1); \
-    echo "Installing wheel: $WHEEL_FILE"; \
+    echo "[INFO] Installing xmnn wheel: $WHEEL_FILE"; \
     pip install --no-cache-dir "$WHEEL_FILE"; \
+    echo "[OK] xmnn wheel installed" && \
     SITE_PKGS=$(python -c "import site; print(site.getsitepackages()[0])"); \
     cp /tmp/_init/_xmnn_init.py "$SITE_PKGS/"; \
     cp /tmp/_init/xmnn_init.pth "$SITE_PKGS/"; \
-    echo "Verifying installation..."; \
+    echo "[INFO] Verifying installation..."; \
     python -c "from importlib.metadata import version; print('  xmnn:', version('xmnn'))"; \
     echo "Verifying shared library dependencies..."; \
     for so in "$SITE_PKGS"/tvm/_libs/*.so*; do \

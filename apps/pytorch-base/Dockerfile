@@ -120,11 +120,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo 'Acquire::http::Timeout "30";' >> /etc/apt/apt.conf.d/80-retries && \
     echo 'Acquire::https::Timeout "30";' >> /etc/apt/apt.conf.d/80-retries && \
     echo '[OK] Apt retry config written' && \
-    echo '[ACTION] apt-get update...' && \
-    apt-get update && \
-    echo '[OK] apt-get update succeeded' && \
-    echo '[ACTION] Installing system packages (ca-certificates, tzdata, locales, tini, gosu, wget, build-essential, etc.)...' && \
-    apt-get install -y --no-install-recommends \
+    echo '[INFO] Updating APT package lists...' && \
+    apt-get update -qq && \
+    echo '[OK] APT package lists updated' && \
+    echo '[INFO] Installing 12 system packages (ca-certificates, tzdata, locales, tini, gosu, wget, build-essential, etc.)...' && \
+    apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         tzdata \
         locales \
@@ -138,8 +138,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         git \
         build-essential \
         gosu \
-    && \
-    echo '[OK] System packages installed' && \
+    && echo '[OK] System packages installed' && \
+    echo '[INFO] Verifying key package versions:' && \
+    echo "  - ca-certificates: $(dpkg-query -W -f='${Version}' ca-certificates 2>/dev/null || echo 'N/A')" && \
+    echo "  - tini: $(dpkg-query -W -f='${Version}' tini 2>/dev/null || echo 'N/A')" && \
+    echo "  - build-essential: $(dpkg-query -W -f='${Version}' build-essential 2>/dev/null || echo 'N/A')" && \
+    echo "  - git: $(git --version 2>&1 | awk '{print $3}')" && \
     echo '[ACTION] Switching apt mirror to HTTPS (ca-certificates now available)...' && \
     if [ -f /etc/apt/sources.list.d/ubuntu.sources ]; then \
         sed -i 's|http://mirrors.aliyun.com|https://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources; \
@@ -325,11 +329,14 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         echo "[INFO] No local conda packages found, will download from network"; \
     fi && \
     echo "[ACTION] Creating '${ENV_NAME}' conda environment with Python ${PYTHON_VERSION}..." && \
+    echo "[INFO] Installing conda packages: python=${PYTHON_VERSION}, pip, setuptools, wheel, numpy" && \
     echo "[CMD] conda create -y -n ${ENV_NAME} python=${PYTHON_VERSION} pip setuptools wheel numpy" && \
     conda create -y -n "${ENV_NAME}" python="${PYTHON_VERSION}" pip setuptools wheel numpy && \
     echo "[OK] conda env '${ENV_NAME}' created" && \
     conda activate "${ENV_NAME}" && \
     echo "[OK] conda env '${ENV_NAME}' activated, Python: $(python --version)" && \
+    echo "[INFO] Verifying conda key packages:" && \
+    conda list | grep -iE 'python|pip|setuptools|wheel|numpy' || true && \
     echo "[ACTION] Determining PyTorch pip index URL (per pytorch.org/get-started/locally/)..." && \
     if [ "${USE_GPU}" = "1" ]; then \
         CUDA_INDEX="${CUDA_VERSION//./}"; \
@@ -439,6 +446,9 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     python -c "import torch; print(f'[OK] PyTorch {torch.__version__} loaded successfully')" && \
     python -c "import torch; print(f'[OK] CUDA available: {torch.cuda.is_available()}')" && \
     python -c "import torchvision; print(f'[OK] torchvision {torchvision.__version__} loaded')" && \
+    echo "" && \
+    echo "[INFO] Key pip packages:" && \
+    pip list --format=columns 2>/dev/null | grep -iE 'torch|numpy|pip|setuptools|wheel' || true && \
     echo "" && \
     echo "[ACTION] Cleaning up..." && \
     echo "[INFO] Removing /tmp/offline to reduce image size..."; \

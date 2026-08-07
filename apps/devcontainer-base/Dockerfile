@@ -57,18 +57,23 @@ RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     echo "=== [Builder] Installing build dependencies ===" && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists for builder..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 6 build packages (build-essential, python3-dev, pip, etc.)..." && \
+    apt-get install -y --no-install-recommends -qq \
         build-essential \
         ca-certificates \
         python3 \
         python3-dev \
         python3-pip \
         python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    && echo "[OK] Build dependencies installed" && \
+    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     python3 -m venv /opt/venv && \
+    echo "[INFO] Virtual environment created at /opt/venv" && \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
         /opt/venv/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
         /opt/venv/bin/pip config set global.trusted-host mirrors.aliyun.com; \
@@ -80,15 +85,21 @@ RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     else \
         echo "[Builder] Using official PyPI"; \
     fi && \
-    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel
+    echo "[INFO] Upgrading pip, setuptools, wheel..." && \
+    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    echo "[OK] pip upgraded: $(/opt/venv/bin/pip --version | awk '{print $2}')"
 
 COPY requirements.txt /tmp/requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== [Builder] Installing Jupyter and Python packages ===" && \
+    echo "[INFO] Installing packages from requirements.txt..." && \
+    echo "[INFO] Package list:" && cat /tmp/requirements.txt | sed 's/^/  - /' && \
     /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
     rm -f /tmp/requirements.txt && \
-    echo "=== [Builder] Python packages installed ===" && \
-    /opt/venv/bin/jupyter --version
+    echo "[OK] Python packages installed, verifying jupyter..." && \
+    /opt/venv/bin/jupyter --version && \
+    echo "[INFO] Key pip packages:" && \
+    /opt/venv/bin/pip list --format=columns 2>/dev/null | grep -iE 'jupyter|notebook|ipykernel|docker|podman|supervisor' || true
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime - Minimal production image
@@ -146,8 +157,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     else \
         echo "[BUILD] Using official APT sources"; \
     fi && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 21 system packages (openssh-server, python3, supervisor, uidmap, etc.)..." && \
+    apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         curl \
         gnupg \
@@ -171,7 +184,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         uidmap \
         fuse-overlayfs \
         slirp4netns \
-    && echo "[BUILD] Runtime packages installed" && \
+    && echo "[OK] Base system packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
+    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
+    echo "  - supervisor: $(supervisord --version 2>/dev/null || echo 'N/A')" && \
     echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
     sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen zh_CN.UTF-8 && \
@@ -202,14 +219,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     . /etc/os-release && \
     echo "[BUILD] Ubuntu codename: ${VERSION_CODENAME}" && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT after adding Docker repo..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing Docker CE packages (docker-ce, containerd, buildx)..." && \
+    apt-get install -y --no-install-recommends -qq \
         docker-ce \
         docker-ce-cli \
         containerd.io \
         docker-buildx-plugin \
-    && echo "[BUILD] Docker Engine installed:" && \
-    docker --version && dockerd --version && containerd --version && \
+    && echo "[OK] Docker Engine installed" && \
+    echo "[INFO] Docker component versions:" && \
+    echo "  - docker: $(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')" && \
+    echo "  - dockerd: $(dockerd --version 2>/dev/null | awk '{print $3}' | tr -d ',')" && \
+    echo "  - containerd: $(containerd --version 2>/dev/null | awk '{print $3}')" && \
+    echo "  - buildx: $(docker buildx version 2>/dev/null | awk '{print $2}')" && \
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
@@ -227,13 +250,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     echo "=== Stage 3/7: Install Podman (rootless) ===" && \
     _STAGE_START=$(date +%s) && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT for Podman installation..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing Podman packages (podman, crun, conmon)..." && \
+    apt-get install -y --no-install-recommends -qq \
         podman \
         crun \
         conmon \
-    && echo "[BUILD] Podman installed:" && \
-    podman --version && \
+    && echo "[OK] Podman installed" && \
+    echo "[INFO] Podman version:" && \
+    echo "  - podman: $(podman --version 2>/dev/null | awk '{print $3}')" && \
+    echo "  - crun: $(crun --version 2>/dev/null | head -1 | awk '{print $2}')" && \
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \

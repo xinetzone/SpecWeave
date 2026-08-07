@@ -54,18 +54,23 @@ RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
     echo "=== [Builder] Installing build dependencies ===" && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists for builder..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 6 build packages (build-essential, python3-dev, pip, etc.)..." && \
+    apt-get install -y --no-install-recommends -qq \
         build-essential \
         ca-certificates \
         python3 \
         python3-dev \
         python3-pip \
         python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    && echo "[OK] Build dependencies installed" && \
+    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     python3 -m venv /opt/venv && \
+    echo "[INFO] Virtual environment created at /opt/venv" && \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
         /opt/venv/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
         /opt/venv/bin/pip config set global.trusted-host mirrors.aliyun.com; \
@@ -77,15 +82,21 @@ RUN echo "=== [Builder] Creating Python virtual environment ===" && \
     else \
         echo "[Builder] Using official PyPI"; \
     fi && \
-    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel
+    echo "[INFO] Upgrading pip, setuptools, wheel..." && \
+    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    echo "[OK] pip upgraded: $(/opt/venv/bin/pip --version | awk '{print $2}')"
 
 COPY requirements.txt /tmp/requirements.txt
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     echo "=== [Builder] Installing Jupyter and Python packages ===" && \
+    echo "[INFO] Installing packages from requirements.txt..." && \
+    echo "[INFO] Package list:" && cat /tmp/requirements.txt | sed 's/^/  - /' && \
     /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
     rm -f /tmp/requirements.txt && \
-    echo "=== [Builder] Python packages installed ===" && \
-    /opt/venv/bin/jupyter --version
+    echo "[OK] Python packages installed, verifying jupyter..." && \
+    /opt/venv/bin/jupyter --version && \
+    echo "[INFO] Key pip packages:" && \
+    /opt/venv/bin/pip list --format=columns 2>/dev/null | grep -iE 'jupyter|notebook|ipykernel|nbconvert' || true
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime - Minimal production image
@@ -139,8 +150,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     else \
         echo "[BUILD] Using official APT sources"; \
     fi && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 14 system packages (ca-certificates, openssh-server, python3, etc.)..." && \
+    apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         curl \
         locales \
@@ -156,7 +169,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         tzdata \
         vim \
         wget \
-    && echo "[BUILD] Runtime packages installed" && \
+    && echo "[OK] System packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
+    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
+    echo "  - ca-certificates: $(dpkg-query -W -f='${Version}' ca-certificates 2>/dev/null || echo 'N/A')" && \
     echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
     sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen zh_CN.UTF-8 && \

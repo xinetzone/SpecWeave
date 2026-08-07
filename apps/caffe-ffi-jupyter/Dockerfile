@@ -82,14 +82,21 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     else \
         echo "[BUILD] Using default Debian APT sources"; \
     fi && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 6 build packages (build-essential, pkg-config, wget, ca-certificates, git)..." && \
+    apt-get install -y --no-install-recommends -qq \
         build-essential \
         pkg-config \
         wget \
         ca-certificates \
         git \
-    && rm -rf /var/lib/apt/lists/* && \
+    && echo "[OK] Build packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - build-essential: $(dpkg-query -W -f='${Version}' build-essential 2>/dev/null || echo 'N/A')" && \
+    echo "  - git: $(git --version 2>&1 | awk '{print $3}')" && \
+    echo "  - ca-certificates: $(dpkg-query -W -f='${Version}' ca-certificates 2>/dev/null || echo 'N/A')" && \
+    rm -rf /var/lib/apt/lists/* && \
     echo "[BUILD] Builder base packages installed" && \
     echo "[BUILD] Pre-installed conda: $(/opt/conda/bin/conda --version)" && \
     _NOW=$(date +%s) && \
@@ -123,6 +130,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         printf '[global]\nindex-url = https://pypi.tuna.tsinghua.edu.cn/simple/\ntrusted-host = pypi.tuna.tsinghua.edu.cn\nretries = 10\ntimeout = 120\n' > /root/.config/pip/pip.conf && \
         echo "[BUILD] Using Tsinghua TUNA PyPI mirror"; \
     fi && \
+    echo "[INFO] Creating conda env 'caffe-ffi' with packages: python=${PYTHON_VERSION}, pip, setuptools, wheel, setuptools-scm, libprotobuf>=7.0.0, protobuf>=7.0.0, zlib, libopenblas, openblas, cmake>=3.26, ninja>=1.13, make, cxx-compiler, patchelf" && \
     echo "[BUILD] Creating conda env with Python + build tools + core C++ libs..." && \
     conda create -y -n caffe-ffi -c conda-forge \
         python="${PYTHON_VERSION}" \
@@ -138,9 +146,12 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         cxx-compiler \
         patchelf \
     && conda activate caffe-ffi && \
-    echo "[BUILD] conda env 'caffe-ffi' created, Python: $(python --version)" && \
+    echo "[OK] conda env 'caffe-ffi' created, Python: $(python --version)" && \
+    echo "[INFO] Verifying conda key packages:" && \
+    conda list | grep -iE 'python|pip|setuptools|cmake|ninja|protobuf|openblas' || true && \
     echo "[BUILD] Conda-installed protobuf: $(protoc --version)" && \
     echo "[BUILD] Conda-installed cmake: $(cmake --version | head -1)" && \
+    echo "[INFO] Installing Python packages: numpy>=2.3, scikit-build-core>=0.10, cython>=3.2.8, setuptools-scm, typing-extensions>=4.5, pytest>=8.0, ipykernel, apache-tvm-ffi" && \
     echo "[BUILD] Installing Python base packages (numpy, scikit-build-core, tvm-ffi)..." && \
     pip install --no-cache-dir \
         "numpy>=2.3" \
@@ -151,6 +162,9 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         "pytest>=8.0" \
         ipykernel \
         apache-tvm-ffi && \
+    echo "[OK] Python packages installed" && \
+    echo "[INFO] Key pip packages:" && \
+    pip list --format=columns 2>/dev/null | grep -iE 'numpy|protobuf|tvm|ipykernel|scikit|cython|pytest' || true && \
     echo "[BUILD] Base Python dependencies + apache-tvm-ffi (PyPI) installed" && \
     python -c "import numpy; print('[BUILD] numpy:', numpy.__version__)" && \
     python -c "import tvm_ffi; print('[BUILD] tvm_ffi:', tvm_ffi.__version__)" && \
@@ -250,11 +264,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
             fi; \
         done; \
     fi && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+    echo "[INFO] Updating APT package lists..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing 2 runtime packages (libgomp1, curl)..." && \
+    apt-get install -y --no-install-recommends -qq \
         libgomp1 \
         curl \
-    && rm -rf /var/lib/apt/lists/* && \
+    && echo "[OK] Runtime packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - libgomp1: $(dpkg-query -W -f='${Version}' libgomp1 2>/dev/null || echo 'N/A')" && \
+    echo "  - curl: $(curl --version 2>&1 | head -1 | awk '{print $2}')" && \
+    rm -rf /var/lib/apt/lists/* && \
     echo "[BUILD] Runtime packages installed (libgomp1 for OpenMP, curl for healthcheck)" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
