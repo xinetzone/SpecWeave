@@ -1,7 +1,7 @@
 # DevContainer Variants Build & Test CI
 # ======================================
 # Builds devcontainer-base image and all variants in dependency order:
-#   base → conda → conda-llvm → onnx-pytorch
+#   base → conda → conda-llvm → onnx-pytorch → onnx-quantized
 #
 # Architecture:
 #   - lint job: fast feedback (bash syntax, Dockerfile checks, timer parser tests)
@@ -66,6 +66,7 @@ on:
           - conda
           - conda-llvm
           - onnx-pytorch
+          - onnx-quantized
       mirror:
         description: 'Mirror source (CI runners are overseas; official usually fastest)'
         required: true
@@ -261,6 +262,7 @@ jobs:
           echo "    └─ conda (devcontainer-base:conda-${{ env.IMAGE_TAG }})"
           echo "         └─ conda-llvm (devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }})"
           echo "              └─ onnx-pytorch (devcontainer-base:onnx-pytorch-${{ env.IMAGE_TAG }})"
+          echo "                   └─ onnx-quantized (devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }})"
           echo ""
           echo "============================================================"
           mkdir -p "$BUILD_LOG_DIR"
@@ -281,7 +283,7 @@ jobs:
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 1/4: Building base image                            ║"
+          echo "║  STAGE 1/5: Building base image                            ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Command: bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
@@ -321,7 +323,7 @@ jobs:
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 2/4: Building conda variant                         ║"
+          echo "║  STAGE 2/5: Building conda variant                         ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Depends on: devcontainer-base:${{ env.IMAGE_TAG }}"
@@ -361,7 +363,7 @@ jobs:
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 3/4: Building conda-llvm variant + tests            ║"
+          echo "║  STAGE 3/5: Building conda-llvm variant + tests            ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Depends on: devcontainer-base:conda-${{ env.IMAGE_TAG }}"
@@ -415,7 +417,7 @@ jobs:
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 4/4: Building onnx-pytorch variant + tests          ║"
+          echo "║  STAGE 4/5: Building onnx-pytorch variant + tests          ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Depends on: devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }}"
@@ -442,6 +444,41 @@ jobs:
           echo ""
           echo "Test duration: $((TEST_END - TEST_START))s"
           echo "✅ onnx-pytorch tests passed"
+
+      # ── Build onnx-quantized variant + tests ─────────────────────────
+      - name: Build onnx-quantized variant
+        id: build_onnx_quantized
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 5/5: Building onnx-quantized variant + tests        ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "Depends on: devcontainer-base:onnx-pytorch-${{ env.IMAGE_TAG }}"
+          echo "Command: bash variants/build.sh --variant onnx-quantized --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          STAGE_START=$(date +%s)
+          echo ""
+          set -o pipefail
+          bash variants/build.sh --variant onnx-quantized --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/05-onnx-quantized-build.log"
+          STAGE_END=$(date +%s)
+          echo ""
+          echo "Build duration: $((STAGE_END - STAGE_START))s"
+
+      - name: Run onnx-quantized smoke validation
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "=== STEP: Run onnx-quantized smoke validation ==="
+          echo ""
+          echo "--- docker images ---"
+          docker images devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
+          echo ""
+          echo "--- Quantization imports ---"
+          docker run --rm devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} /opt/conda/bin/python -c "from onnxruntime.quantization import quantize_dynamic,QuantType; from onnxconverter_common import float16; import neural_compressor; print('onnxruntime.quantization: OK'); print('neural_compressor:', neural_compressor.__version__)"
+          echo ""
+          echo "✅ onnx-quantized validation passed"
 
       # ── Final summary ─────────────────────────────────────────────────
       - name: Build summary

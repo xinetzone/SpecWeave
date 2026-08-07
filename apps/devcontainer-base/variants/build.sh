@@ -12,6 +12,7 @@ VARIANTS=(
     "conda|Miniconda3基础环境||/opt/conda/bin/conda --version;/opt/conda/bin/conda info --envs"
     "conda-llvm|conda+LLVM/clang编译工具链|conda|/opt/conda/bin/llvm-config --version;/opt/conda/bin/clang --version;/opt/conda/bin/clang++ --version;/opt/conda/bin/cmake --version;/opt/conda/bin/ninja --version"
     "onnx-pytorch|conda-llvm + PyTorch CPU + ONNX 深度学习运行时|conda-llvm|/opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\";/opt/conda/bin/python -c \"import torch;assert torch.cuda.is_available() is False\""
+    "onnx-quantized|onnx-pytorch + ONNX量化工具链(INT8/FP16动态/静态量化+Intel Neural Compressor)|onnx-pytorch|/opt/conda/bin/python -c \"from onnxruntime.quantization import quantize_dynamic,QuantType;print('quantization OK')\";/opt/conda/bin/python -c \"import neural_compressor;print(neural_compressor.__version__)\""
 )
 
 declare -A VARIANT_DESC
