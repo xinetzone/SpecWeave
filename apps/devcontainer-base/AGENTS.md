@@ -24,6 +24,7 @@
 - **非root用户**：devuser (UID 1000)，加入docker组，可选NOPASSWD sudo（通过GRANT_SUDO环境变量控制）
 - **服务端口**：sshd(22) + dockerd(unix socket) + podman(rootless unix socket) + jupyter(8888)
 - **父级工作区**：SpecWeave 根目录（`../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
+- **AI资产容器**：`.agents/` 目录（本项目特有规则/脚本/模板）
 
 ## 嵌套路由关系
 

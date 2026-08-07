@@ -88,6 +88,42 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 辅助脚本 | scripts/ | build.sh（构建）、healthcheck.sh（健康检查） |
 | Docker忽略规则 | .dockerignore | 排除.git/.trae/.agents/workspace/notebooks等非构建文件 |
 
+## 项目约束速览
+
+详细约束已按主题拆分到 `.agents/rules/` 下各文件，以下是核心约束索引：
+
+| 约束主题 | 所在文件 |
+|---------|---------|
+| 中文环境（locale/timezone）、基础镜像锁定 | [dockerfile.md](.agents/rules/dockerfile.md#基础约定) |
+| BuildKit语法、多阶段构建、层缓存优化 | [dockerfile.md](.agents/rules/dockerfile.md#多阶段结构) |
+| 非root用户（jupyteruser/UID1000/sudo） | [dockerfile.md](.agents/rules/dockerfile.md#非-root-用户规范) |
+| 构建日志格式（[INFO]/[OK]/版本验证） | [dockerfile.md](.agents/rules/dockerfile.md#基础约定) |
+| 敏感信息（禁止硬编码密码/密钥） | [dockerfile.md](.agents/rules/dockerfile.md#安全规范) |
+| 镜像优化（多阶段/--no-install-recommends/缓存清理） | [dockerfile.md](.agents/rules/dockerfile.md#体积优化) |
+| 可复用基础镜像（WORKDIR/tini/FROM兼容） | [dockerfile.md](.agents/rules/dockerfile.md#可复用性) |
+| 服务管理（supervisord双服务） | [services.md](.agents/rules/services.md#服务管理方案) |
+| SSH配置（端口/root登录/ED25519/host keys） | [services.md](.agents/rules/services.md#ssh-服务配置) |
+| Jupyter配置（venv/token/工作目录/CORS） | [services.md](.agents/rules/services.md#jupyter-notebook-配置) |
+| 健康检查（sshd+jupyter双服务探测） | [services.md](.agents/rules/services.md#健康检查) |
+| 启动脚本（tini/日志/信号/密码初始化/命令模式） | [entrypoint.md](.agents/rules/entrypoint.md) |
+
+## 快速开始
+
+```bash
+# 构建
+bash scripts/build.sh
+
+# 运行（SSH 2222 + Jupyter 8888）
+docker run -d -p 2222:22 -p 8888:8888 \
+  -e USER_PASSWORD=changeme -e JUPYTER_TOKEN=mysecret \
+  -v jupyter-workspace:/workspace --name jupyter-test jupyter-ssh-base
+
+# 验证
+docker exec jupyter-test supervisorctl status
+```
+
+完整构建、运行、验证命令和环境变量说明见 [.agents/rules/build-test.md](.agents/rules/build-test.md)。
+
 ## 引用父级 SpecWeave 规范
 
 本项目完全遵循 SpecWeave 工作区发现协议：

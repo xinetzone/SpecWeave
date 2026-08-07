@@ -1,11 +1,11 @@
 ---
-id: "docker-ssh-dind-agents-readme"
-title: "docker-ssh-dind AI资产容器"
+id: "pytorch-base-agents-readme"
+title: "pytorch-base AI资产容器"
 source: "AGENTS.md"
 ---
-# docker-ssh-dind - .agents 目录
+# pytorch-base - .agents 目录
 
-本目录是 docker-ssh-dind 子项目的 AI 协作者资产容器，存放项目特有的规则、角色、技能、脚本、工作流和模板。
+本目录是 pytorch-base 子项目的 AI 协作者资产容器，存放项目特有的规则、角色、技能、脚本、工作流和模板。
 
 ## 目录结构
 
@@ -13,9 +13,9 @@ source: "AGENTS.md"
 .agents/
 ├── README.md          ← 本文件（目录索引）
 ├── rules/             ← 项目特有规则（单一职责，按主题拆分）
-│   ├── containerfile.md  ← Containerfile 编写规范（7阶段结构/层缓存/DinD配置/安全/中文环境）
-│   ├── entrypoint.md     ← Entrypoint 启动脚本规范（6步启动流程/日志/信号处理/Docker等待/诊断）
-│   └── build-test.md     ← 构建与测试规范（build/run命令/7步验证流程/常见问题排查）
+│   ├── dockerfile.md  ← Dockerfile 7阶段构建规范（BuildKit/conda/PyTorch/离线资源/网络容错）
+│   ├── entrypoint.md  ← Entrypoint 启动脚本规范（conda激活/gosu用户切换/横幅/错误处理）
+│   └── build-test.md  ← 构建与测试流程（build.sh参数/离线模式/GPU/13项验证/问题排查）
 ├── roles/             ← 角色定义（预留，回退到父级）
 ├── skills/            ← 技能（预留，回退到父级）
 ├── scripts/           ← 自动化脚本（预留）
@@ -34,5 +34,4 @@ source: "AGENTS.md"
 
 ## 变更日志
 
-- 2026-08-07 | refactor | AGENTS.md精简为路由入口，约束迁移至.agents/rules/（3个主题文件）
-- 2026-07-20 | feat | 初始化AGENTS.md + .agents骨架
+- 2026-08-07 | feat | 从AGENTS.md拆分出.agents/目录，约束规则按主题原子化为3个rules文件

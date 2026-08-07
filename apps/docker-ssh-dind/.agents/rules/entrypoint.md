@@ -1,6 +1,7 @@
 ---
 id: "dind-entrypoint-rules"
 title: "Entrypoint 启动脚本规范"
+source: "AGENTS.md#项目特有约束"
 ---
 # Entrypoint 启动脚本规范（docker-ssh-dind）
 

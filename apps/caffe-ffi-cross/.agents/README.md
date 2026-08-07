@@ -1,11 +1,11 @@
 ---
-id: "docker-ssh-dind-agents-readme"
-title: "docker-ssh-dind AI资产容器"
+id: "caffe-ffi-cross-agents-readme"
+title: "caffe-ffi-cross AI资产容器"
 source: "AGENTS.md"
 ---
-# docker-ssh-dind - .agents 目录
+# caffe-ffi-cross - .agents 目录
 
-本目录是 docker-ssh-dind 子项目的 AI 协作者资产容器，存放项目特有的规则、角色、技能、脚本、工作流和模板。
+本目录是 caffe-ffi-cross 子项目的 AI 协作者资产容器，存放项目特有的规则、角色、技能、脚本、工作流和模板。
 
 ## 目录结构
 
@@ -13,9 +13,8 @@ source: "AGENTS.md"
 .agents/
 ├── README.md          ← 本文件（目录索引）
 ├── rules/             ← 项目特有规则（单一职责，按主题拆分）
-│   ├── containerfile.md  ← Containerfile 编写规范（7阶段结构/层缓存/DinD配置/安全/中文环境）
-│   ├── entrypoint.md     ← Entrypoint 启动脚本规范（6步启动流程/日志/信号处理/Docker等待/诊断）
-│   └── build-test.md     ← 构建与测试规范（build/run命令/7步验证流程/常见问题排查）
+│   ├── dockerfile.md  ← Dockerfile 交叉编译规范（双Dockerfile/conda-forge交叉编译器/SDK/Wine）
+│   └── build-test.md  ← 构建与测试流程（--mirror/--skip-sdk/跨平台编译验证/产物检查）
 ├── roles/             ← 角色定义（预留，回退到父级）
 ├── skills/            ← 技能（预留，回退到父级）
 ├── scripts/           ← 自动化脚本（预留）
@@ -23,6 +22,8 @@ source: "AGENTS.md"
 ├── templates/         ← 模板（预留）
 └── docs/              ← AI知识库（预留）
 ```
+
+**关键区别**：本项目是**纯构建工具镜像**（交叉编译conda包），无entrypoint、无服务管理（supervisord/SSH/Jupyter），因此不需要entrypoint.md和services.md规则文件。
 
 ## 父级继承
 
@@ -34,5 +35,4 @@ source: "AGENTS.md"
 
 ## 变更日志
 
-- 2026-08-07 | refactor | AGENTS.md精简为路由入口，约束迁移至.agents/rules/（3个主题文件）
-- 2026-07-20 | feat | 初始化AGENTS.md + .agents骨架
+- 2026-08-07 | feat | 创建.agents/原子化结构（2个rules文件），因是纯构建镜像无entrypoint/services
