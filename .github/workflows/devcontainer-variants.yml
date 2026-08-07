@@ -473,43 +473,180 @@ jobs:
       - name: Collect diagnostics on failure
         if: failure()
         run: |
+          DIAG_DIR="/tmp/diag-${{ github.sha }}"
+          mkdir -p "$DIAG_DIR"
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
           echo "║                 FAILURE DIAGNOSTICS                         ║"
+          echo "║           (saving to $DIAG_DIR)          ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
-          echo "--- Docker images ---"
-          docker images -a --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" 2>&1 | head -30
+
+          # ── Section 1: System state ──────────────────────────────────
+          echo "=== [1/10] System state ==="
+          echo "--- Date/Time ---" | tee "$DIAG_DIR/01-system.txt"
+          date -u '+%Y-%m-%d %H:%M:%S UTC' | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- Uptime & Load ---" | tee -a "$DIAG_DIR/01-system.txt"
+          uptime | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- Memory ---" | tee -a "$DIAG_DIR/01-system.txt"
+          free -h | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- Disk usage ---" | tee -a "$DIAG_DIR/01-system.txt"
+          df -h | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- Inode usage ---" | tee -a "$DIAG_DIR/01-system.txt"
+          df -i | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- CPU info ---" | tee -a "$DIAG_DIR/01-system.txt"
+          nproc | tee -a "$DIAG_DIR/01-system.txt"
+          cat /proc/cpuinfo | grep "model name" | head -1 | tee -a "$DIAG_DIR/01-system.txt"
+          echo "--- Kernel ---" | tee -a "$DIAG_DIR/01-system.txt"
+          uname -a | tee -a "$DIAG_DIR/01-system.txt"
+
+          # ── Section 2: Docker daemon state ──────────────────────────
           echo ""
-          echo "--- Docker ps -a ---"
-          docker ps -a 2>&1 | head -20
+          echo "=== [2/10] Docker daemon state ==="
+          echo "--- Docker version ---" | tee "$DIAG_DIR/02-docker-daemon.txt"
+          docker version 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          echo "--- Docker info ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          docker info 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          echo "--- Docker daemon config ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          cat /etc/docker/daemon.json 2>/dev/null | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "No daemon.json found" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          echo "--- Docker daemon log (last 200 lines) ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          sudo journalctl -u docker --no-pager -n 200 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "Cannot access docker daemon logs" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          echo "--- containerd log (last 100 lines) ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+          sudo journalctl -u containerd --no-pager -n 100 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "Cannot access containerd logs" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
+
+          # ── Section 3: Docker images & layers ───────────────────────
           echo ""
-          echo "--- Disk space ---"
-          df -h
+          echo "=== [3/10] Docker images & layers ==="
+          echo "--- All images ---" | tee "$DIAG_DIR/03-images.txt"
+          docker images -a --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}\t{{.CreatedAt}}" 2>&1 | tee -a "$DIAG_DIR/03-images.txt"
           echo ""
-          echo "--- Docker info (abbreviated) ---"
-          docker info 2>&1 | grep -E "Server Version|Storage Driver|Cgroup|Kernel|Operating System|Total Memory" || true
+          echo "--- Image layer history (for each devcontainer-base image) ---" | tee -a "$DIAG_DIR/03-images.txt"
+          for img in $(docker images --format "{{.Repository}}:{{.Tag}}" | grep devcontainer-base); do
+            echo "" | tee -a "$DIAG_DIR/03-images.txt"
+            echo "===== Layer history for $img =====" | tee -a "$DIAG_DIR/03-images.txt"
+            docker history --no-trunc "$img" 2>&1 | head -50 | tee -a "$DIAG_DIR/03-images.txt"
+          done
           echo ""
-          echo "--- Last 100 lines of Docker daemon log (if available) ---"
-          sudo journalctl -u docker --no-pager -n 100 2>/dev/null || echo "Cannot access docker daemon logs"
+          echo "--- Dangling images ---" | tee -a "$DIAG_DIR/03-images.txt"
+          docker images -f "dangling=true" --format "table {{.Repository}}\t{{.ID}}\t{{.Size}}\t{{.CreatedAt}}" 2>&1 | head -20 | tee -a "$DIAG_DIR/03-images.txt"
+
+          # ── Section 4: BuildKit & build cache ───────────────────────
           echo ""
-          echo "--- Build log files ---"
-          ls -la "$BUILD_LOG_DIR/" 2>/dev/null || echo "No build logs found"
+          echo "=== [4/10] BuildKit & build cache ==="
+          echo "--- Buildx builder info ---" | tee "$DIAG_DIR/04-buildkit.txt"
+          docker buildx ls 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt"
+          echo "--- Build cache usage (docker system df -v) ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
+          docker system df -v 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt"
+          echo "--- Buildx du (cache disk usage) ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
+          docker buildx du --verbose 2>&1 | head -100 | tee -a "$DIAG_DIR/04-buildkit.txt" || echo "buildx du not available" | tee -a "$DIAG_DIR/04-buildkit.txt"
+          echo "--- BuildKit worker info ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
+          docker buildx inspect --bootstrap 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt" || echo "buildx inspect failed" | tee -a "$DIAG_DIR/04-buildkit.txt"
+
+          # ── Section 5: Containers & execution ───────────────────────
           echo ""
-          echo "--- Last 50 lines of each build log ---"
+          echo "=== [5/10] Containers ==="
+          echo "--- All containers (including stopped) ---" | tee "$DIAG_DIR/05-containers.txt"
+          docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.Status}}\t{{.Names}}" 2>&1 | tee -a "$DIAG_DIR/05-containers.txt"
+          echo "--- Container logs (for any exited containers) ---" | tee -a "$DIAG_DIR/05-containers.txt"
+          for cid in $(docker ps -aq --filter "status=exited" 2>/dev/null); do
+            cname=$(docker inspect --format '{{.Name}}' "$cid" 2>/dev/null | sed 's|^/||')
+            echo "" | tee -a "$DIAG_DIR/05-containers.txt"
+            echo "===== Logs for container $cname ($cid) =====" | tee -a "$DIAG_DIR/05-containers.txt"
+            docker logs --tail 50 "$cid" 2>&1 | tee -a "$DIAG_DIR/05-containers.txt"
+          done
+
+          # ── Section 6: Networks & Volumes ───────────────────────────
+          echo ""
+          echo "=== [6/10] Networks & Volumes ==="
+          echo "--- Networks ---" | tee "$DIAG_DIR/06-network-volumes.txt"
+          docker network ls 2>&1 | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          echo "--- Volumes ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          docker volume ls 2>&1 | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          echo "--- Host network interfaces ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          ip addr 2>/dev/null | head -30 | tee -a "$DIAG_DIR/06-network-volumes.txt" || ifconfig 2>/dev/null | head -30 | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          echo "--- DNS resolution test ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          nslookup archive.ubuntu.com 2>&1 | head -10 | tee -a "$DIAG_DIR/06-network-volumes.txt" || echo "nslookup failed" | tee -a "$DIAG_DIR/06-network-volumes.txt"
+          curl -sI https://registry-1.docker.io/v2/ 2>&1 | head -5 | tee -a "$DIAG_DIR/06-network-volumes.txt" || echo "Docker Hub connectivity test failed" | tee -a "$DIAG_DIR/06-network-volumes.txt"
+
+          # ── Section 7: Build logs ───────────────────────────────────
+          echo ""
+          echo "=== [7/10] Build logs ==="
+          echo "--- Build log files listing ---" | tee "$DIAG_DIR/07-build-logs.txt"
+          ls -la "$BUILD_LOG_DIR/" 2>&1 | tee -a "$DIAG_DIR/07-build-logs.txt"
+          echo ""
+          echo "--- Copying build logs to diag dir ---"
+          cp -v "$BUILD_LOG_DIR"/*.log "$DIAG_DIR/" 2>/dev/null || echo "No build logs to copy"
+          echo ""
           for logfile in "$BUILD_LOG_DIR"/*.log; do
             if [ -f "$logfile" ]; then
               echo ""
-              echo "===== $logfile ====="
-              tail -50 "$logfile"
+              echo "===== Last 80 lines of $(basename "$logfile") ====="
+              tail -80 "$logfile"
             fi
           done
 
-      - name: Upload build logs as artifact
+          # ── Section 8: Build error extraction ───────────────────────
+          echo ""
+          echo "=== [8/10] Error patterns in build logs ==="
+          echo "--- ERROR/FATAL/failed/cannot/denied lines ---" | tee "$DIAG_DIR/08-errors.txt"
+          for logfile in "$BUILD_LOG_DIR"/*.log; do
+            if [ -f "$logfile" ]; then
+              echo "## $(basename "$logfile")" | tee -a "$DIAG_DIR/08-errors.txt"
+              grep -inE "error:|fatal|failed|cannot|denied|permission denied|not found|no space|timeout|killed|OOM|out of memory" "$logfile" 2>/dev/null | tail -30 | tee -a "$DIAG_DIR/08-errors.txt" || echo "  (no error patterns found)" | tee -a "$DIAG_DIR/08-errors.txt"
+              echo "" | tee -a "$DIAG_DIR/08-errors.txt"
+            fi
+          done
+
+          # ── Section 9: Environment & Git context ────────────────────
+          echo ""
+          echo "=== [9/10] Environment & Git context ==="
+          echo "--- Relevant environment variables (no secrets) ---" | tee "$DIAG_DIR/09-context.txt"
+          env | grep -iE "DOCKER|BUILD|CI|GITHUB|PATH|HOME|HTTP_PROXY|HTTPS_PROXY|NO_PROXY" | sort | tee -a "$DIAG_DIR/09-context.txt"
+          echo "--- Git commit ---" | tee -a "$DIAG_DIR/09-context.txt"
+          echo "SHA: ${{ github.sha }}" | tee -a "$DIAG_DIR/09-context.txt"
+          echo "Ref: ${{ github.ref }}" | tee -a "$DIAG_DIR/09-context.txt"
+          echo "Actor: ${{ github.actor }}" | tee -a "$DIAG_DIR/09-context.txt"
+          echo "Event: ${{ github.event_name }}" | tee -a "$DIAG_DIR/09-context.txt"
+          echo "--- Working directory contents ---" | tee -a "$DIAG_DIR/09-context.txt"
+          ls -la "$PROJECT_DIR"/ 2>&1 | head -30 | tee -a "$DIAG_DIR/09-context.txt"
+          echo "--- Dockerfiles present ---" | tee -a "$DIAG_DIR/09-context.txt"
+          find "$PROJECT_DIR" -name Dockerfile -type f 2>/dev/null | tee -a "$DIAG_DIR/09-context.txt"
+          echo "--- /tmp contents ---" | tee -a "$DIAG_DIR/09-context.txt"
+          ls -la /tmp/ 2>&1 | head -30 | tee -a "$DIAG_DIR/09-context.txt"
+          echo "--- /tmp/variants-build-* log files ---" | tee -a "$DIAG_DIR/09-context.txt"
+          ls -la /tmp/variants-build-*.log 2>/dev/null | tee -a "$DIAG_DIR/09-context.txt" || echo "None found"
+          echo "--- Last 5 lines from each /tmp/variants-build log ---" | tee -a "$DIAG_DIR/09-context.txt"
+          for vlog in /tmp/variants-build-*.log; do
+            if [ -f "$vlog" ]; then
+              echo "--- $(basename "$vlog") ---" | tee -a "$DIAG_DIR/09-context.txt"
+              tail -5 "$vlog" | tee -a "$DIAG_DIR/09-context.txt"
+            fi
+          done
+
+          # ── Section 10: Package manager & apt state ─────────────────
+          echo ""
+          echo "=== [10/10] Package manager state ==="
+          echo "--- apt cache size ---" | tee "$DIAG_DIR/10-packages.txt"
+          du -sh /var/cache/apt/ 2>/dev/null | tee -a "$DIAG_DIR/10-packages.txt" || echo "Cannot determine" | tee -a "$DIAG_DIR/10-packages.txt"
+          echo "--- pip cache size ---" | tee -a "$DIAG_DIR/10-packages.txt"
+          du -sh ~/.cache/pip/ 2>/dev/null | tee -a "$DIAG_DIR/10-packages.txt" || echo "No pip cache"
+          echo "--- Running processes ---" | tee -a "$DIAG_DIR/10-packages.txt"
+          ps aux --sort=-%mem | head -20 | tee -a "$DIAG_DIR/10-packages.txt"
+
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  DIAGNOSTICS COLLECTION COMPLETE                            ║"
+          echo "║  Saved to: $DIAG_DIR            ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          ls -la "$DIAG_DIR/"
+
+      - name: Upload build logs and diagnostics as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: build-logs-${{ github.sha }}
-          path: /tmp/build-logs/
-          retention-days: 14
+          name: build-artifacts-${{ github.sha }}
+          path: |
+            /tmp/build-logs/
+            /tmp/diag-${{ github.sha }}/
+          retention-days: 30
           if-no-files-found: ignore
