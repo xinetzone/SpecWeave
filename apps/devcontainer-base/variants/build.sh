@@ -123,6 +123,12 @@ topological_sort() {
             IFS=',' read -ra deps <<< "$deps_str"
             for dep in "${deps[@]}"; do
                 needed["$dep"]=1
+                # 依赖节点的 VARIANTS 条目可能已在本循环中被跳过（当时 needed 尚未
+                # 标记该依赖），因此其 in_degree 可能未被初始化。此处补齐默认值 0，
+                # 确保依赖节点能正确进入构建队列。
+                if [ -z "${in_degree[$dep]:-}" ]; then
+                    in_degree["$dep"]=0
+                fi
                 adj["$dep"]="${adj[$dep]:-} $name"
                 in_degree["$name"]=$((in_degree["$name"] + 1))
             done
@@ -211,7 +217,12 @@ parse_timer_logs() {
         if echo "$line" | grep -q "took"; then
             stage_desc=$(echo "$line" | sed 's/.*\[TIMER\] //' | sed 's/ took.*//')
             duration=$(echo "$line" | grep -oP 'took \K[0-9]+s' || echo "N/A")
-            total_variant_time=$((total_variant_time + $(echo "$duration" | tr -d 's')))
+            # 仅当 duration 是纯数字时长（如 42s）时才累加；否则（N/A）跳过，
+            # 避免对非数字做算术运算触发 set -e 的算术求值错误（division by 0），
+            # 该错误会导致 build_variant 异常返回、主循环中断而跳过后续变体构建。
+            if [[ "$duration" =~ ^[0-9]+s$ ]]; then
+                total_variant_time=$((total_variant_time + ${duration%s}))
+            fi
             stage_num=$((stage_num + 1))
             printf "%-60s %s\n" "S${stage_num}: $stage_desc" "$duration"
         elif echo "$line" | grep -q "started at"; then
@@ -290,10 +301,11 @@ build_variant() {
     set +e
     DOCKER_BUILDKIT=1 docker build \
         --progress=plain \
+        --file "${variant_dir}/Dockerfile" \
         ${NO_CACHE} \
         "${build_args[@]}" \
         -t "${image_name}" \
-        "${variant_dir}" 2>&1 | tee "$log_file"
+        "${SCRIPT_DIR}" 2>&1 | tee "$log_file"
     local build_exit_code=${PIPESTATUS[0]}
     set -e
 
