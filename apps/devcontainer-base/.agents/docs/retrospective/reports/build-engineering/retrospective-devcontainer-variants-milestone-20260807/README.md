@@ -2,9 +2,10 @@
 id: retro-devcontainer-variants-milestone-20260807
 date: 2026-08-07
 type: project-milestone
-source: apps/devcontainer-base/variants/ 实现
+source: apps/devcontainer-base/variants/ 实现 + AGENTS.md路由 + 测试体系
 status: completed
-tags: [docker, devcontainer, variants, conda, llvm, milestone]
+tags: [docker, devcontainer, variants, conda, llvm, milestone, testing, governance]
+commit: f9db7a87, b1ccfa43
 ---
 
 # devcontainer-base 镜像变体系统 — 里程碑复盘报告
@@ -168,9 +169,103 @@ variants/
 |------|------|
 | 构建脚本 | [variants/build.sh](../../../../../../variants/build.sh) |
 | 一键构建脚本 | [variants/scripts/build-conda-llvm.sh](../../../../../../variants/scripts/build-conda-llvm.sh) |
-| 单元测试脚本 | [variants/scripts/test-conda-llvm.sh](../../../../../../variants/scripts/test-conda-llvm.sh) |
+| 完整单元测试 | [variants/scripts/test-conda-llvm.sh](../../../../../../variants/scripts/test-conda-llvm.sh) |
+| 冒烟测试 | [variants/scripts/test-conda-llvm-smoke.sh](../../../../../../variants/scripts/test-conda-llvm-smoke.sh) |
+| TIMER解析器测试 | [variants/scripts/test-timer-parser.sh](../../../../../../variants/scripts/test-timer-parser.sh) |
 | conda 变体 Dockerfile | [variants/conda/Dockerfile](../../../../../../variants/conda/Dockerfile) |
 | conda-llvm 变体 Dockerfile | [variants/conda-llvm/Dockerfile](../../../../../../variants/conda-llvm/Dockerfile) |
 | 变体模板 | [variants/_template/Dockerfile](../../../../../../variants/_template/Dockerfile) |
 | 变体索引 | [variants/README.md](../../../../../../variants/README.md) |
+| **变体治理路由** | [variants/AGENTS.md](../../../../../../variants/AGENTS.md) |
+| **变体规则容器** | [variants/.agents/](../../../../../../variants/.agents/README.md) |
 | 项目主路由 | [AGENTS.md](../../../../../../AGENTS.md) |
+
+---
+
+## 7. 治理层增强：AGENTS.md 路由 + .agents/ 规范容器（commit b1ccfa43）
+
+在 variants/ 功能实现完成后，为其建立了完整的 AI 协作治理层，确保后续维护和新增变体时有规范可依。
+
+### 7.1 产出物
+
+```
+variants/
+├── AGENTS.md                    # 变体系列AI协作者入口（启动协议+五层路由+约束速览）
+└── .agents/
+    ├── README.md                # AI资产目录索引+五层路由加载顺序
+    └── rules/
+        ├── build-orchestration.md  # 构建编排规范（VARIANTS数组格式、拓扑排序、参数传递）
+        ├── variant-conventions.md  # 变体Dockerfile共享约定（FROM/SHELL/PATH/缓存挂载）
+        ├── testing.md             # 测试规范（L1-L6分层策略+脚本模板）
+        └── new-variant-guide.md   # 新增变体7步指南
+```
+
+### 7.2 五层路由体系
+
+```
+第1层（根级）：SpecWeave 全局规范 → ../../../../.agents/global-core-rules.md
+第2层（应用级）：apps/ 区域路由 → ../../../AGENTS.md
+第3层（项目级）：devcontainer-base 项目规范 → ../../.agents/rules/
+第4层（子系统级）：变体管理规范 → 本目录 rules/
+第5层（变体级）：单个变体特有规则 → ../<variant>/.agents/rules/dockerfile.md
+```
+
+### 7.3 父级路由更新
+
+同步更新了 [apps/devcontainer-base/AGENTS.md](../../../../../../AGENTS.md) 的嵌套路由图和上下文路由表，将变体相关任务指向 variants/AGENTS.md，确保路由链完整。
+
+---
+
+## 8. 测试体系验证与Bug修复（commit f9db7a87）
+
+### 8.1 测试脚本产出
+
+| 脚本 | 测试项 | 层级 | 耗时 | 依赖 |
+|------|--------|------|------|------|
+| test-timer-parser.sh | 13项单元测试 | L0（无Docker） | <2秒 | 仅bash |
+| test-conda-llvm-smoke.sh | 4项冒烟测试 | L1-L2 | <10秒 | Docker镜像存在 |
+| test-conda-llvm.sh | 21项完整测试 | L1-L6 | ~30秒 | Docker镜像存在 |
+
+**test-timer-parser.sh 设计特点**：
+- 不依赖Docker，从build.sh中动态提取parse_timer_logs()函数
+- 生成模拟docker build日志（覆盖conda/conda-llvm两种变体格式+边缘情况）
+- 验证函数正确提取started at事件、阶段耗时、总构建时长
+- 发现Bug → 修复Bug → 更新mock → 全部通过的闭环验证
+
+### 8.2 发现并修复的Bug
+
+| Bug | 根因 | 修复方式 | 验证 |
+|-----|------|---------|------|
+| 🔴 Final stage缺少[TIMER]行 | conda Stage 5/5和conda-llvm Stage 4/4只输出格式化表格，未输出`[TIMER] Stage N/M took Xs`标记，导致parse_timer_logs()遗漏final stage | 在两个Dockerfile的timing summary前添加`echo "[TIMER] Stage N/M (metadata+final verify) took ${_ELAPSED}s \| ..."` | test-timer-parser.sh T6/T9通过 |
+| 🔴 Build duration不进日志文件 | build.sh中`log_info "[TIMER] Build duration:"`输出到stdout（终端），不经过`docker build \| tee`管道，日志文件中没有此行 | 在`BUILD_DURATION`计算后立即`echo "[TIMER] Build duration: ${BUILD_DURATION}s" >> "$log_file"`追加写入 | test-timer-parser.sh T7通过 |
+
+### 8.3 关键数据（本次测试验证）
+
+- **test-timer-parser.sh**：13/13 全部通过
+- **Bash语法检查**：build.sh + 2个新脚本 全部通过
+- **发现并修复阻断Bug**：2个（final stage计时缺失 + Build duration丢失）
+- **新增代码行数**：627行
+- **新增/修改文件**：5个
+
+---
+
+## 9. 经验萃取
+
+### 洞察5：单元测试发现Bug的"测试即修复"闭环模式
+
+**现象**：在为已有代码编写单元测试时，通过精心构造测试数据，发现了2个实际运行时才会暴露的Bug。
+**根因**：代码编写时只关注"正常路径"，测试编写时才关注"解析边界"——final stage和wrapper输出是两个代码路径的交汇点，容易遗漏。
+**建议模式**：
+1. 为每个核心函数编写不依赖运行环境的单元测试
+2. 使用mock数据覆盖所有输出格式变体（而非只测一种）
+3. 测试脚本本身也需作为代码审查对象
+4. 发现Bug后立即更新mock数据，形成"发现→修复→验证"闭环
+
+### 洞察6：治理层（AGENTS.md + .agents/）应在功能完成后立即建立
+
+**现象**：variants/功能实现完成后，如果没有AGENTS.md路由和.agents/规范，后续维护者无法快速理解构建系统的约束和约定。
+**建议模式**：
+- 功能模块完成后第一时间建立AGENTS.md入口
+- 规则文件按单一职责原子化拆分（build-orchestration/testing/conventions等）
+- 嵌套路由从根级到模块级清晰定义加载顺序
+- 父级路由表同步更新，确保路由链不断裂
