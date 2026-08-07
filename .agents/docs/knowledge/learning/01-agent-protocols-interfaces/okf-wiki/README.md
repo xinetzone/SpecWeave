@@ -49,6 +49,7 @@ OKF（Open Knowledge Format）是Google Cloud 2026年6月发布的开放知识�
 |------|------|------|
 | [Awesome OKF 深度案例分析](awesome-okf-analysis/README.md) | 使用七概念方法论分析中文OKF生态项目awesome-okf，含2个可迁移模式、4个原子行动项。适合想了解OKF实践中设计trade-off的开发者/架构师 | `okf` `case-study` `seven-concepts` `patterns` |
 | [OKF 生态基建知识](okf-ecosystem-wiki/README.md) | OKF生态基建层系统知识：生态资源图谱、bundle分发注册机制、bundle工程化发布模板。适合想消费/发布/工程化管理OKF bundle的开发者 | `okf` `ecosystem` `bundle` `registry` `template` |
+| [Awesome OKF README 中文翻译](awesome-okf-bundle-README.zh-CN.md) | linyiru/awesome-okf 官方资源列表的完整中文翻译，包含规范文档、官方工具、社区工具、文章指南等40+资源链接 | `okf` `translation` `awesome-list` `resources` |
 
 ## 📖 阅读建议
 
