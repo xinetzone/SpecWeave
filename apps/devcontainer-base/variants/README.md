@@ -8,6 +8,7 @@
 |---------|------|---------|---------|
 | conda | Miniconda3 基础环境 | devcontainer-base:latest | Miniconda3, conda镜像源配置 |
 | conda-llvm | conda + LLVM编译工具链 | devcontainer-base:conda | LLVM 22.1.8, clang 22.1.8, cmake, ninja |
+| onnx-pytorch | conda-llvm + PyTorch CPU + ONNX 运行时 | devcontainer-base:conda-llvm | PyTorch CPU, torchvision, ONNX, ONNX Runtime, onnx-simplifier, onnxoptimizer |
 
 ## 快速开始
 
