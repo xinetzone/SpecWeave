@@ -73,6 +73,7 @@ date: "2026-07-09"
 | ["实现→审查→加固"三段式SOP：核心机制类代码开发流程](implement-review-harden-sop.md) | "实现→审查→加固"三段式SOP：核心机制类代码开发流程 | L2 |  |
 | [索引优于记忆原则（Index Over Memorization Principle）](index-over-memorization.md) | 索引优于记忆原则（Index Over Memorization Principle） | L2 | `索引优先` `认知分工` `外部记忆` |
 | [知识沉淀二次验证SOP](knowledge-crystallization-second-validation-sop.md) | 知识沉淀二次验证SOP | L1 |  |
+| [知识资产「萃取→归档→删除」生命周期闭环模式](knowledge-lifecycle-extract-archive-delete.md) | 临时知识库目录"萃取→归档→删除"完整闭环：先萃取价值进正式知识库，再确认使命完成后清源，删除后复盘反哺方法论 | L1-draft | `知识管理` `生命周期` `萃取` `删除` `治理` |
 | [知识沉淀「中间产物→质量门→最终产出」双层架构模式](knowledge-dual-layer-architecture.md) | 知识沉淀「中间产物→质量门→最终产出」双层架构模式 | L1 |  |
 | [知识库→指令集转化管道（Knowledge-to-Command Pipeline）](knowledge-to-command-pipeline.md) | 知识库→指令集转化管道（Knowledge-to-Command Pipeline） | L1 | `knowledge-base` `command-set` `methodology-adoption` |
 | [分层分级降维模式（Layered Priority Dimension Reduction）](layered-priority-dimension-reduction.md) | 分层分级降维模式（Layered Priority Dimension Reduction） | L1 | `分层架构` `优先级分级` `复杂系统` |

@@ -55,9 +55,15 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │   └─ healthcheck.sh   ← 健康检查脚本
        ├─ docker-compose.yml   ← Compose 编排
        ├─ .env.example         ← 环境变量模板
-       ├─ variants/            ← 镜像变体目录（基于基础镜像的特殊功能镜像组）
-       │   ├─ README.md        ← 变体索引和使用指南
+       ├─ variants/            ← 镜像变体系列（子系统，有独立AGENTS.md）
+       │   ├─ AGENTS.md        ← 变体系列路由入口（进入variants/必读）
+       │   ├─ .agents/         ← 变体管理子系统AI资产容器
+       │   │   ├─ README.md    ← 子系统.agents索引
+       │   │   └─ rules/       ← 变体管理规则（构建编排/共享约定/测试/新增指南）
+       │   ├─ README.md        ← 人类可读：变体索引和使用指南
        │   ├─ build.sh         ← 变体统一构建脚本（拓扑排序+依赖处理）
+       │   ├─ shared/lib/      ← 变体间共享脚本库（logging.sh）
+       │   ├─ scripts/         ← 单变体辅助脚本（build-*/test-*）
        │   ├─ _template/       ← 新变体模板（复制后修改）
        │   │   ├─ Dockerfile
        │   │   ├─ .env.example
@@ -91,7 +97,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | Jupyter配置 | [.agents/rules/services.md#jupyter-服务](.agents/rules/services.md#jupyter-服务) | venv路径、token配置、工作目录、CORS策略 |
 | SSH配置 | [.agents/rules/services.md#ssh-服务sshd](.agents/rules/services.md#ssh-服务sshd) | ED25519优先、禁用root登录、密码+密钥认证、host keys启动时生成 |
 | 镜像构建/启动/测试 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build.sh/start.sh命令、.env配置、Compose/run命令、验证流程、问题排查 |
-| 镜像变体构建/新增变体 | [variants/README.md](variants/README.md) | variants/build.sh使用、可用变体列表、新增变体模板流程 |
+| 镜像变体构建/新增/测试 | [variants/AGENTS.md](variants/AGENTS.md) | 变体系列路由入口，构建编排/共享约定/测试/新增指南 |
 | conda变体Dockerfile | [variants/conda/.agents/rules/dockerfile.md](variants/conda/.agents/rules/dockerfile.md) | Miniconda安装、/opt/conda路径、conda-init.sh、镜像源配置 |
 | conda-llvm变体Dockerfile | [variants/conda-llvm/.agents/rules/dockerfile.md](variants/conda-llvm/.agents/rules/dockerfile.md) | LLVM 22.1.8安装、clang/cmake/ninja、PATH配置 |
 | 健康检查脚本 | [.agents/rules/services.md#健康检查](.agents/rules/services.md#健康检查) | healthcheck.sh条件检查逻辑、端口检测方式 |
@@ -111,8 +117,12 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 服务管理规范 | [.agents/rules/services.md](.agents/rules/services.md) | supervisord/SSH/Docker/Podman/Jupyter/健康检查 |
 | 构建测试规范 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build.sh/start.sh/Compose/验证流程/问题排查 |
 | 最佳实践文档 | [docs/best-practices.md](docs/best-practices.md) | Docker DinD无冲突配置、Compose变量覆盖、镜像源切换可复用模式 |
-| 变体目录索引 | [variants/README.md](variants/README.md) | 镜像变体列表、构建命令、新增变体指南 |
-| 变体构建脚本 | [variants/build.sh](variants/build.sh) | 多变体统一构建、依赖拓扑排序、国内镜像源支持 |
+| 变体子系统路由 | [variants/AGENTS.md](variants/AGENTS.md) | 镜像变体系列入口（构建/测试/新增变体） |
+| 变体系列AI资产 | [variants/.agents/README.md](variants/.agents/README.md) | 变体管理子系统规则索引 |
+| 变体构建编排规范 | [variants/.agents/rules/build-orchestration.md](variants/.agents/rules/build-orchestration.md) | VARIANTS格式、拓扑排序、[TIMER]、验证机制 |
+| 变体Dockerfile共享约定 | [variants/.agents/rules/variant-conventions.md](variants/.agents/rules/variant-conventions.md) | FROM模式、禁止覆盖项、PATH优先级、缓存挂载 |
+| 变体测试规范 | [variants/.agents/rules/testing.md](variants/.agents/rules/testing.md) | 6层测试策略、脚本模板 |
+| 新增变体操南 | [variants/.agents/rules/new-variant-guide.md](variants/.agents/rules/new-variant-guide.md) | 7步流程、模板替换、注册清单 |
 | conda变体规范 | [variants/conda/.agents/rules/dockerfile.md](variants/conda/.agents/rules/dockerfile.md) | Miniconda基础环境变体的Dockerfile规范 |
 | conda-llvm变体规范 | [variants/conda-llvm/.agents/rules/dockerfile.md](variants/conda-llvm/.agents/rules/dockerfile.md) | LLVM/clang工具链变体的Dockerfile规范 |
 | 新变体模板 | [variants/_template/](variants/_template/) | 新增变体的Dockerfile/.env/README/dockerfile.md模板 |
@@ -174,6 +184,7 @@ bash scripts/start.sh stop
 
 ## 变更日志
 
+- 2026-08-07 | refactor | 为 variants/ 添加 AGENTS.md + .agents/ 原子化规范结构（4个规则文件：构建编排/共享约定/测试/新增指南），更新父级路由表
 - 2026-08-07 | feat | 新增 variants/ 镜像变体目录结构：统一构建脚本、conda 变体（Miniconda3）、conda-llvm 变体（LLVM 22.1.8/clang/cmake/ninja）、_template 新变体模板
 - 2026-08-07 | refactor | 将AGENTS.md中项目约束和快速开始拆分为.agents/rules/下4个原子规则文件（dockerfile/entrypoint/services/build-test）
 - 2026-08-07 | feat | 新增start.sh一键启动脚本、.env.example环境变量模板、docs/best-practices.md最佳实践、BuildKit缓存优化
