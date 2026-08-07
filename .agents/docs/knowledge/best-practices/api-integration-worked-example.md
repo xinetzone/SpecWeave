@@ -218,6 +218,11 @@ done
 echo "TIMEOUT / 重试耗尽" >&2; exit 2
 ```
 
+> **可运行测试脚本**：上述 Bash 逻辑已整理为一个可独立运行、零外部依赖的 Python 测试脚本
+> [demo_async_polling_podcast.py](../../../scripts/tests/demo_async_polling_podcast.py)。
+> 它内置一个模拟异步播客 API 的 mock server，对「成功 / 失败 / 超时 / 429 限流退避 / 5xx 重试 / 无效 Key 不重试」六个场景做断言，
+> 可直接运行 `python demo_async_polling_podcast.py` 验证四模式组合逻辑，无需真实 API Key。
+
 ---
 
 ## 八、模式 → 业务环节映射表
@@ -236,3 +241,5 @@ echo "TIMEOUT / 重试耗尽" >&2; exit 2
 | 版本 | 日期 | 变更内容 |
 |------|------|----------|
 | v1.0 | 2026-08-07 | 初始版本：以 AI 播客自动生成场景演示四项通用 API 集成模式的组合应用（编排图、端到端脚本、模式映射表） |
+| v1.1 | 2026-08-07 | 补充可运行测试脚本引用：脚本移植为 [demo_async_polling_podcast.py](../../../scripts/tests/demo_async_polling_podcast.py)，内置 mock server 覆盖五类场景 |
+| v1.2 | 2026-08-07 | 同步脚本优化：重试改为独立预算、mock 校验鉴权并新增「无效 Key 不重试」场景，脚本共覆盖六类场景 |
