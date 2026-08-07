@@ -343,6 +343,7 @@ RUN echo "" && \
     _LVT3=$((_LLVS3 - _LLVS2)) && \
     _LVT4=$_ELAPSED && \
     _LVTOTAL=$((_NOW - _START)) && \
+    echo "[TIMER] Stage 4/4 (metadata+final verify) took ${_ELAPSED}s | LLVM variant cumulative: ${_LVTOTAL}s" && \
     echo "╔══════════════════════════════════════════════════════════════╗"; \
     echo "║   BUILD TIMING SUMMARY (Conda-LLVM Variant - 4 Add Stages) ║"; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \

@@ -301,6 +301,9 @@ build_variant() {
     BUILD_DURATION=$((BUILD_END - BUILD_START))
     log_metric "variant_build_duration_seconds" "$BUILD_DURATION" "seconds"
 
+    # 将总耗时追加到日志文件，确保 parse_timer_logs 能解析到
+    echo "[TIMER] Build duration: ${BUILD_DURATION}s" >> "$log_file"
+
     if [ $build_exit_code -ne 0 ]; then
         echo ""
         log_error "Build failed for ${image_name} (exit code: $build_exit_code)"

@@ -467,6 +467,7 @@ RUN echo "" && \
     _VT4=$((_VS4 - _VS3)) && \
     _VT5=$_ELAPSED && \
     _VTOTAL=$((_NOW - _START)) && \
+    echo "[TIMER] Stage 5/5 (metadata+final verify) took ${_ELAPSED}s | Variant cumulative: ${_VTOTAL}s" && \
     echo "╔══════════════════════════════════════════════════════════════╗"; \
     echo "║     BUILD TIMING SUMMARY (Conda Variant - 5 Add Stages)    ║"; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \
