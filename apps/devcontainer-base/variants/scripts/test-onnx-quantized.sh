@@ -65,42 +65,42 @@ docker_run_bash() {
 # ─────────────────────────── L1 基础工具链版本（继承onnx-pytorch） ───────────────────────────
 test_torch_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import torch;print(torch.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import torch;print('VER_TORCH='+torch.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+[a-z0-9+.]*' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_TORCH=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_TORCH=//')
     if [ -n "$ver" ]; then
         pass "T1: torch version = $ver"
         return 0
     else
-        fail "T1: torch not importable, output: $(echo "$result" | head -1)"
+        fail "T1: torch not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnx_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnx;print(onnx.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import onnx;print('VER_ONNX='+onnx.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_ONNX=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ONNX=//')
     if [ -n "$ver" ]; then
         pass "T2: onnx version = $ver"
         return 0
     else
-        fail "T2: onnx not importable, output: $(echo "$result" | head -1)"
+        fail "T2: onnx not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnxruntime_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime;print(onnxruntime.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime;print('VER_ORT='+onnxruntime.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_ORT=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ORT=//')
     if [ -n "$ver" ]; then
         pass "T3: onnxruntime version = $ver"
         return 0
     else
-        fail "T3: onnxruntime not importable, output: $(echo "$result" | head -1)"
+        fail "T3: onnxruntime not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
@@ -358,12 +358,14 @@ test_devuser_exists() {
 # ─────────────────────────── L5 PATH 优先级与环境隔离 ───────────────────────────
 test_python_path_priority() {
     local result
-    result=$(docker_run_bash 'which python' 2>&1)
-    if echo "$result" | grep -q "/opt/conda/bin/python"; then
-        pass "T16: python points to conda: $result"
+    result=$(docker_run /opt/conda/bin/python -c "import sys;print('PYPATH_OK:'+sys.executable)" 2>&1)
+    local path
+    path=$(echo "$result" | grep -oE 'PYPATH_OK:/[^ ]+' | head -1 | sed 's/PYPATH_OK://')
+    if echo "$path" | grep -q "/opt/conda/bin/python"; then
+        pass "T16: python points to conda: $path"
         return 0
     else
-        fail "T16: python does not point to conda, got: $result"
+        fail "T16: python does not point to conda, got: $path"
         return 1
     fi
 }
@@ -384,7 +386,7 @@ test_venv_preserved() {
 test_build_info_exists() {
     local result
     result=$(docker_run_bash 'test -f /etc/devcontainer-variant-onnx-quantized-build-info && cat /etc/devcontainer-variant-onnx-quantized-build-info' 2>&1)
-    if echo "$result" | grep -q "VARIANT=onnx-quantized" && echo "$result" | grep -q "ORT_VERSION_ACTUAL" && echo "$result" | grep -q "ONNXCONVERTER_COMMON_VERSION"; then
+    if echo "$result" | grep -q "VARIANT=onnx-quantized" && echo "$result" | grep -q "ONNXRUNTIME_VERSION" && echo "$result" | grep -q "ONNXCONVERTER_COMMON_VERSION"; then
         pass "T18: build-info exists with quantization package versions"
         return 0
     else

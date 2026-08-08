@@ -65,57 +65,56 @@ docker_run_bash() {
 # ─────────────────────────── L1 基础工具链版本 ───────────────────────────
 test_torch_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import torch;print(torch.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import torch;print('VER_TORCH='+torch.__version__)" 2>&1)
     local ver
-    # 容器 entrypoint 会输出服务诊断日志，版本行混在其中，需从完整输出精确提取版本。
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+[a-z0-9+.]*' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_TORCH=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_TORCH=//')
     if [ -n "$ver" ]; then
         pass "T1: torch version = $ver"
         return 0
     else
-        fail "T1: torch not importable, output: $(echo "$result" | head -1)"
+        fail "T1: torch not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_torchvision_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import torchvision;print(torchvision.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import torchvision;print('VER_TV='+torchvision.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+[a-z0-9+.]*' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_TV=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_TV=//')
     if [ -n "$ver" ]; then
         pass "T2: torchvision version = $ver"
         return 0
     else
-        fail "T2: torchvision not importable, output: $(echo "$result" | head -1)"
+        fail "T2: torchvision not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnx_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnx;print(onnx.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import onnx;print('VER_ONNX='+onnx.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_ONNX=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ONNX=//')
     if [ -n "$ver" ]; then
         pass "T3: onnx version = $ver"
         return 0
     else
-        fail "T3: onnx not importable, output: $(echo "$result" | head -1)"
+        fail "T3: onnx not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnxruntime_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime;print(onnxruntime.__version__)" 2>&1)
+    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime;print('VER_ORT='+onnxruntime.__version__)" 2>&1)
     local ver
-    ver=$(echo "$result" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    ver=$(echo "$result" | grep -oE 'VER_ORT=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ORT=//')
     if [ -n "$ver" ]; then
         pass "T4: onnxruntime version = $ver"
         return 0
     else
-        fail "T4: onnxruntime not importable, output: $(echo "$result" | head -1)"
+        fail "T4: onnxruntime not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
