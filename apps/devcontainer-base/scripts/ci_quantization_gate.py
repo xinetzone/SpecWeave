@@ -56,8 +56,8 @@ from onnx_quantize_kit import (
     auto_quantize, QuantizationConfig, AccuracyThresholds,
     FileCalibrationReader, RandomCalibrationReader,
     detect_model_type, ModelType,
+    build_report,
 )
-from onnx_quantize_kit.benchmark import benchmark_model
 
 
 def parse_args():
@@ -198,54 +198,8 @@ def main():
 
     elapsed = time.perf_counter() - t0
 
-    # 构建CI报告
-    report = {
-        "status": "PASS" if result.success else "FAIL",
-        "model": os.path.basename(args.model),
-        "output": args.output,
-        "model_type": result.model_type,
-        "strategy_used": result.strategy_used,
-        "fallback_triggered": result.fallback_triggered,
-        "fallback_reason": result.fallback_reason,
-        "elapsed_seconds": round(elapsed, 2),
-        "thresholds": {
-            "acceptable_max_diff": thresholds.acceptable_max_diff,
-            "min_cosine_sim": thresholds.min_cosine_sim,
-            "min_speedup": thresholds.min_speedup,
-        },
-    }
-
-    if result.fp32_performance and result.fp32_performance.success:
-        report["fp32"] = {
-            "avg_ms": round(result.fp32_performance.avg_ms, 4),
-            "size_kb": round(result.fp32_performance.size_kb, 1),
-        }
-
-    if result.performance and result.performance.success:
-        report["quantized"] = {
-            "avg_ms": round(result.performance.avg_ms, 4),
-            "p50_ms": round(result.performance.p50_ms, 4),
-            "p95_ms": round(result.performance.p95_ms, 4),
-            "p99_ms": round(result.performance.p99_ms, 4),
-            "throughput_fps": round(result.performance.throughput_fps, 1),
-            "size_kb": round(result.performance.size_kb, 1),
-        }
-
-    if result.accuracy:
-        report["accuracy"] = {
-            "level": result.accuracy.level,
-            "max_diff": round(result.accuracy.max_diff, 6),
-            "mean_diff": round(result.accuracy.mean_diff, 6),
-            "cosine_sim_min": round(result.accuracy.cosine_sim_min, 6),
-            "passed": result.accuracy.passed,
-        }
-
-    report["speedup"] = round(result.speedup, 2)
-    report["size_ratio"] = round(result.size_ratio, 3)
-    report["all_attempts"] = result.all_attempts
-
-    if result.error:
-        report["error"] = result.error
+    # 构建CI报告（使用统一的reporting模块）
+    report = build_report(result, thresholds, elapsed, args.model)
 
     # 输出报告
     if args.report:

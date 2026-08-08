@@ -114,6 +114,28 @@ _CALIB_MAP = {
 }
 
 
+def _safe_get_input_shape(session_or_input, default: int = 1) -> tuple:
+    """从ONNX Runtime input安全提取形状，兼容DimensionProto和纯int
+
+    动态维度（dim_value=0 或 dim_param存在）会被替换为default值。
+    """
+    import onnxruntime as ort
+    if isinstance(session_or_input, ort.InferenceSession):
+        inp = session_or_input.get_inputs()[0]
+        shape = inp.shape
+    else:
+        shape = session_or_input.shape
+    result = []
+    for d in shape:
+        if isinstance(d, int):
+            result.append(d if d > 0 else default)
+        elif hasattr(d, 'dim_value'):
+            result.append(d.dim_value if d.dim_value > 0 else default)
+        else:
+            result.append(default)
+    return tuple(result)
+
+
 def _prepare_model(model_path: str, tmpdir: str) -> str:
     """预处理模型：simplify + quant_pre_process"""
     prepared_path = os.path.join(tmpdir, "model_prepared.onnx")
@@ -250,8 +272,7 @@ def _quantize_with_config(model_path: str, output_path: str, cfg: QuantizationCo
             inp = tmp_sess.get_inputs()[0]
             input_name = input_name or inp.name
             if input_shape is None:
-                input_shape = tuple(d.dim_value if d.dim_value > 0 else 1
-                                    for d in inp.shape)
+                input_shape = _safe_get_input_shape(inp)
             del tmp_sess
 
         if calib_reader is None:
@@ -370,8 +391,7 @@ def auto_quantize(model_path: str, output_path: str,
             inp = tmp_sess.get_inputs()[0]
             input_name = input_name or inp.name
             if input_shape is None:
-                input_shape = tuple(d.dim_value if d.dim_value > 0 else 1
-                                    for d in inp.shape)
+                input_shape = _safe_get_input_shape(inp)
             del tmp_sess
 
         # FP32基准

@@ -17,19 +17,21 @@
 from .calibration import CalibrationReader, RandomCalibrationReader, FileCalibrationReader
 from .benchmark import benchmark_model, create_session, BenchmarkResult
 from .accuracy import validate_accuracy, AccuracyResult, AccuracyThresholds
-from .model_detect import detect_model_type, ModelType
+from .model_detect import detect_model_type, ModelType, analyze_model
 from .quantize import (
     auto_quantize, quantize_dynamic_simple, quantize_static_qdq,
     quantize_static_qoperator, quantize_fp16, QuantizationResult, QuantizationConfig,
 )
+from .reporting import build_report, parse_report, format_summary, format_batch_summary
 
 __version__ = "1.0.0"
 __all__ = [
     "CalibrationReader", "RandomCalibrationReader", "FileCalibrationReader",
     "benchmark_model", "create_session", "BenchmarkResult",
     "validate_accuracy", "AccuracyResult", "AccuracyThresholds",
-    "detect_model_type", "ModelType",
+    "detect_model_type", "ModelType", "analyze_model",
     "auto_quantize", "quantize_dynamic_simple", "quantize_static_qdq",
     "quantize_static_qoperator", "quantize_fp16",
     "QuantizationResult", "QuantizationConfig",
+    "build_report", "parse_report", "format_summary", "format_batch_summary",
 ]

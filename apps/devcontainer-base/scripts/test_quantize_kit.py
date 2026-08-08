@@ -166,7 +166,82 @@ check("All attempts recorded with strategy names",
 # Show what was attempted
 for a in r.all_attempts:
     status = "✅" if a["success"] else "❌"
-    print(f"  {status} {a['strategy']:25s} success={a['success']} max_diff={a.get('max_diff',-1):.4f}")
+    err = (a.get("error") or "")[:80]
+    print(f"  {status} {a['strategy']:25s} success={a['success']} max_diff={a.get('max_diff',-1):.4f}  {err}")
+
+# ──── Test 4b: Transformer 静态量化精度灾难 → 自动回滚到动态量化 ────
+# 核心场景模拟：强制对 Transformer 使用静态量化，通过「校准数据分布不匹配」
+# 复现真实场景中的精度灾难（静态量化严重依赖校准数据分布，分布不匹配时误差剧增；
+# 动态量化无需校准数据，不受此影响）
+print("\n" + "="*70)
+print("Test 4b: Transformer static quantization disaster → auto rollback to dynamic")
+print("="*70)
+
+# 构造一个「分布不匹配」的校准Reader：校准数据范围极窄，
+# 但验证时用正常范围数据，模拟生产环境校准数据与真实输入分布不一致
+# （这是静态量化精度灾难的最常见根因）
+class MismatchedCalibrationReader(RandomCalibrationReader):
+    """故意用分布不匹配的校准数据触发静态量化精度灾难"""
+    def _generate(self):
+        # 校准数据范围极窄(乘以0.001)，与真实输入(标准正态N(0,1))严重不匹配
+        # 静态量化会根据这些窄范围数据计算scale/zero_point，
+        # 导致真实范围输入时严重截断/clamp，误差爆炸
+        self.data = [
+            {self.input_name: np.random.randn(*self.input_shape).astype(np.float32) * 0.001}
+            for _ in range(self.num_samples)
+        ]
+
+mismatch_reader = MismatchedCalibrationReader("input", (1,8,64), num_samples=10)
+
+# 使用较紧的阈值：正常动态量化max_diff一般<0.5，静态量化在分布不匹配时会爆炸
+TRANSFORMER_ROLLBACK = AccuracyThresholds(
+    acceptable_max_diff=1.0,
+    min_cosine_sim=0.0,
+    min_speedup=0.0,
+)
+r_trans = auto_quantize(
+    trans_path,
+    os.path.join(tmpdir, "trans_fb.onnx"),
+    calib_reader=mismatch_reader,
+    input_shape=(1,8,64), input_name="input",
+    config=QuantizationConfig(
+        strategy="static_qdq",       # 强制从静态QDQ开始（Transformer的灾难路径）
+        warmup=5, runs=20,
+        thresholds=TRANSFORMER_ROLLBACK,
+    ),
+    verbose=False,
+)
+check("Transformer forced-static returns result", r_trans is not None)
+check("Transformer fallback chain attempted (≥2 strategies)",
+      len(r_trans.all_attempts) >= 2,
+      f"attempts={len(r_trans.all_attempts)}")
+# 关键断言：回滚被触发（strategy_used != static_qdq）
+check("Transformer fallback TRIGGERED (not static_qdq)",
+      r_trans.fallback_triggered == True,
+      f"fallback_triggered={r_trans.fallback_triggered}, strategy={r_trans.strategy_used}")
+check("Transformer rolled back to safe strategy (dynamic/fp16)",
+      r_trans.strategy_used in ("dynamic", "fp16", "static_qoperator_quint8"),
+      f"got {r_trans.strategy_used}")
+check("Final result file exists",
+      r_trans.success and os.path.exists(r_trans.output_path),
+      f"success={r_trans.success}, error={r_trans.error}")
+check("Fallback reason recorded",
+      bool(r_trans.fallback_reason),
+      f"reason={r_trans.fallback_reason}")
+# 打印完整回滚链
+print("  Transformer rollback chain (calibration mismatch scenario):")
+for i, a in enumerate(r_trans.all_attempts):
+    status = "✅" if a["success"] else "❌"
+    tag = "PRIMARY" if i == 0 else f"FALLBACK-{i}"
+    err = (a.get("error") or "")[:70]
+    print(f"    {status} [{tag:10s}] {a['strategy']:25s} "
+          f"max_diff={a.get('max_diff',-1):.4f}  {err}")
+if r_trans.success:
+    print(f"  ✅ Final: strategy={r_trans.strategy_used}, "
+          f"speedup={r_trans.speedup:.2f}x, max_diff={r_trans.accuracy.max_diff:.4f}")
+    print(f"  ✅ Fallback reason: {r_trans.fallback_reason}")
+else:
+    print(f"  ❌ All strategies failed: {r_trans.error}")
 
 print("\n" + "="*70)
 print("Test 5: Individual API functions")
