@@ -9,7 +9,7 @@
 #   --quick      Quick mode: warmup=10, runs=50, calib=20 (for fast validation)
 #   --threads N  ORT intra-op threads (default: 4)
 #   --output DIR Host directory to mount for results (default: ./benchmark-results)
-#   --image TAG  Override Docker image (default: devcontainer-onnx-pytorch:latest)
+#   --image TAG  Override Docker image (default: devcontainer-base:onnx-pytorch-latest)
 #   --help       Show this help
 
 set -euo pipefail
@@ -22,7 +22,7 @@ USE_CN=0
 QUICK_MODE=0
 THREADS=4
 OUTPUT_DIR="${SCRIPT_DIR}/../benchmark-results"
-IMAGE_TAG="devcontainer-onnx-pytorch:latest"
+IMAGE_TAG="devcontainer-base:onnx-pytorch-latest"
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do

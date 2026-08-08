@@ -99,5 +99,9 @@ examples/*/output/
 ci-artifacts/
 ci-artifacts-new-*/
 
+# Benchmark 运行结果
+apps/devcontainer-base/benchmark-results-docker/
+apps/devcontainer-base/benchmark-results/
+
 # HTML 分享包
 .trae-html-share-packages/

@@ -3,6 +3,7 @@
 
 Features:
 - Structured logging with per-stage timing
+- Graceful degradation when optional deps are missing
 - Memory usage tracking (if psutil available)
 - CLI arguments for configuration
 - Detailed per-precision breakdown
@@ -16,8 +17,9 @@ import shutil
 import sys
 import tempfile
 import time
+import traceback
 from pathlib import Path
-from typing import Dict, Any, Tuple
+from typing import Dict, Any, Tuple, Optional, Callable
 
 import numpy as np
 
@@ -84,10 +86,13 @@ from onnxruntime.quantization import (
     QuantType, QuantFormat, CalibrationMethod,
 )
 
+# FP16 conversion is optional
 try:
     from onnxconverter_common import float16
+    HAS_FP16 = True
 except ImportError:
     float16 = None
+    HAS_FP16 = False
 
 SEP = "=" * 70
 DASH = "-" * 70
@@ -162,7 +167,7 @@ MODELS = [
     ('SmallMLP(128->10)', SmallMLP(), torch.randn(1, 128), (1,128), 'input'),
     ('LargeMLP(1024->100)', LargeMLP(), torch.randn(1, 1024), (1,1024), 'input'),
     ('ConvNet(3x32x32->10)', ConvNet(), torch.randn(1,3,32,32), (1,3,32,32), 'input'),
-    ('Transformer(16x256->10)', TransformerLike(), torch.randn(1,16,256), (1,16,256), 'input'),
+    ('Transformer(3L-256d)', TransformerLike(), torch.randn(1,16,256), (1,16,256), 'input'),
 ]
 
 
@@ -178,6 +183,29 @@ class CalibReader(CalibrationDataReader):
         return d
 
 
+# Result keys mapped to display names
+PRECISION_CONFIGS = [
+    # (result_key, display_label, path_suffix, is_optional, converter_fn)
+    ("FP32", "FP32", "_fp32.onnx", False, None),
+    ("FP16", "FP16", "_fp16.onnx", True, "convert_fp16"),
+    ("INT8_Dynamic", "INT8-Dyn", "_dyn.onnx", False, "quantize_dynamic_int8"),
+    ("INT8_Static_QDQ", "INT8-QDQ", "_qdq.onnx", False, "quantize_static_qdq"),
+    ("INT8_Static_QOperator", "INT8-QOp", "_qop.onnx", False, "quantize_static_qop"),
+]
+
+
+def error_result(error_msg: str) -> Dict[str, Any]:
+    """Create an error result entry."""
+    return {
+        'error': str(error_msg),
+        'avg_ms': float('nan'),
+        'speedup': 0.0,
+        'size_kb': 0,
+        'max_diff': float('nan'),
+        'size_ratio': 0.0,
+    }
+
+
 def benchmark_session(
     sess: ort.InferenceSession,
     input_shape: Tuple,
@@ -185,9 +213,9 @@ def benchmark_session(
     warmup: int = WARMUP,
     runs: int = RUNS,
     logger: logging.Logger = None,
+    stage: str = "benchmark",
 ) -> Dict[str, float]:
     """Benchmark an ORT session with detailed timing stats."""
-    stage = "benchmark"
     # Warmup
     if logger:
         logger.info(f"Warmup: {warmup} iterations", extra={"stage": stage})
@@ -210,11 +238,13 @@ def benchmark_session(
     stats = {
         'avg_ms': float(np.mean(t)),
         'p50_ms': float(np.median(t)),
+        'p5_ms': float(np.percentile(t, 5)),
         'p95_ms': float(np.percentile(t, 95)),
         'p99_ms': float(np.percentile(t, 99)),
         'min_ms': float(np.min(t)),
         'max_ms': float(np.max(t)),
         'std_ms': float(np.std(t)),
+        'error': None,
     }
     if logger:
         logger.info(
@@ -281,16 +311,18 @@ def simplify_onnx(path: str, logger: logging.Logger) -> None:
     logger.info(f"Simplified ONNX: {size_kb:.1f}KB", extra={"stage": stage})
 
 
-def convert_fp16(src: str, dst: str, logger: logging.Logger) -> None:
-    """Convert FP32 ONNX to FP16."""
+def convert_fp16(src: str, dst: str, logger: logging.Logger) -> bool:
+    """Convert FP32 ONNX to FP16. Returns True on success, False if deps missing."""
     stage = "convert-fp16"
-    if float16 is None:
-        raise RuntimeError("onnxconverter-common not installed; cannot convert to FP16")
+    if not HAS_FP16:
+        logger.warning("onnxconverter-common not installed; skipping FP16", extra={"stage": stage})
+        return False
     with StageTimer(logger, f"{stage}.float16"):
         m16 = float16.convert_float_to_float16(onnx.load(src), keep_io_types=True)
         onnx.save(m16, dst)
     size_kb = os.path.getsize(dst) / 1024
     logger.info(f"FP16 model: {size_kb:.1f}KB", extra={"stage": stage})
+    return True
 
 
 def quantize_dynamic_int8(src: str, dst: str, logger: logging.Logger) -> None:
@@ -351,6 +383,41 @@ def create_session(
     return sess
 
 
+def run_precision(
+    prec_key: str,
+    prec_label: str,
+    model_path: str,
+    inp_shape: Tuple,
+    inp_name: str,
+    warmup: int,
+    runs: int,
+    threads: int,
+    fp32_avg_ms: float,
+    fp32_size_kb: float,
+    test_inp: np.ndarray,
+    out_fp32: np.ndarray,
+    logger: logging.Logger,
+    model_stage: str,
+) -> Dict[str, Any]:
+    """Run benchmark for one precision. Returns result dict (with error key on failure)."""
+    stage = f"{model_stage}.{prec_label}"
+    try:
+        sess = create_session(model_path, threads, logger)
+        r = benchmark_session(sess, inp_shape, inp_name, warmup, runs, logger, stage)
+        r['size_kb'] = os.path.getsize(model_path) / 1024
+        out = sess.run(None, {inp_name: test_inp})[0]
+        r['max_diff'] = float(np.max(np.abs(out_fp32 - out)))
+        r['speedup'] = fp32_avg_ms / r['avg_ms'] if r['avg_ms'] > 0 else 0.0
+        r['size_ratio'] = r['size_kb'] / fp32_size_kb if fp32_size_kb > 0 else 0.0
+        r['throughput_fps'] = 1000.0 / r['avg_ms'] if r['avg_ms'] > 0 else 0.0
+        del sess
+        return r
+    except Exception as e:
+        logger.error(f"{prec_label} failed: {e}", extra={"stage": model_stage})
+        logger.debug(traceback.format_exc(), extra={"stage": model_stage})
+        return error_result(str(e))
+
+
 # ---------------------------------------------------------------------------
 # Main benchmark runner
 # ---------------------------------------------------------------------------
@@ -365,6 +432,13 @@ def run_benchmark(args: argparse.Namespace) -> Dict[str, Any]:
         f"ONNX Runtime: {ort.__version__} | PyTorch: {torch.__version__}",
         extra={"stage": "init"},
     )
+    available_precisions = ["FP32"]
+    if HAS_FP16:
+        available_precisions.append("FP16")
+    else:
+        logger.warning("FP16 unavailable (onnxconverter-common not installed)", extra={"stage": "init"})
+    available_precisions.extend(["INT8-Dyn", "INT8-QDQ", "INT8-QOp"])
+    logger.info(f"Available precisions: {', '.join(available_precisions)}", extra={"stage": "init"})
     logger.info(
         f"Config: warmup={args.warmup}, runs={args.runs}, calib={args.calib}, "
         f"threads={intra_threads}, CPUExecutionProvider",
@@ -399,116 +473,138 @@ def run_benchmark(args: argparse.Namespace) -> Dict[str, Any]:
 
             model_results: Dict[str, Any] = {'input_shape': list(inp_shape)}
 
-            # --- FP32 baseline ---
-            prec = "FP32"
-            logger.info(f"--- {prec} baseline ---", extra={"stage": model_stage})
+            # --- FP32 baseline (required, must succeed) ---
+            prec_key, prec_label = "FP32", "FP32"
+            logger.info(f"--- {prec_label} baseline ---", extra={"stage": model_stage})
             sess_fp32 = create_session(fp32_path, intra_threads, logger)
-            r = benchmark_session(sess_fp32, inp_shape, inp_name, args.warmup, args.runs, logger)
+            r = benchmark_session(sess_fp32, inp_shape, inp_name, args.warmup, args.runs, logger, f"{model_stage}.FP32")
             r['size_kb'] = os.path.getsize(fp32_path) / 1024
             out_fp32 = sess_fp32.run(None, {inp_name: test_inp})[0]
             fp32_avg = r['avg_ms']
+            fp32_size = r['size_kb']
+            r['max_diff'] = 0.0
+            r['speedup'] = 1.0
+            r['size_ratio'] = 1.0
+            r['throughput_fps'] = 1000.0 / r['avg_ms'] if r['avg_ms'] > 0 else 0.0
             logger.info(
-                f"  FP32: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB",
+                f"  FP32: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB throughput={r['throughput_fps']:.0f}fps",
                 extra={"stage": model_stage},
             )
-            model_results[prec] = r
+            model_results[prec_key] = r
             del sess_fp32
-            log_mem(logger, model_stage, f"after {prec}")
+            log_mem(logger, model_stage, f"after {prec_label}")
 
-            # --- FP16 ---
-            prec = "FP16"
-            logger.info(f"--- {prec} ---", extra={"stage": model_stage})
-            fp16_path = os.path.join(tmpdir, model_name + '_fp16.onnx')
-            convert_fp16(fp32_path, fp16_path, logger)
-            sess = create_session(fp16_path, intra_threads, logger)
-            r = benchmark_session(sess, inp_shape, inp_name, args.warmup, args.runs, logger)
-            r['size_kb'] = os.path.getsize(fp16_path) / 1024
-            r['max_diff'] = float(np.max(np.abs(out_fp32 - sess.run(None, {inp_name: test_inp})[0])))
-            r['speedup'] = fp32_avg / r['avg_ms']
-            r['size_ratio'] = r['size_kb'] / model_results['FP32']['size_kb']
-            logger.info(
-                f"  FP16: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
-                f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
-                extra={"stage": model_stage},
-            )
-            model_results[prec] = r
-            del sess
-            log_mem(logger, model_stage, f"after {prec}")
+            # --- FP16 (optional) ---
+            if HAS_FP16:
+                prec_key, prec_label = "FP16", "FP16"
+                logger.info(f"--- {prec_label} ---", extra={"stage": model_stage})
+                fp16_path = os.path.join(tmpdir, model_name + '_fp16.onnx')
+                try:
+                    ok = convert_fp16(fp32_path, fp16_path, logger)
+                    if ok:
+                        r = run_precision(prec_key, prec_label, fp16_path, inp_shape, inp_name,
+                                          args.warmup, args.runs, intra_threads, fp32_avg, fp32_size,
+                                          test_inp, out_fp32, logger, model_stage)
+                        if r.get('error') is None:
+                            logger.info(
+                                f"  FP16: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
+                                f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
+                                extra={"stage": model_stage},
+                            )
+                        model_results[prec_key] = r
+                    else:
+                        model_results[prec_key] = error_result("FP16 conversion unavailable")
+                except Exception as e:
+                    logger.error(f"FP16 failed: {e}", extra={"stage": model_stage})
+                    model_results[prec_key] = error_result(str(e))
+                log_mem(logger, model_stage, f"after {prec_label}")
 
             # --- INT8 Dynamic ---
-            prec = "INT8-Dyn"
-            logger.info(f"--- {prec} ---", extra={"stage": model_stage})
+            prec_key, prec_label = "INT8_Dynamic", "INT8-Dyn"
+            logger.info(f"--- {prec_label} ---", extra={"stage": model_stage})
             dyn_path = os.path.join(tmpdir, model_name + '_dyn.onnx')
-            quantize_dynamic_int8(fp32_path, dyn_path, logger)
-            sess = create_session(dyn_path, intra_threads, logger)
-            r = benchmark_session(sess, inp_shape, inp_name, args.warmup, args.runs, logger)
-            r['size_kb'] = os.path.getsize(dyn_path) / 1024
-            r['max_diff'] = float(np.max(np.abs(out_fp32 - sess.run(None, {inp_name: test_inp})[0])))
-            r['speedup'] = fp32_avg / r['avg_ms']
-            r['size_ratio'] = r['size_kb'] / model_results['FP32']['size_kb']
-            logger.info(
-                f"  INT8 Dynamic: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
-                f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
-                extra={"stage": model_stage},
-            )
-            model_results[prec] = r
-            del sess
-            log_mem(logger, model_stage, f"after {prec}")
+            try:
+                quantize_dynamic_int8(fp32_path, dyn_path, logger)
+                r = run_precision(prec_key, prec_label, dyn_path, inp_shape, inp_name,
+                                  args.warmup, args.runs, intra_threads, fp32_avg, fp32_size,
+                                  test_inp, out_fp32, logger, model_stage)
+                if r.get('error') is None:
+                    logger.info(
+                        f"  INT8 Dynamic: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
+                        f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
+                        extra={"stage": model_stage},
+                    )
+                model_results[prec_key] = r
+            except Exception as e:
+                logger.error(f"INT8 Dynamic failed: {e}", extra={"stage": model_stage})
+                model_results[prec_key] = error_result(str(e))
+            log_mem(logger, model_stage, f"after {prec_label}")
 
             # --- INT8 Static QDQ ---
-            prec = "INT8-QDQ"
-            logger.info(f"--- {prec} ---", extra={"stage": model_stage})
+            prec_key, prec_label = "INT8_Static_QDQ", "INT8-QDQ"
+            logger.info(f"--- {prec_label} ---", extra={"stage": model_stage})
             qdq_path = os.path.join(tmpdir, model_name + '_qdq.onnx')
-            quantize_static_qdq(fp32_path, qdq_path, calib_data, inp_name, logger)
-            sess = create_session(qdq_path, intra_threads, logger)
-            r = benchmark_session(sess, inp_shape, inp_name, args.warmup, args.runs, logger)
-            r['size_kb'] = os.path.getsize(qdq_path) / 1024
-            r['max_diff'] = float(np.max(np.abs(out_fp32 - sess.run(None, {inp_name: test_inp})[0])))
-            r['speedup'] = fp32_avg / r['avg_ms']
-            r['size_ratio'] = r['size_kb'] / model_results['FP32']['size_kb']
-            logger.info(
-                f"  INT8 Static QDQ: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
-                f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
-                extra={"stage": model_stage},
-            )
-            model_results['INT8_Static_QDQ'] = r
-            del sess
-            log_mem(logger, model_stage, f"after {prec}")
+            try:
+                quantize_static_qdq(fp32_path, qdq_path, calib_data, inp_name, logger)
+                r = run_precision(prec_key, prec_label, qdq_path, inp_shape, inp_name,
+                                  args.warmup, args.runs, intra_threads, fp32_avg, fp32_size,
+                                  test_inp, out_fp32, logger, model_stage)
+                if r.get('error') is None:
+                    logger.info(
+                        f"  INT8 Static QDQ: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
+                        f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
+                        extra={"stage": model_stage},
+                    )
+                model_results[prec_key] = r
+            except Exception as e:
+                logger.error(f"INT8 Static QDQ failed: {e}", extra={"stage": model_stage})
+                model_results[prec_key] = error_result(str(e))
+            log_mem(logger, model_stage, f"after {prec_label}")
 
             # --- INT8 Static QOperator ---
-            prec = "INT8-QOp"
-            logger.info(f"--- {prec} ---", extra={"stage": model_stage})
+            prec_key, prec_label = "INT8_Static_QOperator", "INT8-QOp"
+            logger.info(f"--- {prec_label} ---", extra={"stage": model_stage})
             qop_path = os.path.join(tmpdir, model_name + '_qop.onnx')
-            quantize_static_qop(fp32_path, qop_path, calib_data, inp_name, logger)
-            sess = create_session(qop_path, intra_threads, logger)
-            r = benchmark_session(sess, inp_shape, inp_name, args.warmup, args.runs, logger)
-            r['size_kb'] = os.path.getsize(qop_path) / 1024
-            r['max_diff'] = float(np.max(np.abs(out_fp32 - sess.run(None, {inp_name: test_inp})[0])))
-            r['speedup'] = fp32_avg / r['avg_ms']
-            r['size_ratio'] = r['size_kb'] / model_results['FP32']['size_kb']
-            logger.info(
-                f"  INT8 Static QOp: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
-                f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
-                extra={"stage": model_stage},
-            )
-            model_results['INT8_Static_QOperator'] = r
-            del sess
-            log_mem(logger, model_stage, f"after {prec}")
+            try:
+                quantize_static_qop(fp32_path, qop_path, calib_data, inp_name, logger)
+                r = run_precision(prec_key, prec_label, qop_path, inp_shape, inp_name,
+                                  args.warmup, args.runs, intra_threads, fp32_avg, fp32_size,
+                                  test_inp, out_fp32, logger, model_stage)
+                if r.get('error') is None:
+                    logger.info(
+                        f"  INT8 Static QOp: avg={r['avg_ms']:.4f}ms size={r['size_kb']:.1f}KB "
+                        f"diff={r['max_diff']:.6f} speedup={r['speedup']:.2f}x",
+                        extra={"stage": model_stage},
+                    )
+                model_results[prec_key] = r
+            except Exception as e:
+                logger.error(f"INT8 Static QOp failed: {e}", extra={"stage": model_stage})
+                model_results[prec_key] = error_result(str(e))
+            log_mem(logger, model_stage, f"after {prec_label}")
 
-            # QDQ vs QOp comparison
-            qdq_avg = model_results['INT8_Static_QDQ']['avg_ms']
-            qop_avg = model_results['INT8_Static_QOperator']['avg_ms']
-            qdq_vs_qop = qdq_avg / qop_avg
-            winner = "QDQ" if qdq_avg < qop_avg else "QOperator"
-            logger.info(
-                f"  >> QDQ vs QOp ratio: {qdq_vs_qop:.3f}x (winner: {winner})",
-                extra={"stage": model_stage},
-            )
+            # QDQ vs QOp comparison (only if both succeeded)
+            qdq_r = model_results.get('INT8_Static_QDQ', {})
+            qop_r = model_results.get('INT8_Static_QOperator', {})
+            if qdq_r.get('error') is None and qop_r.get('error') is None:
+                qdq_avg = qdq_r['avg_ms']
+                qop_avg = qop_r['avg_ms']
+                qdq_vs_qop = qdq_avg / qop_avg if qop_avg > 0 else float('inf')
+                winner = "QDQ" if qdq_avg < qop_avg else "QOperator"
+                logger.info(
+                    f"  >> QDQ vs QOp ratio: {qdq_vs_qop:.3f}x (winner: {winner})",
+                    extra={"stage": model_stage},
+                )
+
             results[model_name] = model_results
             log_mem(logger, model_stage, "model complete")
 
         # Save results
         out_path = args.output
+        # Determine which precisions actually ran
+        ran_precisions = ["FP32"]
+        if HAS_FP16:
+            ran_precisions.append("FP16")
+        ran_precisions.extend(["INT8_Dynamic", "INT8_Static_QDQ", "INT8_Static_QOperator"])
         output_data = {
             'results': results,
             'config': {
@@ -518,32 +614,53 @@ def run_benchmark(args: argparse.Namespace) -> Dict[str, Any]:
                 'intra_threads': intra_threads,
                 'ort_version': ort.__version__,
                 'torch_version': torch.__version__,
+                'numpy_version': np.__version__,
                 'providers': ['CPUExecutionProvider'],
                 'omp_num_threads': os.environ.get('OMP_NUM_THREADS'),
                 'openblas_num_threads': os.environ.get('OPENBLAS_NUM_THREADS'),
+                'has_fp16': HAS_FP16,
+                'precisions_tested': ran_precisions,
             }
         }
+        os.makedirs(os.path.dirname(os.path.abspath(out_path)), exist_ok=True)
         with open(out_path, 'w', encoding='utf-8') as f:
-            json.dump(output_data, f, indent=2, ensure_ascii=False)
+            json.dump(output_data, f, indent=2, ensure_ascii=False, default=str)
         logger.info(f"Results saved to {out_path}", extra={"stage": "save"})
 
         # Print summary table
         print(f'\n{SEP}')
         print('SUMMARY')
         print(SEP)
-        print(f'{"Model":<28} {"FP32":>8} {"FP16":>8} {"INT8-Dyn":>8} {"INT8-QDQ":>9} {"INT8-QOp":>9} | {"Best Speedup":>12}')
-        print('-' * 100)
+        col_widths = [25, 8, 8, 8, 9, 9]
+        header = f"{'Model':<25} {'FP32':>8}"
+        if HAS_FP16:
+            header += f" {'FP16':>8}"
+        header += f" {'INT8-Dyn':>8} {'INT8-QDQ':>9} {'INT8-QOp':>9} | {'Best':>12}"
+        print(header)
+        print('-' * (len(header) + 20))
         for name, data in results.items():
             fp32 = data['FP32']['avg_ms']
-            speeds = {
-                'FP16': data['FP16']['speedup'],
-                'INT8-Dyn': data['INT8-Dyn']['speedup'],
-                'INT8-QDQ': data['INT8_Static_QDQ']['speedup'],
-                'INT8-QOp': data['INT8_Static_QOperator']['speedup'],
-            }
-            best = max(speeds.items(), key=lambda x: x[1])
-            print(f'{name:<28} {fp32:>7.3f}m {data["FP16"]["avg_ms"]:>7.3f}m {data["INT8-Dyn"]["avg_ms"]:>7.3f}m '
-                  f'{data["INT8_Static_QDQ"]["avg_ms"]:>8.3f}m {data["INT8_Static_QOperator"]["avg_ms"]:>8.3f}m | {best[0]:>9}: {best[1]:.2f}x')
+            row = f'{name:<25} {fp32:>7.3f}m'
+            speeds = {}
+            if HAS_FP16 and 'FP16' in data and data['FP16'].get('error') is None:
+                row += f" {data['FP16']['avg_ms']:>7.3f}m"
+                speeds['FP16'] = data['FP16']['speedup']
+            elif HAS_FP16:
+                row += f" {'N/A':>7} "
+            for key in ['INT8_Dynamic', 'INT8_Static_QDQ', 'INT8_Static_QOperator']:
+                label = {'INT8_Dynamic': 'INT8-Dyn', 'INT8_Static_QDQ': 'INT8-QDQ', 'INT8_Static_QOperator': 'INT8-QOp'}[key]
+                if key in data and data[key].get('error') is None:
+                    d = data[key]
+                    row += f" {d['avg_ms']:>8.3f}m"
+                    speeds[label] = d['speedup']
+                else:
+                    row += f" {'N/A':>8} "
+            if speeds:
+                best = max(speeds.items(), key=lambda x: x[1])
+                row += f" | {best[0]:>9}: {best[1]:.2f}x"
+            else:
+                row += " | N/A"
+            print(row)
         print(f'\nResults saved to {out_path}')
         return output_data
 
@@ -561,7 +678,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument('-r', '--runs', type=int, default=RUNS, help='Timed benchmark iterations')
     parser.add_argument('-c', '--calib', type=int, default=CALIB_SAMPLES, help='Calibration samples for static quantization')
     parser.add_argument('-t', '--threads', type=int, default=4, help='OR intra-op threads')
-    parser.add_argument('-o', '--output', type=str, default=str(Path(tempfile.gettempdir()) / 'benchmark_results.json'), help='Results JSON output path')
+    default_out = str(Path(tempfile.gettempdir()) / 'benchmark_results.json')
+    parser.add_argument('-o', '--output', type=str, default=default_out, help='Results JSON output path')
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable debug logging')
     return parser.parse_args()
 
