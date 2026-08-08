@@ -499,6 +499,7 @@ jobs:
           fi
 
           # Run benchmarks in onnx-quantized image (includes FP16 support)
+          echo "[INFO] Starting docker container for benchmarks..."
           docker run --rm \
             -v $(pwd)/scripts:/benchmark:ro \
             -v $(pwd)/benchmark-results-ci:/results \
@@ -507,29 +508,7 @@ jobs:
             -e OPENBLAS_NUM_THREADS=1 \
             -e OMP_WAIT_POLICY=PASSIVE \
             devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
-            bash -lc "
-              set -e
-              echo '[CONTAINER] Running quantization benchmark...'
-              python /benchmark/benchmark_quantization.py \
-                --output /results/benchmark_results.json \
-                --threads 4 \
-                $BENCH_ARGS
-              echo ''
-              echo '[CONTAINER] Benchmark complete, results summary:'
-              python -c \"
-import json
-with open('/results/benchmark_results.json') as f:
-    data = json.load(f)
-print(f'  Models tested: {len(data[\\\"results\\\"])}')
-for name, r in data['results'].items():
-    fp32 = r['FP32']['avg_ms']
-    best = max(
-        [(p, r[p]['speedup']) for p in ['FP16','INT8-Dyn','INT8_Static_QDQ','INT8_Static_QOperator'] if p in r and 'speedup' in r[p]],
-        key=lambda x: x[1], default=('N/A', 1.0)
-    )
-    print(f'  {name}: FP32={fp32:.3f}ms, best={best[0]} ({best[1]:.2f}x)')
-\"
-            "
+            bash -lc "python /benchmark/benchmark_quantization.py --output /results/benchmark_results.json --threads 4 $BENCH_ARGS && echo '[CONTAINER] Benchmark completed successfully'"
 
           # Run analysis script if available
           if [ -f scripts/analyze_benchmark.py ]; then
