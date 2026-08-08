@@ -196,18 +196,20 @@ tags: ["onnx", "quantization", "benchmark", "ci", "devcontainer", "performance"]
 
 ### 3.4 萃取模式：Docker-based CI Benchmark Pattern
 
+> **状态**：✅ **已归档（validated）** — 已落地实现为 [devcontainer-variants.yml Stage 6/6](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)，配套 [test-onnx-quantized.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/scripts/test-onnx-quantized.sh) 20项L1-L6分层测试验证。
+
 **触发场景**：
 - 需要在CI中自动运行性能基准测试
 - 测试依赖复杂的Python/C++环境
 - 需要跨run对比性能趋势
 
-**核心步骤**：
-1. **镜像选择**：在包含完整依赖的最终变体镜像中运行（而非基础镜像）
-2. **结果挂载**：通过`-v $(pwd)/results:/results`挂载输出目录
-3. **环境变量固定**：显式设置OMP_NUM_THREADS/OPENBLAS_NUM_THREADS避免CI机器配置差异
-4. **分层触发**：PR不跑→main跑quick→nightly跑full
-5. **Artifact留存**：结果JSON+分析报告上传，保留30天
-6. **回归阈值**：定义明确的PASS/FAIL阈值（如性能下降>10%告警）
+**核心步骤**（已验证）：
+1. **镜像选择**：在包含完整依赖的最终变体镜像中运行（而非基础镜像） ✅ 已验证（CI中使用devcontainer-base:onnx-quantized镜像）
+2. **结果挂载**：通过`-v $(pwd)/results:/results`挂载输出目录 ✅ 已验证
+3. **环境变量固定**：显式设置OMP_NUM_THREADS/OPENBLAS_NUM_THREADS避免CI机器配置差异 ✅ 已验证
+4. **分层触发**：PR不跑→main跑quick→nightly跑full ✅ 已验证
+5. **Artifact留存**：结果JSON+分析报告上传，保留30天 ✅ 已验证
+6. **回归阈值**：定义明确的PASS/FAIL阈值（如性能下降>10%告警） ⏳ TODO：待实现性能回归检测门禁
 
 **反模式**：
 - ❌ 在PR中跑完整benchmark（浪费CI时间，延迟反馈）

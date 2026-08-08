@@ -12,6 +12,7 @@
 #   --output DIR Host directory to mount for results (default: ./benchmark-results)
 #   --variant V  Variant to use: onnx-pytorch (default) or onnx-quantized (includes FP16 support)
 #   --image TAG  Override Docker image (default depends on --variant)
+#   --verbose    Verbose mode: pass -v to benchmark script, show docker commands
 #   --help       Show this help
 #
 # Examples:
@@ -28,6 +29,7 @@ PROJECT_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 USE_CN=0
 QUICK_MODE=0
 FULL_MODE=0
+VERBOSE=0
 THREADS=4
 OUTPUT_DIR="${SCRIPT_DIR}/../benchmark-results"
 VARIANT="onnx-pytorch"
@@ -39,12 +41,13 @@ while [[ $# -gt 0 ]]; do
         --cn) USE_CN=1; shift ;;
         --quick) QUICK_MODE=1; shift ;;
         --full) FULL_MODE=1; shift ;;
+        --verbose) VERBOSE=1; shift ;;
         --threads) THREADS="$2"; shift 2 ;;
         --output) OUTPUT_DIR="$2"; shift 2 ;;
         --variant) VARIANT="$2"; shift 2 ;;
         --image) IMAGE_TAG="$2"; shift 2 ;;
         --help|-h)
-            head -25 "$0" | grep '^#' | sed 's/^# \?//'
+            head -27 "$0" | grep '^#' | sed 's/^# \?//'
             exit 0
             ;;
         *) echo "Unknown option: $1"; exit 1 ;;
@@ -75,6 +78,7 @@ echo "  Image:     ${IMAGE_TAG}"
 echo "  Threads:   ${THREADS}"
 echo "  Quick mode: $([[ ${QUICK_MODE} -eq 1 ]] && echo 'YES' || echo 'NO')"
 echo "  Full mode:  $([[ ${FULL_MODE} -eq 1 ]] && echo 'YES' || echo 'NO')"
+echo "  Verbose:    $([[ ${VERBOSE} -eq 1 ]] && echo 'YES' || echo 'NO')"
 echo "  CN mirror:  $([[ ${USE_CN} -eq 1 ]] && echo 'YES' || echo 'NO')"
 echo "  Output:    ${OUTPUT_DIR}"
 echo "============================================================"
@@ -115,6 +119,7 @@ elif [[ ${FULL_MODE} -eq 1 ]]; then
 else
     BENCH_ARGS="${BENCH_ARGS} --warmup 5 --runs 20 --calib 10"
 fi
+[[ ${VERBOSE} -eq 1 ]] && BENCH_ARGS="${BENCH_ARGS} -v"
 BENCH_ARGS="${BENCH_ARGS} --output /results/benchmark_results.json"
 
 # Environment variables for OpenMP
@@ -125,14 +130,24 @@ ENV_VARS=(
     -e KMP_DUPLICATE_LIB_OK=TRUE
 )
 
-echo ""
-echo "[INFO] Starting benchmark container..."
-echo "[INFO] Benchmark args: ${BENCH_ARGS}"
-echo ""
-
 # Run the container
 # Mount: scripts dir -> /benchmark, output dir -> /results
 CONTAINER_NAME="onnx-bench-$(date +%Y%m%d-%H%M%S)"
+
+echo ""
+echo "[INFO] Starting benchmark container..."
+echo "[INFO] Benchmark args: ${BENCH_ARGS}"
+if [[ ${VERBOSE} -eq 1 ]]; then
+    echo "[INFO] Docker command:"
+    echo "  docker run --rm --name ${CONTAINER_NAME} \\"
+    for ev in "${ENV_VARS[@]}"; do
+        echo "    ${ev} \\"
+    done
+    echo "    -v ${SCRIPT_DIR}:/benchmark:ro \\"
+    echo "    -v ${OUTPUT_DIR}:/results \\"
+    echo "    ${IMAGE_TAG} bash -lc '...'"
+    echo ""
+fi
 
 docker run --rm \
     --name "${CONTAINER_NAME}" \
@@ -149,7 +164,7 @@ docker run --rm \
         echo '  CPU count:' \$(nproc)
         echo ''
         echo '[CONTAINER] Running benchmark...'
-        python /benchmark/benchmark_quantization.py -v ${BENCH_ARGS}
+        python /benchmark/benchmark_quantization.py ${BENCH_ARGS}
         echo ''
         echo '[CONTAINER] Benchmark complete! Results saved to /results/benchmark_results.json'
         echo '[CONTAINER] Result summary:'
