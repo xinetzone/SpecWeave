@@ -47,6 +47,12 @@ ENV CONDA_DIR=/opt/conda
 
 ENV PATH=/opt/conda/bin:${PATH}
 
+# OpenMP defaults for quantized inference performance (prevents over-subscription)
+ENV OMP_NUM_THREADS=4
+ENV OPENBLAS_NUM_THREADS=1
+ENV OMP_WAIT_POLICY=PASSIVE
+ENV KMP_DUPLICATE_LIB_OK=TRUE
+
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
@@ -329,6 +335,69 @@ os.remove(quant_path)
 print("[OK] QUANTIZATION SMOKE TEST PASSED")
 QSMOKE
 echo "[OK] Quantization smoke test passed"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
+echo "│  [FINAL VERIFICATION - FP16 SMOKE]             │"
+echo "│  Create model → FP16 convert → run inference   │"
+echo "└─────────────────────────────────────────────────┘"
+python - <<'FP16SMOKE'
+import torch
+import onnx
+import numpy as np
+from onnxconverter_common import float16
+import onnxruntime as ort
+
+# Create FP32 model
+class SimpleModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = torch.nn.Linear(8, 4)
+    def forward(self, x):
+        return self.fc(x) * 0.5 + 1.0
+
+model = SimpleModel().eval()
+dummy = torch.randn(1, 8)
+fp32_path = "/tmp/test_fp32.onnx"
+fp16_path = "/tmp/test_fp16.onnx"
+
+torch.onnx.export(model, dummy, fp32_path,
+                  input_names=["input"], output_names=["output"],
+                  opset_version=18, do_constant_folding=True)
+print("[OK] Exported FP32 model")
+
+# Convert to FP16
+fp32_model = onnx.load(fp32_path)
+fp16_model = float16.convert_float_to_float16(fp32_model)
+onnx.save(fp16_model, fp16_path)
+print("[OK] Converted to FP16")
+
+# Verify FP16 inference
+fp16_model_loaded = onnx.load(fp16_path)
+onnx.checker.check_model(fp16_model_loaded)
+print("[OK] FP16 model passes ONNX checker")
+
+sess = ort.InferenceSession(fp16_path, providers=["CPUExecutionProvider"])
+inp = np.random.randn(1, 8).astype(np.float16)
+out = sess.run(None, {"input": inp})[0]
+
+# Compute expected (approximate)
+with torch.no_grad():
+    expected = model(torch.from_numpy(inp.astype(np.float32))).numpy()
+max_diff = np.max(np.abs(out.astype(np.float32) - expected))
+print(f"[OK] FP16 vs FP32 reference max diff: {max_diff:.6f} (expected < 0.5 for FP16 on CPU)")
+assert max_diff < 1.0, f"FP16 precision loss too high: {max_diff}"
+
+import os
+fp32_size = os.path.getsize(fp32_path)
+fp16_size = os.path.getsize(fp16_path)
+print(f"[OK] Model size: FP32={fp32_size}B, FP16={fp16_size}B, ratio={fp16_size/fp32_size:.2%}")
+
+os.remove(fp32_path)
+os.remove(fp16_path)
+print("[OK] FP16 SMOKE TEST PASSED")
+FP16SMOKE
+echo "[OK] FP16 smoke test passed"
 echo ""
 
 _NOW=$(date +%s)

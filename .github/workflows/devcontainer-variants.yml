@@ -474,6 +474,80 @@ jobs:
           echo ""
           echo "✅ onnx-quantized validation passed"
 
+      # ── Stage 6/6: Run ONNX quantization benchmarks (main/schedule only) ──
+      - name: Run ONNX quantization benchmarks
+        if: github.event_name != 'pull_request'
+        id: run_benchmarks
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  STAGE 6/6: ONNX Quantization Benchmarks                   ║"
+          echo "║  (main push & nightly only — skipped on PR for speed)      ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          BENCH_START=$(date +%s)
+
+          mkdir -p benchmark-results-ci
+
+          # Determine benchmark mode
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            BENCH_ARGS="--warmup 20 --runs 100 --calib 100"
+            echo "[INFO] Nightly build: FULL benchmark (warmup=20, runs=100, calib=100)"
+          else
+            BENCH_ARGS="--warmup 5 --runs 20 --calib 10"
+            echo "[INFO] Main push: QUICK benchmark (warmup=5, runs=20, calib=10)"
+          fi
+
+          # Run benchmarks in onnx-quantized image (includes FP16 support)
+          docker run --rm \
+            -v $(pwd)/scripts:/benchmark:ro \
+            -v $(pwd)/benchmark-results-ci:/results \
+            -e KMP_DUPLICATE_LIB_OK=TRUE \
+            -e OMP_NUM_THREADS=4 \
+            -e OPENBLAS_NUM_THREADS=1 \
+            -e OMP_WAIT_POLICY=PASSIVE \
+            devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
+            bash -lc "
+              set -e
+              echo '[CONTAINER] Running quantization benchmark...'
+              python /benchmark/benchmark_quantization.py \
+                --output /results/benchmark_results.json \
+                --threads 4 \
+                $BENCH_ARGS
+              echo ''
+              echo '[CONTAINER] Benchmark complete, results summary:'
+              python -c \"
+import json
+with open('/results/benchmark_results.json') as f:
+    data = json.load(f)
+print(f'  Models tested: {len(data[\\\"results\\\"])}')
+for name, r in data['results'].items():
+    fp32 = r['FP32']['avg_ms']
+    best = max(
+        [(p, r[p]['speedup']) for p in ['FP16','INT8-Dyn','INT8_Static_QDQ','INT8_Static_QOperator'] if p in r and 'speedup' in r[p]],
+        key=lambda x: x[1], default=('N/A', 1.0)
+    )
+    print(f'  {name}: FP32={fp32:.3f}ms, best={best[0]} ({best[1]:.2f}x)')
+\"
+            "
+
+          # Run analysis script if available
+          if [ -f scripts/analyze_benchmark.py ]; then
+            echo "[INFO] Running analysis..."
+            docker run --rm \
+              -v $(pwd)/scripts:/benchmark:ro \
+              -v $(pwd)/benchmark-results-ci:/results \
+              devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
+              /opt/conda/bin/python /benchmark/analyze_benchmark.py /results/benchmark_results.json \
+                --output /results/benchmark_report.md 2>&1 || echo "[WARN] analyze_benchmark.py returned non-zero"
+          fi
+
+          BENCH_END=$(date +%s)
+          echo ""
+          echo "Benchmark duration: $((BENCH_END - BENCH_START))s"
+          echo "Results saved to: benchmark-results-ci/"
+          echo "✅ Benchmarks completed"
+
       # ── Final summary ─────────────────────────────────────────────────
       - name: Build summary
         if: always()
@@ -679,5 +753,6 @@ jobs:
           path: |
             /tmp/build-logs/
             /tmp/diag-${{ github.sha }}/
+            ${{ env.PROJECT_DIR }}/benchmark-results-ci/
           retention-days: 30
           if-no-files-found: ignore

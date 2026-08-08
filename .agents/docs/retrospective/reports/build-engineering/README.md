@@ -1,7 +1,7 @@
 ---
 id: "retrospective-reports-build-engineering-index"
 title: "构建工程复盘报告索引"
-date: "2026-08-07"
+date: "2026-08-08"
 type: "index"
 ---
 
@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（18份）
+## 报告清单（19份）
 
-| 报告名称（原子化目录） | 简要说明 | 日期 |
+| 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `insight-onnx-quantization-benchmark-analysis-20260808.md` | ONNX量化基准测试洞察报告（R-I-E链路）：4种模型INT8量化性能分析（MLP最高8.1x加速、小CNN Dynamic量化反降速）、CI分层基准测试集成方案设计、Docker-based CI Benchmark Pattern萃取、onnx-quantized变体依赖检查发现3项遗漏 | 2026-08-08 |
 | `retrospective-agents-atomization-seven-docker-projects-20260807/` | 7个Docker子项目.agents原子化改造全面复盘（R-I-E-A-C）：21个原子规则文件+ID唯一性零冲突+BuildKit兼容性补全；AI上下文Token消耗平均降低60-70%，新增check-rules-id-uniqueness.ps1批量检查脚本，原子提交afa9d346 | 2026-08-07 |
 | `retrospective-devcontainer-base-seven-concepts-20260807/` | devcontainer-base 全功能开发容器构建验证与部署里程碑复盘：Ubuntu26.04+SSH+Docker DinD+Podman+Jupyter多服务容器，解决dockerd配置冲突、Compose环境变量覆盖、WSL2环境适配三大问题，萃取DinD无冲突配置、Compose变量覆盖、构建验证三段式三个可复用模式 | 2026-08-07 |
 | `retrospective-jupyter-ssh-base-seven-concepts-20260807/` | jupyter-ssh-base 七概念方法论全面复盘（R-I-E-V）：多入口环境变量链路隔离、Dockerfile Runtime六步逻辑分层、容器健康检查最小探针三大洞察；更新PATH四重保障模式至L2，新增Dockerfile分层和健康检查两个L1模式 | 2026-08-07 |
@@ -58,3 +59,6 @@ type: "index"
 - 7个Docker子项目.agents原子化改造（R-I-E-A-C链路，21个规则文件零冲突，Token消耗降低60-70%）
 - devcontainer-base 全功能开发容器构建验证（DinD无冲突配置+Compose变量覆盖+构建验证三段式模式）
 - jupyter-ssh-base 七概念方法论全面复盘（R-I-E-V链路，3个洞察，1个L2模式更新+2个L1新模式）
+
+### ONNX 量化系列（1份）
+- ONNX量化基准测试性能分析+CI集成方案+依赖检查洞察报告（R-I-E链路，3个核心洞察，1个CI集成模式，5个原子化行动项）

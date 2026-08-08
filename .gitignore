@@ -102,6 +102,9 @@ ci-artifacts-new-*/
 # Benchmark 运行结果
 apps/devcontainer-base/benchmark-results-docker/
 apps/devcontainer-base/benchmark-results/
+apps/devcontainer-base/benchmark-results-onnx-pytorch/
+apps/devcontainer-base/benchmark-results-onnx-quantized/
+apps/devcontainer-base/benchmark-results-ci/
 
 # HTML 分享包
 .trae-html-share-packages/
