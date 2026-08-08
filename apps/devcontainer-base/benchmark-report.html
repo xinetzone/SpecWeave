@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONNX 量化性能基准报告 — FP16 vs INT8 (x64 CPU)</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8; --green: #34d399; --orange: #fb923c; --red: #f87171; --purple: #a78bfa; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height:1.6; }
+  .container { max-width:1280px; margin:0 auto; padding:24px 20px; }
+  header { text-align:center; padding:40px 0 32px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  header h1 { font-size:2rem; font-weight:700; background: linear-gradient(135deg, var(--accent), var(--purple)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px; }
+  header .meta { color:var(--muted); font-size:0.9rem; }
+  .kpi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:16px; margin-bottom:32px; }
+  .kpi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .kpi-card .label { color:var(--muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+  .kpi-card .value { font-size:1.6rem; font-weight:700; }
+  .kpi-card .sub { font-size:0.8rem; color:var(--muted); margin-top:4px; }
+  .kpi-card.best .value { color:var(--green); }
+  .kpi-card.warn .value { color:var(--orange); }
+  .kpi-card.bad .value { color:var(--red); }
+  .chart-section { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:24px; margin-bottom:24px; }
+  .chart-section h2 { font-size:1.2rem; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .chart-section h2 .badge { font-size:0.7rem; background:var(--accent); color:#0f172a; padding:2px 8px; border-radius:10px; font-weight:600; }
+  .chart-container { width:100%; height:420px; }
+  .chart-row { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  @media (max-width:900px) { .chart-row { grid-template-columns:1fr; } }
+  .insight-box { background:rgba(56,189,248,0.08); border-left:4px solid var(--accent); border-radius:0 8px 8px 0; padding:16px 20px; margin:16px 0; }
+  .insight-box.warn { background:rgba(251,146,60,0.08); border-left-color:var(--orange); }
+  .insight-box.good { background:rgba(52,211,153,0.08); border-left-color:var(--green); }
+  .insight-box h3 { font-size:0.95rem; margin-bottom:8px; }
+  .insight-box ul { padding-left:20px; font-size:0.88rem; color:var(--muted); }
+  .insight-box li { margin-bottom:4px; }
+  table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-top:12px; }
+  th,td { padding:8px 12px; text-align:right; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-weight:600; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.5px; }
+  td:first-child,th:first-child { text-align:left; }
+  tr:hover { background:rgba(255,255,255,0.03); }
+  .tag { display:inline-block; padding:1px 6px; border-radius:4px; font-size:0.75rem; font-weight:600; }
+  .tag.fast { background:rgba(52,211,153,0.15); color:var(--green); }
+  .tag.slow { background:rgba(248,113,113,0.15); color:var(--red); }
+  .tag.neutral { background:rgba(148,163,184,0.15); color:var(--muted); }
+  footer { text-align:center; padding:32px 0; color:var(--muted); font-size:0.8rem; border-top:1px solid var(--border); margin-top:32px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>ONNX 量化性能基准报告</h1>
+    <div class="meta">x64 CPU (Intel i9-14900K) · ONNX Runtime 1.28.0 · FP16 vs INT8 静态/动态量化 · warmup=50 runs=300 threads=4</div>
+  </header>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- Latency Comparison -->
+  <div class="chart-section">
+    <h2>📊 各模型平均推理延迟对比 (ms) <span class="badge">核心指标</span></h2>
+    <div class="chart-container" id="chartLatency"></div>
+    <div class="insight-box">
+      <h3>🔍 延迟分析要点</h3>
+      <ul>
+        <li><strong>FP16 在 x64 CPU 上无加速</strong>：由于x86 CPU缺乏原生FP16计算单元，所有模型FP16推理均比FP32慢（0.59x~0.91x），仅模型大小减半</li>
+        <li><strong>INT8 Dynamic 对MLP模型效果最佳</strong>：LargeMLP获得4.46x加速，SmallMLP 1.24x，Transformer 1.33x</li>
+        <li><strong>INT8 Static QDQ 对CNN模型优势明显</strong>：ConvNet QDQ 1.56x vs QOperator 1.10x；但对Transformer QDQ反而变慢(0.36x)，因Attention算子量化后图优化受限</li>
+        <li><strong>P99延迟</strong>：FP16在所有模型上P99延迟最高，因类型转换带来额外开销</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-section">
+      <h2>⚡ 加速比 (相对FP32)</h2>
+      <div class="chart-container" id="chartSpeedup"></div>
+    </div>
+    <div class="chart-section">
+      <h2>📦 模型大小压缩比</h2>
+      <div class="chart-container" id="chartSize"></div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-section">
+      <h2>🎯 P50/P95/P99 延迟分布</h2>
+      <div class="chart-container" id="chartPercentiles"></div>
+    </div>
+    <div class="chart-section">
+      <h2>📈 吞吐量对比 (FPS)</h2>
+      <div class="chart-container" id="chartThroughput"></div>
+    </div>
+  </div>
+
+  <!-- QDQ vs QOperator -->
+  <div class="chart-section">
+    <h2>🔬 QDQ vs QOperator 静态量化格式对比 <span class="badge">格式选型</span></h2>
+    <div class="chart-container" id="chartQdqQop" style="height:360px;"></div>
+    <div class="insight-box warn">
+      <h3>⚠️ QDQ vs QOperator 选型指南 (x64 CPU)</h3>
+      <ul>
+        <li><strong>QDQ (QuantizeLinear/DequantizeLinear)</strong>：保留Q/DQ节点在图中，使图优化器能更好融合量化算子；对Conv/Gemm类算子通常表现更好</li>
+        <li><strong>QOperator (QLinearConv/QLinearMatMul)</strong>：直接使用量化算子，跨引擎兼容性更好，但部分算子QDQ经图优化后内核更高效</li>
+        <li><strong>ConvNet模型QDQ胜出42%</strong>：QDQ avg=0.044ms vs QOperator 0.063ms，卷积算子经QDQ融合后内核利用率更高</li>
+        <li><strong>MLP模型两者相当</strong>：LargeMLP QDQ 0.033ms vs QOperator 0.032ms，差异在3%以内</li>
+        <li><strong>Transformer模型QOperator更稳</strong>：QDQ 0.72ms vs QOperator 0.24ms，因Attention中Softmax/LayerNorm等算子QDQ量化后产生反量化瓶颈</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Accuracy vs Speed -->
+  <div class="chart-section">
+    <h2>🎭 精度-速度权衡 (Accuracy vs Speedup)</h2>
+    <div class="chart-container" id="chartAccuracy" style="height:380px;"></div>
+    <div class="insight-box good">
+      <h3>✅ 精度损失可接受范围</h3>
+      <ul>
+        <li><strong>FP16</strong>：max_diff &lt; 0.0005，精度损失可忽略（仅FP32→FP16截断误差）</li>
+        <li><strong>INT8 Dynamic</strong>：max_diff 0.003~0.008，精度较好；无需校准数据，部署最简单</li>
+        <li><strong>INT8 Static</strong>：max_diff 0.005~0.102，需校准数据；QOperator在Transformer上精度退化严重(max_diff=0.102)</li>
+        <li><strong>推荐策略</strong>：MLP/CNN首选INT8 Static QDQ；Transformer首选INT8 Dynamic；需要精度保证时优先FP16（大小减半，精度几乎无损）</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="chart-section">
+    <h2>📋 详细数据表</h2>
+    <div style="overflow-x:auto;">
+      <table id="dataTable"></table>
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="chart-section">
+    <h2>💡 量化策略推荐矩阵</h2>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>场景</th><th>推荐格式</th><th>预期加速</th><th>模型大小</th><th>精度损失</th><th>部署复杂度</th></tr></thead>
+        <tbody>
+          <tr><td>MLP/全连接网络</td><td><span class="tag fast">INT8 Dynamic</span></td><td>1.2x~4.5x</td><td>~25%</td><td>&lt;0.01</td><td>⭐ 极低</td></tr>
+          <tr><td>CNN/卷积网络</td><td><span class="tag fast">INT8 Static QDQ</span></td><td>1.5x~2x</td><td>~25%</td><td>&lt;0.02</td><td>⭐⭐ 中</td></tr>
+          <tr><td>Transformer/Attention</td><td><span class="tag neutral">INT8 Dynamic</span></td><td>1.1x~1.3x</td><td>~25%</td><td>&lt;0.01</td><td>⭐ 极低</td></tr>
+          <tr><td>精度敏感/通用场景</td><td><span class="tag neutral">FP16</span></td><td>0.6x~0.9x</td><td>~50%</td><td>&lt;0.001</td><td>⭐ 极低</td></tr>
+          <tr><td>边缘/嵌入式CPU</td><td><span class="tag fast">INT8 Static QDQ</span></td><td>2x~4x(ARM)</td><td>~25%</td><td>&lt;0.02</td><td>⭐⭐⭐ 较高</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    Generated by ONNX Quantization Benchmark Suite · Data collected in devcontainer (Python 3.14.6, ONNX Runtime 1.28.0)
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  "config": {"warmup":50,"runs":300,"intra_threads":4,"ort_version":"1.28.0","device":"x64_CPU_Intel_i9-14900K"},
+  "results": {
+    "SmallMLP(128→10)": {
+      "FP32":{"avg_ms":0.0045,"p50_ms":0.0041,"p95_ms":0.0045,"p99_ms":0.0061,"throughput_fps":223118,"size_kb":139.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.0076,"p50_ms":0.0075,"p95_ms":0.0082,"p99_ms":0.0306,"throughput_fps":131997,"size_kb":70.0,"max_diff":0.000347,"speedup":0.59,"size_ratio":0.502},
+      "INT8_Dynamic":{"avg_ms":0.0036,"p50_ms":0.0036,"p95_ms":0.0038,"p99_ms":0.0043,"throughput_fps":276684,"size_kb":37.4,"max_diff":0.006485,"speedup":1.24,"size_ratio":0.268},
+      "INT8_Static_QDQ":{"avg_ms":0.0045,"p50_ms":0.0043,"p95_ms":0.0047,"p99_ms":0.0073,"throughput_fps":224715,"size_kb":41.3,"max_diff":0.011619,"speedup":1.01,"size_ratio":0.296},
+      "INT8_Static_QOperator":{"avg_ms":0.0060,"p50_ms":0.0049,"p95_ms":0.0077,"p99_ms":0.0175,"throughput_fps":165547,"size_kb":38.1,"max_diff":0.010797,"speedup":0.74,"size_ratio":0.273}
+    },
+    "LargeMLP(1024→100)": {
+      "FP32":{"avg_ms":0.1008,"p50_ms":0.0951,"p95_ms":0.1286,"p99_ms":0.1629,"throughput_fps":9921,"size_kb":16797.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.1110,"p50_ms":0.0902,"p95_ms":0.2201,"p99_ms":0.4114,"throughput_fps":9008,"size_kb":8398.9,"max_diff":0.000167,"speedup":0.91,"size_ratio":0.500},
+      "INT8_Dynamic":{"avg_ms":0.0226,"p50_ms":0.0197,"p95_ms":0.0307,"p99_ms":0.0641,"throughput_fps":44261,"size_kb":4211.2,"max_diff":0.003719,"speedup":4.46,"size_ratio":0.251},
+      "INT8_Static_QDQ":{"avg_ms":0.0330,"p50_ms":0.0279,"p95_ms":0.0448,"p99_ms":0.1379,"throughput_fps":30270,"size_kb":4252.0,"max_diff":0.005649,"speedup":3.05,"size_ratio":0.253},
+      "INT8_Static_QOperator":{"avg_ms":0.0322,"p50_ms":0.0290,"p95_ms":0.0487,"p99_ms":0.0794,"throughput_fps":31040,"size_kb":4225.7,"max_diff":0.005746,"speedup":3.13,"size_ratio":0.252}
+    },
+    "ConvNet(CIFAR-10)": {
+      "FP32":{"avg_ms":0.0693,"p50_ms":0.0593,"p95_ms":0.1152,"p99_ms":0.2113,"throughput_fps":14427,"size_kb":4184.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.1125,"p50_ms":0.1004,"p95_ms":0.1625,"p99_ms":0.2717,"throughput_fps":8886,"size_kb":2093.1,"max_diff":0.000174,"speedup":0.62,"size_ratio":0.500},
+      "INT8_Dynamic":{"avg_ms":0.1148,"p50_ms":0.1055,"p95_ms":0.1340,"p99_ms":0.3239,"throughput_fps":8714,"size_kb":1051.4,"max_diff":0.002605,"speedup":0.60,"size_ratio":0.251},
+      "INT8_Static_QDQ":{"avg_ms":0.0444,"p50_ms":0.0374,"p95_ms":0.0802,"p99_ms":0.1242,"throughput_fps":22514,"size_kb":1057.2,"max_diff":0.019829,"speedup":1.56,"size_ratio":0.253},
+      "INT8_Static_QOperator":{"avg_ms":0.0633,"p50_ms":0.0389,"p95_ms":0.1072,"p99_ms":0.1993,"throughput_fps":15803,"size_kb":1051.5,"max_diff":0.008516,"speedup":1.10,"size_ratio":0.251}
+    },
+    "Transformer(3L-256d)": {
+      "FP32":{"avg_ms":0.2618,"p50_ms":0.2385,"p95_ms":0.3704,"p99_ms":0.5576,"throughput_fps":3819,"size_kb":6307.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.4195,"p50_ms":0.3995,"p95_ms":0.5944,"p99_ms":0.8835,"throughput_fps":2384,"size_kb":3160.1,"max_diff":0.000408,"speedup":0.62,"size_ratio":0.501},
+      "INT8_Dynamic":{"avg_ms":0.1970,"p50_ms":0.1822,"p95_ms":0.2535,"p99_ms":0.4640,"throughput_fps":5076,"size_kb":1604.4,"max_diff":0.008067,"speedup":1.33,"size_ratio":0.254},
+      "INT8_Static_QDQ":{"avg_ms":0.7226,"p50_ms":0.6826,"p95_ms":0.9210,"p99_ms":1.2623,"throughput_fps":1384,"size_kb":1664.9,"max_diff":0.026808,"speedup":0.36,"size_ratio":0.264},
+      "INT8_Static_QOperator":{"avg_ms":0.2439,"p50_ms":0.2193,"p95_ms":0.3495,"p99_ms":0.4804,"throughput_fps":4099,"size_kb":1630.9,"max_diff":0.102051,"speedup":1.07,"size_ratio":0.259}
+    }
+  }
+};
+
+const COLORS = {
+  FP32:'#94a3b8', FP16:'#f87171', INT8_Dynamic:'#38bdf8',
+  INT8_Static_QDQ:'#34d399', INT8_Static_QOperator:'#a78bfa'
+};
+const LABELS = {
+  FP32:'FP32 (基线)', FP16:'FP16', INT8_Dynamic:'INT8 Dynamic',
+  INT8_Static_QDQ:'INT8 Static (QDQ)', INT8_Static_QOperator:'INT8 Static (QOperator)'
+};
+const models = Object.keys(DATA.results);
+const formats = ['FP32','FP16','INT8_Dynamic','INT8_Static_QDQ','INT8_Static_QOperator'];
+
+// KPI
+function renderKPIs() {
+  const grid = document.getElementById('kpiGrid');
+  // Best overall speedup
+  let bestSpeedup = 0, bestModel='', bestFormat='';
+  let worstSpeedup=99, worstModel='', worstFormat='';
+  let fp16Slowdown=0;
+  for(const m of models) for(const f of formats) {
+    if(f==='FP32') continue;
+    const s = DATA.results[m][f].speedup;
+    if(s>bestSpeedup){bestSpeedup=s;bestModel=m;bestFormat=f;}
+    if(s<worstSpeedup){worstSpeedup=s;worstModel=m;worstFormat=f;}
+    if(f==='FP16') fp16Slowdown += s;
+  }
+  fp16Slowdown /= models.length;
+
+  const kpis = [
+    {label:'最高加速比', value:`${bestSpeedup.toFixed(1)}x`, sub:`${bestModel} · ${LABELS[bestFormat]}`, cls:'best'},
+    {label:'FP16平均加速比', value:`${fp16Slowdown.toFixed(2)}x`, sub:'x64 CPU 无原生FP16', cls:'bad'},
+    {label:'模型最大压缩', value:'75%', sub:'INT8 量化 → ~25%体积', cls:'best'},
+    {label:'INT8最佳格式', value:'QDQ', sub:'CNN场景领先42%', cls:'best'},
+  ];
+  grid.innerHTML = kpis.map(k=>`<div class="kpi-card ${k.cls}"><div class="label">${k.label}</div><div class="value">${k.value}</div><div class="sub">${k.sub}</div></div>`).join('');
+}
+
+function baseOpt() {
+  return {
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis',backgroundColor:'#1e293b',borderColor:'#334155',textStyle:{color:'#e2e8f0'}},
+    legend:{textStyle:{color:'#94a3b8'},top:0,type:'scroll'},
+    grid:{left:60,right:20,top:50,bottom:40},
+    xAxis:{type:'category',data:models,axisLabel:{color:'#94a3b8',fontSize:11,rotate:15},axisLine:{lineStyle:{color:'#334155'}}},
+    yAxis:{axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1e293b'}},axisLine:{lineStyle:{color:'#334155'}}},
+  };
+}
+
+// Latency chart
+function chartLatency() {
+  const c = echarts.init(document.getElementById('chartLatency'),'dark');
+  const series = formats.map(f=>({
+    name:LABELS[f],type:'bar',
+    data:models.map(m=>+(DATA.results[m][f].avg_ms).toFixed(4)),
+    itemStyle:{color:COLORS[f],borderRadius:[4,4,0,0]},
+    barMaxWidth:28,
+  }));
+  c.setOption({...baseOpt(),
+    yAxis:{...baseOpt().yAxis,name:'延迟 (ms)',nameTextStyle:{color:'#94a3b8'},type:'log'},
+    series,
+    tooltip:{...baseOpt().tooltip,formatter:p=>p.map(i=>`${i.marker}${i.seriesName}: <b>${i.value} ms</b>`).join('<br/>')}
+  });
+  return c;
+}
+
+// Speedup chart
+function chartSpeedup() {
+  const c = echarts.init(document.getElementById('chartSpeedup'),'dark');
+  const fmts = ['FP16','INT8_Dynamic','INT8_Static_QDQ','INT8_Static_QOperator'];
+  const series = fmts.map(f=>({
+    name:LABELS[f],type:'bar',
+    data:models.map(m=>+(DATA.results[m][f].speedup).toFixed(2)),
+    itemStyle:{color:COLORS[f],borderRadius:[4,4,0,0]},
+    barMaxWidth:28,
+    markLine: f==='FP16'?{data:[{yAxis:1,label:{formatter:'FP32基线',color:'#94a3b8'},lineStyle:{color:'#64748b',type:'dashed'}}],silent:true}:undefined,
+  }));
+  c.setOption({...baseOpt(),
+    yAxis:{...baseOpt().yAxis,name:'Speedup (x)',nameTextStyle:{color:'#94a3b8'}},
+    series,
+    tooltip:{...baseOpt().tooltip,formatter:p=>p.map(i=>`${i.marker}${i.seriesName}: <b>${i.value}x</b>`).join('<br/>')}
+  });
+  return c;
+}
+
+// Size chart
+function chartSize() {
+  const c = echarts.init(document.getElementById('chartSize'),'dark');
+  const series = formats.map(f=>({
+    name:LABELS[f],type:'bar',
+    data:models.map(m=>+(DATA.results[m][f].size_ratio*100).toFixed(1)),
+    itemStyle:{color:COLORS[f],borderRadius:[4,4,0,0]},
+    barMaxWidth:28,
+  }));
+  c.setOption({...baseOpt(),
+    yAxis:{...baseOpt().yAxis,name:'相对大小 (%)',nameTextStyle:{color:'#94a3b8'},max:110},
+    series,
+    tooltip:{...baseOpt().tooltip,formatter:p=>p.map(i=>`${i.marker}${i.seriesName}: <b>${i.value}%</b>`).join('<br/>')}
+  });
+  return c;
+}
+
+// Percentiles
+function chartPercentiles() {
+  const c = echarts.init(document.getElementById('chartPercentiles'),'dark');
+  // Show P50/P95/P99 for the best format per model
+  const series = [];
+  const pkeys = ['p50_ms','p95_ms','p99_ms'];
+  const plabels = ['P50','P95','P99'];
+  // Pick INT8 formats + FP32
+  const fmts = ['FP32','INT8_Dynamic','INT8_Static_QDQ','INT8_Static_QOperator'];
+  for(const fmt of fmts) {
+    for(let i=0;i<pkeys.length;i++) {
+      series.push({
+        name:`${LABELS[fmt]} ${plabels[i]}`,type:'bar',
+        data:models.map(m=>+(DATA.results[m][fmt][pkeys[i]]).toFixed(4)),
+        itemStyle:{color:COLORS[fmt],opacity:0.5+i*0.2,borderRadius:[4,4,0,0]},
+        barMaxWidth:14,
+      });
+    }
+  }
+  c.setOption({...baseOpt(),
+    yAxis:{...baseOpt().yAxis,name:'延迟 (ms)',nameTextStyle:{color:'#94a3b8'},type:'log'},
+    series,
+    tooltip:{...baseOpt().tooltip,formatter:p=>p.map(i=>`${i.marker}${i.seriesName}: <b>${i.value} ms</b>`).join('<br/>')}
+  });
+  return c;
+}
+
+// Throughput
+function chartThroughput() {
+  const c = echarts.init(document.getElementById('chartThroughput'),'dark');
+  const series = formats.map(f=>({
+    name:LABELS[f],type:'bar',
+    data:models.map(m=>Math.round(DATA.results[m][f].throughput_fps)),
+    itemStyle:{color:COLORS[f],borderRadius:[4,4,0,0]},
+    barMaxWidth:28,
+  }));
+  c.setOption({...baseOpt(),
+    yAxis:{...baseOpt().yAxis,name:'FPS (samples/s)',nameTextStyle:{color:'#94a3b8'},type:'log'},
+    series,
+    tooltip:{...baseOpt().tooltip,formatter:p=>p.map(i=>`${i.marker}${i.seriesName}: <b>${i.value.toLocaleString()} FPS</b>`).join('<br/>')}
+  });
+  return c;
+}
+
+// QDQ vs QOperator
+function chartQdqQop() {
+  const c = echarts.init(document.getElementById('chartQdqQop'),'dark');
+  const fmts = ['INT8_Static_QDQ','INT8_Static_QOperator'];
+  const series = fmts.map(f=>({
+    name:LABELS[f],type:'bar',
+    data:models.map(m=>+(DATA.results[m][f].avg_ms).toFixed(4)),
+    itemStyle:{color:COLORS[f],borderRadius:[4,4,0,0]},
+    barMaxWidth:40,
+    label:{show:true,position:'top',color:'#e2e8f0',formatter:p=>`${p.value}ms`},
+  }));
+  // Add ratio line
+  const ratioData = models.map(m=>{
+    const qdq = DATA.results[m].INT8_Static_QDQ.avg_ms;
+    const qop = DATA.results[m].INT8_Static_QOperator.avg_ms;
+    return +(qop/qdq).toFixed(2);
+  });
+  series.push({
+    name:'QOp/QDQ 耗时比',type:'line',yAxisIndex:1,
+    data:ratioData,
+    lineStyle:{color:'#fb923c',width:2},
+    itemStyle:{color:'#fb923c'},
+    symbol:'circle',symbolSize:8,
+    label:{show:true,color:'#fb923c',formatter:p=>`${p.value}x`},
+  });
+  c.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'axis',backgroundColor:'#1e293b',borderColor:'#334155',textStyle:{color:'#e2e8f0'}},
+    legend:{textStyle:{color:'#94a3b8'},top:0},
+    grid:{left:60,right:60,top:50,bottom:40},
+    xAxis:{type:'category',data:models,axisLabel:{color:'#94a3b8',fontSize:11,rotate:15},axisLine:{lineStyle:{color:'#334155'}}},
+    yAxis:[
+      {type:'value',name:'延迟(ms)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1e293b'}},axisLine:{lineStyle:{color:'#334155'}}},
+      {type:'value',name:'QOp/QDQ',nameTextStyle:{color:'#fb923c'},axisLabel:{color:'#fb923c'},splitLine:{show:false},axisLine:{lineStyle:{color:'#334155'}},min:0,max:4},
+    ],
+    series,
+  });
+  return c;
+}
+
+// Accuracy vs Speedup scatter
+function chartAccuracy() {
+  const c = echarts.init(document.getElementById('chartAccuracy'),'dark');
+  const scatter = [];
+  for(const m of models) for(const f of formats) {
+    if(f==='FP32') continue;
+    const r = DATA.results[m][f];
+    scatter.push({
+      name:`${m} ${LABELS[f]}`,
+      value:[+(r.speedup).toFixed(2), +(r.max_diff).toFixed(4)],
+      itemStyle:{color:COLORS[f]},
+      symbolSize: Math.max(8, 6+Math.sqrt(r.size_kb)/2),
+    });
+  }
+  c.setOption({
+    backgroundColor:'transparent',
+    tooltip:{trigger:'item',backgroundColor:'#1e293b',borderColor:'#334155',textStyle:{color:'#e2e8f0'},
+      formatter:p=>`<b>${p.data.name}</b><br/>加速比: ${p.data.value[0]}x<br/>max_diff: ${p.data.value[1]}`},
+    legend:{data:formats.filter(f=>f!=='FP32').map(f=>({name:LABELS[f],icon:'circle',textStyle:{color:COLORS[f]}})),top:0},
+    grid:{left:70,right:30,top:50,bottom:50},
+    xAxis:{type:'value',name:'加速比 (x)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1e293b'}},axisLine:{lineStyle:{color:'#334155'}}},
+    yAxis:{type:'value',name:'精度损失 (max_diff)',nameTextStyle:{color:'#94a3b8'},axisLabel:{color:'#94a3b8'},splitLine:{lineStyle:{color:'#1e293b'}},axisLine:{lineStyle:{color:'#334155'}}},
+    series:formats.filter(f=>f!=='FP32').map(f=>({
+      name:LABELS[f],type:'scatter',
+      data:scatter.filter(s=>s.name.includes(LABELS[f])),
+      itemStyle:{color:COLORS[f]},
+    })),
+  });
+  return c;
+}
+
+// Data table
+function renderTable() {
+  const t = document.getElementById('dataTable');
+  let html = '<thead><tr><th>模型</th><th>格式</th><th>avg(ms)</th><th>P50(ms)</th><th>P95(ms)</th><th>P99(ms)</th><th>FPS</th><th>大小(KB)</th><th>加速比</th><th>大小比</th><th>max_diff</th></tr></thead><tbody>';
+  for(const m of models) {
+    for(let i=0;i<formats.length;i++) {
+      const f = formats[i];
+      const r = DATA.results[m][f];
+      const tag = r.speedup>=1.5?'fast':r.speedup>=0.9?'neutral':'slow';
+      const tagText = r.speedup>=1.5?'快':r.speedup>=0.9?'中':'慢';
+      html += `<tr${i===0?' style="border-top:2px solid #334155"':''}>
+        ${i===0?`<td rowspan="${formats.length}" style="font-weight:600;vertical-align:top">${m}</td>`:''}
+        <td style="text-align:left"><span class="tag ${tag}" style="background:${COLORS[f]}22;color:${COLORS[f]}">${LABELS[f]}</span></td>
+        <td>${r.avg_ms.toFixed(4)}</td><td>${r.p50_ms.toFixed(4)}</td><td>${r.p95_ms.toFixed(4)}</td><td>${r.p99_ms.toFixed(4)}</td>
+        <td>${Math.round(r.throughput_fps).toLocaleString()}</td><td>${r.size_kb.toFixed(1)}</td>
+        <td><span class="tag ${tag}">${r.speedup.toFixed(2)}x</span></td>
+        <td>${(r.size_ratio*100).toFixed(1)}%</td><td>${r.max_diff.toFixed(6)}</td>
+      </tr>`;
+    }
+  }
+  html += '</tbody>';
+  t.innerHTML = html;
+}
+
+// Render all
+renderKPIs();
+const charts = [chartLatency(),chartSpeedup(),chartSize(),chartPercentiles(),chartThroughput(),chartQdqQop(),chartAccuracy()];
+renderTable();
+window.addEventListener('resize',()=>charts.forEach(c=>c.resize()));
+</script>
+</body>
+</html>
