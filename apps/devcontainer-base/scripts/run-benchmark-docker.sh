@@ -185,10 +185,11 @@ with open('${RESULTS_FILE}') as f:
 r = d.get('results', {})
 for name, m in r.items():
     fp32 = m.get('FP32', {}).get('avg_ms', 0)
-    precs = [(p, m[p]['speedup']) for p in ['FP16','INT8-Dyn','INT8_Static_QDQ','INT8_Static_QOperator'] if p in m]
+    precs = [(p, m[p]['speedup']) for p in ['FP16','INT8_Dynamic','INT8_Static_QDQ','INT8_Static_QOperator'] if p in m]
+    labels = {'FP16':'FP16','INT8_Dynamic':'INT8-Dyn','INT8_Static_QDQ':'INT8-QDQ','INT8_Static_QOperator':'INT8-QOp'}
     if precs:
         best = max(precs, key=lambda x: x[1])
-        print(f'  {name}: FP32={fp32:.3f}ms, best={best[0]} ({best[1]:.2f}x)')
+        print(f'  {name}: FP32={fp32:.3f}ms, best={labels[best[0]]} ({best[1]:.2f}x)')
     else:
         print(f'  {name}: FP32={fp32:.3f}ms')
 " 2>/dev/null || echo "  (failed to parse results, see ${RESULTS_FILE})"
