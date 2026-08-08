@@ -62,6 +62,13 @@ docker_run_bash() {
     docker run --rm "$IMAGE" bash -c "$1" 2>&1
 }
 
+docker_run_mount_bash() {
+    local host_dir="$1"
+    local container_dir="$2"
+    local cmd="$3"
+    docker run --rm -v "${host_dir}:${container_dir}:ro" "$IMAGE" bash -c "$cmd" 2>&1
+}
+
 # ─────────────────────────── L1 基础工具链版本（继承onnx-pytorch） ───────────────────────────
 test_torch_version() {
     local result
@@ -419,6 +426,93 @@ test_omp_env() {
     fi
 }
 
+# ─────────────────────────── L7 onnx_quantize_kit CI 集成测试（需挂载scripts目录） ───────────────────────────
+SCRIPTS_DIR=""
+find_scripts_dir() {
+    # 尝试定位 scripts/onnx_quantize_kit/ 目录
+    local candidate
+    # 从脚本位置向上查找: variants/scripts -> variants -> devcontainer-base
+    candidate="${VARIANTS_DIR}/../scripts"
+    if [ -d "$candidate/onnx_quantize_kit" ]; then
+        SCRIPTS_DIR="$(cd "$candidate" && pwd)"
+        return 0
+    fi
+    return 1
+}
+
+test_quantize_kit_import() {
+    if [ -z "$SCRIPTS_DIR" ]; then
+        skip "T21: onnx_quantize_kit not found (scripts dir not available), skipping"
+        return 0
+    fi
+    local result
+    result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
+        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python -c "from onnx_quantize_kit import auto_quantize, QuantizationConfig; print(\"kit-import-ok\")"' 2>&1)
+    if echo "$result" | grep -q "kit-import-ok"; then
+        pass "T21: onnx_quantize_kit importable from mounted scripts"
+        return 0
+    else
+        fail "T21: onnx_quantize_kit import failed, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
+test_ci_quantization_gate() {
+    if [ -z "$SCRIPTS_DIR" ]; then
+        skip "T22: ci_quantization_gate test skipped (scripts dir not available)"
+        return 0
+    fi
+    local result
+    result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
+        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python /opt/devcontainer/scripts/ci_quantization_gate.py --help' 2>&1)
+    if echo "$result" | grep -q "usage:" && echo "$result" | grep -q "CI Quantization Gate"; then
+        pass "T22: ci_quantization_gate.py --help works"
+        return 0
+    else
+        fail "T22: ci_quantization_gate.py --help failed, output: $(echo "$result" | tail -5)"
+        return 1
+    fi
+}
+
+test_quantize_kit_mock_model() {
+    if [ -z "$SCRIPTS_DIR" ]; then
+        skip "T23: onnx_quantize_kit mock model test skipped (scripts dir not available)"
+        return 0
+    fi
+    local result
+    result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
+        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python -c "
+import torch, onnx, tempfile, os, numpy as np
+from onnx_quantize_kit import auto_quantize, QuantizationConfig
+
+class SimpleModel(torch.nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc = torch.nn.Linear(16, 8)
+    def forward(self, x):
+        return self.fc(x)
+
+with tempfile.TemporaryDirectory() as td:
+    onnx_path = os.path.join(td, \"model.onnx\")
+    torch.onnx.export(SimpleModel(), torch.randn(1,16), onnx_path,
+                      input_names=[\"input\"], output_names=[\"output\"], opset_version=13)
+    cfg = QuantizationConfig(optimize_model=True, verify_accuracy=True, accuracy_threshold=0.1)
+    result = auto_quantize(onnx_path, os.path.join(td, \"out.onnx\"), config=cfg)
+    assert result.success, f\"auto_quantize failed: {result.error}\"
+    assert os.path.exists(result.output_path), \"output model missing\"
+    print(f\"kit-mock-ok strategy={result.strategy_used} max_diff={result.max_diff:.6f}\")
+"' 2>&1)
+    if echo "$result" | grep -q "kit-mock-ok"; then
+        local diff
+        diff=$(echo "$result" | grep -oE "max_diff=[0-9.e-]+" | head -1)
+        pass "T23: onnx_quantize_kit auto_quantize mock model $diff"
+        return 0
+    else
+        fail "T23: onnx_quantize_kit mock model failed, output: $(echo "$result" | tail -5)"
+        return 1
+    fi
+}
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --tag)
@@ -506,6 +600,20 @@ log_step "6. Build Info & Configuration Tests (L6)"
 test_build_info_exists || true
 test_condarc_exists || true
 test_omp_env || true
+echo ""
+
+log_step "7. onnx_quantize_kit CI Integration Tests (L7)"
+if find_scripts_dir; then
+    log_info "Found scripts directory: ${SCRIPTS_DIR}"
+    test_quantize_kit_import || true
+    test_ci_quantization_gate || true
+    test_quantize_kit_mock_model || true
+else
+    log_warn "scripts/onnx_quantize_kit not found locally, L7 tests will be skipped"
+    test_quantize_kit_import
+    test_ci_quantization_gate
+    test_quantize_kit_mock_model
+fi
 echo ""
 
 echo ""

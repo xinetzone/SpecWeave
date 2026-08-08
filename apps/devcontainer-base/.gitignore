@@ -1,5 +1,7 @@
 # Runtime directories
 workspace/
+local-results*/
+benchmark_results*.json
 
 # Local environment (contains credentials)
 .env
