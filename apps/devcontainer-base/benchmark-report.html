@@ -155,35 +155,35 @@
 
 <script>
 const DATA = {
-  "config": {"warmup":50,"runs":300,"intra_threads":4,"ort_version":"1.28.0","device":"x64_CPU_Intel_i9-14900K"},
+  "config": {"warmup":50,"runs":300,"intra_threads":4,"ort_version":"1.28.0","device":"x64_CPU_Windows_Local","date":"2026-08-08"},
   "results": {
     "SmallMLP(128→10)": {
-      "FP32":{"avg_ms":0.0045,"p50_ms":0.0041,"p95_ms":0.0045,"p99_ms":0.0061,"throughput_fps":223118,"size_kb":139.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
-      "FP16":{"avg_ms":0.0076,"p50_ms":0.0075,"p95_ms":0.0082,"p99_ms":0.0306,"throughput_fps":131997,"size_kb":70.0,"max_diff":0.000347,"speedup":0.59,"size_ratio":0.502},
-      "INT8_Dynamic":{"avg_ms":0.0036,"p50_ms":0.0036,"p95_ms":0.0038,"p99_ms":0.0043,"throughput_fps":276684,"size_kb":37.4,"max_diff":0.006485,"speedup":1.24,"size_ratio":0.268},
-      "INT8_Static_QDQ":{"avg_ms":0.0045,"p50_ms":0.0043,"p95_ms":0.0047,"p99_ms":0.0073,"throughput_fps":224715,"size_kb":41.3,"max_diff":0.011619,"speedup":1.01,"size_ratio":0.296},
-      "INT8_Static_QOperator":{"avg_ms":0.0060,"p50_ms":0.0049,"p95_ms":0.0077,"p99_ms":0.0175,"throughput_fps":165547,"size_kb":38.1,"max_diff":0.010797,"speedup":0.74,"size_ratio":0.273}
+      "FP32":{"avg_ms":0.0069,"p50_ms":0.0068,"p95_ms":0.0072,"p99_ms":0.0075,"throughput_fps":145089,"size_kb":139.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.0079,"p50_ms":0.0079,"p95_ms":0.0082,"p99_ms":0.0085,"throughput_fps":125876,"size_kb":70.0,"max_diff":0.000392,"speedup":0.87,"size_ratio":0.502},
+      "INT8_Dynamic":{"avg_ms":0.0087,"p50_ms":0.0074,"p95_ms":0.0119,"p99_ms":0.0125,"throughput_fps":115172,"size_kb":37.4,"max_diff":0.009116,"speedup":0.79,"size_ratio":0.268},
+      "INT8_Static_QDQ":{"avg_ms":0.0100,"p50_ms":0.0115,"p95_ms":0.0120,"p99_ms":0.0141,"throughput_fps":99631,"size_kb":41.2,"max_diff":0.015886,"speedup":0.69,"size_ratio":0.296},
+      "INT8_Static_QOperator":{"avg_ms":0.0088,"p50_ms":0.0077,"p95_ms":0.0118,"p99_ms":0.0126,"throughput_fps":112999,"size_kb":38.1,"max_diff":0.032280,"speedup":0.78,"size_ratio":0.273}
     },
     "LargeMLP(1024→100)": {
-      "FP32":{"avg_ms":0.1008,"p50_ms":0.0951,"p95_ms":0.1286,"p99_ms":0.1629,"throughput_fps":9921,"size_kb":16797.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
-      "FP16":{"avg_ms":0.1110,"p50_ms":0.0902,"p95_ms":0.2201,"p99_ms":0.4114,"throughput_fps":9008,"size_kb":8398.9,"max_diff":0.000167,"speedup":0.91,"size_ratio":0.500},
-      "INT8_Dynamic":{"avg_ms":0.0226,"p50_ms":0.0197,"p95_ms":0.0307,"p99_ms":0.0641,"throughput_fps":44261,"size_kb":4211.2,"max_diff":0.003719,"speedup":4.46,"size_ratio":0.251},
-      "INT8_Static_QDQ":{"avg_ms":0.0330,"p50_ms":0.0279,"p95_ms":0.0448,"p99_ms":0.1379,"throughput_fps":30270,"size_kb":4252.0,"max_diff":0.005649,"speedup":3.05,"size_ratio":0.253},
-      "INT8_Static_QOperator":{"avg_ms":0.0322,"p50_ms":0.0290,"p95_ms":0.0487,"p99_ms":0.0794,"throughput_fps":31040,"size_kb":4225.7,"max_diff":0.005746,"speedup":3.13,"size_ratio":0.252}
+      "FP32":{"avg_ms":0.2149,"p50_ms":0.2000,"p95_ms":0.3017,"p99_ms":0.3818,"throughput_fps":4654,"size_kb":16797.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.1223,"p50_ms":0.1020,"p95_ms":0.1985,"p99_ms":0.4542,"throughput_fps":8179,"size_kb":8398.9,"max_diff":0.000178,"speedup":1.76,"size_ratio":0.500},
+      "INT8_Dynamic":{"avg_ms":0.0398,"p50_ms":0.0311,"p95_ms":0.0592,"p99_ms":0.2133,"throughput_fps":25125,"size_kb":4211.2,"max_diff":0.004008,"speedup":5.40,"size_ratio":0.251},
+      "INT8_Static_QDQ":{"avg_ms":0.0500,"p50_ms":0.0387,"p95_ms":0.0918,"p99_ms":0.1998,"throughput_fps":19996,"size_kb":4252.0,"max_diff":0.006925,"speedup":4.30,"size_ratio":0.253},
+      "INT8_Static_QOperator":{"avg_ms":0.0336,"p50_ms":0.0304,"p95_ms":0.0416,"p99_ms":0.1000,"throughput_fps":29760,"size_kb":4225.7,"max_diff":0.014654,"speedup":6.39,"size_ratio":0.252}
     },
     "ConvNet(CIFAR-10)": {
-      "FP32":{"avg_ms":0.0693,"p50_ms":0.0593,"p95_ms":0.1152,"p99_ms":0.2113,"throughput_fps":14427,"size_kb":4184.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
-      "FP16":{"avg_ms":0.1125,"p50_ms":0.1004,"p95_ms":0.1625,"p99_ms":0.2717,"throughput_fps":8886,"size_kb":2093.1,"max_diff":0.000174,"speedup":0.62,"size_ratio":0.500},
-      "INT8_Dynamic":{"avg_ms":0.1148,"p50_ms":0.1055,"p95_ms":0.1340,"p99_ms":0.3239,"throughput_fps":8714,"size_kb":1051.4,"max_diff":0.002605,"speedup":0.60,"size_ratio":0.251},
-      "INT8_Static_QDQ":{"avg_ms":0.0444,"p50_ms":0.0374,"p95_ms":0.0802,"p99_ms":0.1242,"throughput_fps":22514,"size_kb":1057.2,"max_diff":0.019829,"speedup":1.56,"size_ratio":0.253},
-      "INT8_Static_QOperator":{"avg_ms":0.0633,"p50_ms":0.0389,"p95_ms":0.1072,"p99_ms":0.1993,"throughput_fps":15803,"size_kb":1051.5,"max_diff":0.008516,"speedup":1.10,"size_ratio":0.251}
+      "FP32":{"avg_ms":0.0699,"p50_ms":0.0646,"p95_ms":0.0970,"p99_ms":0.1543,"throughput_fps":14311,"size_kb":4184.5,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.1134,"p50_ms":0.1076,"p95_ms":0.1510,"p99_ms":0.2108,"throughput_fps":8815,"size_kb":2093.1,"max_diff":0.000112,"speedup":0.62,"size_ratio":0.500},
+      "INT8_Dynamic":{"avg_ms":0.1529,"p50_ms":0.1438,"p95_ms":0.1847,"p99_ms":0.2676,"throughput_fps":6539,"size_kb":1051.4,"max_diff":0.002927,"speedup":0.46,"size_ratio":0.251},
+      "INT8_Static_QDQ":{"avg_ms":0.0574,"p50_ms":0.0559,"p95_ms":0.0637,"p99_ms":0.0972,"throughput_fps":17410,"size_kb":1057.2,"max_diff":0.003401,"speedup":1.22,"size_ratio":0.253},
+      "INT8_Static_QOperator":{"avg_ms":0.0619,"p50_ms":0.0575,"p95_ms":0.0871,"p99_ms":0.1526,"throughput_fps":16158,"size_kb":1051.5,"max_diff":0.003403,"speedup":1.13,"size_ratio":0.251}
     },
     "Transformer(3L-256d)": {
-      "FP32":{"avg_ms":0.2618,"p50_ms":0.2385,"p95_ms":0.3704,"p99_ms":0.5576,"throughput_fps":3819,"size_kb":6307.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
-      "FP16":{"avg_ms":0.4195,"p50_ms":0.3995,"p95_ms":0.5944,"p99_ms":0.8835,"throughput_fps":2384,"size_kb":3160.1,"max_diff":0.000408,"speedup":0.62,"size_ratio":0.501},
-      "INT8_Dynamic":{"avg_ms":0.1970,"p50_ms":0.1822,"p95_ms":0.2535,"p99_ms":0.4640,"throughput_fps":5076,"size_kb":1604.4,"max_diff":0.008067,"speedup":1.33,"size_ratio":0.254},
-      "INT8_Static_QDQ":{"avg_ms":0.7226,"p50_ms":0.6826,"p95_ms":0.9210,"p99_ms":1.2623,"throughput_fps":1384,"size_kb":1664.9,"max_diff":0.026808,"speedup":0.36,"size_ratio":0.264},
-      "INT8_Static_QOperator":{"avg_ms":0.2439,"p50_ms":0.2193,"p95_ms":0.3495,"p99_ms":0.4804,"throughput_fps":4099,"size_kb":1630.9,"max_diff":0.102051,"speedup":1.07,"size_ratio":0.259}
+      "FP32":{"avg_ms":0.3237,"p50_ms":0.3029,"p95_ms":0.4482,"p99_ms":0.6407,"throughput_fps":3089,"size_kb":6307.1,"max_diff":0.0,"speedup":1.0,"size_ratio":1.0},
+      "FP16":{"avg_ms":0.6743,"p50_ms":0.6337,"p95_ms":0.8397,"p99_ms":1.2490,"throughput_fps":1483,"size_kb":3160.1,"max_diff":0.000471,"speedup":0.48,"size_ratio":0.501},
+      "INT8_Dynamic":{"avg_ms":0.2625,"p50_ms":0.2475,"p95_ms":0.3352,"p99_ms":0.5941,"throughput_fps":3809,"size_kb":1604.4,"max_diff":0.009420,"speedup":1.23,"size_ratio":0.254},
+      "INT8_Static_QDQ":{"avg_ms":0.6819,"p50_ms":0.6442,"p95_ms":0.8995,"p99_ms":1.2893,"throughput_fps":1466,"size_kb":1664.8,"max_diff":0.240071,"speedup":0.47,"size_ratio":0.264},
+      "INT8_Static_QOperator":{"avg_ms":0.3349,"p50_ms":0.2961,"p95_ms":0.5524,"p99_ms":0.8683,"throughput_fps":2986,"size_kb":1630.9,"max_diff":0.025043,"speedup":0.97,"size_ratio":0.259}
     }
   }
 };
