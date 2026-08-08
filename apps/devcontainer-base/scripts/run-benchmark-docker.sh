@@ -140,48 +140,59 @@ echo "[INFO] Benchmark args: ${BENCH_ARGS}"
 if [[ ${VERBOSE} -eq 1 ]]; then
     echo "[INFO] Docker command:"
     echo "  docker run --rm --name ${CONTAINER_NAME} \\"
-    for ev in "${ENV_VARS[@]}"; do
-        echo "    ${ev} \\"
+    i=0
+    while [[ $i -lt ${#ENV_VARS[@]} ]]; do
+        echo "    ${ENV_VARS[$i]} ${ENV_VARS[$((i+1))]} \\"
+        i=$((i+2))
     done
+    echo "    -e BENCH_ARGS=\"${BENCH_ARGS}\" \\"
     echo "    -v ${SCRIPT_DIR}:/benchmark:ro \\"
     echo "    -v ${OUTPUT_DIR}:/results \\"
-    echo "    ${IMAGE_TAG} bash -lc '...'"
+    echo "    ${IMAGE_TAG} /opt/conda/bin/python /benchmark/benchmark_quantization.py \$BENCH_ARGS"
     echo ""
 fi
 
 docker run --rm \
     --name "${CONTAINER_NAME}" \
     "${ENV_VARS[@]}" \
+    -e BENCH_ARGS="${BENCH_ARGS}" \
     -v "${SCRIPT_DIR}:/benchmark:ro" \
     -v "${OUTPUT_DIR}:/results" \
     "${IMAGE_TAG}" \
-    bash -lc "
+    bash -c "
         set -e
         echo '[CONTAINER] Environment info:'
-        echo '  Python:' \$(python --version)
-        echo '  PyTorch:' \$(python -c 'import torch; print(torch.__version__)')
-        echo '  ONNX Runtime:' \$(python -c 'import onnxruntime; print(onnxruntime.__version__)')
-        echo '  CPU count:' \$(nproc)
+        printf '  Python: '; /opt/conda/bin/python --version 2>&1
+        printf '  PyTorch: '; /opt/conda/bin/python -c 'import torch; print(torch.__version__)' 2>&1
+        printf '  ONNX Runtime: '; /opt/conda/bin/python -c 'import onnxruntime; print(onnxruntime.__version__)' 2>&1
+        printf '  CPU count: '; nproc
         echo ''
         echo '[CONTAINER] Running benchmark...'
-        python /benchmark/benchmark_quantization.py ${BENCH_ARGS}
+        /opt/conda/bin/python /benchmark/benchmark_quantization.py \$BENCH_ARGS
         echo ''
-        echo '[CONTAINER] Benchmark complete! Results saved to /results/benchmark_results.json'
-        echo '[CONTAINER] Result summary:'
-        python -c \"
-import json
-with open('/results/benchmark_results.json') as f:
-    data = json.load(f)
-print(f'  Models tested: {len(data[\"results\"])}')
-for name, r in data['results'].items():
-    fp32 = r['FP32']['avg_ms']
-    best_prec = max(
-        [(p, r[p]['speedup']) for p in ['FP16','INT8-Dyn','INT8_Static_QDQ','INT8_Static_QOperator'] if p in r],
-        key=lambda x: x[1]
-    )
-    print(f'  {name}: FP32={fp32:.3f}ms, best={best_prec[0]} ({best_prec[1]:.2f}x)')
-\"
+        echo '[CONTAINER] Benchmark complete!'
     "
+
+echo ""
+echo "[INFO] Reading results..."
+RESULTS_FILE="${OUTPUT_DIR}/benchmark_results.json"
+if [ -f "${RESULTS_FILE}" ]; then
+    echo "[RESULT] Models tested:"
+    python3 -c "
+import json
+with open('${RESULTS_FILE}') as f:
+    d = json.load(f)
+r = d.get('results', {})
+for name, m in r.items():
+    fp32 = m.get('FP32', {}).get('avg_ms', 0)
+    precs = [(p, m[p]['speedup']) for p in ['FP16','INT8-Dyn','INT8_Static_QDQ','INT8_Static_QOperator'] if p in m]
+    if precs:
+        best = max(precs, key=lambda x: x[1])
+        print(f'  {name}: FP32={fp32:.3f}ms, best={best[0]} ({best[1]:.2f}x)')
+    else:
+        print(f'  {name}: FP32={fp32:.3f}ms')
+" 2>/dev/null || echo "  (failed to parse results, see ${RESULTS_FILE})"
+fi
 
 echo ""
 echo "============================================================"

@@ -508,7 +508,7 @@ jobs:
             -e OPENBLAS_NUM_THREADS=1 \
             -e OMP_WAIT_POLICY=PASSIVE \
             devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
-            bash -lc "python /benchmark/benchmark_quantization.py --output /results/benchmark_results.json --threads 4 $BENCH_ARGS && echo '[CONTAINER] Benchmark completed successfully'"
+            bash -c "/opt/conda/bin/python /benchmark/benchmark_quantization.py --output /results/benchmark_results.json --threads 4 $BENCH_ARGS && echo '[CONTAINER] Benchmark completed successfully'"
 
           # Run analysis script if available
           if [ -f scripts/analyze_benchmark.py ]; then
