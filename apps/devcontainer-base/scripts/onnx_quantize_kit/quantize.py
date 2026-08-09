@@ -1,4 +1,15 @@
-"""高层量化API：自动选型+回滚策略"""
+"""高层量化API：自动选型+回滚策略
+
+================================================================================
+📌 量化引擎：onnxruntime.quantization（唯一引擎，不依赖 Neural Compressor）
+================================================================================
+- INC 3.x已弃用ONNX Runtime适配器（intel/neural-compressor#2199），
+  重构为PyTorch-first框架，ONNX量化不再积极维护
+- onnxruntime.quantization 原生API优势：零额外依赖、与ORT推理100%兼容、
+  社区活跃、适合生产部署
+- 如需PyTorch权重量化（RTN/AWQ/GPTQ），可单独 pip install neural-compressor
+================================================================================
+"""
 import os
 import tempfile
 import shutil

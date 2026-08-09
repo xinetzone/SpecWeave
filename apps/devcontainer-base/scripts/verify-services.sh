@@ -14,7 +14,6 @@ echo ""
 echo "=== All core package versions ==="
 docker exec onnx-quantized-test /opt/conda/bin/python -c "
 import torch, torchvision, onnx, onnxruntime, onnxsim, onnxoptimizer, onnxscript
-import neural_compressor
 print('PyTorch:', torch.__version__)
 print('TorchVision:', torchvision.__version__)
 print('ONNX:', onnx.__version__)
@@ -22,6 +21,10 @@ print('ONNX Runtime:', onnxruntime.__version__)
 print('ONNX Simplifier:', onnxsim.__version__)
 print('ONNX Optimizer:', onnxoptimizer.__version__)
 print('ONNX Script:', onnxscript.__version__)
-print('Neural Compressor:', neural_compressor.__version__)
+try:
+    import neural_compressor
+    print('Neural Compressor:', neural_compressor.__version__, '(optional)')
+except ImportError:
+    print('Neural Compressor: not installed (optional - pip install neural-compressor for PyTorch quantization)')
 print('CUDA available:', torch.cuda.is_available())
 "

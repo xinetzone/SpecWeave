@@ -633,8 +633,11 @@ print(f'  ONNX Runtime: {onnxruntime.__version__}')
 print(f'  CUDA avail:   {torch.cuda.is_available()}')
 from onnxruntime.quantization import quantize_dynamic, QuantType
 print(f'  Quantization: available')
-import neural_compressor
-print(f'  Neural Compressor: {neural_compressor.__version__}')
+try:
+    import neural_compressor
+    print(f'  Neural Compressor: {neural_compressor.__version__} (optional)')
+except ImportError:
+    print(f'  Neural Compressor: not installed (optional)')
 " 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
 else
     docker run --rm "$final_image" /opt/conda/bin/python -c "

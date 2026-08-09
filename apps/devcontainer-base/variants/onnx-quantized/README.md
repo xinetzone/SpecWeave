@@ -2,7 +2,7 @@
 
 > **发布日期**: 2026-08-08 | **状态**: ✅ 验证通过 | **Python**: 3.14.6
 
-ONNX 模型量化工具链变体，基于 onnx-pytorch 构建，提供完整的模型量化、优化和部署能力。支持动态/静态 INT8 量化、FP16 半精度转换、QDQ 格式，集成 Intel Neural Compressor 高级量化功能。
+ONNX 模型量化工具链变体，基于 onnxruntime.quantization 原生API构建，提供完整的模型量化、优化和部署能力。支持动态/静态 INT8 量化、FP16 半精度转换、QDQ 格式，零额外重量级依赖。Intel Neural Compressor 作为可选 PyTorch 扩展（需手动安装）。
 
 ---
 
@@ -19,7 +19,7 @@ ONNX 模型量化工具链变体，基于 onnx-pytorch 构建，提供完整的�
 | **ONNX Optimizer** | 0.4.2 | 计算图优化 |
 | **ONNX Converter Common** | 1.16.0 | float16 转换工具 |
 | **ONNX Runtime Tools** | - | BERT 优化器和校准工具 |
-| **Neural Compressor** | 3.9 | Intel 神经压缩器（PTQ/QAT） |
+| **Neural Compressor** | 可选安装 | Intel 神经压缩器（PyTorch weight-only量化，3.x已弃用ONNX适配器） |
 | **LLVM/Clang** | 22.1.8 | 编译工具链（继承自 conda-llvm） |
 
 ---
@@ -39,7 +39,7 @@ ONNX 模型量化工具链变体，基于 onnx-pytorch 构建，提供完整的�
 | **量化模型推理** | ✅ PASS | 输出形状正确 (1,5) |
 | **FP32 vs INT8 精度对比** | ✅ PASS | **max_diff = 0.002050**（误差 < 0.21%）|
 | **FP16 半精度转换** | ✅ PASS | onnxconverter-common 正常 |
-| **Neural Compressor 导入** | ✅ PASS | 包 v3.9 已安装，3.x PyTorch API 正常，ONNX 使用 onnxruntime 原生量化 |
+| **Neural Compressor 导入** | ⏭️ SKIP | 未预装（可选PyTorch扩展：`pip install neural-compressor`）；ONNX量化使用onnxruntime原生API |
 | **SSH 服务** | ✅ PASS | OpenSSH_10.2p1 |
 | **Docker Daemon** | ✅ PASS | Docker 29.7.2 (DinD) |
 | **Jupyter Notebook** | ✅ PASS | 由 supervisord 管理 |
@@ -239,7 +239,7 @@ for _ in range(100):
 | **静态量化 + 校准** | 中等 | 20-40% 加速，更好精度 | 有代表性校准数据集 |
 | **QDQ 格式量化** | 中等 | 兼容性更好，支持 TensorRT/OpenVINO | 多引擎部署 |
 | **INT8 算子融合** | 高 | 额外 10-20% 加速 | Conv+ReLU+BN 等常见模式 |
-| **Neural Compressor 自动调优** | 中等 | 精度-性能 Pareto 最优 | 追求极致精度/性能平衡 |
+| **Neural Compressor 自动调优**（可选） | 中等 | 精度-性能 Pareto 最优 | PyTorch模型追求极致精度（需手动 `pip install neural-compressor`） |
 | **BF16 混合精度（新CPU）** | 低 | 接近 FP32 精度，支持 AVX512-BF16 | Intel Xeon Sapphire Rapids+ |
 | **ONNX Runtime Extensions** | 低 | 自定义算子支持 | 特殊业务算子 |
 | **IO 绑定 + 预分配内存** | 低 | 减少内存拷贝开销 | 高吞吐服务化部署 |
@@ -324,7 +324,7 @@ print("✅ FP16 转换完成")
    **本项目的策略**：
    - ✅ **ONNX模型量化**：直接使用 `onnxruntime.quantization` 原生API（这是我们 `onnx_quantize_kit` 的主力方案，完全不受影响）
    - ✅ **PyTorch模型量化**：如需INC高级功能（AutoRound/AWQ/GPTQ等weight-only量化），使用INC 3.x PyTorch API
-   - 📦 **包已安装**：`neural-compressor==3.9` 已预装，可根据需要使用
+   - 📦 **包未预装**：`neural-compressor` 是可选扩展，ONNX量化不需要它。如需PyTorch weight-only量化（RTN/AWQ/GPTQ/AutoRound），请手动安装：`pip install neural-compressor`
 
    **INC 3.x PyTorch API 示例**：
    ```python
@@ -402,6 +402,6 @@ onnx-quantized (量化工具链 ← 当前变体)
   - onnxruntime.quantization (内置)
   - onnxconverter-common (FP16)
   - onnxruntime-tools (BERT优化)
-  - neural-compressor 3.9 (Intel INC)
+  - neural-compressor (可选，PyTorch-only in 3.x，需手动pip安装)
   - onnxsim v0.7.0 (模型简化)
 ```

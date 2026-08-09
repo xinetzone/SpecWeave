@@ -1,6 +1,19 @@
 """onnx_quantize_kit - ONNX模型量化可复用工具包
 
+基于 onnxruntime.quantization 原生API构建的生产级量化工具包，零额外重量级依赖。
+
 提供统一的校准、基准测试、精度验证、自动量化选型和CI门禁能力。
+
+================================================================================
+📌 量化引擎说明
+================================================================================
+- **核心引擎（唯一）**: onnxruntime.quantization（随 onnxruntime 包内置提供）
+  - 支持：动态INT8 / 静态QDQ / 静态QOperator / FP16 转换
+  - 零额外运行时依赖，与ONNX Runtime推理引擎100%兼容
+- **不包含**: Intel Neural Compressor (INC)
+  - INC 3.x已弃用ONNX适配器（PR intel/neural-compressor#2199），聚焦PyTorch
+  - 如需PyTorch权重量化（RTN/AWQ/GPTQ/AutoRound），可单独 pip install neural-compressor
+  - 本工具包不依赖INC，INC的缺失不影响任何ONNX量化功能
 
 快速开始:
     from onnx_quantize_kit import auto_quantize, benchmark_model, validate_accuracy

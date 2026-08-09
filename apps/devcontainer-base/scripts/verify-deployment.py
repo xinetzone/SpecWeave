@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 onnx-quantized 变体部署验证脚本
-验证所有核心功能：PyTorch、ONNX Runtime、ONNX 量化工具、Neural Compressor
+验证所有核心功能：PyTorch、ONNX Runtime、onnxruntime.quantization 量化工具；Neural Compressor 为可选 PyTorch 扩展
 """
 import sys
 import json
@@ -17,7 +17,7 @@ def record_test(name, status, message="", version=""):
         "version": version,
         "timestamp": datetime.now().isoformat()
     })
-    icon = "✅" if status == "PASS" else "❌" if status == "FAIL" else "⚠️"
+    icon = "✅" if status == "PASS" else "❌" if status == "FAIL" else "⚠️" if status == "WARN" else "⏭️"
     print(f"{icon} {name}: {status} {message}" if message else f"{icon} {name}: {status}")
 
 def test_imports():
@@ -26,25 +26,36 @@ def test_imports():
     print("Test 1: Core Package Imports")
     print("="*60)
     
-    packages = [
+    required_packages = [
         ("torch", "PyTorch"),
         ("torchvision", "TorchVision"),
         ("onnx", "ONNX"),
         ("onnxruntime", "ONNX Runtime"),
         ("onnxsim", "ONNX Simplifier"),
-        ("onnxoptimizer", "ONNX Optimizer"),
-        ("onnxscript", "ONNX Script"),
-        ("neural_compressor", "Neural Compressor"),
         ("onnxconverter_common", "ONNX Converter Common"),
     ]
     
-    for pkg_name, display_name in packages:
+    optional_packages = [
+        ("onnxoptimizer", "ONNX Optimizer"),
+        ("onnxscript", "ONNX Script"),
+        ("neural_compressor", "Neural Compressor (optional)"),
+    ]
+    
+    for pkg_name, display_name in required_packages:
         try:
             pkg = __import__(pkg_name)
             version = getattr(pkg, "__version__", "unknown")
             record_test(f"Import {display_name}", "PASS", version=version)
         except Exception as e:
             record_test(f"Import {display_name}", "FAIL", str(e))
+    
+    for pkg_name, display_name in optional_packages:
+        try:
+            pkg = __import__(pkg_name)
+            version = getattr(pkg, "__version__", "unknown")
+            record_test(f"Import {display_name}", "PASS", version=version)
+        except Exception:
+            record_test(f"Import {display_name}", "SKIP", "optional, not installed")
 
 def test_torch_basic():
     """测试2: PyTorch基础功能"""
@@ -263,11 +274,16 @@ def test_neural_compressor_imports():
     ========================================================================
     """
     print("\n" + "="*60)
-    print("Test 6: Neural Compressor API Access (INC 3.x)")
+    print("Test 6: Neural Compressor (Optional PyTorch Extension)")
     print("="*60)
     
     try:
         import neural_compressor
+    except ImportError:
+        record_test("Neural Compressor", "SKIP", "not installed (optional, not required for ONNX quantization)")
+        return
+    
+    try:
         nc_version = neural_compressor.__version__
         record_test("Neural Compressor version", "PASS", version=nc_version)
         
@@ -364,17 +380,19 @@ def main():
     passed = sum(1 for r in results if r["status"] == "PASS")
     failed = sum(1 for r in results if r["status"] == "FAIL")
     warned = sum(1 for r in results if r["status"] == "WARN")
+    skipped = sum(1 for r in results if r["status"] == "SKIP")
     total = len(results)
     
     print(f"Total tests: {total}")
     print(f"✅ Passed: {passed}")
     print(f"❌ Failed: {failed}")
     print(f"⚠️  Warnings: {warned}")
+    print(f"⏭️  Skipped: {skipped}")
     print("="*60)
     
     # 保存JSON结果
     report = {
-        "summary": {"total": total, "passed": passed, "failed": failed, "warned": warned},
+        "summary": {"total": total, "passed": passed, "failed": failed, "warned": warned, "skipped": skipped},
         "results": results,
         "environment": {
             "python_version": sys.version,

@@ -3,7 +3,7 @@
 # DevContainer Base - ONNX Quantized Variant Dockerfile
 # Project: SpecWeave Full-featured Development Container - ONNX Model Quantization Toolkit
 # Base: devcontainer-base:onnx-pytorch-${BASE_TAG} (PyTorch CPU + ONNX + ONNX Runtime + LLVM)
-# Toolchain: ONNX Runtime quantization + onnxconverter-common + onnxruntime-tools + Intel Neural Compressor
+# Toolchain: onnxruntime.quantization (primary) + onnxconverter-common + onnxsim. Note: neural-compressor is NOT installed by default (optional PyTorch extension).
 # Quantization: Dynamic/static quantization, QDQ format, INT8/FP16 calibration, accuracy validation
 # PATH priority: /opt/conda/bin first (quantization tools directly available in base conda env)
 #
@@ -20,7 +20,7 @@
 #
 # Variant Stage Layering (additional 3 layers on top of onnx-pytorch variant):
 #   Stage 1/3: PATH verification + timer initialization + base tool check
-#   Stage 2/3: Install quantization packages (onnxruntime-tools, neural-compressor, etc.)
+#   Stage 2/3: Install quantization packages (onnxconverter-common, onnxsim)
 #   Stage 3/3: build-info + cleanup + quantization smoke test + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
@@ -39,9 +39,9 @@ ARG CONDA_MIRROR
 ARG PIP_MIRROR
 
 LABEL maintainer="SpecWeave"
-LABEL description="DevContainer onnx-quantized variant with ONNX quantization toolkit (INT8/FP16 dynamic/static quantization + Intel Neural Compressor)"
+LABEL description="DevContainer onnx-quantized variant with ONNX quantization toolkit (INT8/FP16 dynamic/static/QDQ via onnxruntime.quantization; neural-compressor optional)"
 LABEL variant="onnx-quantized"
-LABEL quantization="onnxruntime,neural-compressor,int8,fp16"
+LABEL quantization="onnxruntime,int8,fp16,qdq"
 
 ENV CONDA_DIR=/opt/conda
 
@@ -96,8 +96,9 @@ STAGE1_EOF
 # Stage 2/3 (追加层2): 安装量化工具包
 # 变化频率：中（工具版本升级时改）
 # 原则：在 base conda 环境安装量化相关包；使用 BuildKit cache 加速
-# 包含：onnxruntime.quantization (built-in), onnxconverter-common,
-#       onnxruntime-tools, neural-compressor (Intel INC), onnxsim
+# 包含：onnxruntime.quantization (built-in 核心量化引擎), onnxconverter-common (FP16转换),
+#       onnxsim (模型简化预处理)
+# 不包含：neural-compressor (PyTorch场景可选，需手动 pip install neural-compressor)
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
@@ -106,10 +107,11 @@ echo ""
 echo "########################################################################"
 echo "# [ONNX-QUANTIZED VARIANT STAGE 2/3] Install Quantization Toolkit"
 echo "# Packages:"
-echo "#   - onnxconverter-common (ONNX model conversion utilities)"
-echo "#   - onnxruntime-tools    (ONNX Runtime quantization tools, including calibrators)"
-echo "#   - neural-compressor    (Intel Neural Compressor: PTQ/QAT, INT8/FP16/BF16)"
+echo "#   - onnxconverter-common (ONNX FP16 conversion utilities)"
 echo "#   - onnxsim              (ONNX model simplification, pre-quantization)"
+echo "# NOT INSTALLED BY DEFAULT:"
+echo "#   - neural-compressor    (Intel INC: PyTorch-only in 3.x, ONNX adaptor deprecated)"
+echo "#     Install manually if needed: pip install neural-compressor"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
@@ -125,8 +127,6 @@ echo "[INFO] Installing additional quantization utilities..."
 echo ""
 pip install --no-cache-dir \
     onnxconverter-common \
-    onnxruntime-tools \
-    neural-compressor \
     onnxsim
 echo ""
 echo "[OK] Quantization toolkit installation complete"
@@ -135,8 +135,7 @@ echo ""
 echo "[INFO] Installed package versions:"
 echo "  - onnxruntime.quantization: $(python -c 'from onnxruntime.quantization import quantize_dynamic, QuantType; print("available (dynamic+static QDQ)")' 2>&1)"
 echo "  - onnxconverter-common: $(python -c 'import onnxconverter_common; print(onnxconverter_common.__version__)' 2>&1)"
-echo "  - onnxruntime-tools: $(python -c 'from onnxruntime_tools import optimizer; print("available")' 2>&1)"
-echo "  - neural-compressor: $(python -c 'import neural_compressor; print(neural_compressor.__version__)' 2>&1)"
+echo "  - neural-compressor: $(python -c 'import neural_compressor; print(neural_compressor.__version__)' 2>/dev/null || echo 'not installed (optional: pip install neural-compressor)')"
 echo "  - onnxsim: $(python -c 'import onnxsim; print(onnxsim.__version__)' 2>&1)"
 echo ""
 
@@ -155,6 +154,8 @@ echo "OQS2=$_NOW" >> /tmp/.onnx-quantized-variant-build-timer
 echo "[TIMER] Stage 2/3 (install quantization toolkit) took ${_ELAPSED}s | ONNX-Quantized variant cumulative: ${_TOTAL}s"
 echo '[OK] Stage 2 complete'
 STAGE2_EOF
+
+COPY scripts/ /opt/devcontainer-scripts/
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/3 (追加层3): build-info + 清理 + 量化冒烟测试 + 汇总表
@@ -175,7 +176,7 @@ echo "[ACTION] Writing build metadata to /etc/devcontainer-variant-onnx-quantize
 ORT_VERSION=$(python -c "import onnxruntime;print(onnxruntime.__version__)" 2>/dev/null || echo "unknown")
 TORCH_VERSION_ACTUAL=$(python -c "import torch;print(torch.__version__)" 2>/dev/null || echo "unknown")
 ONNX_VERSION_ACTUAL=$(python -c "import onnx;print(onnx.__version__)" 2>/dev/null || echo "unknown")
-NC_VERSION=$(python -c "import neural_compressor;print(neural_compressor.__version__)" 2>/dev/null || echo "unknown")
+NC_VERSION=$(python -c "import neural_compressor;print(neural_compressor.__version__)" 2>/dev/null || echo "not installed (optional)")
 OCC_VERSION=$(python -c "import onnxconverter_common;print(onnxconverter_common.__version__)" 2>/dev/null || echo "unknown")
 ONNXSIM_VERSION=$(python -c "import onnxsim;print(onnxsim.__version__)" 2>/dev/null || echo "unknown")
 printf '%s\n' \
@@ -199,7 +200,8 @@ printf '%s\n' \
     "PATH_PRIORITY=conda-bin-first" \
     "SYSTEM_VENV=/opt/venv" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-    "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnx-simplifier,onnxoptimizer,onnxconverter-common,onnxruntime-tools,neural-compressor,onnxsim" \
+    "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnxconverter-common,onnxsim" \
+    "OPTIONAL_PACKAGES=neural-compressor(pytorch-only),onnxruntime-tools(legacy)" \
     "BUILD_TIMER=enabled" \
     > /etc/devcontainer-variant-onnx-quantized-build-info
 echo "[OK] Build metadata written:"
@@ -225,35 +227,29 @@ python -c "from onnxruntime.quantization import quantize_dynamic, QuantType, qua
 python -c "from onnxconverter_common import float16; print('[OK] onnxconverter_common.float16 imports')"
 python - <<'NCIMPORT'
 """
-Neural Compressor 3.x API Import Check
-=====================================
-📌 INC 2.x vs 3.x 关键差异：
-- 2.x (旧API): 统一入口 `from neural_compressor import quantization` + PostTrainingQuantConfig
-  - 支持 PyTorch/TensorFlow/ONNX Runtime
-  - ONNX通过 adaptor/onnxrt.py 适配
-- 3.x (新API, 推荐): 框架专属API，主要聚焦 PyTorch
-  - PyTorch API: `from neural_compressor.torch.quantization import RTNConfig, quantize, prepare, convert`
-  - 细粒度配置类: RTNConfig/AWQConfig/GPTQConfig/TeqConfig/AutoRoundConfig (替代统一PostTrainingQuantConfig)
-  - ⚠️ ONNX Runtime 适配器在 3.x 中已弃用 (PR #2199)
-  - ✅ 本项目ONNX量化主力: onnxruntime.quantization 原生API，不依赖INC ONNX适配层
-"""
-import neural_compressor
-nc_ver = neural_compressor.__version__
-print(f"[OK] neural_compressor {nc_ver} loaded")
-print(f"[INFO] Note: INC 3.x uses framework-specific APIs (neural_compressor.torch for PyTorch)")
-print(f"[INFO] ONNX Runtime adaptor is deprecated in 3.x; using onnxruntime.quantization natively")
+Neural Compressor Status Check (Optional Extension)
+==================================================
+📌 Starting from INC 3.x, ONNX Runtime adaptor is deprecated (PR #2199).
+   INC 3.x refactored to framework-specific APIs with PyTorch as primary focus.
 
-# 测试3.x PyTorch API（新推荐API）
+This project uses onnxruntime.quantization as the SOLE ONNX quantization engine.
+neural-compressor is NOT installed by default. To use it for PyTorch quantization:
+   pip install neural-compressor
+   from neural_compressor.torch.quantization import RTNConfig, quantize
+"""
+import sys
 try:
-    from neural_compressor.torch.quantization import RTNConfig, quantize
-    print("[OK] INC 3.x PyTorch API available: RTNConfig, quantize")
-except (ImportError, AttributeError) as e:
-    # 3.x API不可用时，验证基础包完整性
+    import neural_compressor
+    nc_ver = neural_compressor.__version__
+    print(f"[INFO] neural_compressor {nc_ver} detected (optional extension)")
     try:
-        import neural_compressor.adaptor
-        print("[OK] INC adaptor layer available (2.x compatibility)")
+        from neural_compressor.torch.quantization import RTNConfig, quantize
+        print("[INFO] INC 3.x PyTorch API available: RTNConfig, quantize")
     except (ImportError, AttributeError):
-        print(f"[WARN] INC API paths differ in version {nc_ver}, package is installed correctly")
+        print(f"[INFO] INC PyTorch API paths differ in version {nc_ver}")
+except ImportError:
+    print("[INFO] neural-compressor not installed (optional, not required for ONNX quantization)")
+    print("[INFO] ONNX quantization uses onnxruntime.quantization natively")
 NCIMPORT
 echo "[VALIDATE 2/8] System venv /opt/venv preserved..."
 test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"
@@ -584,9 +580,21 @@ echo "[OK] onnxruntime.quantization unit tests passed"
 echo ""
 
 echo "┌─────────────────────────────────────────────────┐"
-echo "│  [FINAL VERIFICATION - INC 3.x UNIT TESTS]     │"
-echo "│  Neural Compressor 3.x API validation suite    │"
+echo "│  [REQUIRED] onnx_quantize_kit REGRESSION TESTS │"
+echo "│  Full pipeline: quantize→accuracy→benchmark    │"
 echo "└─────────────────────────────────────────────────┘"
+mkdir -p /tmp/scripts
+cp -r /opt/devcontainer-scripts/* /tmp/scripts/
+python /tmp/scripts/test_ort_quantization_regression.py
+echo "[OK] onnx_quantize_kit regression tests passed"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
+echo "│  [OPTIONAL] INC 3.x UNIT TESTS                 │"
+echo "│  Neural Compressor 3.x (PyTorch-only extension)│"
+echo "│  Skipped if neural-compressor not installed    │"
+echo "└─────────────────────────────────────────────────┘"
+if python -c "import neural_compressor" 2>/dev/null; then
 python - <<'NCUNIT'
 """
 Neural Compressor 3.x API Unit Tests (Strict Mode)
@@ -725,7 +733,11 @@ if failed > 0:
 else:
     print("  ✅ INC 3.x UNIT TESTS PASSED")
 NCUNIT
-echo "[OK] Neural Compressor 3.x unit tests passed"
+echo "[OK] Neural Compressor 3.x unit tests completed"
+else
+echo "[SKIP] Neural Compressor not installed - skipping INC unit tests (expected)"
+echo "[SKIP] ONNX quantization uses onnxruntime.quantization natively (no INC needed)"
+fi
 echo ""
 
 _NOW=$(date +%s)
@@ -752,7 +764,11 @@ rm -f /tmp/.onnx-quantized-variant-build-timer
 echo "########################################################################"
 echo "# ONNX-QUANTIZED VARIANT BUILD COMPLETE!"
 echo "# Quantization modes: dynamic INT8, static INT8, QDQ, FP16, Calibration"
-echo "# Intel Neural Compressor ${NC_VERSION} available for advanced quantization workflows"
+if python -c "import neural_compressor" 2>/dev/null; then
+echo "# Neural Compressor: available (optional PyTorch extension)"
+else
+echo "# Neural Compressor: not installed (optional, pip install neural-compressor for PyTorch quantization)"
+fi
 echo "#"
 echo "# Quick start:"
 echo "#   from onnxruntime.quantization import quantize_dynamic, QuantType"

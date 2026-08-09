@@ -9,6 +9,8 @@
 4. **精度验证方法论**
 5. **性能调优最佳实践**
 
+> **📌 量化引擎说明**：本指南所有ONNX量化流程均基于 **onnxruntime.quantization 原生API**（`quantize_dynamic`/`quantize_static`），这是ONNX模型量化的主力方案，**无需安装任何额外重量级依赖**。Intel Neural Compressor (INC) **未预装**、**非ONNX量化所必需**——INC 3.x 已弃用ONNX适配器（PR #2199），仅保留PyTorch-first API。如需对PyTorch模型进行weight-only量化（RTN/AWQ/GPTQ/AutoRound），可手动安装：`pip install neural-compressor`。
+
 ---
 
 ## 0. 快速选型决策树
@@ -895,4 +897,4 @@ BF16混合精度训练(PyTorch AMP) → 训练完成 → 模型.float()转FP32
 - [onnx-quantized README](README.md) - 基础使用和发布说明
 - [ONNX Runtime Quantization Docs](https://onnxruntime.ai/docs/performance/quantization.html)
 - [ONNX Runtime Quantization Examples](https://github.com/microsoft/onnxruntime-inference-examples/tree/main/quantization)
-- [Intel Neural Compressor Docs](https://intel.github.io/neural-compressor/)
+- [Intel Neural Compressor Docs](https://intel.github.io/neural-compressor/) - 可选PyTorch扩展（weight-only量化：RTN/AWQ/GPTQ/AutoRound）；ONNX量化不需要INC，INC 3.x已弃用ONNX适配器（PR #2199）
