@@ -8,7 +8,7 @@
 # Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
 #
 # Build: docker build -t devcontainer-base .
-# CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun -t devcontainer-base .
+# CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun -t devcontainer-base .
 # Run:   docker run -d --privileged -p 2222:22 -p 2375:2375 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -e GRANT_SUDO=yes \
 #          -v $(pwd)/workspace:/workspace -v docker-data:/var/lib/docker devcontainer-base
@@ -108,6 +108,7 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
 FROM ubuntu:26.04
 
 ARG APT_MIRROR
+ARG DOCKER_MIRROR=official
 
 LABEL maintainer="SpecWeave"
 LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter, managed by supervisord"
@@ -214,12 +215,19 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "=== Stage 2/7: Install Docker CE ===" && \
     _STAGE_START=$(date +%s) && \
     install -m 0755 -d /etc/apt/keyrings && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    if [ "${DOCKER_MIRROR}" = "aliyun" ]; then \
+        DOCKER_REPO="https://mirrors.aliyun.com/docker-ce/linux/ubuntu"; \
+        echo "[BUILD] Using Aliyun Docker CE mirror: ${DOCKER_REPO}"; \
+    else \
+        DOCKER_REPO="https://download.docker.com/linux/ubuntu"; \
+        echo "[BUILD] Using official Docker CE repo: ${DOCKER_REPO}"; \
+    fi && \
+    curl -fsSL ${DOCKER_REPO}/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     chmod a+r /etc/apt/keyrings/docker.gpg && \
     echo "[BUILD] Docker GPG key installed" && \
     . /etc/os-release && \
     echo "[BUILD] Ubuntu codename: ${VERSION_CODENAME}" && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] ${DOCKER_REPO} ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
     echo "[INFO] Updating APT after adding Docker repo..." && \
     apt-get update -qq && \
     echo "[INFO] Installing Docker CE packages (docker-ce, containerd, buildx)..." && \

@@ -15,6 +15,7 @@ REGISTRY="${REGISTRY:-}"
 NO_CACHE=""
 APT_MIRROR="${APT_MIRROR:-official}"
 PIP_MIRROR="${PIP_MIRROR:-official}"
+DOCKER_MIRROR="${DOCKER_MIRROR:-official}"
 VERIFY=false
 VERIFY_ONLY=false
 
@@ -65,7 +66,7 @@ while [[ $# -gt 0 ]]; do
         -n|--name) IMAGE_NAME="$2"; shift 2 ;;
         -r|--registry) REGISTRY="$2"; shift 2 ;;
         --no-cache) NO_CACHE="--no-cache"; shift ;;
-        --cn) APT_MIRROR="aliyun"; PIP_MIRROR="aliyun"; shift ;;
+        --cn) APT_MIRROR="aliyun"; PIP_MIRROR="aliyun"; DOCKER_MIRROR="aliyun"; shift ;;
         --apt-mirror) APT_MIRROR="$2"; shift 2 ;;
         --pip-mirror) PIP_MIRROR="$2"; shift 2 ;;
         --verify) VERIFY=true; shift ;;
@@ -96,6 +97,7 @@ fi
 log_set_field "image" "$FULL_IMAGE"
 log_set_field "apt_mirror" "$APT_MIRROR"
 log_set_field "pip_mirror" "$PIP_MIRROR"
+log_set_field "docker_mirror" "$DOCKER_MIRROR"
 
 # ------------------------------------------------------------------------------
 # 嵌入式验证
@@ -158,6 +160,7 @@ log_step "Building ${FULL_IMAGE}"
 log_info "Project dir:  ${PROJECT_DIR}"
 log_info "APT mirror:   ${APT_MIRROR}"
 log_info "PyPI mirror:  ${PIP_MIRROR}"
+log_info "Docker CE mirror: ${DOCKER_MIRROR}"
 if [ -n "$NO_CACHE" ]; then log_info "Cache: disabled"; fi
 echo ""
 
@@ -168,6 +171,7 @@ DOCKER_BUILDKIT=1 docker build \
     ${NO_CACHE} \
     --build-arg APT_MIRROR="${APT_MIRROR}" \
     --build-arg PIP_MIRROR="${PIP_MIRROR}" \
+    --build-arg DOCKER_MIRROR="${DOCKER_MIRROR}" \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
     -t "${FULL_IMAGE}" \
     .
