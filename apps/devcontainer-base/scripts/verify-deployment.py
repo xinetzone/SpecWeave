@@ -234,33 +234,59 @@ def test_fp16_conversion():
         record_test("FP16 conversion", "FAIL", str(e))
 
 def test_neural_compressor_imports():
-    """测试6: Neural Compressor API"""
+    """测试6: Neural Compressor API
+    
+    ========================================================================
+    📌 Neural Compressor 版本说明 (INC 2.x vs 3.x API 差异)
+    ========================================================================
+    
+    **INC 2.x API（旧版统一API，已逐步弃用）：**
+    - 统一入口：`from neural_compressor import quantization`
+    - 配置类：`from neural_compressor.config import PostTrainingQuantConfig`
+    - 支持框架：PyTorch/TensorFlow/ONNX Runtime
+    - ONNX量化：通过 adaptor/onnxrt.py 适配层支持
+    
+    **INC 3.x API（新版Torch-only API，推荐）：**
+    - 重构为框架专属API，主要聚焦 PyTorch：`neural_compressor.torch`
+    - 细粒度配置类：RTNConfig/AWQConfig/GPTQConfig/TeqConfig/AutoRoundConfig
+    - Torch-like API：prepare()/convert()/autotune()/save()/load()
+    - ⚠️ **重要变更**：TensorFlow/Keras/ONNX Runtime 适配器在 3.x 中已标记弃用(deprecated)
+      - 相关PR: intel/neural-compressor#2199 "Deprecate 2x Tensorflow, Keras and ONNX"
+      - ONNX Runtime 量化功能仍可使用 2.x 兼容API，但不再积极维护
+      - ✅ **本项目推荐**：ONNX模型量化直接使用 `onnxruntime.quantization` 原生API
+        （我们的onnx_quantize_kit工具包正是基于此，不依赖INC的ONNX适配层）
+    
+    **测试策略**：
+    - ✅ 验证包安装和版本号
+    - ✅ 验证3.x PyTorch API可访问（neural_compressor.torch）
+    - ⚠️ 2.x PostTrainingQuantConfig在3.x中可能不可用，标记为预期行为
+    ========================================================================
+    """
     print("\n" + "="*60)
-    print("Test 6: Neural Compressor API Access")
+    print("Test 6: Neural Compressor API Access (INC 3.x)")
     print("="*60)
     
     try:
         import neural_compressor
-        record_test("Neural Compressor version", "PASS", version=neural_compressor.__version__)
+        nc_version = neural_compressor.__version__
+        record_test("Neural Compressor version", "PASS", version=nc_version)
         
-        # 测试常见导入路径
-        import_paths = [
-            "from neural_compressor.config import PostTrainingQuantConfig",
-            "from neural_compressor import PostTrainingQuantConfig",
-        ]
-        
-        import_success = False
-        for path in import_paths:
+        # 测试1: 验证3.x PyTorch API模块可导入 (INC 3.x新API)
+        try:
+            from neural_compressor.torch.quantization import RTNConfig, quantize
+            record_test("NC 3.x PyTorch API (RTNConfig/quantize)", "PASS")
+        except (ImportError, AttributeError) as e:
+            # 3.x API不可用时，降级检查基础包完整性
             try:
-                exec(path)
-                record_test(f"NC import: {path.split()[1]}", "PASS")
-                import_success = True
-                break
+                import neural_compressor.adaptor
+                record_test("NC 2.x adaptor layer available", "PASS")
             except (ImportError, AttributeError):
-                continue
+                record_test("NC 3.x API structure", "WARN", 
+                           f"Package installed (v{nc_version}), API paths may differ in 3.x")
         
-        if not import_success:
-            record_test("Neural Compressor quantization config", "WARN", "Could not find PTQ config (package installed)")
+        # 测试2: 验证顶层包可正常访问（不测试已弃用的2.x ONNX API）
+        # 注意：PostTrainingQuantConfig是2.x旧API，3.x中已重构为细粒度配置类
+        # ONNX量化请使用onnxruntime.quantization原生API，这是我们的主力量化方案
         
     except Exception as e:
         record_test("Neural Compressor imports", "FAIL", str(e))

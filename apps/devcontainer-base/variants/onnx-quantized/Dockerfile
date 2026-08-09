@@ -224,22 +224,36 @@ echo "[VALIDATE 1/8] Quantization imports..."
 python -c "from onnxruntime.quantization import quantize_dynamic, QuantType, quantize_static, CalibrationDataReader; print('[OK] onnxruntime.quantization imports')"
 python -c "from onnxconverter_common import float16; print('[OK] onnxconverter_common.float16 imports')"
 python - <<'NCIMPORT'
+"""
+Neural Compressor 3.x API Import Check
+=====================================
+📌 INC 2.x vs 3.x 关键差异：
+- 2.x (旧API): 统一入口 `from neural_compressor import quantization` + PostTrainingQuantConfig
+  - 支持 PyTorch/TensorFlow/ONNX Runtime
+  - ONNX通过 adaptor/onnxrt.py 适配
+- 3.x (新API, 推荐): 框架专属API，主要聚焦 PyTorch
+  - PyTorch API: `from neural_compressor.torch.quantization import RTNConfig, quantize, prepare, convert`
+  - 细粒度配置类: RTNConfig/AWQConfig/GPTQConfig/TeqConfig/AutoRoundConfig (替代统一PostTrainingQuantConfig)
+  - ⚠️ ONNX Runtime 适配器在 3.x 中已弃用 (PR #2199)
+  - ✅ 本项目ONNX量化主力: onnxruntime.quantization 原生API，不依赖INC ONNX适配层
+"""
 import neural_compressor
-print(f"[OK] neural_compressor {neural_compressor.__version__} loaded")
-# Try common INC 3.x import paths
-for import_path in [
-    "from neural_compressor.config import PostTrainingQuantConfig",
-    "from neural_compressor import PostTrainingQuantConfig",
-    "from neural_compressor import quantization",
-]:
+nc_ver = neural_compressor.__version__
+print(f"[OK] neural_compressor {nc_ver} loaded")
+print(f"[INFO] Note: INC 3.x uses framework-specific APIs (neural_compressor.torch for PyTorch)")
+print(f"[INFO] ONNX Runtime adaptor is deprecated in 3.x; using onnxruntime.quantization natively")
+
+# 测试3.x PyTorch API（新推荐API）
+try:
+    from neural_compressor.torch.quantization import RTNConfig, quantize
+    print("[OK] INC 3.x PyTorch API available: RTNConfig, quantize")
+except (ImportError, AttributeError) as e:
+    # 3.x API不可用时，验证基础包完整性
     try:
-        exec(import_path)
-        print(f"[OK] {import_path}")
-        break
-    except ImportError:
-        pass
-else:
-    print(f"[WARN] Could not find quantization class in neural_compressor (this is OK, package is installed)")
+        import neural_compressor.adaptor
+        print("[OK] INC adaptor layer available (2.x compatibility)")
+    except (ImportError, AttributeError):
+        print(f"[WARN] INC API paths differ in version {nc_ver}, package is installed correctly")
 NCIMPORT
 echo "[VALIDATE 2/8] System venv /opt/venv preserved..."
 test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"

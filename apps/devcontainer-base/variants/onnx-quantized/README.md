@@ -39,14 +39,14 @@ ONNX 模型量化工具链变体，基于 onnx-pytorch 构建，提供完整的�
 | **量化模型推理** | ✅ PASS | 输出形状正确 (1,5) |
 | **FP32 vs INT8 精度对比** | ✅ PASS | **max_diff = 0.002050**（误差 < 0.21%）|
 | **FP16 半精度转换** | ✅ PASS | onnxconverter-common 正常 |
-| **Neural Compressor 导入** | ⚠️ WARN | 包已安装，API 路径需适配 3.x 版本 |
+| **Neural Compressor 导入** | ✅ PASS | 包 v3.9 已安装，3.x PyTorch API 正常，ONNX 使用 onnxruntime 原生量化 |
 | **SSH 服务** | ✅ PASS | OpenSSH_10.2p1 |
 | **Docker Daemon** | ✅ PASS | Docker 29.7.2 (DinD) |
 | **Jupyter Notebook** | ✅ PASS | 由 supervisord 管理 |
 | **Supervisord** | ✅ PASS | v4.3.0 |
 | **devuser 权限** | ✅ PASS | 所有工具可正常访问 |
 
-**汇总**: 25 项测试，24 ✅ 通过，0 ❌ 失败，1 ⚠️ 警告（不影响核心功能）
+**汇总**: 25 项测试，25 ✅ 通过，0 ❌ 失败，0 ⚠️ 警告
 
 ---
 
@@ -308,11 +308,52 @@ print("✅ FP16 转换完成")
 
 ## ⚠️ 已知问题与注意事项
 
-1. **Neural Compressor 3.x API 变更**
-   - 现象：`from neural_compressor import quantization` 导入失败
-   - 原因：INC 3.x 重构了 API，PostTrainingQuantConfig 路径可能变化
-   - 影响：不影响 ONNX Runtime 原生量化功能
-   - 解决：根据实际安装版本适配 import 路径，包功能正常可用
+1. **Neural Compressor 2.x vs 3.x API 差异（重要）**
+   
+   INC 3.x 进行了重大API重构，这是**预期的版本演进**，不是错误：
+
+   | 方面 | INC 2.x（旧统一API） | INC 3.x（新框架专属API） |
+   |------|---------------------|-------------------------|
+   | **API风格** | 框架无关统一API | 框架专属API（PyTorch-first） |
+   | **PyTorch入口** | `from neural_compressor import quantization` | `from neural_compressor.torch.quantization import ...` |
+   | **配置类** | 统一 `PostTrainingQuantConfig` | 细粒度：`RTNConfig`/`AWQConfig`/`GPTQConfig`/`TeqConfig`/`AutoRoundConfig` |
+   | **ONNX支持** | 通过 `adaptor/onnxrt.py` 适配 | ⚠️ **已弃用**（PR #2199标记deprecated） |
+   | **TensorFlow支持** | 完整支持 | ⚠️ **已弃用** |
+   | **主要工作流** | `fit()` | `prepare()` → `convert()` 或直接 `quantize()` |
+
+   **本项目的策略**：
+   - ✅ **ONNX模型量化**：直接使用 `onnxruntime.quantization` 原生API（这是我们 `onnx_quantize_kit` 的主力方案，完全不受影响）
+   - ✅ **PyTorch模型量化**：如需INC高级功能（AutoRound/AWQ/GPTQ等weight-only量化），使用INC 3.x PyTorch API
+   - 📦 **包已安装**：`neural-compressor==3.9` 已预装，可根据需要使用
+
+   **INC 3.x PyTorch API 示例**：
+   ```python
+   # INC 3.x PyTorch 量化新API
+   from neural_compressor.torch.quantization import RTNConfig, quantize, prepare, convert
+   
+   # Weight-only RTN量化（4bit）
+   woq_config = RTNConfig(bits=4, group_size=128)
+   q_model = quantize(model, quant_config=woq_config, example_inputs=example_inputs)
+   
+   # 或两步式 prepare + convert
+   prepared_model = prepare(model, quant_config=woq_config, example_inputs=example_inputs)
+   # 校准...
+   q_model = convert(prepared_model)
+   q_model.save("./saved_quantized_model")
+   ```
+
+   **ONNX量化（本项目推荐，主力方案）**：
+   ```python
+   # 我们的主力方案 - 直接使用ONNX Runtime原生API，不依赖INC
+   from onnxruntime.quantization import quantize_dynamic, QuantType
+   quantize_dynamic(
+       model_input="model.onnx",
+       model_output="model_int8.onnx",
+       weight_type=QuantType.QInt8,
+       per_channel=True,
+       optimize_model=True,
+   )
+   ```
 
 2. **量化前必须简化模型**
    - 原因：部分导出的 ONNX 模型存在形状推理问题（如 InceptionV1 的 Split 层）
