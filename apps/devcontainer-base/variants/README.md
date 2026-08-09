@@ -9,6 +9,7 @@
 | conda | Miniconda3 基础环境 | devcontainer-base:latest | Miniconda3, conda镜像源配置 |
 | conda-llvm | conda + LLVM编译工具链 | devcontainer-base:conda | LLVM 22.1.8, clang 22.1.8, cmake, ninja |
 | onnx-pytorch | conda-llvm + PyTorch CPU + ONNX 运行时 | devcontainer-base:conda-llvm | PyTorch CPU, torchvision, ONNX, ONNX Runtime, onnx-simplifier, onnxoptimizer |
+| onnx-quantized | onnx-pytorch + ONNX量化工具链 | devcontainer-base:onnx-pytorch | onnxruntime.quantization(INT8/FP16), onnxconverter-common, onnxsim; neural-compressor可选(PyTorch-only) |
 
 ## 快速开始
 
@@ -40,12 +41,12 @@ bash variants/build.sh --all
    - `__EXTRA_VALIDATION__`：构建后验证命令
 3. **更新配置文件**：修改 `.env.example` 添加变体特有参数，更新 `README.md` 使用说明
 4. **更新 .agents/rules/dockerfile.md**：记录变体特有 Dockerfile 规范
-5. **在 variants/build.sh 中注册**：在 `VARIANTS` 数组中添加变体定义，格式：
+5. **在 variants/build.sh 中注册**：在 `VARIANTS` 数组中添加变体定义，格式（`|` 分隔）：
    ```bash
-   "<name>:<description>:<deps>:<verify-commands>"
+   "<name>|<description>|<deps>|<verify-commands>"
    # name:     变体名称（与目录名一致）
    # desc:     一句话描述
    # deps:     依赖的变体名（逗号分隔，无依赖留空）
-   # verify:   验证命令（分号分隔多条命令）
+   # verify:   验证命令（分号分隔多条命令，每条独立报告PASS/FAIL/TIMEOUT）
    ```
 6. **在本 README.md 变体列表中添加新条目**

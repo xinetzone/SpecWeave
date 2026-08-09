@@ -24,6 +24,8 @@
 - **可用变体**：
   - `conda`：Miniconda3 基础环境（基于 devcontainer-base:latest）
   - `conda-llvm`：conda + LLVM 22.1.8/clang/cmake/ninja 编译工具链（基于 conda 变体）
+  - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
+  - `onnx-quantized`：onnx-pytorch + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，基于 onnx-pytorch 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
 - **AI资产容器**：`.agents/` 目录（本子系统特有规则）
 
@@ -47,10 +49,17 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │       ├─ testing.md              ← 测试规范
                  │       └─ new-variant-guide.md    ← 新增变体操南
                  ├─ build.sh               ← 统一构建脚本（拓扑排序+依赖处理+计时+验证）
-                 ├─ shared/lib/logging.sh  ← 共享结构化日志库
+                 ├─ shared/                ← 变体间共享组件
+                 │   ├─ lib/logging.sh     ← 共享结构化日志库
+                 │   └─ scripts/conda-mirror-setup.sh ← conda/pip镜像源配置脚本
                  ├─ scripts/               ← 单变体辅助脚本
-                 │   ├─ build-conda-llvm.sh ← conda-llvm一键构建脚本
-                 │   └─ test-conda-llvm.sh  ← conda-llvm单元测试（21项）
+                 │   ├─ build-conda-llvm.sh    ← conda-llvm一键构建脚本
+                 │   ├─ build-onnx-pytorch.sh  ← onnx-pytorch一键构建脚本
+                 │   ├─ test-conda-llvm.sh     ← conda-llvm单元测试
+                 │   ├─ test-conda-llvm-smoke.sh ← conda-llvm冒烟测试
+                 │   ├─ test-onnx-pytorch.sh   ← onnx-pytorch单元测试（20项）
+                 │   ├─ test-onnx-quantized.sh ← onnx-quantized单元测试
+                 │   └─ test-timer-parser.sh   ← [TIMER]日志解析单元测试
                  ├─ _template/             ← 新变体模板
                  │   ├─ Dockerfile
                  │   ├─ .env.example
@@ -61,10 +70,25 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ .env.example
                  │   ├─ README.md
                  │   └─ .agents/rules/dockerfile.md
-                 └─ conda-llvm/            ← conda+LLVM 变体
+                 ├─ conda-llvm/            ← conda+LLVM 变体
+                 │   ├─ Dockerfile
+                 │   ├─ .env.example
+                 │   ├─ README.md
+                 │   ├─ DEPENDENCIES.md
+                 │   ├─ RELEASE.md
+                 │   ├─ RELEASE-GUIDE.md
+                 │   └─ .agents/rules/dockerfile.md
+                 ├─ onnx-pytorch/          ← PyTorch CPU+ONNX Runtime 变体
+                 │   ├─ Dockerfile
+                 │   ├─ .env.example
+                 │   ├─ README.md
+                 │   └─ .agents/rules/dockerfile.md
+                 └─ onnx-quantized/        ← ONNX量化工具链变体（INT8/FP16）
                      ├─ Dockerfile
                      ├─ .env.example
                      ├─ README.md
+                     ├─ ADVANCED-QUANTIZATION-GUIDE.md
+                     ├─ QUANTIZATION-BEST-PRACTICES.md
                      └─ .agents/rules/dockerfile.md
 ```
 
@@ -78,6 +102,8 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 编写/修改变体 Dockerfile | [.agents/rules/variant-conventions.md](.agents/rules/variant-conventions.md) | FROM继承模式、SHELL重置、禁止覆盖项、PATH优先级、缓存挂载规范、[VALIDATION CHECKPOINT] |
 | conda 变体 Dockerfile | [conda/.agents/rules/dockerfile.md](conda/.agents/rules/dockerfile.md) | Miniconda安装路径、不自动激活原则、conda-init.sh、镜像源配置 |
 | conda-llvm 变体 Dockerfile | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM安装、clang/cmake/ninja、PATH配置 |
+| onnx-pytorch 变体 Dockerfile | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU安装、ONNX生态、PATH优先级（/opt/conda/bin最前）、4追加阶段 |
+| onnx-quantized 变体 Dockerfile | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | onnxruntime.quantization量化工具链、FP16/INT8、neural-compressor可选、共享脚本COPY模式 |
 | 编写/运行测试脚本 | [.agents/rules/testing.md](.agents/rules/testing.md) | L1-L6六层测试策略、脚本模板、pass/fail辅助函数、冒烟验证vs完整测试对比 |
 | 新增镜像变体 | [.agents/rules/new-variant-guide.md](.agents/rules/new-variant-guide.md) | 7步流程：复制模板→替换占位符→更新配置→创建规则→注册到build.sh→创建测试→更新README |
 | 共享日志库使用 | [shared/lib/logging.sh](shared/lib/logging.sh) | log_info/log_ok/log_error/log_step/log_metric/log_event/log_summary API |
@@ -98,6 +124,9 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 新增变体操南 | [.agents/rules/new-variant-guide.md](.agents/rules/new-variant-guide.md) | 7步新增流程、模板占位符、注册检查清单 |
 | conda变体规范 | [conda/.agents/rules/dockerfile.md](conda/.agents/rules/dockerfile.md) | Miniconda变体特有Dockerfile规则 |
 | conda-llvm变体规范 | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM/clang变体特有Dockerfile规则 |
+| onnx-pytorch变体规范 | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU+ONNX Runtime变体特有规则 |
+| onnx-quantized变体规范 | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | ONNX量化工具链变体特有规则 |
+| 共享镜像源脚本 | [shared/scripts/conda-mirror-setup.sh](shared/scripts/conda-mirror-setup.sh) | conda/pip镜像源配置（环境变量驱动） |
 | 新变体模板 | [_template/](_template/) | 复制模板创建新变体 |
 | 人类可读文档 | [README.md](README.md) | 变体列表和快速开始（面向人类用户） |
 
@@ -125,15 +154,19 @@ bash build.sh --list
 
 # 构建单个变体（国内源）
 bash build.sh --variant conda-llvm --cn
+bash build.sh --variant onnx-pytorch --cn
+bash build.sh --variant onnx-quantized --cn
 
-# 构建所有变体（按依赖顺序）
+# 构建所有变体（按依赖顺序：conda → conda-llvm → onnx-pytorch → onnx-quantized）
 bash build.sh --all --cn
 
-# 一键构建+测试 conda-llvm
-bash scripts/build-conda-llvm.sh
+# 一键构建+测试 onnx-pytorch
+bash scripts/build-onnx-pytorch.sh
 
 # 仅运行测试（镜像已存在）
 bash scripts/test-conda-llvm.sh
+bash scripts/test-onnx-pytorch.sh
+bash scripts/test-onnx-quantized.sh
 
 # 新增变体（7步流程）
 cp -r _template <new-variant>
@@ -151,4 +184,7 @@ cp -r _template <new-variant>
 
 ## 变更日志
 
+- 2026-08-09 | feat | 新增 onnx-quantized 变体（onnxruntime.quantization 量化工具链），注册到 build.sh VARIANTS 数组
+- 2026-08-08 | feat | 新增 onnx-pytorch 变体（PyTorch CPU + ONNX Runtime 深度学习运行时），添加 build-onnx-pytorch.sh/test-onnx-pytorch.sh 脚本
+- 2026-08-08 | feat | 新增 shared/scripts/conda-mirror-setup.sh 共享镜像源配置脚本，变体通过环境变量驱动
 - 2026-08-07 | feat | 初始化 variants/AGENTS.md + .agents/ 目录，原子化4个规则文件（build-orchestration/variant-conventions/testing/new-variant-guide）

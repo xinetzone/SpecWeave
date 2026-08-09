@@ -5,7 +5,7 @@ version: 1.0.0
 date: 2026-08-07
 type: workflow
 source: variants/ 变体系统CI集成设计
-status: planned
+status: implemented
 tags: [ci, docker, variants, github-actions, build-pipeline]
 ---
 
@@ -22,19 +22,22 @@ flowchart LR
     Base[devcontainer-base:latest<br/>基础镜像<br/>7阶段构建] --> Conda[conda<br/>Miniconda3<br/>5追加阶段]
     Conda --> CondaLLVM[conda-llvm<br/>+ LLVM/clang/cmake/ninja<br/>4追加阶段]
     CondaLLVM --> OnnxPyTorch[onnx-pytorch<br/>+ PyTorch CPU + ONNX Runtime<br/>4追加阶段]
+    OnnxPyTorch --> OnnxQuantized[onnx-quantized<br/>+ onnxruntime.quantization<br/>INT8/FP16量化工具链]
     
     classDef base fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
     classDef conda fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     classDef llvm fill:#fff3e0,stroke:#e65100,stroke-width:2px
     classDef pytorch fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef quant fill:#fce4ec,stroke:#c62828,stroke-width:2px
     
     class Base base
     class Conda conda
     class CondaLLVM llvm
     class OnnxPyTorch pytorch
+    class OnnxQuantized quant
 ```
 
-**构建顺序必须遵循**：`base → conda → conda-llvm → onnx-pytorch`（拓扑排序）。
+**构建顺序必须遵循**：`base → conda → conda-llvm → onnx-pytorch → onnx-quantized`（拓扑排序）。
 
 ---
 
@@ -78,7 +81,7 @@ apps/devcontainer-base/.agents/**
 |------|-----|------|
 | MIRROR | `official` | 官方源构建（用于发布验证） |
 | MIRROR | `cn` | 国内源构建（加速国内用户使用） |
-| VARIANT | `base, conda, conda-llvm, onnx-pytorch` | 按依赖顺序构建 |
+| VARIANT | `base, conda, conda-llvm, onnx-pytorch, onnx-quantized` | 按依赖顺序构建 |
 
 **完整构建内容**：
 1. 按拓扑顺序构建所有镜像
@@ -102,7 +105,7 @@ apps/devcontainer-base/.agents/**
 ### 2.4 手动触发（workflow_dispatch）
 
 **可选参数**：
-- `variant`：选择构建单个变体（base/conda/conda-llvm/onnx-pytorch/all）
+- `variant`：选择构建单个变体（base/conda/conda-llvm/onnx-pytorch/onnx-quantized/all）
 - `mirror`：选择镜像源（official/cn）
 - `no_cache`：是否禁用缓存
 - `run_tests`：是否运行测试
@@ -194,7 +197,35 @@ apps/devcontainer-base/.agents/**
 
 **测试**：运行 test-onnx-pytorch.sh 的20项单元测试，包含 PyTorch 张量运算 + ONNX 导出 + ONNX Runtime 推理冒烟测试。
 
-### 3.6 Stage 5: 构建报告与清理
+### 3.6 Stage 5: ONNX-Quantized 变体构建
+
+**依赖 Stage 4 成功完成**：
+
+```yaml
+- name: Build onnx-quantized variant
+  needs: build-onnx-pytorch
+  run: |
+    cd apps/devcontainer-base
+    bash variants/build.sh --variant onnx-quantized --tag ci-${{ github.sha }} $([ "${{ inputs.mirror }}" = "cn" ] && echo "--cn")
+- name: Run onnx-quantized tests
+  run: |
+    cd apps/devcontainer-base
+    bash variants/scripts/test-onnx-quantized.sh --tag ci-${{ github.sha }}
+```
+
+**测试**：运行 test-onnx-quantized.sh 的量化工具链单元测试，包含：
+- onnxruntime.quantization API导入验证（quantize_dynamic/quantize_static/quantize_qat等）
+- 动态INT8量化冒烟测试
+- FP16半精度转换验证
+- onnx_quantize_kit包导入与API可用性检查
+
+**额外CI门禁**（onnx-quantize-ci.yml独立流水线）：
+- Python 3.10/3.11/3.12 多版本测试矩阵
+- G1-G11 回归测试（test_ort_quantization_regression.py）
+- CI量化门禁脚本（ci_quantization_gate.py）：cosine_sim ≥ 0.90 精度阈值
+- 性能基准测试（benchmark阶段，仅定时/手动触发）
+
+### 3.7 Stage 6: 构建报告与清理
 
 | 项 | 说明 |
 |----|------|
@@ -214,14 +245,17 @@ flowchart TD
     Base --> Conda[Stage 2: Build Conda<br/>+ basic validation]
     Conda --> CondaLLVM[Stage 3: Build Conda-LLVM<br/>+ 21 unit tests]
     CondaLLVM --> OnnxPyTorch[Stage 4: Build ONNX-PyTorch<br/>+ 20 unit tests]
-    OnnxPyTorch --> Report[Stage 5: Build Report<br/>timing + size + summary]
+    OnnxPyTorch --> OnnxQuantized[Stage 5: Build ONNX-Quantized<br/>+ quantization tests]
+    OnnxQuantized --> Report[Stage 6: Build Report<br/>timing + size + summary]
     
     classDef lint fill:#f5f5f5,stroke:#616161,stroke-width:2px
     classDef stage fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+    classDef quant fill:#fce4ec,stroke:#c62828,stroke-width:2px
     classDef report fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px
     
     class Lint lint
     class Base,Conda,CondaLLVM,OnnxPyTorch stage
+    class OnnxQuantized quant
     class Report report
 ```
 
@@ -239,7 +273,7 @@ flowchart TD
 | 触发 | 标签格式 | 示例 |
 |------|---------|------|
 | main 分支 | `:latest-<variant>` | `devcontainer-base:conda-latest` |
-| Tag 发布 | `:v<version>-<variant>` | `devcontainer-base:onnx-pytorch-v1.0.0` |
+| Tag 发布 | `:v<version>-<variant>` | `devcontainer-base:onnx-quantized-v1.0.0` |
 | PR 构建 | `:pr-<prnum>-<sha>` | `devcontainer-base:conda-pr-123-abc123`（不推送，仅本地验证） |
 | Nightly | `:nightly-<date>-<variant>` | `devcontainer-base:conda-nightly-20260807` |
 
@@ -259,6 +293,7 @@ flowchart TD
 | conda | ✅ COPY shared/scripts/conda-mirror-setup.sh | ✅ 符合 | 第3阶段通过环境变量调用 |
 | conda-llvm | ➖ 继承自conda | ✅ 符合 | 镜像源已在conda层配置，无需重复 |
 | onnx-pytorch | ➖ 继承自conda-llvm → conda | ✅ 符合 | 镜像源已在conda层配置 |
+| onnx-quantized | ✅ 继承共享脚本模式 | ✅ 符合 | 量化工具链零额外重量级依赖 |
 | _template | ✅ 注释说明共享脚本用法 | ✅ 符合 | Stage 2注释包含COPY指令提示 |
 
 ### 6.1 共享脚本扩展建议
@@ -299,7 +334,20 @@ flowchart TD
 
 实际 workflow 文件应放在：
 ```
-.github/workflows/devcontainer-variants.yml
+.github/workflows/devcontainer-variants.yml    # 变体构建流水线（Docker-based）
+.github/workflows/onnx-quantize-ci.yml         # ONNX量化工具包CI（Python-based）
 ```
+
+### 8.1 onnx-quantize-ci.yml 独立流水线
+
+专门为 `scripts/onnx_quantize_kit/` 设计的Python CI，与Docker构建流水线分离：
+
+| 项 | 说明 |
+|----|------|
+| 触发条件 | onnx_quantize_kit代码/测试/Dockerfile/CI配置变更（push/main + PR）；每周日定时全量回归；手动触发 |
+| 测试矩阵 | Python 3.10 / 3.11 / 3.12 |
+| 阶段 | ①install → ②unit-tests（test_quantize_kit.py）→ ③regression-tests（G1-G11 test_ort_quantization_regression.py）→ ④ci-gate（cosine_sim≥0.90精度门禁）→ ⑤benchmark（仅定时/手动） |
+| 依赖 | onnxruntime, onnx, numpy, onnxconverter-common, psutil（ci-requirements.txt） |
+| 门禁 | 量化后模型 cosine_similarity ≥ 0.90，失败阻断合并 |
 
 （本设计文档在 `.agents/workflows/variants-ci.md`，是人类可读的设计说明）

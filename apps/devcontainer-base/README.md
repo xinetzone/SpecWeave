@@ -36,11 +36,60 @@ devcontainer-base/
 │           ├── sshd.conf           # SSH 进程配置
 │           ├── dockerd.conf        # Docker daemon 进程配置
 │           └── jupyter.conf        # Jupyter 进程配置
-└── scripts/
-    ├── build.sh                    # 一键构建脚本（支持--cn/--verify）
-    ├── healthcheck.sh              # 容器健康检查脚本（条件化检测）
-    └── lib/
-        └── logging.sh              # 日志工具库
+├── scripts/
+│   ├── build.sh                    # 一键构建脚本（支持--cn/--verify）
+│   ├── start.sh                    # 一键启动脚本（健康验证+连接信息）
+│   ├── local-build.sh              # 本地WSL2构建脚本（变体依赖链）
+│   ├── healthcheck.sh              # 容器健康检查脚本（条件化检测）
+│   ├── verify-deployment.py        # 部署验证脚本（多维度检查）
+│   ├── verify-services.sh          # 服务验证脚本
+│   ├── ci-requirements.txt         # CI环境Python依赖清单
+│   ├── ci_quantization_gate.py     # CI量化门禁（精度阈值+基准测试）
+│   ├── lib/
+│   │   └── logging.sh              # 日志工具库
+│   ├── onnx_quantize_kit/          # ONNX量化工具包（onnxruntime.quantization封装）
+│   │   ├── __init__.py             # 公开API导出
+│   │   ├── quantize.py             # 高层量化API（auto_quantize+各量化方法）
+│   │   ├── accuracy.py             # 精度验证
+│   │   ├── benchmark.py            # 性能基准测试
+│   │   ├── calibration.py          # 校准数据读取器
+│   │   ├── model_detect.py         # 模型类型自动检测
+│   │   ├── cli.py                  # 命令行接口
+│   │   └── reporting.py            # 报告生成
+│   ├── test_quantize_kit.py        # onnx_quantize_kit单元测试
+│   ├── test_onnxruntime_quantization.py  # ORT量化API单元测试
+│   ├── test_ort_quantization_regression.py # ORT回归测试（G1-G11）
+│   ├── test_neural_compressor.py   # Neural Compressor兼容性测试（可选）
+│   ├── benchmark_quantization.py   # 量化性能基准对比
+│   ├── batch_quantize.py           # 批量量化脚本
+│   ├── onnx-quantize.py            # ONNX量化命令行工具
+│   ├── compare_qdq_vs_qoperator.py # QDQ vs QOperator格式对比
+│   ├── run_full_benchmark.py       # 完整基准测试套件
+│   ├── analyze_benchmark.py        # 基准测试结果分析
+│   ├── analyze-diagnostics.py      # 10维诊断解析器
+│   ├── ci_alert.py                 # CI告警工具
+│   ├── models/                     # 测试用ONNX模型（cnn/mlp/transformer）
+│   ├── QUICKSTART.md               # 量化工具包快速入门
+│   └── EXERCISES.md                # 量化练习材料
+└── variants/                       # 镜像变体系列（按依赖链排列）
+    ├── AGENTS.md                   # 变体管理AI协作者入口
+    ├── README.md                   # 变体索引和使用指南
+    ├── build.sh                    # 变体统一构建脚本（拓扑排序+计时+验证）
+    ├── _template/                  # 新变体模板
+    ├── conda/                      # Miniconda3 基础环境变体
+    ├── conda-llvm/                 # conda+LLVM/clang编译工具链变体
+    ├── onnx-pytorch/               # PyTorch CPU+ONNX Runtime深度学习运行时
+    ├── onnx-quantized/             # ONNX量化工具链（INT8/FP16）
+    ├── shared/                     # 变体间共享组件
+    │   ├── lib/logging.sh          # 结构化日志库
+    │   └── scripts/conda-mirror-setup.sh  # conda/pip镜像源配置
+    └── scripts/                    # 单变体辅助脚本
+        ├── build-conda-llvm.sh     # conda-llvm一键构建
+        ├── build-onnx-pytorch.sh   # onnx-pytorch一键构建
+        ├── test-conda-llvm.sh      # conda-llvm测试
+        ├── test-onnx-pytorch.sh    # onnx-pytorch测试（20项）
+        ├── test-onnx-quantized.sh  # onnx-quantized测试
+        └── test-timer-parser.sh    # [TIMER]解析单元测试
 ```
 
 ## 🚀 快速开始
@@ -126,6 +175,62 @@ DooD模式无需 `--privileged`，容器内 docker 命令直接操作宿主Docke
 ```bash
 docker run -it --rm devcontainer-base:1.0 bash
 ```
+
+### 构建镜像变体
+
+基础镜像之上提供了一系列功能变体，按依赖链构建：
+
+```
+base (Ubuntu 26.04 + SSH + Docker + Jupyter)
+  ↓
+conda (Miniconda3 + Python 3.14.6)
+  ↓
+conda-llvm (LLVM/Clang 22.1.8 + CMake + Ninja)
+  ↓
+onnx-pytorch (PyTorch CPU + ONNX Runtime 1.28.0)
+  ↓
+onnx-quantized (onnxruntime.quantization 量化工具链: INT8/FP16)
+```
+
+```bash
+# 构建所有变体（按依赖顺序，国内源加速）
+bash variants/build.sh --all --cn
+
+# 构建单个变体
+bash variants/build.sh --variant onnx-quantized --cn
+
+# 列出可用变体
+bash variants/build.sh --list
+```
+
+| 变体 | 说明 | 核心组件 |
+|------|------|---------|
+| conda | Miniconda3 基础环境 | conda, Python 3.14.6 |
+| conda-llvm | 编译工具链 | LLVM 22.1.8, Clang, CMake, Ninja |
+| onnx-pytorch | 深度学习运行时 | PyTorch CPU, ONNX Runtime, onnxsim |
+| onnx-quantized | 模型量化工具链 | onnxruntime.quantization, FP16/INT8, onnx_quantize_kit |
+
+> 详细变体文档见 [variants/README.md](variants/README.md) 和 [variants/AGENTS.md](variants/AGENTS.md)。
+
+### ONNX 量化工具包（onnx_quantize_kit）
+
+`scripts/onnx_quantize_kit/` 提供基于 `onnxruntime.quantization` 的高层量化API：
+
+```python
+from onnx_quantize_kit import auto_quantize, quantize_dynamic_simple, quantize_fp16
+
+# 自动选择最优量化策略（根据模型类型MLP/CNN/Transformer）
+result = auto_quantize("model.onnx", "model_quantized.onnx", calib_reader=...)
+print(f"Strategy: {result.strategy_used}, Accuracy: {result.accuracy.cosine_sim:.4f}")
+
+# 一行动态量化
+quantize_dynamic_simple("model.onnx", "model_int8.onnx")
+
+# FP16转换
+quantize_fp16("model.onnx", "model_fp16.onnx")
+```
+
+支持：动态INT8量化、静态QDQ/QOperator量化、FP16半精度转换、自动策略选择、精度验证、性能基准。详细文档见 [scripts/QUICKSTART.md](scripts/QUICKSTART.md)。
 
 ## 🔌 连接方式
 
@@ -250,16 +355,44 @@ Docker HEALTHCHECK配置：
 - `start-period=60s`
 - `retries=3`
 
+## 🔄 CI/CD 持续集成
+
+项目配置了两套 GitHub Actions CI 流水线：
+
+### 1. 变体构建流水线（devcontainer-variants.yml）
+
+- **触发条件**：PR（Lint快速检查）、main分支推送（完整构建）、Nightly定时、手动触发
+- **构建矩阵**：按依赖拓扑 `base → conda → conda-llvm → onnx-pytorch → onnx-quantized` 顺序构建
+- **验证**：每个变体构建后自动运行单元测试（20+项测试/变体），逐条PASS/FAIL报告
+
+### 2. ONNX量化工具包CI（onnx-quantize-ci.yml）
+
+- **触发条件**：onnx_quantize_kit代码/测试/Dockerfile/CI配置变更（push/main + PR）、每周日定时全量回归、手动触发
+- **测试矩阵**：Python 3.10/3.11/3.12 多版本
+- **测试阶段**：单元测试 → G1-G11回归测试 → CI量化门禁 → 性能基准（定时/手动）
+- **自动门禁**：cosine_sim ≥ 0.90 精度阈值，失败阻断合并
+
+手动触发：
+```bash
+# 触发变体构建
+gh workflow run devcontainer-variants.yml --ref main -f variant=onnx-quantized
+
+# 触发量化CI
+gh workflow run onnx-quantize-ci.yml --ref main
+```
+
 ## 📝 版本信息
 
 - **版本**：1.0
 - **基础镜像**：ubuntu:26.04
-- **Python**：venv (/opt/venv)
+- **Python**：venv (/opt/venv, Python 3)
 - **Jupyter**: notebook 7.2.2, jupyterlab 4.2.5
 - **Docker CE**：官方仓库最新稳定版
 - **Podman**：Ubuntu 26.04官方源
 - **OpenSSH**：Ubuntu 26.04官方包
 - **Supervisor**：Ubuntu 26.04官方包
+- **镜像变体**：conda, conda-llvm, onnx-pytorch, onnx-quantized（共4个功能变体）
+- **ONNX量化工具包**：onnx_quantize_kit（基于onnxruntime.quantization原生API）
 
 ## 📄 许可证
 
@@ -269,3 +402,5 @@ Docker HEALTHCHECK配置：
 
 - [jupyter-ssh-base](../jupyter-ssh-base/) - 基础镜像（SSH+Jupyter，无容器运行时）
 - [docker-ssh-dind](../docker-ssh-dind/) - Docker DinD镜像（SSH+Docker，无Jupyter/Podman）
+- [onnx-pytorch 变体](variants/onnx-pytorch/) - PyTorch CPU + ONNX Runtime 深度学习运行时
+- [onnx-quantized 变体](variants/onnx-quantized/) - ONNX模型量化工具链（INT8/FP16）

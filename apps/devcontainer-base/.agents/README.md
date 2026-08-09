@@ -20,7 +20,8 @@ source: "AGENTS.md"
 ├── roles/             ← 角色定义（预留，回退到父级）
 ├── skills/            ← 技能（预留，回退到父级）
 ├── scripts/           ← 自动化脚本（预留）
-├── workflows/         ← 工作流（预留）
+├── workflows/         ← CI/CD工作流设计文档
+│   └── variants-ci.md ← 变体构建CI + ONNX量化工具包CI设计
 ├── templates/         ← 模板（预留）
 └── docs/              ← AI知识库（预留）
 ```
@@ -45,6 +46,8 @@ source: "AGENTS.md"
 | 修改启动脚本 | [rules/entrypoint.md](rules/entrypoint.md) | tini init、日志格式、启动流程、信号处理、命令模式 |
 | 修改服务配置 | [rules/services.md](rules/services.md) | supervisord管理、Docker DinD、Podman rootless、Jupyter、SSH、健康检查 |
 | 构建/测试/部署 | [rules/build-test.md](rules/build-test.md) | build.sh/start.sh用法、Compose profile、验证流程、问题排查 |
+| 镜像变体构建/新增 | [../variants/AGENTS.md](../variants/AGENTS.md) | 变体路由入口，构建编排/共享约定/测试规范/新增指南 |
+| CI流水线设计 | [workflows/variants-ci.md](workflows/variants-ci.md) | 双流水线设计（Docker变体构建+Python量化CI）、依赖拓扑、精度门禁 |
 
 ### 规则加载自检清单
 
@@ -76,4 +79,5 @@ source: "内容来源（原始文件路径#章节）"
 
 ## 变更日志
 
+- 2026-08-07 | feat | 新增 workflows/variants-ci.md（双CI流水线设计文档）；更新路由表添加变体/CI入口
 - 2026-08-07 | feat | 从 AGENTS.md 拆分出 .agents/ 目录，约束规则按主题原子化为4个rules文件
