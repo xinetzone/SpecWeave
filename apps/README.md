@@ -55,14 +55,17 @@ apps/<app-name>/
 | `caffe-ffi-cross/` | caffe-ffi-cross 应用 | `caffe-ffi-cross/`（暂无 README） |
 | `caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](caffe-ffi-jupyter/README.md) |
 | `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
+| `cow-demo/` | 零拷贝COW读写分离模式（Zero-copy COW Read-Write Separation Pattern）的C++示例框架。 | [README.md](cow-demo/README.md) |
+| `devcontainer-base/` | DevContainer Base - 标准化开发容器基础镜像 (SSH + Docker + Podman + Jupyter) | [README.md](devcontainer-base/README.md) |
 | `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
-| `eve-minimal-agent/` | Vercel Eve 最小可运行 Agent 示例，演示文件系统即接口设计哲学。 | [README.md](eve-minimal-agent/README.md) |
+| `eve-minimal-agent/` | 一个最小可运行的 **Vercel Eve** Agent 示例。它演示了 Eve 的核心设计哲学——**"文件系统即接口"**：你只需把文件放在约定位置... | [README.md](eve-minimal-agent/README.md) |
 | `jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](jupyter-ssh-base/README.md) |
 | `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
 | `pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](pytorch-base/README.md) |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
 | `xmnn-runtime/` | xmnn-runtime 应用 | `xmnn-runtime/`（暂无 README） |
 | `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
+| `zleap-workspace-first-prototype/` | zleap-workspace-first-prototype 应用 | `zleap-workspace-first-prototype/`（暂无 README） |
 
 <!-- APPS_TABLE_END -->
 
