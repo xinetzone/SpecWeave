@@ -423,6 +423,167 @@ echo "[OK] FP16 smoke test passed"
 echo ""
 
 echo "┌─────────────────────────────────────────────────┐"
+echo "│  [FINAL VERIFICATION - ORT QUANT UNIT TESTS]   │"
+echo "│  onnxruntime.quantization core API validation  │"
+echo "│  (Primary quantization path - our main stack)  │"
+echo "└─────────────────────────────────────────────────┘"
+python - <<'ORTUNIT'
+"""
+onnxruntime.quantization Core API Unit Tests (Build-time Validation)
+====================================================================
+Validates the primary quantization stack: dynamic/static/FP16, QDQ/QOperator,
+per-channel weights, calibration methods, and accuracy verification.
+This is a focused subset of test_onnxruntime_quantization.py for build-time smoke.
+"""
+import sys, os, tempfile, shutil
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+import numpy as np
+import torch
+import torch.nn as nn
+import onnx
+import onnxruntime as ort
+from onnxruntime.quantization import (
+    quantize_dynamic, quantize_static, QuantType, QuantFormat,
+    CalibrationMethod, CalibrationDataReader,
+)
+try:
+    from onnxconverter_common import float16
+    HAS_FP16 = True
+except ImportError:
+    HAS_FP16 = False
+try:
+    import onnxsim
+    HAS_ONNXSIM = True
+except ImportError:
+    HAS_ONNXSIM = False
+
+passed = 0
+failed = 0
+def check(name, cond, msg=""):
+    global passed, failed
+    if cond:
+        print(f"  ✅ {name}"); passed += 1
+    else:
+        print(f"  ❌ {name}: {msg}"); failed += 1
+
+# Fixed seeds
+torch.manual_seed(42); np.random.seed(42)
+tmpdir = tempfile.mkdtemp()
+
+# ── Create test models ──
+class MLP(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(nn.Linear(64,128),nn.ReLU(),nn.Linear(128,10))
+    def forward(self,x): return self.net(x)
+
+model = MLP().eval()
+fp32_path = os.path.join(tmpdir, "mlp.onnx")
+dyn_path = os.path.join(tmpdir, "mlp_dyn.onnx")
+static_qdq_path = os.path.join(tmpdir, "mlp_qdq.onnx")
+static_qop_path = os.path.join(tmpdir, "mlp_qop.onnx")
+fp16_path = os.path.join(tmpdir, "mlp_fp16.onnx")
+
+torch.onnx.export(model, torch.randn(1,64), fp32_path,
+                  input_names=["input"], output_names=["output"],
+                  opset_version=18, do_constant_folding=True)
+if HAS_ONNXSIM:
+    m = onnx.load(fp32_path); m2,ok = onnxsim.simplify(m)
+    if ok: onnx.save(m2, fp32_path)
+onnx.checker.check_model(onnx.load(fp32_path))
+check("FP32 ONNX model export + checker", True)
+
+# Helper: run inference with auto FP16 type adaptation
+def infer(path, name, arr):
+    s = ort.InferenceSession(path, providers=["CPUExecutionProvider"])
+    inp_meta = s.get_inputs()[0]
+    if "float16" in inp_meta.type and arr.dtype == np.float32:
+        arr = arr.astype(np.float16)
+    out = s.run(None, {name: arr})[0]
+    return out.astype(np.float32) if out.dtype == np.float16 else out
+
+inp = np.random.randn(1,64).astype(np.float32)
+fp32_out = infer(fp32_path, "input", inp)
+
+# ── Test 1: Dynamic quantization (3 weight_type variants) ──
+for wtype_name, wtype in [("QInt8_per_channel", QuantType.QInt8),
+                            ("QUInt8_per_channel", QuantType.QUInt8)]:
+    out_p = os.path.join(tmpdir, f"dyn_{wtype_name}.onnx")
+    quantize_dynamic(fp32_path, out_p, weight_type=wtype, per_channel=True)
+    onnx.checker.check_model(onnx.load(out_p))
+    out = infer(out_p, "input", inp)
+    md = np.max(np.abs(fp32_out - out))
+    check(f"dynamic {wtype_name}: quantize+infer (max_diff={md:.5f})", md < 1.0, f"diff={md}")
+
+# ── Test 2: Static QDQ quantization ──
+class RandomCalib(CalibrationDataReader):
+    def __init__(self, n=20):
+        self.data = [{"input": np.random.randn(1,64).astype(np.float32)} for _ in range(n)]
+        self.idx = 0
+    def get_next(self):
+        if self.idx >= len(self.data): return None
+        d = self.data[self.idx]; self.idx += 1; return d
+    def rewind(self): self.idx = 0
+
+calib = RandomCalib(30)
+quantize_static(fp32_path, static_qdq_path, calib, quant_format=QuantFormat.QDQ,
+                per_channel=True, activation_type=QuantType.QInt8, weight_type=QuantType.QInt8,
+                calibrate_method=CalibrationMethod.MinMax)
+onnx.checker.check_model(onnx.load(static_qdq_path))
+qdq_out = infer(static_qdq_path, "input", inp)
+md = np.max(np.abs(fp32_out - qdq_out))
+check(f"static QDQ MinMax: quantize+infer (max_diff={md:.5f})", md < 2.0, f"diff={md}")
+
+# Verify QDQ nodes exist
+m = onnx.load(static_qdq_path)
+qdq_count = sum(1 for n in m.graph.node if n.op_type in ("QuantizeLinear","DequantizeLinear"))
+check(f"static QDQ: QuantizeLinear/DequantizeLinear nodes exist ({qdq_count})", qdq_count > 0)
+
+# ── Test 3: Static QOperator quantization ──
+calib.rewind()
+quantize_static(fp32_path, static_qop_path, calib, quant_format=QuantFormat.QOperator,
+                per_channel=True, activation_type=QuantType.QUInt8, weight_type=QuantType.QInt8,
+                calibrate_method=CalibrationMethod.MinMax)
+onnx.checker.check_model(onnx.load(static_qop_path))
+qop_out = infer(static_qop_path, "input", inp)
+md = np.max(np.abs(fp32_out - qop_out))
+check(f"static QOperator QUInt8: quantize+infer (max_diff={md:.5f})", md < 2.0, f"diff={md}")
+
+# ── Test 4: FP16 conversion ──
+if HAS_FP16:
+    fp16_model = float16.convert_float_to_float16(onnx.load(fp32_path))
+    onnx.save(fp16_model, fp16_path)
+    onnx.checker.check_model(onnx.load(fp16_path))
+    fp16_out = infer(fp16_path, "input", inp)
+    md = np.max(np.abs(fp32_out - fp16_out))
+    check(f"FP16 conversion: convert+infer (max_diff={md:.6f})", md < 0.01, f"diff={md}")
+    fp32_size = os.path.getsize(fp32_path); fp16_size = os.path.getsize(fp16_path)
+    ratio = fp16_size / fp32_size
+    check(f"FP16 size ratio: {ratio:.1%} (expected ~50%)", 0.4 < ratio < 0.8, f"ratio={ratio:.1%}")
+else:
+    check("FP16 conversion", False, "onnxconverter_common not available")
+
+# ── Test 5: File size compression ──
+fp32_size = os.path.getsize(fp32_path)
+dyn_size = os.path.getsize(os.path.join(tmpdir, "dyn_QInt8_per_channel.onnx"))
+check(f"INT8 dynamic model is smaller than FP32 ({dyn_size}/{fp32_size} bytes)", dyn_size < fp32_size)
+
+# ── Cleanup ──
+shutil.rmtree(tmpdir, ignore_errors=True)
+
+# ── Summary ──
+print(f"\n  ─────────────────────────────────────")
+print(f"  ORT QUANTIZATION TESTS: {passed} passed, {failed} failed")
+print(f"  ─────────────────────────────────────")
+if failed > 0:
+    print("  ❌ ORT QUANTIZATION TESTS FAILED"); sys.exit(1)
+else:
+    print("  ✅ ORT QUANTIZATION TESTS PASSED")
+ORTUNIT
+echo "[OK] onnxruntime.quantization unit tests passed"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
 echo "│  [FINAL VERIFICATION - INC 3.x UNIT TESTS]     │"
 echo "│  Neural Compressor 3.x API validation suite    │"
 echo "└─────────────────────────────────────────────────┘"
