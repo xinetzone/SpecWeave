@@ -74,6 +74,7 @@ SpecWeave 可供暴露的能力资产包括：
 | [05 权限认证流程](05-auth-permission.md) | name 消毒、路径安全、API key | 深度集成 |
 | [06 调用方式示例](06-usage-examples.md) | plugins install、hermes okf、会话内调用 | 快速接入 |
 | [07 常见问题及解决方案](07-troubleshooting.md) | 未发现/未启用/schema/单实例/Windows | 快速接入 |
+| [08 AGENTS.md 与 .agents/ 的自动加载机制](08-agents-md-autoload.md) | 原生加载 AGENTS.md、不加载 .agents/、三法落地 | 深度集成 |
 
 三条阅读路径见 [README](README.md) 的"阅读建议"。
 

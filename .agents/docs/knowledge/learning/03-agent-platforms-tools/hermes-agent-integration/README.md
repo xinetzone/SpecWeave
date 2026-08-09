@@ -38,6 +38,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-age
 | [权限认证流程](05-auth-permission.md) | 插件 name 消毒、路径安全、manifest_version、API key、project 权限 | `security` `auth` |
 | [调用方式示例](06-usage-examples.md) | plugins install、hermes okf、会话内工具调用、with_context 召回 | `hermes` `usage` |
 | [常见问题及解决方案](07-troubleshooting.md) | 未发现/未启用/schema/provider 单实例/Windows 路径/name 冲突/restart | `faq` `troubleshooting` |
+| [AGENTS.md 与 .agents/ 的自动加载机制](08-agents-md-autoload.md) | Hermes 原生加载 AGENTS.md 但不加载 .agents/ 目录；路由地图/插件/OKF 三法让规范库被识别调用 | `hermes` `context-files` `agents-md` `autoload` |
 
 ## 📖 阅读建议
 
