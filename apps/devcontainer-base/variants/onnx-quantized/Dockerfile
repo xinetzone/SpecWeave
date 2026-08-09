@@ -422,6 +422,151 @@ FP16SMOKE
 echo "[OK] FP16 smoke test passed"
 echo ""
 
+echo "┌─────────────────────────────────────────────────┐"
+echo "│  [FINAL VERIFICATION - INC 3.x UNIT TESTS]     │"
+echo "│  Neural Compressor 3.x API validation suite    │"
+echo "└─────────────────────────────────────────────────┘"
+python - <<'NCUNIT'
+"""
+Neural Compressor 3.x API Unit Tests (Strict Mode)
+==================================================
+Runs comprehensive validation of INC 3.x APIs for the onnx-quantized variant.
+This is the strict-mode version of test_neural_compressor.py.
+
+Tests:
+1. Package version >= 3.0
+2. 3.x PyTorch API imports (RTNConfig, quantize, prepare, convert)
+3. Weight-only quantization smoke test (RTN 4bit on PyTorch MLP)
+4. 2.x legacy API deprecation verification (expected behavior)
+5. onnxruntime.quantization primary path unaffected
+"""
+import sys
+import os
+import tempfile
+import shutil
+import traceback
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+passed = 0
+failed = 0
+
+def check(name, condition, msg=""):
+    global passed, failed
+    if condition:
+        print(f"  ✅ {name}")
+        passed += 1
+    else:
+        print(f"  ❌ {name}: {msg}")
+        failed += 1
+
+# ── Test 1: Package and version ──
+import neural_compressor
+nc_ver = neural_compressor.__version__
+nc_tuple = tuple(map(int, nc_ver.split(".")[:2]))
+check(f"neural_compressor installed (v{nc_ver})", nc_tuple >= (3, 0),
+      f"Expected >= 3.0, got {nc_ver}")
+
+# ── Test 2: 3.x PyTorch API imports ──
+import torch
+import torch.nn as nn
+from neural_compressor.torch.quantization import RTNConfig, quantize, prepare, convert
+check("RTNConfig (3.x weight-only config) importable", True)
+check("quantize() (one-shot API) importable", True)
+check("prepare()/convert() (standard workflow) importable", True)
+
+# Optional advanced configs (may require extra dependencies)
+optional_configs = ["AWQConfig", "GPTQConfig"]
+for cfg in optional_configs:
+    try:
+        exec(f"from neural_compressor.torch.quantization import {cfg}")
+        print(f"  ✅ {cfg} (advanced algorithm) available")
+    except (ImportError, AttributeError):
+        print(f"  ⏭️  {cfg} not available (may need extra dependencies)")
+
+# ── Test 3: Weight-only quantization smoke test ──
+tmpdir = tempfile.mkdtemp()
+try:
+    class TinyMLP(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.net = nn.Sequential(
+                nn.Linear(64, 128), nn.ReLU(), nn.Linear(128, 10)
+            )
+        def forward(self, x): return self.net(x)
+
+    model = TinyMLP().eval()
+    inp = torch.randn(1, 64)
+    with torch.no_grad():
+        fp32_out = model(inp)
+    check("FP32 model forward pass", fp32_out.shape == (1, 10))
+
+    # RTN 4bit weight-only quantization
+    woq_cfg = RTNConfig(bits=4, group_size=32)
+    qmodel = quantize(model, quant_config=woq_cfg, example_inputs=inp)
+    check("RTN 4bit weight-only quantize() succeeded", qmodel is not None)
+
+    with torch.no_grad():
+        q_out = qmodel(inp)
+    check("Quantized model forward pass", q_out.shape == (1, 10))
+
+    max_diff = torch.max(torch.abs(fp32_out - q_out)).item()
+    check(f"4bit quantization accuracy (max_diff={max_diff:.4f} < 1.0)",
+          max_diff < 1.0, f"diff={max_diff}")
+    print(f"     FP32 vs INT4 max_diff: {max_diff:.6f}")
+finally:
+    shutil.rmtree(tmpdir, ignore_errors=True)
+
+# ── Test 4: 2.x legacy API deprecation (expected in 3.x) ──
+print("  ℹ️  Verifying 2.x legacy API behavior (expected to be unavailable/deprecated)...")
+legacy_imports = [
+    ("neural_compressor.config.PostTrainingQuantConfig",
+     "PostTrainingQuantConfig (2.x unified config)"),
+]
+for path, desc in legacy_imports:
+    try:
+        exec(f"from {path} import *")
+        print(f"  ⚠️  {desc}: still available via compatibility layer")
+    except (ImportError, AttributeError):
+        print(f"  ✅ {desc}: not available in 3.x (expected - API was refactored)")
+
+# ── Test 5: Primary ONNX quantization path still works ──
+import numpy as np
+import onnx
+import onnxsim
+import onnxruntime as ort
+from onnxruntime.quantization import quantize_dynamic, QuantType
+
+check("onnxruntime.quantization primary path importable", True)
+tmpdir = tempfile.mkdtemp()
+try:
+    class LinModel(nn.Module):
+        def __init__(self): super().__init__(); self.fc = nn.Linear(8,4)
+        def forward(self,x): return self.fc(x)
+    m = LinModel().eval()
+    p1 = os.path.join(tmpdir, "t.onnx")
+    p2 = os.path.join(tmpdir, "tq.onnx")
+    torch.onnx.export(m, torch.randn(1,8), p1, input_names=["i"], output_names=["o"], opset_version=18)
+    mm = onnx.load(p1); mm2,_ = onnxsim.simplify(mm); onnx.save(mm2,p1)
+    quantize_dynamic(p1, p2, weight_type=QuantType.QInt8)
+    sess = ort.InferenceSession(p2, providers=["CPUExecutionProvider"])
+    o = sess.run(None, {"i": np.random.randn(1,8).astype(np.float32)})[0]
+    check("ONNX dynamic quantize + inference (primary path)", o.shape == (1,4))
+finally:
+    shutil.rmtree(tmpdir, ignore_errors=True)
+
+# ── Summary ──
+print(f"\n  ─────────────────────────────────────")
+print(f"  INC 3.x UNIT TESTS: {passed} passed, {failed} failed")
+print(f"  ─────────────────────────────────────")
+if failed > 0:
+    print("  ❌ INC 3.x UNIT TESTS FAILED")
+    sys.exit(1)
+else:
+    print("  ✅ INC 3.x UNIT TESTS PASSED")
+NCUNIT
+echo "[OK] Neural Compressor 3.x unit tests passed"
+echo ""
+
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.onnx-quantized-variant-build-timer | cut -d= -f2)
