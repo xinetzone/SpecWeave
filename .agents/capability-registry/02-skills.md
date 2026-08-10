@@ -29,10 +29,11 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 | ~~pattern-extraction-cmd~~ | ~~"模式沉淀"、"萃取模式"~~ | ~~3~~ | ~~v1.0.0（已废弃，由extraction-cmd替代）~~ | ~~[skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md)~~ |
 
-### 脚本命令门面（6个）
+### 脚本命令门面（7个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
+| docker-cache-cmd | "保存镜像"、"缓存Docker镜像"、"docker缓存"、"镜像缓存"、"加载镜像"、"封存镜像"、"docker save/load"、"WSL重置恢复"、"镜像本地缓存" | docker-cache（bash脚本） | v1.0.0 | [skills/docker-cache-cmd/SKILL.md](../skills/docker-cache-cmd/SKILL.md) |
 | link-check-cmd | "链接检查"、"检查链接"、"断链"、"链接修复"、"fix links"、"check links"、"验证链接"、"死链" | check-links.py + lib/link_fixer.py | v1.0.0 | [skills/link-check-cmd/SKILL.md](../skills/link-check-cmd/SKILL.md) |
 | atomization-finalize-cmd | "原子化收尾"、"finalize atomization"、"文档拆分完成"、"文件移动后处理"、"断链修复导航更新"、"一键收尾" | finalize-atomization.py | v1.0.0 | [skills/atomization-finalize-cmd/SKILL.md](../skills/atomization-finalize-cmd/SKILL.md) |
 | docgen-cmd | "生成导航"、"更新导航"、"docgen"、"更新README"、"刷新看板"、"生成文档索引"、"应用清单" | docgen.py（含nav/dashboard/apps/stats/all子命令） | v1.1.0 | [skills/docgen-cmd/SKILL.md](../skills/docgen-cmd/SKILL.md) |

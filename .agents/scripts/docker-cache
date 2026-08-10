@@ -5,31 +5,31 @@
 #
 # 快速开始:
 #   # 首次构建镜像（自动缓存）：
-#   bash scripts/docker-cache build -i devcontainer-base:chaos-ai-npu-latest \
+#   bash .agents/scripts/docker-cache build -i devcontainer-base:chaos-ai-npu-latest \
 #       -f external/chaos/ai/Dockerfile -c external/chaos/ai/ --cn
 #
 #   # WSL2重置后快速恢复（从缓存加载，2-5分钟）：
-#   bash scripts/docker-cache load --all
+#   bash .agents/scripts/docker-cache load --all
 #
 #   # 手动保存当前 Docker 镜像到缓存：
-#   bash scripts/docker-cache save devcontainer-base:chaos-ai-npu-latest
+#   bash .agents/scripts/docker-cache save devcontainer-base:chaos-ai-npu-latest
 #
 #   # 保存 manifest 中记录的所有缓存镜像：
-#   bash scripts/docker-cache save --all
+#   bash .agents/scripts/docker-cache save --all
 #
 #   # 列出缓存内容：
-#   bash scripts/docker-cache list
+#   bash .agents/scripts/docker-cache list
 #
 #   # 检查环境依赖：
-#   bash scripts/docker-cache doctor
+#   bash .agents/scripts/docker-cache doctor
 #
 #   # 清理缓存：
-#   bash scripts/docker-cache clean --all
+#   bash .agents/scripts/docker-cache clean --all
 #
 # 典型工作流：
-#   1. 首次环境搭建：bash scripts/docker-cache build -i <image> -f <dockerfile> -c <context>
+#   1. 首次环境搭建：bash .agents/scripts/docker-cache build -i <image> -f <dockerfile> -c <context>
 #   2. 日常开发：docker build 正常使用即可，缓存已自动建立
-#   3. WSL2重置/Docker损坏：bash scripts/docker-cache load --all（快速恢复所有镜像）
+#   3. WSL2重置/Docker损坏：bash .agents/scripts/docker-cache load --all（快速恢复所有镜像）
 #   4. Dockerfile修改后：再次执行 build 命令，自动检测变更并重新构建、更新缓存
 #
 # 环境变量:
@@ -49,7 +49,7 @@ find_project_root() {
         fi
         dir="$(cd "$dir/.." && pwd)"
     done
-    echo "$SCRIPT_DIR/.."
+    echo "$SCRIPT_DIR/../.."
 }
 
 PROJECT_ROOT="$(find_project_root)"
@@ -263,6 +263,7 @@ cleanup() {
     release_lock
     local tmp_file="${MANIFEST_FILE}.tmp.$$"
     [ -f "$tmp_file" ] && rm -f "$tmp_file"
+    local img_tmp_file="${IMAGES_DIR}/"*.tmp.* 2>/dev/null || true
 }
 
 trap cleanup EXIT

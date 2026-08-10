@@ -46,7 +46,7 @@
 - 之前有一个简单的单次导出任务（docker-image-save-20260727），但未形成系统化工具
 
 ## Functional Requirements
-- **FR-1**: 提供 `scripts/docker-cache`（bash脚本）作为统一入口，支持子命令：save/load/build/list/clean/doctor
+- **FR-1**: 提供 `.agents/scripts/docker-cache`（bash脚本）作为统一入口，支持子命令：save/load/build/list/clean/doctor
 - **FR-2**: `save <image> [--compress <level>]` - 将指定镜像保存到 `.docker-cache/images/` 目录，自动处理路径转换（WSL路径↔Windows路径）
 - **FR-3**: `load <image>` - 从存档加载镜像到 Docker daemon，加载前检查完整性
 - **FR-4**: `build <variant> [--cn] [--tag TAG] [--no-cache]` - 智能构建：先检查本地存档是否有对应镜像，有则 load 并验证，无则调用现有构建脚本构建，构建成功后自动 save
@@ -74,7 +74,7 @@
 - **Technical**: Docker 运行在 WSL2 中，存档目录通过 `/mnt/d/` 跨文件系统访问（性能比原生慢但持久可靠）
 - **Platform**: WSL2 Linux（主要）+ 原生 Linux（兼容）
 - **Dependencies**: 仅依赖 docker 命令；pigz 为可选依赖（自动检测，缺失时降级）
-- **Project**: 脚本放在 `scripts/docker-cache` 或 `.agents/scripts/` 下？考虑到这是项目级开发工具，放在 `scripts/docker-cache` 更合适（与 bundle-project.ps1 同级）；或者放在 `apps/devcontainer-base/scripts/` 下，因为主要服务于 devcontainer 构建。考虑到需要服务多个子目录（apps/devcontainer-base + external/chaos/ai + xmnn-whl-builder），放项目根 `scripts/` 下更统一。
+- **Project**: 脚本放在 `.agents/scripts/docker-cache`（遵循 AGENTS.md 规范，所有 AI 智能体脚本统一放在 `.agents/scripts/` 下，与其他自动化脚本同级）。最初考虑放项目根 `scripts/` 或 `apps/devcontainer-base/scripts/`，但最终统一归入 `.agents/scripts/` 目录。
 - **Naming**: 镜像存档命名规范：`<repository-sanitized>_<tag>.tar.gz`（例如 `devcontainer-base_chaos-ai-npu-latest.tar.gz`）
 - **Storage**: .docker-cache/ 默认在项目根，可能占用较大空间（~50GB 全量存档），用户通过 DOCKER_CACHE_DIR 可指定到其他盘
 
@@ -88,50 +88,50 @@
 ## Acceptance Criteria
 
 ### AC-1: docker-cache 脚本存在且可执行
-- **Given**: 项目根目录 scripts/ 下
-- **When**: 运行 `bash scripts/docker-cache --help`
+- **Given**: 项目根目录 .agents/scripts/ 下
+- **When**: 运行 `bash .agents/scripts/docker-cache --help`
 - **Then**: 显示帮助信息，列出所有子命令（save/load/build/list/clean/doctor），退出码 0
 - **Verification**: `programmatic`
 
 ### AC-2: save 命令能正确保存镜像
 - **Given**: Docker 中存在镜像 devcontainer-base:chaos-ai-npu-latest
-- **When**: 运行 `bash scripts/docker-cache save devcontainer-base:chaos-ai-npu-latest`
+- **When**: 运行 `bash .agents/scripts/docker-cache save devcontainer-base:chaos-ai-npu-latest`
 - **Then**: 在 `.docker-cache/images/` 下生成 tar.gz 文件，manifest.json 更新，命令输出显示大小和耗时
 - **Verification**: `programmatic`
 
 ### AC-3: load 命令能正确恢复镜像
 - **Given**: `.docker-cache/images/` 中存在某个镜像的存档
-- **When**: 先 `docker rmi` 删除本地镜像，再运行 `bash scripts/docker-cache load <image>`
+- **When**: 先 `docker rmi` 删除本地镜像，再运行 `bash .agents/scripts/docker-cache load <image>`
 - **Then**: 镜像被重新加载到 Docker daemon，`docker images` 可见，镜像ID/标签一致
 - **Verification**: `programmatic`
 
 ### AC-4: build 命令智能判断缓存
 - **Given**: 本地无存档，Docker 中有基础镜像
-- **When**: 运行 `bash scripts/docker-cache build chaos-ai-npu --cn`
+- **When**: 运行 `bash .agents/scripts/docker-cache build chaos-ai-npu --cn`
 - **Then**: 调用构建脚本构建镜像，构建成功后自动 save 到缓存
 - **Verification**: `programmatic`
 
 ### AC-5: build 命令能从缓存恢复
 - **Given**: 本地有存档但 Docker 中无该镜像（模拟 WSL 重置后场景）
-- **When**: 运行 `bash scripts/docker-cache build chaos-ai-npu`
+- **When**: 运行 `bash .agents/scripts/docker-cache build chaos-ai-npu`
 - **Then**: 自动从存档 load 镜像，跳过 Dockerfile 构建，输出 "Loaded from cache"
 - **Verification**: `programmatic`
 
 ### AC-6: list 命令显示存档列表
 - **Given**: 有若干镜像存档
-- **When**: 运行 `bash scripts/docker-cache list`
+- **When**: 运行 `bash .agents/scripts/docker-cache list`
 - **Then**: 以表格形式显示镜像名、标签、大小、创建日期
 - **Verification**: `human-judgment`
 
 ### AC-7: clean 命令正确清理旧存档
 - **Given**: 存在多个标签相同但日期不同的存档
-- **When**: 运行 `bash scripts/docker-cache clean --keep 2 --dry-run`
+- **When**: 运行 `bash .agents/scripts/docker-cache clean --keep 2 --dry-run`
 - **Then**: 列出将被删除的文件但不实际删除；不加 --dry-run 时实际删除，只保留最近2个
 - **Verification**: `programmatic`
 
 ### AC-8: doctor 命令诊断环境
 - **Given**: 正常环境（Docker运行中, 磁盘充足）
-- **When**: 运行 `bash scripts/docker-cache doctor`
+- **When**: 运行 `bash .agents/scripts/docker-cache doctor`
 - **Then**: 逐项检查并输出 OK/WARN/FAIL，最终给出总结
 - **Verification**: `human-judgment`
 

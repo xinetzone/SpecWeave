@@ -1,13 +1,13 @@
 # Docker 镜像本地缓存管理系统 - The Implementation Plan (Decomposed and Prioritized Task List)
 
 > **实施状态**: 全部完成 ✅
-> **产出物**: `scripts/docker-cache` (1757行, bash)
+> **产出物**: `.agents/scripts/docker-cache` (1758行, bash)
 > **验证状态**: bash -n 语法通过；基础命令（--help/--test/list/list --json/各子命令--help）验证通过；Docker相关功能需在有Docker环境时端到端验证
 
 ## [x] Task 1: 创建目录结构和基础脚本骨架
 - **Priority**: high
 - **Depends On**: None
-- **完成状态**: 已完成。创建了 `scripts/docker-cache`（bash，1757行），包含 shebang/set -euo pipefail/TTY颜色/日志函数/参数解析框架/DOCKER_CACHE_DIR环境变量/项目根自动查找；`.gitignore` 添加了 `.docker-cache/` 排除。
+- **完成状态**: 已完成。创建了 `.agents/scripts/docker-cache`（bash，1758行），包含 shebang/set -euo pipefail/TTY颜色/日志函数/参数解析框架/DOCKER_CACHE_DIR环境变量/项目根自动查找；`.gitignore` 添加了 `.docker-cache/` 排除。
 - **Acceptance Criteria Addressed**: [AC-1, AC-10]
 - **验证结果**: TR-1.1~TR-1.4 全部通过
 
@@ -82,7 +82,7 @@
 ## [x] Task 10: 集成到现有构建流程（可选增强）
 - **Priority**: low
 - **Depends On**: [Task 9]
-- **完成状态**: 跳过（合理）。docker-cache build 是独立工具，已可直接使用。不修改现有构建脚本，保持零侵入性，降低耦合风险。用户可按需选择：`bash scripts/docker-cache build -i <image> -f <dockerfile> -c <context>` 或继续使用原有构建脚本后手动 save。
+- **完成状态**: 跳过（合理）。docker-cache build 是独立工具，已可直接使用。不修改现有构建脚本，保持零侵入性，降低耦合风险。用户可按需选择：`bash .agents/scripts/docker-cache build -i <image> -f <dockerfile> -c <context>` 或继续使用原有构建脚本后手动 save。
 - **Acceptance Criteria Addressed**: [AC-12]
 - **理由**: YAGNI - 核心价值已实现（镜像缓存+快速恢复），集成到现有脚本是增强项而非必要项
 

@@ -1,10 +1,10 @@
 # Docker 镜像本地缓存管理系统 - Verification Checklist
 
 ## 基础结构检查
-- [x] Checkpoint 1: `scripts/docker-cache` 文件存在且有可执行权限（chmod +x）
+- [x] Checkpoint 1: `.agents/scripts/docker-cache` 文件存在且有可执行权限（chmod +x）
 - [x] Checkpoint 2: `.docker-cache/` 目录结构正确（images/、buildkit-cache/、.locks/ 子目录存在）
 - [x] Checkpoint 3: `.gitignore` 中包含 `.docker-cache/` 排除规则
-- [x] Checkpoint 4: `bash scripts/docker-cache --help` 退出码为0，帮助信息完整可读
+- [x] Checkpoint 4: `bash .agents/scripts/docker-cache --help` 退出码为0，帮助信息完整可读
 
 ## 核心功能验证
 - [x] Checkpoint 5: `save` 命令能保存存在的镜像到 .docker-cache/images/，生成 .tar.gz 文件（代码逻辑已实现，需 Docker 运行时验证）
