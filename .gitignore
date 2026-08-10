@@ -108,3 +108,6 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # HTML 分享包
 .trae-html-share-packages/
+
+# Docker 缓存目录
+.docker-cache/
