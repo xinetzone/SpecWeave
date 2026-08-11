@@ -1,0 +1,21 @@
+# Chaos AI Portable 镜像多阶段构建瘦身 - Checklist
+
+- [x] portable.Dockerfile 已重构为 base → deps → final 三阶段
+- [x] base 阶段已删除 `chown -R ai:ai /opt/conda`，conda 保持 root:root
+- [x] 三阶段构建成功，无报错
+- [x] 镜像大小从 15.6GB 缩小至 9.59GB（降幅 38.5%，≥35% 目标达成）
+- [x] ai 用户通过 `sudo pip install` 可在 conda base 安装包（实测 flask 成功）
+- [x] `pip install --user`（~/.local）作为替代方案可用（实测 six 成功）
+- [x] sshd/dockerd/jupyter 三服务启动正常（supervisord 均 RUNNING）
+- [x] jupyter 内 `!pip install` 通过 sudo 可用（ai 用户以 /opt/conda 运行）
+- [x] SSH 登录 ai 用户正常（sshd 监听 22 端口）
+- [x] 核心功能无损：torch 2.13.0 / onnx 1.22.0 / onnxruntime 1.28.0 可 import
+- [x] 工具链无损：LLVM 22.1.8 / clang 22.1.8 / CMake 4.4.2 / Ninja 1.13.2 版本正确
+- [x] conda-environment-guide.md 已更新为 sudo 安装方式（base 环境 + root 属主）
+- [x] 全量 pip 包保留（transformers/datasets/librosa/numba/jieba 等仍在）
+- [x] 关键修复：deps 阶段 `ENV PIP_USER=0` 使包写入 /opt/conda，ai 用户可全部 import
+- [x] docker-compose.yml 的 dev-portable 服务已指向 `chaos-ai:portable-slim`
+- [x] 新镜像已保存至 docker-cache（2.0GB tar.gz，ID sha256:65cedded9cd07，list 状态 ✅）
+- [x] `docker compose up -d dev-portable` 重建容器成功，状态 healthy
+- [x] 宿主机端口 2222(SSH) + 8888(Jupyter) 映射可达
+- [x] 运行容器中 core 包 + 工具链 + ai 用户 import 全部验证通过
