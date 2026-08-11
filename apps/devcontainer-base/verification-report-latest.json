@@ -1,0 +1,189 @@
+{
+  "summary": {
+    "total": 25,
+    "passed": 24,
+    "failed": 0,
+    "warned": 1
+  },
+  "results": [
+    {
+      "name": "Import PyTorch",
+      "status": "PASS",
+      "message": "",
+      "version": "2.13.0+cpu",
+      "timestamp": "2026-08-08T15:16:38.825650"
+    },
+    {
+      "name": "Import TorchVision",
+      "status": "PASS",
+      "message": "",
+      "version": "0.28.0+cpu",
+      "timestamp": "2026-08-08T15:16:39.846271"
+    },
+    {
+      "name": "Import ONNX",
+      "status": "PASS",
+      "message": "",
+      "version": "1.22.0",
+      "timestamp": "2026-08-08T15:16:39.904632"
+    },
+    {
+      "name": "Import ONNX Runtime",
+      "status": "PASS",
+      "message": "",
+      "version": "1.28.0",
+      "timestamp": "2026-08-08T15:16:39.946857"
+    },
+    {
+      "name": "Import ONNX Simplifier",
+      "status": "PASS",
+      "message": "",
+      "version": "v0.7.0",
+      "timestamp": "2026-08-08T15:16:39.977407"
+    },
+    {
+      "name": "Import ONNX Optimizer",
+      "status": "PASS",
+      "message": "",
+      "version": "0.4.2",
+      "timestamp": "2026-08-08T15:16:39.981877"
+    },
+    {
+      "name": "Import ONNX Script",
+      "status": "PASS",
+      "message": "",
+      "version": "0.7.1",
+      "timestamp": "2026-08-08T15:16:40.230343"
+    },
+    {
+      "name": "Import Neural Compressor",
+      "status": "PASS",
+      "message": "",
+      "version": "3.9",
+      "timestamp": "2026-08-08T15:16:40.231626"
+    },
+    {
+      "name": "Import ONNX Converter Common",
+      "status": "PASS",
+      "message": "",
+      "version": "1.16.0",
+      "timestamp": "2026-08-08T15:16:40.243678"
+    },
+    {
+      "name": "CUDA Available (CPU build)",
+      "status": "PASS",
+      "message": "cuda_available=False",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:40.243715"
+    },
+    {
+      "name": "PyTorch tensor operations",
+      "status": "PASS",
+      "message": "(a+b)*2 result correct",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:40.266104"
+    },
+    {
+      "name": "torch.onnx.export",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.075297"
+    },
+    {
+      "name": "ONNX model checker",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.075421"
+    },
+    {
+      "name": "ONNX Runtime CPU inference",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.092266"
+    },
+    {
+      "name": "Model simplification with onnxsim",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.565165"
+    },
+    {
+      "name": "Dynamic INT8 quantization",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.568768"
+    },
+    {
+      "name": "Quantized model inference",
+      "status": "PASS",
+      "message": "output shape: (1, 5)",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.581142"
+    },
+    {
+      "name": "FP32 vs INT8 accuracy check",
+      "status": "PASS",
+      "message": "max_diff=0.002465",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.582412"
+    },
+    {
+      "name": "FP16 conversion with onnxconverter-common",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.913852"
+    },
+    {
+      "name": "Neural Compressor version",
+      "status": "PASS",
+      "message": "",
+      "version": "3.9",
+      "timestamp": "2026-08-08T15:16:41.914108"
+    },
+    {
+      "name": "Neural Compressor quantization config",
+      "status": "WARN",
+      "message": "Could not find PTQ config (package installed)",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.914262"
+    },
+    {
+      "name": "Service: SSH",
+      "status": "PASS",
+      "message": "OpenSSH_10.2p1 Ubuntu-2ubuntu3.5, OpenSSL 3.5.5 27 Jan 2026",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.916716"
+    },
+    {
+      "name": "Service: Docker",
+      "status": "PASS",
+      "message": "Docker version 29.7.2, build a7dcaa6",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:41.928512"
+    },
+    {
+      "name": "Service: Supervisord",
+      "status": "PASS",
+      "message": "4.3.0",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:42.074295"
+    },
+    {
+      "name": "Build metadata exists",
+      "status": "PASS",
+      "message": "",
+      "version": "",
+      "timestamp": "2026-08-08T15:16:42.074961"
+    }
+  ],
+  "environment": {
+    "python_version": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:37:38) [GCC 14.3.0]",
+    "timestamp": "2026-08-08T15:16:42.075024"
+  }
+}

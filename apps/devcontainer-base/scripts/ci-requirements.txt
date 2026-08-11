@@ -1,0 +1,14 @@
+# ONNX Quantization Toolkit CI Dependencies
+# Install: pip install -r ci-requirements.txt
+#
+# Core dependencies (required for onnx_quantize_kit)
+onnxruntime>=1.20.0
+onnx>=1.16.0
+numpy>=1.24.0
+pyyaml>=6.0
+
+# Test model generation (for CI regression tests that create PyTorch→ONNX models)
+# Note: torch CPU-only is installed via extra-index-url in CI workflow for speed
+torch>=2.0.0
+onnxconverter-common>=1.13.0
+onnxsim>=0.4.33

@@ -1,15 +1,18 @@
 ---
 id: "dind-containerfile-rules"
 title: "Containerfile 编写规范"
+source: "AGENTS.md#项目特有约束"
 ---
 # Containerfile 编写规范（docker-ssh-dind）
 
 ## 基础约定
 
-- 文件名为 `Containerfile`（非Dockerfile）
+- 文件名为 `Containerfile`（非Dockerfile），首行声明 BuildKit 语法：`# syntax=docker/dockerfile:1.7-labs`
 - 基础镜像：`ubuntu:26.04`（固定版本，不使用`latest`）
 - 构建注释/日志使用**英文**（避免PowerShell/Shell编码问题）
-- 每个Stage/关键步骤输出构建日志：`echo "[BUILD] ..."`
+- 启用 `SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]`，管道中任何命令失败立即终止
+- 每个Stage/关键步骤输出结构化日志：`echo "[INFO]/[OK]/[BUILD] ..."`，关键组件输出版本验证
+- 使用 BuildKit `--mount=type=cache` 挂载 apt 缓存，加速重复构建
 
 ## 结构规范
 
@@ -25,6 +28,12 @@ title: "Containerfile 编写规范"
 
 ## 层缓存优化
 
+- 使用 BuildKit `--mount=type=cache` 挂载 apt 缓存，跨构建复用：
+  ```dockerfile
+  RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+      --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+      apt-get update -qq && apt-get install -y --no-install-recommends -qq ...
+  ```
 - 先安装不常变化的系统包，再复制/配置经常变化的文件
 - 多个RUN指令合并为一个（用`&& \`连接），减少镜像层数
 - apt-get update和install在同一个RUN中，避免缓存过期

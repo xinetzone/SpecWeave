@@ -28,6 +28,7 @@ date: "2026-07-09"
 | [右侧侧边栏UI美化七概念复盘报告](retrospective-sidebar-ui-beautification-20260714.md) | 右侧侧边栏UI美化七概念复盘报告 | L2 | `UI美化` `Tailwind CSS` `frontend-design` |
 | [WeasyPrint第一性原理学习与wiki教程生成复盘报告](retrospective-weasyprint-learning-20260713.md) | WeasyPrint第一性原理学习与wiki教程生成复盘报告 | - | `retrospective` `weasyprint` `wiki` |
 | [XMNN (xmtools) 全面复盘 + whl 打包 + Docker 镜像导出](retrospective-xmtools-20260803/README.md) | XMNN NPU 推理工具包全面复盘、构建缺陷修复、whl 打包与 Docker 镜像导出 | L2 | `xmnn` `tvm` `nuitka` `whl` `docker` `复盘` |
+| [道德经+AI知识库（tao-ai-knowledge）全面复盘报告](retrospective-tao-ai-knowledge-20260807/README.md) | 道德经+AI知识库全面复盘：文档-实现断层、认证双轨、重包装轻内核洞察；萃取文档-实现对齐审计与环境变量占位符纪律两模式 | L1 | `tao-ai-knowledge` `nextjs` `supabase` `复盘` `洞察` `萃取` |
 
 ## 📁 子目录导航
 

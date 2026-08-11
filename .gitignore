@@ -95,5 +95,16 @@ examples/*/output/
 # 第三方依赖（vendor/ 目录不忽略，子模块通过 gitlink 跟踪，手动管理的依赖需自行配置忽略规则）
 .chaos/
 
+# CI 诊断产物目录
+ci-artifacts/
+ci-artifacts-new-*/
+
+# Benchmark 运行结果
+apps/devcontainer-base/benchmark-results-docker/
+apps/devcontainer-base/benchmark-results/
+apps/devcontainer-base/benchmark-results-onnx-pytorch/
+apps/devcontainer-base/benchmark-results-onnx-quantized/
+apps/devcontainer-base/benchmark-results-ci/
+
 # HTML 分享包
 .trae-html-share-packages/

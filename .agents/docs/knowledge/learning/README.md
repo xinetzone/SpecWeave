@@ -11,11 +11,11 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | 指标 | 数值 |
 |------|------|
-| 总 Wiki 数 | 64 |
-| 原子化 Wiki | 25 |
+| 总 Wiki 数 | 65 |
+| 原子化 Wiki | 26 |
 | 单文件 Wiki | 39 |
 | 主题数 | 8（含 2 个厂商二级子目录）+ 1 个跨领域专题 |
-| 文件总数 | ~309 |
+| 文件总数 | ~318 |
 
 ## 🧭 快速导航
 
@@ -23,7 +23,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 |------|----------|-----------|-----------|----------|
 | 01 | Agent 协议与接口 | Agent 通信协议、Skills 开放标准、接口四层抽象、FFI/IDL 底层技术 | 9 | [01-agent-protocols-interfaces/](01-agent-protocols-interfaces/README.md) |
 | 02 | Agent 工程方法论 | Harness/Headroom/Karpathy/LongCat 等工程方法论与 Prompt 模式 | 7 | [02-agent-engineering-methodology/](02-agent-engineering-methodology/README.md) |
-| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 14 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
+| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 15 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
 | 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 4 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
 | 05 | AI 多模态内容 | AI 短剧、3D 动画、音频生成、AI 配图、文本转 CAD | 6 | [05-ai-multimodal-content/](05-ai-multimodal-content/README.md) |
 | 06 | 商业趋势分析 | AI 变现、国产模型对比、个人 IP 趋势、供应链风险分析 | 6 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
@@ -78,6 +78,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | MopMonk 安全 Agent | MiniMax 安全 Agent + CyberGym 漏洞挖掘（7 章原子化） | [mopmonk-security-agent-wiki.md](03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
 | Octo 明略科技多 Agent 协作平台 | Private AI 时代多 Agent 协作基础设施 | [octo-platform-wiki.md](03-agent-platforms-tools/octo-platform-wiki.md) |
 | Open Code Review 代码评审工具 | 阿里开源 AI 代码评审工具（11 章原子化） | [open-code-review-wiki.md](03-agent-platforms-tools/open-code-review-wiki.md) |
+| **Intel Neural Compressor 模型量化工具** | Intel开源模型压缩工具完整教程：9章原子化Wiki，覆盖量化技术、API、最佳实践（静态/动态/仅权重/FP8/SmoothQuant/GPTQ/RTN） | **[neural-compressor-wiki/](neural-compressor-wiki/README.md)** |
 | QuantDinger AI 量化交易平台 | 开源自托管 AI 量化交易全链路平台 | [quantdinger-ai-trading-wiki.md](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) |
 | Rainman AI 翻译工具 | AI 翻译书工具教程（8 章原子化） | [rainman-translate-book-wiki.md](03-agent-platforms-tools/rainman-translate-book-wiki.md) |
 | TRAE v3.3.74 版本发布笔记 | TRAE IDE 版本更新：Browser 配置聚合页、Windows MSSDK 接入 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) |

@@ -91,7 +91,11 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [python-package-version-standard-api.md](python-package-version-standard-api.md) | Python包版本验证标准API：使用importlib.metadata.version()替代__version__属性访问，应对PEP 517/518/621新构建后端不再注入__version__的兼容性问题 | L2 已验证 | Dockerfile包验证、CI安装验证、跨Python版本项目、安装脚本/healthcheck |
 | [shared-lib-symbol-dual-layer-control.md](shared-lib-symbol-dual-layer-control.md) | 共享库符号双层控制模式：编译期-fvisibility-inlines-hidden隐藏内联/模板弱符号+链接期--exclude-libs,ALL隐藏静态库符号，解决C++模板密集型第三方库（LLVM/Boost/Eigen）的WEAK符号泄漏 | L1 实验性 | C/C++共享库构建、第三方库符号隔离、静态链接隐藏、ELF符号可见性控制 |
 | [env-var-alias-backward-compat.md](env-var-alias-backward-compat.md) | 环境变量别名向后兼容：检查新变量是否仍为Dockerfile ENV默认值（而非检查是否为空），解决旧变量名在重命名后静默失效的问题 | L2 已验证 | Docker镜像ENTRYPOINT脚本、配置文件迁移、CLI选项重命名 |
-| [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH修复：三层配置（ENV+environment+profile.d），解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行 |
+| [docker-ssh-noninteractive-path-fix.md](docker-ssh-noninteractive-path-fix.md) | Docker+SSH非交互会话PATH四重保障：ENV+/etc/environment+profile.d+supervisord environment=四层配置，覆盖docker exec/SSH交互/SSH非交互/supervisord四入口，解决SSH非交互会话不继承Dockerfile ENV的通用陷阱 | L2 已验证 | 含SSH服务的Docker镜像、virtualenv/conda自定义PATH、远程命令执行、supervisord多服务容器 |
+| [dockerfile-runtime-logical-layering.md](dockerfile-runtime-logical-layering.md) | Dockerfile Runtime六步逻辑分层：按变化频率分层（系统包→运行时复制→用户目录→目录准备→配置复制→清理验证），最大化构建缓存命中，每层末尾语法验证，改配置不触发重装包 | L1 实验性 | 多阶段Dockerfile runtime阶段编写、镜像构建缓存优化、Dockerfile审查 |
+| [docker-buildkit-optimization-best-practices.md](docker-buildkit-optimization-best-practices.md) | Docker BuildKit构建优化三件套：语法声明(# syntax=1.7-labs)+安全Shell(pipefail)+缓存挂载(apt/pip/conda)，含7项目验证数据、缓存目录速查表、反模式清单、自动化检查清单 | L2 已验证 | 新建/审查Dockerfile/Containerfile、构建速度优化、管道静默错误防御 |
+| [docker-buildkit-optimization-project-comparison.md](docker-buildkit-optimization-project-comparison.md) | Docker BuildKit优化跨项目对比报告：7个Docker子项目10个Dockerfile/Containerfile的逐项合规审计矩阵、修复记录、缓存路径合规性矩阵、架构特征对比、关键教训总结 | L2 已验证 | Docker优化审计、跨项目对比、合规性检查、模式推广验证 |
+| [container-healthcheck-minimal-probe.md](container-healthcheck-minimal-probe.md) | 容器健康检查最小探针设计：L0进程存在→L1 TCP空探针→L2 HTTP状态码分级原则，非HTTP服务不发应用层数据，配套日志降噪三重措施（sshd LogLevel=ERROR/stderr分流/无空ENV声明） | L1 实验性 | Docker HEALTHCHECK设计、多服务容器（SSH+Jupyter/Nginx+App）、supervisord容器、避免健康检查日志噪音 |
 | [docker-image-offline-export-distribution.md](docker-image-offline-export-distribution.md) | Docker镜像离线构建-验证-导出-分发六步标准流程：环境预检→构建→G1功能验证→导出+校验→G3删除-加载-再验证→交付，三重质量门确保离线分发包可用 | L2 已验证 | Docker镜像离线分发、内网隔离环境部署、CI镜像归档、新机器交付 |
 | [wsl-docker-command-safety.md](wsl-docker-command-safety.md) | WSL环境下Docker操作安全命令模式：简单命令直传避免bash -c嵌套、路径统一/mnt/格式、复杂操作脚本化，解决PowerShell→wsl→bash三层变量展开陷阱 | L2 已验证 | Windows+WSL2 Docker操作、wsl.exe跨层调用Docker、PowerShell执行Docker命令 |
 | [powershell-wsl-cross-shell-wrapper.md](powershell-wsl-cross-shell-wrapper.md) | PowerShell→WSL跨Shell包装器模式：自动检测wsl.exe+发行版自动选择+Windows↔WSL路径转换+Docker预检+参数透传+退出码传递，消除"先进入WSL终端"的认知负担 | L2 已验证 | WSL2部署脚本Windows入口、CI/CD Windows runner调用Linux工具链、跨环境自动化脚本 |
@@ -138,6 +142,26 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [thin-wrapper-pattern.md](thin-wrapper-pattern.md) | 薄包装模式：通用核心抽取→极薄参数映射层→参数透传→共享模块→约定优于配置，实现N个项目共用一套构建逻辑 | L2 已验证 | 多项目构建脚本、微服务部署脚本、CI/CD流水线模板、相似工具链配置 |
 | [editable-install-stale-so.md](editable-install-stale-so.md) | Editable安装stale .so处理：重编译后对比build/与源码树editable路径的.so符号并显式复制刷新，应对editable install不自动更新编译产物 | L1 实验性 | C++/Cython扩展+editable install开发、重新编译后测试行为未跟随、scikit-build-core构建 |
 | [cxx-build-regression-verification.md](cxx-build-regression-verification.md) | C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功 | L1 实验性 | 跨平台C++项目(CMake+scikit-build)构建/重构回归验证、"编译产物可配置特性"回归、CI里程碑闭环 |
+| [android-responsive-list-resource-qualifier.md](android-responsive-list-resource-qualifier.md) | 资源限定符驱动的响应式列表切换（小屏 LinearLayout / 大屏 GridLayout，零代码适配） | L1 实验性 | Android 响应式布局 |
+| [android-listadapter-diffutil.md](android-listadapter-diffutil.md) | ListAdapter + DiffUtil 高效列表刷新，避免 notifyDataSetChanged 全量刷新 | L1 实验性 | Android RecyclerView 列表刷新 |
+| [android-viewbinding-fragment-scoped-lifecycle.md](android-viewbinding-fragment-scoped-lifecycle.md) | Fragment 内 ViewBinding 作用域生命周期管理（_binding + onDestroyView 置空防泄漏） | L1 实验性 | Android Fragment + ViewBinding |
+| [android-fragment-viewmodel-viewbinding-template.md](android-fragment-viewmodel-viewbinding-template.md) | Fragment + ViewModel + ViewBinding 三件套组件骨架模板 | L1 实验性 | Android 页面快速搭建 |
+| [docker-apt-layer-slimming.md](docker-apt-layer-slimming.md) | Docker apt 层瘦身：DEBIAN_FRONTEND非交互+--no-install-recommends+rm -rf lists，apt缓存清理减小镜像 | L1 实验性 | Dockerfile系统包安装、镜像体积优化 |
+| [docker-conditional-dependency-injection.md](docker-conditional-dependency-injection.md) | Docker 声明式依赖条件注入：if [ -f environment.yml ]判存在+conda env update幂等注入，单Dockerfile多项目复用 | L1 实验性 | 通用容器镜像、多项目依赖声明式注入 |
+| [conda-dual-path-env-management.md](conda-dual-path-env-management.md) | Conda 环境管理双路径：base更新vs独立env创建，按隔离需求选择，独立env需显式定位 | L1 实验性 | conda容器/CI环境、多项目隔离 |
+| [docker-podman-cross-platform-container.md](docker-podman-cross-platform-container.md) | Docker↔Podman跨平台容器命令统一：CLI兼容可互换+Windows VM初始化+卷挂载shell语法区分 | L1 实验性 | 跨平台容器构建、Windows Podman替代Docker |
+| [docker-volume-mount-dev-workflow.md](docker-volume-mount-dev-workflow.md) | Docker卷挂载宿主动态开发：-v $(pwd):/workspace挂载实现宿主机改码容器内运行，免重建镜像 | L1 实验性 | 容器内开发、热重载迭代 |
+| [docker-image-variant-incremental-inheritance.md](docker-image-variant-incremental-inheritance.md) | 镜像变体"基础继承+配置化"：FROM base+追加层实现增量功能，统一构建脚本拓扑排序处理变体依赖，模板驱动新增 | L1 实验性 | 多变体Docker镜像体系、基础镜像+增量变体维护、新增变体规范化 |
+| [dockerfile-build-timer-monitoring.md](dockerfile-build-timer-monitoring.md) | Dockerfile多阶段构建计时器：[TIMER]标记+日志解析+ASCII汇总表，跨RUN状态文件持久化，final stage计时不遗漏，Build duration显式追加日志 | L1 实验性 | 多阶段Dockerfile构建耗时观测与瓶颈定位、CI构建阶段报告 |
+| [docker-image-layered-verification.md](docker-image-layered-verification.md) | Docker镜像分层验证金字塔（L1-L6）：工具链→功能编译→组件深度→基础服务继承→环境隔离→配置验证，断言防过时、版本提取防取错行 | L1 实验性 | 复杂Docker镜像系统化验证、变体继承验证、CI镜像质量门禁 |
+| [field-delimiter-selection-principle.md](field-delimiter-selection-principle.md) | 字段分隔符选择原则：选数据中极不可能出现的字符（如\|）作分隔符，排除路径/URL/赋值中常见的:、/、=、空格 | L1 实验性 | 单字符串编码多字段的解析（配置/数组元素/日志格式）、shell IFS分割 |
+| [unit-test-driven-bug-fix-loop.md](unit-test-driven-bug-fix-loop.md) | 单元测试驱动Bug发现与修复闭环（测试即修复）：核心函数写不依赖环境的单测，mock覆盖所有格式变体，发现Bug立即更新mock形成发现→修复→验证闭环+回归防护 | L1 实验性 | 为已有脚本/解析器补单测发现隐藏Bug、构建流水线解析函数测试、CI轻量单测层 |
+| [governance-layer-immediate-establishment.md](governance-layer-immediate-establishment.md) | 功能完成后立即建立治理层（AGENTS.md+.agents/）：同批次建立入口+规则按单一职责原子化拆分+嵌套路由清晰定义加载顺序+父级路由表同步防链断裂 | L1 实验性 | 新增功能模块/子项目/应用交付时治理入口建立、AI智能体按路由装载模块规则、多子模块嵌套治理 |
+| [onnx-pre-quantize-simplification.md](onnx-pre-quantize-simplification.md) | ONNX 量化前简化模式：torch 导出模型先 onnxsim.simplify + checker 再量化，解决 ShapeInferenceError (64)vs(128)，内联冒烟回归防护 | L1 实验性 | torch.onnx.export→onnxruntime 量化流水线、Docker/CI 量化冒烟测试、形状推断冲突排查 |
+
+## Android 模式命名规范
+
+Android 相关模式统一使用 `android-` 前缀命名文件与 id，代码类归入 code-patterns/，架构类归入 architecture-patterns/，均标注 source 指向 `chaos/tests/AndroidStudioProjects/MyApplication`，初始成熟度 L1（实验性，单案例待验证）。
 
 ## 成熟度定义
 
