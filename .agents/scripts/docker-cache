@@ -1,0 +1,1758 @@
+#!/bin/bash
+# ==============================================================================
+# Docker Cache Management Script
+# Docker 镜像与 BuildKit 缓存管理工具
+#
+# 快速开始:
+#   # 首次构建镜像（自动缓存）：
+#   bash .agents/scripts/docker-cache build -i devcontainer-base:chaos-ai-npu-latest \
+#       -f external/chaos/ai/Dockerfile -c external/chaos/ai/ --cn
+#
+#   # WSL2重置后快速恢复（从缓存加载，2-5分钟）：
+#   bash .agents/scripts/docker-cache load --all
+#
+#   # 手动保存当前 Docker 镜像到缓存：
+#   bash .agents/scripts/docker-cache save devcontainer-base:chaos-ai-npu-latest
+#
+#   # 保存 manifest 中记录的所有缓存镜像：
+#   bash .agents/scripts/docker-cache save --all
+#
+#   # 列出缓存内容：
+#   bash .agents/scripts/docker-cache list
+#
+#   # 检查环境依赖：
+#   bash .agents/scripts/docker-cache doctor
+#
+#   # 清理缓存：
+#   bash .agents/scripts/docker-cache clean --all
+#
+# 典型工作流：
+#   1. 首次环境搭建：bash .agents/scripts/docker-cache build -i <image> -f <dockerfile> -c <context>
+#   2. 日常开发：docker build 正常使用即可，缓存已自动建立
+#   3. WSL2重置/Docker损坏：bash .agents/scripts/docker-cache load --all（快速恢复所有镜像）
+#   4. Dockerfile修改后：再次执行 build 命令，自动检测变更并重新构建、更新缓存
+#
+# 环境变量:
+#   DOCKER_CACHE_DIR   缓存目录路径（默认: 项目根目录/.docker-cache/）
+# ==============================================================================
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+find_project_root() {
+    local dir="$SCRIPT_DIR"
+    while [ "$dir" != "/" ]; do
+        if [ -d "$dir/.git" ]; then
+            echo "$dir"
+            return 0
+        fi
+        dir="$(cd "$dir/.." && pwd)"
+    done
+    echo "$SCRIPT_DIR/../.."
+}
+
+PROJECT_ROOT="$(find_project_root)"
+DOCKER_CACHE_DIR="${DOCKER_CACHE_DIR:-${PROJECT_ROOT}/.docker-cache}"
+IMAGES_DIR="${DOCKER_CACHE_DIR}/images"
+BUILDKIT_CACHE_DIR="${DOCKER_CACHE_DIR}/buildkit-cache"
+MANIFEST_FILE="${DOCKER_CACHE_DIR}/manifest.json"
+LOCK_DIR="${DOCKER_CACHE_DIR}/.locks"
+
+LOCK_FD=""
+LOCK_IMAGE_KEY=""
+LOCK_DIR_PATH=""
+
+COMPRESS_CMD="gzip"
+DECOMPRESS_CMD="gzip -dc"
+
+if [ -t 1 ]; then
+    CLR_RESET='\033[0m'
+    CLR_RED='\033[0;31m'
+    CLR_GREEN='\033[0;32m'
+    CLR_YELLOW='\033[1;33m'
+    CLR_BLUE='\033[0;34m'
+    CLR_CYAN='\033[0;36m'
+    CLR_BOLD='\033[1m'
+    CLR_GRAY='\033[0;90m'
+else
+    CLR_RESET=''
+    CLR_RED=''
+    CLR_GREEN=''
+    CLR_YELLOW=''
+    CLR_BLUE=''
+    CLR_CYAN=''
+    CLR_BOLD=''
+    CLR_GRAY=''
+fi
+
+info()    { echo -e "${CLR_GREEN}ℹ️${CLR_RESET}  $*"; }
+ok()      { echo -e "${CLR_GREEN}✅${CLR_RESET}  $*"; }
+warn()    { echo -e "${CLR_YELLOW}⚠️${CLR_RESET}  $*"; }
+error()   { echo -e "${CLR_RED}❌${CLR_RESET}  $*"; }
+step()    { echo ""; echo -e "${CLR_BOLD}${CLR_BLUE}━━━ $* ━━━${CLR_RESET}"; echo ""; }
+header()  { echo ""; echo -e "${CLR_BOLD}${CLR_CYAN}╔══════════════════════════════════════════════════════════════╗${CLR_RESET}"; }
+footer()  { echo -e "${CLR_BOLD}${CLR_CYAN}╚══════════════════════════════════════════════════════════════╝${CLR_RESET}"; echo ""; }
+
+ensure_cache_dirs() {
+    mkdir -p "$IMAGES_DIR"
+    mkdir -p "$BUILDKIT_CACHE_DIR"
+    mkdir -p "$LOCK_DIR"
+}
+
+manifest_init() {
+    if [ ! -f "$MANIFEST_FILE" ]; then
+        printf '{"version":"1.0","images":{}}\n' > "$MANIFEST_FILE"
+    fi
+}
+
+manifest_get_all() {
+    if command -v python3 &>/dev/null; then
+        python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+print(json.dumps(data.get('images', {}), ensure_ascii=False))
+"
+    else
+        cat "$MANIFEST_FILE"
+    fi
+}
+
+manifest_get() {
+    local image_key="$1"
+    if command -v python3 &>/dev/null; then
+        MANIFEST_KEY="$image_key" python3 -c "
+import json, os
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+key = os.environ['MANIFEST_KEY']
+img = data.get('images', {}).get(key)
+if img is not None:
+    print(json.dumps(img, ensure_ascii=False))
+"
+    fi
+}
+
+manifest_set() {
+    local image_key="$1"
+    local json_value="$2"
+    local tmp_file="${MANIFEST_FILE}.tmp.$$"
+
+    if command -v python3 &>/dev/null; then
+        MANIFEST_KEY="$image_key" MANIFEST_VALUE="$json_value" MANIFEST_TMP="$tmp_file" python3 -c "
+import json, os, sys
+
+manifest_path = '$MANIFEST_FILE'
+tmp_path = os.environ['MANIFEST_TMP']
+key = os.environ['MANIFEST_KEY']
+value_str = os.environ['MANIFEST_VALUE']
+
+try:
+    with open(manifest_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+except (FileNotFoundError, json.JSONDecodeError):
+    data = {'version': '1.0', 'images': {}}
+
+data.setdefault('images', {})
+data['images'][key] = json.loads(value_str)
+
+with open(tmp_path, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+"
+        python3 -c "import json; json.load(open('$tmp_file', 'r', encoding='utf-8'))"
+        mv "$tmp_file" "$MANIFEST_FILE"
+    fi
+}
+
+manifest_remove() {
+    local image_key="$1"
+    local tmp_file="${MANIFEST_FILE}.tmp.$$"
+
+    if command -v python3 &>/dev/null; then
+        MANIFEST_KEY="$image_key" MANIFEST_TMP="$tmp_file" python3 -c "
+import json, os
+
+manifest_path = '$MANIFEST_FILE'
+tmp_path = os.environ['MANIFEST_TMP']
+key = os.environ['MANIFEST_KEY']
+
+with open(manifest_path, 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+if 'images' in data and key in data['images']:
+    del data['images'][key]
+
+with open(tmp_path, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+"
+        python3 -c "import json; json.load(open('$tmp_file', 'r', encoding='utf-8'))"
+        mv "$tmp_file" "$MANIFEST_FILE"
+    fi
+}
+
+manifest_get_keys() {
+    if command -v python3 &>/dev/null; then
+        python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+for k in data.get('images', {}).keys():
+    print(k)
+"
+    fi
+}
+
+manifest_clear_all() {
+    local tmp_file="${MANIFEST_FILE}.tmp.$$"
+    if command -v python3 &>/dev/null; then
+        MANIFEST_TMP="$tmp_file" python3 -c "
+import json, os
+manifest_path = '$MANIFEST_FILE'
+tmp_path = os.environ['MANIFEST_TMP']
+try:
+    with open(manifest_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+except (FileNotFoundError, json.JSONDecodeError):
+    data = {'version': '1.0', 'images': {}}
+data['images'] = {}
+with open(tmp_path, 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+"
+        python3 -c "import json; json.load(open('$tmp_file', 'r', encoding='utf-8'))"
+        mv "$tmp_file" "$MANIFEST_FILE"
+    fi
+}
+
+get_dir_size() {
+    local dir="$1"
+    if [ ! -d "$dir" ]; then
+        echo 0
+        return
+    fi
+    if [ "$(uname -s)" = "Darwin" ]; then
+        du -sk "$dir" 2>/dev/null | awk '{print $1 * 1024}'
+    else
+        du -sb "$dir" 2>/dev/null | awk '{print $1}'
+    fi
+}
+
+get_file_size() {
+    local f="$1"
+    if [ ! -f "$f" ]; then
+        echo 0
+        return
+    fi
+    wc -c < "$f" | tr -d ' '
+}
+
+release_lock() {
+    if [ -n "$LOCK_FD" ]; then
+        if [ -n "$LOCK_DIR_PATH" ]; then
+            rmdir "$LOCK_DIR_PATH" 2>/dev/null || true
+            LOCK_DIR_PATH=""
+        else
+            exec {LOCK_FD}>&- 2>/dev/null || true
+        fi
+        LOCK_FD=""
+        LOCK_IMAGE_KEY=""
+    fi
+}
+
+cleanup() {
+    release_lock
+    local tmp_file="${MANIFEST_FILE}.tmp.$$"
+    [ -f "$tmp_file" ] && rm -f "$tmp_file"
+    local img_tmp_file="${IMAGES_DIR}/"*.tmp.* 2>/dev/null || true
+}
+
+trap cleanup EXIT
+
+acquire_lock() {
+    local image_key="$1"
+    local safe_name
+    safe_name="$(sanitize_image_name "$image_key")"
+    local lock_file="${LOCK_DIR}/${safe_name}.lock"
+
+    release_lock
+
+    if command -v flock &>/dev/null; then
+        exec {LOCK_FD}>"$lock_file"
+        flock -x "$LOCK_FD"
+        LOCK_DIR_PATH=""
+    else
+        local lock_dir="${LOCK_DIR}/${safe_name}.lockdir"
+        while ! mkdir "$lock_dir" 2>/dev/null; do
+            sleep 0.1
+        done
+        LOCK_FD="1"
+        LOCK_DIR_PATH="$lock_dir"
+    fi
+    LOCK_IMAGE_KEY="$image_key"
+}
+
+sanitize_image_name() {
+    local image="$1"
+    echo "$image" | sed -e 's|/|_|g' -e 's|:|_|g'
+}
+
+check_docker_running() {
+    if ! docker info &>/dev/null; then
+        error "Docker 未运行或无法访问"
+        exit 1
+    fi
+}
+
+get_image_id() {
+    local image="$1"
+    docker image inspect --format='{{.Id}}' "$image" 2>/dev/null || echo ""
+}
+
+image_exists_in_docker() {
+    local image="$1"
+    docker image inspect "$image" &>/dev/null
+}
+
+human_size() {
+    local bytes="$1"
+    if [ "$bytes" -lt 1024 ]; then
+        echo "${bytes}B"
+    elif [ "$bytes" -lt 1048576 ]; then
+        awk "BEGIN {printf \"%.1fKB\", $bytes/1024}"
+    elif [ "$bytes" -lt 1073741824 ]; then
+        awk "BEGIN {printf \"%.1fMB\", $bytes/1048576}"
+    else
+        awk "BEGIN {printf \"%.1fGB\", $bytes/1073741824}"
+    fi
+}
+
+check_pigz() {
+    if command -v pigz &>/dev/null; then
+        COMPRESS_CMD="pigz"
+        DECOMPRESS_CMD="pigz -dc"
+        info "使用 pigz 进行压缩（多线程加速）"
+    else
+        COMPRESS_CMD="gzip"
+        DECOMPRESS_CMD="gzip -dc"
+        info "使用 gzip 进行压缩"
+    fi
+}
+
+compute_sha256() {
+    local file_path="$1"
+    local hash=""
+    if command -v sha256sum &>/dev/null; then
+        hash="$(sha256sum "$file_path" | awk '{print $1}')"
+    elif command -v sha256 &>/dev/null; then
+        hash="$(sha256 -q "$file_path" 2>/dev/null || sha256 "$file_path" | awk '{print $NF}')"
+    fi
+    if [ -n "$hash" ]; then
+        echo "sha256:${hash}"
+    fi
+}
+
+save_image_to_cache() {
+    local image_name="$1"
+    local dockerfile_path="${2:-}"
+    local dockerfile_checksum="${3:-}"
+
+    acquire_lock "$image_name"
+
+    if ! image_exists_in_docker "$image_name"; then
+        error "镜像不存在于 Docker 中: ${image_name}"
+        release_lock
+        return 1
+    fi
+
+    local image_id
+    image_id="$(get_image_id "$image_name")"
+    if [ -z "$image_id" ]; then
+        error "无法获取镜像ID: ${image_name}"
+        release_lock
+        return 1
+    fi
+
+    local safe_name
+    safe_name="$(sanitize_image_name "$image_name")"
+    local cache_file="${IMAGES_DIR}/${safe_name}.tar.gz"
+    local tmp_file="${cache_file}.tmp.$$"
+
+    info "镜像ID: ${image_id}"
+
+    set +e
+    docker save "$image_name" | $COMPRESS_CMD > "$tmp_file"
+    local save_pipestatus=("${PIPESTATUS[@]}")
+    set -e
+
+    if [ "${save_pipestatus[0]}" -ne 0 ] || [ "${save_pipestatus[1]}" -ne 0 ]; then
+        error "保存镜像失败: ${image_name}"
+        rm -f "$tmp_file"
+        release_lock
+        return 1
+    fi
+
+    local size
+    size="$(wc -c < "$tmp_file" | tr -d ' ')"
+    local sha256
+    sha256="$(compute_sha256 "$tmp_file")"
+
+    mv "$tmp_file" "$cache_file"
+
+    local created_at
+    created_at="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+    local json_entry
+    json_entry="$(IMAGE_NAME="$image_name" IMAGE_ID="$image_id" FILE_NAME="${safe_name}.tar.gz" SIZE="$size" SHA256="$sha256" CREATED_AT="$created_at" DOCKERFILE="$dockerfile_path" DOCKERFILE_CHECKSUM="$dockerfile_checksum" python3 -c "
+import json, os
+entry = {
+    'image_name': os.environ['IMAGE_NAME'],
+    'image_id': os.environ['IMAGE_ID'],
+    'file': os.environ['FILE_NAME'],
+    'compressed_size': int(os.environ['SIZE']),
+    'sha256': os.environ['SHA256'],
+    'created_at': os.environ['CREATED_AT'],
+    'dockerfile': os.environ.get('DOCKERFILE') or None,
+    'dockerfile_checksum': os.environ.get('DOCKERFILE_CHECKSUM') or None
+}
+print(json.dumps(entry, ensure_ascii=False))
+")"
+    manifest_set "$image_name" "$json_entry"
+
+    ok "保存完成: $(human_size "$size")"
+    release_lock
+    return 0
+}
+
+load_image_from_cache() {
+    local image_name="$1"
+    local skip_if_exists="${2:-false}"
+
+    acquire_lock "$image_name"
+
+    local entry_json
+    entry_json="$(manifest_get "$image_name")"
+    if [ -z "$entry_json" ]; then
+        error "manifest 中未找到镜像记录: ${image_name}"
+        release_lock
+        return 1
+    fi
+
+    local cache_file=""
+    local cached_image_id=""
+    local compressed_size=""
+    if command -v python3 &>/dev/null; then
+        cache_file="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print('${IMAGES_DIR}/' + entry.get('file', ''))
+")"
+        cached_image_id="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('image_id', ''))
+")"
+        compressed_size="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('compressed_size', 0))
+")"
+    fi
+
+    if [ ! -f "$cache_file" ]; then
+        error "缓存文件不存在: ${cache_file}"
+        release_lock
+        return 1
+    fi
+
+    if [ "$skip_if_exists" = true ] && image_exists_in_docker "$image_name"; then
+        local current_id
+        current_id="$(get_image_id "$image_name")"
+        if [ -n "$current_id" ] && [ "$current_id" = "$cached_image_id" ]; then
+            ok "镜像已就绪（ID匹配）"
+            release_lock
+            return 0
+        fi
+    fi
+
+    info "缓存文件: ${cache_file}"
+    info "大小: $(human_size "$compressed_size")"
+
+    set +e
+    $DECOMPRESS_CMD "$cache_file" | docker load
+    local load_pipestatus=("${PIPESTATUS[@]}")
+    set -e
+
+    if [ "${load_pipestatus[0]}" -ne 0 ] || [ "${load_pipestatus[1]}" -ne 0 ]; then
+        error "加载镜像失败: ${image_name}"
+        release_lock
+        return 1
+    fi
+
+    local new_id
+    new_id="$(get_image_id "$image_name")"
+    if [ -z "$new_id" ]; then
+        warn "镜像加载后无法验证ID，但加载命令已返回成功"
+    elif [ "$new_id" != "$cached_image_id" ]; then
+        warn "镜像ID不匹配 (期望: ${cached_image_id:0:19}..., 实际: ${new_id:0:19}...)"
+    fi
+
+    ok "加载完成"
+    release_lock
+    return 0
+}
+
+run_self_test() {
+    step "Self-test"
+
+    info "测试 sanitize_image_name:"
+    local test1
+    test1="$(sanitize_image_name "devcontainer-base:chaos-ai-npu-latest")"
+    ok "devcontainer-base:chaos-ai-npu-latest -> $test1"
+
+    local test2
+    test2="$(sanitize_image_name "xmnn-whl-builder:latest")"
+    ok "xmnn-whl-builder:latest -> $test2"
+
+    info "测试 human_size:"
+    ok "1024 bytes -> $(human_size 1024)"
+    ok "1536 bytes -> $(human_size 1536)"
+    ok "1048576 bytes -> $(human_size 1048576)"
+    ok "1572864 bytes -> $(human_size 1572864)"
+    ok "1073741824 bytes -> $(human_size 1073741824)"
+
+    ok "Self-test 完成"
+}
+
+ensure_cache_dirs
+manifest_init
+
+usage() {
+    cat <<EOF
+Docker Cache Management Tool
+
+用法: $0 <命令> [选项]
+
+命令:
+  save        保存 Docker 镜像到缓存
+  load        从缓存加载 Docker 镜像
+  build       构建并缓存镜像（带 BuildKit 缓存挂载）
+  list        列出缓存内容
+  clean       清理缓存
+  doctor      检查环境依赖
+  -h, --help  显示帮助
+  --test      运行内部测试
+
+环境变量:
+  DOCKER_CACHE_DIR   缓存目录 (当前: ${DOCKER_CACHE_DIR})
+
+示例:
+  $0 save devcontainer-base:chaos-ai-npu-latest  # 保存单个镜像
+  $0 save --all                                   # 保存所有已记录的镜像
+  $0 load devcontainer-base:chaos-ai-npu-latest  # 加载单个镜像
+  $0 load --all                                   # 加载所有缓存镜像
+  $0 list                                         # 列出缓存
+  $0 clean                                        # 清理全部缓存
+  DOCKER_CACHE_DIR=/tmp/cache $0 list             # 自定义缓存目录
+EOF
+    exit 0
+}
+
+cmd_save() {
+    local save_all=false
+    local force=false
+    local images=()
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --all)
+                save_all=true
+                shift
+                ;;
+            --force)
+                force=true
+                shift
+                ;;
+            -h|--help)
+                cat <<EOF
+用法: $0 save <IMAGE_NAME> [--all] [--force]
+
+保存 Docker 镜像到缓存
+
+参数:
+  IMAGE_NAME   要保存的镜像名 (如: devcontainer-base:chaos-ai-npu-latest)
+  --all        保存 manifest 中记录的所有缓存镜像
+  --force      即使已缓存且镜像ID未变，也强制重新保存
+
+示例:
+  $0 save devcontainer-base:chaos-ai-npu-latest
+  $0 save --all
+  $0 save --all --force
+EOF
+                exit 0
+                ;;
+            *)
+                images+=("$1")
+                shift
+                ;;
+        esac
+    done
+
+    if [ "${#images[@]}" -eq 0 ] && [ "$save_all" = false ]; then
+        error "缺少参数: 请指定镜像名或使用 --all"
+        echo ""
+        cat <<EOF
+用法: $0 save <IMAGE_NAME> [--all] [--force]
+
+示例:
+  $0 save devcontainer-base:chaos-ai-npu-latest
+  $0 save --all
+EOF
+        return 1
+    fi
+
+    check_docker_running
+    check_pigz
+
+    local target_images=()
+    if [ "$save_all" = true ]; then
+        while IFS= read -r img; do
+            [ -n "$img" ] && target_images+=("$img")
+        done < <(manifest_get_keys)
+        if [ "${#target_images[@]}" -eq 0 ]; then
+            warn "manifest 中没有记录任何缓存镜像"
+            return 0
+        fi
+    fi
+    for img in "${images[@]}"; do
+        target_images+=("$img")
+    done
+
+    local saved_count=0
+    local skipped_count=0
+    local failed_count=0
+    local total="${#target_images[@]}"
+
+    header
+    info "开始保存镜像 (共 ${total} 个)"
+    footer
+
+    local idx=0
+    for image_name in "${target_images[@]}"; do
+        idx=$((idx + 1))
+        info "[${idx}/${total}] 处理: ${image_name}"
+
+        if ! image_exists_in_docker "$image_name"; then
+            error "镜像不存在于 Docker 中，跳过: ${image_name}"
+            failed_count=$((failed_count + 1))
+            continue
+        fi
+
+        local image_id
+        image_id="$(get_image_id "$image_name")"
+        if [ -z "$image_id" ]; then
+            error "无法获取镜像ID，跳过: ${image_name}"
+            failed_count=$((failed_count + 1))
+            continue
+        fi
+
+        local existing_entry
+        existing_entry="$(manifest_get "$image_name")"
+        local existing_id=""
+        if [ -n "$existing_entry" ] && command -v python3 &>/dev/null; then
+            existing_id="$(echo "$existing_entry" | MANIFEST_ENTRY="$existing_entry" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('image_id', ''))
+")"
+        fi
+
+        if [ -n "$existing_id" ] && [ "$existing_id" = "$image_id" ] && [ "$force" = false ]; then
+            ok "镜像已是最新缓存，跳过: ${image_name}"
+            skipped_count=$((skipped_count + 1))
+            continue
+        fi
+
+        step "保存镜像: ${image_name}"
+
+        if save_image_to_cache "$image_name"; then
+            saved_count=$((saved_count + 1))
+        else
+            failed_count=$((failed_count + 1))
+        fi
+    done
+
+    header
+    info "保存完成汇总:"
+    ok "  成功保存: ${saved_count} 个"
+    if [ "$skipped_count" -gt 0 ]; then
+        info "  跳过: ${skipped_count} 个 (已是最新)"
+    fi
+    if [ "$failed_count" -gt 0 ]; then
+        warn "  失败: ${failed_count} 个"
+    fi
+    footer
+}
+
+cmd_load() {
+    local load_all=false
+    local images=()
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --all)
+                load_all=true
+                shift
+                ;;
+            -h|--help)
+                cat <<EOF
+用法: $0 load [IMAGE_NAME] [--all]
+
+从缓存加载 Docker 镜像
+
+参数:
+  IMAGE_NAME   要加载的镜像名 (如: devcontainer-base:chaos-ai-npu-latest)
+  --all        加载 manifest 中记录的所有缓存镜像
+
+示例:
+  $0 load devcontainer-base:chaos-ai-npu-latest
+  $0 load --all
+EOF
+                exit 0
+                ;;
+            *)
+                images+=("$1")
+                shift
+                ;;
+        esac
+    done
+
+    if [ "${#images[@]}" -eq 0 ] && [ "$load_all" = false ]; then
+        error "缺少参数: 请指定镜像名或使用 --all"
+        echo ""
+        cat <<EOF
+用法: $0 load [IMAGE_NAME] [--all]
+
+示例:
+  $0 load devcontainer-base:chaos-ai-npu-latest
+  $0 load --all
+EOF
+        return 1
+    fi
+
+    check_docker_running
+    check_pigz
+
+    local target_images=()
+    if [ "$load_all" = true ]; then
+        while IFS= read -r img; do
+            [ -n "$img" ] && target_images+=("$img")
+        done < <(manifest_get_keys)
+        if [ "${#target_images[@]}" -eq 0 ]; then
+            warn "manifest 中没有记录任何缓存镜像"
+            return 0
+        fi
+    fi
+    for img in "${images[@]}"; do
+        target_images+=("$img")
+    done
+
+    local loaded_count=0
+    local skipped_count=0
+    local failed_count=0
+    local total="${#target_images[@]}"
+
+    header
+    info "开始加载镜像 (共 ${total} 个)"
+    footer
+
+    local idx=0
+    for image_name in "${target_images[@]}"; do
+        idx=$((idx + 1))
+        info "[${idx}/${total}] 处理: ${image_name}"
+
+        local entry_json
+        entry_json="$(manifest_get "$image_name")"
+        if [ -z "$entry_json" ]; then
+            error "manifest 中未找到镜像记录，跳过: ${image_name}"
+            failed_count=$((failed_count + 1))
+            continue
+        fi
+
+        local cached_image_id=""
+        if command -v python3 &>/dev/null; then
+            cached_image_id="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('image_id', ''))
+")"
+        fi
+
+        if image_exists_in_docker "$image_name"; then
+            local current_id
+            current_id="$(get_image_id "$image_name")"
+            if [ -n "$current_id" ] && [ "$current_id" = "$cached_image_id" ]; then
+                ok "镜像已加载且ID一致，跳过: ${image_name}"
+                skipped_count=$((skipped_count + 1))
+                continue
+            fi
+        fi
+
+        step "加载镜像: ${image_name}"
+
+        if load_image_from_cache "$image_name" false; then
+            loaded_count=$((loaded_count + 1))
+        else
+            failed_count=$((failed_count + 1))
+        fi
+    done
+
+    header
+    info "加载完成汇总:"
+    ok "  成功加载: ${loaded_count} 个"
+    if [ "$skipped_count" -gt 0 ]; then
+        info "  跳过: ${skipped_count} 个 (已存在且ID一致)"
+    fi
+    if [ "$failed_count" -gt 0 ]; then
+        warn "  失败: ${failed_count} 个"
+    fi
+    footer
+}
+
+cmd_build() {
+    local image_name=""
+    local dockerfile="./Dockerfile"
+    local context_dir=""
+    local tag=""
+    local build_args=()
+    local no_cache=false
+    local no_cache_load=false
+    local use_cn_mirrors=false
+    local use_buildkit_cache=false
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -i|--image)
+                image_name="$2"
+                shift 2
+                ;;
+            -f|--file)
+                dockerfile="$2"
+                shift 2
+                ;;
+            -c|--context)
+                context_dir="$2"
+                shift 2
+                ;;
+            -t|--tag)
+                tag="$2"
+                shift 2
+                ;;
+            --build-arg)
+                build_args+=("$2")
+                shift 2
+                ;;
+            --no-cache)
+                no_cache=true
+                shift
+                ;;
+            --no-cache-load)
+                no_cache_load=true
+                shift
+                ;;
+            --cn)
+                use_cn_mirrors=true
+                shift
+                ;;
+            --buildkit-cache)
+                use_buildkit_cache=true
+                shift
+                ;;
+            -h|--help)
+                cat <<EOF
+用法: $0 build [选项]
+
+构建并智能缓存 Docker 镜像
+
+选项:
+  -i, --image IMAGE_NAME       目标镜像名称 (必填，如 devcontainer-base:chaos-ai-npu-latest)
+  -f, --file DOCKERFILE        Dockerfile 路径 (默认: ./Dockerfile)
+  -c, --context CONTEXT_DIR    构建上下文目录 (默认: Dockerfile 所在目录)
+  -t, --tag TAG                镜像标签 (与 -i 二选一)
+      --build-arg KEY=VALUE    构建参数 (可多次指定)
+      --no-cache               忽略 Docker 构建缓存
+      --no-cache-load          强制重新构建，即使有缓存（构建后仍更新缓存）
+      --cn                     使用国内镜像源
+      --buildkit-cache         启用 BuildKit 缓存
+  -h, --help                   显示帮助
+
+示例:
+  $0 build -i devcontainer-base:chaos-ai-npu-latest -f ./Dockerfile
+  $0 build -t myapp:latest --cn --buildkit-cache
+  $0 build -i myimage:v1 --build-arg HTTP_PROXY=http://proxy:8080
+EOF
+                exit 0
+                ;;
+            *)
+                error "未知选项: $1"
+                return 1
+                ;;
+        esac
+    done
+
+    if [ -z "$image_name" ] && [ -n "$tag" ]; then
+        image_name="$tag"
+    fi
+
+    if [ -z "$image_name" ]; then
+        error "缺少参数: 请使用 -i/--image 或 -t/--tag 指定镜像名"
+        echo ""
+        cat <<EOF
+用法: $0 build -i IMAGE_NAME [选项]
+
+示例:
+  $0 build -i devcontainer-base:chaos-ai-npu-latest
+EOF
+        return 1
+    fi
+
+    if [ ! -f "$dockerfile" ]; then
+        error "Dockerfile 不存在: $dockerfile"
+        return 1
+    fi
+
+    dockerfile="$(cd "$(dirname "$dockerfile")" && pwd)/$(basename "$dockerfile")"
+
+    if [ -z "$context_dir" ]; then
+        context_dir="$(dirname "$dockerfile")"
+    fi
+
+    if [ ! -d "$context_dir" ]; then
+        error "构建上下文目录不存在: $context_dir"
+        return 1
+    fi
+
+    context_dir="$(cd "$context_dir" && pwd)"
+
+    check_docker_running
+    check_pigz
+
+    header
+    info "智能构建: ${image_name}"
+    footer
+
+    local dockerfile_checksum
+    dockerfile_checksum="$(compute_sha256 "$dockerfile")"
+    info "Dockerfile: ${dockerfile}"
+    info "Dockerfile Checksum: ${dockerfile_checksum}"
+    info "构建上下文: ${context_dir}"
+
+    local cache_hit=false
+    local cache_entry=""
+    local cached_dockerfile_checksum=""
+    local cached_image_id=""
+
+    if [ "$no_cache_load" = false ] && [ "$no_cache" = false ]; then
+        cache_entry="$(manifest_get "$image_name")"
+        if [ -n "$cache_entry" ] && command -v python3 &>/dev/null; then
+            local cache_file=""
+            cache_file="$(echo "$cache_entry" | MANIFEST_ENTRY="$cache_entry" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print('${IMAGES_DIR}/' + entry.get('file', ''))
+")"
+            cached_dockerfile_checksum="$(echo "$cache_entry" | MANIFEST_ENTRY="$cache_entry" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('dockerfile_checksum', '') or '')
+")"
+            cached_image_id="$(echo "$cache_entry" | MANIFEST_ENTRY="$cache_entry" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('image_id', ''))
+")"
+
+            if [ -f "$cache_file" ] && [ "$cached_dockerfile_checksum" = "$dockerfile_checksum" ]; then
+                cache_hit=true
+                info "缓存命中 (Dockerfile 未变更)"
+            else
+                if [ ! -f "$cache_file" ]; then
+                    info "缓存未命中: 缓存文件不存在"
+                elif [ "$cached_dockerfile_checksum" != "$dockerfile_checksum" ]; then
+                    info "缓存未命中: Dockerfile 已变更"
+                fi
+            fi
+        else
+            info "缓存未命中: 无 manifest 记录"
+        fi
+    else
+        if [ "$no_cache_load" = true ]; then
+            info "强制重新构建 (--no-cache-load)"
+        fi
+        if [ "$no_cache" = true ]; then
+            info "忽略 Docker 构建缓存 (--no-cache)"
+        fi
+    fi
+
+    if [ "$cache_hit" = true ]; then
+        step "⚡ 快速路径 - 从缓存加载"
+
+        local start_time
+        start_time="$(date +%s)"
+
+        if image_exists_in_docker "$image_name"; then
+            local current_id
+            current_id="$(get_image_id "$image_name")"
+            if [ -n "$current_id" ] && [ "$current_id" = "$cached_image_id" ]; then
+                ok "镜像已就绪（ID匹配）"
+                local end_time
+                end_time="$(date +%s)"
+                local elapsed=$((end_time - start_time))
+                header
+                ok "⚡ 从缓存加载完成（耗时 ${elapsed}s，比重新构建快 80-90%）"
+                footer
+                return 0
+            fi
+        fi
+
+        if load_image_from_cache "$image_name" false; then
+            local end_time
+            end_time="$(date +%s)"
+            local elapsed=$((end_time - start_time))
+            header
+            ok "⚡ 从缓存加载完成（耗时 ${elapsed}s，比重新构建快 80-90%）"
+            footer
+            return 0
+        else
+            warn "缓存加载失败，回退到构建路径"
+            cache_hit=false
+        fi
+    fi
+
+    step "🔨 构建路径 - Dockerfile 构建"
+    info "构建镜像: ${image_name}"
+    info "Dockerfile: ${dockerfile}"
+    info "构建上下文: ${context_dir}"
+
+    local all_build_args=()
+
+    if [ "$use_cn_mirrors" = true ]; then
+        info "使用国内镜像源"
+        all_build_args+=("--build-arg" "APT_MIRROR=aliyun")
+        all_build_args+=("--build-arg" "CONDA_MIRROR=tuna")
+        all_build_args+=("--build-arg" "PIP_MIRROR=aliyun")
+    fi
+
+    for arg in "${build_args[@]}"; do
+        all_build_args+=("--build-arg" "$arg")
+    done
+
+    all_build_args+=("--build-arg" "BUILDKIT_INLINE_CACHE=1")
+
+    local docker_build_opts=()
+    if [ "$no_cache" = true ]; then
+        docker_build_opts+=("--no-cache")
+    fi
+
+    local start_time
+    start_time="$(date +%s)"
+
+    export DOCKER_BUILDKIT=1
+
+    set +e
+    docker build \
+        "${docker_build_opts[@]}" \
+        "${all_build_args[@]}" \
+        -t "$image_name" \
+        -f "$dockerfile" \
+        "$context_dir"
+    local build_status=$?
+    set -e
+
+    if [ $build_status -ne 0 ]; then
+        error "Docker 构建失败"
+        return 1
+    fi
+
+    local end_time
+    end_time="$(date +%s)"
+    local elapsed=$((end_time - start_time))
+
+    local new_image_id
+    new_image_id="$(get_image_id "$image_name")"
+    if [ -z "$new_image_id" ]; then
+        error "构建成功但无法获取镜像ID"
+        return 1
+    fi
+
+    info "镜像ID: ${new_image_id}"
+    info "构建耗时: ${elapsed}s"
+
+    step "💾 自动保存到缓存"
+    if save_image_to_cache "$image_name" "$dockerfile" "$dockerfile_checksum"; then
+        ok "已更新缓存"
+    else
+        warn "保存到缓存失败，但镜像已构建成功"
+    fi
+
+    step "✅ 验证镜像"
+    if docker image inspect "$image_name" &>/dev/null; then
+        ok "镜像验证通过"
+    else
+        error "镜像验证失败"
+        return 1
+    fi
+
+    header
+    ok "🔨 构建完成并已缓存（耗时 ${elapsed}s）"
+    footer
+
+    return 0
+}
+
+cmd_list() {
+    local json_output=false
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --json)
+                json_output=true
+                shift
+                ;;
+            -h|--help)
+                cat <<EOF
+用法: $0 list [--json]
+
+列出缓存内容
+
+参数:
+  --json       以 JSON 格式输出（机器可读）
+
+示例:
+  $0 list
+  $0 list --json
+EOF
+                exit 0
+                ;;
+            *)
+                error "未知选项: $1"
+                return 1
+                ;;
+        esac
+    done
+
+    if [ "$json_output" = true ]; then
+        manifest_get_all
+        return 0
+    fi
+
+    local images_json
+    images_json="$(manifest_get_all)"
+    local image_count=0
+    local total_size=0
+
+    if command -v python3 &>/dev/null; then
+        image_count="$(echo "$images_json" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(len(data))
+")"
+        total_size="$(echo "$images_json" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+total = sum(img.get('compressed_size', 0) for img in data.values())
+print(total)
+")"
+    fi
+
+    if [ "$image_count" -eq 0 ] || [ -z "$images_json" ] || [ "$images_json" = "{}" ]; then
+        info "缓存为空"
+        return 0
+    fi
+
+    header
+    echo -e "${CLR_BOLD}📦 Docker 镜像缓存列表${CLR_RESET}"
+    footer
+
+    printf "%-38s  %-8s  %-16s  %-6s\n" "镜像名称" "大小" "缓存时间" "Docker"
+    printf "%-38s  %-8s  %-16s  %-6s\n" "──────────────────────────────────────" "────────" "────────────────" "──────"
+
+    if command -v python3 &>/dev/null; then
+        echo "$images_json" | MANIFEST_JSON="$images_json" python3 -c "
+import json, os, sys, subprocess
+
+data = json.loads(os.environ['MANIFEST_JSON'])
+
+def human_size(b):
+    if b < 1024:
+        return f'{b}B'
+    elif b < 1048576:
+        return f'{b/1024:.1f}KB'
+    elif b < 1073741824:
+        return f'{b/1048576:.1f}MB'
+    else:
+        return f'{b/1073741824:.1f}GB'
+
+def format_time(ts):
+    if not ts:
+        return '-'
+    try:
+        from datetime import datetime
+        dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+        return dt.strftime('%Y-%m-%d %H:%M')
+    except:
+        return ts[:16]
+
+def docker_status(image_name, cached_id):
+    try:
+        result = subprocess.run(
+            ['docker', 'image', 'inspect', '--format={{.Id}}', image_name],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode != 0:
+            return '❌'
+        current_id = result.stdout.strip()
+        if not current_id:
+            return '❌'
+        if current_id == cached_id:
+            return '✅'
+        else:
+            return '⚠️'
+    except:
+        return '❌'
+
+for name, img in data.items():
+    size_str = human_size(img.get('compressed_size', 0))
+    time_str = format_time(img.get('created_at', ''))
+    status = docker_status(name, img.get('image_id', ''))
+    print(f'{name:<38}  {size_str:<8}  {time_str:<16}  {status:<6}')
+"
+    fi
+
+    echo ""
+    info "共 ${image_count} 个缓存镜像，总计 $(human_size "$total_size")"
+}
+
+cmd_clean() {
+    local clean_all=false
+    local clean_orphans=false
+    local clean_buildkit=false
+    local assume_yes=false
+    local target_image=""
+    local images=()
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --all)
+                clean_all=true
+                shift
+                ;;
+            --orphans)
+                clean_orphans=true
+                shift
+                ;;
+            --buildkit)
+                clean_buildkit=true
+                shift
+                ;;
+            -y|--yes)
+                assume_yes=true
+                shift
+                ;;
+            -h|--help)
+                cat <<EOF
+用法: $0 clean [IMAGE_NAME] [--all] [--orphans] [--buildkit] [-y|--yes]
+
+清理缓存
+
+参数:
+  IMAGE_NAME    清理指定镜像的缓存
+  --all         清理所有镜像缓存（保留 manifest.json 结构）
+  --orphans     只清理孤立文件（images/ 中存在但 manifest 未记录的文件）
+  --buildkit    同时清理 BuildKit 缓存目录
+  -y, --yes     跳过确认提示（用于 CI/脚本）
+
+示例:
+  $0 clean devcontainer-base:chaos-ai-npu-latest
+  $0 clean --all
+  $0 clean --orphans
+  $0 clean --all --buildkit -y
+EOF
+                exit 0
+                ;;
+            *)
+                images+=("$1")
+                shift
+                ;;
+        esac
+    done
+
+    if [ "${#images[@]}" -gt 1 ]; then
+        error "只能指定一个镜像名，或使用 --all/--orphans"
+        return 1
+    fi
+
+    if [ "${#images[@]}" -eq 1 ]; then
+        target_image="${images[0]}"
+    fi
+
+    local has_action=false
+    if [ -n "$target_image" ] || [ "$clean_all" = true ] || [ "$clean_orphans" = true ] || [ "$clean_buildkit" = true ]; then
+        has_action=true
+    fi
+
+    if [ "$has_action" = false ]; then
+        local images_json
+        images_json="$(manifest_get_all)"
+        local image_count=0
+        local images_size=0
+        local buildkit_size=0
+
+        if command -v python3 &>/dev/null; then
+            image_count="$(echo "$images_json" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(len(data))
+")"
+            images_size="$(echo "$images_json" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+total = sum(img.get('compressed_size', 0) for img in data.values())
+print(total)
+")"
+        fi
+        buildkit_size="$(get_dir_size "$BUILDKIT_CACHE_DIR")"
+
+        cat <<EOF
+用法: $0 clean [IMAGE_NAME] [--all] [--orphans] [--buildkit] [-y|--yes]
+
+当前缓存统计:
+  镜像缓存数量: ${image_count} 个
+  镜像缓存大小: $(human_size "$images_size")
+  BuildKit 缓存: $(human_size "$buildkit_size")
+
+请指定清理操作:
+  $0 clean <IMAGE_NAME>   清理指定镜像
+  $0 clean --all          清理所有镜像缓存
+  $0 clean --orphans      清理孤立文件
+  $0 clean --buildkit     清理 BuildKit 缓存
+
+使用 -y 跳过确认提示。
+EOF
+        return 0
+    fi
+
+    local to_delete=()
+    local total_to_free=0
+    local delete_desc=""
+
+    ensure_cache_dirs
+
+    if [ -n "$target_image" ]; then
+        local entry_json
+        entry_json="$(manifest_get "$target_image")"
+        if [ -z "$entry_json" ]; then
+            error "manifest 中未找到镜像记录: ${target_image}"
+            return 1
+        fi
+        local cache_file=""
+        local file_size=0
+        if command -v python3 &>/dev/null; then
+            cache_file="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print('${IMAGES_DIR}/' + entry.get('file', ''))
+")"
+            file_size="$(echo "$entry_json" | MANIFEST_ENTRY="$entry_json" python3 -c "
+import json, os
+entry = json.loads(os.environ['MANIFEST_ENTRY'])
+print(entry.get('compressed_size', 0))
+")"
+        fi
+        if [ ! -f "$cache_file" ]; then
+            warn "缓存文件不存在，将仅从 manifest 移除记录: ${target_image}"
+        else
+            to_delete+=("$cache_file")
+            total_to_free=$((total_to_free + file_size))
+        fi
+        delete_desc="镜像: ${target_image}"
+    fi
+
+    if [ "$clean_all" = true ]; then
+        if [ -d "$IMAGES_DIR" ]; then
+            while IFS= read -r fpath; do
+                [ -z "$fpath" ] && continue
+                local fsize
+                fsize="$(get_file_size "$fpath")"
+                to_delete+=("$fpath")
+                total_to_free=$((total_to_free + fsize))
+            done < <(find "$IMAGES_DIR" -type f -name "*.tar.gz" 2>/dev/null)
+        fi
+        if [ -z "$delete_desc" ]; then
+            delete_desc="所有镜像缓存"
+        else
+            delete_desc="${delete_desc} + 所有镜像缓存"
+        fi
+    fi
+
+    if [ "$clean_orphans" = true ]; then
+        local manifest_files=""
+        if [ -f "$MANIFEST_FILE" ] && command -v python3 &>/dev/null; then
+            manifest_files="$(python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+for img in data.get('images', {}).values():
+    print(img.get('file', ''))
+")"
+        fi
+        if [ -d "$IMAGES_DIR" ]; then
+            while IFS= read -r fpath; do
+                [ -z "$fpath" ] && continue
+                local fname
+                fname="$(basename "$fpath")"
+                if ! grep -qxF "$fname" <<< "$manifest_files"; then
+                    local fsize
+                    fsize="$(get_file_size "$fpath")"
+                    to_delete+=("$fpath")
+                    total_to_free=$((total_to_free + fsize))
+                fi
+            done < <(find "$IMAGES_DIR" -type f -name "*.tar.gz" 2>/dev/null)
+        fi
+        if [ -z "$delete_desc" ]; then
+            delete_desc="孤立文件"
+        else
+            delete_desc="${delete_desc} + 孤立文件"
+        fi
+    fi
+
+    local buildkit_freed=0
+    if [ "$clean_buildkit" = true ]; then
+        buildkit_freed="$(get_dir_size "$BUILDKIT_CACHE_DIR")"
+        if [ -z "$delete_desc" ]; then
+            delete_desc="BuildKit 缓存"
+        else
+            delete_desc="${delete_desc} + BuildKit 缓存"
+        fi
+    fi
+
+    if [ "${#to_delete[@]}" -eq 0 ] && [ "$clean_buildkit" != true ] && [ -z "$target_image" ]; then
+        info "没有需要清理的内容"
+        return 0
+    fi
+
+    header
+    warn "即将清理: ${delete_desc}"
+    if [ "${#to_delete[@]}" -gt 0 ]; then
+        info "将删除 ${#to_delete[@]} 个文件"
+    fi
+    if [ "$clean_buildkit" = true ]; then
+        info "将清空 BuildKit 缓存目录: ${BUILDKIT_CACHE_DIR}"
+    fi
+    info "预计释放空间: $(human_size "$((total_to_free + buildkit_freed))")"
+    footer
+
+    if [ "$assume_yes" != true ]; then
+        echo -n -e "${CLR_YELLOW}确认删除? [y/N] ${CLR_RESET}"
+        read -r confirm
+        case "$confirm" in
+            [yY][eE][sS]|[yY])
+                ;;
+            *)
+                info "已取消"
+                return 0
+                ;;
+        esac
+    fi
+
+    step "执行清理"
+
+    local deleted_count=0
+    local actual_freed=0
+
+    for fpath in "${to_delete[@]}"; do
+        if [ -z "$fpath" ]; then
+            continue
+        fi
+        local parent_dir
+        parent_dir="$(dirname "$fpath")"
+        if [ "$parent_dir" != "$IMAGES_DIR" ]; then
+            warn "跳过非 images 目录文件: ${fpath}"
+            continue
+        fi
+        local fname
+        fname="$(basename "$fpath")"
+        case "$fname" in
+            *.tar.gz)
+                ;;
+            *)
+                warn "跳过非 .tar.gz 文件: ${fpath}"
+                continue
+                ;;
+        esac
+        local fsize
+        fsize="$(get_file_size "$fpath")"
+        info "删除: ${fname}"
+        rm -f "$fpath"
+        deleted_count=$((deleted_count + 1))
+        actual_freed=$((actual_freed + fsize))
+    done
+
+    if [ -n "$target_image" ]; then
+        info "从 manifest 移除记录: ${target_image}"
+        manifest_remove "$target_image"
+    fi
+
+    if [ "$clean_all" = true ]; then
+        info "清空 manifest 中 images 记录"
+        manifest_clear_all
+    fi
+
+    if [ "$clean_buildkit" = true ]; then
+        if [ -d "$BUILDKIT_CACHE_DIR" ]; then
+            info "清空 BuildKit 缓存目录"
+            find "$BUILDKIT_CACHE_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true
+            actual_freed=$((actual_freed + buildkit_freed))
+        fi
+    fi
+
+    header
+    ok "清理完成"
+    if [ "$deleted_count" -gt 0 ]; then
+        info "  删除文件: ${deleted_count} 个"
+    fi
+    info "  释放空间: $(human_size "$actual_freed")"
+    footer
+}
+
+cmd_doctor() {
+    local issues=0
+
+    header
+    echo -e "${CLR_BOLD}🩺 Docker Cache Doctor${CLR_RESET}"
+    footer
+
+    # 1. Docker 是否可用
+    if command -v docker &>/dev/null; then
+        local docker_ver
+        docker_ver="$(docker --version 2>/dev/null | head -1)"
+        ok "Docker: ${docker_ver}"
+    else
+        error "Docker: 未安装"
+        issues=$((issues + 1))
+    fi
+
+    # 2. Docker daemon 是否运行
+    if command -v docker &>/dev/null && docker info &>/dev/null; then
+        ok "Docker daemon: 运行中"
+    else
+        error "Docker daemon: 未运行"
+        issues=$((issues + 1))
+    fi
+
+    # 3. 缓存目录是否可写
+    if [ -d "$DOCKER_CACHE_DIR" ] && [ -w "$DOCKER_CACHE_DIR" ]; then
+        ok "缓存目录: ${DOCKER_CACHE_DIR} (可写)"
+    elif mkdir -p "$DOCKER_CACHE_DIR" 2>/dev/null && [ -w "$DOCKER_CACHE_DIR" ]; then
+        ok "缓存目录: ${DOCKER_CACHE_DIR} (已创建，可写)"
+    else
+        error "缓存目录: ${DOCKER_CACHE_DIR} (不可写)"
+        issues=$((issues + 1))
+    fi
+
+    # 4. manifest.json 是否合法
+    if [ -f "$MANIFEST_FILE" ]; then
+        local manifest_valid=true
+        local manifest_count=0
+        if command -v python3 &>/dev/null; then
+            if ! python3 -c "import json; json.load(open('$MANIFEST_FILE', 'r', encoding='utf-8'))" &>/dev/null; then
+                manifest_valid=false
+            else
+                manifest_count="$(python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+print(len(data.get('images', {})))
+")"
+            fi
+        fi
+        if [ "$manifest_valid" = true ]; then
+            ok "Manifest: 合法 (${manifest_count} 个镜像)"
+        else
+            error "Manifest: 文件损坏或格式错误"
+            issues=$((issues + 1))
+        fi
+    else
+        warn "Manifest: 文件不存在 (将在首次保存时创建)"
+    fi
+
+    # 5. 压缩工具
+    if command -v pigz &>/dev/null; then
+        ok "压缩工具: pigz (多线程)"
+    elif command -v gzip &>/dev/null; then
+        ok "压缩工具: gzip"
+    else
+        error "压缩工具: 未找到 pigz 或 gzip"
+        issues=$((issues + 1))
+    fi
+
+    # 6. 文件锁
+    if command -v flock &>/dev/null; then
+        ok "文件锁: flock 可用"
+    else
+        warn "文件锁: flock 不可用，将使用目录锁降级方案"
+    fi
+
+    # 7. python3
+    if command -v python3 &>/dev/null; then
+        local py_ver
+        py_ver="$(python3 --version 2>&1)"
+        ok "Python: ${py_ver}"
+    else
+        error "Python: python3 未安装 (manifest 管理必需)"
+        issues=$((issues + 1))
+    fi
+
+    # 8. sha256
+    if command -v sha256sum &>/dev/null; then
+        ok "SHA256: sha256sum 可用"
+    elif command -v sha256 &>/dev/null; then
+        ok "SHA256: sha256 可用"
+    else
+        error "SHA256: 未找到 sha256sum 或 sha256"
+        issues=$((issues + 1))
+    fi
+
+    # 9. 缓存完整性检查
+    echo ""
+    step "缓存完整性检查"
+
+    local orphan_count=0
+    local missing_count=0
+    local corrupt_count=0
+    local manifest_files=""
+    local disk_files=""
+
+    if [ -f "$MANIFEST_FILE" ] && command -v python3 &>/dev/null; then
+        manifest_files="$(python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+for img in data.get('images', {}).values():
+    print(img.get('file', ''))
+")"
+
+        # 检查 manifest 中记录的文件是否存在且 hash 匹配
+        while IFS= read -r fname; do
+            [ -z "$fname" ] && continue
+            local fpath="${IMAGES_DIR}/${fname}"
+            if [ ! -f "$fpath" ]; then
+                error "缺失缓存文件: ${fname}"
+                missing_count=$((missing_count + 1))
+            else
+                # 检查 sha256
+                local expected_sha=""
+                expected_sha="$(python3 -c "
+import json
+with open('$MANIFEST_FILE', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+for img in data.get('images', {}).values():
+    if img.get('file') == '$fname':
+        print(img.get('sha256', ''))
+        break
+")"
+                if [ -n "$expected_sha" ]; then
+                    local actual_sha
+                    actual_sha="$(compute_sha256 "$fpath")"
+                    if [ "$actual_sha" != "$expected_sha" ]; then
+                        error "文件损坏 (hash 不匹配): ${fname}"
+                        corrupt_count=$((corrupt_count + 1))
+                    fi
+                fi
+            fi
+        done <<< "$manifest_files"
+
+        # 检查孤立文件
+        if [ -d "$IMAGES_DIR" ]; then
+            while IFS= read -r fpath; do
+                [ -z "$fpath" ] && continue
+                local fname
+                fname="$(basename "$fpath")"
+                if ! grep -qxF "$fname" <<< "$manifest_files"; then
+                    warn "孤立文件: ${fname}"
+                    orphan_count=$((orphan_count + 1))
+                fi
+            done < <(find "$IMAGES_DIR" -type f -name "*.tar.gz" 2>/dev/null)
+        fi
+    fi
+
+    if [ "$missing_count" -gt 0 ]; then
+        error "缺失 ${missing_count} 个缓存文件"
+        issues=$((issues + missing_count))
+    fi
+    if [ "$corrupt_count" -gt 0 ]; then
+        error "${corrupt_count} 个缓存文件损坏"
+        issues=$((issues + corrupt_count))
+    fi
+    if [ "$orphan_count" -gt 0 ]; then
+        warn "发现 ${orphan_count} 个孤立文件"
+    fi
+    if [ "$missing_count" -eq 0 ] && [ "$corrupt_count" -eq 0 ] && [ "$orphan_count" -eq 0 ]; then
+        ok "缓存完整性: 所有文件验证通过"
+    fi
+
+    echo ""
+    if [ "$issues" -eq 0 ]; then
+        ok "所有检查通过 ✅"
+    else
+        error "发现 ${issues} 个问题 ❌"
+    fi
+    footer
+
+    return $issues
+}
+
+if [ "${BASH_SOURCE[0]}" != "$0" ]; then
+    return 0
+fi
+
+if [ $# -eq 0 ]; then
+    error "缺少命令参数"
+    usage
+fi
+
+case "$1" in
+    save)
+        shift
+        cmd_save "$@"
+        ;;
+    load)
+        shift
+        cmd_load "$@"
+        ;;
+    build)
+        shift
+        cmd_build "$@"
+        ;;
+    list)
+        shift
+        cmd_list "$@"
+        ;;
+    clean)
+        shift
+        cmd_clean "$@"
+        ;;
+    doctor)
+        shift
+        cmd_doctor "$@"
+        ;;
+    --test)
+        run_self_test
+        ;;
+    -h|--help)
+        usage
+        ;;
+    *)
+        error "未知命令: $1"
+        usage
+        ;;
+esac

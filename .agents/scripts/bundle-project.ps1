@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     将 SpecWeave 项目（包括所有嵌套 submodule）打包为单个 bundle 目录
 .DESCRIPTION
@@ -6,9 +6,9 @@
     支持解包还原（unbundle）
 .EXAMPLE
     # 打包
-    ./scripts/bundle-project.ps1 -Bundle
+    ./.agents/scripts/bundle-project.ps1 -Bundle
     # 解包
-    ./scripts/bundle-project.ps1 -Unbundle -BundlePath ./SpecWeave-bundle-20260728 -TargetPath ./restored
+    ./.agents/scripts/bundle-project.ps1 -Unbundle -BundlePath ./SpecWeave-bundle-20260728 -TargetPath ./restored
 #>
 
 #Requires -Version 5.1
@@ -123,6 +123,18 @@ if ($MyInvocation.InvocationName -ne '.') {
 
 $ErrorActionPreference = "Stop"
 
+function Find-ProjectRoot {
+    param([string]$StartDir)
+    $dir = Resolve-Path $StartDir
+    while ($dir -ne [System.IO.Path]::GetPathRoot($dir)) {
+        if (Test-Path (Join-Path $dir ".git")) {
+            return $dir
+        }
+        $dir = Split-Path $dir -Parent
+    }
+    return (Split-Path (Split-Path $StartDir -Parent) -Parent)
+}
+
 function Write-Step {
     param([string]$Message)
     Write-Host "==> $Message" -ForegroundColor Cyan
@@ -206,7 +218,7 @@ function Invoke-BundleProject {
     Write-Host "========================================" -ForegroundColor Magenta
     Write-Host ""
 
-    $root = $PSScriptRoot | Split-Path -Parent
+    $root = Find-ProjectRoot -StartDir $PSScriptRoot
     $script:hasDirty = $false
 
     # 创建输出目录
@@ -361,7 +373,7 @@ if ($Bundle) {
     Write-Host "SpecWeave Bundle 工具" -ForegroundColor Magenta
     Write-Host ""
     Write-Host "用法:" -ForegroundColor White
-    Write-Host "  打包:  ./scripts/bundle-project.ps1 -Bundle [-OutputDir <dir>] [-Force]"
-    Write-Host "  解包:  ./scripts/bundle-project.ps1 -Unbundle -BundlePath <bundle-dir> -TargetPath <target> [-Force]"
+    Write-Host "  打包:  ./.agents/scripts/bundle-project.ps1 -Bundle [-OutputDir <dir>] [-Force]"
+    Write-Host "  解包:  ./.agents/scripts/bundle-project.ps1 -Unbundle -BundlePath <bundle-dir> -TargetPath <target> [-Force]"
     Write-Host ""
 }

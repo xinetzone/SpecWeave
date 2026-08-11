@@ -1,0 +1,7 @@
+- [x] Checkpoint 1: config.toml 的 shape 已改为 [1,3,32,32]，与 prototxt 的 input_dim: 32 一致
+- [x] Checkpoint 2: 清除 temp 目录后执行 compile.py，6 个步骤全部通过
+- [x] Checkpoint 3: vta_config.bin 已生成（8480 bytes），非空
+- [x] Checkpoint 4: runtime_bandwidth_first.log 中无 "split error"、"error"、"failed" 关键词
+- [x] Checkpoint 5: 所有编译产物存在（network.xmnn, param.bin, vta_data.bin, vta_data_rtos.bin, caffe_demo.bin）
+- [x] Checkpoint 6: 编译日志输出"模型编译全部完成! (总耗时: 7.92s)"
+- [x] Checkpoint 7: 修复仅修改 1 行配置，未修改模型文件或工具链代码
