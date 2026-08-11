@@ -1,49 +1,4 @@
----
-id: "standalone-insights-index"
-title: "独立洞察卡片索引"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/standalone/README.toml"
----
-# 独立洞察卡片
-
-本目录存放不属于特定原子化复盘报告的独立洞察卡片。每份洞察为单个 Markdown 文件，遵循"事实采集 → 根因分析 → 纠正预防"结构，可直接查阅和引用。
-
-与 `insight-extraction/` 下原子化报告的区别：
-- **原子化报告**（子目录形式）：围绕特定项目/任务的完整复盘，包含 README、execution-retrospective、insight-extraction、export-suggestions 等多文件
-- **独立洞察卡片**（单文件形式）：跨项目、单主题的精炼洞察，直接由"洞察"指令或复盘过程产出，无需完整的四文件结构
-
-## 洞察卡片清单
-
-| 文件 | 日期 | 主题 | 来源 |
-|------|------|------|------|
-| [insight-python-forkserver-default-20260811.md](insight-python-forkserver-default-20260811.md) | 2026-08-11 | Python 3.14+ Linux multiprocessing默认从fork改为forkserver：七概念深度分析（安全债偿还、架构折中、隐式契约破裂） | seven-concepts-cmd session sc-20260811-python-forkserver-change |
-| [insight-xmnn-docker-build-20260722.md](insight-xmnn-docker-build-20260722.md) | 2026-07-22 | XMNN Docker构建与wheel打包核心洞察 | retrospective-xmnn-wheel-packaging-data-dirs-20260722 |
-| [insight-temp-file-discipline-20260701.md](insight-temp-file-discipline-20260701.md) | 2026-07-01 | 临时文件路径规范执行卡点 | defuddle-web-content-extraction |
-| [insight-tuyaopen-folder-20260630.md](insight-tuyaopen-folder-20260630.md) | 2026-06-30 | TuyaOpen 目录洞察 | external: TuyaOpen SDK 仓库（临时克隆，已清理） |
-| [insight-windows-git-encoding-20260701.md](insight-windows-git-encoding-20260701.md) | 2026-07-01 | Windows Git 非 ASCII 提交信息编码陷阱 | atomic-commit-cmd-execution |
-| [insight-dockerfile-caching-20260703.md](insight-dockerfile-caching-20260703.md) | 2026-07-03 | Dockerfile 层缓存与开发环境镜像构建的七条深层洞察 | llvm-dev Dockerfile全面优化任务 |
-| [insight-subagent-batch-checkpoint-20260706.md](insight-subagent-batch-checkpoint-20260706.md) | 2026-07-06 | 批量子代理委派的中间检查点缺失风险 | volcengine-sandbox-learning复盘 |
-| [insight-domestic-llm-comparison-20260706.md](insight-domestic-llm-comparison-20260706.md) | 2026-07-06 | 国产AI模型对比与使用场景推荐 | 微信公众号文章萃取 |
-| [insight-analyze-wechat-article-3dnk-20260706.md](insight-analyze-wechat-article-3dnk-20260706.md) | 2026-07-06 | 3D神经核团微信公众号文章洞察萃取 | 微信公众号文章萃取 |
-| [insight-user-focus-highlight-20260707.md](insight-user-focus-highlight-20260707.md) | 2026-07-07 | 用户关注点高亮响应SOP：显式重点独立成章深度展开 | volcengine-dual-product-learning复盘 |
-| [insight-adversarial-review-cmd-20260710.md](insight-adversarial-review-cmd-20260710.md) | 2026-07-10 | 对抗性审查指令集创建：知识库→指令集转化、元审查设计、指令集vs Skill边界判断 | retrospective-adversarial-review-cmd-20260710 |
-| [insight-caffe-docker-build-20260722.md](insight-caffe-docker-build-20260722.md) | 2026-07-22 | Caffe Docker 运行时镜像构建 5 条核心洞察：参考模板、sandbox过滤、引号嵌套、缓存策略、老旧框架兼容性 | retrospective-caffe-docker-runtime-20260722 |
-
-## 补充目录入口
-
-| 目录 | 日期 | 主题 | 来源 |
-|------|------|------|------|
-| [first-principles-learning-mode/README.md](first-principles-learning-mode/README.md) | 2026-07-15 | 学习模式第一性原理分析原子化报告目录入口 | retrospective-learning-mode-first-principles-20260711 |
-
-## 新增洞察卡片规范
-
-1. 文件名遵循 `insight-{主题关键词}-{日期}.md` 格式（kebab-case）
-2. 文件开头使用 YAML frontmatter，包含 `id` 和 `source` 字段
-3. 内容结构遵循"1. 事实数据采集 → 2. 根因分析与洞察 → 3. 纠正与预防措施"三段式
-4. 完成后同步更新本索引文件
-
----
-
-## 附录：Python multiprocessing fork → forkserver 迁移检查清单
+# Python multiprocessing fork → forkserver 迁移检查清单
 
 > **适用版本**：Python 3.14+（Linux默认从fork改为forkserver）
 > **适用平台**：Linux（Python 3.8+ macOS已默认spawn，Windows一直是spawn）
@@ -52,7 +7,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins
 
 ---
 
-### 一、安全风险检查（洞察1：安全债偿还）
+## 一、安全风险检查（洞察1：安全债偿还）
 
 | # | 检查项 | 通过标准 | 风险等级 | 验证方法 |
 |---|-------|---------|---------|---------|
@@ -64,7 +19,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins
 
 ---
 
-### 二、性能与启动时机检查（洞察2：架构折中）
+## 二、性能与启动时机检查（洞察2：架构折中）
 
 | # | 检查项 | 通过标准 | 风险等级 | 验证方法 |
 |---|-------|---------|---------|---------|
@@ -76,7 +31,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins
 
 ---
 
-### 三、API契约合规检查（洞察3：隐式契约破裂）
+## 三、API契约合规检查（洞察3：隐式契约破裂）
 
 | # | 检查项 | 通过标准 | 风险等级 | 验证方法 |
 |---|-------|---------|---------|---------|
@@ -91,9 +46,9 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins
 
 ---
 
-### 四、快速验证命令
+## 四、快速验证命令
 
-#### 升级前预测试（推荐）
+### 升级前预测试（推荐）
 
 ```python
 # 在测试配置文件（conftest.py或测试入口）开头添加：
@@ -109,7 +64,7 @@ except RuntimeError:
 python -c "import multiprocessing as mp; mp.set_start_method('spawn'); exec(open('your_script.py').read())"
 ```
 
-#### 死锁诊断
+### 死锁诊断
 
 ```bash
 # Python 3.14+ 使用faulthandler诊断死锁
@@ -119,17 +74,17 @@ python -X faulthandler your_script.py
 # kill -SIGABRT <pid>
 ```
 
-#### 验证测试脚本
+### 验证测试脚本
 
 项目提供完整验证脚本（需Linux环境）：
 ```bash
-python ../../../../../scripts/tests/test_mp_forkserver_validation.py
+python .agents/scripts/tests/test_mp_forkserver_validation.py
 ```
 该脚本自动对比 fork/forkserver/spawn 三种模式在5个测试场景下的行为差异。
 
 ---
 
-### 五、常见错误与修复对照表
+## 五、常见错误与修复对照表
 
 | 错误信息 | 原因 | 修复方案 |
 |---------|------|---------|
@@ -143,7 +98,7 @@ python ../../../../../scripts/tests/test_mp_forkserver_validation.py
 
 ---
 
-### 六、迁移决策树
+## 六、迁移决策树
 
 ```
 代码中使用multiprocessing/ProcessPoolExecutor？
