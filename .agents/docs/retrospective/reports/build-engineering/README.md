@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（20份）
+## 报告清单（21份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-chaos-ai-portable-slim-20260811/` | chaos-ai:portable 镜像多阶段构建瘦身复盘（I-F-A-C链路）：删除conda整体chown消除4.6GB复制层，镜像15.6GB→9.59GB（降幅38.5%）；构建期/运行期PIP_USER冲突修复（deps设PIP_USER=0包写入/opt/conda，final恢复=1支持--user）；docker-compose指向portable-slim+docker-cache缓存2.0GB；萃取"构建期/运行期属主分离"与"消除chown复制层"两模式 | 2026-08-11 |
 | `retrospective-xmnn-four-layer-release-pipeline-20260810/` | XMNN四层镜像/产物架构闭环复盘（R-I-E-V-C链路）：补齐L3发布产物层(xmnn-releases)、.dockerignore精确保留bind mount路径、extract-release.sh一键自动提取脚本（5步流程+多级fallback容错）、萃取"双路径产物分发"和"多层降级容错"两个可复用模式 | 2026-08-10 |
 | `insight-onnx-quantization-benchmark-analysis-20260808.md` | ONNX量化基准测试洞察报告（R-I-E链路）：4种模型INT8量化性能分析（MLP最高8.1x加速、小CNN Dynamic量化反降速）、CI分层基准测试集成方案设计、Docker-based CI Benchmark Pattern萃取、onnx-quantized变体依赖检查发现3项遗漏 | 2026-08-08 |
 | `retrospective-agents-atomization-seven-docker-projects-20260807/` | 7个Docker子项目.agents原子化改造全面复盘（R-I-E-A-C）：21个原子规则文件+ID唯一性零冲突+BuildKit兼容性补全；AI上下文Token消耗平均降低60-70%，新增check-rules-id-uniqueness.ps1批量检查脚本，原子提交afa9d346 | 2026-08-07 |
