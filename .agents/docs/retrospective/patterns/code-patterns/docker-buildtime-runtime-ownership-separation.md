@@ -162,6 +162,8 @@ RUN chown -R ai:ai /opt/conda
 
 ## 相关模式
 
+> 📋 **配套检查清单**：[docker-pip-user-ownership-checklist.md](../../../checklists/docker-pip-user-ownership-checklist.md) — 15 项通用检查清单 + 决策速查 + 质量门红线
+
 - [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) — 构建时配置 vs 运行时配置职责分离（外层原则）
 - [dockerfile-python-code-safe-embedding.md](dockerfile-python-code-safe-embedding.md) — Dockerfile 中 Python 代码安全嵌入
 - [docker-buildkit-optimization-best-practices.md](docker-buildkit-optimization-best-practices.md) — BuildKit 缓存挂载与优化
