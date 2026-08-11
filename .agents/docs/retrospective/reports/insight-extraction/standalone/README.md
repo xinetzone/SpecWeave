@@ -15,6 +15,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/ins
 
 | 文件 | 日期 | 主题 | 来源 |
 |------|------|------|------|
+| [insight-python-forkserver-default-20260811.md](insight-python-forkserver-default-20260811.md) | 2026-08-11 | Python 3.14+ Linux multiprocessing默认从fork改为forkserver：七概念深度分析（安全债偿还、架构折中、隐式契约破裂） | seven-concepts-cmd session sc-20260811-python-forkserver-change |
+| [insight-xmnn-docker-build-20260722.md](insight-xmnn-docker-build-20260722.md) | 2026-07-22 | XMNN Docker构建与wheel打包核心洞察 | retrospective-xmnn-wheel-packaging-data-dirs-20260722 |
 | [insight-temp-file-discipline-20260701.md](insight-temp-file-discipline-20260701.md) | 2026-07-01 | 临时文件路径规范执行卡点 | defuddle-web-content-extraction |
 | [insight-tuyaopen-folder-20260630.md](insight-tuyaopen-folder-20260630.md) | 2026-06-30 | TuyaOpen 目录洞察 | external: TuyaOpen SDK 仓库（临时克隆，已清理） |
 | [insight-windows-git-encoding-20260701.md](insight-windows-git-encoding-20260701.md) | 2026-07-01 | Windows Git 非 ASCII 提交信息编码陷阱 | atomic-commit-cmd-execution |
