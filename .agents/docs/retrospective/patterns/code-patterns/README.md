@@ -159,6 +159,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [unit-test-driven-bug-fix-loop.md](unit-test-driven-bug-fix-loop.md) | 单元测试驱动Bug发现与修复闭环（测试即修复）：核心函数写不依赖环境的单测，mock覆盖所有格式变体，发现Bug立即更新mock形成发现→修复→验证闭环+回归防护 | L1 实验性 | 为已有脚本/解析器补单测发现隐藏Bug、构建流水线解析函数测试、CI轻量单测层 |
 | [governance-layer-immediate-establishment.md](governance-layer-immediate-establishment.md) | 功能完成后立即建立治理层（AGENTS.md+.agents/）：同批次建立入口+规则按单一职责原子化拆分+嵌套路由清晰定义加载顺序+父级路由表同步防链断裂 | L1 实验性 | 新增功能模块/子项目/应用交付时治理入口建立、AI智能体按路由装载模块规则、多子模块嵌套治理 |
 | [onnx-pre-quantize-simplification.md](onnx-pre-quantize-simplification.md) | ONNX 量化前简化模式：torch 导出模型先 onnxsim.simplify + checker 再量化，解决 ShapeInferenceError (64)vs(128)，内联冒烟回归防护 | L1 实验性 | torch.onnx.export→onnxruntime 量化流水线、Docker/CI 量化冒烟测试、形状推断冲突排查 |
+| [nuitka-compile-flags-dynamic-injection.md](nuitka-compile-flags-dynamic-injection.md) | Nuitka 编译参数构建期动态注入：宿主CLI → build-arg → ARG/ENV → 编译脚本非引用展开追加，含双向验证与空值安全，一套构建脚本服务多项目 | L1 实验性 | Nuitka/Cython编译参数外部注入、多项目共享构建脚本、构建期可审计编译选项 |
 
 ## Android 模式命名规范
 
