@@ -9,10 +9,12 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（21份）
+## 报告清单（23份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `summary-palmdet-compile-fix-20260812.md` | palmDet 模型编译修复+完整编译过程总结：最终根因修正为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`），校准图被 resize 成 224×3 致 W 维度恒为 1；修复后前向与 ORT 一致、完整编译 6 阶段通过退出码 0；配套 onnx2pytorch Resize/Reshape 猴补丁；纠偏早前洞察报告根因结论；萃取"跨框架模型输入布局核验"模式 | 2026-08-12 |
+| `insight-palmdet-compile-failure-20260812.md` | palmDet 模型编译失败洞察报告（F-V-C-R-I-E链路）：**主因**为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`，工具链按 NCHW 解包致输入尺寸错误、W 维度恒 1）；**辅因**为 onnx2pytorch Resize/Reshape 算子转换缺陷（含 Heisenbug 诊断）；修复为 config NCHW 修正+猴补丁+形状自校验；萃取"跨框架模型输入布局核验""算子转换形状自校验""透明包装验证法"三模式 | 2026-08-12 |
 | `retrospective-chaos-ai-portable-slim-20260811/` | chaos-ai:portable 镜像多阶段构建瘦身复盘（I-F-A-C链路）：删除conda整体chown消除4.6GB复制层，镜像15.6GB→9.59GB（降幅38.5%）；构建期/运行期PIP_USER冲突修复（deps设PIP_USER=0包写入/opt/conda，final恢复=1支持--user）；docker-compose指向portable-slim+docker-cache缓存2.0GB；萃取"构建期/运行期属主分离"与"消除chown复制层"两模式 | 2026-08-11 |
 | `retrospective-xmnn-four-layer-release-pipeline-20260810/` | XMNN四层镜像/产物架构闭环复盘（R-I-E-V-C链路）：补齐L3发布产物层(xmnn-releases)、.dockerignore精确保留bind mount路径、extract-release.sh一键自动提取脚本（5步流程+多级fallback容错）、萃取"双路径产物分发"和"多层降级容错"两个可复用模式 | 2026-08-10 |
 | `insight-onnx-quantization-benchmark-analysis-20260808.md` | ONNX量化基准测试洞察报告（R-I-E链路）：4种模型INT8量化性能分析（MLP最高8.1x加速、小CNN Dynamic量化反降速）、CI分层基准测试集成方案设计、Docker-based CI Benchmark Pattern萃取、onnx-quantized变体依赖检查发现3项遗漏 | 2026-08-08 |
