@@ -14,7 +14,7 @@
 - 项目配置文件（`pyproject.toml`）须通过依赖声明与注释**显式声明排除 onnx2pytorch**。
 
 ## What Changes
-- 新增独立 Python 包 `onnx_adaround/`（位于 `external/chaos/npuusertools/xmnn/` 下，与原 `adaround/` 并列）。
+- 新增独立 Python 包 `onnx_adaround/`（位于 `apps/tests/` 下，由 `onnx-adaround-relocate` 从原 `external/chaos/` 迁移而来）。
 - 实现六大核心模块：模型加载与图改写（ONNX 图级 BN 折叠）、量化算子（numpy/onnxscript 实现 Conv/MatMul/Gemm/ReLU/PReLU/Resize/Reshape）、量化器（UniformAffineQuantizer / AdaRoundQuantizer）、层/块重建（layer/block reconstruction + 温度退火）、可学习 alpha 的自动微分优化引擎、权重融合回 ONNX initializer。
 - 数据管线：校准数据加载（基于 Pillow + numpy，替代 torchvision）。
 - CLI 入口 `run_adaround` 与原 `adaround_onnx_export.py` 的 `run_adaround` 签名/流程一致（`onnx_path`→`final_onnx_path`，6 步流程）。
@@ -24,9 +24,9 @@
 ## Impact
 - Affected specs：`onnx-wiki-tutorial`（ONNX 生态知识背景）、`ort-only-quantize-refactor`（同为去重量级依赖方向）
 - Affected code：
-  - `external/chaos/npuusertools/xmnn/onnx_adaround/`（新增包）
-  - `external/chaos/npuusertools/xmnn/onnx_adaround/pyproject.toml`（新增，声明排除 onnx2pytorch）
-  - `external/chaos/npuusertools/xmnn/onnx_adaround/tests/`（新增测试）
+  - `apps/tests/onnx_adaround/`（新增包）
+  - `apps/tests/onnx_adaround/pyproject.toml`（新增，声明排除 onnx2pytorch）
+  - `apps/tests/onnx_adaround/tests/`（新增测试）
   - `.github/workflows/`（CI，若仓库已配置）
 
 ## ADDED Requirements

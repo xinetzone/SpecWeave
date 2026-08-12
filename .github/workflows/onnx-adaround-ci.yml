@@ -2,7 +2,7 @@
 # =============================================
 # Pure-ONNX AdaRound quantization library (torch-free reimplementation).
 # The `onnx_adaround` package lives as a subdirectory of the monorepo at
-# external/chaos/npuusertools/xmnn/onnx_adaround, so the parent `xmnn` dir
+# apps/tests/onnx_adaround, so the parent `xmnn` dir
 # is added to PYTHONPATH to make `import onnx_adaround` resolve correctly.
 #
 # Trigger rules:
@@ -19,12 +19,12 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "external/chaos/npuusertools/xmnn/onnx_adaround/**"
+      - "apps/tests/onnx_adaround/**"
       - ".github/workflows/onnx-adaround-ci.yml"
   pull_request:
     branches: ["main"]
     paths:
-      - "external/chaos/npuusertools/xmnn/onnx_adaround/**"
+      - "apps/tests/onnx_adaround/**"
       - ".github/workflows/onnx-adaround-ci.yml"
   workflow_dispatch:
 
@@ -41,7 +41,7 @@ defaults:
 
 env:
   # Make `import onnx_adaround` resolve to the package subdirectory.
-  PYTHONPATH: ${{ github.workspace }}/external/chaos/npuusertools/xmnn
+  PYTHONPATH: ${{ github.workspace }}/apps/tests
 
 jobs:
   ci:
@@ -62,28 +62,29 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
-          cache-dependency-path: external/chaos/npuusertools/xmnn/onnx_adaround/pyproject.toml
+          cache-dependency-path: apps/tests/onnx_adaround/pyproject.toml
 
       - name: Install dependencies (torch-free)
-        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        working-directory: apps/tests/onnx_adaround
         run: |
           python -m pip install --upgrade pip
           pip install onnx onnxruntime onnxscript numpy Pillow pytest pytest-cov ruff
 
       - name: Ruff lint
-        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        working-directory: apps/tests/onnx_adaround
         run: python -m ruff check .
 
       - name: Run tests with coverage
-        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        working-directory: apps/tests/onnx_adaround
         run: python -m pytest tests/ --cov=. --cov-report=term-missing
 
       # Task 8 gate 3: the library must remain torch-free. Fails the job if any
-      # source file contains a forbidden torch / torchvision / onnx2pytorch import.
+      # source file contains an actual forbidden import statement. Docstring /
+      # comment mentions of torch / onnx2pytorch are allowed (spec: "注释与文档除外").
       - name: Zero-torch dependency static check
         run: |
-          if grep -rE "import torch|from torch|import torchvision|from torchvision|onnx2pytorch" \
-              external/chaos/npuusertools/xmnn/onnx_adaround/ --include="*.py"; then
+          if grep -rnE '^[[:space:]]*(import[[:space:]]+(torch|torchvision|onnx2pytorch)|from[[:space:]]+(torch|torchvision|onnx2pytorch))' \
+              apps/tests/onnx_adaround/ --include="*.py"; then
             echo "::error::Forbidden torch/torchvision/onnx2pytorch import found in onnx_adaround/"
             exit 1
           fi
