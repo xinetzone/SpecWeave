@@ -1,0 +1,90 @@
+# onnx-adaround CI
+# =============================================
+# Pure-ONNX AdaRound quantization library (torch-free reimplementation).
+# The `onnx_adaround` package lives as a subdirectory of the monorepo at
+# external/chaos/npuusertools/xmnn/onnx_adaround, so the parent `xmnn` dir
+# is added to PYTHONPATH to make `import onnx_adaround` resolve correctly.
+#
+# Trigger rules:
+#   - Push / Pull Request to main: when package code, tests, or CI config change
+#   - Manual dispatch: full CI on demand
+#
+# Task 8 gates:
+#   1. pytest + coverage (fail_under = 80 enforced by pyproject.toml)
+#   2. ruff lint
+#   3. Zero-torch static check (no torch/torchvision/onnx2pytorch imports)
+name: onnx-adaround CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "external/chaos/npuusertools/xmnn/onnx_adaround/**"
+      - ".github/workflows/onnx-adaround-ci.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "external/chaos/npuusertools/xmnn/onnx_adaround/**"
+      - ".github/workflows/onnx-adaround-ci.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: "onnx-adaround-ci-${{ github.ref }}"
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  # Make `import onnx_adaround` resolve to the package subdirectory.
+  PYTHONPATH: ${{ github.workspace }}/external/chaos/npuusertools/xmnn
+
+jobs:
+  ci:
+    name: CI (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: external/chaos/npuusertools/xmnn/onnx_adaround/pyproject.toml
+
+      - name: Install dependencies (torch-free)
+        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        run: |
+          python -m pip install --upgrade pip
+          pip install onnx onnxruntime onnxscript numpy Pillow pytest pytest-cov ruff
+
+      - name: Ruff lint
+        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        run: python -m ruff check .
+
+      - name: Run tests with coverage
+        working-directory: external/chaos/npuusertools/xmnn/onnx_adaround
+        run: python -m pytest tests/ --cov=. --cov-report=term-missing
+
+      # Task 8 gate 3: the library must remain torch-free. Fails the job if any
+      # source file contains a forbidden torch / torchvision / onnx2pytorch import.
+      - name: Zero-torch dependency static check
+        run: |
+          if grep -rE "import torch|from torch|import torchvision|from torchvision|onnx2pytorch" \
+              external/chaos/npuusertools/xmnn/onnx_adaround/ --include="*.py"; then
+            echo "::error::Forbidden torch/torchvision/onnx2pytorch import found in onnx_adaround/"
+            exit 1
+          fi
+          echo "Zero torch dependency check passed"
