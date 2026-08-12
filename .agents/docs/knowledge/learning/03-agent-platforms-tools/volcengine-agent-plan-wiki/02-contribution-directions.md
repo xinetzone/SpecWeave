@@ -71,8 +71,8 @@ flowchart LR
     SEARCH --> IMG_PROMPT["📝 生图Prompt工程"]
     IMG_PROMPT --> IMG_GEN["🖼️ 生图模型<br/>素材生成"]
     IMG_GEN --> IMG_FEEDBACK{"🔄 素材满意？"}
-    IMG_FEEDBACK|"否"| IMG_PROMPT
-    IMG_FEEDBACK|"是"| VID_GEN["🎬 生视频模型<br/>视频合成"]
+    IMG_FEEDBACK -->|"否"| IMG_PROMPT
+    IMG_FEEDBACK -->|"是"| VID_GEN["🎬 生视频模型<br/>视频合成"]
     VID_GEN --> LLM_FINAL["📝 语言模型<br/>文案+字幕"]
     LLM_FINAL --> DONE["✅ 成品交付"]
     classDef start fill:#5C7CFA,stroke:#364FC7,color:#fff
@@ -207,14 +207,14 @@ flowchart LR
 ### 示例想法
 
 - 《我尝试让AI自己写代码自己部署，结果服务器被玩坏了……》
->
-> **实验想法**：用Agent Plan给AI完整的服务器权限，看它能不能自己部署一个服务
->
-> **实验过程**：......
->
-> **实验结果**：......
->
-> **经验总结**：......
+
+  > **实验想法**：用Agent Plan给AI完整的服务器权限，看它能不能自己部署一个服务
+  >
+  > **实验过程**：......
+  >
+  > **实验结果**：......
+  >
+  > **经验总结**：......
 - 《用生图模型生成UI设计稿，再让编程模型直接转代码——效果如何？》
 - 《让5个AI模型互相评审代码，结果会比单个模型更好吗？》
 - 《一个失败的实验：我尝试做全自动股票交易Agent，结果……》

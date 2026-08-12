@@ -22,9 +22,9 @@ flowchart LR
     SUB --> PRACTICE["🔨 动手实践<br/>用Agent Plan做项目/做测评/写代码"]
     PRACTICE --> SHARE["💬 在群内发布<br/>带上#AgentPlan共创标签"]
     SHARE --> REVIEW{"📋 每周评审"}
-    REVIEW|"优质内容"| REWARD["🎁 Small套餐奖励"]
-    REVIEW|"超优质内容"| REWARD2["🎁 Medium套餐奖励<br/>+ Cookbook收录"]
-    REVIEW|"继续努力"| PRACTICE
+    REVIEW -->|"优质内容"| REWARD["🎁 Small套餐奖励"]
+    REVIEW -->|"超优质内容"| REWARD2["🎁 Medium套餐奖励<br/>+ Cookbook收录"]
+    REVIEW -->|"继续努力"| PRACTICE
     REWARD & REWARD2 --> DONE["✅ 社群公示"]
     classDef start fill:#5C7CFA,stroke:#364FC7,color:#fff
     classDef process fill:#74C0FC,stroke:#1971C2,color:#fff

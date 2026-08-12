@@ -92,6 +92,7 @@ flowchart TD
 | 05 | [05-quickstart-resources.md](05-quickstart-resources.md) | 快速开始与资源：订阅链接、控制台入口、官方文档合集 |
 | 06 | [06-crossmodal-paradigm.md](06-crossmodal-paradigm.md) | 跨模态范式洞察：单模态到跨模态的演进、跨模态协同链路、与Harness方法论关联 |
 | 07 | [07-faq.md](07-faq.md) | 常见问题FAQ：参与门槛、内容形式、评审标准、套餐奖励等10个问题 |
+| 08 | [08-practice-cases.md](08-practice-cases.md) | 实践指南与项目案例：Agent Plan精确定义（Agent Model+Harness用量、Seedance/Seedream）、三步上手路径、CookBook案例库导航 |
 
 ## 征集方向总览
 
@@ -111,6 +112,11 @@ flowchart TD
 | **方舟（Ark）** | 火山引擎大模型服务平台，提供模型推理、Agent开发等能力 |
 | **Doubao-Seed-Evolving** | 方舟持续迭代的主力模型系列，欢迎开发者持续测评 |
 | **Cookbook** | 方舟开发者实践食谱，收录优质开发者实践内容 |
+| **Seedance** | 字节SOTA级多模态模型（据通用认知为生视频方向），具体以控制台为准 |
+| **Seedream** | 字节SOTA级多模态模型（据通用认知为生图方向），具体以控制台为准 |
+| **Agent Model** | Agent开发所需的模型调用用量（编程/语言/多模态生成/向量化） |
+| **Agent Harness** | Agent工程底座所需用量（联网搜索、工具调用等） |
+| **AFP** | Agent Plan用量单位，用于估算项目资源成本（如短视频网站约15000 AFP） |
 | **跨模态协同** | 语言模型规划+生图出素材+生视频成片的多模型协作模式 |
 | **Harness** | AI Agent业务运行底座，组织模型、工具、知识、记忆等组件的工程框架 |
 | **#AgentPlan共创** | 参与共创计划的指定社群标签 |
