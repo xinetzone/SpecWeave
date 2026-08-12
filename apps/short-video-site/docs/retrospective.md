@@ -88,11 +88,11 @@ tags: [短视频, AI开发, Agent Plan, Seedream, Seedance, 全栈]
 
 ## 六、原子行动项
 
-1. **补充美食视频素材**：在下一轮对话中调用 GenerateVideo 生成美食主题视频
-2. **补充美妆视频素材**：在后续轮次调用 GenerateVideo 生成美妆护肤主题视频
-3. **视频数据外置**：将 `js/app.js` 中的视频数据抽取为 `assets/data/videos.json`
-4. **添加视频预览静音播放**：鼠标悬停在视频卡片上时自动静音预览
-5. **更新 apps/AGENTS.md 路由表**：将 short-video-site 添加到应用路由表
+1. ✅ **补充美食视频素材**：已通过 Seedance 生成 `food.mp4`（2.61 MB），提交于 `75ae13cc`
+2. ✅ **补充美妆视频素材**：已通过 Seedance 生成 `beauty.mp4`（2.15 MB），提交于 `150fa24b`
+3. ✅ **视频数据外置**：已将视频数据抽取为 `assets/data/videos.json`，`app.js` 改为 fetch 异步加载
+4. ✅ **添加视频预览静音播放**：鼠标悬停 400ms 后自动静音预览，移出时暂停并重置
+5. ✅ **更新 apps/AGENTS.md 路由表**：已将 short-video-site 添加到应用路由表
 
 ## 七、经验总结
 
