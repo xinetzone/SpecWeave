@@ -292,6 +292,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|---|---|
 | `retrospective-alipay-aipay-windows-install-20260723.md` | 支付宝AI Pay Skill Windows安装任务复盘（R→I→E→Export）：alipay-cli跨平台兼容性断裂/Agent沙箱网络限制/多组件安装分层验证3条核心洞察，萃取Windows环境Unix-only CLI安装处理/沙箱联网命令预授权/多组件安装状态分层验证3个L1可复用模式，G1-G3质量门全部通过 | 2026-07-23 | task |
 | `retrospective-caffe-ffi-conv-v4-milestone-20260805.md` | Conv v4 OpenMP并行优化里程碑复盘（R→I→V→E→C）：Conv层沿M维度分块并行优化、CPU推理OpenMP双层并行隔离配置模式、16种OMP抖动诊断组合，3条核心洞察+1个L1可复用模式，G1-G4质量门全部通过 | 2026-08-05 | task |
+| `retrospective-xmnn-container-health-fix-20260812.md` | xmnn 容器 unhealthy 误报诊断与修复复盘（F→V→C→R→I→E）：健康探针与部署形态错配导致 4 容器系统性误报，注入 ENABLE_SSH=no/ENABLE_DOCKER=no 修复，萃取探针-部署模式对齐模式，3条核心洞察+1个可复用模式，G1-G4质量门全部通过 | 2026-08-12 | task |
 | `retrospective-pickle-sedimentation-20260723/` | Pickle序列化知识沉淀R→I→E链路复盘：方法论编排场景4知识沉淀，3份源材料→2个新文档（源码层修复模式+诊断SOP）+2个索引更新，形成四位一体知识闭环，G1-G4质量门全部通过 | 2026-07-23 | task |
 | `retrospective-sidebar-ui-beautification-20260714.md` | 竹简悟道右侧侧边栏UI美化七概念复盘（R→I→F→E→C）：Tailwind v4动态className检测盲区根因分析、内联样式保底模式/CSS渲染诊断五步/书斋清供侧边栏设计参数3个可复用模式萃取，frontend-design Skill视觉闭环验证 | 2026-07-14 | task |
 | `retrospective-mermaid-funnel-redesign-pdf-export-20260711/` | Mermaid五品漏斗图重绘与PDF导出任务复盘：修正"工艺品→公益品"笔误、重绘五品漏斗Mermaid图（5层信任分层+直线连接+渐变色系）、开发并完善三段式PDF导出脚本（Pandoc+Mermaid.js+Playwright），萃取"三段式中文PDF导出法"L1可复用模式 | 2026-07-11 | task |
@@ -546,6 +547,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-07-23 | `retrospective-alipay-aipay-windows-install-20260723.md` | task-reports |
 | 2026-07-23 | `retrospective-pickle-sedimentation-20260723/` | task-reports |
 | 2026-08-05 | `retrospective-caffe-ffi-conv-v4-milestone-20260805.md` | task-reports |
+| 2026-08-12 | `retrospective-xmnn-container-health-fix-20260812.md` | task-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -561,7 +563,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
-| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析、README自动生成、标记区域、增量更新、文档覆盖、索引更新、docgen、caffe-ffi、OpenMP、Conv v4、并行优化、双层并行隔离、OMP抖动诊断、CV%、P99/P50、自适应线程数、环境变量自检 | `task-reports/` | 全部 21 份报告 |
+| 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析、README自动生成、标记区域、增量更新、文档覆盖、索引更新、docgen、caffe-ffi、OpenMP、Conv v4、并行优化、双层并行隔离、OMP抖动诊断、CV%、P99/P50、自适应线程数、环境变量自检、容器健康、unhealthy、健康探针、ENABLE_SSH、ENABLE_DOCKER、探针-部署模式对齐、supervisorctl | `task-reports/` | 全部 22 份报告 |
 
 ### 4.3 按报告类型查找
 
