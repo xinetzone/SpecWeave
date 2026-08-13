@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（23份）
+## 报告清单（24份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-ai-dev-variant-bugfix-logging-20260813/` | ai-dev变体Bug修复与Stage 2日志增强里程碑复盘（R-I-E-V-C链路）：修复T4(JupyterLab版本提取head→tail)和T25(Go模板`.`语法)两个测试失败；`|||`多字符命令分隔符替换`;`解决Python -c内部分号冲突；新增pip_install_group()函数实现14组pip分组安装+每组pip check冲突检测+失败诊断；萃取"安全命令列表分隔符"(L2)和"Docker pip分组安装可观测性"(L1)两个模式 | 2026-08-13 |
 | `summary-palmdet-compile-fix-20260812.md` | palmDet 模型编译修复+完整编译过程总结：最终根因修正为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`），校准图被 resize 成 224×3 致 W 维度恒为 1；修复后前向与 ORT 一致、完整编译 6 阶段通过退出码 0；配套 onnx2pytorch Resize/Reshape 猴补丁；纠偏早前洞察报告根因结论；萃取"跨框架模型输入布局核验"模式 | 2026-08-12 |
 | `insight-palmdet-compile-failure-20260812.md` | palmDet 模型编译失败洞察报告（F-V-C-R-I-E链路）：**主因**为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`，工具链按 NCHW 解包致输入尺寸错误、W 维度恒 1）；**辅因**为 onnx2pytorch Resize/Reshape 算子转换缺陷（含 Heisenbug 诊断）；修复为 config NCHW 修正+猴补丁+形状自校验；萃取"跨框架模型输入布局核验""算子转换形状自校验""透明包装验证法"三模式 | 2026-08-12 |
 | `retrospective-chaos-ai-portable-slim-20260811/` | chaos-ai:portable 镜像多阶段构建瘦身复盘（I-F-A-C链路）：删除conda整体chown消除4.6GB复制层，镜像15.6GB→9.59GB（降幅38.5%）；构建期/运行期PIP_USER冲突修复（deps设PIP_USER=0包写入/opt/conda，final恢复=1支持--user）；docker-compose指向portable-slim+docker-cache缓存2.0GB；萃取"构建期/运行期属主分离"与"消除chown复制层"两模式 | 2026-08-11 |
@@ -60,7 +61,8 @@ type: "index"
 - Runtime PyTorch可选化
 - pyproject.toml依赖审计
 
-### Docker 基础镜像系列（3份）
+### Docker 基础镜像系列（4份）
+- ai-dev变体Bug修复与Stage 2日志增强（R-I-E-V-C链路，2个Bug修复+14组pip分组可观测性+2个模式萃取）
 - 7个Docker子项目.agents原子化改造（R-I-E-A-C链路，21个规则文件零冲突，Token消耗降低60-70%）
 - devcontainer-base 全功能开发容器构建验证（DinD无冲突配置+Compose变量覆盖+构建验证三段式模式）
 - jupyter-ssh-base 七概念方法论全面复盘（R-I-E-V链路，3个洞察，1个L2模式更新+2个L1新模式）
