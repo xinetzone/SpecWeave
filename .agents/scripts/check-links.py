@@ -290,7 +290,12 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, str, str]:
     if clean_url.startswith("file:///"):
         from urllib.parse import urlparse, unquote
         parsed = urlparse(clean_url)
-        target = Path(unquote(parsed.path.lstrip("/")))
+        p = unquote(parsed.path)
+        # Windows 盘符形式 file:///D:/... → /D:/... → D:/...
+        # POSIX 绝对路径 file:///media/... → /media/...（保留根斜杠，勿 lstrip 全部斜杠）
+        if len(p) >= 3 and p[0] == "/" and p[2] == ":":
+            p = p[1:]
+        target = Path(p)
     else:
         target = (base_dir / clean_url).resolve()
 
