@@ -13,6 +13,8 @@ Hermes Agent 的 SpecWeave 工作区规范集成插件。本目录是该插件�
 | `hermes specweave` | CLI 子命令 | `status` / `route` |
 | `specweave:protocol` | read-only skill | 启动协议 / 上下文路由 / 内容敏感度参考 |
 
+> 使用者接入说明见 [ACCESS.md](ACCESS.md)。
+
 ## 目录结构
 
 ```
