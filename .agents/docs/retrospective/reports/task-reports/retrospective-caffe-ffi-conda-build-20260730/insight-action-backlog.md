@@ -49,9 +49,9 @@ ssot:
   4. ✅ Step 8a0 路径验证门禁：`__file__`必须包含`site-packages/caffe_ffi`，否则直接fail
   5. ✅ 在有editable残留的环境中运行脚本，验证能正确通过（首次运行清理所有残留，二次运行环境已干净）
 - **涉及文件**：
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L20-L34)（clean_editable_files函数，两次调用）
-  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L29-L70)（clean_editable_residuals函数，Step 1b+7a）
-  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L294-L302)（Step 8a0 路径验证门禁）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L20-L34)（clean_editable_files函数，两次调用）
+  - [scripts/test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L29-L70)（clean_editable_residuals函数，Step 1b+7a）
+  - [scripts/test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L294-L302)（Step 8a0 路径验证门禁）
 
 ---
 
@@ -69,7 +69,7 @@ ssot:
   1. `missing_dso_whitelist` 段上方有块注释说明用途（全相对RPATH不需要prefix replacement、vendored库由patchelf处理）
   2. 为每个白名单条目添加行内注释说明原因（libtvm_ffi是本地编译bundled、libopenblas/libprotobuf是conda依赖由RPATH解析）
 - **涉及文件**：
-  - [conda.recipe/meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14-L18)
+  - [conda.recipe/meta.yaml](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml#L14-L18)
 - **实施步骤**：
   1. 在 `missing_dso_whitelist:` 上方添加块注释：
      ```yaml
@@ -104,8 +104,8 @@ ssot:
   4. ✅ ldd检查所有依赖解析，无not found
   5. ✅ 注释明确说明禁止使用绝对路径的原因
 - **涉及文件**：
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L169-L190)（RPATH配置，含禁止绝对路径注释）
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L285-L315)（patchelf设置两个.so的RPATH）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L169-L190)（RPATH配置，含禁止绝对路径注释）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L285-L315)（patchelf设置两个.so的RPATH）
 - **关键发现**：
   - RPATH层级计算：从.so所在目录到PREFIX/lib需要的`..`个数
   - _caffe_ffi.so在`caffe_ffi/`：caffe_ffi/ → site-packages/ → python3.14/ → lib/ = 3级`..`
@@ -124,8 +124,8 @@ ssot:
   3. ✅ 本地源码编译tvm-ffi优先，SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13绕过git describe问题
   4. ✅ 构建前清理tvm-ffi in-tree构建残留，确保全新编译
 - **涉及文件**：
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L136-L145)（tvm-ffi安装后符号验证）
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L277-L283)（RPATH设置后再次符号验证）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L136-L145)（tvm-ffi安装后符号验证）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L277-L283)（RPATH设置后再次符号验证）
 - **关键教训**：pip安装的apache-tvm-ffi 0.1.12 wheel缺少TVMFFIGetCustomAllocator符号，导致运行时失败；必须本地源码编译+符号验证
 
 ### ACT-007：嵌套构建时CMAKE_ARGS/SKBUILD_CMAKE_ARGS参数隔离 ✅ 已完成
@@ -141,8 +141,8 @@ ssot:
   3. ✅ tvm-ffi构建完成后恢复原始CMAKE_ARGS和SKBUILD_CMAKE_ARGS
   4. ✅ caffe-ffi构建前同样隔离CMAKE_ARGS，设置独立的SKBUILD_CMAKE_ARGS
 - **涉及文件**：
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L87-L119)（tvm-ffi构建参数隔离+恢复）
-  - [conda.recipe/build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L175-L235)（caffe-ffi构建参数隔离+恢复）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L87-L119)（tvm-ffi构建参数隔离+恢复）
+  - [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh#L175-L235)（caffe-ffi构建参数隔离+恢复）
 
 ### ACT-008：验证脚本集成Python单元测试步骤 ✅ 已完成
 
@@ -157,7 +157,7 @@ ssot:
   3. ✅ 测试失败时直接fail，不继续
   4. ✅ 测试文件路径：tests/python/test_python_api.py
 - **涉及文件**：
-  - [scripts/test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L398-L418)（Step 8d 单元测试）
+  - [scripts/test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh#L398-L418)（Step 8d 单元测试）
 - **关键发现**：C++层`backtrace_symbols()`在pytest环境处理Python栈帧会崩溃，必须默认禁用
 
 ### ACT-005：将洞察/模式萃取为正式模式文档存入patterns/ ✅ 已完成
@@ -168,18 +168,18 @@ ssot:
 - **预期收益**：其他使用 conda-build + scikit-build-core 的项目可直接参考模式，避免重复踩坑
 - **状态**：✅ **已完成**（2026-07-30，v1.1）
 - **验收标准（DoD）**：
-  1. ✅ 创建模式文档 [conda-build-scikit-build-core-native.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-build-scikit-build-core-native.md)（升级版L3）
+  1. ✅ 创建模式文档 [conda-build-scikit-build-core-native.md](../../../patterns/code-patterns/conda-build-scikit-build-core-native.md)（升级版L3）
      - 位置：`.agents/docs/retrospective/patterns/code-patterns/`（归类为code-patterns，因包含大量具体代码模板）
      - 包含：触发场景、五层陷阱分析、conda-build三段式依赖表、六步法完整流程、build.sh/meta.yaml代码模板、RPATH深度计算公式、符号验证标准、6个反模式、12项检验标准、完整test脚本模板、迁移示例
-  2. ✅ 创建模式文档 [conda-package-clean-verification.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-package-clean-verification.md)（升级版L3）
+  2. ✅ 创建模式文档 [conda-package-clean-verification.md](../../../patterns/code-patterns/conda-package-clean-verification.md)（升级版L3）
      - 位置：`.agents/docs/retrospective/patterns/code-patterns/`
      - 包含：触发场景、四类假成功陷阱、PEP 660 editable四件套残留分析、五维验证法、editable清理函数、路径验证门禁、ldd+nm双重依赖检查、backtrace环境配置、全量单元测试规范、6个反模式、10项检验标准、快速验证命令清单、迁移示例
   3. ✅ 更新 patterns/code-patterns/README.md 索引，添加两个新L3模式条目
   4. ✅ 两个模式均标注成熟度 L3 方法论，包含完整反模式清单和检验标准
 - **涉及文件**：
-  - [conda-build-scikit-build-core-native.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-build-scikit-build-core-native.md)（新建，L3，501行）
-  - [conda-package-clean-verification.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-package-clean-verification.md)（新建，L3，507行）
-  - [code-patterns/README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/README.md#L86-L87)（更新索引，新增2行）
+  - [conda-build-scikit-build-core-native.md](../../../patterns/code-patterns/conda-build-scikit-build-core-native.md)（新建，L3，501行）
+  - [conda-package-clean-verification.md](../../../patterns/code-patterns/conda-package-clean-verification.md)（新建，L3，507行）
+  - [code-patterns/README.md](../../../patterns/code-patterns/README.md#L86-L87)（更新索引，新增2行）
 
 ---
 
@@ -225,9 +225,9 @@ ssot:
   - docker compose profile：`docker compose --profile macos run --rm macos-cross`
 - **前置依赖**：ACT-003b RPATH设计已稳定
 - **涉及文件**：
-  - [build.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)：跨平台适配（平台检测+工具函数+RPATH前缀+依赖修复）
-  - [meta.yaml](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)：macOS/Windows条件依赖、交叉编译配置、DSO白名单
-  - [test-conda-build.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh)：跨平台适配（平台检测+Bootstrap自适应+otool/nm/llvm-objdump封装+符号验证）
+  - [build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)：跨平台适配（平台检测+工具函数+RPATH前缀+依赖修复）
+  - [meta.yaml](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)：macOS/Windows条件依赖、交叉编译配置、DSO白名单
+  - [test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh)：跨平台适配（平台检测+Bootstrap自适应+otool/nm/llvm-objdump封装+符号验证）
   - apps/caffe-ffi-cross/：Docker交叉编译方案（Dockerfile、docker-compose.yml、run.sh、交叉编译recipe）
 
 ---

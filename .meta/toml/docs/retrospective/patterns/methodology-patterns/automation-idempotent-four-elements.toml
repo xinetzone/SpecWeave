@@ -1,0 +1,5 @@
+id = "bp-automation-idempotent-four-elements"
+title = "自动化幂等四要素"
+category = "retrospective/patterns/methodology-patterns"
+date = "2026-08-12"
+version = "1.0"

@@ -15,6 +15,7 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 成熟度 | 标签 |
 |------|------|--------|------|
+| [裸URL自动链接包裹（Bare URL Autolink Wrap）](bare-url-autolink-wrap.md) | Markdown 中 URL 的表达形式由渲染意图驱动：正文行内可点击 URL 用 `<url>` 自动链接包裹，而 frontmatter 元数据、代码块、反引号、含占位符的 URL 模板一律保持原样；先分类→只改目标类→全量复核，避免无脑全局替换破坏非正文内容 | L1 | `markdown` `url` `autolink` `文档格式` `批量修改` |
 | [原子化+速查手册双层架构](atomization-quick-reference-dual-layer.md) | 原子化拆分到单职责文件（粒度层），同时创建quick-reference速查手册（认知层），两层通过链接互联；同主题文件≥5个时必须创建 | L1 | `document-architecture` `atomization` `quick-reference` `cognitive-load` `u-curve` |
 | [原子化三标准检验（Atomization Three-Criteria Test）](atomization-three-criteria-test.md) | 原子化三标准检验（Atomization Three-Criteria Test） | L1 |  |
 | [原子化三级分类策略（Atomization Three-Tier Classification）](atomization-three-tier-classification.md) | 原子化三级分类策略（Atomization Three-Tier Classification） | L1 |  |

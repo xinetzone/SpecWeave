@@ -215,8 +215,8 @@ maturity: "L2"
 
 ### 7.3 相关链接
 
-- [Docker模板骨架目录](../../../templates/docker-snippets/skeleton/)
+- [Docker模板骨架目录](../../../../templates/docker-snippets/skeleton/CONFIG.md)
 - [Dockerfile Python代码嵌入模式](../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md)
 - [容器验证脚本权限模型](../../patterns/process-patterns/container-verify-script-permission-model.md)
 - [模板占位符粒度设计](../../patterns/methodology-patterns/governance-strategy/template-placeholder-granularity-design.md)
-- [XMNN Runtime 项目](../../../../apps/xmnn-runtime/)
+- [XMNN Runtime 项目](../../../../../apps/xmnn-runtime/docker/Dockerfile)

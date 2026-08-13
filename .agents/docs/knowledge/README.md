@@ -2,28 +2,31 @@
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：796
-- **分类数**：60
-- **标签数**：1574
+- **总条目数**：1138
+- **分类数**：63
+- **标签数**：2243
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
 | architecture | 1 | [architecture](category-index.md#architecture) |
-| best-practices | 23 | [best-practices](best-practices/README.md) |
-| decisions | 1 | [decisions](decisions/README.md) |
+| best-practices | 43 | [best-practices](best-practices/README.md) |
+| case-study | 5 | [case-study](category-index.md#case-study) |
+| decisions | 5 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](category-index.md#docs) |
 | examples | 6 | [examples](category-index.md#examples) |
-| knowledge | 352 | [knowledge](category-index.md#knowledge) |
-| learning | 234 | [learning](learning/README.md) |
-| operations | 11 | [operations](operations/README.md) |
+| knowledge | 357 | [knowledge](category-index.md#knowledge) |
+| learning | 422 | [learning](learning/README.md) |
+| methods | 6 | [methods](category-index.md#methods) |
+| operations | 19 | [operations](operations/README.md) |
+| platform | 1 | [platform](category-index.md#platform) |
 | reference | 3 | [reference](category-index.md#reference) |
 | research | 1 | [research](category-index.md#research) |
 | standards | 1 | [standards](category-index.md#standards) |
-| tech | 14 | [tech](tech/README.md) |
+| tech | 29 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 146 | [unknown](category-index.md#unknown) |
+| unknown | 225 | [unknown](category-index.md#unknown) |
 
 ## 辅助索引
 
@@ -34,23 +37,22 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| **[火山引擎 AgentKit 企业级 AI Agent 平台 Wiki 教程](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md)** | **2026-07-31** | **learning** |
-| [conda-forge 交叉编译配置完整指南](best-practices/conda-forge-cross-compilation-guide.md) | 2026-07-30 | best-practices |
-| [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) | 2026-07-29 | best-practices |
-| [TVM FFI 教程总览](tech/tvm-ffi-wiki/00-overview.md) | 2026-07-28 | tech |
-| [项目结构说明](tech/tvm-ffi-wiki/01-project-structure.md) | 2026-07-28 | tech |
-| [Any/AnyView 类型系统](tech/tvm-ffi-wiki/02-any-type.md) | 2026-07-28 | tech |
-| [Object 对象系统](tech/tvm-ffi-wiki/03-object-system.md) | 2026-07-28 | tech |
-| [Function 函数与全局注册表](tech/tvm-ffi-wiki/04-function-registry.md) | 2026-07-28 | tech |
-| [Container 容器类型](tech/tvm-ffi-wiki/05-containers.md) | 2026-07-28 | tech |
-| [Reflection 反射系统](tech/tvm-ffi-wiki/06-reflection.md) | 2026-07-28 | tech |
-| [Module 模块系统](tech/tvm-ffi-wiki/07-module-system.md) | 2026-07-28 | tech |
-| [Rainman Translate Book Wiki 教程](learning/03-agent-platforms-tools/rainman-translate-book-wiki.md) | 2026-07-04 | learning |
+| [异步生成接口'两段式'轮询模式](best-practices/api-async-polling-pattern.md) | 2026-08-07 | best-practices |
+| [API 错误处理与重试策略](best-practices/api-error-handling-retry-strategy.md) | 2026-08-07 | best-practices |
+| [API 集成模式组合实战示例：AI 播客自动生成](best-practices/api-integration-worked-example.md) | 2026-08-07 | best-practices |
+| [AskUserQuestion 分步交互式收集参数模式](best-practices/api-interactive-parameter-collection.md) | 2026-08-07 | best-practices |
+| [用 @file 传长文本请求体](best-practices/api-long-text-file-parameter.md) | 2026-08-07 | best-practices |
+| [硬编码路径批量修复工具使用指南（fix-hardcoded-paths.py）](best-practices/fix-hardcoded-paths-guide.md) | 2026-08-07 | best-practices |
+| [模型调用环境变量脱敏模板（.env 字段清单）](best-practices/model-env-template.md) | 2026-08-07 | best-practices |
+| [GLM 大模型调用可复用示例（本地加载 + API 调用）](tech/glm-model-call-example.md) | 2026-08-07 | tech |
+| [ListenHub API 规范——Authentication（认证与基础 URL）](tech/listenhub-api-authentication.md) | 2026-08-07 | tech |
+| [ListenHub API 规范——Image Generation（AI 图片生成）](tech/listenhub-api-image.md) | 2026-08-07 | tech |
 
 ## 相关资源
 
 ### 回溯报告
 
+- [GitHub Spec Kit 文章知识沉淀七概念方法论编排](../retrospective/2026-07-06-github-speckit-sdd-seven-concepts.md)
 - [七概念方法论体系整合任务复盘](../retrospective/2026-07-10-seven-concepts-methodology-integration.md)
 - [元方法论自举验证复盘——seven-concepts-trigger CLI工具](../retrospective/2026-07-11-meta-bootstrap-seven-concepts-trigger.md)
 - [原子写入重构性能对比报告](../retrospective/2026-07-12-atomic-write-refactoring.md)
@@ -61,6 +63,8 @@
 - [竹简悟道·秒悟竞赛冲刺复盘报告——Trae Solo+七概念方法论实战](../retrospective/2026-07-14-meoo-contest-sprint-retro.md)
 - [SpecWeave / external/xmhub/npu_tvm 七概念正式复盘报告](../retrospective/2026-07-17-npu-tvm-seven-concepts-retro.md)
 - [Windows磁盘空间诊断与WSL虚拟磁盘优化实践复盘](../retrospective/2026-07-22-windows-disk-cleanup-wsl-optimization.md)
+- [caffe-ffi Backward日志规划与性能监控规范里程碑复盘](../retrospective/2026-07-31-caffe-ffi-backward-logging-milestone-retro.md)
+- [Anime.js 4.5+Three.js适配器学习分析任务七概念复盘报告](../retrospective/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
 - [项目硬编码问题系统性复盘报告](../retrospective/hardcode-retrospective-report.md)
 - [元方法论自举执行日志](../retrospective/meta-bootstrap-execution-log.md)
 - [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/prompt-extraction.md)
@@ -101,4 +105,4 @@
 
 ---
 
-*索引自动生成于 2026-07-30 17:21:03*
+*索引自动生成于 2026-08-07 15:46:04*

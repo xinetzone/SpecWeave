@@ -51,10 +51,10 @@ tags: [cmd-log, ci, compliance, automation, retrospective]
 
 | 文件 | 类型 | 行数 | 说明 |
 |------|------|------|------|
-| [check-cmd-log-compliance.py](../../../../scripts/check-cmd-log-compliance.py) | 新增 | 281行 | CMD-LOG合规检查器核心脚本 |
-| [fix-cmd-log-compliance.py](../../../../scripts/fix-cmd-log-compliance.py) | 新增 | 220行 | 批量自动修复脚本（dry-run/apply/verify三模式） |
-| [ci-check.ps1](../../../../scripts/ci-check.ps1) | 修改 | +12行 | Windows CI添加步骤19 |
-| [ci-check.sh](../../../../scripts/ci-check.sh) | 修改 | +11行 | Linux/Mac CI添加步骤19 |
+| [check-cmd-log-compliance.py](../../../../../scripts/check-cmd-log-compliance.py) | 新增 | 281行 | CMD-LOG合规检查器核心脚本 |
+| [fix-cmd-log-compliance.py](../../../../../scripts/fix-cmd-log-compliance.py) | 新增 | 220行 | 批量自动修复脚本（dry-run/apply/verify三模式） |
+| [ci-check.ps1](../../../../../scripts/ci-check.ps1) | 修改 | +12行 | Windows CI添加步骤19 |
+| [ci-check.sh](../../../../../scripts/ci-check.sh) | 修改 | +11行 | Linux/Mac CI添加步骤19 |
 | 7个SKILL.md | 修改 | +各2行 | 插入铁律一blockquote警告 |
 | 2个历史复盘文档 | 修改 | +各3行 | 补全CMD_START/COMPLETE首尾闭环 |
 | [cmd-log-compliance-todo.md](../../../../../../playground/cmd-log-compliance-todo.md) | 新增 | ~100行 | 待办清单（全部项已标记完成） |
@@ -67,13 +67,13 @@ tags: [cmd-log, ci, compliance, automation, retrospective]
 
 | ID | 文件 | 修复前 | 修复后 |
 |----|------|--------|--------|
-| **A1** | [retrospective-cmd/SKILL.md](../../../../skills/retrospective-cmd/SKILL.md#L114-L118) | §7仅说"必须按CMD-LOG规范输出结构化日志"，未提铁律一关键词 | 插入blockquote：⚠️ **铁律一（🔴强制）**：S0 CMD_START必须是第一条输出... |
-| **A2** | [insight-cmd/SKILL.md](../../../../skills/insight-cmd/SKILL.md) | 同上 | 同上 |
-| **A3** | [export-report-cmd/SKILL.md](../../../../skills/export-report-cmd/SKILL.md) | 同上 | 同上 |
-| **A4** | [atomization-cmd/SKILL.md](../../../../skills/atomization-cmd/SKILL.md) | 同上 | 同上 |
-| **A5** | [atomic-commit-cmd/SKILL.md](../../../../skills/atomic-commit-cmd/SKILL.md) | §4后已有CMD_START要求，但未出现"铁律一"关键词 | 补充"铁律一（🔴强制）"标注 |
-| **A6** | [mermaid-cmd/SKILL.md](../../../../skills/mermaid-cmd/SKILL.md) | §8仅说"遵循项目CMD-LOG规范"，未提铁律一关键词 | 插入铁律一blockquote |
-| **A7** | [pattern-extraction-cmd/SKILL.md](../../../../skills/pattern-extraction-cmd/SKILL.md) + [04-cmd-log-quality.md](../../../../skills/pattern-extraction-cmd/SKILL/04-cmd-log-quality.md) | 主入口无CMD-LOG说明，L2子文档缺少铁律关键词 | 主入口新增铁律引用行，L2插入blockquote |
+| **A1** | [retrospective-cmd/SKILL.md](../../../../../skills/retrospective-cmd/SKILL.md#L114-L118) | §7仅说"必须按CMD-LOG规范输出结构化日志"，未提铁律一关键词 | 插入blockquote：⚠️ **铁律一（🔴强制）**：S0 CMD_START必须是第一条输出... |
+| **A2** | [insight-cmd/SKILL.md](../../../../../skills/insight-cmd/SKILL.md) | 同上 | 同上 |
+| **A3** | [export-report-cmd/SKILL.md](../../../../../skills/export-report-cmd/SKILL.md) | 同上 | 同上 |
+| **A4** | [atomization-cmd/SKILL.md](../../../../../skills/atomization-cmd/SKILL.md) | 同上 | 同上 |
+| **A5** | [atomic-commit-cmd/SKILL.md](../../../../../skills/atomic-commit-cmd/SKILL.md) | §4后已有CMD_START要求，但未出现"铁律一"关键词 | 补充"铁律一（🔴强制）"标注 |
+| **A6** | [mermaid-cmd/SKILL.md](../../../../../skills/mermaid-cmd/SKILL.md) | §8仅说"遵循项目CMD-LOG规范"，未提铁律一关键词 | 插入铁律一blockquote |
+| **A7** | [pattern-extraction-cmd/SKILL.md](../../../../../skills/pattern-extraction-cmd/SKILL.md) + [04-cmd-log-quality.md](../../../../../skills/pattern-extraction-cmd/SKILL/04-cmd-log-quality.md) | 主入口无CMD-LOG说明，L2子文档缺少铁律关键词 | 主入口新增铁律引用行，L2插入blockquote |
 
 **修复代码示例**（A类统一插入的blockquote）：
 
@@ -89,9 +89,9 @@ tags: [cmd-log, ci, compliance, automation, retrospective]
 
 | ID | 文件 | 修复前 | 修复后 |
 |----|------|--------|--------|
-| **B1a** | [retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md](../../../task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md) | 第36行：首条日志是KEY_FINDING而非CMD_START（违反铁律一） | 首行前插入CMD_START(S0)日志行 |
+| **B1a** | [retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md](../retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md) | 第36行：首条日志是KEY_FINDING而非CMD_START（违反铁律一） | 首行前插入CMD_START(S0)日志行 |
 | **B1b** | 同上 | 第180行：末条日志是KEY_FINDING而非CMD_COMPLETE（违反铁律四，链路未闭环） | 末尾追加CMD_COMPLETE(S5)日志行 |
-| **B2a** | [retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md](../../../task-reports/retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md) | 第88行：首条日志是KEY_FINDING而非CMD_START（违反铁律一） | 首行前插入CMD_START(S0)日志行 |
+| **B2a** | [retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md](../retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md) | 第88行：首条日志是KEY_FINDING而非CMD_START（违反铁律一） | 首行前插入CMD_START(S0)日志行 |
 | **B2b** | 同上 | 第88行：末条日志是KEY_FINDING而非CMD_COMPLETE（违反铁律四，链路未闭环） | 末尾追加CMD_COMPLETE(S5)日志行 |
 
 **B类修复示例**（最小补全法——首尾各加一行）：
@@ -179,7 +179,7 @@ Exit code: 0
 
 ### 决策3：自动修复脚本dry-run优先模式
 
-**方案**：[fix-cmd-log-compliance.py](../../../../scripts/fix-cmd-log-compliance.py)默认dry-run（只预览不写入），必须显式`--apply`才实际修改文件，`--verify`修复后自动运行检查器验证。
+**方案**：[fix-cmd-log-compliance.py](../../../../../scripts/fix-cmd-log-compliance.py)默认dry-run（只预览不写入），必须显式`--apply`才实际修改文件，`--verify`修复后自动运行检查器验证。
 
 **为什么重要**：批量修改9个文件，任何误判都会破坏文档结构，dry-run让用户可以先审阅修改内容再决定是否应用。
 

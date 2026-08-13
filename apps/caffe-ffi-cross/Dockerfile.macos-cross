@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # Caffe-FFI macOS Cross-Compile Build Image
 # Single-stage build: continuumio/miniconda3 with cross-compilation toolchain
@@ -67,7 +68,9 @@ LABEL maintainer="Caffe-FFI Cross-Compile Team" \
 # -----------------------------------------------------------------------------
 # [1/5] Configure APT mirror and install system dependencies
 # -----------------------------------------------------------------------------
-RUN echo "=== [1/5] Configuring APT mirror: ${APT_MIRROR} ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== [1/5] Configuring APT mirror: ${APT_MIRROR} ===" && \
     if [ "${APT_MIRROR}" = "aliyun" ]; then \
         for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
             if [ -f "$$f" ]; then \
@@ -102,7 +105,8 @@ RUN echo "=== [1/5] Configuring APT mirror: ${APT_MIRROR} ===" && \
 # [2/5] Configure conda channels and create cross-build environment
 # Reference: https://conda-forge.org/docs/how-to/advanced/cross-compilation/
 # -----------------------------------------------------------------------------
-RUN echo "=== [2/5] Creating cross-build conda environment (Python ${PYTHON_VERSION}) ===" && \
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    echo "=== [2/5] Creating cross-build conda environment (Python ${PYTHON_VERSION}) ===" && \
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
     conda config --system --set auto_activate_base false && \
     if [ "${CONDA_MIRROR}" = "tuna" ]; then \

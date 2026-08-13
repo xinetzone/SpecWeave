@@ -1,0 +1,118 @@
+# =============================================================================
+# devcontainer-base Docker Compose
+# =============================================================================
+# 使用方式 (Usage):
+#   docker compose --profile dind up -d      # DinD 模式（推荐，隔离 Docker 环境，需 --privileged）
+#   docker compose --profile dood up -d      # DooD 模式（使用宿主机 Docker，无需 --privileged）
+#   docker compose --profile ssh-only up -d  # 仅 SSH 模式（最小化，无 Docker/Jupyter）
+#
+# 环境变量覆盖 (Environment overrides):
+#   USER_PASSWORD=changeme    SSH 密码（默认 changeme）
+#   JUPYTER_TOKEN=...         Jupyter token（默认 devcontainer123）
+#   GRANT_SUDO=yes/no         是否授予免密 sudo（默认 yes）
+#   TZ=Asia/Shanghai          时区
+#
+# 模式说明 (Modes):
+#   DinD (Docker-in-Docker): 完全隔离的 Docker 守护进程，需要 --privileged 权限
+#   DooD (Docker-out-of-Docker): 挂载宿主机 Docker Socket，共享宿主机 Docker
+#   SSH-only: 仅 SSH 访问，不启动 Docker 和 Jupyter，资源占用最小
+# =============================================================================
+
+x-common-env: &common-env
+  TZ: ${TZ:-Asia/Shanghai}
+  LANG: ${LANG:-zh_CN.UTF-8}
+  USER_PASSWORD: ${USER_PASSWORD:-changeme}
+  GRANT_SUDO: ${GRANT_SUDO:-yes}
+  ALLOW_ROOT_SSH: ${ALLOW_ROOT_SSH:-no}
+  ENABLE_SSH: ${ENABLE_SSH:-yes}
+  ENABLE_PODMAN: ${ENABLE_PODMAN:-no}
+  DEBUG: ${DEBUG:-0}
+
+services:
+  # ─── DinD 模式（默认推荐）- Docker-in-Docker，完全隔离，需要 --privileged ───
+  devcontainer-dind:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-base:1.0
+    container_name: devcontainer-base-dind
+    profiles: ["dind"]
+    privileged: true
+    ports:
+      - "${SSH_PORT:-2222}:22"      # SSH
+      - "${JUPYTER_PORT:-8888}:8888"    # Jupyter Notebook
+    volumes:
+      - ./workspace:/workspace
+      - docker-storage:/var/lib/docker  # 持久化 Docker 镜像/层
+    environment:
+      <<: *common-env
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+      ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}
+      ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    tty: true
+    stdin_open: true
+
+  # ─── DooD 模式 - Docker-out-of-Docker，使用宿主机 Docker Socket，无需 --privileged ───
+  devcontainer-dood:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-base:1.0
+    container_name: devcontainer-base-dood
+    profiles: ["dood"]
+    ports:
+      - "${SSH_PORT:-2223}:22"      # SSH（不同端口避免冲突）
+      - "${JUPYTER_PORT:-8889}:8888"    # Jupyter Notebook（不同端口）
+    volumes:
+      - ./workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # 挂载宿主机 Docker Socket
+    environment:
+      <<: *common-env
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+      ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}  # 当检测到 Docker Socket 时，entrypoint 会自动禁用内部 dockerd
+      ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    tty: true
+    stdin_open: true
+
+  # ─── 仅 SSH 模式（最小化）- 无 Docker，无 Jupyter ───
+  devcontainer-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-base:1.0
+    container_name: devcontainer-base-ssh
+    profiles: ["ssh-only"]
+    ports:
+      - "${SSH_PORT:-2224}:22"      # 仅 SSH
+    volumes:
+      - ./workspace:/workspace
+    environment:
+      <<: *common-env
+      ENABLE_DOCKER: ${ENABLE_DOCKER:-no}
+      ENABLE_JUPYTER: ${ENABLE_JUPYTER:-no}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    tty: true
+    stdin_open: true
+
+volumes:
+  docker-storage:

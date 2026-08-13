@@ -3,13 +3,21 @@
 本目录收录面向开发者的技术教程、API指南、源码解析等实战类技术文档。
 
 <!-- nav-start -->
+- [caffe-ffi Conv v4 OpenMP 并行优化技术总结](caffe-ffi-conv-v4-optimization-summary.md)
 <!-- nav-end -->
+
+## 技术总结
+
+| 文档 | 简介 | 入口 |
+|------|------|------|
+| caffe-ffi Conv v4 OpenMP 并行优化技术总结 | caffe-ffi Conv 层 OpenMP 并行优化（v4）的策略、实验结果、抖动诊断与生产部署配置 | [caffe-ffi-conv-v4-optimization-summary.md](caffe-ffi-conv-v4-optimization-summary.md) |
 
 ## Wiki 教程系列
 
 | 教程 | 章节数 | 简介 | 入口 |
 |------|--------|------|------|
 | TVM FFI 中文 Wiki 教程 | 14章 | Apache TVM FFI 跨语言互操作库的完整中文教程，覆盖类型系统、对象系统、容器、反射、模块系统、C++/Python开发指南、实战案例、FAQ与源码解析 | [00-overview.md](tvm-ffi-wiki/00-overview.md) |
+| Python 与 Rust 技术对比分析 Wiki | 5章 | 基于最新标准（Python 3.14 / Rust 1.97）从零创作的 Python 与 Rust 技术对比分析，覆盖语言运行时、性能工程化、生态应用场景、代码示例、决策矩阵与迁移路径 | [00-overview.md](python-rust-comparison/00-overview.md) |
 
 ## 文档分类
 

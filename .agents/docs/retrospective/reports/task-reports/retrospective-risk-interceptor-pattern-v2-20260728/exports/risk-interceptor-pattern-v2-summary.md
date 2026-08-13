@@ -13,9 +13,9 @@
 
 | # | 需求 | 交付物 | 状态 |
 |---|------|--------|------|
-| 1 | 改进建议应用到智能体系统提示词 | [reverse-adaptation-innovation-v2-addendum.md](../../../../prompts/reverse-adaptation-innovation-v2-addendum.md)、[pattern-adversarial-review-addendum.md](../../../../prompts/pattern-adversarial-review-addendum.md)（v2.0） | ✅ 已提交(d93af3e6) |
-| 2 | P0级高风险操作拦截Python实现 | [risk_interceptor.py](../../../../scripts/lib/risk_interceptor.py)、[check-risky-commands.py](../../../../scripts/check-risky-commands.py) | ✅ 已提交(a670fe9f) |
-| 3 | pre-commit自动化检查配置 | 模式V2质量门集成到[pre_commit.py](../../../../scripts/hooks/pre_commit.py) | ✅ 已提交(0f6feee9) |
+| 1 | 改进建议应用到智能体系统提示词 | [reverse-adaptation-innovation-v2-addendum.md](../../../../../../prompts/reverse-adaptation-innovation-v2-addendum.md)、[pattern-adversarial-review-addendum.md](../../../../../../prompts/pattern-adversarial-review-addendum.md)（v2.0） | ✅ 已提交(d93af3e6) |
+| 2 | P0级高风险操作拦截Python实现 | [risk_interceptor.py](../../../../../../scripts/lib/risk_interceptor.py)、[check-risky-commands.py](../../../../../../scripts/check-risky-commands.py) | ✅ 已提交(a670fe9f) |
+| 3 | pre-commit自动化检查配置 | 模式V2质量门集成到[pre_commit.py](../../../../../../scripts/hooks/pre_commit.py) | ✅ 已提交(0f6feee9) |
 | 追加 | check-risky-commands详细日志 | -v/-vv/-vvv三级verbose、决策全程追踪 | ✅ 同提交a670fe9f |
 
 ## 二、核心功能说明

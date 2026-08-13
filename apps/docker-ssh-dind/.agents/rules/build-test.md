@@ -1,6 +1,7 @@
 ---
 id: "dind-build-test-rules"
 title: "构建与测试规范"
+source: "AGENTS.md#项目特有约束"
 ---
 # 构建与测试规范（docker-ssh-dind）
 

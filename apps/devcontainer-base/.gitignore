@@ -1,0 +1,19 @@
+# Runtime directories
+workspace/
+local-results*/
+benchmark_results*.json
+
+# Local environment (contains credentials)
+.env
+
+# Docker volumes (metadata)
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

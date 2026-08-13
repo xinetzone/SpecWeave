@@ -90,6 +90,7 @@ date: "2026-07-30"
 | [numerical-gradient-diagnostic-logging.md](numerical-gradient-diagnostic-logging.md) | 数值梯度诊断日志规范（6类自动检测WARNING、worst邻域输出、SNR/C¹拐点检测、日志级别控制、典型失败模式识别） | `debugging` `numerical-gradient` `logging` `diagnostics` `observability` `grad-check` `caffe-ffi` `pytest` |
 | [caffe-layer-backward-validation-workflow.md](caffe-layer-backward-validation-workflow.md) | Caffe层Backward验证标准工作流（L0烟雾→L1手算→L2 numpy匹配→L3数值梯度，含每层模板/阈值/检查清单/常见失败模式） | `caffe-ffi` `backward` `testing` `workflow` `three-layer-validation` `gradient-check` `c++` `numpy` `numerical-gradient` |
 | [caffe-identity-layer-cow-separation.md](caffe-identity-layer-cow-separation.md) | 恒等层 COW 零拷贝分离原则（输入梯度 dX 与参数梯度 dparam 分离、filler 初始化、dX 与 dparam 隔离、4个陷阱+检查清单） | `caffe-ffi` `cow` `zerocopy` `scale` `bias` `eltwise` `backward` `gradient` `bug-pattern` `c++` `identity-layer` |
+| [model-config-input-layout-convention.md](model-config-input-layout-convention.md) | 模型编译 config 输入布局核验与修正规范（工具链强制按 NCHW 解包、config shape 必须与模型布局一致、5-Why 根因链路、新模型接入核验检查清单、前向一致性验证） | `model-compile` `config` `input-layout` `NCHW` `NHWC` `NV12` `onnx2pytorch` `tvm` `adaround` `checklist` `caffe` `onnx` |
 
 ---
 
@@ -113,6 +114,7 @@ date: "2026-07-30"
 | 🧩 兼容性修复 | [wrapper-script-injection-pattern.md](wrapper-script-injection-pattern.md) |
 | 🔬 序列化诊断 | [dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md) → [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md) |
 | 🧠 深度学习/FFI | [caffe-slim-tvm-ffi-troubleshooting.md](caffe-slim-tvm-ffi-troubleshooting.md) → [symbol-visibility-control.md](symbol-visibility-control.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) → [float-precision-testing-guide.md](float-precision-testing-guide.md) → [test-infra-performance-optimization.md](test-infra-performance-optimization.md) → [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) → [caffe-layer-backward-validation-workflow.md](caffe-layer-backward-validation-workflow.md) → [caffe-pooling-max-gradient-routing.md](caffe-pooling-max-gradient-routing.md) → [caffe-pooling-ave-gradient-routing.md](caffe-pooling-ave-gradient-routing.md) → [caffe-identity-layer-cow-separation.md](caffe-identity-layer-cow-separation.md) → [hand-computed-gradient-verification.md](hand-computed-gradient-verification.md) → [numerical-gradient-diagnostic-logging.md](numerical-gradient-diagnostic-logging.md) |
+| 🧮 模型编译/config 配置 | [model-config-input-layout-convention.md](model-config-input-layout-convention.md) → [compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md) |
 | 🔨 CMake/构建系统 | [cmake-modularization-best-practices.md](cmake-modularization-best-practices.md) → [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
 | 🔀 conda交叉编译 | [conda-forge-cross-compilation-guide.md](conda-forge-cross-compilation-guide.md) |
 | 📚 知识管理 | [archive-wiki-linkage-guide.md](archive-wiki-linkage-guide.md) |

@@ -38,6 +38,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 
 | 应用 | AGENTS.md 入口 | .agents/ | 说明 |
 |------|---------------|:---:|------|
+| devcontainer-base | [apps/devcontainer-base/AGENTS.md](devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理） |
 | docker-ssh-dind | [apps/docker-ssh-dind/AGENTS.md](docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
 | jupyter-ssh-base | [apps/jupyter-ssh-base/AGENTS.md](jupyter-ssh-base/AGENTS.md) | ❌ 无 | Jupyter Notebook SSH 基础镜像 |
 | pytorch-base | [apps/pytorch-base/AGENTS.md](pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
@@ -51,12 +52,14 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 | xmnn-runtime | —（遵循根规范） | ❌ 无 | XMNN 运行时环境 |
 | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
+| short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 
 ### 嵌套优先级
 
 ```
 SpecWeave 根 AGENTS.md
   └─ apps/AGENTS.md（本文件，apps 区域入口）
+       ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）
        ├─ docker-ssh-dind/AGENTS.md（docker-ssh-dind 应用入口 · 嵌套优先）
        ├─ jupyter-ssh-base/AGENTS.md（jupyter-ssh-base 应用入口 · 嵌套优先）
        ├─ pytorch-base/AGENTS.md（pytorch-base 应用入口 · 嵌套优先）
@@ -79,7 +82,7 @@ flowchart TD
     Layer2 --> SubApp{"步骤2：按应用路由表<br/>确定目标应用"}
     SubApp -.->|"❶ 无匹配项"| E1["确认是否为新增应用<br/>走新增应用流程"]
     E1 -.-> Layer2
-    SubApp -->|"有自身 AGENTS.md<br/>（docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
+    SubApp -->|"有自身 AGENTS.md<br/>（devcontainer-base/docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
     SubApp -->|"无自身 AGENTS.md<br/>（ai-code-assistant/camera-power-controller/<br/>prompt_extraction/shared/tests/xmnn-runtime）"| Direct["直接遵循根 .agents/ 规范"]
     Layer3 -.->|"❷ 读取失败"| E2["检查文件是否存在<br/>回退到根规范执行"]
     E2 -.-> Direct
@@ -165,6 +168,9 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
 | apps/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
 | apps/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
+| apps/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
+| apps/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（SSH+Docker+Podman+Jupyter） |
+| apps/devcontainer-base/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-base 入口 |
 | apps/docker-ssh-dind/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Docker SSH DinD 环境 |
 | apps/docker-ssh-dind/AGENTS.md | 应用自治 | ✅ 是 | docker-ssh-dind 入口 |
 | apps/docker-ssh-dind/.agents/ | 应用自治 | ✅ 是 | docker-ssh-dind 规范体系 |

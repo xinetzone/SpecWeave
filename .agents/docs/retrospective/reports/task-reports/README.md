@@ -19,33 +19,40 @@ date: "2026-07-09"
 | [贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告](2026-07-04-oray-ai-analysis-retrospective.md) | 贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析 - 项目复盘报告 | - | `贝锐` `Oray` `AI产品矩阵` |
 | [Caffe 项目结构重组复盘报告](2026-07-24-caffe-project-structure-refactoring.md) | Caffe 项目结构重组复盘报告 | - | `caffe` `project-structure` `refactoring` |
 | [Caffe tvm-ffi 依赖统一迁移复盘报告](2026-07-24-caffe-tvm-ffi-dependency-migration.md) | Caffe tvm-ffi 依赖统一迁移复盘报告 | - | `caffe` `tvm-ffi` `dependency-migration` |
-| [Caffe docker/local 目录全面复盘报告](retrospective-caffe-docker-local-20260724.md) | Caffe docker/local 目录全面复盘报告 | - | `caffe` `docker` `conda` `python-3.14` |
 | [支付宝 AI Pay Skill Windows 安装任务复盘](retrospective-alipay-aipay-windows-install-20260723.md) | 支付宝 AI Pay Skill Windows 安装任务复盘 | L1 | `windows` `cli-install` `skill-setup` |
 | [analyze-wechat-article-3dnk 任务复盘报告](retrospective-analyze-wechat-article-3dnk-20260706.md) | analyze-wechat-article-3dnk 任务复盘报告 | - |  |
+| [Caffe docker/local 目录全面复盘报告](retrospective-caffe-docker-local-20260724.md) | Caffe docker/local 目录全面复盘报告 | - | `caffe` `docker` `conda` |
+| [Conv v4 OpenMP并行优化里程碑复盘](retrospective-caffe-ffi-conv-v4-milestone-20260805.md) | Conv v4 OpenMP并行优化里程碑复盘 | - |  |
 | [Docker模板升级+五条红线验证+方法论编排复盘报告](retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+五条红线验证+方法论编排复盘报告 | L2 | `docker` `template` `verification` |
 | [第一性原理指令集与知识库双向关联建立 — 任务复盘](retrospective-first-principles-knowledge-link-20260709.md) | *** | - |  |
+| [Hermes Conda 环境创建与源码安装复盘](retrospective-hermes-conda-setup-20260812.md) | Hermes Conda 环境创建与源码安装复盘 | - | `conda` `hermes` `python-environment` |
 | [右侧侧边栏UI美化七概念复盘报告](retrospective-sidebar-ui-beautification-20260714.md) | 右侧侧边栏UI美化七概念复盘报告 | L2 | `UI美化` `Tailwind CSS` `frontend-design` |
 | [WeasyPrint第一性原理学习与wiki教程生成复盘报告](retrospective-weasyprint-learning-20260713.md) | WeasyPrint第一性原理学习与wiki教程生成复盘报告 | - | `retrospective` `weasyprint` `wiki` |
-| [XMNN (xmtools) 全面复盘 + whl 打包 + Docker 镜像导出](retrospective-xmtools-20260803/README.md) | XMNN NPU 推理工具包全面复盘、构建缺陷修复、whl 打包与 Docker 镜像导出 | L2 | `xmnn` `tvm` `nuitka` `whl` `docker` `复盘` |
 
 ## 📁 子目录导航
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [Report Malformed Data Handling 20260709](report-malformed-data-handling-20260709/README.md) | 3 |  |
+| 📋 [Retro 20260728 Tvm Ffi Wiki](retro-20260728-tvm-ffi-wiki/) | 3 |  |
 | ✅ [Retrospective Adversarial Review Cmd 20260710](retrospective-adversarial-review-cmd-20260710/README.md) | 1 |  |
 | ✅ [Retrospective Adversarial Review Kg 20260710](retrospective-adversarial-review-kg-20260710/README.md) | 2 |  |
 | ✅ [Retrospective Adversarial Review Questions 20260710](retrospective-adversarial-review-questions-20260710/README.md) | 2 |  |
+| ✅ [Retrospective Adversarial Wiki Sync 20260728](retrospective-adversarial-wiki-sync-20260728/README.md) | 2 |  |
 | ✅ [Retrospective Analysis Dimension Template Library 20260708](retrospective-analysis-dimension-template-library-20260708/README.md) | 2 |  |
 | ✅ [Retrospective Ark Cli Submodule Integration 20260707](retrospective-ark-cli-submodule-integration-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Arkcli Setup 20260707](retrospective-arkcli-setup-20260707/README.md) | 4 |  |
 | ✅ [Retrospective Best Practice Docs 20260705](retrospective-best-practice-docs-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Best Practices Readme Link Fix 20260709](retrospective-best-practices-readme-link-fix-20260709/README.md) | 4 |  |
-| ✅ [Retrospective Caffe Forward Pass Notebook 20260727](retrospective-caffe-forward-pass-notebook-20260727/README.md) | 2 | `caffe` `jupyter-notebook` `forward-pass` `deep-learning` |
-| ✅ [Retrospective Caffe Ffi Memlog 20260728](retrospective-caffe-ffi-memlog-20260728/README.md) | 1 | `caffe-ffi` `memory-debugging` `zero-copy` `logging` `cpp` `python` |
+| ✅ [Retrospective Caffe Docker Image Distribution 20260727](retrospective-caffe-docker-image-distribution-20260727/README.md) | 1 |  |
+| ✅ [Retrospective Caffe Edge Ops Test Checklist 20260727](retrospective-caffe-edge-ops-test-checklist-20260727/README.md) | 3 |  |
+| ✅ [Retrospective Caffe Ffi Conda Build 20260730](retrospective-caffe-ffi-conda-build-20260730/README.md) | 3 |  |
+| ✅ [Retrospective Caffe Ffi Memlog 20260728](retrospective-caffe-ffi-memlog-20260728/README.md) | 1 |  |
+| ✅ [Retrospective Caffe Forward Pass Notebook 20260727](retrospective-caffe-forward-pass-notebook-20260727/README.md) | 2 |  |
 | ✅ [Retrospective Caffe Jupyter Docker Build 20260726](retrospective-caffe-jupyter-docker-build-20260726/README.md) | 1 |  |
 | ✅ [Retrospective Caffe Proto 20260722](retrospective-caffe-proto-20260722/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Slim Rename 20260724](retrospective-caffe-slim-rename-20260724/README.md) | 3 |  |
+| 📋 [Retrospective Cmd Log Compliance Fix 20260728](retrospective-cmd-log-compliance-fix-20260728/) | 1 |  |
 | ✅ [Retrospective Codex Article Analysis 20260706](retrospective-codex-article-analysis-20260706/README.md) | 1 |  |
 | ✅ [Retrospective Concurrent Report Atomization 20260708](retrospective-concurrent-report-atomization-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Concurrent Safety Checker 20260708](retrospective-concurrent-safety-checker-20260708/README.md) | 3 |  |
@@ -68,10 +75,12 @@ date: "2026-07-09"
 | ✅ [Retrospective Minitap Wiki Creation 20260707](retrospective-minitap-wiki-creation-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Pickle Sedimentation 20260723](retrospective-pickle-sedimentation-20260723/README.md) | 4 |  |
 | ✅ [Retrospective Report Standardization 20260708](retrospective-report-standardization-20260708/README.md) | 3 |  |
+| ✅ [Retrospective Risk Interceptor Pattern v2 20260728](retrospective-risk-interceptor-pattern-v2-20260728/README.md) | 3 | （1个子目录） |
 | ✅ [Retrospective Sensitive Info Hooks 20260708](retrospective-sensitive-info-hooks-20260708/README.md) | 4 |  |
 | ✅ [Retrospective Session 20260708 Overview](retrospective-session-20260708-overview/README.md) | 1 |  |
 | ✅ [Retrospective Sidebar Collapse Occlusion 20260714](retrospective-sidebar-collapse-occlusion-20260714/README.md) | 1 | （1个子目录） |
 | ✅ [Retrospective Specweave v2 Demo Post Publish 20260710](retrospective-specweave-v2-demo-post-publish-20260710/README.md) | 4 |  |
+| ✅ [Retrospective Tao Ai Knowledge 20260807](retrospective-tao-ai-knowledge-20260807/README.md) | 3 |  |
 | ✅ [Retrospective Tech Interface Wiki 20260703](retrospective-tech-interface-wiki-20260703/README.md) | 2 |  |
 | ✅ [TVM FFI Wiki 教程复盘](retrospective-tvm-ffi-wiki-tutorial-20260705/README.md) | 4 |  |
 | ✅ [Retrospective Vendor Check Module 20260707](retrospective-vendor-check-module-20260707/README.md) | 1 |  |
@@ -80,6 +89,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Xmnn Export Entrypoint Fix 20260718](retrospective-xmnn-export-entrypoint-fix-20260718/README.md) | 3 |  |
 | ✅ [Retrospective Xmnn Nuitka Docker Deployment 20260722](retrospective-xmnn-nuitka-docker-deployment-20260722/README.md) | 1 |  |
 | ✅ [Retrospective Xmnn Runtime Repackaging 20260718](retrospective-xmnn-runtime-repackaging-20260718/README.md) | 1 |  |
+| ✅ [Retrospective Xmtools 20260803](retrospective-xmtools-20260803/README.md) | 3 |  |
 | ✅ [Retrospective Zhihu 637007780 Analysis 20260706](retrospective-zhihu-637007780-analysis-20260706/README.md) | 4 |  |
 
 
@@ -92,4 +102,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-07-24 -->
+<!-- generated by generate-readme.py on 2026-08-12 -->

@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7-labs
 # =============================================================================
 # Docker-in-Docker with SSH Server - Containerfile
 # Base: ubuntu:26.04 | DinD + OpenSSH | zh_CN.UTF-8 / Asia/Shanghai | wslc-compatible
@@ -32,14 +33,19 @@ ENV DIND_SKIP_DOCKER=0
 # Set to 'wslc' to explicitly indicate wslc.exe runtime
 ENV CONTAINER_RUNTIME=auto
 
+# Use bash with pipefail for safer RUN commands
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 # -----------------------------------------------------------------------------
 # [BUILD LOG] Stage 1/7: Install base system packages + Chinese locale support
 # locales: zh_CN locale; tzdata: timezone data; tini: init process
 # openssh-server: SSH; pwgen: random password; sudo: privilege escalation
 # -----------------------------------------------------------------------------
-RUN echo "=== Stage 1/7: Base system + Chinese locale ===" && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 1/7: Base system + Chinese locale ===" && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         curl \
         gnupg \
@@ -68,7 +74,9 @@ RUN echo "=== Stage 1/7: Base system + Chinese locale ===" && \
 # [BUILD LOG] Stage 2/7: Install Docker Engine
 # Configure Docker official GPG key + apt repo, install docker-ce/containerd.io
 # -----------------------------------------------------------------------------
-RUN echo "=== Stage 2/7: Install Docker Engine ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 2/7: Install Docker Engine ===" && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
     chmod a+r /etc/apt/keyrings/docker.gpg && \

@@ -1,0 +1,53 @@
+{
+  "summary": {
+    "root_directory": "D:\\spaces\\SpecWeave\\external\\chaos\\sdk_caffe\\models",
+    "target_format": "caffe-ffi",
+    "total_models": 2,
+    "converted": 0,
+    "already_compatible": 0,
+    "skipped": 0,
+    "errors": 0,
+    "scanned_only": 2,
+    "total_input_size": 32399768,
+    "total_output_size": 0,
+    "total_time_ms": 29.9
+  },
+  "models": [
+    {
+      "source": "D:\\spaces\\SpecWeave\\external\\chaos\\sdk_caffe\\models\\debug\\caffe_demo\\fgvsirfeature.caffemodel",
+      "source_size": 32141931,
+      "source_hash": "069e01fba14ae1d5",
+      "format": "V2",
+      "v1_layers": 0,
+      "v2_layers": 294,
+      "model_name": "S_resnet_face_embedding",
+      "status": "scanned",
+      "output": null,
+      "output_size": null,
+      "output_hash": null,
+      "roundtrip_ok": null,
+      "convert_time_ms": 28.7,
+      "error": null,
+      "caffe_ffi_load_ok": null,
+      "notes": []
+    },
+    {
+      "source": "D:\\spaces\\SpecWeave\\external\\chaos\\sdk_caffe\\models\\debug\\caffe_demo\\fgvsirfeature_ssd.caffemodel",
+      "source_size": 257837,
+      "source_hash": "2c93a32d358d70b0",
+      "format": "V2",
+      "v1_layers": 0,
+      "v2_layers": 11,
+      "model_name": "SqueezeNet_SSD_reconstructed",
+      "status": "scanned",
+      "output": null,
+      "output_size": null,
+      "output_hash": null,
+      "roundtrip_ok": null,
+      "convert_time_ms": 1.2,
+      "error": null,
+      "caffe_ffi_load_ok": null,
+      "notes": []
+    }
+  ]
+}

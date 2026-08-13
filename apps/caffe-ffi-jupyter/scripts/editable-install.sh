@@ -25,6 +25,12 @@ if [ -d "$CONDA_PREFIX/lib" ]; then
     fi
 fi
 
+# Verify OpenBLAS development headers are available (cblas.h required for Caffe BLAS)
+if [ ! -f "$CONDA_PREFIX/include/cblas.h" ]; then
+    log_warn "cblas.h not found in $CONDA_PREFIX/include — install 'openblas' conda package for BLAS headers"
+    log_warn "  conda install -y -c conda-forge openblas"
+fi
+
 # ── Editable install helper ──
 # Usage: do_editable_install <name> <src_dir> [extra_cmake_args]
 # Returns 0 if usable (editable OK OR pre-installed OK OR already installed), 1 only on hard failure.
@@ -214,6 +220,10 @@ CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCMAKE_PREFIX_PATH=$CONDA_PREFIX;
 # 否则 split_layer.cpp 中 #ifdef CAFFE_FFI_ENABLE_COW_PHASE3 的 lazy reshape 分支不编译，
 # 导致 N>=16 的 SetShapeOnly 延迟分配测试失败（见 editable-install 历史坑记录）。
 CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCAFFE_FFI_ENABLE_COW_PHASE3=ON"
+# ── Release 性能优化：关闭性能统计/调试日志，启用 -O3 -ffast-math ──
+CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCAFFE_FFI_ENABLE_PERF_LOG=OFF"
+CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCAFFE_FFI_ENABLE_DEBUG_LOG=OFF"
+CAFFE_FFI_CMAKE_ARGS="${CAFFE_FFI_CMAKE_ARGS};-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -ffast-math -fno-finite-math-only"
 do_editable_install "caffe-ffi" "$CAFFE_FFI_SRC_DIR" "$CAFFE_FFI_CMAKE_ARGS"
 
 # ── Update ldconfig for newly built .so files (root only) ──

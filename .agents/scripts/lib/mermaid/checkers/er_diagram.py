@@ -16,7 +16,9 @@ class ErDiagramChecker(BaseDiagramChecker):
         self.er_rel_ops = [
             "||--o{", "||--||", "}o--o{", "}o--||", "|o--o{", "|o--||",
             "||--}|", "|o--o|", "|o--}", "|--o{", "|--||",
-            "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--"
+            "o--o{", "o--||", "--o{", "--||", "--|o", "--o", "--",
+            # crow 的爪「一或多」：|{ 为有效基数标记，与 o{（零或多）等价但左端为竖线
+            "||--|{", "|o--|{", "}o--|{", "o--|{", "|--|{",
         ]
         self.er_rel_ops_sorted = sorted(self.er_rel_ops, key=len, reverse=True)
         self.attr_pat = re.compile(r'^\s*([A-Za-z_][A-Za-z0-9_]*|[A-Za-z_][A-Za-z0-9_]*\[\])\s+([A-Za-z_][A-Za-z0-9_]*)(\s+"[^"]*")?(\s+[A-Za-z]+)?\s*$')
