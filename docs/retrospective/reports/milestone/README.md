@@ -14,6 +14,7 @@
 | milestone-four-engineering-concepts-wiki-20260704 | 四大工程概念 Wiki 教程创建任务 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→C | 25条客观事实、3条核心洞察(格式示例保障+非零退出码处理+流程成熟度)、1个模式候选(网页文章→Wiki教程标准流程)、3项原子行动项，G1-G4质量门全部通过 | [four-engineering-concepts-wiki-retrospective-20260704.md](four-engineering-concepts-wiki-retrospective-20260704.md) |
 | milestone-analyze-wechat-article-eeb14-20260704 | 微信公众号文章系统性学习与深度洞察分析 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→V→C | 25条客观事实、3条核心洞察(shell特殊字符URL陷阱+深度依赖链整体委托+双层输出防复述)、2个L1模式候选(双层输出模式+整体委托模式)、V对抗审查5条意见采纳3条、3项原子行动项，G1-G4+V门全部通过 | [analyze-wechat-article-eeb14-retrospective-20260704.md](analyze-wechat-article-eeb14-retrospective-20260704.md) |
 | milestone-libtv-wiki-20260704 | LibTV AI 短剧创作工具学习 Wiki 教程创建任务 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→A→C | 26条客观事实、3条核心洞察(defuddle稳定首选+子智能体单次交付可预测+脚本可访问性缺陷)、1个L2模式(WA-Wiki-Single-Delivery)、3项原子行动项，G1-G4质量门全部通过 | [libtv-wiki-retrospective-20260704.md](libtv-wiki-retrospective-20260704.md) |
+| milestone-hermes-specweave-integration-20260812 | Hermes-SpecWeave 工作区规范集成里程碑 | 2026-08-12 | ✅ 已完成 | 七概念R→I→E→C | 20条客观事实、3条核心洞察(被动生效目录感知+面向结果自动化+包加载反直觉坑)、2个可复用模式(bp-plugin-bridge-standard-integration+bp-automation-idempotent-four-elements)、4项原子行动项，G1-G4质量门全部通过 | [retrospective-hermes-specweave-integration-20260812.md](retrospective-hermes-specweave-integration-20260812.md) |
 
 ## 知识沉淀里程碑模式库
 

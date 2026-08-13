@@ -1,132 +1,133 @@
 # Chaos AI 可移植Docker镜像优化 - The Implementation Plan
 
-## [x] Task 1: 创建新的portable.Dockerfile基础框架
+> **实现现状同步（2026-08-11）**：本文档已按 `external/chaos/ai/portable.Dockerfile`（v3.0 多阶段瘦身版）实际实现状态同步。原计划的"8 阶段独立 Ubuntu 构建 + py314 专用环境"演进为"base→deps→final 三阶段瘦身构建 + conda base 环境"。各任务交付物与状态已更新为对应实际实现。
+
+## [x] Task 1: 创建portable.Dockerfile基础框架（多阶段构建）
 - **Priority**: high
 - **Depends On**: None
-- **Description**: 
-  - 创建独立的Dockerfile（命名为portable.Dockerfile或重构现有Dockerfile，建议保留原Dockerfile，新建portable.Dockerfile作为独立可移植版本）
-  - 第一阶段：基于Ubuntu 26.04基础镜像，配置apt镜像源，安装基础系统包（tzdata、curl、wget、git、build-essential、g++、openssh-server、sudo、supervisor等）
-  - 配置时区Asia/Shanghai（三层保证：tzdata+ln+ENV TZ）
-  - 配置BuildKit缓存挂载（apt/conda/pip）
-- **Acceptance Criteria Addressed**: AC-1, NFR-1
-- **Deliverables**: `portable.Dockerfile` (544行, 8阶段构建)
-- **Notes**: 保留原Dockerfile不动，新建portable.Dockerfile作为独立可移植版本
+- **Description**:
+  - 新建 `portable.Dockerfile` 作为独立可移植版本，保留原 `Dockerfile` 不动
+  - 基于 `devcontainer-base:onnx-quantized-latest`（Ubuntu 26.04 + conda + LLVM + torch/onnx）自包含构建
+  - **三阶段多阶段构建**：`base`（创建 ai 用户+目录+sudo，devuser→ai 重命名）→ `deps`（root 身份安装全部 Python 包）→ `final`（COPY 配置/脚本+运行时配置+元数据+7 项验证）
+  - 关键优化：删除对 /opt/conda 的整体 chown（消除 4.6GB 复制层），conda 保持 root:root，ai 通过 sudo 安装包
+  - 配置时区 Asia/Shanghai，BuildKit cache mount（apt/conda/pip）
+- **Acceptance Criteria Addressed**: AC-1, AC-13, NFR-1, NFR-6
+- **Deliverables**: `portable.Dockerfile`（320行, 3阶段构建, v3.0-portable-slim）
+- **Notes**: 与最初"8 阶段独立 Ubuntu 构建"设想不同，实现采用 3 阶段瘦身且保留 devcontainer-base 依赖链
 
-## [x] Task 2: 安装Miniconda并创建py314专用环境
+## [x] Task 2: 使用conda base环境（Python 3.14+）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 下载并安装Miniconda3到/opt/conda
-  - 配置conda镜像源（支持bfsu/tuna/official通过CONDA_MIRROR参数）
-  - 创建py314 conda环境，安装Python 3.14+
-  - 配置conda默认不自动激活base，而是默认激活py314
-  - 安装基础Python包：pip、ipython、ipykernel、jupyterlab等
-  - 配置pip镜像源
-  - 设置/opt/conda目录权限为ai用户可读写
-- **Acceptance Criteria Addressed**: AC-4, AC-9, AC-10, FR-3
-- **Deliverables**: Stage 3+4 in portable.Dockerfile
+  - 复用基础镜像自带的 Miniconda base 环境（Python 3.14.4），不再创建独立 py314 环境
+  - 配置 pip 镜像源（aliyun/tuna，通过 PIP_MIRROR 参数）
+  - 配置 conda base 默认激活（conda-init.sh 写入 /etc/profile.d/）
+  - 配置 pip 镜像源与 PIP_USER：deps 阶段 `PIP_USER=0`（包写入 /opt/conda），final 阶段恢复 `PIP_USER=1`
+  - 设置 /opt/conda 保持 root:root 属主（ai 通过 sudo 安装）
+- **Acceptance Criteria Addressed**: AC-4, AC-9, AC-10, FR-3, FR-13
+- **Deliverables**: Stage 1(base) + Stage 2(deps) 中的 conda 配置
+- **Notes**: 与最初"创建 py314 专用环境"设想不同，实现采用 base 环境（LLVM 工具链已在 base PATH 中）
 
 ## [x] Task 3: 安装LLVM/CMake/Ninja等NPU构建工具链
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
-  - 在py314环境中通过conda安装llvmdev 22.1.8、clang 22.1.8、cmake 4.4.0、ninja 1.13.2
-  - 安装系统依赖patchelf
-  - 安装XMNN构建相关Python包：scikit-build-core、nuitka、invoke、build、decorator、attrs、cloudpickle、typing_extensions、pytest等
+  - 复用基础镜像预装的 LLVM/Clang 22.1.8、CMake ≥4.4、Ninja 1.13.2 工具链（在 base PATH 中）
+  - 安装 XMNN 构建相关Python包到 base 环境：scikit-build-core、nuitka、invoke、build、decorator、attrs、cloudpickle、typing_extensions、pytest、psutil 等
+  - 预装 ML/NLP 生态包：transformers、sentence-transformers、datasets、pyarrow、fastapi、numba、librosa 等
   - 验证工具版本符合要求
 - **Acceptance Criteria Addressed**: FR-10
-- **Deliverables**: Stage 4 in portable.Dockerfile (含llvm-config符号链接修复)
+- **Deliverables**: Stage 2(deps) 的 pip install 列表 + Stage 3(final) 版本验证
 
 ## [x] Task 4: 创建ai用户并配置权限
 - **Priority**: high
 - **Depends On**: Task 1, Task 2
 - **Description**:
-  - 创建ai组（可配置GID），创建ai用户（可配置UID）
-  - 配置ai用户home目录/home/ai
-  - 根据GRANT_SUDO参数决定是否添加sudo权限
-  - 配置sudo免密（如果GRANT_SUDO=yes）
-  - 设置/opt/conda、/workspace等目录权限为ai:ai
-  - 预创建/workspace子目录：npu_tvm、npuusertools、models、project
-  - 配置默认umask 0027（写入/etc/profile、/etc/bash.bashrc、ai用户.bashrc）
+  - 在 Stage 1(base) 复用基础镜像 devuser(UID 1001)，重命名为 ai（`usermod -l ai devuser`），支持 AI_UID/AI_GID 配置
+  - 配置 ai 用户 home 目录 /home/ai，加入 docker、sudo 组
+  - 根据 GRANT_SUDO 参数决定是否添加 sudo 免密（默认 yes）
+  - **/opt/conda 保持 root:root**（ai 通过 sudo pip/conda 安装，不直接写 conda）
+  - 预创建 /workspace 子目录：npu_tvm、npuusertools、models、project，属主 ai:ai
+  - 配置默认 umask 0027（写入 /etc/profile、/etc/bash.bashrc、ai 用户.bashrc）
 - **Acceptance Criteria Addressed**: AC-2, AC-3, AC-8, FR-2, FR-5, FR-6, FR-9
-- **Deliverables**: Stage 5 in portable.Dockerfile
+- **Deliverables**: Stage 1(base) 用户创建 + Stage 3(final) umask 配置
+- **Notes**: 与最初"AI_UID/AI_GID 默认 1000:1000、conda 属主 ai:ai"设想不同，实现默认 1001:1001 且 conda 保持 root:root
 
 ## [x] Task 5: 配置多入口环境一致性（Shell/SSH/Jupyter）
 - **Priority**: high
 - **Depends On**: Task 2, Task 4
 - **Description**:
-  - 编写/etc/profile.d/conda-init.sh：登录shell自动激活py314环境
-  - 配置sshd：禁止root登录（PermitRootLogin no），配置ForceCommand或pam_env加载conda环境
-  - 编写sshd启动脚本确保环境变量正确传递
-  - 更新Jupyter kernel配置：使用/opt/conda/envs/py314/bin/python，设置正确PATH和PYTHONPATH
-  - 安装Jupyter到py314环境，移除/opt/venv（不再需要单独venv）
-  - 配置supervisord管理sshd、jupyter、docker等服务
-  - 适配chaos-ai-init.sh逻辑到新的profile.d脚本
-- **Acceptance Criteria Addressed**: AC-5, AC-6, AC-7, AC-11, FR-4, FR-8, FR-11
-- **Deliverables**: 
+  - 编写 /etc/profile.d/conda-init.sh：登录 shell 自动激活 base 环境
+  - 配置 sshd：禁止 root 登录（PermitRootLogin no）、PermitUserEnvironment yes（SSH 非交互环境加载）
+  - 编写 ssh 环境文件 /home/ai/.ssh/environment（PATH 优先 /opt/conda/bin + CONDA_DEFAULT_ENV=base）
+  - Jupyter 使用 /opt/conda/bin/python（kernel.json PATH 优先 /opt/conda/bin），设置 PYTHONPATH/LD_LIBRARY_PATH
+  - 移除对 /opt/venv 的依赖（统一 base 环境）
+  - 配置 supervisord 管理 sshd、dockerd、jupyter 服务
+  - 适配 chaos-ai-init.sh 逻辑到 profile.d 脚本
+- **Acceptance Criteria Addressed**: AC-5, AC-6, AC-7, AC-11, FR-4, FR-8, FR-11, FR-14
+- **Deliverables**:
   - `config/profile/conda-init.sh`
   - `config/ssh/sshd_config`
   - `config/jupyter/jupyter_notebook_config.py`
-  - `config/supervisor/` (主配置+conf.d子目录)
+  - `config/jupyter/kernels/npu/kernel.json`
+  - `config/supervisor/`（主配置+conf.d 子目录）
 
 ## [x] Task 6: 创建fix-permissions.sh和文档
 - **Priority**: medium
 - **Depends On**: Task 4
 - **Description**:
-  - 编写/opt/bin/fix-permissions.sh脚本，用于调整挂载卷权限（将/workspace下挂载目录的权限调整为ai用户可访问）
-  - 脚本支持指定目标目录，递归修改属主为ai:ai（仅用于首次初始化）
-  - 脚本支持dry-run(-d)、verbose(-v)、quiet(-q)模式，含彩色诊断日志
-  - 创建/opt/docs/conda-environment-guide.md，说明如何管理conda环境、安装包、创建新环境
-  - 在Dockerfile注释和build-info中包含使用说明
-  - 写入build metadata到/etc/chaos-ai-portable-build-info
+  - 编写 /opt/bin/fix-permissions.sh 脚本，用于调整挂载卷权限（将 /workspace 下挂载目录权限调整为 ai 用户可访问）
+  - 脚本支持指定目标目录、dry-run(-d)、verbose(-v)、quiet(-q) 模式，含前后状态扫描、变更对比、验证阶段、彩色诊断日志
+  - 创建 /opt/docs/conda-environment-guide.md，说明如何管理 conda 环境、安装包（sudo pip/sudo conda/pip --user）、创建新环境
+  - 写入 build metadata 到 /etc/chaos-ai-portable-build-info（版本/路径/镜像源/PIP_USER 等）
 - **Acceptance Criteria Addressed**: FR-7, FR-12
 - **Deliverables**:
-  - `scripts/fix-permissions.sh` (439行, 含详细日志/dry-run/verbose)
+  - `scripts/fix-permissions.sh`（438行, 含详细日志/dry-run/verbose/前后对比）
   - `docs/portable/conda-environment-guide.md`
-  - Stage 7 build-info generation
+  - Stage 3(final) build-info 生成
 
 ## [x] Task 7: 配置Docker-in-Docker和服务管理
 - **Priority**: medium
 - **Depends On**: Task 4, Task 5
 - **Description**:
-  - 安装Docker CE（支持DinD）
-  - 配置daemon.json（兼容国内镜像加速）
-  - 配置supervisord启动sshd、jupyter、dockerd
-  - 配置entrypoint.sh或启动脚本支持服务启动
-  - 保留现有容器启动逻辑兼容性
-  - ENTRYPOINT为空数组，允许用户覆盖CMD
-- **Acceptance Criteria Addressed**: NFR-2
+  - 复用基础镜像预装 Docker CE（支持 DinD）
+  - 配置 daemon.json（含国内镜像加速）
+  - 配置 supervisord 启动 sshd、dockerd、jupyter
+  - 编写 start.sh 启动脚本，支持 DooD/DinD 自动检测（检测 /var/run/docker.sock），含 7 阶段诊断启动、ERR trap、步骤计时、彩色日志、二进制预检、挂载诊断
+  - ENTRYPOINT 为空数组，CMD 默认启动 start.sh（内部 exec supervisord），允许用户覆盖 CMD
+- **Acceptance Criteria Addressed**: NFR-2, FR-14
 - **Deliverables**:
   - `config/docker/daemon.json`
-  - `config/supervisor/conf.d/dockerd.conf`
-  - `scripts/start.sh` (525行, 含详细诊断日志/ERR trap/步骤计时)
+  - `config/supervisor/conf.d/`（sshd.conf/dockerd.conf/jupyter.conf）
+  - `scripts/start.sh`（529行, 7阶段诊断启动/DooD-DinD自动检测/ERR trap）
   - ENTRYPOINT=[], CMD=["/usr/local/bin/start.sh"]
 
-## [x] Task 8: 设置USER指令和最终清理
+## [x] Task 8: 设置运行时配置和最终清理
 - **Priority**: high
 - **Depends On**: Task 4, Task 5, Task 6, Task 7
 - **Description**:
-  - 设置USER ai为默认运行用户 → 注意：构建时以root完成安装，运行时通过start.sh以ai用户执行服务
-  - 设置WORKDIR /workspace
-  - 配置ENV PATH确保py314/bin优先
-  - 清理apt缓存、conda缓存、pip缓存、/tmp文件
-  - 运行冒烟测试验证所有组件正常
-  - 设置CMD默认启动supervisord（与现有行为兼容）
-  - Dockerfile最终阶段输出构建信息和使用提示
+  - 运行时以 ai 用户执行服务（start.sh 以 ai 用户启动 supervisord 子服务）
+  - 设置 WORKDIR /workspace
+  - 配置 ENV PATH 确保 /opt/conda/bin 优先
+  - 清理 apt 缓存、conda 缓存、pip 缓存、/tmp 文件
+  - 运行冒烟测试（Stage 3 final 7 项验证：sshd 语法/supervisord/python/LLVM/CMake+Ninja/Docker+ML包/user+scripts）
+  - 设置 CMD 默认启动 start.sh
+  - Dockerfile 最终阶段输出构建信息和使用提示
 - **Acceptance Criteria Addressed**: AC-2, NFR-1
-- **Deliverables**: Stage 7 validation (8项检查) + WORKDIR/ENV/EXPOSE/CMD
+- **Deliverables**: Stage 3(final) validation（7 项检查）+ WORKDIR/ENV/EXPOSE/CMD
 
-## [ ] Task 9: 端到端验证测试
+## [x] Task 9: 端到端验证测试
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**:
-  - 编写验证脚本test-portable-image.sh验证所有AC项
-  - 测试独立构建（无本地基础镜像）
-  - 测试默认非root运行
-  - 测试UID/GID自定义构建
-  - 测试SSH/Jupyter/CMD三环境一致性
-  - 测试umask权限保护
-  - 测试conda环境创建和包安装
-  - 测试NPU工具链挂载兼容
-- **Acceptance Criteria Addressed**: AC-1~AC-11
-- **Status**: 待Docker环境实际构建后验证
+  - 通过 `chaos-ai-portable-image-slim` 流程完成多阶段瘦身构建与验证（2026-08-11 实测）
+  - 验证独立构建（基于基础镜像链）
+  - 验证默认非root运行（ai 用户）
+  - 验证 UID/GID 自定义构建（AI_UID/AI_GID 1001）
+  - 验证 SSH/Jupyter/CMD 三环境一致性（base 环境）
+  - 验证 umask 权限保护（0027）
+  - 验证 conda 环境创建和包安装（sudo pip 安装 + conda create 新环境）
+  - 验证 NPU 工具链挂载兼容（PYTHONPATH）
+  - 验证服务健康（sshd/dockerd/jupyter 均 RUNNING）
+- **Acceptance Criteria Addressed**: AC-1~AC-13
+- **Status**: **已完成**（2026-08-11 实测：镜像 9.59GB，Python 3.14.4，LLVM 22.1.8，CMake 4.4.2，Ninja 1.13.2，sshd/dockerd/jupyter 均 RUNNING，容器 healthy；docker-cache 缓存 2.0GB tar.gz 已保存）

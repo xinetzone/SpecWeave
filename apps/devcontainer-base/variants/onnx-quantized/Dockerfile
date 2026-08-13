@@ -121,18 +121,44 @@ echo "[OK] base environment activated"
 echo "  - conda env: $CONDA_DEFAULT_ENV"
 echo ""
 
-echo "[ACTION] Installing quantization packages via pip..."
-echo "[INFO] onnxruntime already has built-in quantization (onnxruntime.quantization)"
-echo "[INFO] Installing additional quantization utilities..."
-echo ""
-pip install --no-cache-dir \
-    onnxconverter-common \
-    onnxsim
-echo ""
-echo "[OK] Quantization toolkit installation complete"
-echo ""
+# ── 辅助函数：pip 包分组安装（结构化日志+计时+冲突诊断） ──
+pip_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [PIP INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] pip check for dependency conflicts:"
+        pip check 2>&1 | head -10 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] pip check output for conflict diagnosis:"
+        pip check 2>&1 | head -30 || true
+        exit $rc
+    fi
+}
 
-echo "[INFO] Installed package versions:"
+pip_install_group "G3: Quantization Utilities" \
+    "onnxconverter-common (FP16 conversion) + onnxsim (model simplification)" \
+    onnxconverter-common onnxsim
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] Quantization toolkit                   │"
+echo "└─────────────────────────────────────────────────┘"
 echo "  - onnxruntime.quantization: $(python -c 'from onnxruntime.quantization import quantize_dynamic, QuantType; print("available (dynamic+static QDQ)")' 2>&1)"
 echo "  - onnxconverter-common: $(python -c 'import onnxconverter_common; print(onnxconverter_common.__version__)' 2>&1)"
 echo "  - neural-compressor: $(python -c 'import neural_compressor; print(neural_compressor.__version__)' 2>/dev/null || echo 'not installed (optional: pip install neural-compressor)')"

@@ -128,81 +128,137 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 #       "File or directory already exists" 而中止安装。基础 Miniconda
 #       只在镜像首次构建时安装一次，pkgs 缓存收益甚微，故不挂载缓存。
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
-    echo "########################################################################" && \
-    echo "# [CONDA VARIANT STAGE 2/5] Install Miniconda3 to /opt/conda" && \
-    echo "# MINICONDA_VERSION=${MINICONDA_VERSION}, PYTHON_VERSION=${PYTHON_VERSION}" && \
-    echo "# CONDA_MIRROR=${CONDA_MIRROR}" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    ARCH=$(uname -m) && \
-    echo "[ACTION] Detecting architecture..." && \
-    if [ "$ARCH" = "x86_64" ]; then \
-        MINICONDA_ARCH="x86_64"; \
-        echo "[OK] Architecture: x86_64 (amd64)"; \
-    elif [ "$ARCH" = "aarch64" ]; then \
-        MINICONDA_ARCH="aarch64"; \
-        echo "[OK] Architecture: aarch64 (arm64)"; \
-    else \
-        echo "[ERROR] Unsupported architecture: $ARCH"; \
-        exit 1; \
-    fi && \
-    if [ "${MINICONDA_VERSION}" = "latest" ]; then \
-        echo "[ACTION] Resolving latest Miniconda3 version..."; \
-        CONDA_INSTALLER="Miniconda3-latest-Linux-${MINICONDA_ARCH}.sh"; \
-    else \
-        CONDA_INSTALLER="Miniconda3-${MINICONDA_VERSION}-Linux-${MINICONDA_ARCH}.sh"; \
-    fi && \
-    echo "[ACTION] Downloading Miniconda3: ${CONDA_INSTALLER}..." && \
-    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        echo "[INFO] Using Tsinghua TUNA mirror: mirrors.tuna.tsinghua.edu.cn"; \
-        CONDA_URL="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/${CONDA_INSTALLER}"; \
-    else \
-        echo "[INFO] Using official Anaconda repo: repo.anaconda.com"; \
-        CONDA_URL="https://repo.anaconda.com/miniconda/${CONDA_INSTALLER}"; \
-    fi && \
-    echo "[ACTION] Download URL: ${CONDA_URL}"; \
-    wget --tries=3 --timeout=120 --waitretry=5 -q "${CONDA_URL}" -O /tmp/miniconda.sh && \
-    echo "[OK] Downloaded: $(du -h /tmp/miniconda.sh | cut -f1)"; \
-    echo "[ACTION] Verifying installer size..."; \
-    INSTALLER_SIZE=$(stat -c%s /tmp/miniconda.sh 2>/dev/null || wc -c < /tmp/miniconda.sh); \
-    echo "[INFO] Installer size: ${INSTALLER_SIZE} bytes"; \
-    if [ "$INSTALLER_SIZE" -lt 50000000 ]; then \
-        echo "[WARN] Installer seems smaller than expected (<50MB), may be corrupted or network error"; \
-    fi; \
-    echo "[ACTION] Running Miniconda3 installer (batch mode, prefix=/opt/conda)..."; \
-    bash /tmp/miniconda.sh -b -p "${CONDA_DIR}" && \
-    echo "[OK] Miniconda3 installed to ${CONDA_DIR}"; \
-    rm -f /tmp/miniconda.sh; \
-    echo "[ACTION] Disabling conda base auto-activation..."; \
-    "${CONDA_DIR}/bin/conda" config --system --set auto_activate_base false && \
-    echo "[OK] auto_activate_base set to false (system-wide)"; \
-    echo "[ACTION] Pre-configuring conda channels (conda-forge only, strict priority)..."; \
-    "${CONDA_DIR}/bin/conda" config --system --add channels conda-forge && \
-    "${CONDA_DIR}/bin/conda" config --system --set channel_priority strict && \
-    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        "${CONDA_DIR}/bin/conda" config --system --set custom_channels.conda-forge https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud; \
-    fi && \
-    "${CONDA_DIR}/bin/conda" config --system --remove channels defaults 2>/dev/null || true && \
-    echo "[OK] Channels pre-configured (conda-forge only, no defaults)"; \
-    "${CONDA_DIR}/bin/conda" config --show-sources && \
-    echo "[ACTION] Setting default Python version in base environment to ${PYTHON_VERSION}..."; \
-    "${CONDA_DIR}/bin/conda" install -y -n base --override-channels -c conda-forge "python=${PYTHON_VERSION}" && \
-    echo "[OK] Base environment Python set to ${PYTHON_VERSION}"; \
-    "${CONDA_DIR}/bin/conda" clean -ya && \
-    echo "[ACTION] Verifying conda installation..."; \
-    "${CONDA_DIR}/bin/conda" --version && \
-    echo "  - conda path: ${CONDA_DIR}/bin/conda"; \
-    echo "  - python (conda base): $("${CONDA_DIR}/bin/python" --version 2>&1)"; \
-    echo "  - conda info --base: $("${CONDA_DIR}/bin/conda" info --base)"; \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "VS2=$_NOW" >> /tmp/.variant-build-timer && \
-    echo "[TIMER] Stage 2/5 (Miniconda install) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 2 complete'
+RUN <<'STAGE2_EOF'
+set -e
+echo ""
+echo "########################################################################"
+echo "# [CONDA VARIANT STAGE 2/5] Install Miniconda3 to /opt/conda"
+echo "# MINICONDA_VERSION=${MINICONDA_VERSION}, PYTHON_VERSION=${PYTHON_VERSION}"
+echo "# CONDA_MIRROR=${CONDA_MIRROR}"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+
+# ── 辅助函数：conda 包分组安装（结构化日志+计时+诊断） ──
+conda_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [CONDA INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    "${CONDA_DIR}/bin/conda" install -y -n base --override-channels -c conda-forge "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] Installed package versions:"
+        "${CONDA_DIR}/bin/conda" list 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -20 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] conda list for conflict diagnosis:"
+        "${CONDA_DIR}/bin/conda" list 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -30 || true
+        exit $rc
+    fi
+}
+
+ARCH=$(uname -m)
+echo "[ACTION] Detecting architecture..."
+if [ "$ARCH" = "x86_64" ]; then
+    MINICONDA_ARCH="x86_64"
+    echo "[OK] Architecture: x86_64 (amd64)"
+elif [ "$ARCH" = "aarch64" ]; then
+    MINICONDA_ARCH="aarch64"
+    echo "[OK] Architecture: aarch64 (arm64)"
+else
+    echo "[ERROR] Unsupported architecture: $ARCH"
+    exit 1
+fi
+
+if [ "${MINICONDA_VERSION}" = "latest" ]; then
+    echo "[ACTION] Resolving latest Miniconda3 version..."
+    CONDA_INSTALLER="Miniconda3-latest-Linux-${MINICONDA_ARCH}.sh"
+else
+    CONDA_INSTALLER="Miniconda3-${MINICONDA_VERSION}-Linux-${MINICONDA_ARCH}.sh"
+fi
+
+echo "[ACTION] Downloading Miniconda3: ${CONDA_INSTALLER}..."
+_dl_start=$(date +%s)
+if [ "${CONDA_MIRROR}" = "tuna" ]; then
+    echo "[INFO] Using Tsinghua TUNA mirror: mirrors.tuna.tsinghua.edu.cn"
+    CONDA_URL="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/${CONDA_INSTALLER}"
+else
+    echo "[INFO] Using official Anaconda repo: repo.anaconda.com"
+    CONDA_URL="https://repo.anaconda.com/miniconda/${CONDA_INSTALLER}"
+fi
+echo "[ACTION] Download URL: ${CONDA_URL}"
+wget --tries=3 --timeout=120 --waitretry=5 -q "${CONDA_URL}" -O /tmp/miniconda.sh
+_dl_elapsed=$(($(date +%s) - _dl_start))
+echo "[OK] Downloaded: $(du -h /tmp/miniconda.sh | cut -f1) in ${_dl_elapsed}s"
+
+echo "[ACTION] Verifying installer size..."
+INSTALLER_SIZE=$(stat -c%s /tmp/miniconda.sh 2>/dev/null || wc -c < /tmp/miniconda.sh)
+echo "[INFO] Installer size: ${INSTALLER_SIZE} bytes"
+if [ "$INSTALLER_SIZE" -lt 50000000 ]; then
+    echo "[WARN] Installer seems smaller than expected (<50MB), may be corrupted or network error"
+fi
+
+echo "[ACTION] Running Miniconda3 installer (batch mode, prefix=/opt/conda)..."
+_inst_start=$(date +%s)
+bash /tmp/miniconda.sh -b -p "${CONDA_DIR}"
+_inst_elapsed=$(($(date +%s) - _inst_start))
+echo "[OK] Miniconda3 installed to ${CONDA_DIR} in ${_inst_elapsed}s"
+rm -f /tmp/miniconda.sh
+
+echo "[ACTION] Disabling conda base auto-activation..."
+"${CONDA_DIR}/bin/conda" config --system --set auto_activate_base false
+echo "[OK] auto_activate_base set to false (system-wide)"
+
+echo "[ACTION] Pre-configuring conda channels (conda-forge only, strict priority)..."
+"${CONDA_DIR}/bin/conda" config --system --add channels conda-forge
+"${CONDA_DIR}/bin/conda" config --system --set channel_priority strict
+if [ "${CONDA_MIRROR}" = "tuna" ]; then
+    "${CONDA_DIR}/bin/conda" config --system --set custom_channels.conda-forge https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+fi
+"${CONDA_DIR}/bin/conda" config --system --remove channels defaults 2>/dev/null || true
+echo "[OK] Channels pre-configured (conda-forge only, no defaults)"
+"${CONDA_DIR}/bin/conda" config --show-sources
+
+conda_install_group "G1: Base Python" "Set default Python version in base environment" \
+    "python=${PYTHON_VERSION}"
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [CLEAN] Cleaning conda package cache            │"
+echo "└─────────────────────────────────────────────────┘"
+"${CONDA_DIR}/bin/conda" clean -ya -q
+echo "[OK] conda package cache cleaned"
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] Conda installation summary             │"
+echo "└─────────────────────────────────────────────────┘"
+"${CONDA_DIR}/bin/conda" --version
+echo "  - conda path: ${CONDA_DIR}/bin/conda"
+echo "  - python (conda base): $("${CONDA_DIR}/bin/python" --version 2>&1)"
+echo "  - conda info --base: $("${CONDA_DIR}/bin/conda" info --base)"
+echo "  - conda packages in base: $("${CONDA_DIR}/bin/conda" list -n base 2>/dev/null | wc -l)"
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.variant-build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "VS2=$_NOW" >> /tmp/.variant-build-timer
+echo "[TIMER] Stage 2/5 (Miniconda install) took ${_ELAPSED}s | Variant cumulative: ${_TOTAL}s"
+echo '[OK] Stage 2 complete'
+STAGE2_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/5: conda + pip 镜像源配置
@@ -363,6 +419,23 @@ RUN echo "" && \
     apt-get clean 2>/dev/null || true; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
     echo "[OK] Cleanup complete (conda clean, pip cache purge, apt clean, tmp)"; \
+    echo ""; \
+    echo "┌─────────────────────────────────────────────────┐"; \
+    echo "│ [FINAL CHECK] Dependency consistency            │"; \
+    echo "└─────────────────────────────────────────────────┘"; \
+    echo "[CHECK] conda environment consistency:"; \
+    /opt/conda/bin/conda check 2>&1 | head -10 || echo "[WARN] conda check reported issues (non-fatal)"; \
+    echo ""; \
+    echo "[CHECK] system venv pip check:"; \
+    /opt/venv/bin/pip check 2>&1 | head -10 || echo "[WARN] pip check reported issues (non-fatal)"; \
+    echo ""; \
+    echo "┌─────────────────────────────────────────────────┐"; \
+    echo "│ [INFO] Installed package versions (summary)     │"; \
+    echo "└─────────────────────────────────────────────────┘"; \
+    echo "  [conda base]"; \
+    /opt/conda/bin/conda list -n base 2>/dev/null | grep -E '^(python|pip|conda|setuptools|wheel|openssl|certifi|ca-certificates)\s' | awk '{printf "    - %s: %s\n", $1, $2}'; \
+    echo "  [system venv]"; \
+    /opt/venv/bin/pip list --format=freeze 2>/dev/null | grep -iE '^(pip|setuptools|wheel|jupyter|notebook|jupyterlab|httpx)=' | sed 's/^/    - /' | head -15; \
     echo ""; \
     echo "┌─────────────────────────────────────────────────┐"; \
     echo "│  [VALIDATION CHECKPOINT - Stage 5/5]           │"; \

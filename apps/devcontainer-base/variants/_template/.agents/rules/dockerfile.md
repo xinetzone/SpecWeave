@@ -69,14 +69,34 @@
 - 支持的安装方式：
   - `apt-get install`（系统包，使用 `--no-install-recommends`）
   - `conda install`（如基于 conda 变体）
-  - `pip install`（注意区分系统 venv 和 conda）
+  - `pip install`（**必须使用 pip_install_group 函数**，详见「Pip 安装可观测模式」）
   - 下载解压二进制包
   - 编译安装
 - 使用 BuildKit cache 挂载加速重复构建：
   - apt: `--mount=type=cache,target=/var/cache/apt,sharing=locked`
   - conda: `--mount=type=cache,target=/opt/conda/pkgs,sharing=locked`
+  - pip: `--mount=type=cache,target=/root/.cache/pip,sharing=locked`
 - 每个主要步骤输出 `[ACTION]`、`[INFO]`、`[OK]` 日志
 - 阶段结束输出 `[TIMER]`
+
+#### Pip 安装可观测模式（强制）
+
+安装 pip 包时必须使用分组安装模式，便于排查依赖冲突：
+
+```dockerfile
+# 在 Stage 开头先定义 pip_install_group 函数（参考 ai-dev 变体实现）
+pip_install_group() {
+    local group_name="$1" description="$2"; shift 2
+    # ... 详见 variant-conventions.md 中的完整实现
+}
+
+# 按功能分组安装，每组单独计时+冲突检测
+pip_install_group "data-processing" "数据处理库" numpy pandas scipy
+pip_install_group "ml-frameworks" "机器学习框架" scikit-learn xgboost
+pip_install_group "nlp" "NLP工具包" transformers tokenizers
+```
+
+详见 [variant-conventions.md](../../.agents/rules/variant-conventions.md) 中的「Pip Install Group Observability 模式」，以及 [testing.md](../../.agents/rules/testing.md) 中的「容器输出提取规范」。
 
 ### Stage N/N：元数据 + 清理 + 最终验证
 

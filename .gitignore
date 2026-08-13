@@ -80,6 +80,9 @@ desktop.ini
 *.swo
 *~
 
+# 临时调试脚本（原子提交前清理，不入库）
+.tmp-*.sh
+
 # 构建产物
 dist/
 build/

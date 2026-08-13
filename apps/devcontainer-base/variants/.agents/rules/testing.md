@@ -185,6 +185,56 @@ build.sh 中的 `VARIANTS` 数组定义**构建后快速验证命令**（快速�
 - 超时控制：快速验证 60s，完整测试脚本中编译测试可放宽到 120s
 - 禁止 `--privileged` 除非测试 DinD 功能（基础服务测试不需要）
 
+## 容器输出提取规范（输出尾部定位模式）
+
+容器环境中通过entrypoint执行命令时，**entrypoint脚本链会在目标命令执行前输出大量诊断信息**（conda初始化、PATH配置、环境检查等），stdout不是纯净的命令输出。这与本地直接运行二进制的行为不同。
+
+### 版本号提取：使用 `tail -1` 模式
+
+提取版本号等单行输出时，**禁止使用 `head -1`**（会取到entrypoint诊断信息），必须使用 `tail -1` 从输出尾部定位：
+
+```bash
+# ❌ 错误：head -1 取到的是entrypoint诊断输出
+local ver=$(docker run --rm "$IMAGE" jupyter lab --version 2>&1 | head -1)
+
+# ✅ 正确：tail -1 取最后一行（实际版本号），tr去除空白
+local ver=$(docker run --rm "$IMAGE" jupyter lab --version 2>&1 | tail -1 | tr -d '[:space:]')
+```
+
+### 版本存在性检查：优先使用 `grep` 模式
+
+仅需验证版本是否存在（无需精确提取）时，使用`grep`在全部输出中搜索版本模式，更健壮：
+
+```bash
+# ✅ 推荐：grep搜索，不受前置输出影响
+local result
+result=$(docker run --rm "$IMAGE" <tool> --version 2>&1)
+if echo "$result" | grep -qE "<version-pattern>"; then
+    pass "T<N>: <Tool> version check"
+else
+    fail "T<N>: <Tool> version check failed"
+fi
+```
+
+### Go template 语法注意
+
+使用`docker inspect --format`时，Go template字段访问必须以`.`开头：
+
+```bash
+# ❌ 错误：缺少点前缀
+docker inspect --format='{{json.Config.Entrypoint}}' "$IMAGE"
+
+# ✅ 正确：.Config 表示当前上下文的Config字段
+docker inspect --format='{{json .Config.Entrypoint}}' "$IMAGE"
+```
+
+### 反模式教训
+
+- ❌ 假设`--version`只输出一行版本号——本地直接运行成立，但容器entrypoint在命令前输出诊断信息
+- ❌ 使用`head -1`截取第一行——会取到entrypoint的分隔线/欢迎信息/诊断输出
+- ❌ Go template字段访问遗漏`.`前缀——`Config` vs `.Config`，前者是变量引用，后者是字段访问
+- ❌ 不使用`tr -d '[:space:]'`去除尾部换行——版本号比较时尾部换行可能导致字符串不匹配
+
 ## 新增变体测试检查清单
 
 创建新变体测试脚本时，逐项确认：

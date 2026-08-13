@@ -105,6 +105,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [ps7-to-ps5-translation.md](ps7-to-ps5-translation.md) | PS7→PS5语法降级转换四映射表：运算符映射11项（?:/??/??=/&&/||/?./-Parallel/class）+API映射13项（WMI→CIM/workflow/pwsh.exe/SkipCertificateCheck等）+行为差异映射8项（编码/TLS/CIM协议等）+并行降级5方案对照表+自动转换辅助脚本 | L1 | `powershell` `version-migration` `syntax-translation` `compatibility` `downgrade` `code-conversion` |
 | [wsl2-docker-selection-decision.md](wsl2-docker-selection-decision.md) | WSL2 Docker方案决策模式：11项实测性能基准+7种场景决策矩阵+文件系统性能提示+常见陷阱（credential helper/9p协议/systemd），解决Docker Desktop vs 原生Docker选型困惑 | L2 已验证 | WSL2部署指南Docker环境章节、Windows开发环境搭建、DevOps环境选型、CI/CD runner配置 |
 | [docker-buildtime-vs-runtime-config.md](docker-buildtime-vs-runtime-config.md) | Dockerfile构建时与运行时配置分离原则：RUN层处理静态安装/编译/复制，ENTRYPOINT处理动态密钥/配置/权限，验证服务必须经过ENTRYPOINT完整启动链 | L2 已验证 | 多阶段Dockerfile设计、容器化服务镜像、SSH/TLS密钥安全、ENTRYPOINT脚本编写 |
+| [docker-buildtime-runtime-ownership-separation.md](docker-buildtime-runtime-ownership-separation.md) | Docker构建时/运行时属主分离模式（PIP_USER治理）：构建期以root关闭PIP_USER写入共享site-packages，运行期非root用户可读；删除对大型目录整体chown产生巨层 | L2 已验证 | 多阶段Dockerfile + 非root运行用户 + conda/pip AI开发容器、镜像体积优化、PIP_USER冲突排查 |
 | [flat-nested-hybrid-scan.md](flat-nested-hybrid-scan.md) | 扁平+嵌套混合目录扫描：嵌套优先→扁平回退，避免"两层结构假设"导致静默失败（输出0/0但不报错） | L2 已验证 | 目录扫描器/索引生成器、Spec看板、文档导航表、结构迁移过渡期 |
 | [zero-copy-batch-inference-defense.md](zero-copy-batch-inference-defense.md) | 深度学习零拷贝分批推理防御：pad→forward→copy=True→slice四步法+单样本一致性校验，解决DLPack/zero-copy view在下一批forward后被静默覆盖的陷阱 | L2 已验证 | DL推理API无自动批处理、C++推理引擎Python绑定、Caffe/ONNX Runtime/TensorRT分批推理 |
 | [pretrained-model-download-validation.md](pretrained-model-download-validation.md) | 预训练模型多源下载与多级验证：≥3源URL fallback+大小预估+magic bytes检测+加载验证+准确率校验，应对GitHub LFS pointer/截断文件/HTML错误页 | L2 已验证 | .caffemodel/.pth/.onnx/.safetensors下载、CI模型获取、不可靠网络环境、教学模型获取 |
@@ -158,6 +159,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [unit-test-driven-bug-fix-loop.md](unit-test-driven-bug-fix-loop.md) | 单元测试驱动Bug发现与修复闭环（测试即修复）：核心函数写不依赖环境的单测，mock覆盖所有格式变体，发现Bug立即更新mock形成发现→修复→验证闭环+回归防护 | L1 实验性 | 为已有脚本/解析器补单测发现隐藏Bug、构建流水线解析函数测试、CI轻量单测层 |
 | [governance-layer-immediate-establishment.md](governance-layer-immediate-establishment.md) | 功能完成后立即建立治理层（AGENTS.md+.agents/）：同批次建立入口+规则按单一职责原子化拆分+嵌套路由清晰定义加载顺序+父级路由表同步防链断裂 | L1 实验性 | 新增功能模块/子项目/应用交付时治理入口建立、AI智能体按路由装载模块规则、多子模块嵌套治理 |
 | [onnx-pre-quantize-simplification.md](onnx-pre-quantize-simplification.md) | ONNX 量化前简化模式：torch 导出模型先 onnxsim.simplify + checker 再量化，解决 ShapeInferenceError (64)vs(128)，内联冒烟回归防护 | L1 实验性 | torch.onnx.export→onnxruntime 量化流水线、Docker/CI 量化冒烟测试、形状推断冲突排查 |
+| [nuitka-compile-flags-dynamic-injection.md](nuitka-compile-flags-dynamic-injection.md) | Nuitka 编译参数构建期动态注入：宿主CLI → build-arg → ARG/ENV → 编译脚本非引用展开追加，含双向验证与空值安全，一套构建脚本服务多项目 | L1 实验性 | Nuitka/Cython编译参数外部注入、多项目共享构建脚本、构建期可审计编译选项 |
 
 ## Android 模式命名规范
 

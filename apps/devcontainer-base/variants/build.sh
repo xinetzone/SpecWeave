@@ -9,10 +9,11 @@ LOG_SERVICE="devcontainer-variants-build"
 LOG_JSON_OUTPUT="/tmp/devcontainer-variants-events.jsonl"
 
 VARIANTS=(
-    "conda|Miniconda3基础环境||/opt/conda/bin/conda --version;/opt/conda/bin/conda info --envs"
-    "conda-llvm|conda+LLVM/clang编译工具链|conda|/opt/conda/bin/llvm-config --version;/opt/conda/bin/clang --version;/opt/conda/bin/clang++ --version;/opt/conda/bin/cmake --version;/opt/conda/bin/ninja --version"
-    "onnx-pytorch|conda-llvm + PyTorch CPU + ONNX 深度学习运行时|conda-llvm|/opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\";/opt/conda/bin/python -c \"import torch;assert torch.cuda.is_available() is False\""
-    "onnx-quantized|onnx-pytorch + ONNX量化工具链(INT8/FP16动态/静态量化+Intel Neural Compressor)|onnx-pytorch|/opt/conda/bin/python -c \"from onnxruntime.quantization import quantize_dynamic,quantize_static,QuantType,QuantFormat,CalibrationDataReader;print('quantization API OK')\";/opt/conda/bin/python -c \"import neural_compressor;print('neural_compressor',neural_compressor.__version__)\";/opt/conda/bin/python -c \"from onnxconverter_common import float16;print('float16 conversion OK')\";/opt/conda/bin/python -c \"import onnxruntime.quantization.shape_inference;print('shape_inference OK')\""
+    "conda|Miniconda3基础环境||/opt/conda/bin/conda --version|||/opt/conda/bin/conda info --envs"
+    "conda-llvm|conda+LLVM/clang编译工具链|conda|/opt/conda/bin/llvm-config --version|||/opt/conda/bin/clang --version|||/opt/conda/bin/clang++ --version|||/opt/conda/bin/cmake --version|||/opt/conda/bin/ninja --version"
+    "onnx-pytorch|conda-llvm + PyTorch CPU + ONNX 深度学习运行时|conda-llvm|/opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\"|||/opt/conda/bin/python -c \"import torch;assert torch.cuda.is_available() is False\""
+    "onnx-quantized|onnx-pytorch + ONNX量化工具链(INT8/FP16动态/静态量化+Intel Neural Compressor)|onnx-pytorch|/opt/conda/bin/python -c \"from onnxruntime.quantization import quantize_dynamic,quantize_static,QuantType,QuantFormat,CalibrationDataReader;print('quantization API OK')\"|||/opt/conda/bin/python -c \"import neural_compressor;print('neural_compressor',neural_compressor.__version__)\"|||/opt/conda/bin/python -c \"from onnxconverter_common import float16;print('float16 conversion OK')\"|||/opt/conda/bin/python -c \"import onnxruntime.quantization.shape_inference;print('shape_inference OK')\""
+    "ai-dev|onnx-quantized + 完整AI/ML/NLP全栈Python生态(50+包)+JupyterLab4.x+AI内核|onnx-quantized|/opt/conda/bin/python -c \"import transformers,datasets,fastapi,pandas;print('ai-dev core OK')\"|||/opt/conda/bin/python -c \"import matplotlib,seaborn,rich,typer;print('viz/cli OK')\"|||/opt/conda/bin/python -c \"import jieba,nltk,fitz,openpyxl;print('nlp/document OK')\"|||/opt/conda/bin/python -c \"import psycopg2,pymongo,elasticsearch,minio;print('database OK')\"|||/opt/conda/bin/python -c \"from onnxruntime.quantization import quantize_dynamic;print('quantization inherited OK')\"|||test -f /opt/venv/share/jupyter/kernels/ai-dev/kernel.json && echo 'kernel registered'"
 )
 
 declare -A VARIANT_DESC
@@ -66,6 +67,84 @@ Examples:
   $0 -v conda-llvm --no-cache -t dev          # Build conda-llvm without cache, tag as dev
   $0 -a --build-arg EXTRA_TOOLS=yes           # Build all with extra build arg
 EOF
+}
+
+validate_delimiter_convention() {
+    local errors=0
+    local entry_num=0
+
+    echo ""
+    log_step "[CONVENTION CHECK] Validating ||| delimiter convention in VARIANTS array"
+
+    for entry in "${VARIANTS[@]}"; do
+        entry_num=$((entry_num + 1))
+
+        local normalized_entry="${entry//|||/§§§}"
+        local field_count
+        field_count=$(awk -F'|' '{print NF}' <<< "$normalized_entry")
+
+        if [ "$field_count" -ne 4 ]; then
+            log_error "Entry #${entry_num}: Invalid field count (expected 4, got ${field_count})"
+            log_error "  → Check if '|||' was accidentally written as '|' (single pipe) in validate commands"
+            log_error "  → Entry: $entry"
+            errors=$((errors + 1))
+            continue
+        fi
+
+        local normalized_for_parse="${entry//|||/§§§}"
+        IFS='|' read -r name desc deps validate_placeholder <<< "$normalized_for_parse"
+        local validate="${validate_placeholder//§§§/|||}"
+
+        if [ -z "$name" ]; then
+            log_error "Entry #${entry_num}: Variant name cannot be empty"
+            errors=$((errors + 1))
+        fi
+
+        if [ -z "$validate" ]; then
+            log_warn "Entry '${name}': No validation commands defined"
+        else
+            local cmd_count=0
+            local _remaining="$validate"
+
+            if [[ "$_remaining" == *";"* ]] && [[ "$_remaining" != *'"'* ]]; then
+                log_warn "Entry '${name}': Semicolon detected outside quoted strings - verify this is not a command separator"
+                log_warn "  → Use '|||' (triple pipe) to separate multiple validation commands"
+                log_warn "  → Validate field: $validate"
+            fi
+
+            while [[ "$_remaining" == *"|||"* ]]; do
+                local cmd_part="${_remaining%%|||*}"
+                cmd_part=$(echo "$cmd_part" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+                if [ -n "$cmd_part" ]; then
+                    cmd_count=$((cmd_count + 1))
+                else
+                    log_error "Entry '${name}': Empty command segment between '|||' separators"
+                    errors=$((errors + 1))
+                fi
+                _remaining="${_remaining#*|||}"
+            done
+            _remaining=$(echo "$_remaining" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+            if [ -n "$_remaining" ]; then
+                cmd_count=$((cmd_count + 1))
+            fi
+
+            if [ $cmd_count -eq 0 ]; then
+                log_error "Entry '${name}': Validate field has no non-empty commands"
+                errors=$((errors + 1))
+            else
+                log_info "Entry '${name}': ${cmd_count} validation command(s), convention OK"
+            fi
+        fi
+    done
+
+    echo ""
+    if [ $errors -gt 0 ]; then
+        log_error "[CONVENTION CHECK] FAILED with ${errors} error(s). Please fix VARIANTS array before building."
+        return 1
+    else
+        log_ok "[CONVENTION CHECK] PASSED for all ${entry_num} variant(s)"
+        return 0
+    fi
 }
 
 parse_variants() {
@@ -375,7 +454,13 @@ validate_variant() {
     echo "└─────────────────────────────────────────────────┘"
     echo ""
 
-    IFS=';' read -ra cmds <<< "$validate_cmds"
+    local cmds=()
+    local _remaining="$validate_cmds"
+    while [[ "$_remaining" == *"|||"* ]]; do
+        cmds+=("${_remaining%%|||*}")
+        _remaining="${_remaining#*|||}"
+    done
+    cmds+=("$_remaining")
     local cmd_num=0
     
     for cmd in "${cmds[@]}"; do
@@ -492,6 +577,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 parse_variants
+
+if ! validate_delimiter_convention; then
+    exit 1
+fi
 
 if $LIST_MODE; then
     list_variants
