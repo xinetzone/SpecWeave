@@ -22,20 +22,22 @@ VARIANTS=(
 | name | 变体名称，必须与目录名一致 | 小写+连字符，如 `conda-llvm` |
 | description | 一句话中文描述 | 简洁说明，如 `conda+LLVM/clang编译工具链` |
 | dependencies | 依赖的变体名 | 逗号分隔多个依赖；无依赖留空字符串 |
-| validation-commands | 构建后验证命令 | 分号 `;` 分隔多条 shell 命令 |
+| validation-commands | 构建后验证命令 | `\|\|\|`（三管道）分隔多条 shell 命令 |
 
 **示例**：
 ```bash
-"conda|Miniconda3基础环境||/opt/conda/bin/conda --version;/opt/conda/bin/conda info --envs"
+"conda|Miniconda3基础环境||/opt/conda/bin/conda --version|||/opt/conda/bin/conda info --envs"
 "conda-llvm|conda+LLVM/clang编译工具链|conda|/opt/conda/bin/clang++ --version"
+"ai-dev|AI/ML/NLP全栈开发环境|onnx-quantized|/opt/conda/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/bin/jupyter lab --version|||docker inspect --format='{{json .Config.Entrypoint}}' devcontainer-base:ai-dev-latest"
 ```
 
 ### 字段分隔符选择原则
 
 - 首选 `|` 作为字段分隔符（验证命令中的路径不含 `|`）
-- 验证命令之间用 `;` 分隔
+- **验证命令之间用 `|||`（三管道）分隔**，禁止使用 `;`/`|`/`&&`/`||` 等单/双shell元字符
 - 依赖变体之间用 `,` 分隔
 - **禁止**使用 `:` 作为字段分隔符（与路径中的 `:` 冲突）
+- **禁止**使用单字符shell元字符（`;`/`|`/`&`/换行符）作为命令分隔符（会被命令内容中的合法语法误分割）
 
 ## 构建流程
 
@@ -101,10 +103,32 @@ build.sh 的 `parse_timer_logs()` 会自动解析这些标记，生成阶段耗�
 ### 验证命令格式
 
 验证命令在容器内以 `bash -c "<cmd>"` 执行：
-- 命令以分号 `;` 分隔，逐条执行
+- 命令以 `|||`（三管道）分隔，逐条执行（使用shell参数扩展解析，非IFS分割）
 - 单条命令超时 60 秒（使用 `timeout` 命令）
 - 每条命令独立报告结果，不短路
 - 最终统计 `pass_count/total_count PASS`
+
+**命令分隔符选择规范（安全命令列表分隔符模式）**：
+
+选择命令列表分隔符时必须遵循以下原则：
+1. **内容扫描优先**：先列出所有待分隔命令，扫描其中出现的shell元字符集
+2. **使用多字符无意义序列**：推荐 `|||`（三管道），在bash中无语法意义（`||`是或运算符，但`|||`不是合法语法序列）
+3. **禁止单字符元字符**：不得使用`;`/`|`/`&`/换行符，它们会出现在合法命令中（如`python -c "a;b"`、`grep|sed|awk`管道）
+4. **禁止IFS分割**：使用shell参数扩展`${var%%sep*}`和`${var#*sep}`解析，因为IFS不支持多字符分隔符
+5. **trim+空值过滤**：拆分后对每条命令去除首尾空白，跳过空字符串
+
+解析实现（build.sh已内置，新增变体无需自行实现）：
+```bash
+local cmds=()
+local _remaining="$validate_cmds"
+while [[ "$_remaining" == *"|||"* ]]; do
+    cmds+=("${_remaining%%|||*}")
+    _remaining="${_remaining#*|||}"
+done
+cmds+=("$_remaining")
+```
+
+> **反模式教训**：早期版本使用`;`作为分隔符，被`python -c "import a,b;print(1)"`中的分号错误分割，导致验证命令永远失败。此bug在ai-dev变体测试T4/T25修复后才暴露。
 
 ### 镜像命名约定
 

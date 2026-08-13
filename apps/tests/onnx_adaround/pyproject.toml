@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "onnx-adaround"
+version = "0.1.0"
+description = "Pure ONNX-ecosystem reimplementation of AdaRound post-training quantization (torch-free, no onnx2pytorch)."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "SpecWeave" }]
+# NOTE: Intentionally EXCLUDED dependencies (never re-add):
+#   - torch / torchvision: heavy (~2GB), non-portable. This library is torch-free.
+#   - onnx2pytorch: has functional defects (Resize scales parsing, fixed-reshape
+#     batch collapse, unreliable Resize-with-scales) and drags in torch.
+dependencies = [
+    "onnx>=1.16.0",
+    "onnxruntime>=1.20.0",
+    "onnxscript>=0.1.0",
+    "numpy>=1.24",
+    "Pillow>=9.0",
+]
+
+[project.optional-dependencies]
+# Dev/test deps. torch is ONLY allowed here as an optional dev reference for
+# numerical cross-checks in tests; it is never a runtime dependency of the library.
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+    "torch>=2.0",
+]
+
+[tool.setuptools.packages.find]
+include = ["onnx_adaround*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+# Use the package-directory path (not the package name) as the source. When the
+# package is resolved from PYTHONPATH (not installed), coverage's
+# `source=["onnx_adaround"]` triggers a startup import of the package before the
+# tracer attaches, producing "module-not-measured" / 0% coverage. A path-based
+# source avoids that startup import and lets coverage trace the modules correctly.
+source = ["."]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]

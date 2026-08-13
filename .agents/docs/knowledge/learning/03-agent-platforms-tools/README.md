@@ -45,7 +45,7 @@ Agent平台与工具生态可分为七大类别：
 | [mopmonk-security-agent-wiki/](mopmonk-security-agent-wiki/00-overview.md) | 7篇 | **MopMonk安全Agent（扫地僧）**：CyberGym全球第七、中国第一的漏洞复现AI Agent，73.1%成功率，MiniMax M3基座，结构化记忆+记忆驱动挖掘+多Agent并行探索三大核心技术 |
 | [open-code-review-wiki/](open-code-review-wiki/00-overview.md) | 11篇 | **阿里Open Code Review开源AI代码评审工具**：确定性工程×Agent混合驱动架构，阿里内部数万开发者验证、识别数百万缺陷，F1指标在AACR-Bench领先，含安装/使用/优化/集成/评估/FAQ完整指南 |
 | [rainman-translate-book-wiki/](rainman-translate-book-wiki/00-overview.md) | 8篇 | **Rainman Translate Book整书翻译神器**：基于Claude Code Skill的开源整书翻译，8个并行子代理+术语表锁定+相邻上下文+断点续传，支持PDF/DOCX/EPUB输入，五种格式输出 |
-| [volcengine-agent-plan-wiki/](volcengine-agent-plan-wiki/README.md) | 9篇 | **火山引擎方舟Agent Plan共创计划参与指南**：一个API Key覆盖编程/生图/生视频/向量化/联网搜索的订阅制产品，五大征集方向（评测/Agent落地/应用/编程协同/探索实验）、参与流程、奖励机制、跨模态范式（语言规划→生图→生视频链路） |
+| [volcengine-agent-plan-wiki/](volcengine-agent-plan-wiki/README.md) | 10篇 | **火山引擎方舟Agent Plan共创计划参与指南**：一个API Key覆盖编程/生图/生视频/向量化/联网搜索的订阅制产品（Agent Model + Agent Harness 用量资源、Seedance/Seedream 字节SOTA多模态模型），五大征集方向（评测/Agent落地/应用/编程协同/探索实验）、参与流程、奖励机制、跨模态范式（语言规划→生图→生视频链路）、CookBook实践案例库 |
 | **[hermes-agent-integration/](hermes-agent-integration/README.md)** | **9篇** | **SpecWeave 接入 Hermes Agent 集成指南**：把 SpecWeave 整个工作区（AGENTS.md/.agents 能力体系）接入 Hermes Agent 的实战指导，覆盖两条路径（框架插件 + Hermes OKF 记忆层）、插件接口规范、能力映射矩阵、配置文件、数据格式转换、权限认证、调用示例与故障排查 |
 | **[hermes-agent-wiki/](hermes-agent-wiki/README.md)** | **12篇** | **Hermes Agent 学习 Wiki 教程**：唯一内置学习闭环的自进化 AI Agent 完整教程，12章覆盖产品总览、核心特性、快速上手、CLI/斜杠命令（COMMAND_REGISTRY）、配置体系、消息网关、工具与工具集、技能系统、记忆系统、MCP/cron/委派扩展、架构解析与源码导读、术语表/FAQ/资源 |
 

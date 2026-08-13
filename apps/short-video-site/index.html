@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReelVibe - 发现精彩短视频</title>
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+<body>
+  <!-- 左侧导航栏 -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="assets/logo.jpg" alt="ReelVibe" class="logo-img">
+      <span class="logo-text">ReelVibe</span>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="featured">
+        <span class="material-icons-round">grid_view</span>
+        <span>精选</span>
+      </a>
+      <a href="#" class="nav-item" data-page="recommend">
+        <span class="material-icons-round">auto_awesome</span>
+        <span>推荐</span>
+      </a>
+      <a href="#" class="nav-item" data-page="ai-search">
+        <span class="material-icons-round">travel_explore</span>
+        <span>AI 搜索</span>
+      </a>
+      <a href="#" class="nav-item" data-page="following">
+        <span class="material-icons-round">people</span>
+        <span class="nav-badge-wrap">关注<span class="nav-badge">3</span></span>
+      </a>
+      <a href="#" class="nav-item" data-page="friends">
+        <span class="material-icons-round">diversity_3</span>
+        <span class="nav-badge-wrap">朋友<span class="nav-badge red">12</span></span>
+      </a>
+      <a href="#" class="nav-item" data-page="mine">
+        <span class="material-icons-round">person</span>
+        <span>我的</span>
+      </a>
+      <div class="nav-divider"></div>
+      <a href="#" class="nav-item" data-page="live">
+        <span class="material-icons-round">live_tv</span>
+        <span>直播</span>
+      </a>
+      <a href="#" class="nav-item" data-page="cinema">
+        <span class="material-icons-round">movie</span>
+        <span>放映厅</span>
+      </a>
+      <a href="#" class="nav-item" data-page="drama">
+        <span class="material-icons-round">theaters</span>
+        <span>短剧</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-tags">
+        <a href="#">关于</a><a href="#">帮助</a><a href="#">隐私</a>
+      </div>
+      <p class="sidebar-copyright">&copy; 2026 ReelVibe</p>
+    </div>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="main-content">
+    <!-- 顶部栏 -->
+    <header class="top-bar">
+      <div class="search-box">
+        <span class="material-icons-round search-icon">search</span>
+        <input type="text" placeholder="搜索你感兴趣的内容" id="searchInput">
+        <button class="search-btn" aria-label="搜索">
+          <span class="material-icons-round">search</span>
+        </button>
+      </div>
+      <div class="top-actions">
+        <button class="top-btn" title="充值中心">
+          <span class="material-icons-round">diamond</span>
+        </button>
+        <button class="top-btn" title="客户端">
+          <span class="material-icons-round">desktop_windows</span>
+        </button>
+        <button class="top-btn" title="投稿">
+          <span class="material-icons-round">cloud_upload</span>
+        </button>
+        <button class="top-btn notification" title="通知">
+          <span class="material-icons-round">notifications</span>
+          <span class="notification-dot">47</span>
+        </button>
+        <button class="top-btn" title="私信">
+          <span class="material-icons-round">mail</span>
+          <span class="msg-dot"></span>
+        </button>
+        <div class="avatar">
+          <img src="assets/logo.jpg" alt="用户头像">
+        </div>
+      </div>
+    </header>
+
+    <!-- 分类标签 -->
+    <div class="category-bar">
+      <div class="category-scroll" id="categoryScroll">
+        <button class="category-chip active" data-category="all">全部</button>
+        <button class="category-chip" data-category="course">公开课</button>
+        <button class="category-chip" data-category="film">影视</button>
+        <button class="category-chip" data-category="game">游戏</button>
+        <button class="category-chip" data-category="music">音乐</button>
+        <button class="category-chip" data-category="drama">小剧场</button>
+        <button class="category-chip" data-category="food">美食</button>
+        <button class="category-chip" data-category="beauty">美妆穿搭</button>
+        <button class="category-chip" data-category="vlog">生活vlog</button>
+        <button class="category-chip active-underline" data-category="travel">旅行</button>
+        <button class="category-chip" data-category="anime">二次元</button>
+        <button class="category-chip" data-category="knowledge">知识</button>
+        <button class="category-chip" data-category="parenting">亲子</button>
+        <button class="category-chip" data-category="animal">动物</button>
+        <button class="category-chip" data-category="sports">体育</button>
+      </div>
+    </div>
+
+    <!-- 内容区域：播放器 + 推荐 -->
+    <div class="content-area">
+      <!-- 主播放器 -->
+      <section class="player-section">
+        <div class="video-player" id="mainPlayer">
+          <video id="mainVideo" autoplay muted loop playsinline>
+            <source src="assets/videos/nature.mp4" type="video/mp4">
+          </video>
+          <div class="player-overlay">
+            <div class="player-info">
+              <div class="player-author">
+                <img src="assets/logo.jpg" alt="" class="author-avatar">
+                <div>
+                  <span class="author-name">@自然探索家</span>
+                  <span class="post-date">8月10日</span>
+                </div>
+                <button class="follow-btn">+ 关注</button>
+              </div>
+              <h2 class="video-title">航拍中国：云雾缭绕的金色山峦，治愈系自然风光 4K</h2>
+              <div class="video-tags">
+                <span>#自然风光</span><span>#航拍</span><span>#治愈系</span><span>#4K</span>
+              </div>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn" id="playPauseBtn" title="播放/暂停">
+                <span class="material-icons-round">pause</span>
+              </button>
+              <span class="time-display" id="timeDisplay">00:00 / 00:05</span>
+              <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <button class="ctrl-btn" id="muteBtn" title="静音">
+                <span class="material-icons-round">volume_off</span>
+              </button>
+              <button class="ctrl-btn" id="fullscreenBtn" title="全屏">
+                <span class="material-icons-round">fullscreen</span>
+              </button>
+            </div>
+          </div>
+          <div class="subtitle-overlay" id="subtitleOverlay">
+            云雾缭绕的金色山峦
+          </div>
+        </div>
+
+        <!-- 互动栏 -->
+        <div class="engagement-bar">
+          <button class="engage-btn">
+            <span class="material-icons-round engage-icon">favorite</span>
+            <span class="engage-count">18.2万</span>
+          </button>
+          <button class="engage-btn">
+            <span class="material-icons-round engage-icon">chat_bubble</span>
+            <span class="engage-count">3,421</span>
+          </button>
+          <button class="engage-btn">
+            <span class="material-icons-round engage-icon">star</span>
+            <span class="engage-count">8,956</span>
+          </button>
+          <button class="engage-btn">
+            <span class="material-icons-round engage-icon">share</span>
+            <span class="engage-count">分享</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 右侧推荐列表 -->
+      <aside class="recommend-sidebar">
+        <h3 class="recommend-title">热门推荐</h3>
+        <div class="recommend-list" id="recommendList">
+          <!-- JS 动态生成 -->
+        </div>
+      </aside>
+    </div>
+
+    <!-- 下方视频网格 -->
+    <section class="video-grid-section">
+      <h3 class="section-title">更多精彩</h3>
+      <div class="video-grid" id="videoGrid">
+        <!-- JS 动态生成 -->
+      </div>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

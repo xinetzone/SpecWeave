@@ -289,13 +289,13 @@ def generate_index_tables(
             for e in doc_entries:
                 tags_str = ' '.join(f'`{t}`' for t in e.tags[:3]) if e.tags else ""
                 mat = e.maturity if e.maturity else "-"
-                lines.append(f"| [{e.title}]({e.filename}) | {e.summary} | {mat} | {tags_str} |")
+                lines.append(f"| [{e.title}](./{e.filename}) | {e.summary} | {mat} | {tags_str} |")
         else:
             lines.append("| 文档 | 说明 | 标签 |")
             lines.append("|------|------|------|")
             for e in doc_entries:
                 tags_str = ' '.join(f'`{t}`' for t in e.tags[:3]) if e.tags else ""
-                lines.append(f"| [{e.title}]({e.filename}) | {e.summary} | {tags_str} |")
+                lines.append(f"| [{e.title}](./{e.filename}) | {e.summary} | {tags_str} |")
         lines.append("")
 
     if dir_entries:
@@ -306,7 +306,7 @@ def generate_index_tables(
         for d in dir_entries:
             status = "✅" if d.readme_exists else "📋"
             label = humanize_dirname(d.dirname)
-            link = f"{d.dirname}/README.md" if d.readme_exists else f"{d.dirname}/"
+            link = f"./{d.dirname}/README.md" if d.readme_exists else f"./{d.dirname}/"
             extra = f"（{d.subdir_count}个子目录）" if d.subdir_count else ""
             lines.append(f"| {status} [{label}]({link}) | {d.md_count} | {extra} |")
         lines.append("")

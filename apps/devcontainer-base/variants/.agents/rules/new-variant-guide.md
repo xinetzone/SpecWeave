@@ -87,15 +87,17 @@ cp -r variants/_template variants/<variant-name>
 
 **示例**：
 ```bash
-"cuda|CUDA 12.x GPU计算环境||nvidia-smi;nvcc --version"
+"cuda|CUDA 12.x GPU计算环境||nvidia-smi|||nvcc --version"
 "pytorch|PyTorch GPU训练环境|conda,cuda|python -c 'import torch;print(torch.__version__,torch.cuda.is_available())'"
+"ai-dev|AI/ML/NLP全栈环境|onnx-quantized|/opt/conda/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/bin/jupyter lab --version"
 ```
 
 注意：
 - 字段分隔符是 `|`（管道符），不是 `:`
-- 验证命令之间用 `;` 分隔
+- **验证命令之间用 `|||`（三管道）分隔**，禁止使用 `;`（会被Python `-c "a;b"` 等命令内部分号误分割）
 - 依赖变体之间用 `,` 分隔
 - 无依赖时第三个字段留空（连续两个 `||`）
+- 验证命令中包含Python单行多语句（含`;`）时，`|||`分隔符可正确处理
 
 ### Step 6: 创建测试脚本
 

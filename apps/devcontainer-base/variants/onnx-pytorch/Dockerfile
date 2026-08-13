@@ -104,39 +104,78 @@ RUN echo "" && \
 #       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
-    echo "" && \
-    echo "########################################################################" && \
-    echo "# [ONNX-PYTORCH VARIANT STAGE 2/4] Install PyTorch CPU + torchvision" && \
-    echo "# Packages: torch, torchvision (CPU wheels)" && \
-    echo "# Index: ${TORCH_INDEX_URL}" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    echo "[ACTION] Sourcing conda.sh and activating base environment..." && \
-    source /opt/conda/etc/profile.d/conda.sh && \
-    conda activate base && \
-    echo "[OK] base environment activated" && \
-    echo "  - conda env: $CONDA_DEFAULT_ENV" && \
-    echo "  - python: $(python --version 2>&1)" && \
-    echo "  - pip: $(pip --version 2>&1)" && \
-    echo "" && \
-    echo "[ACTION] Installing PyTorch CPU + torchvision from CPU index..." && \
-    echo "[INFO] Downloading CPU wheels (no CUDA bundled), this may take a while..." && \
-    pip install --no-cache-dir torch torchvision --index-url "${TORCH_INDEX_URL}" && \
-    echo "" && \
-    echo "[OK] PyTorch CPU + torchvision installation complete" && \
-    echo "" && \
-    echo "[INFO] Installed package versions:" && \
-    echo "  - torch: $(python -c 'import torch;print(torch.__version__)')" && \
-    echo "  - torchvision: $(python -c 'import torchvision;print(torchvision.__version__)')" && \
-    echo "  - cuda available: $(python -c 'import torch;print(torch.cuda.is_available())')" && \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "ONXS2=$_NOW" >> /tmp/.onnx-pytorch-variant-build-timer && \
-    echo "[TIMER] Stage 2/4 (install pytorch) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 2 complete'
+    --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    <<'STAGE2_EOF'
+set -e
+echo ""
+echo "########################################################################"
+echo "# [ONNX-PYTORCH VARIANT STAGE 2/4] Install PyTorch CPU + torchvision"
+echo "# Packages: torch, torchvision (CPU wheels)"
+echo "# Index: ${TORCH_INDEX_URL}"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+echo "[ACTION] Sourcing conda.sh and activating base environment..."
+source /opt/conda/etc/profile.d/conda.sh
+conda activate base
+echo "[OK] base environment activated"
+echo "  - conda env: $CONDA_DEFAULT_ENV"
+echo "  - python: $(python --version 2>&1)"
+echo "  - pip: $(pip --version 2>&1)"
+echo ""
+
+# ── 辅助函数：pip 包分组安装（结构化日志+计时+冲突诊断） ──
+pip_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [PIP INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] pip check for dependency conflicts:"
+        pip check 2>&1 | head -10 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] pip check output for conflict diagnosis:"
+        pip check 2>&1 | head -30 || true
+        echo "[DIAG] Already-installed conflicting packages:"
+        pip list --format=freeze 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -20 || true
+        exit $rc
+    fi
+}
+
+pip_install_group "G1: PyTorch CPU" \
+    "torch + torchvision from CPU index (no CUDA bundled)" \
+    torch torchvision --index-url "${TORCH_INDEX_URL}"
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] PyTorch installation                   │"
+echo "└─────────────────────────────────────────────────┘"
+echo "  - torch: $(python -c 'import torch;print(torch.__version__)')"
+echo "  - torchvision: $(python -c 'import torchvision;print(torchvision.__version__)')"
+echo "  - cuda available: $(python -c 'import torch;print(torch.cuda.is_available())')"
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "ONXS2=$_NOW" >> /tmp/.onnx-pytorch-variant-build-timer
+echo "[TIMER] Stage 2/4 (install pytorch) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s"
+echo '[OK] Stage 2 complete'
+STAGE2_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/4 (追加层3): ONNX 生态安装 + onnx-pytorch-init.sh + 权限验证
@@ -152,18 +191,45 @@ echo ""
 _STAGE_START=$(date +%s)
 source /opt/conda/etc/profile.d/conda.sh
 conda activate base
-echo "[ACTION] Installing ONNX ecosystem packages..."
-echo "[INFO] Package list:"
-echo "  - onnx"
-echo "  - onnxruntime"
-echo "  - onnx-simplifier"
-echo "  - onnxoptimizer"
-echo "  - onnxscript (required by torch.onnx.export in torch>=2.1)"
+
+# ── 辅助函数：pip 包分组安装（结构化日志+计时+冲突诊断） ──
+pip_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [PIP INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] pip check for dependency conflicts:"
+        pip check 2>&1 | head -10 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] pip check output for conflict diagnosis:"
+        pip check 2>&1 | head -30 || true
+        exit $rc
+    fi
+}
+
+pip_install_group "G2: ONNX Ecosystem" \
+    "onnx + onnxruntime + simplifier + optimizer + onnxscript" \
+    onnx onnxruntime onnx-simplifier onnxoptimizer onnxscript
+
 echo ""
-pip install --no-cache-dir onnx onnxruntime onnx-simplifier onnxoptimizer onnxscript
-echo ""
-echo "[OK] ONNX ecosystem installation complete"
-echo "[INFO] Installed package versions:"
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] ONNX installation                      │"
+echo "└─────────────────────────────────────────────────┘"
 echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)')"
 echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)')"
 echo ""
