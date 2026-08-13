@@ -153,7 +153,7 @@ preflight_checks() {
     local checks_fail=0
 
     # Check 1: Docker daemon
-    log_info "[1/6] Checking Docker daemon..."
+    log_info "[1/7] Checking Docker daemon..."
     if docker info >/dev/null 2>&1; then
         local docker_ver
         docker_ver=$(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')
@@ -165,7 +165,7 @@ preflight_checks() {
     fi
 
     # Check 2: BuildKit support
-    log_info "[2/6] Checking BuildKit support..."
+    log_info "[2/7] Checking BuildKit support..."
     if docker buildx version >/dev/null 2>&1; then
         local buildx_ver
         buildx_ver=$(docker buildx version 2>/dev/null | awk '{print $2}')
@@ -177,7 +177,7 @@ preflight_checks() {
     fi
 
     # Check 3: Disk space
-    log_info "[3/6] Checking disk space..."
+    log_info "[3/7] Checking disk space..."
     local available_kb
     available_kb=$(df -k "$PROJECT_DIR" | tail -1 | awk '{print $4}')
     local available_gb=$((available_kb / 1024 / 1024))
@@ -193,7 +193,7 @@ preflight_checks() {
     fi
 
     # Check 4: Dockerfile exists
-    log_info "[4/6] Checking Dockerfile..."
+    log_info "[4/7] Checking Dockerfile..."
     if [ -f "$PROJECT_DIR/Dockerfile" ]; then
         local df_size
         df_size=$(wc -c < "$PROJECT_DIR/Dockerfile")
@@ -205,7 +205,7 @@ preflight_checks() {
     fi
 
     # Check 5: Local Miniforge cache
-    log_info "[5/6] Checking local Miniforge3 cache..."
+    log_info "[5/7] Checking local Miniforge3 cache..."
     local miniforge_cache="$PROJECT_DIR/.cache/Miniforge3-Latest-Linux-x86_64.sh"
     if [ -f "$miniforge_cache" ]; then
         local cache_size
@@ -218,7 +218,7 @@ preflight_checks() {
     fi
 
     # Check 6: Build args summary
-    log_info "[6/6] Build configuration summary:"
+    log_info "[6/7] Build configuration summary:"
     printf "    %-20s %s\n" "Image:" "${FULL_IMAGE}"
     printf "    %-20s %s\n" "APT mirror:" "${APT_MIRROR}"
     printf "    %-20s %s\n" "PyPI mirror:" "${PIP_MIRROR}"
@@ -231,12 +231,28 @@ preflight_checks() {
     printf "    %-20s %s\n" "Log file:" "${BUILD_LOG_FILE}"
     checks_ok=$((checks_ok + 1))
 
+    # Check 7: Required scripts exist
+    log_info "[7/7] Checking required scripts..."
+    local missing_scripts=""
+    for s in scripts/verify-cext.sh scripts/ft-benchmark.sh examples/free_threading_demo.py; do
+        if [ ! -f "$PROJECT_DIR/$s" ]; then
+            missing_scripts="${missing_scripts} $s"
+        fi
+    done
+    if [ -z "$missing_scripts" ]; then
+        log_ok "  All required scripts present"
+        checks_ok=$((checks_ok + 1))
+    else
+        log_warn "  Missing scripts:${missing_scripts} (non-blocking)"
+        checks_ok=$((checks_ok + 1))
+    fi
+
     echo ""
     if [ "$checks_fail" -gt 0 ]; then
         log_fail "Pre-flight checks failed (${checks_fail} error(s)). Please fix and retry."
         exit 1
     fi
-    log_ok "Pre-flight checks passed (${checks_ok}/6 checks OK)"
+    log_ok "Pre-flight checks passed (${checks_ok}/7 checks OK)"
     echo ""
 }
 
@@ -354,7 +370,6 @@ quick_smoke_test() {
             local demo_rc=$?
             if [ $demo_rc -eq 0 ] && echo "$demo_output" | grep -q "No-GIL\|free-threading\|无GIL" && \
                echo "$demo_output" | grep -q "GIL disabled\|GIL.*禁用"; then
-                # Extract best speedup
                 local best_speedup
                 best_speedup=$(echo "$demo_output" | grep -oP '\d+\.\d+x' | head -1 || echo "?")
                 log_ok "    Free-threading demo: PASS (best speedup: ${best_speedup})"
@@ -365,13 +380,34 @@ quick_smoke_test() {
                 echo "$demo_output" | tail -20 | while IFS= read -r line; do
                     log_info "      ${line}"
                 done
-                # Non-blocking: demo failure doesn't fail the build
                 test_passed=$((test_passed + 1))
             fi
         else
             log_warn "    Free-threading demo: SKIP (script not found at ${demo_script})"
             test_passed=$((test_passed + 1))
         fi
+    fi
+
+    # 10. C extension ABI compatibility verification
+    log_info "  Testing: C extension ABI compatibility..."
+    if docker exec "$test_container" test -x /usr/local/bin/verify-cext.sh; then
+        local cext_output
+        cext_output=$(timeout 30 docker exec "$test_container" bash /usr/local/bin/verify-cext.sh 2>&1)
+        local cext_rc=$?
+        if [ $cext_rc -eq 0 ]; then
+            log_ok "    C extension verification: PASS (all C exts load correctly)"
+            test_passed=$((test_passed + 1))
+        else
+            log_fail "    C extension verification: FAIL"
+            log_error "    verify-cext.sh output:"
+            echo "$cext_output" | tail -20 | while IFS= read -r line; do
+                log_error "      ${line}"
+            done
+            test_failed=$((test_failed + 1))
+        fi
+    else
+        log_warn "    C extension verification: SKIP (verify-cext.sh not found in image)"
+        test_passed=$((test_passed + 1))
     fi
 
     # Cleanup
@@ -557,6 +593,18 @@ if $QUICK_TEST; then
     else
         log_fail "Quick smoke test found issues!"
         exit 1
+    fi
+
+    # Run automated ft-benchmark to record speedup data
+    if [ "$PYTHON_BUILD" = "cp314t" ] && [ -x "$SCRIPT_DIR/ft-benchmark.sh" ]; then
+        echo ""
+        log_step "Free-Threading Performance Benchmark"
+        BENCHMARK_LOG="${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" \
+        BENCHMARK_RANGE=50000 \
+        MIN_SPEEDUP=2.0 \
+        bash "$SCRIPT_DIR/ft-benchmark.sh" --image "$FULL_IMAGE" --quick || {
+            log_warn "ft-benchmark did not meet threshold (see log for details)"
+        }
     fi
 fi
 

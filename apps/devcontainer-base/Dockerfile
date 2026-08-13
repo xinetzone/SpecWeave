@@ -6,7 +6,7 @@
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
 # Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
-# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, libmamba solver), Jupyter in base env
+# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, GCC 14.4.0编译, libgcc 16.1.0运行时, libmamba solver), Jupyter在main环境
 #
 # Build: docker build -t devcontainer-base .
 # CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t devcontainer-base .
@@ -46,7 +46,7 @@ ARG PYTHON_VERSION
 ARG PYTHON_BUILD
 
 LABEL maintainer="SpecWeave"
-LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(Python 3.14.6 free-threading cp314t, conda-forge, libmamba solver), managed by supervisord"
+LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(Python 3.14.6 free-threading cp314t, GCC 14.4.0编译, libgcc 16.1.0运行时, conda-forge, libmamba solver), managed by supervisord"
 LABEL version="2.0-ft"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
@@ -217,7 +217,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # 变化频率：中（Python/包版本升级时改）
 # 原则：Miniforge3（conda-forge官方发行版，无defaults channel/无Anaconda商业包）轻量安装到/opt/conda，
 #       默认conda-forge channel + libmamba solver，Python 3.14.6使用cp314t free-threading构建（GIL默认禁用），
-#       Jupyter安装到base环境，安装后立即清理缓存，无ABI冲突
+#       Python由GCC 14.4.0编译，运行时自动升级至libgcc 16.1.0（向后兼容，无ABI冲突），
+#       Jupyter安装到main环境，安装后立即清理缓存，无ABI冲突
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
@@ -563,10 +564,11 @@ COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
 COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
 
 RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     _STAGE_START=$(date +%s) && \
-    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
     chown -R devuser:devuser /workspace && \
     echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
@@ -671,6 +673,14 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     sshd -t && echo "[OK] sshd config valid" && \
     python --version && echo "[OK] python (conda) available" && \
     python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); assert ft==1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'; print(f'[OK] Python free-threading build (GIL disabled by default, PYTHON_GIL=1 to enable)')" && \
+    echo "[C-EXT] Verifying C extension compatibility..." && \
+    python -c "import brotli; d=b'hello'*100; c=brotli.compress(d); assert brotli.decompress(c)==d; print('[OK] brotli C ext (non-ft-safe, GIL warning expected)')" 2>/dev/null && \
+    python -c "import cffi; ffi=cffi.FFI(); ffi.cdef('int printf(const char*, ...);'); C=ffi.dlopen(None); print('[OK] cffi C ext')" 2>/dev/null && \
+    python -c "import sqlite3; c=sqlite3.connect(':memory:'); c.execute('CREATE TABLE t(id INT)'); c.execute('INSERT INTO t VALUES(1)'); assert c.execute('SELECT * FROM t').fetchone()==(1,); print('[OK] _sqlite3 C ext')" && \
+    python -c "import ssl; ctx=ssl.create_default_context(); assert ctx.protocol==ssl.PROTOCOL_TLS_CLIENT; print('[OK] _ssl C ext')" && \
+    python -c "import zlib; d=b'test'*50; c=zlib.compress(d); assert zlib.decompress(c)==d; print('[OK] zlib C ext')" && \
+    python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
+    bash /usr/local/bin/verify-cext.sh >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
     conda --version && echo "[OK] conda available" && \
     pip --version && echo "[OK] pip available" && \
     jupyter --version && echo "[OK] jupyter available" && \
