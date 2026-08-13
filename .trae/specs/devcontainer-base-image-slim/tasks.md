@@ -116,8 +116,9 @@
     - 端到端服务验证（SSH/Docker DinD/JupyterLab/Podman）
 - **Acceptance Criteria Addressed**: AC-2, AC-4, AC-5, AC-7, AC-8
 - **Release Artifacts**:
-  - RELEASE-v2.md已生成发布说明
-  - examples/free_threading_demo.py已提供并发性能示例
+  - RELEASE-v2.md已生成发布说明（含性能基准数据：cp314t 8线程4.98x加速）
+  - examples/free_threading_demo.py已提供并发性能示例（修复检测逻辑，使用sysconfig）
+  - CI流水线已修正free-threading检测，新增cp314t环境创建验证
 
 ## Task 9: 独立审查与修正 ⏳
 - **Status**: `pending`

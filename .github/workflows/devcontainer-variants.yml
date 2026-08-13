@@ -365,13 +365,19 @@ jobs:
           echo ""
           MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
 
-          echo "--- [1/8] Free-threading build detection ---"
+          echo "--- [1/8] Python build type detection ---"
           docker run --rm "$MAIN_IMAGE" python -c "
-          import sys
-          assert hasattr(sys, '_is_gil_enabled'), 'Not a free-threading build'
-          print(f'  Python: {sys.version}')
+          import sys, sysconfig
+          py_gil_disabled = sysconfig.get_config_var('Py_GIL_DISABLED')
+          soabi = sysconfig.get_config_var('SOABI') or ''
+          is_ft = (py_gil_disabled == 1) or ('cpython-314t' in soabi)
+          build_type = 'cp314t (free-threading)' if is_ft else 'cp314 (standard, GIL always on)'
+          print(f'  Python: {sys.version.split()[0]}')
+          print(f'  Build:  {build_type}')
+          print(f'  SOABI:  {soabi}')
+          assert hasattr(sys, '_is_gil_enabled'), 'Python 3.14+ required'
           print(f'  GIL enabled: {sys._is_gil_enabled()}')
-          print('  ✅ Free-threading build detected')
+          print('  ✅ Python 3.14 detected')
           "
           echo ""
 
@@ -416,19 +422,33 @@ jobs:
 
           echo "✅ Deep verification (8/8) completed"
 
-      - name: Run free-threading demo script
+      - name: Run free-threading demo script (standard build)
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
-          echo "=== STEP: Free-threading demo (GIL mode) ==="
+          echo "=== STEP: Free-threading demo (standard cp314 build) ==="
           echo ""
           MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
-          # Run with GIL enabled (default) first
+          # Run demo on default Python (cp314, GIL always on - script handles this correctly)
           docker run --rm \
             -v "$(pwd)/examples:/examples:ro" \
-            "$MAIN_IMAGE" python /examples/free_threading_demo.py 2>&1 | head -50
+            "$MAIN_IMAGE" python /examples/free_threading_demo.py 2>&1 | head -60
           echo ""
-          echo "✅ Free-threading demo script runs correctly"
+          echo "✅ Free-threading demo script runs correctly on standard build"
+          echo ""
+          echo "=== STEP: Verify cp314t free-threading env creation ==="
+          echo ""
+          # Verify that cp314t (free-threading) environment can be created and GIL can be disabled
+          CONTAINER_FT=$(docker run -d "$MAIN_IMAGE" tail -f /dev/null)
+          docker exec "$CONTAINER_FT" conda create -n ft -c conda-forge "python=*=*_cp314t" --solver libmamba -y 2>&1 | tail -5
+          docker exec "$CONTAINER_FT" /opt/conda/envs/ft/bin/python -c "
+          import sys, sysconfig
+          assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'cp314t build not detected'
+          assert sys._is_gil_enabled() == False, 'GIL should be disabled by default in cp314t'
+          print(f'  ✅ cp314t free-threading env created: Python {sys.version.split()[0]}, GIL disabled')
+          "
+          docker rm -f "$CONTAINER_FT" 2>/dev/null
+          echo ""
 
       - name: Collect build logs
         if: always()

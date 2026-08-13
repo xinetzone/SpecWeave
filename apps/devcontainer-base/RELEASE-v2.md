@@ -11,12 +11,14 @@
 
 `conda-libmamba-v2` 是 devcontainer-base 基础镜像的**重大架构升级版本**，核心变更包括：
 
-- **Python 3.14.6 + free-threading（无GIL）支持**：Python生态最新版本，支持PEP 703无全局解释器锁实验性构建
+- **Python 3.14.6**：Python生态最新版本，支持PEP 703无全局解释器锁（free-threading）实验性构建
 - **libmamba求解器**：Conda默认求解器从经典solver切换为libmamba，依赖解析速度提升10-100倍
+- **free-threading可选支持**：默认安装标准CPython构建(cp314)，可通过`conda create -n ft python=*=*_cp314t -c conda-forge`一键创建无GIL环境
 - **环境统一**：移除 `/opt/venv` 虚拟环境，所有Python包/JupyterLab统一由Conda管理，消除路径歧义
 - **激进瘦身**：9步清理策略（APT缓存/文档/静态库/调试符号/__pycache__/locale/遥测），最终镜像 **2.38GB**
 - **构建可观测性**：构建计时器、日志持久化、预检机制、错误诊断信息
 - **JupyterLab替代Notebook**：默认Jupyter界面升级为Lab
+- **CI/CD流水线**：GitHub Actions三job架构（lint+build-main+push），支持自动推送到私有仓库
 
 ---
 
@@ -24,8 +26,8 @@
 
 | 组件 | v1（旧版） | **v2（本版）** | 变更类型 |
 |------|-----------|---------------|---------|
-| **Python** | 3.13 (系统) / 3.x (venv) | **3.14.6** (conda-forge, GCC 14.4.0) | ⬆️ 大版本升级 |
-| **free-threading** | ❌ 不支持 | **✅ 可用** (`sys._is_gil_enabled()=True`) | 🆕 新特性 |
+| **Python** | 3.13 (系统) / 3.x (venv) | **3.14.6** (conda-forge, GCC 14.4.0, 标准cp314构建) | ⬆️ 大版本升级 |
+| **free-threading** | ❌ 不支持 | **✅ 可选**（`conda create -n ft python=*=*_cp314t`创建无GIL环境） | 🆕 新特性 |
 | **Conda** | 24.x.x (Miniconda3) | **26.7.0** (Miniforge/mambaforge) | ⬆️ 大版本升级 |
 | **Conda Solver** | classic solver | **libmamba 2.3.2**（默认） | 🔄 求解器切换 |
 | **Conda Channels** | defaults + conda-forge | **conda-forge only** | 🧹 精简 |
@@ -35,30 +37,47 @@
 | **构建日志** | 仅stdout | **tee持久化 + plain进度** | 🆕 可观测性 |
 | **预检机制** | ❌ 无 | **6项预检** | 🆕 可靠性 |
 | **冒烟测试** | ❌ 手动 | **7项自动验证** | 🆕 CI就绪 |
+| **CI/CD流水线** | 5层链式构建 | **三job架构(lint+build+push)** | 🆕 自动推送 |
+| **变体适配** | 旧路径(/opt/venv) | **已适配**(/opt/conda) | 🔧 路径更新 |
 | **Ubuntu Base** | 26.04 | 26.04 | 无变更 |
 
 ---
 
 ## 3. 详细变更
 
-### 3.1 🐍 Python 3.14 + free-threading（无GIL）
+### 3.1 🐍 Python 3.14 + free-threading（无GIL）可选支持
 
-Python 3.14.6 来自 conda-forge，采用 GCC 14.4.0 编译，启用了 free-threading（PEP 703 无GIL）构建。
+默认Python 3.14.6 来自 conda-forge，采用 GCC 14.4.0 编译，安装的是**标准CPython构建(cp314)**，GIL始终启用以保证最大兼容性。
 
-**验证结果**：
+**验证结果（默认环境）**：
 ```python
->>> import sys
+>>> import sys, sysconfig
 >>> sys.version
-'3.14.6 | packaged by conda-forge | (main, Jul 23 2026, 13:16:19) [GCC 14.4.0]'
->>> sys._is_gil_enabled()  # free-threading模式下可禁用GIL
-True
+'3.14.6 | packaged by conda-forge | (main, Aug 11 2026, 10:26:15) [GCC 14.4.0]'
+>>> sysconfig.get_config_var('Py_GIL_DISABLED')
+0                                          # 0=标准构建(GIL), 1=free-threading构建
+>>> sys._is_gil_enabled()
+True                                       # GIL启用（标准构建始终为True）
 >>> # PEP 695 泛型语法支持
 >>> type Point[T] = tuple[T, T]
 >>> Point[int]
 tuple[int, int]
 ```
 
-> **注意**：free-threading在本镜像中默认为GIL启用状态（`_is_gil_enabled()=True`），可通过设置环境变量 `PYTHON_GIL=0` 启动无GIL模式。当前纯Python计算密集型任务已可受益于多线程并行，但含C扩展的包（如NumPy）需确认已提供free-threading兼容的build。
+**启用free-threading（无GIL）**：
+通过conda创建独立的free-threading环境（cp314t构建）：
+```bash
+conda create -n ft python=*=*_cp314t -c conda-forge --solver libmamba -y
+conda activate ft
+# python3.14t 二进制默认GIL禁用，PYTHON_GIL=1可强制启用兼容模式
+```
+
+> **重要提示**：
+> - 默认Python(cp314)是**标准构建**，设置`PYTHON_GIL=0`会报错"Disabling the GIL is not supported by this build"
+> - Free-threading构建(cp314t)GIL**默认禁用**，设置`PYTHON_GIL=1`可强制启用GIL（兼容模式）
+> - 正确检测free-threading构建的方式：`sysconfig.get_config_var('Py_GIL_DISABLED') == 1`，而非仅检查`hasattr(sys, '_is_gil_enabled')`（所有Python 3.14都有此函数）
+> - 纯Python CPU密集型任务在无GIL模式下8线程可获得约**5x加速**（详见§4.4性能基准）
+> - 含C扩展的包（NumPy等）需确认提供cp314t兼容build
 
 ### 3.2 ⚡ libmamba求解器
 
@@ -167,7 +186,7 @@ PODMAN_ROOTLESS=enabled
 | 3 | Conda 26.7.0版本 | ✅ |
 | 4 | libmambapy成功导入（无ImportError） | ✅ |
 | 5 | PEP 695 泛型语法`type Point[T] = tuple[T, T]` | ✅ |
-| 6 | free-threading构建检测 | ✅ |
+| 6 | Python构建类型确认（cp314标准构建，Py_GIL_DISABLED=0） | ✅ |
 | 7 | JupyterLab命令路径正确（/opt/conda/bin/jupyter） | ✅ |
 | 8 | /opt/venv不存在（已移除） | ✅ |
 
@@ -187,6 +206,22 @@ devcontainer-base    conda-libmamba-v2   2.38GB
 
 > 注：对比旧版含venv的conda镜像（约3.5GB），瘦身32%。但v2额外集成了Python 3.14（比3.13大）、libmamba、JupyterLab（比Notebook大），实际纯瘦身效果更显著。
 
+### 4.4 Free-Threading 性能基准测试
+
+**测试环境**：容器内16核CPU，素数计算任务（统计0~2,000,000内素数，纯Python CPU密集型）
+
+| Python构建 | GIL状态 | 单线程 | 8线程(threading) | 8进程(ProcessPool) |
+|-----------|---------|--------|-----------------|-------------------|
+| **cp314 (标准)** | 🔒 ON | 1.555s | 1.568s (**0.99x**) | 0.369s (**4.22x**) |
+| **cp314t (free-threading)** | 🔓 OFF | 1.653s (+6.3%开销) | **0.332s (4.98x)** 🎉 | 0.429s (3.85x) |
+| cp314t + PYTHON_GIL=1 | 🔒 ON | 1.653s | 1.671s (0.99x) | 0.466s (3.55x) |
+
+**关键结论**：
+- 🎉 **无GIL模式下8线程加速4.98x**，且多线程性能**超越多进程**(4.22x)——省去了进程间序列化/通信开销
+- 标准GIL模式下多线程完全无效(0.99x)，符合预期
+- Free-threading单线程有~6%性能开销（引用计数原子操作），但多线程加速收益远超此开销
+- cp314t + PYTHON_GIL=1回退到串行行为，验证了GIL开关的有效性
+
 ---
 
 ## 5. 已知问题 & 限制
@@ -194,10 +229,10 @@ devcontainer-base    conda-libmamba-v2   2.38GB
 | # | 问题 | 影响范围 | 状态 | 规避方案 |
 |---|------|---------|------|---------|
 | 1 | **TUNA conda镜像连接失败**：清华TUNA的conda-forge镜像在构建时返回`CondaHTTPError: HTTP 000 CONNECTION FAILED` | 国内使用TUNA源构建时 | ⚠️ 环境相关 | 使用`--conda-mirror official`切换官方源，或使用`--network-host` |
-| 2 | **Python 3.14 C扩展兼容性**：部分含C扩展的第三方包（如特定版本的NumPy/PyTorch）可能尚未提供Python 3.14 wheel | 使用`conda install`安装包时 | ⚠️ 生态适配中 | conda-forge已对大部分包提供3.14 build；如遇问题可pin包版本或等待上游更新 |
-| 3 | **free-threading兼容性**：默认启动为GIL启用模式；设置`PYTHON_GIL=0`后，非free-threading兼容的C扩展可能crash | 使用无GIL模式时 | ⚠️ PEP 703实验性 | 仅在确知所有依赖兼容free-threading时才禁用GIL |
-| 4 | **变体镜像未适配**：conda-llvm/onnx-pytorch/onnx-quantized/ai-dev变体仍引用旧镜像标签体系，无法直接基于v2构建 | 构建上层变体时 | 🔴 待处理 | 后续Task 6处理，需更新变体Dockerfile |
-| 5 | **CI流水线未更新**：现有GitHub Actions workflow仍引用`/opt/venv/bin/python`路径，会导致verify conda步骤失败 | CI自动化 | 🔴 待处理 | 后续Task 7处理 |
+| 2 | **Python 3.14 C扩展兼容性**：部分含C扩展的第三方包（如特定版本的PyTorch）可能尚未提供Python 3.14 wheel | 使用`conda install`安装包时 | ⚠️ 生态适配中 | conda-forge已对大部分包提供3.14 build；如遇问题可pin包版本或等待上游更新 |
+| 3 | **free-threading构建(cp314t)C扩展兼容性**：cp314t无GIL环境中，非ft兼容的C扩展可能crash或不可用 | 使用cp314t无GIL环境时 | ⚠️ PEP 703实验性 | cp314t环境中安装包需确认提供cp314t/abi3兼容build；NumPy等主要包正在适配中；生产环境建议使用默认cp314 |
+| 4 | **变体镜像Python 3.14兼容性**：onnx-pytorch/onnx-quantized变体依赖的PyTorch/ONNX Runtime可能尚未提供Python 3.14 wheel | 构建AI变体时 | ⚠️ 待上游适配 | CI中变体构建标记为experimental(continue-on-error)；等待PyTorch/ONNX提供3.14 wheel |
+| 5 | **默认Python非free-threading构建**：镜像默认安装cp314（GIL始终启用），非cp314t（无GIL） | 期望默认无GIL的用户 | ℹ️ 设计决策 | 稳定性优先：标准构建兼容性最好；需free-threading时执行`conda create -n ft python=*=*_cp314t -c conda-forge` |
 | 6 | **Podman用户提示**：容器内`podman info`显示`The cgroupv2 manager is set to systemd but there is no systemd user session available` | rootless podman使用 | ⚠️ 功能不影响 | podman命令仍可正常使用；若需彻底消除需在容器内启动user session |
 | 7 | **conda solve容器内测试**：容器内执行`conda create --dry-run`需`--network=host`才能在30秒内完成 | 容器网络模式 | ⚠️ 环境相关 | 默认容器网络下conda solve可能较慢；生产使用不受影响 |
 
@@ -218,15 +253,25 @@ docker run -d --privileged \
   -e JUPYTER_TOKEN=mysecret \
   devcontainer-base:conda-libmamba-v2
 
-# 验证Python 3.14 free-threading
+# 验证Python 3.14环境
 docker exec -it <container> python -c "
-import sys
+import sys, sysconfig
 print(f'Python: {sys.version}')
+print(f'Build type: cp314t (free-threading)' if sysconfig.get_config_var('Py_GIL_DISABLED') else 'Build type: cp314 (standard, GIL always on)')
 print(f'GIL enabled: {sys._is_gil_enabled()}')
+"
+
+# 创建free-threading环境（无GIL并行计算）
+docker exec -it <container> conda create -n ft python=*=*_cp314t -c conda-forge --solver libmamba -y
+docker exec -it <container> /opt/conda/envs/ft/bin/python -c "
+import sys; print(f'Free-threading: GIL enabled={sys._is_gil_enabled()}')  # 应输出False
 "
 
 # 使用libmamba快速创建环境
 docker exec -it <container> conda create -n test python=3.14 numpy -y
+
+# 运行free-threading性能演示脚本
+docker exec -it <container> python examples/free_threading_demo.py
 ```
 
 ---
@@ -247,3 +292,5 @@ docker exec -it <container> conda create -n test python=3.14 numpy -y
 |--------|------|
 | `ceec9c07` | feat(docker): 主Dockerfile集成Miniconda3+Python3.14+libmamba，9步激进清理，build.sh日志/预检/冒烟测试增强 |
 | `5efd3eac` | docs: 更新README文档反映Python3.14+libmamba+JupyterLab新架构 |
+| `62f4a809` | feat(devcontainer): conda-libmamba-v2发布 - CI流水线重构+发布说明+free-threading示例+变体适配 |
+| (待提交) | fix: 修正free-threading检测逻辑(sysconfig)，更新RELEASE-v2.md性能基准数据，CI增加cp314t环境验证 |
