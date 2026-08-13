@@ -162,3 +162,32 @@ class TestLinkWithTitle:
         checked_url, status, msg = cl.check_local_link(test_file, url)
         assert status == "ok", f"带标题的存在文件应通过检查，status='{status}', msg='{msg}'"
 
+
+class TestFileUrlPosixResolution:
+    """回归：file:/// POSIX 绝对路径不应丢失根斜杠被误判为断链。
+
+    修复前 check_local_link 对 file:/// 执行 parsed.path.lstrip("/")，
+    导致 file:///media/... 被解析为相对路径 media/...（丢失前导 /），
+    误报"文件不存在"。本测试锁定该场景防止回归。
+    """
+
+    def test_posix_absolute_file_url_resolves(self, tmp_path):
+        """file:/// 指向的 POSIX 绝对路径文件应检查通过。"""
+        target = tmp_path / "posix.md"
+        target.write_text("# posix", encoding="utf-8")
+        test_file = tmp_path / "test.md"
+        test_file.write_text(f"[ref](file:///{target.as_posix()})", encoding="utf-8")
+
+        url = f"file:///{target.as_posix()}"
+        checked_url, status, msg = cl.check_local_link(test_file, url)
+        assert status == "ok", f"POSIX file:/// 绝对路径应通过，status='{status}', msg='{msg}'"
+
+    def test_posix_absolute_file_url_missing(self, tmp_path):
+        """file:/// 指向不存在的 POSIX 路径应如实报告断链（而非路径解析错误）。"""
+        test_file = tmp_path / "test.md"
+        test_file.write_text("[ref](file:///tmp/definitely-not-exist-xyz.md)", encoding="utf-8")
+
+        url = "file:///tmp/definitely-not-exist-xyz.md"
+        checked_url, status, msg = cl.check_local_link(test_file, url)
+        assert status == "missing", f"不存在的 POSIX 路径应报告 missing，status='{status}', msg='{msg}'"
+
