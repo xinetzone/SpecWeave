@@ -19,6 +19,8 @@ DOCKER_MIRROR="${DOCKER_MIRROR:-official}"
 CONDA_MIRROR="${CONDA_MIRROR:-official}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.14.6}"
 PYTHON_BUILD="${PYTHON_BUILD:-cp314t}"
+BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE:-standard}"
+DEEP_VERIFY=false
 VERIFY=false
 VERIFY_ONLY=false
 QUICK_TEST=true
@@ -37,7 +39,7 @@ Usage: $0 [OPTIONS]
 Build the devcontainer-base Docker image.
 
 Options:
-  -t, --tag TAG          Image tag (default: 1.0)
+  -t, --tag TAG          Image tag (default: conda-libmamba-ft)
   -n, --name NAME        Image name (default: devcontainer-base)
   -r, --registry REG     Registry prefix (e.g., your-registry.com)
   --no-cache             Disable Docker build cache
@@ -47,8 +49,10 @@ Options:
   --docker-mirror MIRROR Docker CE mirror: official|aliyun (default: official)
   --conda-mirror MIRROR  Conda mirror: official|tuna|aliyun (default: official)
   --python-ver VER       Python version (default: 3.14.6)
-  --python-build BUILD   Python build: cp314t (free-threading, default) | cp314 (standard, GIL always on)
-  --verify               Run embedded verification after build
+  --python-build BUILD   Python build: cp314t (free-threading, default) | cp314 (standard)
+  --verify-mode MODE     Build verification mode: standard (default) | fast | off
+  --deep-verify          Run deep verification (numpy/pandas) after build
+  --verify               Run embedded service verification after build
   --verify-only           Only verify existing image (skip build)
   --no-quick-test         Skip quick Python/libmamba smoke test after build
   --network-host          Use --network=host for docker build (helpful for network issues)
@@ -58,22 +62,28 @@ Options:
   -h, --help              Show this help message
 
 Environment variables (overridden by CLI args):
-  IMAGE_NAME, IMAGE_TAG, REGISTRY, APT_MIRROR, PIP_MIRROR, NETWORK_HOST
+  IMAGE_NAME, IMAGE_TAG, REGISTRY, APT_MIRROR, PIP_MIRROR, NETWORK_HOST, BUILD_VERIFY_MODE
 
 Examples:
-  $0                                         # Build conda-libmamba-ft (Miniforge3 + Python 3.14.6 cp314t free-threading)
-  $0 --tag latest --cn                       # Build :latest with China mirrors
-  $0 --no-cache -t dev                       # Build without cache, tag as dev
-  $0 --network-host --cn                     # Build with host network + China mirrors
-  $0 --verify                                # Build and run full verification
-  $0 --verify-only --tag conda-libmamba-ft   # Verify existing image only
-  $0 --python-build cp314                     # Build standard (GIL) Python instead of free-threading
-  $0 --no-quick-test                         # Build without smoke test
-  $0 --log-format=json --log-json            # JSON output for monitoring
+  $0                                              # Build with standard verification
+  $0 --verify-mode fast                           # Build with fast verification (quicker)
+  $0 --deep-verify                                # Build + deep numpy/pandas verification
+  $0 --tag latest --cn                            # Build :latest with China mirrors
+  $0 --no-cache -t dev                            # Build without cache, tag as dev
+  $0 --network-host --cn                          # Build with host network + China mirrors
+  $0 --verify                                     # Build and run service verification
+  $0 --verify-only --tag conda-libmamba-ft        # Verify existing image only
+  $0 --python-build cp314                         # Build standard (GIL) Python
+  $0 --no-quick-test                              # Build without smoke test
 
 Docker modes:
   DinD (Docker-in-Docker): Requires --privileged flag for fully isolated Docker daemon
   DooD (Docker-out-of-Docker): Mount host /var/run/docker.sock without --privileged
+
+Verification modes:
+  standard: Full C extension + 19-point verification (default, recommended for releases)
+  fast:     Essential checks only (Python + core C exts), ~30s faster builds
+  off:      Skip build-time verification entirely (fastest, for iterative dev only)
 EOF
 }
 
@@ -93,6 +103,8 @@ while [[ $# -gt 0 ]]; do
         --conda-mirror) CONDA_MIRROR="$2"; shift 2 ;;
         --python-ver) PYTHON_VERSION="$2"; shift 2 ;;
         --python-build) PYTHON_BUILD="$2"; shift 2 ;;
+        --verify-mode) BUILD_VERIFY_MODE="$2"; shift 2 ;;
+        --deep-verify) DEEP_VERIFY=true; shift ;;
         --verify) VERIFY=true; shift ;;
         --verify-only) VERIFY_ONLY=true; VERIFY=true; shift ;;
         --no-quick-test) QUICK_TEST=false; shift ;;
@@ -126,6 +138,8 @@ log_set_field "pip_mirror" "$PIP_MIRROR"
 log_set_field "docker_mirror" "$DOCKER_MIRROR"
 log_set_field "conda_mirror" "$CONDA_MIRROR"
 log_set_field "network_host" "$NETWORK_HOST"
+log_set_field "verify_mode" "$BUILD_VERIFY_MODE"
+log_set_field "deep_verify" "$DEEP_VERIFY"
 
 # ── 错误处理 ──
 _cleanup_on_error() {
@@ -226,6 +240,8 @@ preflight_checks() {
     printf "    %-20s %s\n" "Conda mirror:" "${CONDA_MIRROR}"
     printf "    %-20s %s\n" "Network mode:" "$([ "$NETWORK_HOST" = true ] && echo 'host' || echo 'bridge')"
     printf "    %-20s %s\n" "Cache:" "$([ -n "$NO_CACHE" ] && echo 'disabled' || echo 'enabled')"
+    printf "    %-20s %s\n" "Verify mode:" "${BUILD_VERIFY_MODE}"
+    printf "    %-20s %s\n" "Deep verify:" "$([ "$DEEP_VERIFY" = true ] && echo 'yes (numpy/pandas)' || echo 'no')"
     printf "    %-20s %s\n" "Quick test:" "$([ "$QUICK_TEST" = true ] && echo 'yes' || echo 'no')"
     printf "    %-20s %s\n" "Full verify:" "$([ "$VERIFY" = true ] && echo 'yes' || echo 'no')"
     printf "    %-20s %s\n" "Log file:" "${BUILD_LOG_FILE}"
@@ -365,7 +381,7 @@ quick_smoke_test() {
         if [ -f "$demo_script" ]; then
             docker cp "$demo_script" "$test_container:/tmp/free_threading_demo.py" 2>/dev/null
             local demo_output
-            demo_output=$(timeout 90 docker exec -e BENCHMARK_RANGE=50000 "$test_container" \
+            demo_output=$(timeout 90 docker exec -e BENCHMARK_RANGE=500000 "$test_container" \
                 python /tmp/free_threading_demo.py 2>&1)
             local demo_rc=$?
             if [ $demo_rc -eq 0 ] && echo "$demo_output" | grep -q "No-GIL\|free-threading\|无GIL" && \
@@ -511,6 +527,7 @@ DOCKER_BUILDKIT=1 docker build \
     --build-arg CONDA_MIRROR="${CONDA_MIRROR}" \
     --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
     --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
+    --build-arg BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE}" \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
     -t "${FULL_IMAGE}" \
     . 2>&1 | tee "$BUILD_LOG_FILE"
@@ -600,11 +617,56 @@ if $QUICK_TEST; then
         echo ""
         log_step "Free-Threading Performance Benchmark"
         BENCHMARK_LOG="${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" \
-        BENCHMARK_RANGE=50000 \
-        MIN_SPEEDUP=2.0 \
+        BENCHMARK_RANGE=500000 \
+        MIN_SPEEDUP=3.0 \
         bash "$SCRIPT_DIR/ft-benchmark.sh" --image "$FULL_IMAGE" --quick || {
             log_warn "ft-benchmark did not meet threshold (see log for details)"
         }
+    fi
+fi
+
+# ── 深度验证（--deep-verify）：运行容器安装numpy/pandas进行C扩展验证 ──
+if $DEEP_VERIFY; then
+    echo ""
+    log_step "Deep Verification: numpy/pandas C extension compatibility"
+    DEEP_CONTAINER="deep-verify-${IMAGE_NAME}-$(date +%s)"
+    DEEP_PASSED=0
+    DEEP_FAILED=0
+
+    log_info "Starting container for deep verification..."
+    if docker run -d --name "$DEEP_CONTAINER" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
+        sleep 2
+
+        # Install numpy and pandas in the running container
+        log_info "Installing numpy and pandas (this may take a minute)..."
+        if timeout 180 docker exec "$DEEP_CONTAINER" conda install -y -n main --solver=libmamba numpy pandas >/dev/null 2>&1; then
+            log_ok "numpy + pandas installed successfully"
+        else
+            log_fail "Failed to install numpy/pandas (network or solver issue)"
+            docker rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
+            exit 1
+        fi
+
+        # Run verify-cext.sh --deep in the container
+        log_info "Running deep C extension verification..."
+        if timeout 60 docker exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep -q; then
+            log_ok "Deep verification: PASS (numpy/pandas C extensions compatible with cp314t)"
+            DEEP_PASSED=1
+        else
+            log_fail "Deep verification: FAIL (numpy/pandas C extensions have issues)"
+            DEEP_FAILED=1
+            docker exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep 2>&1 | tail -30 || true
+        fi
+
+        docker rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
+
+        if [ $DEEP_FAILED -gt 0 ]; then
+            log_error "Deep verification failed! numpy/pandas may not be fully compatible with cp314t free-threading."
+            exit 1
+        fi
+    else
+        log_fail "Failed to start container for deep verification"
+        exit 1
     fi
 fi
 

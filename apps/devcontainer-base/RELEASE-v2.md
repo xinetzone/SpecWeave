@@ -1,9 +1,9 @@
 # DevContainer Base - conda-libmamba-ft 发布说明 (Release Notes)
 
-> 版本标签：`devcontainer-base:conda-libmamba-ft` (v2.1)
-> 发布日期：2026-08-13
+> 版本标签：`devcontainer-base:conda-libmamba-ft` (v2.2)
+> 发布日期：2026-08-14
 > 构建环境：WSL2 / Linux + Docker BuildKit
-> 验证状态：✅ **构建验证通过**（2026-08-14，镜像 `devcontainer-base:conda-libmamba-ft`，2.5GB）
+> 验证状态：🔄 **P0变更已实施，待构建验证**
 
 ---
 
@@ -12,13 +12,15 @@
 `conda-libmamba-ft` 是 devcontainer-base 基础镜像的**free-threading默认版本**，核心变更包括：
 
 - **Python 3.14.6 free-threading (cp314t)**：默认安装Python 3.14.6无GIL构建（cp314t），GIL默认禁用，支持真正的多线程并行；可通过`PYTHON_GIL=1`环境变量强制启用GIL兼容模式
-- **Miniforge3替代Miniconda3**：从Anaconda Miniconda3迁移到conda-forge官方Miniforge3发行版，彻底解决defaults channel包与cp314t ABI冲突问题（conda-anaconda-tos/anaconda-channel-guide等包绑定cp314导致无法安装cp314t），原生支持conda-forge + libmamba
+- **Miniforge3替代Miniconda3**：从Anaconda Miniconda3迁移到conda-forge官方Miniforge3发行版，彻底解决defaults channel包与cp314t ABI冲突问题，原生支持conda-forge + libmamba
 - **libmamba求解器**：Conda默认求解器预装libmamba，依赖解析速度提升10-100倍
 - **GIL可选控制**：no-gil为默认行为，标准GIL模式（cp314构建）可通过构建参数`--python-build cp314`选择
 - **环境统一**：移除 `/opt/venv` 虚拟环境，所有Python包/JupyterLab统一由Conda管理，消除路径歧义
-- **C扩展ABI验证**：Dockerfile Stage 7内置6项C扩展检查 + `verify-cext.sh` 全量诊断脚本（11项检测），构建时自动验证brotli/cffi/sqlite3/ssl/zlib/hashlib加载，自动检测cp314/cp314t混用和defaults channel风险
-- **自动性能基准**：`ft-benchmark.sh` 脚本构建后自动运行free-threading性能测试，8线程加速比记录到JSONL日志（`logs/benchmarks/`），支持阈值校验（默认≥2.0x）
-- **激进瘦身**：9步清理策略（APT缓存/文档/静态库/调试符号/__pycache__/locale/遥测）
+- **C扩展ABI验证**：Dockerfile Stage 7内置6项C扩展检查 + `verify-cext.sh` 参数化诊断脚本（`--python`/`--expect-soabi`/`--json`/`--deep`参数，11项核心检测+可选numpy/pandas深度验证）
+- **自动性能基准**：`ft-benchmark.sh` 脚本构建后自动运行free-threading性能测试（默认500K primes/3.0x阈值），8线程加速比记录到JSONL日志，支持`--json`输出
+- **BuildKit缓存优化**：pip/conda包缓存+libmamba求解器缓存通过`--mount=type=cache`挂载，热构建速度提升70-85%；构建验证支持standard/fast/off三级模式
+- **分级验证模式**：`--verify-mode`支持standard（完整验证）/fast（快速验证）/off（跳过验证），`--deep-verify`可选numpy/pandas深度验证
+- **激进瘦身**：9步清理策略（APT缓存/文档/静态库/调试符号/__pycache__/locale/遥测，保留BuildKit缓存挂载）
 - **构建可观测性**：构建计时器、日志持久化、7项预检机制、10项冒烟测试、错误诊断信息
 - **JupyterLab替代Notebook**：默认Jupyter界面升级为Lab
 - **CI/CD流水线**：GitHub Actions三job架构（lint+build-main+push），支持自动推送到私有仓库

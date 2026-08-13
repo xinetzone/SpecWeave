@@ -10,13 +10,14 @@
 #
 # 选项：
 #   -i, --image IMAGE       镜像名 (default: devcontainer-base:conda-libmamba-ft)
-#   -r, --range N           素数范围 (default: 50000 for quick, 2000000 for full)
-#   -t, --min-threshold X   8线程最小加速比阈值 (default: 2.0)
+#   -r, --range N           素数范围 (default: 500000 for quick, 2000000 for full)
+#   -t, --min-threshold X   8线程最小加速比阈值 (default: 3.0)
 #   -o, --log-file FILE     基准测试日志JSONL文件路径
-#   -q, --quick             快速模式 (BENCHMARK_RANGE=50000)
-#   -f, --full              完整模式 (BENCHMARK_RANGE=2000000)
+#   -q, --quick             快速模式 (BENCHMARK_RANGE=500000, threshold=3.0)
+#   -f, --full              完整模式 (BENCHMARK_RANGE=2000000, threshold=4.0)
 #   -c, --cleanup           测试后删除容器 (default: true)
 #   -v, --verbose           显示demo完整输出
+#   -j, --json              JSON输出（机器可解析）
 #   -h, --help              显示帮助
 #
 # 环境变量：
@@ -36,13 +37,14 @@ PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
 # Defaults
 IMAGE="${IMAGE:-devcontainer-base:conda-libmamba-ft}"
-RANGE="${BENCHMARK_RANGE:-50000}"
-MIN_SPEEDUP="${MIN_SPEEDUP:-2.0}"
+RANGE="${BENCHMARK_RANGE:-500000}"
+MIN_SPEEDUP="${MIN_SPEEDUP:-3.0}"
 LOG_FILE="${BENCHMARK_LOG:-${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl}"
 CLEANUP=true
 VERBOSE=false
 QUICK=false
 FULL=false
+JSON_OUTPUT=false
 
 # Colors (TTY only)
 if [ -t 1 ]; then
@@ -60,19 +62,20 @@ Run free-threading performance benchmark on a Docker image and record results.
 
 Options:
   -i, --image IMAGE       Docker image (default: devcontainer-base:conda-libmamba-ft)
-  -r, --range N           Prime range upper bound (default: 50000)
-  -t, --min-threshold X   Minimum 8-thread speedup threshold (default: 2.0)
+  -r, --range N           Prime range upper bound (default: 500000)
+  -t, --min-threshold X   Minimum 8-thread speedup threshold (default: 3.0)
   -o, --log-file FILE     Benchmark log JSONL file path
-  -q, --quick             Quick mode (range=50000, suitable for CI/smoke test)
-  -f, --full              Full mode (range=2000000, thorough validation)
+  -q, --quick             Quick mode (range=500000, threshold=3.0, CI/smoke test)
+  -f, --full              Full mode (range=2000000, threshold=4.0, thorough validation)
   --no-cleanup            Keep test container after run
   -v, --verbose           Show full demo output
+  -j, --json              Output JSON result to stdout
   -h, --help              Show this help
 
 Examples:
-  $0                                    # Quick smoke benchmark
-  $0 -f                                 # Full benchmark (2M primes)
-  $0 -i myimage:tag -r 100000 -t 3.0   # Custom image/threshold
+  $0                                    # Quick smoke benchmark (500K primes, 3.0x threshold)
+  $0 -f                                 # Full benchmark (2M primes, 4.0x threshold)
+  $0 -i myimage:tag -r 100000 -t 3.5   # Custom image/threshold
 EOF
 }
 
@@ -82,10 +85,11 @@ while [[ $# -gt 0 ]]; do
         -r|--range) RANGE="$2"; shift 2 ;;
         -t|--min-threshold) MIN_SPEEDUP="$2"; shift 2 ;;
         -o|--log-file) LOG_FILE="$2"; shift 2 ;;
-        -q|--quick) QUICK=true; RANGE=50000; shift ;;
-        -f|--full) FULL=true; RANGE=2000000; shift ;;
+        -q|--quick) QUICK=true; RANGE=500000; MIN_SPEEDUP=3.0; shift ;;
+        -f|--full) FULL=true; RANGE=2000000; MIN_SPEEDUP=4.0; shift ;;
         --no-cleanup) CLEANUP=false; shift ;;
         -v|--verbose) VERBOSE=true; shift ;;
+        -j|--json) JSON_OUTPUT=true; shift ;;
         -h|--help) usage; exit 0 ;;
         *) echo "Unknown option: $1"; usage; exit 2 ;;
     esac
@@ -255,5 +259,12 @@ JSON
 echo ""
 echo "  Results recorded to: $LOG_FILE"
 echo ""
+
+# JSON output to stdout (for CI/automation)
+if [ "$JSON_OUTPUT" = true ]; then
+    cat << JSON
+{"status":"${STATUS}","image":"${IMAGE}","python_version":"${PY_VER}","build_type":"${PY_BUILD}","prime_range":${RANGE},"best_8x":${BEST_SPEEDUP:-null},"threshold":${MIN_SPEEDUP},"duration_seconds":${BENCH_DURATION},"cpu_cores":${CPU_COUNT},"thread_8x":${THREAD_8_SPEEDUP:-null},"threadpool_8x":${THREADPOOL_8_SPEEDUP:-null}}
+JSON
+fi
 
 exit $EXIT_CODE

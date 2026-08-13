@@ -6,7 +6,9 @@
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
 # Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
-# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, GCC 14.4.0编译, libgcc 16.1.0运行时, libmamba solver), Jupyter在main环境
+# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, libgcc-ng 16.1.0运行时, libmamba solver), Jupyter在main环境
+# BuildKit cache: pip (/root/.cache/pip) + conda pkgs (/opt/conda/pkgs) + libmamba solver (/root/.cache/conda) 持久化缓存
+# Verify modes: BUILD_VERIFY_MODE=standard (default, full checks) | fast (essential only) | off (skip)
 #
 # Build: docker build -t devcontainer-base .
 # CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t devcontainer-base .
@@ -32,6 +34,7 @@ ARG PIP_MIRROR=official
 ARG CONDA_MIRROR=official
 ARG PYTHON_VERSION=3.14.6
 ARG PYTHON_BUILD=cp314t
+ARG BUILD_VERIFY_MODE=standard
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime - Minimal production image with Micromamba
@@ -44,10 +47,11 @@ ARG CONDA_MIRROR
 ARG PIP_MIRROR
 ARG PYTHON_VERSION
 ARG PYTHON_BUILD
+ARG BUILD_VERIFY_MODE
 
 LABEL maintainer="SpecWeave"
 LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(Python 3.14.6 free-threading cp314t, GCC 14.4.0编译, libgcc 16.1.0运行时, conda-forge, libmamba solver), managed by supervisord"
-LABEL version="2.0-ft"
+LABEL version="2.2-ft"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -222,6 +226,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
     --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly \
     <<'STAGE4_EOF'
 set -e
@@ -267,7 +272,7 @@ pip_install_group() {
     echo "└─────────────────────────────────────────────────┘"
     g_start=$(date +%s)
     set +e
-    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    pip install --timeout 120 --retries 5 "$@" 2>&1
     rc=$?
     set -e
     g_end=$(date +%s)
@@ -464,15 +469,14 @@ fi
 echo "conda activate main" >> /root/.bashrc
 echo "[INFO] Auto-activate 'main' environment configured in .bashrc"
 
-# ── 清理缓存 ──
+# ── 清理临时文件（不清理BuildKit cache挂载目录：/root/.cache/pip, /opt/conda/pkgs, /root/.cache/conda） ──
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
-echo "│ [CLEAN] Cleaning conda + pip caches            │"
+echo "│ [CLEAN] Removing temp/installer files          │"
+echo "│ (BuildKit cache mounts preserved for reuse)    │"
 echo "└─────────────────────────────────────────────────┘"
-conda clean -yafq 2>/dev/null || true
-/opt/conda/envs/main/bin/pip cache purge 2>/dev/null || true
-rm -rf "${CONDA_DIR}/pkgs"/* 2>/dev/null || true
-echo "[OK] Conda/pip caches cleaned"
+rm -f /tmp/miniforge.sh /tmp/conda_dl_err.log 2>/dev/null || true
+echo "[OK] Temp files cleaned (conda/pip caches preserved in BuildKit mounts)"
 
 # ── 验证安装 ──
 echo ""
@@ -565,10 +569,11 @@ COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_c
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
+COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
 
 RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     _STAGE_START=$(date +%s) && \
-    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
     chown -R devuser:devuser /workspace && \
     echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
@@ -577,14 +582,18 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     echo "│  [VALIDATION CHECKPOINT - Stage 6/7]            │" && \
     echo "│  Running syntax validation for all configs      │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    echo "[VALIDATE 1/3] sshd -t (SSH daemon config syntax)..." && \
+    echo "[VALIDATE 1/5] sshd -t (SSH daemon config syntax)..." && \
     sshd -t && echo "[OK] sshd_config syntax valid" && \
-    echo "[VALIDATE 2/3] bash -n entrypoint.sh..." && \
+    echo "[VALIDATE 2/5] bash -n entrypoint.sh..." && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
-    echo "[VALIDATE 3/3] bash -n healthcheck.sh..." && \
+    echo "[VALIDATE 3/5] bash -n healthcheck.sh..." && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
+    echo "[VALIDATE 4/5] bash -n verify-cext.sh..." && \
+    bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh bash syntax valid" && \
+    echo "[VALIDATE 5/5] bash -n ft-benchmark.sh..." && \
+    bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh bash syntax valid" && \
     echo "" && \
-    echo "[BUILD] All 3 syntax validation checks passed" && \
+    echo "[BUILD] All 5 syntax validation checks passed" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
@@ -607,6 +616,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
     echo "BUILD_TYPE=multi-stage-slim" >> /etc/devcontainer-build-info && \
+    echo "BUILD_VERIFY_MODE=${BUILD_VERIFY_MODE}" >> /etc/devcontainer-build-info && \
     echo "LOCALE=zh_CN.UTF-8" >> /etc/devcontainer-build-info && \
     echo "TIMEZONE=Asia/Shanghai" >> /etc/devcontainer-build-info && \
     echo "NON_ROOT_USER=devuser" >> /etc/devcontainer-build-info && \
@@ -621,6 +631,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "DOCKER_DIND=enabled" >> /etc/devcontainer-build-info && \
     echo "PODMAN_ROOTLESS=enabled" >> /etc/devcontainer-build-info && \
     echo "BUILD_TIMER=enabled" >> /etc/devcontainer-build-info && \
+    echo "BUILDKIT_CACHE=enabled" >> /etc/devcontainer-build-info && \
     cat /etc/devcontainer-build-info && \
     echo "[BUILD] Build info written to /etc/devcontainer-build-info" && \
     echo "" && \
@@ -644,20 +655,21 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "[CLEAN 5/9] Stripping debug symbols from binaries..." && \
     find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
     find /opt/conda/lib -name "*.so*" ! -path "*/python3.14/site-packages/*" ! -path "*/envs/*/lib/python3.14/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    echo "[CLEAN 6/9] Removing conda telemetry + dev tools..." && \
+    echo "[CLEAN 6/9] Removing conda telemetry + dev tools (preserving package cache)..." && \
     conda remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
     rm -f /opt/conda/bin/x86_64-conda-linux-gnu-ld /opt/conda/bin/x86_64-conda-linux-gnu-ld.bfd 2>/dev/null || true && \
     rm -f /opt/conda/bin/c_rehash /opt/conda/bin/openssl-c_rehash 2>/dev/null || true && \
-    conda clean -yafq 2>/dev/null || true && \
+    conda clean -y -l -q 2>/dev/null || true && \
     echo "[CLEAN 7/9] Conda share bloat (terminfo db, locale unused)..." && \
     rm -rf /opt/conda/share/zoneinfo/leapseconds /opt/conda/share/zoneinfo/tzdata.zi 2>/dev/null || true && \
     for _loc in /opt/conda/share/locale/*; do \
         _bn=$(basename "$_loc"); \
         case "$_bn" in en|en_US|zh|zh_CN|zh_TW|ja) ;; *) rm -rf "$_loc" 2>/dev/null || true ;; esac; \
     done && \
-    echo "[CLEAN 8/9] Package caches and tmp files..." && \
-    rm -rf /opt/conda/pkgs/* /root/.cache/pip /root/.conda/pkgs /tmp/* /var/tmp/* 2>/dev/null || true && \
-    pip cache purge 2>/dev/null || true && \
+    echo "[CLEAN 8/9] Package caches and tmp files (preserving BuildKit cache mounts)..." && \
+    rm -rf /root/.conda/pkgs /tmp/* /var/tmp/* 2>/dev/null || true && \
+    echo "  - Preserved BuildKit cache mounts: /root/.cache/pip, /root/.cache/conda, /opt/conda/pkgs" && \
+    echo "  - These will be reused on subsequent builds for faster installs" && \
     echo "[CLEAN 9/9] Ensuring /opt/conda permissions..." && \
     chown -R root:root /opt/conda && \
     chmod -R a+rX /opt/conda && \
@@ -666,29 +678,43 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [FINAL VERIFICATION - Stage 7/7]               │" && \
-    echo "│  Verifying all critical binaries are runnable   │" && \
+    echo "│  Mode: ${BUILD_VERIFY_MODE} (standard/fast/off)         │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
-    supervisord --version && echo "[OK] supervisord available" && \
-    sshd -t && echo "[OK] sshd config valid" && \
-    python --version && echo "[OK] python (conda) available" && \
-    python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); assert ft==1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'; print(f'[OK] Python free-threading build (GIL disabled by default, PYTHON_GIL=1 to enable)')" && \
-    echo "[C-EXT] Verifying C extension compatibility..." && \
-    python -c "import brotli; d=b'hello'*100; c=brotli.compress(d); assert brotli.decompress(c)==d; print('[OK] brotli C ext (non-ft-safe, GIL warning expected)')" 2>/dev/null && \
-    python -c "import cffi; ffi=cffi.FFI(); ffi.cdef('int printf(const char*, ...);'); C=ffi.dlopen(None); print('[OK] cffi C ext')" 2>/dev/null && \
-    python -c "import sqlite3; c=sqlite3.connect(':memory:'); c.execute('CREATE TABLE t(id INT)'); c.execute('INSERT INTO t VALUES(1)'); assert c.execute('SELECT * FROM t').fetchone()==(1,); print('[OK] _sqlite3 C ext')" && \
-    python -c "import ssl; ctx=ssl.create_default_context(); assert ctx.protocol==ssl.PROTOCOL_TLS_CLIENT; print('[OK] _ssl C ext')" && \
-    python -c "import zlib; d=b'test'*50; c=zlib.compress(d); assert zlib.decompress(c)==d; print('[OK] zlib C ext')" && \
-    python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
-    bash /usr/local/bin/verify-cext.sh >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
-    conda --version && echo "[OK] conda available" && \
-    pip --version && echo "[OK] pip available" && \
-    jupyter --version && echo "[OK] jupyter available" && \
-    docker --version && echo "[OK] docker available" && \
-    podman --version && echo "[OK] podman available" && \
-    test ! -d /opt/venv && echo "[OK] /opt/venv removed (using conda only)" && \
-    bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
-    bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
+    if [ "${BUILD_VERIFY_MODE}" = "off" ]; then \
+        echo "[SKIP] Build verification disabled (BUILD_VERIFY_MODE=off)"; \
+    elif [ "${BUILD_VERIFY_MODE}" = "fast" ]; then \
+        echo "[FAST MODE] Essential checks only..." && \
+        python --version && echo "[OK] python available" && \
+        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); soabi=sysconfig.get_config_var('SOABI'); assert ft==1, f'GIL not disabled: Py_GIL_DISABLED={ft}'; assert 'cpython-314t' in soabi, f'SOABI mismatch: {soabi}'; print(f'[OK] Python free-threading verified (SOABI={soabi})')" && \
+        python -c "import brotli,cffi,sqlite3,ssl,zlib,hashlib; print('[OK] Core C extensions load OK')" && \
+        conda --version && echo "[OK] conda available" && \
+        echo "[FAST MODE] Essential checks passed"; \
+    else \
+        tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
+        supervisord --version && echo "[OK] supervisord available" && \
+        sshd -t && echo "[OK] sshd config valid" && \
+        python --version && echo "[OK] python (conda) available" && \
+        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); assert ft==1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'; print(f'[OK] Python free-threading build (GIL disabled by default, PYTHON_GIL=1 to enable)')" && \
+        echo "[C-EXT] Verifying C extension compatibility..." && \
+        python -c "import brotli; d=b'hello'*100; c=brotli.compress(d); assert brotli.decompress(c)==d; print('[OK] brotli C ext (non-ft-safe, GIL warning expected)')" 2>/dev/null && \
+        python -c "import cffi; ffi=cffi.FFI(); ffi.cdef('int printf(const char*, ...);'); C=ffi.dlopen(None); print('[OK] cffi C ext')" 2>/dev/null && \
+        python -c "import sqlite3; c=sqlite3.connect(':memory:'); c.execute('CREATE TABLE t(id INT)'); c.execute('INSERT INTO t VALUES(1)'); assert c.execute('SELECT * FROM t').fetchone()==(1,); print('[OK] _sqlite3 C ext')" && \
+        python -c "import ssl; ctx=ssl.create_default_context(); assert ctx.protocol==ssl.PROTOCOL_TLS_CLIENT; print('[OK] _ssl C ext')" && \
+        python -c "import zlib; d=b'test'*50; c=zlib.compress(d); assert zlib.decompress(c)==d; print('[OK] zlib C ext')" && \
+        python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
+        bash /usr/local/bin/verify-cext.sh -q --expect-soabi cpython-314t >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
+        conda --version && echo "[OK] conda available" && \
+        pip --version && echo "[OK] pip available" && \
+        jupyter --version && echo "[OK] jupyter available" && \
+        docker --version && echo "[OK] docker available" && \
+        podman --version && echo "[OK] podman available" && \
+        test ! -d /opt/venv && echo "[OK] /opt/venv removed (using conda only)" && \
+        bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
+        bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
+        bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
+        bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh syntax valid" && \
+        echo "[OK] All standard verification checks passed"; \
+    fi && \
     echo "" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
