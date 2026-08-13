@@ -15,6 +15,19 @@ Hermes Agent 的 SpecWeave 工作区规范集成插件。本目录是该插件�
 
 > 使用者接入说明见 [ACCESS.md](ACCESS.md)。
 
+## 一键安装（Python 自动化）
+
+本目录提供零第三方依赖的安装脚本 [install.py](install.py)，自动化「部署 + 启用 + 验证」：
+
+```powershell
+$env:HERMES_HOME = "C:\Users\admin\.hermes"
+python install.py install     # deploy + enable（幂等，自动备份 config.yaml）
+python install.py verify      # 校验：插件加载 + 工作区检测 + 路由 + 协议注入
+python install.py all         # install + verify
+```
+
+特性：幂等（重复执行无副作用）、enable 前自动备份 `config.yaml.bak-<ts>`、复用插件自身 `detector.py` 校验逻辑、`verify` 输出机器可读 JSON + 退出码。
+
 ## 目录结构
 
 ```
