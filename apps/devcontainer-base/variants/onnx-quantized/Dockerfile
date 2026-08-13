@@ -20,8 +20,8 @@
 #
 # Variant Stage Layering (additional 3 layers on top of onnx-pytorch variant):
 #   Stage 1/3: PATH verification + timer initialization + base tool check
-#   Stage 2/3: Install quantization packages (onnxconverter-common, onnxsim)
-#   Stage 3/3: build-info + cleanup + quantization smoke test + timing summary
+#   Stage 2/3: Install quantization packages (onnxconverter-common, onnxsim) + cleanup
+#   Stage 3/3: build-info + smoke tests + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
@@ -80,7 +80,7 @@ echo "  - PATH: $PATH"
 echo ""
 echo "[BUILD] Verifying devuser + services preserved..."
 echo "  - devuser exists: $(id devuser 2>&1 | head -1)"
-echo "  - /opt/venv exists: $(test -d /opt/venv && echo 'yes' || echo 'no')"
+echo "  - /opt/conda exists: $(test -d /opt/conda && echo 'yes' || echo 'no')"
 echo "  - docker: $(docker --version 2>&1 | head -1)"
 echo "  - supervisord: $(supervisord --version 2>&1 | head -1)"
 echo ""
@@ -93,9 +93,9 @@ echo '[OK] Stage 1 complete'
 STAGE1_EOF
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/3 (追加层2): 安装量化工具包
+# Stage 2/3 (追加层2): 安装量化工具包 + 清理
 # 变化频率：中（工具版本升级时改）
-# 原则：在 base conda 环境安装量化相关包；使用 BuildKit cache 加速
+# 原则：在 base conda 环境安装量化相关包；安装后立即清理缓存；使用 BuildKit cache 加速
 # 包含：onnxruntime.quantization (built-in 核心量化引擎), onnxconverter-common (FP16转换),
 #       onnxsim (模型简化预处理)
 # 不包含：neural-compressor (PyTorch场景可选，需手动 pip install neural-compressor)
@@ -105,7 +105,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     <<'STAGE2_EOF'
 echo ""
 echo "########################################################################"
-echo "# [ONNX-QUANTIZED VARIANT STAGE 2/3] Install Quantization Toolkit"
+echo "# [ONNX-QUANTIZED VARIANT STAGE 2/3] Install Quantization Toolkit + Cleanup"
 echo "# Packages:"
 echo "#   - onnxconverter-common (ONNX FP16 conversion utilities)"
 echo "#   - onnxsim              (ONNX model simplification, pre-quantization)"
@@ -166,10 +166,16 @@ echo "  - onnxsim: $(python -c 'import onnxsim; print(onnxsim.__version__)' 2>&1
 echo ""
 
 echo "[ACTION] Setting permissions for devuser..."
-# Only fix bin directory executables (fast, <1 sec); base image already handled /opt/conda
-# Pip installs files with umask 022 (world-readable), so no recursive chmod needed
 find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
 echo "[OK] Permissions verified (bin executables only, base image permissions preserved)"
+echo ""
+
+echo "[ACTION] Post-install cleanup..."
+find /opt/conda -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda -type f -name '*.pyc' -delete 2>/dev/null || true
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
+echo "[OK] Post-install cleanup complete (__pycache__/.pyc removed, conda+pyp cache purged)"
 echo ""
 
 _NOW=$(date +%s)
@@ -177,21 +183,21 @@ _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.onnx-quantized-variant-build-timer | cut -d= -f2)
 _TOTAL=$((_NOW - _START))
 echo "OQS2=$_NOW" >> /tmp/.onnx-quantized-variant-build-timer
-echo "[TIMER] Stage 2/3 (install quantization toolkit) took ${_ELAPSED}s | ONNX-Quantized variant cumulative: ${_TOTAL}s"
+echo "[TIMER] Stage 2/3 (install quantization toolkit + cleanup) took ${_ELAPSED}s | ONNX-Quantized variant cumulative: ${_TOTAL}s"
 echo '[OK] Stage 2 complete'
 STAGE2_EOF
 
 COPY scripts/ /opt/devcontainer-scripts/
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 3/3 (追加层3): build-info + 清理 + 量化冒烟测试 + 汇总表
+# Stage 3/3 (追加层3): build-info + 量化冒烟测试 + 汇总表
 # 变化频率：最低
-# 原则：写入 variant build-info；清理缓存；运行量化冒烟测试（动态INT8量化+推理验证）
+# 原则：写入 variant build-info；运行量化冒烟测试（动态INT8量化+推理验证）
 # ═══════════════════════════════════════════════════════════════════
 RUN <<'STAGE3_EOF'
 echo ""
 echo "########################################################################"
-echo "# [ONNX-QUANTIZED VARIANT STAGE 3/3] Final Metadata, Cleanup, Quantization Smoke Test"
+echo "# [ONNX-QUANTIZED VARIANT STAGE 3/3] Final Metadata, Quantization Smoke Test, Timing Summary"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
@@ -223,8 +229,8 @@ printf '%s\n' \
     "PIP_MIRROR=${PIP_MIRROR}" \
     "APT_MIRROR=${APT_MIRROR}" \
     "INSTALL_ENV=base" \
+    "PYTHON_ENV=conda-base" \
     "PATH_PRIORITY=conda-bin-first" \
-    "SYSTEM_VENV=/opt/venv" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
     "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnxconverter-common,onnxsim" \
     "OPTIONAL_PACKAGES=neural-compressor(pytorch-only),onnxruntime-tools(legacy)" \
@@ -234,13 +240,12 @@ echo "[OK] Build metadata written:"
 cat /etc/devcontainer-variant-onnx-quantized-build-info
 echo ""
 
-echo "[ACTION] Running cleanup..."
-conda clean -ya -q 2>/dev/null || true
-/opt/conda/bin/pip cache purge 2>/dev/null || true
-/opt/venv/bin/pip cache purge 2>/dev/null || true
+echo "[ACTION] Running final cleanup..."
+find /opt/conda -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda -type f -name '*.pyc' -delete 2>/dev/null || true
 apt-get clean 2>/dev/null || true
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-echo "[OK] Cleanup complete"
+echo "[OK] Final cleanup complete"
 echo ""
 
 echo "┌─────────────────────────────────────────────────┐"
@@ -277,11 +282,11 @@ except ImportError:
     print("[INFO] neural-compressor not installed (optional, not required for ONNX quantization)")
     print("[INFO] ONNX quantization uses onnxruntime.quantization natively")
 NCIMPORT
-echo "[VALIDATE 2/8] System venv /opt/venv preserved..."
-test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"
-/opt/venv/bin/python --version
-echo "[VALIDATE 3/8] Jupyter available from venv..."
-/opt/venv/bin/jupyter --version 2>&1 | head -2
+echo "[VALIDATE 2/8] Conda base environment intact..."
+test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda base environment intact"
+/opt/conda/bin/python --version
+echo "[VALIDATE 3/8] Jupyter available from conda base..."
+/opt/conda/bin/jupyter --version 2>&1 | head -2
 echo "[VALIDATE 4/8] Core services (docker, supervisord) preserved..."
 docker --version 2>&1
 supervisord --version 2>&1
@@ -868,6 +873,7 @@ echo ""
 rm -f /tmp/.onnx-quantized-variant-build-timer
 echo "########################################################################"
 echo "# ONNX-QUANTIZED VARIANT BUILD COMPLETE!"
+echo "# JupyterLab runs from conda base"
 echo "# Quantization modes: dynamic INT8, static INT8, QDQ, FP16, Calibration"
 if python -c "import neural_compressor" 2>/dev/null; then
 echo "# Neural Compressor: available (optional PyTorch extension)"

@@ -220,12 +220,12 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/jupyter && echo "executable"' 2>&1)
+    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
     if echo "$result" | grep -q "executable"; then
-        pass "T12: Jupyter executable exists (/opt/venv/bin/jupyter)"
+        pass "T12: Jupyter executable exists (/opt/conda/bin/jupyter)"
         return 0
     else
-        fail "T12: Jupyter executable not found at /opt/venv/bin/jupyter"
+        fail "T12: Jupyter executable not found at /opt/conda/bin/jupyter"
         return 1
     fi
 }
@@ -279,26 +279,26 @@ test_python_path_priority() {
     fi
 }
 
-test_venv_preserved() {
+test_venv_removed() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/python && echo "exists"' 2>&1)
-    if echo "$result" | grep -q "exists"; then
-        pass "T17: /opt/venv/bin/python still exists (venv preserved)"
+    result=$(docker_run_bash 'test ! -d /opt/venv && echo "removed"' 2>&1)
+    if echo "$result" | grep -q "removed"; then
+        pass "T17: /opt/venv removed"
         return 0
     else
-        fail "T17: /opt/venv/bin/python not found (venv broken?)"
+        fail "T17: /opt/venv still exists (expected removed)"
         return 1
     fi
 }
 
-test_venv_jupyter_still_works() {
+test_conda_jupyter_works() {
     local result
-    result=$(docker_run /opt/venv/bin/jupyter --version 2>&1)
+    result=$(docker_run /opt/conda/bin/jupyter --version 2>&1)
     if echo "$result" | grep -qi "jupyter"; then
-        pass "T18: /opt/venv/bin/jupyter still usable"
+        pass "T18: /opt/conda/bin/jupyter usable"
         return 0
     else
-        fail "T18: /opt/venv/bin/jupyter not usable, got: $(echo "$result" | head -1)"
+        fail "T18: /opt/conda/bin/jupyter not usable, got: $(echo "$result" | head -1)"
         return 1
     fi
 }
@@ -408,8 +408,8 @@ echo ""
 
 log_step "5. PATH Priority & Environment Isolation Tests (L5)"
 test_python_path_priority || true
-test_venv_preserved || true
-test_venv_jupyter_still_works || true
+test_venv_removed || true
+test_conda_jupyter_works || true
 echo ""
 
 log_step "6. Build Info & Configuration Tests (L6)"

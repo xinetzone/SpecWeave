@@ -218,22 +218,22 @@ collect_diagnostics() {
     docker_run_bash "echo 'HOSTNAME='\$(hostname); echo 'USER='\$(whoami); echo 'PWD='\$(pwd); echo 'PATH='\$PATH; echo 'OMP_NUM_THREADS='\$OMP_NUM_THREADS; echo 'PIP_USER='\$PIP_USER" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[2] Python paths:${NC}"
-    docker_run_bash "which python; which python3; which pip; /opt/conda/bin/python --version; /opt/venv/bin/python --version 2>&1" 2>&1 | sed 's/^/    /'
+    docker_run_bash "which python; which python3; which pip; /opt/conda/bin/python --version; test ! -d /opt/venv && echo '/opt/venv REMOVED (using conda only)'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[3] Key package versions (pip list filtered):${NC}"
     docker_run_bash "/opt/conda/bin/pip list 2>/dev/null | grep -iE 'torch|onnx|transformers|datasets|fastapi|pandas|numpy|scikit|jupyter|matplotlib|jieba|nltk|httpx|pydantic|uvicorn|numba|librosa|pymupdf|elasticsearch|psycopg|pymongo|minio|nuitka|rich|typer' || echo '(pip list failed)'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[4] Jupyter kernels:${NC}"
-    docker_run_bash "/opt/venv/bin/jupyter kernelspec list 2>&1; echo '---'; ls -la /opt/venv/share/jupyter/kernels/ 2>&1; echo '---'; ls -la /opt/conda/share/jupyter/kernels/ 2>&1; echo '---'; cat /opt/venv/share/jupyter/kernels/ai-dev/kernel.json 2>&1" 2>&1 | sed 's/^/    /'
+    docker_run_bash "/opt/conda/bin/jupyter kernelspec list 2>&1; echo '---'; ls -la /opt/conda/share/jupyter/kernels/ 2>&1; echo '---'; cat /opt/conda/share/jupyter/kernels/ai-dev/kernel.json 2>&1" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[5] Build info:${NC}"
     docker_run_bash "cat /etc/devcontainer-variant-ai-dev-build-info 2>&1 || echo '(build-info not found)'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[6] Services:${NC}"
-    docker_run_bash "which sshd; which supervisord; which docker; which podman; id devuser 2>&1; test -d /opt/venv && echo '/opt/venv exists' || echo '/opt/venv MISSING'" 2>&1 | sed 's/^/    /'
+    docker_run_bash "which sshd; which supervisord; which docker; which podman; id devuser 2>&1; test ! -d /opt/venv && echo '/opt/venv REMOVED'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[7] Disk usage:${NC}"
-    docker_run_bash "df -h / /opt/conda /opt/venv 2>/dev/null; echo '---'; du -sh /opt/conda 2>/dev/null; du -sh /opt/venv 2>/dev/null" 2>&1 | sed 's/^/    /'
+    docker_run_bash "df -h / /opt/conda 2>/dev/null; echo '---'; du -sh /opt/conda 2>/dev/null" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[8] pip check (dependency conflicts):${NC}"
     docker_run_bash "/opt/conda/bin/pip check 2>&1 || echo '(pip check found issues)'" 2>&1 | sed 's/^/    /'
@@ -269,7 +269,7 @@ test_jupyterlab_version() {
     log_test_start "T4" "JupyterLab >=4.4"
     t_start=$(date +%s)
     set +e
-    result=$(docker_run /opt/venv/bin/jupyter lab --version 2>&1)
+    result=$(docker_run /opt/conda/bin/jupyter lab --version 2>&1)
     rc=$?
     set -e
     elapsed=$(($(date +%s) - t_start))
@@ -352,12 +352,11 @@ print('JIEBA_OK')
 # ═══════════════════════════════════════════════════════════════════
 
 test_jupyter_kernel_registered() {
-    run_test "T10" "Jupyter ai-dev kernel registered (dual-path)" \
+    run_test "T10" "Jupyter ai-dev kernel registered" \
         "KERNEL_OK" \
         docker_run_bash "
-test -f /opt/venv/share/jupyter/kernels/ai-dev/kernel.json && \
 test -f /opt/conda/share/jupyter/kernels/ai-dev/kernel.json && \
-/opt/venv/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && \
+/opt/conda/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && \
 echo 'KERNEL_OK'
 "
 }
@@ -367,7 +366,7 @@ test_kernel_config() {
         "KERNEL_CONFIG_OK" \
         docker_run /opt/conda/bin/python -c "
 import json
-with open('/opt/venv/share/jupyter/kernels/ai-dev/kernel.json') as f:
+with open('/opt/conda/share/jupyter/kernels/ai-dev/kernel.json') as f:
     k = json.load(f)
 assert k['display_name'] == 'Python 3 (AI Dev)', f'Bad display_name: {k[\"display_name\"]}'
 assert '/opt/conda/bin/python' in k['argv'][0], f'Bad python path: {k[\"argv\"][0]}'
@@ -422,9 +421,9 @@ test_docker_exists() {
 }
 
 test_jupyter_exists() {
-    run_test "T17" "Jupyter available in /opt/venv" \
+    run_test "T17" "Jupyter available in conda" \
         "JUPYTER_OK" \
-        docker_run_bash "test -x /opt/venv/bin/jupyter && echo 'JUPYTER_OK'"
+        docker_run_bash "test -x /opt/conda/bin/jupyter && echo 'JUPYTER_OK'"
 }
 
 test_devuser_exists() {
@@ -443,10 +442,10 @@ test_path_priority() {
         docker_run_bash "which python"
 }
 
-test_venv_preserved() {
-    run_test "T20" "/opt/venv preserved and executable" \
-        "VENV_OK" \
-        docker_run_bash "test -x /opt/venv/bin/python && echo 'VENV_OK'"
+test_venv_removed() {
+    run_test "T20" "/opt/venv removed (using conda only)" \
+        "VENV_REMOVED" \
+        docker_run_bash "test ! -d /opt/venv && echo 'VENV_REMOVED'"
 }
 
 test_env_variables() {
@@ -485,7 +484,7 @@ test_kernel_json_valid() {
         "JSON_VALID" \
         docker_run /opt/conda/bin/python -c "
 import json
-with open('/opt/venv/share/jupyter/kernels/ai-dev/kernel.json') as f:
+with open('/opt/conda/share/jupyter/kernels/ai-dev/kernel.json') as f:
     k = json.load(f)
 assert 'argv' in k and 'display_name' in k and 'language' in k
 assert 'env' in k and 'PATH' in k['env']
@@ -600,7 +599,7 @@ test_devuser_exists
 # ── L5 ──
 log_section "L5: PATH Priority & Environment Isolation"
 test_path_priority
-test_venv_preserved
+test_venv_removed
 test_env_variables
 test_devuser_access
 

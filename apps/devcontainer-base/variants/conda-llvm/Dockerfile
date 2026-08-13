@@ -5,7 +5,7 @@
 # Base: devcontainer-base:conda-${BASE_TAG} (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniconda3)
 # Toolchain: LLVM ${LLVM_VERSION} + Clang + CMake + Ninja + Make via conda-forge
 # PATH priority: /opt/conda/bin first (LLVM/clang/cmake/ninja directly available)
-# Activation: LLVM tools directly in PATH; conda-init.sh preserved for venv users
+# Python/Jupyter: runs from conda base environment (/opt/conda)
 #
 # Build: docker build -f variants/conda-llvm/Dockerfile -t devcontainer-base:conda-llvm-latest .
 # CN:    docker build -f variants/conda-llvm/Dockerfile \
@@ -18,10 +18,10 @@
 # Verify: docker run --rm devcontainer-base:conda-llvm-latest llvm-config --version
 #
 # Variant Stage Layering (additional 4 layers on top of conda variant 5 stages):
-#   Stage 1/4: Conda channel config + PATH + timer initialization
-#   Stage 2/4: Install LLVM/clang/cmake/ninja/make via conda-forge in base env
+#   Stage 1/4: PATH verification + timer initialization
+#   Stage 2/4: Install LLVM/clang/cmake/ninja/make via conda-forge + aggressive cleanup
 #   Stage 3/4: Symlinks + conda-llvm-init.sh + permission verification
-#   Stage 4/4: build-info + cleanup + final verification + timing summary
+#   Stage 4/4: build-info + final cleanup + verification + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
@@ -56,14 +56,14 @@ ENV PATH=/opt/conda/bin:${PATH}
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 1/4 (追加层1): Conda 频道配置 + PATH 设置 + 计时器初始化
+# Stage 1/4 (追加层1): PATH 验证 + 计时器初始化
 # 变化频率：最低
-# 原则：确认 conda-forge 频道优先级；确认 PATH 已设置；
+# 原则：验证基础 conda 环境；验证 PATH 已设置；
 #       初始化追加层计时器 /tmp/.llvm-variant-build-timer
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "" && \
     echo "########################################################################" && \
-    echo "# [CONDA-LLVM VARIANT STAGE 1/4] Channel Config + PATH + Timer Init" && \
+    echo "# [CONDA-LLVM VARIANT STAGE 1/4] PATH Verification + Timer Init" && \
     echo "# LLVM_VERSION=${LLVM_VERSION}, CONDA_MIRROR=${CONDA_MIRROR}" && \
     echo "########################################################################" && \
     echo "" && \
@@ -74,17 +74,9 @@ RUN echo "" && \
     echo "  - conda path: $(which conda 2>/dev/null || echo '/opt/conda/bin/conda')" && \
     /opt/conda/bin/conda --version && \
     echo "  - PATH: $PATH" && \
-    echo "[BUILD] Ensuring conda-forge channel is prioritized..." && \
-    source /opt/conda/etc/profile.d/conda.sh && \
-    conda config --system --add channels conda-forge && \
-    conda config --system --set channel_priority strict && \
-    conda config --system --remove channels defaults 2>/dev/null || true && \
-    echo "[OK] conda-forge channel configured with strict priority (no defaults)" && \
-    conda config --show-sources && \
     echo "" && \
     echo "[INFO] Base image verification:" && \
     echo "  - devuser exists: $(id devuser 2>&1 | head -1)" && \
-    echo "  - /opt/venv exists: $(test -d /opt/venv && echo 'yes' || echo 'no')" && \
     echo "  - /opt/conda exists: $(test -d /opt/conda && echo 'yes' || echo 'no')" && \
     echo "  - PATH starts with conda bin: $(echo $PATH | grep -q '^/opt/conda/bin' && echo 'yes' || echo 'yes (via ENV)')" && \
     _NOW=$(date +%s) && \
@@ -95,10 +87,11 @@ RUN echo "" && \
     echo '[OK] Stage 1 complete'
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/4 (追加层2): 通过 conda-forge 安装 LLVM/clang/cmake/ninja/make
+# Stage 2/4 (追加层2): 通过 conda-forge 安装 LLVM/clang/cmake/ninja/make + 激进清理
 # 变化频率：低（LLVM版本升级时改）
 # 原则：在 base 环境直接安装；版本锁定到 ${LLVM_VERSION}；
-#       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建
+#       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建；
+#       安装后进行激进清理：strip二进制、移除静态库、清理缓存
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     <<'STAGE2_EOF'
@@ -173,13 +166,35 @@ echo "  - cmake: $(cmake --version 2>&1 | head -1 | awk '{print $3}')"
 echo "  - ninja: $(ninja --version 2>&1)"
 echo "  - make: $(make --version 2>&1 | head -1 | awk '{print $3}')"
 echo "  - llvm-config: $(llvm-config --version 2>&1)"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [CLEANUP] Aggressive post-install cleanup       │"
+echo "└─────────────────────────────────────────────────┘"
+echo "[ACTION] Stripping binaries in /opt/conda/bin..."
+find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] Binary stripping complete"
+echo ""
+echo "[ACTION] Removing static libraries (.a)..."
+find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true
+echo "[OK] Static libraries removed"
+echo ""
+echo "[ACTION] Removing __pycache__ and .pyc files..."
+find /opt/conda -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda -type f -name "*.pyc" -delete 2>/dev/null || true
+echo "[OK] Python cache removed"
+echo ""
+echo "[ACTION] Running conda clean -yafq..."
+conda clean -yafq 2>/dev/null || true
+echo "[OK] Conda cache cleaned"
+echo ""
 
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
 _TOTAL=$((_NOW - _START))
 echo "LLVS2=$_NOW" >> /tmp/.llvm-variant-build-timer
-echo "[TIMER] Stage 2/4 (install toolchain) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s"
+echo "[TIMER] Stage 2/4 (install toolchain + cleanup) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s"
 echo '[OK] Stage 2 complete'
 STAGE2_EOF
 
@@ -219,27 +234,26 @@ else
 fi
 echo ""
 echo "[ACTION] Creating /etc/profile.d/conda-llvm-init.sh (alternative activation script)..."
-cat > /etc/profile.d/conda-llvm-init.sh << 'LLVM_INIT_EOF'
-#!/bin/bash
-# =============================================================================
-# Conda-LLVM Initialization Script for DevContainer
-# This script adds conda base environment bin to PATH (if not already there)
-# for users who want to ensure LLVM tools are accessible.
-#
-# Note: In conda-llvm variant, /opt/conda/bin is already in PATH via ENV,
-# so this script is provided for backward compatibility and login shells.
-# =============================================================================
-
-if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
-    source "/opt/conda/etc/profile.d/conda.sh"
-    conda activate base 2>/dev/null || true
-fi
-
-if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then
-    export PATH="/opt/conda/bin:$PATH"
-fi
-
-LLVM_INIT_EOF
+printf '%s\n' \
+    '#!/bin/bash' \
+    '# =============================================================================' \
+    '# Conda-LLVM Initialization Script for DevContainer' \
+    '# This script adds conda base environment bin to PATH (if not already there)' \
+    '# for users who want to ensure LLVM tools are accessible.' \
+    '#' \
+    '# Note: In conda-llvm variant, /opt/conda/bin is already in PATH via ENV,' \
+    '# so this script is provided for backward compatibility and login shells.' \
+    '# =============================================================================' \
+    '' \
+    'if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then' \
+    '    source "/opt/conda/etc/profile.d/conda.sh"' \
+    '    conda activate base 2>/dev/null || true' \
+    'fi' \
+    '' \
+    'if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then' \
+    '    export PATH="/opt/conda/bin:$PATH"' \
+    'fi' \
+    > /etc/profile.d/conda-llvm-init.sh
 chmod +x /etc/profile.d/conda-llvm-init.sh
 echo "[OK] /etc/profile.d/conda-llvm-init.sh created"
 echo ""
@@ -249,7 +263,7 @@ chmod -R a+rX /opt/conda
 find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
 echo "[OK] Permissions verified"
 echo ""
-echo "[ACTION] Quick tool availability check (before cleanup)..."
+echo "[ACTION] Quick tool availability check (before final cleanup)..."
 llvm-config --version 2>&1 | head -1
 clang --version 2>&1 | head -1
 cmake --version 2>&1 | head -1
@@ -286,6 +300,8 @@ RUN echo "" && \
     CMAKE_ACTUAL_VERSION=$(cmake --version 2>&1 | head -1 | awk '{print $3}'); \
     NINJA_ACTUAL_VERSION=$(ninja --version 2>&1); \
     CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}'); \
+    PYTHON_ACTUAL_VERSION=$(/opt/conda/bin/python --version 2>&1 | awk '{print $2}'); \
+    JUPYTER_ACTUAL_VERSION=$(/opt/conda/bin/jupyter --version 2>&1 | head -1 | awk '{print $3}'); \
     printf '%s\n' \
         "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
         "VARIANT=conda-llvm" \
@@ -296,6 +312,9 @@ RUN echo "" && \
         "CMAKE_VERSION_ACTUAL=${CMAKE_ACTUAL_VERSION}" \
         "NINJA_VERSION_ACTUAL=${NINJA_ACTUAL_VERSION}" \
         "CONDA_VERSION=${CONDA_VERSION}" \
+        "PYTHON_VERSION_ACTUAL=${PYTHON_ACTUAL_VERSION}" \
+        "JUPYTER_VERSION_ACTUAL=${JUPYTER_ACTUAL_VERSION}" \
+        "PYTHON_ENV=conda-base" \
         "CONDA_DIR=/opt/conda" \
         "CONDA_MIRROR=${CONDA_MIRROR}" \
         "PIP_MIRROR=${PIP_MIRROR}" \
@@ -303,7 +322,6 @@ RUN echo "" && \
         "INSTALL_ENV=base" \
         "PATH_PRIORITY=conda-bin-first" \
         "ACTIVATION_SCRIPT=/etc/profile.d/conda-llvm-init.sh" \
-        "SYSTEM_VENV=/opt/venv" \
         "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
         "PACKAGES_INSTALLED=llvmdev,clangdev,clang,lld,lldb,cmake,ninja,make" \
         "BUILD_TIMER=enabled" \
@@ -311,15 +329,13 @@ RUN echo "" && \
     echo "[OK] Build metadata written:"; \
     cat /etc/devcontainer-variant-conda-llvm-build-info; \
     echo ""; \
-    echo "[ACTION] Running cleanup..."; \
+    echo "[ACTION] Running final cleanup..."; \
     source /opt/conda/etc/profile.d/conda.sh && \
     conda activate base && \
-    conda clean -ya -q 2>/dev/null || true; \
-    /opt/venv/bin/pip cache purge 2>/dev/null || true; \
     /opt/conda/bin/pip cache purge 2>/dev/null || true; \
     apt-get clean 2>/dev/null || true; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
-    echo "[OK] Cleanup complete (conda clean, pip cache purge, apt clean, tmp)"; \
+    echo "[OK] Cleanup complete (pip cache purge, apt clean, tmp)"; \
     echo ""; \
     echo "┌─────────────────────────────────────────────────┐"; \
     echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"; \
@@ -344,9 +360,11 @@ RUN echo "" && \
     echo "[VALIDATE 6/9] make available..."; \
     test -x $(which make) && echo "[OK] make executable"; \
     make --version | head -1; \
-    echo "[VALIDATE 7/9] System venv /opt/venv still exists with Jupyter..."; \
-    test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"; \
-    /opt/venv/bin/jupyter --version 2>&1 | head -2; \
+    echo "[VALIDATE 7/9] Python/Jupyter from conda base environment..."; \
+    test -x /opt/conda/bin/python && echo "[OK] /opt/conda/bin/python exists"; \
+    /opt/conda/bin/python --version; \
+    test -x /opt/conda/bin/jupyter && echo "[OK] /opt/conda/bin/jupyter exists"; \
+    /opt/conda/bin/jupyter --version 2>&1 | head -2; \
     echo "[VALIDATE 8/9] Core services (docker, supervisord) still present..."; \
     docker --version 2>&1; \
     supervisord --version 2>&1; \
@@ -382,8 +400,8 @@ RUN echo "" && \
     echo "╔══════════════════════════════════════════════════════════════╗"; \
     echo "║   BUILD TIMING SUMMARY (Conda-LLVM Variant - 4 Add Stages) ║"; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \
-    printf "║  Stage 1/4  channel config + init     %5ds               ║\n" $_LVT1; \
-    printf "║  Stage 2/4  LLVM toolchain install    %5ds               ║\n" $_LVT2; \
+    printf "║  Stage 1/4  path verification + init  %5ds               ║\n" $_LVT1; \
+    printf "║  Stage 2/4  LLVM toolchain + cleanup  %5ds               ║\n" $_LVT2; \
     printf "║  Stage 3/4  symlinks+init script      %5ds               ║\n" $_LVT3; \
     printf "║  Stage 4/4  metadata+final verify     %5ds               ║\n" $_LVT4; \
     echo "╠══════════════════════════════════════════════════════════════╣"; \
@@ -395,8 +413,7 @@ RUN echo "" && \
     echo "# CONDA-LLVM VARIANT BUILD COMPLETE!"; \
     echo "# LLVM/Clang ${LLVM_VERSION} + CMake + Ninja + Make available in PATH"; \
     echo "# PATH priority: /opt/conda/bin first (LLVM tools directly accessible)"; \
-    echo "# System venv /opt/venv/bin/python still available via absolute path"; \
-    echo "# Jupyter services unaffected (started via absolute paths by supervisord)"; \
+    echo "# JupyterLab runs from conda base"; \
     echo "#"; \
     echo "# Verify with: llvm-config --version && clang --version && cmake --version"; \
     echo "########################################################################"; \

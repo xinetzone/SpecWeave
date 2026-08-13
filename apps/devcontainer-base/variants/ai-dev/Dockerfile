@@ -80,7 +80,8 @@ echo "  - PATH: $PATH"
 echo ""
 echo "[BUILD] Verifying devuser + services preserved..."
 echo "  - devuser exists: $(id devuser 2>&1 | head -1)"
-echo "  - /opt/venv exists: $(test -d /opt/venv && echo 'yes' || echo 'no')"
+echo "  - /opt/conda exists: $(test -d /opt/conda && echo 'yes' || echo 'no')"
+echo "  - /opt/venv removed: $(test ! -d /opt/venv && echo 'yes' || echo 'no')"
 echo "  - docker: $(docker --version 2>&1 | head -1)"
 echo "  - supervisord: $(supervisord --version 2>&1 | head -1)"
 echo ""
@@ -212,33 +213,21 @@ pip_install_group "G14: Developer Tools" "icecream" \
     icecream
 
 echo ""
-echo "[ACTION] Upgrading JupyterLab in /opt/venv for httpx>=0.28 compatibility..."
-_venv_start=$(date +%s)
-set +e
-/opt/venv/bin/pip install --no-cache-dir --timeout 120 --retries 5 \
-    --upgrade "jupyterlab>=4.4" "notebook>=7.3" 2>&1
-_venv_rc=$?
-set -e
-_venv_elapsed=$(($(date +%s) - _venv_start))
-if [ $_venv_rc -eq 0 ]; then
-    echo "[OK] /opt/venv JupyterLab upgraded in ${_venv_elapsed}s"
-    echo "  - venv jupyter-lab: $(/opt/venv/bin/jupyter lab --version 2>/dev/null || echo unknown)"
-    echo "  - venv notebook: $(/opt/venv/bin/jupyter notebook --version 2>/dev/null || echo unknown)"
-else
-    echo "[FAIL] /opt/venv JupyterLab upgrade failed (exit code: $_venv_rc)"
-    exit $_venv_rc
-fi
-
-echo ""
 echo "[ACTION] Setting permissions for devuser..."
 find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
 echo "[OK] Permissions verified (bin executables only)"
 
 echo ""
+echo "[ACTION] Aggressive binary size optimization..."
+find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+echo "[OK] Binaries stripped and __pycache__/.pyc removed"
+
+echo ""
 echo "[ACTION] Cleaning caches..."
 conda clean -ya -q 2>/dev/null || true
 pip cache purge 2>/dev/null || true
-/opt/venv/bin/pip cache purge 2>/dev/null || true
 echo "[OK] Caches cleaned"
 
 echo ""
@@ -302,7 +291,6 @@ source /opt/conda/etc/profile.d/conda.sh
 conda activate base
 
 echo "[ACTION] Registering generic 'Python 3 (AI Dev)' Jupyter kernel..."
-mkdir -p /opt/venv/share/jupyter/kernels/ai-dev
 mkdir -p /opt/conda/share/jupyter/kernels/ai-dev
 
 cat > /opt/kernels-ai-dev.json <<'KERNEL'
@@ -317,21 +305,20 @@ cat > /opt/kernels-ai-dev.json <<'KERNEL'
   "{connection_file}"
  ],
  "env": {
-  "PATH": "/opt/conda/bin:/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  "PATH": "/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
   "OMP_NUM_THREADS": "4",
   "KMP_DUPLICATE_LIB_OK": "TRUE"
  }
 }
 KERNEL
 
-cp /opt/kernels-ai-dev.json /opt/venv/share/jupyter/kernels/ai-dev/kernel.json
 cp /opt/kernels-ai-dev.json /opt/conda/share/jupyter/kernels/ai-dev/kernel.json
 rm -f /opt/kernels-ai-dev.json
 
 AI_GROUP=$(id -g devuser)
-chown -R devuser:${AI_GROUP} /opt/venv/share/jupyter/kernels/ai-dev /opt/conda/share/jupyter/kernels/ai-dev
-chmod 644 /opt/venv/share/jupyter/kernels/ai-dev/kernel.json /opt/conda/share/jupyter/kernels/ai-dev/kernel.json
-echo "[OK] ai-dev kernel registered at /opt/venv/share/jupyter/kernels/ai-dev (synced to /opt/conda)"
+chown -R devuser:${AI_GROUP} /opt/conda/share/jupyter/kernels/ai-dev
+chmod 644 /opt/conda/share/jupyter/kernels/ai-dev/kernel.json
+echo "[OK] ai-dev kernel registered at /opt/conda/share/jupyter/kernels/ai-dev"
 echo "[KERNEL] display_name: Python 3 (AI Dev)"
 echo "[KERNEL] python: /opt/conda/bin/python"
 echo ""
@@ -344,8 +331,8 @@ PANDAS_VER=$(python -c "import pandas;print(pandas.__version__)" 2>/dev/null || 
 PYTORCH_VER=$(python -c "import torch;print(torch.__version__)" 2>/dev/null || echo "unknown")
 ONNX_VER=$(python -c "import onnx;print(onnx.__version__)" 2>/dev/null || echo "unknown")
 ORT_VER=$(python -c "import onnxruntime;print(onnxruntime.__version__)" 2>/dev/null || echo "unknown")
-JUPYTERLAB_VER=$(/opt/venv/bin/jupyter lab --version 2>/dev/null || echo "unknown")
-NOTEBOOK_VER=$(/opt/venv/bin/jupyter notebook --version 2>/dev/null || echo "unknown")
+JUPYTERLAB_VER=$(/opt/conda/bin/jupyter lab --version 2>/dev/null || echo "unknown")
+NOTEBOOK_VER=$(/opt/conda/bin/jupyter notebook --version 2>/dev/null || echo "unknown")
 PYTHON_VER=$(python --version 2>&1 | awk '{print $2}')
 printf '%s\n' \
     "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
@@ -368,7 +355,7 @@ printf '%s\n' \
     "APT_MIRROR=${APT_MIRROR}" \
     "INSTALL_ENV=base" \
     "PATH_PRIORITY=conda-bin-first" \
-    "SYSTEM_VENV=/opt/venv" \
+    "PYTHON_ENV=conda-base" \
     "JUPYTER_KERNEL=ai-dev (Python 3 AI Dev, /opt/conda/bin/python)" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
     "PACKAGES_COUNT=50+" \
@@ -382,6 +369,8 @@ echo ""
 echo "[ACTION] Running cleanup..."
 apt-get clean 2>/dev/null || true
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
 echo "[OK] Cleanup complete"
 echo ""
 
@@ -400,13 +389,14 @@ python -c "import fitz, bs4, openpyxl; print('[OK] Document processing imports')
 python -c "import psycopg2, pymongo, elasticsearch, minio; print('[OK] Database clients imports')"
 python -c "import nuitka, pytest, psutil, icecream; print('[OK] Build/dev tools imports')"
 
-echo "[VALIDATE 2/8] System venv /opt/venv preserved..."
-test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"
-/opt/venv/bin/python --version
+echo "[VALIDATE 2/8] Conda environment verified..."
+test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda verified"
+test ! -d /opt/venv && echo "[OK] /opt/venv does not exist (removed)"
+/opt/conda/bin/python --version
 
-echo "[VALIDATE 3/8] JupyterLab >=4.4 in /opt/venv..."
-/opt/venv/bin/jupyter lab --version
-_JL_VER=$(/opt/venv/bin/jupyter lab --version 2>/dev/null | head -1)
+echo "[VALIDATE 3/8] JupyterLab >=4.4 in /opt/conda..."
+/opt/conda/bin/jupyter lab --version
+_JL_VER=$(/opt/conda/bin/jupyter lab --version 2>/dev/null | head -1)
 _JL_MAJOR=$(echo "$_JL_VER" | cut -d. -f1)
 _JL_MINOR=$(echo "$_JL_VER" | cut -d. -f2)
 if [ "$_JL_MAJOR" -gt 4 ] || { [ "$_JL_MAJOR" -eq 4 ] && [ "$_JL_MINOR" -ge 4 ]; }; then
@@ -427,9 +417,8 @@ echo "[VALIDATE 6/8] onnx-quantized inheritance (quantization API)..."
 python -c "from onnxruntime.quantization import quantize_dynamic, QuantType, quantize_static, CalibrationDataReader; print('[OK] quantization API inherited')"
 
 echo "[VALIDATE 7/8] Jupyter kernel registered..."
-test -f /opt/venv/share/jupyter/kernels/ai-dev/kernel.json && echo "[OK] ai-dev kernel in /opt/venv (UI visible)"
-test -f /opt/conda/share/jupyter/kernels/ai-dev/kernel.json && echo "[OK] ai-dev kernel in /opt/conda (CLI visible)"
-/opt/venv/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && echo "[OK] kernel visible to Jupyter"
+test -f /opt/conda/share/jupyter/kernels/ai-dev/kernel.json && echo "[OK] ai-dev kernel in /opt/conda"
+/opt/conda/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && echo "[OK] kernel visible to Jupyter"
 
 echo "[VALIDATE 8/8] PATH and environment..."
 echo "  PATH: $PATH"

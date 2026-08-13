@@ -338,12 +338,12 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/jupyter && echo "executable"' 2>&1)
+    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
     if echo "$result" | grep -q "executable"; then
-        pass "T14: Jupyter executable exists"
+        pass "T14: Jupyter executable exists in conda"
         return 0
     else
-        fail "T14: Jupyter executable not found"
+        fail "T14: Jupyter executable not found in conda"
         return 1
     fi
 }
@@ -375,14 +375,14 @@ test_python_path_priority() {
     fi
 }
 
-test_venv_preserved() {
+test_venv_removed() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/python && echo "exists"' 2>&1)
-    if echo "$result" | grep -q "exists"; then
-        pass "T17: /opt/venv preserved"
+    result=$(docker_run_bash 'test ! -d /opt/venv && echo "removed"' 2>&1)
+    if echo "$result" | grep -q "removed"; then
+        pass "T17: /opt/venv removed"
         return 0
     else
-        fail "T17: /opt/venv not found"
+        fail "T17: /opt/venv still exists"
         return 1
     fi
 }
@@ -589,9 +589,9 @@ test_jupyter_executable || true
 test_devuser_exists || true
 echo ""
 
-log_step "5. PATH Priority & Environment Isolation Tests (L5)"
+log_step "5. PATH Priority &amp; Environment Isolation Tests (L5)"
 test_python_path_priority || true
-test_venv_preserved || true
+test_venv_removed || true
 echo ""
 
 log_step "6. Build Info & Configuration Tests (L6)"

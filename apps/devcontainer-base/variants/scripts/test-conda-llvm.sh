@@ -270,12 +270,12 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/jupyter && echo "executable"' 2>&1)
+    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
     if echo "$result" | grep -q "executable"; then
-        pass "T14: Jupyter executable exists (/opt/venv/bin/jupyter)"
+        pass "T14: Jupyter executable exists (/opt/conda/bin/jupyter)"
         return 0
     else
-        fail "T14: Jupyter executable not found at /opt/venv/bin/jupyter"
+        fail "T14: Jupyter executable not found at /opt/conda/bin/jupyter"
         return 1
     fi
 }
@@ -342,12 +342,12 @@ test_conda_path_priority() {
 
 test_venv_preserved() {
     local result
-    result=$(docker_run_bash 'test -x /opt/venv/bin/python && echo "exists"' 2>&1)
-    if echo "$result" | grep -q "exists"; then
-        pass "T20: /opt/venv/bin/python still exists (venv preserved)"
+    result=$(docker_run_bash 'test ! -d /opt/venv && echo "VENV_REMOVED"' 2>&1)
+    if echo "$result" | grep -q "VENV_REMOVED"; then
+        pass "T20: /opt/venv removed (using conda only)"
         return 0
     else
-        fail "T20: /opt/venv/bin/python not found (venv broken?)"
+        fail "T20: /opt/venv directory still exists (venv not removed)"
         return 1
     fi
 }

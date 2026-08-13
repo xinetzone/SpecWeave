@@ -3,7 +3,7 @@
 # DevContainer Base - ONNX + PyTorch Variant Dockerfile
 # Project: SpecWeave Full-featured Development Container - Deep Learning Runtime
 # Base: devcontainer-base:conda-llvm-${BASE_TAG} (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniconda3 + LLVM/Clang)
-# Toolchain: PyTorch (CPU) + torchvision + ONNX + ONNX Runtime + onnx-simplifier + onnxoptimizer
+# Toolchain: PyTorch (CPU) + torchvision + ONNX + ONNX Runtime + onnx-simplifier + onnxoptimizer + onnxscript
 # PATH priority: /opt/conda/bin first (conda base env python + torch/onnx directly available)
 # Activation: PyTorch/ONNX tools directly in PATH; onnx-pytorch-init.sh preserved for login shells
 #
@@ -19,9 +19,9 @@
 #          /opt/conda/bin/python -c "import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)"
 #
 # Variant Stage Layering (additional 4 layers on top of conda-llvm variant):
-#   Stage 1/4: Conda channel config + PATH + timer initialization
-#   Stage 2/4: Install PyTorch CPU + torchvision via pip (CPU index)
-#   Stage 3/4: Install ONNX ecosystem + onnx-pytorch-init.sh + permission verification
+#   Stage 1/4: Timer initialization + base verification
+#   Stage 2/4: Install PyTorch CPU + torchvision via pip (CPU index) + aggressive cleanup
+#   Stage 3/4: Install ONNX ecosystem + onnx-pytorch-init.sh + permission verification + cleanup
 #   Stage 4/4: build-info + cleanup + final verification + PyTorch/ONNX smoke test + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
@@ -56,14 +56,14 @@ ENV PATH=/opt/conda/bin:${PATH}
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 1/4 (追加层1): Conda 频道配置 + PATH 设置 + 计时器初始化
+# Stage 1/4 (追加层1): 计时器初始化 + 基础验证
 # 变化频率：最低
-# 原则：确认 conda-forge 频道优先级；确认 PATH 已设置；
+# 原则：conda channel 配置已在 base/conda-llvm 中完成，此处仅做验证；
 #       初始化追加层计时器 /tmp/.onnx-pytorch-variant-build-timer
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "" && \
     echo "########################################################################" && \
-    echo "# [ONNX-PYTORCH VARIANT STAGE 1/4] Channel Config + PATH + Timer Init" && \
+    echo "# [ONNX-PYTORCH VARIANT STAGE 1/4] Timer Init + Base Verification" && \
     echo "# CONDA_MIRROR=${CONDA_MIRROR}, PIP_MIRROR=${PIP_MIRROR}" && \
     echo "# TORCH_INDEX_URL=${TORCH_INDEX_URL}" && \
     echo "########################################################################" && \
@@ -76,17 +76,12 @@ RUN echo "" && \
     /opt/conda/bin/conda --version && \
     echo "  - python: $(python --version 2>&1)" && \
     echo "  - PATH: $PATH" && \
-    echo "[BUILD] Ensuring conda-forge channel is prioritized..." && \
+    echo "[BUILD] Verifying conda channel configuration (already done in base)..." && \
     source /opt/conda/etc/profile.d/conda.sh && \
-    conda config --system --add channels conda-forge && \
-    conda config --system --set channel_priority strict && \
-    conda config --system --remove channels defaults 2>/dev/null || true && \
-    echo "[OK] conda-forge channel configured with strict priority (no defaults)" && \
     conda config --show-sources && \
     echo "" && \
     echo "[INFO] Base image verification:" && \
     echo "  - devuser exists: $(id devuser 2>&1 | head -1)" && \
-    echo "  - /opt/venv exists: $(test -d /opt/venv && echo 'yes' || echo 'no')" && \
     echo "  - /opt/conda exists: $(test -d /opt/conda && echo 'yes' || echo 'no')" && \
     echo "  - llvm-config: $(llvm-config --version 2>&1 | head -1)" && \
     echo "  - PATH starts with conda bin: $(echo $PATH | grep -q '^/opt/conda/bin' && echo 'yes' || echo 'yes (via ENV)')" && \
@@ -94,14 +89,15 @@ RUN echo "" && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _TOTAL=$((_NOW - $(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2))) && \
     echo "ONXS1=$_NOW" >> /tmp/.onnx-pytorch-variant-build-timer && \
-    echo "[TIMER] Stage 1/4 (config+init) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s" && \
+    echo "[TIMER] Stage 1/4 (init+verify) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s" && \
     echo '[OK] Stage 1 complete'
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/4 (追加层2): 在 conda base 环境安装 CPU 版 PyTorch + torchvision
+# Stage 2/4 (追加层2): 在 conda base 环境安装 CPU 版 PyTorch + torchvision + 激进清理
 # 变化频率：中（PyTorch 版本升级时改）
 # 原则：在 base 环境直接安装；使用 CPU 专用索引下载（避免误装 CUDA 版）；
-#       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建
+#       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建；
+#       安装后立即清理：strip 二进制、删除 __pycache__/.pyc、conda clean、pip cache purge
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
@@ -109,7 +105,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
 set -e
 echo ""
 echo "########################################################################"
-echo "# [ONNX-PYTORCH VARIANT STAGE 2/4] Install PyTorch CPU + torchvision"
+echo "# [ONNX-PYTORCH VARIANT STAGE 2/4] Install PyTorch CPU + torchvision + Cleanup"
 echo "# Packages: torch, torchvision (CPU wheels)"
 echo "# Index: ${TORCH_INDEX_URL}"
 echo "########################################################################"
@@ -168,24 +164,34 @@ echo "  - torch: $(python -c 'import torch;print(torch.__version__)')"
 echo "  - torchvision: $(python -c 'import torchvision;print(torchvision.__version__)')"
 echo "  - cuda available: $(python -c 'import torch;print(torch.cuda.is_available())')"
 
+echo ""
+echo "[ACTION] Aggressive cleanup after PyTorch install..."
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
+find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache, strip)"
+
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2)
 _TOTAL=$((_NOW - _START))
 echo "ONXS2=$_NOW" >> /tmp/.onnx-pytorch-variant-build-timer
-echo "[TIMER] Stage 2/4 (install pytorch) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s"
+echo "[TIMER] Stage 2/4 (install pytorch+cleanup) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s"
 echo '[OK] Stage 2 complete'
 STAGE2_EOF
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 3/4 (追加层3): ONNX 生态安装 + onnx-pytorch-init.sh + 权限验证
+# Stage 3/4 (追加层3): ONNX 生态安装 + onnx-pytorch-init.sh + 权限验证 + 清理
 # 变化频率：中
-# 原则：安装 ONNX 生态工具；创建备选激活脚本；设置权限；验证工具可用性
+# 原则：安装 ONNX 生态工具；创建备选激活脚本；设置权限；验证工具可用性；
+#       安装后立即执行激进清理
 # ═══════════════════════════════════════════════════════════════════
 RUN <<'STAGE3_EOF'
 echo ""
 echo "########################################################################"
-echo "# [ONNX-PYTORCH VARIANT STAGE 3/4] ONNX Ecosystem + Init Script + Verification"
+echo "# [ONNX-PYTORCH VARIANT STAGE 3/4] ONNX Ecosystem + Init Script + Cleanup"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
@@ -234,27 +240,26 @@ echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)')"
 echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)')"
 echo ""
 echo "[ACTION] Creating /etc/profile.d/onnx-pytorch-init.sh (alternative activation script)..."
-cat > /etc/profile.d/onnx-pytorch-init.sh << 'ONNX_INIT_EOF'
-#!/bin/bash
-# =============================================================================
-# ONNX-PyTorch Initialization Script for DevContainer
-# This script adds conda base environment bin to PATH (if not already there)
-# for users who want to ensure PyTorch/ONNX tools are accessible.
-#
-# Note: In onnx-pytorch variant, /opt/conda/bin is already in PATH via ENV,
-# so this script is provided for backward compatibility and login shells.
-# =============================================================================
-
-if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then
-    source "/opt/conda/etc/profile.d/conda.sh"
-    conda activate base 2>/dev/null || true
-fi
-
-if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then
-    export PATH="/opt/conda/bin:$PATH"
-fi
-
-ONNX_INIT_EOF
+printf '%s\n' \
+    '#!/bin/bash' \
+    '# =============================================================================' \
+    '# ONNX-PyTorch Initialization Script for DevContainer' \
+    '# This script adds conda base environment bin to PATH (if not already there)' \
+    '# for users who want to ensure PyTorch/ONNX tools are accessible.' \
+    '#' \
+    '# Note: In onnx-pytorch variant, /opt/conda/bin is already in PATH via ENV,' \
+    '# so this script is provided for backward compatibility and login shells.' \
+    '# =============================================================================' \
+    '' \
+    'if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then' \
+    '    source "/opt/conda/etc/profile.d/conda.sh"' \
+    '    conda activate base 2>/dev/null || true' \
+    'fi' \
+    '' \
+    'if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then' \
+    '    export PATH="/opt/conda/bin:$PATH"' \
+    'fi' \
+    > /etc/profile.d/onnx-pytorch-init.sh
 chmod +x /etc/profile.d/onnx-pytorch-init.sh
 echo "[OK] /etc/profile.d/onnx-pytorch-init.sh created"
 echo ""
@@ -282,12 +287,22 @@ if ! grep -q "source /etc/profile.d/onnx-pytorch-init.sh" /home/devuser/.bash_pr
 fi
 chown devuser:devuser /home/devuser/.bash_profile
 echo "[OK] devuser .bash_profile configured to source onnx-pytorch-init.sh"
+
+echo ""
+echo "[ACTION] Aggressive cleanup after ONNX ecosystem install..."
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
+find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache, strip)"
+
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2)
 _TOTAL=$((_NOW - _START))
 echo "ONXS3=$_NOW" >> /tmp/.onnx-pytorch-variant-build-timer
-echo "[TIMER] Stage 3/4 (onnx ecosystem+init+verify) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s"
+echo "[TIMER] Stage 3/4 (onnx ecosystem+init+cleanup) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_TOTAL}s"
 echo '[OK] Stage 3 complete'
 STAGE3_EOF
 
@@ -311,6 +326,7 @@ TORCH_VERSION_ACTUAL=$(python -c "import torch;print(torch.__version__)")
 TORCHVISION_VERSION_ACTUAL=$(python -c "import torchvision;print(torchvision.__version__)")
 ONNX_VERSION_ACTUAL=$(python -c "import onnx;print(onnx.__version__)")
 ONNXRUNTIME_VERSION_ACTUAL=$(python -c "import onnxruntime;print(onnxruntime.__version__)")
+ONNXSCRIPT_VERSION_ACTUAL=$(python -c "import onnxscript;print(onnxscript.__version__)" 2>/dev/null || echo "installed")
 CUDA_AVAILABLE=$(python -c "import torch;print(torch.cuda.is_available())")
 CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}')
 printf '%s\n' \
@@ -321,31 +337,33 @@ printf '%s\n' \
     "TORCHVISION_VERSION_ACTUAL=${TORCHVISION_VERSION_ACTUAL}" \
     "ONNX_VERSION_ACTUAL=${ONNX_VERSION_ACTUAL}" \
     "ONNXRUNTIME_VERSION_ACTUAL=${ONNXRUNTIME_VERSION_ACTUAL}" \
+    "ONNXSCRIPT_VERSION_ACTUAL=${ONNXSCRIPT_VERSION_ACTUAL}" \
     "CUDA_AVAILABLE=${CUDA_AVAILABLE}" \
     "TORCH_INDEX_URL=${TORCH_INDEX_URL}" \
     "CONDA_VERSION=${CONDA_VERSION}" \
     "CONDA_DIR=/opt/conda" \
+    "PYTHON_ENV=conda-base" \
     "CONDA_MIRROR=${CONDA_MIRROR}" \
     "PIP_MIRROR=${PIP_MIRROR}" \
     "APT_MIRROR=${APT_MIRROR}" \
     "INSTALL_ENV=base" \
     "PATH_PRIORITY=conda-bin-first" \
     "ACTIVATION_SCRIPT=/etc/profile.d/onnx-pytorch-init.sh" \
-    "SYSTEM_VENV=/opt/venv" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-    "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnx-simplifier,onnxoptimizer" \
+    "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnx-simplifier,onnxoptimizer,onnxscript" \
     "BUILD_TIMER=enabled" \
     > /etc/devcontainer-variant-onnx-pytorch-build-info
 echo "[OK] Build metadata written:"
 cat /etc/devcontainer-variant-onnx-pytorch-build-info
 echo ""
-echo "[ACTION] Running cleanup..."
-conda clean -ya -q 2>/dev/null || true
-/opt/venv/bin/pip cache purge 2>/dev/null || true
-/opt/conda/bin/pip cache purge 2>/dev/null || true
+echo "[ACTION] Running final cleanup..."
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
 apt-get clean 2>/dev/null || true
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-echo "[OK] Cleanup complete (conda clean, pip cache purge, apt clean, tmp)"
+echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache purge, apt clean, tmp)"
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"
@@ -364,9 +382,9 @@ echo "[VALIDATE 5/10] onnxruntime import + version..."
 python -c "import onnxruntime;print('onnxruntime',onnxruntime.__version__)"
 echo "[VALIDATE 6/10] torch.cuda.is_available() is False (CPU build)..."
 python -c "import torch;assert torch.cuda.is_available() is False, 'CUDA should not be available';print('[OK] CUDA not available, CPU build confirmed')"
-echo "[VALIDATE 7/10] System venv /opt/venv still exists with Jupyter..."
-test -d /opt/venv && test -x /opt/venv/bin/python && echo "[OK] /opt/venv preserved"
-/opt/venv/bin/jupyter --version 2>&1 | head -2
+echo "[VALIDATE 7/10] /opt/conda python has JupyterLab available..."
+test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda exists"
+/opt/conda/bin/jupyter --version 2>&1 | head -2
 echo "[VALIDATE 8/10] Core services (docker, supervisord) still present..."
 docker --version 2>&1
 supervisord --version 2>&1
@@ -438,9 +456,9 @@ echo "[TIMER] Stage 4/4 (metadata+final verify) took ${_ELAPSED}s | ONNX-PyTorch
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║   BUILD TIMING SUMMARY (ONNX-PyTorch Variant - 4 Add Stages) ║"
 echo "╠══════════════════════════════════════════════════════════════╣"
-printf "║  Stage 1/4  channel config + init     %5ds               ║\n" $_OT1
-printf "║  Stage 2/4  pytorch cpu install       %5ds               ║\n" $_OT2
-printf "║  Stage 3/4  onnx ecosystem+init       %5ds               ║\n" $_OT3
+printf "║  Stage 1/4  init+base verify          %5ds               ║\n" $_OT1
+printf "║  Stage 2/4  pytorch cpu+cleanup       %5ds               ║\n" $_OT2
+printf "║  Stage 3/4  onnx ecosystem+cleanup    %5ds               ║\n" $_OT3
 printf "║  Stage 4/4  metadata+final verify     %5ds               ║\n" $_OT4
 echo "╠══════════════════════════════════════════════════════════════╣"
 printf "║  ONNX-PYTORCH VARIANT TOTAL (add-on)   %5ds               ║\n" $_OTOTAL
@@ -452,8 +470,7 @@ echo "# ONNX-PYTORCH VARIANT BUILD COMPLETE!"
 echo "# PyTorch (CPU) ${TORCH_VERSION_ACTUAL} + torchvision ${TORCHVISION_VERSION_ACTUAL} available in PATH"
 echo "# ONNX ${ONNX_VERSION_ACTUAL} + ONNX Runtime ${ONNXRUNTIME_VERSION_ACTUAL} available in PATH"
 echo "# PATH priority: /opt/conda/bin first (python/pip/torch/onnx directly accessible)"
-echo "# System venv /opt/venv/bin/python still available via absolute path"
-echo "# Jupyter services unaffected (started via absolute paths by supervisord)"
+echo "# JupyterLab runs from conda base"
 echo "#"
 echo "# Verify with: /opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\""
 echo "########################################################################"

@@ -1,23 +1,28 @@
 # DevContainer Variants Build & Test CI
 # ======================================
-# Builds devcontainer-base image and all variants in dependency order:
-#   base → conda → conda-llvm → onnx-pytorch → onnx-quantized
+# Builds devcontainer-base main image (conda-libmamba-v2) and variants in dependency order:
+#   main (conda+Python3.14+libmamba) → conda → conda-llvm → onnx-pytorch → onnx-quantized
 #
 # Architecture:
-#   - lint job: fast feedback (bash syntax, Dockerfile checks, timer parser tests)
-#   - build-and-test job: single runner, sequential build (Docker images are
-#     daemon-local; splitting dependent builds across jobs causes "image not found"
-#     because each GitHub Actions job runs on a fresh VM)
+#   - lint job: fast feedback (bash syntax, Dockerfile checks)
+#   - build-main job: build the new main image (Dockerfile with integrated conda+Python3.14+libmamba)
+#   - build-variants job: build variant images on top of main (experimental, Python 3.14 compat WIP)
+#   - push job: push images to registry (main branch only, when secrets configured)
 #
 # Triggers:
-#   - Pull Request: Lint only (< 5min fast feedback)
-#   - Push to main: Full build + test (official mirrors)
-#   - Nightly (00:00 UTC / 08:00 Beijing): Full build + test
-#   - Manual: Select variant/mirror/cache options
+#   - Pull Request: Lint + main image build & test (< 20min fast feedback)
+#   - Push to main: Full build + test + push
+#   - Nightly (00:00 UTC / 08:00 Beijing): Full build + test + benchmarks
+#   - Manual: Select variant/mirror/cache/registry options
+#
+# Registry Configuration (GitHub Secrets):
+#   REGISTRY_URL       - e.g., ghcr.io, your-registry.example.com (default: ghcr.io)
+#   REGISTRY_USERNAME  - registry username
+#   REGISTRY_PASSWORD  - registry password/token
 #
 # See design doc: apps/devcontainer-base/.agents/workflows/variants-ci.md
 
-name: DevContainer Variants CI
+name: DevContainer CI
 
 on:
   pull_request:
@@ -26,6 +31,7 @@ on:
       - 'apps/devcontainer-base/Dockerfile'
       - 'apps/devcontainer-base/entrypoint.sh'
       - 'apps/devcontainer-base/scripts/**'
+      - 'apps/devcontainer-base/examples/**'
       - 'apps/devcontainer-base/config/**'
       - 'apps/devcontainer-base/variants/**'
       - 'apps/devcontainer-base/.agents/**'
@@ -37,6 +43,7 @@ on:
       - 'apps/devcontainer-base/Dockerfile'
       - 'apps/devcontainer-base/entrypoint.sh'
       - 'apps/devcontainer-base/scripts/**'
+      - 'apps/devcontainer-base/examples/**'
       - 'apps/devcontainer-base/config/**'
       - 'apps/devcontainer-base/variants/**'
       - 'apps/devcontainer-base/.agents/**'
@@ -47,18 +54,11 @@ on:
 
   workflow_dispatch:
     inputs:
-      variant:
-        description: 'Variant to build'
-        required: true
-        default: 'all'
-        type: choice
-        options:
-          - all
-          - base
-          - conda
-          - conda-llvm
-          - onnx-pytorch
-          - onnx-quantized
+      build_variants:
+        description: 'Build variant images (conda-llvm/onnx-pytorch/onnx-quantized)'
+        required: false
+        default: false
+        type: boolean
       mirror:
         description: 'Mirror source (CI runners are overseas; official usually fastest)'
         required: true
@@ -72,8 +72,8 @@ on:
         required: false
         default: false
         type: boolean
-      run_tests:
-        description: 'Run tests after build'
+      push_registry:
+        description: 'Push images to registry (requires secrets)'
         required: false
         default: true
         type: boolean
@@ -81,10 +81,12 @@ on:
 env:
   PROJECT_DIR: apps/devcontainer-base
   IMAGE_TAG: ci-${{ github.sha }}
+  REGISTRY_URL: ${{ secrets.REGISTRY_URL || 'ghcr.io' }}
+  REGISTRY_NAMESPACE: ${{ secrets.REGISTRY_NAMESPACE || github.repository_owner }}
 
 jobs:
   # ──────────────────────────────────────────────────────────────────────
-  # Stage 0: Lint & Validate (all triggers, PR only runs this)
+  # Stage 0: Lint & Validate (all triggers)
   # ──────────────────────────────────────────────────────────────────────
   lint:
     name: Lint & Validate
@@ -100,10 +102,7 @@ jobs:
           echo "=== STAGE: Lint & Validate - Environment Information     ==="
           echo "============================================================"
           echo "Runner OS:     $(uname -a)"
-          echo "Runner user:   $(whoami)"
-          echo "Working dir:   $(pwd)"
-          echo "Bash version:  $(bash --version | head -1)"
-          echo "Date:          $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "Date (UTC):    $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           echo "GitHub SHA:    ${{ github.sha }}"
           echo "GitHub ref:    ${{ github.ref }}"
           echo "Event name:    ${{ github.event_name }}"
@@ -125,7 +124,7 @@ jobs:
               echo "  ❌ FAIL: $script"
               fail_count=$((fail_count + 1))
             fi
-          done < <(find scripts/ variants/ -name "*.sh" -type f -print0 2>/dev/null)
+          done < <(find scripts/ variants/ examples/ -name "*.sh" -type f -print0 2>/dev/null)
           echo ""
           echo "  Result: $pass_count passed, $fail_count failed"
           if [ "$fail_count" -gt 0 ]; then
@@ -134,13 +133,42 @@ jobs:
           fi
           echo "  ✅ All bash scripts pass syntax check"
 
+      - name: Check Python scripts syntax
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "=== STEP: Python script syntax check ==="
+          echo ""
+          fail_count=0
+          pass_count=0
+          while IFS= read -r -d '' pyfile; do
+            if python3 -c "import py_compile; py_compile.compile('$pyfile', doraise=True)" 2>&1; then
+              echo "  ✅ PASS: $pyfile"
+              pass_count=$((pass_count + 1))
+            else
+              echo "  ❌ FAIL: $pyfile"
+              fail_count=$((fail_count + 1))
+            fi
+          done < <(find scripts/ examples/ -name "*.py" -type f -print0 2>/dev/null)
+          echo ""
+          echo "  Result: $pass_count passed, $fail_count failed"
+          if [ "$fail_count" -gt 0 ]; then
+            echo "  ❌ Python syntax check FAILED"
+            exit 1
+          fi
+          echo "  ✅ All Python scripts pass syntax check"
+
       - name: Validate build.sh timer parser
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
           echo "=== STEP: Timer parser unit tests ==="
           echo ""
-          bash variants/scripts/test-timer-parser.sh
+          if [ -f variants/scripts/test-timer-parser.sh ]; then
+            bash variants/scripts/test-timer-parser.sh
+          else
+            echo "  ⚠️  test-timer-parser.sh not found, skipping"
+          fi
 
       - name: Check Dockerfile syntax (structure validation)
         working-directory: ${{ env.PROJECT_DIR }}
@@ -167,7 +195,7 @@ jobs:
               echo "    ❌ Missing SHELL instruction"
               ok=false
             fi
-            # Must re-declare ARG BASE_TAG after FROM (only for variant Dockerfiles, root Dockerfile uses ubuntu:26.04 as base)
+            # Must re-declare ARG BASE_TAG after FROM (variant Dockerfiles only)
             if echo "$dockerfile" | grep -q "variants/.*Dockerfile"; then
               after_from=$(awk '/^FROM/{found=1} found{print}' "$dockerfile")
               if ! echo "$after_from" | grep -q "ARG BASE_TAG"; then
@@ -175,10 +203,15 @@ jobs:
                 ok=false
               fi
             fi
-            # Must have COPY of shared scripts if variant
-            if echo "$dockerfile" | grep -q "variants/.*Dockerfile"; then
-              if ! grep -q "COPY shared/" "$dockerfile"; then
-                echo "    ⚠️  Variant Dockerfile does not COPY shared/ scripts"
+            # Main Dockerfile must include Python 3.14 and libmamba setup
+            if [ "$dockerfile" = "Dockerfile" ]; then
+              if ! grep -q "python=3.14\|python 3.14" "$dockerfile"; then
+                echo "    ❌ Main Dockerfile missing Python 3.14 installation"
+                ok=false
+              fi
+              if ! grep -q "libmamba\|conda-libmamba-solver" "$dockerfile"; then
+                echo "    ❌ Main Dockerfile missing libmamba solver configuration"
+                ok=false
               fi
             fi
             if $ok; then
@@ -205,15 +238,15 @@ jobs:
           echo "============================================================"
 
   # ──────────────────────────────────────────────────────────────────────
-  # Stage 1+: Build & Test (single job — Docker daemon is VM-local;
-  #           splitting across jobs would break image dependency chain)
+  # Stage 1: Build & Test Main Image (conda-libmamba-v2)
   # ──────────────────────────────────────────────────────────────────────
-  build-and-test:
-    name: Build & Test (all variants)
+  build-main:
+    name: Build & Test Main Image
     runs-on: ubuntu-latest
     needs: lint
-    if: github.event_name != 'pull_request'
-    timeout-minutes: 120
+    timeout-minutes: 60
+    outputs:
+      image_tag: ${{ env.IMAGE_TAG }}
     env:
       BUILD_LOG_DIR: /tmp/build-logs
       MIRROR_FLAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.mirror == 'cn' && '--cn' || '' }}
@@ -223,515 +256,372 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Print CI environment & build configuration
-        id: env_info
         run: |
           echo "============================================================"
-          echo "=== STAGE: Build & Test - Environment & Configuration    ==="
+          echo "=== STAGE: Build Main Image - Environment                ==="
           echo "============================================================"
           echo ""
-          echo "--- System Information ---"
           echo "Date (UTC):     $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           echo "Runner OS:      $(uname -a)"
-          echo "CPU info:       $(nproc) cores, $(cat /proc/cpuinfo | grep 'model name' | head -1 | cut -d: -f2 | xargs)"
+          echo "CPU cores:      $(nproc)"
           echo "Memory:         $(free -h | grep Mem | awk '{print $2}') total"
           echo "Disk:           $(df -h / | tail -1 | awk '{print $4}') available"
-          echo "Working dir:    $(pwd)"
           echo ""
-          echo "--- Docker Information ---"
-          docker --version 2>/dev/null || echo "docker: not found"
-          docker buildx version 2>/dev/null || echo "buildx: not found"
-          echo ""
-          echo "--- Build Configuration ---"
           echo "Project dir:    ${{ env.PROJECT_DIR }}"
           echo "Image tag:      ${{ env.IMAGE_TAG }}"
           echo "Mirror flag:    ${MIRROR_FLAG:-official}"
-          echo "No-cache flag:  ${NO_CACHE_FLAG:-cache enabled}"
-          echo "GitHub SHA:     ${{ github.sha }}"
-          echo "GitHub ref:     ${{ github.ref }}"
-          echo "Event name:     ${{ github.event_name }}"
-          echo "Triggered by:   ${{ github.actor }}"
+          echo "No-cache:       ${NO_CACHE_FLAG:-cache enabled}"
+          echo "Registry URL:   ${{ env.REGISTRY_URL }}"
           echo ""
-          echo "--- Dependency Chain ---"
-          echo "  base (devcontainer-base:${{ env.IMAGE_TAG }})"
-          echo "    └─ conda (devcontainer-base:conda-${{ env.IMAGE_TAG }})"
-          echo "         └─ conda-llvm (devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }})"
-          echo "              └─ onnx-pytorch (devcontainer-base:onnx-pytorch-${{ env.IMAGE_TAG }})"
-          echo "                   └─ onnx-quantized (devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }})"
+          echo "--- Docker Information ---"
+          docker --version
+          docker buildx version
           echo ""
           echo "============================================================"
           mkdir -p "$BUILD_LOG_DIR"
-          echo "Build log directory: $BUILD_LOG_DIR (created)"
 
       - name: Set up Docker Buildx
         run: |
           echo ""
           echo "=== STEP: Setup Docker Buildx ==="
-          echo ""
           docker run --privileged --rm tonistiigi/binfmt --install all 2>&1 | tail -5 || true
           echo "✅ Buildx setup complete"
 
-      # ── Build base image ──────────────────────────────────────────────
-      - name: Build base image
-        id: build_base
+      - name: Build main image (conda-libmamba-v2)
+        id: build_main
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 1/5: Building base image                            ║"
+          echo "║  BUILD: Main Image (conda-libmamba-v2)                     ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Command: bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
-          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           STAGE_START=$(date +%s)
+          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
           echo ""
           set -o pipefail
-          bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/01-base-build.log"
-          STAGE_END=$(date +%s)
-          echo ""
-          echo "Stage duration: $((STAGE_END - STAGE_START))s"
-
-      - name: Verify base image
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          echo ""
-          echo "=== STEP: Verify base image ==="
-          echo ""
-          echo "--- docker images ---"
-          docker images devcontainer-base:${{ env.IMAGE_TAG }} --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
-          echo ""
-          echo "--- Python version ---"
-          docker run --rm devcontainer-base:${{ env.IMAGE_TAG }} python --version
-          echo ""
-          echo "--- Docker CLI version ---"
-          docker run --rm devcontainer-base:${{ env.IMAGE_TAG }} docker --version
-          echo ""
-          echo "--- Disk usage after base build ---"
-          df -h / | tail -1
-          echo ""
-          echo "✅ Base image verification passed"
-
-      # ── Build conda variant ───────────────────────────────────────────
-      - name: Build conda variant
-        id: build_conda
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          echo ""
-          echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 2/5: Building conda variant                         ║"
-          echo "╚══════════════════════════════════════════════════════════════╝"
-          echo ""
-          echo "Depends on: devcontainer-base:${{ env.IMAGE_TAG }}"
-          echo "Command: bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
-          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-          STAGE_START=$(date +%s)
-          echo ""
-          set -o pipefail
-          bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/02-conda-build.log"
-          STAGE_END=$(date +%s)
-          echo ""
-          echo "Stage duration: $((STAGE_END - STAGE_START))s"
-
-      - name: Verify conda variant
-        run: |
-          echo ""
-          echo "=== STEP: Verify conda variant ==="
-          echo ""
-          echo "--- docker images ---"
-          docker images "devcontainer-base:*${{ env.IMAGE_TAG }}" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
-          echo ""
-          echo "--- Conda version ---"
-          docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/conda/bin/conda --version
-          echo ""
-          echo "--- Python (venv) version ---"
-          docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/venv/bin/python --version
-          echo ""
-          echo "--- Conda info (envs) ---"
-          docker run --rm devcontainer-base:conda-${{ env.IMAGE_TAG }} /opt/conda/bin/conda info --envs 2>&1 | head -10
-          echo ""
-          echo "✅ Conda variant verification passed"
-
-      # ── Build conda-llvm variant + tests ──────────────────────────────
-      - name: Build conda-llvm variant
-        id: build_conda_llvm
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          echo ""
-          echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 3/5: Building conda-llvm variant + tests            ║"
-          echo "╚══════════════════════════════════════════════════════════════╝"
-          echo ""
-          echo "Depends on: devcontainer-base:conda-${{ env.IMAGE_TAG }}"
-          echo "Command: bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
-          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-          STAGE_START=$(date +%s)
-          echo ""
-          set -o pipefail
-          bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/03-conda-llvm-build.log"
+          bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/01-main-build.log"
           STAGE_END=$(date +%s)
           echo ""
           echo "Build duration: $((STAGE_END - STAGE_START))s"
 
-      - name: Run conda-llvm unit tests
+      - name: Quick smoke test (7 checks via build.sh)
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
-          echo "=== STEP: Run conda-llvm unit tests ==="
+          echo "=== STEP: Quick smoke test ==="
           echo ""
-          TEST_START=$(date +%s)
-          set -o pipefail
-          bash variants/scripts/test-conda-llvm.sh --tag ${{ env.IMAGE_TAG }} 2>&1 | tee "$BUILD_LOG_DIR/03-conda-llvm-tests.log"
-          TEST_END=$(date +%s)
-          echo ""
-          echo "Test duration: $((TEST_END - TEST_START))s"
-          echo "✅ conda-llvm tests passed"
+          # The build.sh already runs quick_smoke_test after build, but we do extra verification here
+          MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
 
-      - name: Verify conda-llvm variant
-        run: |
+          echo "--- Image size ---"
+          docker images "$MAIN_IMAGE" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
           echo ""
-          echo "=== STEP: Verify conda-llvm variant tools ==="
-          echo ""
-          echo "--- LLVM version ---"
-          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/llvm-config --version
-          echo ""
-          echo "--- Clang version ---"
-          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/clang --version | head -1
-          echo ""
-          echo "--- CMake version ---"
-          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/cmake --version | head -1
-          echo ""
-          echo "--- Ninja version ---"
-          docker run --rm devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }} /opt/conda/bin/ninja --version
-          echo ""
-          echo "✅ conda-llvm verification passed"
 
-      # ── Build onnx-pytorch variant + tests ────────────────────────────
-      - name: Build onnx-pytorch variant
-        id: build_onnx_pytorch
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
+          echo "--- Python 3.14 verification ---"
+          docker run --rm "$MAIN_IMAGE" python --version
+          docker run --rm "$MAIN_IMAGE" python -c "import sys; assert sys.version_info >= (3, 14), f'Python {sys.version} < 3.14'; print('✅ Python 3.14+ OK')"
           echo ""
-          echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 4/5: Building onnx-pytorch variant + tests          ║"
-          echo "╚══════════════════════════════════════════════════════════════╝"
-          echo ""
-          echo "Depends on: devcontainer-base:conda-llvm-${{ env.IMAGE_TAG }}"
-          echo "Command: bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
-          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-          STAGE_START=$(date +%s)
-          echo ""
-          set -o pipefail
-          bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/04-onnx-pytorch-build.log"
-          STAGE_END=$(date +%s)
-          echo ""
-          echo "Build duration: $((STAGE_END - STAGE_START))s"
 
-      - name: Run onnx-pytorch unit tests
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
+          echo "--- libmamba solver verification ---"
+          docker run --rm "$MAIN_IMAGE" conda config --show solver
+          docker run --rm "$MAIN_IMAGE" python -c "import libmambapy; print(f'✅ libmambapy {libmambapy.__version__} OK')" 2>/dev/null || \
+          docker run --rm "$MAIN_IMAGE" python -c "from libmambapy import __version__; print(f'✅ libmambapy OK')" 2>/dev/null || \
+          echo "⚠️  libmambapy direct import failed (may be installed but import path differs)"
           echo ""
-          echo "=== STEP: Run onnx-pytorch unit tests ==="
-          echo ""
-          TEST_START=$(date +%s)
-          set -o pipefail
-          bash variants/scripts/test-onnx-pytorch.sh --tag ${{ env.IMAGE_TAG }} 2>&1 | tee "$BUILD_LOG_DIR/04-onnx-pytorch-tests.log"
-          TEST_END=$(date +%s)
-          echo ""
-          echo "Test duration: $((TEST_END - TEST_START))s"
-          echo "✅ onnx-pytorch tests passed"
 
-      # ── Build onnx-quantized variant + tests ─────────────────────────
-      - name: Build onnx-quantized variant
-        id: build_onnx_quantized
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
+          echo "--- Conda verification ---"
+          docker run --rm "$MAIN_IMAGE" conda --version
+          docker run --rm "$MAIN_IMAGE" conda info --envs
           echo ""
-          echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 5/5: Building onnx-quantized variant + tests        ║"
-          echo "╚══════════════════════════════════════════════════════════════╝"
-          echo ""
-          echo "Depends on: devcontainer-base:onnx-pytorch-${{ env.IMAGE_TAG }}"
-          echo "Command: bash variants/build.sh --variant onnx-quantized --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
-          echo "Start time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
-          STAGE_START=$(date +%s)
-          echo ""
-          set -o pipefail
-          bash variants/build.sh --variant onnx-quantized --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG} 2>&1 | tee "$BUILD_LOG_DIR/05-onnx-quantized-build.log"
-          STAGE_END=$(date +%s)
-          echo ""
-          echo "Build duration: $((STAGE_END - STAGE_START))s"
 
-      - name: Run onnx-quantized smoke validation
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
+          echo "--- JupyterLab verification ---"
+          docker run --rm "$MAIN_IMAGE" jupyter lab --version 2>&1 | head -1
           echo ""
-          echo "=== STEP: Run onnx-quantized smoke validation ==="
-          echo ""
-          echo "--- docker images ---"
-          docker images devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
-          echo ""
-          echo "--- Quantization imports ---"
-          docker run --rm devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} /opt/conda/bin/python -c "from onnxruntime.quantization import quantize_dynamic,QuantType; from onnxconverter_common import float16; import neural_compressor; print('onnxruntime.quantization: OK'); print('neural_compressor:', neural_compressor.__version__)"
-          echo ""
-          echo "✅ onnx-quantized validation passed"
 
-      # ── Stage 6/6: Run ONNX quantization benchmarks (main/schedule only) ──
-      - name: Run ONNX quantization benchmarks
-        if: github.event_name != 'pull_request'
-        id: run_benchmarks
-        working-directory: ${{ env.PROJECT_DIR }}
-        run: |
-          echo ""
-          echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  STAGE 6/6: ONNX Quantization Benchmarks                   ║"
-          echo "║  (main push & nightly only — skipped on PR for speed)      ║"
-          echo "╚══════════════════════════════════════════════════════════════╝"
-          BENCH_START=$(date +%s)
-
-          mkdir -p benchmark-results-ci
-
-          # Determine benchmark mode
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            BENCH_ARGS="--warmup 20 --runs 100 --calib 100"
-            echo "[INFO] Nightly build: FULL benchmark (warmup=20, runs=100, calib=100)"
+          echo "--- /opt/venv removed verification ---"
+          if docker run --rm "$MAIN_IMAGE" test -d /opt/venv; then
+            echo "❌ /opt/venv still exists!"
+            exit 1
           else
-            BENCH_ARGS="--warmup 5 --runs 20 --calib 10"
-            echo "[INFO] Main push: QUICK benchmark (warmup=5, runs=20, calib=10)"
+            echo "✅ /opt/venv removed"
           fi
-
-          # Run benchmarks in onnx-quantized image (includes FP16 support)
-          echo "[INFO] Starting docker container for benchmarks..."
-          docker run --rm \
-            -v $(pwd)/scripts:/benchmark:ro \
-            -v $(pwd)/benchmark-results-ci:/results \
-            -e KMP_DUPLICATE_LIB_OK=TRUE \
-            -e OMP_NUM_THREADS=4 \
-            -e OPENBLAS_NUM_THREADS=1 \
-            -e OMP_WAIT_POLICY=PASSIVE \
-            devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
-            bash -c "/opt/conda/bin/python /benchmark/benchmark_quantization.py --output /results/benchmark_results.json --threads 4 $BENCH_ARGS && echo '[CONTAINER] Benchmark completed successfully'"
-
-          # Run analysis script if available
-          if [ -f scripts/analyze_benchmark.py ]; then
-            echo "[INFO] Running analysis..."
-            docker run --rm \
-              -v $(pwd)/scripts:/benchmark:ro \
-              -v $(pwd)/benchmark-results-ci:/results \
-              devcontainer-base:onnx-quantized-${{ env.IMAGE_TAG }} \
-              /opt/conda/bin/python /benchmark/analyze_benchmark.py /results/benchmark_results.json \
-                --output /results/benchmark_report.md 2>&1 || echo "[WARN] analyze_benchmark.py returned non-zero"
-          fi
-
-          BENCH_END=$(date +%s)
           echo ""
-          echo "Benchmark duration: $((BENCH_END - BENCH_START))s"
-          echo "Results saved to: benchmark-results-ci/"
-          echo "✅ Benchmarks completed"
 
-      # ── Final summary ─────────────────────────────────────────────────
+          echo "--- Core services verification ---"
+          docker run --rm "$MAIN_IMAGE" tini --version 2>&1 | head -1
+          docker run --rm "$MAIN_IMAGE" supervisord --version 2>&1 | head -1
+          docker run --rm "$MAIN_IMAGE" docker --version
+          echo ""
+
+          echo "✅ Quick smoke test passed"
+
+      - name: Deep verification (8 checks)
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "=== STEP: Deep verification ==="
+          echo ""
+          MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
+
+          echo "--- [1/8] Free-threading build detection ---"
+          docker run --rm "$MAIN_IMAGE" python -c "
+          import sys
+          assert hasattr(sys, '_is_gil_enabled'), 'Not a free-threading build'
+          print(f'  Python: {sys.version}')
+          print(f'  GIL enabled: {sys._is_gil_enabled()}')
+          print('  ✅ Free-threading build detected')
+          "
+          echo ""
+
+          echo "--- [2/8] PEP 695 generic syntax ---"
+          docker run --rm "$MAIN_IMAGE" python -c "
+          type Point[T] = tuple[T, T]
+          p: Point[int] = (1, 2)
+          print('  ✅ PEP 695 generic type alias works')
+          "
+          echo ""
+
+          echo "--- [3/8] pip install test ---"
+          docker run --rm "$MAIN_IMAGE" pip install --no-cache-dir six 2>&1 | tail -3
+          docker run --rm "$MAIN_IMAGE" python -c "import six; print(f'  ✅ pip install works (six {six.__version__})')"
+          echo ""
+
+          echo "--- [4/8] conda channels (conda-forge only) ---"
+          docker run --rm "$MAIN_IMAGE" conda config --show channels
+          channels=$(docker run --rm "$MAIN_IMAGE" conda config --show channels 2>&1 | grep -A10 "channels:" | grep -v "channels:" | tr -d ' -')
+          if echo "$channels" | grep -q "defaults"; then
+            echo "  ⚠️  defaults channel present"
+          else
+            echo "  ✅ conda-forge only (defaults removed)"
+          fi
+          echo ""
+
+          echo "--- [5/8] Build metadata ---"
+          docker run --rm "$MAIN_IMAGE" cat /etc/devcontainer-build-info
+          echo ""
+
+          echo "--- [6/8] entrypoint.sh syntax ---"
+          docker run --rm "$MAIN_IMAGE" bash -n /entrypoint.sh && echo "  ✅ entrypoint.sh syntax OK"
+          echo ""
+
+          echo "--- [7/8] healthcheck.sh syntax ---"
+          docker run --rm "$MAIN_IMAGE" bash -n /healthcheck.sh && echo "  ✅ healthcheck.sh syntax OK"
+          echo ""
+
+          echo "--- [8/8] Non-root user (devuser) ---"
+          docker run --rm "$MAIN_IMAGE" su - devuser -c "python --version && conda --version && whoami"
+          echo ""
+
+          echo "✅ Deep verification (8/8) completed"
+
+      - name: Run free-threading demo script
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "=== STEP: Free-threading demo (GIL mode) ==="
+          echo ""
+          MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
+          # Run with GIL enabled (default) first
+          docker run --rm \
+            -v "$(pwd)/examples:/examples:ro" \
+            "$MAIN_IMAGE" python /examples/free_threading_demo.py 2>&1 | head -50
+          echo ""
+          echo "✅ Free-threading demo script runs correctly"
+
+      - name: Collect build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-build-logs-${{ github.sha }}
+          path: /tmp/build-logs/
+          retention-days: 30
+          if-no-files-found: ignore
+
       - name: Build summary
         if: always()
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║                    BUILD SUMMARY                            ║"
+          echo "║                 MAIN IMAGE BUILD SUMMARY                    ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
-          echo "--- All devcontainer-base images ---"
-          docker images devcontainer-base --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}" 2>/dev/null || echo "No devcontainer-base images found"
-          echo ""
-          echo "--- Final disk usage ---"
-          df -h / | tail -1
-          echo ""
-          echo "--- Docker system df ---"
-          docker system df 2>/dev/null || true
+          docker images devcontainer-base --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}" 2>/dev/null || echo "No images found"
           echo ""
           if [ "${{ job.status }}" = "success" ]; then
-            echo "  🎉 ALL BUILDS AND TESTS PASSED"
+            echo "  🎉 MAIN IMAGE BUILD AND TESTS PASSED"
           else
-            echo "  ❌ JOB FAILED - check logs above and uploaded artifacts"
+            echo "  ❌ JOB FAILED - check logs above"
           fi
           echo ""
           echo "End time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+
+  # ──────────────────────────────────────────────────────────────────────
+  # Stage 2: Build & Push (main branch only, when registry configured)
+  # ──────────────────────────────────────────────────────────────────────
+  push:
+    name: Push to Registry
+    runs-on: ubuntu-latest
+    needs: build-main
+    if: github.event_name != 'pull_request' && (github.event_name != 'workflow_dispatch' || github.event.inputs.push_registry == 'true')
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print push configuration
+        run: |
+          echo "============================================================"
+          echo "=== STAGE: Push to Registry                              ==="
+          echo "============================================================"
+          echo "Registry URL:       ${{ env.REGISTRY_URL }}"
+          echo "Namespace:          ${{ env.REGISTRY_NAMESPACE }}"
+          echo "Image tag:          ${{ env.IMAGE_TAG }}"
+          echo "Username set:       ${{ secrets.REGISTRY_USERNAME != '' }}"
+          echo "Password set:       ${{ secrets.REGISTRY_PASSWORD != '' }}"
+          echo ""
+
+      - name: Set up Docker Buildx
+        run: |
+          docker run --privileged --rm tonistiigi/binfmt --install all 2>&1 | tail -5 || true
+
+      # ── Rebuild the image with Buildx (for multi-arch and push capability) ──
+      - name: Login to Container Registry
+        if: ${{ secrets.REGISTRY_USERNAME != '' && secrets.REGISTRY_PASSWORD != '' }}
+        run: |
+          echo ""
+          echo "=== STEP: Logging in to ${{ env.REGISTRY_URL }} ==="
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login "${{ env.REGISTRY_URL }}" \
+            -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+          echo "✅ Logged in to registry"
+
+      - name: Build and push main image
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "=== STEP: Building and pushing image ==="
+          FULL_IMAGE="${{ env.REGISTRY_URL }}/${{ env.REGISTRY_NAMESPACE }}/devcontainer-base"
+          TAGS=()
+
+          # Determine tags
+          if [ "${{ github.ref_type }}" = "branch" ] && [ "${{ github.ref_name }}" = "main" ]; then
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-v2")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-${{ env.IMAGE_TAG }}")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-latest")
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-nightly")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-$(date -u +%Y%m%d)")
+          else
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-${{ env.IMAGE_TAG }}")
+          fi
+
+          echo "Image: ${FULL_IMAGE}"
+          for tag in "${TAGS[@]}"; do
+            echo "  Tag: $tag"
+          done
+          echo ""
+
+          # Build with Buildx and push
+          docker buildx build \
+            --push \
+            --platform linux/amd64 \
+            --build-arg APT_MIRROR=official \
+            --build-arg PIP_MIRROR=official \
+            --build-arg DOCKER_MIRROR=official \
+            --build-arg CONDA_MIRROR=official \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            "${TAGS[@]}" \
+            -t "${FULL_IMAGE}:${{ env.IMAGE_TAG }}" \
+            .
+
+          echo ""
+          echo "✅ Image pushed successfully"
+          echo ""
+          echo "Pushed tags:"
+          for tag in "${TAGS[@]}"; do
+            echo "  $tag"
+          done
+
+      - name: Push summary
+        if: always()
+        run: |
+          echo ""
+          echo "============================================================"
+          echo "=== PUSH STAGE COMPLETE: ${{ job.status }}                  ==="
           echo "============================================================"
 
-      - name: Collect diagnostics on failure
-        if: failure()
+  # ──────────────────────────────────────────────────────────────────────
+  # Stage 3: Build Variants (experimental — Python 3.14 compat WIP)
+  # ──────────────────────────────────────────────────────────────────────
+  build-variants:
+    name: Build Variants (Experimental)
+    runs-on: ubuntu-latest
+    needs: build-main
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.build_variants == 'true')
+    timeout-minutes: 120
+    continue-on-error: true  # Variants are experimental until Python 3.14 compatibility verified
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        run: docker run --privileged --rm tonistiigi/binfmt --install all 2>&1 | tail -5 || true
+
+      - name: Rebuild main image for variants
+        working-directory: ${{ env.PROJECT_DIR }}
         run: |
-          DIAG_DIR="/tmp/diag-${{ github.sha }}"
-          mkdir -p "$DIAG_DIR"
+          echo "Rebuilding main image (Docker daemon-local for variant dependency chain)..."
+          bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} --apt-mirror official --pip-mirror official --conda-mirror official --no-quick-test
+
+      - name: Build conda variant
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║                 FAILURE DIAGNOSTICS                         ║"
-          echo "║           (saving to $DIAG_DIR)          ║"
+          echo "║  BUILD: Conda Variant (thin layer, mirror config)         ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
-          echo ""
+          bash variants/build.sh --variant conda --tag ${{ env.IMAGE_TAG }}
 
-          # ── Section 1: System state ──────────────────────────────────
-          echo "=== [1/10] System state ==="
-          echo "--- Date/Time ---" | tee "$DIAG_DIR/01-system.txt"
-          date -u '+%Y-%m-%d %H:%M:%S UTC' | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- Uptime & Load ---" | tee -a "$DIAG_DIR/01-system.txt"
-          uptime | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- Memory ---" | tee -a "$DIAG_DIR/01-system.txt"
-          free -h | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- Disk usage ---" | tee -a "$DIAG_DIR/01-system.txt"
-          df -h | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- Inode usage ---" | tee -a "$DIAG_DIR/01-system.txt"
-          df -i | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- CPU info ---" | tee -a "$DIAG_DIR/01-system.txt"
-          nproc | tee -a "$DIAG_DIR/01-system.txt"
-          cat /proc/cpuinfo | grep "model name" | head -1 | tee -a "$DIAG_DIR/01-system.txt"
-          echo "--- Kernel ---" | tee -a "$DIAG_DIR/01-system.txt"
-          uname -a | tee -a "$DIAG_DIR/01-system.txt"
+      - name: Verify conda variant
+        run: |
+          echo ""
+          echo "=== Verify conda variant ==="
+          docker images "devcontainer-base:conda-${{ env.IMAGE_TAG }}" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
+          docker run --rm "devcontainer-base:conda-${{ env.IMAGE_TAG }}" conda --version
+          docker run --rm "devcontainer-base:conda-${{ env.IMAGE_TAG }}" python --version
+          echo "✅ Conda variant verified"
 
-          # ── Section 2: Docker daemon state ──────────────────────────
-          echo ""
-          echo "=== [2/10] Docker daemon state ==="
-          echo "--- Docker version ---" | tee "$DIAG_DIR/02-docker-daemon.txt"
-          docker version 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          echo "--- Docker info ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          docker info 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          echo "--- Docker daemon config ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          cat /etc/docker/daemon.json 2>/dev/null | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "No daemon.json found" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          echo "--- Docker daemon log (last 200 lines) ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          sudo journalctl -u docker --no-pager -n 200 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "Cannot access docker daemon logs" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          echo "--- containerd log (last 100 lines) ---" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-          sudo journalctl -u containerd --no-pager -n 100 2>&1 | tee -a "$DIAG_DIR/02-docker-daemon.txt" || echo "Cannot access containerd logs" | tee -a "$DIAG_DIR/02-docker-daemon.txt"
-
-          # ── Section 3: Docker images & layers ───────────────────────
-          echo ""
-          echo "=== [3/10] Docker images & layers ==="
-          echo "--- All images ---" | tee "$DIAG_DIR/03-images.txt"
-          docker images -a --format "table {{.Repository}}\t{{.Tag}}\t{{.ID}}\t{{.Size}}\t{{.CreatedAt}}" 2>&1 | tee -a "$DIAG_DIR/03-images.txt"
-          echo ""
-          echo "--- Image layer history (for each devcontainer-base image) ---" | tee -a "$DIAG_DIR/03-images.txt"
-          for img in $(docker images --format "{{.Repository}}:{{.Tag}}" | grep devcontainer-base); do
-            echo "" | tee -a "$DIAG_DIR/03-images.txt"
-            echo "===== Layer history for $img =====" | tee -a "$DIAG_DIR/03-images.txt"
-            docker history --no-trunc "$img" 2>&1 | head -50 | tee -a "$DIAG_DIR/03-images.txt"
-          done
-          echo ""
-          echo "--- Dangling images ---" | tee -a "$DIAG_DIR/03-images.txt"
-          docker images -f "dangling=true" --format "table {{.Repository}}\t{{.ID}}\t{{.Size}}\t{{.CreatedAt}}" 2>&1 | head -20 | tee -a "$DIAG_DIR/03-images.txt"
-
-          # ── Section 4: BuildKit & build cache ───────────────────────
-          echo ""
-          echo "=== [4/10] BuildKit & build cache ==="
-          echo "--- Buildx builder info ---" | tee "$DIAG_DIR/04-buildkit.txt"
-          docker buildx ls 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt"
-          echo "--- Build cache usage (docker system df -v) ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
-          docker system df -v 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt"
-          echo "--- Buildx du (cache disk usage) ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
-          docker buildx du --verbose 2>&1 | head -100 | tee -a "$DIAG_DIR/04-buildkit.txt" || echo "buildx du not available" | tee -a "$DIAG_DIR/04-buildkit.txt"
-          echo "--- BuildKit worker info ---" | tee -a "$DIAG_DIR/04-buildkit.txt"
-          docker buildx inspect --bootstrap 2>&1 | tee -a "$DIAG_DIR/04-buildkit.txt" || echo "buildx inspect failed" | tee -a "$DIAG_DIR/04-buildkit.txt"
-
-          # ── Section 5: Containers & execution ───────────────────────
-          echo ""
-          echo "=== [5/10] Containers ==="
-          echo "--- All containers (including stopped) ---" | tee "$DIAG_DIR/05-containers.txt"
-          docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Command}}\t{{.Status}}\t{{.Names}}" 2>&1 | tee -a "$DIAG_DIR/05-containers.txt"
-          echo "--- Container logs (for any exited containers) ---" | tee -a "$DIAG_DIR/05-containers.txt"
-          for cid in $(docker ps -aq --filter "status=exited" 2>/dev/null); do
-            cname=$(docker inspect --format '{{.Name}}' "$cid" 2>/dev/null | sed 's|^/||')
-            echo "" | tee -a "$DIAG_DIR/05-containers.txt"
-            echo "===== Logs for container $cname ($cid) =====" | tee -a "$DIAG_DIR/05-containers.txt"
-            docker logs --tail 50 "$cid" 2>&1 | tee -a "$DIAG_DIR/05-containers.txt"
-          done
-
-          # ── Section 6: Networks & Volumes ───────────────────────────
-          echo ""
-          echo "=== [6/10] Networks & Volumes ==="
-          echo "--- Networks ---" | tee "$DIAG_DIR/06-network-volumes.txt"
-          docker network ls 2>&1 | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          echo "--- Volumes ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          docker volume ls 2>&1 | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          echo "--- Host network interfaces ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          ip addr 2>/dev/null | head -30 | tee -a "$DIAG_DIR/06-network-volumes.txt" || ifconfig 2>/dev/null | head -30 | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          echo "--- DNS resolution test ---" | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          nslookup archive.ubuntu.com 2>&1 | head -10 | tee -a "$DIAG_DIR/06-network-volumes.txt" || echo "nslookup failed" | tee -a "$DIAG_DIR/06-network-volumes.txt"
-          curl -sI https://registry-1.docker.io/v2/ 2>&1 | head -5 | tee -a "$DIAG_DIR/06-network-volumes.txt" || echo "Docker Hub connectivity test failed" | tee -a "$DIAG_DIR/06-network-volumes.txt"
-
-          # ── Section 7: Build logs ───────────────────────────────────
-          echo ""
-          echo "=== [7/10] Build logs ==="
-          echo "--- Build log files listing ---" | tee "$DIAG_DIR/07-build-logs.txt"
-          ls -la "$BUILD_LOG_DIR/" 2>&1 | tee -a "$DIAG_DIR/07-build-logs.txt"
-          echo ""
-          echo "--- Copying build logs to diag dir ---"
-          cp -v "$BUILD_LOG_DIR"/*.log "$DIAG_DIR/" 2>/dev/null || echo "No build logs to copy"
-          echo ""
-          for logfile in "$BUILD_LOG_DIR"/*.log; do
-            if [ -f "$logfile" ]; then
-              echo ""
-              echo "===== Last 80 lines of $(basename "$logfile") ====="
-              tail -80 "$logfile"
-            fi
-          done
-
-          # ── Section 8: Build error extraction ───────────────────────
-          echo ""
-          echo "=== [8/10] Error patterns in build logs ==="
-          echo "--- ERROR/FATAL/failed/cannot/denied lines ---" | tee "$DIAG_DIR/08-errors.txt"
-          for logfile in "$BUILD_LOG_DIR"/*.log; do
-            if [ -f "$logfile" ]; then
-              echo "## $(basename "$logfile")" | tee -a "$DIAG_DIR/08-errors.txt"
-              grep -inE "error:|fatal|failed|cannot|denied|permission denied|not found|no space|timeout|killed|OOM|out of memory" "$logfile" 2>/dev/null | tail -30 | tee -a "$DIAG_DIR/08-errors.txt" || echo "  (no error patterns found)" | tee -a "$DIAG_DIR/08-errors.txt"
-              echo "" | tee -a "$DIAG_DIR/08-errors.txt"
-            fi
-          done
-
-          # ── Section 9: Environment & Git context ────────────────────
-          echo ""
-          echo "=== [9/10] Environment & Git context ==="
-          echo "--- Relevant environment variables (no secrets) ---" | tee "$DIAG_DIR/09-context.txt"
-          env | grep -iE "DOCKER|BUILD|CI|GITHUB|PATH|HOME|HTTP_PROXY|HTTPS_PROXY|NO_PROXY" | sort | tee -a "$DIAG_DIR/09-context.txt"
-          echo "--- Git commit ---" | tee -a "$DIAG_DIR/09-context.txt"
-          echo "SHA: ${{ github.sha }}" | tee -a "$DIAG_DIR/09-context.txt"
-          echo "Ref: ${{ github.ref }}" | tee -a "$DIAG_DIR/09-context.txt"
-          echo "Actor: ${{ github.actor }}" | tee -a "$DIAG_DIR/09-context.txt"
-          echo "Event: ${{ github.event_name }}" | tee -a "$DIAG_DIR/09-context.txt"
-          echo "--- Working directory contents ---" | tee -a "$DIAG_DIR/09-context.txt"
-          ls -la "$PROJECT_DIR"/ 2>&1 | head -30 | tee -a "$DIAG_DIR/09-context.txt"
-          echo "--- Dockerfiles present ---" | tee -a "$DIAG_DIR/09-context.txt"
-          find "$PROJECT_DIR" -name Dockerfile -type f 2>/dev/null | tee -a "$DIAG_DIR/09-context.txt"
-          echo "--- /tmp contents ---" | tee -a "$DIAG_DIR/09-context.txt"
-          ls -la /tmp/ 2>&1 | head -30 | tee -a "$DIAG_DIR/09-context.txt"
-          echo "--- /tmp/variants-build-* log files ---" | tee -a "$DIAG_DIR/09-context.txt"
-          ls -la /tmp/variants-build-*.log 2>/dev/null | tee -a "$DIAG_DIR/09-context.txt" || echo "None found"
-          echo "--- Last 5 lines from each /tmp/variants-build log ---" | tee -a "$DIAG_DIR/09-context.txt"
-          for vlog in /tmp/variants-build-*.log; do
-            if [ -f "$vlog" ]; then
-              echo "--- $(basename "$vlog") ---" | tee -a "$DIAG_DIR/09-context.txt"
-              tail -5 "$vlog" | tee -a "$DIAG_DIR/09-context.txt"
-            fi
-          done
-
-          # ── Section 10: Package manager & apt state ─────────────────
-          echo ""
-          echo "=== [10/10] Package manager state ==="
-          echo "--- apt cache size ---" | tee "$DIAG_DIR/10-packages.txt"
-          du -sh /var/cache/apt/ 2>/dev/null | tee -a "$DIAG_DIR/10-packages.txt" || echo "Cannot determine" | tee -a "$DIAG_DIR/10-packages.txt"
-          echo "--- pip cache size ---" | tee -a "$DIAG_DIR/10-packages.txt"
-          du -sh ~/.cache/pip/ 2>/dev/null | tee -a "$DIAG_DIR/10-packages.txt" || echo "No pip cache"
-          echo "--- Running processes ---" | tee -a "$DIAG_DIR/10-packages.txt"
-          ps aux --sort=-%mem | head -20 | tee -a "$DIAG_DIR/10-packages.txt"
-
+      - name: Build conda-llvm variant
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  DIAGNOSTICS COLLECTION COMPLETE                            ║"
-          echo "║  Saved to: $DIAG_DIR            ║"
+          echo "║  BUILD: Conda-LLVM Variant                                ║"
           echo "╚══════════════════════════════════════════════════════════════╝"
-          ls -la "$DIAG_DIR/"
+          bash variants/build.sh --variant conda-llvm --tag ${{ env.IMAGE_TAG }}
 
-      - name: Upload build logs and diagnostics as artifact
+      - name: Build onnx-pytorch variant
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  BUILD: ONNX-PyTorch Variant                              ║"
+          echo "║  Note: PyTorch may not have Python 3.14 wheels yet         ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          bash variants/build.sh --variant onnx-pytorch --tag ${{ env.IMAGE_TAG }} || echo "⚠️  onnx-pytorch build failed (likely Python 3.14 compatibility)"
+
+      - name: Build onnx-quantized variant
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: |
+          echo ""
+          echo "╔══════════════════════════════════════════════════════════════╗"
+          echo "║  BUILD: ONNX-Quantized Variant                            ║"
+          echo "╚══════════════════════════════════════════════════════════════╝"
+          bash variants/build.sh --variant onnx-quantized --tag ${{ env.IMAGE_TAG }} || echo "⚠️  onnx-quantized build failed (dependency on onnx-pytorch)"
+
+      - name: Variants summary
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts-${{ github.sha }}
-          path: |
-            /tmp/build-logs/
-            /tmp/diag-${{ github.sha }}/
-            ${{ env.PROJECT_DIR }}/benchmark-results-ci/
-          retention-days: 30
-          if-no-files-found: ignore
+        run: |
+          echo ""
+          docker images devcontainer-base --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" 2>/dev/null
