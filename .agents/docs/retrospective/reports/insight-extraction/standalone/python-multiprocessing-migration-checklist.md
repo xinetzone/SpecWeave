@@ -78,9 +78,12 @@ python -X faulthandler your_script.py
 
 项目提供完整验证脚本（需Linux环境）：
 ```bash
+# 从项目根目录运行
 python .agents/scripts/tests/test_mp_forkserver_validation.py
 ```
-该脚本自动对比 fork/forkserver/spawn 三种模式在5个测试场景下的行为差异。
+该脚本自动对比 fork/forkserver/spawn 三种模式在6个测试场景下的行为差异（多线程锁死锁、全局状态污染、局部函数pickle、基本功能、多进程并发、asyncio事件循环）。
+
+> 注：若从文档所在目录直接运行，路径为 `../../../../../scripts/tests/test_mp_forkserver_validation.py`
 
 ---
 
