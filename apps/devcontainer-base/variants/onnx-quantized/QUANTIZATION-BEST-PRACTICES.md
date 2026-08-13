@@ -50,7 +50,7 @@ sess = ort.InferenceSession(path, sess_options=so, providers=['CPUExecutionProvi
 # 在onnx-quantized容器内运行
 cd /workspace
 python scripts/run_full_benchmark.py
-# 结果输出到 apps/devcontainer-base/benchmark-results.json
+# 结果输出到 apps/devcontainer-base/reports/benchmark-results.json
 
 # QDQ/QOperator专项对比
 python scripts/compare_qdq_vs_qoperator.py --model conv --shape 1,3,32,32
@@ -500,5 +500,5 @@ print('[CI-PASS] Quantization benchmarks validated')
 - [ADVANCED-QUANTIZATION-GUIDE.md](ADVANCED-QUANTIZATION-GUIDE.md) - 高级量化实施指南（含完整代码）
 - [run_full_benchmark.py](../scripts/run_full_benchmark.py) - 全量基准测试脚本
 - [compare_qdq_vs_qoperator.py](../scripts/compare_qdq_vs_qoperator.py) - QDQ/QOperator对比脚本
-- [benchmark-report.html](../benchmark-report.html) - 交互式性能对比图表
+- [benchmark-report.html](../../reports/benchmark-report.html) - 交互式性能对比图表
 - [ONNX Runtime Quantization Docs](https://onnxruntime.ai/docs/performance/quantization.html)

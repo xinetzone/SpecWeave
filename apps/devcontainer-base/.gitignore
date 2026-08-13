@@ -3,6 +3,11 @@ workspace/
 local-results*/
 benchmark_results*.json
 
+# Build/verification/benchmark reports (directory structure preserved)
+reports/*
+!reports/.gitkeep
+!reports/README.md
+
 # Local environment (contains credentials)
 .env
 
@@ -17,3 +22,4 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+

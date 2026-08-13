@@ -129,7 +129,7 @@ if __name__ == '__main__':
                    'ort_version':ort.__version__,'device':'x64_CPU_Intel_i9-14900K'},
         'results': results
     }
-    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'benchmark-results.json')
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'reports', 'benchmark-results.json')
     out = os.path.normpath(out)
     with open(out, 'w') as f: json.dump(report, f, indent=2)
     print(f'\nDONE. Results saved to {out}')
