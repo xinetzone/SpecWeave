@@ -101,57 +101,87 @@ RUN echo "" && \
 #       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
-    echo "" && \
-    echo "########################################################################" && \
-    echo "# [CONDA-LLVM VARIANT STAGE 2/4] Install LLVM Toolchain via conda-forge" && \
-    echo "# Packages: llvmdev, clangdev, clang, lld, lldb, cmake, ninja, make" && \
-    echo "# Version: all LLVM packages @ ${LLVM_VERSION}" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    echo "[ACTION] Sourcing conda.sh and activating base environment..." && \
-    source /opt/conda/etc/profile.d/conda.sh && \
-    conda activate base && \
-    echo "[OK] base environment activated" && \
-    echo "  - conda env: $CONDA_DEFAULT_ENV" && \
-    echo "  - python: $(python --version 2>&1)" && \
-    echo "" && \
-    echo "[ACTION] Installing LLVM toolchain packages from conda-forge..." && \
-    echo "[INFO] Package list:" && \
-    echo "  - llvmdev=${LLVM_VERSION}" && \
-    echo "  - clangdev=${LLVM_VERSION}" && \
-    echo "  - clang=${LLVM_VERSION}" && \
-    echo "  - lld=${LLVM_VERSION}" && \
-    echo "  - lldb=${LLVM_VERSION}" && \
-    echo "  - cmake (latest)" && \
-    echo "  - ninja (latest)" && \
-    echo "  - make (latest)" && \
-    echo "" && \
-    conda install -y --override-channels -c conda-forge \
-        "llvmdev=${LLVM_VERSION}" \
-        "clangdev=${LLVM_VERSION}" \
-        "clang=${LLVM_VERSION}" \
-        "lld=${LLVM_VERSION}" \
-        "lldb=${LLVM_VERSION}" \
-        cmake \
-        ninja \
-        make && \
-    echo "" && \
-    echo "[OK] LLVM toolchain installation complete" && \
-    echo "" && \
-    echo "[INFO] Installed package versions:" && \
-    echo "  - llvmdev: $(conda list llvmdev | grep llvmdev | awk '{print $2}')" && \
-    echo "  - clang: $(conda list clang | grep '^clang ' | awk '{print $2}')" && \
-    echo "  - cmake: $(cmake --version 2>&1 | head -1 | awk '{print $3}')" && \
-    echo "  - ninja: $(ninja --version 2>&1)" && \
-    echo "  - make: $(make --version 2>&1 | head -1 | awk '{print $3}')" && \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "LLVS2=$_NOW" >> /tmp/.llvm-variant-build-timer && \
-    echo "[TIMER] Stage 2/4 (install toolchain) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s" && \
-    echo '[OK] Stage 2 complete'
+    <<'STAGE2_EOF'
+set -e
+echo ""
+echo "########################################################################"
+echo "# [CONDA-LLVM VARIANT STAGE 2/4] Install LLVM Toolchain via conda-forge"
+echo "# Packages: llvmdev, clangdev, clang, lld, lldb, cmake, ninja, make"
+echo "# Version: all LLVM packages @ ${LLVM_VERSION}"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+echo "[ACTION] Sourcing conda.sh and activating base environment..."
+source /opt/conda/etc/profile.d/conda.sh
+conda activate base
+echo "[OK] base environment activated"
+echo "  - conda env: $CONDA_DEFAULT_ENV"
+echo "  - python: $(python --version 2>&1)"
+echo ""
+
+# ── 辅助函数：conda 包分组安装（结构化日志+计时+诊断） ──
+conda_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [CONDA INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    conda install -y --override-channels -c conda-forge "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] Installed package versions:"
+        conda list 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -20 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] conda list for conflict diagnosis:"
+        conda list 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -30 || true
+        exit $rc
+    fi
+}
+
+conda_install_group "G1: LLVM Core (pinned ${LLVM_VERSION})" \
+    "llvmdev/clangdev/clang/lld/lldb all pinned to same version" \
+    "llvmdev=${LLVM_VERSION}" \
+    "clangdev=${LLVM_VERSION}" \
+    "clang=${LLVM_VERSION}" \
+    "lld=${LLVM_VERSION}" \
+    "lldb=${LLVM_VERSION}"
+
+conda_install_group "G2: Build Tools (latest)" \
+    "cmake/ninja/make build system tools" \
+    cmake ninja make
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] Installed toolchain versions           │"
+echo "└─────────────────────────────────────────────────┘"
+echo "  - llvmdev: $(conda list llvmdev 2>/dev/null | grep '^llvmdev' | awk '{print $2}')"
+echo "  - clang: $(conda list clang 2>/dev/null | grep '^clang ' | awk '{print $2}')"
+echo "  - lld: $(conda list lld 2>/dev/null | grep '^lld ' | awk '{print $2}')"
+echo "  - lldb: $(conda list lldb 2>/dev/null | grep '^lldb ' | awk '{print $2}')"
+echo "  - cmake: $(cmake --version 2>&1 | head -1 | awk '{print $3}')"
+echo "  - ninja: $(ninja --version 2>&1)"
+echo "  - make: $(make --version 2>&1 | head -1 | awk '{print $3}')"
+echo "  - llvm-config: $(llvm-config --version 2>&1)"
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "LLVS2=$_NOW" >> /tmp/.llvm-variant-build-timer
+echo "[TIMER] Stage 2/4 (install toolchain) took ${_ELAPSED}s | LLVM variant cumulative: ${_TOTAL}s"
+echo '[OK] Stage 2 complete'
+STAGE2_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/4 (追加层3): 符号链接 + conda-llvm-init.sh + 权限验证
