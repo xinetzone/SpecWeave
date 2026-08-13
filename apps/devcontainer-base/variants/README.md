@@ -10,6 +10,7 @@
 | conda-llvm | conda + LLVM编译工具链 | devcontainer-base:conda | LLVM 22.1.8, clang 22.1.8, cmake, ninja |
 | onnx-pytorch | conda-llvm + PyTorch CPU + ONNX 运行时 | devcontainer-base:conda-llvm | PyTorch CPU, torchvision, ONNX, ONNX Runtime, onnx-simplifier, onnxoptimizer |
 | onnx-quantized | onnx-pytorch + ONNX量化工具链 | devcontainer-base:onnx-pytorch | onnxruntime.quantization(INT8/FP16), onnxconverter-common, onnxsim; neural-compressor可选(PyTorch-only) |
+| ai-dev | onnx-quantized + 完整AI/ML/NLP全栈生态 | devcontainer-base:onnx-quantized | 50+ Python包(NLP/数据/可视化/文档/Web/数据库), JupyterLab 4.x, 通用AI内核 |
 
 ## 快速开始
 
@@ -47,6 +48,7 @@ bash variants/build.sh --all
    # name:     变体名称（与目录名一致）
    # desc:     一句话描述
    # deps:     依赖的变体名（逗号分隔，无依赖留空）
-   # verify:   验证命令（分号分隔多条命令，每条独立报告PASS/FAIL/TIMEOUT）
+   # verify:   验证命令（用 `|||` 三管道分隔多条命令，禁止使用 `;` 避免与Python `-c "a;b"` 命令内部分号冲突）
    ```
+   详见 [构建编排规范](.agents/rules/build-orchestration.md) 中的「安全命令列表分隔符模式」
 6. **在本 README.md 变体列表中添加新条目**

@@ -130,6 +130,110 @@ RUN --mount=type=cache,target=<path>,sharing=locked \
 
 ⚠️ 缓存挂载必须配合 `rm -rf /var/lib/apt/lists/*` 等清理命令使用，确保最终镜像不包含缓存数据。
 
+## 包安装可观测性规范（pip/conda分组安装模式）
+
+当Dockerfile中需要安装**10个以上**pip/conda包时，必须采用分组安装模式以提升依赖冲突排查效率。此模式称为"Pip Install Group Observability"。
+
+### 触发条件
+
+- pip install 包数量 ≥ 10个
+- conda install 包数量 ≥ 10个
+- 包之间存在复杂的版本依赖关系（如AI/ML/NLP生态）
+
+### 核心要求
+
+1. **定义安装辅助函数**：在RUN指令开头定义`pip_install_group()`（或`conda_install_group()`），包含：
+   - 结构化框线头输出（组名+描述+完整包清单）
+   - 独立计时（秒级精度）
+   - `set +e`捕获安装退出码（防止`set -e`直接终止导致无法输出诊断）
+   - 成功后执行`pip check`/`conda check`，前10行输出直接暴露冲突
+   - 失败时输出诊断：`pip check`前30行 + 已安装冲突包列表 + 明确exit code
+
+2. **按功能域分组**：每组3-8个包，从底层依赖到上层应用排列：
+   - G1: Build Tools（编译器/构建工具）
+   - G2: Core ML/DL（深度学习框架）
+   - G3: NLP/Transformers等（按功能域分组）
+
+3. **最终一致性检查**：全部安装后执行一次全量`pip check`/`conda list`
+
+4. **版本汇总**：使用`importlib`输出核心包版本号，注意模块名与包名映射（如`sklearn`→`scikit-learn`、`cv2`→`opencv-python`、`fitz`→`PyMuPDF`）
+
+### pip_install_group 参考实现
+
+```dockerfile
+RUN <<'STAGE_EOF'
+set -e
+_STAGE_START=$(date +%s)
+
+pip_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start=$(date +%s) g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    set +e
+    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+        echo "[CHECK] pip check for dependency conflicts:"
+        pip check 2>&1 | head -10 || true
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        echo "[DIAG] pip check output for conflict diagnosis:"
+        pip check 2>&1 | head -30 || true
+        echo "[DIAG] Already-installed conflicting packages:"
+        pip list --format=freeze 2>/dev/null | grep -iE "$(echo "$*" | tr ' ' '|' | sed 's/[>=<].*//g')" | head -20 || true
+        exit $rc
+    fi
+}
+
+# 按功能域分组安装，每组3-8个包
+pip_install_group "G1: Build Tools" "编译和构建工具" \
+    ninja cmake wheel setuptools
+pip_install_group "G2: Core ML/DL" "深度学习框架" \
+    torch onnx onnxruntime
+# ... 更多分组 ...
+
+# 最终一致性检查
+echo ""
+echo "[FINAL CHECK] Dependency consistency:"
+pip check 2>&1 || echo "[WARN] pip check reported issues (conda packages may appear as missing)"
+
+# 版本汇总
+python -c "
+import importlib
+packages = [('torch','torch'),('sklearn','scikit-learn'),('fitz','PyMuPDF')]
+for mod, name in packages:
+    try:
+        m = importlib.import_module(mod)
+        print(f'  - {name}: {getattr(m, \"__version__\", \"installed\")}')
+    except ImportError:
+        print(f'  - {name}: NOT FOUND')
+"
+STAGE_EOF
+```
+
+### 反模式
+
+- ❌ **所有包写在一个pip install中**：冲突无法定位到包组，排查靠反复试错
+- ❌ **不做set +e错误捕获**：`set -e`导致pip失败时直接退出，无诊断信息
+- ❌ **不运行pip check**：版本冲突静默存在到运行时才暴露ImportError
+- ❌ **组太大（>10个包）**：分组的诊断价值丧失，退化为"一个大pip install"
+- ❌ **版本汇总假设模块名=包名**：多个常用包不一致导致"NOT FOUND"误报
+- ❌ **为减少层数而合并所有pip install**：30+包场景下冲突排查成本（30-60分钟）远大于多13层元数据成本（几KB）
+
+### 反模式教训
+
+ai-dev变体早期将30+个pip包一次性安装，发生依赖冲突时无法定位是哪个包组引入的，需要反复二分法排查。分组安装后，冲突可直接定位到Gx分组，排查时间从30-60分钟缩短到5分钟以内。
+
 ## [VALIDATION CHECKPOINT] 规范
 
 每个变体 Dockerfile 的最后一个阶段必须包含验证检查点：
