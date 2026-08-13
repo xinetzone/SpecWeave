@@ -38,6 +38,8 @@ requirements*.txt text eol=lf
 *.psm1     text eol=crlf
 *.bat      text eol=crlf
 *.cmd      text eol=crlf
+# Git hooks (extensionless POSIX shell scripts)
+.githooks/* text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi
