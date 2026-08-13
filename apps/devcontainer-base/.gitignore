@@ -1,10 +1,18 @@
+# Build caches and logs
+.cache/
+logs/
+
 # Runtime directories
 workspace/
 local-results*/
 benchmark_results*.json
 
 # Build/verification/benchmark reports (directory structure preserved)
-reports/*
+reports/
+*.html
+*report*.json
+benchmark-results.json
+verification-report*.json
 !reports/.gitkeep
 !reports/README.md
 

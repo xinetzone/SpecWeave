@@ -2,117 +2,50 @@
 # =============================================================================
 # DevContainer Base - Dockerfile (Multi-stage build)
 # Project: SpecWeave Full-featured Development Container Base Image
-# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter
+# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter + Miniconda3(libmamba)
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
 # Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
+# Python: Miniconda3 at /opt/conda (Python 3.14, libmamba solver), Jupyter in base env
 #
 # Build: docker build -t devcontainer-base .
-# CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun -t devcontainer-base .
+# CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t devcontainer-base .
 # Run:   docker run -d --privileged -p 2222:22 -p 2375:2375 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -e GRANT_SUDO=yes \
 #          -v $(pwd)/workspace:/workspace -v docker-data:/var/lib/docker devcontainer-base
 # Debug: docker run -it --rm --privileged devcontainer-base bash
 #
-# Runtime Stage Layering (adapted dockerfile-runtime-logical-layering pattern v1.3):
+# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.3):
 #   Stage 2.1/7: 系统包 + APT镜像 + locale/timezone (变化频率: 最低)
 #   Stage 2.2/7: Docker CE 安装 (变化频率: 低)
 #   Stage 2.3/7: Podman rootless 安装 (变化频率: 低)
-#   Stage 2.4/7: COPY venv from builder + PATH 配置 (变化频率: 低)
+#   Stage 2.4/7: Miniconda3 安装 + Jupyter + PATH 配置 (变化频率: 中)
 #   Stage 2.5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
 #   Stage 2.6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
-#   Stage 2.7/7: build-info + 清理 + 最终验证 (变化频率: 最低)
+#   Stage 2.7/7: build-info + 激进清理 + 最终验证 (变化频率: 最低)
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
 
 ARG APT_MIRROR=official
 ARG PIP_MIRROR=official
+ARG CONDA_MIRROR=official
+ARG PYTHON_VERSION=3.14
 
 # -----------------------------------------------------------------------------
-# Stage 1: Builder - Install Python dependencies with build toolchain
-# -----------------------------------------------------------------------------
-FROM ubuntu:26.04 AS builder
-
-ARG APT_MIRROR
-ARG PIP_MIRROR
-
-ENV DEBIAN_FRONTEND=noninteractive
-
-SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
-
-RUN echo "=== [Builder] Configuring APT mirror: ${APT_MIRROR} ===" && \
-    if [ "${APT_MIRROR}" = "aliyun" ]; then \
-        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
-        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true; \
-        echo "[Builder] Using Aliyun APT mirror"; \
-    elif [ "${APT_MIRROR}" = "tuna" ]; then \
-        sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
-        sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true; \
-        echo "[Builder] Using Tsinghua TUNA APT mirror"; \
-    else \
-        echo "[Builder] Using official APT sources"; \
-    fi
-
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
-    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    echo "=== [Builder] Installing build dependencies ===" && \
-    echo "[INFO] Updating APT package lists for builder..." && \
-    apt-get update -qq && \
-    echo "[INFO] Installing 6 build packages (build-essential, python3-dev, pip, etc.)..." && \
-    apt-get install -y --no-install-recommends -qq \
-        build-essential \
-        ca-certificates \
-        python3 \
-        python3-dev \
-        python3-pip \
-        python3-venv \
-    && echo "[OK] Build dependencies installed" && \
-    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
-    rm -rf /var/lib/apt/lists/*
-
-RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
-    echo "=== [Builder] Creating Python virtual environment ===" && \
-    python3 -m venv /opt/venv && \
-    echo "[INFO] Virtual environment created at /opt/venv" && \
-    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
-        /opt/venv/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
-        /opt/venv/bin/pip config set global.trusted-host mirrors.aliyun.com; \
-        echo "[Builder] Using Aliyun PyPI mirror"; \
-    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
-        /opt/venv/bin/pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple && \
-        /opt/venv/bin/pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn; \
-        echo "[Builder] Using Tsinghua TUNA PyPI mirror"; \
-    else \
-        echo "[Builder] Using official PyPI"; \
-    fi && \
-    echo "[INFO] Upgrading pip, setuptools, wheel..." && \
-    /opt/venv/bin/pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    echo "[OK] pip upgraded: $(/opt/venv/bin/pip --version | awk '{print $2}')"
-
-COPY requirements.txt /tmp/requirements.txt
-RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
-    echo "=== [Builder] Installing Jupyter and Python packages ===" && \
-    echo "[INFO] Installing packages from requirements.txt..." && \
-    echo "[INFO] Package list:" && cat /tmp/requirements.txt | sed 's/^/  - /' && \
-    /opt/venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt && \
-    rm -f /tmp/requirements.txt && \
-    echo "[OK] Python packages installed, verifying jupyter..." && \
-    /opt/venv/bin/jupyter --version && \
-    echo "[INFO] Key pip packages:" && \
-    /opt/venv/bin/pip list --format=columns 2>/dev/null | grep -iE 'jupyter|notebook|ipykernel|docker|podman|supervisor' || true
-
-# -----------------------------------------------------------------------------
-# Stage 2: Runtime - Minimal production image
+# Stage 2: Runtime - Minimal production image with Micromamba
 # -----------------------------------------------------------------------------
 FROM ubuntu:26.04
 
 ARG APT_MIRROR
 ARG DOCKER_MIRROR=official
+ARG CONDA_MIRROR
+ARG PIP_MIRROR
+ARG PYTHON_VERSION
 
 LABEL maintainer="SpecWeave"
-LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter, managed by supervisord"
-LABEL version="1.3"
+LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniconda3(Python 3.14, libmamba solver), managed by supervisord"
+LABEL version="2.0-slim"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -120,8 +53,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=zh_CN.UTF-8 \
     LANGUAGE=zh_CN:zh \
     LC_ALL=zh_CN.UTF-8 \
-    PATH="/opt/venv/bin:${PATH}" \
-    VIRTUAL_ENV="/opt/venv" \
+    CONDA_DIR=/opt/conda \
+    PATH="/opt/conda/bin:${PATH}" \
     NON_ROOT_USER=devuser \
     JUPYTER_PORT=8888 \
     SSH_PORT=22 \
@@ -161,7 +94,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     fi && \
     echo "[INFO] Updating APT package lists..." && \
     apt-get update -qq && \
-    echo "[INFO] Installing 21 system packages (openssh-server, python3, supervisor, uidmap, etc.)..." && \
+    echo "[INFO] Installing system packages (--no-install-recommends)..." && \
     apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         curl \
@@ -174,14 +107,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         openssh-client \
         procps \
         pwgen \
-        python3 \
-        python3-venv \
+        bzip2 \
+        wget \
         sudo \
         supervisor \
         tini \
         tzdata \
-        vim \
-        wget \
+        vim-tiny \
         xz-utils \
         uidmap \
         fuse-overlayfs \
@@ -189,7 +121,6 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     && echo "[OK] Base system packages installed" && \
     echo "[INFO] Verifying key package versions:" && \
     echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
-    echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
     echo "  - supervisor: $(supervisord --version 2>/dev/null || echo 'N/A')" && \
     echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
     sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -279,28 +210,299 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 3/7 (Podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.4/7: 语言运行时复制（从 builder 阶段 COPY venv）
-# 变化频率：低（依赖版本升级时改）
-# 原则：COPY --from=builder 后立即验证二进制可用，配置 profile.d
+# Stage 2.4/7: Miniconda3 安装 + Python 3.14 + libmamba solver + Jupyter
+# 变化频率：中（Python/包版本升级时改）
+# 原则：Miniconda3轻量安装到/opt/conda，启用libmamba求解器加速依赖解析，
+#       conda-forge channel优先，Jupyter安装到base环境，安装后立即清理缓存
 # ═══════════════════════════════════════════════════════════════════
-COPY --from=builder /opt/venv /opt/venv
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly \
+    <<'STAGE4_EOF'
+set -e
+echo "=== Stage 4/7: Install Miniconda3 + Python ${PYTHON_VERSION} (libmamba solver) + Jupyter ==="
+_STAGE_START=$(date +%s)
 
-RUN echo "=== Stage 4/7: Copy Python venv from builder ===" && \
-    _STAGE_START=$(date +%s) && \
-    python3 --version && \
-    pip --version && \
-    jupyter --version && \
-    echo "[BUILD] Jupyter available via venv at /opt/venv" && \
-    echo "export PATH=/opt/venv/bin:\$PATH" > /etc/profile.d/venv.sh && \
-    echo "export VIRTUAL_ENV=/opt/venv" >> /etc/profile.d/venv.sh && \
-    chmod +x /etc/profile.d/venv.sh && \
-    echo "[BUILD] System-wide profile.d/venv.sh created for login shell PATH" && \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "S4=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Stage 4/7 (venv+PATH) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+# ── 辅助函数：conda 包分组安装（使用libmamba solver） ──
+conda_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [CONDA INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    conda install -y -n base --solver=libmamba "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        exit $rc
+    fi
+}
+
+# ── 辅助函数：pip 包分组安装 ──
+pip_install_group() {
+    local group_name="$1" description="$2"
+    shift 2
+    local g_start g_end g_elapsed rc
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [PIP INSTALL] ${group_name}"
+    echo "│ Desc: ${description}"
+    echo "│ PKGS: $*"
+    echo "└─────────────────────────────────────────────────┘"
+    g_start=$(date +%s)
+    set +e
+    pip install --no-cache-dir --timeout 120 --retries 5 "$@" 2>&1
+    rc=$?
+    set -e
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+    if [ $rc -eq 0 ]; then
+        echo "[OK] ${group_name} installed in ${g_elapsed}s"
+    else
+        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
+        pip check 2>&1 | head -20 || true
+        exit $rc
+    fi
+}
+
+# ── 架构检测 + Miniconda安装器URL ──
+echo "[INFO] Detecting architecture..."
+ARCH=$(uname -m)
+case "$ARCH" in
+    x86_64)  CONDA_ARCH="x86_64" ;;
+    aarch64) CONDA_ARCH="aarch64" ;;
+    *) echo "[ERROR] Unsupported architecture: $ARCH"; exit 1 ;;
+esac
+echo "[OK] Architecture: $ARCH ($CONDA_ARCH)"
+
+# ── 下载并安装 Miniconda3（优先本地缓存，回退网络多源下载） ──
+echo "[INFO] Downloading Miniconda3 installer..."
+_dl_start=$(date +%s)
+
+LOCAL_INSTALLER=""
+for f in /tmp/local-cache/Miniconda3-latest-Linux-${CONDA_ARCH}.sh \
+         /tmp/local-cache/Miniconda3-*-Linux-${CONDA_ARCH}.sh; do
+    if [ -f "$f" ] && [ -s "$f" ]; then
+        LOCAL_INSTALLER="$f"
+        break
+    fi
+done
+
+if [ -n "$LOCAL_INSTALLER" ]; then
+    echo "[OK] Using local cached installer: $LOCAL_INSTALLER ($(du -h "$LOCAL_INSTALLER" | cut -f1))"
+    cp "$LOCAL_INSTALLER" /tmp/miniconda.sh
+    DL_OK=1
+else
+    echo "[INFO] No local cache found, downloading from network..."
+    # 根据 CONDA_MIRROR 构建候选下载源列表
+    if [ "${CONDA_MIRROR}" = "tuna" ]; then
+        DL_URLS=(
+            "https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+        )
+    elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
+        DL_URLS=(
+            "https://mirrors.aliyun.com/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+        )
+    else
+        DL_URLS=(
+            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+        )
+    fi
+
+    DL_OK=0
+    for dl_url in "${DL_URLS[@]}"; do
+        echo "[INFO] Trying: $dl_url"
+        if curl -fsSL --connect-timeout 30 --max-time 300 --retry 3 --retry-delay 5 \
+            -o /tmp/miniconda.sh "$dl_url" 2>/tmp/conda_dl_err.log; then
+            echo "[OK] Downloaded from: $dl_url"
+            DL_OK=1
+            break
+        else
+            echo "[WARN] Failed, trying next source..."
+            cat /tmp/conda_dl_err.log | tail -3
+        fi
+    done
+
+    if [ "$DL_OK" = "0" ]; then
+        echo "[ERROR] Failed to download Miniconda3 from all sources"
+        cat /tmp/conda_dl_err.log
+        exit 1
+    fi
+fi
+
+_dl_elapsed=$(($(date +%s) - _dl_start))
+echo "[OK] Installer ready: $(du -h /tmp/miniconda.sh | cut -f1) in ${_dl_elapsed}s"
+
+echo "[INFO] Installing Miniconda3 to ${CONDA_DIR}..."
+bash /tmp/miniconda.sh -b -p "${CONDA_DIR}" -f
+rm -f /tmp/miniconda.sh
+echo "[OK] Miniconda3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)"
+
+# ── Source conda.sh 使 conda 命令在当前 shell 完全可用 ──
+. "${CONDA_DIR}/etc/profile.d/conda.sh"
+echo "[OK] conda.sh sourced, conda available in build shell"
+
+# ── 接受 Anaconda ToS（必须在移除defaults频道之前执行） ──
+echo "[INFO] Accepting Anaconda Terms of Service..."
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main 2>&1 || true
+conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r 2>&1 || true
+echo "[OK] ToS accepted"
+
+# ── 彻底清除Miniconda安装器写入的系统级defaults配置（防止多源合并） ──
+echo "[INFO] Removing system-level default channels..."
+rm -f "${CONDA_DIR}/.condarc"
+rm -rf "${CONDA_DIR}/condarc.d/"
+conda config --remove-key channels --system 2>/dev/null || true
+conda config --remove-key default_channels --system 2>/dev/null || true
+conda config --remove-key channels 2>/dev/null || true
+conda config --remove-key default_channels 2>/dev/null || true
+conda config --set auto_activate_base false 2>/dev/null || true
+echo "[OK] System-level defaults removed"
+
+# ── 配置 .condarc（频道 + solver + 网络调优） ──
+echo "[INFO] Configuring .condarc..."
+if [ "${CONDA_MIRROR}" = "tuna" ]; then
+    cat > /root/.condarc <<'CRC'
+channels:
+  - conda-forge
+default_channels: []
+channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+channel_priority: strict
+show_channel_urls: true
+remote_connect_timeout_secs: 30
+remote_read_timeout_secs: 120
+remote_max_retries: 5
+remote_backoff_factor: 3
+repodata_threads: 1
+execute_threads: 1
+ssl_verify: true
+CRC
+    echo "[OK] Using Tsinghua TUNA mirror (channel_alias)"
+elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
+    cat > /root/.condarc <<'CRC'
+channels:
+  - conda-forge
+default_channels: []
+channel_alias: https://mirrors.aliyun.com/anaconda/cloud
+channel_priority: strict
+show_channel_urls: true
+remote_connect_timeout_secs: 30
+remote_read_timeout_secs: 120
+remote_max_retries: 5
+remote_backoff_factor: 3
+repodata_threads: 1
+execute_threads: 1
+ssl_verify: true
+CRC
+    echo "[OK] Using Aliyun mirror (channel_alias)"
+else
+    cat > /root/.condarc <<'CRC'
+channels:
+  - conda-forge
+default_channels: []
+channel_priority: strict
+show_channel_urls: true
+remote_connect_timeout_secs: 30
+remote_read_timeout_secs: 300
+remote_max_retries: 5
+remote_backoff_factor: 3
+repodata_threads: 1
+execute_threads: 1
+ssl_verify: true
+CRC
+    echo "[OK] Using official conda-forge channels"
+fi
+
+# ── Miniconda已自带Python，确认版本 ──
+_builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
+echo "[INFO] Miniconda built-in Python: ${_builtin_py}"
+
+# ── Step 1: 检查libmamba是否已预装，否则安装（使用--freeze-installed避免升级已有包，加速classic solver） ──
+if conda list -n base conda-libmamba-solver 2>/dev/null | grep -q conda-libmamba-solver; then
+    echo "[OK] conda-libmamba-solver already pre-installed"
+else
+    echo "[INFO] Installing conda-libmamba-solver (classic solver, freeze-installed for speed)..."
+    conda install -y -n base --solver=classic --freeze-installed --strict-channel-priority \
+        conda-libmamba-solver libmambapy 2>&1
+    echo "[OK] conda-libmamba-solver + libmambapy installed"
+fi
+
+# ── Step 2: 切换到libmamba solver ──
+conda config --set solver libmamba
+echo "[OK] Default solver set to libmamba: $(conda config --show solver 2>&1 | tr -d ' ')"
+
+# ── Step 3: 用libmamba确保Python版本正确（快速求解） ──
+echo "[INFO] Ensuring Python ${PYTHON_VERSION} (using libmamba solver)..."
+conda install -y -n base "python=${PYTHON_VERSION}" pip 2>&1
+echo "[OK] Python $(python --version 2>&1 | awk '{print $2}') ready"
+
+# ── 配置 PyPI 镜像 ──
+if [ "${PIP_MIRROR}" = "aliyun" ]; then
+    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    pip config set global.trusted-host mirrors.aliyun.com
+    echo "[OK] Using Aliyun PyPI mirror"
+elif [ "${PIP_MIRROR}" = "tuna" ]; then
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+    pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+    echo "[OK] Using Tsinghua TUNA PyPI mirror"
+fi
+
+# ── 安装 Jupyter 生态 ──
+echo "[INFO] Installing Jupyter ecosystem..."
+conda_install_group "G2: Jupyter" "Jupyter Lab >=4.4 + Notebook >=7.3 + ipykernel" \
+    "jupyterlab>=4.4" "notebook>=7.3" ipykernel nbconvert jupyter_server
+
+# ── 激活 conda base 环境到当前 shell ──
+echo "[INFO] Activating conda base for build shell..."
+eval "$(conda shell.bash hook 2>/dev/null)"
+conda activate base
+echo "[OK] Build shell activated (python: $(which python))"
+
+# ── 清理缓存 ──
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [CLEAN] Cleaning conda + pip caches            │"
+echo "└─────────────────────────────────────────────────┘"
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
+rm -rf "${CONDA_DIR}/pkgs"/* 2>/dev/null || true
+echo "[OK] Conda/pip caches cleaned"
+
+# ── 验证安装 ──
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] Conda + Python + Jupyter              │"
+echo "└─────────────────────────────────────────────────┘"
+conda --version
+python --version
+jupyter --version
+echo "  - conda dir: ${CONDA_DIR}"
+echo "  - python path: $(which python)"
+echo "  - jupyter path: $(which jupyter)"
+echo "  - solver: $(conda config --show solver 2>&1 | tr -d ' ')"
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "S4=$_NOW" >> /tmp/.build-timer
+echo "[TIMER] Stage 4/7 (conda+libmamba+jupyter) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+echo '[OK] Stage 4 complete'
+STAGE4_EOF
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 2.5/7: 用户/组/工作目录创建 + subuid/subgid + 权限设置
@@ -332,11 +534,21 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
     chmod 700 /home/devuser/.ssh && \
     chown -R devuser:devuser /workspace /home/devuser/.jupyter /home/devuser/.ssh && \
     echo "[BUILD] Working directory /workspace and .jupyter/.ssh directories created with proper permissions" && \
-    echo "export PATH=/opt/venv/bin:\$PATH" >> /home/devuser/.bashrc && \
-    echo "export VIRTUAL_ENV=/opt/venv" >> /home/devuser/.bashrc && \
+    echo "[BUILD] Creating conda initialization script..." && \
+    printf '%s\n' \
+        '#!/bin/bash' \
+        '# Conda base environment activation' \
+        'if [ -f /opt/conda/etc/profile.d/conda.sh ]; then' \
+        '    . /opt/conda/etc/profile.d/conda.sh' \
+        '    conda activate base 2>/dev/null || true' \
+        'fi' \
+        > /etc/profile.d/conda-init.sh && \
+    chmod +x /etc/profile.d/conda-init.sh && \
+    echo "source /etc/profile.d/conda-init.sh" >> /home/devuser/.bashrc && \
+    echo "source /etc/profile.d/conda-init.sh" >> /root/.bashrc && \
     chown devuser:devuser /home/devuser/.bashrc && \
-    echo "PATH=/opt/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
-    echo "[BUILD] User .bashrc and /etc/environment configured with venv PATH (PATH layer 2+3)" && \
+    echo "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
+    echo "[BUILD] User .bashrc and /etc/environment configured (conda PATH priority)" && \
     echo "[BUILD] Preparing runtime directories and Docker daemon.json..." && \
     mkdir -p /run/sshd && chmod 755 /run/sshd && \
     mkdir -p /var/log/supervisor /etc/supervisor/conf.d /etc/docker && \
@@ -353,7 +565,6 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
 # Stage 2.6/7: 配置文件 COPY + 权限设置 + 语法验证
 # 变化频率：高（配置调整时改，缓存不会让前面层失效）
 # 原则：所有 COPY 集中在一处；同层 RUN 做权限 + 全部语法验证
-#       （sshd -t、bash -n 等），构建即测试，问题早发现
 # ═══════════════════════════════════════════════════════════════════
 COPY config/sshd_config /etc/ssh/sshd_config
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
@@ -389,34 +600,74 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.7/7: 构建元数据 + 最终清理 + 最终可用性验证
+# Stage 2.7/7: 构建元数据 + 激进清理 + 最终验证
 # 变化频率：最低（版本发布时改）
-# 原则：写入build-info；清理apt/tmp缓存；最终验证所有关键命令可执行；
-#       输出耗时汇总表；删除计时器文件
+# 原则：写入build-info；激进清理doc/man/info/__pycache__/.pyc/静态库；
+#       strip二进制；最终验证所有关键命令可执行；输出耗时汇总表
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 7/7: Final metadata, cleanup, and verification ===" && \
+RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ===" && \
     _STAGE_START=$(date +%s) && \
     DEVUSER_UID=$(id -u devuser) && \
+    CONDA_VERSION=$(conda --version 2>&1 | awk '{print $2}') && \
+    PYTHON_VERSION_ACTUAL=$(python --version 2>&1 | awk '{print $2}') && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
-    echo "BUILD_TYPE=multi-stage" >> /etc/devcontainer-build-info && \
+    echo "BUILD_TYPE=multi-stage-slim" >> /etc/devcontainer-build-info && \
     echo "LOCALE=zh_CN.UTF-8" >> /etc/devcontainer-build-info && \
     echo "TIMEZONE=Asia/Shanghai" >> /etc/devcontainer-build-info && \
     echo "NON_ROOT_USER=devuser" >> /etc/devcontainer-build-info && \
     echo "NON_ROOT_UID=${DEVUSER_UID}" >> /etc/devcontainer-build-info && \
     echo "SERVICES=sshd,dockerd,podman,jupyter" >> /etc/devcontainer-build-info && \
     echo "SUPERVISOR=enabled" >> /etc/devcontainer-build-info && \
-    echo "PYTHON_VENV=/opt/venv" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_ENV=conda" >> /etc/devcontainer-build-info && \
+    echo "CONDA_DIR=/opt/conda" >> /etc/devcontainer-build-info && \
+    echo "CONDA_VERSION=${CONDA_VERSION}" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_VERSION=${PYTHON_VERSION_ACTUAL}" >> /etc/devcontainer-build-info && \
     echo "DOCKER_DIND=enabled" >> /etc/devcontainer-build-info && \
     echo "PODMAN_ROOTLESS=enabled" >> /etc/devcontainer-build-info && \
-    echo "PATH_LAYERS=4(docker-env+etc-environment+profile.d+supervisor)" >> /etc/devcontainer-build-info && \
     echo "BUILD_TIMER=enabled" >> /etc/devcontainer-build-info && \
     cat /etc/devcontainer-build-info && \
     echo "[BUILD] Build info written to /etc/devcontainer-build-info" && \
-    echo "[BUILD] Running final cleanup..." && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│ [AGGRESSIVE CLEANUP] Removing unnecessary files│" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    echo "[CLEAN 1/9] APT cache + lists..." && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    echo "[BUILD] APT cache cleaned" && \
+    echo "[CLEAN 2/9] Documentation, man pages, info pages (system + conda)..." && \
+    rm -rf /usr/share/doc/* /usr/share/man/* /usr/share/info/* /usr/share/lintian/* 2>/dev/null || true && \
+    rm -rf /opt/conda/share/doc/* /opt/conda/share/man/* /opt/conda/share/info/* /opt/conda/share/gtk-doc/* 2>/dev/null || true && \
+    echo "[CLEAN 3/9] Python __pycache__ and .pyc/.pyo files..." && \
+    find /opt/conda -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    find /opt/conda -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
+    find /usr -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN 4/9] Conda static libs + non-Python dev headers..." && \
+    find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.la" -delete 2>/dev/null || true && \
+    find /opt/conda/include -mindepth 1 -maxdepth 1 ! -name "python*" -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN 5/9] Stripping debug symbols from binaries..." && \
+    find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.so*" ! -path "*/python3.14/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    echo "[CLEAN 6/9] Removing conda telemetry + dev tools..." && \
+    conda remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
+    rm -f /opt/conda/bin/x86_64-conda-linux-gnu-ld /opt/conda/bin/x86_64-conda-linux-gnu-ld.bfd 2>/dev/null || true && \
+    rm -f /opt/conda/bin/c_rehash /opt/conda/bin/openssl-c_rehash 2>/dev/null || true && \
+    conda clean -yafq 2>/dev/null || true && \
+    echo "[CLEAN 7/9] Conda share bloat (terminfo db, locale unused)..." && \
+    rm -rf /opt/conda/share/zoneinfo/leapseconds /opt/conda/share/zoneinfo/tzdata.zi 2>/dev/null || true && \
+    for _loc in /opt/conda/share/locale/*; do \
+        _bn=$(basename "$_loc"); \
+        case "$_bn" in en|en_US|zh|zh_CN|zh_TW|ja) ;; *) rm -rf "$_loc" 2>/dev/null || true ;; esac; \
+    done && \
+    echo "[CLEAN 8/9] Package caches and tmp files..." && \
+    rm -rf /opt/conda/pkgs/* /root/.cache/pip /root/.conda/pkgs /tmp/* /var/tmp/* 2>/dev/null || true && \
+    pip cache purge 2>/dev/null || true && \
+    echo "[CLEAN 9/9] Ensuring /opt/conda permissions..." && \
+    chown -R root:root /opt/conda && \
+    chmod -R a+rX /opt/conda && \
+    find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
+    echo "[OK] Aggressive cleanup complete" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [FINAL VERIFICATION - Stage 7/7]               │" && \
@@ -425,11 +676,13 @@ RUN echo "=== Stage 7/7: Final metadata, cleanup, and verification ===" && \
     tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
     supervisord --version && echo "[OK] supervisord available" && \
     sshd -t && echo "[OK] sshd config valid" && \
-    python --version && echo "[OK] python available" && \
+    python --version && echo "[OK] python (conda) available" && \
+    conda --version && echo "[OK] conda available" && \
     pip --version && echo "[OK] pip available" && \
     jupyter --version && echo "[OK] jupyter available" && \
     docker --version && echo "[OK] docker available" && \
     podman --version && echo "[OK] podman available" && \
+    test ! -d /opt/venv && echo "[OK] /opt/venv removed (using conda only)" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     echo "" && \
@@ -456,16 +709,16 @@ RUN echo "=== Stage 7/7: Final metadata, cleanup, and verification ===" && \
     printf "║  Stage 1/7  system packages + locale   %5ds               ║\n" $_T1 && \
     printf "║  Stage 2/7  Docker CE install          %5ds               ║\n" $_T2 && \
     printf "║  Stage 3/7  Podman rootless install    %5ds               ║\n" $_T3 && \
-    printf "║  Stage 4/7  venv copy + PATH config    %5ds               ║\n" $_T4 && \
+    printf "║  Stage 4/7  Miniconda3+libmamba+Python  %5ds               ║\n" $_T4 && \
     printf "║  Stage 5/7  user+subuid+dirs+daemon   %5ds               ║\n" $_T5 && \
     printf "║  Stage 6/7  config + validation       %5ds               ║\n" $_T6 && \
-    printf "║  Stage 7/7  metadata + final verify    %5ds               ║\n" $_T7 && \
+    printf "║  Stage 7/7  cleanup + final verify     %5ds               ║\n" $_T7 && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
     printf "║  RUNTIME TOTAL                         %5ds               ║\n" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
-    rm -f /tmp/.build-timer /tmp/* /var/tmp/* && \
-    echo "[BUILD] ========== BUILD COMPLETE ==========" && \
+    rm -f /tmp/.build-timer && \
+    echo "[BUILD] ========== BUILD COMPLETE (slim) ==========" && \
     echo ""
 
 # ── 元数据声明（不产生镜像层） ──
