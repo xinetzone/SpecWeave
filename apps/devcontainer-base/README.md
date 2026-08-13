@@ -4,8 +4,8 @@
 
 ## ✨ 特性
 
-- **基础环境**：Ubuntu 26.04 固定标签、中文 locale zh_CN.UTF-8、Asia/Shanghai 时区、Python 3 venv
-- **四大服务**：SSH(22) + Docker DinD(2375) + Podman(rootless) + Jupyter(8888)，可独立启停
+- **基础环境**：Ubuntu 26.04 固定标签、中文 locale zh_CN.UTF-8、Asia/Shanghai 时区、Miniconda3 + Python 3.14（libmamba求解器）
+- **四大服务**：SSH(22) + Docker DinD(2375) + Podman(rootless) + JupyterLab(8888)，可独立启停
 - **进程管理**：Supervisord 统一管理，服务自动重启、优先级调度
 - **双容器运行时**：
   - Docker DinD 模式（--privileged，完全隔离）
@@ -98,20 +98,31 @@ devcontainer-base/
 
 ```bash
 # 方式1：直接 docker build
-docker build -t devcontainer-base:1.0 .
+docker build -t devcontainer-base:conda-libmamba-v2 .
 
-# 方式2：使用构建脚本
+# 方式2：使用构建脚本（推荐，含日志+预检+冒烟测试）
 bash scripts/build.sh
 
-# 使用国内镜像源（apt/pip加速）
-bash scripts/build.sh --cn
+# 使用国内镜像源（apt/pip/docker加速，conda使用official源保证稳定性）
+bash scripts/build.sh --apt-mirror aliyun --pip-mirror aliyun --docker-mirror aliyun --conda-mirror official --network-host
 
-# 构建并验证（构建后自动启动临时容器验证服务）
-bash scripts/build.sh --verify
+# 构建并运行快速冒烟测试（自动验证Python 3.14+libmamba等核心功能）
+bash scripts/build.sh --test
 
-# 使用国内镜像源构建并验证
-bash scripts/build.sh --cn --verify
+# 跳过缓存重新构建
+bash scripts/build.sh --no-cache
+
+# 自定义标签
+bash scripts/build.sh -t my-tag
 ```
+
+**构建脚本特性**：
+- 📝 **详细日志**：`--progress=plain` 输出完整构建过程，日志自动保存至 `logs/builds/`
+- ✅ **构建前预检**：6项检查（Docker运行状态/BuildKit/磁盘空间/缓存/配置摘要）
+- 🌐 **多镜像源支持**：APT/PyPI/Docker CE/Conda 均可独立切换镜像源（aliyun/tuna/official）
+- 🔧 **网络模式**：`--network-host` 使用host网络解决国内下载问题
+- 🧪 **冒烟测试**：构建后自动启动容器验证Python版本、libmamba求解器、pip等7项核心功能
+- 🚨 **错误捕获**：构建失败时自动输出最后50行日志和排查建议
 
 ### Docker Compose（推荐）
 
@@ -149,7 +160,7 @@ docker run -d \
   -e USER_PASSWORD=your_password \
   -e JUPYTER_TOKEN=your_token \
   -e GRANT_SUDO=yes \
-  devcontainer-base:1.0
+  devcontainer-base:conda-libmamba-v2
 ```
 
 ⚠️ **注意**: DinD模式必须使用 `--privileged`，否则Docker守护进程无法启动。
@@ -165,7 +176,7 @@ docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   -e USER_PASSWORD=your_password \
   -e JUPYTER_TOKEN=your_token \
-  devcontainer-base:1.0
+  devcontainer-base:conda-libmamba-v2
 ```
 
 DooD模式无需 `--privileged`，容器内 docker 命令直接操作宿主Docker。entrypoint 会自动检测宿主 socket 并禁用内部 dockerd。
@@ -173,7 +184,7 @@ DooD模式无需 `--privileged`，容器内 docker 命令直接操作宿主Docke
 #### 命令模式（调试/一次性任务）
 
 ```bash
-docker run -it --rm devcontainer-base:1.0 bash
+docker run -it --rm devcontainer-base:conda-libmamba-v2 bash
 ```
 
 ### 构建镜像变体
@@ -320,12 +331,17 @@ supervisorctl tail -f jupyter
 ## 🏗️ 作为基础镜像使用
 
 ```dockerfile
-FROM devcontainer-base:1.0
+FROM devcontainer-base:conda-libmamba-v2
 
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     your-package \
     && rm -rf /var/lib/apt/lists/*
+
+# conda环境安装包（默认已激活base环境，使用libmamba solver）
+RUN conda install -y your-conda-package && conda clean -yafq
+# 或使用pip
+RUN pip install your-pip-package && pip cache purge
 
 USER devuser
 # ENTRYPOINT保持不变，服务按环境变量自动启动
@@ -383,14 +399,18 @@ gh workflow run onnx-quantize-ci.yml --ref main
 
 ## 📝 版本信息
 
-- **版本**：1.0
+- **版本**：conda-libmamba-v2
 - **基础镜像**：ubuntu:26.04
-- **Python**：venv (/opt/venv, Python 3)
-- **Jupyter**: notebook 7.2.2, jupyterlab 4.2.5
-- **Docker CE**：官方仓库最新稳定版
-- **Podman**：Ubuntu 26.04官方源
+- **Python**：3.14.6（Miniconda3 / conda-forge, GCC 14.4.0, free-threading build）
+- **Conda**：26.7.0（默认solver: libmamba, 频道: conda-forge only）
+- **libmambapy**：2.3.2（底层求解器库）
+- **pip**：26.2.1
+- **Jupyter**: JupyterLab（通过conda安装）
+- **Docker CE**：官方仓库最新稳定版（支持Aliyun镜像加速）
+- **Podman**：Ubuntu 26.04官方源（rootless模式）
 - **OpenSSH**：Ubuntu 26.04官方包
 - **Supervisor**：Ubuntu 26.04官方包
+- **镜像大小**：~2.38GB
 - **镜像变体**：conda, conda-llvm, onnx-pytorch, onnx-quantized（共4个功能变体）
 - **ONNX量化工具包**：onnx_quantize_kit（基于onnxruntime.quantization原生API）
 
