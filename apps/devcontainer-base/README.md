@@ -4,8 +4,9 @@
 
 ## ✨ 特性
 
-- **基础环境**：Ubuntu 26.04 固定标签、中文 locale zh_CN.UTF-8、Asia/Shanghai 时区、Miniconda3 + Python 3.14（libmamba求解器）
+- **基础环境**：Ubuntu 26.04 固定标签、中文 locale zh_CN.UTF-8、Asia/Shanghai 时区、Miniforge3 (conda-forge) + Python 3.14.6 free-threading (cp314t，GIL默认禁用，libmamba求解器)
 - **四大服务**：SSH(22) + Docker DinD(2375) + Podman(rootless) + JupyterLab(8888)，可独立启停
+- **GIL可选**：默认cp314t无GIL构建支持真正多线程并行；`PYTHON_GIL=1`可启用GIL兼容模式；构建时`--python-build cp314`可选标准GIL构建
 - **进程管理**：Supervisord 统一管理，服务自动重启、优先级调度
 - **双容器运行时**：
   - Docker DinD 模式（--privileged，完全隔离）
@@ -76,7 +77,7 @@ devcontainer-base/
     ├── README.md                   # 变体索引和使用指南
     ├── build.sh                    # 变体统一构建脚本（拓扑排序+计时+验证）
     ├── _template/                  # 新变体模板
-    ├── conda/                      # Miniconda3 基础环境变体
+    ├── conda/                      # Miniforge3 (conda-forge) 基础环境变体
     ├── conda-llvm/                 # conda+LLVM/clang编译工具链变体
     ├── onnx-pytorch/               # PyTorch CPU+ONNX Runtime深度学习运行时
     ├── onnx-quantized/             # ONNX量化工具链（INT8/FP16）
@@ -194,7 +195,7 @@ docker run -it --rm devcontainer-base:conda-libmamba-v2 bash
 ```
 base (Ubuntu 26.04 + SSH + Docker + Jupyter)
   ↓
-conda (Miniconda3 + Python 3.14.6)
+conda (Miniforge3 conda-forge + Python 3.14.6 cp314t free-threading)
   ↓
 conda-llvm (LLVM/Clang 22.1.8 + CMake + Ninja)
   ↓
@@ -216,7 +217,7 @@ bash variants/build.sh --list
 
 | 变体 | 说明 | 核心组件 |
 |------|------|---------|
-| conda | Miniconda3 基础环境 | conda, Python 3.14.6 |
+| conda | Miniforge3 conda-forge 基础环境 | conda, libmamba, Python 3.14.6 cp314t free-threading |
 | conda-llvm | 编译工具链 | LLVM 22.1.8, Clang, CMake, Ninja |
 | onnx-pytorch | 深度学习运行时 | PyTorch CPU, ONNX Runtime, onnxsim |
 | onnx-quantized | 模型量化工具链 | onnxruntime.quantization, FP16/INT8, onnx_quantize_kit |
@@ -399,10 +400,11 @@ gh workflow run onnx-quantize-ci.yml --ref main
 
 ## 📝 版本信息
 
-- **版本**：conda-libmamba-v2
+- **版本**：conda-libmamba-ft (Miniforge3 + Python 3.14.6 cp314t)
 - **基础镜像**：ubuntu:26.04
-- **Python**：3.14.6（Miniconda3 / conda-forge, GCC 14.4.0, free-threading build）
-- **Conda**：26.7.0（默认solver: libmamba, 频道: conda-forge only）
+- **Python**：3.14.6（Miniforge3 / conda-forge, GCC 14.4.0, free-threading cp314t build, GIL默认禁用）
+- **Conda发行版**：Miniforge3（conda-forge官方，无defaults channel，无Anaconda商业包）
+- **Conda**：预装libmamba solver，频道: conda-forge only
 - **libmambapy**：2.3.2（底层求解器库）
 - **pip**：26.2.1
 - **Jupyter**: JupyterLab（通过conda安装）

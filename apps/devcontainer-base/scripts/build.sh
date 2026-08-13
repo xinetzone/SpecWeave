@@ -10,13 +10,15 @@ LOG_SERVICE="devcontainer-build"
 LOG_JSON_OUTPUT="/tmp/devcontainer-base-events.jsonl"
 
 IMAGE_NAME="${IMAGE_NAME:-devcontainer-base}"
-IMAGE_TAG="${IMAGE_TAG:-conda-libmamba}"
+IMAGE_TAG="${IMAGE_TAG:-conda-libmamba-ft}"
 REGISTRY="${REGISTRY:-}"
 NO_CACHE=""
 APT_MIRROR="${APT_MIRROR:-official}"
 PIP_MIRROR="${PIP_MIRROR:-official}"
 DOCKER_MIRROR="${DOCKER_MIRROR:-official}"
 CONDA_MIRROR="${CONDA_MIRROR:-official}"
+PYTHON_VERSION="${PYTHON_VERSION:-3.14.6}"
+PYTHON_BUILD="${PYTHON_BUILD:-cp314t}"
 VERIFY=false
 VERIFY_ONLY=false
 QUICK_TEST=true
@@ -44,6 +46,8 @@ Options:
   --pip-mirror MIRROR    PyPI mirror: official|aliyun|tuna (default: official)
   --docker-mirror MIRROR Docker CE mirror: official|aliyun (default: official)
   --conda-mirror MIRROR  Conda mirror: official|tuna|aliyun (default: official)
+  --python-ver VER       Python version (default: 3.14.6)
+  --python-build BUILD   Python build: cp314t (free-threading, default) | cp314 (standard, GIL always on)
   --verify               Run embedded verification after build
   --verify-only           Only verify existing image (skip build)
   --no-quick-test         Skip quick Python/libmamba smoke test after build
@@ -57,12 +61,13 @@ Environment variables (overridden by CLI args):
   IMAGE_NAME, IMAGE_TAG, REGISTRY, APT_MIRROR, PIP_MIRROR, NETWORK_HOST
 
 Examples:
-  $0                                         # Build conda-libmamba with official mirrors
+  $0                                         # Build conda-libmamba-ft (Miniforge3 + Python 3.14.6 cp314t free-threading)
   $0 --tag latest --cn                       # Build :latest with China mirrors
   $0 --no-cache -t dev                       # Build without cache, tag as dev
   $0 --network-host --cn                     # Build with host network + China mirrors
   $0 --verify                                # Build and run full verification
-  $0 --verify-only --tag conda-libmamba      # Verify existing image only
+  $0 --verify-only --tag conda-libmamba-ft   # Verify existing image only
+  $0 --python-build cp314                     # Build standard (GIL) Python instead of free-threading
   $0 --no-quick-test                         # Build without smoke test
   $0 --log-format=json --log-json            # JSON output for monitoring
 
@@ -86,6 +91,8 @@ while [[ $# -gt 0 ]]; do
         --pip-mirror) PIP_MIRROR="$2"; shift 2 ;;
         --docker-mirror) DOCKER_MIRROR="$2"; shift 2 ;;
         --conda-mirror) CONDA_MIRROR="$2"; shift 2 ;;
+        --python-ver) PYTHON_VERSION="$2"; shift 2 ;;
+        --python-build) PYTHON_BUILD="$2"; shift 2 ;;
         --verify) VERIFY=true; shift ;;
         --verify-only) VERIFY_ONLY=true; VERIFY=true; shift ;;
         --no-quick-test) QUICK_TEST=false; shift ;;
@@ -197,16 +204,16 @@ preflight_checks() {
         checks_fail=$((checks_fail + 1))
     fi
 
-    # Check 5: Local Miniconda cache
-    log_info "[5/6] Checking local Miniconda cache..."
-    local miniconda_cache="$PROJECT_DIR/.cache/Miniconda3-latest-Linux-x86_64.sh"
-    if [ -f "$miniconda_cache" ]; then
+    # Check 5: Local Miniforge cache
+    log_info "[5/6] Checking local Miniforge3 cache..."
+    local miniforge_cache="$PROJECT_DIR/.cache/Miniforge3-Latest-Linux-x86_64.sh"
+    if [ -f "$miniforge_cache" ]; then
         local cache_size
-        cache_size=$(du -h "$miniconda_cache" | cut -f1)
-        log_ok "  Miniconda installer cached (${cache_size}) - will skip download"
+        cache_size=$(du -h "$miniforge_cache" | cut -f1)
+        log_ok "  Miniforge3 installer cached (${cache_size}) - will skip download"
         checks_ok=$((checks_ok + 1))
     else
-        log_warn "  Miniconda installer not cached (will download during build)"
+        log_warn "  Miniforge3 installer not cached (will download during build)"
         checks_ok=$((checks_ok + 1))
     fi
 
@@ -235,7 +242,7 @@ preflight_checks() {
 
 # ── 快速冒烟测试：Python 3.14 + libmamba ──
 quick_smoke_test() {
-    log_step "Quick Smoke Test: Python 3.14 + libmamba"
+    log_step "Quick Smoke Test: Python ${PYTHON_VERSION} (${PYTHON_BUILD}) + libmamba"
 
     local test_container="smoke-${IMAGE_NAME}-$(date +%s)"
     local test_passed=0
@@ -266,21 +273,35 @@ quick_smoke_test() {
     }
 
     # 1. Python version check
-    log_info "  Testing: Python 3.14..."
+    log_info "  Testing: Python ${PYTHON_VERSION}..."
     local py_ver
     py_ver=$(docker exec "$test_container" python --version 2>&1)
-    if echo "$py_ver" | grep -q "Python 3\.14"; then
+    if echo "$py_ver" | grep -q "Python ${PYTHON_VERSION}"; then
         log_ok "    Python version: ${py_ver} - PASS"
         test_passed=$((test_passed + 1))
     else
-        log_fail "    Python version: ${py_ver} - FAIL (expected 3.14.x)"
+        log_fail "    Python version: ${py_ver} - FAIL (expected ${PYTHON_VERSION})"
         test_failed=$((test_failed + 1))
     fi
 
-    # 2. Conda version
+    # 2. Python build type detection (cp314t vs cp314)
+    log_info "  Testing: Python build type..."
+    local py_build_actual
+    py_build_actual=$(docker exec "$test_container" python -c "import sysconfig; print('cp314t' if sysconfig.get_config_var('Py_GIL_DISABLED') else 'cp314')" 2>&1)
+    local gil_status
+    gil_status=$(docker exec "$test_container" python -c "import sys; print('enabled' if sys._is_gil_enabled() else 'disabled')" 2>&1)
+    if [ "$py_build_actual" = "$PYTHON_BUILD" ]; then
+        log_ok "    Python build: ${py_build_actual} (GIL ${gil_status} by default) - PASS"
+        test_passed=$((test_passed + 1))
+    else
+        log_fail "    Python build: ${py_build_actual} - FAIL (expected ${PYTHON_BUILD})"
+        test_failed=$((test_failed + 1))
+    fi
+
+    # 3. Conda version
     run_test "Conda available" conda --version
 
-    # 3. libmamba solver
+    # 4. libmamba solver
     log_info "  Testing: libmamba solver..."
     local solver
     solver=$(docker exec "$test_container" conda config --show solver 2>&1 | grep "solver:" | awk '{print $2}')
@@ -292,7 +313,7 @@ quick_smoke_test() {
         test_failed=$((test_failed + 1))
     fi
 
-    # 4. conda-forge channel only (no defaults)
+    # 5. conda-forge channel only (no defaults)
     log_info "  Testing: channels (conda-forge only)..."
     local channels
     channels=$(docker exec "$test_container" conda config --show channels 2>&1)
@@ -305,13 +326,13 @@ quick_smoke_test() {
         test_failed=$((test_failed + 1))
     fi
 
-    # 5. pip available
+    # 6. pip available
     run_test "pip available" pip --version
 
-    # 6. Python can import standard modules
+    # 7. Python can import standard modules
     run_test "Python imports (os, sys, json)" python -c "import os, sys, json; print('ok')"
 
-    # 7. Conda can solve a package (dry-run, with timeout to avoid hanging)
+    # 8. Conda can solve a package (dry-run, with timeout to avoid hanging)
     log_info "  Testing: conda solve (dry-run, timeout=30s)..."
     if timeout 30 docker exec "$test_container" conda install -y --dry-run tinycss2 >/dev/null 2>&1; then
         log_ok "    Conda solve with libmamba: PASS"
@@ -420,6 +441,8 @@ DOCKER_BUILDKIT=1 docker build \
     --build-arg PIP_MIRROR="${PIP_MIRROR}" \
     --build-arg DOCKER_MIRROR="${DOCKER_MIRROR}" \
     --build-arg CONDA_MIRROR="${CONDA_MIRROR}" \
+    --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
+    --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
     -t "${FULL_IMAGE}" \
     . 2>&1 | tee "$BUILD_LOG_FILE"

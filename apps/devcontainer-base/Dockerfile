@@ -2,11 +2,11 @@
 # =============================================================================
 # DevContainer Base - Dockerfile (Multi-stage build)
 # Project: SpecWeave Full-featured Development Container Base Image
-# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter + Miniconda3(libmamba)
+# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(conda-forge, libmamba)
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
 # Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
-# Python: Miniconda3 at /opt/conda (Python 3.14, libmamba solver), Jupyter in base env
+# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, libmamba solver), Jupyter in base env
 #
 # Build: docker build -t devcontainer-base .
 # CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t devcontainer-base .
@@ -19,7 +19,7 @@
 #   Stage 2.1/7: 系统包 + APT镜像 + locale/timezone (变化频率: 最低)
 #   Stage 2.2/7: Docker CE 安装 (变化频率: 低)
 #   Stage 2.3/7: Podman rootless 安装 (变化频率: 低)
-#   Stage 2.4/7: Miniconda3 安装 + Jupyter + PATH 配置 (变化频率: 中)
+#   Stage 2.4/7: Miniforge3 (conda-forge) 安装 + Python 3.14 cp314t + libmamba + Jupyter (变化频率: 中)
 #   Stage 2.5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
 #   Stage 2.6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
 #   Stage 2.7/7: build-info + 激进清理 + 最终验证 (变化频率: 最低)
@@ -30,7 +30,8 @@
 ARG APT_MIRROR=official
 ARG PIP_MIRROR=official
 ARG CONDA_MIRROR=official
-ARG PYTHON_VERSION=3.14
+ARG PYTHON_VERSION=3.14.6
+ARG PYTHON_BUILD=cp314t
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime - Minimal production image with Micromamba
@@ -42,10 +43,11 @@ ARG DOCKER_MIRROR=official
 ARG CONDA_MIRROR
 ARG PIP_MIRROR
 ARG PYTHON_VERSION
+ARG PYTHON_BUILD
 
 LABEL maintainer="SpecWeave"
-LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniconda3(Python 3.14, libmamba solver), managed by supervisord"
-LABEL version="2.0-slim"
+LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(Python 3.14.6 free-threading cp314t, conda-forge, libmamba solver), managed by supervisord"
+LABEL version="2.0-ft"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -210,17 +212,18 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 3/7 (Podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.4/7: Miniconda3 安装 + Python 3.14 + libmamba solver + Jupyter
+# Stage 2.4/7: Miniforge3 (conda-forge) 安装 + Python 3.14.6 cp314t free-threading + libmamba + Jupyter
 # 变化频率：中（Python/包版本升级时改）
-# 原则：Miniconda3轻量安装到/opt/conda，启用libmamba求解器加速依赖解析，
-#       conda-forge channel优先，Jupyter安装到base环境，安装后立即清理缓存
+# 原则：Miniforge3（conda-forge官方发行版，无defaults channel/无Anaconda商业包）轻量安装到/opt/conda，
+#       默认conda-forge channel + libmamba solver，Python 3.14.6使用cp314t free-threading构建（GIL默认禁用），
+#       Jupyter安装到base环境，安装后立即清理缓存，无ABI冲突
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly \
     <<'STAGE4_EOF'
 set -e
-echo "=== Stage 4/7: Install Miniconda3 + Python ${PYTHON_VERSION} (libmamba solver) + Jupyter ==="
+echo "=== Stage 4/7: Install Miniforge3 + Python ${PYTHON_VERSION} ${PYTHON_BUILD} (conda-forge, libmamba) + Jupyter ==="
 _STAGE_START=$(date +%s)
 
 # ── 辅助函数：conda 包分组安装（使用libmamba solver） ──
@@ -276,7 +279,7 @@ pip_install_group() {
     fi
 }
 
-# ── 架构检测 + Miniconda安装器URL ──
+# ── 架构检测 + Miniforge3安装器URL ──
 echo "[INFO] Detecting architecture..."
 ARCH=$(uname -m)
 case "$ARCH" in
@@ -286,13 +289,13 @@ case "$ARCH" in
 esac
 echo "[OK] Architecture: $ARCH ($CONDA_ARCH)"
 
-# ── 下载并安装 Miniconda3（优先本地缓存，回退网络多源下载） ──
-echo "[INFO] Downloading Miniconda3 installer..."
+# ── 下载并安装 Miniforge3（conda-forge官方发行版，无defaults包，原生libmamba支持） ──
+echo "[INFO] Downloading Miniforge3 installer (conda-forge official)..."
 _dl_start=$(date +%s)
 
 LOCAL_INSTALLER=""
-for f in /tmp/local-cache/Miniconda3-latest-Linux-${CONDA_ARCH}.sh \
-         /tmp/local-cache/Miniconda3-*-Linux-${CONDA_ARCH}.sh; do
+for f in /tmp/local-cache/Miniforge3-Latest-Linux-${CONDA_ARCH}.sh \
+         /tmp/local-cache/Miniforge3-*-Linux-${CONDA_ARCH}.sh; do
     if [ -f "$f" ] && [ -s "$f" ]; then
         LOCAL_INSTALLER="$f"
         break
@@ -301,25 +304,24 @@ done
 
 if [ -n "$LOCAL_INSTALLER" ]; then
     echo "[OK] Using local cached installer: $LOCAL_INSTALLER ($(du -h "$LOCAL_INSTALLER" | cut -f1))"
-    cp "$LOCAL_INSTALLER" /tmp/miniconda.sh
+    cp "$LOCAL_INSTALLER" /tmp/miniforge.sh
     DL_OK=1
 else
     echo "[INFO] No local cache found, downloading from network..."
-    # 根据 CONDA_MIRROR 构建候选下载源列表
+    # Miniforge3下载源：GitHub官方 + 国内镜像
     if [ "${CONDA_MIRROR}" = "tuna" ]; then
         DL_URLS=(
-            "https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
-            "https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
-            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
         )
     elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
         DL_URLS=(
-            "https://mirrors.aliyun.com/anaconda/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
-            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
         )
     else
         DL_URLS=(
-            "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${CONDA_ARCH}.sh"
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
         )
     fi
 
@@ -327,7 +329,7 @@ else
     for dl_url in "${DL_URLS[@]}"; do
         echo "[INFO] Trying: $dl_url"
         if curl -fsSL --connect-timeout 30 --max-time 300 --retry 3 --retry-delay 5 \
-            -o /tmp/miniconda.sh "$dl_url" 2>/tmp/conda_dl_err.log; then
+            -L -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then
             echo "[OK] Downloaded from: $dl_url"
             DL_OK=1
             break
@@ -338,49 +340,33 @@ else
     done
 
     if [ "$DL_OK" = "0" ]; then
-        echo "[ERROR] Failed to download Miniconda3 from all sources"
+        echo "[ERROR] Failed to download Miniforge3 from all sources"
         cat /tmp/conda_dl_err.log
         exit 1
     fi
 fi
 
 _dl_elapsed=$(($(date +%s) - _dl_start))
-echo "[OK] Installer ready: $(du -h /tmp/miniconda.sh | cut -f1) in ${_dl_elapsed}s"
+echo "[OK] Installer ready: $(du -h /tmp/miniforge.sh | cut -f1) in ${_dl_elapsed}s"
 
-echo "[INFO] Installing Miniconda3 to ${CONDA_DIR}..."
-bash /tmp/miniconda.sh -b -p "${CONDA_DIR}" -f
-rm -f /tmp/miniconda.sh
-echo "[OK] Miniconda3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)"
+echo "[INFO] Installing Miniforge3 to ${CONDA_DIR}..."
+bash /tmp/miniforge.sh -b -p "${CONDA_DIR}" -f
+rm -f /tmp/miniforge.sh
+echo "[OK] Miniforge3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)"
 
 # ── Source conda.sh 使 conda 命令在当前 shell 完全可用 ──
 . "${CONDA_DIR}/etc/profile.d/conda.sh"
 echo "[OK] conda.sh sourced, conda available in build shell"
 
-# ── 接受 Anaconda ToS（必须在移除defaults频道之前执行） ──
-echo "[INFO] Accepting Anaconda Terms of Service..."
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main 2>&1 || true
-conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r 2>&1 || true
-echo "[OK] ToS accepted"
+# ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
+echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
 
-# ── 彻底清除Miniconda安装器写入的系统级defaults配置（防止多源合并） ──
-echo "[INFO] Removing system-level default channels..."
-rm -f "${CONDA_DIR}/.condarc"
-rm -rf "${CONDA_DIR}/condarc.d/"
-conda config --remove-key channels --system 2>/dev/null || true
-conda config --remove-key default_channels --system 2>/dev/null || true
-conda config --remove-key channels 2>/dev/null || true
-conda config --remove-key default_channels 2>/dev/null || true
-conda config --set auto_activate_base false 2>/dev/null || true
-echo "[OK] System-level defaults removed"
-
-# ── 配置 .condarc（频道 + solver + 网络调优） ──
-echo "[INFO] Configuring .condarc..."
+# ── 配置 .condarc（conda-forge镜像 + solver + 网络调优） ──
+echo "[INFO] Configuring .condarc for conda-forge..."
 if [ "${CONDA_MIRROR}" = "tuna" ]; then
     cat > /root/.condarc <<'CRC'
 channels:
   - conda-forge
-default_channels: []
-channel_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
 channel_priority: strict
 show_channel_urls: true
 remote_connect_timeout_secs: 30
@@ -391,13 +377,14 @@ repodata_threads: 1
 execute_threads: 1
 ssl_verify: true
 CRC
-    echo "[OK] Using Tsinghua TUNA mirror (channel_alias)"
+    # 配置TUNA conda-forge镜像
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+    conda config --set channel_alias https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+    echo "[OK] Using Tsinghua TUNA conda-forge mirror"
 elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
     cat > /root/.condarc <<'CRC'
 channels:
   - conda-forge
-default_channels: []
-channel_alias: https://mirrors.aliyun.com/anaconda/cloud
 channel_priority: strict
 show_channel_urls: true
 remote_connect_timeout_secs: 30
@@ -408,12 +395,11 @@ repodata_threads: 1
 execute_threads: 1
 ssl_verify: true
 CRC
-    echo "[OK] Using Aliyun mirror (channel_alias)"
+    echo "[OK] Using Aliyun conda-forge mirror (direct channels)"
 else
     cat > /root/.condarc <<'CRC'
 channels:
   - conda-forge
-default_channels: []
 channel_priority: strict
 show_channel_urls: true
 remote_connect_timeout_secs: 30
@@ -427,28 +413,32 @@ CRC
     echo "[OK] Using official conda-forge channels"
 fi
 
-# ── Miniconda已自带Python，确认版本 ──
-_builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
-echo "[INFO] Miniconda built-in Python: ${_builtin_py}"
-
-# ── Step 1: 检查libmamba是否已预装，否则安装（使用--freeze-installed避免升级已有包，加速classic solver） ──
-if conda list -n base conda-libmamba-solver 2>/dev/null | grep -q conda-libmamba-solver; then
-    echo "[OK] conda-libmamba-solver already pre-installed"
-else
-    echo "[INFO] Installing conda-libmamba-solver (classic solver, freeze-installed for speed)..."
-    conda install -y -n base --solver=classic --freeze-installed --strict-channel-priority \
-        conda-libmamba-solver libmambapy 2>&1
-    echo "[OK] conda-libmamba-solver + libmambapy installed"
-fi
-
-# ── Step 2: 切换到libmamba solver ──
+# ── 确保libmamba solver为默认 ──
 conda config --set solver libmamba
-echo "[OK] Default solver set to libmamba: $(conda config --show solver 2>&1 | tr -d ' ')"
+echo "[OK] Default solver: $(conda config --show solver 2>&1 | tr -d ' ')"
 
-# ── Step 3: 用libmamba确保Python版本正确（快速求解） ──
-echo "[INFO] Ensuring Python ${PYTHON_VERSION} (using libmamba solver)..."
-conda install -y -n base "python=${PYTHON_VERSION}" pip 2>&1
-echo "[OK] Python $(python --version 2>&1 | awk '{print $2}') ready"
+# ── Miniforge3已自带Python，确认版本 ──
+_builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
+echo "[INFO] Miniforge3 built-in Python: ${_builtin_py}"
+
+# ── Step 1: 安装/确认Python版本（Miniforge无defaults包，无cp314 ABI冲突） ──
+echo "[INFO] Ensuring Python ${PYTHON_VERSION} (build: ${PYTHON_BUILD}, libmamba solver)..."
+conda install -y -n base "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" pip 2>&1
+echo "[OK] Python $(python --version 2>&1 | awk '{print $2}') ready ($(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")'))"
+
+# ── 验证free-threading构建（如选择cp314t） ──
+if [ "${PYTHON_BUILD}" = "cp314t" ]; then
+    python -c "
+import sys, sysconfig
+ft = sysconfig.get_config_var('Py_GIL_DISABLED')
+soabi = sysconfig.get_config_var('SOABI')
+gil = sys._is_gil_enabled()
+assert ft == 1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'
+assert 'cpython-314t' in soabi, f'Expected cpython-314t in SOABI, got {soabi}'
+assert not gil, 'GIL should be disabled by default in cp314t'
+print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={soabi}, GIL disabled by default')
+    "
+fi
 
 # ── 配置 PyPI 镜像 ──
 if [ "${PIP_MIRROR}" = "aliyun" ]; then
@@ -610,6 +600,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     DEVUSER_UID=$(id -u devuser) && \
     CONDA_VERSION=$(conda --version 2>&1 | awk '{print $2}') && \
     PYTHON_VERSION_ACTUAL=$(python --version 2>&1 | awk '{print $2}') && \
+    PYTHON_BUILD_TYPE=$(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")') && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
     echo "BUILD_TYPE=multi-stage-slim" >> /etc/devcontainer-build-info && \
@@ -623,6 +614,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "CONDA_DIR=/opt/conda" >> /etc/devcontainer-build-info && \
     echo "CONDA_VERSION=${CONDA_VERSION}" >> /etc/devcontainer-build-info && \
     echo "PYTHON_VERSION=${PYTHON_VERSION_ACTUAL}" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_BUILD_TYPE=${PYTHON_BUILD_TYPE}" >> /etc/devcontainer-build-info && \
     echo "DOCKER_DIND=enabled" >> /etc/devcontainer-build-info && \
     echo "PODMAN_ROOTLESS=enabled" >> /etc/devcontainer-build-info && \
     echo "BUILD_TIMER=enabled" >> /etc/devcontainer-build-info && \
@@ -677,6 +669,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     supervisord --version && echo "[OK] supervisord available" && \
     sshd -t && echo "[OK] sshd config valid" && \
     python --version && echo "[OK] python (conda) available" && \
+    python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); assert ft==1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'; print(f'[OK] Python free-threading build (GIL disabled by default, PYTHON_GIL=1 to enable)')" && \
     conda --version && echo "[OK] conda available" && \
     pip --version && echo "[OK] pip available" && \
     jupyter --version && echo "[OK] jupyter available" && \
@@ -709,7 +702,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     printf "║  Stage 1/7  system packages + locale   %5ds               ║\n" $_T1 && \
     printf "║  Stage 2/7  Docker CE install          %5ds               ║\n" $_T2 && \
     printf "║  Stage 3/7  Podman rootless install    %5ds               ║\n" $_T3 && \
-    printf "║  Stage 4/7  Miniconda3+libmamba+Python  %5ds               ║\n" $_T4 && \
+    printf "║  Stage 4/7  Miniforge3+libmamba+Pythonft %5ds               ║\n" $_T4 && \
     printf "║  Stage 5/7  user+subuid+dirs+daemon   %5ds               ║\n" $_T5 && \
     printf "║  Stage 6/7  config + validation       %5ds               ║\n" $_T6 && \
     printf "║  Stage 7/7  cleanup + final verify     %5ds               ║\n" $_T7 && \

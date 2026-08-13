@@ -1,7 +1,7 @@
 # DevContainer Variants Build & Test CI
 # ======================================
-# Builds devcontainer-base main image (conda-libmamba-v2) and variants in dependency order:
-#   main (conda+Python3.14+libmamba) → conda → conda-llvm → onnx-pytorch → onnx-quantized
+# Builds devcontainer-base main image (conda-libmamba-ft) and variants in dependency order:
+#   main (conda+Python3.14.6 cp314t free-threading+libmamba) → conda → conda-llvm → onnx-pytorch → onnx-quantized
 #
 # Architecture:
 #   - lint job: fast feedback (bash syntax, Dockerfile checks)
@@ -238,7 +238,7 @@ jobs:
           echo "============================================================"
 
   # ──────────────────────────────────────────────────────────────────────
-  # Stage 1: Build & Test Main Image (conda-libmamba-v2)
+  # Stage 1: Build & Test Main Image (conda-libmamba-ft, default cp314t)
   # ──────────────────────────────────────────────────────────────────────
   build-main:
     name: Build & Test Main Image
@@ -287,13 +287,13 @@ jobs:
           docker run --privileged --rm tonistiigi/binfmt --install all 2>&1 | tail -5 || true
           echo "✅ Buildx setup complete"
 
-      - name: Build main image (conda-libmamba-v2)
+      - name: Build main image (conda-libmamba-ft, default cp314t)
         id: build_main
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
           echo "╔══════════════════════════════════════════════════════════════╗"
-          echo "║  BUILD: Main Image (conda-libmamba-v2)                     ║"
+          echo "║  BUILD: Main Image (conda-libmamba-ft, Python 3.14.6 cp314t)║"
           echo "╚══════════════════════════════════════════════════════════════╝"
           echo ""
           echo "Command: bash scripts/build.sh --tag ${{ env.IMAGE_TAG }} ${MIRROR_FLAG} ${NO_CACHE_FLAG}"
@@ -319,9 +319,22 @@ jobs:
           docker images "$MAIN_IMAGE" --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}\t{{.CreatedAt}}"
           echo ""
 
-          echo "--- Python 3.14 verification ---"
+          echo "--- Python 3.14.6 free-threading (cp314t) verification ---"
           docker run --rm "$MAIN_IMAGE" python --version
-          docker run --rm "$MAIN_IMAGE" python -c "import sys; assert sys.version_info >= (3, 14), f'Python {sys.version} < 3.14'; print('✅ Python 3.14+ OK')"
+          docker run --rm "$MAIN_IMAGE" python -c "import sys; assert sys.version_info >= (3, 14), f'Python {sys.version} < 3.14'; print(f'✅ Python {sys.version.split()[0]} OK')"
+          docker run --rm "$MAIN_IMAGE" python -c "
+          import sys, sysconfig
+          py_gil_disabled = sysconfig.get_config_var('Py_GIL_DISABLED')
+          soabi = sysconfig.get_config_var('SOABI') or ''
+          is_ft = (py_gil_disabled == 1) and ('cpython-314t' in soabi)
+          gil_enabled = sys._is_gil_enabled()
+          assert is_ft, f'Expected cp314t free-threading build, got Py_GIL_DISABLED={py_gil_disabled}, SOABI={soabi}'
+          assert not gil_enabled, f'GIL should be disabled by default in cp314t, got _is_gil_enabled()={gil_enabled}'
+          print(f'✅ Default Python is cp314t free-threading build (GIL disabled by default)')
+          print(f'   SOABI: {soabi}')
+          print(f'   GIL enabled: {gil_enabled}')
+          print(f'   Use PYTHON_GIL=1 to enable GIL for C extension compatibility')
+          "
           echo ""
 
           echo "--- libmamba solver verification ---"
@@ -365,19 +378,33 @@ jobs:
           echo ""
           MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
 
-          echo "--- [1/8] Python build type detection ---"
+          echo "--- [1/8] Python build type detection (expecting cp314t, GIL disabled by default) ---"
           docker run --rm "$MAIN_IMAGE" python -c "
           import sys, sysconfig
           py_gil_disabled = sysconfig.get_config_var('Py_GIL_DISABLED')
           soabi = sysconfig.get_config_var('SOABI') or ''
-          is_ft = (py_gil_disabled == 1) or ('cpython-314t' in soabi)
-          build_type = 'cp314t (free-threading)' if is_ft else 'cp314 (standard, GIL always on)'
+          is_ft = (py_gil_disabled == 1) and ('cpython-314t' in soabi)
+          gil_enabled = sys._is_gil_enabled()
+          build_type = 'cp314t (free-threading, GIL disabled)' if is_ft else 'cp314 (standard, GIL always on)'
           print(f'  Python: {sys.version.split()[0]}')
           print(f'  Build:  {build_type}')
           print(f'  SOABI:  {soabi}')
           assert hasattr(sys, '_is_gil_enabled'), 'Python 3.14+ required'
-          print(f'  GIL enabled: {sys._is_gil_enabled()}')
-          print('  ✅ Python 3.14 detected')
+          print(f'  GIL enabled: {gil_enabled}')
+          assert is_ft, f'Expected default build to be cp314t free-threading, got {build_type}'
+          assert not gil_enabled, f'GIL should be disabled by default in cp314t, got gil_enabled={gil_enabled}'
+          print('  ✅ Python 3.14.6 cp314t free-threading confirmed (GIL disabled by default)')
+          "
+          echo ""
+
+          echo "--- [1b/8] PYTHON_GIL=1 compatibility mode verification ---"
+          docker run --rm -e PYTHON_GIL=1 "$MAIN_IMAGE" python -c "
+          import sys, sysconfig
+          py_gil_disabled = sysconfig.get_config_var('Py_GIL_DISABLED')
+          gil_enabled = sys._is_gil_enabled()
+          assert py_gil_disabled == 1, 'Still cp314t build'
+          assert gil_enabled, f'PYTHON_GIL=1 should enable GIL, got gil_enabled={gil_enabled}'
+          print(f'  ✅ PYTHON_GIL=1 enables GIL compatibility mode (GIL enabled: {gil_enabled})')
           "
           echo ""
 
@@ -422,32 +449,35 @@ jobs:
 
           echo "✅ Deep verification (8/8) completed"
 
-      - name: Run free-threading demo script (standard build)
+      - name: Run free-threading demo script (default cp314t)
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
           echo ""
-          echo "=== STEP: Free-threading demo (standard cp314 build) ==="
+          echo "=== STEP: Free-threading demo (default cp314t, GIL disabled) ==="
           echo ""
           MAIN_IMAGE="devcontainer-base:${{ env.IMAGE_TAG }}"
-          # Run demo on default Python (cp314, GIL always on - script handles this correctly)
+          # Run demo on default Python (cp314t, GIL disabled by default)
           docker run --rm \
             -v "$(pwd)/examples:/examples:ro" \
-            "$MAIN_IMAGE" python /examples/free_threading_demo.py 2>&1 | head -60
+            "$MAIN_IMAGE" python /examples/free_threading_demo.py 2>&1 | head -80
           echo ""
-          echo "✅ Free-threading demo script runs correctly on standard build"
+          echo "✅ Free-threading demo script runs correctly on default cp314t build"
           echo ""
-          echo "=== STEP: Verify cp314t free-threading env creation ==="
+          echo "=== STEP: Verify PYTHON_GIL=1 GIL compatibility mode ==="
           echo ""
-          # Verify that cp314t (free-threading) environment can be created and GIL can be disabled
-          CONTAINER_FT=$(docker run -d "$MAIN_IMAGE" tail -f /dev/null)
-          docker exec "$CONTAINER_FT" conda create -n ft -c conda-forge "python=*=*_cp314t" --solver libmamba -y 2>&1 | tail -5
-          docker exec "$CONTAINER_FT" /opt/conda/envs/ft/bin/python -c "
+          docker run --rm -e PYTHON_GIL=1 \
+            -v "$(pwd)/examples:/examples:ro" \
+            "$MAIN_IMAGE" python -c "
           import sys, sysconfig
-          assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'cp314t build not detected'
-          assert sys._is_gil_enabled() == False, 'GIL should be disabled by default in cp314t'
-          print(f'  ✅ cp314t free-threading env created: Python {sys.version.split()[0]}, GIL disabled')
+          assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'cp314t build'
+          assert sys._is_gil_enabled(), 'GIL should be enabled with PYTHON_GIL=1'
+          print(f'  ✅ PYTHON_GIL=1 works: GIL enabled, full C extension compatibility')
           "
-          docker rm -f "$CONTAINER_FT" 2>/dev/null
+          echo ""
+          echo "=== STEP: Verify standard cp314 build can be selected via build arg ==="
+          echo ""
+          echo "  (Standard cp314 build is available via --python-build cp314 at build time)"
+          echo "  Build command example: ./scripts/build.sh --python-build cp314 --tag conda-libmamba-std"
           echo ""
 
       - name: Collect build logs
@@ -526,14 +556,14 @@ jobs:
 
           # Determine tags
           if [ "${{ github.ref_type }}" = "branch" ] && [ "${{ github.ref_name }}" = "main" ]; then
-            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-v2")
-            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-${{ env.IMAGE_TAG }}")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-ft")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-ft-${{ env.IMAGE_TAG }}")
             TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-latest")
           elif [ "${{ github.event_name }}" = "schedule" ]; then
             TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-nightly")
             TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-$(date -u +%Y%m%d)")
           else
-            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-${{ env.IMAGE_TAG }}")
+            TAGS+=(--tag "${FULL_IMAGE}:conda-libmamba-ft-${{ env.IMAGE_TAG }}")
           fi
 
           echo "Image: ${FULL_IMAGE}"
@@ -550,6 +580,8 @@ jobs:
             --build-arg PIP_MIRROR=official \
             --build-arg DOCKER_MIRROR=official \
             --build-arg CONDA_MIRROR=official \
+            --build-arg PYTHON_VERSION=3.14.6 \
+            --build-arg PYTHON_BUILD=cp314t \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             "${TAGS[@]}" \
             -t "${FULL_IMAGE}:${{ env.IMAGE_TAG }}" \

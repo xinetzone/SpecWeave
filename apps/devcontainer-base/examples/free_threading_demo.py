@@ -1,31 +1,33 @@
 #!/usr/bin/env python3
 """
-Python 3.14 Free-Threading (无GIL) 并发性能演示脚本
-==================================================
+Python 3.14.6 Free-Threading (无GIL) 并发性能演示脚本
+=====================================================
 
 本脚本演示 Python 3.14 free-threading (PEP 703) 模式下多线程并发性能的提升。
 
 在传统CPython中，GIL（全局解释器锁）使得CPU密集型多线程代码无法真正并行执行。
 Python 3.14 的 free-threading 构建(cpython-314t)移除了GIL，使得多线程可以真正利用多核CPU。
 
-重要说明：
-- 标准Python构建(cpython-314)GIL始终启用，设置PYTHON_GIL=0会报错
-- Free-threading构建(cpython-314t)GIL默认禁用，设置PYTHON_GIL=1可重新启用
-- conda-forge中free-threading版本需安装 `python=*=*_cp314t` 构建
+重要说明（devcontainer-base:conda-libmamba-ft 默认配置）:
+- 默认Python就是free-threading构建(cpython-314t)，GIL默认禁用，支持真正多线程并行
+- 设置环境变量 PYTHON_GIL=1 可强制启用GIL（兼容模式，用于C扩展兼容性问题）
+- 标准GIL构建(cpython-314)可通过构建参数 --python-build cp314 选择，GIL始终启用
+- 标准构建设置 PYTHON_GIL=0 会报错 "Disabling the GIL is not supported by this build"
 
-使用方式（在 devcontainer-base:conda-libmamba-v2 容器中运行）:
+使用方式（在 devcontainer-base:conda-libmamba-ft 容器中运行）:
 
-  # 方式1: 标准Python（GIL始终启用，作为对照基线）
-  docker run --rm devcontainer-base:conda-libmamba-v2 \
+  # 方式1: 默认无GIL模式（推荐，真正多线程并行）
+  docker run --rm devcontainer-base:conda-libmamba-ft \
     python examples/free_threading_demo.py
 
-  # 方式2: 创建free-threading环境并运行（需先conda create -n ft python=*=*_cp314t）
-  docker run --rm devcontainer-base:conda-libmamba-v2 \
-    /opt/conda/envs/ft/bin/python examples/free_threading_demo.py
+  # 方式2: GIL兼容模式（C扩展遇到问题时使用）
+  docker run --rm -e PYTHON_GIL=1 devcontainer-base:conda-libmamba-ft \
+    python examples/free_threading_demo.py
 
-  # 方式3: 在free-threading构建中强制启用GIL（对照测试）
-  docker run --rm -e PYTHON_GIL=1 devcontainer-base:conda-libmamba-v2 \
-    /opt/conda/envs/ft/bin/python examples/free_threading_demo.py
+  # 方式3: 标准GIL构建镜像（构建时选择）
+  # ./scripts/build.sh --python-build cp314 --tag conda-libmamba-std
+  docker run --rm devcontainer-base:conda-libmamba-std \
+    python examples/free_threading_demo.py
 """
 
 import sys
@@ -69,7 +71,7 @@ def detect_environment() -> dict:
         info["gil_enabled"] = True
     
     # 环境变量检测
-    info["pygil_env"] = os.environ.get("PYTHON_GIL", "1 (default in standard build, 0 in ft build)")
+    info["pygil_env"] = os.environ.get("PYTHON_GIL", "0 (default in cp314t build: GIL disabled; set to 1 to enable)")
     
     return info
 
@@ -88,17 +90,19 @@ def print_header():
     print()
     
     if info["free_threading_build"]:
-        gil_status = "🔒 启用 (GIL active, PYTHON_GIL=1)" if info["gil_enabled"] else "🔓 禁用 (No-GIL / free-threading, default for cp314t)"
+        gil_status = "🔒 启用 (GIL active, PYTHON_GIL=1 compatibility mode)" if info["gil_enabled"] else "🔓 禁用 (No-GIL / free-threading, DEFAULT for this image)"
         print(f"  GIL 状态: {gil_status}")
         print(f"  PYTHON_GIL 环境变量: {info['pygil_env']}")
         if info["gil_enabled"]:
             print()
-            print("  💡 当前GIL已启用（强制兼容模式）。不设置PYTHON_GIL即为默认无GIL模式。")
+            print("  💡 当前GIL已启用（兼容模式）。不设置PYTHON_GIL即为默认无GIL模式，可获得真正多线程并行。")
+        else:
+            print()
+            print("  ✅ 默认无GIL模式！多线程CPU密集型任务可真正利用多核并行。")
     else:
         print("  ⚠️  当前Python是标准构建(cp314)，GIL始终启用，无法禁用。")
-        print("     如需体验free-threading，请安装cp314t构建：")
-        print("       conda create -n ft python=*=*_cp314t -c conda-forge")
-        print("       conda activate ft && python examples/free_threading_demo.py")
+        print("     本镜像默认使用cp314t无GIL构建；如需标准构建请使用构建参数：")
+        print("       ./scripts/build.sh --python-build cp314")
     
     print()
     print("-" * 70)
