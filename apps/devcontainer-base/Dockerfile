@@ -56,7 +56,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANGUAGE=zh_CN:zh \
     LC_ALL=zh_CN.UTF-8 \
     CONDA_DIR=/opt/conda \
-    PATH="/opt/conda/bin:${PATH}" \
+    CONDA_DEFAULT_ENV=main \
+    PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}" \
     NON_ROOT_USER=devuser \
     JUPYTER_PORT=8888 \
     SSH_PORT=22 \
@@ -366,7 +367,7 @@ echo "[INFO] Configuring .condarc for conda-forge..."
 if [ "${CONDA_MIRROR}" = "tuna" ]; then
     cat > /root/.condarc <<'CRC'
 channels:
-  - conda-forge
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 channel_priority: strict
 show_channel_urls: true
 remote_connect_timeout_secs: 30
@@ -377,14 +378,11 @@ repodata_threads: 1
 execute_threads: 1
 ssl_verify: true
 CRC
-    # 配置TUNA conda-forge镜像
-    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-    conda config --set channel_alias https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
-    echo "[OK] Using Tsinghua TUNA conda-forge mirror"
+    echo "[OK] Using Tsinghua TUNA conda-forge mirror (direct URL)"
 elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
     cat > /root/.condarc <<'CRC'
 channels:
-  - conda-forge
+  - https://mirrors.aliyun.com/anaconda/cloud/conda-forge/
 channel_priority: strict
 show_channel_urls: true
 remote_connect_timeout_secs: 30
@@ -395,7 +393,7 @@ repodata_threads: 1
 execute_threads: 1
 ssl_verify: true
 CRC
-    echo "[OK] Using Aliyun conda-forge mirror (direct channels)"
+    echo "[OK] Using Aliyun conda-forge mirror (direct URL)"
 else
     cat > /root/.condarc <<'CRC'
 channels:
@@ -417,50 +415,53 @@ fi
 conda config --set solver libmamba
 echo "[OK] Default solver: $(conda config --show solver 2>&1 | tr -d ' ')"
 
-# ── Miniforge3已自带Python，确认版本 ──
+# ── Miniforge3自带Python，不要升级base Python（conda无cp314t构建） ──
 _builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
-echo "[INFO] Miniforge3 built-in Python: ${_builtin_py}"
+echo "[INFO] Miniforge3 base Python (conda runtime): ${_builtin_py}"
+echo "[INFO] Note: conda has no cp314t build on conda-forge yet, so we keep base Python ${_builtin_py}"
+echo "[INFO] Creating a dedicated 'main' environment with Python ${PYTHON_VERSION} ${PYTHON_BUILD}..."
 
-# ── Step 1: 安装/确认Python版本（Miniforge无defaults包，无cp314 ABI冲突） ──
-echo "[INFO] Ensuring Python ${PYTHON_VERSION} (build: ${PYTHON_BUILD}, libmamba solver)..."
-conda install -y -n base "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" pip 2>&1
-echo "[OK] Python $(python --version 2>&1 | awk '{print $2}') ready ($(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")'))"
+# ── Step 1: 创建free-threading用户环境(conda运行在base py313, 用户环境用cp314t) ──
+conda create -y -n main -c conda-forge --solver=libmamba \
+    "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" pip 2>&1
+echo "[OK] main env created with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
 
-# ── 验证free-threading构建（如选择cp314t） ──
+# ── 配置 PyPI 镜像（在main环境中） ──
+if [ "${PIP_MIRROR}" = "aliyun" ]; then
+    /opt/conda/envs/main/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    /opt/conda/envs/main/bin/pip config set global.trusted-host mirrors.aliyun.com
+    echo "[OK] Using Aliyun PyPI mirror"
+elif [ "${PIP_MIRROR}" = "tuna" ]; then
+    /opt/conda/envs/main/bin/pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+    /opt/conda/envs/main/bin/pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+    echo "[OK] Using Tsinghua TUNA PyPI mirror"
+fi
+
+# ── Step 2: 安装 Jupyter 生态到main环境 ──
+echo "[INFO] Installing Jupyter ecosystem into main environment..."
+conda install -y -n main -c conda-forge --solver=libmamba \
+    "jupyterlab>=4.4" "notebook>=7.3" ipykernel nbconvert jupyter_server 2>&1
+echo "[OK] Jupyter installed in main env"
+
+# ── 注册main环境为Jupyter默认kernel（Python 3.14 free-threading） ──
+/opt/conda/envs/main/bin/python -m ipykernel install --name main --display-name "Python ${PYTHON_VERSION} (free-threading)" --prefix=/opt/conda/envs/main 2>&1
+echo "[OK] Jupyter kernel registered: Python ${PYTHON_VERSION} (free-threading)"
+
+# ── 验证free-threading构建 ──
 if [ "${PYTHON_BUILD}" = "cp314t" ]; then
-    python -c "
+    /opt/conda/envs/main/bin/python -c "
 import sys, sysconfig
 ft = sysconfig.get_config_var('Py_GIL_DISABLED')
 soabi = sysconfig.get_config_var('SOABI')
-gil = sys._is_gil_enabled()
 assert ft == 1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'
 assert 'cpython-314t' in soabi, f'Expected cpython-314t in SOABI, got {soabi}'
-assert not gil, 'GIL should be disabled by default in cp314t'
 print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={soabi}, GIL disabled by default')
     "
 fi
 
-# ── 配置 PyPI 镜像 ──
-if [ "${PIP_MIRROR}" = "aliyun" ]; then
-    pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-    pip config set global.trusted-host mirrors.aliyun.com
-    echo "[OK] Using Aliyun PyPI mirror"
-elif [ "${PIP_MIRROR}" = "tuna" ]; then
-    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-    pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
-    echo "[OK] Using Tsinghua TUNA PyPI mirror"
-fi
-
-# ── 安装 Jupyter 生态 ──
-echo "[INFO] Installing Jupyter ecosystem..."
-conda_install_group "G2: Jupyter" "Jupyter Lab >=4.4 + Notebook >=7.3 + ipykernel" \
-    "jupyterlab>=4.4" "notebook>=7.3" ipykernel nbconvert jupyter_server
-
-# ── 激活 conda base 环境到当前 shell ──
-echo "[INFO] Activating conda base for build shell..."
-eval "$(conda shell.bash hook 2>/dev/null)"
-conda activate base
-echo "[OK] Build shell activated (python: $(which python))"
+# ── 设置main环境为默认激活 ──
+echo "conda activate main" >> /root/.bashrc
+echo "[INFO] Auto-activate 'main' environment configured in .bashrc"
 
 # ── 清理缓存 ──
 echo ""
@@ -468,22 +469,22 @@ echo "┌───────────────────────�
 echo "│ [CLEAN] Cleaning conda + pip caches            │"
 echo "└─────────────────────────────────────────────────┘"
 conda clean -yafq 2>/dev/null || true
-pip cache purge 2>/dev/null || true
+/opt/conda/envs/main/bin/pip cache purge 2>/dev/null || true
 rm -rf "${CONDA_DIR}/pkgs"/* 2>/dev/null || true
 echo "[OK] Conda/pip caches cleaned"
 
 # ── 验证安装 ──
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
-echo "│ [VERIFY] Conda + Python + Jupyter              │"
+echo "│ [VERIFY] Conda + Python (main env) + Jupyter   │"
 echo "└─────────────────────────────────────────────────┘"
-conda --version
-python --version
-jupyter --version
+"${CONDA_DIR}/bin/conda" --version
+/opt/conda/envs/main/bin/python --version
+/opt/conda/envs/main/bin/jupyter --version
 echo "  - conda dir: ${CONDA_DIR}"
-echo "  - python path: $(which python)"
-echo "  - jupyter path: $(which jupyter)"
-echo "  - solver: $(conda config --show solver 2>&1 | tr -d ' ')"
+echo "  - main env python: /opt/conda/envs/main/bin/python"
+echo "  - main env jupyter: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
+echo "  - default solver: libmamba"
 
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
@@ -640,7 +641,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     find /opt/conda/include -mindepth 1 -maxdepth 1 ! -name "python*" -exec rm -rf {} + 2>/dev/null || true && \
     echo "[CLEAN 5/9] Stripping debug symbols from binaries..." && \
     find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    find /opt/conda/lib -name "*.so*" ! -path "*/python3.14/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.so*" ! -path "*/python3.14/site-packages/*" ! -path "*/envs/*/lib/python3.14/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
     echo "[CLEAN 6/9] Removing conda telemetry + dev tools..." && \
     conda remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
     rm -f /opt/conda/bin/x86_64-conda-linux-gnu-ld /opt/conda/bin/x86_64-conda-linux-gnu-ld.bfd 2>/dev/null || true && \

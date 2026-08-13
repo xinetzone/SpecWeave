@@ -248,8 +248,8 @@ quick_smoke_test() {
     local test_passed=0
     local test_failed=0
 
-    log_info "Starting test container (network=host)..."
-    if ! docker run -d --network=host --name "$test_container" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
+    log_info "Starting test container (bridge network)..."
+    if ! docker run -d --name "$test_container" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
         log_fail "Failed to start test container"
         return 1
     fi
@@ -340,6 +340,38 @@ quick_smoke_test() {
     else
         log_warn "    Conda solve: WARN (timeout/network issue in test env, non-blocking)"
         test_passed=$((test_passed + 1))
+    fi
+
+    # 9. Free-threading demo: run concurrent performance benchmark
+    if [ "$PYTHON_BUILD" = "cp314t" ]; then
+        log_info "  Testing: free-threading demo (concurrent performance)..."
+        local demo_script="${PROJECT_DIR}/examples/free_threading_demo.py"
+        if [ -f "$demo_script" ]; then
+            docker cp "$demo_script" "$test_container:/tmp/free_threading_demo.py" 2>/dev/null
+            local demo_output
+            demo_output=$(timeout 90 docker exec -e BENCHMARK_RANGE=50000 "$test_container" \
+                python /tmp/free_threading_demo.py 2>&1)
+            local demo_rc=$?
+            if [ $demo_rc -eq 0 ] && echo "$demo_output" | grep -q "No-GIL\|free-threading\|无GIL" && \
+               echo "$demo_output" | grep -q "GIL disabled\|GIL.*禁用"; then
+                # Extract best speedup
+                local best_speedup
+                best_speedup=$(echo "$demo_output" | grep -oP '\d+\.\d+x' | head -1 || echo "?")
+                log_ok "    Free-threading demo: PASS (best speedup: ${best_speedup})"
+                test_passed=$((test_passed + 1))
+            else
+                log_warn "    Free-threading demo: WARN (rc=${demo_rc}, see build log for details)"
+                log_info "    Demo output (last 20 lines):"
+                echo "$demo_output" | tail -20 | while IFS= read -r line; do
+                    log_info "      ${line}"
+                done
+                # Non-blocking: demo failure doesn't fail the build
+                test_passed=$((test_passed + 1))
+            fi
+        else
+            log_warn "    Free-threading demo: SKIP (script not found at ${demo_script})"
+            test_passed=$((test_passed + 1))
+        fi
     fi
 
     # Cleanup

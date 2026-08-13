@@ -232,8 +232,8 @@ def main():
     info = detect_environment()
     num_cpus = info["cpu_count"]
     
-    # 测试参数
-    PRIME_RANGE_UPPER = 200_000      # 统计 0~200000 范围素数（纯Python计算）
+    # 测试参数（支持环境变量 BENCHMARK_RANGE 控制规模，便于CI/smoke test快速验证）
+    PRIME_RANGE_UPPER = int(os.environ.get("BENCHMARK_RANGE", "200_000"))
     MAX_WORKERS = min(num_cpus, 8)   # 最多8个workers
     
     expected_primes = count_primes_in_range(0, PRIME_RANGE_UPPER)
