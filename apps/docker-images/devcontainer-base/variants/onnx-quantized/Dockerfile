@@ -2,36 +2,36 @@
 # =============================================================================
 # DevContainer Base - ONNX Quantized Variant Dockerfile
 # Project: SpecWeave Full-featured Development Container - ONNX Model Quantization Toolkit
-# Base: devcontainer-base:onnx-pytorch-${BASE_TAG} (PyTorch CPU + ONNX + ONNX Runtime + LLVM)
-# Toolchain: onnxruntime.quantization (primary) + onnxconverter-common + onnxsim. Note: neural-compressor is NOT installed by default (optional PyTorch extension).
+# Base: devcontainer-base:onnx-dev-${BASE_TAG} (pure ONNX ecosystem, main env, free-threading, no PyTorch)
+# Toolchain: onnxruntime.quantization (primary) + onnxconverter-common + onnxsim. Note: neural-compressor is NOT installed by default (optional PyTorch extension, needs torch on demand).
 # Quantization: Dynamic/static quantization, QDQ format, INT8/FP16 calibration, accuracy validation
-# PATH priority: /opt/conda/bin first (quantization tools directly available in base conda env)
+# PATH priority: /opt/conda/envs/main/bin first (quantization tools in conda main env, Python 3.14.6 cp314t free-threading)
 #
 # Build: docker build -f variants/onnx-quantized/Dockerfile -t devcontainer-base:onnx-quantized-latest .
 # CN:    docker build -f variants/onnx-quantized/Dockerfile \
-#          --build-arg APT_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna --build-arg PIP_MIRROR=aliyun \
+#          --build-arg APT_MIRROR=aliyun --build-arg CONDA_MIRROR=bfsu --build-arg PIP_MIRROR=aliyun \
 #          -t devcontainer-base:onnx-quantized-latest .
 # Run:   docker run -d --privileged -p 2222:22 -p 2375:2375 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -e GRANT_SUDO=yes \
 #          -v $(pwd)/workspace:/workspace -v docker-data:/var/lib/docker \
 #          devcontainer-base:onnx-quantized-latest
 # Verify: docker run --rm devcontainer-base:onnx-quantized-latest \
-#          /opt/conda/bin/python -c "from onnxruntime.quantization import quantize_dynamic;print('quantize OK')"
+#          /opt/conda/envs/main/bin/python -c "from onnxruntime.quantization import quantize_dynamic;print('quantize OK')"
 #
-# Variant Stage Layering (additional 3 layers on top of onnx-pytorch variant):
-#   Stage 1/3: PATH verification + timer initialization + base tool check
-#   Stage 2/3: Install quantization packages (onnxconverter-common, onnxsim) + cleanup
-#   Stage 3/3: build-info + smoke tests + timing summary
+# Variant Stage Layering (additional 3 layers on top of onnx-dev variant):
+#   Stage 1/3: PATH verification + timer initialization + base tool check (free-threading + torch-absent guards)
+#   Stage 2/3: Idempotent quantization package install (onnxconverter-common, onnxsim) + guards + cleanup
+#   Stage 3/3: build-info + pure-ONNX smoke tests (no torch: models built via onnx.helper) + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
 
 ARG BASE_TAG=latest
 ARG APT_MIRROR=official
-ARG CONDA_MIRROR=tuna
+ARG CONDA_MIRROR=bfsu
 ARG PIP_MIRROR=aliyun
 
-FROM devcontainer-base:onnx-pytorch-${BASE_TAG}
+FROM devcontainer-base:onnx-dev-${BASE_TAG}
 
 ARG BASE_TAG
 ARG APT_MIRROR
@@ -39,13 +39,13 @@ ARG CONDA_MIRROR
 ARG PIP_MIRROR
 
 LABEL maintainer="SpecWeave"
-LABEL description="DevContainer onnx-quantized variant with ONNX quantization toolkit (INT8/FP16 dynamic/static/QDQ via onnxruntime.quantization; neural-compressor optional)"
+LABEL description="DevContainer onnx-quantized variant with ONNX quantization toolkit (INT8/FP16 dynamic/static/QDQ via onnxruntime.quantization; free-threading main env; no PyTorch)"
 LABEL variant="onnx-quantized"
 LABEL quantization="onnxruntime,int8,fp16,qdq"
 
 ENV CONDA_DIR=/opt/conda
 
-ENV PATH=/opt/conda/bin:${PATH}
+ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}
 
 # OpenMP defaults for quantized inference performance (prevents over-subscription)
 ENV OMP_NUM_THREADS=4
@@ -58,7 +58,7 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 # ═══════════════════════════════════════════════════════════════════
 # Stage 1/3 (追加层1): 基础验证 + 计时器初始化
 # 变化频率：最低
-# 原则：验证 onnx-pytorch 基础组件；初始化追加层计时器
+# 原则：验证 onnx-dev 基础组件（main 环境 + free-threading + torch 缺席）；初始化追加层计时器
 # ═══════════════════════════════════════════════════════════════════
 RUN <<'STAGE1_EOF'
 echo ""
@@ -70,13 +70,23 @@ echo ""
 _STAGE_START=$(date +%s)
 echo "[TIMER] ONNX-Quantized variant build started at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "START=$_STAGE_START" > /tmp/.onnx-quantized-variant-build-timer
-echo "[BUILD] Verifying base onnx-pytorch installation..."
-echo "  - torch: $(python -c 'import torch;print(torch.__version__)' 2>/dev/null || echo 'not found')"
+echo "[BUILD] Verifying base onnx-dev installation (conda main env)..."
 echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)' 2>/dev/null || echo 'not found')"
 echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)' 2>/dev/null || echo 'not found')"
+echo "  - onnxsim: $(python -c 'import onnxsim;print(getattr(onnxsim,"__version__","installed"))' 2>/dev/null || echo 'not found')"
+echo "  - torch: $(python -c 'import importlib.util as u; print("ABSENT (by design)" if u.find_spec("torch") is None else "PRESENT")')"
+echo "  - free-threading: $(python -c 'import sys; print("GIL disabled (cp314t)" if not sys._is_gil_enabled() else "GIL ENABLED")')"
 echo "  - conda: $(/opt/conda/bin/conda --version 2>&1 | head -1)"
 echo "  - python: $(python --version 2>&1)"
 echo "  - PATH: $PATH"
+echo ""
+echo "[GUARD] Base image must be free-threading with torch absent..."
+python -c "import sys; assert sys._is_gil_enabled() is False, 'base image must be free-threading (cp314t)'" \
+    && echo "[OK] free-threading base confirmed (GIL disabled)" \
+    || { echo "[FATAL] base image is NOT free-threading - wrong base image?"; exit 1; }
+python -c "import importlib.util as u, sys; f=u.find_spec('torch'); sys.exit(0 if f is None else 1)" \
+    && echo "[OK] torch absent in base (by design)" \
+    || { echo "[FATAL] torch present in base - expected onnx-dev (no PyTorch) as base"; exit 1; }
 echo ""
 echo "[BUILD] Verifying devuser + services preserved..."
 echo "  - devuser exists: $(id devuser 2>&1 | head -1)"
@@ -93,31 +103,34 @@ echo '[OK] Stage 1 complete'
 STAGE1_EOF
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/3 (追加层2): 安装量化工具包 + 清理
+# Stage 2/3 (追加层2): 安装量化工具包 + 守卫 + 清理
 # 变化频率：中（工具版本升级时改）
-# 原则：在 base conda 环境安装量化相关包；安装后立即清理缓存；使用 BuildKit cache 加速
-# 包含：onnxruntime.quantization (built-in 核心量化引擎), onnxconverter-common (FP16转换),
-#       onnxsim (模型简化预处理)
-# 不包含：neural-compressor (PyTorch场景可选，需手动 pip install neural-compressor)
+# 原则：在 conda main 环境幂等安装量化相关包（onnx-dev 已含大部分依赖，pip 幂等 no-op）；
+#       安装后执行 free-threading + torch 缺席双守卫；立即清理缓存；使用 BuildKit cache 加速
+# 包含：onnxruntime.quantization (built-in 核心量化引擎, 来自 onnx-dev 继承),
+#       onnxconverter-common (FP16转换), onnxsim (模型简化预处理)
+# 不包含：neural-compressor (PyTorch场景可选，需 torch，本镜像无 torch 按需自装),
+#         torch/torchvision/onnxoptimizer (继承 onnx-dev 的一等排除约束)
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     <<'STAGE2_EOF'
 echo ""
 echo "########################################################################"
-echo "# [ONNX-QUANTIZED VARIANT STAGE 2/3] Install Quantization Toolkit + Cleanup"
-echo "# Packages:"
+echo "# [ONNX-QUANTIZED VARIANT STAGE 2/3] Install Quantization Toolkit + Guards + Cleanup"
+echo "# Packages (idempotent, mostly inherited from onnx-dev):"
 echo "#   - onnxconverter-common (ONNX FP16 conversion utilities)"
 echo "#   - onnxsim              (ONNX model simplification, pre-quantization)"
 echo "# NOT INSTALLED BY DEFAULT:"
-echo "#   - neural-compressor    (Intel INC: PyTorch-only in 3.x, ONNX adaptor deprecated)"
-echo "#     Install manually if needed: pip install neural-compressor"
+echo "#   - neural-compressor    (Intel INC: PyTorch-only in 3.x, needs torch)"
+echo "#   - torch/torchvision    (excluded by design, inherited from onnx-dev)"
+echo "#   - onnxoptimizer        (free-threading incompatible, CPython #111506)"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
 source /opt/conda/etc/profile.d/conda.sh
-conda activate base
-echo "[OK] base environment activated"
+conda activate main
+echo "[OK] main environment activated"
 echo "  - conda env: $CONDA_DEFAULT_ENV"
 echo ""
 
@@ -152,7 +165,7 @@ pip_install_group() {
 }
 
 pip_install_group "G3: Quantization Utilities" \
-    "onnxconverter-common (FP16 conversion) + onnxsim (model simplification)" \
+    "onnxconverter-common (FP16 conversion) + onnxsim (model simplification); idempotent - inherited from onnx-dev where present" \
     onnxconverter-common onnxsim
 
 echo ""
@@ -161,21 +174,44 @@ echo "│ [VERIFY] Quantization toolkit                   │"
 echo "└─────────────────────────────────────────────────┘"
 echo "  - onnxruntime.quantization: $(python -c 'from onnxruntime.quantization import quantize_dynamic, QuantType; print("available (dynamic+static QDQ)")' 2>&1)"
 echo "  - onnxconverter-common: $(python -c 'import onnxconverter_common; print(onnxconverter_common.__version__)' 2>&1)"
-echo "  - neural-compressor: $(python -c 'import neural_compressor; print(neural_compressor.__version__)' 2>/dev/null || echo 'not installed (optional: pip install neural-compressor)')"
+echo "  - neural-compressor: $(python -c 'import neural_compressor; print(neural_compressor.__version__)' 2>/dev/null || echo 'not installed (optional, needs torch: pip install neural-compressor torch)')"
 echo "  - onnxsim: $(python -c 'import onnxsim; print(onnxsim.__version__)' 2>&1)"
 echo ""
 
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [GUARD] Free-threading integrity check          │"
+echo "└─────────────────────────────────────────────────┘"
+_PY_BUILD=$(conda list python 2>/dev/null | awk '$1=="python"{print $3; exit}')
+echo "  - python build string: ${_PY_BUILD:-unknown}"
+echo "$_PY_BUILD" | grep -q "cp314t" || { echo "[FATAL] python build is not cp314t after pip installs"; exit 1; }
+python -c "import sys; sys.exit(0 if sys._is_gil_enabled() is False else 1)" \
+    && echo "[OK] free-threading (cp314t) preserved, GIL still disabled" \
+    || { echo "[FATAL] GIL unexpectedly enabled after pip installs"; exit 1; }
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [GUARD] torch-absent negative check             │"
+echo "└─────────────────────────────────────────────────┘"
+python -c "import importlib.util as u, sys; f=u.find_spec('torch'); print('[INFO] torch:', 'ABSENT' if f is None else 'PRESENT'); sys.exit(0 if f is None else 1)" \
+    && echo "[OK] torch is absent (by design, inherited from onnx-dev)" \
+    || { echo "[FATAL] torch unexpectedly present - a dependency pulled it in!"; exit 1; }
+python -c "import importlib.util as u, sys; f=u.find_spec('onnxoptimizer'); print('[INFO] onnxoptimizer:', 'ABSENT' if f is None else 'PRESENT'); sys.exit(0 if f is None else 1)" \
+    && echo "[OK] onnxoptimizer is absent (free-threading incompatible, CPython #111506)" \
+    || { echo "[FATAL] onnxoptimizer unexpectedly present!"; exit 1; }
+echo ""
+
 echo "[ACTION] Setting permissions for devuser..."
-find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
-echo "[OK] Permissions verified (bin executables only, base image permissions preserved)"
+find /opt/conda/envs/main/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
+echo "[OK] Permissions verified (main env bin executables only, base image permissions preserved)"
 echo ""
 
 echo "[ACTION] Post-install cleanup..."
-find /opt/conda -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
-find /opt/conda -type f -name '*.pyc' -delete 2>/dev/null || true
+find /opt/conda/envs/main/lib -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/envs/main/lib -type f -name '*.pyc' -delete 2>/dev/null || true
 conda clean -yafq 2>/dev/null || true
 pip cache purge 2>/dev/null || true
-echo "[OK] Post-install cleanup complete (__pycache__/.pyc removed, conda+pyp cache purged)"
+echo "[OK] Post-install cleanup complete (__pycache__/.pyc removed, conda+pip cache purged)"
 echo ""
 
 _NOW=$(date +%s)
@@ -202,22 +238,20 @@ echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
 source /opt/conda/etc/profile.d/conda.sh
-conda activate base
+conda activate main
 
 echo "[ACTION] Writing build metadata to /etc/devcontainer-variant-onnx-quantized-build-info..."
 ORT_VERSION=$(python -c "import onnxruntime;print(onnxruntime.__version__)" 2>/dev/null || echo "unknown")
-TORCH_VERSION_ACTUAL=$(python -c "import torch;print(torch.__version__)" 2>/dev/null || echo "unknown")
 ONNX_VERSION_ACTUAL=$(python -c "import onnx;print(onnx.__version__)" 2>/dev/null || echo "unknown")
-NC_VERSION=$(python -c "import neural_compressor;print(neural_compressor.__version__)" 2>/dev/null || echo "not installed (optional)")
+NC_VERSION=$(python -c "import neural_compressor;print(neural_compressor.__version__)" 2>/dev/null || echo "not installed (optional, needs torch)")
 OCC_VERSION=$(python -c "import onnxconverter_common;print(onnxconverter_common.__version__)" 2>/dev/null || echo "unknown")
 ONNXSIM_VERSION=$(python -c "import onnxsim;print(onnxsim.__version__)" 2>/dev/null || echo "unknown")
 printf '%s\n' \
     "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
     "VARIANT=onnx-quantized" \
-    "VARIANT_DESCRIPTION=ONNX model quantization toolkit (INT8/FP16 dynamic/static/QDQ/QAT)" \
-    "BASE_IMAGE=devcontainer-base:onnx-pytorch-${BASE_TAG}" \
+    "VARIANT_DESCRIPTION=ONNX model quantization toolkit (INT8/FP16 dynamic/static/QDQ, pure ONNX, free-threading)" \
+    "BASE_IMAGE=devcontainer-base:onnx-dev-${BASE_TAG}" \
     "ONNXRUNTIME_VERSION=${ORT_VERSION}" \
-    "TORCH_VERSION_ACTUAL=${TORCH_VERSION_ACTUAL}" \
     "ONNX_VERSION_ACTUAL=${ONNX_VERSION_ACTUAL}" \
     "NEURAL_COMPRESSOR_VERSION=${NC_VERSION}" \
     "ONNXCONVERTER_COMMON_VERSION=${OCC_VERSION}" \
@@ -228,21 +262,31 @@ printf '%s\n' \
     "CONDA_MIRROR=${CONDA_MIRROR}" \
     "PIP_MIRROR=${PIP_MIRROR}" \
     "APT_MIRROR=${APT_MIRROR}" \
-    "INSTALL_ENV=base" \
-    "PYTHON_ENV=conda-base" \
-    "PATH_PRIORITY=conda-bin-first" \
+    "INSTALL_ENV=main (default user env)" \
+    "PYTHON_ENV=conda-main free-threading (cp314t, GIL disabled)" \
+    "PATH_PRIORITY=conda-main-bin-first" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-    "PACKAGES_INSTALLED=torch,torchvision,onnx,onnxruntime,onnxconverter-common,onnxsim" \
-    "OPTIONAL_PACKAGES=neural-compressor(pytorch-only),onnxruntime-tools(legacy)" \
+    "PACKAGES_INSTALLED=onnx,onnxruntime,onnxconverter-common,onnxsim,onnxscript" \
+    "PACKAGES_EXCLUDED=torch,torchvision (by design, inherited from onnx-dev; install on demand); onnxoptimizer (free-threading incompatible, CPython #111506)" \
+    "OPTIONAL_PACKAGES=neural-compressor(needs torch, install on demand),onnxruntime-tools(legacy)" \
     "BUILD_TIMER=enabled" \
     > /etc/devcontainer-variant-onnx-quantized-build-info
 echo "[OK] Build metadata written:"
 cat /etc/devcontainer-variant-onnx-quantized-build-info
 echo ""
 
+# NOTE: timer file lives in /tmp; capture timing data BEFORE rm -rf /tmp/* below,
+# otherwise arithmetic expansion on empty strings fails the build (timing-order bug fix).
+_TSTART=$(grep '^START=' /tmp/.onnx-quantized-variant-build-timer | cut -d= -f2)
+_TOQS1=$(grep '^OQS1=' /tmp/.onnx-quantized-variant-build-timer | cut -d= -f2)
+_TOQS2=$(grep '^OQS2=' /tmp/.onnx-quantized-variant-build-timer | cut -d= -f2)
+_TSTART=${_TSTART:-$(date +%s)}
+_TOQS1=${_TOQS1:-$_TSTART}
+_TOQS2=${_TOQS2:-$_TOQS1}
+
 echo "[ACTION] Running final cleanup..."
-find /opt/conda -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
-find /opt/conda -type f -name '*.pyc' -delete 2>/dev/null || true
+find /opt/conda/envs/main/lib -type d -name '__pycache__' -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/envs/main/lib -type f -name '*.pyc' -delete 2>/dev/null || true
 apt-get clean 2>/dev/null || true
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 echo "[OK] Final cleanup complete"
@@ -264,8 +308,9 @@ Neural Compressor Status Check (Optional Extension)
    INC 3.x refactored to framework-specific APIs with PyTorch as primary focus.
 
 This project uses onnxruntime.quantization as the SOLE ONNX quantization engine.
-neural-compressor is NOT installed by default. To use it for PyTorch quantization:
-   pip install neural-compressor
+neural-compressor is NOT installed by default (this image has NO PyTorch by design).
+To use it for PyTorch quantization (installs torch as dependency):
+   pip install neural-compressor torch
    from neural_compressor.torch.quantization import RTNConfig, quantize
 """
 import sys
@@ -282,24 +327,25 @@ except ImportError:
     print("[INFO] neural-compressor not installed (optional, not required for ONNX quantization)")
     print("[INFO] ONNX quantization uses onnxruntime.quantization natively")
 NCIMPORT
-echo "[VALIDATE 2/8] Conda base environment intact..."
-test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda base environment intact"
-/opt/conda/bin/python --version
-echo "[VALIDATE 3/8] Jupyter available from conda base..."
-/opt/conda/bin/jupyter --version 2>&1 | head -2
+echo "[VALIDATE 2/8] Conda main environment intact..."
+test -d /opt/conda/envs/main && test -x /opt/conda/envs/main/bin/python && echo "[OK] /opt/conda/envs/main environment intact"
+/opt/conda/envs/main/bin/python --version
+echo "[VALIDATE 3/8] Jupyter available from conda main..."
+/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -2
 echo "[VALIDATE 4/8] Core services (docker, supervisord) preserved..."
 docker --version 2>&1
 supervisord --version 2>&1
 echo "[OK] Core services preserved"
 echo "[VALIDATE 5/8] devuser can access quantization tools..."
-su - devuser -c "/opt/conda/bin/python -c 'from onnxruntime.quantization import quantize_dynamic; print(\"quantize_dynamic accessible\")'" && echo "[OK] devuser can access quantization tools"
-echo "[VALIDATE 6/8] PyTorch + ONNX still working (inherited)..."
-python -c "import torch,onnx,onnxruntime; print(torch.__version__,onnx.__version__,onnxruntime.__version__)"
+su - devuser -c "/opt/conda/envs/main/bin/python -c 'from onnxruntime.quantization import quantize_dynamic; print(\"quantize_dynamic accessible\")'" && echo "[OK] devuser can access quantization tools"
+echo "[VALIDATE 6/8] Free-threading + exclusions preserved (inherited from onnx-dev)..."
+python -c "import sys; assert sys._is_gil_enabled() is False; print('[OK] free-threading active (cp314t, GIL disabled)')"
+python -c "import importlib.util as u, sys; assert u.find_spec('torch') is None, 'torch must be absent'; assert u.find_spec('onnxoptimizer') is None, 'onnxoptimizer must be absent'; print('[OK] torch + onnxoptimizer absent (by design)')"
 echo "[VALIDATE 7/8] LLVM toolchain still inherited..."
 llvm-config --version 2>&1 | head -1
 echo "[OK] LLVM toolchain preserved"
 echo "[VALIDATE 8/8] ONNX init script preserved..."
-bash -n /etc/profile.d/onnx-pytorch-init.sh && echo "[OK] onnx-pytorch-init.sh valid"
+bash -n /etc/profile.d/onnx-dev-init.sh && echo "[OK] onnx-dev-init.sh valid"
 echo ""
 echo "[VALIDATE] All validation checks completed"
 echo ""
@@ -307,37 +353,38 @@ echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│  [FINAL VERIFICATION - QUANTIZATION SMOKE]     │"
 echo "│  Create model → dynamic INT8 quantize → run    │"
+echo "│  (pure ONNX: model built via onnx.helper, no   │"
+echo "│   torch dependency)                            │"
 echo "└─────────────────────────────────────────────────┘"
 python - <<'QSMOKE'
-import torch
 import onnx
 import onnxsim
 import onnxruntime as ort
 import numpy as np
 import os
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_dynamic, QuantType
 
-# Fixed seeds for deterministic smoke test
-torch.manual_seed(42)
-np.random.seed(42)
+# Fixed seed for deterministic smoke test
+rng = np.random.default_rng(42)
 
-# 1) Create a simple model
-class LinearModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc = torch.nn.Linear(10, 5)
-    def forward(self, x):
-        return self.fc(x)
-
-model = LinearModel().eval()
-dummy = torch.randn(1, 10)
+# 1) Create a simple Gemm model (pure ONNX, equivalent of nn.Linear(10, 5))
+IN_DIM, OUT_DIM = 10, 5
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) * 0.1).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [helper.make_node("Gemm", ["input", "w", "b"], ["output"])]
+graph = helper.make_graph(
+    nodes, "linear",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
 onnx_path = "/tmp/test_model.onnx"
 quant_path = "/tmp/test_model_int8.onnx"
-
-torch.onnx.export(model, dummy, onnx_path,
-                  input_names=["input"], output_names=["output"],
-                  opset_version=18, do_constant_folding=True)
-print(f"[OK] Exported FP32 ONNX model: {onnx_path}")
+onnx.save(model, onnx_path)
+print(f"[OK] Created FP32 ONNX model (pure helper): {onnx_path}")
 
 # 2) Simplify model with onnxsim to fix shape inference issues before quantization
 model_onnx = onnx.load(onnx_path)
@@ -385,35 +432,45 @@ echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│  [FINAL VERIFICATION - FP16 SMOKE]             │"
 echo "│  Create model → FP16 convert → run inference   │"
+echo "│  (pure ONNX: Gemm*0.5+1.0 built via helper,    │"
+echo "│   FP32 session as reference, no torch)         │"
 echo "└─────────────────────────────────────────────────┘"
 python - <<'FP16SMOKE'
-import torch
 import onnx
 import numpy as np
+import os
+from onnx import TensorProto, helper
 from onnxconverter_common import float16
 import onnxruntime as ort
 
-# Fixed seeds for deterministic smoke test
-torch.manual_seed(42)
-np.random.seed(42)
+# Fixed seed for deterministic smoke test
+rng = np.random.default_rng(42)
 
-# Create FP32 model
-class SimpleModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc = torch.nn.Linear(8, 4)
-    def forward(self, x):
-        return self.fc(x) * 0.5 + 1.0
-
-model = SimpleModel().eval()
-dummy = torch.randn(1, 8)
+# Create FP32 model: Gemm -> Mul(0.5) -> Add(1.0) (pure ONNX, no torch)
+IN_DIM, OUT_DIM = 8, 4
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) * 0.1).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+half = np.array([0.5], dtype=np.float32)
+one = np.array([1.0], dtype=np.float32)
+nodes = [
+    helper.make_node("Gemm", ["input", "w", "b"], ["gemm_out"]),
+    helper.make_node("Mul", ["gemm_out", "half"], ["mul_out"]),
+    helper.make_node("Add", ["mul_out", "one"], ["output"]),
+]
+graph = helper.make_graph(
+    nodes, "simple",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True),
+     helper.make_tensor("half", TensorProto.FLOAT, half.shape, half.tobytes(), raw=True),
+     helper.make_tensor("one", TensorProto.FLOAT, one.shape, one.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
 fp32_path = "/tmp/test_fp32.onnx"
 fp16_path = "/tmp/test_fp16.onnx"
-
-torch.onnx.export(model, dummy, fp32_path,
-                  input_names=["input"], output_names=["output"],
-                  opset_version=18, do_constant_folding=True)
-print("[OK] Exported FP32 model")
+onnx.save(model, fp32_path)
+print("[OK] Created FP32 model (pure helper)")
 
 # Convert to FP16
 fp32_model = onnx.load(fp32_path)
@@ -426,18 +483,17 @@ fp16_model_loaded = onnx.load(fp16_path)
 onnx.checker.check_model(fp16_model_loaded)
 print("[OK] FP16 model passes ONNX checker")
 
-sess = ort.InferenceSession(fp16_path, providers=["CPUExecutionProvider"])
-inp = np.random.randn(1, 8).astype(np.float16)
-out = sess.run(None, {"input": inp})[0]
+# FP32 session output as numerical reference (no torch needed)
+sess_fp32 = ort.InferenceSession(fp32_path, providers=["CPUExecutionProvider"])
+sess_fp16 = ort.InferenceSession(fp16_path, providers=["CPUExecutionProvider"])
+inp = rng.standard_normal((1, IN_DIM)).astype(np.float32)
+out_fp32 = sess_fp32.run(None, {"input": inp})[0]
+out_fp16 = sess_fp16.run(None, {"input": inp.astype(np.float16)})[0]
 
-# Compute expected (approximate)
-with torch.no_grad():
-    expected = model(torch.from_numpy(inp.astype(np.float32))).numpy()
-max_diff = np.max(np.abs(out.astype(np.float32) - expected))
+max_diff = np.max(np.abs(out_fp16.astype(np.float32) - out_fp32))
 print(f"[OK] FP16 vs FP32 reference max diff: {max_diff:.6f} (smoke threshold: < 5.0)")
 assert max_diff < 5.0, f"FP16 precision loss too high: {max_diff}"
 
-import os
 fp32_size = os.path.getsize(fp32_path)
 fp16_size = os.path.getsize(fp16_path)
 print(f"[OK] Model size: FP32={fp32_size}B, FP16={fp16_size}B, ratio={fp16_size/fp32_size:.2%}")
@@ -465,10 +521,9 @@ This is a focused subset of test_onnxruntime_quantization.py for build-time smok
 import sys, os, tempfile, shutil
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 import numpy as np
-import torch
-import torch.nn as nn
 import onnx
 import onnxruntime as ort
+from onnx import TensorProto, helper
 from onnxruntime.quantization import (
     quantize_dynamic, quantize_static, QuantType, QuantFormat,
     CalibrationMethod, CalibrationDataReader,
@@ -494,31 +549,44 @@ def check(name, cond, msg=""):
         print(f"  ❌ {name}: {msg}"); failed += 1
 
 # Fixed seeds
-torch.manual_seed(42); np.random.seed(42)
+rng = np.random.default_rng(42)
+np.random.seed(42)
 tmpdir = tempfile.mkdtemp()
 
-# ── Create test models ──
-class MLP(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = nn.Sequential(nn.Linear(64,128),nn.ReLU(),nn.Linear(128,10))
-    def forward(self,x): return self.net(x)
+# ── Create test model (pure ONNX helper, no torch) ──
+# Equivalent of nn.Sequential(nn.Linear(64,128), nn.ReLU(), nn.Linear(128,10))
+IN_DIM, HID_DIM, OUT_DIM = 64, 128, 10
+w1 = (rng.standard_normal((IN_DIM, HID_DIM)) / np.sqrt(IN_DIM)).astype(np.float32)
+b1 = np.zeros(HID_DIM, dtype=np.float32)
+w2 = (rng.standard_normal((HID_DIM, OUT_DIM)) / np.sqrt(HID_DIM)).astype(np.float32)
+b2 = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [
+    helper.make_node("Gemm", ["input", "w1", "b1"], ["gemm1_out"]),
+    helper.make_node("Relu", ["gemm1_out"], ["relu_out"]),
+    helper.make_node("Gemm", ["relu_out", "w2", "b2"], ["output"]),
+]
+graph = helper.make_graph(
+    nodes, "mlp",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w1", TensorProto.FLOAT, w1.shape, w1.tobytes(), raw=True),
+     helper.make_tensor("b1", TensorProto.FLOAT, b1.shape, b1.tobytes(), raw=True),
+     helper.make_tensor("w2", TensorProto.FLOAT, w2.shape, w2.tobytes(), raw=True),
+     helper.make_tensor("b2", TensorProto.FLOAT, b2.shape, b2.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
 
-model = MLP().eval()
 fp32_path = os.path.join(tmpdir, "mlp.onnx")
-dyn_path = os.path.join(tmpdir, "mlp_dyn.onnx")
 static_qdq_path = os.path.join(tmpdir, "mlp_qdq.onnx")
 static_qop_path = os.path.join(tmpdir, "mlp_qop.onnx")
 fp16_path = os.path.join(tmpdir, "mlp_fp16.onnx")
 
-torch.onnx.export(model, torch.randn(1,64), fp32_path,
-                  input_names=["input"], output_names=["output"],
-                  opset_version=18, do_constant_folding=True)
+onnx.save(model, fp32_path)
 if HAS_ONNXSIM:
     m = onnx.load(fp32_path); m2,ok = onnxsim.simplify(m)
     if ok: onnx.save(m2, fp32_path)
 onnx.checker.check_model(onnx.load(fp32_path))
-check("FP32 ONNX model export + checker", True)
+check("FP32 ONNX model build (pure helper) + checker", True)
 
 # Helper: run inference with auto FP16 type adaptation
 def infer(path, name, arr):
@@ -621,10 +689,12 @@ import tempfile
 import numpy as np
 import onnx
 import onnxsim
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_dynamic, QuantType
 import onnxruntime as ort
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+rng = np.random.default_rng(42)
 passed = 0
 failed = 0
 
@@ -637,26 +707,33 @@ def check(name, condition):
         print(f"  ❌ {name}")
         failed += 1
 
-# Create a simple MLP model for testing
-import torch
-import torch.nn as nn
-
-class MLP(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = nn.Sequential(nn.Linear(64, 128), nn.ReLU(), nn.Linear(128, 10))
-    def forward(self, x):
-        return self.net(x)
-
+# Create a simple MLP model for testing (pure ONNX helper, no torch)
+# Equivalent of nn.Sequential(nn.Linear(64,128), nn.ReLU(), nn.Linear(128,10))
 tmpdir = tempfile.mkdtemp()
-model = MLP()
-model.eval()
+IN_DIM, HID_DIM, OUT_DIM = 64, 128, 10
+w1 = (rng.standard_normal((IN_DIM, HID_DIM)) / np.sqrt(IN_DIM)).astype(np.float32)
+b1 = np.zeros(HID_DIM, dtype=np.float32)
+w2 = (rng.standard_normal((HID_DIM, OUT_DIM)) / np.sqrt(HID_DIM)).astype(np.float32)
+b2 = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [
+    helper.make_node("Gemm", ["input", "w1", "b1"], ["gemm1_out"]),
+    helper.make_node("Relu", ["gemm1_out"], ["relu_out"]),
+    helper.make_node("Gemm", ["relu_out", "w2", "b2"], ["output"]),
+]
+graph = helper.make_graph(
+    nodes, "mlp",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w1", TensorProto.FLOAT, w1.shape, w1.tobytes(), raw=True),
+     helper.make_tensor("b1", TensorProto.FLOAT, b1.shape, b1.tobytes(), raw=True),
+     helper.make_tensor("w2", TensorProto.FLOAT, w2.shape, w2.tobytes(), raw=True),
+     helper.make_tensor("b2", TensorProto.FLOAT, b2.shape, b2.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
 fp32_path = os.path.join(tmpdir, "mlp.onnx")
-torch.onnx.export(model, torch.randn(1, 64), fp32_path, input_names=["input"], output_names=["output"],
-                  opset_version=18, do_constant_folding=True)
-# Simplify with onnxsim to resolve shape-inference conflicts from torch export
-# before quantization (matches QSMOKE/ORTUNIT pattern; prevents
-# "Inferred shape and existing shape differ" in quantize_dynamic shape infer)
+onnx.save(model, fp32_path)
+# Simplify with onnxsim before quantization (matches QSMOKE/ORTUNIT pattern;
+# prevents "Inferred shape and existing shape differ" in quantize_dynamic shape infer)
 m = onnx.load(fp32_path)
 m2, ok = onnxsim.simplify(m)
 if ok:

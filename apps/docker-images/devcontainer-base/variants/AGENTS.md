@@ -25,7 +25,7 @@
   - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
   - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，安装于 main 环境，**不含 PyTorch**，onnxoptimizer 因 free-threading 不兼容而排除，基于 conda-llvm 变体）
   - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
-  - `onnx-quantized`：onnx-pytorch + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，基于 onnx-pytorch 变体）
+  - `onnx-quantized`：onnx-dev + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，纯 ONNX 无 PyTorch，free-threading main 环境，基于 onnx-dev 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
 - **AI资产容器**：`.agents/` 目录（本子系统特有规则）
 
@@ -189,6 +189,7 @@ cp -r _template <new-variant>
 
 ## 变更日志
 
+- 2026-08-14 | refactor | onnx-quantized v2.0.0：基础镜像从 onnx-pytorch 迁移至 onnx-dev（纯 ONNX 无 PyTorch，main 环境 free-threading cp314t），量化测试模型全部改用 onnx.helper 纯构建（make_tensor 传 bytes 必须显式 raw=True，onnx 1.22 不再自动识别）
 - 2026-08-09 | feat | 新增 onnx-quantized 变体（onnxruntime.quantization 量化工具链），注册到 build.sh VARIANTS 数组
 - 2026-08-08 | feat | 新增 onnx-pytorch 变体（PyTorch CPU + ONNX Runtime 深度学习运行时），添加 build-onnx-pytorch.sh/test-onnx-pytorch.sh 脚本
 - 2026-08-08 | feat | 新增 shared/scripts/conda-mirror-setup.sh 共享镜像源配置脚本，变体通过环境变量驱动

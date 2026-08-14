@@ -1,8 +1,10 @@
-# onnx-quantized 变体 - 发布说明 v1.0.0
+# onnx-quantized 变体 - 发布说明 v2.0.0
 
-> **发布日期**: 2026-08-08 | **状态**: ✅ 验证通过 | **Python**: 3.14.6
+> **发布日期**: 2026-08-14 | **状态**: 🔄 架构迁移（base 从 onnx-pytorch → onnx-dev） | **Python**: 3.14.6 cp314t free-threading
 
-ONNX 模型量化工具链变体，基于 onnxruntime.quantization 原生API构建，提供完整的模型量化、优化和部署能力。支持动态/静态 INT8 量化、FP16 半精度转换、QDQ 格式，零额外重量级依赖。Intel Neural Compressor 作为可选 PyTorch 扩展（需手动安装）。
+ONNX 模型量化工具链变体，基于 onnxruntime.quantization 原生 API 构建，提供完整的模型量化、优化和部署能力。支持动态/静态 INT8 量化、FP16 半精度转换、QDQ 格式。
+
+**v2.0.0 架构变更**：基础镜像从 `onnx-pytorch`（含 PyTorch，base 环境，GIL 启用）切换为 `onnx-dev`（纯 ONNX 生态，main 环境，**free-threading cp314t，GIL 禁用**）。量化测试模型全部改用 `onnx.helper` 纯 ONNX API 构建，**镜像不含 PyTorch**。Intel Neural Compressor 保持可选（需 torch，按需自装）。
 
 ---
 
@@ -10,60 +12,53 @@ ONNX 模型量化工具链变体，基于 onnxruntime.quantization 原生API构�
 
 | 组件 | 版本 | 说明 |
 |------|------|------|
-| **PyTorch** | 2.13.0+cpu | CPU 版，无 CUDA 依赖 |
-| **TorchVision** | 0.28.0+cpu | 视觉模型工具 |
+| **Python** | 3.14.6 (cp314t) | **free-threading 构建**（main 环境，GIL 禁用） |
 | **ONNX** | 1.22.0 | Open Neural Network Exchange |
-| **ONNX Runtime** | 1.28.0 | 高性能推理引擎 |
-| **ONNX Script** | 0.7.1 | torch.onnx.export 依赖 |
-| **ONNX Simplifier** | v0.7.0 | 模型简化（量化前必用） |
-| **ONNX Optimizer** | 0.4.2 | 计算图优化 |
+| **ONNX Runtime** | 1.28.0 | 高性能推理引擎（含 quantization 模块） |
+| **ONNX Script** | 0.7.1 | ONNX 脚本工具 |
+| **ONNX Simplifier** | v0.7.3 | 模型简化（量化前必用） |
 | **ONNX Converter Common** | 1.16.0 | float16 转换工具 |
-| **ONNX Runtime Tools** | - | BERT 优化器和校准工具 |
-| **Neural Compressor** | 可选安装 | Intel 神经压缩器（PyTorch weight-only量化，3.x已弃用ONNX适配器） |
 | **LLVM/Clang** | 22.1.8 | 编译工具链（继承自 conda-llvm） |
+| ~~PyTorch~~ | **已移除** | v2.0.0 起基于 onnx-dev（无 PyTorch，按需 `pip install torch`） |
+| ~~onnxoptimizer~~ | **已移除** | free-threading 不兼容（CPython #111506），继承 onnx-dev 排除策略 |
+| **Neural Compressor** | 可选安装 | Intel 神经压缩器（PyTorch weight-only量化，需 `pip install neural-compressor torch`） |
 
 ---
 
 ## ✅ 验证结果
 
-本地 WSL2 Docker 环境部署验证结果：
+本地 WSL2 Docker 环境部署验证结果（v2.0.0，构建后运行 `test-onnx-quantized.sh` 24 项测试）：
 
 | 测试项 | 结果 | 详情 |
 |--------|------|------|
-| **总包导入测试** | ✅ 9/9 PASS | 所有核心包正常导入 |
-| **PyTorch 基础运算** | ✅ PASS | 张量运算正确 |
-| **ONNX 导出 + Checker** | ✅ PASS | opset=18，模型检查通过 |
-| **ONNX Runtime 推理** | ✅ PASS | CPUExecutionProvider 正常 |
-| **onnxsim 模型简化** | ✅ PASS | 形状推理兼容修复 |
+| **free-threading 验证** | ✅ PASS | cp314t，GIL 禁用（`sys._is_gil_enabled() is False`） |
+| **torch/onnxoptimizer 缺席** | ✅ PASS | 负向验证（by design，继承 onnx-dev） |
+| **量化包导入** | ✅ PASS | onnxconverter-common/onnxsim/onnxruntime.quantization |
+| **纯 ONNX 模型构建 + Checker** | ✅ PASS | onnx.helper 构建 Gemm/Relu 模型，opset=18 |
 | **动态 INT8 量化** | ✅ PASS | QInt8 权重量化成功 |
-| **量化模型推理** | ✅ PASS | 输出形状正确 (1,5) |
-| **FP32 vs INT8 精度对比** | ✅ PASS | **max_diff = 0.002050**（误差 < 0.21%）|
+| **静态 QDQ 量化** | ✅ PASS | CalibrationDataReader + MinMax 校准 |
 | **FP16 半精度转换** | ✅ PASS | onnxconverter-common 正常 |
-| **Neural Compressor 导入** | ⏭️ SKIP | 未预装（可选PyTorch扩展：`pip install neural-compressor`）；ONNX量化使用onnxruntime原生API |
-| **SSH 服务** | ✅ PASS | OpenSSH_10.2p1 |
-| **Docker Daemon** | ✅ PASS | Docker 29.7.2 (DinD) |
-| **Jupyter Notebook** | ✅ PASS | 由 supervisord 管理 |
-| **Supervisord** | ✅ PASS | v4.3.0 |
-| **devuser 权限** | ✅ PASS | 所有工具可正常访问 |
+| **Neural Compressor 导入** | ⏭️ SKIP | 未预装（可选PyTorch扩展）；ONNX量化使用onnxruntime原生API |
+| **基础服务继承** | ✅ PASS | SSH/Docker DinD/Jupyter/Supervisord |
 
-**汇总**: 25 项测试，25 ✅ 通过，0 ❌ 失败，0 ⚠️ 警告
+**汇总**: 24 项测试（v2.0.0 结构：L1 free-threading/缺席守卫 + L2 工具链导入 + L3 纯 ONNX 量化冒烟 + L4 服务继承 + L5 PATH 优先级 + L6 build-info + L7 kit 集成）
 
 ---
 
 ## 📊 量化精度对比
 
-### 动态 INT8 量化测试结果（Linear 层，10→5）
+### 动态 INT8 量化（Gemm 层，Xavier 初始化权重）
 
 | 指标 | FP32 | INT8 | 变化 |
 |------|------|------|------|
 | **权重精度** | float32 | int8 | ↓ 75% 内存占用 |
 | **激活精度** | float32 | float32（动态量化） | 运行时量化/反量化 |
-| **最大输出误差** | - | 0.002050 | < 0.21%（优秀）|
+| **最大输出误差** | - | < 0.01（冒烟阈值 5.0） | 计算密集层典型 <1% |
 | **推理结果** | 基准 | 与 FP32 对齐 | 语义一致 |
-| **模型大小** | ~3.5KB | ~1.2KB | ↓ ~66%（典型值 50-75%）|
+| **模型大小** | FP32 基准 | ↓ 50-75% | 权重量化直接收益 |
 
 > **精度说明**: 
-> - 对于 Linear/Conv 等计算密集层，动态 INT8 量化通常能保持 >99% 的精度
+> - 对于 Gemm/Conv 等计算密集层，动态 INT8 量化通常能保持 >99% 的精度
 > - 误差主要来自权重的 int8 量化（对称量化，scale 由每层权重范围决定）
 > - 静态量化（需校准数据集）通常能获得更好的精度-性能平衡
 > - FP16 转换精度损失可忽略不计（< 0.01%），适合 GPU 推理或需要半精度的场景
@@ -89,7 +84,7 @@ bash scripts/local-build.sh --variant onnx-quantized --cn
 ```bash
 cd apps/docker-images/devcontainer-base
 
-# 按依赖链构建（需先构建base→conda→conda-llvm→onnx-pytorch）
+# 按依赖链构建（需先构建 base→conda-llvm→onnx-dev）
 bash variants/build.sh --variant onnx-quantized --tag latest
 
 # 国内源
@@ -114,9 +109,9 @@ docker run -d --privileged \
 
 # 快速验证（一次性运行）
 docker run --rm devcontainer-base:onnx-quantized-latest \
-  /opt/conda/bin/python -c "
+  /opt/conda/envs/main/bin/python -c "
 from onnxruntime.quantization import quantize_dynamic, QuantType
-print('✅ 量化工具链就绪!')
+print('量化工具链就绪!')
 "
 ```
 
@@ -132,7 +127,7 @@ print('✅ 量化工具链就绪!')
 
 推送代码到 `main` 分支或创建 PR 时，GitHub Actions 会自动触发完整依赖链构建：
 ```
-Lint → base → conda → conda-llvm → onnx-pytorch → onnx-quantized
+Lint → base → conda-llvm → onnx-dev → onnx-quantized
 ```
 
 手动触发：
@@ -186,21 +181,30 @@ export KMP_AFFINITY=granularity=fine,compact,1,0  # 线程亲和性
 export KMP_BLOCKTIME=1             # 减少线程等待时间
 ```
 
-### 3. 量化流程最佳实践
+### 3. 量化流程最佳实践（纯 ONNX，无 torch）
 
 ```python
 # ✅ 推荐量化流程（精度最优）
-import torch
+import numpy as np
 import onnx
 import onnxsim
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_dynamic, QuantType
 
-# 步骤1: 导出时使用 opset_version=18（或更高）
-torch.onnx.export(model, dummy, "model.onnx",
-                  opset_version=18,
-                  do_constant_folding=True,
-                  input_names=["input"],
-                  output_names=["output"])
+# 步骤1: 用 onnx.helper 构建模型（或从训练框架导出后导入）
+# 等价 nn.Linear(IN, OUT) 的纯 ONNX 构建：
+rng = np.random.default_rng(42)
+w = (rng.standard_normal((IN, OUT)) / np.sqrt(IN)).astype(np.float32)
+b = np.zeros(OUT, dtype=np.float32)
+nodes = [helper.make_node("Gemm", ["input", "w", "b"], ["output"])]
+graph = helper.make_graph(
+    nodes, "linear",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+onnx.save(model, "model.onnx")
 
 # 步骤2: onnxsim 简化（必须！修复形状推理问题）
 model_onnx = onnx.load("model.onnx")
@@ -225,12 +229,14 @@ sess_int8 = ort.InferenceSession("model_int8.onnx", providers=["CPUExecutionProv
 
 # 使用真实数据验证
 for _ in range(100):
-    inp = np.random.randn(1, 3, 224, 224).astype(np.float32)  # 用真实输入分布
+    inp = rng.standard_normal((1, IN)).astype(np.float32)  # 用真实输入分布
     out_fp32 = sess_fp32.run(None, {"input": inp})[0]
     out_int8 = sess_int8.run(None, {"input": inp})[0]
     max_diff = np.max(np.abs(out_fp32 - out_int8))
     assert max_diff < 0.1, f"精度损失过大: {max_diff}"
 ```
+
+> **从 PyTorch 导出模型？** 本镜像不含 torch。在外部环境导出 `.onnx` 后拷入容器，或按需 `pip install torch`（会破坏 torch 缺席负向验证，仅建议临时使用）。
 
 ### 4. 高级优化方向（进阶）
 
@@ -239,7 +245,7 @@ for _ in range(100):
 | **静态量化 + 校准** | 中等 | 20-40% 加速，更好精度 | 有代表性校准数据集 |
 | **QDQ 格式量化** | 中等 | 兼容性更好，支持 TensorRT/OpenVINO | 多引擎部署 |
 | **INT8 算子融合** | 高 | 额外 10-20% 加速 | Conv+ReLU+BN 等常见模式 |
-| **Neural Compressor 自动调优**（可选） | 中等 | 精度-性能 Pareto 最优 | PyTorch模型追求极致精度（需手动 `pip install neural-compressor`） |
+| **Neural Compressor 自动调优**（可选） | 中等 | 精度-性能 Pareto 最优 | PyTorch模型追求极致精度（需手动 `pip install neural-compressor torch`） |
 | **BF16 混合精度（新CPU）** | 低 | 接近 FP32 精度，支持 AVX512-BF16 | Intel Xeon Sapphire Rapids+ |
 | **ONNX Runtime Extensions** | 低 | 自定义算子支持 | 特殊业务算子 |
 | **IO 绑定 + 预分配内存** | 低 | 减少内存拷贝开销 | 高吞吐服务化部署 |
@@ -258,24 +264,31 @@ def warmup(session, input_shape, num_warmup=10):
 
 ## 📝 使用示例
 
-### 示例1: 快速 FP32→INT8 量化
+### 示例1: 快速 FP32→INT8 量化（纯 ONNX）
 
 ```python
-import torch
+import numpy as np
 import onnx
 import onnxsim
 import onnxruntime as ort
-import numpy as np
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_dynamic, QuantType
 
-# 你的模型
-model = YourModel().eval()
-dummy = torch.randn(1, 3, 224, 224)
-
-# 1. 导出 ONNX
-torch.onnx.export(model, dummy, "fp32.onnx",
-                  opset_version=18, do_constant_folding=True,
-                  input_names=["input"], output_names=["output"])
+# 1. 构建 Gemm 模型（等价 nn.Linear(10, 5)）
+rng = np.random.default_rng(42)
+IN_DIM, OUT_DIM = 10, 5
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) * 0.1).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [helper.make_node("Gemm", ["input", "w", "b"], ["output"])]
+graph = helper.make_graph(
+    nodes, "linear",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
+onnx.save(model, "fp32.onnx")
 
 # 2. 简化
 m = onnx.load("fp32.onnx")
@@ -288,8 +301,8 @@ quantize_dynamic("fp32_simp.onnx", "int8.onnx",
 
 # 4. 验证
 sess = ort.InferenceSession("int8.onnx", providers=["CPUExecutionProvider"])
-out = sess.run(None, {"input": np.random.randn(1,3,224,224).astype(np.float32)})[0]
-print(f"✅ 量化完成! 输出形状: {out.shape}")
+out = sess.run(None, {"input": rng.standard_normal((1, IN_DIM)).astype(np.float32)})[0]
+print(f"量化完成! 输出形状: {out.shape}")
 ```
 
 ### 示例2: FP16 转换
@@ -301,15 +314,31 @@ from onnxconverter_common import float16
 model = onnx.load("fp32_simp.onnx")
 model_fp16 = float16.convert_float_to_float16(model, keep_io_types=True)
 onnx.save(model_fp16, "fp16.onnx")
-print("✅ FP16 转换完成")
+print("FP16 转换完成")
 ```
 
 ---
 
 ## ⚠️ 已知问题与注意事项
 
-1. **Neural Compressor 2.x vs 3.x API 差异（重要）**
-   
+1. **v2.0.0 架构迁移注意事项（重要）**
+
+   | 方面 | v1.0.0（旧） | v2.0.0（新） |
+   |------|--------------|--------------|
+   | **基础镜像** | onnx-pytorch（含 PyTorch） | onnx-dev（纯 ONNX） |
+   | **Python 环境** | conda base（GIL 启用） | conda main（**free-threading cp314t**） |
+   | **Python 路径** | `/opt/conda/bin/python` | `/opt/conda/envs/main/bin/python` |
+   | **torch** | 2.13.0+cpu 预装 | **缺席**（负向验证，按需自装） |
+   | **模型构建方式** | `torch.onnx.export` | `onnx.helper` 纯构建 |
+   | **onnxoptimizer** | 0.4.2 预装 | **排除**（free-threading 不兼容） |
+
+   **迁移指引**：
+   - 所有 `/opt/conda/bin/python` 引用改为 `/opt/conda/envs/main/bin/python`
+   - 依赖 torch 的工作流：在外部环境导出 ONNX 后拷入，或 `pip install torch`（临时）
+   - 需要 onnxoptimizer 的场景：用 `onnxsim`（已内置）替代图优化
+
+2. **Neural Compressor 2.x vs 3.x API 差异**
+
    INC 3.x 进行了重大API重构，这是**预期的版本演进**，不是错误：
 
    | 方面 | INC 2.x（旧统一API） | INC 3.x（新框架专属API） |
@@ -318,23 +347,21 @@ print("✅ FP16 转换完成")
    | **PyTorch入口** | `from neural_compressor import quantization` | `from neural_compressor.torch.quantization import ...` |
    | **配置类** | 统一 `PostTrainingQuantConfig` | 细粒度：`RTNConfig`/`AWQConfig`/`GPTQConfig`/`TeqConfig`/`AutoRoundConfig` |
    | **ONNX支持** | 通过 `adaptor/onnxrt.py` 适配 | ⚠️ **已弃用**（PR #2199标记deprecated） |
-   | **TensorFlow支持** | 完整支持 | ⚠️ **已弃用** |
-   | **主要工作流** | `fit()` | `prepare()` → `convert()` 或直接 `quantize()` |
 
    **本项目的策略**：
-   - ✅ **ONNX模型量化**：直接使用 `onnxruntime.quantization` 原生API（这是我们 `onnx_quantize_kit` 的主力方案，完全不受影响）
-   - ✅ **PyTorch模型量化**：如需INC高级功能（AutoRound/AWQ/GPTQ等weight-only量化），使用INC 3.x PyTorch API
-   - 📦 **包未预装**：`neural-compressor` 是可选扩展，ONNX量化不需要它。如需PyTorch weight-only量化（RTN/AWQ/GPTQ/AutoRound），请手动安装：`pip install neural-compressor`
+   - ✅ **ONNX模型量化**：直接使用 `onnxruntime.quantization` 原生API（主力方案，完全不受影响）
+   - ✅ **PyTorch模型量化**：如需INC高级功能，先 `pip install neural-compressor torch` 再使用 INC 3.x PyTorch API
+   - 📦 **包未预装**：INC 需 torch，本镜像按设计不含
 
    **INC 3.x PyTorch API 示例**：
    ```python
-   # INC 3.x PyTorch 量化新API
+   # 先安装: pip install neural-compressor torch
    from neural_compressor.torch.quantization import RTNConfig, quantize, prepare, convert
-   
+
    # Weight-only RTN量化（4bit）
    woq_config = RTNConfig(bits=4, group_size=128)
    q_model = quantize(model, quant_config=woq_config, example_inputs=example_inputs)
-   
+
    # 或两步式 prepare + convert
    prepared_model = prepare(model, quant_config=woq_config, example_inputs=example_inputs)
    # 校准...
@@ -355,22 +382,22 @@ print("✅ FP16 转换完成")
    )
    ```
 
-2. **量化前必须简化模型**
-   - 原因：部分导出的 ONNX 模型存在形状推理问题（如 InceptionV1 的 Split 层）
+3. **量化前必须简化模型**
+   - 原因：部分 ONNX 模型存在形状推理问题（如 InceptionV1 的 Split 层）
    - 解决：始终在量化前运行 `onnxsim.simplify()`，确保 opset_version ≥ 18
 
-3. **动态量化 vs 静态量化选择**
+4. **动态量化 vs 静态量化选择**
    - 动态量化：无需校准数据，适合 RNN/Transformer/Linear 主导模型
    - 静态量化：需要代表性校准数据集（~100样本），CNN 模型精度更好
    - FP16：几乎无精度损失，适合 GPU、支持 FP16 的 CPU、边缘设备
 
-4. **线程数配置**
+5. **线程数配置**
    - 延迟敏感场景：`OMP_NUM_THREADS=2-4`，`intra_op_num_threads=2-4`
    - 吞吐场景：`OMP_NUM_THREADS=物理核心数`，`intra_op_num_threads=物理核心数`
    - 务必设置 `OPENBLAS_NUM_THREADS=1` 避免嵌套并行
 
-5. **依赖链构建**
-   - onnx-quantized 依赖 onnx-pytorch → conda-llvm → conda → base
+6. **依赖链构建**
+   - onnx-quantized 依赖 onnx-dev → conda-llvm → base
    - 本地构建建议使用 `local-build.sh` 自动处理依赖链
    - CI 构建按拓扑顺序自动执行
 
@@ -378,10 +405,11 @@ print("✅ FP16 转换完成")
 
 ## 🔗 相关链接
 
-- [父变体 onnx-pytorch](../onnx-pytorch/README.md)
+- [发布清单 RELEASE.md](./RELEASE.md)（v2.0.0 镜像标识/版本矩阵/验证记录）
+- [基础变体 onnx-dev](../onnx-dev/README.md)
+- [姊妹变体 onnx-pytorch](../onnx-pytorch/README.md)（含 PyTorch 架构）
 - [本地构建脚本](../../scripts/local-build.sh)
 - [部署验证脚本](../../scripts/verify-deployment.py)
-- [10维诊断解析器](../../scripts/analyze-diagnostics.py)
 - [ONNX Runtime 量化文档](https://onnxruntime.ai/docs/performance/quantization.html)
 - [Intel Neural Compressor 文档](https://intel.github.io/neural-compressor/)
 
@@ -392,16 +420,14 @@ print("✅ FP16 转换完成")
 ```
 base (Ubuntu 26.04 + SSH + Docker DinD + Jupyter)
   ↓
-conda (Miniconda3 + Python 3.14.6)
-  ↓
 conda-llvm (LLVM/Clang 22.1.8 + 编译工具链)
   ↓
-onnx-pytorch (PyTorch 2.13.0+cpu + ONNX Runtime 1.28.0)
+onnx-dev (纯 ONNX 生态 + main 环境 free-threading cp314t，无 PyTorch)
   ↓
 onnx-quantized (量化工具链 ← 当前变体)
-  - onnxruntime.quantization (内置)
+  - onnxruntime.quantization (内置，主量化引擎)
   - onnxconverter-common (FP16)
-  - onnxruntime-tools (BERT优化)
-  - neural-compressor (可选，PyTorch-only in 3.x，需手动pip安装)
-  - onnxsim v0.7.0 (模型简化)
+  - onnxsim (模型简化，量化前必用)
+  - neural-compressor (可选，PyTorch-only in 3.x，需手动 pip install neural-compressor torch)
+  - 排除: torch/torchvision (by design), onnxoptimizer (free-threading 不兼容)
 ```

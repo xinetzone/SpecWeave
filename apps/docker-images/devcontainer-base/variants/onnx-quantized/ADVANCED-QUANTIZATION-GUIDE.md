@@ -1,6 +1,6 @@
 # onnx-quantized 高级量化实施指南：静态INT8量化与BF16/FP16混合精度
 
-> **版本**: v1.0 | **验证环境**: onnx-quantized v1.0 (ORT 1.28.0, PyTorch 2.13.0, Python 3.14.6) | **验证日期**: 2026-08-08
+> **版本**: v2.0 | **验证环境**: onnx-quantized v2.0 (ORT 1.28.0, Python 3.14.6 cp314t free-threading, **无 PyTorch**, main 环境) | **验证日期**: 2026-08-14
 
 本指南基于容器内实测验证，提供可直接运行的代码，覆盖：
 1. **静态 INT8 量化**（QDQ/QOperator 两种格式、校准数据Reader实现、MinMax/Entropy/Percentile校准方法）
@@ -9,7 +9,9 @@
 4. **精度验证方法论**
 5. **性能调优最佳实践**
 
-> **📌 量化引擎说明**：本指南所有ONNX量化流程均基于 **onnxruntime.quantization 原生API**（`quantize_dynamic`/`quantize_static`），这是ONNX模型量化的主力方案，**无需安装任何额外重量级依赖**。Intel Neural Compressor (INC) **未预装**、**非ONNX量化所必需**——INC 3.x 已弃用ONNX适配器（PR #2199），仅保留PyTorch-first API。如需对PyTorch模型进行weight-only量化（RTN/AWQ/GPTQ/AutoRound），可手动安装：`pip install neural-compressor`。
+> **📌 量化引擎说明**：本指南所有ONNX量化流程均基于 **onnxruntime.quantization 原生API**（`quantize_dynamic`/`quantize_static`），这是ONNX模型量化的主力方案，**无需安装任何额外重量级依赖**。Intel Neural Compressor (INC) **未预装**、**非ONNX量化所必需**——INC 3.x 已弃用ONNX适配器（PR #2199），仅保留PyTorch-first API。如需对PyTorch模型进行weight-only量化（RTN/AWQ/GPTQ/AutoRound），可手动安装：`pip install neural-compressor torch`。
+
+> **🚫 PyTorch 说明（v2.0）**：本镜像基于 onnx-dev（纯 ONNX 生态，free-threading main 环境），**不含 torch**。指南内所有示例模型均改用 `onnx.helper` 纯 ONNX API 构建，可直接在容器内运行；涉及 PyTorch 训练/导出的代码（如 §2.3 BF16 AMP）属于**外部训练环境**工作流。如需在容器内使用 torch：临时 `pip install torch`（会破坏 torch 缺席负向验证，仅建议临时使用）。
 
 ---
 
@@ -61,10 +63,10 @@
 """静态INT8量化完整实施流程 - 容器内验证通过"""
 import os
 import numpy as np
-import torch
 import onnx
 import onnxsim
 import onnxruntime as ort
+from onnx import TensorProto, helper
 from onnxruntime.quantization import (
     quantize_static,
     CalibrationDataReader,
@@ -81,7 +83,7 @@ MODEL_NAME = "your_model"           # 你的模型名称
 OPSET_VERSION = 18                  # ONNX opset版本（建议18+）
 CALIBRATION_SAMPLES = 100           # 校准样本数量（50-1000）
 BATCH_SIZE = 1                      # 批大小
-INPUT_SHAPE = (BATCH_SIZE, 3, 224, 224)  # 根据你的模型调整
+INPUT_SHAPE = (BATCH_SIZE, 512)  # 演示模型为 Gemm(512→10)；根据你的模型调整
 INPUT_NAME = "input"                # 输入节点名称
 OUTPUT_NAME = "output"              # 输出节点名称
 
@@ -90,24 +92,32 @@ SIMP_PATH = f"{MODEL_NAME}_simplified.onnx"
 STATIC_Q_PATH = f"{MODEL_NAME}_int8_static.onnx"
 
 # ====================================================================
-# 步骤1: PyTorch → ONNX 导出
+# 步骤1: 构建演示模型（纯 ONNX helper，无 torch）
 # ====================================================================
-def export_to_onnx(model, dummy_input, output_path):
-    """导出ONNX模型（最佳实践配置）"""
-    model.eval()
-    with torch.no_grad():
-        torch.onnx.export(
-            model,
-            dummy_input,
-            output_path,
-            input_names=[INPUT_NAME],
-            output_names=[OUTPUT_NAME],
-            opset_version=OPSET_VERSION,
-            do_constant_folding=True,        # 常量折叠
-            # dynamic_axes 参数用于动态batch size，按需启用:
-            # dynamic_axes={INPUT_NAME: {0: 'batch'}, OUTPUT_NAME: {0: 'batch'}},
-        )
-    print(f"[OK] Exported to {output_path}")
+def build_demo_onnx_model(output_path):
+    """
+    构建纯 ONNX 演示模型（Gemm: IN_DIM → 10）
+
+    生产环境替换为你从训练框架导出的 .onnx 文件（在外部环境执行
+    torch.onnx.export / tf2onnx 等导出后拷入容器），后续步骤不变。
+    """
+    rng = np.random.default_rng(42)
+    in_dim = INPUT_SHAPE[1]
+    out_dim = 10
+    w = (rng.standard_normal((in_dim, out_dim)) / np.sqrt(in_dim)).astype(np.float32)
+    b = np.zeros(out_dim, dtype=np.float32)
+    graph = helper.make_graph(
+        [helper.make_node("Gemm", [INPUT_NAME, "w", "b"], [OUTPUT_NAME])],
+        "demo_linear",
+        [helper.make_tensor_value_info(INPUT_NAME, TensorProto.FLOAT, list(INPUT_SHAPE))],
+        [helper.make_tensor_value_info(OUTPUT_NAME, TensorProto.FLOAT, [INPUT_SHAPE[0], out_dim])],
+        [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+         helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)],
+    )
+    model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", OPSET_VERSION)])
+    model.ir_version = min(model.ir_version, 9)
+    onnx.save(model, output_path)
+    print(f"[OK] Demo model saved to {output_path}")
 
 # ====================================================================
 # 步骤2: ONNX 模型简化（必须！量化前必做）
@@ -199,8 +209,8 @@ def get_real_calibration_data(image_dir, preprocess_fn, num_samples=100):
     paths = sorted(glob.glob(os.path.join(image_dir, "*.jpg")))[:num_samples]
     for path in paths:
         img = Image.open(path).convert("RGB")
-        data = preprocess_fn(img)  # 你的预处理：resize, normalize, to_tensor等
-        yield data.numpy().astype(np.float32)
+        data = preprocess_fn(img)  # 你的预处理：resize, normalize 等
+        yield np.asarray(data, dtype=np.float32)
 
 # ====================================================================
 # 步骤5: 执行静态量化
@@ -310,12 +320,8 @@ def validate_accuracy(fp32_path, quant_path, test_data_loader, num_tests=100):
 # 主流程
 # ====================================================================
 def main():
-    # 0. 你的模型（替换为实际模型加载）
-    model = YourModelClass().eval()
-    dummy_input = torch.randn(*INPUT_SHAPE)
-    
-    # 1. 导出
-    export_to_onnx(model, dummy_input, FP32_PATH)
+    # 0/1. 构建演示模型（生产环境替换为你的 FP32 ONNX 文件路径）
+    build_demo_onnx_model(FP32_PATH)
     
     # 2. 简化
     simplify_model(FP32_PATH, SIMP_PATH)
@@ -412,9 +418,9 @@ BF16 **不适合**的场景：
 - 普通x86 CPU（无AVX512-BF16）部署 → 用FP16或INT8替代
 - 不安装额外EP的纯CPU推理 → 直接用INT8量化（收益更大）
 
-### 2.3 方案一：PyTorch 训练阶段 BF16 混合精度（推荐）
+### 2.3 方案一：PyTorch 训练阶段 BF16 混合精度（推荐，需外部训练环境）
 
-BF16最常见的用法是在**训练阶段**使用PyTorch的自动混合精度（AMP），训练完成后导出FP32 ONNX再量化为INT8部署：
+BF16最常见的用法是在**训练阶段**使用PyTorch的自动混合精度（AMP），训练完成后导出FP32 ONNX再量化为INT8部署。**以下代码在训练服务器/外部 torch 环境运行**（本镜像无 torch）；导出 FP32 ONNX 后拷入容器执行量化：
 
 ```python
 """
@@ -568,11 +574,11 @@ print("Active providers:", sess.get_providers())
 #!/usr/bin/env python3
 """FP16半精度转换 - 容器验证通过，通用CPU可用"""
 import os
-import torch
 import onnx
 import onnxsim
 import onnxruntime as ort
 import numpy as np
+from onnx import TensorProto, helper
 from onnxconverter_common import float16
 
 # ====================================================================
@@ -602,10 +608,19 @@ def convert_to_fp16(fp32_path: str, fp16_path: str, keep_io_types: bool = True):
 # 完整流程
 # ====================================================================
 def main():
-    # 1. 导出+简化（同上，用onnxsim）
-    model = YourModel().eval()
-    dummy = torch.randn(1, 3, 224, 224)
-    torch.onnx.export(model, dummy, "/tmp/fp32.onnx", opset_version=18, do_constant_folding=True)
+    # 1. 构建演示模型+简化（纯 ONNX helper，无 torch；生产环境直接放入你的 FP32 .onnx）
+    rng = np.random.default_rng(0)
+    w = (rng.standard_normal((128, 10)) / np.sqrt(128)).astype(np.float32)
+    b = np.zeros(10, dtype=np.float32)
+    graph = helper.make_graph(
+        [helper.make_node("Gemm", ["input", "w", "b"], ["output"])], "fp16_demo",
+        [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, 128])],
+        [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, 10])],
+        [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+         helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+    model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+    model.ir_version = min(model.ir_version, 9)
+    onnx.save(model, "/tmp/fp32.onnx")
     m = onnx.load("/tmp/fp32.onnx")
     m_simp, _ = onnxsim.simplify(m)
     onnx.save(m_simp, "/tmp/fp32.onnx")
@@ -615,7 +630,7 @@ def main():
     
     # 3. 验证FP16可以在CPU EP上推理
     sess = ort.InferenceSession("/tmp/fp16.onnx", providers=["CPUExecutionProvider"])
-    inp = np.random.randn(1, 3, 224, 224).astype(np.float32)
+    inp = np.random.randn(1, 128).astype(np.float32)
     out = sess.run(None, {"input": inp})[0]
     print(f"[OK] FP16 inference works! output dtype={out.dtype}, shape={out.shape}")
     
@@ -847,13 +862,13 @@ def compare_models(fp32_path, int8_path, fp16_path=None, input_shape=(1,3,224,22
 
 ### 场景A: Transformer/LLM/BERT（Linear主导模型）
 ```
-PyTorch模型 → 导出ONNX(opset=18) → onnxsim简化 → 动态INT8量化(per_channel=True) → 验证 → 部署
+训练框架模型（外部导出ONNX opset=18） → onnxsim简化 → 动态INT8量化(per_channel=True) → 验证 → 部署
 实施时间: ~10分钟 | 预期加速: 1.5x-2x | 预期精度损失: <1%
 ```
 
 ### 场景B: CNN/检测/分割（Conv主导模型）
 ```
-PyTorch模型 → 导出ONNX(opset=18) → onnxsim简化 → quant_pre_process
+训练框架模型（外部导出ONNX opset=18） → onnxsim简化 → quant_pre_process
 → 收集真实校准数据(100-500样本) → 静态INT8量化(QDQ, MinMax起步) 
 → 全面精度验证(cos_sim/max_diff) → 如精度不够→Entropy校准/排除敏感层
 → 性能基准 → 部署
@@ -862,13 +877,13 @@ PyTorch模型 → 导出ONNX(opset=18) → onnxsim简化 → quant_pre_process
 
 ### 场景C: 最小精度损失优先
 ```
-PyTorch模型 → 导出ONNX(opset=18) → onnxsim简化 → FP16转换(keep_io_types=True) → 验证 → 部署
+训练框架模型（外部导出ONNX opset=18） → onnxsim简化 → FP16转换(keep_io_types=True) → 验证 → 部署
 实施时间: ~5分钟 | 预期模型缩小: ~50% | 预期加速: 1.0x-1.3x | 预期精度损失: <0.1%
 ```
 
-### 场景D: BF16训练+INT8部署（生产推荐）
+### 场景D: BF16训练+INT8部署（生产推荐，训练在外部环境）
 ```
-BF16混合精度训练(PyTorch AMP) → 训练完成 → 模型.float()转FP32
+BF16混合精度训练(PyTorch AMP,外部环境) → 训练完成 → 模型.float()转FP32
 → 导出ONNX(opset=18) → onnxsim简化 → 静态INT8量化(QDQ,真实校准数据)
 → 精度验证(cos_sim+业务指标) → 性能基准 → INT8部署
 ```
