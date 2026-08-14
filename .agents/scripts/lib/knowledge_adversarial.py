@@ -1090,11 +1090,18 @@ def run_adversarial_review(
         print(f"  P2: {result['stats']['P2']}")
         print()
 
-    # 3. 生成报告
-    report_path = generate_review_report(result, output_dir=output_dir)
-    result["report_path"] = str(report_path)
+    # 3. 生成报告（无攻击场景时跳过，避免生成空占位报告文件）
+    if scenarios:
+        report_path = generate_review_report(result, output_dir=output_dir)
+        result["report_path"] = str(report_path)
+    else:
+        result["report_path"] = None
+        report_path = None
 
     if verbose:
-        print(f"报告已生成: {report_path}")
+        if report_path:
+            print(f"报告已生成: {report_path}")
+        else:
+            print("无攻击场景，跳过报告生成")
 
     return result
