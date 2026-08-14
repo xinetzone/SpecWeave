@@ -108,7 +108,8 @@ set -e
 echo ""
 echo "########################################################################"
 echo "# [CONDA-LLVM VARIANT STAGE 2/4] Install LLVM Toolchain via conda-forge"
-echo "# Packages: llvmdev, clangdev, clang, lld, lldb, cmake, ninja, make"
+echo "# Packages: llvmdev, clangdev, clang, lld, cmake, ninja, make, libgcc, libstdcxx-ng"
+echo "# Excluded: lldb (no cp314t build; would force python GIL swap)"
 echo "# Version: all LLVM packages @ ${LLVM_VERSION}"
 echo "# Target env: main (Python 3.14t free-threading, default user env)"
 echo "########################################################################"
@@ -121,6 +122,94 @@ echo "[OK] main environment activated"
 echo "  - conda env: $CONDA_DEFAULT_ENV"
 echo "  - python: $(python --version 2>&1)"
 echo "  - python path: $(which python)"
+echo ""
+
+echo "[ACTION] Configuring conda mirror based on CONDA_MIRROR=${CONDA_MIRROR}..."
+case "${CONDA_MIRROR}" in
+    bfsu)
+        echo "[INFO] Using BFSU (Beijing Foreign Studies University) mirror"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'default_channels_alias: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
+            'custom_channels:' \
+            '  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 300' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > /opt/conda/.condarc
+        ;;
+    tuna)
+        echo "[INFO] Using Tsinghua TUNA mirror"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'default_channels_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+            'custom_channels:' \
+            '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 300' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > /opt/conda/.condarc
+        ;;
+    aliyun)
+        echo "[INFO] Using Aliyun mirror"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'default_channels_alias: https://mirrors.aliyun.com/anaconda/cloud' \
+            'custom_channels:' \
+            '  conda-forge: https://mirrors.aliyun.com/anaconda/cloud' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 300' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > /opt/conda/.condarc
+        ;;
+    *)
+        echo "[INFO] Using official conda-forge channels (no mirror)"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 300' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > /opt/conda/.condarc
+        ;;
+esac
+echo "[OK] .condarc configured:"
+cat /opt/conda/.condarc
 echo ""
 
 # ── 辅助函数：conda 包分组安装（结构化日志+计时+诊断） ──
@@ -153,17 +242,50 @@ conda_install_group() {
     fi
 }
 
+# NOTE: lldb is intentionally EXCLUDED. Its python bindings have no cp314t
+# (free-threading) build on conda-forge, so installing it makes the solver
+# silently swap python from *_cp314t (nogil) to *_cp314 + python-gil (GIL).
+# python is explicitly pinned to the cp314t build as a regression guard;
+# if a future package forces the GIL build, the solve will FAIL here instead.
 conda_install_group "G1: LLVM Core (pinned ${LLVM_VERSION})" \
-    "llvmdev/clangdev/clang/lld/lldb all pinned to same version" \
+    "llvmdev/clangdev/clang/lld pinned; python locked to free-threading build" \
     "llvmdev=${LLVM_VERSION}" \
     "clangdev=${LLVM_VERSION}" \
     "clang=${LLVM_VERSION}" \
     "lld=${LLVM_VERSION}" \
-    "lldb=${LLVM_VERSION}"
+    "python=*=*cp314t"
 
 conda_install_group "G2: Build Tools (latest)" \
     "cmake/ninja/make build system tools" \
     cmake ninja make
+
+# G3: GCC runtime libs required by the conda-forge clang linker
+# (x86_64-conda-linux-gnu-ld needs -lgcc / -lstdc++ to link C/C++ binaries;
+#  without them every user compilation fails with "cannot find -lgcc")
+conda_install_group "G3: GCC Runtime (for clang linking)" \
+    "libgcc/libstdcxx runtime libraries" \
+    libgcc libstdcxx-ng
+
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [GUARD] free-threading python integrity check   │"
+echo "└─────────────────────────────────────────────────┘"
+PY_BUILD=$(conda list python 2>/dev/null | grep '^python ' | awk '{print $3}')
+echo "  - python build string: ${PY_BUILD}"
+case "$PY_BUILD" in
+    *cp314t*) echo "[OK] python is free-threading (cp314t) build" ;;
+    *) echo "[FATAL] python lost free-threading build (got: ${PY_BUILD})"
+       echo "        A package in G1-G3 forced the GIL build - check the solver transaction above."
+       exit 1 ;;
+esac
+GIL_STATE=$(python -c "import sys; print(sys._is_gil_enabled())" 2>&1)
+echo "  - sys._is_gil_enabled(): ${GIL_STATE}"
+if [ "$GIL_STATE" = "False" ]; then
+    echo "[OK] GIL is disabled - nogil runtime active"
+else
+    echo "[FATAL] GIL is enabled - free-threading is NOT active"
+    exit 1
+fi
 
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
@@ -172,7 +294,7 @@ echo "└───────────────────────�
 echo "  - llvmdev: $(conda list llvmdev 2>/dev/null | grep '^llvmdev' | awk '{print $2}')"
 echo "  - clang: $(conda list clang 2>/dev/null | grep '^clang ' | awk '{print $2}')"
 echo "  - lld: $(conda list lld 2>/dev/null | grep '^lld ' | awk '{print $2}')"
-echo "  - lldb: $(conda list lldb 2>/dev/null | grep '^lldb ' | awk '{print $2}')"
+echo "  - lldb: EXCLUDED (no cp314t build; would force python GIL swap)"
 echo "  - cmake: $(cmake --version 2>&1 | head -1 | awk '{print $3}')"
 echo "  - ninja: $(ninja --version 2>&1)"
 echo "  - make: $(make --version 2>&1 | head -1 | awk '{print $3}')"
@@ -187,10 +309,10 @@ find /opt/conda/envs/main/bin -type f -executable -exec strip --strip-unneeded {
 find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
 echo "[OK] Binary stripping complete"
 echo ""
-echo "[ACTION] Removing static libraries (.a)..."
-find /opt/conda/envs/main/lib -name "*.a" -delete 2>/dev/null || true
-find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true
-echo "[OK] Static libraries removed"
+echo "[ACTION] Removing static libraries (.a) - preserving libgcc*/libstdc++ needed by the linker..."
+find /opt/conda/envs/main/lib -name "*.a" ! -name "libgcc*" ! -name "libstdc++*" -delete 2>/dev/null || true
+find /opt/conda/lib -name "*.a" ! -name "libgcc*" ! -name "libstdc++*" -delete 2>/dev/null || true
+echo "[OK] Static libraries removed (gcc runtime libs preserved)"
 echo ""
 echo "[ACTION] Removing __pycache__ and .pyc files..."
 find /opt/conda -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
@@ -306,135 +428,166 @@ STAGE3_EOF
 # 原则：写入 variant build-info；清理 conda/pip 缓存；
 #       最终验证所有工具链可用；确认 Jupyter 服务不受影响；输出耗时汇总表
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "" && \
-    echo "########################################################################" && \
-    echo "# [CONDA-LLVM VARIANT STAGE 4/4] Final Metadata, Cleanup, Verification" && \
-    echo "########################################################################" && \
-    echo "" && \
-    _STAGE_START=$(date +%s) && \
-    echo "[ACTION] Writing build metadata to /etc/devcontainer-variant-conda-llvm-build-info..."; \
-    LLVM_ACTUAL_VERSION=$(llvm-config --version 2>&1 | head -1); \
-    CLANG_ACTUAL_VERSION=$(clang --version 2>&1 | head -1 | awk '{print $3}'); \
-    CMAKE_ACTUAL_VERSION=$(cmake --version 2>&1 | head -1 | awk '{print $3}'); \
-    NINJA_ACTUAL_VERSION=$(ninja --version 2>&1); \
-    CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}'); \
-    PYTHON_ACTUAL_VERSION=$(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}'); \
-    JUPYTER_ACTUAL_VERSION=$(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1 | awk '{print $3}'); \
-    printf '%s\n' \
-        "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-        "VARIANT=conda-llvm" \
-        "BASE_IMAGE=devcontainer-base:${BASE_TAG}" \
-        "LLVM_VERSION_REQUESTED=${LLVM_VERSION}" \
-        "LLVM_VERSION_ACTUAL=${LLVM_ACTUAL_VERSION}" \
-        "CLANG_VERSION_ACTUAL=${CLANG_ACTUAL_VERSION}" \
-        "CMAKE_VERSION_ACTUAL=${CMAKE_ACTUAL_VERSION}" \
-        "NINJA_VERSION_ACTUAL=${NINJA_ACTUAL_VERSION}" \
-        "CONDA_VERSION=${CONDA_VERSION}" \
-        "PYTHON_VERSION_ACTUAL=${PYTHON_ACTUAL_VERSION}" \
-        "PYTHON_BUILD=free-threading (cp314t)" \
-        "JUPYTER_VERSION_ACTUAL=${JUPYTER_ACTUAL_VERSION}" \
-        "PYTHON_ENV=conda-main" \
-        "CONDA_DIR=/opt/conda" \
-        "CONDA_ENV=main" \
-        "CONDA_MIRROR=${CONDA_MIRROR}" \
-        "PIP_MIRROR=${PIP_MIRROR}" \
-        "APT_MIRROR=${APT_MIRROR}" \
-        "INSTALL_ENV=main (default user env)" \
-        "PATH_PRIORITY=conda-main-bin-first" \
-        "ACTIVATION_SCRIPT=/etc/profile.d/conda-init.sh (main env)" \
-        "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-        "PACKAGES_INSTALLED=llvmdev,clangdev,clang,lld,lldb,cmake,ninja,make" \
-        "BUILD_TIMER=enabled" \
-        > /etc/devcontainer-variant-conda-llvm-build-info && \
-    echo "[OK] Build metadata written:"; \
-    cat /etc/devcontainer-variant-conda-llvm-build-info; \
-    echo ""; \
-    echo "[ACTION] Running final cleanup..."; \
-    source /opt/conda/etc/profile.d/conda.sh && \
-    conda activate main && \
-    pip cache purge 2>/dev/null || true; \
-    apt-get clean 2>/dev/null || true; \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
-    echo "[OK] Cleanup complete (pip cache purge, apt clean, tmp)"; \
-    echo ""; \
-    echo "┌─────────────────────────────────────────────────┐"; \
-    echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"; \
-    echo "│  Running final toolchain + service verification │"; \
-    echo "└─────────────────────────────────────────────────┘"; \
-    echo ""; \
-    echo "[VALIDATE 1/9] bash -n /etc/profile.d/conda-llvm-init.sh..."; \
-    bash -n /etc/profile.d/conda-llvm-init.sh && echo "[OK] conda-llvm-init.sh bash syntax valid"; \
-    echo "[VALIDATE 2/9] llvm-config available and version matches..."; \
-    test -x $(which llvm-config) && echo "[OK] llvm-config executable"; \
-    llvm-config --version; \
-    echo "[VALIDATE 3/9] clang/clang++ available..."; \
-    test -x $(which clang) && echo "[OK] clang executable"; \
-    clang --version | head -2; \
-    test -x $(which clang++) && echo "[OK] clang++ executable"; \
-    echo "[VALIDATE 4/9] cmake available..."; \
-    test -x $(which cmake) && echo "[OK] cmake executable"; \
-    cmake --version | head -1; \
-    echo "[VALIDATE 5/9] ninja available..."; \
-    test -x $(which ninja) && echo "[OK] ninja executable"; \
-    ninja --version; \
-    echo "[VALIDATE 6/9] make available..."; \
-    test -x $(which make) && echo "[OK] make executable"; \
-    make --version | head -1; \
-    echo "[VALIDATE 7/9] Python/Jupyter from conda base environment..."; \
-    test -x /opt/conda/bin/python && echo "[OK] /opt/conda/bin/python exists"; \
-    /opt/conda/bin/python --version; \
-    test -x /opt/conda/bin/jupyter && echo "[OK] /opt/conda/bin/jupyter exists"; \
-    /opt/conda/bin/jupyter --version 2>&1 | head -2; \
-    echo "[VALIDATE 8/9] Core services (docker, supervisord) still present..."; \
-    docker --version 2>&1; \
-    supervisord --version 2>&1; \
-    echo "[OK] Core services preserved"; \
-    echo "[VALIDATE 9/9] devuser can access LLVM tools..."; \
-    su - devuser -c "llvm-config --version && clang --version | head -1" && echo "[OK] devuser can access LLVM toolchain"; \
-    echo ""; \
-    echo "[VALIDATE] All validation checks completed"; \
-    echo ""; \
-    echo "┌─────────────────────────────────────────────────┐"; \
-    echo "│  [FINAL VERIFICATION - HELLO WORLD COMPILE]     │"; \
-    echo "│  Testing clang compilation of a simple C++ file │"; \
-    echo "└─────────────────────────────────────────────────┘"; \
-    echo '#include <iostream>' > /tmp/hello.cpp && \
-    echo 'int main() { std::cout << "Hello from LLVM/Clang!\\n"; return 0; }' >> /tmp/hello.cpp && \
-    clang++ --std=c++17 /tmp/hello.cpp -o /tmp/hello -stdlib=libstdc++ 2>&1 || clang++ --std=c++17 /tmp/hello.cpp -o /tmp/hello 2>&1 && \
-    /tmp/hello && \
-    rm -f /tmp/hello.cpp /tmp/hello && \
-    echo "[OK] C++ compilation test passed"; \
-    echo ""; \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _LLVS1=$(grep '^LLVS1=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _LLVS2=$(grep '^LLVS2=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _LLVS3=$(grep '^LLVS3=' /tmp/.llvm-variant-build-timer | cut -d= -f2) && \
-    _LVT1=$((_LLVS1 - _START)) && \
-    _LVT2=$((_LLVS2 - _LLVS1)) && \
-    _LVT3=$((_LLVS3 - _LLVS2)) && \
-    _LVT4=$_ELAPSED && \
-    _LVTOTAL=$((_NOW - _START)) && \
-    echo "[TIMER] Stage 4/4 (metadata+final verify) took ${_ELAPSED}s | LLVM variant cumulative: ${_LVTOTAL}s" && \
-    echo "╔══════════════════════════════════════════════════════════════╗"; \
-    echo "║   BUILD TIMING SUMMARY (Conda-LLVM Variant - 4 Add Stages) ║"; \
-    echo "╠══════════════════════════════════════════════════════════════╣"; \
-    printf "║  Stage 1/4  path verification + init  %5ds               ║\n" $_LVT1; \
-    printf "║  Stage 2/4  LLVM toolchain + cleanup  %5ds               ║\n" $_LVT2; \
-    printf "║  Stage 3/4  symlinks+init script      %5ds               ║\n" $_LVT3; \
-    printf "║  Stage 4/4  metadata+final verify     %5ds               ║\n" $_LVT4; \
-    echo "╠══════════════════════════════════════════════════════════════╣"; \
-    printf "║  CONDA-LLVM VARIANT TOTAL (add-on)    %5ds               ║\n" $_LVTOTAL; \
-    echo "╚══════════════════════════════════════════════════════════════╝"; \
-    echo ""; \
-    rm -f /tmp/.llvm-variant-build-timer; \
-    echo "########################################################################"; \
-    echo "# CONDA-LLVM VARIANT BUILD COMPLETE!"; \
-    echo "# LLVM/Clang ${LLVM_VERSION} + CMake + Ninja + Make available in PATH"; \
-    echo "# PATH priority: /opt/conda/bin first (LLVM tools directly accessible)"; \
-    echo "# JupyterLab runs from conda base"; \
-    echo "#"; \
-    echo "# Verify with: llvm-config --version && clang --version && cmake --version"; \
-    echo "########################################################################"; \
-    echo ""
+RUN <<'STAGE4_EOF'
+echo ""
+echo "########################################################################"
+echo "# [CONDA-LLVM VARIANT STAGE 4/4] Final Metadata, Cleanup, Verification"
+echo "########################################################################"
+echo ""
+_STAGE_START=$(date +%s)
+# Disable pipefail: version commands piped to `head` (e.g. jupyter --version)
+# hit SIGPIPE and exit with code 120 (Python BrokenPipeError), which would
+# abort the build under `set -e -o pipefail` despite being benign.
+set +o pipefail
+echo "[ACTION] Activating conda main environment for Stage 4..."
+source /opt/conda/etc/profile.d/conda.sh
+conda activate main
+echo "  - conda env: $CONDA_DEFAULT_ENV"
+echo "  - python: $(python --version 2>&1)"
+echo "  - which llvm-config: $(which llvm-config 2>&1)"
+echo ""
+
+echo "[ACTION] Writing build metadata to /etc/devcontainer-variant-conda-llvm-build-info..."
+LLVM_ACTUAL_VERSION=$(llvm-config --version 2>&1 | head -1)
+CLANG_ACTUAL_VERSION=$(clang --version 2>&1 | head -1 | awk '{print $3}')
+CMAKE_ACTUAL_VERSION=$(cmake --version 2>&1 | head -1 | awk '{print $3}')
+NINJA_ACTUAL_VERSION=$(ninja --version 2>&1)
+CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}')
+PYTHON_ACTUAL_VERSION=$(python --version 2>&1 | awk '{print $2}')
+JUPYTER_ACTUAL_VERSION=$(jupyter --version 2>&1 | head -1 | awk '{print $3}')
+
+cat > /etc/devcontainer-variant-conda-llvm-build-info <<EOF_INFO
+BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+VARIANT=conda-llvm
+BASE_IMAGE=devcontainer-base:${BASE_TAG}
+LLVM_VERSION_REQUESTED=${LLVM_VERSION}
+LLVM_VERSION_ACTUAL=${LLVM_ACTUAL_VERSION}
+CLANG_VERSION_ACTUAL=${CLANG_ACTUAL_VERSION}
+CMAKE_VERSION_ACTUAL=${CMAKE_ACTUAL_VERSION}
+NINJA_VERSION_ACTUAL=${NINJA_ACTUAL_VERSION}
+CONDA_VERSION=${CONDA_VERSION}
+PYTHON_VERSION_ACTUAL=${PYTHON_ACTUAL_VERSION}
+PYTHON_BUILD=$(python -c "import sys; print('free-threading nogil active' if not sys._is_gil_enabled() else 'GIL enabled REGRESSION')" 2>&1)
+JUPYTER_VERSION_ACTUAL=${JUPYTER_ACTUAL_VERSION}
+PYTHON_ENV=conda-main
+CONDA_DIR=/opt/conda
+CONDA_ENV=main
+CONDA_MIRROR=${CONDA_MIRROR}
+PIP_MIRROR=${PIP_MIRROR}
+APT_MIRROR=${APT_MIRROR}
+INSTALL_ENV=main (default user env)
+PATH_PRIORITY=conda-main-bin-first
+ACTIVATION_SCRIPT=/etc/profile.d/conda-init.sh (main env)
+SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord
+PACKAGES_INSTALLED=llvmdev,clangdev,clang,lld,cmake,ninja,make,libgcc,libstdcxx-ng
+PACKAGES_EXCLUDED=lldb(no cp314t build,forces python GIL swap)
+BUILD_TIMER=enabled
+EOF_INFO
+
+echo "[OK] Build metadata written:"
+cat /etc/devcontainer-variant-conda-llvm-build-info
+echo ""
+
+echo "[ACTION] Running final cleanup..."
+pip cache purge 2>/dev/null || true
+apt-get clean 2>/dev/null || true
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+echo "[OK] Cleanup complete (pip cache purge, apt clean, tmp)"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
+echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"
+echo "│  Running final toolchain + service verification │"
+echo "└─────────────────────────────────────────────────┘"
+echo ""
+
+echo "[VALIDATE 1/9] bash -n /etc/profile.d/conda-llvm-init.sh..."
+bash -n /etc/profile.d/conda-llvm-init.sh && echo "[OK] conda-llvm-init.sh bash syntax valid"
+
+echo "[VALIDATE 2/9] llvm-config available and version matches..."
+test -x "$(which llvm-config)" && echo "[OK] llvm-config executable"
+llvm-config --version
+
+echo "[VALIDATE 3/9] clang/clang++ available..."
+test -x "$(which clang)" && echo "[OK] clang executable"
+clang --version | head -2
+test -x "$(which clang++)" && echo "[OK] clang++ executable"
+
+echo "[VALIDATE 4/9] cmake available..."
+test -x "$(which cmake)" && echo "[OK] cmake executable"
+cmake --version | head -1
+
+echo "[VALIDATE 5/9] ninja available..."
+test -x "$(which ninja)" && echo "[OK] ninja executable"
+ninja --version
+
+echo "[VALIDATE 6/9] make available..."
+test -x "$(which make)" && echo "[OK] make executable"
+make --version | head -1
+
+echo "[VALIDATE 7/9] Python/Jupyter from conda main environment (default user env)..."
+test -x /opt/conda/envs/main/bin/python && echo "[OK] /opt/conda/envs/main/bin/python exists"
+/opt/conda/envs/main/bin/python --version
+test -x /opt/conda/envs/main/bin/jupyter && echo "[OK] /opt/conda/envs/main/bin/jupyter exists"
+/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -2
+
+echo "[VALIDATE 8/9] Core services (docker, supervisord) still present..."
+docker --version 2>&1
+supervisord --version 2>&1
+echo "[OK] Core services preserved"
+
+echo "[VALIDATE 9/9] devuser can access LLVM tools..."
+su - devuser -c "source /opt/conda/etc/profile.d/conda.sh && conda activate main && llvm-config --version && clang --version | head -1" && echo "[OK] devuser can access LLVM toolchain"
+
+echo ""
+echo "[VALIDATE] All validation checks completed"
+echo ""
+
+echo "┌─────────────────────────────────────────────────┐"
+echo "│  [FINAL VERIFICATION - HELLO WORLD COMPILE]     │"
+echo "│  Testing clang compilation of a simple C++ file │"
+echo "└─────────────────────────────────────────────────┘"
+echo '#include <iostream>' > /tmp/hello.cpp
+echo 'int main() { std::cout << "Hello from LLVM/Clang!\n"; return 0; }' >> /tmp/hello.cpp
+clang++ --std=c++17 /tmp/hello.cpp -o /tmp/hello -stdlib=libstdc++ 2>&1 || clang++ --std=c++17 /tmp/hello.cpp -o /tmp/hello 2>&1
+/tmp/hello
+rm -f /tmp/hello.cpp /tmp/hello
+echo "[OK] C++ compilation test passed"
+echo ""
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_LLVS1=$(grep '^LLVS1=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_LLVS2=$(grep '^LLVS2=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_LLVS3=$(grep '^LLVS3=' /tmp/.llvm-variant-build-timer | cut -d= -f2)
+_LVT1=$((_LLVS1 - _START))
+_LVT2=$((_LLVS2 - _LLVS1))
+_LVT3=$((_LLVS3 - _LLVS2))
+_LVT4=$_ELAPSED
+_LVTOTAL=$((_NOW - _START))
+
+echo "[TIMER] Stage 4/4 (metadata+final verify) took ${_ELAPSED}s | LLVM variant cumulative: ${_LVTOTAL}s"
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║   BUILD TIMING SUMMARY (Conda-LLVM Variant - 4 Add Stages) ║"
+echo "╠══════════════════════════════════════════════════════════════╣"
+printf "║  Stage 1/4  path verification + init  %5ds               ║\n" $_LVT1
+printf "║  Stage 2/4  LLVM toolchain + cleanup  %5ds               ║\n" $_LVT2
+printf "║  Stage 3/4  symlinks+init script      %5ds               ║\n" $_LVT3
+printf "║  Stage 4/4  metadata+final verify     %5ds               ║\n" $_LVT4
+echo "╠══════════════════════════════════════════════════════════════╣"
+printf "║  CONDA-LLVM VARIANT TOTAL (add-on)    %5ds               ║\n" $_LVTOTAL
+echo "╚══════════════════════════════════════════════════════════════╝"
+echo ""
+
+rm -f /tmp/.llvm-variant-build-timer
+echo "########################################################################"
+echo "# CONDA-LLVM VARIANT BUILD COMPLETE!"
+echo "# LLVM/Clang ${LLVM_VERSION} + CMake + Ninja + Make installed in conda main env"
+echo "# PATH priority: /opt/conda/envs/main/bin first (LLVM tools + Python 3.14t)"
+echo "# Default environment: main (Python 3.14 free-threading + Jupyter)"
+echo "#"
+echo "# Verify with: llvm-config --version && clang --version && cmake --version"
+echo "########################################################################"
+echo ""
+STAGE4_EOF
