@@ -368,20 +368,20 @@ echo "[OK] conda.sh sourced, conda available in build shell"
 # ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
 echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
 
-# ── 配置 .condarc（conda-forge镜像 + solver + 网络调优） ──
-echo "[INFO] Configuring .condarc for conda-forge..."
+# ── 配置 .condarc（conda-forge镜像 + solver + 网络调优 + 高并行度） ──
+echo "[INFO] Configuring .condarc for conda-forge (high parallelism: 8 threads)..."
 if [ "${CONDA_MIRROR}" = "tuna" ]; then
     cat > /root/.condarc <<'CRC'
 channels:
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
 channel_priority: strict
-show_channel_urls: true
+show_channel_urls: false
 remote_connect_timeout_secs: 30
 remote_read_timeout_secs: 120
 remote_max_retries: 5
 remote_backoff_factor: 3
-repodata_threads: 1
-execute_threads: 1
+repodata_threads: 8
+execute_threads: 8
 ssl_verify: true
 CRC
     echo "[OK] Using Tsinghua TUNA conda-forge mirror (direct URL)"
@@ -390,13 +390,13 @@ elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
 channels:
   - https://mirrors.aliyun.com/anaconda/cloud/conda-forge/
 channel_priority: strict
-show_channel_urls: true
+show_channel_urls: false
 remote_connect_timeout_secs: 30
 remote_read_timeout_secs: 120
 remote_max_retries: 5
 remote_backoff_factor: 3
-repodata_threads: 1
-execute_threads: 1
+repodata_threads: 8
+execute_threads: 8
 ssl_verify: true
 CRC
     echo "[OK] Using Aliyun conda-forge mirror (direct URL)"
@@ -405,21 +405,22 @@ else
 channels:
   - conda-forge
 channel_priority: strict
-show_channel_urls: true
+show_channel_urls: false
 remote_connect_timeout_secs: 30
 remote_read_timeout_secs: 300
 remote_max_retries: 5
 remote_backoff_factor: 3
-repodata_threads: 1
-execute_threads: 1
+repodata_threads: 8
+execute_threads: 8
 ssl_verify: true
 CRC
     echo "[OK] Using official conda-forge channels"
 fi
 
-# ── 确保libmamba solver为默认 ──
+# ── 确保libmamba solver为默认，验证mamba可用 ──
 conda config --set solver libmamba
 echo "[OK] Default solver: $(conda config --show solver 2>&1 | tr -d ' ')"
+echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)"
 
 # ── Miniforge3自带Python，不要升级base Python（conda无cp314t构建） ──
 _builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
@@ -427,10 +428,23 @@ echo "[INFO] Miniforge3 base Python (conda runtime): ${_builtin_py}"
 echo "[INFO] Note: conda has no cp314t build on conda-forge yet, so we keep base Python ${_builtin_py}"
 echo "[INFO] Creating a dedicated 'main' environment with Python ${PYTHON_VERSION} ${PYTHON_BUILD}..."
 
-# ── Step 1: 创建free-threading用户环境(conda运行在base py313, 用户环境用cp314t) ──
-conda create -y -n main -c conda-forge --solver=libmamba \
-    "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" pip 2>&1
-echo "[OK] main env created with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
+# ── Step 1: 一次性创建main环境（Python cp314t + pip + Jupyter生态，单次solver求解） ──
+# 优化：使用mamba CLI直接调用libmamba（比conda --solver=libmamba少Python层开销）；
+#       合并create+install为单次mamba create（减少一次solver运行）；
+#       8线程并行下载+解压（repodata_threads/execute_threads=8在.condarc中配置）
+echo "[INFO] Creating 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter (single mamba solve)..."
+_mamba_start=$(date +%s)
+mamba create -y -n main -c conda-forge --override-channels -q \
+    "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" \
+    pip \
+    "jupyterlab>=4.4" \
+    "notebook>=7.3" \
+    ipykernel \
+    nbconvert \
+    jupyter_server 2>&1
+_mamba_elapsed=$(($(date +%s) - _mamba_start))
+echo "[OK] main env created in ${_mamba_elapsed}s with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
+echo "[OK] Jupyter ecosystem installed: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
 
 # ── 配置 PyPI 镜像（在main环境中） ──
 if [ "${PIP_MIRROR}" = "aliyun" ]; then
@@ -442,12 +456,6 @@ elif [ "${PIP_MIRROR}" = "tuna" ]; then
     /opt/conda/envs/main/bin/pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
     echo "[OK] Using Tsinghua TUNA PyPI mirror"
 fi
-
-# ── Step 2: 安装 Jupyter 生态到main环境 ──
-echo "[INFO] Installing Jupyter ecosystem into main environment..."
-conda install -y -n main -c conda-forge --solver=libmamba \
-    "jupyterlab>=4.4" "notebook>=7.3" ipykernel nbconvert jupyter_server 2>&1
-echo "[OK] Jupyter installed in main env"
 
 # ── 注册main环境为Jupyter默认kernel（Python 3.14 free-threading） ──
 /opt/conda/envs/main/bin/python -m ipykernel install --name main --display-name "Python ${PYTHON_VERSION} (free-threading)" --prefix=/opt/conda/envs/main 2>&1
