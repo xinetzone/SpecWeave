@@ -24,7 +24,7 @@
 - **可用变体**：
   - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
   - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，安装于 main 环境，**不含 PyTorch**，onnxoptimizer 因 free-threading 不兼容而排除，基于 conda-llvm 变体）
-  - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
+  - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX 生态全工具链（torch 一等公民，base 环境 GIL 启用，含 onnxoptimizer，基于 conda-llvm 变体）
   - `onnx-quantized`：onnx-dev + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，纯 ONNX 无 PyTorch，free-threading main 环境，基于 onnx-dev 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
 - **AI资产容器**：`.agents/` 目录（本子系统特有规则）
@@ -59,7 +59,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ test-conda-llvm.sh     ← conda-llvm单元测试
                  │   ├─ test-conda-llvm-smoke.sh ← conda-llvm冒烟测试
                  │   ├─ test-onnx-dev.sh       ← onnx-dev单元测试（23项，含torch缺席负向验证）
-                 │   ├─ test-onnx-pytorch.sh   ← onnx-pytorch单元测试（20项）
+                 │   ├─ test-onnx-pytorch.sh   ← onnx-pytorch单元测试（23项，含GIL启用守卫）
                  │   ├─ test-onnx-quantized.sh ← onnx-quantized单元测试
                  │   └─ test-timer-parser.sh   ← [TIMER]日志解析单元测试
                  ├─ _template/             ← 新变体模板

@@ -328,6 +328,42 @@ test_condarc_exists() {
     fi
 }
 
+test_gil_enabled() {
+    local result
+    result=$(docker_run /opt/conda/bin/python -c "import sys;print('GIL_OK' if sys._is_gil_enabled() is True else 'GIL_UNEXPECTED_DISABLED')" 2>&1)
+    if echo "$result" | grep -q "GIL_OK"; then
+        pass "T21: GIL enabled (standard build guard, vs onnx-dev free-threading)"
+        return 0
+    else
+        fail "T21: GIL not enabled or _is_gil_enabled API missing, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
+test_onnx_ecosystem_imports() {
+    local result
+    result=$(docker_run /opt/conda/bin/python -c "import onnxsim,onnxoptimizer,onnxscript;print('ECO_OK')" 2>&1)
+    if echo "$result" | grep -q "ECO_OK"; then
+        pass "T22: ONNX ecosystem fully importable (onnxsim/onnxoptimizer/onnxscript)"
+        return 0
+    else
+        fail "T22: ONNX ecosystem import failed, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
+test_devuser_functional() {
+    local result
+    result=$(docker_run_bash 'su - devuser -c "/opt/conda/bin/python -c '"'"'import torch,onnx;print(\"DEVUSER_OK\")'"'"'"' 2>&1)
+    if echo "$result" | grep -q "DEVUSER_OK"; then
+        pass "T23: devuser can import torch/onnx (functional check)"
+        return 0
+    else
+        fail "T23: devuser import failed, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --tag)
@@ -415,6 +451,12 @@ echo ""
 log_step "6. Build Info & Configuration Tests (L6)"
 test_build_info_exists || true
 test_condarc_exists || true
+echo ""
+
+log_step "7. Architecture Guard & Ecosystem Tests (L7)"
+test_gil_enabled || true
+test_onnx_ecosystem_imports || true
+test_devuser_functional || true
 echo ""
 
 echo ""
