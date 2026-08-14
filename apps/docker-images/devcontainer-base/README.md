@@ -484,7 +484,7 @@ gh workflow run onnx-quantize-ci.yml --ref main
 | **Podman** | Ubuntu 26.04 官方源（rootless 模式） |
 | **OpenSSH / Supervisor** | Ubuntu 26.04 官方包 |
 | **镜像大小** | ~2.38GB |
-| **镜像变体** | conda → conda-llvm → onnx-pytorch → onnx-quantized → ai-dev（5级功能变体） |
+| **镜像变体** | conda-llvm → onnx-dev → onnx-quantized → ai-dev（4级功能变体） |
 | **ONNX量化工具包** | onnx_quantize_kit（基于 onnxruntime.quantization 原生 API 封装） |
 
 > 📜 **完整变更历史**见 [CHANGELOG.md](CHANGELOG.md)。

@@ -26,6 +26,7 @@
   - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，安装于 main 环境，**不含 PyTorch**，onnxoptimizer 因 free-threading 不兼容而排除，基于 conda-llvm 变体）
   - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX 生态全工具链（torch 一等公民，base 环境 GIL 启用，含 onnxoptimizer，基于 conda-llvm 变体）
   - `onnx-quantized`：onnx-dev + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，纯 ONNX 无 PyTorch，free-threading main 环境，基于 onnx-dev 变体）
+  - `ai-dev`：onnx-quantized + 完整 AI/ML/NLP 全栈生态（50+ 包）+ JupyterLab 4.x + 通用 AI 内核（基于 onnx-quantized 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
 - **AI资产容器**：`.agents/` 目录（本子系统特有规则）
 
@@ -86,13 +87,18 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ .env.example
                  │   ├─ README.md
                  │   └─ .agents/rules/dockerfile.md
-                 └─ onnx-quantized/        ← ONNX量化工具链变体（INT8/FP16）
-                     ├─ AGENTS.md         ← 变体级智能体入口（嵌套优先）
+                 ├─ onnx-quantized/        ← ONNX量化工具链变体（INT8/FP16）
+                 │   ├─ AGENTS.md         ← 变体级智能体入口（嵌套优先）
+                 │   ├─ Dockerfile
+                 │   ├─ .env.example
+                 │   ├─ README.md
+                 │   ├─ ADVANCED-QUANTIZATION-GUIDE.md
+                 │   ├─ QUANTIZATION-BEST-PRACTICES.md
+                 │   └─ .agents/rules/dockerfile.md
+                 └─ ai-dev/                ← AI全栈变体（50+包 + JupyterLab4.x + AI内核）
                      ├─ Dockerfile
                      ├─ .env.example
                      ├─ README.md
-                     ├─ ADVANCED-QUANTIZATION-GUIDE.md
-                     ├─ QUANTIZATION-BEST-PRACTICES.md
                      └─ .agents/rules/dockerfile.md
 ```
 
@@ -108,6 +114,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | onnx-dev 变体 Dockerfile | [onnx-dev/.agents/rules/dockerfile.md](onnx-dev/.agents/rules/dockerfile.md) | 纯ONNX生态（main环境安装）、PyTorch一等排除约束（双重负向验证）、free-threading防线、4追加阶段 |
 | onnx-pytorch 变体 Dockerfile | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU安装、ONNX生态、PATH优先级（/opt/conda/bin最前）、4追加阶段 |
 | onnx-quantized 变体 Dockerfile | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | onnxruntime.quantization量化工具链、FP16/INT8、neural-compressor可选、共享脚本COPY模式 |
+| ai-dev 变体 Dockerfile | [ai-dev/.agents/rules/dockerfile.md](ai-dev/.agents/rules/dockerfile.md) | 完整AI/ML/NLP全栈（50+包，base环境安装）、torch非继承（经onnx2torch/open_clip_torch传递引入）、JupyterLab4.x+通用AI内核（base python注册于main环境kernels）、PIP_USER构建/运行时分离 |
 | 编写/运行测试脚本 | [.agents/rules/testing.md](.agents/rules/testing.md) | L1-L6六层测试策略、脚本模板、pass/fail辅助函数、冒烟验证vs完整测试对比 |
 | 新增镜像变体 | [.agents/rules/new-variant-guide.md](.agents/rules/new-variant-guide.md) | 7步流程：复制模板→替换占位符→更新配置→创建规则→注册到build.sh→创建测试→更新README |
 | 共享日志库使用 | [shared/lib/logging.sh](shared/lib/logging.sh) | log_info/log_ok/log_error/log_step/log_metric/log_event/log_summary API |
@@ -130,6 +137,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | onnx-dev变体规范 | [onnx-dev/.agents/rules/dockerfile.md](onnx-dev/.agents/rules/dockerfile.md) | 纯ONNX生态变体特有规则（无PyTorch，main环境） |
 | onnx-pytorch变体规范 | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU+ONNX Runtime变体特有规则 |
 | onnx-quantized变体规范 | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | ONNX量化工具链变体特有规则 |
+| ai-dev变体规范 | [ai-dev/.agents/rules/dockerfile.md](ai-dev/.agents/rules/dockerfile.md) | 完整AI/ML/NLP全栈变体特有规则（base环境安装，Jupyter内核注册main环境） |
 | 共享性能配置脚本 | [shared/scripts/conda-perf-setup.sh](shared/scripts/conda-perf-setup.sh) | conda性能参数配置（线程、超时、solver）；镜像源已内置基础镜像 |
 | 新变体模板 | [_template/](_template/) | 复制模板创建新变体 |
 | 人类可读文档 | [README.md](README.md) | 变体列表和快速开始（面向人类用户） |
@@ -161,8 +169,9 @@ bash build.sh --variant conda-llvm --cn
 bash build.sh --variant onnx-pytorch --cn
 bash build.sh --variant onnx-quantized --cn
 bash build.sh --variant onnx-dev --cn
+bash build.sh --variant ai-dev --cn
 
-# 构建所有变体（按依赖顺序：conda-llvm → onnx-pytorch → onnx-quantized、onnx-dev）
+# 构建所有变体（按依赖顺序：conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → ai-dev）
 bash build.sh --all --cn
 
 # 一键构建+测试 onnx-pytorch
@@ -172,6 +181,7 @@ bash scripts/build-onnx-pytorch.sh
 bash scripts/test-conda-llvm.sh
 bash scripts/test-onnx-pytorch.sh
 bash scripts/test-onnx-quantized.sh
+bash scripts/test-ai-dev.sh
 
 # 新增变体（7步流程）
 cp -r _template <new-variant>
@@ -189,6 +199,7 @@ cp -r _template <new-variant>
 
 ## 变更日志
 
+- 2026-08-15 | docs | ai-dev 变体同步 onnx-quantized v2.0.0 架构：继承链更新为 devcontainer-base→conda-llvm→onnx-dev→onnx-quantized→ai-dev，补齐 ai-dev 治理登记（可用变体/路由图/路由表/快速开始），明确 torch 非继承（经 onnx2torch/open_clip_torch 传递引入 base 环境）
 - 2026-08-14 | refactor | onnx-quantized v2.0.0：基础镜像从 onnx-pytorch 迁移至 onnx-dev（纯 ONNX 无 PyTorch，main 环境 free-threading cp314t），量化测试模型全部改用 onnx.helper 纯构建（make_tensor 传 bytes 必须显式 raw=True，onnx 1.22 不再自动识别）
 - 2026-08-09 | feat | 新增 onnx-quantized 变体（onnxruntime.quantization 量化工具链），注册到 build.sh VARIANTS 数组
 - 2026-08-08 | feat | 新增 onnx-pytorch 变体（PyTorch CPU + ONNX Runtime 深度学习运行时），添加 build-onnx-pytorch.sh/test-onnx-pytorch.sh 脚本

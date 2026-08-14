@@ -26,7 +26,7 @@
 - **服务端口**：sshd(22) + dockerd(unix socket) + podman(rootless) + jupyter(8888)
 - **Python环境**：/opt/conda（Miniforge3 + Python 3.14.6 cp314t free-threading）
 - **父级工作区**：SpecWeave 根目录（[../../AGENTS.md](../../AGENTS.md)）— 全局规则、Skill、角色均以父级为准
-- **镜像变体**：`variants/` 子系统（conda/conda-llvm/ai-dev/onnx-pytorch/onnx-quantized，有独立AGENTS.md）
+- **镜像变体**：`variants/` 子系统（conda-llvm/onnx-dev/onnx-pytorch/onnx-quantized/ai-dev；onnx-dev/onnx-pytorch/onnx-quantized 有独立AGENTS.md，其余遵循变体规则文件）
 - **AI资产容器**：[.agents/](.agents/README.md) 目录（本项目特有规则/脚本/工作流）
 
 ## 嵌套路由关系
@@ -110,6 +110,7 @@ bash variants/build.sh --all --cn
 
 最近变更（完整历史见 [CHANGELOG.md](CHANGELOG.md)）：
 
+- 2026-08-15 | docs | 变体列表修正：下线 conda，补齐 onnx-dev，标注仅 onnx-dev/onnx-pytorch/onnx-quantized 有独立AGENTS.md
 - 2026-08-14 | refactor | 原子化拆分：AGENTS.md精简为入口路由，详细目录结构迁移至.agents/structure.md，约束速查迁移至.agents/README.md
 - 2026-08-07 | feat | 新增 onnx-pytorch/onnx-quantized 变体；onnx_quantize_kit量化工具包；CI双流水线
 - 2026-08-07 | refactor | variants/ 添加独立AGENTS.md + .agents/原子化规范体系
