@@ -8,20 +8,20 @@ Python 3.14.6 Free-Threading (无GIL) 并发性能演示脚本
 在传统CPython中，GIL（全局解释器锁）使得CPU密集型多线程代码无法真正并行执行。
 Python 3.14 的 free-threading 构建(cpython-314t)移除了GIL，使得多线程可以真正利用多核CPU。
 
-重要说明（devcontainer-base:conda-libmamba-ft 默认配置）:
+重要说明（devcontainer-base:conda-llvm-latest 默认配置）:
 - 默认Python就是free-threading构建(cpython-314t)，GIL默认禁用，支持真正多线程并行
 - 设置环境变量 PYTHON_GIL=1 可强制启用GIL（兼容模式，用于C扩展兼容性问题）
 - 标准GIL构建(cpython-314)可通过构建参数 --python-build cp314 选择，GIL始终启用
 - 标准构建设置 PYTHON_GIL=0 会报错 "Disabling the GIL is not supported by this build"
 
-使用方式（在 devcontainer-base:conda-libmamba-ft 容器中运行）:
+使用方式（在 devcontainer-base:conda-llvm-latest 容器中运行）:
 
   # 方式1: 默认无GIL模式（推荐，真正多线程并行）
-  docker run --rm devcontainer-base:conda-libmamba-ft \
+  docker run --rm devcontainer-base:conda-llvm-latest \
     python examples/free_threading_demo.py
 
   # 方式2: GIL兼容模式（C扩展遇到问题时使用）
-  docker run --rm -e PYTHON_GIL=1 devcontainer-base:conda-libmamba-ft \
+  docker run --rm -e PYTHON_GIL=1 devcontainer-base:conda-llvm-latest \
     python examples/free_threading_demo.py
 
   # 方式3: 标准GIL构建镜像（构建时选择）
