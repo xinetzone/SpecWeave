@@ -2,10 +2,11 @@
 id: "docker-build-four-layer-verification"
 title: "Docker 镜像构建四层验证流水线"
 type: "code-pattern"
-maturity: "L1-实验性"
-maturity_note: "devcontainer-base conda-libmamba-ft v2.1 实战验证（7预检+10冒烟+11项C扩展+性能基准JSONL）；单案例，待更多镜像项目验证后升级L2"
+maturity: "L2-已验证"
+maturity_note: "devcontainer-base v2.1+v2.2.1双版本实战验证（7预检+10冒烟+11项C扩展+性能基准JSONL）；C扩展模板项目(cext-test)容器内验证复用；2案例"
 source:
   - "devcontainer-base v2.1 (commit 169d036f): 7项预检+Stage7内联验证+10项冒烟+ft-benchmark.sh JSONL日志"
+  - "devcontainer-base v2.2.1: 四层验证在性能优化后持续通过，C扩展6项fast验证保留"
   - "retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814"
 related_patterns:
   - "docker-image-layered-verification.md"
@@ -13,9 +14,10 @@ related_patterns:
   - "preflight-checks-script.md"
   - "docker-buildkit-optimization-best-practices.md"
   - "three-layer-test-validation.md"
+  - "conda-build-performance-triple-optimization.md"
 tags: ["docker", "build-pipeline", "verification", "preflight", "smoke-test", "benchmark", "ci", "quality-gate", "jsonl-logging"]
-validation_count: 1
-reuse_count: 0
+validation_count: 2
+reuse_count: 1
 ---
 
 # Docker 镜像构建四层验证流水线

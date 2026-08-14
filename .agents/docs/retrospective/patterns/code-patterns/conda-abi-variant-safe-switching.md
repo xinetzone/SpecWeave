@@ -2,21 +2,23 @@
 id: "conda-abi-variant-safe-switching"
 title: "Conda ABI 变体安全切换模式"
 type: "code-pattern"
-maturity: "L1-实验性"
-maturity_note: "devcontainer-base v2.1 cp314t free-threading 实战验证（Miniforge3+双环境+verify-cext.sh 11项检测）；单案例，待更多ABI变体场景验证后升级L2"
+maturity: "L2-已验证"
+maturity_note: "devcontainer-base v2.1+v2.2.1双版本实战验证（Miniforge3+双环境+verify-cext.sh 11项检测）；libgcc 16.1.0跨大版本自动升级兼容验证；C扩展模板项目(cext-test)free-threading ABI验证复用；2案例"
 source:
   - "devcontainer-base v2.1 (commit 45882bb2/169d036f): Miniforge3替代Miniconda3，双环境架构，verify-cext.sh ABI检测"
-  - "retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814 洞察1+模式2"
+  - "devcontainer-base v2.2.1: libgcc 16.1.0运行时自动升级兼容验证（GCC 14.4.0编译），三联优化后ABI检测持续通过"
+  - "retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814 洞察1+洞察3+模式2"
 related_patterns:
   - "conda-dual-path-env-management.md"
   - "conda-custom-channels-mirror.md"
   - "conda-docker-multistage-best-practices.md"
+  - "conda-build-performance-triple-optimization.md"
   - "conda-build-scikit-build-core-native.md"
   - "docker-build-four-layer-verification.md"
   - "runtime-version-enforcement.md"
-tags: ["conda", "abi", "free-threading", "cp314t", "channel-management", "miniforge", "python", "environment-isolation", "silent-failure"]
-validation_count: 1
-reuse_count: 0
+tags: ["conda", "abi", "free-threading", "cp314t", "channel-management", "miniforge", "python", "environment-isolation", "silent-failure", "gcc", "libgcc", "rpath", "c-extensions"]
+validation_count: 2
+reuse_count: 1
 ---
 
 # Conda ABI 变体安全切换模式
@@ -62,6 +64,8 @@ Conda 生态中，同一 Python 版本存在多个 ABI 不兼容的变体（标�
 - **SOABI 检测是最可靠的验证方式**：`sysconfig.get_config_var('SOABI')` 包含完整 ABI 标识（如 `cpython-314t-x86_64-linux-gnu`），比版本号检查更准确。
 - **C 扩展功能 roundtrip 测试**：只做 `import brotli` 不充分——必须做 `brotli.compress(brotli.decompress(data)) == data` 级别的功能验证，某些 C 扩展能 import 但调用时 crash。
 - **诊断脚本要检测"未来风险"**：不仅检查当前状态，还要检测 conda config 中是否有 defaults channel（即使当前未导致问题，用户后续 install 时可能触发）。
+- **libgcc/libstdc++ 运行时自动升级是 conda 生态正常行为，不必恐惧**：conda/mamba 求解器可能在创建新环境时自动将 libgcc 从 base 环境的版本跨大版本升级（如 GCC 14.4.0 编译的 Python 搭配 libgcc 16.1.0 运行时）。conda-forge 的 libgcc/libstdc++ 遵循严格的 ABI 向后兼容策略，且 conda 使用 RPATH 机制确保每个环境二进制链接到自己环境内的运行时，不同环境间无交叉污染。5个C扩展包（brotli/cffi/cmarkgfm/PyYAML/psutil）在 libgcc 16.1.0 运行时下正常加载的实战验证了这一点。
+- **不要在 Dockerfile 注释中误导性标注 GCC 版本**：应明确区分"GCC 编译版本"和"libgcc 运行时版本"，如标注"GCC 14.4.0 编译 + libgcc 16.1.0 运行时（conda-forge 自动升级，向后兼容）"，而非简单写"GCC 16.1.0"造成误解。
 
 ## 反模式
 
@@ -74,6 +78,8 @@ Conda 生态中，同一 Python 版本存在多个 ABI 不兼容的变体（标�
 | 用户 `conda config --add channels defaults` 无检测 | 静默降级无警告，free-threading 功能失效，极难排查 | verify-cext.sh 自动检测 defaults channel 并告警 |
 | PATH 中 base 在目标环境之前 | `which python` 指向 base 环境 Python（cp313），用户以为用的是 cp314t | Dockerfile 中目标环境 bin 在 PATH 最前，冒烟测试验证 `which python` |
 | 依赖"理论上 ABI 兼容"不做运行时验证 | GCC/libstdc++ 跨大版本可能有 ABI break，理论兼容≠实际可用 | Dockerfile 内联 C 扩展加载验证 + 功能 roundtrip 测试 |
+| 恐惧 conda 自动升级 libgcc 大版本而 pin 旧版本 | 错失安全更新和性能优化，且可能导致依赖冲突（其他包要求新版 libgcc） | 信任 conda-forge 的 ABI 向后兼容策略，配合构建时 C 扩展功能验证作为最终安全网 |
+| Dockerfile 注释只写"GCC X.Y.Z"不区分编译版本/运行时版本 | 误导读者认为整个工具链都是该版本，排查 C 扩展问题时方向错误 | 明确标注 "GCC <编译版本> 编译 + libgcc <运行时版本> 运行时（conda-forge自动升级）" |
 
 ## 检验标准
 
@@ -85,6 +91,8 @@ Conda 生态中，同一 Python 版本存在多个 ABI 不兼容的变体（标�
 - [ ] 关键 C 扩展包 import 成功且功能 roundtrip 测试通过
 - [ ] verify-cext.sh（同等诊断脚本）全量通过，无 ABI 混用告警
 - [ ] Dockerfile 构建阶段有 RUN 命令内联验证，坏镜像直接构建失败
+- [ ] 关键 C 扩展包在 libgcc 自动升级后仍能正常 import 且通过功能 roundtrip 测试（不依赖"理论兼容"假设）
+- [ ] Dockerfile/文档中的 GCC 版本注释明确区分"编译版本"和"运行时版本"
 
 ## 诊断脚本参考（verify-cext.sh 核心逻辑）
 

@@ -396,3 +396,14 @@ session: "sc-20260814-devcontainer-milestone"
 1. **冷构建精确时间待 CI 验证**：37s 为缓存热构建数据（BuildKit 缓存命中），冷构建无缓存时需要下载所有包（约 300-500MB），预计 60-120s（8 线程并行下载），需 CI 流水线 `--no-cache` 构建确认
 2. **BuildKit 计时器文件缓存 bug**：`/tmp/.build-timer` 在 BuildKit 层缓存中保留旧值，导致 Stage 7 汇总计时显示 Stage 4 为 23968s（错误值）；内联 Stage 4 计时器（`_mamba_start`/`_mamba_elapsed`）报告正确的 37s
 3. **mamba 初始化警告**：`mamba create` 时出现 `libmamba 'main' does not contain any filesystem separator. target_prefix: '/root/.local/share/mamba/envs/main'` 警告，不影响实际环境创建位置（验证 `/opt/conda/envs/main/` 正确存在且功能正常）
+
+### 10.6 模式萃取归档记录
+
+| 洞察/模式 | 萃取状态 | 入库位置 | 成熟度 |
+|-----------|---------|---------|--------|
+| 洞察4：conda 默认线程数保守 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O1并行度调优 | L1 实验性 |
+| 洞察5：conda solver 重复求解 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O2+O3命令合并+原生CLI | L1 实验性 |
+| 模式3：Conda构建层性能三联优化 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) | L1 实验性 |
+| 洞察3：GCC运行时自动升级兼容 | ✅ 已补充 | [conda-abi-variant-safe-switching.md](../../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) 关键决策+反模式+检验标准 | L2 已验证（双案例升级） |
+| 模式1：四层验证流水线 | ✅ 已升级 | [docker-build-four-layer-verification.md](../../../../patterns/code-patterns/docker-build-four-layer-verification.md) | L1→L2 已验证（双案例+复用） |
+| 模式2：ABI安全切换 | ✅ 已升级 | [conda-abi-variant-safe-switching.md](../../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) | L1→L2 已验证（双案例+复用） |
