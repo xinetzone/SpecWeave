@@ -28,7 +28,7 @@ VARIANTS=(
 ```bash
 "conda|Miniconda3基础环境||/opt/conda/bin/conda --version|||/opt/conda/bin/conda info --envs"
 "conda-llvm|conda+LLVM/clang编译工具链|conda|/opt/conda/bin/clang++ --version"
-"ai-dev|AI/ML/NLP全栈开发环境|onnx-quantized|/opt/conda/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/bin/jupyter lab --version|||docker inspect --format='{{json .Config.Entrypoint}}' devcontainer-base:ai-dev-latest"
+"ai-dev|AI/ML/NLP全栈开发环境|onnx-quantized|/opt/conda/envs/main/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/envs/main/bin/jupyter lab --version|||docker inspect --format='{{json .Config.Entrypoint}}' devcontainer-base:ai-dev-latest"
 ```
 
 ### 字段分隔符选择原则

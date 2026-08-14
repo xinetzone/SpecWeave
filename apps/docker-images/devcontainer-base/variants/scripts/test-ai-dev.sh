@@ -224,7 +224,7 @@ collect_diagnostics() {
     docker_run_bash "/opt/conda/bin/pip list 2>/dev/null | grep -iE 'torch|onnx|transformers|datasets|fastapi|pandas|numpy|scikit|jupyter|matplotlib|jieba|nltk|httpx|pydantic|uvicorn|numba|librosa|pymupdf|elasticsearch|psycopg|pymongo|minio|nuitka|rich|typer' || echo '(pip list failed)'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[4] Jupyter kernels:${NC}"
-    docker_run_bash "/opt/conda/bin/jupyter kernelspec list 2>&1; echo '---'; ls -la /opt/conda/share/jupyter/kernels/ 2>&1; echo '---'; cat /opt/conda/share/jupyter/kernels/ai-dev/kernel.json 2>&1" 2>&1 | sed 's/^/    /'
+    docker_run_bash "/opt/conda/envs/main/bin/jupyter kernelspec list 2>&1; echo '---'; ls -la /opt/conda/envs/main/share/jupyter/kernels/ 2>&1; echo '---'; cat /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json 2>&1" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[5] Build info:${NC}"
     docker_run_bash "cat /etc/devcontainer-variant-ai-dev-build-info 2>&1 || echo '(build-info not found)'" 2>&1 | sed 's/^/    /'
@@ -269,7 +269,7 @@ test_jupyterlab_version() {
     log_test_start "T4" "JupyterLab >=4.4"
     t_start=$(date +%s)
     set +e
-    result=$(docker_run /opt/conda/bin/jupyter lab --version 2>&1)
+    result=$(docker_run /opt/conda/envs/main/bin/jupyter lab --version 2>&1)
     rc=$?
     set -e
     elapsed=$(($(date +%s) - t_start))
@@ -355,8 +355,8 @@ test_jupyter_kernel_registered() {
     run_test "T10" "Jupyter ai-dev kernel registered" \
         "KERNEL_OK" \
         docker_run_bash "
-test -f /opt/conda/share/jupyter/kernels/ai-dev/kernel.json && \
-/opt/conda/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && \
+test -f /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json && \
+/opt/conda/envs/main/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && \
 echo 'KERNEL_OK'
 "
 }
@@ -366,7 +366,7 @@ test_kernel_config() {
         "KERNEL_CONFIG_OK" \
         docker_run /opt/conda/bin/python -c "
 import json
-with open('/opt/conda/share/jupyter/kernels/ai-dev/kernel.json') as f:
+with open('/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json') as f:
     k = json.load(f)
 assert k['display_name'] == 'Python 3 (AI Dev)', f'Bad display_name: {k[\"display_name\"]}'
 assert '/opt/conda/bin/python' in k['argv'][0], f'Bad python path: {k[\"argv\"][0]}'
@@ -379,7 +379,7 @@ print('KERNEL_CONFIG_OK')
 test_quantization_inherited() {
     run_test "T12" "onnx-quantized inheritance (quantization API)" \
         "QUANT_INHERIT_OK" \
-        docker_run /opt/conda/bin/python -c "
+        docker_run /opt/conda/envs/main/bin/python -c "
 from onnxruntime.quantization import quantize_dynamic, QuantType, quantize_static, CalibrationDataReader
 print('QUANT_INHERIT_OK')
 "
@@ -423,7 +423,7 @@ test_docker_exists() {
 test_jupyter_exists() {
     run_test "T17" "Jupyter available in conda" \
         "JUPYTER_OK" \
-        docker_run_bash "test -x /opt/conda/bin/jupyter && echo 'JUPYTER_OK'"
+        docker_run_bash "test -x /opt/conda/envs/main/bin/jupyter && echo 'JUPYTER_OK'"
 }
 
 test_devuser_exists() {
@@ -484,7 +484,7 @@ test_kernel_json_valid() {
         "JSON_VALID" \
         docker_run /opt/conda/bin/python -c "
 import json
-with open('/opt/conda/share/jupyter/kernels/ai-dev/kernel.json') as f:
+with open('/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json') as f:
     k = json.load(f)
 assert 'argv' in k and 'display_name' in k and 'language' in k
 assert 'env' in k and 'PATH' in k['env']
@@ -514,6 +514,40 @@ test_no_entrypoint_override() {
         pass "T25" "$elapsed" "Entrypoint is null (inherits from base at runtime)"
     else
         fail "T25" "Entrypoint may have been overridden: $result"
+    fi
+}
+
+test_base_gil_guard() {
+    local t_start elapsed result
+    log_test_start "T26" "base env GIL guard (standard Python, inherited from onnx-quantized)"
+    t_start=$(date +%s)
+    set +e
+    result=$(docker_run /opt/conda/bin/python -c "import sys;print('GIL_OK' if sys._is_gil_enabled() is True else 'GIL_FT')" 2>&1)
+    rc=$?
+    set -e
+    elapsed=$(($(date +%s) - t_start))
+    if echo "$result" | grep -q "GIL_OK"; then
+        pass "T26" "$elapsed" "base env GIL enabled (standard build)"
+    elif echo "$result" | grep -q "GIL_FT"; then
+        pass "T26" "$elapsed" "base env GIL disabled (free-threading, inherited from onnx-quantized main env)"
+    else
+        fail "T26" "GIL check failed, output: $(echo "$result" | tail -3)"
+    fi
+}
+
+test_main_gil_disabled() {
+    local t_start elapsed result
+    log_test_start "T27" "main env GIL disabled (free-threading guard, cp314t)"
+    t_start=$(date +%s)
+    set +e
+    result=$(docker_run /opt/conda/envs/main/bin/python -c "import sys;print('FT_OK' if sys._is_gil_enabled() is False else 'GIL_UNEXPECTED_ENABLED')" 2>&1)
+    rc=$?
+    set -e
+    elapsed=$(($(date +%s) - t_start))
+    if echo "$result" | grep -q "FT_OK"; then
+        pass "T27" "$elapsed" "main env GIL disabled (free-threading cp314t)"
+    else
+        fail "T27" "main env GIL not disabled, output: $(echo "$result" | tail -3)"
     fi
 }
 
@@ -608,6 +642,11 @@ log_section "L6: Configuration Validation"
 test_kernel_json_valid
 test_pip_user_runtime
 test_no_entrypoint_override
+
+# ── L7 ──
+log_section "L7: Architecture Guards"
+test_base_gil_guard
+test_main_gil_disabled
 
 # ── Summary ──
 SCRIPT_END=$(date +%s)

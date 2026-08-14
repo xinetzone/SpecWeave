@@ -89,7 +89,7 @@ cp -r variants/_template variants/<variant-name>
 ```bash
 "cuda|CUDA 12.x GPU计算环境||nvidia-smi|||nvcc --version"
 "pytorch|PyTorch GPU训练环境|conda,cuda|python -c 'import torch;print(torch.__version__,torch.cuda.is_available())'"
-"ai-dev|AI/ML/NLP全栈环境|onnx-quantized|/opt/conda/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/bin/jupyter lab --version"
+"ai-dev|AI/ML/NLP全栈环境|onnx-quantized|/opt/conda/envs/main/bin/python -c \"import torch;print(torch.__version__)\"|||/opt/conda/envs/main/bin/jupyter lab --version"
 ```
 
 注意：

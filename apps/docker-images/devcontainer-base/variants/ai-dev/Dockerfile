@@ -70,10 +70,10 @@ _STAGE_START=$(date +%s)
 echo "[TIMER] AI-Dev variant build started at $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "START=$_STAGE_START" > /tmp/.ai-dev-variant-build-timer
 echo "[BUILD] Verifying base onnx-quantized installation..."
-echo "  - torch: $(python -c 'import torch;print(torch.__version__)' 2>/dev/null || echo 'not found')"
-echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)' 2>/dev/null || echo 'not found')"
-echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)' 2>/dev/null || echo 'not found')"
-echo "  - quantization: $(python -c 'from onnxruntime.quantization import quantize_dynamic;print("available")' 2>/dev/null || echo 'not found')"
+echo "  - torch: $(/opt/conda/envs/main/bin/python -c 'import torch;print(torch.__version__)' 2>/dev/null || echo 'not found (by design)')"
+echo "  - onnx: $(/opt/conda/envs/main/bin/python -c 'import onnx;print(onnx.__version__)' 2>/dev/null || echo 'not found')"
+echo "  - onnxruntime: $(/opt/conda/envs/main/bin/python -c 'import onnxruntime;print(onnxruntime.__version__)' 2>/dev/null || echo 'not found')"
+echo "  - quantization: $(/opt/conda/envs/main/bin/python -c 'from onnxruntime.quantization import quantize_dynamic;print("available")' 2>/dev/null || echo 'not found')"
 echo "  - conda: $(/opt/conda/bin/conda --version 2>&1 | head -1)"
 echo "  - python: $(python --version 2>&1)"
 echo "  - PATH: $PATH"
@@ -291,7 +291,7 @@ source /opt/conda/etc/profile.d/conda.sh
 conda activate base
 
 echo "[ACTION] Registering generic 'Python 3 (AI Dev)' Jupyter kernel..."
-mkdir -p /opt/conda/share/jupyter/kernels/ai-dev
+mkdir -p /opt/conda/envs/main/share/jupyter/kernels/ai-dev
 
 cat > /opt/kernels-ai-dev.json <<'KERNEL'
 {
@@ -312,13 +312,13 @@ cat > /opt/kernels-ai-dev.json <<'KERNEL'
 }
 KERNEL
 
-cp /opt/kernels-ai-dev.json /opt/conda/share/jupyter/kernels/ai-dev/kernel.json
+cp /opt/kernels-ai-dev.json /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json
 rm -f /opt/kernels-ai-dev.json
 
 AI_GROUP=$(id -g devuser)
-chown -R devuser:${AI_GROUP} /opt/conda/share/jupyter/kernels/ai-dev
-chmod 644 /opt/conda/share/jupyter/kernels/ai-dev/kernel.json
-echo "[OK] ai-dev kernel registered at /opt/conda/share/jupyter/kernels/ai-dev"
+chown -R devuser:${AI_GROUP} /opt/conda/envs/main/share/jupyter/kernels/ai-dev
+chmod 644 /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json
+echo "[OK] ai-dev kernel registered at /opt/conda/envs/main/share/jupyter/kernels/ai-dev (main env jupyter service)"
 echo "[KERNEL] display_name: Python 3 (AI Dev)"
 echo "[KERNEL] python: /opt/conda/bin/python"
 echo ""
@@ -331,8 +331,8 @@ PANDAS_VER=$(python -c "import pandas;print(pandas.__version__)" 2>/dev/null || 
 PYTORCH_VER=$(python -c "import torch;print(torch.__version__)" 2>/dev/null || echo "unknown")
 ONNX_VER=$(python -c "import onnx;print(onnx.__version__)" 2>/dev/null || echo "unknown")
 ORT_VER=$(python -c "import onnxruntime;print(onnxruntime.__version__)" 2>/dev/null || echo "unknown")
-JUPYTERLAB_VER=$(/opt/conda/bin/jupyter lab --version 2>/dev/null || echo "unknown")
-NOTEBOOK_VER=$(/opt/conda/bin/jupyter notebook --version 2>/dev/null || echo "unknown")
+JUPYTERLAB_VER=$(/opt/conda/envs/main/bin/jupyter lab --version 2>/dev/null || echo "unknown")
+NOTEBOOK_VER=$(/opt/conda/envs/main/bin/jupyter notebook --version 2>/dev/null || echo "unknown")
 PYTHON_VER=$(python --version 2>&1 | awk '{print $2}')
 printf '%s\n' \
     "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
@@ -394,9 +394,9 @@ test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda ver
 test ! -d /opt/venv && echo "[OK] /opt/venv does not exist (removed)"
 /opt/conda/bin/python --version
 
-echo "[VALIDATE 3/8] JupyterLab >=4.4 in /opt/conda..."
-/opt/conda/bin/jupyter lab --version
-_JL_VER=$(/opt/conda/bin/jupyter lab --version 2>/dev/null | head -1)
+echo "[VALIDATE 3/8] JupyterLab >=4.4 in main env (/opt/conda/envs/main)..."
+/opt/conda/envs/main/bin/jupyter lab --version
+_JL_VER=$(/opt/conda/envs/main/bin/jupyter lab --version 2>/dev/null | head -1)
 _JL_MAJOR=$(echo "$_JL_VER" | cut -d. -f1)
 _JL_MINOR=$(echo "$_JL_VER" | cut -d. -f2)
 if [ "$_JL_MAJOR" -gt 4 ] || { [ "$_JL_MAJOR" -eq 4 ] && [ "$_JL_MINOR" -ge 4 ]; }; then
@@ -413,12 +413,19 @@ echo "[OK] Core services preserved"
 echo "[VALIDATE 5/8] devuser can access AI/ML packages..."
 su - devuser -c "/opt/conda/bin/python -c 'import transformers, pandas, fastapi; print(\"packages accessible\")'" && echo "[OK] devuser can access AI/ML packages"
 
-echo "[VALIDATE 6/8] onnx-quantized inheritance (quantization API)..."
-python -c "from onnxruntime.quantization import quantize_dynamic, QuantType, quantize_static, CalibrationDataReader; print('[OK] quantization API inherited')"
+echo "[VALIDATE 6/8] onnx-quantized inheritance (quantization API, main env)..."
+/opt/conda/envs/main/bin/python -c "from onnxruntime.quantization import quantize_dynamic, QuantType, quantize_static, CalibrationDataReader; print('[OK] quantization API inherited')"
 
-echo "[VALIDATE 7/8] Jupyter kernel registered..."
-test -f /opt/conda/share/jupyter/kernels/ai-dev/kernel.json && echo "[OK] ai-dev kernel in /opt/conda"
-/opt/conda/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && echo "[OK] kernel visible to Jupyter"
+echo "[VALIDATE 6.5/8] Architecture guards (GIL state)..."
+echo "  - base env GIL enabled: $(/opt/conda/bin/python -c 'import sys;print("yes" if sys._is_gil_enabled() is True else "NO")')"
+echo "  - main env GIL disabled: $(/opt/conda/envs/main/bin/python -c 'import sys;print("yes" if sys._is_gil_enabled() is False else "NO")')"
+/opt/conda/bin/python -c "import sys; assert sys._is_gil_enabled() is True, 'base env must be standard build (GIL enabled)'"
+/opt/conda/envs/main/bin/python -c "import sys; assert sys._is_gil_enabled() is False, 'main env must be free-threading (GIL disabled)'"
+echo "[OK] GIL state guards passed"
+
+echo "[VALIDATE 7/8] Jupyter kernel registered (main env jupyter)..."
+test -f /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json && echo "[OK] ai-dev kernel in /opt/conda/envs/main/share/jupyter/kernels"
+/opt/conda/envs/main/bin/jupyter kernelspec list 2>/dev/null | grep -q ai-dev && echo "[OK] kernel visible to Jupyter (main env service)"
 
 echo "[VALIDATE 8/8] PATH and environment..."
 echo "  PATH: $PATH"

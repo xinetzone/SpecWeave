@@ -158,7 +158,7 @@ apps/docker-images/devcontainer-base/.agents/**
 
 **验证**：
 - 运行 conda 版本检查（容器内 conda --version）
-- 确认 /opt/conda 存在且 /opt/conda/bin/python 可用（Python 3.14.6 cp314t）
+- 确认 /opt/conda 存在且 /opt/conda/envs/main/bin/python 可用（Python 3.14.6 cp314t，free-threading，GIL 禁用）；base 环境 /opt/conda/bin/python 为标准构建（GIL 启用）
 - 确认 PATH 优先级正确
 
 ### 3.4 Stage 3: Conda-LLVM 变体构建

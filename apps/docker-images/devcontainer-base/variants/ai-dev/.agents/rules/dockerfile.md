@@ -62,15 +62,14 @@
 ### Stage 2/3: 安装 AI/ML/NLP 生态系统
 - 设置 `PIP_USER=0`（构建期写入 /opt/conda）
 - 按分类批量 pip install（50+ 包）
-- 升级 /opt/venv 的 JupyterLab>=4.4 + notebook>=7.3
+- 升级 JupyterLab>=4.4 + notebook>=7.3（main 环境，继承自基础镜像）
 - 使用 `--mount=type=cache` 缓存 conda/pkgs 和 pip cache
 - 清理 conda/pip 缓存
 - 安装后验证包版本
 
 ### Stage 3/3: Jupyter 内核 + 元数据 + 验证
 - 注册 "Python 3 (AI Dev)" Jupyter 内核
-  - 主注册：`/opt/venv/share/jupyter/kernels/ai-dev/`（UI 可见）
-  - 同步：`/opt/conda/share/jupyter/kernels/ai-dev/`（CLI 可见）
+  - 注册位置：`/opt/conda/envs/main/share/jupyter/kernels/ai-dev/`（main 环境 Jupyter 服务可见）
   - 内核 argv：`/opt/conda/bin/python -m ipykernel_launcher`
   - 内核 env：PATH 优先 conda，OpenMP 配置
 - 写入 `/etc/devcontainer-variant-ai-dev-build-info`
@@ -80,15 +79,14 @@
 
 ## Jupyter 内核说明
 
-内核注册到两个位置以确保 UI 和 CLI 一致性：
+内核注册于 main 环境 kernels 目录（Jupyter 服务运行于 main 环境，supervisord 以绝对路径 `/opt/conda/envs/main/bin/jupyter` 启动）：
 
-1. `/opt/venv/share/jupyter/kernels/ai-dev/kernel.json` — Jupyter server 真实搜索路径（UI 可见）
-2. `/opt/conda/share/jupyter/kernels/ai-dev/kernel.json` — conda 环境路径（CLI `jupyter kernelspec list` 可见）
+1. `/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json` — main 环境 Jupyter 服务真实搜索路径（UI/CLI 一致）
 
 内核配置：
 - `display_name`: "Python 3 (AI Dev)"
 - `argv`: `/opt/conda/bin/python -m ipykernel_launcher -f {connection_file}`
-- `env.PATH`: `/opt/conda/bin:/opt/venv/bin:/usr/local/sbin:...`
+- `env.PATH`: `/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
 - 不设置项目特定的 PYTHONPATH（通用内核）
 
 ## PIP_USER 构建/运行时分离
@@ -102,7 +100,7 @@
 - SSH (sshd): 端口 22 ✓
 - Docker DinD: `/var/run/docker.sock` ✓
 - Podman: ✓
-- Jupyter: `/opt/venv/bin/jupyter`（supervisord 管理）✓
+- Jupyter: `/opt/conda/envs/main/bin/jupyter`（supervisord 管理，main 环境）✓
 - Supervisord: ✓
 
 ## build-info 路径

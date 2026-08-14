@@ -219,13 +219,14 @@ test_supervisord_config() {
 }
 
 test_jupyter_executable() {
-    local result
-    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
-    if echo "$result" | grep -q "executable"; then
-        pass "T12: Jupyter executable exists (/opt/conda/bin/jupyter)"
+    local rc
+    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+        pass "T12: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
         return 0
     else
-        fail "T12: Jupyter executable not found at /opt/conda/bin/jupyter"
+        fail "T12: Jupyter executable not found at /opt/conda/envs/main/bin/jupyter"
         return 1
     fi
 }
@@ -292,13 +293,14 @@ test_venv_removed() {
 }
 
 test_conda_jupyter_works() {
-    local result
-    result=$(docker_run /opt/conda/bin/jupyter --version 2>&1)
-    if echo "$result" | grep -qi "jupyter"; then
-        pass "T18: /opt/conda/bin/jupyter usable"
+    local rc
+    docker run --rm "$IMAGE" /opt/conda/envs/main/bin/jupyter --version >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+        pass "T18: /opt/conda/envs/main/bin/jupyter usable"
         return 0
     else
-        fail "T18: /opt/conda/bin/jupyter not usable, got: $(echo "$result" | head -1)"
+        fail "T18: /opt/conda/envs/main/bin/jupyter not usable (exit=$rc)"
         return 1
     fi
 }
