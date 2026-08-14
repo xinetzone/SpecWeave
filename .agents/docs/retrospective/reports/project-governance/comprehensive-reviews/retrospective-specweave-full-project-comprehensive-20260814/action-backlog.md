@@ -18,7 +18,7 @@ scenario: "C-comprehensive-20260814"
 
 | ID | 行动项 | 来源 | 优先级 | 状态 | Owner（RACI） |
 |----|--------|------|:------:|------|--------------|
-| A1 | 修复 3 个 pytest 收集错误（API 漂移/openpyxl/.Tests.py 文件名） | report.md §5.1 | **P0** | ⏳ 待规划 | developer + tester |
+| A1 | 修复 3 个 pytest 收集错误（API 漂移/openpyxl/.Tests.py 文件名） | report.md §5.1 | **P0** | ✅ 已完成（2026-08-14：2420→2484 收集，0 错误） | developer + tester |
 | A2 | SSOT 单一数据源制度化（.meta/toml + 统计脚本 + 校验门禁） | report.md §5.1 | **P0** | ⏳ 待规划 | architect |
 | A3 | 多智能体并行安全边界规范（先量化冲突成本、定义成功率指标） | report.md §5.1 | **P0** | ⏳ 待规划 | orchestrator + architect |
 | A4 | 断链自愈机制（check-links --fix 接入 pre-commit，dry-run+白名单） | report.md §5.1 | P1 | ⏳ 待规划 | developer |
@@ -31,10 +31,10 @@ scenario: "C-comprehensive-20260814"
 |----|--------|------|:------:|------|------|
 | S1 | vendor 子模块漂移治理（8 个中 7 个未 checkout，建立健康检查） | architect 评审 | **P0** | ⏳ 待规划 | 本轮已实测：仅 flexloop 就位，指针与内容不同步 |
 | S2 | 单仓巨型化评审（pytest 收集 >300s，评估稀疏检出/apps 独立仓库） | architect 评审 | **P0** | ⏳ 待规划 | 本轮实测：全量收集 548s |
-| S3 | pytest 收集性能专项（单文件 13-42s，定位 import 链瓶颈） | architect 评审 | **P0** | ⏳ 待规划 | 与 A1 捆绑，否则「CI 全量可跑」落空 |
+| S3 | pytest 收集性能专项（单文件 13-42s，定位 import 链瓶颈） | architect 评审 | **P0** | 🔄 进行中（2026-08-14：根因=模块级副作用，analyze_frontmatter_issues 24s→6.5s；引入 pytest-xdist） | 与 A1 捆绑，否则「CI 全量可跑」落空 |
 | S4 | specs 生命周期管理（166 个规划目录 active/archived/superseded 标记） | architect 评审 | P1 | ⏳ 待规划 | 目录增长是扩散而非收敛 |
 | S5 | 测试资产分布审计（64 测试文件全在 scripts，apps 层近零测试） | architect 评审 | P1 | ⏳ 待规划 | 明确 A6 覆盖率门禁作用域 |
-| S6 | 环境可复现性（scripts 工具链无 pyproject/requirements） | architect 评审 | P1 | ⏳ 待规划 | 本轮已实证：pytest-benchmark/openpyxl 均缺失 |
+| S6 | 环境可复现性（scripts 工具链无 pyproject/requirements） | architect 评审 | P1 | ✅ 已完成（2026-08-14：创建 requirements-dev.txt 对齐 CI 依赖清单） | 本轮已实证：pytest-benchmark/openpyxl 均缺失 |
 
 ## 三、全量测试回归存量问题（2026-08-14 实测）
 
