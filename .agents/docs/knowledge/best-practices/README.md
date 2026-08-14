@@ -91,6 +91,7 @@ date: "2026-07-30"
 | [caffe-layer-backward-validation-workflow.md](caffe-layer-backward-validation-workflow.md) | Caffe层Backward验证标准工作流（L0烟雾→L1手算→L2 numpy匹配→L3数值梯度，含每层模板/阈值/检查清单/常见失败模式） | `caffe-ffi` `backward` `testing` `workflow` `three-layer-validation` `gradient-check` `c++` `numpy` `numerical-gradient` |
 | [caffe-identity-layer-cow-separation.md](caffe-identity-layer-cow-separation.md) | 恒等层 COW 零拷贝分离原则（输入梯度 dX 与参数梯度 dparam 分离、filler 初始化、dX 与 dparam 隔离、4个陷阱+检查清单） | `caffe-ffi` `cow` `zerocopy` `scale` `bias` `eltwise` `backward` `gradient` `bug-pattern` `c++` `identity-layer` |
 | [model-config-input-layout-convention.md](model-config-input-layout-convention.md) | 模型编译 config 输入布局核验与修正规范（工具链强制按 NCHW 解包、config shape 必须与模型布局一致、5-Why 根因链路、新模型接入核验检查清单、前向一致性验证） | `model-compile` `config` `input-layout` `NCHW` `NHWC` `NV12` `onnx2pytorch` `tvm` `adaround` `checklist` `caffe` `onnx` |
+| [git-push-rejected-resolution.md](git-push-rejected-resolution.md) | Git推送被拒绝（fetch first）问题解决指南（五步法诊断→备份→策略选择→执行→验证，目录大重构场景merge优先策略，index.lock处理） | `git` `push` `conflict` `merge` `rebase` `directory-restructure` `troubleshooting` |
 
 ---
 
@@ -105,6 +106,7 @@ date: "2026-07-30"
 | 🔍 Parser开发 | [parser-complexity-budget.md](parser-complexity-budget.md) |
 | 🕸️ DAG/图变换验证 | [dag-graph-transform-verification.md](dag-graph-transform-verification.md) |
 | 🪝 Git钩子 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) |
+| 🚑 Git故障排除 | [git-push-rejected-resolution.md](git-push-rejected-resolution.md) |
 | 📋 信息采集 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) |
 | 🛡️ 合规安全 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) |
 | 📐 方法论治理 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) |
