@@ -76,6 +76,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ RELEASE-GUIDE.md
                  │   └─ .agents/rules/dockerfile.md
                  ├─ onnx-dev/             ← 纯ONNX生态变体（无PyTorch，main环境）
+                 │   ├─ AGENTS.md         ← 变体级智能体入口（嵌套优先）
                  │   ├─ Dockerfile
                  │   ├─ .env.example
                  │   ├─ README.md
