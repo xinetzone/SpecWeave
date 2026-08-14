@@ -4,15 +4,16 @@ date: 2026-08-14
 source: retrospective-devcontainer-v221-conda-perf-20260814
 type: insight-extraction
 maturity: "L1-实战验证"
-validation_count: 1
+validation_count: 2
+note: "2026-08-14 第2轮加固：跨项目集成指南（b84631a0）二次验证洞察4/5，新增洞察7（复用最后一公里）"
 ---
 
 # 洞察萃取：conda构建性能优化+配置资产化
 
 > 来源：devcontainer-base v2.2.1 Stage 4 conda求解性能优化（419s→37s，11.3x加速）
 > 方法论：七概念 R-I-E-C 链路
-> 关联模式：[conda-build-performance-triple-optimization.md](../../patterns/code-patterns/conda-build-performance-triple-optimization.md)
-> 关联资产：apps/devcontainer-base/variants/shared/scripts/conda-perf-setup.sh
+> 关联模式：[conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md)
+> 关联资产：apps/docker-images/devcontainer-base/variants/shared/scripts/conda-perf-setup.sh
 
 ---
 
@@ -65,6 +66,18 @@ validation_count: 1
 
 ---
 
+## 跨项目复用层
+
+### 洞察7：跨项目复用的"最后一公里"是配套集成指南——资产存在≠可复用
+- **现象**：配置萃取为共享脚本/模板后，进一步沉淀 336 行跨项目快速集成指南（3 种集成方式 A/B/C + 6 环境变量 + 6 FAQ + 6 环境档位），作为资产对外复用的入口
+- **根因**：资产只解决"有没有"，可复用还要求"会不会用"——缺少降低使用门槛的入口文档，使用方需读源码自行推断，复用门槛高；指南让新项目可"抄作业"式集成（COPY 模板 / 调参数 / source 函数）
+- **量化影响**：集成指南覆盖 GitHub Actions/GitLab CI/WSL2/Mac M 系列/服务器/弱网 6 种环境档位，新项目复用成本趋近于零
+- **反模式**：只沉淀资产不写集成指南——资产沦为"个人知识"，他人无法低成本复用
+- **行动准则**：沉淀共享资产时同步配套「快速集成指南」（资产清单→集成方式→参数表→FAQ→调优档位→验证方法），形成「资产→指南→模式→报告」引用闭环
+- **可迁移**：任何可复用资产（构建脚本/配置文件/工具库/内部库）都应配套 README/集成指南降低复用门槛
+
+---
+
 ## 方法论层
 
 ### 洞察6：性能优化应遵循"测量→诊断→优化→验证→萃取"五步法
@@ -99,5 +112,6 @@ validation_count: 1
 - [x] Dockerfile通过BuildKit bind mount引用（零镜像层开销）
 - [x] CHANGELOG记录萃取内容和用法
 - [x] 模式文档存入 patterns/code-patterns/
+- [x] 跨项目快速集成指南（CONDA-PERF-INTEGRATION-GUIDE.md，提交 b84631a0）
 - [ ] 其他devcontainer变体（jupyter-ssh-base等）迁移使用共享脚本
 - [ ] CI无缓存流水线验证冷构建精确耗时

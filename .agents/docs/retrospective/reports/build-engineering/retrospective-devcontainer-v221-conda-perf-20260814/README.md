@@ -21,8 +21,9 @@ commits:
   - "6a591333 perf(devcontainer-base): 优化Stage 4 conda求解策略"
   - "3256adb9 refactor(devcontainer-base): 提取Stage 4 conda性能配置为共享可复用资产"
   - "3fee1f73 docs(retrospective): 沉淀Stage 4 conda三联优化为可复用模式文档"
-tags: ["conda", "mamba", "libmamba", "performance", "build-optimization", "docker", "buildkit", "configuration-extraction"]
-updated: "2026-08-14 方法论加固：修正提交统计、拆分实测/预估口径、补充术语速查与对抗审查记录"
+  - "b84631a0 docs(devcontainer-base): 新增conda性能配置跨项目快速集成指南"
+tags: ["conda", "mamba", "libmamba", "performance", "build-optimization", "docker", "buildkit", "configuration-extraction", "integration-guide"]
+updated: "2026-08-14 方法论加固：修正提交统计、拆分实测/预估口径、补充术语速查与对抗审查记录；补充跨项目集成指南事实与复用闭环洞察（提交b84631a0）"
 ---
 
 # devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘
@@ -36,9 +37,10 @@ updated: "2026-08-14 方法论加固：修正提交统计、拆分实测/预估�
 | 日期 | 2026-08-14 |
 | 核心目标 | Stage 4 conda 求解从 419s 优化至 3 分钟以内，并将优化配置萃取为可复用资产 |
 | 目标达成 | ✅ 完全达成（37s 缓存热构建，11.3x 加速） |
-| 提交数 | 3 个原子提交（+2个前置修复提交） |
-| 代码变更 | 12 文件，3 提交汇总 +800/-170 行 |
+| 提交数 | 4 个原子提交（+2个前置修复提交） |
+| 代码变更 | 13 文件，4 提交汇总 +1136/-170 行 |
 | 新模式沉淀 | 1 个代码模式文档 + 1 套可复用配置脚本/模板 |
+| 新增产出 | 1 个跨项目快速集成指南（336 行，3 种集成方式） |
 
 ## 二、事实还原（R）
 
@@ -108,6 +110,22 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 | BuildKit bind mount | 构建时把宿主机文件挂载进 RUN，不写入镜像层 | 需 COPY 进镜像增加层体积；脚本改动需重建该层 |
 | BuildKit cache mount | 构建时共享缓存目录（如 /opt/conda/pkgs），热构建命中 | 每次重建重新下载几百 MB 包 |
 
+### 2.7 跨项目集成指南（新增事实）
+
+配置萃取完成后，进一步沉淀为跨项目快速集成指南（提交 `b84631a0`，2026-08-14）：
+
+| 维度 | 内容 |
+|------|------|
+| 文件 | `apps/docker-images/devcontainer-base/docs/CONDA-PERF-INTEGRATION-GUIDE.md`（336 行） |
+| 集成方式 | 3 种：A 静态模板 COPY（一行即用）/ B 动态脚本（COPY 或 BuildKit bind mount）/ C source 辅助函数（`mamba_create_env`/`conda_perf_verify`） |
+| 环境变量 | 6 个：`CONDA_DIR` / `CONDA_MIRROR` / `CONDA_THREADS` / `CONDA_TIMEOUT` / `CONDA_RETRIES` / `CONDA_OUTPUT` |
+| FAQ | 6 个（Miniconda 兼容性、线程数选择、超时适配、cache mount、非 Docker 使用、solver 设置方式） |
+| 调优档位 | 6 个环境档位（GitHub Actions/GitLab CI/WSL2/Mac M 系列/服务器/弱网） |
+| 适用边界 | 面向 Miniforge3/Miniconda3 + mamba；Micromamba（`.mambarc` 配置）明确不适用 |
+| 引用闭环 | 指南「相关资源」→ 本复盘报告 + 洞察萃取 + 模式文档，形成「资产→指南→模式→报告」四层闭环 |
+
+> **路径说明**：工作区 apps/ 已按类型重组为 `apps/docker-images/`、`apps/ai-agents/`、`apps/dev-tools/`、`apps/samples/` 分组，本报告引用的资产路径（`apps/docker-images/devcontainer-base/...`）均为重组后的新路径。
+
 ## 三、根因洞察（I）
 
 ### 洞察1：工具默认保守值是为单核时代设计的
@@ -141,6 +159,14 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 - **根因**：静态模板适合配置固定、不需要动态选择镜像的场景（一行 COPY 即可）；动态脚本适合需要根据构建参数选择镜像源、调整线程数的场景
 - **影响**：只提供脚本不提供模板会增加简单场景的使用复杂度；只提供模板不提供脚本无法应对动态配置需求
 - **建议**：可复用配置资产应同时提供静态模板（最简用法）和动态脚本（高级用法），覆盖不同复杂度需求
+
+### 洞察6：跨项目复用的"最后一公里"是配套集成指南——资产存在≠可复用
+- **现象**：conda 性能配置萃取为共享脚本/模板后，进一步沉淀 336 行跨项目快速集成指南（3 种集成方式 + 6 环境变量 + 6 FAQ + 6 调优档位），作为资产对外复用的入口
+- **根因**：资产（脚本/模板）只解决"有没有"；可复用还要求"会不会用"——缺少降低使用门槛的入口文档，潜在使用方仍需读源码自行推断，复用门槛高
+- **影响**：有集成指南后，新项目可"抄作业"式集成（COPY 模板 / 调参数 / source 函数），复用成本趋近于零；无指南时资产沦为"个人知识"
+- **建议**：凡沉淀共享资产，同步配套「快速集成指南」（资产清单→集成方式→参数表→FAQ→调优档位→验证方法），形成「资产→指南→模式→报告」引用闭环
+
+> **闭环证据**：洞察4（优化验证后立即萃取）+ 洞察5（双形态提供）+ 洞察6（集成指南入口）构成「验证→资产化→对外发布」三级递进；跨项目集成指南（提交 `b84631a0`）是洞察4/5 的二次验证。
 
 ## 四、可复用模式沉淀（E）
 
@@ -199,6 +225,17 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 
 **V 门判定**：意见≥5 ✅（8 条）；采纳修正≥2 ✅（4 条）；非表演式 ✅
 
+### 5.2 方法论加固（第2轮：跨项目复用闭环，2026-08-14）
+
+本更新基于新增提交 `b84631a0`（跨项目集成指南）补充事实与洞察：
+
+| 质量门 | 检查项 | 结果 |
+|--------|--------|------|
+| G1（事实无因果词） | §2.7 新事实（提交哈希/行数/集成方式/环境变量/FAQ/调优档位）均经 `git show --numstat` 核实 | ✅ |
+| G2（洞察四元组） | 新增洞察6 含完整四元组（现象+根因+影响+建议），与既有洞察维度独立 | ✅ |
+| G3（模式可迁移） | 复用闭环沿用既有模式文档，无新增伪模式；指南作为资产复用入口 | ✅ |
+| G4（行动项原子化） | 更新聚焦"报告+洞察同步"，单一提交交付 | ✅ |
+
 ## 六、提交记录
 
 | Hash | Type | Subject | Files | Lines |
@@ -206,16 +243,18 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 | `6a591333` | perf | 优化Stage 4 conda求解策略，419s降至37s | 3 | +243/-108 |
 | `3256adb9` | refactor | 提取Stage 4 conda性能配置为共享可复用资产 | 6 | +370/-52 |
 | `3fee1f73` | docs | 沉淀Stage 4 conda三联优化为可复用模式文档 | 5 | +187/-10 |
+| `b84631a0` | docs | 新增conda性能配置跨项目快速集成指南 | 1 | +336/-0 |
 
 ## 七、下一步行动项
 
-> **进展注记（2026-08-14 方法论加固）**：截至本次更新，报告生成后无新开发提交，下列行动项均未推进；本次补充首步动作，并新增 2 项对抗审查派生行动项。
+> **进展注记（2026-08-14 第2轮加固）**：跨项目集成指南已发布（提交 `b84631a0`），为行动项3（变体迁移）提供复用入口；其余行动项仍待推进。
 
 | # | 行动项 | 优先级 | 第一步动作 | 验收标准 |
 |---|--------|--------|-----------|----------|
 | 1 | CI 无缓存流水线验证冷构建 Stage 4 精确耗时 | P1 | CI 增加 `docker build --no-cache` 计时任务 | 冷构建 Stage 4 <180s，校验 60-120s 预估 |
 | 2 | v2.3 优化 Stage 7 清理耗时（当前 126s，次要瓶颈） | P2 | 内联计时分解 Stage 7 内 126s 去向 | Stage 7 <60s |
-| 3 | 其他 devcontainer 变体迁移使用 conda-perf-setup.sh | P2 | 从 jupyter-ssh-base 变体起，Stage 4 改为 bind mount 引用共享脚本 | 所有变体统一使用共享脚本，静态对比等价 |
+| 3 | 其他 devcontainer 变体迁移使用 conda-perf-setup.sh | P2 | 从 jupyter-ssh-base 变体起，Stage 4 改为 bind mount 引用共享脚本（集成指南已提供「方式B2 bind mount」模板，见 §2.7） | 所有变体统一使用共享脚本，静态对比等价 |
 | 4 | conda-build-performance-triple-optimization 模式升级 L2 | P3 | 在 ≥2 个新 conda 构建项目复用并记录 validation_count | validation_count ≥3 |
 | 5 | 拆分三联优化（O1/O2/O3）独立性能贡献（V-A3 派生） | P2 | 分别仅启用单优化项构建对比，单变量归因 | 每项优化独立耗时数据 |
 | 6 | conda-perf-setup.sh 安全基线（V-C3 派生） | P3 | 执行 shellcheck + 参数注入点审查 | 过 shellcheck，无注入风险 |
+| 7 | 将集成指南回链到模式文档「迁移验证」章节 | P3 | 在 conda-build-performance-triple-optimization 模式文档补充指南链接 | 模式文档可一键跳转集成指南，闭环闭合 |
