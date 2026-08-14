@@ -1,0 +1,105 @@
+# =============================================================================
+# environment.yml — devcontainer-base conda-lock 精确版本锁定模板 (B2)
+# =============================================================================
+# 用于生成跨平台 conda-lock 锁文件，确保构建可复现性。
+#
+# 使用方式：
+#   1. 首次生成锁文件：
+#      conda-lock lock --file environment.yml --platform linux-64
+#   2. 从锁文件安装：
+#      conda-lock install --name main conda-linux-64.lock
+#   3. 或使用 micromamba：
+#      micromamba create -n main -f conda-linux-64.lock
+#
+# 注意：
+#   - =*_cp314t 后缀锁定 free-threading 构建（Py_GIL_DISABLED=1）
+#   - platform: linux-64 指定目标架构为 x86_64 Linux（容器环境）
+#   - category: main 标记运行时依赖；category: build 标记构建时依赖
+# =============================================================================
+
+name: main
+
+channels:
+  - conda-forge
+  - nodefaults  # 防止意外回退到 defaults 频道
+
+platforms:
+  - linux-64
+
+# ── 版本约束说明 ──
+# 精确版本锁定策略：
+#   - Python: major.minor.patch + build string（cp314t 表示 free-threading）
+#   - 核心工具（cmake/ninja）: 补丁版本锁定（compatible release策略）
+#   - Jupyter生态: minor版本锁定，允许补丁更新
+#   - C扩展依赖: 精确版本锁定（ABI兼容性关键）
+#
+# 首次求解后，使用 conda-lock 固化所有依赖的精确版本+hash
+
+dependencies:
+  # ═══════════════════════════════════════════════════════════════
+  # 核心运行时 (runtime, main)
+  # ═══════════════════════════════════════════════════════════════
+  - python=3.14.6=*_cp314t       # free-threading Python 3.14.6
+  - pip=25.0.*                    # 包管理
+  - setuptools>=75.0              # 构建后端（free-threading兼容）
+  - wheel>=0.45                   # wheel打包
+
+  # ═══════════════════════════════════════════════════════════════
+  # 构建工具链 (build toolchain, main)
+  # cmake + ninja 用于编译 C/C++ 扩展（针对 cp314t ABI）
+  # ═══════════════════════════════════════════════════════════════
+  - cmake>=3.30                   # CMake构建系统（支持Python 3.14+）
+  - ninja>=1.12                   # Ninja构建后端（并行编译）
+  - make>=4.4                     # GNU Make（传统构建系统兼容）
+  - c-compiler                    # C编译器（conda-forge工具链抽象）
+  - cxx-compiler                  # C++编译器
+  - pkg-config>=0.29              # 包配置查询工具
+
+  # Python 构建依赖（C扩展编译需要）
+  - python-build-standalone       # 独立Python构建工具链
+  - cpython>=3.14                 # Python开发头文件
+  - cython>=3.1                   # Cython（Python C扩展生成器）
+  - pybind11>=2.13                # C++/Python绑定
+  - nanobind>=2.2                 # 新一代C++/Python绑定（free-threading原生支持）
+
+  # ═══════════════════════════════════════════════════════════════
+  # Jupyter 生态 (runtime, main)
+  # ═══════════════════════════════════════════════════════════════
+  - jupyterlab>=4.4,<5.0          # JupyterLab主界面
+  - notebook>=7.3,<8.0            # Jupyter Notebook 7+
+  - ipykernel>=6.29               # IPython内核
+  - nbconvert>=7.16               # Notebook转换
+  - jupyter_server>=2.14          # Jupyter服务端
+  - jupyterlab_server>=2.27       # Lab服务端
+  - jupyter_client>=8.6           # Jupyter客户端协议
+  - ipython>=8.30                 # 交互式Python shell
+  - nbformat>=5.10                # Notebook格式
+  - traitlets>=5.14               # Traitlets配置系统
+
+  # ═══════════════════════════════════════════════════════════════
+  # 数据科学 C 扩展常用库 (runtime, main)
+  # 这些是 C 扩展兼容性验证的常用包
+  # ═══════════════════════════════════════════════════════════════
+  - numpy>=2.2,<3.0               # 数值计算（free-threading原生支持需≥2.0）
+  - pandas>=2.2,<3.0              # 数据分析
+  - brotli-python>=1.1            # Brotli压缩（Python绑定）
+  - cffi>=1.17                    # C Foreign Function Interface
+  - pycparser>=2.22               # C解析器（cffi依赖）
+  - sqlite                        # SQLite3（Python标准库依赖）
+  - openssl>=3.4                  # SSL/TLS
+  - zlib                          # 压缩
+  - bzip2                         # bzip2压缩
+  - xz                            # xz/lzma压缩
+  - libffi>=3.4                   # FFI库
+  - readline>=8.2                 # 命令行编辑
+  - ncurses>=6.5                  # 终端UI
+  - tk>=8.6                       # Tkinter GUI
+  - lz4-c>=1.9                    # LZ4压缩
+  - zstd>=1.5                     # Zstandard压缩
+
+  # ═══════════════════════════════════════════════════════════════
+  # pip 包（非conda-forge可用或需要最新版时使用）
+  # ═══════════════════════════════════════════════════════════════
+  - pip:
+    # 如果有 conda-forge 上不可用的包，在此处列出
+    # 例如：some-pypi-only-package==x.y.z

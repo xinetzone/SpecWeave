@@ -1,0 +1,448 @@
+# syntax=docker/dockerfile:1.7-labs
+# =============================================================================
+# DevContainer Base - Dockerfile.micromamba (EXPERIMENTAL)
+# Micromamba variant for comparison with Miniforge3 baseline
+# =============================================================================
+# This is an experimental Dockerfile using micromamba instead of Miniforge3.
+# Micromamba is a statically-linked C++ implementation of mamba/conda (~10MB binary),
+# which eliminates the base Python environment (250MB) that comes with Miniforge3.
+#
+# Key differences from the standard Dockerfile:
+#   1. Uses micromamba single binary instead of Miniforge3 installer
+#   2. No base Python environment (only main env with cp314t)
+#   3. conda command is an alias to micromamba
+#   4. Smaller download (~10MB vs ~100MB Miniforge3 installer)
+# =============================================================================
+
+ARG APT_MIRROR=official
+ARG PIP_MIRROR=official
+ARG CONDA_MIRROR=official
+ARG PYTHON_VERSION=3.14.6
+ARG PYTHON_BUILD=cp314t
+ARG BUILD_VERIFY_MODE=standard
+
+FROM ubuntu:26.04
+
+ARG APT_MIRROR
+ARG DOCKER_MIRROR=official
+ARG CONDA_MIRROR
+ARG PIP_MIRROR
+ARG PYTHON_VERSION
+ARG PYTHON_BUILD
+ARG BUILD_VERIFY_MODE
+
+LABEL maintainer="SpecWeave"
+LABEL description="EXPERIMENTAL: Ubuntu 26.04 dev container with SSH + Docker DinD + Podman + Jupyter + micromamba(Python 3.14.6 free-threading cp314t, conda-forge)"
+LABEL version="2.2-micromamba-experiment"
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8 \
+    CONDA_DIR=/opt/conda \
+    MAMBA_ROOT_PREFIX=/opt/conda \
+    CONDA_DEFAULT_ENV=main \
+    PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}" \
+    NON_ROOT_USER=devuser \
+    JUPYTER_PORT=8888 \
+    SSH_PORT=22 \
+    GRANT_SUDO=no \
+    ALLOW_ROOT_SSH=no \
+    JUPYTER_ALLOW_ORIGIN= \
+    ENABLE_SSH=yes \
+    ENABLE_DOCKER=yes \
+    ENABLE_PODMAN=no \
+    ENABLE_JUPYTER=yes
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 1/7: 系统包安装 + APT镜像 + locale/timezone (same as baseline)
+# ═══════════════════════════════════════════════════════════════════
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 1/7: Install base system packages + Chinese locale ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[TIMER] Runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    echo "START=$_STAGE_START" > /tmp/.build-timer && \
+    if [ "${APT_MIRROR}" = "aliyun" ]; then \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true; \
+    elif [ "${APT_MIRROR}" = "tuna" ]; then \
+        sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true; \
+    fi && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends -qq \
+        ca-certificates curl gnupg iptables iproute2 kmod locales openssh-server openssh-client \
+        procps pwgen bzip2 wget sudo supervisor tini tzdata vim-tiny xz-utils uidmap \
+        fuse-overlayfs slirp4netns \
+    && sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen zh_CN.UTF-8 && update-locale LANG=zh_CN.UTF-8 && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone && \
+    rm -rf /var/lib/apt/lists/* && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _TOTAL=$((_NOW - $(grep '^START=' /tmp/.build-timer | cut -d= -f2))) && \
+    echo "S1=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 1/7 (system+locale) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 2/7: Docker CE (same as baseline)
+# ═══════════════════════════════════════════════════════════════════
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 2/7: Install Docker CE ===" && \
+    _STAGE_START=$(date +%s) && \
+    install -m 0755 -d /etc/apt/keyrings && \
+    if [ "${DOCKER_MIRROR}" = "aliyun" ]; then \
+        DOCKER_REPO="https://mirrors.aliyun.com/docker-ce/linux/ubuntu"; \
+    else \
+        DOCKER_REPO="https://download.docker.com/linux/ubuntu"; \
+    fi && \
+    curl -fsSL ${DOCKER_REPO}/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && chmod a+r /etc/apt/keyrings/docker.gpg && \
+    . /etc/os-release && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] ${DOCKER_REPO} ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin && \
+    rm -rf /var/lib/apt/lists/* && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && _TOTAL=$((_NOW - _START)) && \
+    echo "S2=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 2/7 (Docker CE) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 3/7: Podman rootless (same as baseline)
+# ═══════════════════════════════════════════════════════════════════
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 3/7: Install Podman (rootless) ===" && \
+    _STAGE_START=$(date +%s) && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends -qq podman crun conmon && \
+    rm -rf /var/lib/apt/lists/* && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && _TOTAL=$((_NOW - _START)) && \
+    echo "S3=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 3/7 (Podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 4/7: MICROMAMBA INSTALLATION (EXPERIMENTAL - replaces Miniforge3)
+# Key differences:
+#   - Downloads ~10MB micromamba binary instead of ~100MB Miniforge3 installer
+#   - No base Python 3.13 environment (saves ~250MB)
+#   - conda is an alias for micromamba
+# ═══════════════════════════════════════════════════════════════════
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    --mount=type=cache,target=/root/.cache/micromamba,sharing=locked \
+    <<'STAGE4_EOF'
+set -e
+echo "=== Stage 4/7: Install micromamba + Python ${PYTHON_VERSION} ${PYTHON_BUILD} (conda-forge) + Jupyter ==="
+_STAGE_START=$(date +%s)
+
+# ── 架构检测 ──
+echo "[INFO] Detecting architecture..."
+ARCH=$(uname -m)
+case "$ARCH" in
+    x86_64)  MICROMAMBA_ARCH="linux-64" ;;
+    aarch64) MICROMAMBA_ARCH="linux-aarch64" ;;
+    *) echo "[ERROR] Unsupported architecture: $ARCH"; exit 1 ;;
+esac
+echo "[OK] Architecture: $ARCH ($MICROMAMBA_ARCH)"
+
+# ── 下载 micromamba 静态二进制 ──
+echo "[INFO] Downloading micromamba (static binary, ~10MB)..."
+_dl_start=$(date +%s)
+curl -fsSL --connect-timeout 30 --max-time 120 --retry 3 \
+    -L "https://micro.mamba.pm/api/micromamba/${MICROMAMBA_ARCH}/latest" \
+    -o /tmp/micromamba.tar.bz2 2>/tmp/micro_dl_err.log || {
+    echo "[ERROR] Failed to download micromamba"; cat /tmp/micro_dl_err.log; exit 1
+}
+
+# 提取二进制文件
+mkdir -p /tmp/micro-extract
+tar -xjf /tmp/micromamba.tar.bz2 -C /tmp/micro-extract/
+mkdir -p /opt/conda/bin
+cp /tmp/micro-extract/bin/micromamba /opt/conda/bin/micromamba
+chmod +x /opt/conda/bin/micromamba
+rm -rf /tmp/micromamba.tar.bz2 /tmp/micro-extract /tmp/micro_dl_err.log
+
+_dl_elapsed=$(($(date +%s) - _dl_start))
+echo "[OK] micromamba installed: $(/opt/conda/bin/micromamba --version 2>&1) in ${_dl_elapsed}s"
+echo "  - Binary size: $(du -h /opt/conda/bin/micromamba | cut -f1)"
+
+# ── 创建conda命令别名（micromamba兼容conda CLI） ──
+cat > /opt/conda/bin/conda <<'CONDA_SCRIPT'
+#!/bin/bash
+exec /opt/conda/bin/micromamba "$@"
+CONDA_SCRIPT
+chmod +x /opt/conda/bin/conda
+
+# ── 配置 .mambarc（channels + solver） ──
+echo "[INFO] Configuring channels..."
+mkdir -p /root
+if [ "${CONDA_MIRROR}" = "tuna" ]; then
+    cat > /root/.mambarc <<'CRC'
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+channel_priority: strict
+show_channel_urls: true
+CRC
+elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
+    cat > /root/.mambarc <<'CRC'
+channels:
+  - https://mirrors.aliyun.com/anaconda/cloud/conda-forge/
+channel_priority: strict
+show_channel_urls: true
+CRC
+else
+    cat > /root/.mambarc <<'CRC'
+channels:
+  - conda-forge
+channel_priority: strict
+show_channel_urls: true
+CRC
+fi
+echo "[OK] Channel configuration:"
+cat /root/.mambarc
+
+# ── 创建main环境 + Python free-threading ──
+echo "[INFO] Creating 'main' environment with Python ${PYTHON_VERSION} ${PYTHON_BUILD}..."
+echo "  (Note: No base Python environment - micromamba is a pure C++ binary, saving ~250MB)"
+/opt/conda/bin/micromamba create -y -n main -c conda-forge \
+    "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" pip \
+    --root-prefix=/opt/conda 2>&1
+echo "[OK] main env created: $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
+
+# ── 配置 PyPI 镜像 ──
+if [ "${PIP_MIRROR}" = "aliyun" ]; then
+    /opt/conda/envs/main/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    /opt/conda/envs/main/bin/pip config set global.trusted-host mirrors.aliyun.com
+elif [ "${PIP_MIRROR}" = "tuna" ]; then
+    /opt/conda/envs/main/bin/pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+    /opt/conda/envs/main/bin/pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+fi
+
+# ── 安装 Jupyter ──
+echo "[INFO] Installing Jupyter ecosystem..."
+/opt/conda/bin/micromamba install -y -n main -c conda-forge \
+    "jupyterlab>=4.4" "notebook>=7.3" ipykernel nbconvert jupyter_server \
+    --root-prefix=/opt/conda 2>&1
+echo "[OK] Jupyter installed"
+
+# ── 注册Jupyter kernel ──
+/opt/conda/envs/main/bin/python -m ipykernel install --name main \
+    --display-name "Python ${PYTHON_VERSION} (free-threading)" \
+    --prefix=/opt/conda/envs/main 2>&1
+echo "[OK] Jupyter kernel registered"
+
+# ── 验证free-threading ──
+if [ "${PYTHON_BUILD}" = "cp314t" ]; then
+    /opt/conda/envs/main/bin/python -c "
+import sys, sysconfig
+ft = sysconfig.get_config_var('Py_GIL_DISABLED')
+soabi = sysconfig.get_config_var('SOABI')
+assert ft == 1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'
+assert 'cpython-314t' in soabi, f'Expected cpython-314t in SOABI, got {soabi}'
+print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={soabi}, no base Python env')
+    "
+fi
+
+# ── Shell初始化 ──
+cat > /etc/profile.d/micromamba-init.sh <<'INIT'
+#!/bin/bash
+export MAMBA_ROOT_PREFIX=/opt/conda
+export PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}"
+INIT
+chmod +x /etc/profile.d/micromamba-init.sh
+echo "source /etc/profile.d/micromamba-init.sh" >> /root/.bashrc
+
+# ── 检查是否存在base Python（对比指标） ──
+echo ""
+echo "[INFO] Checking for base Python environment..."
+BASE_PY_COUNT=$(find /opt/conda -maxdepth 2 -name "python*" -type f ! -path "*/envs/*" 2>/dev/null | wc -l)
+echo "  - Python binaries outside envs/: ${BASE_PY_COUNT} (Miniforge3 has ~3 from base py313)"
+echo "  - Main env size: $(du -sh /opt/conda/envs/main 2>/dev/null | cut -f1)"
+echo "  - Total conda dir size: $(du -sh /opt/conda 2>/dev/null | cut -f1)"
+
+# ── 清理 ──
+rm -rf /tmp/* /var/tmp/* 2>/dev/null || true
+echo "[OK] Temp files cleaned"
+
+# ── 验证安装 ──
+echo ""
+echo "┌─────────────────────────────────────────────────┐"
+echo "│ [VERIFY] micromamba + Python (main env) + Jupyter"
+echo "└─────────────────────────────────────────────────┘"
+/opt/conda/bin/micromamba --version
+/opt/conda/envs/main/bin/python --version
+/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -3
+echo "  - root prefix: /opt/conda"
+echo "  - conda alias: /opt/conda/bin/conda -> micromamba"
+echo "  - base Python: NONE (unlike Miniforge3's py313)"
+
+_NOW=$(date +%s)
+_ELAPSED=$((_NOW - _STAGE_START))
+_START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2)
+_TOTAL=$((_NOW - _START))
+echo "S4=$_NOW" >> /tmp/.build-timer
+echo "[TIMER] Stage 4/7 (micromamba+python+jupyter) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+echo '[OK] Stage 4 complete (micromamba variant)'
+STAGE4_EOF
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 5/7: 用户/组/工作目录 (same as baseline)
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
+    _STAGE_START=$(date +%s) && \
+    groupadd -f docker && \
+    if getent passwd devuser >/dev/null 2>&1; then \
+        usermod -aG docker,sudo devuser; \
+    elif ! getent passwd 1000 >/dev/null 2>&1; then \
+        useradd -m -s /bin/bash -u 1000 -G docker,sudo devuser; \
+    else \
+        useradd -m -s /bin/bash -G docker,sudo devuser; \
+    fi && \
+    echo "devuser:100000:65536" > /etc/subuid && \
+    echo "devuser:100000:65536" > /etc/subgid && \
+    mkdir -p /workspace /home/devuser/.jupyter/jupyter_server_config.d /home/devuser/.ssh && \
+    chmod 755 /workspace && chmod 700 /home/devuser/.ssh && \
+    chown -R devuser:devuser /workspace /home/devuser/.jupyter /home/devuser/.ssh && \
+    printf '%s\n' \
+        '#!/bin/bash' \
+        '# Micromamba initialization' \
+        'if [ -f /etc/profile.d/micromamba-init.sh ]; then' \
+        '    source /etc/profile.d/micromamba-init.sh' \
+        'fi' \
+        > /etc/profile.d/conda-init.sh && \
+    chmod +x /etc/profile.d/conda-init.sh && \
+    echo "source /etc/profile.d/conda-init.sh" >> /home/devuser/.bashrc && \
+    echo "source /etc/profile.d/conda-init.sh" >> /root/.bashrc && \
+    chown devuser:devuser /home/devuser/.bashrc && \
+    echo "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
+    mkdir -p /run/sshd && chmod 755 /run/sshd && \
+    mkdir -p /var/log/supervisor /etc/supervisor/conf.d /etc/docker && \
+    printf '{\n  "storage-driver": "overlay2",\n  "iptables": false,\n  "log-driver": "json-file",\n  "log-opts": {"max-size": "10m", "max-file": "3"},\n  "userland-proxy": false\n}\n' > /etc/docker/daemon.json && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && _TOTAL=$((_NOW - _START)) && \
+    echo "S5=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 5/7 (user+dirs+daemon) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 6/7: 配置文件 COPY + 权限 + 语法验证 (same as baseline)
+# ═══════════════════════════════════════════════════════════════════
+COPY config/sshd_config /etc/ssh/sshd_config
+COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
+COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
+COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
+
+RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
+    _STAGE_START=$(date +%s) && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh && \
+    chown -R devuser:devuser /home/devuser/.jupyter /workspace && \
+    sshd -t && echo "[OK] sshd_config syntax valid" && \
+    bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
+    bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
+    bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
+    bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh syntax valid" && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && _TOTAL=$((_NOW - _START)) && \
+    echo "S6=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 7/7: 构建元数据 + 清理 + 最终验证 (adapted for micromamba)
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 7/7: Final metadata, cleanup, and verification (micromamba) ===" && \
+    _STAGE_START=$(date +%s) && \
+    DEVUSER_UID=$(id -u devuser) && \
+    MICROMAMBA_VERSION=$(/opt/conda/bin/micromamba --version 2>&1 | awk '{print $2}') && \
+    PYTHON_VERSION_ACTUAL=$(python --version 2>&1 | awk '{print $2}') && \
+    PYTHON_BUILD_TYPE=$(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")') && \
+    echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
+    echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
+    echo "BUILD_TYPE=micromamba-experimental" >> /etc/devcontainer-build-info && \
+    echo "BUILD_VERIFY_MODE=${BUILD_VERIFY_MODE}" >> /etc/devcontainer-build-info && \
+    echo "PACKAGE_MANAGER=micromamba" >> /etc/devcontainer-build-info && \
+    echo "MICROMAMBA_VERSION=${MICROMAMBA_VERSION}" >> /etc/devcontainer-build-info && \
+    echo "LOCALE=zh_CN.UTF-8" >> /etc/devcontainer-build-info && \
+    echo "TIMEZONE=Asia/Shanghai" >> /etc/devcontainer-build-info && \
+    echo "NON_ROOT_USER=devuser" >> /etc/devcontainer-build-info && \
+    echo "NON_ROOT_UID=${DEVUSER_UID}" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_ENV=micromamba" >> /etc/devcontainer-build-info && \
+    echo "CONDA_DIR=/opt/conda" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_VERSION=${PYTHON_VERSION_ACTUAL}" >> /etc/devcontainer-build-info && \
+    echo "PYTHON_BUILD_TYPE=${PYTHON_BUILD_TYPE}" >> /etc/devcontainer-build-info && \
+    echo "BASE_PYTHON=none" >> /etc/devcontainer-build-info && \
+    cat /etc/devcontainer-build-info && \
+    echo "" && \
+    echo "[CLEAN] Removing unnecessary files..." && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    rm -rf /usr/share/doc/* /usr/share/man/* /usr/share/info/* /usr/share/lintian/* 2>/dev/null || true && \
+    rm -rf /opt/conda/share/doc/* /opt/conda/share/man/* /opt/conda/share/info/* 2>/dev/null || true && \
+    find /opt/conda -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    find /opt/conda -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.la" -delete 2>/dev/null || true && \
+    find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    rm -rf /tmp/* /var/tmp/* 2>/dev/null || true && \
+    chown -R root:root /opt/conda && chmod -R a+rX /opt/conda && \
+    find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
+    echo "[OK] Cleanup complete" && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [FINAL VERIFICATION - micromamba variant]     │" && \
+    echo "│  Mode: ${BUILD_VERIFY_MODE}" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    if [ "${BUILD_VERIFY_MODE}" = "off" ]; then \
+        echo "[SKIP] Build verification disabled"; \
+    elif [ "${BUILD_VERIFY_MODE}" = "fast" ]; then \
+        echo "[FAST MODE] Essential checks only..." && \
+        python --version && echo "[OK] python available" && \
+        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); soabi=sysconfig.get_config_var('SOABI'); assert ft==1, f'GIL not disabled'; assert 'cpython-314t' in soabi, f'SOABI mismatch: {soabi}'; print(f'[OK] Python free-threading verified (SOABI={soabi})')" && \
+        python -c "import brotli,cffi,sqlite3,ssl,zlib,hashlib; print('[OK] Core C extensions load OK')" && \
+        micromamba --version && echo "[OK] micromamba available" && \
+        echo "[FAST MODE] Essential checks passed"; \
+    else \
+        tini --version >/dev/null 2>&1 && echo "[OK] tini available" && \
+        supervisord --version && echo "[OK] supervisord available" && \
+        sshd -t && echo "[OK] sshd config valid" && \
+        python --version && echo "[OK] python available" && \
+        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); assert ft==1; print('[OK] Python free-threading build')" && \
+        python -c "import brotli,cffi,sqlite3,ssl,zlib,hashlib; print('[OK] Core C extensions OK')" && \
+        bash /usr/local/bin/verify-cext.sh -q --expect-soabi cpython-314t >/dev/null 2>&1 && echo "[OK] verify-cext.sh passed" && \
+        /opt/conda/bin/micromamba --version && echo "[OK] micromamba available" && \
+        pip --version && echo "[OK] pip available" && \
+        jupyter --version && echo "[OK] jupyter available" && \
+        docker --version && echo "[OK] docker available" && \
+        echo "[OK] All standard verification checks passed"; \
+    fi && \
+    echo "" && \
+    _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _S1=$(grep '^S1=' /tmp/.build-timer | cut -d= -f2) && _S2=$(grep '^S2=' /tmp/.build-timer | cut -d= -f2) && \
+    _S3=$(grep '^S3=' /tmp/.build-timer | cut -d= -f2) && _S4=$(grep '^S4=' /tmp/.build-timer | cut -d= -f2) && \
+    _S5=$(grep '^S5=' /tmp/.build-timer | cut -d= -f2) && _S6=$(grep '^S6=' /tmp/.build-timer | cut -d= -f2) && \
+    _T1=$((_S1 - _START)) && _T2=$((_S2 - _S1)) && _T3=$((_S3 - _S2)) && _T4=$((_S4 - _S3)) && _T5=$((_S5 - _S4)) && _T6=$((_S6 - _S5)) && _T7=$_ELAPSED && _TOTAL=$((_NOW - _START)) && \
+    echo "╔══════════════════════════════════════════════════════════════╗" && \
+    echo "║  BUILD TIMING SUMMARY (micromamba variant)                 ║" && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  Stage 1/7  system packages + locale   %5ds               ║\n" $_T1 && \
+    printf "║  Stage 2/7  Docker CE install          %5ds               ║\n" $_T2 && \
+    printf "║  Stage 3/7  Podman rootless install    %5ds               ║\n" $_T3 && \
+    printf "║  Stage 4/7  micromamba+python+jupyter  %5ds               ║\n" $_T4 && \
+    printf "║  Stage 5/7  user+subuid+dirs+daemon   %5ds               ║\n" $_T5 && \
+    printf "║  Stage 6/7  config + validation       %5ds               ║\n" $_T6 && \
+    printf "║  Stage 7/7  cleanup + final verify     %5ds               ║\n" $_T7 && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  RUNTIME TOTAL                         %5ds               ║\n" $_TOTAL && \
+    echo "╚══════════════════════════════════════════════════════════════╝" && \
+    rm -f /tmp/.build-timer && \
+    echo "[BUILD] ========== BUILD COMPLETE (micromamba experimental) =========="
+
+WORKDIR /workspace
+VOLUME ["/workspace", "/var/lib/docker"]
+EXPOSE 22 8888
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /usr/local/bin/healthcheck.sh
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+CMD []
