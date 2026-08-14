@@ -91,6 +91,7 @@
   - 所有test-*.sh测试脚本更新路径引用
 - **Acceptance Criteria Addressed**: AC-1, AC-5, AC-7
 - **Notes**: Python 3.14是非常新的版本（2026-08），PyTorch/ONNX Runtime可能尚未提供3.14 wheel，CI中变体构建标记为experimental(continue-on-error)
+- **2026-08-14 追记**: conda 变体已下线（commits 51f78768/df9078f3）：经七概念 I→F→V 分析判定冗余，镜像源配置（系统级 .condarc/pip.conf）内聚到基础镜像三源参数化，变体链简化为 base → conda-llvm → onnx-*；build.sh VARIANTS 数组移除 conda
 
 ## Task 7: CI流水线更新 ✅
 - **Status**: `completed`
@@ -110,16 +111,17 @@
 - **Acceptance Criteria Addressed**: AC-1, AC-10
 
 ## Task 8: 本地深度验证（变体运行时验证） ⏳
-- **Status**: `in-progress`（主镜像验证已完成，变体运行时验证待执行）
+- **Status**: `in-progress`（主镜像 + conda-llvm 变体验证已完成，onnx-*/ai-dev 变体验证待执行）
 - **Priority**: high
 - **Depends On**: Task 6
 - **Description**:
   - ✅ 主镜像深度验证已完成（v2.2：11项深度验证通过；v2.2.1：构建验证通过，Stage 4 优化验证）
   - ✅ v2.2.1 主镜像构建验证通过：镜像 2.46GB，Python 3.14.6 free-threading（Py_GIL_DISABLED=1），Stage 4 从 419s→37s
   - ✅ C扩展模板容器内验证通过（test-in-docker.sh 在 v2.2-fasttest 容器中：CMake配置/GCC 15.2.0编译/7项自检/8线程×100K压力测试/FT ABI检测全部通过）
-  - ⏳ 变体镜像运行时验证待执行：
-    - 重新构建所有变体镜像（需PyTorch/ONNX Python 3.14 wheel可用）
-    - 验证LLVM工具链（clang/lld/cmake/ninja）
+  - ✅ conda-llvm 变体运行时验证已完成（v2.3，commit 8722378）：--no-cache 重建后 main 环境（Python 3.14t）正确激活，LLVM 工具链（clang/lld/cmake/ninja/llvm-config）版本输出正常，INSTALL_ENV 元数据核验通过（verify-conda-llvm.sh 全项）
+  - ✅ nogil 基准验证已完成（v2.3，commits 0013d4f7/d5874eb4）：容器内 8 线程加速比 4.54x~4.63x（quick 500K，阈值 3.0x PASS），GIL 未被拉起；池开销探针实测 thread lag ~1.3ms / process(fork) lag ~16.5ms（Windows spawn 对照 ~134ms）
+  - ⏳ 下游变体镜像运行时验证待执行：
+    - 重新构建 onnx-*/ai-dev 变体镜像（需PyTorch/ONNX Python 3.14 wheel可用）
     - 验证PyTorch/ONNX导入（需确认Python 3.14兼容性）
     - 记录所有镜像体积，检查瘦身目标达成情况
     - 端到端服务验证（SSH/Docker DinD/JupyterLab/Podman）
@@ -170,7 +172,17 @@
     - docs/CONDA-PERF-INTEGRATION-GUIDE.md（跨项目快速集成指南）
   - **Dockerfile 重构**：Stage 4 从 ~50行内联 heredoc 改为 3 行脚本调用（BuildKit bind mount 引用脚本，不增加镜像层）
 
+### 后续 V3: v2.3 conda 变体下线 + conda-llvm main 环境修复 + nogil 工具链 ✅
+- **Status**: `completed`（conda-llvm 运行时验证通过；onnx-* 变体验证仍归 Task 8）
+- **Commits**: 51f78768, df9078f3, ce70c676, 8722378, 0013d4f7, 00c7b462, d5874eb4
+- **Description**:
+  - **conda 变体下线**：七概念 I→F→V 分析判定冗余，镜像源配置（系统级 .condarc/pip.conf）内聚到基础镜像；变体链简化 base → conda-llvm → onnx-*
+  - **基础镜像三源参数化**：CONDA_MIRROR/PIP_MIRROR/APT_MIRROR（official/tuna/aliyun/bfsu），三配置构建验证通过；entrypoint.sh 适配 root/devuser 双用户；micromamba 实验 Dockerfile 同步
+  - **conda-llvm main 环境修复**：Stage 2/3/4 全链路激活 main（Python 3.14t），LLVM 安装落位 main 而非 base；新增 variants/verify-conda-llvm.sh 自动核验（main 激活/工具路径/版本/INSTALL_ENV 元数据）+ docker-compose.yml llvm profile
+  - **nogil 可观测性工具链**：check_gil_state.py（金丝雀子进程定位拉起 GIL 的 C 扩展，如 _brotli）；ft_benchmark.py（ft-benchmark.sh 的 Python 封装：库函数 + CLI + JSONL 日志 + quick/full 预设）；nogil_kit.py 工具箱（env_report/diagnose/register_nogil_kernel/quick_thread_scaling/pool_compare/PoolProbe 池开销探针类）+ examples/nogil_kernel_template.ipynb Jupyter 模板（3.14 forkserver 坑位处理：显式 fork 上下文）
+  - **验收数据**：容器内 8 线程 4.54x~4.63x（quick 500K，阈值 3.0x PASS）；池开销探针 thread lag ~1.3ms / process(fork) lag ~16.5ms；Windows spawn 对照 ~134ms
+
 ## 交付物清单（更新后）
-- ✅ [spec.md](spec.md) - PRD（已同步 v2.2/v2.2.1 现状）
-- ✅ [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/devcontainer-base-image-slim/tasks.md) - 实施计划（已更新路径与任务状态）
+- ✅ [spec.md](spec.md) - PRD（已同步 v2.2/v2.2.1/v2.3 现状）
+- ✅ [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/devcontainer-base-image-slim/tasks.md) - 实施计划（已更新路径与任务状态，含后续演进 V1-V3 记录）
 - ✅ [checklist.md](checklist.md) - 预检清单（已更新）
