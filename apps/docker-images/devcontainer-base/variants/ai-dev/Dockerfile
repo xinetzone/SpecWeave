@@ -2,7 +2,7 @@
 # =============================================================================
 # DevContainer Base - AI Dev Variant Dockerfile
 # Project: SpecWeave Full-featured Development Container - AI/ML/NLP Full-Stack
-# Base: devcontainer-base:onnx-quantized-${BASE_TAG} (PyTorch + ONNX + Quantization + LLVM)
+# Base: devcontainer-base:onnx-quantized-${BASE_TAG} (pure ONNX quantization toolkit, main env free-threading, no PyTorch)
 # Ecosystem: 50+ Python packages covering NLP, data, viz, document, web, database
 # Jupyter: JupyterLab >=4.4 + notebook >=7.3, generic "Python 3 (AI Dev)" kernel
 # PATH priority: /opt/conda/bin first (AI tools directly available in base conda env)

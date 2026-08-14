@@ -3,20 +3,22 @@
 ## 基础信息
 
 - **基础镜像**: `devcontainer-base:onnx-quantized-${BASE_TAG}`
-- **继承链**: devcontainer-base → conda → conda-llvm → onnx-pytorch → onnx-quantized → ai-dev
-- **安装环境**: conda base 环境（`/opt/conda`）
+- **继承链**: devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → ai-dev
+- **安装环境**: conda base 环境（`/opt/conda`，标准 Python，GIL 启用）
 - **PATH 优先级**: `/opt/conda/bin` 优先于系统 PATH（conda python 为默认 python）
-- **默认 Python**: `/opt/conda/bin/python`（继承自 onnx-quantized）
-- **系统 venv**: `/opt/venv/bin/python` 保留（Jupyter 服务使用）
+- **默认 Python**: `/opt/conda/bin/python`（base 环境，AI 内核与 50+ 生态包所在）
+- **量化工具链环境**: main 环境（`/opt/conda/envs/main`，free-threading cp314t，继承自 onnx-quantized）
+- **系统 venv**: 已移除（`/opt/venv` 不存在；Jupyter 服务运行于 main 环境）
 
 ## 核心组件
 
 | 分类 | 包 | 说明 |
 |------|-----|------|
 | 构建工具 | scikit-build-core, nuitka, invoke, build | Python 包构建与编译 |
-| 深度学习（继承） | torch, torchvision, onnx, onnxruntime | 来自 onnx-quantized |
+| 深度学习 | onnx, onnxruntime | 继承自 onnx-quantized（纯 ONNX 链） |
+| torch/torchvision | 非继承 | onnx-quantized v2.0.0 纯 ONNX 无 torch；ai-dev 经 onnx2torch + open_clip_torch 传递引入 base 环境 |
 | 量化（继承） | onnxruntime.quantization, onnxconverter-common, onnxsim | 来自 onnx-quantized |
-| Jupyter | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 | 同时升级 /opt/venv 版本 |
+| Jupyter | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 | 装于 base 环境（AI 内核使用）；Jupyter 服务仍运行于 main 环境 |
 | NLP/Transformers | transformers, datasets, sentencepiece, sentence-transformers, evaluate, tiktoken | HuggingFace 生态 |
 | 模型转换 | onnx2torch | ONNX→PyTorch |
 | 数据处理 | pandas, pyarrow, scikit-learn, natsort | 数据分析栈 |
@@ -54,15 +56,15 @@
 ## Stage 结构（3 层追加）
 
 ### Stage 1/3: 基础验证 + 计时器初始化
-- 验证 torch/onnx/onnxruntime/quantization 可导入
+- 验证 onnx/onnxruntime/quantization 可导入（main 环境）+ torch 缺席（by design）
 - 确认 devuser 和基础服务（docker/supervisord）存在
-- 验证 /opt/venv 保留
+- 验证 /opt/venv 已移除（不存在）
 - 初始化 `/tmp/.ai-dev-variant-build-timer`
 
 ### Stage 2/3: 安装 AI/ML/NLP 生态系统
 - 设置 `PIP_USER=0`（构建期写入 /opt/conda）
 - 按分类批量 pip install（50+ 包）
-- 升级 JupyterLab>=4.4 + notebook>=7.3（main 环境，继承自基础镜像）
+- 安装 JupyterLab>=4.4 + notebook>=7.3（base 环境，供 AI 内核使用；Jupyter 服务仍为 main 环境）
 - 使用 `--mount=type=cache` 缓存 conda/pkgs 和 pip cache
 - 清理 conda/pip 缓存
 - 安装后验证包版本
