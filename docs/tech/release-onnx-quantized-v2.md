@@ -175,6 +175,7 @@ docker run --rm devcontainer-base:onnx-quantized-latest \
 - [高级量化指南（静态量化/校准数据集/QDQ）](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/variants/onnx-quantized/ADVANCED-QUANTIZATION-GUIDE.md)
 - [量化最佳实践](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/variants/onnx-quantized/QUANTIZATION-BEST-PRACTICES.md)
 - [基础变体 onnx-dev](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/variants/onnx-dev/README.md)
+- [onnx-pytorch v1.1.0 发布说明](release-onnx-pytorch-v1-1.md)（姊妹变体：torch 训练/导出环境，架构正交对偶）
 - [构建编排规范](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/variants/.agents/rules/build-orchestration.md)
 - [测试规范](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/variants/.agents/rules/testing.md)
 - [基础镜像 README](https://gitcode.com/daoCollective/SpecWeave/blob/main/apps/docker-images/devcontainer-base/README.md)

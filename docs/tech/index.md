@@ -12,6 +12,7 @@ features
 contributing
 changelog
 release-onnx-quantized-v2
+release-onnx-pytorch-v1-1
 ```
 
 :::{note}
