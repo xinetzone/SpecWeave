@@ -11,6 +11,7 @@ quickstart
 features
 contributing
 changelog
+release-onnx-quantized-v2
 ```
 
 :::{note}
