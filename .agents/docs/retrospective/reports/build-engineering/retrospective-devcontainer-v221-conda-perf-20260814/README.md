@@ -15,6 +15,8 @@ related_patterns:
   - "code-patterns/docker-build-four-layer-verification.md"
 related_reports:
   - "retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814/README.md"
+companion_files:
+  - "insight-extraction.md"
 commits:
   - "6a591333 perf(devcontainer-base): 优化Stage 4 conda求解策略"
   - "3256adb9 refactor(devcontainer-base): 提取Stage 4 conda性能配置为共享可复用资产"
