@@ -12,6 +12,7 @@ source: "AGENTS.md"
 ```
 .agents/
 ├── README.md          ← 本文件（目录索引）
+├── structure.md       ← 项目目录结构导航（完整文件树+职责说明）
 ├── rules/             ← 项目特有规则（单一职责，按主题拆分）
 │   ├── dockerfile.md  ← Dockerfile 多阶段构建规范
 │   ├── entrypoint.md  ← Entrypoint 启动脚本规范
@@ -42,6 +43,7 @@ source: "AGENTS.md"
 
 | 任务场景 | 必读规则文件 | 核心关注点 |
 |---------|-------------|-----------|
+| 定位文件/了解项目结构 | [structure.md](structure.md) | 完整目录树、目录职责说明、快速定位指南 |
 | 修改 Dockerfile | [rules/dockerfile.md](rules/dockerfile.md) | BuildKit语法、多阶段结构、层缓存、中文环境、非root用户、安全规范 |
 | 修改启动脚本 | [rules/entrypoint.md](rules/entrypoint.md) | tini init、日志格式、启动流程、信号处理、命令模式 |
 | 修改服务配置 | [rules/services.md](rules/services.md) | supervisord管理、Docker DinD、Podman rootless、Jupyter、SSH、健康检查 |
@@ -77,7 +79,29 @@ source: "内容来源（原始文件路径#章节）"
 - 全局 Skill：[../../../.agents/skills/](../../../.agents/skills/)
 - 七概念指令集：[../../../.agents/commands/](../../../.agents/commands/)
 
+## 核心约束速查
+
+详细约束已按主题拆分到 `rules/` 下各文件，以下是核心约束索引：
+
+| 约束主题 | 所在文件 |
+|---------|---------|
+| 中文环境（locale/timezone）、基础镜像锁定 | [dockerfile.md](rules/dockerfile.md#基础约定) |
+| 非root用户（devuser/UID1000/docker组/sudo） | [dockerfile.md](rules/dockerfile.md#非-root-用户规范) |
+| 服务管理（supervisord四服务统一管理） | [services.md](rules/services.md#总体原则) |
+| Docker DinD配置（daemon.json单一配置源） | [services.md](rules/services.md#docker-dind-服务dockerd) |
+| Podman rootless配置（subuid/subgid/cgroupv2） | [services.md](rules/services.md#podman-rootless-服务) |
+| 启动脚本要求（tini/日志/信号处理） | [entrypoint.md](rules/entrypoint.md#基础约定) |
+| 构建日志格式（[BUILD]/[STAGE]/[TIMER]标记） | [dockerfile.md](rules/dockerfile.md#基础约定) |
+| 敏感信息（禁止硬编码密码/token） | [dockerfile.md](rules/dockerfile.md#安全规范) |
+| 镜像优化（7 Stage/--no-install-recommends/9步清理） | [dockerfile.md](rules/dockerfile.md#体积优化) |
+| Jupyter配置（conda路径/token/工作目录/CORS） | [services.md](rules/services.md#jupyter-服务) |
+| SSH配置（ED25519优先/禁用root/密码+密钥） | [services.md](rules/services.md#ssh-服务sshd) |
+| 健康检查（条件检测/端口探测） | [services.md](rules/services.md#健康检查) |
+| Docker与Podman共存配置 | [services.md](rules/services.md) |
+| CI量化门禁（cosine_sim≥0.90，失败阻断） | [workflows/variants-ci.md](workflows/variants-ci.md) |
+
 ## 变更日志
 
+- 2026-08-14 | refactor | 从 AGENTS.md 原子化拆分出 structure.md（详细目录结构），README.md 增加核心约束速查章节
 - 2026-08-07 | feat | 新增 workflows/variants-ci.md（双CI流水线设计文档）；更新路由表添加变体/CI入口
 - 2026-08-07 | feat | 从 AGENTS.md 拆分出 .agents/ 目录，约束规则按主题原子化为4个rules文件
