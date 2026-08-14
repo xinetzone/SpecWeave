@@ -22,6 +22,7 @@ commits:
   - "3256adb9 refactor(devcontainer-base): 提取Stage 4 conda性能配置为共享可复用资产"
   - "3fee1f73 docs(retrospective): 沉淀Stage 4 conda三联优化为可复用模式文档"
 tags: ["conda", "mamba", "libmamba", "performance", "build-optimization", "docker", "buildkit", "configuration-extraction"]
+updated: "2026-08-14 方法论加固：修正提交统计、拆分实测/预估口径、补充术语速查与对抗审查记录"
 ---
 
 # devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘
@@ -36,7 +37,7 @@ tags: ["conda", "mamba", "libmamba", "performance", "build-optimization", "docke
 | 核心目标 | Stage 4 conda 求解从 419s 优化至 3 分钟以内，并将优化配置萃取为可复用资产 |
 | 目标达成 | ✅ 完全达成（37s 缓存热构建，11.3x 加速） |
 | 提交数 | 3 个原子提交（+2个前置修复提交） |
-| 代码变更 | 12 文件，+900/-82 行 |
+| 代码变更 | 12 文件，3 提交汇总 +800/-170 行 |
 | 新模式沉淀 | 1 个代码模式文档 + 1 套可复用配置脚本/模板 |
 
 ## 二、事实还原（R）
@@ -75,11 +76,14 @@ Stage 4 Dockerfile 中 `.condarc` 配置存在三项特征：
 
 | 指标 | v2.2（优化前） | v2.2.1（优化后） | 提升 |
 |------|---------------|-----------------|------|
-| Stage 4 耗时（缓存热构建） | 419s（冷构建基准） | **37s** | **11.3x** |
+| Stage 4 耗时（缓存热构建·实测） | 419s（冷构建基准） | **37s** | **11.3x** |
+| Stage 4 耗时（冷构建·预估） | 419s | 60-120s（待 CI 验证） | ~3.5-7x |
 | 镜像体积 | 2.46GB | **2.46GB** | 零增长 |
 | Python free-threading | ✅ Py_GIL_DISABLED=1 | ✅ Py_GIL_DISABLED=1 | — |
 | Jupyter 生态 | ✅ | ✅ | — |
 | C 扩展加载（6项验证） | ✅ | ✅ | — |
+
+> **数据口径说明**：419s→37s 为**缓存热构建实测**（BuildKit cache mount 命中）；**冷构建**（无缓存）精确耗时尚未在 CI 验证，60-120s 为基于 8 线程并行下载/解压的预估区间，列入行动项1 待验证。
 
 ### 2.5 配置萃取产出
 
@@ -94,6 +98,16 @@ Stage 4 Dockerfile 中 `.condarc` 配置存在三项特征：
 
 Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通过 BuildKit bind mount 引用，零镜像层开销）。
 
+### 2.6 关键术语速查
+
+| 术语 | 作用 | 不设置/不做会怎样 |
+|------|------|------------------|
+| `repodata_threads` | repodata.json（通道元数据）下载的并行线程数 | 串行下载，多核+高带宽下浪费等待时间 |
+| `execute_threads` | 包解压/安装的并行线程数 | 串行解压，I/O 等待拉长安装耗时 |
+| `mamba create` | 原生 C++ CLI 一次性创建环境并求解依赖 | 若分两步 `conda create`+`conda install` → solver 运行两次 |
+| BuildKit bind mount | 构建时把宿主机文件挂载进 RUN，不写入镜像层 | 需 COPY 进镜像增加层体积；脚本改动需重建该层 |
+| BuildKit cache mount | 构建时共享缓存目录（如 /opt/conda/pkgs），热构建命中 | 每次重建重新下载几百 MB 包 |
+
 ## 三、根因洞察（I）
 
 ### 洞察1：工具默认保守值是为单核时代设计的
@@ -107,6 +121,8 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 - **根因**：`conda` 是 Python 程序，通过 `--solver=libmamba` 参数调用 libmamba 时仍需经过 conda 的 Python 框架层；`mamba` 是 C++ 原生实现，直接链接 libmamba
 - **影响**：单次 solver 调用的 Python 层开销虽小，但在依赖树复杂（Python 3.14t + Jupyter 全栈，~100+ 包）时累积显著
 - **建议**：Miniforge3 环境下始终使用 `mamba` 命令而非 `conda --solver=libmamba`
+
+> **时效边界**：本结论针对 Miniforge3/mamba 环境。conda 25.x 已将 libmamba 设为默认 solver，`conda --solver=libmamba` 的 Python 封装开销正在收敛；若未来 mamba 与 conda 底层完全统一，建议重新评估 CLI 选择。
 
 ### 洞察3：合并安装命令减少 solver 运行次数是最高 ROI 优化
 - **现象**：两次 conda 命令导致 libmamba solver 运行两次，每次 solver 都需要解析完整依赖树
@@ -145,7 +161,7 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 
 ### 模式：可复用配置资产双形态提供法
 
-**文件**：`apps/devcontainer-base/variants/shared/scripts/conda-perf-setup.sh` + `apps/devcontainer-base/variants/shared/config/condarc/condarc-performant.yaml`
+**文件**：`apps/docker-images/devcontainer-base/variants/shared/scripts/conda-perf-setup.sh` + `apps/docker-images/devcontainer-base/variants/shared/config/condarc/condarc-performant.yaml`
 
 **核心原则**：
 - 静态模板（YAML/JSON/config）：适合配置固定场景，一行 COPY 即用
@@ -162,23 +178,44 @@ Dockerfile Stage 4 从 ~50 行内联 heredoc 精简为 3 行脚本调用（通�
 | G2（洞察四元组） | 5个洞察均包含现象+根因+影响+建议 | ✅ |
 | G3（模式可迁移） | 模式文档含触发场景+核心步骤+反模式+验收标准 | ✅ |
 | G4（行动项原子化） | 3个原子提交，单一职责，Conventional Commits格式 | ✅ |
-| V（对抗审查） | 脚本健壮性（mamba fallback）、超时自动适配、Docker bind mount零开销 | ✅ |
+| V（对抗审查） | 强化的 4 视角对抗审查（§5.1）：8 条实质意见、采纳修正 4 条 | ✅ |
 | 预提交Hook | 关键文件位置✅ 敏感信息✅ 模式文档V2质量✅ UTF-8编码✅ | ✅ |
 | 工作区状态 | 所有变更已提交，工作区干净 | ✅ |
+
+### 5.1 对抗审查记录（方法论加固，2026-08-14）
+
+**4 视角审查**（魔鬼代言人/新人/老板/未来）产出 8 条实质意见，采纳修正 4 条：
+
+| # | 视角 | 审查意见 | 处理 |
+|---|------|---------|------|
+| V-A1 | 魔鬼代言人 | `6a591333` 提交统计与 git 不符（报告 2文件+55/-47 vs 实际 3文件+243/-108） | ✅ 修正 §一/§六 |
+| V-A4 | 魔鬼代言人 | "验收数据"表易被误读为冷构建已验证，实际 37s 为热构建实测 | ✅ §2.4 拆分实测/预估并加数据口径说明 |
+| V-B1 | 新人 | repodata_threads/mamba/BuildKit 等术语无解释，新人无法判断适用性 | ✅ 新增 §2.6 术语速查 |
+| V-D1 | 未来 | mamba 优于 `conda --solver=libmamba` 的结论在 conda 25.x 后可能过时 | ✅ 洞察2 补充时效边界注记 |
+| V-A2 | 魔鬼代言人 | 报告未标注行动项后续进展 | ⏭ §七 加"无新提交"进展注记 |
+| V-D2 | 未来 | 并行度 8 为经验值，未验证 16 核+/ARM64 | ⏭ 与模式文档"待验证场景"呼应，行动项1 保留 |
+| V-A3 | 魔鬼代言人 | 419s→37s 为三联优化合谋收益，未拆分单项贡献 | ⏭ 洞察3 已标注估算值，新增行动项5 单变量归因 |
+| V-C1/C3 | 老板 | 复用成本与脚本安全基线未量化 | ⏭ 新增行动项6（shellcheck + 注入审查） |
+
+**V 门判定**：意见≥5 ✅（8 条）；采纳修正≥2 ✅（4 条）；非表演式 ✅
 
 ## 六、提交记录
 
 | Hash | Type | Subject | Files | Lines |
 |------|------|---------|-------|-------|
-| `6a591333` | perf | 优化Stage 4 conda求解策略，419s降至37s | 2 | +55/-47 |
+| `6a591333` | perf | 优化Stage 4 conda求解策略，419s降至37s | 3 | +243/-108 |
 | `3256adb9` | refactor | 提取Stage 4 conda性能配置为共享可复用资产 | 6 | +370/-52 |
 | `3fee1f73` | docs | 沉淀Stage 4 conda三联优化为可复用模式文档 | 5 | +187/-10 |
 
 ## 七、下一步行动项
 
-| # | 行动项 | 优先级 | 验收标准 |
-|---|--------|--------|----------|
-| 1 | 在 CI 无缓存流水线验证冷构建 Stage 4 精确耗时 | P1 | 冷构建 Stage 4 <180s |
-| 2 | v2.3 优化 Stage 7 清理耗时（当前 126s，次要瓶颈） | P2 | Stage 7 <60s |
-| 3 | 其他 devcontainer 变体（如 jupyter-ssh-base）迁移使用 conda-perf-setup.sh | P2 | 所有变体统一使用共享脚本 |
-| 4 | conda-build-performance-triple-optimization 模式待更多项目验证后升级 L2 | P3 | validation_count ≥3 |
+> **进展注记（2026-08-14 方法论加固）**：截至本次更新，报告生成后无新开发提交，下列行动项均未推进；本次补充首步动作，并新增 2 项对抗审查派生行动项。
+
+| # | 行动项 | 优先级 | 第一步动作 | 验收标准 |
+|---|--------|--------|-----------|----------|
+| 1 | CI 无缓存流水线验证冷构建 Stage 4 精确耗时 | P1 | CI 增加 `docker build --no-cache` 计时任务 | 冷构建 Stage 4 <180s，校验 60-120s 预估 |
+| 2 | v2.3 优化 Stage 7 清理耗时（当前 126s，次要瓶颈） | P2 | 内联计时分解 Stage 7 内 126s 去向 | Stage 7 <60s |
+| 3 | 其他 devcontainer 变体迁移使用 conda-perf-setup.sh | P2 | 从 jupyter-ssh-base 变体起，Stage 4 改为 bind mount 引用共享脚本 | 所有变体统一使用共享脚本，静态对比等价 |
+| 4 | conda-build-performance-triple-optimization 模式升级 L2 | P3 | 在 ≥2 个新 conda 构建项目复用并记录 validation_count | validation_count ≥3 |
+| 5 | 拆分三联优化（O1/O2/O3）独立性能贡献（V-A3 派生） | P2 | 分别仅启用单优化项构建对比，单变量归因 | 每项优化独立耗时数据 |
+| 6 | conda-perf-setup.sh 安全基线（V-C3 派生） | P3 | 执行 shellcheck + 参数注入点审查 | 过 shellcheck，无注入风险 |
