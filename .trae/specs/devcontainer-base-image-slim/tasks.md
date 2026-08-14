@@ -125,7 +125,7 @@
     - 端到端服务验证（SSH/Docker DinD/JupyterLab/Podman）
 - **Acceptance Criteria Addressed**: AC-2, AC-4, AC-5, AC-7, AC-8
 - **Release Artifacts**:
-  - RELEASE-v2.md已生成发布说明（含性能基准数据：cp314t 8线程 5.30x加速）
+  - RELEASE-v2.md已生成发布说明（位于 docs/RELEASE-v2.md，含性能基准数据：cp314t 8线程 5.30x加速）
   - examples/free_threading_demo.py已提供并发性能示例（修复检测逻辑，使用sysconfig）
   - CI流水线已修正free-threading检测，新增cp314t环境创建验证
   - CHANGELOG.md 已记录 v2.2-ft 与 v2.2.1-ft 两个版本章节
@@ -135,7 +135,7 @@
 - **Priority**: medium
 - **Depends On**: Task 8
 - **Description**:
-  - v2.2 阶段已完成：V2.2-BUILD-PIPELINE-OPTIMIZATION.md 四视角对抗审查（魔鬼代言人/新人/老板/未来）+ 6项优化 P0/P1/P2 规划
+  - v2.2 阶段已完成：docs/v2.2-build-pipeline-optimization.md 四视角对抗审查（魔鬼代言人/新人/老板/未来）+ 6项优化 P0/P1/P2 规划
   - 已完成代码审查修复：fix(cext-template) 7078e4c0、fix(cmake-cext) a64fed68、fix(Dockerfile模板缓存挂载冲突) 6f26af4f
   - 待办：Task 8 完成后对变体构建结果做回归对抗审查（四视角：用户/运维/安全/维护）
   - 如有问题修复后重试验证
@@ -150,7 +150,7 @@
 ### 后续 V1: v2.2 构建流水线优化（conda-libmamba-ft） ✅
 - **Status**: `completed`（P0+P1 全部测试通过）
 - **Commits**: 169d036f, 5271ca29, f6e5333b, a9f11263, a64fed68, 7078e4c0, 7333e4b3, 6f26af4f
-- **文档**: [V2.2-BUILD-PIPELINE-OPTIMIZATION.md](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/V2.2-BUILD-PIPELINE-OPTIMIZATION.md)
+- **文档**: [docs/v2.2-build-pipeline-optimization.md](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/docs/v2.2-build-pipeline-optimization.md)
 - **Description**:
   - **P0 核心优化**：Dockerfile 添加 BuildKit `--mount=type=cache`（pip/conda-pkgs/libmamba 三缓存）；verify-cext.sh 参数化重构（--python/--expect-soabi/--json/--deep，11项检测）；ft-benchmark.sh quick模式 500K primes/3.0x 阈值
   - **P1 增强**：--deep-verify 可选 numpy/pandas 深度验证；conda-lock/environment.yml 精确版本锁定（python=3.14.6 cp314t 等）；micromamba 对比实验（结论：无显著优势 2.48GB vs 2.46GB）；templates/cmake-cext C扩展标准模板（CMakeLists.txt + src/ft_extension.c + build.sh + test-in-docker.sh）

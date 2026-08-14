@@ -16,17 +16,15 @@ source: "AGENTS.md#项目特有约束"
 
 ## 多阶段结构
 
-Builder + Runtime 两阶段构建，Runtime 阶段分 7 个 Stage 块：
+单 Dockerfile 7 Stage 构建（v2.2+ 架构：Miniforge3 + Python 3.14.6 cp314t 直接集成，无独立 builder stage 复制 venv）：
 
-1. **Stage 2.1/7**：系统包安装 + APT 镜像源切换 + locale/timezone 配置（变化频率：最低）
-2. **Stage 2.2/7**：Docker CE 安装（变化频率：低）
-3. **Stage 2.3/7**：Podman rootless 安装（变化频率：低）
-4. **Stage 2.4/7**：COPY venv from builder + PATH 配置（变化频率：低）
-5. **Stage 2.5/7**：用户/组 + subuid/subgid + 运行时目录 + daemon.json（变化频率：中）
-6. **Stage 2.6/7**：配置文件 COPY + 权限 + 语法验证（变化频率：高）
-7. **Stage 2.7/7**：build-info + 清理 + 最终验证（变化频率：最低）
-
-Builder 阶段安装 build-essential/python3-dev，编译 Python 虚拟环境；Runtime 阶段仅保留运行时必需包。
+1. **Stage 1/7**：系统包安装 + APT 镜像源切换 + locale/timezone 配置（变化频率：最低）
+2. **Stage 2/7**：Docker CE 安装（变化频率：低）
+3. **Stage 3/7**：Podman rootless 安装（变化频率：低）
+4. **Stage 4/7**：Miniforge3 安装 + Conda 环境创建（Python 3.14.6 cp314t + libmamba 求解器 + 核心包，变化频率：中）
+5. **Stage 5/7**：用户/组 + subuid/subgid + 运行时目录 + daemon.json（变化频率：中）
+6. **Stage 6/7**：配置文件 COPY + 权限 + 语法验证（变化频率：高）
+7. **Stage 7/7**：build-info + 9步激进清理 + 最终验证（变化频率：最低）
 
 ## 层缓存优化
 
@@ -37,10 +35,12 @@ Builder 阶段安装 build-essential/python3-dev，编译 Python 虚拟环境；
       apt-get update && apt-get install -y --no-install-recommends ...
   ```
 - pip 安装同样使用缓存挂载：`--mount=type=cache,target=/root/.cache/pip,sharing=locked`
+- Conda 包缓存使用 BuildKit 缓存挂载：`--mount=type=cache,target=/opt/conda/pkgs,sharing=locked`
+- libmamba 求解器缓存挂载：`--mount=type=cache,target=/root/.cache/conda,sharing=locked`
 - 多个 RUN 指令合并为一个（用 `&& \` 连接），减少镜像层数
 - apt-get update 和 install 在同一个 RUN 中，避免缓存过期
 - COPY 指令尽量放在靠后阶段，优先复制不常变化的文件
-- 变化频率高的配置文件 COPY 集中在 Stage 2.6，避免前面层缓存失效
+- 变化频率高的配置文件 COPY 集中在 Stage 6，避免前面层缓存失效
 
 ## 中文环境配置
 
@@ -81,9 +81,17 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 ## 体积优化
 
 - Runtime 阶段使用 `--no-install-recommends` 减少不必要的依赖
-- 多阶段构建：builder 阶段含 build-essential/python3-dev，runtime 仅 COPY venv
-- Stage 7 清理 `/tmp/*` `/var/tmp/*` 减少镜像体积
-- pip 安装使用 `--no-cache-dir`
+- 单镜像架构：Miniforge3 直接在 Stage 4 安装，无独立 builder stage 复制 venv；Conda 环境即最终运行时环境
+- Stage 7 执行 9 步激进清理：
+  1. 删除 `/usr/share/doc`、`/usr/share/man`、`/usr/share/info` 文档
+  2. 删除所有 `__pycache__` 目录和 `*.pyc`/`*.pyo` 文件
+  3. apt 清理：`apt-get clean && rm -rf /var/lib/apt/lists/*`
+  4. conda 清理：`conda clean -yafq && conda build purge-all`
+  5. pip 安装使用 `--no-cache-dir`
+  6. 删除 `/opt/conda/pkgs` 下的 tar 包和缓存
+  7. 删除静态库 `*.a`/`*.la`
+  8. 对二进制执行 `strip --strip-unneeded`
+  9. 清理 `/tmp/*` `/var/tmp/*`
 - Docker/Podman 客户端与服务端版本匹配
 
 <a id="非-root-用户规范"></a>
@@ -98,10 +106,11 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 
 ## 验证清单
 
-- [ ] `bash scripts/build.sh` 无错误，构建日志有清晰的 Stage 标记和计时
+- [ ] `bash scripts/build.sh` 无错误，构建日志有清晰的 Stage 标记和 [TIMER] 计时
 - [ ] 镜像中 `locale -a` 显示 zh_CN.UTF-8
 - [ ] 镜像中 `date` 显示 Asia/Shanghai 时区
 - [ ] `id devuser` 显示 uid=1000，groups 包含 docker
-- [ ] Python venv 在 `/opt/venv`，`/opt/venv/bin/python` 可用
+- [ ] Conda 环境在 `/opt/conda`，`/opt/conda/bin/python` 可用且为 Python 3.14.6 cp314t（free-threading）
 - [ ] Docker CLI 和 Podman CLI 均已安装
 - [ ] `dockerd --version` 与 Docker CLI 版本匹配
+- [ ] JupyterLab 通过 `/opt/conda/bin/jupyter lab` 启动

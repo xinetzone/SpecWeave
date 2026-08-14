@@ -56,7 +56,7 @@ source: "AGENTS.md#项目特有约束"
 
 **配置文件**：[config/jupyter_notebook_config.py](../../config/jupyter_notebook_config.py)、[config/supervisor/conf.d/jupyter.conf](../../config/supervisor/conf.d/jupyter.conf)
 
-- Python 虚拟环境位于 `/opt/venv`，Jupyter 安装在 venv 中
+- Python 环境位于 `/opt/conda`（Miniforge3 + Python 3.14.6 cp314t free-threading），JupyterLab 安装在 conda 环境中
 - 默认监听 `0.0.0.0:8888`
 - Notebook 工作目录为 `/workspace`
 - token 通过 `JUPYTER_TOKEN` 环境变量控制（默认 `devcontainer123`）
