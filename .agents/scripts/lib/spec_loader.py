@@ -280,6 +280,21 @@ TASK_ROUTING = {
         ],
         "description": "七概念方法论编排任务",
     },
+    "token_optimize": {
+        "keywords": ["token优化", "token optimize", "降本", "成本优化", "上下文压缩", "prompt优化", "LLM成本", "缓存命中率"],
+        "l2_specs": [
+            "commands/token-optimize.md",
+            "skills/token-optimize-cmd/SKILL.md",
+        ],
+        "description": "Token优化任务",
+    },
+    "action_first": {
+        "keywords": ["行动优先", "action first", "结论前置", "输出范式", "信噪比", "工具性交互"],
+        "l2_specs": [
+            "commands/action-first.md",
+        ],
+        "description": "行动优先输出任务",
+    },
 }
 
 STAGE_REQUIREMENTS = {
