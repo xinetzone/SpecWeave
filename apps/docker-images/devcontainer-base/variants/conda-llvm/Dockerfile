@@ -68,7 +68,7 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 RUN echo "" && \
     echo "########################################################################" && \
     echo "# [CONDA-LLVM VARIANT STAGE 1/4] PATH Verification + Timer Init" && \
-    echo "# LLVM_VERSION=${LLVM_VERSION}, CONDA_MIRROR=${CONDA_MIRROR}" && \
+    echo "# LLVM_VERSION=${LLVM_VERSION}, CONDA_MIRROR=${CONDA_MIRROR}, INSTALL_ENV=main" && \
     echo "########################################################################" && \
     echo "" && \
     _STAGE_START=$(date +%s) && \
@@ -77,12 +77,16 @@ RUN echo "" && \
     echo "[BUILD] Verifying base conda installation..." && \
     echo "  - conda path: $(which conda 2>/dev/null || echo '/opt/conda/bin/conda')" && \
     /opt/conda/bin/conda --version && \
+    echo "  - conda envs available:" && \
+    /opt/conda/bin/conda env list && \
     echo "  - PATH: $PATH" && \
     echo "" && \
     echo "[INFO] Base image verification:" && \
     echo "  - devuser exists: $(id devuser 2>&1 | head -1)" && \
     echo "  - /opt/conda exists: $(test -d /opt/conda && echo 'yes' || echo 'no')" && \
-    echo "  - PATH starts with conda bin: $(echo $PATH | grep -q '^/opt/conda/bin' && echo 'yes' || echo 'yes (via ENV)')" && \
+    echo "  - main env exists: $(test -d /opt/conda/envs/main && echo 'yes' || echo 'no')" && \
+    echo "  - main env python (expected 3.14t): $(test -x /opt/conda/envs/main/bin/python && /opt/conda/envs/main/bin/python --version 2>&1 || echo 'NOT FOUND')" && \
+    echo "  - PATH starts with main env bin: $(echo $PATH | grep -q '^/opt/conda/envs/main/bin' && echo 'yes' || echo 'checking...')" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _TOTAL=$((_NOW - $(grep '^START=' /tmp/.llvm-variant-build-timer | cut -d= -f2))) && \
