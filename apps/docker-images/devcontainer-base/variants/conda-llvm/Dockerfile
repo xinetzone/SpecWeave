@@ -4,12 +4,13 @@
 # Project: SpecWeave Full-featured Development Container - LLVM/Clang Toolchain
 # Base: devcontainer-base:${BASE_TAG} (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniforge3 conda-forge)
 # Toolchain: LLVM ${LLVM_VERSION} + Clang + CMake + Ninja + Make via conda-forge
-# PATH priority: /opt/conda/bin first (LLVM/clang/cmake/ninja directly available)
-# Python/Jupyter: runs from conda main environment (/opt/conda/envs/main)
+# Install target: conda **main** environment (Python 3.14t free-threading, default user env)
+# PATH priority: /opt/conda/envs/main/bin first (LLVM/clang/cmake/ninja + Python/Jupyter)
+# Python/Jupyter: runs from conda main environment (/opt/conda/envs/main, Python 3.14.6 ft)
 #
 # Build: docker build -f variants/conda-llvm/Dockerfile -t devcontainer-base:conda-llvm-latest .
 # CN:    docker build -f variants/conda-llvm/Dockerfile \
-#          --build-arg APT_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna --build-arg PIP_MIRROR=aliyun \
+#          --build-arg APT_MIRROR=aliyun --build-arg CONDA_MIRROR=bfsu --build-arg PIP_MIRROR=aliyun \
 #          -t devcontainer-base:conda-llvm-latest .
 # Run:   docker run -d --privileged -p 2222:22 -p 2375:2375 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -e GRANT_SUDO=yes \
@@ -17,10 +18,10 @@
 #          devcontainer-base:conda-llvm-latest
 # Verify: docker run --rm devcontainer-base:conda-llvm-latest llvm-config --version
 #
-# Variant Stage Layering (additional 4 layers on top of base image 5 stages):
-#   Stage 1/4: PATH verification + timer initialization
-#   Stage 2/4: Install LLVM/clang/cmake/ninja/make via conda-forge + aggressive cleanup
-#   Stage 3/4: Symlinks + conda-llvm-init.sh + permission verification
+# Variant Stage Layering (additional 4 layers on top of base image 7 stages):
+#   Stage 1/4: PATH verification (main env first) + timer initialization
+#   Stage 2/4: Install LLVM/clang/cmake/ninja/make into **main** env + aggressive cleanup
+#   Stage 3/4: Symlinks + permissions + verification in main env
 #   Stage 4/4: build-info + final cleanup + verification + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
@@ -28,7 +29,7 @@
 
 ARG BASE_TAG=latest
 ARG APT_MIRROR=official
-ARG CONDA_MIRROR=tuna
+ARG CONDA_MIRROR=bfsu
 ARG PIP_MIRROR=aliyun
 ARG LLVM_VERSION=22.1.8
 
@@ -44,14 +45,17 @@ ARG PIP_MIRROR
 ARG LLVM_VERSION
 
 LABEL maintainer="SpecWeave"
-LABEL description="DevContainer conda variant with LLVM/Clang/CMake/Ninja toolchain via conda-forge"
+LABEL description="DevContainer variant with LLVM/Clang/CMake/Ninja toolchain in conda main env (Python 3.14t)"
 LABEL variant="conda-llvm"
 LABEL llvm.version="${LLVM_VERSION}"
+LABEL conda.env="main (Python 3.14 free-threading)"
 
 ENV CONDA_DIR=/opt/conda \
-    LLVM_VERSION=${LLVM_VERSION}
+    LLVM_VERSION=${LLVM_VERSION} \
+    CONDA_DEFAULT_ENV=main
 
-ENV PATH=/opt/conda/bin:${PATH}
+# main env bin first (LLVM/clang/cmake/ninja + Python 3.14t/Jupyter), then base conda bin
+ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
@@ -89,7 +93,8 @@ RUN echo "" && \
 # ═══════════════════════════════════════════════════════════════════
 # Stage 2/4 (追加层2): 通过 conda-forge 安装 LLVM/clang/cmake/ninja/make + 激进清理
 # 变化频率：低（LLVM版本升级时改）
-# 原则：在 base 环境直接安装；版本锁定到 ${LLVM_VERSION}；
+# 原则：在 main 环境（Python 3.14t free-threading，默认用户环境）安装；
+#       版本锁定到 ${LLVM_VERSION}；
 #       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建；
 #       安装后进行激进清理：strip二进制、移除静态库、清理缓存
 # ═══════════════════════════════════════════════════════════════════
@@ -101,15 +106,17 @@ echo "########################################################################"
 echo "# [CONDA-LLVM VARIANT STAGE 2/4] Install LLVM Toolchain via conda-forge"
 echo "# Packages: llvmdev, clangdev, clang, lld, lldb, cmake, ninja, make"
 echo "# Version: all LLVM packages @ ${LLVM_VERSION}"
+echo "# Target env: main (Python 3.14t free-threading, default user env)"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
-echo "[ACTION] Sourcing conda.sh and activating base environment..."
+echo "[ACTION] Sourcing conda.sh and activating main environment (default user env)..."
 source /opt/conda/etc/profile.d/conda.sh
-conda activate base
-echo "[OK] base environment activated"
+conda activate main
+echo "[OK] main environment activated"
 echo "  - conda env: $CONDA_DEFAULT_ENV"
 echo "  - python: $(python --version 2>&1)"
+echo "  - python path: $(which python)"
 echo ""
 
 # ── 辅助函数：conda 包分组安装（结构化日志+计时+诊断） ──
@@ -171,11 +178,13 @@ echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│ [CLEANUP] Aggressive post-install cleanup       │"
 echo "└─────────────────────────────────────────────────┘"
-echo "[ACTION] Stripping binaries in /opt/conda/bin..."
+echo "[ACTION] Stripping binaries in conda env bin dirs..."
+find /opt/conda/envs/main/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
 find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
 echo "[OK] Binary stripping complete"
 echo ""
 echo "[ACTION] Removing static libraries (.a)..."
+find /opt/conda/envs/main/lib -name "*.a" -delete 2>/dev/null || true
 find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true
 echo "[OK] Static libraries removed"
 echo ""
@@ -212,8 +221,9 @@ echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
 source /opt/conda/etc/profile.d/conda.sh
-conda activate base
-echo "[ACTION] Verifying LLVM binaries are in PATH..."
+conda activate main
+echo "[ACTION] Verifying LLVM binaries are in PATH (main env)..."
+echo "  - conda env: $CONDA_DEFAULT_ENV"
 echo "  - which llvm-config: $(which llvm-config 2>/dev/null || echo 'NOT FOUND (checking alternatives)')"
 echo "  - which clang: $(which clang 2>/dev/null || echo 'NOT FOUND')"
 echo "  - which clang++: $(which clang++ 2>/dev/null || echo 'NOT FOUND')"
@@ -221,45 +231,49 @@ echo ""
 echo "[ACTION] Creating llvm-config symlink if needed..."
 if ! command -v llvm-config >/dev/null 2>&1; then
     echo "[INFO] llvm-config not directly in PATH, searching for alternatives..."
-    LLVM_CONFIG_BIN=$(find /opt/conda/bin -name 'llvm-config*' -type f 2>/dev/null | head -1)
+    LLVM_CONFIG_BIN=$(find /opt/conda/envs/main/bin /opt/conda/bin -name 'llvm-config*' -type f 2>/dev/null | head -1)
     if [ -n "$LLVM_CONFIG_BIN" ]; then
         echo "[INFO] Found: $LLVM_CONFIG_BIN, creating symlink..."
-        ln -sf "$LLVM_CONFIG_BIN" /opt/conda/bin/llvm-config
-        echo "[OK] llvm-config symlink created"
+        ln -sf "$LLVM_CONFIG_BIN" /opt/conda/envs/main/bin/llvm-config
+        echo "[OK] llvm-config symlink created in main env bin"
     else
-        echo "[WARN] Could not find llvm-config binary in /opt/conda/bin"
+        echo "[WARN] Could not find llvm-config binary"
     fi
 else
     echo "[OK] llvm-config already available at $(which llvm-config)"
 fi
 echo ""
-echo "[ACTION] Creating /etc/profile.d/conda-llvm-init.sh (alternative activation script)..."
+echo "[ACTION] Ensuring LLVM tools are accessible via PATH priority..."
+# main env bin is already in PATH via conda activation and /etc/environment,
+# ensure all critical tools have execute permission
+chmod a+x /opt/conda/envs/main/bin/llvm* /opt/conda/envs/main/bin/clang* /opt/conda/envs/main/bin/lld* 2>/dev/null || true
+echo "[OK] Tool permissions set"
+echo ""
+echo "[ACTION] Updating conda-init.sh to ensure main env is default..."
+# conda-init.sh already activates main, no need for separate conda-llvm-init.sh
+# but we keep backward compatibility
 printf '%s\n' \
     '#!/bin/bash' \
     '# =============================================================================' \
     '# Conda-LLVM Initialization Script for DevContainer' \
-    '# This script adds conda base environment bin to PATH (if not already there)' \
-    '# for users who want to ensure LLVM tools are accessible.' \
-    '#' \
-    '# Note: In conda-llvm variant, /opt/conda/bin is already in PATH via ENV,' \
-    '# so this script is provided for backward compatibility and login shells.' \
+    '# LLVM/clang/cmake/ninja toolchain is installed in conda main environment' \
+    '# (Python 3.14t free-threading), which is the default user environment.' \
+    '# This script ensures main environment is activated on login.' \
     '# =============================================================================' \
     '' \
     'if [ -f "/opt/conda/etc/profile.d/conda.sh" ]; then' \
     '    source "/opt/conda/etc/profile.d/conda.sh"' \
-    '    conda activate base 2>/dev/null || true' \
+    '    conda activate main 2>/dev/null || conda activate base 2>/dev/null || true' \
     'fi' \
     '' \
-    'if [[ ":$PATH:" != *":/opt/conda/bin:"* ]]; then' \
-    '    export PATH="/opt/conda/bin:$PATH"' \
-    'fi' \
     > /etc/profile.d/conda-llvm-init.sh
 chmod +x /etc/profile.d/conda-llvm-init.sh
-echo "[OK] /etc/profile.d/conda-llvm-init.sh created"
+echo "[OK] /etc/profile.d/conda-llvm-init.sh updated (main env first)"
 echo ""
 echo "[ACTION] Ensuring /opt/conda permissions for devuser..."
 chown -R root:root /opt/conda
 chmod -R a+rX /opt/conda
+find /opt/conda/envs/main/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
 find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
 echo "[OK] Permissions verified"
 echo ""
@@ -300,8 +314,8 @@ RUN echo "" && \
     CMAKE_ACTUAL_VERSION=$(cmake --version 2>&1 | head -1 | awk '{print $3}'); \
     NINJA_ACTUAL_VERSION=$(ninja --version 2>&1); \
     CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}'); \
-    PYTHON_ACTUAL_VERSION=$(/opt/conda/bin/python --version 2>&1 | awk '{print $2}'); \
-    JUPYTER_ACTUAL_VERSION=$(/opt/conda/bin/jupyter --version 2>&1 | head -1 | awk '{print $3}'); \
+    PYTHON_ACTUAL_VERSION=$(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}'); \
+    JUPYTER_ACTUAL_VERSION=$(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1 | awk '{print $3}'); \
     printf '%s\n' \
         "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
         "VARIANT=conda-llvm" \
@@ -313,15 +327,17 @@ RUN echo "" && \
         "NINJA_VERSION_ACTUAL=${NINJA_ACTUAL_VERSION}" \
         "CONDA_VERSION=${CONDA_VERSION}" \
         "PYTHON_VERSION_ACTUAL=${PYTHON_ACTUAL_VERSION}" \
+        "PYTHON_BUILD=free-threading (cp314t)" \
         "JUPYTER_VERSION_ACTUAL=${JUPYTER_ACTUAL_VERSION}" \
         "PYTHON_ENV=conda-main" \
         "CONDA_DIR=/opt/conda" \
+        "CONDA_ENV=main" \
         "CONDA_MIRROR=${CONDA_MIRROR}" \
         "PIP_MIRROR=${PIP_MIRROR}" \
         "APT_MIRROR=${APT_MIRROR}" \
-        "INSTALL_ENV=base" \
-        "PATH_PRIORITY=conda-bin-first" \
-        "ACTIVATION_SCRIPT=/etc/profile.d/conda-llvm-init.sh" \
+        "INSTALL_ENV=main (default user env)" \
+        "PATH_PRIORITY=conda-main-bin-first" \
+        "ACTIVATION_SCRIPT=/etc/profile.d/conda-init.sh (main env)" \
         "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
         "PACKAGES_INSTALLED=llvmdev,clangdev,clang,lld,lldb,cmake,ninja,make" \
         "BUILD_TIMER=enabled" \
@@ -331,8 +347,8 @@ RUN echo "" && \
     echo ""; \
     echo "[ACTION] Running final cleanup..."; \
     source /opt/conda/etc/profile.d/conda.sh && \
-    conda activate base && \
-    /opt/conda/bin/pip cache purge 2>/dev/null || true; \
+    conda activate main && \
+    pip cache purge 2>/dev/null || true; \
     apt-get clean 2>/dev/null || true; \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; \
     echo "[OK] Cleanup complete (pip cache purge, apt clean, tmp)"; \
