@@ -76,9 +76,8 @@ RUN chmod +x /tmp/conda-perf-setup.sh && \
 # ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
 # 脚本已配置好 .condarc 和 solver，直接使用 mamba 即可
 # ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
-RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
-    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
-    mamba create -y -n myenv -c conda-forge --override-channels -q \
+# 注：本模板为兼容模式不使用 BuildKit cache mount，B2 模板支持缓存加速
+RUN mamba create -y -n myenv -c conda-forge --override-channels -q \
         "python=${PYTHON_VERSION}" \
         pip \
         __CONDA_PACKAGES__ && \
@@ -86,8 +85,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
 
 # ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
 # ARG PIP_MIRROR=official
-# RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
-#     if [ "${PIP_MIRROR}" = "tuna" ]; then \
+# RUN if [ "${PIP_MIRROR}" = "tuna" ]; then \
 #         /opt/conda/envs/myenv/bin/pip config set global.index-url \
 #             https://pypi.tuna.tsinghua.edu.cn/simple && \
 #         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \

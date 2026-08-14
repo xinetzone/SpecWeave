@@ -54,6 +54,8 @@
 
 FROM __BASE_IMAGE__
 
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
 # ── 构建参数 ──
 ARG MINIFORGE_VERSION=__MINIFORGE_VER__
 ARG PYTHON_VERSION=__PYTHON_VERSION__
@@ -69,9 +71,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     && rm -rf /var/lib/apt/lists/*
 
 # ── 安装 Miniforge3（自带 mamba + conda-forge 配置） ──
-RUN wget -q "https://github.com/conda-forge/miniforge/releases/download/\
-${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" \
-        -O /tmp/miniforge.sh && \
+RUN _MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" && \
+    wget -q "$_MINIFORGE_URL" -O /tmp/miniforge.sh && \
     bash /tmp/miniforge.sh -b -p /opt/conda && \
     rm /tmp/miniforge.sh
 
@@ -95,7 +96,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     mamba create -y -n myenv -c conda-forge --override-channels -q \
-        python=${PYTHON_VERSION} \
+        "python=${PYTHON_VERSION}" \
         pip \
         __CONDA_PACKAGES__ && \
     conda clean -afy

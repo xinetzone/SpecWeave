@@ -39,7 +39,9 @@ ARG PYTHON_VERSION=__PYTHON_VERSION__
 ARG CONDA_THREADS=8
 
 # ── 系统依赖 ──
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
         wget bzip2 ca-certificates bash \
     && rm -rf /var/lib/apt/lists/*
 
