@@ -92,6 +92,7 @@ RUN --mount=type=bind,source=scripts/conda-perf-setup.sh,target=/tmp/conda-perf-
 
 # ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
 # conda pkgs 和 pip cache 都通过 cache mount 持久化，大幅加速重建
+# 注：cache mount 内容不进入镜像层，仅清理锁文件避免跨构建残留，保留已解压包供下次构建硬链接
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
@@ -99,7 +100,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         "python=${PYTHON_VERSION}" \
         pip \
         __CONDA_PACKAGES__ && \
-    conda clean -afy
+    conda clean -y -l -q 2>/dev/null || true
 
 # ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
 # RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \

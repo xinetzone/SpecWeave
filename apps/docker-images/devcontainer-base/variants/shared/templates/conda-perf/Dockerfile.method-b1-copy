@@ -76,7 +76,7 @@ RUN chmod +x /tmp/conda-perf-setup.sh && \
 # ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
 # 脚本已配置好 .condarc 和 solver，直接使用 mamba 即可
 # ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
-# 注：本模板为兼容模式不使用 BuildKit cache mount，B2 模板支持缓存加速
+# 注：本模板为兼容模式不使用 BuildKit cache mount，pkgs 进入镜像层，激进清理减小镜像体积
 RUN mamba create -y -n myenv -c conda-forge --override-channels -q \
         "python=${PYTHON_VERSION}" \
         pip \

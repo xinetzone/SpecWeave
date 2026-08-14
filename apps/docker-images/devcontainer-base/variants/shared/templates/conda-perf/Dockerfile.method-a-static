@@ -66,13 +66,14 @@ RUN conda config --set solver libmamba
 # ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
 # ⚠️  不要分两步 create + install，会导致 solver 运行两次！
 # ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
+# 注：cache mount 内容不进入镜像层，仅清理锁文件避免跨构建残留，保留已解压包供下次构建硬链接
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
     mamba create -y -n myenv -c conda-forge --override-channels -q \
         "python=${PYTHON_VERSION}" \
         pip \
         __CONDA_PACKAGES__ && \
-    conda clean -afy
+    conda clean -y -l -q 2>/dev/null || true
 
 # ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
 # RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
