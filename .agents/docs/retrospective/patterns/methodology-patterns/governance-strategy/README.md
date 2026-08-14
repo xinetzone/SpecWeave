@@ -26,6 +26,7 @@ date: "2026-07-09"
 | [V阶段对抗审查「用户视角优先」权重分配模式](adversarial-perspective-weighting.md) | V阶段对抗审查「用户视角优先」权重分配模式 | L1 |  |
 | [两栖定位模型（Amphibious Positioning Model）](amphibious-positioning-model.md) | 两栖定位模型（Amphibious Positioning Model） | L1 |  |
 | [信息架构优先于算法补全：结构决定连接](architecture-over-algorithm.md) | 系统的连接性由结构决定而非算法补全：大量孤立节点的根因通常是信息架构缺陷（无分层分类、无导航路径、未定义语义关系），而非算法不足。好的架构天然消除80%以上孤立问题，算法只应处理剩余边缘案例。决策框架：孤立率>50%先做架构，<20%可用算法补全。正反验证：best-practices（0孤立，无算法）vs adversarial-review（67孤立，有配置）。 | L1 | `信息架构` `推荐算法` `知识图谱` |
+| [资产复用最后一公里：配套集成指南](asset-reuse-last-mile-integration-guide.md) | 沉淀共享资产时同步配套「快速集成指南」六段式（资产清单/集成方式/参数表/FAQ/调优档位/验证方法），形成「资产→指南→模式→报告」引用闭环，解决"资产存在≠可复用"的最后一公里问题 | L1 | `资产复用` `集成指南` `最后一公里` `复用门槛` |
 | [自动化统计三防线模式：路径校验→环比告警→人工复盘](automated-stats-three-defense-lines.md) | 自动化统计三防线模式：路径校验→环比告警→人工复盘 | L1 |  |
 | [可得性启发结构性防范模式（Availability Heuristic Structural Guard）](availability-heuristic-structural-guard.md) | 可得性启发结构性防范模式（Availability Heuristic Structural Guard） | L1 |  |
 | [公理系统一致性第一性原理（Axiom System: Consistency Enables Composability）](axiom-system-consistency-principle.md) | 公理系统一致性第一性原理（Axiom System: Consistency Enables Composability） | L2 | `第一性原理` `公理系统` `一致性` |
@@ -98,6 +99,7 @@ date: "2026-07-09"
 | [存量业务系统智能化改造5步SOP](P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md) | 存量业务系统智能化改造5步SOP | L1 |  |
 | [知识类项目Spec「硬软AC双轨验收」模式](P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.md) | 知识类项目Spec「硬软AC双轨验收」模式 | L1 |  |
 | [模式渐进式工具提取：L1实验阶段即可提取轻量工具](pattern-tooling-progressive-extraction.md) | 模式渐进式工具提取：L1实验阶段即可提取轻量工具 | L1 | `pattern-tooling` `progressive-extraction` `checklist` |
+| [性能优化五步法：测量→诊断→优化→验证→萃取](performance-optimization-five-step-method.md) | 性能优化五步法：先测量量化基线→第一性原理诊断根因→一次只改一个变量优化→性能+功能双重验证→立即萃取为资产，解决"凭感觉优化"的盲目调参/无法归因/功能回退/重复劳动四类失败模式 | L1 | `性能优化` `五步法` `测量优先` `单变量归因` `萃取闭环` |
 | [分层渐进优化策略：安全场景先行+复杂场景后置的风险控制方法论](phased-incremental-optimization.md) | 分层渐进优化策略：安全场景先行+复杂场景后置的风险控制方法论 | L2-validated | `optimization` `risk-control` `phased-delivery` |
 | [方法论推广渐进式验证模式](phased-rollout-validation.md) | 方法论推广渐进式验证模式 | L2 |  |
 | [践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law）](practice-gap-recursive-practice.md) | 践行鸿沟与递归践行定律（Practice Gap & Recursive Practice Law） | L3 | `践行鸿沟` `递归践行` `认知偏差` |

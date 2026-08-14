@@ -7,6 +7,7 @@ maturity_note: "devcontainer-base v2.2→v2.2.1 Stage 4 实战验证（419s→37
 source:
   - "devcontainer-base v2.2.1 (v2.2.1-opt): Stage 4 conda环境创建从419s优化至37s"
   - "retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814 洞察4+洞察5+模式3"
+  - "retrospective-devcontainer-v221-conda-perf-20260814 洞察1+洞察2+洞察3"
 related_patterns:
   - "conda-docker-multistage-best-practices.md"
   - "conda-abi-variant-safe-switching.md"
@@ -14,6 +15,8 @@ related_patterns:
   - "docker-build-four-layer-verification.md"
   - "dockerfile-build-timer-monitoring.md"
   - "container-build-env-optimization.md"
+  - "config-asset-dual-form.md"
+  - "performance-optimization-five-step-method.md"
 tags: ["conda", "mamba", "libmamba", "build-performance", "docker-buildkit", "parallelism", "solver-optimization", "cache-mount", "build-timing"]
 validation_count: 1
 reuse_count: 0

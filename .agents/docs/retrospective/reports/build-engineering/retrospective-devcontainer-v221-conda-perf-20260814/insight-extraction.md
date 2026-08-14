@@ -5,14 +5,18 @@ source: retrospective-devcontainer-v221-conda-perf-20260814
 type: insight-extraction
 maturity: "L1-实战验证"
 validation_count: 2
-note: "2026-08-14 第2轮加固：跨项目集成指南（b84631a0）二次验证洞察4/5，新增洞察7（复用最后一公里）"
+note: "2026-08-14 第2轮加固：跨项目集成指南（b84631a0）二次验证洞察4/5，新增洞察7（复用最后一公里）；第3轮归档：洞察4+5→config-asset-dual-form、洞察6→performance-optimization-five-step-method、洞察7→asset-reuse-last-mile-integration-guide"
 ---
 
 # 洞察萃取：conda构建性能优化+配置资产化
 
 > 来源：devcontainer-base v2.2.1 Stage 4 conda求解性能优化（419s→37s，11.3x加速）
 > 方法论：七概念 R-I-E-C 链路
-> 关联模式：[conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md)
+> 关联模式：
+> - [conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md)（洞察1-3：三联优化）
+> - [config-asset-dual-form.md](../../../patterns/code-patterns/config-asset-dual-form.md)（洞察4+5：配置资产化双形态）← 本次归档新增
+> - [performance-optimization-five-step-method.md](../../../patterns/methodology-patterns/governance-strategy/performance-optimization-five-step-method.md)（洞察6：五步法）← 本次归档新增
+> - [asset-reuse-last-mile-integration-guide.md](../../../patterns/methodology-patterns/governance-strategy/asset-reuse-last-mile-integration-guide.md)（洞察7：集成指南最后一公里）← 本次归档新增
 > 关联资产：apps/docker-images/devcontainer-base/variants/shared/scripts/conda-perf-setup.sh
 
 ---
@@ -113,5 +117,8 @@ note: "2026-08-14 第2轮加固：跨项目集成指南（b84631a0）二次验�
 - [x] CHANGELOG记录萃取内容和用法
 - [x] 模式文档存入 patterns/code-patterns/
 - [x] 跨项目快速集成指南（CONDA-PERF-INTEGRATION-GUIDE.md，提交 b84631a0）
+- [x] 洞察4+5归档为 config-asset-dual-form 模式（code-patterns）← 2026-08-14 本次归档
+- [x] 洞察6归档为 performance-optimization-five-step-method 模式（governance-strategy）← 2026-08-14 本次归档
+- [x] 洞察7归档为 asset-reuse-last-mile-integration-guide 模式（governance-strategy）← 2026-08-14 本次归档
 - [ ] 其他devcontainer变体（jupyter-ssh-base等）迁移使用共享脚本
 - [ ] CI无缓存流水线验证冷构建精确耗时
