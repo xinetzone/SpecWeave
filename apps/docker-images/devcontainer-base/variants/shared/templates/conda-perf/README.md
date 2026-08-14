@@ -4,11 +4,13 @@
 
 ## 模板选择指南
 
-| 模板文件 | 方式 | 复杂度 | 需要复制的文件 | 适用场景 |
-|---------|------|--------|--------------|---------|
-| `Dockerfile.method-a-static` | A: 静态 YAML | ★☆☆☆☆ | Dockerfile + 1个YAML | 镜像源固定、追求最简配置 |
-| `Dockerfile.method-b1-copy` | B1: COPY 脚本 | ★★☆☆☆ | Dockerfile + 1个Shell脚本 | 需要动态切换镜像源、兼容性优先 |
-| `Dockerfile.method-b2-bindmount` | B2: BuildKit bind mount | ★★☆☆☆ | Dockerfile + 1个Shell脚本 | **推荐**：零镜像层、需要BuildKit |
+| 模板文件 | 方式 | 复杂度 | BuildKit | 需要复制的文件 | 适用场景 |
+|---------|------|--------|:---:|--------------|---------|
+| `Dockerfile.method-a-static` | A: 静态 YAML | ★☆☆☆☆ | 需要 | Dockerfile + 1个YAML | 镜像源固定、追求最简配置 |
+| `Dockerfile.method-b1-copy` | B1: COPY 脚本 | ★★☆☆☆ | 需要 | Dockerfile + 1个Shell脚本 | 偏好传统COPY方式、动态切换镜像源 |
+| `Dockerfile.method-b2-bindmount` | B2: BuildKit bind mount | ★★☆☆☆ | **需要（推荐）** | Dockerfile + 1个Shell脚本 | **推荐**：零镜像层、脚本变更不影响缓存 |
+
+> 💡 **三种模板均使用 BuildKit cache mount** 加速重建。B1 与 B2 的核心区别是脚本传递方式：B1 用 COPY 写入镜像层（脚本变更会导致后续层缓存失效），B2 用 bind mount 零层挂载（脚本变更不影响后续层缓存）。若镜像源固定不需要动态切换，用 A 最简。
 
 ## 快速开始（方式 B2，推荐）
 
@@ -64,29 +66,26 @@ docker run --rm -it my-conda-app python -c "import numpy; print(numpy.__version_
 
 **关键理解**：Docker 构建时每条 `RUN` 指令的缓存 key 由父层 hash + 指令文本 + 输入文件 checksum 共同决定。
 
-- **COPY 脚本**：脚本文件 checksum 成为该层 hash 的一部分。脚本任何修改（包括注释）都会改变层 hash，导致**所有后续层**缓存失效。在无 BuildKit cache mount 的 B1 模式下，这意味着 `mamba create` 需要重新下载全部包。
+- **COPY 脚本**：脚本文件 checksum 成为该层 hash 的一部分。脚本任何修改（包括注释）都会改变层 hash，导致**所有后续层**缓存失效。虽然 B1 也使用了 cache mount（已下载的包不重复下载），但 `mamba create` 层需要重新执行 solver（~20-40s），且 COPY 产生一个额外镜像层（~5KB）。
 - **bind mount 脚本**：脚本内容 hash 是该 RUN 指令 cache key 的一部分（脚本变则该 RUN 重跑），但 **bind mount 不写入镜像层**。如果脚本输出（.condarc 内容）完全相同，产出的层 digest 不变，后续层（mamba create）仍可命中缓存；即使配置变了导致后续层重跑，cache mount 里已下载的包也能让求解器跳过下载。
 
 ### 性能对比（典型场景：numpy + pandas + jupyterlab，约 1.2GB 包）
 
 > 数据基于国内 TUNA 镜像 + 8 线程场景估算，实际耗时因网络带宽/CPU/磁盘速度而异。假设 Dockerfile 层顺序正确（COPY 应用代码在最后）。
 
-| 构建场景 | Method A (静态YAML, BuildKit) | Method B1 (COPY脚本, 无BuildKit) | Method B2 (bind mount, BuildKit 推荐) |
+| 构建场景 | Method A (静态YAML) | Method B1 (COPY脚本) | Method B2 (bind mount 推荐) |
 |---------|:---:|:---:|:---:|
 | **首次构建（冷缓存，全量下载）** | ~120-180s | ~120-180s | ~120-180s |
 | **仅代码变更（配置/包均未变）** | ~3-8s ⚡ | ~3-8s ⚡ | ~3-8s ⚡ |
-| **脚本注释/格式微调（输出不变）** | N/A（无脚本） | 🔴 ~120-180s（全层失效+无缓存） | **~3-8s** ⚡（层 digest 不变） |
-| **配置变更（镜像源/线程数，包未变）** | ~20-40s（cache mount 命中包） | 🔴 ~120-180s（全量重下） | **~20-40s**（cache mount 命中包） |
-| **新增一个包（暖缓存）** | ~20-40s | ~120-180s（无缓存，全量重下） | **~20-40s** |
-| **镜像大小额外开销** | +0KB | +~5KB（脚本文件层） | **+0KB** |
+| **配置文件/脚本注释微调（输出不变）** | ~20-40s（COPY层失效，re-solve） | ~20-40s（COPY层失效，re-solve） | **~3-8s** ⚡（层digest不变） |
+| **配置变更（镜像源/线程数，包未变）** | ~20-40s（cache mount命中包） | ~20-40s（cache mount命中包） | ~20-40s（cache mount命中包） |
+| **新增一个包（暖缓存）** | ~20-40s | ~20-40s | ~20-40s |
+| **镜像大小额外开销** | +~0.5KB（YAML层） | +~5KB（脚本层） | **+0KB** |
 | **并发构建安全** | ✅ | ✅ | ✅ (sharing=locked) |
 
-**B2 的核心优势**：
-1. **脚本微调场景**：修改注释/日志/格式但输出不变时，20-60x 加速（3-8s vs 2-3 分钟）
-2. **零镜像层开销**：脚本不进入镜像，节省 5KB（虽然微乎其微，但理念更干净）
-3. **配置迭代场景**：即使切换镜像源/调整线程数触发环境层重跑，cache mount 确保已下载的包不重复下载，仅 re-solve 耗时 20-40s 而非重新下载 2-3 分钟
+**B2 为什么是推荐方案**：三种模板在冷构建和配置变更场景性能相当（都受益于 cache mount），核心差异在于**脚本/配置微调场景**——B2 的 bind mount 机制使脚本变更不写入镜像层，输出不变时后续层直接命中缓存，实现 3-8s 重建；而 B1 的 COPY 机制会导致后续层失效，即使 cache mount 命中已下载的包，仍需 20-40s 重新求解。对于频繁迭代配置的开发阶段，B2 提供约 5-10x 的微调加速。
 
-> 💡 **Method A 也用了 BuildKit cache mount**，所以在配置变更/新增包场景也能享受包缓存加速（~20-40s）。A 不适合需要动态切换镜像源的场景（需要换 YAML 文件重新 COPY），B2 通过 build-arg 动态切换无需修改任何文件。
+> 💡 **Method A 最简**：不需要脚本，仅一个 YAML 文件 + 一行 COPY，适合镜像源固定、不需要动态切换的项目。B1 适合偏好传统 COPY 方式且不介意脚本变更触发 re-solve 的场景。
 
 ### cache mount 路径规范（避免冲突）
 
@@ -221,7 +220,7 @@ BuildKit `--mount=type=cache` 挂载的目录是**构建时缓存**，其内容*
 - 镜像只包含 `envs/myenv/` 中实际安装的文件（硬链接或拷贝）
 - 因此在有 cache mount 的 RUN 中，**不要**用 `conda clean -afy` 激进清理——那只会清掉缓存中下次构建可复用的包，却不能减小镜像
 - 正确做法：`conda clean -y -l -q` 仅清理锁文件（防止跨构建残留锁），保留已解压包供下次硬链接复用
-- 仅在无 cache mount 时（如 B1 兼容模式），才用 `conda clean -afy` 激进清理减小镜像层体积
+- 仅在不使用 BuildKit 的传统构建（无 `--mount=type=cache`）时，才用 `conda clean -afy` 激进清理减小镜像层体积。本仓库提供的三种模板均使用 cache mount，统一使用 `-y -l -q`。
 
 ### 常见陷阱
 

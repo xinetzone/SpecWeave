@@ -2,9 +2,10 @@
 # =============================================================================
 # Conda 高性能环境 Dockerfile 模板 — 方式 B1：COPY 动态脚本
 #
-# 适用场景：需要通过 build-arg 动态切换镜像源/调整线程数
-# 复杂度：★★☆☆☆（兼容性好，COPY 脚本执行）
+# 适用场景：需要通过 build-arg 动态切换镜像源/调整线程数，偏好传统 COPY 方式
+# 复杂度：★★☆☆☆（COPY 脚本执行，概念直观）
 # 特点：环境变量参数化、镜像源自动超时适配、mamba 不可用自动 fallback
+# 与 B2 的区别：B1 用 COPY 将脚本写入镜像层（更直观），B2 用 bind mount（零层）
 #
 # ⚠️  使用前需要复制的文件：
 #   1. 本文件（Dockerfile）
@@ -12,17 +13,21 @@
 #      来源：variants/shared/scripts/conda-perf-setup.sh
 #      放置：与本 Dockerfile 同级目录（或 docker/ 子目录，需修改 COPY 路径）
 #
+# 前置条件：必须启用 BuildKit（用于 cache mount 加速）
+#   export DOCKER_BUILDKIT=1          # Linux/macOS
+#   $env:DOCKER_BUILDKIT=1            # Windows PowerShell
+#
 # 构建命令：
 #   # 国际网络（官方源，默认8线程）
-#   docker build -t my-conda-app -f Dockerfile.method-b1-copy .
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app -f Dockerfile.method-b1-copy .
 #
 #   # 中国大陆（清华 TUNA，8线程）
-#   docker build -t my-conda-app -f Dockerfile.method-b1-copy \
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app -f Dockerfile.method-b1-copy \
 #       --build-arg CONDA_MIRROR=tuna \
 #       --build-arg CONDA_THREADS=8 .
 #
 #   # 中国大陆（阿里镜像，16线程）
-#   docker build -t my-conda-app -f Dockerfile.method-b1-copy \
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app -f Dockerfile.method-b1-copy \
 #       --build-arg CONDA_MIRROR=aliyun \
 #       --build-arg CONDA_THREADS=16 .
 #
@@ -48,10 +53,13 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 ARG MINIFORGE_VERSION=__MINIFORGE_VER__
 ARG PYTHON_VERSION=__PYTHON_VERSION__
 ARG CONDA_MIRROR=official
+ARG PIP_MIRROR=official
 ARG CONDA_THREADS=8
 
 # ── 系统依赖 ──
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
         wget bzip2 ca-certificates bash \
     && rm -rf /var/lib/apt/lists/*
 
@@ -76,16 +84,18 @@ RUN chmod +x /tmp/conda-perf-setup.sh && \
 # ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
 # 脚本已配置好 .condarc 和 solver，直接使用 mamba 即可
 # ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
-# 注：本模板为兼容模式不使用 BuildKit cache mount，pkgs 进入镜像层，激进清理减小镜像体积
-RUN mamba create -y -n myenv -c conda-forge --override-channels -q \
+# 注：cache mount 内容不进入镜像层，仅清理锁文件避免跨构建残留，保留已解压包供下次构建硬链接
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    mamba create -y -n myenv -c conda-forge --override-channels -q \
         "python=${PYTHON_VERSION}" \
         pip \
         __CONDA_PACKAGES__ && \
-    conda clean -afy
+    conda clean -y -l -q 2>/dev/null || true
 
 # ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
-# ARG PIP_MIRROR=official
-# RUN if [ "${PIP_MIRROR}" = "tuna" ]; then \
+# RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+#     if [ "${PIP_MIRROR}" = "tuna" ]; then \
 #         /opt/conda/envs/myenv/bin/pip config set global.index-url \
 #             https://pypi.tuna.tsinghua.edu.cn/simple && \
 #         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
