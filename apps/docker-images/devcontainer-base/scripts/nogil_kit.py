@@ -212,6 +212,11 @@ class PoolProbe:
                               进程池该值含 fork/spawn 成本，即真实的"启动耗时"
       - result_bytes        : 单个 worker 结果的 pickle 序列化大小（进程池往返成本）
 
+    健壮性设计（测量 API 永不抛出，失败降级为 error 字段）：
+      - 瞬时故障（BrokenProcessPool/fork 资源不足等）自动重试，线性退避
+      - 重试用尽后返回 {"error": ..., "attempts": N}，不中断其余池的测量
+      - mp_method 在构造期校验，非法值立即 ValueError（配置错误应显式失败）
+
     用法：
 
         probe = PoolProbe(workers=8, payload=50_000)
@@ -224,23 +229,44 @@ class PoolProbe:
     """
 
     def __init__(self, workers: int = 8, payload: int = 50_000,
-                 mp_method: str | None = None):
+                 mp_method: str | None = None,
+                 retries: int = 2, retry_delay: float = 0.5):
         """
         参数：
-            workers   每种池的 worker 数
-            payload   每个 worker 的素数上界（探针负载规模）
-            mp_method 进程池 start_method；None 表示 fork 优先、平台不支持时回退默认
+            workers     每种池的 worker 数
+            payload     每个 worker 的素数上界（探针负载规模）
+            mp_method   进程池 start_method；None 表示 fork 优先、平台不支持时回退默认
+            retries     单次测量失败后的重试次数（默认 2，即最多尝试 3 轮）
+            retry_delay 首次重试前的基础等待秒数，线性退避（delay × 尝试轮次）
         """
         import multiprocessing as mp
         self.workers = workers
         self.payload = payload
+        self.retries = max(0, retries)
+        self.retry_delay = max(0.0, retry_delay)
         if mp_method is None:
             mp_method = ("fork" if "fork" in mp.get_all_start_methods()
                          else mp.get_start_method())
+        elif mp_method not in mp.get_all_start_methods():
+            raise ValueError(
+                f"mp_method={mp_method!r} 在本平台不可用，"
+                f"可选: {sorted(mp.get_all_start_methods())}")
         self.mp_method = mp_method
 
+    def _with_retry(self, measure_fn) -> dict:
+        """带重试的测量执行：异常触发重试（线性退避），用尽后降级为 error dict。"""
+        last_err: Exception | None = None
+        for attempt in range(self.retries + 1):
+            if attempt:
+                time.sleep(self.retry_delay * attempt)
+            try:
+                return measure_fn()
+            except Exception as e:  # BrokenProcessPool/OSError/pickle 等瞬时或永久异常
+                last_err = e
+        return {"error": repr(last_err), "attempts": self.retries + 1}
+
     def _measure(self, factory, **kw) -> dict:
-        """对给定 Executor 工厂执行一轮测量（构造 → 提交 → 收集）。"""
+        """对给定 Executor 工厂执行一轮测量（构造 → 提交 → 收集）；异常向上抛由重试层处理。"""
         t_create = time.perf_counter()
         with factory(self.workers, **kw) as ex:
             create_s = time.perf_counter() - t_create
@@ -259,20 +285,24 @@ class PoolProbe:
         }
 
     def measure_thread_pool(self) -> dict:
-        """测量 ThreadPoolExecutor 的启动开销。"""
-        return self._measure(ThreadPoolExecutor)
+        """测量 ThreadPoolExecutor 的启动开销（失败自动重试，用尽返回 error dict）。"""
+        return self._with_retry(lambda: self._measure(ThreadPoolExecutor))
 
     def measure_process_pool(self) -> dict:
-        """测量 ProcessPoolExecutor 的启动开销（含 fork/spawn 成本）。"""
+        """测量 ProcessPoolExecutor 的启动开销（含 fork/spawn 成本；失败自动重试）。"""
         import multiprocessing as mp
         from concurrent.futures import ProcessPoolExecutor
-        d = self._measure(ProcessPoolExecutor,
-                          mp_context=mp.get_context(self.mp_method))
-        d["start_method"] = self.mp_method
-        return d
+
+        def _do() -> dict:
+            d = self._measure(ProcessPoolExecutor,
+                              mp_context=mp.get_context(self.mp_method))
+            d["start_method"] = self.mp_method
+            return d
+
+        return self._with_retry(_do)
 
     def run(self) -> dict:
-        """全量测量：线程池 + 进程池，返回完整埋点 dict。"""
+        """全量测量：线程池 + 进程池独立容错，结构始终完整，返回埋点 dict。"""
         return {
             "workers": self.workers, "payload": self.payload,
             "pickle_protocol": pickle.HIGHEST_PROTOCOL,
@@ -291,6 +321,10 @@ class PoolProbe:
         for kind in ("thread", "process"):
             d = t.get(kind) or {}
             if not d:
+                continue
+            if "error" in d:  # 单池测量失败：报告失败原因与尝试次数，不影响其余行
+                n = d.get("attempts", 1)
+                lines.append(f"[probe] {kind}: 测量失败（尝试 {n} 次）: {d['error']}")
                 continue
             lags = d.get("spawn_lag_seconds") or [0.0]
             lines.append(
