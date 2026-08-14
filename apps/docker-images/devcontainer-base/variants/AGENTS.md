@@ -22,8 +22,7 @@
 - **核心功能**：多变体统一构建（拓扑排序）、构建阶段计时、逐条验证、国内镜像源支持、模板化新增
 - **共享组件**：`shared/lib/logging.sh`（结构化日志库，双格式text+JSON）
 - **可用变体**：
-  - `conda`：Miniconda3 基础环境（基于 devcontainer-base:latest）
-  - `conda-llvm`：conda + LLVM 22.1.8/clang/cmake/ninja 编译工具链（基于 conda 变体）
+  - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
   - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
   - `onnx-quantized`：onnx-pytorch + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，基于 onnx-pytorch 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
@@ -65,12 +64,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ .env.example
                  │   ├─ README.md
                  │   └─ .agents/rules/dockerfile.md
-                 ├─ conda/                 ← Miniconda3 变体
-                 │   ├─ Dockerfile
-                 │   ├─ .env.example
-                 │   ├─ README.md
-                 │   └─ .agents/rules/dockerfile.md
-                 ├─ conda-llvm/            ← conda+LLVM 变体
+                 ├─ conda-llvm/            ← 基础镜像+LLVM 变体（镜像源已内置）
                  │   ├─ Dockerfile
                  │   ├─ .env.example
                  │   ├─ README.md
@@ -100,8 +94,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 |---------|---------|------|
 | 修改/理解 build.sh 构建逻辑 | [.agents/rules/build-orchestration.md](.agents/rules/build-orchestration.md) | VARIANTS数组格式（`|`分隔）、拓扑排序、构建参数传递、[TIMER]日志解析、逐条验证机制、独立构建脚本约定 |
 | 编写/修改变体 Dockerfile | [.agents/rules/variant-conventions.md](.agents/rules/variant-conventions.md) | FROM继承模式、SHELL重置、禁止覆盖项、PATH优先级、缓存挂载规范、[VALIDATION CHECKPOINT] |
-| conda 变体 Dockerfile | [conda/.agents/rules/dockerfile.md](conda/.agents/rules/dockerfile.md) | Miniconda安装路径、不自动激活原则、conda-init.sh、镜像源配置 |
-| conda-llvm 变体 Dockerfile | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM安装、clang/cmake/ninja、PATH配置 |
+| conda-llvm 变体 Dockerfile | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM安装、clang/cmake/ninja、PATH配置（镜像源已内置基础镜像） |
 | onnx-pytorch 变体 Dockerfile | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU安装、ONNX生态、PATH优先级（/opt/conda/bin最前）、4追加阶段 |
 | onnx-quantized 变体 Dockerfile | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | onnxruntime.quantization量化工具链、FP16/INT8、neural-compressor可选、共享脚本COPY模式 |
 | 编写/运行测试脚本 | [.agents/rules/testing.md](.agents/rules/testing.md) | L1-L6六层测试策略、脚本模板、pass/fail辅助函数、冒烟验证vs完整测试对比 |
@@ -109,7 +102,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 共享日志库使用 | [shared/lib/logging.sh](shared/lib/logging.sh) | log_info/log_ok/log_error/log_step/log_metric/log_event/log_summary API |
 | 基础镜像构建规范 | [../.agents/rules/dockerfile.md](../.agents/rules/dockerfile.md) | 回退到父级 devcontainer-base Dockerfile规范 |
 | 全局规则（提交/代码风格） | [../../../AGENTS.md](../../../AGENTS.md) | 回退到 SpecWeave 根工作区 |
-| Skill使用 | [../../../.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| Skill使用 | [../../../.agents/skills/](../../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
 
 ## 核心规范入口
 
@@ -122,11 +115,10 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 变体共享约定 | [.agents/rules/variant-conventions.md](.agents/rules/variant-conventions.md) | FROM模式、禁止覆盖项、PATH优先级、缓存挂载、验证检查点 |
 | 测试规范 | [.agents/rules/testing.md](.agents/rules/testing.md) | 6层测试策略、脚本模板、快速验证vs完整测试 |
 | 新增变体操南 | [.agents/rules/new-variant-guide.md](.agents/rules/new-variant-guide.md) | 7步新增流程、模板占位符、注册检查清单 |
-| conda变体规范 | [conda/.agents/rules/dockerfile.md](conda/.agents/rules/dockerfile.md) | Miniconda变体特有Dockerfile规则 |
 | conda-llvm变体规范 | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM/clang变体特有Dockerfile规则 |
 | onnx-pytorch变体规范 | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU+ONNX Runtime变体特有规则 |
 | onnx-quantized变体规范 | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | ONNX量化工具链变体特有规则 |
-| 共享镜像源脚本 | [shared/scripts/conda-mirror-setup.sh](shared/scripts/conda-mirror-setup.sh) | conda/pip镜像源配置（环境变量驱动） |
+| 共享性能配置脚本 | [shared/scripts/conda-perf-setup.sh](shared/scripts/conda-perf-setup.sh) | conda性能参数配置（线程、超时、solver）；镜像源已内置基础镜像 |
 | 新变体模板 | [_template/](_template/) | 复制模板创建新变体 |
 | 人类可读文档 | [README.md](README.md) | 变体列表和快速开始（面向人类用户） |
 

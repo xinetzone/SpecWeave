@@ -1,0 +1,122 @@
+# =============================================================================
+# devcontainer-base — IDE 桥接模式专用 Compose 配置
+# =============================================================================
+# 基于「容器开发服务宿主桥接模式」五要素：
+#   1. 服务绑定0.0.0.0（镜像内已配置，无需额外处理）
+#   2. 端口映射（SSH 2222、Jupyter 8888）
+#   3. 认证配置（JUPYTER_TOKEN / USER_PASSWORD）
+#   4. CORS 跨域（JUPYTER_ALLOW_ORIGIN=*，IDE WebView必需）
+#   5. 文件卷挂载（./workspace ↔ /workspace，双向同步）
+#
+# 使用方式：
+#   # 方式1：独立启动（DinD模式，推荐）
+#   docker compose -f docker-compose.ide.yml up -d
+#
+#   # 方式2：与主配置叠加使用
+#   docker compose -f docker-compose.yml -f docker-compose.ide.yml --profile dind up -d
+#
+#   # 自定义token/密码
+#   JUPYTER_TOKEN=mysecret USER_PASSWORD=mypass docker compose -f docker-compose.ide.yml up -d
+#
+# IDE 连接：
+#   VSCode/Trae → Ctrl+Shift+P → Jupyter: Specify Jupyter Server → Existing
+#   → 输入 http://localhost:8888/?token=<JUPYTER_TOKEN>
+# =============================================================================
+
+services:
+  # ── IDE 桥接模式（DinD 全功能版）────────────────────────────────────────
+  dev-ide:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-base:1.0
+    container_name: devcontainer-ide
+    privileged: true
+    ports:
+      # ── 要素2：端口映射 ──
+      - "${SSH_PORT:-2222}:22"           # SSH 访问
+      - "${JUPYTER_PORT:-8888}:8888"     # Jupyter Server（IDE连接入口）
+    volumes:
+      # ── 要素5：文件卷挂载 ──
+      # 工作目录：宿主机 ./workspace ↔ 容器 /workspace（双向实时同步）
+      - ./workspace:/workspace
+      # Docker 数据持久化（镜像/容器/卷不丢失）
+      - ide-docker-storage:/var/lib/docker
+      # conda包缓存（加速重启后的包可用性，可选）
+      - ide-conda-pkgs:/opt/conda/pkgs
+    environment:
+      # ── 要素3：认证配置 ──
+      - USER_PASSWORD=${USER_PASSWORD:-devpass}
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN:-devtoken123}
+      # ── 要素4：CORS 跨域配置（IDE WebView必需，缺失则静默失败） ──
+      - JUPYTER_ALLOW_ORIGIN=${JUPYTER_ALLOW_ORIGIN:-*}
+      # ── 其他基础配置 ──
+      - GRANT_SUDO=${GRANT_SUDO:-yes}
+      - TZ=${TZ:-Asia/Shanghai}
+      - LANG=${LANG:-zh_CN.UTF-8}
+      - ENABLE_SSH=yes
+      - ENABLE_DOCKER=yes
+      - ENABLE_JUPYTER=yes
+      - ENABLE_PODMAN=no
+      - ALLOW_ROOT_SSH=no
+      - DEBUG=${DEBUG:-0}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    tty: true
+    stdin_open: true
+    # ── 资源限制（可按需调整） ──
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 8G
+    #       cpus: '4.0'
+    #     reservations:
+    #       memory: 2G
+
+  # ── IDE 桥接模式（DooD 轻量版，挂载宿主机Docker） ──────────────────────
+  # 启用方式：docker compose -f docker-compose.ide.yml --profile dood up -d
+  dev-ide-dood:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devcontainer-base:1.0
+    container_name: devcontainer-ide-dood
+    profiles: ["dood"]
+    ports:
+      - "${SSH_PORT_DOOD:-2223}:22"
+      - "${JUPYTER_PORT_DOOD:-8889}:8888"
+    volumes:
+      - ./workspace:/workspace
+      # DooD模式：挂载宿主机Docker Socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ide-conda-pkgs-dood:/opt/conda/pkgs
+    environment:
+      - USER_PASSWORD=${USER_PASSWORD:-devpass}
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN:-devtoken123}
+      - JUPYTER_ALLOW_ORIGIN=${JUPYTER_ALLOW_ORIGIN:-*}
+      - GRANT_SUDO=${GRANT_SUDO:-yes}
+      - TZ=${TZ:-Asia/Shanghai}
+      - LANG=${LANG:-zh_CN.UTF-8}
+      - ENABLE_SSH=yes
+      - ENABLE_DOCKER=yes
+      - ENABLE_JUPYTER=yes
+      - ENABLE_PODMAN=no
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    tty: true
+    stdin_open: true
+
+volumes:
+  ide-docker-storage:
+  ide-conda-pkgs:
+  ide-conda-pkgs-dood:

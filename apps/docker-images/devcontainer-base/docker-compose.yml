@@ -47,6 +47,7 @@ services:
     environment:
       <<: *common-env
       JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+      JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
       ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}
       ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
     restart: unless-stopped
@@ -76,6 +77,7 @@ services:
     environment:
       <<: *common-env
       JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+      JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
       ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}  # 当检测到 Docker Socket 时，entrypoint 会自动禁用内部 dockerd
       ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
     restart: unless-stopped

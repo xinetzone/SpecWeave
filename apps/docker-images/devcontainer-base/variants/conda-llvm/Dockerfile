@@ -2,10 +2,10 @@
 # =============================================================================
 # DevContainer Base - Conda LLVM Variant Dockerfile
 # Project: SpecWeave Full-featured Development Container - LLVM/Clang Toolchain
-# Base: devcontainer-base:conda-${BASE_TAG} (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniconda3)
+# Base: devcontainer-base:${BASE_TAG} (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniforge3 conda-forge)
 # Toolchain: LLVM ${LLVM_VERSION} + Clang + CMake + Ninja + Make via conda-forge
 # PATH priority: /opt/conda/bin first (LLVM/clang/cmake/ninja directly available)
-# Python/Jupyter: runs from conda base environment (/opt/conda)
+# Python/Jupyter: runs from conda main environment (/opt/conda/envs/main)
 #
 # Build: docker build -f variants/conda-llvm/Dockerfile -t devcontainer-base:conda-llvm-latest .
 # CN:    docker build -f variants/conda-llvm/Dockerfile \
@@ -17,7 +17,7 @@
 #          devcontainer-base:conda-llvm-latest
 # Verify: docker run --rm devcontainer-base:conda-llvm-latest llvm-config --version
 #
-# Variant Stage Layering (additional 4 layers on top of conda variant 5 stages):
+# Variant Stage Layering (additional 4 layers on top of base image 5 stages):
 #   Stage 1/4: PATH verification + timer initialization
 #   Stage 2/4: Install LLVM/clang/cmake/ninja/make via conda-forge + aggressive cleanup
 #   Stage 3/4: Symlinks + conda-llvm-init.sh + permission verification
@@ -32,11 +32,11 @@ ARG CONDA_MIRROR=tuna
 ARG PIP_MIRROR=aliyun
 ARG LLVM_VERSION=22.1.8
 
-FROM devcontainer-base:conda-${BASE_TAG}
+FROM devcontainer-base:${BASE_TAG}
 
 # 重新声明 ARG：FROM 之前的 ARG 只在构建解析 FROM 时生效，不会自动带入
 # 后续阶段。若不在 FROM 后重新声明，Stage 4 写入 build-info 时 ${BASE_TAG}
-# 会退化为空值，导致 BASE_IMAGE=devcontainer-base:conda-（缺失标签）。
+# 会退化为空值，导致 BASE_IMAGE=devcontainer-base:（缺失标签）。
 ARG BASE_TAG
 ARG APT_MIRROR
 ARG CONDA_MIRROR
@@ -305,7 +305,7 @@ RUN echo "" && \
     printf '%s\n' \
         "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
         "VARIANT=conda-llvm" \
-        "BASE_IMAGE=devcontainer-base:conda-${BASE_TAG}" \
+        "BASE_IMAGE=devcontainer-base:${BASE_TAG}" \
         "LLVM_VERSION_REQUESTED=${LLVM_VERSION}" \
         "LLVM_VERSION_ACTUAL=${LLVM_ACTUAL_VERSION}" \
         "CLANG_VERSION_ACTUAL=${CLANG_ACTUAL_VERSION}" \
@@ -314,7 +314,7 @@ RUN echo "" && \
         "CONDA_VERSION=${CONDA_VERSION}" \
         "PYTHON_VERSION_ACTUAL=${PYTHON_ACTUAL_VERSION}" \
         "JUPYTER_VERSION_ACTUAL=${JUPYTER_ACTUAL_VERSION}" \
-        "PYTHON_ENV=conda-base" \
+        "PYTHON_ENV=conda-main" \
         "CONDA_DIR=/opt/conda" \
         "CONDA_MIRROR=${CONDA_MIRROR}" \
         "PIP_MIRROR=${PIP_MIRROR}" \

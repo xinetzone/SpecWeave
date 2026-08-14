@@ -14,7 +14,7 @@
   - Podman rootless 模式（按需启动，无守护进程）
 - **安全增强**：非 root 用户 devuser(UID 1000)、可选 NOPASSWD sudo、SSH ED25519 密钥、Jupyter Token/密码认证
 - **灵活配置**：环境变量驱动、支持国内镜像源、运行时动态配置
-- **多阶段构建**：Builder/runtime 分离、apt 缓存清理、最小化镜像
+- **多阶段构建**：7阶段单镜像构建、BuildKit缓存挂载（apt/pip/conda/libmamba）、激进清理策略、最小化镜像
 - **健康检查**：内置 HEALTHCHECK，按启用服务条件化检查
 - **可组合性**：每个服务可独立启用/禁用，适合作为各类开发容器的 base image
 
@@ -25,8 +25,10 @@ devcontainer-base/
 ├── Dockerfile                      # 主构建文件（多阶段构建，Python 3.14 cp314t）
 ├── entrypoint.sh                   # 容器启动脚本（服务动态启停）
 ├── docker-compose.yml              # Compose 编排（3种profile）
+├── docker-compose.ide.yml          # IDE Jupyter桥接模式专用Compose
 ├── .dockerignore                   # Docker 构建忽略文件
 ├── .env.example                    # 环境变量模板
+├── .env.ide.example                # IDE桥接模式环境变量模板
 ├── CHANGELOG.md                    # 版本变更日志
 ├── AGENTS.md                       # AI 协作者规范（SpecWeave）
 ├── conda-lock/                     # Conda 环境精确版本锁定
@@ -44,6 +46,7 @@ devcontainer-base/
 ├── scripts/
 │   ├── build.sh                    # 一键构建脚本（支持--cn/--verify）
 │   ├── start.sh                    # 一键启动脚本（健康验证+连接信息）
+│   ├── run-jupyter-ide.sh          # IDE Jupyter桥接一键启动脚本
 │   ├── local-build.sh              # 本地WSL2构建脚本（变体依赖链）
 │   ├── healthcheck.sh              # 容器健康检查脚本（条件化检测）
 │   ├── verify-deployment.py        # 部署验证脚本（多维度检查）
@@ -78,6 +81,9 @@ devcontainer-base/
 │   └── EXERCISES.md                # 量化练习材料
 ├── docs/                           # 文档目录
 │   ├── best-practices.md           # Docker DinD/Compose/镜像源最佳实践
+│   ├── IDE-JUPYTER-BRIDGE.md       # IDE Jupyter桥接模式使用指南（VSCode/Trae）
+│   ├── examples/                   # 配置示例归档
+│   │   └── ide-bridge/             # IDE桥接模式已验证配置归档（Compose+env+脚本）
 │   ├── RELEASE-v2.md               # v2.2 详细发布说明
 │   ├── v2.2-build-pipeline-optimization.md  # v2.2 构建流水线优化方案
 │   ├── PY314T-C-EXTENSION-GUIDE.md # Python 3.14t C 扩展编译指南
@@ -92,10 +98,11 @@ devcontainer-base/
     ├── README.md                   # 变体索引和使用指南
     ├── build.sh                    # 变体统一构建脚本（拓扑排序+计时+验证）
     ├── _template/                  # 新变体模板
-    ├── conda/                      # Miniforge3 (conda-forge) 基础环境变体
+    ├── conda/                      # 镜像源配置+验证（Miniforge3/Python已在base中）
     ├── conda-llvm/                 # conda+LLVM/clang编译工具链变体
     ├── onnx-pytorch/               # PyTorch CPU+ONNX Runtime深度学习运行时
     ├── onnx-quantized/             # ONNX量化工具链（INT8/FP16）
+    ├── ai-dev/                     # 全栈AI/ML/NLP生态+JupyterLab4.x
     ├── shared/                     # 变体间共享组件
     │   ├── lib/logging.sh          # 结构化日志库
     │   └── scripts/conda-mirror-setup.sh  # conda/pip镜像源配置
@@ -161,6 +168,28 @@ docker compose logs -f
 docker compose down
 ```
 
+### IDE Jupyter 桥接模式（宿主机 VSCode/Trae 连接容器 Kernel）
+
+将容器内 Jupyter Kernel 暴露给宿主机 IDE 使用，UI 在宿主机、执行在容器，轻量无需 Dev Containers 扩展：
+
+```bash
+# 一键启动（推荐，含健康检查+连接引导）
+bash scripts/run-jupyter-ide.sh
+
+# 或使用专用 Compose 文件
+cp .env.ide.example .env
+docker compose -f docker-compose.ide.yml up -d
+```
+
+启动后在 IDE 中连接：
+1. `Ctrl+Shift+P` → **Jupyter: Specify Jupyter Server for Connections**
+2. 选择 **Existing** → 输入 `http://localhost:8888/?token=devtoken123`
+3. 打开 `.ipynb` → 选择 Python 3 kernel
+
+⚠️ **关键配置**：必须设置 `JUPYTER_ALLOW_ORIGIN=*`（IDE WebView CORS 需要），docker-compose.ide.yml 和 run-jupyter-ide.sh 已默认配置。
+
+> 详细使用指南见 [docs/IDE-JUPYTER-BRIDGE.md](docs/IDE-JUPYTER-BRIDGE.md)。
+
 ### 手动运行容器
 
 #### DinD模式（Docker-in-Docker，推荐用于开发环境）
@@ -208,15 +237,17 @@ docker run -it --rm devcontainer-base:conda-libmamba-v2 bash
 基础镜像之上提供了一系列功能变体，按依赖链构建：
 
 ```
-base (Ubuntu 26.04 + SSH + Docker + Jupyter)
+base (Ubuntu 26.04 + SSH + Docker + Podman + Jupyter + Miniforge3 + Python 3.14.6 cp314t free-threading)
   ↓
-conda (Miniforge3 conda-forge + Python 3.14.6 cp314t free-threading)
+conda (镜像源配置 + 验证，Miniforge3已在base中)
   ↓
-conda-llvm (LLVM/Clang 22.1.8 + CMake + Ninja)
+conda-llvm (LLVM/Clang 22.1.8 + CMake + Ninja via conda-forge)
   ↓
 onnx-pytorch (PyTorch CPU + ONNX Runtime 1.28.0)
   ↓
 onnx-quantized (onnxruntime.quantization 量化工具链: INT8/FP16)
+  ↓
+ai-dev (全栈AI/ML/NLP生态50+包 + JupyterLab4.x + AI内核)
 ```
 
 ```bash
@@ -232,10 +263,11 @@ bash variants/build.sh --list
 
 | 变体 | 说明 | 核心组件 |
 |------|------|---------|
-| conda | Miniforge3 conda-forge 基础环境 | conda, libmamba, Python 3.14.6 cp314t free-threading |
+| conda | 镜像源配置 + 基础验证（Miniforge3已在base中） | conda, libmamba, conda/pip镜像源配置 |
 | conda-llvm | 编译工具链 | LLVM 22.1.8, Clang, CMake, Ninja |
 | onnx-pytorch | 深度学习运行时 | PyTorch CPU, ONNX Runtime, onnxsim |
-| onnx-quantized | 模型量化工具链 | onnxruntime.quantization, FP16/INT8, onnx_quantize_kit |
+| onnx-quantized | 模型量化工具链 | onnxruntime.quantization, FP16/INT8, onnx_quantize_kit, Neural Compressor |
+| ai-dev | 全栈AI/ML/NLP开发环境 | transformers, datasets, fastapi, pandas, JupyterLab4.x, AI内核 |
 
 > 详细变体文档见 [variants/README.md](variants/README.md) 和 [variants/AGENTS.md](variants/AGENTS.md)。
 
@@ -273,6 +305,22 @@ ssh devuser@localhost -p 2222
 
 浏览器访问 http://localhost:8888/，使用 `JUPYTER_TOKEN` 或密码登录。
 
+### IDE Jupyter 连接（VSCode / Trae）
+
+容器内 Jupyter 可直接暴露给宿主机 IDE 的 Jupyter 插件使用：
+
+```bash
+# 启动IDE桥接模式（已配置CORS+端口映射+volume挂载）
+bash scripts/run-jupyter-ide.sh
+```
+
+IDE 中连接步骤：
+1. `Ctrl+Shift+P` → **Jupyter: Specify Jupyter Server for Connections**
+2. 选择 **Existing** → 输入 `http://localhost:8888/?token=<JUPYTER_TOKEN>`
+3. 打开 `.ipynb` 文件，Kernel 选择容器内 Python 3 环境
+
+> 完整指南见 [docs/IDE-JUPYTER-BRIDGE.md](docs/IDE-JUPYTER-BRIDGE.md)。
+
 ### Docker使用
 
 容器内SSH登录后，devuser已在docker组，直接使用docker命令：
@@ -302,6 +350,7 @@ podman run --rm hello-world
 | `ROOT_PASSWORD` | *(不设置)* | root密码，需 `ALLOW_ROOT_SSH=yes` |
 | `JUPYTER_TOKEN` | *(随机生成)* | Jupyter访问令牌 |
 | `JUPYTER_PASSWORD` | *(空)* | Jupyter密码（与Token二选一） |
+| `JUPYTER_ALLOW_ORIGIN` | *(空)* | Jupyter CORS允许Origin（IDE连接需设为`*`） |
 | `GRANT_SUDO` | `no` | devuser免密sudo |
 | `ALLOW_ROOT_SSH` | `no` | 允许root SSH登录 |
 | `SSH_PUBLIC_KEY` | *(空)* | SSH公钥注入 |
@@ -394,7 +443,7 @@ Docker HEALTHCHECK配置：
 ### 1. 变体构建流水线（devcontainer-variants.yml）
 
 - **触发条件**：PR（Lint快速检查）、main分支推送（完整构建）、Nightly定时、手动触发
-- **构建矩阵**：按依赖拓扑 `base → conda → conda-llvm → onnx-pytorch → onnx-quantized` 顺序构建
+- **构建矩阵**：按依赖拓扑 `base → conda → conda-llvm → onnx-pytorch → onnx-quantized → ai-dev` 顺序构建
 - **验证**：每个变体构建后自动运行单元测试（20+项测试/变体），逐条PASS/FAIL报告
 
 ### 2. ONNX量化工具包CI（onnx-quantize-ci.yml）
@@ -428,7 +477,7 @@ gh workflow run onnx-quantize-ci.yml --ref main
 - **OpenSSH**：Ubuntu 26.04官方包
 - **Supervisor**：Ubuntu 26.04官方包
 - **镜像大小**：~2.38GB
-- **镜像变体**：conda, conda-llvm, onnx-pytorch, onnx-quantized（共4个功能变体）
+- **镜像变体**：conda, conda-llvm, onnx-pytorch, onnx-quantized, ai-dev（共5个功能变体）
 - **ONNX量化工具包**：onnx_quantize_kit（基于onnxruntime.quantization原生API）
 
 ## 📄 许可证
@@ -441,3 +490,4 @@ gh workflow run onnx-quantize-ci.yml --ref main
 - [docker-ssh-dind](../docker-ssh-dind/) - Docker DinD镜像（SSH+Docker，无Jupyter/Podman）
 - [onnx-pytorch 变体](variants/onnx-pytorch/) - PyTorch CPU + ONNX Runtime 深度学习运行时
 - [onnx-quantized 变体](variants/onnx-quantized/) - ONNX模型量化工具链（INT8/FP16）
+- [ai-dev 变体](variants/ai-dev/) - 全栈AI/ML/NLP开发环境

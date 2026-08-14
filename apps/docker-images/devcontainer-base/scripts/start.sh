@@ -57,6 +57,7 @@ Environment variables (can be set in .env file):
   PROFILE            Runtime profile (dind|dood|ssh-only)
   USER_PASSWORD      SSH password for devuser (auto-generated if empty)
   JUPYTER_TOKEN      Jupyter access token (auto-generated if empty)
+  JUPYTER_ALLOW_ORIGIN  CORS allowed origins (default: * for IDE WebView support)
   GRANT_SUDO         Grant NOPASSWD sudo to devuser (default: yes)
   SSH_PORT           Host SSH port (default: 2222[dind]/2223[dood]/2224[ssh-only])
   JUPYTER_PORT       Host Jupyter port (default: 8888[dind]/8889[dood])
@@ -113,6 +114,7 @@ esac
 
 SSH_PORT="${SSH_PORT:-$DEFAULT_SSH_PORT}"
 JUPYTER_PORT="${JUPYTER_PORT:-$DEFAULT_JUPYTER_PORT}"
+JUPYTER_ALLOW_ORIGIN="${JUPYTER_ALLOW_ORIGIN:-*}"
 
 # ── 前置检查 ──
 check_prerequisites() {
@@ -206,7 +208,7 @@ do_start() {
         log_info "Auto-generated Jupyter token: $JUPYTER_TOKEN"
     fi
 
-    export USER_PASSWORD JUPYTER_TOKEN SSH_PORT JUPYTER_PORT
+    export USER_PASSWORD JUPYTER_TOKEN SSH_PORT JUPYTER_PORT JUPYTER_ALLOW_ORIGIN
 
     # ── 创建 workspace 目录 ──
     mkdir -p "$PROJECT_DIR/workspace"

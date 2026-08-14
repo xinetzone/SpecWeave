@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（25份）
+## 报告清单（26份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `insight-jupyter-kernel-expose-host-ide-20260814.md` | 容器内Jupyter Kernel暴露给宿主机IDE可行性技术洞察报告（F→V→I创新突破链路）：纠正"暴露Kernel"架构认知偏差，阐明Jupyter三层C/S架构（IDE→HTTP→Server→ZeroMQ→Kernel）；当前Dockerfile已完成90%准备工作（0.0.0.0绑定+EXPOSE 8888+entrypoint环境变量支持）；识别出CORS配置和volume挂载两个易被忽略的必选条件；给出4种可行方案对比（端口直连/SSH隧道/Dev Containers/kernel-gateway），推荐方案1一键命令模板 | 2026-08-14 |
 | `retrospective-devcontainer-v221-conda-perf-20260814/` | devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘（R-I-E-C链路）：Stage 4 conda求解从419s优化至37s（缓存热构建，11.3x加速），三项关键优化（8线程并行/单次mamba solver/原生mamba CLI）；萃取3个静态YAML模板+1个动态Shell脚本（conda-perf-setup.sh）为共享可复用资产，Dockerfile从~50行内联heredoc精简为3行脚本调用；沉淀"Conda构建层性能三联优化"模式（L1实验性）；3个原子提交900行变更 | 2026-08-14 |
 | `retrospective-ai-dev-variant-bugfix-logging-20260813/` | ai-dev变体Bug修复与Stage 2日志增强里程碑复盘（R-I-E-V-C链路）：修复T4(JupyterLab版本提取head→tail)和T25(Go模板`.`语法)两个测试失败；`|||`多字符命令分隔符替换`;`解决Python -c内部分号冲突；新增pip_install_group()函数实现14组pip分组安装+每组pip check冲突检测+失败诊断；萃取"安全命令列表分隔符"(L2)和"Docker pip分组安装可观测性"(L1)两个模式 | 2026-08-13 |
 | `summary-palmdet-compile-fix-20260812.md` | palmDet 模型编译修复+完整编译过程总结：最终根因修正为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`），校准图被 resize 成 224×3 致 W 维度恒为 1；修复后前向与 ORT 一致、完整编译 6 阶段通过退出码 0；配套 onnx2pytorch Resize/Reshape 猴补丁；纠偏早前洞察报告根因结论；萃取"跨框架模型输入布局核验"模式 | 2026-08-12 |
@@ -62,7 +63,8 @@ type: "index"
 - Runtime PyTorch可选化
 - pyproject.toml依赖审计
 
-### Docker 基础镜像系列（4份）
+### Docker 基础镜像系列（5份）
+- 容器内Jupyter Kernel暴露给宿主机IDE可行性技术洞察（F→V→I链路，架构纠正+4方案对比+2必选配置）
 - ai-dev变体Bug修复与Stage 2日志增强（R-I-E-V-C链路，2个Bug修复+14组pip分组可观测性+2个模式萃取）
 - 7个Docker子项目.agents原子化改造（R-I-E-A-C链路，21个规则文件零冲突，Token消耗降低60-70%）
 - devcontainer-base 全功能开发容器构建验证（DinD无冲突配置+Compose变量覆盖+构建验证三段式模式）

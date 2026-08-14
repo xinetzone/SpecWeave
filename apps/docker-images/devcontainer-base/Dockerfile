@@ -369,12 +369,78 @@ echo "[OK] conda.sh sourced, conda available in build shell"
 # ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
 echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
 
-# ── 使用共享脚本配置 .condarc（高性能：8线程并行、超时重试、镜像源、libmamba solver） ──
-echo "[INFO] Running shared conda-perf-setup.sh..."
+# ── 使用共享脚本配置性能参数 + 合并镜像源配置 ──
+echo "[INFO] Configuring conda performance and mirror sources..."
 chmod +x /tmp/conda-perf-setup.sh
+# 运行性能配置（线程、超时、重试），输出到临时位置后合并镜像源配置
 CONDA_DIR="${CONDA_DIR}" CONDA_MIRROR="${CONDA_MIRROR}" CONDA_THREADS=8 \
-    bash /tmp/conda-perf-setup.sh
-echo "[OK] Performance .condarc configured via shared script"
+    CONDA_OUTPUT=/tmp/condarc-perf.yaml bash /tmp/conda-perf-setup.sh
+echo ""
+echo "[ACTION] Writing system-level ${CONDA_DIR}/.condarc with mirror sources..."
+case "${CONDA_MIRROR}" in
+    bfsu)
+        echo "[INFO] Configuring conda for BFSU (Beijing Foreign Studies University) mirror (conda-forge only, no defaults)"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'default_channels_alias: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
+            'custom_channels:' \
+            '  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 120' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > "${CONDA_DIR}/.condarc"
+        ;;
+    tuna)
+        echo "[INFO] Configuring conda for Tsinghua TUNA mirror (conda-forge only, no defaults)"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'default_channels_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+            'custom_channels:' \
+            '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 120' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > "${CONDA_DIR}/.condarc"
+        ;;
+    *)
+        echo "[INFO] Configuring conda for official channels (conda-forge only, no defaults)"
+        printf '%s\n' \
+            'channels:' \
+            '  - conda-forge' \
+            'show_channel_urls: true' \
+            'channel_priority: strict' \
+            'ssl_verify: true' \
+            'auto_activate_base: false' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 300' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 3' \
+            'repodata_threads: 8' \
+            'execute_threads: 8' \
+            'solver: libmamba' \
+            > "${CONDA_DIR}/.condarc"
+        ;;
+esac
+echo "[OK] System-level .condarc written:"
+cat "${CONDA_DIR}/.condarc"
 echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)"
 
 # ── Miniforge3自带Python，不要升级base Python（conda无cp314t构建） ──
@@ -401,16 +467,53 @@ _mamba_elapsed=$(($(date +%s) - _mamba_start))
 echo "[OK] main env created in ${_mamba_elapsed}s with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
 echo "[OK] Jupyter ecosystem installed: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
 
-# ── 配置 PyPI 镜像（在main环境中） ──
-if [ "${PIP_MIRROR}" = "aliyun" ]; then
-    /opt/conda/envs/main/bin/pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-    /opt/conda/envs/main/bin/pip config set global.trusted-host mirrors.aliyun.com
-    echo "[OK] Using Aliyun PyPI mirror"
-elif [ "${PIP_MIRROR}" = "tuna" ]; then
-    /opt/conda/envs/main/bin/pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-    /opt/conda/envs/main/bin/pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
-    echo "[OK] Using Tsinghua TUNA PyPI mirror"
+# ── 配置 PyPI 镜像（root + base + main 环境，devuser 在 Stage 2.5 创建后配置） ──
+echo "[ACTION] Configuring pip mirrors..."
+mkdir -p /root/.config/pip
+case "${PIP_MIRROR}" in
+    aliyun)
+        echo "[INFO] Configuring pip for Aliyun mirror"
+        PIP_INDEX_URL="https://mirrors.aliyun.com/pypi/simple/"
+        PIP_TRUSTED_HOST="mirrors.aliyun.com"
+        ;;
+    tuna)
+        echo "[INFO] Configuring pip for Tsinghua TUNA mirror"
+        PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
+        PIP_TRUSTED_HOST="pypi.tuna.tsinghua.edu.cn"
+        ;;
+    *)
+        echo "[INFO] Configuring pip for official PyPI"
+        PIP_INDEX_URL="https://pypi.org/simple/"
+        PIP_TRUSTED_HOST=""
+        ;;
+esac
+# 写入 root 全局 pip.conf
+printf '%s\n' \
+    '[global]' \
+    "index-url = ${PIP_INDEX_URL}" \
+    "retries = 5" \
+    "timeout = 60" \
+    > /root/.config/pip/pip.conf
+if [ -n "${PIP_TRUSTED_HOST}" ]; then
+    printf '%s\n' "trusted-host = ${PIP_TRUSTED_HOST}" >> /root/.config/pip/pip.conf
 fi
+# 配置 conda base 环境 pip
+if [ "${PIP_MIRROR}" = "aliyun" ]; then
+    "${CONDA_DIR}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+    "${CONDA_DIR}/bin/pip" config set global.trusted-host mirrors.aliyun.com
+elif [ "${PIP_MIRROR}" = "tuna" ]; then
+    "${CONDA_DIR}/bin/pip" config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+    "${CONDA_DIR}/bin/pip" config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+fi
+# 配置 main 环境 pip
+/opt/conda/envs/main/bin/pip config set global.index-url "${PIP_INDEX_URL}"
+if [ -n "${PIP_TRUSTED_HOST}" ]; then
+    /opt/conda/envs/main/bin/pip config set global.trusted-host "${PIP_TRUSTED_HOST}"
+fi
+echo "[OK] pip mirrors configured (root + base + main; devuser will be configured in Stage 2.5)"
+# 将 PIP 配置变量导出到临时文件，供 Stage 2.5 使用
+echo "PIP_INDEX_URL=${PIP_INDEX_URL}" > /tmp/pip-config.env
+echo "PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST}" >> /tmp/pip-config.env
 
 # ── 注册main环境为Jupyter默认kernel（Python 3.14 free-threading） ──
 /opt/conda/envs/main/bin/python -m ipykernel install --name main --display-name "Python ${PYTHON_VERSION} (free-threading)" --prefix=/opt/conda/envs/main 2>&1
@@ -428,9 +531,8 @@ print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={so
     "
 fi
 
-# ── 设置main环境为默认激活 ──
-echo "conda activate main" >> /root/.bashrc
-echo "[INFO] Auto-activate 'main' environment configured in .bashrc"
+# ── main环境激活将在 Stage 2.5 通过 conda-init.sh 统一配置 ──
+echo "[INFO] main environment activation will be configured via conda-init.sh in Stage 2.5"
 
 # ── 清理临时文件（不清理BuildKit cache挂载目录：/root/.cache/pip, /opt/conda/pkgs, /root/.cache/conda） ──
 echo ""
@@ -493,21 +595,26 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
     chmod 700 /home/devuser/.ssh && \
     chown -R devuser:devuser /workspace /home/devuser/.jupyter /home/devuser/.ssh && \
     echo "[BUILD] Working directory /workspace and .jupyter/.ssh directories created with proper permissions" && \
+    echo "[BUILD] Configuring devuser pip mirror..." && \
+    mkdir -p /home/devuser/.config/pip && \
+    cp /root/.config/pip/pip.conf /home/devuser/.config/pip/pip.conf && \
+    chown -R devuser:devuser /home/devuser/.config && \
+    echo "[OK] devuser pip mirror configured" && \
     echo "[BUILD] Creating conda initialization script..." && \
     printf '%s\n' \
         '#!/bin/bash' \
-        '# Conda base environment activation' \
+        '# Conda main environment (Python 3.14 free-threading) activation' \
         'if [ -f /opt/conda/etc/profile.d/conda.sh ]; then' \
         '    . /opt/conda/etc/profile.d/conda.sh' \
-        '    conda activate base 2>/dev/null || true' \
+        '    conda activate main 2>/dev/null || conda activate base 2>/dev/null || true' \
         'fi' \
         > /etc/profile.d/conda-init.sh && \
     chmod +x /etc/profile.d/conda-init.sh && \
     echo "source /etc/profile.d/conda-init.sh" >> /home/devuser/.bashrc && \
     echo "source /etc/profile.d/conda-init.sh" >> /root/.bashrc && \
     chown devuser:devuser /home/devuser/.bashrc && \
-    echo "PATH=/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
-    echo "[BUILD] User .bashrc and /etc/environment configured (conda PATH priority)" && \
+    echo "PATH=/opt/conda/envs/main/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
+    echo "[BUILD] User .bashrc and /etc/environment configured (conda main env PATH priority)" && \
     echo "[BUILD] Preparing runtime directories and Docker daemon.json..." && \
     mkdir -p /run/sshd && chmod 755 /run/sshd && \
     mkdir -p /var/log/supervisor /etc/supervisor/conf.d /etc/docker && \
@@ -667,6 +774,13 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
         python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
         bash /usr/local/bin/verify-cext.sh -q --expect-soabi cpython-314t >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
         conda --version && echo "[OK] conda available" && \
+        echo "[MIRROR] Verifying conda system .condarc exists..." && \
+        test -f /opt/conda/.condarc && echo "[OK] System .condarc present" && \
+        grep -q "conda-forge" /opt/conda/.condarc && echo "[OK] conda-forge channel configured" && \
+        echo "[MIRROR] Verifying pip configurations..." && \
+        test -f /root/.config/pip/pip.conf && echo "[OK] root pip.conf present" && \
+        test -f /home/devuser/.config/pip/pip.conf && echo "[OK] devuser pip.conf present" && \
+        su - devuser -c "pip config get global.index-url" && echo "[OK] devuser pip index URL configured" && \
         pip --version && echo "[OK] pip available" && \
         jupyter --version && echo "[OK] jupyter available" && \
         docker --version && echo "[OK] docker available" && \
