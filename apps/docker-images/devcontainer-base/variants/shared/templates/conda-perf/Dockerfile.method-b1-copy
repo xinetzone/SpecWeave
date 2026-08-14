@@ -1,0 +1,120 @@
+# syntax=docker/dockerfile:1.6
+# =============================================================================
+# Conda 高性能环境 Dockerfile 模板 — 方式 B1：COPY 动态脚本
+#
+# 适用场景：需要通过 build-arg 动态切换镜像源/调整线程数
+# 复杂度：★★☆☆☆（兼容性好，COPY 脚本执行）
+# 特点：环境变量参数化、镜像源自动超时适配、mamba 不可用自动 fallback
+#
+# ⚠️  使用前需要复制的文件：
+#   1. 本文件（Dockerfile）
+#   2. conda-perf-setup.sh
+#      来源：variants/shared/scripts/conda-perf-setup.sh
+#      放置：与本 Dockerfile 同级目录（或 docker/ 子目录，需修改 COPY 路径）
+#
+# 构建命令：
+#   # 国际网络（官方源，默认8线程）
+#   docker build -t my-conda-app -f Dockerfile.method-b1-copy .
+#
+#   # 中国大陆（清华 TUNA，8线程）
+#   docker build -t my-conda-app -f Dockerfile.method-b1-copy \
+#       --build-arg CONDA_MIRROR=tuna \
+#       --build-arg CONDA_THREADS=8 .
+#
+#   # 中国大陆（阿里镜像，16线程）
+#   docker build -t my-conda-app -f Dockerfile.method-b1-copy \
+#       --build-arg CONDA_MIRROR=aliyun \
+#       --build-arg CONDA_THREADS=16 .
+#
+# 环境变量（build-arg）：
+#   CONDA_MIRROR    : official(默认) | tuna | aliyun
+#   CONDA_THREADS   : 并行线程数（默认8，建议=CPU核心数）
+#   CONDA_TIMEOUT   : 读取超时秒数（自动：官方300s/镜像120s）
+#
+# 替换占位符（搜索 __XXX__ 并替换）：
+#   __BASE_IMAGE__     : 基础镜像（默认 ubuntu:24.04）
+#   __MINIFORGE_VER__  : Miniforge3 版本（默认 24.11.3-2）
+#   __PYTHON_VERSION__ : Python 版本（默认 3.12）
+#   __CONDA_PACKAGES__ : conda 包列表（如 numpy pandas jupyterlab，至少保留 pip）
+#   __PIP_PACKAGES__   : pip 包列表（可选，取消注释 pip 段后填入）
+#   __APP_DIR__        : 应用目录（默认 /app）
+# =============================================================================
+
+FROM __BASE_IMAGE__
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ── 构建参数 ──
+ARG MINIFORGE_VERSION=__MINIFORGE_VER__
+ARG PYTHON_VERSION=__PYTHON_VERSION__
+ARG CONDA_MIRROR=official
+ARG CONDA_THREADS=8
+
+# ── 系统依赖 ──
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget bzip2 ca-certificates bash \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── 安装 Miniforge3（自带 mamba + conda-forge 配置） ──
+RUN _MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" && \
+    wget -q "$_MINIFORGE_URL" -O /tmp/miniforge.sh && \
+    bash /tmp/miniforge.sh -b -p /opt/conda && \
+    rm /tmp/miniforge.sh
+
+ENV PATH=/opt/conda/bin:$PATH
+
+# ── 方式 B1：COPY 动态脚本并执行 ──
+# 脚本会根据 CONDA_MIRROR 自动选择镜像源、适配超时、设置并行线程数、配置 libmamba solver
+COPY conda-perf-setup.sh /tmp/conda-perf-setup.sh
+RUN chmod +x /tmp/conda-perf-setup.sh && \
+    CONDA_DIR=/opt/conda \
+    CONDA_MIRROR=${CONDA_MIRROR} \
+    CONDA_THREADS=${CONDA_THREADS} \
+        bash /tmp/conda-perf-setup.sh && \
+    rm /tmp/conda-perf-setup.sh
+
+# ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
+# 脚本已配置好 .condarc 和 solver，直接使用 mamba 即可
+# ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    mamba create -y -n myenv -c conda-forge --override-channels -q \
+        "python=${PYTHON_VERSION}" \
+        pip \
+        __CONDA_PACKAGES__ && \
+    conda clean -afy
+
+# ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
+# ARG PIP_MIRROR=official
+# RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+#     if [ "${PIP_MIRROR}" = "tuna" ]; then \
+#         /opt/conda/envs/myenv/bin/pip config set global.index-url \
+#             https://pypi.tuna.tsinghua.edu.cn/simple && \
+#         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
+#             pypi.tuna.tsinghua.edu.cn; \
+#     elif [ "${PIP_MIRROR}" = "aliyun" ]; then \
+#         /opt/conda/envs/myenv/bin/pip config set global.index-url \
+#             https://mirrors.aliyun.com/pypi/simple/ && \
+#         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
+#             mirrors.aliyun.com; \
+#     fi && \
+#     /opt/conda/envs/myenv/bin/pip install __PIP_PACKAGES__
+
+# ── 激活环境 ──
+RUN echo "source activate myenv" >> ~/.bashrc
+ENV PATH=/opt/conda/envs/myenv/bin:$PATH
+
+# ── 应用目录 ──
+WORKDIR __APP_DIR__
+
+# ── 验证配置 ──
+RUN echo "=== Verification ===" && \
+    python --version && \
+    mamba --version 2>&1 | head -1 && \
+    conda config --show solver && \
+    echo "Mirror: ${CONDA_MIRROR:-official}, Threads: ${CONDA_THREADS:-8}" && \
+    grep -E 'repodata_threads|execute_threads' /root/.condarc && \
+    echo "[OK] Conda performance config applied successfully"
+
+# ── 默认命令 ──
+CMD ["/bin/bash"]

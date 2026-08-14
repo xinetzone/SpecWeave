@@ -55,7 +55,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 ### 阶段 S3：目录创建与文件迁移
 
-**动作**：创建 `apps/zhujian-wudao/` 目录，执行 Move 操作迁移两个文件。
+**动作**：创建 `apps/ai-agents/zhujian-wudao/` 目录，执行 Move 操作迁移两个文件。
 
 **关键技术决策**：
 
@@ -128,7 +128,7 @@ Move-Item -Path ".temp\AI\报名帖_竹简悟道.md" -Destination "apps\zhujian-
 
 | 验证项 | 结果 |
 |--------|------|
-| `apps/zhujian-wudao/` 目录存在 | ✅ |
+| `apps/ai-agents/zhujian-wudao/` 目录存在 | ✅ |
 | 3 个文件齐全（HTML + MD + README） | ✅ |
 | HTML 无外部依赖 | ✅（Grep 验证） |
 | apps/README.md 索引已更新 | ✅（§2.3 新增） |

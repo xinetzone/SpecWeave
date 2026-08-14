@@ -39,7 +39,7 @@
 | 文件 | 行号 | 原内容 | 处理方式 |
 |------|------|--------|----------|
 | ../../../../knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.md | 150,190,195 | 192.168.1.100 | 代码块上下文自动识别/nosec标记 |
-| ../../../../../../apps/camera-power-controller/SOLUTION.md | 254,533 | 192.168.1.101 | 添加nosec标记 |
+| ../../../../../../apps/dev-tools/camera-power-controller/SOLUTION.md | 254,533 | 192.168.1.101 | 添加nosec标记 |
 | ../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-ai-developer-ecosystem-wiki.md | 763 | 192.168.10.1 | 添加nosec标记 |
 
 ### 3.3 剩余低风险项（6项，保留）

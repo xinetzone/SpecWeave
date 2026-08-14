@@ -43,11 +43,11 @@ validation_count: 7
 
 | 文件 | 修复项 | 修复前 | 修复后 |
 |------|--------|--------|--------|
-| [Dockerfile.macos-cross](../../../../../apps/caffe-ffi-cross/Dockerfile.macos-cross) | 语法声明+APT缓存+conda缓存 | ❌ 全部缺失 | ✅ 全部配置 |
-| [Dockerfile.win-cross](../../../../../apps/caffe-ffi-cross/Dockerfile.win-cross) | 语法声明+APT缓存+conda缓存+wine-runtime SHELL | ❌ 全部缺失 | ✅ 全部配置 |
-| [devcontainer-base/Dockerfile](../../../../../apps/devcontainer-base/Dockerfile) | pip venv阶段缓存挂载 | ❌ pip upgrade无缓存 | ✅ 添加pip cache mount |
-| [variants/conda/Dockerfile](../../../../../apps/devcontainer-base/variants/conda/Dockerfile) | conda pkgs缓存+pip缓存+conda clean | ❌ conda install无缓存 | ✅ 添加conda/pip cache mount + conda clean -ya |
-| [jupyter-ssh-base/Dockerfile](../../../../../apps/jupyter-ssh-base/Dockerfile) | pip venv阶段缓存挂载 | ❌ pip upgrade无缓存 | ✅ 添加pip cache mount |
+| [Dockerfile.macos-cross](../../../../../apps/docker-images/caffe-ffi-cross/Dockerfile.macos-cross) | 语法声明+APT缓存+conda缓存 | ❌ 全部缺失 | ✅ 全部配置 |
+| [Dockerfile.win-cross](../../../../../apps/docker-images/caffe-ffi-cross/Dockerfile.win-cross) | 语法声明+APT缓存+conda缓存+wine-runtime SHELL | ❌ 全部缺失 | ✅ 全部配置 |
+| [devcontainer-base/Dockerfile](../../../../../apps/docker-images/devcontainer-base/Dockerfile) | pip venv阶段缓存挂载 | ❌ pip upgrade无缓存 | ✅ 添加pip cache mount |
+| [variants/conda/Dockerfile](../../../../../apps/docker-images/devcontainer-base/variants/conda/Dockerfile) | conda pkgs缓存+pip缓存+conda clean | ❌ conda install无缓存 | ✅ 添加conda/pip cache mount + conda clean -ya |
+| [jupyter-ssh-base/Dockerfile](../../../../../apps/docker-images/jupyter-ssh-base/Dockerfile) | pip venv阶段缓存挂载 | ❌ pip upgrade无缓存 | ✅ 添加pip cache mount |
 
 ---
 
@@ -60,7 +60,7 @@ validation_count: 7
 | 基础镜像 | ubuntu:26.04 |
 | 多阶段构建 | 2阶段（builder + runtime） |
 | 包管理器 | apt + pip |
-| Dockerfile | [Dockerfile](../../../../../apps/jupyter-ssh-base/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/jupyter-ssh-base/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -86,7 +86,7 @@ validation_count: 7
 | 基础镜像 | ubuntu:26.04 |
 | 多阶段构建 | 2阶段（builder + runtime） |
 | 包管理器 | apt + pip |
-| Dockerfile | [Dockerfile](../../../../../apps/devcontainer-base/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/devcontainer-base/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -111,7 +111,7 @@ validation_count: 7
 | 基础镜像 | devcontainer-base:${BASE_TAG} |
 | 多阶段构建 | 单阶段（5个逻辑步骤） |
 | 包管理器 | apt（继承）+ conda + pip |
-| Dockerfile | [Dockerfile](../../../../../apps/devcontainer-base/variants/conda/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/devcontainer-base/variants/conda/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -137,7 +137,7 @@ validation_count: 7
 | 基础镜像 | devcontainer-base:conda-${BASE_TAG} |
 | 多阶段构建 | 单阶段 |
 | 包管理器 | conda |
-| Dockerfile | [Dockerfile](../../../../../apps/devcontainer-base/variants/conda-llvm/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/devcontainer-base/variants/conda-llvm/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -160,7 +160,7 @@ validation_count: 7
 | 文件类型 | Containerfile |
 | 多阶段构建 | 单阶段 |
 | 包管理器 | apt（Ubuntu源配置后） |
-| Dockerfile | [Containerfile](../../../../../apps/docker-ssh-dind/Containerfile) |
+| Dockerfile | [Containerfile](../../../../../apps/docker-images/docker-ssh-dind/Containerfile) |
 
 **BuildKit 优化配置**：
 
@@ -181,7 +181,7 @@ validation_count: 7
 | 基础镜像 | 可配置（默认 nvidia/cuda 或 cpu 变体） |
 | 多阶段构建 | 5阶段（base→system→conda→runtime→final） |
 | 包管理器 | apt + pip + conda |
-| Dockerfile | [Dockerfile](../../../../../apps/pytorch-base/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/pytorch-base/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -208,7 +208,7 @@ validation_count: 7
 | 基础镜像 | continuumio/miniconda3:latest |
 | 多阶段构建 | 5阶段（base→builder1→builder2→builder3→runtime） |
 | 包管理器 | apt + pip + conda |
-| Dockerfile | [Dockerfile](../../../../../apps/caffe-ffi-jupyter/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile) |
 
 **BuildKit 优化配置**：
 
@@ -238,7 +238,7 @@ validation_count: 7
 | 基础镜像 | continuumio/miniconda3:latest |
 | 多阶段构建 | 单阶段（5个逻辑步骤） |
 | 包管理器 | apt + conda + cctools_osx-64 |
-| Dockerfile | [Dockerfile.macos-cross](../../../../../apps/caffe-ffi-cross/Dockerfile.macos-cross) |
+| Dockerfile | [Dockerfile.macos-cross](../../../../../apps/docker-images/caffe-ffi-cross/Dockerfile.macos-cross) |
 
 **BuildKit 优化配置**：
 
@@ -264,7 +264,7 @@ validation_count: 7
 | 基础镜像 | continuumio/miniconda3:latest |
 | 多阶段构建 | 2阶段（cross-builder + wine-runtime） |
 | 包管理器 | apt + conda + Wine |
-| Dockerfile | [Dockerfile.win-cross](../../../../../apps/caffe-ffi-cross/Dockerfile.win-cross) |
+| Dockerfile | [Dockerfile.win-cross](../../../../../apps/docker-images/caffe-ffi-cross/Dockerfile.win-cross) |
 
 **BuildKit 优化配置**：
 
@@ -290,7 +290,7 @@ validation_count: 7
 | 基础镜像 | npu-tvm-build:conda（外部预构建） |
 | 多阶段构建 | 单阶段（6个逻辑步骤） |
 | 包管理器 | apt + pip（conda来自基础镜像） |
-| Dockerfile | [Dockerfile](../../../../../apps/xmnn-runtime/docker/Dockerfile) |
+| Dockerfile | [Dockerfile](../../../../../apps/docker-images/xmnn-runtime/docker/Dockerfile) |
 
 **BuildKit 优化配置**：
 

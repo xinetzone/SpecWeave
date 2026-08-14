@@ -226,7 +226,7 @@ CAFFE_FFI_DISABLE_BACKTRACE=1 python -m pytest --pyargs caffe_ffi -v
 
 ### 方案概述
 
-- 位置：apps/caffe-ffi-cross/
+- 位置：apps/docker-images/caffe-ffi-cross/
 - 核心思路：利用conda-forge的交叉编译工具链（clang_osx-64、clang_win-64等）在Linux Docker容器中编译macOS/Windows conda包
 - 三层测试矩阵：
   * L1 编译验证：conda-build成功生成目标平台包文件
@@ -247,7 +247,7 @@ CAFFE_FFI_DISABLE_BACKTRACE=1 python -m pytest --pyargs caffe_ffi -v
 ### 使用方式
 
 ```bash
-cd apps/caffe-ffi-cross
+cd apps/docker-images/caffe-ffi-cross
 
 # 一键测试所有平台
 ./run.sh

@@ -12,7 +12,7 @@ type: insight-extraction/external-learning
 | 项目 | caffe-ffi | caffex |
 |------|-----------|--------|
 | 目标库 | `projects/xuanspace/libs/caffe-ffi` | `projects/xuanspace/vendor/caffe/caffex` |
-| 基准环境 | `apps/caffe-ffi-jupyter`（`caffe-ffi-jupyter:latest` 镜像） | `vendor/caffe/docker/origin`（`caffe-cpu:origin-runtime` 镜像） |
+| 基准环境 | `apps/docker-images/caffe-ffi-jupyter`（`caffe-ffi-jupyter:latest` 镜像） | `vendor/caffe/docker/origin`（`caffe-cpu:origin-runtime` 镜像） |
 | Python | 3.14.6（conda env `caffe-ffi`） | 3.10（pycaffe） |
 | numpy | 2.5.1 | 1.26.4 |
 | caffe_ffi 版本 | 0.1.0 | — |

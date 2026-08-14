@@ -2,7 +2,7 @@
 title: "Conda 构建最佳实践检查清单"
 date: 2026-07-30
 source:
-  - apps/caffe-ffi-jupyter/conda-build-verification-report.md
+  - apps/docker-images/caffe-ffi-jupyter/conda-build-verification-report.md
   - projects/xuanspace/libs/caffe-ffi/conda.recipe/
 tags: [conda-build, checklist, best-practices, RPATH, OpenBLAS, scikit-build-core, editable]
 status: "✅ 基于caffe-ffi build 5实践验证"
@@ -411,5 +411,5 @@ echo "✓ Conda package tests passed"
 - 构建脚本：[build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh)
 - 元数据：[meta.yaml](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml)
 - BLAS检测：[DetectBLAS.cmake](../../projects/xuanspace/libs/caffe-ffi/cmake/DetectBLAS.cmake)
-- 完整验证脚本：[full-clean-rebuild.sh](../../apps/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh)
-- 验证报告：[conda-build-verification-report.md](../../apps/caffe-ffi-jupyter/conda-build-verification-report.md)
+- 完整验证脚本：[full-clean-rebuild.sh](../../apps/docker-images/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh)
+- 验证报告：[conda-build-verification-report.md](../../apps/docker-images/caffe-ffi-jupyter/conda-build-verification-report.md)

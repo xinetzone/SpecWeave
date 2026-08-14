@@ -3,7 +3,7 @@ id: retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814
 date: 2026-08-14
 updated: 2026-08-14
 type: retrospective
-source: "七概念方法论实践：apps/devcontainer-base conda-libmamba-ft v2.1 版本交付 + v2.2.1 Stage 4 优化追加"
+source: "七概念方法论实践：apps/docker-images/devcontainer-base conda-libmamba-ft v2.1 版本交付 + v2.2.1 Stage 4 优化追加"
 tags: [docker, devcontainer, python-3.14, free-threading, miniforge, conda-libmamba, benchmark, c-extensions, build-automation, build-optimization, mamba]
 milestone: "conda-libmamba-ft v2.1 + v2.2.1 Stage 4 优化"
 version: "2.2.1"
@@ -17,7 +17,7 @@ session: "sc-20260814-devcontainer-milestone"
 
 ## 一、背景与目标
 
-基于七概念方法论（R-I-E-V）完成 `apps/devcontainer-base` 基础镜像 v2.1（`conda-libmamba-ft`）的版本交付复盘。本版本是从 v1（系统 Python 3.13 + venv + Miniconda3 defaults channel）到 v2.1（Python 3.14.6 free-threading + Miniforge3 + libmamba + 自动验证体系）的大版本升级。
+基于七概念方法论（R-I-E-V）完成 `apps/docker-images/devcontainer-base` 基础镜像 v2.1（`conda-libmamba-ft`）的版本交付复盘。本版本是从 v1（系统 Python 3.13 + venv + Miniconda3 defaults channel）到 v2.1（Python 3.14.6 free-threading + Miniforge3 + libmamba + 自动验证体系）的大版本升级。
 
 **目标交付物：**
 - Python 3.14.6 cp314t free-threading 为默认 Python（GIL 默认禁用）

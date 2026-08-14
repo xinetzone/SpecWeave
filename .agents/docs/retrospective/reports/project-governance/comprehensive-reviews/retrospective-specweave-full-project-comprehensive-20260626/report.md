@@ -194,7 +194,7 @@ flowchart TB
 | 决策框架 | 4 | docs/retrospective/frameworks/ |
 | 复盘报告 | 50+ | docs/retrospective/reports/（6 主题分类） |
 | Spec 文档 | 29 套（87 文件） | .trae/specs/（7 主题分类） |
-| 竹简悟道洞察 | 68 条 | apps/zhujian-wudao/.agents/docs/insights/ |
+| 竹简悟道洞察 | 68 条 | apps/ai-agents/zhujian-wudao/.agents/docs/insights/ |
 
 ***
 

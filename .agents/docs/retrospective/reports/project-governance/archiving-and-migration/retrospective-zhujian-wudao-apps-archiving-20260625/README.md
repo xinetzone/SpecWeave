@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 ---
 # 竹简悟道归档至 apps/ — 复盘报告
 
-> **任务名称**：竹简悟道参赛作品从 `.temp/AI/` 归档至 `apps/zhujian-wudao/`
+> **任务名称**：竹简悟道参赛作品从 `.temp/AI/` 归档至 `apps/ai-agents/zhujian-wudao/`
 > **复盘日期**：2026-06-25
 > **报告类型**：项目结项复盘 + 洞察萃取
 > **归档分类**：project-governance
@@ -29,17 +29,17 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 | 文件 | 源路径 | 目标路径 |
 |------|--------|---------|
-| `竹简悟道_完整版.html` | `.temp/AI/` | `apps/zhujian-wudao/` |
-| `报名帖_竹简悟道.md` | `.temp/AI/` | `apps/zhujian-wudao/` |
+| `竹简悟道_完整版.html` | `.temp/AI/` | `apps/ai-agents/zhujian-wudao/` |
+| `报名帖_竹简悟道.md` | `.temp/AI/` | `apps/ai-agents/zhujian-wudao/` |
 
 ### 交付物清单
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 应用目录 | `apps/zhujian-wudao/` | kebab-case 命名，符合 apps/ 规范 |
-| HTML Demo | `apps/zhujian-wudao/竹简悟道_完整版.html` | 自包含原型，浏览器直开 |
-| 报名帖 | `apps/zhujian-wudao/报名帖_竹简悟道.md` | 大赛报名四段结构 |
-| 应用说明 | `apps/zhujian-wudao/README.md` | 基于报名帖内容提炼 |
+| 应用目录 | `apps/ai-agents/zhujian-wudao/` | kebab-case 命名，符合 apps/ 规范 |
+| HTML Demo | `apps/ai-agents/zhujian-wudao/竹简悟道_完整版.html` | 自包含原型，浏览器直开 |
+| 报名帖 | `apps/ai-agents/zhujian-wudao/报名帖_竹简悟道.md` | 大赛报名四段结构 |
+| 应用说明 | `apps/ai-agents/zhujian-wudao/README.md` | 基于报名帖内容提炼 |
 | 索引更新 | `apps/README.md` §2.3 | 新增「应用清单」表格 |
 
 ## 子模块导航

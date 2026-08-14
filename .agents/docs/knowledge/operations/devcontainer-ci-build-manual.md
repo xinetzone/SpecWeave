@@ -32,7 +32,7 @@ graph TD
 ### 1.2 文件结构
 
 ```
-apps/devcontainer-base/
+apps/docker-images/devcontainer-base/
 ├── Dockerfile                          # 基础镜像 Dockerfile（7 阶段构建）
 ├── scripts/
 │   ├── build.sh                        # 基础镜像构建脚本
@@ -97,7 +97,7 @@ docker version && docker buildx version
 ### 2.3 一键构建 onnx-pytorch 变体（推荐）
 
 ```bash
-cd apps/devcontainer-base
+cd apps/docker-images/devcontainer-base
 
 # 国内镜像源构建（默认）
 bash variants/scripts/build-onnx-pytorch.sh --cn --tag latest
@@ -122,7 +122,7 @@ bash variants/scripts/build-onnx-pytorch.sh --no-cache --cn --tag latest
 ### 2.4 分步构建（调试用）
 
 ```bash
-cd apps/devcontainer-base
+cd apps/docker-images/devcontainer-base
 
 # Step 1: 构建基础镜像
 bash scripts/build.sh --cn --tag latest
@@ -185,7 +185,7 @@ CI 流水线文件：`.github/workflows/devcontainer-variants.yml`
 
 | 触发事件 | 路径过滤 | 说明 |
 |---------|---------|------|
-| `push` | `apps/devcontainer-base/**`、`.github/workflows/devcontainer-variants.yml` | 代码推送自动构建 |
+| `push` | `apps/docker-images/devcontainer-base/**`、`.github/workflows/devcontainer-variants.yml` | 代码推送自动构建 |
 | `pull_request` | 同上 | PR 自动验证 |
 | `workflow_dispatch` | — | 手动触发，支持镜像源选择 |
 
@@ -480,8 +480,8 @@ LABEL devcontainer.variant="<variant-name>"
 
 ## 九、参考资源
 
-- 基础镜像构建脚本：[scripts/build.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/scripts/build.sh)
-- onnx-pytorch 构建脚本：[variants/scripts/build-onnx-pytorch.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/scripts/build-onnx-pytorch.sh)
+- 基础镜像构建脚本：[scripts/build.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/build.sh)
+- onnx-pytorch 构建脚本：[variants/scripts/build-onnx-pytorch.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/scripts/build-onnx-pytorch.sh)
 - CI 流水线配置：[devcontainer-variants.yml](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)
-- 基础镜像 Dockerfile：[Dockerfile](file:///d:/spaces/SpecWeave/apps/devcontainer-base/Dockerfile)
-- onnx-pytorch Dockerfile：[variants/onnx-pytorch/Dockerfile](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/onnx-pytorch/Dockerfile)
+- 基础镜像 Dockerfile：[Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)
+- onnx-pytorch Dockerfile：[variants/onnx-pytorch/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)

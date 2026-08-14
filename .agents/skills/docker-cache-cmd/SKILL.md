@@ -253,8 +253,8 @@ bash .agents/scripts/docker-cache clean --all -y
 ```bash
 cd d:\spaces\SpecWeave
 # 逐层构建（从基础镜像到上层镜像，每层build自动缓存）
-bash .agents/scripts/docker-cache build -i devcontainer-base:conda-latest -f apps/devcontainer-base/Dockerfile.conda -c apps/devcontainer-base/ --cn
-bash .agents/scripts/docker-cache build -i devcontainer-base:onnx-pytorch-latest -f apps/devcontainer-base/Dockerfile.onnx-pytorch -c apps/devcontainer-base/ --cn
+bash .agents/scripts/docker-cache build -i devcontainer-base:conda-latest -f apps/docker-images/devcontainer-base/Dockerfile.conda -c apps/docker-images/devcontainer-base/ --cn
+bash .agents/scripts/docker-cache build -i devcontainer-base:onnx-pytorch-latest -f apps/docker-images/devcontainer-base/Dockerfile.onnx-pytorch -c apps/docker-images/devcontainer-base/ --cn
 # ... 其他层
 bash .agents/scripts/docker-cache list  # 验证缓存
 ```

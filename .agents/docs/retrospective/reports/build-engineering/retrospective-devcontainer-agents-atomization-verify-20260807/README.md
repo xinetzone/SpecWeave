@@ -2,7 +2,7 @@
 id: "devcontainer-agents-atomization-verify-report"
 title: "devcontainer-base .agents/ 原子化验证与规则归档报告"
 date: "2026-08-07"
-source: "apps/devcontainer-base/.agents/"
+source: "apps/docker-images/devcontainer-base/.agents/"
 type: "verification-report"
 tags: ["devcontainer-base", "atomization", "verification", "rules-export"]
 ---
@@ -10,7 +10,7 @@ tags: ["devcontainer-base", "atomization", "verification", "rules-export"]
 # devcontainer-base .agents/ 原子化验证与规则归档报告
 
 > **报告日期**：2026-08-07
-> **验证范围**：`apps/devcontainer-base/.agents/` 目录结构、内部链接、规则文件内容
+> **验证范围**：`apps/docker-images/devcontainer-base/.agents/` 目录结构、内部链接、规则文件内容
 > **方法论**：R-I-E（复盘→洞察→萃取）
 
 ---
@@ -50,7 +50,7 @@ tags: ["devcontainer-base", "atomization", "verification", "rules-export"]
 ## 2. 目录结构
 
 ```
-apps/devcontainer-base/
+apps/docker-images/devcontainer-base/
 ├── AGENTS.md                        ← 索引页（路由+约束速览+快速开始）
 └── .agents/                         ← AI资产容器
     ├── README.md                    ← 目录索引+快速开始指南（含三层路由）
@@ -76,7 +76,7 @@ apps/devcontainer-base/
 ```
 第1层（根级）：SpecWeave 全局规范 → .agents/global-core-rules.md
 第2层（区域级）：apps/ 区域路由 → apps/AGENTS.md
-第3层（应用级）：devcontainer-base 项目特有规则 → apps/devcontainer-base/.agents/rules/
+第3层（应用级）：devcontainer-base 项目特有规则 → apps/docker-images/devcontainer-base/.agents/rules/
 ```
 
 ### 3.2 任务类型→规则文件路由表
@@ -95,7 +95,7 @@ AI协作者在开始工作前必须确认：
 - [ ] 已根据任务类型读取对应的 rules/*.md 文件
 - [ ] 理解 Docker DinD 的 daemon.json 单一配置源原则（避免命令行参数冲突）
 - [ ] 理解非root用户 devuser (UID 1000) 的权限模型
-- [ ] 修改后运行 `python .agents/scripts/check-links.py --path apps/devcontainer-base/` 验证链接
+- [ ] 修改后运行 `python .agents/scripts/check-links.py --path apps/docker-images/devcontainer-base/` 验证链接
 
 ---
 
@@ -607,12 +607,12 @@ docker volume rm devcontainer-base_workspace
 
 | 文件 | 状态 | 说明 |
 |------|------|------|
-| apps/devcontainer-base/AGENTS.md | ✅ 重构 | 从单文件约束改为索引页+路由表 |
-| apps/devcontainer-base/.agents/README.md | ✅ 新增 | 目录索引+快速开始指南（三层路由+任务路由表+自检清单） |
-| apps/devcontainer-base/.agents/rules/dockerfile.md | ✅ 新增 | Dockerfile多阶段构建规范（107行） |
-| apps/devcontainer-base/.agents/rules/entrypoint.md | ✅ 新增 | Entrypoint启动脚本规范（83行） |
-| apps/devcontainer-base/.agents/rules/services.md | ✅ 新增 | 服务管理规范（104行，含显式锚点） |
-| apps/devcontainer-base/.agents/rules/build-test.md | ✅ 新增 | 构建与测试规范（202行） |
+| apps/docker-images/devcontainer-base/AGENTS.md | ✅ 重构 | 从单文件约束改为索引页+路由表 |
+| apps/docker-images/devcontainer-base/.agents/README.md | ✅ 新增 | 目录索引+快速开始指南（三层路由+任务路由表+自检清单） |
+| apps/docker-images/devcontainer-base/.agents/rules/dockerfile.md | ✅ 新增 | Dockerfile多阶段构建规范（107行） |
+| apps/docker-images/devcontainer-base/.agents/rules/entrypoint.md | ✅ 新增 | Entrypoint启动脚本规范（83行） |
+| apps/docker-images/devcontainer-base/.agents/rules/services.md | ✅ 新增 | 服务管理规范（104行，含显式锚点） |
+| apps/docker-images/devcontainer-base/.agents/rules/build-test.md | ✅ 新增 | 构建与测试规范（202行） |
 | .agents/rules/*/(.gitkeep x5) | ✅ 新增 | 预留目录占位 |
 
 ---

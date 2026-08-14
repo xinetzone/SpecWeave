@@ -2,7 +2,7 @@
 
 > **项目名称**：智能体开发规范体系（含提示词萃取系统、智能体脚本、知识库脚本）
 > **复盘日期**：2026-06-23
-> **复盘范围**：`apps/prompt_extraction/`、`.agents/scripts/`、`docs/knowledge/scripts/` 三大源代码区域
+> **复盘范围**：`apps/dev-tools/prompt_extraction/`、`.agents/scripts/`、`docs/knowledge/scripts/` 三大源代码区域
 > **报告类型**：硬编码问题专项复盘
 > **复盘人**：开发者角色（developer）
 
@@ -56,7 +56,7 @@ pie title 风险等级分布
 
 项目包含三大源代码区域：
 
-1. **`apps/prompt_extraction/`**：提示词萃取系统核心业务代码，包含配置、评估、优化、抽取、输入、预处理、流水线、UI 等模块。
+1. **`apps/dev-tools/prompt_extraction/`**：提示词萃取系统核心业务代码，包含配置、评估、优化、抽取、输入、预处理、流水线、UI 等模块。
 2. **`.agents/scripts/`**：7 个智能体脚本，承担 Git 忽略规则验证、链接有效性验证、派生产物溯源、规格一致性验证、角色权限验证、文件路径迁移、导航表生成等职责。
 3. **`docs/knowledge/scripts/`**：知识库索引生成脚本。
 
@@ -85,7 +85,7 @@ pie title 风险等级分布
 
 | 区域 | 文件数 | 文件清单 |
 | --- | --- | --- |
-| `apps/prompt_extraction/` | 14 | `config.py`、`assessment/evaluator.py`、`optimization/optimizer.py`、`extraction/extractor.py`、`input/parser.py`、`input/input_handler.py`、`preprocessing/cleaner.py`、`preprocessing/normalizer.py`、`pipeline.py`、`ui/app.py`、`ui/components/score_card.py`、`ui/components/radar_chart.py`、`ui/components/diff_viewer.py`、`ui/components/export_button.py` |
+| `apps/dev-tools/prompt_extraction/` | 14 | `config.py`、`assessment/evaluator.py`、`optimization/optimizer.py`、`extraction/extractor.py`、`input/parser.py`、`input/input_handler.py`、`preprocessing/cleaner.py`、`preprocessing/normalizer.py`、`pipeline.py`、`ui/app.py`、`ui/components/score_card.py`、`ui/components/radar_chart.py`、`ui/components/diff_viewer.py`、`ui/components/export_button.py` |
 | `.agents/scripts/` | 7 | `check-gitignore.py`、`check-links.py`、`check-source-traceability.py`、`check-spec-consistency.py`、`check-role-permissions.py`、`check-move.py`、`generate-nav.py` |
 | `docs/knowledge/scripts/` | 1 | `generate_index.py` |
 | **合计** | **22** | — |
@@ -131,7 +131,7 @@ flowchart LR
 
 业务常量指承载业务规则、领域知识、阈值映射等语义的字面量，是硬编码问题中影响最深远的一类。
 
-#### 4.1.1 apps/prompt_extraction/config.py
+#### 4.1.1 apps/dev-tools/prompt_extraction/config.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -142,7 +142,7 @@ flowchart LR
 | BC-05 | `config.py:10-15` | `GRADE_THRESHOLDS = {"优": 85, "良": 70, "中": 50, "差": 0}` 等级阈值映射 | 高 | 等级标准变更需改代码，且 `app.py:142` 处 `grade_order` 重复定义 | 迁移至配置文件，统一等级顺序与颜色映射 |
 | BC-06 | `config.py:18` | `DEFAULT_OUTPUT_DIR = "output"` 默认输出目录 | 中 | 路径硬编码，多环境适配困难 | 通过环境变量 `OUTPUT_DIR` 注入 |
 
-#### 4.1.2 apps/prompt_extraction/assessment/evaluator.py
+#### 4.1.2 apps/dev-tools/prompt_extraction/assessment/evaluator.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -165,14 +165,14 @@ flowchart LR
 | BC-23 | `evaluator.py:219` | `score += 34` 输出可判定分值 | 高 | 同上 | 同上 |
 | BC-24 | `evaluator.py:221` | `score += 17` 输出类型部分分值 | 高 | 同上 | 同上 |
 
-#### 4.1.3 apps/prompt_extraction/optimization/optimizer.py
+#### 4.1.3 apps/dev-tools/prompt_extraction/optimization/optimizer.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-25 | `optimizer.py:15-29` | `_AMBIGUITY_MAP` 字典（13 项歧义词汇映射） | 中 | 映射扩展需改代码 | 抽取至 `data/ambiguity_map.yaml` |
 | BC-26 | `optimizer.py:203` | `context_keywords = ("背景", "当前", "目前", "现状", "场景", "假设", "前提")` | 中 | 关键词库扩展需改代码 | 抽取至 `data/context_keywords.yaml` |
 
-#### 4.1.4 apps/prompt_extraction/extraction/extractor.py
+#### 4.1.4 apps/dev-tools/prompt_extraction/extraction/extractor.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -183,7 +183,7 @@ flowchart LR
 | BC-31 | `extractor.py:80-90` | `imperative_prefixes` 列表（约 50 个祈使动词前缀，函数内部硬编码） | 中 | 前缀库扩展需改代码且位置隐蔽 | 提升至模块级常量并抽取至 `data/imperative_prefixes.yaml` |
 | BC-32 | `extractor.py:135` | `return "内容约束"` 默认约束类型 | 中 | 默认值变更需改代码 | 迁移至配置文件 `default_constraint_type` |
 
-#### 4.1.5 apps/prompt_extraction/input/parser.py
+#### 4.1.5 apps/dev-tools/prompt_extraction/input/parser.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -192,38 +192,38 @@ flowchart LR
 | BC-35 | `parser.py:65` | 同上 keywords 列表（重复硬编码） | 高 | 与 `parser.py:45` 重复定义，修改易遗漏 | 统一为模块级常量并抽取至配置文件 |
 | BC-36 | `parser.py:81` | `uuid.uuid4().hex[:12]` ID 长度 12 | 高 | 与 `input_handler.py:11` 重复，长度调整需改两处 | 提取为 `ID_LENGTH = 12` 常量并共享 |
 
-#### 4.1.6 apps/prompt_extraction/input/input_handler.py
+#### 4.1.6 apps/dev-tools/prompt_extraction/input/input_handler.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-37 | `input_handler.py:11` | `uuid.uuid4().hex[:12]` ID 长度 12 | 高 | 与 `parser.py:81` 重复 | 同 BC-36 |
 
-#### 4.1.7 apps/prompt_extraction/preprocessing/normalizer.py
+#### 4.1.7 apps/dev-tools/prompt_extraction/preprocessing/normalizer.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-38 | `normalizer.py:54-84` | `punctuation_map` 字典（约 20 项标点映射） | 中 | 映射扩展需改代码 | 抽取至 `data/punctuation_map.yaml` |
 
-#### 4.1.8 apps/prompt_extraction/pipeline.py
+#### 4.1.8 apps/dev-tools/prompt_extraction/pipeline.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-39 | `pipeline.py:149-154` | `columns = ["id", "original_text", ...]` CSV 列名列表（14 列） | 中 | 列结构调整需改代码 | 抽取至 `config/csv_columns.yaml` |
 
-#### 4.1.9 apps/prompt_extraction/ui/app.py
+#### 4.1.9 apps/dev-tools/prompt_extraction/ui/app.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-40 | `app.py:142` | `grade_order = ["优", "良", "中", "差"]` 等级顺序 | 高 | 与 `config.py:10-15` 的 `GRADE_THRESHOLDS` 键重复 | 统一引用 `config.GRADE_THRESHOLDS` 的键 |
 | BC-41 | `app.py:143` | `grade_colors = {"优": "green", ...}` 等级颜色映射 | 高 | 与 `score_card.py:8-13` 的 `_GRADE_COLORS` 重复 | 抽取至 `config.py` 的 `GRADE_COLORS` 常量 |
 
-#### 4.1.10 apps/prompt_extraction/ui/components/score_card.py
+#### 4.1.10 apps/dev-tools/prompt_extraction/ui/components/score_card.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | BC-42 | `score_card.py:8-13` | `_GRADE_COLORS` 等级颜色映射 | 高 | 与 `app.py:143` 重复 | 同 BC-41 |
 
-#### 4.1.11 apps/prompt_extraction/ui/components/export_button.py
+#### 4.1.11 apps/dev-tools/prompt_extraction/ui/components/export_button.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -288,13 +288,13 @@ flowchart LR
 
 配置参数指运行时可调的参数，如阈值、超时、并发数、编码、尺寸等。
 
-#### 4.2.1 apps/prompt_extraction/config.py
+#### 4.2.1 apps/dev-tools/prompt_extraction/config.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | CP-01 | `config.py:18` | `DEFAULT_OUTPUT_DIR = "output"` 默认输出目录 | 中 | 多环境适配困难 | 通过环境变量 `OUTPUT_DIR` 注入 |
 
-#### 4.2.2 apps/prompt_extraction/assessment/evaluator.py
+#### 4.2.2 apps/dev-tools/prompt_extraction/assessment/evaluator.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -302,21 +302,21 @@ flowchart LR
 | CP-03 | `evaluator.py:74` | `length > 500` 文本过长阈值 | 中 | 同上 | 同上 |
 | CP-04 | `evaluator.py:146` | `len(text) > 50` 上下文长度阈值 | 中 | 同上 | 同上 |
 
-#### 4.2.3 apps/prompt_extraction/input/parser.py
+#### 4.2.3 apps/dev-tools/prompt_extraction/input/parser.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | CP-05 | `parser.py:100` | `encoding="utf-8-sig"` 编码常量 | 高 | 编码调整需改代码，多平台兼容性差 | 迁移至 `config.py` 的 `FILE_ENCODING` 常量 |
 | CP-06 | `parser.py:113` | `encoding="gbk"` 编码常量 | 高 | 同上 | 同上 |
 
-#### 4.2.4 apps/prompt_extraction/pipeline.py
+#### 4.2.4 apps/dev-tools/prompt_extraction/pipeline.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | CP-07 | `pipeline.py:134` | `json.dumps(..., ensure_ascii=False)` JSON 序列化参数 | 低 | 参数调整需改代码 | 提取为 `JSON_DUMP_KWARGS` 常量 |
 | CP-08 | `pipeline.py:156` | `df.to_csv(..., encoding="utf-8-sig")` 编码常量 | 高 | 与 CP-05 重复 | 统一引用 `FILE_ENCODING` |
 
-#### 4.2.5 apps/prompt_extraction/ui/app.py
+#### 4.2.5 apps/dev-tools/prompt_extraction/ui/app.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -324,7 +324,7 @@ flowchart LR
 | CP-10 | `app.py:161-162` | `text_summary[:80] + "..."` 文本截断长度 80 | 中 | 截断长度调整需改代码 | 提取为 `TEXT_SUMMARY_LENGTH = 80` 常量 |
 | CP-11 | `app.py:205` | `height=150` 文本域高度 | 低 | 同 CP-09 | 同 CP-09 |
 
-#### 4.2.6 apps/prompt_extraction/ui/components/radar_chart.py
+#### 4.2.6 apps/dev-tools/prompt_extraction/ui/components/radar_chart.py
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -395,7 +395,7 @@ flowchart LR
 
 UI 文本硬编码指直接内联于界面组件中的展示文本，是国际化支持的主要障碍。
 
-#### 4.5.1 apps/prompt_extraction/ui/app.py（约 45 处）
+#### 4.5.1 apps/dev-tools/prompt_extraction/ui/app.py（约 45 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -438,21 +438,21 @@ UI 文本硬编码指直接内联于界面组件中的展示文本，是国际�
 | UI-37 | `app.py:267` | `st.info("请通过侧边栏...")` | 低 | 同上 | 同上 |
 | UI-38 | `app.py:271` | `st.caption("提示词萃取系统 · 基于 Streamlit 构建")` | 低 | 同上 | 同上 |
 
-#### 4.5.2 apps/prompt_extraction/ui/components/score_card.py（约 5 处）
+#### 4.5.2 apps/dev-tools/prompt_extraction/ui/components/score_card.py（约 5 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | UI-39 | `score_card.py:46-50` | `st.metric(label="综合评分"/"清晰度"/"完整性"/"可执行性", ...)` | 中 | 国际化支持障碍 | 抽取至 `i18n/zh_CN.yaml` |
 | UI-40 | `score_card.py:54` | `st.markdown("**优化建议：**")` | 低 | 同上 | 同上 |
 
-#### 4.5.3 apps/prompt_extraction/ui/components/radar_chart.py（约 2 处）
+#### 4.5.3 apps/dev-tools/prompt_extraction/ui/components/radar_chart.py（约 2 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
 | UI-41 | `radar_chart.py:19` | `categories = ["清晰度", "完整性", "可执行性"]` 维度名称 | 中 | 国际化支持障碍 | 抽取至 `i18n/zh_CN.yaml` |
 | UI-42 | `radar_chart.py:36` | `hovertemplate="%{theta}: %{r:.1f} 分<extra></extra>"` 悬停模板 | 低 | 同上 | 同上 |
 
-#### 4.5.4 apps/prompt_extraction/ui/components/diff_viewer.py（约 4 处）
+#### 4.5.4 apps/dev-tools/prompt_extraction/ui/components/diff_viewer.py（约 4 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -461,7 +461,7 @@ UI 文本硬编码指直接内联于界面组件中的展示文本，是国际�
 | UI-45 | `diff_viewer.py:31` | `st.markdown("##### 原始文本")` | 低 | 同上 | 同上 |
 | UI-46 | `diff_viewer.py:35` | `st.markdown("##### 优化后文本")` | 低 | 同上 | 同上 |
 
-#### 4.5.5 apps/prompt_extraction/ui/components/export_button.py（约 5 处）
+#### 4.5.5 apps/dev-tools/prompt_extraction/ui/components/export_button.py（约 5 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -470,7 +470,7 @@ UI 文本硬编码指直接内联于界面组件中的展示文本，是国际�
 | UI-49 | `export_button.py:66` | `label="导出优化后提示词 (TXT)"` | 中 | 同上 | 同上 |
 | UI-50 | `export_button.py:73` | `st.info("无可导出的优化后提示词。")` | 低 | 同上 | 同上 |
 
-#### 4.5.6 apps/prompt_extraction/optimization/optimizer.py（约 15 处）
+#### 4.5.6 apps/dev-tools/prompt_extraction/optimization/optimizer.py（约 15 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -479,7 +479,7 @@ UI 文本硬编码指直接内联于界面组件中的展示文本，是国际�
 | UI-53 | `optimizer.py:237-275` | 多处 `sections.append("## 指令")` 等 Markdown 章节标题 | 低 | 同上 | 抽取至 `templates/section_templates.yaml` |
 | UI-54 | `optimizer.py:363-375` | 多处 `improvements.append("补充缺失要素...")` 改进说明文本 | 中 | 同上 | 抽取至 `templates/improvement_templates.yaml` |
 
-#### 4.5.7 apps/prompt_extraction/assessment/evaluator.py（约 8 处）
+#### 4.5.7 apps/dev-tools/prompt_extraction/assessment/evaluator.py（约 8 处）
 
 | 编号 | 位置 | 内容摘要 | 风险等级 | 影响分析 | 重构方案 |
 | --- | --- | --- | --- | --- | --- |
@@ -630,7 +630,7 @@ UI 文本硬编码指直接内联于界面组件中的展示文本，是国际�
 - 评分系数、权重值、等级阈值等核心业务规则缺乏统一治理
 
 #### 目标状态
-- 所有业务常量集中管理于 `apps/prompt_extraction/config/business_rules.yaml`
+- 所有业务常量集中管理于 `apps/dev-tools/prompt_extraction/config/business_rules.yaml`
 - 智能体脚本常量集中管理于 `.agents/config/` 目录
 - 消除所有重复定义
 - 通过 `Settings` 对象统一注入
@@ -648,11 +648,11 @@ flowchart LR
 ```
 
 1. **建立配置目录结构**：
-   - `apps/prompt_extraction/config/business_rules.yaml`：业务规则配置
-   - `apps/prompt_extraction/data/`：词库与映射数据目录
+   - `apps/dev-tools/prompt_extraction/config/business_rules.yaml`：业务规则配置
+   - `apps/dev-tools/prompt_extraction/data/`：词库与映射数据目录
    - `.agents/config/`：智能体脚本配置目录
 2. **抽取业务常量至 YAML**：将 `GRADE_THRESHOLDS`、评分系数、权重值等迁移至配置文件。
-3. **实现 Settings 加载器**：开发 `apps/prompt_extraction/config/settings.py`，提供配置加载与校验功能。
+3. **实现 Settings 加载器**：开发 `apps/dev-tools/prompt_extraction/config/settings.py`，提供配置加载与校验功能。
 4. **替换源码中的硬编码**：将 `evaluator.py`、`optimizer.py`、`extractor.py` 等文件中的硬编码替换为 `Settings` 对象引用。
 5. **消除重复定义**：统一 `EXCLUDED_DIRS`、`grade_colors`、ID 长度等重复常量。
 6. **编写单元测试**：覆盖配置加载、常量引用、权重和校验等场景。
@@ -677,7 +677,7 @@ flowchart LR
 - UI 尺寸参数集中管理于 `ui_config.yaml`
 
 #### 实施步骤
-1. 建立 `apps/prompt_extraction/config/runtime.yaml` 配置文件。
+1. 建立 `apps/dev-tools/prompt_extraction/config/runtime.yaml` 配置文件。
 2. 将编码常量、阈值、尺寸参数迁移至配置文件。
 3. 实现环境变量覆盖机制（`os.getenv` 优先于配置文件）。
 4. 替换源码中的硬编码为配置引用。
@@ -701,7 +701,7 @@ flowchart LR
 #### 实施步骤
 1. 引入 `python-dotenv` 依赖，在项目根目录创建 `.env.example`。
 2. 定义 `PROJECT_ROOT`、`OUTPUT_DIR`、`KNOWLEDGE_DIR` 等环境变量。
-3. 开发 `apps/prompt_extraction/config/paths.py` 路径解析模块。
+3. 开发 `apps/dev-tools/prompt_extraction/config/paths.py` 路径解析模块。
 4. 替换 `check-gitignore.py`、`generate-nav.py`、`generate_index.py` 中的路径硬编码。
 5. 编写路径解析单元测试。
 
@@ -718,14 +718,14 @@ flowchart LR
 - 国际化支持障碍
 
 #### 目标状态
-- 错误信息集中管理于 `apps/prompt_extraction/errors/messages.yaml`
+- 错误信息集中管理于 `apps/dev-tools/prompt_extraction/errors/messages.yaml`
 - 通过错误码引用错误信息
 - 支持多语言切换
 
 #### 实施步骤
-1. 建立 `apps/prompt_extraction/errors/messages.yaml` 错误信息库。
+1. 建立 `apps/dev-tools/prompt_extraction/errors/messages.yaml` 错误信息库。
 2. 定义错误码规范（如 `E_FILE_FORMAT_UNSUPPORTED`）。
-3. 开发 `apps/prompt_extraction/errors/exceptions.py` 自定义异常类。
+3. 开发 `apps/dev-tools/prompt_extraction/errors/exceptions.py` 自定义异常类。
 4. 替换 `parser.py`、`input_handler.py` 中的硬编码错误信息。
 5. 编写错误信息加载与格式化单元测试。
 
@@ -742,13 +742,13 @@ flowchart LR
 - UI 文本调整需逐文件检索
 
 #### 目标状态
-- UI 文本集中管理于 `apps/prompt_extraction/i18n/zh_CN.yaml`
+- UI 文本集中管理于 `apps/dev-tools/prompt_extraction/i18n/zh_CN.yaml`
 - 通过 `t("key")` 函数引用文本
 - 支持多语言切换（预留 `en_US.yaml` 等扩展位）
 
 #### 实施步骤
-1. 建立 `apps/prompt_extraction/i18n/` 国际化目录。
-2. 开发 `apps/prompt_extraction/i18n/translator.py` 翻译加载器。
+1. 建立 `apps/dev-tools/prompt_extraction/i18n/` 国际化目录。
+2. 开发 `apps/dev-tools/prompt_extraction/i18n/translator.py` 翻译加载器。
 3. 将 `app.py`、`score_card.py`、`radar_chart.py`、`diff_viewer.py`、`export_button.py` 中的 UI 文本抽取至 `zh_CN.yaml`。
 4. 将 `optimizer.py`、`evaluator.py` 中的模板文本抽取至 `templates/` 目录。
 5. 替换源码中的硬编码为 `t("key")` 调用。
@@ -843,7 +843,7 @@ flowchart LR
 | 工具 | 用途 | 配置示例 | 集成方式 |
 | --- | --- | --- | --- |
 | `ruff` | 代码风格与潜在问题检查 | `ruff check --select F,E,W` | pre-commit + CI |
-| `bandit` | 安全漏洞扫描 | `bandit -r apps/prompt_extraction/` | CI |
+| `bandit` | 安全漏洞扫描 | `bandit -r apps/dev-tools/prompt_extraction/` | CI |
 | 自定义脚本 | 硬编码字面量检测 | 扫描 `.py` 文件中的魔法数字与字符串 | pre-commit + CI |
 | `pre-commit` | 提交前自动检查 | `.pre-commit-config.yaml` | 本地钩子 |
 
@@ -940,20 +940,20 @@ gantt
 
 | 文件 | 问题数 | 主要类别 |
 | --- | --- | --- |
-| `apps/prompt_extraction/ui/app.py` | 45 | UI 文本、业务常量、配置参数 |
-| `apps/prompt_extraction/assessment/evaluator.py` | 28 | 业务常量、UI 文本、配置参数 |
-| `apps/prompt_extraction/optimization/optimizer.py` | 8 | 业务常量、UI 文本 |
-| `apps/prompt_extraction/extraction/extractor.py` | 6 | 业务常量 |
-| `apps/prompt_extraction/input/parser.py` | 15 | 业务常量、配置参数、错误信息 |
-| `apps/prompt_extraction/input/input_handler.py` | 2 | 业务常量、错误信息 |
-| `apps/prompt_extraction/preprocessing/cleaner.py` | 10 | 其他类型（正则模式） |
-| `apps/prompt_extraction/preprocessing/normalizer.py` | 4 | 业务常量、其他类型（Unicode） |
-| `apps/prompt_extraction/pipeline.py` | 3 | 业务常量、配置参数 |
-| `apps/prompt_extraction/config.py` | 6 | 业务常量、配置参数、路径 |
-| `apps/prompt_extraction/ui/components/score_card.py` | 7 | 业务常量、UI 文本、CSS 样式 |
-| `apps/prompt_extraction/ui/components/radar_chart.py` | 9 | UI 文本、配置参数、CSS 样式 |
-| `apps/prompt_extraction/ui/components/diff_viewer.py` | 4 | UI 文本 |
-| `apps/prompt_extraction/ui/components/export_button.py` | 9 | UI 文本、业务常量、配置参数 |
+| `apps/dev-tools/prompt_extraction/ui/app.py` | 45 | UI 文本、业务常量、配置参数 |
+| `apps/dev-tools/prompt_extraction/assessment/evaluator.py` | 28 | 业务常量、UI 文本、配置参数 |
+| `apps/dev-tools/prompt_extraction/optimization/optimizer.py` | 8 | 业务常量、UI 文本 |
+| `apps/dev-tools/prompt_extraction/extraction/extractor.py` | 6 | 业务常量 |
+| `apps/dev-tools/prompt_extraction/input/parser.py` | 15 | 业务常量、配置参数、错误信息 |
+| `apps/dev-tools/prompt_extraction/input/input_handler.py` | 2 | 业务常量、错误信息 |
+| `apps/dev-tools/prompt_extraction/preprocessing/cleaner.py` | 10 | 其他类型（正则模式） |
+| `apps/dev-tools/prompt_extraction/preprocessing/normalizer.py` | 4 | 业务常量、其他类型（Unicode） |
+| `apps/dev-tools/prompt_extraction/pipeline.py` | 3 | 业务常量、配置参数 |
+| `apps/dev-tools/prompt_extraction/config.py` | 6 | 业务常量、配置参数、路径 |
+| `apps/dev-tools/prompt_extraction/ui/components/score_card.py` | 7 | 业务常量、UI 文本、CSS 样式 |
+| `apps/dev-tools/prompt_extraction/ui/components/radar_chart.py` | 9 | UI 文本、配置参数、CSS 样式 |
+| `apps/dev-tools/prompt_extraction/ui/components/diff_viewer.py` | 4 | UI 文本 |
+| `apps/dev-tools/prompt_extraction/ui/components/export_button.py` | 9 | UI 文本、业务常量、配置参数 |
 | `.agents/scripts/check-gitignore.py` | 3 | 业务常量、路径 |
 | `.agents/scripts/check-links.py` | 8 | 其他类型、业务常量、配置参数 |
 | `.agents/scripts/check-source-traceability.py` | 3 | 业务常量、其他类型 |
@@ -990,7 +990,7 @@ gantt
 ### 附录 C：配置文件目录结构建议
 
 ```
-apps/prompt_extraction/
+apps/dev-tools/prompt_extraction/
 ├── config/
 │   ├── business_rules.yaml       # 业务规则配置
 │   ├── runtime.yaml              # 运行时配置参数

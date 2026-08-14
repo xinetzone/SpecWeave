@@ -22,7 +22,7 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/05-examp
 ### 完整场景：新会话恢复任务
 
 ```
-📋 新会话上下文重建：已重新读取 [竹简悟道项目README](../../../apps/zhujian-wudao/README.md)、[技术方案](.temp/zhujian/spec.md)、[任务清单](.temp/zhujian/tasks.md)、[已有代码](../../../apps/zhujian-wudao/src/)
+📋 新会话上下文重建：已重新读取 [竹简悟道项目README](../../../apps/ai-agents/zhujian-wudao/README.md)、[技术方案](.temp/zhujian/spec.md)、[任务清单](.temp/zhujian/tasks.md)、[已有代码](../../../apps/ai-agents/zhujian-wudao/src/)
 
 当前进度：④代码实现阶段，对话核心逻辑已完成，待实现竹简渲染模块
 待办事项：继续实现竹简渲染模块 → 编写单元测试 → 提交PR

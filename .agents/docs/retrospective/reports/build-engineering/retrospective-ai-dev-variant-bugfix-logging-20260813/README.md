@@ -2,7 +2,7 @@
 id: retrospective-ai-dev-variant-bugfix-logging-20260813
 date: 2026-08-13
 type: retrospective
-source: "七概念方法论实践：apps/devcontainer-base/variants ai-dev变体Bug修复、Stage 2日志增强与分隔符同步"
+source: "七概念方法论实践：apps/docker-images/devcontainer-base/variants ai-dev变体Bug修复、Stage 2日志增强与分隔符同步"
 tags: [docker, devcontainer, variants, bash, pip, logging, bugfix, test, seven-concepts]
 session: sc-20260813-devcontainer-variant-fix-retro
 ---
@@ -21,7 +21,7 @@ session: sc-20260813-devcontainer-variant-fix-retro
 
 ### 1.1 项目背景
 
-`apps/devcontainer-base/variants/ai-dev`是devcontainer-base的AI/ML/NLP开发变体，在前期开发后发现两个测试失败（T4、T25），同时Stage 2包安装过程缺乏中间可观测性导致依赖冲突排查困难，且命令分隔符设计存在bug需要同步修正。
+`apps/docker-images/devcontainer-base/variants/ai-dev`是devcontainer-base的AI/ML/NLP开发变体，在前期开发后发现两个测试失败（T4、T25），同时Stage 2包安装过程缺乏中间可观测性导致依赖冲突排查困难，且命令分隔符设计存在bug需要同步修正。
 
 ### 1.2 项目目标
 
@@ -35,9 +35,9 @@ session: sc-20260813-devcontainer-variant-fix-retro
 
 | 交付物 | 文件路径 | 说明 |
 |--------|---------|------|
-| 修复后的测试脚本 | [test-ai-dev.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/scripts/test-ai-dev.sh) | T4+T25修复，25/25通过 |
-| 日志增强后的Dockerfile | [ai-dev/Dockerfile](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/ai-dev/Dockerfile) | pip_install_group函数+14组分组安装 |
-| 分隔符修复后的构建脚本 | [build.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/build.sh) | \|\|\|分隔符+参数扩展解析 |
+| 修复后的测试脚本 | [test-ai-dev.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/scripts/test-ai-dev.sh) | T4+T25修复，25/25通过 |
+| 日志增强后的Dockerfile | [ai-dev/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/ai-dev/Dockerfile) | pip_install_group函数+14组分组安装 |
+| 分隔符修复后的构建脚本 | [build.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/build.sh) | \|\|\|分隔符+参数扩展解析 |
 | 复盘报告（本文档） | 本文件 | R→I→E→V→C全链路产出 |
 
 ### 1.4 关键数据

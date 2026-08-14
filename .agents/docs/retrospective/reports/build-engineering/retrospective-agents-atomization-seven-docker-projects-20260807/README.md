@@ -8,13 +8,13 @@ status: "completed"
 maturity: "L2"
 methodology: "seven-concepts (R-I-E-A-C)"
 source:
-  - "apps/jupyter-ssh-base"
-  - "apps/devcontainer-base"
-  - "apps/docker-ssh-dind"
-  - "apps/pytorch-base"
-  - "apps/caffe-ffi-jupyter"
-  - "apps/caffe-ffi-cross"
-  - "apps/xmnn-runtime/docker"
+  - "apps/docker-images/jupyter-ssh-base"
+  - "apps/docker-images/devcontainer-base"
+  - "apps/docker-images/docker-ssh-dind"
+  - "apps/docker-images/pytorch-base"
+  - "apps/docker-images/caffe-ffi-jupyter"
+  - "apps/docker-images/caffe-ffi-cross"
+  - "apps/docker-images/xmnn-runtime/docker"
   - "seven-concepts-cmd skill execution"
 tags: ["docker", "agents", "atomization", "buildkit", "multi-stage-build", "pattern-extraction", "seven-concepts", "rules", "frontmatter", "id-uniqueness"]
 related_patterns:
@@ -49,13 +49,13 @@ commit: "afa9d346"
 
 | 序号 | 子项目 | 基础镜像 | 用途 | 原有AGENTS.md | 规则文件数 |
 |------|--------|---------|------|:------------:|:---------:|
-| 1 | [jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
-| 2 | [devcontainer-base](file:///d:/spaces/SpecWeave/apps/devcontainer-base) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
-| 3 | [docker-ssh-dind](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
-| 4 | [pytorch-base](file:///d:/spaces/SpecWeave/apps/pytorch-base) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
-| 5 | [caffe-ffi-jupyter](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
-| 6 | [caffe-ffi-cross](file:///d:/spaces/SpecWeave/apps/caffe-ffi-cross) | ubuntu:26.04 | Linux→macOS/Windows 交叉编译镜像 | ❌ 无 → 新建 | 2 |
-| 7 | [xmnn-runtime/docker](file:///d:/spaces/SpecWeave/apps/xmnn-runtime/docker) | ubuntu:24.04 | xmnn Python wheel 运行时镜像 | ❌ 无 → 新建 | 3 |
+| 1 | [jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
+| 2 | [devcontainer-base](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
+| 3 | [docker-ssh-dind](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
+| 4 | [pytorch-base](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
+| 5 | [caffe-ffi-jupyter](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
+| 6 | [caffe-ffi-cross](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-cross) | ubuntu:26.04 | Linux→macOS/Windows 交叉编译镜像 | ❌ 无 → 新建 | 2 |
+| 7 | [xmnn-runtime/docker](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker) | ubuntu:24.04 | xmnn Python wheel 运行时镜像 | ❌ 无 → 新建 | 3 |
 
 **统计**：7个子项目，其中5个原有AGENTS.md，2个无AGENTS.md（本次新建）；共生成21个原子规则文件。
 
@@ -135,7 +135,7 @@ Malformed errors:    0
 
 ### F05. docker-ssh-dind BuildKit补全内容
 
-对 [Containerfile](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind/Containerfile) 进行了3项BuildKit兼容性修复：
+对 [Containerfile](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/Containerfile) 进行了3项BuildKit兼容性修复：
 
 1. **语法声明**：添加 `# syntax=docker/dockerfile:1.7-labs`（启用BuildKit高级特性）
 2. **安全Shell**：添加 `SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]`（管道错误传播）
@@ -355,13 +355,13 @@ refactor(agents): 全面原子化7个Docker子项目的.agents规则体系
 - 🆕 [check-rules-id-uniqueness.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/check-rules-id-uniqueness.ps1) — Rules ID唯一性批量检查脚本
 
 ### 原子化项目文件
-- [jupyter-ssh-base/.agents/](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/.agents/) — 4规则文件
-- [devcontainer-base/.agents/](file:///d:/spaces/SpecWeave/apps/devcontainer-base/.agents/) — 4规则文件
-- [docker-ssh-dind/.agents/](file:///d:/spaces/SpecWeave/apps/docker-ssh-dind/.agents/) — 3规则文件（含Containerfile）
-- [pytorch-base/.agents/](file:///d:/spaces/SpecWeave/apps/pytorch-base/.agents/) — 3规则文件
-- [caffe-ffi-jupyter/.agents/](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/.agents/) — 2规则文件
-- [caffe-ffi-cross/.agents/](file:///d:/spaces/SpecWeave/apps/caffe-ffi-cross/.agents/) — 2规则文件（交叉编译）
-- [xmnn-runtime/docker/.agents/](file:///d:/spaces/SpecWeave/apps/xmnn-runtime/docker/.agents/) — 3规则文件（UID自适应）
+- [jupyter-ssh-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/.agents/) — 4规则文件
+- [devcontainer-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/.agents/) — 4规则文件
+- [docker-ssh-dind/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/) — 3规则文件（含Containerfile）
+- [pytorch-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base/.agents/) — 3规则文件
+- [caffe-ffi-jupyter/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/.agents/) — 2规则文件
+- [caffe-ffi-cross/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-cross/.agents/) — 2规则文件（交叉编译）
+- [xmnn-runtime/docker/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker/.agents/) — 3规则文件（UID自适应）
 
 ### 关联已有模式
 - [dockerfile-runtime-logical-layering.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) — 六步逻辑分层（全部7项目对齐）

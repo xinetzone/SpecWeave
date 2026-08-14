@@ -37,7 +37,7 @@ HA Core 在 `bootstrap` 中将启动拆分为多个阶段：先确保基础能�
 2. **Why-2：为什么系统内核难以作为库复用？**  
    因为其核心设计目标是支撑独立运行态（事件循环、生命周期、存储、注册中心），而不是提供稳定的嵌入式 API 面。
 3. **Why-3：为什么工程化层面会阻塞？**  
-   因为它对 Python 版本与依赖 pin 有极强约束，且工具链围绕“主仓库统一治理”构建（见 [pyproject.toml](../../../../../../../apps/ai-code-assistant/pyproject.toml#L24-L84)）。
+   因为它对 Python 版本与依赖 pin 有极强约束，且工具链围绕“主仓库统一治理”构建（见 [pyproject.toml](../../../../../../../apps/ai-agents/ai-code-assistant/pyproject.toml#L24-L84)）。
 4. **Why-4：为什么 Python 版本会成为硬门槛？**  
    因为它直接使用了未来版本语言/标准库能力，并据此收敛大量兼容性成本。
 5. **Why-5：最终根因是什么？**  

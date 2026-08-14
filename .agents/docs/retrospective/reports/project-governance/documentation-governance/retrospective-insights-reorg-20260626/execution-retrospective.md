@@ -10,7 +10,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 ### 任务背景
 
-竹简悟道洞察库在归档至 `apps/zhujian-wudao/docs/insights/` 后，暴露出严重的结构失衡与历史欠债：2 个文件行数为 701 与 3265（比例 1:4.7），且 `insights-31-65.md` 实际包含洞察 31-68（文件名与内容不符）。本次任务将其重组为 3 个按「基础层 / 哲学层 / 元层」四层结构组织的均衡文件，并修复历史遗留的结构债务。
+竹简悟道洞察库在归档至 `apps/ai-agents/zhujian-wudao/docs/insights/` 后，暴露出严重的结构失衡与历史欠债：2 个文件行数为 701 与 3265（比例 1:4.7），且 `insights-31-65.md` 实际包含洞察 31-68（文件名与内容不符）。本次任务将其重组为 3 个按「基础层 / 哲学层 / 元层」四层结构组织的均衡文件，并修复历史遗留的结构债务。
 
 ### 任务约束
 
@@ -76,7 +76,7 @@ flowchart TD
 | 维度 | 内容 |
 |------|------|
 | **目标** | 清理被替代的旧文件，同步更新目录索引 |
-| **操作** | 删除 `insights-31-65.md`；更新 `apps/zhujian-wudao/docs/insights/README.md` 反映三层结构 |
+| **操作** | 删除 `insights-31-65.md`；更新 `apps/ai-agents/zhujian-wudao/docs/insights/README.md` 反映三层结构 |
 | **结果** | 旧文件清理完毕；目录索引呈现 01-30 / 31-53 / 54-68 三层结构 |
 
 ### 步骤 T5：更新全项目交叉引用

@@ -425,7 +425,7 @@ pytest tests/ -v
 
 ```bash
 # ===== 一键完整验证 =====
-bash apps/caffe-ffi-jupyter/scripts/test-conda-build.sh
+bash apps/docker-images/caffe-ffi-jupyter/scripts/test-conda-build.sh
 
 # ===== 单独执行各维度检查 =====
 

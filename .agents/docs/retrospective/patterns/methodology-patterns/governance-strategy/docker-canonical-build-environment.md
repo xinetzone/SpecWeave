@@ -99,7 +99,7 @@ docker run --rm \
   -v "$(pwd):/SpecWeave" \
   -v caffe-ffi-workspace:/workspace \
   caffe-ffi-jupyter:latest \
-  bash -c "cp /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
+  bash -c "cp /SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
 ```
 
 **关键要点**：
@@ -244,7 +244,7 @@ docker run --rm \
   -v "$(pwd):/SpecWeave" \
   -v caffe-ffi-workspace:/workspace \
   caffe-ffi-jupyter:latest \
-  bash -c "bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh"
+  bash -c "bash /SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh"
 ```
 
 ### CI/CD 流水线
@@ -261,7 +261,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run C++ tests
-        run: bash apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh
+        run: bash apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh
 ```
 
 ### Code Review 时

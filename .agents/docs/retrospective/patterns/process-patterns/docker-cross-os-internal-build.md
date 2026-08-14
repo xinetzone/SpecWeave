@@ -160,14 +160,14 @@ done
 
 ### 案例2：test-cpp-tests.sh构建目录分离策略
 
-- **文件**：`apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh`
+- **文件**：`apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh`
 - **策略**：源码从`/SpecWeave`（NTFS mount）只读引用，构建目录放在`/workspace/caffe-ffi-cpp-build`（Docker命名卷，Linux文件系统）
 - **关键设计**：脚本头部注释明确说明："将build目录放在Docker命名卷/workspace上，完全规避NTFS bind mount上autotools无法创建临时文件（confdefs.h等）的问题"
 - **结果**：稳定构建和运行C++/Python单元测试
 
 ### 案例3：full-clean-rebuild.sh CRLF防御性修复
 
-- **文件**：`apps/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh`
+- **文件**：`apps/docker-images/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh`
 - **策略**：构建前对关键源文件类型（.sh/.cmake/CMakeLists.txt/.py/.cc/.cpp/.hpp/.h等）执行CRLF检测和sed修复
 - **定位**：作为防御性措施（Step 1），与核心模式配合使用
 - **覆盖范围**：同时修复caffe-ffi和tvm-ffi vendor目录

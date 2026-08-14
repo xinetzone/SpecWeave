@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'apps/jupyter-ssh-base/**'
+      - 'apps/docker-images/jupyter-ssh-base/**'
   pull_request:
     branches: [main]
     paths:
-      - 'apps/jupyter-ssh-base/**'
+      - 'apps/docker-images/jupyter-ssh-base/**'
   workflow_dispatch:
     inputs:
       push_to_registry:
@@ -30,7 +30,7 @@ env:
 
 defaults:
   run:
-    working-directory: apps/jupyter-ssh-base
+    working-directory: apps/docker-images/jupyter-ssh-base
 
 jobs:
   # ===========================================================================
@@ -120,14 +120,14 @@ jobs:
       - name: Run healthcheck tests
         run: |
           bash scripts/healthcheck-test.sh
-        working-directory: apps/jupyter-ssh-base
+        working-directory: apps/docker-images/jupyter-ssh-base
         env:
           IMAGE_TAG: '1.1'
 
       - name: Run SSH non-interactive PATH tests
         run: |
           bash scripts/test-ssh-noninteractive-path.sh --skip-build
-        working-directory: apps/jupyter-ssh-base
+        working-directory: apps/docker-images/jupyter-ssh-base
         env:
           IMAGE_TAG: 'test-ssh-path'
 
@@ -220,7 +220,7 @@ jobs:
       - name: Build and push to GHCR
         uses: docker/build-push-action@v6
         with:
-          context: apps/jupyter-ssh-base
+          context: apps/docker-images/jupyter-ssh-base
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/jupyter-ssh-base:${{ env.IMAGE_TAG }}

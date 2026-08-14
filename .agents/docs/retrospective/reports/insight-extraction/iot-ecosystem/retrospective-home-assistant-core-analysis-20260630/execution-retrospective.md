@@ -41,8 +41,8 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 ### 2.4 工程化边界证据
 
-- Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](../../../../../../../apps/ai-code-assistant/pyproject.toml#L24-L24)
-- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../../../apps/ai-code-assistant/pyproject.toml#L440-L888)、`requirements_test.txt`
+- Python 版本要求 `>= 3.14.2`：见 [pyproject.toml](../../../../../../../apps/ai-agents/ai-code-assistant/pyproject.toml#L24-L24)
+- 强 pin 依赖与严格 lint/test 体系：见 [pyproject.toml](../../../../../../../apps/ai-agents/ai-code-assistant/pyproject.toml#L440-L888)、`requirements_test.txt`
 
 ---
 

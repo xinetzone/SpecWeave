@@ -70,4 +70,4 @@ grep -rn "2[0-9]\.[0-9]\{2\}" docs/ --include="*.md" | grep -v "verified:"
 
 ## 应用示例
 
-参见 [WSL-DEPLOY-GUIDE.md](../../../apps/caffe-ffi-jupyter/WSL-DEPLOY-GUIDE.md) 中的实际应用。
+参见 [WSL-DEPLOY-GUIDE.md](../../../apps/docker-images/caffe-ffi-jupyter/WSL-DEPLOY-GUIDE.md) 中的实际应用。

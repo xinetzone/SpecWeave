@@ -2,7 +2,7 @@
 id: retrospective-devcontainer-base-20260807
 date: 2026-08-07
 type: retrospective
-source: "七概念方法论实践：apps/devcontainer-base 构建验证与Docker Compose部署"
+source: "七概念方法论实践：apps/docker-images/devcontainer-base 构建验证与Docker Compose部署"
 tags: [docker, devcontainer, dind, supervisord, ssh, jupyter, podman, build-verification]
 ---
 
@@ -10,7 +10,7 @@ tags: [docker, devcontainer, dind, supervisord, ssh, jupyter, podman, build-veri
 
 ## 一、背景与目标
 
-基于七概念方法论（R-I-E-C-A-F-V）完成 `apps/devcontainer-base` 全功能开发容器基础镜像的构建验证、Docker Compose部署测试与国内镜像源适配。
+基于七概念方法论（R-I-E-C-A-F-V）完成 `apps/docker-images/devcontainer-base` 全功能开发容器基础镜像的构建验证、Docker Compose部署测试与国内镜像源适配。
 
 **目标交付物：**
 - 基于 Ubuntu 26.04 的多服务开发容器（SSH + Docker DinD + Podman rootless + Jupyter）

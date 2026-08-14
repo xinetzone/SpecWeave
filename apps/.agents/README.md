@@ -22,26 +22,37 @@ apps/
 ├── .agents/
 │   └── README.md          ← 本文件（元数据容器说明）
 ├── README.md              ← apps 目录总览
-├── zhujian-wudao/         ← zhujian-wudao 应用（有自己的 .agents/）
-│   ├── AGENTS.md          ← zhujian-wudao 入口（嵌套优先）
-│   └── .agents/           ← zhujian-wudao 规范体系
-├── docker-ssh-dind/       ← docker-ssh-dind 应用（有自己的 .agents/）
-│   ├── AGENTS.md
-│   └── .agents/
-├── jupyter-ssh-base/      ← jupyter-ssh-base 应用（有 AGENTS.md）
-│   └── AGENTS.md
-├── ai-code-assistant/     ← 无独立 .agents/ 的应用
-├── camera-power-controller/
-├── prompt_extraction/
-├── pytorch-base/
-├── shared/
-├── tests/
-└── xmnn-runtime/
+├── shared/                ← 跨应用共享资源
+├── tests/                 ← 全局测试用例
+├── docker-images/         ← 容器镜像类分组
+│   ├── devcontainer-base/ ← devcontainer-base 应用（有自己的 .agents/）
+│   │   ├── AGENTS.md      ← devcontainer-base 入口（嵌套优先）
+│   │   └── .agents/
+│   ├── docker-ssh-dind/   ← docker-ssh-dind 应用（有自己的 .agents/）
+│   │   ├── AGENTS.md
+│   │   └── .agents/
+│   ├── jupyter-ssh-base/  ← jupyter-ssh-base 应用（有 AGENTS.md）
+│   │   └── AGENTS.md
+│   ├── pytorch-base/
+│   ├── caffe-ffi-jupyter/
+│   ├── caffe-ffi-cross/
+│   └── xmnn-runtime/
+├── ai-agents/             ← AI 应用类分组
+│   ├── zhujian-wudao/     ← zhujian-wudao 应用（有自己的 .agents/）
+│   ├── ai-code-assistant/
+│   └── eve-minimal-agent/
+├── dev-tools/             ← 开发工具类分组
+│   ├── camera-power-controller/
+│   └── prompt_extraction/
+└── samples/               ← 示例/原型类分组
+    ├── cow-demo/
+    ├── short-video-site/
+    └── zleap-workspace-first-prototype/
 ```
 
 ## 与子应用 .agents/ 的关系
 
-| 维度 | apps/.agents/（本目录） | apps/zhujian-wudao/.agents/ |
+| 维度 | apps/.agents/（本目录） | apps/ai-agents/zhujian-wudao/.agents/ |
 |------|------------------------|-----------------------------|
 | 归属 | SpecWeave 主权区 | zhujian-wudao 应用 |
 | 版本管理 | 直接纳入 SpecWeave（同仓库） | 直接纳入 SpecWeave（同仓库） |

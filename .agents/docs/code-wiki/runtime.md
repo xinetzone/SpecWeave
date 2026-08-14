@@ -8,9 +8,9 @@
 |---|---|---|
 | 阅读和使用规范体系 | AI 编码工具、Git | 将仓库根目录作为工作目录，AI 工具读取 `AGENTS.md` |
 | 运行治理脚本 | Python、Git | 执行 `.agents/scripts/` 下的检查脚本 |
-| 运行提示词萃取系统 | Python、pip | 安装 `apps/prompt_extraction/requirements.txt` |
-| 运行 Web UI | Python、pip、Streamlit | 使用 Streamlit 启动 `apps/prompt_extraction/ui/app.py` |
-| 运行测试 | Python、pip、pytest | 执行 `apps/prompt_extraction/tests/` 测试套件 |
+| 运行提示词萃取系统 | Python、pip | 安装 `apps/dev-tools/prompt_extraction/requirements.txt` |
+| 运行 Web UI | Python、pip、Streamlit | 使用 Streamlit 启动 `apps/dev-tools/prompt_extraction/ui/app.py` |
+| 运行测试 | Python、pip、pytest | 执行 `apps/dev-tools/prompt_extraction/tests/` 测试套件 |
 
 ## 安装提示词萃取系统依赖
 
@@ -248,7 +248,7 @@ Markdown 文件优先按一级或二级标题拆分区块；若无标题，则�
 
 | 修改区域 | 建议验证 |
 |---|---|
-| `apps/prompt_extraction/` 源码 | `python -m pytest apps\prompt_extraction\tests` |
+| `apps/dev-tools/prompt_extraction/` 源码 | `python -m pytest apps\prompt_extraction\tests` |
 | `docs/` 文档 | `python .agents\scripts\check-links.py` |
 | `.agents/roles/` | `python .agents\scripts\check-role-permissions.py` |
 | `.trae/specs/` | `python .agents\scripts\check-spec-consistency.py` |

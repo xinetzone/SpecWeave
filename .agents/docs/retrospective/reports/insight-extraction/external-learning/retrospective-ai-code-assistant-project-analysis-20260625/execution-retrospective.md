@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ai-code-assistant-project-analysis-20260625-execution"
 title: "执行过程复盘"
-source: "../../../../../../../apps/ai-code-assistant/README.md"
+source: "../../../../../../../apps/ai-agents/ai-code-assistant/README.md"
 x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/execution-retrospective.toml"
 ---
 # 执行过程复盘
@@ -40,10 +40,10 @@ flowchart LR
 
 本次采用了**自顶向下、配置优先**的阅读策略：
 
-1. **先看配置**：[pyproject.toml](../../../../../../../apps/ai-code-assistant/pyproject.toml) 提供了项目名称、描述、依赖列表、启动脚本，快速建立项目概览
-2. **再看入口**：[app.py](../../../../../../../apps/ai-code-assistant/app.py) 展示了路由结构和模块组装方式，明确了 API 边界
+1. **先看配置**：[pyproject.toml](../../../../../../../apps/ai-agents/ai-code-assistant/pyproject.toml) 提供了项目名称、描述、依赖列表、启动脚本，快速建立项目概览
+2. **再看入口**：[app.py](../../../../../../../apps/ai-agents/ai-code-assistant/app.py) 展示了路由结构和模块组装方式，明确了 API 边界
 3. **后看模块**：三个 modules 文件实现了具体业务逻辑，每个模块职责单一
-4. **最后看前端**：[index.html](../../../../../../../apps/ai-code-assistant/templates/index.html) 验证了功能完整性和用户交互流程
+4. **最后看前端**：[index.html](../../../../../../../apps/ai-agents/ai-code-assistant/templates/index.html) 验证了功能完整性和用户交互流程
 
 ### 2.3 关键发现记录
 

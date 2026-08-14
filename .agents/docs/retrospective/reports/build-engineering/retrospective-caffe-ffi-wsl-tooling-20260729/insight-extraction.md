@@ -84,9 +84,9 @@ WSL2环境下的部署脚本应同时提供：
 
 | 编号 | 建议 | 优先级 | 适用范围 |
 |------|------|--------|----------|
-| A01 | 所有面向WSL的bash脚本配套PowerShell包装器 | 高 | apps/caffe-ffi-jupyter/及其他WSL项目 |
+| A01 | 所有面向WSL的bash脚本配套PowerShell包装器 | 高 | apps/docker-images/caffe-ffi-jupyter/及其他WSL项目 |
 | A02 | 在scripts/lib/下建立共享shell工具库（logging.sh等） | 高 | 可推广到其他apps子项目 |
 | A03 | 部署指南增加"方案对比"小节，提供量化数据 | 中 | 所有涉及技术选型的文档 |
 | A04 | 文档中的版本号使用变量或标注"最后验证日期" | 低 | 所有部署类文档 |
-| A05 | 将bash日志库推广到其他shell脚本（build.sh等） | 中 | apps/caffe-ffi-jupyter/scripts/build.sh |
+| A05 | 将bash日志库推广到其他shell脚本（build.sh等） | 中 | apps/docker-images/caffe-ffi-jupyter/scripts/build.sh |
 | A06 | 考虑为PowerShell脚本也增加JSON日志输出 | 低 | deploy.ps1/diagnose.ps1 |

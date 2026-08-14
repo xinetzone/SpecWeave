@@ -1,0 +1,135 @@
+# syntax=docker/dockerfile:1.6
+# =============================================================================
+# Conda 高性能环境 Dockerfile 模板 — 方式 B2：BuildKit bind mount（推荐）
+#
+# 适用场景：需要动态切换镜像源 + 追求最小镜像层数 + 已启用 BuildKit
+# 复杂度：★★☆☆☆（需要 BuildKit，零镜像层开销）
+# 特点：脚本不写入镜像层、BuildKit 自动管理、cache mount 加速重建
+#
+# ⚠️  使用前需要复制的文件：
+#   1. 本文件（Dockerfile）→ 重命名为 Dockerfile
+#   2. conda-perf-setup.sh
+#      来源：variants/shared/scripts/conda-perf-setup.sh
+#      放置：scripts/conda-perf-setup.sh（相对于 Dockerfile 所在目录）
+#      建议目录结构：
+#        your-project/
+#        ├── Dockerfile          ← 本文件（重命名后）
+#        ├── scripts/
+#        │   └── conda-perf-setup.sh
+#        └── .dockerignore
+#
+# 前置条件：必须启用 BuildKit
+#   export DOCKER_BUILDKIT=1          # Linux/macOS
+#   $env:DOCKER_BUILDKIT=1            # Windows PowerShell
+#   或在 Docker Desktop 中默认启用
+#
+# 构建命令：
+#   # 国际网络（官方源）
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app .
+#
+#   # 中国大陆（清华 TUNA，8线程）
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app \
+#       --build-arg CONDA_MIRROR=tuna \
+#       --build-arg CONDA_THREADS=8 .
+#
+#   # 中国大陆（阿里镜像，16线程，pip 也用阿里）
+#   DOCKER_BUILDKIT=1 docker build -t my-conda-app \
+#       --build-arg CONDA_MIRROR=aliyun \
+#       --build-arg PIP_MIRROR=aliyun \
+#       --build-arg CONDA_THREADS=16 .
+#
+# 环境变量（build-arg）：
+#   CONDA_MIRROR    : official(默认) | tuna | aliyun
+#   PIP_MIRROR      : official(默认) | tuna | aliyun
+#   CONDA_THREADS   : 并行线程数（默认8，建议=CPU核心数）
+#
+# 替换占位符（搜索 __XXX__ 并替换）：
+#   __BASE_IMAGE__     : 基础镜像（默认 ubuntu:24.04）
+#   __MINIFORGE_VER__  : Miniforge3 版本（默认 24.11.3-2）
+#   __PYTHON_VERSION__ : Python 版本（默认 3.12）
+#   __CONDA_PACKAGES__ : conda 安装的包列表（空格分隔，如 numpy pandas jupyterlab）
+#   __PIP_PACKAGES__   : pip 安装的包列表（可选，取消注释 pip 段后填入）
+#   __APP_DIR__        : 应用目录（默认 /app）
+# =============================================================================
+
+FROM __BASE_IMAGE__
+
+# ── 构建参数 ──
+ARG MINIFORGE_VERSION=__MINIFORGE_VER__
+ARG PYTHON_VERSION=__PYTHON_VERSION__
+ARG CONDA_MIRROR=official
+ARG PIP_MIRROR=official
+ARG CONDA_THREADS=8
+
+# ── 系统依赖 ──
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+        wget bzip2 ca-certificates bash \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── 安装 Miniforge3（自带 mamba + conda-forge 配置） ──
+RUN wget -q "https://github.com/conda-forge/miniforge/releases/download/\
+${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" \
+        -O /tmp/miniforge.sh && \
+    bash /tmp/miniforge.sh -b -p /opt/conda && \
+    rm /tmp/miniforge.sh
+
+ENV PATH=/opt/conda/bin:$PATH
+
+# ── 方式 B2：BuildKit bind mount 执行脚本（零镜像层，推荐） ──
+# --mount=type=bind 将宿主机文件挂载到容器内（只读），不增加镜像层
+# --mount=type=cache 挂载缓存目录，跨构建复用下载的包
+RUN --mount=type=bind,source=scripts/conda-perf-setup.sh,target=/tmp/conda-perf-setup.sh,readonly \
+    --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    chmod +x /tmp/conda-perf-setup.sh && \
+    CONDA_DIR=/opt/conda \
+    CONDA_MIRROR=${CONDA_MIRROR} \
+    CONDA_THREADS=${CONDA_THREADS} \
+        bash /tmp/conda-perf-setup.sh
+
+# ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
+# conda pkgs 和 pip cache 都通过 cache mount 持久化，大幅加速重建
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    mamba create -y -n myenv -c conda-forge --override-channels -q \
+        python=${PYTHON_VERSION} \
+        pip \
+        __CONDA_PACKAGES__ && \
+    conda clean -afy
+
+# ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
+# RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+#     if [ "${PIP_MIRROR}" = "tuna" ]; then \
+#         /opt/conda/envs/myenv/bin/pip config set global.index-url \
+#             https://pypi.tuna.tsinghua.edu.cn/simple && \
+#         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
+#             pypi.tuna.tsinghua.edu.cn; \
+#     elif [ "${PIP_MIRROR}" = "aliyun" ]; then \
+#         /opt/conda/envs/myenv/bin/pip config set global.index-url \
+#             https://mirrors.aliyun.com/pypi/simple/ && \
+#         /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
+#             mirrors.aliyun.com; \
+#     fi && \
+#     /opt/conda/envs/myenv/bin/pip install __PIP_PACKAGES__
+
+# ── 激活环境 ──
+RUN echo "source activate myenv" >> ~/.bashrc
+ENV PATH=/opt/conda/envs/myenv/bin:$PATH
+
+# ── 应用目录 ──
+WORKDIR __APP_DIR__
+
+# ── 验证配置 ──
+RUN echo "=== Verification ===" && \
+    python --version && \
+    mamba --version 2>&1 | head -1 && \
+    conda config --show solver && \
+    echo "Conda mirror: ${CONDA_MIRROR}, Pip mirror: ${PIP_MIRROR}, Threads: ${CONDA_THREADS}" && \
+    grep -E 'repodata_threads|execute_threads' /root/.condarc && \
+    echo "[OK] Conda performance config applied successfully"
+
+# ── 默认命令 ──
+CMD ["/bin/bash"]

@@ -45,11 +45,11 @@ status: completed
 
 | 文件 | 类型 | BuildKit声明 | 缓存挂载 | 日志规范 |
 |------|------|-------------|---------|---------|
-| apps/jupyter-ssh-base/Dockerfile | 基础镜像 | ✅ 已有(部分) | ❌ 缺失 | ❌ 简单 |
-| apps/devcontainer-base/Dockerfile | 全功能开发容器 | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
-| apps/pytorch-base/Dockerfile | PyTorch环境 | ⚠️ 1.7(无labs) | ⚠️ 仅conda/pip | ❌ 简单 |
-| apps/caffe-ffi-jupyter/Dockerfile | Caffe-FFI Jupyter | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
-| apps/xmnn-runtime/docker/Dockerfile | XMNN推理运行时 | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
+| apps/docker-images/jupyter-ssh-base/Dockerfile | 基础镜像 | ✅ 已有(部分) | ❌ 缺失 | ❌ 简单 |
+| apps/docker-images/devcontainer-base/Dockerfile | 全功能开发容器 | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
+| apps/docker-images/pytorch-base/Dockerfile | PyTorch环境 | ⚠️ 1.7(无labs) | ⚠️ 仅conda/pip | ❌ 简单 |
+| apps/docker-images/caffe-ffi-jupyter/Dockerfile | Caffe-FFI Jupyter | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
+| apps/docker-images/xmnn-runtime/docker/Dockerfile | XMNN推理运行时 | ❌ 缺失 | ❌ 缺失 | ❌ 简单 |
 | .agents/templates/.../skeleton/Dockerfile | 模板文件 | ❌ 缺失 | ❌ 缺失 | ❌ 无示例 |
 
 ---
@@ -279,7 +279,7 @@ echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
 .\.agents\scripts\test-dockerfiles.ps1 -Build
 
 # 测试单个文件
-.\.agents\scripts\test-dockerfiles.ps1 -File apps/jupyter-ssh-base/Dockerfile -Build
+.\.agents\scripts\test-dockerfiles.ps1 -File apps/docker-images/jupyter-ssh-base/Dockerfile -Build
 
 # 自定义超时
 .\.agents\scripts\test-dockerfiles.ps1 -Build -Timeout 900

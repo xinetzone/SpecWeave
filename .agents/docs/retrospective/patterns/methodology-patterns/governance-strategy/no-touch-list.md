@@ -81,7 +81,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/me
 - `.agents/scripts/check-spec-consistency.py` — 独立运行，与本次改造无关
 - `.agents/scripts/generate-tests.py` — 代码生成器，运行频率低
 - `.agents/scripts/agents.py` — 项目初始化脚本，极少使用
-- `apps/prompt_extraction/` — 独立子项目，有自己的架构
+- `apps/dev-tools/prompt_extraction/` — 独立子项目，有自己的架构
 
 发现其他脚本有类似问题时，记录到技术债务清单（但不在本次处理），专注完成当前瓶颈改造，未来有需求时再处理已记录的债务。
 

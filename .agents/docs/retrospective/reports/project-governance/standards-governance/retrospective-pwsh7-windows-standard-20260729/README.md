@@ -28,7 +28,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/pro
 ### F01-F05：背景与现状
 
 - **F01**：项目中存在27个PowerShell脚本文件，分布在`.agents/scripts/`、`apps/*/`、`scripts/`等目录
-- **F02**：其中`apps/pytorch-base/build.ps1`头部明确声明`#Requires -Version 5.1`，要求使用旧版本
+- **F02**：其中`apps/docker-images/pytorch-base/build.ps1`头部明确声明`#Requires -Version 5.1`，要求使用旧版本
 - **F03**：Windows系统自带PowerShell 5.1（基于.NET Framework），而pwsh7（PowerShell 7.4+ LTS，基于.NET 8）需要手动安装
 - **F04**：pwsh7与5.1存在语法差异：`??`/`??=`空合并运算符、三元运算符`?:`、`$PSNativeCommandErrorActionPreference`等特性仅在7.x中可用
 - **F05**：项目规范文档（AGENTS.md、ONBOARDING.md）之前未明确提及PowerShell版本要求

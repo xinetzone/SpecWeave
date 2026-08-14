@@ -12,7 +12,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 | # | 行动项 | 状态 | 验证方式 |
 |---|--------|------|---------|
-| 1 | 创建 `apps/zhujian-wudao/` 目录 | ✅ 完成 | 目录存在 |
+| 1 | 创建 `apps/ai-agents/zhujian-wudao/` 目录 | ✅ 完成 | 目录存在 |
 | 2 | 迁移 HTML Demo 与报名帖 | ✅ 完成 | 3 文件齐全 |
 | 3 | 编写应用 README.md | ✅ 完成 | 文件可读 |
 | 4 | 更新 apps/README.md §2.3 应用清单 | ✅ 完成 | 索引可见 |
@@ -21,7 +21,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 | # | 行动项 | 责任 | 说明 |
 |---|--------|------|------|
-| 5 | Git 提交归档变更 | developer | 提交 `apps/zhujian-wudao/` 新增与 `apps/README.md` 修改，遵循 Conventional Commits：`feat(apps): 归档竹简悟道参赛作品至 apps/zhujian-wudao/` |
+| 5 | Git 提交归档变更 | developer | 提交 `apps/ai-agents/zhujian-wudao/` 新增与 `apps/README.md` 修改，遵循 Conventional Commits：`feat(apps): 归档竹简悟道参赛作品至 apps/ai-agents/zhujian-wudao/` |
 | 6 | 提交本次复盘报告 | developer | 提交 `docs/retrospective/reports/project-governance/retrospective-zhujian-wudao-apps-archiving-20260625/` 4 文件 |
 | 7 | 运行归类验证脚本 | developer | 执行 `.agents/scripts/check-report-categorization.py` 确认新报告已正确归类 |
 
@@ -30,7 +30,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 | # | 行动项 | 责任 | 说明 |
 |---|--------|------|------|
 | 8 | 补充 app-development-workflow.md 选择性归档子流程 | architect | 在协议中新增「选择性归档」场景，明确门禁跳过规则（详见 INS-03） |
-| 9 | 评估竹简悟道完整资产归档价值 | architect | 评估 `.temp/AI/.agents/` 下规格文档、洞察库（62 条）是否归档至 `apps/zhujian-wudao/docs/` |
+| 9 | 评估竹简悟道完整资产归档价值 | architect | 评估 `.temp/AI/.agents/` 下规格文档、洞察库（62 条）是否归档至 `apps/ai-agents/zhujian-wudao/docs/` |
 | 10 | 开发 apps/ 索引自动生成脚本 | developer | 类似 `generate-nav.py`，自动扫描 `apps/` 子目录生成 §2.3 应用清单 |
 
 ### P3 — 长期规划（3 个月内）
@@ -97,17 +97,17 @@ S1 规范读取 → S2 依赖验证 → S3 目录创建与文件迁移 → S4 �
 - 不同版本 HTML 共存可能引发混淆（哪个是定稿？）
 
 **建议**：
-- 短期：在 `apps/zhujian-wudao/README.md` 中明确标注「完整版」为定稿版本
+- 短期：在 `apps/ai-agents/zhujian-wudao/README.md` 中明确标注「完整版」为定稿版本
 - 中期：评估 `.temp/AI/.agents/` 下洞察库等资产的归档价值（详见 P2-9）
 - 长期：`.temp/AI/` 整体清理或归档至 `.temp/_archived/`
 
 ### 风险 2：应用 README 内容来源单一
 
-**现象**：`apps/zhujian-wudao/README.md` 主要基于报名帖内容提炼，未引入产品规格、洞察库等深度内容。
+**现象**：`apps/ai-agents/zhujian-wudao/README.md` 主要基于报名帖内容提炼，未引入产品规格、洞察库等深度内容。
 
 **风险**：作为长期项目资产，README 信息密度不足，未来维护者难以理解产品全貌。
 
-**缓解**：P2-9 评估完整资产归档时，同步扩充 README 或建立 `apps/zhujian-wudao/docs/` 子目录。
+**缓解**：P2-9 评估完整资产归档时，同步扩充 README 或建立 `apps/ai-agents/zhujian-wudao/docs/` 子目录。
 
 ### 风险 3：中文文件名的跨平台兼容性
 

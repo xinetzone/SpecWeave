@@ -4,7 +4,7 @@ version: "1.5"
 date: 2026-07-30
 type: task-retrospective
 scope: milestone
-source: "apps/caffe-ffi-jupyter/scripts/test-conda-build.sh + projects/xuanspace/libs/caffe-ffi/conda.recipe/"
+source: "apps/docker-images/caffe-ffi-jupyter/scripts/test-conda-build.sh + projects/xuanspace/libs/caffe-ffi/conda.recipe/"
 tags: ["conda-build", "scikit-build-core", "cmake", "rpath", "patchelf", "python-packaging", "tvm-ffi", "caffe-ffi", "editable-cleanup", "symbol-verification", "pattern-extraction", "l4-verification", "macos-cross-platform", "conda-build-compat", "pyproject-toml"]
 status: in-progress
 ---
@@ -71,7 +71,7 @@ status: in-progress
 | [conda.recipe/build.sh](../../../../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 增加 `clean_editable_files()` 三重保护清理；tvm-ffi安装前彻底清理构建残留；CMAKE_ARGS/SKBUILD_CMAKE_ARGS构建隔离；SETUPTOOLS_SCM_PRETEND_VERSION=0.1.13；nm符号验证(TVMFFIGetCustomAllocator)；macOS跨平台适配（IS_MACOS检测、@loader_path RPATH、install_name_tool、otool/nm -gU封装）；RPATH新增`$ORIGIN/../tvm_ffi/lib`；libtvm_ffi.so独立RPATH设置（深一级路径）；构建后双重editable清理；详细环境变量日志；**A-T7精简**：移除_EXTRA_CMAKE_ARGS平台分支和10个重复-D参数（迁移到pyproject.toml三层分离），SKBUILD_CMAKE_ARGS从12个精简为5个conda专属参数 | +200/-10 |
 | [pyproject.toml](../../../../../../projects/xuanspace/libs/caffe-ffi/pyproject.toml) | **A-T7新增**：CMake参数三层分离——项目默认值（CAFFE_USE_BLAS/CAFFE_FFI_BUILD_TESTS/CMAKE_POSITION_INDEPENDENT_CODE）、Linux override（CMAKE_BUILD_RPATH_USE_ORIGIN从全局移到Linux-only）、macOS override（CMAKE_MACOSX_RPATH/CMAKE_INSTALL_NAME_DIR）；CMAKE_BUILD_RPATH_USE_ORIGIN从全局修正为Linux-only | +30/-5 |
 | [cmake/Install.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Install.cmake) | DESTINATION 从 "caffe_ffi" 改为 "."，添加详细注释说明双重嵌套原因；新增protobuf Python文件安装规则 | +10/-2 |
-| [scripts/test-conda-build.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c跨平台依赖检查（Linux ldd / macOS otool -L）；新增Step 8d Python单元测试集成；macOS跨平台适配（IS_MACOS检测、otool/nm -gU封装、@rpath验证、.dylib库查找、PLATFORM子目录自适应、Bootstrap Docker/本地miniconda/miniforge自适应）；apache-tvm-ffi pip卸载重装避免版本冲突 | +400/-50 |
+| [scripts/test-conda-build.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-conda-build.sh) | 跳过 conda-verify；conda build → conda-build；recipe 验证改为 YAML parse；实现完整 `clean_editable_residuals()` 函数（清理.pth+.py+__pycache__+direct_url.json）；Step 1b预清理 + Step 7a安装前彻底清理（双重保障）；安装前删除stale包目录；Step 8a0显式验证site-packages加载路径；Step 8c跨平台依赖检查（Linux ldd / macOS otool -L）；新增Step 8d Python单元测试集成；macOS跨平台适配（IS_MACOS检测、otool/nm -gU封装、@rpath验证、.dylib库查找、PLATFORM子目录自适应、Bootstrap Docker/本地miniconda/miniforge自适应）；apache-tvm-ffi pip卸载重装避免版本冲突 | +400/-50 |
 
 ### Bug 修复记录
 
@@ -429,7 +429,7 @@ site-packages/
 
 ```bash
 # 一键构建验证（在容器内执行，推荐）
-bash /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-conda-build.sh
+bash /SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-conda-build.sh
 
 # 手动验证步骤
 source /opt/conda/etc/profile.d/conda.sh

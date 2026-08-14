@@ -1,0 +1,98 @@
+# syntax=docker/dockerfile:1.6
+# =============================================================================
+# Conda 高性能环境 Dockerfile 模板 — 方式 A：静态 YAML 模板
+#
+# 适用场景：镜像源固定、不需要动态切换、追求最简配置
+# 复杂度：★☆☆☆☆（最简单，一行 COPY）
+# 特点：零脚本依赖、YAML 可读可审查、零运行时开销
+#
+# ⚠️  使用前需要复制的文件：
+#   1. 本文件（Dockerfile）
+#   2. condarc-performant.yaml（或 tuna/aliyun 版本）
+#      来源：variants/shared/config/condarc/condarc-performant.yaml
+#      放置：与本 Dockerfile 同级目录
+#
+# 构建命令：
+#   # 国际网络（官方源）
+#   docker build -t my-conda-app -f Dockerfile.method-a-static .
+#
+#   # 中国大陆（清华 TUNA 源）— 复制 condarc-performant-tuna.yaml 并改名为 condarc-performant.yaml
+#   cp condarc-performant-tuna.yaml condarc-performant.yaml
+#   docker build -t my-conda-app -f Dockerfile.method-a-static .
+#
+# 替换占位符（搜索 __XXX__ 并替换）：
+#   __BASE_IMAGE__     : 基础镜像（默认 ubuntu:24.04）
+#   __MINIFORGE_VER__  : Miniforge3 版本（默认 24.11.3-2）
+#   __PYTHON_VERSION__ : Python 版本（默认 3.12）
+#   __CONDA_PACKAGES__ : conda 包列表（如 numpy pandas jupyterlab，至少保留 pip）
+#   __PIP_PACKAGES__   : pip 包列表（可选，取消注释 pip 段后填入）
+#   __APP_DIR__        : 应用目录（默认 /app）
+# =============================================================================
+
+FROM __BASE_IMAGE__
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ── 构建参数 ──
+ARG MINIFORGE_VERSION=__MINIFORGE_VER__
+ARG PYTHON_VERSION=__PYTHON_VERSION__
+ARG CONDA_THREADS=8
+
+# ── 系统依赖 ──
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        wget bzip2 ca-certificates bash \
+    && rm -rf /var/lib/apt/lists/*
+
+# ── 安装 Miniforge3（自带 mamba + conda-forge 配置） ──
+RUN _MINIFORGE_URL="https://github.com/conda-forge/miniforge/releases/download/${MINIFORGE_VERSION}/Miniforge3-${MINIFORGE_VERSION}-Linux-x86_64.sh" && \
+    wget -q "$_MINIFORGE_URL" -O /tmp/miniforge.sh && \
+    bash /tmp/miniforge.sh -b -p /opt/conda && \
+    rm /tmp/miniforge.sh
+
+ENV PATH=/opt/conda/bin:$PATH
+
+# ── 方式 A：COPY 高性能 .condarc 模板（关键步骤） ──
+# 根据网络环境选择对应的 YAML 文件：
+#   - condarc-performant.yaml        → 官方 conda-forge（海外/国际网络）
+#   - condarc-performant-tuna.yaml   → 清华 TUNA（中国大陆）
+#   - condarc-performant-aliyun.yaml → 阿里镜像（中国大陆）
+COPY condarc-performant.yaml /root/.condarc
+
+# ── 设置 libmamba 为默认 solver（YAML 中不直接设置以兼容不同版本） ──
+RUN conda config --set solver libmamba
+
+# ── 单次 mamba create 创建环境（关键优化：一次 solver） ──
+# ⚠️  不要分两步 create + install，会导致 solver 运行两次！
+# ⚠️  __CONDA_PACKAGES__ 必须替换为实际包名（如 numpy pandas），至少保留 pip
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    mamba create -y -n myenv -c conda-forge --override-channels -q \
+        "python=${PYTHON_VERSION}" \
+        pip \
+        __CONDA_PACKAGES__ && \
+    conda clean -afy
+
+# ── 可选：pip 安装 conda 没有的包（取消注释并填入包名） ──
+# RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+#     /opt/conda/envs/myenv/bin/pip config set global.index-url \
+#         https://pypi.tuna.tsinghua.edu.cn/simple && \
+#     /opt/conda/envs/myenv/bin/pip config set global.trusted-host \
+#         pypi.tuna.tsinghua.edu.cn && \
+#     /opt/conda/envs/myenv/bin/pip install __PIP_PACKAGES__
+
+# ── 激活环境 ──
+RUN echo "source activate myenv" >> ~/.bashrc
+ENV PATH=/opt/conda/envs/myenv/bin:$PATH
+
+# ── 应用目录 ──
+WORKDIR __APP_DIR__
+
+# ── 验证配置 ──
+RUN echo "=== Verification ===" && \
+    python --version && \
+    conda config --show solver && \
+    grep -E 'repodata_threads|execute_threads' /root/.condarc && \
+    echo "[OK] Conda performance config applied successfully"
+
+# ── 默认命令 ──
+CMD ["/bin/bash"]

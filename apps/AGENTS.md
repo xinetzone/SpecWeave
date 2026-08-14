@@ -36,35 +36,41 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 
 ## 应用路由表
 
-| 应用 | AGENTS.md 入口 | .agents/ | 说明 |
-|------|---------------|:---:|------|
-| devcontainer-base | [apps/devcontainer-base/AGENTS.md](devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理） |
-| docker-ssh-dind | [apps/docker-ssh-dind/AGENTS.md](docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
-| jupyter-ssh-base | [apps/jupyter-ssh-base/AGENTS.md](jupyter-ssh-base/AGENTS.md) | ❌ 无 | Jupyter Notebook SSH 基础镜像 |
-| pytorch-base | [apps/pytorch-base/AGENTS.md](pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
-| caffe-ffi-jupyter | [apps/caffe-ffi-jupyter/AGENTS.md](caffe-ffi-jupyter/AGENTS.md) | ❌ 无 | Caffe-FFI Jupyter 开发环境（基于jupyter-ssh-base） |
-| zhujian-wudao | [apps/zhujian-wudao/AGENTS.md](zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
-| eve-minimal-agent | —（遵循根规范） | ❌ 无 | Vercel Eve 最小可运行 Agent 示例 |
-| ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
-| camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
-| prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
-| shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
-| tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
-| xmnn-runtime | —（遵循根规范） | ❌ 无 | XMNN 运行时环境 |
-| cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
-| short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
+> apps/ 下应用按**应用类型**分组存放：`docker-images/`（容器镜像类）、`ai-agents/`（AI 应用类）、`dev-tools/`（开发工具类）、`samples/`（示例/原型类）。根级保留治理层（shared/、tests/、.agents/）。
+
+| 分组 | 应用 | AGENTS.md 入口 | .agents/ | 说明 |
+|------|------|---------------|:---:|------|
+| docker-images/ | devcontainer-base | [docker-images/devcontainer-base/AGENTS.md](docker-images/devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理） |
+| docker-images/ | docker-ssh-dind | [docker-images/docker-ssh-dind/AGENTS.md](docker-images/docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
+| docker-images/ | jupyter-ssh-base | [docker-images/jupyter-ssh-base/AGENTS.md](docker-images/jupyter-ssh-base/AGENTS.md) | ❌ 无 | Jupyter Notebook SSH 基础镜像 |
+| docker-images/ | pytorch-base | [docker-images/pytorch-base/AGENTS.md](docker-images/pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
+| docker-images/ | caffe-ffi-jupyter | [docker-images/caffe-ffi-jupyter/AGENTS.md](docker-images/caffe-ffi-jupyter/AGENTS.md) | ❌ 无 | Caffe-FFI Jupyter 开发环境（基于jupyter-ssh-base） |
+| docker-images/ | caffe-ffi-cross | —（遵循根规范） | ❌ 无 | Caffe-FFI 交叉编译（macOS/Windows 交叉构建镜像） |
+| docker-images/ | xmnn-runtime | —（遵循根规范） | ❌ 无 | XMNN 运行时环境 |
+| ai-agents/ | zhujian-wudao | [ai-agents/zhujian-wudao/AGENTS.md](ai-agents/zhujian-wudao/AGENTS.md) | ✅ 有 | 竹简悟道——道家哲学AI洞察项目 |
+| ai-agents/ | eve-minimal-agent | —（遵循根规范） | ❌ 无 | Vercel Eve 最小可运行 Agent 示例 |
+| ai-agents/ | ai-code-assistant | —（遵循根规范） | ❌ 无 | AI 代码助手 Web 应用 |
+| dev-tools/ | camera-power-controller | —（遵循根规范） | ❌ 无 | 摄像头电源控制工具 |
+| dev-tools/ | prompt_extraction | —（遵循根规范） | ❌ 无 | 提示词质量评估与提取工具 |
+| samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
+| samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
+| samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
+| 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
+| 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
 ### 嵌套优先级
 
 ```
 SpecWeave 根 AGENTS.md
   └─ apps/AGENTS.md（本文件，apps 区域入口）
-       ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）
-       ├─ docker-ssh-dind/AGENTS.md（docker-ssh-dind 应用入口 · 嵌套优先）
-       ├─ jupyter-ssh-base/AGENTS.md（jupyter-ssh-base 应用入口 · 嵌套优先）
-       ├─ pytorch-base/AGENTS.md（pytorch-base 应用入口 · 嵌套优先）
-       ├─ caffe-ffi-jupyter/AGENTS.md（caffe-ffi-jupyter 应用入口 · 嵌套优先）
-       └─ zhujian-wudao/AGENTS.md（zhujian-wudao 应用入口 · 嵌套优先）
+       └─ docker-images/（容器镜像类分组）
+            ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）
+            ├─ docker-ssh-dind/AGENTS.md（docker-ssh-dind 应用入口 · 嵌套优先）
+            ├─ jupyter-ssh-base/AGENTS.md（jupyter-ssh-base 应用入口 · 嵌套优先）
+            ├─ pytorch-base/AGENTS.md（pytorch-base 应用入口 · 嵌套优先）
+            └─ caffe-ffi-jupyter/AGENTS.md（caffe-ffi-jupyter 应用入口 · 嵌套优先）
+       └─ ai-agents/（AI 应用类分组）
+            └─ zhujian-wudao/AGENTS.md（zhujian-wudao 应用入口 · 嵌套优先）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若应用自身的 AGENTS.md 规则与本文件冲突，以应用的 AGENTS.md 为准（子层覆盖父层）。无自身 AGENTS.md 的应用直接遵循根 .agents/ 规范。
@@ -131,28 +137,28 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| 入门指南 | [docker-ssh-dind/.agents/README.md](docker-ssh-dind/.agents/README.md) | docker-ssh-dind .agents/ 入口 |
-| 构建测试规则 | [docker-ssh-dind/.agents/rules/build-test.md](docker-ssh-dind/.agents/rules/build-test.md) | 构建与测试规范 |
-| Containerfile 规则 | [docker-ssh-dind/.agents/rules/containerfile.md](docker-ssh-dind/.agents/rules/containerfile.md) | Containerfile/Dockerfile 编写规范 |
-| Entrypoint 规则 | [docker-ssh-dind/.agents/rules/entrypoint.md](docker-ssh-dind/.agents/rules/entrypoint.md) | 入口脚本编写规范 |
+| 入门指南 | [docker-images/docker-ssh-dind/.agents/README.md](docker-images/docker-ssh-dind/.agents/README.md) | docker-ssh-dind .agents/ 入口 |
+| 构建测试规则 | [docker-images/docker-ssh-dind/.agents/rules/build-test.md](docker-images/docker-ssh-dind/.agents/rules/build-test.md) | 构建与测试规范 |
+| Containerfile 规则 | [docker-images/docker-ssh-dind/.agents/rules/containerfile.md](docker-images/docker-ssh-dind/.agents/rules/containerfile.md) | Containerfile/Dockerfile 编写规范 |
+| Entrypoint 规则 | [docker-images/docker-ssh-dind/.agents/rules/entrypoint.md](docker-images/docker-ssh-dind/.agents/rules/entrypoint.md) | 入口脚本编写规范 |
 
 ### zhujian-wudao 应用
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| 约束规范 | [zhujian-wudao/.agents/constraints.md](zhujian-wudao/.agents/constraints.md) | 竹简悟道项目约束 |
-| 约定规范 | [zhujian-wudao/.agents/conventions.md](zhujian-wudao/.agents/conventions.md) | 代码与文档约定 |
-| 项目说明 | [zhujian-wudao/.agents/project.md](zhujian-wudao/.agents/project.md) | 项目概述 |
-| 工作流 | [zhujian-wudao/.agents/workflows.md](zhujian-wudao/.agents/workflows.md) | 工作流程规范 |
-| 哲学家角色 | [zhujian-wudao/.agents/roles/philosopher.md](zhujian-wudao/.agents/roles/philosopher.md) | 哲学洞察角色定义 |
-| 洞察写作指南 | [zhujian-wudao/.agents/roles/references/insight-writing-guide.md](zhujian-wudao/.agents/roles/references/insight-writing-guide.md) | 洞察文档写作规范 |
-| 约束速查表 | [zhujian-wudao/.agents/roles/references/constraints-cheatsheet.md](zhujian-wudao/.agents/roles/references/constraints-cheatsheet.md) | 约束条件速查 |
-| 洞察写作技能 | [zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) | 洞察写作 Skill |
-| 道家学者插画技能 | [zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) | 道家风格插画 Skill |
-| 产品规格 | [zhujian-wudao/.agents/docs/product/2026-06-17-product-spec.md](zhujian-wudao/.agents/docs/product/2026-06-17-product-spec.md) | 产品规格文档 |
-| 洞察库索引 | [zhujian-wudao/.agents/docs/insights/_index.md](zhujian-wudao/.agents/docs/insights/_index.md) | 洞察文档索引 |
-| 可迁移方法 | [zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md](zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md) | 可迁移方法论 |
-| 可迁移模式 | [zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md](zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md) | 可复用设计模式 |
+| 约束规范 | [ai-agents/zhujian-wudao/.agents/constraints.md](ai-agents/zhujian-wudao/.agents/constraints.md) | 竹简悟道项目约束 |
+| 约定规范 | [ai-agents/zhujian-wudao/.agents/conventions.md](ai-agents/zhujian-wudao/.agents/conventions.md) | 代码与文档约定 |
+| 项目说明 | [ai-agents/zhujian-wudao/.agents/project.md](ai-agents/zhujian-wudao/.agents/project.md) | 项目概述 |
+| 工作流 | [ai-agents/zhujian-wudao/.agents/workflows.md](ai-agents/zhujian-wudao/.agents/workflows.md) | 工作流程规范 |
+| 哲学家角色 | [ai-agents/zhujian-wudao/.agents/roles/philosopher.md](ai-agents/zhujian-wudao/.agents/roles/philosopher.md) | 哲学洞察角色定义 |
+| 洞察写作指南 | [ai-agents/zhujian-wudao/.agents/roles/references/insight-writing-guide.md](ai-agents/zhujian-wudao/.agents/roles/references/insight-writing-guide.md) | 洞察文档写作规范 |
+| 约束速查表 | [ai-agents/zhujian-wudao/.agents/roles/references/constraints-cheatsheet.md](ai-agents/zhujian-wudao/.agents/roles/references/constraints-cheatsheet.md) | 约束条件速查 |
+| 洞察写作技能 | [ai-agents/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](ai-agents/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) | 洞察写作 Skill |
+| 道家学者插画技能 | [ai-agents/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](ai-agents/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) | 道家风格插画 Skill |
+| 产品规格 | [ai-agents/zhujian-wudao/.agents/docs/product/2026-06-17-product-spec.md](ai-agents/zhujian-wudao/.agents/docs/product/2026-06-17-product-spec.md) | 产品规格文档 |
+| 洞察库索引 | [ai-agents/zhujian-wudao/.agents/docs/insights/_index.md](ai-agents/zhujian-wudao/.agents/docs/insights/_index.md) | 洞察文档索引 |
+| 可迁移方法 | [ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md](ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-methods.md) | 可迁移方法论 |
+| 可迁移模式 | [ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md](ai-agents/zhujian-wudao/.agents/docs/knowledge-transfer/2026-06-17-transferable-patterns.md) | 可复用设计模式 |
 
 ## 边界声明
 
@@ -162,27 +168,33 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/README.md | SpecWeave 主权区 | ✅ 是 | apps 目录总览 |
 | apps/shared/ | SpecWeave 主权区 | ✅ 是 | 跨应用共享资源 |
 | apps/tests/ | SpecWeave 主权区 | ✅ 是 | 全局测试用例 |
-| apps/ai-code-assistant/ | 应用自治（遵循根规范） | ✅ 是 | AI 代码助手应用 |
-| apps/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
-| apps/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
-| apps/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
-| apps/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
-| apps/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
-| apps/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
-| apps/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（SSH+Docker+Podman+Jupyter） |
-| apps/devcontainer-base/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-base 入口 |
-| apps/docker-ssh-dind/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Docker SSH DinD 环境 |
-| apps/docker-ssh-dind/AGENTS.md | 应用自治 | ✅ 是 | docker-ssh-dind 入口 |
-| apps/docker-ssh-dind/.agents/ | 应用自治 | ✅ 是 | docker-ssh-dind 规范体系 |
-| apps/jupyter-ssh-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Jupyter SSH 基础镜像 |
-| apps/jupyter-ssh-base/AGENTS.md | 应用自治 | ✅ 是 | jupyter-ssh-base 入口 |
-| apps/pytorch-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | PyTorch 基础环境镜像 |
-| apps/pytorch-base/AGENTS.md | 应用自治 | ✅ 是 | pytorch-base 入口 |
-| apps/caffe-ffi-jupyter/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Caffe-FFI Jupyter 开发环境 |
-| apps/caffe-ffi-jupyter/AGENTS.md | 应用自治 | ✅ 是 | caffe-ffi-jupyter 入口 |
-| apps/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
-| apps/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
-| apps/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
+| apps/docker-images/ | SpecWeave 主权区 | ✅ 是 | 容器镜像类应用分组 |
+| apps/ai-agents/ | SpecWeave 主权区 | ✅ 是 | AI 应用类分组 |
+| apps/dev-tools/ | SpecWeave 主权区 | ✅ 是 | 开发工具类分组 |
+| apps/samples/ | SpecWeave 主权区 | ✅ 是 | 示例/原型类分组 |
+| apps/docker-images/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（SSH+Docker+Podman+Jupyter） |
+| apps/docker-images/devcontainer-base/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-base 入口 |
+| apps/docker-images/docker-ssh-dind/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Docker SSH DinD 环境 |
+| apps/docker-images/docker-ssh-dind/AGENTS.md | 应用自治 | ✅ 是 | docker-ssh-dind 入口 |
+| apps/docker-images/docker-ssh-dind/.agents/ | 应用自治 | ✅ 是 | docker-ssh-dind 规范体系 |
+| apps/docker-images/jupyter-ssh-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Jupyter SSH 基础镜像 |
+| apps/docker-images/jupyter-ssh-base/AGENTS.md | 应用自治 | ✅ 是 | jupyter-ssh-base 入口 |
+| apps/docker-images/pytorch-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | PyTorch 基础环境镜像 |
+| apps/docker-images/pytorch-base/AGENTS.md | 应用自治 | ✅ 是 | pytorch-base 入口 |
+| apps/docker-images/caffe-ffi-jupyter/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Caffe-FFI Jupyter 开发环境 |
+| apps/docker-images/caffe-ffi-jupyter/AGENTS.md | 应用自治 | ✅ 是 | caffe-ffi-jupyter 入口 |
+| apps/docker-images/caffe-ffi-cross/ | 应用自治（遵循根规范） | ✅ 是 | Caffe-FFI 交叉编译 |
+| apps/docker-images/xmnn-runtime/ | 应用自治（遵循根规范） | ✅ 是 | XMNN 运行时环境 |
+| apps/ai-agents/zhujian-wudao/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 竹简悟道项目 |
+| apps/ai-agents/zhujian-wudao/AGENTS.md | 应用自治 | ✅ 是 | zhujian-wudao 入口 |
+| apps/ai-agents/zhujian-wudao/.agents/ | 应用自治 | ✅ 是 | zhujian-wudao 规范体系 |
+| apps/ai-agents/ai-code-assistant/ | 应用自治（遵循根规范） | ✅ 是 | AI 代码助手应用 |
+| apps/ai-agents/eve-minimal-agent/ | 应用自治（遵循根规范） | ✅ 是 | Vercel Eve 最小可运行 Agent 示例 |
+| apps/dev-tools/camera-power-controller/ | 应用自治（遵循根规范） | ✅ 是 | 摄像头电源控制工具 |
+| apps/dev-tools/prompt_extraction/ | 应用自治（遵循根规范） | ✅ 是 | 提示词提取工具 |
+| apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
+| apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
+| apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
 
 > **与 projects/vendor 的本质区别**：apps/ 下的所有资产都标记为「✅ 可直接修改」，因为它们都是主仓库的一部分；而 projects/vendor 是 git submodule，标记为「❌ 不可直接修改」。
 

@@ -20,7 +20,7 @@
 #   REGISTRY_USERNAME  - registry username
 #   REGISTRY_PASSWORD  - registry password/token
 #
-# See design doc: apps/devcontainer-base/.agents/workflows/variants-ci.md
+# See design doc: apps/docker-images/devcontainer-base/.agents/workflows/variants-ci.md
 
 name: DevContainer CI
 
@@ -28,25 +28,25 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'apps/devcontainer-base/Dockerfile'
-      - 'apps/devcontainer-base/entrypoint.sh'
-      - 'apps/devcontainer-base/scripts/**'
-      - 'apps/devcontainer-base/examples/**'
-      - 'apps/devcontainer-base/config/**'
-      - 'apps/devcontainer-base/variants/**'
-      - 'apps/devcontainer-base/.agents/**'
+      - 'apps/docker-images/devcontainer-base/Dockerfile'
+      - 'apps/docker-images/devcontainer-base/entrypoint.sh'
+      - 'apps/docker-images/devcontainer-base/scripts/**'
+      - 'apps/docker-images/devcontainer-base/examples/**'
+      - 'apps/docker-images/devcontainer-base/config/**'
+      - 'apps/docker-images/devcontainer-base/variants/**'
+      - 'apps/docker-images/devcontainer-base/.agents/**'
       - '.github/workflows/devcontainer-variants.yml'
 
   push:
     branches: [main]
     paths:
-      - 'apps/devcontainer-base/Dockerfile'
-      - 'apps/devcontainer-base/entrypoint.sh'
-      - 'apps/devcontainer-base/scripts/**'
-      - 'apps/devcontainer-base/examples/**'
-      - 'apps/devcontainer-base/config/**'
-      - 'apps/devcontainer-base/variants/**'
-      - 'apps/devcontainer-base/.agents/**'
+      - 'apps/docker-images/devcontainer-base/Dockerfile'
+      - 'apps/docker-images/devcontainer-base/entrypoint.sh'
+      - 'apps/docker-images/devcontainer-base/scripts/**'
+      - 'apps/docker-images/devcontainer-base/examples/**'
+      - 'apps/docker-images/devcontainer-base/config/**'
+      - 'apps/docker-images/devcontainer-base/variants/**'
+      - 'apps/docker-images/devcontainer-base/.agents/**'
       - '.github/workflows/devcontainer-variants.yml'
 
   schedule:
@@ -79,7 +79,7 @@ on:
         type: boolean
 
 env:
-  PROJECT_DIR: apps/devcontainer-base
+  PROJECT_DIR: apps/docker-images/devcontainer-base
   IMAGE_TAG: ci-${{ github.sha }}
   REGISTRY_URL: ${{ secrets.REGISTRY_URL || 'ghcr.io' }}
   REGISTRY_NAMESPACE: ${{ secrets.REGISTRY_NAMESPACE || github.repository_owner }}

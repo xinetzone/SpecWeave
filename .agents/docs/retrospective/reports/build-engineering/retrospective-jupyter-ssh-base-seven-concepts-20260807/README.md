@@ -8,7 +8,7 @@ status: "completed"
 maturity: "L2"
 methodology: "seven-concepts (R-I-E-V)"
 source:
-  - "apps/jupyter-ssh-base"
+  - "apps/docker-images/jupyter-ssh-base"
   - "seven-concepts-cmd skill execution"
 tags: ["docker", "jupyter", "ssh", "supervisord", "multi-stage-build", "healthcheck", "pattern-extraction", "seven-concepts", "environment-variables", "PATH"]
 related_patterns:
@@ -23,7 +23,7 @@ reuse_count: 1
 
 ## 执行摘要
 
-使用七概念方法论（R-I-E-C-A-F-V）对 [apps/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
+使用七概念方法论（R-I-E-C-A-F-V）对 [apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
 
 **方法论执行链路**：R(复盘) → I(洞察) → E(萃取) → V(对抗审查)，跳过 C(原子提交)/A(原子化)/F(第一性原理)（C/A 为代码重构、F 在 I 阶段已天然体现）。
 
@@ -35,7 +35,7 @@ reuse_count: 1
 - 全部通过 G1-G4 质量门检查
 
 **关键数据**：
-- 项目位置：[apps/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base)
+- 项目位置：[apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base)
 - 基础镜像：ubuntu:26.04
 - Python 环境：Python 3.14 /opt/venv
 - 镜像体积：713 MB（多阶段构建后）
@@ -50,7 +50,7 @@ reuse_count: 1
 
 ### F01. 项目定位与架构
 
-- 项目路径：[apps/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base)
+- 项目路径：[apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base)
 - 项目类型：Docker 基础开发镜像（Jupyter Lab + SSH 远程访问）
 - 用途：作为 caffe-ffi-jupyter 等上层应用镜像的 base 镜像
 - 基础镜像：ubuntu:26.04
@@ -64,17 +64,17 @@ reuse_count: 1
 
 | 文件 | 行数 | 职责 |
 |------|------|------|
-| [Dockerfile](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/Dockerfile) | 180 | 多阶段构建（builder + runtime 6层） |
-| [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/entrypoint.sh) | 125 | 6步运行时初始化（密码/密钥/服务/Jupyter/信号转发） |
-| [config/sshd_config](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/sshd_config) | 40 | SSH 服务配置（LogLevel=ERROR） |
-| [config/supervisord.conf](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/supervisord.conf) | 25 | Supervisor 主配置 |
-| [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) | 20 | Jupyter 服务配置（stderr 分流） |
-| [config/supervisor/conf.d/sshd.conf](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/supervisor/conf.d/sshd.conf) | 10 | SSH 服务配置 |
-| [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/scripts/healthcheck.sh) | 60 | TCP空探针+HTTP状态码健康检查 |
-| [scripts/healthcheck-test.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/scripts/healthcheck-test.sh) | - | 健康检查测试脚本 |
-| [scripts/test-ssh-noninteractive-path.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/scripts/test-ssh-noninteractive-path.sh) | - | SSH非交互PATH验证脚本 |
-| [README.md](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/README.md) | 155 | 使用文档 |
-| [AGENTS.md](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/AGENTS.md) | 50 | 智能体路由规范 |
+| [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) | 180 | 多阶段构建（builder + runtime 6层） |
+| [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/entrypoint.sh) | 125 | 6步运行时初始化（密码/密钥/服务/Jupyter/信号转发） |
+| [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) | 40 | SSH 服务配置（LogLevel=ERROR） |
+| [config/supervisord.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisord.conf) | 25 | Supervisor 主配置 |
+| [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) | 20 | Jupyter 服务配置（stderr 分流） |
+| [config/supervisor/conf.d/sshd.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/sshd.conf) | 10 | SSH 服务配置 |
+| [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) | 60 | TCP空探针+HTTP状态码健康检查 |
+| [scripts/healthcheck-test.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck-test.sh) | - | 健康检查测试脚本 |
+| [scripts/test-ssh-noninteractive-path.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/test-ssh-noninteractive-path.sh) | - | SSH非交互PATH验证脚本 |
+| [README.md](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/README.md) | 155 | 使用文档 |
+| [AGENTS.md](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/AGENTS.md) | 50 | 智能体路由规范 |
 
 ### F03. 构建阶段结构（物理两阶段）
 
@@ -326,11 +326,11 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 - 🆕 [container-healthcheck-minimal-probe.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/container-healthcheck-minimal-probe.md) — L1-draft 新增
 
 ### 关联项目文件
-- [Dockerfile](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/Dockerfile) — 多阶段构建参考实现
-- [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/entrypoint.sh) — 6步运行时初始化参考
-- [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/scripts/healthcheck.sh) — 最小探针参考实现
-- [config/sshd_config](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/sshd_config) — LogLevel=ERROR配置
-- [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) — stderr分流配置
+- [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) — 多阶段构建参考实现
+- [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/entrypoint.sh) — 6步运行时初始化参考
+- [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) — 最小探针参考实现
+- [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) — LogLevel=ERROR配置
+- [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) — stderr分流配置
 
 ### 关联已有模式
 - [docker-buildtime-vs-runtime-config.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-buildtime-vs-runtime-config.md)

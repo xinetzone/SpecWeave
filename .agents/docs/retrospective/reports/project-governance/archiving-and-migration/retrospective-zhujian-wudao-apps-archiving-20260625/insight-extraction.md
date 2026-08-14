@@ -205,4 +205,4 @@ flowchart TD
 - 62 条洞察库（702 + 2353 行）
 - 可迁移洞察与模板集（432 + 540 行）
 
-这些资产具有长期复用价值，可考虑后续归档至 `apps/zhujian-wudao/docs/` 或 `docs/retrospective/patterns/`。
+这些资产具有长期复用价值，可考虑后续归档至 `apps/ai-agents/zhujian-wudao/docs/` 或 `docs/retrospective/patterns/`。

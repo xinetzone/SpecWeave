@@ -27,7 +27,7 @@ date: "2026-07-06"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 演示页面 | [temp-hsk-demo/index.html](../../../../../../apps/ai-code-assistant/templates/index.html) | 107行，渐变紫色背景+白色卡片+部署状态+工具信息+时间戳 |
+| 演示页面 | [temp-hsk-demo/index.html](../../../../../../apps/ai-agents/ai-code-assistant/templates/index.html) | 107行，渐变紫色背景+白色卡片+部署状态+工具信息+时间戳 |
 | 公网资源 | https://files.hz-1.aicp.space:8010/file/f4d06796-ad37-4c46-9431-7a29cddaa435?verify_code=9949 | 匿名文件托管，验证码9949，需激活认领 |
 | 复盘README | [README.md](README.md) | 复盘总览 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本文件 |

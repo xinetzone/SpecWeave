@@ -28,7 +28,7 @@ x-toml-ref: "../../../.meta/toml/.agents/protocols/pre-document-reading/03-confi
 developer开始编码时的输出：
 
 ```
-📋 前置文档确认：已读取 [技术方案文档](../../../.agents/specs/xxx.md)、[任务分解清单](.temp/tasks.md)、[开发规范](../../docs/development-standards.md)、[auth模块现有代码](../../../apps/zhujian-wudao/src/auth.js)
+📋 前置文档确认：已读取 [技术方案文档](../../../.agents/specs/xxx.md)、[任务分解清单](.temp/tasks.md)、[开发规范](../../docs/development-standards.md)、[auth模块现有代码](../../../apps/ai-agents/zhujian-wudao/src/auth.js)
 
 开始实现用户认证模块，按照方案的分层架构进行编码……
 ```

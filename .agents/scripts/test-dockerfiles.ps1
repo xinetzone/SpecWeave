@@ -20,7 +20,7 @@
 .EXAMPLE
     .\test-dockerfiles.ps1                    # 语法检查所有Dockerfile
     .\test-dockerfiles.ps1 -Build             # 构建所有Dockerfile
-    .\test-dockerfiles.ps1 -File apps/jupyter-ssh-base/Dockerfile -Build
+    .\test-dockerfiles.ps1 -File apps/docker-images/jupyter-ssh-base/Dockerfile -Build
 .NOTES
     作者: SpecWeave Team
     版本: 1.0.0

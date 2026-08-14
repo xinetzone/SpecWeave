@@ -5,7 +5,7 @@ date: 2026-08-12
 scenario: innovation+knowledge
 chain: F→I→C→R→I→E
 tags: [短视频, AI开发, Agent Plan, Seedream, Seedance, 全栈]
-source: apps/short-video-site/docs/retrospective.md
+source: apps/samples/short-video-site/docs/retrospective.md
 maturity: L2
 commits: [75ae13cc, 150fa24b, 73e40c43]
 ---
@@ -18,7 +18,7 @@ commits: [75ae13cc, 150fa24b, 73e40c43]
 |------|------|
 | 项目名称 | ReelVibe 短视频网站 |
 | 开发时间 | 2026-08-12 |
-| 项目位置 | `apps/short-video-site/` |
+| 项目位置 | `apps/samples/short-video-site/` |
 | 技术栈 | HTML5 + CSS3 + Vanilla JS |
 | AI 工具 | Seedream（生图）、Seedance（生视频）、WebSearch（调研） |
 | 参考设计 | 抖音 Web 端布局 |
@@ -123,19 +123,19 @@ commits: [75ae13cc, 150fa24b, 73e40c43]
 本项目经验已萃取为方法论模式：
 
 - **[AI 多模态全栈开发闭环](patterns/methodology-patterns/ai-collaboration/ai-multimodal-fullstack-dev-loop.md)**：六阶段闭环（调研先行→素材并行→零依赖开发→复盘识别→行动项闭环→提示词沉淀），成熟度 L2，含素材生成策略矩阵、技术选型决策树、反模式清单与效率数据
-- **提示词模板**：`apps/short-video-site/docs/prompt-template.md`（完整版 + 精简版 + 3 种场景变体）
+- **提示词模板**：`apps/samples/short-video-site/docs/prompt-template.md`（完整版 + 精简版 + 3 种场景变体）
 
 ## 九、交付物清单
 
 | 交付物 | 路径 | 说明 |
 |--------|------|------|
-| 网站首页 | `apps/short-video-site/index.html` | 三栏布局短视频网站 |
-| 样式表 | `apps/short-video-site/css/style.css` | 深色主题、响应式 |
-| 交互逻辑 | `apps/short-video-site/js/app.js` | 播放器、搜索、筛选、悬停预览 |
-| 视频数据 | `apps/short-video-site/assets/data/videos.json` | 8 条视频元数据 |
-| Logo | `apps/short-video-site/assets/logo.jpg` | Seedream 生成 |
-| 自然风光视频 | `apps/short-video-site/assets/videos/nature.mp4` | Seedance 生成 |
-| 美食推荐视频 | `apps/short-video-site/assets/videos/food.mp4` | Seedance 生成 |
-| 美妆护肤视频 | `apps/short-video-site/assets/videos/beauty.mp4` | Seedance 生成 |
-| 复盘报告 | `apps/short-video-site/docs/retrospective.md` | 本文件 |
-| 提示词模板 | `apps/short-video-site/docs/prompt-template.md` | 可分享的 AI 全栈开发提示词 |
+| 网站首页 | `apps/samples/short-video-site/index.html` | 三栏布局短视频网站 |
+| 样式表 | `apps/samples/short-video-site/css/style.css` | 深色主题、响应式 |
+| 交互逻辑 | `apps/samples/short-video-site/js/app.js` | 播放器、搜索、筛选、悬停预览 |
+| 视频数据 | `apps/samples/short-video-site/assets/data/videos.json` | 8 条视频元数据 |
+| Logo | `apps/samples/short-video-site/assets/logo.jpg` | Seedream 生成 |
+| 自然风光视频 | `apps/samples/short-video-site/assets/videos/nature.mp4` | Seedance 生成 |
+| 美食推荐视频 | `apps/samples/short-video-site/assets/videos/food.mp4` | Seedance 生成 |
+| 美妆护肤视频 | `apps/samples/short-video-site/assets/videos/beauty.mp4` | Seedance 生成 |
+| 复盘报告 | `apps/samples/short-video-site/docs/retrospective.md` | 本文件 |
+| 提示词模板 | `apps/samples/short-video-site/docs/prompt-template.md` | 可分享的 AI 全栈开发提示词 |

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-insights-reorg-20260626-readme"
 title: "竹简悟道洞察库重组 — 复盘报告"
-source: "external: 不存在-apps/zhujian-wudao/docs/insights/ + ../../../../README.md#复盘文档体系"
+source: "external: 不存在-apps/ai-agents/zhujian-wudao/docs/insights/ + ../../../../README.md#复盘文档体系"
 x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-insights-reorg-20260626/README.toml"
 ---
 # 竹简悟道洞察库重组 — 复盘报告
@@ -33,8 +33,8 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 | 文件 | 原路径 | 问题 | 目标路径 |
 |------|--------|------|---------|
-| `insights-01-30.md` | `apps/zhujian-wudao/docs/insights/` | 头部过时、3 个模糊标题、过时引用 | 同名优化 |
-| `insights-31-65.md` | `apps/zhujian-wudao/docs/insights/` | 文件名与内容不符（实际含 31-68）、标题层级错乱、临时统计块残留、结构缺失 | 拆分为 2 个新文件 |
+| `insights-01-30.md` | `apps/ai-agents/zhujian-wudao/docs/insights/` | 头部过时、3 个模糊标题、过时引用 | 同名优化 |
+| `insights-31-65.md` | `apps/ai-agents/zhujian-wudao/docs/insights/` | 文件名与内容不符（实际含 31-68）、标题层级错乱、临时统计块残留、结构缺失 | 拆分为 2 个新文件 |
 
 ### 修复问题清单
 
@@ -52,11 +52,11 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 优化后的基础层文件 | `apps/zhujian-wudao/docs/insights/insights-01-30.md` | 702 行，更新头部与 3 个模糊标题 |
-| 新建哲学层文件 | `apps/zhujian-wudao/docs/insights/insights-31-53.md` | 1503 行，23 条洞察，修复洞察 53 结构 |
-| 新建元层文件 | `apps/zhujian-wudao/docs/insights/insights-54-68.md` | 1844 行，15 条洞察，补全结构 + 清理临时块 |
+| 优化后的基础层文件 | `apps/ai-agents/zhujian-wudao/docs/insights/insights-01-30.md` | 702 行，更新头部与 3 个模糊标题 |
+| 新建哲学层文件 | `apps/ai-agents/zhujian-wudao/docs/insights/insights-31-53.md` | 1503 行，23 条洞察，修复洞察 53 结构 |
+| 新建元层文件 | `apps/ai-agents/zhujian-wudao/docs/insights/insights-54-68.md` | 1844 行，15 条洞察，补全结构 + 清理临时块 |
 | 删除的旧文件 | `insights-31-65.md` | 已通过 Move 拆分替代 |
-| 目录索引更新 | `apps/zhujian-wudao/docs/insights/README.md` | 反映三层结构 |
+| 目录索引更新 | `apps/ai-agents/zhujian-wudao/docs/insights/README.md` | 反映三层结构 |
 | 交叉引用更新 | 全项目 11 个文件 | 指向新文件名与编号范围 |
 
 ## 四层结构对照

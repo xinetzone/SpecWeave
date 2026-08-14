@@ -210,7 +210,7 @@ tags: ["seven-concepts", "milestone-retro", "meoo-contest", "trae-solo", "ai-cod
 | PRD文档 | [spec.md](../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) |
 | 任务清单 | [tasks.md](../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) |
 | 验证清单 | [checklist.md](../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) |
-| 项目源码 | [zhujianwudao/](../../../apps/zhujian-wudao/README.md) |
+| 项目源码 | [zhujianwudao/](../../../apps/ai-agents/zhujian-wudao/README.md) |
 | 线上地址 | https://zhujianwudao.meoo.run/ |
 | 萃取模式M-1 | T-24h竞赛冲刺模式（待入库） |
 | 萃取模式M-2 | 方法论内化产品彩蛋模式（待入库） |

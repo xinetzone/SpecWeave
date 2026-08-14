@@ -4,7 +4,7 @@ title: "ONNX 量化前简化模式"
 type: "code-pattern"
 date: "2026-08-10"
 maturity: "L1-draft"
-source: "apps/devcontainer-base/variants/onnx-quantized/Dockerfile + external/chaos/ai (2026-08-10)"
+source: "apps/docker-images/devcontainer-base/variants/onnx-quantized/Dockerfile + external/chaos/ai (2026-08-10)"
 related_patterns:
   - "framework-parameter-semantics-verification"
   - "incremental-regression-verification"

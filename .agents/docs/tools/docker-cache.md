@@ -469,8 +469,8 @@ bash .agents/scripts/docker-cache doctor
 # 2. 构建第一层基础镜像
 bash .agents/scripts/docker-cache build \
     -i devcontainer-base:onnx-pytorch-latest \
-    -f apps/devcontainer-base/variants/onnx-pytorch/Dockerfile \
-    -c apps/devcontainer-base/ \
+    -f apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile \
+    -c apps/docker-images/devcontainer-base/ \
     --cn
 
 # 3. 构建依赖上层镜像（自动利用 Docker 层缓存 + docker-cache 缓存）
@@ -537,7 +537,7 @@ DOCKER_CACHE_DIR=/path/to/usb/docker-cache bash .agents/scripts/docker-cache loa
 
 ## 与现有构建脚本集成
 
-### apps/devcontainer-base/variants/build.sh
+### apps/docker-images/devcontainer-base/variants/build.sh
 
 现有构建脚本支持 `--use-cache` 选项集成 docker-cache。集成方式参考：
 

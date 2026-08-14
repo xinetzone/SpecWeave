@@ -65,7 +65,7 @@ docker run --rm \
   -v "$(pwd):/SpecWeave" \
   -v caffe-ffi-workspace:/workspace \
   caffe-ffi-jupyter:latest \
-  bash -c "cp /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
+  bash -c "cp /SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
 ```
 
 ### 1.3 CMake 配置参数
@@ -292,7 +292,7 @@ docker run --rm \
   -v "$(pwd):/SpecWeave" \
   -v caffe-ffi-workspace:/workspace \
   caffe-ffi-jupyter:latest \
-  bash -c "cp /SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
+  bash -c "cp /SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh /workspace/ && bash /workspace/test-cpp-tests.sh"
 
 # 预期结果：
 # - 编译步骤[67/71]包含test_net.cpp，[68/71]包含test_insert_splits.cpp
@@ -308,4 +308,4 @@ docker run --rm \
 - [构建失败分层排查法](../../patterns/code-patterns/build-failure-layered-triage.md)
 - [CMake列表变更诊断输出模式](../../patterns/code-patterns/cmake-list-removal-diagnostic-output.md)
 - [caffe-ffi README](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/README.md)
-- [caffe-ffi-jupyter Docker镜像](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/README.md)
+- [caffe-ffi-jupyter Docker镜像](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/README.md)

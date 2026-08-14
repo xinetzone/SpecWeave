@@ -261,4 +261,4 @@ L1-draft — jupyter-ssh-base 项目中验证可行（镜像从单阶段 1.2GB �
   - compiled-wheel-runtime-image-build.md（Python wheel 运行时镜像的具体分层实践）
   - conda-docker-multistage-best-practices.md（Conda 环境的多阶段构建）
 - 参考实例：
-  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/jupyter-ssh-base/Dockerfile)（本模式的参考实现）
+  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（本模式的参考实现）

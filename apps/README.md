@@ -19,24 +19,38 @@
 
 ## 二、子目录结构及职责
 
-### 2.1 `apps/shared/`
+### 2.1 分组结构
 
-存放多个应用之间**可共享的公共模块**，包括但不限于：
+apps/ 下的应用按**应用类型**分组存放，便于定位与扩展：
 
-- 公共工具函数库
-- 通用 UI 组件
-- 共享类型定义与接口
-- 通用配置模板
-- 跨应用复用的脚本与辅助工具
+```
+apps/
+├── AGENTS.md              ← apps 区域入口路由
+├── README.md              ← 本文件（目录总览）
+├── .agents/               ← 区域元数据容器
+├── shared/                ← 跨应用共享资源
+├── tests/                 ← 全局测试用例
+├── docker-images/         ← 容器镜像类应用（7 个）
+├── ai-agents/             ← AI 应用类（3 个）
+├── dev-tools/             ← 开发工具类（2 个）
+└── samples/               ← 示例/原型类（3 个）
+```
 
-共享模块的提取原则：当至少两个应用对同一代码块存在依赖时，方可将其提升至 `shared/`。单个应用所使用的模块应保留在应用自身目录内，避免过早抽象。
+分组规则：
+
+- **docker-images/**：以 Docker 镜像形态交付的基础设施/运行时应用
+- **ai-agents/**：AI 智能体/AI 应用（Agent、代码助手、AI 洞察项目）
+- **dev-tools/**：开发者工具类（硬件控制、提示词萃取等实用工具）
+- **samples/**：示例框架、Demo 站点、原型项目
+
+> 应用目录名保持唯一且在 apps/ 全区域内唯一；新增应用时先按应用类型判定所属分组，再放入对应子文件夹。
 
 ### 2.2 应用独立目录
 
-每个应用在 `apps/<app-name>/` 下独立存放，享有完整的目录自治权。典型结构如下：
+每个应用在分组下的 `apps/<group>/<app-name>/` 独立存放，享有完整的目录自治权。典型结构如下：
 
 ```
-apps/<app-name>/
+apps/<group>/<app-name>/
   README.md          -- 本应用的功能说明、安装与使用方式
   package.json       -- 依赖声明文件（或等效的 go.mod / Cargo.toml 等）
   src/               -- 源代码目录
@@ -49,23 +63,40 @@ apps/<app-name>/
 
 <!-- APPS_TABLE_START -->
 
+#### docker-images/（容器镜像类）
+
 | 应用 | 说明 | 入口 |
 |---|---|---|
-| `ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-code-assistant/README.md) |
-| `caffe-ffi-cross/` | caffe-ffi-cross 应用 | `caffe-ffi-cross/`（暂无 README） |
-| `caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](caffe-ffi-jupyter/README.md) |
-| `camera-power-controller/` | camera-power-controller 应用 | `camera-power-controller/`（暂无 README） |
-| `cow-demo/` | 零拷贝COW读写分离模式（Zero-copy COW Read-Write Separation Pattern）的C++示例框架。 | [README.md](cow-demo/README.md) |
-| `devcontainer-base/` | DevContainer Base - 标准化开发容器基础镜像 (SSH + Docker + Podman + Jupyter) | [README.md](devcontainer-base/README.md) |
-| `docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-ssh-dind/README.md) |
-| `eve-minimal-agent/` | 一个最小可运行的 **Vercel Eve** Agent 示例。它演示了 Eve 的核心设计哲学——**"文件系统即接口"**：你只需把文件放在约定位置... | [README.md](eve-minimal-agent/README.md) |
-| `jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](jupyter-ssh-base/README.md) |
-| `prompt_extraction/` | 本目录的索引文件。 | [README.md](prompt_extraction/README.md) |
-| `pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](pytorch-base/README.md) |
-| `tests/` | tests 应用 | `tests/`（暂无 README） |
-| `xmnn-runtime/` | xmnn-runtime 应用 | `xmnn-runtime/`（暂无 README） |
-| `zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](zhujian-wudao/README.md) |
-| `zleap-workspace-first-prototype/` | zleap-workspace-first-prototype 应用 | `zleap-workspace-first-prototype/`（暂无 README） |
+| `docker-images/caffe-ffi-cross/` | caffe-ffi-cross 交叉编译镜像 | `docker-images/caffe-ffi-cross/`（暂无 README） |
+| `docker-images/caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../docker-images/jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](docker-images/caffe-ffi-jupyter/README.md) |
+| `docker-images/devcontainer-base/` | DevContainer Base - 标准化开发容器基础镜像 (SSH + Docker + Podman + Jupyter) | [README.md](docker-images/devcontainer-base/README.md) |
+| `docker-images/docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-images/docker-ssh-dind/README.md) |
+| `docker-images/jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](docker-images/jupyter-ssh-base/README.md) |
+| `docker-images/pytorch-base/` | 基于 **ubuntu:26.04 LTS** + **Miniconda3** + **Python 3.14** + **PyTorch 2.13.0... | [README.md](docker-images/pytorch-base/README.md) |
+| `docker-images/xmnn-runtime/` | XMNN 运行时环境 | `docker-images/xmnn-runtime/`（暂无 README） |
+
+#### ai-agents/（AI 应用类）
+
+| 应用 | 说明 | 入口 |
+|---|---|---|
+| `ai-agents/ai-code-assistant/` | AI 编程学习助手 —— 你的 AI 编程导师 | [README.md](ai-agents/ai-code-assistant/README.md) |
+| `ai-agents/eve-minimal-agent/` | 一个最小可运行的 **Vercel Eve** Agent 示例。它演示了 Eve 的核心设计哲学——**"文件系统即接口"**：你只需把文件放在约定位置... | [README.md](ai-agents/eve-minimal-agent/README.md) |
+| `ai-agents/zhujian-wudao/` | 竹简悟道 —— 陪你慢慢想透的智慧伙伴 | [README.md](ai-agents/zhujian-wudao/README.md) |
+
+#### dev-tools/（开发工具类）
+
+| 应用 | 说明 | 入口 |
+|---|---|---|
+| `dev-tools/camera-power-controller/` | 摄像头电源控制工具 | `dev-tools/camera-power-controller/`（暂无 README） |
+| `dev-tools/prompt_extraction/` | 提示词质量评估与提取工具 | [README.md](dev-tools/prompt_extraction/README.md) |
+
+#### samples/（示例/原型类）
+
+| 应用 | 说明 | 入口 |
+|---|---|---|
+| `samples/cow-demo/` | 零拷贝COW读写分离模式（Zero-copy COW Read-Write Separation Pattern）的C++示例框架。 | [README.md](samples/cow-demo/README.md) |
+| `samples/short-video-site/` | ReelVibe 短视频网站（AI 全流程开发 Demo） | `samples/short-video-site/`（暂无 README） |
+| `samples/zleap-workspace-first-prototype/` | 工作区首个原型（多模型路由） | `samples/zleap-workspace-first-prototype/`（暂无 README） |
 
 <!-- APPS_TABLE_END -->
 

@@ -17,7 +17,7 @@
 
     rename_map = {"竹简悟道.html": "竹简悟道_完整版.html"}
     fixes = fix_directory_links(
-        root_dir=Path("apps/zhujian-wudao"),
+        root_dir=Path("apps/ai-agents/zhujian-wudao"),
         project_root=Path("."),
         rename_map=rename_map,
         dry_run=True,

@@ -164,7 +164,7 @@ endif()
 
 ### 修复5：构建脚本 SO 拷贝路径（test-cpp-tests.sh）
 
-**文件**：[test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278)
+**文件**：[test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278)
 
 **变更**：
 ```bash
@@ -323,7 +323,7 @@ Top 5 最慢用例：
 | [cmake/TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L59) | 修复（PRIVATE→PUBLIC） | 1 |
 | [src/caffe_ffi/blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345) | 修复（ShareDiff形状同步） | ~20 |
 | [python/caffe_ffi/_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L100-L112) | 修复（fallback状态设置） | 3 |
-| [apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278) | 修复（SO拷贝路径+PYTHONPATH） | ~10 |
+| [apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278) | 修复（SO拷贝路径+PYTHONPATH） | ~10 |
 | [tests/python/test_python_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322) | 新增（回归测试） | ~90 |
 
 ---

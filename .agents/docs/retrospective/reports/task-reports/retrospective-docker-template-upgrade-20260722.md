@@ -43,7 +43,7 @@ maturity: "L2"
 | F01 | T0 | 用户要求运行 `bundle_wheel_deps.py`、提取5条红线规则生成pytest脚本、基于 `01-build-env-reuse` 初始化项目骨架 |
 | F02 | T1 | `bundle_wheel_deps.py` 对 `xmnn.whl` 的依赖收集：9个非系统依赖已全部内嵌，`RPATH=$ORIGIN`，零缺失 |
 | F03 | T1 | `test_docker_redlines.py` 生成：5条红线规则、8个测试用例，覆盖R1-R5全部验证点 |
-| F04 | T1 | 基于 skeleton 模板创建 `apps/xmnn-runtime/` 项目（Dockerfile、entrypoint.sh、init文件、build.sh、verify.sh、.dockerignore） |
+| F04 | T1 | 基于 skeleton 模板创建 `apps/docker-images/xmnn-runtime/` 项目（Dockerfile、entrypoint.sh、init文件、build.sh、verify.sh、.dockerignore） |
 | F05 | T2 | Dockerfile 使用 `npu-tvm-build:conda` 基础镜像，`CONDA_ENV_NAME=tvm-build`，安装 pandas/matplotlib/openpyxl/tqdm/tomlkit |
 | F06 | T2 | 首次构建失败：Dockerfile 第99行多行 Python 代码（TE compute 验证）导致 `unknown instruction: import` |
 | F07 | T2 | 修复：将多行 Python 代码改为 `python -c "..."` 单行格式，构建成功 |
@@ -219,4 +219,4 @@ maturity: "L2"
 - [Dockerfile Python代码嵌入模式](../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md)
 - [容器验证脚本权限模型](../../patterns/process-patterns/container-verify-script-permission-model.md)
 - [模板占位符粒度设计](../../patterns/methodology-patterns/governance-strategy/template-placeholder-granularity-design.md)
-- [XMNN Runtime 项目](../../../../../apps/xmnn-runtime/docker/Dockerfile)
+- [XMNN Runtime 项目](../../../../../apps/docker-images/xmnn-runtime/docker/Dockerfile)

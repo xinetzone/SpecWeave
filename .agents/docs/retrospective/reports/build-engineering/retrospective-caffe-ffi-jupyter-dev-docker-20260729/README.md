@@ -17,10 +17,10 @@ related_patterns: [
 
 ## 执行摘要
 
-为 `apps/caffe-ffi-jupyter/` 构建支持本地源码开发的Docker镜像，采用多阶段构建+运行时volume挂载editable安装方案。核心改进：(1) 使用 `continuumio/miniconda3:latest` 作为builder基础镜像加速构建；(2) 运行时通过entrypoint自动检测挂载源码并执行 `pip install -e`，失败时优雅降级到预装版本；(3) 源码挂载到 `/SpecWeave` 独立路径（避开基础镜像的 `/workspace` 递归chown性能陷阱），`/workspace` 使用Docker命名卷；(4) entrypoint内置CRLF自动修复（fix_crlf函数）处理Windows NTFS挂载的换行符问题；(5) 配套test-editable.sh一键验证脚本（增量验证策略适配NTFS挂载限制）。容器成功启动，SSH(2222)和Jupyter(8888)服务正常，Python 3.14.6 + numpy 2.5.1 + protobuf 7.35.1 + tvm_ffi 0.1.12 + caffe_ffi 0.1.0 editable模式全部验证通过，Net功能测试（创建网络、读取name属性）成功。
+为 `apps/docker-images/caffe-ffi-jupyter/` 构建支持本地源码开发的Docker镜像，采用多阶段构建+运行时volume挂载editable安装方案。核心改进：(1) 使用 `continuumio/miniconda3:latest` 作为builder基础镜像加速构建；(2) 运行时通过entrypoint自动检测挂载源码并执行 `pip install -e`，失败时优雅降级到预装版本；(3) 源码挂载到 `/SpecWeave` 独立路径（避开基础镜像的 `/workspace` 递归chown性能陷阱），`/workspace` 使用Docker命名卷；(4) entrypoint内置CRLF自动修复（fix_crlf函数）处理Windows NTFS挂载的换行符问题；(5) 配套test-editable.sh一键验证脚本（增量验证策略适配NTFS挂载限制）。容器成功启动，SSH(2222)和Jupyter(8888)服务正常，Python 3.14.6 + numpy 2.5.1 + protobuf 7.35.1 + tvm_ffi 0.1.12 + caffe_ffi 0.1.0 editable模式全部验证通过，Net功能测试（创建网络、读取name属性）成功。
 
 **关键数据**：
-- 修改文件：6个（[Dockerfile](../../../../../../apps/caffe-ffi-jupyter/Dockerfile)、[docker-compose.yml](../../../../../../apps/caffe-ffi-jupyter/docker-compose.yml)、[Dockerfile.dockerignore](../../../../../../apps/caffe-ffi-jupyter/Dockerfile.dockerignore)、[test-editable.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-editable.sh)、[common.ps1](../../../../../../apps/caffe-ffi-jupyter/scripts/lib/common.ps1)、[common.Tests.ps1](../../../../../../apps/caffe-ffi-jupyter/scripts/common.Tests.ps1)）+ xuanspace子模块4个文件
+- 修改文件：6个（[Dockerfile](../../../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile)、[docker-compose.yml](../../../../../../apps/docker-images/caffe-ffi-jupyter/docker-compose.yml)、[Dockerfile.dockerignore](../../../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile.dockerignore)、[test-editable.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-editable.sh)、[common.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/lib/common.ps1)、[common.Tests.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/common.Tests.ps1)）+ xuanspace子模块4个文件
 - xuanspace子模块修改：4个核心修复文件（[_caffe_ffi.cc](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc)、[Options.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)、[TargetBuild.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake)、[_ffi_api.py](../../../../../../projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py)）+ .gitattributes CRLF规则
 - 构建错误迭代：~15轮（初始10轮 + editable修复5轮：CRLF→make缺失→静态断言→符号可见性→.so搜索路径→测试链接→NTFS autotools限制）
 - 容器启动时间：<30秒（命名卷方案，从递归chown的"极慢"改善到正常水平）
@@ -96,7 +96,7 @@ Python glob代码在无.so文件时触发 `IndexError: list index out of range`�
 
 ### F16. 基础镜像entrypoint递归chown
 
-基础镜像 [entrypoint.sh](../../../../../../apps/jupyter-ssh-base/entrypoint.sh#L151) 在启动时执行 `chown -R jupyteruser:jupyteruser /workspace`。将整个SpecWeave仓库bind mount到 `/workspace` 后，chown遍历Windows挂载的数十万文件，容器启动极慢。
+基础镜像 [entrypoint.sh](../../../../../../apps/docker-images/jupyter-ssh-base/entrypoint.sh#L151) 在启动时执行 `chown -R jupyteruser:jupyteruser /workspace`。将整个SpecWeave仓库bind mount到 `/workspace` 后，chown遍历Windows挂载的数十万文件，容器启动极慢。
 
 ### F17. tvm-ffi configure脚本CRLF问题
 
@@ -126,12 +126,12 @@ tvm-ffi和caffe-ffi的editable安装因源码问题（CRLF、C++静态断言）�
 
 | 文件路径 | 操作 | 说明 |
 |----------|------|------|
-| [Dockerfile](../../../../../../apps/caffe-ffi-jupyter/Dockerfile) | 重写+增强 | 多阶段构建+inline heredoc entrypoint+editable安装逻辑+SRC_ROOT自动检测+fix_crlf()+make依赖+CAFFE_FFI_BUILD_TESTS=OFF，~400行 |
-| [docker-compose.yml](../../../../../../apps/caffe-ffi-jupyter/docker-compose.yml) | 修改 | 路径分离挂载(/SpecWeave bind + /workspace volume) + WORKSPACE_DIR环境变量 |
-| [Dockerfile.dockerignore](../../../../../../apps/caffe-ffi-jupyter/Dockerfile.dockerignore) | 新建 | 排除大目录(projects/vendor/external/playground等)减小build context |
-| [test-editable.sh](../../../../../../apps/caffe-ffi-jupyter/scripts/test-editable.sh) | 新建 | 一键验证脚本（增量验证策略），CRLF修复+tvm-ffi检查+caffe-ffi检查+功能测试 |
-| [common.ps1](../../../../../../apps/caffe-ffi-jupyter/scripts/lib/common.ps1) | 新建 | PowerShell公共工具库（WSL检测、路径转换、Docker检查、Python版本验证） |
-| [common.Tests.ps1](../../../../../../apps/caffe-ffi-jupyter/scripts/common.Tests.ps1) | 新建 | common.ps1的Pester 5单元测试 |
+| [Dockerfile](../../../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile) | 重写+增强 | 多阶段构建+inline heredoc entrypoint+editable安装逻辑+SRC_ROOT自动检测+fix_crlf()+make依赖+CAFFE_FFI_BUILD_TESTS=OFF，~400行 |
+| [docker-compose.yml](../../../../../../apps/docker-images/caffe-ffi-jupyter/docker-compose.yml) | 修改 | 路径分离挂载(/SpecWeave bind + /workspace volume) + WORKSPACE_DIR环境变量 |
+| [Dockerfile.dockerignore](../../../../../../apps/docker-images/caffe-ffi-jupyter/Dockerfile.dockerignore) | 新建 | 排除大目录(projects/vendor/external/playground等)减小build context |
+| [test-editable.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-editable.sh) | 新建 | 一键验证脚本（增量验证策略），CRLF修复+tvm-ffi检查+caffe-ffi检查+功能测试 |
+| [common.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/lib/common.ps1) | 新建 | PowerShell公共工具库（WSL检测、路径转换、Docker检查、Python版本验证） |
+| [common.Tests.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/common.Tests.ps1) | 新建 | common.ps1的Pester 5单元测试 |
 | [_caffe_ffi.cc](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc) | 修改 | lambda包装Net::name()返回值类型（const std::string&→std::string） |
 | [Options.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake) | 修改 | 新增CAFFE_FFI_BUILD_TESTS选项 |
 | [TargetBuild.cmake](../../../../../../projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake) | 修改 | Linux符号可见性设置（CXX_VISIBILITY_PRESET default） |

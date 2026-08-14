@@ -14,10 +14,10 @@ tags: ["onnx", "quantization", "benchmark", "ci", "devcontainer", "performance"]
 > **生成日期**：2026-08-08
 > **方法论**：七概念方法论（R-I-E链路：事实采集→洞察分析→模式萃取）
 > **关联文件**：
-> - 基准数据：[benchmark_quick.json](../../../../../../apps/devcontainer-base/benchmark-results-docker/benchmark_quick.json)
-> - 基准脚本：[benchmark_quantization.py](../../../../../../apps/devcontainer-base/scripts/benchmark_quantization.py)
-> - Docker运行脚本：[run-benchmark-docker.sh](../../../../../../apps/devcontainer-base/scripts/run-benchmark-docker.sh)
-> - onnx-quantized变体：[Dockerfile](../../../../../../apps/devcontainer-base/variants/onnx-quantized/Dockerfile)
+> - 基准数据：[benchmark_quick.json](../../../../../../apps/docker-images/devcontainer-base/benchmark-results-docker/benchmark_quick.json)
+> - 基准脚本：[benchmark_quantization.py](../../../../../../apps/docker-images/devcontainer-base/scripts/benchmark_quantization.py)
+> - Docker运行脚本：[run-benchmark-docker.sh](../../../../../../apps/docker-images/devcontainer-base/scripts/run-benchmark-docker.sh)
+> - onnx-quantized变体：[Dockerfile](../../../../../../apps/docker-images/devcontainer-base/variants/onnx-quantized/Dockerfile)
 > - CI流水线：[devcontainer-variants.yml](../../../../../../.github/workflows/devcontainer-variants.yml)
 
 ---
@@ -196,7 +196,7 @@ tags: ["onnx", "quantization", "benchmark", "ci", "devcontainer", "performance"]
 
 ### 3.4 萃取模式：Docker-based CI Benchmark Pattern
 
-> **状态**：✅ **已归档（validated）** — 已落地实现为 [devcontainer-variants.yml Stage 6/6](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)，配套 [test-onnx-quantized.sh](file:///d:/spaces/SpecWeave/apps/devcontainer-base/variants/scripts/test-onnx-quantized.sh) 20项L1-L6分层测试验证。
+> **状态**：✅ **已归档（validated）** — 已落地实现为 [devcontainer-variants.yml Stage 6/6](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)，配套 [test-onnx-quantized.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/scripts/test-onnx-quantized.sh) 20项L1-L6分层测试验证。
 
 **触发场景**：
 - 需要在CI中自动运行性能基准测试
@@ -254,20 +254,20 @@ tags: ["onnx", "quantization", "benchmark", "ci", "devcontainer", "performance"]
 
 | # | 行动项 | 验收标准 | 优先级 | 状态 | 完成验证 |
 |---|--------|---------|--------|------|---------|
-| 1 | 创建variants/scripts/test-onnx-quantized.sh | bash -n语法通过；Docker内运行所有检查PASS；覆盖FP16/Static-QDQ/INC/build-info | 高 | ✅ 已完成 | [test-onnx-quantized.sh](../../../../../../apps/devcontainer-base/variants/scripts/test-onnx-quantized.sh) 包含23项L1-L7分层测试（T1-T23），覆盖版本验证、工具链导入、量化冒烟、服务继承、环境隔离、build-info、CI Kit集成 |
-| 2 | Dockerfile冒烟测试增加FP16转换验证 | 构建时输出"FP16 conversion OK"；max_diff检查 | 中 | ✅ 已完成 | [Dockerfile](../../../../../../apps/devcontainer-base/variants/onnx-quantized/Dockerfile#L344-L408) 新增FP16SMOKE块：模型导出→float16转换→ONNX checker→推理验证→max_diff检查→大小对比 |
+| 1 | 创建variants/scripts/test-onnx-quantized.sh | bash -n语法通过；Docker内运行所有检查PASS；覆盖FP16/Static-QDQ/INC/build-info | 高 | ✅ 已完成 | [test-onnx-quantized.sh](../../../../../../apps/docker-images/devcontainer-base/variants/scripts/test-onnx-quantized.sh) 包含23项L1-L7分层测试（T1-T23），覆盖版本验证、工具链导入、量化冒烟、服务继承、环境隔离、build-info、CI Kit集成 |
+| 2 | Dockerfile冒烟测试增加FP16转换验证 | 构建时输出"FP16 conversion OK"；max_diff检查 | 中 | ✅ 已完成 | [Dockerfile](../../../../../../apps/docker-images/devcontainer-base/variants/onnx-quantized/Dockerfile#L344-L408) 新增FP16SMOKE块：模型导出→float16转换→ONNX checker→推理验证→max_diff检查→大小对比 |
 | 3 | CI集成基准测试步骤（Stage 6/6） | main/nightly自动运行benchmark；结果作为artifact上传；性能下降>10%告警 | 中 | ✅ 已完成 | [devcontainer-variants.yml](../../../../../../.github/workflows/devcontainer-variants.yml#L477-L530) Stage 6/6已集成：分层触发（PR不跑/main quick/nightly full）、onnx-quantized镜像运行、-v挂载结果目录、固定OMP线程数、analyze_benchmark.py自动分析、artifact上传留存30天 |
-| 4 | run-benchmark-docker.sh增加--variant参数 | 默认使用onnx-quantized镜像；支持指定变体 | 中 | ✅ 已完成 | [run-benchmark-docker.sh](../../../../../../apps/devcontainer-base/scripts/run-benchmark-docker.sh#L13-L71) 新增--variant/--image参数：支持onnx-pytorch/onnx-quantized、自动选择镜像、输出目录按变体区分 |
+| 4 | run-benchmark-docker.sh增加--variant参数 | 默认使用onnx-quantized镜像；支持指定变体 | 中 | ✅ 已完成 | [run-benchmark-docker.sh](../../../../../../apps/docker-images/devcontainer-base/scripts/run-benchmark-docker.sh#L13-L71) 新增--variant/--image参数：支持onnx-pytorch/onnx-quantized、自动选择镜像、输出目录按变体区分 |
 | 5 | 在onnx-quantized镜像重新运行完整benchmark | benchmark_results.json包含FP16数据；补充FP16性能分析 | 低 | ⏳ 待执行 | 需WSL2/Linux Docker环境；当前已具备完整工具链（FP16+INT8全方案），待环境就绪后执行 |
 
 **额外完成项**（上一轮会话迭代补充）：
 | # | 额外交付物 | 说明 | 关联文件 |
 |---|-----------|------|---------|
-| E1 | batch_quantize.py 批量量化脚本 | 支持路径/glob模型发现、ThreadPoolExecutor并发处理、单模型/批量JSON报告聚合 | [batch_quantize.py](../../../../../../apps/devcontainer-base/scripts/batch_quantize.py) |
-| E2 | ci_alert.py CI报警脚本 | 解析JSON报告、支持--fail-on-warning/--min-speedup阈值、非零退出码用于CI门禁 | [ci_alert.py](../../../../../../apps/devcontainer-base/scripts/ci_alert.py) |
-| E3 | analyze_model() dry-run API | model_detect.py中封装模型类型检测、策略链推荐、输入形状推断，供CLI和其他脚本复用 | [model_detect.py](../../../../../../apps/devcontainer-base/scripts/onnx_quantize_kit/model_detect.py) |
-| E4 | ci_quantization_gate.py CI量化门禁 | 独立CI门禁脚本，在test-onnx-quantized.sh T22中验证可用 | [ci_quantization_gate.py](../../../../../../apps/devcontainer-base/scripts/ci_quantization_gate.py) |
-| E5 | reporting.py 统一报告模块 | 集中报告构建/解析/格式化，CLI/CI/批量脚本共用 | [reporting.py](../../../../../../apps/devcontainer-base/scripts/onnx_quantize_kit/reporting.py) |
+| E1 | batch_quantize.py 批量量化脚本 | 支持路径/glob模型发现、ThreadPoolExecutor并发处理、单模型/批量JSON报告聚合 | [batch_quantize.py](../../../../../../apps/docker-images/devcontainer-base/scripts/batch_quantize.py) |
+| E2 | ci_alert.py CI报警脚本 | 解析JSON报告、支持--fail-on-warning/--min-speedup阈值、非零退出码用于CI门禁 | [ci_alert.py](../../../../../../apps/docker-images/devcontainer-base/scripts/ci_alert.py) |
+| E3 | analyze_model() dry-run API | model_detect.py中封装模型类型检测、策略链推荐、输入形状推断，供CLI和其他脚本复用 | [model_detect.py](../../../../../../apps/docker-images/devcontainer-base/scripts/onnx_quantize_kit/model_detect.py) |
+| E4 | ci_quantization_gate.py CI量化门禁 | 独立CI门禁脚本，在test-onnx-quantized.sh T22中验证可用 | [ci_quantization_gate.py](../../../../../../apps/docker-images/devcontainer-base/scripts/ci_quantization_gate.py) |
+| E5 | reporting.py 统一报告模块 | 集中报告构建/解析/格式化，CLI/CI/批量脚本共用 | [reporting.py](../../../../../../apps/docker-images/devcontainer-base/scripts/onnx_quantize_kit/reporting.py) |
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 id: "retrospective-ai-code-assistant-project-analysis-20260625-insight"
 title: "洞察萃取"
-source: "../../../../../../../apps/ai-code-assistant/README.md"
+source: "../../../../../../../apps/ai-agents/ai-code-assistant/README.md"
 x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/insight-extraction.toml"
 ---
 # 洞察萃取

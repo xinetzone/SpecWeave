@@ -314,10 +314,10 @@ function Enter-MsvcDevShell {
 |------|------|------|-----------|---------|-----------|
 | [build_native_ext.ps1](../../../scripts/build_native_ext.ps1) | 260 | C++扩展构建 | ✅ 无 | - | ✅ 已模块化（使用NativeBuild） |
 | [build_caffe_ffi.ps1](../../../scripts/build_caffe_ffi.ps1) | ~15 | 薄包装 | ✅ 无 | - | ✅ 薄包装 |
-| [pytorch-base/build.ps1](../../../../apps/pytorch-base/build.ps1) | 420 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [xmnn-runtime/docker/build.ps1](../../../../apps/xmnn-runtime/docker/build.ps1) | 369 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [jupyter-ssh-base/scripts/build.ps1](../../../../apps/jupyter-ssh-base/scripts/build.ps1) | 409 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
-| [caffe-ffi-jupyter/scripts/lib/common.ps1](../../../../apps/caffe-ffi-jupyter/scripts/lib/common.ps1) | 244 | Docker/WSL公共库 | ✅ 无 | - | ✅ 已模块化 |
+| [pytorch-base/build.ps1](../../../../apps/docker-images/pytorch-base/build.ps1) | 420 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [xmnn-runtime/docker/build.ps1](../../../../apps/docker-images/xmnn-runtime/docker/build.ps1) | 369 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [jupyter-ssh-base/scripts/build.ps1](../../../../apps/docker-images/jupyter-ssh-base/scripts/build.ps1) | 409 | Docker/WSL构建 | ✅ 无 | ⚠️ ~200行重复 | ❌ 自包含单文件 |
+| [caffe-ffi-jupyter/scripts/lib/common.ps1](../../../../apps/docker-images/caffe-ffi-jupyter/scripts/lib/common.ps1) | 244 | Docker/WSL公共库 | ✅ 无 | - | ✅ 已模块化 |
 
 ### 7.2 重复代码分析
 

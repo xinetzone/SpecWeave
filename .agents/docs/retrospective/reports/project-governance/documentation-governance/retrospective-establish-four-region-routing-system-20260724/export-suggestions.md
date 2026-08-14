@@ -21,7 +21,7 @@ tags: [pattern, extraction, best-practices, action-items]
   ↓ 判断当前工作目录所在区域
 第二层：子区域路由（apps/AGENTS.md | projects/AGENTS.md | vendor/AGENTS.md）
   ↓ 判断具体子应用/子项目/子模块
-第三层：子模块路由（如 apps/zhujian-wudao/AGENTS.md）
+第三层：子模块路由（如 apps/ai-agents/zhujian-wudao/AGENTS.md）
 ```
 
 **适用场景**：
