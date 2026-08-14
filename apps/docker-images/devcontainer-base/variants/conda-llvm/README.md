@@ -1,21 +1,26 @@
 # DevContainer Base - Conda-LLVM 变体 (LLVM/Clang 工具链)
 
-> 基于 devcontainer-base:conda 变体的 LLVM/Clang 编译工具链镜像，在保留所有基础功能的前提下，通过 conda-forge 预装完整的 LLVM 工具链（llvmdev, clang, clangdev, lld, lldb）以及构建工具（cmake, ninja, make），直接在 conda base 环境安装，开箱即用。
+> 直接基于 devcontainer-base 基础镜像的 LLVM/Clang 编译工具链变体，在保留所有基础功能的前提下，通过 conda-forge 在 **conda main 环境**（Python 3.14.6 cp314t free-threading，默认用户环境）预装 LLVM 工具链（llvmdev, clangdev, clang, lld）与构建工具（cmake, ninja, make），开箱即用。
+>
+> 历史变更：本变体曾基于 conda 变体（base 环境安装），自 2026-08 起直接基于 `devcontainer-base:${BASE_TAG}`，工具链迁移至 main 环境并与默认用户环境（Python 3.14t free-threading）保持一致；conda 变体已从构建注册表移除。
 
 ## ✨ 特性
 
-- **基础镜像继承**：完全继承 conda 变体和 devcontainer-base 的所有功能
+- **基础镜像继承**：完全继承 devcontainer-base 的所有功能
   - Ubuntu 26.04 + 中文环境 zh_CN.UTF-8 + Asia/Shanghai 时区
   - SSH(22) + Docker DinD(2375) + Podman(rootless) + Jupyter(8888)
   - supervisord 进程管理，devuser 非 root 用户 (UID 1000)
-  - Miniconda3 安装在 `/opt/conda`
+  - Miniforge3（conda-forge 官方发行版，libmamba solver）安装于 `/opt/conda`
+- **main 环境安装**：LLVM 工具链安装于 conda **main 环境**（Python 3.14.6 cp314t free-threading，默认用户环境），编译工具与默认 Python/Jupyter 共享同一环境
 - **LLVM 工具链**：LLVM/Clang 22.1.8，统一版本通过 conda-forge 安装
-  - `llvmdev`, `clangdev`, `clang`, `lld`, `lldb`
+  - `llvmdev`, `clangdev`, `clang`, `lld`（版本锁定）
+  - `lldb` **已排除**（conda-forge 无 cp314t 构建，安装会引发 GIL 回归，见注意事项）
 - **构建工具**：`cmake`, `ninja`, `make` 最新版本（conda-forge）
-- **PATH 设计**：`/opt/conda/bin` 在 PATH 最前面，llvm-config/clang/cmake/ninja 直接可用
-- **开箱即用**：无需手动激活 conda，所有编译工具直接在 PATH 中
-- **服务稳定**：Jupyter 等服务由 supervisord 用绝对路径启动，不受 PATH 变更影响
-- **国内镜像支持**：支持清华 TUNA conda 镜像、阿里云/清华 pip 镜像
+- **GCC 运行时**：`libgcc`, `libstdcxx-ng`（conda-forge clang 链接器必需，缺失会导致 `cannot find -lgcc`）
+- **free-threading 防线**：python 显式锁定 `*=*cp314t` 构建 + 安装后断言 `sys._is_gil_enabled() == False`，任何包引发的 GIL 回归会使构建立即失败
+- **PATH 设计**：`/opt/conda/envs/main/bin` 在 PATH 最前面，llvm-config/clang/cmake/ninja 与 Python 3.14t/Jupyter 直接可用
+- **服务稳定**：Jupyter 等服务由 supervisord 启动，使用 main 环境的绝对路径，不受 PATH 变更影响
+- **国内镜像支持**：conda 源支持 bfsu（默认）/tuna/aliyun/official 四种
 
 ## 📦 包含组件
 
@@ -24,12 +29,15 @@
 | LLVM | 22.1.8 | llvmdev 核心库 + 头文件 |
 | Clang | 22.1.8 | C/C++/Objective-C 编译器 |
 | lld | 22.1.8 | LLVM 链接器 |
-| lldb | 22.1.8 | LLVM 调试器 |
+| lldb | - | **已排除**（见注意事项 3） |
 | CMake | latest | 跨平台构建系统 |
 | Ninja | latest | 快速构建系统 |
 | Make | latest | GNU Make |
+| libgcc / libstdcxx-ng | latest | GCC 运行时库（clang 链接器依赖） |
 
-> 注：`clang-tools-extra` 包在 conda-forge 通道不存在，已从安装列表移除，故不列于上表。
+> 注 1：`clang-tools-extra` 包在 conda-forge 通道不存在，已从安装列表移除。
+> 注 2：`lldb` 因 python 绑定无 cp314t（free-threading）构建被排除，详见注意事项。
+> 注 3：组件实际版本以容器内 `/etc/devcontainer-variant-conda-llvm-build-info` 为准。
 
 ## 📁 目录结构
 
@@ -50,17 +58,14 @@ variants/conda-llvm/
 
 ### 前置条件
 
-需要先构建基础镜像和 conda 变体：
+需要先构建基础镜像（conda 变体已下线，无需中间变体）：
 
 ```bash
 # 在 devcontainer-base 根目录
 cd /path/to/devcontainer-base
 
-# 1. 构建基础镜像
+# 1. 构建基础镜像（V2 内置默认镜像源）
 bash scripts/build.sh --cn
-
-# 2. 构建 conda 变体
-bash variants/build.sh --variant conda --cn
 ```
 
 ### 使用构建脚本（推荐）
@@ -69,7 +74,7 @@ bash variants/build.sh --variant conda --cn
 # 在 devcontainer-base 根目录执行
 bash variants/build.sh --variant conda-llvm
 
-# 使用国内镜像源构建（推荐中国网络环境）
+# 国内镜像源构建（推荐中国网络环境）
 bash variants/build.sh --variant conda-llvm --cn
 
 # 构建后验证
@@ -87,7 +92,7 @@ docker build -f variants/conda-llvm/Dockerfile \
 # 国内镜像源构建
 docker build -f variants/conda-llvm/Dockerfile \
   --build-arg APT_MIRROR=aliyun \
-  --build-arg CONDA_MIRROR=tuna \
+  --build-arg CONDA_MIRROR=bfsu \
   --build-arg PIP_MIRROR=aliyun \
   -t devcontainer-base:conda-llvm-latest .
 
@@ -132,11 +137,11 @@ docker run --rm -v $(pwd):/workspace -w /workspace \
 
 ### PATH 优先级说明
 
-**conda-llvm 变体中，`/opt/conda/bin` 在 PATH 最前面**，因此：
+**conda-llvm 变体中，`/opt/conda/envs/main/bin` 在 PATH 最前面**，因此：
 - `llvm-config`, `clang`, `clang++`, `cmake`, `ninja`, `make` 直接可用
-- `python` 和 `pip` 默认指向 conda base 环境的 Python
-- 系统 venv `/opt/venv/bin` 的 Python 仍可通过绝对路径 `/opt/venv/bin/python` 访问
-- **Jupyter 服务不受影响**：supervisord 使用 `/opt/venv/bin/jupyter` 绝对路径启动
+- `python` 和 `pip` 默认指向 conda main 环境的 **Python 3.14.6（cp314t free-threading，GIL 默认禁用）**
+- `jupyter` 同样来自 main 环境
+- **Jupyter 服务不受影响**：supervisord 使用 main 环境绝对路径启动
 
 ### 快速验证工具链
 
@@ -149,6 +154,10 @@ cmake --version
 ninja --version
 make --version
 lld --version
+
+# 验证 free-threading Python（默认环境）
+python --version                       # Python 3.14.6
+python -c "import sys; print(sys._is_gil_enabled())"   # False（GIL 已禁用）
 ```
 
 ### 编译 C++ 项目
@@ -193,30 +202,12 @@ llvm-config --libs core orcjit native
 llvm-config --cxxflags
 ```
 
-### 切换回系统 venv Python（如需要）
+### Conda 环境说明
 
-```bash
-# 临时使用系统 venv 的 Python
-/opt/venv/bin/python --version
-/opt/venv/bin/pip --version
-
-# 或修改 PATH 临时切换
-export PATH=/opt/venv/bin:$PATH
-which python  # 现在指向 /opt/venv/bin/python
-
-# 永久切换：编辑 ~/.bashrc 将 /opt/venv/bin 放在前面
-echo 'export PATH=/opt/venv/bin:$PATH' >> ~/.bashrc
-```
-
-### 使用原始 conda-init.sh（不激活 base）
-
-如果需要原始 conda 变体的行为（不自动激活），仍可使用：
-
-```bash
-# 重置 PATH 到 conda 变体默认状态（venv 优先）
-source /etc/profile.d/conda-init.sh
-# 注意：这不会自动 conda activate base
-```
+- 工具链与默认 Python 均位于 **main 环境**（`/opt/conda/envs/main`），登录 shell 自动激活（`/etc/profile.d/conda-init.sh`）
+- 备选激活脚本：`/etc/profile.d/conda-llvm-init.sh`（同样激活 main 环境，向后兼容保留）
+- base 环境仅保留 conda 自身运行时（无 cp314t 构建），不建议在其上安装工具链
+- 如需隔离环境，可自行 `conda create -n myenv`
 
 ## ✅ 验证命令
 
@@ -235,8 +226,13 @@ docker run --rm devcontainer-base:conda-llvm-latest cmake --version
 # 验证 Ninja 可用
 docker run --rm devcontainer-base:conda-llvm-latest ninja --version
 
-# 验证 Jupyter 服务仍可用（绝对路径）
-docker run --rm devcontainer-base:conda-llvm-latest /opt/venv/bin/jupyter --version
+# 验证默认 Python 为 free-threading 构建（main 环境）
+docker run --rm devcontainer-base:conda-llvm-latest \
+  bash -c 'python --version && python -c "import sys; print(sys._is_gil_enabled())"'
+# 期望输出: Python 3.14.6 / False
+
+# 验证 Jupyter 服务仍可用（main 环境绝对路径）
+docker run --rm devcontainer-base:conda-llvm-latest /opt/conda/envs/main/bin/jupyter --version
 
 # 验证 Docker 可用
 docker run --rm --privileged devcontainer-base:conda-llvm-latest docker --version
@@ -253,9 +249,9 @@ docker run --rm devcontainer-base:conda-llvm-latest cat /etc/devcontainer-varian
 
 | 参数 | 默认值 | 说明 |
 |------|-------|------|
-| `BASE_TAG` | `latest` | conda 基础镜像标签 |
+| `BASE_TAG` | `latest` | 基础镜像标签（直接基于 devcontainer-base，无中间变体） |
 | `APT_MIRROR` | `official` | APT 源：official/aliyun/tuna |
-| `CONDA_MIRROR` | `tuna` | Conda 源：tuna（清华）/official（官方） |
+| `CONDA_MIRROR` | `bfsu` | Conda 源：bfsu（北外，默认）/tuna（清华）/aliyun（阿里云）/official（官方） |
 | `PIP_MIRROR` | `aliyun` | PyPI 源：aliyun（阿里云）/tuna（清华）/official |
 | `LLVM_VERSION` | `22.1.8` | LLVM/Clang 统一版本号 |
 
@@ -263,31 +259,32 @@ docker run --rm devcontainer-base:conda-llvm-latest cat /etc/devcontainer-varian
 
 | 路径 | 说明 |
 |------|------|
-| `/opt/conda/bin` | Conda base 环境 bin 目录（在 PATH 最前） |
-| `/opt/conda` | Miniconda3 安装根目录 |
-| `/opt/venv` | 系统 Python venv（服务使用，绝对路径访问） |
-| `/etc/profile.d/conda-init.sh` | 原始 conda 激活脚本（不自动激活） |
-| `/etc/profile.d/conda-llvm-init.sh` | Conda-LLVM 备选激活脚本 |
+| `/opt/conda/envs/main/bin` | main 环境 bin 目录（PATH 最前：LLVM 工具 + Python 3.14t + Jupyter） |
+| `/opt/conda` | Miniforge3 安装根目录 |
+| `/opt/conda/envs/main` | main 环境（默认用户环境，Python 3.14.6 cp314t） |
+| `/etc/profile.d/conda-init.sh` | 基础镜像默认激活脚本（激活 main 环境） |
+| `/etc/profile.d/conda-llvm-init.sh` | Conda-LLVM 备选激活脚本（激活 main 环境） |
 | `/etc/devcontainer-variant-conda-llvm-build-info` | 构建元数据 |
 
 ## ⚠️ 注意事项
 
-1. **PATH 优先级**：conda-llvm 变体中 `/opt/conda/bin` 在 PATH 最前面，这与 conda 变体不同。这是为了让 LLVM/Clang 工具链开箱即用。默认 `python` 是 conda base 环境的 Python。
+1. **PATH 优先级**：conda-llvm 变体中 `/opt/conda/envs/main/bin` 在 PATH 最前面。默认 `python` 是 main 环境的 Python 3.14.6（cp314t free-threading）。
 
-2. **服务不受影响**：Jupyter、SSH、Docker 等服务由 supervisord 使用绝对路径启动，因此不受 PATH 顺序变更影响，始终使用系统 venv 的 Python 运行。
+2. **free-threading 运行时**：main 环境 Python 为 cp314t 构建，GIL 默认禁用（`sys._is_gil_enabled()` 返回 `False`）。构建期有两道防线：python 显式锁定 `*=*cp314t` 构建 + 安装后 GIL 状态断言，任何包试图引入 GIL 构建的 python 都会使构建失败。
 
-3. **base 环境安装**：所有 LLVM 工具直接安装在 conda base 环境中，没有创建新环境，简化使用。如需隔离环境，可以自行 `conda create -n myenv`。
+3. **lldb 不可用**：`lldb` 的 python 绑定在 conda-forge 上没有 cp314t（free-threading）构建，安装 lldb 会使求解器静默将 python 从 `cp314t` 切换为 `cp314 + python-gil`（GIL 回归）。因此 lldb 被排除在安装列表之外；如需调试器，建议在独立环境（非 main）中安装，避免污染 free-threading 运行时。
 
-4. **版本一致性**：所有 LLVM 相关包（llvmdev, clangdev, clang, lld, lldb）统一锁定到 `${LLVM_VERSION}`，避免版本不匹配问题。
+4. **服务不受影响**：Jupyter、SSH、Docker 等服务由 supervisord 使用 main 环境绝对路径启动，不受 PATH 顺序变更影响。
 
-5. **编译缓存**：Dockerfile 使用 BuildKit cache 挂载 `/opt/conda/pkgs`，重复构建时可大幅加速 conda 包下载和安装。
+5. **版本一致性**：所有 LLVM 相关包（llvmdev, clangdev, clang, lld）统一锁定到 `${LLVM_VERSION}`，避免版本不匹配问题。
 
-6. **如需使用系统 venv Python**：请使用绝对路径 `/opt/venv/bin/python` 或 `/opt/venv/bin/pip`，或在 `~/.bashrc` 中调整 PATH 顺序。
+6. **GCC 运行时依赖**：conda-forge 的 clang 链接器（`x86_64-conda-linux-gnu-ld`）需要 `-lgcc`/`-lstdc++`，故必须安装 `libgcc`/`libstdcxx-ng`；镜像清理时静态库删除对 `libgcc*`/`libstdc++*` 豁免，否则用户编译会报 `cannot find -lgcc`。
+
+7. **编译缓存**：Dockerfile 使用 BuildKit cache 挂载 `/opt/conda/pkgs`，重复构建时可大幅加速 conda 包下载和安装。
 
 ## 🔗 相关镜像
 
-- [devcontainer-base](../../README.md) - 基础镜像（SSH + Docker + Podman + Jupyter）
-- [conda variant](../conda/README.md) - Conda 基础变体（Miniconda3，venv 优先）
+- [devcontainer-base](../../README.md) - 基础镜像（SSH + Docker + Podman + Jupyter + Miniforge3）
 
 ## 📄 相关文档
 
