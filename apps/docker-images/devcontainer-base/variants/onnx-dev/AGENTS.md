@@ -24,8 +24,8 @@
 | 依赖链 | base → conda-llvm → **onnx-dev** |
 | 核心定位 | 纯 ONNX 工具链运行时（模型定义/推理/精简/优化/算子编写） |
 | Python 环境 | conda **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t free-threading，GIL 禁用） |
-| 安装包 | onnx、onnxruntime、onnx-simplifier、onnxoptimizer、onnxscript（全部经 pip 装入 main 环境） |
-| 显式排除 | torch、torchvision（**一等排除约束**，见下文） |
+| 安装包 | onnx、onnxruntime、onnx-simplifier、onnxscript（全部经 pip 装入 main 环境） |
+| 显式排除 | torch、torchvision（**一等排除约束**，见下文）；onnxoptimizer（free-threading 不兼容，见设计决策） |
 
 ## 三条不可违反的约束（改动本变体前必读）
 
@@ -98,6 +98,7 @@ docker run --rm devcontainer-base:onnx-dev-latest \
 
 | 决策 | 理由 |
 |------|------|
+| onnxoptimizer 被排除（构建期 + 测试期 T4 双负向防线） | 其 sdist 声明 `py_limited_api='cp312'`，与 free-threading 构建（`Py_GIL_DISABLED`）根本不兼容（CPython #111506），无 cp314t wheel，源码构建必失败；onnxsim 0.5+ 已内置图优化基本覆盖其用途 |
 | 基于 conda-llvm 而非 onnx-pytorch 裁剪 | 裁剪已构建镜像不可行（层不可变）；从依赖链上游分叉是唯一干净路径 |
 | torch 缺席用 `find_spec` 而非 `import` | 不实际导入：更快、无副作用、不触发 torch 初始化报错歧义 |
 | Stage 4 计时器数据在 `rm -rf /tmp/*` 前捕获 | 计时器文件位于 /tmp，清理后再读取会因空值导致算术展开语法错误（已修复并预防） |

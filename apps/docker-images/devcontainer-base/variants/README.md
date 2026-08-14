@@ -7,7 +7,7 @@
 | 变体名称 | 描述 | 基础镜像 | 额外组件 |
 |---------|------|---------|---------|
 | conda-llvm | 基础镜像 + LLVM编译工具链 | devcontainer-base:latest | Miniforge3(main环境, Python 3.14.6 cp314t free-threading), LLVM 22.1.8, clang 22.1.8, cmake, ninja |
-| onnx-dev | conda-llvm + 纯ONNX生态（无PyTorch） | devcontainer-base:conda-llvm | onnx, onnxruntime, onnx-simplifier, onnxoptimizer, onnxscript（main环境安装；torch/torchvision一等排除） |
+| onnx-dev | conda-llvm + 纯ONNX生态（无PyTorch） | devcontainer-base:conda-llvm | onnx, onnxruntime, onnx-simplifier, onnxscript（main环境安装；torch/torchvision一等排除；onnxoptimizer因free-threading不兼容排除） |
 | onnx-pytorch | conda-llvm + PyTorch CPU + ONNX 运行时 | devcontainer-base:conda-llvm | PyTorch CPU, torchvision, ONNX, ONNX Runtime, onnx-simplifier, onnxoptimizer |
 | onnx-quantized | onnx-pytorch + ONNX量化工具链 | devcontainer-base:onnx-pytorch | onnxruntime.quantization(INT8/FP16), onnxconverter-common, onnxsim; neural-compressor可选(PyTorch-only) |
 | ai-dev | onnx-quantized + 完整AI/ML/NLP全栈生态 | devcontainer-base:onnx-quantized | 50+ Python包(NLP/数据/可视化/文档/Web/数据库), JupyterLab 4.x, 通用AI内核 |

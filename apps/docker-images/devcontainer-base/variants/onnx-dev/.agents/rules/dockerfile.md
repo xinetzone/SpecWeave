@@ -36,7 +36,9 @@ Stage 2 使用 `pip_install_group` 辅助函数按组安装（结构化日志 + 
 | 分组 | 包 | 说明 |
 |------|-----|------|
 | G1: ONNX Core | onnx, onnxruntime | 模型格式 + CPU 推理引擎 |
-| G2: ONNX Tools | onnx-simplifier, onnxoptimizer, onnxscript | 精简/优化/算子编写 |
+| G2: ONNX Tools | onnx-simplifier, onnxscript | 精简（0.5+ 内置图优化）/算子编写 |
+
+> **onnxoptimizer 禁止加入 G2**：其 sdist 声明 `py_limited_api='cp312'`，与 free-threading 构建（`Py_GIL_DISABLED`）根本不兼容（CPython #111506），无 cp314t wheel，源码构建必失败。测试脚本 T4 为其缺席负向验证防线。
 
 - 安装目标：`conda activate main` 后 pip 安装（**不是** base 环境）
 - 每组使用 `pip install --no-cache-dir --timeout 120 --retries 5 <pkgs>`
@@ -96,7 +98,7 @@ ONNX-Dev 变体在 conda-llvm 变体之上追加 **4 个阶段**（计时器标�
   1. `source /opt/conda/etc/profile.d/conda.sh`
   2. `conda activate main`
   3. `pip_install_group` 分两组安装（G1/G2）
-  4. 输出已安装版本汇总（onnx/onnxruntime/onnxsim/onnxoptimizer/onnxscript）
+  4. 输出已安装版本汇总（onnx/onnxruntime/onnxsim/onnxscript）
   5. **[GUARD] free-threading 完整性检查**（cp314t + GIL 禁用）
   6. **[GUARD] torch/torchvision 缺席负向验证**
   7. 激进清理（pycache/pyc/conda clean/pip cache）
@@ -115,19 +117,18 @@ ONNX-Dev 变体在 conda-llvm 变体之上追加 **4 个阶段**（计时器标�
 
 - `set +o pipefail`（规避 `jupyter --version | head` 的 SIGPIPE 120 退出码）
 - 写入构建信息：`/etc/devcontainer-variant-onnx-dev-build-info`
-  - 关键字段：`INSTALL_ENV=main (default user env)`、`PYTHON_BUILD=free-threading nogil active`、`PATH_PRIORITY=conda-main-bin-first`、`PACKAGES_INSTALLED=onnx,onnxruntime,onnx-simplifier,onnxoptimizer,onnxscript`、`PACKAGES_EXCLUDED=torch,torchvision (optional; install on demand via pip)` 等
+  - 关键字段：`INSTALL_ENV=main (default user env)`、`PYTHON_BUILD=free-threading nogil active`、`PATH_PRIORITY=conda-main-bin-first`、`PACKAGES_INSTALLED=onnx,onnxruntime,onnx-simplifier,onnxscript`、`PACKAGES_EXCLUDED=torch,torchvision (optional; install on demand via pip); onnxoptimizer (free-threading incompatible...)` 等
 - 清理：conda clean + pip cache purge + apt clean + tmp
-- **[VALIDATION CHECKPOINT]** 10 项验证：
+- **[VALIDATION CHECKPOINT]** 9 项验证：
   1. `bash -n /etc/profile.d/onnx-dev-init.sh`（脚本语法）
   2. onnx 导入 + 版本
   3. onnxruntime 导入 + 版本
   4. onnx-simplifier 导入
-  5. onnxoptimizer 导入
-  6. onnxscript 导入
-  7. free-threading python（GIL 禁用断言）
-  8. **torch AND torchvision 缺席**（负向断言，find_spec）
-  9. main 环境 jupyter 可执行 + docker/supervisord 仍存在（服务未被破坏）
-  10. devuser 可访问 ONNX 工具 + LLVM 工具链继承（llvm-config/clang）
+  5. onnxscript 导入
+  6. free-threading python（GIL 禁用断言）
+  7. **torch AND torchvision 缺席**（负向断言，find_spec）
+  8. main 环境 jupyter 可执行 + docker/supervisord 仍存在（服务未被破坏）
+  9. devuser 可访问 ONNX 工具 + LLVM 工具链继承（llvm-config/clang）
 - **[FINAL VERIFICATION - PURE-ONNX SMOKE]**（无 torch 依赖）：
   - free-threading 运行时断言
   - `onnx.helper` 手工构建 Add 模型 → `onnx.checker` 校验 → 保存

@@ -1,8 +1,10 @@
 # DevContainer Base - ONNX-Dev 变体 (纯 ONNX 生态工具链)
 
-> 基于 devcontainer-base:conda-llvm 变体的**纯 ONNX 生态运行时**镜像，在保留所有基础功能（含 LLVM/Clang 工具链）的前提下，于 conda **main 环境**（Python 3.14.6 cp314t free-threading，默认用户环境）预装 ONNX 全套工具链（onnx, onnxruntime, onnx-simplifier, onnxoptimizer, onnxscript），开箱即用。
+> 基于 devcontainer-base:conda-llvm 变体的**纯 ONNX 生态运行时**镜像，在保留所有基础功能（含 LLVM/Clang 工具链）的前提下，于 conda **main 环境**（Python 3.14.6 cp314t free-threading，默认用户环境）预装 ONNX 工具链（onnx, onnxruntime, onnx-simplifier, onnxscript），开箱即用。
 >
 > **核心定位：不含 PyTorch**。torch/torchvision 被显式排除并设有构建期负向验证防线（`find_spec('torch') is None` 断言），任何依赖意外拉入 torch 都会使构建失败。需要 PyTorch 时请运行期按需安装（`pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu`）或使用 [onnx-pytorch 变体](../onnx-pytorch/README.md)。
+>
+> **onnxoptimizer 亦被排除**：其 sdist 声明 `py_limited_api='cp312'`，与 free-threading 构建（`Py_GIL_DISABLED`）根本不兼容（[CPython #111506](https://github.com/python/cpython/issues/111506)），无 cp314t wheel，源码构建必失败；onnxsim 0.5+ 已内置图优化功能基本覆盖其用途。
 
 ## ✨ 特性
 
@@ -13,13 +15,13 @@
   - Miniforge3 安装在 `/opt/conda`
   - LLVM/Clang 22.1.8 + CMake + Ninja + Make 编译工具链（conda main 环境）
 - **main 环境安装**：ONNX 工具链安装于 conda **main 环境**（Python 3.14.6 cp314t free-threading，默认用户环境），与默认 Python/Jupyter 共享环境
-- **ONNX 全生态**：
+- **ONNX 工具链**：
   - `onnx`（模型定义/checker/序列化）
   - `onnxruntime`（CPU 推理引擎）
-  - `onnx-simplifier`（模型精简，`python -m onnxsim`）
-  - `onnxoptimizer`（计算图优化）
+  - `onnx-simplifier`（模型精简，`python -m onnxsim`，0.5+ 内置图优化）
   - `onnxscript`（新式 opset/算子编写）
 - **PyTorch 一等排除约束**：torch/torchvision 不进镜像 + 构建期/测试期双重负向验证防线（镜像更小、依赖更干净）
+- **onnxoptimizer 排除**：与 free-threading 根本不兼容（`Py_LIMITED_API` × `Py_GIL_DISABLED`，CPython #111506），设有 T4 负向验证防线防止依赖回拉
 - **free-threading 防线**：安装后断言 python build 为 cp314t 且 `sys._is_gil_enabled() is False`，pip 依赖破坏 free-threading 会使构建立即失败
 - **PATH 设计**：`/opt/conda/envs/main/bin` 在 PATH 最前面，onnx 工具与默认 Python 直接可用
 - **服务稳定**：Jupyter 等服务由 supervisord 用 main 环境绝对路径启动，不受 PATH 变更影响
@@ -31,9 +33,9 @@
 |------|------|------|
 | ONNX | latest | 开放神经网络交换格式（定义/checker） |
 | ONNX Runtime | latest | 跨平台推理引擎（CPUExecutionProvider） |
-| onnx-simplifier | latest | ONNX 模型精简工具 |
-| onnxoptimizer | latest | ONNX 计算图优化工具 |
+| onnx-simplifier | latest | ONNX 模型精简工具（0.5+ 内置图优化） |
 | onnxscript | latest | 新式 opset/算子编写框架 |
+| onnxoptimizer | **不含** | 显式排除：free-threading 不兼容（CPython #111506） |
 | torch / torchvision | **不含** | 显式排除（负向验证防线） |
 | Python | 3.14.6 (cp314t) | main 环境，free-threading（GIL 禁用） |
 | LLVM / Clang | 22.1.8 | 继承自 conda-llvm 变体 |
@@ -143,7 +145,7 @@ docker run --rm -v $(pwd):/workspace -w /workspace \
 
 **onnx-dev 变体中，`/opt/conda/envs/main/bin` 在 PATH 最前面**，因此：
 - `python` 和 `pip` 默认指向 conda main 环境的 **Python 3.14.6（cp314t free-threading，GIL 默认禁用）**
-- `onnx`, `onnxruntime`, `onnxsim`, `onnxoptimizer`, `onnxscript` 可直接 import，无需激活环境
+- `onnx`, `onnxruntime`, `onnxsim`, `onnxscript` 可直接 import，无需激活环境
 - LLVM 工具链（`llvm-config`, `clang`, `cmake`, `ninja`, `make`）直接可用（继承自 conda-llvm）
 - **Jupyter 服务不受影响**：supervisord 使用 main 环境绝对路径启动
 
@@ -191,17 +193,9 @@ EOF
 ### 模型精简与优化
 
 ```bash
-# 生成测试模型后，使用 onnx-simplifier 精简
+# 生成测试模型后，使用 onnx-simplifier 精简（0.5+ 内置图优化，
+# 基本覆盖 onnxoptimizer 的用途——后者与 free-threading 不兼容，本变体不含）
 python -m onnxsim /tmp/add.onnx /tmp/add-simplified.onnx
-
-# 使用 onnxoptimizer 优化计算图
-python -c "
-import onnx
-from onnxoptimizer import optimize
-m = onnx.load('/tmp/add.onnx')
-optimized = optimize(m)
-onnx.save(optimized, '/tmp/add-optimized.onnx')
-print('optimized')"
 ```
 
 ### 按需安装 PyTorch（可选）

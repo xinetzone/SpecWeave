@@ -23,7 +23,7 @@
 - **共享组件**：`shared/lib/logging.sh`（结构化日志库，双格式text+JSON）
 - **可用变体**：
   - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
-  - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxoptimizer/onnxscript，安装于 main 环境，**不含 PyTorch**，基于 conda-llvm 变体）
+  - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，安装于 main 环境，**不含 PyTorch**，onnxoptimizer 因 free-threading 不兼容而排除，基于 conda-llvm 变体）
   - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
   - `onnx-quantized`：onnx-pytorch + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，基于 onnx-pytorch 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）

@@ -109,13 +109,17 @@ test_onnxsim_version() {
 }
 
 test_onnxoptimizer_version() {
+    # NEGATIVE check: onnxoptimizer is intentionally EXCLUDED from onnx-dev.
+    # Its sdist declares py_limited_api='cp312', fundamentally incompatible with
+    # free-threading builds (Py_LIMITED_API x Py_GIL_DISABLED, CPython #111506).
+    # This guard fails if any future dependency silently pulls it back in.
     local result
-    result=$(docker_run "$MAIN_PY" -c "import onnxoptimizer;print('VER_OPT='+getattr(onnxoptimizer,'__version__','installed'))" 2>&1)
-    if echo "$result" | grep -q "VER_OPT="; then
-        pass "T4: onnxoptimizer importable ($(echo "$result" | grep -oE 'VER_OPT=.*' | sed 's/VER_OPT=//'))"
+    result=$(docker_run "$MAIN_PY" -c "import importlib.util as u; import sys; f=u.find_spec('onnxoptimizer'); print('ABSENT' if f is None else 'PRESENT'); sys.exit(0 if f is None else 1)" 2>&1)
+    if echo "$result" | grep -q "ABSENT"; then
+        pass "T4: onnxoptimizer is ABSENT (by design: free-threading incompatible, negative check)"
         return 0
     else
-        fail "T4: onnxoptimizer not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
+        fail "T4: onnxoptimizer unexpectedly PRESENT (free-threading incompatible!), output: $(echo "$result" | head -3)"
         return 1
     fi
 }

@@ -5,8 +5,11 @@
 # Base: devcontainer-base:conda-llvm-${BASE_TAG}
 #       (Ubuntu 26.04 + SSH + Docker DinD + Podman + Jupyter + Miniforge3
 #        + LLVM/Clang 工具链 @ conda main 环境, Python 3.14.6 cp314t free-threading)
-# Packages: onnx + onnxruntime + onnx-simplifier + onnxoptimizer + onnxscript
+# Packages: onnx + onnxruntime + onnx-simplifier + onnxscript
 #           (全部经 pip 安装至 conda main 环境；torch/torchvision 显式排除)
+# Excluded: onnxoptimizer — 其 sdist 声明 py_limited_api='cp312'，与 free-threading
+#           构建（Py_GIL_DISABLED）根本不兼容（CPython #111506），无 cp314t wheel，
+#           源码构建必失败。onnxsim 0.5+ 已内置图优化，功能基本覆盖。
 # PATH priority: /opt/conda/envs/main/bin first (ONNX 工具与默认 Python 直接可用)
 # Activation: ONNX 工具直接在 PATH；onnx-dev-init.sh 为登录 shell 保留备选激活
 #
@@ -26,7 +29,7 @@
 #   Stage 2/4: Install ONNX ecosystem via pip (main env) + free-threading GUARD
 #              + torch-absent negative check + aggressive cleanup
 #   Stage 3/4: onnx-dev-init.sh + permission verification + cleanup
-#   Stage 4/4: build-info + cleanup + final validation (10 checks)
+#   Stage 4/4: build-info + cleanup + final validation (9 checks)
 #              + pure-ONNX smoke test + timing summary
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
@@ -113,8 +116,8 @@ set -e
 echo ""
 echo "########################################################################"
 echo "# [ONNX-DEV VARIANT STAGE 2/4] Install ONNX Ecosystem (main env) + Guards + Cleanup"
-echo "# Packages: onnx, onnxruntime, onnx-simplifier, onnxoptimizer, onnxscript"
-echo "# Excluded (by design): torch, torchvision"
+echo "# Packages: onnx, onnxruntime, onnx-simplifier, onnxscript"
+echo "# Excluded (by design): torch, torchvision, onnxoptimizer (incompatible with free-threading)"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
@@ -163,9 +166,13 @@ pip_install_group "G1: ONNX Core" \
     "onnx + onnxruntime (model format + CPU inference engine)" \
     onnx onnxruntime
 
+# NOTE: onnxoptimizer is intentionally EXCLUDED. It has no cp314t wheel and its
+# sdist declares py_limited_api='cp312', which is rejected on free-threading
+# builds (Py_LIMITED_API × Py_GIL_DISABLED incompatible, CPython #111506).
+# onnxsim 0.5+ embeds its own graph optimization, covering most use cases.
 pip_install_group "G2: ONNX Tools" \
-    "onnx-simplifier + onnxoptimizer + onnxscript" \
-    onnx-simplifier onnxoptimizer onnxscript
+    "onnx-simplifier + onnxscript (onnxoptimizer excluded: free-threading incompatible)" \
+    onnx-simplifier onnxscript
 
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
@@ -174,14 +181,13 @@ echo "└───────────────────────�
 echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)')"
 echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)')"
 echo "  - onnx-simplifier: $(python -c 'import onnxsim;print(getattr(onnxsim,"__version__","installed"))')"
-echo "  - onnxoptimizer: $(python -c 'import onnxoptimizer;print(onnxoptimizer.__version__)')"
-echo "  - onnxscript: $(python -c 'import onnxscript;print(getattr(onnxscript,"__version__","installed"))' 2>/dev/null || echo installed)"
+echo "  - onnxscript: $(python -c 'import onnxscript;print(getattr(onnxscript,"__version__","installed")' 2>/dev/null || echo installed)"
 
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│ [GUARD] Free-threading integrity check          │"
 echo "└─────────────────────────────────────────────────┘"
-_PY_BUILD=$(conda list python 2>/dev/null | awk '$2=="python"{print $4; exit}')
+_PY_BUILD=$(conda list python 2>/dev/null | awk '$1=="python"{print $3; exit}')
 echo "  - python build string: ${_PY_BUILD:-unknown}"
 echo "$_PY_BUILD" | grep -q "cp314t" || { echo "[FATAL] python build no longer cp314t after pip installs"; exit 1; }
 python -c "import sys; sys.exit(0 if sys._is_gil_enabled() is False else 1)" \
@@ -318,7 +324,6 @@ conda activate main
 ONNX_VERSION_ACTUAL=$(python -c "import onnx;print(onnx.__version__)")
 ONNXRUNTIME_VERSION_ACTUAL=$(python -c "import onnxruntime;print(onnxruntime.__version__)")
 ONNXSIM_VERSION_ACTUAL=$(python -c "import onnxsim;print(getattr(onnxsim,'__version__','installed'))" 2>/dev/null || echo "installed")
-ONNXOPTIMIZER_VERSION_ACTUAL=$(python -c "import onnxoptimizer;print(getattr(onnxoptimizer,'__version__','installed'))" 2>/dev/null || echo "installed")
 ONNXSCRIPT_VERSION_ACTUAL=$(python -c "import onnxscript;print(getattr(onnxscript,'__version__','installed'))" 2>/dev/null || echo "installed")
 CONDA_VERSION=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}')
 printf '%s\n' \
@@ -328,7 +333,6 @@ printf '%s\n' \
     "ONNX_VERSION_ACTUAL=${ONNX_VERSION_ACTUAL}" \
     "ONNXRUNTIME_VERSION_ACTUAL=${ONNXRUNTIME_VERSION_ACTUAL}" \
     "ONNXSIM_VERSION_ACTUAL=${ONNXSIM_VERSION_ACTUAL}" \
-    "ONNXOPTIMIZER_VERSION_ACTUAL=${ONNXOPTIMIZER_VERSION_ACTUAL}" \
     "ONNXSCRIPT_VERSION_ACTUAL=${ONNXSCRIPT_VERSION_ACTUAL}" \
     "CONDA_VERSION=${CONDA_VERSION}" \
     "CONDA_DIR=/opt/conda" \
@@ -337,8 +341,8 @@ printf '%s\n' \
     "PATH_PRIORITY=conda-main-bin-first" \
     "ACTIVATION_SCRIPT=/etc/profile.d/conda-init.sh (main env)" \
     "SERVICES_PRESERVED=sshd,dockerd,podman,jupyter,supervisord" \
-    "PACKAGES_INSTALLED=onnx,onnxruntime,onnx-simplifier,onnxoptimizer,onnxscript" \
-    "PACKAGES_EXCLUDED=torch,torchvision (optional; install on demand via pip)" \
+    "PACKAGES_INSTALLED=onnx,onnxruntime,onnx-simplifier,onnxscript" \
+    "PACKAGES_EXCLUDED=torch,torchvision (optional; install on demand via pip); onnxoptimizer (free-threading incompatible: Py_LIMITED_API x Py_GIL_DISABLED, CPython #111506)" \
     "CONDA_MIRROR=${CONDA_MIRROR}" \
     "PIP_MIRROR=${PIP_MIRROR}" \
     "APT_MIRROR=${APT_MIRROR}" \
@@ -374,28 +378,26 @@ echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"
 echo "│  Running final component + service verification │"
 echo "└─────────────────────────────────────────────────┘"
 echo ""
-echo "[VALIDATE 1/10] bash -n /etc/profile.d/onnx-dev-init.sh..."
+echo "[VALIDATE 1/9] bash -n /etc/profile.d/onnx-dev-init.sh..."
 bash -n /etc/profile.d/onnx-dev-init.sh && echo "[OK] onnx-dev-init.sh bash syntax valid"
-echo "[VALIDATE 2/10] onnx import + version..."
+echo "[VALIDATE 2/9] onnx import + version..."
 python -c "import onnx;print('onnx',onnx.__version__)"
-echo "[VALIDATE 3/10] onnxruntime import + version..."
+echo "[VALIDATE 3/9] onnxruntime import + version..."
 python -c "import onnxruntime;print('onnxruntime',onnxruntime.__version__)"
-echo "[VALIDATE 4/10] onnx-simplifier import..."
+echo "[VALIDATE 4/9] onnx-simplifier import..."
 python -c "import onnxsim;print('onnxsim',getattr(onnxsim,'__version__','installed'))"
-echo "[VALIDATE 5/10] onnxoptimizer import..."
-python -c "import onnxoptimizer;print('onnxoptimizer',getattr(onnxoptimizer,'__version__','installed'))"
-echo "[VALIDATE 6/10] onnxscript import..."
+echo "[VALIDATE 5/9] onnxscript import..."
 python -c "import onnxscript;print('onnxscript',getattr(onnxscript,'__version__','installed'))"
-echo "[VALIDATE 7/10] python is free-threading (cp314t, GIL disabled)..."
+echo "[VALIDATE 6/9] python is free-threading (cp314t, GIL disabled)..."
 python -c "import sys; assert sys._is_gil_enabled() is False; print('[OK] GIL disabled (free-threading active)')"
-echo "[VALIDATE 8/10] torch AND torchvision are ABSENT (negative check)..."
+echo "[VALIDATE 7/9] torch AND torchvision are ABSENT (negative check)..."
 python -c "import importlib.util as u, sys; f1=u.find_spec('torch'); f2=u.find_spec('torchvision'); print('[OK] torch absent' if f1 is None else '[FAIL] torch present'); print('[OK] torchvision absent' if f2 is None else '[FAIL] torchvision present'); sys.exit(0 if (f1 is None and f2 is None) else 1)"
-echo "[VALIDATE 9/10] Jupyter from main env + core services (docker, supervisord) still present..."
+echo "[VALIDATE 8/9] Jupyter from main env + core services (docker, supervisord) still present..."
 test -x /opt/conda/envs/main/bin/jupyter && echo "[OK] /opt/conda/envs/main/bin/jupyter executable"
 docker --version 2>&1
 supervisord --version 2>&1
 echo "[OK] Core services preserved"
-echo "[VALIDATE 10/10] devuser can access ONNX tools + LLVM toolchain inherited..."
+echo "[VALIDATE 9/9] devuser can access ONNX tools + LLVM toolchain inherited..."
 su - devuser -c "python -c 'import onnx,onnxruntime;print(onnx.__version__,onnxruntime.__version__)'" && echo "[OK] devuser can access ONNX tools"
 llvm-config --version 2>&1 | head -1
 clang --version 2>&1 | head -1
