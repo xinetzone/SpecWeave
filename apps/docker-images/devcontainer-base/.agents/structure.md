@@ -61,7 +61,9 @@ devcontainer-base/
 │   ├── ci_quantization_gate.py ← CI量化门禁脚本（cosine_sim≥0.90）
 │   ├── ci-requirements.txt ← CI Python依赖清单
 │   ├── verify-services.sh ← 服务验证脚本
-│   ├── ft-benchmark.sh    ← Free-threading性能基准测试
+│   ├── ft-benchmark.sh    ← Free-threading性能基准测试（薄委托，兼容镜像内入口）
+│   ├── ft_benchmark.py    ← 基准核心实现（可 import 复用：run_ft_benchmark）
+│   ├── check_gil_state.py ← GIL 状态诊断器（金丝雀审计定位肇事模块）
 │   ├── verify-cext.sh     ← C扩展验证脚本
 │   ├── onnx-quantize.py   ← ONNX量化命令行工具
 │   ├── batch_quantize.py  ← 批量量化脚本

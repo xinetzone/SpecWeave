@@ -302,6 +302,72 @@ REGISTRIES_EOF
     log_info "Container runtime configuration complete"
 }
 
+_is_docker_named_volume() {
+    local dir="$1"
+    local mount_src
+    if [ ! -f /proc/mounts ]; then
+        return 1
+    fi
+    mount_src=$(awk -v dir="$dir" '$2 == dir {print $1; exit}' /proc/mounts 2>/dev/null || true)
+    case "$mount_src" in
+        /var/lib/docker/volumes/*/_data) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+setup_workspace() {
+    log_info "[Init] Initializing workspace and user directory permissions..."
+    local user="${NON_ROOT_USER:-devuser}"
+    local chown_mode="${WORKSPACE_CHOWN_MODE:-yes}"
+    local chown_dirs="${CHOWN_DIRS:-/workspace}"
+    local ws_chmod="${WORKSPACE_CHMOD:-755}"
+
+    mkdir -p "/workspace" "/home/${user}/.ssh"
+
+    local ssh_dir="/home/${user}/.ssh"
+    chown "${user}:${user}" "${ssh_dir}" 2>/dev/null || true
+    chmod 700 "${ssh_dir}" 2>/dev/null || true
+    log_info "  SSH dir: ${ssh_dir} ensured (chmod 700, owner ${user})"
+
+    local dir
+    for dir in ${chown_dirs}; do
+        [ -d "$dir" ] || mkdir -p "$dir" 2>/dev/null || true
+        if [ "${chown_mode}" = "no" ]; then
+            log_info "  ${dir}: skip chown (WORKSPACE_CHOWN_MODE=no)"
+            continue
+        fi
+        if [ "${chown_mode}" = "named-only" ]; then
+            if ! _is_docker_named_volume "$dir"; then
+                log_warn "  ${dir}: skip chown (bind mount detected, WORKSPACE_CHOWN_MODE=named-only)"
+                continue
+            fi
+        fi
+        if [ "${chown_mode}" = "yes" ]; then
+            if ! _is_docker_named_volume "$dir"; then
+                log_warn "  ${dir}: bind mount detected — chown will modify host directory ownership. Set WORKSPACE_CHOWN_MODE=named-only or no to skip."
+            fi
+        fi
+        chown -R "${user}:${user}" "$dir" 2>/dev/null || {
+            if [ "${chown_mode}" = "yes" ]; then
+                local ro_err=0
+                touch "$dir/.chown_test_$$" 2>/dev/null || ro_err=1
+                rm -f "$dir/.chown_test_$$" 2>/dev/null || true
+                if [ "$ro_err" -eq 1 ]; then
+                    log_info "  ${dir}: chown skipped (read-only volume)"
+                else
+                    log_warn "  ${dir}: chown ${user}:${user} failed — directory may still be writable for root. Verify manually if user processes fail to write."
+                fi
+            fi
+        }
+        log_info "  ${dir}: owner ensured ${user}:${user}"
+        if [ -n "${ws_chmod}" ] && [ "$dir" = "/workspace" ]; then
+            chmod "${ws_chmod}" "$dir" 2>/dev/null || true
+            log_info "  ${dir}: mode ensured ${ws_chmod}"
+        fi
+    done
+    log_info "Workspace initialization complete"
+}
+
 setup_jupyter() {
     if [ "${ENABLE_JUPYTER:-yes}" != "yes" ]; then
         log_info "[Step 6/7] Jupyter disabled (ENABLE_JUPYTER=no), skipping configuration"
@@ -313,10 +379,7 @@ setup_jupyter() {
     local jupyter_config_dir="/home/${user}/.jupyter"
     local jupyter_runtime_config="${jupyter_config_dir}/jupyter_server_config.d/runtime.py"
 
-    mkdir -p "/workspace" "${jupyter_config_dir}/jupyter_server_config.d"
-    chown -R "${user}:${user}" "/workspace" "${jupyter_config_dir}" 2>/dev/null || true
-    chmod 755 "/workspace"
-    chmod 700 "/home/${user}/.ssh"
+    mkdir -p "${jupyter_config_dir}/jupyter_server_config.d"
 
     cat > "$jupyter_runtime_config" << 'JUPYTER_RUNTIME_EOF'
 c = get_config()
@@ -466,6 +529,7 @@ if [ $# -gt 0 ]; then
     log_info "Command mode detected: '$*' - skipping service startup, exec user command directly"
     diagnose_system
     setup_passwords
+    setup_workspace
     setup_container_runtimes
     log_info "Entering user command (tini as init, signals forwarded)..."
     echo ""
@@ -474,6 +538,7 @@ fi
 
 diagnose_system
 setup_passwords
+setup_workspace
 generate_host_keys
 configure_sshd
 setup_ssh_keys
