@@ -23,6 +23,7 @@
 - **共享组件**：`shared/lib/logging.sh`（结构化日志库，双格式text+JSON）
 - **可用变体**：
   - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
+  - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxoptimizer/onnxscript，安装于 main 环境，**不含 PyTorch**，基于 conda-llvm 变体）
   - `onnx-pytorch`：conda-llvm + PyTorch CPU + ONNX Runtime 深度学习运行时（基于 conda-llvm 变体）
   - `onnx-quantized`：onnx-pytorch + onnxruntime.quantization 量化工具链（INT8/FP16动态/静态量化，基于 onnx-pytorch 变体）
 - **新增变体模板**：`_template/` 目录（复制→替换占位符→注册→验证）
@@ -53,9 +54,11 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   └─ scripts/conda-mirror-setup.sh ← conda/pip镜像源配置脚本
                  ├─ scripts/               ← 单变体辅助脚本
                  │   ├─ build-conda-llvm.sh    ← conda-llvm一键构建脚本
+                 │   ├─ build-onnx-dev.sh      ← onnx-dev一键构建脚本（依赖链 base→conda-llvm→onnx-dev）
                  │   ├─ build-onnx-pytorch.sh  ← onnx-pytorch一键构建脚本
                  │   ├─ test-conda-llvm.sh     ← conda-llvm单元测试
                  │   ├─ test-conda-llvm-smoke.sh ← conda-llvm冒烟测试
+                 │   ├─ test-onnx-dev.sh       ← onnx-dev单元测试（23项，含torch缺席负向验证）
                  │   ├─ test-onnx-pytorch.sh   ← onnx-pytorch单元测试（20项）
                  │   ├─ test-onnx-quantized.sh ← onnx-quantized单元测试
                  │   └─ test-timer-parser.sh   ← [TIMER]日志解析单元测试
@@ -71,6 +74,11 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ DEPENDENCIES.md
                  │   ├─ RELEASE.md
                  │   ├─ RELEASE-GUIDE.md
+                 │   └─ .agents/rules/dockerfile.md
+                 ├─ onnx-dev/             ← 纯ONNX生态变体（无PyTorch，main环境）
+                 │   ├─ Dockerfile
+                 │   ├─ .env.example
+                 │   ├─ README.md
                  │   └─ .agents/rules/dockerfile.md
                  ├─ onnx-pytorch/          ← PyTorch CPU+ONNX Runtime 变体
                  │   ├─ Dockerfile
@@ -95,6 +103,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 修改/理解 build.sh 构建逻辑 | [.agents/rules/build-orchestration.md](.agents/rules/build-orchestration.md) | VARIANTS数组格式（`|`分隔）、拓扑排序、构建参数传递、[TIMER]日志解析、逐条验证机制、独立构建脚本约定 |
 | 编写/修改变体 Dockerfile | [.agents/rules/variant-conventions.md](.agents/rules/variant-conventions.md) | FROM继承模式、SHELL重置、禁止覆盖项、PATH优先级、缓存挂载规范、[VALIDATION CHECKPOINT] |
 | conda-llvm 变体 Dockerfile | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM安装、clang/cmake/ninja、PATH配置（镜像源已内置基础镜像） |
+| onnx-dev 变体 Dockerfile | [onnx-dev/.agents/rules/dockerfile.md](onnx-dev/.agents/rules/dockerfile.md) | 纯ONNX生态（main环境安装）、PyTorch一等排除约束（双重负向验证）、free-threading防线、4追加阶段 |
 | onnx-pytorch 变体 Dockerfile | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU安装、ONNX生态、PATH优先级（/opt/conda/bin最前）、4追加阶段 |
 | onnx-quantized 变体 Dockerfile | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | onnxruntime.quantization量化工具链、FP16/INT8、neural-compressor可选、共享脚本COPY模式 |
 | 编写/运行测试脚本 | [.agents/rules/testing.md](.agents/rules/testing.md) | L1-L6六层测试策略、脚本模板、pass/fail辅助函数、冒烟验证vs完整测试对比 |
@@ -116,6 +125,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
 | 测试规范 | [.agents/rules/testing.md](.agents/rules/testing.md) | 6层测试策略、脚本模板、快速验证vs完整测试 |
 | 新增变体操南 | [.agents/rules/new-variant-guide.md](.agents/rules/new-variant-guide.md) | 7步新增流程、模板占位符、注册检查清单 |
 | conda-llvm变体规范 | [conda-llvm/.agents/rules/dockerfile.md](conda-llvm/.agents/rules/dockerfile.md) | LLVM/clang变体特有Dockerfile规则 |
+| onnx-dev变体规范 | [onnx-dev/.agents/rules/dockerfile.md](onnx-dev/.agents/rules/dockerfile.md) | 纯ONNX生态变体特有规则（无PyTorch，main环境） |
 | onnx-pytorch变体规范 | [onnx-pytorch/.agents/rules/dockerfile.md](onnx-pytorch/.agents/rules/dockerfile.md) | PyTorch CPU+ONNX Runtime变体特有规则 |
 | onnx-quantized变体规范 | [onnx-quantized/.agents/rules/dockerfile.md](onnx-quantized/.agents/rules/dockerfile.md) | ONNX量化工具链变体特有规则 |
 | 共享性能配置脚本 | [shared/scripts/conda-perf-setup.sh](shared/scripts/conda-perf-setup.sh) | conda性能参数配置（线程、超时、solver）；镜像源已内置基础镜像 |
