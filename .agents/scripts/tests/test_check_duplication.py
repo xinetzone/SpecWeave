@@ -4,7 +4,6 @@
 - normalize_line: 代码行归一化（空行、注释、字符串内#、行内注释）
 - extract_normalized_lines: 归一化行提取（跳过空行/注释/排除行）
 - compute_fingerprint: 指纹计算（一致性、不同输入不同指纹）
-- expand_duplicate_block: 重复块扩展
 - suggest_lib_location: 共享库位置建议
 - find_duplicates: 端到端重复检测（无重复、有重复、阈值过滤）
 """
@@ -40,7 +39,6 @@ from check_duplication import (
     normalize_line,
     extract_normalized_lines,
     compute_fingerprint,
-    expand_duplicate_block,
     suggest_lib_location,
     find_duplicates,
     DuplicateBlock,
