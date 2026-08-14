@@ -87,6 +87,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  │   ├─ README.md
                  │   └─ .agents/rules/dockerfile.md
                  └─ onnx-quantized/        ← ONNX量化工具链变体（INT8/FP16）
+                     ├─ AGENTS.md         ← 变体级智能体入口（嵌套优先）
                      ├─ Dockerfile
                      ├─ .env.example
                      ├─ README.md
@@ -159,8 +160,9 @@ bash build.sh --list
 bash build.sh --variant conda-llvm --cn
 bash build.sh --variant onnx-pytorch --cn
 bash build.sh --variant onnx-quantized --cn
+bash build.sh --variant onnx-dev --cn
 
-# 构建所有变体（按依赖顺序：conda → conda-llvm → onnx-pytorch → onnx-quantized）
+# 构建所有变体（按依赖顺序：conda-llvm → onnx-pytorch → onnx-quantized、onnx-dev）
 bash build.sh --all --cn
 
 # 一键构建+测试 onnx-pytorch
