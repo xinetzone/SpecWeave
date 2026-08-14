@@ -34,7 +34,6 @@ import os
 import re
 import subprocess
 import sys
-import time
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -87,70 +86,21 @@ def _parse(output: str) -> tuple[dict, float]:
 
 
 # ─── 日志埋点：线程/进程池启动耗时与结果序列化大小 ────────────────────────
+# 核心实现已提取为 nogil_kit.PoolProbe 诊断工具类；此处保留兼容薄委托。
 
-def _probe_task(n: int) -> tuple[float, int]:
-    """探针负载：返回 (任务开始时刻, 计算结果)。模块级顶层函数，保证可 pickle。"""
-    t = time.perf_counter()
-    x = sum(1 for i in range(2, n) if all(i % j for j in range(2, int(i ** 0.5) + 1)))
-    return t, x
+from nogil_kit import PoolProbe  # 同目录工具库（仅标准库依赖）
 
 
 def probe_pool_overhead(workers: int = 8, n: int = 50_000) -> dict:
-    """实测每个线程/进程 worker 的启动延迟与结果序列化大小（日志埋点）。
-
-    - pool_create_seconds : Executor 构造耗时（ProcessPool 为惰性 spawn，构造极快）
-    - spawn_lag_seconds   : 每个 worker 从 submit 到任务真正开跑的延迟；
-                            进程池该值含 fork/spawn 成本，即真实的"启动耗时"
-    - result_bytes        : 单个 worker 结果的 pickle 序列化大小（进程池往返成本）
-    """
-    import pickle
-    import multiprocessing as mp
-    from concurrent.futures import ThreadPoolExecutor, ProcessPoolExecutor
-
-    def _run(factory, **kw) -> dict:
-        t_create = time.perf_counter()
-        with factory(workers, **kw) as ex:
-            create_s = time.perf_counter() - t_create
-            t_submit = time.perf_counter()
-            futs = [ex.submit(_probe_task, n) for _ in range(workers)]
-            results = [f.result() for f in futs]
-        lags = [round(t - t_submit, 6) for t, _ in results]
-        sample = results[0][1]
-        return {
-            "pool_create_seconds": round(create_s, 6),
-            "spawn_lag_seconds": lags,                    # 每个 worker 一项
-            "spawn_lag_avg": round(sum(lags) / len(lags), 6),
-            "result_bytes": len(pickle.dumps(sample)),    # 结果序列化大小
-            "result_type": type(sample).__name__,
-        }
-
-    out: dict = {"workers": workers, "payload": n,
-                 "pickle_protocol": pickle.HIGHEST_PROTOCOL}
-    out["thread"] = _run(ThreadPoolExecutor)
-    # fork 优先（进程启动最快）；平台不支持时回退默认 start_method
-    method = "fork" if "fork" in mp.get_all_start_methods() else mp.get_start_method()
-    out["process"] = _run(ProcessPoolExecutor, mp_context=mp.get_context(method))
-    out["process"]["start_method"] = method
-    return out
+    """实测每个线程/进程 worker 的启动延迟与结果序列化大小（委托 PoolProbe）。"""
+    return PoolProbe(workers=workers, payload=n).run()
 
 
 def _print_telemetry(t: dict) -> None:
     """打印埋点摘要（quiet=False 时由 run_ft_benchmark 调用）。"""
     if not t:
         return
-    if "error" in t:
-        print(f"[probe] 探针失败（不影响基准结果）: {t['error']}")
-        return
-    for kind in ("thread", "process"):
-        d = t.get(kind) or {}
-        if not d:
-            continue
-        lags = d.get("spawn_lag_seconds") or [0.0]
-        print(f"[probe] {kind}({d.get('start_method', '-')}): x{t['workers']} "
-              f"create={d['pool_create_seconds'] * 1000:7.2f}ms "
-              f"lag[min={min(lags) * 1000:.1f} avg={d['spawn_lag_avg'] * 1000:.1f} "
-              f"max={max(lags) * 1000:.1f}]ms "
-              f"result={d['result_bytes']}B")
+    print(PoolProbe().format_report(t))
 
 
 def _run_probe(local: bool, image: str, docker_cmd: str, timeout: float) -> dict:
@@ -158,11 +108,14 @@ def _run_probe(local: bool, image: str, docker_cmd: str, timeout: float) -> dict
     try:
         if local:
             return probe_pool_overhead()
+        kit = Path(__file__).resolve().parent / "nogil_kit.py"
+        if not kit.exists():
+            return {"error": f"未找到 {kit}"}
         probe_code = ("import sys, json; sys.path.insert(0, '/tmp'); "
-                      "import ft_benchmark as fb; "
-                      "print(json.dumps(fb.probe_pool_overhead()))")
+                      "from nogil_kit import PoolProbe; "
+                      "print(json.dumps(PoolProbe().run()))")
         cmd = [docker_cmd, "run", "--rm",
-               "-v", f"{Path(__file__).resolve()}:/tmp/ft_benchmark.py:ro",
+               "-v", f"{kit}:/tmp/nogil_kit.py:ro",
                "--entrypoint", MAIN_PYTHON, str(image), "-c", probe_code]
         pr = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
                             encoding="utf-8", errors="replace")

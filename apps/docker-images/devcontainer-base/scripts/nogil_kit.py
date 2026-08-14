@@ -6,13 +6,13 @@
   1. 环境自检        env_report() / format_env_report()
   2. GIL 状态诊断    diagnose()（子进程调用同目录 check_gil_state.py）
   3. kernel 注册     register_nogil_kernel()（幂等，env PYTHON_GIL=0）
-  4. 性能测量        quick_thread_scaling() / pool_compare()
+  4. 性能测量        quick_thread_scaling() / pool_compare() / PoolProbe
 
 零第三方依赖（register_nogil_kernel 内部延迟导入 jupyter_client）。
 
 用法（任意项目里）：
 
-    from nogil_kit import env_report, diagnose, register_nogil_kernel
+    from nogil_kit import env_report, diagnose, register_nogil_kernel, PoolProbe
 
     print(format_env_report(env_report()))
     diagnose()                          # GIL 诊断，退出码 0=健康 1=被拉起 2=非ft构建
@@ -20,12 +20,16 @@
 
     sp = quick_thread_scaling(range_=200_000)   # {"1": 1.0, "2": 2.3, ...}
     cmp = pool_compare(n=3_000_000, workers=8)  # ThreadPool vs ProcessPool 对照
+
+    probe = PoolProbe(workers=8)               # 池启动开销诊断工具类
+    print(probe.format_report())               # 线程/进程启动延迟 + 序列化大小
 """
 
 from __future__ import annotations
 
 import json
 import os
+import pickle
 import subprocess
 import sys
 import sysconfig
@@ -37,7 +41,7 @@ from pathlib import Path
 __all__ = [
     "env_report", "format_env_report", "locate_check_script", "diagnose",
     "register_nogil_kernel", "count_primes", "quick_thread_scaling",
-    "pool_compare",
+    "pool_compare", "PoolProbe",
 ]
 
 _SCRIPTS_DIR = Path(__file__).resolve().parent
@@ -190,6 +194,116 @@ def pool_compare(n: int = 3_000_000, workers: int = 8,
     }
 
 
+# ─── 5. 池启动开销诊断（从 ft_benchmark 探针埋点提取）──────────────────────
+
+def _probe_lag_task(n: int) -> tuple[float, int]:
+    """探针负载：返回 (任务开始时刻, 计算结果)。模块级顶层函数，保证可 pickle。"""
+    t = time.perf_counter()
+    x = count_primes(n)
+    return t, x
+
+
+class PoolProbe:
+    """线程/进程池启动开销诊断工具类。
+
+    实测维度（每种池各一份）：
+      - pool_create_seconds : Executor 构造耗时（ProcessPool 为惰性 spawn，构造极快）
+      - spawn_lag_seconds   : 每个 worker 从 submit 到任务真正开跑的延迟列表；
+                              进程池该值含 fork/spawn 成本，即真实的"启动耗时"
+      - result_bytes        : 单个 worker 结果的 pickle 序列化大小（进程池往返成本）
+
+    用法：
+
+        probe = PoolProbe(workers=8, payload=50_000)
+        t = probe.run()                  # 全量测量，返回 dict
+        print(probe.format_report(t))    # 可读报告（不传 t 则现场测量）
+        probe.measure_thread_pool()      # 也可单独测量某一种池
+
+    注意：Windows（spawn）下调用方入口需有 __main__ 保护，
+    否则子进程重放模块级代码会触发 multiprocessing 引导错误。
+    """
+
+    def __init__(self, workers: int = 8, payload: int = 50_000,
+                 mp_method: str | None = None):
+        """
+        参数：
+            workers   每种池的 worker 数
+            payload   每个 worker 的素数上界（探针负载规模）
+            mp_method 进程池 start_method；None 表示 fork 优先、平台不支持时回退默认
+        """
+        import multiprocessing as mp
+        self.workers = workers
+        self.payload = payload
+        if mp_method is None:
+            mp_method = ("fork" if "fork" in mp.get_all_start_methods()
+                         else mp.get_start_method())
+        self.mp_method = mp_method
+
+    def _measure(self, factory, **kw) -> dict:
+        """对给定 Executor 工厂执行一轮测量（构造 → 提交 → 收集）。"""
+        t_create = time.perf_counter()
+        with factory(self.workers, **kw) as ex:
+            create_s = time.perf_counter() - t_create
+            t_submit = time.perf_counter()
+            futs = [ex.submit(_probe_lag_task, self.payload)
+                    for _ in range(self.workers)]
+            results = [f.result() for f in futs]
+        lags = [round(t - t_submit, 6) for t, _ in results]
+        sample = results[0][1]
+        return {
+            "pool_create_seconds": round(create_s, 6),
+            "spawn_lag_seconds": lags,                    # 每个 worker 一项
+            "spawn_lag_avg": round(sum(lags) / len(lags), 6),
+            "result_bytes": len(pickle.dumps(sample)),    # 结果序列化大小
+            "result_type": type(sample).__name__,
+        }
+
+    def measure_thread_pool(self) -> dict:
+        """测量 ThreadPoolExecutor 的启动开销。"""
+        return self._measure(ThreadPoolExecutor)
+
+    def measure_process_pool(self) -> dict:
+        """测量 ProcessPoolExecutor 的启动开销（含 fork/spawn 成本）。"""
+        import multiprocessing as mp
+        from concurrent.futures import ProcessPoolExecutor
+        d = self._measure(ProcessPoolExecutor,
+                          mp_context=mp.get_context(self.mp_method))
+        d["start_method"] = self.mp_method
+        return d
+
+    def run(self) -> dict:
+        """全量测量：线程池 + 进程池，返回完整埋点 dict。"""
+        return {
+            "workers": self.workers, "payload": self.payload,
+            "pickle_protocol": pickle.HIGHEST_PROTOCOL,
+            "thread": self.measure_thread_pool(),
+            "process": self.measure_process_pool(),
+        }
+
+    def format_report(self, t: dict | None = None) -> str:
+        """渲染可读报告；不传 t 则现场执行一轮 run()。"""
+        t = t if t is not None else self.run()
+        if not t:
+            return ""
+        if "error" in t:
+            return f"[probe] 探针失败（不影响基准结果）: {t['error']}"
+        lines = []
+        for kind in ("thread", "process"):
+            d = t.get(kind) or {}
+            if not d:
+                continue
+            lags = d.get("spawn_lag_seconds") or [0.0]
+            lines.append(
+                f"[probe] {kind}({d.get('start_method', '-')}): x{t['workers']} "
+                f"create={d['pool_create_seconds'] * 1000:7.2f}ms "
+                f"lag[min={min(lags) * 1000:.1f} avg={d['spawn_lag_avg'] * 1000:.1f} "
+                f"max={max(lags) * 1000:.1f}]ms "
+                f"result={d['result_bytes']}B")
+        return "\n".join(lines)
+
+
 if __name__ == "__main__":
     print(format_env_report(env_report()))
+    probe = PoolProbe(workers=4, payload=20_000)
+    print(probe.format_report())
     print("\n[nogil_kit] 自检模式：python -c 'from nogil_kit import ...' 按需调用")
