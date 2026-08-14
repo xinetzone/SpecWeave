@@ -1,0 +1,15 @@
+id = "bp-automation-idempotent-four-elements"
+title = "自动化幂等四要素"
+domain = "methodology"
+layer = "tools"
+category = "retrospective/patterns/methodology-patterns"
+maturity = "L1"
+validation_count = 1
+reuse_count = 1
+documentation_level = "complete"
+source = "Hermes-SpecWeave 集成里程碑（七概念方法论编排·场景1里程碑复盘）"
+date = "2026-08-12"
+version = "1.0"
+
+[bindings]
+related_patterns = ["bp-plugin-bridge-standard-integration"]

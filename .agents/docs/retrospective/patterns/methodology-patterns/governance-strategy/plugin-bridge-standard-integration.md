@@ -3,9 +3,9 @@ id: "bp-plugin-bridge-standard-integration"
 title: "插件桥接规范集成法"
 type: "methodology"
 date: "2026-08-12"
-maturity: "L1-draft"
+maturity: "L1"
 source: "Hermes-SpecWeave 集成里程碑（七概念方法论编排·场景1里程碑复盘）"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/plugin-bridge-standard-integration.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/plugin-bridge-standard-integration.toml"
 related_patterns: ["bp-integration-over-invention", "bp-layered-chained-spec"]
 tags: ["agent-platform", "workspace-governance", "plugin", "context-routing", "integration"]
 validation_count: 1
@@ -82,6 +82,6 @@ documentation_level: "complete"
 
 ## 关联资源
 
-- 配套模式：[整合优于发明模式](integration-over-invention.md)（本模式是其"Agent 平台扩展"领域的细化）
+- 配套模式：整合优于发明模式（`bp-integration-over-invention`，暂存于根 `docs/` 遗留区，待统一迁移至 `.agents/docs/` 后补链）——本模式是其"Agent 平台扩展"领域的细化
 - 分层链式规格模式：[分层链式规格模式](layered-chained-spec.md)
-- 里程碑复盘报告：[retrospective-hermes-specweave-integration-20260812](../../reports/milestone/retrospective-hermes-specweave-integration-20260812.md)
+- 里程碑复盘报告：retrospective-hermes-specweave-integration-20260812（暂存于根 `docs/` 遗留区，待统一迁移至 `.agents/docs/` 后补链）

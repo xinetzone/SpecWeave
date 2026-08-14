@@ -3,9 +3,9 @@ id: "bp-automation-idempotent-four-elements"
 title: "自动化幂等四要素"
 type: "methodology"
 date: "2026-08-12"
-maturity: "L1-draft"
+maturity: "L1"
 source: "Hermes-SpecWeave 集成里程碑（七概念方法论编排·场景1里程碑复盘）"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/automation-idempotent-four-elements.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/automation-idempotent-four-elements.toml"
 related_patterns: ["bp-plugin-bridge-standard-integration"]
 tags: ["automation", "idempotency", "devops", "bootstrap", "cli"]
 validation_count: 1
@@ -82,5 +82,5 @@ documentation_level: "complete"
 
 ## 关联资源
 
-- 配套模式：[插件桥接规范集成法](plugin-bridge-standard-integration.md)
-- 里程碑复盘报告：[retrospective-hermes-specweave-integration-20260812](../../reports/milestone/retrospective-hermes-specweave-integration-20260812.md)
+- 配套模式：[插件桥接规范集成法](../governance-strategy/plugin-bridge-standard-integration.md)
+- 里程碑复盘报告：retrospective-hermes-specweave-integration-20260812（暂存于根 `docs/` 遗留区，待统一迁移至 `.agents/docs/` 后补链）

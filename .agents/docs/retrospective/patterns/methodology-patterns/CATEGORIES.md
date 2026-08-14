@@ -164,6 +164,7 @@
 | [tool-workflow-composition.md](tools-automation/tool-workflow-composition.md) | 工具工作流组合：事前评估→事中操作→事后收尾→验证→门禁，组合价值>单个工具之和 | L1 |
 | [toolchain-maturity.md](tools-automation/toolchain-maturity.md) | 工具链五阶段成熟度模型：手动检测→自动检测→自动修复→流程预防→门禁保障，含维度评估表与跃迁规律 | L1 |
 | [tool-failure-three-tier-degradation.md](tools-automation/tool-failure-three-tier-degradation.md) | 工具故障三级降级策略：Level1委托sub-agent→Level2挖掘附带信息/替代工具→Level3基于已有知识推进，含defuddle常见故障处理、Windows环境注意事项，核心铁则"连续失败2次禁止第3次重试" | L2 |
+| [automation-idempotent-four-elements.md](tools-automation/automation-idempotent-four-elements.md) | 自动化幂等四要素：install/verify面向结果建模+幂等+可回滚+可判定，全分支验证（install.py验证） | L1-draft |
 
 ---
 
@@ -194,6 +195,7 @@
 | [three-level-problem-solving.md](governance-strategy/three-level-problem-solving.md) | 问题解决三层跃迁：L1症状治疗→L2病因根治→L3系统免疫，架构师思考L3 | L1 |
 | [three-tier-board-system.md](governance-strategy/three-tier-board-system.md) | 三层看板体系：全局看板→主题看板→创建模板，覆盖看-管-建全生命周期，含自维护闭环 | L1 |
 | [three-tier-governance.md](governance-strategy/three-tier-governance.md) | 三层治理模型（原子化→自动化→验证），含实施检查清单（150+脚本验证，L3标准化） | L3 |
+| [plugin-bridge-standard-integration.md](governance-strategy/plugin-bridge-standard-integration.md) | 插件桥接规范集成法：以插件+技能叠加方式把工作区规范接入已有Agent平台，目录感知自动生效+verify可判定（Hermes-SpecWeave集成验证） | L1-draft |
 | [three-zone-boundary-model.md](governance-strategy/three-zone-boundary-model.md) | 三区域边界模型：主项目区/接口层/外部依赖区主权划分，定义允许/禁止操作清单 | L2 |
 | [file-creation-precheck-pattern.md](governance-strategy/file-creation-precheck-pattern.md) | 文件创建前置检查模式：三步检查流程（确定归属目录→确定文件名格式→自动化验证）确保文件创建合规 | L2 |
 | [format-evidence-over-memory-pattern.md](governance-strategy/format-evidence-over-memory-pattern.md) | 格式证据优先于记忆模式：创建新文件前必须读取同目录现有文档确认格式，实际文档是唯一权威来源 | L2 |
