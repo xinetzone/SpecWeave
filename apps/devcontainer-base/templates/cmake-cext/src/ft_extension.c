@@ -320,7 +320,9 @@ ft_thread_stress(PyObject* self, PyObject* args)
 
     /* Create worker function via Py_CompileString */
     /* NOTE: Use keyword arguments for Thread() — positional args are wrong! */
+    /* NOTE: Must include import in the compiled code string for worker thread scope */
     PyObject* worker_code = Py_CompileString(
+        "import ft_extension\n"
         "def worker(n):\n"
         "    for _ in range(n):\n"
         "        ft_extension.atomic_increment(1)\n",
@@ -375,7 +377,7 @@ ft_thread_stress(PyObject* self, PyObject* args)
     Py_DECREF(Thread);
     Py_DECREF(threading);
 
-    return Py_BuildValue("{s:l,s:l,s:l,s:O}",
+    return Py_BuildValue("{s:l,s:l,s:l,s:O,s:O}",
         "threads", n_threads,
         "iterations_per_thread", n_iterations,
         "expected_total", expected,
