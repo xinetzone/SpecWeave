@@ -23,6 +23,23 @@ import threading
 import multiprocessing as mp
 from multiprocessing import Process, Lock, Queue, get_context
 
+import pytest
+
+
+@pytest.fixture(params=["fork", "spawn", "forkserver"])
+def ctx_name(request):
+    """multiprocessing 启动上下文名称参数化 fixture。
+
+    覆盖 fork（Unix 默认）、spawn（Windows 默认）、forkserver 三种启动方式，
+    验证不同 context 下的锁继承/全局变量/局部函数 pickle 行为差异。
+    Windows 不支持 fork context，自动跳过。
+    """
+    import platform
+
+    if request.param == "fork" and platform.system() == "Windows":
+        pytest.skip("Windows 不支持 fork context")
+    return request.param
+
 
 # ============================================================
 # 测试1：多线程+fork导致锁永久死锁（最经典的fork不安全案例）
