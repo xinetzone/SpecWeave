@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（24份）
+## 报告清单（25份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-devcontainer-v221-conda-perf-20260814/` | devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘（R-I-E-C链路）：Stage 4 conda求解从419s优化至37s（缓存热构建，11.3x加速），三项关键优化（8线程并行/单次mamba solver/原生mamba CLI）；萃取3个静态YAML模板+1个动态Shell脚本（conda-perf-setup.sh）为共享可复用资产，Dockerfile从~50行内联heredoc精简为3行脚本调用；沉淀"Conda构建层性能三联优化"模式（L1实验性）；3个原子提交900行变更 | 2026-08-14 |
 | `retrospective-ai-dev-variant-bugfix-logging-20260813/` | ai-dev变体Bug修复与Stage 2日志增强里程碑复盘（R-I-E-V-C链路）：修复T4(JupyterLab版本提取head→tail)和T25(Go模板`.`语法)两个测试失败；`|||`多字符命令分隔符替换`;`解决Python -c内部分号冲突；新增pip_install_group()函数实现14组pip分组安装+每组pip check冲突检测+失败诊断；萃取"安全命令列表分隔符"(L2)和"Docker pip分组安装可观测性"(L1)两个模式 | 2026-08-13 |
 | `summary-palmdet-compile-fix-20260812.md` | palmDet 模型编译修复+完整编译过程总结：最终根因修正为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`），校准图被 resize 成 224×3 致 W 维度恒为 1；修复后前向与 ORT 一致、完整编译 6 阶段通过退出码 0；配套 onnx2pytorch Resize/Reshape 猴补丁；纠偏早前洞察报告根因结论；萃取"跨框架模型输入布局核验"模式 | 2026-08-12 |
 | `insight-palmdet-compile-failure-20260812.md` | palmDet 模型编译失败洞察报告（F-V-C-R-I-E链路）：**主因**为 config 输入布局配置错误（模型 NCHW `[1,3,224,224]` vs config NHWC `[1,224,224,3]`，工具链按 NCHW 解包致输入尺寸错误、W 维度恒 1）；**辅因**为 onnx2pytorch Resize/Reshape 算子转换缺陷（含 Heisenbug 诊断）；修复为 config NCHW 修正+猴补丁+形状自校验；萃取"跨框架模型输入布局核验""算子转换形状自校验""透明包装验证法"三模式 | 2026-08-12 |
