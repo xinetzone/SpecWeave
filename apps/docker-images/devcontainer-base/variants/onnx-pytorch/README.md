@@ -28,6 +28,7 @@
 | ONNX Runtime | latest | 跨平台推理引擎（CPU provider） |
 | onnx-simplifier | latest | ONNX 模型精简工具 |
 | onnxoptimizer | latest | ONNX 图优化工具 |
+| onnxscript | latest | ONNX Script（用 Python 编写 ONNX 算子） |
 | LLVM | 22.1.8 | 继承自 conda-llvm 变体 |
 | Clang | 22.1.8 | 继承自 conda-llvm 变体 |
 | CMake / Ninja / Make | latest | 继承自 conda-llvm 变体 |
@@ -39,6 +40,7 @@ variants/onnx-pytorch/
 ├── Dockerfile              # ONNX-PyTorch 变体构建文件（4个追加阶段）
 ├── .env.example            # 构建参数配置模板
 ├── README.md               # 本文件
+├── AGENTS.md               # AI 协作者入口（变体级路由）
 └── .agents/
     └── rules/
         └── dockerfile.md   # Dockerfile 规范说明
@@ -131,8 +133,7 @@ docker run --rm -v $(pwd):/workspace -w /workspace \
 **onnx-pytorch 变体中，`/opt/conda/bin` 在 PATH 最前面**，因此：
 - `python` 和 `pip` 默认指向 conda base 环境的 Python（PyTorch/ONNX 所在环境）
 - `torch`, `onnx`, `onnxruntime` 可直接 import，无需激活环境
-- 系统 venv `/opt/venv/bin` 的 Python 仍可通过绝对路径 `/opt/venv/bin/python` 访问
-- **Jupyter 服务不受影响**：supervisord 使用 `/opt/venv/bin/jupyter` 绝对路径启动
+- **Jupyter 服务不受影响**：由 supervisord 使用 main 环境 `/opt/conda/envs/main/bin/jupyter` 独立启动，与 base torch 环境解耦（`/opt/venv` 已在基础镜像中移除）
 
 ### 验证导入
 
@@ -178,14 +179,6 @@ python -m onnxsim /tmp/net.onnx /tmp/net-simplified.onnx
 python -c "import onnxoptimizer; print('onnxoptimizer ready')"
 ```
 
-### 切换回系统 venv Python（如需要）
-
-```bash
-# 临时使用系统 venv 的 Python
-/opt/venv/bin/python --version
-/opt/venv/bin/pip --version
-```
-
 ## ✅ 验证命令
 
 ```bash
@@ -202,8 +195,8 @@ docker run --rm devcontainer-base:onnx-pytorch-latest \
   /opt/conda/bin/python -c "import torch;print(torch.cuda.is_available())"
 # 期望输出: False
 
-# 验证 Jupyter 服务仍可用（绝对路径）
-docker run --rm devcontainer-base:onnx-pytorch-latest /opt/venv/bin/jupyter --version
+# 验证 Jupyter 服务仍可用（main 环境）
+docker run --rm devcontainer-base:onnx-pytorch-latest /opt/conda/envs/main/bin/jupyter --version
 
 # 验证 Docker 可用
 docker run --rm --privileged devcontainer-base:onnx-pytorch-latest docker --version
@@ -228,7 +221,6 @@ docker run --rm devcontainer-base:onnx-pytorch-latest cat /etc/devcontainer-vari
 |------|------|
 | `/opt/conda/bin` | Conda base 环境 bin 目录（在 PATH 最前，torch/onnx 所在） |
 | `/opt/conda` | Miniconda3 安装根目录 |
-| `/opt/venv` | 系统 Python venv（服务使用，绝对路径访问） |
 | `/etc/profile.d/conda-init.sh` | 原始 conda 激活脚本（不自动激活） |
 | `/etc/profile.d/onnx-pytorch-init.sh` | ONNX-PyTorch 备选激活脚本 |
 | `/etc/devcontainer-variant-onnx-pytorch-build-info` | 构建元数据 |
@@ -237,7 +229,7 @@ docker run --rm devcontainer-base:onnx-pytorch-latest cat /etc/devcontainer-vari
 
 1. **PATH 优先级**：onnx-pytorch 变体中 `/opt/conda/bin` 在 PATH 最前面，默认 `python` 是 conda base 环境的 Python（PyTorch/ONNX 所在环境）。
 
-2. **服务不受影响**：Jupyter、SSH、Docker 等服务由 supervisord 使用绝对路径启动，因此不受 PATH 顺序变更影响，始终使用系统 venv 的 Python 运行。
+2. **服务不受影响**：Jupyter、SSH、Docker 等服务由 supervisord 启动，不受 PATH 顺序变更影响（Jupyter 由 supervisord 以 main 环境绝对路径启动）。
 
 3. **CPU 版 PyTorch**：本变体安装的是 CPU 版 PyTorch（`torch.cuda.is_available() == False`），不含 CUDA 支持。如需 GPU 推理请另行构建 CUDA 变体。
 
@@ -247,13 +239,13 @@ docker run --rm devcontainer-base:onnx-pytorch-latest cat /etc/devcontainer-vari
 
 6. **网络注意**：PyTorch CPU 版默认从 `https://download.pytorch.org/whl/cpu` 下载，若该源不可达，请在 `.env` 中设置 `TORCH_INDEX_URL=https://mirrors.tuna.tsinghua.edu.cn/pytorch-wheels/cpu`。
 
-7. **如需使用系统 venv Python**：请使用绝对路径 `/opt/venv/bin/python` 或 `/opt/venv/bin/pip`，或在 `~/.bashrc` 中调整 PATH 顺序。
-
 ## 🔗 相关镜像
 
 - [devcontainer-base](../../README.md) - 基础镜像（SSH + Docker + Podman + Jupyter）
 - [conda variant](../conda/README.md) - Conda 基础变体（Miniconda3，venv 优先）
 - [conda-llvm variant](../conda-llvm/README.md) - LLVM/Clang 工具链变体（本变体的基础）
+- [onnx-dev variant](../onnx-dev/README.md) - 纯 ONNX 生态变体（main 环境 free-threading，无 PyTorch，架构对偶）
+- [onnx-quantized variant](../onnx-quantized/README.md) - ONNX 量化工具链变体（torch 导出模型的量化下游）
 
 ## 📄 相关文档
 
