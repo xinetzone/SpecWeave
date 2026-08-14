@@ -529,7 +529,7 @@ test_base_gil_guard() {
     if echo "$result" | grep -q "GIL_OK"; then
         pass "T26" "$elapsed" "base env GIL enabled (standard build)"
     elif echo "$result" | grep -q "GIL_FT"; then
-        pass "T26" "$elapsed" "base env GIL disabled (free-threading, inherited from onnx-quantized main env)"
+        fail "T26" "base env GIL unexpectedly disabled (must be standard build per Dockerfile assert; main env is the free-threading one)"
     else
         fail "T26" "GIL check failed, output: $(echo "$result" | tail -3)"
     fi
