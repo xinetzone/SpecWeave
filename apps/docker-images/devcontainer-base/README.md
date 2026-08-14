@@ -22,12 +22,16 @@
 
 ```
 devcontainer-base/
-├── Dockerfile                      # 主构建文件（多阶段构建）
+├── Dockerfile                      # 主构建文件（多阶段构建，Python 3.14 cp314t）
 ├── entrypoint.sh                   # 容器启动脚本（服务动态启停）
-├── requirements.txt                # Python 依赖版本固定
 ├── docker-compose.yml              # Compose 编排（3种profile）
 ├── .dockerignore                   # Docker 构建忽略文件
+├── .env.example                    # 环境变量模板
+├── CHANGELOG.md                    # 版本变更日志
 ├── AGENTS.md                       # AI 协作者规范（SpecWeave）
+├── conda-lock/                     # Conda 环境精确版本锁定
+│   ├── environment.yml             # Python 3.14.6 cp314t 锁定模板
+│   └── generate-locks.sh           # 锁文件生成/验证/安装脚本
 ├── config/
 │   ├── supervisord.conf            # Supervisord 主配置
 │   ├── sshd_config                 # SSH 服务完整配置
@@ -72,6 +76,17 @@ devcontainer-base/
 │   ├── models/                     # 测试用ONNX模型（cnn/mlp/transformer）
 │   ├── QUICKSTART.md               # 量化工具包快速入门
 │   └── EXERCISES.md                # 量化练习材料
+├── docs/                           # 文档目录
+│   ├── best-practices.md           # Docker DinD/Compose/镜像源最佳实践
+│   ├── RELEASE-v2.md               # v2.2 详细发布说明
+│   ├── v2.2-build-pipeline-optimization.md  # v2.2 构建流水线优化方案
+│   ├── PY314T-C-EXTENSION-GUIDE.md # Python 3.14t C 扩展编译指南
+│   ├── CONDA-PERF-INTEGRATION-GUIDE.md  # Conda 性能优化集成指南
+│   └── TECH-ADVISORY-defaults-channel-abi-risk.md  # defaults channel ABI 风险公告
+├── examples/                       # 示例代码
+│   └── free_threading_demo.py      # Free-threading 多线程性能演示
+├── templates/                      # 可复用模板
+│   └── cmake-cext/                 # CMake C 扩展标准模板
 └── variants/                       # 镜像变体系列（按依赖链排列）
     ├── AGENTS.md                   # 变体管理AI协作者入口
     ├── README.md                   # 变体索引和使用指南

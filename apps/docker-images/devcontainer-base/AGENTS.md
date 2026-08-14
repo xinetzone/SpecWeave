@@ -41,7 +41,12 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │       └─ build-test.md  ← 构建与测试流程
        ├─ Dockerfile           ← 多阶段构建定义（builder + runtime）
        ├─ entrypoint.sh        ← 容器启动脚本
-       ├─ requirements.txt     ← Python 依赖包列表
+       ├─ docker-compose.yml   ← Compose 编排
+       ├─ .env.example         ← 环境变量模板
+       ├─ CHANGELOG.md         ← 版本变更日志
+       ├─ conda-lock/          ← Conda 环境锁定（environment.yml + 锁文件生成脚本）
+       │   ├─ environment.yml  ← Python 3.14 cp314t 精确版本锁定模板
+       │   └─ generate-locks.sh ← 锁文件生成/验证/安装脚本
        ├─ config/              ← 配置文件目录
        │   ├─ supervisord.conf ← supervisord 主配置
        │   ├─ sshd_config      ← SSH 服务配置
@@ -116,7 +121,17 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │       ├─ .env.example
        │       ├─ README.md
        │       └─ .agents/rules/dockerfile.md
-       ├─ docs/                ← 人类可读文档（最佳实践等）
+       ├─ docs/                ← 人类可读文档（最佳实践/技术指南/发布说明/方案文档）
+       │   ├─ best-practices.md            ← Docker DinD/Compose/镜像源最佳实践
+       │   ├─ CONDA-PERF-INTEGRATION-GUIDE.md ← Conda 性能优化集成指南
+       │   ├─ PY314T-C-EXTENSION-GUIDE.md ← Python 3.14t C 扩展编译指南
+       │   ├─ TECH-ADVISORY-defaults-channel-abi-risk.md ← defaults channel ABI 风险公告
+       │   ├─ RELEASE-v2.md               ← v2.2 版本详细发布说明
+       │   └─ v2.2-build-pipeline-optimization.md ← v2.2 构建流水线优化方案（七概念方法论记录）
+       ├─ examples/            ← 示例代码
+       │   └─ free_threading_demo.py ← Free-threading 多线程性能演示
+       ├─ templates/           ← 可复用模板
+       │   └─ cmake-cext/      ← CMake C 扩展标准模板
        └─ README.md            ← 使用文档
 ```
 

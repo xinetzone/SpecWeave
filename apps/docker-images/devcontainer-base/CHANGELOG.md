@@ -149,7 +149,7 @@ v2.2-ft 是首个生产就绪版本，默认 Python 运行时为 **Python 3.14.6
 ### 📚 文档
 
 - **[PY314T-C-EXTENSION-GUIDE.md](docs/PY314T-C-EXTENSION-GUIDE.md)** — 团队技术分享：Python 3.13t/3.14t C 扩展的 7 个关键变更、开发中遇到的 7 个坑点、以及最佳实践清单
-- **[V2.2-BUILD-PIPELINE-OPTIMIZATION.md](V2.2-BUILD-PIPELINE-OPTIMIZATION.md)** — 完整方法论记录（第一性原理 → 对抗审查 → 洞察落地）
+- **[v2.2-build-pipeline-optimization.md](docs/v2.2-build-pipeline-optimization.md)** — 完整方法论记录（第一性原理 → 对抗审查 → 洞察落地）
 - **C 扩展编译规范** — GIL 声明、线程安全、CMake 配置、依赖版本、测试要求的强制规范（流水线文档第 9 节）
 
 ### 🐛 Bug 修复

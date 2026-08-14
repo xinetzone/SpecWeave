@@ -447,7 +447,7 @@ python -c "import ft_extension; ft_extension.thread_stress(8, 100000)"
 - [PEP 684 – A Per-Interpreter GIL](https://peps.python.org/pep-0684/)
 
 ### 项目内资源
-- [v2.2 构建流水线文档](../V2.2-BUILD-PIPELINE-OPTIMIZATION.md)：第九节 C 扩展编译规范
+- [v2.2 构建流水线文档](v2.2-build-pipeline-optimization.md)：第九节 C 扩展编译规范
 - [defaults 渠道 ABI 风险公告](TECH-ADVISORY-defaults-channel-abi-risk.md)
 - [conda-lock 环境锁定模板](../conda-lock/environment.yml)
 - [C 扩展标准模板](../templates/cmake-cext/)

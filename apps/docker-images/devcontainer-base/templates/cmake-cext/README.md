@@ -148,4 +148,4 @@ conda install -c conda-forge "python=3.14.*=*_cp314t" "cmake>=3.30" "ninja>=1.12
 
 - [Python 3.13 Free-Threading 官方文档](https://docs.python.org/3.13/howto/free-threading-extensions.html)
 - [PEP 703 – Making the Global Interpreter Lock Optional in CPython](https://peps.python.org/pep-0703/)
-- [devcontainer-base v2.2 构建流水线文档](../../V2.2-BUILD-PIPELINE-OPTIMIZATION.md)
+- [devcontainer-base v2.2 构建流水线文档](../../docs/v2.2-build-pipeline-optimization.md)
