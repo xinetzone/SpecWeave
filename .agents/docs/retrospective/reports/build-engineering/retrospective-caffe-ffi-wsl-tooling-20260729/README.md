@@ -21,7 +21,7 @@ related_patterns: [
 对 `apps/docker-images/caffe-ffi-jupyter/` 的 WSL 部署工具链进行四项改进：(1) Ubuntu版本从22.04更新到24.04/26.04；(2) 统一 wsl-deploy.sh 和 diagnose.sh 的日志格式，支持 JSON Lines 结构化输出以接入自动化监控平台；(3) 补充 Docker Desktop vs 原生 Docker 在 WSL2 中的性能对比数据；(4) 创建 PowerShell 包装器支持从 Windows 直接调用 WSL 脚本。
 
 **关键数据**（v2最终版本，经实测验证）：
-- 新建文件：8个（[lib/logging.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/lib/logging.sh)、[lib/logging.ps1](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/lib/logging.ps1)、[deploy.ps1](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/deploy.ps1)、[diagnose.ps1](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/diagnose.ps1) + 4个其他apps的lib/logging.sh）
+- 新建文件：8个（[lib/logging.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/lib/logging.sh)、[lib/logging.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/lib/logging.ps1)、[deploy.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/deploy.ps1)、[diagnose.ps1](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/diagnose.ps1) + 4个其他apps的lib/logging.sh）
 - 修改文件：8个（wsl-deploy.sh、diagnose.sh、WSL-DEPLOY-GUIDE.md + 其他5个apps脚本统一日志重构）
 - 日志库规模：Bash版173行、PowerShell版149行，支持 text/json 双格式 + metric/event/summary 三类结构化输出
 - 推广范围：5个apps完成统一日志集成（caffe-ffi-jupyter、docker-ssh-dind、jupyter-ssh-base、pytorch-base、xmnn-runtime）

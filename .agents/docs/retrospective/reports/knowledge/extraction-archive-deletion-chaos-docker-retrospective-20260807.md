@@ -55,11 +55,11 @@ tags: ["extraction", "archive", "deletion", "docker", "conda", "chaos", "code-pa
 
 | 资产 | 类型 | 说明 |
 |------|------|------|
-| [docker-apt-layer-slimming.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-apt-layer-slimming.md) | 萃取 | apt 层瘦身模式 |
-| [docker-conditional-dependency-injection.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-conditional-dependency-injection.md) | 萃取 | 声明式依赖条件注入 |
-| [conda-dual-path-env-management.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-dual-path-env-management.md) | 萃取 | conda 环境双路径 |
-| [docker-podman-cross-platform-container.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-podman-cross-platform-container.md) | 萃取 | Docker↔Podman 跨平台 |
-| [docker-volume-mount-dev-workflow.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-volume-mount-dev-workflow.md) | 萃取 | 卷挂载开发工作流 |
+| [docker-apt-layer-slimming.md](../../patterns/code-patterns/docker-apt-layer-slimming.md) | 萃取 | apt 层瘦身模式 |
+| [docker-conditional-dependency-injection.md](../../patterns/code-patterns/docker-conditional-dependency-injection.md) | 萃取 | 声明式依赖条件注入 |
+| [conda-dual-path-env-management.md](../../patterns/code-patterns/conda-dual-path-env-management.md) | 萃取 | conda 环境双路径 |
+| [docker-podman-cross-platform-container.md](../../patterns/code-patterns/docker-podman-cross-platform-container.md) | 萃取 | Docker↔Podman 跨平台 |
+| [docker-volume-mount-dev-workflow.md](../../patterns/code-patterns/docker-volume-mount-dev-workflow.md) | 萃取 | 卷挂载开发工作流 |
 | [code-patterns/README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/README.md) | 归档 | 索引新增 5 行 |
 | conda.Containerfile / index.md | 删除 | chaos 源文件已删除 |
 

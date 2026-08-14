@@ -31,17 +31,17 @@ P3-D 计划的 6 个核心训练层（Dropout/Scale/Bias/Eltwise/Concat/Softmax�
 
 | 测试文件 | 用例数 | 关键验证点 |
 |---------|:------:|-----------|
-| [test_split_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_split_backward.py) | 17 | 梯度累加（N=2/3 求和到底部）、N=1 直通、数值梯度 |
-| [test_slice_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_slice_backward.py) | 20 | 梯度路由（按 slice_point 分发）、显式/隐式分割、数值梯度 |
-| [test_lrn_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_lrn_backward.py) | 13 | 局部响应归一化梯度（scale 项+链式法则）、数值梯度 |
-| [test_crop_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_crop_backward.py) | 19 | 梯度复制+zero-pad（裁剪区复制，其余为 0）、数值梯度 |
-| [test_concat_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py) | 24 | Concat 梯度拆分（多轴/多输入） |
-| [test_eltwise_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py) | 32 | Eltwise SUM/PROD/MAX 梯度路由 |
-| [test_scale_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_scale_backward.py) | 25 | Scale 参数/输入梯度 |
-| [test_bias_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_bias_backward.py) | 19 | Bias 参数/输入梯度 |
-| [test_dropout_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py) | 20 | Dropout 梯度直通（ratio=0 identity） |
-| [test_softmax_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py) | 22 | Softmax 预测层梯度 |
-| [test_p3d_all_layers_e2e.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_p3d_all_layers_e2e.py) | 8 | 端到端：Loss 随 SGD 下降（梯度有效性金标准） |
+| [test_split_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_split_backward.py) | 17 | 梯度累加（N=2/3 求和到底部）、N=1 直通、数值梯度 |
+| [test_slice_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_slice_backward.py) | 20 | 梯度路由（按 slice_point 分发）、显式/隐式分割、数值梯度 |
+| [test_lrn_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_lrn_backward.py) | 13 | 局部响应归一化梯度（scale 项+链式法则）、数值梯度 |
+| [test_crop_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_crop_backward.py) | 19 | 梯度复制+zero-pad（裁剪区复制，其余为 0）、数值梯度 |
+| [test_concat_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py) | 24 | Concat 梯度拆分（多轴/多输入） |
+| [test_eltwise_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py) | 32 | Eltwise SUM/PROD/MAX 梯度路由 |
+| [test_scale_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_scale_backward.py) | 25 | Scale 参数/输入梯度 |
+| [test_bias_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_bias_backward.py) | 19 | Bias 参数/输入梯度 |
+| [test_dropout_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py) | 20 | Dropout 梯度直通（ratio=0 identity） |
+| [test_softmax_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py) | 22 | Softmax 预测层梯度 |
+| [test_p3d_all_layers_e2e.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_p3d_all_layers_e2e.py) | 8 | 端到端：Loss 随 SGD 下降（梯度有效性金标准） |
 | **合计** | **219** | **全部通过** |
 
 ## 各层 Backward 语义

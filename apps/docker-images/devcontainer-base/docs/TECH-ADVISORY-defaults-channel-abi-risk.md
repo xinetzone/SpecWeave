@@ -214,11 +214,11 @@ docker build -t devcontainer-base:conda-libmamba-ft .
 
 ## 七、相关资源
 
-- 模式文档：[conda-abi-variant-safe-switching.md](../../.agents/docs/retrospective/patterns/code-patterns/conda-abi-variant-safe-switching.md)
-- 验证脚本：[scripts/verify-cext.sh](scripts/verify-cext.sh)
-- 基准脚本：[scripts/ft-benchmark.sh](scripts/ft-benchmark.sh)
+- 模式文档：[conda-abi-variant-safe-switching.md](../../../../.agents/docs/retrospective/patterns/code-patterns/conda-abi-variant-safe-switching.md)
+- 验证脚本：[../scripts/verify-cext.sh](../scripts/verify-cext.sh)
+- 基准脚本：[../scripts/ft-benchmark.sh](../scripts/ft-benchmark.sh)
 - 发布说明：[RELEASE-v2.md](RELEASE-v2.md) §5已知问题#5
-- 复盘报告：[retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814](../../.agents/docs/retrospective/reports/build-engineering/retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814/README.md)
+- 复盘报告：[retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814](../../../../.agents/docs/retrospective/reports/build-engineering/retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814/)
 - PEP 703: https://peps.python.org/pep-0703/
 - conda-forge free-threading: https://conda-forge.org/docs/user/knowledge/free-threading/
 

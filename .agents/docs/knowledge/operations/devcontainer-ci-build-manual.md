@@ -480,8 +480,8 @@ LABEL devcontainer.variant="<variant-name>"
 
 ## 九、参考资源
 
-- 基础镜像构建脚本：[scripts/build.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/build.sh)
-- onnx-pytorch 构建脚本：[variants/scripts/build-onnx-pytorch.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/scripts/build-onnx-pytorch.sh)
-- CI 流水线配置：[devcontainer-variants.yml](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)
+- 基础镜像构建脚本：[scripts/build.sh](../../../../apps/docker-images/devcontainer-base/scripts/build.sh)
+- onnx-pytorch 构建脚本：[variants/scripts/build-onnx-pytorch.sh](../../../../apps/docker-images/devcontainer-base/variants/scripts/build-onnx-pytorch.sh)
+- CI 流水线配置：[devcontainer-variants.yml](../../../../.github/workflows/devcontainer-variants.yml)
 - 基础镜像 Dockerfile：[Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)
 - onnx-pytorch Dockerfile：[variants/onnx-pytorch/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-pytorch/Dockerfile)

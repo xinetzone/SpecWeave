@@ -173,7 +173,7 @@
 
 # Status Reconciliation (2026-08-01)
 - **更新方法**：七概念方法论编排（seven-concepts-cmd，里程碑复盘场景 R→I→E→C，轻量版）
-- **更新原因**：tasks.md 任务状态与实际产出物（[analysis-report.md](../../../docs/knowledge/learning/analyze-wechat-article-rqndd/analysis-report.md)）及 checklist.md（33/33 完成）存在不一致——Task 1/3/5/6/7 此前仍标记为 `[ ]`，但产出物已完整覆盖其全部 Test Requirements
+- **更新原因**：tasks.md 任务状态与实际产出物（[analysis-report.md](../../../../docs/knowledge/learning/analyze-wechat-article-rqndd/analysis-report.md)）及 checklist.md（33/33 完成）存在不一致——Task 1/3/5/6/7 此前仍标记为 `[ ]`，但产出物已完整覆盖其全部 Test Requirements
 - **验证依据**：逐项交叉核对 analysis-report.md 章节与各任务 TR 的映射关系：
   - Task 1 (TR-1.1/1.2/1.3) → 报告"一、1-5"节（文章基本信息/五大议题详解/关键数据时间线）✓
   - Task 3 (TR-3.1/3.2/3.3/3.4) → 报告"一、4-5"节（五大议题详解/关键概念与数据一览）✓

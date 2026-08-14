@@ -67,7 +67,7 @@ dX_i[n, k, m] = dy[n, offsets[i] + k, m]
 
 ### 头文件修改
 
-**文件**：[concat_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp)
+**文件**：[concat_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp)
 
 在protected区域`Forward_cpu`声明后添加：
 
@@ -87,7 +87,7 @@ std::vector<int64_t> concat_offsets_;
 
 ### Backward_cpu实现
 
-**文件**：[concat_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp#L127-L188)
+**文件**：[concat_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp#L127-L188)
 
 核心结构（约60行）：
 1. **前置检查**：propagate_down检查（所有bottom都不需要梯度时直接返回）
@@ -133,7 +133,7 @@ for (int i = 0; i < num_bottoms; ++i) {
 
 ## 测试用例（24个，全部通过）
 
-**测试文件**：[test_concat_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py)
+**测试文件**：[test_concat_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py)
 
 ### L1：已知值手算验证（4个）
 

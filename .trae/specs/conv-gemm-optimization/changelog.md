@@ -72,7 +72,7 @@
 
 **核心改动**:
 
-1. [gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md): 新增第十一章「Conv GEMM调度优化实施」
+1. [gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md): 新增第十一章「Conv GEMM调度优化实施」
 2. `.trae/specs/conv-gemm-optimization/` 新增 spec 文档集：
    - `spec.md` — PRD（目标≤200ms）与验收标准
    - `tasks.md` — 8项任务分解与基准/回归测试结果

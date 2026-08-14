@@ -164,7 +164,7 @@ endif()
 
 ### 修复5：构建脚本 SO 拷贝路径（test-cpp-tests.sh）
 
-**文件**：[test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278)
+**文件**：[test-cpp-tests.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278)
 
 **变更**：
 ```bash
@@ -323,7 +323,7 @@ Top 5 最慢用例：
 | [cmake/TargetBuild.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/TargetBuild.cmake#L59) | 修复（PRIVATE→PUBLIC） | 1 |
 | [src/caffe_ffi/blob.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L306-L345) | 修复（ShareDiff形状同步） | ~20 |
 | [python/caffe_ffi/_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/_ffi_api.py#L100-L112) | 修复（fallback状态设置） | 3 |
-| [apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278) | 修复（SO拷贝路径+PYTHONPATH） | ~10 |
+| [apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh](../../../../../../apps/docker-images/caffe-ffi-jupyter/scripts/test-cpp-tests.sh#L260-L278) | 修复（SO拷贝路径+PYTHONPATH） | ~10 |
 | [tests/python/test_python_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_python_api.py#L232-L322) | 新增（回归测试） | ~90 |
 
 ---
@@ -333,14 +333,14 @@ Top 5 最慢用例：
 | 文档 | 用途 |
 |------|------|
 | [boundary-failure-modes.md](boundary-failure-modes.md) | 5层边界+6类失效模式Mermaid流程图，含失效传播链和防御纵深检查链，用于团队分享 |
-| [cmake-cpp-python-boundary-checklist.md](../../patterns/checklists/cmake-cpp-python-boundary-checklist.md) | CMake/C++/Python混合项目通用检查清单模板（CI/CR/发布前检查） |
+| [cmake-cpp-python-boundary-checklist.md](../../../patterns/checklists/cmake-cpp-python-boundary-checklist.md) | CMake/C++/Python混合项目通用检查清单模板（CI/CR/发布前检查） |
 
 ## 萃取模式
 
 | 模式ID | 模式文件 | 说明 |
 |--------|---------|------|
-| ffi-fallback-diagnostics | [code-patterns/ffi-fallback-diagnostics.md](../../patterns/code-patterns/ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：诊断对象+公开API+严格模式环境变量，消除静默成功反模式 |
-| python-editable-import-isolation | [code-patterns/python-editable-import-isolation.md](../../patterns/code-patterns/python-editable-import-isolation.md) | editable install三层导入隔离：meta_path finder清理 + sys.path清理 + sys.modules缓存清理 |
-| cmake-cpp-python-boundary-checklist | [checklists/cmake-cpp-python-boundary-checklist.md](../../patterns/checklists/cmake-cpp-python-boundary-checklist.md) | 混合项目5大类20+检查项通用清单 |
+| ffi-fallback-diagnostics | [code-patterns/ffi-fallback-diagnostics.md](../../../patterns/code-patterns/ffi-fallback-diagnostics.md) | FFI降级路径结构化诊断：诊断对象+公开API+严格模式环境变量，消除静默成功反模式 |
+| python-editable-import-isolation | [code-patterns/python-editable-import-isolation.md](../../../patterns/code-patterns/python-editable-import-isolation.md) | editable install三层导入隔离：meta_path finder清理 + sys.path清理 + sys.modules缓存清理 |
+| cmake-cpp-python-boundary-checklist | [checklists/cmake-cpp-python-boundary-checklist.md](../../../patterns/checklists/cmake-cpp-python-boundary-checklist.md) | 混合项目5大类20+检查项通用清单 |
 | cmake-target-compile-def-visibility | (见检查清单§1.1) | CMake PRIVATE/PUBLIC/INTERFACE宏可见性正确标注 |
-| cow-trigger-path-completeness | (见[const-cow-trigger](../../patterns/code-patterns/const-cow-trigger.md)) | COW触发点覆盖所有mutable访问路径 |
+| cow-trigger-path-completeness | (见[const-cow-trigger](../../../patterns/code-patterns/const-cow-trigger.md)) | COW触发点覆盖所有mutable访问路径 |

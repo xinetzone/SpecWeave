@@ -236,4 +236,4 @@ BuildKit `--mount=type=cache` 挂载的目录是**构建时缓存**，其内容*
 
 ## 详细文档
 
-完整集成指南见 [docs/CONDA-PERF-INTEGRATION-GUIDE.md](../../../docs/CONDA-PERF-INTEGRATION-GUIDE.md)。
+完整集成指南见 [docs/CONDA-PERF-INTEGRATION-GUIDE.md](../../../../docs/CONDA-PERF-INTEGRATION-GUIDE.md)。

@@ -76,13 +76,13 @@ wiki知识库 [adversarial-review-wiki/](../docs/knowledge/learning/02-agent-eng
 **验证结果**：
 - 链接检查：111个本地引用全部通过
 - 残留扫描：10处旧引用全部集中在08-practice-cases.md实战案例历史记录中（预期保留）
-- 新增工具：[scan-adversarial-wiki.py](../../../../scripts/scan-adversarial-wiki.py) 可复用扫描脚本
+- 新增工具：[scan-adversarial-wiki.py](../../../../../scripts/scan-adversarial-wiki.py) 可复用扫描脚本
 
 **模式沉淀**：本次案例将`version-ripple-grep-sweep`模式从L1升级为L2（validation_count=2），新增"内容四分类法"核心策略。
 
 ## 代码SSOT确认
 
-代码定义位置：[knowledge_adversarial.py](../../scripts/lib/knowledge_adversarial.py#L49-L115)
+代码定义位置：[knowledge_adversarial.py](../../../../../scripts/lib/knowledge_adversarial.py#L49-L115)
 
 ```python
 ATTACKER_PROFILES: dict[str, AttackerProfile] = {

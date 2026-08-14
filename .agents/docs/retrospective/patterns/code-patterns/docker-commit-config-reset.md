@@ -98,7 +98,7 @@ CMD ["bash"]
 - ✅ 构建过程可审计（Dockerfile 即文档）
 - ✅ 无临时配置泄漏
 
-**教训**：Docker 镜像更新应优先使用 Dockerfile 声明式构建，docker commit 仅用于快速原型验证。详见归档文档 [docker-declarative-first-principle.md](../../../../knowledge/best-practices/docker-declarative-first-principle.md)
+**教训**：Docker 镜像更新应优先使用 Dockerfile 声明式构建，docker commit 仅用于快速原型验证。详见归档文档 [docker-declarative-first-principle.md](../../../knowledge/best-practices/docker-declarative-first-principle.md)
 
 ## Changelog
 

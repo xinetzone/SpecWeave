@@ -1,13 +1,13 @@
 # 任务依赖审查与风险点补充报告
 
-> 审查对象：[tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/retrospectives-insights/analyze-alipay-aipay-incentive/tasks.md) 中的任务分解
+> 审查对象：[tasks.md](tasks.md) 中的任务分解
 > 审查视角：从「开发者实际参与活动」的全流程角度，识别遗漏的关键依赖项和未被充分覆盖的风险点
 
 ---
 
 ## 一、原 tasks.md 的定位说明
 
-当前 [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/retrospectives-insights/analyze-alipay-aipay-incentive/tasks.md) 是**「指南编写项目」的任务分解**（I→V→A→质量验证→交付），不是「开发者参与活动」的执行任务分解。
+当前 [tasks.md](tasks.md) 是**「指南编写项目」的任务分解**（I→V→A→质量验证→交付），不是「开发者参与活动」的执行任务分解。
 
 从指南编写的角度，5个任务的分解基本完整，覆盖了七概念方法论的R→I→F→V→A→C链路。但在V阶段（对抗审查）中识别出的部分风险点，没有在指南的任务/行动层面充分落地为可执行的依赖检查。
 
@@ -23,7 +23,7 @@
 |--------|----------------|-------------|---------|
 | 支付宝账号实名认证 | ✅ 有提及 | 未说明实名认证时长（通常即时，但企业认证需审核1-3天） | 明确个人实名认证即时完成，企业认证需提前 |
 | 域名购买+域名实名认证 | ❌ 缺失 | 域名注册后需完成域名实名认证（1-3天），未实名无法备案 | 新增域名实名认证为独立前置步骤 |
-| **ICP备案** | ⚠️ 提到但未展开 | 仅在产品对比表中提了一句，未给出完整流程和时长预期 | 已补充 [icp-guide.md](file:///d:/spaces/SpecWeave/.trae/specs/retrospectives-insights/analyze-alipay-aipay-incentive/icp-guide.md) |
+| **ICP备案** | ⚠️ 提到但未展开 | 仅在产品对比表中提了一句，未给出完整流程和时长预期 | 已补充 [icp-guide.md](icp-guide.md) |
 | 云服务器购买 | ❌ 缺失 | 备案需要购买中国大陆节点服务器（≥3个月） | 已在icp-guide.md中补充 |
 | HTTPS证书配置 | ❌ 缺失 | 支付宝回调地址必须是HTTPS，需要SSL证书 | 已在icp-guide.md中补充 |
 | 支付宝开放平台创建应用 | ⚠️ 简单提及 | 未详细说明创建流程、审核时间、应用类型选择 | 已在daily-schedule.md Day 2中补充 |

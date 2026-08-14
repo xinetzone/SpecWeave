@@ -499,7 +499,7 @@ class NullStream {
 
 ### 步骤 5：CMakeLists.txt 添加编译开关和 DbgHelp 链接
 
-在 [src/vta/CMakeLists.txt](../../../../../../projects/xuanspace/libs/npu-ffi/src/vta/CMakeLists.txt) 中添加：
+在 [src/vta/CMakeLists.txt](../../../../../projects/xuanspace/libs/npu-ffi/src/vta/CMakeLists.txt) 中添加：
 
 ```cmake
 option(NPU_FFI_ENABLE_BACKTRACE "Enable stack backtrace for buffer leak diagnosis" ON)
@@ -515,7 +515,7 @@ else()
 endif()
 ```
 
-在顶层 [CMakeLists.txt](../../../../../../projects/xuanspace/libs/npu-ffi/CMakeLists.txt) 的 `option()` 区域添加一行：
+在顶层 [CMakeLists.txt](../../../../../projects/xuanspace/libs/npu-ffi/CMakeLists.txt) 的 `option()` 区域添加一行：
 
 ```cmake
 option(NPU_FFI_ENABLE_BACKTRACE "Enable stack backtrace for buffer leak diagnosis" ON)
@@ -523,7 +523,7 @@ option(NPU_FFI_ENABLE_BACKTRACE "Enable stack backtrace for buffer leak diagnosi
 
 ### 步骤 6：FFI 层暴露 buffer_get_construction_backtrace 函数
 
-在 [src/vta/ffi_registry.cc](../../../../../../projects/xuanspace/libs/npu-ffi/src/vta/ffi_registry.cc) 中添加查询函数：
+在 [src/vta/ffi_registry.cc](../../../../../projects/xuanspace/libs/npu-ffi/src/vta/ffi_registry.cc) 中添加查询函数：
 
 ```cpp
 #ifdef NPU_FFI_ENABLE_BACKTRACE
@@ -556,7 +556,7 @@ std::string buffer_get_construction_backtrace(int64_t ptr) {
 
 ### 步骤 7：Python Buffer 层暴露属性（可选）
 
-在 [python/npu_ffi/vta/buffer.py](../../../../../../projects/xuanspace/libs/npu-ffi/python/npu_ffi/vta/buffer.py) 添加：
+在 [python/npu_ffi/vta/buffer.py](../../../../../projects/xuanspace/libs/npu-ffi/python/npu_ffi/vta/buffer.py) 添加：
 
 ```python
 @property

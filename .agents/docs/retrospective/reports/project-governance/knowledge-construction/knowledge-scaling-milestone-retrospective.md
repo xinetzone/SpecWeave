@@ -203,35 +203,35 @@ retrospective-date: 2026-08-01
 - **单一职责**：创建专项资产化流程文档，明确4类交付物标准
 - **可独立验证**：文档包含知识库、技能、角色、模式四类资产的交付清单与验收checklist（共24项）
 - **验收标准**：文档引用MILESTONE-KNOWLEDGE-CLOOP-001模式，且checklist项数24项（≥15项要求）
-- **交付物**：[milestone-breakthrough-assetization-process.md](../../patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md)
+- **交付物**：[milestone-breakthrough-assetization-process.md](../../../patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md)
 - **完成状态**：✅ 已完成
 
 ### ✅ 行动项3：为Token优化专家角色补充迁移验证案例
 - **单一职责**：在Token优化专家角色配置中新增2个跨领域Token优化迁移案例
 - **可独立验证**：角色prompt中包含文档生成、代码审查两个非LLM对话场景的Token优化案例
 - **验收标准**：每个迁移案例包含场景描述、优化前后Token用量对比、关键优化点三个要素
-- **交付物**：[.agents/roles/token-optimizer.md](../../../../roles/token-optimizer.md)（新增"跨领域迁移验证案例"章节）
+- **交付物**：[.agents/roles/token-optimizer.md](../../../../../roles/token-optimizer.md)（新增"跨领域迁移验证案例"章节）
 - **完成状态**：✅ 已完成
 
 ### ✅ 行动项4：建立ACT改进提案的量化验证模板
 - **单一职责**：为知识构建方法论ACT改进创建标准化的效果验证模板
 - **可独立验证**：模板包含改进前基线、改进后测量、统计周期、结论四个必填部分
 - **验收标准**：模板以独立文件形式存在，且ACT-001/002/003已有对应填充记录
-- **交付物**：[act-improvement-validation-template.md](../../standards/act-improvement-validation-template.md)
+- **交付物**：[act-improvement-validation-template.md](../../../../standards/act-improvement-validation-template.md)
 - **完成状态**：✅ 已完成
 
 ### ✅ 行动项5：制定《工程攻坚复盘强制模板》
 - **单一职责**：创建P0/P1级bug修复的强制复盘模板，对应ENGINEERING-DEBUG-CLOOP-002模式
 - **可独立验证**：模板包含问题建档、根因溯源、失败尝试记录、模式萃取、防御固化5个强制章节
 - **验收标准**：模板文件存在，包含PowerShell兼容性案例回填参考和验收Checklist
-- **交付物**：[.agents/templates/engineering-debug-retrospective-template.md](../../../../templates/engineering-debug-retrospective-template.md)
+- **交付物**：[.agents/templates/engineering-debug-retrospective-template.md](../../../../../templates/engineering-debug-retrospective-template.md)
 - **完成状态**：✅ 已完成
 
 ### ✅ 行动项6：编制《Windows环境零摩擦开发指南》
 - **单一职责**：整理Windows平台开发兼容性防御checklist，对应WINDOWS-COMPAT-ZEROFRICTION-003模式
 - **可独立验证**：指南包含编码问题、Shell差异、路径处理、权限问题、工具版本5大类共18项检查项（≥15项要求）
 - **验收标准**：文档存在于docs/knowledge/目录下，且git-commit-utf8.py等现有工具均有引用链接
-- **交付物**：[windows-zero-friction-development-guide.md](../../../knowledge/best-practices/windows-zero-friction-development-guide.md)
+- **交付物**：[windows-zero-friction-development-guide.md](../../../../knowledge/best-practices/windows-zero-friction-development-guide.md)
 - **完成状态**：✅ 已完成
 
 ---
@@ -248,11 +248,11 @@ retrospective-date: 2026-08-01
 
 **C阶段行动项交付物汇总：**
 1. [spec目录关联索引INDEX.md](../../../../../../.trae/specs/retrospectives-insights/INDEX.md) - 42个关联关系
-2. [专项突破资产化标准流程](../../patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md) - 4类资产24项验收checklist
-3. [Token优化专家角色更新](../../../../roles/token-optimizer.md) - 新增2个跨领域迁移案例
-4. [ACT改进提案量化验证模板](../../standards/act-improvement-validation-template.md) - 含ACT-001/002/003示例
-5. [工程攻坚复盘强制模板](../../../../templates/engineering-debug-retrospective-template.md) - 5个强制章节
-6. [Windows环境零摩擦开发指南](../../../knowledge/best-practices/windows-zero-friction-development-guide.md) - 5大类18项检查项
+2. [专项突破资产化标准流程](../../../patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md) - 4类资产24项验收checklist
+3. [Token优化专家角色更新](../../../../../roles/token-optimizer.md) - 新增2个跨领域迁移案例
+4. [ACT改进提案量化验证模板](../../../../standards/act-improvement-validation-template.md) - 含ACT-001/002/003示例
+5. [工程攻坚复盘强制模板](../../../../../templates/engineering-debug-retrospective-template.md) - 5个强制章节
+6. [Windows环境零摩擦开发指南](../../../../knowledge/best-practices/windows-zero-friction-development-guide.md) - 5大类18项检查项
 
 下一步核心方向：
 1. ✅ **已完成**：执行上述6项原子行动项，补齐当前体系的短板（2026-08-01完成）

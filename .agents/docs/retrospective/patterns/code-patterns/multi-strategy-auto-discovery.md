@@ -49,5 +49,5 @@ reuse_count: 2
 - 场景4（生活场景）：找餐厅——朋友推荐→大众点评→地图搜索→验证营业状态→按口味偏好排序→选择最近的一家
 
 ## 参考实现
-- PowerShell实现：[NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) 中 `Get-CondaRoots`、`Find-CondaEnvPython`、`Find-VisualStudio` 函数
+- PowerShell实现：[NativeBuild.psm1](../../../../scripts/lib/NativeBuild.psm1) 中 `Get-CondaRoots`、`Find-CondaEnvPython`、`Find-VisualStudio` 函数
 - 应用案例：caffe-ffi、npu-ffi、demo-ffi、xuan-ext-demo四个C++扩展项目的构建脚本

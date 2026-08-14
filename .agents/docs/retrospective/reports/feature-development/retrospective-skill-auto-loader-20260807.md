@@ -71,16 +71,16 @@ commit: "6fb994c3"
 
 | 文件 | 类型 | 说明 |
 |------|------|------|
-| [SKILL.md](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/SKILL.md) | 新增 | 技能门面，含触发词、参数说明、快速开始 |
+| [SKILL.md](../../../../skills/load-flexloop-skills/SKILL.md) | 新增 | 技能门面，含触发词、参数说明、快速开始 |
 | [.gitignore](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/.gitignore) | 新增 | 排除缓存和派生产物 |
-| [models.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/models.py) | 新增 | 数据模型（dataclass） |
-| [discovery.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/discovery.py) | 新增 | 技能文件发现 |
-| [parser.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/parser.py) | 新增 | Frontmatter解析与验证 |
-| [cache.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/cache.py) | 新增 | 增量扫描缓存 |
-| [report.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/report.py) | 新增 | JSON+Markdown报告生成 |
-| [cli.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/scripts/cli.py) | 新增 | Typer CLI入口 |
-| [conftest.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/tests/conftest.py) | 新增 | 测试配置（解决sys.path模块名冲突） |
-| [test_skill_loader.py](file:///d:/spaces/SpecWeave/.agents/skills/load-flexloop-skills/tests/test_skill_loader.py) | 新增 | 20个单元测试 |
+| [models.py](../../../../skills/load-flexloop-skills/scripts/models.py) | 新增 | 数据模型（dataclass） |
+| [discovery.py](../../../../skills/load-flexloop-skills/scripts/discovery.py) | 新增 | 技能文件发现 |
+| [parser.py](../../../../skills/load-flexloop-skills/scripts/parser.py) | 新增 | Frontmatter解析与验证 |
+| [cache.py](../../../../skills/load-flexloop-skills/scripts/cache.py) | 新增 | 增量扫描缓存 |
+| [report.py](../../../../skills/load-flexloop-skills/scripts/report.py) | 新增 | JSON+Markdown报告生成 |
+| [cli.py](../../../../skills/load-flexloop-skills/scripts/cli.py) | 新增 | Typer CLI入口 |
+| [conftest.py](../../../../skills/load-flexloop-skills/tests/conftest.py) | 新增 | 测试配置（解决sys.path模块名冲突） |
+| [test_skill_loader.py](../../../../skills/load-flexloop-skills/tests/test_skill_loader.py) | 新增 | 20个单元测试 |
 | [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/spec.md) | 新增 | PRD产品需求文档 |
 | [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/tasks.md) | 新增 | 实施计划（8个任务） |
 | [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/checklist.md) | 新增 | 验证检查清单（18个检查点） |

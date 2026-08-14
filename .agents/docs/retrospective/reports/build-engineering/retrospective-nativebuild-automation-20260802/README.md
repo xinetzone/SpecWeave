@@ -113,21 +113,21 @@ flowchart TD
 
 | 文件路径 | 行数 | 说明 |
 |----------|------|------|
-| [lib/NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) | ~440 | 核心模块：Conda发现、项目自动发现（VsDevShell/PathPattern re-export） |
-| [lib/VsDevShell.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/VsDevShell.psm1) | ~260 | 通用模块：VS多策略发现+DevShell加载+PATH自动恢复 |
-| [lib/PathPattern.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/PathPattern.psm1) | ~107 | 通用模块：分段通配符路径解析 |
-| [build_native_ext.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_native_ext.ps1) | ~230 | 通用参数化构建脚本，6阶段进度输出 |
-| [build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1) | ~15 | caffe-ffi 薄包装脚本 |
-| [build_npu_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_npu_ffi.ps1) | ~15 | npu-ffi 薄包装脚本 |
-| [build_demo_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_demo_ffi.ps1) | ~15 | demo-ffi 薄包装脚本 |
-| [build_xuan_ext_demo.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_xuan_ext_demo.ps1) | ~15 | xuan-ext-demo 薄包装脚本 |
-| [build_caffe_ffi.bat](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.bat) | ~5 | CMD双击启动器（自动调用pwsh） |
-| [verify_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/verify_caffe_ffi.ps1) | ~10 | caffe-ffi 导入验证 |
-| [verify_native_ext.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/verify_native_ext.ps1) | ~50 | 通用扩展导入验证 |
-| [tests/test_build_scripts.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_build_scripts.Tests.ps1) | ~400 | Pester单元测试，117个测试用例 |
-| [tests/test_vsdevshell.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_vsdevshell.Tests.ps1) | ~300 | VsDevShell模块单元测试，33个测试用例 |
-| [tests/test_pathpattern.Tests.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/tests/test_pathpattern.Tests.ps1) | ~400 | PathPattern模块单元测试，46个测试用例 |
-| [knowledge/best-practices/vsdevshell-api-reference.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/best-practices/vsdevshell-api-reference.md) | ~453 | VsDevShell模块完整API参考文档 |
+| [lib/NativeBuild.psm1](../../../../../scripts/lib/NativeBuild.psm1) | ~440 | 核心模块：Conda发现、项目自动发现（VsDevShell/PathPattern re-export） |
+| [lib/VsDevShell.psm1](../../../../../scripts/lib/VsDevShell.psm1) | ~260 | 通用模块：VS多策略发现+DevShell加载+PATH自动恢复 |
+| [lib/PathPattern.psm1](../../../../../scripts/lib/PathPattern.psm1) | ~107 | 通用模块：分段通配符路径解析 |
+| [build_native_ext.ps1](../../../../../scripts/build_native_ext.ps1) | ~230 | 通用参数化构建脚本，6阶段进度输出 |
+| [build_caffe_ffi.ps1](../../../../../scripts/build_caffe_ffi.ps1) | ~15 | caffe-ffi 薄包装脚本 |
+| [build_npu_ffi.ps1](../../../../../scripts/build_npu_ffi.ps1) | ~15 | npu-ffi 薄包装脚本 |
+| [build_demo_ffi.ps1](../../../../../scripts/build_demo_ffi.ps1) | ~15 | demo-ffi 薄包装脚本 |
+| [build_xuan_ext_demo.ps1](../../../../../scripts/build_xuan_ext_demo.ps1) | ~15 | xuan-ext-demo 薄包装脚本 |
+| [build_caffe_ffi.bat](../../../../../scripts/build_caffe_ffi.bat) | ~5 | CMD双击启动器（自动调用pwsh） |
+| [verify_caffe_ffi.ps1](../../../../../scripts/verify_caffe_ffi.ps1) | ~10 | caffe-ffi 导入验证 |
+| [verify_native_ext.ps1](../../../../../scripts/verify_native_ext.ps1) | ~50 | 通用扩展导入验证 |
+| [tests/test_build_scripts.Tests.ps1](../../../../../scripts/tests/test_build_scripts.Tests.ps1) | ~400 | Pester单元测试，117个测试用例 |
+| [tests/test_vsdevshell.Tests.ps1](../../../../../scripts/tests/test_vsdevshell.Tests.ps1) | ~300 | VsDevShell模块单元测试，33个测试用例 |
+| [tests/test_pathpattern.Tests.ps1](../../../../../scripts/tests/test_pathpattern.Tests.ps1) | ~400 | PathPattern模块单元测试，46个测试用例 |
+| [knowledge/best-practices/vsdevshell-api-reference.md](../../../../knowledge/best-practices/vsdevshell-api-reference.md) | ~453 | VsDevShell模块完整API参考文档 |
 
 ### F03. 修复的Bug清单与功能改进
 
@@ -232,7 +232,7 @@ Tests Passed: 196, Failed: 0, Skipped: 0, Inconclusive: 0, NotRun: 0
 
 > 📚 以下4个模式已正式归档至模式库，点击模式名称查看完整文档（含跨领域迁移示例、检验标准、参考实现）：
 
-### P1: [多策略自动发现模式](../../patterns/code-patterns/multi-strategy-auto-discovery.md) (multi-strategy-auto-discovery)
+### P1: [多策略自动发现模式](../../../patterns/code-patterns/multi-strategy-auto-discovery.md) (multi-strategy-auto-discovery)
 
 **触发场景**：需要在不同机器上定位外部依赖（Python、Conda、Visual Studio、JDK等），安装位置和配置因用户而异。
 
@@ -252,7 +252,7 @@ Tests Passed: 196, Failed: 0, Skipped: 0, Inconclusive: 0, NotRun: 0
 
 **迁移验证**：已在 Conda发现（5级策略）和 VS发现（3级策略）中验证有效。
 
-### P2: [版本优先级排序模式](../../patterns/code-patterns/version-priority-sorting.md) (version-priority-sorting)
+### P2: [版本优先级排序模式](../../../patterns/code-patterns/version-priority-sorting.md) (version-priority-sorting)
 
 **触发场景**：多版本同类工具共存（如VS 2022/2019/Insiders、Python 3.10/3.12/3.14），需要自动选择最优版本。
 
@@ -269,7 +269,7 @@ Tests Passed: 196, Failed: 0, Skipped: 0, Inconclusive: 0, NotRun: 0
 
 **迁移验证**：VS发现正确选择v18 Insiders而非v17 2022。
 
-### P3: [PATH长度自动恢复模式](../../patterns/code-patterns/path-length-recovery.md) (path-length-recovery)
+### P3: [PATH长度自动恢复模式](../../../patterns/code-patterns/path-length-recovery.md) (path-length-recovery)
 
 **触发场景**：Windows环境下加载大型开发环境（MSVC、Intel编译器等），PATH过长导致批处理脚本命令行超过8191字符限制。
 
@@ -289,7 +289,7 @@ Tests Passed: 196, Failed: 0, Skipped: 0, Inconclusive: 0, NotRun: 0
 
 **迁移验证**：本机构建PATH 7014→1669字符，DevShell加载成功。
 
-### P4: [薄包装模式](../../patterns/code-patterns/thin-wrapper-pattern.md) (thin-wrapper-pattern)
+### P4: [薄包装模式](../../../patterns/code-patterns/thin-wrapper-pattern.md) (thin-wrapper-pattern)
 
 **触发场景**：通用构建脚本需要适配多个相似但各有差异的项目（不同项目名、Python版本要求、构建类型）。
 
@@ -450,7 +450,7 @@ Tests Passed: 196, Failed: 0, Skipped: 0, Inconclusive: 0, NotRun: 0
   - `Find-CondaEnvPython` / `Get-CondaRoots` - conda专用
   - `Find-NativeProject` / `Test-NativeProject` - scikit-build项目发现
 
-**📖 API参考文档**：[VsDevShell 模块 API 参考](../../knowledge/best-practices/vsdevshell-api-reference.md)（含完整参数说明、示例、设计模式、集成指南、FAQ）
+**📖 API参考文档**：[VsDevShell 模块 API 参考](../../../../knowledge/best-practices/vsdevshell-api-reference.md)（含完整参数说明、示例、设计模式、集成指南、FAQ）
 
 ---
 

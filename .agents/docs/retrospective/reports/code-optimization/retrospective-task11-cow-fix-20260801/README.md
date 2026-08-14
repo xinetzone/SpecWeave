@@ -154,7 +154,7 @@ cptr._blob_ref = blob_ref  # ❌ 反模式：在临时cptr上绑定引用
 |--------|------|------|
 | Python Blob _tensor_to_numpy修复 | [_core.py](file:///D:/spaces/xuanspace/python/caffe_ffi/_core.py) | 引用循环修复，_blob_ref迁移到arr.base.obj |
 | C++ Blob共享状态标志 | [blob.hpp](file:///D:/spaces/xuanspace/include/caffe_ffi/blob.hpp) / [blob.cpp](file:///D:/spaces/xuanspace/src/caffe_ffi/blob.cpp) | data_shared_/diff_shared_标志、COW逻辑修正、Reshape语义修正、空tensor refcount=0 |
-| tasks.md更新 | [tasks.md](file:///D:/spaces/SpecWeave/.trae/specs/caffe-ffi-p2b-split-perf-csv/tasks.md#L279-L291) | Task 11标记完成，记录7项修复内容 |
+| tasks.md更新 | [tasks.md](../../../../../../.trae/specs/caffe-ffi-p2b-split-perf-csv/tasks.md#L279-L291) | Task 11标记完成，记录7项修复内容 |
 | CHANGELOG更新 | [CHANGELOG.md](file:///D:/spaces/xuanspace/CHANGELOG.md) | Unreleased段记录COW机制与内存泄漏修复 |
 | 本复盘报告 | 本文件 | R-I-E结构化里程碑复盘 |
 

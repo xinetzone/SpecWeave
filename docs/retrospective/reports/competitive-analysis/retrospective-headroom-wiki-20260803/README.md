@@ -23,10 +23,10 @@
 
 | 文件名 | 用途 | 对应TOML |
 |--------|------|----------|
-| [README.md](./README.md) | 复盘主入口，核心指标与摘要 | [README.toml](../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.toml) |
-| [execution-retrospective.md](./execution-retrospective.md) | 执行过程复盘，时间线与问题根因分析 | [execution-retrospective.toml](../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/execution-retrospective.toml) |
-| [insight-extraction.md](./insight-extraction.md) | 洞察萃取，8条核心洞察与可复用模式 | [insight-extraction.toml](../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/insight-extraction.toml) |
-| [export-suggestions.md](./export-suggestions.md) | 导出与改进建议，行动项与模式成熟度评估 | [export-suggestions.toml](../../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/export-suggestions.toml) |
+| [README.md](./README.md) | 复盘主入口，核心指标与摘要 | [README.toml](../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.toml) |
+| [execution-retrospective.md](./execution-retrospective.md) | 执行过程复盘，时间线与问题根因分析 | [execution-retrospective.toml](../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/execution-retrospective.toml) |
+| [insight-extraction.md](./insight-extraction.md) | 洞察萃取，8条核心洞察与可复用模式 | [insight-extraction.toml](../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/insight-extraction.toml) |
+| [export-suggestions.md](./export-suggestions.md) | 导出与改进建议，行动项与模式成熟度评估 | [export-suggestions.toml](../../../../../.meta/toml/.agents/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/export-suggestions.toml) |
 
 ## 整体评估
 

@@ -34,10 +34,10 @@ docker/.agents/
 ## 父级继承
 
 所有未在本目录定义的规则、角色、技能均回退到 SpecWeave 根工作区：
-- 全局规则：[../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md)
-- 全局 Skill：[../../../.agents/skills/](../../../.agents/skills/)
-- 七概念指令集：[../../../.agents/commands/](../../../.agents/commands/)
-- Dockerfile 自动化测试脚本：[../../../.agents/scripts/test-dockerfiles.ps1](../../../.agents/scripts/test-dockerfiles.ps1)
+- 全局规则：[../../../.agents/global-core-rules.md](../../../../../.agents/global-core-rules.md)
+- 全局 Skill：[../../../.agents/skills/](../../../../../.agents/skills/)
+- 七概念指令集：[../../../.agents/commands/](../../../../../.agents/commands/)
+- Dockerfile 自动化测试脚本：[../../../.agents/scripts/test-dockerfiles.ps1](../../../../../.agents/scripts/test-dockerfiles.ps1)
 - 日志库：[lib/logging.sh](lib/logging.sh)（xmnn-runtime专用）
 
 ## 变更日志

@@ -119,7 +119,7 @@ Placeholder of length '80' too short in file .../_caffe_ffi.so
 
 **修复方案**：
 
-在[full-clean-rebuild.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh#L157-L163)的Step 4（conda install）**之后**添加post-install清理：
+在[full-clean-rebuild.sh](scripts/full-clean-rebuild.sh#L157-L163)的Step 4（conda install）**之后**添加post-install清理：
 
 ```bash
 # Post-install cleanup: remove any stray editable finder files
@@ -140,7 +140,7 @@ echo "  Post-install cleanup done"
 
 **根因**：conda-build --test默认不继承构建时的channel配置，需要显式指定`-c conda-forge`。
 
-**修复**：在[full-clean-rebuild.sh](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh#L332)中添加channel参数：
+**修复**：在[full-clean-rebuild.sh](scripts/full-clean-rebuild.sh#L332)中添加channel参数：
 ```bash
 conda-build --test -c conda-forge "$_PKG_FILE"
 ```
@@ -391,12 +391,12 @@ print(\"Blob test:\", b.count(), np.allclose(b.to_numpy(), 1.0))
 
 ## 附录：build 6 代码改进（基于最佳实践审查）
 
-基于 [conda-build-best-practices.md](../../.agents/checklists/conda-build-best-practices.md) 自动化检查发现的问题，build 6 做了以下代码改进（待Docker构建验证）：
+基于 [conda-build-best-practices.md](../../../.agents/checklists/conda-build-best-practices.md) 自动化检查发现的问题，build 6 做了以下代码改进（待Docker构建验证）：
 
 | 改进项 | 文件 | 说明 |
 |--------|------|------|
-| editable清理模式通用化 | [build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 新增`clean_editable_files()`辅助函数，将`_editable_skbc_*`具体模式改为`_editable_*`/`__editable__*`通配模式，防止遗漏其他editable变体 |
-| 源码路径.pth清理 | [build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 在clean_editable_files()中增加对指向xuanspace/SpecWeave/_skbuild源码路径的.pth文件检测和删除 |
-| CMAKE_INSTALL_RPATH去绝对路径 | [build.sh](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 将`${PREFIX}/lib`绝对路径改为`$ORIGIN/../../..`相对路径，消除CMake构建阶段的绝对路径残留风险 |
+| editable清理模式通用化 | [build.sh](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 新增`clean_editable_files()`辅助函数，将`_editable_skbc_*`具体模式改为`_editable_*`/`__editable__*`通配模式，防止遗漏其他editable变体 |
+| 源码路径.pth清理 | [build.sh](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 在clean_editable_files()中增加对指向xuanspace/SpecWeave/_skbuild源码路径的.pth文件检测和删除 |
+| CMAKE_INSTALL_RPATH去绝对路径 | [build.sh](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/build.sh) | 将`${PREFIX}/lib`绝对路径改为`$ORIGIN/../../..`相对路径，消除CMake构建阶段的绝对路径残留风险 |
 | post-install清理增强 | [full-clean-rebuild.sh](scripts/full-clean-rebuild.sh) | post-install步骤同步增加`__editable__*`变体清理和源码路径.pth文件删除，与build.sh保持一致 |
-| build number递增 | [meta.yaml](../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number: 5 → 6 |
+| build number递增 | [meta.yaml](../../../projects/xuanspace/libs/caffe-ffi/conda.recipe/meta.yaml) | build number: 5 → 6 |

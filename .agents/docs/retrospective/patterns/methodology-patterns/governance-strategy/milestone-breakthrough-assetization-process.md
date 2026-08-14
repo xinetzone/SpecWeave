@@ -92,7 +92,7 @@ tags: ["methodology", "process", "assetization", "knowledge-management", "milest
 | RL-006 | 在capability-registry.md和协作场景文档中有对应索引 | 必须 |
 
 **参考案例**：
-- [Token Optimizer角色](../../roles/token-optimizer.md)
+- [Token Optimizer角色](../../../../../roles/token-optimizer.md)
 
 > **说明**：不是每个专项都需要新角色。如果专项能力可以并入现有角色，只需更新现有角色定义即可，不需要强行创建新角色。
 

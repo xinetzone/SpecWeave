@@ -401,9 +401,9 @@ session: "sc-20260814-devcontainer-milestone"
 
 | 洞察/模式 | 萃取状态 | 入库位置 | 成熟度 |
 |-----------|---------|---------|--------|
-| 洞察4：conda 默认线程数保守 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O1并行度调优 | L1 实验性 |
-| 洞察5：conda solver 重复求解 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O2+O3命令合并+原生CLI | L1 实验性 |
-| 模式3：Conda构建层性能三联优化 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) | L1 实验性 |
-| 洞察3：GCC运行时自动升级兼容 | ✅ 已补充 | [conda-abi-variant-safe-switching.md](../../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) 关键决策+反模式+检验标准 | L2 已验证（双案例升级） |
-| 模式1：四层验证流水线 | ✅ 已升级 | [docker-build-four-layer-verification.md](../../../../patterns/code-patterns/docker-build-four-layer-verification.md) | L1→L2 已验证（双案例+复用） |
-| 模式2：ABI安全切换 | ✅ 已升级 | [conda-abi-variant-safe-switching.md](../../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) | L1→L2 已验证（双案例+复用） |
+| 洞察4：conda 默认线程数保守 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O1并行度调优 | L1 实验性 |
+| 洞察5：conda solver 重复求解 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) O2+O3命令合并+原生CLI | L1 实验性 |
+| 模式3：Conda构建层性能三联优化 | ✅ 已萃取 | [conda-build-performance-triple-optimization.md](../../../patterns/code-patterns/conda-build-performance-triple-optimization.md) | L1 实验性 |
+| 洞察3：GCC运行时自动升级兼容 | ✅ 已补充 | [conda-abi-variant-safe-switching.md](../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) 关键决策+反模式+检验标准 | L2 已验证（双案例升级） |
+| 模式1：四层验证流水线 | ✅ 已升级 | [docker-build-four-layer-verification.md](../../../patterns/code-patterns/docker-build-four-layer-verification.md) | L1→L2 已验证（双案例+复用） |
+| 模式2：ABI安全切换 | ✅ 已升级 | [conda-abi-variant-safe-switching.md](../../../patterns/code-patterns/conda-abi-variant-safe-switching.md) | L1→L2 已验证（双案例+复用） |

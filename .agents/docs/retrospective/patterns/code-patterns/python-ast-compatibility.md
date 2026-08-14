@@ -369,7 +369,7 @@ multiprocessing.set_start_method("fork", force=True)
 - 69个校准样本全部加载完成
 - 无 pickle 错误
 
-**教训**：Python大版本升级时，不仅要检查AST/语法变更（案例1），还要检查**运行时行为默认值变更**（案例2）。详见归档文档 [python-version-upgrade-compatibility-check.md](../../../../knowledge/best-practices/python-version-upgrade-compatibility-check.md)
+**教训**：Python大版本升级时，不仅要检查AST/语法变更（案例1），还要检查**运行时行为默认值变更**（案例2）。详见归档文档 [python-version-upgrade-compatibility-check.md](../../../knowledge/best-practices/python-version-upgrade-compatibility-check.md)
 
 ## 迁移示例
 

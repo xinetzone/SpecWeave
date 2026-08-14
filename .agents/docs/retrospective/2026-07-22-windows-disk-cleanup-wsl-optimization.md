@@ -163,8 +163,8 @@ maturity: "validated"
 
 | 产出物 | 位置 | 说明 |
 |--------|------|------|
-| Trae缓存清理脚本 | [cleanup-trae-cache.ps1](file:///D:/spaces/SpecWeave/.agents/scripts/cleanup-trae-cache.ps1) | 带DryRun/白名单/进程检测的安全清理脚本 |
-| WSL VHDX压缩脚本 | [compress-wsl-vhdx.ps1](file:///D:/spaces/SpecWeave/.agents/scripts/compress-wsl-vhdx.ps1) | 管理员权限，fstrim+shutdown+compact三步骤 |
+| Trae缓存清理脚本 | [cleanup-trae-cache.ps1](../../scripts/cleanup-trae-cache.ps1) | 带DryRun/白名单/进程检测的安全清理脚本 |
+| WSL VHDX压缩脚本 | [compress-wsl-vhdx.ps1](../../scripts/compress-wsl-vhdx.ps1) | 管理员权限，fstrim+shutdown+compact三步骤 |
 | 本复盘报告 | 本文件 | R-I-E结构化复盘+模式萃取 |
 
 ---

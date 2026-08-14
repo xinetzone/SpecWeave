@@ -42,7 +42,7 @@ source: "retrospective-specweave-full-project-20260719#核心问题4"
   3. **知识传递缺失**：架构决策过程、设计哲学、调试技巧等隐性知识只在xinetzone脑中，文档虽多但缺乏"为什么这样设计"的上下文
 
 **为什么没有人类贡献者入职文档？**
-- 因为项目从0到1的27天是xinetzone单人高速迭代期，[CONTRIBUTING.md](../../../../CONTRIBUTING.md) 只写了git操作流程（clone/branch/commit/PR），缺乏架构理解、开发环境配置、模块地图等新人必需信息。
+- 因为项目从0到1的27天是xinetzone单人高速迭代期，[CONTRIBUTING.md](../../../CONTRIBUTING.md) 只写了git操作流程（clone/branch/commit/PR），缺乏架构理解、开发环境配置、模块地图等新人必需信息。
 
 **根因总结**：不是项目不欢迎贡献，而是**贡献者漏斗在"了解项目"和"找到第一个任务"两个环节断裂**——新人能看到代码但看不懂，想贡献但不知从何下手。
 
@@ -188,10 +188,10 @@ flowchart LR
 
 | 现有资产 | 对团队建设的价值 | 需要改进 |
 |---------|----------------|---------|
-| [CONTRIBUTING.md](../../../../CONTRIBUTING.md) | 已有git操作流程 | 缺少架构理解/环境搭建/新人引导内容 |
+| [CONTRIBUTING.md](../../../CONTRIBUTING.md) | 已有git操作流程 | 缺少架构理解/环境搭建/新人引导内容 |
 | [GOVERNANCE.md](../../../../GOVERNANCE.md) | 已有治理框架 | 需要补充决策流程细节和角色晋升路径 |
 | [CODEOWNERS](../../../../CODEOWNERS) | 已有所有权机制 | 目前核心目录只有xinetzone，需补充第二owner |
-| [.agents/teams/](../teams/README.md) | 已有AI角色团队体系 | 面向AI，不适用人类贡献者，但RBAC模型可参考 |
+| [.agents/teams/](../../teams/) | 已有AI角色团队体系 | 面向AI，不适用人类贡献者，但RBAC模型可参考 |
 | [.agents/ONBOARDING.md](../../ONBOARDING.md) | 有onboarding文档概念 | 面向AI智能体，需要新建人类版本 |
 | CI质量门禁（16步） | 自动化防护完善 | 权限下放后CI安全网已经足够 |
 | 周复盘机制（ACT-04刚完成） | 已有周度节奏 | 可以扩展为包含贡献者活跃度的周度审视 |

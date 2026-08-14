@@ -15,7 +15,7 @@ wiki_version: '1.0'
 
 VeADK 提供了完整的认证与凭证管理体系，支持多种认证方式，包括 API Key、OAuth2、请求签名、VeFaaS IAM 角色等。认证模块设计了清晰的优先级机制，并提供凭证服务用于安全地存储和管理用户凭证，同时内置了日志凭证脱敏功能以防止敏感信息泄露。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/)
+> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/](#)
 
 ---
 

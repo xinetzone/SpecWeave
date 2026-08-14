@@ -132,17 +132,17 @@ graph TB
 
 | 文件 | 行数 | 职责 |
 |------|------|------|
-| [checker_base.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checker_base.py) | 204 | 检查器基类 `BaseChecker` 和共享上下文 `CheckerContext` |
-| [coordinator.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/coordinator.py) | 251 | AST遍历协调器 `ConcurrentSafetyCoordinator` |
-| [checkers/timeout_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/timeout_checker.py) | 137 | TIMEOUT维度：锁/等待超时检查 |
-| [checkers/idempotent_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/idempotent_checker.py) | 65 | IDEMPOTENT维度：列表追加去重检查 |
-| [checkers/boundary_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/boundary_checker.py) | 61 | BOUNDARY维度：O(n)线性查找检查 |
-| [checkers/defensive_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/defensive_checker.py) | 109 | DEFENSIVE维度：可变默认参数/防御性拷贝 |
-| [checkers/config_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/config_checker.py) | 47 | CONFIG维度：硬编码参数检查 |
-| [checkers/i18n_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/i18n_checker.py) | 91 | I18N维度：中文字面量检查 |
-| [checkers/deadlock_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/deadlock_checker.py) | 177 | DEADLOCK维度：锁获取顺序一致性检查 |
-| [checkers/leak_checker.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/checkers/leak_checker.py) | 122 | LEAK维度：线程池/进程池资源泄漏检查 |
-| [visitor.py](file:///C:/Users/admin/Desktop/Dao/flows/SpecWeave/.agents/scripts/lib/check_concurrent_safety/visitor.py) | ~20 | 向后兼容别名 |
+| [checker_base.py](../../.agents/scripts/lib/check_concurrent_safety/checker_base.py) | 204 | 检查器基类 `BaseChecker` 和共享上下文 `CheckerContext` |
+| [coordinator.py](../../.agents/scripts/lib/check_concurrent_safety/coordinator.py) | 251 | AST遍历协调器 `ConcurrentSafetyCoordinator` |
+| [checkers/timeout_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/timeout_checker.py) | 137 | TIMEOUT维度：锁/等待超时检查 |
+| [checkers/idempotent_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/idempotent_checker.py) | 65 | IDEMPOTENT维度：列表追加去重检查 |
+| [checkers/boundary_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/boundary_checker.py) | 61 | BOUNDARY维度：O(n)线性查找检查 |
+| [checkers/defensive_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/defensive_checker.py) | 109 | DEFENSIVE维度：可变默认参数/防御性拷贝 |
+| [checkers/config_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/config_checker.py) | 47 | CONFIG维度：硬编码参数检查 |
+| [checkers/i18n_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/i18n_checker.py) | 91 | I18N维度：中文字面量检查 |
+| [checkers/deadlock_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/deadlock_checker.py) | 177 | DEADLOCK维度：锁获取顺序一致性检查 |
+| [checkers/leak_checker.py](../../.agents/scripts/lib/check_concurrent_safety/checkers/leak_checker.py) | 122 | LEAK维度：线程池/进程池资源泄漏检查 |
+| [visitor.py](../../.agents/scripts/lib/check_concurrent_safety/visitor.py) | ~20 | 向后兼容别名 |
 
 ## 3.3. **核心设计**
 

@@ -48,5 +48,5 @@ reuse_count: 2
 - 场景4（招聘筛选）：候选人排序——先按工作年限（数值），再按学历优先级（博士>硕士>本科），再按技能匹配度
 
 ## 参考实现
-- PowerShell实现：[NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) 中 `Convert-VsVersionDirToNumber`、`Find-VisualStudio` 函数
+- PowerShell实现：[NativeBuild.psm1](../../../../scripts/lib/NativeBuild.psm1) 中 `Convert-VsVersionDirToNumber`、`Find-VisualStudio` 函数
 - 验证案例：本机同时安装VS 2022（v17）和VS 2026 Insiders（v18）时，正确选择v18 Insiders

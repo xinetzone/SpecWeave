@@ -288,7 +288,7 @@
 
 ### 模式1：生产/调试双模式条件编译
 
-📎 模式库：[cpp-compiletime-conditional-zero-overhead.md](../../.agents/docs/retrospective/patterns/code-patterns/cpp-compiletime-conditional-zero-overhead.md)
+📎 模式库：[cpp-compiletime-conditional-zero-overhead.md](../../../.agents/docs/retrospective/patterns/code-patterns/cpp-compiletime-conditional-zero-overhead.md)
 
 **触发场景**：推理引擎包含性能统计、调试日志、范数计算等开发辅助代码，Release 构建需零开销。
 
@@ -303,7 +303,7 @@
 
 ### 模式2：OpenBLAS + OpenMP 共存配置
 
-📎 模式库：[blas-openmp-nested-parallelism.md](../../.agents/docs/retrospective/patterns/code-patterns/blas-openmp-nested-parallelism.md)
+📎 模式库：[blas-openmp-nested-parallelism.md](../../../.agents/docs/retrospective/patterns/code-patterns/blas-openmp-nested-parallelism.md)
 
 **触发场景**：使用 OpenBLAS 的项目同时使用 OpenMP 做外层并行。
 
@@ -317,7 +317,7 @@
 
 ### 模式3：OpenMP 卷积层通道分块+算子融合
 
-📎 模式库：[openmp-conv-channel-parallel-fusion.md](../../.agents/docs/retrospective/patterns/code-patterns/openmp-conv-channel-parallel-fusion.md)
+📎 模式库：[openmp-conv-channel-parallel-fusion.md](../../../.agents/docs/retrospective/patterns/code-patterns/openmp-conv-channel-parallel-fusion.md)
 
 **触发场景**：对卷积层做 OpenMP 并行时，需平衡负载均衡、GEMM 效率和线程开销。
 
@@ -330,7 +330,7 @@
 
 ### 模式4：Python 测试同名模块冲突防御
 
-📎 模式库：[pytest-relative-import-module-conflict.md](../../.agents/docs/retrospective/patterns/code-patterns/pytest-relative-import-module-conflict.md)
+📎 模式库：[pytest-relative-import-module-conflict.md](../../../.agents/docs/retrospective/patterns/code-patterns/pytest-relative-import-module-conflict.md)
 
 **触发场景**：pytest 测试目录中存在同名工具模块（如多个 utils.py）。
 
@@ -343,7 +343,7 @@
 
 ### 模式5：大文件下载完整性校验
 
-📎 已有L2成熟模式：[pretrained-model-download-validation.md](../../.agents/docs/retrospective/patterns/code-patterns/pretrained-model-download-validation.md)（多源fallback + magic bytes + 加载验证多级校验链）
+📎 已有L2成熟模式：[pretrained-model-download-validation.md](../../../.agents/docs/retrospective/patterns/code-patterns/pretrained-model-download-validation.md)（多源fallback + magic bytes + 加载验证多级校验链）
 
 **触发场景**：自动下载预训练模型等大文件时。
 
@@ -356,7 +356,7 @@
 
 ### 模式6：Conda 环境构建最佳实践
 
-📎 模式库：[conda-docker-multistage-best-practices.md](../../.agents/docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md)
+📎 模式库：[conda-docker-multistage-best-practices.md](../../../.agents/docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md)
 
 **触发场景**：构建 Docker 镜像或新建 conda 环境时。
 

@@ -23,7 +23,7 @@ reuse_count: 1
 
 ## 执行摘要
 
-使用七概念方法论（R-I-E-C-A-F-V）对 [apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
+使用七概念方法论（R-I-E-C-A-F-V）对 [apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
 
 **方法论执行链路**：R(复盘) → I(洞察) → E(萃取) → V(对抗审查)，跳过 C(原子提交)/A(原子化)/F(第一性原理)（C/A 为代码重构、F 在 I 阶段已天然体现）。
 
@@ -35,7 +35,7 @@ reuse_count: 1
 - 全部通过 G1-G4 质量门检查
 
 **关键数据**：
-- 项目位置：[apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base)
+- 项目位置：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/)
 - 基础镜像：ubuntu:26.04
 - Python 环境：Python 3.14 /opt/venv
 - 镜像体积：713 MB（多阶段构建后）
@@ -50,7 +50,7 @@ reuse_count: 1
 
 ### F01. 项目定位与架构
 
-- 项目路径：[apps/docker-images/jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base)
+- 项目路径：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/)
 - 项目类型：Docker 基础开发镜像（Jupyter Lab + SSH 远程访问）
 - 用途：作为 caffe-ffi-jupyter 等上层应用镜像的 base 镜像
 - 基础镜像：ubuntu:26.04
@@ -65,16 +65,16 @@ reuse_count: 1
 | 文件 | 行数 | 职责 |
 |------|------|------|
 | [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) | 180 | 多阶段构建（builder + runtime 6层） |
-| [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/entrypoint.sh) | 125 | 6步运行时初始化（密码/密钥/服务/Jupyter/信号转发） |
+| [entrypoint.sh](../../../../../../apps/docker-images/jupyter-ssh-base/entrypoint.sh) | 125 | 6步运行时初始化（密码/密钥/服务/Jupyter/信号转发） |
 | [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) | 40 | SSH 服务配置（LogLevel=ERROR） |
-| [config/supervisord.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisord.conf) | 25 | Supervisor 主配置 |
-| [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) | 20 | Jupyter 服务配置（stderr 分流） |
-| [config/supervisor/conf.d/sshd.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/sshd.conf) | 10 | SSH 服务配置 |
-| [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) | 60 | TCP空探针+HTTP状态码健康检查 |
-| [scripts/healthcheck-test.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck-test.sh) | - | 健康检查测试脚本 |
-| [scripts/test-ssh-noninteractive-path.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/test-ssh-noninteractive-path.sh) | - | SSH非交互PATH验证脚本 |
+| [config/supervisord.conf](../../../../../../apps/docker-images/jupyter-ssh-base/config/supervisord.conf) | 25 | Supervisor 主配置 |
+| [config/supervisor/conf.d/jupyter.conf](../../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) | 20 | Jupyter 服务配置（stderr 分流） |
+| [config/supervisor/conf.d/sshd.conf](../../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/sshd.conf) | 10 | SSH 服务配置 |
+| [scripts/healthcheck.sh](../../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) | 60 | TCP空探针+HTTP状态码健康检查 |
+| [scripts/healthcheck-test.sh](../../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck-test.sh) | - | 健康检查测试脚本 |
+| [scripts/test-ssh-noninteractive-path.sh](../../../../../../apps/docker-images/jupyter-ssh-base/scripts/test-ssh-noninteractive-path.sh) | - | SSH非交互PATH验证脚本 |
 | [README.md](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/README.md) | 155 | 使用文档 |
-| [AGENTS.md](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/AGENTS.md) | 50 | 智能体路由规范 |
+| [AGENTS.md](../../../../../../apps/docker-images/jupyter-ssh-base/AGENTS.md) | 50 | 智能体路由规范 |
 
 ### F03. 构建阶段结构（物理两阶段）
 
@@ -184,7 +184,7 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 
 | 属性 | 值 |
 |------|-----|
-| 模式文件 | [docker-ssh-noninteractive-path-fix.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) |
+| 模式文件 | [docker-ssh-noninteractive-path-fix.md](../../../patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) |
 | 变更内容 | 从"三重保障"升级为"四重保障"，新增 supervisord environment= 作为第4层 |
 | 原成熟度 | L2（已有验证） |
 | 新成熟度 | L2-validated（jupyter-ssh-base 四入口全链路验证） |
@@ -202,7 +202,7 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 
 | 属性 | 值 |
 |------|-----|
-| 模式文件 | [dockerfile-runtime-logical-layering.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
+| 模式文件 | [dockerfile-runtime-logical-layering.md](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
 | 成熟度 | L1-draft（单项目验证，待更多项目验证后升级L2） |
 | 解决问题 | runtime 阶段大杂烩 RUN 导致缓存失效范围大、错误定位难、职责不清 |
 
@@ -224,7 +224,7 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 
 | 属性 | 值 |
 |------|-----|
-| 模式文件 | [container-healthcheck-minimal-probe.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/container-healthcheck-minimal-probe.md) |
+| 模式文件 | [container-healthcheck-minimal-probe.md](../../../patterns/code-patterns/container-healthcheck-minimal-probe.md) |
 | 成熟度 | L1-draft（单项目验证，待更多项目验证后升级L2） |
 | 解决问题 | 健康检查导致日志噪音、偶发误报、性能开销 |
 
@@ -286,11 +286,11 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 ### V5. 维护者视角："新模式和现有模式库有没有冲突或重复？"
 
 **审查**：对比现有模式库中相关模式：
-- [docker-buildtime-vs-runtime-config.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-buildtime-vs-runtime-config.md)：讨论构建时 vs 运行时配置职责分离，是本模式的前提原则，无冲突
-- [docker-timezone-configuration.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-timezone-configuration.md)：时区配置三层保障，与 PATH 四重保障是同构问题，互相印证，无冲突
-- [compiled-wheel-runtime-image-build.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md)：Python wheel运行时镜像构建，六步分层模式可作为其上层组织原则，互补不重复
-- [conda-docker-multistage-best-practices.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md)：Conda多阶段构建最佳实践，六步分层可与之结合，无冲突
-- [dual-channel-tiered-logging.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)：双通道日志，健康检查的stderr分流是其具体应用场景，互相印证
+- [docker-buildtime-vs-runtime-config.md](../../../patterns/code-patterns/docker-buildtime-vs-runtime-config.md)：讨论构建时 vs 运行时配置职责分离，是本模式的前提原则，无冲突
+- [docker-timezone-configuration.md](../../../patterns/code-patterns/docker-timezone-configuration.md)：时区配置三层保障，与 PATH 四重保障是同构问题，互相印证，无冲突
+- [compiled-wheel-runtime-image-build.md](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md)：Python wheel运行时镜像构建，六步分层模式可作为其上层组织原则，互补不重复
+- [conda-docker-multistage-best-practices.md](../../../patterns/code-patterns/conda-docker-multistage-best-practices.md)：Conda多阶段构建最佳实践，六步分层可与之结合，无冲突
+- [dual-channel-tiered-logging.md](../../../patterns/code-patterns/dual-channel-tiered-logging.md)：双通道日志，健康检查的stderr分流是其具体应用场景，互相印证
 
 **结论**：新模式与现有模式库完全对齐，无冲突、无重复、有互补关系。
 
@@ -321,24 +321,24 @@ supervisord 启动的子进程   supervisord environment= 配置      supervisor
 ## 交叉引用索引
 
 ### 模式库产出
-- 📈 [docker-ssh-noninteractive-path-fix.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) — 更新至L2，新增supervisord层
-- 🆕 [dockerfile-runtime-logical-layering.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) — L1-draft 新增
-- 🆕 [container-healthcheck-minimal-probe.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/container-healthcheck-minimal-probe.md) — L1-draft 新增
+- 📈 [docker-ssh-noninteractive-path-fix.md](../../../patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) — 更新至L2，新增supervisord层
+- 🆕 [dockerfile-runtime-logical-layering.md](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) — L1-draft 新增
+- 🆕 [container-healthcheck-minimal-probe.md](../../../patterns/code-patterns/container-healthcheck-minimal-probe.md) — L1-draft 新增
 
 ### 关联项目文件
 - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile) — 多阶段构建参考实现
-- [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/entrypoint.sh) — 6步运行时初始化参考
-- [scripts/healthcheck.sh](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) — 最小探针参考实现
+- [entrypoint.sh](../../../../../../apps/docker-images/jupyter-ssh-base/entrypoint.sh) — 6步运行时初始化参考
+- [scripts/healthcheck.sh](../../../../../../apps/docker-images/jupyter-ssh-base/scripts/healthcheck.sh) — 最小探针参考实现
 - [config/sshd_config](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/sshd_config) — LogLevel=ERROR配置
-- [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) — stderr分流配置
+- [config/supervisor/conf.d/jupyter.conf](../../../../../../apps/docker-images/jupyter-ssh-base/config/supervisor/conf.d/jupyter.conf) — stderr分流配置
 
 ### 关联已有模式
-- [docker-buildtime-vs-runtime-config.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-buildtime-vs-runtime-config.md)
-- [docker-timezone-configuration.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-timezone-configuration.md)
-- [compiled-wheel-runtime-image-build.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md)
-- [conda-docker-multistage-best-practices.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md)
-- [env-var-alias-backward-compat.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/env-var-alias-backward-compat.md)
-- [dual-channel-tiered-logging.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dual-channel-tiered-logging.md)
+- [docker-buildtime-vs-runtime-config.md](../../../patterns/code-patterns/docker-buildtime-vs-runtime-config.md)
+- [docker-timezone-configuration.md](../../../patterns/code-patterns/docker-timezone-configuration.md)
+- [compiled-wheel-runtime-image-build.md](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md)
+- [conda-docker-multistage-best-practices.md](../../../patterns/code-patterns/conda-docker-multistage-best-practices.md)
+- [env-var-alias-backward-compat.md](../../../patterns/code-patterns/env-var-alias-backward-compat.md)
+- [dual-channel-tiered-logging.md](../../../patterns/code-patterns/dual-channel-tiered-logging.md)
 
 ---
 

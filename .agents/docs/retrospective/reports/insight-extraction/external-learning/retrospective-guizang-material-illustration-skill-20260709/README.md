@@ -62,7 +62,7 @@ generated: "2026-08-01"
 
 ## 关联资源
 
-- [Spec 三件套（保留在 spec 目录）](../../../../../../.trae/specs/retrospectives-insights/analyze-guizang-material-illustration-skill/spec.md) —— spec.md / tasks.md / checklist.md 作为过程产物保留
+- [Spec 三件套（保留在 spec 目录）](../../../../../../../.trae/specs/retrospectives-insights/analyze-guizang-material-illustration-skill/spec.md) —— spec.md / tasks.md / checklist.md 作为过程产物保留
 - [萃取模式：提示词到产品七步法](../../../../patterns/methodology-patterns/ai-collaboration/prompt-to-product-seven-steps.md) —— 本案例萃取的可复用方法论模式（L1成熟度）
 - [同类先例：Codex Skills 文章分析归档](../retrospective-skills-article-learning-20260629/README.md) —— 同为AI Skill开发实践文章分析
 - [同类先例：Tutti 多Agent工作空间分析归档](../retrospective-tutti-analysis-20260707/README.md) —— 同为外部开源产品深度洞察分析

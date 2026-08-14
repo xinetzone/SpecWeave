@@ -93,7 +93,7 @@ source: "retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md#p3-backwa
 
 ## 四、萃取（E 阶段）
 
-> 可复用模式详见 [09-insights-patterns.md](09-insights-patterns.md) 与 [BLOB_OBJECT_TEST_FAILURES_RETROSPECTIVE_20260804.md](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/BLOB_OBJECT_TEST_FAILURES_RETROSPECTIVE_20260804.md)。
+> 可复用模式详见 [09-insights-patterns.md](09-insights-patterns.md) 与 [BLOB_OBJECT_TEST_FAILURES_RETROSPECTIVE_20260804.md](../../../../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/BLOB_OBJECT_TEST_FAILURES_RETROSPECTIVE_20260804.md)。
 
 ### 模式 1：FFI 对象断言兼容（FFI-Object-Assertion-Compat）
 
@@ -142,7 +142,7 @@ P3 阶段（Backward 实现与验证）**圆满收官**：
 
 ## 附：相关文档
 
-- [P3-E 验收报告](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)
+- [P3-E 验收报告](../../../../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)
 - [P4 路线图](../../../../../../../.trae/specs/caffe-ffi-tvm-integration/p4-roadmap.md)
 - [P3-D Backward 待办清单](08-p3d-backward-todo.md)
 - [P3-E 实现计划](17-p3e-backward-implementation-plan.md)

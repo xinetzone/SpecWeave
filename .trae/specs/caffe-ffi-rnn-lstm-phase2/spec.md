@@ -22,7 +22,7 @@ Phase 2 已全部完成并通过验收：
 
 `caffe-ffi-tvm-integration` 的 Task 30 Phase 2 需要实现 C++ `RecurrentLayer`（含 `LSTMUnit/LSTMLayer`、`RNNLayer`）并提供 Backward 梯度支持。Phase 1（`caffe-ffi-rnn-lstm-phase1`）已交付纯 Python 前向推理 API（`caffe_ffi.sequence`，16 测试通过），可作为 Phase 2 前向的**数值基准**。
 
-Phase 2 的**核心难点是 Backward 梯度正确性**（尤其 BPTT 时间展开）。当前主规范的 Task 30 Phase 2 规划**未定义任何梯度验证标准**，而项目已沉淀一套成熟的 L0-L1-L2-L3 三层验证工作流（见 [caffe-layer-backward-validation-workflow.md](../../../projects/xuanspace/libs/caffe-ffi/.agents/docs/knowledge/best-practices/caffe-layer-backward-validation-workflow.md)）。本 Spec 将这套标准**完整显式化**，作为 Phase 2 实现与验收的硬性门槛。
+Phase 2 的**核心难点是 Backward 梯度正确性**（尤其 BPTT 时间展开）。当前主规范的 Task 30 Phase 2 规划**未定义任何梯度验证标准**，而项目已沉淀一套成熟的 L0-L1-L2-L3 三层验证工作流（见 [caffe-layer-backward-validation-workflow.md](../../../.agents/docs/knowledge/best-practices/caffe-layer-backward-validation-workflow.md)）。本 Spec 将这套标准**完整显式化**，作为 Phase 2 实现与验收的硬性门槛。
 
 ## What Changes
 

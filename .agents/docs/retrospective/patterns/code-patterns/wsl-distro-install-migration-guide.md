@@ -532,7 +532,7 @@ wsl -l -v
 ### Q7: 如何压缩WSL虚拟磁盘（释放空间）？
 
 当WSL内删除大量文件后，Windows上的ext4.vhdx不会自动缩小。参考项目脚本：
-[compress-wsl-vhdx.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/compress-wsl-vhdx.ps1)
+[compress-wsl-vhdx.ps1](../../../../scripts/compress-wsl-vhdx.ps1)
 
 ---
 
@@ -568,7 +568,7 @@ cat /etc/wsl.conf                  # 查看WSL配置
 - [WSL官方文档 - 基本命令](https://learn.microsoft.com/zh-cn/windows/wsl/basic-commands)
 - [WSL官方文档 - 导入导出](https://learn.microsoft.com/zh-cn/windows/wsl/basic-commands#import-and-export-a-distribution)
 - [Ubuntu WSL镜像下载](https://apt.releases.ubuntu.com/)
-- 实践来源：[WSL Ubuntu 26.04安装与迁移复盘报告](../reports/environment-setup/retrospective-wsl-ubuntu2604-install-migration-20260722/README.md)
+- 实践来源：[WSL Ubuntu 26.04安装与迁移复盘报告](../../reports/environment-setup/retrospective-wsl-ubuntu2604-install-migration-20260722/)
 
 <!-- changelog -->
 - 2026-07-22 | feat | 初始版本，包含3个核心模式：离线安装、安全迁移、默认用户配置修复，基于Ubuntu 26.04安装实践萃取

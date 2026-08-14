@@ -89,9 +89,9 @@ export KMP_DUPLICATE_LIB_OK=TRUE
 ## 四、代码修改清单
 
 ### 4.1 新增文件
-- [build_and_bench.sh](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/build_and_bench.sh) — 一键编译+性能测试脚本
-- [bench_inceptionv1.py](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/bench_inceptionv1.py) — Python性能基准测试脚本
-- [openmp-perf-analysis-and-conv-optimization.md](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/openmp-perf-analysis-and-conv-optimization.md) — 详细技术分析文档
+- [build_and_bench.sh](build_and_bench.sh) — 一键编译+性能测试脚本
+- [bench_inceptionv1.py](bench_inceptionv1.py) — Python性能基准测试脚本
+- [openmp-perf-analysis-and-conv-optimization.md](openmp-perf-analysis-and-conv-optimization.md) — 详细技术分析文档
 
 ### 4.2 修改文件
 - [base_conv_layer.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/base_conv_layer.hpp#L167-L171) — 新增 `forward_cpu_gemm_ext()` 声明（线程安全版本，接受外部 col_buffer 指针）

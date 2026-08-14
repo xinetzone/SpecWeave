@@ -19,8 +19,8 @@ source: "retrospective-xmnn-wheel-scikit-build-nuitka-20260726"
 
 | 模式 | 更新类型 | 变更内容 |
 |------|---------|---------|
-| [python-native-extension-self-contained-wheel.md](../../patterns/code-patterns/python-native-extension-self-contained-wheel.md) | 验证计数更新 | validation_count: 1→2, reuse_count: 0→1 |
-| [python-ast-compatibility.md](../../patterns/code-patterns/python-ast-compatibility.md) | 内容+计数更新 | 新增案例3（运行时Monkey-patch策略）、ExtSlice/Bytes兼容类、validation_count: 2→3, reuse_count: 1→2 |
+| [python-native-extension-self-contained-wheel.md](../../../patterns/code-patterns/python-native-extension-self-contained-wheel.md) | 验证计数更新 | validation_count: 1→2, reuse_count: 0→1 |
+| [python-ast-compatibility.md](../../../patterns/code-patterns/python-ast-compatibility.md) | 内容+计数更新 | 新增案例3（运行时Monkey-patch策略）、ExtSlice/Bytes兼容类、validation_count: 2→3, reuse_count: 1→2 |
 
 ## 原子行动项（推进状态更新）
 

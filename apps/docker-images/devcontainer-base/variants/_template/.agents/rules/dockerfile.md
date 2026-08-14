@@ -96,7 +96,7 @@ pip_install_group "ml-frameworks" "机器学习框架" scikit-learn xgboost
 pip_install_group "nlp" "NLP工具包" transformers tokenizers
 ```
 
-详见 [variant-conventions.md](../../.agents/rules/variant-conventions.md) 中的「Pip Install Group Observability 模式」，以及 [testing.md](../../.agents/rules/testing.md) 中的「容器输出提取规范」。
+详见 [variant-conventions.md](../../../.agents/rules/variant-conventions.md) 中的「Pip Install Group Observability 模式」，以及 [testing.md](../../../.agents/rules/testing.md) 中的「容器输出提取规范」。
 
 ### Stage N/N：元数据 + 清理 + 最终验证
 

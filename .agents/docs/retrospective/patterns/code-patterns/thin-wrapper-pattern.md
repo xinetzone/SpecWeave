@@ -52,7 +52,7 @@ reuse_count: 4
 
 ## 参考实现
 - PowerShell实现：
-  - 通用核心：[build_native_ext.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_native_ext.ps1)（~230行，6阶段构建流程）
-  - 薄包装示例：[build_caffe_ffi.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/build_caffe_ffi.ps1)（~15行）、build_npu_ffi.ps1、build_demo_ffi.ps1、build_xuan_ext_demo.ps1
-  - 共享模块：[NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1)
+  - 通用核心：[build_native_ext.ps1](../../../../scripts/build_native_ext.ps1)（~230行，6阶段构建流程）
+  - 薄包装示例：[build_caffe_ffi.ps1](../../../../scripts/build_caffe_ffi.ps1)（~15行）、build_npu_ffi.ps1、build_demo_ffi.ps1、build_xuan_ext_demo.ps1
+  - 共享模块：[NativeBuild.psm1](../../../../scripts/lib/NativeBuild.psm1)
 - 验证案例：4个C++扩展项目均使用约15行薄包装适配同一个通用构建器

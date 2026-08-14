@@ -376,6 +376,6 @@ Wheel 大小: ~169 MB
 
 ## 相关报告索引
 
-- [retrospective-xmnn-wheel-packaging-data-dirs-20260722](../bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/README.md) — 早期数据目录问题修复
-- [retrospective-xmnn-nuitka-docker-runtime-20260722](../bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md) — Docker 运行时环境问题
-- [retrospective-tvm-llvm-weak-symbol-leak-fix-20260721](../bugfix/retrospective-tvm-llvm-weak-symbol-leak-fix-20260721/README.md) — LLVM 弱符号泄漏修复
+- [retrospective-xmnn-wheel-packaging-data-dirs-20260722](../../bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/) — 早期数据目录问题修复
+- [retrospective-xmnn-nuitka-docker-runtime-20260722](../../bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/) — Docker 运行时环境问题
+- [retrospective-tvm-llvm-weak-symbol-leak-fix-20260721](../../bugfix/retrospective-tvm-llvm-weak-symbol-leak-fix-20260721/) — LLVM 弱符号泄漏修复

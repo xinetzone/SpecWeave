@@ -187,7 +187,7 @@ status: archived
 | [concat_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) | ✅ P3已修复：添加[CONCAT-PERF] out值域+num_bottoms+concat_axis计时 |
 | [softmax_loss_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_loss_layer.cpp) | ✅ P3已修复：添加[LOSS-PERF] 概率分布统计(prob值域+avg_max_prob+avg_entropy+uncertainty)+avg_loss+valid_count |
 | [sigmoid_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/sigmoid_layer.cpp) | ✅ P2 Sigmoid Backward已有实现，含[ACTIVATION-PERF] saturate_ratio饱和率统计 |
-| [caffe-ffi-perf-instrumentation-template.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/caffe-ffi-perf-instrumentation-template.md) | ✅ 统一C++性能埋点模板v1.1.0：四类模板（GEMM Forward/Backward+逐元素+概率分布）+8大避坑指南+15个层类型日志标签对照表+14个层已实现状态清单（Forward覆盖率82%） |
+| [caffe-ffi-perf-instrumentation-template.md](../knowledge/caffe-ffi-perf-instrumentation-template.md) | ✅ 统一C++性能埋点模板v1.1.0：四类模板（GEMM Forward/Backward+逐元素+概率分布）+8大避坑指南+15个层类型日志标签对照表+14个层已实现状态清单（Forward覆盖率82%） |
 | [框架接口渐进式扩展模式](patterns/code-patterns/progressive-interface-extension.md) | 模式1：三阶段接口演进策略（L1候选） |
 | [单次遍历性能统计日志埋点模式](patterns/code-patterns/single-pass-perf-instrumentation.md) | 模式3：计算+统计融合+卷积层GEMM多阶段适配+Conv Backward C++示例（L1候选） |
 | [Monorepo子项目CI盲区检测模式](patterns/process-patterns/monorepo-ci-blindspot-detection.md) | 模式2：collect-only对比+修复方案选择（L1候选） |

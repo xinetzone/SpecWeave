@@ -98,4 +98,4 @@ pyproject.toml ──> app.py ──> modules/
 
 ## 来源
 
-本应用从 `.temp/AI/ai-code-assistant/` 暂存区选择性归档而来，遵循项目 [应用开发生命周期规范](../../.agents/protocols/app-development-workflow.md) §2.2 选择性归档流程完成归档。
+本应用从 `.temp/AI/ai-code-assistant/` 暂存区选择性归档而来，遵循项目 [应用开发生命周期规范](../../../.agents/protocols/app-development-workflow.md) §2.2 选择性归档流程完成归档。

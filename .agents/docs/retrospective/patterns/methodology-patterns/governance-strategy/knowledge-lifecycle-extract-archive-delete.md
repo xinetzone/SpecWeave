@@ -221,4 +221,4 @@ rm -rf chaos/docker  # 结束
 4. **失败场景**：萃取不完整即删除时的补救路径
 
 > **来源**：chaos/docker 萃取→归档→删除全流程复盘（2026-08-07）
-> **关联报告**：[extraction-archive-deletion-chaos-docker-retrospective-20260807.md](../../../../reports/knowledge/extraction-archive-deletion-chaos-docker-retrospective-20260807.md)
+> **关联报告**：[extraction-archive-deletion-chaos-docker-retrospective-20260807.md](../../../reports/knowledge/extraction-archive-deletion-chaos-docker-retrospective-20260807.md)

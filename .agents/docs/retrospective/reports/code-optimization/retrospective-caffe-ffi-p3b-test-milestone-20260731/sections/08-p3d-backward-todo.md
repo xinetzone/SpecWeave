@@ -37,8 +37,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P0（最简单，无参数，identity pass-through） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~30分钟（实现10min + 编译5min + 测试10min + 文档5min） |
-| **C++文件** | [dropout_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp)、[dropout_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp) |
-| **测试文件** | [test_dropout_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py)（20个用例） |
+| **C++文件** | [dropout_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp)、[dropout_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp) |
+| **测试文件** | [test_dropout_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py)（20个用例） |
 
 **Backward公式**：
 - 当前实现仅支持inference模式（Forward是identity copy）
@@ -62,8 +62,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P0（加法层，梯度简单） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~45分钟（实现15min + 测试20min + 文档10min） |
-| **C++文件** | [bias_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp)、[bias_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/bias_layer.cpp) |
-| **测试文件** | [test_bias_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_bias_backward.py)（19个用例） |
+| **C++文件** | [bias_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/bias_layer.hpp)、[bias_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/bias_layer.cpp) |
+| **测试文件** | [test_bias_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_bias_backward.py)（19个用例） |
 | **前置检查** | `param_propagate_down_`已在Line 53初始化 ✅ |
 
 **Backward公式**：
@@ -93,8 +93,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P1（乘法层，梯度稍复杂） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~75分钟（代码30min + 测试30min + 文档15min） |
-| **C++文件** | [scale_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp)、[scale_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/scale_layer.cpp) |
-| **测试文件** | [test_scale_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_scale_backward.py)（25个用例） |
+| **C++文件** | [scale_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/scale_layer.hpp)、[scale_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/scale_layer.cpp) |
+| **测试文件** | [test_scale_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_scale_backward.py)（25个用例） |
 
 **Backward公式**：
 - Forward: `y = alpha * x + beta`（alpha必选，beta可选bias_term）
@@ -124,8 +124,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P1（三种操作：SUM/PROD/MAX，MAX需要winner mask） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~70分钟（代码25min + 测试35min + 文档10min） |
-| **C++文件** | [eltwise_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp)、[eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp) |
-| **测试文件** | [test_eltwise_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py)（32个用例） |
+| **C++文件** | [eltwise_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp)、[eltwise_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp) |
+| **测试文件** | [test_eltwise_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py)（32个用例） |
 | **无learnable参数** | 无需param_propagate_down_初始化 |
 
 **Backward公式**：
@@ -161,8 +161,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P1（通道拼接，Slice反向操作） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~50分钟（代码15min + 测试25min + 文档10min） |
-| **C++文件** | [concat_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp)、[concat_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) |
-| **测试文件** | [test_concat_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py)（24个用例） |
+| **C++文件** | [concat_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/concat_layer.hpp)、[concat_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/concat_layer.cpp) |
+| **测试文件** | [test_concat_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_concat_backward.py)（24个用例） |
 | **无learnable参数** | 无需param_propagate_down_初始化 |
 
 **Backward公式**：
@@ -194,8 +194,8 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 | **优先级** | P2（独立Softmax层，分类输出常用） |
 | **状态** | ✅ 已完成（2026-08-03） |
 | **实际工作量** | ~70分钟（代码30min + 测试25min + 调试15min） |
-| **C++文件** | [softmax_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp)、[softmax_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp) |
-| **测试文件** | [test_softmax_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py)（22个用例） |
+| **C++文件** | [softmax_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp)、[softmax_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp) |
+| **测试文件** | [test_softmax_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py)（22个用例） |
 | **无learnable参数** | 无需param_propagate_down_初始化 |
 
 **Backward公式**：

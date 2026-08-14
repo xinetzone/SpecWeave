@@ -32,7 +32,7 @@
   - `human-judgement` TR-2.3: 反常识要点超越表面总结，揭示深层架构原则
   - `human-judgement` TR-2.4: 可迁移行动建议可直接应用于AI辅助软件工程领域
   - `human-judgement` TR-2.5: 与现有闭环执行模式的差异已明确说明
-- **Notes**: 参考[insight指令集](file:///d:/spaces/SpecWeave/.agents/commands/insight.md)
+- **Notes**: 参考[insight指令集](../../../../.agents/commands/insight.md)
 - **完成状态**: 产出4条洞察（有界迭代预算、跨阶段回溯反馈、溯源信任基础设施、目标-机制解耦），G2质量门通过，文件：insights.md
 
 ## [x] Task 3: E阶段 - 模式萃取与文档化
@@ -52,7 +52,7 @@
   - `programmatic` TR-3.5: 迁移示例≥1个非芯片/EDA领域（如AI软件工程、DevOps、内容生成等）
   - `human-judgement` TR-3.6: 抽象层级合适——不具体到芯片设计，也不空洞到"注意风险"
   - `human-judgement` TR-3.7: 与现有模式无实质重复，关系（互补/扩展/独立）清晰说明
-- **Notes**: 参考[extraction指令集](file:///d:/spaces/SpecWeave/.agents/commands/extraction.md)；需grep检查现有模式库防重复
+- **Notes**: 参考[extraction指令集](../../../../.agents/commands/extraction.md)；需grep检查现有模式库防重复
 - **完成状态**: 产出2个模式（bounded-iteration-budget治理策略模式、provenance-driven-trust架构模式），G3质量门通过
 
 ## [x] Task 4: V阶段 - 对抗性审查
@@ -91,5 +91,5 @@
   - `programmatic` TR-5.3: `python .agents/scripts/check-links.py` 链接验证通过，零断链
   - `programmatic` TR-5.4: 模式frontmatter中related_patterns字段已正确填写
   - `human-judgement` TR-5.5: 索引条目格式与现有条目一致，分类正确
-- **Notes**: 参考[docgen-cmd](file:///d:/spaces/SpecWeave/.agents/skills/docgen-cmd/SKILL.md)进行索引更新
+- **Notes**: 参考[docgen-cmd](../../../../.agents/skills/docgen-cmd/SKILL.md)进行索引更新
 - **完成状态**: 两个模式文件位于正确目录，两个README索引已更新，related_patterns交叉引用验证通过，链接检查零断链，执行摘要已生成，G4质量门通过

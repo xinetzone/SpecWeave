@@ -138,5 +138,5 @@ Containerfile 注释和使用文档中必须包含：
 ---
 
 **相关文档**：
-- [Spec 文档](../../.trae/specs/standards-tools/create-docker-ssh-containerfile/spec.md)
+- [Spec 文档](../../../../.trae/specs/standards-tools/create-docker-ssh-containerfile/spec.md)
 - [Containerfile](../Containerfile)

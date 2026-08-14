@@ -67,8 +67,8 @@ status: "已完成"
 
 | 模式ID | 模式名称 | 成熟度 | 说明 |
 |--------|---------|--------|------|
-| bp-plugin-bridge-standard-integration | [插件桥接规范集成法](../patterns/methodology-patterns/plugin-bridge-standard-integration.md) | L1-draft | 把一套工作区规范接入已有 Agent 平台的五步法 |
-| bp-automation-idempotent-four-elements | [自动化幂等四要素](../patterns/methodology-patterns/automation-idempotent-four-elements.md) | L1-draft | 部署/启用/验证脚本的幂等设计 |
+| bp-plugin-bridge-standard-integration | [插件桥接规范集成法](../../patterns/methodology-patterns/plugin-bridge-standard-integration.md) | L1-draft | 把一套工作区规范接入已有 Agent 平台的五步法 |
+| bp-automation-idempotent-four-elements | [自动化幂等四要素](../../patterns/methodology-patterns/automation-idempotent-four-elements.md) | L1-draft | 部署/启用/验证脚本的幂等设计 |
 
 **G3 检查**：名称合规、触发+步骤+反模式+检验+迁移完整 ✅ → 通过
 

@@ -68,7 +68,7 @@ apps/<group>/<app-name>/
 | 应用 | 说明 | 入口 |
 |---|---|---|
 | `docker-images/caffe-ffi-cross/` | caffe-ffi-cross 交叉编译镜像 | `docker-images/caffe-ffi-cross/`（暂无 README） |
-| `docker-images/caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](../docker-images/jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](docker-images/caffe-ffi-jupyter/README.md) |
+| `docker-images/caffe-ffi-jupyter/` | 基于 [jupyter-ssh-base](docker-images/jupyter-ssh-base/) 的 Caffe-FFI 开发环境 Docker 镜像，提供 SSH... | [README.md](docker-images/caffe-ffi-jupyter/README.md) |
 | `docker-images/devcontainer-base/` | DevContainer Base - 标准化开发容器基础镜像 (SSH + Docker + Podman + Jupyter) | [README.md](docker-images/devcontainer-base/README.md) |
 | `docker-images/docker-ssh-dind/` | 基于 ubuntu:26.04 的 Docker-in-Docker (DinD) 镜像，内置 OpenSSH 服务端，支持中文环境。 | [README.md](docker-images/docker-ssh-dind/README.md) |
 | `docker-images/jupyter-ssh-base/` | Jupyter SSH Base - 标准化 Jupyter + SSH 基础镜像 | [README.md](docker-images/jupyter-ssh-base/README.md) |

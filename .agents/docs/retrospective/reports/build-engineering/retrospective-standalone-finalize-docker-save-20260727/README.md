@@ -106,9 +106,9 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 |------|------|------|------|
 | [caffex-removal README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md) | 新建 | ~8KB | caffex移除复盘报告 |
 | [REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md) | 新建 | ~16KB | 回归测试流程文档 |
-| [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
-| [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
-| [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/docker-image-save-20260727/checklist.md) | 新建 | ~1KB | 验证清单 |
+| [spec.md](../../../../../../.trae/specs/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
+| [tasks.md](../../../../../../.trae/specs/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
+| [checklist.md](../../../../../../.trae/specs/docker-image-save-20260727/checklist.md) | 新建 | ~1KB | 验证清单 |
 | caffe-cpu-standalone-jupyter_20260727.tar.gz | 新建 | 490MB | 镜像归档（D:\BaiduSyncdisk\docker\） |
 
 ---

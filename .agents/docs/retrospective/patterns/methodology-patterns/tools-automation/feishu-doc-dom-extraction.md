@@ -126,7 +126,7 @@ L1 首次萃取（volcengine-agent-plan-wiki验证1次）
 
 ### 自动化脚本
 
-已提供可复用的Python脚本：[feishu-doc-extract.py](../../../../scripts/feishu-doc-extract.py)，特性：
+已提供可复用的Python脚本：[feishu-doc-extract.py](../../../../../scripts/feishu-doc-extract.py)，特性：
 - Playwright驱动，支持有头/无头模式
 - 集成10+项反模式/质量检查（容器存在性、可滚动性、body滚动反模式、内容阈值、空行比例、URL保留、标题存在性、零宽字符清理）
 - 自动输出元数据报告（JSON格式，含完整检查结果）

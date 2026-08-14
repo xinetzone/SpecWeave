@@ -200,9 +200,9 @@ tags: ["里程碑复盘", "七概念", "方法论编排", "原子提交", "洞�
 
 ## 关联资源
 
-- **原子提交 skill**：[atomic-commit-cmd](../../../../.agents/skills/atomic-commit-cmd) —— v1.6.0 重扫描机制验证
-- **洞察萃取 skill**：[insight-cmd](../../../../.agents/skills/insight-cmd) —— 本次使用的方法论
-- **方法论编排 skill**：[seven-concepts-cmd](../../../../.agents/skills/seven-concepts-cmd) —— 本次使用的元编排引擎
+- **原子提交 skill**：[atomic-commit-cmd](../../../../.agents/skills/atomic-commit-cmd/) —— v1.6.0 重扫描机制验证
+- **洞察萃取 skill**：[insight-cmd](../../../../.agents/skills/insight-cmd/) —— 本次使用的方法论
+- **方法论编排 skill**：[seven-concepts-cmd](../../../../.agents/skills/seven-concepts-cmd/) —— 本次使用的元编排引擎
 - **洞察报告产出物**：[insight-domestic-llm-comparison-20260706.md](../../../../.agents/docs/retrospective/reports/insight-extraction/standalone/insight-domestic-llm-comparison-20260706.md) —— 8 条洞察，408 行
 - **已有模式验证**：[relative-path-pitfalls.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) —— L3，第 4 次验证
 - **L2 编排文档**：[seven-concepts.md](../../../../.agents/commands/seven-concepts.md) —— 完整编排逻辑

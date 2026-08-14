@@ -108,8 +108,8 @@ tags: ["caffe-ffi", "protobuf7", "cmake", "msvc", "conda", "tvm-ffi", "windows-b
 
 | 模式ID | 模式名称 | 存放路径 |
 |--------|---------|---------|
-| conda-windows-cmake-dual-path | Windows Conda CMake 双路径搜索模式 | [code-patterns/conda-windows-cmake-dual-path.md](../../patterns/code-patterns/conda-windows-cmake-dual-path.md) |
-| msvc-vcvarsall-path-staging | MSVC vcvarsall PATH 分阶段初始化模式 | [code-patterns/msvc-vcvarsall-path-staging.md](../../patterns/code-patterns/msvc-vcvarsall-path-staging.md) |
+| conda-windows-cmake-dual-path | Windows Conda CMake 双路径搜索模式 | [code-patterns/conda-windows-cmake-dual-path.md](../../../patterns/code-patterns/conda-windows-cmake-dual-path.md) |
+| msvc-vcvarsall-path-staging | MSVC vcvarsall PATH 分阶段初始化模式 | [code-patterns/msvc-vcvarsall-path-staging.md](../../../patterns/code-patterns/msvc-vcvarsall-path-staging.md) |
 
 ### 模式迁移验证
 

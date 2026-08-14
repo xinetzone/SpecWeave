@@ -83,7 +83,7 @@ SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data
 | 脚本 | 一键健康检查脚本 | [scripts/healthcheck-test.sh](scripts/healthcheck-test.sh) |
 | 脚本 | SSH 非交互 PATH 集成测试 | [scripts/test-ssh-noninteractive-path.sh](scripts/test-ssh-noninteractive-path.sh) |
 | 修复 | entrypoint.sh 加固 | [entrypoint.sh](entrypoint.sh) |
-| 修复 | 敏感信息检测 `${...}` 变量引用识别 | [sensitive_info.py](../../.agents/scripts/lib/checks/sensitive_info.py) |
+| 修复 | 敏感信息检测 `${...}` 变量引用识别 | [sensitive_info.py](../../../.agents/scripts/lib/checks/sensitive_info.py) |
 | 优化 | Jupyter stderr 重定向到日志文件 | [config/supervisor/conf.d/jupyter.conf](config/supervisor/conf.d/jupyter.conf) |
 | 优化 | healthcheck.sh TCP 探针优化 | [scripts/healthcheck.sh](scripts/healthcheck.sh) |
 | 优化 | sshd LogLevel 降为 ERROR | [config/sshd_config](config/sshd_config) |

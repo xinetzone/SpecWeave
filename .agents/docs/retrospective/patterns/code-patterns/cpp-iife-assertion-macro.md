@@ -282,7 +282,7 @@ error C2280: AssertHelper::AssertHelper(const AssertHelper&): attempting to refe
 ## 9. 参考实现
 
 本模式的生产级通用实现位于：
-- [assert_helper.hpp](file:///d:/spaces/SpecWeave/.agents/scripts/include/assert_helper.hpp) — SpecWeave 通用版（可直接 copy 到其他项目）
+- [assert_helper.hpp](../../../../scripts/include/assert_helper.hpp) — SpecWeave 通用版（可直接 copy 到其他项目）
 
 使用示例：
 ```cpp

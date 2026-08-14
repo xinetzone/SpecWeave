@@ -75,9 +75,9 @@ source: "内容来源（原始文件路径#章节）"
 ### 父级继承
 
 所有未在本目录定义的规则、角色、技能均回退到 SpecWeave 根工作区：
-- 全局规则：[../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md)
-- 全局 Skill：[../../../.agents/skills/](../../../.agents/skills/)
-- 七概念指令集：[../../../.agents/commands/](../../../.agents/commands/)
+- 全局规则：[../../../.agents/global-core-rules.md](../../../../.agents/global-core-rules.md)
+- 全局 Skill：[../../../.agents/skills/](../../../../.agents/skills/)
+- 七概念指令集：[../../../.agents/commands/](../../../../.agents/commands/)
 
 ## 核心约束速查
 

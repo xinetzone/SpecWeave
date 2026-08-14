@@ -484,7 +484,7 @@ Backward后的4个reduce遍历（top_diff/bottom_diff/weight_diff/bias_diff）�
 
 ## 代码审查速查
 
-审查性能日志埋点代码时，使用 [框架扩展与性能日志CR清单](../../../checklists/framework-extension-and-perf-logging-review.md#三性能统计日志埋点检查) 逐项对照；多阶段算子（Conv/FC/GEMM）参见§3.4多阶段检查项。
+审查性能日志埋点代码时，使用 [框架扩展与性能日志CR清单](../../../../checklists/framework-extension-and-perf-logging-review.md#三性能统计日志埋点检查) 逐项对照；多阶段算子（Conv/FC/GEMM）参见§3.4多阶段检查项。
 
 ## 与现有模式的关系
 

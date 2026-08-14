@@ -26,8 +26,8 @@ version: "1.0"
 
 ## Background & Context
 - **现有知识资产**:
-  - [idl-wiki/04-major-idl-specs.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md) 中有 protobuf 简要介绍（约40行）
-  - [caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) 中有 proto2/proto3 详细对比（七概念方法论产出）
+  - [idl-wiki/04-major-idl-specs.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md) 中有 protobuf 简要介绍（约40行）
+  - [caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md](../../../.agents/docs/knowledge/learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) 中有 proto2/proto3 详细对比（七概念方法论产出）
   - Caffe 项目（external/chaos/caffe）使用 proto2 作为配置 DSL，是典型的 proto2 遗留系统实例
 - **技术背景**:
   - Protobuf 经历了：Google 内部原型（2001）→ 开源 proto2（2008）→ proto3（2016，随 gRPC 推广）→ Editions（2022 提出，2023/2024 正式发布）四个主要阶段

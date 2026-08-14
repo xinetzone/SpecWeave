@@ -15,7 +15,7 @@ phases: [core-logic-fix, cross-platform-enhancement, standards-enforcement]
 
 ## 候选模式1：CI门禁工具默认静默模式（Default-Silent for CI Gates）
 
-**与现有模式的关系**：现有 [dual-channel-tiered-logging](../../../patterns/code-patterns/dual-channel-tiered-logging.md) 覆盖"控制台简洁+文件详细"双轨场景，但未覆盖"CI门禁工具默认零诊断输出"场景。本候选模式可作为其补充变体。
+**与现有模式的关系**：现有 [dual-channel-tiered-logging](../../../../patterns/code-patterns/dual-channel-tiered-logging.md) 覆盖"控制台简洁+文件详细"双轨场景，但未覆盖"CI门禁工具默认零诊断输出"场景。本候选模式可作为其补充变体。
 
 **核心差异**：
 - 现有模式：Logger=DEBUG，ConsoleHandler=INFO（默认有INFO输出）
@@ -59,7 +59,7 @@ primary = max(cat_scores, key=cat_scores.get)
 
 ## 候选模式4：跨Shell危险命令检测的三生态+双向覆盖（Cross-Shell Dangerous Command Detection with Bidirectional Pattern Coverage）
 
-**与现有模式的关系**：现有 [command-injection-prevention](../../../patterns/code-patterns/command-injection-prevention.md) 关注代码中的命令注入漏洞防御；本候选模式关注**CLI安全检测工具自身**如何跨平台覆盖不同Shell生态的危险命令模式。两者解决不同层面的问题。
+**与现有模式的关系**：现有 [command-injection-prevention](../../../../patterns/code-patterns/command-injection-prevention.md) 关注代码中的命令注入漏洞防御；本候选模式关注**CLI安全检测工具自身**如何跨平台覆盖不同Shell生态的危险命令模式。两者解决不同层面的问题。
 
 **核心问题**：跨平台CLI安全工具在单一环境（如WSL/Linux）开发时，天然遗漏Windows CMD/PowerShell的高危命令，且正则通常只覆盖"命令+参数"标准形式，遗漏管道调用等非标准形式。
 
@@ -86,7 +86,7 @@ primary = max(cat_scores, key=cat_scores.get)
 
 ## 候选模式5：多编码回退链文件读取（Multi-Encoding Fallback Chain for File Reading）
 
-**与现有模式的关系**：现有 [cross-platform-encoding-enforcement](../../../patterns/code-patterns/cross-platform-encoding-enforcement.md) 解决的是**输出编码**问题（stdout/stderr写入时的UnicodeEncodeError），覆盖PYTHONIOENCODING、stdout.reconfigure()、三层防御体系等。本候选模式解决的是**输入编码**问题（读取用户提供的外部文件时的UnicodeDecodeError），两者互补。
+**与现有模式的关系**：现有 [cross-platform-encoding-enforcement](../../../../patterns/code-patterns/cross-platform-encoding-enforcement.md) 解决的是**输出编码**问题（stdout/stderr写入时的UnicodeEncodeError），覆盖PYTHONIOENCODING、stdout.reconfigure()、三层防御体系等。本候选模式解决的是**输入编码**问题（读取用户提供的外部文件时的UnicodeDecodeError），两者互补。
 
 **核心问题**：硬编码 `encoding="utf-8"` 读取文件在中文Windows GBK环境下崩溃（.bat/.ps1/.reg等批处理文件默认GBK编码），且不同场景可能遇到UTF-8-SIG（BOM头）、GB18030等编码。
 
@@ -118,7 +118,7 @@ def _read_file_text(filepath):
 
 ## 候选模式6：首Bug主动闭环模式（First-Bug Proactive Closure Pattern）
 
-**与现有模式的关系**：现有 [second-exposure-governance-loop](../../../patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) 要求**同一问题第二次出现**时才启动治理闭环。本候选模式补充了其边界条件：当首次发现的bug具有架构级/模式级特征时，即使没有第二次暴露，也应主动完成"修复→预防→标准固化"三阶段闭环，而非等待第二次事故。
+**与现有模式的关系**：现有 [second-exposure-governance-loop](../../../../patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) 要求**同一问题第二次出现**时才启动治理闭环。本候选模式补充了其边界条件：当首次发现的bug具有架构级/模式级特征时，即使没有第二次暴露，也应主动完成"修复→预防→标准固化"三阶段闭环，而非等待第二次事故。
 
 **核心问题**：second-exposure-governance-loop的触发条件是"问题第二次出现"，但架构级/模式级缺陷（如默认日志架构错误、缺少去重层、跨平台覆盖不全）一旦被发现，就应该在第一次修复时就完成标准固化——等待第二次暴露意味着另一个开发者/另一个工具会再次踩坑，造成不必要的返工。
 

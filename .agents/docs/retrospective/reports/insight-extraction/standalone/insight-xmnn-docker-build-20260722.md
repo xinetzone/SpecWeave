@@ -9,7 +9,7 @@ tags: ["docker", "nuitka", "conda", "wheel-packaging", "shell-quoting"]
 
 # XMNN Docker 构建核心洞察
 
-> 来源：[XMNN Nuitka打包与Docker运行时镜像构建复盘](../bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md)
+> 来源：[XMNN Nuitka打包与Docker运行时镜像构建复盘](../../bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/)
 
 ## 洞察1：Docker构建"环境复用"的三层迭代
 

@@ -42,7 +42,7 @@ CMake install() 规则是显式的"安装什么到哪里"，消除 setuptools fi
 ## 模式萃取结果
 
 ### P1: Nuitka + scikit-build-core 原生 Wheel 打包模式
-→ **已存在模式**：[python-native-extension-self-contained-wheel.md](../../patterns/code-patterns/python-native-extension-self-contained-wheel.md)（L2）
+→ **已存在模式**：[python-native-extension-self-contained-wheel.md](../../../patterns/code-patterns/python-native-extension-self-contained-wheel.md)（L2）
 → **新增贡献**：
 - 验证了 CMake-native 依赖捆绑方案（install_real_lib 函数 + install-CODE patchelf）
 - 验证了 .pth 引导 + Monkey-patch 整合方案（环境变量设置 + AST 兼容在同一 bootstrap 中）
@@ -50,7 +50,7 @@ CMake install() 规则是显式的"安装什么到哪里"，消除 setuptools fi
 - 更新验证计数：validation_count 1→2
 
 ### P2: Python AST 版本兼容 Monkey-patch 模式
-→ **已存在模式**：[python-ast-compatibility.md](../../patterns/code-patterns/python-ast-compatibility.md)（L1）
+→ **已存在模式**：[python-ast-compatibility.md](../../../patterns/code-patterns/python-ast-compatibility.md)（L1）
 → **新增贡献**：
 - 发现第三种策略：运行时 Monkey-patch（当无法修改源码时）
 - 补充 ExtSlice 类的兼容定义（此前只覆盖到 Index）

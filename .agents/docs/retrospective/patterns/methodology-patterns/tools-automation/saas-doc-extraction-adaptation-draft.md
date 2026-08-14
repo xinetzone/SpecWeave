@@ -2,7 +2,7 @@
 
 > **状态**：草案 v0.1（飞书已验证，其他平台待实测验证）
 > **创建日期**：2026-07-31
-> **基础模式**：[feishu-doc-dom-extraction.md](../../patterns/methodology-patterns/tools-automation/feishu-doc-dom-extraction.md)
+> **基础模式**：[feishu-doc-dom-extraction.md](feishu-doc-dom-extraction.md)
 
 ## 一、背景与目标
 

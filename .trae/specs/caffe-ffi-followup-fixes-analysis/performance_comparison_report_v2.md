@@ -202,10 +202,10 @@ export KMP_DUPLICATE_LIB_OK=TRUE
 - [conv_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/conv_layer.cpp#L55-L95) — Forward_cpu OpenMP batch 并行
 
 ### 5.2 新增脚本
-- [build_and_bench.sh](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/build_and_bench.sh) — 一键编译+多配置性能测试
-- [bench_subprocess.py](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/bench_subprocess.py) — 子进程隔离基准测试（确保环境变量生效）
-- [convert_sdk_models.py](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/convert_sdk_models.py) — SDK 目录批量转换脚本
-- [batch_convert_caffemodels.py](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/batch_convert_caffemodels.py) — 底层 caffemodel 转换工具
+- [build_and_bench.sh](build_and_bench.sh) — 一键编译+多配置性能测试
+- [bench_subprocess.py](bench_subprocess.py) — 子进程隔离基准测试（确保环境变量生效）
+- [convert_sdk_models.py](convert_sdk_models.py) — SDK 目录批量转换脚本
+- [batch_convert_caffemodels.py](batch_convert_caffemodels.py) — 底层 caffemodel 转换工具
 
 ### 5.3 模型转换结果
 - sdk_full_test: 2 个模型全部转换成功（fgvsirfeature.caffemodel 30.7MB, fgvsirfeature_ssd.caffemodel 0.2MB）

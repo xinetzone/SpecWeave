@@ -55,4 +55,4 @@ cmake --build .
 
 ## 模式文档
 
-- [zerocopy-cow-readwrite-separation.md](../../.agents/docs/retrospective/patterns/architecture-patterns/zerocopy-cow-readwrite-separation.md) — 完整模式文档（触发场景、核心步骤、反模式、迁移示例）
+- [zerocopy-cow-readwrite-separation.md](../../../.agents/docs/retrospective/patterns/architecture-patterns/zerocopy-cow-readwrite-separation.md) — 完整模式文档（触发场景、核心步骤、反模式、迁移示例）

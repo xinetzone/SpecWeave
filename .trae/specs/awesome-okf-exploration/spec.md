@@ -119,7 +119,7 @@ status: completed
 |--------|------|------|
 | 分析报告6件套 | [awesome-okf-analysis/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/) | ✅ 完成 |
 | knowledge-catalog-wiki（10篇教程） | [knowledge-catalog-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/) | ✅ 额外完成 |
-| awesome-okf vendor迁移 | [vendor/awesome-okf/](../../vendor/awesome-okf/) | ✅ 完成（41处路径引用修复） |
+| awesome-okf vendor迁移 | [vendor/awesome-okf/](../../../vendor/awesome-okf/) | ✅ 完成（41处路径引用修复） |
 | okf-wiki反向链接更新 | [okf-wiki/README.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md)、[07-resources-and-glossary.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.md)、[05-architecture-and-integration.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/05-architecture-and-integration.md) | ✅ 完成 |
 
 ## Open Questions (Resolved)

@@ -483,9 +483,9 @@ closure:
 
 | ID | 状态 | 落地Commit | 落地内容摘要 |
 |----|------|-----------|------------|
-| **ACT-001** | ✅ 已完成 | a0a90539 | 在[development-standards.md](../../../../docs/development-standards.md#L613-L631)新增"术语解释强制规范"：①首次出现必须一句话解释；②专业文档开头≥15术语速查表；③≥3文档知识库须有独立glossary.md；④纳入G3/V门强制检查 |
-| **ACT-002** | ✅ 已完成 | a0a90539 | 在[development-standards.md](../../../../docs/development-standards.md#L633-L655)新增"收益表述三前提规范"：①适用场景②团队/环境基线③测量方式与假设；禁止无前提收益承诺；经验估算须标注免责声明；纳入G2/G3门强制检查 |
-| **ACT-003** | ✅ 已完成 | a0a90539 | 在[solo-review-methods.md](../../../../docs/knowledge/quality-assurance/solo-review-methods.md#L325-L444)新增"方案五：知识构建专用——AI Agent四视角对抗审查法"：固定魔鬼代言人/新手/CTO/学者四视角，每视角≥3条意见、总≥10条、🔴100%修正等7项V门硬性条件，提供AI Agent Prompt模板；同步更新[review-checklist-templates.md](../../../../docs/knowledge/quality-assurance/review-checklist-templates.md)增加3个对应检查项 |
+| **ACT-001** | ✅ 已完成 | a0a90539 | 在[development-standards.md](../../../../development-standards.md#L613-L631)新增"术语解释强制规范"：①首次出现必须一句话解释；②专业文档开头≥15术语速查表；③≥3文档知识库须有独立glossary.md；④纳入G3/V门强制检查 |
+| **ACT-002** | ✅ 已完成 | a0a90539 | 在[development-standards.md](../../../../development-standards.md#L633-L655)新增"收益表述三前提规范"：①适用场景②团队/环境基线③测量方式与假设；禁止无前提收益承诺；经验估算须标注免责声明；纳入G2/G3门强制检查 |
+| **ACT-003** | ✅ 已完成 | a0a90539 | 在[solo-review-methods.md](../../../../knowledge/quality-assurance/solo-review-methods.md#L325-L444)新增"方案五：知识构建专用——AI Agent四视角对抗审查法"：固定魔鬼代言人/新手/CTO/学者四视角，每视角≥3条意见、总≥10条、🔴100%修正等7项V门硬性条件，提供AI Agent Prompt模板；同步更新[review-checklist-templates.md](../../../../knowledge/quality-assurance/review-checklist-templates.md)增加3个对应检查项 |
 | **ACT-004** | ⏳ 待执行 | — | 知识库v1.1迭代项，后续版本推进 |
 
 **闭环验证**：三项方法论改进均通过"自指性检验"——规范本身已用在LLM Token优化知识库的V阶段审查中，验证有效；改进后的规范可反过来指导未来知识构建任务，形成"实践→复盘→规范→再实践"的闭环。

@@ -115,7 +115,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 
 ## 代码审查速查
 
-审查CI配置变更时，使用 [框架扩展与性能日志CR清单](../../../checklists/framework-extension-and-perf-logging-review.md#四monorepo-ci覆盖检查) 逐项对照。
+审查CI配置变更时，使用 [框架扩展与性能日志CR清单](../../../../checklists/framework-extension-and-perf-logging-review.md#四monorepo-ci覆盖检查) 逐项对照。
 
 ## 实际案例（Caffe-ffi CI盲区发现）
 

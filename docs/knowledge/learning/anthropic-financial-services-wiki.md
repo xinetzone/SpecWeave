@@ -853,4 +853,4 @@ Skill的本质是什么？是把**资深员工脑子里的隐性经验**，变�
 
 - [Agent Skills 开放标准完整指南](../agent-skills-open-standard-wiki.md) - 深入了解Skill的标准规范、设计原则和最佳实践，理解为什么Skill是企业知识沉淀的关键
 - [Agent 通信协议完整教程：MCP/ACP/A2A/ANP](../agent-communication-protocols-wiki.md) - 了解MCP（Model Context Protocol）协议的技术细节，看懂数据连接器是怎么工作的
-- [明略科技Octo平台学习Wiki](../octo-platform-wiki.md) - 另一个多Agent协作平台的参考，对比不同Agent架构设计的思路
+- [明略科技Octo平台学习Wiki](octo-platform-wiki.md) - 另一个多Agent协作平台的参考，对比不同Agent架构设计的思路

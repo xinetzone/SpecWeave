@@ -107,5 +107,5 @@ status: all-passed
 |------|------|------|
 | 分析报告 | [awesome-okf-analysis/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/) | ✅ 6件套完整 |
 | knowledge-catalog教程 | [knowledge-catalog-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/) | ✅ 10篇完整 |
-| vendor子模块 | [vendor/awesome-okf/](../../vendor/awesome-okf/) | ✅ 迁移完成 |
+| vendor子模块 | [vendor/awesome-okf/](../../../vendor/awesome-okf/) | ✅ 迁移完成 |
 | okf-wiki更新 | [okf-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/) | ✅ 5处反向链接 |

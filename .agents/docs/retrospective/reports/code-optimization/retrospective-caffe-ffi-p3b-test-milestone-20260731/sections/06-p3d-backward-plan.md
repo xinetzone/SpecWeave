@@ -25,7 +25,7 @@ actual_time: "~30min (vs estimated 65min)"
 
 ### 当前Forward实现审计
 
-**文件**：[dropout_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp)
+**文件**：[dropout_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp)
 
 ```cpp
 // Forward核心逻辑（inference模式）：
@@ -66,7 +66,7 @@ Backward: dX = dy * mask / (1 - ratio)
 
 ### Step 1：头文件修改 ✅
 
-**文件**：[dropout_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp#L27-L30)
+**文件**：[dropout_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/dropout_layer.hpp#L27-L30)
 
 在protected区域`Forward_cpu`声明后添加：
 
@@ -78,7 +78,7 @@ void Backward_cpu(const std::vector<Blob*>& top,
 
 ### Step 2：C++实现 ✅
 
-**文件**：[dropout_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp#L60-L93)
+**文件**：[dropout_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/dropout_layer.cpp#L60-L93)
 
 实际实现（约35行，比计划更简洁，去掉了值域统计循环以匹配Forward的轻量风格）：
 
@@ -133,7 +133,7 @@ void DropoutLayer::Backward_cpu(const std::vector<Blob*>& top,
 
 ## 4. 测试用例（实际执行20个，全部通过）
 
-**测试文件**：[test_dropout_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py)
+**测试文件**：[test_dropout_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_dropout_backward.py)
 
 | # | 测试类 | 测试方法 | 验证内容 | 结果 |
 |---|--------|---------|---------|------|

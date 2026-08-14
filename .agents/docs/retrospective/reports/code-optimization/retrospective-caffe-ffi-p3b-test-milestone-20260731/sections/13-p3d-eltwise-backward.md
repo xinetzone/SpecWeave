@@ -75,7 +75,7 @@ MAX是非光滑操作，在非极值点梯度仅路由到最大值对应的输�
 
 ### 头文件修改
 
-**文件**：[eltwise_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp#L28-L35)
+**文件**：[eltwise_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/eltwise_layer.hpp#L28-L35)
 
 1. 添加`Backward_cpu`声明（protected区域，override）
 2. 新增`std::vector<int> max_idx_`成员变量，用于MAX模式winner索引缓存
@@ -90,7 +90,7 @@ std::vector<int> max_idx_;  // MAX模式winner索引缓存，Forward时记录，
 
 ### Reshape修改
 
-**文件**：[eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L121-L125)
+**文件**：[eltwise_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L121-L125)
 
 仅MAX模式分配max_idx_，其他模式释放内存：
 
@@ -104,7 +104,7 @@ if (op_ == MAX) {
 
 ### Forward MAX分支修改
 
-**文件**：[eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L208-L225)
+**文件**：[eltwise_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L208-L225)
 
 在计算最大值的同时记录winner索引：
 
@@ -131,7 +131,7 @@ case MAX: {
 
 ### Backward_cpu实现
 
-**文件**：[eltwise_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L248-L368)
+**文件**：[eltwise_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L248-L368)
 
 核心结构（约120行）：
 1. **前置检查**：propagate_down检查（所有bottom都不需要梯度时直接返回）
@@ -206,7 +206,7 @@ MAX模式需要知道每个位置哪个输入是winner，这一信息在Forward�
 
 ## 测试用例（32个，全部通过）
 
-**测试文件**：[test_eltwise_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py)
+**测试文件**：[test_eltwise_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_eltwise_backward.py)
 
 ### L1：已知值手算验证（4个）
 

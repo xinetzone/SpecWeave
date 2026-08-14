@@ -202,4 +202,4 @@ define_docker_target(pycaffe-jupyter
 
 - **不要**在 CMake 中直接内联多行 Docker 命令 — 转义和引号嵌套极易出错，使用辅助函数生成独立脚本
 - **不要**将所有镜像都加入默认构建目标 — 开发镜像（含 Jupyter/SSH）应作为可选目标
-- **不要**在验证脚本中 hardcode 密码 — 使用环境变量，参照 [env-var-five-layer-protection.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/env-var-five-layer-protection.md)
+- **不要**在验证脚本中 hardcode 密码 — 使用环境变量，参照 [env-var-five-layer-protection.md](../code-patterns/env-var-five-layer-protection.md)

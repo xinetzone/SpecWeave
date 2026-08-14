@@ -268,7 +268,7 @@ tags: [caffe, docker, multi-stage-build, runtime-image, dockerfile-optimization,
 
 | 编号 | 时间 | 事件 |
 |------|------|------|
-| F18 | 第三轮 | 创建 [caffe-docker-sop.md](../../../../knowledge/operations/caffe-docker-sop.md)（11 章节 SOP：前置条件、快速开始、Dockerfile 目标、构建选项、验证步骤、环境变量、镜像导出、故障排查、容器生命周期、目录结构、关联文档） |
+| F18 | 第三轮 | 创建 [caffe-docker-sop.md](../../../../../knowledge/operations/caffe-docker-sop.md)（11 章节 SOP：前置条件、快速开始、Dockerfile 目标、构建选项、验证步骤、环境变量、镜像导出、故障排查、容器生命周期、目录结构、关联文档） |
 | F19 | 第三轮 | 更新 RUNTIME_IMAGE_USAGE.md 新增"编译兼容性"章节，引用 legacy-cpp 模式 |
 | F20 | 第三轮 | 创建 [reference-project-index.md](../../../../assets/reference-project-index.md)（可参考项目索引，含 NPU TVM/Caffe 两个参考项目 + 目录结构规范 + 使用步骤 + 反模式） |
 | F21 | 第三轮 | 更新 operations/README.md：新增"🐳 Docker / 容器构建"分类 + 快速参考条目，指南总数 12→13 篇 |
@@ -380,4 +380,4 @@ tags: [caffe, docker, multi-stage-build, runtime-image, dockerfile-optimization,
 | [shell-nested-quote-file-based-strategy](../../../../patterns/code-patterns/shell-nested-quote-file-based-strategy.md) | 模式 2：多层命令嵌套的文件化规避策略 |
 | [legacy-cpp-compilation-compatibility-checklist](../../../../patterns/process-patterns/legacy-cpp-compilation-compatibility-checklist.md) | 模式 3：老旧 C++ 项目编译兼容性预检清单 |
 | [ops-sop-standard-template](../../../../patterns/process-patterns/ops-sop-standard-template.md) | 模式 4：操作 SOP 标准化模板 |
-| [docker-legacy-project-risk-warning-checklist](../../../../../checklists/docker-legacy-project-risk-warning-checklist.md) | 风险预警清单：基于 7 条洞察的 7 项风险预警 |
+| [docker-legacy-project-risk-warning-checklist](../../../../../../checklists/docker-legacy-project-risk-warning-checklist.md) | 风险预警清单：基于 7 条洞察的 7 项风险预警 |

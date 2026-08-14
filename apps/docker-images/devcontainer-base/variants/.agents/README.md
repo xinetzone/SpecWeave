@@ -56,10 +56,10 @@ source: "内容来源（文件路径或AGENTS.md）"
 
 - 子系统路由：[../AGENTS.md](../AGENTS.md)（variants/ 入口）
 - 项目级规则：[../../.agents/](../../.agents/)（devcontainer-base 项目规则）
-- 应用级路由：[../../../AGENTS.md](../../../AGENTS.md)（apps/ 区域路由）
-- 全局规则：[../../../../.agents/global-core-rules.md](../../../../.agents/global-core-rules.md)
-- 全局 Skill：[../../../../.agents/skills/](../../../../.agents/skills/)
-- 七概念指令集：[../../../../.agents/commands/](../../../../.agents/commands/)
+- 应用级路由：[../../../AGENTS.md](../../../../AGENTS.md)（apps/ 区域路由）
+- 全局规则：[../../../../.agents/global-core-rules.md](../../../../../.agents/global-core-rules.md)
+- 全局 Skill：[../../../../.agents/skills/](../../../../../.agents/skills/)
+- 七概念指令集：[../../../../.agents/commands/](../../../../../.agents/commands/)
 
 ## 变体级规则
 

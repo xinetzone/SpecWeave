@@ -216,7 +216,7 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 已加固的脚本：ci-check.ps1、path-migration-ci.ps1、test-wechat-extraction.ps1
 
-**与现有模式关系**：本模式是对 [direct-file-write-over-shell-pipe](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md) 模式在Windows中文场景下的具体化补充。现有模式强调"不用shell管道写文件"，本模式补充了"Windows+中文"场景下的具体禁止操作和正确操作。
+**与现有模式关系**：本模式是对 [direct-file-write-over-shell-pipe](../../../../.agents/docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md) 模式在Windows中文场景下的具体化补充。现有模式强调"不用shell管道写文件"，本模式补充了"Windows+中文"场景下的具体禁止操作和正确操作。
 
 ### 模式2：Docker-in-Docker SSH 镜像标准结构
 
@@ -388,14 +388,14 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 | 产出物 | 路径 |
 |--------|------|
 | 镜像构建定义 | [Containerfile](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/Containerfile) |
-| 容器启动脚本 | [entrypoint.sh](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/entrypoint.sh) |
+| 容器启动脚本 | [entrypoint.sh](../entrypoint.sh) |
 | 使用文档（中文） | [README.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/README.md) |
-| 环境检测脚本 | [check-env.sh](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/scripts/check-env.sh) |
-| 容器管理脚本 | [dind.sh](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/scripts/dind.sh) |
-| AI协作者入口 | [AGENTS.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/AGENTS.md) |
+| 环境检测脚本 | [check-env.sh](../scripts/check-env.sh) |
+| 容器管理脚本 | [dind.sh](../scripts/dind.sh) |
+| AI协作者入口 | [AGENTS.md](../AGENTS.md) |
 | AI资产索引 | [.agents/README.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/README.md) |
-| Containerfile规范 | [containerfile.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/rules/containerfile.md) |
-| Entrypoint规范 | [entrypoint.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/rules/entrypoint.md) |
-| 构建测试规范 | [build-test.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/rules/build-test.md) |
-| 选型决策文档 | [decision-dind-vs-dood.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/docs/decision-dind-vs-dood.md) |
-| 项目复盘报告 | [retrospective-20260720.md](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/docs/retrospective-20260720.md) |
+| Containerfile规范 | [containerfile.md](../.agents/rules/containerfile.md) |
+| Entrypoint规范 | [entrypoint.md](../.agents/rules/entrypoint.md) |
+| 构建测试规范 | [build-test.md](../.agents/rules/build-test.md) |
+| 选型决策文档 | [decision-dind-vs-dood.md](decision-dind-vs-dood.md) |
+| 项目复盘报告 | [retrospective-20260720.md](#) |

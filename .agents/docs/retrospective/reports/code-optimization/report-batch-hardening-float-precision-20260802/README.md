@@ -23,7 +23,7 @@ source: "float-precision-testing-guide.md 模式批量应用"
 1. 修复了 [test_p3c_activations_ip.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_p3c_activations_ip.py) 中 `test_sigmoid_float32_saturation_exact` 的 2 个违规断言
 2. 修复了 tanh 饱和断言同类问题
 3. 编写了 [test_elu_kink_stability.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_elu_kink_stability.py) ELU C¹拐点专项测试（24个用例）
-4. 沉淀了 [float-precision-testing-guide.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md) 浮点数精度测试技术指南
+4. 沉淀了 [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md) 浮点数精度测试技术指南
 
 本次批量加固目标：将指南中的 4 个核心模式**系统地应用到所有其他类似测试文件**中，排查遗漏违规和潜在 flake 风险。
 

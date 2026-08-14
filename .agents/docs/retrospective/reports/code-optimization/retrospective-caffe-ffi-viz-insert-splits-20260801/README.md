@@ -263,7 +263,7 @@ G3质量门检查：
 
 | 洞察主题 | 入库路径 |
 |---------|---------|
-| DAG图变换算法验证最佳实践（3个核心洞察+检查清单） | [knowledge/best-practices/dag-graph-transform-verification.md](../../../knowledge/best-practices/dag-graph-transform-verification.md) |
+| DAG图变换算法验证最佳实践（3个核心洞察+检查清单） | [knowledge/best-practices/dag-graph-transform-verification.md](../../../../knowledge/best-practices/dag-graph-transform-verification.md) |
 
 ### 索引更新
 
@@ -282,7 +282,7 @@ G3质量门检查：
 | 本报告 | 里程碑复盘报告（.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/） |
 | [graph-transform-validator-architecture.md](../../../patterns/architecture-patterns/graph-transform-validator-architecture.md) | 架构模式：图变换验证工具四段式架构 |
 | [protobuf-text-minimal-parser.md](../../../patterns/code-patterns/protobuf-text-minimal-parser.md) | 代码模式：Protobuf文本格式最小解析器 |
-| [dag-graph-transform-verification.md](../../../knowledge/best-practices/dag-graph-transform-verification.md) | 最佳实践：DAG图变换算法验证（3个洞察+检查清单） |
+| [dag-graph-transform-verification.md](../../../../knowledge/best-practices/dag-graph-transform-verification.md) | 最佳实践：DAG图变换算法验证（3个洞察+检查清单） |
 
 ---
 

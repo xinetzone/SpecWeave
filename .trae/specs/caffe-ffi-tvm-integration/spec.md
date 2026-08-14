@@ -48,8 +48,8 @@ last_updated: "2026-08-04"
 - ✅ 内存管理ASan验证 — 已完成（2026-08-04，ASan 构建 1647 passed / 0 内存安全错误，发现并修复 in-place InnerProduct 堆越界读）
 - 🔄 BLAS路径性能基准验证 — 待完整BLAS环境
 - ✅ 端到端真实模型推理+微调测试（LeNet/MNIST精度97.95%）— 已完成
-- ✅ RNN/LSTM层 Phase 1（纯Python前向推理）— 已完成（`caffe_ffi.sequence` 子模块，RNN/LSTM 类、双向、Caffe打包权重加载、16测试通过、示例可运行，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md)）
-- ✅ RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）— 已完成（`test_recurrent_backward.py` 29用例L0-L3全梯度验证，全量回归1692 passed/1 skipped，详见 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)）
+- ✅ RNN/LSTM层 Phase 1（纯Python前向推理）— 已完成（`caffe_ffi.sequence` 子模块，RNN/LSTM 类、双向、Caffe打包权重加载、16测试通过、示例可运行，详见 [caffe-ffi-rnn-lstm-phase1 规范](../caffe-ffi-rnn-lstm-phase1/spec.md)）
+- ✅ RNN/LSTM层 Phase 2（C++ proto定义+RecurrentLayer/LSTMUnit/LSTMLayer，Backward/BPTT梯度）— 已完成（`test_recurrent_backward.py` 29用例L0-L3全梯度验证，全量回归1692 passed/1 skipped，详见 [caffe-ffi-rnn-lstm-phase2 规范](../caffe-ffi-rnn-lstm-phase2/spec.md)）
 - ✅ **Solver训练流程（SGD/Adam等优化器）** — 已完成（Task 33，`caffe_ffi.solver`：SGD/Adam优化器、StepLR/MultiStepLR/ExponentialLR/CosineAnnealingLR调度器、Solver训练循环；`caffe_ffi.serialization`：save_net/load_net/weights_to_dict/dict_to_weights；Test 33端到端训练+保存/加载示例、训练指南+API参考文档）
 - ⬜ v0.2.0(Beta)：40+层、三平台CI全覆盖、性能benchmark体系
 - ✅ **P4工程化（训练API封装/模型序列化/应用示例/文档完善）** — 已完成（Task 33）；性能优化（BLAS后端/多线程/COW推广）、能力扩展（更多激活/归一化/损失层/训练模式Dropout）已完成（Task 31/32）
@@ -337,7 +337,7 @@ last_updated: "2026-08-04"
 - **AC-14**: 内存管理ASan验证
 
 ### 已达成 ✅
-- **AC-RNN**: RNN/LSTM层实现（Phase 1 纯Python前向 + Phase 2 C++/Backward，见 [caffe-ffi-rnn-lstm-phase1 规范](../../caffe-ffi-rnn-lstm-phase1/spec.md) 与 [caffe-ffi-rnn-lstm-phase2 规范](../../caffe-ffi-rnn-lstm-phase2/spec.md)）
+- **AC-RNN**: RNN/LSTM层实现（Phase 1 纯Python前向 + Phase 2 C++/Backward，见 [caffe-ffi-rnn-lstm-phase1 规范](../caffe-ffi-rnn-lstm-phase1/spec.md) 与 [caffe-ffi-rnn-lstm-phase2 规范](../caffe-ffi-rnn-lstm-phase2/spec.md)）
 - **AC-Solver**: Solver优化器实现（SGD/Adam优化器、学习率调度器、Solver训练循环、模型序列化、应用示例、训练指南，Task 33）
 
 ## Open Questions (Resolved & Remaining)

@@ -42,8 +42,8 @@ sess = ort.InferenceSession(path, sess_options=so, providers=['CPUExecutionProvi
 
 | 脚本 | 用途 | 输出 |
 |------|------|------|
-| [run_full_benchmark.py](../scripts/run_full_benchmark.py) | 4类模型×5格式全量对比 | JSON结果 + 控制台表格 |
-| [compare_qdq_vs_qoperator.py](../scripts/compare_qdq_vs_qoperator.py) | QDQ vs QOperator专项对比 | JSON结果 + 性能差异百分比 |
+| [run_full_benchmark.py](../../scripts/run_full_benchmark.py) | 4类模型×5格式全量对比 | JSON结果 + 控制台表格 |
+| [compare_qdq_vs_qoperator.py](../../scripts/compare_qdq_vs_qoperator.py) | QDQ vs QOperator专项对比 | JSON结果 + 性能差异百分比 |
 
 **运行方式**：
 ```bash
@@ -498,7 +498,7 @@ print('[CI-PASS] Quantization benchmarks validated')
 ## 相关资源
 
 - [ADVANCED-QUANTIZATION-GUIDE.md](ADVANCED-QUANTIZATION-GUIDE.md) - 高级量化实施指南（含完整代码）
-- [run_full_benchmark.py](../scripts/run_full_benchmark.py) - 全量基准测试脚本
-- [compare_qdq_vs_qoperator.py](../scripts/compare_qdq_vs_qoperator.py) - QDQ/QOperator对比脚本
+- [run_full_benchmark.py](../../scripts/run_full_benchmark.py) - 全量基准测试脚本
+- [compare_qdq_vs_qoperator.py](../../scripts/compare_qdq_vs_qoperator.py) - QDQ/QOperator对比脚本
 - [benchmark-report.html](../../reports/benchmark-report.html) - 交互式性能对比图表
 - [ONNX Runtime Quantization Docs](https://onnxruntime.ai/docs/performance/quantization.html)

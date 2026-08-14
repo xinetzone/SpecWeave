@@ -31,7 +31,7 @@
 - **Status**: `completed`
 - **Commits**: ceec9c07
 - **Description**:
-  - 修改 [config/supervisor/conf.d/jupyter.conf](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/config/supervisor/conf.d/jupyter.conf)
+  - 修改 [config/supervisor/conf.d/jupyter.conf](../../../apps/docker-images/devcontainer-base/config/supervisor/conf.d/jupyter.conf)
   - command从`jupyter notebook`改为`/opt/conda/bin/jupyter lab`
   - PATH环境变量更新为conda路径
   - VIRTUAL_ENV移除
@@ -41,7 +41,7 @@
 - **Status**: `completed`
 - **Commits**: ceec9c07（后经 v2.2 流水线优化扩展）
 - **Description**:
-  - 修改 [scripts/build.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/build.sh)（+306行，后续 v2.2 扩展）
+  - 修改 [scripts/build.sh](../../../apps/docker-images/devcontainer-base/scripts/build.sh)（+306行，后续 v2.2 扩展）
   - **日志持久化**：tee双输出到控制台+`logs/builds/build-<timestamp>.log`
   - **构建前预检（6项）**：Docker运行状态、BuildKit支持、磁盘空间≥10GB、Dockerfile存在性、Miniforge缓存、构建参数摘要
   - **详细构建输出**：`--progress=plain`模式
@@ -98,7 +98,7 @@
 - **Commits**: 8d7b2d41
 - **Depends On**: Task 6
 - **Description**:
-  - 完全重写[.github/workflows/devcontainer-variants.yml](file:///d:/spaces/SpecWeave/.github/workflows/devcontainer-variants.yml)（770行变更）
+  - 完全重写[.github/workflows/devcontainer-variants.yml](../../../.github/workflows/devcontainer-variants.yml)（770行变更）
   - 架构从5层链式构建改为三job：build-main（主镜像构建+8项深度验证）→ push（条件推送）→ build-variants（实验性）
   - 新增多镜像源矩阵（aliyun/tuna/official），超时15min自动切换fallback
   - lint阶段：bash -n语法检查所有shell脚本+Python3语法检查
@@ -150,7 +150,7 @@
 ### 后续 V1: v2.2 构建流水线优化（conda-libmamba-ft） ✅
 - **Status**: `completed`（P0+P1 全部测试通过）
 - **Commits**: 169d036f, 5271ca29, f6e5333b, a9f11263, a64fed68, 7078e4c0, 7333e4b3, 6f26af4f
-- **文档**: [docs/v2.2-build-pipeline-optimization.md](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/docs/v2.2-build-pipeline-optimization.md)
+- **文档**: [docs/v2.2-build-pipeline-optimization.md](../../../apps/docker-images/devcontainer-base/docs/v2.2-build-pipeline-optimization.md)
 - **Description**:
   - **P0 核心优化**：Dockerfile 添加 BuildKit `--mount=type=cache`（pip/conda-pkgs/libmamba 三缓存）；verify-cext.sh 参数化重构（--python/--expect-soabi/--json/--deep，11项检测）；ft-benchmark.sh quick模式 500K primes/3.0x 阈值
   - **P1 增强**：--deep-verify 可选 numpy/pandas 深度验证；conda-lock/environment.yml 精确版本锁定（python=3.14.6 cp314t 等）；micromamba 对比实验（结论：无显著优势 2.48GB vs 2.46GB）；templates/cmake-cext C扩展标准模板（CMakeLists.txt + src/ft_extension.c + build.sh + test-in-docker.sh）
@@ -171,6 +171,6 @@
   - **Dockerfile 重构**：Stage 4 从 ~50行内联 heredoc 改为 3 行脚本调用（BuildKit bind mount 引用脚本，不增加镜像层）
 
 ## 交付物清单（更新后）
-- ✅ [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/devcontainer-base-image-slim/spec.md) - PRD（已同步 v2.2/v2.2.1 现状）
+- ✅ [spec.md](spec.md) - PRD（已同步 v2.2/v2.2.1 现状）
 - ✅ [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/devcontainer-base-image-slim/tasks.md) - 实施计划（已更新路径与任务状态）
-- ✅ [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/devcontainer-base-image-slim/checklist.md) - 预检清单（已更新）
+- ✅ [checklist.md](checklist.md) - 预检清单（已更新）

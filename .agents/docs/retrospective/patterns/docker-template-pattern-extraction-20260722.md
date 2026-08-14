@@ -197,7 +197,7 @@ def docker_py(image, script, user=None):
 ## 五、相关文档
 
 - [复盘报告](../reports/task-reports/retrospective-docker-template-upgrade-20260722.md)
-- [Docker 模板骨架目录](../../templates/docker-snippets/skeleton/)
+- [Docker 模板骨架目录](../../../templates/docker-snippets/skeleton/)
 - [模式1: Dockerfile Python 代码安全嵌入](code-patterns/dockerfile-python-code-safe-embedding.md)
 - [模式2: 容器验证脚本权限模型](process-patterns/container-verify-script-permission-model.md)
 - [模式3: 模板占位符粒度设计](methodology-patterns/governance-strategy/template-placeholder-granularity-design.md)

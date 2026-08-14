@@ -58,9 +58,9 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 构建脚本/镜像源配置 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build.sh参数、--mirror/--skip-sdk、跨平台构建命令 |
 | 运行编译/产物验证 | [.agents/rules/build-test.md](.agents/rules/build-test.md#运行交叉编译) | VOLUME挂载、Mach-O/PE格式验证、test-cross-build.sh |
 | AI资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/目录结构、无entrypoint/services说明 |
-| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../.agents/global-core-rules.md) | 回退到父级工作区 |
-| Skill使用 | [../../.agents/skills/](../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
-| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../.agents/commands/) | 七概念指令集，通过父级调用 |
+| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 回退到父级工作区 |
+| Skill使用 | [../../.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../../.agents/commands/) | 七概念指令集，通过父级调用 |
 
 ## 核心规范入口
 

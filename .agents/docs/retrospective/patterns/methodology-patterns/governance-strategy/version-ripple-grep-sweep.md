@@ -181,7 +181,7 @@ Select-String -Path "docs/**/*.md" -Pattern "7类可复用资产|7类资产|七�
    - "性能攻击者"、"`performance`"参数
    - 变体覆盖：阿拉伯数字/中文、全称/简称
 
-2. **扫描脚本**：编写[scan-adversarial-wiki.py](../../../../scripts/scan-adversarial-wiki.py)自动分类，初始扫描发现41处匹配。
+2. **扫描脚本**：编写[scan-adversarial-wiki.py](../../../../../scripts/scan-adversarial-wiki.py)自动分类，初始扫描发现41处匹配。
 
 3. **四分类处理结果**：
 

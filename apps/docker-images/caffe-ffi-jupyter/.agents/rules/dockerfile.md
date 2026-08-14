@@ -27,7 +27,7 @@ source: "AGENTS.md#项目特有约束"
 - ✅ 健康检查
 - ❌ **不覆盖ENTRYPOINT**：继承父镜像的tini + entrypoint.sh
 
-父镜像规范参考：[../jupyter-ssh-base/.agents/rules/](../jupyter-ssh-base/.agents/rules/)
+父镜像规范参考：[../jupyter-ssh-base/.agents/rules/](../../../jupyter-ssh-base/.agents/rules/)
 
 ## 构建上下文
 

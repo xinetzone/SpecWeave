@@ -26,17 +26,17 @@ status: completed
 
 ### 主要产出物
 
-1. **[apps/AGENTS.md](../../../../../../apps/AGENTS.md)** - 应用区入口路由文件（新建）
-2. **[apps/.agents/README.md](../../../../../../apps/.agents/README.md)** - apps 区域元数据容器文档（新建）
-3. **[AGENTS.md](../../../../../../AGENTS.md)** - 根 AGENTS.md 启动协议重构（更新）
-4. **[.agents/context-routing.md](../../../../../../.agents/context-routing.md)** - 上下文路由表更新（更新）
-5. **[apps/README.md](../../../../../../apps/README.md)** - apps 区域 README 智能体入口补充（更新）
+1. **[apps/AGENTS.md](../../../../../../../apps/AGENTS.md)** - 应用区入口路由文件（新建）
+2. **[apps/.agents/README.md](../../../../../../../apps/.agents/)** - apps 区域元数据容器文档（新建）
+3. **[AGENTS.md](../../../../../../../AGENTS.md)** - 根 AGENTS.md 启动协议重构（更新）
+4. **[.agents/context-routing.md](../../../../../../context-routing.md)** - 上下文路由表更新（更新）
+5. **[apps/README.md](../../../../../../../apps/)** - apps 区域 README 智能体入口补充（更新）
 
 ### Spec 文档
 
-- **PRD**: [spec.md](../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/spec.md)
-- **任务清单**: [tasks.md](../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/tasks.md)
-- **验证清单**: [checklist.md](../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/checklist.md)
+- **PRD**: [spec.md](../../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/spec.md)
+- **任务清单**: [tasks.md](../../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/tasks.md)
+- **验证清单**: [checklist.md](../../../../../../../.trae/specs/core-foundation/establish-four-region-routing-system/checklist.md)
 
 ## 报告导航
 

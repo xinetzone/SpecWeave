@@ -58,9 +58,9 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 
 ### F04. Spec规划产出
 
-- [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/caffe-jupyter-docker-build/spec.md)：6个验收标准（AC-1~AC-6）
-- [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/caffe-jupyter-docker-build/tasks.md)：7个有序任务
-- [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/caffe-jupyter-docker-build/checklist.md)：6大类28个检查点
+- [spec.md](../../../../../../.trae/specs/caffe-jupyter-docker-build/spec.md)：6个验收标准（AC-1~AC-6）
+- [tasks.md](../../../../../../.trae/specs/caffe-jupyter-docker-build/tasks.md)：7个有序任务
+- [checklist.md](../../../../../../.trae/specs/caffe-jupyter-docker-build/checklist.md)：6大类28个检查点
 - Open Questions：3个（文件命名格式、是否删除旧镜像、是否--no-cache）
 
 ### F05. 旧容器清理操作
@@ -419,6 +419,6 @@ Spec规划文档:
 ## 相关报告索引
 
 - [retrospective-caffe-standalone-caffex-removal-20260727](retrospective-caffe-standalone-caffex-removal-20260727/README.md) — Caffe standalone版本caffex依赖移除
-- [compiled-wheel-runtime-image-build](../../patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 编译Python Wheel运行时镜像构建模式（相关模式）
-- [docker-modular-build-orchestration](../../patterns/architecture-patterns/docker-modular-build-orchestration.md) — Docker模块化构建编排模式（相关模式）
-- [wsl-distro-install-migration-guide](../../patterns/code-patterns/wsl-distro-install-migration-guide.md) — WSL发行版安装迁移指南
+- [compiled-wheel-runtime-image-build](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 编译Python Wheel运行时镜像构建模式（相关模式）
+- [docker-modular-build-orchestration](../../../patterns/architecture-patterns/docker-modular-build-orchestration.md) — Docker模块化构建编排模式（相关模式）
+- [wsl-distro-install-migration-guide](../../../patterns/code-patterns/wsl-distro-install-migration-guide.md) — WSL发行版安装迁移指南

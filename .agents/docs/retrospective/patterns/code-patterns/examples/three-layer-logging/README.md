@@ -263,11 +263,11 @@ objdump -d -M intel release_binary | grep -A5 "expensive_computation"
 
 ## 与其他模式的关系
 
-- **[cpp-nullstream-logging](../cpp-nullstream-logging.md)**：纯 C++ 场景下用 NullStream 模板实现零开销日志（本模式 C++ 层是其简化版，用 `if(enabled_)` 替代模板吸收）
-- **[dual-channel-tiered-logging](../dual-channel-tiered-logging.md)**：纯 Python 场景控制台+文件双轨输出（本模式 Python 层的 Handler 管理借鉴了其思路）
-- **[cross-platform-backtrace-leak-diagnosis](../cross-platform-backtrace-leak-diagnosis.md)**：本日志模式 TRACE 级别输出构造栈的典型应用
-- **[resource-counter-primitive-binding](../resource-counter-primitive-binding.md)**：资源计数器在 `[MEM]` 标签日志中读取
-- **[ffi-memory-leak-autouse-fixture](../ffi-memory-leak-autouse-fixture.md)**：测试 fixture 利用本模式的 `setup_trace()` 开启泄漏诊断
+- **[cpp-nullstream-logging](../../cpp-nullstream-logging.md)**：纯 C++ 场景下用 NullStream 模板实现零开销日志（本模式 C++ 层是其简化版，用 `if(enabled_)` 替代模板吸收）
+- **[dual-channel-tiered-logging](../../dual-channel-tiered-logging.md)**：纯 Python 场景控制台+文件双轨输出（本模式 Python 层的 Handler 管理借鉴了其思路）
+- **[cross-platform-backtrace-leak-diagnosis](../../cross-platform-backtrace-leak-diagnosis.md)**：本日志模式 TRACE 级别输出构造栈的典型应用
+- **[resource-counter-primitive-binding](../../resource-counter-primitive-binding.md)**：资源计数器在 `[MEM]` 标签日志中读取
+- **[ffi-memory-leak-autouse-fixture](../../ffi-memory-leak-autouse-fixture.md)**：测试 fixture 利用本模式的 `setup_trace()` 开启泄漏诊断
 
 ## 检验清单
 

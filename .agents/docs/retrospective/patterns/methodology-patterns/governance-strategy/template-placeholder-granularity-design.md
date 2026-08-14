@@ -130,5 +130,5 @@ deps=[{{VERIFY_PIP_DEPS}}]; \
 
 ## 相关模式
 
-- [file-creation-precheck-pattern](../methodology-patterns/governance-strategy/file-creation-precheck-pattern.md) — 文件创建前的预检查模式
-- [immutable-constraint-documentation](../methodology-patterns/governance-strategy/immutable-constraint-documentation.md) — 不可变约束的文档化
+- [file-creation-precheck-pattern](file-creation-precheck-pattern.md) — 文件创建前的预检查模式
+- [immutable-constraint-documentation](immutable-constraint-documentation.md) — 不可变约束的文档化

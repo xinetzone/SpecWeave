@@ -15,7 +15,7 @@ wiki_version: '1.0'
 
 VeADK 提供了灵活的模型配置系统，支持火山引擎方舟（Ark）大模型服务和通过 LiteLLM 接入的多种模型提供商。系统内置了多模型 Fallback 降级策略、Responses API 支持、Embedding 模型配置和实时语音模型配置，并遵循 API Key 四级优先级机制进行认证。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/models/](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/)
+> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/models/](#)
 
 ---
 

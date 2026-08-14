@@ -18,7 +18,7 @@ source: "基于spec.md分解的原子化任务清单"
   - `programmatic` TR-1.1: 目录创建成功，包含00-overview.md和README.md
   - `programmatic` TR-1.2: 两个文件均包含正确的YAML frontmatter（id、title、source）
   - `human-judgement` TR-1.3: 00-overview.md清晰概述项目定位、设计理念与文档结构
-- **Notes**: 参考 [agent-skills-wiki/00-overview.md](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) 格式
+- **Notes**: 参考 [agent-skills-wiki/00-overview.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) 格式
 
 ## [x] Task 2: 创建认知原理与设计理念章节
 - **Priority**: high

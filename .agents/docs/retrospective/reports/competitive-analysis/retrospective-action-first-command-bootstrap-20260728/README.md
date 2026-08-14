@@ -32,16 +32,16 @@ v_adopted: 4
 | **方法论** | 七概念方法论（R→I→E→V）知识沉淀链路 |
 | **执行模式** | 当前会话从上下文压缩恢复后直接执行，基于文件系统已有产出物增量工作 |
 | **触发方式** | 用户连续递进需求链："应用范式看效果→配置默认设置→新增到commands→轻量版+Mermaid图→复盘+洞察+萃取+导出+原子提交" |
-| **新增文件** | [action-first.md](../../../../commands/action-first.md)（380行指令集）+ 本报告 |
-| **修改文件** | [commands/README.md](../../../../commands/README.md)（新增1行索引） |
+| **新增文件** | [action-first.md](../../../../../commands/action-first.md)（380行指令集）+ 本报告 |
+| **修改文件** | [commands/README.md](../../../../../commands/)（新增1行索引） |
 | **质量门** | G1✅ G2✅ G3✅ G-V✅ 全部通过 |
 
 ### 本次会话新增产出物清单
 
 | 文件 | 说明 |
 |------|------|
-| [action-first.md](../../../../commands/action-first.md) | action-first指令集完整文档（14章节，含四大规则、黄金三层、破规场景、RACI矩阵、Mermaid决策树、自检清单） |
-| [commands/README.md](../../../../commands/README.md) | 指令集索引更新，action-first注册为第14个指令 |
+| [action-first.md](../../../../../commands/action-first.md) | action-first指令集完整文档（14章节，含四大规则、黄金三层、破规场景、RACI矩阵、Mermaid决策树、自检清单） |
+| [commands/README.md](../../../../../commands/) | 指令集索引更新，action-first注册为第14个指令 |
 | 本README.md | 元复盘报告 |
 
 ### 跨会话产出物（父任务+本次合计）

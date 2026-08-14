@@ -33,11 +33,11 @@ SpecWeave 根 AGENTS.md（全局规则/Skill/角色）
 
 **关键**：entrypoint、services、security等规范直接继承自jupyter-ssh-base，本项目无需重复定义entrypoint.md和services.md。
 
-- 全局规则：[../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md)
-- 父镜像规范：[../jupyter-ssh-base/.agents/](../jupyter-ssh-base/.agents/)
-- 全局 Skill：[../../../.agents/skills/](../../../.agents/skills/)
-- 七概念指令集：[../../../.agents/commands/](../../../.agents/commands/)
-- Dockerfile 自动化测试脚本：[../../../.agents/scripts/test-dockerfiles.ps1](../../../.agents/scripts/test-dockerfiles.ps1)
+- 全局规则：[../../../.agents/global-core-rules.md](../../../../.agents/global-core-rules.md)
+- 父镜像规范：[../jupyter-ssh-base/.agents/](../../jupyter-ssh-base/.agents/)
+- 全局 Skill：[../../../.agents/skills/](../../../../.agents/skills/)
+- 七概念指令集：[../../../.agents/commands/](../../../../.agents/commands/)
+- Dockerfile 自动化测试脚本：[../../../.agents/scripts/test-dockerfiles.ps1](../../../../.agents/scripts/test-dockerfiles.ps1)
 
 ## 变更日志
 

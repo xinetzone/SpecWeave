@@ -195,7 +195,7 @@ ReLU/Dropout/ELU/Sigmoid/Tanh/PReLU/Bias/Scale/BatchNorm 全部改完再测试
 - [split_layer.cpp Phase 1+2实现](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp)
 - [blob.hpp ShareData/COW实现](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/blob.hpp)
 - [test_blob_zerocopy.cpp 14+19个C++测试](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/cpp/test_blob_zerocopy.cpp)
-- 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/README.md)
+- 复盘报告：[retrospective-split-zerocopy-cow-milestone-20260731](../../../reports/code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/)
 
 ## Changelog
 

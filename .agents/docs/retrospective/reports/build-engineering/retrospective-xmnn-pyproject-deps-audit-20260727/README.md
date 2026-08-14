@@ -369,7 +369,7 @@ onnx2pytorch>=0.4, telnetlib3>=2.0
 ## 相关报告索引
 
 - [retrospective-xmnn-wheel-scikit-build-nuitka-20260726](../retrospective-xmnn-wheel-scikit-build-nuitka-20260726/README.md) — XMNN Wheel 构建系统搭建
-- [retrospective-xmnn-wheel-packaging-data-dirs-20260722](../bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/README.md) — 数据目录打包修复（autolibs/tools_cpp/fonts）
+- [retrospective-xmnn-wheel-packaging-data-dirs-20260722](../../bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/) — 数据目录打包修复（autolibs/tools_cpp/fonts）
 - [BUILD_REPORT.md](file:///d:/spaces/SpecWeave/external/chaos/xmtools/BUILD_REPORT.md) — 完整构建修复报告（含第九章依赖审计）
 - [python-wheel-dependency-audit-wda4.md](../../../patterns/process-patterns/python-wheel-dependency-audit-wda4.md) — 萃取产出：WDA-4模式
 - [compiled-wheel-runtime-image-build.md](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 升级产出：运行时镜像构建模式（L2）

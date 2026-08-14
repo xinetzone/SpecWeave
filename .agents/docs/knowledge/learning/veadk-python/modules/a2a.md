@@ -15,7 +15,7 @@ wiki_version: '1.0'
 
 VeADK 完整支持 Agent2Agent（A2A）协议，实现了 Agent 之间的互操作能力。A2A 是由 Google 提出的开放协议，允许不同厂商、不同框架实现的 Agent 之间通过标准化 JSON-RPC 接口互相调用、传递消息和协作。VeADK 提供了从服务端暴露、AgentCard 生成、Hub 注册到客户端调用的完整四层架构支持。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/)
+> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/](#)
 
 ---
 

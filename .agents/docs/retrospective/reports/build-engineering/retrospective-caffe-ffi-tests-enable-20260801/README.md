@@ -173,7 +173,7 @@ message(STATUS "[caffe_ffi] C++ test sources: ${CAFFE_FFI_CPP_TEST_SRCS}")
 ### 模式1：CMake 列表变更必须配套"活文档"诊断输出
 
 - **模式ID**：cmake-list-removal-diagnostic-output
-- **完整文档**：[patterns/code-patterns/cmake-list-removal-diagnostic-output.md](../../patterns/code-patterns/cmake-list-removal-diagnostic-output.md)
+- **完整文档**：[patterns/code-patterns/cmake-list-removal-diagnostic-output.md](../../../patterns/code-patterns/cmake-list-removal-diagnostic-output.md)
 - **触发场景**：CMake 中任何对源文件/测试/目标列表使用 `list(REMOVE_ITEM)`、`list(FILTER)`、`list(REMOVE_DUPLICATES)` 等会改变列表内容的操作
 - **核心步骤**：
   1. 变更前：打印列表长度和内容（`list(LENGTH ...)` + `message(STATUS ...)`）
@@ -203,7 +203,7 @@ message(STATUS "[caffe_ffi] C++ test sources: ${CAFFE_FFI_CPP_TEST_SRCS}")
 ### 模式2：构建失败分层排查法——工具链层优先于项目层
 
 - **模式ID**：build-failure-layered-triage
-- **完整文档**：[patterns/code-patterns/build-failure-layered-triage.md](../../patterns/code-patterns/build-failure-layered-triage.md)
+- **完整文档**：[patterns/code-patterns/build-failure-layered-triage.md](../../../patterns/code-patterns/build-failure-layered-triage.md)
 - **触发场景**：C/C++/Rust 等编译型语言项目构建失败，且错误信息涉及标准库头文件、编译器内部错误（如 C10xx/LNKxxxx）、或跨平台/跨环境行为不一致
 - **核心步骤**：
   - **L0 环境层（30秒检查）**：①编译器版本号（是否预览版/Insiders）；②环境变量（INCLUDE/LIB/PATH 是否初始化）；③SDK 版本

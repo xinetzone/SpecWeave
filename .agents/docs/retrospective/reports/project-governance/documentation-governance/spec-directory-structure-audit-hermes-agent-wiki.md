@@ -15,7 +15,7 @@ last_verified: "2026-08-10"
 
 ## 1. 审计背景
 
-本次审计针对 `check-spec-output-archive.py`（[atomic-commit 规范](file:///d:/spaces/SpecWeave/.agents/skills/atomic-commit-cmd/SKILL.md) 的 spec 白名单校验）对 `.trae/specs/hermes-agent-learning-wiki/` 目录的校验结果。该脚本规定：**spec 规划目录仅允许保留 `spec.md / tasks.md / checklist.md / README.md / .gitkeep`**，其余分析报告、任务输出、文章内容等产出物必须归档至 `docs/` 对应目录。
+本次审计针对 `check-spec-output-archive.py`（[atomic-commit 规范](../../../../../skills/atomic-commit-cmd/SKILL.md) 的 spec 白名单校验）对 `.trae/specs/hermes-agent-learning-wiki/` 目录的校验结果。该脚本规定：**spec 规划目录仅允许保留 `spec.md / tasks.md / checklist.md / README.md / .gitkeep`**，其余分析报告、任务输出、文章内容等产出物必须归档至 `docs/` 对应目录。
 
 初始提交（`7b4a4629`）将 `adversarial-review.md` 放入 spec 目录，触发校验 FAIL。本次审计记录该目录从违规到修正的全过程与前后结构对比，供后续审计追溯。
 

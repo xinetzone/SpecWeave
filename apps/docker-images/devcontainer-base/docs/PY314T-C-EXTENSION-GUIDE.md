@@ -433,7 +433,7 @@ python -c "import ft_extension; ft_extension.thread_stress(8, 100000)"
 
 模板包含：
 - [CMakeLists.txt](templates/cmake-cext/CMakeLists.txt)：参数化构建配置，支持 MODULE_NAME 等选项
-- [src/ft_extension.c](templates/cmake-cext/src/ft_extension.c)：注释完整的示例模块，包含所有最佳实践
+- [src/ft_extension.c](../templates/cmake-cext/src/ft_extension.c)：注释完整的示例模块，包含所有最佳实践
 - [build.sh](templates/cmake-cext/build.sh)：一键构建测试脚本
 - [README.md](templates/cmake-cext/README.md)：详细使用文档
 

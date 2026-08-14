@@ -37,7 +37,7 @@
 - [README.md](../../../../.agents/docs/knowledge/learning/first-principles/README.md)：文件导航表，定义了12个文档的标题、简介、难度、阅读顺序
 - [04-key-thinkers-quotes.md](../../../../.agents/docs/knowledge/learning/first-principles/04-key-thinkers-quotes.md)：核心人物论述
 
-项目已有自包含HTML产物先例：[竹简悟道_完整版.html](../../../../apps/zhujian-wudao/竹简悟道_完整版.html)采用CSS/JS内联的单文件模式。
+项目已有自包含HTML产物先例：[竹简悟道_完整版.html](../../../../apps/ai-agents/zhujian-wudao/竹简悟道_完整版.html)采用CSS/JS内联的单文件模式。
 
 项目脚本开发规范见 [lib/README.md](../../../../.agents/scripts/lib/README.md)，现有脚本如 [check-links.py](../../../../.agents/scripts/check-links.py) 可作为Python脚本结构参考。
 

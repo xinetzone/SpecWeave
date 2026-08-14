@@ -74,9 +74,9 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 健康检查脚本 | [.agents/rules/services.md#健康检查](.agents/rules/services.md#健康检查) | healthcheck.sh条件检查逻辑、端口检测方式 |
 | 项目约束速查 | [.agents/README.md#核心约束速查](.agents/README.md#核心约束速查) | 14项核心约束快速索引 |
 | 最佳实践/性能指南 | [docs/](docs/) | Docker DinD配置、Conda性能优化、Python 3.14t C扩展、风险公告 |
-| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../.agents/global-core-rules.md) | 回退到父级工作区 |
-| Skill使用 | [../../.agents/skills/](../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
-| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../.agents/commands/) | 七概念指令集，通过父级调用 |
+| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 回退到父级工作区 |
+| Skill使用 | [../../.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../../.agents/commands/) | 七概念指令集，通过父级调用 |
 
 ## 快速开始
 

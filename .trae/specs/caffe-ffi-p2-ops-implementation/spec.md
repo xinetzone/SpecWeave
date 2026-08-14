@@ -1,7 +1,7 @@
 # caffe-ffi P2 算子补齐实现 Spec
 
 ## Why
-[gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P2 清单包含 13 类训练专用/数据输入/冷门算子，此前标记为"推理引擎刻意不实现"。用户决定**全部补齐** P2 算子，以闭合算子覆盖差距（除 GPU 专属 CuDNN 包装层外）。补齐后算子覆盖率从 91.8% 进一步提升，且多标签损失（ContrastiveLoss/InfogainLoss/MultinomialLogisticLoss）与数据输入层（MemoryData/DummyData/Data 等）使 caffe-ffi 具备更完整的训练/数据加载能力。
+[gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P2 清单包含 13 类训练专用/数据输入/冷门算子，此前标记为"推理引擎刻意不实现"。用户决定**全部补齐** P2 算子，以闭合算子覆盖差距（除 GPU 专属 CuDNN 包装层外）。补齐后算子覆盖率从 91.8% 进一步提升，且多标签损失（ContrastiveLoss/InfogainLoss/MultinomialLogisticLoss）与数据输入层（MemoryData/DummyData/Data 等）使 caffe-ffi 具备更完整的训练/数据加载能力。
 
 ## What Changes
 - 在 [caffe.proto](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/proto/caffe/proto/caffe.proto) 新增 11 个 P2 参数 message，并在 `LayerParameter` 注册字段（179-189）
@@ -12,7 +12,7 @@
 - **CuDNN\* 包装层（10 种）刻意不实现**（GPU 专属，caffe-ffi 为纯 CPU 引擎），在报告中记录理由
 - 重新生成并提交 `caffe_pb2.py`（预生成 pb2，开箱即用约定）
 - 补齐各算子单元测试（forward/backward/数值梯度），遵循项目 Backward 验证工作流
-- 更新 [gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) P2 状态
+- 更新 [gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) P2 状态
 
 ## Impact
 - Affected specs: `caffex-vs-caffe-ffi-gap-analysis`（P2 状态刷新）
@@ -86,7 +86,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: 算子覆盖率统计更新
-[gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P2 缺失清单、算子覆盖率、Proto 参数数量、路线图与行动项 SHALL 同步更新；CuDNN 包装层保持"不实现"并记录理由。
+[gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P2 缺失清单、算子覆盖率、Proto 参数数量、路线图与行动项 SHALL 同步更新；CuDNN 包装层保持"不实现"并记录理由。
 
 ### Requirement: 数据层定位调整
 原报告将数据输入层标记为"推理引擎通常不需要"，现因 P2 补齐而调整：数据层经 Python/numpy 桥接实现，定位从"刻意不实现"改为"已实现（Python 桥接）"。

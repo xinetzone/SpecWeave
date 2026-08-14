@@ -73,7 +73,7 @@ dx_i = sum_{j=1}^C J_{ji} * dy_j
 
 ### 头文件修改
 
-**文件**：[softmax_layer.hpp](../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp)
+**文件**：[softmax_layer.hpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/layers/softmax_layer.hpp)
 
 在protected区域`Forward_cpu`声明后添加：
 
@@ -94,7 +94,7 @@ ObjectPtr<Blob> scale_;
 
 ### Backward_cpu实现
 
-**文件**：[softmax_layer.cpp](../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp#L142-L213)
+**文件**：[softmax_layer.cpp](../../../../../../../projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/softmax_layer.cpp#L142-L213)
 
 核心结构（约70行）：
 1. **前置检查**：propagate_down[0]检查
@@ -148,7 +148,7 @@ NCHW布局下索引计算：
 
 ## 测试用例（22个，全部通过）
 
-**测试文件**：[test_softmax_backward.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py)
+**测试文件**：[test_softmax_backward.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_softmax_backward.py)
 
 ### L1：已知值手算验证（4个）
 

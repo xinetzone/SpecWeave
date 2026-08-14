@@ -169,7 +169,7 @@ flowchart TD
 **目标**：评估所有涉及模式的成熟度等级，提炼核心洞察。
 
 **操作步骤**：
-1. 对照[pattern-maturity-levels.md](../../concepts/pattern-maturity-levels.md)的L1-L3标准，逐个评估模式当前等级
+1. 对照[pattern-maturity-levels.md](../../../concepts/pattern-maturity-levels.md)的L1-L3标准，逐个评估模式当前等级
 2. 给出每个模式的L2/L3升级条件和可执行路径
 3. 提炼≥3条核心洞察（G2四元组：现象+根因+影响+建议）
 4. 完成validation-report.md第五章

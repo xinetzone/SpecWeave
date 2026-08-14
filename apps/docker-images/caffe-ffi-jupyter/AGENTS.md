@@ -59,10 +59,10 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | Docker Compose运行 | [.agents/rules/build-test.md](.agents/rules/build-test.md#docker-compose运行) | compose/目录、端口映射、token获取 |
 | caffe-ffi内核验证 | [.agents/rules/build-test.md](.agents/rules/build-test.md#验证caffe-ffi安装) | 内核列表、动态库ldconfig验证、ldd检查 |
 | AI资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/目录结构、继承链 |
-| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../.agents/global-core-rules.md) | 回退到父级工作区 |
-| Skill使用 | [../../.agents/skills/](../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
-| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../.agents/commands/) | 七概念指令集，通过父级调用 |
-| Dockerfile自动化测试 | [../../.agents/scripts/test-dockerfiles.ps1](../../.agents/scripts/test-dockerfiles.ps1) | 项目根目录测试脚本 |
+| 全局规则（提交/代码风格/沟通） | [../../AGENTS.md](../../AGENTS.md) → [../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 回退到父级工作区 |
+| Skill使用 | [../../.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| 复盘/洞察/原子化/原子提交 | [../../.agents/commands/](../../../.agents/commands/) | 七概念指令集，通过父级调用 |
+| Dockerfile自动化测试 | [../../.agents/scripts/test-dockerfiles.ps1](../../../.agents/scripts/test-dockerfiles.ps1) | 项目根目录测试脚本 |
 
 ## 核心规范入口
 

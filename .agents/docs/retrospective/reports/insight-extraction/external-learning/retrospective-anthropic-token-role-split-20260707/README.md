@@ -63,7 +63,7 @@ last-updated: "2026-08-01"
 
 ## 关联资源
 
-- [Spec 三件套（保留在 spec 目录）](../../../../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-anthropic-token-role-split/spec.md) —— spec.md / tasks.md / checklist.md 作为规划过程产物保留
+- [Spec 三件套（保留在 spec 目录）](../../../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-anthropic-token-role-split/spec.md) —— spec.md / tasks.md / checklist.md 作为规划过程产物保留
 - [同类先例：Tutti 多Agent分析归档](../retrospective-tutti-analysis-20260707/README.md) —— 同为微信公众号技术文章深度洞察分析
 - [同类先例：Codex 产品哲学分析归档](../retrospective-codex-article-analysis-20260706/README.md) —— AI产品技术方向分析参考
 

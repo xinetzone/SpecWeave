@@ -440,7 +440,7 @@ flowchart TD
 | [skill-five-elements-model.md](skill-five-elements-model.md) | **互补（结构vs过程）** | 五要素模型定义 Skill 文档应该**长什么样**，本模式定义 Skill 应该**怎么造出来** |
 | [generation-validation-closed-loop.md](generation-validation-closed-loop.md) | **组成部分（宏观vs微观）** | 生成-验证闭环是本模式步骤7（QA）在单次生成层面的具体实现 |
 | [honest-limitation-acknowledgment.md](honest-limitation-acknowledgment.md) | **补充（能力边界）** | 七步法完成后，需要用本模式明确"不能做什么"，完成产品化的最后一环 |
-| [constraint-driven-creativity.md](../../creative-design/constraint-driven-creativity.md) | **理论基础** | 约束驱动创意是步骤5（精确约束）的底层设计哲学——明确约束反而提升质量稳定性 |
+| [constraint-driven-creativity.md](../creative-design/constraint-driven-creativity.md) | **理论基础** | 约束驱动创意是步骤5（精确约束）的底层设计哲学——明确约束反而提升质量稳定性 |
 | [progressive-templating.md](progressive-templating.md) | **实现技术** | 渐进式模板化是步骤1（场景细分）和步骤2（统一语言）的具体实现技术 |
 | [first-principles-prompt-pattern.md](first-principles-prompt-pattern.md) | **配套使用** | 步骤6（语义层处理）需要第一性原理思维，穿透表面直达本质 |
 | [adversarial-review-prompt-pattern.md](adversarial-review-prompt-pattern.md) | **QA技术** | 对抗式审查Prompt可以作为步骤7（QA闭环）的自动化检查技术 |

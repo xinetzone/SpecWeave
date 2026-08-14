@@ -93,7 +93,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 
 ## 代码审查速查
 
-快速审查接口扩展代码时，使用 [框架扩展与性能日志CR清单](../../../checklists/framework-extension-and-perf-logging-review.md#二框架接口渐进式扩展检查) 逐项对照。
+快速审查接口扩展代码时，使用 [框架扩展与性能日志CR清单](../../../../checklists/framework-extension-and-perf-logging-review.md#二框架接口渐进式扩展检查) 逐项对照。
 
 ## 实际案例（Caffe-ffi Backward扩展）
 

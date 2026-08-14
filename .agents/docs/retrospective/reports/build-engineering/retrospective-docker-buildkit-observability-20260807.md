@@ -104,7 +104,7 @@ Docker构建可观测性的本质是：**构建过程必须是可审计、可定
 
 ### 自动化测试脚本设计
 
-测试脚本 [test-dockerfiles.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/test-dockerfiles.ps1) 实现：
+测试脚本 [test-dockerfiles.ps1](../../../../scripts/test-dockerfiles.ps1) 实现：
 
 1. **自动发现**: 遍历`apps/`和`.agents/templates/`下所有Dockerfile，排除vendor/projects
 2. **BuildKit语法检查**: 验证`# syntax=docker/dockerfile:1.x-labs`声明存在
@@ -193,7 +193,7 @@ echo "  - python3: $(python3 --version 2>&1 | awk '{print $2}')" && \
 
 ### 新增文件：自动化测试脚本
 
-**新增**: [.agents/scripts/test-dockerfiles.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/test-dockerfiles.ps1)（298行）
+**新增**: [.agents/scripts/test-dockerfiles.ps1](../../../../scripts/test-dockerfiles.ps1)（298行）
 
 功能特性：
 - 自动发现Dockerfile

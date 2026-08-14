@@ -170,4 +170,4 @@ Data → Conv(20) → Pool(MAX) → Conv(50) → Pool(MAX) → IP(500) → ReLU 
 | Test Accuracy | **97.95%**（≥ 97% 达标） |
 | 梯度健康 | 无 NaN/Inf，权重收敛 |
 
-> 端到端训练证明 19 类层 Backward 组合后梯度流正确，可作为 Backward 阶段终极验收标准。详见 [P3-E 验收报告](../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)。
+> 端到端训练证明 19 类层 Backward 组合后梯度流正确，可作为 Backward 阶段终极验收标准。详见 [P3-E 验收报告](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)。

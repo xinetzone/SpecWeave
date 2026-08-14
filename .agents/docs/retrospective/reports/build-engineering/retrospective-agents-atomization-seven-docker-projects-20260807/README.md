@@ -49,11 +49,11 @@ commit: "afa9d346"
 
 | 序号 | 子项目 | 基础镜像 | 用途 | 原有AGENTS.md | 规则文件数 |
 |------|--------|---------|------|:------------:|:---------:|
-| 1 | [jupyter-ssh-base](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
-| 2 | [devcontainer-base](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
-| 3 | [docker-ssh-dind](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
-| 4 | [pytorch-base](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
-| 5 | [caffe-ffi-jupyter](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
+| 1 | [jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
+| 2 | [devcontainer-base](../../../../../../apps/docker-images/devcontainer-base/) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
+| 3 | [docker-ssh-dind](../../../../../../apps/docker-images/docker-ssh-dind/) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
+| 4 | [pytorch-base](../../../../../../apps/docker-images/pytorch-base/) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
+| 5 | [caffe-ffi-jupyter](../../../../../../apps/docker-images/caffe-ffi-jupyter/) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
 | 6 | [caffe-ffi-cross](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-cross) | ubuntu:26.04 | Linux→macOS/Windows 交叉编译镜像 | ❌ 无 → 新建 | 2 |
 | 7 | [xmnn-runtime/docker](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker) | ubuntu:24.04 | xmnn Python wheel 运行时镜像 | ❌ 无 → 新建 | 3 |
 
@@ -96,7 +96,7 @@ applicable_to: "<项目路径>"
 
 ### F04. ID唯一性检查结果
 
-运行 [check-rules-id-uniqueness.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/check-rules-id-uniqueness.ps1) 结果：
+运行 [check-rules-id-uniqueness.ps1](../../../../../scripts/check-rules-id-uniqueness.ps1) 结果：
 
 ```
 Total files scanned: 24
@@ -242,7 +242,7 @@ refactor(agents): 全面原子化7个Docker子项目的.agents规则体系
 
 | 属性 | 值 |
 |------|-----|
-| 脚本路径 | [check-rules-id-uniqueness.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/check-rules-id-uniqueness.ps1) |
+| 脚本路径 | [check-rules-id-uniqueness.ps1](../../../../../scripts/check-rules-id-uniqueness.ps1) |
 | 功能 | 批量扫描 `.agents/rules/*.md`，提取frontmatter中id字段，检查唯一性和缺失 |
 | 输出 | 彩色控制台报告 + 退出码（0=通过，1=存在重复/缺失） |
 | 参数 | `-RootDir`（扫描根目录，默认自动检测）、`-Strict`（缺失ID视为错误） |
@@ -352,7 +352,7 @@ refactor(agents): 全面原子化7个Docker子项目的.agents规则体系
 ## 交叉引用索引
 
 ### 工具产出
-- 🆕 [check-rules-id-uniqueness.ps1](file:///d:/spaces/SpecWeave/.agents/scripts/check-rules-id-uniqueness.ps1) — Rules ID唯一性批量检查脚本
+- 🆕 [check-rules-id-uniqueness.ps1](../../../../../scripts/check-rules-id-uniqueness.ps1) — Rules ID唯一性批量检查脚本
 
 ### 原子化项目文件
 - [jupyter-ssh-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/.agents/) — 4规则文件
@@ -364,9 +364,9 @@ refactor(agents): 全面原子化7个Docker子项目的.agents规则体系
 - [xmnn-runtime/docker/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker/.agents/) — 3规则文件（UID自适应）
 
 ### 关联已有模式
-- [dockerfile-runtime-logical-layering.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) — 六步逻辑分层（全部7项目对齐）
-- [docker-ssh-noninteractive-path-fix.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) — PATH四重保障
-- [container-healthcheck-minimal-probe.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/patterns/code-patterns/container-healthcheck-minimal-probe.md) — 最小探针
+- [dockerfile-runtime-logical-layering.md](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) — 六步逻辑分层（全部7项目对齐）
+- [docker-ssh-noninteractive-path-fix.md](../../../patterns/code-patterns/docker-ssh-noninteractive-path-fix.md) — PATH四重保障
+- [container-healthcheck-minimal-probe.md](../../../patterns/code-patterns/container-healthcheck-minimal-probe.md) — 最小探针
 
 ---
 

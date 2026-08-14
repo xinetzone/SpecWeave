@@ -41,7 +41,7 @@ source: "iteration-reports"
 ### 周复盘（周日 07-26，30分钟）
 
 - [ ] 运行 `python .agents/scripts/docgen.py weekly` 获取数据快照
-- [ ] 使用 [weekly-retrospective-template.md](../../../../../../templates/weekly-retrospective-template.md) 完成周复盘
+- [ ] 使用 [weekly-retrospective-template.md](../../../../../templates/weekly-retrospective-template.md) 完成周复盘
 - [ ] 制定下周日历（07-27 ~ 08-02）
 
 ### CI质量门禁（工作日午间，自动化）

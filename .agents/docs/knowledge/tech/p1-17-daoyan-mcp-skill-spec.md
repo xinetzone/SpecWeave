@@ -193,5 +193,5 @@ curl -X POST "https://your-api-endpoint" \
 
 **来源参考**：
 - [daoyan-wisdom/SKILL.md](file:///d:/spaces/chaos/daoApps/dao-yan/.trae/skills/daoyan-wisdom/SKILL.md)
-- 相关项目：[P1-10 DaoYan 项目概览](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/tech/p1-10-daoyan-project-overview.md)
+- 相关项目：[P1-10 DaoYan 项目概览](p1-10-daoyan-project-overview.md)
 - 在线体验：https://167c2bc1450e4ea3a0dc4b07c5873069.prod.enter.pro

@@ -3,8 +3,8 @@
 > G3质量门：每个模式包含触发场景、核心步骤（3-7步）、反模式（≥3个）、检验标准、迁移示例（≥1个非当前场景）
 >
 > **归档状态**：✅ 已归档至模式库 (2026-07-31)
-> - PAT-001 → [code-patterns/ffi-intrusive-refcount-zerocopy.md](../../.agents/docs/retrospective/patterns/code-patterns/ffi-intrusive-refcount-zerocopy.md)（L2-validated, validation_count: 3，Phase 2 N≥2 COW 验证通过）
-> - PAT-002 → [architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md](../../.agents/docs/retrospective/patterns/architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md)（L1-draft, validation_count: 1）
+> - PAT-001 → [code-patterns/ffi-intrusive-refcount-zerocopy.md](../../../.agents/docs/retrospective/patterns/code-patterns/ffi-intrusive-refcount-zerocopy.md)（L2-validated, validation_count: 3，Phase 2 N≥2 COW 验证通过）
+> - PAT-002 → [architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md](../../../.agents/docs/retrospective/patterns/architecture-patterns/raw-pointer-ffi-smart-pointer-bridge.md)（L1-draft, validation_count: 1）
 
 ---
 

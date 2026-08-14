@@ -1,7 +1,7 @@
 # Caffe Normalize→RMSNorm 代码优化 - Product Requirement Document
 
 ## Overview
-- **Summary**: 对 [caffe.py](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/python/tvm/relay/frontend/caffe.py#L549-L560) 中 Normalize 层转 RMSNorm 的代码段进行优化，消除重复计算、提升可读性、完善错误处理，并参照 [test_rms_norm.py](file:///d:/spaces/SpecWeave/apps/tests/test_rms_norm.py) 的标准补充单元测试。
+- **Summary**: 对 [caffe.py](file:///d:/spaces/SpecWeave/external/xmhub/npu_tvm/python/tvm/relay/frontend/caffe.py#L549-L560) 中 Normalize 层转 RMSNorm 的代码段进行优化，消除重复计算、提升可读性、完善错误处理，并参照 [test_rms_norm.py](../../../apps/tests/test_rms_norm.py) 的标准补充单元测试。
 - **Purpose**: 当前代码存在辅助函数重复调用、缺少参数校验、可读性不足等问题，优化后可提升代码质量、减少冗余计算、降低维护成本，同时通过测试确保数学等价性不被破坏。
 - **Target Users**: TVM NPU 编译器开发者、维护 caffe frontend 的工程师。
 

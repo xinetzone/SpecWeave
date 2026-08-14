@@ -27,10 +27,10 @@ id: awesome-okf-vendor-migration-checklist
 - [x] vendor/flexloop/ 和 vendor/ark-cli/ 目录内无意外修改
 
 ## 元数据更新验证
-- [x] [vendor/AGENTS.md](../vendor/AGENTS.md) 子模块路由表包含 awesome-okf 条目
-- [x] [vendor/AGENTS.md](../vendor/AGENTS.md) 中 awesome-okf 类型标注为 third_party
-- [x] [vendor/AGENTS.md](../vendor/AGENTS.md) 中 awesome-okf 说明文字准确描述用途（中文 OKF 生态项目）
-- [x] [vendor/AGENTS.md](../vendor/AGENTS.md) 边界声明表包含 awesome-okf 行，标注为不可修改
+- [x] [vendor/AGENTS.md](../../../vendor/AGENTS.md) 子模块路由表包含 awesome-okf 条目
+- [x] [vendor/AGENTS.md](../../../vendor/AGENTS.md) 中 awesome-okf 类型标注为 third_party
+- [x] [vendor/AGENTS.md](../../../vendor/AGENTS.md) 中 awesome-okf 说明文字准确描述用途（中文 OKF 生态项目）
+- [x] [vendor/AGENTS.md](../../../vendor/AGENTS.md) 边界声明表包含 awesome-okf 行，标注为不可修改
 - [x] `vendor/README.md` 依赖清单表格包含 awesome-okf 行
 - [x] `vendor/README.md` 中 awesome-okf 的版本格式为 `main@<short-commit> (子模块)`（main@f6c70627）
 - [x] `vendor/README.md` 中 awesome-okf 的类型、日期、用途字段正确

@@ -36,12 +36,12 @@ title: "i-have-adhd知识沉淀任务二次验证报告"
 | [checklist.md](../analyze-i-have-adhd-article/checklist.md) | 60 | 验证检查清单 | Spec工作目录 |
 | [article-content.md](../analyze-i-have-adhd-article/article-content.md) | 50 | 原文内容提取 | Spec工作目录 |
 | [analysis-report.md](../analyze-i-have-adhd-article/analysis-report.md) | 946 | 完整分析报告（v1.2） | Spec工作目录 |
-| [action-first-output-paradigm.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 223 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |
-| [reverse-adaptation-innovation.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) | 277 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |
-| [README.md](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/README.md) | 160 | 元复盘归档报告 | 报告归档目录 |
-| [action-first-output-paradigm-addendum.md](../../../.agents/prompts/action-first-output-paradigm-addendum.md) | 149 | 提示词模板 | prompts目录 |
-| [action-first-output-paradigm.toml](../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.toml) | 12 | TOML元数据（v2新增） | .meta/toml目录 |
-| [reverse-adaptation-innovation.toml](../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.toml) | 12 | TOML元数据（v2新增） | .meta/toml目录 |
+| [action-first-output-paradigm.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 223 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |
+| [reverse-adaptation-innovation.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) | 277 | L2方法论模式（v2.0，已更新） | 知识库模式目录 |
+| [README.md](../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/) | 160 | 元复盘归档报告 | 报告归档目录 |
+| [action-first-output-paradigm-addendum.md](../../../../.agents/prompts/action-first-output-paradigm-addendum.md) | 149 | 提示词模板 | prompts目录 |
+| [action-first-output-paradigm.toml](../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.toml) | 12 | TOML元数据（v2新增） | .meta/toml目录 |
+| [reverse-adaptation-innovation.toml](../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.toml) | 12 | TOML元数据（v2新增） | .meta/toml目录 |
 
 **Spec工作目录小计**：1362行
 **知识库+归档+模板小计**：833行（含v2新增TOML元数据24行）
@@ -147,10 +147,10 @@ title: "i-have-adhd知识沉淀任务二次验证报告"
 
 | 核心步骤 | 遵循度 | 证据与说明 |
 |---------|--------|-----------|
-| ①确定目标目录 | ✅ 遵循 | [action-first-output-paradigm.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)放置在ai-collaboration/目录（AI协作模式），[reverse-adaptation-innovation.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md)放置在creative-design/目录（创意设计模式），目录选择准确 |
-| ②读取1-2个同目录现有条目作为风格锚 | ✅ 遵循 | 元复盘洞察5明确记录：萃取时先读取了同目录下现有模式文件[output-behavior-specification.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md)和constraint-driven-creativity.md作为格式参考 |
+| ①确定目标目录 | ✅ 遵循 | [action-first-output-paradigm.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)放置在ai-collaboration/目录（AI协作模式），[reverse-adaptation-innovation.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md)放置在creative-design/目录（创意设计模式），目录选择准确 |
+| ②读取1-2个同目录现有条目作为风格锚 | ✅ 遵循 | 元复盘洞察5明确记录：萃取时先读取了同目录下现有模式文件[output-behavior-specification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md)和constraint-driven-creativity.md作为格式参考 |
 | ③识别隐式约定 | ⚠️ 部分遵循 | 识别了章节结构、YAML字段、代码块风格、反模式表格等约定，但遗漏两个隐式约定：(a)ai-collaboration目录现有模式均含`x-toml-ref`字段指向.meta/toml/下的配置文件，两个新模式均缺少此字段；(b)现有模式frontmatter包含`id`/`source`/`x-toml-ref`（部分还含`category`/`date`），新模式frontmatter字段集合不完整 |
-| ④按锚定风格撰写新内容 | ⚠️ 部分遵循 | 整体框架对齐（模式类型/成熟度/适用场景/问题背景/核心规则/反模式/迁移验证/关系），但存在风格漂移：(1)action-first的"正例"章节含代码块示例，而同目录[output-behavior-specification.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md)对应位置使用mermaid图表；(2)reverse-adaptation使用"核心概念"替代"问题背景"，并额外增加"适用条件""关键成功因素""风险点与规避策略"三个独立大章，深度超过同目录锚点模式；(3)成熟度表述格式不一致：action-first用"L2 单案例验证（i-have-adhd项目9400+ Star实践验证）"，output-behavior用"L2 已验证（Ian Xiaohei Illustrations 完整实践验证）"，括号内说明格式不统一 |
+| ④按锚定风格撰写新内容 | ⚠️ 部分遵循 | 整体框架对齐（模式类型/成熟度/适用场景/问题背景/核心规则/反模式/迁移验证/关系），但存在风格漂移：(1)action-first的"正例"章节含代码块示例，而同目录[output-behavior-specification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md)对应位置使用mermaid图表；(2)reverse-adaptation使用"核心概念"替代"问题背景"，并额外增加"适用条件""关键成功因素""风险点与规避策略"三个独立大章，深度超过同目录锚点模式；(3)成熟度表述格式不一致：action-first用"L2 单案例验证（i-have-adhd项目9400+ Star实践验证）"，output-behavior用"L2 已验证（Ian Xiaohei Illustrations 完整实践验证）"，括号内说明格式不统一 |
 | ⑤对比检查一致性 | ❌ 未遵循 | 无显式的一致性对比检查记录。两个新模式写完后未与锚点模式逐条对比章节结构、字段、格式，风格漂移问题未被发现 |
 
 **模式B遵循度总评**：5步中2步✅完全遵循，2步⚠️部分遵循，1步❌未遵循。风格锚定在前半段执行较好，后半段（对比检查）缺失导致风格漂移。
@@ -191,7 +191,7 @@ title: "i-have-adhd知识沉淀任务二次验证报告"
 
 | 核心步骤 | 遵循度 | 证据与说明 |
 |---------|--------|-----------|
-| ①搜索"必须/禁止/绝不/一定"等强约束词 | ⚠️ 部分遵循 | V阶段对抗审查确实发现了analysis-report.md中的强约束问题（见[analysis-report.md:849-851](../analyze-i-have-adhd-article/analysis-report.md#L849-L851)审查意见3：强约束与"例外不完备"自相矛盾），并将analysis-report中2.1-2.4节的"必须/禁止"调整为"默认推荐"。但Grep搜索显示：入库后的模式文档[action-first-output-paradigm.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)中仍保留4处"必须/禁止"强约束 |
+| ①搜索"必须/禁止/绝不/一定"等强约束词 | ⚠️ 部分遵循 | V阶段对抗审查确实发现了analysis-report.md中的强约束问题（见[analysis-report.md:849-851](../analyze-i-have-adhd-article/analysis-report.md#L849-L851)审查意见3：强约束与"例外不完备"自相矛盾），并将analysis-report中2.1-2.4节的"必须/禁止"调整为"默认推荐"。但Grep搜索显示：入库后的模式文档[action-first-output-paradigm.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)中仍保留4处"必须/禁止"强约束 |
 | ②逐条追问"是否有反例？什么场景下不适用？" | ⚠️ 部分遵循 | V阶段对analysis-report中的强约束进行了反例追问（采纳4条修正），但入库模式文档未执行此步骤。action-first模式文档中4处强约束均无对应例外说明：(a)L39"禁止'一会儿''很快'等模糊表述"——短平快单轮交互中时间估计可能冗余；(b)L51"每一句话都必须携带与当前任务直接相关的信息价值"——人际互动中适度寒暄有建立信任功能；(c)L128"破规场景（必须主动打破规则）"——此"必须"是元规则描述，可接受；(d)L132"即使'离题'也必须立即提醒"——轻微风险是否值得打断需要权衡 |
 | ③如有反例，改为"默认推荐"+显式列举例外 | ⚠️ 部分遵循 | analysis-report.md中可迁移性部分已修正为"默认推荐"+弹性提示区块，但入库模式文档action-first-output-paradigm.md未同步修正：L39仍为"禁止……模糊表述"（非"默认不使用"），L51仍为"必须携带信息价值"（非"默认聚焦核心信息"） |
 | ④V阶段专门攻击强约束的适用边界 | ⚠️ 部分遵循 | V阶段对analysis-report执行了边界攻击（意见3专门攻击强约束问题），但模式入库后未对模式文档本身进行第二轮强约束自检。模式文档中的强约束成为"漏网之鱼" |
@@ -508,7 +508,7 @@ title: "i-have-adhd知识沉淀任务二次验证报告"
 
 ## 五、模式成熟度评估与核心洞察（I阶段收尾）
 
-> 本章对照 [pattern-maturity-levels.md](../../../../../../.agents/docs/retrospective/concepts/pattern-maturity-levels.md) 的L1-L3标准，评估本次知识沉淀涉及的5个模式当前成熟度，给出L3升级路径，并提炼3+条核心洞察。
+> 本章对照 [pattern-maturity-levels.md](../../../../.agents/docs/retrospective/concepts/pattern-maturity-levels.md) 的L1-L3标准，评估本次知识沉淀涉及的5个模式当前成熟度，给出L3升级路径，并提炼3+条核心洞察。
 
 ### 5.1 成熟度判定基准
 

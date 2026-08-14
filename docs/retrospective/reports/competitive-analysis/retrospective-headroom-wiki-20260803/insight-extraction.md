@@ -16,7 +16,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I1 |
-| **归档状态** | ✅ 已归档为模式 [file-existence-verification-gate](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/file-existence-verification-gate.md)（L2成熟度，5个验证案例，commit 115c1934） |
+| **归档状态** | ✅ 已归档为模式 [file-existence-verification-gate](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/file-existence-verification-gate.md)（L2成熟度，5个验证案例，commit 115c1934） |
 | **触发场景** | 多轮对话创建大量文件后，AI在对话摘要中声称所有任务已完成，但实际文件系统验证发现多个文件缺失 |
 | **核心发现** | 长上下文场景下，AI的工作记忆采用压缩表示，容易混淆"计划执行"和"已经执行"的状态，产生"完成幻觉"。对话中的"已完成"仅是语言层面的表述，不代表文件系统真实状态。 |
 | **可复用价值** | 适用于所有AI辅助的文件创建、代码编写、文档生成任务。这是AI Agent系统的通用风险，不仅限于文档场景。 |
@@ -29,7 +29,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I2 |
-| **归档状态** | ✅ 已归档为模式 [relative-path-systematic-construction](../../../../.agents/docs/retrospective/patterns/code-patterns/relative-path-systematic-construction.md)（L2成熟度，4个验证案例，commit 69c4ee5b） |
+| **归档状态** | ✅ 已归档为模式 [relative-path-systematic-construction](../../../../../.agents/docs/retrospective/patterns/code-patterns/relative-path-systematic-construction.md)（L2成熟度，4个验证案例，commit 69c4ee5b） |
 | **触发场景** | 编写x-toml-ref引用时，多次出现相对路径层级错误，导致MD文件无法正确关联TOML元数据 |
 | **核心发现** | 相对路径不是凭记忆估算的，必须以MD文件的实际目录位置为起点，逐级向上（../）数到共同祖先，再向下到TOML位置。目录深度超过4层时记忆错误率极高。 |
 | **可复用价值** | 适用于所有跨目录相对路径引用场景，包括Markdown链接、import语句、配置文件引用等。 |
@@ -42,7 +42,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I3 |
-| **归档状态** | ✅ 已归档为模式 [example-first-alignment](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.md)（L2成熟度，5个验证案例，commit 69c4ee5b） |
+| **归档状态** | ✅ 已归档为模式 [example-first-alignment](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.md)（L2成熟度，5个验证案例，commit 69c4ee5b） |
 | **触发场景** | 任务初期尝试从零设计Wiki格式，进展缓慢；找到github-cli-wiki成熟示例后，快速对齐章节结构、命名规范、TOML字段，效率大幅提升 |
 | **核心发现** | 格式对齐是文档创作的主要隐性成本之一。成熟示例提供了"什么是好的"的具象参照，避免了反复试错，不仅提升速度，还保证了风格一致性。 |
 | **可复用价值** | 适用于所有结构化文档创作、代码模板复用、配置文件编写等场景。"找参考"是效率提升的第一杠杆。 |
@@ -57,7 +57,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I4 |
-| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，6个验证案例，commit e3a3bf32 + 13590d49增强） |
+| **归档状态** | ✅ 已归档为模式 [content-type-routing](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（L2成熟度，6个验证案例，commit e3a3bf32 + 13590d49增强） |
 | **触发场景** | Headroom不使用单一压缩算法处理所有内容，而是先通过分类器识别内容类型（代码/对话/文档/结构化数据），再路由到对应的压缩策略 |
 | **核心发现** | 异构数据的特征差异巨大，"一刀切"的单一算法必然在某些类型上表现很差。先分类再处理的两阶段架构，能在每个细分场景选用最优策略，整体效果远优于万能方案。 |
 | **可复用价值** | 这是通用的异构数据处理范式，适用于：文档处理、日志分析、API网关路由、缓存策略、错误处理等几乎所有需要处理多种输入类型的系统。 |
@@ -70,7 +70,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I5 |
-| **归档状态** | ✅ 已归档为模式 [reversibility-guarantee](../../../../.agents/docs/retrospective/patterns/architecture-patterns/reversibility-guarantee.md)（L2成熟度，6个验证案例，commit 15a52fd5） |
+| **归档状态** | ✅ 已归档为模式 [reversibility-guarantee](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/reversibility-guarantee.md)（L2成熟度，6个验证案例，commit 15a52fd5） |
 | **触发场景** | Headroom的CCR（Context Compression & Recovery）机制不直接丢弃原始上下文，而是以可恢复的方式压缩，需要时可完整还原 |
 | **核心发现** | 传统摘要式压缩是信息有损的，一旦压缩错误或需要细节，原始信息永久丢失。可逆设计虽然有一定的存储/计算开销，但保留了"后悔权"，在不确定场景下稳健性大幅提升。 |
 | **可复用价值** | 适用于所有信息压缩、数据聚合、日志处理、状态同步等场景。本质是"在效率和可回溯性之间做权衡"，可逆设计选择了长期稳健性。 |
@@ -83,7 +83,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | I6 |
-| **归档状态** | ✅ 已归档为模式 [classic-patterns-reuse-heuristic](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md)（L2成熟度，6个验证案例，commit 64e27fae） |
+| **归档状态** | ✅ 已归档为模式 [classic-patterns-reuse-heuristic](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md)（L2成熟度，6个验证案例，commit 64e27fae） |
 | **触发场景** | Headroom将压缩后的上下文作为热数据常驻LLM上下文窗口，原始上下文作为冷数据存储在外部，需要时按需检索加载 |
 | **核心发现** | 这不是新发明，而是计算机体系结构中Cache分层思想（CPU Cache → 内存 → 磁盘）、数据库冷热分离、CDN缓存等经典模式在AI上下文管理中的直接复用。 |
 | **可复用价值** | 经典计算机科学思想具有强大的跨领域迁移能力。遇到AI领域的"新问题"时，先想想传统CS领域是否已经有成熟解决方案。 |
@@ -98,7 +98,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P1 |
-| **归档状态** | ✅ 已归档为模式 [transparent-interceptor-middleware](../../../../.agents/docs/retrospective/patterns/architecture-patterns/transparent-interceptor-middleware.md)（L2成熟度，8个验证案例，commit 91e80bcf） |
+| **归档状态** | ✅ 已归档为模式 [transparent-interceptor-middleware](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/transparent-interceptor-middleware.md)（L2成熟度，8个验证案例，commit 91e80bcf） |
 | **触发场景** | Headroom作为Harness层中间件，位于LLM API调用链路上，对应用代码和LLM本身完全透明，无需修改任何一端即可实现上下文压缩 |
 | **核心发现** | 拦截器模式通过在调用链路中插入透明代理层，实现横切关注点（压缩、缓存、日志、限流、重试等）的统一处理，符合开闭原则（对扩展开放，对修改关闭）。 |
 | **可复用价值** | 这是最成熟的架构模式之一，适用于：API网关、RPC拦截器、HTTP中间件、ORM钩子、消息队列过滤器等所有需要在不修改核心逻辑的情况下增强功能的场景。 |
@@ -111,7 +111,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P2 |
-| **归档状态** | 🔄 合并增强至 [content-type-routing](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（补充专家池原理+4种组合模式+第6个验证案例，L2成熟度，validation_count 5→6，commit 13590d49） |
+| **归档状态** | 🔄 合并增强至 [content-type-routing](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-type-routing.md)（补充专家池原理+4种组合模式+第6个验证案例，L2成熟度，validation_count 5→6，commit 13590d49） |
 | **触发场景** | Headroom集成了多种压缩算法（摘要、抽取、代码保留、实体链接等），通过路由层智能选择，而非依赖某一种"最好"的算法 |
 | **核心发现** | 没有万能算法，每个算法都有其擅长的场景和边界条件。通过"算法池+智能路由"的组合架构，可以在不同场景下选用最优算法，整体表现超越任何单一算法。 |
 | **可复用价值** | 适用于：压缩算法、序列化格式、序列化策略、推荐算法、搜索排序、异常处理重试策略等需要针对不同场景选择策略的系统。 |
@@ -124,7 +124,7 @@
 | 字段 | 内容 |
 |------|------|
 | **洞察编号** | P3 |
-| **归档状态** | ✅ 已归档为模式 [usage-feedback-self-optimization-loop](../../../../.agents/docs/retrospective/patterns/architecture-patterns/usage-feedback-self-optimization-loop.md)（L2成熟度，7个验证案例，含OODA/PDCA/PID经典溯源+L0-L5成熟度模型，commit 6b1edbf1） |
+| **归档状态** | ✅ 已归档为模式 [usage-feedback-self-optimization-loop](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/usage-feedback-self-optimization-loop.md)（L2成熟度，7个验证案例，含OODA/PDCA/PID经典溯源+L0-L5成熟度模型，commit 6b1edbf1） |
 | **触发场景** | Headroom内置learn命令，能从实际使用中学习哪些压缩策略有效、哪些会导致信息丢失，自动更新配置文件（CLAUDE.md/AGENTS.md）持续优化 |
 | **核心发现** | 最好的系统不是一次性设计完美的，而是能从实际使用中持续学习进化的。通过闭环反馈机制，系统越用越好，形成正向飞轮。 |
 | **可复用价值** | 适用于：所有需要长期运行、效果依赖实际使用场景的系统，包括推荐系统、搜索引擎、缓存策略、压缩配置、提示词工程、Agent行为优化等。 |

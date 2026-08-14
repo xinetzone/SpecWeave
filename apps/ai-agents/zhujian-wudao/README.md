@@ -44,4 +44,4 @@ TRAE AI 创意大赛参赛作品，赛道标签：`学习工作` + `社会公益
 
 ## 来源
 
-本应用从 `.temp/AI/` 暂存区迁移而来，遵循项目 [应用开发生命周期规范](../../.agents/protocols/app-development-workflow.md) 完成归档。
+本应用从 `.temp/AI/` 暂存区迁移而来，遵循项目 [应用开发生命周期规范](../../../.agents/protocols/app-development-workflow.md) 完成归档。

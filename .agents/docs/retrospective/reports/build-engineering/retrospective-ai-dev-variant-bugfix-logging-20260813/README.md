@@ -35,9 +35,9 @@ session: sc-20260813-devcontainer-variant-fix-retro
 
 | 交付物 | 文件路径 | 说明 |
 |--------|---------|------|
-| 修复后的测试脚本 | [test-ai-dev.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/scripts/test-ai-dev.sh) | T4+T25修复，25/25通过 |
+| 修复后的测试脚本 | [test-ai-dev.sh](../../../../../../apps/docker-images/devcontainer-base/variants/scripts/test-ai-dev.sh) | T4+T25修复，25/25通过 |
 | 日志增强后的Dockerfile | [ai-dev/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/ai-dev/Dockerfile) | pip_install_group函数+14组分组安装 |
-| 分隔符修复后的构建脚本 | [build.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/build.sh) | \|\|\|分隔符+参数扩展解析 |
+| 分隔符修复后的构建脚本 | [build.sh](../../../../../../apps/docker-images/devcontainer-base/variants/build.sh) | \|\|\|分隔符+参数扩展解析 |
 | 复盘报告（本文档） | 本文件 | R→I→E→V→C全链路产出 |
 
 ### 1.4 关键数据

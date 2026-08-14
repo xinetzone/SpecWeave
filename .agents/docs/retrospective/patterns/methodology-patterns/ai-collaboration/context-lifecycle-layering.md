@@ -229,7 +229,7 @@ SpecWeave项目已有部分分层实现：
 | [progressive-context-disclosure.md](progressive-context-disclosure.md) | 相关 | 渐进式披露是第三层"懒加载"的具体实现策略 |
 | [lazy-loading-pattern.md](lazy-loading-pattern.md) | 相关 | 懒加载模式是第三层的具体实现 |
 | [subagent-atomic-task-template.md](subagent-atomic-task-template.md) | 落地工具 | 子代理原子任务模板是第四层"隔离执行"的委派规范 |
-| [subagent-output-quality-checklist.md](../../../templates/subagent-output-quality-checklist.md) | 落地工具 | 子代理输出质量校验是第四层执行的质量保障 |
+| [subagent-output-quality-checklist.md](../../../../../templates/subagent-output-quality-checklist.md) | 落地工具 | 子代理输出质量校验是第四层执行的质量保障 |
 
 ## 适用场景
 

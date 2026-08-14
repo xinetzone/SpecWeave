@@ -22,7 +22,7 @@
 ## Background & Context
 - Conv v4 优化策略：沿输出通道(M)维度分块并行，最小分块32通道，GEMM+Bias融合，im2col单线程
 - 已验证模型：ResNet-50 (53 Conv, 224×224)、InceptionV1 (57 Conv, 224×224)、ResNet-101 (104 Conv, 224×224)
-- 已完成环境变量修复：OMP_WAIT_POLICY=PASSIVE 已在 [build_and_bench_v5.sh](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/build_and_bench_v5.sh#L22-L27) 全局导出
+- 已完成环境变量修复：OMP_WAIT_POLICY=PASSIVE 已在 [build_and_bench_v5.sh](../caffe-ffi-followup-fixes-analysis/build_and_bench_v5.sh#L22-L27) 全局导出
 - 稳定性测试发现：batch=16时InceptionV1 CV%达18.6%，尾延迟比2.33x，存在显著抖动；OMP=2时出现0.90x减速（小GEMM线程开销>收益）
 - SDK 真实模型：fgvsirfeature（人脸嵌入，120×120输入，~64 Conv，通道数16→32→64→128→256渐进式残差网络）、fgvsirfeature_ssd（人脸检测SSD，小模型）
 - 方法论：使用七概念编排（场景1+场景2混合链路）R→I→E→[F→V]→A→C

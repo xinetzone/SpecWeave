@@ -18,7 +18,7 @@ maturity: "L1"
 - 修改文件：4 个（pyproject.toml、run-build.sh、Dockerfile、新建 verify_xmnn.py）
 - 构建轮次：3 轮 runtime 构建（第1轮 pytest 缺失、第2轮 rich.__version__ 报错、第3轮 shell 转义语法错误后成功）
 - 验证结果：15 个核心模块导入正常，tvm/VTA 运行时功能正常，PyTorch 标记为可选
-- 模式更新：[dockerfile-python-code-safe-embedding](../../../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md) 升级 validation_count=3，新增 printf 转义陷阱
+- 模式更新：[dockerfile-python-code-safe-embedding](../../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md) 升级 validation_count=3，新增 printf 转义陷阱
 
 ---
 
@@ -109,7 +109,7 @@ import tvm → import tvm.relay.frontend.caffe → import tvm.relay.testing
 1. **Why 失败？** rich 15.0.0 没有暴露 `__version__` 属性
 2. **Why 假设它有？** PEP 396 推荐模块暴露 `__version__`，但不是强制标准
 3. **Why 没提前发现？** dev 容器中验证脚本没有打印所有包的版本
-4. **根本原因**：直接使用 `module.__version__` 是反模式（已有 [python-package-version-standard-api](../../../../patterns/code-patterns/python-package-version-standard-api.md) 模式明确指出）
+4. **根本原因**：直接使用 `module.__version__` 是反模式（已有 [python-package-version-standard-api](../../../patterns/code-patterns/python-package-version-standard-api.md) 模式明确指出）
 
 **修复**：实现 `get_version()` fallback 函数，先用 `__version__`，fallback 到 `importlib.metadata.version()`。
 
@@ -148,7 +148,7 @@ import tvm → import tvm.relay.frontend.caffe → import tvm.relay.testing
 
 **洞察 2：`__version__` 不可靠是已知模式但执行不到位**
 
-[python-package-version-standard-api](../../../../patterns/code-patterns/python-package-version-standard-api.md) 模式明确指出 PEP 396 非强制，rich/typing_extensions 等包不暴露 `__version__`。本次仍踩坑说明：
+[python-package-version-standard-api](../../../patterns/code-patterns/python-package-version-standard-api.md) 模式明确指出 PEP 396 非强制，rich/typing_extensions 等包不暴露 `__version__`。本次仍踩坑说明：
 - 模式存在不等于被执行——新写验证脚本时未检查模式库
 - 需要在 Dockerfile 验证模板中固化 `importlib.metadata` fallback，而非依赖人工记忆
 
@@ -157,7 +157,7 @@ import tvm → import tvm.relay.frontend.caffe → import tvm.relay.testing
 当 Python 代码超过 15 行或需要传递字符串参数（包名等字面量）时，shell 转义问题几乎必然出现。本次的 printf 单引号转义问题证明：
 - 即使有经验的开发者也容易在 shell 引号嵌套上犯错
 - 外部脚本（COPY + RUN）是零转义风险的最优方案
-- 这与已有 [shell-nested-quote-file-based-strategy](../../../../patterns/code-patterns/shell-nested-quote-file-based-strategy.md) 和 [dockerfile-python-code-safe-embedding](../../../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md) 模式一致，但之前的模式未强调 printf 单引号的 `\"` 陷阱
+- 这与已有 [shell-nested-quote-file-based-strategy](../../../patterns/code-patterns/shell-nested-quote-file-based-strategy.md) 和 [dockerfile-python-code-safe-embedding](../../../patterns/code-patterns/dockerfile-python-code-safe-embedding.md) 模式一致，但之前的模式未强调 printf 单引号的 `\"` 陷阱
 
 ### 3.2 可复用模式沉淀
 

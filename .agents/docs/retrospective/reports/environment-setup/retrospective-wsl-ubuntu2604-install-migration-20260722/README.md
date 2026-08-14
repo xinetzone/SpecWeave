@@ -288,5 +288,5 @@ wsl -d Ubuntu-26.04 -- whoami
 
 - [WSL官方文档 - 导入导出](https://learn.microsoft.com/zh-cn/windows/wsl/basic-commands#import-and-export-a-distribution)
 - [Ubuntu 26.04 WSL镜像](https://apt.releases.ubuntu.com/26.04/)
-- 历史相关复盘：[Windows磁盘空间诊断与WSL虚拟磁盘优化](../../2026-07-22-windows-disk-cleanup-wsl-optimization.md)
+- 历史相关复盘：[Windows磁盘空间诊断与WSL虚拟磁盘优化](../../../2026-07-22-windows-disk-cleanup-wsl-optimization.md)
 - WSL VHDX压缩脚本：[compress-wsl-vhdx.ps1](../../../../../scripts/compress-wsl-vhdx.ps1)

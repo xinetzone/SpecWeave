@@ -224,7 +224,7 @@ if (Test-Path "path/to/file.md") {
 | [edit-verify-separation.md](edit-verify-separation.md) | 理念一致 | 编辑-验证分离强调编辑和验证由不同步骤/角色完成，本模式是其在文件操作的具体应用 |
 | [visual-operation-closed-loop.md](visual-operation-closed-loop.md) | 理念一致 | 可视化操作闭环要求操作后通过视觉确认结果，本模式是文件系统层面的同类理念 |
 | [simple-task-high-risk.md](../governance-strategy/simple-task-high-risk.md) | 风险提醒 | 简单任务最容易跳过验证（"就改一个字"），本模式明确简单任务也必须验证 |
-| [spec-reference-validation-pattern.md](spec-workflow/spec-reference-validation-pattern.md) | 同领域模式 | spec引用验证关注"引用目标存在性"，是本模式在文档引用场景的变体 |
+| [spec-reference-validation-pattern.md](../spec-workflow/spec-reference-validation-pattern.md) | 同领域模式 | spec引用验证关注"引用目标存在性"，是本模式在文档引用场景的变体 |
 
 ## Changelog
 

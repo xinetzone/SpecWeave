@@ -31,7 +31,7 @@
 ## [x] ACT-01: 飞书云文档DOM提取模式沉淀
 
 - **完成情况**:
-  - ✅ 创建模式文档 [feishu-doc-dom-extraction.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/feishu-doc-dom-extraction.md)
+  - ✅ 创建模式文档 [feishu-doc-dom-extraction.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/feishu-doc-dom-extraction.md)
   - ✅ V2质量门：6类反目标场景、2个失败案例、7个早期预警信号
   - ✅ 包含3套代码片段（browser_evaluate/Playwright/Puppeteer）
   - ✅ 明确企业SaaS三级降级策略
@@ -56,21 +56,21 @@
 ## [x] ACT-03: 批量wiki生成后元数据一致性检查
 
 - **完成情况**:
-  - ✅ 在[tech-wiki-tutorial-creation.md](../../../../../.agents/docs/retrospective/patterns/documentation-patterns/tech-wiki-tutorial-creation.md)新增"步骤6：批量生成后元数据一致性检查（必做）"
+  - ✅ 在[tech-wiki-tutorial-creation.md](../../../.agents/docs/retrospective/patterns/documentation-patterns/tech-wiki-tutorial-creation.md)新增"步骤6：批量生成后元数据一致性检查（必做）"
   - ✅ 7项检查清单：source/date/category/tags/id/交叉链接/跨wiki链接
 - **Acceptance Criteria**: ✅
 
 ## [x] ACT-04: 扩展分析章节增加💡知识拓展标记
 
 - **完成情况**:
-  - ✅ 在[06-crossmodal-paradigm.md](../../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)添加4处💡标记+章节开头📌说明
+  - ✅ 在[06-crossmodal-paradigm.md](../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)添加4处💡标记+章节开头📌说明
   - ✅ 修复重复标题问题
 - **Acceptance Criteria**: ✅
 
 ## [x] ACT-05: 飞书文档提取自动化脚本
 
 - **完成情况**:
-  - ✅ 创建[feishu-doc-extract.py](../../../../../.agents/scripts/feishu-doc-extract.py)
+  - ✅ 创建[feishu-doc-extract.py](../../../.agents/scripts/feishu-doc-extract.py)
   - ✅ Playwright驱动，支持有头/无头模式
   - ✅ 集成全部10项反模式/质量检查
   - ✅ 双向扫描（向下→向上→向下）
@@ -93,7 +93,7 @@
 ## [x] ACT-07: 多SaaS平台DOM提取适配方案草案
 
 - **完成情况**:
-  - ✅ 创建[saas-doc-extraction-adaptation-draft.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/saas-doc-extraction-adaptation-draft.md)
+  - ✅ 创建[saas-doc-extraction-adaptation-draft.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/saas-doc-extraction-adaptation-draft.md)
   - ✅ 7大平台候选选择器（钉钉/企微/语雀/石墨/WPS/Notion/Confluence）
   - ✅ 通用DOM探测脚本（自动定位滚动容器+文本行选择器）
   - ✅ 4阶段实施路线图

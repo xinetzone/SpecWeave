@@ -78,7 +78,7 @@ generated: "2026-08-01"
 
 ## 关联资源
 
-- [Spec 三件套（保留在 spec 目录）](../../../../../../.trae/specs/retrospectives-insights/analyze-tencent-hunyuan-hy3-release/spec.md) —— spec.md / tasks.md / checklist.md 作为过程产物保留
+- [Spec 三件套（保留在 spec 目录）](../../../../../../../.trae/specs/retrospectives-insights/analyze-tencent-hunyuan-hy3-release/spec.md) —— spec.md / tasks.md / checklist.md 作为过程产物保留
 - [同类先例：GPT-5.6 行业变局分析归档](../retrospective-gpt56-industry-shift-20260708/README.md) —— 同为大模型行业动态深度分析
 - [同类先例：Codex 产品哲学分析归档](../retrospective-codex-article-analysis-20260706/README.md) —— 同为AI产品发布深度洞察分析
 - [开源地址](https://github.com/Tencent-Hunyuan/Hy3) —— GitHub开源仓库

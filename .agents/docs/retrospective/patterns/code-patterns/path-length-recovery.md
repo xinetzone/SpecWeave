@@ -50,7 +50,7 @@ reuse_count: 1
 - 场景4（项目管理）：会议议程超载→第一次尝试全部讨论超时→记录必须讨论的核心议题→精简议程→重新安排会议→非核心议题异步沟通→记录议程长度变化
 
 ## 参考实现
-- PowerShell实现：[NativeBuild.psm1](file:///d:/spaces/SpecWeave/.agents/scripts/lib/NativeBuild.psm1) 中 `Enter-MsvcDevShell` 函数
+- PowerShell实现：[NativeBuild.psm1](../../../../scripts/lib/NativeBuild.psm1) 中 `Enter-MsvcDevShell` 函数
 - 验证案例：本机PATH 7014字符时触发自动恢复，精简到1669字符后DevShell加载成功，cl.exe可用
 
 ## 技术背景

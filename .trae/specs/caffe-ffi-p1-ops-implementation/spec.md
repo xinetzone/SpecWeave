@@ -1,14 +1,14 @@
 # caffe-ffi P1 算子补齐实现 Spec
 
 ## Why
-[caffe-ffi 技术差距分析报告](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 显示 P0 算子已全部补齐（算子覆盖率 59.0%），但 P1 仍有 18 组共 **20 个**常见推理算子缺失。补齐这些算子可覆盖 Clip（MobileNet V2/V3）、Swish（EfficientNet）、ArgMax/Reduction（分类后处理）、MVN/Exp/Log（概率计算）等高频推理场景，将算子覆盖率从 59.0% 提升至 ~90%。
+[caffe-ffi 技术差距分析报告](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 显示 P0 算子已全部补齐（算子覆盖率 59.0%），但 P1 仍有 18 组共 **20 个**常见推理算子缺失。补齐这些算子可覆盖 Clip（MobileNet V2/V3）、Swish（EfficientNet）、ArgMax/Reduction（分类后处理）、MVN/Exp/Log（概率计算）等高频推理场景，将算子覆盖率从 59.0% 提升至 ~90%。
 
 ## What Changes
 - 在 [caffe.proto](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/proto/caffe/proto/caffe.proto) 新增 16 个 P1 参数 message，并在 `LayerParameter` 注册字段
 - 新增 20 个算子实现（头文件 + cpp），遵循现有 NeuronLayer/Layer 模式
 - 重新生成并提交 `caffe_pb2.py`（预生成 pb2，开箱即用约定）
 - 补齐各算子单元测试（forward/backward/数值梯度），遵循项目 Backward 验证工作流
-- 更新 [gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) P1 状态
+- 更新 [gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) P1 状态
 
 ## Impact
 - Affected specs: `caffex-vs-caffe-ffi-gap-analysis`（P1 状态刷新）
@@ -78,7 +78,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: 算子覆盖率统计更新
-[gap_analysis_report.md](file:///d:/spaces/SpecWeave/.trae/specs/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P1 缺失清单、算子覆盖率（59.0% → ~90%）、Proto 参数数量、路线图与行动项 SHALL 同步更新。
+[gap_analysis_report.md](../caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md) 的 P1 缺失清单、算子覆盖率（59.0% → ~90%）、Proto 参数数量、路线图与行动项 SHALL 同步更新。
 
 ## REMOVED Requirements
 无。

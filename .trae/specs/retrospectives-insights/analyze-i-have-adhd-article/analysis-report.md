@@ -9,9 +9,9 @@ date: 2026-07-28
 
 > **📚 Wiki教程版本**：本报告已原子化为结构化Wiki教程，适合按章节渐进式学习：
 > [i-have-adhd Wiki 目录索引](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md) |
-> [行动优先输出范式](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) |
-> [逆向适配创新方法论](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |
-> [设计取舍与写作借鉴](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
+> [行动优先输出范式](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) |
+> [逆向适配创新方法论](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |
+> [设计取舍与写作借鉴](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
 
 ## 执行摘要
 

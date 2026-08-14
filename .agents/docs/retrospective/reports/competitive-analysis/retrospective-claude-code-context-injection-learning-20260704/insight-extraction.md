@@ -113,7 +113,7 @@ Dynamic Workflows的解决思路不是"让模型更聪明"或"写更好的prompt
 
 ### 模式候选1：上下文生命周期管理原则 ✅ 已归档
 
-> **归档状态**：已正式萃取为模式 [context-lifecycle-layering.md](../../../../patterns/methodology-patterns/ai-collaboration/context-lifecycle-layering.md)，成熟度L2，3个验证案例
+> **归档状态**：已正式萃取为模式 [context-lifecycle-layering.md](../../../patterns/methodology-patterns/ai-collaboration/context-lifecycle-layering.md)，成熟度L2，3个验证案例
 
 | 项目 | 内容 |
 |---|---|
