@@ -228,6 +228,7 @@ RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
     --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly \
+    --mount=type=bind,source=variants/shared/scripts/conda-perf-setup.sh,target=/tmp/conda-perf-setup.sh,readonly \
     <<'STAGE4_EOF'
 set -e
 echo "=== Stage 4/7: Install Miniforge3 + Python ${PYTHON_VERSION} ${PYTHON_BUILD} (conda-forge, libmamba) + Jupyter ==="
@@ -368,58 +369,12 @@ echo "[OK] conda.sh sourced, conda available in build shell"
 # ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
 echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
 
-# ── 配置 .condarc（conda-forge镜像 + solver + 网络调优 + 高并行度） ──
-echo "[INFO] Configuring .condarc for conda-forge (high parallelism: 8 threads)..."
-if [ "${CONDA_MIRROR}" = "tuna" ]; then
-    cat > /root/.condarc <<'CRC'
-channels:
-  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
-channel_priority: strict
-show_channel_urls: false
-remote_connect_timeout_secs: 30
-remote_read_timeout_secs: 120
-remote_max_retries: 5
-remote_backoff_factor: 3
-repodata_threads: 8
-execute_threads: 8
-ssl_verify: true
-CRC
-    echo "[OK] Using Tsinghua TUNA conda-forge mirror (direct URL)"
-elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
-    cat > /root/.condarc <<'CRC'
-channels:
-  - https://mirrors.aliyun.com/anaconda/cloud/conda-forge/
-channel_priority: strict
-show_channel_urls: false
-remote_connect_timeout_secs: 30
-remote_read_timeout_secs: 120
-remote_max_retries: 5
-remote_backoff_factor: 3
-repodata_threads: 8
-execute_threads: 8
-ssl_verify: true
-CRC
-    echo "[OK] Using Aliyun conda-forge mirror (direct URL)"
-else
-    cat > /root/.condarc <<'CRC'
-channels:
-  - conda-forge
-channel_priority: strict
-show_channel_urls: false
-remote_connect_timeout_secs: 30
-remote_read_timeout_secs: 300
-remote_max_retries: 5
-remote_backoff_factor: 3
-repodata_threads: 8
-execute_threads: 8
-ssl_verify: true
-CRC
-    echo "[OK] Using official conda-forge channels"
-fi
-
-# ── 确保libmamba solver为默认，验证mamba可用 ──
-conda config --set solver libmamba
-echo "[OK] Default solver: $(conda config --show solver 2>&1 | tr -d ' ')"
+# ── 使用共享脚本配置 .condarc（高性能：8线程并行、超时重试、镜像源、libmamba solver） ──
+echo "[INFO] Running shared conda-perf-setup.sh..."
+chmod +x /tmp/conda-perf-setup.sh
+CONDA_DIR="${CONDA_DIR}" CONDA_MIRROR="${CONDA_MIRROR}" CONDA_THREADS=8 \
+    bash /tmp/conda-perf-setup.sh
+echo "[OK] Performance .condarc configured via shared script"
 echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)"
 
 # ── Miniforge3自带Python，不要升级base Python（conda无cp314t构建） ──

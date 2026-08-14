@@ -39,6 +39,19 @@ v2.2.1-ft 是 v2.2 的性能优化版本，重点优化 Stage 4 conda 求解速�
 ### 🐛 附带修复
 - `.condarc` 配置从保守的串行设置（`repodata_threads: 1`/`execute_threads: 1`）调整为 8 线程并行，匹配现代多核 CPU 和高带宽网络环境
 
+### 🔧 可复用配置萃取
+将 Stage 4 的 conda 性能优化配置提取为独立共享资产，其他项目可直接复用：
+
+| 文件 | 用途 | 用法 |
+|------|------|------|
+| `variants/shared/config/condarc/condarc-performant.yaml` | 官方 conda-forge 高性能配置模板 | Dockerfile 中 `COPY` 为 `/root/.condarc` |
+| `variants/shared/config/condarc/condarc-performant-tuna.yaml` | 清华 tuna 镜像高性能配置模板 | 同上，国内网络环境使用 |
+| `variants/shared/config/condarc/condarc-performant-aliyun.yaml` | 阿里镜像高性能配置模板 | 同上，阿里云 ECS 内网极佳 |
+| `variants/shared/scripts/conda-perf-setup.sh` | 动态配置脚本（支持环境变量参数化） | 独立执行或 `source` 获取 `mamba_create_env` 函数 |
+
+**脚本环境变量**：`CONDA_MIRROR`（official/tuna/aliyun）、`CONDA_THREADS`（默认8）、`CONDA_TIMEOUT`（自动按镜像源调整）、`CONDA_DIR`（默认/opt/conda）
+**source 函数**：`mamba_create_env <name> [packages...]`（单次 mamba 创建环境+计时+错误处理）、`conda_perf_verify`（配置验证）
+
 ---
 
 ## [2.2-ft] - 2026-08-14

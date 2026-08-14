@@ -1,0 +1,20 @@
+# =============================================================================
+# condarc-performant-aliyun.yaml — 阿里 aliyun 镜像版（性能优化配置）
+#
+# 与 condarc-performant.yaml 相同的性能优化，channels 指向阿里镜像
+# 适用场景：中国大陆网络环境 Docker 构建/CI（阿里云ECS内网速度极佳）
+#
+# 用法：COPY variants/shared/config/condarc/condarc-performant-aliyun.yaml /root/.condarc
+# =============================================================================
+
+channels:
+  - https://mirrors.aliyun.com/anaconda/cloud/conda-forge/
+channel_priority: strict
+show_channel_urls: false
+remote_connect_timeout_secs: 30
+remote_read_timeout_secs: 120
+remote_max_retries: 5
+remote_backoff_factor: 3
+repodata_threads: 8
+execute_threads: 8
+ssl_verify: true
