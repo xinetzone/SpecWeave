@@ -15,6 +15,13 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API，零第三方依赖） | v1.2.0 | [skills/home-assistant/SKILL.md](../skills/home-assistant/SKILL.md) |
 | git-commit-helper | "提交"、"commit"、"原子提交"、"代码提交"、"提交变更"、"git commit"、"保存更改" | 1（内置validate_commit.py脚本，三查暂存法） | v1.1.0 | [skills/git-commit-helper/SKILL.md](../skills/git-commit-helper/SKILL.md) |
 
+### 应用内置完整Skill（2个，来自 apps/zhujian-wudao）
+
+| Skill名 | 触发词 | 方案数 | 版本 | 路径 |
+|---------|--------|-------|------|------|
+| zhujian-insight-writer | "撰写洞察"、"生成洞察"、"分析概念"、"补充洞察库"、"体道四法" | 1（帛书《老子》哲学洞察撰写，三不铁律） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](../../apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) |
+| dao-scholar-illustrations | "配图"、"文章插图"、"道德经学者"、"手绘"、"shot list"、"道家哲学配图" | 1（道德经学者风格生图，九种构图模式） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](../../apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) |
+
 ### 命令集门面（9个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |

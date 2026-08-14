@@ -20,6 +20,7 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 | Token优化专家 | token-optimizer | optimization | specialist | 💡 专家 | LLM Token优化方案、成本-质量-延迟权衡、缓存策略、优化评审 |
 | 论文写作指导者 | thesis-advisor | academic | guidance | 标准 | 语言学专业论文写作流程指导 |
 | 联合创始者 | co-founder | governance | founding | 🏛️ 联合创始 | 愿景确立、协作契约奠基 |
+| 哲思引导者 | philosopher | content | generation | 标准 | 洞察撰写、内容审查、交叉引用维护、哲学一致性保证（[apps/zhujian-wudao](../../apps/zhujian-wudao/.agents/roles/philosopher.md) 应用角色） |
 
 ## 协作场景
 
@@ -42,6 +43,8 @@ x-toml-ref: "../../.meta/toml/.agents/roles/README.toml"
 ├── token-optimizer.md           # 💡 Token优化专家
 └── thesis-advisor.md             # 论文写作指导者
 ```
+
+> **应用角色注册**：apps/ 区域内的应用角色（如哲思引导者 philosopher，位于 [apps/zhujian-wudao/.agents/roles/philosopher.md](../../apps/zhujian-wudao/.agents/roles/philosopher.md)）通过本索引注册定位，实际文件保留在应用自治区，遵循 [apps/AGENTS.md](../../apps/AGENTS.md) 路由定位原则。
 
 ## 使用方法
 

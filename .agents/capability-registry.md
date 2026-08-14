@@ -30,7 +30,7 @@ x-toml-ref: "../.meta/toml/.agents/capability-registry.toml"
 | 章节 | 说明 |
 |------|------|
 | [脚本索引](capability-registry/01-scripts.md) | 检查验证、生成构建、统计分析、自动化、CI等脚本清单 |
-| [Skill索引](capability-registry/02-skills.md) | 完整Skill、命令集门面、脚本命令门面三类Skill清单 |
+| [Skill索引](capability-registry/02-skills.md) | 完整Skill、应用内置完整Skill、命令集门面、脚本命令门面四类Skill清单 |
 | [命令集、工作流、协议、规则索引](capability-registry/03-commands-workflows-protocols-rules.md) | 9个命令集、3个工作流、7个协议、8条规则索引 |
 | [知识参考、快速查找指南与更新说明](capability-registry/04-knowledge-guide-changelog.md) | 知识库引用、场景快速查找决策树、版本更新历史 |
 
