@@ -163,6 +163,7 @@ docker run --rm devcontainer-base:onnx-quantized-latest \
 ## 11. 相关文档
 
 - [onnx-quantized 变体 README](./README.md)
+- [文档站点版发布说明](../../../../../docs/tech/release-onnx-quantized-v2.md)（Sphinx 站点，随 Pages 自动部署）
 - [高级量化指南](./ADVANCED-QUANTIZATION-GUIDE.md)（静态量化/校准数据集/QDQ）
 - [量化最佳实践](./QUANTIZATION-BEST-PRACTICES.md)
 - [基础变体 onnx-dev](../onnx-dev/README.md)

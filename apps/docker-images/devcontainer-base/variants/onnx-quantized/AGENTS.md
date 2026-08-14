@@ -62,6 +62,7 @@ SpecWeave 根 AGENTS.md（全局规则）
                       ├─ Dockerfile                         ← 3 追加阶段构建定义
                       ├─ .env.example                      ← 构建参数模板
                       ├─ README.md                         ← 发布说明
+                      ├─ RELEASE.md                        ← v2.0.0 发布清单（镜像标识/版本矩阵/验证记录）
                       ├─ ADVANCED-QUANTIZATION-GUIDE.md    ← 高级量化指南（静态量化/校准/QDQ）
                       └─ QUANTIZATION-BEST-PRACTICES.md    ← 量化最佳实践
 ```
@@ -71,6 +72,7 @@ SpecWeave 根 AGENTS.md（全局规则）
 | 任务类型 | 必读入口 | 说明 |
 |---------|---------|------|
 | 修改本变体 Dockerfile | [.agents/rules/dockerfile.md](.agents/rules/dockerfile.md) | 基础信息、PATH 优先级、量化包安装、OMP 线程调优、3 阶段结构 |
+| 查看发布清单/版本历史 | [RELEASE.md](RELEASE.md) | v2.0.0 镜像标识、版本矩阵、24 项验证记录、v1→v2 迁移指引（站点版：`docs/tech/release-onnx-quantized-v2.md`） |
 | 量化操作实践（何时用动态/静态/FP16） | [QUANTIZATION-BEST-PRACTICES.md](QUANTIZATION-BEST-PRACTICES.md) | 量化选型决策、精度-性能权衡、常见陷阱 |
 | 高级量化（校准数据集/QDQ/静态 INT8） | [ADVANCED-QUANTIZATION-GUIDE.md](ADVANCED-QUANTIZATION-GUIDE.md) | 静态量化全流程、CalibrationDataReader 编写、QDQ 格式 |
 | 变体共享约定（FROM/SHELL/缓存挂载/验证检查点） | [../.agents/rules/variant-conventions.md](../.agents/rules/variant-conventions.md) | 所有变体必须遵循的 Dockerfile 共享约定 |

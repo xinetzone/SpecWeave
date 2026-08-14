@@ -406,6 +406,7 @@ print("FP16 转换完成")
 ## 🔗 相关链接
 
 - [发布清单 RELEASE.md](./RELEASE.md)（v2.0.0 镜像标识/版本矩阵/验证记录）
+- [文档站点版发布说明](../../../../../docs/tech/release-onnx-quantized-v2.md)（Sphinx 站点）
 - [基础变体 onnx-dev](../onnx-dev/README.md)
 - [姊妹变体 onnx-pytorch](../onnx-pytorch/README.md)（含 PyTorch 架构）
 - [本地构建脚本](../../scripts/local-build.sh)
