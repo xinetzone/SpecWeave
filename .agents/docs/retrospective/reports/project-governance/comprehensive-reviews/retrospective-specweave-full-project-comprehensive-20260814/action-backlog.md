@@ -29,9 +29,9 @@ scenario: "C-comprehensive-20260814"
 
 | ID | 行动项 | 来源 | 优先级 | 状态 | 说明 |
 |----|--------|------|:------:|------|------|
-| S1 | vendor 子模块漂移治理（8 个中 7 个未 checkout，建立健康检查） | architect 评审 | **P0** | ⏳ 待规划 | 本轮已实测：仅 flexloop 就位，指针与内容不同步 |
+| S1 | vendor 子模块漂移治理（8 个中 7 个未 checkout，建立健康检查） | architect 评审 | **P0** | ✅ 已完成（2026-08-14：check-submodule-pointer.py 指针一致性检查 + vendor.py deep 增加漂移检测 + CI [1.5/16] 门禁接入） | 本轮已实测：仅 flexloop 就位，指针与内容不同步 |
 | S2 | 单仓巨型化评审（pytest 收集 >300s，评估稀疏检出/apps 独立仓库） | architect 评审 | **P0** | ⏳ 待规划 | 本轮实测：全量收集 548s |
-| S3 | pytest 收集性能专项（单文件 13-42s，定位 import 链瓶颈） | architect 评审 | **P0** | 🔄 进行中（2026-08-14：根因=模块级副作用，analyze_frontmatter_issues 24s→6.5s；引入 pytest-xdist） | 与 A1 捆绑，否则「CI 全量可跑」落空 |
+| S3 | pytest 收集性能专项（单文件 13-42s，定位 import 链瓶颈） | architect 评审 | **P0** | ✅ 已完成（2026-08-14：根因定位=①模块级副作用 ②openpyxl 重型库 import；analyze_frontmatter_issues 24s→6.5s；xdist 实测仅 -6% 收益，非银弹；治本=消灭副作用+CI 分片） | 与 A1 捆绑，否则「CI 全量可跑」落空 |
 | S4 | specs 生命周期管理（166 个规划目录 active/archived/superseded 标记） | architect 评审 | P1 | ⏳ 待规划 | 目录增长是扩散而非收敛 |
 | S5 | 测试资产分布审计（64 测试文件全在 scripts，apps 层近零测试） | architect 评审 | P1 | ⏳ 待规划 | 明确 A6 覆盖率门禁作用域 |
 | S6 | 环境可复现性（scripts 工具链无 pyproject/requirements） | architect 评审 | P1 | ✅ 已完成（2026-08-14：创建 requirements-dev.txt 对齐 CI 依赖清单） | 本轮已实证：pytest-benchmark/openpyxl 均缺失 |
@@ -40,7 +40,7 @@ scenario: "C-comprehensive-20260814"
 
 | ID | 问题 | 根因 | 优先级 | 状态 |
 |----|------|------|:------:|------|
-| T1 | test_mp_forkserver_validation.py 5 errors | `ctx_name` fixture 从未定义（e69f0a14 引入时缺陷） | P1 | ⏳ 待规划 |
+| T1 | test_mp_forkserver_validation.py 5 errors | `ctx_name` fixture 从未定义（e69f0a14 引入时缺陷） | P1 | ✅ 已完成（2026-08-14：补 parametrize fixture + Windows 平台跳过，5 passed+10 skipped） |
 | T2 | test_check_sensitive_info.py 2 failed | Unix 路径检测断言（Windows 环境差异） | P2 | ⏳ 待规划 |
 | T3 | test_check_academic_sources/test_error_tolerance/test_batch_cli/test_quality_utils 4 failed | 环境/性能断言/存量 skill 校验 | P2 | ⏳ 待规划 |
 | T4 | 废弃 docs/ 壳遗留 29 文件未迁移（15 模式 + 14 里程碑报告） | 历史迁移未完成 + 新写入违规 | P1 | ⏳ 待规划 |
