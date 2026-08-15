@@ -3,11 +3,11 @@ id: "pytorch-entrypoint-rules"
 title: "Entrypoint 启动脚本规范"
 source: "AGENTS.md#项目特有约束"
 ---
-# Entrypoint 启动脚本规范（pytorch-base）
+# Entrypoint 启动脚本规范（pytorch-base v3.0）
 
 ## 基本职责
 
-entrypoint.sh 是容器的入口点（通过 tini 作为 PID 1 管理），负责 conda 环境激活、用户切换、信号转发和交互式横幅。
+entrypoint.sh 是容器的入口点（通过 tini 作为 PID 1 管理），负责 conda 环境激活、用户切换、信号转发和交互式横幅（含 GPU 设备信息展示）。
 
 ## 日志规范
 
@@ -27,14 +27,22 @@ entry_log_branch(){ entry_log_info "[BRANCH] >>> $*"; }
 
 ## 启动流程（4步）
 
-1. **初始化**：加载build-time配置（`/etc/pytorch-base-build-info`中的PYTORCH_VERSION/PYTHON_VERSION/USE_GPU等）
+1. **初始化**：加载build-time配置（`/etc/pytorch-base-build-info`中的PYTORCH_VERSION/PYTHON_VERSION/USE_GPU/CUDA_VERSION等）
 2. **Conda环境设置**：
    - 将conda环境pytorch的bin目录 prepend到PATH
    - 设置CONDA_DEFAULT_ENV和CONDA_PREFIX
    - source conda.sh并执行 `conda activate pytorch`
    - 验证Python来自conda环境路径
-   - 非致命检查PyTorch是否可导入（派生镜像可能后安装）
-3. **横幅显示**：交互式TTY时显示环境信息（conda环境名、Python版本、PyTorch版本、CUDA状态、用户、工作目录）
+   - 检查PyTorch三件套（torch/torchvision/torchaudio）是否可导入
+   - 检查ONNX Runtime版本和providers（含CUDAExecutionProvider检测）
+   - GPU版本获取CUDA版本、设备数、设备名、显存信息
+3. **横幅显示**：交互式TTY时显示环境信息：
+   - Conda环境名、Python版本
+   - PyTorch版本、CUDA版本（torch builtin）
+   - GPU设备列表（设备名+显存大小，可用时）；不可用时提示加`--gpus all`
+   - torchvision/torchaudio版本
+   - ONNX Runtime版本+CUDAExecutionProvider状态
+   - 用户、工作目录、快速测试命令
 4. **用户切换与命令执行**：
    - root运行时通过gosu切换到ai用户（默认）
    - RUN_AS_USER环境变量可指定目标用户（root则保持root）
@@ -57,6 +65,17 @@ entry_log_branch(){ entry_log_info "[BRANCH] >>> $*"; }
 2. profile.d脚本：`/etc/profile.d/conda.sh` 被source
 3. .bashrc：登录shell自动source conda.sh和activate环境
 
+## GPU信息探测（v3.0新增）
+
+Banner中展示的GPU信息：
+- `TORCH_CUDA_VER`：torch.version.cuda（PyTorch内置CUDA版本）
+- `GPU_COUNT`：torch.cuda.device_count()
+- `GPU_NAME[i]`：torch.cuda.get_device_name(i)（每张卡名称）
+- `GPU_MEM[i]`：get_device_properties(i).total_memory（每张卡显存，GB）
+- `CUDAExecutionProvider`：onnxruntime中是否启用GPU provider
+
+无GPU时（`torch.cuda.is_available()=False`）显示友好提示：`not available (run with --gpus all for GPU acceleration)`，不报错。
+
 ## 错误处理
 
 - trap ERR捕获错误，输出诊断上下文（PID、uid/gid、用户、工作目录、环境路径、命令参数）
@@ -64,6 +83,7 @@ entry_log_branch(){ entry_log_info "[BRANCH] >>> $*"; }
 - Python不在PATH中时exit 1
 - 目标用户不存在时exit 1并列出可用用户
 - gosu不可用时输出WARN（不阻断，用户切换可能失败）
+- 三件套（torchvision/torchaudio）或ORT不可导入时不报错（派生镜像可能不完整）
 
 ## 反模式
 
@@ -71,3 +91,4 @@ entry_log_branch(){ entry_log_info "[BRANCH] >>> $*"; }
 - ❌ 不要在entrypoint中执行conda install/pip install（构建时完成，entrypoint只做环境激活）
 - ❌ 不要忽略exec（直接执行bash而不exec，会导致tini无法正确转发信号）
 - ❌ 不要用 `conda run -n pytorch command` 作为默认入口（慢且不直观），直接PATH prepend+activate
+- ❌ 不要在无GPU时强制要求CUDA可用（构建环境可能没有GPU，运行时才挂载）

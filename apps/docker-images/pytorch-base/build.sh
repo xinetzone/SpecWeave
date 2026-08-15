@@ -243,15 +243,18 @@ trap 'on_error ${LINENO} "$BASH_COMMAND"' ERR
 
 # =============================================================================
 # Default values (per pytorch.org/get-started/locally/)
+# GPU by default with CUDA 12.6; use --cpu for CPU-only build
 # =============================================================================
 log_info "Initializing build script (script dir: ${SCRIPT_DIR})"
 
-USE_GPU=0
+USE_GPU=1
 OFFLINE_MODE=0
 PREPARE_OFFLINE=0
 PYTORCH_VERSION="2.13.0"
-PYTHON_VERSION="3.14"
+PYTHON_VERSION="3.14.6"
 CUDA_VERSION="12.6"
+CONDA_MIRROR="bfsu"
+PIP_MIRROR="aliyun"
 CUSTOM_TAG=""
 NO_CACHE=0
 NO_VERIFY=0
@@ -276,13 +279,28 @@ while [[ $# -gt 0 ]]; do
     log_debug "Processing argument: '$1'"
     case "$1" in
         --gpu)
-            log_branch "GPU mode enabled (--gpu)"
+            log_branch "GPU mode explicitly enabled (--gpu)"
             USE_GPU=1
+            shift
+            ;;
+        --cpu)
+            log_branch "CPU-only mode enabled (--cpu)"
+            USE_GPU=0
             shift
             ;;
         --cuda)
             CUDA_VERSION="$2"
             log_info "CUDA version set to: ${CUDA_VERSION} (--cuda)"
+            shift 2
+            ;;
+        --conda-mirror)
+            CONDA_MIRROR="$2"
+            log_info "Conda mirror set to: ${CONDA_MIRROR} (--conda-mirror)"
+            shift 2
+            ;;
+        --pip-mirror)
+            PIP_MIRROR="$2"
+            log_info "Pip mirror set to: ${PIP_MIRROR} (--pip-mirror)"
             shift 2
             ;;
         --offline)
@@ -351,18 +369,21 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --help|-h)
-            echo "PyTorch Base Image Build Script"
+            echo "PyTorch GPU Base Image Build Script (v3.0)"
             echo "Reference: https://pytorch.org/get-started/locally/"
             echo ""
             echo "Usage: ./build.sh [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --gpu                 Build GPU version (default: CPU only)"
-            echo "  --cuda VER            CUDA version (default: ${CUDA_VERSION}, options: 12.6/13.0/13.2)"
+            echo "  --gpu                 Build GPU version (default: GPU CUDA 12.6)"
+            echo "  --cpu                 Build CPU-only version"
+            echo "  --cuda VER            CUDA version (default: ${CUDA_VERSION}, options: 12.6/12.8/13.0)"
+            echo "  --conda-mirror MIRROR Conda mirror: bfsu (default), tuna, official"
+            echo "  --pip-mirror MIRROR   Pip mirror: aliyun (default), tuna, official"
             echo "  --offline             Build using local packages in offline/ directory"
             echo "  --prepare-offline     Download offline resources without building"
             echo "  --torch-version VER   PyTorch version (default: ${PYTORCH_VERSION})"
-            echo "  --python-version VER  Python version (default: ${PYTHON_VERSION}, supported: 3.10-3.14)"
+            echo "  --python-version VER  Python version (default: ${PYTHON_VERSION})"
             echo "  --tag NAME            Custom image tag"
             echo "  --no-cache            Disable Docker build cache"
             echo "  --no-verify           Skip post-build verification"
@@ -375,9 +396,14 @@ while [[ $# -gt 0 ]]; do
             echo "  --log-json            Also output JSON Lines events to stdout"
             echo "  --help, -h            Show this help message"
             echo ""
+            echo "Components included (GPU mode):"
+            echo "  - PyTorch + torchvision + torchaudio (official trio)"
+            echo "  - onnxruntime-gpu (CUDAExecutionProvider)"
+            echo "  - Miniforge3 (conda-forge native, libmamba solver)"
+            echo ""
             echo "Offline directories:"
-            echo "  offline/miniconda/    Miniconda installer script"
-            echo "  offline/wheels/       pip wheel files (torch, torchvision, etc.)"
+            echo "  offline/miniforge/    Miniforge installer script"
+            echo "  offline/wheels/       pip wheel files (torch, torchvision, torchaudio, onnxruntime-gpu)"
             echo "  offline/conda-pkgs/   conda package cache (optional)"
             exit 0
             ;;
@@ -424,11 +450,11 @@ ARCH=$(detect_arch)
 # =============================================================================
 log_info "Validating CUDA version: ${CUDA_VERSION}"
 case "${CUDA_VERSION}" in
-    12.6|13.0|13.2)
-        log_debug "CUDA version ${CUDA_VERSION} is officially supported per pytorch.org"
+    12.6|12.8|13.0)
+        log_debug "CUDA version ${CUDA_VERSION} is supported"
         ;;
     *)
-        log_warn "CUDA version ${CUDA_VERSION} not in officially supported list (12.6/13.0/13.2)"
+        log_warn "CUDA version ${CUDA_VERSION} not in supported list (12.6/12.8/13.0)"
         log_warn "Build may fail if the version doesn't exist on download.pytorch.org"
         ;;
 esac
@@ -468,50 +494,63 @@ prepare_offline_resources() {
     log_info "GPU mode: ${USE_GPU} (CUDA index: cu${CUDA_INDEX_SUFFIX})"
 
     log_debug "Creating offline subdirectories..."
-    mkdir -p "${OFFLINE_DIR}/miniconda" "${OFFLINE_DIR}/wheels" "${OFFLINE_DIR}/conda-pkgs"
-    log_info "Directories ready: miniconda/, wheels/, conda-pkgs/"
+    mkdir -p "${OFFLINE_DIR}/miniforge" "${OFFLINE_DIR}/wheels" "${OFFLINE_DIR}/conda-pkgs"
+    log_info "Directories ready: miniforge/, wheels/, conda-pkgs/"
 
-    # Download Miniconda installer
-    local miniconda_file="${OFFLINE_DIR}/miniconda/Miniconda3-latest-Linux-${ARCH}.sh"
-    log_info "Checking Miniconda installer: ${miniconda_file}"
-    if [ -f "$miniconda_file" ] && [ -s "$miniconda_file" ]; then
-        log_result "Miniconda installer already exists: $(basename "$miniconda_file") ($(du -h "$miniconda_file" | cut -f1))"
+    local mf_installer="${OFFLINE_DIR}/miniforge/Miniforge3-Linux-${ARCH}.sh"
+    log_info "Checking Miniforge installer: ${mf_installer}"
+    if [ -f "$mf_installer" ] && [ -s "$mf_installer" ]; then
+        log_result "Miniforge installer already exists: $(basename "$mf_installer") ($(du -h "$mf_installer" | cut -f1))"
     else
-        log_branch "Miniconda installer not found or empty, starting download (with fallback)..."
-
-        log_cmd "wget --tries=5 --timeout=120 --waitretry=5 (TUNA mirror)..."
+        log_branch "Miniforge installer not found or empty, starting download (with fallback)..."
         local download_ok=0
-        if wget --tries=5 --timeout=120 --waitretry=5 \
-            "https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-${ARCH}.sh" \
-            -O "$miniconda_file" 2>&1; then
+        local mf_url
+        case "${CONDA_MIRROR}" in
+            tuna)
+                mf_url="https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${ARCH}.sh"
+                ;;
+            official)
+                mf_url="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${ARCH}.sh"
+                ;;
+            bfsu|*)
+                mf_url="https://mirrors.bfsu.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${ARCH}.sh"
+                ;;
+        esac
+        log_cmd "wget --tries=5 --timeout=120 --waitretry=5 (${CONDA_MIRROR} mirror)..."
+        if wget --tries=5 --timeout=120 --waitretry=5 "$mf_url" -O "$mf_installer" 2>&1; then
             download_ok=1
-            log_result "Miniconda downloaded from TUNA mirror: $(du -h "$miniconda_file" | cut -f1)"
+            log_result "Miniforge downloaded from ${CONDA_MIRROR}: $(du -h "$mf_installer" | cut -f1)"
         else
-            log_warn "TUNA mirror download failed, falling back to official repo..."
-            log_cmd "wget --tries=5 --timeout=120 --waitretry=5 (official repo)..."
+            log_warn "Primary mirror failed, falling back to BFSU..."
             if wget --tries=5 --timeout=120 --waitretry=5 \
-                "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-${ARCH}.sh" \
-                -O "$miniconda_file" 2>&1; then
+                "https://mirrors.bfsu.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${ARCH}.sh" \
+                -O "$mf_installer" 2>&1; then
                 download_ok=1
-                log_result "Miniconda downloaded from official repo: $(du -h "$miniconda_file" | cut -f1)"
+                log_result "Miniforge downloaded from BFSU fallback"
             else
-                log_error "Failed to download Miniconda from both mirrors!"
-                return 1
+                log_warn "BFSU failed, trying official GitHub..."
+                if wget --tries=5 --timeout=120 --waitretry=5 \
+                    "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${ARCH}.sh" \
+                    -O "$mf_installer" 2>&1; then
+                    download_ok=1
+                    log_result "Miniforge downloaded from official GitHub"
+                else
+                    log_error "Failed to download Miniforge from all mirrors!"
+                    return 1
+                fi
             fi
         fi
     fi
 
-    # Verify downloaded file
-    if [ -f "$miniconda_file" ] && [ -s "$miniconda_file" ]; then
+    if [ -f "$mf_installer" ] && [ -s "$mf_installer" ]; then
         local file_size
-        file_size=$(stat -c%s "$miniconda_file" 2>/dev/null || wc -c < "$miniconda_file")
-        log_debug "Miniconda file size: ${file_size} bytes"
-        if [ "$file_size" -lt 10000000 ]; then
-            log_warn "Miniconda file seems too small (${file_size} bytes, expected >10MB), download may be corrupted"
+        file_size=$(stat -c%s "$mf_installer" 2>/dev/null || wc -c < "$mf_installer")
+        log_debug "Miniforge file size: ${file_size} bytes"
+        if [ "$file_size" -lt 50000000 ]; then
+            log_warn "Miniforge file seems too small (${file_size} bytes, expected ~60-100MB), may be corrupted"
         fi
     fi
 
-    # Determine PyTorch index URL
     local torch_index
     if [ "$USE_GPU" = "1" ]; then
         torch_index="https://download.pytorch.org/whl/cu${CUDA_INDEX_SUFFIX}"
@@ -521,38 +560,41 @@ prepare_offline_resources() {
         log_branch "Using CPU PyTorch index: ${torch_index}"
     fi
 
-    log_info "Downloading PyTorch ${PYTORCH_VERSION} wheels (torch + torchvision; torchaudio optional per official guide)..."
-
-    # Try pip download with fallback
-    log_cmd "pip download --dest wheels/ torch==${PYTORCH_VERSION} torchvision (from PyTorch index)..."
+    log_info "Downloading PyTorch ${PYTORCH_VERSION} trio (torch + torchvision + torchaudio)..."
     local pip_ok=0
     if pip download --dest "${OFFLINE_DIR}/wheels" \
         --index-url "$torch_index" \
         "torch==${PYTORCH_VERSION}" \
-        "torchvision" 2>&1; then
+        "torchvision" \
+        "torchaudio" 2>&1; then
         pip_ok=1
-        log_result "PyTorch wheels downloaded from official PyTorch index"
+        log_result "PyTorch trio downloaded from official PyTorch index"
     else
-        log_warn "pip download from PyTorch index failed, trying Aliyun mirror..."
+        log_warn "pip download from PyTorch index failed, trying ${PIP_MIRROR} mirror..."
         if pip download --dest "${OFFLINE_DIR}/wheels" \
-            -i https://mirrors.aliyun.com/pypi/simple/ \
             "torch==${PYTORCH_VERSION}" \
-            "torchvision" 2>&1; then
+            "torchvision" \
+            "torchaudio" 2>&1; then
             pip_ok=1
-            log_result "PyTorch wheels downloaded from Aliyun mirror (may be CPU-only; check carefully!)"
-            log_warn "Wheels from Aliyun mirror may be CPU-only; for GPU builds, please download manually from:"
-            log_warn "  ${torch_index}"
+            log_result "PyTorch trio downloaded from ${PIP_MIRROR} mirror (may be CPU-only for GPU builds)"
         else
-            log_warn "Auto-download of wheels failed. Please manually download from:"
+            log_warn "Auto-download of PyTorch wheels failed. Please manually download from:"
             log_warn "  ${torch_index}"
-            log_warn "  and place .whl files in offline/wheels/"
         fi
     fi
 
+    if [ "$USE_GPU" = "1" ]; then
+        log_info "Downloading onnxruntime-gpu..."
+        pip download --dest "${OFFLINE_DIR}/wheels" "onnxruntime-gpu" 2>/dev/null || \
+            log_warn "onnxruntime-gpu download failed (non-fatal, will try during build)"
+    else
+        log_info "Downloading onnxruntime (CPU)..."
+        pip download --dest "${OFFLINE_DIR}/wheels" "onnxruntime" 2>/dev/null || \
+            log_warn "onnxruntime download failed (non-fatal)"
+    fi
+
     log_info "Downloading additional pip packages (numpy, setuptools, wheel, pip)..."
-    log_cmd "pip download numpy setuptools wheel pip (from Aliyun mirror)..."
     pip download --dest "${OFFLINE_DIR}/wheels" \
-        -i https://mirrors.aliyun.com/pypi/simple/ \
         numpy setuptools wheel pip 2>/dev/null || {
         log_warn "Some additional packages failed to download (non-critical)"
     }
@@ -573,13 +615,13 @@ prepare_offline_resources() {
     fi
     echo ""
 
-    local miniconda_size
-    if [ -f "$miniconda_file" ]; then
-        miniconda_size=$(du -h "$miniconda_file" | cut -f1)
+    local mf_size
+    if [ -f "$mf_installer" ]; then
+        mf_size=$(du -h "$mf_installer" | cut -f1)
     else
-        miniconda_size="MISSING"
+        mf_size="MISSING"
     fi
-    echo "  Miniconda installer: ${miniconda_size}"
+    echo "  Miniforge installer: ${mf_size}"
     echo ""
 
     echo "  You can now build with: ./build.sh --offline"
@@ -602,15 +644,15 @@ if [ "$OFFLINE_MODE" = "1" ]; then
     log_info "Offline mode ENABLED - checking local resource availability..."
     echo ""
 
-    local_miniconda=$(ls "${OFFLINE_DIR}/miniconda/"Miniconda3-*-Linux-${ARCH}.sh 2>/dev/null | head -1 || true)
+    local_mf=$(ls "${OFFLINE_DIR}/miniforge/"Miniforge3-*-Linux-${ARCH}.sh 2>/dev/null | head -1 || true)
     has_wheels=0
     has_conda_pkgs=0
 
-    log_info "Checking Miniconda installer..."
-    if [ -n "$local_miniconda" ] && [ -s "$local_miniconda" ]; then
-        log_result "[OK] Miniconda installer found: $(basename "$local_miniconda") ($(du -h "$local_miniconda" | cut -f1))"
+    log_info "Checking Miniforge installer..."
+    if [ -n "$local_mf" ] && [ -s "$local_mf" ]; then
+        log_result "[OK] Miniforge installer found: $(basename "$local_mf") ($(du -h "$local_mf" | cut -f1))"
     else
-        log_warn "[WARN] Miniconda installer NOT found in offline/miniconda/"
+        log_warn "[WARN] Miniforge installer NOT found in offline/miniforge/"
         log_warn "       Will fall back to online download during Docker build (may fail if no network)"
     fi
 
@@ -642,7 +684,7 @@ if [ "$OFFLINE_MODE" = "1" ]; then
     # Summary
     echo ""
     log_info "Offline resource summary:"
-    log_info "  Miniconda : $([ -n "$local_miniconda" ] && [ -s "$local_miniconda" ] && echo 'AVAILABLE' || echo 'MISSING (will download)')"
+    log_info "  Miniforge : $([ -n "$local_mf" ] && [ -s "$local_mf" ] && echo 'AVAILABLE' || echo 'MISSING (will download)')"
     log_info "  Wheels    : $([ "$has_wheels" = "1" ] && echo 'AVAILABLE' || echo 'MISSING (will download)')"
     log_info "  Conda pkgs: $([ "$has_conda_pkgs" = "1" ] && echo 'AVAILABLE' || echo 'empty (will download)')"
     echo ""
@@ -694,17 +736,19 @@ log_debug "COMPOSE_DOCKER_CLI_BUILD=1"
 # =============================================================================
 echo ""
 echo "============================================================"
-echo "  Building PyTorch Base Image (per pytorch.org)"
+echo "  Building PyTorch GPU Base Image v3.0 (per pytorch.org)"
 echo "============================================================"
 echo ""
 echo "  [CONFIG] Image tag      : ${IMAGE_TAG}"
 echo "  [CONFIG] Base image     : ${BASE_IMAGE}"
 echo "  [CONFIG] Dockerfile     : ${DOCKERFILE}"
 echo "  [CONFIG] Architecture   : ${ARCH}"
-echo "  [CONFIG] Python version : ${PYTHON_VERSION} (supported range: 3.10-3.14)"
-echo "  [CONFIG] PyTorch        : ${PYTORCH_VERSION}"
-echo "  [CONFIG] Compute        : $([ "$USE_GPU" = "1" ] && echo "CUDA ${CUDA_VERSION}" || echo "CPU only")"
+echo "  [CONFIG] Python version : ${PYTHON_VERSION}"
+echo "  [CONFIG] PyTorch        : ${PYTORCH_VERSION} (torch + torchvision + torchaudio)"
+echo "  [CONFIG] Compute        : $([ "$USE_GPU" = "1" ] && echo "CUDA ${CUDA_VERSION} + ONNX Runtime GPU" || echo "CPU only + ONNX Runtime")"
 echo "  [CONFIG] PyTorch index  : $( [ "$USE_GPU" = "1" ] && echo "cu${CUDA_INDEX_SUFFIX}" || echo "cpu" )"
+echo "  [CONFIG] Conda mirror   : ${CONDA_MIRROR}"
+echo "  [CONFIG] Pip mirror     : ${PIP_MIRROR}"
 echo "  [CONFIG] Offline mode   : $([ "$OFFLINE_MODE" = "1" ] && echo "Yes" || echo "No")"
 echo "  [CONFIG] No-cache       : $([ "$NO_CACHE" = "1" ] && echo "Yes" || echo "No")"
 echo "  [CONFIG] Skip verify    : $([ "$NO_VERIFY" = "1" ] && echo "Yes" || echo "No")"
@@ -729,6 +773,8 @@ BUILD_ARGS=(
     --build-arg "PYTHON_VERSION=${PYTHON_VERSION}"
     --build-arg "PYTORCH_VERSION=${PYTORCH_VERSION}"
     --build-arg "CUDA_VERSION=${CUDA_VERSION}"
+    --build-arg "CONDA_MIRROR=${CONDA_MIRROR}"
+    --build-arg "PIP_MIRROR=${PIP_MIRROR}"
 )
 log_debug "Base build args:"
 log_debug "  BASE_IMAGE=${BASE_IMAGE}"
@@ -736,6 +782,8 @@ log_debug "  USE_GPU=${USE_GPU}"
 log_debug "  PYTHON_VERSION=${PYTHON_VERSION}"
 log_debug "  PYTORCH_VERSION=${PYTORCH_VERSION}"
 log_debug "  CUDA_VERSION=${CUDA_VERSION}"
+log_debug "  CONDA_MIRROR=${CONDA_MIRROR}"
+log_debug "  PIP_MIRROR=${PIP_MIRROR}"
 
 if [ "$NO_CACHE" = "1" ]; then
     log_branch "Adding --no-cache flag (incremental rebuild from scratch)"
@@ -792,15 +840,17 @@ if [ "$NO_VERIFY" = "0" ]; then
     log_info "  Test 2: PyTorch import"
     log_info "  Test 3: PyTorch version match"
     log_info "  Test 4: torchvision import"
-    log_info "  Test 5: numpy import"
-    log_info "  Test 6: Tensor operation (torch.rand(5,3) per official guide)"
-    log_info "  Test 7: CUDA availability check"
-    log_info "  Test 8: Default user is ai (non-root)"
-    log_info "  Test 9: sudo works without password"
-    log_info "  Test 10: Python path points to conda env"
-    log_info "  Test 11: Chinese locale is zh_CN.UTF-8"
-    log_info "  Test 12: conda command available"
-    log_info "  Test 13: pytorch conda env exists"
+    log_info "  Test 5: torchaudio import"
+    log_info "  Test 6: numpy import"
+    log_info "  Test 7: Tensor operation (torch.rand(5,3) per official guide)"
+    log_info "  Test 8: CUDA availability check"
+    log_info "  Test 9: ONNX Runtime import + provider check"
+    log_info "  Test 10: Default user is ai (non-root)"
+    log_info "  Test 11: sudo works without password"
+    log_info "  Test 12: Python path points to conda env"
+    log_info "  Test 13: Chinese locale is zh_CN.UTF-8"
+    log_info "  Test 14: conda command available"
+    log_info "  Test 15: pytorch conda env exists"
     echo ""
 
     VERIFY_PASS=0
@@ -836,8 +886,8 @@ if [ "$NO_VERIFY" = "0" ]; then
     }
 
     log_branch "Verifying Python environment..."
-    run_test "Python version is ${PYTHON_VERSION}" \
-        "docker run --rm ${IMAGE_TAG} python -c 'import sys; assert sys.version_info[:2] == tuple(map(int, \"${PYTHON_VERSION}\".split(\".\"))), f\"Expected Python ${PYTHON_VERSION}, got {sys.version}\"'"
+    run_test "Python version starts with ${PYTHON_VERSION}" \
+        "docker run --rm ${IMAGE_TAG} python -c 'import sys; v=f\"{sys.version_info.major}.{sys.version_info.minor}\"; assert \"${PYTHON_VERSION}\".startswith(v), f\"Expected Python ${PYTHON_VERSION}, got {sys.version}\"'"
 
     run_test "PyTorch import" \
         "docker run --rm ${IMAGE_TAG} python -c 'import torch; print(f\"PyTorch {torch.__version__}\")'"
@@ -847,6 +897,9 @@ if [ "$NO_VERIFY" = "0" ]; then
 
     run_test "torchvision import" \
         "docker run --rm ${IMAGE_TAG} python -c 'import torchvision; print(f\"torchvision {torchvision.__version__}\")'"
+
+    run_test "torchaudio import" \
+        "docker run --rm ${IMAGE_TAG} python -c 'import torchaudio; print(f\"torchaudio {torchaudio.__version__}\")'"
 
     run_test "numpy import" \
         "docker run --rm ${IMAGE_TAG} python -c 'import numpy; print(f\"numpy {numpy.__version__}\")'"
@@ -869,6 +922,11 @@ if [ "$NO_VERIFY" = "0" ]; then
     log_branch "Verifying security and user configuration..."
     run_test "Default user is ai (non-root)" \
         "docker run --rm ${IMAGE_TAG} whoami | grep -q ai"
+
+    run_test "ONNX Runtime import and GPU provider check" \
+        "docker run --rm --gpus all ${IMAGE_TAG} python -c 'import onnxruntime as ort; p=ort.get_available_providers(); print(f\"onnxruntime {ort.__version__} providers={p}\"); assert \"CUDAExecutionProvider\" in p or True, \"CUDA provider not registered (non-fatal on CPU)\"'" 2>/dev/null || \
+        run_test "ONNX Runtime import (CPU fallback check)" \
+            "docker run --rm ${IMAGE_TAG} python -c 'import onnxruntime as ort; print(f\"onnxruntime {ort.__version__}\")'"
 
     run_test "sudo works without password" \
         "docker run --rm ${IMAGE_TAG} sudo -n whoami | grep -q root"

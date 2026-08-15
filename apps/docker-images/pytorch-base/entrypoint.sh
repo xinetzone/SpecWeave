@@ -151,10 +151,21 @@ fi
 # Check PyTorch availability (non-fatal; some derived images may not have it yet)
 if python -c "import torch" 2>/dev/null; then
     PYTORCH_VER=$(python -c "import torch; print(torch.__version__)" 2>/dev/null || echo "unknown")
+    TORCH_CUDA_VER=$(python -c "import torch; print(torch.version.cuda or 'N/A')" 2>/dev/null || echo "unknown")
     CUDA_AVAIL=$(python -c "import torch; print(torch.cuda.is_available())" 2>/dev/null || echo "unknown")
-    entry_log_debug "PyTorch version: ${PYTORCH_VER}, CUDA available: ${CUDA_AVAIL}"
+    GPU_COUNT=$(python -c "import torch; print(torch.cuda.device_count())" 2>/dev/null || echo "0")
+    entry_log_debug "PyTorch version: ${PYTORCH_VER}, CUDA: ${TORCH_CUDA_VER}, available: ${CUDA_AVAIL}, GPUs: ${GPU_COUNT}"
 else
     entry_log_debug "PyTorch not importable (may be installed later in derived image)"
+fi
+
+# Check ONNX Runtime availability
+ORT_VER=""
+ORT_PROVIDERS=""
+if python -c "import onnxruntime" 2>/dev/null; then
+    ORT_VER=$(python -c "import onnxruntime; print(onnxruntime.__version__)" 2>/dev/null || echo "unknown")
+    ORT_PROVIDERS=$(python -c "import onnxruntime; print(','.join(onnxruntime.get_available_providers()))" 2>/dev/null || echo "unknown")
+    entry_log_debug "ONNX Runtime version: ${ORT_VER}, providers: ${ORT_PROVIDERS}"
 fi
 
 # =============================================================================
@@ -165,16 +176,35 @@ show_banner() {
         entry_log_info "Interactive TTY detected, displaying banner"
         echo ""
         echo "============================================================"
-        echo "  PyTorch Base Image (Miniconda3 + Python + PyTorch)"
+        echo "  PyTorch GPU Base Image (Miniforge3 + Python + PyTorch CUDA)"
         echo "============================================================"
         echo ""
         echo "  Conda env : ${ENV_NAME} (${ENV_PATH})"
         echo "  Python    : $(python --version 2>&1 || echo 'unknown')"
         echo "  PyTorch   : $(python -c 'import torch; print(torch.__version__)' 2>&1 || echo 'not installed')"
-        echo "  CUDA      : $(python -c 'import torch; print("available ("+str(torch.cuda.device_count())+" devices)" if torch.cuda.is_available() else "not available")' 2>&1 || echo 'unknown')"
+        echo "  CUDA ver  : ${TORCH_CUDA_VER:-unknown} (torch builtin)"
+        if [ "${CUDA_AVAIL:-false}" = "True" ] && [ "${GPU_COUNT:-0}" != "0" ]; then
+            echo "  GPUs      : ${GPU_COUNT} device(s)"
+            for i in $(seq 0 $((GPU_COUNT - 1))); do
+                GPU_NAME=$(python -c "import torch; print(torch.cuda.get_device_name($i))" 2>/dev/null || echo "unknown")
+                GPU_MEM=$(python -c "import torch; p=torch.cuda.get_device_properties($i); print(f'{p.total_memory/1024**3:.1f} GB')" 2>/dev/null || echo "")
+                echo "    [$i]     : ${GPU_NAME} ${GPU_MEM}"
+            done
+        else
+            echo "  CUDA      : not available (run with --gpus all for GPU acceleration)"
+        fi
+        echo "  torchvis  : $(python -c 'import torchvision; print(torchvision.__version__)' 2>&1 || echo 'not installed')"
+        echo "  torchaudio: $(python -c 'import torchaudio; print(torchaudio.__version__)' 2>&1 || echo 'not installed')"
+        if [ -n "${ORT_VER:-}" ]; then
+            echo "  ONNX RT   : ${ORT_VER}"
+            if echo "${ORT_PROVIDERS:-}" | grep -q CUDA; then
+                echo "    GPU     : CUDAExecutionProvider enabled"
+            fi
+        fi
         echo "  User      : $(whoami)"
         echo "  Workdir   : $(pwd)"
         echo ""
+        echo "  Quick test: python -c 'import torch; x=torch.rand(5,3); print(x)'"
         echo "  Tip: conda env '${ENV_NAME}' is already activated on PATH"
         echo "  Tip: Set ENTRYPOINT_DEBUG=1 for verbose logging"
         echo "============================================================"

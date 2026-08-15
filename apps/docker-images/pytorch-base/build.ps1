@@ -1,14 +1,14 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 <#
 .SYNOPSIS
     PyTorch Base Docker 镜像构建 PowerShell 包装器
 .DESCRIPTION
     从 Windows PowerShell/CMD 直接调用，自动通过 wsl.exe 执行 WSL 内的构建脚本。
     支持 text/json 双格式日志输出，与 bash 脚本统一的结构化日志契约。
-.PARAMETER Gpu
-    构建 GPU 版本（CUDA 12.6）
+.PARAMETER Cpu
+    构建 CPU-only 版本（默认构建 GPU 版本）
 .PARAMETER Cuda
-    CUDA 版本（默认: 12.6，可选: 12.6/13.0/13.2）
+    CUDA 版本（默认: 12.6，可选: 12.6/12.8/13.0）
 .PARAMETER Offline
     使用 offline/ 目录下的本地包构建
 .PARAMETER PrepareOffline
@@ -16,7 +16,7 @@
 .PARAMETER TorchVersion
     PyTorch 版本（默认: 2.13.0）
 .PARAMETER PythonVersion
-    Python 版本（默认: 3.14，支持: 3.10-3.14）
+    Python 版本（默认: 3.14.6，精确 patch 版本）
 .PARAMETER Tag
     自定义镜像标签
 .PARAMETER NoCache
@@ -43,10 +43,12 @@
     显示帮助
 .EXAMPLE
     .\build.ps1
-    # 默认 CPU 版本构建
+    # 默认 GPU 版本构建（CUDA 12.6）
 .EXAMPLE
-    .\build.ps1 -Gpu -Tag cuda12.6
-    # 构建 GPU 版本
+    .\build.ps1 -Cpu
+    # 构建 CPU 版本
+.EXAMPLE
+    .\build.ps1 -Cuda 13.0
 .EXAMPLE
     .\build.ps1 -LogFormat json -LogJson
     # JSON 格式输出（供监控平台采集）
@@ -56,13 +58,13 @@
 
 [CmdletBinding()]
 param(
-    [switch]$Gpu,
-    [ValidateSet("12.6", "13.0", "13.2")]
+    [switch]$Cpu,
+    [ValidateSet("12.6", "12.8", "13.0")]
     [string]$Cuda = "12.6",
     [switch]$Offline,
     [switch]$PrepareOffline,
     [string]$TorchVersion = "2.13.0",
-    [string]$PythonVersion = "3.14",
+    [string]$PythonVersion = "3.14.6",
     [string]$Tag = "",
     [switch]$NoCache,
     [switch]$NoVerify,
@@ -263,7 +265,7 @@ function Write-StepOut {
 
 # ── 启动事件 ──
 $buildStart = Get-Date
-$buildType = if ($Gpu) { "gpu" } else { "cpu" }
+$buildType = if ($Cpu) { "cpu" } else { "gpu" }
 $LogFields["build_type"] = $buildType
 $LogFields["cuda_version"] = $Cuda
 $LogFields["python_version"] = $PythonVersion
@@ -358,12 +360,12 @@ Write-OkOut "Docker daemon 运行中"
 
 # ── 5. 构建参数 ──
 $bashArgs = @()
-if ($Gpu) { $bashArgs += "--gpu" }
+if ($Cpu) { $bashArgs += "--cpu" }
 if ($Cuda -ne "12.6") { $bashArgs += "--cuda"; $bashArgs += $Cuda }
 if ($Offline) { $bashArgs += "--offline" }
 if ($PrepareOffline) { $bashArgs += "--prepare-offline" }
 if ($TorchVersion -ne "2.13.0") { $bashArgs += "--torch-version"; $bashArgs += $TorchVersion }
-if ($PythonVersion -ne "3.14") { $bashArgs += "--python-version"; $bashArgs += $PythonVersion }
+if ($PythonVersion -ne "3.14.6") { $bashArgs += "--python-version"; $bashArgs += $PythonVersion }
 if ($Tag) { $bashArgs += "--tag"; $bashArgs += $Tag }
 if ($NoCache) { $bashArgs += "--no-cache" }
 if ($NoVerify) { $bashArgs += "--no-verify" }
@@ -376,7 +378,7 @@ if ($LogJson) { $bashArgs += "--log-json" }
 
 # ── 6. 执行构建 ──
 Write-StepOut "开始构建 PyTorch Base 镜像"
-Write-Info "构建类型: $(if ($Gpu) { 'GPU (CUDA ' + $Cuda + ')' } else { 'CPU' })"
+Write-Info "构建类型: $(if ($Cpu) { 'CPU' } else { 'GPU (CUDA ' + $Cuda + ')' })"
 Write-Info "调用 WSL: bash build.sh $($bashArgs -join ' ')"
 if ($LogFormat -eq "text" -or $LogJson) { Write-Host "" }
 
