@@ -51,21 +51,23 @@ LOG_FORMAT="${LOG_FORMAT:-text}"
 
 _json_ts() { date -u +"%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || date -u; }
 _json_ensure_dir() { local d; d="$(dirname "$LOG_JSON_OUTPUT")"; [ -d "$d" ] || mkdir -p "$d" 2>/dev/null || true; }
-_json_write() { _json_ensure_dir; echo "$1" >> "$LOG_JSON_OUTPUT"; [ "$LOG_JSON_STDOUT" = "1" ] && echo "$1"; }
+_json_write() { _json_ensure_dir; echo "${1-}" >> "$LOG_JSON_OUTPUT"; [ "$LOG_JSON_STDOUT" = "1" ] && echo "${1-}" || true; }
 
 log_event() {
-    local event="$1"; shift; local ts kvs="" kv
+    local event="${1-}"
+    [ $# -gt 0 ] && shift || true
+    local ts kvs="" kv
     ts=$(_json_ts)
     for kv in "$@"; do kvs="$kvs,\"${kv%%=*}\":\"${kv#*=}\""; done
     _json_write "{\"ts\":\"$ts\",\"type\":\"event\",\"service\":\"$LOG_SERVICE\",\"event\":\"$event\"${kvs}}"
 }
 log_metric() {
-    local name="$1" value="$2" unit="${3:-}" ts
+    local name="${1-}" value="${2-0}" unit="${3:-}" ts
     ts=$(_json_ts)
     _json_write "{\"ts\":\"$ts\",\"type\":\"metric\",\"service\":\"$LOG_SERVICE\",\"metric\":\"$name\",\"value\":$value,\"unit\":\"$unit\"}"
 }
 log_summary() {
-    local pass="$1" fail="$2" total="$3" dur="$4" status="$5" ts
+    local pass="${1:-0}" fail="${2:-0}" total="${3:-0}" dur="${4:-0}" status="${5:-unknown}" ts
     ts=$(_json_ts)
     _json_write "{\"ts\":\"$ts\",\"type\":\"summary\",\"service\":\"$LOG_SERVICE\",\"passed\":$pass,\"failed\":$fail,\"total\":$total,\"duration_seconds\":$dur,\"status\":\"$status\"}"
 }
@@ -181,8 +183,8 @@ mark_action "script initialization"
 # Error handler - trap errors and log FULL context to file
 # =============================================================================
 on_error() {
-    local line_no=$1
-    local cmd=$2
+    local line_no="${1:-0}"
+    local cmd="${2:-unknown}"
     local error_ts
     error_ts=$(date '+%Y-%m-%d %H:%M:%S')
 
@@ -251,7 +253,7 @@ USE_GPU=1
 OFFLINE_MODE=0
 PREPARE_OFFLINE=0
 PYTORCH_VERSION="2.13.0"
-PYTHON_VERSION="3.14.6"
+PYTHON_VERSION="3.13"
 CUDA_VERSION="12.6"
 CONDA_MIRROR="bfsu"
 PIP_MIRROR="aliyun"
@@ -427,14 +429,12 @@ log_phase "Environment Detection"
 detect_arch() {
     local arch
     arch=$(uname -m)
-    log_debug "Raw machine architecture: ${arch}"
+    log_debug "Raw machine architecture: ${arch}" >&2
     case "$arch" in
         x86_64|amd64)
-            log_result "Architecture detected: x86_64 (amd64)"
             echo "x86_64"
             ;;
         aarch64|arm64)
-            log_result "Architecture detected: aarch64 (arm64)"
             echo "aarch64"
             ;;
         *)
@@ -444,6 +444,10 @@ detect_arch() {
     esac
 }
 ARCH=$(detect_arch)
+case "$ARCH" in
+    x86_64) log_result "Architecture detected: x86_64 (amd64)" ;;
+    aarch64) log_result "Architecture detected: aarch64 (arm64)" ;;
+esac
 
 # =============================================================================
 # Validate CUDA version
@@ -855,12 +859,13 @@ if [ "$NO_VERIFY" = "0" ]; then
 
     VERIFY_PASS=0
     VERIFY_FAIL=0
+    VERIFY_TOTAL=0
     VERIFY_START=$(date +%s)
     log_event "verification_start"
 
     run_test() {
-        local desc="$1"
-        local cmd="$2"
+        local desc="${1-}"
+        local cmd="${2-}"
         local test_output
         local test_rc=0
 
@@ -876,10 +881,12 @@ if [ "$NO_VERIFY" = "0" ]; then
         if [ $test_rc -eq 0 ]; then
             echo "PASS"
             VERIFY_PASS=$((VERIFY_PASS + 1))
+            VERIFY_TOTAL=$((VERIFY_TOTAL + 1))
             log_debug "Test PASSED: $desc"
         else
             echo "FAIL"
             VERIFY_FAIL=$((VERIFY_FAIL + 1))
+            VERIFY_TOTAL=$((VERIFY_TOTAL + 1))
             log_error "Test FAILED: $desc (exit code: ${test_rc})"
             log_error "  Command output: ${test_output}"
         fi
@@ -949,7 +956,7 @@ if [ "$NO_VERIFY" = "0" ]; then
 
     echo ""
     echo "  ============================================================"
-    echo "  Results: ${VERIFY_PASS} passed, ${VERIFY_FAIL} failed (${VERIFY_DURATION}s)"
+    echo "  Results: ${VERIFY_PASS} passed, ${VERIFY_FAIL} failed, ${VERIFY_TOTAL} total (${VERIFY_DURATION}s)"
     echo "  ============================================================"
 
     if [ "$VERIFY_FAIL" -gt 0 ]; then
@@ -960,8 +967,8 @@ if [ "$NO_VERIFY" = "0" ]; then
     fi
 
     log_result "All ${VERIFY_PASS} verification tests PASSED!"
-    log_event "verification_complete" "passed=$VERIFY_PASS" "failed=$VERIFY_FAIL" "duration=$VERIFY_DURATION"
-    log_summary
+    log_event "verification_complete" "passed=$VERIFY_PASS" "failed=$VERIFY_FAIL" "total=$VERIFY_TOTAL" "duration=$VERIFY_DURATION"
+    log_summary "$VERIFY_PASS" "$VERIFY_FAIL" "$VERIFY_TOTAL" "$VERIFY_DURATION" "pass"
 else
     log_info "Verification skipped (--no-verify flag is set)"
     log_event "verification_skipped"
@@ -1017,7 +1024,7 @@ log_result "Total build time: ${TOTAL_MIN}m ${TOTAL_SEC}s"
 log_result "Image: ${IMAGE_TAG}"
 log_event "build_complete" "status=success" "total_duration=$TOTAL_DURATION" "image_tag=$IMAGE_TAG"
 log_metric "total_duration_seconds" "$TOTAL_DURATION" "seconds"
-log_summary
+log_summary 1 0 1 "$TOTAL_DURATION" "success"
 
 # Write success footer to log
 {

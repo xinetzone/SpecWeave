@@ -34,7 +34,7 @@
 
 ARG BASE_IMAGE=ubuntu:26.04
 ARG USE_GPU=1
-ARG PYTHON_VERSION=3.14.6
+ARG PYTHON_VERSION=3.13
 ARG PYTORCH_VERSION=2.13.0
 ARG CUDA_VERSION=12.6
 ARG CONDA_MIRROR=bfsu
@@ -65,7 +65,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     CONDA_ENVS_DIRS=/opt/conda/envs \
     CONDA_PKGS_DIRS=/opt/conda/pkgs \
     PATH=/opt/conda/envs/pytorch/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
-    LD_LIBRARY_PATH=/opt/conda/envs/pytorch/lib/python3.14/site-packages/torch/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH} \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     ENV_NAME=pytorch \
@@ -291,7 +290,7 @@ RUN echo "" && \
         ;; \
     esac; \
     if [ -n "$CONDA_CHANNEL_URL" ]; then \
-        echo "[ACTION] Writing ${CONDA_DIR}/.condarc (${CONDA_MIRROR} mirror + conda-forge/pytorch/nvidia channels)..."; \
+        echo "[ACTION] Writing ${CONDA_DIR}/.condarc (${CONDA_MIRROR} mirror + conda-forge/pytorch/nvidia channels + network timeouts)..."; \
         printf '%s\n' \
             'channels:' \
             '  - conda-forge' \
@@ -307,6 +306,10 @@ RUN echo "" && \
             "  pytorch: ${CONDA_CHANNEL_URL}" \
             "  nvidia: ${CONDA_CHANNEL_URL}" \
             'ssl_verify: true' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 120' \
+            'remote_max_retries: 5' \
+            'remote_backoff_factor: 2' \
             > "${CONDA_DIR}/.condarc"; \
     else \
         printf '%s\n' \
@@ -317,6 +320,9 @@ RUN echo "" && \
             '  - defaults' \
             'show_channel_urls: true' \
             'ssl_verify: true' \
+            'remote_connect_timeout_secs: 30' \
+            'remote_read_timeout_secs: 120' \
+            'remote_max_retries: 5' \
             > "${CONDA_DIR}/.condarc"; \
     fi && \
     echo "[OK] .condarc written:" && \
@@ -361,9 +367,11 @@ RUN echo "" && \
 # Stage 4/7: conda env + PyTorch trio (torch/vision/audio) + onnxruntime-gpu
 # Change frequency: medium (version upgrades, main hotspot)
 # 4-stage fallback: local wheels -> PyTorch official index -> pip mirror -> conda
+# Conda create fallback: mirror -> official channels -> retry
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    set -euo pipefail && \
     echo "" && \
     echo "########################################################################" && \
     echo "# [STAGE 4/7] Create Conda Env + Install PyTorch Trio + ONNX Runtime GPU" && \
@@ -386,10 +394,62 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         echo "[INFO] No local conda packages, will download from network"; \
     fi && \
     echo "[ACTION] Creating '${ENV_NAME}' conda env with Python ${PYTHON_VERSION}..." && \
-    conda create -y -n "${ENV_NAME}" python="${PYTHON_VERSION}" pip setuptools wheel numpy && \
+    CONDA_CREATE_OK=0 && \
+    for _attempt in 1 2 3; do \
+        echo "[INFO] conda create attempt $_attempt/3..."; \
+        if timeout 300 conda create -y -n "${ENV_NAME}" python="${PYTHON_VERSION}" pip setuptools wheel numpy 2>&1; then \
+            CONDA_CREATE_OK=1; \
+            break; \
+        fi; \
+        if [ "$_attempt" -eq 1 ]; then \
+            echo "[WARN] BFSU mirror failed, trying TUNA mirror..."; \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                '  - pytorch' \
+                '  - nvidia' \
+                '  - defaults' \
+                'show_channel_urls: true' \
+                'default_channels:' \
+                '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main' \
+                '  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r' \
+                'custom_channels:' \
+                '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+                '  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+                '  nvidia: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+                'ssl_verify: true' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 120' \
+                'remote_max_retries: 5' \
+                > "${CONDA_DIR}/.condarc"; \
+        elif [ "$_attempt" -eq 2 ]; then \
+            echo "[WARN] TUNA mirror failed, trying official conda-forge..."; \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                '  - pytorch' \
+                '  - nvidia' \
+                '  - defaults' \
+                'show_channel_urls: true' \
+                'ssl_verify: true' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 180' \
+                'remote_max_retries: 5' \
+                > "${CONDA_DIR}/.condarc"; \
+        fi; \
+        sleep 10; \
+    done && \
+    if [ "$CONDA_CREATE_OK" != "1" ]; then \
+        echo "[ERROR] conda create failed after 3 attempts!"; \
+        echo "[ERROR] Check network connectivity or try --conda-mirror official"; \
+        exit 1; \
+    fi && \
     echo "[OK] conda env '${ENV_NAME}' created" && \
+    test -d "${ENV_PATH}" || { echo "[ERROR] Env directory ${ENV_PATH} does not exist after conda create!"; exit 1; } && \
     conda activate "${ENV_NAME}" && \
     echo "[OK] conda env activated: Python $(python --version)" && \
+    PYTHON_SITE=$(python -c "import site; print(site.getsitepackages()[0])") && \
+    echo "[INFO] Python site-packages: ${PYTHON_SITE}" && \
     echo "[INFO] Key conda packages:" && \
     conda list | grep -iE 'python|pip|setuptools|wheel|numpy' || true && \
     echo "" && \
@@ -479,6 +539,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
         echo "[OK] PyTorch trio installed via conda fallback"; \
         PYTORCH_INSTALLED=1; \
     fi && \
+    test -d "${PYTHON_SITE}/torch" || { echo "[ERROR] torch not found after install!"; exit 1; } && \
     echo "" && \
     echo "[ACTION] Installing ONNX Runtime GPU..." && \
     if [ "${USE_GPU}" = "1" ]; then \
@@ -525,6 +586,11 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     echo "[INFO] Installed pip packages (key ML libs):" && \
     pip list --format=columns 2>/dev/null | grep -iE 'torch|numpy|onnx|pip|setuptools|wheel' || true && \
     echo "" && \
+    echo "[ACTION] Setting LD_LIBRARY_PATH for torch libs..." && \
+    TORCH_LIB="${PYTHON_SITE}/torch/lib" && \
+    echo "LD_LIBRARY_PATH=${TORCH_LIB}:/usr/local/nvidia/lib64" >> /etc/environment && \
+    echo "[OK] LD_LIBRARY_PATH configured" && \
+    echo "" && \
     echo "[ACTION] Cleaning up..." && \
     rm -rf /tmp/offline && \
     conda clean -ya && \
@@ -535,6 +601,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
+    echo "PYTHON_SITE=${PYTHON_SITE}" > /tmp/.python-site && \
     echo "S4=$_NOW" >> /tmp/.build-timer && \
     echo "[TIMER] Stage 4/7 (conda env+PyTorch+ORT) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s" && \
     echo '[OK] Stage 4 complete'
@@ -641,6 +708,8 @@ RUN echo "" && \
     _STAGE_START=$(date +%s) && \
     source "${CONDA_DIR}/etc/profile.d/conda.sh" && \
     conda activate "${ENV_NAME}" && \
+    PYTHON_SITE=$(python -c "import site; print(site.getsitepackages()[0])") && \
+    echo "[INFO] Python site-packages: ${PYTHON_SITE}" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [FINAL VERIFICATION - Stage 7/7]               │" && \
@@ -673,7 +742,7 @@ RUN echo "" && \
             echo "[WARN] CUDA version mismatch: torch reports ${TORCH_CUDA}, build arg was ${CUDA_VERSION}"; \
         fi; \
         echo "[VALIDATE] CUDA libraries exist in torch/lib..."; \
-        TORCH_LIB="${ENV_PATH}/lib/python3.14/site-packages/torch/lib"; \
+        TORCH_LIB="${PYTHON_SITE}/torch/lib"; \
         CUDA_LIB_COUNT=$(find "$TORCH_LIB" -name "libcudart*" -o -name "libcuda*" -o -name "libcublas*" -o -name "libcudnn*" 2>/dev/null | wc -l); \
         echo "[INFO] Found ${CUDA_LIB_COUNT} CUDA-related libraries in torch/lib"; \
         if [ "$CUDA_LIB_COUNT" -gt 0 ]; then \
@@ -685,45 +754,29 @@ RUN echo "" && \
     echo "" && \
     echo "[VALIDATE] ONNX Runtime..." && \
     if [ "${USE_GPU}" = "1" ]; then \
-        python -c "
-import onnxruntime as ort
-providers = ort.get_available_providers()
-print(f'  onnxruntime:  {ort.__version__}')
-print(f'  providers:    {providers}')
-if 'CUDAExecutionProvider' in providers:
-    print('[OK] CUDAExecutionProvider available')
-else:
-    print('[WARN] CUDAExecutionProvider NOT available (GPU acceleration disabled)')
-" || echo "[WARN] onnxruntime verification skipped"; \
+        python -c "import onnxruntime as ort; providers = ort.get_available_providers(); print(f'  onnxruntime:  {ort.__version__}'); print(f'  providers:    {providers}'); print('[OK] CUDAExecutionProvider available' if 'CUDAExecutionProvider' in providers else '[WARN] CUDAExecutionProvider NOT available (GPU acceleration disabled)')" || echo "[WARN] onnxruntime verification skipped"; \
     else \
         python -c "import onnxruntime as ort; print(f'  onnxruntime:  {ort.__version__} (CPU)')" 2>/dev/null || echo "[WARN] onnxruntime not installed"; \
     fi && \
     echo "" && \
     echo "[VALIDATE] Tensor operations (per pytorch.org: x = torch.rand(5,3))..." && \
-    python -c "
-import torch
-x = torch.rand(5, 3)
-print(x)
-assert x.shape == (5, 3), f'Shape mismatch: {x.shape}'
-y = x @ x.T
-assert y.shape == (5, 5), f'Matmul shape mismatch: {y.shape}'
-print('[OK] Tensor ops verified: rand + matmul work correctly')
-" && \
+    python -c "import torch; x = torch.rand(5, 3); print(x); assert x.shape == (5, 3), f'Shape mismatch: {x.shape}'; y = x @ x.T; assert y.shape == (5, 5), f'Matmul shape mismatch: {y.shape}'; print('[OK] Tensor ops verified: rand + matmul work correctly')" && \
     echo "" && \
     echo "[VALIDATE] CUDA availability check (no GPU in build env = False expected)..." && \
-    python -c "
-import torch
-cuda_avail = torch.cuda.is_available()
-print(f'  torch.cuda.is_available() = {cuda_avail}')
-print(f'  (False is NORMAL during build - GPU only available at runtime with --gpus all)')
-if not cuda_avail:
-    print('[OK] Build env has no GPU (expected) - CUDA libraries installed correctly')
-else:
-    gpu_count = torch.cuda.device_count()
-    print(f'[OK] GPU detected! {gpu_count} device(s)')
-    for i in range(gpu_count):
-        print(f'  GPU {i}: {torch.cuda.get_device_name(i)}')
-" && \
+    printf '%s\n' \
+        'import torch' \
+        'cuda_avail = torch.cuda.is_available()' \
+        "print(f'  torch.cuda.is_available() = {cuda_avail}')" \
+        "print(f'  (False is NORMAL during build - GPU only available at runtime with --gpus all)')" \
+        'if not cuda_avail:' \
+        "    print('[OK] Build env has no GPU (expected) - CUDA libraries installed correctly')" \
+        'else:' \
+        '    gpu_count = torch.cuda.device_count()' \
+        "    print(f'[OK] GPU detected! {gpu_count} device(s)')" \
+        '    for i in range(gpu_count):' \
+        "        print(f'  GPU {i}: {torch.cuda.get_device_name(i)}')" \
+        > /tmp/check_cuda.py && \
+    python /tmp/check_cuda.py && \
     echo "" && \
     echo "[VALIDATE] numpy..." && \
     python -c "import numpy; print(f'  numpy:        {numpy.__version__}')" && \
@@ -746,35 +799,36 @@ else:
     cat /etc/pytorch-base-build-info && \
     echo "" && \
     echo "[ACTION] Fixing executable stack flags on PyTorch .so files..." && \
-    python -c "
-import os, struct, glob
-lib_dir = os.path.join('${ENV_PATH}', 'lib', 'python3.14', 'site-packages', 'torch', 'lib')
-fixed = 0
-if os.path.isdir(lib_dir):
-    for so_path in glob.glob(os.path.join(lib_dir, '*.so')):
-        try:
-            with open(so_path, 'r+b') as f:
-                magic = f.read(4)
-                if magic != b'\x7fELF': continue
-                f.seek(0)
-                hdr = f.read(64)
-                if len(hdr) < 64 or hdr[4] != 2: continue
-                e_phoff = struct.unpack('<Q', hdr[32:40])[0]
-                e_phentsize = struct.unpack('<H', hdr[54:56])[0]
-                e_phnum = struct.unpack('<H', hdr[56:58])[0]
-                for i in range(e_phnum):
-                    f.seek(e_phoff + i * e_phentsize)
-                    phdr = f.read(e_phentsize)
-                    p_type = struct.unpack('<I', phdr[0:4])[0]
-                    if p_type == 0x6474e551:
-                        p_flags = struct.unpack('<I', phdr[4:8])[0]
-                        if p_flags & 1:
-                            f.seek(e_phoff + i * e_phentsize + 4)
-                            f.write(struct.pack('<I', p_flags & ~1))
-                            fixed += 1
-        except: pass
-print(f'[OK] Fixed executable stack flag on {fixed} .so files')
-" 2>/dev/null || echo "[INFO] Stack flag fix skipped (non-critical)" && \
+    printf '%s\n' \
+        'import os, struct, glob' \
+        "lib_dir = os.environ.get('TORCH_LIB_PATH', '')" \
+        'fixed = 0' \
+        'if os.path.isdir(lib_dir):' \
+        "    for so_path in glob.glob(os.path.join(lib_dir, '*.so')):" \
+        '        try:' \
+        "            with open(so_path, 'r+b') as f:" \
+        '                magic = f.read(4)' \
+        "                if magic != b'\x7fELF': continue" \
+        '                f.seek(0)' \
+        '                hdr = f.read(64)' \
+        '                if len(hdr) < 64 or hdr[4] != 2: continue' \
+        "                e_phoff = struct.unpack('<Q', hdr[32:40])[0]" \
+        "                e_phentsize = struct.unpack('<H', hdr[54:56])[0]" \
+        "                e_phnum = struct.unpack('<H', hdr[56:58])[0]" \
+        '                for i in range(e_phnum):' \
+        '                    f.seek(e_phoff + i * e_phentsize)' \
+        '                    phdr = f.read(e_phentsize)' \
+        "                    p_type = struct.unpack('<I', phdr[0:4])[0]" \
+        '                    if p_type == 0x6474e551:' \
+        "                        p_flags = struct.unpack('<I', phdr[4:8])[0]" \
+        '                        if p_flags & 1:' \
+        '                            f.seek(e_phoff + i * e_phentsize + 4)' \
+        "                            f.write(struct.pack('<I', p_flags & ~1))" \
+        '                            fixed += 1' \
+        '        except: pass' \
+        "print(f'[OK] Fixed executable stack flag on {fixed} .so files')" \
+        > /tmp/fix_stack.py && \
+    TORCH_LIB_PATH="${PYTHON_SITE}/torch/lib" python /tmp/fix_stack.py 2>/dev/null || echo "[INFO] Stack flag fix skipped (non-critical)" && \
     echo "" && \
     echo "[ACTION] Aggressive cleanup to reduce image size..." && \
     rm -rf /tmp/* /var/tmp/* /root/.cache /home/ai/.cache && \
