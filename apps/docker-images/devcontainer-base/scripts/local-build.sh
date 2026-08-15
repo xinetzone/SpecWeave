@@ -6,7 +6,7 @@
 #   - Automatic WSL2 detection + Windows→WSL path mapping
 #   - Docker Engine + Buildx auto-install/start in WSL2
 #   - Optional native-WSL filesystem copy for 2-3x faster builds
-#   - Full CI-equivalent build chain (base → conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → ai-dev)
+#   - Full CI-equivalent build chain (base → conda-llvm → onnx-dev → onnx-quantized → torch-dev → ai-dev)
 #   - Structured logging + diagnostics collection on failure
 #   - Lint checks (bash -n + Dockerfile structure validation)
 #
@@ -21,7 +21,7 @@
 #   --official            Use official mirrors (default for CI, default for this script: cn)
 #   --no-cache            Disable Docker build cache
 #   --tag TAG             Image tag suffix (default: latest)
-#   --variant VARIANT     Build specific variant (conda-llvm/onnx-dev/onnx-pytorch/onnx-quantized/ai-dev/all)
+#   --variant VARIANT     Build specific variant (conda-llvm/onnx-dev/onnx-pytorch/onnx-quantized/torch-dev/ai-dev/all)
 #                         default: all (full chain)
 #   --native-fs           Copy project to WSL2 native filesystem (~) for faster IO
 #   --skip-docker-setup   Skip Docker daemon check/setup (use if Docker already running)
@@ -82,7 +82,7 @@ ${BOLD}Options:${NC}
   --official            Use official mirrors
   --no-cache            Disable Docker build cache
   --tag TAG             Image tag suffix (default: latest)
-  --variant VARIANT     Variant to build: conda-llvm, onnx-dev, onnx-pytorch, onnx-quantized, ai-dev, all [default: all]
+  --variant VARIANT     Variant to build: conda-llvm, onnx-dev, onnx-pytorch, onnx-quantized, torch-dev, ai-dev, all [default: all]
   --native-fs           Copy project to WSL2 native filesystem for faster Docker builds
                         (recommended when project is on /mnt/<drive>/ cross-mount)
   --skip-docker-setup   Skip Docker daemon auto-check/setup
@@ -174,7 +174,7 @@ done
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║     DevContainer Local CI Build                            ║"
-echo "║     Mirroring: base → conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → ai-dev ║"
+echo "║     Mirroring: base → conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → torch-dev → ai-dev ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -528,20 +528,20 @@ declare -a STAGE_LOGS=()
 stage_idx=0
 
 # Always build base first (all variants depend on base, either directly or transitively)
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "torch-dev" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("base")
     STAGE_CMDS+=("bash scripts/build.sh --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/01-base-build.log")
 fi
 
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "torch-dev" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("conda-llvm")
     STAGE_CMDS+=("bash variants/build.sh --variant conda-llvm --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/02-conda-llvm-build.log")
 fi
 
-# onnx-dev: 纯 ONNX 生态变体（onnx-quantized 与 ai-dev 的直接依赖）
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
+# onnx-dev: 纯 ONNX 生态变体（onnx-quantized/torch-dev 与 ai-dev 的直接依赖）
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "torch-dev" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("onnx-dev")
     STAGE_CMDS+=("bash variants/build.sh --variant onnx-dev --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/03-onnx-dev-build.log")
@@ -554,16 +554,24 @@ if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-pytorch" ]; then
     STAGE_LOGS+=("${LOGS_DIR}/04-onnx-pytorch-build.log")
 fi
 
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
+# onnx-quantized: 量化工具链变体（torch-dev 的直接基础）
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "torch-dev" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("onnx-quantized")
     STAGE_CMDS+=("bash variants/build.sh --variant onnx-quantized --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/05-onnx-quantized-build.log")
 fi
 
+# torch-dev: free-threading PyTorch 变体（ai-dev 的直接基础，main env cp314t）
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "torch-dev" ] || [ "$VARIANT" = "ai-dev" ]; then
+    STAGES+=("torch-dev")
+    STAGE_CMDS+=("bash variants/build.sh --variant torch-dev --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
+    STAGE_LOGS+=("${LOGS_DIR}/06-torch-dev-build.log")
+fi
+
 if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("ai-dev")
     STAGE_CMDS+=("bash variants/build.sh --variant ai-dev --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
-    STAGE_LOGS+=("${LOGS_DIR}/06-ai-dev-build.log")
+    STAGE_LOGS+=("${LOGS_DIR}/07-ai-dev-build.log")
 fi
 
 TOTAL_STAGES=${#STAGES[@]}
@@ -629,28 +637,66 @@ log_step "Quick verification"
 final_image="devcontainer-base:${VARIANT}-${TAG}"
 if [ "$VARIANT" = "all" ]; then
     final_image="devcontainer-base:ai-dev-${TAG}"
+elif [ "$VARIANT" = "base" ]; then
+    final_image="devcontainer-base:${TAG}"
 fi
 echo ""
 log_info "Verifying final image: $final_image"
 if [ "$VARIANT" = "ai-dev" ] || [ "$VARIANT" = "all" ]; then
+    echo "  [base env] AI/ML packages:"
     docker run --rm "$final_image" /opt/conda/bin/python -c "
-import torch, onnx, onnxruntime
+import transformers, datasets, fastapi, pandas
+print(f'  transformers: {transformers.__version__}')
+print(f'  datasets:     {datasets.__version__}')
+print(f'  fastapi:      {fastapi.__version__}')
+print(f'  pandas:       {pandas.__version__}')
+" 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Base env verification failed"
+    echo "  [main env] PyTorch + ONNX (free-threading):"
+    docker run --rm "$final_image" /opt/conda/envs/main/bin/python -c "
+import sys, torch, torchvision, onnx, onnxruntime
+assert sys._is_gil_enabled() is False, 'main env must be free-threading'
+print(f'  Python:       {sys.version.split()[0]} (free-threading, GIL disabled)')
 print(f'  PyTorch:      {torch.__version__}')
+print(f'  torchvision:  {torchvision.__version__}')
 print(f'  ONNX:         {onnx.__version__}')
 print(f'  ONNX Runtime: {onnxruntime.__version__}')
 print(f'  CUDA avail:   {torch.cuda.is_available()}')
 from onnxruntime.quantization import quantize_dynamic, QuantType
 print(f'  Quantization: available')
-import jupyterlab
-print(f'  JupyterLab:   {jupyterlab.__version__}')
+" 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Main env PyTorch verification failed"
+elif [ "$VARIANT" = "torch-dev" ]; then
+    docker run --rm "$final_image" /opt/conda/envs/main/bin/python -c "
+import sys, torch, torchvision, onnx, onnxruntime
+assert sys._is_gil_enabled() is False, 'main env must be free-threading'
+print(f'  Python:       {sys.version.split()[0]} (free-threading, GIL disabled)')
+print(f'  PyTorch:      {torch.__version__}')
+print(f'  torchvision:  {torchvision.__version__}')
+print(f'  ONNX:         {onnx.__version__}')
+print(f'  ONNX Runtime: {onnxruntime.__version__}')
+print(f'  CUDA avail:   {torch.cuda.is_available()}')
+from onnxruntime.quantization import quantize_dynamic, QuantType
+print(f'  Quantization: available')
+x=torch.randn(64,64); y=torch.randn(64,64); z=torch.matmul(x,y); l=z.sum(); l.backward()
+assert z.shape == (64,64) and x.grad is not None
+print(f'  matmul+autograd: OK')
 " 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
 elif [ "$VARIANT" = "onnx-quantized" ]; then
-    docker run --rm "$final_image" /opt/conda/bin/python -c "
-import onnx, onnxruntime
+    docker run --rm "$final_image" /opt/conda/envs/main/bin/python -c "
+import sys, onnx, onnxruntime
+assert sys._is_gil_enabled() is False, 'main env must be free-threading'
+print(f'  Python:       {sys.version.split()[0]} (free-threading, GIL disabled)')
 print(f'  ONNX:         {onnx.__version__}')
 print(f'  ONNX Runtime: {onnxruntime.__version__}')
 from onnxruntime.quantization import quantize_dynamic, QuantType
 print(f'  Quantization: available')
+" 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
+elif [ "$VARIANT" = "base" ]; then
+    docker run --rm "$final_image" /opt/conda/envs/main/bin/python -c "
+import sys, sysconfig
+print(f'  Python:       {sys.version.split()[0]}')
+print(f'  Free-threading: {sysconfig.get_config_var(\"Py_GIL_DISABLED\") == 1}')
+import jupyterlab
+print(f'  JupyterLab:   {jupyterlab.__version__}')
 " 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
 else
     docker run --rm "$final_image" /opt/conda/bin/python -c "

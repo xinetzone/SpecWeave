@@ -63,35 +63,39 @@ updated: 2026-08-14
 | **Podman (rootless)** | unix socket | `ENABLE_PODMAN=yes` | 按需启动（无守护进程） | 用户命名空间隔离，cgroupv2兼容 |
 | **JupyterLab** | TCP 8888 | `ENABLE_JUPYTER=yes` | supervisord | conda Python环境，Token/Password/CORS配置 |
 
-### 运行模式 ASCII 示意
+### 运行模式架构图
 
-```
-┌───────────────────────────────────────────────────────────────┐
-│                     devcontainer-base 容器                      │
-│                                                               │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────────┐   │
-│  │  SSH (22)    │   │ Jupyter(8888)│   │ supervisord      │   │
-│  │  ED25519     │   │ Token/CORS   │   │ 统一管理4服务     │   │
-│  └──────┬───────┘   └──────┬───────┘   └──────────────────┘   │
-│         │                  │                                  │
-│  ┌──────┴──────────────────┴───────┐                          │
-│  │       devuser (UID 1000)        │                          │
-│  │  docker组 + sudo(可选NOPASSWD)  │                          │
-│  └──────────────┬─────────────────┘                          │
-│                 │                                            │
-│    ┌────────────┴────────────┐                               │
-│    ▼                         ▼                               │
-│  ┌───────────┐    ┌──────────────────┐    ┌───────────────┐  │
-│  │Docker DinD│    │  Podman rootless │    │  Docker DooD  │  │
-│  │dockerd    │    │  用户命名空间隔离 │    │ 宿主socket挂  │  │
-│  │--privileged│    │  按需启动无守护  │    │ 载(ro只读)   │  │
-│  └───────────┘    └──────────────────┘    └───────┬───────┘  │
-│                                                    │          │
-└────────────────────────────────────────────────────┼──────────┘
-                                                     │
-                                          ┌──────────▼──────────┐
-                                          │  宿主 Docker Daemon  │
-                                          └─────────────────────┘
+```mermaid
+flowchart TB
+    subgraph CONTAINER ["devcontainer-base 容器"]
+        SVC_SSH["SSH (22) ED25519密钥认证"]
+        SVC_JUPYTER["JupyterLab (8888) Token/CORS配置"]
+        SVC_SUPERVISORD["supervisord 统一管理4大服务"]
+        USER_DEV["devuser (UID 1000) docker组 + 可选NOPASSWD sudo"]
+        RUNTIME_DIND["Docker DinD dockerd --privileged 完全隔离环境"]
+        RUNTIME_PODMAN["Podman rootless 用户命名空间隔离 按需启动无守护"]
+        RUNTIME_DOOD["Docker DooD 挂载宿主docker.sock 只读共享"]
+    end
+    subgraph HOST ["宿主环境"]
+        HOST_DOCKER["宿主 Docker Daemon"]
+    end
+    SVC_SSH --> USER_DEV
+    SVC_JUPYTER --> USER_DEV
+    SVC_SUPERVISORD --> USER_DEV
+    USER_DEV --> RUNTIME_DIND
+    USER_DEV --> RUNTIME_PODMAN
+    USER_DEV --> RUNTIME_DOOD
+    RUNTIME_DOOD -->|"挂载/var/run/docker.sock (ro)"| HOST_DOCKER
+    style CONTAINER fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style HOST fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    style SVC_SSH fill:#e8f5e9,stroke:#388e3c
+    style SVC_JUPYTER fill:#e8f5e9,stroke:#388e3c
+    style SVC_SUPERVISORD fill:#fff3e0,stroke:#f57c00
+    style USER_DEV fill:#fff9c4,stroke:#fbc02d
+    style RUNTIME_DIND fill:#ffebee,stroke:#d32f2f
+    style RUNTIME_PODMAN fill:#ffebee,stroke:#d32f2f
+    style RUNTIME_DOOD fill:#ffebee,stroke:#d32f2f
+    style HOST_DOCKER fill:#fce4ec,stroke:#c2185b
 ```
 
 ---

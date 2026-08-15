@@ -39,6 +39,7 @@ log_pass() {
         echo -e "  ${GREEN}✔${RESET} $1"
         [ -n "$detail" ] && [ "$VERBOSE" = "1" ] && echo "      ${detail}"
     fi
+    return 0
 }
 
 log_fail() {
@@ -50,6 +51,7 @@ log_fail() {
         echo -e "  ${RED}✘${RESET} $1"
         [ -n "$detail" ] && echo "      ${RED}${detail}${RESET}"
     fi
+    return 0
 }
 
 log_warn() {
@@ -61,6 +63,7 @@ log_warn() {
         echo -e "  ${YELLOW}⚠${RESET} $1"
         [ -n "$detail" ] && [ "$VERBOSE" = "1" ] && echo "      ${detail}"
     fi
+    return 0
 }
 
 log_info() {
