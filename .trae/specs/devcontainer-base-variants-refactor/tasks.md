@@ -431,6 +431,36 @@
 - **Test Requirements**:
   - [rule] 文档清晰，新人可按文档创建新变体
 
+### Task 20: 新建 llm-agent 变体（LangChain/LangGraph 生态） — ✅ **CODE CREATED**
+- **Status**: ✅ **CODE CREATED** (2026-08-15)
+- **Priority**: high
+- **Depends on**: Task 16 (ai-dev)
+- **Description**: 基于ai-dev新建LLM Agent变体，安装LangChain/LangGraph生态+LLM SDKs+向量数据库
+- **Base**: devcontainer-base:ai-dev-${BASE_TAG}
+- **Install env**: base (GIL) - LangChain ft-compat not yet guaranteed
+- **Packages (5 groups in base env)**:
+  - G1: LangChain Core (langchain, langchain-core, langchain-community)
+  - G2: LangGraph (stateful multi-actor agent framework)
+  - G3: LLM SDKs (openai, anthropic, google-generativeai)
+  - G4: Vector Stores/RAG (faiss-cpu, chromadb)
+  - G5: Agent/Web Tools (duckduckgo-search, tenacity, pydantic-settings)
+- **Architecture decisions**:
+  - PATH优先级：/opt/conda/bin在前（继承ai-dev，base python默认）
+  - 不注册新kernel（复用ai-dev "Python 3 (AI Dev)" kernel）
+  - main env (ft PyTorch)保留可通过完整路径访问
+  - Runtime API keys通过`-e`传入（OPENAI_API_KEY/ANTHROPIC_API_KEY/GOOGLE_API_KEY）
+- **Acceptance Criteria**:
+  - [x] llm-agent/Dockerfile created using new framework
+  - [x] 3-stage structure (verify base → install packages → smoke test)
+  - [x] LangGraph smoke test: StateGraph construction+invocation
+  - [x] Dual-env guards: base GIL enabled, main ft PyTorch preserved
+  - [x] devuser access verified
+- **Test Requirements**:
+  - [ ] docker build成功
+  - [ ] langchain/langgraph/openai/anthropic/google-generativeai/faiss/chromadb可导入
+  - [ ] LangGraph StateGraph可构建调用
+  - [ ] main env PyTorch free-threading可用
+
 ---
 
 ## 任务依赖关系图
