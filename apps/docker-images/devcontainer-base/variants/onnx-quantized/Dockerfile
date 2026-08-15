@@ -94,7 +94,7 @@ variant_activate_main_env
 
 ensure_all_permissions
 
-variant_write_build_info "onnx-quantized" "onnx-dev-${BASE_TAG}" \
+variant_write_build_info "onnx-quantized" "devcontainer-base:onnx-dev-${BASE_TAG}" \
     "VARIANT_DESCRIPTION=ONNX quantization toolkit (INT8/FP16/QDQ/dynamic/static, pure ONNX, free-threading)" \
     "ONNXRUNTIME_VERSION=$(python -c 'import onnxruntime;print(onnxruntime.__version__)')" \
     "ONNXCONVERTER_COMMON_VERSION=$(python -c 'import onnxconverter_common;print(onnxconverter_common.__version__)' 2>/dev/null || echo unknown)" \
@@ -105,6 +105,68 @@ variant_write_build_info "onnx-quantized" "onnx-dev-${BASE_TAG}" \
     "OPTIONAL_PACKAGES=neural-compressor(needs torch: pip install neural-compressor torch)" \
     "BASE_VARIANT=onnx-dev(LLVM+ONNX inherited)" \
     "SCRIPTS_DIR=/opt/devcontainer-scripts/"
+
+# ── Build-info self-verification with detailed debug logs ──
+echo ""
+echo "┌─────────────────────────────────────────────────────────────────────┐"
+echo "│  [BUILD-INFO DEBUG] Self-verification of /etc/build-info file       │"
+echo "└─────────────────────────────────────────────────────────────────────┘"
+INFO_FILE="/etc/devcontainer-variant-onnx-quantized-build-info"
+echo "[DEBUG] Expected info file: ${INFO_FILE}"
+if [ -f "${INFO_FILE}" ]; then
+    echo "[DEBUG] File exists: YES"
+    echo "[DEBUG] File permissions: $(ls -la "${INFO_FILE}" | awk '{print $1, $3, $4, $5}')"
+    echo ""
+    echo "--- [DEBUG] Full build-info contents ---"
+    cat -n "${INFO_FILE}"
+    echo "--- [DEBUG] End of build-info ---"
+    echo ""
+    echo "--- [DEBUG] Required field verification ---"
+    _bi_pass=0
+    _bi_fail=0
+    _check_field() {
+        local field_pattern="$1"
+        local field_name="$2"
+        if grep -q "^${field_pattern}" "${INFO_FILE}"; then
+            local value
+            value=$(grep "^${field_pattern}" "${INFO_FILE}" | head -1 | sed "s/^${field_pattern}//")
+            echo "  [PASS] ${field_name}: ${value}"
+            _bi_pass=$((_bi_pass + 1))
+        else
+            echo "  [FAIL] ${field_name}: NOT FOUND or MISMATCH"
+            _bi_fail=$((_bi_fail + 1))
+        fi
+    }
+    _check_field "VARIANT=" "VARIANT"
+    _check_field "VARIANT=onnx-quantized" "VARIANT=onnx-quantized (exact value)"
+    _check_field "BASE_IMAGE=" "BASE_IMAGE"
+    _check_field "BASE_IMAGE=devcontainer-base:onnx-dev" "BASE_IMAGE prefix (devcontainer-base:onnx-dev)"
+    _check_field "ONNXRUNTIME_VERSION=" "ONNXRUNTIME_VERSION"
+    _check_field "ONNXCONVERTER_COMMON_VERSION=" "ONNXCONVERTER_COMMON_VERSION"
+    _check_field "BUILD_DATE=" "BUILD_DATE"
+    _check_field "PYTHON_VERSION=" "PYTHON_VERSION"
+    _check_field "PYTHON_BUILD=" "PYTHON_BUILD (free-threading)"
+    echo ""
+    echo "--- [DEBUG] Field verification summary ---"
+    echo "  Passed: ${_bi_pass}"
+    echo "  Failed: ${_bi_fail}"
+    if [ "${_bi_fail}" -gt 0 ]; then
+        echo ""
+        echo "[ERROR] Build-info self-verification FAILED - ${_bi_fail} field(s) missing or incorrect"
+        echo "[ERROR] This will cause T19 test failure in the external test suite"
+        exit 1
+    else
+        echo "[OK] Build-info self-verification PASSED - all required fields present"
+    fi
+else
+    echo "[DEBUG] File exists: NO"
+    echo ""
+    echo "[DEBUG] Searching for similar files in /etc/:"
+    find /etc -maxdepth 1 -name "*build*info*" -o -name "*variant*" 2>/dev/null | head -20
+    echo ""
+    echo "[ERROR] Build-info file NOT FOUND at expected path!"
+    exit 1
+fi
 
 cleanup_all
 

@@ -304,25 +304,44 @@ def main(argv=None):
             print()
         return 0
 
-    # 自动检测输入信息用于校准Reader（优先使用 analyze_model 结果）
-    shape_for_calib = input_shape or (1, 3, 224, 224)
-    name_for_calib = args.input_name or "input"
+    # 自动检测输入信息用于校准Reader（优先顺序：用户指定 > analyze_model结果 > Session检测 > 安全fallback）
+    # Bug #3修复：不再硬编码(1,3,224,224)图像形状，避免非CNN模型错误
+    shape_for_calib = input_shape
+    name_for_calib = args.input_name
+    detect_failed = False
+
     if input_shape is None or args.input_name is None:
+        # 尝试1：使用analyze_model结果
         if analysis and analysis.get("input_shape") and analysis.get("input_name"):
             if input_shape is None:
                 shape_for_calib = analysis["input_shape"]
             if args.input_name is None:
                 name_for_calib = analysis["input_name"]
         else:
+            # 尝试2：直接创建Session检测
             try:
                 sess = create_session(model_path, args.threads)
-                inp = sess.get_inputs()[0]
-                name_for_calib = args.input_name or inp.name
-                if input_shape is None:
-                    shape_for_calib = _safe_get_input_shape(inp)
+                if len(sess.get_inputs()) > 0:
+                    inp = sess.get_inputs()[0]
+                    name_for_calib = args.input_name or inp.name
+                    if input_shape is None:
+                        shape_for_calib = _safe_get_input_shape(inp)
                 del sess
             except Exception:
-                pass
+                detect_failed = True
+
+    # 最终fallback：如果所有检测都失败，使用基于模型秩的通用默认值而非图像专用形状
+    # 注意：这是一个安全的兜底，但用户应优先通过--input-shape显式指定
+    if shape_for_calib is None:
+        detect_failed = True
+        # 使用(1, 10)作为通用fallback（适合大多数MLP/简单RNN；CNN需要用户显式指定）
+        # 不使用(1,3,224,224)因为那只适用于图像模型，会让其他类型模型静默失败
+        shape_for_calib = (1, 10)
+        if not args.json:
+            print(_c("⚠️  Warning: Could not auto-detect input shape, using fallback (1,10). "
+                     "Please specify --input-shape for non-trivial models.", C.YELLOW))
+    if name_for_calib is None:
+        name_for_calib = "input"
 
     # 校准数据Reader
     if args.calib_dir and os.path.isdir(args.calib_dir):

@@ -49,18 +49,51 @@ def create_session(model_path: str, intra_threads: int = 4,
     return ort.InferenceSession(model_path, sess_options=so, providers=providers)
 
 
+def _safe_get_input_shape(inp, default: int = 1) -> tuple:
+    """从ONNX Runtime input安全提取形状，兼容DimensionProto/纯int/Session对象
+
+    动态维度（dim_value=0 或 dim_param字符串存在）会被替换为default值。
+    与 quantize._safe_get_input_shape 保持一致的逻辑。
+    """
+    # 支持传入InferenceSession对象
+    if isinstance(inp, ort.InferenceSession):
+        if len(inp.get_inputs()) == 0:
+            raise ValueError("Session has no inputs")
+        inp = inp.get_inputs()[0]
+    shape = inp.shape
+    result = []
+    for d in shape:
+        if isinstance(d, int):
+            result.append(d if d > 0 else default)
+        elif hasattr(d, 'dim_value'):
+            if hasattr(d, 'dim_param') and d.dim_param:
+                result.append(default)
+            else:
+                result.append(d.dim_value if d.dim_value > 0 else default)
+        else:
+            result.append(default)
+    return tuple(result)
+
+
 def _resolve_input(sess: ort.InferenceSession, input_shape: Optional[tuple],
-                   input_name: Optional[str]) -> tuple:
-    """解析输入名称和形状"""
+                   input_name: Optional[str], default_batch: int = 1) -> tuple:
+    """解析输入名称和形状
+
+    安全处理：
+    - 动态维度（字符串dim_param，如"batch"/"seq_len"）替换为default_batch
+    - dim_value=0或负数替换为default_batch
+    - 非int/非DimensionProto类型安全降级为default_batch
+    """
+    if len(sess.get_inputs()) == 0:
+        raise ValueError("Model has no inputs")
     inp = sess.get_inputs()[0]
     name = input_name or inp.name
     is_fp16 = "float16" in str(inp.type)
     dtype = np.float16 if is_fp16 else np.float32
     if input_shape is None:
-        shape = tuple(d.dim_value if d.dim_value > 0 else 1
-                      for d in inp.shape)
+        shape = _safe_get_input_shape(inp, default=default_batch)
     else:
-        shape = input_shape
+        shape = tuple(input_shape)
     return name, shape, dtype
 
 

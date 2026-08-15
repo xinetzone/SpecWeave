@@ -34,6 +34,7 @@ from .model_detect import detect_model_type, ModelType, analyze_model
 from .quantize import (
     auto_quantize, quantize_dynamic_simple, quantize_static_qdq,
     quantize_static_qoperator, quantize_fp16, QuantizationResult, QuantizationConfig,
+    detect_input_info,
 )
 from .reporting import build_report, parse_report, format_summary, format_batch_summary
 
@@ -44,7 +45,7 @@ __all__ = [
     "validate_accuracy", "AccuracyResult", "AccuracyThresholds",
     "detect_model_type", "ModelType", "analyze_model",
     "auto_quantize", "quantize_dynamic_simple", "quantize_static_qdq",
-    "quantize_static_qoperator", "quantize_fp16",
+    "quantize_static_qoperator", "quantize_fp16", "detect_input_info",
     "QuantizationResult", "QuantizationConfig",
     "build_report", "parse_report", "format_summary", "format_batch_summary",
 ]

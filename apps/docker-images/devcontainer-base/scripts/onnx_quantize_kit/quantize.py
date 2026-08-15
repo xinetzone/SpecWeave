@@ -128,7 +128,8 @@ _CALIB_MAP = {
 def _safe_get_input_shape(session_or_input, default: int = 1) -> tuple:
     """从ONNX Runtime input安全提取形状，兼容DimensionProto和纯int
 
-    动态维度（dim_value=0 或 dim_param存在）会被替换为default值。
+    动态维度（dim_value=0 或 dim_param字符串存在）会被替换为default值。
+    与 benchmark._safe_get_input_shape 保持一致的逻辑。
     """
     import onnxruntime as ort
     if isinstance(session_or_input, ort.InferenceSession):
@@ -141,10 +142,93 @@ def _safe_get_input_shape(session_or_input, default: int = 1) -> tuple:
         if isinstance(d, int):
             result.append(d if d > 0 else default)
         elif hasattr(d, 'dim_value'):
-            result.append(d.dim_value if d.dim_value > 0 else default)
+            if hasattr(d, 'dim_param') and d.dim_param:
+                result.append(default)
+            else:
+                result.append(d.dim_value if d.dim_value > 0 else default)
         else:
             result.append(default)
     return tuple(result)
+
+
+def detect_input_info(model_path: str, intra_threads: int = 4) -> tuple:
+    """安全检测模型的输入名称和形状
+
+    Args:
+        model_path: ONNX模型路径
+        intra_threads: 推理线程数
+
+    Returns:
+        (input_name, input_shape) 元组
+
+    Raises:
+        ValueError: 模型无输入或加载失败
+    """
+    sess = create_session(model_path, intra_threads)
+    try:
+        if len(sess.get_inputs()) == 0:
+            raise ValueError("Model has no inputs")
+        inp = sess.get_inputs()[0]
+        name = inp.name
+        shape = _safe_get_input_shape(inp)
+        return name, shape
+    finally:
+        del sess
+
+
+# 保留别名以向后兼容
+_detect_input_info = detect_input_info
+
+
+def quantize_fp16(model_path: str, output_path: str) -> QuantizationResult:
+    """FP16转换便捷函数"""
+    result = QuantizationResult(strategy_used="fp16")
+    tmpdir = tempfile.mkdtemp()
+    try:
+        prepared = _prepare_model(model_path, tmpdir)
+        _do_quantize_fp16(prepared, output_path)
+        result.success = True
+        result.output_path = output_path
+
+        # 自动检测输入信息（修复Bug #1）
+        input_name, input_shape = detect_input_info(output_path, intra_threads=4)
+
+        result.performance = benchmark_model(output_path, input_shape, input_name,
+                                              intra_threads=4, warmup=20, runs=100)
+        # 修复Bug #8：直接用os.path.getsize，无需创建Session跑推理
+        fp32_size = os.path.getsize(model_path) / 1024
+        result.size_ratio = result.performance.size_kb / max(fp32_size, 1)
+    except Exception as e:
+        result.error = str(e)
+    finally:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+    return result
+
+
+def quantize_dynamic_simple(model_path: str, output_path: str,
+                            weight_type: str = "QInt8") -> QuantizationResult:
+    """动态量化便捷函数"""
+    result = QuantizationResult(strategy_used="dynamic")
+    tmpdir = tempfile.mkdtemp()
+    try:
+        prepared = _prepare_model(model_path, tmpdir)
+        _do_quantize_dynamic(prepared, output_path, weight_type)
+        result.success = True
+        result.output_path = output_path
+
+        # 自动检测输入信息（修复Bug #1）
+        input_name, input_shape = detect_input_info(output_path, intra_threads=4)
+
+        result.performance = benchmark_model(output_path, input_shape, input_name,
+                                              intra_threads=4, warmup=50, runs=200)
+        # 计算size_ratio
+        fp32_size = os.path.getsize(model_path) / 1024
+        result.size_ratio = result.performance.size_kb / max(fp32_size, 1)
+    except Exception as e:
+        result.error = str(e)
+    finally:
+        shutil.rmtree(tmpdir, ignore_errors=True)
+    return result
 
 
 def _prepare_model(model_path: str, tmpdir: str) -> str:
@@ -204,45 +288,6 @@ def _do_quantize_fp16(prepared_path: str, output_path: str) -> None:
     model = onnx.load(prepared_path)
     model_fp16 = float16.convert_float_to_float16(model)
     onnx.save(model_fp16, output_path)
-
-
-def quantize_fp16(model_path: str, output_path: str) -> QuantizationResult:
-    """FP16转换便捷函数"""
-    result = QuantizationResult(strategy_used="fp16")
-    tmpdir = tempfile.mkdtemp()
-    try:
-        prepared = _prepare_model(model_path, tmpdir)
-        _do_quantize_fp16(prepared, output_path)
-        result.success = True
-        result.output_path = output_path
-        result.performance = benchmark_model(output_path,
-                                              intra_threads=4, warmup=20, runs=100)
-        result.size_ratio = (result.performance.size_kb /
-                             max(benchmark_model(model_path, warmup=5, runs=20).size_kb, 1))
-    except Exception as e:
-        result.error = str(e)
-    finally:
-        shutil.rmtree(tmpdir, ignore_errors=True)
-    return result
-
-
-def quantize_dynamic_simple(model_path: str, output_path: str,
-                            weight_type: str = "QInt8") -> QuantizationResult:
-    """动态量化便捷函数"""
-    result = QuantizationResult(strategy_used="dynamic")
-    tmpdir = tempfile.mkdtemp()
-    try:
-        prepared = _prepare_model(model_path, tmpdir)
-        _do_quantize_dynamic(prepared, output_path, weight_type)
-        result.success = True
-        result.output_path = output_path
-        result.performance = benchmark_model(output_path,
-                                              intra_threads=4, warmup=50, runs=200)
-    except Exception as e:
-        result.error = str(e)
-    finally:
-        shutil.rmtree(tmpdir, ignore_errors=True)
-    return result
 
 
 def quantize_static_qdq(model_path: str, output_path: str,
