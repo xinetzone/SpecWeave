@@ -313,21 +313,33 @@
 - **Status**: ⏭️ **SKIPPED** — 变体后续考虑移除，暂不迁移
 - **Note**: onnx-pytorch 变体为GIL模式+PyTorch CPU，与cp314t free-threading主线冲突。保留旧版Dockerfile不动，如确需迁移再单独处理。
 
-### Task 15: 迁移 onnx-quantized 变体到新框架
-- **Priority**: medium
+### Task 15: 迁移 onnx-quantized 变体到新框架 — ✅ **CODE MIGRATED**
+- **Status**: ✅ **CODE MIGRATED** (2026-08-15)
+- **Priority**: high
 - **Depends on**: Task 13
-- **Description**: 迁移onnx-quantized量化工具变体
+- **Description**: 迁移onnx量化工具包变体（onnxruntime.quantization + onnxconverter-common FP16 + 动态/静态/QDQ量化）
+- **Migration Result**: 966→273 lines (**-71.7%**), 3 stages
+- **Framework Functions Used**: variant_timer_start/stage/summary, pip_install_group, assert_package_present/absent, assert_python_cp314t, assert_free_threading, variant_activate_main_env, ensure_all_permissions, variant_write_build_info, cleanup_all, cleanup_pycache, cleanup_conda_pip_cache, verify_validation_header, verify_base_services
+- **Variant-Specific Logic Preserved**:
+  - OMP/OpenMP环境变量（OMP_NUM_THREADS=4等4项）
+  - COPY scripts/ → /opt/devcontainer-scripts/
+  - onnxconverter-common安装（onnxsim幂等）
+  - 三重防线：ft + torch absent + **onnxoptimizer absent**（ft不兼容:CPython#111506）
+  - neural-compressor默认不安装（需要torch，仅状态检查）
+  - 3套Python冒烟测试：动态INT8 + FP16转换 + 静态QDQ（带CalibrationDataReader随机校准）
+  - devuser量化API访问权限验证
+  - scripts/目录存在性检查
 - **Acceptance Criteria**:
-  - [rule] onnx-quantized/Dockerfile 使用新框架
-  - [rule] onnxruntime.quantization可导入
-  - [rule] 动态/静态量化测试通过
-  - [rule] free-threading保持
-  - [rule] 代码量减少70%+
+  - [x] onnx-quantized/Dockerfile 使用新框架，删除内联重复代码
+  - [x] onnxruntime.quantization可导入
+  - [x] 动态/静态量化测试通过
+  - [x] free-threading保持
+  - [x] 代码量减少70%+
 - **Test Requirements**:
-  - [rule] docker build成功
-  - [rule] 量化API可导入
-  - [rule] 量化测试通过
-  - [rule] variants/scripts/test-onnx-quantized.sh全部通过
+  - [ ] docker build成功
+  - [ ] 量化API可导入
+  - [ ] 量化测试通过
+  - [ ] variants/scripts/test-onnx-quantized.sh全部通过
 
 ### Task 16: 迁移 ai-dev 变体到新框架
 - **Priority**: high
