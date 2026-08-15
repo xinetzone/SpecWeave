@@ -6,7 +6,7 @@
 #   - Automatic WSL2 detection + Windows→WSL path mapping
 #   - Docker Engine + Buildx auto-install/start in WSL2
 #   - Optional native-WSL filesystem copy for 2-3x faster builds
-#   - Full CI-equivalent build chain (base → conda → conda-llvm → onnx-pytorch → onnx-quantized)
+#   - Full CI-equivalent build chain (base → conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → ai-dev)
 #   - Structured logging + diagnostics collection on failure
 #   - Lint checks (bash -n + Dockerfile structure validation)
 #
@@ -21,7 +21,7 @@
 #   --official            Use official mirrors (default for CI, default for this script: cn)
 #   --no-cache            Disable Docker build cache
 #   --tag TAG             Image tag suffix (default: latest)
-#   --variant VARIANT     Build specific variant (conda/conda-llvm/onnx-pytorch/onnx-quantized/all)
+#   --variant VARIANT     Build specific variant (conda-llvm/onnx-dev/onnx-pytorch/onnx-quantized/ai-dev/all)
 #                         default: all (full chain)
 #   --native-fs           Copy project to WSL2 native filesystem (~) for faster IO
 #   --skip-docker-setup   Skip Docker daemon check/setup (use if Docker already running)
@@ -82,7 +82,7 @@ ${BOLD}Options:${NC}
   --official            Use official mirrors
   --no-cache            Disable Docker build cache
   --tag TAG             Image tag suffix (default: latest)
-  --variant VARIANT     Variant to build: conda, conda-llvm, onnx-pytorch, onnx-quantized, all [default: all]
+  --variant VARIANT     Variant to build: conda-llvm, onnx-dev, onnx-pytorch, onnx-quantized, ai-dev, all [default: all]
   --native-fs           Copy project to WSL2 native filesystem for faster Docker builds
                         (recommended when project is on /mnt/<drive>/ cross-mount)
   --skip-docker-setup   Skip Docker daemon auto-check/setup
@@ -174,7 +174,7 @@ done
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║     DevContainer Local CI Build                            ║"
-echo "║     Mirroring: base → conda → conda-llvm → onnx-pytorch → onnx-quantized ║"
+echo "║     Mirroring: base → conda-llvm → onnx-dev/onnx-pytorch → onnx-quantized → ai-dev ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -528,34 +528,42 @@ declare -a STAGE_LOGS=()
 stage_idx=0
 
 # Always build base first (all variants depend on base, either directly or transitively)
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ] || [ "$VARIANT" = "conda" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ]; then
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "base" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("base")
     STAGE_CMDS+=("bash scripts/build.sh --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/01-base-build.log")
 fi
 
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "conda" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ]; then
-    STAGES+=("conda")
-    STAGE_CMDS+=("bash variants/build.sh --variant conda --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
-    STAGE_LOGS+=("${LOGS_DIR}/02-conda-build.log")
-fi
-
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ]; then
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "conda-llvm" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("conda-llvm")
     STAGE_CMDS+=("bash variants/build.sh --variant conda-llvm --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
-    STAGE_LOGS+=("${LOGS_DIR}/03-conda-llvm-build.log")
+    STAGE_LOGS+=("${LOGS_DIR}/02-conda-llvm-build.log")
 fi
 
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-pytorch" ] || [ "$VARIANT" = "onnx-quantized" ]; then
+# onnx-dev: 纯 ONNX 生态变体（onnx-quantized 与 ai-dev 的直接依赖）
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-dev" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
+    STAGES+=("onnx-dev")
+    STAGE_CMDS+=("bash variants/build.sh --variant onnx-dev --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
+    STAGE_LOGS+=("${LOGS_DIR}/03-onnx-dev-build.log")
+fi
+
+# onnx-pytorch: 与 onnx-dev 平行的独立分支（均基于 conda-llvm）
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-pytorch" ]; then
     STAGES+=("onnx-pytorch")
     STAGE_CMDS+=("bash variants/build.sh --variant onnx-pytorch --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/04-onnx-pytorch-build.log")
 fi
 
-if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-quantized" ]; then
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "ai-dev" ]; then
     STAGES+=("onnx-quantized")
     STAGE_CMDS+=("bash variants/build.sh --variant onnx-quantized --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
     STAGE_LOGS+=("${LOGS_DIR}/05-onnx-quantized-build.log")
+fi
+
+if [ "$VARIANT" = "all" ] || [ "$VARIANT" = "ai-dev" ]; then
+    STAGES+=("ai-dev")
+    STAGE_CMDS+=("bash variants/build.sh --variant ai-dev --tag ${TAG} ${MIRROR_FLAG} ${NO_CACHE}")
+    STAGE_LOGS+=("${LOGS_DIR}/06-ai-dev-build.log")
 fi
 
 TOTAL_STAGES=${#STAGES[@]}
@@ -620,11 +628,11 @@ echo ""
 log_step "Quick verification"
 final_image="devcontainer-base:${VARIANT}-${TAG}"
 if [ "$VARIANT" = "all" ]; then
-    final_image="devcontainer-base:onnx-quantized-${TAG}"
+    final_image="devcontainer-base:ai-dev-${TAG}"
 fi
 echo ""
 log_info "Verifying final image: $final_image"
-if [ "$VARIANT" = "onnx-quantized" ] || [ "$VARIANT" = "all" ]; then
+if [ "$VARIANT" = "ai-dev" ] || [ "$VARIANT" = "all" ]; then
     docker run --rm "$final_image" /opt/conda/bin/python -c "
 import torch, onnx, onnxruntime
 print(f'  PyTorch:      {torch.__version__}')
@@ -633,11 +641,16 @@ print(f'  ONNX Runtime: {onnxruntime.__version__}')
 print(f'  CUDA avail:   {torch.cuda.is_available()}')
 from onnxruntime.quantization import quantize_dynamic, QuantType
 print(f'  Quantization: available')
-try:
-    import neural_compressor
-    print(f'  Neural Compressor: {neural_compressor.__version__} (optional)')
-except ImportError:
-    print(f'  Neural Compressor: not installed (optional)')
+import jupyterlab
+print(f'  JupyterLab:   {jupyterlab.__version__}')
+" 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
+elif [ "$VARIANT" = "onnx-quantized" ]; then
+    docker run --rm "$final_image" /opt/conda/bin/python -c "
+import onnx, onnxruntime
+print(f'  ONNX:         {onnx.__version__}')
+print(f'  ONNX Runtime: {onnxruntime.__version__}')
+from onnxruntime.quantization import quantize_dynamic, QuantType
+print(f'  Quantization: available')
 " 2>&1 | grep -v "^\[" | sed 's/^/  /' || log_warn "Quick verification failed"
 else
     docker run --rm "$final_image" /opt/conda/bin/python -c "

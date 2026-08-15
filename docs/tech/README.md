@@ -20,6 +20,8 @@ date: "2026-07-19"
 | [自动化脚本四层日志增强模式](four-layer-logging-pattern.md) | 自动化脚本四层日志增强模式 |  |
 | [📦 技术文档](index.md) | 本目录集中承载 **SpecWeave 本项目** 的技术相关文档。全部项目技术资产（包含项目介绍、快速开始、核心功能、贡献指南与变更日志）均位于本目录下，与同级 [通用知识](../general/index.md)（方法论、哲学等）完全隔离。 |  |
 | [项目介绍](intro.md) | **SpecWeave 是一套给 AI 助手（智能体）使用的"员工手册"。** |  |
+| [onnx-quantized v2.0.0 发布说明](release-onnx-quantized-v2.md) | devcontainer-base:onnx-quantized 镜像 v2.0.0 发布清单：基础镜像迁移至 onnx-dev（free-threading 纯 ONNX 架构），24/24 测试通过。 |  |
+| [onnx-pytorch v1.1.0 发布说明](release-onnx-pytorch-v1-1.md) | devcontainer-base:onnx-pytorch 镜像 v1.1.0 发布清单：适配 conda-llvm jupyter 迁移至 main 环境，23/23 测试通过。 |  |
 | [快速开始](quickstart.md) | 使用 SpecWeave 不需要安装任何软件。你只需要把它放到项目文件夹里，AI 工具就会自动读取规则。 |  |
 
 <!-- README_INDEX_END -->

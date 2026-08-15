@@ -110,7 +110,7 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 - [ ] 镜像中 `locale -a` 显示 zh_CN.UTF-8
 - [ ] 镜像中 `date` 显示 Asia/Shanghai 时区
 - [ ] `id devuser` 显示 uid=1000，groups 包含 docker
-- [ ] Conda 环境在 `/opt/conda`，`/opt/conda/bin/python` 可用且为 Python 3.14.6 cp314t（free-threading）
+- [ ] Conda 环境在 `/opt/conda`，main 环境 `/opt/conda/envs/main/bin/python` 为 Python 3.14.6 cp314t（free-threading，GIL 禁用）；base 环境 `/opt/conda/bin/python` 为标准构建（GIL 启用）
 - [ ] Docker CLI 和 Podman CLI 均已安装
 - [ ] `dockerd --version` 与 Docker CLI 版本匹配
-- [ ] JupyterLab 通过 `/opt/conda/bin/jupyter lab` 启动
+- [ ] JupyterLab 通过 `/opt/conda/envs/main/bin/jupyter lab` 启动（supervisord 以 main 环境绝对路径启动）

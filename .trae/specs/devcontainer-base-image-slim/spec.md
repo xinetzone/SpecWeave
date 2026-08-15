@@ -1,6 +1,6 @@
 # devcontainer-base 镜像瘦身 - Product Requirements Document
 
-> **本文件已于 2026-08-14 更新同步**：反映 v2.2/v2.2.1 已完成成果与当前实际架构。原始 5 镜像分层目标已被单镜像（Miniforge3 + Python 3.14.6 free-threading）架构取代，见下方「架构演进记录」。
+> **本文件已于 2026-08-14 更新同步**：反映 v2.2/v2.2.1/v2.3 已完成成果与当前实际架构。原始 5 镜像分层目标已被单镜像（Miniforge3 + Python 3.14.6 free-threading）架构取代；v2.3 起 conda 变体下线、变体链简化为 base → conda-llvm → onnx-*，见下方「架构演进记录」。
 
 ## 架构演进记录（2026-08-14 更新）
 
@@ -8,6 +8,7 @@
 - **v2 架构变更**：主 Dockerfile 重构为**单镜像集成 Miniforge3 + Python 3.14.6 free-threading (cp314t) + libmamba 求解器**，合并了原「base」和「conda」两层；Jupyter 切换为 Lab 模式；移除 /opt/venv 虚拟环境
 - **v2.2（conda-libmamba-ft）**：BuildKit 缓存挂载 + verify-cext.sh/ft-benchmark.sh 参数化 + conda-lock 精确版本锁定 + cmake-cext C 扩展标准模板 + micromamba 对比实验（结论：无显著优势，保留 Miniforge3）
 - **v2.2.1（v2.2.1-opt）**：Stage 4 conda 求解优化（8线程并行 + 单次 mamba create + mamba CLI 原生调用），冷构建 642s 中 Stage 4 从 419s 降至 37s（缓存热构建）；萃取 conda-perf-setup.sh + condarc 模板为跨项目共享资产
+- **v2.3（2026-08-14）**：conda 变体目录下线（镜像源配置内聚基础镜像，三源参数化 CONDA_MIRROR/PIP_MIRROR/APT_MIRROR：official/tuna/aliyun/bfsu），变体依赖链简化为 base → conda-llvm → onnx-*；conda-llvm 变体修复为 main 环境（Python 3.14t）安装 LLVM 工具链并完成运行时验证；新增 nogil 可观测性工具链（check_gil_state.py GIL 诊断 / ft_benchmark.py 基准 + PoolProbe 池开销探针 / nogil_kit.py 工具箱 + Jupyter 模板）
 - **当前体积**：主镜像 2.46GB（v2.2.1，含 Miniforge3+Python3.14+Jupyter+全部服务）
 - **应用路径**：`apps/docker-images/devcontainer-base/`（2026-08-14 apps 目录按类型分组重构后）
 
@@ -23,7 +24,9 @@
 - ✅ 可复现构建：conda-lock/environment.yml 精确版本锁定（python=3.14.6 cp314t 等）
 - ✅ 保持现有功能100%兼容：SSH/Docker/Podman/Jupyter服务、所有环境变量、entrypoint行为、变体依赖链不变
 - ✅ C扩展生态：cmake-cext 标准模板 + PY314T-C-EXTENSION-GUIDE 技术分享 + verify-cext.sh 11项ABI验证
-- 🎯 变体镜像（conda-llvm/onnx-pytorch/onnx-quantized）基于新基础的运行时构建验证（Task 8，进行中）
+- ✅ conda-llvm 变体运行时验证（v2.3：main 环境 Python 3.14t 激活 + LLVM 工具链 + verify-conda-llvm.sh 全项通过，commit 8722378）
+- ✅ nogil 性能验证（v2.3：容器内 8 线程 4.54x~4.63x 加速，阈值 3.0x PASS）
+- 🎯 下游变体（onnx-pytorch/onnx-quantized）运行时验证（Task 8，待 Python 3.14 wheel 生态明确）
 
 ## Non-Goals
 - ✅ 不拆分core/slim分层变体（用户选择保留Docker+Podman全功能）
@@ -84,7 +87,7 @@
   - supervisord服务配置结构不变
   - 服务端口（22/8888）、VOLUME（/var/lib/docker、/workspace）、WORKDIR不变
   - devuser用户（UID 1000）、docker组权限不变
-  - 变体依赖链不变：conda FROM base，conda-llvm FROM conda，onnx-* FROM conda-llvm（采用 ${BASE_TAG} 参数化）
+  - 变体依赖链：v2.3 起 conda 变体下线（镜像源配置内聚基础镜像），链简化为 conda-llvm FROM base，onnx-* FROM conda-llvm（采用 ${BASE_TAG} 参数化）；conda-llvm 改用 main 环境（Python 3.14t）安装 LLVM 工具链
 - **FR-5**: 构建脚本适配 ✅
   - build.sh脚本更新，支持 --verify-mode（standard/fast/off）、--deep-verify、--tag、--python-build、多镜像源、--network-host
   - 构建后输出新旧镜像体积对比（构建日志持久化 logs/builds/）
@@ -99,11 +102,13 @@
 - **NFR-2**: 功能完整性
   - ✅ 主镜像构建验证通过（v2.2 11/11 深度验证 + v2.2.1 构建验证通过）
   - ✅ SSH登录、Docker DinD、Jupyter访问、Podman rootless功能正常
-  - ✅ conda基础命令可用，clang --version、cmake --version、ninja --version正常输出（变体验证中）
+  - ✅ conda基础命令可用；conda-llvm 变体 main 环境（Python 3.14t）内 clang/lld/cmake/ninja 版本输出正常（v2.3 verify-conda-llvm.sh 通过）
   - ✅ verify-cext.sh 11项C扩展ABI验证（含cp314t检测）
+  - ✅ nogil 基准验证（v2.3：8 线程 4.54x~4.63x PASS，GIL 未被拉起；池开销探针 thread lag ~1.3ms / fork lag ~16.5ms）
   - ⏳ 下游变体（onnx-pytorch、onnx-quantized）中PyTorch、ONNX Runtime导入验证（Task 8 待执行）
 - **NFR-3**: 构建稳定性
   - ✅ 国内源（APT_MIRROR=aliyun, PIP_MIRROR=aliyun + conda清华源）构建成功
+  - ✅ v2.3 基础镜像三源参数化验证通过（CONDA_MIRROR=official/aliyun/bfsu 三配置构建成功，commit ce70c676）
   - ✅ BuildKit 缓存挂载后热构建速度提升 70-85%；Stage 4 从 419s→37s
   - ⚠️ 冷构建 10.7 分钟（642s）超出原始 120% 预算，主要瓶颈已由 v2.2.1 针对性优化 Stage 4
 - **NFR-4**: 安全性
@@ -143,10 +148,10 @@
 - **Type**: `rule`
 - **Given**: 在 apps/docker-images/devcontainer-base 目录，Docker已启动
 - **When**: 执行 `bash scripts/build.sh` 构建主镜像，`bash variants/build.sh` 构建变体
-- **Then**: 主镜像 + 5个变体（conda/conda-llvm/onnx-pytorch/onnx-quantized/ai-dev）全部构建成功，无错误
+- **Then**: 主镜像 + 4个变体（conda-llvm/onnx-pytorch/onnx-quantized/ai-dev；v2.3 起 conda 变体下线）全部构建成功，无错误
 - **Pass Condition**: 构建退出码为0，docker images中所有标签存在
 - **Evidence**: 构建日志输出、docker images列表
-- **Status**: ⏳ 主镜像已验证（v2.2.1 构建验证通过）；变体运行时验证待执行（Task 8）
+- **Status**: 🟡 主镜像已验证（v2.2.1）；conda-llvm 已构建并运行时验证（v2.3，--no-cache 重建，commit 8722378）；onnx-*/ai-dev 运行时验证待执行（Task 8）
 
 ### AC-2: 体积瘦身目标达成 ✅（按单镜像架构重新定义）
 - **Type**: `rule`
@@ -181,14 +186,14 @@
 - **Pass Condition**: 所有服务RUNNING且功能验证通过
 - **Evidence**: supervisorctl status输出、docker exec命令结果、curl HTTP状态码
 
-### AC-5: LLVM精简后编译工具可用（conda-llvm变体） ⏳
+### AC-5: LLVM精简后编译工具可用（conda-llvm变体） ✅
 - **Type**: `rule`
 - **Given**: conda-llvm镜像启动容器
 - **When**: 容器内执行 `clang --version`、`clang++ --version`、`ld.lld --version`、`cmake --version`、`ninja --version`
 - **Then**: 所有命令正常输出版本信息，无"command not found"或库缺失错误
 - **Pass Condition**: 五个命令均成功输出版本
 - **Evidence**: 命令执行输出
-- **Status**: ⏳ 待 Task 8 变体运行时验证（Dockerfile 已适配 /opt/conda 路径）
+- **Status**: ✅ v2.3 已验证（commit 8722378）：conda-llvm 容器 main 环境（Python 3.14t）内 LLVM 工具链版本输出正常，devuser 默认进入 main，INSTALL_ENV 元数据核验通过（verify-conda-llvm.sh）
 
 ### AC-6: Conda环境完整性 ✅
 - **Type**: `rule`
@@ -249,5 +254,6 @@
 ## Open Questions
 - [ ] chaos-ai-portable的portable-slim标签是否也需要同步重新构建以获得瘦身收益？（本次不主动修改，留待用户后续构建时自动获得）
 - [x] lldb是否有上层应用依赖？经检查xmnn-whl-builder只用clang/cmake/ninja，不需要调试，已安全移除
-- [ ] 变体镜像（conda-llvm/onnx-pytorch/onnx-quantized）基于 v2.2 新基础的运行时验证何时执行？（Task 8）
+- [x] conda 变体是否仍有存在必要？已决策下线（v2.3，commits 51f78768/df9078f3）：镜像源配置内聚基础镜像三源参数化，变体链简化为 base → conda-llvm → onnx-*
+- [x] conda-llvm 变体运行时验证（v2.3 已执行：main 环境 Python 3.14t 激活 + LLVM 工具链 + 元数据核验通过）；onnx-pytorch/onnx-quantized 待 Python 3.14 wheel 生态明确后执行（Task 8）
 - [ ] Python 3.14 wheel 生态下 PyTorch/ONNX 是否提供兼容 wheel？（v2.2 变体构建为 experimental，Task 8 需确认）

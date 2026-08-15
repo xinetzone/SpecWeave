@@ -10,6 +10,7 @@ LOG_JSON_OUTPUT="/tmp/test-onnx-quantized-events.jsonl"
 
 TAG="latest"
 IMAGE=""
+MAIN_PY="/opt/conda/envs/main/bin/python"
 
 TEST_PASS=0
 TEST_FAIL=0
@@ -24,7 +25,7 @@ usage() {
     cat << EOF
 Usage: $0 [OPTIONS]
 
-Unit test script for onnx-quantized variant.
+Unit test script for onnx-quantized variant (base: onnx-dev, free-threading main env, no PyTorch).
 
 Options:
   --tag TAG        Image tag suffix (default: latest)
@@ -69,45 +70,55 @@ docker_run_mount_bash() {
     docker run --rm -v "${host_dir}:${container_dir}:ro" "$IMAGE" bash -c "$cmd" 2>&1
 }
 
-# ─────────────────────────── L1 基础工具链版本（继承onnx-pytorch） ───────────────────────────
-test_torch_version() {
+# ─────────────────────────── L1 基础工具链版本（继承onnx-dev,free-threading） ───────────────────────────
+test_free_threading() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import torch;print('VER_TORCH='+torch.__version__)" 2>&1)
-    local ver
-    ver=$(echo "$result" | grep -oE 'VER_TORCH=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_TORCH=//')
-    if [ -n "$ver" ]; then
-        pass "T1: torch version = $ver"
+    result=$(docker_run "$MAIN_PY" -c "import sys;print('FT_OK' if sys._is_gil_enabled() is False else 'FT_FAIL')" 2>&1)
+    if echo "$result" | grep -q "FT_OK"; then
+        pass "T1: free-threading active (cp314t, GIL disabled)"
         return 0
     else
-        fail "T1: torch not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
+        fail "T1: free-threading not active, output: $(echo "$result" | grep -v '^\[' | tail -3)"
+        return 1
+    fi
+}
+
+test_torch_absent() {
+    local result
+    result=$(docker_run "$MAIN_PY" -c "import importlib.util as u,sys;f=u.find_spec('torch');o=u.find_spec('onnxoptimizer');print('ABSENT_OK' if (f is None and o is None) else 'UNEXPECTED_PRESENT')" 2>&1)
+    if echo "$result" | grep -q "ABSENT_OK"; then
+        pass "T2: torch + onnxoptimizer absent (by design, inherited from onnx-dev)"
+        return 0
+    else
+        fail "T2: torch/onnxoptimizer unexpectedly present, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnx_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnx;print('VER_ONNX='+onnx.__version__)" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "import onnx;print('VER_ONNX='+onnx.__version__)" 2>&1)
     local ver
     ver=$(echo "$result" | grep -oE 'VER_ONNX=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ONNX=//')
     if [ -n "$ver" ]; then
-        pass "T2: onnx version = $ver"
+        pass "T3: onnx version = $ver"
         return 0
     else
-        fail "T2: onnx not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
+        fail "T3: onnx not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
 
 test_onnxruntime_version() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime;print('VER_ORT='+onnxruntime.__version__)" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "import onnxruntime;print('VER_ORT='+onnxruntime.__version__)" 2>&1)
     local ver
     ver=$(echo "$result" | grep -oE 'VER_ORT=[0-9]+\.[0-9]+\.[0-9a-z+.]+' | head -1 | sed 's/VER_ORT=//')
     if [ -n "$ver" ]; then
-        pass "T3: onnxruntime version = $ver"
+        pass "T4: onnxruntime version = $ver"
         return 0
     else
-        fail "T3: onnxruntime not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
+        fail "T4: onnxruntime not importable, output: $(echo "$result" | grep -v '^\[' | tail -3)"
         return 1
     fi
 }
@@ -115,78 +126,88 @@ test_onnxruntime_version() {
 # ─────────────────────────── L2 量化工具链导入 ───────────────────────────
 test_onnxconverter_common() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "from onnxconverter_common import float16;print('fp16-ok')" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "from onnxconverter_common import float16;print('fp16-ok')" 2>&1)
     if echo "$result" | grep -q "fp16-ok"; then
-        pass "T4: onnxconverter_common.float16 importable"
+        pass "T5: onnxconverter_common.float16 importable"
         return 0
     else
-        fail "T4: onnxconverter_common.float16 not importable, output: $(echo "$result" | head -3)"
+        fail "T5: onnxconverter_common.float16 not importable, output: $(echo "$result" | head -3)"
         return 1
     fi
 }
 
 test_onnxruntime_tools() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "from onnxruntime.transformers import optimizer;print('ort-tools-ok')" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "from onnxruntime.transformers import optimizer;print('ort-tools-ok')" 2>&1)
     if echo "$result" | grep -q "ort-tools-ok"; then
-        pass "T5: onnxruntime.transformers.optimizer importable"
+        pass "T6: onnxruntime.transformers.optimizer importable"
         return 0
     else
-        fail "T5: onnxruntime.transformers.optimizer not importable, output: $(echo "$result" | head -3)"
+        fail "T6: onnxruntime.transformers.optimizer not importable, output: $(echo "$result" | head -3)"
         return 1
     fi
 }
 
 test_neural_compressor() {
     local result
-    result=$(docker_run_bash '/opt/conda/bin/python -c "
+    result=$(docker_run_bash "$MAIN_PY -c \"
 try:
     import neural_compressor
-    print(f\"nc-ok version={neural_compressor.__version__}\")
+    print(f\\\"nc-ok version={neural_compressor.__version__}\\\")
 except ImportError:
-    print(\"nc-skip\")
-"' 2>&1)
+    print(\\\"nc-skip\\\")
+\"" 2>&1)
     if echo "$result" | grep -q "nc-ok"; then
         local ncver
         ncver=$(echo "$result" | grep -oE "version=[0-9.]+" | head -1)
-        pass "T6: neural_compressor importable $ncver (optional)"
+        pass "T7: neural_compressor importable $ncver (optional)"
         return 0
     elif echo "$result" | grep -q "nc-skip"; then
         # Optional package - not installed is OK
-        pass "T6: neural_compressor not installed (optional, expected - using onnxruntime.quantization natively)"
+        pass "T7: neural_compressor not installed (optional, expected - using onnxruntime.quantization natively)"
         return 0
     else
-        fail "T6: neural_compressor check unexpected output: $(echo "$result" | head -3)"
+        fail "T7: neural_compressor check unexpected output: $(echo "$result" | head -3)"
         return 1
     fi
 }
 
 test_onnxsim() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "from onnxsim import simplify;print('onnxsim-ok')" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "from onnxsim import simplify;print('onnxsim-ok')" 2>&1)
     if echo "$result" | grep -q "onnxsim-ok"; then
-        pass "T7: onnxsim.simplify importable"
+        pass "T8: onnxsim.simplify importable"
         return 0
     else
-        fail "T7: onnxsim not importable, output: $(echo "$result" | head -3)"
+        fail "T8: onnxsim not importable, output: $(echo "$result" | head -3)"
         return 1
     fi
 }
 
-# ─────────────────────────── L3 量化功能冒烟测试 ───────────────────────────
+# ─────────────────────────── L3 量化功能冒烟测试（纯ONNX,无torch） ───────────────────────────
 test_fp16_conversion() {
     local result
     result=$(docker_run_bash 'cat > /tmp/fp16_test.py << EOF
-import torch, onnx, numpy as np
+import onnx, numpy as np
+from onnx import TensorProto, helper
 from onnxconverter_common import float16
 
-class SmallNet(torch.nn.Module):
-    def forward(self, x):
-        return x * 2 + 1
-
-# Export FP32 model
-torch.onnx.export(SmallNet(), torch.randn(1,3), "/tmp/fp32.onnx", opset_version=13,
-                  input_names=["input"], output_names=["output"])
+# Build FP32 model: output = input * 2 + 1 (pure ONNX helper, no torch)
+two = np.array([2.0], dtype=np.float32)
+one = np.array([1.0], dtype=np.float32)
+nodes = [
+    helper.make_node("Mul", ["input", "two"], ["mul_out"]),
+    helper.make_node("Add", ["mul_out", "one"], ["output"]),
+]
+graph = helper.make_graph(
+    nodes, "scale_shift",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, 3])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, 3])],
+    [helper.make_tensor("two", TensorProto.FLOAT, two.shape, two.tobytes(), raw=True),
+     helper.make_tensor("one", TensorProto.FLOAT, one.shape, one.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
+onnx.save(model, "/tmp/fp32.onnx")
 
 # Convert to FP16
 fp32_model = onnx.load("/tmp/fp32.onnx")
@@ -203,14 +224,14 @@ max_diff = np.max(np.abs(out.astype(np.float32) - expected))
 assert max_diff < 0.1, f"FP16 precision loss too large: {max_diff}"
 print(f"fp16-convert-ok max_diff={max_diff:.6f}")
 EOF
-/opt/conda/bin/python /tmp/fp16_test.py && rm -f /tmp/fp16_test.py /tmp/fp32.onnx /tmp/fp16.onnx' 2>&1)
+'"$MAIN_PY"' /tmp/fp16_test.py && rm -f /tmp/fp16_test.py /tmp/fp32.onnx /tmp/fp16.onnx' 2>&1)
     if echo "$result" | grep -q "fp16-convert-ok"; then
         local diff
         diff=$(echo "$result" | grep -oE "max_diff=[0-9.e-]+" | head -1)
-        pass "T8: FP16 conversion + inference smoke $diff"
+        pass "T9: FP16 conversion + inference smoke $diff"
         return 0
     else
-        fail "T8: FP16 conversion failed, output: $(echo "$result" | head -5)"
+        fail "T9: FP16 conversion failed, output: $(echo "$result" | head -5)"
         return 1
     fi
 }
@@ -218,18 +239,25 @@ EOF
 test_dynamic_int8_quantization() {
     local result
     result=$(docker_run_bash 'cat > /tmp/dynq_test.py << EOF
-import torch, onnx, numpy as np
+import onnx, numpy as np
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_dynamic, QuantType
 
-class MLP(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc = torch.nn.Linear(64, 10)
-    def forward(self, x):
-        return self.fc(x)
-
-torch.onnx.export(MLP(), torch.randn(1,64), "/tmp/mlp.onnx", opset_version=13,
-                  input_names=["input"], output_names=["output"])
+# Build Gemm model (pure ONNX, equivalent of nn.Linear(64, 10))
+rng = np.random.default_rng(42)
+IN_DIM, OUT_DIM = 64, 10
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) / np.sqrt(IN_DIM)).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [helper.make_node("Gemm", ["input", "w", "b"], ["output"])]
+graph = helper.make_graph(
+    nodes, "linear",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
+onnx.save(model, "/tmp/mlp.onnx")
 
 quantize_dynamic("/tmp/mlp.onnx", "/tmp/mlp_int8.onnx", weight_type=QuantType.QInt8)
 
@@ -240,12 +268,12 @@ out = sess.run(None, {"input": inp})[0]
 assert out.shape == (1,10), f"Unexpected shape: {out.shape}"
 print(f"dynq-ok shape={out.shape}")
 EOF
-/opt/conda/bin/python /tmp/dynq_test.py && rm -f /tmp/dynq_test.py /tmp/mlp.onnx /tmp/mlp_int8.onnx' 2>&1)
+'"$MAIN_PY"' /tmp/dynq_test.py && rm -f /tmp/dynq_test.py /tmp/mlp.onnx /tmp/mlp_int8.onnx' 2>&1)
     if echo "$result" | grep -q "dynq-ok"; then
-        pass "T9: INT8 Dynamic quantization + inference smoke"
+        pass "T10: INT8 Dynamic quantization + inference smoke"
         return 0
     else
-        fail "T9: INT8 Dynamic quantization failed, output: $(echo "$result" | head -5)"
+        fail "T10: INT8 Dynamic quantization failed, output: $(echo "$result" | head -5)"
         return 1
     fi
 }
@@ -253,18 +281,25 @@ EOF
 test_static_qdq_quantization() {
     local result
     result=$(docker_run_bash 'cat > /tmp/staticq_test.py << EOF
-import torch, onnx, numpy as np
+import onnx, numpy as np
+from onnx import TensorProto, helper
 from onnxruntime.quantization import quantize_static, QuantType, CalibrationDataReader
 
-class MLP(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc = torch.nn.Linear(32, 10)
-    def forward(self, x):
-        return self.fc(x)
-
-torch.onnx.export(MLP(), torch.randn(1,32), "/tmp/mlp32.onnx", opset_version=13,
-                  input_names=["input"], output_names=["output"])
+# Build Gemm model (pure ONNX, equivalent of nn.Linear(32, 10))
+rng = np.random.default_rng(42)
+IN_DIM, OUT_DIM = 32, 10
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) / np.sqrt(IN_DIM)).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [helper.make_node("Gemm", ["input", "w", "b"], ["output"])]
+graph = helper.make_graph(
+    nodes, "linear",
+    [helper.make_tensor_value_info("input", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info("output", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor("w", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor("b", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid("", 18)])
+model.ir_version = min(model.ir_version, 9)
+onnx.save(model, "/tmp/mlp32.onnx")
 
 class DummyCalibrationReader(CalibrationDataReader):
     def __init__(self):
@@ -289,37 +324,37 @@ out = sess.run(None, {"input": inp})[0]
 assert out.shape == (1,10), f"Unexpected shape: {out.shape}"
 print(f"staticqdq-ok shape={out.shape}")
 EOF
-/opt/conda/bin/python /tmp/staticq_test.py && rm -f /tmp/staticq_test.py /tmp/mlp32.onnx /tmp/mlp32_qdq.onnx' 2>&1)
+'"$MAIN_PY"' /tmp/staticq_test.py && rm -f /tmp/staticq_test.py /tmp/mlp32.onnx /tmp/mlp32_qdq.onnx' 2>&1)
     if echo "$result" | grep -q "staticqdq-ok"; then
-        pass "T10: INT8 Static-QDQ quantization + CalibrationDataReader smoke"
+        pass "T11: INT8 Static-QDQ quantization + CalibrationDataReader smoke"
         return 0
     else
-        fail "T10: INT8 Static-QDQ quantization failed, output: $(echo "$result" | head -5)"
+        fail "T11: INT8 Static-QDQ quantization failed, output: $(echo "$result" | head -5)"
         return 1
     fi
 }
 
 test_onnxruntime_providers() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import onnxruntime as ort;print('providers',ort.get_available_providers())" 2>&1)
+    result=$(docker_run "$MAIN_PY" -c "import onnxruntime as ort;print('providers',ort.get_available_providers())" 2>&1)
     if echo "$result" | grep -q "CPUExecutionProvider"; then
-        pass "T11: onnxruntime providers include CPUExecutionProvider"
+        pass "T12: onnxruntime providers include CPUExecutionProvider"
         return 0
     else
-        fail "T11: CPUExecutionProvider not found, output: $(echo "$result" | head -3)"
+        fail "T12: CPUExecutionProvider not found, output: $(echo "$result" | head -3)"
         return 1
     fi
 }
 
-# ─────────────────────────── L4 基础服务继承（onnx-pytorch继承验证） ───────────────────────────
+# ─────────────────────────── L4 基础服务继承（onnx-dev继承验证） ───────────────────────────
 test_sshd_config() {
     local result
     result=$(docker_run_bash 'test -f /etc/ssh/sshd_config && echo "exists"' 2>&1)
     if echo "$result" | grep -q "exists"; then
-        pass "T12: SSH config file exists"
+        pass "T13: SSH config file exists"
         return 0
     else
-        fail "T12: SSH config file not found"
+        fail "T13: SSH config file not found"
         return 1
     fi
 }
@@ -328,22 +363,22 @@ test_supervisord_config() {
     local result
     result=$(docker_run_bash 'test -f /etc/supervisord.conf && echo "exists"' 2>&1)
     if echo "$result" | grep -q "exists"; then
-        pass "T13: supervisord config exists"
+        pass "T14: supervisord config exists"
         return 0
     else
-        fail "T13: supervisord config not found"
+        fail "T14: supervisord config not found"
         return 1
     fi
 }
 
 test_jupyter_executable() {
     local result
-    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
+    result=$(docker_run_bash "test -x $MAIN_PY && test -x /opt/conda/envs/main/bin/jupyter && echo 'executable'" 2>&1)
     if echo "$result" | grep -q "executable"; then
-        pass "T14: Jupyter executable exists in conda"
+        pass "T15: Jupyter executable exists in conda main env"
         return 0
     else
-        fail "T14: Jupyter executable not found in conda"
+        fail "T15: Jupyter executable not found in conda main env"
         return 1
     fi
 }
@@ -352,10 +387,10 @@ test_devuser_exists() {
     local result
     result=$(docker_run id devuser 2>&1)
     if echo "$result" | grep -q "uid="; then
-        pass "T15: devuser exists"
+        pass "T16: devuser exists"
         return 0
     else
-        fail "T15: devuser does not exist, got: $result"
+        fail "T16: devuser does not exist, got: $result"
         return 1
     fi
 }
@@ -363,14 +398,12 @@ test_devuser_exists() {
 # ─────────────────────────── L5 PATH 优先级与环境隔离 ───────────────────────────
 test_python_path_priority() {
     local result
-    result=$(docker_run /opt/conda/bin/python -c "import sys;print('PYPATH_OK:'+sys.executable)" 2>&1)
-    local path
-    path=$(echo "$result" | grep -oE 'PYPATH_OK:/[^ ]+' | head -1 | sed 's/PYPATH_OK://')
-    if echo "$path" | grep -q "/opt/conda/bin/python"; then
-        pass "T16: python points to conda: $path"
+    result=$(docker_run_bash 'which python' 2>&1)
+    if echo "$result" | grep -q "/opt/conda/envs/main/bin/python"; then
+        pass "T17: PATH priority conda-main-first: $result"
         return 0
     else
-        fail "T16: python does not point to conda, got: $path"
+        fail "T17: python does not resolve to main env, got: $result"
         return 1
     fi
 }
@@ -379,10 +412,10 @@ test_venv_removed() {
     local result
     result=$(docker_run_bash 'test ! -d /opt/venv && echo "removed"' 2>&1)
     if echo "$result" | grep -q "removed"; then
-        pass "T17: /opt/venv removed"
+        pass "T18: /opt/venv removed"
         return 0
     else
-        fail "T17: /opt/venv still exists"
+        fail "T18: /opt/venv still exists"
         return 1
     fi
 }
@@ -391,11 +424,11 @@ test_venv_removed() {
 test_build_info_exists() {
     local result
     result=$(docker_run_bash 'test -f /etc/devcontainer-variant-onnx-quantized-build-info && cat /etc/devcontainer-variant-onnx-quantized-build-info' 2>&1)
-    if echo "$result" | grep -q "VARIANT=onnx-quantized" && echo "$result" | grep -q "ONNXRUNTIME_VERSION" && echo "$result" | grep -q "ONNXCONVERTER_COMMON_VERSION"; then
-        pass "T18: build-info exists with quantization package versions"
+    if echo "$result" | grep -q "VARIANT=onnx-quantized" && echo "$result" | grep -q "BASE_IMAGE=devcontainer-base:onnx-dev" && echo "$result" | grep -q "ONNXRUNTIME_VERSION" && echo "$result" | grep -q "ONNXCONVERTER_COMMON_VERSION"; then
+        pass "T19: build-info exists with onnx-dev base + quantization package versions"
         return 0
     else
-        fail "T18: build-info missing required fields, output: $(echo "$result" | head -5)"
+        fail "T19: build-info missing required fields (VARIANT/BASE_IMAGE=onnx-dev/versions), output: $(echo "$result" | head -5)"
         return 1
     fi
 }
@@ -404,10 +437,10 @@ test_condarc_exists() {
     local result
     result=$(docker_run_bash 'test -f /opt/conda/.condarc && echo "exists"' 2>&1)
     if echo "$result" | grep -q "exists"; then
-        pass "T19: .condarc configuration exists"
+        pass "T20: .condarc configuration exists"
         return 0
     else
-        fail "T19: .condarc not found"
+        fail "T20: .condarc not found"
         return 1
     fi
 }
@@ -416,10 +449,10 @@ test_omp_env() {
     local result
     result=$(docker_run_bash 'echo "OMP_NUM_THREADS=$OMP_NUM_THREADS KMP_DUPLICATE_LIB_OK=$KMP_DUPLICATE_LIB_OK"' 2>&1)
     if echo "$result" | grep -q "OMP_NUM_THREADS=4" && echo "$result" | grep -q "KMP_DUPLICATE_LIB_OK=TRUE"; then
-        pass "T20: OpenMP env defaults set correctly"
+        pass "T21: OpenMP env defaults set correctly"
         return 0
     else
-        pass "T20: OpenMP env defaults (info only): $result"
+        pass "T21: OpenMP env defaults (info only): $result"
         return 0
     fi
 }
@@ -440,60 +473,68 @@ find_scripts_dir() {
 
 test_quantize_kit_import() {
     if [ -z "$SCRIPTS_DIR" ]; then
-        skip "T21: onnx_quantize_kit not found (scripts dir not available), skipping"
+        skip "T22: onnx_quantize_kit not found (scripts dir not available), skipping"
         return 0
     fi
     local result
     result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
-        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python -c "from onnx_quantize_kit import auto_quantize, QuantizationConfig; print(\"kit-import-ok\")"' 2>&1)
+        "PYTHONPATH=/opt/devcontainer/scripts:\$PYTHONPATH $MAIN_PY -c 'from onnx_quantize_kit import auto_quantize, QuantizationConfig; print(\"kit-import-ok\")'" 2>&1)
     if echo "$result" | grep -q "kit-import-ok"; then
-        pass "T21: onnx_quantize_kit importable from mounted scripts"
+        pass "T22: onnx_quantize_kit importable from mounted scripts (main env)"
         return 0
     else
-        fail "T21: onnx_quantize_kit import failed, output: $(echo "$result" | tail -3)"
+        fail "T22: onnx_quantize_kit import failed, output: $(echo "$result" | tail -3)"
         return 1
     fi
 }
 
 test_ci_quantization_gate() {
     if [ -z "$SCRIPTS_DIR" ]; then
-        skip "T22: ci_quantization_gate test skipped (scripts dir not available)"
+        skip "T23: ci_quantization_gate test skipped (scripts dir not available)"
         return 0
     fi
     local result
     result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
-        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python /opt/devcontainer/scripts/ci_quantization_gate.py --help' 2>&1)
-    if echo "$result" | grep -q "usage:" && echo "$result" | grep -q "CI Quantization Gate"; then
-        pass "T22: ci_quantization_gate.py --help works"
+        "PYTHONPATH=/opt/devcontainer/scripts:\$PYTHONPATH $MAIN_PY /opt/devcontainer/scripts/ci_quantization_gate.py --help" 2>&1)
+    if echo "$result" | grep -q "usage:" && echo "$result" | grep -q "ci_quantization_gate.py"; then
+        pass "T23: ci_quantization_gate.py --help works (main env)"
         return 0
     else
-        fail "T22: ci_quantization_gate.py --help failed, output: $(echo "$result" | tail -5)"
+        fail "T23: ci_quantization_gate.py --help failed, output: $(echo "$result" | tail -5)"
         return 1
     fi
 }
 
 test_quantize_kit_mock_model() {
     if [ -z "$SCRIPTS_DIR" ]; then
-        skip "T23: onnx_quantize_kit mock model test skipped (scripts dir not available)"
+        skip "T24: onnx_quantize_kit mock model test skipped (scripts dir not available)"
         return 0
     fi
     local result
     result=$(docker_run_mount_bash "$SCRIPTS_DIR" "/opt/devcontainer/scripts" \
-        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH /opt/conda/bin/python -c "
-import torch, onnx, tempfile, os, numpy as np
+        'PYTHONPATH=/opt/devcontainer/scripts:$PYTHONPATH '"$MAIN_PY"' -c "
+import onnx, tempfile, os, numpy as np
+from onnx import TensorProto, helper
 from onnx_quantize_kit import auto_quantize, QuantizationConfig
 
-class SimpleModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.fc = torch.nn.Linear(16, 8)
-    def forward(self, x):
-        return self.fc(x)
+# Build Gemm model (pure ONNX, equivalent of nn.Linear(16, 8), no torch)
+rng = np.random.default_rng(42)
+IN_DIM, OUT_DIM = 16, 8
+w = (rng.standard_normal((IN_DIM, OUT_DIM)) / np.sqrt(IN_DIM)).astype(np.float32)
+b = np.zeros(OUT_DIM, dtype=np.float32)
+nodes = [helper.make_node(\"Gemm\", [\"input\", \"w\", \"b\"], [\"output\"])]
+graph = helper.make_graph(
+    nodes, \"linear\",
+    [helper.make_tensor_value_info(\"input\", TensorProto.FLOAT, [1, IN_DIM])],
+    [helper.make_tensor_value_info(\"output\", TensorProto.FLOAT, [1, OUT_DIM])],
+    [helper.make_tensor(\"w\", TensorProto.FLOAT, w.shape, w.tobytes(), raw=True),
+     helper.make_tensor(\"b\", TensorProto.FLOAT, b.shape, b.tobytes(), raw=True)])
+model = helper.make_model(graph, opset_imports=[helper.make_opsetid(\"\", 18)])
+model.ir_version = min(model.ir_version, 9)
 
 with tempfile.TemporaryDirectory() as td:
     onnx_path = os.path.join(td, \"model.onnx\")
-    torch.onnx.export(SimpleModel(), torch.randn(1,16), onnx_path,
-                      input_names=[\"input\"], output_names=[\"output\"], opset_version=13)
+    onnx.save(model, onnx_path)
     cfg = QuantizationConfig(optimize_model=True, verify_accuracy=True, accuracy_threshold=0.1)
     result = auto_quantize(onnx_path, os.path.join(td, \"out.onnx\"), config=cfg)
     assert result.success, f\"auto_quantize failed: {result.error}\"
@@ -503,10 +544,10 @@ with tempfile.TemporaryDirectory() as td:
     if echo "$result" | grep -q "kit-mock-ok"; then
         local diff
         diff=$(echo "$result" | grep -oE "max_diff=[0-9.e-]+" | head -1)
-        pass "T23: onnx_quantize_kit auto_quantize mock model $diff"
+        pass "T24: onnx_quantize_kit auto_quantize mock model (pure ONNX) $diff"
         return 0
     else
-        fail "T23: onnx_quantize_kit mock model failed, output: $(echo "$result" | tail -5)"
+        fail "T24: onnx_quantize_kit mock model failed, output: $(echo "$result" | tail -5)"
         return 1
     fi
 }
@@ -550,6 +591,7 @@ fi
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║      ONNX-Quantized Variant Unit Test Suite                 ║"
+echo "║      (base: onnx-dev, free-threading main env, no PyTorch)  ║"
 echo "╚══════════════════════════════════════════════════════════════╝"
 echo ""
 log_info "Testing image: ${IMAGE}"
@@ -562,8 +604,9 @@ fi
 log_ok "Image exists: ${IMAGE}"
 echo ""
 
-log_step "1. Basic Toolchain Version Tests (L1)"
-test_torch_version || true
+log_step "1. Base Toolchain Tests - free-threading + no-torch (L1, inherited from onnx-dev)"
+test_free_threading || true
+test_torch_absent || true
 test_onnx_version || true
 test_onnxruntime_version || true
 echo ""
@@ -575,7 +618,7 @@ test_neural_compressor || true
 test_onnxsim || true
 echo ""
 
-log_step "3. Quantization Function Smoke Tests (L3)"
+log_step "3. Quantization Function Smoke Tests - pure ONNX (L3)"
 test_fp16_conversion || true
 test_dynamic_int8_quantization || true
 test_static_qdq_quantization || true
@@ -589,7 +632,7 @@ test_jupyter_executable || true
 test_devuser_exists || true
 echo ""
 
-log_step "5. PATH Priority &amp; Environment Isolation Tests (L5)"
+log_step "5. PATH Priority & Environment Isolation Tests (L5)"
 test_python_path_priority || true
 test_venv_removed || true
 echo ""

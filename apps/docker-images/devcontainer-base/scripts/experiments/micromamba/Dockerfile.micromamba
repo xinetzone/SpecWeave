@@ -334,6 +334,8 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
 COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
+COPY scripts/ft_benchmark.py /usr/local/bin/ft_benchmark.py
+COPY scripts/check_gil_state.py /usr/local/bin/check_gil_state.py
 
 RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     _STAGE_START=$(date +%s) && \
@@ -343,7 +345,9 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
-    bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh syntax valid" && \
+    bash -n /usr/local/bin/ft-benchmark.sh && \
+    python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/check_gil_state.py && \
+    echo "[OK] ft-benchmark (wrapper+core) syntax valid" && \
     _NOW=$(date +%s) && _ELAPSED=$((_NOW - _STAGE_START)) && _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && _TOTAL=$((_NOW - _START)) && \
     echo "S6=$_NOW" >> /tmp/.build-timer && \
     echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"

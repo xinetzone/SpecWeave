@@ -269,13 +269,14 @@ test_supervisord_config() {
 }
 
 test_jupyter_executable() {
-    local result
-    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
-    if echo "$result" | grep -q "executable"; then
-        pass "T14: Jupyter executable exists (/opt/conda/bin/jupyter)"
+    local rc
+    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+        pass "T14: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
         return 0
     else
-        fail "T14: Jupyter executable not found at /opt/conda/bin/jupyter"
+        fail "T14: Jupyter executable not found at /opt/conda/envs/main/bin/jupyter"
         return 1
     fi
 }
@@ -331,11 +332,11 @@ test_conda_dir_exists() {
 test_conda_path_priority() {
     local result
     result=$(docker_run_bash 'which python' 2>&1)
-    if echo "$result" | grep -q "/opt/conda/bin/python"; then
-        pass "T19: python points to conda: $result"
+    if echo "$result" | grep -q "/opt/conda/envs/main/bin/python"; then
+        pass "T19: python points to conda main env: $result"
         return 0
     else
-        fail "T19: python does not point to conda (expected /opt/conda/bin/python), got: $result"
+        fail "T19: python does not point to main env (expected /opt/conda/envs/main/bin/python), got: $result"
         return 1
     fi
 }
@@ -360,6 +361,18 @@ test_condarc_exists() {
         return 0
     else
         fail "T21: .condarc not found or not readable"
+        return 1
+    fi
+}
+
+test_main_gil_disabled() {
+    local result
+    result=$(docker_run /opt/conda/envs/main/bin/python -c "import sys;print('FT_OK' if sys._is_gil_enabled() is False else 'GIL_UNEXPECTED_ENABLED')" 2>&1)
+    if echo "$result" | grep -q "FT_OK"; then
+        pass "T22: main env GIL disabled (free-threading guard, cp314t)"
+        return 0
+    else
+        fail "T22: main env GIL not disabled or _is_gil_enabled API missing, output: $(echo "$result" | tail -3)"
         return 1
     fi
 }
@@ -452,6 +465,10 @@ echo ""
 
 log_step "6. Conda Mirror Configuration Tests"
 test_condarc_exists || true
+echo ""
+
+log_step "7. Free-threading Guard Tests"
+test_main_gil_disabled || true
 echo ""
 
 echo ""

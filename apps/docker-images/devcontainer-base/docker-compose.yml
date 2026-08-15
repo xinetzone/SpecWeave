@@ -5,6 +5,7 @@
 #   docker compose --profile dind up -d      # DinD 模式（推荐，隔离 Docker 环境，需 --privileged）
 #   docker compose --profile dood up -d      # DooD 模式（使用宿主机 Docker，无需 --privileged）
 #   docker compose --profile ssh-only up -d  # 仅 SSH 模式（最小化，无 Docker/Jupyter）
+#   docker compose --profile llvm up -d      # LLVM 变体（conda main 环境 + LLVM/Clang 22 工具链，free-threading Python 3.14t）
 #
 # 环境变量覆盖 (Environment overrides):
 #   USER_PASSWORD=changeme    SSH 密码（默认 changeme）
@@ -79,6 +80,44 @@ services:
       JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
       JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
       ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}  # 当检测到 Docker Socket 时，entrypoint 会自动禁用内部 dockerd
+      ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    tty: true
+    stdin_open: true
+
+  # ─── LLVM 变体 - conda main 环境 + LLVM/Clang 工具链（free-threading Python 3.14t）───
+  # 基于 variants/conda-llvm/Dockerfile 构建（依赖 devcontainer-base:${BASE_TAG:-latest} 基础镜像）
+  # 默认 DooD 模式（共享宿主机 Docker，无需 --privileged）
+  devcontainer-llvm:
+    build:
+      context: .
+      dockerfile: variants/conda-llvm/Dockerfile
+      args:
+        BASE_TAG: ${BASE_TAG:-latest}
+        APT_MIRROR: ${APT_MIRROR:-official}
+        CONDA_MIRROR: ${CONDA_MIRROR:-official}
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+        LLVM_VERSION: ${LLVM_VERSION:-22.1.8}
+    image: devcontainer-base:conda-llvm-latest
+    container_name: devcontainer-base-llvm
+    profiles: ["llvm"]
+    ports:
+      - "${SSH_PORT:-2225}:22"        # SSH（避开 dind/dood/ssh-only 的 2222-2224）
+      - "${JUPYTER_PORT:-8890}:8888"  # Jupyter（避开 8888/8889）
+    volumes:
+      - ./workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock:ro  # DooD：共享宿主机 Docker
+    environment:
+      <<: *common-env
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+      JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
+      ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}
       ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
     restart: unless-stopped
     healthcheck:

@@ -67,10 +67,14 @@ source: "内容来源（文件路径或AGENTS.md）"
 
 | 变体 | 规则文件 |
 |------|---------|
-| conda | [../conda/.agents/rules/dockerfile.md](../conda/.agents/rules/dockerfile.md) |
 | conda-llvm | [../conda-llvm/.agents/rules/dockerfile.md](../conda-llvm/.agents/rules/dockerfile.md) |
+| onnx-dev | [../onnx-dev/.agents/rules/dockerfile.md](../onnx-dev/.agents/rules/dockerfile.md) |
+| onnx-pytorch | [../onnx-pytorch/.agents/rules/dockerfile.md](../onnx-pytorch/.agents/rules/dockerfile.md) |
+| onnx-quantized | [../onnx-quantized/.agents/rules/dockerfile.md](../onnx-quantized/.agents/rules/dockerfile.md) |
+| ai-dev | [../ai-dev/.agents/rules/dockerfile.md](../ai-dev/.agents/rules/dockerfile.md) |
 | _template | [../_template/.agents/rules/dockerfile.md](../_template/.agents/rules/dockerfile.md) |
 
 ## 变更日志
 
+- 2026-08-15 | docs | 变体级规则表补齐 onnx-dev/onnx-pytorch/onnx-quantized/ai-dev，下线 conda 变体登记（与 variants/AGENTS.md 可用变体对齐）
 - 2026-08-07 | feat | 初始化 variants/.agents/ 目录，原子化4个规则文件

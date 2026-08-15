@@ -250,7 +250,7 @@ preflight_checks() {
     # Check 7: Required scripts exist
     log_info "[7/7] Checking required scripts..."
     local missing_scripts=""
-    for s in scripts/verify-cext.sh scripts/ft-benchmark.sh examples/free_threading_demo.py; do
+    for s in scripts/verify-cext.sh scripts/ft-benchmark.sh scripts/ft_benchmark.py examples/free_threading_demo.py; do
         if [ ! -f "$PROJECT_DIR/$s" ]; then
             missing_scripts="${missing_scripts} $s"
         fi
@@ -612,14 +612,12 @@ if $QUICK_TEST; then
         exit 1
     fi
 
-    # Run automated ft-benchmark to record speedup data
-    if [ "$PYTHON_BUILD" = "cp314t" ] && [ -x "$SCRIPT_DIR/ft-benchmark.sh" ]; then
+    # Run automated ft-benchmark to record speedup data (core: ft_benchmark.py)
+    if [ "$PYTHON_BUILD" = "cp314t" ] && [ -f "$SCRIPT_DIR/ft_benchmark.py" ]; then
         echo ""
         log_step "Free-Threading Performance Benchmark"
-        BENCHMARK_LOG="${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" \
-        BENCHMARK_RANGE=500000 \
-        MIN_SPEEDUP=3.0 \
-        bash "$SCRIPT_DIR/ft-benchmark.sh" --image "$FULL_IMAGE" --quick || {
+        python3 "$SCRIPT_DIR/ft_benchmark.py" --image "$FULL_IMAGE" --quick \
+            --log "${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" || {
             log_warn "ft-benchmark did not meet threshold (see log for details)"
         }
     fi

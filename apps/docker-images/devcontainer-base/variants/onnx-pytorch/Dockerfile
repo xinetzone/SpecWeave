@@ -382,9 +382,8 @@ echo "[VALIDATE 5/10] onnxruntime import + version..."
 python -c "import onnxruntime;print('onnxruntime',onnxruntime.__version__)"
 echo "[VALIDATE 6/10] torch.cuda.is_available() is False (CPU build)..."
 python -c "import torch;assert torch.cuda.is_available() is False, 'CUDA should not be available';print('[OK] CUDA not available, CPU build confirmed')"
-echo "[VALIDATE 7/10] /opt/conda python has JupyterLab available..."
-test -d /opt/conda && test -x /opt/conda/bin/python && echo "[OK] /opt/conda exists"
-/opt/conda/bin/jupyter --version 2>&1 | head -2
+echo "[VALIDATE 7/10] JupyterLab available (main env, used by supervisord)..."
+/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -2
 echo "[VALIDATE 8/10] Core services (docker, supervisord) still present..."
 docker --version 2>&1
 supervisord --version 2>&1
@@ -470,7 +469,7 @@ echo "# ONNX-PYTORCH VARIANT BUILD COMPLETE!"
 echo "# PyTorch (CPU) ${TORCH_VERSION_ACTUAL} + torchvision ${TORCHVISION_VERSION_ACTUAL} available in PATH"
 echo "# ONNX ${ONNX_VERSION_ACTUAL} + ONNX Runtime ${ONNXRUNTIME_VERSION_ACTUAL} available in PATH"
 echo "# PATH priority: /opt/conda/bin first (python/pip/torch/onnx directly accessible)"
-echo "# JupyterLab runs from conda base"
+echo "# JupyterLab runs from conda main env (supervisord) - independent of base torch env"
 echo "#"
 echo "# Verify with: /opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\""
 echo "########################################################################"

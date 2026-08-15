@@ -4,12 +4,12 @@
 
 ## ✨ 特性
 
-- **基础镜像继承链**：devcontainer-base → conda → conda-llvm → onnx-pytorch → onnx-quantized → **ai-dev**
+- **基础镜像继承链**：devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → **ai-dev**
   - Ubuntu 26.04 + 中文环境 zh_CN.UTF-8 + Asia/Shanghai 时区
   - SSH(22) + Docker DinD(2375) + Podman + Jupyter(8888)
   - supervisord 进程管理，devuser 非 root 用户
-  - Miniconda3 + LLVM 22.1.8 + CMake + Ninja
-  - PyTorch CPU + ONNX + ONNX Runtime + 量化工具链
+  - Miniforge3 + LLVM 22.1.8 + CMake + Ninja
+  - 纯 ONNX 生态（ONNX + ONNX Runtime + 量化工具链，free-threading main 环境，无预装 PyTorch）
 - **ai-dev 特有功能**：
   - 50+ Python 包覆盖 NLP、数据处理、可视化、文档处理、Web API、数据库客户端
   - HuggingFace Transformers 生态（transformers, datasets, sentence-transformers, evaluate）
@@ -59,7 +59,7 @@ psycopg2-binary (PostgreSQL), pymongo (MongoDB), elasticsearch, minio
 pytest, psutil, decorator, attrs, cloudpickle, typing_extensions, icecream
 
 ### 继承自 onnx-quantized
-torch, torchvision, onnx, onnxruntime, onnxconverter-common, onnxsim
+onnx, onnxruntime, onnxconverter-common, onnxsim（纯 ONNX 链；torch/torchvision 非继承，经 onnx2torch + open_clip_torch 传递引入 base 环境）
 
 ## 📁 目录结构
 
@@ -162,19 +162,21 @@ docker run -d \
 docker run --rm devcontainer-base:ai-dev-latest \
   /opt/conda/bin/python -c "import transformers, datasets, fastapi, pandas; print('ai-dev OK')"
 
-# 验证系统 venv 仍然存在
-docker run --rm devcontainer-base:ai-dev-latest /opt/venv/bin/python --version
-
-# 验证 JupyterLab 版本
-docker run --rm devcontainer-base:ai-dev-latest /opt/venv/bin/jupyter lab --version
-
-# 验证 Jupyter 内核注册
+# 验证基础 Python（conda base 环境，承载 50+ AI/ML/NLP 包）
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/venv/bin/jupyter kernelspec list
+  /opt/conda/bin/python --version
 
-# 验证量化工具链继承
+# 验证 JupyterLab 版本（服务由 main 环境 jupyter 启动）
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/bin/python -c "from onnxruntime.quantization import quantize_dynamic; print('quantization OK')"
+  /opt/conda/envs/main/bin/jupyter lab --version
+
+# 验证 Jupyter 内核注册（main 环境 jupyter 服务可见）
+docker run --rm devcontainer-base:ai-dev-latest \
+  /opt/conda/envs/main/bin/jupyter kernelspec list
+
+# 验证量化工具链继承（main 环境 free-threading）
+docker run --rm devcontainer-base:ai-dev-latest \
+  /opt/conda/envs/main/bin/python -c "from onnxruntime.quantization import quantize_dynamic; print('quantization OK')"
 
 # 验证基础服务
 docker run --rm devcontainer-base:ai-dev-latest which sshd
@@ -187,11 +189,12 @@ docker run --rm devcontainer-base:ai-dev-latest \
 
 ## 🔧 Jupyter 内核
 
-ai-dev 变体内核名为 **"Python 3 (AI Dev)"**，使用 conda base 环境的 Python：
+ai-dev 变体内核名为 **"Python 3 (AI Dev)"**，内核 Python 使用 conda **base 环境**（承载全部 AI/ML/NLP 包），内核注册于 **main 环境** kernels 目录（对 supervisord 启动的 main 环境 Jupyter 服务可见）：
 
-- 内核路径：`/opt/conda/bin/python`
+- 内核 Python：`/opt/conda/bin/python`（base 环境）
+- 内核注册位置：`/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json`
+- Jupyter 服务：`/opt/conda/envs/main/bin/jupyter`（supervisord 以绝对路径启动）
 - 已预装所有 AI/ML/NLP 包，无需额外 pip install
-- UI 和 CLI 均可见（双路径注册）
 
 在 JupyterLab 中选择 "Python 3 (AI Dev)" 内核即可使用全部包。
 
@@ -209,16 +212,14 @@ ai-dev 变体内核名为 **"Python 3 (AI Dev)"**，使用 conda base 环境的 
 | 层级 | 变体 | 新增内容 |
 |------|------|---------|
 | L0 | devcontainer-base | Ubuntu 26.04 + SSH + Docker + Jupyter + supervisord |
-| L1 | conda | Miniconda3 + Python 3.14 |
-| L2 | conda-llvm | LLVM 22.1.8 + clang + cmake + ninja |
-| L3 | onnx-pytorch | PyTorch CPU + ONNX + ONNX Runtime |
-| L4 | onnx-quantized | onnxruntime.quantization + FP16/INT8 量化 |
-| L5 | **ai-dev** | **50+ AI/ML/NLP 包 + JupyterLab 4.x + AI 内核** |
+| L1 | conda-llvm | Miniforge3 + LLVM 22.1.8 + clang + cmake + ninja |
+| L2 | onnx-dev | 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，无 PyTorch） |
+| L3 | onnx-quantized | onnxruntime.quantization + FP16/INT8 量化 |
+| L4 | **ai-dev** | **50+ AI/ML/NLP 包 + JupyterLab 4.x + AI 内核** |
 
 ## 🔗 相关镜像
 
 - [devcontainer-base](../../README.md) — 基础镜像（SSH + Docker + Podman + Jupyter）
-- [conda](../conda/README.md) — Miniconda3 基础环境
 - [conda-llvm](../conda-llvm/README.md) — LLVM 编译工具链
-- [onnx-pytorch](../onnx-pytorch/README.md) — PyTorch + ONNX 运行时
+- [onnx-dev](../onnx-dev/README.md) — 纯 ONNX 生态（无 PyTorch）
 - [onnx-quantized](../onnx-quantized/README.md) — ONNX 量化工具链

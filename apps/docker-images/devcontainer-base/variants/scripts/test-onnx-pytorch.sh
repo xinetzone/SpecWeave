@@ -219,13 +219,14 @@ test_supervisord_config() {
 }
 
 test_jupyter_executable() {
-    local result
-    result=$(docker_run_bash 'test -x /opt/conda/bin/jupyter && echo "executable"' 2>&1)
-    if echo "$result" | grep -q "executable"; then
-        pass "T12: Jupyter executable exists (/opt/conda/bin/jupyter)"
+    local rc
+    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+        pass "T12: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
         return 0
     else
-        fail "T12: Jupyter executable not found at /opt/conda/bin/jupyter"
+        fail "T12: Jupyter executable not found at /opt/conda/envs/main/bin/jupyter"
         return 1
     fi
 }
@@ -292,13 +293,14 @@ test_venv_removed() {
 }
 
 test_conda_jupyter_works() {
-    local result
-    result=$(docker_run /opt/conda/bin/jupyter --version 2>&1)
-    if echo "$result" | grep -qi "jupyter"; then
-        pass "T18: /opt/conda/bin/jupyter usable"
+    local rc
+    docker run --rm "$IMAGE" /opt/conda/envs/main/bin/jupyter --version >/dev/null 2>&1
+    rc=$?
+    if [ "$rc" -eq 0 ]; then
+        pass "T18: /opt/conda/envs/main/bin/jupyter usable"
         return 0
     else
-        fail "T18: /opt/conda/bin/jupyter not usable, got: $(echo "$result" | head -1)"
+        fail "T18: /opt/conda/envs/main/bin/jupyter not usable (exit=$rc)"
         return 1
     fi
 }
@@ -324,6 +326,42 @@ test_condarc_exists() {
         return 0
     else
         fail "T20: .condarc not found or not readable"
+        return 1
+    fi
+}
+
+test_gil_enabled() {
+    local result
+    result=$(docker_run /opt/conda/bin/python -c "import sys;print('GIL_OK' if sys._is_gil_enabled() is True else 'GIL_UNEXPECTED_DISABLED')" 2>&1)
+    if echo "$result" | grep -q "GIL_OK"; then
+        pass "T21: GIL enabled (standard build guard, vs onnx-dev free-threading)"
+        return 0
+    else
+        fail "T21: GIL not enabled or _is_gil_enabled API missing, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
+test_onnx_ecosystem_imports() {
+    local result
+    result=$(docker_run /opt/conda/bin/python -c "import onnxsim,onnxoptimizer,onnxscript;print('ECO_OK')" 2>&1)
+    if echo "$result" | grep -q "ECO_OK"; then
+        pass "T22: ONNX ecosystem fully importable (onnxsim/onnxoptimizer/onnxscript)"
+        return 0
+    else
+        fail "T22: ONNX ecosystem import failed, output: $(echo "$result" | tail -3)"
+        return 1
+    fi
+}
+
+test_devuser_functional() {
+    local result
+    result=$(docker_run_bash 'su - devuser -c "/opt/conda/bin/python -c '"'"'import torch,onnx;print(\"DEVUSER_OK\")'"'"'"' 2>&1)
+    if echo "$result" | grep -q "DEVUSER_OK"; then
+        pass "T23: devuser can import torch/onnx (functional check)"
+        return 0
+    else
+        fail "T23: devuser import failed, output: $(echo "$result" | tail -3)"
         return 1
     fi
 }
@@ -415,6 +453,12 @@ echo ""
 log_step "6. Build Info & Configuration Tests (L6)"
 test_build_info_exists || true
 test_condarc_exists || true
+echo ""
+
+log_step "7. Architecture Guard & Ecosystem Tests (L7)"
+test_gil_enabled || true
+test_onnx_ecosystem_imports || true
+test_devuser_functional || true
 echo ""
 
 echo ""

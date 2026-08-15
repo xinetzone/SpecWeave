@@ -18,7 +18,7 @@
 - **必须设置**：`ENV PATH=/opt/conda/bin:${PATH}`
 - `/opt/conda/bin` 在 PATH **最前面**，确保 python/pip/torch/onnx/onnxruntime 直接可用
 - 默认 `python`/`pip` 指向 conda base 环境的 Python（PyTorch/ONNX 所在环境）
-- **Jupyter 服务不受影响**：supervisord 使用 `/opt/venv/bin/jupyter` **绝对路径**启动，不依赖 PATH
+- **Jupyter 服务不受影响**：supervisord 使用 main 环境 `/opt/conda/envs/main/bin/jupyter` 绝对路径启动，独立于 base torch 环境（`/opt/venv` 已在基础镜像中移除）
 
 ### 2. PyTorch CPU 安装（强制约束）
 
@@ -33,7 +33,7 @@
 
 在 Stage 3/4 安装 ONNX 生态工具（普通 PyPI，受 `PIP_MIRROR` 控制）：
 ```
-pip install --no-cache-dir onnx onnxruntime onnx-simplifier onnxoptimizer
+pip install --no-cache-dir onnx onnxruntime onnx-simplifier onnxoptimizer onnxscript
 ```
 
 ### 4. 继承基础镜像设置（禁止覆盖）
@@ -76,7 +76,7 @@ ONNX-PyTorch 变体在 conda-llvm 变体之上，追加 **4 个阶段**（编号
   - `conda config --system --add channels conda-forge`
   - `conda config --system --set channel_priority strict`
 - 验证 PATH 已包含 `/opt/conda/bin`（ENV 设置已生效）
-- 验证基础镜像关键组件存在（devuser、/opt/venv、/opt/conda、llvm-config）
+- 验证基础镜像关键组件存在（devuser、/opt/conda、llvm-config；`/opt/venv` 已在基础镜像移除，不在验证列表）
 - 初始化追加层计时器：`/tmp/.onnx-pytorch-variant-build-timer`
 - 输出 `[TIMER] Stage 1/4 ...`
 - 注意：执行 conda 命令前必须 `source /opt/conda/etc/profile.d/conda.sh`
@@ -97,7 +97,7 @@ ONNX-PyTorch 变体在 conda-llvm 变体之上，追加 **4 个阶段**（编号
 
 - 安装 ONNX 生态：
   ```
-  pip install --no-cache-dir onnx onnxruntime onnx-simplifier onnxoptimizer
+  pip install --no-cache-dir onnx onnxruntime onnx-simplifier onnxoptimizer onnxscript
   ```
 - 创建 `/etc/profile.d/onnx-pytorch-init.sh`（使用 heredoc）：
   - source `/opt/conda/etc/profile.d/conda.sh`
@@ -127,7 +127,7 @@ ONNX-PyTorch 变体在 conda-llvm 变体之上，追加 **4 个阶段**（编号
   4. `onnx` 导入 + 版本输出
   5. `onnxruntime` 导入 + 版本输出
   6. `torch.cuda.is_available() == False`（CPU 版确认）
-  7. `/opt/venv` 存在且 Jupyter 可通过绝对路径使用
+  7. Jupyter 可通过 main 环境绝对路径 `/opt/conda/envs/main/bin/jupyter` 使用（supervisord 实际路径）
   8. docker、supervisord 仍存在（服务未被破坏）
   9. devuser 可访问 PyTorch/ONNX（`su - devuser -c "..."`）
   10. LLVM 工具链仍继承自 conda-llvm 基础（llvm-config、clang）
@@ -159,7 +159,7 @@ conda-llvm 变体和基础镜像的所有服务在 onnx-pytorch 变体中**保�
 - **dockerd**：Docker DinD（端口 2375）
 - **podman**：Podman rootless（按需）
 - **jupyter**：Jupyter Notebook/Lab（端口 8888）
-  - **关键**：使用 `/opt/venv/bin/jupyter` **绝对路径**，由 supervisord 启动
+  - **关键**：由 supervisord 以 main 环境绝对路径 `/opt/conda/envs/main/bin/jupyter` 启动
   - **不受 PATH 变更影响**，始终正常运行
 - **supervisord**：进程管理，配置不变
 

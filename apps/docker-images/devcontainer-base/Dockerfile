@@ -640,6 +640,8 @@ COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
 COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
+COPY scripts/ft_benchmark.py /usr/local/bin/ft_benchmark.py
+COPY scripts/check_gil_state.py /usr/local/bin/check_gil_state.py
 
 RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     _STAGE_START=$(date +%s) && \
@@ -647,6 +649,9 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
     chown -R devuser:devuser /workspace && \
     echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
+    for _f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh /home/devuser/.jupyter/jupyter_notebook_config.py /etc/supervisor/supervisord.conf /etc/supervisor/conf.d/*.conf /etc/ssh/sshd_config; do \
+        if [ -f "$_f" ]; then sed -i 's/\r$//' "$_f" 2>/dev/null || true; fi; \
+    done && echo "[BUILD] CRLF cleaned from all text configs/scripts (Windows editor safe)" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [VALIDATION CHECKPOINT - Stage 6/7]            │" && \
@@ -660,8 +665,10 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
     echo "[VALIDATE 4/5] bash -n verify-cext.sh..." && \
     bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh bash syntax valid" && \
-    echo "[VALIDATE 5/5] bash -n ft-benchmark.sh..." && \
-    bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh bash syntax valid" && \
+    echo "[VALIDATE 5/5] ft-benchmark (bash wrapper + python core)..." && \
+    bash -n /usr/local/bin/ft-benchmark.sh && \
+    python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/check_gil_state.py && \
+    echo "[OK] ft-benchmark.sh + ft_benchmark.py + check_gil_state.py syntax valid" && \
     echo "" && \
     echo "[BUILD] All 5 syntax validation checks passed" && \
     _NOW=$(date +%s) && \
@@ -789,7 +796,8 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
         bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
         bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
         bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
-        bash -n /usr/local/bin/ft-benchmark.sh && echo "[OK] ft-benchmark.sh syntax valid" && \
+        bash -n /usr/local/bin/ft-benchmark.sh && \
+        python3 -m py_compile /usr/local/bin/ft_benchmark.py && echo "[OK] ft-benchmark (wrapper+core) syntax valid" && \
         echo "[OK] All standard verification checks passed"; \
     fi && \
     echo "" && \
