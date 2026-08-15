@@ -7,6 +7,9 @@
 #
 # 依赖：logging.sh（variant_log_* 函数）
 # 不修改 shell errexit/nounset 选项
+# 环境变量：
+#   CONDA_DIR       - conda安装目录（默认/opt/conda）
+#   DEVTARGET_USER  - dev用户名（默认devuser）
 # =============================================================================
 
 # 防止重复 source
@@ -47,19 +50,20 @@ _variant_configure_conda_mirror() {
             ;;
     esac
 
-    # 写入 .condarc，包含性能优化参数（按Task 1验收标准要求）
+    # 写入 .condarc，包含性能优化参数
     cat > "${condarc}" <<EOF
 channels:
   - ${conda_url}
 channel_priority: strict
 show_channel_urls: false
+auto_activate_base: false
+ssl_verify: true
 
 # ── Network tuning ──
 remote_connect_timeout_secs: 30
 remote_read_timeout_secs: 300
 remote_max_retries: 5
 remote_backoff_factor: 3
-ssl_verify: true
 
 # ── Parallel threads ──
 repodata_threads: 8
@@ -69,7 +73,11 @@ execute_threads: 8
 solver: libmamba
 EOF
 
-    variant_log_ok "conda mirror configured: ${mirror} -> ${conda_url}"
+    echo "[INFO] .condarc written to ${condarc}:"
+    cat "${condarc}"
+    echo ""
+
+    variant_log_ok "conda mirror configured: ${mirror}"
     return 0
 }
 
@@ -78,7 +86,9 @@ EOF
 # ---------------------------------------------------------------------------
 _variant_configure_pip_mirror() {
     local mirror="${PIP_MIRROR:-official}"
+    local devuser="${DEVTARGET_USER:-devuser}"
     local pip_index_url
+    local pip_trusted_host
 
     variant_log_info "Configuring pip mirror: ${mirror}"
 
@@ -86,43 +96,53 @@ _variant_configure_pip_mirror() {
         official)
             variant_log_info "Using official PyPI mirror"
             pip_index_url="https://pypi.org/simple"
+            pip_trusted_host=""
             ;;
         tuna)
             variant_log_info "Using TUNA (Tsinghua) PyPI mirror"
             pip_index_url="https://pypi.tuna.tsinghua.edu.cn/simple"
+            pip_trusted_host="pypi.tuna.tsinghua.edu.cn"
             ;;
         aliyun)
             variant_log_info "Using Aliyun PyPI mirror"
             pip_index_url="https://mirrors.aliyun.com/pypi/simple"
+            pip_trusted_host="mirrors.aliyun.com"
+            ;;
+        bfsu)
+            variant_log_info "Using BFSU PyPI mirror"
+            pip_index_url="https://mirrors.bfsu.edu.cn/pypi/simple"
+            pip_trusted_host="mirrors.bfsu.edu.cn"
             ;;
         *)
-            variant_log_error "Unknown PIP_MIRROR value: ${mirror}. Valid values: official/tuna/aliyun"
+            variant_log_error "Unknown PIP_MIRROR value: ${mirror}. Valid values: official/tuna/aliyun/bfsu"
             return 1
             ;;
     esac
 
-    # 配置 root 用户 pip
-    local root_pip_dir="/root/.pip"
-    mkdir -p "${root_pip_dir}"
-    cat > "${root_pip_dir}/pip.conf" <<EOF
+    _write_pip_conf() {
+        local pip_dir="$1"
+        mkdir -p "${pip_dir}"
+        cat > "${pip_dir}/pip.conf" <<EOF
 [global]
 index-url = ${pip_index_url}
-trusted-host = $(echo "${pip_index_url}" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
 timeout = 120
+retries = 5
 EOF
+        if [[ -n "${pip_trusted_host}" ]]; then
+            echo "trusted-host = ${pip_trusted_host}" >> "${pip_dir}/pip.conf"
+        fi
+    }
 
-    # 配置 devuser 用户 pip（如存在）
-    if id -u devuser >/dev/null 2>&1; then
-        local devuser_pip_dir="/home/devuser/.pip"
-        mkdir -p "${devuser_pip_dir}"
-        cat > "${devuser_pip_dir}/pip.conf" <<EOF
-[global]
-index-url = ${pip_index_url}
-trusted-host = $(echo "${pip_index_url}" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
-timeout = 120
-EOF
-        chown -R devuser:devuser "${devuser_pip_dir}"
-        variant_log_ok "pip mirror configured for root + devuser: ${mirror}"
+    # 配置 root 用户 pip（兼容.pip和.config/pip两个位置）
+    _write_pip_conf "/root/.pip"
+    _write_pip_conf "/root/.config/pip"
+
+    # 配置目标用户 pip（如存在）
+    if id -u "${devuser}" >/dev/null 2>&1; then
+        _write_pip_conf "/home/${devuser}/.pip"
+        _write_pip_conf "/home/${devuser}/.config/pip"
+        chown -R "${devuser}:${devuser}" "/home/${devuser}/.pip" "/home/${devuser}/.config/pip" 2>/dev/null || true
+        variant_log_ok "pip mirror configured for root + ${devuser}: ${mirror}"
     else
         variant_log_ok "pip mirror configured for root: ${mirror}"
     fi
@@ -136,11 +156,16 @@ EOF
 _variant_configure_apt_mirror() {
     local mirror="${APT_MIRROR:-official}"
     local sources_list="/etc/apt/sources.list"
-    local sources_list_d="/etc/apt/sources.list.d"
+
+    # 如果APT_MIRROR为空或official，且已有系统默认配置，则不修改
+    if [[ "${mirror}" == "official" ]] && [[ -f "${sources_list}" ]] && [[ -s "${sources_list}" ]]; then
+        variant_log_info "APT mirror: using existing system sources (official default)"
+        return 0
+    fi
 
     variant_log_info "Configuring APT mirror: ${mirror}"
 
-    # 检测 Debian/Ubuntu 版本（简化处理，默认Debian bookworm）
+    # 检测 Debian/Ubuntu 版本
     local debian_codename
     if [[ -f /etc/os-release ]]; then
         # shellcheck source=/dev/null
@@ -152,7 +177,6 @@ _variant_configure_apt_mirror() {
 
     case "${mirror}" in
         official)
-            variant_log_info "Using official Debian APT mirror"
             cat > "${sources_list}" <<EOF
 deb http://deb.debian.org/debian ${debian_codename} main contrib non-free non-free-firmware
 deb http://deb.debian.org/debian ${debian_codename}-updates main contrib non-free non-free-firmware
@@ -181,7 +205,6 @@ EOF
             ;;
     esac
 
-    # 清理可能存在的第三方源（可选，只清理我们创建的，不碰已有）
     variant_log_ok "APT mirror configured: ${mirror} (${debian_codename})"
     return 0
 }

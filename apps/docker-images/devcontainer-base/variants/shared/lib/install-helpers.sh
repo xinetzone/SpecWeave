@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # =============================================================================
-# install-helpers.sh — 包安装辅助模块（conda/pip分组安装）
+# install-helpers.sh — 包安装辅助模块（apt/conda/pip分组安装）
 #
-# 提供 conda_install_group 和 pip_install_group 函数，带结构化日志、
-# 计时、错误诊断功能。
+# 提供 apt_install_group / conda_install_group / pip_install_group 函数，
+# 带结构化日志、计时、错误诊断功能。
 #
 # 依赖：logging.sh（variant_log_* 函数）
 # 不修改 shell errexit/nounset 选项，只临时切换 set +e
@@ -12,6 +12,51 @@
 # 防止重复 source
 [[ -n "${_VARIANT_INSTALL_HELPERS_LOADED:-}" ]] && return 0
 _VARIANT_INSTALL_HELPERS_LOADED=1
+
+# ---------------------------------------------------------------------------
+# apt_install_group: 分组安装APT系统包
+# 用法: apt_install_group <description> <packages...>
+# 注意：需要先配置好APT镜像源并执行apt-get update
+# ---------------------------------------------------------------------------
+apt_install_group() {
+    local description="$1"
+    shift
+    local packages=("$@")
+
+    if [[ ${#packages[@]} -eq 0 ]]; then
+        variant_log_info "No apt packages to install for: ${description}"
+        return 0
+    fi
+
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [APT INSTALL] ${description}"
+    echo "│ PKGS: ${packages[*]}"
+    echo "└─────────────────────────────────────────────────┘"
+
+    local g_start g_end g_elapsed rc
+    g_start=$(date +%s)
+
+    local saved_opts="$-"
+    set +e
+    apt-get install -y --no-install-recommends -qq "${packages[@]}" 2>&1
+    rc=$?
+    if [[ "${saved_opts}" == *e* ]]; then
+        set -e
+    fi
+
+    g_end=$(date +%s)
+    g_elapsed=$((g_end - g_start))
+
+    if [[ ${rc} -eq 0 ]]; then
+        variant_log_ok "APT: ${description} installed in ${g_elapsed}s"
+        echo ""
+        return 0
+    else
+        variant_log_error "APT: ${description} failed after ${g_elapsed}s (exit code: ${rc})"
+        exit ${rc}
+    fi
+}
 
 # ---------------------------------------------------------------------------
 # conda_install_group: 分组安装conda包
