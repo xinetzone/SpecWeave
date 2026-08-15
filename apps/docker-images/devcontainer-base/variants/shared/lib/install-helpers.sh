@@ -191,3 +191,19 @@ variant_activate_main_env() {
     echo "  - python path: $(which python)"
     echo ""
 }
+
+# ---------------------------------------------------------------------------
+# 辅助函数：激活conda base环境（ai-dev等需要在base安装包的变体）
+# ---------------------------------------------------------------------------
+variant_activate_base_env() {
+    variant_log_info "Activating conda base environment..."
+    # shellcheck source=/dev/null
+    source /opt/conda/etc/profile.d/conda.sh
+    conda activate base
+    export PIP_USER=0
+    variant_log_ok "base environment activated (PIP_USER=0 for build-time)"
+    echo "  - conda env: ${CONDA_DEFAULT_ENV}"
+    echo "  - python: $(python --version 2>&1)"
+    echo "  - python path: $(which python)"
+    echo ""
+}

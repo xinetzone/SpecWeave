@@ -341,9 +341,27 @@
   - [ ] 量化测试通过
   - [ ] variants/scripts/test-onnx-quantized.sh全部通过
 
-### Task 16: 迁移 ai-dev 变体到新框架
+### Task 15.5: 迁移 torch-dev 变体到新框架 — ✅ **CODE MIGRATED** (intermediate)
+- **Status**: ✅ **CODE MIGRATED** (2026-08-15)
 - **Priority**: high
 - **Depends on**: Task 15
+- **Description**: 迁移free-threading PyTorch变体（torch-dev是onnx-quantized→ai-dev的中间层）
+- **Migration Result**: 443→163 lines (**-63.2%**), 3 stages
+- **Framework Enhancement**: 新增variant_activate_base_env()支持base环境安装（ai-dev需要）
+- **Framework Functions Used**: variant_timer_start/stage/summary, pip_install_group(--index-url for PyTorch CUDA index), assert_package_present/absent, assert_python_cp314t, assert_free_threading, variant_activate_main_env, ensure_all_permissions, variant_write_build_info, cleanup_all, cleanup_pycache, cleanup_conda_pip_cache, verify_validation_header, verify_base_services
+- **Variant-Specific Logic Preserved**:
+  - TORCH_CUDA_INDEX=cu130构建参数
+  - pip_install_group使用--index-url指向PyTorch官方CUDA wheel源
+  - PATH优先级：main/bin在前（PyTorch优先）
+  - 守卫翻转：S1 torch absent → S2 torch present
+  - onnxoptimizer absent保持（ft不兼容）
+  - 6项PyTorch冒烟测试：matmul/conv2d/autograd/cross_entropy/tensor/MLP forward
+  - 不注册kernel（留给下游ai-dev）
+- **Note**: torch-dev在原始tasks.md中未单独列出，是ai-dev(Task16)的必要前置依赖
+
+### Task 16: 迁移 ai-dev 变体到新框架
+- **Priority**: high
+- **Depends on**: Task 15.5
 - **Description**: 迁移最复杂的ai-dev全栈AI变体
 - **Acceptance Criteria**:
   - [rule] ai-dev/Dockerfile 使用新框架，删除内联重复代码
