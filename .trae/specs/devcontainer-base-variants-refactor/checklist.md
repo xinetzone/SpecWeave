@@ -1,6 +1,6 @@
 # devcontainer-base 变体 Dockerfile 重构优化 - 检查清单
 
-> **版本**：v2.2（基于七概念方法论重新设计，Task 1-2已完成）
+> **版本**：v2.3（基于七概念方法论重新设计，Task 1-3已完成）
 > **更新日期**：2026-08-15
 
 ## 实施阶段检查点
@@ -8,7 +8,7 @@
 ### 阶段一：补全框架基础设施
 - [x] mirror.sh 已实现，支持4种conda源+性能参数 ✅
 - [x] install-helpers.sh 已实现，conda/pip_install_group函数 ✅
-- [ ] ft-guards.sh 已实现，free-threading守卫函数
+- [x] ft-guards.sh 已实现，free-threading守卫函数 ✅
 - [ ] cleanup.sh 已实现，安全清理（不碰计时器目录）
 - [ ] build-info.sh 已实现，统一build-info写入
 - [ ] verify.sh 已实现，基础验证函数

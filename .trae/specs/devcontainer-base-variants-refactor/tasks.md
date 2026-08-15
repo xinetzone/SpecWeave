@@ -1,6 +1,6 @@
 # devcontainer-base 变体 Dockerfile 重构优化 - 实施任务清单
 
-> **任务版本**：v2.1（基于七概念方法论重新设计，Task 1已完成）
+> **任务版本**：v2.3（基于七概念方法论重新设计，Task 1-3已完成）
 > **更新日期**：2026-08-15
 > **策略**：增量迁移，先补全框架，再更新模板，最后按依赖顺序逐个迁移变体，每个变体迁移后独立验证
 > **依赖顺序**：框架基础设施 → 模板 → conda-llvm(试点) → onnx-dev → onnx-pytorch/onnx-quantized(可并行) → ai-dev → 全量验证
@@ -64,9 +64,12 @@
   - [rule] 所有断言失败时输出清晰错误信息并 exit 1
   - [rule] 断言成功时输出[OK]日志
 - **Test Requirements**:
-  - [rule] `bash -n variants/shared/lib/ft-guards.sh` 无错误
-  - [rule] source后函数存在
-  - [rule] 断言失败时正确退出并输出清晰错误信息
+  - [x] `bash -n variants/shared/lib/ft-guards.sh` 无错误
+  - [x] source后函数存在
+  - [x] 断言失败时正确退出并输出清晰错误信息
+- **Status**: ✅ **COMPLETED** (2026-08-15)
+- **Artifacts**:
+  - `variants/shared/lib/ft-guards.sh` (109行)
 
 ### Task 4: 实现清理模块 cleanup.sh
 - **Priority**: high
