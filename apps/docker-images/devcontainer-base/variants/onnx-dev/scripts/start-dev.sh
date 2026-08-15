@@ -4,14 +4,15 @@
 # 自动检测环境，默认 Ephemeral（一次性）模式，支持 Persistent（长期后台）模式
 #
 # 用法:
-#   ./start-dev.sh                      # 一次性 Python 交互模式（--rm）
-#   ./start-dev.sh your_script.py       # 一次性运行指定脚本
-#   ./start-dev.sh -d                   # 长期后台模式（SSH+Jupyter+DinD）
-#   ./start-dev.sh -d -p 2222 -P 8888   # 自定义端口的长期模式
-#   ./start-dev.sh -d --stop            # 停止并删除已有容器
-#   ./start-dev.sh -d --logs            # 查看后台容器日志
-#   ./start-dev.sh --bash               # 一次性模式进入 bash shell
-#   ./start-dev.sh --info               # 显示镜像和容器信息
+#   ./scripts/start-dev.sh                      # 一次性 Python 交互模式（--rm）
+#   ./scripts/start-dev.sh inference_demo.py    # 一次性运行 examples/ 下的脚本
+#   ./scripts/start-dev.sh ft_compat_check.py   # 一次性运行 tools/ 下的脚本
+#   ./scripts/start-dev.sh -d                   # 长期后台模式（SSH+Jupyter+DinD）
+#   ./scripts/start-dev.sh -d -p 2222 -P 8888   # 自定义端口的长期模式
+#   ./scripts/start-dev.sh -d --stop            # 停止并删除已有容器
+#   ./scripts/start-dev.sh -d --logs            # 查看后台容器日志
+#   ./scripts/start-dev.sh --bash               # 一次性模式进入 bash shell
+#   ./scripts/start-dev.sh --info               # 显示镜像和容器信息
 # =============================================================================
 set -euo pipefail
 
@@ -37,7 +38,22 @@ warn()  { echo -e "${YELLOW}[WARN]${NC}  $*"; }
 error() { echo -e "${RED}[ERROR]${NC} $*" >&2; }
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$SCRIPT_DIR"
+VARIANT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$VARIANT_ROOT"
+
+# 智能解析脚本路径：支持直接写文件名（自动查找 examples/ tools/）或显式路径
+resolve_script_path() {
+    local input="$1"
+    if [[ -f "$VARIANT_ROOT/$input" ]]; then
+        echo "$input"
+    elif [[ -f "$VARIANT_ROOT/examples/$input" ]]; then
+        echo "examples/$input"
+    elif [[ -f "$VARIANT_ROOT/tools/$input" ]]; then
+        echo "tools/$input"
+    else
+        echo "$input"
+    fi
+}
 
 check_docker() {
     if ! command -v docker &>/dev/null; then
@@ -81,6 +97,12 @@ show_persistent_info() {
     echo -e "  ${YELLOW}进入容器:${NC}"
     echo -e "    docker exec -it $CONTAINER_NAME bash"
     echo ""
+    echo -e "  ${YELLOW}目录结构:${NC}"
+    echo -e "    /workspace/           ← 变体根目录（挂载点）"
+    echo -e "    /workspace/examples/  ← 示例代码"
+    echo -e "    /workspace/tools/     ← 工具脚本"
+    echo -e "    /workspace/scripts/   ← 启动/运维脚本"
+    echo ""
     echo -e "  ${YELLOW}常用命令:${NC}"
     echo -e "    查看日志:  $0 -d --logs"
     echo -e "    停止容器:  $0 -d --stop"
@@ -103,7 +125,7 @@ show_info() {
     echo -e "${CYAN}═══ 快速验证 ═══${NC}"
     docker run --rm -i \
         -e WORKSPACE_CHOWN_MODE=named-only \
-        -v "$SCRIPT_DIR:$WORKSPACE_DIR" \
+        -v "$VARIANT_ROOT:$WORKSPACE_DIR" \
         -w "$WORKSPACE_DIR" \
         "$IMAGE" \
         "$PYTHON_BIN" -c "import onnx,onnxruntime,sys;print(f'onnx {onnx.__version__}, onnxruntime {onnxruntime.__version__}, gil_disabled={not sys._is_gil_enabled()}')"
@@ -114,11 +136,11 @@ show_help() {
 onnx-dev 容器一键启动脚本
 
 用法:
-  ./start-dev.sh [选项] [命令/脚本...]
+  ./scripts/start-dev.sh [选项] [命令/脚本...]
 
 模式:
   (无参数)          Ephemeral 模式：启动 Python 交互环境（--rm 自动删除）
-  <script.py>       Ephemeral 模式：运行指定 Python 脚本
+  <script.py>       Ephemeral 模式：运行指定 Python 脚本（自动查找 examples/ tools/）
   --bash            Ephemeral 模式：进入 bash shell
   -d, --daemon      Persistent 模式：后台启动（SSH+Jupyter）
   -d --stop         停止并删除 Persistent 容器
@@ -127,12 +149,14 @@ onnx-dev 容器一键启动脚本
   -h, --help        显示此帮助
 
 示例:
-  ./start-dev.sh                    # Python 交互环境
-  ./start-dev.sh test_simple.py     # 运行测试脚本
-  ./start-dev.sh --bash             # 进入 bash
-  ./start-dev.sh -d                 # 启动长期开发容器
-  ./start-dev.sh -d --stop          # 停止容器
-  ./start-dev.sh --info             # 查看信息
+  ./scripts/start-dev.sh                        # Python 交互环境
+  ./scripts/start-dev.sh simple_verify.py       # 运行 examples/simple_verify.py
+  ./scripts/start-dev.sh inference_demo.py      # 运行 examples/inference_demo.py
+  ./scripts/start-dev.sh ft_compat_check.py     # 运行 tools/ft_compat_check.py
+  ./scripts/start-dev.sh --bash                 # 进入 bash
+  ./scripts/start-dev.sh -d                     # 启动长期开发容器
+  ./scripts/start-dev.sh -d --stop              # 停止容器
+  ./scripts/start-dev.sh --info                 # 查看信息
 HELP
 }
 
@@ -191,6 +215,7 @@ if [[ "$PERSISTENT" == true ]]; then
     stop_existing
     info "启动 Persistent 模式（后台长期开发容器）..."
     info "  SSH 端口: $SSH_PORT, Jupyter 端口: $JUPYTER_PORT"
+    info "  挂载目录: $VARIANT_ROOT -> $WORKSPACE_DIR"
     docker run -d \
         --name "$CONTAINER_NAME" \
         --privileged \
@@ -200,7 +225,7 @@ if [[ "$PERSISTENT" == true ]]; then
         -e "JUPYTER_TOKEN=$TOKEN" \
         -e "GRANT_SUDO=yes" \
         -e "TZ=Asia/Shanghai" \
-        -v "$SCRIPT_DIR:$WORKSPACE_DIR" \
+        -v "$VARIANT_ROOT:$WORKSPACE_DIR" \
         "$IMAGE"
     sleep 2
     if docker ps --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
@@ -224,13 +249,21 @@ else
         info "启动 Ephemeral 模式（bash shell，退出即删）..."
         DOCKER_CMD="bash"
     else
-        info "启动 Ephemeral 模式运行: ${EPHEMERAL_ARGS[*]}"
-        DOCKER_CMD="$PYTHON_BIN ${EPHEMERAL_ARGS[*]}"
+        # 智能解析脚本路径
+        script_path="$(resolve_script_path "${EPHEMERAL_ARGS[0]}")"
+        if [[ ${#EPHEMERAL_ARGS[@]} -gt 1 ]]; then
+            script_args="${EPHEMERAL_ARGS[@]:1}"
+            info "启动 Ephemeral 模式运行: $script_path $script_args"
+            DOCKER_CMD="$PYTHON_BIN $script_path $script_args"
+        else
+            info "启动 Ephemeral 模式运行: $script_path"
+            DOCKER_CMD="$PYTHON_BIN $script_path"
+        fi
     fi
     echo ""
     docker run --rm $IT_FLAG \
         -e "WORKSPACE_CHOWN_MODE=named-only" \
-        -v "$SCRIPT_DIR:$WORKSPACE_DIR" \
+        -v "$VARIANT_ROOT:$WORKSPACE_DIR" \
         -w "$WORKSPACE_DIR" \
         "$IMAGE" \
         $DOCKER_CMD

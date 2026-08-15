@@ -47,13 +47,54 @@
 
 ```
 variants/onnx-dev/
-├── Dockerfile              # ONNX-Dev 变体构建文件（4个追加阶段）
+├── Dockerfile              # ONNX-Dev 变体构建文件（3个追加阶段）
 ├── .env.example            # 构建参数配置模板
 ├── README.md               # 本文件
-└── .agents/
-    └── rules/
-        └── dockerfile.md   # Dockerfile 规范说明
+├── AGENTS.md               # AI 协作者入口
+├── .devcontainer/          # VS Code Dev Container 配置
+│   └── devcontainer.json
+├── .agents/
+│   └── rules/
+│       └── dockerfile.md   # Dockerfile 规范说明
+├── scripts/                # 启动/运维脚本
+│   ├── start-dev.sh        # Linux/WSL 一键启动脚本（Ephemeral/Persistent 双模式）
+│   ├── start-dev.ps1       # Windows PowerShell 包装器
+│   ├── wsl-run.sh          # WSL 入口脚本
+│   └── run_all_tests.sh    # 容器内批量测试脚本
+├── examples/               # 示例代码
+│   ├── simple_verify.py    # 简单环境验证脚本
+│   └── inference_demo.py   # 完整推理演示（Add模型+Mini-MLP+onnxsim）
+├── tools/                  # 工具脚本
+│   └── ft_compat_check.py  # Free-Threading 包兼容性检查工具
+└── docs/                   # 参考文档
+    └── WSL2-PATH-CHEATSHEET.md  # WSL2 路径映射速查
 ```
+
+## 🚀 快速开始（一键启动）
+
+使用提供的启动脚本，自动选择 Ephemeral（一次性）或 Persistent（长期后台）模式：
+
+```bash
+# 在 variants/onnx-dev/ 目录下执行
+
+# Linux/WSL：一键启动 Ephemeral 模式（Python REPL，退出即删）
+bash scripts/start-dev.sh
+
+# 运行示例脚本（自动查找 examples/ 或 tools/ 目录）
+bash scripts/start-dev.sh simple_verify.py       # 环境验证
+bash scripts/start-dev.sh inference_demo.py      # 推理演示
+bash scripts/start-dev.sh ft_compat_check.py     # FT兼容性检查
+
+# 长期后台模式（SSH+Jupyter+DinD）
+bash scripts/start-dev.sh -d
+
+# Windows PowerShell：
+.\scripts\start-dev.ps1
+.\scripts\start-dev.ps1 inference_demo.py
+.\scripts\start-dev.ps1 -Daemon
+```
+
+启动脚本支持智能路径查找：直接写文件名即可（如 `inference_demo.py`），脚本会自动在 `examples/`、`tools/` 和根目录下查找；也支持显式路径（如 `examples/inference_demo.py`）。
 
 ## 🚀 构建
 
@@ -294,3 +335,18 @@ docker run --rm devcontainer-base:onnx-dev-latest cat /etc/devcontainer-variant-
 - [Dockerfile 规范](./.agents/rules/dockerfile.md) - 本变体 Dockerfile 规范说明
 - [构建编排规范](../.agents/rules/build-orchestration.md) - build.sh 统一构建
 - [测试规范](../.agents/rules/testing.md) - 6 层测试策略
+- [WSL2 路径映射速查](./docs/WSL2-PATH-CHEATSHEET.md) - Windows↔WSL2↔Docker 三层路径与权限速查卡片
+
+## 🧪 容器内批量测试
+
+镜像构建完成后，可在容器内运行所有示例和工具测试：
+
+```bash
+# 方式1：通过启动脚本运行
+bash scripts/start-dev.sh scripts/run_all_tests.sh
+
+# 方式2：直接 docker run
+docker run --rm -v "$(pwd):/workspace" -w /workspace \
+  devcontainer-base:onnx-dev-latest \
+  bash scripts/run_all_tests.sh
+```

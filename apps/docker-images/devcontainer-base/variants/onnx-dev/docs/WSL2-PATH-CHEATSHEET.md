@@ -142,7 +142,7 @@ git config --global core.fileMode false
 wsl -d Ubuntu -- bash -c "cd /mnt/d/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-dev && docker run --rm -v \`"$(pwd):/workspace\`" devcontainer-base:onnx-dev-latest python -c 'import onnx; print(onnx.__version__)'"
 
 # 运行推理脚本（PowerShell）
-wsl -d Ubuntu -- bash -c "cd /mnt/d/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-dev && ./start-dev.sh inference_demo.py"
+wsl -d Ubuntu -- bash -c "cd /mnt/d/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-dev && ./scripts/start-dev.sh inference_demo.py"
 ```
 
 ### 🐧 WSL2 / Linux 直接调用
@@ -150,10 +150,10 @@ wsl -d Ubuntu -- bash -c "cd /mnt/d/spaces/SpecWeave/apps/docker-images/devconta
 cd /mnt/d/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/onnx-dev
 
 # 一键启动（自动选模式）
-./start-dev.sh                    # Ephemeral Python REPL
-./start-dev.sh inference_demo.py  # 运行脚本
-./start-dev.sh -d                 # Persistent 后台模式
-./start-dev.sh --info             # 查看镜像信息
+./scripts/start-dev.sh                    # Ephemeral Python REPL
+./scripts/start-dev.sh inference_demo.py  # 运行脚本（自动查找 examples/）
+./scripts/start-dev.sh -d                 # Persistent 后台模式
+./scripts/start-dev.sh --info             # 查看镜像信息
 ```
 
 ### 🐳 Docker 直接调用（WSL/Linux）

@@ -1,33 +1,41 @@
 #!/bin/bash
-# onnx-dev 容器内测试脚本 - 一次性验证所有脚本
+# onnx-dev 容器内测试脚本 - 一次性验证所有示例和工具
 set -e
 
-SCRIPT_DIR="/work"
+WORKSPACE_DIR="/workspace"
+EXAMPLES_DIR="$WORKSPACE_DIR/examples"
+TOOLS_DIR="$WORKSPACE_DIR/tools"
 PYTHON="/opt/conda/envs/main/bin/python"
 
 echo "============================================"
-echo "Test 1: opset模式冒烟推理 (inference_demo.py)"
+echo "Test 1: opset模式冒烟推理 (examples/inference_demo.py)"
 echo "============================================"
-$PYTHON $SCRIPT_DIR/inference_demo.py
+$PYTHON $EXAMPLES_DIR/inference_demo.py
 
 echo ""
 echo "============================================"
-echo "Test 2: free-threading包检查 (ft_compat_check.py) - 人类可读"
+echo "Test 2: 简单环境验证 (examples/simple_verify.py)"
 echo "============================================"
-$PYTHON $SCRIPT_DIR/ft_compat_check.py
+$PYTHON $EXAMPLES_DIR/simple_verify.py
 
 echo ""
 echo "============================================"
-echo "Test 3: free-threading包检查 (JSON输出)"
+echo "Test 3: free-threading包检查 (tools/ft_compat_check.py) - 人类可读"
 echo "============================================"
-$PYTHON $SCRIPT_DIR/ft_compat_check.py --json
+$PYTHON $TOOLS_DIR/ft_compat_check.py
 
 echo ""
 echo "============================================"
-echo "Test 4: 验证已有ONNX模型推理（如果存在模型文件）"
+echo "Test 4: free-threading包检查 (JSON输出)"
 echo "============================================"
-if [ -d "$SCRIPT_DIR/models" ] && ls $SCRIPT_DIR/models/*.onnx 1>/dev/null 2>&1; then
-    for model in $SCRIPT_DIR/models/*.onnx; do
+$PYTHON $TOOLS_DIR/ft_compat_check.py --json
+
+echo ""
+echo "============================================"
+echo "Test 5: 验证已有ONNX模型推理（如果存在模型文件）"
+echo "============================================"
+if [ -d "$WORKSPACE_DIR/models" ] && ls $WORKSPACE_DIR/models/*.onnx 1>/dev/null 2>&1; then
+    for model in $WORKSPACE_DIR/models/*.onnx; do
         echo "  测试模型: $model"
         $PYTHON -c "
 import onnx
