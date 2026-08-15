@@ -1,27 +1,26 @@
 # devcontainer-base 变体 Dockerfile 重构优化 - 检查清单
 
-> **版本**：v2.3（基于七概念方法论重新设计，Task 1-3已完成）
+> **版本**：v2.8（阶段一完成！Task 1-8全部完成，10模块框架就绪）
 > **更新日期**：2026-08-15
 
 ## 实施阶段检查点
 
-### 阶段一：补全框架基础设施
+### ✅ 阶段一：补全框架基础设施（全部完成）
 - [x] mirror.sh 已实现，支持4种conda源+性能参数 ✅
 - [x] install-helpers.sh 已实现，conda/pip_install_group函数 ✅
 - [x] ft-guards.sh 已实现，free-threading守卫函数 ✅
-- [ ] cleanup.sh 已实现，安全清理（不碰计时器目录）
-- [ ] build-info.sh 已实现，统一build-info写入
-- [ ] verify.sh 已实现，基础验证函数
-- [ ] permissions.sh 已实现，权限设置函数
-- [ ] variant-framework.sh 入口脚本已实现，正确source顺序
-- [ ] 所有9个新脚本+现有2个脚本共10个全部通过 bash -n 语法检查
-- [ ] VARIANT_DEBUG=1 可正常启用调试输出
+- [x] cleanup.sh 已实现，安全清理（不碰计时器目录）✅
+- [x] build-info.sh 已实现，统一build-info写入 ✅
+- [x] verify.sh 已实现，基础验证函数 ✅
+- [x] permissions.sh 已实现，权限设置函数 ✅
+- [x] variant-framework.sh 入口脚本已实现，正确source顺序 ✅
+- [x] 所有10个脚本（含已有logging/timer）全部通过 bash -n 语法检查 ✅
+- [x] VARIANT_DEBUG=1 可正常启用set -x调试输出 ✅
 
-### 阶段二：向后兼容、测试与模板
-- [ ] conda-mirror-setup.sh 已更新，内部调用mirror.sh保持向后兼容
-- [ ] 框架集成测试通过：source variant-framework.sh 无错误，所有函数已定义
-- [ ] _template/Dockerfile 已更新使用新框架
-- [ ] 模板代码量 < 100行
+### 阶段二：向后兼容、测试与模板更新
+- [ ] conda-mirror-setup.sh 向后兼容更新（内部调用mirror.sh，保持独立可执行）
+- [ ] 框架集成验证（source后所有函数可用，无报错）
+- [ ] _template/Dockerfile更新（使用新框架，代码量<100行）
 - [ ] 模板可成功构建dummy变体验证框架可用性
 
 ### 阶段三：试点迁移

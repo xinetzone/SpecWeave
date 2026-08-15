@@ -1,13 +1,13 @@
 # devcontainer-base 变体 Dockerfile 重构优化 - Product Requirement Document
 
-> **Spec状态**：v2.0 更新（基于七概念方法论重新设计）
+> **Spec状态**：v2.1（阶段一完成！10模块共享框架全部就绪，等待阶段二向后兼容+模板更新）
 > **更新日期**：2026-08-15
 > **方法论链路**：I(洞察)→F(第一性原理)→V(对抗审查)→A(原子化)
 
 ## Overview
 - **Summary**: 提取 devcontainer-base variants/ 目录下所有变体 Dockerfile 中的重复构建框架代码到 `variants/shared/lib/` 共享脚本库。变体 Dockerfile 只保留变体差异逻辑（安装什么包、验证什么功能），简化维护成本。
 - **Purpose**: 解决当前每个变体独立实现完整构建框架导致的代码重复、维护成本高、bug修复不同步等问题。
-- **Current Status**: 重构已部分启动——`shared/lib/logging.sh` 和 `shared/lib/timer.sh` 已实现且设计质量高于原Spec，本方案基于这两个现有模块补全框架而非降级重写。
+- **Current Status**: ✅ **阶段一完成** - 10个模块的共享构建框架全部实现并通过语法检查。logging.sh/timer.sh为已有高质量模块，其余8个模块（mirror/install-helpers/ft-guards/cleanup/build-info/verify/permissions/variant-framework）已按Spec实现。下一步：阶段二向后兼容、框架集成验证、模板更新。
 - **Target Users**: 维护 devcontainer-base 镜像的开发者、新增变体的开发者、CI/CD 系统。
 
 ## Goals
