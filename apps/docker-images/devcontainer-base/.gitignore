@@ -32,3 +32,6 @@ Thumbs.db
 .idea/
 *.swp
 
+# ONNX models
+*.onnx
+
