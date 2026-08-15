@@ -152,6 +152,7 @@ mindmap
 ## 配套资产
 
 - 通用自动化脚本模板：[three-layer-repair-closure-template](../../../../.agents/templates/three-layer-repair-closure-template/README.md)
+- 连接池耗尽场景示例：[connection-pool-exhaustion.ps1](../../../../.agents/templates/three-layer-repair-closure-template/examples/connection-pool-exhaustion.ps1)（数据库连接数周期性超限三层修复）
 - 参考实现：[fix-screenshot-tool.ps1](../../../../.agents/scripts/fix-screenshot-tool.ps1)（`-Watch` 守护模式即第 3 层兜底实现）
 - 私域根因报告：[screenshot-tool-dual-source-rootcause-20260815.md](../../../playground/reports/screenshot-tool-dual-source-rootcause-20260815/screenshot-tool-dual-source-rootcause-20260815.md)（不入 git）
 

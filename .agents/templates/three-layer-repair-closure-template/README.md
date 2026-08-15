@@ -48,6 +48,12 @@ schtasks /Create /TN "MyAppHealWatch" /TR "pwsh.exe -NoProfile -ExecutionPolicy 
 - **故障信号用机器可判**：`Test-FaultSignal` 返回布尔，配合退出码可进 CI
 - **继承本模式 5 个反模式**：只治标不找源、知识不独立沉淀、无自动兜底、归因不验证、断源不备份
 
+## 配套示例
+
+| 示例 | 场景 | 文件 |
+|------|------|------|
+| 连接池耗尽 | 数据库连接数周期性超限，终止空闲连接 + 按来源定位泄漏 | [examples/connection-pool-exhaustion.ps1](examples/connection-pool-exhaustion.ps1) |
+
 ## 适用范围
 
 - 适用于：反复复发型故障、存在周期性破坏源的环境、需免人工兜底的运维
