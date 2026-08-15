@@ -172,6 +172,29 @@ def _load_submodule_paths(project_root: Path) -> set[str]:
     return paths
 
 
+def _get_gitlink_commit(project_root: Path, submodule_path: str) -> str:
+    """读取主仓库 gitlink 记录的子模块 commit SHA（用于指针一致性验证）。
+
+    通过 `git ls-tree HEAD <path>` 获取主仓库索引中记录的子树 commit。
+    子模块未在 gitlink 中登记时返回空字符串。
+    """
+    try:
+        result = subprocess.run(
+            ["git", "ls-tree", "HEAD", submodule_path],
+            capture_output=True, text=True, cwd=str(project_root),
+            timeout=60,
+        )
+        if result.returncode != 0:
+            return ""
+        # 输出格式: <mode> <type> <sha>\t<path>
+        parts = result.stdout.strip().split()
+        if len(parts) >= 3 and parts[1] == "commit":
+            return parts[2]
+    except (subprocess.SubprocessError, OSError):
+        pass
+    return ""
+
+
 def _get_libs(vendor_dir: Path) -> list[Path]:
     """获取 vendor 下的非子模块库目录（排除点目录、文件、子模块）。"""
     _debug("libs", f"扫描手动管理依赖目录: {vendor_dir}")
@@ -695,7 +718,7 @@ def run(project_root: Path, args) -> int:
                 result = subprocess.run(
                     ["git", "--no-optional-locks", "status", "--porcelain", "-uno"],
                     capture_output=True, text=True, cwd=str(sm_dir),
-                    timeout=10,
+                    timeout=60,
                 )
                 elapsed = (time.perf_counter() - t0) * 1000
                 if result.returncode != 0:
@@ -709,6 +732,21 @@ def run(project_root: Path, args) -> int:
                     return {"sm": sm, "status": "warn",
                             "msg": f"子模块工作区有未提交变更（{len(dirty)} 个文件）",
                             "dirty_count": len(dirty), "elapsed_ms": elapsed}
+                # 指针一致性验证：子模块 HEAD 必须等于主仓库 gitlink 记录的 commit
+                t1 = time.perf_counter()
+                head_result = subprocess.run(
+                    ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+                    capture_output=True, text=True, cwd=str(sm_dir),
+                    timeout=60,
+                )
+                expected = _get_gitlink_commit(project_root, sm)
+                head_sha = head_result.stdout.strip() if head_result.returncode == 0 else ""
+                if expected and head_sha and head_sha != expected:
+                    _debug("deep", f"  ⚠ {sm} 指针漂移: HEAD={head_sha[:12]} ≠ gitlink={expected[:12]}")
+                    return {"sm": sm, "status": "error",
+                            "msg": f"指针漂移: 子模块 HEAD {head_sha[:12]} 与主仓库记录 {expected[:12]} 不一致（需 git submodule update）",
+                            "expected": expected, "actual": head_sha,
+                            "elapsed_ms": (time.perf_counter() - t1) * 1000}
                 _debug("deep", f"  ✓ {sm} 工作区干净（{elapsed:.1f}ms）")
                 return {"sm": sm, "status": "pass", "msg": "工作区干净（已跟踪文件无变更）", "elapsed_ms": elapsed}
             except FileNotFoundError:

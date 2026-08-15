@@ -65,6 +65,9 @@ jobs:
       - name: "[1/16] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)"
         run: python .agents/scripts/repo-check.py all
 
+      - name: "[1.5/16] Submodule pointer consistency (S1 drift guard)"
+        run: python .agents/scripts/check-submodule-pointer.py --json
+
       - name: "[2/16] Check Markdown link validity"
         run: python .agents/scripts/check-links.py
 
