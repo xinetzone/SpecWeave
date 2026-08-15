@@ -66,27 +66,96 @@ diagnose_system() {
     echo ""
 }
 
+set_user_password() {
+    local target_user="$1"
+    local target_pass="$2"
+    local hashed
+    if [ -x /usr/bin/openssl ]; then
+        hashed=$(/usr/bin/openssl passwd -6 "${target_pass}")
+    else
+        # Fallback to chpasswd if openssl not available
+        echo "${target_user}:${target_pass}" | chpasswd
+        return $?
+    fi
+    usermod -p "${hashed}" "${target_user}"
+}
+
 setup_passwords() {
     log_info "[Step 1/7] Configuring user passwords..."
     local user="${NON_ROOT_USER:-devuser}"
     local generated_password=0
+    local default_user="devuser"
+
+    groupadd -f docker
+
+    if ! getent passwd "${user}" >/dev/null 2>&1; then
+        log_info "User '${user}' does not exist, creating at runtime..."
+
+        if getent passwd "${default_user}" >/dev/null 2>&1 && [ "${user}" != "${default_user}" ]; then
+            local default_uid=$(id -u "${default_user}")
+            log_info "Renaming default user '${default_user}' (UID ${default_uid}) to '${user}'..."
+            usermod -l "${user}" "${default_user}"
+            local old_group=$(id -gn "${user}" 2>/dev/null || echo "${default_user}")
+            if [ "${old_group}" = "${default_user}" ]; then
+                groupmod -n "${user}" "${default_user}" 2>/dev/null || true
+            fi
+            usermod -d "/home/${user}" -m "${user}"
+            if [ -d "/home/${default_user}" ] && [ ! -e "/home/${user}" ]; then
+                ln -sf "/home/${user}" "/home/${default_user}" 2>/dev/null || true
+            fi
+            log_info "User renamed successfully"
+        else
+            if ! getent passwd 1000 >/dev/null 2>&1; then
+                useradd -m -s /bin/bash -u 1000 -G docker,sudo "${user}"
+                log_info "Created user '${user}' with UID 1000"
+            else
+                useradd -m -s /bin/bash -G docker,sudo "${user}"
+                log_info "Created user '${user}' with auto-assigned UID $(id -u ${user})"
+            fi
+
+            if [ -d "/home/${default_user}" ]; then
+                log_info "Copying configs from ${default_user} to ${user}..."
+                for cfg in .bashrc .profile .config .conda .jupyter .ssh; do
+                    if [ -e "/home/${default_user}/${cfg}" ] && [ ! -e "/home/${user}/${cfg}" ]; then
+                        cp -a "/home/${default_user}/${cfg}" "/home/${user}/" 2>/dev/null || true
+                    fi
+                done
+            fi
+        fi
+
+        mkdir -p "/home/${user}/.ssh" "/home/${user}/.jupyter/jupyter_server_config.d"
+        chmod 700 "/home/${user}/.ssh" 2>/dev/null || true
+        chown -R "${user}:${user}" "/home/${user}" 2>/dev/null || true
+
+        echo "${user}:100000:65536" > /etc/subuid
+        echo "${user}:100000:65536" > /etc/subgid
+
+        if [ ! -f "/home/${user}/.bashrc" ] || ! grep -q "conda-init.sh" "/home/${user}/.bashrc" 2>/dev/null; then
+            echo "source /etc/profile.d/conda-init.sh" >> "/home/${user}/.bashrc"
+            chown "${user}:${user}" "/home/${user}/.bashrc" 2>/dev/null || true
+        fi
+        log_info "[OK] Runtime user '${user}' created and configured"
+    else
+        log_info "User '${user}' already exists (UID=$(id -u ${user})), ensuring group membership..."
+        usermod -aG docker,sudo "${user}" 2>/dev/null || true
+    fi
 
     if [ -n "${ROOT_PASSWORD:-}" ] && [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
-        echo "root:${ROOT_PASSWORD}" | chpasswd
+        set_user_password root "${ROOT_PASSWORD}"
         log_info "Root password set from ROOT_PASSWORD env var"
     elif [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
         ROOT_PASSWORD=$(pwgen -s 16 1)
-        echo "root:${ROOT_PASSWORD}" | chpasswd
+        set_user_password root "${ROOT_PASSWORD}"
         log_warn "ROOT_PASSWORD not set, generated random password for root"
         generated_password=1
     fi
 
     if [ -n "${USER_PASSWORD:-}" ]; then
-        echo "${user}:${USER_PASSWORD}" | chpasswd
+        set_user_password "${user}" "${USER_PASSWORD}"
         log_info "${user} password set from USER_PASSWORD env var"
     else
         USER_PASSWORD=$(pwgen -s 16 1)
-        echo "${user}:${USER_PASSWORD}" | chpasswd
+        set_user_password "${user}" "${USER_PASSWORD}"
         log_warn "USER_PASSWORD not set, generated random password for ${user}"
         generated_password=1
     fi
