@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # =============================================================================
-# cleanup.sh — 统一清理模块（激进清理减小镜像体积，安全排除计时器目录）
+# cleanup.sh — 统一清理模块（激进清理减小镜像体积，基于 safe_cleanup 安全原语）
 #
 # 提供分层清理函数：pycache → conda/pip cache → apt → tmp → binaries → all
-# 关键安全保证：cleanup_tmp 显式排除 /root/.variant-timers/ 计时器目录
+# 安全保证：基于 safe_cleanup.sh 的 T∩D=∅ 隔离原则，自动防止备份自毁类 bug
 #
-# 依赖：logging.sh（variant_log_* 函数）
+# 依赖：logging.sh（variant_log_* 函数）、safe_cleanup.sh（安全清理原语）
 # =============================================================================
 
 # 防止重复 source
@@ -14,6 +14,13 @@ _VARIANT_CLEANUP_LOADED=1
 
 # 计时器目录（必须排除，不能被清理删除）
 _VARIANT_TIMER_DIR="/root/.variant-timers"
+
+# 确保 safe_cleanup 已加载（框架已按依赖顺序加载，此处为独立source时的兜底）
+if [[ -z "${_SAFE_CLEANUP_LOADED:-}" ]]; then
+    _CLEANUP_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    # shellcheck source=./safe_cleanup.sh
+    source "${_CLEANUP_LIB_DIR}/safe_cleanup.sh"
+fi
 
 # ---------------------------------------------------------------------------
 # cleanup_pycache: 删除Python缓存文件
@@ -51,7 +58,7 @@ cleanup_conda_pip_cache() {
 }
 
 # ---------------------------------------------------------------------------
-# cleanup_apt: 清理APT缓存
+# cleanup_apt: 清理APT缓存（使用 safe_cleanup_dir 安全清理 lists 目录）
 # ---------------------------------------------------------------------------
 cleanup_apt() {
     echo ""
@@ -60,13 +67,19 @@ cleanup_apt() {
     echo "└─────────────────────────────────────────────────┘"
 
     apt-get clean -y 2>/dev/null || true
-    rm -rf /var/lib/apt/lists/* 2>/dev/null || true
+    # 使用 safe_cleanup_dir 替代 rm -rf /var/lib/apt/lists/* —— 根目录护栏+隐藏文件自动清理
+    safe_cleanup_dir /var/lib/apt/lists
 
     variant_log_ok "APT cache cleaned"
 }
 
 # ---------------------------------------------------------------------------
-# cleanup_tmp: 安全清理临时目录，显式排除计时器目录
+# cleanup_tmp: 安全清理临时目录
+#
+# 安全策略：
+#   1. _VARIANT_TIMER_DIR=/root/.variant-timers 天然在 /tmp、/var/tmp 之外
+#   2. 启动时断言：验证计时器目录不在清理目标内（防御未来路径变更）
+#   3. 使用 safe_cleanup_dir 白名单清理，无需 mv-aside（零备份自毁风险）
 # ---------------------------------------------------------------------------
 cleanup_tmp() {
     echo ""
@@ -75,25 +88,30 @@ cleanup_tmp() {
     echo "│ NOTE: ${_VARIANT_TIMER_DIR} EXCLUDED (timer data)  │"
     echo "└─────────────────────────────────────────────────┘"
 
-    # 清理/tmp，但先排除计时器目录
-    if [[ -d "${_VARIANT_TIMER_DIR}" ]]; then
-        # 临时移动计时器目录到安全位置
-        local tmp_timer_backup="/tmp/.variant-timers-backup-$$"
-        mv "${_VARIANT_TIMER_DIR}" "${tmp_timer_backup}" 2>/dev/null || true
+    # 防御性断言：计时器目录必须在 /tmp 和 /var/tmp 之外（T∩D=∅不变量）
+    # 如果未来有人把 _VARIANT_TIMER_DIR 改到 /tmp 下，这里会立刻报错阻止清理
+    local _assert_failed=0
+    for _tmp_target in /tmp /var/tmp; do
+        if safe_is_subpath "${_VARIANT_TIMER_DIR}" "${_tmp_target}"; then
+            echo "[CLEANUP][ERROR] Timer dir INSIDE cleanup target! This violates T∩D=∅ invariant." >&2
+            echo "[CLEANUP][ERROR]   timer: ${_VARIANT_TIMER_DIR}" >&2
+            echo "[CLEANUP][ERROR]   target: ${_tmp_target}" >&2
+            echo "[CLEANUP][ERROR]   Use safe_cleanup_move_aside() or move timer dir outside /tmp." >&2
+            _assert_failed=1
+        fi
+    done
 
-        rm -rf /tmp/* /tmp/.* 2>/dev/null || true
-        rm -rf /var/tmp/* /var/tmp/.* 2>/dev/null || true
-
-        # 恢复计时器目录
-        mkdir -p "$(dirname "${_VARIANT_TIMER_DIR}")"
-        mv "${tmp_timer_backup}" "${_VARIANT_TIMER_DIR}" 2>/dev/null || true
-    else
-        # 计时器目录不存在，直接清理
-        rm -rf /tmp/* /tmp/.* 2>/dev/null || true
-        rm -rf /var/tmp/* /var/tmp/.* 2>/dev/null || true
+    if [[ $_assert_failed -eq 1 ]]; then
+        echo "[CLEANUP][WARN] Aborting tmp cleanup due to safety violation. Timer data must be preserved." >&2
+        return 1
     fi
 
-    variant_log_ok "tmp directories cleaned (timer dir preserved)"
+    # 计时器目录在 /root/，天然隔离——直接安全清理 /tmp 和 /var/tmp
+    # safe_cleanup_dir 自动处理隐藏文件、根目录护栏、非阻塞容错
+    safe_cleanup_dir /tmp
+    safe_cleanup_dir /var/tmp
+
+    variant_log_ok "tmp directories cleaned (timer dir preserved via safe_cleanup)"
 }
 
 # ---------------------------------------------------------------------------
