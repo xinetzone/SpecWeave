@@ -307,25 +307,15 @@
   - 3个构建阶段（继承conda-llvm层框架，无需重复COPY）
   - torch/torchvision双重负向防线（Stage2安装后+Stage3最终验证）
 
-### Task 14: 迁移 onnx-pytorch 变体到新框架
+### Task 14: 迁移 onnx-pytorch 变体到新框架 — ⏭️ **SKIPPED (2026-08-15)**
 - **Priority**: medium
 - **Depends on**: Task 13
-- **Description**: 迁移onnx-pytorch变体（GIL模式Python+PyTorch CPU）
-- **Acceptance Criteria**:
-  - [rule] onnx-pytorch/Dockerfile 使用新框架
-  - [rule] PyTorch CPU可用，ONNX导出验证通过
-  - [rule] CUDA不可用（CPU-only）验证通过
-  - [rule] GIL模式验证（因为PyTorch对free-threading支持有限）
-  - [rule] 代码量减少70%+
-- **Test Requirements**:
-  - [rule] docker build成功
-  - [rule] torch可导入，CUDA不可用
-  - [rule] ONNX导出测试通过
-  - [rule] variants/scripts/test-onnx-pytorch.sh全部通过
+- **Status**: ⏭️ **SKIPPED** — 变体后续考虑移除，暂不迁移
+- **Note**: onnx-pytorch 变体为GIL模式+PyTorch CPU，与cp314t free-threading主线冲突。保留旧版Dockerfile不动，如确需迁移再单独处理。
 
 ### Task 15: 迁移 onnx-quantized 变体到新框架
 - **Priority**: medium
-- **Depends on**: Task 13（可与Task 14并行）
+- **Depends on**: Task 13
 - **Description**: 迁移onnx-quantized量化工具变体
 - **Acceptance Criteria**:
   - [rule] onnx-quantized/Dockerfile 使用新框架
@@ -341,7 +331,7 @@
 
 ### Task 16: 迁移 ai-dev 变体到新框架
 - **Priority**: high
-- **Depends on**: Task 14, Task 15
+- **Depends on**: Task 15
 - **Description**: 迁移最复杂的ai-dev全栈AI变体
 - **Acceptance Criteria**:
   - [rule] ai-dev/Dockerfile 使用新框架，删除内联重复代码
@@ -362,7 +352,7 @@
 
 ### Task 17: 检查并更新 variants/build.sh（如需要）
 - **Priority**: medium
-- **Depends on**: Task 12-16
+- **Depends on**: Task 12-13, 15-16（Task 14已跳过）
 - **Description**: 检查build.sh是否需要更新以适配新框架（理论上不需要，因为变体接口不变）
 - **Acceptance Criteria**:
   - [rule] bash variants/build.sh --list 可正常列出所有变体
