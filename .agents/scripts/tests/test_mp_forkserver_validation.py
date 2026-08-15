@@ -36,8 +36,9 @@ def ctx_name(request):
     """
     import platform
 
-    if request.param == "fork" and platform.system() == "Windows":
-        pytest.skip("Windows 不支持 fork context")
+    # Windows 仅支持 spawn context（Python 3.13：fork/forkserver 均不可用）
+    if platform.system() == "Windows" and request.param != "spawn":
+        pytest.skip(f"Windows 不支持 {request.param} context")
     return request.param
 
 
