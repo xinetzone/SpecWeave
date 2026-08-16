@@ -24,10 +24,10 @@
 | 依赖链 | base → conda-llvm → onnx-dev → onnx-quantized → torch-dev → **ai-dev**（6层） |
 | 核心定位 | 全栈 AI/ML/NLP 开发环境（双环境架构：base GIL兼容 + main free-threading PyTorch） |
 | Python 环境架构 | **双环境（Dual-Env）**：base(GIL) + main(free-threading cp314t) |
-| 默认 Python | `/opt/conda/bin/python`（base 环境，GIL 启用，承载 50+ AI/ML/NLP 包） |
+| 默认 Python | `/opt/conda/bin/python`（base 环境，GIL 启用，承载 47 个 AI/ML/NLP 包） |
 | PyTorch 环境 | `/opt/conda/envs/main/bin/python`（main 环境，cp314t free-threading，无 GIL，继承自 torch-dev） |
-| 本层安装（base环境） | transformers/datasets/fastapi/pandas/matplotlib/jieba/PyMuPDF/数据库客户端/einops/numba 等 48 个包（不含 torch 依赖包） |
-| 本层安装（main环境） | onnx2torch, open_clip_torch（torch 依赖包，与 torch 同处 main 环境，G-M1组） |
+| 本层安装（base环境） | transformers/datasets/fastapi/pandas/matplotlib/jieba/PyMuPDF/数据库客户端/einops/numba 等 47 个包（不含 torch 依赖包） |
+| 本层安装（main环境） | onnx2torch, open_clip_torch, sentence-transformers（torch 依赖包，与 torch 同处 main 环境，G-M1组） |
 | 继承自带（main环境） | torch/torchvision（CUDA cp314t）、onnx/onnxruntime（含量化）、onnxsim/onnxscript（来自 torch-dev） |
 | 继承自带（base环境） | LLVM/clang/cmake/ninja（来自 conda-llvm 链）、Python 3.14.6 标准构建 |
 | 排除项 | onnxoptimizer（free-threading 不兼容，继承自 onnx-quantized 约束） |
@@ -42,15 +42,15 @@ ai-dev 的核心设计是**双Python环境隔离**：
 
 - **base 环境（`/opt/conda`，GIL 启用，PATH 最前）**：
   - 默认 `python` 命令指向此环境
-  - 承载 48 个 AI/ML/NLP 生态包（transformers、datasets、fastapi、pandas、数据库客户端等）
+  - 承载 47 个 AI/ML/NLP 生态包（transformers、datasets、fastapi、pandas、数据库客户端等）
   - 使用标准 CPython（GIL 启用）保证最大包兼容性
-  - **不得在此环境安装 torch/torchvision 或声明 torch 依赖的包**（如 onnx2torch、open_clip_torch）——它们只在 main 环境存在
+  - **不得在此环境安装 torch/torchvision 或声明 torch 依赖的包**（如 onnx2torch、open_clip_torch、sentence-transformers）——它们只在 main 环境存在
   - 如果必须安装新包且其 `install_requires` 包含 torch，该包必须装在 main 环境，防止 pip 自动拉取 GIL 版 torch 到 base
 
 - **main 环境（`/opt/conda/envs/main`，free-threading cp314t，无 GIL）**：
-  - PyTorch CUDA、ONNX 量化栈、onnx2torch、open_clip_torch 所在（继承自 torch-dev + 本层 G-M1 组）
+  - PyTorch CUDA、ONNX 量化栈、onnx2torch、open_clip_torch、sentence-transformers 所在（继承自 torch-dev + 本层 G-M1 组）
   - 通过绝对路径 `/opt/conda/envs/main/bin/python` 访问
-  - 放已验证可在 free-threading 下工作的包（torch/onnx/onnxruntime/onnxsim/onnxscript/onnx2torch/open_clip）
+  - 放已验证可在 free-threading 下工作的包（torch/onnx/onnxruntime/onnxsim/onnxscript/onnx2torch/open_clip/sentence_transformers）
   - Jupyter 服务运行于此环境（supervisord 启动）
 
 - **环境隔离铁则**：两个环境的 site-packages 完全隔离，**不可跨环境 import 包**。
@@ -60,7 +60,7 @@ ai-dev 的核心设计是**双Python环境隔离**：
 - **PATH 优先级（刻意覆盖 torch-dev 设置）**：
   - torch-dev: `/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}`（main 在前）
   - ai-dev: `/opt/conda/bin:${PATH}`（base 在前，覆盖 torch-dev 的 PATH）
-  - 理由：ai-dev 的日常开发重心在 base 环境（50+包），main 环境 PyTorch 为需要时显式调用
+  - 理由：ai-dev 的日常开发重心在 base 环境（47个包），main 环境 PyTorch 为需要时显式调用
 
 ### 2. Jupyter 跨环境内核机制
 
@@ -175,4 +175,5 @@ bash variants/scripts/test-ai-dev.sh
 | 日期 | 变更 |
 |------|------|
 | 2026-08-16 | 新增本 AGENTS.md；修正文档继承链（onnx-quantized→torch-dev→ai-dev）；明确双环境架构三条核心约束；修复 onnx2torch/open_clip_torch/sentence-transformers 安装位置（从 base 移到 main G-M1组，构建验证时发现sentence-transformers遗漏）；添加 T28（base 无 torch 守卫）和 T29（main torch 生态含sentence-transformers）测试；解决V阶段发现的架构风险 |
+| 2026-08-16 | 增强构建可观测性：install-helpers.sh新增--verbose模式（安装前环境诊断+pip -v详细编译输出+逐个包import验证）；G-M1组启用verbose模式便于排查Rust源码编译问题；dockerfile.md新增Rust编译环境要求和torch依赖包识别规则；修正包数统计为47个 |
 | 2026-08-15 | ai-dev 变体首次创建（但文档/规范未同步更新，遗留不一致问题） |

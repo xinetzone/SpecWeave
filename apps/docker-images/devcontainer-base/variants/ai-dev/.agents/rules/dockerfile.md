@@ -6,7 +6,7 @@
 - **继承链**: devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → torch-dev → **ai-dev**（6层）
 - **双环境架构**:
   - **base 环境**（`/opt/conda`，标准 Python，GIL **启用**）：承载 47 个 AI/ML/NLP 生态包，默认 `python` 指向此环境
-  - **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t **free-threading**，GIL **禁用**）：PyTorch CUDA + ONNX量化栈 + G-M1 torch依赖包（继承自 torch-dev）
+  - **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t **free-threading**，GIL **禁用**）：PyTorch CUDA + ONNX量化栈 + G-M1 torch依赖包（onnx2torch/open_clip_torch/sentence-transformers，继承自 torch-dev）
 - **PATH 优先级**: `/opt/conda/bin:${PATH}`（base 环境在前，刻意覆盖 torch-dev 的 main 在前设置）
 - **默认 Python**: `/opt/conda/bin/python`（base 环境，GIL 启用）
 - **PyTorch Python**: `/opt/conda/envs/main/bin/python`（main 环境，free-threading，CUDA 可用）
@@ -89,8 +89,18 @@
 
 - 设置 `variant_activate_base_env`（激活 base 环境 + `PIP_USER=0` 构建期写入全局）
 - pip 升级：`pip install --no-cache-dir --upgrade pip setuptools wheel`
-- 按 G1-G14 分组使用 `pip_install_group` 在 **base 环境**安装 50+ 包（每组 3-8 个包，独立计时+冲突诊断）
-- **切换到 main 环境**（`variant_activate_main_env`），安装 G-M1 组（onnx2torch + open_clip_torch）——这两个包依赖 torch，必须安装在 main 环境与 torch 同处
+- 按 G1-G14 分组使用 `pip_install_group` 在 **base 环境**安装 47 个包（每组 3-8 个包，独立计时+冲突诊断）
+- **切换到 main 环境**（`variant_activate_main_env`）前的 Rust/编译环境配置（G-M1源码编译必需）：
+  1. 设置 Rust 镜像源（rsproxy.cn）加速 Rust toolchain 下载（maturin构建safetensors/tokenizers需要）
+  2. 配置 clang/clang++ 作为 C/C++ 编译器（conda 环境中无 gcc，需用 conda 安装的 clang）
+  3. 创建 cc→clang 和 c++→clang++ 符号链接（Rust cc-rs crate 默认查找 cc/c++）
+  4. 设置 CC=clang, CXX=clang++ 环境变量
+- **切换到 main 环境**（`variant_activate_main_env`），使用 `pip_install_group --verbose` 安装 G-M1 组（onnx2torch + open_clip_torch + sentence-transformers）：
+  - **为什么用 `--verbose`？** safetensors/tokenizers 没有 cp314t prebuilt wheel，需要 Rust+maturin 源码编译，verbose 模式输出：
+    - 安装前环境诊断（Python ABI/编译器/Rust版本）
+    - pip -v 详细输出（wheel检测/编译进度/cargo build日志）
+    - 安装后逐个包import验证+版本打印
+  - 这三个包都声明 `install_requires: torch`，必须安装在 main 环境与 torch 同处，否则 pip 会自动拉取 GIL 版 torch 到 base 破坏双环境隔离
 - 切回 base 环境（`variant_activate_base_env`）执行清理
 - 使用 `--mount=type=cache,target=/root/.cache/pip,sharing=locked` 缓存 pip 下载
 - 安装后执行：
@@ -101,7 +111,7 @@
   - `pip check`：依赖冲突检查（前5行输出）
 - 版本汇总：分两段输出
   - base 环境版本：使用 importlib 输出核心包版本（注意模块名↔包名映射：sklearn→scikit-learn, fitz→PyMuPDF）
-  - main 环境版本：输出 torch/torchvision/onnx2torch/open_clip 版本
+  - main 环境版本：输出 torch/torchvision/onnx2torch/open_clip/sentence-transformers 版本
 
 ### Stage 3/3: Jupyter 内核注册 + 元数据 + 双环境验证
 
@@ -123,7 +133,7 @@
   - PATH_PRIORITY, BASE_VARIANT, TORCH_IN_BASE=false
 - `cleanup_all`：统一清理
 - 双环境验证（9 项检查）：
-  1. NLP 栈导入（transformers/datasets/sentence_transformers/evaluate）
+  1. NLP 栈导入（transformers/datasets/evaluate；sentence-transformers 在 main 环境，不在 base）
   2. Web/API 栈导入（fastapi/uvicorn/pydantic/httpx）
   3. 数据栈导入（pandas/pyarrow/sklearn）
   4. 可视化/CLI栈导入（matplotlib/seaborn/rich/typer）
@@ -132,7 +142,7 @@
   7. 数据库客户端导入（psycopg2/pymongo/elasticsearch/minio）
   8. 构建/开发工具导入（nuitka/pytest/psutil/icecream）
   9. 双环境 GIL 架构 + torch 隔离验证：
-     - main 环境：torch+torchvision 导入、量化API、onnx2torch+open_clip导入、GIL禁用
+     - main 环境：torch+torchvision 导入、量化API、onnx2torch+open_clip+sentence-transformers导入、GIL禁用
      - base 环境：GIL启用、torch NOT present（双环境隔离守卫）
 - `verify_base_services`：验证 SSH/Docker/Supervisord 基础服务未被破坏
 - JupyterLab 版本检查（>=4.4）
@@ -150,7 +160,7 @@
 
 内核配置：
 - `display_name`: "Python 3 (AI Dev)"
-- `argv[0]`: `/opt/conda/bin/python`（指向 base 环境 Python，50+包可用）
+- `argv[0]`: `/opt/conda/bin/python`（指向 base 环境 Python，47个包可用）
 - `env.PATH`: `/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
 - 不设置项目特定的 PYTHONPATH（通用开发内核）
 
@@ -171,8 +181,33 @@
 测试脚本必须包含双环境架构守卫，防止后续修改意外破坏架构：
 - T26: base 环境 GIL 必须启用（`sys._is_gil_enabled() is True`）
 - T27: main 环境 GIL 必须禁用（`sys._is_gil_enabled() is False`）
-- T28: base 环境 torch 必须不存在（`importlib.util.find_spec('torch') is None`）—— torch 依赖包（onnx2torch/open_clip_torch）必须装在 main 环境
-- T29: main 环境 torch 生态（torch+torchvision+onnx2torch+open_clip）必须可导入且 GIL 禁用
+- T28: base 环境 torch 必须不存在（`importlib.util.find_spec('torch') is None`）—— **所有 torch 依赖包（onnx2torch/open_clip_torch/sentence-transformers）必须装在 main 环境**
+- T29: main 环境 torch 生态（torch+torchvision+onnx2torch+open_clip+sentence-transformers）必须可导入且 GIL 禁用
+
+### torch 依赖包识别规则
+
+**判定标准**：包的 `install_requires` 中包含 `torch` 或 `torchvision` 声明。
+
+**已识别的 torch 依赖包清单**（必须安装在 main 环境 G-M1 组）：
+| 包 | install_requires 中的 torch 声明 | 备注 |
+|----|----------------------------------|------|
+| onnx2torch | 显式依赖 torch | ONNX→PyTorch 转换 |
+| open_clip_torch | 显式依赖 torch | CLIP 模型实现 |
+| sentence-transformers | `torch>=1.11.0` | 句向量模型（2026-08-16 修复时新发现） |
+
+**新增包检查流程**：
+1. 安装新包前先查 `pip show <pkg> | grep Requires` 是否包含 torch
+2. 或在 base 环境试装：若 pip 自动下载 torch 则说明有隐式 torch 依赖
+3. 确认依赖 torch 的包一律移至 main 环境 G-M1 组安装
+
+## Rust 源码编译环境要求（cp314t free-threading）
+
+由于 Python 3.14.6 cp314t（free-threading）生态尚不成熟，部分包（safetensors、tokenizers、huggingface-hub 等）没有预编译 wheel，需要 Rust+maturin 源码编译。构建 main 环境 G-M1 组前必须：
+
+1. **Rust 镜像源配置**：`RUSTUP_DIST_SERVER=https://rsproxy.cn`、`RUSTUP_UPDATE_ROOT=https://rsproxy.cn/rustup`（国内加速 Rust toolchain 下载）
+2. **C/C++ 编译器配置**：使用 conda 安装的 clang/clang++（无 gcc），设置 `CC=clang`、`CXX=clang++`
+3. **符号链接**：创建 `cc→clang`、`c++→clang++`（Rust cc-rs crate 默认查找 cc/c++）
+4. **日志详细度**：使用 `pip_install_group --verbose` 启用安装前环境诊断+编译详细输出+安装后逐个包验证，方便排查编译问题
 
 ## 服务继承
 
@@ -196,6 +231,6 @@
 - 不设置项目特定的 PYTHONPATH
 - 不安装 GPU 相关包到 base 环境（CUDA 相关包只在 main 环境，由 torch-dev 管理）
 - 不在 base 环境直接 pip install torch（torch 只存在于 main 环境）
-- 不在 base 环境安装声明 `install_requires: torch` 的包（如 onnx2torch, open_clip_torch）——这类包必须在 main 环境安装，防止 pip 自动拉取 GIL 版 torch 到 base 破坏双环境隔离
+- 不在 base 环境安装声明 `install_requires: torch` 的包（如 onnx2torch, open_clip_torch, sentence-transformers）——这类包必须在 main 环境安装，防止 pip 自动拉取 GIL 版 torch 到 base 破坏双环境隔离
 - 不重复 COPY variant-framework（已由 torch-dev 层提供）
 - 不删除或修改 main 环境的 torch/onnx 包

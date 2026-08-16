@@ -2,13 +2,13 @@
 # =============================================================================
 # DevContainer Base - AI Dev (Full AI/ML/NLP Stack, Dual-Env Architecture)
 # Base: devcontainer-base:torch-dev-${BASE_TAG} (free-threading PyTorch cp314t in main env)
-# Architecture: DUAL-ENV - base(GIL):50+ packages(NLP/data/viz/web/db, NO torch)
-#                          main(ft):PyTorch+ONNX+onnx2torch+open_clip (torch-dependent pkgs HERE)
+# Architecture: DUAL-ENV - base(GIL):47 packages(NLP/data/viz/web/db, NO torch)
+#                          main(ft):PyTorch+ONNX+onnx2torch+open_clip+sentence-transformers (torch-dependent pkgs HERE)
 # PATH priority: /opt/conda/bin first (base env python default; main env accessible via full path)
 # Jupyter: "Python 3 (AI Dev)" kernel registered in main env's jupyter, pointing to base python
 # Build (CN): docker build -f variants/ai-dev/Dockerfile --build-arg PIP_MIRROR=aliyun -t devcontainer-base:ai-dev-latest .
 # Verify (base): docker run --rm devcontainer-base:ai-dev-latest python -c "import transformers,datasets,fastapi,pandas;print('ai-dev base OK')"
-# Verify (main ft): docker run --rm devcontainer-base:ai-dev-latest /opt/conda/envs/main/bin/python -c "import torch,onnx2torch,open_clip,sys;print(f'torch {torch.__version__}, GIL off: {not sys._is_gil_enabled()}')"
+# Verify (main ft): docker run --rm devcontainer-base:ai-dev-latest /opt/conda/envs/main/bin/python -c "import torch,onnx2torch,open_clip,sentence_transformers,sys;print(f'torch {torch.__version__}, GIL off: {not sys._is_gil_enabled()}')"
 # =============================================================================
 
 ARG BASE_TAG=latest
@@ -24,7 +24,7 @@ ARG CONDA_MIRROR
 ARG PIP_MIRROR
 
 LABEL maintainer="SpecWeave"
-LABEL description="DevContainer ai-dev: full AI/ML/NLP ecosystem (50+ pkgs in base GIL env, NO torch), free-threading PyTorch+onnx2torch+open_clip (main env), JupyterLab 4.x, dual-env architecture"
+LABEL description="DevContainer ai-dev: full AI/ML/NLP ecosystem (47 pkgs in base GIL env, NO torch), free-threading PyTorch+onnx2torch+open_clip+sentence-transformers (main env), JupyterLab 4.x, dual-env architecture"
 LABEL variant="ai-dev"
 LABEL ecosystem="nlp,transformers,data-science,document-processing,web-api,database"
 LABEL architecture="dual-env:base(GIL)+main(free-threading)"
@@ -38,7 +38,11 @@ ENV PATH=/opt/conda/bin:${PATH}
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-# Framework already inherited from torch-dev base layer.
+# Override shared install-helpers.sh to pick up --verbose support without full
+# chain rebuild (conda-llvm→onnx-dev→onnx-quantized→torch-dev). Safe because
+# helpers are sourced at RUN time (not baked into earlier layers' binaries).
+# Remove this COPY after the next full dependency-chain rebuild.
+COPY variants/shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
 
 # ── Stage 1/3: Base verification (torch-dev inheritance + dual-env pre-check)
 RUN <<'S1'
@@ -133,7 +137,7 @@ export CC=clang
 export CXX=clang++
 echo "  [OK] Rust mirror + clang/clang++ configured for builds"
 
-pip_install_group "G-M1: PyTorch Ecosystem (main env)" "onnx2torch, open_clip_torch, sentence-transformers (torch-dependent, installed alongside torch in main ft env)" \
+pip_install_group --verbose "G-M1: PyTorch Ecosystem (main env)" "onnx2torch, open_clip_torch, sentence-transformers (torch-dependent, VERBOSE mode for Rust source builds)" \
     onnx2torch open_clip_torch sentence-transformers
 
 echo "  onnx2torch (main):        $(python -c 'import onnx2torch; print(getattr(onnx2torch,\"__version__\",\"installed\"))' 2>/dev/null)"
