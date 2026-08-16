@@ -5,8 +5,8 @@
 - **基础镜像**: `devcontainer-base:torch-dev-${BASE_TAG}`
 - **继承链**: devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → torch-dev → **ai-dev**（6层）
 - **双环境架构**:
-  - **base 环境**（`/opt/conda`，标准 Python，GIL **启用**）：承载 50+ AI/ML/NLP 生态包，默认 `python` 指向此环境
-  - **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t **free-threading**，GIL **禁用**）：PyTorch CUDA + ONNX量化栈（继承自 torch-dev）
+  - **base 环境**（`/opt/conda`，标准 Python，GIL **启用**）：承载 47 个 AI/ML/NLP 生态包，默认 `python` 指向此环境
+  - **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t **free-threading**，GIL **禁用**）：PyTorch CUDA + ONNX量化栈 + G-M1 torch依赖包（继承自 torch-dev）
 - **PATH 优先级**: `/opt/conda/bin:${PATH}`（base 环境在前，刻意覆盖 torch-dev 的 main 在前设置）
 - **默认 Python**: `/opt/conda/bin/python`（base 环境，GIL 启用）
 - **PyTorch Python**: `/opt/conda/envs/main/bin/python`（main 环境，free-threading，CUDA 可用）
@@ -15,7 +15,7 @@
 
 ## 核心组件
 
-### base 环境安装的包（GIL 启用，50+ 包，G1-G14分组）
+### base 环境安装的包（GIL 启用，47 包，G1-G14分组）
 
 | 分组 | 包 | 说明 |
 |------|-----|------|
@@ -23,9 +23,9 @@
 | G2: Core Utilities | decorator, attrs, cloudpickle, typing_extensions, pytest, psutil | 基础工具库 |
 | G3: Jupyter Ecosystem | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 | Jupyter 生态（装于 base 供内核使用；服务运行于 main） |
 | G4: Data Processing | pyarrow, pandas, scikit-learn, natsort | 数据分析栈 |
-| G5: NLP/Transformers | datasets, transformers, sentencepiece, sentence-transformers, evaluate, tiktoken | HuggingFace 生态（onnx2torch 依赖 torch，移至 main 环境 G-M1） |
+| G5: NLP/Transformers | datasets, transformers, sentencepiece, evaluate, tiktoken | HuggingFace 生态（**sentence-transformers 依赖 torch，移至 main G-M1**） |
 | G6: Visualization/CLI | matplotlib, seaborn, wordcloud, tabulate, tqdm, colorama, rich | 图表与终端美化 |
-| G7: AI/ML Utilities | einops, numba | 张量操作/编译加速（open_clip_torch 依赖 torch，移至 main 环境 G-M1） |
+| G7: AI/ML Utilities | einops, numba | 张量操作/编译加速（**open_clip_torch 依赖 torch，移至 main G-M1**） |
 | G8: Audio Processing | librosa | 音频分析（soundfile/audioread/resampy 作为依赖自动安装） |
 | G9: Chinese NLP | jieba, nltk, pypinyin | 中文分词/拼音/NLTK数据 |
 | G10: Document Processing | PyMuPDF(fitz), EbookLib, beautifulsoup4, openpyxl | PDF/EPUB/HTML/Excel 文档解析 |
@@ -42,13 +42,13 @@
 | ONNX 生态（继承自torch-dev） | onnx, onnxruntime | 模型格式与推理引擎 |
 | ONNX 工具（继承自torch-dev） | onnx-simplifier, onnxscript | 模型简化与脚本化 |
 | 量化工具（继承自torch-dev） | onnxruntime.quantization, onnxconverter-common | INT8/FP16 量化 |
-| **G-M1: PyTorch 生态（本层新增）** | **onnx2torch, open_clip_torch** | **依赖 torch 的包，安装于 main 环境与 torch 同处** |
+| **G-M1: PyTorch 生态（本层新增）** | **onnx2torch, open_clip_torch, sentence-transformers** | **依赖 torch 的包（install_requires 含 torch），安装于 main 环境与 torch 同处** |
 | 编译工具链（继承自conda-llvm） | LLVM 22.1.8, clang, cmake, ninja | 继承自 conda-llvm |
 
 ### 显式排除
 
 - **onnxoptimizer**: free-threading 不兼容（CPython #111506），继承自 onnx-quantized 约束
-- **torch/torchvision 不装在 base**: 只在 main 环境存在（base 环境装依赖 torch 的包时需注意，见"待验证问题"）
+- **torch/torchvision 不装在 base**: 只在 main 环境存在；**任何声明 `install_requires: torch` 的包都必须安装在 main 环境 G-M1 组**（已识别：onnx2torch, open_clip_torch, sentence-transformers）
 
 ## 构建参数
 

@@ -128,13 +128,13 @@ SpecWeave 根 AGENTS.md（全局规则）
 # 构建（WSL2/Linux，国内镜像源；拓扑排序自动先建 torch-dev 依赖链）
 bash variants/build.sh --variant ai-dev --cn
 
-# 快速验证镜像（base 环境 50+ 包导入）
+# 快速验证镜像（base 环境 47 个包导入）
 docker run --rm devcontainer-base:ai-dev-latest \
   python -c "import transformers,datasets,fastapi,pandas;print('ai-dev base OK')"
 
-# 验证 main 环境 PyTorch 生态（free-threading cp314t，含onnx2torch/open_clip）
+# 验证 main 环境 PyTorch 生态（free-threading cp314t，含onnx2torch/open_clip/sentence-transformers）
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/envs/main/bin/python -c "import torch,sys,onnx2torch,open_clip;print(f'torch {torch.__version__}, GIL disabled: {not sys._is_gil_enabled()}, CUDA: {torch.cuda.is_available()}')"
+  /opt/conda/envs/main/bin/python -c "import torch,sys,onnx2torch,open_clip,sentence_transformers;print(f'torch {torch.__version__}, GIL disabled: {not sys._is_gil_enabled()}, CUDA: {torch.cuda.is_available()}')"
 
 # 验证 base 环境无 torch（双环境隔离）
 docker run --rm devcontainer-base:ai-dev-latest \
@@ -149,8 +149,9 @@ docker run --rm devcontainer-base:ai-dev-latest bash -c '
   echo "=== base env (default python, GIL enabled, NO torch) ===";
   python -c "import sys;print(f\"GIL enabled: {sys._is_gil_enabled()}\")";
   python -c "import importlib.util;print(f\"torch present: {importlib.util.find_spec(\"torch\") is not None}\")";
-  echo "=== main env (PyTorch ft + onnx2torch/open_clip, GIL disabled) ===";
-  /opt/conda/envs/main/bin/python -c "import sys,torch,onnx2torch,open_clip;print(f\"GIL enabled: {sys._is_gil_enabled()}, torch: {torch.__version__}\")"
+  python -c "import transformers,datasets;print(f\"transformers OK: base env\")";
+  echo "=== main env (PyTorch ft + onnx2torch/open_clip/sentence-transformers, GIL disabled) ===";
+  /opt/conda/envs/main/bin/python -c "import sys,torch,onnx2torch,open_clip,sentence_transformers;print(f\"GIL enabled: {sys._is_gil_enabled()}, torch: {torch.__version__}, sentence-transformers OK\")"
 '
 
 # 运行完整测试（29项，含双环境GIL守卫+torch隔离T28/T29）
@@ -162,10 +163,10 @@ bash variants/scripts/test-ai-dev.sh
 | 决策 | 理由 | 日期 |
 |------|------|------|
 | 基于 torch-dev 而非 onnx-quantized | torch-dev 提供 free-threading PyTorch CUDA（cp314t），ai-dev 需要 torch 作为一等公民支持下游 LLM Agent | 2026-08-16 记录（之前文档错误声称基于 onnx-quantized） |
-| PATH 设置为 `/opt/conda/bin:${PATH}`（base 在前） | 刻意覆盖 torch-dev 的 `/opt/conda/envs/main/bin` 在前设置；ai-dev 日常开发重心在 base 环境（48个兼容包），PyTorch ft 通过绝对路径显式调用 | 2026-08-16 记录 |
-| Jupyter 内核注册在 main 环境但指向 base python | Jupyter 服务运行于 main 环境（supervisord 绝对路径启动），但用户需要使用 base 环境的 48 个 AI 包；ipykernel 跨环境内核机制支持此架构 | 2026-08-16 记录 |
-| 48 个包装在 base 环境而非 main 环境 | free-threading 生态尚未成熟，大量包（pandas/matplotlib/数据库客户端等）没有 cp314t wheel 或未经验证；base 环境用标准 Python（GIL启用）保证最大兼容性 | 2026-08-16 第一性原理推导 |
-| onnx2torch 和 open_clip_torch 装在 main 环境（G-M1组） | 这两个包 `install_requires` 包含 torch；装在 base 会导致 pip 自动拉取 GIL 版 torch 到 base，破坏双环境隔离。所有 torch 依赖包必须与 torch 同处 main 环境 | 2026-08-16 V阶段审查发现问题，C阶段实施修复 |
+| PATH 设置为 `/opt/conda/bin:${PATH}`（base 在前） | 刻意覆盖 torch-dev 的 `/opt/conda/envs/main/bin` 在前设置；ai-dev 日常开发重心在 base 环境（47个兼容包），PyTorch ft 通过绝对路径显式调用 | 2026-08-16 记录 |
+| Jupyter 内核注册在 main 环境但指向 base python | Jupyter 服务运行于 main 环境（supervisord 绝对路径启动），但用户需要使用 base 环境的 47 个 AI 包；ipykernel 跨环境内核机制支持此架构 | 2026-08-16 记录 |
+| 47 个包装在 base 环境而非 main 环境 | free-threading 生态尚未成熟，大量包（pandas/matplotlib/数据库客户端等）没有 cp314t wheel 或未经验证；base 环境用标准 Python（GIL启用）保证最大兼容性 | 2026-08-16 第一性原理推导 |
+| onnx2torch、open_clip_torch、sentence-transformers 装在 main 环境（G-M1组） | 这些包 `install_requires` 包含 torch；装在 base 会导致 pip 自动拉取 GIL 版 torch 到 base，破坏双环境隔离。**所有 torch 依赖包必须与 torch 同处 main 环境** | 2026-08-16 V阶段审查发现问题，构建验证时发现sentence-transformers遗漏，C阶段修复 |
 | PIP_USER 构建期0/运行期1分离 | 防止构建期以 root 身份运行 pip install 时，包被写入 `/root/.local` 而非 `/opt/conda`，导致 devuser 运行时无法 import | 2026-08-16 记录 |
 | 不提供自己的 AGENTS_EXTRA 激活脚本 | 基础镜像和 onnx-dev 已有激活脚本；ai-dev 不新增额外 profile.d 脚本以避免复杂度 | 2026-08-16 记录 |
 
@@ -173,5 +174,5 @@ bash variants/scripts/test-ai-dev.sh
 
 | 日期 | 变更 |
 |------|------|
-| 2026-08-16 | 新增本 AGENTS.md；修正文档继承链（onnx-quantized→torch-dev→ai-dev）；明确双环境架构三条核心约束；修复 onnx2torch/open_clip_torch 安装位置（从 base 移到 main G-M1组）；添加 T28（base 无 torch 守卫）和 T29（main torch 生态）测试；解决V阶段发现的架构风险 |
+| 2026-08-16 | 新增本 AGENTS.md；修正文档继承链（onnx-quantized→torch-dev→ai-dev）；明确双环境架构三条核心约束；修复 onnx2torch/open_clip_torch/sentence-transformers 安装位置（从 base 移到 main G-M1组，构建验证时发现sentence-transformers遗漏）；添加 T28（base 无 torch 守卫）和 T29（main torch 生态含sentence-transformers）测试；解决V阶段发现的架构风险 |
 | 2026-08-15 | ai-dev 变体首次创建（但文档/规范未同步更新，遗留不一致问题） |

@@ -302,10 +302,10 @@ test_transformers_version() {
 # ═══════════════════════════════════════════════════════════════════
 
 test_core_imports() {
-    run_test "T6" "All core package imports (25+ packages)" \
+    run_test "T6" "All core package imports (24 base packages, sentence-transformers moved to main)" \
         "ALL_IMPORTS_OK" \
         docker_run_bash "/opt/conda/bin/python -c \"
-import transformers, datasets, sentence_transformers, evaluate
+import transformers, datasets, evaluate
 import fastapi, uvicorn, pydantic, httpx
 import pandas, pyarrow, sklearn
 import matplotlib, seaborn, rich, typer
@@ -581,11 +581,12 @@ test_base_torch_absent() {
 }
 
 test_main_torch_ecosystem() {
-    run_test "T29" "main env torch ecosystem imports (torch+onnx2torch+open_clip)" \
+    run_test "T29" "main env torch ecosystem imports (torch+onnx2torch+open_clip+sentence-transformers)" \
         "TORCH_ECO_OK" \
         docker_run /opt/conda/envs/main/bin/python -c "
 import torch, torchvision
 import onnx2torch, open_clip
+import sentence_transformers
 import sys
 assert sys._is_gil_enabled() is False, 'main env GIL must be disabled'
 print('TORCH_ECO_OK')

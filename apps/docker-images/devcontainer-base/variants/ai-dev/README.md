@@ -1,6 +1,6 @@
 # DevContainer Base - ai-dev 变体
 
-> torch-dev + 48个 AI/ML/NLP 包（base GIL） + onnx2torch/open_clip（main ft）+ JupyterLab 4.x + 跨环境 AI 内核（双环境架构：base GIL 兼容 + main free-threading PyTorch）
+> torch-dev + 47个 AI/ML/NLP 包（base GIL） + onnx2torch/open_clip/sentence-transformers（main ft）+ JupyterLab 4.x + 跨环境 AI 内核（双环境架构：base GIL 兼容 + main free-threading PyTorch）
 
 ## ✨ 特性
 
@@ -10,10 +10,10 @@ ai-dev 采用**双 Python 环境隔离**设计，平衡生态兼容性与性能�
 
 | 环境 | Python | GIL | 用途 | 默认路径 |
 |------|--------|-----|------|---------|
-| **base** | 3.14.6 标准构建 | ✅ 启用 | 50+ AI/ML/NLP 兼容生态（日常开发默认） | `/opt/conda/bin/python` |
-| **main** | 3.14.6 cp314t free-threading | ❌ 禁用 | PyTorch CUDA + ONNX 量化栈（多核无锁性能） | `/opt/conda/envs/main/bin/python` |
+| **base** | 3.14.6 标准构建 | ✅ 启用 | 47 AI/ML/NLP 兼容生态（日常开发默认） | `/opt/conda/bin/python` |
+| **main** | 3.14.6 cp314t free-threading | ❌ 禁用 | PyTorch CUDA + ONNX 量化栈 + G-M1 torch依赖包（多核无锁性能） | `/opt/conda/envs/main/bin/python` |
 
-- 默认 `python` 命令指向 **base 环境**（GIL 启用），保证 50+ 包最大兼容性
+- 默认 `python` 命令指向 **base 环境**（GIL 启用），保证 47 包最大兼容性
 - PyTorch CUDA 训练/推理通过 `/opt/conda/envs/main/bin/python` 显式调用（free-threading，无 GIL 锁）
 - 两个环境 site-packages 完全隔离，不可跨环境 import 包
 - PATH 刻意设置为 `/opt/conda/bin:${PATH}`（base 在前，覆盖 torch-dev 的 main 在前设置）
@@ -29,22 +29,22 @@ devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → torch-dev �
 - Miniforge3 + LLVM 22.1.8 + CMake + Ninja
 - **main 环境（来自 torch-dev）**：PyTorch + TorchVision（CUDA cp314t free-threading）、ONNX Runtime + 量化工具链
 
-### ai-dev 特有功能（base 环境，48 个包 + main 环境 G-M1 组）
+### ai-dev 特有功能（base 环境，47 个包 + main 环境 G-M1 组）
 
-- 48 个 Python 包覆盖 NLP、数据处理、可视化、文档处理、Web API、数据库客户端（base 环境 G1-G14）
-- onnx2torch 和 open_clip_torch 安装在 main 环境（G-M1组，与 torch 同处），避免破坏双环境隔离
-- HuggingFace Transformers 生态（transformers, datasets, sentence-transformers, evaluate）
+- 47 个 Python 包覆盖 NLP、数据处理、可视化、文档处理、Web API、数据库客户端（base 环境 G1-G14）
+- onnx2torch、open_clip_torch、sentence-transformers 安装在 main 环境（G-M1组，与 torch 同处），避免破坏双环境隔离
+- HuggingFace Transformers 生态（transformers, datasets, evaluate 在 base；sentence-transformers 在 main G-M1）
 - JupyterLab >=4.4 + notebook >=7.3（解决 httpx>=0.28 兼容性）
-- 预注册 **"Python 3 (AI Dev)"** 跨环境 Jupyter 内核：Jupyter 服务运行于 main 环境（supervisord 启动），内核指向 base 环境 Python（48 个包可用）
+- 预注册 **"Python 3 (AI Dev)"** 跨环境 Jupyter 内核：Jupyter 服务运行于 main 环境（supervisord 启动），内核指向 base 环境 Python（47 个包可用）
 - OpenMP 性能调优（OMP_NUM_THREADS=4, KMP_DUPLICATE_LIB_OK=TRUE）
 - 下游 llm-agent 变体的直接基础
 
 ## 🚀 快速开始（3条命令）
 
 ```bash
-# 1. base 环境验证（默认 python = GIL 启用，50+ 包可用）
+# 1. base 环境验证（默认 python = GIL 启用，47 包可用）
 docker run --rm devcontainer-base:ai-dev-latest \
-  python -c "import transformers,datasets,fastapi,pandas;print('base OK: GIL enabled, 50+ packages ready')"
+  python -c "import transformers,datasets,fastapi,pandas;print('base OK: GIL enabled, 47 packages ready')"
 
 # 2. main 环境验证（PyTorch free-threading，无 GIL，CUDA 可用）
 docker run --rm devcontainer-base:ai-dev-latest \
@@ -56,7 +56,7 @@ docker run -it --rm -p 8888:8888 -e JUPYTER_TOKEN=mysecret devcontainer-base:ai-
 
 ## 📦 包含的 Python 包
 
-### base 环境安装的包（GIL 启用，本层新增 50+ 包，G1-G14分组）
+### base 环境安装的包（GIL 启用，本层新增 47 包，G1-G14分组）
 
 | 分组 | 包 |
 |------|-----|
@@ -64,9 +64,9 @@ docker run -it --rm -p 8888:8888 -e JUPYTER_TOKEN=mysecret devcontainer-base:ai-
 | **G2: 核心工具** | decorator, attrs, cloudpickle, typing_extensions, pytest, psutil |
 | **G3: Jupyter 生态** | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 |
 | **G4: 数据处理** | pyarrow, pandas, scikit-learn, natsort |
-| **G5: NLP/Transformers** | datasets, transformers, sentencepiece, sentence-transformers, evaluate, tiktoken |
+| **G5: NLP/Transformers** | datasets, transformers, sentencepiece, evaluate, tiktoken（sentence-transformers 依赖 torch，在 main G-M1） |
 | **G6: 可视化/CLI** | matplotlib, seaborn, wordcloud, tabulate, tqdm, colorama, rich |
-| **G7: AI/ML 工具** | einops, numba |
+| **G7: AI/ML 工具** | einops, numba（open_clip_torch 依赖 torch，在 main G-M1） |
 | **G8: 音频处理** | librosa |
 | **G9: 中文 NLP** | jieba, nltk, pypinyin |
 | **G10: 文档处理** | PyMuPDF (fitz), EbookLib, beautifulsoup4, openpyxl |
@@ -83,13 +83,13 @@ docker run -it --rm -p 8888:8888 -e JUPYTER_TOKEN=mysecret devcontainer-base:ai-
 | **ONNX 生态** | onnx, onnxruntime |
 | **ONNX 工具** | onnx-simplifier, onnxscript |
 | **量化工具** | onnxruntime.quantization, onnxconverter-common |
-| **G-M1: PyTorch 生态（本层新增）** | onnx2torch, open_clip_torch（依赖 torch，装在 main 环境） |
+| **G-M1: PyTorch 生态（本层新增）** | onnx2torch, open_clip_torch, sentence-transformers（依赖 torch，装在 main 环境） |
 | **编译工具链** | LLVM 22.1.8, clang, cmake, ninja（来自 conda-llvm 链） |
 
 ### 显式排除
 
 - **onnxoptimizer**: free-threading 不兼容（CPython #111506），继承自 onnx-quantized 约束
-- **torch/torchvision 不装在 base**: 只在 main 环境存在；所有声明 `install_requires: torch` 的包（onnx2torch, open_clip_torch）也必须装在 main 环境（G-M1组）
+- **torch/torchvision 不装在 base**: 只在 main 环境存在；所有声明 `install_requires: torch` 的包（onnx2torch, open_clip_torch, sentence-transformers）也必须装在 main 环境（G-M1组）
 
 ## 📁 目录结构
 
@@ -199,13 +199,13 @@ echo "=== main 环境（PyTorch ft，GIL 禁用）==="
 docker run --rm devcontainer-base:ai-dev-latest \
   /opt/conda/envs/main/bin/python -c "import sys;print(f'GIL enabled: {sys._is_gil_enabled()}')"
 
-# === base 环境核心包导入验证（50+ 包）===
+# === base 环境核心包导入验证（47 包）===
 docker run --rm devcontainer-base:ai-dev-latest \
   python -c "import transformers, datasets, fastapi, pandas; print('ai-dev base OK')"
 
-# === main 环境 PyTorch + ONNX 量化验证（含onnx2torch/open_clip）===
+# === main 环境 PyTorch + ONNX 量化验证（含onnx2torch/open_clip/sentence-transformers）===
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/envs/main/bin/python -c "import torch, torchvision, onnx2torch, open_clip; from onnxruntime.quantization import quantize_dynamic; print(f'torch={torch.__version__}, torchvision={torchvision.__version__}, CUDA={torch.cuda.is_available()}')"
+  /opt/conda/envs/main/bin/python -c "import torch, torchvision, onnx2torch, open_clip, sentence_transformers; from onnxruntime.quantization import quantize_dynamic; print(f'torch={torch.__version__}, torchvision={torchvision.__version__}, CUDA={torch.cuda.is_available()}')"
 
 # === base 环境 torch 隔离验证（base 不应有 torch）===
 docker run --rm devcontainer-base:ai-dev-latest \
@@ -278,7 +278,7 @@ ai-dev 变体内核名为 **"Python 3 (AI Dev)"**，采用跨环境内核机制�
 | L2 | onnx-dev | ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，base 环境纯 ONNX） |
 | L3 | onnx-quantized | onnxruntime.quantization + FP16/INT8 量化 + main free-threading 环境 |
 | L4 | torch-dev | PyTorch + TorchVision（CUDA cp314t free-threading，main 环境）+ JupyterLab 4.x |
-| L5 | **ai-dev** | **48个AI/ML/NLP包（base env）+ onnx2torch/open_clip（main env G-M1）+ 跨环境Jupyter内核 + 双环境架构守卫** |
+| L5 | **ai-dev** | **47个AI/ML/NLP包（base env）+ onnx2torch/open_clip/sentence-transformers（main env G-M1）+ 跨环境Jupyter内核 + 双环境架构守卫** |
 
 ## 🔗 相关镜像
 
