@@ -8,15 +8,67 @@
 
 ai-dev 采用**双 Python 环境隔离**设计，平衡生态兼容性与性能前沿：
 
-| 环境 | Python | GIL | 用途 | 默认路径 |
-|------|--------|-----|------|---------|
-| **base** | 3.14.6 标准构建 | ✅ 启用 | 47 AI/ML/NLP 兼容生态（日常开发默认） | `/opt/conda/bin/python` |
-| **main** | 3.14.6 cp314t free-threading | ❌ 禁用 | PyTorch CUDA + ONNX 量化栈 + G-M1 torch依赖包（多核无锁性能） | `/opt/conda/envs/main/bin/python` |
+| 环境 | Python | GIL | ABI | 用途 | 默认路径 |
+|------|--------|-----|-----|------|---------|
+| **base** | 3.13.x 标准构建 | ✅ 启用 | cpython-313 | 47 AI/ML/NLP 兼容生态（日常开发默认） | `/opt/conda/bin/python` |
+| **main** | 3.14.6 cp314t | ❌ 禁用 | cpython-314t | PyTorch CUDA + ONNX 量化栈 + G-M1 torch依赖包（多核无锁性能） | `/opt/conda/envs/main/bin/python` |
 
-- 默认 `python` 命令指向 **base 环境**（GIL 启用），保证 47 包最大兼容性
-- PyTorch CUDA 训练/推理通过 `/opt/conda/envs/main/bin/python` 显式调用（free-threading，无 GIL 锁）
+- 默认 `python` 命令指向 **base 环境**（Python 3.13 GIL 启用），保证 47 包最大兼容性
+- PyTorch CUDA 训练/推理通过 `/opt/conda/envs/main/bin/python` 显式调用（Python 3.14 free-threading，无 GIL 锁）
 - 两个环境 site-packages 完全隔离，不可跨环境 import 包
 - PATH 刻意设置为 `/opt/conda/bin:${PATH}`（base 在前，覆盖 torch-dev 的 main 在前设置）
+
+### 架构设计原则与关键约束
+
+#### 1. Command Mode 日志分离（Unix 规范）
+
+entrypoint.sh 在 command mode（非服务模式）下必须严格遵循 Unix 日志规范：
+- **stdout**：仅输出用户命令的数据结果（纯净，可供脚本正则匹配）
+- **stderr**：输出所有诊断日志（banner/INFO/WARN/密码提示/系统诊断等）
+
+这是测试脚本（`test-ai-dev.sh`）通过 stdout 正则匹配验证功能的基础。如果诊断日志输出到 stdout，会污染命令输出导致测试失败。
+
+#### 2. PyTorch / Triton Free-Threading 兼容性
+
+**已知约束**：triton（PyTorch CUDA 依赖）等部分 C 扩展模块未声明 free-threading 兼容性（缺少 `Py_mod_gil` 多阶段初始化标志）。当这些模块被 import 时，CPython 3.14t 会**自动启用 GIL**（进程级一次性保险丝，启用后当前进程内无法关闭）。
+
+**解决方案**：
+- 在同一 Python 进程中需要保持 GIL 禁用状态时，设置环境变量 `PYTHON_GIL=0`（强制覆盖，at own risk）
+- 构建验证阶段通过独立进程检查 GIL 状态（先 import torch 的进程不做 GIL 断言，GIL 断言在单独进程中执行）
+- Jupyter 跨环境内核指向 base 环境（GIL 启用），不涉及此问题
+
+```bash
+# 正确：保持 main 环境 GIL 禁用（import torch 前设置 PYTHON_GIL=0）
+docker run --rm devcontainer-base:ai-dev-latest \
+  bash -c "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c 'import torch,sys;print(torch.__version__, not sys._is_gil_enabled())'"
+```
+
+#### 3. torch 依赖包隔离规则
+
+**判定标准**：包的 `install_requires` 中显式声明 `torch` 或 `torchvision` 依赖。
+
+**隔离规则**：所有 torch 依赖包必须安装在 main 环境（G-M1 组），禁止安装在 base 环境——否则会因为 base 环境无 torch 而导致安装失败，或意外将 torch 拉入 base 环境破坏双环境隔离。
+
+**已识别的 torch 依赖包清单**：
+| 包 | install_requires 中的 torch 声明 | 版本获取方式 |
+|----|----------------------------------|-------------|
+| onnx2torch | 显式依赖 torch | `importlib.metadata.version('onnx2torch')`（无 `__version__` 属性） |
+| open_clip_torch | 显式依赖 torch | `open_clip.__version__` |
+| sentence-transformers | `torch>=1.11.0` | `sentence_transformers.__version__` |
+
+#### 4. 跨环境版本号获取机制
+
+在 Dockerfile 构建阶段（S3阶段），获取 main 环境包版本号时必须：
+1. 先执行 `variant_activate_main_env` 激活 main 环境（设置正确的 PATH/LD_LIBRARY_PATH/PYTHONPATH）
+2. 调用 python 获取版本号并存入 shell 变量
+3. 再执行 `variant_activate_base_env` 切回 base 环境
+4. 将变量传入 `variant_write_build_info`
+
+禁止在 base 环境激活状态下直接用绝对路径 `/opt/conda/envs/main/bin/python -c ...` 获取版本——因环境变量未正确设置，可能导致 C 扩展 import 失败（错误被 `2>/dev/null` 吞掉后版本字段为空）。
+
+#### 5. Rust 源码编译要求
+
+G-M1 组（onnx2torch/open_clip_torch/sentence-transformers）及其依赖包中，部分包（如 safetensors）可能无预编译 cp314t wheel，需要 Rust 工具链 + maturin 从源码编译。构建时已预装 Rust，G-M1 组启用 `--verbose` 模式输出编译详情便于排查。
 
 ### 基础镜像继承链（6层）
 
@@ -42,13 +94,14 @@ devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → torch-dev �
 ## 🚀 快速开始（3条命令）
 
 ```bash
-# 1. base 环境验证（默认 python = GIL 启用，47 包可用）
+# 1. base 环境验证（默认 python = Python 3.13 GIL 启用，47 包可用）
 docker run --rm devcontainer-base:ai-dev-latest \
   python -c "import transformers,datasets,fastapi,pandas;print('base OK: GIL enabled, 47 packages ready')"
 
 # 2. main 环境验证（PyTorch free-threading，无 GIL，CUDA 可用）
+# 注意：import torch 后检查 GIL 需设置 PYTHON_GIL=0（triton 兼容问题）
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/envs/main/bin/python -c "import torch,sys;print(f'main OK: torch={torch.__version__}, GIL disabled={not sys._is_gil_enabled()}, CUDA={torch.cuda.is_available()}')"
+  bash -c "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c \"import torch,sys;print(f'main OK: torch={torch.__version__}, GIL disabled={not sys._is_gil_enabled()}, CUDA={torch.cuda.is_available()}')\""
 
 # 3. 交互式使用
 docker run -it --rm -p 8888:8888 -e JUPYTER_TOKEN=mysecret devcontainer-base:ai-dev-latest
@@ -196,8 +249,9 @@ docker run --rm devcontainer-base:ai-dev-latest \
   python -c "import sys;print(f'GIL enabled: {sys._is_gil_enabled()}')"
 
 echo "=== main 环境（PyTorch ft，GIL 禁用）==="
+# 注意：先 import torch 再检查 GIL 时需设置 PYTHON_GIL=0（triton 未声明 ft 兼容会自动启用 GIL）
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/envs/main/bin/python -c "import sys;print(f'GIL enabled: {sys._is_gil_enabled()}')"
+  bash -c "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c \"import sys;print(f'GIL enabled: {sys._is_gil_enabled()}')\""
 
 # === base 环境核心包导入验证（47 包）===
 docker run --rm devcontainer-base:ai-dev-latest \
@@ -205,7 +259,7 @@ docker run --rm devcontainer-base:ai-dev-latest \
 
 # === main 环境 PyTorch + ONNX 量化验证（含onnx2torch/open_clip/sentence-transformers）===
 docker run --rm devcontainer-base:ai-dev-latest \
-  /opt/conda/envs/main/bin/python -c "import torch, torchvision, onnx2torch, open_clip, sentence_transformers; from onnxruntime.quantization import quantize_dynamic; print(f'torch={torch.__version__}, torchvision={torchvision.__version__}, CUDA={torch.cuda.is_available()}')"
+  bash -c "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c \"import torch, torchvision, onnx2torch, open_clip, sentence_transformers; from onnxruntime.quantization import quantize_dynamic; print(f'torch={torch.__version__}, torchvision={torchvision.__version__}, CUDA={torch.cuda.is_available()}')\""
 
 # === base 环境 torch 隔离验证（base 不应有 torch）===
 docker run --rm devcontainer-base:ai-dev-latest \

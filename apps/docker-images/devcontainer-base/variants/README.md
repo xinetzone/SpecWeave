@@ -2,6 +2,50 @@
 
 本目录包含基于 devcontainer-base 基础镜像的特殊功能变体。
 
+## 变体依赖拓扑
+
+```mermaid
+flowchart TD
+    base["devcontainer-base:latest<br/>Ubuntu 26.04 · SSH · Docker DinD · Podman · Jupyter<br/>Miniforge3 · Python 3.14.6 cp314t free-threading"]
+    conda_llvm["conda-llvm<br/>LLVM 22.1.8 · clang · cmake · ninja<br/>编译工具链"]
+    onnx_dev["onnx-dev<br/>纯 ONNX 生态（无 PyTorch）<br/>main 环境 · free-threading"]
+    onnx_pytorch["onnx-pytorch<br/>PyTorch CPU · ONNX Runtime<br/>base 环境 · GIL 启用"]
+    onnx_quantized["onnx-quantized<br/>onnxruntime.quantization<br/>INT8/FP16 量化 · main 环境"]
+    torch_dev["torch-dev<br/>Free-Threading PyTorch CUDA<br/>cp314t · 无 GIL · cu130 索引"]
+    ai_dev["ai-dev<br/>50+ AI/ML/NLP 全栈包<br/>JupyterLab 4.x · 通用 AI 内核<br/>base 环境 GIL · torch 继承自 torch-dev"]
+
+    base --> conda_llvm
+    conda_llvm -->|"free-threading 主线"| onnx_dev
+    conda_llvm -->|"GIL 兼容分支"| onnx_pytorch
+    onnx_dev --> onnx_quantized
+    onnx_quantized --> torch_dev
+    torch_dev --> ai_dev
+
+    classDef base fill:#f5f5f5,stroke:#616161,stroke-width:2px,color:#212121
+    classDef toolchain fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20
+    classDef ftMain fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#bf360c
+    classDef gilBranch fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c
+    classDef quant fill:#fff9c4,stroke:#f57f17,stroke-width:2px,color:#e65100
+    classDef cuda fill:#fce4ec,stroke:#c62828,stroke-width:2px,color:#b71c1c
+    classDef fullstack fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1
+
+    class base base
+    class conda_llvm toolchain
+    class onnx_dev,onnx_quantized ftMain
+    class onnx_pytorch gilBranch
+    class torch_dev cuda
+    class ai_dev fullstack
+```
+
+**图例说明：**
+- ⚫ 灰色：基础镜像层（系统级服务）
+- 🟢 绿色：编译工具链层（LLVM/clang/cmake/ninja）
+- 🟠 橙色：free-threading 主线（main 环境，cp314t，无 GIL）
+- 🟣 紫色：GIL 兼容分支（base 环境，GIL 启用）
+- 🟡 黄色：量化工具链层
+- 🔴 红色：CUDA 加速层（free-threading PyTorch）
+- 🔵 蓝色：全栈 AI 开发层（50+ 包 + JupyterLab）
+
 ## 可用变体
 
 | 变体名称 | 描述 | 基础镜像 | 额外组件 |
