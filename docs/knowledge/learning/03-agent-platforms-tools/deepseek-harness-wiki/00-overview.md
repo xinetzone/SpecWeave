@@ -52,6 +52,7 @@ maturity: L1
 | 13 | [13-faq-troubleshooting.md](13-faq-troubleshooting.md) | 10+ 常见问题与故障排查、配置文件速查、帮助渠道 | 14 |
 | 14 | [14-use-cases-limitations.md](14-use-cases-limitations.md) | 适用/不适用场景决策表、⚠️ 预览版风险提示、平台限制 | 15 |
 | 15 | [15-ecosystem-resources.md](15-ecosystem-resources.md) | 官方资源、社区插件、推荐阅读、生态动态新闻 | 16 |
+| 16 | [16-appendix-core-services.md](16-appendix-core-services.md) | 附录：核心服务速查表、ctx.* API 速查、事件模式速查 | — |
 
 ## 学习路径
 
@@ -86,6 +87,7 @@ maturity: L1
 适合计划扩展 dsh 生态或嵌入自有系统的开发者：
 - 完成架构理解路径
 - 学习 [12 无头模式与 SDK](12-headless-sdk.md) 进行程序化集成
+- 开发时随时查阅 [16 附录：核心服务速查表](16-appendix-core-services.md)
 - 参考 [15 生态资源](15-ecosystem-resources.md) 跟踪社区进展
 - 阅读官方源码与示例插件
 
@@ -93,19 +95,22 @@ maturity: L1
 
 | 概念 | 定义 |
 |------|------|
-| **Cordis** | dsh 底层元框架，源自时空可组合性编程范式论文，插件向共享上下文贡献服务、类型化事件和可逆效应，无特权内核 |
-| **Plugin（插件）** | dsh 的基本扩展单元，模型、工具、循环、UI 均为插件，可自由挂载卸载，卸载时自动清理注册内容（可逆效应） |
-| **Profile（配置档案）** | 存放在 `~/.dsh/profiles/` 下的命名组合清单，罗列叠加的 bundle 与用户自定义补丁，内置 web/headless 模板 |
-| **Bundle（能力捆绑包）** | 打包一组 Cordis 配置与代码的分发格式，可被上层继续打补丁（patch） |
+| **Cordis** | dsh 底层元框架，源自时空可组合性编程范式论文，核心五概念：Plugin（插件三种形态）、Context（服务容器）、Inject（依赖注入）、Events（五种分发模式：emit/bail/parallel/serial/waterfall）、Reversible Effects（可逆效应四种disposer），无特权内核 |
+| **Context（上下文）** | Cordis 的服务容器，每个服务占据稳定的 `ctx.<key>`（如 `ctx.tools`、`ctx.llm`），通过 key 查找而非模块导入，是插件间通信的唯一通道 |
+| **Plugin（插件）** | dsh 的基本扩展单元，有三种等价形态：带 `inject`/`apply` 的函数、Service 子类、普通对象；模型、工具、循环、UI 均为插件，可自由挂载卸载 |
+| **Reversible Effect（可逆效应）** | 通过 `ctx.effect()` 或 `ctx.on()` 注册的副作用，卸载时自动按 LIFO 逆序执行 disposer（支持函数/Generator/Promise/AsyncGenerator 四种形式），保证无残留；热重载依赖此机制 |
+| **Event Dispatch（事件分发）** | Cordis 类型化事件五种模式：`emit`（同步纯通知）、`bail`（同步早退，第一个非null结果获胜）、`parallel`（并行等待全部完成）、`serial`（顺序执行有返回）、`waterfall`（链式中间件，必须调用 `next()` 否则短路） |
+| **Profile（配置档案）** | 存放在 `~/.dsh/profiles/` 下的命名组合清单，罗列叠加的 bundle 与用户自定义补丁，内置 web/headless/cordis 模板 |
+| **Bundle（能力捆绑包）** | 打包一组 Cordis 配置与代码的分发格式，叠加顺序：dsh-base → profile bundles → profile patch → home patch → CLI --patch overlay，可被上层继续打补丁 |
 | **Turn（回合）** | 从认领输入开始到无欠账结束的一次完整对话轮次，包含零到多个 Step |
 | **Step（步骤）** | 一次模型请求加上其触发的工具调用，是 Agent 循环的最小执行单元 |
-| **SessionLog（会话日志）** | 仅追加（append-only）的 SessionEvent 流，硬性规则：模型看到的一切必须可从日志重建，支持分叉、回放、检查点 |
-| **CapabilitySeam（能力接缝）** | 由 Service Definition（声明接口）、Service Provider（实现）、Consumer（使用）三角色组成的可替换能力抽象，"一次替换，全局生效" |
+| **SessionLog（会话日志）** | 仅追加（append-only）的 SessionEvent 流，硬性不变量（invariant）：模型看到的一切必须可从日志重建，支持分叉、回放、检查点；由 invariants 包运行时断言强制执行 |
+| **CapabilitySeam（能力接缝）** | 由 Service Definition（声明接口）、Service Provider（实现接口，可多实现切换）、Consumer（消费方）三角色组成的可替换能力抽象；基于依赖注入实现解耦，"一次替换，全局生效" |
 
 ## 版本说明
 
 - **基于版本**：v0.1.0-rc.6（开发者预览版）
-- **数据截止**：2026-08-15
+- **数据截止**：2026-08-15，源码交叉验证：2026-08-17（基于 `external/libs/deepseek-harness`、`external/libs/cordis` 本地源码）
 - **协议**：MIT
 - **重要提示**：当前为开发者预览版本，官方明确声明核心插件与基础接口会快速迭代，可能存在破坏兼容的变更，不建议直接用于生产环境。
 

@@ -4,7 +4,9 @@ title: DeepSeek Harness Wiki - 工具系统与 Capability Seam
 source:
   - .temp/deepseek-harness-sources/02-tonybai.md
   - .temp/deepseek-harness-sources/09-deepseekagent-io.md
-date: 2026-08-16
+  - external/libs/cordis/packages/core/src/context.ts
+  - external/libs/cordis/packages/core/src/service.ts
+date: 2026-08-17
 tags:
   - deepseek
   - agent
@@ -16,8 +18,10 @@ tags:
   - service-definition
   - subagent
   - goals
+  - cordis
+  - dependency-injection
 category: learning
-maturity: L1
+maturity: L2
 ---
 
 # 09 工具系统与 Capability Seam
@@ -120,9 +124,11 @@ dsh 的设计者意识到：问题不在于工具本身，而在于工具背后�
 
 每一个 Capability Seam 都由三个角色组成，三者缺一不可。理解这三个角色是理解整个 dsh 工具系统的关键。
 
+> **官方定义**：一个包可以合并承担多个角色，但单一角色本身不是seam；添加一项能力意味着把三者一并设计。
+
 ### 角色 1：Service Definition（服务定义）
 
-Service Definition 是能力的「接口契约」，只定义「能做什么」，不定义「怎么做」。它是纯类型定义，没有任何实现代码。
+Service Definition 是能力的「接口契约」，声明接口，是seam的公开契约。它只定义「能做什么」，不定义「怎么做」。它是纯类型定义，没有任何实现代码。
 
 **示例：文件系统服务定义**
 
@@ -167,9 +173,9 @@ dsh 内置的核心 Service Definition 包括：
 | `memory` | 长期记忆 |
 | `secrets` | 凭证管理 |
 
-### 角色 2：Provider（服务提供者）
+### 角色 2：Service Provider（服务提供方）
 
-Provider 是 Service Definition 的**具体实现**。一个服务可以有多个 Provider，运行时选择使用哪一个。
+Service Provider 是 Service Definition 的**具体实现**，实现接口。一个服务可以有多个 Provider 并存或切换，运行时选择使用哪一个。
 
 **示例：本地文件系统 Provider**
 
@@ -216,9 +222,9 @@ Provider 的特点：
 - **可配置**：Provider 可以有自己的配置参数（比如远程沙箱的地址、认证信息）
 - **生命周期**：Provider 有自己的初始化和销毁逻辑，由插件系统管理
 
-### 角色 3：Consumer（服务消费者）
+### 角色 3：Consumer（消费方）
 
-Consumer 是**使用**服务的一方，通常是工具（Tool）或者其他插件。Consumer 只依赖 Service Definition 接口，永远不依赖具体的 Provider 实现。
+Consumer 是**使用**服务的一方，通常是面向模型的工具或其他插件。Consumer 只依赖 Service Definition 接口，永远不依赖具体的 Provider 实现。
 
 **示例：read_file 工具作为 Consumer**
 
@@ -254,27 +260,62 @@ Consumer 的特点：
 | Provider | 能力的具体实现 | 中（可以有多个实现） | 一个服务可以有多个 Provider |
 | Consumer | 使用能力完成任务 | 高（工具很多） | 一个服务可以被很多 Consumer 使用 |
 
+## 核心Seam实例表
+
+以下是dsh内置的核心Capability Seam完整清单：
+
+| Seam | ctx键 | 内置Provider | 消费方 | 替换效果示例 |
+|---|---|---|---|---|
+| LLM适配 | `ctx.llm` | `llm-deepseek`, `llm-pi-ai`, `llm-replay` | `agent-loop`, `compaction` | 切换模型提供商，不需要改Agent循环 |
+| 文件系统 | `ctx.fs` | `fs-local`, `fs-sandbox`, `fs-e2b` | `tool-fs` | 本地文件→E2B远程沙箱→受限沙箱，tool-fs无需改动 |
+| Shell执行 | `ctx.shell` | `bash-local`, `bash-sandbox`, `pwsh-local` | `tool-bash`, `tool-pwsh`, `hooks-*` | bash→pwsh→沙箱bash，工具和钩子自动适配 |
+| 子进程 | `ctx.subprocess` | `subprocess-local`, `subprocess-e2b` | `bash-local`, `terminal-bash`, `lsp-stdio`, `subagent-*` | 本地spawn→E2B远程，Bash/PTY/LSP/子Agent一起迁移 |
+| 子Agent委派 | `ctx.subagents` | `spawn-in-process`, `fork-in-process`, `subagent-acp`, `subagent-codex`, `subagent-claude-code` | `tool-subagent`, `tool-ralph` | 新建子Agent→委派给Claude Code/Codex/ACP，消费方无感知 |
+| 持久化 | `ctx.sessionPersistence` | `session-persistence-jsonl`, `session-persistence-sqlite` | `agent-loop`, `tool-bash`, `hooks-*` | JSONL文件→SQLite→其他存储，会话存储切换 |
+| 凭据管理 | `ctx.credentials` | `credentials-local` | `llm-deepseek`, `apiproxy` | 本地文件→系统密钥链→远程密钥服务 |
+| 用户设置 | `ctx.settings` | `settings-file` | `llm-deepseek`, `apiproxy` | 本地配置文件→远程配置中心 |
+| 沙箱 | `ctx.sandbox` | `sandbox-local` | `bash-sandbox`, `terminal-bash` | 无沙箱→Landlock沙箱→Docker沙箱 |
+| 审批 | `ctx.approval` | `acp` | `tools`, `tool-bash` | 自动批准→ACP人工审批→自定义策略 |
+| 网页访问 | `ctx.web` | `web-search-exa`, `web-search-perplexity`, `web-search-deepseek`, `web-fetch-http` | `tool-web` | 不同搜索/抓取Provider切换 |
+| 终端 | `ctx.terminals` | `terminal-bash` | `tool-terminal` | bash终端→其他PTY实现 |
+| LSP | `ctx.lsp` | `lsp-local` | `tool-lsp` | 本地LSP→远程LSP服务 |
+| 后台任务 | `ctx.jobs` | `jobs-local` | `tool-jobs`, `tool-bash`, `tool-subagent` | 本地任务表→分布式任务队列 |
+| 技能 | `ctx.skills` | `skill-filesystem`, `skill-badge` | `tool-skill` | 文件系统技能→远程技能注册中心 |
+
 ## 「一次替换，全局生效」机制与示例
 
 三角色分离带来的最震撼的效果就是：**换一个 Provider，所有使用这个服务的 Consumer 自动全部切换到新实现，不需要改一行 Consumer 代码。**
+
+### 深层原理：依赖注入的解耦力量
+
+Consumer只依赖接口（`ctx.xxx`的方法签名），不依赖具体实现。当Provider替换时，所有Consumer自动使用新实现——因为它们都是通过同一个ctx键查找服务的。这是**依赖注入（DI）**带来的解耦效果，不是硬编码的if-else分支切换。
+
+这背后是基于Cordis框架的服务注册与发现机制：
+1. Provider在启动时通过唯一的ctx键（如`ctx.fs`）注册自己的实现
+2. Consumer通过同一个ctx键获取服务实例
+3. 当Provider被替换时，同一个ctx键指向的实例自动更新
+4. 所有Consumer后续通过该键获取的都是新实例，无需任何改动
 
 ### 示例 1：从本地环境迁移到远程沙箱
 
 这是官方文档中给出的经典示例。
 
 **本地环境默认配置：**
-- FileSystem Provider → LocalFileSystemProvider（操作本地磁盘）
-- Execution Provider → LocalExecutionProvider（本地 child_process）
-- 这两个 Provider 共享同一个「本地执行世界」
+- 文件系统 Provider → `fs-local`（操作本地磁盘，绑定`ctx.fs`）
+- 子进程 Provider → `subprocess-local`（本地child_process，绑定`ctx.subprocess`）
+- Shell执行 Provider → `bash-local`（依赖`ctx.subprocess`）
+- 这两个核心seam（`ctx.fs`和`ctx.subprocess`）共享同一个「本地执行世界」
+
+> **重要说明**：文件系统（`ctx.fs`）和子进程（`ctx.subprocess`）这两个seam通常需要**配套切换**（都指向同一个远程环境），因为它们共享同一个执行上下文。文件操作的工作目录、Shell的cwd、进程的环境变量必须保持一致，否则会出现状态不同步的经典bug。
 
 **现在要把整个 Agent 放到远程沙箱里运行，只需要两步：**
 
-1. 把 FileSystem Provider 换成 RemoteSandboxFileSystemProvider
-2. 把 Execution Provider 换成 RemoteSandboxExecutionProvider（同一个沙箱实例）
+1. 把 `ctx.fs` Provider 换成 `fs-e2b`（E2B远程沙箱文件系统）
+2. 把 `ctx.subprocess` Provider 换成 `subprocess-e2b`（同一个E2B沙箱实例）
 
 **发生了什么？**
 - `str_replace_editor` 工具的文件编辑操作，自动变成在远程沙箱里编辑文件
-- `bash` 工具执行命令，自动变成在远程沙箱里执行
+- `bash` 工具执行命令，自动变成在远程沙箱里执行（因为`bash-local`依赖`ctx.subprocess`）
 - `pty` 伪终端，自动连接到远程沙箱的 PTY
 - `lsp` 语言服务器（如果启用），自动在远程沙箱里启动，访问远程文件
 - 所有文件监听、目录列表、搜索操作，全部自动变成远程的
@@ -283,15 +324,15 @@ Consumer 的特点：
 这就是「一次替换，全局生效」——本来要改十几个工具、几十处代码的迁移工作，现在只需要换两个 Provider。
 
 **为什么这么神奇？**
-因为所有这些工具（bash/pty/lsp/edit/read/search）都是 Consumer，它们只依赖 `filesystem` 和 `execution` 这两个 Service Definition 接口。你换了 Provider，Consumer 拿到的服务实例自动变成新的，它们调用接口方法时自然就走到新的实现上了。
+因为所有这些工具（bash/pty/lsp/edit/read/search）都是 Consumer，它们只依赖 `ctx.fs` 和 `ctx.subprocess` 这两个 Service Definition 接口。你换了 Provider，Consumer 拿到的服务实例自动变成新的，它们调用接口方法时自然就走到新的实现上了。
 
-而且因为文件系统和执行服务是同一个 Provider 实例提供的，它们天然共享同一个执行世界——在 bash 里 `cd` 到某个目录，下一次文件操作默认就在那个目录下，不会出现「bash 的工作目录和文件操作的工作目录不一致」的经典 bug。
+而且因为文件系统和子进程服务是同一个沙箱实例提供的，它们天然共享同一个执行世界——在 bash 里 `cd` 到某个目录，下一次文件操作默认就在那个目录下，不会出现「bash 的工作目录和文件操作的工作目录不一致」的经典 bug。
 
 ### 示例 2：子 Agent Provider 切换
 
 子 Agent 是另一个极好的例子，展示了 Seam 抽象的灵活性。
 
-`subagent` 服务定义了一个简单的接口：
+`ctx.subagents` 服务定义了一个简单的接口：
 
 ```typescript
 interface SubagentService {
@@ -303,14 +344,14 @@ interface SubagentService {
 
 | Provider 实现 | 行为 |
 |--------------|------|
-| **LocalSubagentProvider**（默认） | 在本地拉起一个新的 dsh 子 Agent 实例，独立会话，执行完返回结果 |
-| **ClaudeCodeDelegationProvider** | 把任务委托给本机安装的 Claude Code 执行，用 Claude Code 跑这个任务，结果返回 |
-| **CodexDelegationProvider** | 把任务委托给本机 Codex CLI 执行 |
-| **RemoteWorkerProvider** | 把任务发送到远程 Worker 集群执行，适合并行跑多个子任务 |
-| **MockTestingProvider** | 测试用，不真的执行，返回预设结果 |
+| **spawn-in-process**（默认） | 在本地进程内拉起一个新的 dsh 子 Agent 实例，独立会话，执行完返回结果 |
+| **fork-in-process** | 在本地进程内fork一个子Agent |
+| **subagent-acp** | 通过Agent Communication Protocol委派 |
+| **subagent-codex** | 把任务委托给本机 Codex CLI 执行 |
+| **subagent-claude-code** | 把任务委托给本机安装的 Claude Code 执行，用 Claude Code 跑这个任务，结果返回 |
 
 **切换效果：**
-你在插件中把 `subagent` 服务的 Provider 从默认的 LocalSubagentProvider 换成 ClaudeCodeDelegationProvider，然后——
+你在插件中把 `ctx.subagents` 服务的 Provider 从默认的 `spawn-in-process` 换成 `subagent-claude-code`，然后——
 - 模型调用 `spawn_subagent` 工具时，不会再拉起新的 dsh 实例了
 - 自动变成启动 Claude Code，把任务传给它，等它执行完拿回结果
 - `spawn_subagent` 工具的参数格式没变，模型不需要知道背后实现变了
@@ -319,13 +360,13 @@ interface SubagentService {
 
 **这就是 Seam 的力量：你可以在运行时改变 Agent 的整个行为模式，而模型和上层工具完全感知不到变化。**
 
-## ctx.goals 与 subagent seam 扩展点
+## ctx.goals 与 ctx.subagents seam 扩展点
 
-在核心 Seam 之外，dsh 还预留了两个面向高级场景的扩展点，它们本身也是 Seam 设计的。
+在核心 Seam 之外，dsh 还预留了两个面向高级场景的重要扩展点，它们本身也是标准的 Seam 设计。
 
 ### ctx.goals：目标管理扩展点
 
-`ctx.goals` 是目标管理服务的入口，负责维护 Agent 的长短期目标、跟踪进度、调整优先级。
+`ctx.goals` 是目标管理seam，可以替换实现自定义目标跟踪逻辑。它负责维护 Agent 的长短期目标、跟踪进度、调整优先级。
 
 **默认实现提供的能力：**
 - 创建短期目标（当前会话内要完成的）
@@ -346,9 +387,9 @@ interface SubagentService {
 **模型如何使用：**
 模型通过 `goals` 工具与目标系统交互——它可以查询当前目标、添加新目标、更新进度。因为这是标准工具，不管你换成什么 Provider，模型使用方式都不变。
 
-### subagent seam：多 Agent 扩展点
+### ctx.subagents：子Agent后端扩展点
 
-`subagent` 服务我们在上一节已经提到，它是多 Agent 架构的核心扩展点。默认实现只是简单拉起本地子 Agent，但通过自定义 Provider 你可以实现几乎任何多 Agent 拓扑：
+`ctx.subagents` 是子Agent后端seam，可以添加新的委派目标（如委派给自定义Agent框架）。我们在上一节已经提到，它是多 Agent 架构的核心扩展点。默认实现只是简单拉起本地子 Agent，但通过自定义 Provider 你可以实现几乎任何多 Agent 拓扑：
 
 **场景 1：多模型路由**
 ```
@@ -380,6 +421,9 @@ interface SubagentService {
 
 **场景 4：A/B 测试**
 同一个任务同时派给两个不同模型跑，对比结果选更好的那个，或者人工审核。
+
+**场景 5：自定义Agent框架委派**
+通过实现自定义的`ctx.subagents` Provider，可以将子任务委派给任何第三方Agent框架，如OpenInterpreter、Aider、AutoGPT等。
 
 所有这些场景都不需要修改 dsh 核心代码，只需要写一个 Subagent Provider 插件即可。
 

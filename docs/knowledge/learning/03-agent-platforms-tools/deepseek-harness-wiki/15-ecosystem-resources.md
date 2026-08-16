@@ -173,10 +173,10 @@ dsh 开源时间不长，但生态已经开始有一些有意思的进展了。
 
 ### 关于本教程
 
-本教程是 DeepSeek Harness v0.1 版本的社区中文指南，基于官方文档、源码分析、实际使用体验和公开资料编写。
+本教程是 DeepSeek Harness v0.1 版本的社区中文指南，基于官方文档、源码交叉验证、实际使用体验和公开资料编写。
 
-- **教程版本**：基于 v0.1.0-rc.6 版本编写
-- **数据截止日期**：2026-08-15
+- **教程版本**：基于 v0.1.0-rc.6 版本编写，已通过本地源码（external/libs/deepseek-harness、external/libs/cordis）交叉验证
+- **数据截止日期**：2026-08-15，源码验证日期：2026-08-17
 - **适用版本**：v0.1.x 系列的 rc 版本
 - **协议**：本教程采用 CC BY-NC-SA 4.0 协议共享
 
@@ -188,6 +188,8 @@ dsh 开源时间不长，但生态已经开始有一些有意思的进展了。
 |------|------|
 | DeepSeek 官方 GitHub 仓库 | 源码、README、文档、Issue、Discussions |
 | DeepSeek 官方网站 deepseek.com/harness | 产品介绍、官方文档 |
+| external/libs/deepseek-harness 本地源码 | 架构、事件、Seam、插件机制源码交叉验证 |
+| external/libs/cordis 本地源码 | Cordis Context/Event/Fiber/Service 核心实现源码验证 |
 | Tony Bai 架构分析文章 | Cordis 架构、插件设计、Capability Seam 解析 |
 | 极客公园评测文章 | 实际使用体验、竞品对比 |
 | 新浪财经商业分析 | 行业定位、生态意义 |
@@ -218,4 +220,4 @@ AI Agent 生态还在非常早期的阶段，今天我们看到的工具可能�
 
 ---
 
-← [14 适用场景](14-use-cases-limitations.md) | 回到 [00 总览](00-overview.md)
+← [14 适用场景](14-use-cases-limitations.md) | [16 附录：核心服务速查表](16-appendix-core-services.md) | 回到 [00 总览](00-overview.md)

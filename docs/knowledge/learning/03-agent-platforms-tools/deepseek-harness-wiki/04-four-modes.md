@@ -4,7 +4,8 @@ title: DeepSeek Harness Wiki - 四种运行模式
 source:
   - .temp/deepseek-harness-sources/02-tonybai.md
   - .temp/deepseek-harness-sources/09-deepseekagent-io.md
-date: 2026-08-16
+  - external/libs/cordis
+date: 2026-08-17
 tags:
   - deepseek
   - agent
@@ -14,6 +15,7 @@ tags:
   - code-mode
   - minimal
   - creator
+  - cordis
 category: learning
 maturity: L1
 ---
@@ -29,7 +31,7 @@ DeepSeek Harness 提供四种预设运行模式，每种模式对应不同的插
 | **Standard（标准模式）** | 完整编程 Agent 能力：文件编辑、Shell 执行、文件与网页搜索、Skills、计划管理、目标追踪、子 Agent 委派、工作流编排 | 日常写代码、通用编程任务、默认使用场景 | Web UI 默认模式，或 `--profile web` |
 | **Code（代码模式 / PTC）** | Standard 全部能力 + 程序化工具调用（Programmatic Tool Calling），模型通过 TypeScript 编排多步操作 | 多步操作密集场景，希望减少轮次往返、提升执行效率 | Web UI 模式切换，或启动时指定 |
 | **Minimal（极简模式）** | 仅保留两个工具：持久化 `bash` 和 `str_replace_editor` | 模型基准评测、需要极简可控环境的研究场景 | `--profile minimal` |
-| **Creator（创造模式）** | Standard 全部能力 + 运行时自省、内存中试验插件、Preset 编写指导 | 定制 Agent 形态、开发插件、自定义 Profile | Web UI 模式切换，或 `--profile creator` |
+| **Creator（创造模式）** | Standard 全部能力 + 运行时自省、内存中试验插件、Preset编写指导（源码层称Cordis模式） | 定制 Agent 形态、开发插件、自定义 Profile | Web UI 模式切换，或 `--profile creator` |
 
 每种模式本质上是不同的 Profile 配置，对应不同的 Bundle 组合与补丁叠加，切换模式不需要修改代码，仅需切换配置。
 
@@ -161,7 +163,7 @@ npx @deepseek-ai/dsh --profile minimal "你的评测任务"
 
 ## Creator 模式：定制与插件开发
 
-Creator 模式是为希望自定义 Agent 形态、开发插件的高级用户设计的模式。
+Creator模式（架构层名称：Cordis模式）是为希望自定义 Agent 形态、开发插件的高级用户设计的模式。在Web UI面向用户时称为"Creator（创造模式）"，在源码和CLI架构层面则称为"Cordis模式"，这两个名称指的是同一个运行模式——用于插件开发、运行时自省和热重载。
 
 ### 额外能力
 
@@ -178,7 +180,7 @@ Creator 模式是为希望自定义 Agent 形态、开发插件的高级用户�
 
 使用 Creator 模式定制新形态 Agent 的流程：
 
-1. 启动 Creator 模式：`npx @deepseek-ai/dsh web --profile creator`
+1. 启动 Creator/Cordis 模式：`npx @deepseek-ai/dsh web --profile creator`（部分版本可能使用 `--profile cordis`，两者本质都是启用动态插件加载能力）
 2. 在对话中描述你想要的 Agent 形态（如「我想要一个专门做代码审查的 Agent，不需要文件写入权限，但要能调用静态分析工具」）
 3. 模型会帮你生成对应的 Profile 配置和补丁
 4. 在内存中试验加载这些配置，实时调整
@@ -214,8 +216,11 @@ npx @deepseek-ai/dsh web --profile web
 # 启动 Minimal 模式（无头）
 npx @deepseek-ai/dsh --profile minimal "任务描述"
 
-# 启动 Creator 模式
+# 启动 Creator/Cordis 模式（插件开发）
 npx @deepseek-ai/dsh web --profile creator
+# 或在部分源码版本中：
+npx @deepseek-ai/dsh web --profile cordis
+# 两者本质都是启用动态插件加载与运行时自省能力
 ```
 
 实际上，四种内置模式本质上就是四个预置的 Profile 名称。你也可以创建自己的自定义 Profile，实现第五种、第六种模式。自定义 Profile 的方法将在后续章节介绍。

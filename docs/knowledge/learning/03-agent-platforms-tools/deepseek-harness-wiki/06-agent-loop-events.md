@@ -4,7 +4,9 @@ title: DeepSeek Harness Wiki - Agent 循环与事件模型
 source:
   - .temp/deepseek-harness-sources/02-tonybai.md
   - .temp/deepseek-harness-sources/09-deepseekagent-io.md
-date: 2026-08-16
+  - external/libs/cordis/packages/core/src/context.ts
+  - external/libs/cordis/packages/core/src/events.ts
+date: 2026-08-17
 tags:
   - deepseek
   - agent
@@ -14,8 +16,9 @@ tags:
   - turn
   - step
   - waterfall
+  - invariant
 category: learning
-maturity: L1
+maturity: L2
 ---
 
 # 06 Agent 循环与事件模型
@@ -68,186 +71,166 @@ Turn 是用户感知到的「一次对话轮次」：
 - Agent 给出最终回答，等待下一条输入 → Turn 结束
 
 Turn 和 Step 的关系：
-- 一个 Turn 可以包含 0 个 Step（极特殊情况，如输入为空直接结束）
+- 一个 Turn 可以包含 0 个 Step（首次领取被拒绝或改写为空时，仍会关闭一个不含步骤的持久轮次）
 - 一个 Turn 通常包含 1 到 N 个 Step
 - 简单问答可能只有 1 个 Step（模型直接回答，不调用工具）
 - 复杂编程任务可能需要几十个 Step
 
 理解这两个概念是理解事件模型的基础。
 
-## 典型回合流程
+## Turn 流程官方精确时序图
 
-一个典型的 Turn 会经历以下标准流程：
+默认循环执行一个 Turn 的精确时序如下（官方文本图）：
 
-```
-1. 认领输入
-   ↓
-2. 组装提示词分区与工具 Schema
-   ↓
-3. 触发 agent/pre-step 事件 → 决定模型到底能看到什么
-   ↓
-4. 追加消息进会话日志
-   ↓
-5. 发起模型请求（触发 agent/request 事件）
-   ↓
-6. 流式接收模型输出（触发 llm/stream 事件）
-   ↓
-7. 解析输出，发现工具调用
-   ↓
-8. 依次执行工具（触发 tools/* 系列事件）
-   ↓
-9. 将工具结果追加回消息
-   ↓
-10. 触发 agent/turn-stopping 事件 → 决定是否需要继续
-    ↓
-11. 如果需要更多工具 → 回到步骤 2，开始下一个 Step
-    ↓
-    如果任务完成 → 输出最终回答，Turn 结束
+```text
+turn/start
+  claim next-step input plus one queued message
+  assemble prompt sections + tool schemas
+  -&gt; agent/pre-step                   reject | enter(messages)
+     reject, or a first enter rewritten empty -&gt; close the turn with no step
+     step/start
+     append entered messages as user/message
+     derive model history from the log
+     agent/request -&gt; llm/stream -&gt; assistant/chunk* -&gt; assistant/message
+     tool/call* -&gt; tools/pre-execute -&gt; tools/execute -&gt; tools/post-execute -&gt; tool/result*
+     step/end
+     tools owe another request, or next-step input arrived -&gt; claim -&gt; next step
+  -&gt; agent/turn-stopping
+turn/end
 ```
 
-这个流程中的每一个步骤，几乎都有对应的事件可以被插件拦截和修改。
+要点说明：
+1. Turn 开始时先认领（claim）下一个步骤输入和一条排队消息
+2. 组装提示词分区与工具 schema
+3. 进入 `agent/pre-step` 瀑布事件，监听器可以 reject 或 enter(messages)
+4. 如果被 reject 或首次 enter 被改写为空 → 关闭一个不含步骤的 Turn
+5. 正常流程：step/start → 追加消息 → 从日志推导模型历史 → 模型请求流式响应 → 工具执行三阶段 → step/end
+6. 如果工具需要再次请求，或有新输入到达 → 认领 → 下一个 Step
+7. 最后触发 `agent/turn-stopping` 串行事件，然后 Turn 结束
 
-## 三类事件系统详解
+## 输入到达机制
 
-dsh 的事件分为三大类，分别服务于不同的目的。
+所有输入通过同一个 inbox 到达驱动器：
 
-### 1. 会话事件（Session Events）
+- 有些消息会**立即唤醒循环**（如用户主动发送的消息）
+- 注入的上下文留在 inbox 中，直到另一条消息将其唤醒
+- `agent.inject()` 可注入上下文到下一次获准的请求中
 
-**广播通道**：`session/event`
+这种设计确保了输入处理的统一性，无论是用户输入、系统注入还是工具返回结果，都走同一条通道。
 
-会话事件是**写入日志、持久存在**的事实。任何需要「重启后还在」的数据都通过会话事件记录。
+## 三类事件分发模式
 
-常见会话事件包括：
-- 用户消息追加
-- 助手消息追加（包括流式的 chunk）
-- 工具调用记录
-- 工具结果记录
-- 系统提示词变更
-- 子 Agent 调度记录
-- 检查点（Checkpoint）创建
+dsh 的事件通过 `@mode` JSDoc 标签记录分发模式，分为三大类：
 
-会话事件的特点：
+### 1. 持久会话事件（Session Events）——写入 SessionLog
+
+这些事件是**持久化、写入会话日志**的事实，构成了可重建的历史轨迹：
+
+- `turn/*`：Turn 生命周期事件（turn/start、turn/end）
+- `step/*`：Step 生命周期事件（step/start、step/end）
+- `user/message`：用户消息追加
+- `assistant/*`：助手消息相关（assistant/chunk*、assistant/message）
+- `tool/*`：工具相关事件（tool/call*、tool/result*）
+
+持久会话事件的特点：
 - 持久化到磁盘，重启会话后可以恢复
 - append-only（只追加），不可修改已有事件
 - 是 Trajectory 轨迹视图和分叉/回放功能的数据源
-- 通过 `session/event` 通道广播，插件可以监听但不应该拦截修改
+- 遵循「模型可见即已记录」的核心不变量
 
-会话事件的设计原则是「记录事实」——发生了什么就记什么，不做解释，不做修改。
+### 2. Waterfall 事件（瀑布型事件）——有 `next()`
 
-### 2. Agent 事件（`agent/*`）
+瀑布型事件构成了插件拦截流程的主要机制，多个监听者按注册顺序依次执行，每个监听者**必须显式调用 `next()`** 才能传递控制权。
 
-**广播通道**：`agent/*` 系列
+默认循环中的 Waterfall 事件：
 
-Agent 事件携带一个「活的」Agent 对象，用于观察或介入**正在进行中**的工作。这些事件是 transient（临时）的，只在当前 Turn/Step 生命周期内存在，不会被持久化。
+| 事件 | 用途 |
+|------|------|
+| `agent/pre-step` | Step 开始前，决定模型能看到什么 |
+| `agent/request` | 发送模型请求前，可修改请求参数 |
+| `llm/stream` | 流式输出拦截，处理 chunk |
+| `tools/pre-execute` | 工具执行前，可修改参数、权限检查 |
+| `tools/execute` | 工具实际执行阶段 |
+| `tools/post-execute` | 工具执行后，可修改结果、过滤输出 |
 
-常见 Agent 事件包括：
-- `agent/pre-step`：Step 开始前，可以修改要发给模型的消息
-- `agent/request`：即将发送模型请求，可以修改请求参数
-- `agent/response`：收到模型响应，可以解析或修改响应
-- `agent/tool-call`：即将执行工具调用，可以修改参数或拒绝执行
-- `agent/tool-result`：工具执行完成，可以修改结果
-- `agent/turn-stopping`：Step 结束后，决定是否继续下一个 Step
-- `agent/turn-end`：整个 Turn 结束
-
-Agent 事件是插件干预循环流程的主要入口。
-
-### 3. 能力事件（Capability Events）
-
-**挂载对象**：具体能力接口（文件系统、工具、遥测等）
-
-能力事件挂载在各个能力接口的 Seam 上，用于在不引入循环本身的情况下，为能力添加策略和适配器。
-
-常见能力事件场景：
-- 文件系统能力上的事件：读写文件前做权限检查、病毒扫描
-- 工具执行能力上的事件：审计工具调用、限制危险命令
-- 遥测能力上的事件：收集指标、上报监控数据
-- 沙箱能力上的事件：拦截系统调用、隔离资源
-
-能力事件的特点是：它们关注的是「某个能力被使用」这件事，而不是 Agent 循环的整体流程。你不需要理解整个循环，就可以为文件读写添加权限审计。
-
-## 瀑布型事件与 `next()` 机制
-
-dsh 中最核心的一类事件是**瀑布型事件（Waterfall Events）**，它们构成了插件拦截流程的主要机制。
-
-### 什么是瀑布型事件
-
-瀑布型事件的特点是：
+瀑布型事件的特点：
 - 多个监听者按注册顺序依次执行
-- 每个监听者**必须显式调用 `next()`** 才能把控制权传递给下一个监听者
-- 如果不调用 `next()`，流程就会在这里中断，后续监听者不会执行
-- 每个监听者可以修改传递给下游的数据，或者直接返回一个结果终止流程
+- 每个监听者必须显式调用 `next()` 才能继续
+- 不调用 `next()` 则流程中断
+- 可以修改传递给下游的数据，或直接返回结果终止流程
 
-这就像一个瀑布，水从上往下流，每一层都可以「截留」、「改道」或者「放流」。
+### 3. Serial 事件（串行事件）——无 `next()`
 
-### 关键瀑布型拦截点
+与瀑布型事件不同，串行事件**没有 `next()`**，用于投票/聚合逻辑而非流水线传递。
 
-默认循环中，以下关键节点是瀑布型事件：
+核心 Serial 事件：**`agent/turn-stopping`**
 
-| 事件 | 用途 | 可以做什么 |
-|------|------|------------|
-| `agent/pre-step` | 模型请求前 | 增删改消息历史、注入额外上下文、修改工具列表、拒绝本次请求 |
-| `agent/request` | 发送请求前 | 修改模型参数（温度、top_p 等）、切换模型、重写请求体、添加请求头 |
-| `llm/stream` | 流式输出中 | 监听输出 chunk、拦截敏感内容、缓存响应、提前终止流式输出 |
-| `tools/before-call` | 工具执行前 | 修改工具参数、权限检查、参数校验、拒绝执行危险工具 |
-| `tools/after-call` | 工具执行后 | 修改工具返回结果、结果过滤、错误处理、记录审计日志 |
-| `tools/error` | 工具出错时 | 捕获错误、降级处理、重试逻辑、自定义错误消息 |
+- 在每个 Step 结束后触发
+- 回答一个问题：**这个 Turn 应该结束了吗？**
+- 每个监听者独立判断，任何一个返回「需要继续」则 Turn 继续
+- 所有监听者都认为完成时，Turn 才结束
+- 不存在顺序依赖，不需要传递控制权
 
-### `next()` 机制示例
+## `agent/pre-step` 语义详解
 
-举个例子，如果你想写一个插件，在每次调用 Shell 工具前自动添加 `set -euo pipefail` 保证脚本安全，代码逻辑大概是这样：
+`agent/pre-step` 是循环中最关键的决策点，它**决定模型看到什么**：
+
+- 监听器可以**改写已领取的消息**，增删改提示词内容
+- 监听器也可以直接**拒绝（reject）**这些消息
+- **首次领取被拒绝或被改写为空时，仍会关闭一个不含步骤的持久轮次**，因此日志会记录这次尝试
+- 每个步骤读取插件注册的提示词片段和工具 schema
+
+这是插件干预模型输入的主要入口——无论是注入额外上下文、修改工具列表、过滤敏感内容，还是实现权限控制，都在这里完成。
+
+## 运行时不变量（Invariant）
+
+dsh 核心设计遵循一条铁律：**模型可见即已记录**——抵达模型请求的一切都必须能从日志重建。
+
+这条不变量由 `invariants` 包的**运行时断言**强制执行。它意味着：
+
+1. 任何新增的模型可见输入，**必须新增一个会话事件类型**
+2. 需要扩展 `SessionEventMap` 类型定义
+3. 需要提供从日志渲染（render）该输入的逻辑
+
+这条不变量是会话日志可观测性、轨迹回放、分叉调试等功能的基础——如果模型看到了某样东西但日志里没有，这些功能就会失效。
+
+## 工具执行三阶段
+
+工具执行遵循严格的三阶段 Waterfall 链：
+
+```text
+tool/call*
+  → tools/pre-execute   # 执行前：参数校验、权限检查、审计
+  → tools/execute       # 实际执行：调用工具实现
+  → tools/post-execute  # 执行后：结果处理、过滤、错误转换
+→ tool/result*
+```
+
+> **注意**：事件名称是 `tools/pre-execute` → `tools/execute` → `tools/post-execute`，不是 `tools/before-call` 等其他命名。
+
+### Waterfall 事件使用示例
+
+举个例子，如果你想写一个插件，在每次调用 Shell 工具前自动添加 `set -euo pipefail` 保证脚本安全：
 
 ```typescript
-ctx.on('tools/before-call', async (event, next) => {
+ctx.on('tools/pre-execute', async (event, next) =&gt; {
   if (event.tool.name === 'bash') {
-    // 在命令前添加安全选项
     event.tool.args.command = `set -euo pipefail\n${event.tool.args.command}`;
   }
-  // 必须调用 next() 继续传递给下一个监听者和实际执行
   await next();
 });
 ```
 
-如果你想阻止某个危险命令执行，可以不调用 `next()`，直接返回错误：
+如果你想阻止某个危险命令执行，可以直接抛出错误：
 
 ```typescript
-ctx.on('tools/before-call', async (event, next) => {
-  if (event.tool.name === 'bash' && event.tool.args.command.includes('rm -rf /')) {
-    // 拒绝执行，不调用 next()
+ctx.on('tools/pre-execute', async (event, next) =&gt; {
+  if (event.tool.name === 'bash' &amp;&amp; event.tool.args.command.includes('rm -rf /')) {
     throw new Error('危险命令被安全插件拦截');
   }
   await next();
 });
 ```
-
-瀑布型事件给了插件极大的权力——你可以在任何关键点介入，做任何修改，甚至完全阻止流程继续。
-
-## `agent/turn-stopping` 串行事件
-
-与瀑布型事件不同，`agent/turn-stopping` 是一个特殊的**串行事件**，它**没有 `next()`**。
-
-### 事件作用
-
-`agent/turn-stopping` 在每个 Step 结束后触发，专门用来回答一个问题：**这个 Turn 应该结束了吗？**
-
-每个监听这个事件的插件可以独立做出判断：
-- 如果任何一个监听者返回「需要继续」，Turn 就会继续下一个 Step
-- 如果所有监听者都认为「任务完成」，Turn 才会结束
-
-### 为什么没有 `next()`
-
-这是因为「是否继续」是一个投票/聚合逻辑，而不是流水线逻辑：
-- 每个插件独立表达自己的判断
-- 结果聚合（有一个要继续就继续）
-- 不存在「谁先谁后」的顺序依赖，也不需要传递控制权
-
-这与瀑布型事件的「顺序处理、向下传递」本质不同，所以设计为没有 `next()` 的串行事件。
-
-### 典型用途
-
-- 默认循环逻辑：判断模型是否输出了最终回答（没有更多工具调用）
-- 目标管理插件：检查是否还有未完成的子目标需要继续
-- 计划插件：判断当前步骤是否偏离计划，需要纠偏后继续
-- 预算控制插件：检查 Token/时间预算是否耗尽，强制终止
 
 ## Loop 本身也是插件
 
@@ -276,6 +259,7 @@ ctx.on('tools/before-call', async (event, next) => {
 - 内置流式输出处理
 - 与所有官方插件兼容
 - 处理了大部分边界情况（错误、超时、取消等）
+- 严格执行「模型可见即已记录」不变量
 
 除非你有非常特殊的调度逻辑需求，否则默认循环应该足够使用——而且你依然可以通过事件系统在不替换循环的情况下，定制几乎所有行为。
 
