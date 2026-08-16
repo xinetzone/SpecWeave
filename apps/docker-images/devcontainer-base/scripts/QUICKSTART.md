@@ -38,9 +38,12 @@ print(f"加速: {result.speedup:.2f}x")
 
 运行测试套件验证环境：
 ```bash
-python test_quantize_kit.py
-# 期望输出: Results: 37 passed, 0 failed
+python -m pytest tests/ -v
+# 期望输出: Results: 56 passed, 0 failed
+# quantize.py 覆盖率: 96% (目标≥95% ✅)
 ```
+
+> **覆盖率报告**：详见 [docs/test-quantize-coverage-catalog.md](docs/test-quantize-coverage-catalog.md)，包含32个专项测试用例清单与未覆盖代码分析。
 
 ---
 
@@ -211,7 +214,11 @@ class MyCalibrationReader(CalibrationDataReader):
 | `onnx_quantize_kit/accuracy.py` | 精度验证（max_diff、cosine_sim） |
 | `onnx_quantize_kit/benchmark.py` | 性能基准测试（延迟、吞吐、百分位） |
 | `onnx_quantize_kit/model_detect.py` | 模型类型自动检测（MLP/CNN/Transformer/RNN） |
-| `test_quantize_kit.py` | 完整测试套件（37 个测试用例） |
+| `tests/test_quantize.py` | 核心量化逻辑单元测试（24个） |
+| `tests/test_quantize_coverage.py` | 专项覆盖率测试（32个，覆盖回退/异常/边界） |
+| `tests/conftest.py` | pytest共享fixtures（MLP/CNN/Identity测试模型） |
+| `run_coverage.py` | Windows环境覆盖率脚本（解决C扩展冲突） |
+| `docs/test-quantize-coverage-catalog.md` | ✅ **覆盖率96%归档文档**（测试用例清单+未覆盖分析） |
 | `ci_quantization_gate.py` | CI 门禁命令行工具 |
 | `ci-requirements.txt` | CI 环境依赖清单 |
 | `../../variants/scripts/test-onnx-quantized.sh` | Docker 镜像集成测试脚本 |
@@ -269,14 +276,15 @@ config = QuantizationConfig(
 ### 6.1 运行测试
 
 ```bash
-# 完整测试套件
-python test_quantize_kit.py
+# 完整测试套件（56个测试用例）
+python -m pytest tests/ -v
 
-# 单个模块快速测试
-python -c "
-from onnx_quantize_kit import auto_quantize
-# ... 你的测试代码
-"
+# 仅运行专项覆盖率测试
+python -m pytest tests/test_quantize_coverage.py -v
+
+# 生成覆盖率报告（Windows环境使用独立脚本，避免C扩展冲突）
+python run_coverage.py
+# 目标覆盖率：≥95%，当前状态：96% ✅
 ```
 
 ### 6.2 Docker 环境验证
