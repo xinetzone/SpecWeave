@@ -45,6 +45,81 @@ ONNX 模型量化工具链变体，基于 onnxruntime.quantization 原生 API �
 
 ---
 
+## 🧪 onnx_quantize_kit 测试质量
+
+### 测试覆盖概览
+
+| 指标 | 值 |
+|------|------|
+| **测试框架** | pytest 8.4.2 |
+| **总测试用例** | **195** (100% 通过) |
+| ├─ 核心单元测试 | 140 |
+| ├─ 集成测试 | 23 |
+| └─ 专项覆盖率测试 | 32 |
+| **执行时间** | < 6s |
+| **核心模块覆盖率** | **96%**（quantize.py 主逻辑 ✅ 达标） |
+| **工具模块平均覆盖率** | **95%+** |
+
+### 模块覆盖率详情
+
+| 模块 | 覆盖率 | 说明 |
+|------|--------|------|
+| `__init__.py` | 100% | 公共 API 导出 |
+| `calibration.py` | **100%** | 校准数据读取器 |
+| `benchmark.py` | 96% | 性能基准测试 |
+| `reporting.py` | 96% | 测试报告生成 |
+| **`quantize.py`** | **96%** ✅ | **量化核心逻辑**（专项测试覆盖回退路径/异常/边界/所有策略分支） |
+| `accuracy.py` | 91% | 精度验证 |
+| `model_detect.py` | 81% | 模型类型检测 |
+| `cli.py` | 0% | CLI 入口（E2E 测试范围，非单元测试） |
+| **整体（不含CLI）** | **94%** | 核心库代码 |
+| **整体（含CLI）** | 75% | - |
+
+### P0 Bug 验证状态
+
+所有前序修复的 P0 级 Bug 均有对应测试用例覆盖验证：
+
+| Bug ID | 问题描述 | 验证状态 |
+|--------|----------|----------|
+| **Bug #1** | 便捷函数缺少 input_shape/input_name 参数 | ✅ 已验证（detect_input_info 全套测试） |
+| **Bug #2** | 动态 dim_param 维度处理不完善 | ✅ 已验证（动态 batch 替换测试） |
+| **Bug #3** | CLI 默认形状硬编码为图像尺寸 | ✅ 已验证（自动检测逻辑测试） |
+| **T19** | build-info BASE_IMAGE 缺少仓库前缀 | ✅ 构建时自验证拦截 |
+
+### 测试类型覆盖
+
+- ✅ **正常路径**：所有公共 API 标准调用
+- ✅ **边界值**：warmup=0、runs=1、动态维度、极小模型、dim_value=0、未知类型
+- ✅ **异常场景**：不存在文件、损坏模型、类型不兼容、缺失字段、依赖导入失败、量化异常
+- ✅ **空值/None**：可选参数 None 触发自动检测、perf/acc失败时字段处理
+- ✅ **参数组合**：QInt8/QUInt8、QDQ/QOperator/QInt8/QInt8Quint8/QUInt8、per_channel、MinMax/Entropy 校准
+- ✅ **回退路径**：onnxsim导入失败、quant_pre_process失败、主策略精度不达标自动fallback
+- ✅ **日志路径**：verbose模式打印、回滚触发警告、全策略失败日志
+
+### 运行测试
+
+```bash
+cd scripts/
+
+# 运行全部测试（195个用例）
+python -m pytest tests/ -v
+
+# 生成覆盖率报告（Windows环境使用独立脚本避免C扩展冲突）
+python run_coverage.py
+# 目标：quantize.py ≥ 95%，当前：96% ✅
+
+# 仅专项覆盖率测试（回退/异常/边界）
+python -m pytest tests/test_quantize_coverage.py -v
+
+# 仅集成测试（静态量化主路径）
+python -m pytest tests/test_quantize_integration.py -v
+```
+
+详细测试用例清单见：[test-quantize-coverage-catalog.md](../../scripts/docs/test-quantize-coverage-catalog.md)（32个专项测试用例+未覆盖代码分析）
+详细覆盖率报告见：[retrospective-onnx-quantize-kit-test-coverage-20260816.md](../../../../../.agents/docs/retrospective/reports/build-engineering/retrospective-onnx-quantize-kit-test-coverage-20260816.md)
+
+---
+
 ## 📊 量化精度对比
 
 ### 动态 INT8 量化（Gemm 层，Xavier 初始化权重）
