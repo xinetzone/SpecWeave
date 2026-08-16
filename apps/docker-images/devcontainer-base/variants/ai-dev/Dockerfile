@@ -2,12 +2,13 @@
 # =============================================================================
 # DevContainer Base - AI Dev (Full AI/ML/NLP Stack, Dual-Env Architecture)
 # Base: devcontainer-base:torch-dev-${BASE_TAG} (free-threading PyTorch cp314t in main env)
-# Architecture: DUAL-ENV - base(GIL):50+ packages(NLP/data/viz/web/db) | main(ft):PyTorch+ONNX
+# Architecture: DUAL-ENV - base(GIL):50+ packages(NLP/data/viz/web/db, NO torch)
+#                          main(ft):PyTorch+ONNX+onnx2torch+open_clip (torch-dependent pkgs HERE)
 # PATH priority: /opt/conda/bin first (base env python default; main env accessible via full path)
 # Jupyter: "Python 3 (AI Dev)" kernel registered in main env's jupyter, pointing to base python
 # Build (CN): docker build -f variants/ai-dev/Dockerfile --build-arg PIP_MIRROR=aliyun -t devcontainer-base:ai-dev-latest .
-# Verify (base): docker run --rm devcontainer-base:ai-dev-latest python -c "import transformers,datasets,fastapi,pandas;print('ai-dev OK')"
-# Verify (main ft): docker run --rm devcontainer-base:ai-dev-latest /opt/conda/envs/main/bin/python -c "import torch,sys;print(torch.__version__);assert not sys._is_gil_enabled()"
+# Verify (base): docker run --rm devcontainer-base:ai-dev-latest python -c "import transformers,datasets,fastapi,pandas;print('ai-dev base OK')"
+# Verify (main ft): docker run --rm devcontainer-base:ai-dev-latest /opt/conda/envs/main/bin/python -c "import torch,onnx2torch,open_clip,sys;print(f'torch {torch.__version__}, GIL off: {not sys._is_gil_enabled()}')"
 # =============================================================================
 
 ARG BASE_TAG=latest
@@ -23,7 +24,7 @@ ARG CONDA_MIRROR
 ARG PIP_MIRROR
 
 LABEL maintainer="SpecWeave"
-LABEL description="DevContainer ai-dev: full AI/ML/NLP ecosystem (50+ pkgs in base GIL env), free-threading PyTorch (main env), JupyterLab 4.x, dual-env architecture"
+LABEL description="DevContainer ai-dev: full AI/ML/NLP ecosystem (50+ pkgs in base GIL env, NO torch), free-threading PyTorch+onnx2torch+open_clip (main env), JupyterLab 4.x, dual-env architecture"
 LABEL variant="ai-dev"
 LABEL ecosystem="nlp,transformers,data-science,document-processing,web-api,database"
 LABEL architecture="dual-env:base(GIL)+main(free-threading)"
@@ -56,11 +57,11 @@ test -d /opt/conda && test -x /opt/conda/bin/python && echo "  [OK] /opt/conda b
 echo "  [OK] torch-dev base verified (dual-env architecture confirmed)"
 S1
 
-# ── Stage 2/3: Install full AI/ML/NLP ecosystem (50+ packages in BASE env)
+# ── Stage 2/3: Install AI/ML/NLP ecosystem (48 pkgs base env + G-M1 2 pkgs main env)
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     <<'S2'
 source /usr/local/share/variant-framework/variant-framework.sh
-variant_timer_stage 2 "Install full AI/ML/NLP ecosystem (base env, 50+ packages)"
+variant_timer_stage 2 "Install AI/ML/NLP ecosystem (48 base + G-M1 2 main pkgs)"
 variant_activate_base_env  # activates base + sets PIP_USER=0 for build-time
 
 pip install --no-cache-dir --upgrade pip setuptools wheel
@@ -78,14 +79,14 @@ pip_install_group "G3: Jupyter Ecosystem" "ipython, ipykernel, jupyterlab>=4.4, 
 pip_install_group "G4: Data Processing" "pyarrow, pandas, scikit-learn, natsort" \
     pyarrow pandas scikit-learn natsort
 
-pip_install_group "G5: NLP/Transformers" "datasets, transformers, sentencepiece, sentence-transformers, evaluate, tiktoken, onnx2torch" \
-    datasets transformers sentencepiece sentence-transformers evaluate tiktoken onnx2torch
+pip_install_group "G5: NLP/Transformers" "datasets, transformers, sentencepiece, sentence-transformers, evaluate, tiktoken" \
+    datasets transformers sentencepiece sentence-transformers evaluate tiktoken
 
 pip_install_group "G6: Visualization/CLI" "matplotlib, seaborn, wordcloud, tabulate, tqdm, colorama, rich" \
     matplotlib seaborn wordcloud tabulate tqdm colorama rich
 
-pip_install_group "G7: AI/ML Utilities" "einops, open_clip_torch, numba" \
-    einops open_clip_torch numba
+pip_install_group "G7: AI/ML Utilities" "einops, numba" \
+    einops numba
 
 pip_install_group "G8: Audio Processing" "librosa (soundfile/audioread/resampy as deps)" \
     librosa
@@ -108,13 +109,27 @@ pip_install_group "G13: Database Clients" "psycopg2-binary, pymongo, elasticsear
 pip_install_group "G14: Developer Tools" "icecream" \
     icecream
 
+# ── Install torch-dependent packages in MAIN env (free-threading, where torch lives)
+# onnx2torch and open_clip_torch depend on torch; installing them in base would cause
+# pip to pull a GIL-version torch into base, breaking the dual-env architecture.
+variant_activate_main_env  # switches to /opt/conda/envs/main, PIP_USER=0 for build-time
+
+pip_install_group "G-M1: PyTorch Ecosystem (main env)" "onnx2torch, open_clip_torch (torch-dependent, installed alongside torch in main ft env)" \
+    onnx2torch open_clip_torch
+
+echo "  onnx2torch (main): $(python -c 'import onnx2torch; print(getattr(onnx2torch,\"__version__\",\"installed\"))' 2>/dev/null)"
+echo "  open_clip (main):  $(python -c 'import open_clip; print(getattr(open_clip,\"__version__\",\"installed\"))' 2>/dev/null)"
+
+# Switch back to base env for permission cleanup
+variant_activate_base_env
+
 ensure_all_permissions
 cleanup_binaries
 cleanup_pycache
 cleanup_conda_pip_cache
 pip check 2>&1 | head -5 || true
 echo ""
-echo "  Installed package versions (base env):"
+echo "  Installed package versions (base env, G1-G14, 48 pkgs, NO torch):"
 python -c "
 import importlib
 pkgs = [('transformers','transformers'),('datasets','datasets'),('sentence_transformers','sentence-transformers'),
@@ -123,6 +138,16 @@ pkgs = [('transformers','transformers'),('datasets','datasets'),('sentence_trans
         ('nltk','nltk'),('fitz','PyMuPDF'),('psycopg2','psycopg2-binary'),('pymongo','pymongo'),
         ('elasticsearch','elasticsearch'),('minio','minio'),('nuitka','nuitka'),('rich','rich'),
         ('httpx','httpx'),('numba','numba'),('librosa','librosa')]
+for mod, name in pkgs:
+    try:
+        m = importlib.import_module(mod); print(f'    {name}: {getattr(m,\"__version__\",\"installed\")}')
+    except ImportError: print(f'    {name}: NOT FOUND')
+"
+echo ""
+echo "  Installed package versions (main env, G-M1, torch-dependent):"
+/opt/conda/envs/main/bin/python -c "
+import importlib
+pkgs = [('torch','torch'),('torchvision','torchvision'),('onnx2torch','onnx2torch'),('open_clip','open_clip_torch')]
 for mod, name in pkgs:
     try:
         m = importlib.import_module(mod); print(f'    {name}: {getattr(m,\"__version__\",\"installed\")}')
@@ -155,22 +180,25 @@ chmod 644 /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json
 echo "[OK] ai-dev kernel registered (main env jupyter, base python)"
 
 variant_write_build_info "ai-dev" "torch-dev-${BASE_TAG}" \
-    "VARIANT_DESCRIPTION=Full AI/ML/NLP Python ecosystem (dual-env: base GIL 50+pkgs + main ft PyTorch)" \
+    "VARIANT_DESCRIPTION=Full AI/ML/NLP Python ecosystem (dual-env: base GIL 50+pkgs + main ft PyTorch+onnx2torch+open_clip)" \
     "ARCHITECTURE=dual-env: base(GIL,/opt/conda) for NLP/data/web + main(free-threading,/opt/conda/envs/main) for PyTorch" \
     "PYTHON_BASE_VERSION=$(python --version 2>&1 | awk '{print $2}') (GIL-enabled)" \
     "PYTHON_MAIN_VERSION=$(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}') (cp314t free-threading, GIL disabled)" \
     "PYTORCH_VERSION=$(/opt/conda/envs/main/bin/python -c 'import torch;print(torch.__version__)' 2>/dev/null)" \
     "TORCHVISION_VERSION=$(/opt/conda/envs/main/bin/python -c 'import torchvision;print(torchvision.__version__)' 2>/dev/null)" \
+    "ONNX2TORCH_VERSION=$(/opt/conda/envs/main/bin/python -c 'import onnx2torch;print(getattr(onnx2torch,\"__version__\",\"installed\"))' 2>/dev/null)" \
+    "OPEN_CLIP_VERSION=$(/opt/conda/envs/main/bin/python -c 'import open_clip;print(getattr(open_clip,\"__version__\",\"installed\"))' 2>/dev/null)" \
     "TRANSFORMERS_VERSION=$(python -c 'import transformers;print(transformers.__version__)' 2>/dev/null)" \
     "DATASETS_VERSION=$(python -c 'import datasets;print(datasets.__version__)' 2>/dev/null)" \
     "FASTAPI_VERSION=$(python -c 'import fastapi;print(fastapi.__version__)' 2>/dev/null)" \
     "PANDAS_VERSION=$(python -c 'import pandas;print(pandas.__version__)' 2>/dev/null)" \
     "JUPYTERLAB_VERSION=$(/opt/conda/envs/main/bin/jupyter lab --version 2>/dev/null | head -1)" \
     "JUPYTER_KERNEL=ai-dev (Python 3 AI Dev, /opt/conda/bin/python, registered in main jupyter)" \
-    "PACKAGES_COUNT=50+ (G1-G14 in base env)" \
-    "PACKAGES_GROUPS=G1:Build,G2:Utils,G3:Jupyter,G4:Data,G5:NLP,G6:Viz,G7:AI,G8:Audio,G9:CN-NLP,G10:Doc,G11:Web,G12:Config,G13:DB,G14:DevTools" \
-    "PATH_PRIORITY=conda-base-bin-first" \
-    "BASE_VARIANT=torch-dev(PyTorch+ONNX-quant+LLVM inherited)"
+    "PACKAGES_COUNT=50+ (G1-G14 base env + G-M1 main env)" \
+    "PACKAGES_GROUPS=base(G1:Build,G2:Utils,G3:Jupyter,G4:Data,G5:NLP,G6:Viz,G7:AI-utils,G8:Audio,G9:CN-NLP,G10:Doc,G11:Web,G12:Config,G13:DB,G14:DevTools)+main(G-M1:torch-deps:onnx2torch,open_clip)" \
+    "PATH_PRIORITY=conda-base-bin-first (base python default; main python via /opt/conda/envs/main/bin/python)" \
+    "BASE_VARIANT=torch-dev(PyTorch+ONNX-quant+LLVM inherited)" \
+    "TORCH_IN_BASE=false (torch ONLY in main env; base env torch isolation enforced)"
 
 cleanup_all
 
@@ -186,13 +214,15 @@ python -c "import fitz, bs4, openpyxl; print('  [6/9] Document processing import
 python -c "import psycopg2, pymongo, elasticsearch, minio; print('  [7/9] Database clients imports OK')"
 python -c "import nuitka, pytest, psutil, icecream; print('  [8/9] Build/dev tools imports OK')"
 
-# Check 9: dual-env GIL architecture + main env inheritance
+# Check 9: dual-env GIL architecture + main env inheritance + torch-dependent packages
 echo "  [9/9] Dual-env GIL architecture verification:"
 /opt/conda/envs/main/bin/python -c "import torch, torchvision; print(f'    main env: torch {torch.__version__} + torchvision {torchvision.__version__}')"
 /opt/conda/envs/main/bin/python -c "from onnxruntime.quantization import quantize_dynamic; print('    main env: quantization API OK')"
+/opt/conda/envs/main/bin/python -c "import onnx2torch, open_clip; print(f'    main env: onnx2torch + open_clip_torch installed (torch-dependent)')"
 /opt/conda/envs/main/bin/python -c "import sys; assert sys._is_gil_enabled() is False; print('    main env: GIL disabled (free-threading cp314t)')"
 python -c "import sys; assert sys._is_gil_enabled() is True; print('    base env: GIL enabled (standard Python)')"
-echo "[OK] GIL architecture: base=GIL, main=free-threading"
+python -c "import importlib.util; assert importlib.util.find_spec('torch') is None; print('    base env: torch NOT present (dual-env isolation OK)')"
+echo "[OK] GIL architecture: base=GIL, main=free-threading; torch-only in main env"
 
 verify_base_services
 
@@ -211,17 +241,17 @@ test -f /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json && echo " 
 echo -n "  [VERIFY] devuser base env packages access... "
 su - devuser -c "python -c 'import transformers,pandas,fastapi;print(\"OK\")'" >/dev/null 2>&1 \
     && echo "[OK]" || { echo "[FAIL]"; exit 1; }
-echo -n "  [VERIFY] devuser main env PyTorch access... "
-su - devuser -c "/opt/conda/envs/main/bin/python -c 'import torch;print(\"OK\")'" >/dev/null 2>&1 \
+echo -n "  [VERIFY] devuser main env PyTorch ecosystem access... "
+su - devuser -c "/opt/conda/envs/main/bin/python -c 'import torch,onnx2torch,open_clip;print(\"OK\")'" >/dev/null 2>&1 \
     && echo "[OK]" || { echo "[FAIL]"; exit 1; }
 
 echo ""
 variant_timer_summary "ai-dev Variant (add-on)"
 echo "########################################################################"
-echo "# AI-DEV BUILD COMPLETE - Dual-Env: base(GIL 50+pkgs) + main(ft PyTorch)"
+echo "# AI-DEV BUILD COMPLETE - Dual-Env: base(GIL 50+pkgs,NO torch) + main(ft PyTorch+onnx2torch+open_clip)"
 echo "# Quick (base): import transformers, datasets, fastapi, pandas"
-echo "# Quick (main ft): /opt/conda/envs/main/bin/python -c \"import torch;print(torch.__version__)\""
-echo "# Jupyter: jupyter lab --allow-root (kernel: Python 3 (AI Dev))"
+echo "# Quick (main ft): /opt/conda/envs/main/bin/python -c \"import torch,onnx2torch;print(torch.__version__)\""
+echo "# Jupyter: jupyter lab --allow-root (kernel: Python 3 (AI Dev), base python)"
 echo "########################################################################"
 S3
 

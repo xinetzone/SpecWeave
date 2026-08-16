@@ -2,35 +2,53 @@
 
 ## 基础信息
 
-- **基础镜像**: `devcontainer-base:onnx-quantized-${BASE_TAG}`
-- **继承链**: devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → ai-dev
-- **安装环境**: conda base 环境（`/opt/conda`，标准 Python，GIL 启用）
-- **PATH 优先级**: `/opt/conda/bin` 优先于系统 PATH（conda python 为默认 python）
-- **默认 Python**: `/opt/conda/bin/python`（base 环境，AI 内核与 50+ 生态包所在）
-- **量化工具链环境**: main 环境（`/opt/conda/envs/main`，free-threading cp314t，继承自 onnx-quantized）
-- **系统 venv**: 已移除（`/opt/venv` 不存在；Jupyter 服务运行于 main 环境）
+- **基础镜像**: `devcontainer-base:torch-dev-${BASE_TAG}`
+- **继承链**: devcontainer-base → conda-llvm → onnx-dev → onnx-quantized → torch-dev → **ai-dev**（6层）
+- **双环境架构**:
+  - **base 环境**（`/opt/conda`，标准 Python，GIL **启用**）：承载 50+ AI/ML/NLP 生态包，默认 `python` 指向此环境
+  - **main 环境**（`/opt/conda/envs/main`，Python 3.14.6 cp314t **free-threading**，GIL **禁用**）：PyTorch CUDA + ONNX量化栈（继承自 torch-dev）
+- **PATH 优先级**: `/opt/conda/bin:${PATH}`（base 环境在前，刻意覆盖 torch-dev 的 main 在前设置）
+- **默认 Python**: `/opt/conda/bin/python`（base 环境，GIL 启用）
+- **PyTorch Python**: `/opt/conda/envs/main/bin/python`（main 环境，free-threading，CUDA 可用）
+- **/opt/venv**: 已在 onnx-dev 变体链中移除，不存在
+- **Jupyter 服务**: `/opt/conda/envs/main/bin/jupyter`（supervisord 以绝对路径启动，运行于 main 环境）
 
 ## 核心组件
 
+### base 环境安装的包（GIL 启用，50+ 包，G1-G14分组）
+
+| 分组 | 包 | 说明 |
+|------|-----|------|
+| G1: Build Tools | scikit-build-core, nuitka, invoke, build | Python 包构建与编译 |
+| G2: Core Utilities | decorator, attrs, cloudpickle, typing_extensions, pytest, psutil | 基础工具库 |
+| G3: Jupyter Ecosystem | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 | Jupyter 生态（装于 base 供内核使用；服务运行于 main） |
+| G4: Data Processing | pyarrow, pandas, scikit-learn, natsort | 数据分析栈 |
+| G5: NLP/Transformers | datasets, transformers, sentencepiece, sentence-transformers, evaluate, tiktoken | HuggingFace 生态（onnx2torch 依赖 torch，移至 main 环境 G-M1） |
+| G6: Visualization/CLI | matplotlib, seaborn, wordcloud, tabulate, tqdm, colorama, rich | 图表与终端美化 |
+| G7: AI/ML Utilities | einops, numba | 张量操作/编译加速（open_clip_torch 依赖 torch，移至 main 环境 G-M1） |
+| G8: Audio Processing | librosa | 音频分析（soundfile/audioread/resampy 作为依赖自动安装） |
+| G9: Chinese NLP | jieba, nltk, pypinyin | 中文分词/拼音/NLTK数据 |
+| G10: Document Processing | PyMuPDF(fitz), EbookLib, beautifulsoup4, openpyxl | PDF/EPUB/HTML/Excel 文档解析 |
+| G11: Web/API Stack | pydantic, fastapi, uvicorn, httpx>=0.28 | 异步 Web 框架 |
+| G12: Serialization/Config | toml, typer, xmltodict, pyyaml | 配置文件/CLI框架 |
+| G13: Database Clients | psycopg2-binary, pymongo, elasticsearch, minio | PostgreSQL/MongoDB/ES/MinIO 客户端 |
+| G14: Developer Tools | icecream | 调试打印工具 |
+
+### main 环境继承的包（来自 torch-dev，free-threading cp314t）
+
 | 分类 | 包 | 说明 |
 |------|-----|------|
-| 构建工具 | scikit-build-core, nuitka, invoke, build | Python 包构建与编译 |
-| 深度学习 | onnx, onnxruntime | 继承自 onnx-quantized（纯 ONNX 链） |
-| torch/torchvision | 非继承 | onnx-quantized v2.0.0 纯 ONNX 无 torch；ai-dev 经 onnx2torch + open_clip_torch 传递引入 base 环境 |
-| 量化（继承） | onnxruntime.quantization, onnxconverter-common, onnxsim | 来自 onnx-quantized |
-| Jupyter | ipython, ipykernel, jupyterlab>=4.4, notebook>=7.3 | 装于 base 环境（AI 内核使用）；Jupyter 服务仍运行于 main 环境 |
-| NLP/Transformers | transformers, datasets, sentencepiece, sentence-transformers, evaluate, tiktoken | HuggingFace 生态 |
-| 模型转换 | onnx2torch | ONNX→PyTorch |
-| 数据处理 | pandas, pyarrow, scikit-learn, natsort | 数据分析栈 |
-| 可视化 | matplotlib, seaborn, wordcloud, tabulate, tqdm, colorama, rich | 图表与终端美化 |
-| AI/ML 工具 | einops, open_clip_torch, numba | 张量操作/编译加速 |
-| 音频处理 | librosa | 音频分析 |
-| 中文 NLP | jieba, nltk, pypinyin | 中文分词/拼音 |
-| 文档处理 | PyMuPDF, EbookLib, beautifulsoup4, openpyxl | PDF/EPUB/HTML/Excel |
-| Web/API | fastapi, uvicorn, pydantic, httpx>=0.28 | 异步 Web 框架 |
-| 序列化 | toml, typer, xmltodict, pyyaml | 配置/CLI |
-| 数据库 | psycopg2-binary, pymongo, elasticsearch, minio | PostgreSQL/MongoDB/ES/MinIO |
-| 开发工具 | pytest, psutil, decorator, attrs, cloudpickle, icecream | 测试/调试/工具 |
+| PyTorch 核心（继承自torch-dev） | torch, torchvision | cp314t free-threading，CUDA cu130/cu128/cpu |
+| ONNX 生态（继承自torch-dev） | onnx, onnxruntime | 模型格式与推理引擎 |
+| ONNX 工具（继承自torch-dev） | onnx-simplifier, onnxscript | 模型简化与脚本化 |
+| 量化工具（继承自torch-dev） | onnxruntime.quantization, onnxconverter-common | INT8/FP16 量化 |
+| **G-M1: PyTorch 生态（本层新增）** | **onnx2torch, open_clip_torch** | **依赖 torch 的包，安装于 main 环境与 torch 同处** |
+| 编译工具链（继承自conda-llvm） | LLVM 22.1.8, clang, cmake, ninja | 继承自 conda-llvm |
+
+### 显式排除
+
+- **onnxoptimizer**: free-threading 不兼容（CPython #111506），继承自 onnx-quantized 约束
+- **torch/torchvision 不装在 base**: 只在 main 环境存在（base 环境装依赖 torch 的包时需注意，见"待验证问题"）
 
 ## 构建参数
 
@@ -46,56 +64,115 @@
 | 变量 | 值 | 说明 |
 |------|-----|------|
 | CONDA_DIR | /opt/conda | Conda 安装路径 |
-| PATH | /opt/conda/bin:${PATH} | conda 工具优先 |
+| PATH | /opt/conda/bin:${PATH} | **base 环境 conda 工具优先**（刻意覆盖 torch-dev 的 main 在前） |
 | OMP_NUM_THREADS | 4 | OpenMP 线程数 |
 | OPENBLAS_NUM_THREADS | 1 | OpenBLAS 线程数 |
 | OMP_WAIT_POLICY | PASSIVE | OpenMP 等待策略 |
 | KMP_DUPLICATE_LIB_OK | TRUE | 允许 OpenMP 多副本共存 |
-| PIP_USER | 1（运行时） | 运行时支持用户级 pip 安装 |
+| PIP_USER | 1（运行时） | 构建期设为 0，运行时恢复为 1 支持用户级 pip 安装 |
 
 ## Stage 结构（3 层追加）
 
-### Stage 1/3: 基础验证 + 计时器初始化
-- 验证 onnx/onnxruntime/quantization 可导入（main 环境）+ torch 缺席（by design）
-- 确认 devuser 和基础服务（docker/supervisord）存在
-- 验证 /opt/venv 已移除（不存在）
-- 初始化 `/tmp/.ai-dev-variant-build-timer`
+### Stage 1/3: 基础验证 + 双环境预检
 
-### Stage 2/3: 安装 AI/ML/NLP 生态系统
-- 设置 `PIP_USER=0`（构建期写入 /opt/conda）
-- 按分类批量 pip install（50+ 包）
-- 安装 JupyterLab>=4.4 + notebook>=7.3（base 环境，供 AI 内核使用；Jupyter 服务仍为 main 环境）
-- 使用 `--mount=type=cache` 缓存 conda/pkgs 和 pip cache
-- 清理 conda/pip 缓存
-- 安装后验证包版本
+- 计时器初始化 `variant_timer_start "ai-dev"`
+- 验证 main 环境（free-threading）继承自 torch-dev：
+  - torch + torchvision 可导入
+  - onnxruntime.quantization 量化 API 可用
+  - GIL 禁用（`sys._is_gil_enabled() is False`）
+- 验证 base 环境（GIL）预检：
+  - GIL 启用（`sys._is_gil_enabled() is True`）
+  - `/opt/conda/bin/python` 可执行
+- 注意：**Framework 已由上游 torch-dev 层 COPY 到 /usr/local/share/variant-framework/，不需要重复 COPY**
 
-### Stage 3/3: Jupyter 内核 + 元数据 + 验证
-- 注册 "Python 3 (AI Dev)" Jupyter 内核
-  - 注册位置：`/opt/conda/envs/main/share/jupyter/kernels/ai-dev/`（main 环境 Jupyter 服务可见）
-  - 内核 argv：`/opt/conda/bin/python -m ipykernel_launcher`
-  - 内核 env：PATH 优先 conda，OpenMP 配置
-- 写入 `/etc/devcontainer-variant-ai-dev-build-info`
-- 8 项验证检查
-- 输出 BUILD TIMING SUMMARY 表
-- 恢复 `PIP_USER=1`
+### Stage 2/3: 安装 AI/ML/NLP 生态系统（base 环境 G1-G14 + main 环境 G-M1）
+
+- 设置 `variant_activate_base_env`（激活 base 环境 + `PIP_USER=0` 构建期写入全局）
+- pip 升级：`pip install --no-cache-dir --upgrade pip setuptools wheel`
+- 按 G1-G14 分组使用 `pip_install_group` 在 **base 环境**安装 50+ 包（每组 3-8 个包，独立计时+冲突诊断）
+- **切换到 main 环境**（`variant_activate_main_env`），安装 G-M1 组（onnx2torch + open_clip_torch）——这两个包依赖 torch，必须安装在 main 环境与 torch 同处
+- 切回 base 环境（`variant_activate_base_env`）执行清理
+- 使用 `--mount=type=cache,target=/root/.cache/pip,sharing=locked` 缓存 pip 下载
+- 安装后执行：
+  - `ensure_all_permissions`：修复 devuser 权限
+  - `cleanup_binaries`：清理冗余二进制
+  - `cleanup_pycache`：清理 Python 缓存
+  - `cleanup_conda_pip_cache`：清理包缓存
+  - `pip check`：依赖冲突检查（前5行输出）
+- 版本汇总：分两段输出
+  - base 环境版本：使用 importlib 输出核心包版本（注意模块名↔包名映射：sklearn→scikit-learn, fitz→PyMuPDF）
+  - main 环境版本：输出 torch/torchvision/onnx2torch/open_clip 版本
+
+### Stage 3/3: Jupyter 内核注册 + 元数据 + 双环境验证
+
+- 设置 `set +o pipefail`（防止某些验证命令的管道非零退出导致构建失败）
+- 注册 "Python 3 (AI Dev)" Jupyter 内核：
+  - 目标路径：`/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json`
+  - argv：`/opt/conda/bin/python -m ipykernel_launcher -f {connection_file}`（base 环境 python）
+  - env.PATH：`/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
+  - env.OMP_NUM_THREADS/KMP_DUPLICATE_LIB_OK：OpenMP 配置
+  - 权限：chown devuser:devuser + chmod 644
+- `variant_write_build_info` 写入构建元数据：
+  - VARIANT_DESCRIPTION, ARCHITECTURE（dual-env）
+  - PYTHON_BASE_VERSION/PYTHON_MAIN_VERSION（双环境版本）
+  - PYTORCH_VERSION/TORCHVISION_VERSION（来自 main 环境）
+  - ONNX2TORCH_VERSION/OPEN_CLIP_VERSION（来自 main 环境 G-M1）
+  - TRANSFORMERS_VERSION/DATASETS_VERSION/FASTAPI_VERSION/PANDAS_VERSION 等（来自 base 环境）
+  - JUPYTERLAB_VERSION（来自 main 环境）
+  - JUPYTER_KERNEL 信息, PACKAGES_COUNT/GROUPS
+  - PATH_PRIORITY, BASE_VARIANT, TORCH_IN_BASE=false
+- `cleanup_all`：统一清理
+- 双环境验证（9 项检查）：
+  1. NLP 栈导入（transformers/datasets/sentence_transformers/evaluate）
+  2. Web/API 栈导入（fastapi/uvicorn/pydantic/httpx）
+  3. 数据栈导入（pandas/pyarrow/sklearn）
+  4. 可视化/CLI栈导入（matplotlib/seaborn/rich/typer）
+  5. 中文NLP导入（jieba/nltk/pypinyin）
+  6. 文档处理导入（fitz/bs4/openpyxl）
+  7. 数据库客户端导入（psycopg2/pymongo/elasticsearch/minio）
+  8. 构建/开发工具导入（nuitka/pytest/psutil/icecream）
+  9. 双环境 GIL 架构 + torch 隔离验证：
+     - main 环境：torch+torchvision 导入、量化API、onnx2torch+open_clip导入、GIL禁用
+     - base 环境：GIL启用、torch NOT present（双环境隔离守卫）
+- `verify_base_services`：验证 SSH/Docker/Supervisord 基础服务未被破坏
+- JupyterLab 版本检查（>=4.4）
+- 内核文件存在检查 + devuser 双环境访问权限验证
+- `variant_timer_summary` 输出构建阶段计时
+- 最终恢复 `ENV PIP_USER=1`（运行时支持用户级安装）
 
 ## Jupyter 内核说明
 
-内核注册于 main 环境 kernels 目录（Jupyter 服务运行于 main 环境，supervisord 以绝对路径 `/opt/conda/envs/main/bin/jupyter` 启动）：
+内核注册于 **main 环境** kernels 目录（因为 Jupyter 服务运行于 main 环境，由 supervisord 以绝对路径 `/opt/conda/envs/main/bin/jupyter` 启动）：
 
-1. `/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json` — main 环境 Jupyter 服务真实搜索路径（UI/CLI 一致）
+```
+/opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json
+```
 
 内核配置：
 - `display_name`: "Python 3 (AI Dev)"
-- `argv`: `/opt/conda/bin/python -m ipykernel_launcher -f {connection_file}`
+- `argv[0]`: `/opt/conda/bin/python`（指向 base 环境 Python，50+包可用）
 - `env.PATH`: `/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`
-- 不设置项目特定的 PYTHONPATH（通用内核）
+- 不设置项目特定的 PYTHONPATH（通用开发内核）
+
+**重要**：此内核在 Jupyter 中无法直接 import torch（torch 在 main 环境而非 base）。需要使用 PyTorch 时：
+- 方案 A：用绝对路径 `/opt/conda/envs/main/bin/python` 启动脚本
+- 方案 B：在 Notebook 中通过 `sys.path` 操作或 subprocess 调用 main 环境 python
+- 方案 C：下游需要在 Jupyter 中直接使用 torch 时，可另行注册指向 main 环境的专属内核
 
 ## PIP_USER 构建/运行时分离
 
-- **构建期（Stage 2）**: `PIP_USER=0`，pip 包写入 `/opt/conda`（root:root 属主，全局可读）
-- **运行时（Stage 3 后）**: `PIP_USER=1`，支持 `pip install --user` 到 `~/.local`
+- **构建期（Stage 2）**: `variant_activate_base_env` 内部设置 `PIP_USER=0`，pip 包写入 `/opt/conda`（root:root 属主，全局可读）
+- **运行时（Stage 3 结束）**: Dockerfile 末尾 `ENV PIP_USER=1`，支持 `pip install --user` 到 `~/.local`
 - 此模式防止构建期包误写入 `/root/.local` 导致运行时 devuser 无法 import
+- 新增 pip install 步骤必须在 `variant_activate_base_env` 之后执行
+
+## 双环境 GIL 守卫与 torch 隔离（测试 T26-T29）
+
+测试脚本必须包含双环境架构守卫，防止后续修改意外破坏架构：
+- T26: base 环境 GIL 必须启用（`sys._is_gil_enabled() is True`）
+- T27: main 环境 GIL 必须禁用（`sys._is_gil_enabled() is False`）
+- T28: base 环境 torch 必须不存在（`importlib.util.find_spec('torch') is None`）—— torch 依赖包（onnx2torch/open_clip_torch）必须装在 main 环境
+- T29: main 环境 torch 生态（torch+torchvision+onnx2torch+open_clip）必须可导入且 GIL 禁用
 
 ## 服务继承
 
@@ -109,7 +186,7 @@
 
 `/etc/devcontainer-variant-ai-dev-build-info`
 
-包含字段：BUILD_DATE, VARIANT, BASE_IMAGE, PYTHON_VERSION, PYTORCH_VERSION, ONNX_VERSION, ONNXRUNTIME_VERSION, TRANSFORMERS_VERSION, DATASETS_VERSION, FASTAPI_VERSION, PANDAS_VERSION, JUPYTERLAB_VERSION, NOTEBOOK_VERSION, CONDA_DIR, PACKAGES_COUNT, JUPYTER_KERNEL, SERVICES_PRESERVED, OPENMP_CONFIG 等。
+包含字段：BUILD_DATE, VARIANT, BASE_IMAGE（=devcontainer-base:torch-dev-${BASE_TAG}）, ARCHITECTURE, PYTHON_BASE_VERSION, PYTHON_MAIN_VERSION, PYTORCH_VERSION, TORCHVISION_VERSION, TRANSFORMERS_VERSION, DATASETS_VERSION, FASTAPI_VERSION, PANDAS_VERSION, JUPYTERLAB_VERSION, JUPYTER_KERNEL, PACKAGES_COUNT, PACKAGES_GROUPS, PATH_PRIORITY, BASE_VARIANT 等。
 
 ## 禁止事项
 
@@ -117,4 +194,8 @@
 - 不修改基础镜像的 supervisord/sshd/docker 配置
 - 不重命名 devuser（保持基础镜像用户策略）
 - 不设置项目特定的 PYTHONPATH
-- 不安装 GPU 相关包（CPU-only 变体）
+- 不安装 GPU 相关包到 base 环境（CUDA 相关包只在 main 环境，由 torch-dev 管理）
+- 不在 base 环境直接 pip install torch（torch 只存在于 main 环境）
+- 不在 base 环境安装声明 `install_requires: torch` 的包（如 onnx2torch, open_clip_torch）——这类包必须在 main 环境安装，防止 pip 自动拉取 GIL 版 torch 到 base 破坏双环境隔离
+- 不重复 COPY variant-framework（已由 torch-dev 层提供）
+- 不删除或修改 main 环境的 torch/onnx 包
