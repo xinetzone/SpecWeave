@@ -44,6 +44,12 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 # Remove this COPY after the next full dependency-chain rebuild.
 COPY variants/shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
 
+# Override entrypoint.sh to fix command-mode stdout pollution (diagnostic logs
+# must go to stderr per Unix convention). Safe because entrypoint is runtime-only
+# (not used during build). Remove this COPY after the next full base rebuild.
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh && bash -n /usr/local/bin/entrypoint.sh
+
 # ── Stage 1/3: Base verification (torch-dev inheritance + dual-env pre-check)
 RUN <<'S1'
 source /usr/local/share/variant-framework/variant-framework.sh
@@ -204,21 +210,32 @@ chown -R devuser:${AI_GROUP} /opt/conda/envs/main/share/jupyter/kernels/ai-dev
 chmod 644 /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json
 echo "[OK] ai-dev kernel registered (main env jupyter, base python)"
 
+# ── Pre-fetch main-env package versions (activate main env temporarily for correct LD_LIBRARY_PATH/PYTHONPATH)
+variant_activate_main_env
+PYTORCH_VER=$(python -c 'import torch;print(torch.__version__)' 2>/dev/null || echo "unknown")
+TORCHVISION_VER=$(python -c 'import torchvision;print(torchvision.__version__)' 2>/dev/null || echo "unknown")
+ONNX2TORCH_VER=$(python -c "import importlib.metadata;print(importlib.metadata.version('onnx2torch'))" 2>/dev/null || echo "unknown")
+OPEN_CLIP_VER=$(python -c 'import open_clip;print(getattr(open_clip,"__version__","installed"))' 2>/dev/null || echo "unknown")
+SENTENCE_TRANSFORMERS_VER=$(python -c 'import sentence_transformers;print(getattr(sentence_transformers,"__version__","installed"))' 2>/dev/null || echo "unknown")
+JUPYTERLAB_VER=$(jupyter lab --version 2>/dev/null | head -1 || echo "unknown")
+variant_activate_base_env
+echo "[OK] Main-env versions fetched: torch=${PYTORCH_VER}, onnx2torch=${ONNX2TORCH_VER}, open_clip=${OPEN_CLIP_VER}, st=${SENTENCE_TRANSFORMERS_VER}"
+
 variant_write_build_info "ai-dev" "torch-dev-${BASE_TAG}" \
     "VARIANT_DESCRIPTION=Full AI/ML/NLP Python ecosystem (dual-env: base GIL 47pkgs + main ft PyTorch+onnx2torch+open_clip+sentence-transformers)" \
     "ARCHITECTURE=dual-env: base(GIL,/opt/conda) for NLP/data/web + main(free-threading,/opt/conda/envs/main) for PyTorch" \
     "PYTHON_BASE_VERSION=$(python --version 2>&1 | awk '{print $2}') (GIL-enabled)" \
     "PYTHON_MAIN_VERSION=$(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}') (cp314t free-threading, GIL disabled)" \
-    "PYTORCH_VERSION=$(/opt/conda/envs/main/bin/python -c 'import torch;print(torch.__version__)' 2>/dev/null)" \
-    "TORCHVISION_VERSION=$(/opt/conda/envs/main/bin/python -c 'import torchvision;print(torchvision.__version__)' 2>/dev/null)" \
-    "ONNX2TORCH_VERSION=$(/opt/conda/envs/main/bin/python -c 'import onnx2torch;print(getattr(onnx2torch,\"__version__\",\"installed\"))' 2>/dev/null)" \
-    "OPEN_CLIP_VERSION=$(/opt/conda/envs/main/bin/python -c 'import open_clip;print(getattr(open_clip,\"__version__\",\"installed\"))' 2>/dev/null)" \
-    "SENTENCE_TRANSFORMERS_VERSION=$(/opt/conda/envs/main/bin/python -c 'import sentence_transformers;print(getattr(sentence_transformers,\"__version__\",\"installed\"))' 2>/dev/null)" \
+    "PYTORCH_VERSION=${PYTORCH_VER}" \
+    "TORCHVISION_VERSION=${TORCHVISION_VER}" \
+    "ONNX2TORCH_VERSION=${ONNX2TORCH_VER}" \
+    "OPEN_CLIP_VERSION=${OPEN_CLIP_VER}" \
+    "SENTENCE_TRANSFORMERS_VERSION=${SENTENCE_TRANSFORMERS_VER}" \
     "TRANSFORMERS_VERSION=$(python -c 'import transformers;print(transformers.__version__)' 2>/dev/null)" \
     "DATASETS_VERSION=$(python -c 'import datasets;print(datasets.__version__)' 2>/dev/null)" \
     "FASTAPI_VERSION=$(python -c 'import fastapi;print(fastapi.__version__)' 2>/dev/null)" \
     "PANDAS_VERSION=$(python -c 'import pandas;print(pandas.__version__)' 2>/dev/null)" \
-    "JUPYTERLAB_VERSION=$(/opt/conda/envs/main/bin/jupyter lab --version 2>/dev/null | head -1)" \
+    "JUPYTERLAB_VERSION=${JUPYTERLAB_VER}" \
     "JUPYTER_KERNEL=ai-dev (Python 3 AI Dev, /opt/conda/bin/python, registered in main jupyter)" \
     "PACKAGES_COUNT=50 (base:47 G1-G14, main:3 G-M1:onnx2torch,open_clip,sentence-transformers)" \
     "PACKAGES_GROUPS=base(G1:Build,G2:Utils,G3:Jupyter,G4:Data,G5:NLP,G6:Viz,G7:AI-utils,G8:Audio,G9:CN-NLP,G10:Doc,G11:Web,G12:Config,G13:DB,G14:DevTools)+main(G-M1:torch-deps:onnx2torch,open_clip,sentence-transformers)" \

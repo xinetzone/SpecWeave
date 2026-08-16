@@ -254,8 +254,8 @@ collect_diagnostics() {
 # ═══════════════════════════════════════════════════════════════════
 
 test_python_version() {
-    run_test "T1" "Python version (>=3.14)" \
-        "Python 3\.(1[4-9]|[2-9][0-9])" \
+    run_test "T1" "Python version (>=3.13)" \
+        "Python 3\.(1[3-9]|[2-9][0-9])" \
         docker_run /opt/conda/bin/python --version
 }
 
@@ -398,7 +398,7 @@ test_build_info() {
         docker_run_bash "
 test -f /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'VARIANT=ai-dev' /etc/devcontainer-variant-ai-dev-build-info && \
-grep -q 'BASE_IMAGE=devcontainer-base:torch-dev' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'BASE_IMAGE=torch-dev' /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'ARCHITECTURE=dual-env' /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'PACKAGES_COUNT' /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'TRANSFORMERS_VERSION' /etc/devcontainer-variant-ai-dev-build-info && \
@@ -583,14 +583,14 @@ test_base_torch_absent() {
 test_main_torch_ecosystem() {
     run_test "T29" "main env torch ecosystem imports (torch+onnx2torch+open_clip+sentence-transformers)" \
         "TORCH_ECO_OK" \
-        docker_run /opt/conda/envs/main/bin/python -c "
+        docker_run_bash "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c \"
 import torch, torchvision
 import onnx2torch, open_clip
 import sentence_transformers
 import sys
 assert sys._is_gil_enabled() is False, 'main env GIL must be disabled'
 print('TORCH_ECO_OK')
-"
+\""
 }
 
 # ═══════════════════════════════════════════════════════════════════

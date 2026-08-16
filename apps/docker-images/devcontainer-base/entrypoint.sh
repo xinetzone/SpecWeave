@@ -18,18 +18,18 @@ fi
 DOCKER_DOD_MODE=0
 ENABLE_DOCKER_ORIG="${ENABLE_DOCKER:-yes}"
 
-log_info()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]  $*"; }
+log_info()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]  $*" >&2; }
 log_warn()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [WARN]  $*" >&2; }
 log_error() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR] $*" >&2; }
 
 print_banner() {
-    echo ""
-    echo "============================================================"
-    echo "  DevContainer Base starting..."
-    echo "  Time: $(date)"
-    echo "  Host: $(hostname)"
-    echo "============================================================"
-    echo ""
+    echo "" >&2
+    echo "============================================================" >&2
+    echo "  DevContainer Base starting..." >&2
+    echo "  Time: $(date)" >&2
+    echo "  Host: $(hostname)" >&2
+    echo "============================================================" >&2
+    echo "" >&2
 }
 
 diagnose_system() {
@@ -63,7 +63,7 @@ diagnose_system() {
         while IFS= read -r line; do log_info "  $line"; done < /etc/devcontainer-build-info
     fi
     log_info "========================================"
-    echo ""
+    echo "" >&2
 }
 
 set_user_password() {
@@ -178,15 +178,15 @@ SUDOERS_EOF
     fi
 
     if [ "$generated_password" = "1" ]; then
-        echo ""
-        echo "    ************************************************"
+        echo "" >&2
+        echo "    ************************************************" >&2
         if [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
-            echo "    * [IMPORTANT] Root password:      ${ROOT_PASSWORD}"
+            echo "    * [IMPORTANT] Root password:      ${ROOT_PASSWORD}" >&2
         fi
-        echo "    * [IMPORTANT] ${user} password: ${USER_PASSWORD}"
-        echo "    * SSH login: ssh ${user}@<host> -p <port>"
-        echo "    ************************************************"
-        echo ""
+        echo "    * [IMPORTANT] ${user} password: ${USER_PASSWORD}" >&2
+        echo "    * SSH login: ssh ${user}@<host> -p <port>" >&2
+        echo "    ************************************************" >&2
+        echo "" >&2
     fi
 }
 
@@ -531,65 +531,65 @@ configure_supervisor_and_start() {
         fi
     done
 
-    echo ""
-    echo "============================================================"
-    echo "  Container ready! Services managed by supervisord"
-    echo ""
+    echo "" >&2
+    echo "============================================================" >&2
+    echo "  Container ready! Services managed by supervisord" >&2
+    echo "" >&2
 
     if [ "${ENABLE_SSH:-yes}" = "yes" ]; then
-        echo "  SSH access:"
-        echo "    ssh ${user}@<host> -p <mapped-port>"
-        echo "    Password: ${USER_PASSWORD:-<set via USER_PASSWORD env>}"
+        echo "  SSH access:" >&2
+        echo "    ssh ${user}@<host> -p <mapped-port>" >&2
+        echo "    Password: ${USER_PASSWORD:-<set via USER_PASSWORD env>}" >&2
         if [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
-            echo "    ssh root@<host> -p <mapped-port>"
-            echo "    Root password: ${ROOT_PASSWORD:-<set via ROOT_PASSWORD env>}"
+            echo "    ssh root@<host> -p <mapped-port>" >&2
+            echo "    Root password: ${ROOT_PASSWORD:-<set via ROOT_PASSWORD env>}" >&2
         fi
-        echo ""
+        echo "" >&2
     fi
 
     if [ "${DOCKER_DOD_MODE}" = "1" ]; then
-        echo "  Docker access:"
-        echo "    Mode: DooD (host Docker socket mounted)"
-        echo "    Usage: docker ps (via host daemon)"
-        echo ""
+        echo "  Docker access:" >&2
+        echo "    Mode: DooD (host Docker socket mounted)" >&2
+        echo "    Usage: docker ps (via host daemon)" >&2
+        echo "" >&2
     elif [ "${ENABLE_DOCKER_ORIG:-yes}" = "yes" ]; then
-        echo "  Docker access:"
-        echo "    Mode: DinD (Docker-in-Docker)"
-        echo "    Socket: unix:///var/run/docker.sock"
-        echo "    Usage: docker ps (as ${user} or root)"
-        echo ""
+        echo "  Docker access:" >&2
+        echo "    Mode: DinD (Docker-in-Docker)" >&2
+        echo "    Socket: unix:///var/run/docker.sock" >&2
+        echo "    Usage: docker ps (as ${user} or root)" >&2
+        echo "" >&2
     fi
 
     if [ "${ENABLE_PODMAN:-no}" = "yes" ]; then
-        echo "  Podman access (rootless, on-demand):"
-        echo "    Usage: su - ${user} -c 'podman ps'"
-        echo "    Or: SSH as ${user} and run podman commands directly"
-        echo ""
+        echo "  Podman access (rootless, on-demand):" >&2
+        echo "    Usage: su - ${user} -c 'podman ps'" >&2
+        echo "    Or: SSH as ${user} and run podman commands directly" >&2
+        echo "" >&2
     fi
 
     if [ "${ENABLE_JUPYTER:-yes}" = "yes" ]; then
-        echo "  Jupyter access:"
-        echo "    URL: http://<host>:<mapped-port>/"
+        echo "  Jupyter access:" >&2
+        echo "    URL: http://<host>:<mapped-port>/" >&2
         if [ -n "${JUPYTER_TOKEN:-}" ]; then
-            echo "    Token: ${JUPYTER_TOKEN}"
+            echo "    Token: ${JUPYTER_TOKEN}" >&2
         fi
         if [ -n "${JUPYTER_PASSWORD:-}" ]; then
-            echo "    Password: (use JUPYTER_PASSWORD you set)"
+            echo "    Password: (use JUPYTER_PASSWORD you set)" >&2
         fi
-        echo ""
+        echo "" >&2
     fi
 
-    echo "  Working directory: /workspace (mount a volume here for persistence)"
+    echo "  Working directory: /workspace (mount a volume here for persistence)" >&2
 
     if [ "$priv_warn" = "1" ] && [ "${DOCKER_DOD_MODE}" != "1" ]; then
-        echo ""
-        echo "  [WARNING] Container may not be running with --privileged flag"
-        echo "            Docker DinD requires --privileged to function correctly"
-        echo "            Use: docker run --privileged ..."
+        echo "" >&2
+        echo "  [WARNING] Container may not be running with --privileged flag" >&2
+        echo "            Docker DinD requires --privileged to function correctly" >&2
+        echo "            Use: docker run --privileged ..." >&2
     fi
 
-    echo "============================================================"
-    echo ""
+    echo "============================================================" >&2
+    echo "" >&2
 }
 
 print_banner
@@ -601,7 +601,7 @@ if [ $# -gt 0 ]; then
     setup_workspace
     setup_container_runtimes
     log_info "Entering user command (tini as init, signals forwarded)..."
-    echo ""
+    echo "" >&2
     exec "$@"
 fi
 
