@@ -71,7 +71,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ENABLE_SSH=yes \
     ENABLE_DOCKER=yes \
     ENABLE_PODMAN=no \
-    ENABLE_JUPYTER=yes
+    ENABLE_JUPYTER=yes \
+    LOCAL_USER_ID= \
+    LOCAL_GROUP_ID= \
+    WORKSPACE_CHOWN_MODE=auto \
+    CHOWN_EXTRA= \
+    FIXUID_DEBUG=0
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
@@ -647,7 +652,6 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     _STAGE_START=$(date +%s) && \
     chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
-    chown -R devuser:devuser /workspace && \
     echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
     for _f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh /home/devuser/.jupyter/jupyter_notebook_config.py /etc/supervisor/supervisord.conf /etc/supervisor/conf.d/*.conf /etc/ssh/sshd_config; do \
         if [ -f "$_f" ]; then sed -i 's/\r$//' "$_f" 2>/dev/null || true; fi; \

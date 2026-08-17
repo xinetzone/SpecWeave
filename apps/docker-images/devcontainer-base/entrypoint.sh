@@ -21,6 +21,11 @@ ENABLE_DOCKER_ORIG="${ENABLE_DOCKER:-yes}"
 log_info()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]  $*" >&2; }
 log_warn()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [WARN]  $*" >&2; }
 log_error() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR] $*" >&2; }
+log_debug() {
+    if [ "${FIXUID_DEBUG:-0}" = "1" ]; then
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] [DEBUG] $*" >&2
+    fi
+}
 
 _is_docker_named_volume() {
     local dir="$1"
@@ -149,6 +154,182 @@ set_user_password() {
         return $?
     fi
     usermod -p "${hashed}" "${target_user}"
+}
+
+# -----------------------------------------------------------------------------
+# adjust_user_uid_gid: 运行时动态调整 devuser 的 UID/GID 以匹配宿主机用户
+# 这是解决 Docker bind mount 跨 UID 权限问题的核心函数
+# 执行顺序：必须在 setup_passwords/setup_workspace 之前，服务启动之后
+# -----------------------------------------------------------------------------
+adjust_user_uid_gid() {
+    local user="${NON_ROOT_USER:-devuser}"
+    local target_uid="${LOCAL_USER_ID:-}"
+    local target_gid="${LOCAL_GROUP_ID:-}"
+    local default_uid=1000
+    local default_gid=1000
+    local user_grp ws_uid ws_gid occupied_by occupied_grp new_uid_for_existing new_gid_for_existing _d _is_mount final_uid final_gid
+
+    log_info "[FixUID] Adjusting user UID/GID for ${user}..."
+
+    # 确保用户存在（如果不存在则先创建）
+    if ! getent passwd "${user}" >/dev/null 2>&1; then
+        log_info "[FixUID] User '${user}' does not exist, creating first with default UID=${default_uid}..."
+        groupadd -f docker
+        local _create_uid="${default_uid}"
+        # 如果 default_uid 被占用，主动寻找下一个可用 UID（>=1000）
+        if getent passwd "${default_uid}" >/dev/null 2>&1; then
+            _create_uid=$((default_uid + 1))
+            while getent passwd "${_create_uid}" >/dev/null 2>&1; do
+                _create_uid=$((_create_uid + 1))
+            done
+            log_warn "[FixUID] Default UID ${default_uid} occupied, creating user with UID=${_create_uid} instead"
+        fi
+        local _create_gid="${_create_uid}"
+        if ! getent group "${_create_gid}" >/dev/null 2>&1; then
+            groupadd -g "${_create_gid}" "${user}"
+        fi
+        useradd -m -s /bin/bash -u "${_create_uid}" -g "${_create_gid}" -G docker,sudo "${user}"
+        mkdir -p "/home/${user}/.ssh" "/home/${user}/.jupyter/jupyter_server_config.d"
+        chmod 700 "/home/${user}/.ssh" 2>/dev/null || true
+        echo "${user}:100000:65536" > /etc/subuid
+        echo "${user}:100000:65536" > /etc/subgid
+        if [ ! -f "/home/${user}/.bashrc" ] || ! grep -q "conda-init.sh" "/home/${user}/.bashrc" 2>/dev/null; then
+            echo "source /etc/profile.d/conda-init.sh" >> "/home/${user}/.bashrc"
+        fi
+    fi
+
+    local current_uid current_gid
+    current_uid=$(id -u "${user}")
+    current_gid=$(id -g "${user}")
+    log_debug "[FixUID] Current state: ${user} UID=${current_uid} GID=${current_gid}"
+    user_grp=$(id -gn "${user}" 2>/dev/null || echo "${user}")
+
+    # 智能自动检测：如果未设置 LOCAL_USER_ID，尝试从 /workspace 目录属主检测
+    if [ -z "${target_uid}" ]; then
+        log_debug "[FixUID] LOCAL_USER_ID not set, attempting auto-detection from /workspace..."
+        if [ -d "/workspace" ]; then
+            ws_uid=$(stat -c '%u' /workspace 2>/dev/null || echo "")
+            ws_gid=$(stat -c '%g' /workspace 2>/dev/null || echo "")
+            log_debug "[FixUID] /workspace owner: UID=${ws_uid} GID=${ws_gid}"
+            # 仅当检测到有效且非默认的 UID 时才自动使用（非 root=0，非当前=1000）
+            if [ -n "${ws_uid}" ] && [ "${ws_uid}" != "0" ] && [ "${ws_uid}" != "${current_uid}" ] && [ "${ws_uid}" -ge 1000 ] 2>/dev/null; then
+                target_uid="${ws_uid}"
+                target_gid="${ws_gid:-${ws_uid}}"
+                log_info "[FixUID] Auto-detected UID=${target_uid} GID=${target_gid} from /workspace directory owner"
+            else
+                log_debug "[FixUID] Auto-detection: /workspace owned by root or already matching, keeping defaults"
+            fi
+        fi
+    fi
+
+    # 回退到默认值
+    target_uid="${target_uid:-${current_uid}}"
+    target_gid="${target_gid:-${current_gid}}"
+
+    # 安全保护：禁止设置为 root UID=0
+    if [ "${target_uid}" = "0" ]; then
+        log_warn "[FixUID] Attempt to set UID=0 (root) detected, falling back to current UID=${current_uid}"
+        log_warn "[FixUID] For security, ${user} cannot be root. Use 'docker exec -u root ...' for root operations."
+        target_uid="${current_uid}"
+        target_gid="${current_gid}"
+    fi
+
+    # 验证 UID/GID 是数字
+    if ! [[ "${target_uid}" =~ ^[0-9]+$ ]] || ! [[ "${target_gid}" =~ ^[0-9]+$ ]]; then
+        log_warn "[FixUID] Invalid UID/GID (must be numeric), keeping current UID=${current_uid} GID=${current_gid}"
+        return 0
+    fi
+
+    # 如果已经匹配，无需调整
+    if [ "${target_uid}" = "${current_uid}" ] && [ "${target_gid}" = "${current_gid}" ]; then
+        log_info "[FixUID] ${user} UID/GID already matches target (${current_uid}:${current_gid}), no adjustment needed"
+        return 0
+    fi
+
+    log_info "[FixUID] Adjusting ${user} UID: ${current_uid} -> ${target_uid}, GID: ${current_gid} -> ${target_gid}"
+
+    # 检查目标 UID 是否已被其他用户占用
+    if getent passwd "${target_uid}" >/dev/null 2>&1; then
+        occupied_by=$(getent passwd "${target_uid}" | cut -d: -f1)
+        if [ "${occupied_by}" != "${user}" ]; then
+            new_uid_for_existing=$((target_uid + 1000))
+            while getent passwd "${new_uid_for_existing}" >/dev/null 2>&1; do
+                new_uid_for_existing=$((new_uid_for_existing + 1))
+            done
+            log_warn "[FixUID] UID ${target_uid} occupied by '${occupied_by}', moving to UID=${new_uid_for_existing}"
+            usermod -u "${new_uid_for_existing}" "${occupied_by}" 2>/dev/null || true
+        fi
+    fi
+
+    # 检查目标 GID 是否已被其他组占用
+    if getent group "${target_gid}" >/dev/null 2>&1; then
+        occupied_grp=$(getent group "${target_gid}" | cut -d: -f1)
+        if [ "${occupied_grp}" != "${user_grp}" ]; then
+            new_gid_for_existing=$((target_gid + 1000))
+            while getent group "${new_gid_for_existing}" >/dev/null 2>&1; do
+                new_gid_for_existing=$((new_gid_for_existing + 1))
+            done
+            log_warn "[FixUID] GID ${target_gid} occupied by '${occupied_grp}', moving to GID=${new_gid_for_existing}"
+            groupmod -g "${new_gid_for_existing}" "${occupied_grp}" 2>/dev/null || true
+        fi
+    fi
+
+    # 执行 GID 调整（先调组，再调用户）
+    if [ "${target_gid}" != "${current_gid}" ]; then
+        log_debug "[FixUID] Running groupmod -g ${target_gid} ${user_grp}"
+        groupmod -g "${target_gid}" "${user_grp}" || {
+            log_error "[FixUID] Failed to adjust GID for group ${user_grp}"
+            return 1
+        }
+    fi
+
+    # 执行 UID 调整（usermod 会自动调整用户主目录的文件属主）
+    if [ "${target_uid}" != "${current_uid}" ]; then
+        log_debug "[FixUID] Running usermod -u ${target_uid} ${user}"
+        usermod -u "${target_uid}" "${user}" || {
+            log_error "[FixUID] Failed to adjust UID for user ${user}"
+            return 1
+        }
+    fi
+
+    # 调整容器内部 devuser 拥有的文件属主（限定安全范围，不碰挂载点和系统目录）
+    log_debug "[FixUID] Fixing ownership of ${user}'s files in safe directories..."
+    local _safe_dirs=(
+        "/home/${user}"
+        "/run/user/${current_uid}"
+        "/run/user/${target_uid}"
+        "/tmp"
+        "/var/log/supervisor"
+    )
+    for _d in "${_safe_dirs[@]}"; do
+        if [ -d "$_d" ]; then
+            _is_mount=0
+            if mountpoint -q "$_d" 2>/dev/null; then
+                _is_mount=1
+                log_debug "[FixUID] Skipping mountpoint: $_d"
+            fi
+            if [ "$_is_mount" = "0" ]; then
+                log_debug "[FixUID] Adjusting ownership in: $_d"
+                find "$_d" -xdev -user "${current_uid}" -exec chown -h "${target_uid}:${target_gid}" {} \; 2>/dev/null || true
+            fi
+        fi
+    done
+
+    # 确保 /run/user/<uid> 目录存在且权限正确
+    mkdir -p "/run/user/${target_uid}" 2>/dev/null || true
+    chown "${target_uid}:${target_gid}" "/run/user/${target_uid}" 2>/dev/null || true
+    chmod 700 "/run/user/${target_uid}" 2>/dev/null || true
+
+    final_uid=$(id -u "${user}")
+    final_gid=$(id -g "${user}")
+    log_info "[FixUID] ${user} UID/GID adjustment complete: UID=${final_uid} GID=${final_gid}"
+
+    # 验证最终状态
+    if [ "${final_uid}" != "${target_uid}" ] || [ "${final_gid}" != "${target_gid}" ]; then
+        log_warn "[FixUID] Warning: Final UID/GID (${final_uid}:${final_gid}) differs from target (${target_uid}:${target_gid})"
+    fi
+
+    return 0
 }
 
 setup_passwords() {
@@ -513,7 +694,7 @@ _print_permission_help() {
 setup_workspace() {
     log_info "[Init] Initializing workspace and user directory permissions..."
     local user="${NON_ROOT_USER:-devuser}"
-    local ws_chown_mode="${WORKSPACE_CHOWN_MODE:-yes}"
+    local ws_chown_mode="${WORKSPACE_CHOWN_MODE:-auto}"
     local jupyter_dir="${JUPYTER_ROOT_DIR:-/workspace}"
     local jupyter_chown_mode="${JUPYTER_ROOT_CHOWN:-auto}"
     local ws_chmod="${WORKSPACE_CHMOD:-755}"
@@ -722,6 +903,7 @@ resolve_jupyter_root_dir
 if [ $# -gt 0 ]; then
     log_info "Command mode detected: '$*' - skipping service startup, exec user command directly"
     diagnose_system
+    adjust_user_uid_gid
     setup_passwords
     setup_workspace
     setup_container_runtimes
@@ -732,6 +914,7 @@ if [ $# -gt 0 ]; then
 fi
 
 diagnose_system
+adjust_user_uid_gid
 setup_passwords
 setup_workspace
 generate_host_keys
