@@ -35,10 +35,24 @@ LABEL variant="__VARIANT_NAME__"
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-# Copy shared framework (10 modules) + legacy conda-mirror-setup.sh
+# Copy shared framework (13 modules, v1.1.0+) + legacy conda-mirror-setup.sh
 COPY variants/shared/lib/ /usr/local/share/variant-framework/
 COPY variants/shared/scripts/conda-mirror-setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/conda-mirror-setup.sh
+
+# ── Optional: Custom user configuration (uncomment to use) ─────────
+# ARG DEVTARGET_USER=ai
+# ARG DEVTARGET_UID=1001
+# ARG DEVTARGET_GID=1001
+# ARG GRANT_SUDO=yes
+# # ⚠️  USER_PASSWORD: Passwords set during build enter image layer history.
+# #     Prefer runtime password or SSH key auth (variant_lock_user_password).
+# # ARG USER_PASSWORD=
+# RUN <<'S1_USER'
+# source /usr/local/share/variant-framework/variant-framework.sh
+# variant_configure_target_user
+# variant_configure_shell_profile 0022
+# S1_USER
 
 # ── Stage 1/5: Framework init + base verification ──────────────────
 RUN <<'S1'
@@ -46,8 +60,9 @@ source /usr/local/share/variant-framework/variant-framework.sh
 variant_timer_start "__VARIANT_NAME__"
 variant_timer_stage 1 "Framework init + base verification"
 variant_log_info "python: $(python --version 2>&1)"
+variant_log_info "framework v${variant_framework_version}, target user: ${DEVTARGET_USER:-devuser}"
 test -d /opt/venv && test -x /opt/venv/bin/python && variant_log_ok "/opt/venv verified"
-id devuser >/dev/null 2>&1 && variant_log_ok "devuser exists"
+id "${DEVTARGET_USER:-devuser}" >/dev/null 2>&1 && variant_log_ok "${DEVTARGET_USER:-devuser} exists"
 S1
 
 # ── Stage 2/5: Mirrors + system packages ───────────────────────────
@@ -81,6 +96,15 @@ RUN <<'S4'
 source /usr/local/share/variant-framework/variant-framework.sh
 variant_timer_stage 4 "Post-install configuration"
 ensure_all_permissions
+
+# ── Optional: Register custom Jupyter kernel (uncomment to use) ──
+# variant_register_jupyter_kernel "custom" "Python 3 (__VARIANT_NAME__)" "/opt/conda/bin/python"
+
+# ── Optional: Deploy docs to /opt/docs/ (uncomment to use) ──────
+# COPY docs/ /tmp/_variant_docs/
+# variant_deploy_docs "/tmp/_variant_docs" "__VARIANT_NAME__"
+# rm -rf /tmp/_variant_docs
+
 # __EXTRA_CONFIG_STEPS__
 S4
 

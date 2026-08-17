@@ -115,25 +115,30 @@ verify_conda_main_env() {
 }
 
 # ---------------------------------------------------------------------------
-# verify_devuser_access: 验证devuser存在且可访问conda
+# verify_user_access: 验证指定用户存在且可访问conda（通用版本）
+# 用法: verify_user_access [username]
+# username 默认使用 DEVTARGET_USER（未设置则为 devuser）
 # ---------------------------------------------------------------------------
-verify_devuser_access() {
+verify_user_access() {
+    local username="${1:-${DEVTARGET_USER:-devuser}}"
+    local user_home="/home/${username}"
+
     echo ""
     echo "┌─────────────────────────────────────────────────┐"
-    echo "│ [VERIFY] devuser access permissions             │"
+    echo "│ [VERIFY] ${username} access permissions         │"
     echo "└─────────────────────────────────────────────────┘"
 
     local failed=0
 
-    echo -n "  [VERIFY] devuser exists... "
-    if id -u devuser >/dev/null 2>&1; then
-        echo "[OK] (uid: $(id -u devuser))"
+    echo -n "  [VERIFY] ${username} exists... "
+    if id -u "${username}" >/dev/null 2>&1; then
+        echo "[OK] (uid: $(id -u "${username}"))"
     else
         echo "[FAIL]"
         failed=1
     fi
 
-    echo -n "  [VERIFY] devuser can access conda dir... "
+    echo -n "  [VERIFY] ${username} can access conda dir... "
     if [[ -r /opt/conda ]] && [[ -x /opt/conda ]]; then
         echo "[OK]"
     else
@@ -141,34 +146,76 @@ verify_devuser_access() {
         failed=1
     fi
 
-    echo -n "  [VERIFY] devuser .bashrc ownership... "
-    if [[ -f /home/devuser/.bashrc ]]; then
+    echo -n "  [VERIFY] ${username} .bashrc ownership... "
+    if [[ -f "${user_home}/.bashrc" ]]; then
         local owner
-        owner=$(stat -c '%U' /home/devuser/.bashrc 2>/dev/null || echo "unknown")
-        if [[ "${owner}" == "devuser" ]]; then
+        owner=$(stat -c '%U' "${user_home}/.bashrc" 2>/dev/null || echo "unknown")
+        if [[ "${owner}" == "${username}" ]]; then
             echo "[OK] (owner: ${owner})"
         else
-            echo "[WARN] owner is ${owner} (expected devuser)"
+            echo "[WARN] owner is ${owner} (expected ${username})"
         fi
     else
         echo "[INFO] no .bashrc found (ok if not needed)"
     fi
 
-    echo -n "  [VERIFY] devuser can execute python... "
-    if su - devuser -c "python --version" >/dev/null 2>&1; then
+    echo -n "  [VERIFY] ${username} can execute python... "
+    if su - "${username}" -c "python --version" >/dev/null 2>&1; then
         local py_ver
-        py_ver=$(su - devuser -c "python --version" 2>&1)
+        py_ver=$(su - "${username}" -c "python --version" 2>&1)
         echo "[OK] (${py_ver})"
     else
-        echo "[WARN] devuser python execution check skipped (may need conda activation)"
+        echo "[WARN] ${username} python execution check skipped (may need conda activation)"
     fi
 
     if [[ ${failed} -eq 0 ]]; then
-        variant_log_ok "devuser access verified"
+        variant_log_ok "${username} access verified"
         return 0
     else
-        variant_log_error "devuser access verification failed"
+        variant_log_error "${username} access verification failed"
         exit 1
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# verify_devuser_access: 验证devuser存在且可访问conda（向后兼容wrapper）
+# ---------------------------------------------------------------------------
+verify_devuser_access() {
+    verify_user_access "devuser"
+}
+
+# ---------------------------------------------------------------------------
+# verify_ssh_config: 验证 sshd 配置文件语法正确（sshd -t）
+# ---------------------------------------------------------------------------
+verify_ssh_config() {
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [VERIFY] SSH daemon configuration syntax        │"
+    echo "└─────────────────────────────────────────────────┘"
+
+    echo -n "  [VERIFY] sshd -t config syntax... "
+    if command -v sshd >/dev/null 2>&1; then
+        local saved_opts="$-"
+        set +e
+        local sshd_output
+        sshd_output=$(sshd -t 2>&1)
+        local rc=$?
+        if [[ "${saved_opts}" == *e* ]]; then
+            set -e
+        fi
+        if [[ ${rc} -eq 0 ]]; then
+            echo "[OK]"
+            variant_log_ok "sshd configuration syntax is valid"
+            return 0
+        else
+            echo "[FAIL]"
+            echo "  sshd -t output: ${sshd_output}"
+            variant_log_error "sshd configuration syntax error"
+            exit 1
+        fi
+    else
+        echo "[SKIP] sshd not found in image"
+        return 0
     fi
 }
 

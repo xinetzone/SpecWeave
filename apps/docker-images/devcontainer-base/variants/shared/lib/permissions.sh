@@ -73,30 +73,46 @@ ensure_executable_permissions() {
 }
 
 # ---------------------------------------------------------------------------
-# ensure_devuser_bashrc: 确保devuser拥有自己的.bashrc
+# ensure_user_bashrc: 确保指定用户拥有自己的.bashrc（通用版本）
+# 用法: ensure_user_bashrc [username]
+# username 默认使用 DEVTARGET_USER（未设置则为 devuser）
 # ---------------------------------------------------------------------------
-ensure_devuser_bashrc() {
-    local bashrc_path="${1:-/home/devuser/.bashrc}"
+ensure_user_bashrc() {
+    local username="${1:-${DEVTARGET_USER:-devuser}}"
+    local user_home="/home/${username}"
+    local bashrc_path="${user_home}/.bashrc"
 
     echo ""
     echo "┌─────────────────────────────────────────────────┐"
-    echo "│ [PERM] Fixing devuser .bashrc ownership         │"
+    echo "│ [PERM] Fixing ${username} .bashrc ownership     │"
     echo "└─────────────────────────────────────────────────┘"
 
+    local target_group="${username}"
+    if id "${username}" &>/dev/null; then
+        target_group=$(id -gn "${username}" 2>/dev/null || echo "${username}")
+    fi
+
     if [[ -f "${bashrc_path}" ]]; then
-        chown devuser:devuser "${bashrc_path}" 2>/dev/null || true
-        echo "[OK] ${bashrc_path} owned by devuser:devuser"
+        chown "${username}:${target_group}" "${bashrc_path}" 2>/dev/null || true
+        echo "[OK] ${bashrc_path} owned by ${username}:${target_group}"
     else
         echo "[INFO] ${bashrc_path} not found, skipping"
     fi
 
-    # 确保devuser主目录权限正确
-    if [[ -d /home/devuser ]]; then
-        chown devuser:devuser /home/devuser 2>/dev/null || true
-        echo "[OK] /home/devuser owned by devuser:devuser"
+    # 确保用户主目录权限正确
+    if [[ -d "${user_home}" ]]; then
+        chown "${username}:${target_group}" "${user_home}" 2>/dev/null || true
+        echo "[OK] ${user_home} owned by ${username}:${target_group}"
     fi
 
-    variant_log_ok "devuser permissions fixed"
+    variant_log_ok "${username} permissions fixed"
+}
+
+# ---------------------------------------------------------------------------
+# ensure_devuser_bashrc: 确保devuser拥有自己的.bashrc（向后兼容wrapper）
+# ---------------------------------------------------------------------------
+ensure_devuser_bashrc() {
+    ensure_user_bashrc "devuser"
 }
 
 # ---------------------------------------------------------------------------
@@ -126,7 +142,7 @@ ensure_profile_d_executable() {
 ensure_all_permissions() {
     variant_stage_header "Permission Fixes"
     ensure_conda_permissions
-    ensure_devuser_bashrc
+    ensure_user_bashrc
     ensure_profile_d_executable
     variant_log_ok "All permissions fixed"
 }

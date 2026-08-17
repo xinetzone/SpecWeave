@@ -308,3 +308,27 @@ variant_activate_base_env() {
     echo "  - python path: $(which python)"
     echo ""
 }
+
+# ---------------------------------------------------------------------------
+# variant_pip_build_mode: 切换到构建模式（PIP_USER=0）
+# 用法: variant_pip_build_mode
+#
+# 包会安装到 /opt/conda 或 /opt/venv 全局位置（root:root，所有用户可读）。
+# 适用于构建阶段安装系统级包。
+# ---------------------------------------------------------------------------
+variant_pip_build_mode() {
+    export PIP_USER=0
+    variant_log_info "PIP build mode: PIP_USER=0 (packages install to global location)"
+}
+
+# ---------------------------------------------------------------------------
+# variant_pip_runtime_mode: 切换到运行时模式（PIP_USER=1）
+# 用法: variant_pip_runtime_mode
+#
+# 用户可通过 pip install --user 安装到 ~/.local，避免污染全局环境。
+# 适用于镜像构建完成后设置用户默认行为。
+# ---------------------------------------------------------------------------
+variant_pip_runtime_mode() {
+    export PIP_USER=1
+    variant_log_info "PIP runtime mode: PIP_USER=1 (packages install to ~/.local)"
+}

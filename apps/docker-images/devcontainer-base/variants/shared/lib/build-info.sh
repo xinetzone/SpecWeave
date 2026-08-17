@@ -92,6 +92,13 @@ variant_write_build_info() {
         conda_version=$(/opt/conda/bin/conda --version 2>&1 | awk '{print $2}')
     fi
 
+    # 检测目标用户信息
+    local target_user="${DEVTARGET_USER:-devuser}"
+    local target_uid="unknown"
+    if id -u "${target_user}" &>/dev/null; then
+        target_uid=$(id -u "${target_user}")
+    fi
+
     # 写入文件
     cat > "${info_file}" <<EOF
 BUILD_DATE=${build_date}
@@ -105,6 +112,8 @@ CONDA_ENV=main
 CONDA_MIRROR=${conda_mirror}
 PIP_MIRROR=${pip_mirror}
 APT_MIRROR=${apt_mirror}
+TARGET_USER=${target_user}
+TARGET_UID=${target_uid}
 SERVICES_PRESERVED=docker:${docker_preserved}, supervisord:${supervisord_preserved}, sshd:${sshd_preserved}, jupyter:${jupyter_preserved}
 BUILD_TIMER=${build_timer}s
 EOF

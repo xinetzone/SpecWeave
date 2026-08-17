@@ -9,17 +9,32 @@
 #   VARIANT_DEBUG=1  - 启用set -x调试输出
 #   VARIANT_FRAMEWORK_DIR - 自定义框架目录（默认同目录下）
 #
-# 框架版本：1.0.0
+# 框架版本：1.1.0
 # 包含模块（按依赖顺序）：
-#   logging     - 结构化日志（text+JSON双格式）
-#   timer       - 构建阶段计时
-#   mirror      - 镜像源配置（conda/pip/APT）
-#   install-helpers - conda/pip分组安装辅助
-#   ft-guards   - free-threading完整性守卫
-#   cleanup     - 统一清理（安全排除计时器目录）
-#   build-info  - 构建元数据写入
-#   verify      - 基础验证函数
-#   permissions - 权限设置函数
+#   logging         - 结构化日志（text+JSON双格式）
+#   timer           - 构建阶段计时
+#   user-management - 目标用户管理（自定义用户名/UID/GID/重命名/sudo）
+#   mirror          - 镜像源配置（conda/pip/APT）
+#   shell-profile   - Shell环境配置（umask/bashrc/PATH持久化/SSH）
+#   install-helpers - conda/pip分组安装辅助（含PIP_USER模式切换）
+#   jupyter-kernel  - Jupyter自定义内核注册
+#   docs            - 文档部署到/opt/docs/
+#   ft-guards       - free-threading完整性守卫
+#   cleanup         - 统一清理（安全排除计时器目录）
+#   build-info      - 构建元数据写入
+#   verify          - 基础验证函数（sshd/用户/内核/语法检查）
+#   permissions     - 权限设置函数
+#
+# v1.1.0 changelog:
+#   + 新增 user-management 模块：自定义用户创建/重命名/UID冲突处理
+#   + 新增 shell-profile 模块：umask/bashrc幂等追加/PATH持久化/SSH环境
+#   + 新增 jupyter-kernel 模块：自定义Jupyter内核注册
+#   + 新增 docs 模块：文档容器内部署
+#   + install-helpers: 新增 PIP_USER 构建/运行时模式切换函数
+#   + verify: 新增通用用户验证、sshd配置语法检查（旧函数保留wrapper）
+#   + permissions: 新增通用用户bashrc权限设置（旧函数保留wrapper）
+#   + build-info: 新增 TARGET_USER/TARGET_UID 元数据字段
+#   + 默认值保持100%向后兼容（DEVTARGET_USER=devuser, UID/GID=1000）
 # =============================================================================
 
 # 防止重复source
@@ -27,7 +42,7 @@
 _VARIANT_FRAMEWORK_LOADED=1
 
 # 框架版本号
-variant_framework_version="1.0.0"
+variant_framework_version="1.1.0"
 
 # ---------------------------------------------------------------------------
 # 获取框架目录（支持自定义VARIANT_FRAMEWORK_DIR环境变量）
@@ -50,12 +65,17 @@ fi
 
 # ---------------------------------------------------------------------------
 # 按依赖顺序source所有模块
+# 注意：user-management必须在mirror/permissions之前（它们依赖DEVTARGET_USER默认值）
 # ---------------------------------------------------------------------------
 _VARIANT_MODULES=(
     "logging"
     "timer"
+    "user-management"
     "mirror"
+    "shell-profile"
     "install-helpers"
+    "jupyter-kernel"
+    "docs"
     "ft-guards"
     "cleanup"
     "build-info"
