@@ -45,3 +45,5 @@
 | [five-layer-progressive-analysis.md](five-layer-progressive-analysis.md) | 五层递进分析框架：认识论→方法论→偏差→实践→边界，从"为什么"到"怎么做"再到"何时失效"的完整追问链，覆盖知识库质量全光谱，1次验证（对抗性审查知识库开放性提问） | L1 |
 | [riev-doc-learning-method.md](riev-doc-learning-method.md) | RIEV文档学习法：R(事实采集)→I(洞察提炼四元组)→E(结构化指南)→V(三视角对抗审查)+归档收尾，四段式知识沉淀流水线，含G1-G3质量门和6个反模式，2次实战验证（秒悟大使入驻指南/秒悟Meoo实训案例） | L2 |
 | [methodology-overflow-paradigm.md](methodology-overflow-paradigm.md) | 方法论溢出范式：技术演进不是"全新领域全新范式"，而是"成熟方法论向新领域溢出"，学习新领域最快方式是寻找新旧领域方法论映射，预判新领域赢家（擅长既有领域工程化的玩家），1次验证（Vercel Eve前端方法论迁移） | L1 |
+| [open-source-repo-four-layer-identification.md](open-source-repo-four-layer-identification.md) | 开源仓库四层架构识别法：学习新仓库时先识别规范层/参考实现层/工具层/示例层四层，按40%/25%/15%/10%/10%时间分配，避免上来就读源码迷失细节，30秒完成目录扫描建立全局认知，1次验证（Knowledge Catalog仓库） | L1 |
+| [vendor-neutral-three-layer-learning.md](vendor-neutral-three-layer-learning.md) | 厂商项目三层剥离学习法（双视角）：学习者视角剥离营销话术→规范层重点投入；架构师视角识别"开放吸引生态+工具绑定变现"的成熟商业开源策略，含倒闭/竞品/本质三问+4大厂商策略识别，4次验证（OKF/Android/K8s/OpenAPI） | L2 |

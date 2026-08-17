@@ -21,6 +21,10 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
 | [provenance-driven-trust.md](provenance-driven-trust.md) | 溯源驱动信任：无人值守系统的机器可验证信任基础设施——内容校验码+仅追加日志+机器可验证Sign-off凭证+自积累知识库，信任建立在不可篡改溯源链而非智能体自我声明之上 | L1-draft | 无人值守自主系统、AI辅助软件工程、DevOps流水线、自动化内容生成、供应链安全 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
+| [knowledge-as-code-paradigm.md](knowledge-as-code-paradigm.md) | 知识即代码：软件工程范式向知识管理迁移法，复用Git/PR/CI/CR等成熟实践而非重新发明，Docs as Code的AI时代扩展版 | L1 实验性 | AI Agent知识系统、技术团队知识库、需要可审计可追溯的文档体系 |
+| [verifiable-knowledge-claim.md](verifiable-knowledge-claim.md) | 可验证知识声明：自然语言描述→可执行+可验证规范，runtime+parameters+executor+attester五元组，借鉴密码学"不信任只验证"思想消除Agent计算幻觉 | L1 实验性 | AI Agent消费的指标体系、数据质量规则、合规检查、高可信度知识系统 |
+| [trust-first-metadata.md](trust-first-metadata.md) | 信任优先元数据：AI原生知识体系的字段设计优先级倒置——信任/来源/生命周期字段为一等公民，三级Trust Tier（unverified→machine-confirmed→human-reviewed），禁止Agent自证可信 | L1 实验性 | AI Agent知识库/RAG系统、人机协作知识管理、元数据schema设计、数据目录/治理平台 |
+| [agent-knowledge-graph-navigation.md](agent-knowledge-graph-navigation.md) | Agent知识图谱导航：三层索引+Frontmatter预过滤+图结构显式链接，让Agent像浏览器加载网页一样分层导航知识而非一次性全量加载，token消耗降低60-80% | L1 实验性 | AI Agent知识库/知识Bundle/RAG文档组织、面向Agent消费的文档系统、MCP工具文档 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
 | [iot-device-category-mapping.md](iot-device-category-mapping.md) | IoT 设备分类到平台映射，实现设备自动发现和实体创建 | L1 实验性 | IoT 平台设备发现、多设备类型支持 |
