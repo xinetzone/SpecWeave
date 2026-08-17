@@ -40,6 +40,26 @@ _is_docker_named_volume() {
     esac
 }
 
+# Check if a directory is a bind mount (mounted from host, not a named volume or internal dir)
+_is_bind_mount() {
+    local dir="$1"
+    local mount_src
+    if [ ! -f /proc/mounts ]; then
+        return 1
+    fi
+    # Check if dir is listed as a mount point in /proc/mounts
+    mount_src=$(awk -v dir="$dir" '$2 == dir {print $1; exit}' /proc/mounts 2>/dev/null || true)
+    if [ -z "$mount_src" ]; then
+        return 1
+    fi
+    # Named volumes are not bind mounts
+    case "$mount_src" in
+        /var/lib/docker/volumes/*/_data) return 1 ;;
+        overlay|proc|sysfs|tmpfs|devpts|mqueue|cgroup*|nsfs) return 1 ;;
+        *) return 0 ;;
+    esac
+}
+
 _is_sensitive_system_dir() {
     local dir="$1"
     case "$dir" in
@@ -168,6 +188,7 @@ adjust_user_uid_gid() {
     local default_uid=1000
     local default_gid=1000
     local user_grp ws_uid ws_gid occupied_by occupied_grp new_uid_for_existing new_gid_for_existing _d _is_mount final_uid final_gid
+    local uid_source="default"  # 追踪UID来源: env / auto / default / blocked
 
     log_info "[FixUID] Adjusting user UID/GID for ${user}..."
 
@@ -205,6 +226,9 @@ adjust_user_uid_gid() {
     user_grp=$(id -gn "${user}" 2>/dev/null || echo "${user}")
 
     # 智能自动检测：如果未设置 LOCAL_USER_ID，尝试从 /workspace 目录属主检测
+    if [ -n "${LOCAL_USER_ID:-}" ]; then
+        uid_source="env"  # 显式通过环境变量指定
+    fi
     if [ -z "${target_uid}" ]; then
         log_debug "[FixUID] LOCAL_USER_ID not set, attempting auto-detection from /workspace..."
         if [ -d "/workspace" ]; then
@@ -215,6 +239,7 @@ adjust_user_uid_gid() {
             if [ -n "${ws_uid}" ] && [ "${ws_uid}" != "0" ] && [ "${ws_uid}" != "${current_uid}" ] && [ "${ws_uid}" -ge 1000 ] 2>/dev/null; then
                 target_uid="${ws_uid}"
                 target_gid="${ws_gid:-${ws_uid}}"
+                uid_source="auto"  # 从/workspace属主自动检测
                 log_info "[FixUID] Auto-detected UID=${target_uid} GID=${target_gid} from /workspace directory owner"
             else
                 log_debug "[FixUID] Auto-detection: /workspace owned by root or already matching, keeping defaults"
@@ -230,6 +255,7 @@ adjust_user_uid_gid() {
     if [ "${target_uid}" = "0" ]; then
         log_warn "[FixUID] Attempt to set UID=0 (root) detected, falling back to current UID=${current_uid}"
         log_warn "[FixUID] For security, ${user} cannot be root. Use 'docker exec -u root ...' for root operations."
+        uid_source="blocked"  # UID=0被安全阻止
         target_uid="${current_uid}"
         target_gid="${current_gid}"
     fi
@@ -237,12 +263,35 @@ adjust_user_uid_gid() {
     # 验证 UID/GID 是数字
     if ! [[ "${target_uid}" =~ ^[0-9]+$ ]] || ! [[ "${target_gid}" =~ ^[0-9]+$ ]]; then
         log_warn "[FixUID] Invalid UID/GID (must be numeric), keeping current UID=${current_uid} GID=${current_gid}"
+        FIXUID_USER="${user}"
+        FIXUID_FINAL_UID="${current_uid}"
+        FIXUID_FINAL_GID="${current_gid}"
+        FIXUID_ORIG_UID="${current_uid}"
+        FIXUID_ORIG_GID="${current_gid}"
+        FIXUID_SOURCE="invalid"
+        FIXUID_CHANGED="no"
+        export FIXUID_USER FIXUID_FINAL_UID FIXUID_FINAL_GID FIXUID_ORIG_UID FIXUID_ORIG_GID FIXUID_SOURCE FIXUID_CHANGED
         return 0
     fi
 
     # 如果已经匹配，无需调整
     if [ "${target_uid}" = "${current_uid}" ] && [ "${target_gid}" = "${current_gid}" ]; then
         log_info "[FixUID] ${user} UID/GID already matches target (${current_uid}:${current_gid}), no adjustment needed"
+        # 导出全局变量供启动横幅使用
+        FIXUID_USER="${user}"
+        FIXUID_FINAL_UID="${current_uid}"
+        FIXUID_FINAL_GID="${current_gid}"
+        FIXUID_ORIG_UID="${current_uid}"
+        FIXUID_ORIG_GID="${current_gid}"
+        FIXUID_SOURCE="${uid_source}"
+        FIXUID_CHANGED="no"
+        export FIXUID_USER FIXUID_FINAL_UID FIXUID_FINAL_GID FIXUID_ORIG_UID FIXUID_ORIG_GID FIXUID_SOURCE FIXUID_CHANGED
+        # 醒目的UID映射摘要日志（与调整完成时格式一致）
+        log_info "[FixUID] ═════════════════════════════════════════"
+        log_info "[FixUID]   User: ${user}"
+        log_info "[FixUID]   UID/GID mapping: ${current_uid}:${current_gid} (no change)"
+        log_info "[FixUID]   Source: ${uid_source} (env=环境变量 / auto=自动检测 / default=镜像默认 / blocked=安全阻止)"
+        log_info "[FixUID] ═════════════════════════════════════════"
         return 0
     fi
 
@@ -322,7 +371,32 @@ adjust_user_uid_gid() {
 
     final_uid=$(id -u "${user}")
     final_gid=$(id -g "${user}")
-    log_info "[FixUID] ${user} UID/GID adjustment complete: UID=${final_uid} GID=${final_gid}"
+
+    # 导出全局变量供启动横幅使用
+    FIXUID_USER="${user}"
+    FIXUID_FINAL_UID="${final_uid}"
+    FIXUID_FINAL_GID="${final_gid}"
+    FIXUID_ORIG_UID="${current_uid}"
+    FIXUID_ORIG_GID="${current_gid}"
+    FIXUID_SOURCE="${uid_source}"
+    FIXUID_CHANGED="no"
+    if [ "${final_uid}" != "${current_uid}" ] || [ "${final_gid}" != "${current_gid}" ]; then
+        FIXUID_CHANGED="yes"
+    fi
+    export FIXUID_USER FIXUID_FINAL_UID FIXUID_FINAL_GID FIXUID_ORIG_UID FIXUID_ORIG_GID FIXUID_SOURCE FIXUID_CHANGED
+
+    # 醒目的UID映射摘要日志
+    local _change_desc=""
+    if [ "${FIXUID_CHANGED}" = "yes" ]; then
+        _change_desc="${current_uid}:${current_gid} -> ${final_uid}:${final_gid}"
+    else
+        _change_desc="${final_uid}:${final_gid} (no change)"
+    fi
+    log_info "[FixUID] ═════════════════════════════════════════"
+    log_info "[FixUID]   User: ${user}"
+    log_info "[FixUID]   UID/GID mapping: ${_change_desc}"
+    log_info "[FixUID]   Source: ${uid_source} (env=环境变量 / auto=自动检测 / default=镜像默认 / blocked=安全阻止)"
+    log_info "[FixUID] ═════════════════════════════════════════"
 
     # 验证最终状态
     if [ "${final_uid}" != "${target_uid}" ] || [ "${final_gid}" != "${target_gid}" ]; then
@@ -635,13 +709,13 @@ _do_chown_dir() {
         return 0
     fi
     if [ "${mode}" = "named-only" ] || [ "${mode}" = "auto" ]; then
-        if ! _is_docker_named_volume "$dir"; then
+        if _is_bind_mount "$dir"; then
             log_warn "  ${dir}: skip chown (bind mount detected, ${label}) — host directory permissions will NOT be modified"
-            return 2
+            return 0
         fi
     fi
     if [ "${mode}" = "yes" ]; then
-        if ! _is_docker_named_volume "$dir"; then
+        if _is_bind_mount "$dir"; then
             log_warn "  ${dir}: bind mount detected — chown WILL MODIFY HOST DIRECTORY OWNERSHIP!"
             log_warn "    If this is a shared data directory, cancel and restart with:"
             log_warn "    -e JUPYTER_ROOT_CHOWN=named-only (recommended) or -e WORKSPACE_CHOWN_MODE=named-only"
@@ -706,7 +780,7 @@ setup_workspace() {
     chmod 700 "${ssh_dir}" 2>/dev/null || true
     log_info "  SSH dir: ${ssh_dir} ensured (chmod 700, owner ${user})"
 
-    _do_chown_dir "/workspace" "${ws_chown_mode}" "WORKSPACE_CHOWN_MODE=${ws_chown_mode}"
+    _do_chown_dir "/workspace" "${ws_chown_mode}" "WORKSPACE_CHOWN_MODE=${ws_chown_mode}" || true
     if [ -n "${ws_chmod}" ]; then
         chmod "${ws_chmod}" "/workspace" 2>/dev/null || true
         log_info "  /workspace: mode ensured ${ws_chmod}"
@@ -716,13 +790,13 @@ setup_workspace() {
     for extra_dir in ${CHOWN_DIRS:-}; do
         [ "$extra_dir" = "/workspace" ] && continue
         [ "$extra_dir" = "$jupyter_dir" ] && continue
-        _do_chown_dir "$extra_dir" "${ws_chown_mode}" "CHOWN_DIRS, WORKSPACE_CHOWN_MODE=${ws_chown_mode}"
+        _do_chown_dir "$extra_dir" "${ws_chown_mode}" "CHOWN_DIRS, WORKSPACE_CHOWN_MODE=${ws_chown_mode}" || true
     done
 
     local chown_ret=0
     if [ "$jupyter_dir" != "/workspace" ]; then
         _do_chown_dir "$jupyter_dir" "$jupyter_chown_mode" "JUPYTER_ROOT_CHOWN=${jupyter_chown_mode}" || chown_ret=$?
-        if [ "$chown_ret" -eq 2 ] && [ "${JUPYTER_ROOT_SENSITIVE:-0}" != "1" ] && [ "${JUPYTER_ROOT_PERM_HELP_PRINTED:-0}" != "1" ]; then
+        if [ "$chown_ret" -ne 0 ] && [ "${JUPYTER_ROOT_SENSITIVE:-0}" != "1" ] && [ "${JUPYTER_ROOT_PERM_HELP_PRINTED:-0}" != "1" ]; then
             _print_permission_help "$jupyter_dir"
             JUPYTER_ROOT_PERM_HELP_PRINTED=1
             export JUPYTER_ROOT_PERM_HELP_PRINTED
@@ -838,6 +912,28 @@ configure_supervisor_and_start() {
     echo "" >&2
     echo "============================================================" >&2
     echo "  Container ready! Services managed by supervisord" >&2
+    echo "" >&2
+
+    # UID 映射摘要（由 adjust_user_uid_gid 设置 FIXUID_* 全局变量）
+    local _uid_user="${FIXUID_USER:-${user}}"
+    local _uid_final="${FIXUID_FINAL_UID:-$(id -u ${user} 2>/dev/null || echo 1000)}"
+    local _uid_final_g="${FIXUID_FINAL_GID:-$(id -g ${user} 2>/dev/null || echo 1000)}"
+    local _uid_source="${FIXUID_SOURCE:-unknown}"
+    local _uid_changed="${FIXUID_CHANGED:-no}"
+    local _uid_source_cn="未知"
+    case "${_uid_source}" in
+        env)     _uid_source_cn="环境变量(LOCAL_USER_ID)" ;;
+        auto)    _uid_source_cn="自动检测(/workspace属主)" ;;
+        default) _uid_source_cn="镜像默认" ;;
+        blocked) _uid_source_cn="安全阻止(UID=0不允许)" ;;
+        invalid) _uid_source_cn="无效值(已回退默认)" ;;
+    esac
+    echo "  User/UID mapping:" >&2
+    echo "    User:  ${_uid_user} (UID:GID = ${_uid_final}:${_uid_final_g})" >&2
+    if [ "${_uid_changed}" = "yes" ]; then
+        echo "    Changed: ${FIXUID_ORIG_UID:-?}:${FIXUID_ORIG_GID:-?} -> ${_uid_final}:${_uid_final_g}" >&2
+    fi
+    echo "    Source: ${_uid_source_cn}" >&2
     echo "" >&2
 
     if [ "${ENABLE_SSH:-yes}" = "yes" ]; then

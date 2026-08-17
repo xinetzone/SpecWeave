@@ -1,30 +1,30 @@
 # syntax=docker/dockerfile:1.7-labs
 # =============================================================================
-# DevContainer Base - Dockerfile (Multi-stage build)
+# DevContainer Base - Dockerfile (7-stage single-image build)
 # Project: SpecWeave Full-featured Development Container Base Image
 # Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(conda-forge, libmamba)
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
-# Services: sshd(22) + dockerd(2375) + podman(rootless) + jupyter(8888), managed by supervisord
+# Services: sshd(22) + dockerd(unix socket) + podman(rootless) + jupyter(8888), managed by supervisord
 # Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, libgcc-ng 16.1.0运行时, libmamba solver), Jupyter在main环境
 # BuildKit cache: pip (/root/.cache/pip) + conda pkgs (/opt/conda/pkgs) + libmamba solver (/root/.cache/conda) 持久化缓存
 # Verify modes: BUILD_VERIFY_MODE=standard (default, full checks) | fast (essential only) | off (skip)
 #
 # Build: docker build -t devcontainer-base .
 # CN:    docker build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg DOCKER_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t devcontainer-base .
-# Run:   docker run -d --privileged -p 2222:22 -p 2375:2375 -p 8888:8888 \
+# Run:   docker run -d --privileged -p 2222:22 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -e GRANT_SUDO=yes \
 #          -v $(pwd)/workspace:/workspace -v docker-data:/var/lib/docker devcontainer-base
 # Debug: docker run -it --rm --privileged devcontainer-base bash
 #
 # Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.3):
-#   Stage 2.1/7: 系统包 + APT镜像 + locale/timezone (变化频率: 最低)
-#   Stage 2.2/7: Docker CE 安装 (变化频率: 低)
-#   Stage 2.3/7: Podman rootless 安装 (变化频率: 低)
-#   Stage 2.4/7: Miniforge3 (conda-forge) 安装 + Python 3.14 cp314t + libmamba + Jupyter (变化频率: 中)
-#   Stage 2.5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
-#   Stage 2.6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
-#   Stage 2.7/7: build-info + 激进清理 + 最终验证 (变化频率: 最低)
+#   Stage 1/7: 系统包 + APT镜像 + locale/timezone (变化频率: 最低)
+#   Stage 2/7: Docker CE 安装 (变化频率: 低)
+#   Stage 3/7: Podman rootless 安装 (变化频率: 低)
+#   Stage 4/7: Miniforge3 (conda-forge) 安装 + Python 3.14 cp314t + libmamba + Jupyter (变化频率: 中)
+#   Stage 5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
+#   Stage 6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
+#   Stage 7/7: build-info + 激进清理 + 最终验证 (变化频率: 最低)
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
@@ -37,7 +37,7 @@ ARG PYTHON_BUILD=cp314t
 ARG BUILD_VERIFY_MODE=standard
 
 # -----------------------------------------------------------------------------
-# Stage 2: Runtime - Minimal production image with Micromamba
+# Stage: Runtime - Minimal production image with Miniforge3
 # -----------------------------------------------------------------------------
 FROM ubuntu:26.04
 
@@ -81,7 +81,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.1/7: 系统包安装 + APT镜像 + locale/timezone 配置
+# Stage 1/7: 系统包安装 + APT镜像 + locale/timezone 配置
 # 变化频率：最低（基础镜像确定后很少改）
 # 原则：--no-install-recommends，同层完成APT镜像配置+locale+tz+清理
 #       初始化计时器 /tmp/.build-timer
@@ -149,7 +149,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 1/7 (system+locale) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.2/7: Docker CE 安装
+# Stage 2/7: Docker CE 安装
 # 变化频率：低（Docker版本升级时改）
 # 原则：GPG key + apt repo 配置 + 安装在同层完成，清理apt缓存
 # ═══════════════════════════════════════════════════════════════════
@@ -194,7 +194,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 2/7 (Docker CE) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.3/7: Podman rootless 安装
+# Stage 3/7: Podman rootless 安装
 # 变化频率：低（Podman版本升级时改）
 # 原则：直接使用Ubuntu 26.04官方源，无需第三方repo
 # ═══════════════════════════════════════════════════════════════════
@@ -222,7 +222,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 3/7 (Podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.4/7: Miniforge3 (conda-forge) 安装 + Python 3.14.6 cp314t free-threading + libmamba + Jupyter
+# Stage 4/7: Miniforge3 (conda-forge) 安装 + Python 3.14.6 cp314t free-threading + libmamba + Jupyter
 # 变化频率：中（Python/包版本升级时改）
 # 原则：Miniforge3（conda-forge官方发行版，无defaults channel/无Anaconda商业包）轻量安装到/opt/conda，
 #       默认conda-forge channel + libmamba solver，Python 3.14.6使用cp314t free-threading构建（GIL默认禁用），
@@ -232,65 +232,11 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
-    --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly \
-    --mount=type=bind,source=variants/shared/scripts/conda-perf-setup.sh,target=/tmp/conda-perf-setup.sh,readonly \
+    --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly,required=false \
     <<'STAGE4_EOF'
 set -e
 echo "=== Stage 4/7: Install Miniforge3 + Python ${PYTHON_VERSION} ${PYTHON_BUILD} (conda-forge, libmamba) + Jupyter ==="
 _STAGE_START=$(date +%s)
-
-# ── 辅助函数：conda 包分组安装（使用libmamba solver） ──
-conda_install_group() {
-    local group_name="$1" description="$2"
-    shift 2
-    local g_start g_end g_elapsed rc
-    echo ""
-    echo "┌─────────────────────────────────────────────────┐"
-    echo "│ [CONDA INSTALL] ${group_name}"
-    echo "│ Desc: ${description}"
-    echo "│ PKGS: $*"
-    echo "└─────────────────────────────────────────────────┘"
-    g_start=$(date +%s)
-    set +e
-    conda install -y -n base --solver=libmamba "$@" 2>&1
-    rc=$?
-    set -e
-    g_end=$(date +%s)
-    g_elapsed=$((g_end - g_start))
-    if [ $rc -eq 0 ]; then
-        echo "[OK] ${group_name} installed in ${g_elapsed}s"
-    else
-        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
-        exit $rc
-    fi
-}
-
-# ── 辅助函数：pip 包分组安装 ──
-pip_install_group() {
-    local group_name="$1" description="$2"
-    shift 2
-    local g_start g_end g_elapsed rc
-    echo ""
-    echo "┌─────────────────────────────────────────────────┐"
-    echo "│ [PIP INSTALL] ${group_name}"
-    echo "│ Desc: ${description}"
-    echo "│ PKGS: $*"
-    echo "└─────────────────────────────────────────────────┘"
-    g_start=$(date +%s)
-    set +e
-    pip install --timeout 120 --retries 5 "$@" 2>&1
-    rc=$?
-    set -e
-    g_end=$(date +%s)
-    g_elapsed=$((g_end - g_start))
-    if [ $rc -eq 0 ]; then
-        echo "[OK] ${group_name} installed in ${g_elapsed}s"
-    else
-        echo "[FAIL] ${group_name} failed after ${g_elapsed}s (exit code: $rc)"
-        pip check 2>&1 | head -20 || true
-        exit $rc
-    fi
-}
 
 # ── 架构检测 + Miniforge3安装器URL ──
 echo "[INFO] Detecting architecture..."
@@ -374,13 +320,7 @@ echo "[OK] conda.sh sourced, conda available in build shell"
 # ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
 echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
 
-# ── 使用共享脚本配置性能参数 + 合并镜像源配置 ──
-echo "[INFO] Configuring conda performance and mirror sources..."
-chmod +x /tmp/conda-perf-setup.sh
-# 运行性能配置（线程、超时、重试），输出到临时位置后合并镜像源配置
-CONDA_DIR="${CONDA_DIR}" CONDA_MIRROR="${CONDA_MIRROR}" CONDA_THREADS=8 \
-    CONDA_OUTPUT=/tmp/condarc-perf.yaml bash /tmp/conda-perf-setup.sh
-echo ""
+# ── 写入系统级 .condarc（镜像源 + libmamba solver + 性能参数） ──
 echo "[ACTION] Writing system-level ${CONDA_DIR}/.condarc with mirror sources..."
 case "${CONDA_MIRROR}" in
     bfsu)
@@ -472,7 +412,7 @@ _mamba_elapsed=$(($(date +%s) - _mamba_start))
 echo "[OK] main env created in ${_mamba_elapsed}s with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
 echo "[OK] Jupyter ecosystem installed: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
 
-# ── 配置 PyPI 镜像（root + base + main 环境，devuser 在 Stage 2.5 创建后配置） ──
+# ── 配置 PyPI 镜像（root + base + main 环境，devuser 在 Stage 5/7 创建后配置） ──
 echo "[ACTION] Configuring pip mirrors..."
 mkdir -p /root/.config/pip
 case "${PIP_MIRROR}" in
@@ -515,8 +455,8 @@ fi
 if [ -n "${PIP_TRUSTED_HOST}" ]; then
     /opt/conda/envs/main/bin/pip config set global.trusted-host "${PIP_TRUSTED_HOST}"
 fi
-echo "[OK] pip mirrors configured (root + base + main; devuser will be configured in Stage 2.5)"
-# 将 PIP 配置变量导出到临时文件，供 Stage 2.5 使用
+echo "[OK] pip mirrors configured (root + base + main; devuser will be configured in Stage 5/7)"
+# 将 PIP 配置变量导出到临时文件，供 Stage 5/7 使用
 echo "PIP_INDEX_URL=${PIP_INDEX_URL}" > /tmp/pip-config.env
 echo "PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST}" >> /tmp/pip-config.env
 
@@ -536,8 +476,8 @@ print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={so
     "
 fi
 
-# ── main环境激活将在 Stage 2.5 通过 conda-init.sh 统一配置 ──
-echo "[INFO] main environment activation will be configured via conda-init.sh in Stage 2.5"
+# ── main环境激活将在 Stage 5/7 通过 conda-init.sh 统一配置 ──
+echo "[INFO] main environment activation will be configured via conda-init.sh in Stage 5/7"
 
 # ── 清理临时文件（不清理BuildKit cache挂载目录：/root/.cache/pip, /opt/conda/pkgs, /root/.cache/conda） ──
 echo ""
@@ -571,7 +511,7 @@ echo '[OK] Stage 4 complete'
 STAGE4_EOF
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.5/7: 用户/组/工作目录创建 + subuid/subgid + 权限设置
+# Stage 5/7: 用户/组/工作目录创建 + subuid/subgid + 权限设置
 # 变化频率：中（新增用户或目录时改）
 # 原则：UID 优先固定值 1000；docker组必须存在；配置rootless podman的
 #       subuid/subgid；chown在同层完成；写入~/.bashrc和/etc/environment
@@ -633,7 +573,7 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
     echo "[TIMER] Stage 5/7 (user+subuid+dirs+daemon) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.6/7: 配置文件 COPY + 权限设置 + 语法验证
+# Stage 6/7: 配置文件 COPY + 权限设置 + 语法验证
 # 变化频率：高（配置调整时改，缓存不会让前面层失效）
 # 原则：所有 COPY 集中在一处；同层 RUN 做权限 + 全部语法验证
 # ═══════════════════════════════════════════════════════════════════
@@ -683,7 +623,7 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2.7/7: 构建元数据 + 激进清理 + 最终验证
+# Stage 7/7: 构建元数据 + 激进清理 + 最终验证
 # 变化频率：最低（版本发布时改）
 # 原则：写入build-info；激进清理doc/man/info/__pycache__/.pyc/静态库；
 #       strip二进制；最终验证所有关键命令可执行；输出耗时汇总表
@@ -823,17 +763,17 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     _T7=$_ELAPSED && \
     _TOTAL=$((_NOW - _START)) && \
     echo "╔══════════════════════════════════════════════════════════════╗" && \
-    echo "║         BUILD TIMING SUMMARY (Runtime Stage)               ║" && \
+    echo "║         BUILD TIMING SUMMARY (Runtime Stage)                ║" && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
-    printf "║  Stage 1/7  system packages + locale   %5ds               ║\n" $_T1 && \
-    printf "║  Stage 2/7  Docker CE install          %5ds               ║\n" $_T2 && \
-    printf "║  Stage 3/7  Podman rootless install    %5ds               ║\n" $_T3 && \
-    printf "║  Stage 4/7  Miniforge3+libmamba+Pythonft %5ds               ║\n" $_T4 && \
-    printf "║  Stage 5/7  user+subuid+dirs+daemon   %5ds               ║\n" $_T5 && \
-    printf "║  Stage 6/7  config + validation       %5ds               ║\n" $_T6 && \
-    printf "║  Stage 7/7  cleanup + final verify     %5ds               ║\n" $_T7 && \
+    printf "║  Stage 1/7  %-29s %5ds                       ║\n" "system packages + locale" $_T1 && \
+    printf "║  Stage 2/7  %-29s %5ds                       ║\n" "Docker CE install" $_T2 && \
+    printf "║  Stage 3/7  %-29s %5ds                       ║\n" "Podman rootless install" $_T3 && \
+    printf "║  Stage 4/7  %-29s %5ds                       ║\n" "Miniforge3+Python ft+Jupyter" $_T4 && \
+    printf "║  Stage 5/7  %-29s %5ds                       ║\n" "user+subuid+dirs+daemon" $_T5 && \
+    printf "║  Stage 6/7  %-29s %5ds                       ║\n" "config + validation" $_T6 && \
+    printf "║  Stage 7/7  %-29s %5ds                       ║\n" "cleanup + final verify" $_T7 && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
-    printf "║  RUNTIME TOTAL                         %5ds               ║\n" $_TOTAL && \
+    printf "║  %-42s %5ds                       ║\n" "RUNTIME TOTAL" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
     rm -f /tmp/.build-timer && \
