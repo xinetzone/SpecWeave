@@ -136,12 +136,12 @@ Enrichment Agent示例演示如何使用外部信息源，以Agent方式增强Kn
 
 ```mermaid
 flowchart TD
-    A[BigQuery数据集] -->|Download| B[元数据快照<br/>metadata.initial/]
-    C[自定义配置<br/>config/instructions.md<br/>config/skills/] -->|Enrich| D
-    B -->|Enrich| D[Enrichment Agent<br/>元数据丰富]
-    D -->|Output| E[丰富后元数据<br/>metadata.new/]
-    E -->|Diff审查| F[人工审查变更]
-    F -->|Publish| G[Knowledge Catalog服务]
+    A["BigQuery数据集"] -->|"Download"| B["元数据快照 metadata.initial/"]
+    C["自定义配置 config/instructions.md config/skills/"] -->|"Enrich"| D["Enrichment Agent 元数据丰富"]
+    B -->|"Enrich"| D
+    D -->|"Output"| E["丰富后元数据 metadata.new/"]
+    E -->|"Diff审查"| F["人工审查变更"]
+    F -->|"Publish"| G["Knowledge Catalog服务"]
 ```
 
 四个核心步骤：
@@ -299,11 +299,11 @@ Discovery Agent和Enrichment Agent形成一个闭环：
 
 ```mermaid
 flowchart LR
-    A[用户提问<br/>"Q2营收数据在哪？"] --> B[Discovery Agent<br/>搜索+分解+重排]
-    B --> C{找到结果？}
-    C -->|是| D[返回数据资产+丰富文档]
-    C -->|否/文档不足| E[Enrichment Agent<br/>自动生成/补充文档]
-    E --> F[发布到Knowledge Catalog]
+    A["用户提问 Q2营收数据在哪？"] --> B["Discovery Agent 搜索+分解+重排"]
+    B --> C{"找到结果？"}
+    C -->|"是"| D["返回数据资产+丰富文档"]
+    C -->|"否/文档不足"| E["Enrichment Agent 自动生成/补充文档"]
+    E --> F["发布到Knowledge Catalog"]
     F --> B
 ```
 
