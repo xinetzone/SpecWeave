@@ -22,6 +22,77 @@ log_info()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [INFO]  $*" >&2; }
 log_warn()  { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [WARN]  $*" >&2; }
 log_error() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] [ERROR] $*" >&2; }
 
+_is_docker_named_volume() {
+    local dir="$1"
+    local mount_src
+    if [ ! -f /proc/mounts ]; then
+        return 1
+    fi
+    mount_src=$(awk -v dir="$dir" '$2 == dir {print $1; exit}' /proc/mounts 2>/dev/null || true)
+    case "$mount_src" in
+        /var/lib/docker/volumes/*/_data) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+_is_sensitive_system_dir() {
+    local dir="$1"
+    case "$dir" in
+        /|/home|/home/*|/etc|/etc/*|/usr|/usr/*|/bin|/sbin|/dev|/proc|/sys|/var|/root|/boot)
+            return 0 ;;
+        *)
+            return 1 ;;
+    esac
+}
+
+resolve_jupyter_root_dir() {
+    local root_dir="${JUPYTER_ROOT_DIR:-}"
+    local chown_mode="${JUPYTER_ROOT_CHOWN:-auto}"
+    if [ -z "$root_dir" ]; then
+        local cwd="$(pwd)"
+        if [ "$cwd" != "/" ] && [ -d "$cwd" ]; then
+            root_dir="$cwd"
+            log_info "Auto-detected working directory as Jupyter root: $root_dir (from Docker -w or current dir)"
+        else
+            root_dir="/workspace"
+            log_info "Using default Jupyter root: $root_dir"
+        fi
+    else
+        log_info "Using Jupyter root from JUPYTER_ROOT_DIR env: $root_dir"
+    fi
+    if [ ! -d "$root_dir" ]; then
+        log_warn "Jupyter root dir '$root_dir' does not exist, creating it..."
+        mkdir -p "$root_dir" 2>/dev/null || {
+            log_error "Failed to create $root_dir, falling back to /workspace"
+            root_dir="/workspace"
+            chown_mode="named-only"
+            mkdir -p "$root_dir"
+        }
+    fi
+    if _is_sensitive_system_dir "$root_dir"; then
+        log_error "========================================"
+        log_error "⚠️  SECURITY WARNING: Jupyter root dir '$root_dir' is a system directory!"
+        log_error "    chown will be FORCIBLY SKIPPED to prevent damaging host system permissions."
+        log_error "    Please use a dedicated data directory instead (e.g. /workspace, /data, /media/...)."
+        log_error "========================================"
+        chown_mode="no"
+        JUPYTER_ROOT_SENSITIVE=1
+    fi
+    if [ "$root_dir" = "/workspace" ]; then
+        :
+    elif [ "$chown_mode" = "auto" ]; then
+        if ! _is_docker_named_volume "$root_dir" 2>/dev/null; then
+            chown_mode="no"
+            JUPYTER_ROOT_BIND_MOUNT=1
+        fi
+    fi
+    JUPYTER_ROOT_DIR="$root_dir"
+    JUPYTER_ROOT_CHOWN="$chown_mode"
+    JUPYTER_ROOT_SENSITIVE="${JUPYTER_ROOT_SENSITIVE:-0}"
+    JUPYTER_ROOT_BIND_MOUNT="${JUPYTER_ROOT_BIND_MOUNT:-0}"
+    export JUPYTER_ROOT_DIR JUPYTER_ROOT_CHOWN JUPYTER_ROOT_SENSITIVE JUPYTER_ROOT_BIND_MOUNT
+}
+
 print_banner() {
     echo "" >&2
     echo "============================================================" >&2
@@ -371,69 +442,112 @@ REGISTRIES_EOF
     log_info "Container runtime configuration complete"
 }
 
-_is_docker_named_volume() {
+_do_chown_dir() {
     local dir="$1"
-    local mount_src
-    if [ ! -f /proc/mounts ]; then
-        return 1
+    local mode="$2"
+    local user="${NON_ROOT_USER:-devuser}"
+    local label="$3"
+
+    [ -d "$dir" ] || mkdir -p "$dir" 2>/dev/null || true
+    if [ "${mode}" = "no" ]; then
+        log_info "  ${dir}: skip chown (${label})"
+        return 0
     fi
-    mount_src=$(awk -v dir="$dir" '$2 == dir {print $1; exit}' /proc/mounts 2>/dev/null || true)
-    case "$mount_src" in
-        /var/lib/docker/volumes/*/_data) return 0 ;;
-        *) return 1 ;;
-    esac
+    if [ "${mode}" = "named-only" ] || [ "${mode}" = "auto" ]; then
+        if ! _is_docker_named_volume "$dir"; then
+            log_warn "  ${dir}: skip chown (bind mount detected, ${label}) — host directory permissions will NOT be modified"
+            return 2
+        fi
+    fi
+    if [ "${mode}" = "yes" ]; then
+        if ! _is_docker_named_volume "$dir"; then
+            log_warn "  ${dir}: bind mount detected — chown WILL MODIFY HOST DIRECTORY OWNERSHIP!"
+            log_warn "    If this is a shared data directory, cancel and restart with:"
+            log_warn "    -e JUPYTER_ROOT_CHOWN=named-only (recommended) or -e WORKSPACE_CHOWN_MODE=named-only"
+        fi
+    fi
+    chown -R "${user}:${user}" "$dir" 2>/dev/null || {
+        local ro_err=0
+        touch "$dir/.chown_test_$$" 2>/dev/null || ro_err=1
+        rm -f "$dir/.chown_test_$$" 2>/dev/null || true
+        if [ "$ro_err" -eq 1 ]; then
+            log_info "  ${dir}: chown skipped (read-only volume)"
+            return 0
+        else
+            log_warn "  ${dir}: chown ${user}:${user} failed — directory may not be writable by devuser."
+            return 1
+        fi
+    }
+    log_info "  ${dir}: owner ensured ${user}:${user}"
+    return 0
+}
+
+_print_permission_help() {
+    local dir="$1"
+    local user="${NON_ROOT_USER:-devuser}"
+    local uid=$(id -u "${user}" 2>/dev/null || echo 1000)
+    local gid=$(id -g "${user}" 2>/dev/null || echo 1000)
+    echo "" >&2
+    log_warn "┌────────────────────────────────────────────────────────────────────┐"
+    log_warn "│  📂 Directory permissions notice for: $dir"
+    log_warn "│"
+    log_warn "│  This is a bind-mounted host directory — chown was skipped to"
+    log_warn "│  prevent modifying host file ownership."
+    log_warn "│"
+    log_warn "│  Solutions if you get 'Permission denied' inside the container:"
+    log_warn "│"
+    log_warn "│  1. (Recommended) Fix permissions ON THE HOST once:"
+    log_warn "│     sudo chown -R ${uid}:${gid} \"$dir\""
+    log_warn "│"
+    log_warn "│  2. Or run inside container with sudo when needed:"
+    log_warn "│     sudo chown -R ${user}:${user} \"$dir\""
+    log_warn "│"
+    log_warn "│  3. Or explicitly allow chown (modifies host files!):"
+    log_warn "│     Add to docker run: -e JUPYTER_ROOT_CHOWN=yes"
+    log_warn "│"
+    log_warn "│  Note: For read-only dataset/model directories, no fix needed."
+    log_warn "└────────────────────────────────────────────────────────────────────┘"
+    echo "" >&2
 }
 
 setup_workspace() {
     log_info "[Init] Initializing workspace and user directory permissions..."
     local user="${NON_ROOT_USER:-devuser}"
-    local chown_mode="${WORKSPACE_CHOWN_MODE:-yes}"
-    local chown_dirs="${CHOWN_DIRS:-/workspace}"
+    local ws_chown_mode="${WORKSPACE_CHOWN_MODE:-yes}"
+    local jupyter_dir="${JUPYTER_ROOT_DIR:-/workspace}"
+    local jupyter_chown_mode="${JUPYTER_ROOT_CHOWN:-auto}"
     local ws_chmod="${WORKSPACE_CHMOD:-755}"
 
-    mkdir -p "/workspace" "/home/${user}/.ssh"
+    mkdir -p "/workspace" "/home/${user}/.ssh" "${jupyter_dir}"
 
     local ssh_dir="/home/${user}/.ssh"
     chown "${user}:${user}" "${ssh_dir}" 2>/dev/null || true
     chmod 700 "${ssh_dir}" 2>/dev/null || true
     log_info "  SSH dir: ${ssh_dir} ensured (chmod 700, owner ${user})"
 
-    local dir
-    for dir in ${chown_dirs}; do
-        [ -d "$dir" ] || mkdir -p "$dir" 2>/dev/null || true
-        if [ "${chown_mode}" = "no" ]; then
-            log_info "  ${dir}: skip chown (WORKSPACE_CHOWN_MODE=no)"
-            continue
-        fi
-        if [ "${chown_mode}" = "named-only" ]; then
-            if ! _is_docker_named_volume "$dir"; then
-                log_warn "  ${dir}: skip chown (bind mount detected, WORKSPACE_CHOWN_MODE=named-only)"
-                continue
-            fi
-        fi
-        if [ "${chown_mode}" = "yes" ]; then
-            if ! _is_docker_named_volume "$dir"; then
-                log_warn "  ${dir}: bind mount detected — chown will modify host directory ownership. Set WORKSPACE_CHOWN_MODE=named-only or no to skip."
-            fi
-        fi
-        chown -R "${user}:${user}" "$dir" 2>/dev/null || {
-            if [ "${chown_mode}" = "yes" ]; then
-                local ro_err=0
-                touch "$dir/.chown_test_$$" 2>/dev/null || ro_err=1
-                rm -f "$dir/.chown_test_$$" 2>/dev/null || true
-                if [ "$ro_err" -eq 1 ]; then
-                    log_info "  ${dir}: chown skipped (read-only volume)"
-                else
-                    log_warn "  ${dir}: chown ${user}:${user} failed — directory may still be writable for root. Verify manually if user processes fail to write."
-                fi
-            fi
-        }
-        log_info "  ${dir}: owner ensured ${user}:${user}"
-        if [ -n "${ws_chmod}" ] && [ "$dir" = "/workspace" ]; then
-            chmod "${ws_chmod}" "$dir" 2>/dev/null || true
-            log_info "  ${dir}: mode ensured ${ws_chmod}"
-        fi
+    _do_chown_dir "/workspace" "${ws_chown_mode}" "WORKSPACE_CHOWN_MODE=${ws_chown_mode}"
+    if [ -n "${ws_chmod}" ]; then
+        chmod "${ws_chmod}" "/workspace" 2>/dev/null || true
+        log_info "  /workspace: mode ensured ${ws_chmod}"
+    fi
+
+    local extra_dir
+    for extra_dir in ${CHOWN_DIRS:-}; do
+        [ "$extra_dir" = "/workspace" ] && continue
+        [ "$extra_dir" = "$jupyter_dir" ] && continue
+        _do_chown_dir "$extra_dir" "${ws_chown_mode}" "CHOWN_DIRS, WORKSPACE_CHOWN_MODE=${ws_chown_mode}"
     done
+
+    local chown_ret=0
+    if [ "$jupyter_dir" != "/workspace" ]; then
+        _do_chown_dir "$jupyter_dir" "$jupyter_chown_mode" "JUPYTER_ROOT_CHOWN=${jupyter_chown_mode}" || chown_ret=$?
+        if [ "$chown_ret" -eq 2 ] && [ "${JUPYTER_ROOT_SENSITIVE:-0}" != "1" ] && [ "${JUPYTER_ROOT_PERM_HELP_PRINTED:-0}" != "1" ]; then
+            _print_permission_help "$jupyter_dir"
+            JUPYTER_ROOT_PERM_HELP_PRINTED=1
+            export JUPYTER_ROOT_PERM_HELP_PRINTED
+        fi
+    fi
+
     log_info "Workspace initialization complete"
 }
 
@@ -489,7 +603,7 @@ JUPYTER_RUNTIME_EOF
 c.ServerApp.ip = '0.0.0.0'
 c.ServerApp.port = ${JUPYTER_PORT:-8888}
 c.ServerApp.open_browser = False
-c.ServerApp.root_dir = '/workspace'
+c.ServerApp.root_dir = '${JUPYTER_ROOT_DIR:-/workspace}'
 c.ServerApp.allow_root = False
 c.ServerApp.allow_origin = '${JUPYTER_ALLOW_ORIGIN:-}'
 c.ServerApp.allow_credentials = True
@@ -497,12 +611,21 @@ JUPYTER_RUNTIME_EOF
 
     chown -R "${user}:${user}" "${jupyter_config_dir}" 2>/dev/null || true
     log_info "Jupyter runtime config written to ${jupyter_runtime_config}"
-    log_info "Jupyter configured (root_dir: /workspace, port: ${JUPYTER_PORT:-8888})"
+    log_info "Jupyter configured (root_dir: ${JUPYTER_ROOT_DIR:-/workspace}, port: ${JUPYTER_PORT:-8888})"
 }
 
 configure_supervisor_and_start() {
     log_info "[Step 7/7] Configuring supervisord services..."
     local user="${NON_ROOT_USER:-devuser}"
+
+    local jupyter_conf="/etc/supervisor/conf.d/jupyter.conf"
+    if [ -f "$jupyter_conf" ] && [ "${ENABLE_JUPYTER:-yes}" = "yes" ]; then
+        local jupyter_dir="${JUPYTER_ROOT_DIR:-/workspace}"
+        if grep -q "^directory=" "$jupyter_conf" 2>/dev/null; then
+            sed -i "s|^directory=.*|directory=${jupyter_dir}|" "$jupyter_conf"
+            log_info "Updated supervisor jupyter directory to: ${jupyter_dir}"
+        fi
+    fi
 
     local priv_warn=0
     if [ "${ENABLE_DOCKER:-yes}" = "yes" ]; then
@@ -579,7 +702,7 @@ configure_supervisor_and_start() {
         echo "" >&2
     fi
 
-    echo "  Working directory: /workspace (mount a volume here for persistence)" >&2
+    echo "  Working directory: ${JUPYTER_ROOT_DIR:-/workspace} (Jupyter/SSH default, mount volumes here)" >&2
 
     if [ "$priv_warn" = "1" ] && [ "${DOCKER_DOD_MODE}" != "1" ]; then
         echo "" >&2
@@ -594,6 +717,8 @@ configure_supervisor_and_start() {
 
 print_banner
 
+resolve_jupyter_root_dir
+
 if [ $# -gt 0 ]; then
     log_info "Command mode detected: '$*' - skipping service startup, exec user command directly"
     diagnose_system
@@ -602,6 +727,7 @@ if [ $# -gt 0 ]; then
     setup_container_runtimes
     log_info "Entering user command (tini as init, signals forwarded)..."
     echo "" >&2
+    cd "${JUPYTER_ROOT_DIR:-/workspace}" || true
     exec "$@"
 fi
 
