@@ -49,8 +49,8 @@ LABEL framework.version="1.1.0"
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # Copy shared framework (v1.1.0, 13 modules)
-COPY variants/shared/lib/ /usr/local/share/variant-framework/
-COPY variants/shared/scripts/conda-mirror-setup.sh /usr/local/bin/
+COPY shared/lib/ /usr/local/share/variant-framework/
+COPY shared/scripts/conda-mirror-setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/conda-mirror-setup.sh
 
 # ── Stage 0/5: Custom user configuration (v1.1.0新功能) ──────────

@@ -42,7 +42,7 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 # chain rebuild (conda-llvm→onnx-dev→onnx-quantized→torch-dev). Safe because
 # helpers are sourced at RUN time (not baked into earlier layers' binaries).
 # Remove this COPY after the next full dependency-chain rebuild.
-COPY variants/shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
+COPY shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
 
 # Override entrypoint.sh to fix command-mode stdout pollution (diagnostic logs
 # must go to stderr per Unix convention). Safe because entrypoint is runtime-only

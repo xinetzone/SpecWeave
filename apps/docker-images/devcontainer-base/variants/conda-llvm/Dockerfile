@@ -46,8 +46,8 @@ ENV PATH=/opt/conda/envs/main/lib/ccache/bin:/opt/conda/envs/main/bin:/opt/conda
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-COPY variants/shared/lib/ /usr/local/share/variant-framework/
-COPY variants/shared/scripts/conda-mirror-setup.sh /usr/local/bin/
+COPY shared/lib/ /usr/local/share/variant-framework/
+COPY shared/scripts/conda-mirror-setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/conda-mirror-setup.sh
 
 # ── Stage 1-2/5: Framework init + mirrors ──────────────────────────
