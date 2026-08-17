@@ -114,6 +114,7 @@ def run_concurrent_check(project_root: Path, staged_files: list[Path]) -> int:
 
     try:
         from lib.check_concurrent_safety import scan_python_file
+        from lib.rules import load_rules
     except ImportError as e:
         print(f"\n⚠️  无法加载并发安全检查模块: {e}")
         print("   尝试使用 CLI 脚本扫描...")
@@ -141,10 +142,11 @@ def run_concurrent_check(project_root: Path, staged_files: list[Path]) -> int:
     infos: list[tuple[Path, object]] = []
 
     print("\n🔍 正在扫描暂存 Python 文件的并发安全问题...")
+    rules_engine = load_rules()
     for rel_path in py_files:
         abs_path = project_root / rel_path
         try:
-            report = scan_python_file(abs_path, project_root)
+            report = scan_python_file(abs_path, project_root, rules_engine=rules_engine)
         except (OSError, UnicodeDecodeError, SyntaxError):
             continue
 

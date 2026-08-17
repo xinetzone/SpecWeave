@@ -26,6 +26,7 @@ dir_names = [
     ".git",
     ".temp",
     ".venv",
+    ".cache",
     "node_modules",
     "vendor",
     "generated",
@@ -182,6 +183,12 @@ patterns = [
     '^#\s*ruff:',
     '^#\s*isort:',
     '^#\s*fmt:\s*(on|off|skip)',
+    '#\s*(?:nosec|sensitive-ignore)\b',
+    '//\s*(?:nosec|sensitive-ignore)\b',
+    '/\*\s*(?:nosec|sensitive-ignore)\s*\*/',
+    '<!--\s*(?:nosec|sensitive-ignore)\s*-->',
+    '%%\s*(?:nosec|sensitive-ignore)\b',
+    '--\s*(?:nosec|sensitive-ignore)\b',
     '^pass$',
     '^\.\.\.$',
     '^\.\.\s+',
@@ -199,4 +206,4 @@ patterns = [
     '^try:$',
     '^if\s+__name__\s*==\s*["\x27]__main__["\x27]\s*:?$',
 ]
-description = "单行结构标记/占位符/控制流关键词，不视为有效逻辑代码"
+description = "单行结构标记/占位符/控制流关键词/linter忽略标记（nosec/sensitive-ignore），不视为有效逻辑代码"

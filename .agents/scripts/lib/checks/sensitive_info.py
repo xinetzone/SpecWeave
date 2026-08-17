@@ -78,7 +78,7 @@ CODE_BLOCK_EXAMPLE_SKIP_TYPES = {PHONE, EMAIL, API_KEY, PASSWORD, INTERNAL_IP, D
 DEFAULT_EXCLUDE_DIRS = {
     "vendor", "external", "playground", "__pycache__", ".git",
     ".venv", "node_modules", ".pytest_cache", ".mypy_cache",
-    ".meta", "reports", ".trae", ".temp",
+    ".meta", "reports", ".trae", ".temp", ".cache",
 }
 
 SYSTEM_WIN_USERS = {
@@ -395,7 +395,7 @@ RULES: list[Rule] = [
         type=PHONE,
         severity=SEVERITY_HIGH,
         pattern=re.compile(
-            r"(?<![>\"'`\w\d])1[3-9]\d{9}(?![\w@\d])"
+            r"(?<![>\"'`\w\d.])1[3-9]\d{9}(?![\w@\d.])"
         ),
         placeholder_patterns=[
             re.compile(r"1[3-9]\d{9}\.example", re.IGNORECASE),

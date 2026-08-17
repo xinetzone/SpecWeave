@@ -262,81 +262,81 @@ jobs:
         working-directory: apps/docker-images/devcontainer-base/scripts
         run: |
           python - <<'PYEOF'
-import torch, onnx, os
-import numpy as np
+          import torch, onnx, os
+          import numpy as np
 
-MODEL_DIR = os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts/.ci_test_models")
-os.makedirs(MODEL_DIR, exist_ok=True)
+          MODEL_DIR = os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts/.ci_test_models")
+          os.makedirs(MODEL_DIR, exist_ok=True)
 
-# Model 1: Simple CNN (good for static QDQ quantization)
-class SimpleCNN(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.conv = torch.nn.Conv2d(3, 8, 3, padding=1)
-        self.pool = torch.nn.AdaptiveAvgPool2d(1)
-        self.fc = torch.nn.Linear(8, 10)
-    def forward(self, x):
-        x = self.conv(x)
-        x = torch.relu(x)
-        x = self.pool(x)
-        x = x.view(x.size(0), -1)
-        return self.fc(x)
+          # Model 1: Simple CNN (good for static QDQ quantization)
+          class SimpleCNN(torch.nn.Module):
+              def __init__(self):
+                  super().__init__()
+                  self.conv = torch.nn.Conv2d(3, 8, 3, padding=1)
+                  self.pool = torch.nn.AdaptiveAvgPool2d(1)
+                  self.fc = torch.nn.Linear(8, 10)
+              def forward(self, x):
+                  x = self.conv(x)
+                  x = torch.relu(x)
+                  x = self.pool(x)
+                  x = x.view(x.size(0), -1)
+                  return self.fc(x)
 
-torch.onnx.export(SimpleCNN().eval(), torch.randn(1,3,32,32),
-                  os.path.join(MODEL_DIR, 'cnn.onnx'),
-                  input_names=['input'], output_names=['output'],
-                  opset_version=17, do_constant_folding=True)
+          torch.onnx.export(SimpleCNN().eval(), torch.randn(1,3,32,32),
+                            os.path.join(MODEL_DIR, 'cnn.onnx'),
+                            input_names=['input'], output_names=['output'],
+                            opset_version=17, do_constant_folding=True)
 
-# Model 2: MLP (good for dynamic quantization)
-class MLP(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = torch.nn.Sequential(
-            torch.nn.Linear(128, 256), torch.nn.ReLU(),
-            torch.nn.Linear(256, 128), torch.nn.ReLU(),
-            torch.nn.Linear(128, 64), torch.nn.ReLU(),
-            torch.nn.Linear(64, 10),
-        )
-    def forward(self, x):
-        return self.net(x)
+          # Model 2: MLP (good for dynamic quantization)
+          class MLP(torch.nn.Module):
+              def __init__(self):
+                  super().__init__()
+                  self.net = torch.nn.Sequential(
+                      torch.nn.Linear(128, 256), torch.nn.ReLU(),
+                      torch.nn.Linear(256, 128), torch.nn.ReLU(),
+                      torch.nn.Linear(128, 64), torch.nn.ReLU(),
+                      torch.nn.Linear(64, 10),
+                  )
+              def forward(self, x):
+                  return self.net(x)
 
-torch.onnx.export(MLP().eval(), torch.randn(1,128),
-                  os.path.join(MODEL_DIR, 'mlp.onnx'),
-                  input_names=['input'], output_names=['output'],
-                  opset_version=17, do_constant_folding=True)
+          torch.onnx.export(MLP().eval(), torch.randn(1,128),
+                            os.path.join(MODEL_DIR, 'mlp.onnx'),
+                            input_names=['input'], output_names=['output'],
+                            opset_version=17, do_constant_folding=True)
 
-# Model 3: Small Transformer-like (attention pattern)
-class TinyTransformer(torch.nn.Module):
-    def __init__(self, d_model=64, nhead=4):
-        super().__init__()
-        self.q_proj = torch.nn.Linear(d_model, d_model)
-        self.k_proj = torch.nn.Linear(d_model, d_model)
-        self.v_proj = torch.nn.Linear(d_model, d_model)
-        self.out_proj = torch.nn.Linear(d_model, d_model)
-        self.nhead = nhead
-        self.d_k = d_model // nhead
-    def forward(self, x):
-        # x: (batch, seq, d_model)
-        q = self.q_proj(x)
-        k = self.k_proj(x)
-        v = self.v_proj(x)
-        # Simple scaled dot-product attention
-        import math
-        scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(self.d_k)
-        attn = torch.softmax(scores, dim=-1)
-        out = torch.matmul(attn, v)
-        return self.out_proj(out)
+          # Model 3: Small Transformer-like (attention pattern)
+          class TinyTransformer(torch.nn.Module):
+              def __init__(self, d_model=64, nhead=4):
+                  super().__init__()
+                  self.q_proj = torch.nn.Linear(d_model, d_model)
+                  self.k_proj = torch.nn.Linear(d_model, d_model)
+                  self.v_proj = torch.nn.Linear(d_model, d_model)
+                  self.out_proj = torch.nn.Linear(d_model, d_model)
+                  self.nhead = nhead
+                  self.d_k = d_model // nhead
+              def forward(self, x):
+                  # x: (batch, seq, d_model)
+                  q = self.q_proj(x)
+                  k = self.k_proj(x)
+                  v = self.v_proj(x)
+                  # Simple scaled dot-product attention
+                  import math
+                  scores = torch.matmul(q, k.transpose(-2, -1)) / math.sqrt(self.d_k)
+                  attn = torch.softmax(scores, dim=-1)
+                  out = torch.matmul(attn, v)
+                  return self.out_proj(out)
 
-torch.onnx.export(TinyTransformer().eval(), torch.randn(1,10,64),
-                  os.path.join(MODEL_DIR, 'transformer.onnx'),
-                  input_names=['input'], output_names=['output'],
-                  opset_version=17, do_constant_folding=True)
+          torch.onnx.export(TinyTransformer().eval(), torch.randn(1,10,64),
+                            os.path.join(MODEL_DIR, 'transformer.onnx'),
+                            input_names=['input'], output_names=['output'],
+                            opset_version=17, do_constant_folding=True)
 
-print(f'Test models generated in {MODEL_DIR}')
-for f in sorted(os.listdir(MODEL_DIR)):
-    size = os.path.getsize(os.path.join(MODEL_DIR, f))
-    print(f'  {f}: {size:,} bytes')
-PYEOF
+          print(f'Test models generated in {MODEL_DIR}')
+          for f in sorted(os.listdir(MODEL_DIR)):
+              size = os.path.getsize(os.path.join(MODEL_DIR, f))
+              print(f'  {f}: {size:,} bytes')
+          PYEOF
         env:
           PYTHONPATH: ${{ github.workspace }}/apps/docker-images/devcontainer-base/scripts:${PYTHONPATH}
           GITHUB_WORKSPACE: ${{ github.workspace }}
@@ -371,52 +371,52 @@ PYEOF
         working-directory: apps/docker-images/devcontainer-base/scripts
         run: |
           python - <<'PYEOF'
-import sys, os, json
-sys.path.insert(0, os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts"))
-from onnx_quantize_kit import auto_quantize, RandomCalibrationReader
+          import sys, os, json
+          sys.path.insert(0, os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts"))
+          from onnx_quantize_kit import auto_quantize, RandomCalibrationReader
 
-MODEL_DIR = os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts/.ci_test_models")
-model_path = os.path.join(MODEL_DIR, "transformer.onnx")
-output_path = os.path.join(MODEL_DIR, "transformer_quantized.onnx")
+          MODEL_DIR = os.path.join(os.environ["GITHUB_WORKSPACE"], "apps/docker-images/devcontainer-base/scripts/.ci_test_models")
+          model_path = os.path.join(MODEL_DIR, "transformer.onnx")
+          output_path = os.path.join(MODEL_DIR, "transformer_quantized.onnx")
 
-calib_reader = RandomCalibrationReader("input", (1, 10, 64), num_samples=10)
-result = auto_quantize(
-    model_path, output_path,
-    calib_reader=calib_reader,
-    verbose=True,
-)
+          calib_reader = RandomCalibrationReader("input", (1, 10, 64), num_samples=10)
+          result = auto_quantize(
+              model_path, output_path,
+              calib_reader=calib_reader,
+              verbose=True,
+          )
 
-print(f"\n=== auto_quantize result for Transformer ===")
-print(f"  Success: {result.success}")
-print(f"  Strategy used: {result.strategy_used}")
-print(f"  Model type: {result.model_type}")
-if result.accuracy:
-    print(f"  Cosine similarity: {result.accuracy.cosine_sim:.6f}")
-    print(f"  Max diff: {result.accuracy.max_diff:.6f}")
-if result.performance:
-    print(f"  FP32 latency: {result.performance.fp32_avg_ms:.2f}ms")
-    print(f"  INT8 latency: {result.performance.quantized_avg_ms:.2f}ms")
-    print(f"  Speedup: {result.speedup:.2f}x")
-print(f"  Size ratio: {result.size_ratio:.1%}")
-if result.fallback_triggered:
-    print(f"  Fallback triggered: {result.fallback_reason}")
+          print(f"\n=== auto_quantize result for Transformer ===")
+          print(f"  Success: {result.success}")
+          print(f"  Strategy used: {result.strategy_used}")
+          print(f"  Model type: {result.model_type}")
+          if result.accuracy:
+              print(f"  Cosine similarity: {result.accuracy.cosine_sim:.6f}")
+              print(f"  Max diff: {result.accuracy.max_diff:.6f}")
+          if result.performance:
+              print(f"  FP32 latency: {result.performance.fp32_avg_ms:.2f}ms")
+              print(f"  INT8 latency: {result.performance.quantized_avg_ms:.2f}ms")
+              print(f"  Speedup: {result.speedup:.2f}x")
+          print(f"  Size ratio: {result.size_ratio:.1%}")
+          if result.fallback_triggered:
+              print(f"  Fallback triggered: {result.fallback_reason}")
 
-# Save report
-report = result.to_dict()
-with open(os.path.join(MODEL_DIR, "transformer_report.json"), "w") as f:
-    json.dump(report, f, indent=2, default=str)
+          # Save report
+          report = result.to_dict()
+          with open(os.path.join(MODEL_DIR, "transformer_report.json"), "w") as f:
+              json.dump(report, f, indent=2, default=str)
 
-if not result.success:
-    print(f"\n::error::auto_quantize failed for Transformer model: {result.error}")
-    sys.exit(1)
+          if not result.success:
+              print(f"\n::error::auto_quantize failed for Transformer model: {result.error}")
+              sys.exit(1)
 
-# Accuracy gate
-if result.accuracy and result.accuracy.cosine_sim < 0.90:
-    print(f"\n::error::Transformer accuracy below safety threshold: cos_sim={result.accuracy.cosine_sim:.4f}")
-    sys.exit(1)
+          # Accuracy gate
+          if result.accuracy and result.accuracy.cosine_sim < 0.90:
+              print(f"\n::error::Transformer accuracy below safety threshold: cos_sim={result.accuracy.cosine_sim:.4f}")
+              sys.exit(1)
 
-print(f"\n✅ auto_quantize passed for Transformer model")
-PYEOF
+          print(f"\n✅ auto_quantize passed for Transformer model")
+          PYEOF
         env:
           PYTHONPATH: ${{ github.workspace }}/apps/docker-images/devcontainer-base/scripts:${PYTHONPATH}
           GITHUB_WORKSPACE: ${{ github.workspace }}
@@ -479,104 +479,104 @@ PYEOF
         working-directory: apps/docker-images/devcontainer-base/scripts
         run: |
           python - <<'PYEOF'
-import sys, os, time, json, tempfile
-sys.path.insert(0, ".")
-import torch
-import numpy as np
-import onnx
-from onnx_quantize_kit import (
-    auto_quantize, quantize_dynamic_simple, quantize_static_qdq,
-    quantize_fp16, benchmark_model, validate_accuracy,
-    RandomCalibrationReader, detect_model_type,
-)
+          import sys, os, time, json, tempfile
+          sys.path.insert(0, ".")
+          import torch
+          import numpy as np
+          import onnx
+          from onnx_quantize_kit import (
+              auto_quantize, quantize_dynamic_simple, quantize_static_qdq,
+              quantize_fp16, benchmark_model, validate_accuracy,
+              RandomCalibrationReader, detect_model_type,
+          )
 
-# Create a representative MLP model
-class MLP(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.net = torch.nn.Sequential(
-            torch.nn.Linear(512, 1024), torch.nn.ReLU(),
-            torch.nn.Linear(1024, 1024), torch.nn.ReLU(),
-            torch.nn.Linear(1024, 512), torch.nn.ReLU(),
-            torch.nn.Linear(512, 256), torch.nn.ReLU(),
-            torch.nn.Linear(256, 10),
-        )
-    def forward(self, x):
-        return self.net(x)
+          # Create a representative MLP model
+          class MLP(torch.nn.Module):
+              def __init__(self):
+                  super().__init__()
+                  self.net = torch.nn.Sequential(
+                      torch.nn.Linear(512, 1024), torch.nn.ReLU(),
+                      torch.nn.Linear(1024, 1024), torch.nn.ReLU(),
+                      torch.nn.Linear(1024, 512), torch.nn.ReLU(),
+                      torch.nn.Linear(512, 256), torch.nn.ReLU(),
+                      torch.nn.Linear(256, 10),
+                  )
+              def forward(self, x):
+                  return self.net(x)
 
-tmpdir = tempfile.mkdtemp()
-fp32_path = os.path.join(tmpdir, "mlp_fp32.onnx")
-model = MLP().eval()
-torch.onnx.export(model, torch.randn(1, 512), fp32_path,
-                  input_names=["input"], output_names=["output"],
-                  opset_version=17, do_constant_folding=True)
+          tmpdir = tempfile.mkdtemp()
+          fp32_path = os.path.join(tmpdir, "mlp_fp32.onnx")
+          model = MLP().eval()
+          torch.onnx.export(model, torch.randn(1, 512), fp32_path,
+                            input_names=["input"], output_names=["output"],
+                            opset_version=17, do_constant_folding=True)
 
-print("=" * 60)
-print("PERFORMANCE BENCHMARK: FP32 vs INT8 vs FP16")
-print("=" * 60)
+          print("=" * 60)
+          print("PERFORMANCE BENCHMARK: FP32 vs INT8 vs FP16")
+          print("=" * 60)
 
-# FP32 baseline
-fp32_perf = benchmark_model(fp32_path, (1, 512), num_runs=200, num_warmup=20)
-print(f"FP32:  {fp32_perf.fp32_avg_ms:.2f}ms avg, size={fp32_perf.fp32_size_kb:.0f}KB")
+          # FP32 baseline
+          fp32_perf = benchmark_model(fp32_path, (1, 512), num_runs=200, num_warmup=20)
+          print(f"FP32:  {fp32_perf.fp32_avg_ms:.2f}ms avg, size={fp32_perf.fp32_size_kb:.0f}KB")
 
-# Dynamic INT8
-int8_path = os.path.join(tmpdir, "mlp_int8.onnx")
-quantize_dynamic_simple(fp32_path, int8_path)
-int8_perf = benchmark_model(int8_path, (1, 512), num_runs=200, num_warmup=20)
-int8_acc = validate_accuracy(fp32_path, int8_path, (1, 512))
-print(f"INT8:  {int8_perf.quantized_avg_ms:.2f}ms avg, size={int8_perf.quantized_size_kb:.0f}KB, "
-      f"speedup={int8_perf.speedup:.2f}x, cos_sim={int8_acc.cosine_sim:.6f}")
+          # Dynamic INT8
+          int8_path = os.path.join(tmpdir, "mlp_int8.onnx")
+          quantize_dynamic_simple(fp32_path, int8_path)
+          int8_perf = benchmark_model(int8_path, (1, 512), num_runs=200, num_warmup=20)
+          int8_acc = validate_accuracy(fp32_path, int8_path, (1, 512))
+          print(f"INT8:  {int8_perf.quantized_avg_ms:.2f}ms avg, size={int8_perf.quantized_size_kb:.0f}KB, "
+                f"speedup={int8_perf.speedup:.2f}x, cos_sim={int8_acc.cosine_sim:.6f}")
 
-# FP16
-fp16_path = os.path.join(tmpdir, "mlp_fp16.onnx")
-quantize_fp16(fp32_path, fp16_path)
-fp16_perf = benchmark_model(fp16_path, (1, 512), num_runs=200, num_warmup=20)
-fp16_acc = validate_accuracy(fp32_path, fp16_path, (1, 512))
-print(f"FP16:  {fp16_perf.quantized_avg_ms:.2f}ms avg, size={fp16_perf.quantized_size_kb:.0f}KB, "
-      f"speedup={fp16_perf.speedup:.2f}x, cos_sim={fp16_acc.cosine_sim:.6f}")
+          # FP16
+          fp16_path = os.path.join(tmpdir, "mlp_fp16.onnx")
+          quantize_fp16(fp32_path, fp16_path)
+          fp16_perf = benchmark_model(fp16_path, (1, 512), num_runs=200, num_warmup=20)
+          fp16_acc = validate_accuracy(fp32_path, fp16_path, (1, 512))
+          print(f"FP16:  {fp16_perf.quantized_avg_ms:.2f}ms avg, size={fp16_perf.quantized_size_kb:.0f}KB, "
+                f"speedup={fp16_perf.speedup:.2f}x, cos_sim={fp16_acc.cosine_sim:.6f}")
 
-# Size comparison
-fp32_size = os.path.getsize(fp32_path)
-int8_size = os.path.getsize(int8_path)
-fp16_size = os.path.getsize(fp16_path)
-print(f"\nSize reduction: INT8={int8_size/fp32_size:.1%}, FP16={fp16_size/fp32_size:.1%}")
+          # Size comparison
+          fp32_size = os.path.getsize(fp32_path)
+          int8_size = os.path.getsize(int8_path)
+          fp16_size = os.path.getsize(fp16_path)
+          print(f"\nSize reduction: INT8={int8_size/fp32_size:.1%}, FP16={fp16_size/fp32_size:.1%}")
 
-# Write benchmark report to /tmp for artifact upload
-report = {
-    "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-    "python": sys.version.split()[0],
-    "onnxruntime": __import__("onnxruntime").__version__,
-    "onnx": onnx.__version__,
-    "torch": torch.__version__,
-    "model": "MLP(512→1024→1024→512→256→10)",
-    "input_shape": [1, 512],
-    "results": {
-        "fp32": {"avg_ms": fp32_perf.fp32_avg_ms, "size_kb": fp32_perf.fp32_size_kb},
-        "int8_dynamic": {
-            "avg_ms": int8_perf.quantized_avg_ms,
-            "size_kb": int8_perf.quantized_size_kb,
-            "speedup": int8_perf.speedup,
-            "cosine_sim": float(int8_acc.cosine_sim),
-            "max_diff": float(int8_acc.max_diff),
-        },
-        "fp16": {
-            "avg_ms": fp16_perf.quantized_avg_ms,
-            "size_kb": fp16_perf.quantized_size_kb,
-            "speedup": fp16_perf.speedup,
-            "cosine_sim": float(fp16_acc.cosine_sim),
-            "max_diff": float(fp16_acc.max_diff),
-        },
-    },
-}
+          # Write benchmark report to /tmp for artifact upload
+          report = {
+              "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+              "python": sys.version.split()[0],
+              "onnxruntime": __import__("onnxruntime").__version__,
+              "onnx": onnx.__version__,
+              "torch": torch.__version__,
+              "model": "MLP(512→1024→1024→512→256→10)",
+              "input_shape": [1, 512],
+              "results": {
+                  "fp32": {"avg_ms": fp32_perf.fp32_avg_ms, "size_kb": fp32_perf.fp32_size_kb},
+                  "int8_dynamic": {
+                      "avg_ms": int8_perf.quantized_avg_ms,
+                      "size_kb": int8_perf.quantized_size_kb,
+                      "speedup": int8_perf.speedup,
+                      "cosine_sim": float(int8_acc.cosine_sim),
+                      "max_diff": float(int8_acc.max_diff),
+                  },
+                  "fp16": {
+                      "avg_ms": fp16_perf.quantized_avg_ms,
+                      "size_kb": fp16_perf.quantized_size_kb,
+                      "speedup": fp16_perf.speedup,
+                      "cosine_sim": float(fp16_acc.cosine_sim),
+                      "max_diff": float(fp16_acc.max_diff),
+                  },
+              },
+          }
 
-bench_path = "/tmp/benchmark_report.json"
-with open(bench_path, "w") as f:
-    json.dump(report, f, indent=2)
-print(f"\nBenchmark report saved to {bench_path}")
+          bench_path = "/tmp/benchmark_report.json"
+          with open(bench_path, "w") as f:
+              json.dump(report, f, indent=2)
+          print(f"\nBenchmark report saved to {bench_path}")
 
-import shutil
-shutil.rmtree(tmpdir, ignore_errors=True)
-PYEOF
+          import shutil
+          shutil.rmtree(tmpdir, ignore_errors=True)
+          PYEOF
         env:
           PYTHONPATH: ${{ github.workspace }}/apps/docker-images/devcontainer-base/scripts:${PYTHONPATH}
 
