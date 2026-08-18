@@ -1,5 +1,5 @@
 ---
-id: python314-context-monitoring-annotation-wiki-05-annotationlib
+id: python314-stdlib-wiki-05-annotationlib
 title: "Python 3.14 标准库 annotationlib 全面详解"
 date: "2026-08-18"
 category: "learning"
@@ -304,4 +304,4 @@ print(forward_ref.evaluate())                       # <class 'int'>
 ## 章节导航
 
 - [上一章：sys.monitoring](04-sys-monitoring.md) →
-- [下一章：跨模块综合分析](06-cross-module-analysis.md) →
+- [下一章：dataclasses](06-dataclasses.md) →

@@ -1,5 +1,5 @@
 ---
-id: python314-context-monitoring-annotation-wiki-03-contextvars
+id: python314-stdlib-wiki-03-contextvars
 title: "Python 3.14 标准库 contextvars 全面详解"
 date: "2026-08-18"
 category: "learning"

@@ -1,5 +1,5 @@
 ---
-id: python314-context-monitoring-annotation-wiki-04-sys-monitoring
+id: python314-stdlib-wiki-04-sys-monitoring
 title: "Python 3.14 标准库 sys.monitoring 全面详解"
 date: "2026-08-18"
 category: "learning"

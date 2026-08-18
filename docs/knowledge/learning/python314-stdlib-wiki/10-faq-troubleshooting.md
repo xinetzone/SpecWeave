@@ -1,5 +1,5 @@
 ---
-id: python314-context-monitoring-annotation-wiki-08-faq-troubleshooting
+id: python314-stdlib-wiki-10-faq-troubleshooting
 title: "Python 3.14 标准库教程 — FAQ 与排错"
 date: "2026-08-18"
 category: "learning"
@@ -8,9 +8,9 @@ tags: ["python", "python-3.14", "stdlib", "faq", "troubleshooting", "tutorial"]
 
 # Python 3.14 标准库教程 — FAQ 与排错
 
-> 一句话摘要：本章以问答形式解答 `sys.monitoring`、`contextvars`、`annotationlib`、`ExitStack` 及版本不匹配这几类高频疑问，并给出常见错误信息与对策表，帮助你快速定位并解决问题。
+> 一句话摘要：本章以问答形式，分"运行时动态机制""`dataclasses`""`traceback`"三组，集中解答六模块在使用中的高频疑问，并给出常见错误信息与对策表，帮助你快速定位并解决问题。
 
-## FAQ
+## 一、运行时动态机制（`contextlib` / `contextvars` / `sys.monitoring` / `annotationlib`）常见问题
 
 ### Q1：`sys.monitoring` 有哪些线程/数量限制？性能开销到底大不大？
 
@@ -70,9 +70,102 @@ tags: ["python", "python-3.14", "stdlib", "faq", "troubleshooting", "tutorial"]
 
 对策：动手前先跑 `sys.version_info` 检查版本（见 [01 版本背景](01-version-prerequisites.md)）；或对 `annotationlib` 使用 `typing-extensions` 的 `get_annotations()` 向后移植。
 
-## 常见错误信息与对策表
+## 二、`dataclasses` 常见问题
 
-| 错误信息（典型形态） | 可能原因 | 对策 |
+### Q1：为什么给字段写 `x: list = []` 会报错？
+
+**现象**：
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class C:
+    x: list = []   # ValueError: mutable default <class 'list'> for field x is not allowed
+```
+
+**原因**：普通 Python 会把默认值存在类属性里，导致所有实例共享同一个可变对象；`@dataclass` 在检测到不可哈希（通常即"可变"）的默认值时直接抛出 `ValueError`（3.11 起统一按"不允许不可哈希对象"判断）。
+
+**对策**：改用 `field(default_factory=list)`，让每个实例在需要默认值时都调用一次工厂函数，生成全新的对象。
+
+```python
+from dataclasses import dataclass, field
+
+@dataclass
+class C:
+    x: list = field(default_factory=list)
+```
+
+### Q2：为什么我的 `frozen=True` 数据类在 `__post_init__` 里赋值会报错？
+
+**现象**：`frozen=True` 会生成只读的 `__setattr__`，普通赋值抛 `FrozenInstanceError`。
+
+**对策**：在 `__post_init__` 内用 `object.__setattr__(self, name, value)` 完成一次性初始化（绕过冻结限制）。这是官方文档推荐的写法。
+
+### Q3：为什么我定义了 `hash=False` 的字段，但比较仍然用到了它？
+
+**原因**：`hash=False` 只影响字段是否参与生成 `__hash__()`，**不影响** `__eq__` 等比较方法；只要 `compare=True`，该字段仍参与比较。要同时排除比较与哈希，应同时设置 `compare=False`。
+
+### Q4：`slots=True` 之后，为什么 `__slots__` 里看不到继承来的字段？
+
+**现象**：某字段名若已包含在基类的 `__slots__` 中，它不会出现在派生子类新生成的 `__slots__` 里（3.11 起），以避免覆写。
+
+**对策**：不要用 `__slots__` 读取字段名，一律改用 `fields()`。
+
+### Q5：`replace()` 对 `init=False` 字段的行为是什么？
+
+**说明**：`replace()` 新对象通过调用 `__init__()` 创建，`init=False` 的字段不在参数列表里，也不会从源对象拷贝，而是在 `__post_init__`（若有）里初始化。若 `changes` 里出现 `init=False` 的字段名，会抛 `ValueError`。建议尽量少用 `init=False` 字段。
+
+### Q6：`order=True` 时为什么报 `ValueError` / `TypeError`？
+
+- `order=True` 且 `eq=False` → 抛 `ValueError`。
+- 类里已经定义了 `__lt__` 等任一比较方法 → 抛 `TypeError`。
+
+### Q7：`dataclasses` 什么时候会真正检查字段的类型注解？
+
+**说明**：仅在识别 `ClassVar` 与 `InitVar` 这两类伪字段时会检查注解；除此之外，`@dataclass` 不校验你写的是 `int` 还是别的什么——类型标注主要供类型检查器与 IDE 使用。
+
+## 三、`traceback` 常见问题
+
+### Q1：`print_tb` 的 `limit` 和 `sys.tracebacklimit` 是一个东西吗？
+
+**不是**。`print_tb`/`print_stack` 的 `limit`：正数表示"从调用点起至多 N 条"，负数表示"最后 N 条"；而 `sys.tracebacklimit` 的语义与之不同（负的 `limit` 对应于正的 `sys.tracebacklimit`，正的 `limit` 的效果无法用 `sys.tracebacklimit` 表达）。不要想当然互相套用。
+
+### Q2：为什么我把异常对象存进列表，一段时间后内存涨得厉害？
+
+**原因**：异常对象通过 `__traceback__` 链到整条栈帧，栈帧又引用局部变量，形成庞大的对象图；长期持有异常对象会拖住这些对象不被回收。
+
+**对策**：需要"稍后再打印"时，用 `TracebackException.from_exception(exc)`（配 `compact=True` 更省）保存轻量表示，而非保存异常对象本身。
+
+### Q3：`capture_locals=True` 时为什么偶尔报异常或结果异常？
+
+**原因**：`capture_locals=True` 会对每个局部变量调用 `repr()`，某些对象的 `__repr__` 可能抛异常。3.12 起这些异常不再传播，但更稳妥的做法是按需开启。
+
+### Q4：在不处于 `except` 块时调用 `print_exc()` 会怎样？
+
+**原因**：`print_exc()`/`format_exc()` 依赖 `sys.exception()`（当前正在处理的异常），在 `except` 块之外调用可能输出空或产生非预期结果。
+
+**对策**：此时应改用 `print_stack()`/`format_stack()`/`extract_stack()` 获取当前调用栈。
+
+### Q5：`TracebackException.exc_type` 还能用吗？
+
+**已弃用**：3.13 起 `exc_type` 已弃用，请改用 `exc_type_str`（字符串形式），这样也避免了持有异常类对象引用带来的额外成本。
+
+### Q6：为什么回溯输出里冒出了 ANSI 颜色代码？
+
+**原因**：3.13 起 `traceback` 输出默认带颜色。
+
+**对策**：写入日志文件或非终端环境时，可用环境变量（如 `PYTHON_COLORS=0`）或 `NO_COLOR` 关闭。
+
+### Q7：异常组（ExceptionGroup）的内容为什么被截断了？
+
+**原因**：`TracebackException` 的 `max_group_width`（默认 15）与 `max_group_depth`（默认 10）会截断异常组的格式化输出。
+
+**对策**：诊断深层嵌套异常组时，可按需调大这两个参数。
+
+## 四、常见错误信息与对策表
+
+| 报错 / 症状 | 常见成因 | 对策 |
 |---|---|---|
 | `ModuleNotFoundError: No module named 'sys.monitoring'` | 误用 `import sys.monitoring` 或 `from sys.monitoring import events` | 改为 `import sys` 后使用 `sys.monitoring` / `sys.monitoring.events` |
 | `ModuleNotFoundError: No module named 'annotationlib'` | Python 版本 < 3.14 | 升级到 3.14，或用 `typing-extensions` 的 `get_annotations()` |
@@ -85,10 +178,17 @@ tags: ["python", "python-3.14", "stdlib", "faq", "troubleshooting", "tutorial"]
 | `LookupError` | `ContextVar.get()` 无默认值且变量未设置 | 提供 `default` 或先 `set` |
 | `KeyError`（`context[var]`） | `Context` 中无该变量 | 用 `context.get(var, default)` |
 | `NameError`（注解 `VALUE` 求值） | 前向引用名字尚未定义 | 改用 `Format.FORWARDREF` 或待名字就绪后再求值 |
+| `ValueError: mutable default ... for field ... is not allowed` | 字段默认可变对象 | 改用 `field(default_factory=...)` |
+| `FrozenInstanceError` | 对 `frozen=True` 实例赋值 | 用 `object.__setattr__` 在 `__post_init__` 初始化 |
+| `TypeError: non-default argument follows default argument` | 无默认值字段排在默认值字段之后 | 调整字段顺序或用 `kw_only` |
+| `ValueError` / `TypeError`（order 相关） | `order=True` 但 `eq=False` 或类已有比较方法 | 检查 `eq` 与已有方法 |
+| 回溯为空 / `print_exc` 无输出 | 在 `except` 块之外调用 | 改用 `print_stack` / `extract_stack` |
+| 回溯输出带 ANSI 颜色 | 3.13 起默认彩色 | 设 `PYTHON_COLORS=0` 或 `NO_COLOR` |
+| 异常组内容被截断 | 超过 `max_group_width`/`max_group_depth` | 调大对应参数 |
 
-> 更多反模式与注意事项，见各章"注意事项 / 反模式"小节：`contextlib`（02 章第九节）、`contextvars`（03 章第八节）、`sys.monitoring`（04 章第十一节）、`annotationlib`（05 章末）。
+> 更多反模式与注意事项，见各章"注意事项 / 反模式"小节：`contextlib`（02 章第九节）、`contextvars`（03 章第八节）、`sys.monitoring`（04 章第十一节）、`annotationlib`（05 章末）、`dataclasses`（06 章第十三节）、`traceback`（07 章末）。
 
-## 章节导航
+## 五、章节导航
 
-- [上一章：综合使用示例](07-usage-examples.md) ←
-- [下一章：总结与资源](09-summary-resources.md) →
+- [上一章：综合使用示例](09-usage-examples.md) ←
+- [下一章：总结与资源](11-summary-resources.md) →

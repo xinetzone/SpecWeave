@@ -1,5 +1,5 @@
 ---
-id: python314-context-monitoring-annotation-wiki-02-contextlib
+id: python314-stdlib-wiki-02-contextlib
 title: "Python 3.14 标准库 contextlib 全面详解"
 date: "2026-08-18"
 category: "learning"
