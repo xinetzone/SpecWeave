@@ -18,6 +18,7 @@ ai-engineering/README
 | 分类 | 说明 | 入门推荐 |
 |------|------|---------|
 | **[Agent 平台与工具学习 Wiki](learning/03-agent-platforms-tools/README.md)** | 主流 AI Agent 开发平台与工具的系统学习教程（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个 Wiki） | [DeepSeek Harness 完全指南](learning/03-agent-platforms-tools/deepseek-harness-wiki/00-overview.md) |
+| **[Python 3.14 标准库](learning/python314-context-monitoring-annotation-wiki/00-overview.md)** | Python 3.14 标准库运行时动态机制学习（contextlib / contextvars / sys.monitoring / annotationlib） | [概述](learning/python314-context-monitoring-annotation-wiki/00-overview.md) |
 | **[AI Engineering](ai-engineering/README.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/loop-engineering-knowledge-base.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/ai-agent-atomic-design-analysis.md) |
