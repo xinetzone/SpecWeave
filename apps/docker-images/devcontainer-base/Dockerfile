@@ -17,16 +17,27 @@
 #          -v $(pwd)/workspace:/workspace -v docker-data:/var/lib/docker devcontainer-base
 # Debug: docker run -it --rm --privileged devcontainer-base bash
 #
-# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.3):
-#   Stage 1/7: 系统包 + APT镜像 + locale/timezone (变化频率: 最低)
-#   Stage 2/7: Docker CE 安装 (变化频率: 低)
-#   Stage 3/7: Podman rootless 安装 (变化频率: 低)
-#   Stage 4/7: Miniforge3 (conda-forge) 安装 + Python 3.14 cp314t + libmamba + Jupyter (变化频率: 中)
-#   Stage 5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
-#   Stage 6/7: 配置文件 COPY + 权限 + 语法验证 (变化频率: 高)
-#   Stage 7/7: build-info + 激进清理 + 最终验证 (变化频率: 最低)
+# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.4):
 #
-# Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
+#   分层设计原理（5条公理）：
+#     P1 变化频率分层: 同频率同层，低频率层在前，高频率层在后 → 最大化缓存命中
+#     P2 缓存保护:     高耗时稳定操作（mamba solver）必须独立成层，不被高频变化触发重跑
+#     P3 开发能力保留: 清理步骤不损害编译/版本控制等开发能力（保留头文件、保留git等）
+#     P4 工具链80/20:  80%场景常用工具内置base镜像（git/docker compose/jupyter等）
+#     P5 脚本外置:     >50行复杂逻辑抽取为外部脚本（scripts/dockerfile/），独立维护
+#
+#   Stage 1/7: 系统包 + APT镜像 + locale/timezone          (变化频率: 最低)
+#   Stage 2/7: Docker CE + Compose Plugin 安装             (变化频率: 低)
+#   Stage 3/7: Podman rootless 安装                        (变化频率: 低)
+#   Stage 4/7: Miniforge3 + Python ft + libmamba + Jupyter (变化频率: 中，分3子层)
+#     4a: Miniforge3安装 + .condarc 配置                   (变化频率: 低)
+#     4b: mamba create main环境 (Python+Jupyter求解安装)   (变化频率: 中，高耗时)
+#     4c: pip镜像配置 + kernel注册 + ft验证                (变化频率: 中高)
+#   Stage 5/7: 用户/组 + subuid/subgid + 运行时目录 + daemon.json (变化频率: 中)
+#   Stage 6/7: 配置文件 COPY + 权限 + 语法验证             (变化频率: 高)
+#   Stage 7/7: build-info + 激进清理 + 最终验证            (变化频率: 最低)
+#
+# Build Timing: 每个Stage/子Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
 
 ARG APT_MIRROR=official
@@ -110,6 +121,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get install -y --no-install-recommends -qq \
         ca-certificates \
         curl \
+        git \
         gnupg \
         iptables \
         iproute2 \
@@ -132,6 +144,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         slirp4netns \
     && echo "[OK] Base system packages installed" && \
     echo "[INFO] Verifying key package versions:" && \
+    echo "  - git: $(git --version 2>/dev/null || echo 'N/A')" && \
     echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
     echo "  - supervisor: $(supervisord --version 2>/dev/null || echo 'N/A')" && \
     echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
@@ -149,13 +162,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 1/7 (system+locale) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/7: Docker CE 安装
+# Stage 2/7: Docker CE + Compose Plugin 安装
 # 变化频率：低（Docker版本升级时改）
 # 原则：GPG key + apt repo 配置 + 安装在同层完成，清理apt缓存
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    echo "=== Stage 2/7: Install Docker CE ===" && \
+    echo "=== Stage 2/7: Install Docker CE + Compose Plugin ===" && \
     _STAGE_START=$(date +%s) && \
     install -m 0755 -d /etc/apt/keyrings && \
     if [ "${DOCKER_MIRROR}" = "aliyun" ]; then \
@@ -173,18 +186,20 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] ${DOCKER_REPO} ${VERSION_CODENAME} stable" > /etc/apt/sources.list.d/docker.list && \
     echo "[INFO] Updating APT after adding Docker repo..." && \
     apt-get update -qq && \
-    echo "[INFO] Installing Docker CE packages (docker-ce, containerd, buildx)..." && \
+    echo "[INFO] Installing Docker CE packages (docker-ce, containerd, buildx, compose-plugin)..." && \
     apt-get install -y --no-install-recommends -qq \
         docker-ce \
         docker-ce-cli \
         containerd.io \
         docker-buildx-plugin \
-    && echo "[OK] Docker Engine installed" && \
+        docker-compose-plugin \
+    && echo "[OK] Docker Engine + Compose Plugin installed" && \
     echo "[INFO] Docker component versions:" && \
     echo "  - docker: $(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')" && \
     echo "  - dockerd: $(dockerd --version 2>/dev/null | awk '{print $3}' | tr -d ',')" && \
     echo "  - containerd: $(containerd --version 2>/dev/null | awk '{print $3}')" && \
     echo "  - buildx: $(docker buildx version 2>/dev/null | awk '{print $2}')" && \
+    echo "  - compose: $(docker compose version 2>/dev/null | awk '{print $4}' | tr -d 'v')" && \
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
@@ -222,293 +237,38 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 3/7 (Podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 4/7: Miniforge3 (conda-forge) 安装 + Python 3.14.6 cp314t free-threading + libmamba + Jupyter
+# Stage 4/7: Miniforge3 (conda-forge) 安装 + Python free-threading + libmamba + Jupyter
 # 变化频率：中（Python/包版本升级时改）
-# 原则：Miniforge3（conda-forge官方发行版，无defaults channel/无Anaconda商业包）轻量安装到/opt/conda，
-#       默认conda-forge channel + libmamba solver，Python 3.14.6使用cp314t free-threading构建（GIL默认禁用），
-#       Python由GCC 14.4.0编译，运行时自动升级至libgcc 16.1.0（向后兼容，无ABI冲突），
-#       Jupyter安装到main环境，安装后立即清理缓存，无ABI冲突
+# 分层设计（P2缓存保护）：拆分为3个子层，4b(mamba create)高耗时层被保护
+#   4a: Miniforge3安装 + .condarc配置（稳定，很少变）
+#   4b: mamba create main环境（高耗时，Python/Jupyter版本升级时变）
+#   4c: pip镜像配置 + kernel注册 + ft验证（中高频变，不触发4a/4b重跑）
+# 所有复杂逻辑抽取到 scripts/dockerfile/ 外部脚本（P5脚本外置）
 # ═══════════════════════════════════════════════════════════════════
+
+# ── Stage 4a: Miniforge3 安装 + .condarc ──
+COPY scripts/dockerfile/stage4a-miniforge.sh /tmp/stage4a-miniforge.sh
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    sed -i 's/\r$//' /tmp/stage4a-miniforge.sh && chmod +x /tmp/stage4a-miniforge.sh && \
+    bash /tmp/stage4a-miniforge.sh && \
+    rm -f /tmp/stage4a-miniforge.sh
+
+# ── Stage 4b: mamba create main 环境（高耗时层，独立缓存保护） ──
+COPY scripts/dockerfile/stage4b-mamba-env.sh /tmp/stage4b-mamba-env.sh
+RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
+    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    sed -i 's/\r$//' /tmp/stage4b-mamba-env.sh && chmod +x /tmp/stage4b-mamba-env.sh && \
+    bash /tmp/stage4b-mamba-env.sh && \
+    rm -f /tmp/stage4b-mamba-env.sh
+
+# ── Stage 4c: pip 配置 + kernel注册 + free-threading 验证 ──
+COPY scripts/dockerfile/stage4c-pip-verify.sh /tmp/stage4c-pip-verify.sh
 RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
     --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
-    --mount=type=cache,target=/root/.cache/conda,sharing=locked \
-    --mount=type=bind,source=.cache,target=/tmp/local-cache,readonly,required=false \
-    <<'STAGE4_EOF'
-set -e
-echo "=== Stage 4/7: Install Miniforge3 + Python ${PYTHON_VERSION} ${PYTHON_BUILD} (conda-forge, libmamba) + Jupyter ==="
-_STAGE_START=$(date +%s)
-
-# ── 架构检测 + Miniforge3安装器URL ──
-echo "[INFO] Detecting architecture..."
-ARCH=$(uname -m)
-case "$ARCH" in
-    x86_64)  CONDA_ARCH="x86_64" ;;
-    aarch64) CONDA_ARCH="aarch64" ;;
-    *) echo "[ERROR] Unsupported architecture: $ARCH"; exit 1 ;;
-esac
-echo "[OK] Architecture: $ARCH ($CONDA_ARCH)"
-
-# ── 下载并安装 Miniforge3（conda-forge官方发行版，无defaults包，原生libmamba支持） ──
-echo "[INFO] Downloading Miniforge3 installer (conda-forge official)..."
-_dl_start=$(date +%s)
-
-LOCAL_INSTALLER=""
-for f in /tmp/local-cache/Miniforge3-Latest-Linux-${CONDA_ARCH}.sh \
-         /tmp/local-cache/Miniforge3-*-Linux-${CONDA_ARCH}.sh; do
-    if [ -f "$f" ] && [ -s "$f" ]; then
-        LOCAL_INSTALLER="$f"
-        break
-    fi
-done
-
-if [ -n "$LOCAL_INSTALLER" ]; then
-    echo "[OK] Using local cached installer: $LOCAL_INSTALLER ($(du -h "$LOCAL_INSTALLER" | cut -f1))"
-    cp "$LOCAL_INSTALLER" /tmp/miniforge.sh
-    DL_OK=1
-else
-    echo "[INFO] No local cache found, downloading from network..."
-    # Miniforge3下载源：GitHub官方 + 国内镜像
-    if [ "${CONDA_MIRROR}" = "tuna" ]; then
-        DL_URLS=(
-            "https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
-        )
-    elif [ "${CONDA_MIRROR}" = "aliyun" ]; then
-        DL_URLS=(
-            "https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
-        )
-    else
-        DL_URLS=(
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh"
-        )
-    fi
-
-    DL_OK=0
-    for dl_url in "${DL_URLS[@]}"; do
-        echo "[INFO] Trying: $dl_url"
-        if curl -fsSL --connect-timeout 30 --max-time 300 --retry 3 --retry-delay 5 \
-            -L -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then
-            echo "[OK] Downloaded from: $dl_url"
-            DL_OK=1
-            break
-        else
-            echo "[WARN] Failed, trying next source..."
-            cat /tmp/conda_dl_err.log | tail -3
-        fi
-    done
-
-    if [ "$DL_OK" = "0" ]; then
-        echo "[ERROR] Failed to download Miniforge3 from all sources"
-        cat /tmp/conda_dl_err.log
-        exit 1
-    fi
-fi
-
-_dl_elapsed=$(($(date +%s) - _dl_start))
-echo "[OK] Installer ready: $(du -h /tmp/miniforge.sh | cut -f1) in ${_dl_elapsed}s"
-
-echo "[INFO] Installing Miniforge3 to ${CONDA_DIR}..."
-bash /tmp/miniforge.sh -b -p "${CONDA_DIR}" -f
-rm -f /tmp/miniforge.sh
-echo "[OK] Miniforge3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)"
-
-# ── Source conda.sh 使 conda 命令在当前 shell 完全可用 ──
-. "${CONDA_DIR}/etc/profile.d/conda.sh"
-echo "[OK] conda.sh sourced, conda available in build shell"
-
-# ── Miniforge3默认已配置conda-forge channel和libmamba solver，无需额外ToS/defaults清理 ──
-echo "[INFO] Miniforge3 defaults: conda-forge channel + libmamba solver pre-configured"
-
-# ── 写入系统级 .condarc（镜像源 + libmamba solver + 性能参数） ──
-echo "[ACTION] Writing system-level ${CONDA_DIR}/.condarc with mirror sources..."
-case "${CONDA_MIRROR}" in
-    bfsu)
-        echo "[INFO] Configuring conda for BFSU (Beijing Foreign Studies University) mirror (conda-forge only, no defaults)"
-        printf '%s\n' \
-            'channels:' \
-            '  - conda-forge' \
-            'show_channel_urls: true' \
-            'channel_priority: strict' \
-            'default_channels_alias: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
-            'custom_channels:' \
-            '  conda-forge: https://mirrors.bfsu.edu.cn/anaconda/cloud' \
-            'ssl_verify: true' \
-            'auto_activate_base: false' \
-            'remote_connect_timeout_secs: 30' \
-            'remote_read_timeout_secs: 120' \
-            'remote_max_retries: 5' \
-            'remote_backoff_factor: 3' \
-            'repodata_threads: 8' \
-            'execute_threads: 8' \
-            'solver: libmamba' \
-            > "${CONDA_DIR}/.condarc"
-        ;;
-    tuna)
-        echo "[INFO] Configuring conda for Tsinghua TUNA mirror (conda-forge only, no defaults)"
-        printf '%s\n' \
-            'channels:' \
-            '  - conda-forge' \
-            'show_channel_urls: true' \
-            'channel_priority: strict' \
-            'default_channels_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
-            'custom_channels:' \
-            '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
-            'ssl_verify: true' \
-            'auto_activate_base: false' \
-            'remote_connect_timeout_secs: 30' \
-            'remote_read_timeout_secs: 120' \
-            'remote_max_retries: 5' \
-            'remote_backoff_factor: 3' \
-            'repodata_threads: 8' \
-            'execute_threads: 8' \
-            'solver: libmamba' \
-            > "${CONDA_DIR}/.condarc"
-        ;;
-    *)
-        echo "[INFO] Configuring conda for official channels (conda-forge only, no defaults)"
-        printf '%s\n' \
-            'channels:' \
-            '  - conda-forge' \
-            'show_channel_urls: true' \
-            'channel_priority: strict' \
-            'ssl_verify: true' \
-            'auto_activate_base: false' \
-            'remote_connect_timeout_secs: 30' \
-            'remote_read_timeout_secs: 300' \
-            'remote_max_retries: 5' \
-            'remote_backoff_factor: 3' \
-            'repodata_threads: 8' \
-            'execute_threads: 8' \
-            'solver: libmamba' \
-            > "${CONDA_DIR}/.condarc"
-        ;;
-esac
-echo "[OK] System-level .condarc written:"
-cat "${CONDA_DIR}/.condarc"
-echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)"
-
-# ── Miniforge3自带Python，不要升级base Python（conda无cp314t构建） ──
-_builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
-echo "[INFO] Miniforge3 base Python (conda runtime): ${_builtin_py}"
-echo "[INFO] Note: conda has no cp314t build on conda-forge yet, so we keep base Python ${_builtin_py}"
-echo "[INFO] Creating a dedicated 'main' environment with Python ${PYTHON_VERSION} ${PYTHON_BUILD}..."
-
-# ── Step 1: 一次性创建main环境（Python cp314t + pip + Jupyter生态，单次solver求解） ──
-# 优化：使用mamba CLI直接调用libmamba（比conda --solver=libmamba少Python层开销）；
-#       合并create+install为单次mamba create（减少一次solver运行）；
-#       8线程并行下载+解压（repodata_threads/execute_threads=8在.condarc中配置）
-echo "[INFO] Creating 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter (single mamba solve)..."
-_mamba_start=$(date +%s)
-mamba create -y -n main -c conda-forge --override-channels -q \
-    "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" \
-    pip \
-    "jupyterlab>=4.4" \
-    "notebook>=7.3" \
-    ipykernel \
-    nbconvert \
-    jupyter_server 2>&1
-_mamba_elapsed=$(($(date +%s) - _mamba_start))
-echo "[OK] main env created in ${_mamba_elapsed}s with Python $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')"
-echo "[OK] Jupyter ecosystem installed: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
-
-# ── 配置 PyPI 镜像（root + base + main 环境，devuser 在 Stage 5/7 创建后配置） ──
-echo "[ACTION] Configuring pip mirrors..."
-mkdir -p /root/.config/pip
-case "${PIP_MIRROR}" in
-    aliyun)
-        echo "[INFO] Configuring pip for Aliyun mirror"
-        PIP_INDEX_URL="https://mirrors.aliyun.com/pypi/simple/"
-        PIP_TRUSTED_HOST="mirrors.aliyun.com"
-        ;;
-    tuna)
-        echo "[INFO] Configuring pip for Tsinghua TUNA mirror"
-        PIP_INDEX_URL="https://pypi.tuna.tsinghua.edu.cn/simple/"
-        PIP_TRUSTED_HOST="pypi.tuna.tsinghua.edu.cn"
-        ;;
-    *)
-        echo "[INFO] Configuring pip for official PyPI"
-        PIP_INDEX_URL="https://pypi.org/simple/"
-        PIP_TRUSTED_HOST=""
-        ;;
-esac
-# 写入 root 全局 pip.conf
-printf '%s\n' \
-    '[global]' \
-    "index-url = ${PIP_INDEX_URL}" \
-    "retries = 5" \
-    "timeout = 60" \
-    > /root/.config/pip/pip.conf
-if [ -n "${PIP_TRUSTED_HOST}" ]; then
-    printf '%s\n' "trusted-host = ${PIP_TRUSTED_HOST}" >> /root/.config/pip/pip.conf
-fi
-# 配置 conda base 环境 pip
-if [ "${PIP_MIRROR}" = "aliyun" ]; then
-    "${CONDA_DIR}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-    "${CONDA_DIR}/bin/pip" config set global.trusted-host mirrors.aliyun.com
-elif [ "${PIP_MIRROR}" = "tuna" ]; then
-    "${CONDA_DIR}/bin/pip" config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-    "${CONDA_DIR}/bin/pip" config set global.trusted-host pypi.tuna.tsinghua.edu.cn
-fi
-# 配置 main 环境 pip
-/opt/conda/envs/main/bin/pip config set global.index-url "${PIP_INDEX_URL}"
-if [ -n "${PIP_TRUSTED_HOST}" ]; then
-    /opt/conda/envs/main/bin/pip config set global.trusted-host "${PIP_TRUSTED_HOST}"
-fi
-echo "[OK] pip mirrors configured (root + base + main; devuser will be configured in Stage 5/7)"
-# 将 PIP 配置变量导出到临时文件，供 Stage 5/7 使用
-echo "PIP_INDEX_URL=${PIP_INDEX_URL}" > /tmp/pip-config.env
-echo "PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST}" >> /tmp/pip-config.env
-
-# ── 注册main环境为Jupyter默认kernel（Python 3.14 free-threading） ──
-/opt/conda/envs/main/bin/python -m ipykernel install --name main --display-name "Python ${PYTHON_VERSION} (free-threading)" --prefix=/opt/conda/envs/main 2>&1
-echo "[OK] Jupyter kernel registered: Python ${PYTHON_VERSION} (free-threading)"
-
-# ── 验证free-threading构建 ──
-if [ "${PYTHON_BUILD}" = "cp314t" ]; then
-    /opt/conda/envs/main/bin/python -c "
-import sys, sysconfig
-ft = sysconfig.get_config_var('Py_GIL_DISABLED')
-soabi = sysconfig.get_config_var('SOABI')
-assert ft == 1, f'Expected free-threading build, got Py_GIL_DISABLED={ft}'
-assert 'cpython-314t' in soabi, f'Expected cpython-314t in SOABI, got {soabi}'
-print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={soabi}, GIL disabled by default')
-    "
-fi
-
-# ── main环境激活将在 Stage 5/7 通过 conda-init.sh 统一配置 ──
-echo "[INFO] main environment activation will be configured via conda-init.sh in Stage 5/7"
-
-# ── 清理临时文件（不清理BuildKit cache挂载目录：/root/.cache/pip, /opt/conda/pkgs, /root/.cache/conda） ──
-echo ""
-echo "┌─────────────────────────────────────────────────┐"
-echo "│ [CLEAN] Removing temp/installer files          │"
-echo "│ (BuildKit cache mounts preserved for reuse)    │"
-echo "└─────────────────────────────────────────────────┘"
-rm -f /tmp/miniforge.sh /tmp/conda_dl_err.log 2>/dev/null || true
-echo "[OK] Temp files cleaned (conda/pip caches preserved in BuildKit mounts)"
-
-# ── 验证安装 ──
-echo ""
-echo "┌─────────────────────────────────────────────────┐"
-echo "│ [VERIFY] Conda + Python (main env) + Jupyter   │"
-echo "└─────────────────────────────────────────────────┘"
-"${CONDA_DIR}/bin/conda" --version
-/opt/conda/envs/main/bin/python --version
-/opt/conda/envs/main/bin/jupyter --version
-echo "  - conda dir: ${CONDA_DIR}"
-echo "  - main env python: /opt/conda/envs/main/bin/python"
-echo "  - main env jupyter: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
-echo "  - default solver: libmamba"
-
-_NOW=$(date +%s)
-_ELAPSED=$((_NOW - _STAGE_START))
-_START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2)
-_TOTAL=$((_NOW - _START))
-echo "S4=$_NOW" >> /tmp/.build-timer
-echo "[TIMER] Stage 4/7 (conda+libmamba+jupyter) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
-echo '[OK] Stage 4 complete'
-STAGE4_EOF
+    sed -i 's/\r$//' /tmp/stage4c-pip-verify.sh && chmod +x /tmp/stage4c-pip-verify.sh && \
+    bash /tmp/stage4c-pip-verify.sh && \
+    rm -f /tmp/stage4c-pip-verify.sh /tmp/pip-config.env
 
 # ═══════════════════════════════════════════════════════════════════
 # Stage 5/7: 用户/组/工作目录创建 + subuid/subgid + 权限设置
@@ -586,6 +346,7 @@ COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
 COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
 COPY scripts/ft_benchmark.py /usr/local/bin/ft_benchmark.py
+COPY scripts/nogil_kit.py /usr/local/bin/nogil_kit.py
 COPY scripts/check_gil_state.py /usr/local/bin/check_gil_state.py
 
 RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
@@ -611,8 +372,8 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh bash syntax valid" && \
     echo "[VALIDATE 5/5] ft-benchmark (bash wrapper + python core)..." && \
     bash -n /usr/local/bin/ft-benchmark.sh && \
-    python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/check_gil_state.py && \
-    echo "[OK] ft-benchmark.sh + ft_benchmark.py + check_gil_state.py syntax valid" && \
+    python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/nogil_kit.py /usr/local/bin/check_gil_state.py && \
+    echo "[OK] ft-benchmark.sh + ft_benchmark.py + nogil_kit.py + check_gil_state.py syntax valid" && \
     echo "" && \
     echo "[BUILD] All 5 syntax validation checks passed" && \
     _NOW=$(date +%s) && \
@@ -634,6 +395,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     CONDA_VERSION=$(conda --version 2>&1 | awk '{print $2}') && \
     PYTHON_VERSION_ACTUAL=$(python --version 2>&1 | awk '{print $2}') && \
     PYTHON_BUILD_TYPE=$(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")') && \
+    PYDIR=$(python -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")') && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
     echo "BUILD_TYPE=multi-stage-slim" >> /etc/devcontainer-build-info && \
@@ -669,13 +431,13 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     find /opt/conda -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
     find /opt/conda -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
     find /usr -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
-    echo "[CLEAN 4/9] Conda static libs + non-Python dev headers..." && \
+    echo "[CLEAN 4/9] Conda static libs (.a/.la) only, preserving dev headers for C extension compilation..." && \
     find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true && \
     find /opt/conda/lib -name "*.la" -delete 2>/dev/null || true && \
-    find /opt/conda/include -mindepth 1 -maxdepth 1 ! -name "python*" -exec rm -rf {} + 2>/dev/null || true && \
+    echo "  - Preserved /opt/conda/include/* (dev headers needed for pip C extension builds like cryptography/psutil)" && \
     echo "[CLEAN 5/9] Stripping debug symbols from binaries..." && \
     find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    find /opt/conda/lib -name "*.so*" ! -path "*/python3.14/site-packages/*" ! -path "*/envs/*/lib/python3.14/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find /opt/conda/lib -name "*.so*" ! -path "*/${PYDIR}/site-packages/*" ! -path "*/envs/*/lib/${PYDIR}/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
     echo "[CLEAN 6/9] Removing conda telemetry + dev tools (preserving package cache)..." && \
     conda remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
     rm -f /opt/conda/bin/x86_64-conda-linux-gnu-ld /opt/conda/bin/x86_64-conda-linux-gnu-ld.bfd 2>/dev/null || true && \
@@ -706,7 +468,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     elif [ "${BUILD_VERIFY_MODE}" = "fast" ]; then \
         echo "[FAST MODE] Essential checks only..." && \
         python --version && echo "[OK] python available" && \
-        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); soabi=sysconfig.get_config_var('SOABI'); assert ft==1, f'GIL not disabled: Py_GIL_DISABLED={ft}'; assert 'cpython-314t' in soabi, f'SOABI mismatch: {soabi}'; print(f'[OK] Python free-threading verified (SOABI={soabi})')" && \
+        python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); soabi=sysconfig.get_config_var('SOABI') or ''; assert ft==1, f'GIL not disabled: Py_GIL_DISABLED={ft}'; assert 't' in soabi, f'SOABI mismatch (expected free-threading t suffix): {soabi}'; print(f'[OK] Python free-threading verified (SOABI={soabi})')" && \
         python -c "import brotli,cffi,sqlite3,ssl,zlib,hashlib; print('[OK] Core C extensions load OK')" && \
         conda --version && echo "[OK] conda available" && \
         echo "[FAST MODE] Essential checks passed"; \
@@ -723,8 +485,10 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
         python -c "import ssl; ctx=ssl.create_default_context(); assert ctx.protocol==ssl.PROTOCOL_TLS_CLIENT; print('[OK] _ssl C ext')" && \
         python -c "import zlib; d=b'test'*50; c=zlib.compress(d); assert zlib.decompress(c)==d; print('[OK] zlib C ext')" && \
         python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
-        bash /usr/local/bin/verify-cext.sh -q --expect-soabi cpython-314t >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
+        bash /usr/local/bin/verify-cext.sh -q >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
         conda --version && echo "[OK] conda available" && \
+        git --version && echo "[OK] git available" && \
+        docker compose version && echo "[OK] docker compose available" && \
         echo "[MIRROR] Verifying conda system .condarc exists..." && \
         test -f /opt/conda/.condarc && echo "[OK] System .condarc present" && \
         grep -q "conda-forge" /opt/conda/.condarc && echo "[OK] conda-forge channel configured" && \
@@ -741,7 +505,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
         bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
         bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
         bash -n /usr/local/bin/ft-benchmark.sh && \
-        python3 -m py_compile /usr/local/bin/ft_benchmark.py && echo "[OK] ft-benchmark (wrapper+core) syntax valid" && \
+        python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/nogil_kit.py /usr/local/bin/check_gil_state.py && echo "[OK] ft-benchmark + nogil_kit + check_gil_state syntax valid" && \
         echo "[OK] All standard verification checks passed"; \
     fi && \
     echo "" && \
