@@ -25,6 +25,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [verifiable-knowledge-claim.md](verifiable-knowledge-claim.md) | 可验证知识声明：自然语言描述→可执行+可验证规范，runtime+parameters+executor+attester五元组，借鉴密码学"不信任只验证"思想消除Agent计算幻觉 | L1 实验性 | AI Agent消费的指标体系、数据质量规则、合规检查、高可信度知识系统 |
 | [trust-first-metadata.md](trust-first-metadata.md) | 信任优先元数据：AI原生知识体系的字段设计优先级倒置——信任/来源/生命周期字段为一等公民，三级Trust Tier（unverified→machine-confirmed→human-reviewed），禁止Agent自证可信 | L1 实验性 | AI Agent知识库/RAG系统、人机协作知识管理、元数据schema设计、数据目录/治理平台 |
 | [agent-knowledge-graph-navigation.md](agent-knowledge-graph-navigation.md) | Agent知识图谱导航：三层索引+Frontmatter预过滤+图结构显式链接，让Agent像浏览器加载网页一样分层导航知识而非一次性全量加载，token消耗降低60-80%，经 okf-kit v0.3.3 实现二次验证 | L2 已验证 | AI Agent知识库/知识Bundle/RAG文档组织、面向Agent消费的文档系统、MCP工具文档 |
+| [zero-config-core-enhancement.md](zero-config-core-enhancement.md) | 零配置核心+可选增强降级：核心功能（本质价值）零凭据零配置开箱即用，增强功能（AI/云端/高级检索）可选并优雅降级，消除"不配置就完全不能用"的冷启动问题，经 okf-kit v0.3.3 零Key实践验证 | L1 实验性 | 开发者工具/CLI/SDK/Agent工具设计、以低试入门槛获客的开源/商业工具 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
 | [iot-device-category-mapping.md](iot-device-category-mapping.md) | IoT 设备分类到平台映射，实现设备自动发现和实体创建 | L1 实验性 | IoT 平台设备发现、多设备类型支持 |

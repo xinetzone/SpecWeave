@@ -61,6 +61,7 @@ tags: ["okf-kit", "seven-concepts", "methodology", "knowledge-precipitation", "R
 - **根因**：降低使用门槛，避免"不配置Key就完全不能用"的冷启动问题
 - **影响**：用户可以pip install后立即使用，LLM是可选增强而非必需依赖
 - **建议**：工具设计应区分"核心功能"和"增强功能"，核心功能零配置可用
+- **沉淀**：本洞察已沉淀为可复用模式 [零配置核心·可选增强降级](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/zero-config-core-enhancement.md)（L1 待验证）
 
 ### 洞察3：BFS + 路径自动Scoping的爬取策略
 - **现象**：默认按seed URL的路径段自动限制爬取范围
