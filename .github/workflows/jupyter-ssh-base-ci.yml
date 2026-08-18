@@ -5,10 +5,12 @@ on:
     branches: [main]
     paths:
       - 'apps/docker-images/jupyter-ssh-base/**'
+      - '.github/workflows/jupyter-ssh-base-ci.yml'
   pull_request:
     branches: [main]
     paths:
       - 'apps/docker-images/jupyter-ssh-base/**'
+      - '.github/workflows/jupyter-ssh-base-ci.yml'
   workflow_dispatch:
     inputs:
       push_to_registry:

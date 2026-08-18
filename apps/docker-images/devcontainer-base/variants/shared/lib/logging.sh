@@ -170,3 +170,68 @@ log_parse_args() {
         printf 'set -- '; printf '%q ' "${args[@]}"; echo ""
     fi
 }
+
+# =============================================================================
+# DevContainer Variant 构建专用函数
+# 与现有变体 Dockerfile 中的日志输出风格保持一致
+# =============================================================================
+
+# 阶段标题横幅（大标题，用 # 包围）
+variant_stage_header() {
+    local title="$1"
+    echo ""
+    echo "########################################################################"
+    echo "# ${title}"
+    echo "########################################################################"
+    echo ""
+}
+
+# 区块标题横幅（用 = 包围）
+variant_section_header() {
+    local title="$1"
+    echo ""
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo "  ${title}"
+    echo "═══════════════════════════════════════════════════════════════════"
+    echo ""
+}
+
+# BUILD 信息日志（与现有变体 [BUILD] 风格一致）
+variant_log_build() {
+    echo "[BUILD] $*"
+}
+
+# OK 成功日志（与现有变体 [OK] 风格一致）
+variant_log_ok() {
+    echo "[OK] $*"
+}
+
+# INFO 信息日志（与现有变体 [INFO] 风格一致）
+variant_log_info() {
+    echo "[INFO] $*"
+}
+
+# WARN 警告日志（与现有变体 [WARN] 风格一致）
+variant_log_warn() {
+    echo "[WARN] $*"
+}
+
+# ERROR 错误日志（与现有变体 [ERROR] 风格一致）
+variant_log_error() {
+    echo "[ERROR] $*" >&2
+}
+
+# TIMER 计时日志（与现有变体 [TIMER] 风格一致）
+variant_log_timer() {
+    echo "[TIMER] $*"
+}
+
+# CHECK 检查项日志（用于验证步骤）
+variant_log_check() {
+    echo "  - $*"
+}
+
+# 空行（用于分隔）
+variant_blank_line() {
+    echo ""
+}

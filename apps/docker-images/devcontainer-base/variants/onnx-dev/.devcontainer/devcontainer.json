@@ -1,0 +1,59 @@
+{
+  "name": "ONNX Dev (onnx-dev)",
+  "image": "devcontainer-base:onnx-dev-latest",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "devuser",
+
+  "forwardPorts": [22, 8888],
+
+  "containerEnv": {
+    "USER_PASSWORD": "dev",
+    "JUPYTER_TOKEN": "dev",
+    "GRANT_SUDO": "yes",
+    "TZ": "Asia/Shanghai",
+    "WORKSPACE_CHOWN_MODE": "named-only"
+  },
+
+  "runArgs": ["--privileged"],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/envs/main/bin/python",
+        "python.terminal.activateEnvironment": false,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "jupyter.jupyterServerType": "local",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash",
+            "args": ["-l"]
+          }
+        },
+        "files.eol": "\n",
+        "editor.formatOnSave": true,
+        "[python]": {
+          "editor.tabSize": 4,
+          "editor.insertSpaces": true,
+          "editor.formatOnSave": true
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "/opt/conda/envs/main/bin/python -c \"import onnx, onnxruntime, onnxsim, onnxscript; print(f'✅ onnx {onnx.__version__}, onnxruntime {onnxruntime.__version__}, GIL disabled')\"",
+
+  "shutdownAction": "stopContainer"
+}

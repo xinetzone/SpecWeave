@@ -138,7 +138,7 @@ AST 引擎采用的是规则加有向图的架构。我们将规则原子化，�
 
 会议推荐
 
-AICon 上海站 4 大核心看点：Keynote 前瞻洞见、Agent 工程化专题拆解、前沿技术 + 产业落地全覆盖，Google Cloud 专家实操带练。更多详情可扫码或联系票务经理 13269078023 进行咨询。
+AICon 上海站 4 大核心看点：Keynote 前瞻洞见、Agent 工程化专题拆解、前沿技术 + 产业落地全覆盖，Google Cloud 专家实操带练。更多详情可扫码或联系票务经理 132****8023 进行咨询。
 
 ![](https://mmbiz.qpic.cn/mmbiz_jpg/hLLZnAbUwNhHvDLJ9E7FRaQDZ0icUwteY4QdO3BrpVhpuyHJucYKNmahibhYt2xGI32BKztpomgjyc2EicicQYZG5zwB1dcnfl45Ey3Xh47gnys/640?wx_fmt=jpeg&from=appmsg)
 

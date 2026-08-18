@@ -268,7 +268,7 @@ python --version  # 确认 >= 3.10
 
 **排查步骤**：
 1. 确认Redis服务运行
-2. 检查redis_url格式：`redis://:password@host:port/db`
+2. 检查redis_url格式：`redis://:password@host:port/db`  <!-- nosec: 文档示例占位符 -->
 3. 检查Redis版本（建议6.0+）
 
 **解决方案**：
