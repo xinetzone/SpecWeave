@@ -17,3 +17,4 @@ tags: ["agent", "platform", "tools", "index", "wiki"]
 | └ [新开发者快速上手演示](agency-agents-wiki/quickstart-demo-guide.md) | 配套的分步上手教程：自动检测工具 → 克隆 → 预览 → 安装 → 激活 → 5 人小团队跑通 MVP | 手册 |
 | [Open Code Review 完全指南](open-code-review-wiki/00-overview.md) | 阿里巴巴开源的 AI 代码审查 CLI 工具，确定性工程 × Agent 混合 | 11 |
 | [okf-kit 完全指南](okf-kit-wiki/00-overview.md) | 将网站转换为 AI Agent 可直接读取的可移植 OKF 知识包：零 Key 爬取、增量同步、Agent 导航对话、MCP/HTTP 服务 | 12 |
+| [Cordis 时空可组合性框架完全指南](cordis-spatiotemporal-composability-wiki/00-overview.md) | TypeScript「时空可组合性」元框架 + 配套论文：可逆效应、响应式协同效应、Fiber 生命周期、声明式装配、热更新 | 13 |
