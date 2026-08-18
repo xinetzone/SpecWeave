@@ -31,3 +31,4 @@ git submodule update --init --recursive
 | 项目 | 描述 | 仓库 |
 |------|------|------|
 | [xuanspace](xuanspace/) | Xuanspace（玄境）Python monorepo 项目管理工具 | https://github.com/xinetzone/xuanspace |
+| [awesome-okf-xs](awesome-okf-xs/) | 玄境项目 OKF（开源知识格式）文档库 | https://github.com/awesome-flexloop/awesome-okf |

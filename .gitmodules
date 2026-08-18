@@ -29,6 +29,6 @@
 	path = vendor/okf-bundle-template
 	url = git@github.com:vinodborole/okf-bundle-template.git
 	branch = main
-[submodule "vendor/awesome-okf-xs"]
-	path = vendor/awesome-okf-xs
+[submodule "projects/awesome-okf-xs"]
+	path = projects/awesome-okf-xs
 	url = git@github.com:awesome-flexloop/awesome-okf.git
