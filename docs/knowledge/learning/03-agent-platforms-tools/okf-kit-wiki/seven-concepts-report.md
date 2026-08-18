@@ -81,6 +81,7 @@ tags: ["okf-kit", "seven-concepts", "methodology", "knowledge-precipitation", "R
 - **根因**：静态站点和JS渲染站点需要不同抓取策略，但上层crawl逻辑相同
 - **影响**：核心爬取流程与具体抓取实现解耦，新增Fetcher不影响crawl逻辑
 - **建议**：IO边界使用抽象接口隔离，核心逻辑保持纯函数式
+- **沉淀**：本洞察已沉淀为可复用模式 [IO边界抽象隔离·纯函数核心](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/io-boundary-pure-function-core.md)（L1 待验证）
 
 ### G2 质量门检查
 - ✅ 每个洞察包含现象描述
