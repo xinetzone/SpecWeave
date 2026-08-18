@@ -138,7 +138,7 @@ okf-kit 源码研读确认了「IO 边界抽象隔离 + 核心纯函数化」的
 
 - **操作系统 VFS（虚拟文件系统）**：内核通过统一「文件操作接口」访问文件，EXT4/XFS/NTFS 等具体文件系统作为适配器可插拔——「核心逻辑依赖抽象接口，后端实现可替换」
 - **Repository 模式 + 数据库后端**：业务层依赖 `Repository` 接口，MySQL ↔ PostgreSQL 切换时业务逻辑零改动——「IO 边界（数据库）隔离，核心业务纯函数化」
-- **编译器的前端/后端分离**：前端生成中间表示（IR，平抽象接口），后端针对不同 CPU 架构生成代码——「核心（IR 生成）与后端（代码生成）解耦」
+- **编译器的前端/后端分离**：前端生成中间表示（IR，Intermediate Representation），后端针对不同 CPU 架构生成代码——「核心（IR 生成）与后端（代码生成）解耦」
 
 这三个先例说明「IO 边界抽象 + 核心纯函数化」是成熟系统架构的通用直觉，但尚未在本项目内形成独立验证案例，故本模式保持 L1。
 
@@ -173,7 +173,7 @@ okf-kit 源码研读确认了「IO 边界抽象隔离 + 核心纯函数化」的
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
 | [content-type-routing.md](content-type-routing.md) | 相近但不同（策略选择 vs 依赖倒置） | 见「与现有模式的区分」表，两者常组合：路由选择策略 + 每个 IO 后端接口隔离 |
-| [classic-patterns-reuse-heuristic.md](classic-patterns-reuse-heuristic.md) | 经典溯源（遵循其启发式） | 本模式是经典「端口-适配器（Ports & Adapters）+ 依赖倒置原则（DIP）+ 纯函数核心（Functional Core, Imperative Shell）」在爬虫 IO 边界的架构级应用，非原创发明 |
+| [classic-patterns-reuse-heuristic.md](../methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.md) | 经典溯源（遵循其启发式） | 本模式是经典「端口-适配器（Ports & Adapters）+ 依赖倒置原则（DIP）+ 纯函数核心（Functional Core, Imperative Shell）」在爬虫 IO 边界的架构级应用，非原创发明 |
 
 **经典模式溯源**（遵循经典模式优先复用启发式，未假装创新）：
 - **端口-适配器架构（Ports & Adapters，又称六边形架构）**：核心与外部世界通过「端口」（接口）+「适配器」（实现）隔离
