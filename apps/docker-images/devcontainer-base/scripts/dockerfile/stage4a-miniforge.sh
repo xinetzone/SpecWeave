@@ -6,6 +6,9 @@
 # =============================================================================
 set -e
 
+# 防止Python在安装过程中生成.pyc文件（同层清理才能真正省空间）
+export PYTHONDONTWRITEBYTECODE=1
+
 echo "=== Stage 4a/4c: Install Miniforge3 + configure .condarc ==="
 _STAGE_START=$(date +%s)
 
@@ -163,6 +166,56 @@ echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)"
 _builtin_py=$("${CONDA_DIR}/bin/python" --version 2>&1 | awk '{print $2}')
 echo "[INFO] Miniforge3 base Python (conda runtime): ${_builtin_py}"
 echo "[INFO] Note: conda base Python kept as-is; free-threading Python will be in 'main' env"
+
+# ── 移除 anaconda-anon-usage telemetry（同层删除，必须在strip之前） ──
+echo "[CLEAN] Removing anaconda-anon-usage telemetry..."
+"${CONDA_DIR}/bin/conda" remove -y -n base anaconda-anon-usage --force 2>/dev/null || true
+rm -f "${CONDA_DIR}/bin/c_rehash" "${CONDA_DIR}/bin/openssl-c_rehash" "${CONDA_DIR}/bin/x86_64-conda-linux-gnu-ld" "${CONDA_DIR}/bin/x86_64-conda-linux-gnu-ld.bfd" 2>/dev/null || true
+echo "[OK] Telemetry and unused binaries removed"
+
+# ── 清理base Python测试套件（同层删除） ──
+echo "[CLEAN] Removing test suites from base Python..."
+find "${CONDA_DIR}/lib" -type d -path "*/python*/test" -prune -exec rm -rf {} + 2>/dev/null || true
+find "${CONDA_DIR}/lib" -type d -path "*/python*/unittest/test" -prune -exec rm -rf {} + 2>/dev/null || true
+find "${CONDA_DIR}/lib" -type d -path "*/python*/site-packages/*/tests" -prune -exec rm -rf {} + 2>/dev/null || true
+echo "[OK] Test suites removed from base env"
+
+# ── 清理tk/tcl（服务器环境不需要GUI toolkit，同层删除） ──
+echo "[CLEAN] Removing tk/tcl GUI toolkit files from base env..."
+rm -rf "${CONDA_DIR}/lib/tk8.6" "${CONDA_DIR}/lib/tcl8.6" 2>/dev/null || true
+rm -rf "${CONDA_DIR}/lib/tk8" "${CONDA_DIR}/lib/tcl8" 2>/dev/null || true
+rm -f "${CONDA_DIR}/lib/libtk8.6.so" "${CONDA_DIR}/lib/libtcl8.6.so" 2>/dev/null || true
+rm -f "${CONDA_DIR}/bin/tclsh"* "${CONDA_DIR}/bin/wish"* 2>/dev/null || true
+echo "[OK] tk/tcl removed from base env"
+
+# ── 清理安装/删除过程中可能生成的 .pyc 文件 ──
+echo "[CLEAN] Removing .pyc/__pycache__ from miniforge base..."
+find "${CONDA_DIR}" -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true
+find "${CONDA_DIR}" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+
+# ── Strip Miniforge base 二进制文件（同层strip，避免Copy-on-Write膨胀） ──
+echo "[STRIP] Stripping Miniforge base binaries (same-layer, no COW)..."
+# Standalone executables in conda base bin/ (use --strip-unneeded to preserve dynamic symbols)
+find "${CONDA_DIR}/bin" -type f -executable ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" ! -name "*.pm" \
+    -exec strip --strip-unneeded {} \; 2>/dev/null || true
+# micromamba (statically-linked Rust/C++ binary, strip-all safe)
+if [ -f "${CONDA_DIR}/micromamba/micromamba" ]; then
+    strip --strip-all "${CONDA_DIR}/micromamba/micromamba" 2>/dev/null || true
+fi
+# Shared libraries in base lib
+find "${CONDA_DIR}/lib" -name "*.so*" -type f \
+    -exec strip --strip-unneeded {} \; 2>/dev/null || true
+# sbin and libexec binaries
+find "${CONDA_DIR}/sbin" "${CONDA_DIR}/libexec" -type f -executable \
+    -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] Miniforge base binaries stripped"
+
+# ── 设置base conda权限（同层，避免COW） ──
+echo "[PERM] Setting permissions on /opt/conda (base)..."
+chown -R root:root "${CONDA_DIR}" 2>/dev/null || true
+chmod -R a+rX "${CONDA_DIR}" 2>/dev/null || true
+find "${CONDA_DIR}/bin" -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
+echo "[OK] Base conda permissions set (same-layer)"
 
 # ── 清理临时文件 ──
 rm -f /tmp/conda_dl_err.log 2>/dev/null || true

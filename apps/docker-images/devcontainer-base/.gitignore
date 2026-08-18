@@ -1,6 +1,13 @@
 # Build caches and logs
 .cache/
 logs/
+local-cache/
+
+# Python cache (prevents __pycache__/*.pyc bloat in repo and Docker context)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
 # Runtime directories
 workspace/

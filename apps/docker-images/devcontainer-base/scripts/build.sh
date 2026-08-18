@@ -20,6 +20,7 @@ CONDA_MIRROR="${CONDA_MIRROR:-official}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.14.6}"
 PYTHON_BUILD="${PYTHON_BUILD:-cp314t}"
 BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE:-standard}"
+INSTALL_PODMAN="${INSTALL_PODMAN:-true}"
 DEEP_VERIFY=false
 VERIFY=false
 VERIFY_ONLY=false
@@ -51,6 +52,8 @@ Options:
   --python-ver VER       Python version (default: 3.14.6)
   --python-build BUILD   Python build: cp314t (free-threading, default) | cp314 (standard)
   --verify-mode MODE     Build verification mode: standard (default) | fast | off
+  --podman               Include Podman rootless (default: true)
+  --no-podman            Exclude Podman to reduce image size (~80MB)
   --deep-verify          Run deep verification (numpy/pandas) after build
   --verify               Run embedded service verification after build
   --verify-only           Only verify existing image (skip build)
@@ -75,6 +78,7 @@ Examples:
   $0 --verify-only --tag conda-libmamba-ft        # Verify existing image only
   $0 --python-build cp314                         # Build standard (GIL) Python
   $0 --no-quick-test                              # Build without smoke test
+  $0 --no-podman                                  # Build without Podman (smaller image)
 
 Docker modes:
   DinD (Docker-in-Docker): Requires --privileged flag for fully isolated Docker daemon
@@ -104,6 +108,8 @@ while [[ $# -gt 0 ]]; do
         --python-ver) PYTHON_VERSION="$2"; shift 2 ;;
         --python-build) PYTHON_BUILD="$2"; shift 2 ;;
         --verify-mode) BUILD_VERIFY_MODE="$2"; shift 2 ;;
+        --podman) INSTALL_PODMAN=true; shift ;;
+        --no-podman) INSTALL_PODMAN=false; shift ;;
         --deep-verify) DEEP_VERIFY=true; shift ;;
         --verify) VERIFY=true; shift ;;
         --verify-only) VERIFY_ONLY=true; VERIFY=true; shift ;;
@@ -139,6 +145,7 @@ log_set_field "docker_mirror" "$DOCKER_MIRROR"
 log_set_field "conda_mirror" "$CONDA_MIRROR"
 log_set_field "network_host" "$NETWORK_HOST"
 log_set_field "verify_mode" "$BUILD_VERIFY_MODE"
+log_set_field "install_podman" "$INSTALL_PODMAN"
 log_set_field "deep_verify" "$DEEP_VERIFY"
 
 # ── 错误处理 ──
@@ -241,6 +248,7 @@ preflight_checks() {
     printf "    %-20s %s\n" "Network mode:" "$([ "$NETWORK_HOST" = true ] && echo 'host' || echo 'bridge')"
     printf "    %-20s %s\n" "Cache:" "$([ -n "$NO_CACHE" ] && echo 'disabled' || echo 'enabled')"
     printf "    %-20s %s\n" "Verify mode:" "${BUILD_VERIFY_MODE}"
+    printf "    %-20s %s\n" "Podman:" "$([ "$INSTALL_PODMAN" = true ] && echo 'yes (rootless)' || echo 'no (smaller image)')"
     printf "    %-20s %s\n" "Deep verify:" "$([ "$DEEP_VERIFY" = true ] && echo 'yes (numpy/pandas)' || echo 'no')"
     printf "    %-20s %s\n" "Quick test:" "$([ "$QUICK_TEST" = true ] && echo 'yes' || echo 'no')"
     printf "    %-20s %s\n" "Full verify:" "$([ "$VERIFY" = true ] && echo 'yes' || echo 'no')"
@@ -426,6 +434,34 @@ quick_smoke_test() {
         test_passed=$((test_passed + 1))
     fi
 
+    # 11. Python cache cleanliness check (P7: no __pycache__ bloat)
+    log_info "  Testing: Python cache cleanliness (no __pycache__ bloat)..."
+    local pycache_output
+    pycache_output=$(docker exec "$test_container" clean-pycache.sh --check /opt/conda /usr 2>&1)
+    local pycache_rc=$?
+    if [ $pycache_rc -eq 0 ]; then
+        log_ok "    Python cache clean: PASS (no __pycache__/.pyc found)"
+        test_passed=$((test_passed + 1))
+    else
+        log_fail "    Python cache clean: FAIL"
+        log_error "    clean-pycache.sh output: ${pycache_output}"
+        test_failed=$((test_failed + 1))
+    fi
+
+    # 12. Podman availability (conditional on INSTALL_PODMAN)
+    if [ "$INSTALL_PODMAN" = true ]; then
+        run_test "podman available" podman --version
+    else
+        log_info "  Testing: podman not installed (--no-podman)..."
+        if docker exec "$test_container" command -v podman >/dev/null 2>&1; then
+            log_warn "    podman is present but INSTALL_PODMAN=false (unexpected)"
+            test_passed=$((test_passed + 1))
+        else
+            log_ok "    podman correctly absent (INSTALL_PODMAN=false)"
+            test_passed=$((test_passed + 1))
+        fi
+    fi
+
     # Cleanup
     docker rm -f "$test_container" >/dev/null 2>&1
 
@@ -528,6 +564,7 @@ DOCKER_BUILDKIT=1 docker build \
     --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
     --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
     --build-arg BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE}" \
+    --build-arg INSTALL_PODMAN="${INSTALL_PODMAN}" \
     --build-arg BUILDKIT_INLINE_CACHE=1 \
     -t "${FULL_IMAGE}" \
     . 2>&1 | tee "$BUILD_LOG_FILE"

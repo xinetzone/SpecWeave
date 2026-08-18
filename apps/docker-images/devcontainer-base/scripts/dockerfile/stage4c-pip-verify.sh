@@ -6,6 +6,9 @@
 # =============================================================================
 set -e
 
+# 防止pip/jupyter/python验证过程中生成.pyc文件
+export PYTHONDONTWRITEBYTECODE=1
+
 echo "=== Stage 4c/4c: pip mirrors + kernel registration + free-threading verify ==="
 _STAGE_START=$(date +%s)
 
@@ -90,6 +93,21 @@ echo "  - conda dir: ${CONDA_DIR}"
 echo "  - main env python: /opt/conda/envs/main/bin/python"
 echo "  - main env jupyter: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)"
 echo "  - default solver: libmamba"
+
+# ── Conda缓存清理（同层） ──
+echo "[CLEAN] Cleaning conda caches..."
+conda clean -y -a -f -q 2>/dev/null || true
+# 只设置stage4c新增文件的权限（kernel注册文件），不递归chmod整个/opt/conda（避免COW）
+chmod -R a+rX /opt/conda/envs/main/share/jupyter/kernels 2>/dev/null || true
+echo "[OK] Conda caches cleaned (same-layer)"
+
+# ── 清理pip/jupyter/验证过程中可能生成的.pyc文件（最后清理） ──
+echo "[CLEAN] Removing .pyc/__pycache__ after all operations..."
+find /opt/conda/envs/main -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true
+find /opt/conda/envs/main -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+find "${CONDA_DIR}" -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true
+find "${CONDA_DIR}" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+echo "[OK] .pyc files cleaned in same layer as stage4c"
 
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))

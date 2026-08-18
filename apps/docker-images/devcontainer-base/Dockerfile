@@ -2,10 +2,10 @@
 # =============================================================================
 # DevContainer Base - Dockerfile (7-stage single-image build)
 # Project: SpecWeave Full-featured Development Container Base Image
-# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(conda-forge, libmamba)
+# Base: ubuntu:26.04 | OpenSSH + Docker DinD + Podman(rootless, optional) + Jupyter + Miniforge3(conda-forge, libmamba)
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
-# Services: sshd(22) + dockerd(unix socket) + podman(rootless) + jupyter(8888), managed by supervisord
+# Services: sshd(22) + dockerd(unix socket) + podman(rootless, INSTALL_PODMAN=true) + jupyter(8888), managed by supervisord
 # Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14.6 free-threading cp314t, libgcc-ng 16.1.0运行时, libmamba solver), Jupyter在main环境
 # BuildKit cache: pip (/root/.cache/pip) + conda pkgs (/opt/conda/pkgs) + libmamba solver (/root/.cache/conda) 持久化缓存
 # Verify modes: BUILD_VERIFY_MODE=standard (default, full checks) | fast (essential only) | off (skip)
@@ -19,16 +19,18 @@
 #
 # Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.4):
 #
-#   分层设计原理（5条公理）：
+#   分层设计原理（6条公理）：
 #     P1 变化频率分层: 同频率同层，低频率层在前，高频率层在后 → 最大化缓存命中
 #     P2 缓存保护:     高耗时稳定操作（mamba solver）必须独立成层，不被高频变化触发重跑
 #     P3 开发能力保留: 清理步骤不损害编译/版本控制等开发能力（保留头文件、保留git等）
 #     P4 工具链80/20:  80%场景常用工具内置base镜像（git/docker compose/jupyter等）
 #     P5 脚本外置:     >50行复杂逻辑抽取为外部脚本（scripts/dockerfile/），独立维护
+#     P6 按需安装:     默认关闭的功能不占镜像体积（Podman等），通过ARG构建参数控制开关
+#     P7 同层修改:     strip/chmod/包移除等修改操作必须在文件创建的同一层完成（禁止上层修改低层文件导致Copy-on-Write膨胀）
 #
 #   Stage 1/7: 系统包 + APT镜像 + locale/timezone          (变化频率: 最低)
 #   Stage 2/7: Docker CE + Compose Plugin 安装             (变化频率: 低)
-#   Stage 3/7: Podman rootless 安装                        (变化频率: 低)
+#   Stage 3/7: Podman rootless 安装（可选，默认跳过）       (变化频率: 低)
 #   Stage 4/7: Miniforge3 + Python ft + libmamba + Jupyter (变化频率: 中，分3子层)
 #     4a: Miniforge3安装 + .condarc 配置                   (变化频率: 低)
 #     4b: mamba create main环境 (Python+Jupyter求解安装)   (变化频率: 中，高耗时)
@@ -46,6 +48,7 @@ ARG CONDA_MIRROR=official
 ARG PYTHON_VERSION=3.14.6
 ARG PYTHON_BUILD=cp314t
 ARG BUILD_VERIFY_MODE=standard
+ARG INSTALL_PODMAN=true
 
 # -----------------------------------------------------------------------------
 # Stage: Runtime - Minimal production image with Miniforge3
@@ -59,6 +62,7 @@ ARG PIP_MIRROR
 ARG PYTHON_VERSION
 ARG PYTHON_BUILD
 ARG BUILD_VERIFY_MODE
+ARG INSTALL_PODMAN
 
 LABEL maintainer="SpecWeave"
 LABEL description="Full-featured Ubuntu 26.04 dev container with SSH + Docker DinD + Podman(rootless) + Jupyter + Miniforge3(Python 3.14.6 free-threading cp314t, GCC 14.4.0编译, libgcc 16.1.0运行时, conda-forge, libmamba solver), managed by supervisord"
@@ -73,6 +77,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     CONDA_DIR=/opt/conda \
     CONDA_DEFAULT_ENV=main \
     PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}" \
+    PYTHONDONTWRITEBYTECODE=1 \
     NON_ROOT_USER=devuser \
     JUPYTER_PORT=8888 \
     SSH_PORT=22 \
@@ -119,6 +124,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     apt-get update -qq && \
     echo "[INFO] Installing system packages (--no-install-recommends)..." && \
     apt-get install -y --no-install-recommends -qq \
+        binutils \
         ca-certificates \
         curl \
         git \
@@ -200,6 +206,17 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "  - containerd: $(containerd --version 2>/dev/null | awk '{print $3}')" && \
     echo "  - buildx: $(docker buildx version 2>/dev/null | awk '{print $2}')" && \
     echo "  - compose: $(docker compose version 2>/dev/null | awk '{print $4}' | tr -d 'v')" && \
+    echo "[STRIP] Stripping Docker/containerd Go binaries (same-layer, no COW)..." && \
+    for _bin in /usr/bin/dockerd /usr/bin/docker /usr/bin/containerd /usr/bin/containerd-shim-runc-v2 /usr/bin/docker-proxy; do \
+        [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+    done && \
+    for _bin in /usr/libexec/docker/cli-plugins/docker-buildx /usr/libexec/docker/cli-plugins/docker-compose; do \
+        [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+    done && \
+    for _bin in /usr/bin/ctr /usr/bin/runc; do \
+        [ -f "$_bin" ] && strip --strip-unneeded "$_bin" 2>/dev/null || true; \
+    done && \
+    echo "[OK] Docker binaries stripped" && \
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
@@ -209,25 +226,35 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 2/7 (Docker CE) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 3/7: Podman rootless 安装
+# Stage 3/7: Podman rootless 安装（可选，默认INSTALL_PODMAN=false跳过）
 # 变化频率：低（Podman版本升级时改）
 # 原则：直接使用Ubuntu 26.04官方源，无需第三方repo
+#       默认不安装以减小镜像体积；--build-arg INSTALL_PODMAN=true 启用
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
-    echo "=== Stage 3/7: Install Podman (rootless) ===" && \
+    echo "=== Stage 3/7: Podman (rootless) [INSTALL_PODMAN=${INSTALL_PODMAN}] ===" && \
     _STAGE_START=$(date +%s) && \
-    echo "[INFO] Updating APT for Podman installation..." && \
-    apt-get update -qq && \
-    echo "[INFO] Installing Podman packages (podman, crun, conmon)..." && \
-    apt-get install -y --no-install-recommends -qq \
-        podman \
-        crun \
-        conmon \
-    && echo "[OK] Podman installed" && \
-    echo "[INFO] Podman version:" && \
-    echo "  - podman: $(podman --version 2>/dev/null | awk '{print $3}')" && \
-    echo "  - crun: $(crun --version 2>/dev/null | head -1 | awk '{print $2}')" && \
+    if [ "${INSTALL_PODMAN}" = "true" ]; then \
+        echo "[INFO] Installing Podman packages (podman, crun, conmon)..." && \
+        apt-get update -qq && \
+        apt-get install -y --no-install-recommends -qq podman crun conmon && \
+        echo "[OK] Podman installed" && \
+        echo "  - podman: $(podman --version 2>/dev/null | awk '{print $3}')" && \
+        echo "  - crun: $(crun --version 2>/dev/null | head -1 | awk '{print $2}')" && \
+        echo "[STRIP] Stripping Podman binaries (same-layer, no COW)..." && \
+        for _bin in /usr/bin/podman /usr/bin/crun /usr/bin/conmon; do \
+            [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+        done && \
+        for _bin in /usr/libexec/podman/rootlessport /usr/libexec/podman/quadlet; do \
+            [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+        done && \
+        echo "[CLEAN] Removing podman-testing (33MB test binary, not needed at runtime)..." && \
+        rm -f /usr/libexec/podman/podman-testing 2>/dev/null || true && \
+        echo "[OK] Podman binaries stripped + podman-testing removed"; \
+    else \
+        echo "[SKIP] Podman not installed (default). Use --build-arg INSTALL_PODMAN=true to enable."; \
+    fi && \
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
@@ -250,6 +277,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 COPY scripts/dockerfile/stage4a-miniforge.sh /tmp/stage4a-miniforge.sh
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/conda,sharing=locked \
+    --mount=type=bind,source=local-cache,target=/tmp/local-cache,readonly \
     sed -i 's/\r$//' /tmp/stage4a-miniforge.sh && chmod +x /tmp/stage4a-miniforge.sh && \
     bash /tmp/stage4a-miniforge.sh && \
     rm -f /tmp/stage4a-miniforge.sh
@@ -333,28 +361,30 @@ RUN echo "=== Stage 5/7: Create non-root user devuser ===" && \
     echo "[TIMER] Stage 5/7 (user+subuid+dirs+daemon) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 6/7: 配置文件 COPY + 权限设置 + 语法验证
+# Stage 6/7: 配置文件 COPY + 语法验证（P7同层修改：--chmod/--chown在COPY时设置权限）
 # 变化频率：高（配置调整时改，缓存不会让前面层失效）
-# 原则：所有 COPY 集中在一处；同层 RUN 做权限 + 全部语法验证
+# 原则：所有 COPY 使用 --chmod/--chown 设置权限（同层，无COW）；RUN仅做CRLF清理+语法验证
 # ═══════════════════════════════════════════════════════════════════
 COPY config/sshd_config /etc/ssh/sshd_config
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
 COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
-COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
-COPY scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
-COPY scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
+COPY --chown=devuser:devuser config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chmod=755 scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chmod=755 scripts/verify-cext.sh /usr/local/bin/verify-cext.sh
+COPY --chmod=755 scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
 COPY scripts/ft_benchmark.py /usr/local/bin/ft_benchmark.py
 COPY scripts/nogil_kit.py /usr/local/bin/nogil_kit.py
 COPY scripts/check_gil_state.py /usr/local/bin/check_gil_state.py
+COPY --chmod=755 scripts/lib/clean-pycache.sh /usr/local/bin/clean-pycache.sh
 
-RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
+RUN echo "=== Stage 6/7: CRLF cleanup + syntax validation (P7: permissions set at COPY time) ===" && \
     _STAGE_START=$(date +%s) && \
-    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh && \
-    chown -R devuser:devuser /home/devuser/.jupyter && \
-    echo "[BUILD] Permissions set: entrypoint.sh and healthcheck.sh executable" && \
-    for _f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh /usr/local/bin/ft-benchmark.sh /home/devuser/.jupyter/jupyter_notebook_config.py /etc/supervisor/supervisord.conf /etc/supervisor/conf.d/*.conf /etc/ssh/sshd_config; do \
+    echo "[BUILD] Permissions set via COPY --chmod/--chown (no chmod/chown in RUN = no COW)" && \
+    for _f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/verify-cext.sh \
+             /usr/local/bin/ft-benchmark.sh /usr/local/bin/clean-pycache.sh \
+             /home/devuser/.jupyter/jupyter_notebook_config.py \
+             /etc/supervisor/supervisord.conf /etc/supervisor/conf.d/*.conf /etc/ssh/sshd_config; do \
         if [ -f "$_f" ]; then sed -i 's/\r$//' "$_f" 2>/dev/null || true; fi; \
     done && echo "[BUILD] CRLF cleaned from all text configs/scripts (Windows editor safe)" && \
     echo "" && \
@@ -362,40 +392,48 @@ RUN echo "=== Stage 6/7: Config permissions + syntax validation ===" && \
     echo "│  [VALIDATION CHECKPOINT - Stage 6/7]            │" && \
     echo "│  Running syntax validation for all configs      │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    echo "[VALIDATE 1/5] sshd -t (SSH daemon config syntax)..." && \
+    echo "[VALIDATE 1/6] sshd -t (SSH daemon config syntax)..." && \
     sshd -t && echo "[OK] sshd_config syntax valid" && \
-    echo "[VALIDATE 2/5] bash -n entrypoint.sh..." && \
+    echo "[VALIDATE 2/6] bash -n entrypoint.sh..." && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
-    echo "[VALIDATE 3/5] bash -n healthcheck.sh..." && \
+    echo "[VALIDATE 3/6] bash -n healthcheck.sh..." && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
-    echo "[VALIDATE 4/5] bash -n verify-cext.sh..." && \
+    echo "[VALIDATE 4/6] bash -n verify-cext.sh..." && \
     bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh bash syntax valid" && \
-    echo "[VALIDATE 5/5] ft-benchmark (bash wrapper + python core)..." && \
+    echo "[VALIDATE 5/6] bash -n clean-pycache.sh..." && \
+    bash -n /usr/local/bin/clean-pycache.sh && echo "[OK] clean-pycache.sh bash syntax valid" && \
+    echo "[VALIDATE 6/6] ft-benchmark (bash wrapper + python core)..." && \
     bash -n /usr/local/bin/ft-benchmark.sh && \
-    python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/nogil_kit.py /usr/local/bin/check_gil_state.py && \
+    python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py']: compile(open(f).read(), f, 'exec')" && \
     echo "[OK] ft-benchmark.sh + ft_benchmark.py + nogil_kit.py + check_gil_state.py syntax valid" && \
     echo "" && \
-    echo "[BUILD] All 5 syntax validation checks passed" && \
+    echo "[BUILD] All 6 syntax validation checks passed" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
     echo "S6=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Stage 6/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "[TIMER] Stage 6/7 (config+validation, P7-compliant) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 7/7: 构建元数据 + 激进清理 + 最终验证
+# Stage 7/7: 构建元数据 + 删除式清理 + 最终验证
 # 变化频率：最低（版本发布时改）
-# 原则：写入build-info；激进清理doc/man/info/__pycache__/.pyc/静态库；
-#       strip二进制；最终验证所有关键命令可执行；输出耗时汇总表
+# 原则：P7同层修改已在各stage完成，此层只做删除（rm -rf whiteout，无COW数据膨胀）；
+#       删除doc/man/info/__pycache__/.pyc/静态库/locale/test等冗余文件；
+#       PYTHONDONTWRITEBYTECODE阻止验证时.pyc生成；
+#       不执行strip/chmod/包移除等修改操作（已在同层完成）；
+#       最终验证所有关键命令可执行；输出耗时汇总表
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ===" && \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    echo "=== Stage 7/7: Final metadata, deletion cleanup, and verification ===" && \
     _STAGE_START=$(date +%s) && \
+    export PYTHONDONTWRITEBYTECODE=1 && \
+    echo "[INFO] PYTHONDONTWRITEBYTECODE=1 set for Stage 7 to prevent .pyc bloat during verification" && \
     DEVUSER_UID=$(id -u devuser) && \
     CONDA_VERSION=$(conda --version 2>&1 | awk '{print $2}') && \
     PYTHON_VERSION_ACTUAL=$(python --version 2>&1 | awk '{print $2}') && \
     PYTHON_BUILD_TYPE=$(python -c 'import sysconfig; print("free-threading" if sysconfig.get_config_var("Py_GIL_DISABLED") else "standard")') && \
-    PYDIR=$(python -c 'import sys; print(f"python{sys.version_info.major}.{sys.version_info.minor}")') && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/devcontainer-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/devcontainer-build-info && \
     echo "BUILD_TYPE=multi-stage-slim" >> /etc/devcontainer-build-info && \
@@ -404,7 +442,7 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "TIMEZONE=Asia/Shanghai" >> /etc/devcontainer-build-info && \
     echo "NON_ROOT_USER=devuser" >> /etc/devcontainer-build-info && \
     echo "NON_ROOT_UID=${DEVUSER_UID}" >> /etc/devcontainer-build-info && \
-    echo "SERVICES=sshd,dockerd,podman,jupyter" >> /etc/devcontainer-build-info && \
+    if [ "${INSTALL_PODMAN}" = "true" ]; then echo "SERVICES=sshd,dockerd,podman,jupyter"; else echo "SERVICES=sshd,dockerd,jupyter"; fi >> /etc/devcontainer-build-info && \
     echo "SUPERVISOR=enabled" >> /etc/devcontainer-build-info && \
     echo "PYTHON_ENV=conda" >> /etc/devcontainer-build-info && \
     echo "CONDA_DIR=/opt/conda" >> /etc/devcontainer-build-info && \
@@ -412,52 +450,86 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "PYTHON_VERSION=${PYTHON_VERSION_ACTUAL}" >> /etc/devcontainer-build-info && \
     echo "PYTHON_BUILD_TYPE=${PYTHON_BUILD_TYPE}" >> /etc/devcontainer-build-info && \
     echo "DOCKER_DIND=enabled" >> /etc/devcontainer-build-info && \
-    echo "PODMAN_ROOTLESS=enabled" >> /etc/devcontainer-build-info && \
+    if [ "${INSTALL_PODMAN}" = "true" ]; then echo "PODMAN_ROOTLESS=enabled"; else echo "PODMAN_ROOTLESS=disabled"; fi >> /etc/devcontainer-build-info && \
     echo "BUILD_TIMER=enabled" >> /etc/devcontainer-build-info && \
     echo "BUILDKIT_CACHE=enabled" >> /etc/devcontainer-build-info && \
+    echo "STRIP_STRATEGY=same-layer (P7)" >> /etc/devcontainer-build-info && \
     cat /etc/devcontainer-build-info && \
     echo "[BUILD] Build info written to /etc/devcontainer-build-info" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
-    echo "│ [AGGRESSIVE CLEANUP] Removing unnecessary files│" && \
+    echo "│ [DELETION CLEANUP] Removing unnecessary files  │" && \
+    echo "│ (rm -rf only, no modifications = no COW bloat) │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    echo "[CLEAN 1/9] APT cache + lists..." && \
+    echo "[CLEAN 1/8] APT cache + lists..." && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    echo "[CLEAN 2/9] Documentation, man pages, info pages (system + conda)..." && \
+    echo "[CLEAN 2/8] Documentation, man pages, info pages (system + conda) + gitweb + coreutils locales..." && \
     rm -rf /usr/share/doc/* /usr/share/man/* /usr/share/info/* /usr/share/lintian/* 2>/dev/null || true && \
     rm -rf /opt/conda/share/doc/* /opt/conda/share/man/* /opt/conda/share/info/* /opt/conda/share/gtk-doc/* 2>/dev/null || true && \
-    echo "[CLEAN 3/9] Python __pycache__ and .pyc/.pyo files..." && \
-    find /opt/conda -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
-    find /opt/conda -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
-    find /usr -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
-    echo "[CLEAN 4/9] Conda static libs (.a/.la) only, preserving dev headers for C extension compilation..." && \
+    rm -rf /usr/share/gitweb /usr/share/coreutils/locales 2>/dev/null || true && \
+    echo "[CLEAN 3/8] Python __pycache__ and .pyc/.pyo files (pre-verification, using clean-pycache.sh)..." && \
+    clean-pycache.sh -q /opt/conda /usr && \
+    echo "[CLEAN 4/8] Static libs (.a/.la) cleanup (base + main + system)..." && \
     find /opt/conda/lib -name "*.a" -delete 2>/dev/null || true && \
     find /opt/conda/lib -name "*.la" -delete 2>/dev/null || true && \
-    echo "  - Preserved /opt/conda/include/* (dev headers needed for pip C extension builds like cryptography/psutil)" && \
-    echo "[CLEAN 5/9] Stripping debug symbols from binaries..." && \
-    find /opt/conda/bin -type f -executable ! -name "*.py" ! -name "*.sh" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    find /opt/conda/lib -name "*.so*" ! -path "*/${PYDIR}/site-packages/*" ! -path "*/envs/*/lib/${PYDIR}/site-packages/*" -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    echo "[CLEAN 6/9] Removing conda telemetry + dev tools (preserving package cache)..." && \
-    conda remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
-    rm -f /opt/conda/bin/x86_64-conda-linux-gnu-ld /opt/conda/bin/x86_64-conda-linux-gnu-ld.bfd 2>/dev/null || true && \
-    rm -f /opt/conda/bin/c_rehash /opt/conda/bin/openssl-c_rehash 2>/dev/null || true && \
-    conda clean -y -l -q 2>/dev/null || true && \
-    echo "[CLEAN 7/9] Conda share bloat (terminfo db, locale unused)..." && \
+    find /opt/conda/envs/main/lib -name "*.a" -delete 2>/dev/null || true && \
+    find /opt/conda/envs/main/lib -name "*.la" -delete 2>/dev/null || true && \
+    find /usr/lib -name "*.a" -delete 2>/dev/null || true && \
+    find /usr/lib/x86_64-linux-gnu -name "*.a" -delete 2>/dev/null || true && \
+    echo "  - Preserved /opt/conda/include/* for C extension compilation" && \
+    echo "[CLEAN 5/8] Pruning Babel locale data (keeping en/zh/ja)..." && \
+    for _bdir in /opt/conda/envs/main/lib/python*/site-packages/babel/locale-data; do \
+        if [ -d "$_bdir" ]; then \
+            find "$_bdir" -name "*.dat" ! -name "en*.dat" ! -name "zh*.dat" ! -name "ja*.dat" -delete 2>/dev/null || true; \
+            echo "  - Babel locale data pruned to en/zh/ja in $_bdir"; \
+        fi; \
+    done && \
+    echo "[CLEAN 6/8] Pruning system locales/i18n (keeping en_US/zh_CN)..." && \
+    rm -rf /usr/share/locale/* 2>/dev/null || true && \
+    mkdir -p /usr/share/locale/en_US.UTF-8 /usr/share/locale/zh_CN.UTF-8 /usr/share/locale/en /usr/share/locale/zh 2>/dev/null || true && \
+    rm -rf /usr/share/i18n/charmaps/* 2>/dev/null || true && \
+    echo "  - System locales pruned (en_US/zh_CN retained)" && \
+    apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    echo "[CLEAN 7/8] Conda share bloat (terminfo, zoneinfo, locale)..." && \
+    echo "  - Pruning terminfo (keeping xterm/screen/linux/vt100/ansi/dumb/gnome)..." && \
+    find /opt/conda/share/terminfo -mindepth 1 -maxdepth 1 -type d \
+        ! -name "x" ! -name "s" ! -name "l" ! -name "v" ! -name "a" ! -name "d" ! -name "g" \
+        -exec rm -rf {} + 2>/dev/null || true && \
+    for _d in /opt/conda/share/terminfo/x/* /opt/conda/share/terminfo/s/* /opt/conda/share/terminfo/l/* /opt/conda/share/terminfo/v/* /opt/conda/share/terminfo/a/* /opt/conda/share/terminfo/d/* /opt/conda/share/terminfo/g/*; do \
+        [ -e "$_d" ] || continue; \
+        _bn=$(basename "$_d"); \
+        case "$_bn" in xterm*|screen*|linux*|vt100*|ansi*|dumb*|gnome*) ;; *) rm -f "$_d" 2>/dev/null || true ;; esac; \
+    done && \
+    echo "  - Pruning zoneinfo (keeping Asia, Etc, UTC, America/New_York, Europe/London)..." && \
     rm -rf /opt/conda/share/zoneinfo/leapseconds /opt/conda/share/zoneinfo/tzdata.zi 2>/dev/null || true && \
+    for _zd in /opt/conda/share/zoneinfo/*; do \
+        [ -d "$_zd" ] || [ -f "$_zd" ] || continue; \
+        _bn=$(basename "$_zd"); \
+        case "$_bn" in Asia|Etc|UTC|Universal|America|Europe|zone.tab|zone1970.tab|iso3166.tab) ;; *) rm -rf "$_zd" 2>/dev/null || true ;; esac; \
+    done && \
+    for _zd in /opt/conda/share/zoneinfo/America/*; do \
+        [ -f "$_zd" ] || continue; _bn=$(basename "$_zd"); \
+        case "$_bn" in New_York*) ;; *) rm -f "$_zd" 2>/dev/null || true ;; esac; \
+    done && \
+    for _zd in /opt/conda/share/zoneinfo/Europe/*; do \
+        [ -f "$_zd" ] || continue; _bn=$(basename "$_zd"); \
+        case "$_bn" in London*|UTC) ;; *) rm -f "$_zd" 2>/dev/null || true ;; esac; \
+    done && \
+    find /opt/conda/share/zoneinfo -type d -empty -delete 2>/dev/null || true && \
     for _loc in /opt/conda/share/locale/*; do \
         _bn=$(basename "$_loc"); \
         case "$_bn" in en|en_US|zh|zh_CN|zh_TW|ja) ;; *) rm -rf "$_loc" 2>/dev/null || true ;; esac; \
     done && \
-    echo "[CLEAN 8/9] Package caches and tmp files (preserving BuildKit cache mounts)..." && \
+    for _loc in /opt/conda/envs/main/share/locale/*; do \
+        _bn=$(basename "$_loc"); \
+        case "$_bn" in en|en_US|zh|zh_CN|zh_TW|ja) ;; *) rm -rf "$_loc" 2>/dev/null || true ;; esac; \
+    done && \
+    echo "[CLEAN 8/8] Package caches and tmp files..." && \
     rm -rf /root/.conda/pkgs /tmp/* /var/tmp/* 2>/dev/null || true && \
-    echo "  - Preserved BuildKit cache mounts: /root/.cache/pip, /root/.cache/conda, /opt/conda/pkgs" && \
-    echo "  - These will be reused on subsequent builds for faster installs" && \
-    echo "[CLEAN 9/9] Ensuring /opt/conda permissions..." && \
-    chown -R root:root /opt/conda && \
-    chmod -R a+rX /opt/conda && \
-    find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
-    echo "[OK] Aggressive cleanup complete" && \
+    rm -rf /root/.cache/pip 2>/dev/null || true && \
+    echo "  - BuildKit cache mounts are external (not in image layers)" && \
+    echo "[OK] Deletion cleanup complete (8 steps, no COW-causing modifications)" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [FINAL VERIFICATION - Stage 7/7]               │" && \
@@ -495,19 +567,27 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
         echo "[MIRROR] Verifying pip configurations..." && \
         test -f /root/.config/pip/pip.conf && echo "[OK] root pip.conf present" && \
         test -f /home/devuser/.config/pip/pip.conf && echo "[OK] devuser pip.conf present" && \
-        su - devuser -c "pip config get global.index-url" && echo "[OK] devuser pip index URL configured" && \
+        su - devuser -c "PYTHONDONTWRITEBYTECODE=1 pip config get global.index-url" && echo "[OK] devuser pip index URL configured" && \
         pip --version && echo "[OK] pip available" && \
         jupyter --version && echo "[OK] jupyter available" && \
         docker --version && echo "[OK] docker available" && \
-        podman --version && echo "[OK] podman available" && \
+        if [ "${INSTALL_PODMAN}" = "true" ]; then podman --version && echo "[OK] podman available (stripped, no COW bloat)"; else echo "[INFO] podman not installed (INSTALL_PODMAN=false)"; fi && \
         test ! -d /opt/venv && echo "[OK] /opt/venv removed (using conda only)" && \
         bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
         bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
         bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
         bash -n /usr/local/bin/ft-benchmark.sh && \
-        python3 -m py_compile /usr/local/bin/ft_benchmark.py /usr/local/bin/nogil_kit.py /usr/local/bin/check_gil_state.py && echo "[OK] ft-benchmark + nogil_kit + check_gil_state syntax valid" && \
+        python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py']: compile(open(f).read(), f, 'exec')" && echo "[OK] ft-benchmark + nogil_kit + check_gil_state syntax valid" && \
         echo "[OK] All standard verification checks passed"; \
     fi && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│ [POST-VERIFY SWEEP] Final cleanup              │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    echo "  - Removing any __pycache__/.pyc created by verification (using clean-pycache.sh)..." && \
+    clean-pycache.sh -q /opt/conda /usr && \
+    rm -rf /tmp/* /var/tmp/* /root/.conda/pkgs 2>/dev/null || true && \
+    echo "  - Final cleanup complete" && \
     echo "" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
@@ -529,19 +609,19 @@ RUN echo "=== Stage 7/7: Final metadata, aggressive cleanup, and verification ==
     echo "╔══════════════════════════════════════════════════════════════╗" && \
     echo "║         BUILD TIMING SUMMARY (Runtime Stage)                ║" && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
-    printf "║  Stage 1/7  %-29s %5ds                       ║\n" "system packages + locale" $_T1 && \
-    printf "║  Stage 2/7  %-29s %5ds                       ║\n" "Docker CE install" $_T2 && \
-    printf "║  Stage 3/7  %-29s %5ds                       ║\n" "Podman rootless install" $_T3 && \
-    printf "║  Stage 4/7  %-29s %5ds                       ║\n" "Miniforge3+Python ft+Jupyter" $_T4 && \
+    printf "║  Stage 1/7  %-29s %5ds                       ║\n" "system+binutils+locale" $_T1 && \
+    printf "║  Stage 2/7  %-29s %5ds  [stripped]           ║\n" "Docker CE install+strip" $_T2 && \
+    printf "║  Stage 3/7  %-29s %5ds  [stripped]           ║\n" "Podman+strip (optional)" $_T3 && \
+    printf "║  Stage 4/7  %-29s %5ds  [stripped+pruned]    ║\n" "Miniforge+Python ft+Jupyter" $_T4 && \
     printf "║  Stage 5/7  %-29s %5ds                       ║\n" "user+subuid+dirs+daemon" $_T5 && \
-    printf "║  Stage 6/7  %-29s %5ds                       ║\n" "config + validation" $_T6 && \
-    printf "║  Stage 7/7  %-29s %5ds                       ║\n" "cleanup + final verify" $_T7 && \
+    printf "║  Stage 6/7  %-29s %5ds  [P7: COPY --chmod] ║\n" "config + validation" $_T6 && \
+    printf "║  Stage 7/7  %-29s %5ds  [deletion-only]      ║\n" "cleanup + final verify" $_T7 && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
     printf "║  %-42s %5ds                       ║\n" "RUNTIME TOTAL" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
     rm -f /tmp/.build-timer && \
-    echo "[BUILD] ========== BUILD COMPLETE (slim) ==========" && \
+    echo "[BUILD] ========== BUILD COMPLETE (slim, same-layer strip, P7-compliant) ==========" && \
     echo ""
 
 # ── 元数据声明（不产生镜像层） ──
