@@ -1,0 +1,227 @@
+# =============================================================================
+# devcontainer-base 开发环境 Docker Compose
+# =============================================================================
+# 基于新构建的 devcontainer-base:test-refactor 镜像（Python 3.14.6 free-threading）
+#
+# 快速开始:
+#   1. cp .env.dev.example .env.dev
+#   2. 修改 .env.dev 中的密码和token
+#   3. docker compose -f docker-compose.dev.yml --env-file .env.dev up -d
+#   4. 查看日志: docker compose -f docker-compose.dev.yml logs -f
+#   5. 进入容器: docker compose -f docker-compose.dev.yml exec dev bash
+#   6. 测试Jupyter: docker compose -f docker-compose.dev.yml exec dev python /usr/local/bin/test_jupyter_api.py
+#   7. 配置SSH免密: bash scripts/setup-ssh-key.sh
+#   8. 停止:     docker compose -f docker-compose.dev.yml down
+#
+# 模式选择:
+#   默认(DooD): 共享宿主机Docker，无需 --privileged，推荐WSL/Linux桌面使用
+#   DinD模式:   docker compose -f docker-compose.dev.yml --env-file .env.dev --profile dind up -d
+#               完全隔离的Docker环境，需要 --privileged
+#
+# 访问方式:
+#   SSH:     ssh devuser@localhost -p <SSH_PORT>  (密码见 .env.dev)
+#   Jupyter: http://localhost:<JUPYTER_PORT>/?token=<JUPYTER_TOKEN>
+#
+# 定时任务:
+#   ofelia日志清理: 每天凌晨3:00自动清理容器内日志/缓存（启用log-cron profile）
+#   启用方式: docker compose --profile log-cron up -d
+#
+# 持久化说明（命名卷，容器重建不丢失）:
+#   conda-pkgs        - conda包缓存，避免重复下载
+#   pip-cache         - pip包缓存
+#   bash-history      - bash命令历史
+#   vscode-server     - VS Code Remote SSH 扩展缓存
+#   jupyter-config    - Jupyter配置/token
+#   docker-storage-dind - DinD模式的Docker镜像/容器存储
+# =============================================================================
+
+# ── 公共环境变量（YAML anchor，可被服务复用） ──
+x-common-env: &common-env
+  TZ: ${TZ:-Asia/Shanghai}
+  LANG: ${LANG:-zh_CN.UTF-8}
+  # 用户与权限
+  USER_PASSWORD: ${USER_PASSWORD:-dev123456}
+  GRANT_SUDO: ${GRANT_SUDO:-yes}
+  ALLOW_ROOT_SSH: ${ALLOW_ROOT_SSH:-no}
+  LOCAL_USER_ID: ${LOCAL_USER_ID:-1000}
+  LOCAL_GROUP_ID: ${LOCAL_GROUP_ID:-1000}
+  WORKSPACE_CHOWN_MODE: ${WORKSPACE_CHOWN_MODE:-named-only}
+  JUPYTER_ROOT_CHOWN: ${JUPYTER_ROOT_CHOWN:-named-only}
+  # SSH公钥（由setup-ssh-key.sh自动写入，也可手动设置）
+  SSH_PUBLIC_KEY: ${SSH_PUBLIC_KEY:-}
+  # 服务开关
+  ENABLE_SSH: ${ENABLE_SSH:-yes}
+  ENABLE_JUPYTER: ${ENABLE_JUPYTER:-yes}
+  ENABLE_PODMAN: ${ENABLE_PODMAN:-no}
+  DEBUG: ${DEBUG:-0}
+  # Jupyter
+  JUPYTER_TOKEN: ${JUPYTER_TOKEN:-devcontainer123}
+  JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
+  JUPYTER_ROOT_DIR: ${JUPYTER_ROOT_DIR:-/workspace}
+  # Bash历史持久化
+  HISTFILE: /home/devuser/command_history/.bash_history
+  PROMPT_COMMAND: 'history -a; history -c; history -r'
+
+# ── 公共日志配置（Docker json-file轮转，防止日志无限增长） ──
+x-common-logging: &common-logging
+  driver: json-file
+  options:
+    max-size: "10m"    # 单个日志文件最大10MB
+    max-file: "3"      # 保留3个轮转文件
+    labels: "devcontainer"
+
+# ── ofelia定时清理标签（每天凌晨3:00执行） ──
+x-ofelia-labels: &ofelia-labels
+  ofelia.enabled: "true"
+  # 清理容器内系统日志（supervisord、sshd等）
+  ofelia.job-exec.log-cleanup.schedule: "0 0 3 * * *"
+  ofelia.job-exec.log-cleanup.command: "bash -c 'echo \"=== Daily cleanup: $(date) ===\" && find /var/log -type f -name \"*.log\" -mtime +3 -delete 2>/dev/null; for f in /var/log/supervisor/*.log /var/log/syslog /var/log/*.log; do if [ -f \"$$f\" ]; then s=$$(stat -c%s \"$$f\" 2>/dev/null || echo 0); if [ $$s -gt 10485760 ]; then echo \"Truncating $$f ($$s bytes)\"; truncate -s 0 \"$$f\" 2>/dev/null; fi; fi; done; echo \"[DONE] System logs cleaned\"'"
+  # 清理conda/pip缓存
+  ofelia.job-exec.cache-cleanup.schedule: "0 30 3 * * *"
+  ofelia.job-exec.cache-cleanup.command: "bash -c 'conda clean -y -l -q 2>/dev/null; pip cache purge 2>/dev/null; find /tmp -type f -mtime +7 -delete 2>/dev/null; find /var/tmp -type f -mtime +7 -delete 2>/dev/null; echo \"[DONE] Package caches and tmp cleaned\"'"
+  # 清理jupyter运行时kernel文件
+  ofelia.job-exec.jupyter-cleanup.schedule: "0 0 4 * * 0"
+  ofelia.job-exec.jupyter-cleanup.command: "bash -c 'find /home/devuser/.local/share/jupyter/runtime -type f -mtime +1 -delete 2>/dev/null; echo \"[DONE] Jupyter runtime files cleaned\"'"
+  ofelia.job-exec.log-cleanup.user: "root"
+  ofelia.job-exec.cache-cleanup.user: "root"
+  ofelia.job-exec.jupyter-cleanup.user: "root"
+
+services:
+  # ─── 默认模式: DooD (Docker-out-of-Docker) ───
+  # 共享宿主机Docker Socket（只读），无需 --privileged
+  dev:
+    image: ${IMAGE_NAME:-devcontainer-base}:${IMAGE_TAG:-test-refactor}
+    container_name: ${CONTAINER_NAME:-devcontainer-dev}
+    ports:
+      - "${SSH_PORT:-2222}:22"
+      - "${JUPYTER_PORT:-8888}:8888"
+    volumes:
+      # 工作目录
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      # Jupyter API测试脚本（从宿主机挂载，方便更新）
+      - ./scripts/test_jupyter_api.py:/usr/local/bin/test_jupyter_api.py:ro
+      # DooD: 挂载宿主机Docker Socket（只读，安全第一）
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Docker客户端配置（只读）
+      - ${DOCKER_CONFIG:-~/.docker}:/home/devuser/.docker:ro
+      # Git配置（只读，不泄露宿主机凭据）
+      - ${GIT_CONFIG:-~/.gitconfig}:/home/devuser/.gitconfig:ro
+      # 宿主机SSH目录（只读，挂载到独立路径避免覆盖容器内.ssh）
+      # 注意: 宿主机公钥通过SSH_PUBLIC_KEY环境变量注入authorized_keys
+      # 宿主机私钥/known_hosts用于容器内git操作，entrypoint会配置SSH config引用
+      - ${SSH_CONFIG_DIR:-~/.ssh}:/run/host-ssh:ro
+      # 持久化缓存（命名卷，容器重建不丢失）
+      - conda-pkgs:/opt/conda/pkgs
+      - pip-cache:/root/.cache/pip
+      - bash-history:/home/devuser/command_history
+      - vscode-server:/home/devuser/.vscode-server
+      - jupyter-config:/home/devuser/.jupyter
+      - ssh-config:/home/devuser/.ssh  # SSH配置持久化（authorized_keys/host-keys/config）
+    environment:
+      <<: *common-env
+      ENABLE_DOCKER: ${ENABLE_DOCKER:-yes}  # 自动检测DooD模式，禁用内部dockerd
+    restart: unless-stopped
+    logging: *common-logging
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    labels:
+      <<: *ofelia-labels
+    tty: true
+    stdin_open: true
+    working_dir: /workspace
+
+  # ─── DinD模式 (Docker-in-Docker): 完全隔离，需 --privileged ───
+  dev-dind:
+    image: ${IMAGE_NAME:-devcontainer-base}:${IMAGE_TAG:-test-refactor}
+    container_name: ${CONTAINER_NAME:-devcontainer-dev}-dind
+    profiles: ["dind"]
+    privileged: true
+    ports:
+      - "${SSH_PORT_DIND:-2232}:22"
+      - "${JUPYTER_PORT_DIND:-8898}:8888"
+    volumes:
+      # 工作目录
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      # Jupyter API测试脚本
+      - ./scripts/test_jupyter_api.py:/usr/local/bin/test_jupyter_api.py:ro
+      # Docker客户端配置（只读）
+      - ${DOCKER_CONFIG:-~/.docker}:/home/devuser/.docker:ro
+      # Git配置（只读）
+      - ${GIT_CONFIG:-~/.gitconfig}:/home/devuser/.gitconfig:ro
+      # SSH配置目录（只读）
+      - ${SSH_CONFIG_DIR:-~/.ssh}:/home/devuser/.ssh:ro
+      # DinD使用独立缓存卷（避免与DooD模式冲突）
+      - conda-pkgs-dind:/opt/conda/pkgs
+      - pip-cache-dind:/root/.cache/pip
+      - bash-history-dind:/home/devuser/command_history
+      - vscode-server-dind:/home/devuser/.vscode-server
+      - jupyter-config-dind:/home/devuser/.jupyter
+      - docker-storage-dind:/var/lib/docker  # DinD镜像/容器存储持久化
+    environment:
+      <<: *common-env
+      ENABLE_DOCKER: yes
+    restart: unless-stopped
+    logging: *common-logging
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      <<: *ofelia-labels
+    tty: true
+    stdin_open: true
+    working_dir: /workspace
+    # ── GPU支持（安装NVIDIA Container Toolkit后取消注释） ──
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ─── Ofelia 定时任务调度器（log-cron profile） ───
+  # 每天凌晨3:00自动清理容器日志和缓存
+  # 启用: docker compose --profile log-cron up -d
+  # 日志: docker compose logs ofelia
+  ofelia:
+    image: mcuadros/ofelia:latest
+    container_name: ${CONTAINER_NAME:-devcontainer-dev}-cron
+    profiles: ["log-cron"]
+    command: daemon --docker
+    volumes:
+      # ofelia需要rw权限通过docker API执行exec命令
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+    labels:
+      ofelia.enabled: "true"
+      # ofelia自身日志每日轮转
+      ofelia.job-internal.rotate-logs.schedule: "0 0 0 * * *"
+      ofelia.job-internal.rotate-logs.command: "echo 'Log rotation check' && df -h / | tail -1"
+
+volumes:
+  # DooD 模式缓存卷
+  conda-pkgs:
+  pip-cache:
+  bash-history:
+  vscode-server:
+  jupyter-config:
+  ssh-config:
+  # DinD 模式缓存卷（独立隔离）
+  conda-pkgs-dind:
+  pip-cache-dind:
+  bash-history-dind:
+  vscode-server-dind:
+  jupyter-config-dind:
+  docker-storage-dind:
