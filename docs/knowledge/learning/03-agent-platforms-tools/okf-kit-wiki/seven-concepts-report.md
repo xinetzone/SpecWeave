@@ -68,6 +68,7 @@ tags: ["okf-kit", "seven-concepts", "methodology", "knowledge-precipitation", "R
 - **根因**：用户通常只想爬取/docs/或/book/等特定路径下的内容，而非整站
 - **影响**：避免了BFS无边界扩散到整个域名，控制了bundle体积
 - **建议**：爬虫默认scope到seed路径，显式参数（--all-paths）才放开
+- **沉淀**：本洞察已沉淀为可复用模式 [默认范围收敛·显式放开](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/default-scope-explicit-expansion.md)（L1 待验证）
 
 ### 洞察4：Content Hash增量同步
 - **现象**：使用markdown内容的sha256 hash而非时间戳判断页面变更
