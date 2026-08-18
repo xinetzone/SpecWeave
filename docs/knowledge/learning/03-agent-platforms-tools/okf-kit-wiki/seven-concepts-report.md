@@ -76,7 +76,7 @@ tags: ["okf-kit", "seven-concepts", "methodology", "knowledge-precipitation", "R
 - **影响**：sync只写变更页面，git diff干净，适合bundle纳入版本控制
 - **建议**：增量更新应基于内容hash而非元数据
 
-> **本洞察已沉淀为可复用模式**：[内容指纹变更检测·增量同步](../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-fingerprint-incremental-sync.md)——基于内容指纹（SHA256）而非元数据（时间戳）判断数据变更，指纹不变则跳过写入，产出干净 Git diff。与 `content-hash-build-cache`（构建缓存）同技术不同领域（构建 vs 同步）。
+> **本洞察已沉淀为可复用模式**：[内容指纹变更检测·增量同步](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/content-fingerprint-incremental-sync.md)——基于内容指纹（SHA256）而非元数据（时间戳）判断数据变更，指纹不变则跳过写入，产出干净 Git diff。与 `content-hash-build-cache`（构建缓存）同技术不同领域（构建 vs 同步）。
 
 ### 洞察5：Fetcher抽象层实现后端可插拔
 - **现象**：HttpFetcher和BrowserFetcher实现统一的fetch/close接口
