@@ -1,0 +1,61 @@
+# DevContainer Win11 - OpenSSH Server Configuration
+# This is the sshd_config for Windows OpenSSH Server
+
+# Port settings
+Port 22
+ListenAddress 0.0.0.0
+ListenAddress ::
+
+# Authentication
+PermitRootLogin no
+StrictModes yes
+MaxAuthTries 6
+MaxSessions 10
+
+# Public key authentication
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+
+# Password authentication (enabled by default for container use)
+PasswordAuthentication yes
+PermitEmptyPasswords no
+
+# Challenge response
+ChallengeResponseAuthentication no
+
+# Kerberos
+KerberosAuthentication no
+GSSAPIAuthentication no
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# X11 forwarding
+X11Forwarding no
+PrintMotd no
+
+# TCP settings
+TCPKeepAlive yes
+PermitTunnel no
+
+# Allow agent/tcp forwarding
+AllowAgentForwarding yes
+AllowTcpForwarding yes
+PermitTTY yes
+
+# Session
+ClientAliveInterval 300
+ClientAliveCountMax 2
+
+# Subsystem - SFTP
+Subsystem sftp sftp-server.exe
+
+# Default shell (set via registry in Dockerfile)
+# Default shell is PowerShell 7 (pwsh.exe)
+
+# Allow devuser user
+AllowUsers devuser
+
+# Disable administrator login (security)
+DenyUsers Administrator

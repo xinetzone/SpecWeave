@@ -40,7 +40,8 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 
 | 分组 | 应用 | AGENTS.md 入口 | .agents/ | 说明 |
 |------|------|---------------|:---:|------|
-| docker-images/ | devcontainer-base | [docker-images/devcontainer-base/AGENTS.md](docker-images/devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理） |
+| docker-images/ | devcontainer-base | [docker-images/devcontainer-base/AGENTS.md](docker-images/devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（Ubuntu 26.04，SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理，Python 3.14 cp314t free-threading） |
+| docker-images/ | devcontainer-win11 | [docker-images/devcontainer-win11/AGENTS.md](docker-images/devcontainer-win11/AGENTS.md) | ✅ 有 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell管理，Python 3.14 cp314t free-threading） |
 | docker-images/ | docker-ssh-dind | [docker-images/docker-ssh-dind/AGENTS.md](docker-images/docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
 | docker-images/ | jupyter-ssh-base | [docker-images/jupyter-ssh-base/AGENTS.md](docker-images/jupyter-ssh-base/AGENTS.md) | ❌ 无 | Jupyter Notebook SSH 基础镜像 |
 | docker-images/ | pytorch-base | [docker-images/pytorch-base/AGENTS.md](docker-images/pytorch-base/AGENTS.md) | ❌ 无 | PyTorch 基础环境镜像 |
@@ -65,6 +66,7 @@ SpecWeave 根 AGENTS.md
   └─ apps/AGENTS.md（本文件，apps 区域入口）
        └─ docker-images/（容器镜像类分组）
             ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）
+            ├─ devcontainer-win11/AGENTS.md（devcontainer-win11 应用入口 · 嵌套优先 · Windows+free-threading）
             ├─ docker-ssh-dind/AGENTS.md（docker-ssh-dind 应用入口 · 嵌套优先）
             ├─ jupyter-ssh-base/AGENTS.md（jupyter-ssh-base 应用入口 · 嵌套优先）
             ├─ pytorch-base/AGENTS.md（pytorch-base 应用入口 · 嵌套优先）
@@ -88,7 +90,7 @@ flowchart TD
     Layer2 --> SubApp{"步骤2：按应用路由表<br/>确定目标应用"}
     SubApp -.->|"❶ 无匹配项"| E1["确认是否为新增应用<br/>走新增应用流程"]
     E1 -.-> Layer2
-    SubApp -->|"有自身 AGENTS.md<br/>（devcontainer-base/docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
+    SubApp -->|"有自身 AGENTS.md<br/>（devcontainer-base/devcontainer-win11/docker-ssh-dind/jupyter-ssh-base/<br/>pytorch-base/caffe-ffi-jupyter/zhujian-wudao）"| Layer3["第三层：读取应用自身 AGENTS.md<br/>（嵌套优先）"]
     SubApp -->|"无自身 AGENTS.md<br/>（ai-code-assistant/camera-power-controller/<br/>prompt_extraction/shared/tests/xmnn-runtime）"| Direct["直接遵循根 .agents/ 规范"]
     Layer3 -.->|"❷ 读取失败"| E2["检查文件是否存在<br/>回退到根规范执行"]
     E2 -.-> Direct
@@ -133,6 +135,16 @@ flowchart TD
 
 apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调用。实际资产存放在各应用内，本索引仅提供路由定位。
 
+### devcontainer-win11 应用
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 入门指南 | [docker-images/devcontainer-win11/.agents/README.md](docker-images/devcontainer-win11/.agents/README.md) | devcontainer-win11 .agents/ 入口 |
+| Dockerfile 规则 | [docker-images/devcontainer-win11/.agents/rules/dockerfile.md](docker-images/devcontainer-win11/.agents/rules/dockerfile.md) | Windows Dockerfile 编写规范（含 free-threading 配置） |
+| Entrypoint 规则 | [docker-images/devcontainer-win11/.agents/rules/entrypoint.md](docker-images/devcontainer-win11/.agents/rules/entrypoint.md) | entrypoint.ps1 编写规范 |
+| 服务配置规则 | [docker-images/devcontainer-win11/.agents/rules/services.md](docker-images/devcontainer-win11/.agents/rules/services.md) | sshd/jupyter/docker dood 服务配置规范 |
+| 构建测试规则 | [docker-images/devcontainer-win11/.agents/rules/build-test.md](docker-images/devcontainer-win11/.agents/rules/build-test.md) | 构建和测试规范 |
+
 ### docker-ssh-dind 应用
 
 | 资产 | 路径 | 说明 |
@@ -172,8 +184,11 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/ai-agents/ | SpecWeave 主权区 | ✅ 是 | AI 应用类分组 |
 | apps/dev-tools/ | SpecWeave 主权区 | ✅ 是 | 开发工具类分组 |
 | apps/samples/ | SpecWeave 主权区 | ✅ 是 | 示例/原型类分组 |
-| apps/docker-images/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（SSH+Docker+Podman+Jupyter） |
+| apps/docker-images/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（Ubuntu，SSH+Docker+Podman+Jupyter，supervisord管理） |
 | apps/docker-images/devcontainer-base/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-base 入口 |
+| apps/docker-images/devcontainer-win11/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell管理，Python 3.14 cp314t free-threading） |
+| apps/docker-images/devcontainer-win11/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-win11 入口 |
+| apps/docker-images/devcontainer-win11/.agents/ | 应用自治 | ✅ 是 | devcontainer-win11 规范体系（Dockerfile/entrypoint/services/build-test规则） |
 | apps/docker-images/docker-ssh-dind/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Docker SSH DinD 环境 |
 | apps/docker-images/docker-ssh-dind/AGENTS.md | 应用自治 | ✅ 是 | docker-ssh-dind 入口 |
 | apps/docker-images/docker-ssh-dind/.agents/ | 应用自治 | ✅ 是 | docker-ssh-dind 规范体系 |
