@@ -43,8 +43,8 @@
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
 [python-link]: .agents/docs/tech-stack.md
-[scripts-badge]: https://img.shields.io/badge/脚本-401%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-21-success?style=flat
+[scripts-badge]: https://img.shields.io/badge/脚本-412%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-22-success?style=flat
 [rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
 [commands-badge]: https://img.shields.io/badge/指令集-15-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
