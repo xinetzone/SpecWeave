@@ -70,6 +70,8 @@ RUN strip --strip-all /usr/bin/dockerd               # 上层：dockerd 12MB副�
 2. **识别文件创建层**：对每个大文件/目录，明确它在哪个RUN指令中被创建/安装
 3. **同层执行修改**：strip/chmod/删除包内文件等操作，必须在同一RUN指令中用`&&`连接完成，不要分离到独立RUN
 4. **最终层只做删除**：最后清理层（cleanup/final stage）仅执行`rm -rf`（whiteout操作），禁止strip/chmod/chown -R/purge等内容修改操作
+   - **边界说明**：`apt-get clean`可接受——它主要删除`/var/lib/apt/lists/`下的缓存文件（whiteout效果），即使修改少量dpkg状态文件（`/var/lib/dpkg/`等），这些文件仅KB级，COW代价可忽略
+   - **禁止项**：`apt-get purge`/`apt-get autoremove`/`mamba remove`不可在最终层执行（级联删除风险+COW膨胀）
 5. **构建后验证无COW**：`docker history <image>`检查各层大小——除安装层外，其他层应接近0B或仅KB级（COPY指令元数据）
 
 ### strip参数选择指南
@@ -106,6 +108,11 @@ RUN chown -R appuser:appuser /opt/conda  # 触发COW，/opt/conda下每个文件
 ```
 
 后果：`chown -R`修改每个文件的元数据，OverlayFS中修改元数据同样触发COW复制整个文件内容。对于/opt/conda（数百MB），会产生一个数百MB的冗余层。
+
+**为什么`COPY --chown`安全而`RUN chown`不安全？**
+- `COPY --chown=user:group`是在文件**写入新层时**直接设置属主属性，文件数据只写一次到当前层，不涉及对低层已有文件的修改
+- `RUN chown -R`是在COPY之后**修改已写入的文件元数据**，OverlayFS中修改元数据同样触发COW——它需要在当前层创建受影响文件的完整副本才能修改其属性
+- 同理，`COPY --chmod`（Docker 23.0+）也安全，因为权限在写入时设置
 
 正确做法：
 - chown在COPY同层完成：`COPY --chown=appuser:appuser --from=builder /opt/conda /opt/conda`
@@ -163,6 +170,7 @@ file $(which dockerd) | grep -q "not stripped" && echo "ERROR: not stripped" || 
 **Git版本控制**：
 - 类比：Git对象是不可变的（类似低层只读），commit后的修改产生新对象（类似上层COW）
 - 迁移启示：不要在错误的提交中"修复"大文件——应该amend/rebase到创建该文件的提交中，否则Git历史中永久保留两个副本
+- ⚠️ **注意**：Git与OverlayFS机制不完全相同（Git是不可变对象DAG，OverlayFS是whiteout层叠），但"修改应在创建时完成"的分层思维可迁移
 
 **备份系统（增量备份）**：
 - 完全备份后修改大文件，增量备份存储完整新文件

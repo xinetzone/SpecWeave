@@ -224,13 +224,13 @@ category: code-patterns/docker
 
 ## 5. 行动项与后续优化方向
 
-| # | 行动项 | 优先级 | 预期收益 | 说明 |
-|---|---|---|---|---|
-| A1 | 可选：添加`INSTALL_PANDOC`构建参数（默认true） | P2 | -150MB（关闭pandoc时） | 不需要Jupyter导出PDF/DOCX时可关闭 |
-| A2 | 补充Dockerfile注释中strip --strip-all对Go panic的影响说明 | P3 | 文档完整性 | 防止未来误用 |
-| A3 | 编写"P7同层修改原则"完整模式文档存入patterns/code-patterns/docker/ | P2 | 知识沉淀 | 本报告为基础，扩展为正式模式文档 |
-| A4 | 考虑将Stage 1的binutils改为构建完后卸载（如果能安全做到） | P3 | -10MB | binutils仅构建时strip需要，运行时不需要；但需确保同层安装+使用+卸载 |
-| A5 | 清理中间标签镜像释放磁盘空间 | P1 | ~12GB | 7个中间镜像标签可删除 |
+| # | 行动项 | 优先级 | 预期收益 | 说明 | 状态 |
+|---|---|---|---|---|---|
+| A1 | 可选：添加`INSTALL_PANDOC`构建参数（默认true） | P2 | -150MB（关闭pandoc时） | 不需要Jupyter导出PDF/DOCX时可关闭 | 待执行 |
+| A2 | 补充Dockerfile注释中strip --strip-all对Go panic的影响说明 | P3 | 文档完整性 | 防止未来误用 | 待执行 |
+| A3 | 编写"P7同层修改原则"和"镜像深度压缩8步法"完整模式文档存入patterns/code-patterns/ | P2 | 知识沉淀 | 本报告为基础，扩展为正式L2模式文档，含多案例验证矩阵和V阶段对抗审查 | ✅ 已完成（2026-08-18） |
+| A4 | 考虑将Stage 1的binutils改为构建完后卸载（如果能安全做到） | P3 | -10MB | binutils仅构建时strip需要，运行时不需要；但需确保同层安装+使用+卸载 | 待执行 |
+| A5 | 清理中间标签镜像释放磁盘空间 | P1 | ~12GB | 7个中间镜像标签可删除 | 待执行 |
 
 ---
 
@@ -242,10 +242,15 @@ category: code-patterns/docker
 | [stage4a-miniforge.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4a-miniforge.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；同层清理tk/tcl+.pyc |
 | [stage4b-mamba-env.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4b-mamba-env.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；手动删tk/tcl（非mamba remove）；删nbclassic；同层strip bin+.so；清理测试目录 |
 | [stage4c-pip-verify.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/scripts/dockerfile/stage4c-pip-verify.sh) | 修改 | 添加PYTHONDONTWRITEBYTECODE；验证后清理.pyc |
+| [docker-cow-same-layer-modification.md](patterns/code-patterns/docker-cow-same-layer-modification.md) | 新增 | P7同层修改原则正式模式文档（L2-validated，4案例验证） |
+| [docker-deep-slim-8step.md](patterns/code-patterns/docker-deep-slim-8step.md) | 新增 | 镜像深度压缩8步法正式模式文档（L2-validated，3案例验证矩阵） |
+| [code-patterns/README.md](patterns/code-patterns/README.md) | 修改 | 模式索引更新：新增两个Docker模式条目 |
 
 ---
 
 ## 7. 质量门检查清单
+
+### 里程碑复盘阶段（R→I→E→V）
 
 | 质量门 | 标准 | 结果 |
 |---|---|---|
@@ -254,6 +259,15 @@ category: code-patterns/docker
 | G3（模式可迁移） | 模式含触发/步骤/反模式/检验/迁移 | ✅ 2个模式，均含反模式≥3个、跨场景迁移验证 |
 | G4（行动项原子化） | 单一职责、可验证 | ✅ 5个行动项，均可独立执行 |
 | V门（对抗审查） | 4视角全覆盖、≥5条实质意见、≥2条采纳 | ✅ 4视角8条意见，术语补充+风险标注已采纳 |
+
+### 模式沉淀阶段（E→V→C，2026-08-18）
+
+| 质量门 | 标准 | 结果 |
+|---|---|---|
+| G3（模式可迁移·正式入库） | 8项检查全通过（名称/场景/步骤/反模式/检验/迁移/多案例/frontmatter） | ✅ P7模式(226行)+8步法模式(416行)均通过 |
+| V门（模式入库前对抗审查） | 4视角全覆盖、≥5条实质意见、≥2条采纳修正 | ✅ 4视角14条意见，7条采纳修正（apt-get clean边界/COPY --chown机制/Git类比注/BuildKit前置/PYTHONDONTWRITEBYTECODE澄清/编译期strip说明/风险警示加强） |
+| 索引更新 | code-patterns/README.md包含新模式条目 | ✅ 第96-97行已索引 |
+| 交叉引用 | 模式间related_patterns互引用、关联dockerfile-runtime-logical-layering | ✅ P7↔8步法互引用，P7↔P1-P6互引用 |
 
 ---
 

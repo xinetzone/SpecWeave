@@ -91,6 +91,8 @@ RUN apt-get update && \
 
 ### 步骤2：Go二进制strip --strip-all
 
+> ⚠️ **编译期strip更优**：如果自己编译Go程序，优先使用编译期strip：`go build -ldflags="-s -w"`，这比事后`strip --strip-all`更彻底（移除DWARF调试信息+符号表），且不存在COW问题（编译产物本身就是stripped状态）。apt-get安装的预编译Go二进制无法在编译期strip，需使用本步骤事后strip。
+
 ```dockerfile
 # Go编译的静态二进制（dockerd/containerd/podman/buildx/compose）用--strip-all
 RUN echo "=== Install Docker CE ===" && \
@@ -120,6 +122,8 @@ RUN echo "=== Install Podman ===" && \
 
 ### 步骤4：同层清理包管理器缓存
 
+> **前置条件**：需启用BuildKit（Docker 23.0+默认启用；旧版本需设置`DOCKER_BUILDKIT=1`环境变量或使用`docker buildx build`）。`--mount=type=cache`是BuildKit专属语法，传统builder不支持。
+
 ```dockerfile
 # pip/conda/apt缓存在安装同层删除，配合BuildKit cache mount
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -136,15 +140,17 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 ### 步骤5：PYTHONDONTWRITEBYTECODE=1 全链路防护
 
 ```dockerfile
-# 所有执行Python代码的RUN层都设置此环境变量
+# 推荐：Dockerfile全局设置一次ENV，所有后续RUN层自动继承
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# 或在单个RUN层内设置
+# 仅在以下情况需要在单个RUN层内单独设置：
+# 1. 全局ENV未设置（如基础镜像未设置此变量且无法修改基础镜像）
+# 2. 需要临时覆盖（极少数场景）
 RUN PYTHONDONTWRITEBYTECODE=1 python -c "import tvm; print('OK')"
 ```
 
 - Python默认在import时生成.pyc字节码缓存，这是最隐蔽的体积来源
-- 需要在Dockerfile全局ENV设置，且每个执行Python的RUN层都要确保生效
+- **推荐做法**：在Dockerfile开头（第一个FROM之后）设置全局`ENV PYTHONDONTWRITEBYTECODE=1`，所有后续RUN层自动继承，无需重复设置
 - 验证脚本/syntax check/import test都会触发.pyc生成
 
 ### 步骤6：手动rm删除冗余文件（不用包管理器remove）
@@ -197,6 +203,12 @@ print('All imports OK')
 - 验证命令后紧跟同层find+delete作为双保险
 
 ## 反模式（至少3个）
+
+> ⚠️ **风险警示**：以下反模式均来自本项目及相关Docker镜像项目的**实测踩坑**，不是理论推测。在生产镜像上操作前，务必在测试镜像上先验证每一步。特别注意：
+> - Go `--strip-all` 会导致panic stack trace丢失函数名（devcontainer可接受，生产镜像需权衡）
+> - **GPU/CUDA/ML框架的.so文件绝对不能盲目strip**，可能导致CUDA kernel JIT失败或import崩溃（见反模式6）
+> - `apt-get purge`/`apt-get autoremove`可能级联删除关键包（git/ssh等），在生产镜像上禁用
+> - 清理和验证的顺序是**先验证后清理**（verify → clean），顺序颠倒会导致清理白费
 
 ### ❌ 反模式1：忘记装binutils就strip（静默失败）
 
