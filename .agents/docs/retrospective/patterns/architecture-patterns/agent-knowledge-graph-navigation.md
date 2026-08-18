@@ -1,8 +1,10 @@
 ---
 id: "agent-knowledge-graph-navigation"
-source: "../../../reports/competitive-analysis/retrospective-knowledge-catalog-wiki-20260815/insights/insight-05-progressive-disclosure.md"
-maturity: "L1"
-validation_count: 1
+source:
+  - "../../../reports/competitive-analysis/retrospective-knowledge-catalog-wiki-20260815/insights/insight-05-progressive-disclosure.md"
+  - "../../../../../docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L52-L56"
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
@@ -323,6 +325,14 @@ OKF的Enrichment Agent在消费Bundle时严格遵循该导航策略，相比全�
 - 文件之间通过相对链接显式关联
 - Skill采用L0/L1/L2三层架构也是同样的渐进式披露思想
 
+### 案例4：okf-kit v0.3.3 源码实现（2026-08-18，第二次独立验证）
+
+**来源**：[okf-kit Wiki 七概念执行报告 · 洞察1](../../../../../docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L52-L56)
+
+okf-kit（OKF 的 Python 实现，v0.3.3）的源码研读确认了「子目录 index.md 局部路由」机制在真实实现中的落地：面向 Agent 的知识 bundle 为每个目录生成 `index.md`，列出该目录下的子目录与文件清单，使独立 LLM 无需专用 SDK 即可可靠地逐级导航定位内容，从而降低集成门槛。
+
+本次验证与「案例1（OKF v0.2 规范）」构成「规范 + 实现」双重独立验证——前者是设计规范的静态描述，后者是源码实现的行为确认。据此 `validation_count` 由 1 提升至 2，成熟度由 L1 升级为 L2。
+
 ## 适用边界
 
 ### 适用场景
@@ -367,4 +377,4 @@ OKF的Enrichment Agent在消费Bundle时严格遵循该导航策略，相比全�
 
 ---
 
-*模式版本：v1.0 | 创建日期：2026-08-17 | maturity: L1（validation_count=1：OKF v0.2 Bundle规范验证，网站IA/SpecWeave为同构先例佐证）*
+*模式版本：v1.1 | 创建日期：2026-08-17 | 更新日期：2026-08-18 | maturity: L2（validation_count=2：OKF v0.2 规范 + okf-kit v0.3.3 实现双重验证，网站IA/SpecWeave为同构先例佐证）*

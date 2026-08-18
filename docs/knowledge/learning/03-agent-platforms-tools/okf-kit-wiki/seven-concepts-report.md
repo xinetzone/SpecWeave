@@ -54,6 +54,7 @@ tags: ["okf-kit", "seven-concepts", "methodology", "knowledge-precipitation", "R
 - **根因**：Agent无法像人类一样"猜测"文件路径，必须通过逐级列表导航
 - **影响**：这使得独立LLM无需专门SDK即可可靠导航bundle，降低了集成门槛
 - **建议**：任何面向Agent的知识打包格式都应内置目录索引机制
+- **沉淀**：本洞察已沉淀为可复用模式 [Agent知识图谱导航](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/agent-knowledge-graph-navigation.md)（L2 已验证）
 
 ### 洞察2：零Key优先的设计哲学
 - **现象**：核心爬取路径无需API Key，Chat无Key时回退到关键词检索
