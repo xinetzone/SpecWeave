@@ -226,10 +226,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     echo "[TIMER] Stage 2/7 (Docker CE) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 3/7: Podman rootless 安装（可选，默认INSTALL_PODMAN=false跳过）
+# Stage 3/7: Podman rootless 安装（可选，默认INSTALL_PODMAN=true安装）
 # 变化频率：低（Podman版本升级时改）
 # 原则：直接使用Ubuntu 26.04官方源，无需第三方repo
-#       默认不安装以减小镜像体积；--build-arg INSTALL_PODMAN=true 启用
+#       默认安装提供完整容器能力；--build-arg INSTALL_PODMAN=false 可跳过以减小镜像体积
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
