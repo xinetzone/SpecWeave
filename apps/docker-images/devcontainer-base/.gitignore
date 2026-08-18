@@ -20,6 +20,9 @@ verification-report*.json
 # Local environment (contains credentials)
 .env
 
+# Local build helper scripts (WSL-specific, contain hardcoded paths)
+_*.sh
+
 # Docker volumes (metadata)
 *.log
 
@@ -35,3 +38,41 @@ Thumbs.db
 # ONNX models
 *.onnx
 
+# >>> security-secrets (auto-managed by scripts/secure-gitignore.sh) >>>
+# ─── Environment files (contain passwords, tokens, keys) ───
+.env
+.env.dev
+.env.local
+.env.*.local
+.env.*.bak
+.env.*.old
+.env.prod
+.env.staging
+.env.production
+.env.development.local
+
+# ─── SSH private keys & credentials ───
+*.pem
+*.key
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+id_ecdsa
+id_ecdsa.*
+*.sec
+credentials
+*.credentials
+
+# ─── Docker/container secrets ───
+docker-compose.override.yml
+docker-compose.*.local.yml
+
+# ─── White-list: safe files that SHOULD be tracked ───
+!*.pub
+!*.pem.example
+!*.key.example
+!.env.example
+!.env.dev.example
+!.env.ide.example
+# <<< security-secrets (auto-managed) <<<
