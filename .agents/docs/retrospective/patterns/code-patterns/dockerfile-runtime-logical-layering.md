@@ -1,18 +1,21 @@
 ---
 id: "dockerfile-runtime-logical-layering"
-title: "Dockerfile Runtime 阶段六步逻辑分层模式"
+title: "Dockerfile Runtime 阶段六步逻辑分层模式（P1-P6）"
 type: "code-pattern"
-maturity: "L1-draft"
-maturity_note: "jupyter-ssh-base v1.0+ 实战验证；单案例，待更多项目验证后升级L2"
+maturity: "L2-validated"
+maturity_note: "双案例验证：jupyter-ssh-base v1.0+ + devcontainer-base镜像深度压缩实战；补充P7同层修改原则"
 source:
   - "jupyter-ssh-base Dockerfile 6阶段分层构建实践"
+  - "devcontainer-base Docker镜像深度压缩里程碑（P7补充）"
 related_patterns:
   - "docker-buildtime-vs-runtime-config.md"
   - "compiled-wheel-runtime-image-build.md"
   - "conda-docker-multistage-best-practices.md"
-tags: ["docker", "dockerfile", "multi-stage-build", "layering", "cache-optimization", "build-verification"]
-validation_count: 1
-reuse_count: 1
+  - "docker-cow-same-layer-modification.md"
+  - "docker-deep-slim-8step.md"
+tags: ["docker", "dockerfile", "multi-stage-build", "layering", "cache-optimization", "build-verification", "cow"]
+validation_count: 2
+reuse_count: 2
 ---
 
 # Dockerfile Runtime 阶段六步逻辑分层模式
@@ -43,6 +46,14 @@ reuse_count: 1
 ## 核心原则
 
 物理两阶段（builder + runtime）只是基础，**runtime 阶段内部必须按单一职责拆分为 6 个逻辑层**，每层一个 RUN 指令，有清晰的注释边界和验证点。
+
+### 🔴 P7横切原则：同层修改（COW膨胀防御）
+
+在遵循P1-P6分层的基础上，必须额外遵守**P7同层修改原则**（详见 [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)）：
+
+> **所有对文件的内容修改（strip/chmod/删除包内文件）必须在文件创建的同一RUN层内完成；最终清理层（Stage 2.6/6）只做`rm -rf`删除（whiteout操作），禁止strip/chmod/purge等内容修改。**
+
+违反P7会导致Copy-on-Write膨胀——上层修改低层文件会在当前层创建完整数据副本，镜像体积反而增大。devcontainer-base项目实测：在Stage 7（上层）对低层Python二进制strip后，净增5.8MB而非预期减少29MB。
 
 ## 标准方案（6 步逻辑分层）
 
@@ -213,6 +224,8 @@ COPY entrypoint.sh /usr/local/bin/
 - [ ] 是否有最终验证步骤确认关键命令可用？
 - [ ] pip install 是否带 `--no-cache-dir`？
 - [ ] ENTRYPOINT 是否使用 exec 形式（JSON 数组）？
+- [ ] **P7检查**：strip/chmod/purge等修改操作是否在文件创建的同层完成？最终清理层是否仅做rm -rf？（详见[docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)）
+- [ ] **P7检查**：`docker history`中除安装层外其他层大小是否接近0B？
 
 ## 迁移示例（跨领域）
 
@@ -251,14 +264,23 @@ COPY entrypoint.sh /usr/local/bin/
 
 ## 成熟度
 
-L1-draft — jupyter-ssh-base 项目中验证可行（镜像从单阶段 1.2GB 减到 713MB，配置修改不触发重装包），但尚未在第二个不同类型项目中验证。V阶段对抗审查（怀疑者/实践者/运维/SRE/维护者五视角）全部通过。
+L2-validated — 在两个独立Docker镜像项目中验证：
+1. **jupyter-ssh-base**：镜像从单阶段1.2GB减到713MB，配置修改不触发重装包
+2. **devcontainer-base**：在P1-P6分层基础上补充P7同层修改原则，镜像从2.91GB降至1.41GB（压缩率51.5%），验证了分层原则在含conda/pip/Docker DinD/Podman的复杂镜像中的适用性
+
+V阶段对抗审查（怀疑者/实践者/运维/SRE/维护者五视角）全部通过。P7横切原则为2026-08-18 devcontainer-base项目实战后新增。
 
 ## 交叉引用
 
-- 来源：jupyter-ssh-base 项目七概念方法论复盘（2026-08-07）
+- 来源：
+  - jupyter-ssh-base 项目七概念方法论复盘（2026-08-07）
+  - [Docker devcontainer-base镜像深度压缩里程碑复盘](../2026-08-18-docker-image-deep-slim-milestone.md)（2026-08-18，P7补充）
 - 关联模式：
   - docker-buildtime-vs-runtime-config.md（构建时 vs 运行时职责分离是本模式的前提）
   - compiled-wheel-runtime-image-build.md（Python wheel 运行时镜像的具体分层实践）
   - conda-docker-multistage-best-practices.md（Conda 环境的多阶段构建）
+  - [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)（P7同层修改原则，本模式的横切补充原则）
+  - [docker-deep-slim-8step.md](docker-deep-slim-8step.md)（镜像深度压缩8步法，在分层基础上的体积优化专项）
 - 参考实例：
-  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（本模式的参考实现）
+  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（P1-P6参考实现）
+  - [devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)（P1-P7完整参考实现）
