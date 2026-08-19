@@ -69,6 +69,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [five-stage-batch-pipeline.md](five-stage-batch-pipeline.md) | 批量处理五步管道：Discover→Parse→Validate→Cache→Report五阶段正交拆分，错误隔离+增量缓存+双格式输出（JSON+Markdown），单项目失败不中断整体流程 | L2 已验证 | 代码质量检查工具、文件系统扫描器、数据ETL管道、批量内容处理器、CI检查脚本 |
 | [android-single-activity-navigation.md](android-single-activity-navigation.md) | 单一 Activity + Navigation 组件多页面架构（Fragment + 导航图组织） | L1 实验性 | Android 多页面导航 |
 | [android-mvvm-livedata-fragment.md](android-mvvm-livedata-fragment.md) | MVVM + LiveData 标准分层（ViewModel 数据 + Fragment observe 订阅） | L1 实验性 | Android MVVM 架构 |
+| [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 零逻辑客户端桌面应用可冻结架构：GUI 零逻辑 + 后端单源托管 UI/API 无 CORS + 进程内线程服务器支持 PyInstaller 单文件冻结 | L1 实验性 | 把成熟 CLI/服务端工具链封装为可单文件分发的桌面 GUI 应用 |
 
 ## 成熟度定义
 

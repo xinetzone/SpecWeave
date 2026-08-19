@@ -18,6 +18,17 @@ tags: [okf-desktop, action-items, knowledge-sedimentation, pattern-upgrade]
 | A3: 统一知识库 frontmatter 的 x-toml-ref 策略 | 中 | 文档治理 | 明确 wiki 教程新批次是否强制 x-toml-ref，消除新旧批次（okf-wiki 用 vs okf-ecosystem-wiki 不用）不一致 | 2026-08-25 前 |
 | A4: 文档类提交前运行 link-check 自动化脚本 | 中 | 工具运维 | 将本次人工链路核对升级为 check-links.py 自动验证，纳入文档提交流程 | 2026-08-25 前 |
 
+## 推进结果（2026-08-19 已完成）
+
+本次里程碑复盘的 4 条行动项已全部推进并落地，采用「精准沉淀·避免重复」策略：
+
+| 行动项 | 推进方式 | 落地结果 |
+|--------|---------|---------|
+| A1 | 升级已有模式 | [vendor-high-level-doc-first-research](../../../patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.md) validation_count 2→3，补充「无 AI 友好文档时三件套」第 3 个验证案例 |
+| A2 | 新建模式 | [zero-logic-client-desktop-app](../../../patterns/architecture-patterns/zero-logic-client-desktop-app.md)（L1），三支柱 + 关键技术细节，已加入架构模式索引 |
+| A3 | 升级已有模式 | [wiki-dual-track-frontmatter](../../../patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.md) validation_count 1→2（L1→L2），补充 okf-desktop 字段漂移反面案例 |
+| A4 | 升级已有模式 | [link-check-dual-coverage](../../../patterns/methodology-patterns/tools-automation/link-check-dual-coverage.md) validation_count 1→2（L1→L2），补充第二次验证 |
+
 ## 后续跟进事项
 
 1. **模式库升级**：洞察 1（架构洞察先行）与洞察 3（质量双门）均为 project_memory 既有原则的再次验证，可推动相关模式 validation_count +1

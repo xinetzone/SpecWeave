@@ -13,6 +13,14 @@ tags: [okf-desktop, insight, pattern, architecture-first, zero-logic-client, for
 
 从本次任务中萃取了 3 个可复用洞察，其中 2 个为 P0 级高价值模式，1 个为 P1 级质量保障措施。
 
+### 模式归档映射（2026-08-19 已完成推进）
+
+| 洞察 | 归档 / 关联模式 | 推进方式 |
+|------|----------------|---------|
+| 洞察1 架构洞察先行源码学习法 | [vendor-high-level-doc-first-research](../../../patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.md) | 升级（validation_count 2→3） |
+| 洞察2 零逻辑客户端桌面架构 | [zero-logic-client-desktop-app](../../../patterns/architecture-patterns/zero-logic-client-desktop-app.md) | 新建（L1） |
+| 洞察3 格式一致性 + 显式排除双门 | [wiki-dual-track-frontmatter](../../../patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.md) + [link-check-dual-coverage](../../../patterns/methodology-patterns/tools-automation/link-check-dual-coverage.md) | 升级（validation_count 1→2，L1→L2） |
+
 ---
 
 ## 洞察 1：架构洞察先行源码学习法（P0）

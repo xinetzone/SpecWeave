@@ -3,16 +3,16 @@ id: "vendor-high-level-doc-first-research"
 title: "Vendor仓库高层文档优先研究法"
 maturity_level: "L2"
 created_date: "2026-07-05"
-source: "../../../reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md + ../../../reports/knowledge-content/retrospective-agent-proto-wiki-20260703/README.md"
+source: "../../../reports/task-reports/retrospective-tvm-ffi-wiki-tutorial-20260705/insight-extraction.md + ../../../reports/knowledge-content/retrospective-agent-proto-wiki-20260703/README.md + ../../../reports/task-reports/retrospective-okf-desktop-wiki-tutorial-20260819/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.toml"
 tags: ["外部研究", "vendor仓库", "源码研究", "AGENTS.md", "自顶向下", "高效学习", "AI友好文档", "研究方法论"]
 trigger_conditions: ["需要研究外部开源仓库", "学习vendor子模块源码", "理解大型项目架构", "逐文件读源码效率低下", "基础设施不稳定（IDE超时/网络问题）"]
 problem_solved: "研究外部仓库或vendor子模块时，逐文件读取源码效率极低、容易在细节中迷失，且在IDE超时、网络不通等基础设施不稳定环境下容易卡死。本模式提供\"自顶向下\"的高效研究方法，先从项目自带的AI友好高层文档建立全局认知，再按需深入源码细节。"
-validation_count: 2
-reuse_count: 2
+validation_count: 3
+reuse_count: 3
 ---
-> **来源**：TVM FFI Wiki教程创建复盘（2026-07-05）+ Agent通信协议Wiki教程复盘（2026-07-03）——在Shell管道耗尽、WebFetch超时、Read超时三重故障下，通过tvm-ffi自带AGENTS.md获取80%架构信息，效率较逐文件读源码提升10倍
-> **验证次数**：2次成功实战验证（TVM FFI Wiki、Agent Proto Wiki）
+> **来源**：TVM FFI Wiki教程创建复盘（2026-07-05）+ Agent通信协议Wiki教程复盘（2026-07-03）+ okf-desktop Wiki教程复盘（2026-08-19）——TVM FFI 在 Shell 管道耗尽、WebFetch 超时、Read 超时三重故障下，通过 tvm-ffi 自带 AGENTS.md 获取 80% 架构信息；okf-desktop 在无 AI 友好文档场景下，用「README + 入口文件 + 集成点」三件套提炼核心架构原则
+> **验证次数**：3 次成功实战验证（TVM FFI Wiki、Agent Proto Wiki、okf-desktop Wiki）
 
 # Vendor仓库高层文档优先研究法
 
@@ -20,7 +20,7 @@ reuse_count: 2
 方法论模式（外部研究与信息获取）
 
 ## 成熟度
-L2 模式验证（2次独立场景成功验证，分组策略和文档优先级均已优化）
+L2 模式验证（3 次独立场景成功验证，含无 AI 友好文档时的「README + 入口文件 + 集成点」三件套替代策略）
 
 ## 适用场景
 
@@ -194,6 +194,21 @@ flowchart LR
 - 13个文档/4286行/34个Mermaid图一次性交付
 - 验证了"先高层框架、后细节填充"方法在协议类文档创作中的有效性
 
+### 案例3：okf-desktop 桌面客户端 Wiki 教程创建（2026-08-19）
+
+**任务背景**：创建 okf-desktop 桌面客户端（okf-kit 生态）的 8 篇 wiki 教程，源码 20 个文件，仓库内无 AI 友好文档（无 AGENTS.md / CLAUDE.md）。
+
+**替代策略应用（无 AI 友好文档时）**：当 P0-P3 高层文档都不存在时，本案例验证了「三件套」替代策略——并行读取：
+1. **README（项目定位）**：确定"是什么、解决什么问题"
+2. **入口文件（shell/app.py，启动流程）**：确定"怎么跑起来、进程模型"
+3. **唯一集成点（ui/src/api.js，系统边界）**：确定"前端如何调后端、边界在哪"
+
+三者并行读取即可提炼核心架构原则（零逻辑客户端），再以此为纲组织后续全部文档，避免了逐文件通读。
+
+**结果**：
+- 8 篇文档 1163 行单会话完成，20 个源码文件两轮并行读取覆盖
+- 验证了"架构洞察先行"（先建全局框架再填细节）在无高层文档场景下同样有效——三件套是 P0-P3 文档缺失时的第一替代
+
 ---
 
 ## 反模式与注意事项
@@ -234,7 +249,7 @@ flowchart LR
 
 ## 模式演进方向
 
-当前版本为L2（2次验证），后续可在以下方向迭代：
+当前版本为L2（3次验证），后续可在以下方向迭代：
 1. 增加更多实战案例（Rust项目、Python项目、Go项目等不同语言栈的验证）
 2. 整理常见开源项目的AGENTS.md/CLAUDE.md存在情况清单
 3. 开发自动化预检脚本：研究vendor仓库前自动扫描根目录有哪些高层文档可用

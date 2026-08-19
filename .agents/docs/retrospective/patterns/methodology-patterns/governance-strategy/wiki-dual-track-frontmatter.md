@@ -1,9 +1,9 @@
 ---
 id: "wiki-dual-track-frontmatter"
-source: "../../../reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.md"
+source: "../../../reports/competitive-analysis/retrospective-sunlogin-camera-su1-wiki-20260704/export-suggestions.md + ../../../reports/task-reports/retrospective-okf-desktop-wiki-tutorial-20260819/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 related_patterns:
   -   - "format-evidence-over-memory-pattern"
@@ -155,6 +155,16 @@ x-toml-ref: "{{正确计算的相对路径}}"
 - `sunlogin-camera-su1-wiki.md`：6字段（包含author/version）❌ → 已修复为4字段
 
 修复后，模板被更新为双轨规范，新增"步骤0：确认wiki类型"，从5点检查升级为7点检查（新增字段类型检查和编号检查）。
+
+### okf-desktop Wiki（2026-08-19，第二次验证）
+
+本次 okf-desktop 学习任务产出 8 篇文档（>300 行、章节独立），属于原子化 wiki，但创作时采用了「单文件 wiki 风格」的 16 个字段（含 version/type/description/status/author/summary/last_verified/wiki_version 等）且未配置 x-toml-ref 与对应 TOML——这是"字段混用"的第三种表现：**以原子化形态产出、却用单文件风格 frontmatter**。
+
+根因与向日葵 SU1 案例同源：创作前未先读同目录原子化 wiki 参考文件（okf-wiki）确认实际格式，而是凭"看起来更完整"的字段集自创。
+
+纠正结论：原子化 wiki（>300 行 / 多章节）必须使用 4 字段（id/title/source/x-toml-ref），并将 date/tags/category 等元数据外置到 TOML；新增批次在 Spec 阶段必须通过「格式证据优先」读参考文件确定采用哪一轨，禁止凭记忆拼字段。
+
+> 本次复盘正是由此在 retrospective-report 的 S2「问题表」记录了"wiki 教程未生成对应 TOML 元数据"缺陷，进一步印证「格式证据优先于记忆」的必要性。
 
 ## 与其他模式的关系
 
