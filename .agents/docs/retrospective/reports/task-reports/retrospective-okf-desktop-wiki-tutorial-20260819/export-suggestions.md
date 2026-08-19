@@ -29,11 +29,15 @@ tags: [okf-desktop, action-items, knowledge-sedimentation, pattern-upgrade]
 | A3 | 升级已有模式 | [wiki-dual-track-frontmatter](../../../patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.md) validation_count 1→2（L1→L2），补充 okf-desktop 字段漂移反面案例 |
 | A4 | 升级已有模式 | [link-check-dual-coverage](../../../patterns/methodology-patterns/tools-automation/link-check-dual-coverage.md) validation_count 1→2（L1→L2），补充第二次验证 |
 
+> 提交记录：`c06c6456`（推进四行动项沉淀可复用模式，8 文件）
+
 ## 后续跟进事项
 
-1. **模式库升级**：洞察 1（架构洞察先行）与洞察 3（质量双门）均为 project_memory 既有原则的再次验证，可推动相关模式 validation_count +1
-2. **知识库 x-toml-ref 一致性清理**：盘点 learning 目录下各 wiki 教程的 frontmatter 是否采用 x-toml-ref，输出统一策略
-3. **关联教程联动**：okf-desktop-wiki 与 okf-wiki / knowledge-catalog-wiki 已建立交叉引用，可在 OKF 主题知识导航中强化关联
+> 状态（2026-08-19 推进后）：第 1 项已完成，第 2、3 项仍待办。
+
+1. **模式库升级**（已完成）：相关模式的 validation_count 已在 A1-A4 推进中 +1，详见上方「推进结果」
+2. **知识库 x-toml-ref 一致性清理**（待办）：盘点 learning 目录下各 wiki 教程的 frontmatter 是否采用 x-toml-ref，输出统一策略
+3. **关联教程联动**（待办）：okf-desktop-wiki 与 okf-wiki / knowledge-catalog-wiki 已建立交叉引用，可在 OKF 主题知识导航中强化关联
 
 ## 知识沉淀清单
 
@@ -48,8 +52,10 @@ tags: [okf-desktop, action-items, knowledge-sedimentation, pattern-upgrade]
 
 | 模式名称 | 当前成熟度 | 目标成熟度 | 升级依据 |
 |---------|-----------|-----------|---------|
-| 格式一致性优先原则 | L2 | L2（validation_count +1） | 本次 wiki 写入再次按"先读同目录格式"执行成功，与 2026-07-14 教训形成正反两面印证 |
-| 三查暂存法 | L2 | L2（validation_count +1） | 本次排除无关 jira-skill-wiki 变更成功，再次验证"git add 新目录需注意删除暂存"的边界 |
+| [vendor-high-level-doc-first-research](../../../patterns/methodology-patterns/research-knowledge/vendor-high-level-doc-first-research.md) | L2 | L2（validation_count 2→3） | 架构洞察先行（洞察1），补「无 AI 友好文档三件套」第 3 案例 |
+| [zero-logic-client-desktop-app](../../../patterns/architecture-patterns/zero-logic-client-desktop-app.md) | 无（新建） | L1 | 零逻辑客户端架构（洞察2），三支柱 + 关键技术细节 |
+| [wiki-dual-track-frontmatter](../../../patterns/methodology-patterns/governance-strategy/wiki-dual-track-frontmatter.md) | L1 | L2（validation_count 1→2） | 格式一致性（洞察3），补 okf-desktop 字段漂移反面案例 |
+| [link-check-dual-coverage](../../../patterns/methodology-patterns/tools-automation/link-check-dual-coverage.md) | L1 | L2（validation_count 1→2） | 提交前质量门（洞察3），补第二次验证 |
 
 ### 方法论更新点
 
