@@ -112,8 +112,11 @@ conda_install_group() {
 
 # ---------------------------------------------------------------------------
 # pip_install_group: 分组安装pip包
-# 用法: pip_install_group [--index-url <url>] [--verbose] <group_name> <description> <packages...>
+# 用法: pip_install_group [--index-url <url>] [--extra-index-url <url>] [--verbose] <group_name> <description> <packages...>
 #
+# --index-url: 指定主索引源（如 PyTorch CUDA 索引 https://download.pytorch.org/whl/cu130）
+# --extra-index-url: 追加次要索引源（如国内 PyPI 镜像），用于兜底主索引解析不到的 PyPI 依赖
+#                    （规避 files.pythonhosted.org IPv6 不可达导致的下载失败）
 # --verbose: 启用详细日志模式（适用于源码编译场景）
 #   - 安装前：输出Python版本/ABI、pip版本、CC/CXX编译器、Rust版本（如有）
 #   - 安装中：使用 pip -v 显示详细输出（wheel检测/编译进度）
@@ -121,6 +124,7 @@ conda_install_group() {
 # ---------------------------------------------------------------------------
 pip_install_group() {
     local index_url=""
+    local extra_index_url=""
     local verbose=false
 
     # 解析可选参数
@@ -128,6 +132,10 @@ pip_install_group() {
         case "$1" in
             --index-url)
                 index_url="$2"
+                shift 2
+                ;;
+            --extra-index-url)
+                extra_index_url="$2"
                 shift 2
                 ;;
             --verbose)
@@ -151,6 +159,9 @@ pip_install_group() {
     echo "│ Desc: ${description}"
     if [[ -n "${index_url}" ]]; then
         echo "│ Index-URL: ${index_url}"
+    fi
+    if [[ -n "${extra_index_url}" ]]; then
+        echo "│ Extra-Index-URL: ${extra_index_url}"
     fi
     if [[ "${verbose}" == "true" ]]; then
         echo "│ Mode: VERBOSE (source-build diagnostics enabled)"
@@ -190,6 +201,9 @@ pip_install_group() {
     local pip_args=(install --no-cache-dir)
     if [[ -n "${index_url}" ]]; then
         pip_args+=(--index-url "${index_url}")
+    fi
+    if [[ -n "${extra_index_url}" ]]; then
+        pip_args+=(--extra-index-url "${extra_index_url}")
     fi
     if [[ "${verbose}" == "true" ]]; then
         pip_args+=(-v)

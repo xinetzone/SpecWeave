@@ -42,6 +42,12 @@ COPY shared/lib/cleanup.sh /usr/local/share/variant-framework/cleanup.sh
 COPY shared/lib/verify.sh /usr/local/share/variant-framework/verify.sh
 COPY --chmod=755 shared/scripts/r2-dtneeded-analysis.sh /usr/local/share/variant-framework/r2-dtneeded-analysis.sh
 
+# Override shared install-helpers.sh to pick up --extra-index-url support without
+# full chain rebuild (conda-llvm→onnx-dev→onnx-quantized). Safe because helpers
+# are sourced at RUN time (not baked into earlier layers' binaries).
+# Remove this COPY after the next full dependency-chain rebuild.
+COPY shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
+
 # Framework already inherited from onnx-quantized base layer.
 
 # ── Stage 1/3: Base verification (torch absent pre-install) ──────
@@ -70,6 +76,7 @@ variant_timer_stage 2 "PyTorch install + guards"
 variant_activate_main_env
 
 pip_install_group --index-url "https://download.pytorch.org/whl/${TORCH_CUDA_INDEX}" \
+    --extra-index-url "https://mirrors.aliyun.com/pypi/simple/" \
     "G1: PyTorch Core" \
     "torch + torchvision (cp314t free-threading, CUDA ${TORCH_CUDA_INDEX})" \
     torch torchvision
