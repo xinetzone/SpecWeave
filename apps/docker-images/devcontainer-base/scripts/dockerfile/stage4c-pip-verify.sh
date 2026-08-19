@@ -78,6 +78,12 @@ py_ver = '.'.join(map(str, sys.version_info[:2]))
 print(f'[OK] Free-threading verified: Python {sys.version.split()[0]}, SOABI={soabi}, GIL disabled by default')
 "
 
+# ── 验证 python_abi 包（Stage 4b 添加的约束）──
+echo "[VERIFY] Checking python_abi ABI constraint..."
+/opt/conda/envs/main/bin/conda list python_abi 2>/dev/null | grep -q cp314t && \
+    echo "[OK] python_abi pinned to cp314t" || \
+    echo "[WARN] python_abi cp314t not found (check conda solve)"
+
 # ── main环境激活将在 Stage 5/7 通过 conda-init.sh 统一配置 ──
 echo "[INFO] main environment activation will be configured via conda-init.sh in Stage 5/7"
 

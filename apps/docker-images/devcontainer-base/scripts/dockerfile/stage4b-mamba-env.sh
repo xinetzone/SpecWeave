@@ -22,6 +22,7 @@ echo "[INFO] Creating 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} +
 _mamba_start=$(date +%s)
 mamba create -y -n main -c conda-forge --override-channels -q \
     "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" \
+    "python_abi=*=*_${PYTHON_BUILD}" \
     pip \
     "jupyterlab>=4.4" \
     "notebook>=7.3" \
