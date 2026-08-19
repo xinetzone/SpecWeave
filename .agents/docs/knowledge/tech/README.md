@@ -4,6 +4,7 @@
 
 <!-- nav-start -->
 - [caffe-ffi Conv v4 OpenMP 并行优化技术总结](caffe-ffi-conv-v4-optimization-summary.md)
+- [Python 3.14 Free-Threading 适用场景分析](python-314-free-threading-scenario-analysis.md)
 <!-- nav-end -->
 
 ## 技术总结
@@ -11,6 +12,7 @@
 | 文档 | 简介 | 入口 |
 |------|------|------|
 | caffe-ffi Conv v4 OpenMP 并行优化技术总结 | caffe-ffi Conv 层 OpenMP 并行优化（v4）的策略、实验结果、抖动诊断与生产部署配置 | [caffe-ffi-conv-v4-optimization-summary.md](caffe-ffi-conv-v4-optimization-summary.md) |
+| Python 3.14 Free-Threading 适用场景分析 | 基于 no-GIL vs GIL 实测基准分析 free-threading 适用/不适用场景，含判定矩阵与选型建议 | [python-314-free-threading-scenario-analysis.md](python-314-free-threading-scenario-analysis.md) |
 
 ## Wiki 教程系列
 
