@@ -134,6 +134,18 @@ fi
 INIT
 chmod +x /etc/profile.d/conda-llvm-init.sh
 
+# ── Free-threading Jupyter fix: keep GIL disabled in Jupyter kernel ──
+# Without PYTHON_GIL=0, importing _brotli (used by jupyter stack) auto-enables
+# the GIL in free-threading Python, silently nullifying FT concurrency benefits.
+if [ -f /etc/supervisor/conf.d/jupyter.conf ]; then
+    if ! grep -q "PYTHON_GIL" /etc/supervisor/conf.d/jupyter.conf; then
+        sed -i 's|^environment=\(.*\)$|environment=\1,PYTHON_GIL="0"|' /etc/supervisor/conf.d/jupyter.conf
+        variant_log_ok "jupyter.conf: injected PYTHON_GIL=0 (free-threading GIL fix)"
+    else
+        variant_log_ok "jupyter.conf: PYTHON_GIL already set, skip"
+    fi
+fi
+
 # ── ccache cache directory permissions ──
 # /ccache must be writable by all users (devuser/ai/root) for runtime compilation
 mkdir -p /ccache
