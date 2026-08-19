@@ -3,7 +3,7 @@ id: "docker-gpu-slimming-sop"
 title: "GPU/ML Docker镜像瘦身SOP"
 type: "code-pattern"
 maturity: "L2-validated"
-maturity_note: "基于torch-dev-slim实战验证(10.2GB→8.15GB/-20%)，DT_NEEDED分析法经过readelf+import双重验证"
+maturity_note: "基于torch-dev-slim实战验证(10.2GB→8.15GB/-20%)，Phase 2框架化沉淀：shared/lib+scripts三层架构+verify_all_slim_gpu框架函数，DT_NEEDED分析法独立成模式"
 date: 2026-08-19
 source:
   - "retrospective-devcontainer-slim-images-20260819（torch-dev-slim两轮瘦身实战，2026-08-19）"
@@ -14,9 +14,11 @@ related_patterns:
   - "docker-apt-layer-slimming.md"
   - "docker-build-four-layer-verification.md"
   - "docker-image-variant-incremental-inheritance.md"
+  - "dtneeded-dynamic-dependency-analysis.md"
+  - "docker-variant-framework-shared-lib.md"
 tags: ["docker", "slimming", "gpu", "cuda", "pytorch", "dt-needed", "cow", "sop", "ml", "image-optimization"]
 validation_count: 1
-reuse_count: 0
+reuse_count: 1
 ---
 
 # GPU/ML Docker镜像瘦身SOP
@@ -144,7 +146,7 @@ find /opt/conda/envs/main/lib -name "*.so*" -type f \
 | `triton/backends/amd/` | ~3-5MB | AMD GPU后端，N卡镜像不需要 |
 | 静态库`.a`（非编译器必需） | ~50MB | 排除gcc/sysroot/libnpymath后删除 |
 
-参考实现见 [cleanup.sh](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh) 的`cleanup_torch_dev()` R1部分。
+参考实现见 [cleanup.sh](../../../../../apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh) 的`cleanup_torch_dev()` R1部分。
 
 ### 2.3 CoW层序优化（零成本，避免-1~2GB膨胀）
 
@@ -480,10 +482,12 @@ RUN cleanup_torch_dev && \
 
 | 文件 | 说明 |
 |------|------|
-| [cleanup.sh - cleanup_torch_dev()](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh#L302-L398) | R1+R2清理函数参考实现（97行） |
-| [cleanup.sh - cleanup_binaries()](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh#L124-L160) | strip+静态库删除参考实现 |
-| [torch-dev/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/torch-dev/Dockerfile) | torch-dev变体Dockerfile（瘦身集成示例） |
-| [torch-dev/SLIMMING-GUIDE.md](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/variants/torch-dev/SLIMMING-GUIDE.md) | torch-dev-slim专项瘦身指南 |
+| [cleanup.sh - cleanup_torch_dev()](../../../../../apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh) | R1+R2清理函数参考实现 |
+| [cleanup.sh - cleanup_binaries()](../../../../../apps/docker-images/devcontainer-base/variants/shared/lib/cleanup.sh) | strip+静态库删除参考实现 |
+| [verify.sh - verify_all_slim_gpu()](../../../../../apps/docker-images/devcontainer-base/variants/shared/lib/verify.sh) | GPU/ML框架验证函数（CPU+GPU+删除/保留断言+devuser） |
+| [r2-dtneeded-analysis.sh](../../../../../apps/docker-images/devcontainer-base/variants/shared/scripts/r2-dtneeded-analysis.sh) | R2 DT_NEEDED深度分析脚本（--analyze/--delete/--verify/--all） |
+| [torch-dev/Dockerfile](../../../../../apps/docker-images/devcontainer-base/variants/torch-dev/Dockerfile) | torch-dev变体Dockerfile（瘦身集成示例） |
+| [torch-dev/SLIMMING-GUIDE.md](../../../../../apps/docker-images/devcontainer-base/variants/torch-dev/SLIMMING-GUIDE.md) | torch-dev-slim专项瘦身指南 |
 
 ## 成熟度
 
@@ -495,9 +499,13 @@ L2-validated — 在torch-dev-slim镜像中完整验证：
 
 ## 交叉引用
 
+- 子技术模式（Step 3核心技术独立成模）：
+  - [dtneeded-dynamic-dependency-analysis.md](dtneeded-dynamic-dependency-analysis.md)（DT_NEEDED动态依赖分析法：完整的三分类决策+保护清单+删除清单+验证闭环）
+- 架构模式（多变体框架化集成）：
+  - [docker-variant-framework-shared-lib.md](docker-variant-framework-shared-lib.md)（Docker多变体框架化模式：shared/lib+scripts+config三层分离架构）
 - 基础模式：
   - [docker-deep-slim-8step.md](docker-deep-slim-8step.md)（通用镜像8步压缩法，本SOP是GPU/ML场景的扩展）
   - [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)（P7同层修改原则，CoW层序优化的理论基础）
   - [docker-build-four-layer-verification.md](docker-build-four-layer-verification.md)（四层验证流水线）
 - 来源复盘：
-  - [retrospective-devcontainer-slim-images-20260819](../reports/build-engineering/retrospective-devcontainer-slim-images-20260819/README.md)（本SOP的实战来源）
+  - [retrospective-devcontainer-slim-images-20260819](../../reports/build-engineering/retrospective-devcontainer-slim-images-20260819/README.md)（本SOP的实战来源）
