@@ -5,29 +5,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-conda-llvm"
 LOG_JSON_OUTPUT="/tmp/test-conda-llvm-events.jsonl"
 
 TAG="latest"
 IMAGE=""
-ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
-
-detect_engine() {
-    # 构建引擎自动检测（auto: 优先docker，回退podman），与 scripts/build.sh 保持一致
-    if [ "$ENGINE" = "auto" ]; then
-        if docker info >/dev/null 2>&1; then
-            ENGINE="docker"
-        elif podman info >/dev/null 2>&1; then
-            ENGINE="podman"
-        else
-            log_fatal "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
-        fi
-    fi
-    if ! command -v "$ENGINE" >/dev/null 2>&1; then
-        log_fatal "Container engine '${ENGINE}' not found in PATH"
-    fi
-    log_info "Container engine: ${ENGINE}"
-}
+ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman（容器引擎抽象库定义）
 
 TEST_PASS=0
 TEST_FAIL=0
@@ -73,11 +57,11 @@ skip() {
 }
 
 docker_run() {
-    ${ENGINE} run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    ${ENGINE} run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 test_llvm_config_version() {
@@ -442,7 +426,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! ${ENGINE} images --format '{{.Repository}}:{{.Tag}}' | sed 's|^[^/]*/||' | grep -qx "${IMAGE}"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"

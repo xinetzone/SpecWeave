@@ -6,6 +6,7 @@ VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 PROJECT_DIR="$(dirname "$VARIANTS_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="build-conda-llvm"
 LOG_JSON_OUTPUT="/tmp/build-conda-llvm-events.jsonl"
 
@@ -15,24 +16,7 @@ TAG="latest"
 SKIP_BUILD=false
 VARIANT="conda-llvm"
 DEP_VARIANT="conda"
-ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
-
-detect_engine() {
-    # 构建引擎自动检测（auto: 优先docker，回退podman），与 scripts/build.sh 保持一致
-    if [ "$ENGINE" = "auto" ]; then
-        if docker info >/dev/null 2>&1; then
-            ENGINE="docker"
-        elif podman info >/dev/null 2>&1; then
-            ENGINE="podman"
-        else
-            log_fatal "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
-        fi
-    fi
-    if ! command -v "$ENGINE" >/dev/null 2>&1; then
-        log_fatal "Container engine '${ENGINE}' not found in PATH"
-    fi
-    log_info "Container engine: ${ENGINE}"
-}
+ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman（容器引擎抽象库定义）
 
 usage() {
     cat << EOF

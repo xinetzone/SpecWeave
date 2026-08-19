@@ -160,11 +160,16 @@ parse_variants() {
 }
 
 detect_engine() {
-    # 构建引擎自动检测（auto: 优先docker，回退podman），与 scripts/build.sh 保持一致
+    # 构建引擎自动检测（auto: 优先docker，回退podman）
+    # 探活命令带 5s 超时，避免 CLI 存在但 daemon 挂起时 auto 检测阻塞
+    local timeout_prefix=""
+    if command -v timeout >/dev/null 2>&1; then
+        timeout_prefix="timeout 5"
+    fi
     if [ "$BUILD_ENGINE" = "auto" ]; then
-        if docker info >/dev/null 2>&1; then
+        if $timeout_prefix docker info >/dev/null 2>&1; then
             BUILD_ENGINE="docker"
-        elif podman info >/dev/null 2>&1; then
+        elif $timeout_prefix podman info >/dev/null 2>&1; then
             BUILD_ENGINE="podman"
         else
             log_error "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."

@@ -23,12 +23,24 @@
 # 引擎选择（可被调用方在 source 前通过 BUILD_ENGINE 覆盖，或 source 后直接改 ENGINE）
 ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
 
+# 带超时的命令执行（用于探活 docker/podman daemon，避免 CLI 存在但 daemon 挂起时阻塞）
+# 兼容有无 timeout 命令的环境：有则限定超时，无则直接执行
+timeout_cmd() {
+    local seconds="$1"
+    shift
+    if command -v timeout >/dev/null 2>&1; then
+        timeout "$seconds" "$@"
+    else
+        "$@"
+    fi
+}
+
 detect_engine() {
     # 构建/测试引擎自动检测（auto: 优先 docker，回退 podman），与 scripts/build.sh 保持一致
     if [ "$ENGINE" = "auto" ]; then
-        if docker info >/dev/null 2>&1; then
+        if timeout_cmd 5 docker info >/dev/null 2>&1; then
             ENGINE="docker"
-        elif podman info >/dev/null 2>&1; then
+        elif timeout_cmd 5 podman info >/dev/null 2>&1; then
             ENGINE="podman"
         else
             log_fatal "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
