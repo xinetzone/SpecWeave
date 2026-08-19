@@ -376,6 +376,7 @@ COPY --chmod=755 scripts/ft-benchmark.sh /usr/local/bin/ft-benchmark.sh
 COPY scripts/ft_benchmark.py /usr/local/bin/ft_benchmark.py
 COPY scripts/nogil_kit.py /usr/local/bin/nogil_kit.py
 COPY scripts/check_gil_state.py /usr/local/bin/check_gil_state.py
+COPY scripts/ft-wheel-audit.py /usr/local/bin/ft-wheel-audit.py
 COPY --chmod=755 scripts/lib/clean-pycache.sh /usr/local/bin/clean-pycache.sh
 
 RUN echo "=== Stage 6/7: CRLF cleanup + syntax validation (P7: permissions set at COPY time) ===" && \
@@ -404,8 +405,8 @@ RUN echo "=== Stage 6/7: CRLF cleanup + syntax validation (P7: permissions set a
     bash -n /usr/local/bin/clean-pycache.sh && echo "[OK] clean-pycache.sh bash syntax valid" && \
     echo "[VALIDATE 6/6] ft-benchmark (bash wrapper + python core)..." && \
     bash -n /usr/local/bin/ft-benchmark.sh && \
-    python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py']: compile(open(f).read(), f, 'exec')" && \
-    echo "[OK] ft-benchmark.sh + ft_benchmark.py + nogil_kit.py + check_gil_state.py syntax valid" && \
+    python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py','/usr/local/bin/ft-wheel-audit.py']: compile(open(f).read(), f, 'exec')" && \
+    echo "[OK] ft-benchmark.sh + ft_benchmark.py + nogil_kit.py + check_gil_state.py + ft-wheel-audit.py syntax valid" && \
     echo "" && \
     echo "[BUILD] All 6 syntax validation checks passed" && \
     _NOW=$(date +%s) && \
@@ -541,6 +542,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         echo "[FAST MODE] Essential checks only..." && \
         python --version && echo "[OK] python available" && \
         python -c "import sysconfig; ft=sysconfig.get_config_var('Py_GIL_DISABLED'); soabi=sysconfig.get_config_var('SOABI') or ''; assert ft==1, f'GIL not disabled: Py_GIL_DISABLED={ft}'; assert 't' in soabi, f'SOABI mismatch (expected free-threading t suffix): {soabi}'; print(f'[OK] Python free-threading verified (SOABI={soabi})')" && \
+        python /usr/local/bin/ft-wheel-audit.py -q && echo "[OK] Wheel ABI audit passed (fast mode)" && \
         python -c "import brotli,cffi,sqlite3,ssl,zlib,hashlib; print('[OK] Core C extensions load OK')" && \
         conda --version && echo "[OK] conda available" && \
         echo "[FAST MODE] Essential checks passed"; \
@@ -558,6 +560,8 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         python -c "import zlib; d=b'test'*50; c=zlib.compress(d); assert zlib.decompress(c)==d; print('[OK] zlib C ext')" && \
         python -c "import hashlib; assert len(hashlib.sha256(b'test').hexdigest())==64; print('[OK] hashlib C ext')" && \
         bash /usr/local/bin/verify-cext.sh -q >/dev/null 2>&1 && echo "[OK] verify-cext.sh: all C ext checks passed" && \
+        echo "[WHEEL-AUDIT] Running free-threading wheel ABI audit..." && \
+        python /usr/local/bin/ft-wheel-audit.py && echo "[OK] Wheel ABI audit passed (no GIL-polluting packages found)" && \
         conda --version && echo "[OK] conda available" && \
         git --version && echo "[OK] git available" && \
         docker compose version && echo "[OK] docker compose available" && \
@@ -577,7 +581,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
         bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
         bash -n /usr/local/bin/verify-cext.sh && echo "[OK] verify-cext.sh syntax valid" && \
         bash -n /usr/local/bin/ft-benchmark.sh && \
-        python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py']: compile(open(f).read(), f, 'exec')" && echo "[OK] ft-benchmark + nogil_kit + check_gil_state syntax valid" && \
+        python3 -c "for f in ['/usr/local/bin/ft_benchmark.py','/usr/local/bin/nogil_kit.py','/usr/local/bin/check_gil_state.py','/usr/local/bin/ft-wheel-audit.py']: compile(open(f).read(), f, 'exec')" && echo "[OK] ft-benchmark + nogil_kit + check_gil_state + ft-wheel-audit syntax valid" && \
         echo "[OK] All standard verification checks passed"; \
     fi && \
     echo "" && \

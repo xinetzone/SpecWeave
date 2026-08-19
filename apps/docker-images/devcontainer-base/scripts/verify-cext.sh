@@ -340,6 +340,38 @@ if command -v conda &>/dev/null; then
     fi
 fi
 
+# ── Wheel ABI 审计（ft-wheel-audit.py）──
+if [ "$FT_BUILD" = "yes" ]; then
+    WHEEL_AUDIT_SCRIPT=""
+    for candidate in /usr/local/bin/ft-wheel-audit.py "$(dirname "$0")/ft-wheel-audit.py" "$(dirname "$0")/../ft-wheel-audit.py"; do
+        if [ -f "$candidate" ] && [ -x "$candidate" ] || [ -f "$candidate" ]; then
+            WHEEL_AUDIT_SCRIPT="$candidate"
+            break
+        fi
+    done
+
+    if [ -n "$WHEEL_AUDIT_SCRIPT" ]; then
+        if [ "$QUIET" != "1" ] && [ "$JSON_OUTPUT" != "1" ]; then
+            echo ""
+            echo "─── Wheel ABI Audit ───"
+        fi
+        if "$PYTHON" "$WHEEL_AUDIT_SCRIPT" -q 2>/dev/null; then
+            log_pass "wheel_abi_audit" "All installed C extensions are free-threading compatible (cp314t)"
+        else
+            # 提取违规包名
+            VIOLATIONS=$("$PYTHON" "$WHEEL_AUDIT_SCRIPT" -q 2>&1 | grep -v '^\[' || true)
+            if [ -n "$VIOLATIONS" ]; then
+                log_fail "wheel_abi_audit" "Found non-ft C extension wheels that will re-enable GIL"
+                log_verbose "$(echo "$VIOLATIONS" | head -10 | sed 's/^/      /')"
+            else
+                log_warn "wheel_abi_audit" "Wheel audit completed with warnings (sdist/abi3 packages present)"
+            fi
+        fi
+    else
+        log_warn "wheel_audit_skipped" "ft-wheel-audit.py not found; skipping wheel ABI audit"
+    fi
+fi
+
 # ── 深度验证（--deep） ──
 if [ "$DEEP_VERIFY" = "1" ]; then
     if [ "$JSON_OUTPUT" != "1" ] && [ "$QUIET" != "1" ]; then
