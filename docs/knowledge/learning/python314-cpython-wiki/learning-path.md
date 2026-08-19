@@ -423,6 +423,7 @@ graph LR
 |------|------|
 | 速查卡片 | [python314-cheatsheet.html](python314-cheatsheet.html) |
 | Wiki 教程目录 | [00-overview.md](00-overview.md) |
+| 官方文档四大支柱导览 | [13-official-docs-roadmap.md](13-official-docs-roadmap.md) |
 | 实战示例 | [10-practical-examples.md](10-practical-examples.md) |
 | 迁移指南 | [09-migration-guide.md](09-migration-guide.md) |
 | FAQ | [11-faq-troubleshooting.md](11-faq-troubleshooting.md) |

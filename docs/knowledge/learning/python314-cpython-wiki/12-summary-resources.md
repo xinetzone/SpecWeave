@@ -237,6 +237,7 @@ Python 3.14 之后的发展方向：
 | 10 | [10-practical-examples.md](10-practical-examples.md) | 8 个实战示例 |
 | 11 | [11-faq-troubleshooting.md](11-faq-troubleshooting.md) | FAQ、已知问题、调试技巧 |
 | 12 | [12-summary-resources.md](12-summary-resources.md)（本章） | 总结、学习路径、源码速查、资源 |
+| 13 | [13-official-docs-roadmap.md](13-official-docs-roadmap.md) | 官方文档四支柱（tutorial/library/extending/howto）导览与 3.14 映射 |
 
 ---
 
