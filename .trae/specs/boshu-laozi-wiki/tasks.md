@@ -120,7 +120,7 @@
   - 采纳 ≥2 条意见修正产出
 - **Verification**: V 门——审查意见≥5 条、采纳≥2 条修正
 
-## [ ] Task 14: C 阶段 - 原子提交入库（G4 质量门）
+## [x] Task 14: C 阶段 - 原子提交入库（G4 质量门）
 - **Priority**: high
 - **Depends On**: Task 13
 - **Description**:
