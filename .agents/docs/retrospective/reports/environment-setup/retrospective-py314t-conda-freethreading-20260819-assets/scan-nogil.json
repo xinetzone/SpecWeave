@@ -1,0 +1,47 @@
+{
+  "gil_enabled": false,
+  "python": "3.14.6 free-threading build | packaged by conda-forge | (main, Aug 11 2026, 10:28:47) [MSC v.1944 64 bit (AMD64)]",
+  "soabi": "cp314t-win_amd64",
+  "serial_s": 0.2544,
+  "rows": [
+    {
+      "workers": 1,
+      "serial_s": 0.2544
+    },
+    {
+      "workers": 1,
+      "thread_s": 0.2768,
+      "pool_s": 0.267,
+      "thread_speedup": 0.919,
+      "pool_speedup": 0.953
+    },
+    {
+      "workers": 2,
+      "thread_s": 0.1332,
+      "pool_s": 0.1336,
+      "thread_speedup": 1.91,
+      "pool_speedup": 1.905
+    },
+    {
+      "workers": 4,
+      "thread_s": 0.0744,
+      "pool_s": 0.0778,
+      "thread_speedup": 3.421,
+      "pool_speedup": 3.27
+    },
+    {
+      "workers": 8,
+      "thread_s": 0.0483,
+      "pool_s": 0.0504,
+      "thread_speedup": 5.262,
+      "pool_speedup": 5.048
+    },
+    {
+      "workers": 12,
+      "thread_s": 0.0612,
+      "pool_s": 0.0564,
+      "thread_speedup": 4.155,
+      "pool_speedup": 4.512
+    }
+  ]
+}
