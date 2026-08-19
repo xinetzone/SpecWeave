@@ -211,6 +211,8 @@ def main() -> int:
     ap = argparse.ArgumentParser(description="free-threading 基准（ft-benchmark.sh 的 Python 封装）")
     ap.add_argument("--image", default=DEFAULT_IMAGE,
                     help=f"目标镜像（默认 {DEFAULT_IMAGE}；传空字符串或 --local 则本地运行）")
+    ap.add_argument("--docker-cmd", default="docker",
+                    help="容器引擎可执行文件（默认 docker；Podman 环境传 podman）")
     ap.add_argument("--local", action="store_true", help="用当前解释器本地运行（等价 --image ''）")
     ap.add_argument("--range", type=int, default=500_000, help="素数上界（默认 500000）")
     ap.add_argument("--min-speedup", type=float, default=2.0, help="通过阈值（默认 2.0x）")
@@ -238,6 +240,7 @@ def main() -> int:
             benchmark_range=args.range, min_speedup=args.min_speedup,
             log_path=None if args.no_log else (args.log or None),
             probe=not args.no_probe,
+            docker_cmd=args.docker_cmd,
         )
     except (RuntimeError, subprocess.TimeoutExpired, OSError) as e:
         print(f"[ft-benchmark] ERROR: {e}", file=sys.stderr)
