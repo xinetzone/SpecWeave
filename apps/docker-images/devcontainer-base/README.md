@@ -42,7 +42,7 @@ updated: 2026-08-19
 | # | 特性 | 一句话说明 |
 |---|------|-----------|
 | 1 | **Ubuntu 26.04 基础** | 固定标签 + 中文 locale zh_CN.UTF-8 + Asia/Shanghai 时区 |
-| 2 | **Python 3.14.6 free-threading** | Miniforge3 (conda-forge) + cp314t 无GIL构建，`PYTHON_GIL=1` 可切兼容模式 |
+| 2 | **Python 3.14.6 free-threading** | Miniforge3 (conda-forge) + cp314t 无GIL构建，`PYTHON_GIL=1` 可切兼容模式；Jupyter 已注入 `PYTHON_GIL=0` 防 C 扩展自动启用 GIL（见 [FAQ Q6](#q6jupyter-kernel-里-gil-被重新启用free-threading-并行失效来源2026-08-19-gil-修复记录)） |
 | 3 | **四大服务可独立启停** | SSH(22) + Docker DinD/DooD + Podman(rootless) + JupyterLab(8888)，通过 ENVs 控制 |
 | 4 | **双容器运行时** | Docker DinD（完全隔离，需--privileged）/ DooD（挂载宿主socket，无需特权）；Podman rootless 备选 |
 | 5 | **Supervisord 统一管理** | 服务自动重启、优先级调度、日志聚合 |
@@ -690,6 +690,11 @@ gh workflow run onnx-quantize-ci.yml --ref main
 ### Q5：容器内时间不对（非 Asia/Shanghai 时区）？（来源：Dockerfile 时区配置反模式）
 **A**：本镜像已在构建阶段三层保障时区（apt tzdata + `/etc/localtime`软链 + `/etc/timezone`写入 + ENV TZ=Asia/Shanghai）。如仍异常：① 确认宿主机不是 Windows Docker Desktop 的 WSL2 后端（需手动同步 WSL2 时区）；② 启动时加 `-e TZ=Asia/Shanghai` 覆盖。
 
+### Q6：Jupyter kernel 里 GIL 被重新启用，free-threading 并行失效？（来源：2026-08-19 GIL 修复记录）
+**A**：free-threading Python（cp314t）加载**未声明 `Py_MOD_GIL_USED`** 的 C 扩展时，会通过 `PyUnstable_Module_SetGIL` 自动启用 GIL。Jupyter 栈依赖的 `_brotli` 正是此类扩展——因此修复前出现 **bash 上下文 `_is_gil_enabled()=False`、Jupyter kernel 内 `=True`** 的诡异不一致。修复方式：在 `/etc/supervisor/conf.d/jupyter.conf` 的 `environment=` 中注入 `PYTHON_GIL="0"`，使 supervisord 启动 Jupyter 时显式保持 GIL 关闭（kernel 作为子进程继承该变量）。验证：在 kernel 中执行 `import sys; print(sys._is_gil_enabled())` 应输出 `False`。
+
+> ⚠️ **注意**：`jupyter.conf` 的 `environment=` 优先级高于 `docker run -e`。若需为 Jupyter 切回 GIL 兼容模式（`PYTHON_GIL=1`），需同时修改 supervisord 配置，仅 `-e PYTHON_GIL=1` 启动不会覆盖它。Bash/脚本上下文可通过 `python -X gil=0` / `PYTHON_GIL=0` 临时控制。
+
 ---
 
 ## 📚 深入阅读导航
@@ -705,6 +710,7 @@ gh workflow run onnx-quantize-ci.yml --ref main
 | [docs/PY314T-C-EXTENSION-GUIDE.md](docs/PY314T-C-EXTENSION-GUIDE.md) | Python 3.14t free-threading C 扩展编译指南 + CMake 模板 | 需要编译 C/C++ 扩展为 cp314t ABI |
 | [docs/CONDA-PERF-INTEGRATION-GUIDE.md](docs/CONDA-PERF-INTEGRATION-GUIDE.md) | Conda 性能优化集成指南：libmamba solver、缓存、频道优先级 | conda install 慢 / 依赖求解卡死 |
 | [docs/TECH-ADVISORY-defaults-channel-abi-risk.md](docs/TECH-ADVISORY-defaults-channel-abi-risk.md) | ⚠️ defaults channel ABI 不兼容风险公告 + 规避方案 | 混用 defaults + conda-forge 前必读（本镜像默认禁用defaults） |
+| [docs/jupyter-gil-fix-quickstart.md](docs/jupyter-gil-fix-quickstart.md) | Jupyter GIL 问题修复·新开发者快速上手指南：症状识别、fix-jupyter-gil.sh 三步上手、输出解读、3个易踩坑 | 新入职开发者 · Jupyter 多线程不并行 / kernel 内 GIL 异常时 ⭐ |
 
 ---
 

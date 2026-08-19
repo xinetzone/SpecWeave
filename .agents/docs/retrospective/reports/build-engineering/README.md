@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（26份）
+## 报告清单（27份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `troubleshooting-devcontainer-jupyter-gil-20260819.md` | devcontainer-base Jupyter kernel GIL 被重新启用故障排查（I→F→V→C→R→I→E链路）：**根因**为 Jupyter 栈 C 扩展 `_brotli` 未声明 `Py_MOD_GIL_USED`，free-threading 下经 `PyUnstable_Module_SetGIL` 自动拉起 GIL（bash 上下文 False / kernel 内 True 的不一致）；**修复**为 jupyter.conf `environment=` 注入 `PYTHON_GIL="0"` + 重建 base（根因落 base 层）+ conda-llvm 幂等 sed 防御纵深；E2E 验证 kernel GIL=False、5/5 校验 PASS；清理悬空旧镜像 1.8GB；README 沉淀 FAQ Q6 | 2026-08-19 |
 | `insight-jupyter-kernel-expose-host-ide-20260814.md` | 容器内Jupyter Kernel暴露给宿主机IDE可行性技术洞察报告（F→V→I创新突破链路）：纠正"暴露Kernel"架构认知偏差，阐明Jupyter三层C/S架构（IDE→HTTP→Server→ZeroMQ→Kernel）；当前Dockerfile已完成90%准备工作（0.0.0.0绑定+EXPOSE 8888+entrypoint环境变量支持）；识别出CORS配置和volume挂载两个易被忽略的必选条件；给出4种可行方案对比（端口直连/SSH隧道/Dev Containers/kernel-gateway），推荐方案1一键命令模板 | 2026-08-14 |
 | `retrospective-devcontainer-v221-conda-perf-20260814/` | devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘（R-I-E-C链路）：Stage 4 conda求解从419s优化至37s（缓存热构建，11.3x加速），三项关键优化（8线程并行/单次mamba solver/原生mamba CLI）；萃取3个静态YAML模板+1个动态Shell脚本（conda-perf-setup.sh）为共享可复用资产，Dockerfile从~50行内联heredoc精简为3行脚本调用；沉淀"Conda构建层性能三联优化"模式（L1实验性）；3个原子提交900行变更 | 2026-08-14 |
 | `retrospective-ai-dev-variant-bugfix-logging-20260813/` | ai-dev变体Bug修复与Stage 2日志增强里程碑复盘（R-I-E-V-C链路）：修复T4(JupyterLab版本提取head→tail)和T25(Go模板`.`语法)两个测试失败；`|||`多字符命令分隔符替换`;`解决Python -c内部分号冲突；新增pip_install_group()函数实现14组pip分组安装+每组pip check冲突检测+失败诊断；萃取"安全命令列表分隔符"(L2)和"Docker pip分组安装可观测性"(L1)两个模式 | 2026-08-13 |
