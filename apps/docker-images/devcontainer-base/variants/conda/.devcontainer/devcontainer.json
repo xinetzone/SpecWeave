@@ -1,6 +1,6 @@
 {
-  "name": "ONNX Dev (onnx-dev)",
-  "image": "devcontainer-base:onnx-dev-latest",
+  "name": "Conda Base (conda)",
+  "image": "devcontainer-base:conda-latest",
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "remoteUser": "devuser",
@@ -16,18 +16,13 @@
     "JUPYTER_TOKEN": "dev",
     "TZ": "Asia/Shanghai",
     "GRANT_SUDO": "yes",
-    "WORKSPACE_CHOWN_MODE": "named-only",
-    "PYTHON_GIL": "0",
-    "OMP_NUM_THREADS": "4",
-    "OPENBLAS_NUM_THREADS": "1",
-    "KMP_DUPLICATE_LIB_OK": "TRUE"
+    "WORKSPACE_CHOWN_MODE": "named-only"
   },
 
   "runArgs": [
     "--privileged",
     "--security-opt", "seccomp=unconfined",
-    "--cap-add=SYS_PTRACE",
-    "--shm-size=8g"
+    "--shm-size=4g"
   ],
 
   "mounts": [
@@ -37,9 +32,9 @@
   ],
 
   "hostRequirements": {
-    "cpus": 4,
-    "memory": "8gb",
-    "storage": "32gb"
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "20gb"
   },
 
   "customizations": {
@@ -49,44 +44,30 @@
         "ms-python.vscode-pylance",
         "ms-python.debugpy",
         "ms-toolsai.jupyter",
-        "ms-toolsai.jupyter-keymap",
-        "ms-toolsai.jupyter-renderers",
         "redhat.vscode-yaml",
-        "streetsidesoftware.code-spell-checker",
         "ms-azuretools.vscode-docker",
         "editorconfig.editorconfig"
       ],
       "settings": {
-        "python.defaultInterpreterPath": "/opt/conda/envs/main/bin/python",
+        "python.defaultInterpreterPath": "/opt/conda/bin/python",
         "python.terminal.activateEnvironment": false,
         "python.analysis.typeCheckingMode": "basic",
-        "python.analysis.autoImportCompletions": true,
         "jupyter.jupyterServerType": "local",
-        "jupyter.askForKernelRestart": false,
         "terminal.integrated.defaultProfile.linux": "bash",
         "terminal.integrated.profiles.linux": {
           "bash": { "path": "/bin/bash", "args": ["-l"] }
         },
         "files.eol": "\n",
-        "files.trimTrailingWhitespace": true,
         "editor.formatOnSave": true,
-        "editor.formatOnPaste": false,
         "[python]": {
           "editor.tabSize": 4,
-          "editor.insertSpaces": true,
-          "editor.formatOnSave": true,
-          "editor.codeActionsOnSave": {
-            "source.organizeImports": "explicit"
-          }
-        },
-        "[json]": { "editor.tabSize": 2 },
-        "[yaml]": { "editor.tabSize": 2 },
-        "[dockerfile]": { "editor.tabSize": 2 }
+          "editor.insertSpaces": true
+        }
       }
     }
   },
 
-  "postCreateCommand": "/opt/conda/envs/main/bin/python -c \"import onnx,onnxruntime,onnxsim,onnxscript,sys;print(f'✅ onnx {onnx.__version__}, onnxruntime {onnxruntime.__version__}, GIL disabled, ft-ready')\"",
+  "postCreateCommand": "conda --version && python --version && echo '✅ conda base environment ready'",
 
   "postStartCommand": "echo 'Container ready | SSH: devuser@localhost:<port> (pw=dev) | JupyterLab: http://localhost:8888?token=dev'",
 

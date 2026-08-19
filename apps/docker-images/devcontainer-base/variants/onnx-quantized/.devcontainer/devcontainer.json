@@ -1,6 +1,6 @@
 {
-  "name": "ONNX Dev (onnx-dev)",
-  "image": "devcontainer-base:onnx-dev-latest",
+  "name": "ONNX Quantized (onnx-quantized)",
+  "image": "devcontainer-base:onnx-quantized-latest",
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "remoteUser": "devuser",
@@ -68,27 +68,21 @@
           "bash": { "path": "/bin/bash", "args": ["-l"] }
         },
         "files.eol": "\n",
-        "files.trimTrailingWhitespace": true,
         "editor.formatOnSave": true,
-        "editor.formatOnPaste": false,
         "[python]": {
           "editor.tabSize": 4,
           "editor.insertSpaces": true,
-          "editor.formatOnSave": true,
           "editor.codeActionsOnSave": {
             "source.organizeImports": "explicit"
           }
-        },
-        "[json]": { "editor.tabSize": 2 },
-        "[yaml]": { "editor.tabSize": 2 },
-        "[dockerfile]": { "editor.tabSize": 2 }
+        }
       }
     }
   },
 
-  "postCreateCommand": "/opt/conda/envs/main/bin/python -c \"import onnx,onnxruntime,onnxsim,onnxscript,sys;print(f'✅ onnx {onnx.__version__}, onnxruntime {onnxruntime.__version__}, GIL disabled, ft-ready')\"",
+  "postCreateCommand": "/opt/conda/envs/main/bin/python -c \"from onnxruntime.quantization import quantize_dynamic,QuantType;import onnx,onnxruntime;print(f'✅ ONNX Quantized ready: onnx {onnx.__version__}, onnxruntime {onnxruntime.__version__}, INT8/FP16/QDQ support, GIL disabled')\"",
 
-  "postStartCommand": "echo 'Container ready | SSH: devuser@localhost:<port> (pw=dev) | JupyterLab: http://localhost:8888?token=dev'",
+  "postStartCommand": "echo 'Container ready | SSH: devuser@localhost:<port> (pw=dev) | JupyterLab: http://localhost:8888?token=dev | INT8/FP16/QDQ quantization ready'",
 
   "shutdownAction": "stopContainer"
 }
