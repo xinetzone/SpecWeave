@@ -1,0 +1,28 @@
+# Variant build context ignore rules
+# WARNING: DO NOT exclude scripts/ or shared/ — they ARE COPYed into images:
+#   - onnx-quantized: COPY scripts/ /opt/devcontainer-scripts/
+#   - all variants:   COPY shared/lib/ + COPY shared/scripts/conda-mirror-setup.sh
+
+.git
+**/.git
+.trae
+**/.trae
+.agents
+**/.agents
+.devcontainer
+**/.devcontainer
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+**/__pycache__
+.vscode
+**/.vscode
+.cache
+logs
+*.log
+**/.env.example
+shared/tests
+shared/templates
+**/*.md
+verify-*.sh

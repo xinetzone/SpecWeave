@@ -10,6 +10,24 @@ LOG_JSON_OUTPUT="/tmp/test-conda-llvm-events.jsonl"
 
 TAG="latest"
 IMAGE=""
+ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
+
+detect_engine() {
+    # 构建引擎自动检测（auto: 优先docker，回退podman），与 scripts/build.sh 保持一致
+    if [ "$ENGINE" = "auto" ]; then
+        if docker info >/dev/null 2>&1; then
+            ENGINE="docker"
+        elif podman info >/dev/null 2>&1; then
+            ENGINE="podman"
+        else
+            log_fatal "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
+        fi
+    fi
+    if ! command -v "$ENGINE" >/dev/null 2>&1; then
+        log_fatal "Container engine '${ENGINE}' not found in PATH"
+    fi
+    log_info "Container engine: ${ENGINE}"
+}
 
 TEST_PASS=0
 TEST_FAIL=0
@@ -55,11 +73,11 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    ${ENGINE} run --rm "$IMAGE" "$@" 2>&1
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    ${ENGINE} run --rm "$IMAGE" bash -c "$1" 2>&1
 }
 
 test_llvm_config_version() {
@@ -270,7 +288,7 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local rc
-    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    ${ENGINE} run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then
         pass "T14: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
@@ -413,6 +431,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:conda-llvm-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║       Conda-LLVM Variant Unit Test Suite                    ║"
@@ -422,7 +442,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! ${ENGINE} images --format '{{.Repository}}:{{.Tag}}' | sed 's|^[^/]*/||' | grep -qx "${IMAGE}"; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"
