@@ -316,9 +316,11 @@ verify_slim_delete_preserve() {
     if [ $errors -eq 0 ]; then echo "  [OK] All deletion targets confirmed absent"; fi
 
     # 内置保留项默认列表
+    # 注意：libcusparseLt 拆分在独立 nvidia-cusparselt-cu13 wheel（torch 2.13+cu130），
+    #       实际路径为 nvidia/cusparselt/lib/，而非 nvidia/cusparse/lib/。
     local p_errors=0
     if [ "$pres_list" = "-" ] || [ -z "$pres_list" ]; then
-        set -- "nvidia/cusparse/lib/libcusparseLt.so.0" \
+        set -- "nvidia/cusparselt/lib/libcusparseLt.so.0" \
                "nvidia/nccl/lib/libnccl.so.2" \
                "nvidia/nvshmem/lib/libnvshmem_host.so.3" \
                "torchgen/__init__.py"

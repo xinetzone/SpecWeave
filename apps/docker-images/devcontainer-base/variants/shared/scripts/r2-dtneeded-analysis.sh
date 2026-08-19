@@ -74,7 +74,7 @@ declare -a R2_DELETE_CANDIDATES=(
 # ── 保护清单（禁止删除！删除将导致运行时失败）─────────────────────────────────
 declare -a PROTECTED_PATTERNS=(
   "torchgen/"                                        # torch.utils._python_dispatch运行时import
-  "nvidia/cusparse/lib/libcusparseLt.so"             # DT_NEEDED硬依赖 224MB
+  "nvidia/cusparselt/lib/libcusparseLt.so"           # DT_NEEDED硬依赖 224MB（独立cusparselt wheel）
   "nvidia/nccl/lib/libnccl.so"                       # DT_NEEDED硬依赖 186MB
   "nvidia/nvshmem/lib/libnvshmem_host.so"            # DT_NEEDED硬依赖 38MB
   "nvidia/cublas"                                    # cuBLAS核心
