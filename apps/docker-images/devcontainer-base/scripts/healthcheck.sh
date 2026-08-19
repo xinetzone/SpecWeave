@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # devcontainer-base healthcheck script
-# Checks SSH, Docker (DinD/DooD), and Jupyter services conditionally
+# Checks SSH, Docker (DinD/DooD), Podman (rootless), and Jupyter services conditionally
 #
 # Note: This script requires executable permission. In Dockerfile, use:
 #   COPY scripts/healthcheck.sh /usr/local/bin/
@@ -10,9 +10,11 @@
 
 ENABLE_SSH="${ENABLE_SSH:-yes}"
 ENABLE_DOCKER="${ENABLE_DOCKER:-yes}"
+ENABLE_PODMAN="${ENABLE_PODMAN:-no}"
 ENABLE_JUPYTER="${ENABLE_JUPYTER:-yes}"
 SSH_PORT="${SSH_PORT:-22}"
 JUPYTER_PORT="${JUPYTER_PORT:-8888}"
+PODMAN_USER="${NON_ROOT_USER:-devuser}"
 FAIL=0
 SERVICES_ENABLED=0
 
@@ -52,20 +54,36 @@ check_docker() {
         return
     fi
 
+    # 最小功能探测：docker ps 能正常返回即证明 daemon 可响应请求，而非仅检查 socket/进程存在
+    if ! timeout 5 docker ps >/dev/null 2>&1; then
+        echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: FAILED (docker ps failed)"
+        FAIL=1
+        return
+    fi
+
+    # 附带版本信息（可选展示，失败不判定为不健康）
     DOCKER_VERSION=$(timeout 5 docker info --format '{{.ServerVersion}}' 2>/dev/null)
-    if [ -n "$DOCKER_VERSION" ]; then
-        if [ "$DOCKER_MODE" = "dind" ]; then
-            echo "[HEALTHCHECK] docker (DinD) port ${DOCKER_PORT_DESC}: OK (version ${DOCKER_VERSION})"
-        else
-            echo "[HEALTHCHECK] docker (DooD) port ${DOCKER_PORT_DESC}: OK (version ${DOCKER_VERSION})"
-        fi
+    if [ "$DOCKER_MODE" = "dind" ]; then
+        echo "[HEALTHCHECK] docker (DinD) port ${DOCKER_PORT_DESC}: OK${DOCKER_VERSION:+ (version ${DOCKER_VERSION})}"
     else
-        if timeout 5 docker ps >/dev/null 2>&1; then
-            echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: OK"
-        else
-            echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: FAILED"
-            FAIL=1
-        fi
+        echo "[HEALTHCHECK] docker (DooD) port ${DOCKER_PORT_DESC}: OK${DOCKER_VERSION:+ (version ${DOCKER_VERSION})}"
+    fi
+}
+
+check_podman() {
+    # Rootless Podman：以非 root 用户（默认 devuser）按需运行，无常驻 daemon。
+    # 用 podman ps 作为最小功能探测，验证 rootless 运行时可用，而非仅检查二进制存在。
+    if ! command -v podman >/dev/null 2>&1; then
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: FAILED (binary not found)"
+        FAIL=1
+        return
+    fi
+
+    if timeout 10 su - "${PODMAN_USER}" -c "podman ps >/dev/null 2>&1"; then
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: OK"
+    else
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: FAILED (podman ps failed)"
+        FAIL=1
     fi
 }
 
@@ -93,6 +111,11 @@ fi
 if [ "$ENABLE_DOCKER" = "yes" ]; then
     SERVICES_ENABLED=1
     check_docker
+fi
+
+if [ "$ENABLE_PODMAN" = "yes" ]; then
+    SERVICES_ENABLED=1
+    check_podman
 fi
 
 if [ "$ENABLE_JUPYTER" = "yes" ]; then

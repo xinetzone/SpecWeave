@@ -70,12 +70,13 @@ source: "AGENTS.md#项目特有约束"
 
 **脚本**：[scripts/healthcheck.sh](../../scripts/healthcheck.sh)
 
-- Dockerfile 中配置 `HEALTHCHECK` 指令，每 30 秒检查一次，超时 10 秒，start-period=45 秒，retries=3
+- Dockerfile 中配置 `HEALTHCHECK` 指令，每 30 秒检查一次，超时 10 秒，start-period=60 秒，retries=3
 - healthcheck.sh 按条件检查启用的服务：
   - SSH：pgrep sshd 进程 + `/dev/tcp/127.0.0.1/22` 端口检测（不依赖 nc/netcat）
-  - Docker：检查 `/var/run/docker.sock` 存在且可读写 + `docker info` 验证版本
+  - Docker：检查 `/var/run/docker.sock` 存在且可读写 + `docker ps` 最小功能探测（证明 daemon 可响应请求），附带 `docker info` 展示版本
+  - Podman：`podman ps` 最小功能探测（rootless，以 `su - <NON_ROOT_USER>` 运行），验证 rootless 运行时可用而非仅检查二进制存在
   - Jupyter：pgrep jupyter 进程 + curl HTTP API 检测（接受 200/302/401/403）
-- 通过 `ENABLE_SSH`、`ENABLE_DOCKER`、`ENABLE_JUPYTER` 环境变量控制检查哪些服务
+- 通过 `ENABLE_SSH`、`ENABLE_DOCKER`、`ENABLE_PODMAN`、`ENABLE_JUPYTER` 环境变量控制检查哪些服务（Podman 默认 `no`，rootless 按需模式）
 - 输出结构化日志 `[HEALTHCHECK] service: OK/FAILED`，最终输出 `STATUS: HEALTHY/UNHEALTHY`
 
 ## supervisord 主配置
