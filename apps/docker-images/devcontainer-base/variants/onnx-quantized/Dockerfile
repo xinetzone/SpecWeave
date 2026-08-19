@@ -79,20 +79,33 @@ assert_free_threading
 assert_package_absent torch
 assert_package_absent onnxoptimizer
 
+# ── Slim: strip pip-installed .so files (site-packages only, not base layer) ──
+echo "[ACTION] Stripping pip-installed shared libraries in site-packages..."
+SP_DIR=$(/opt/conda/envs/main/bin/python -c "import site;print(site.getsitepackages()[0])")
+find "$SP_DIR" -name "*.so*" -type f -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] site-packages .so stripped"
+
 cleanup_pycache
 cleanup_conda_pip_cache
+# Lightweight perms for newly installed pip packages only
+chmod -R a+rX "$SP_DIR"/onnxconverter_common* 2>/dev/null || true
 S2
 
 COPY scripts/ /opt/devcontainer-scripts/
+RUN chmod -R a+rX /opt/devcontainer-scripts 2>/dev/null || true
 
-# ── Stage 3/3: Build-info + verification + quantization smoke ─────
+# ── Stage 3/3: Build-info + verification + quantization smoke + post-test cleanup ──
+# NOTE: No ensure_all_permissions() — it does chmod -R on /opt/conda (2GB+), triggering
+# CoW on base layers. Base perms are already correct from conda-llvm/onnx-dev builds.
 RUN <<'S3'
 set +o pipefail
 source /usr/local/share/variant-framework/variant-framework.sh
-variant_timer_stage 3 "Build-info + verification + quantization smoke"
+variant_timer_stage 3 "Build-info + verification + quantization smoke + cleanup"
 variant_activate_main_env
 
-ensure_all_permissions
+# Lightweight perms only — no recursive /opt/conda chmod
+ensure_user_bashrc
+ensure_profile_d_executable
 
 variant_write_build_info "onnx-quantized" "devcontainer-base:onnx-dev-${BASE_TAG}" \
     "VARIANT_DESCRIPTION=ONNX quantization toolkit (INT8/FP16/QDQ/dynamic/static, pure ONNX, free-threading)" \
@@ -104,7 +117,8 @@ variant_write_build_info "onnx-quantized" "devcontainer-base:onnx-dev-${BASE_TAG
     "PACKAGES_EXCLUDED=torch,torchvision(by design);onnxoptimizer(ft-incompatible:CPython#111506);neural-compressor(optional,needs torch)" \
     "OPTIONAL_PACKAGES=neural-compressor(needs torch: pip install neural-compressor torch)" \
     "BASE_VARIANT=onnx-dev(LLVM+ONNX inherited)" \
-    "SCRIPTS_DIR=/opt/devcontainer-scripts/"
+    "SCRIPTS_DIR=/opt/devcontainer-scripts/" \
+    "SLIMMING=site-packages-only-strip+CoW-optimized+post-test-cleanup"
 
 # ── Build-info self-verification with detailed debug logs ──
 echo ""
@@ -167,8 +181,6 @@ else
     echo "[ERROR] Build-info file NOT FOUND at expected path!"
     exit 1
 fi
-
-cleanup_all
 
 verify_validation_header "Quantization Toolkit Verification"
 python -c "from onnxruntime.quantization import quantize_dynamic,QuantType,quantize_static,CalibrationDataReader,QuantFormat,CalibrationMethod; print('[OK] onnxruntime.quantization imports')"
@@ -324,6 +336,9 @@ if python -c "import neural_compressor" 2>/dev/null; then
 else
     echo "[SKIP] neural-compressor not installed (expected: pip install neural-compressor torch for PyTorch quantization)"
 fi
+
+# ── Post-test cleanup ──
+cleanup_post_tests
 
 echo ""
 variant_timer_summary "onnx-quantized Variant (add-on)"

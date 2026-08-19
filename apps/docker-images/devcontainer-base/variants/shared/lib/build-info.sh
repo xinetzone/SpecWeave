@@ -17,7 +17,8 @@ _VARIANT_BUILD_INFO_LOADED=1
 # ---------------------------------------------------------------------------
 _variant_get_build_timer_total() {
     local variant_name="$1"
-    local timer_file="/root/.variant-timers/${variant_name}.timer"
+    # timer.sh uses dot-prefixed file with -build-timer suffix (see timer.sh _variant_timer_file)
+    local timer_file="/root/.variant-timers/.${variant_name}-build-timer"
 
     if [[ -f "${timer_file}" ]]; then
         local start_time
@@ -30,7 +31,7 @@ _variant_get_build_timer_total() {
         fi
     fi
     echo "unknown"
-    return 1
+    return 0  # do not fail set -e when timer data is unavailable
 }
 
 # ---------------------------------------------------------------------------

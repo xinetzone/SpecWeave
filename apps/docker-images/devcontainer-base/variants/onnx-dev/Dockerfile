@@ -64,15 +64,26 @@ assert_free_threading
 assert_package_absent torch
 assert_package_absent torchvision
 
+# ── Slim: strip pip-installed .so files (site-packages only, not base layer) ──
+# Strip only the .so files installed by pip in this layer — avoids CoW on base conda .so
+echo "[ACTION] Stripping pip-installed shared libraries in site-packages..."
+SP_DIR=$(/opt/conda/envs/main/bin/python -c "import site;print(site.getsitepackages()[0])")
+find "$SP_DIR" -name "*.so*" -type f -exec strip --strip-unneeded {} \; 2>/dev/null || true
+echo "[OK] site-packages .so stripped"
+
 cleanup_pycache
 cleanup_conda_pip_cache
+# Lightweight perms for newly installed pip packages only (avoids CoW on base /opt/conda)
+chmod -R a+rX "$SP_DIR"/onnx* "$SP_DIR"/onnxruntime* 2>/dev/null || true
 S2
 
 # ── Stage 3/3: Init script + build-info + verification + smoke ────
+# NOTE: No ensure_all_permissions() here — it does chmod -R on /opt/conda (2GB+),
+# triggering CoW on the base conda-llvm layer. Base perms are already correct.
 RUN <<'S3'
 set +o pipefail
 source /usr/local/share/variant-framework/variant-framework.sh
-variant_timer_stage 3 "Init + build-info + verification + smoke"
+variant_timer_stage 3 "Init + build-info + verification + smoke + post-test cleanup"
 variant_activate_main_env
 
 cat > /etc/profile.d/onnx-dev-init.sh <<'INIT'
@@ -87,7 +98,9 @@ grep -q "source /etc/profile.d/onnx-dev-init.sh" /home/devuser/.bash_profile 2>/
     || echo "source /etc/profile.d/onnx-dev-init.sh" >> /home/devuser/.bash_profile
 chown devuser:devuser /home/devuser/.bash_profile /home/devuser/.bashrc 2>/dev/null || true
 
-ensure_all_permissions
+# Lightweight perms only — user files + profile.d (no recursive /opt/conda chmod)
+ensure_user_bashrc
+ensure_profile_d_executable
 
 variant_write_build_info "onnx-dev" "conda-llvm-${BASE_TAG}" \
     "VARIANT_DESCRIPTION=Pure ONNX ecosystem (no PyTorch) in conda main env (Python 3.14t ft)" \
@@ -96,9 +109,8 @@ variant_write_build_info "onnx-dev" "conda-llvm-${BASE_TAG}" \
     "PACKAGES_INSTALLED=onnx,onnxruntime,onnx-simplifier,onnxscript" \
     "PACKAGES_EXCLUDED=torch,torchvision(by design);onnxoptimizer(ft-incompatible:CPython#111506)" \
     "ACTIVATION_SCRIPT=/etc/profile.d/onnx-dev-init.sh" \
-    "BASE_VARIANT=conda-llvm(LLVM toolchain inherited)"
-
-cleanup_all
+    "BASE_VARIANT=conda-llvm(LLVM toolchain inherited)" \
+    "SLIMMING=site-packages-only-strip+CoW-optimized+post-test-cleanup"
 
 verify_validation_header "ONNX + LLVM Inheritance Verification"
 verify_bash_syntax /etc/profile.d/onnx-dev-init.sh
@@ -133,6 +145,9 @@ out = sess.run(None, {"a": np.array([1.0,2.0], dtype=np.float32), "b": np.array(
 assert np.allclose(out, [4.0,6.0]), f"inference mismatch: {out}"
 print(f"[OK] Pure-ONNX smoke test passed: {out.tolist()}")
 PYSMOKE
+
+# ── Post-test cleanup ──
+cleanup_post_tests
 
 variant_timer_summary "onnx-dev Variant (add-on)"
 echo "########################################################################"

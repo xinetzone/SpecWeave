@@ -1,6 +1,8 @@
 # torch-dev 变体 - Free-Threading PyTorch 开发环境 v1.0.0
 
 > **发布日期**: 2026-08-15 | **状态**: ✅ 正式发布 | **Python**: 3.14.6 cp314t free-threading
+>
+> **可用标签**: `torch-dev-latest`（完整版 ~10GB）| **`torch-dev-slim`**（瘦身版 **8.15GB**，推荐）→ 详见 [SLIMMING-GUIDE.md](./SLIMMING-GUIDE.md)
 
 Free-Threading PyTorch 开发环境变体，在 conda main 环境（cp314t，GIL 禁用）安装 PyTorch + torchvision，支持无 GIL 并发计算。是 ai-dev 变体（完整 AI/ML/NLP 全栈）的直接基础镜像。
 
@@ -55,8 +57,8 @@ cd apps/docker-images/devcontainer-base
 # 使用本地一键构建脚本（自动处理WSL2路径映射）
 bash scripts/local-build.sh --variant torch-dev
 
-# 国内镜像加速
-bash scripts/local-build.sh --variant torch-dev --cn
+# 国内镜像加速（构建 slim 瘦身版，推荐）
+bash scripts/local-build.sh --variant torch-dev --cn --tag slim
 ```
 
 ### 方式二：Docker 直接构建
@@ -67,8 +69,11 @@ cd apps/docker-images/devcontainer-base
 # 按依赖链构建（需先构建 base→conda-llvm→onnx-dev→onnx-quantized）
 bash variants/build.sh --variant torch-dev --tag latest
 
-# 国内源
-bash variants/build.sh --variant torch-dev --tag latest --cn
+# 构建 slim 瘦身版（推荐，节省 2GB+）
+bash variants/build.sh --variant torch-dev --tag slim
+
+# 国内源（slim 版）
+bash variants/build.sh --variant torch-dev --tag slim --cn
 ```
 
 ### 方式三：启动容器
@@ -76,7 +81,7 @@ bash variants/build.sh --variant torch-dev --tag latest --cn
 #### 模式A：默认模式（本地workspace挂载，向后兼容）
 
 ```bash
-# CPU 模式（默认）
+# CPU 模式（默认，使用 slim 瘦身版）
 docker run -d --privileged \
   --name torch-dev \
   -p 2222:22 \
@@ -88,7 +93,7 @@ docker run -d --privileged \
   -v $(pwd)/workspace:/workspace \
   -w /workspace \
   -v docker-data:/var/lib/docker \
-  devcontainer-base:torch-dev-latest
+  devcontainer-base:torch-dev-slim
 
 # GPU 模式（添加 --gpus all，详见下方「启用GPU支持」章节）
 # docker run -d --privileged --gpus all \
@@ -102,7 +107,7 @@ docker run -d --privileged \
 #   -v $(pwd)/workspace:/workspace \
 #   -w /workspace \
 #   -v docker-data:/var/lib/docker \
-#   devcontainer-base:torch-dev-latest
+#   devcontainer-base:torch-dev-slim
 ```
 
 #### 模式B：自定义数据目录模式（推荐用于数据集/模型挂载）
@@ -122,7 +127,7 @@ MOUNT=/media/pc/data/ai
 mkdir -p "$MOUNT"
 
 # 3. 启动容器（自动挂载数据目录并设置为工作目录）
-# CPU 模式（默认）
+# CPU 模式（默认，slim 版）
 docker run -d -it --privileged \
   --name torch-dev \
   -p 2222:22 \
@@ -135,7 +140,7 @@ docker run -d -it --privileged \
   -v "$MOUNT:$MOUNT" \
   -v $(pwd)/workspace:/workspace \
   -v docker-data:/var/lib/docker \
-  devcontainer-base:torch-dev-latest
+  devcontainer-base:torch-dev-slim
 
 # GPU 模式（添加 --gpus all，详见下方「启用GPU支持」章节）
 # docker run -d -it --privileged --gpus all \
@@ -150,7 +155,7 @@ docker run -d -it --privileged \
 #   -v "$MOUNT:$MOUNT" \
 #   -v $(pwd)/workspace:/workspace \
 #   -v docker-data:/var/lib/docker \
-#   devcontainer-base:torch-dev-latest
+#   devcontainer-base:torch-dev-slim
 ```
 
 **关键参数说明**：
@@ -209,7 +214,7 @@ docker run -d -it --privileged --gpus all \
   -v "$MOUNT:$MOUNT" \
   -v $(pwd)/workspace:/workspace \
   -v docker-data:/var/lib/docker \
-  devcontainer-base:torch-dev-latest
+  devcontainer-base:torch-dev-slim
 ```
 
 ### 多卡场景：指定GPU设备
@@ -293,7 +298,7 @@ docker run -d -it --privileged --gpus all \
 适用于：快速检查镜像是否正常导入、PyTorch基础功能是否可用
 
 ```bash
-docker run --rm devcontainer-base:torch-dev-latest \
+docker run --rm devcontainer-base:torch-dev-slim \
   /opt/conda/envs/main/bin/python -c "
 import sys, torch
 print(f'torch {torch.__version__} ready!')
@@ -318,7 +323,7 @@ Free-threading: GIL disabled = True
 适用于：验证CUDA/GPU加速是否正常工作（需先满足[GPU前置条件](#前置条件)）
 
 ```bash
-docker run --gpus all --rm devcontainer-base:torch-dev-latest \
+docker run --gpus all --rm devcontainer-base:torch-dev-slim \
   /opt/conda/envs/main/bin/python -c "
 import sys, torch
 print(f'torch {torch.__version__} ready!')
@@ -558,12 +563,19 @@ docker run ... -e JUPYTER_ROOT_CHOWN=yes ...
    
    快速记忆：只需在`docker run`中添加`--gpus all`参数，并确保宿主机满足NVIDIA驱动和容器工具链要求。
 
-3. **依赖链构建顺序**
+3. **slim 版本功能边界**
+
+   `torch-dev-slim` 版本删除了部分专业工具以节省 2GB+ 空间：
+   - ✅ 保留：单GPU/多GPU训练、推理、ONNX导出/量化、核心CUDA算子
+   - ❌ 删除：多GPU分布式线性代数（cusolverMg）、cuDNN JIT引擎、NVSHMEM InfiniBand插件、protoc
+   - 📖 完整说明见 [SLIMMING-GUIDE.md](./SLIMMING-GUIDE.md)「已知限制与陷阱」章节
+
+4. **依赖链构建顺序**
    - torch-dev 依赖链：base → conda-llvm → onnx-dev → onnx-quantized → torch-dev
    - 下游 ai-dev 直接基于 torch-dev 构建
    - 本地构建建议使用 `local-build.sh` 自动处理依赖链
 
-4. **与 onnx-pytorch 的选择**
+5. **与 onnx-pytorch 的选择**
 
    | 场景 | 推荐变体 | Python 环境 | GIL 状态 |
    |------|---------|------------|---------|
@@ -571,7 +583,7 @@ docker run ... -e JUPYTER_ROOT_CHOWN=yes ...
    | 传统 PyTorch 工作流、兼容旧代码、onnxoptimizer | onnx-pytorch | base (3.13.x) | 启用 |
    | 完整 AI/ML/NLP 全栈（50+包） | ai-dev | base + main 双环境 | base启用/main禁用 |
 
-5. **Python 路径**
+6. **Python 路径**
 
    所有命令必须使用 main 环境 Python：
    ```bash
@@ -586,6 +598,7 @@ docker run ... -e JUPYTER_ROOT_CHOWN=yes ...
 
 ## 🔗 相关链接
 
+- [**镜像瘦身指南 SLIMMING-GUIDE.md**](./SLIMMING-GUIDE.md) - slim 标签瘦身策略、验证方法、已知限制
 - [上游变体 onnx-quantized](../onnx-quantized/README.md)
 - [下游变体 ai-dev](../ai-dev/README.md)
 - [平行变体 onnx-pytorch](../onnx-pytorch/README.md)（GIL 模式 PyTorch）

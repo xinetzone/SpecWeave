@@ -37,6 +37,9 @@ ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
+# Update framework libs (cleanup.sh with cleanup_torch_dev)
+COPY shared/lib/cleanup.sh /usr/local/share/variant-framework/cleanup.sh
+
 # Framework already inherited from onnx-quantized base layer.
 
 # ── Stage 1/3: Base verification (torch absent pre-install) ──────
@@ -71,7 +74,7 @@ pip_install_group --index-url "https://download.pytorch.org/whl/${TORCH_CUDA_IND
 
 echo "  torch:        $(python -c 'import torch; print(torch.__version__)' 2>&1)"
 echo "  torchvision:  $(python -c 'import torchvision; print(torchvision.__version__)' 2>&1)"
-echo "  torch cuda:   $(python -c 'import torch; print(f\"available={torch.cuda.is_available()}, devices={torch.cuda.device_count()}\")' 2>&1)"
+echo "  torch cuda:   $(python -c 'import torch; print(f"available={torch.cuda.is_available()}, devices={torch.cuda.device_count()}")' 2>&1)"
 
 assert_python_cp314t
 assert_free_threading
@@ -79,7 +82,16 @@ assert_package_present torch
 assert_package_present torchvision
 assert_package_absent onnxoptimizer
 
-ensure_all_permissions
+# ── 激进瘦身（必须在 pip install 同层，避免 CoW 膨胀）────────────
+# cleanup_binaries: strip 所有 .so 共享库 (~460MB saved) + 删除非必要静态库
+# cleanup_torch_dev: 删除冗余 CUDA 库 (nvrtc.alt, nvperf, nvshmem-bitcode, amd-backend ~180MB)
+cleanup_binaries
+cleanup_torch_dev
+
+# 轻量级权限修复（不做 chmod -R /opt/conda，避免 CoW 膨胀）
+ensure_user_bashrc
+ensure_profile_d_executable
+
 cleanup_pycache
 cleanup_conda_pip_cache
 S2
@@ -99,12 +111,13 @@ variant_write_build_info "torch-dev" "onnx-quantized-${BASE_TAG}" \
     "TORCH_VERSION=$(python -c 'import torch;print(torch.__version__)')" \
     "TORCHVISION_VERSION=$(python -c 'import torchvision;print(torchvision.__version__)')" \
     "TORCH_CUDA_INDEX=${TORCH_CUDA_INDEX}" \
-    "TORCH_CUDA_AVAILABLE=$(python -c 'import torch;print(\"yes\" if torch.cuda.is_available() else \"no\")')" \
+    "TORCH_CUDA_AVAILABLE=$(python -c 'import torch;print("yes" if torch.cuda.is_available() else "no")')" \
     "PACKAGES_INSTALLED=torch,torchvision" \
     "PACKAGES_INHERITED=onnx,onnxruntime,onnxconverter-common,onnxsim,onnxscript,LLVM" \
     "PACKAGES_EXCLUDED=onnxoptimizer (ft-incompatible: CPython#111506)" \
     "KERNEL_REGISTERED=false (kernel in downstream ai-dev)" \
-    "DOWNSTREAM_VARIANTS=ai-dev"
+    "DOWNSTREAM_VARIANTS=ai-dev" \
+    "SLIMMING=R1:strip-bins(.so~508MB)+del-nvrtc.alt+nvperf+nvshmem-device+triton-amd+no-chmod-R(CoW); R2:del-cusolverMg(100MB)+cudnn-jit(29MB)+nvshmem-plugins(4MB)+small-utils(3MB)+protoc(10MB)+strip-triton-bins"
 
 cleanup_all
 
