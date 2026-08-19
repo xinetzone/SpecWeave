@@ -54,6 +54,81 @@ bash fix-jupyter-gil.sh --verify
 2. 若 FAIL，跑 `bash fix-jupyter-gil.sh --all`，等它自动注入配置并验证
 3. 看到 `[RESULT] PASS` 即完成；看到 `[RESULT] FAIL` 跳到第 5 节
 
+### 实战案例：一次真实的报错排查（8 线程不加速）
+
+> 以 `conda-llvm` 镜像为例，演示从"发现变慢"到"确认并行"的完整闭环。照着做即可。
+
+**① 复现症状（notebook 中执行）**
+
+```python
+import time
+from concurrent.futures import ThreadPoolExecutor
+
+def work(_):
+    time.sleep(1)
+    return _
+
+t0 = time.time()
+with ThreadPoolExecutor(max_workers=8) as ex:
+    list(ex.map(work, range(8)))
+print(f"8线程耗时: {time.time()-t0:.2f}s")
+
+import sys
+print("kernel GIL:", sys._is_gil_enabled())
+```
+
+期望：8 个 1 秒任务并行约 **1s**；实际约 **8s** 且打印 `kernel GIL: True` → 确认 GIL 被启用、多线程已退化为串行。
+
+**② 跑诊断脚本（容器 bash 中）**
+
+```bash
+bash fix-jupyter-gil.sh
+```
+
+关键输出（GIL-03 暴露根因）：
+
+```
+=== [GIL-03] 配置检查（只读，--fix 可注入） ===
+  [FAIL] /etc/supervisor/conf.d/jupyter.conf 缺少 PYTHON_GIL，Jupyter kernel 内 GIL 会被 _brotli 拉起
+  [HINT] 运行 bash fix-jupyter-gil.sh --fix 注入
+```
+
+**③ 一键修复 + 验证**
+
+```bash
+bash fix-jupyter-gil.sh --all
+```
+
+期望先看到 `[FIXED] 已注入 PYTHON_GIL="0" 到 environment= 行`，随后 GIL-04 输出：
+
+```
+  [kernel] E2E_OK GIL_ENABLED= False
+  [RESULT] PASS（kernel 内 GIL 保持禁用）
+```
+
+**④ 重启 Jupyter 服务（关键一步，别漏）**
+
+```bash
+supervisorctl restart jupyter
+```
+
+> 为什么必须重启：`--all` 的 E2E 验证用的是**新起的临时 kernel**，所以能通过；但你正在用的 notebook kernel 是**旧进程**，不会继承新注入的 `PYTHON_GIL=0`，不重启就会回到原状。
+
+**⑤ 回到 notebook 复测**
+
+```python
+import sys
+print(sys._is_gil_enabled())   # 现在输出 False
+
+# 重跑 ① 的多线程测试 → 8线程耗时 ≈ 1s，真正并行
+```
+
+**⑥ 收尾自测（可选）**
+
+```bash
+python examples/free_threading_demo.py   # 输出串行/多线程/多进程耗时对比，确认多线程显著优于串行
+```
+
 ## 4. 输出怎么看（5 个环节）
 
 脚本按 GIL-01 ~ GIL-05 分步执行，重点看 3 处：
