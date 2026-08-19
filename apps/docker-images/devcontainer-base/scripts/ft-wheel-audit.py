@@ -98,11 +98,21 @@ def get_conda_build_string(package_name: str) -> Optional[str]:
 
 
 def has_c_extensions(dist: importlib_metadata.Distribution) -> bool:
-    """检测分发包是否包含 C 扩展（.so/.pyd 文件）。"""
+    """检测分发包是否包含 C 扩展（.so/.pyd 文件）。
+
+    优先基于 dist.files（RECORD 清单）判断——这是该包的真实文件列表，
+    精确且无文件系统误扫风险。仅当 RECORD 缺失时回退到目录扫描。
+    """
+    suffixes = importlib.machinery.EXTENSION_SUFFIXES
+
+    # 优先：RECORD 清单（准确，避免 locate_file('') 返回 site-packages 根导致的全局误扫）
+    if dist.files:
+        return any(str(f).endswith(tuple(suffixes)) for f in dist.files)
+
+    # 回退：目录扫描（RECORD 缺失时，如部分 conda 包）
     dist_dir = dist.locate_file("")
     if not dist_dir or not Path(str(dist_dir)).exists():
         return False
-    suffixes = importlib.machinery.EXTENSION_SUFFIXES
     for ext in suffixes:
         if list(Path(str(dist_dir)).rglob(f"*{ext}")):
             return True
