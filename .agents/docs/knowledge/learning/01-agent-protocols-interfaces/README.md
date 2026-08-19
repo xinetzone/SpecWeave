@@ -26,7 +26,7 @@ Agent协议与接口技术栈分为四层抽象：
 
 ---
 
-## 📚 子Wiki索引（11个专题）
+## 📚 子Wiki索引（12个专题）
 
 | 子Wiki目录 | 文件数 | 核心主题 |
 |-----------|--------|---------|
@@ -41,6 +41,7 @@ Agent协议与接口技术栈分为四层抽象：
 | [okf-wiki/](okf-wiki/00-overview.md) | 8篇 | **OKF开放知识格式完整指南**：Google Cloud 2026年6月发布的Agent知识层标准，极简Markdown+YAML格式，人和Agent共读，Git原生。覆盖设计哲学、格式规范、5分钟Quickstart、Agent四层架构定位、8种方案对比、企业落地四阶段路径 |
 | [knowledge-catalog-wiki/](knowledge-catalog-wiki/00-overview.md) | 9篇 | **Knowledge Catalog工具链完整指南**：Google Cloud官方OKF参考实现、参考Agent、可视化工具、enrichment/mdcode工具箱、4个示例Bundle深度解析、快速入门、架构选型决策 |
 | [graphql-wiki/](graphql-wiki/README.md) | 11篇 | **GraphQL 系统性技术教程**：从核心概念到生产最佳实践的完整指南，涵盖查询语言、Schema类型系统、验证执行、客户端基础、服务端核心概念、Python生态（Strawberry+FastAPI完整示例）、最佳实践，包含26条核心术语表与参考资料 |
+| [jira-skill-wiki/](jira-skill-wiki/00-overview.md) | 11篇 | **Jira 集成插件教程**：Claude Code 的 Jira 集成插件完整教程，涵盖双技能架构（jira-communication 脚本化 API 操作 + jira-syntax wiki 标记语法）、六种安装方式、意图动词机制、JQL 查询、最佳实践与故障排查 |
 
 ---
 
