@@ -54,6 +54,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
 | [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
 | [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
+| [agent-workspace-template.md](agent-workspace-template.md) | 智能体工作区枢纽模板：从成熟体系剥离项目特定内容+参数化占位符，产出可复制到新项目的通用脚手架（模板 AGENTS.md + 精简 .agents/ 骨架 + 模式文档） | L1 实验性 | 新项目引导智能体工作区、多项目治理体系统一、成熟体系复用萃取 |
 | [dependency-shimming-layer.md](dependency-shimming-layer.md) | 依赖裁剪适配层：compat/头文件shim零侵入替换重依赖，依赖四分类法+三层shim（别名/内联/空桩）+渐进式裁剪，源文件零修改即可从10依赖降到3依赖 | L2 已验证 | 大型C++库裁剪、开源fork适配、跨平台移植、微服务拆分防腐层、渐进式重构 |
 | [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
 | [zerocopy-cow-readwrite-separation.md](zerocopy-cow-readwrite-separation.md) | 零拷贝COW读写分离模式：const/non-const编译期区分读写意图+引用计数O(1)共享+写时自动克隆+分层增量上线+双重开关回退，在读多写少场景实现性能与安全的平衡 | L2 已验证 | 深度学习框架张量传递、大对象IPC、消息队列广播、协作文档编辑、不可变数据结构、操作系统内存管理 |
