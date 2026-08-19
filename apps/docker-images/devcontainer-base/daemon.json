@@ -1,0 +1,16 @@
+{
+  "storage-driver": "overlay2",
+  "iptables": false,
+  "log-driver": "json-file",
+  "log-opts": {"max-size": "10m", "max-file": "3"},
+  "userland-proxy": false,
+  "registry-mirrors": [
+    "https://docker.1ms.run",
+    "https://hub.rat.dev",
+    "https://dockerpull.com",
+    "https://dockerproxy.cn",
+    "https://docker.1panel.live",
+    "https://dockerhub.icu",
+    "https://docker.m.daocloud.io"
+  ]
+}
