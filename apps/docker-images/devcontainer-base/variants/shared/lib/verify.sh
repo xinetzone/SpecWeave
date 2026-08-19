@@ -261,3 +261,189 @@ verify_all_basic() {
     verify_devuser_access
     variant_log_ok "All basic verifications passed"
 }
+
+# =============================================================================
+# GPU/ML Slim 验证函数（对应 SOP Step 4 七项验证清单）
+# 参考: patterns/code-patterns/docker-gpu-slimming-sop.md
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# verify_slim_delete_preserve: 验证slim瘦身的删除项不存在/保留项存在
+# 用法: verify_slim_delete_preserve <delete_list_file|-> <preserve_list_file|->
+# 传入 - 表示使用内置默认列表（PyTorch cu130）
+# ---------------------------------------------------------------------------
+verify_slim_delete_preserve() {
+    local del_list="${1:-}"
+    local pres_list="${2:-}"
+
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [VERIFY] Slim delete/preserve assertions        │"
+    echo "└─────────────────────────────────────────────────┘"
+
+    local SP
+    SP=$(/opt/conda/envs/main/bin/python -c 'import site; print(site.getsitepackages()[0])' 2>/dev/null || echo "")
+    if [ -z "$SP" ]; then
+        echo "  [WARN] Cannot determine site-packages, skipping slim assertions"
+        return 0
+    fi
+
+    local errors=0
+
+    # 内置删除项默认列表（PyTorch cu130 R2标准删除项）
+    if [ "$del_list" = "-" ] || [ -z "$del_list" ]; then
+        set -- "nvidia/cu13/lib/libnvrtc.alt.so.13" \
+               "nvidia/cu13/lib/libnvperf_host.so" \
+               "nvidia/cu13/lib/libnvperf_target.so" \
+               "nvidia/nvshmem/lib/libnvshmem_device.bc" \
+               "nvidia/cu13/lib/libcusolverMg.so.12" \
+               "nvidia/cudnn/lib/libcudnn_engines_runtime_compiled.so.9" \
+               "nvidia/cu13/lib/libnvblas.so.13" \
+               "triton/backends/amd"
+        for f in "$@"; do
+            if [ -e "$SP/$f" ] || [ -L "$SP/$f" ]; then
+                echo "  [FAIL] Delete target still exists: $f"; errors=1
+            fi
+        done
+    elif [ -f "$del_list" ]; then
+        while IFS= read -r f; do
+            [ -z "$f" ] || [[ "$f" == \#* ]] && continue
+            if [ -e "$SP/$f" ] || [ -L "$SP/$f" ]; then
+                echo "  [FAIL] Delete target still exists: $f"; errors=1
+            fi
+        done < "$del_list"
+    fi
+    if [ $errors -eq 0 ]; then echo "  [OK] All deletion targets confirmed absent"; fi
+
+    # 内置保留项默认列表
+    local p_errors=0
+    if [ "$pres_list" = "-" ] || [ -z "$pres_list" ]; then
+        set -- "nvidia/cusparse/lib/libcusparseLt.so.0" \
+               "nvidia/nccl/lib/libnccl.so.2" \
+               "nvidia/nvshmem/lib/libnvshmem_host.so.3" \
+               "torchgen/__init__.py"
+        for f in "$@"; do
+            if [ ! -e "$SP/$f" ]; then
+                echo "  [FAIL] Preserved target missing: $f"; p_errors=1
+            fi
+        done
+    elif [ -f "$pres_list" ]; then
+        while IFS= read -r f; do
+            [ -z "$f" ] || [[ "$f" == \#* ]] && continue
+            if [ ! -e "$SP/$f" ]; then
+                echo "  [FAIL] Preserved target missing: $f"; p_errors=1
+            fi
+        done < "$pres_list"
+    fi
+    if [ $p_errors -eq 0 ]; then echo "  [OK] All preserved targets confirmed present"; fi
+
+    if [ $errors -eq 0 ] && [ $p_errors -eq 0 ]; then
+        variant_log_ok "Slim delete/preserve assertions passed"
+        return 0
+    else
+        variant_log_error "Slim delete/preserve assertions failed"
+        exit 1
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# verify_gpu_smoke: GPU算子冒烟测试（CUDA matmul/conv2d/MLP）
+# 自动跳过无CUDA环境（CPU-only构建）
+# ---------------------------------------------------------------------------
+verify_gpu_smoke() {
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [VERIFY] GPU compute smoke test                 │"
+    echo "└─────────────────────────────────────────────────┘"
+
+    /opt/conda/envs/main/bin/python - <<'PYEOF'
+import sys, torch, torch.nn as nn, torch.nn.functional as F
+
+if not torch.cuda.is_available():
+    print("  [SKIP] CUDA not available (expected on CPU-only build)")
+    sys.exit(0)
+
+device = torch.device('cuda')
+torch.manual_seed(42)
+errors = 0
+
+# CUDA matmul
+try:
+    a, b = torch.randn(256,256,device=device), torch.randn(256,256,device=device)
+    c = torch.matmul(a,b); assert c.shape==(256,256)
+    print("  [OK] CUDA matmul (256x256)")
+except Exception as e:
+    print(f"  [FAIL] CUDA matmul: {e}"); errors=1
+
+# CUDA conv2d + autograd
+try:
+    x = torch.randn(1,3,32,32,device=device,requires_grad=True)
+    w = torch.randn(16,3,3,3,device=device,requires_grad=True)
+    y = F.conv2d(x,w,padding=1); y.sum().backward()
+    assert x.grad is not None and w.grad is not None
+    print("  [OK] CUDA conv2d+autograd")
+except Exception as e:
+    print(f"  [FAIL] CUDA conv2d: {e}"); errors=1
+
+# CUDA MLP + CrossEntropy (cuDNN path)
+try:
+    model = nn.Sequential(nn.Linear(128,64),nn.ReLU(),nn.Linear(64,10)).to(device)
+    x = torch.randn(32,128,device=device)
+    loss = F.cross_entropy(model(x), torch.randint(0,10,(32,),device=device))
+    loss.backward()
+    assert loss.item() > 0
+    print(f"  [OK] CUDA MLP+CrossEntropy (cuDNN, loss={loss.item():.4f})")
+except Exception as e:
+    print(f"  [FAIL] CUDA MLP+CE: {e}"); errors=1
+
+if errors == 0:
+    print("  [OK] All GPU smoke tests passed")
+else:
+    print(f"  [FAIL] {errors} GPU test(s) failed")
+    sys.exit(1)
+PYEOF
+    local rc=$?
+    if [ $rc -ne 0 ]; then
+        variant_log_error "GPU smoke tests failed"
+        exit 1
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# verify_all_slim_gpu: 一键执行GPU/ML镜像slim验证全流程
+# 用法: verify_all_slim_gpu
+# 包含: CPU算子冒烟 + GPU算子冒烟 + 删除项断言 + 保留项断言 + devuser权限
+# ---------------------------------------------------------------------------
+verify_all_slim_gpu() {
+    verify_validation_header "GPU/ML Slim Validation (SOP Step 4)"
+
+    # 安全检查：torch未安装时跳过（非GPU变体）
+    if ! /opt/conda/envs/main/bin/python -c "import torch" 2>/dev/null; then
+        echo "  [SKIP] torch not installed - not a GPU/ML variant, skipping slim GPU validation"
+        variant_log_ok "GPU slim validation skipped (non-GPU variant)"
+        return 0
+    fi
+
+    echo ""
+    echo "┌─────────────────────────────────────────────────┐"
+    echo "│ [VERIFY] CPU compute smoke test                 │"
+    echo "└─────────────────────────────────────────────────┘"
+    /opt/conda/envs/main/bin/python - <<'PYEOF'
+import torch, torch.nn.functional as F
+torch.manual_seed(42)
+a,b = torch.randn(64,128),torch.randn(128,32)
+c=torch.matmul(a,b); assert c.shape==(64,32); print("  [OK] CPU matmul")
+x,w = torch.randn(1,3,32,32),torch.randn(16,3,3,3)
+conv=F.conv2d(x,w,padding=1); assert conv.shape==(1,16,32,32); print("  [OK] CPU conv2d")
+x2=torch.randn(4,8,requires_grad=True); w2=torch.randn(8,4,requires_grad=True)
+(x2@w2).sum().backward(); assert x2.grad is not None; print("  [OK] CPU autograd")
+model=torch.nn.Sequential(torch.nn.Linear(16,32),torch.nn.ReLU(),torch.nn.Linear(32,4))
+out=model(torch.randn(4,16)); assert out.shape==(4,4); print("  [OK] CPU MLP")
+print("  [OK] All CPU smoke tests passed")
+PYEOF
+
+    verify_gpu_smoke
+    verify_slim_delete_preserve "-" "-"
+    verify_devuser_access
+    variant_log_ok "All GPU/ML slim verifications passed"
+}

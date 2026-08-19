@@ -37,8 +37,10 @@ ENV PATH=/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-# Update framework libs (cleanup.sh with cleanup_torch_dev)
+# Update framework libs (cleanup.sh with cleanup_torch_dev + r2-dtneeded-analysis + verify.sh slim functions)
 COPY shared/lib/cleanup.sh /usr/local/share/variant-framework/cleanup.sh
+COPY shared/lib/verify.sh /usr/local/share/variant-framework/verify.sh
+COPY --chmod=755 shared/scripts/r2-dtneeded-analysis.sh /usr/local/share/variant-framework/r2-dtneeded-analysis.sh
 
 # Framework already inherited from onnx-quantized base layer.
 
@@ -117,10 +119,9 @@ variant_write_build_info "torch-dev" "onnx-quantized-${BASE_TAG}" \
     "PACKAGES_EXCLUDED=onnxoptimizer (ft-incompatible: CPython#111506)" \
     "KERNEL_REGISTERED=false (kernel in downstream ai-dev)" \
     "DOWNSTREAM_VARIANTS=ai-dev" \
-    "SLIMMING=R1:strip-bins(.so~508MB)+del-nvrtc.alt+nvperf+nvshmem-device+triton-amd+no-chmod-R(CoW); R2:del-cusolverMg(100MB)+cudnn-jit(29MB)+nvshmem-plugins(4MB)+small-utils(3MB)+protoc(10MB)+strip-triton-bins"
+    "SLIMMING=R1:strip-bins(.so~508MB)+del-nvrtc.alt+nvperf+nvshmem-device+triton-amd+no-chmod-R(CoW); R2:del-cusolverMg(100MB)+cudnn-jit(29MB)+nvshmem-plugins(4MB)+small-utils(3MB)+protoc(10MB)+strip-triton-bins; SOP:docker-gpu-slimming-sop.md"
 
-cleanup_all
-
+# ── Variant-specific assertions (继承+GIL+排除项) ──
 verify_validation_header "PyTorch Verification"
 python -c "import torch, torchvision; print(f'[OK] torch {torch.__version__}, torchvision {torchvision.__version__}')"
 python -c "from onnxruntime.quantization import quantize_dynamic; print('[OK] quantization API inherited')"
@@ -131,40 +132,18 @@ assert_package_present torchvision
 assert_package_absent onnxoptimizer
 llvm-config --version 2>&1 | head -1 && echo "  [OK] LLVM inherited"
 verify_base_services
-echo -n "  [VERIFY] devuser PyTorch access... "
+python -c "import sys; print(f'[INFO] GIL enabled: {sys._is_gil_enabled()}')"
+
+# ── SOP Step 4: 框架级 GPU/ML slim 验证（CPU+CUDA冒烟+删除/保留断言+devuser）──
+verify_all_slim_gpu
+
+# ── 变体专项验证：devuser可import torch ──
+echo -n "  [VERIFY] devuser torch import... "
 su - devuser -c "python -c 'import torch;print(f\"torch {torch.__version__} OK\")'" >/dev/null 2>&1 \
     && echo "[OK]" || { echo "[FAIL]"; exit 1; }
 
-# ── PyTorch Smoke Test (6 sub-tests: matmul/conv2d/autograd/softmax/tensor/MLP) ──
-echo ""
-echo "┌─────────────────────────────────────────────────┐"
-echo "│  [SMOKE] PyTorch compute (cp314t ft)           │"
-echo "└─────────────────────────────────────────────────┘"
-python - <<'TSMOKE'
-import sys, torch, torch.nn.functional as F
-print(f"[INFO] torch {torch.__version__}, GIL enabled: {sys._is_gil_enabled()}, CUDA: {torch.cuda.is_available()}")
-torch.manual_seed(42)
-
-a, b = torch.randn(64,128), torch.randn(128,32)
-c = torch.matmul(a,b); assert c.shape==(64,32); print(f"[OK] matmul (64,128)@(128,32)->{c.shape}")
-
-x, w = torch.randn(1,3,32,32), torch.randn(16,3,3,3)
-conv = F.conv2d(x,w,padding=1); assert conv.shape==(1,16,32,32); print(f"[OK] conv2d (1,3,32,32)->{conv.shape}")
-
-x2 = torch.randn(4,8,requires_grad=True); w2 = torch.randn(8,4,requires_grad=True)
-y = x2@w2; y.sum().backward()
-assert x2.grad is not None and w2.grad is not None; print("[OK] autograd gradients computed")
-
-logits, targets = torch.randn(8,10), torch.randint(0,10,(8,))
-loss = F.cross_entropy(logits,targets); assert loss.dim()==0 and loss.item()>0; print(f"[OK] cross_entropy loss={loss.item():.4f}")
-
-t = torch.arange(10,dtype=torch.float32); assert t.sum().item()==45.0; print("[OK] tensor arange+sum")
-
-model = torch.nn.Sequential(torch.nn.Linear(16,32), torch.nn.ReLU(), torch.nn.Linear(32,4))
-out = model(torch.randn(4,16)); assert out.shape==(4,4); print(f"[OK] MLP forward (4,16)->{out.shape}")
-
-print("[OK] PYTORCH SMOKE PASSED (matmul+conv2d+autograd+softmax+tensor+MLP)")
-TSMOKE
+# ── SOP Step 4 末：Post-verification cleanup（清理测试产生的pycache）──
+cleanup_post_tests
 
 echo ""
 variant_timer_summary "torch-dev Variant (add-on)"
