@@ -27,6 +27,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-conda-llvm-smoke"
 
 TAG="latest"
@@ -74,11 +75,11 @@ fail() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # ─── S1: clang++ 版本输出验证 ──────────────────────────────────────────────
@@ -194,6 +195,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:conda-llvm-${TAG}"
 fi
 
+detect_engine
+
 # ─── 主测试流程 ──────────────────────────────────────────────────────────────
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
@@ -205,7 +208,7 @@ echo "╚═══════════════════════�
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' 2>/dev/null | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     echo ""
     echo -e "${RED}ERROR: Image not found: ${IMAGE}${NC}"
     echo "Please build the image first:"

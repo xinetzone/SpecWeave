@@ -22,6 +22,7 @@ VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 # shellcheck source=../shared/lib/logging.sh
 source "${VARIANTS_DIR}/shared/lib/logging.sh" 2>/dev/null || true
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh" 2>/dev/null || true
 LOG_SERVICE="test-ai-dev"
 LOG_JSON_OUTPUT="/tmp/test-ai-dev-events.jsonl"
 
@@ -96,11 +97,11 @@ fail() {
 # ── Docker execution wrapper with diagnostics ──
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # run_test TEST_ID DESCRIPTION EXPECTED_PATTERN COMMAND...
@@ -156,25 +157,25 @@ preflight_checks() {
     log_section "Pre-flight Checks"
     local all_ok=1
 
-    # Check Docker daemon
-    echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking Docker daemon ... "
-    if docker info &>/dev/null; then
+    # Check engine daemon
+    echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking ${ENGINE} daemon ... "
+    if ${ENGINE} info &>/dev/null; then
         local dv
-        dv=$(docker version --format '{{.Server.Version}}' 2>/dev/null)
-        echo -e "${GREEN}OK${NC} (Docker $dv)"
-        log_json "PREFLIGHT" ",\"check\":\"docker_daemon\",\"status\":\"ok\",\"version\":\"${dv}\""
+        dv=$(${ENGINE} version --format '{{.Server.Version}}' 2>/dev/null)
+        echo -e "${GREEN}OK${NC} (${ENGINE} $dv)"
+        log_json "PREFLIGHT" ",\"check\":\"engine_daemon\",\"status\":\"ok\",\"engine\":\"${ENGINE}\",\"version\":\"${dv}\""
     else
-        echo -e "${RED}FAILED${NC} - Docker daemon not reachable"
-        log_json "PREFLIGHT" ",\"check\":\"docker_daemon\",\"status\":\"fail\""
+        echo -e "${RED}FAILED${NC} - ${ENGINE} daemon not reachable"
+        log_json "PREFLIGHT" ",\"check\":\"engine_daemon\",\"status\":\"fail\",\"engine\":\"${ENGINE}\""
         all_ok=0
     fi
 
     # Check image exists
     echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking image ${IMAGE} ... "
-    if docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+    if engine_image_exists; then
         local size created
-        size=$(docker images "$IMAGE" --format '{{.Size}}')
-        created=$(docker images "$IMAGE" --format '{{.CreatedAt}}' | cut -d' ' -f1-2)
+        size=$(${ENGINE} images "$IMAGE" --format '{{.Size}}')
+        created=$(${ENGINE} images "$IMAGE" --format '{{.CreatedAt}}' | cut -d' ' -f1-2)
         echo -e "${GREEN}OK${NC} (size=$size, created=$created)"
         log_json "PREFLIGHT" ",\"check\":\"image_exists\",\"status\":\"ok\",\"size\":\"${size}\""
     else
@@ -188,12 +189,12 @@ preflight_checks() {
     if [ "$all_ok" -eq 1 ]; then
         echo ""
         echo -e "  ${BOLD}Image metadata:${NC}"
-        docker inspect "$IMAGE" --format '    - Created: {{.Created}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - OS/Arch: {{.Os}}/{{.Architecture}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - Entrypoint: {{json .Config.Entrypoint}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - Cmd: {{json .Config.Cmd}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - WorkingDir: {{.Config.WorkingDir}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - User: {{.Config.User}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Created: {{.Created}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - OS/Arch: {{.Os}}/{{.Architecture}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Entrypoint: {{json .Config.Entrypoint}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Cmd: {{json .Config.Cmd}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - WorkingDir: {{.Config.WorkingDir}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - User: {{.Config.User}}' 2>/dev/null
     fi
 
     echo ""
@@ -515,7 +516,7 @@ test_no_entrypoint_override() {
     log_test_start "T25" "Entrypoint inherited from base (not overridden)"
     t_start=$(date +%s)
     set +e
-    result=$(docker inspect "$IMAGE" --format '{{json .Config.Entrypoint}}' 2>&1)
+    result=$(${ENGINE} inspect "$IMAGE" --format '{{json .Config.Entrypoint}}' 2>&1)
     set -e
     elapsed=$(($(date +%s) - t_start))
     # Base image uses tini as entrypoint; variant should not override it
@@ -626,6 +627,8 @@ done
 if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:ai-dev-${TAG}"
 fi
+
+detect_engine
 
 # ── Header ──
 echo ""

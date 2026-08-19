@@ -20,7 +20,7 @@
 - **子系统类型**：Docker 镜像变体管理系统（"基础继承+配置化"模式）
 - **父级工作区**：devcontainer-base（[../AGENTS.md](../AGENTS.md)）
 - **核心功能**：多变体统一构建（拓扑排序）、构建阶段计时、逐条验证、国内镜像源支持、模板化新增
-- **共享组件**：`shared/lib/logging.sh`（结构化日志库，双格式text+JSON）
+- **共享组件**：`shared/lib/logging.sh`（结构化日志库，双格式text+JSON）、`shared/lib/container-engine.sh`（容器引擎抽象库，docker/podman 自动检测）
 - **可用变体**：
   - `conda-llvm`：基础镜像 + LLVM 22.1.8/clang/cmake/ninja 编译工具链（直接基于 devcontainer-base:latest，镜像源已内置于基础镜像）
   - `onnx-dev`：conda-llvm + 纯 ONNX 生态（onnx/onnxruntime/onnx-simplifier/onnxscript，安装于 main 环境，**不含 PyTorch**，onnxoptimizer 因 free-threading 不兼容而排除，基于 conda-llvm 变体）
@@ -53,6 +53,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色）
                  ├─ build.sh               ← 统一构建脚本（拓扑排序+依赖处理+计时+验证）
                  ├─ shared/                ← 变体间共享组件
                  │   ├─ lib/logging.sh     ← 共享结构化日志库
+                 │   ├─ lib/container-engine.sh ← 容器引擎抽象库（docker/podman）
                  │   └─ scripts/conda-mirror-setup.sh ← conda/pip镜像源配置脚本
                  ├─ scripts/               ← 单变体辅助脚本
                  │   ├─ build-conda-llvm.sh    ← conda-llvm一键构建脚本

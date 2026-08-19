@@ -92,11 +92,11 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"   # docker/podman 引擎抽象
 LOG_SERVICE="test-<variant>"
 
 TAG="latest"
-VARIANT="<variant-name>"
-IMAGE="devcontainer-base:${VARIANT}-${TAG}"
+IMAGE=""
 PASSED=0
 FAILED=0
 TESTS=()
@@ -105,10 +105,20 @@ TESTS=()
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --tag) TAG="$2"; IMAGE="devcontainer-base:${VARIANT}-${TAG}"; shift 2;;
+        --image) IMAGE="$2"; shift 2;;
         -h|--help) usage; exit 0;;
         *) echo "Unknown option: $1"; exit 1;;
     esac
 done
+
+# 参数解析后、使用镜像前必须执行引擎检测（auto: 优先docker回退podman，兼容podman的localhost/前缀）
+if [ -z "$IMAGE" ]; then
+    IMAGE="devcontainer-base:${VARIANT}-${TAG}"
+fi
+detect_engine
+if ! engine_image_exists; then
+    log_fatal "Image not found: ${IMAGE}. Please build it first."
+fi
 
 # 辅助函数
 pass() { PASSED=$((PASSED+1)); TESTS+=("PASS: $1"); log_ok "$1"; }

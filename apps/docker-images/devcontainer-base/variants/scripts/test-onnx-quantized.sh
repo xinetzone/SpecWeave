@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-onnx-quantized"
 LOG_JSON_OUTPUT="/tmp/test-onnx-quantized-events.jsonl"
 
@@ -56,18 +57,15 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 docker_run_mount_bash() {
-    local host_dir="$1"
-    local container_dir="$2"
-    local cmd="$3"
-    docker run --rm -v "${host_dir}:${container_dir}:ro" "$IMAGE" bash -c "$cmd" 2>&1
+    engine_run_mount_bash "$1" "$2" "$3"
 }
 
 # ─────────────────────────── L1 基础工具链版本（继承onnx-dev,free-threading） ───────────────────────────
@@ -588,6 +586,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:onnx-quantized-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║      ONNX-Quantized Variant Unit Test Suite                 ║"
@@ -598,7 +598,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"
