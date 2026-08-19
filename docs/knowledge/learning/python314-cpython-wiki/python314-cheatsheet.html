@@ -552,6 +552,15 @@ ann = annotationlib.<span class="fn">get_annotations</span>(
     Node, format=Format.VALUE)
 <span class="cmt"># VALUE=真实类型, STRING=字符串, FORWARDREF=对象</span></pre>
         <div class="note"><code>from __future__ import annotations</code> 已<b>软弃用</b>，直接删除即可！</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;">
+          <p style="font-weight:700;color:var(--ann-purple);margin-bottom:4px;">⚡ 类型系统更多变更</p>
+          <pre style="font-size:11px;"><span class="cmt"># UnionType = Union：| 语法完全统一</span>
+<span class="fn">print</span>(int | str)  <span class="cmt"># "int | str"（旧: "Union[int, str]"）</span>
+<span class="fn">isinstance</span>(int|str, typing.Union)  <span class="cmt"># True!</span>
+
+<span class="cmt"># io.Reader/Writer 替代 typing.IO</span>
+<span class="kw">from</span> io <span class="kw">import</span> Reader, Writer  <span class="cmt"># 真正的 Protocol</span></pre>
+        </div>
       </div>
     </div>
 
@@ -583,7 +592,7 @@ ann = annotationlib.<span class="fn">get_annotations</span>(
         <div class="cmd-item"><code>PYTHON_JIT=1</code><span class="cmd-desc">运行时启用 JIT</span></div>
         <div class="cmd-item"><code>PYTHON_GIL=0/1</code><span class="cmd-desc">运行时控制 GIL</span></div>
         <div class="cmd-item"><code>python3.14t</code><span class="cmd-desc">自由线程可执行文件</span></div>
-        <div class="cmd-item"><code>python -m asyncio ps</code><span class="cmd-desc">asyncio 任务内省</span></div>
+        <div class="cmd-item"><code>python -m asyncio ps/pstree</code><span class="cmd-desc">asyncio 任务内省（树形）</span></div>
         <div class="cmd-item"><code>python -m pdb -p PID</code><span class="cmd-desc">pdb 远程附加</span></div>
         <div class="cmd-item"><code>python -m json</code><span class="cmd-desc">JSON 彩色格式化</span></div>
       </div>
@@ -632,12 +641,16 @@ uuid.NIL, uuid.MAX  <span class="cmt"># 常量</span></pre>
       <div class="card-body">
         <ul class="feature-list">
           <li><b>REPL</b>：语法高亮、自动补全默认开启</li>
-          <li><b>asyncio</b>：<code>python -m asyncio ps</code>、call_graph、自由线程支持</li>
+          <li><b>asyncio</b>：<code>ps/pstree</code> CLI、<code>capture/print_call_graph</code>、<code>create_task(kwargs=...)</code>、自由线程、双向链表</li>
+          <li><b>concurrent.futures</b>：<code>InterpreterPoolExecutor</code>、forkserver 默认、<code>terminate/kill_workers()</code></li>
           <li><b>pathlib</b>：<code>Path.copy/move</code>、<code>Path.info</code> 缓存</li>
           <li><b>pdb</b>：远程附加 <code>-p PID</code>、async 支持</li>
           <li><b>argparse</b>：彩色输出、<code>suggest_on_error</code></li>
-          <li><b>inspect</b>：<code>annotation_format</code>、<code>ispackage()</code></li>
-          <li><b>json</b>：<code>python -m json</code> 彩色 CLI</li>
+          <li><b>inspect</b>：<code>annotation_format</code>、<code>unquote_annotations</code>、<code>ispackage()</code></li>
+          <li><b>json</b>：<code>python -m json</code> 彩色 CLI、错误路径注释</li>
+          <li><b>unittest</b>：<code>assertHasAttr/IsSubclass/StartsWith/EndsWith</code></li>
+          <li><b>heapq</b>：<code>heapify_max/heappop_max</code> 等大顶堆函数</li>
+          <li><b>logging</b>：<code>QueueListener</code> 支持 <code>with</code> 语句</li>
           <li><b>pickle</b>：协议 5 默认</li>
           <li><b>struct</b>：F/D 复数格式符</li>
           <li><b>http.server</b>：HTTPS 支持、深色模式</li>

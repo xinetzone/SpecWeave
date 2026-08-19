@@ -4,7 +4,7 @@ title: "Python 3.14 语言新特性"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html, https://peps.python.org/pep-0758/, https://peps.python.org/pep-0765/, https://peps.python.org/pep-0649/, https://peps.python.org/pep-0749/, https://peps.python.org/pep-0750/"
 date: "2026-08-19"
 category: "learning"
-tags: ["python314", "t-strings", "annotations", "except", "finally", "pep", "language-features"]
+tags: ["python314", "t-strings", "annotations", "except", "finally", "pep", "language-features", "typing", "types", "union"]
 ---
 
 # Python 3.14 语言新特性
@@ -325,6 +325,115 @@ hints = typing.get_type_hints(Container)
 
 ---
 
+## 3.5 类型系统重要变更
+
+PEP 649/749 不仅重构了注解求值机制，还带来了以下类型系统层面的重要变更。
+
+### `types.UnionType` 与 `typing.Union` 统一
+
+Python 3.10 引入了 `X | Y` 联合类型语法（即 `types.UnionType`），但它与 `typing.Union[X, Y]` 是两个不同的类。Python 3.14 将二者**完全统一**：
+
+```python
+import typing
+import types
+
+# 3.14 中 types.UnionType 是 typing.Union 的别名
+assert types.UnionType is typing.Union  # True!
+
+# repr() 输出变化：Union[int, str] 现在显示为 int | str
+print(typing.Union[int, str])  # int | str（旧版输出: typing.Union[int, str]）
+
+# 可以用 isinstance 检查
+assert isinstance(int | str, typing.Union)  # True!
+```
+
+**关键行为变化：**
+
+| 行为 | Python 3.13 | Python 3.14 |
+|------|------------|------------|
+| `repr(Union[int, str])` | `typing.Union[int, str]` | `int \| str` |
+| `isinstance(int \| str, Union)` | `TypeError` | `True` |
+| `Union.__args__` | 包含嵌套 Union | 完全扁平化 |
+| Union 缓存 | 同一参数组合缓存 | 不再缓存（性能优化） |
+| 对 Union 对象设属性 | 可能 | 不可（frozen） |
+
+**迁移注意：**
+- 不要依赖 `typing._UnionGenericAlias` 这个内部类型
+- 使用 `typing.get_origin()` 和 `typing.get_args()` 获取 Union 的来源和参数
+- 测试中如果有对 `repr()` 输出的断言，需要更新
+
+### `typing.TypeAliasType` 支持星号解包
+
+`TypeAliasType` 是 PEP 695（Python 3.12）引入的新类型别名语法。Python 3.14 新增对星号解包的支持，可以在类型别名中解包 TypeVarTuple：
+
+```python
+from typing import TypeAliasType
+
+# 3.14 支持在 TypeAliasType 中使用星号解包
+# 这对于泛型变长元组类型特别有用
+type Point[T, *Rest] = tuple[T, *Rest]  # 星号解包类型变量元组
+
+# 也可以解包已有的类型别名
+type IntPair = tuple[int, int]
+type WithStr[*Ts] = tuple[str, *Ts]      # str 在前，后跟 Ts 展开
+```
+
+### `io.Reader` / `io.Writer` 新协议类型
+
+Python 3.14 在 `io` 模块中新增了 `Reader` 和 `Writer` 协议类（Protocol），作为 `typing.IO`、`typing.TextIO`、`typing.BinaryIO` 这些"伪协议"的现代替代：
+
+```python
+from io import Reader, Writer
+
+# Reader 协议：只需实现 read() 方法
+def process_data(source: Reader[bytes]) -> bytes:
+    return source.read()
+
+# Writer 协议：只需实现 write() 方法
+def write_data(dest: Writer[str], data: str) -> None:
+    dest.write(data)
+
+# 对比旧方式：typing.IO 过于宽泛（包含 read/write/seek/close 等全部方法）
+# from typing import IO, TextIO, BinaryIO  # 3.14 软弃用方向
+```
+
+**为什么新增？**
+- `typing.IO`/`TextIO`/`BinaryIO` 是类而非 `Protocol`，不符合结构子类型
+- 它们强制要求实现 `seek()`、`tell()`、`close()` 等方法，但很多类只需要 `read()` 或 `write()`
+- `io.Reader`/`io.Writer` 是真正的 `Protocol`，只要求核心方法，更符合 Python 鸭子类型精神
+
+### `inspect` 增强：注解格式控制
+
+配合 PEP 749 的 `annotationlib`，`inspect` 模块新增了注解格式控制能力：
+
+```python
+import inspect
+from annotationlib import Format
+
+def example(x: int, y: str) -> bool:
+    return True
+
+# inspect.signature() 新增 annotation_format 参数
+sig_value = inspect.signature(example, annotation_format=Format.VALUE)
+# 参数注解为真实类型对象：<class 'int'>, <class 'str'>
+
+sig_string = inspect.signature(example, annotation_format=Format.STRING)
+# 参数注解为字符串形式：'int', 'str'
+
+# Signature.format() 新增 unquote_annotations 参数
+print(sig_value.format(unquote_annotations=True))
+# 字符串注解显示时不包裹引号，更易读
+
+# inspect.ispackage() 新增函数
+import inspect
+import os, json, concurrent
+print(inspect.ispackage(os))         # False（模块）
+print(inspect.ispackage(json))       # False（模块）
+print(inspect.ispackage(concurrent)) # True（命名空间包）
+```
+
+---
+
 ## 4. PEP 750：t-strings 模板字符串
 
 t-strings（Template Strings）是自 Python 3.6 引入 f-strings 以来最重要的字符串语法扩展。
@@ -597,14 +706,17 @@ dis.dis(greet)
 
 ---
 
-## 7. 本章小结
+## 8. 本章小结
 
-| 特性 | PEP | 对日常编码的影响 |
+| 特性 | PEP/来源 | 对日常编码的影响 |
 |------|-----|----------------|
-| 无括号 except | 758 | 语法更简洁，多个异常类型无需括号 |
-| finally 控制流警告 | 765 | 帮助发现隐蔽 bug，注意清理代码中的 return/break |
-| 延迟注解求值 | 649/749 | 前向引用自然工作，可删除 `__future__ annotations` |
-| t-strings | 750 | 安全模板、SQL/HTML 防注入、DSL 构建 |
+| 无括号 except | PEP 758 | 语法更简洁，多个异常类型无需括号 |
+| finally 控制流警告 | PEP 765 | 帮助发现隐蔽 bug，注意清理代码中的 return/break |
+| 延迟注解求值 | PEP 649/749 | 前向引用自然工作，可删除 `__future__ annotations` |
+| **UnionType = Union** | - | `int \| str` 与 `Union[int, str]` 完全统一，repr 改变 |
+| **TypeAliasType 星号解包** | - | PEP 695 type 语句支持 `*Ts` 解包 |
+| **io.Reader/Writer 协议** | - | 替代 typing.IO，更符合结构子类型 |
+| t-strings | PEP 750 | 安全模板、SQL/HTML 防注入、DSL 构建 |
 | map(strict=True) | - | 防止静默截断 |
 | float.from_number() | - | 安全数值转换 |
 | NotImplemented TypeError | - | 防止富比较中的隐蔽 bug |
