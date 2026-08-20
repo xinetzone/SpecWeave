@@ -172,6 +172,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [onnx-pre-quantize-simplification.md](onnx-pre-quantize-simplification.md) | ONNX 量化前简化模式：torch 导出模型先 onnxsim.simplify + checker 再量化，解决 ShapeInferenceError (64)vs(128)，内联冒烟回归防护 | L1 实验性 | torch.onnx.export→onnxruntime 量化流水线、Docker/CI 量化冒烟测试、形状推断冲突排查 |
 | [nuitka-compile-flags-dynamic-injection.md](nuitka-compile-flags-dynamic-injection.md) | Nuitka 编译参数构建期动态注入：宿主CLI → build-arg → ARG/ENV → 编译脚本非引用展开追加，含双向验证与空值安全，一套构建脚本服务多项目 | L1 实验性 | Nuitka/Cython编译参数外部注入、多项目共享构建脚本、构建期可审计编译选项 |
 | [pip-dual-index-mirror-fallback.md](pip-dual-index-mirror-fallback.md) | 镜像依赖「主索引+备用源」双通道下载（extra-index mirror fallback）：扩展pip安装辅助函数支持`--index-url`+`--extra-index-url`，主索引负责版本正确wheel、国内镜像兜底PyPI依赖，同步验证层CUDA/版本硬断言防静默降级，构建后pip freeze固化解析清单 | L1 实验性 | Docker/CI构建主索引(IPv6不可达/源故障)依赖下载失败、pip多索引镜像构建、备用源静默降级防御 |
+| [layer-override-patch-drift.md](layer-override-patch-drift.md) | 分层覆盖补丁的版本漂移：覆盖(COPY/override/配置覆盖)补丁立即可用且当前零漂移，但中间层重建时静默回退形成"每层一个补丁"的分歧；须标注生命周期、同步合并源头、全链重建后移除并以干净态验证 | L1 实验性 | 继承/叠加/多阶段结构(Docker多层COPY覆盖、类继承override、配置分层覆盖)中让跨层共享组件快速生效、临时补丁与源头修复的抉择 |
 
 ## Android 模式命名规范
 
