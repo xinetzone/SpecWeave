@@ -1,6 +1,6 @@
 ---
 id: "pip-dual-index-mirror-fallback"
-source: "docs/retrospective/reports/milestone/torch-dev-mirror-build-retrospective-20260820.md"
+source: "docs/retrospective/reports/milestone/torch-dev-mirror-build-retrospective-20260820.md#L94-L101（洞察 I-2）"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/pip-dual-index-mirror-fallback.toml"
 ---
 # 镜像依赖「主索引+备用源」双通道下载（extra-index mirror fallback）
@@ -8,6 +8,15 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 ## 模式概述
 
 Docker/CI 镜像构建中，当主索引（`download.pytorch.org` / PyPI）的某依赖因网络问题（如 `files.pythonhosted.org` IPv6 不可达）下载失败时，扩展 pip 安装辅助函数支持 `--index-url` + `--extra-index-url` 双通道下载，以主索引负责版本正确的 wheel、国内镜像为备用源兜底 PyPI 侧依赖；并同步在验证层增加 CUDA/版本硬断言，防止主索引故障时静默降级。
+
+## 核心机制：多源合并语义的"延迟风险窗口"（洞察 I-2）
+
+`--index-url` + `--extra-index-url` 双索引的合并语义存在一个**看似无害、实则致命的延迟风险窗口**：
+
+- **正常时无害**：主索引可达时，pip 将两个索引的候选版本合并后取最高版本，备用源只兜底主索引缺失的依赖，demo/CI 全程通过，让人误以为双索引"等价于"单源。
+- **故障时即静默降级通道**：一旦主索引故障，pip 会自动 fallback 到备用源。备用源（如阿里云）往往只有 CPU 版或 beta 版 torch，且版本满足过宽约束（如 `<14,>=13.0.3`），pip 便静默取之——构建仍"成功"，运行时 CUDA 不可用才暴露。
+
+**反常识**：风险窗口恰恰隐藏在"当初引入备用源要解决的场景"（主索引故障）里。演示时主索引可达→所有验证通过→掩盖了故障路径的静默降级。**凡是多源合并语义，必须假定"最坏匹配会命中"来设计验证层拦截，而不仅仅针对"当前正常状态"验证。**
 
 ## 触发场景
 
