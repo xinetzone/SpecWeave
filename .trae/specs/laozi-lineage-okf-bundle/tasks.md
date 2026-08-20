@@ -106,7 +106,7 @@
   - `human-judgement` TR-6.2: G3 质量门——每个模式四要素齐全（触发/步骤/反模式/迁移），且迁移验证引用《老子》之外的至少 1 个可迁移目标。
   - `human-judgement` TR-6.3: V 审查——反模式不是泛泛而谈，至少各含 2 条具体陷阱（如"避讳回改""仿古不讳"）。
 
-## [ ] Task 7: 交叉链接、索引、日志与最终一致性验证
+## [x] Task 7: 交叉链接、索引、日志与最终一致性验证
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4, Task 5, Task 6
 - **Description**:
