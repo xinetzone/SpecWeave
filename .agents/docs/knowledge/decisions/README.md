@@ -35,6 +35,7 @@ date: "2026-07-09"
 | 编号 | 标题 | 日期 | 状态 | 影响范围 |
 |------|------|------|------|---------|
 | ADR-0001 | [libs/ 目录重命名为 vendor/](libs-rename-to-vendor.md) | 2026-06-23 | 🔍 reviewed | 目录结构、配置文件、CI/CD、所有路径引用 |
+| ADR-0002 | [torch-dev 双索引下载与 CUDA 硬断言](torch-dev-extra-index-cuda-assertion.md) | 2026-08-20 | ✅ accepted | devcontainer torch-dev 变体、install-helpers.sh、镜像依赖下载策略、验证层断言 |
 
 ---
 
