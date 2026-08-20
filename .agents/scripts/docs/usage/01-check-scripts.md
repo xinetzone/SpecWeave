@@ -279,6 +279,43 @@ python .agents/scripts/check-mermaid.py --exclude docs/templates
 
 ---
 
+## check-action-closure.py
+
+基于可复用模式「洞察到行动的闭环（insight-to-action-closed-loop）」扫描复盘报告中的行动项，检查每个行动项是否具备可行动要素，并标记「假闭环」风险：
+
+- **列表式行动项识别**：支持 `- **ACT-N**` 加粗 ID 与 `- [ ]` / `- [x]` checkbox 两种格式
+- **缩进子属性解析**：自动解析行动项下缩进的「验收标准 / Owner / 状态 / 优先级」子项
+- **可行动要素检查**：逐个检查优先级、Owner、验收标准、闭环状态四要素是否齐备
+- **假闭环风险标记**：缺验收标准或未标注状态的行动项视为「无法验证闭环」的高风险项
+- **双输出格式**：文本健康报告与 `--json` 结构化输出（便于 CI 集成）
+
+### 参数说明
+
+| 参数 | 类型 | 默认值 | 说明 |
+|------|------|--------|------|
+| `--path PATH` | Path | `.agents/docs/retrospective/reports/` | 指定目标文件或目录 |
+| `--json` | flag | `false` | 以 JSON 格式输出结果（便于 CI 集成） |
+
+### 使用示例
+
+```bash
+# 扫描默认报告目录
+python .agents/scripts/check-action-closure.py
+
+# 检查单个复盘报告文件
+python .agents/scripts/check-action-closure.py --path playground/reports/mystx-milestone-retrospective-20260820/README.md
+
+# 递归扫描指定目录
+python .agents/scripts/check-action-closure.py --path playground/reports/
+
+# JSON 输出（便于 CI 集成）
+python .agents/scripts/check-action-closure.py --path playground/reports/ --json
+```
+
+**退出码约定**：`0` 全部要素齐备、无假闭环风险；`1` 存在要素缺失或假闭环风险；`2` 路径不存在或参数错误。
+
+---
+
 ## 相关模式
 
 - [工具链成熟度](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)

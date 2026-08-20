@@ -13,7 +13,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 
 | 文档 | 主题 | 包含脚本数 |
 |------|------|-----------|
-| [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 9个 |
+| [docs/usage/01-check-scripts.md](docs/usage/01-check-scripts.md) | 检查类脚本 | 10个 |
 | [docs/usage/02-generate-build-scripts.md](docs/usage/02-generate-build-scripts.md) | 生成与构建脚本 | 5个 |
 | [docs/usage/03-git-ci-scripts.md](docs/usage/03-git-ci-scripts.md) | Git与CI脚本 | 2个 |
 | [docs/usage/04-fix-scripts.md](docs/usage/04-fix-scripts.md) | 批量修复与分析脚本 | 8个 |
@@ -34,6 +34,7 @@ x-toml-ref: "../../.meta/toml/.agents/scripts/README.toml"
 | `check-source-traceability.py` | source溯源字段反向索引 | [检查](docs/usage/01-check-scripts.md#check-source-traceabilitypy) |
 | `check-role-permissions.py` | 角色tier/权限声明校验 | [检查](docs/usage/01-check-scripts.md#check-role-permissionspy) |
 | `check-mermaid.py` | Mermaid语法陷阱检测+修复 | [检查](docs/usage/01-check-scripts.md#check-mermaidpy) |
+| `check-action-closure.py` | P-2洞察到行动闭环检查（可行动要素+假闭环风险） | [检查](docs/usage/01-check-scripts.md#check-action-closurepy) |
 | `generate-nav.py` | 自动生成文档导航表 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-navpy) |
 | `generate-dashboard.py` | 自动聚合Spec执行看板 | [生成/构建](docs/usage/02-generate-build-scripts.md#generate-dashboardpy) |
 | `finalize-atomization.py` | 原子化一键收尾（修链+导航+看板） | [生成/构建](docs/usage/02-generate-build-scripts.md#finalize-atomizationpy) |
