@@ -3,7 +3,7 @@
 > 方法论链路：七概念场景 4（知识沉淀）**R → I → E → V → 入库**。
 > 执行约定：每个任务委托单个子代理完成，一次只推进一个任务；任务完成后由独立验证子代理按 checklist.md 黑盒验证，通过后再标记 completed。
 
-## [/] Task 1: Bundle 脚手架与信源登记簿
+## [x] Task 1: Bundle 脚手架与信源登记簿
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -20,7 +20,7 @@
   - `human-judgement` TR-1.3: 审查者抽查 3 条信源，ISBN/URL 真实可核查，作者/出版社/年份与实际一致；发现编造则判失败。
 - **Notes**: 信源登记簿是后续所有概念 `sources` 字段的引用基础，id 必须稳定（建议 kebab-case，如 `gao-ming-boshu-jiaozhu`）。
 
-## [ ] Task 2: R 阶段 — 考古语境概念（2 个）
+## [x] Task 2: R 阶段 — 考古语境概念（2 个）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -34,7 +34,7 @@
   - `human-judgement` TR-2.2: G1 质量门——正文无因果推断词（"因为/导致/所以/因而/从而"），纯客观描述；墓主"利豨"标注为学界主流考订而非绝对事实；郭店墓主身份标注争议。
   - `human-judgement` TR-2.3: 每条事实性语句可在脚注信源中找到对应依据；年代数字（前 168、前 300）有明确文献支持。
 
-## [ ] Task 3: R 阶段 — 出土抄本概念（4 个）
+## [x] Task 3: R 阶段 — 出土抄本概念（4 个）
 - **Priority**: high
 - **Depends On**: Task 1, Task 2
 - **Description**:
@@ -50,7 +50,7 @@
   - `human-judgement` TR-3.2: G1 通过（无因果词）；甲本"不避邦讳"与乙本"避邦讳"的对比描述准确，有避讳字实例引用；北大简"非考古发掘、出土地点缺失"作为局限性明确写出。
   - `human-judgement` TR-3.3: 年代推断（甲本早于乙本）基于避讳证据而非臆测，逻辑链在"避讳特征"小节可见。
 
-## [ ] Task 4: R 阶段 — 传世注本概念（4 个）
+## [x] Task 4: R 阶段 — 传世注本概念（4 个）
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -66,7 +66,7 @@
   - `human-judgement` TR-4.2: 河上公成书年代、想尔注作者两个争议点均有"争议与不确定性"小节并列 ≥2 种观点及代表学者，不做单一断言（AC-6）。
   - `human-judgement` TR-4.3: 王弼本"通行本之祖"定位准确；傅奕本"项羽妾冢"来源记载标注为文献传说而非考古实证。
 
-## [ ] Task 5: I+V 阶段 — 关键异文概念（4 个）
+## [x] Task 5: I+V 阶段 — 关键异文概念（4 个）
 - **Priority**: high
 - **Depends On**: Task 3, Task 4
 - **Description**:
@@ -83,7 +83,7 @@
   - `human-judgement` TR-5.3: V 对抗审查——"大器免成"呈现"免成"与"免通晚"两说，不做单一断言；篇序翻转的具体时间标注为"两汉之际至魏晋逐渐定型"而非精确年份。
   - `human-judgement` TR-5.4: 避讳异文有具体字例（引用原文字形或隶定字），非泛泛而谈。
 
-## [ ] Task 6: E+V 阶段 — 方法论模式概念（2 个）
+## [x] Task 6: E+V 阶段 — 方法论模式概念（2 个）
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**:
