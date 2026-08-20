@@ -1,32 +1,34 @@
 ---
 id: "docker-image-variant-incremental-inheritance"
-title: "镜像变体基础继承+配置化模式"
+title: "基座继承+增量定制模式"
 type: "code-pattern"
-maturity: "L1-实验性"
-maturity_note: "devcontainer-base variants/ 里程碑实战验证；单案例，待更多变体项目验证后升级L2"
+maturity: "L2-validated"
+maturity_note: "双案例验证（devcontainer-base 镜像变体 + mystx Sphinx 主题库），跨 Docker/主题两大域，升级 L2"
 source:
   - "devcontainer-base variants/ 镜像变体系统里程碑复盘（retrospective-devcontainer-variants-milestone-20260807）"
+  - "mystx Sphinx 主题库复盘（2026-08-20，私有分析，案例见迁移验证）"
 related_patterns:
   - "docker-buildkit-optimization-best-practices.md"
   - "dockerfile-runtime-logical-layering.md"
   - "docker-gpu-variant-quick-creation.md"
-tags: ["docker", "image-variant", "base-inheritance", "multi-stage", "template-driven", "devcontainer"]
-validation_count: 1
+  - "thin-wrapper-pattern.md"
+tags: ["docker", "image-variant", "base-inheritance", "multi-stage", "template-driven", "devcontainer", "sphinx-theme", "theme", "incremental-customization"]
+validation_count: 2
 reuse_count: 1
 ---
 
-# 镜像变体"基础继承+配置化"模式
+# 基座继承+增量定制模式
 
 ## 触发场景
 
-- 需要在基础镜像之上维护多个功能变体（如 conda、conda-llvm、gpu、nodejs 等）
+- 需要在成熟「基座」之上做二次定制，而非从零构建；基座可以是 Docker 基础镜像 / Sphinx 主题 / UI 组件库 / 设计系统 / lint 规则集等
 - 遇到以下任一痛点：
-  - 每个变体复制完整 Dockerfile，基础镜像更新时需要同步修改所有变体
-  - 变体间存在依赖关系（如 conda-llvm 依赖 conda），构建顺序靠人工记忆
-  - 新增变体时靠复制粘贴，容易产生配置不一致
+  - 每个派生复制完整基座（完整 Dockerfile / 整套主题模板 / 组件源码），基座更新时需同步修改所有派生
+  - 派生间存在依赖关系（如 conda-llvm 依赖 conda），构建/生成顺序靠人工记忆
+  - 新增派生时靠复制粘贴，容易产生配置不一致
 
-**适用于**：需要维护 2 个以上基于同一基础镜像的变体、且变体间有增量功能差异的项目。
-**不适用于**：单镜像项目（直接用 `docker build` 更简单）。
+**适用于**：需要维护 2 个以上基于同一基座的派生、且派生间有增量差异的项目。
+**不适用于**：单例派生（直接基于基座少量改动，无多派生维护需求）。
 
 ## 问题本质
 
@@ -85,10 +87,39 @@ VARIANTS=(
 
 ## 迁移验证
 
-本模式可迁移到以下场景：
+### 案例1：devcontainer-base 镜像变体（源案例）
+
+本模式源于 Docker 镜像变体系统，可迁移到以下场景：
 - ✅ 任何"基础镜像 + 多功能变体"的 Docker 项目
 - ✅ 多阶段构建中共享基础层的变体维护
 - ✅ 需要统一构建脚本 + 模板驱动新增的镜像体系
+
+### 案例2：mystx Sphinx 主题库（第二个独立域案例，2026-08-20）
+
+- **基座**：sphinx_book_theme（成熟 Sphinx 主题）
+- **增量继承**：`theme.toml` 声明 `inherit = "sphinx_book_theme"` + 单行 `layout.html` `{% extends %}` + 3 个增量 CSS + 26 个默认项增补
+- **收敛**：品牌差异收敛到少量 CSS，未复制整套主题模板
+- **结果**：✅ 验证本模式机制（继承声明 + 增量层 + 最小自有表面积）在非 Docker 的主题域同样成立，跨域升级 L2
+
+### 泛化结论
+
+凡「成熟基座 + 多派生定制」，均应「声明继承 + 追加增量」而非「复制整套」：Docker 用 `FROM base`、Sphinx 主题用 `inherit`/`extends`、前端用 `ConfigProvider`/`@theme` 增量覆盖、规则集用 `extends`。
+
+## 失败案例（V2 成功偏误防御）
+
+| 案例 | 失败表现 | 根因 | 教训 |
+|------|---------|------|------|
+| 基座未锁定标签被上游更新破坏派生 | 基座 `:latest` 被拉到新版本，核心服务（SSH/Jupyter）版本漂移，全部下游派生 CI 同一夜集体失败 | 派生 `FROM base:latest` 未锁定 `BASE_TAG`，依赖基座内部实现而非稳定契约 | 基座用显式版本标签+校验和锁定，派生只依赖公开契约（环境变量/路径/服务） |
+| 共享脚本双份拷贝导致增量修改不生效 | 派生 `COPY shared/lib/install-helpers.sh` 覆盖基座同名文件，改基座脚本后未在派生重新 COPY，修改静默失效 | 共享资源既在基座又在派生，出现两份拷贝，改一处忘同步另一处 | 共享资源单一来源（SSOT），派生只声明继承、不复制基座文件，确需覆盖时加校验 |
+
+## 反目标用户与不适用场景（V2 确认偏误防御）
+
+| 反目标用户/场景 | 不适用原因 | 适配策略 |
+|----------------|-----------|---------|
+| 单例派生（仅 1 个派生、无多派生维护需求） | 基座+模板的抽象成本高于直接写一个 Dockerfile | 轻度：直接 `FROM` 基座，不引入模板体系 |
+| 基座由不受控上游频繁破坏性变更 | 继承会放大基座漂移，版本不断跳变 | 重度：先冻结/固定基座版本或 vendoring，再谈继承 |
+| 派生间差异极大、共享面趋近于零 | 继承收益趋近于零，只剩维护负担 | 中度：拆为独立镜像，用共享脚本库替代继承 |
+| 要求完全自包含、零外部基础依赖（如 `FROM scratch`） | 无法继承任何基座 | 重度：改用自包含构建模式（self-contained-build-no-private-dependency） |
 
 ## 检查清单
 

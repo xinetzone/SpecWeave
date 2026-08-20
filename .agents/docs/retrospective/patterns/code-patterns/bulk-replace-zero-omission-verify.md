@@ -5,12 +5,12 @@ layer: "code-patterns"
 title: "批量替换零遗漏验证模式（Bulk Replace Zero-Omission Verification）"
 maturity: "L2"
 maturity_level: "L2"
-validation_count: 3
+validation_count: 4
 reuse_count: 0
 documentation_level: "standard"
 version: "1.0.0"
 created_date: "2026-07-13"
-last_updated: "2026-07-13"
+last_updated: "2026-08-20"
 source: "retro-20260713-task0"
 tags: ["bulk-edit", "verification", "grep", "replace-all", "zero-defect", "quality-gate"]
 trigger_conditions:
@@ -43,6 +43,7 @@ L2 验证级（3次验证：workspace.json→workspace.yaml替换38处引用、w
 | **变量名变体遗漏** | 替换了`workspace.json`但遗漏了`workspace_json_path`变量名 | 后续代码逻辑错误 | 高 |
 | **glob匹配遗漏** | replace_all只匹配了特定扩展名（如*.py），但配置文件/文档中也有引用 | 构建/运行失败 | 高 |
 | **大小写变体遗漏** | 替换了`Workspace.json`但遗漏了`workspace.json`或`WORKSPACE.JSON` | 跨平台问题 | 中 |
+| **功能性参数残留** | 替换了包名但遗漏了 `--cov=旧包名` 等指向旧包的 CLI 参数/配置项 | 覆盖率/发布/构建静默指向不存在的旧包 | 高 |
 
 replace_all工具看似一键替换，但实际只覆盖了"明确可见、扩展名匹配、大小写精确"的情况。遗漏的引用成为技术债务，可能在很久以后才暴露，此时上下文已丢失，排查成本极高。
 
@@ -141,6 +142,7 @@ Grep pattern="reports/2026-07-13-task0" path="项目根目录" output_mode="cont
 - **验证1：workspace.json→workspace.yaml批量替换**（2026-07-13）：replace_all替换6个文件后，Grep搜索workspace.json确认零遗漏，发现变量名`workspace_json_path`需要同步替换，修正后再次验证零匹配
 - **验证2：复盘报告移动位置后的引用更新**（2026-07-13）：报告从reports/子目录移动到retrospective/根目录后，Grep搜索旧路径`reports/2026-07-13-task0`，发现模式文档中的引用需要更新，修正后验证通过
 - **验证3：历史多次重构验证**：SpecWeave项目中多次重命名/重构均采用此模式，有效防止了引用遗漏
+- **验证4：mystx 品牌重命名 xyzstyle→mystx**（2026-08-20）：case-insensitive grep 定位 16 处残留（跨 6 文件，含小写 `xyzstyle` 与大写 `XYZStyle` 双变体），替换后 grep 确认 0 匹配；其中 `run_tests.py:70` 的 `--cov=xyzstyle` 属功能性参数残留（覆盖率参数指向已不存在的旧包名），验证「功能性参数残留」遗漏类型
 
 ## 关联资源
 
