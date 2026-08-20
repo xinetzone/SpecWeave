@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（27份）
+## 报告清单（28份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-llama-cpp-python-cuda-build-20260820/` | llama-cpp-python CUDA编译部署里程碑复盘（R-I-E-C链路）：Windows 11 + RTX 5050(SM 120) + Python 3.14.3 环境下完成0.3.35 CUDA版源码编译（436编译单元/15分钟/90MB wheel/ggml-cuda.dll 49.7MB）；解决MSVC版本兼容（14.44而非默认14.51）、PATH超长、conda run子进程隔离、pip缓存权限、site-packages/bin目录缺失6类问题；萃取"Windows CUDA扩展源码编译三板斧"模式（L1） | 2026-08-20 |
 | `troubleshooting-devcontainer-jupyter-gil-20260819.md` | devcontainer-base Jupyter kernel GIL 被重新启用故障排查（I→F→V→C→R→I→E链路）：**根因**为 Jupyter 栈 C 扩展 `_brotli` 未声明 `Py_MOD_GIL_USED`，free-threading 下经 `PyUnstable_Module_SetGIL` 自动拉起 GIL（bash 上下文 False / kernel 内 True 的不一致）；**修复**为 jupyter.conf `environment=` 注入 `PYTHON_GIL="0"` + 重建 base（根因落 base 层）+ conda-llvm 幂等 sed 防御纵深；E2E 验证 kernel GIL=False、5/5 校验 PASS；清理悬空旧镜像 1.8GB；README 沉淀 FAQ Q6 | 2026-08-19 |
 | `insight-jupyter-kernel-expose-host-ide-20260814.md` | 容器内Jupyter Kernel暴露给宿主机IDE可行性技术洞察报告（F→V→I创新突破链路）：纠正"暴露Kernel"架构认知偏差，阐明Jupyter三层C/S架构（IDE→HTTP→Server→ZeroMQ→Kernel）；当前Dockerfile已完成90%准备工作（0.0.0.0绑定+EXPOSE 8888+entrypoint环境变量支持）；识别出CORS配置和volume挂载两个易被忽略的必选条件；给出4种可行方案对比（端口直连/SSH隧道/Dev Containers/kernel-gateway），推荐方案1一键命令模板 | 2026-08-14 |
 | `retrospective-devcontainer-v221-conda-perf-20260814/` | devcontainer-base v2.2.1 conda性能优化+配置萃取里程碑复盘（R-I-E-C链路）：Stage 4 conda求解从419s优化至37s（缓存热构建，11.3x加速），三项关键优化（8线程并行/单次mamba solver/原生mamba CLI）；萃取3个静态YAML模板+1个动态Shell脚本（conda-perf-setup.sh）为共享可复用资产，Dockerfile从~50行内联heredoc精简为3行脚本调用；沉淀"Conda构建层性能三联优化"模式（L1实验性）；3个原子提交900行变更 | 2026-08-14 |
@@ -73,3 +74,6 @@ type: "index"
 
 ### ONNX 量化系列（1份）
 - ONNX量化基准测试性能分析+CI集成方案+依赖检查洞察报告（R-I-E链路，3个核心洞察，1个CI集成模式，5个原子化行动项）
+
+### 本地 LLM 系列（1份）
+- llama-cpp-python CUDA编译部署里程碑复盘（R-I-E-C链路，MSVC版本窗口/三层环境隔离/wheel留存三洞察，"Windows CUDA编译三板斧"L1模式，5个原子行动项）
