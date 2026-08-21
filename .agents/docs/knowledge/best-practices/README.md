@@ -65,6 +65,7 @@ date: "2026-07-30"
 | [parser-complexity-budget.md](parser-complexity-budget.md) | Parser复杂度预算Checklist（三层架构/20+边界case测试/时间预算预估） | `parser` `complexity-budget` `TDD` `semi-structured-parsing` |
 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) | 方法论模式验证报告（分类处置决策树+三阶段渐进推广验证） | `pattern-validation` `governance` `batch-upgrade` `phased-rollout` |
 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) | 链式pre-commit钩子架构实践（跨平台Shell入口+Python链式主入口模式） | `git-hooks` `pre-commit` `architecture` `cross-platform` `automation` |
+| [git-commit-mojibake-diagnosis.md](git-commit-mojibake-diagnosis.md) | Git提交中文乱码双层分离验证法（显示层 vs 存储层，git cat-file字节比对，误判reset重提教训+可靠重提方案） | `git` `encoding` `mojibake` `utf-8` `gbk` `windows` `commit` `diagnosis` |
 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) | B2B/旗舰产品信息源分层采集规范（五层信息源优先级策略） | `信息采集` `B2B` `SOP` `多源验证` `Defuddle` |
 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) | AI拟人化互动服务极端情绪干预机制技术实施方案（合规方案） | `合规` `安全` `AI安全` `危机干预` |
 | [symbol-visibility-control.md](symbol-visibility-control.md) | C/C++共享库符号可见性控制最佳实践（--exclude-libs,ALL精确控制、静态注册保护、5大反模式） | `C/C++` `linker` `symbol-visibility` `shared-library` `LLVM` `TVM` `CMake` |

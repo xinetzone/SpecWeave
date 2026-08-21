@@ -10,7 +10,7 @@
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 44 |
+| best-practices | 45 |
 | case-study | 5 |
 | decisions | 5 |
 | docs | 8 |
@@ -114,6 +114,7 @@
 | [硬编码路径批量修复工具使用指南（fix-hardcoded-paths.py）](best-practices/fix-hardcoded-paths-guide.md) | 可复用硬编码路径批量修复工具使用指南：正则保留分隔符风格与盘符大小写，支持 .py/.ipynb 双处理与 dry-run/apply 双模式。 | 2026-08-07 | hardcoded-paths、refactor、python、path-migration、dry-run、ipynb、script |
 | [浮点数精度测试技术指南](best-practices/float-precision-testing-guide.md) |  | 2026-08-02 | float32、precision、testing、ulp、numerical-gradient、c1-kink、sigmoid、elu、activation-functions |
 | [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。 | 2026-07-08 | git-hooks、pre-commit、architecture、cross-platform、automation |
+| [Git提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | Windows 环境下 git 提交中文信息终端显示乱码，但存储字节可能完全正确——显示层乱码 ≠ 存储层乱码。沉淀「双层分离验证法」：git cat-file 原始字节 + Python 字节级比对判定存储是否正确，避免因误判而做无谓的 reset 重提。含根因分析、4 反模式与可靠重提方案。 | 2026-08-21 | git、encoding、mojibake、utf-8、gbk、windows、commit、diagnosis、verification |
 | [手算梯度已知值验证：Backward测试L1层方法论](best-practices/hand-computed-gradient-verification.md) |  | 2026-08-03 | testing、backward、gradient、verification、known-values、hand-computed、numpy、test-pattern、caffe-ffi |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
 | [模型调用环境变量脱敏模板（.env 字段清单）](best-practices/model-env-template.md) | 从 chaos/flexloop/models/.env 沉淀的脱敏环境变量模板：列出字段名与用途说明，所有值一律使用占位符，绝不含真实密钥或个人路径。 | 2026-08-07 | env、environment-variable、desensitization、glm、huggingface、zai |
