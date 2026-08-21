@@ -7,10 +7,10 @@ date: "2026-08-22"
 version: "1.2"
 status: "stable"
 author: ""
-summary: "Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层与独立专题，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
+summary: "Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入00-essence-and-thinking/first-principles/作为子Wiki（v2.1道家原典深读），明确二者从属关系; 2026-08-22 | refactor | 新增00-本质与思维主题作为思维地基层（编号00，位于所有技术主题之前），第一性原理+帛书老子归入00，分类体系从8主题扩展为9主题（00-08），OKR保留为独立专题"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类"
 ---
 # Learning Wiki 主题分类体系
 
@@ -185,7 +185,7 @@ flowchart TD
 |-----------|-------------|
 | 第一性原理思维方法（哲学/物理/商业跨领域） | 特定技术领域的工程方法论（归入02） |
 | 帛书《老子》等东方哲学原典的本质思维 | 具体Agent平台的产品评测（归入03） |
-| 认知偏差防御与批判性思维工具 | 目标管理方法论（OKR归入独立专题） |
+| 认知偏差防御与批判性思维工具 | SaaS管理工具产品学习（归入07） |
 | 对抗性审查与知识质量控制 | 绑定特定厂商的产品案例（归入07） |
 | 跨文化哲学比较与思维范式研究 | 特定技术领域的工程实践（归入02） |
 
@@ -193,8 +193,8 @@ flowchart TD
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| 第一性原理知识档案 | [first-principles/](00-essence-and-thinking/first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels）、帛书老子原典深读（boshu-laozi-wiki）等子模块 | 原子化 |
-| └ 帛书老子 Wiki 教程 | [first-principles/boshu-laozi-wiki/](00-essence-and-thinking/first-principles/boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件），为第一性原理跨文化道家部分提供原典深读 | 原子化 |
+| 第一性原理知识档案 | [first-principles/](00-essence-and-thinking/first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化哲学比较（chinese-philosophy-parallels/）、思维训练题库等子模块（v2.0） | 原子化 |
+| 帛书老子 Wiki 教程 | [boshu-laozi-wiki/](00-essence-and-thinking/boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件），为第一性原理跨文化道家部分提供原典深读材料 | 原子化 |
 
 ---
 
@@ -396,7 +396,7 @@ flowchart TD
 
 **认知定位**：理论落地的"解剖台"层——通过对特定厂商全系列产品的系统性深度学习，将抽象的技术方法论与具体的产品实现对应起来，是"从知道到做到"的关键桥梁。采用二级子目录按厂商聚合。
 
-**核心主题词**：`sunlogin`、`oray`、`tuya`、`tuyaopen`、`iot`、`smart-hardware`、`remote-control`、`product-learning`、`case-study`
+**核心主题词**：`sunlogin`、`oray`、`tuya`、`tuyaopen`、`iot`、`smart-hardware`、`remote-control`、`product-learning`、`case-study`、`okr`、`dingtalk`、`goal-management`、`saas-tools`
 
 **边界说明**：
 
@@ -407,7 +407,8 @@ flowchart TD
 | 涂鸦TuyaOpen AI-IoT SDK完整学习 | 不绑定特定厂商的通用Agent平台（归入03） |
 | 厂商产品的技术拆解、UX分析、版本策略 | 文档工具链通用技术（归入04） |
 | 厂商产品系列索引与学习路径 | 不绑定特定厂商的多模态技术（归入05） |
-| | 不绑定特定厂商的商业趋势（归入06） |
+| 叮当OKR等SaaS管理工具产品Wiki | 不绑定特定厂商的商业趋势（归入06） |
+| | 本质思维方法论（归入00） |
 | | 操作系统级底层技术（归入08） |
 
 **完整Wiki清单（向日葵子系列）**：
@@ -473,7 +474,7 @@ flowchart TD
 | 智能终端架构与系统设计 | 具体终端产品评测（归入07） |
 | | 厂商产品学习（归入07） |
 | | 本质思维方法论（归入00） |
-| | OKR目标管理（归入独立专题） |
+| | SaaS管理工具产品学习（归入07） |
 
 **完整Wiki清单**：
 
@@ -484,29 +485,6 @@ flowchart TD
 | Caffe深度学习框架架构 | [caffe-architecture-wiki/README.md](08-systems-infrastructure/caffe-architecture-wiki/README.md) | Caffe深度学习框架架构深度分析，含Layer/Net/Solver核心机制、Blob数据结构、GPU加速原理 | 原子化 |
 | CPython开发者指南 | [cpython-devguide-wiki/00-overview.md](08-systems-infrastructure/cpython-devguide-wiki/00-overview.md) | CPython贡献全景图，含贡献者入门/开发工作流/治理社区/最佳实践/FAQ | 原子化 |
 | 智能终端Wiki教程 | [intelligent-terminal-wiki/README.md](08-systems-infrastructure/intelligent-terminal-wiki/README.md) | 智能终端架构与系统设计Wiki教程索引 | 原子化 |
-
----
-
-### 独立专题：OKR目标管理方法论
-
-**认知定位**：通用组织管理方法论，不直接属于思维地基或技术主题，但作为目标管理工具广泛适用于个人与团队。不采用编号前缀，独立于00-08主题体系之外。
-
-**核心主题词**：`okr`、`goal-management`、`organizational-methodology`、`kpi`、`performance-management`
-
-**边界说明**：
-
-| 归入本专题 | 不归入本专题 |
-|-----------|-------------|
-| OKR目标与关键结果法完整方法论 | 第一性原理等本质思维方法（归入00） |
-| KR制定方法、评分体系、对齐流程 | 批判性思维与认知偏差（归入00） |
-| OKR模板、案例、工具使用 | Agent工程方法论（归入02） |
-| 个人/部门/公司层级OKR实践 | 知识质量控制方法（归入00） |
-
-**完整Wiki清单**：
-
-| Wiki名 | 入口文件 | 一句话说明 | 类型 |
-|--------|---------|-----------|------|
-| OKR方法论知识库 | [okr-wiki/00-overview.md](okr-wiki/00-overview.md) | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | 原子化 |
 
 ---
 
@@ -521,10 +499,9 @@ flowchart TD
 | 04 | 文档工具链与标记语言 | 5 | 4 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 9 | 2 | 7 |
-| 07 | 厂商产品学习系列 | 24 | 4 | 20 |
+| 07 | 厂商产品学习系列 | 25 | 5 | 20 |
 | 08 | 底层系统与基础设施 | 5 | 3 | 2 |
-| 专题 | OKR目标管理方法论 | 1 | 1 | 0 |
-| **合计** | | **88** | **36** | **52** |
+| **合计** | | **88** | **37** | **51** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
@@ -571,8 +548,8 @@ flowchart TD
    → 是 → 01-agent-protocols-interfaces/
    → 否 ↓
 
-9. 是否是OKR等通用组织管理方法论？
-   → 是 → okr-wiki/（独立专题）
+9. 是否是OKR等SaaS管理工具产品Wiki？
+   → 是 → 07-vendor-product-learning/okr-wiki/（厂商产品工具类）
    → 否 ↓
 
 10. 边界模糊时：重新阅读最近主题的"边界说明"，选择主题词重叠度最高的主题

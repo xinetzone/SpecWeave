@@ -5,16 +5,16 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/README.toml"
 ---
 # Learning Wiki 知识库
 
-Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）九大主题，以及 OKR 独立专题的学习笔记与深度 Wiki。
+Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）九大主题的学习笔记与深度 Wiki。
 
 ## 📊 统计数字
 
 | 指标 | 数值 |
 |------|------|
 | 总 Wiki 数 | 88 |
-| 原子化 Wiki | 36 |
-| 单文件 Wiki | 52 |
-| 主题数 | 9（00-08编号主题）+ 1 个独立专题（OKR） |
+| 原子化 Wiki | 37 |
+| 单文件 Wiki | 51 |
+| 主题数 | 9（00-08编号主题） |
 | 文件总数 | ~328 |
 
 ## 🧭 快速导航
@@ -28,9 +28,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 5 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
 | 05 | AI 多模态内容 | AI 短剧、3D 动画、音频生成、AI 配图、文本转 CAD | 6 | [05-ai-multimodal-content/](05-ai-multimodal-content/README.md) |
 | 06 | 商业趋势分析 | AI 变现、国产模型对比、个人 IP 趋势、供应链风险分析 | 9 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
-| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品 | 24 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
+| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品、叮当OKR管理工具 | 25 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
 | 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 5 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
-| 专题 | OKR目标管理 | OKR目标与关键结果法完整知识库（37个原子化文件） | 1 | [okr-wiki/](okr-wiki/00-overview.md) |
 
 > 详细的分类说明与边界定义见 [CATEGORIES.md](CATEGORIES.md)。
 
@@ -149,7 +148,13 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | Wiki | 说明 | 链接 |
 |------|------|------|
 | ACEP 云手机 | 一站式云手机解决方案+四大能力+超低延时音视频 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |
-| Mobile Use Agent 移动端 AI 智能体 | 云手机+豆包视觉大模型的企业级移动端 Agent，含 MCP 协议实践 | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) |
+| Mobile Use Agent 移动端 AI 智能体 | 云手机+豆包视觉大模型的企业级移动端 Agent，含 MCP 协议实践 | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) |
+
+#### 🎯 叮当OKR（DingTalk OKR）系列
+
+| Wiki | 说明 | 链接 |
+|------|------|------|
+| 叮当OKR帮助手册Wiki | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | [okr-wiki/](07-vendor-product-learning/okr-wiki/00-overview.md) |
 
 ### 08 系统与基础设施
 
@@ -164,8 +169,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels/）、帛书老子原典深读（boshu-laozi-wiki/）等子模块 | [first-principles/](00-essence-and-thinking/first-principles/README.md) |
-| └ 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为跨文化道家部分提供原典深读，已纳入first-principles/作为子Wiki | [first-principles/boshu-laozi-wiki/](00-essence-and-thinking/first-principles/boshu-laozi-wiki/README.md) |
+| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化哲学比较（chinese-philosophy-parallels/）、思维训练题库等子模块（v2.0） | [first-principles/](00-essence-and-thinking/first-principles/README.md) |
+| 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为第一性原理跨文化道家部分提供原典深读材料，与第一性原理平级 | [boshu-laozi-wiki/](00-essence-and-thinking/boshu-laozi-wiki/00-overview.md) |
 
 ### 独立专题：OKR目标管理
 

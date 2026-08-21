@@ -5,21 +5,20 @@
 
 ## 统计摘要
 
-- **总条目数**：1138
+- **总条目数**：1288
 
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 45 |
+| best-practices | 47 |
 | case-study | 5 |
-| decisions | 5 |
+| decisions | 6 |
 | docs | 8 |
 | docs/knowledge/mdi/generated/case1 | 1 |
 | docs/knowledge/mdi/generated/case3 | 1 |
 | examples | 6 |
 | knowledge | 55 |
 | knowledge/best-practices | 1 |
-| knowledge/learning | 5 |
 | knowledge/learning/01-agent-protocols-interfaces | 8 |
 | knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols | 12 |
 | knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki | 15 |
@@ -28,6 +27,7 @@
 | knowledge/learning/02-agent-engineering-methodology/longcat-agent-learning-wiki | 9 |
 | knowledge/learning/03-agent-platforms-tools | 11 |
 | knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki | 9 |
+| knowledge/learning/03-agent-platforms-tools/hermes-agent-integration | 9 |
 | knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki | 7 |
 | knowledge/learning/03-agent-platforms-tools/open-code-review-wiki | 11 |
 | knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki | 8 |
@@ -39,6 +39,7 @@
 | knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix | 2 |
 | knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples | 5 |
 | knowledge/learning/05-ai-multimodal-content | 4 |
+| knowledge/learning/06-ai-ml-inference | 6 |
 | knowledge/learning/06-business-trends-analysis | 10 |
 | knowledge/learning/07-vendor-product-learning | 2 |
 | knowledge/learning/07-vendor-product-learning/comparison | 2 |
@@ -51,8 +52,8 @@
 | knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki | 11 |
 | knowledge/learning/07-vendor-product-learning/volcengine | 11 |
 | knowledge/learning/first-principles | 16 |
-| knowledge/learning/00-essence-and-thinking/first-principles/15-cross-domain-cases | 4 |
-| knowledge/learning/00-essence-and-thinking/first-principles/exercises | 10 |
+| knowledge/learning/first-principles/15-cross-domain-cases | 4 |
+| knowledge/learning/first-principles/exercises | 10 |
 | knowledge/learning/llm-token-optimization | 1 |
 | knowledge/learning/okr-wiki | 1 |
 | knowledge/learning/okr-wiki/appendix | 1 |
@@ -62,16 +63,17 @@
 | knowledge/learning/okr-wiki/scoring | 4 |
 | knowledge/learning/okr-wiki/templates | 7 |
 | knowledge/learning/okr-wiki/tools | 2 |
-| learning | 422 |
+| learning | 482 |
+| learning/07-vendor-product-learning | 11 |
 | methods | 6 |
-| operations | 19 |
+| operations | 21 |
 | platform | 1 |
 | reference | 3 |
 | research | 1 |
 | standards | 1 |
-| tech | 29 |
+| tech | 36 |
 | troubleshooting | 4 |
-| unknown | 225 |
+| unknown | 280 |
 
 ## 按类别浏览
 
@@ -99,7 +101,7 @@
 | [Caffe AVE Pooling梯度路由：均匀分配模式](best-practices/caffe-pooling-ave-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、ave-pooling、c++、numpy、test-pattern |
 | [Caffe MAX Pooling梯度路由：Winner-Takes-All模式](best-practices/caffe-pooling-max-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、max-pooling、c++、numpy、test-pattern |
 | [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
-| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。沉淀「任务编排 vs 用户接口」二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。 | 2026-08-21 | cli、invoke、typer、click、task-runner、selection、anti-pattern、dx、python |
+| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。本文沉淀"任务编排 vs 用户接口"二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。 | 2026-08-21 | - |
 | [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) |  | 2026-07-29 | CMake、modularization、build-system、refactoring、cross-platform、best-practice |
 | [编译型Python包数据文件生命周期管理](best-practices/compiled-package-data-file-lifecycle.md) | 基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Python包数据文件的完整生命周期管理方法：编译阶段显式复制、打包阶段完整性验证、运行阶段环境变量设置与文件校验。 | 2026-07-23 | Python、Nuitka、Cython、wheel、data-files、packaging、TVM、relay |
 | [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
@@ -113,10 +115,12 @@
 | [文件 I/O 并发安全规范：原子写入、日志模板与重试策略](best-practices/file-io-concurrency-safety.md) | 基于原子写入重构实战（11个模块统一改造、46个测试覆盖、并发成功率82%→100%），提炼文件I/O并发安全三原则：写共享文件必须原子化、日志必须分阶段计时、重试必须有限次+退避。提供决策树、日志模板、重试参数规范和完整代码示例，作为所有涉及文件写入的脚本必须遵守的开发规范。 | 2026-07-12 | concurrency、file-io、atomic-write、logging、retry-pattern、windows、defensive-programming |
 | [硬编码路径批量修复工具使用指南（fix-hardcoded-paths.py）](best-practices/fix-hardcoded-paths-guide.md) | 可复用硬编码路径批量修复工具使用指南：正则保留分隔符风格与盘符大小写，支持 .py/.ipynb 双处理与 dry-run/apply 双模式。 | 2026-08-07 | hardcoded-paths、refactor、python、path-migration、dry-run、ipynb、script |
 | [浮点数精度测试技术指南](best-practices/float-precision-testing-guide.md) |  | 2026-08-02 | float32、precision、testing、ulp、numerical-gradient、c1-kink、sigmoid、elu、activation-functions |
+| [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | Windows 环境下 git 提交中文信息在终端显示乱码，但存储字节可能完全正确——显示层乱码 ≠ 存储层乱码。本文沉淀「双层分离验证法」：用 git cat-file 原始字节 + Python 字节级比对判定存储是否正确，避免因误判而做无谓的 reset 重提。含根因分析、4 反模式与可靠重提方案。 | 2026-08-21 | - |
 | [链式pre-commit钩子架构实践指南](best-practices/git-hook-chain-architecture.md) | 基于敏感信息检测和并发安全检查两个pre-commit钩子的实战经验，总结链式pre-commit钩子架构模式——单Shell入口+Python链式主入口+独立检查模块，解决跨平台维护、检查顺序控制和扩展成本问题。 | 2026-07-08 | git-hooks、pre-commit、architecture、cross-platform、automation |
-| [Git提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | Windows 环境下 git 提交中文信息终端显示乱码，但存储字节可能完全正确——显示层乱码 ≠ 存储层乱码。沉淀「双层分离验证法」：git cat-file 原始字节 + Python 字节级比对判定存储是否正确，避免因误判而做无谓的 reset 重提。含根因分析、4 反模式与可靠重提方案。 | 2026-08-21 | git、encoding、mojibake、utf-8、gbk、windows、commit、diagnosis、verification |
+| [Git推送被拒绝（fetch first）问题解决指南](best-practices/git-push-rejected-resolution.md) | 基于SpecWeave项目实际遇到的git push被拒绝问题（远端有本地没有的提交+本地有目录大重构），总结系统化的解决流程——诊断→安全备份→选择合并策略→执行→验证，特别涵盖目录重构场景下rebase失败的处理方案。 | 2026-08-14 | git、push、conflict、merge、rebase、directory-restructure、troubleshooting |
 | [手算梯度已知值验证：Backward测试L1层方法论](best-practices/hand-computed-gradient-verification.md) |  | 2026-08-03 | testing、backward、gradient、verification、known-values、hand-computed、numpy、test-pattern、caffe-ffi |
 | [Mermaid 图表操作指南](best-practices/mermaid-guide.md) | SpecWeave 项目中 Mermaid 图表的一站式操作手册，涵盖起步模板、安全编码六规则、自动化检查工具详解、渲染问题排查流程和不同图表类型注意事项。 | 2026-06-29 | mermaid、图表、可视化、check-mermaid、安全编码、六规则、模板、ci |
+| [模型编译 config 输入布局核验与修正规范（NCHW/NHWC）](best-practices/model-config-input-layout-convention.md) | 从 palmDet 模型编译失败修复沉淀的规范：工具链强制按 NCHW 解包输入 shape，config 输入布局必须与模型（Caffe/ONNX）实际布局一致；提供布局判定、修正方案、新模型接入核验检查清单与配套算子转换修复。 | 2026-08-12 | model-compile、config、input-layout、NCHW、NHWC、NV12、onnx2pytorch、tvm、adaround、checklist、caffe、onnx |
 | [模型调用环境变量脱敏模板（.env 字段清单）](best-practices/model-env-template.md) | 从 chaos/flexloop/models/.env 沉淀的脱敏环境变量模板：列出字段名与用途说明，所有值一律使用占位符，绝不含真实密钥或个人路径。 | 2026-08-07 | env、environment-variable、desensitization、glm、huggingface、zai |
 | [多文件编辑操作可靠性指南](best-practices/multi-file-edit-reliability.md) | 基于IDL Wiki章节拆分实战复盘的多文件编辑操作可靠性指南：涵盖章节拆分级联编号成本、Edit工具精确匹配陷阱、串行vs并行Edit策略、Windows管道稳定性四条核心经验，提供决策矩阵和操作Checklist。 | 2026-07-05 | edit、multi-file、reliability、serial-vs-parallel、windows-pipe、cascading-renumber、wiki-split、tool-pitfalls |
 | [数值梯度诊断日志规范：从失败到根因的可观测性](best-practices/numerical-gradient-diagnostic-logging.md) |  | 2026-08-03 | debugging、numerical-gradient、logging、diagnostics、observability、grad-check、caffe-ffi、pytest |
@@ -150,6 +154,7 @@
 | [SpecWeave 外部代理资产绑定边界](decisions/p0-04-specweave-binding-decision.md) | 记录 chaos 与 SpecWeave 的跨工作区代理资产绑定决策，包括绑定路径、用途、访问顺序、适用边界和维护规则。 |  | - |
 | [已批准治理 Specs 稳定决策集合](decisions/p0-08-governance-specs-decisions.md) | 从 7 个已批准治理 specs 中提炼的稳定决策结论集合，覆盖协作文档三件套基线、临时知识库管道、归档自动化、SpecWeave 外部绑定、任务分类骨架、待办治理口径与归档优先级分级。 |  | - |
 | [DAO Apps 商业计划书结论摘要](decisions/p1-12-daoapps-business-plan.md) | DAO Apps 商业计划书结论，定义以「道法自然」为哲学基石的 AI 智能体应用生态，包含产品矩阵、商业模式、市场定位与 500 万元融资需求。 |  | - |
+| [ADR: torch-dev 双索引下载与 CUDA 硬断言决策](decisions/torch-dev-extra-index-cuda-assertion.md) | 记录 torch-dev 镜像构建中为解决 files.pythonhosted.org IPv6 不可达而引入 --extra-index-url 双索引下载，以及对抗审查后补充的 CUDA 编译版本硬断言，防止主索引故障时静默降级为 CPU 版 torch | 2026-08-20 | devcontainer、torch-dev、pip-mirror、cuda、extra-index、silent-downgrade、verify、镜像构建 |
 
 ### docs
 
@@ -206,6 +211,20 @@
 | [11、核心术语表](learning/02-agent-engineering-methodology/adversarial-review-wiki/11-glossary.md) |  | 2026-07-10 | - |
 | [12、延伸阅读与资源索引](learning/02-agent-engineering-methodology/adversarial-review-wiki/12-resources.md) |  | 2026-07-10 | - |
 | [13、快速参考速查表](learning/02-agent-engineering-methodology/adversarial-review-wiki/13-quick-reference.md) |  | 2026-07-10 | - |
+| [LLM Token节省机制研究文档 V阶段对抗审查记录](learning/02-agent-engineering-methodology/llm-token-optimization/07-adversarial-review.md) |  | 2026-08-01 | LLM、Token、Optimization、Adversarial-Review、V-Gate |
+| [LLM Token优化知识体系元分析](learning/02-agent-engineering-methodology/llm-token-optimization/08-meta-analysis.md) |  | 2026-08-01 | LLM、Token、Optimization、Meta-Analysis、Taxonomy、Evolution |
+| [Token优化禁止事项清单（约束驱动）](learning/02-agent-engineering-methodology/llm-token-optimization/09-constraints.md) |  | 2026-08-01 | LLM、Token、Optimization、Constraints、Anti-Patterns、Guardrails |
+| [Token优化快速参考卡（3分钟速查）](learning/02-agent-engineering-methodology/llm-token-optimization/10-quick-reference.md) |  | 2026-08-01 | LLM、Token、Optimization、Quick-Reference、Cheat-Sheet |
+| [LLM Token 优化术语表](learning/02-agent-engineering-methodology/llm-token-optimization/glossary.md) |  | 2026-08-01 | - |
+| [LLM Token 优化参考文献](learning/02-agent-engineering-methodology/llm-token-optimization/references.md) |  | 2026-08-01 | - |
+| [大语言模型Token优化第一性原理分析](learning/02-agent-engineering-methodology/llm-token-optimization/01-principles/01-first-principles.md) |  | 2026-08-01 | LLM、Token、First-Principles、Transformer、Self-Attention、KV-Cache、Optimization |
+| [LLM Token优化工具与框架调研报告](learning/02-agent-engineering-methodology/llm-token-optimization/03-tools/01-tool-survey.md) |  |  | LLM、Token优化、推理引擎、Prompt缓存、Token压缩 |
+| [Token优化决策框架总览](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/00-framework-overview.md) |  | 2026-08-01 | LLM、Token、Optimization、Decision-Framework、Best-Practices |
+| [Token优化场景决策树](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/01-decision-tree.md) |  | 2026-08-01 | LLM、Token、Optimization、Decision-Tree、Scenarios |
+| [Token优化技术选型矩阵](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/02-selection-matrix.md) |  | 2026-08-01 | LLM、Token、Optimization、Selection-Matrix、ROI |
+| [Token优化可复用最佳实践模式](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/03-patterns.md) |  | 2026-08-01 | LLM、Token、Optimization、Patterns、Best-Practices、G3-Verified |
+| [Token优化反模式与常见误区](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/04-anti-patterns.md) |  | 2026-08-01 | LLM、Token、Optimization、Anti-Patterns、Pitfalls |
+| [Token优化快速启动Checklist](learning/02-agent-engineering-methodology/llm-token-optimization/06-decision-framework/05-quick-checklist.md) |  | 2026-08-01 | LLM、Token、Optimization、Checklist、Launch、Preflight |
 | [00、概述与背景](learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/00-overview.md) |  | 2026-07-13 | - |
 | [01、GPT-5.6范式变革：从规定过程到明确目标](learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/01-paradigm-shift.md) |  | 2026-07-13 | - |
 | [02、七概念方法论与Prompt Engineering映射](learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md) |  | 2026-07-13 | - |
@@ -219,20 +238,6 @@
 | [09、检查清单与可复用模板库](learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/09-checklists-templates.md) |  | 2026-07-13 | - |
 | [10、反模式：20+个Prompt写法陷阱](learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/10-anti-patterns.md) |  | 2026-07-13 | - |
 | [AI硬件设计工具生态深度洞察报告——基于《10个AI硬件设计常用网站》的系统分析](learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/analysis-report.md) |  | 2026-08-01 | ai-hardware、eda、pcb-design、circuit-design、ai-tools、hardware-startup、maker |
-| [LLM Token节省机制研究文档 V阶段对抗审查记录](learning/llm-token-optimization/07-adversarial-review.md) |  | 2026-08-01 | LLM、Token、Optimization、Adversarial-Review、V-Gate |
-| [LLM Token优化知识体系元分析](learning/llm-token-optimization/08-meta-analysis.md) |  | 2026-08-01 | LLM、Token、Optimization、Meta-Analysis、Taxonomy、Evolution |
-| [Token优化禁止事项清单（约束驱动）](learning/llm-token-optimization/09-constraints.md) |  | 2026-08-01 | LLM、Token、Optimization、Constraints、Anti-Patterns、Guardrails |
-| [Token优化快速参考卡（3分钟速查）](learning/llm-token-optimization/10-quick-reference.md) |  | 2026-08-01 | LLM、Token、Optimization、Quick-Reference、Cheat-Sheet |
-| [LLM Token 优化术语表](learning/llm-token-optimization/glossary.md) |  | 2026-08-01 | - |
-| [LLM Token 优化参考文献](learning/llm-token-optimization/references.md) |  | 2026-08-01 | - |
-| [大语言模型Token优化第一性原理分析](learning/llm-token-optimization/01-principles/01-first-principles.md) |  | 2026-08-01 | LLM、Token、First-Principles、Transformer、Self-Attention、KV-Cache、Optimization |
-| [LLM Token优化工具与框架调研报告](learning/llm-token-optimization/03-tools/01-tool-survey.md) |  |  | LLM、Token优化、推理引擎、Prompt缓存、Token压缩 |
-| [Token优化决策框架总览](learning/llm-token-optimization/06-decision-framework/00-framework-overview.md) |  | 2026-08-01 | LLM、Token、Optimization、Decision-Framework、Best-Practices |
-| [Token优化场景决策树](learning/llm-token-optimization/06-decision-framework/01-decision-tree.md) |  | 2026-08-01 | LLM、Token、Optimization、Decision-Tree、Scenarios |
-| [Token优化技术选型矩阵](learning/llm-token-optimization/06-decision-framework/02-selection-matrix.md) |  | 2026-08-01 | LLM、Token、Optimization、Selection-Matrix、ROI |
-| [Token优化可复用最佳实践模式](learning/llm-token-optimization/06-decision-framework/03-patterns.md) |  | 2026-08-01 | LLM、Token、Optimization、Patterns、Best-Practices、G3-Verified |
-| [Token优化反模式与常见误区](learning/llm-token-optimization/06-decision-framework/04-anti-patterns.md) |  | 2026-08-01 | LLM、Token、Optimization、Anti-Patterns、Pitfalls |
-| [Token优化快速启动Checklist](learning/llm-token-optimization/06-decision-framework/05-quick-checklist.md) |  | 2026-08-01 | LLM、Token、Optimization、Checklist、Launch、Preflight |
 | [00、总览：MyST Markdown 统一化接口生态体系](myst-unified-ecosystem/00-overview.md) |  | 2026-07-02 | - |
 | [01、IDL：接口描述语言](myst-unified-ecosystem/01-idl.md) |  | 2026-07-02 | - |
 | [02、Interface：行为契约](myst-unified-ecosystem/02-interface.md) |  | 2026-07-02 | - |
@@ -252,16 +257,6 @@
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [B2B/旗舰产品信息源分层采集规范](best-practices/b2b-product-info-collection-sop.md) |  | 2026-07-04 | 信息采集、B2B产品、SOP、多源验证、Defuddle |
-
-### knowledge/learning
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [AtomGit AI 平台最佳实践](learning/atomgit-ai-best-practices.md) |  | 2026-07-02 | AtomGit、AI开发平台、MLOps、模型管理、数据集管理、Space应用、Notebook开发、协作开发、安全最佳实践、性能监控 |
-| [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](learning/douyin-vibecoding-guide-analysis.md) |  | 2026-07-02 | vibecoding、抖音、内容创作、第一性原理、TRAE大赛、短视频传播 |
-| [华秋智联与星宸科技战略合作深度分析：打通芯片量产最后一公里](learning/huaqiu-sigmastar-partnership-analysis-20260709.md) |  | 2026-07-09 | 端边侧AI、芯片生态、硬件量产、开发者生态、华秋、星宸科技 |
-| [OKR制定指南Wiki手册](learning/okr-guide.md) |  | 2026-07-08 | - |
-| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
 
 ### knowledge/learning/01-agent-protocols-interfaces
 
@@ -384,6 +379,20 @@
 | [常见问题解答](learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/06-faq.md) |  | 2026-07-02 | - |
 | [资源与参考链接](learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/07-resources.md) |  | 2026-07-02 | - |
 | [天才程序员体验卡+5！](learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/article-content.md) |  | 2026-07-02 | - |
+
+### knowledge/learning/03-agent-platforms-tools/hermes-agent-integration
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [00 集成总览与两条路径](learning/03-agent-platforms-tools/hermes-agent-integration/00-overview.md) | 把 SpecWeave 整个工作区接入 Hermes Agent，使其能力可被正确识别、调用与执行；涉及 Hermes Agent 框架插件路径与 Hermes OKF 记忆层两条路径 | 2026-08-09 | - |
+| [01 Hermes Agent 插件接口规范](learning/03-agent-platforms-tools/hermes-agent-integration/01-hermes-plugin-interface.md) | Hermes 插件是扩展 Agent 能力的核心机制，含通用/内存/上下文三类，通过 plugin.yaml 元数据与 register(ctx) 入口注册工具、技能、钩子与记忆 | 2026-08-09 | - |
+| [02 SpecWeave 能力盘点与映射矩阵](learning/03-agent-platforms-tools/hermes-agent-integration/02-capability-mapping.md) | 盘点 SpecWeave 的 skills/commands/scripts/roles/AGENTS.md/knowledge/vendor 能力，并给出到 Hermes 各类插件能力的映射方案 | 2026-08-09 | - |
+| [03 配置文件设置](learning/03-agent-platforms-tools/hermes-agent-integration/03-configuration.md) | 配置 Hermes 以启用 SpecWeave 插件与 hermes-okf 记忆层：config.yaml 的 plugins/memory/context 字段、HERMES_HOME、project 级插件 | 2026-08-09 | - |
+| [04 数据格式转换方法](learning/03-agent-platforms-tools/hermes-agent-integration/04-data-conversion.md) | 把 SpecWeave 的 AGENTS.md 契约、知识库 markdown 转换为 Hermes 插件元数据与 OKF bundle 的具体方法 | 2026-08-09 | - |
+| [05 权限认证流程](learning/03-agent-platforms-tools/hermes-agent-integration/05-auth-permission.md) | Hermes 插件的安全机制：名称消毒、路径穿越防护、manifest_version 校验、环境变量密钥与 project 插件权限开启 | 2026-08-09 | - |
+| [06 调用方式示例](learning/03-agent-platforms-tools/hermes-agent-integration/06-usage-examples.md) | 覆盖 Hermes 插件生命周期命令、hermes-okf 记忆命令、会话内工具调用与 with_context 记忆召回的完整调用示例 | 2026-08-09 | - |
+| [07 常见问题及解决方案](learning/03-agent-platforms-tools/hermes-agent-integration/07-troubleshooting.md) | 覆盖 SpecWeave 接入 Hermes 过程中的常见问题：未发现、未启用、schema 不匹配、单实例限制、Windows 路径、name 冲突、未重启 | 2026-08-09 | - |
+| [08 AGENTS.md 与 .agents/ 的自动加载机制](learning/03-agent-platforms-tools/hermes-agent-integration/08-agents-md-autoload.md) | Hermes 原生自动加载 AGENTS.md（启动 + 子目录渐进发现），但不会自动加载 .agents/ 目录；需通过路由地图、插件或 OKF 挂载让规范库被正确识别 | 2026-08-09 | - |
 
 ### knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki
 
@@ -509,6 +518,17 @@
 | [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) |  | 2026-07-04 | AudioX-Turbo、音频生成、音乐生成、视频配音、扩散模型、模型蒸馏、AI开源、多模态、Anything-to-Audio、Distribution-Matching-Distillation、师生蒸馏 |
 | [LibTV AI 短剧创作工具学习 Wiki](learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md) |  | 2026-07-04 | libtv、ai-shortdrama、ai-video、ai-manhua、character-quality、emotion-control、3d-director、workflow |
 | [text-to-cad 完整学习教程：用AI生成可编辑CAD源代码](learning/05-ai-multimodal-content/text-to-cad-wiki.md) |  | 2026-07-04 | text-to-cad、cad、ai-agent、build123d、step、urdf、3d-printing、robotics |
+
+### knowledge/learning/06-ai-ml-inference
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [ONNX Wiki - 总览](learning/06-ai-ml-inference/onnx-wiki/00-overview.md) |  | 2026-08-09 | - |
+| [ONNX Wiki - 核心概念详解](learning/06-ai-ml-inference/onnx-wiki/01-core-concepts.md) |  | 2026-08-09 | - |
+| [ONNX Wiki - Python API实战](learning/06-ai-ml-inference/onnx-wiki/02-python-api.md) |  | 2026-08-09 | - |
+| [ONNX Wiki - 快速上手指南](learning/06-ai-ml-inference/onnx-wiki/03-quickstart.md) |  | 2026-08-09 | - |
+| [ONNX Wiki - 最佳实践与反模式](learning/06-ai-ml-inference/onnx-wiki/04-best-practices.md) |  | 2026-08-09 | - |
+| [ONNX Wiki - FAQ与资源](learning/06-ai-ml-inference/onnx-wiki/05-faq-and-resources.md) |  | 2026-08-09 | - |
 
 ### knowledge/learning/06-business-trends-analysis
 
@@ -668,7 +688,7 @@
 | [AI时代的第一性原理：人机协同的思维增强](learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.md) |  | 2026-07-02 | - |
 | [第一性原理与类比推理的适用边界研究](learning/00-essence-and-thinking/first-principles/16-boundary-conditions.md) |  | 2026-07-02 | - |
 
-### knowledge/learning/00-essence-and-thinking/first-principles/15-cross-domain-cases
+### knowledge/learning/first-principles/15-cross-domain-cases
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -677,7 +697,7 @@
 | [数学中的第一性原理思维案例](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/mathematics.md) |  | 2026-07-02 | - |
 | [社会科学中的第一性原理思维案例](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/social-sciences.md) |  | 2026-07-02 | - |
 
-### knowledge/learning/00-essence-and-thinking/first-principles/exercises
+### knowledge/learning/first-principles/exercises
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -696,7 +716,7 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [LLM Token节省策略实际应用案例集](learning/llm-token-optimization/04-cases/01-case-studies.md) |  | 2026-08-01 | - |
+| [LLM Token节省策略实际应用案例集](learning/02-agent-engineering-methodology/llm-token-optimization/04-cases/01-case-studies.md) |  | 2026-08-01 | - |
 
 ### knowledge/learning/okr-wiki
 
@@ -773,8 +793,10 @@
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | Learning Wiki 知识库的8主题分类体系设计，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单 | 2026-07-05 | categories、learning-wiki、knowledge-architecture、topic-classification、learning-path |
+| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层与独立专题，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单 | 2026-08-22 | categories、learning-wiki、knowledge-architecture、topic-classification、learning-path |
 | [Learning Wiki 学习路径推荐表](learning/LEARNING-PATHS.md) | Learning Wiki知识库59个Wiki的系统化学习路径推荐，包含8主题内部学习顺序、前置依赖、关联知识点、角色定制路径 | 2026-07-05 | learning-path、study-guide、prerequisites、knowledge-graph、curriculum |
+| [《你以为的自由是一种幻觉》第一性原理分析](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md) | 以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。 | 2026-07-13 | 第一性原理、AI时代认知、自由、认知悬浮、意图对齐、人机协作、知识建构 |
+| [核心概念解读](learning/00-essence-and-thinking/boshu-laozi-wiki/03-core-concepts.md) | 帛书《老子》核心概念——道、德、无为、自然、反（返）、弱——的义理解读，以及帛书用字差异（恒/常、邦/国、弗/不、大器免成/晚成等）带来的义理分野。 | 2026-08-19 | 帛书老子、道德经、核心概念、道、德、无为、自然、版本对照 |
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
 | [Agent Skills 开放标准完整指南](learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) | 从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现 | 2026-07-03 | agent、mcp、interface、api、abi、protocol、a2a |
@@ -819,6 +841,16 @@
 | [五、协议（Protocol）：通信规则约定](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | 协议的综合定义、网络/软件协议分类、核心特征、主流协议对比与应用场景 | 2026-07-03 | protocol、network、http、tcp、websocket、osi-model、tcp-ip |
 | [六、对比分析：四概念系统辨析](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | Interface/API/ABI/Protocol四概念对比表格、关联关系分析、Mermaid架构层次图、常见混淆点澄清与决策指南 | 2026-07-03 | comparison、architecture、abstraction-layers、interface、api、abi、protocol |
 | [七、参考资料与扩展阅读](learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 术语表、权威参考资料、扩展阅读建议与进阶学习路径 | 2026-07-03 | resources、references、glossary、further-reading、books、rfc |
+| [Jira 集成插件教程总览](learning/01-agent-protocols-interfaces/jira-skill-wiki/00-overview.md) | Jira 集成插件系统性技术教程总览，涵盖插件定位、双技能架构、核心特性、版本演进、章节导航与前置知识要求。 | 2026-08-19 | jira、claude-code、agent-skill、plugin、overview、tutorial |
+| [架构设计：双技能插件](learning/01-agent-protocols-interfaces/jira-skill-wiki/01-architecture.md) | Jira 集成插件架构设计详解，涵盖系统总览、目录结构、双技能组件划分、三层脚本体系、数据流与四项关键设计决策。 | 2026-08-19 | jira、architecture、plugin、skill、directory-structure、data-flow |
+| [安装与配置](learning/01-agent-protocols-interfaces/jira-skill-wiki/02-installation.md) | Jira 集成插件安装与配置完整指南，涵盖六种安装方式、凭证文件配置、Server/DC 与 Cloud 的认证差异、环境校验命令。 | 2026-08-19 | jira、installation、configuration、credentials、authentication、uv |
+| [快速开始](learning/01-agent-protocols-interfaces/jira-skill-wiki/03-quickstart.md) | Jira 集成插件快速开始指南，覆盖搜索、工单详情、创建、流转、评论、工时、冲刺看板、工具查询的完整命令示例。 | 2026-08-19 | jira、quickstart、cli、search、worklog、transition、examples |
+| [jira-communication 技能详解](learning/01-agent-protocols-interfaces/jira-skill-wiki/04-jira-communication.md) | jira-communication 技能完整详解，涵盖自动触发条件、三层脚本体系、意图动词机制（work/qa/qa-fail/act）、通用选项与认证方式。 | 2026-08-19 | jira、jira-communication、cli、intent-verbs、scripts、authentication |
+| [jira-syntax 技能详解](learning/01-agent-protocols-interfaces/jira-skill-wiki/05-jira-syntax.md) | jira-syntax 技能完整详解，涵盖 Jira wiki 标记与 Markdown 的语法对照、Bug/特性模板、提交前语法校验清单与常见错误。 | 2026-08-19 | jira、jira-syntax、wiki-markup、templates、validation、markdown |
+| [JQL 查询语言](learning/01-agent-protocols-interfaces/jira-skill-wiki/06-jql.md) | JQL 查询语言完整参考，涵盖排序、比较/文本/列表/历史操作符、用户/日期/冲刺/版本函数、常见查询与引号规则、Cloud 与 Server/DC 差异。 | 2026-08-19 | jira、jql、query、search、operators、functions |
+| [最佳实践与反模式](learning/01-agent-protocols-interfaces/jira-skill-wiki/07-best-practices.md) | Jira 集成插件最佳实践与反模式汇总，涵盖意图动词优先、dry-run 预览、无编辑化、精确流转名、resolution 字段处理与多阶段工作流 walk。 | 2026-08-19 | jira、best-practices、anti-patterns、dry-run、intent-verbs、resolution |
+| [故障排查](learning/01-agent-protocols-interfaces/jira-skill-wiki/08-troubleshooting.md) | Jira 集成插件故障排查指南，涵盖 uv 未安装、环境文件缺失、认证失败、导入错误、resolution 字段无法设置等常见问题与解决步骤。 | 2026-08-19 | jira、troubleshooting、authentication、errors、resolution、import |
+| [术语表与资源](learning/01-agent-protocols-interfaces/jira-skill-wiki/09-glossary.md) | Jira 集成插件核心术语表与参考资料索引，包含 22 个核心术语的中文翻译与通俗解释，以及插件源码、官方语法与 JQL 参考等资源汇总。 | 2026-08-19 | jira、glossary、reference、terminology、resources |
 | [00 Knowledge Catalog概述与知识地图](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/00-overview.md) | Knowledge Catalog（原Dataplex）是Google Cloud推出的AI驱动数据目录与元数据管理平台，包含OKF开放知识格式、参考Agent实现、可视化工具链和示例数据集，为AI Agent提供语义层和业务上下文 | 2026-08-06 | Knowledge Catalog、Dataplex、OKF、知识目录、数据目录、知识图谱、AI Agent、wiki教程 |
 | [01 核心概念与平台架构](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/01-core-concepts.md) | 深入解析Knowledge Catalog平台的三大设计哲学、核心概念体系、OKF格式规范要点、四层平台架构，以及组件间关系的可视化说明 | 2026-08-06 | Knowledge Catalog、OKF、知识管理、平台架构、Bundle、Attested Computation |
 | [02 OKF开放知识格式规范深度解析](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/02-okf-specification.md) | 从knowledge-catalog参考实现视角深度解析OKF v0.2规范，覆盖Bundle结构、Frontmatter必填/推荐字段、链接规则、信任与来源机制、认证计算、合规性规则及版本变更，大量交叉链接指向okf-wiki完整教程 | 2026-08-06 | Knowledge Catalog、OKF、规范解析、Bundle、Frontmatter、Attested Computation、Conformance |
@@ -828,6 +860,13 @@
 | [06 集成模式与最佳实践](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/06-integration-patterns.md) | 详解OKF在企业环境中的落地路径与集成模式：包括试点→团队级→企业级→生态的四阶段渐进式落地路径，数据目录同步、Agent知识库构建、企业Runbook/Playbook管理三种典型集成场景，与Unity Catalog/Collibra等现有数据目录的共存集成方案，Git工作流深度集成（PR评审、版本管理、知识演进），生产者-消费者解耦架构模式，扩展字段设计的最佳实践，以及10条核心最佳实践清单 | 2026-08-06 | Knowledge Catalog、OKF、Integration、Enterprise、Data Catalog、Git Workflow、Best Practices、Runbook、Agent Knowledge、Unity Catalog、Collibra |
 | [07 架构决策与方案对比](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/07-architecture-decisions.md) | 客观呈现OKF/Knowledge Catalog作为早期方案的风险与局限性，详细对比传统RAG向量库、Notion/Obsidian文档工具、Unity Catalog、Collibra、Confluence、MkDocs、dbt docs、其他Agent知识方案共8种主流替代方案的优劣势与适用场景，提供架构选型决策树，并给出全面的风险评估与缓解策略，帮助技术决策者理性判断是否采用以及如何稳妥落地 | 2026-08-06 | Knowledge Catalog、OKF、Architecture Decision、Comparison、Risk Assessment、Data Catalog、Unity Catalog、Collibra、Confluence、dbt docs、RAG、Agent Knowledge |
 | [08 资源与术语表](learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/08-resources-and-glossary.md) | 30+核心术语定义（覆盖Knowledge Catalog、OKF、参考Agent、工具链）、完整官方资源链接、项目内wiki交叉引用索引、学习路径建议 | 2026-08-06 | Knowledge Catalog、OKF、术语表、资源链接、Glossary、References、Dataplex、工具链 |
+| [00 概述与知识地图](learning/01-agent-protocols-interfaces/okf-desktop-wiki/00-overview.md) | okf-desktop 是 okf-kit 生态的轻量桌面客户端，采用「零逻辑客户端 + 进程内本地服务器」架构，纯 React UI 通过 fetch/SSE 调用 okf serve API，可被 PyInstaller 冻结为单文件 | 2026-08-19 | okf-desktop、okf-kit、OKF、pywebview、React、桌面应用、wiki教程 |
+| [01 架构深度解析](learning/01-agent-protocols-interfaces/okf-desktop-wiki/01-architecture.md) | okf-desktop 由三层组成：pywebview shell（启动器）、React UI（纯客户端）、okf serve（本地 API）。shell 在进程内线程上启动 okf serve，UI 通过 api.js 唯一集成点以 Bearer token 调用同源 API | 2026-08-19 | okf-desktop、architecture、pywebview、SSE、单源无CORS、进程内服务器 |
+| [02 安装与快速入门](learning/01-agent-protocols-interfaces/okf-desktop-wiki/02-quickstart.md) | 两种方式运行 okf-desktop：直接下载 Releases 预构建包（免 Python/Node），或从源码构建（build UI → 装 shell 依赖 → python shell/app.py）。首次使用流程：Discover 装书 → Read 阅读 → Chat 对话 | 2026-08-19 | okf-desktop、quickstart、安装、预构建、源码构建、快速上手 |
+| [03 五大界面详解](learning/01-agent-protocols-interfaces/okf-desktop-wiki/03-ui-screens.md) | 五个屏幕围绕 api.js 构建：Library 管理本地书库、Discover 从 registry 安装、Read 用 MarkdownIt 渲染并做链接分类、Chat 用 SSE 流式回答并 deep-link 引用、Settings 配置 LLM 与 keychain | 2026-08-19 | okf-desktop、ui、screens、React、阅读器、对话、引用深链 |
+| [04 API 与数据流](learning/01-agent-protocols-interfaces/okf-desktop-wiki/04-api-and-data-flow.md) | 五个屏幕通过 api.js 调用 17 个端点；install 与 ask 走 SSE 流；链接经 normUrl 归一化后查 resource map 决定应用内跳转或外链；数据落在 ~/.okf 与系统钥匙串 | 2026-08-19 | okf-desktop、api、SSE、数据流、链接分类、引用深链 |
+| [05 跨平台打包](learning/01-agent-protocols-interfaces/okf-desktop-wiki/05-packaging.md) | 用 PyInstaller 把 pywebview shell + 进程内 okf serve + React UI 冻结为单一可执行文件；通过 excludes 裁剪爬虫栈与未用依赖，Linux 包约 140MB；三平台 webview 后端各异；签名公证为独立步骤 | 2026-08-19 | okf-desktop、packaging、pyinstaller、冻结、跨平台、签名 |
+| [06 FAQ 与术语表](learning/01-agent-protocols-interfaces/okf-desktop-wiki/06-faq-and-resources.md) | 回答覆盖运行、打包、安全、扩展等 8 个常见问题；提供 20+ 核心术语表与官方资源链接 | 2026-08-19 | okf-desktop、faq、术语表、glossary、resources、checklist |
 | [00 OKF概述与知识地图](learning/01-agent-protocols-interfaces/okf-wiki/00-overview.md) | OKF是Google Cloud 2026年6月发布的开放知识表示规范，定位为AI时代的HTML，采用Markdown+YAML纯文件格式，目标是成为Agent四层架构中独立的知识层标准 | 2026-08-05 | OKF、Open Knowledge Format、知识标准、Agent、知识层、wiki教程 |
 | [01 核心概念与设计哲学](learning/01-agent-protocols-interfaces/okf-wiki/01-core-concepts.md) | 深入解析OKF的极简设计哲学：最少约定、生产者消费者解耦、格式而非平台；完整介绍Bundle/Concept/Frontmatter等核心概念和规范 | 2026-08-05 | OKF、设计原则、Frontmatter、Bundle、Concept |
 | [02 5分钟快速入门](learning/01-agent-protocols-interfaces/okf-wiki/02-quickstart.md) | OKF零安装零依赖，6个步骤创建一个Agent工具知识库Bundle（3个工具Concept+index+log），5分钟完成并通过三规则验证 | 2026-08-05 | OKF、Quickstart、快速上手、实操、零依赖 |
@@ -916,6 +955,15 @@
 | [资源与参考链接](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md) | 相关资源链接：三个官方仓库（karpathy-skills/multica/multica-cli）的文件结构、分发格式说明、Karpathy原帖、中文报道、Multica平台相关资源等参考资料。 | 2026-07-02 | karpathy、llm、coding、agent、guidelines、resources、references、repository-structure、multica、multica-cli |
 | [Multica 平台：AI Agent 协作管理平台](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md) | Multica 是开源的 Managed Agents 平台，将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。本文档介绍 Multica 平台的核心概念、架构、功能模块，以及它与 Karpathy 准则的关系。 | 2026-07-02 | karpathy、llm、coding、agent、multica、platform、managed-agents、agentic-engineering、runtime、daemon、skill、autopilot、squad |
 | [Multica CLI Skill：让外部 Agent 安全操作 Multica](learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | multica-cli 是一个可移植 Skill，教任意本地编码 Agent（Claude Code、Codex、Cursor 等）通过已认证的 multica CLI 安全操作 Multica 平台。本文档按「背景→核心安全原则→命令正反例→快速上手→工作流实战→生态设计理念」六层认知阶梯组织，帮助读者从理解为什么需要到掌握最佳实践。 | 2026-07-02 | karpathy、llm、coding、agent、multica、cli、skill、claude-code、cursor、codex、safety、external-agent |
+| [Intel Neural Compressor 教程总览](learning/02-agent-engineering-methodology/neural-compressor-wiki/00-overview.md) | Intel Neural Compressor 开源模型压缩库系统性中文教程，涵盖核心概念、安装指南、快速开始、量化技术、API 概览、最佳实践与常见问题。 | 2026-08-09 | neural-compressor、model-compression、quantization、pytorch、tutorial |
+| [核心概念与架构](learning/02-agent-engineering-methodology/neural-compressor-wiki/01-core-concepts.md) | Intel Neural Compressor 的核心概念、模型压缩技术分类、架构设计与工作流程详解。 | 2026-08-09 | neural-compressor、architecture、core-concepts、workflow |
+| [安装指南](learning/02-agent-engineering-methodology/neural-compressor-wiki/02-installation.md) | Intel Neural Compressor PyTorch 后端的安装步骤、依赖说明与不同硬件环境的配置要点。 | 2026-08-09 | neural-compressor、installation、pytorch、setup |
+| [快速开始](learning/02-agent-engineering-methodology/neural-compressor-wiki/03-quickstart.md) | Intel Neural Compressor 快速上手指南，包含完整的 PyTorch CPU 模型量化示例代码与详细注释。 | 2026-08-09 | neural-compressor、quickstart、code-example、pytorch |
+| [主流量化技术详解](learning/02-agent-engineering-methodology/neural-compressor-wiki/04-quantization-techniques.md) | Intel Neural Compressor 支持的主要量化技术：静态量化、动态量化、仅权重量化、FP8 量化、SmoothQuant 的原理、适用场景与使用方法。 | 2026-08-09 | neural-compressor、quantization、static-quantization、dynamic-quantization、fp8 |
+| [API 概览](learning/02-agent-engineering-methodology/neural-compressor-wiki/05-api-overview.md) | Intel Neural Compressor PyTorch 扩展 API 的核心类与函数介绍，包括 prepare、convert、量化配置等关键接口。 | 2026-08-09 | neural-compressor、api、pytorch、reference |
+| [最佳实践](learning/02-agent-engineering-methodology/neural-compressor-wiki/06-best-practices.md) | Intel Neural Compressor 量化流程最佳实践：校准数据选择、精度验证、性能调优与常见陷阱。 | 2026-08-09 | neural-compressor、best-practices、performance、calibration |
+| [常见问题](learning/02-agent-engineering-methodology/neural-compressor-wiki/07-faq.md) | Intel Neural Compressor 使用过程中的常见问题与解决方案。 | 2026-08-09 | neural-compressor、faq、troubleshooting |
+| [术语表与资源](learning/02-agent-engineering-methodology/neural-compressor-wiki/08-resources.md) | Intel Neural Compressor 相关术语表、官方文档链接、参考论文与学习资源。 | 2026-08-09 | neural-compressor、glossary、resources、references |
 | [Anthropic Agent 产品线路线图完整学习教程：Conway永久在线智能体、文件记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计与GPT-5.6竞争分析](learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md) | 深度解析Anthropic即将推出的六条Agent产品线：Conway永久在线智能体、文件级记忆系统、Orbit主动助手、Operon生命科研平台、BugCrawl代码Bug自动修复，以及生态升级细节和GPT-5.6竞争动态分析。 | 2026-07-04 | anthropic、claude、conway、agent、orbit、operon、bugcrawl、file-memory、gpt-5.6、ai-agent、always-on-agent、proactive-ai |
 | [Claude Tag 文章知识捕获](learning/03-agent-platforms-tools/claude-tag-article.md) | 捕获量子位 2026-06-24 文章《刚刚，Claude Code大升级！卡帕西：LLM第三次变革》核心内容：Anthropic 发布企业协作工具 Claude Tag，定位为 Claude Code 进化，强调团队共享、主动介入（Ambient Mode）、异步执行，卡帕西称其为 LLM 用户界面第三次重大变革。本文档已原子化，详细内容见 claude-tag-article/ 子目录。 | 2026-06-29 | claude、tag、anthropic、agent、enterprise、slack、ambient-mode、opus、karpathy、llm、协作、知识沉淀、复盘闭环、模式入库、已原子化 |
 | [Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命](learning/03-agent-platforms-tools/minitap-official-wiki.md) | 深度解析Minitap.ai AI驱动的移动端测试平台，核心产品minitest作为完全自主的AI QA工程师，在AndroidWorld基准测试中达到100%任务成功率（全球第一），实现零脚本、零维护、零flake的移动端测试范式革命。涵盖技术架构、集成生态、客户案例、成本效益分析及开源mobile-use SDK。 | 2026-07-07 | minitap、minitest、mobile-use、ai-qa、mobile-testing、androidworld、e2e-testing、agent-testing、zero-script、ai-agent、mobile-automation |
@@ -951,6 +999,18 @@
 | [工程化理念与趋势洞察](learning/03-agent-platforms-tools/eve-wiki/07-engineering-philosophy-trends.md) | Demo 与生产的分野、Agent 工程化趋势（从模型竞争到工程底座竞争）、前端工程化经验向 AI 领域迁移的洞察。 | 2026-08-04 | eve、vercel、agent-framework、engineering、trends、frontend、ai-infra |
 | [FAQ、适用范围与局限性](learning/03-agent-platforms-tools/eve-wiki/08-faq.md) | Eve 常见问题解答、适用团队范围与当前局限性。 | 2026-08-04 | eve、vercel、agent-framework、faq、limitations、scope |
 | [术语表与参考资源](learning/03-agent-platforms-tools/eve-wiki/09-glossary-resources.md) | Eve 核心术语表（≥15 个）与参考资源清单（5 个来源 + 本地源码 + 官方文档 + 知识库交叉引用）。 | 2026-08-04 | eve、vercel、agent-framework、glossary、resources、references |
+| [00 Hermes Agent 产品总览](learning/03-agent-platforms-tools/hermes-agent-wiki/00-overview.md) | Hermes 是 Nous Research 构建的自进化 AI Agent，唯一内置学习闭环；核心窄腰、能力在边缘的设计哲学由两项属性塑造 | 2026-08-10 | hermes、agent、overview、self-evolving、narrow-waist |
+| [01 Hermes Agent 核心特性详解](learning/03-agent-platforms-tools/hermes-agent-wiki/01-core-features.md) | 详解 Hermes 的核心能力模块及其价值：真正终端界面、随你所在、闭环学习、定时自动化、委派并行、随处运行、研究就绪 | 2026-08-10 | hermes、features、tui、gateway、cron、delegation、learning-loop |
+| [02 Hermes Agent 快速安装与上手](learning/03-agent-platforms-tools/hermes-agent-wiki/02-quickstart.md) | 从安装脚本到首次对话的完整命令流，覆盖 install.sh/install.ps1、hermes setup/model/tools、启动 TUI 与 hermes update | 2026-08-10 | hermes、quickstart、install、setup、onboarding |
+| [03 Hermes Agent CLI 与斜杠命令详解](learning/03-agent-platforms-tools/hermes-agent-wiki/03-cli-commands.md) | 覆盖 hermes 顶层子命令族、交互式/消息斜杠命令，并阐释 COMMAND_REGISTRY（hermes_cli/commands.py）集中定义、多端消费的机制 | 2026-08-10 | hermes、cli、slash-commands、command-registry |
+| [04 配置体系](learning/03-agent-platforms-tools/hermes-agent-wiki/04-configuration.md) | Hermes Agent 用 config.yaml 承载全部非密钥行为配置、.env 只放密钥、HERMES_HOME 定位数据根目录；通过 profiles 支持多实例并行，配置按『CLI 参数 > config.yaml > .env > 内置默认』的优先级解析 | 2026-08-09 | hermes、config、config-yaml、env、profiles |
+| [05 消息网关](learning/03-agent-platforms-tools/hermes-agent-wiki/05-messaging-gateway.md) | Hermes 网关用单一进程运行约 28 个消息平台（Telegram/Discord/Slack/WeCom/Feishu 等），通过 gateway setup/start 配置启动；跨平台会话连续、语音备忘录可转写，并可经 relay 连接器接管平台凭据 | 2026-08-09 | hermes、gateway、messaging、relay、platforms |
+| [06 工具与工具集](learning/03-agent-platforms-tools/hermes-agent-wiki/06-tools-toolsets.md) | Hermes 内置 40+ 模型工具并按工具集（toolset）组织，可按平台启停；新能力按 Footprint Ladder 决策（扩展→CLI+skill→service-gated check_fn→plugin→MCP→core tool），核心保持窄腰设计 | 2026-08-09 | hermes、tools、toolsets、footprint-ladder |
+| [07 技能系统](learning/03-agent-platforms-tools/hermes-agent-wiki/07-skills.md) | Hermes 以技能（skill）承载过程记忆：agent 从经验创建/改进 SKILL.md 形式的技能；内置 skills/ 与可选 optional-skills/ 分层，技能中心统一管理，curator 后台维护技能生命周期 | 2026-08-09 | hermes、skills、skill、curator |
+| [08 记忆系统](learning/03-agent-platforms-tools/hermes-agent-wiki/08-memory.md) | Hermes 采用受限且精选的跨会话记忆：MEMORY.md/USER.md + FTS5 会话搜索为内置，外部 memory provider（如 Honcho）叠加知识图谱与用户建模 | 2026-08-10 | hermes、memory、memory-provider、honcho、fts5 |
+| [09 扩展能力：MCP、定时任务与委派](learning/03-agent-platforms-tools/hermes-agent-wiki/09-extensions-cron-delegation.md) | MCP 让 Hermes 连接外部工具服务器；cron 提供自然语言定时任务；delegate_task 派生隔离子代理并行工作；角色（leaf/orchestrator）控制委派深度 | 2026-08-10 | hermes、mcp、cron、delegation、extension |
+| [10 架构解析与源码导读](learning/03-agent-platforms-tools/hermes-agent-wiki/10-architecture-source.md) | Hermes 以 AIAgent 为核心窄腰，能力落在边缘；一条 AIAgent 类服务 CLI/gateway/ACP/批处理/API 全入口，插件与工具通过注册表模式解耦 | 2026-08-10 | hermes、architecture、source-code、aiagent、plugin |
+| [11 术语表 / FAQ / 资源](learning/03-agent-platforms-tools/hermes-agent-wiki/11-glossary-faq-resources.md) | 术语速查（Hermes、prompt caching、toolset、memory provider、skill、plugin、context engine、gateway、delegation、honcho 等）、FAQ 与官方资源导航 | 2026-08-10 | hermes、glossary、faq、resources |
 | [最佳实践](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/best-practices.md) | 从官方文档中提取的minitest产品使用和mobile-use SDK开发最佳实践，帮助用户高效使用工具并避免常见陷阱。 | 2026-07-07 | best-practices、minitest、mobile-use、最佳实践、guidelines |
 | [常见问题解答（FAQ）](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/faq.md) | 汇总minitest和mobile-use SDK的常见问题与解答，分为产品使用和SDK开发两大部分。 | 2026-07-07 | faq、minitest、mobile-use、troubleshooting、常见问题 |
 | [综合术语表](learning/03-agent-platforms-tools/minitest-mobile-use-wiki/glossary.md) | 整合minitest和mobile-use SDK的术语定义，确保术语翻译统一，方便查阅。 | 2026-07-07 | glossary、minitest、mobile-use、术语表、terminology |
@@ -1019,6 +1079,50 @@
 | [快速上手指南](learning/03-agent-platforms-tools/orca-wiki/05-quickstart.md) | Orca 五步快速上手流程：第一种安装 Orca（macOS Homebrew / Arch AUR / Windows .exe）、第二步启动并登录接入 Agent 订阅、第三步添加连接 Agent（Claude Code、Codex 等）、第四步创建并分发 worktree（一个提示分发到多个隔离 worktree）、第五步并行监控与择优合并（终端分屏、移动端监控、diff 注释），全部命令可直接复制执行。 | 2026-08-03 | orca、stablyai、quickstart、安装、worktree、claude-code、codex、并行、多agent、入门 |
 | [核心价值总结与行业趋势](learning/03-agent-platforms-tools/orca-wiki/06-value-and-trends.md) | Orca 核心价值总结与行业趋势：IDE 从代码编辑器向代理编排器演进的产品哲学、统一跟踪/并行隔离/结果择优三大核心价值、多 Agent 并行开发范式与 Git Worktree 一等公民趋势、自带 Agent 理念，以及与开篇定位的呼应 | 2026-08-03 | orca、stablyai、ai-orchestrator、agent-ide、worktree、parallel-agents、multi-agent、bring-your-own-agent、git-worktree、industry-trend、yc、wiki教程 |
 | [FAQ 与术语表](learning/03-agent-platforms-tools/orca-wiki/07-faq-glossary.md) | Orca 常见问题解答（9 个覆盖开源协议/系统支持/Agent 支持/自带订阅/磁盘隔离/移动端/IDE 对比/中文本地化）+ 18 个核心术语一张表通俗解释，作为本教程速查手册。 | 2026-08-03 | orca、stablyai、ai-orchestrator、faq、glossary、worktree、orchestration、multi-agent、wiki教程 |
+| [VeADK-Python 术语表](learning/03-agent-platforms-tools/veadk-python/glossary.md) | VeADK-Python 核心术语表，包含20+个常用术语的中英文对照和通俗解释 | 2026-08-05 | - |
+| [VeADK-Python Wiki](learning/03-agent-platforms-tools/veadk-python/index.md) | VeADK-Python 开发知识库首页，提供项目介绍、核心特性、文档导航和学习路径 | 2026-08-05 | - |
+| [架构详解：Agent 生命周期与执行流程](learning/03-agent-platforms-tools/veadk-python/architecture/agent-lifecycle.md) | VeADK-Python Agent 生命周期详解，包含 model_post_init 19步初始化流程、Runner执行流程、事件流转、运行时策略选择等核心机制 | 2026-08-05 | - |
+| [架构模式：核心设计模式解析](learning/03-agent-platforms-tools/veadk-python/architecture/design-patterns.md) | VeADK-Python 7个核心设计模式深度解析：继承扩展模式、条件插件挂载、回调链、运行时策略、配置降级、RunProcessor装饰器链、凭证服务单例 | 2026-08-05 | - |
+| [架构参考：模块依赖关系与分层约束](learning/03-agent-platforms-tools/veadk-python/architecture/module-dependencies.md) | VeADK-Python 模块依赖关系详解，包含核心模块依赖图、六层分层架构说明、Agent/Runner聚焦依赖图，以及单向依赖、核心层纯净等依赖规则 | 2026-08-05 | - |
+| [架构概览：VeADK 整体架构设计](learning/03-agent-platforms-tools/veadk-python/architecture/overview.md) | VeADK-Python 整体架构设计文档，介绍与 Google ADK 的关系、六层分层架构、核心组件一览、能力扩展与设计哲学 | 2026-08-05 | - |
+| [A2UI - Agent驱动UI示例](learning/03-agent-platforms-tools/veadk-python/examples/a2ui.md) |  | 2026-08-05 | - |
+| [02 - 自定义工具示例](learning/03-agent-platforms-tools/veadk-python/examples/custom-tools.md) |  | 2026-08-05 | - |
+| [05 - 知识库RAG示例](learning/03-agent-platforms-tools/veadk-python/examples/knowledgebase.md) |  | 2026-08-05 | - |
+| [03 & 09 - 记忆示例（短期+长期）](learning/03-agent-platforms-tools/veadk-python/examples/memory.md) |  | 2026-08-05 | - |
+| [08 - 模型配置示例](learning/03-agent-platforms-tools/veadk-python/examples/model-config.md) |  | 2026-08-05 | - |
+| [06 - 多智能体协作示例](learning/03-agent-platforms-tools/veadk-python/examples/multi-agent.md) |  | 2026-08-05 | - |
+| [01 - 最小Agent示例](learning/03-agent-platforms-tools/veadk-python/examples/quickstart.md) |  | 2026-08-05 | - |
+| [07 - 结构化输出示例](learning/03-agent-platforms-tools/veadk-python/examples/structured-output.md) |  | 2026-08-05 | - |
+| [11 - 链路追踪示例](learning/03-agent-platforms-tools/veadk-python/examples/tracing.md) |  | 2026-08-05 | - |
+| [云服务集成指南](learning/03-agent-platforms-tools/veadk-python/extensions/cloud-integration.md) |  | 2026-08-05 | - |
+| [自定义Extension开发指南](learning/03-agent-platforms-tools/veadk-python/extensions/custom-extension.md) |  | 2026-08-05 | - |
+| [自定义RunProcessor开发指南](learning/03-agent-platforms-tools/veadk-python/extensions/custom-run-processor.md) |  | 2026-08-05 | - |
+| [自定义工具开发完整指南](learning/03-agent-platforms-tools/veadk-python/extensions/custom-tool.md) |  | 2026-08-05 | - |
+| [最佳实践与常见反模式](learning/03-agent-platforms-tools/veadk-python/faq/best-practices.md) |  | 2026-08-05 | - |
+| [常见问题排查](learning/03-agent-platforms-tools/veadk-python/faq/troubleshooting.md) |  | 2026-08-05 | - |
+| [AgentKit 应用工厂使用指南](learning/03-agent-platforms-tools/veadk-python/getting-started/agentkit-app.md) | AgentKit 应用工厂 create_agentkit_app 使用指南，介绍如何将 VeADK Agent 包装为生产级 Web 服务 | 2026-08-05 | - |
+| [配置指南](learning/03-agent-platforms-tools/veadk-python/getting-started/configuration.md) | VeADK-Python 配置指南，涵盖配置优先级、最小配置、config.yaml参考、环境变量列表、API Key获取及配置降级策略 | 2026-08-05 | - |
+| [安装指南](learning/03-agent-platforms-tools/veadk-python/getting-started/installation.md) | VeADK-Python 安装指南，涵盖系统要求、PyPI安装、uv安装、源码构建、验证安装及常见问题 | 2026-08-05 | - |
+| [快速入门：Hello World](learning/03-agent-platforms-tools/veadk-python/getting-started/quickstart.md) | VeADK-Python 快速入门教程，5分钟创建你的第一个AI Agent，包含完整可运行代码和逐行解释 | 2026-08-05 | - |
+| [Agent2Agent(A2A)协议支持](learning/03-agent-platforms-tools/veadk-python/modules/a2a.md) |  | 2026-08-05 | - |
+| [AgentBuilder 使用指南](learning/03-agent-platforms-tools/veadk-python/modules/agent-builder.md) |  | 2026-08-05 | - |
+| [Agent 类完整 API 参考](learning/03-agent-platforms-tools/veadk-python/modules/agent.md) |  | 2026-08-05 | - |
+| [认证与凭证服务](learning/03-agent-platforms-tools/veadk-python/modules/auth.md) |  | 2026-08-05 | - |
+| [CLI命令行工具参考](learning/03-agent-platforms-tools/veadk-python/modules/cli.md) |  | 2026-08-05 | - |
+| [云部署集成](learning/03-agent-platforms-tools/veadk-python/modules/cloud.md) |  | 2026-08-05 | - |
+| [配置系统详解](learning/03-agent-platforms-tools/veadk-python/modules/config.md) |  | 2026-08-05 | - |
+| [知识库(RAG)详解](learning/03-agent-platforms-tools/veadk-python/modules/knowledgebase.md) |  | 2026-08-05 | - |
+| [记忆系统详解（ShortTermMemory & LongTermMemory）](learning/03-agent-platforms-tools/veadk-python/modules/memory.md) |  | 2026-08-05 | - |
+| [模型配置](learning/03-agent-platforms-tools/veadk-python/modules/models.md) |  | 2026-08-05 | - |
+| [多模态能力](learning/03-agent-platforms-tools/veadk-python/modules/multimodal.md) |  | 2026-08-05 | - |
+| [Prompt管理与优化](learning/03-agent-platforms-tools/veadk-python/modules/prompts.md) |  | 2026-08-05 | - |
+| [Runner 类 API 参考](learning/03-agent-platforms-tools/veadk-python/modules/runner.md) |  | 2026-08-05 | - |
+| [Skills 技能系统详解](learning/03-agent-platforms-tools/veadk-python/modules/skills.md) |  | 2026-08-05 | - |
+| [Tools 工具系统详解](learning/03-agent-platforms-tools/veadk-python/modules/tools.md) |  | 2026-08-05 | - |
+| [可观测性与Tracing](learning/03-agent-platforms-tools/veadk-python/modules/tracing.md) |  | 2026-08-05 | - |
+| [VeADK-Python API 索引](learning/03-agent-platforms-tools/veadk-python/references/api-index.md) | VeADK-Python 核心公开类与函数快速索引表 | 2026-08-05 | - |
+| [V阶段：对抗审查报告（多视角质量验证）](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/14-adversarial-review.md) | VeADK-Python Wiki 四视角对抗审查报告，包含12个问题发现、关键问题修正记录、20个API签名抽查结果（准确率90%）及改进建议 | 2026-08-05 | VeADK、对抗审查、质量验证、文档审查、多视角 |
+| [V阶段：最终交付清单](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/15-final-delivery.md) | VeADK-Python Wiki V阶段最终交付物清单，包含完整文档列表、统计信息、结构树和遗留问题说明 | 2026-08-05 | VeADK、最终交付、验收清单、版本发布 |
 | [Agent Plan 共创计划：概述与学习目标](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/00-overview.md) |  | 2026-07-31 | volcengine、agent-plan、方舟、多模态、共创计划 |
 | [产品详解：什么是Agent Plan](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/01-product-overview.md) |  | 2026-07-31 | volcengine、agent-plan、方舟、订阅产品、API Key |
 | [贡献方向详解：五大类征集方向](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/02-contribution-directions.md) |  | 2026-07-31 | volcengine、agent-plan、共创计划、贡献方向、征集 |
@@ -1027,6 +1131,7 @@
 | [快速开始与资源：官方链接汇总](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/05-quickstart-resources.md) |  | 2026-07-31 | volcengine、agent-plan、快速开始、资源、文档 |
 | [跨模态范式洞察：从单模态解决问题到跨模态创造可能](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md) |  | 2026-07-31 | volcengine、agent-plan、跨模态、范式演进、Harness |
 | [常见问题FAQ](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/07-faq.md) |  | 2026-07-31 | volcengine、agent-plan、faq、常见问题 |
+| [实践指南与项目案例：玩转Agent Plan与CookBook案例库](learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/08-practice-cases.md) |  | 2026-08-12 | volcengine、agent-plan、实践指南、CookBook、案例库、Seedance、Seedream |
 | [教程总览与知识地图](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/00-overview.md) | AgentKit 教程体系全景：4层产品生态Mermaid图 + 11章导航表 + 3条阅读路径 + 6个wiki交叉引用矩阵 | 2026-07-31 | AgentKit、VeADK、火山引擎、AI Agent、wiki教程 |
 | [产品介绍与核心概念](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/01-product-intro.md) | AgentKit 企业级 AI Agent 基础设施平台产品定义、工程化痛点分析、9 大功能模块详解、4 大产品优势与产品发展时间线。 | 2026-07-31 | AgentKit、VeADK、火山引擎、AI Agent、wiki教程 |
 | [产品架构与核心能力](learning/03-agent-platforms-tools/volcengine-agentkit-wiki/02-core-architecture.md) | AgentKit Agent Ready 基础设施分层架构、动态 Harness 编排、Serverless 弹性底座、安全防护三层模型与评测可观测闭环详解。 | 2026-07-31 | AgentKit、VeADK、火山引擎、AI Agent、wiki教程 |
@@ -1137,6 +1242,26 @@
 | [兼容性预检+安全审查Checklist](learning/08-systems-infrastructure/ai-powershell5-hell-wiki/07-checklists.md) |  | 2026-07-31 | powershell、powershell-5.1、ai-coding、checklist、compatibility、security-audit、preflight |
 | [陷阱与反模式清单](learning/08-systems-infrastructure/ai-powershell5-hell-wiki/08-pitfalls-anti-patterns.md) |  | 2026-07-31 | powershell、powershell-5.1、ai-coding、pitfalls、anti-patterns、security-hardening、v-stage |
 | [参考资料与延伸阅读](learning/08-systems-infrastructure/ai-powershell5-hell-wiki/09-resources-references.md) |  | 2026-07-31 | powershell、powershell-5.1、references、microsoft-docs、security、compatibility、resources |
+| [conda .github 元仓库 Wiki 教程总览](learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.md) | conda-dev/.github 元仓库 Wiki 教程总览 | 2026-08-20 | conda、github-meta-repo、org-governance、github-actions、wiki-tutorial |
+| [conda .github 元仓库仓库整体架构](learning/08-systems-infrastructure/conda-dev-github-wiki/01-repository-structure.md) | conda .github 元仓库的完整目录结构、各文件职责、与普通仓库 .github/ 的对比及同步体系定位 | 2026-08-20 | conda、github-meta-repo、repository-structure、org-governance、github-actions、template-sync、wiki-tutorial |
+| [GitHub Actions 工作流详解](learning/08-systems-infrastructure/conda-dev-github-wiki/02-workflows-deep-dive.md) | conda .github 元仓库 7 个 GitHub Actions 工作流详解 | 2026-08-20 | conda、github-actions、workflow、cla、stale-bot、ci |
+| [Issue 模板详解](learning/08-systems-infrastructure/conda-dev-github-wiki/03-issue-templates.md) | conda .github 元仓库 4 个 Issue 模板（bug/feature/documentation/epic）详解 | 2026-08-20 | conda、issue-template、github-forms、triage、epic、labels |
+| [社区健康文件详解](learning/08-systems-infrastructure/conda-dev-github-wiki/04-community-files.md) | conda .github 元仓库社区健康文件详解 | 2026-08-20 | conda、code-of-conduct、community、github-profile、gitignore、governance |
+| [中央同步模型](learning/08-systems-infrastructure/conda-dev-github-wiki/05-infrastructure-sync-model.md) | conda .github 元仓库中央同步模型解析 | 2026-08-20 | conda、infrastructure、config.yml、sync、workflows、template-files |
+| [Issue Sorting 与标签体系](learning/08-systems-infrastructure/conda-dev-github-wiki/06-issue-sorting-labeling.md) | Issue Sorting 概念、标签体系与自动化汇总 | 2026-08-20 | conda、issue-sorting、labeling、roadmap-board、automation、stale、cla |
+| [常见操作指南](learning/08-systems-infrastructure/conda-dev-github-wiki/07-operations-guide.md) | conda .github 元仓库配置修改、功能扩展与问题排查指南 | 2026-08-20 | conda、github-actions、operations、troubleshooting、workflow |
+| [最佳实践与注意事项](learning/08-systems-infrastructure/conda-dev-github-wiki/08-best-practices.md) | conda .github 元仓库可迁移治理模式、安全最佳实践与反模式清单 | 2026-08-20 | conda、github-actions、best-practices、security、governance、pull-request-target |
+| [术语表与参考资料](learning/08-systems-infrastructure/conda-dev-github-wiki/09-resources.md) | conda .github 元仓库术语表、权威参考资料与分级阅读建议 | 2026-08-20 | conda、github-actions、glossary、references、resources |
+| [conda 源码与 conda-docs 文档 Wiki 教程总览](learning/08-systems-infrastructure/conda-dev-source-wiki/00-overview.md) | conda 包管理器源码与 conda-docs 文档体系的系统学习教程总览，含分层架构定位、10 章导航与分级阅读路径 | 2026-08-20 | conda、conda-source、package-manager、architecture、sphinx、wiki-tutorial |
+| [conda/conda-docs 整体架构](learning/08-systems-infrastructure/conda-dev-source-wiki/01-architecture.md) | conda 源码仓库整体目录树与分层依赖、conda-docs 构建架构，以及两套文档体系的差异对比 | 2026-08-20 | conda、conda-source、architecture、directory-tree、sphinx、conda-docs、layered-dependency |
+| [核心模块：base/common/models/core 与根级模块](learning/08-systems-infrastructure/conda-dev-source-wiki/02-core-modules.md) | 逐层拆解 conda 主包的 base/common/models/core 四个核心分层与根级模块，说明各自职责并列出真实关键类型与函数。 | 2026-08-20 | conda、source-code、architecture、core-modules、base、common、models、core |
+| [CLI 命令层](learning/08-systems-infrastructure/conda-dev-source-wiki/03-cli-commands.md) | 拆解 conda 命令行的入口、命令注册/分发机制、argparse 扩展与 main_*.py 命令分类，说明 CLI 如何调用 core 与 gateways 完成实际工作。 | 2026-08-20 | conda、source-code、cli、argparse、main、subcommands |
+| [网关、插件与环境管理](learning/08-systems-infrastructure/conda-dev-source-wiki/04-gateways-plugins-env.md) | 系统梳理 conda 的 gateways/plugins/env/notices/auxlib/shell 六大支撑层的职责与关键类、函数。 | 2026-08-20 | conda、gateways、plugins、env、notices、auxlib、source-code |
+| [关键 API 使用方法](learning/08-systems-infrastructure/conda-dev-source-wiki/05-key-apis.md) | 基于真实源码讲解 conda.api、MatchSpec/Channel/Version、核心数据类、Context、History、exports 与 conda-docs 的用法与签名。 | 2026-08-20 | conda、api、matchspec、channel、prefixdata、subdirdata、context、history、exports |
+| [典型应用场景](learning/08-systems-infrastructure/conda-dev-source-wiki/06-scenarios.md) | 用 7 个真实场景串起 conda.api、MatchSpec、SubdirData、虚拟包、插件、文档构建与自定义下载的实践用法。 | 2026-08-20 | conda、scenarios、api、matchspec、subdirdata、virtual-packages、plugins、docs |
+| [常见问题解决方案](learning/08-systems-infrastructure/conda-dev-source-wiki/07-faq.md) | 围绕 conda 求解器、通道、网络、权限、插件等高频问题的现象—根因—解决清单 | 2026-08-20 | conda、faq、troubleshooting、solver、channel-priority、condarc |
+| [最佳实践指南](learning/08-systems-infrastructure/conda-dev-source-wiki/08-best-practices.md) | conda 环境管理、通道求解、API 调用、插件开发、源码贡献与文档写作的实践准则与反模式 | 2026-08-20 | conda、best-practices、plugin-development、api-usage、contribution |
+| [术语表与参考资料](learning/08-systems-infrastructure/conda-dev-source-wiki/09-resources.md) | conda 源码学习术语表、权威参考链接与按难度分级的扩展阅读路线 | 2026-08-20 | conda、glossary、reference、resources、reading-list |
 | [Git 仓库类型与核心概念](learning/08-systems-infrastructure/git-advanced-wiki/00-overview.md) |  | 2026-07-31 | git、bare-repository、working-directory、git-directory、transport-protocol |
 | [git clone 高级参数详解（--no-local --bare 重点）](learning/08-systems-infrastructure/git-advanced-wiki/01-git-clone-advanced.md) |  | 2026-07-31 | git、git-clone、--bare、--no-local、--mirror、advanced-usage |
 | [WSL 概述与核心概念](learning/08-systems-infrastructure/wsl-wiki/00-overview.md) |  | 2026-07-20 | wsl、wsl2、overview、windows-subsystem-for-linux、introduction |
@@ -1150,67 +1275,40 @@
 | [调试诊断与开发环境搭建](learning/08-systems-infrastructure/wsl-wiki/08-debugging-dev-env.md) |  | 2026-07-20 | wsl、debugging、diagnostics、development、vscode、gpu、cuda、docker、debug-shell |
 | [最佳实践与FAQ](learning/08-systems-infrastructure/wsl-wiki/09-best-practices-faq.md) |  | 2026-07-20 | wsl、best-practices、faq、troubleshooting、performance、tips |
 | [术语表与参考资料](learning/08-systems-infrastructure/wsl-wiki/10-glossary-references.md) |  | 2026-07-20 | wsl、glossary、references、terminology、cross-reference |
-| [《你以为的自由是一种幻觉》第一性原理分析](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md) | 以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。 | 2026-07-13 | 第一性原理、AI时代认知、自由、认知悬浮、意图对齐、人机协作、知识建构 |
-| [VeADK-Python 术语表](learning/veadk-python/glossary.md) | VeADK-Python 核心术语表，包含20+个常用术语的中英文对照和通俗解释 | 2026-08-05 | - |
-| [VeADK-Python Wiki](learning/veadk-python/index.md) | VeADK-Python 开发知识库首页，提供项目介绍、核心特性、文档导航和学习路径 | 2026-08-05 | - |
-| [架构详解：Agent 生命周期与执行流程](learning/veadk-python/architecture/agent-lifecycle.md) | VeADK-Python Agent 生命周期详解，包含 model_post_init 19步初始化流程、Runner执行流程、事件流转、运行时策略选择等核心机制 | 2026-08-05 | - |
-| [架构模式：核心设计模式解析](learning/veadk-python/architecture/design-patterns.md) | VeADK-Python 7个核心设计模式深度解析：继承扩展模式、条件插件挂载、回调链、运行时策略、配置降级、RunProcessor装饰器链、凭证服务单例 | 2026-08-05 | - |
-| [架构参考：模块依赖关系与分层约束](learning/veadk-python/architecture/module-dependencies.md) | VeADK-Python 模块依赖关系详解，包含核心模块依赖图、六层分层架构说明、Agent/Runner聚焦依赖图，以及单向依赖、核心层纯净等依赖规则 | 2026-08-05 | - |
-| [架构概览：VeADK 整体架构设计](learning/veadk-python/architecture/overview.md) | VeADK-Python 整体架构设计文档，介绍与 Google ADK 的关系、六层分层架构、核心组件一览、能力扩展与设计哲学 | 2026-08-05 | - |
-| [A2UI - Agent驱动UI示例](learning/veadk-python/examples/a2ui.md) |  | 2026-08-05 | - |
-| [02 - 自定义工具示例](learning/veadk-python/examples/custom-tools.md) |  | 2026-08-05 | - |
-| [05 - 知识库RAG示例](learning/veadk-python/examples/knowledgebase.md) |  | 2026-08-05 | - |
-| [03 & 09 - 记忆示例（短期+长期）](learning/veadk-python/examples/memory.md) |  | 2026-08-05 | - |
-| [08 - 模型配置示例](learning/veadk-python/examples/model-config.md) |  | 2026-08-05 | - |
-| [06 - 多智能体协作示例](learning/veadk-python/examples/multi-agent.md) |  | 2026-08-05 | - |
-| [01 - 最小Agent示例](learning/veadk-python/examples/quickstart.md) |  | 2026-08-05 | - |
-| [07 - 结构化输出示例](learning/veadk-python/examples/structured-output.md) |  | 2026-08-05 | - |
-| [11 - 链路追踪示例](learning/veadk-python/examples/tracing.md) |  | 2026-08-05 | - |
-| [云服务集成指南](learning/veadk-python/extensions/cloud-integration.md) |  | 2026-08-05 | - |
-| [自定义Extension开发指南](learning/veadk-python/extensions/custom-extension.md) |  | 2026-08-05 | - |
-| [自定义RunProcessor开发指南](learning/veadk-python/extensions/custom-run-processor.md) |  | 2026-08-05 | - |
-| [自定义工具开发完整指南](learning/veadk-python/extensions/custom-tool.md) |  | 2026-08-05 | - |
-| [最佳实践与常见反模式](learning/veadk-python/faq/best-practices.md) |  | 2026-08-05 | - |
-| [常见问题排查](learning/veadk-python/faq/troubleshooting.md) |  | 2026-08-05 | - |
-| [AgentKit 应用工厂使用指南](learning/veadk-python/getting-started/agentkit-app.md) | AgentKit 应用工厂 create_agentkit_app 使用指南，介绍如何将 VeADK Agent 包装为生产级 Web 服务 | 2026-08-05 | - |
-| [配置指南](learning/veadk-python/getting-started/configuration.md) | VeADK-Python 配置指南，涵盖配置优先级、最小配置、config.yaml参考、环境变量列表、API Key获取及配置降级策略 | 2026-08-05 | - |
-| [安装指南](learning/veadk-python/getting-started/installation.md) | VeADK-Python 安装指南，涵盖系统要求、PyPI安装、uv安装、源码构建、验证安装及常见问题 | 2026-08-05 | - |
-| [快速入门：Hello World](learning/veadk-python/getting-started/quickstart.md) | VeADK-Python 快速入门教程，5分钟创建你的第一个AI Agent，包含完整可运行代码和逐行解释 | 2026-08-05 | - |
-| [Agent2Agent(A2A)协议支持](learning/veadk-python/modules/a2a.md) |  | 2026-08-05 | - |
-| [AgentBuilder 使用指南](learning/veadk-python/modules/agent-builder.md) |  | 2026-08-05 | - |
-| [Agent 类完整 API 参考](learning/veadk-python/modules/agent.md) |  | 2026-08-05 | - |
-| [认证与凭证服务](learning/veadk-python/modules/auth.md) |  | 2026-08-05 | - |
-| [CLI命令行工具参考](learning/veadk-python/modules/cli.md) |  | 2026-08-05 | - |
-| [云部署集成](learning/veadk-python/modules/cloud.md) |  | 2026-08-05 | - |
-| [配置系统详解](learning/veadk-python/modules/config.md) |  | 2026-08-05 | - |
-| [知识库(RAG)详解](learning/veadk-python/modules/knowledgebase.md) |  | 2026-08-05 | - |
-| [记忆系统详解（ShortTermMemory & LongTermMemory）](learning/veadk-python/modules/memory.md) |  | 2026-08-05 | - |
-| [模型配置](learning/veadk-python/modules/models.md) |  | 2026-08-05 | - |
-| [多模态能力](learning/veadk-python/modules/multimodal.md) |  | 2026-08-05 | - |
-| [Prompt管理与优化](learning/veadk-python/modules/prompts.md) |  | 2026-08-05 | - |
-| [Runner 类 API 参考](learning/veadk-python/modules/runner.md) |  | 2026-08-05 | - |
-| [Skills 技能系统详解](learning/veadk-python/modules/skills.md) |  | 2026-08-05 | - |
-| [Tools 工具系统详解](learning/veadk-python/modules/tools.md) |  | 2026-08-05 | - |
-| [可观测性与Tracing](learning/veadk-python/modules/tracing.md) |  | 2026-08-05 | - |
-| [VeADK-Python API 索引](learning/veadk-python/references/api-index.md) | VeADK-Python 核心公开类与函数快速索引表 | 2026-08-05 | - |
-| [V阶段：对抗审查报告（多视角质量验证）](learning/veadk-python/supporting-analysis/14-adversarial-review.md) | VeADK-Python Wiki 四视角对抗审查报告，包含12个问题发现、关键问题修正记录、20个API签名抽查结果（准确率90%）及改进建议 | 2026-08-05 | VeADK、对抗审查、质量验证、文档审查、多视角 |
-| [V阶段：最终交付清单](learning/veadk-python/supporting-analysis/15-final-delivery.md) | VeADK-Python Wiki V阶段最终交付物清单，包含完整文档列表、统计信息、结构树和遗留问题说明 | 2026-08-05 | VeADK、最终交付、验收清单、版本发布 |
+
+### learning/07-vendor-product-learning
+
+| 标题 | 摘要 | 日期 | 标签 |
+|------|------|------|------|
+| [00 DeepSeek-V4 免费方案全景](learning/07-vendor-product-learning/deepseek/00-overview.md) | DeepSeek-V4正式版采用三层免费金字塔：网页/App永久免费无会员、API新用户赠500万tokens、V4-Flash开源可自托管。API峰谷定价于8月17日生效，普通用户完全不受影响。 | 2026-08-19 | DeepSeek、DeepSeek-V4、免费方案、API定价、大模型、AI工具 |
+| [01 网页端与App免费使用详解](learning/07-vendor-product-learning/deepseek/01-web-app-free.md) | DeepSeek网页端(chat.deepseek.com)和App完全免费，默认V4-Pro模型，支持文件上传/联网搜索/三档推理，无硬性对话次数限制，无付费会员计划。高峰期可能有fair-use软限流。 | 2026-08-19 | DeepSeek、免费、网页版、App、chat.deepseek.com |
+| [02 API新用户免费额度详解](learning/07-vendor-product-learning/deepseek/02-api-free-tier.md) | 注册DeepSeek开发者平台即赠500万tokens（无需信用卡），有效期约30天，覆盖V4-Pro和V4-Flash所有API功能，足够独立开发者做2-4周原型验证。 | 2026-08-19 | DeepSeek、API、免费额度、500万tokens、开发者、platform.deepseek.com |
+| [03 API峰谷定价与竞品对比](learning/07-vendor-product-learning/deepseek/03-api-pricing-comparison.md) | DeepSeek API于2026年8月17日起执行峰谷定价，高峰7小时价格是空闲17小时的2倍。V4-Pro高峰输出27元/百万tokens，空闲13.5元；V4-Flash高峰输出9元，空闲4.5元。缓存命中输入极便宜（0.05-0.30元）。即便涨价，仍显著低于GPT-5.5和Claude Opus。 | 2026-08-19 | DeepSeek、API、定价、峰谷定价、缓存命中、竞品对比、成本优化 |
+| [04 DeepSeek-V4-Pro 能力详解](learning/07-vendor-product-learning/deepseek/04-v4-pro-capabilities.md) | V4-Pro是1.6T参数MoE架构旗舰模型（49B激活），支持1M上下文+384K输出，原生Agent能力，SWE-bench Pro 80.6%排名第一。网页/App免费满血使用。 | 2026-08-19 | DeepSeek、DeepSeek-V4-Pro、MoE、1.6T参数、Agent能力、1M上下文、384K输出 |
+| [05 DeepSeek-V4-Flash 能力详解](learning/07-vendor-product-learning/deepseek/05-v4-flash-capabilities.md) | V4-Flash是284B总参数/13B激活的MoE轻量模型，MIT协议完全开源，支持1M上下文和思考模式，性能接近Pro但成本仅1/3，适合高并发场景和自托管。 | 2026-08-19 | DeepSeek、DeepSeek-V4-Flash、MoE、284B参数、开源、MIT协议、自托管 |
+| [06 开源自托管方案](learning/07-vendor-product-learning/deepseek/06-self-hosting.md) | V4-Flash以MIT协议完全开源，可从HuggingFace免费下载权重，支持vLLM/SGLang部署，最小配置2张H20/H100可跑FP8，4张RTX 4090可跑量化版，无调用限制、无token计费。 | 2026-08-19 | DeepSeek、V4-Flash、自托管、MIT协议、私有化部署、vLLM、SGLang |
+| [07 第三方免费路径与风险提示](learning/07-vendor-product-learning/deepseek/07-third-party-free.md) | 除官方渠道外，OpenRouter、HuggingFace、硅基流动等第三方平台也提供DeepSeek模型的免费额度，但各有限制且可能存在隐私和稳定性风险，建议优先使用官方渠道。 | 2026-08-19 | DeepSeek、第三方平台、OpenRouter、HuggingFace、免费额度、风险提示 |
+| [08 免费vs付费对比与选型决策](learning/07-vendor-product-learning/deepseek/08-free-vs-paid.md) | 网页/App永久免费零成本，API新用户赠500万tokens，付费仅影响API用量计费，价格仍比GPT-5.5便宜8倍以上。提供不同用户画像的选型建议和成本估算。 | 2026-08-19 | DeepSeek、免费vs付费、选型决策、成本估算、决策树 |
+| [09 FAQ常见问题与误区澄清](learning/07-vendor-product-learning/deepseek/09-faq-mythbusting.md) | 澄清关于DeepSeek收费、会员、限流等常见谣言。官方明确：网页/App永久免费无会员、8月17日涨价仅针对API、'79.9元会员'是假消息、限流是公平使用策略而非收费前兆。 | 2026-08-19 | DeepSeek、FAQ、误区澄清、谣言、会员、收费、限流 |
+| [10 术语表](learning/07-vendor-product-learning/deepseek/10-glossary.md) | 整理文档中15+个专业术语的中英文对照和通俗解释，包括Token、MoE、上下文窗口、KV Cache、缓存命中、Tool Calls、FIM、MTP、SFT、RLHF等。 | 2026-08-19 | DeepSeek、术语表、Token、MoE、API、上下文、KV Cache、峰谷定价 |
 
 ### methods
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [Token优化技术方法总览](learning/llm-token-optimization/02-methods/00-methods-overview.md) |  |  | overview、token-optimization、llm、methods |
-| [提示词工程优化](learning/llm-token-optimization/02-methods/01-prompt-engineering.md) |  |  | prompt-engineering、token-optimization、llm |
-| [上下文压缩技术](learning/llm-token-optimization/02-methods/02-context-compression.md) |  |  | context-compression、rag、summarization、llmlingua、token-optimization |
-| [模型微调与蒸馏](learning/llm-token-optimization/02-methods/03-fine-tuning-distillation.md) |  |  | fine-tuning、lora、distillation、quantization、speculative-decoding、token-optimization |
-| [增量推理与缓存](learning/llm-token-optimization/02-methods/04-inference-caching.md) |  |  | kv-cache、pagedattention、prefix-caching、semantic-cache、vllm、inference、token-optimization |
-| [多轮对话管理](learning/llm-token-optimization/02-methods/05-dialog-management.md) |  |  | dialog-management、conversation-state、history-truncation、entity-tracking、sliding-window、token-optimization |
+| [Token优化技术方法总览](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/00-methods-overview.md) |  |  | overview、token-optimization、llm、methods |
+| [提示词工程优化](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/01-prompt-engineering.md) |  |  | prompt-engineering、token-optimization、llm |
+| [上下文压缩技术](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/02-context-compression.md) |  |  | context-compression、rag、summarization、llmlingua、token-optimization |
+| [模型微调与蒸馏](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/03-fine-tuning-distillation.md) |  |  | fine-tuning、lora、distillation、quantization、speculative-decoding、token-optimization |
+| [增量推理与缓存](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/04-inference-caching.md) |  |  | kv-cache、pagedattention、prefix-caching、semantic-cache、vllm、inference、token-optimization |
+| [多轮对话管理](learning/02-agent-engineering-methodology/llm-token-optimization/02-methods/05-dialog-management.md) |  |  | dialog-management、conversation-state、history-truncation、entity-tracking、sliding-window、token-optimization |
 
 ### operations
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [Docker镜像缓存→WSL2发行版迁移操作指南](operations/docker-cache-wsl-migration-guide.md) |  | 2026-08-18 | docker-cache、wsl2、podman、wsl-import、rootfs、image-migration、offline-environment |
+| [EPUB 转 Markdown 转换方案系统性调研报告](operations/epub-to-markdown-conversion-research.md) |  | 2026-08-19 | epub、markdown、pandoc、calibre、ebooklib、转换方案 |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [Frontmatter 路径与链接批量修复流程指南](operations/frontmatter-link-batch-repair-guide.md) | 大规模 frontmatter 路径与 Markdown 链接批量修复的完整流程指南：问题分类诊断、8 阶段分层修复策略、external 标记约定、LF 行尾保留、TOML source 覆盖问题处理，附 8 个自动化脚本的使用参考 | 2026-07-10 | frontmatter、链接修复、批量修复、check-links、路径规范化、external标记 |
 | [HTML 正文提取操作指南](operations/html-body-extraction.md) | HTML 正文提取双方案：正则提取（首选）与边界标记索引截取法（兜底），含 HTML 清洗六步流程，适用于复杂嵌套 HTML 容器 | 2026-06-29 | html、正文提取、正则、索引截取、边界标记、html清洗、降级策略 |
@@ -1276,6 +1374,13 @@
 | [MCP 技能开发与 REST API 集成规范——以道衍为例](tech/p1-17-daoyan-mcp-skill-spec.md) | 以道衍（DaoYan）MCP Server 为例，说明 AI IDE 技能（Skill）定义、MCP 工具配置、REST API 调用与回答规范的完整模式 |  | - |
 | [Reasonix 架构：Python AI Agent 分层设计模式](tech/p1-18-reasonix-architecture.md) | DeepSeek-Reasonix 是一个配置驱动、多模型协作的 AI Coding Agent，采用清晰的分层架构（组装器+Provider+Agent+Controller），是 Python AI Agent 项目的优秀架构参考 |  | - |
 | [TVM Relax 前端 MLP 实验记录](tech/p2-13-tvm-relax-mlp-experiment.md) | TVM Relax 前端 nn.Module API 的最小 MLP 实验，展示从模型定义到 export 导出链路的验证样例，可作为 Relax 前端学习与回归参考。 |  | - |
+| [Python 3.14 Free-Threading 适用场景分析](tech/python-314-free-threading-scenario-analysis.md) |  | 2026-08-19 | python、free-threading、no-gil、concurrency、performance |
+| [Python 与 Rust 技术对比分析报告 Wiki · 总览](tech/python-rust-comparison/00-overview.md) | 基于最新标准（Python 3.14 / Rust 1.97.1）从零创作的 Python 与 Rust 技术对比分析 Wiki，覆盖语言机制、性能、工程化、生态、应用场景、决策矩阵与迁移路径。 | 2026-08-07 | python、rust、技术选型、性能、混合架构 |
+| [Python 与 Rust 技术对比 · 语言与运行时基础](tech/python-rust-comparison/01-language-runtime.md) | 从最新标准对比 Python 与 Rust 在语法、类型、内存、并发与运行时上的机制差异。 | 2026-08-07 | python、rust、类型系统、内存、并发、异步 |
+| [Python 与 Rust 技术对比 · 性能与工程化](tech/python-rust-comparison/02-performance-engineering.md) | 对比 Python 与 Rust 在运行时性能、资源占用与工程化工具链上的差异。 | 2026-08-07 | python、rust、性能、工具链、工程化 |
+| [Python 与 Rust 技术对比 · 生态、应用场景与代码示例](tech/python-rust-comparison/03-ecosystem-scenarios.md) | 对比 Python 与 Rust 的生态成熟度、典型应用场景，并提供对照代码示例。 | 2026-08-07 | python、rust、生态、应用场景、代码示例 |
+| [Python 与 Rust 技术对比 · 决策矩阵与迁移路径](tech/python-rust-comparison/04-decision-migration.md) | 提供 Python 与 Rust 选型决策矩阵、场景化建议、迁移路径与结论。 | 2026-08-07 | python、rust、决策矩阵、选型建议、迁移、混合架构 |
+| [Python 迁移到 Rust 简易检查清单](tech/python-rust-comparison/05-migration-checklist.md) | 基于《Python 与 Rust 技术对比》报告萃取的迁移到 Rust 的简易检查清单，覆盖决策、热点识别、PoC、逐模块迁移、测试、培训与灰度回退。 | 2026-08-07 | python、rust、迁移、检查清单、混合架构 |
 | [TVM FFI 教程总览](tech/tvm-ffi-wiki/00-overview.md) | Apache TVM FFI 中文wiki教程总览 | 2026-07-28 | tvm-ffi、ffi、c++、python、ml-system |
 | [项目结构说明](tech/tvm-ffi-wiki/01-project-structure.md) |  | 2026-07-28 | tvm-ffi、project-structure |
 | [Any/AnyView 类型系统](tech/tvm-ffi-wiki/02-any-type.md) |  | 2026-07-28 | tvm-ffi、type-system、any、type-erasure |
@@ -1335,9 +1440,27 @@
 | [设计哲学](docs-separation-guide/topics/design-philosophy.md) |  |  | - |
 | [深度研究](docs-separation-guide/topics/index.md) |  |  | - |
 | [行业分析](docs-separation-guide/topics/industry-analysis.md) |  |  | - |
-| [AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架](learning/audiox-turbo-audio-generation-wiki.md) |  | 2026-07-04 | AudioX-Turbo、音频生成、音乐生成、视频配音、扩散模型、模型蒸馏、AI开源、多模态、Anything-to-Audio、Distribution-Matching-Distillation、师生蒸馏 |
-| [抖音 Vibecoding 人气赛道·执行行动计划](learning/douyin-vibecoding-action-plan.md) |  |  | vibecoding、抖音、执行计划、行动指南、TRAE大赛 |
-| [SpecWeave 抖音VibeCoding图文·视觉设计规范](learning/douyin-vibecoding-design-spec.md) |  |  | vibecoding、抖音、设计规范、视觉设计、SpecWeave |
+| [帛书老子 Wiki 教程概述](learning/00-essence-and-thinking/boshu-laozi-wiki/00-overview.md) |  |  | - |
+| [历史背景与出土](learning/00-essence-and-thinking/boshu-laozi-wiki/01-background.md) |  |  | - |
+| [版本体系对照](learning/00-essence-and-thinking/boshu-laozi-wiki/02-version-comparison.md) |  |  | - |
+| [注读方法论](learning/00-essence-and-thinking/boshu-laozi-wiki/04-reading-methodology.md) |  |  | - |
+| [核心洞察](learning/00-essence-and-thinking/boshu-laozi-wiki/05-key-insights.md) |  |  | - |
+| [可复用模式](learning/00-essence-and-thinking/boshu-laozi-wiki/06-patterns.md) |  |  | - |
+| [FAQ 与资源](learning/00-essence-and-thinking/boshu-laozi-wiki/07-faq-resources.md) |  |  | - |
+| [跨文化对抗性审查标准与"反向语义漂移"防御机制](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) |  |  | - |
+| [道家哲学核心概念：道、德、自然、无为](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md) |  |  | - |
+| [儒家思想核心概念：本、体用、格物致知、诚](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md) |  |  | - |
+| [墨家方法论核心概念：三表法、类、故、理](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) |  |  | - |
+| [佛教因明学核心概念：现量、比量、宗因喻](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md) |  |  | - |
+| [跨文化四维比较框架与比较矩阵](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md) |  |  | - |
+| [与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md) |  |  | - |
+| [跨文化第一性原理思维方法论与操作指南](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) |  |  | - |
+| [跨文化概念对照总表](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md) |  |  | - |
+| [术语统一表](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md) |  |  | - |
+| [中西哲学根本性思维发展时间线](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/10-timeline.md) |  |  | - |
+| [来源验证日志](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) |  |  | - |
+| [Awesome OKF 中文翻译](learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-bundle-README.zh-CN.md) |  |  | - |
+| [Awesome OKF Kit 中文翻译](learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-kit-README.zh-CN.md) |  |  | - |
 | [dspark-paper-wiki](learning/02-agent-engineering-methodology/dspark-paper-wiki.md) |  |  | - |
 | [从 Prompt 到 Loop：四层工程打造稳定可控的 AI Agent](learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md) |  | 2026-07-14 | 七概念、Agent工程、Context Engineering、Harness Engineering、Loop Engineering、四层工程范式、事实核查通过 |
 | [zhihu-article-seven-concepts-wiki-creation-publish](learning/02-agent-engineering-methodology/agent-eval-methodology-wiki/zhihu-article-seven-concepts-wiki-creation-publish.md) |  |  | - |
@@ -1352,6 +1475,8 @@
 | [深度洞察与模式萃取](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/08-insights-patterns.md) |  |  | - |
 | [常见问题与资源链接](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/09-faq-resources.md) |  |  | - |
 | [总结与Takeaways](learning/02-agent-engineering-methodology/headroom-context-compression-wiki/10-summary.md) |  |  | - |
+| [大语言模型Token节省机制底层原理事实清单](learning/02-agent-engineering-methodology/llm-token-optimization/01-principles/00-facts.md) |  | 2026-08-01 | LLM、Token、Tokenization、Transformer、KV-Cache、PagedAttention、Pricing |
+| [01-metrics-framework](learning/02-agent-engineering-methodology/llm-token-optimization/05-evaluation/01-metrics-framework.md) |  |  | - |
 | [七概念×DeepTutor实践教程 - 概述](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/00-overview.md) |  | 2026-07-14 | 七概念、方法论、DeepTutor、教程 |
 | [七概念×DeepTutor实践教程 - 术语表](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/glossary.md) |  | 2026-07-14 | 七概念、方法论、DeepTutor、教程、术语表 |
 | [R - 复盘 (Retrospective)](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/01-r-retrospective.md) |  | 2026-07-14 | 七概念、R、复盘、理论 |
@@ -1382,9 +1507,32 @@
 | [实践练习](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.md) |  | 2026-07-14 | 练习、实践 |
 | [自学质量检查清单](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.md) |  | 2026-07-14 | 自检、清单、工具 |
 | [延伸阅读](learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/04-learning-path/03-further-reading.md) |  | 2026-07-14 | 延伸阅读、资源 |
+| [3分钟快速参考卡](learning/02-agent-engineering-methodology/trae-ide-token-optimization/04-quick-reference.md) |  | 2026-08-01 | - |
+| [术语表](learning/02-agent-engineering-methodology/trae-ide-token-optimization/glossary.md) |  | 2026-08-01 | - |
+| [参考资料](learning/02-agent-engineering-methodology/trae-ide-token-optimization/references.md) |  | 2026-08-01 | - |
+| [事实数据采集](learning/02-agent-engineering-methodology/trae-ide-token-optimization/01-principles/00-facts.md) |  | 2026-08-01 | - |
+| [第一性原理分析](learning/02-agent-engineering-methodology/trae-ide-token-optimization/01-principles/01-first-principles.md) |  | 2026-08-01 | - |
+| [P-T-001: 静态减负模式](learning/02-agent-engineering-methodology/trae-ide-token-optimization/02-patterns/P-T-001-static-reduction.md) |  | 2026-08-01 | - |
+| [P-T-002: 对话清理模式](learning/02-agent-engineering-methodology/trae-ide-token-optimization/02-patterns/P-T-002-chat-cleanup.md) |  | 2026-08-01 | - |
+| [P-T-003: 模型分级模式](learning/02-agent-engineering-methodology/trae-ide-token-optimization/02-patterns/P-T-003-model-tiering.md) |  | 2026-08-01 | - |
+| [P-T-004: 输入精简模式](learning/02-agent-engineering-methodology/trae-ide-token-optimization/02-patterns/P-T-004-input-concise.md) |  | 2026-08-01 | - |
+| [P-T-005: 循环熔断模式](learning/02-agent-engineering-methodology/trae-ide-token-optimization/02-patterns/P-T-005-loop-breaker.md) |  | 2026-08-01 | - |
+| [快速检查清单](learning/02-agent-engineering-methodology/trae-ide-token-optimization/03-decision-framework/01-quick-checklist.md) |  | 2026-08-01 | - |
 | [AReaL 2.0 官方实战教程：从安装到在线RL微服务部署](learning/03-agent-platforms-tools/areal-official-practical-wiki.md) |  | 2026-08-04 | areal、rl-training、agentic-rl、online-rl、llm-alignment、distributed-training、pytorch、sglang、vllm、fsdp、megatron |
+| [AtomGit AI 平台最佳实践](learning/03-agent-platforms-tools/atomgit-ai-best-practices.md) |  |  | AtomGit、AI开发平台、MLOps、模型管理、数据集管理、Space应用、Notebook开发、协作开发、安全最佳实践、性能监控 |
 | [BrowserAct 官网完整学习教程：Cloud+Local双模式Agent浏览器平台](learning/03-agent-platforms-tools/browseract-official-wiki.md) |  | 2026-08-03 | browseract、ai-agent、browser-automation、web-scraping、cloud、skillhub、data-api、zapier、n8n、residential-proxy |
 | [LangGraph 生产级落地实施路线图](learning/03-agent-platforms-tools/langgraph-implementation-roadmap.md) |  | 2026-08-04 | - |
+| [Hermes Agent 安装方案 - 环境要求与前置准备](learning/03-agent-platforms-tools/hermes-agent-installation/01-environment.md) |  |  | - |
+| [Hermes Agent 安装方案 - 官方脚本安装指南（Linux/macOS/WSL2）](learning/03-agent-platforms-tools/hermes-agent-installation/02-install-script.md) |  |  | - |
+| [Hermes Agent 安装方案 - Windows PowerShell 安装指南](learning/03-agent-platforms-tools/hermes-agent-installation/03-install-windows.md) |  |  | - |
+| [Hermes Agent 安装方案 - 手动源码安装指南](learning/03-agent-platforms-tools/hermes-agent-installation/04-install-manual.md) |  |  | - |
+| [Hermes Agent 安装方案 - Docker 容器化部署指南](learning/03-agent-platforms-tools/hermes-agent-installation/05-install-docker.md) |  |  | - |
+| [Hermes Agent 安装方案 - 配置说明](learning/03-agent-platforms-tools/hermes-agent-installation/06-configuration.md) |  |  | - |
+| [Hermes Agent 安装方案 - 安装验证](learning/03-agent-platforms-tools/hermes-agent-installation/07-verification.md) |  |  | - |
+| [Hermes Agent 安装方案 - 常见问题与故障排除](learning/03-agent-platforms-tools/hermes-agent-installation/08-troubleshooting.md) |  |  | - |
+| [Hermes Agent 安装方案 - 升级与卸载](learning/03-agent-platforms-tools/hermes-agent-installation/09-upgrade-uninstall.md) |  |  | - |
+| [Hermes Agent 安装方案 - Termux（Android）特殊安装说明](learning/03-agent-platforms-tools/hermes-agent-installation/10-termux.md) |  |  | - |
+| [Hermes Agent 安装方案 - 国内网络环境优化指南](learning/03-agent-platforms-tools/hermes-agent-installation/11-network-china.md) |  |  | - |
 | [一、概述](learning/03-agent-platforms-tools/i-have-adhd-wiki/00-overview.md) |  |  | - |
 | [二、设计理念](learning/03-agent-platforms-tools/i-have-adhd-wiki/01-design-philosophy.md) |  |  | - |
 | [三、核心规则](learning/03-agent-platforms-tools/i-have-adhd-wiki/02-core-rules.md) |  |  | - |
@@ -1406,6 +1554,35 @@
 | [第五章 - 资源扩展链接](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/05-resources.md) |  |  | 资源链接、MonkeyCode、Vibe Coding、开源项目、私有化部署 |
 | [第六章 - 学习效果评估方法](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/06-assessment.md) |  |  | 学习评估、效果检验、知识测试、实践评估、七概念 |
 | [第七章 - 附录：七概念应用案例](learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/07-seven-concepts-applied.md) |  |  | 七概念应用、实战案例、R-I-E-C-A-F-V、产品分析 |
+| [veadk/ 目录结构清单](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/01-module-inventory.md) |  |  | - |
+| [Agent 类公开方法和属性签名提取](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/02-agent-class-signatures.md) |  |  | - |
+| [pyproject.toml 依赖清单](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/03-dependencies.md) |  |  | - |
+| [examples/ 目录示例清单](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/04-examples-inventory.md) |  |  | - |
+| [核心类清单](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/05-core-classes-list.md) |  |  | - |
+| [Agent 初始化流程事实记录](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/06-agent-init-flow.md) |  |  | - |
+| [Runner 类事实记录](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/07-runner-facts.md) |  |  | - |
+| [Memory 模块事实记录](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/08-memory-facts.md) |  |  | - |
+| [KnowledgeBase 模块事实记录](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/09-knowledgebase-facts.md) |  |  | - |
+| [Tools 注册表事实记录](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/10-tools-registry-facts.md) |  |  | - |
+| [VeADK架构洞察与设计模式分析](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/11-architecture-insights.md) |  |  | - |
+| [VeADK扩展点清单与注册机制](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/12-extension-points.md) |  |  | - |
+| [VeADK模块依赖关系与分层架构](learning/03-agent-platforms-tools/veadk-python/supporting-analysis/13-module-dependencies.md) |  |  | - |
+| [index](learning/04-docs-markup-tooling/pyinvoke-wiki/index.md) |  |  | - |
+| [log](learning/04-docs-markup-tooling/pyinvoke-wiki/log.md) |  |  | - |
+| [Collection 与命名空间](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/collection.md) |  | 2026-08-21 | pyinvoke、collection、namespace、core-api |
+| [Config 配置系统](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/config.md) |  | 2026-08-21 | pyinvoke、config、dataproxy、merge、yaml、json、environment-variables、core-api |
+| [Context 执行上下文](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/context.md) |  | 2026-08-21 | pyinvoke、context、run、sudo、cd、prefix、mockcontext、core-api |
+| [Executor 执行器](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/executor.md) |  | 2026-08-21 | pyinvoke、executor、task-execution、pre-post、deduplication、core-api |
+| [Loader 任务加载](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/loader.md) |  | 2026-08-21 | pyinvoke、loader、filesystem-loader、module-loading、tasks-discovery、core-api |
+| [Parser 参数解析](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/parser.md) |  | 2026-08-21 | pyinvoke、parser、argument、parsercontext、flags、cli-parsing、core-api |
+| [Program CLI 入口](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/program.md) |  | 2026-08-21 | pyinvoke、program、cli、entrypoint、binary、core-api |
+| [Runner 命令执行](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/runner.md) |  | 2026-08-21 | pyinvoke、runner、result、promise、local、pty、io-threads、core-api |
+| [Task 与 @task 装饰器](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/task.md) |  | 2026-08-21 | pyinvoke、task、decorator、core-api |
+| [PyInvoke runners.py](learning/04-docs-markup-tooling/pyinvoke-wiki/overview/architecture.md) |  | 2026-08-21 | invoke、architecture、call-chain、internals |
+| [PyInvoke 与同类工具对比](learning/04-docs-markup-tooling/pyinvoke-wiki/overview/comparison.md) |  | 2026-08-21 | invoke、comparison、make、fabric、nox、tox、shell |
+| [PyInvoke pyproject.toml - Dependencies and Python version requirements](learning/04-docs-markup-tooling/pyinvoke-wiki/overview/installation.md) |  | 2026-08-21 | invoke、installation、setup、pip |
+| [PyInvoke GitHub Repository](learning/04-docs-markup-tooling/pyinvoke-wiki/overview/intro.md) |  | 2026-08-21 | invoke、python、task-runner、cli、automation、overview |
+| [PyInvoke program.py - CLI entry point](learning/04-docs-markup-tooling/pyinvoke-wiki/overview/quickstart.md) |  | 2026-08-21 | invoke、quickstart、getting-started、tutorial |
 | [一、概述](learning/04-mathematics-foundations/pythagorean-theorem-wiki/00-overview.md) |  |  | - |
 | [二、历史沿革](learning/04-mathematics-foundations/pythagorean-theorem-wiki/02-history.md) |  |  | - |
 | [三、经典证明方法](learning/04-mathematics-foundations/pythagorean-theorem-wiki/03-proof-methods.md) |  |  | - |
@@ -1428,6 +1605,10 @@
 | [十一、资源与工具](learning/05-academic-skills/thesis-writing-wiki/10-resources-and-tools.md) |  |  | - |
 | [十二、社会语言学视频资源](learning/05-academic-skills/thesis-writing-wiki/11-sociolinguistics-video-resources.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
+| [抖音 Vibecoding 人气赛道·执行行动计划](learning/06-business-trends-analysis/douyin-vibecoding-action-plan.md) |  |  | vibecoding、抖音、执行计划、行动指南、TRAE大赛 |
+| [SpecWeave 抖音VibeCoding图文·视觉设计规范](learning/06-business-trends-analysis/douyin-vibecoding-design-spec.md) |  |  | vibecoding、抖音、设计规范、视觉设计、SpecWeave |
+| [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md) |  |  | vibecoding、抖音、内容创作、第一性原理、TRAE大赛、短视频传播 |
+| [华秋智联与星宸科技战略合作深度分析：打通芯片量产最后一公里](learning/06-business-trends-analysis/huaqiu-sigmastar-partnership-analysis-20260709.md) |  | 2026-07-09 | 端边侧AI、芯片生态、硬件量产、开发者生态、华秋、星宸科技 |
 | [cleaned-article](learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/cleaned-article.md) |  |  | - |
 | [微软Copilot成本困境与多模型时代产业变革深度分析报告](learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md) |  | 2026-07-09 | AI产业、微软Copilot、DeepSeek、多模型架构、成本分析、产业趋势、开源模型 |
 | [cleaned-article](learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/cleaned-article.md) |  |  | - |
@@ -1445,8 +1626,34 @@
 | [学习路径与操作指南](learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/04-learning-path.md) |  | 2026-07-14 | - |
 | [常见问题与注意事项](learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/05-faq-notes.md) |  | 2026-07-14 | - |
 | [参考资料与附录](learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/06-resources.md) |  | 2026-07-14 | - |
+| [Google Cloud 知识目录（Knowledge Catalog）README 中文版](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-readme-zh.md) |  | 2026-08-15 | Google Cloud、Knowledge Catalog、Dataplex、数据目录、元数据管理、知识图谱、AI智能体 |
+| [00 - 总览与架构全景](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/00-overview.md) |  | 2026-08-15 | - |
+| [01 - OKF开放知识格式规范详解](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/01-okf-spec.md) |  | 2026-08-15 | - |
+| [02 - 参考智能体（Python实现）](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/02-reference-agent.md) |  | 2026-08-15 | - |
+| [03 - 元数据即代码（mdcode/kcmd工具链）](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/03-metadata-as-code.md) |  | 2026-08-15 | - |
+| [04 - 示例智能体实战（Discovery/Enrichment）](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/04-samples.md) |  | 2026-08-15 | - |
+| [05 - 最佳实践与反模式](learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/05-best-practices.md) |  | 2026-08-15 | - |
+| [01-facts](learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/01-facts.md) |  |  | - |
+| [I - 洞察 (Insight) - 秒悟大使入驻关键洞察](learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/02-insights.md) |  | 2026-07-30 | 七概念、I、洞察、秒悟大使、推广返佣 |
+| [秒悟大使入驻指南（结构化版）](learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/miaowu-ambassador-guide.md) |  | 2026-07-30 | 七概念、E、萃取、秒悟大使、入驻指南、推广返佣 |
+| [秒悟Meoo实训案例 - 事实采集](learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/01-facts.md) |  | 2026-07-31 | 七概念、R、事实、秒悟、Meoo、实训案例 |
+| [秒悟Meoo实训案例 - 核心洞察](learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/02-insights.md) |  | 2026-07-31 | 七概念、I、洞察、秒悟、Meoo |
 | [raw-content](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/raw-content.md) |  |  | - |
 | [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md) |  |  | - |
+| [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
+| [Caffe include/src 目录依赖关系系统性分析](learning/08-systems-infrastructure/caffe-architecture-wiki/03-include-src-dependency-analysis.md) |  | 2026-07-23 | - |
+| [Protocol Buffers proto2 与 proto3 语法区别系统性分析](learning/08-systems-infrastructure/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) |  | 2026-07-23 | - |
+| [05-docker-pycaffe-standalone-build-postmortem](learning/08-systems-infrastructure/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md) |  |  | - |
+| [06-examples-test-diff-analysis-report](learning/08-systems-infrastructure/caffe-architecture-wiki/06-examples-test-diff-analysis-report.md) |  |  | - |
+| [07-caffe-cpp-slim-tvm-ffi-modernization](learning/08-systems-infrastructure/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) |  |  | Caffe、C++、TVM、FFI、DLPack、现代化重构、依赖裁剪、Python绑定 |
+| [08-eight-anti-patterns-defensive-templates](learning/08-systems-infrastructure/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md) |  |  | Caffe、反模式、防御式编程、代码模板、依赖裁剪、C++、Python |
+| [Caffe-Slim 全面架构分析与compat层零侵入替换机制](learning/08-systems-infrastructure/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.md) |  | 2026-07-27 | - |
+| [00 - 总览：CPython贡献全景图](learning/08-systems-infrastructure/cpython-devguide-wiki/00-overview.md) |  | 2026-08-19 | cpython、overview、beginner、contribution、quickstart |
+| [01 - 贡献者快速上手](learning/08-systems-infrastructure/cpython-devguide-wiki/01-contributor-quickstart.md) |  | 2026-08-19 | cpython、quickstart、setup、build、first-pr、codespaces |
+| [02 - 深度开发流程](learning/08-systems-infrastructure/cpython-devguide-wiki/02-development-workflow.md) |  | 2026-08-19 | cpython、workflow、git、testing、release、backport、lifecycle |
+| [03 - 治理与社区](learning/08-systems-infrastructure/cpython-devguide-wiki/03-governance-community.md) |  | 2026-08-19 | cpython、governance、community、triage、security、ai-policy、communication |
+| [04 - 最佳实践与反模式](learning/08-systems-infrastructure/cpython-devguide-wiki/04-best-practices-anti-patterns.md) |  | 2026-08-19 | cpython、best-practices、anti-patterns、checklist、mental-models、growth |
+| [05 - FAQ与资源](learning/08-systems-infrastructure/cpython-devguide-wiki/05-faq-resources.md) |  | 2026-08-19 | cpython、faq、glossary、resources、directory-map、reference |
 | [百度网盘 Git 同步空间目录结构](learning/08-systems-infrastructure/git-baidu-sync/01-directory-structure.md) |  |  | - |
 | [Git 跨平台配置最佳实践（网盘同步场景）](learning/08-systems-infrastructure/git-baidu-sync/02-cross-platform-config.md) |  |  | - |
 | [Git 网盘仓库初始化与新设备加入工作流](learning/08-systems-infrastructure/git-baidu-sync/03-repo-init-workflow.md) |  |  | - |
@@ -1458,71 +1665,24 @@
 | [Git 网盘同步备份与灾难恢复](learning/08-systems-infrastructure/git-baidu-sync/09-backup-recovery.md) |  |  | - |
 | [Git 百度网盘同步 - 故障排查手册](learning/08-systems-infrastructure/git-baidu-sync/10-troubleshooting.md) |  |  | - |
 | [Git 百度网盘同步 - 坑点与反模式](learning/08-systems-infrastructure/git-baidu-sync/11-pitfalls-anti-patterns.md) |  |  | - |
-| [Caffe include/src 目录依赖关系系统性分析](learning/caffe-architecture-wiki/03-include-src-dependency-analysis.md) |  | 2026-07-23 | - |
-| [Protocol Buffers proto2 与 proto3 语法区别系统性分析](learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) |  | 2026-07-23 | - |
-| [05-docker-pycaffe-standalone-build-postmortem](learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md) |  |  | - |
-| [06-examples-test-diff-analysis-report](learning/caffe-architecture-wiki/06-examples-test-diff-analysis-report.md) |  |  | - |
-| [07-caffe-cpp-slim-tvm-ffi-modernization](learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) |  |  | Caffe、C++、TVM、FFI、DLPack、现代化重构、依赖裁剪、Python绑定 |
-| [08-eight-anti-patterns-defensive-templates](learning/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.md) |  |  | Caffe、反模式、防御式编程、代码模板、依赖裁剪、C++、Python |
-| [Caffe-Slim 全面架构分析与compat层零侵入替换机制](learning/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.md) |  | 2026-07-27 | - |
-| [跨文化对抗性审查标准与"反向语义漂移"防御机制](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) |  |  | - |
-| [道家哲学核心概念：道、德、自然、无为](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md) |  |  | - |
-| [儒家思想核心概念：本、体用、格物致知、诚](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md) |  |  | - |
-| [墨家方法论核心概念：三表法、类、故、理](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) |  |  | - |
-| [佛教因明学核心概念：现量、比量、宗因喻](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md) |  |  | - |
-| [跨文化四维比较框架与比较矩阵](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md) |  |  | - |
-| [与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md) |  |  | - |
-| [跨文化第一性原理思维方法论与操作指南](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) |  |  | - |
-| [跨文化概念对照总表](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md) |  |  | - |
-| [术语统一表](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md) |  |  | - |
-| [中西哲学根本性思维发展时间线](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/10-timeline.md) |  |  | - |
-| [来源验证日志](learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) |  |  | - |
-| [第1章 - 项目概述与快速开始](learning/intelligent-terminal-wiki/01-overview.md) |  | 2026-08-03 | - |
-| [第2章 - 整体架构设计](learning/intelligent-terminal-wiki/02-architecture.md) |  | 2026-08-03 | - |
-| [第3章 - WTA Rust 核心 - Master 多路复用器](learning/intelligent-terminal-wiki/03-wta-master.md) |  | 2026-08-03 | - |
-| [第4章 - WTA Rust 核心 - Helper 与 TUI](learning/intelligent-terminal-wiki/04-wta-helper-tui.md) |  | 2026-08-03 | - |
-| [第5章 - C++ 集成层](learning/intelligent-terminal-wiki/05-cpp-integration.md) |  | 2026-08-03 | - |
-| [第6章 - 通信协议栈](learning/intelligent-terminal-wiki/06-protocols.md) |  | 2026-08-03 | - |
-| [第7章 - wtcli 命令参考](learning/intelligent-terminal-wiki/07-wtcli-reference.md) |  | 2026-08-03 | - |
-| [第8章 - wt-agent-hooks Shell 集成](learning/intelligent-terminal-wiki/08-agent-hooks.md) |  | 2026-08-03 | - |
-| [第9章 - Autofix 自动错误检测与修复](learning/intelligent-terminal-wiki/09-autofix.md) |  | 2026-08-03 | - |
-| [第10章 - 构建系统与开发环境](learning/intelligent-terminal-wiki/10-build-system.md) |  | 2026-08-03 | - |
-| [第11章 - 日志系统与调试](learning/intelligent-terminal-wiki/11-logging-debugging.md) |  | 2026-08-03 | - |
-| [第12章 - 配置与设置详解](learning/intelligent-terminal-wiki/12-configuration.md) |  | 2026-08-03 | - |
-| [第13章 - 架构设计模式萃取](learning/intelligent-terminal-wiki/13-design-patterns.md) |  | 2026-08-03 | - |
-| [大语言模型Token节省机制底层原理事实清单](learning/llm-token-optimization/01-principles/00-facts.md) |  | 2026-08-01 | LLM、Token、Tokenization、Transformer、KV-Cache、PagedAttention、Pricing |
-| [01-metrics-framework](learning/llm-token-optimization/05-evaluation/01-metrics-framework.md) |  |  | - |
-| [01-facts](learning/miaowu-ambassador-guide/01-facts.md) |  |  | - |
-| [I - 洞察 (Insight) - 秒悟大使入驻关键洞察](learning/miaowu-ambassador-guide/02-insights.md) |  | 2026-07-30 | 七概念、I、洞察、秒悟大使、推广返佣 |
-| [秒悟大使入驻指南（结构化版）](learning/miaowu-ambassador-guide/miaowu-ambassador-guide.md) |  | 2026-07-30 | 七概念、E、萃取、秒悟大使、入驻指南、推广返佣 |
-| [秒悟Meoo实训案例 - 事实采集](learning/miaowu-meoo-practice-cases/archive/01-facts.md) |  | 2026-07-31 | 七概念、R、事实、秒悟、Meoo、实训案例 |
-| [秒悟Meoo实训案例 - 核心洞察](learning/miaowu-meoo-practice-cases/archive/02-insights.md) |  | 2026-07-31 | 七概念、I、洞察、秒悟、Meoo |
-| [3分钟快速参考卡](learning/trae-ide-token-optimization/04-quick-reference.md) |  | 2026-08-01 | - |
-| [术语表](learning/trae-ide-token-optimization/glossary.md) |  | 2026-08-01 | - |
-| [参考资料](learning/trae-ide-token-optimization/references.md) |  | 2026-08-01 | - |
-| [事实数据采集](learning/trae-ide-token-optimization/01-principles/00-facts.md) |  | 2026-08-01 | - |
-| [第一性原理分析](learning/trae-ide-token-optimization/01-principles/01-first-principles.md) |  | 2026-08-01 | - |
-| [P-T-001: 静态减负模式](learning/trae-ide-token-optimization/02-patterns/P-T-001-static-reduction.md) |  | 2026-08-01 | - |
-| [P-T-002: 对话清理模式](learning/trae-ide-token-optimization/02-patterns/P-T-002-chat-cleanup.md) |  | 2026-08-01 | - |
-| [P-T-003: 模型分级模式](learning/trae-ide-token-optimization/02-patterns/P-T-003-model-tiering.md) |  | 2026-08-01 | - |
-| [P-T-004: 输入精简模式](learning/trae-ide-token-optimization/02-patterns/P-T-004-input-concise.md) |  | 2026-08-01 | - |
-| [P-T-005: 循环熔断模式](learning/trae-ide-token-optimization/02-patterns/P-T-005-loop-breaker.md) |  | 2026-08-01 | - |
-| [快速检查清单](learning/trae-ide-token-optimization/03-decision-framework/01-quick-checklist.md) |  | 2026-08-01 | - |
-| [veadk/ 目录结构清单](learning/veadk-python/supporting-analysis/01-module-inventory.md) |  |  | - |
-| [Agent 类公开方法和属性签名提取](learning/veadk-python/supporting-analysis/02-agent-class-signatures.md) |  |  | - |
-| [pyproject.toml 依赖清单](learning/veadk-python/supporting-analysis/03-dependencies.md) |  |  | - |
-| [examples/ 目录示例清单](learning/veadk-python/supporting-analysis/04-examples-inventory.md) |  |  | - |
-| [核心类清单](learning/veadk-python/supporting-analysis/05-core-classes-list.md) |  |  | - |
-| [Agent 初始化流程事实记录](learning/veadk-python/supporting-analysis/06-agent-init-flow.md) |  |  | - |
-| [Runner 类事实记录](learning/veadk-python/supporting-analysis/07-runner-facts.md) |  |  | - |
-| [Memory 模块事实记录](learning/veadk-python/supporting-analysis/08-memory-facts.md) |  |  | - |
-| [KnowledgeBase 模块事实记录](learning/veadk-python/supporting-analysis/09-knowledgebase-facts.md) |  |  | - |
-| [Tools 注册表事实记录](learning/veadk-python/supporting-analysis/10-tools-registry-facts.md) |  |  | - |
-| [VeADK架构洞察与设计模式分析](learning/veadk-python/supporting-analysis/11-architecture-insights.md) |  |  | - |
-| [VeADK扩展点清单与注册机制](learning/veadk-python/supporting-analysis/12-extension-points.md) |  |  | - |
-| [VeADK模块依赖关系与分层架构](learning/veadk-python/supporting-analysis/13-module-dependencies.md) |  |  | - |
+| [第1章 - 项目概述与快速开始](learning/08-systems-infrastructure/intelligent-terminal-wiki/01-overview.md) |  | 2026-08-03 | - |
+| [第2章 - 整体架构设计](learning/08-systems-infrastructure/intelligent-terminal-wiki/02-architecture.md) |  | 2026-08-03 | - |
+| [第3章 - WTA Rust 核心 - Master 多路复用器](learning/08-systems-infrastructure/intelligent-terminal-wiki/03-wta-master.md) |  | 2026-08-03 | - |
+| [第4章 - WTA Rust 核心 - Helper 与 TUI](learning/08-systems-infrastructure/intelligent-terminal-wiki/04-wta-helper-tui.md) |  | 2026-08-03 | - |
+| [第5章 - C++ 集成层](learning/08-systems-infrastructure/intelligent-terminal-wiki/05-cpp-integration.md) |  | 2026-08-03 | - |
+| [第6章 - 通信协议栈](learning/08-systems-infrastructure/intelligent-terminal-wiki/06-protocols.md) |  | 2026-08-03 | - |
+| [第7章 - wtcli 命令参考](learning/08-systems-infrastructure/intelligent-terminal-wiki/07-wtcli-reference.md) |  | 2026-08-03 | - |
+| [第8章 - wt-agent-hooks Shell 集成](learning/08-systems-infrastructure/intelligent-terminal-wiki/08-agent-hooks.md) |  | 2026-08-03 | - |
+| [第9章 - Autofix 自动错误检测与修复](learning/08-systems-infrastructure/intelligent-terminal-wiki/09-autofix.md) |  | 2026-08-03 | - |
+| [第10章 - 构建系统与开发环境](learning/08-systems-infrastructure/intelligent-terminal-wiki/10-build-system.md) |  | 2026-08-03 | - |
+| [第11章 - 日志系统与调试](learning/08-systems-infrastructure/intelligent-terminal-wiki/11-logging-debugging.md) |  | 2026-08-03 | - |
+| [第12章 - 配置与设置详解](learning/08-systems-infrastructure/intelligent-terminal-wiki/12-configuration.md) |  | 2026-08-03 | - |
+| [第13章 - 架构设计模式萃取](learning/08-systems-infrastructure/intelligent-terminal-wiki/13-design-patterns.md) |  | 2026-08-03 | - |
+| [OKR制定指南Wiki手册](learning/okr-wiki/okr-guide.md) |  | 2026-07-08 | - |
 | [Caffe Docker 容器构建与运行 SOP](operations/caffe-docker-sop.md) |  | 2026-07-22 | caffe、docker、sop、build、runtime、verification |
+| [DevContainer 变体构建与 CI 流水线操作手册](operations/devcontainer-ci-build-manual.md) |  | 2026-08-07 | devcontainer、docker、ci、github-actions、build、onnx-pytorch、operations |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
+| [WSL Docker/Podman 镜像本地缓存操作 SOP（含引擎切换）](operations/docker-cache-wsl-sop.md) |  |  | wsl、docker、podman、镜像缓存、docker-cache、运维SOP、方法论七概念 |
 | [SaaS云文档DOM提取多平台适配方案](operations/saas-doc-dom-extraction-multi-platform.md) |  |  | - |
 | [找三个人杠一遍：对抗评审标准化SOP](quality-assurance/adversarial-review-sop.md) |  |  | - |
 | [如何高效啃技术文档？七概念实战案例](quality-assurance/reading-tech-docs-case.md) |  |  | - |
@@ -1532,4 +1692,4 @@
 
 ---
 
-*索引自动生成于 2026-08-07 15:46:04*
+*索引自动生成于 2026-08-21 12:20:11*

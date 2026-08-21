@@ -6,7 +6,7 @@ tags: ["first-principles", "essence-thinking", "critical-thinking", "philosophy"
 date: "2026-08-21"
 version: "1.0"
 status: "stable"
-summary: "本质与思维——Learning Wiki 的第0主题，所有技术学习之前的思维地基。汇集第一性原理、跨文化根本性思维比较、帛书老子原典深读等本质思考类知识资产。"
+summary: "本质与思维——Learning Wiki 的第0主题，所有技术学习之前的思维地基。汇集第一性原理方法论、帛书老子原典深读、跨文化根本性思维比较等本质思考类知识资产。"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/00-essence-and-thinking/README.toml"
 ---
 # 00 本质与思维（Essence & Thinking）
@@ -47,15 +47,15 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/00-essenc
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化比较、帛书老子原典深读等子模块（v1.9） | 原子化 |
-| └ 帛书老子 Wiki 教程 | [first-principles/boshu-laozi-wiki/](first-principles/boshu-laozi-wiki/00-overview.md) | 马王堆帛书《老子》甲乙本版本学与核心概念系统教程（8章原子化），为跨文化道家部分提供原典深读 | 原子化 |
+| 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化哲学比较（chinese-philosophy-parallels/）、思维训练题库等子模块（v2.0） | 原子化 |
+| 帛书老子 Wiki 教程 | [boshu-laozi-wiki/](boshu-laozi-wiki/00-overview.md) | 马王堆帛书《老子》甲乙本版本学与核心概念系统教程（8章原子化），为第一性原理跨文化比较道家部分提供原典深读材料 | 原子化 |
 
 ---
 
 ## 学习建议
 
 1. **入门者**：建议先读 [first-principles/00-adversarial-review-protocol.md](first-principles/00-adversarial-review-protocol.md) 了解对抗性审查思维，再按 [first-principles/README.md](first-principles/README.md) 的编号顺序学习
-2. **有哲学兴趣**：在学习第一性原理主体后，可深入 [first-principles/boshu-laozi-wiki/](first-principles/boshu-laozi-wiki/00-overview.md) 进行帛书老子原典版本学学习
+2. **有哲学兴趣**：在学习第一性原理主体后，可独立深入 [boshu-laozi-wiki/](boshu-laozi-wiki/00-overview.md) 进行帛书老子原典版本学学习
 3. **跨文化比较**：学完基础概念后，阅读 [first-principles/chinese-philosophy-parallels/](first-principles/chinese-philosophy-parallels/README.md) 进行中西哲学根本性思维比较
 
 ---
