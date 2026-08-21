@@ -3,8 +3,8 @@ id: "learning-categories"
 title: "Learning Wiki 主题分类体系"
 category: "learning"
 tags: ["categories", "learning-wiki", "knowledge-architecture", "topic-classification", "learning-path"]
-date: "2026-07-05"
-version: "1.0"
+date: "2026-08-21"
+version: "1.1"
 status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的8主题分类体系设计，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
@@ -428,7 +428,7 @@ flowchart TD
 
 **认知定位**：所有上层应用的"地基"层——操作系统、运行时环境、系统架构等底层基础设施，是Agent开发与运行的物理载体。
 
-**核心主题词**：`wsl`、`windows-subsystem-linux`、`system-architecture`、`cli`、`plan9`、`drvfs`、`interop`、`container`、`learning-path`
+**核心主题词**：`wsl`、`windows-subsystem-linux`、`system-architecture`、`cli`、`plan9`、`drvfs`、`interop`、`container`、`learning-path`、`deep-learning-framework`、`cpython`、`terminal-architecture`、`caffe`
 
 **边界说明**：
 
@@ -440,7 +440,11 @@ flowchart TD
 | 系统级容器与虚拟化技术 | 文档工具链（归入04） |
 | CLI架构与命令设计 | 多模态内容生成（归入05） |
 | 跨编译构建系统（CMake等） | 商业趋势分析（归入06） |
+| 深度学习框架底层架构（Caffe等） | AI多模态应用层（归入05） |
+| CPython解释器内部机制与贡献指南 | 通用Python应用开发（归入03/04） |
+| 智能终端架构与系统设计 | 具体终端产品评测（归入07） |
 | | 厂商产品学习（归入07） |
+| | 跨领域思维方法论（归入专题） |
 
 **完整Wiki清单**：
 
@@ -448,6 +452,9 @@ flowchart TD
 |--------|---------|-----------|------|
 | WSL CLI与架构参考 | [wsl-cli-and-architecture-wiki.md](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) | 基于external/WSL源码深度核实的CLI命令树、参数定义、CLI架构四层模型、interop binfmt机制、systemd启动流程 | 单文件 |
 | WSL系统学习计划 | [wsl-learning-plan.md](08-systems-infrastructure/wsl-learning-plan.md) | 涵盖三层架构、Linux侧核心进程、Plan9/DrvFs互操作、WSLC Container API三语言投影、CMake跨编译、5个实操练习、4周学习路径 | 单文件 |
+| Caffe深度学习框架架构 | [caffe-architecture-wiki/README.md](08-systems-infrastructure/caffe-architecture-wiki/README.md) | Caffe深度学习框架架构深度分析，含Layer/Net/Solver核心机制、Blob数据结构、GPU加速原理 | 原子化 |
+| CPython开发者指南 | [cpython-devguide-wiki/00-overview.md](08-systems-infrastructure/cpython-devguide-wiki/00-overview.md) | CPython贡献全景图，含贡献者入门/开发工作流/治理社区/最佳实践/FAQ | 原子化 |
+| 智能终端Wiki教程 | [intelligent-terminal-wiki/README.md](08-systems-infrastructure/intelligent-terminal-wiki/README.md) | 智能终端架构与系统设计Wiki教程索引 | 原子化 |
 
 ---
 
@@ -455,7 +462,7 @@ flowchart TD
 
 **认知定位**：超越Agent技术栈的通用思维方法与认知工具，适用于所有知识工作场景的元方法论层。不采用编号前缀，作为独立于01-08技术主题之外的思维基础存在。
 
-**核心主题词**：`first-principles`、`critical-thinking`、`mental-models`、`cognitive-biases`、`adversarial-review`、`epistemology`
+**核心主题词**：`first-principles`、`critical-thinking`、`mental-models`、`cognitive-biases`、`adversarial-review`、`epistemology`、`okr`、`goal-management`、`organizational-methodology`
 
 **边界说明**：
 
@@ -464,6 +471,7 @@ flowchart TD
 | 跨学科通用思维方法（第一性原理、系统思维等） | 特定技术领域的工程方法论（归入02） |
 | 认知偏差防御与批判性思维工具 | 具体Agent平台的产品评测（归入03） |
 | 知识质量控制方法论（对抗性审查等） | 绑定特定厂商的产品案例（归入07） |
+| 通用目标管理方法论（OKR等） | 特定技术领域的工程实践（归入02） |
 
 **完整Wiki清单**：
 
@@ -471,6 +479,7 @@ flowchart TD
 |--------|---------|-----------|------|
 | 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗性审查协议、术语表、时间线、方法论框架、来源验证日志（12个原子化文件） | 原子化 |
 | 帛书老子 Wiki 教程 | [boshu-laozi-wiki/00-overview.md](boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件） | 原子化 |
+| OKR方法论知识库 | [okr-wiki/00-overview.md](okr-wiki/00-overview.md) | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | 原子化 |
 
 ---
 
@@ -479,15 +488,15 @@ flowchart TD
 | 主题编号 | 主题名称 | Wiki数量 | 原子化Wiki | 单文件Wiki |
 |---------|---------|---------|-----------|-----------|
 | 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
-| 02 | Agent工程方法论 | 7 | 4 | 3 |
-| 03 | Agent平台与工具生态 | 14 | 5 | 9 |
-| 04 | 文档工具链与标记语言 | 4 | 3 | 1 |
+| 02 | Agent工程方法论 | 10 | 7 | 3 |
+| 03 | Agent平台与工具生态 | 16 | 6 | 10 |
+| 04 | 文档工具链与标记语言 | 5 | 4 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
-| 06 | AI商业与趋势观察 | 5 | 2 | 3 |
-| 07 | 厂商产品学习系列 | 20 | 2 | 18 |
-| 08 | 底层系统与基础设施 | 2 | 0 | 2 |
-| 专题 | 跨领域思维方法论 | 2 | 2 | 0 |
-| **合计** | | **70** | **25** | **45** |
+| 06 | AI商业与趋势观察 | 9 | 2 | 7 |
+| 07 | 厂商产品学习系列 | 24 | 4 | 20 |
+| 08 | 底层系统与基础设施 | 5 | 3 | 2 |
+| 专题 | 跨领域思维方法论 | 3 | 3 | 0 |
+| **合计** | | **88** | **36** | **52** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
