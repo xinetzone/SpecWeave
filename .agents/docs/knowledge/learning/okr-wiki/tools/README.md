@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-tools-index"
 title: "工具集"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/tools/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # 工具集

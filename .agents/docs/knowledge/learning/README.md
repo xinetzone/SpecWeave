@@ -5,31 +5,32 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/README.toml"
 ---
 # Learning Wiki 知识库
 
-Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集 Agent 协议、工程方法论、平台工具、文档标记、多模态内容、商业趋势、厂商产品、系统基础设施八大主题的学习笔记与深度 Wiki。
+Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）九大主题，以及 OKR 独立专题的学习笔记与深度 Wiki。
 
 ## 📊 统计数字
 
 | 指标 | 数值 |
 |------|------|
-| 总 Wiki 数 | 66 |
-| 原子化 Wiki | 27 |
-| 单文件 Wiki | 39 |
-| 主题数 | 8（含 2 个厂商二级子目录）+ 1 个跨领域专题 |
+| 总 Wiki 数 | 88 |
+| 原子化 Wiki | 36 |
+| 单文件 Wiki | 52 |
+| 主题数 | 9（00-08编号主题）+ 1 个独立专题（OKR） |
 | 文件总数 | ~328 |
 
 ## 🧭 快速导航
 
 | 编号 | 主题名称 | 一句话描述 | Wiki 数量 | 入口链接 |
 |------|----------|-----------|-----------|----------|
-| 01 | Agent 协议与接口 | Agent 通信协议、Skills 开放标准、接口四层抽象、FFI/IDL 底层技术 | 9 | [01-agent-protocols-interfaces/](01-agent-protocols-interfaces/README.md) |
-| 02 | Agent 工程方法论 | Harness/Headroom/Karpathy/LongCat 等工程方法论与 Prompt 模式 | 7 | [02-agent-engineering-methodology/](02-agent-engineering-methodology/README.md) |
-| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 15 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
-| 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 4 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
+| **00** | **本质与思维** | **第一性原理、帛书老子原典深读、批判性思维、对抗性审查——所有技术学习的思维地基** | **2** | **[00-essence-and-thinking/](00-essence-and-thinking/README.md)** |
+| 01 | Agent 协议与接口 | Agent 通信协议、Skills 开放标准、接口四层抽象、FFI/IDL 底层技术 | 10 | [01-agent-protocols-interfaces/](01-agent-protocols-interfaces/README.md) |
+| 02 | Agent 工程方法论 | Harness/Headroom/Karpathy/LongCat 等工程方法论与 Prompt 模式 | 10 | [02-agent-engineering-methodology/](02-agent-engineering-methodology/README.md) |
+| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 16 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
+| 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 5 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
 | 05 | AI 多模态内容 | AI 短剧、3D 动画、音频生成、AI 配图、文本转 CAD | 6 | [05-ai-multimodal-content/](05-ai-multimodal-content/README.md) |
-| 06 | 商业趋势分析 | AI 变现、国产模型对比、个人 IP 趋势、供应链风险分析 | 6 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
-| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品 | 14 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
-| 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 2 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
-| - | 跨领域思维方法论 | 第一性原理思维方法（哲学/物理/商业跨领域） | 1 | [first-principles/](first-principles/README.md) |
+| 06 | 商业趋势分析 | AI 变现、国产模型对比、个人 IP 趋势、供应链风险分析 | 9 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
+| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品 | 24 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
+| 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 5 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
+| 专题 | OKR目标管理 | OKR目标与关键结果法完整知识库（37个原子化文件） | 1 | [okr-wiki/](okr-wiki/00-overview.md) |
 
 > 详细的分类说明与边界定义见 [CATEGORIES.md](CATEGORIES.md)。
 
@@ -157,14 +158,22 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | WSL CLI 命令树与架构 | 基于源码核实的 WSL CLI 命令树与四层架构 | [wsl-cli-and-architecture-wiki.md](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) |
 | WSL 系统学习计划 | 4 周 WSL 系统学习路径 + 5 个实操练习 | [wsl-learning-plan.md](08-systems-infrastructure/wsl-learning-plan.md) |
 
-### 跨领域思维方法论
+### 00 本质与思维
 
-> 不局限于 Agent 技术栈的通用思维方法与认知工具，可应用于所有知识工作场景。
+> 思维地基层——在学习具体技术之前，先建立正确的思维方式。适用于所有知识工作场景的元方法论。
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels/）、帛书老子原典深读（boshu-laozi-wiki/）等子模块 | [first-principles/](first-principles/README.md) |
-| └ 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为跨文化道家部分提供原典深读，已纳入first-principles/作为子Wiki | [first-principles/boshu-laozi-wiki/](first-principles/boshu-laozi-wiki/README.md) |
+| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels/）、帛书老子原典深读（boshu-laozi-wiki/）等子模块 | [first-principles/](00-essence-and-thinking/first-principles/README.md) |
+| └ 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为跨文化道家部分提供原典深读，已纳入first-principles/作为子Wiki | [first-principles/boshu-laozi-wiki/](00-essence-and-thinking/first-principles/boshu-laozi-wiki/README.md) |
+
+### 独立专题：OKR目标管理
+
+> 通用组织管理方法论，独立于00-08技术主题体系之外。
+
+| Wiki | 说明 | 链接 |
+|------|------|------|
+| OKR方法论知识库 | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件） | [okr-wiki/](okr-wiki/00-overview.md) |
 
 ---
 
@@ -172,7 +181,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 ### 🟢 入门者推荐（从概念到实践）
 
-1. **第一性原理思维方法** → [first-principles/](first-principles/README.md)——建立反类比、回归本质的思维基础（所有技术学习的元方法论）
+1. **第一性原理思维方法** → [00-essence-and-thinking/first-principles/](00-essence-and-thinking/first-principles/README.md)——建立反类比、回归本质的思维基础（所有技术学习的元方法论）
 2. **四大工程概念演进** → [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/four-engineering-concepts-wiki.md)——建立 AI 工程全局认知
 3. **Karpathy LLM 编程准则** → [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)——养成正确的 AI 协作编程习惯
 4. **Agent 通信协议（MCP/ACP/A2A/ANP）** → [agent-communication-protocols-wiki.md](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)——理解 Agent 互联互通的基础

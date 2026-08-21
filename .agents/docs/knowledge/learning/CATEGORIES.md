@@ -3,14 +3,14 @@ id: "learning-categories"
 title: "Learning Wiki 主题分类体系"
 category: "learning"
 tags: ["categories", "learning-wiki", "knowledge-architecture", "topic-classification", "learning-path"]
-date: "2026-08-21"
-version: "1.1"
+date: "2026-08-22"
+version: "1.2"
 status: "stable"
 author: ""
-summary: "Learning Wiki 知识库的8主题分类体系设计，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
+summary: "Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层与独立专题，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系文档; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读），明确二者从属关系"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入00-essence-and-thinking/first-principles/作为子Wiki（v2.1道家原典深读），明确二者从属关系; 2026-08-22 | refactor | 新增00-本质与思维主题作为思维地基层（编号00，位于所有技术主题之前），第一性原理+帛书老子归入00，分类体系从8主题扩展为9主题（00-08），OKR保留为独立专题"
 ---
 # Learning Wiki 主题分类体系
 
@@ -26,8 +26,9 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 
 ### 1. 认知递进原则
 
-主题编号按从"基础协议"→"工程方法"→"平台工具"→"工具链"→"多模态"→"商业落地"→"案例研究"→"底层系统"的认知路径排列，符合从抽象到具体、从理论到实践的学习规律。
+主题编号按从"思维地基"→"基础协议"→"工程方法"→"平台工具"→"工具链"→"多模态"→"商业落地"→"案例研究"→"底层系统"的认知路径排列，符合从抽象到具体、从理论到实践的学习规律。
 
+- **00**：思维地基层（本质与思维），建立正确的思维方式，是所有技术学习的元方法论
 - **01-03**：技术核心层（协议→方法→平台），构建Agent技术认知
 - **04-05**：横向能力层（文档工具→多模态内容），补充工程与创作能力
 - **06**：商业落地层，连接技术与商业价值
@@ -65,7 +66,7 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 ### 6. 面向检索原则
 
 主题命名采用"编号-关键词"格式，支持：
-- **数字序号浏览**：按01→08顺序系统学习
+- **数字序号浏览**：按00→08顺序系统学习（00为思维地基，建议先修）
 - **关键词检索**：通过目录名中的英文关键词快速定位
 - **标签关联**：每个Wiki携带5-8个主题标签，支持跨主题检索
 
@@ -75,7 +76,7 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 
 ```mermaid
 flowchart TD
-    PM["🧠 跨领域思维方法论<br/>（元认知层）"]
+    P00["🧠 00 本质与思维<br/>（思维地基层）"]
     subgraph CORE_TECH_LAYER ["核心技术层（01→02→03 递进）"]
         direction TB
         P01["01 Agent协议与接口"]
@@ -90,9 +91,10 @@ flowchart TD
     P06["06 AI商业与趋势观察"]
     P07["07 厂商产品学习系列"]
     P08["08 底层系统与基础设施"]
-    PM -->|"思维方法指导所有领域的学习与实践"| P02
-    PM -->|"批判性思维适用于所有分析工作"| P06
-    PM -->|"对抗性审查保障知识质量"| P04
+    P00 -->|"第一性原理指导工程思维"| P02
+    P00 -->|"批判性思维适用于商业分析"| P06
+    P00 -->|"对抗性审查保障知识质量"| P04
+    P00 -->|"本质思维驱动跨领域迁移"| P05
     P01 -->|"协议是工程基础"| P02
     P02 -->|"方法论指导平台选型"| P03
     P03 -->|"平台实践反哺方法论"| P02
@@ -107,7 +109,7 @@ flowchart TD
     P08 -->|"WSL等基础设施支撑开发环境"| P02
     P08 -->|"WSL等基础设施支撑开发环境"| P03
     P08 -->|"WSL等基础设施支撑开发环境"| P04
-    style PM fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+    style P00 fill:#fff9c4,stroke:#f9a825,stroke-width:3px
     style P01 fill:#e1f5fe
     style P02 fill:#b3e5fc
     style P03 fill:#81d4fa
@@ -121,7 +123,7 @@ flowchart TD
 **图例说明**：
 - **实线箭头（→）**：强依赖/递进关系，前置主题是后置主题的学习基础
 - **虚线箭头（-·→）**：支撑/关联关系，横向能力或底层系统为多个主题提供支撑
-- **颜色编码**：蓝色系=核心技术层，紫色系=横向能力层，橙色系=商业案例层，绿色系=底层支撑层
+- **颜色编码**：黄色=思维地基层，蓝色系=核心技术层，紫色系=横向能力层，橙色系=商业案例层，绿色系=底层支撑层
 
 ---
 
@@ -133,6 +135,7 @@ flowchart TD
 
 | 顺序 | 主题 | 核心Wiki | 学习目标 |
 |------|------|----------|---------|
+| 0 | 00 本质与思维 | [第一性原理](00-essence-and-thinking/first-principles/README.md) | 建立反类比、回归本质的思维基础（所有技术学习的元方法论） |
 | 1 | 01 协议与接口 | [Agent通信协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)、[四层概念](01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 理解Agent互联互通的基础标准 |
 | 2 | 02 工程方法论 | [四代工程概念](02-agent-engineering-methodology/four-engineering-concepts-wiki.md)、[Harness工程](02-agent-engineering-methodology/harness-engineering-wiki.md) | 掌握从Prompt到Loop的工程范式演进 |
 | 3 | 03 平台工具 | [Claude Tag](03-agent-platforms-tools/claude-tag-article.md)、[Open Code Review](03-agent-platforms-tools/open-code-review-wiki.md) | 了解主流Agent平台与工具生态 |
@@ -166,7 +169,32 @@ flowchart TD
 
 ---
 
-## 四、8个主题详细说明
+## 四、9个主题详细说明
+
+---
+
+### 00 本质与思维
+
+**认知定位**：Learning Wiki 的"思维地基"层——编号00，位于所有技术主题（01-08）之前。在学习具体技术之前，先建立正确的思维方式：回归本质、批判性质疑、跨文化思维、对抗性审查。这些元认知能力贯穿所有技术学习与实践。
+
+**核心主题词**：`first-principles`、`essence-thinking`、`critical-thinking`、`mental-models`、`cognitive-biases`、`adversarial-review`、`epistemology`、`chinese-philosophy`、`daoism`、`cross-cultural-thinking`
+
+**边界说明**：
+
+| 归入本主题 | 不归入本主题 |
+|-----------|-------------|
+| 第一性原理思维方法（哲学/物理/商业跨领域） | 特定技术领域的工程方法论（归入02） |
+| 帛书《老子》等东方哲学原典的本质思维 | 具体Agent平台的产品评测（归入03） |
+| 认知偏差防御与批判性思维工具 | 目标管理方法论（OKR归入独立专题） |
+| 对抗性审查与知识质量控制 | 绑定特定厂商的产品案例（归入07） |
+| 跨文化哲学比较与思维范式研究 | 特定技术领域的工程实践（归入02） |
+
+**完整Wiki清单**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 第一性原理知识档案 | [first-principles/](00-essence-and-thinking/first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels）、帛书老子原典深读（boshu-laozi-wiki）等子模块 | 原子化 |
+| └ 帛书老子 Wiki 教程 | [first-principles/boshu-laozi-wiki/](00-essence-and-thinking/first-principles/boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件），为第一性原理跨文化道家部分提供原典深读 | 原子化 |
 
 ---
 
@@ -444,7 +472,8 @@ flowchart TD
 | CPython解释器内部机制与贡献指南 | 通用Python应用开发（归入03/04） |
 | 智能终端架构与系统设计 | 具体终端产品评测（归入07） |
 | | 厂商产品学习（归入07） |
-| | 跨领域思维方法论（归入专题） |
+| | 本质思维方法论（归入00） |
+| | OKR目标管理（归入独立专题） |
 
 **完整Wiki清单**：
 
@@ -458,27 +487,25 @@ flowchart TD
 
 ---
 
-### 跨领域思维方法论（独立专题）
+### 独立专题：OKR目标管理方法论
 
-**认知定位**：超越Agent技术栈的通用思维方法与认知工具，适用于所有知识工作场景的元方法论层。不采用编号前缀，作为独立于01-08技术主题之外的思维基础存在。
+**认知定位**：通用组织管理方法论，不直接属于思维地基或技术主题，但作为目标管理工具广泛适用于个人与团队。不采用编号前缀，独立于00-08主题体系之外。
 
-**核心主题词**：`first-principles`、`critical-thinking`、`mental-models`、`cognitive-biases`、`adversarial-review`、`epistemology`、`okr`、`goal-management`、`organizational-methodology`
+**核心主题词**：`okr`、`goal-management`、`organizational-methodology`、`kpi`、`performance-management`
 
 **边界说明**：
 
 | 归入本专题 | 不归入本专题 |
 |-----------|-------------|
-| 跨学科通用思维方法（第一性原理、系统思维等） | 特定技术领域的工程方法论（归入02） |
-| 认知偏差防御与批判性思维工具 | 具体Agent平台的产品评测（归入03） |
-| 知识质量控制方法论（对抗性审查等） | 绑定特定厂商的产品案例（归入07） |
-| 通用目标管理方法论（OKR等） | 特定技术领域的工程实践（归入02） |
+| OKR目标与关键结果法完整方法论 | 第一性原理等本质思维方法（归入00） |
+| KR制定方法、评分体系、对齐流程 | 批判性思维与认知偏差（归入00） |
+| OKR模板、案例、工具使用 | Agent工程方法论（归入02） |
+| 个人/部门/公司层级OKR实践 | 知识质量控制方法（归入00） |
 
 **完整Wiki清单**：
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels）、帛书老子原典深读（boshu-laozi-wiki）等子模块 | 原子化 |
-| 帛书老子 Wiki 教程 | [first-principles/boshu-laozi-wiki/00-overview.md](first-principles/boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件），为第一性原理跨文化道家部分提供原典深读 | 原子化 |
 | OKR方法论知识库 | [okr-wiki/00-overview.md](okr-wiki/00-overview.md) | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | 原子化 |
 
 ---
@@ -487,6 +514,7 @@ flowchart TD
 
 | 主题编号 | 主题名称 | Wiki数量 | 原子化Wiki | 单文件Wiki |
 |---------|---------|---------|-----------|-----------|
+| 00 | 本质与思维 | 2 | 2 | 0 |
 | 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
 | 02 | Agent工程方法论 | 10 | 7 | 3 |
 | 03 | Agent平台与工具生态 | 16 | 6 | 10 |
@@ -495,7 +523,7 @@ flowchart TD
 | 06 | AI商业与趋势观察 | 9 | 2 | 7 |
 | 07 | 厂商产品学习系列 | 24 | 4 | 20 |
 | 08 | 底层系统与基础设施 | 5 | 3 | 2 |
-| 专题 | 跨领域思维方法论 | 3 | 3 | 0 |
+| 专题 | OKR目标管理方法论 | 1 | 1 | 0 |
 | **合计** | | **88** | **36** | **52** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
@@ -507,6 +535,10 @@ flowchart TD
 当新增一个Wiki时，按以下决策树确定归属：
 
 ```
+0. 是否是本质思维/第一性原理/哲学思维/批判性思维/认知方法论？
+   → 是 → 00-essence-and-thinking/
+   → 否 ↓
+
 1. 是否是特定厂商全系列产品深度拆解？
    → 是 → 07-vendor-product-learning/（新建或加入对应厂商子目录）
    → 否 ↓
@@ -539,5 +571,9 @@ flowchart TD
    → 是 → 01-agent-protocols-interfaces/
    → 否 ↓
 
-9. 边界模糊时：重新阅读最近主题的"边界说明"，选择主题词重叠度最高的主题
+9. 是否是OKR等通用组织管理方法论？
+   → 是 → okr-wiki/（独立专题）
+   → 否 ↓
+
+10. 边界模糊时：重新阅读最近主题的"边界说明"，选择主题词重叠度最高的主题
 ```

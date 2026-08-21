@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-index"
 title: "OKR 方法论知识库"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # OKR 方法论知识库

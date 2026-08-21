@@ -195,9 +195,9 @@ status: "completed"
 
 | 文档 | 路径 | 简介 |
 |------|------|------|
-| 对抗性审查协议原始规范 | [../../first-principles/00-adversarial-review-protocol.md](../../first-principles/00-adversarial-review-protocol.md) | 知识研究场景对抗审查协议原始版本 |
-| 第一性原理核心概念术语表 | [../../first-principles/06-concepts-glossary.md](../../first-principles/06-concepts-glossary.md) | 第一性原理思维相关术语，含确认偏差等认知偏差定义 |
-| 第一性原理知识库总览 | [../../first-principles/README.md](../../first-principles/README.md) | 第一性原理知识库入口 |
+| 对抗性审查协议原始规范 | [../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) | 知识研究场景对抗审查协议原始版本 |
+| 第一性原理核心概念术语表 | [../../00-essence-and-thinking/first-principles/06-concepts-glossary.md](../../00-essence-and-thinking/first-principles/06-concepts-glossary.md) | 第一性原理思维相关术语，含确认偏差等认知偏差定义 |
+| 第一性原理知识库总览 | [../../00-essence-and-thinking/first-principles/README.md](../../00-essence-and-thinking/first-principles/README.md) | 第一性原理知识库入口 |
 
 ### 6.2 对抗性审查知识库内部文档
 

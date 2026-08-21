@@ -295,7 +295,7 @@
 
 ## 人机协作
 
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 代理介绍
 
@@ -1364,7 +1364,7 @@
 
 ## 意图对齐
 
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 成本分析
 
@@ -1961,48 +1961,48 @@
 - [05-docker-pycaffe-standalone-build-postmortem](../learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md)
 - [06-examples-test-diff-analysis-report](../learning/caffe-architecture-wiki/06-examples-test-diff-analysis-report.md)
 - [Caffe-Slim 全面架构分析与compat层零侵入替换机制](../learning/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.md)
-- [对抗性审查标准与验证流程](../learning/first-principles/00-adversarial-review-protocol.md)
-- [第一性原理的哲学起源与发展历程](../learning/first-principles/01-philosophy-origins.md)
-- [物理学中的第一性原理](../learning/first-principles/02-physics-applications.md)
-- [第一性原理商业创新实践案例](../learning/first-principles/03-business-innovation-cases.md)
-- [第一性原理核心学者与实践者论述汇编](../learning/first-principles/04-key-thinkers-quotes.md)
-- [第一性原理学术资源与推荐阅读](../learning/first-principles/05-academic-resources.md)
-- [第一性原理核心概念术语表与思维方式对比](../learning/first-principles/06-concepts-glossary.md)
-- [第一性原理发展时间线](../learning/first-principles/07-timeline.md)
-- [第一性原理方法论框架与实践指南](../learning/first-principles/08-methodology-framework.md)
-- [延伸阅读与资源索引](../learning/first-principles/09-further-reading.md)
-- [来源验证档案与对抗性审查记录](../learning/first-principles/10-source-validation-log.md)
-- [第三方外部评审记录](../learning/first-principles/11-external-review.md)
-- [第一性原理思维训练题库](../learning/first-principles/12-exercises.md)
-- [第一性原理思维的认知科学基础](../learning/first-principles/13-cognitive-science-foundations.md)
-- [AI时代的第一性原理：人机协同的思维增强](../learning/first-principles/14-first-principles-in-ai-era.md)
-- [第一性原理与类比推理的适用边界研究](../learning/first-principles/16-boundary-conditions.md)
-- [生物学中的第一性原理思维案例](../learning/first-principles/15-cross-domain-cases/biology.md)
-- [计算机科学中的第一性原理思维案例](../learning/first-principles/15-cross-domain-cases/computer-science.md)
-- [数学中的第一性原理思维案例](../learning/first-principles/15-cross-domain-cases/mathematics.md)
-- [社会科学中的第一性原理思维案例](../learning/first-principles/15-cross-domain-cases/social-sciences.md)
-- [跨文化对抗性审查标准与"反向语义漂移"防御机制](../learning/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md)
-- [道家哲学核心概念：道、德、自然、无为](../learning/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md)
-- [儒家思想核心概念：本、体用、格物致知、诚](../learning/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md)
-- [墨家方法论核心概念：三表法、类、故、理](../learning/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md)
-- [佛教因明学核心概念：现量、比量、宗因喻](../learning/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md)
-- [跨文化四维比较框架与比较矩阵](../learning/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md)
-- [与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架](../learning/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md)
-- [跨文化第一性原理思维方法论与操作指南](../learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md)
-- [跨文化概念对照总表](../learning/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md)
-- [术语统一表](../learning/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md)
-- [中西哲学根本性思维发展时间线](../learning/first-principles/chinese-philosophy-parallels/10-timeline.md)
-- [来源验证日志](../learning/first-principles/chinese-philosophy-parallels/11-source-validation-log.md)
-- [第一性原理思维训练题库 — 使用指南](../learning/first-principles/exercises/00-intro.md)
-- [Step 1 专项练习——问题定义与边界澄清](../learning/first-principles/exercises/01-step1-problem-definition.md)
-- [Step 2 专项练习——现有方案与假设列举](../learning/first-principles/exercises/02-step2-assumptions.md)
-- [Step 3 专项练习——拆解至基本要素](../learning/first-principles/exercises/03-step3-decomposition.md)
-- [Step 4 专项练习——质疑与验证](../learning/first-principles/exercises/04-step4-questioning.md)
-- [Step 5 专项练习——从基本原理重新构建](../learning/first-principles/exercises/05-step5-reconstruction.md)
-- [Step 6 专项练习——验证与迭代](../learning/first-principles/exercises/06-step6-validation.md)
-- [误区识别专项练习](../learning/first-principles/exercises/07-pitfalls.md)
-- [综合案例分析](../learning/first-principles/exercises/08-cases.md)
-- [练习实践指南](../learning/first-principles/exercises/09-practice-guide.md)
+- [对抗性审查标准与验证流程](../learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
+- [第一性原理的哲学起源与发展历程](../learning/00-essence-and-thinking/first-principles/01-philosophy-origins.md)
+- [物理学中的第一性原理](../learning/00-essence-and-thinking/first-principles/02-physics-applications.md)
+- [第一性原理商业创新实践案例](../learning/00-essence-and-thinking/first-principles/03-business-innovation-cases.md)
+- [第一性原理核心学者与实践者论述汇编](../learning/00-essence-and-thinking/first-principles/04-key-thinkers-quotes.md)
+- [第一性原理学术资源与推荐阅读](../learning/00-essence-and-thinking/first-principles/05-academic-resources.md)
+- [第一性原理核心概念术语表与思维方式对比](../learning/00-essence-and-thinking/first-principles/06-concepts-glossary.md)
+- [第一性原理发展时间线](../learning/00-essence-and-thinking/first-principles/07-timeline.md)
+- [第一性原理方法论框架与实践指南](../learning/00-essence-and-thinking/first-principles/08-methodology-framework.md)
+- [延伸阅读与资源索引](../learning/00-essence-and-thinking/first-principles/09-further-reading.md)
+- [来源验证档案与对抗性审查记录](../learning/00-essence-and-thinking/first-principles/10-source-validation-log.md)
+- [第三方外部评审记录](../learning/00-essence-and-thinking/first-principles/11-external-review.md)
+- [第一性原理思维训练题库](../learning/00-essence-and-thinking/first-principles/12-exercises.md)
+- [第一性原理思维的认知科学基础](../learning/00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)
+- [AI时代的第一性原理：人机协同的思维增强](../learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.md)
+- [第一性原理与类比推理的适用边界研究](../learning/00-essence-and-thinking/first-principles/16-boundary-conditions.md)
+- [生物学中的第一性原理思维案例](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/biology.md)
+- [计算机科学中的第一性原理思维案例](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/computer-science.md)
+- [数学中的第一性原理思维案例](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/mathematics.md)
+- [社会科学中的第一性原理思维案例](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/social-sciences.md)
+- [跨文化对抗性审查标准与"反向语义漂移"防御机制](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md)
+- [道家哲学核心概念：道、德、自然、无为](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md)
+- [儒家思想核心概念：本、体用、格物致知、诚](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md)
+- [墨家方法论核心概念：三表法、类、故、理](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md)
+- [佛教因明学核心概念：现量、比量、宗因喻](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md)
+- [跨文化四维比较框架与比较矩阵](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md)
+- [与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md)
+- [跨文化第一性原理思维方法论与操作指南](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md)
+- [跨文化概念对照总表](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md)
+- [术语统一表](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md)
+- [中西哲学根本性思维发展时间线](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/10-timeline.md)
+- [来源验证日志](../learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.md)
+- [第一性原理思维训练题库 — 使用指南](../learning/00-essence-and-thinking/first-principles/exercises/00-intro.md)
+- [Step 1 专项练习——问题定义与边界澄清](../learning/00-essence-and-thinking/first-principles/exercises/01-step1-problem-definition.md)
+- [Step 2 专项练习——现有方案与假设列举](../learning/00-essence-and-thinking/first-principles/exercises/02-step2-assumptions.md)
+- [Step 3 专项练习——拆解至基本要素](../learning/00-essence-and-thinking/first-principles/exercises/03-step3-decomposition.md)
+- [Step 4 专项练习——质疑与验证](../learning/00-essence-and-thinking/first-principles/exercises/04-step4-questioning.md)
+- [Step 5 专项练习——从基本原理重新构建](../learning/00-essence-and-thinking/first-principles/exercises/05-step5-reconstruction.md)
+- [Step 6 专项练习——验证与迭代](../learning/00-essence-and-thinking/first-principles/exercises/06-step6-validation.md)
+- [误区识别专项练习](../learning/00-essence-and-thinking/first-principles/exercises/07-pitfalls.md)
+- [综合案例分析](../learning/00-essence-and-thinking/first-principles/exercises/08-cases.md)
+- [练习实践指南](../learning/00-essence-and-thinking/first-principles/exercises/09-practice-guide.md)
 - [第1章 - 项目概述与快速开始](../learning/intelligent-terminal-wiki/01-overview.md)
 - [第2章 - 整体架构设计](../learning/intelligent-terminal-wiki/02-architecture.md)
 - [第3章 - WTA Rust 核心 - Master 多路复用器](../learning/intelligent-terminal-wiki/03-wta-master.md)
@@ -2638,7 +2638,7 @@
 
 ## 知识建构
 
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 知识标准
 
@@ -2792,7 +2792,7 @@
 - [Vibe Coding 两大神级 Prompt](../learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 - [F - 第一性原理 (First Principles)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/06-f-first-principles.md)
 - [F第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 等保2.0
 
@@ -2929,7 +2929,7 @@
 
 ## 自由
 
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 自由文本
 
@@ -3050,7 +3050,7 @@
 
 ## 认知悬浮
 
-- [《你以为的自由是一种幻觉》第一性原理分析](../learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
+- [《你以为的自由是一种幻觉》第一性原理分析](../learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md)
 
 ## 认知框架
 

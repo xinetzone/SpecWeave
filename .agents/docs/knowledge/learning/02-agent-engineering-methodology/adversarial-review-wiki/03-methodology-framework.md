@@ -106,7 +106,7 @@ status: "completed"
 | **过度简化偏差** | 将复杂理论简化为口号式总结；忽略重要边界条件；无信息量表述 | 保留理论必要复杂性；明确标注适用范围与边界条件 |
 | **跨领域语义漂移** ⭐ | 同一术语在不同领域含义完全不同，默认按本领域含义理解 | 阶段0概念扫描；建立术语表；歧义术语首次出现标注领域语境 |
 
-📚 详细认知科学基础参见：[13-cognitive-science-foundations.md](../../first-principles/13-cognitive-science-foundations.md)
+📚 详细认知科学基础参见：[13-cognitive-science-foundations.md](../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)
 
 ---
 
@@ -360,7 +360,7 @@ AI写代码（或做方案）的核心矛盾：
 
 🟢A级
 
-- **第一性原理**：[02-philosophy-origins.md](02-philosophy-origins.md) + [08-methodology-framework.md](../../first-principles/08-methodology-framework.md)——管"**做对的事**"，方向正确、根因被真正定位
+- **第一性原理**：[02-philosophy-origins.md](02-philosophy-origins.md) + [08-methodology-framework.md](../../00-essence-and-thinking/first-principles/08-methodology-framework.md)——管"**做对的事**"，方向正确、根因被真正定位
 - **对抗性审查**：本文档——管"**把事做对**"，实现稳健、边界被覆盖、能稳定上线
 - **关系**：二者构成"生成-验证"完整闭环，是质量保障的阴阳两面
 

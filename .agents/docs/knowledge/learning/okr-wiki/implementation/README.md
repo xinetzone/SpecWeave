@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-implementation-index"
 title: "实施指南"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/implementation/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # 实施指南

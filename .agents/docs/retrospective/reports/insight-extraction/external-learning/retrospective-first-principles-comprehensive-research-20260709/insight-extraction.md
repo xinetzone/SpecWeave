@@ -385,7 +385,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 | 洞察 | 支撑数据 | 数据来源 |
 |------|---------|---------|
 | 质量内建 | 0返工（vs 同类项目通常15-30%返工率） | 执行过程记录 |
-| 来源分级效率 | 77.3%一级来源，审查时间80%集中在20%内容 | [10-source-validation-log.md](../../../../../knowledge/learning/first-principles/10-source-validation-log.md) |
-| 偏差防御 | 主动识别并补充了马斯克的争议案例 | [03-business-innovation-cases.md](../../../../../knowledge/learning/first-principles/03-business-innovation-cases.md) |
-| 跨领域术语 | 术语表包含12个核心概念的跨领域定义 | [06-concepts-glossary.md](../../../../../knowledge/learning/first-principles/06-concepts-glossary.md) |
-| 可审计性 | 12项关键事实完整记录验证过程 | [10-source-validation-log.md](../../../../../knowledge/learning/first-principles/10-source-validation-log.md) |
+| 来源分级效率 | 77.3%一级来源，审查时间80%集中在20%内容 | [10-source-validation-log.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |
+| 偏差防御 | 主动识别并补充了马斯克的争议案例 | [03-business-innovation-cases.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/03-business-innovation-cases.md) |
+| 跨领域术语 | 术语表包含12个核心概念的跨领域定义 | [06-concepts-glossary.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/06-concepts-glossary.md) |
+| 可审计性 | 12项关键事实完整记录验证过程 | [10-source-validation-log.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |

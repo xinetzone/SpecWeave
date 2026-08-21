@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-methods-index"
 title: "方法论"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/methods/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # 方法论

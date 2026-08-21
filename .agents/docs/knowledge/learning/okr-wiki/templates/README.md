@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-templates-index"
 title: "模板库"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/templates/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # 模板库

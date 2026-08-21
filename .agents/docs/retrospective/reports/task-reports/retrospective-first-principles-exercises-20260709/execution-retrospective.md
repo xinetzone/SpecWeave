@@ -35,8 +35,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/tas
 
 | 文件 | 类型 | 行数 | 说明 |
 |------|------|------|------|
-| docs/knowledge/learning/first-principles/12-exercises.md | 新增 | 2108 | 思维训练题库主文件 |
-| docs/knowledge/learning/first-principles/README.md | 修改 | — | 更新至v1.3，新增导航 |
+| docs/knowledge/learning/00-essence-and-thinking/first-principles/12-exercises.md | 新增 | 2108 | 思维训练题库主文件 |
+| docs/knowledge/learning/00-essence-and-thinking/first-principles/README.md | 修改 | — | 更新至v1.3，新增导航 |
 | .trae/specs/core-foundation/create-first-principles-exercises/spec.md | 新增 | — | PRD文档 |
 | .trae/specs/core-foundation/create-first-principles-exercises/tasks.md | 新增 | — | 实施计划（8任务） |
 | .trae/specs/core-foundation/create-first-principles-exercises/checklist.md | 新增 | — | 验证清单 |

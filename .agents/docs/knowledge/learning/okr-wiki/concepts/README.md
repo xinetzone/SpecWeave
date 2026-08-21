@@ -2,7 +2,7 @@
 id: "docs-knowledge-learning-okr-wiki-concepts-index"
 title: "核心概念"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/concepts/README.toml"
-category: "knowledge"
+category: "learning"
 date: "2026-07-09"
 ---
 # 核心概念

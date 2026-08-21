@@ -82,7 +82,7 @@ status: "completed"
 
 **核心目标**：确保知识的可信度、逻辑一致性、来源可追溯，防御认知偏差对知识构建的污染。
 
-**核心方法论**（参考 [first-principles/00-adversarial-review-protocol.md](../../first-principles/00-adversarial-review-protocol.md)）：
+**核心方法论**（参考 [first-principles/00-adversarial-review-protocol.md](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)）：
 
 #### 3.1.1 来源验证体系
 - **三级来源分级**：一级来源（Gold Standard，同行评审/权威学术出版）、二级来源（Silver Standard，专业机构/深度报道）、三级来源（Bronze Standard，个人博客/自媒体，仅作线索）
@@ -197,7 +197,7 @@ status: "completed"
 
 本文件核心内容提炼自以下项目内已验证文档：
 
-1. **知识研究场景方法论**：[first-principles/00-adversarial-review-protocol.md](../../first-principles/00-adversarial-review-protocol.md) 🟢A级
+1. **知识研究场景方法论**：[first-principles/00-adversarial-review-protocol.md](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) 🟢A级
    - 来源分级标准、可信度评分体系、五维验证流程、10类认知偏差清单
 
 2. **AI协作/代码场景方法论**：[adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) 🟢A级
