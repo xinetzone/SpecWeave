@@ -55,14 +55,6 @@
 | knowledge/learning/first-principles/15-cross-domain-cases | 4 |
 | knowledge/learning/first-principles/exercises | 10 |
 | knowledge/learning/llm-token-optimization | 1 |
-| knowledge/learning/okr-wiki | 1 |
-| knowledge/learning/okr-wiki/appendix | 1 |
-| knowledge/learning/okr-wiki/concepts | 6 |
-| knowledge/learning/okr-wiki/implementation | 6 |
-| knowledge/learning/okr-wiki/methods | 4 |
-| knowledge/learning/okr-wiki/scoring | 4 |
-| knowledge/learning/okr-wiki/templates | 7 |
-| knowledge/learning/okr-wiki/tools | 2 |
 | learning | 482 |
 | learning/07-vendor-product-learning | 11 |
 | methods | 6 |
@@ -73,7 +65,7 @@
 | standards | 1 |
 | tech | 36 |
 | troubleshooting | 4 |
-| unknown | 280 |
+| unknown | 311 |
 
 ## 按类别浏览
 
@@ -718,85 +710,14 @@
 |------|------|------|------|
 | [LLM Token节省策略实际应用案例集](learning/02-agent-engineering-methodology/llm-token-optimization/04-cases/01-case-studies.md) |  | 2026-08-01 | - |
 
-### knowledge/learning/okr-wiki
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [叮当OKR帮助手册Wiki](learning/okr-wiki/00-overview.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/appendix
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [术语表与参考资源](learning/okr-wiki/appendix/glossary.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/concepts
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [Key Results（关键结果）的特征](learning/okr-wiki/concepts/key-results-features.md) |  | 2026-07-08 | - |
-| [Objective（目标）的特征](learning/okr-wiki/concepts/objective-features.md) |  | 2026-07-08 | - |
-| [OKR的历史背景](learning/okr-wiki/concepts/okr-history.md) |  | 2026-07-08 | - |
-| [OKR的核心原则](learning/okr-wiki/concepts/okr-principles.md) |  | 2026-07-08 | - |
-| [OKR与KPI的区别](learning/okr-wiki/concepts/okr-vs-kpi.md) |  | 2026-07-08 | - |
-| [什么是OKR](learning/okr-wiki/concepts/what-is-okr.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/implementation
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [OKR对齐机制](learning/okr-wiki/implementation/aligning-okr.md) |  | 2026-07-08 | - |
-| [OKR常见误区与避坑建议](learning/okr-wiki/implementation/common-mistakes.md) |  | 2026-07-08 | - |
-| [OKR制定流程](learning/okr-wiki/implementation/creating-okr.md) |  | 2026-07-08 | - |
-| [OKR启动阶段](learning/okr-wiki/implementation/getting-started.md) |  | 2026-07-08 | - |
-| [OKR周期设置](learning/okr-wiki/implementation/setting-cycle.md) |  | 2026-07-08 | - |
-| [OKR跟进与复盘](learning/okr-wiki/implementation/tracking-progress.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/methods
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [自下而上的共创方法](learning/okr-wiki/methods/bottom-up-approach.md) |  | 2026-07-08 | - |
-| [KR共创七步操作法](learning/okr-wiki/methods/kr-co-creation.md) |  | 2026-07-08 | - |
-| [KR量化的七类方法](learning/okr-wiki/methods/kr-quantification-methods.md) |  | 2026-07-08 | - |
-| [自上而下的共创方法](learning/okr-wiki/methods/top-down-approach.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/scoring
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [OKR评分方法](learning/okr-wiki/scoring/how-to-score.md) |  | 2026-07-08 | - |
-| [OKR与绩效的关系](learning/okr-wiki/scoring/okr-vs-performance.md) |  | 2026-07-08 | - |
-| [OKR复盘流程](learning/okr-wiki/scoring/review-process.md) |  | 2026-07-08 | - |
-| [OKR打分模板](learning/okr-wiki/scoring/scoring-templates.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/templates
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [公司级OKR示例](learning/okr-wiki/templates/company-okr-examples.md) |  | 2026-07-08 | - |
-| [部门级OKR示例](learning/okr-wiki/templates/department-okr-examples.md) |  | 2026-07-08 | - |
-| [个人级OKR示例](learning/okr-wiki/templates/individual-okr-examples.md) |  | 2026-07-08 | - |
-| [不同行业OKR示例](learning/okr-wiki/templates/industry-examples.md) |  | 2026-07-08 | - |
-| [OKR检查清单](learning/okr-wiki/templates/okr-checklist.md) |  | 2026-07-08 | - |
-| [OKR制定模板](learning/okr-wiki/templates/okr-templates.md) |  | 2026-07-08 | - |
-| [OKR评分与复盘模板](learning/okr-wiki/templates/review-templates.md) |  | 2026-07-08 | - |
-
-### knowledge/learning/okr-wiki/tools
-
-| 标题 | 摘要 | 日期 | 标签 |
-|------|------|------|------|
-| [隐藏关键词设置教程](learning/okr-wiki/tools/hidden-keyword-setting.md) |  | 2026-07-08 | - |
-| [权限管理与安全设置](learning/okr-wiki/tools/permission-management.md) |  | 2026-07-08 | - |
-
 ### learning
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层与独立专题，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单 | 2026-08-22 | categories、learning-wiki、knowledge-architecture、topic-classification、learning-path |
+| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单 | 2026-08-22 | categories、learning-wiki、knowledge-architecture、topic-classification、learning-path |
 | [Learning Wiki 学习路径推荐表](learning/LEARNING-PATHS.md) | Learning Wiki知识库59个Wiki的系统化学习路径推荐，包含8主题内部学习顺序、前置依赖、关联知识点、角色定制路径 | 2026-07-05 | learning-path、study-guide、prerequisites、knowledge-graph、curriculum |
-| [《你以为的自由是一种幻觉》第一性原理分析](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md) | 以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。 | 2026-07-13 | 第一性原理、AI时代认知、自由、认知悬浮、意图对齐、人机协作、知识建构 |
 | [核心概念解读](learning/00-essence-and-thinking/boshu-laozi-wiki/03-core-concepts.md) | 帛书《老子》核心概念——道、德、无为、自然、反（返）、弱——的义理解读，以及帛书用字差异（恒/常、邦/国、弗/不、大器免成/晚成等）带来的义理分野。 | 2026-08-19 | 帛书老子、道德经、核心概念、道、德、无为、自然、版本对照 |
+| [《你以为的自由是一种幻觉》第一性原理分析](learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md) | 以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。 | 2026-07-13 | 第一性原理、AI时代认知、自由、认知悬浮、意图对齐、人机协作、知识建构 |
 | [Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈](learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | 系统讲解Agent通信四大协议：MCP（Anthropic 2024，工具层）、ACP（IBM/BeeAI 2025，本地Agent协作）、A2A（Google 2025，跨厂商Agent协作）、ANP（去中心化网络层）。包含协议分层架构、N×M集成问题分析、各协议技术规范对比、代码示例与快速参考。本文档已原子化，详细内容见 agent-communication-protocols/ 子目录。 | 2026-07-03 | agent-protocols、mcp、acp、a2a、anp、multi-agent、communication、open-standard、linux-foundation、interoperability |
 | [Agent Skills 开放标准完整指南](learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | 基于 agentskills.io 官方完整教程（快速入门/最佳实践/描述优化/质量评估/脚本使用/客户端实现）和 external/agentskills 源码深度核实的 Agent Skills 开放标准完整指南。覆盖目录结构、SKILL.md格式规范、渐进式披露机制、自包含脚本设计、触发准确率优化、评估驱动迭代、skills-ref验证工具使用、客户端5步集成指南，以及与本项目现有Skill体系的对比分析。本文档已原子化，详细内容见 agent-skills-wiki/ 子目录。 | 2026-07-02 | agent-skills、skills、open-standard、specification、ai-agent、skill-development、progressive-disclosure、skills-ref、client-implementation、skill-evals |
 | [Agent视角：Interface/API/ABI/Protocol四层技术栈总览](learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) | 从AI Agent技术实现视角出发的Interface/API/ABI/Protocol四层抽象总览，聚焦MCP/ACP/A2A/ANP生态中的具体体现 | 2026-07-03 | agent、mcp、interface、api、abi、protocol、a2a |
@@ -1638,6 +1559,38 @@
 | [秒悟大使入驻指南（结构化版）](learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/miaowu-ambassador-guide.md) |  | 2026-07-30 | 七概念、E、萃取、秒悟大使、入驻指南、推广返佣 |
 | [秒悟Meoo实训案例 - 事实采集](learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/01-facts.md) |  | 2026-07-31 | 七概念、R、事实、秒悟、Meoo、实训案例 |
 | [秒悟Meoo实训案例 - 核心洞察](learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/02-insights.md) |  | 2026-07-31 | 七概念、I、洞察、秒悟、Meoo |
+| [叮当OKR帮助手册Wiki](learning/07-vendor-product-learning/okr-wiki/00-overview.md) |  | 2026-07-08 | - |
+| [OKR制定指南Wiki手册](learning/07-vendor-product-learning/okr-wiki/okr-guide.md) |  | 2026-07-08 | - |
+| [术语表与参考资源](learning/07-vendor-product-learning/okr-wiki/appendix/glossary.md) |  | 2026-07-08 | - |
+| [Key Results（关键结果）的特征](learning/07-vendor-product-learning/okr-wiki/concepts/key-results-features.md) |  | 2026-07-08 | - |
+| [Objective（目标）的特征](learning/07-vendor-product-learning/okr-wiki/concepts/objective-features.md) |  | 2026-07-08 | - |
+| [OKR的历史背景](learning/07-vendor-product-learning/okr-wiki/concepts/okr-history.md) |  | 2026-07-08 | - |
+| [OKR的核心原则](learning/07-vendor-product-learning/okr-wiki/concepts/okr-principles.md) |  | 2026-07-08 | - |
+| [OKR与KPI的区别](learning/07-vendor-product-learning/okr-wiki/concepts/okr-vs-kpi.md) |  | 2026-07-08 | - |
+| [什么是OKR](learning/07-vendor-product-learning/okr-wiki/concepts/what-is-okr.md) |  | 2026-07-08 | - |
+| [OKR对齐机制](learning/07-vendor-product-learning/okr-wiki/implementation/aligning-okr.md) |  | 2026-07-08 | - |
+| [OKR常见误区与避坑建议](learning/07-vendor-product-learning/okr-wiki/implementation/common-mistakes.md) |  | 2026-07-08 | - |
+| [OKR制定流程](learning/07-vendor-product-learning/okr-wiki/implementation/creating-okr.md) |  | 2026-07-08 | - |
+| [OKR启动阶段](learning/07-vendor-product-learning/okr-wiki/implementation/getting-started.md) |  | 2026-07-08 | - |
+| [OKR周期设置](learning/07-vendor-product-learning/okr-wiki/implementation/setting-cycle.md) |  | 2026-07-08 | - |
+| [OKR跟进与复盘](learning/07-vendor-product-learning/okr-wiki/implementation/tracking-progress.md) |  | 2026-07-08 | - |
+| [自下而上的共创方法](learning/07-vendor-product-learning/okr-wiki/methods/bottom-up-approach.md) |  | 2026-07-08 | - |
+| [KR共创七步操作法](learning/07-vendor-product-learning/okr-wiki/methods/kr-co-creation.md) |  | 2026-07-08 | - |
+| [KR量化的七类方法](learning/07-vendor-product-learning/okr-wiki/methods/kr-quantification-methods.md) |  | 2026-07-08 | - |
+| [自上而下的共创方法](learning/07-vendor-product-learning/okr-wiki/methods/top-down-approach.md) |  | 2026-07-08 | - |
+| [OKR评分方法](learning/07-vendor-product-learning/okr-wiki/scoring/how-to-score.md) |  | 2026-07-08 | - |
+| [OKR与绩效的关系](learning/07-vendor-product-learning/okr-wiki/scoring/okr-vs-performance.md) |  | 2026-07-08 | - |
+| [OKR复盘流程](learning/07-vendor-product-learning/okr-wiki/scoring/review-process.md) |  | 2026-07-08 | - |
+| [OKR打分模板](learning/07-vendor-product-learning/okr-wiki/scoring/scoring-templates.md) |  | 2026-07-08 | - |
+| [公司级OKR示例](learning/07-vendor-product-learning/okr-wiki/templates/company-okr-examples.md) |  | 2026-07-08 | - |
+| [部门级OKR示例](learning/07-vendor-product-learning/okr-wiki/templates/department-okr-examples.md) |  | 2026-07-08 | - |
+| [个人级OKR示例](learning/07-vendor-product-learning/okr-wiki/templates/individual-okr-examples.md) |  | 2026-07-08 | - |
+| [不同行业OKR示例](learning/07-vendor-product-learning/okr-wiki/templates/industry-examples.md) |  | 2026-07-08 | - |
+| [OKR检查清单](learning/07-vendor-product-learning/okr-wiki/templates/okr-checklist.md) |  | 2026-07-08 | - |
+| [OKR制定模板](learning/07-vendor-product-learning/okr-wiki/templates/okr-templates.md) |  | 2026-07-08 | - |
+| [OKR评分与复盘模板](learning/07-vendor-product-learning/okr-wiki/templates/review-templates.md) |  | 2026-07-08 | - |
+| [隐藏关键词设置教程](learning/07-vendor-product-learning/okr-wiki/tools/hidden-keyword-setting.md) |  | 2026-07-08 | - |
+| [权限管理与安全设置](learning/07-vendor-product-learning/okr-wiki/tools/permission-management.md) |  | 2026-07-08 | - |
 | [raw-content](learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/raw-content.md) |  |  | - |
 | [oray-official-website-core-notes](learning/07-vendor-product-learning/oray/oray-official-website-core-notes.md) |  |  | - |
 | [向日葵三个服务页面系统性学习与深度洞察分析报告](learning/07-vendor-product-learning/sunlogin/sunlogin-service-pages-analysis.md) |  | 2026-07-06 | 向日葵、Sunlogin、屏幕墙、CLI、MCP、AweSun、远程控制、AI Agent、命令行、产品分析、服务页面分析 |
@@ -1678,7 +1631,6 @@
 | [第11章 - 日志系统与调试](learning/08-systems-infrastructure/intelligent-terminal-wiki/11-logging-debugging.md) |  | 2026-08-03 | - |
 | [第12章 - 配置与设置详解](learning/08-systems-infrastructure/intelligent-terminal-wiki/12-configuration.md) |  | 2026-08-03 | - |
 | [第13章 - 架构设计模式萃取](learning/08-systems-infrastructure/intelligent-terminal-wiki/13-design-patterns.md) |  | 2026-08-03 | - |
-| [OKR制定指南Wiki手册](learning/okr-wiki/okr-guide.md) |  | 2026-07-08 | - |
 | [Caffe Docker 容器构建与运行 SOP](operations/caffe-docker-sop.md) |  | 2026-07-22 | caffe、docker、sop、build、runtime、verification |
 | [DevContainer 变体构建与 CI 流水线操作手册](operations/devcontainer-ci-build-manual.md) |  | 2026-08-07 | devcontainer、docker、ci、github-actions、build、onnx-pytorch、operations |
 | [discourse-api-research](operations/discourse-api-research.md) |  |  | - |
@@ -1692,4 +1644,4 @@
 
 ---
 
-*索引自动生成于 2026-08-21 12:20:11*
+*索引自动生成于 2026-08-21 12:32:03*

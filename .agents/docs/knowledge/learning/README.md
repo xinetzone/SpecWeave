@@ -172,14 +172,6 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化哲学比较（chinese-philosophy-parallels/）、思维训练题库等子模块（v2.0） | [first-principles/](00-essence-and-thinking/first-principles/README.md) |
 | 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为第一性原理跨文化道家部分提供原典深读材料，与第一性原理平级 | [boshu-laozi-wiki/](00-essence-and-thinking/boshu-laozi-wiki/00-overview.md) |
 
-### 独立专题：OKR目标管理
-
-> 通用组织管理方法论，独立于00-08技术主题体系之外。
-
-| Wiki | 说明 | 链接 |
-|------|------|------|
-| OKR方法论知识库 | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件） | [okr-wiki/](okr-wiki/00-overview.md) |
-
 ---
 
 ## 🛤️ 推荐学习路径

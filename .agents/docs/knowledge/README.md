@@ -2,31 +2,31 @@
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：1138
-- **分类数**：63
-- **标签数**：2243
+- **总条目数**：1288
+- **分类数**：57
+- **标签数**：2514
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
 | architecture | 1 | [architecture](category-index.md#architecture) |
-| best-practices | 43 | [best-practices](best-practices/README.md) |
+| best-practices | 47 | [best-practices](best-practices/README.md) |
 | case-study | 5 | [case-study](category-index.md#case-study) |
-| decisions | 5 | [decisions](decisions/README.md) |
+| decisions | 6 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](category-index.md#docs) |
 | examples | 6 | [examples](category-index.md#examples) |
-| knowledge | 357 | [knowledge](category-index.md#knowledge) |
-| learning | 422 | [learning](learning/README.md) |
+| knowledge | 336 | [knowledge](category-index.md#knowledge) |
+| learning | 493 | [learning](learning/README.md) |
 | methods | 6 | [methods](category-index.md#methods) |
-| operations | 19 | [operations](operations/README.md) |
+| operations | 21 | [operations](operations/README.md) |
 | platform | 1 | [platform](category-index.md#platform) |
 | reference | 3 | [reference](category-index.md#reference) |
 | research | 1 | [research](category-index.md#research) |
 | standards | 1 | [standards](category-index.md#standards) |
-| tech | 29 | [tech](tech/README.md) |
+| tech | 36 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 225 | [unknown](category-index.md#unknown) |
+| unknown | 311 | [unknown](category-index.md#unknown) |
 
 ## 辅助索引
 
@@ -37,16 +37,16 @@
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [异步生成接口'两段式'轮询模式](best-practices/api-async-polling-pattern.md) | 2026-08-07 | best-practices |
-| [API 错误处理与重试策略](best-practices/api-error-handling-retry-strategy.md) | 2026-08-07 | best-practices |
-| [API 集成模式组合实战示例：AI 播客自动生成](best-practices/api-integration-worked-example.md) | 2026-08-07 | best-practices |
-| [AskUserQuestion 分步交互式收集参数模式](best-practices/api-interactive-parameter-collection.md) | 2026-08-07 | best-practices |
-| [用 @file 传长文本请求体](best-practices/api-long-text-file-parameter.md) | 2026-08-07 | best-practices |
-| [硬编码路径批量修复工具使用指南（fix-hardcoded-paths.py）](best-practices/fix-hardcoded-paths-guide.md) | 2026-08-07 | best-practices |
-| [模型调用环境变量脱敏模板（.env 字段清单）](best-practices/model-env-template.md) | 2026-08-07 | best-practices |
-| [GLM 大模型调用可复用示例（本地加载 + API 调用）](tech/glm-model-call-example.md) | 2026-08-07 | tech |
-| [ListenHub API 规范——Authentication（认证与基础 URL）](tech/listenhub-api-authentication.md) | 2026-08-07 | tech |
-| [ListenHub API 规范——Image Generation（AI 图片生成）](tech/listenhub-api-image.md) | 2026-08-07 | tech |
+| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | 2026-08-22 | learning |
+| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | 2026-08-21 | best-practices |
+| [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | 2026-08-21 | best-practices |
+| [Collection 与命名空间](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/collection.md) | 2026-08-21 | unknown |
+| [Config 配置系统](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/config.md) | 2026-08-21 | unknown |
+| [Context 执行上下文](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/context.md) | 2026-08-21 | unknown |
+| [Executor 执行器](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/executor.md) | 2026-08-21 | unknown |
+| [Loader 任务加载](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/loader.md) | 2026-08-21 | unknown |
+| [Parser 参数解析](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/parser.md) | 2026-08-21 | unknown |
+| [Program CLI 入口](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/program.md) | 2026-08-21 | unknown |
 
 ## 相关资源
 
@@ -65,6 +65,9 @@
 - [Windows磁盘空间诊断与WSL虚拟磁盘优化实践复盘](../retrospective/2026-07-22-windows-disk-cleanup-wsl-optimization.md)
 - [caffe-ffi Backward日志规划与性能监控规范里程碑复盘](../retrospective/2026-07-31-caffe-ffi-backward-logging-milestone-retro.md)
 - [Anime.js 4.5+Three.js适配器学习分析任务七概念复盘报告](../retrospective/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
+- [SpecWeave / external/chaos/ai/xmnn-runtime Kernelspec 路径不一致复盘报告](../retrospective/2026-08-11-xmnn-runtime-kernelspec-path-retro.md)
+- [ReelVibe 短视频网站开发复盘报告](../retrospective/2026-08-12-short-video-site-ai-fullstack-retro.md)
+- [Docker devcontainer-base 镜像深度压缩里程碑复盘](../retrospective/2026-08-18-docker-image-deep-slim-milestone.md)
 - [项目硬编码问题系统性复盘报告](../retrospective/hardcode-retrospective-report.md)
 - [元方法论自举执行日志](../retrospective/meta-bootstrap-execution-log.md)
 - [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/prompt-extraction.md)
@@ -105,4 +108,4 @@
 
 ---
 
-*索引自动生成于 2026-08-07 15:46:04*
+*索引自动生成于 2026-08-21 12:32:03*
