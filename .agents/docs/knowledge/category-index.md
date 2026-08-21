@@ -10,7 +10,7 @@
 | 分类 | 数量 |
 |------|------|
 | architecture | 1 |
-| best-practices | 43 |
+| best-practices | 44 |
 | case-study | 5 |
 | decisions | 5 |
 | docs | 8 |
@@ -99,6 +99,7 @@
 | [Caffe AVE Pooling梯度路由：均匀分配模式](best-practices/caffe-pooling-ave-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、ave-pooling、c++、numpy、test-pattern |
 | [Caffe MAX Pooling梯度路由：Winner-Takes-All模式](best-practices/caffe-pooling-max-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、max-pooling、c++、numpy、test-pattern |
 | [IDE Agent 环境下 CLI 工具配置操作手册](best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
+| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。沉淀「任务编排 vs 用户接口」二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。 | 2026-08-21 | cli、invoke、typer、click、task-runner、selection、anti-pattern、dx、python |
 | [CMake项目模块化重构最佳实践](best-practices/cmake-modularization-best-practices.md) |  | 2026-07-29 | CMake、modularization、build-system、refactoring、cross-platform、best-practice |
 | [编译型Python包数据文件生命周期管理](best-practices/compiled-package-data-file-lifecycle.md) | 基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Python包数据文件的完整生命周期管理方法：编译阶段显式复制、打包阶段完整性验证、运行阶段环境变量设置与文件校验。 | 2026-07-23 | Python、Nuitka、Cython、wheel、data-files、packaging、TVM、relay |
 | [并发代码安全审查与Bug修复闭环指南](best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
