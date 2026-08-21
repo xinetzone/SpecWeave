@@ -334,7 +334,7 @@ RAG检索排序只考虑语义相似度/关键词匹配，不考虑trust_tier和
 |---------|---------|------|
 | [provenance-driven-trust.md](provenance-driven-trust.md) | 基础设施层互补 | 溯源驱动信任是信任**基础设施**（哈希校验、仅追加日志、Sign-off凭证），本模式是元数据**schema设计原则**（字段优先级），两者构成完整信任栈 |
 | [verifiable-knowledge-claim.md](verifiable-knowledge-claim.md) | 具体实现手段 | 可验证知识声明是machine-confirmed的核心升级路径——attester验证通过才能从unverified升级为machine-confirmed |
-| [credibility-dual-track.md](../../methodology-patterns/research-knowledge/credibility-dual-track.md) | 来源评估互补 | 可信度双轨制评估来源可信度（人写vs机器生成），本模式管理知识条目自身的trust_tier |
+| [credibility-dual-track.md](../methodology-patterns/research-knowledge/credibility-dual-track.md) | 来源评估互补 | 可信度双轨制评估来源可信度（人写vs机器生成），本模式管理知识条目自身的trust_tier |
 | [knowledge-as-code-paradigm.md](knowledge-as-code-paradigm.md) | 架构思想支撑 | 知识即代码提供"复用SE范式"的思想；本模式中trust_tier类比代码review状态（draft/CI-passed/approved），stale_after类比@Deprecated |
 | [metadata-layering.md](metadata-layering.md) | 架构分层指导 | 元数据分层模式提供分层架构（内容层/元数据层/溯源层/凭证层），本模式规定各层的优先级顺序 |
 
