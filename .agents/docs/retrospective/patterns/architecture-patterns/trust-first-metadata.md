@@ -2,13 +2,14 @@
 id: "trust-first-metadata"
 source: "../../../reports/competitive-analysis/retrospective-knowledge-catalog-wiki-20260815/insights/insight-03-trust-first.md"
 maturity: "L1"
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 documentation_level: "standard"
 related_patterns:
   - "provenance-driven-trust"
   - "verifiable-knowledge-claim"
   - "credibility-dual-track"
+  - "provenance-self-contained"
   - "knowledge-as-code-paradigm"
   - "metadata-layering"
 tags:
@@ -179,6 +180,19 @@ Agent使用元数据时必须遵循信任感知策略：
 - 过期后自动从Agent优先检索结果中移除（降级为unverified，仅在显式搜索历史时出现）
 - 被验证为错误的知识标记`status: deprecated`并记录替代链接，不是直接删除（保留历史审计轨迹）
 
+### 步骤6：machine-confirmed 可复核性——进程登记机制
+
+当 `verified` 全为非 `human:` 参与者（即 `machine-confirmed` 层级），其**可验证性取决于所指 actor 是否已登记且可被独立第三方复核**。这是"信任真实化"的关键落地，也是本模式在 OKF bundle 审查中补充确立的机制。
+
+**痛点**：只填 `verified: { by: process:<id> }` 而不登记该进程，`verified` 就退化为"自证其说的戳记"——没有任何文档说明这个 `process:<id>` 是什么、如何运行、如何复现核验，机器与第三方都无法审计。
+
+**标准步骤**：
+1. **登记进程文档**：为该 `process:<id>` 创建独立登记文档，必含四要素——标识（唯一、大小写固定）、类型（一次性会话/稳定进程）、定义（做什么）、复核路径（如何复现核验）。
+2. **统一引用指向**：所有文档的 `verified.by` 统一指向同一登记标识（进程标识大小写不一致会破坏机器追溯性）。
+3. **给出核验记录**：登记文档内附核验事件表（日期/范围/结论），作为该进程对目标文档核验的独立证据。
+
+**实例**（本次审核）：okf-spec bundle 为使 `verified.by` 指向 `process:seven-concepts-v` 的 machine-confirmed 可独立复核，登记了 `references/processes/seven-concepts-v.md`（47 行，含进程标识/定义/复核路径/核验记录），并统一 20 处 `verified.by` 指向该标识（修正了初始 `process:seven-concepts-V` 与 `-v` 大小写不一致问题）。
+
 ## 实战案例
 
 ### 案例1：OKF v0.2（Google Cloud）
@@ -282,6 +296,25 @@ RAG检索排序只考虑语义相似度/关键词匹配，不考虑trust_tier和
 - ❌ 完全确定且永不过时的知识（如数学定理——但仍建议有来源标注）
 - ❌ 实时数据流处理（数据流的信任通过传输层安全如TLS保证，不是元数据层）
 
+## 失败案例
+
+**失败案例1：machine-confirmed 自证戳记（okf-spec bundle 信源核验，2026-08-21）**
+
+在 okf-spec bundle 修复过程中，`verified.by` 字段被填为 `process:seven-concepts-V`，但该进程标识**未登记任何进程文档**，也无独立复核路径。这种"填了机器核验标识却没有可复现实体"的做法，使 `machine-confirmed` 退化为"自证其说的戳记"——机器与第三方都无法审计这个标识是什么、如何运行。该模式原样交付时，信任层级形同虚设。**失败根因**：信任元数据只声明了"由谁核验"，却没保证"所指向的核验者是可复现、可复核的实体"；验证者的可验证性被默认假定，而非显式登记。
+
+**失败案例2：信任字段边缘化（dbt schema.yml 长期反例）**
+
+传统 schema.yml 把信任放可选的嵌套 meta 中，AI 生成的 description 无法与人工写的内容区分，导致团队对自动生成内容的可信度集体失灵——不是单一事故，而是持续性的低信任污染。
+
+## 反目标用户/场景
+
+以下用户/场景**不适用或不适合**该模式，强制套用会造成反效果：
+
+1. **追求极致简单的最小原型/演示**：为一次性 Demo 引入三级 trust_tier + 进程登记机制，对简单场景**无效**且徒增 schema 复杂度，反而拖慢验证经验证的能力闭环。
+2. **信任由外部系统单点保证的网络**：当可信度已由传输层安全（TLS）、单私仓权限等外部机制整体保障时，元数据层信任分级**对**该场景**无效**，属于重复治理。
+3. **用户根本不会按信任消费的场景（纯人工/纯脚本硬读）**：若消费方既不看 trust_tier 也不降级过期知识，本模式的信任字段对提升决策正确性**无效**——它只是无人读取的附加字段。
+4. **永不变更的确定性知识（如数学定理）**：对这类内容强加 stale_after 与复审流程**有害**，会造成无意义的治理成本与误降级风险。
+
 ## 检验标准
 
 | 维度 | 检验点 |
@@ -307,4 +340,8 @@ RAG检索排序只考虑语义相似度/关键词匹配，不考虑trust_tier和
 
 ---
 
-*模式版本：v1.0 | 创建日期：2026-08-17 | maturity: L1（validation_count=1：OKF v0.2实践验证）*
+*模式版本：v1.1 | 创建日期：2026-08-17 | maturity: L1（validation_count=2：OKF v0.2 实践验证 + okf-spec bundle 信任真实化审核）*
+
+## Changelog
+
+- 2026-08-21 | revise | okf-spec 里程碑对抗审查补充：新增步骤6"machine-confirmed 可复核性——进程登记机制"，确立信任真实化落地细节（登记进程文档/统一引用指向/给出核验记录）；validation_count 1→2
