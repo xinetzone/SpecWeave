@@ -85,58 +85,58 @@ graph TB
 如果您主要使用minitest云端产品进行移动端测试，按以下顺序学习：
 
 1. **第一阶段：入门了解**
-   - [minitest入门指南](minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
-   - [什么是minitest](minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
-   - [认识Mini代理](minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
-   - [快速开始](minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
+   - [minitest入门指南](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+   - [什么是minitest](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md)
+   - [认识Mini代理](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md)
+   - [快速开始](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md)
 
 2. **第二阶段：套件管理**
-   - [套件管理总览](minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
-   - [用户故事解析](minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
-   - [编写用户故事](minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
-   - [Mini自动维护套件](minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
+   - [套件管理总览](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md)
+   - [用户故事解析](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md)
+   - [编写用户故事](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md)
+   - [Mini自动维护套件](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md)
 
 3. **第三阶段：运行与分类**
-   - [运行测试总览](minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
-   - [提供应用构建](minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
-   - [触发运行](minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
-   - [阅读运行报告](minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
-   - [问题分类](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
+   - [运行测试总览](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md)
+   - [提供应用构建](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md)
+   - [触发运行](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md)
+   - [阅读运行报告](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md)
+   - [问题分类](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md)
 
 4. **第四阶段：集成与参考**
-   - [集成总览](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
-   - [Cursor/Claude集成](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
-   - [GitHub集成](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
-   - [参考手册](minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
+   - [集成总览](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md)
+   - [Cursor/Claude集成](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md)
+   - [GitHub集成](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md)
+   - [参考手册](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md)
 
 ### 路径二：mobile-use SDK 开发者（推荐开发者/研究员）
 
 如果您希望基于mobile-use SDK进行二次开发或研究，按以下顺序学习：
 
 1. **第一阶段：环境准备**
-   - [SDK介绍与安装总览](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
-   - [SDK介绍](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
-   - [安装指南](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
+   - [SDK介绍与安装总览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+   - [SDK介绍](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md)
+   - [安装指南](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md)
 
 2. **第二阶段：快速上手**
-   - [快速开始总览](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
-   - [本地快速开始](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
-   - [平台快速开始](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
-   - [云设备快速开始](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
+   - [快速开始总览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md)
+   - [本地快速开始](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md)
+   - [平台快速开始](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md)
+   - [云设备快速开始](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md)
 
 3. **第三阶段：核心概念**
-   - [核心概念总览](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
-   - [架构概览](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
-   - [Agent核心类](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
-   - [Builder模式](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
-   - [可观测性](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
-   - [Agent配置](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
-   - [任务定义](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
+   - [核心概念总览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md)
+   - [架构概览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md)
+   - [Agent核心类](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md)
+   - [Builder模式](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md)
+   - [可观测性](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md)
+   - [Agent配置](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md)
+   - [任务定义](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md)
 
 4. **第四阶段：实战与参考**
-   - [示例总览](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
-   - [SDK参考总览](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
-   - [故障排除](minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
+   - [示例总览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md)
+   - [SDK参考总览](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md)
+   - [故障排除](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md)
 
 ### 路径三：完整学习（推荐技术负责人/架构师）
 
@@ -145,10 +145,10 @@ graph TB
 1. 完成路径一的全部内容
 2. 完成路径二的全部内容
 3. 阅读综合章节：
-   - [常见问题解答](minitest-mobile-use-wiki/faq.md)
-   - [最佳实践](minitest-mobile-use-wiki/best-practices.md)
-   - [综合术语表](minitest-mobile-use-wiki/glossary.md)
-   - [资源链接](minitest-mobile-use-wiki/resources.md)
+   - [常见问题解答](05-mobile-testing/minitest-mobile-use-wiki/faq.md)
+   - [最佳实践](05-mobile-testing/minitest-mobile-use-wiki/best-practices.md)
+   - [综合术语表](05-mobile-testing/minitest-mobile-use-wiki/glossary.md)
+   - [资源链接](05-mobile-testing/minitest-mobile-use-wiki/resources.md)
 
 ---
 
@@ -158,76 +158,76 @@ graph TB
 
 | 章节 | 子章节 | 标题 | 文件 |
 |---|---|---|---|
-| 1 | 入门指南 | 入门指南总览 | [minitest-docs/01-getting-started/00-overview.md](minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md) |
-| 1 | 入门指南 | 什么是minitest | [minitest-docs/01-getting-started/01-what-is-minitest.md](minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md) |
-| 1 | 入门指南 | 认识Mini代理 | [minitest-docs/01-getting-started/02-meet-mini.md](minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md) |
-| 1 | 入门指南 | 快速开始 | [minitest-docs/01-getting-started/03-quickstart.md](minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md) |
-| 2 | 套件管理 | 套件管理总览 | [minitest-docs/02-suite-management/00-overview.md](minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md) |
-| 2 | 套件管理 | 用户故事解析 | [minitest-docs/02-suite-management/01-anatomy-of-user-story.md](minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md) |
-| 2 | 套件管理 | 编写用户故事 | [minitest-docs/02-suite-management/02-authoring-stories.md](minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md) |
-| 2 | 套件管理 | Mini自动维护套件 | [minitest-docs/02-suite-management/03-mini-maintains-suite.md](minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md) |
-| 3 | 运行测试 | 运行测试总览 | [minitest-docs/03-running-tests/00-overview.md](minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md) |
-| 3 | 运行测试 | 提供应用构建 | [minitest-docs/03-running-tests/01-providing-builds.md](minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md) |
-| 3 | 运行测试 | 触发运行 | [minitest-docs/03-running-tests/02-triggering-runs.md](minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md) |
-| 3 | 运行测试 | 阅读运行报告 | [minitest-docs/03-running-tests/03-reading-run-report.md](minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md) |
-| 4 | 分类与集成 | 分类与集成总览 | [minitest-docs/04-triage-and-integrations/00-overview.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md) |
-| 4 | 分类与集成 | 问题分类 | [minitest-docs/04-triage-and-integrations/01-triaging-issues.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md) |
-| 4 | 分类与集成 | Mini建议 | [minitest-docs/04-triage-and-integrations/02-mini-suggestions.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md) |
-| 4 | 分类与集成 | Cursor/Claude集成 | [minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md) |
-| 4 | 分类与集成 | GitHub集成 | [minitest-docs/04-triage-and-integrations/04-github-integration.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md) |
-| 4 | 分类与集成 | Slack集成 | [minitest-docs/04-triage-and-integrations/05-slack-integration.md](minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md) |
-| 5 | 参考手册 | 参考手册总览 | [minitest-docs/05-reference/00-overview.md](minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md) |
-| 5 | 参考手册 | 能力范围 | [minitest-docs/05-reference/01-capabilities.md](minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md) |
-| 5 | 参考手册 | CLI命令 | [minitest-docs/05-reference/02-cli-commands.md](minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md) |
-| 5 | 参考手册 | 术语表 | [minitest-docs/05-reference/03-glossary.md](minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md) |
-| 5 | 参考手册 | MCP工具 | [minitest-docs/05-reference/04-mcp-tools.md](minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md) |
-| 5 | 参考手册 | Mini命令 | [minitest-docs/05-reference/05-mini-commands.md](minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md) |
-| 5 | 参考手册 | GitHub Action | [minitest-docs/05-reference/06-github-action.md](minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md) |
+| 1 | 入门指南 | 入门指南总览 | [minitest-docs/01-getting-started/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md) |
+| 1 | 入门指南 | 什么是minitest | [minitest-docs/01-getting-started/01-what-is-minitest.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/01-what-is-minitest.md) |
+| 1 | 入门指南 | 认识Mini代理 | [minitest-docs/01-getting-started/02-meet-mini.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/02-meet-mini.md) |
+| 1 | 入门指南 | 快速开始 | [minitest-docs/01-getting-started/03-quickstart.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/03-quickstart.md) |
+| 2 | 套件管理 | 套件管理总览 | [minitest-docs/02-suite-management/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/00-overview.md) |
+| 2 | 套件管理 | 用户故事解析 | [minitest-docs/02-suite-management/01-anatomy-of-user-story.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/01-anatomy-of-user-story.md) |
+| 2 | 套件管理 | 编写用户故事 | [minitest-docs/02-suite-management/02-authoring-stories.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/02-authoring-stories.md) |
+| 2 | 套件管理 | Mini自动维护套件 | [minitest-docs/02-suite-management/03-mini-maintains-suite.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/02-suite-management/03-mini-maintains-suite.md) |
+| 3 | 运行测试 | 运行测试总览 | [minitest-docs/03-running-tests/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/00-overview.md) |
+| 3 | 运行测试 | 提供应用构建 | [minitest-docs/03-running-tests/01-providing-builds.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/01-providing-builds.md) |
+| 3 | 运行测试 | 触发运行 | [minitest-docs/03-running-tests/02-triggering-runs.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/02-triggering-runs.md) |
+| 3 | 运行测试 | 阅读运行报告 | [minitest-docs/03-running-tests/03-reading-run-report.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/03-running-tests/03-reading-run-report.md) |
+| 4 | 分类与集成 | 分类与集成总览 | [minitest-docs/04-triage-and-integrations/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/00-overview.md) |
+| 4 | 分类与集成 | 问题分类 | [minitest-docs/04-triage-and-integrations/01-triaging-issues.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/01-triaging-issues.md) |
+| 4 | 分类与集成 | Mini建议 | [minitest-docs/04-triage-and-integrations/02-mini-suggestions.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/02-mini-suggestions.md) |
+| 4 | 分类与集成 | Cursor/Claude集成 | [minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/03-cursor-claude-integration.md) |
+| 4 | 分类与集成 | GitHub集成 | [minitest-docs/04-triage-and-integrations/04-github-integration.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/04-github-integration.md) |
+| 4 | 分类与集成 | Slack集成 | [minitest-docs/04-triage-and-integrations/05-slack-integration.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/04-triage-and-integrations/05-slack-integration.md) |
+| 5 | 参考手册 | 参考手册总览 | [minitest-docs/05-reference/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/00-overview.md) |
+| 5 | 参考手册 | 能力范围 | [minitest-docs/05-reference/01-capabilities.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/01-capabilities.md) |
+| 5 | 参考手册 | CLI命令 | [minitest-docs/05-reference/02-cli-commands.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/02-cli-commands.md) |
+| 5 | 参考手册 | 术语表 | [minitest-docs/05-reference/03-glossary.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/03-glossary.md) |
+| 5 | 参考手册 | MCP工具 | [minitest-docs/05-reference/04-mcp-tools.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/04-mcp-tools.md) |
+| 5 | 参考手册 | Mini命令 | [minitest-docs/05-reference/05-mini-commands.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/05-mini-commands.md) |
+| 5 | 参考手册 | GitHub Action | [minitest-docs/05-reference/06-github-action.md](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/05-reference/06-github-action.md) |
 
 ### 第二部分：Mobile Use SDK 官方文档
 
 | 章节 | 子章节 | 标题 | 文件 |
 |---|---|---|---|
-| 1 | 介绍与安装 | 介绍与安装总览 | [mobile-use-sdk-docs/01-introduction-installation/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md) |
-| 1 | 介绍与安装 | SDK介绍 | [mobile-use-sdk-docs/01-introduction-installation/01-introduction.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md) |
-| 1 | 介绍与安装 | 安装指南 | [mobile-use-sdk-docs/01-introduction-installation/02-installation.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md) |
-| 2 | 快速开始 | 快速开始总览 | [mobile-use-sdk-docs/02-quickstarts/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md) |
-| 2 | 快速开始 | 本地快速开始 | [mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md) |
-| 2 | 快速开始 | 平台快速开始 | [mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md) |
-| 2 | 快速开始 | 云设备快速开始 | [mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md) |
-| 2 | 快速开始 | BrowserStack快速开始 | [mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md) |
-| 2 | 快速开始 | iOS真机设置 | [mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md) |
-| 3 | 核心概念 | 核心概念总览 | [mobile-use-sdk-docs/03-core-concepts/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md) |
-| 3 | 核心概念 | 架构概览 | [mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md) |
-| 3 | 核心概念 | Agent核心类 | [mobile-use-sdk-docs/03-core-concepts/02-agent.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md) |
-| 3 | 核心概念 | Builder模式 | [mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md) |
-| 3 | 核心概念 | 可观测性 | [mobile-use-sdk-docs/03-core-concepts/04-observability.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md) |
-| 3 | 核心概念 | Agent配置 | [mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md) |
-| 3 | 核心概念 | 任务定义 | [mobile-use-sdk-docs/03-core-concepts/06-tasks.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md) |
-| 4 | 示例 | 示例总览 | [mobile-use-sdk-docs/04-examples/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md) |
-| 4 | 示例 | 简单照片整理器 | [mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md) |
-| 4 | 示例 | 智能通知助手 | [mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md) |
-| 4 | 示例 | 应用锁消息处理 | [mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md) |
-| 4 | 示例 | 平台任务示例 | [mobile-use-sdk-docs/04-examples/04-platform-task-example.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md) |
-| 4 | 示例 | 视频录制分析 | [mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md) |
-| 5 | SDK参考 | SDK参考总览 | [mobile-use-sdk-docs/05-sdk-reference/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md) |
-| 5 | SDK参考 | Agent类 | [mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md) |
-| 5 | SDK参考 | AgentConfigBuilder | [mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md) |
-| 5 | SDK参考 | TaskRequestBuilder | [mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md) |
-| 5 | SDK参考 | 类型定义 | [mobile-use-sdk-docs/05-sdk-reference/04-types.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md) |
-| 5 | SDK参考 | 异常类 | [mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md) |
-| 6 | 故障排除 | 故障排除总览 | [mobile-use-sdk-docs/06-troubleshooting/00-overview.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md) |
-| 6 | 故障排除 | 常见问题排查 | [mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md) |
-| 6 | 故障排除 | 反馈指南 | [mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md](minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md) |
+| 1 | 介绍与安装 | 介绍与安装总览 | [mobile-use-sdk-docs/01-introduction-installation/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md) |
+| 1 | 介绍与安装 | SDK介绍 | [mobile-use-sdk-docs/01-introduction-installation/01-introduction.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/01-introduction.md) |
+| 1 | 介绍与安装 | 安装指南 | [mobile-use-sdk-docs/01-introduction-installation/02-installation.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/02-installation.md) |
+| 2 | 快速开始 | 快速开始总览 | [mobile-use-sdk-docs/02-quickstarts/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/00-overview.md) |
+| 2 | 快速开始 | 本地快速开始 | [mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/01-local-quickstart.md) |
+| 2 | 快速开始 | 平台快速开始 | [mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/02-platform-quickstart.md) |
+| 2 | 快速开始 | 云设备快速开始 | [mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/03-cloud-quickstart.md) |
+| 2 | 快速开始 | BrowserStack快速开始 | [mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/04-browserstack-quickstart.md) |
+| 2 | 快速开始 | iOS真机设置 | [mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/02-quickstarts/05-physical-ios-setup.md) |
+| 3 | 核心概念 | 核心概念总览 | [mobile-use-sdk-docs/03-core-concepts/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/00-overview.md) |
+| 3 | 核心概念 | 架构概览 | [mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/01-architecture-overview.md) |
+| 3 | 核心概念 | Agent核心类 | [mobile-use-sdk-docs/03-core-concepts/02-agent.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/02-agent.md) |
+| 3 | 核心概念 | Builder模式 | [mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/03-builder-pattern.md) |
+| 3 | 核心概念 | 可观测性 | [mobile-use-sdk-docs/03-core-concepts/04-observability.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/04-observability.md) |
+| 3 | 核心概念 | Agent配置 | [mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/05-agent-profiles.md) |
+| 3 | 核心概念 | 任务定义 | [mobile-use-sdk-docs/03-core-concepts/06-tasks.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/03-core-concepts/06-tasks.md) |
+| 4 | 示例 | 示例总览 | [mobile-use-sdk-docs/04-examples/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/00-overview.md) |
+| 4 | 示例 | 简单照片整理器 | [mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/01-simple-photo-organizer.md) |
+| 4 | 示例 | 智能通知助手 | [mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/02-smart-notification-assistant.md) |
+| 4 | 示例 | 应用锁消息处理 | [mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/03-app-lock-messaging.md) |
+| 4 | 示例 | 平台任务示例 | [mobile-use-sdk-docs/04-examples/04-platform-task-example.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/04-platform-task-example.md) |
+| 4 | 示例 | 视频录制分析 | [mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/05-video-recording-analysis.md) |
+| 5 | SDK参考 | SDK参考总览 | [mobile-use-sdk-docs/05-sdk-reference/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/00-overview.md) |
+| 5 | SDK参考 | Agent类 | [mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/01-agent-class.md) |
+| 5 | SDK参考 | AgentConfigBuilder | [mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/02-agent-config-builder.md) |
+| 5 | SDK参考 | TaskRequestBuilder | [mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/03-task-request-builder.md) |
+| 5 | SDK参考 | 类型定义 | [mobile-use-sdk-docs/05-sdk-reference/04-types.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/04-types.md) |
+| 5 | SDK参考 | 异常类 | [mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/05-sdk-reference/05-exceptions.md) |
+| 6 | 故障排除 | 故障排除总览 | [mobile-use-sdk-docs/06-troubleshooting/00-overview.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.md) |
+| 6 | 故障排除 | 常见问题排查 | [mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/01-troubleshooting.md) |
+| 6 | 故障排除 | 反馈指南 | [mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/02-providing-feedback.md) |
 
 ### 第三部分：综合章节
 
 | 章节 | 标题 | 文件 |
 |---|---|---|
-| 附录A | 常见问题解答（FAQ） | [faq.md](minitest-mobile-use-wiki/faq.md) |
-| 附录B | 最佳实践 | [best-practices.md](minitest-mobile-use-wiki/best-practices.md) |
-| 附录C | 综合术语表 | [glossary.md](minitest-mobile-use-wiki/glossary.md) |
-| 附录D | 资源链接 | [resources.md](minitest-mobile-use-wiki/resources.md) |
+| 附录A | 常见问题解答（FAQ） | [faq.md](05-mobile-testing/minitest-mobile-use-wiki/faq.md) |
+| 附录B | 最佳实践 | [best-practices.md](05-mobile-testing/minitest-mobile-use-wiki/best-practices.md) |
+| 附录C | 综合术语表 | [glossary.md](05-mobile-testing/minitest-mobile-use-wiki/glossary.md) |
+| 附录D | 资源链接 | [resources.md](05-mobile-testing/minitest-mobile-use-wiki/resources.md) |
 
 ---
 
@@ -244,6 +244,6 @@ graph TB
 
 ---
 
-> **开始阅读**：[minitest入门指南 →](minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
+> **开始阅读**：[minitest入门指南 →](05-mobile-testing/minitest-mobile-use-wiki/minitest-docs/01-getting-started/00-overview.md)
 >
-> 或者直接从 [Mobile Use SDK介绍开始 →](minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
+> 或者直接从 [Mobile Use SDK介绍开始 →](05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/00-overview.md)
