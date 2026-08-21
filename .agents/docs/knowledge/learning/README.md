@@ -163,8 +163,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、时间线、方法论框架 | [first-principles/](first-principles/README.md) |
-| 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论与两大可复用模式（8 章原子化） | [boshu-laozi-wiki/](boshu-laozi-wiki/README.md) |
+| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels/）、帛书老子原典深读（boshu-laozi-wiki/）等子模块 | [first-principles/](first-principles/README.md) |
+| └ 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为跨文化道家部分提供原典深读，已纳入first-principles/作为子Wiki | [first-principles/boshu-laozi-wiki/](first-principles/boshu-laozi-wiki/README.md) |
 
 ---
 

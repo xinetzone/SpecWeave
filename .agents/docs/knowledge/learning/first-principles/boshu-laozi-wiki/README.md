@@ -38,11 +38,12 @@ date: "2026-08-19"
 
 ## 🔗 相关资源
 
-- [🏠 返回上级：Learning Wiki 知识库](../README.md)
-- [📚 文档首页](../../../README.md)
-- [📋 事实清单（F-001~F-021）](../../../../../.trae/specs/boshu-laozi-wiki/facts.md)
-- [📋 洞察清单（I-001~I-005）](../../../../../.trae/specs/boshu-laozi-wiki/insights.md)
-- [📋 模式清单（P-001~P-002）](../../../../../.trae/specs/boshu-laozi-wiki/patterns.md)
+- [🏠 返回上级：第一性原理系统化资料档案](../README.md)
+- [🌏 跨文化第一性原理比较研究](../chinese-philosophy-parallels/README.md)
+- [📚 文档首页](../../../../README.md)
+- [📋 事实清单（F-001~F-021）](../../../../../../.trae/specs/boshu-laozi-wiki/facts.md)
+- [📋 洞察清单（I-001~I-005）](../../../../../../.trae/specs/boshu-laozi-wiki/insights.md)
+- [📋 模式清单（P-001~P-002）](../../../../../../.trae/specs/boshu-laozi-wiki/patterns.md)
 
 ---
 

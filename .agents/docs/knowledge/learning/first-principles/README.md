@@ -4,9 +4,9 @@ title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9 + future research tasks
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/README.toml"
 created_at: "2026-07-09"
-last_updated: "2026-07-10"
+last_updated: "2026-08-21"
 status: in-progress
-version: "1.7"
+version: "1.9"
 ---
 # 第一性原理系统化资料档案
 
@@ -180,6 +180,7 @@ README.md（了解档案定位与偏差警示）
 | 15 | [15-cross-domain-cases/](15-cross-domain-cases/README.md) | 跨学科第一性原理案例库 | 覆盖生物学（达尔文进化论、中心法则、α螺旋）、数学（欧几里得、非欧几何、哥德尔）、计算机科学（UNIX哲学、关系数据库、TCP/IP）、社会科学（亚当·斯密、韦伯、博弈论）共12个精选案例。 | 入门-进阶 | 12（扩展视野） |
 | 16 | [16-boundary-conditions.md](16-boundary-conditions.md) | 第一性原理与类比推理的适用边界 | 5维度场景判断框架、类比更高效的6类场景、第一性原理更适用的5类场景、定性决策流程图、5种混合使用策略、局限性说明，系统回应"第一性原理万能论"偏差。 | 进阶 | 10（所有读者建议读） |
 | 17 | [12-knowledge-graph.html](12-knowledge-graph.html) | 🕸️ 交互式知识图谱 | 可视化呈现24个核心概念、13位关键人物、19个历史事件、13个文档、4个时期之间的关系网络（共73个节点、176条关系），支持点击查看详情、按类型/领域筛选、搜索定位、邻居高亮等交互。 | 入门 | 0（建议先浏览建立全局认知） |
+| 18 | [boshu-laozi-wiki/](boshu-laozi-wiki/00-overview.md) | 📜 帛书老子Wiki教程 | 马王堆帛书《老子》甲乙本版本学系统教程（8章原子化），含出土背景、版本体系对照（德经在前vs道经在前）、核心概念（道/德/无为/自然）帛书用字差异、注读方法论、五大核心洞察、两大可复用模式（版本对照阅读法、出土文献认知框架）。作为chinese-philosophy-parallels道家部分的原典深读材料。 | 入门-进阶 | 道家兴趣读者选读 |
 
 ---
 
@@ -202,6 +203,7 @@ README.md（了解档案定位与偏差警示）
 | 🌍 跨学科案例库 | [15-cross-domain-cases/](15-cross-domain-cases/README.md) |
 | ⚖️ 适用边界研究 | [16-boundary-conditions.md](16-boundary-conditions.md) |
 | 🕸️ 交互式知识图谱 | [12-knowledge-graph.html](12-knowledge-graph.html) |
+| 📜 帛书老子原典深读 | [boshu-laozi-wiki/](boshu-laozi-wiki/00-overview.md) |
 
 ---
 
@@ -232,7 +234,14 @@ README.md（了解档案定位与偏差警示）
 - 提出跨文化根本性思维七步框架（价值定向→质疑假设→溯源求故→标准确立→分析重建→边界意识→知行合一共验证）
 - 含12个文件，覆盖四维比较框架、20维度比较矩阵、概念对照表、术语表、时间线等
 
-### 8.4 后续扩展方向
+### 8.4 v2.1 道家原典深读（已完成）
+
+✅ **帛书老子Wiki教程**已作为v2.1子Wiki纳入，见 [boshu-laozi-wiki/](boshu-laozi-wiki/00-overview.md)：
+- 马王堆帛书《老子》甲乙本版本学系统教程（8章原子化）
+- 为chinese-philosophy-parallels/01-daoism-core-concepts.md提供帛书版本的原典深读材料
+- 含版本体系对照（德经在前vs道经在前、避讳字、文字异文）、注读方法论、版本对照阅读法与出土文献认知框架两大可复用模式
+
+### 8.5 后续扩展方向
 
 - 补充贝索斯股东信精确出处追溯
 - 待SpaceX官方财报确认后更新Starlink收入数据
@@ -254,7 +263,8 @@ README.md（了解档案定位与偏差警示）
 
 ---
 
-*本档案版本：v1.8 | 最后更新：2026-07-13 | 审查状态：自审通过，外部评审进行中（参见11-external-review.md）*
+*本档案版本：v1.9 | 最后更新：2026-08-21 | 审查状态：自审通过，外部评审进行中（参见11-external-review.md）*
+*v1.9更新：v2.1道家原典深读扩展完成，新增boshu-laozi-wiki/子目录（8个文件），帛书老子马王堆版本学系统教程，为chinese-philosophy-parallels道家部分提供原典深读材料*
 *v1.8更新：v2.0跨文化扩展完成，新增chinese-philosophy-parallels/子目录（12个文件），包含道/儒/墨/佛四家概念系统整理、四维比较框架、20维度比较矩阵、七步跨文化思维框架、反向语义漂移防御机制*
 *v1.7更新：新增认知科学基础、AI时代应用、跨学科案例库、适用边界研究4个核心章节*
 *v1.6更新：思维训练题库（12-exercises.md）已原子化为exercises/子目录下10个独立文件*

@@ -10,7 +10,7 @@ author: ""
 summary: "Learning Wiki 知识库的8主题分类体系设计，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系文档; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki)"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系文档; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读），明确二者从属关系"
 ---
 # Learning Wiki 主题分类体系
 
@@ -477,8 +477,8 @@ flowchart TD
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗性审查协议、术语表、时间线、方法论框架、来源验证日志（12个原子化文件） | 原子化 |
-| 帛书老子 Wiki 教程 | [boshu-laozi-wiki/00-overview.md](boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件） | 原子化 |
+| 第一性原理知识档案 | [first-principles/](first-principles/README.md) | 哲学起源+物理学应用+商业创新案例跨领域系统化档案，含对抗审查、术语表、方法论框架、跨文化比较（chinese-philosophy-parallels）、帛书老子原典深读（boshu-laozi-wiki）等子模块 | 原子化 |
+| 帛书老子 Wiki 教程 | [first-principles/boshu-laozi-wiki/00-overview.md](first-principles/boshu-laozi-wiki/00-overview.md) | 马王堆出土《老子》甲乙本版本学与核心概念系统教程，含注读方法论、五条核心洞察、两大可复用模式（8个原子化文件），为第一性原理跨文化道家部分提供原典深读 | 原子化 |
 | OKR方法论知识库 | [okr-wiki/00-overview.md](okr-wiki/00-overview.md) | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | 原子化 |
 
 ---
