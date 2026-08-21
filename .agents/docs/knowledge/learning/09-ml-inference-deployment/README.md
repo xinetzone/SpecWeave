@@ -1,5 +1,5 @@
 ---
-id: "ai-ml-inference-index"
+id: "ml-inference-deployment-index"
 title: "AI/ML推理与模型部署"
 category: "learning"
 date: "2026-08-09"

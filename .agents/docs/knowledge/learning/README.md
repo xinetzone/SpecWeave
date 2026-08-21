@@ -5,16 +5,16 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/README.toml"
 ---
 # Learning Wiki 知识库
 
-Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）九大主题的学习笔记与深度 Wiki。
+Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）、推理部署（09）、通用基础（10）十一大主题的学习笔记与深度 Wiki。
 
 ## 📊 统计数字
 
 | 指标 | 数值 |
 |------|------|
-| 总 Wiki 数 | 88 |
-| 原子化 Wiki | 37 |
-| 单文件 Wiki | 51 |
-| 主题数 | 9（00-08编号主题） |
+| 总 Wiki 数 | 100 |
+| 原子化 Wiki | 46 |
+| 单文件 Wiki | 54 |
+| 主题数 | 11（00-10编号主题） |
 | 文件总数 | ~328 |
 
 ## 🧭 快速导航
@@ -30,6 +30,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | 06 | 商业趋势分析 | AI商业化、火山引擎生态、模型对比、个人IP、AI硬件、供应链风险、Vibecoding创作 | 12 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
 | 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品、叮当OKR管理工具 | 25 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
 | 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 5 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
+| 09 | ML 推理与部署 | ONNX 开放神经网络交换格式、推理引擎与模型部署落地 | 1 | [09-ml-inference-deployment/](09-ml-inference-deployment/README.md) |
+| 10 | 通用基础知识 | 数学推理（勾股定理）与学术论文写作等通识基础 | 2 | [10-foundational-knowledge/](10-foundational-knowledge/README.md) |
 
 > 详细的分类说明与边界定义见 [CATEGORIES.md](CATEGORIES.md)。
 
@@ -151,7 +153,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| ACEP 云手机 | 一站式云手机解决方案+四大能力+超低延时音视频 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |
+| ACEP 云手机 | 一站式云手机解决方案+四大能力+超低延时音视频 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine/volcengine-acep-cloudphone-analysis.md) |
 | Mobile Use Agent 移动端 AI 智能体 | 云手机+豆包视觉大模型的企业级移动端 Agent，含 MCP 协议实践 | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) |
 
 #### 🎯 叮当OKR（DingTalk OKR）系列

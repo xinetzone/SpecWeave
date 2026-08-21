@@ -7,10 +7,10 @@ date: "2026-08-22"
 version: "1.3"
 status: "stable"
 author: ""
-summary: "Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
+summary: "Learning Wiki 知识库的11主题分类体系设计（00-10），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）"
 ---
 # Learning Wiki 主题分类体系
 
@@ -26,7 +26,7 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 
 ### 1. 认知递进原则
 
-主题编号按从"思维地基"→"基础协议"→"工程方法"→"平台工具"→"工具链"→"多模态"→"商业落地"→"案例研究"→"底层系统"的认知路径排列，符合从抽象到具体、从理论到实践的学习规律。
+主题编号按从"思维地基"→"基础协议"→"工程方法"→"平台工具"→"工具链"→"多模态"→"商业落地"→"案例研究"→"底层系统"→"推理部署"→"通用基础"的认知路径排列，符合从抽象到具体、从理论到实践的学习规律。
 
 - **00**：思维地基层（本质与思维），建立正确的思维方式，是所有技术学习的元方法论
 - **01-03**：技术核心层（协议→方法→平台），构建Agent技术认知
@@ -34,6 +34,8 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 - **06**：商业落地层，连接技术与商业价值
 - **07**：案例支撑层，通过厂商产品学习深化理解
 - **08**：底层支撑层，夯实系统基础设施认知
+- **09**：推理部署层，覆盖模型从训练到上线的落地工程
+- **10**：通用基础层，沉淀数学推理与学术研究等通识素养
 
 ### 2. 知识内聚原则
 
@@ -66,7 +68,7 @@ Learning Wiki 采用**认知递进式**主题分类架构，遵循以下6条核�
 ### 6. 面向检索原则
 
 主题命名采用"编号-关键词"格式，支持：
-- **数字序号浏览**：按00→08顺序系统学习（00为思维地基，建议先修）
+- **数字序号浏览**：按00→10顺序系统学习（00为思维地基，建议先修）
 - **关键词检索**：通过目录名中的英文关键词快速定位
 - **标签关联**：每个Wiki携带5-8个主题标签，支持跨主题检索
 
@@ -169,7 +171,7 @@ flowchart TD
 
 ---
 
-## 四、9个主题详细说明
+## 四、11个主题详细说明
 
 ---
 
@@ -495,8 +497,8 @@ flowchart TD
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| 火山引擎ACEP云手机 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) | 火山引擎ACEP云手机产品系统性学习，含超低延时音视频传输、云原生架构、七段式信息架构UX分析 | 单文件 |
-| 火山引擎Mobile Use Agent | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记，云手机+豆包视觉大模型的企业级移动端AI智能体，含六大优势/三层架构/四大场景/MCP协议实践洞察 | 单文件 |
+| 火山引擎ACEP云手机 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine/volcengine-acep-cloudphone-analysis.md) | 火山引擎ACEP云手机产品系统性学习，含超低延时音视频传输、云原生架构、七段式信息架构UX分析 | 单文件 |
+| 火山引擎Mobile Use Agent | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记，云手机+豆包视觉大模型的企业级移动端AI智能体，含六大优势/三层架构/四大场景/MCP协议实践洞察 | 单文件 |
 | 火山引擎SearchInfinity搜索 | [volcengine-searchinfinity-analysis.md](07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | 火山引擎SearchInfinity搜索产品分析 | 单文件 |
 | 火山引擎ARK大模型平台 | [volcengine-ark-introduction-analysis-report.md](07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 火山引擎ARK大模型服务平台介绍分析 | 单文件 |
 | 火山引擎维京AI搜索推荐 | [viking-ai-search-rec-core-notes.md](07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 火山引擎维京AI搜索推荐产品核心笔记 | 单文件 |
@@ -538,6 +540,50 @@ flowchart TD
 
 ---
 
+### 09 ML推理与部署
+
+**认知定位**：AI模型从训练到上线的"落地"层——模型格式、推理引擎、部署运行时与性能优化，是Agent/应用真正调用模型能力的技术基础。
+
+**核心主题词**：`onnx`、`model-inference`、`inference-engine`、`model-deployment`、`quantization`、`runtime`、`tensorrt`、`vllm`、`mlir`
+
+**边界说明**：
+
+| 归入本主题 | 不归入本主题 |
+|-----------|-------------|
+| 模型交换格式（ONNX等） | 量化工具即性能调优方法（归入02-06） |
+| 推理引擎与运行时（ONNX Runtime等） | Agent推理加速论文研究方法论（归入02-06） |
+| 模型部署与上线工程 | Agent上下文/Token优化（归入02-04） |
+| 推理性能容器化部署 | 深度学习框架底层架构（归入08） |
+
+**完整Wiki清单**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| ONNX Wiki | [onnx-wiki/README.md](09-ml-inference-deployment/onnx-wiki/README.md) | ONNX模型格式与推理实战全指南，含核心概念、Python API、快速上手、最佳实践、FAQ资源 | 原子化 |
+
+### 10 通用基础知识
+
+**认知定位**：跨领域的通用基础能力层——数学推理与学术研究等通识类基础，为技术学习与技术输出提供通用素养支撑。
+
+**核心主题词**：`mathematics`、`academic-writing`、`thesis`、`foundational-skills`、`knowledge-skill`
+
+**边界说明**：
+
+| 归入本主题 | 不归入本主题 |
+|-----------|-------------|
+| 数学推理与证明（勾股定理等） | 思维地基层方法论（归入00） |
+| 学术论文写作与研究技能 | 文档工具链Markdown生态（归入04） |
+| 通用知识通识素养 | 具体技术平台产品（归入03/07） |
+
+**完整Wiki清单**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 勾股定理Wiki | [pythagorean-theorem-wiki/README.md](10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/README.md) | 勾股定理历史、证明方法、数论规律与应用的系统教程 | 原子化 |
+| 论文写作Wiki | [thesis-writing-wiki/README.md](10-foundational-knowledge/academic-skills/thesis-writing-wiki/README.md) | 从选题到答辩的学术论文写作全流程指南 | 原子化 |
+
+---
+
 ## 五、统计摘要
 
 | 主题编号 | 主题名称 | Wiki数量 | 原子化Wiki | 单文件Wiki |
@@ -551,7 +597,9 @@ flowchart TD
 | 06 | AI商业与趋势观察 | 9 | 2 | 7 |
 | 07 | 厂商产品学习系列 | 25 | 5 | 20 |
 | 08 | 底层系统与基础设施 | 5 | 3 | 2 |
-| **合计** | | **97** | **43** | **54** |
+| 09 | ML推理与部署 | 1 | 1 | 0 |
+| 10 | 通用基础知识 | 2 | 2 | 0 |
+| **合计** | | **100** | **46** | **54** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 

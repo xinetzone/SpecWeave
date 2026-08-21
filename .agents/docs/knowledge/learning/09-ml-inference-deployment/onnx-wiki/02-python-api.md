@@ -10,7 +10,7 @@ tags:
   - linear-regression
 source:
   - https://onnx.ai/onnx/intro/python.html
-category: knowledge/learning/06-ai-ml-inference
+category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
 

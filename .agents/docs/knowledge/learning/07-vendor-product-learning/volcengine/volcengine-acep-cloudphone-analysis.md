@@ -2,7 +2,7 @@
 id: "volcengine-acep-cloudphone-analysis"
 title: "火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/ACEP）+ 产品UX深度分析"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.toml"
 date: "2026-07-06"
 updated: "2026-07-07"
 tags: ["ACEP", "火山引擎", "云手机", "ARM服务器", "音视频技术", "云游戏", "边缘计算", "云原生", "虚拟手机", "仿真测试", "云办公", "B端产品设计", "信息架构"]
@@ -571,7 +571,7 @@ flowchart LR
 ## 七、网页信息架构与UX设计分析
 
 > **模式沉淀说明**：本节分析的B端产品"七段式认知递进"信息架构已正式沉淀为方法论模式，详见：
-> [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)（L2-verified，3次验证）
+> [b2b-product-seven-segment-ia.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)（L2-verified，3次验证）
 
 ### 7.1 页面信息架构：七段式认知递进结构
 
@@ -788,10 +788,10 @@ flowchart TB
 ## 九、可借鉴设计模式与B端产品展示经验总结
 
 > **模式沉淀说明**：本章总结的B端产品展示经验已系统化沉淀为方法论模式库，核心模式包括：
-> - [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)：B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证）
-> - [b2b-product-page-ux-five-dimensions.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md)：ToB产品页UX分析五维框架（L2-verified，2次验证）
-> - [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)：B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，本章模式1+3萃取）
-> - [external-website-analysis-fallback-strategy.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)：外部网站分析信息源分层兜底策略（L2-verified，8次验证）
+> - [b2b-product-seven-segment-ia.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)：B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证）
+> - [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md)：ToB产品页UX分析五维框架（L2-verified，2次验证）
+> - [b2b-value-quantification-case-validation.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)：B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，本章模式1+3萃取）
+> - [external-website-analysis-fallback-strategy.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md)：外部网站分析信息源分层兜底策略（L2-verified，8次验证）
 
 ### 9.1 七大可复用B端技术产品展示模式
 
@@ -925,14 +925,14 @@ flowchart TB
 | 9 | **常见问题FAQ** | 建议 | 解答售前常见疑问，减少咨询成本 |
 | 10 | **文档/资源链接** | 必须 | 文档中心、API参考、SDK下载、开发者社区等 |
 
-> **完整模式文档**：详见 [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)，包含各段设计规范、完整性检查清单、反模式识别等详细内容。
+> **完整模式文档**：详见 [b2b-product-seven-segment-ia.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md)，包含各段设计规范、完整性检查清单、反模式识别等详细内容。
 
 ---
 
 ## 十、行业启示与技术趋势
 
 > **模式沉淀说明**：本章五大趋势判断已系统化沉淀为行业分析方法论模式：
-> [tech-product-commercialization-evolution.md](../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md)（技术驱动型产品商业化演进五维分析框架，L1-experimental）
+> [tech-product-commercialization-evolution.md](../../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md)（技术驱动型产品商业化演进五维分析框架，L1-experimental）
 >
 > 五维框架对应关系：
 > - 趋势1（ARM自研护城河）→ 维度五：竞争格局"自研护城河分化"规律
@@ -1006,9 +1006,9 @@ flowchart TB
 
 | 启示编号 | 启示内容 | 对应模式 |
 |---------|---------|---------|
-| **启示1** | **硬指标是B端产品的第一语言**：不要用"超低延时"、"高性能"、"高可用"这类模糊形容词，直接亮出数字——<70ms、99.99%、100万QPS，数字是技术人员的通用语言 | [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)（首屏量化亮剑） |
-| **启示2** | **案例必须带数据**："某某客户选择了我们"是无效背书，"某某客户用了我们之后，延时降低到50ms以内，支撑XX万用户，成本降低XX%"才是有效背书 | [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)（案例三点闭环验证） |
-| **启示3** | **CTA不要只有"联系销售"**：技术用户喜欢先看文档、先动手试，给他们体验中心和文档入口，比只给一个销售电话转化率高得多 | [b2b-product-page-ux-five-dimensions.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md)（维度三：CTA四层分类策略） |
+| **启示1** | **硬指标是B端产品的第一语言**：不要用"超低延时"、"高性能"、"高可用"这类模糊形容词，直接亮出数字——<70ms、99.99%、100万QPS，数字是技术人员的通用语言 | [b2b-value-quantification-case-validation.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)（首屏量化亮剑） |
+| **启示2** | **案例必须带数据**："某某客户选择了我们"是无效背书，"某某客户用了我们之后，延时降低到50ms以内，支撑XX万用户，成本降低XX%"才是有效背书 | [b2b-value-quantification-case-validation.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md)（案例三点闭环验证） |
+| **启示3** | **CTA不要只有"联系销售"**：技术用户喜欢先看文档、先动手试，给他们体验中心和文档入口，比只给一个销售电话转化率高得多 | [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md)（维度三：CTA四层分类策略） |
 | **启示4** | **"一站式"对B端客户吸引力巨大**：企业客户讨厌集成多个厂商组件——出了问题互相推诿、责任不清。如果能真正提供一站式解决方案，是强大的差异化优势 | 待验证（L1候选，需更多案例确认普适性） |
 
 ---
@@ -1088,13 +1088,13 @@ flowchart TB
 
 | 产出类型 | 链接 | 说明 |
 |---------|------|------|
-| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
-| **新模式沉淀1** | [b2b-product-seven-segment-ia.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证） |
-| **新模式沉淀2** | [b2b-value-quantification-case-validation.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，第九章模式1+3萃取） |
-| **新模式沉淀3** | [tech-product-commercialization-evolution.md](../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md) | 技术驱动型产品商业化演进五维分析框架（L1-experimental，第十章五大趋势萃取） |
-| **模式升级验证1** | [b2b-product-page-ux-five-dimensions.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（L1→L2升级，第2次验证，补充ACEP案例） |
-| **模式升级验证2** | [external-website-analysis-fallback-strategy.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析信息源分层兜底策略（第8次验证，validation_count=8） |
-| **洞察萃取** | [insight-extraction.md](../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/insight-extraction.md) | 3个核心洞察、3个可复用模式、3项改进建议 |
+| **复盘报告** | [retrospective-volcengine-acep-learning-20260707/](../../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/README.md) | 包含事实收集、过程分析、洞察萃取、导出建议完整四件套 |
+| **新模式沉淀1** | [b2b-product-seven-segment-ia.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-seven-segment-ia.md) | B端技术产品页面七段式认知递进信息架构（L2-verified，3次验证） |
+| **新模式沉淀2** | [b2b-value-quantification-case-validation.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-value-quantification-case-validation.md) | B端产品价值量化与案例验证双闭环模式（L2-verified，2次验证，第九章模式1+3萃取） |
+| **新模式沉淀3** | [tech-product-commercialization-evolution.md](../../../../retrospective/patterns/methodology-patterns/product-growth/tech-product-commercialization-evolution.md) | 技术驱动型产品商业化演进五维分析框架（L1-experimental，第十章五大趋势萃取） |
+| **模式升级验证1** | [b2b-product-page-ux-five-dimensions.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/b2b-product-page-ux-five-dimensions.md) | ToB产品页UX分析五维框架（L1→L2升级，第2次验证，补充ACEP案例） |
+| **模式升级验证2** | [external-website-analysis-fallback-strategy.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 外部网站分析信息源分层兜底策略（第8次验证，validation_count=8） |
+| **洞察萃取** | [insight-extraction.md](../../../../retrospective/reports/competitive-analysis/retrospective-volcengine-acep-learning-20260707/insight-extraction.md) | 3个核心洞察、3个可复用模式、3项改进建议 |
 
 ---
 

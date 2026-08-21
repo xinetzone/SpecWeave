@@ -10,7 +10,7 @@ tags:
   - type-system
 source:
   - https://onnx.ai/onnx/intro/concepts.html
-category: knowledge/learning/06-ai-ml-inference
+category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
 

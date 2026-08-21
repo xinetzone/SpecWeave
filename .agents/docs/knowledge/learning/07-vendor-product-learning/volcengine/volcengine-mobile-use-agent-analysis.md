@@ -2,7 +2,7 @@
 id: "volcengine-mobile-use-agent-analysis"
 title: "火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/1583515?lang=zh）+ 产品架构深度分析"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.toml"
 date: "2026-07-07"
 tags: ["Mobile Use Agent", "火山引擎", "云手机", "豆包视觉大模型", "MCP", "GUI Agent", "移动端自动化", "Jeddak AICC", "AI Agent", "云原生"]
 ---
@@ -375,13 +375,13 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 
 **模式**：任务在云手机执行，本机完全不被占用
 
-**借鉴价值**：Agent 任务隔离不仅解决资源占用问题，更带来环境一致性、安全隔离、并发能力等多重价值。本项目的 [vendor 子模块沙箱](../../operations/vendor-flexloop-integration-guide.md) 也采用类似思路。
+**借鉴价值**：Agent 任务隔离不仅解决资源占用问题，更带来环境一致性、安全隔离、并发能力等多重价值。本项目的 [vendor 子模块沙箱](../../../operations/vendor-flexloop-integration-guide.md) 也采用类似思路。
 
 ### 8.4 接入方式分层
 
 **模式**：Demo → MCP → 代码框架 → SDK
 
-**借鉴价值**：从体验到深度集成的渐进式披露，与本项目 [capabilities/](../../../../capabilities/README.md) 的 L0/L1/L2 三层架构理念完全一致——L0 快速了解、L1 标准使用、L2 深度定制。
+**借鉴价值**：从体验到深度集成的渐进式披露，与本项目 [capabilities/](../../../../../capabilities/README.md) 的 L0/L1/L2 三层架构理念完全一致——L0 快速了解、L1 标准使用、L2 深度定制。
 
 ---
 

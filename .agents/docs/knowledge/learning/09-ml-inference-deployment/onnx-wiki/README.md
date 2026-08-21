@@ -9,7 +9,7 @@ tags:
   - index
 source:
   - https://onnx.ai
-category: knowledge/learning/06-ai-ml-inference
+category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
 
