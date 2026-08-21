@@ -16,7 +16,7 @@ tags: ["执行复盘", "HiAgent", "Spec模式", "网页分析", "浏览器MCP"]
 | 任务目标 | 火山引擎HiAgent智能体开发平台网页系统性学习与深度洞察分析 |
 | 执行模式 | Spec模式（规划→内容提取→subagent执行→验证→复盘） |
 | Spec目录 | `.trae/specs/retrospectives-insights/analyze-volcengine-hiagent/` |
-| 最终产出 | `docs/knowledge/learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md` |
+| 最终产出 | `docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md` |
 | 产出大小 | 约800+行，11章节，含Mermaid图、表格、术语表 |
 
 ## 2. 执行时间线

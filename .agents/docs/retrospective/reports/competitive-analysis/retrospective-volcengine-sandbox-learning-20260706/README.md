@@ -17,7 +17,7 @@ maturity: "L2-verified"
 | **复盘时间** | 2026-07-06 |
 | **复盘类型** | task（单任务复盘） |
 | **任务入口** | `/spec https://www.volcengine.com/solutions/ai-cloud-native-sandbox` |
-| **最终产出** | [volcengine-ai-cloud-native-sandbox-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)（967行深度分析报告） |
+| **最终产出** | [volcengine-ai-cloud-native-sandbox-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)（967行深度分析报告） |
 
 ## 文件索引
 

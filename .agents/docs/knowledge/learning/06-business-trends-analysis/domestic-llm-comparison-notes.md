@@ -287,7 +287,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-busine
 
 - 本项目的 [AGENTS.md](../../../../../AGENTS.md) 定义了多角色智能体协作架构，文章的场景化模型选择可为其提供模型选型参考
 - 本项目的 [Agent 通信协议完整教程](../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) 介绍了 Agent 通信协议，国产模型的 API 接入需遵循这些协议标准
-- 本项目的 [Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) 介绍了 LLM 编程准则，GLM 5.2 / Kimi K2.7 Code 等 coding 模型的使用应遵循这些准则
+- 本项目的 [Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) 介绍了 LLM 编程准则，GLM 5.2 / Kimi K2.7 Code 等 coding 模型的使用应遵循这些准则
 
 ---
 
@@ -314,7 +314,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-busine
 - 项目智能体入口：[AGENTS.md](../../../../../AGENTS.md)
 - 知识库索引：[项目知识库](../../README.md)
 - Agent 通信协议教程：[Agent 通信协议完整教程](../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
-- Karpathy LLM 编程准则：[Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
+- Karpathy LLM 编程准则：[Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md)
 - 知识库模板：[template.md](../../template.md)
 
 ---

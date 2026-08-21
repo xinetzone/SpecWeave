@@ -528,14 +528,14 @@
 |------|------|------|------|
 | [《人工智能拟人化互动服务管理暂行办法》深度分析报告](learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 系统解读五部门联合发布的《人工智能拟人化互动服务管理暂行办法》（2026年7月15日施行），对比涂鸦平台公告覆盖度，识别6项高风险遗漏义务，提供7天倒计时行动方案和37项合规自查清单。 | 2026-07-08 | AI regulation、compliance、CAC、Tuya、智能体、AI agent |
 | [三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill](learning/06-business-trends-analysis/three-ai-tools-wiki.md) |  | 2026-07-04 | ai-tools、intelligent-terminal、claudian、book-to-skill、ai-agent、terminal、obsidian、claude-code、agent-skills |
-| [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) |  | 2026-07-06 | AgentKit、火山引擎、企业级AI、智能体平台、Harness编排、Serverless、MCP协议、安全沙箱、存量焕新、生产就绪、全链路可观测、AI云原生 |
-| [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) |  | 2026-07-06 | 火山引擎、云原生、沙箱、AI安全、MicroVM、Serverless、大模型应用、代码执行、Agent基础设施、安全隔离、弹性计算、E2B |
-| [火山引擎方舟大模型平台入门文档深度分析报告](learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md) |  | 2026-07-02 | - |
-| [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-arkcli-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、ARK、Ark CLI、arkcli、Ark Docs MCP、命令行工具、AI Agent、MCP、大模型工具、AI开发工具、Claude Code、Cursor、Trae、双层架构 |
-| [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md) |  | 2026-07-06 | HiAgent、火山引擎、智能体平台、Agent开发、数字员工、企业AI、MCP、低代码、大模型运维、私有化部署、AI安全 |
-| [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作、AI特效模板 |
-| [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md) |  | 2026-07-07 | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、字节跳动、AI基础设施、火山方舟 |
-| [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励、数据合规 |
+| [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) |  | 2026-07-06 | AgentKit、火山引擎、企业级AI、智能体平台、Harness编排、Serverless、MCP协议、安全沙箱、存量焕新、生产就绪、全链路可观测、AI云原生 |
+| [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md) |  | 2026-07-06 | 火山引擎、云原生、沙箱、AI安全、MicroVM、Serverless、大模型应用、代码执行、Agent基础设施、安全隔离、弹性计算、E2B |
+| [火山引擎方舟大模型平台入门文档深度分析报告](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ark-introduction-analysis.md) |  | 2026-07-02 | - |
+| [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、ARK、Ark CLI、arkcli、Ark Docs MCP、命令行工具、AI Agent、MCP、大模型工具、AI开发工具、Claude Code、Cursor、Trae、双层架构 |
+| [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md) |  | 2026-07-06 | HiAgent、火山引擎、智能体平台、Agent开发、数字员工、企业AI、MCP、低代码、大模型运维、私有化部署、AI安全 |
+| [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md) |  | 2026-07-04 | KickArt、火山引擎、AI视频生成、电商营销、创作Agent、爆款裂变、投前预审、内容分发、Seedance、VLM、AIGC营销、短视频创作、AI特效模板 |
+| [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md) |  | 2026-07-07 | 火山引擎、机器学习平台、MLOps、分布式训练、大模型训练、云原生、GPU、模型推理、深度学习、字节跳动、AI基础设施、火山方舟 |
+| [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md) |  | 2026-07-07 | 火山引擎、方舟、协作奖励计划、数据飞轮、增长策略、数据授权、撤回授权、用户激励、数据合规 |
 
 ### knowledge/learning/07-vendor-product-learning
 
@@ -1526,9 +1526,9 @@
 | [十一、资源与工具](learning/05-academic-skills/thesis-writing-wiki/10-resources-and-tools.md) |  |  | - |
 | [十二、社会语言学视频资源](learning/05-academic-skills/thesis-writing-wiki/11-sociolinguistics-video-resources.md) |  |  | - |
 | [ian-xiaohei-illustrations](learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md) |  |  | - |
-| [抖音 Vibecoding 人气赛道·执行行动计划](learning/06-business-trends-analysis/douyin-vibecoding-action-plan.md) |  |  | vibecoding、抖音、执行计划、行动指南、TRAE大赛 |
-| [SpecWeave 抖音VibeCoding图文·视觉设计规范](learning/06-business-trends-analysis/douyin-vibecoding-design-spec.md) |  |  | vibecoding、抖音、设计规范、视觉设计、SpecWeave |
-| [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md) |  |  | vibecoding、抖音、内容创作、第一性原理、TRAE大赛、短视频传播 |
+| [抖音 Vibecoding 人气赛道·执行行动计划](learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.md) |  |  | vibecoding、抖音、执行计划、行动指南、TRAE大赛 |
+| [SpecWeave 抖音VibeCoding图文·视觉设计规范](learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.md) |  |  | vibecoding、抖音、设计规范、视觉设计、SpecWeave |
+| [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md) |  |  | vibecoding、抖音、内容创作、第一性原理、TRAE大赛、短视频传播 |
 | [华秋智联与星宸科技战略合作深度分析：打通芯片量产最后一公里](learning/06-business-trends-analysis/huaqiu-sigmastar-partnership-analysis-20260709.md) |  | 2026-07-09 | 端边侧AI、芯片生态、硬件量产、开发者生态、华秋、星宸科技 |
 | [cleaned-article](learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/cleaned-article.md) |  |  | - |
 | [微软Copilot成本困境与多模型时代产业变革深度分析报告](learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md) |  | 2026-07-09 | AI产业、微软Copilot、DeepSeek、多模型架构、成本分析、产业趋势、开源模型 |

@@ -4,13 +4,13 @@ title: "Learning Wiki 主题分类体系"
 category: "learning"
 tags: ["categories", "learning-wiki", "knowledge-architecture", "topic-classification", "learning-path"]
 date: "2026-08-22"
-version: "1.2"
+version: "1.3"
 status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的9主题分类体系设计（00-08），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki"
 ---
 # Learning Wiki 主题分类体系
 
@@ -137,7 +137,7 @@ flowchart TD
 |------|------|----------|---------|
 | 0 | 00 本质与思维 | [第一性原理](00-essence-and-thinking/first-principles/README.md) | 建立反类比、回归本质的思维基础（所有技术学习的元方法论） |
 | 1 | 01 协议与接口 | [Agent通信协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)、[四层概念](01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 理解Agent互联互通的基础标准 |
-| 2 | 02 工程方法论 | [四代工程概念](02-agent-engineering-methodology/four-engineering-concepts-wiki.md)、[Harness工程](02-agent-engineering-methodology/harness-engineering-wiki.md) | 掌握从Prompt到Loop的工程范式演进 |
+| 2 | 02 工程方法论 | [四代工程概念](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md)、[Harness工程](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) | 掌握从Prompt到Loop的工程范式演进 |
 | 3 | 03 平台工具 | [Claude Tag](03-agent-platforms-tools/claude-tag-article.md)、[Open Code Review](03-agent-platforms-tools/open-code-review-wiki.md) | 了解主流Agent平台与工具生态 |
 | 4 | 06 商业趋势 | [AI变现指南](06-business-trends-analysis/ai-monetization-wiki/00-overview.md) | 理解技术如何转化为商业价值 |
 
@@ -165,7 +165,7 @@ flowchart TD
 | 1 | 08 底层系统 | [WSL学习计划](08-systems-infrastructure/wsl-learning-plan.md)、[WSL CLI与架构](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) | 掌握Windows/Linux互操作底层机制 |
 | 2 | 01 协议与接口 | [FFI外部函数接口](01-agent-protocols-interfaces/ffi-wiki/00-overview.md)、[IDL接口定义语言](01-agent-protocols-interfaces/idl-wiki/00-overview.md)、[TVM FFI](01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md) | 理解跨语言调用与接口定义底层技术 |
 | 3 | 01 协议与接口 | [Agent Runtime Protocol](01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) | 深入生产级Agent运行时协议设计 |
-| 4 | 02 工程方法论 | [Headroom上下文压缩](02-agent-engineering-methodology/headroom-context-compression-wiki.md)、[DSpark推理加速](02-agent-engineering-methodology/dspark-paper-wiki.md) | 掌握Agent性能优化底层技术 |
+| 4 | 02 工程方法论 | [Headroom上下文压缩](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md)、[DSpark推理加速](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | 掌握Agent性能优化底层技术 |
 
 ---
 
@@ -235,7 +235,7 @@ flowchart TD
 
 **认知定位**：Agent开发的"兵法"层——从Prompt Engineering到Loop Engineering的四代工程范式演进，提供驾驭AI Agent的系统化思维框架与实战方法论。
 
-**核心主题词**：`harness-engineering`、`prompt-engineering`、`context-engineering`、`loop-engineering`、`karpathy-guidelines`、`context-compression`、`vibe-coding`、`longcat`
+**核心主题词**：`harness-engineering`、`prompt-engineering`、`context-engineering`、`loop-engineering`、`karpathy-guidelines`、`context-compression`、`vibe-coding`、`longcat`、`seven-concepts`、`agent-evaluation`、`token-optimization`、`inference-acceleration`
 
 **边界说明**：
 
@@ -244,22 +244,60 @@ flowchart TD
 | Agent工程范式演进（Prompt→Context→Harness→Loop） | 具体通信协议标准（归入01） |
 | Harness Engineering驾驭工程方法论 | 具体Agent平台产品（归入03） |
 | Karpathy LLM编程四条准则 | 文档工具链使用方法（归入04） |
-| Headroom上下文压缩中间件 | 多模态内容生成技术（归入05） |
-| LongCat Agent + Loop Engineering实战 | 商业变现方法论（归入06） |
-| Vibe Coding两大神级Prompt（第一性原理+对抗式审查） | 厂商产品案例分析（归入07） |
-| DSpark推理加速论文 | 底层系统基础设施（归入08） |
+| 七概念方法论实践与对抗性审查 | 多模态内容生成技术（归入05） |
+| Headroom上下文压缩与Token优化 | 商业变现方法论（归入06） |
+| Agent评测体系与方法论 | 厂商产品案例分析（归入07） |
+| LongCat/DSpark推理加速与性能优化 | 底层系统基础设施（归入08） |
+| Vibe Coding双Prompt闭环 | 本质思维方法论（归入00） |
 
-**完整Wiki清单**：
+**📂 01-paradigms/ — 范式演进与Agent架构**：
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
-| DSpark推理加速论文 | [dspark-paper-wiki.md](02-agent-engineering-methodology/dspark-paper-wiki.md) | DeepSeek DSpark推理加速论文学习笔记 | 单文件 |
-| 四代工程概念演进 | [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/four-engineering-concepts-wiki.md) | Prompt→Context→Harness→Loop四代AI工程概念的范式演进与瓶颈转移分析 | 单文件 |
-| Harness驾驭工程 | [harness-engineering-wiki.md](02-agent-engineering-methodology/harness-engineering-wiki.md) | 阿里Harness Engineering方法论完整教程，含四条铁律、六大模式、悟空AI招聘案例 | 原子化 |
-| Headroom上下文压缩 | [headroom-context-compression-wiki.md](02-agent-engineering-methodology/headroom-context-compression-wiki.md) | AI Agent上下文压缩中间件完整教程，1万Token压到1千且质量不降反升，含六种压缩算法、CCR可逆机制 | 原子化 |
-| Karpathy LLM编程准则 | [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | Karpathy四条行为准则完整教程，含真实代码正反例、四种分发格式、Multica平台介绍、SpecWeave整合 | 原子化 |
-| LongCat Agent实测 | [longcat-agent-learning-wiki.md](02-agent-engineering-methodology/longcat-agent-learning-wiki.md) | 美团LongCat-2.0（1.6T MoE）接入Claude Code完整流程，含BI看板实战、Token效率对比、Loop Engineering | 原子化 |
-| Vibe Coding神级Prompt | [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | 第一性原理（管生成）与对抗式审查（管验证）构成的Vibe Coding双Prompt闭环分析 | 单文件 |
+| 四代工程概念演进 | [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md) | Prompt→Context→Harness→Loop四代AI工程概念的范式演进与瓶颈转移分析 | 单文件 |
+| Harness驾驭工程 | [harness-engineering-wiki.md](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) | 阿里Harness Engineering方法论完整教程，含四条铁律、六大模式、悟空AI招聘案例 | 原子化 |
+| Harness七大组件 | [harness-seven-components-wiki.md](02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki.md) | AI Agent业务运行底座七大核心组件系统教程，从Prompt到业务交付 | 原子化 |
+| Loop Engineering文章分析 | [harness-loop-engineering-article-analysis.md](02-agent-engineering-methodology/01-paradigms/harness-loop-engineering-article-analysis.md) | Loop Engineering与AI系统工程范式转移深度分析 | 单文件 |
+
+**📂 02-prompt-coding/ — AI编程与Prompt工程**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| Karpathy LLM编程准则 | [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | Karpathy四条行为准则完整教程，含真实代码正反例、四种分发格式、Multica平台介绍、SpecWeave整合 | 原子化 |
+| Agent Skills完整教程 | [agent-skills-wiki.md](02-agent-engineering-methodology/02-prompt-coding/agent-skills-wiki.md) | 谷歌Addy Osmani Agent Skills完整教程，20个核心技能、7个斜杠命令、Google工程文化深度融入 | 原子化 |
+| 七概念×新Prompt范式 | [seven-concepts-prompt-wiki/00-overview.md](02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/00-overview.md) | 七概念方法论驱动的Prompt工程新范式，含GCOB框架、聊天/工作/Codex场景、反模式清单 | 原子化 |
+| Vibe Coding神级Prompt | [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | 第一性原理（管生成）与对抗式审查（管验证）构成的Vibe Coding双Prompt闭环分析 | 单文件 |
+
+**📂 03-methodology/ — 七概念方法论体系**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 对抗性审查方法论 | [adversarial-review-wiki/00-overview.md](02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/00-overview.md) | 对抗性审查完整知识库，含哲学起源、方法论框架、认知偏差防御、行业标准、开源工具 | 原子化 |
+| 七概念×DeepTutor实践 | [seven-concepts-deeptutor-wiki/00-overview.md](02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/00-overview.md) | 七概念方法论在DeepTutor产品中的完整实践教程，含理论篇、案例篇、分析篇、学习路径 | 原子化 |
+| WorkBuddy四层×七概念分析 | [workbuddy-four-layers-seven-concepts-analysis.md](02-agent-engineering-methodology/03-methodology/workbuddy-four-layers-seven-concepts-analysis.md) | 七概念框架视角下WorkBuddy四层工程（Prompt→Context→Harness→Loop）深度跨体系对照分析 | 单文件 |
+
+**📂 04-context-optimization/ — 上下文与Token优化**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| Headroom上下文压缩 | [headroom-context-compression-wiki.md](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md) | AI Agent上下文压缩中间件完整教程，1万Token压到1千且质量不降反升，含六种压缩算法、CCR可逆机制 | 原子化 |
+| LLM Token优化体系 | [llm-token-optimization/README.md](02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/README.md) | LLM Token使用优化全流程指导，含原则、方法、工具、案例、评估、决策框架六模块 | 原子化 |
+| Trae IDE Token优化 | [trae-ide-token-optimization/README.md](02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/README.md) | Trae IDE环境特化的Token优化模式库（静态缩减/对话清理/模型分层/输入精简/Loop断路器） | 原子化 |
+
+**📂 05-evaluation/ — Agent评测体系**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| Agent评测工程手册 | [agent-evaluation-wiki/00-overview.md](02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/00-overview.md) | Agent评测系统化教程，含理论基础、指标设计、Benchmark构建、自动/人工评测、数据治理、行业实践 | 原子化 |
+| Agent评测方法论档案 | [agent-eval-methodology-wiki/README.md](02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/README.md) | 七概念方法论驱动的评测方法论创作档案，含知乎文章、创作过程记录、七概念实践指南附录 | 原子化 |
+
+**📂 06-performance/ — 推理加速与性能优化**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| DSpark推理加速论文 | [dspark-paper-wiki.md](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | DeepSeek DSpark推理加速论文学习笔记 | 单文件 |
+| LongCat Agent实测 | [longcat-agent-learning-wiki.md](02-agent-engineering-methodology/06-performance/longcat-agent-learning-wiki.md) | 美团LongCat-2.0（1.6T MoE）接入Claude Code完整流程，含BI看板实战、Token效率对比、Loop Engineering | 原子化 |
+| Intel Neural Compressor | [neural-compressor-wiki/00-overview.md](02-agent-engineering-methodology/06-performance/neural-compressor-wiki/00-overview.md) | Intel Neural Compressor量化工具完整教程，含安装、快速入门、量化技术、API概览、最佳实践 | 原子化 |
 
 ---
 
@@ -366,7 +404,7 @@ flowchart TD
 
 **认知定位**：技术价值的"罗盘"层——从商业视角审视AI技术，分析变现路径、行业趋势、产品选型，连接技术能力与市场需求。
 
-**核心主题词**：`ai-monetization`、`business-model`、`domestic-llm`、`personal-ip`、`solopreneur`、`marketing-creation`、`trend-analysis`、`pmf`
+**核心主题词**：`ai-monetization`、`business-model`、`domestic-llm`、`personal-ip`、`solopreneur`、`marketing-creation`、`trend-analysis`、`pmf`、`volcengine-ecosystem`、`vibecoding`、`copilot-cost`、`ai-hardware-tools`、`ems-energy`、`supply-chain-risk`、`ai-regulation`
 
 **边界说明**：
 
@@ -376,9 +414,14 @@ flowchart TD
 | 国产AI模型对比与选型 | Agent工程实践方法（归入02） |
 | 个人IP创业趋势（Papi酱案例） | 具体Agent平台产品评测（归入03） |
 | AI工具对比分析 | 文档工具技术细节（归入04） |
-| 营销创作平台案例（火山KickArt） | 多模态生成技术原理（归入05） |
-| 行业趋势观察与商业洞察 | 厂商产品深度拆解（归入07） |
-| | 底层系统技术（归入08） |
+| 火山引擎AI产品生态分析 | 多模态生成技术原理（归入05） |
+| 抖音Vibecoding内容创作趋势 | 厂商产品深度拆解（归入07） |
+| Copilot成本困境与多模型时代 | 底层系统技术（归入08） |
+| AI硬件设计工具生态 |  |
+| 开源EMS能源管理系统趋势 |  |
+| 供应链风险与制造业分析（七概念方法论应用） |  |
+| 全球AI监管政策动态 |  |
+| 行业趋势观察与商业洞察 |  |
 
 **完整Wiki清单**：
 
@@ -388,7 +431,14 @@ flowchart TD
 | 国产AI模型对比 | [domestic-llm-comparison-notes.md](06-business-trends-analysis/domestic-llm-comparison-notes.md) | DeepSeek V4/Kimi K2.7/MiniMax M3/GLM 5.2四款国产模型对比，按四类人群推荐方案，"能力是入场券，信任才是留下来的理由" | 单文件 |
 | Papi酱个人IP创业趋势 | [papi-jiang-solo-ip-trend-wiki.md](06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | Papi酱十年创业时间线解析，"把公司做小，把IP做大"创业新趋势，小而美模式实践启示 | 原子化 |
 | 三大AI工具分析 | [three-ai-tools-wiki.md](06-business-trends-analysis/three-ai-tools-wiki.md) | 三大AI工具对比分析 | 单文件 |
-| 火山引擎KickArt营销创作 | [volcengine-kickart-marketing-creation-analysis.md](06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) | 火山引擎KickArt营销创作平台分析 | 单文件 |
+| 火山引擎AI产品生态 | [volcengine-ai-ecosystem-wiki/README.md](06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.md) | 火山引擎全系产品深度解析：基础设施→Agent平台→开发者工具→应用创作→生态增长 | 原子化 |
+| 抖音Vibecoding创作指南 | [douyin-vibecoding-wiki/README.md](06-business-trends-analysis/douyin-vibecoding-wiki/README.md) | 抖音AI编程内容创作方法论、视觉规范、执行计划 | 原子化 |
+| 微软Copilot成本困境与多模型时代 | [copilot-cost-multimodel-era-wiki/](06-business-trends-analysis/copilot-cost-multimodel-era-wiki/) | Copilot成本困境、DeepSeek V4冲击、多模型架构产业变革 | 原子化 |
+| AI硬件设计工具生态 | [ai-hardware-design-tools-wiki/](06-business-trends-analysis/ai-hardware-design-tools-wiki/) | 10个AI硬件设计工具深度分析、PCB/EDA/电路设计全链路 | 原子化 |
+| 开源EMS能源管理系统 | [ems-energy-management-wiki/](06-business-trends-analysis/ems-energy-management-wiki/) | 开源能源管理系统深度洞察、50+协议支持 | 原子化 |
+| 七概念印度制造业供应链风险 | [seven-concepts-india-manufacturing-wiki/](06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/) | 基于七概念方法论的印度制造业供应链风险系统分析 | 原子化 |
+| AI拟人化互动服务管理办法 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 五部门AI拟人化互动服务管理办法深度解读、合规自查清单 | 单文件 |
+| 华秋智联×星宸科技战略合作 | [huaqiu-sigmastar-partnership-analysis-20260709.md](06-business-trends-analysis/huaqiu-sigmastar-partnership-analysis-20260709.md) | 打通芯片量产最后一公里、端边侧AI生态分析 | 单文件 |
 
 ---
 
@@ -494,14 +544,14 @@ flowchart TD
 |---------|---------|---------|-----------|-----------|
 | 00 | 本质与思维 | 2 | 2 | 0 |
 | 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
-| 02 | Agent工程方法论 | 10 | 7 | 3 |
+| 02 | Agent工程方法论 | 19 | 14 | 5 |
 | 03 | Agent平台与工具生态 | 16 | 6 | 10 |
 | 04 | 文档工具链与标记语言 | 5 | 4 | 1 |
 | 05 | AI多模态与内容生成 | 6 | 0 | 6 |
 | 06 | AI商业与趋势观察 | 9 | 2 | 7 |
 | 07 | 厂商产品学习系列 | 25 | 5 | 20 |
 | 08 | 底层系统与基础设施 | 5 | 3 | 2 |
-| **合计** | | **88** | **37** | **51** |
+| **合计** | | **97** | **43** | **54** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 

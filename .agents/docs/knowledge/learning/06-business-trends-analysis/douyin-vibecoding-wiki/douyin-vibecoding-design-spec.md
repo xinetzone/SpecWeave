@@ -6,13 +6,13 @@ version: "1.0"
 tags: ["vibecoding", "抖音", "设计规范", "视觉设计", "SpecWeave"]
 related:
   - "[douyin-vibecoding-action-plan.md](douyin-vibecoding-action-plan.md)"
-  - "[specweave-color-palette.png](../../../../.temp/specweave-color-palette.png)"
+  - "[specweave-color-palette.png](../../../../../../.temp/specweave-color-palette.png)"
 ---
 
 # SpecWeave 抖音图文 · 视觉设计规范
 
 > 📐 画布尺寸：**1080×1440px**（3:4竖版，抖音最佳比例）
-> 🎨 配色色卡：[specweave-color-palette.png](../../../../.temp/specweave-color-palette.png)（可直接导入吸色）
+> 🎨 配色色卡：[specweave-color-palette.png](../../../../../../.temp/specweave-color-palette.png)（可直接导入吸色）
 > 📦 相关文档：[抖音Vibecoding执行行动计划](douyin-vibecoding-action-plan.md)
 
 ---
@@ -460,6 +460,6 @@ related:
 | 资源 | 链接 |
 |------|------|
 | 执行行动计划 | [douyin-vibecoding-action-plan.md](douyin-vibecoding-action-plan.md) |
-| 配色色卡PNG | [specweave-color-palette.png](../../../../.temp/specweave-color-palette.png) |
+| 配色色卡PNG | [specweave-color-palette.png](../../../../../../.temp/specweave-color-palette.png) |
 | 深度分析报告 | [douyin-vibecoding-guide-analysis.md](douyin-vibecoding-guide-analysis.md) |
 | 一句话定位+文案 | 见行动计划末尾"SpecWeave参赛专用·已填充内容"章节 |

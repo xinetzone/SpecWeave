@@ -340,7 +340,7 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 | 产品 | 定位 | 与 Mobile Use Agent 关系 |
 |------|------|------------------------|
 | **[ACEP 云手机](./volcengine-acep-cloudphone-analysis.md)** | 云手机 IaaS/PaaS | 底层基础设施 |
-| **[HiAgent](../06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)** | 企业级 Agent 平台 | 互补：HiAgent 通用企业 Agent，Mobile Use Agent 专注移动端 |
+| **[HiAgent](../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)** | 企业级 Agent 平台 | 互补：HiAgent 通用企业 Agent，Mobile Use Agent 专注移动端 |
 | **方舟大模型** | 模型服务 | 提供 LLM 能力 |
 | **Jeddak AICC** | 隐私计算 | 提供安全加密 |
 
@@ -369,7 +369,7 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 
 **模式**：视觉识别 + 指令调用 + 工具集成（MCP）
 
-**借鉴价值**：单一驱动模式都有边界，工程上应根据任务类型动态选择执行路径。这与 [Karpathy LLM Coding Guidelines](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines/00-overview.md) 中"工具优先，代码其次"的原则一致。
+**借鉴价值**：单一驱动模式都有边界，工程上应根据任务类型动态选择执行路径。这与 [Karpathy LLM Coding Guidelines](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/00-overview.md) 中"工具优先，代码其次"的原则一致。
 
 ### 8.3 环境隔离策略
 
@@ -421,10 +421,10 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 ### 10.3 本项目内相关 wiki
 
 - [火山引擎云手机（ACEP）完整学习笔记](./volcengine-acep-cloudphone-analysis.md) - Mobile Use Agent 的底层基础设施
-- [火山引擎 HiAgent 平台分析](../06-business-trends-analysis/volcengine-hiagent-platform-analysis.md) - 火山引擎企业级 Agent 平台
+- [火山引擎 HiAgent 平台分析](../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md) - 火山引擎企业级 Agent 平台
 - [MCP 协议深度解析](../01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.md) - Mobile Use Agent 依赖的协议标准
 - [Agent 通信协议全景](../01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md) - MCP 在协议生态中的定位
-- [Karpathy LLM Coding Guidelines](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines/00-overview.md) - 工具优先原则的理论基础
+- [Karpathy LLM Coding Guidelines](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/00-overview.md) - 工具优先原则的理论基础
 
 ### 10.4 联系方式
 

@@ -81,7 +81,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 - 1.10是协议层的高级话题，建议在理解基础协议后再学
 
 **学完本主题后建议延伸**：
-- → [02 工程方法论](02-agent-engineering-methodology/four-engineering-concepts-wiki.md)：理解协议之上如何构建工程体系
+- → [02 工程方法论](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md)：理解协议之上如何构建工程体系
 - → [03 平台工具](03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)：看具体平台如何实现这些协议
 - → [08 底层系统](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md)：WSL中Plan9/DrvFs的跨进程通信与协议思想相通
 
@@ -94,13 +94,13 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 
 | 步骤 | Wiki | 难度 | 学习目标 | 预计时间 | 前置步骤 |
 |------|------|------|---------|---------|---------|
-| 2.1 | [四代工程概念演进](02-agent-engineering-methodology/four-engineering-concepts-wiki.md) | ⭐ | 建立Prompt→Context→Harness→Loop的范式演进全局认知，理解瓶颈转移逻辑 | 40min | 01主题基础 |
-| 2.2 | [Vibe Coding神级Prompt](02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ⭐ | 掌握第一性原理（管生成）+对抗式审查（管验证）双Prompt闭环 | 30min | 无（可独立阅读） |
-| 2.3 | [Karpathy LLM编程准则](02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | ⭐⭐ | 四条行为准则：编码前思考/简约至上/精确编辑/目标驱动，含真实代码正反例 | 2.5h | 2.1 |
-| 2.4 | [Harness驾驭工程](02-agent-engineering-methodology/harness-engineering-wiki.md) | ⭐⭐ | 四条反直觉铁律、六大工程模式、悟空AI招聘实战案例 | 2h | 2.1, 2.3 |
-| 2.5 | [LongCat Agent实测](02-agent-engineering-methodology/longcat-agent-learning-wiki.md) | ⭐⭐ | 美团LongCat-2.0接入Claude Code实战：BI看板项目、Token效率、Loop Engineering | 2h | 2.3, 2.4 |
-| 2.6 | [Headroom上下文压缩](02-agent-engineering-methodology/headroom-context-compression-wiki.md) | ⭐⭐⭐ | 六种压缩算法、CCR可逆机制、四种接入方式、跨Agent记忆 | 2h | 2.4 |
-| 2.7 | [DSpark推理加速论文](02-agent-engineering-methodology/dspark-paper-wiki.md) | ⭐⭐⭐ | DeepSeek推理加速论文笔记，理解LLM推理性能优化方法论 | 1.5h | 2.4, 2.6 |
+| 2.1 | [四代工程概念演进](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md) | ⭐ | 建立Prompt→Context→Harness→Loop的范式演进全局认知，理解瓶颈转移逻辑 | 40min | 01主题基础 |
+| 2.2 | [Vibe Coding神级Prompt](02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | ⭐ | 掌握第一性原理（管生成）+对抗式审查（管验证）双Prompt闭环 | 30min | 无（可独立阅读） |
+| 2.3 | [Karpathy LLM编程准则](02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | ⭐⭐ | 四条行为准则：编码前思考/简约至上/精确编辑/目标驱动，含真实代码正反例 | 2.5h | 2.1 |
+| 2.4 | [Harness驾驭工程](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) | ⭐⭐ | 四条反直觉铁律、六大工程模式、悟空AI招聘实战案例 | 2h | 2.1, 2.3 |
+| 2.5 | [LongCat Agent实测](02-agent-engineering-methodology/06-performance/longcat-agent-learning-wiki.md) | ⭐⭐ | 美团LongCat-2.0接入Claude Code实战：BI看板项目、Token效率、Loop Engineering | 2h | 2.3, 2.4 |
+| 2.6 | [Headroom上下文压缩](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md) | ⭐⭐⭐ | 六种压缩算法、CCR可逆机制、四种接入方式、跨Agent记忆 | 2h | 2.4 |
+| 2.7 | [DSpark推理加速论文](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | ⭐⭐⭐ | DeepSeek推理加速论文笔记，理解LLM推理性能优化方法论 | 1.5h | 2.4, 2.6 |
 
 **主题内知识关联**：
 - 2.1是全主题的认知地图，建议最先阅读
@@ -169,7 +169,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 
 **学完本主题后建议延伸**：
 - 本主题是横向支撑能力，可服务于所有其他主题的文档写作需求
-- → 回到[02 工程方法论](02-agent-engineering-methodology/headroom-context-compression-wiki.md)：Headroom文档中可能涉及文档压缩表示
+- → 回到[02 工程方法论](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md)：Headroom文档中可能涉及文档压缩表示
 - → 可使用MyST重写或优化其他主题的Wiki文档
 
 ---
@@ -194,7 +194,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 - 5.5→5.6是AI短剧/视频方向的递进学习（先平台概览再工具详解）
 
 **学完本主题后建议延伸**：
-- → [06 商业趋势](06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)：多模态内容的商业化路径
+- → [06 商业趋势：火山引擎AI生态](06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.md)：多模态内容的商业化路径与AI产品生态
 - → [07 厂商产品](07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)：多模态在硬件产品中的应用（如远程摄像头）
 
 ---
@@ -210,7 +210,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 | 6.2 | [国产AI模型对比](06-business-trends-analysis/domestic-llm-comparison-notes.md) | ⭐ | DeepSeek V4/Kimi K2.7/MiniMax M3/GLM 5.2对比，按场景推荐选型 | 40min | 无 |
 | 6.3 | [三大AI工具分析](06-business-trends-analysis/three-ai-tools-wiki.md) | ⭐ | AI工具对比分析框架 | 30min | 无 |
 | 6.4 | [Papi酱个人IP创业趋势](06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | ⭐ | "把公司做小，把IP做大"创业新趋势，小而美模式实践 | 1h | 无 |
-| 6.5 | [火山引擎KickArt营销创作](06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) | ⭐⭐ | 营销创作平台案例分析（AI+营销方向） | 50min | 6.1 |
+| 6.5 | [火山引擎AI产品生态](06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.md) | ⭐⭐ | 火山引擎全系AI产品深度解析：Agent平台/大模型/沙箱/营销创作/ML平台 | 2h | 6.1 |
 
 **主题内知识关联**：
 - 6.1（AI变现指南）是核心框架，建议最先阅读
@@ -260,7 +260,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 - 7B.1→7B.2→7B.3是涂鸦SDK从概览到实操到Skills集成的递进链路
 
 **学完本主题后建议延伸**：
-- → 回到[02 工程方法论](02-agent-engineering-methodology/harness-engineering-wiki.md)：重新审视Harness模式在产品设计中的体现
+- → 回到[02 工程方法论](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md)：重新审视Harness模式在产品设计中的体现
 - → [06 商业趋势](06-business-trends-analysis/ai-monetization-wiki/00-overview.md)：分析贝锐/涂鸦的商业模式与变现路径
 
 ---
@@ -362,10 +362,10 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 | 核心概念 | 主要主题 | 关联主题与Wiki |
 |---------|---------|---------------|
 | **MCP协议** | 01 | [01 通信协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) → [01 Interface深度](01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) → [03 QuantDinger](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) → [03 BrowserAct](03-agent-platforms-tools/browseract-wiki.md) → [07 涂鸦Skills](07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) |
-| **Harness模式** | 02 | [02 Harness工程](02-agent-engineering-methodology/harness-engineering-wiki.md) → [05 Agnes/Pavo](05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)（harness在多模态中的应用）→ [07 开机盒子](07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)（产品Harness设计） |
+| **Harness模式** | 02 | [02 Harness工程](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) → [05 Agnes/Pavo](05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)（harness在多模态中的应用）→ [07 开机盒子](07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)（产品Harness设计） |
 | **Skill开发** | 01 | [01 Skills标准](01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) → [01 Skills教程](01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) → [05 Ian小嘿](05-ai-multimodal-content/ian-xiaohei-illustrations.md) → [07 涂鸦Skills](07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) |
-| **上下文压缩** | 02 | [02 Headroom](02-agent-engineering-methodology/headroom-context-compression-wiki.md) → [02 LongCat](02-agent-engineering-methodology/longcat-agent-learning-wiki.md)（Token效率对比）→ [02 DSpark](02-agent-engineering-methodology/dspark-paper-wiki.md)（推理级压缩） |
-| **Agent协作** | 01-03 | [01 A2A协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) → [02 Harness多Agent](02-agent-engineering-methodology/harness-engineering-wiki.md) → [03 Octo](03-agent-platforms-tools/octo-platform-wiki.md) → [03 The Agency](03-agent-platforms-tools/the-agency-project-wiki.md) → [03 Claude Tag](03-agent-platforms-tools/claude-tag-article.md)（团队协作） |
+| **上下文压缩** | 02 | [02 Headroom](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md) → [02 LongCat](02-agent-engineering-methodology/06-performance/longcat-agent-learning-wiki.md)（Token效率对比）→ [02 DSpark](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md)（推理级压缩） |
+| **Agent协作** | 01-03 | [01 A2A协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) → [02 Harness多Agent](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) → [03 Octo](03-agent-platforms-tools/octo-platform-wiki.md) → [03 The Agency](03-agent-platforms-tools/the-agency-project-wiki.md) → [03 Claude Tag](03-agent-platforms-tools/claude-tag-article.md)（团队协作） |
 | **软硬结合** | 07 | [07 Oray矩阵](07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md) → [07 开机盒子](07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) → [07 无网远控](07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) → [07 涂鸦SDK](07-vendor-product-learning/tuya/tuya-open-learning-report.md) → [05 摄像头SU1](05-ai-multimodal-content/../07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md) |
 | **AI变现** | 06 | [06 AI变现指南](06-business-trends-analysis/ai-monetization-wiki/00-overview.md) → [03 QuantDinger](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)（SaaS+金融）→ [03 MopMonk](03-agent-platforms-tools/mopmonk-security-agent-wiki.md)（安全SaaS）→ [07 Oray矩阵](07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)（软硬结合变现） |
 

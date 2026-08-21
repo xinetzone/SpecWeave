@@ -175,8 +175,8 @@
 
 ## 云原生
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](../learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 - [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](../learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
@@ -309,7 +309,7 @@
 
 ## 代码执行
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ## 代码模板
 
@@ -346,7 +346,7 @@
 
 ## 企业AI
 
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 
 ## 企业安全
 
@@ -362,7 +362,7 @@
 
 ## 企业级AI
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
 
 ## 企业落地
 
@@ -382,7 +382,7 @@
 
 ## 低代码
 
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 
 ## 使用场景
 
@@ -466,7 +466,7 @@
 
 ## 全链路可观测
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
 
 ## 八大场景
 
@@ -509,7 +509,7 @@
 
 ## 内容分发
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 内容创业
 
@@ -520,7 +520,7 @@
 
 ## 内容创作
 
-- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md)
+- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
 
 ## 内容提取
 
@@ -564,7 +564,7 @@
 
 ## 分布式训练
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ## 分析
@@ -609,7 +609,7 @@
 
 ## 创作Agent
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 前端动画
 
@@ -659,7 +659,7 @@
 
 ## 协作奖励计划
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ## 协作开发
@@ -746,7 +746,7 @@
 
 ## 双层架构
 
-- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md)
 
 ## 双电源
 
@@ -820,7 +820,7 @@
 
 ## 命令行工具
 
-- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md)
 - [火山引擎方舟 Ark CLI 核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
 
 ## 响应契约
@@ -869,7 +869,7 @@
 
 ## 增长策略
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [可借鉴的设计理念](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/12-design-insights.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
@@ -953,7 +953,7 @@
 
 ## 大模型工具
 
-- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md)
 
 ## 大模型平台
 
@@ -963,7 +963,7 @@
 
 ## 大模型应用
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ## 大模型联网
 
@@ -971,12 +971,12 @@
 
 ## 大模型训练
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ## 大模型运维
 
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 
 ## 大模型问答
 
@@ -997,14 +997,14 @@
 
 ## 字节跳动
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎Viking AI搜索推荐产品核心笔记](../learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
 - [火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件](../learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 - [豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎](../learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md)
 
 ## 存量焕新
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
 
 ## 学习指南
 
@@ -1050,7 +1050,7 @@
 
 ## 安全沙箱
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
 
 ## 安全编码
 
@@ -1059,7 +1059,7 @@
 
 ## 安全隔离
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ## 安装
 
@@ -1403,7 +1403,7 @@
 
 ## 弹性计算
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ## 归档升级
 
@@ -1492,7 +1492,7 @@
 
 ## 执行计划
 
-- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-action-plan.md)
+- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.md)
 
 ## 扩散模型
 
@@ -1549,13 +1549,13 @@
 
 ## 投前预审
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 抖音
 
-- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-action-plan.md)
-- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-design-spec.md)
-- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md)
+- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.md)
+- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.md)
+- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
 
 ## 拟人化互动
 
@@ -1592,7 +1592,7 @@
 
 ## 撤回授权
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ## 播客
@@ -1624,7 +1624,7 @@
 
 ## 数字员工
 
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 
 ## 数据
 
@@ -1636,11 +1636,11 @@
 
 ## 数据合规
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 
 ## 数据授权
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ## 数据流
@@ -1658,7 +1658,7 @@
 
 ## 数据飞轮
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ## 文件下载
@@ -1713,8 +1713,8 @@
 
 - [Agent Plan 共创计划：概述与学习目标](../learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/00-overview.md)
 - [产品详解：什么是Agent Plan](../learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/01-product-overview.md)
-- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山引擎方舟 Ark CLI 核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
@@ -1756,8 +1756,8 @@
 
 ## 智能体平台
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 
 ## 智能排插
 
@@ -2197,7 +2197,7 @@
 - [ONNX Wiki - 快速上手指南](../learning/06-ai-ml-inference/onnx-wiki/03-quickstart.md)
 - [ONNX Wiki - 最佳实践与反模式](../learning/06-ai-ml-inference/onnx-wiki/04-best-practices.md)
 - [ONNX Wiki - FAQ与资源](../learning/06-ai-ml-inference/onnx-wiki/05-faq-and-resources.md)
-- [火山引擎方舟大模型平台入门文档深度分析报告](../learning/06-business-trends-analysis/volcengine-ark-introduction-analysis.md)
+- [火山引擎方舟大模型平台入门文档深度分析报告](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ark-introduction-analysis.md)
 - [cleaned-article](../learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/cleaned-article.md)
 - [cleaned-article](../learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/cleaned-article.md)
 - [Copilot发展历程与成本困境深度分析](../learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task2-copilot-analysis.md)
@@ -2364,7 +2364,7 @@
 
 ## 机器学习平台
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ## 机房运维
@@ -2474,7 +2474,7 @@
 
 ## 模型推理
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ## 模型管理
@@ -2529,7 +2529,7 @@
 
 ## 沙箱
 
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
 
 ## 沙箱环境
 
@@ -2590,7 +2590,7 @@
 
 ## 深度学习
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎机器学习平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ml-platform-core-notes.md)
 
 ## 深度洞察
@@ -2630,13 +2630,13 @@
 - [产品架构与核心能力](../learning/03-agent-platforms-tools/volcengine-agentkit-wiki/02-core-architecture.md)
 - [VeADK 智能体开发框架](../learning/03-agent-platforms-tools/volcengine-agentkit-wiki/03-veadk-framework.md)
 - [应用场景与落地方案](../learning/03-agent-platforms-tools/volcengine-agentkit-wiki/06-application-scenarios.md)
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
-- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md)
-- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-arkcli-analysis.md)
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md)
+- [火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](../learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md)
 - [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](../learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
 - [火山引擎Viking AI搜索推荐产品核心笔记](../learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)
@@ -2653,7 +2653,7 @@
 
 ## 火山方舟
 
-- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ml-platform-analysis.md)
+- [火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ml-platform-analysis.md)
 - [火山引擎方舟大模型平台入门文档深度分析报告](../learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)
 - [火山引擎方舟大模型平台核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)
 - [火山引擎方舟入门文档原始内容提取](../learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)
@@ -2661,7 +2661,7 @@
 
 ## 爆款裂变
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 版本信息
 
@@ -2711,7 +2711,7 @@
 
 ## 生产就绪
 
-- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)
+- [火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)
 
 ## 生态
 
@@ -2754,7 +2754,7 @@
 
 ## 用户激励
 
-- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md)
+- [火山方舟协作奖励计划深度分析：数据换免费Tokens的飞轮模式与撤回授权机制设计](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md)
 - [火山方舟协作奖励计划核心笔记](../learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md)
 
 ## 用户画像
@@ -2767,7 +2767,7 @@
 
 ## 电商营销
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 电量监控
 
@@ -2863,11 +2863,11 @@
 
 ## 短视频传播
 
-- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md)
+- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
 
 ## 短视频创作
 
-- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md)
+- [火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-kickart-marketing-creation-analysis.md)
 
 ## 研究助手
 
@@ -2923,7 +2923,7 @@
 - [第二章 - MonkeyCode产品深度解析](../learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md)
 - [第三章 - 实践操作指南](../learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/03-practice-guide.md)
 - [第五章 - 资源扩展链接](../learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/05-resources.md)
-- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-hiagent-platform-analysis.md)
+- [火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台](../learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)
 - [06 开源自托管方案](../learning/07-vendor-product-learning/deepseek/06-self-hosting.md)
 
 ## 秒悟
@@ -2993,7 +2993,7 @@
 - [Vibe Coding 两大神级 Prompt](../learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
 - [F - 第一性原理 (First Principles)](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/06-f-first-principles.md)
 - [F第一性原理在DeepTutor中的体现](../learning/02-agent-engineering-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.md)
-- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-guide-analysis.md)
+- [抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
 
 ## 第三方平台
 
@@ -3233,7 +3233,7 @@
 
 ## 行动指南
 
-- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-action-plan.md)
+- [抖音 Vibecoding 人气赛道·执行行动计划](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.md)
 
 ## 行动项
 
@@ -3253,7 +3253,7 @@
 
 ## 视觉设计
 
-- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-design-spec.md)
+- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.md)
 - [界面设计与视觉分析](../learning/07-vendor-product-learning/openai/chatgpt-codex-wiki/03-interface-design.md)
 - [网页设计与用户体验分析](../learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis/04-web-ux-analysis.md)
 
@@ -3311,7 +3311,7 @@
 
 ## 设计规范
 
-- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-design-spec.md)
+- [SpecWeave 抖音VibeCoding图文·视觉设计规范](../learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.md)
 
 ## 访客路径
 
