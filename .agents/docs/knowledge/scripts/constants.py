@@ -9,11 +9,15 @@ KNOWLEDGE_DIR = SCRIPT_DIR.parent
 DOCS_DIR = KNOWLEDGE_DIR.parent
 OUTPUT_FILE = KNOWLEDGE_DIR / "README.md"
 CATEGORY_INDEX_FILE = KNOWLEDGE_DIR / "category-index.md"
+CATEGORY_INDEX_DIR = KNOWLEDGE_DIR / "categories"
 TAG_INDEX_DIR = KNOWLEDGE_DIR / "tags"
 
 # ── 排除文件 ──────────────────────────────────────────────────
 EXCLUDE_FILES = {"template.md", "readme.md", "category-index.md"}
-GENERATED_DIRS = {"scripts", "tags"}
+GENERATED_DIRS = {"scripts", "tags", "categories"}
+
+# ── 分片大小目标 ──────────────────────────────────────────────
+TARGET_SHARD_KB = 80  # 单个分片文件目标大小上限（KB）
 
 # ── 默认元数据 ────────────────────────────────────────────────
 DEFAULT_META = {

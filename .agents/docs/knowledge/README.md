@@ -3,30 +3,30 @@
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
 - **总条目数**：1288
-- **分类数**：57
+- **分类数**：53
 - **标签数**：2514
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
-| architecture | 1 | [architecture](category-index.md#architecture) |
+| architecture | 1 | [architecture](categories/architecture.md) |
 | best-practices | 47 | [best-practices](best-practices/README.md) |
-| case-study | 5 | [case-study](category-index.md#case-study) |
+| case-study | 5 | [case-study](categories/case-study.md) |
 | decisions | 6 | [decisions](decisions/README.md) |
-| docs | 10 | [docs](category-index.md#docs) |
-| examples | 6 | [examples](category-index.md#examples) |
-| knowledge | 336 | [knowledge](category-index.md#knowledge) |
+| docs | 10 | [docs](categories/docs.md) |
+| examples | 6 | [examples](categories/examples.md) |
+| knowledge | 293 | [knowledge](categories/knowledge.md) |
 | learning | 493 | [learning](learning/README.md) |
-| methods | 6 | [methods](category-index.md#methods) |
+| methods | 6 | [methods](categories/methods.md) |
 | operations | 21 | [operations](operations/README.md) |
-| platform | 1 | [platform](category-index.md#platform) |
-| reference | 3 | [reference](category-index.md#reference) |
-| research | 1 | [research](category-index.md#research) |
-| standards | 1 | [standards](category-index.md#standards) |
+| platform | 1 | [platform](categories/platform.md) |
+| reference | 3 | [reference](categories/reference.md) |
+| research | 1 | [research](categories/research.md) |
+| standards | 1 | [standards](categories/standards.md) |
 | tech | 36 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 311 | [unknown](category-index.md#unknown) |
+| unknown | 354 | [unknown](categories/unknown.md) |
 
 ## 辅助索引
 
@@ -108,4 +108,4 @@
 
 ---
 
-*索引自动生成于 2026-08-21 12:32:03*
+*索引自动生成于 2026-08-21 15:32:36*
