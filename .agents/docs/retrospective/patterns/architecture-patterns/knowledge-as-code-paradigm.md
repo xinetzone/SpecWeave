@@ -215,6 +215,25 @@ OKF是"知识即代码"的标杆实现：
 - ❌ 视觉/设计类资产（图片/设计稿本身不是文本，但元数据和注释仍适用）
 - ❌ 个人笔记（如果只有自己用，不需要PR和CI，简单纯文本即可）
 
+## 失败案例
+
+**失败案例1：只模仿形式不模仿精神（多团队复制"文档即代码"面子的长期反例）**
+
+不少团队照搬"文档入库+PR审查"的流程，却**没有真正建立质量门**：文档直接merge进main、PR流于形式、CI不做内容校验。后果是"知识即代码"只剩Git版本管理的壳，质量仍靠人肉自觉——投入了流程改造的成本，却没有换来可审计、可追踪的收益，最终被当作"过度工程"废弃。**失败根因**：把"知识即代码"窄化为"用Git管文档"，跳过了质量门、自动化校验等真正让"代码级治理"成立的能力。
+
+**失败案例2：概念翻译疲劳导致沟通成本飙升（交叉团队实践复盘）**
+
+为了"知识即代码"，给每个SE概念都发明新名字（如把"merge conflict"另起专有名词），结果团队内部每讲一次都要先翻译术语。**失败根因**：知识即代码的价值在于复用SE的**既有**心智模型，反其道另造词汇反而削平了复用红利。
+
+## 反目标用户/场景
+
+以下用户/场景**不适用或不适合**该模式，强制套用会造成反效果：
+
+1. **零自动化能力的纯内容团队**：若团队没有CI/Git钩子等任何自动化手段，只引入Git管文档**对**质量保证**无效**，流程沦为形式主义。
+2. **以实时并发协作为主的场景**：Git的提交-合并模型应对秒级多人实时编辑**不适合**，会产生长期分支冲突与痛苦rebase。
+3. **一次性交付、无后续维护的知识资产**：对用完即弃、无历史责任的知识，投入PR+CI的完整治理链**对**成果**无效**，纯属沉没成本。
+4. **二进制/媒体为主的视觉资产业务**：非文本资产本身无法grep/diff，强行纳入文本化治理**有害**，会制造虚假的"可追踪"幻觉。
+
 ## 检验标准
 
 | 维度 | 检验点 |
@@ -231,12 +250,12 @@ OKF是"知识即代码"的标杆实现：
 
 | 关系模式 | 关系类型 | 说明 |
 |---------|---------|------|
-| [markdown-as-interface.md](markdown-as-interface.md) | 实现手段 | Markdown作为接口是知识即代码的核心技术选择之一 |
-| [knowledge-archive-four-layer.md](../research-knowledge/knowledge-archive-four-layer.md) | 组织结构 | 四层档案架构是知识即代码的目录组织实践 |
+| [markdown-as-interface.md](../methodology-patterns/ai-collaboration/markdown-as-interface.md) | 实现手段 | Markdown作为接口是知识即代码的核心技术选择之一 |
+| [knowledge-archive-four-layer.md](../methodology-patterns/research-knowledge/knowledge-archive-four-layer.md) | 组织结构 | 四层档案架构是知识即代码的目录组织实践 |
 | [provenance-driven-trust.md](provenance-driven-trust.md) | 质量延伸 | 溯源驱动信任是知识即代码中签名/验证机制的深化 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 架构参考 | 五层文档架构是知识文件分层组织的具体模式 |
-| [vendor-neutral-three-layer-learning.md](../research-knowledge/vendor-neutral-three-layer-learning.md) | 方法论互补 | 学习方法论层面的三层剥离，本模式是知识系统架构层面的范式迁移 |
-| [open-source-repo-four-layer-identification.md](../research-knowledge/open-source-repo-four-layer-identification.md) | 实践支撑 | 四层架构识别法是在阅读开源项目时发现"知识即代码"模式的具体方法 |
+| [vendor-neutral-three-layer-learning.md](../methodology-patterns/research-knowledge/vendor-neutral-three-layer-learning.md) | 方法论互补 | 学习方法论层面的三层剥离，本模式是知识系统架构层面的范式迁移 |
+| [open-source-repo-four-layer-identification.md](../methodology-patterns/research-knowledge/open-source-repo-four-layer-identification.md) | 实践支撑 | 四层架构识别法是在阅读开源项目时发现"知识即代码"模式的具体方法 |
 
 ---
 

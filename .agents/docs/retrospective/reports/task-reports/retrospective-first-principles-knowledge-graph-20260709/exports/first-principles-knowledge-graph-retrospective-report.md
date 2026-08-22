@@ -28,7 +28,7 @@ last_updated: "2026-07-10"
 
 | 指标 | 数值 |
 |------|------|
-| 最终交付 | [12-knowledge-graph.html](../../../../../knowledge/learning/first-principles/12-knowledge-graph.html)（127KB自包含HTML） |
+| 最终交付 | [12-knowledge-graph.html](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html)（127KB自包含HTML） |
 | 节点总数 | 77个（概念24+人物13+事件19+文档17+时期4） |
 | 初始关系 | 176条（自动62.5%+手工37.5%） |
 | 编辑功能 | ✅ 支持点击创建/右键删除/双格式导出（Python/JSON） |
@@ -79,7 +79,7 @@ last_updated: "2026-07-10"
 | [knowledge_graph_core.py](../../../../../../scripts/lib/knowledge_graph_core.py) | 核心库（含推荐算法+通用模板集成） |
 | [generate-knowledge-graph.py](../../../../../../scripts/generate-knowledge-graph.py) | 旧脚本（双轨兼容，保留向后兼容） |
 | [knowledge-graph-generic.html](../../../../../../scripts/templates/knowledge-graph-generic.html) | 通用HTML模板（含编辑模式UI/JS） |
-| [12-knowledge-graph.html](../../../../../knowledge/learning/first-principles/12-knowledge-graph.html) | 最终交付：77节点交互式知识图谱 |
+| [12-knowledge-graph.html](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html) | 最终交付：77节点交互式知识图谱 |
 | tests/ | 29个单元测试，全部通过 |
 
 ### 2.3 图数据统计
@@ -183,7 +183,7 @@ last_updated: "2026-07-10"
 - 核心库：[knowledge_graph_core.py](../../../../../../scripts/lib/knowledge_graph_core.py)
 - 兼容脚本：[generate-knowledge-graph.py](../../../../../../scripts/generate-knowledge-graph.py)
 - 通用模板：[knowledge-graph-generic.html](../../../../../../scripts/templates/knowledge-graph-generic.html)
-- 最终交付：[12-knowledge-graph.html](../../../../../knowledge/learning/first-principles/12-knowledge-graph.html)
+- 最终交付：[12-knowledge-graph.html](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html)
 - 分模块复盘：父目录下 [README.md](../README.md) / [execution-retrospective.md](../execution-retrospective.md) / [insight-extraction.md](../insight-extraction.md)
 
 ### 7.2 原子提交记录

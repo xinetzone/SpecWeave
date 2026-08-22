@@ -173,7 +173,7 @@ flowchart TB
   - 反向链接标注：说明该指令集在什么场景下会引用本知识库
 
 **R10 路径风格规则** ← A5
-- `.agents/commands/`目录内的指令集：使用相对路径（如`../../docs/knowledge/learning/first-principles/README.md`）
+- `.agents/commands/`目录内的指令集：使用相对路径（如`../../docs/knowledge/learning/00-essence-and-thinking/first-principles/README.md`）
 - `.agents/commands/`内引用其他`.agents/`文件：使用相对路径
 - `docs/knowledge/`内的知识库文件：使用`.agents/`前缀路径（如`.agents/commands/first-principles.md`）
 - 建立前用Grep查询同目录先例：
@@ -210,7 +210,7 @@ flowchart TB
 
 | 维度 | 内容 | 规则符合度 |
 |------|------|-----------|
-| **关联方向** | `.agents/commands/first-principles.md` ↔ `docs/knowledge/learning/first-principles/README.md` | R9 ✅ |
+| **关联方向** | `.agents/commands/first-principles.md` ↔ `docs/knowledge/learning/00-essence-and-thinking/first-principles/README.md` | R9 ✅ |
 | **资料类型** | 类型1：12文件多文件系统性档案 | R2 ✅ |
 | **系统性验证** | ✅ 完整6步执行流程（08文件）、✅ 28项检查清单、✅ validation_count≥1 | R4 三问全过 ✅ |
 | **链接选择** | 核心参考6个具体文件链接（非仅README），每个有简要说明 | R6+R7 ✅ |

@@ -59,7 +59,7 @@ version: "0.1"
 | 字段名 | 含义 | 取值规范 | 填写时机 |
 |--------|------|----------|----------|
 | **completed_at** | 完成日期 | ISO 8601日期格式：`YYYY-MM-DD`；项目验收通过时填写 | 项目完成、所有AC通过时填写 |
-| **archive_location** | 归档位置 | 相对路径字符串，指明项目产出物最终归档的docs目录位置；如`"docs/knowledge/learning/first-principles/"` | 项目规划阶段确定归档目录时填写，或完成时填写 |
+| **archive_location** | 归档位置 | 相对路径字符串，指明项目产出物最终归档的docs目录位置；如`"docs/knowledge/learning/00-essence-and-thinking/first-principles/"` | 项目规划阶段确定归档目录时填写，或完成时填写 |
 | **last_updated** | 最后更新日期 | ISO 8601日期格式：`YYYY-MM-DD`；每次更新Spec内容时同步更新 | Spec每次修改时更新 |
 | **parent_spec** | 父Spec ID | 字符串，引用父项目的id；用于表示Spec之间的派生/子项目关系；如`"universal-prd-template-extraction"` | 派生子项目创建时填写 |
 | **child_specs** | 子Spec ID列表 | YAML列表，列出所有从本Spec派生的子项目id；如`["frontmatter-specification", "universal-prd-template"]` | 子项目创建时更新父Spec此字段 |
@@ -81,7 +81,7 @@ last_updated: "2026-07-09"
 status: "completed"
 theme: "retrospectives-insights"
 version: "1.1"
-archive_location: "docs/knowledge/learning/first-principles/"
+archive_location: "docs/knowledge/learning/00-essence-and-thinking/first-principles/"
 total_files: 12
 patterns_extracted: 7
 key_commits:

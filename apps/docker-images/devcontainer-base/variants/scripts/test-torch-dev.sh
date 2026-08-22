@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-torch-dev"
 LOG_JSON_OUTPUT="/tmp/test-torch-dev-events.jsonl"
 
@@ -56,11 +57,11 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # ─────────────────────────── L1 基础环境验证（free-threading + 版本） ───────────────────────────
@@ -480,6 +481,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:torch-dev-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║      torch-dev Variant Unit Test Suite                      ║"
@@ -491,7 +494,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"

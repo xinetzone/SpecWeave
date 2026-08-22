@@ -59,6 +59,17 @@ BUILDKIT_CACHE_DIR="${DOCKER_CACHE_DIR}/buildkit-cache"
 MANIFEST_FILE="${DOCKER_CACHE_DIR}/manifest.json"
 LOCK_DIR="${DOCKER_CACHE_DIR}/.locks"
 
+# 容器引擎选择：显式 DOCKER_BIN > 优先 docker (若可用) > podman 回退
+if [ -n "${DOCKER_BIN:-}" ]; then
+    :  # 用户显式指定，直接使用
+elif command -v docker &>/dev/null; then
+    DOCKER_BIN="docker"
+elif command -v podman &>/dev/null; then
+    DOCKER_BIN="podman"
+else
+    DOCKER_BIN="docker"  # 保留默认值，后续 doctor/check 会报错
+fi
+
 LOCK_FD=""
 LOCK_IMAGE_KEY=""
 LOCK_DIR_PATH=""
@@ -297,20 +308,20 @@ sanitize_image_name() {
 }
 
 check_docker_running() {
-    if ! docker info &>/dev/null; then
-        error "Docker 未运行或无法访问"
+    if ! $DOCKER_BIN info &>/dev/null; then
+        error "容器引擎 (${DOCKER_BIN}) 未运行或无法访问"
         exit 1
     fi
 }
 
 get_image_id() {
     local image="$1"
-    docker image inspect --format='{{.Id}}' "$image" 2>/dev/null || echo ""
+    $DOCKER_BIN image inspect --format='{{.Id}}' "$image" 2>/dev/null || echo ""
 }
 
 image_exists_in_docker() {
     local image="$1"
-    docker image inspect "$image" &>/dev/null
+    $DOCKER_BIN image inspect "$image" &>/dev/null
 }
 
 human_size() {
@@ -380,7 +391,7 @@ save_image_to_cache() {
     info "镜像ID: ${image_id}"
 
     set +e
-    docker save "$image_name" | $COMPRESS_CMD > "$tmp_file"
+    $DOCKER_BIN save "$image_name" | $COMPRESS_CMD > "$tmp_file"
     local save_pipestatus=("${PIPESTATUS[@]}")
     set -e
 
@@ -478,7 +489,7 @@ print(entry.get('compressed_size', 0))
     info "大小: $(human_size "$compressed_size")"
 
     set +e
-    $DECOMPRESS_CMD "$cache_file" | docker load
+    $DECOMPRESS_CMD "$cache_file" | $DOCKER_BIN load
     local load_pipestatus=("${PIPESTATUS[@]}")
     set -e
 
@@ -544,6 +555,7 @@ Docker Cache Management Tool
 
 环境变量:
   DOCKER_CACHE_DIR   缓存目录 (当前: ${DOCKER_CACHE_DIR})
+  DOCKER_BIN         容器引擎命令 (当前: ${DOCKER_BIN}，支持 docker/podman，自动检测回退)
 
 示例:
   $0 save devcontainer-base:chaos-ai-npu-latest  # 保存单个镜像
@@ -1059,7 +1071,7 @@ print(entry.get('image_id', ''))
     export DOCKER_BUILDKIT=1
 
     set +e
-    docker build \
+    $DOCKER_BIN build \
         "${docker_build_opts[@]}" \
         "${all_build_args[@]}" \
         -t "$image_name" \
@@ -1069,7 +1081,7 @@ print(entry.get('image_id', ''))
     set -e
 
     if [ $build_status -ne 0 ]; then
-        error "Docker 构建失败"
+        error "容器引擎 (${DOCKER_BIN}) 构建失败"
         return 1
     fi
 
@@ -1095,7 +1107,7 @@ print(entry.get('image_id', ''))
     fi
 
     step "✅ 验证镜像"
-    if docker image inspect "$image_name" &>/dev/null; then
+    if $DOCKER_BIN image inspect "$image_name" &>/dev/null; then
         ok "镜像验证通过"
     else
         error "镜像验证失败"
@@ -1177,10 +1189,11 @@ print(total)
     printf "%-38s  %-8s  %-16s  %-6s\n" "──────────────────────────────────────" "────────" "────────────────" "──────"
 
     if command -v python3 &>/dev/null; then
-        echo "$images_json" | MANIFEST_JSON="$images_json" python3 -c "
+        echo "$images_json" | DOCKER_BIN="$DOCKER_BIN" MANIFEST_JSON="$images_json" python3 -c "
 import json, os, sys, subprocess
 
 data = json.loads(os.environ['MANIFEST_JSON'])
+DOCKER_BIN = os.environ.get('DOCKER_BIN', 'docker')
 
 def human_size(b):
     if b < 1024:
@@ -1205,7 +1218,7 @@ def format_time(ts):
 def docker_status(image_name, cached_id):
     try:
         result = subprocess.run(
-            ['docker', 'image', 'inspect', '--format={{.Id}}', image_name],
+            [DOCKER_BIN, 'image', 'inspect', '--format={{.Id}}', image_name],
             capture_output=True, text=True, timeout=5
         )
         if result.returncode != 0:
@@ -1531,21 +1544,21 @@ cmd_doctor() {
     echo -e "${CLR_BOLD}🩺 Docker Cache Doctor${CLR_RESET}"
     footer
 
-    # 1. Docker 是否可用
-    if command -v docker &>/dev/null; then
-        local docker_ver
-        docker_ver="$(docker --version 2>/dev/null | head -1)"
-        ok "Docker: ${docker_ver}"
+    # 1. 容器引擎是否可用（DOCKER_BIN，支持 docker/podman 等）
+    if command -v "$DOCKER_BIN" &>/dev/null; then
+        local engine_ver
+        engine_ver="$("$DOCKER_BIN" --version 2>/dev/null | head -1)"
+        ok "容器引擎 (${DOCKER_BIN}): ${engine_ver}"
     else
-        error "Docker: 未安装"
+        error "容器引擎 (${DOCKER_BIN}): 未安装"
         issues=$((issues + 1))
     fi
 
-    # 2. Docker daemon 是否运行
-    if command -v docker &>/dev/null && docker info &>/dev/null; then
-        ok "Docker daemon: 运行中"
+    # 2. 容器引擎 daemon 是否运行
+    if command -v "$DOCKER_BIN" &>/dev/null && "$DOCKER_BIN" info &>/dev/null; then
+        ok "容器引擎 daemon (${DOCKER_BIN}): 运行中"
     else
-        error "Docker daemon: 未运行"
+        error "容器引擎 daemon (${DOCKER_BIN}): 未运行"
         issues=$((issues + 1))
     fi
 

@@ -28,7 +28,7 @@ export_date: "2026-07-07"
 | Spec 定义文件 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | PRD格式，13个功能需求、10个验收标准、10个开放问题 |
 | Spec 任务拆解 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务，已全部标记为[x]完成 |
 | Spec 检查清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
-| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 13章+6个Mermaid图表，核心产出 |
+| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../../docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) | 13章+6个Mermaid图表，核心产出 |
 | 源产品URL | https://www.volcengine.com/product/agentkit | 火山引擎AgentKit企业级AI Agent平台产品页 |
 
 ## 是否需要正式导出
@@ -74,7 +74,7 @@ export_date: "2026-07-07"
 |------|----------|------|--------|------|
 | 洞察1：企业官网SPA工具选择 | [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) | 升级（validation_count 5→6，新增企业官网SPA特殊处理规则、决策速查表、案例6） | L2 → L2 | ✅ 已落地 |
 | 洞察2：最后一公里定位框架 | [b2b-ai-last-mile-positioning-framework.md](../../../patterns/methodology-patterns/research-knowledge/b2b-ai-last-mile-positioning-framework.md) | 新建B2B AI产品分析框架模式（含六步定位法、四大支柱、开发框架vs生产平台对比） | L1 → L2 | ✅ 已落地 |
-| 洞察3：双身份安全模型 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 已在学习笔记第五章技术架构中详细记录，待多次验证后考虑升级为模式 | L1（观察） | ✅ 已记录 |
+| 洞察3：双身份安全模型 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) | 已在学习笔记第五章技术架构中详细记录，待多次验证后考虑升级为模式 | L1（观察） | ✅ 已记录 |
 | 洞察4：产出物保存决策 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 决策矩阵已整合至spec-mode-doc-creation-workflow模式的深度分析任务特殊考虑章节 | L2（补充）→ L2 | ✅ 已落地 |
 | 洞察5：Spec模式深度分析验证 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 4→5，新增形态B文件产出说明、案例5） | L2 → L2 | ✅ 已落地 |
 | 洞察6：Harness编排设计哲学 | [b2b-ai-last-mile-positioning-framework.md](../../../patterns/methodology-patterns/research-knowledge/b2b-ai-last-mile-positioning-framework.md) | 已在定位框架中记录"配置即部署"核心能力，待多次验证后沉淀为正式模式 | L1（观察） | ✅ 已记录 |

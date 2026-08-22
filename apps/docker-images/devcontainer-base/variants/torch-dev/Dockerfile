@@ -42,6 +42,12 @@ COPY shared/lib/cleanup.sh /usr/local/share/variant-framework/cleanup.sh
 COPY shared/lib/verify.sh /usr/local/share/variant-framework/verify.sh
 COPY --chmod=755 shared/scripts/r2-dtneeded-analysis.sh /usr/local/share/variant-framework/r2-dtneeded-analysis.sh
 
+# Override shared install-helpers.sh to pick up --extra-index-url support without
+# full chain rebuild (conda-llvm→onnx-dev→onnx-quantized). Safe because helpers
+# are sourced at RUN time (not baked into earlier layers' binaries).
+# Remove this COPY after the next full dependency-chain rebuild.
+COPY shared/lib/install-helpers.sh /usr/local/share/variant-framework/install-helpers.sh
+
 # Framework already inherited from onnx-quantized base layer.
 
 # ── Stage 1/3: Base verification (torch absent pre-install) ──────
@@ -70,6 +76,7 @@ variant_timer_stage 2 "PyTorch install + guards"
 variant_activate_main_env
 
 pip_install_group --index-url "https://download.pytorch.org/whl/${TORCH_CUDA_INDEX}" \
+    --extra-index-url "https://mirrors.aliyun.com/pypi/simple/" \
     "G1: PyTorch Core" \
     "torch + torchvision (cp314t free-threading, CUDA ${TORCH_CUDA_INDEX})" \
     torch torchvision
@@ -130,6 +137,20 @@ assert_free_threading
 assert_package_present torch
 assert_package_present torchvision
 assert_package_absent onnxoptimizer
+
+# ── P1 硬断言：torch 必须为 CUDA 编译版（防 extra-index 静默降级）──
+# 构建环境无 GPU → torch.cuda.is_available() 恒为 False，不可作为断言依据；
+# 用 torch.version.cuda（编译时 CUDA 版本）：CUDA 构建返回非空（如 13.0），
+# CPU 降级版返回 None。主索引不可达时 extra-index 只会提供 CPU 版，此断言强制构建 FAIL。
+echo -n "  [VERIFY] torch CUDA build (torch.version.cuda)... "
+CUDA_BUILD=$(python -c 'import torch; v = torch.version.cuda; print(v if v else "NONE")' 2>&1)
+if [ -z "${CUDA_BUILD}" ] || [ "${CUDA_BUILD}" = "NONE" ]; then
+    echo "[FAIL] torch is CPU build (silent downgrade via extra-index?) - expected CUDA ${TORCH_CUDA_INDEX}"
+    variant_log_error "CUDA build assertion failed: torch.version.cuda is empty (CPU downgrade detected)"
+    exit 1
+fi
+echo "[OK] torch CUDA build version: ${CUDA_BUILD} (index ${TORCH_CUDA_INDEX})"
+
 llvm-config --version 2>&1 | head -1 && echo "  [OK] LLVM inherited"
 verify_base_services
 python -c "import sys; print(f'[INFO] GIL enabled: {sys._is_gil_enabled()}')"

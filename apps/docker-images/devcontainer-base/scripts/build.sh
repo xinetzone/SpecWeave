@@ -131,7 +131,7 @@ cd "$PROJECT_DIR"
 
 # ── 构建引擎自动检测（auto: 优先docker，回退podman） ──
 if [ "$BUILD_ENGINE" = "auto" ]; then
-    if ${ENGINE} info >/dev/null 2>&1; then
+    if docker info >/dev/null 2>&1; then
         BUILD_ENGINE="docker"
     elif podman info >/dev/null 2>&1; then
         BUILD_ENGINE="podman"
@@ -510,7 +510,7 @@ verify_image() {
         -e USER_PASSWORD=verifypass \
         -e JUPYTER_TOKEN=verifytoken \
         -e ENABLE_DOCKER=yes \
-        -p 0:22 -p 0:8888 \
+        -p 22 -p 8888 \
         "$FULL_IMAGE"; then
         log_error "Failed to start verification container"
         return 1
@@ -699,7 +699,7 @@ if $QUICK_TEST; then
     if [ "$PYTHON_BUILD" = "cp314t" ] && [ -f "$SCRIPT_DIR/ft_benchmark.py" ]; then
         echo ""
         log_step "Free-Threading Performance Benchmark"
-        python3 "$SCRIPT_DIR/ft_benchmark.py" --image "$FULL_IMAGE" --quick \
+        python3 "$SCRIPT_DIR/ft_benchmark.py" --image "$FULL_IMAGE" --docker-cmd "$ENGINE" --quick \
             --log "${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" || {
             log_warn "ft-benchmark did not meet threshold (see log for details)"
         }

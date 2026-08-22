@@ -25,7 +25,7 @@ date: "2026-07-09"
 
 ## 📚 分类索引
 
-共 14 篇操作指南，按主题分为 8 大类：
+共 15 篇操作指南，按主题分为 8 大类：
 
 ### 💬 Discourse / 论坛自动化
 
@@ -49,6 +49,7 @@ date: "2026-07-09"
 |------|-----------|------|
 | [html-body-extraction.md](html-body-extraction.md) | HTML正文提取双方案：正则提取（首选）+ 边界标记索引截取法（兜底），含HTML清洗六步流程 | ✅ stable |
 | [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) | 微信公众号文章提取双路径决策模型：defuddle CLI 与 PowerShell Invoke-WebRequest 互为兜底 | ✅ stable |
+| [epub-to-markdown-conversion-research.md](epub-to-markdown-conversion-research.md) | EPUB转Markdown方案系统性调研：pandoc/calibre/pypandoc/ebooklib对比、复杂元素保真、问题方案、性能实测、适用场景矩阵（七概念方法编排） | 🔍 reviewed |
 
 ### 🛡️ 工具降级与可靠性
 

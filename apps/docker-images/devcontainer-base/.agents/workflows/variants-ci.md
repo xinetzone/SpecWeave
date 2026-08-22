@@ -1,12 +1,12 @@
 ---
 id: ci-variants-build
 name: devcontainer-base Variants CI
-version: 1.1.0
-date: 2026-08-15
+version: 1.2.0
+date: 2026-08-19
 type: workflow
 source: variants/ 变体系统CI集成设计
 status: implemented
-tags: [ci, docker, variants, github-actions, build-pipeline]
+tags: [ci, docker, variants, github-actions, build-pipeline, freethreading, gil]
 ---
 
 # DevContainer 变体 CI 集成方案
@@ -383,3 +383,63 @@ flowchart TD
 | 门禁 | 量化后模型 cosine_similarity ≥ 0.90，失败阻断合并 |
 
 （本设计文档在 `.agents/workflows/variants-ci.md`，是人类可读的设计说明）
+
+---
+
+## 9. Free-threading Jupyter GIL 守卫规范（PYTHON_GIL）
+
+> **来源**：2026-08-19 故障排查报告 `troubleshooting-devcontainer-jupyter-gil-20260819.md`。本规范定义 free-threading（cp314t）镜像中 Jupyter 进程的 GIL 保持禁用**不变式**，CI 与变体构建必须遵守。
+
+### 9.1 不变式
+
+**base 镜像的 `/etc/supervisor/conf.d/jupyter.conf` 中 `environment=` 行必须包含 `PYTHON_GIL="0"`。**
+
+违反后果：Jupyter 栈依赖的 C 扩展 `_brotli` 未声明 `Py_MOD_GIL_USED`，free-threading 下 import 时经 `PyUnstable_Module_SetGIL` 自动拉起 GIL——表现为 **bash 上下文 `_is_gil_enabled()=False`、Jupyter kernel 内 `=True`** 的不一致，kernel 多线程静默退化为串行（无报错、无警告）。
+
+### 9.2 配置逻辑（幂等注入片段）
+
+源文件：`config/supervisor/conf.d/jupyter.conf`（base 镜像 `COPY config/supervisor/conf.d/` 进入镜像）。
+
+变体层防御（如 `variants/conda-llvm/Dockerfile`，对**从旧 base tag 构建**的场景生效；base 已含时走幂等跳过分支）：
+
+```dockerfile
+# ── Free-threading Jupyter fix: keep GIL disabled in Jupyter kernel ──
+# Without PYTHON_GIL=0, importing _brotli (used by jupyter stack) auto-enables
+# the GIL in free-threading Python, silently nullifying FT concurrency benefits.
+if [ -f /etc/supervisor/conf.d/jupyter.conf ]; then
+    if ! grep -q "PYTHON_GIL" /etc/supervisor/conf.d/jupyter.conf; then
+        sed -i 's|^environment=\(.*\)$|environment=\1,PYTHON_GIL="0"|' /etc/supervisor/conf.d/jupyter.conf
+        variant_log_ok "jupyter.conf: injected PYTHON_GIL=0 (free-threading GIL fix)"
+    else
+        variant_log_ok "jupyter.conf: PYTHON_GIL already set, skip"
+    fi
+fi
+```
+
+### 9.3 优先级语义（易踩坑）
+
+- **supervisord `environment=` 优先级高于 `docker run -e`**：仅 `-e PYTHON_GIL=1` 启动**不能**把 Jupyter 切回 GIL 兼容模式——需同步修改 supervisord 配置（`environment=` 会覆盖继承的进程环境变量）。
+- **GIL 是进程级一次性保险丝**：`PYTHON_GIL=0` 只设定进程初始状态；运行中 import 未声明 `Py_MOD_GIL_USED` 的 C 扩展仍会拉起 GIL 且无法在当前进程内关闭。因此必须在 supervisord 启动 Jupyter 时锁定，而非事后补救。
+- **entrypoint 不冲突**：`entrypoint.sh` 运行时仅 sed 修改 jupyter.conf 的 `directory=` 行，不触碰 `environment=` 行，不会覆盖本注入。
+
+### 9.4 验证命令（CI 门禁建议）
+
+在 Stage 2/3 测试中增加以下守卫（放入 `test-conda-llvm.sh` / `test-onnx-dev.sh`）：
+
+```bash
+# ① 配置级：jupyter.conf 必须含 PYTHON_GIL（幂等断言）
+grep -q 'PYTHON_GIL="0"' /etc/supervisor/conf.d/jupyter.conf \
+    || { echo "FAIL: jupyter.conf missing PYTHON_GIL"; exit 1; }
+
+# ② 运行时级：kernel 内 _is_gil_enabled() 必须为 False（E2E）
+#    ——一键脚本 variants/scripts/fix-jupyter-gil.sh --verify
+bash variants/scripts/fix-jupyter-gil.sh --verify
+```
+
+### 9.5 排查速查
+
+| 症状 | 结论 | 处置 |
+|------|------|------|
+| bash GIL=False、kernel GIL=True | jupyter.conf 缺 `PYTHON_GIL="0"` 或未重启服务 | `bash fix-jupyter-gil.sh --all` |
+| 单进程 import 后 GIL 被拉起 | 该 C 扩展未声明 `Py_MOD_GIL_USED` | `scripts/check_gil_state.py --audit <mod>` 定位肇事模块；等待上游修复或剔除 |
+| 需为 Jupyter 切回 GIL 兼容模式 | supervisord 配置未改 | 修改 `environment=` 中 `PYTHON_GIL="1"` 并重启（`-e` 无效） |

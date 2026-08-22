@@ -8,3 +8,5 @@ notebooks
 *.pyd
 __pycache__
 .vscode
+.cache
+logs

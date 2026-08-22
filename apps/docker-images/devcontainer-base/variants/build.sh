@@ -9,7 +9,7 @@ LOG_SERVICE="devcontainer-variants-build"
 LOG_JSON_OUTPUT="/tmp/devcontainer-variants-events.jsonl"
 
 VARIANTS=(
-    "conda-llvm|conda+LLVM/clang编译工具链||/opt/conda/bin/llvm-config --version|||/opt/conda/bin/clang --version|||/opt/conda/bin/clang++ --version|||/opt/conda/bin/cmake --version|||/opt/conda/bin/ninja --version"
+    "conda-llvm|conda+LLVM/clang编译工具链||llvm-config --version|||clang --version|||clang++ --version|||cmake --version|||ninja --version"
     "onnx-dev|conda-llvm + 纯ONNX生态(onnx/onnxruntime/onnx-simplifier/onnxscript,无PyTorch;onnxoptimizer因free-threading不兼容而排除)|conda-llvm|/opt/conda/envs/main/bin/python -c \"import onnx,onnxruntime,onnxsim,onnxscript;print('onnx-dev ecosystem OK')\"|||/opt/conda/envs/main/bin/python -c \"import sys;assert sys._is_gil_enabled() is False;print('free-threading OK')\"|||/opt/conda/envs/main/bin/python -c \"import importlib.util as u;assert u.find_spec('torch') is None and u.find_spec('torchvision') is None and u.find_spec('onnxoptimizer') is None;print('torch/onnxoptimizer absent OK')\""
     "onnx-pytorch|conda-llvm + PyTorch CPU + ONNX 深度学习运行时|conda-llvm|/opt/conda/bin/python -c \"import torch,onnx,onnxruntime;print(torch.__version__,onnx.__version__,onnxruntime.__version__)\"|||/opt/conda/bin/python -c \"import torch;assert torch.cuda.is_available() is False\"|||/opt/conda/bin/python -c \"import sys;assert sys._is_gil_enabled() is True;print('GIL enabled OK')\"|||/opt/conda/bin/python -c \"import onnxsim,onnxoptimizer,onnxscript;print('onnx ecosystem OK')\""
     "onnx-quantized|onnx-dev + ONNX量化工具链(INT8/FP16动态/静态量化,纯ONNX无PyTorch,free-threading main环境;neural-compressor可选需自装torch)|onnx-dev|/opt/conda/envs/main/bin/python -c \"from onnxruntime.quantization import quantize_dynamic,quantize_static,QuantType,QuantFormat,CalibrationDataReader;print('quantization API OK')\"|||/opt/conda/envs/main/bin/python -c \"from onnxconverter_common import float16;print('float16 conversion OK')\"|||/opt/conda/envs/main/bin/python -c \"import onnxruntime.quantization.shape_inference;print('shape_inference OK')\"|||/opt/conda/envs/main/bin/python -c \"import importlib.util as u,sys;assert u.find_spec('torch') is None and u.find_spec('onnxoptimizer') is None;print('torch/onnxoptimizer absent OK')\""
@@ -29,6 +29,7 @@ APT_MIRROR="official"
 CONDA_MIRROR="official"
 PIP_MIRROR="official"
 TAG="latest"
+BUILD_ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
 declare -a SELECTED_VARIANTS=()
 declare -a EXTRA_BUILD_ARGS=()
 
@@ -158,6 +159,31 @@ parse_variants() {
     done
 }
 
+detect_engine() {
+    # 构建引擎自动检测（auto: 优先docker，回退podman）
+    # 探活命令带 5s 超时，避免 CLI 存在但 daemon 挂起时 auto 检测阻塞
+    local timeout_prefix=""
+    if command -v timeout >/dev/null 2>&1; then
+        timeout_prefix="timeout 5"
+    fi
+    if [ "$BUILD_ENGINE" = "auto" ]; then
+        if $timeout_prefix docker info >/dev/null 2>&1; then
+            BUILD_ENGINE="docker"
+        elif $timeout_prefix podman info >/dev/null 2>&1; then
+            BUILD_ENGINE="podman"
+        else
+            log_error "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
+            exit 1
+        fi
+    fi
+    if ! command -v "$BUILD_ENGINE" >/dev/null 2>&1; then
+        log_error "Build engine '${BUILD_ENGINE}' not found in PATH"
+        exit 1
+    fi
+    ENGINE="$BUILD_ENGINE"  # shorthand for commands
+    log_info "Build engine: ${ENGINE}"
+}
+
 list_variants() {
     log_step "Available variants"
     echo ""
@@ -247,7 +273,7 @@ check_dependency_image() {
 
     if [ -z "$deps_str" ]; then
         local base_image="devcontainer-base:${TAG}"
-        if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${base_image}$"; then
+        if ! ${ENGINE} images --format '{{.Repository}}:{{.Tag}}' | sed 's|^[^/]*/||' | grep -qx "${base_image}"; then
             log_error "基础镜像不存在: ${base_image}"
             log_error "请先构建基础镜像: bash scripts/build.sh --tag ${TAG}"
             return 1
@@ -258,7 +284,7 @@ check_dependency_image() {
     IFS=',' read -ra deps <<< "$deps_str"
     for dep in "${deps[@]}"; do
         local dep_image="devcontainer-base:${dep}-${TAG}"
-        if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${dep_image}$"; then
+        if ! ${ENGINE} images --format '{{.Repository}}:{{.Tag}}' | sed 's|^[^/]*/||' | grep -qx "${dep_image}"; then
             log_error "依赖镜像不存在: ${dep_image}"
             log_error "请先构建依赖变体: bash variants/build.sh --variant ${dep} --tag ${TAG}"
             return 1
@@ -378,17 +404,33 @@ build_variant() {
     log_event "variant_build_start" "variant=$variant" "image=$image_name" "log_file=$log_file"
 
     echo ""
-    log_info "Starting docker build with --progress=plain, output to: $log_file"
+    log_info "Starting ${ENGINE} build with --progress=plain, output to: $log_file"
     echo ""
 
     set +e
-    DOCKER_BUILDKIT=1 docker build \
-        --progress=plain \
-        --file "${variant_dir}/Dockerfile" \
-        ${NO_CACHE} \
-        "${build_args[@]}" \
-        -t "${image_name}" \
-        "${SCRIPT_DIR}" 2>&1 | tee "$log_file"
+    if [ "$ENGINE" = "docker" ]; then
+        DOCKER_BUILDKIT=1 docker build \
+            --progress=plain \
+            --file "${variant_dir}/Dockerfile" \
+            ${NO_CACHE} \
+            "${build_args[@]}" \
+            -t "${image_name}" \
+            "${SCRIPT_DIR}" 2>&1 | tee "$log_file"
+    else
+        # podman build (native BuildKit-compatible, no DOCKER_BUILDKIT needed)
+        # --format docker: required for SHELL directive support (heredoc RUN blocks use source)
+        # --network=host: WSL2 rootless DNS needs it
+        podman build \
+            --progress=plain \
+            --format docker \
+            --layers \
+            --network=host \
+            --file "${variant_dir}/Dockerfile" \
+            ${NO_CACHE} \
+            "${build_args[@]}" \
+            -t "${image_name}" \
+            "${SCRIPT_DIR}" 2>&1 | tee "$log_file"
+    fi
     local build_exit_code=${PIPESTATUS[0]}
     set -e
 
@@ -415,7 +457,7 @@ build_variant() {
 
     echo ""
     log_ok "Build complete: ${image_name}"
-    IMAGE_SIZE=$(docker images --format '{{.Size}}' "${image_name}" | head -1)
+    IMAGE_SIZE=$(${ENGINE} images --format '{{.Size}}' "${image_name}" | head -1)
     log_info "[TIMER] Build duration: ${BUILD_DURATION}s"
     log_info "Image size: ${IMAGE_SIZE}"
     log_info "Build log saved to: $log_file"
@@ -479,10 +521,10 @@ validate_variant() {
         local cmd_output
         local cmd_exit
         if command -v timeout >/dev/null 2>&1; then
-            cmd_output=$(timeout "$VALIDATE_TIMEOUT" docker run --rm "${image_name}" bash -c "$cmd" 2>&1)
+            cmd_output=$(timeout "$VALIDATE_TIMEOUT" ${ENGINE} run --rm "${image_name}" bash -c "$cmd" 2>&1)
             cmd_exit=$?
         else
-            cmd_output=$(docker run --rm "${image_name}" bash -c "$cmd" 2>&1)
+            cmd_output=$(${ENGINE} run --rm "${image_name}" bash -c "$cmd" 2>&1)
             cmd_exit=$?
         fi
         set -e
@@ -578,6 +620,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+detect_engine
+
 parse_variants
 
 if ! validate_delimiter_convention; then
@@ -632,7 +676,7 @@ for variant in "${BUILD_ORDER[@]}"; do
         VARIANT_END=$(date +%s)
         VARIANT_DURATION=$((VARIANT_END - VARIANT_START))
         image_name="devcontainer-base:${variant}-${TAG}"
-        IMAGE_SIZE=$(docker images --format '{{.Size}}' "${image_name}" | head -1)
+        IMAGE_SIZE=$(${ENGINE} images --format '{{.Size}}' "${image_name}" | head -1)
         BUILD_DURATIONS["$variant"]=$VARIANT_DURATION
         BUILD_SIZES["$variant"]="$IMAGE_SIZE"
         BUILD_PASS=$((BUILD_PASS + 1))

@@ -1303,8 +1303,8 @@ CUA提出的「对话即办事」不仅仅是营销口号，代表了一种新�
 
 ### 关联产品分析
 - [火山引擎Mobile Use Agent分析](../volcengine-mobile-use-agent-analysis.md) - CUA的移动端对应产品
-- [火山引擎AI云原生沙箱分析](../../06-business-trends-analysis/volcengine-ai-cloud-native-sandbox-analysis.md) - Agent云端执行底座
-- [火山引擎HiAgent平台分析](../../06-business-trends-analysis/volcengine-hiagent-platform-analysis.md) - 企业级Agent平台
+- [火山引擎AI云原生沙箱分析](../../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md) - Agent云端执行底座
+- [火山引擎HiAgent平台分析](../../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md) - 企业级Agent平台
 
 ### 行业参考
 - `Anthropic Computer Use`（原外部链接 2026-07 复检已失效：www.anthropic.com/news/computer-use） - 海外标杆产品

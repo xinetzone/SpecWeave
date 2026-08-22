@@ -3,14 +3,14 @@ id: "python-implicit-dependency-detection"
 title: "Python包隐式依赖检测模式"
 type: code-pattern
 date: 2026-07-18
-maturity: L1 实验性
-maturity_note: "单案例验证（XMNN/TVM 项目，5轮Docker build迭代发现隐式依赖），待第二个独立案例验证后升级 L2"
+maturity: L2
+maturity_note: "双案例验证（XMNN/TVM 项目 + mystx Sphinx 主题库），两案例均独立复现「声明与运行时 import 断层」"
 source: "../../reports/task-reports/retrospective-xmnn-runtime-repackaging-20260718/README.md#模式bpython包隐式依赖检测清单"
 related_patterns:
   - "compiled-wheel-runtime-image-build.md"
   - "../process-patterns/docker-build-network-resilience.md"
 tags: ["python", "dependency", "implicit-dependency", "import-chain", "wheel", "docker", "packaging"]
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 ---
 
@@ -190,6 +190,12 @@ RUN python -c "import <包>; from <包> import <API>; <包>.<核心功能>(); pr
 - **触发路径**：`import tvm` → `tvm.testing` → `pytest`
 - **结果**：✅ 5轮 Docker build 迭代后检测出所有隐式依赖
 
+### 场景1b：mystx Sphinx 主题库（第二个独立验证案例，2026-08-20）
+
+- **隐式依赖**：sphinx、myst-nb（`pyproject.toml` 声明 `dependencies = []`，但代码顶层 `import sphinx` / `import myst_nb`，README 又列出一份核心依赖清单）
+- **触发路径**：`pip install mystx` 后 `import mystx`——缺少 sphinx/myst-nb 时顶层 import 即抛错，依赖被「隐式传递」粉饰
+- **结果**：✅ 确认本模式在非 TVM 的 Sphinx 主题库领域依然成立，双案例支撑升级 L2
+
 ### 场景2：Jupyter Notebook 扩展打包（推断，待验证）
 
 - **隐式依赖**：jupyter-core、notebook、traitlets、jinja2
@@ -224,3 +230,4 @@ RUN python -c "import <包>; from <包> import <API>; <包>.<核心功能>(); pr
 ## Changelog
 
 - **2026-07-18** (v1.0.0): 初始版本，从 XMNN Runtime 1.2.1-fix-cp314 重新打包复盘萃取，单案例验证（TVM 项目 5轮 Docker build 迭代），标记 L1 实验性
+- **2026-08-20** (v1.1.0): 补充第二个独立验证案例 mystx（Sphinx 主题库「零声明 vs 运行时强依赖」断层），maturity L1→L2

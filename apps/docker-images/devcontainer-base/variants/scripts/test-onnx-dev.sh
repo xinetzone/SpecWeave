@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-onnx-dev"
 LOG_JSON_OUTPUT="/tmp/test-onnx-dev-events.jsonl"
 
@@ -57,11 +58,11 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # main 环境 python 绝对路径（与变体 PATH 优先级一致）
@@ -431,6 +432,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:onnx-dev-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║       ONNX-Dev Variant Unit Test Suite (no PyTorch)         ║"
@@ -441,7 +444,7 @@ log_info "Python env:   conda main (/opt/conda/envs/main, free-threading)"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"

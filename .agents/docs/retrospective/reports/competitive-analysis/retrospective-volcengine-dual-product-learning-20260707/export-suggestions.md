@@ -58,9 +58,9 @@ maturity: "L2-verified"
 
 | 资产类型 | 路径 | 归档状态 | 备注 |
 |---------|------|---------|------|
-| Ark CLI深度分析报告 | docs/knowledge/learning/06-business-trends-analysis/volcengine-arkcli-analysis.md | ✅ 已归档 | ~56KB，含双层Agent架构洞察 |
+| Ark CLI深度分析报告 | docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-arkcli-analysis.md | ✅ 已归档 | ~56KB，含双层Agent架构洞察 |
 | Ark CLI核心笔记 | docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-arkcli-core-notes.md | ✅ 已归档 | ~9KB |
-| 奖励计划深度分析报告 | docs/knowledge/learning/06-business-trends-analysis/volcengine-reward-plan-analysis.md | ✅ 已归档 | ~67KB，撤回授权重点章节 |
+| 奖励计划深度分析报告 | docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-reward-plan-analysis.md | ✅ 已归档 | ~67KB，撤回授权重点章节 |
 | 奖励计划核心笔记 | docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-reward-plan-core-notes.md | ✅ 已归档 | ~6KB |
 | Ark CLI Spec三件套 | .trae/specs/retrospectives-insights/analyze-volcengine-arkcli/ | ✅ 已保留（仅三件套，派生产物已清理） | spec.md/tasks.md(15)/checklist.md(48) |
 | 奖励计划Spec三件套 | .trae/specs/retrospectives-insights/analyze-volcengine-reward-plan/ | ✅ 已保留（仅三件套，派生产物已清理） | spec.md/tasks.md(15)/checklist.md(48) |

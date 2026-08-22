@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-onnx-pytorch"
 LOG_JSON_OUTPUT="/tmp/test-onnx-pytorch-events.jsonl"
 
@@ -55,11 +56,11 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # ─────────────────────────── L1 基础工具链版本 ───────────────────────────
@@ -220,7 +221,7 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local rc
-    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    docker_run_bash 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then
         pass "T12: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
@@ -294,7 +295,7 @@ test_venv_removed() {
 
 test_conda_jupyter_works() {
     local rc
-    docker run --rm "$IMAGE" /opt/conda/envs/main/bin/jupyter --version >/dev/null 2>&1
+    docker_run /opt/conda/envs/main/bin/jupyter --version >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then
         pass "T18: /opt/conda/envs/main/bin/jupyter usable"
@@ -402,6 +403,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:onnx-pytorch-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║       ONNX-PyTorch Variant Unit Test Suite                  ║"
@@ -411,7 +414,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"

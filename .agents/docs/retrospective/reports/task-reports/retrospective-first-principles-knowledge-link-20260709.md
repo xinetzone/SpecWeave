@@ -47,7 +47,7 @@ cmd_session: "retr-20260709-first-principles-link"
 |--------|------|---------|
 | `.agents/commands/` 指令集文件数（含"关联资源"章节） | 9个 | Grep "## 关联资源" |
 | 已建立 `docs/knowledge` 关联的指令集数 | 2个（file-creation.md + first-principles.md[本次修改]） | Grep "docs/knowledge" |
-| `docs/knowledge/learning/first-principles/` 文件数 | 11个 | LS |
+| `docs/knowledge/learning/00-essence-and-thinking/first-principles/` 文件数 | 11个 | LS |
 | 本次新增知识库链接数 | 6个（指令集侧）+ 1个（知识库README侧） | Edit 结果 |
 | first-principles.md 修改前关联资源链接数 | 4个 | Read |
 | first-principles.md 修改后关联资源链接数 | 10个（4原有 + 6新增） | Edit 结果 |
