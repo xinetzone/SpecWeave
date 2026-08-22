@@ -1,0 +1,32 @@
+# Checklist
+
+- [ ] 建立 `bundles/datawhale/` 目录及分组 `index.md`（frontmatter 含 okf_version/type/total_bundles/generated/verified）
+- [ ] 分组 index 按「代码框架」「教程书籍」两类导航，覆盖 18 个知识束
+- [ ] torch-rechub bundle：concepts/examples/references 三层齐全，R 阶段 facts.md 无推断性表述
+- [ ] torch-rechub bundle：Grep 验证 DSSM/DeepFM/DIN/MMoE 等类名方法在源码中存在，无虚构 API
+- [ ] deepagents bundle：三层齐全，Grep 验证模块与符号存在性
+- [ ] base-llm bundle：三层齐全，概念按六大部分章节转译，附来源章节链接
+- [ ] happy-llm bundle：三层齐全，覆盖 Transformer/LLaMA2/GRPO/RAG/Agent 核心概念
+- [ ] hello-agents bundle：三层齐全，覆盖 16 章核心概念（范式/框架/记忆/上下文工程/协议/Agentic-RL）
+- [ ] all-in-rag bundle：三层齐全，覆盖数据准备/索引/检索/评估/实战
+- [ ] easy-vecdb bundle：三层齐全，覆盖向量检索/ANN/Annoy/Faiss/Milvus
+- [ ] easy-vibe bundle：三层齐全
+- [ ] handy-n8n bundle：三层齐全（c01-c06）
+- [ ] handy-ollama bundle：三层齐全
+- [ ] key-book bundle：三层齐全，覆盖七大理论概念（可学性/复杂度/泛化界/稳定性/一致性/收敛率/遗憾界）
+- [ ] pumpkin-book bundle：三层齐全
+- [ ] tiny-universe bundle：三层齐全
+- [ ] vibe-vibe bundle：三层齐全
+- [ ] code-your-own-llm bundle：三层齐全（精简）
+- [ ] Agent-Learning-Hub bundle：三层齐全（精简）
+- [ ] deepagents-in-action bundle：三层齐全（精简）
+- [ ] members-visualization bundle：极简 index.md（占位收录）
+- [ ] 每个 bundle 根 index.md frontmatter 必填字段完整（type/title/description/generated/verified/status/sources）
+- [ ] 每个子目录 concepts/examples/references 的 index.md 无 frontmatter（仅根 index 保留 okf_version）
+- [ ] 交叉链接统一使用 `/` 开头 bundle-relative 路径，无 `../` 相对路径
+- [ ] 全部文档中文撰写，英文术语首次出现括号注释
+- [ ] 每个 bundle 含 log.md 变更日志
+- [ ] 总索引 `bundles/index.md` 已新增 datawhale 分组行，groups=17、total_bundles=128
+- [ ] 分组总索引 `bundles/datawhale/index.md` status 在全部 bundle 完成后置为 stable
+- [ ] 全量链接检查无断裂（link-check-cmd 或人工核验）
+- [ ] C 阶段：可复用模式已沉淀至 `docs/retrospective/patterns/`
