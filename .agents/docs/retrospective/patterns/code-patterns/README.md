@@ -175,6 +175,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [layer-override-patch-drift.md](layer-override-patch-drift.md) | 分层覆盖补丁的版本漂移：覆盖(COPY/override/配置覆盖)补丁立即可用且当前零漂移，但中间层重建时静默回退形成"每层一个补丁"的分歧；须标注生命周期、同步合并源头、全链重建后移除并以干净态验证 | L1 实验性 | 继承/叠加/多阶段结构(Docker多层COPY覆盖、类继承override、配置分层覆盖)中让跨层共享组件快速生效、临时补丁与源头修复的抉择 |
 | [sphinx-conf-probe-fallback.md](sphinx-conf-probe-fallback.md) | Sphinx conf.py 探测回退模式：模块探测加载(find_spec)+主题回退链+版本号哨兵回退+可选功能失败降级+多平台条件配置，缺失可选依赖时优雅降级不中断构建 | L1 实验性 | Sphinx conf.py 配置、纯Python配置文件、插件探测加载、可选依赖降级 |
 | [pytest-factory-fixture-pattern.md](pytest-factory-fixture-pattern.md) | pytest工厂Fixture模式：fixture返回可调用工厂函数（闭包捕获依赖）+yield分割创建清理+多实例追踪列表自动销毁，含4个变体（配置默认值/autouse清理/无状态return/异步资源）和4个反模式 | L2 已验证 | pytest测试中需要动态创建多实例资源、工厂创建资源需自动清理、测试参数动态决定场景 |
+| [okf-sources-path-normalization.md](okf-sources-path-normalization.md) | OKF sources 路径规范化：提取→映射表→拼5级../前缀→存在性过滤四步修复，正则字符类禁含`.`防吞点，无源码仓库标注豁免 | L1 实验性 | OKF/带sources字段的批量文档修复、bundle与源码目录命名差异映射、正则提取路径 |
 
 ## Android 模式命名规范
 

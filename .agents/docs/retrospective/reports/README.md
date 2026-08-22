@@ -551,6 +551,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-08-05 | `retrospective-caffe-ffi-conv-v4-milestone-20260805.md` | task-reports |
 | 2026-08-12 | `retrospective-xmnn-container-health-fix-20260812.md` | task-reports |
 | 2026-08-19 | `retrospective-chaos-epub-books-classification-20260819.md` | task-reports |
+| 2026-08-22 | `retrospective-jupyter-okf-wiki-group-20260822/` | competitive-analysis |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
