@@ -186,7 +186,7 @@
   - `programmatic` TR-12.2: 原单文件内容已整合，无信息丢失
   - `human-judgement` TR-12.3: 单文件到原子化的转换逻辑合理
 
-## [/] Task 13: 迁移 ai-engineering-four-milestones-wiki
+## [x] Task 13: 迁移 ai-engineering-four-milestones-wiki ✅ 2026-08-23
 
 - **Priority**: medium
 - **Depends On**: Task 1
@@ -241,7 +241,7 @@
   - `programmatic` TR-16.1: 所有文件已迁移至目标位置
   - `programmatic` TR-16.2: frontmatter 格式合规
 
-## [/] Task 17: 迁移复盘模式文件
+## [x] Task 17: 迁移复盘模式文件 ✅ 2026-08-23
 
 - **Priority**: high
 - **Depends On**: None
@@ -283,7 +283,7 @@
 - **Test Requirements**:
   - `programmatic` TR-19.1: 文件已迁移至合适位置
 
-## [/] Task 20: 更新分类索引和统计
+## [x] Task 20: 更新分类索引和统计 ✅ 2026-08-23
 
 - **Priority**: high
 - **Depends On**: Task 1-19
@@ -338,3 +338,23 @@
   6. CATEGORIES.md 10 主题漏列 python314-cpython-wiki，已补充
   7. CATEGORIES.md 08 主题统计写 10，实际 11，已修正
   8. 最终统计：count_wikis.py 输出 150，CATEGORIES.md 统计 150，一致 ✅
+
+## [x] Task 23: 迁移 codewhale-wiki ✅ 2026-08-23
+
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**:
+  - 将 `docs/knowledge/learning/codewhale/` 的 8 个内容文件迁移至 `.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/`
+  - 源→目标映射：concepts/tech/intro→00-overview、quickstart→01-quickstart、features→02-features、deploy→03-deploy、changelog→04-changelog、concepts/comparison→05-comparison、concepts/general/domain/index→06-domain、concepts/topics/index→07-topics
+  - 标准化 frontmatter 为 4 字段（id/title/source/x-toml-ref）
+  - 创建 9 个 TOML 元数据文件（8 内容 + README）
+  - 生成 README.md 索引（章节导航/快速开始/重点阅读推荐）
+  - 修复 15 处绝对路径链接（`/concepts/...`）为相对路径
+  - 更新 CATEGORIES.md（03 主题清单 + 统计 150→151，version 1.5→1.6）
+- **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5, AC-6, AC-7, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-23.1: 目标目录存在 8 个内容文件 + README.md ✅
+  - `programmatic` TR-23.2: frontmatter 字段数严格为 4 ✅
+  - `programmatic` TR-23.3: check-links.py 零断链（36 个本地引用全部有效）✅
+  - `programmatic` TR-23.4: check-filename-convention.py 全部通过 ✅
+  - `programmatic` TR-23.5: 9 个 TOML 文件存在 ✅

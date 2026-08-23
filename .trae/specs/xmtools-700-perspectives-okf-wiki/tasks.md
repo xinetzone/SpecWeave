@@ -42,7 +42,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-1.3: 视角标题无实质性重复，透镜类型分布合理（非全部同质）
 - **Notes**: 注册表是后续所有批次的派工单；跨切面主题允许不绑定单一文件
 
-### [/] Task 2: vta_hw R 阶段事实采集
+### [x] Task 2: vta_hw R 阶段事实采集
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -57,7 +57,7 @@ d:\AI\.chaos\docs\
   - `programmatic` TR-2.3: G1 扫描——事实中无推断性动词（"用于/目的是/设计为/以便/用来"）
 - **Notes**: 事实只记录"代码里有什么"，分析留到 I/E 阶段
 
-### [ ] Task 3: npu_tvm 全局与 npuusertools R 阶段事实采集
+### [x] Task 3: npu_tvm 全局与 npuusertools R 阶段事实采集
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -72,7 +72,7 @@ d:\AI\.chaos\docs\
   - `programmatic` TR-3.3: G1 无推断词
 - **Notes**: npuusertools 的 C++ 预编译库（.so/.a）不逆向，仅从头文件/API/Python 绑定提取事实
 
-### [ ] Task 4: 搭建 Bundle 骨架与 references 信源登记
+### [x] Task 4: 搭建 Bundle 骨架与 references 信源登记
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -86,7 +86,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-4.3: 子目录 index.md 不含 frontmatter
 - **Notes**: 此时 index 仅占位骨架，内容文档定稿后在 Task 11 统一回填
 
-### [ ] Task 5: 生成试点样本（25 篇）
+### [x] Task 5: 生成试点样本（25 篇）
 - **Priority**: high
 - **Depends On**: Task 2, Task 3, Task 4
 - **Description**:
@@ -102,7 +102,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-5.4: 分析基于事实，无虚构 API，篇幅 600-1200 字
 - **Notes**: 试点样本是质量基准，经审批后作为后续批量生成的 few-shot 模板
 
-### [ ] Task 6: 试点自验证与提交审批（关卡）
+### [x] Task 6: 试点自验证与提交审批（关卡）
 - **Priority**: high
 - **Depends On**: Task 5
 - **Description**:
@@ -121,7 +121,7 @@ d:\AI\.chaos\docs\
 
 ## Phase 2：批量生成（Phase 1 审批通过后）
 
-### [ ] Task 7: 批量生成 vta_hw Chisel 核心与 Shell/DPI/Tests（~231篇）
+### [x] Task 7: 批量生成 vta_hw Chisel 核心与 Shell/DPI/Tests（~231篇）
 - **Priority**: high
 - **Depends On**: Task 6（审批通过）
 - **Description**:
@@ -137,7 +137,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-7.4: 同模块的 6 个视角分析角度不同，无整段重复
 - **Notes**: 并行委派时每个子任务独立获得完整格式规范与事实清单，不假设共享上下文
 
-### [ ] Task 8: 批量生成 vta_hw 运行时/配置/头文件/apps/跨切面（~269篇）
+### [x] Task 8: 批量生成 vta_hw 运行时/配置/头文件/apps/跨切面（~269篇）
 - **Priority**: high
 - **Depends On**: Task 6（审批通过）
 - **Description**:
@@ -152,7 +152,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-8.4: 跨切面文档有综合分析而非单文件复述
 - **Notes**: runtime 多版本（v2/v3/v4/vta3.0）文档须显式标注版本差异
 
-### [ ] Task 9: 批量生成 npu_tvm 全局（~150篇）
+### [x] Task 9: 批量生成 npu_tvm 全局（~150篇）
 - **Priority**: high
 - **Depends On**: Task 6（审批通过）
 - **Description**:
@@ -166,7 +166,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-9.3: TVM 上游通用部分与芯劢定制部分区分清晰
 - **Notes**: 聚焦定制部分，上游通用机制点到为止
 
-### [ ] Task 10: 批量生成 npuusertools（~50篇）
+### [x] Task 10: 批量生成 npuusertools（~50篇）
 - **Priority**: high
 - **Depends On**: Task 6（审批通过）
 - **Description**:
@@ -179,7 +179,7 @@ d:\AI\.chaos\docs\
   - `programmatic` TR-10.3: AdaRound 量化文档引用的类/函数在 xmnn/adaround/ 中存在
 - **Notes**: C++ 预编译库不逆向，仅从 Python API 与头文件描述
 
-### [ ] Task 11: 回填各级 index 导航
+### [x] Task 11: 回填各级 index 导航
 - **Priority**: high
 - **Depends On**: Task 7, Task 8, Task 9, Task 10
 - **Description**:
@@ -196,7 +196,7 @@ d:\AI\.chaos\docs\
 
 ## Phase 3：独立验证与收尾
 
-### [ ] Task 12: V 阶段——Grep API 真实性全量验证
+### [x] Task 12: V 阶段——Grep API 真实性全量验证
 - **Priority**: high
 - **Depends On**: Task 11
 - **Description**:
@@ -210,7 +210,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-12.3: 修复未引入新的事实错误
 - **Notes**: 验证子代理与生成子代理必须是不同的独立上下文（黑盒验证）
 
-### [ ] Task 13: V 阶段——链接与 frontmatter 全量检查
+### [x] Task 13: V 阶段——链接与 frontmatter 全量检查
 - **Priority**: high
 - **Depends On**: Task 11
 - **Description**:
@@ -225,7 +225,7 @@ d:\AI\.chaos\docs\
   - `programmatic` TR-13.3: frontmatter 必填字段 100% 完整
 - **Notes**: 可与 Task 12 并行（不同验证维度）
 
-### [ ] Task 14: 问题修复
+### [x] Task 14: 问题修复
 - **Priority**: high
 - **Depends On**: Task 12, Task 13
 - **Description**:
@@ -237,7 +237,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-14.2: 重复内容已改写为差异化分析
 - **Notes**: 修复单篇文档后重新 Grep 验证该篇
 
-### [ ] Task 15: 生成根索引与学习路径
+### [x] Task 15: 生成根索引与学习路径
 - **Priority**: medium
 - **Depends On**: Task 14
 - **Description**:
@@ -249,7 +249,7 @@ d:\AI\.chaos\docs\
   - `human-judgement` TR-15.2: 提供至少 3 条学习路径，每条路径点击 ≤3 次到达目标文档
 - **Notes**: 根索引是用户入口，须经人工可读性评审
 
-### [ ] Task 16: C 阶段——模式沉淀与最终验收
+### [x] Task 16: C 阶段——模式沉淀与最终验收
 - **Priority**: medium
 - **Depends On**: Task 15
 - **Description**:

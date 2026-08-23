@@ -313,7 +313,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-11.3: C++ 技术分析准确，代码风格与源码一致
 - **Notes**: 112-115 来自 tvm/src/support/ 目录，是 TVM 的支撑库而非 tvm-ffi 核心。
 
-## [/] Task 12: 分类09 - Python绑定（15篇，视角116-130）
+## [x] Task 12: 分类09 - Python绑定（15篇，视角116-130）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -342,7 +342,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-12.3: Python 绑定机制分析准确，GIL/自由线程讨论有据
 - **Notes**: 注意 tvm-ffi/python/ 目录文件较少（core.pyi, error.py, py.typed），Cython 生成的 .cpp 不在源码树中。需要结合 tvm/python/tvm/ 中的使用模式分析。
 
-## [ ] Task 13: 分类10 - Rust绑定（10篇，视角131-140）
+## [x] Task 13: 分类10 - Rust绑定（10篇，视角131-140）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -366,7 +366,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-13.3: Rust 安全分析准确，unsafe 边界讨论有据
 - **Notes**: Rust 代码量较少（any.rs + lib.rs），需要结合 Cargo.toml 和 build.rs 分析整体设计。
 
-## [ ] Task 14: 分类11 - C ABI与平台（10篇，视角141-150）
+## [x] Task 14: 分类11 - C ABI与平台（10篇，视角141-150）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -390,7 +390,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-14.3: 平台兼容性分析全面，147包含NPU建议
 - **Notes**: 147 WASM 支持对 NPU Web 部署场景有意义，包含 NPU 建议。
 
-## [ ] Task 15: 分类12 - 构建与打包（10篇，视角151-160）
+## [x] Task 15: 分类12 - 构建与打包（10篇，视角151-160）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -414,7 +414,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-15.3: 构建流程分析准确
 - **Notes**: 参考 CMakeLists.txt, pyproject.toml, build.rs。
 
-## [ ] Task 16: 分类13 - 测试策略（10篇，视角161-170）
+## [x] Task 16: 分类13 - 测试策略（10篇，视角161-170）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -438,7 +438,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-16.3: 测试覆盖分析有数据支撑
 - **Notes**: 参考 tests/cpp/ 目录下的 10 个测试文件和 .github/workflows/。
 
-## [ ] Task 17: 分类14 - TVM编译器集成（15篇，视角171-185）
+## [x] Task 17: 分类14 - TVM编译器集成（15篇，视角171-185）
 
 - **Priority**: medium
 - **Depends On**: Task 3
@@ -467,7 +467,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-17.3: FFI 集成分析准确，标注的文档包含NPU建议
 - **Notes**: 本分类分析 tvm/ 目录（非 tvm-ffi/），展示 FFI 在真实编译器中的应用。171/176/177/178/179/180/185 包含 NPU 建议。
 
-## [ ] Task 18: 分类15 - NPU与加速器建议（15篇，视角186-200）
+## [x] Task 18: 分类15 - NPU与加速器建议（15篇，视角186-200）
 
 - **Priority**: high
 - **Depends On**: Task 3
@@ -496,7 +496,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-18.3: NPU 建议具体、合理、可操作，结合 TVM FFI 机制给出实现路径
 - **Notes**: 参考 projects/xuanspace/libs/npu-ffi/ 和 tvm/src/target/ 中的后端注册模式。所有文档均含 NPU 建议。
 
-## [ ] Task 19: V阶段 - 独立验证与修复
+## [x] Task 19: V阶段 - 独立验证与修复
 
 - **Priority**: high
 - **Depends On**: Task 4-18
@@ -516,7 +516,7 @@ d:\AI\projects\docs\
   - `human-judgement` TR-19.4: NPU 建议质量审查通过
 - **Notes**: Grep 验证是 G4 质量门的核心，不可跳过。发现虚构 API 必须修复文档而非删除检查。
 
-## [ ] Task 20: 索引生成与收尾
+## [x] Task 20: 索引生成与收尾
 
 - **Priority**: high
 - **Depends On**: Task 19
