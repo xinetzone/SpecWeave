@@ -4,13 +4,13 @@ title: "Learning Wiki 主题分类体系"
 category: "learning"
 tags: ["categories", "learning-wiki", "knowledge-architecture", "topic-classification", "learning-path"]
 date: "2026-08-22"
-version: "1.3"
+version: "1.5"
 status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的11主题分类体系设计（00-10），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/CATEGORIES.toml"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）; 2026-08-23a | audit | Task 22迁移审核：补充04/07/08主题缺失Wiki条目（+12），更新统计摘要(137→149 Wiki)，修复count_wikis.py NON_WIKI_WIKIS列表; 2026-08-23b | audit | Task 22收尾：修复pyinvoke-wiki/index.md→README.md，更新count_wikis.py支持10主题，补充10主题缺失条目（python314-cpython-wiki），修正08主题统计(10→11)，更新统计摘要(149→150 Wiki)"
 ---
 # Learning Wiki 主题分类体系
 
@@ -260,6 +260,7 @@ flowchart TD
 | Harness驾驭工程 | [harness-engineering-wiki.md](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) | 阿里Harness Engineering方法论完整教程，含四条铁律、六大模式、悟空AI招聘案例 | 原子化 |
 | Harness七大组件 | [harness-seven-components-wiki.md](02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki.md) | AI Agent业务运行底座七大核心组件系统教程，从Prompt到业务交付 | 原子化 |
 | Loop Engineering文章分析 | [harness-loop-engineering-article-analysis.md](02-agent-engineering-methodology/01-paradigms/harness-loop-engineering-article-analysis.md) | Loop Engineering与AI系统工程范式转移深度分析 | 单文件 |
+| AI工程四代里程碑 | [ai-engineering-four-milestones-wiki/README.md](02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/README.md) | AI工程四代里程碑（瓶颈迁移→Prompt→Context→Harness→Loop）完整教程，含洞察模式与可复用方法论 | 原子化 |
 
 **📂 02-prompt-coding/ — AI编程与Prompt工程**：
 
@@ -275,8 +276,9 @@ flowchart TD
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
 | 对抗性审查方法论 | [adversarial-review-wiki/00-overview.md](02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/00-overview.md) | 对抗性审查完整知识库，含哲学起源、方法论框架、认知偏差防御、行业标准、开源工具 | 原子化 |
+| Book to Skill | [book-to-skill-wiki/README.md](02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/README.md) | 从书籍到SKILL.md的自动化提取工具完整教程，含提取器架构、Token经济学、安全模型、扩展开发 | 原子化 |
+| 深度学习原子化设计 | [deep-learning-atomic-design/README.md](02-agent-engineering-methodology/deep-learning-atomic-design/README.md) | 深度学习模型原子化设计理念与实现，含组件分析与设计模式 | 原子化 |
 | 七概念×DeepTutor实践 | [seven-concepts-deeptutor-wiki/00-overview.md](02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/00-overview.md) | 七概念方法论在DeepTutor产品中的完整实践教程，含理论篇、案例篇、分析篇、学习路径 | 原子化 |
-| WorkBuddy四层×七概念分析 | [workbuddy-four-layers-seven-concepts-analysis.md](02-agent-engineering-methodology/03-methodology/workbuddy-four-layers-seven-concepts-analysis.md) | 七概念框架视角下WorkBuddy四层工程（Prompt→Context→Harness→Loop）深度跨体系对照分析 | 单文件 |
 
 **📂 04-context-optimization/ — 上下文与Token优化**：
 
@@ -333,12 +335,16 @@ flowchart TD
 | EchoBird百灵鸟桌面Agent | [echobird-wiki.md](03-agent-platforms-tools/echobird-wiki.md) | Tauri+Rust桌面Agent，Model Nexus支持本地LLM（Claude Code/Codex/OpenClaw） | 单文件 |
 | MopMonk安全Agent | [mopmonk-security-agent-wiki.md](03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | MiniMax M3驱动的安全Agent，CyberGym漏洞挖掘 | 原子化 |
 | Octo多Agent协作平台 | [octo-platform-wiki.md](03-agent-platforms-tools/octo-platform-wiki.md) | 明略科技Octo：Private AI时代多Agent协作基础设施，含Matter/Taste/Orchestration核心技术 | 单文件 |
-| Open Code Review代码评审 | [open-code-review-wiki.md](03-agent-platforms-tools/open-code-review-wiki.md) | 阿里开源AI代码评审工具完整教程，含安装、使用、优化、集成、效果验证 | 原子化 |
-| QuantDinger AI量化交易 | [quantdinger-ai-trading-wiki.md](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) | 开源自托管AI量化交易平台，Docker Compose一键部署，MCP Agent Gateway双轨策略开发 | 单文件 |
+| Open Code Review代码评审 | [open-code-review-wiki/README.md](03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 阿里开源AI代码评审工具完整教程，含安装、使用、优化、集成、效果验证及CLI参考、规则系统、MCP工具等深度章节 | 原子化 |
+| The Agency项目 | [agency-agents-wiki/README.md](03-agent-platforms-tools/agency-agents-wiki/README.md) | The Agency 230+专职AI Agent角色库完整教程，含17部门名册、Agent文件格式、脚本体系、16工具集成与NEXUS编排策略 | 原子化 |
+| Cordis时空可组合性框架 | [cordis-spatiotemporal-composability-wiki/README.md](03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/README.md) | Cordis TypeScript时空可组合性元框架完整教程，含论文背景、核心架构、插件系统、生命周期与HMR | 原子化 |
+| DeepSeek Harness | [deepseek-harness-wiki/README.md](03-agent-platforms-tools/deepseek-harness-wiki/README.md) | DeepSeek Harness CLI完整教程，含Agent循环、四种运行模式、插件开发、MCP服务与无头SDK | 原子化 |
+| OKF Kit 工具包 | [okf-kit-wiki/README.md](03-agent-platforms-tools/okf-kit-wiki/README.md) | OKF Kit CLI工具包完整教程，含OKF格式规范、核心架构、MCP服务、扩展开发与注册表可视化 | 原子化 |
+| QuantDinger量化分析 | [quantdinger/README.md](03-agent-platforms-tools/quantdinger/README.md) | 微信文章深度分析：量化交易Agent与市场分析方法论 | 原子化 |
 | Rainman AI翻译工具 | [rainman-translate-book-wiki.md](03-agent-platforms-tools/rainman-translate-book-wiki.md) | Rainman Translate Book AI翻译工具Wiki教程 | 原子化 |
 | TRAE v3.3.74版本发布笔记 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) | TRAE IDE版本更新：Browser配置聚合页、Windows MSSDK接入 | 单文件 |
 | The Agency项目 | [the-agency-project-wiki.md](03-agent-platforms-tools/the-agency-project-wiki.md) | The Agency多Agent项目学习笔记 | 单文件 |
-| 七概念解析MonkeyCode开源Vibe Coding | [seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md](03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md) | 基于七概念方法论解析MonkeyCode开源私有化Vibe Coding平台，含知识框架、产品解析、部署指南、FAQ、资源链接、学习评估 | 原子化 |
+| 七概念解析MonkeyCode开源Vibe Coding | [seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md](03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md) | 基于七概念方法论解析MonkeyCode开源私有化Vibe Coding平台，含知识框架、产品解析、部署指南、FAQ、资源链接、学习评估 | 原子化 |
 
 ---
 
@@ -399,6 +405,9 @@ flowchart TD
 | Ian小嘿插图AI配图Skill | [ian-xiaohei-illustrations.md](05-ai-multimodal-content/ian-xiaohei-illustrations.md) | AI配图Skill学习分析 | 单文件 |
 | LibTV AI短剧创作工具 | [libtv-ai-shortdrama-wiki.md](05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md) | AI短剧/AI漫画创作工具，含3D导演、角色质量控制、情感控制 | 单文件 |
 | Text-to-CAD文本转CAD | [text-to-cad-wiki.md](05-ai-multimodal-content/text-to-cad-wiki.md) | 文本转CAD技术学习笔记 | 单文件 |
+| MiniT2I 极简文生图 | [minit2i-wiki/README.md](05-ai-multimodal-content/minit2i-wiki/README.md) | MiniT2I极简文生图模型完整教程，含设计哲学、三大减法、MM-JiT架构、实验性能、范式启示 | 原子化 |
+| 因果AI | [causal-ai/README.md](05-ai-multimodal-content/causal-ai/README.md) | 微信文章深度分析：因果AI方法论 | 原子化 |
+| 原子涌现 | [atomic-emergence/README.md](05-ai-multimodal-content/atomic-emergence/README.md) | 算法与涌现的交互哲学，含交互式可视化 | 单文件 |
 
 ---
 
@@ -532,11 +541,17 @@ flowchart TD
 
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
+| AI大模型×PowerShell 5 兼容性防御 | [ai-powershell5-hell-wiki/README.md](08-systems-infrastructure/ai-powershell5-hell-wiki/README.md) | AI大模型生成PowerShell 5.1兼容代码的防御性编程指南，含约束语言模式、异常处理、安全加固 | 原子化 |
+| Caffe深度学习框架架构 | [caffe-architecture-wiki/README.md](08-systems-infrastructure/caffe-architecture-wiki/README.md) | Caffe深度学习框架架构深度分析，含Layer/Net/Solver核心机制、Blob数据结构、GPU加速原理 | 原子化 |
+| conda .github 元仓库 | [conda-dev-github-wiki/README.md](08-systems-infrastructure/conda-dev-github-wiki/README.md) | conda社区.github元仓库完整教程，含Issue模板、PR模板、工作流配置、GitHub Actions集成 | 原子化 |
+| conda源码与文档 | [conda-dev-source-wiki/README.md](08-systems-infrastructure/conda-dev-source-wiki/README.md) | conda包管理器源码与conda-docs文档站点完整教程，含分层架构、核心模块、构建系统 | 原子化 |
+| CPython开发者指南 | [cpython-devguide-wiki/00-overview.md](08-systems-infrastructure/cpython-devguide-wiki/00-overview.md) | CPython贡献全景图，含贡献者入门/开发工作流/治理社区/最佳实践/FAQ | 原子化 |
+| Git高级操作与百度同步 | [git-advanced-wiki/README.md](08-systems-infrastructure/git-advanced-wiki/README.md) | Git高级操作完整教程，含 cherry-pick/rebase/stash/reflog 等深度技巧 | 原子化 |
+| 基于百度网盘的Git跨设备同步 | [git-baidu-sync/README.md](08-systems-infrastructure/git-baidu-sync/README.md) | 利用git clone --no-local硬链接技术结合百度网盘实现私有Git仓库跨设备同步 | 单文件 |
+| GitHub CLI 完整教程 | [github-cli-wiki/README.md](08-systems-infrastructure/github-cli-wiki/README.md) | GitHub CLI 完整教程，含安装、基础命令、PR工作流、Actions集成、高级用法、FAQ速查表 | 原子化 |
+| 智能终端架构与系统 | [intelligent-terminal-wiki/README.md](08-systems-infrastructure/intelligent-terminal-wiki/README.md) | Trae智能终端架构完整教程，含WTCLI协议、MCP集成、C++扩展、Agent Hook系统 | 原子化 |
 | WSL CLI与架构参考 | [wsl-cli-and-architecture-wiki.md](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) | 基于external/WSL源码深度核实的CLI命令树、参数定义、CLI架构四层模型、interop binfmt机制、systemd启动流程 | 单文件 |
 | WSL系统学习计划 | [wsl-learning-plan.md](08-systems-infrastructure/wsl-learning-plan.md) | 涵盖三层架构、Linux侧核心进程、Plan9/DrvFs互操作、WSLC Container API三语言投影、CMake跨编译、5个实操练习、4周学习路径 | 单文件 |
-| Caffe深度学习框架架构 | [caffe-architecture-wiki/README.md](08-systems-infrastructure/caffe-architecture-wiki/README.md) | Caffe深度学习框架架构深度分析，含Layer/Net/Solver核心机制、Blob数据结构、GPU加速原理 | 原子化 |
-| CPython开发者指南 | [cpython-devguide-wiki/00-overview.md](08-systems-infrastructure/cpython-devguide-wiki/00-overview.md) | CPython贡献全景图，含贡献者入门/开发工作流/治理社区/最佳实践/FAQ | 原子化 |
-| 智能终端Wiki教程 | [intelligent-terminal-wiki/README.md](08-systems-infrastructure/intelligent-terminal-wiki/README.md) | 智能终端架构与系统设计Wiki教程索引 | 原子化 |
 
 ---
 
@@ -580,6 +595,7 @@ flowchart TD
 | Wiki名 | 入口文件 | 一句话说明 | 类型 |
 |--------|---------|-----------|------|
 | 勾股定理Wiki | [pythagorean-theorem-wiki/README.md](10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/README.md) | 勾股定理历史、证明方法、数论规律与应用的系统教程 | 原子化 |
+| Python3.14 CPython 源码 | [python314-cpython-wiki/README.md](10-foundational-knowledge/python314-cpython-wiki/README.md) | Python3.14 CPython 解释器源码全景图，含语言特性、JIT解释器、自由线程、stdlib 改进等13章 | 原子化 |
 | 论文写作Wiki | [thesis-writing-wiki/README.md](10-foundational-knowledge/academic-skills/thesis-writing-wiki/README.md) | 从选题到答辩的学术论文写作全流程指南 | 原子化 |
 
 ---
@@ -589,17 +605,17 @@ flowchart TD
 | 主题编号 | 主题名称 | Wiki数量 | 原子化Wiki | 单文件Wiki |
 |---------|---------|---------|-----------|-----------|
 | 00 | 本质与思维 | 2 | 2 | 0 |
-| 01 | Agent协议与接口技术栈 | 10 | 7 | 3 |
-| 02 | Agent工程方法论 | 19 | 14 | 5 |
-| 03 | Agent平台与工具生态 | 16 | 6 | 10 |
-| 04 | 文档工具链与标记语言 | 5 | 4 | 1 |
-| 05 | AI多模态与内容生成 | 6 | 0 | 6 |
-| 06 | AI商业与趋势观察 | 9 | 2 | 7 |
-| 07 | 厂商产品学习系列 | 25 | 5 | 20 |
-| 08 | 底层系统与基础设施 | 5 | 3 | 2 |
+| 01 | Agent协议与接口技术栈 | 17 | 13 | 4 |
+| 02 | Agent工程方法论 | 25 | 15 | 10 |
+| 03 | Agent平台与工具生态 | 33 | 18 | 15 |
+| 04 | 文档工具链与标记语言 | 10 | 8 | 2 |
+| 05 | AI多模态与内容生成 | 10 | 5 | 5 |
+| 06 | AI商业与趋势观察 | 14 | 11 | 3 |
+| 07 | 厂商产品学习系列 | 24 | 11 | 13 |
+| 08 | 底层系统与基础设施 | 10 | 9 | 1 |
 | 09 | ML推理与部署 | 1 | 1 | 0 |
-| 10 | 通用基础知识 | 2 | 2 | 0 |
-| **合计** | | **100** | **46** | **54** |
+| 10 | 通用基础知识 | 3 | 3 | 0 |
+| **合计** | | **150** | **99** | **51** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
