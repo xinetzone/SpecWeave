@@ -54,6 +54,17 @@ F-002: <类>.<方法> 接受参数 (<参数列表>)，返回 <返回类型>
 F-003: <模块A> 中的 <对象> 被 <模块B> 的 <方法> 引用，传递 <数据>
 ```
 
+#### R阶段专项：大型 C/C++ 项目的头文件优先采集（2026-08-23 新增）
+
+针对源码规模 >1000 文件、含头文件与实现文件分离的 C/C++ 项目（如 Apache TVM、TuyaOpen），R 阶段采用**头文件优先事实采集策略**——已在 2 个大型 C/C++ 项目验证（L2），完整模式见 [cpp-header-first-fact-collection.md](../research-knowledge/cpp-header-first-fact-collection.md)：
+
+1. **头文件为 API 权威来源**：优先阅读 `include/` 下的头文件，提取类声明、函数签名、枚举类型、宏定义
+2. **实现文件仅用于验证**：`.c`/`.cc` 仅用于验证函数存在性和理解内部数据流，不作为 API 声明的权威来源（可能包含静态函数或内部宏）
+3. **构建系统文件作补充**：Kconfig/CMakeLists.txt 作为模块依赖关系和架构裁剪的补充信息来源（识别可选组件、条件编译分支、模块间链接依赖）
+4. **V 阶段在头文件中 Grep 验证**：对每个类名/宏名在 `include/` 中验证存在性，并检查命名空间前缀；版本迁移期项目以最新 `.h` 头文件为权威
+
+> **为什么要加这一步**：C++ 项目的 API 虚构风险显著高于 Python 和 Markdown 项目——AI 容易把训练数据中的旧版 API 当作源码中真实存在的新版 API（"版本迁移期的统计惯性"），如 TVM 案例中虚构的 `PackedFunc`/`TVMArgs`/`TVM_FFI_REGISTER_GLOBAL` 8 类 API 涉及 10 个文件。头文件权威性分层是消除该风险的最有效手段。
+
 ### I阶段（Insight）：架构洞察与知识结构设计
 
 **目标**：从事实中提炼架构洞察，设计知识包的文档结构。
@@ -346,7 +357,9 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | spec-driven-batch-doc-generation | 互补 | 本模式的E阶段复用了spec驱动批量文档生成的核心思想（统一模板+分批并行+统一验证），但增加了R阶段事实采集和V阶段API真实性验证 |
 | batched-creation-independent-review | 依赖 | V阶段的独立审查与修复借鉴了分批创建+独立审查模式 |
 | external-content-fact-verification | 相关 | V阶段的Grep验证是外部内容事实验证在源码场景的应用 |
+| [cpp-header-first-fact-collection.md](../research-knowledge/cpp-header-first-fact-collection.md) | 专项细化 | 本工作流R阶段在大型C/C++项目上的细化——以include/头文件为API权威来源、实现文件仅用于验证、构建系统文件补充模块依赖，2次验证（Apache TVM/TuyaOpen） |
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
+- 2026-08-23 | pattern | R阶段新增"大型C/C++项目头文件优先采集"专项小节，反向传播自新沉淀模式 cpp-header-first-fact-collection（L2，Apache TVM/TuyaOpen 双案例验证）
 - 2026-08-21 | pattern | 初始创建：从 PyInvoke v3.0.3 OKF Wiki 生成实践萃取

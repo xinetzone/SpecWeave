@@ -21,6 +21,7 @@
 | [cross-cultural-reverse-hermeneutics-defense.md](cross-cultural-reverse-hermeneutics-defense.md) | 跨文化比较反向格义防御七步法（CP-1至CP-7）：原典优先→体系内定位→注疏覆盖→差异先于共性→不等同声明→反笼统标签→目的论自觉，解决"X就是中国的Y"框架先行偏差，跨文化/跨时代思想比较的前置防御 | L1 |
 | [credibility-dual-track.md](credibility-dual-track.md) | 可信度评分+验证日志双轨制v1.1：🟢🔵🟡🔴emoji标记+独立来源判定标准(5类独立/6类非独立/4类灰色地带)+可信度动态调整规则(升级/降级触发条件)+credibility-stats.py工具支持，两次项目验证成熟度L2 | L2 |
 | [core-scenario-dual-layer.md](core-scenario-dual-layer.md) | 核心-场景双层知识架构：底层共享核心原语(概念/标记/通用工具)+上层层场景化方法论，解决"万能框架过度裁剪"和"独立建设重复不一致"两难，遵循三次抽象原则和单向依赖 | L1 |
+| [cpp-header-first-fact-collection.md](cpp-header-first-fact-collection.md) | 大型C/C++项目头文件优先事实采集策略：R阶段以include/头文件为API权威来源、实现文件仅用于验证、构建系统文件(Kconfig/CMakeLists)补充模块依赖，V阶段在头文件中Grep验证类名/宏名并检查命名空间前缀，消除版本迁移期API虚构风险，2次验证（Apache TVM/TuyaOpen） | L2 |
 | [knowledge-system-five-foundations.md](knowledge-system-five-foundations.md) | 知识系统五维根基框架：设计知识系统时从五个基础学科原理推导出必须回答的根本问题（知识质量/认知防御/信任架构/术语统一/质量生成），避免凭直觉/类比搭建导致的维度缺失，五维完备则0返工，缺失一维则返工率15-30% | L1 |
 | [cross-vendor-knowledge-fusion.md](cross-vendor-knowledge-fusion.md) | 跨Vendor知识融合三步法：理解Vendor→认知自我→优势互补融合，避免"全盘照搬"和"NIH综合征"两个极端，融合后1+1>2 | L1 |
 | [vendor-high-level-doc-first-research.md](vendor-high-level-doc-first-research.md) | Vendor仓库"自顶向下"研究法：先读AGENTS.md/CLAUDE.md等AI友好高层文档建立全局框架，再按需深入源码，效率提升5-10倍，基础设施故障时的救命稻草 | L2 |
