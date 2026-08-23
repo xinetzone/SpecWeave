@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-overview"
 title: "项目概述与核心定位"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/00-overview.toml"
 category: "learning"
 tags: ["zleap-agent", "workspace-first", "agent-harness", "context", "local-models"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent 项目概述与核心定位：workspace-first 的 Agent Ha
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 00 项目概述与核心定位
 
 ## 一句话定位

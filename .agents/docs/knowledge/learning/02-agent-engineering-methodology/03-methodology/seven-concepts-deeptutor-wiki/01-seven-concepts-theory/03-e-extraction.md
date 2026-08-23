@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-01-e
 title: E - 萃取 (Extraction)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/03-e-extraction.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, E, 萃取, 理论]
 ---
-
 # E - 萃取 (Extraction)
 
 ---

@@ -9,12 +9,12 @@ tags:
   - pitfalls
   - production
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/04-best-practices.toml"
   - https://onnx.ai/onnx/intro/concepts.html
   - https://onnx.ai/onnx/intro/python.html
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX 最佳实践与反模式
 
 > **这是本Wiki最重要的一章**。90%的ONNX生产问题都来自本章列出的反模式。遵循"反模式对等原则"：正确做法和反模式成对出现。

@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-03-issue-templates
 title: "Issue 模板详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/03-issue-templates.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/03-issue-templates.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "issue-template", "github-forms", "triage", "epic", "labels"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库 4 个 Issue 模板（bug/feature/documentation/epic）详解"
 ---
-
 # Issue 模板详解
 
 conda/.github 元仓库通过 `.github/ISSUE_TEMPLATE/` 下的 4 个 GitHub Forms（YAML）模板规范 issue 提交流程，并在创建时自动打上类型标签，与 Issue Sorting 标签体系联动。本文逐一拆解各模板的字段语义、block 类型与 validations 用法。

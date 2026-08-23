@@ -2,9 +2,8 @@
 id: "agent-runtime-protocol-wiki-11"
 title: "跨维度分析与行业趋势"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/11-cross-dimensional-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/11-cross-dimensional-analysis.toml"
 ---
-
 # 11 跨维度分析与行业趋势
 
 ## 设计决策持久性判断

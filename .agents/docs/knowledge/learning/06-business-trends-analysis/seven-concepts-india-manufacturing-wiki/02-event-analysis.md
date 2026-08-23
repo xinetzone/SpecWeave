@@ -2,6 +2,7 @@
 id: "event-analysis"
 title: "事件分析：印度塔塔电子泄密事件详解"
 source: "seven-concepts-india-manufacturing-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/02-event-analysis.toml"
 date: "2026-07-14"
 version: "1.0"
 ---

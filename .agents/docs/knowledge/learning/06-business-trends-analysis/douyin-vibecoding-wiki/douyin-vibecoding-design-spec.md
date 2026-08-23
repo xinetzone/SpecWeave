@@ -1,6 +1,7 @@
 ---
 title: "SpecWeave 抖音VibeCoding图文·视觉设计规范"
 source: "基于SpecWeave参赛内容策划生成"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.toml"
 plan_date: "2026-07-12"
 version: "1.0"
 tags: ["vibecoding", "抖音", "设计规范", "视觉设计", "SpecWeave"]
@@ -8,7 +9,6 @@ related:
   - "[douyin-vibecoding-action-plan.md](douyin-vibecoding-action-plan.md)"
   - "[specweave-color-palette.png](../../../../../../.temp/specweave-color-palette.png)"
 ---
-
 # SpecWeave 抖音图文 · 视觉设计规范
 
 > 📐 画布尺寸：**1080×1440px**（3:4竖版，抖音最佳比例）

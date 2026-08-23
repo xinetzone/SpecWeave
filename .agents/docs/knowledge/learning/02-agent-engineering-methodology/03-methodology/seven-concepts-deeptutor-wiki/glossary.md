@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-glossary
 title: 七概念×DeepTutor实践教程 - 术语表
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/glossary.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, 方法论, DeepTutor, 教程, 术语表]
 ---
-
 # 术语表 Glossary
 
 ---

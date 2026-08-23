@@ -2,6 +2,7 @@
 id: "agent-evaluation-wiki-overview"
 title: "AI Agent 评测体系化建设方法论教程总览"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/00-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "evaluation-methodology", "benchmark", "metrics", "overview", "tutorial"]
 date: "2026-08-05"

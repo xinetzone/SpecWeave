@@ -7,12 +7,12 @@ tags:
   - version-history
   - evolution
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.toml"
   - https://protobuf.dev/history
   - https://github.com/protocolbuffers/protobuf/blob/main/CHANGES.txt
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # 版本演进时间轴
 
 Protobuf从2001年Google内部工具发展到今天的Editions体系，走过了20余年。理解每个版本的背景、决策和教训，是正确选型和避免踩坑的关键。

@@ -2,8 +2,8 @@
 id: 05-core-classes-list
 title: 核心类清单
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/05-core-classes-list.toml"
 ---
-
 ## 核心类概览
 
 | 类名 | 文件路径 | 类签名 |

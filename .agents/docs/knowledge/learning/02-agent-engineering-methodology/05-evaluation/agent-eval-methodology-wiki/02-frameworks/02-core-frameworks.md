@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module2-frameworks"
 title: "模块2：核心评测框架对比"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/02-frameworks/02-core-frameworks.toml"
 category: "learning"
 tags: ["agent-evaluation", "framework", "helm", "mt-bench", "agentbench", "auto-eval", "tau-bench", "agentboard", "selection"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "深度对比HELM、MT-Bench、AgentBench、AutoEval、τ-bench、AgentBoard六大评测框架，给出基于8个维度的横向对比表与选型决策树。"
 references: 10
 ---
-
 # 模块2：核心评测框架对比
 
 > **方法论视角**：本模块从评测框架的"测什么/用什么环境/怎么判定"视角对比六大框架。若需落地的自动化评测工具选型（LangSmith/Braintrust/DeepEval 等对比）与基准测试集构建，请参阅 [工程手册 · 第4章 自动化评测框架](../../agent-evaluation-wiki/04-automated-evaluation.md)与[第3章 基准测试构建](../../agent-evaluation-wiki/03-benchmark-construction.md)。

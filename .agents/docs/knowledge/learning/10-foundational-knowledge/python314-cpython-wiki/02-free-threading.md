@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-02"
 title: "Python 3.14 自由线程（无 GIL）深度解析"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#free-threaded-cpython"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/02-free-threading.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/02-free-threading.toml"
 ---
-
 # Python 3.14 自由线程（无 GIL）深度解析
 
 自由线程（Free-Threading，也称为"无 GIL Python"）是 Python 3.14 最重要的架构变革。自 Python 1.5（1997年）引入全局解释器锁（GIL）以来，Python 的多线程一直无法真正利用多核 CPU。PEP 703 提出了去除 GIL 的路线图，PEP 779 正式将自由线程构建标记为受支持的平台（Supported Platform）。

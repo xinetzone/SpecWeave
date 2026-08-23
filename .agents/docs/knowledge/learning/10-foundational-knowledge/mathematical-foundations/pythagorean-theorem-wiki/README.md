@@ -2,6 +2,7 @@
 id: "pythagorean-theorem-wiki"
 title: "勾股定理 Wiki"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/README.toml"
 ---
 # 勾股定理 Wiki
 

@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-08"
 title: "配置管理（Configuration Management）：持续调教面板"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/08-configuration.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "配置管理", "configuration", "调教", "参数"]
 ---
-
 # 配置管理（Configuration Management）：持续调教面板
 
 ## 一、为什么产品经理必须理解配置管理

@@ -2,6 +2,7 @@
 id: "mermaid-wiki-09-faq-best-practices"
 title: "Mermaid 常见问题与最佳实践（FAQ & Best Practices）"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/09-faq-best-practices.toml"
 category: "learning"
 tags: ["mermaid","faq","troubleshooting","best-practices","安全编码","check-mermaid","markup"]
 date: "2026-08-06"

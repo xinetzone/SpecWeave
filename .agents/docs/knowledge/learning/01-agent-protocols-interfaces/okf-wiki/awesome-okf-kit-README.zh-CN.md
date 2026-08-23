@@ -3,6 +3,7 @@ type: Translation
 title: Awesome OKF Kit 中文翻译
 description: vinodborole/awesome-okf-kit 项目 README 的中文翻译，OKF 即用型知识包社区注册表
 source: vendor/awesome-okf-kit/README.md
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-kit-README.zh-CN.toml"
 tags:
   - OKF
   - 开放知识格式
@@ -11,7 +12,6 @@ tags:
   - AI Agent
   - 翻译
 ---
-
 # awesome-okf-kit
 
 **一个面向即用型 [OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)（开放知识格式，Open Knowledge Format）知识包的社区注册表。**

@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch07-wtcli"
 title: "第7章 - wtcli 命令参考"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/07-wtcli-reference.toml"
 date: "2026-08-03"
 ---
-
 # 第7章 wtcli 命令参考
 
 `wtcli` 是 Windows Terminal Protocol 的官方命令行客户端，提供类 tmux 风格的命令接口来查询和操控 Windows Terminal 的窗口、标签页和窗格。它是所有外部进程（包括 wta-master、Agent CLI、用户脚本）与 Windows Terminal COM 服务器交互的标准入口。

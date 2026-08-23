@@ -2,7 +2,7 @@
 id: okf-topic-index
 title: "OKF（开放知识格式）主题知识导航"
 source: "docs/knowledge/learning/okf-topic-index.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.toml"
 date: "2026-08-19"
 category: "learning"
 tags: ["okf", "open-knowledge-format", "index", "navigation", "wiki"]
@@ -17,7 +17,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # OKF（开放知识格式）主题知识导航
 
 > 本文档是项目中全部 OKF（Open Knowledge Format，开放知识格式）相关知识的**统一导航总入口**。OKF 相关知识当前散布在多个目录、横跨两套文档树与两个分类号，本文档将它们收敛到单一切入点，并按「格式规范」与「工具链」两大子域归类，附版本说明与推荐路径。

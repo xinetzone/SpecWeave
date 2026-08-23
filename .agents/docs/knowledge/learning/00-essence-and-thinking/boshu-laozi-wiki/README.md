@@ -2,10 +2,10 @@
 id: "docs-knowledge-learning-boshu-laozi-wiki-index"
 title: "帛书老子 Wiki 教程"
 source: "公共领域知识（马王堆帛书老子研究）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/boshu-laozi-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-19"
 ---
-
 # 帛书老子 Wiki 教程
 
 > 帛书《老子》——1973 年长沙马王堆三号汉墓出土的《老子》甲、乙本，是目前传世本之外最重要的《老子》早期文本。本教程基于马王堆帛书研究的公共领域学术知识，系统讲解其出土背景、版本体系、核心概念、注读方法论与可复用模式。教程源于对《帛书老子注读》一书的学习目标，因原 epub 为掌阅 DRM 加密无法读取正文，改以公共领域知识生成。

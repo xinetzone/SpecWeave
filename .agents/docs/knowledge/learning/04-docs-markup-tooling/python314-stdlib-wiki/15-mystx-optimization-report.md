@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-15"
 title: "mystx 主题基于 Python 3.14 标准库优化 — 优化前后对比记录"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/15-mystx-optimization-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/15-mystx-optimization-report.toml"
 ---
-
 # mystx 主题基于 Python 3.14 标准库优化 — 优化前后对比记录
 
 > 一句话摘要：本记录逐项列出 `mystx` Sphinx 主题（`d:\spaces\SpecWeave\playground\books\libs\mystx`）在 Python 3.14 标准库优化前后的可量化指标差异——单元测试通过数、代码覆盖率、`flake8` 告警数、数据类实例 `__dict__` 存在性与内存占用、缺 `myst_nb` 时的导入表现，并给出「优化前 / 优化后 / 变化量」。

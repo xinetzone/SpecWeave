@@ -3,6 +3,7 @@ id: okf-ecosystem-infrastructure-03-bundle-template
 title: "03 OKF Bundle 工程化发布模板"
 version: "1.0"
 source: ".chaos/libs/okf-bundle-template 深度分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/03-bundle-template.toml"
 type: "Wiki Tutorial"
 description: "okf-bundle-template 的 GitHub Actions 工作流（build.yml/sync.yml）、okf-kit CLI 命令速查、NOTICE.md 许可署名与 registry 接入流程"
 tags: ["OKF", "bundle", "template", "okf-kit", "github-actions", "CI/CD"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.1"
 ---
-
 # 03 OKF Bundle 工程化发布模板
 
 > 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [okf-bundle-template](https://github.com/vinodborole/okf-bundle-template)（GitHub 模板仓库）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。

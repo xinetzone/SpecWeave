@@ -2,6 +2,7 @@
 id: "zhihu-article-seven-concepts-wiki-creation"
 title: "知乎文章：用方法论编排，而不是靠灵感——我如何用seven-concepts-cmd产出了一整部Wiki教程"
 source: "seven-concepts:复盘产物"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/zhihu-article-seven-concepts-wiki-creation.toml"
 category: "learning"
 tags: ["zhihu-article", "seven-concepts", "methodology", "wiki-creation", "creation-experience"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "复盘一次用seven-concepts-cmd方法论编排技能产出Agent评测方法论Wiki教程的完整过程：R建立事实清单、F从本质重构框架、I提炼反常识洞察、E有据撰写、V四视角对抗审查，以及五道质量门如何保证产出质量。分享方法论编排如何把'写教程'从'堆资料'变成'构建可复用的方法论体系'。"
 references: 6
 ---
-
 # 用方法论编排，而不是靠灵感：我如何用 seven-concepts-cmd 产出了一整部 Wiki 教程
 
 > 复盘一次"方法论驱动创作"的真实过程：不是靠灵感、不是靠经验，而是用一套可编排的方法论链路，稳定地产出一部有据可依、有洞察深度、经得起对抗检验的 Wiki 教程。

@@ -2,9 +2,8 @@
 id: "rqndd-00-overview"
 title: "2025年7月初中国AI行业动态深度分析 — 概述"
 source: "https://mp.weixin.qq.com/s/RQnDdXDMvjYMFJz25qt0Gw"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/rqndd/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/rqndd/00-overview.toml"
 ---
-
 # 2025年7月初中国AI行业动态文章系统性学习与深度洞察分析报告
 
 ---

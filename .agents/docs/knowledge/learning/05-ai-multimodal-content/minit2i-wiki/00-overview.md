@@ -2,9 +2,8 @@
 id: "minit2i-wiki-00"
 title: "MiniT2I极简文生图模型 — 概述与学习目标"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/00-overview.toml"
 ---
-
 # MiniT2I极简文生图模型 — 概述与学习目标
 
 > 一句话摘要：MiniT2I是何恺明团队发布的极简像素空间文生图模型，通过移除VAE、AdaLN、私有数据、RL/DPO和辅助损失这五大"标配"组件，证明纯粹的朴素Transformer即可在学术级算力上达到SOTA级性能，标志着文生图领域从"堆料"到"提纯"的范式转移。

@@ -2,9 +2,8 @@
 id: "quantdinger-00-overview"
 title: "QuantDinger：自托管AI量化交易平台"
 source: "微信公众号「极客之家」"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/00-overview.toml"
 ---
-
 # 《QuantDinger：自托管AI量化交易平台》分析报告
 
 > 本报告基于微信公众号"极客之家"发布的QuantDinger项目介绍文章，由AI智能体系统学习并分析。报告分为"学习笔记（技术内容理解）"与"洞察总结（行业趋势与战略洞察）"两个层次，力求完整还原原文技术脉络，并给出独立、批判性的行业判断。

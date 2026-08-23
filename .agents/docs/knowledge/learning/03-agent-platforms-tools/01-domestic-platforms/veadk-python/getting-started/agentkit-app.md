@@ -2,6 +2,7 @@
 id: veadk-python-agentkit-app
 title: AgentKit 应用工厂使用指南
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/getting-started/agentkit-app.toml"
 category: learning
 tags:
 - VeADK
@@ -17,8 +18,6 @@ author: seven-concepts knowledge-scenario
 summary: AgentKit 应用工厂 create_agentkit_app 使用指南，介绍如何将 VeADK Agent 包装为生产级 Web 服务
 wiki_version: '1.0'
 ---
-
-
 # AgentKit 应用工厂使用指南
 
 本文档介绍 VeADK 提供的 `create_agentkit_app` 应用工厂函数，用于将 Agent 快速包装为生产级 Web 服务。

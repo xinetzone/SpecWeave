@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-skills-tools-permissions"
 title: "Skill 与工具权限"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/04-skills-tools-permissions.toml"
 category: "learning"
 tags: ["zleap-agent", "skill", "skill-registry", "sensitivity-audit", "permission", "approval", "mcp", "tool-policy"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent Skill 机制与工具权限：SKILL.md 入口、SkillRegis
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 04 Skill 与工具权限
 
 本章讲 Zleap-Agent 的两大安全与能力维度：**Skill（可复用能力包）**与**工具权限（安全边界）**。

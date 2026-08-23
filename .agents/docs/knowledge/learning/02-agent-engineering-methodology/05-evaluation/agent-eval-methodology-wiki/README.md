@@ -1,12 +1,12 @@
 ---
 id: "agent-eval-methodology-index"
 title: "Agent评测方法论系统化资料档案"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/README.toml"
 category: "learning"
 date: "2026-08-05"
 version: "0.1"
 status: "draft"
 ---
-
 # Agent评测方法论系统化资料档案
 
 > **L2级方法论模式知识库**。本知识库系统梳理Agent评测方法论，覆盖方法论概述→核心框架对比→关键指标体系→八阶段实施步骤→8个行业案例→常见问题解答的完整体系。

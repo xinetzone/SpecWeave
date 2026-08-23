@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-installation"
 title: "安装与配置"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/02-installation.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/02-installation.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "installation", "configuration", "credentials", "authentication", "uv"]

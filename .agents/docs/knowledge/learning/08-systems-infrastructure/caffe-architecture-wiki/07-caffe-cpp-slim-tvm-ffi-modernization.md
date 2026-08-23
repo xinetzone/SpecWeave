@@ -1,10 +1,10 @@
 ---
 source: "https://github.com/daoflows/caffe (26 commits ahead of BVLC/caffe:master)"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.toml"
 analysis_date: "2026-07-24"
 methodology: "知识沉淀 - 开源项目 fork 现代化改造分析"
 tags: ["Caffe", "C++", "TVM", "FFI", "DLPack", "现代化重构", "依赖裁剪", "Python绑定"]
 ---
-
 # Caffe 现代化改造：caffe-cpp-slim 无依赖核心与 TVM FFI 绑定层分析
 
 > 分析 daoflows/caffe fork 相对于原始 BVLC Caffe 的架构演进：从"巨无霸全依赖框架"到"最小化推理核心 + 现代FFI绑定 + TVM Relax算子"的现代化改造路径。

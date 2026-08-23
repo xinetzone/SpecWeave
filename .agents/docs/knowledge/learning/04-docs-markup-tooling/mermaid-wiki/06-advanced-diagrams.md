@@ -2,6 +2,7 @@
 id: "mermaid-wiki-06-advanced"
 title: "Mermaid 进阶图表：GitGraph / Requirement / Mindmap / Block / C4 / Zenuml"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/06-advanced-diagrams.toml"
 category: "learning"
 tags: ["mermaid", "diagram", "gitGraph", "requirementDiagram", "mindmap", "block", "c4", "zenuml", "markup", "visualization"]
 date: "2026-08-06"

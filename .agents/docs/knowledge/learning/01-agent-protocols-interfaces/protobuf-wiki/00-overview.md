@@ -9,13 +9,13 @@ tags:
   - grpc
   - protocols
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/00-overview.toml"
   - https://protobuf.dev
   - https://protobuf.com.cn
   - https://buf.build/blog
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # Protobuf Wiki 总览
 
 Protocol Buffers（简称Protobuf）是Google开发的语言中立、平台中立、可扩展的结构化数据序列化机制，广泛应用于RPC通信、数据存储、配置文件等场景。本Wiki系统梳理Protobuf从proto2到proto3再到Editions 2023/2024的完整演进脉络，提供版本选型、迁移指南、最佳实践的可操作指导。

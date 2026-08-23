@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/07-faq.toml"
 summary: "Intel Neural Compressor 使用过程中的常见问题与解决方案。"
 tags: ["neural-compressor", "faq", "troubleshooting"]
 ---
-
 # 常见问题
 
 本章汇集了使用 Intel Neural Compressor 过程中最常见的问题及解决方案，分为**环境与安装问题**、**量化使用问题**和**精度与性能问题**三大类。如果遇到本章未覆盖的问题，建议在 [GitHub Issues](https://github.com/intel/neural-compressor/issues) 搜索或提交新 issue。

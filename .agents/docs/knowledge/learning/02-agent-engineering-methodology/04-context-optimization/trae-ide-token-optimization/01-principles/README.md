@@ -1,6 +1,7 @@
 ---
 id: "trae-token-principles-index"
 title: "原理与事实"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/01-principles/README.toml"
 date: 2026-08-01
 type: index
 ---

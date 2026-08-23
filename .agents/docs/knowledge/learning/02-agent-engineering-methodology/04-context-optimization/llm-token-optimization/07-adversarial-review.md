@@ -7,6 +7,7 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Adversarial-Review", "V-Gate"]
 maturity: "L1"
 source: "adversarial-review-v-stage"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/07-adversarial-review.toml"
 prerequisites:
   - "llm-token-optimization-principles-facts"
   - "llm-token-optimization-methods-overview"
@@ -16,7 +17,6 @@ review_date: "2026-08-01"
 review_version: "1.0"
 v_gate_result: "PASSED"
 ---
-
 # LLM Token节省机制研究文档 V阶段对抗审查记录
 
 > **审查阶段**：V阶段（对抗性审查）

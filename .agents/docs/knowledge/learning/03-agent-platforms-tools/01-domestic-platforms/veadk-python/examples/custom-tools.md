@@ -2,14 +2,13 @@
 id: veadk-python-custom-tools
 title: 02 - 自定义工具示例
 source: d:\AI\.chaos\libs\veadk-python\examples\02_custom_tools\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/custom-tools.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 自定义工具示例 (Custom Tools)
 
 ## 1. 示例功能介绍

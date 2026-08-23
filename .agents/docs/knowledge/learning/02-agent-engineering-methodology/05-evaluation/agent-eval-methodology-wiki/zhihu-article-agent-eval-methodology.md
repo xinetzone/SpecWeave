@@ -2,6 +2,7 @@
 id: "zhihu-article-agent-eval-methodology"
 title: "知乎文章：别再给Agent跑分了——谈谈评测体系化建设"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/zhihu-article-agent-eval-methodology.toml"
 category: "learning"
 tags: ["zhihu-article", "agent-evaluation", "methodology", "popularization"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "面向知乎的Agent评测体系化建设科普文章，用痛点引入、生动案例、通俗类比讲解评测方法论，并分享Wiki创作经验。"
 references: 6
 ---
-
 # 别再给Agent跑分了——谈谈评测体系化建设
 
 做AI Agent的朋友，你大概经历过这样的时刻：

@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-quickstart"
 title: "快速开始"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/03-quickstart.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/03-quickstart.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "quickstart", "cli", "search", "worklog", "transition", "examples"]

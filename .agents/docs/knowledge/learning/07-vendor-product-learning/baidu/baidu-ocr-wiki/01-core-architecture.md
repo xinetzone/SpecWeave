@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-01"
 title: "百度 Unlimited-OCR 核心架构与设计理念"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/01-core-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/01-core-architecture.toml"
 ---
-
 # 百度 Unlimited-OCR 核心架构与设计理念
 
 > 核心设计理念：OCR本质是"有参考、逐字抄录"而非"无中生有创作"——抄书者不需要记住10分钟前写的字句，只需要"眼睛盯着原文、记得笔停在哪里"。Unlimited-OCR跳出"追求全记住"的思维定式，通过R-SWA非对称注意力机制实现"该记的永不遗忘、该忘的主动遗忘"，用机制设计而非参数堆砌解决长文档OCR难题。

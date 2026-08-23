@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-04-hell-dimensions"
 title: "四大地狱维度结构化洞察"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/04-hell-dimensions.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "insights", "root-cause", "severity", "four-dimensions"]
 ---
-
 # 四大地狱维度结构化洞察
 
 本章从兼容性、性能、安全性、编码模型偏差四大维度提炼 14 个结构化根因洞察。每个洞察严格遵循四元组结构：【现象】【根因】【影响】【建议】，并标注严重度（P0=阻断级、P1=高危级、P2=中危级）。所有建议已纳入 V 阶段对抗审查加固。

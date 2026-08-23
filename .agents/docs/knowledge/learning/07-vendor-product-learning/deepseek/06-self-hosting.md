@@ -3,6 +3,7 @@ id: "deepseek-v4-self-hosting"
 title: "06 开源自托管方案"
 version: "1.0"
 source: "HuggingFace deepseek-ai/DeepSeek-V4-Flash + github.com/deepseek-ai/DeepEP + github.com/deepseek-ai/DeepGEMM + MIT许可证"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/06-self-hosting.toml"
 type: "Wiki Document"
 description: "DeepSeek-V4-Flash开源模型自托管完整指南：MIT协议条款、硬件需求、部署步骤、成本估算"
 tags: ["DeepSeek", "V4-Flash", "自托管", "MIT协议", "私有化部署", "vLLM", "SGLang"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "V4-Flash以MIT协议完全开源，可从HuggingFace免费下载权重，支持vLLM/SGLang部署，最小配置2张H20/H100可跑FP8，4张RTX 4090可跑量化版，无调用限制、无token计费。"
 last_verified: "2026-08-19"
 ---
-
 # 06 开源自托管方案
 
 > V4-Pro未开源，无法自托管。本章仅适用于DeepSeek-V4-Flash。

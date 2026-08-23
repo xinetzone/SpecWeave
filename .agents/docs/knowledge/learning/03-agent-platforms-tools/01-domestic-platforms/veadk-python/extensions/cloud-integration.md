@@ -2,13 +2,12 @@
 id: cloud-integration
 title: 云服务集成指南
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/extensions/cloud-integration.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 云服务集成指南
 
 本文档介绍 VeADK 的云服务集成模式，以及如何扩展支持其他云服务提供商。VeADK 内置了火山引擎（Volcengine）系列云服务的集成，所有集成遵循统一的凭证管理和请求签名模式。

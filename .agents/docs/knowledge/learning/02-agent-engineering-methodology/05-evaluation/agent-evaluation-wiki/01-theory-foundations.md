@@ -2,6 +2,7 @@
 id: "agent-evaluation-theory-foundations"
 title: "第1章：评测理论基础"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/01-theory-foundations.toml"
 category: "learning"
 tags: ["agent-evaluation", "evaluation-theory", "benchmark", "metrics", "reliability", "validity", "ethics", "timeline"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent评测的理论基础，包括标准定义、与传统LLM评测的本质区别、发展时间线、能力维度框架、评测范式演进、信效度理论、伦理考虑与核心挑战。"
 references: 22
 ---
-
 # 第1章：评测理论基础
 
 > **方法论视角**：如需从"为什么评测/评测成熟度与误区"的方法论链路视角理解本主题，可参阅 [方法论Wiki · 模块1 方法论概述](../agent-eval-methodology-wiki/01-overview/01-methodology-overview.md)。

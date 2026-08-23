@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 升级与卸载"
 chapter: 9
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/09-upgrade-uninstall.toml"
   - external/libs/hermes-agent/hermes_cli/update_cmd.py
   - external/libs/hermes-agent/hermes_cli/uninstall.py
   - external/libs/hermes-agent/hermes_cli/backup.py
@@ -13,7 +14,6 @@ source:
   - external/libs/hermes-agent/docker-compose.yml
   - external/libs/hermes-agent/README.md
 ---
-
 # 9. 升级与卸载
 
 本章详细说明 Hermes Agent 的版本升级、配置备份、版本回滚、卸载流程以及数据目录结构。内容涵盖 `hermes update` 自动升级命令的完整工作流、手动升级步骤、Docker 镜像升级、升级前备份策略、版本回滚方法、`hermes uninstall` 卸载命令、跨平台手动卸载步骤、`~/.hermes` 数据目录说明，以及升级过程中的常见问题与解决方案。

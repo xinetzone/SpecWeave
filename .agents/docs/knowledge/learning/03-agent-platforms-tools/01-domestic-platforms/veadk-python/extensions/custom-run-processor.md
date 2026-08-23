@@ -2,13 +2,12 @@
 id: custom-run-processor
 title: 自定义RunProcessor开发指南
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/extensions/custom-run-processor.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 自定义RunProcessor开发指南
 
 本文档介绍 RunProcessor（运行处理器）的概念、接口定义和开发方法。RunProcessor 是 VeADK 中实现横切关注点的核心机制，类似 Web 框架中的中间件模式。

@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-06"
 title: "Python 3.14 标准库 dataclasses 全面详解"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/06-dataclasses.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/06-dataclasses.toml"
 ---
-
 # Python 3.14 标准库 dataclasses 全面详解
 
 > 一句话摘要：`dataclasses` 模块用一个 `@dataclass` 装饰器和一组配套函数，根据你在类里写的类型标注自动生成 `__init__`、`__repr__`、`__eq__` 等样板方法，让你只声明字段就能得到一个功能完整的数据类。

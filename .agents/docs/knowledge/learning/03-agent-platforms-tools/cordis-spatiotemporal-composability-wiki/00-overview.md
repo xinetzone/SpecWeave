@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-00"
 title: "Cordis 时空可组合性框架 — 概述"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/00-overview.toml"
 ---
-
 # Cordis 时空可组合性框架 — 概述
 
 > 一句话摘要：本教程系统讲解 Cordis —— 一个处于活跃开发期的 TypeScript「时空可组合性（Spatiotemporal Composability）元框架」，以及支撑它的学术论文《A Programming Paradigm for Spatiotemporal Composability》。教程覆盖背景理论、monorepo 文件结构、核心抽象（Context/Service/Fiber/Registry）、可逆效应与响应式协同效应机制、插件系统、生命周期、声明式加载器、热更新、辅助包与使用示例。

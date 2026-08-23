@@ -2,6 +2,7 @@
 id: "agent-evaluation-automated-frameworks"
 title: "第4章：自动化评测框架"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/04-automated-evaluation.toml"
 category: "learning"
 tags: ["agent-evaluation", "llm-as-judge", "automated-evaluation", "langsmith", "braintrust", "deepeval", "phoenix", "openai-evals"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent自动化评测框架，包括三大评测范式、6大主流框架深度对比、补充工具、评分聚合方法、报告生成模板与框架选型决策树。"
 references: 22
 ---
-
 # 第4章：自动化评测框架
 
 > **方法论视角**：如需从"评测框架测什么/用什么环境/怎么判定"的方法论视角对比 HELM/MT-Bench/AgentBench 等框架，可参阅 [方法论Wiki · 模块2 核心评测框架对比](../agent-eval-methodology-wiki/02-frameworks/02-core-frameworks.md)。

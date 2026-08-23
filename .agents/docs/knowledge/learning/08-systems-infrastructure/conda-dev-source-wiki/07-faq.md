@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-07-faq
 title: "常见问题解决方案"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/07-faq.toml"
 category: "learning"
 tags: ["conda", "faq", "troubleshooting", "solver", "channel-priority", "condarc"]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "围绕 conda 求解器、通道、网络、权限、插件等高频问题的现象—根因—解决清单"
 ---
-
 # 常见问题解决方案
 
 本章汇总 conda 开发与使用中最高频的 9 类问题。每条按「问题 → 现象 → 根因 → 解决」四段式展开，配置项与异常类名均与 `conda/base/context.py`、`conda/exceptions.py` 源码保持一致。

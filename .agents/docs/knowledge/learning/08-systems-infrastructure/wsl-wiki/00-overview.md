@@ -2,11 +2,11 @@
 id: wsl-wiki-00-overview
 title: "WSL 概述与核心概念"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/00-overview.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "wsl2", "overview", "windows-subsystem-for-linux", "introduction"]
 ---
-
 # WSL 概述与核心概念
 
 ## 1. WSL 是什么

@@ -14,9 +14,8 @@ summary: "从knowledge-catalog参考实现视角深度解析OKF v0.2规范，覆
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/02-okf-specification.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/02-okf-specification.toml"
 ---
-
 # 02 OKF开放知识格式规范深度解析
 
 > **本章定位说明**

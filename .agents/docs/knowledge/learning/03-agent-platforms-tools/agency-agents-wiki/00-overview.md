@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-00"
 title: "The Agency 完全指南 — 概述"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/00-overview.toml"
 ---
-
 # The Agency 完全指南 — 概述
 
 > 一句话摘要：本教程系统讲解 AI 专家角色库项目 **The Agency（agency-agents）**——一个包含 230+ 个专职 AI Agent、横跨 17 个部门的"AI 梦之队"，教你如何通过一套 Markdown 角色文件，在 Claude Code、Cursor、Codex 等 16 种 AI 编程工具中调用这些各怀绝技的专家，让它们像真实团队一样协作交付成果。

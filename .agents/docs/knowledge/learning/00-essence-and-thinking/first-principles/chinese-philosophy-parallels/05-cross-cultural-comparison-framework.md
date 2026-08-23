@@ -2,6 +2,7 @@
 id: cross-cultural-comparison-framework
 title: 跨文化四维比较框架与比较矩阵
 source: cross-cultural-first-principles-comparison Task 5
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.toml"
 created_at: "2026-07-13"
 status: in-progress
 version: "1.0"

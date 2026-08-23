@@ -2,6 +2,7 @@
 id: "thesis-writing-paper-structure"
 title: "六、论文结构与各章写作"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/05-paper-structure.toml"
 ---
 # 六、论文结构与各章写作
 

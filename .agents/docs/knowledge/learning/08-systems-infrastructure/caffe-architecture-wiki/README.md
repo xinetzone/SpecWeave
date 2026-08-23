@@ -1,9 +1,9 @@
 ---
 source: "BVLC Caffe (caffex) 源码深度分析 (d:/spaces/SpecWeave/external/chaos/caffe/caffex)"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.toml"
 analysis_date: "2026-07-22"
 methodology: "七概念方法论 R→I→E→V 知识沉淀链路"
 ---
-
 # Caffe 深度学习框架架构深度分析
 
 > 通过七概念方法论（R-复盘/I-洞察/E-萃取/V-对抗审查）系统性分析 BVLC Caffe 框架的核心架构，提炼可跨领域迁移的设计模式。

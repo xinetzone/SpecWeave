@@ -2,11 +2,11 @@
 id: "seven-concepts-applied"
 title: "第七章 - 附录：七概念应用案例"
 source: "七概念方法论实战应用"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/07-seven-concepts-applied.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["七概念应用", "实战案例", "R-I-E-C-A-F-V", "产品分析"]
 ---
-
 # 第七章 - 附录：七概念方法论在MonkeyCode分析中的完整应用案例
 
 前面的章节我们分别学习了七概念框架和MonkeyCode产品，本章将完整展示R→F→I→V→E→A→C七概念分析链路在MonkeyCode上的实际应用。通过这个实战案例，你可以看到方法论如何一步步引导我们从事实走向行动，形成完整的分析闭环。

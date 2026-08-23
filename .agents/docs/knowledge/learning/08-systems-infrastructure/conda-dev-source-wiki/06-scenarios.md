@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-06-scenarios
 title: "典型应用场景"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/06-scenarios.toml"
 category: "learning"
 tags: [conda, scenarios, api, matchspec, subdirdata, virtual-packages, plugins, docs]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "用 7 个真实场景串起 conda.api、MatchSpec、SubdirData、虚拟包、插件、文档构建与自定义下载的实践用法。"
 ---
-
 # 典型应用场景
 
 本章用 7 个场景把前两章的组件串起来。所有签名均基于真实源码，代码「示意」处已标注。

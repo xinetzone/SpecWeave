@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-08"
 title: "Cordis — 热更新 HMR"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/08-hmr.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/08-hmr.toml"
 ---
-
 # Cordis — 热更新 HMR
 
 > 一句话摘要：本章讲解 `plugin-hmr` 包如何基于 `chokidar` 监听文件、基于 Node 内部的 `ModuleLoader.loadCache` 增量重载插件：把变更文件分类为「接受（accepted）」「拒绝（declined）」，备份并清空模块缓存后重新导入，失败时回滚，实现不重启进程的插件热更新。

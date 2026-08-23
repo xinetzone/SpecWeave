@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-ui-screens"
 title: "03 五大界面详解"
 version: "1.0"
 source: "ui/src/App.jsx + ui/src/screens/{Library,Discover,Read,Chat,Settings}.jsx"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/03-ui-screens.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 五个屏幕（Library/Discover/Read/Chat/Settings）逐一拆解，含链接分类与引用深链交互"
 tags: ["okf-desktop", "ui", "screens", "React", "阅读器", "对话", "引用深链"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 03 五大界面详解
 
 ## 3.0 顶层路由与全局状态（App.jsx）

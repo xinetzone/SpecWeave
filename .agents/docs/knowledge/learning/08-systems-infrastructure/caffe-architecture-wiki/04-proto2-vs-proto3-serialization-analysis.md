@@ -5,6 +5,7 @@ type: "technology-analysis"
 date: "2026-07-23"
 maturity: "L2-validated"
 source: "七概念方法论R→I→E→V知识沉淀链路：d:/spaces/SpecWeave/external/chaos/caffe/python/protos/caffe.proto proto2 语法特征分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.toml"
 analysis_date: "2026-07-23"
 methodology: "seven-concepts R→I→E→V"
 reference_file: "external/chaos/caffe/python/protos/caffe.proto"
@@ -23,7 +24,6 @@ tags:
   - 七概念方法论
   - Caffe
 ---
-
 # Protocol Buffers proto2 与 proto3 语法区别系统性分析
 
 > **方法论链路**：R（复盘事实采集）→ I（洞察根因分析）→ E（可复用模式萃取）→ V（多视角对抗审查）

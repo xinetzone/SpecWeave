@@ -1,6 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-okf-desktop-wiki-index"
 title: "okf-desktop 桌面客户端"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-19"
 ---

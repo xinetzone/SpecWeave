@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-07"
 title: "DeepSeek Harness 完全指南 — 会话日志与可观测性"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/07-session-log-observability.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/07-session-log-observability.toml"
 ---
-
 # 07 会话日志与可观测性
 
 DeepSeek Harness 有一条贯穿整个设计的硬性规则：**模型看到的一切，必须能从日志里还原出来**。基于这条规则设计的会话日志系统，以及配套的 Trajectory 轨迹视图，是 dsh 区别于其他闭源 Agent 产品最显著的特征之一，被 Hacker News 社区评价为「killer feature」。

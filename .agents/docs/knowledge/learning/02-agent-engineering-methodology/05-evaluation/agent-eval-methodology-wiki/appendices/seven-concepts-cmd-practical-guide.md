@@ -2,6 +2,7 @@
 id: "seven-concepts-cmd-practical-guide"
 title: "seven-concepts-cmd 实操避坑指南"
 source: "seven-concepts:复盘产物"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/seven-concepts-cmd-practical-guide.toml"
 category: "learning"
 tags: ["seven-concepts", "practical-guide", "anti-patterns", "quality-gates", "lessons-learned"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "基于一次真实任务（用seven-concepts-cmd产出Agent评测方法论Wiki教程及知乎文章）的复盘，总结方法论编排的实操避坑指南：适用场景判断、五大高频坑、质量门实战检查、真实踩坑案例与快速自查表。"
 references: 6
 ---
-
 # seven-concepts-cmd 实操避坑指南
 
 > 本指南基于一次真实任务（用 `seven-concepts-cmd` 产出《Agent评测方法论》Wiki 教程 + 知乎文章）的复盘提炼。不空谈理论，只讲"实操中真的会踩的坑"和"怎样避免"。

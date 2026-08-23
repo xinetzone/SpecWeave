@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-04"
 title: "okf-kit 完全指南 — 核心架构"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/04-core-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/04-core-architecture.toml"
 ---
-
 # okf-kit 完全指南 — 核心架构
 
 > 一句话摘要：okf-kit 核心由四个模块组成——crawl.py 实现 BFS 广度优先爬取控制流程，mapper.py 负责 URL 到文件路径的确定性映射，fetch/ 目录提供可插拔的 Fetcher 抽象层（HttpFetcher/BrowserFetcher），writer.py 负责将爬取结果写入 OKF 格式的 bundle 并生成目录索引。

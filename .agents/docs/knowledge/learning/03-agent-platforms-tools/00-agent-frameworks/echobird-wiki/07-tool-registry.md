@@ -2,6 +2,7 @@
 id: "echobird-wiki-tool-registry"
 title: "工具注册表"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/07-tool-registry.toml"
 category: "learning"
 tags: ["echobird", "tool-registry", "config.json", "paths.json", "tool-manager"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 工具注册表的 config.json/paths.json 结构、26+ 工具
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 07 工具注册表
 
 **工具注册表（Tool Registry）** 是 EchoBird 的"工具清单 + 配置字典"：它用统一的 `config.json` 与 `paths.json` 两个文件描述每一个受支持 AI 工具的模型配置写入方式和可执行文件位置，从而让 App Manager 能在不写死任何路径的前提下，自动检测已安装工具、并把 Model Nexus 的模型配置一键写入各工具的原生配置文件。本张基于源码 `external/tools/EchoBird/tools/` 与 `src-tauri/src/services/` 下的真实实现整理。

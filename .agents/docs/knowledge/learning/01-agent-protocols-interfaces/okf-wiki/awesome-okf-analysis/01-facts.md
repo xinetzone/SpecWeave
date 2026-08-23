@@ -4,12 +4,12 @@ title: Awesome OKF 深度分析 - 事实清单（R阶段）
 type: Facts
 version: 1.0
 source: yzfly/awesome-okf (commit 730e6ff 附近)
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/01-facts.toml"
 description: awesome-okf 项目客观事实清单，覆盖Producer插件、Skill工作流、扩展提案、Dogfooding四个维度
 tags: [okf, awesome-okf, 事实, retrospective]
 category: case-study
 date: 2026-08-06
 ---
-
 # Awesome OKF 深度分析 - 事实清单（R阶段）
 
 > **说明**：本清单仅记录客观事实（"是什么"），不包含因果判断或价值评价。OKF通用概念（如frontmatter、Bundle定义）请参考 [okf-wiki](../README.md) 对应章节，不在此处重复。

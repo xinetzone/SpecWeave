@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-03"
 title: "参与指南：如何加入共创计划"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/03-participation-guide.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["volcengine", "agent-plan", "共创计划", "参与指南", "流程"]

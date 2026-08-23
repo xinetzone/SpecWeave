@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-index"
 title: "对抗性审查系统化资料档案"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/README.toml"
 category: "learning"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 对抗性审查系统化资料档案
 
 > **L2级方法论模式知识库，采用自举验证（用对抗性审查方法构建自身）**。本知识库系统梳理对抗性审查（Adversarial Review）方法论，覆盖哲学起源→核心概念→方法论框架→认知偏差防御→检查清单→行业标准→开源工具→实战案例→学术资源的完整体系。所有内容经过五维验证流程审查，关键事实100%交叉验证，一级来源占比75.0%，🟢A级资料占比69.8%，是可信赖的工程化质量保障参考体系。

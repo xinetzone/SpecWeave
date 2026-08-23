@@ -2,6 +2,7 @@
 id: veadk-python-architecture-overview
 title: 架构概览：VeADK 整体架构设计
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/architecture/overview.toml"
 category: learning
 tags:
 - VeADK
@@ -16,8 +17,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 整体架构设计文档，介绍与 Google ADK 的关系、六层分层架构、核心组件一览、能力扩展与设计哲学
 wiki_version: '1.0'
 ---
-
-
 # 架构概览：VeADK 整体架构设计
 
 VeADK（Volcengine Agent Development Kit）是火山引擎推出的企业级 AI Agent 开发框架，基于 Google ADK（Agent Development Kit）进行继承扩展，保持 100% 生态兼容的同时，提供云原生部署、企业级安全、多运行时支持、记忆/知识库/工具链一站式集成等增强能力。

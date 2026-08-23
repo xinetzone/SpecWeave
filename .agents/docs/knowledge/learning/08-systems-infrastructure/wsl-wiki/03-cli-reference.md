@@ -2,11 +2,11 @@
 id: "wsl-wiki-03-cli-reference"
 title: "CLI 完整命令参考"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/03-cli-reference.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "wslc", "cli", "command-reference", "wsl.exe", "container-cli", "alias"]
 ---
-
 # CLI 完整命令参考
 
 WSL 提供两套 CLI 工具：传统的 `wsl.exe`（发行版管理）和新的 `wslc.exe`（容器管理，preview阶段）。本章基于 WSL 源码核实，提供完整命令参考。

@@ -4,6 +4,7 @@ project: hermes-agent
 version: 1.0.0
 created: 2026-08-10
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/README.toml"
   - external/libs/hermes-agent/README.md
   - external/libs/hermes-agent/README.zh-CN.md
   - external/libs/hermes-agent/pyproject.toml
@@ -15,7 +16,6 @@ source:
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
 ---
-
 # Hermes Agent 完整安装方案
 
 > **Nous Research Hermes Agent** — 具备内置学习循环的自改进 AI 智能体。支持多模型、多平台，提供终端交互界面、多平台消息网关、定时自动化、委派并行化等能力。

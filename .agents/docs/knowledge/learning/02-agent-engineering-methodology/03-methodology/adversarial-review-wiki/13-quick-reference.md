@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-quickref"
 title: "13、快速参考速查表"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/13-quick-reference.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 13、快速参考速查表
 
 ---

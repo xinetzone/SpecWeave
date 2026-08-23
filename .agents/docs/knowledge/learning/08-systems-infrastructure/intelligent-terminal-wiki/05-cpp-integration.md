@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch05-cpp-integration"
 title: "第5章 - C++ 集成层"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/05-cpp-integration.toml"
 date: "2026-08-03"
 ---
-
 # 第5章 C++ 集成层
 
 C++ 集成层是 Intelligent Terminal 在 Windows Terminal 原生代码中的嵌入点，负责将 WTA (Windows Terminal Agent) 的 Rust 核心进程（wta-master + wta-helper）与终端 UI、XAML 控件、设置系统、COM 协议服务器无缝连接。本章详细解析 C++ 侧的核心组件、生命周期管理、进程隔离和 UI 集成机制。

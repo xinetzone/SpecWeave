@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-validation-execution"
 title: "GraphQL 验证与执行"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/04-validation-execution.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/04-validation-execution.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "api", "validation", "execution", "resolver", "introspection", "error-handling", "breadth-first"]

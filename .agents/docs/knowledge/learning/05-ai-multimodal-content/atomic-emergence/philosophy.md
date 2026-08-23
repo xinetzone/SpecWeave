@@ -2,7 +2,7 @@
 id: "atomic-emergence-philosophy"
 title: "Atomic Emergence — 算法哲学"
 source: "docs/knowledge/algorithmic-art/atomic-emergence/concepts/philosophy.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/philosophy.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/philosophy.toml"
 type: "Concept"
 description: "Atomic Emergence原子涌现的算法哲学：复杂性从简单性中涌现的生成美学运动"
 generated:
@@ -14,7 +14,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Atomic Emergence — 原子涌现
 
 ## Algorithmic Philosophy

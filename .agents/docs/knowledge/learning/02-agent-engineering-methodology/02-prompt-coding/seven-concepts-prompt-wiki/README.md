@@ -1,12 +1,12 @@
 ---
 id: "seven-concepts-prompt-index"
 title: "七概念驱动的GPT-5.6时代Prompt Engineering Wiki教程"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.toml"
 category: "learning"
 date: "2026-07-13"
 version: "1.0"
 status: "completed"
 ---
-
 # 七概念驱动的GPT-5.6时代Prompt Engineering Wiki教程
 
 > **L2级Prompt工程方法论知识库，融合SpecWeave七概念方法论与OpenAI最新GPT-5.6 Prompting指南**。本Wiki针对"模型能力升级但Prompt写法未跟上"的行业痛点，将SpecWeave R-I-E-C-A-F-V七概念方法论系统映射到GPT-5.6时代的Prompt Engineering实践，覆盖范式变革→概念映射→GCOB框架→核心规则→Before/After对照→多场景实战→检查清单→反模式→术语表→FAQ→速查表的完整体系。所有内容以工程实践为导向，提供可直接复用的模板和检查清单。

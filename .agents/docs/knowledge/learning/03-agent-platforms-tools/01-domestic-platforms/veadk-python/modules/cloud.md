@@ -2,13 +2,12 @@
 id: cloud-module
 title: 云部署集成
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/cloud.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 云部署集成
 
 ## 概述

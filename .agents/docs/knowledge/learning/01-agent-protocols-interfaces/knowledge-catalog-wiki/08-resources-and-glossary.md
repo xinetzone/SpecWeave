@@ -15,9 +15,8 @@ last_verified: "2026-08-06"
 wiki_version: "1.0"
 kc_version_target: "preview"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/08-resources-and-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/08-resources-and-glossary.toml"
 ---
-
 # 08 资源与术语表
 
 ## 8.1 核心术语表（Glossary）

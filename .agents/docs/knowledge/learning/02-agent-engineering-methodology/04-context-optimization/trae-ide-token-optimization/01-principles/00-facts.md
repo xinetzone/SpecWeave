@@ -4,6 +4,7 @@ title: "事实数据采集"
 date: 2026-08-01
 type: facts
 source: "forum.trae.cn 社区帖子+官方文档+用户实测"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/01-principles/00-facts.toml"
 maturity: "L1-experimental"
 ---
 # 事实数据采集

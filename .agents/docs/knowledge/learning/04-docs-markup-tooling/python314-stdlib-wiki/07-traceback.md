@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-07"
 title: "Python 3.14 标准库 traceback 全面详解"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/07-traceback.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/07-traceback.toml"
 ---
-
 # Python 3.14 标准库 traceback 全面详解
 
 > 一句话摘要：`traceback` 是 Python 标准库中用于提取、格式化与打印程序栈回溯信息的标准接口，它比解释器默认的回溯显示更灵活，并且能够在不持有异常对象引用的情况下捕获足够多的异常信息供稍后渲染，从而显著提升内存管理效率。

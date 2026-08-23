@@ -2,6 +2,7 @@
 id: "eve-wiki-03"
 title: "生产级能力详解"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/03-production-capabilities.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "durable-execution", "sandbox", "approvals", "connections", "channels", "tracing", "evals"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # 03 生产级能力详解
 
 Eve 内置了六大生产级能力，它们共同回答了真实 Agent 在生产中面临的持久运行、安全执行、权限控制、多渠道接入、可观测与回归验证问题。这些能力在 Demo 阶段往往被忽略，却是生产系统的关键。

@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-graphql-wiki-index"
 title: "GraphQL 教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-05"
 source: "spec:create-graphql-wiki-tutorial"

@@ -9,13 +9,13 @@ tags:
   - model-format
   - ml-deployment
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/00-overview.toml"
   - https://onnx.ai/onnx/intro/concepts.html
   - https://onnx.ai/onnx/intro/python.html
   - https://onnx.ai
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX Wiki 总览
 
 ONNX（Open Neural Network Exchange，开放神经网络交换格式）是机器学习模型的开放标准，提供了框架互操作性的通用语言。本Wiki系统梳理ONNX核心概念、Python API实战、最佳实践与常见陷阱，帮助工程师快速上手并避免生产踩坑。

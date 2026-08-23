@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-readme"
 title: "Zleap-Agent workspace-first Agent Harness Wiki 教程"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/README.toml"
 category: "learning"
 tags: ["zleap-agent", "agent-harness", "workspace", "agent-runtime", "local-models", "openai-compatible", "postgresql", "memory", "skill", "mcp", "gateway", "feishu", "wechat", "multi-agent"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 zleap_version_target: "0.3.3"
 ---
-
 # Zleap-Agent workspace-first Agent Harness Wiki 教程
 
 **Workspace Is All Agents Need** —— 面向本地模型与 OpenAI-compatible 模型的 workspace-first Agent Harness。

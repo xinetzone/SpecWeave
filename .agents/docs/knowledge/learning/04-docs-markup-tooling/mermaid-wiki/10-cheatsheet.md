@@ -2,6 +2,7 @@
 id: "mermaid-wiki-10-cheatsheet"
 title: "Mermaid 命令速查表（Cheatsheet）"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/10-cheatsheet.toml"
 category: "learning"
 tags: ["mermaid","cheatsheet","速查","flowchart","sequenceDiagram","classDiagram","stateDiagram","erDiagram","gantt","pie","journey","timeline","sankey","quadrantChart","gitGraph","requirementDiagram","mindmap","block","c4","zenuml","markup"]
 date: "2026-08-06"

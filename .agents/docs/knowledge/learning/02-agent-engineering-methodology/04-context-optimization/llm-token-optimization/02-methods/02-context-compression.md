@@ -2,10 +2,10 @@
 id: "llm-token-optimization-02-context-compression"
 title: "上下文压缩技术"
 source: "CSDN技术博客、arXiv论文(xRAG/CORE-RAG/LooComp)、Microsoft Semantic Kernel文档综合整理"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/02-context-compression.toml"
 tags: ["context-compression", "rag", "summarization", "llmlingua", "token-optimization"]
 category: "methods"
 ---
-
 # 上下文压缩技术
 
 上下文压缩技术针对长上下文场景，在不损失关键信息的前提下减少传给模型的token数量，同时提升模型对关键信息的注意力集中度。这类技术是处理长文档、RAG系统和长对话的核心手段。

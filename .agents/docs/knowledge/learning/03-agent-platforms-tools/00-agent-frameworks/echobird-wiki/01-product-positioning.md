@@ -2,6 +2,7 @@
 id: "echobird-wiki-product-positioning"
 title: "产品定位与核心价值"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/01-product-positioning.toml"
 category: "learning"
 tags: ["echobird", "product-positioning", "model-nexus"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 产品定位（解决 AI Agent 安装配置劝退问题）、
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 01 产品定位与核心价值
 
 ## 1.1 一句话定位

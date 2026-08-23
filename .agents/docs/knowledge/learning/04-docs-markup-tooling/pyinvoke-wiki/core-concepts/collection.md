@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Collection 与命名空间
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/collection.toml"
 description: PyInvoke Collection 类的完整 API 参考，涵盖任务注册、子命名空间、点分路径查找、命名空间配置与 from_module 自动发现。
 tags: [pyinvoke, collection, namespace, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/collection.py
 ---
-
 # Collection 与命名空间
 
 ## 概述

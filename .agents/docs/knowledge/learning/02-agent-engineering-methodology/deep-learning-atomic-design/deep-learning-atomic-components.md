@@ -2,7 +2,7 @@
 id: "deep-learning-atomic-components"
 title: "深度学习框架组件化设计与原子化实现研究报告"
 source: "docs/knowledge/engineering/deep-learning-atomic-design/concepts/deep-learning-atomic-components.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/deep-learning-atomic-components.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/deep-learning-atomic-components.toml"
 type: "Reference"
 description: "深度学习框架组件化设计与原子化实现研究报告：PyTorch nn.Module、Hugging Face三层抽象、TensorFlow Keras封装模式"
 generated:
@@ -14,7 +14,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 深度学习框架组件化设计与原子化实现研究报告
 
 ## 目录

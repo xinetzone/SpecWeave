@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Executor 执行器
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/executor.toml"
 description: PyInvoke Executor 执行器的完整 API 参考，涵盖任务归一化、前置/后置任务展开、去重与执行流程。
 tags: [pyinvoke, executor, task-execution, pre-post, deduplication, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/executor.py
 ---
-
 # Executor 执行器
 
 ## 概述

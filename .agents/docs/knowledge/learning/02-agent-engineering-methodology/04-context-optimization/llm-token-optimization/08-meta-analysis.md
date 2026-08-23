@@ -7,6 +7,7 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Meta-Analysis", "Taxonomy", "Evolution"]
 maturity: "L1"
 source: "zhujian-wudao-insight-meta-analysis-methodology"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/08-meta-analysis.toml"
 prerequisites:
   - "llm-token-optimization-first-principles"
   - "llm-token-optimization-methods-overview"
@@ -14,7 +15,6 @@ prerequisites:
 validation_count: 1
 reuse_count: 0
 ---
-
 # LLM Token优化知识体系元分析
 
 > 本文档采用竹简悟道项目萃取的洞察库元分析方法论，对LLM Token优化知识体系进行分类学分析、演化阶段识别和核心锚点定位，帮助读者快速理解知识结构、把握核心本质。

@@ -2,6 +2,7 @@
 id: chinese-philosophy-parallels-archive
 title: 跨文化第一性原理比较研究档案
 source: cross-cultural-first-principles-comparison Task 8
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/README.toml"
 parent_archive: ../README.md
 created_at: "2026-07-13"
 status: completed

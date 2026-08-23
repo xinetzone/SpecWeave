@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-03"
 title: "百度 Unlimited-OCR 快速上手指南"
 source: "https://github.com/baidu/Unlimited-OCR"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/03-quick-start.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/03-quick-start.toml"
 ---
-
 # 百度 Unlimited-OCR 快速上手指南
 
 > 本章基于官方源码README和infer.py脚本整理，提供三种部署方式：Transformers适合快速体验，SGLang适合高性能服务部署，vLLM适合成熟生产环境。PDF需先用PyMuPDF转图片（DPI=300），内置infer.py脚本支持一键批量推理。

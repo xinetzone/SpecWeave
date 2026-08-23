@@ -2,6 +2,7 @@
 id: "intelligent-terminal-wiki-index"
 title: "Intelligent Terminal Wiki 教程索引"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/README.toml"
 date: "2026-08-03"
 ---
 # Intelligent Terminal Wiki 教程索引

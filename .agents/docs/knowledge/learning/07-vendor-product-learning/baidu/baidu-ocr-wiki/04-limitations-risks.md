@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-04"
 title: "百度 Unlimited-OCR 局限性与风险提示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/04-limitations-risks.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/04-limitations-risks.toml"
 ---
-
 # 百度 Unlimited-OCR 局限性与风险提示
 
 > Unlimited-OCR当前为早期开源技术预览版，在功能完整性、部署便捷性、开源协议等方面存在局限。本章客观梳理5项主要局限性、评估项目成熟度，并给出不同场景的适用性评级，帮助你做出合理的技术选型决策。

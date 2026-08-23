@@ -2,6 +2,7 @@
 id: veadk-python-configuration
 title: 配置指南
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/getting-started/configuration.toml"
 category: learning
 tags:
 - VeADK
@@ -17,8 +18,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 配置指南，涵盖配置优先级、最小配置、config.yaml参考、环境变量列表、API Key获取及配置降级策略
 wiki_version: '1.0'
 ---
-
-
 # VeADK-Python 配置指南
 
 本文档介绍 VeADK-Python 的配置体系，包括配置方式优先级、最小配置示例、完整配置参考、环境变量列表以及配置降级策略。

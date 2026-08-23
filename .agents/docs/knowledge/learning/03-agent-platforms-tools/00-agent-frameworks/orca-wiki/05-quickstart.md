@@ -2,6 +2,7 @@
 id: "orca-wiki-quickstart"
 title: "快速上手指南"
 source: "https://www.onorca.dev/download 官网 + d:\AI\external\tools\orca 本地开源源码（docs/readme/README.zh-CN.md、skill-guides/orca-cli.md）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/05-quickstart.toml"
 category: "learning"
 tags: ["orca", "stablyai", "quickstart", "安装", "worktree", "claude-code", "codex", "并行", "多agent", "入门"]
 date: "2026-08-03"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 orca_version_target: "1.4.165-rc.0"
 
 ---
-
 # 05 快速上手指南
 
 本章带领你用 **五步** 完成 Orca 从零到能跑：安装 → 启动登录 → 添加 Agent → 创建并分发 worktree → 并行监控与择优合并。所有命令均以代码块呈现，可直接复制到终端执行。本章是初次体验 Orca 的最佳入口，建议与 [01 核心架构](./01-core-architecture.md)、[03 Orca CLI 与多 Agent 编排](./03-orca-cli-orchestration.md) 配合阅读。

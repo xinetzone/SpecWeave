@@ -2,14 +2,13 @@
 id: veadk-python-multi-agent
 title: 06 - 多智能体协作示例
 source: d:\AI\.chaos\libs\veadk-python\examples\06_multi_agent\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/multi-agent.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 多智能体协作示例 (Multi-Agent)
 
 ## 1. 示例功能介绍

@@ -1,10 +1,10 @@
 ---
 source: "https://github.com/daoflows/caffe现代化改造实战总结"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.toml"
 analysis_date: "2026-07-24"
 methodology: "反模式萃取 + 防御代码模板"
 tags: ["Caffe", "反模式", "防御式编程", "代码模板", "依赖裁剪", "C++", "Python"]
 ---
-
 # 八大反模式陷阱与防御代码模板
 
 > 从 daoflows/caffe 现代化改造实战中萃取的8个经典陷阱，每个陷阱都包含：问题本质、错误示例、防御策略、可直接复用的代码模板。

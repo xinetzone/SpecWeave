@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-12"
 title: "Cordis — 总结与资源"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/12-summary-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/12-summary-resources.toml"
 ---
-
 # Cordis — 总结与资源
 
 > 一句话摘要：本章回顾整套教程的核心知识点，给出「源码位置速查表」与「术语速查表」，并列出论文、文档、源码等资源链接，作为后续深入学习与查阅的入口。

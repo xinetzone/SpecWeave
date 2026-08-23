@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Runner 命令执行
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/runner.toml"
 description: PyInvoke Runner 抽象类与 Local 本地执行器的完整 API 参考，涵盖 Result/Promise 对象、PTY 模式、I/O 线程模型与异常类型。
 tags: [pyinvoke, runner, result, promise, local, pty, io-threads, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/runners.py
 ---
-
 # Runner 命令执行
 
 ## 概述

@@ -2,12 +2,12 @@
 id: miaowu-meoo-practice-cases-insights
 title: 秒悟Meoo实训案例 - 核心洞察
 source: 基于01-facts.md提炼
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/02-insights.toml"
 version: 1.1
 date: "2026-07-31"
 tags: [七概念, I, 洞察, 秒悟, Meoo]
 g2-gate: passed
 ---
-
 # 秒悟Meoo实训案例 - 核心洞察
 
 ## 🔴 关键学习路径洞察

@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-09"
 title: "实践指南：从零搭建你的文章Agent"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/09-practice-guide.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "实践指南", "实操", "步骤", "文章Agent"]
 ---
-
 ## 一、从理解到落地：实操路线图
 
 学完七大组件，接下来是落地。本文以文章Agent（智能体）为例，给出从零搭建的实操步骤，包含四个阶段：定义→搭建→调优→运营。

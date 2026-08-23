@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-10"
 title: "The Agency 完全指南 — 总结与资源"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/10-summary-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/10-summary-resources.toml"
 ---
-
 # The Agency 完全指南 — 总结与资源
 
 > 一句话摘要：本章作为教程的收尾，用一句话总结 The Agency 的核心价值、回顾教程要点、给出分角色学习路径，汇总 GitHub 仓库、桌面应用、社区翻译等核心资源，并附一份覆盖核心术语的术语表，助你完成从入门到实战的闭环。

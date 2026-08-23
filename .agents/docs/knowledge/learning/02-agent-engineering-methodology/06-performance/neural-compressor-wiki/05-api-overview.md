@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/05-api-overview.toml"
 summary: "Intel Neural Compressor PyTorch 扩展 API 的核心类与函数介绍，包括 prepare、convert、量化配置等关键接口。"
 tags: ["neural-compressor", "api", "pytorch", "reference"]
 ---
-
 # API 概览
 
 本章详细介绍 Intel Neural Compressor PyTorch 扩展（`neural_compressor.torch`）的核心 API。Neural Compressor 采用与 PyTorch 原生量化一致的 `prepare`/`convert` API 风格，降低学习成本，同时提供统一的配置类和自动调优功能。

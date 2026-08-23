@@ -4,12 +4,12 @@ title: "02 - 深度开发流程"
 date: 2026-08-19
 tags: [cpython, workflow, git, testing, release, backport, lifecycle]
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/02-development-workflow.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
 maturity: L1-draft
 ---
-
 # 02 - 深度开发流程
 
 本章深入讲解CPython的Git工作流、PR生命周期、版本管理和测试体系，帮助你理解从代码修改到版本发布的完整流程。

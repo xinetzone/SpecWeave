@@ -12,8 +12,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/07-resources.toml"
 ---
-
 # 资源与术语表
 
 ## 官方资源

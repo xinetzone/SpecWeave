@@ -2,9 +2,8 @@
 id: "agent-runtime-protocol-wiki-09"
 title: "框架对比：九条设计原则遵循度评估"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/09-framework-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/09-framework-comparison.toml"
 ---
-
 # 09 框架对比：九条设计原则遵循度评估
 
 > 本章是[08章](08-protocol-design-principles.md)九条设计原则的落地延伸，通过星级评分系统对比五大主流 Agent 框架对协议设计原则的遵循程度，帮助读者快速评估框架成熟度和生产适用性。

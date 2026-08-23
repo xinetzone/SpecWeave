@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-08-best-practices
 title: "最佳实践与注意事项"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/08-best-practices.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/08-best-practices.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-actions", "best-practices", "security", "governance", "pull-request-target"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库可迁移治理模式、安全最佳实践与反模式清单"
 ---
-
 # 最佳实践与注意事项
 
 > 本章从 `conda-dev/.github` 元仓库的实际设计中提炼可迁移的治理模式，聚焦安全性与可维护性。每个模式均可在其他组织/仓库复制。

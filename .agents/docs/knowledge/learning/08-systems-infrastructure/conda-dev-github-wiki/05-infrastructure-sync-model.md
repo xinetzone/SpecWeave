@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-05-infrastructure-sync-model
 title: "中央同步模型"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/05-infrastructure-sync-model.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/05-infrastructure-sync-model.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "infrastructure", "config.yml", "sync", "workflows", "template-files"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库中央同步模型解析"
 ---
-
 # 中央同步模型
 
 > 本章解析 Conda 社区如何用**一份 `config.yml` + 一个中央仓库（`conda/infrastructure`）**，把社区文件、工作流、Issue/PR 模板统一批量下发到 conda 组织内的所有仓库。核心文件为本元仓库的 `.github/template-files/config.yml` 与 `update.yml`。

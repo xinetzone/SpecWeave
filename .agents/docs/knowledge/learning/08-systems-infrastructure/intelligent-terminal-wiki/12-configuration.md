@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch12-config"
 title: "第12章 - 配置与设置详解"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/12-configuration.toml"
 date: "2026-08-03"
 ---
-
 # 第12章 配置与设置详解
 
 Intelligent Terminal 提供了分层的配置系统，支持全局设置、Profile 级覆盖、组策略（GPO）管控和环境变量调节。所有配置通过 `settings.json` 文件持久化，配合设置 UI 界面进行可视化管理，同时支持企业环境通过 GPO 进行统一管控。

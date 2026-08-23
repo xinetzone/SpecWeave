@@ -2,9 +2,8 @@
 id: "github-cli-wiki-07"
 title: "命令速查表与最佳实践"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/07-cheatsheet.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/07-cheatsheet.toml"
 ---
-
 # 命令速查表与最佳实践
 
 本章是 GitHub CLI 的完整命令速查表，按功能分类组织，并集成了 SpecWeave 工作流的最佳实践和常用自动化模式。

@@ -2,6 +2,7 @@
 id: "thesis-writing-overview"
 title: "一、概述"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/00-overview.toml"
 ---
 # 一、概述
 

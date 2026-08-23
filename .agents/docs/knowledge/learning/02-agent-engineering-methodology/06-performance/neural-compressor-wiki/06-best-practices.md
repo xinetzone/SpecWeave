@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/06-best-practices.toml"
 summary: "Intel Neural Compressor 量化流程最佳实践：校准数据选择、精度验证、性能调优与常见陷阱。"
 tags: ["neural-compressor", "best-practices", "performance", "calibration"]
 ---
-
 # 最佳实践
 
 本章总结了使用 Intel Neural Compressor 进行模型量化时的工程最佳实践，涵盖校准数据准备、量化策略选择、精度验证、性能调优以及常见陷阱规避等方面。这些经验来自大量实际项目验证，可帮助您首次量化即获得理想效果。

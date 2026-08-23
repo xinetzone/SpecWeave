@@ -2,6 +2,7 @@
 id: "agent-evaluation-benchmark-construction"
 title: "第3章：基准测试构建"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/03-benchmark-construction.toml"
 category: "learning"
 tags: ["agent-evaluation", "benchmark", "swe-bench", "gaia", "webarena", "agentbench", "tau-bench", "benchmark-contamination", "adversarial-examples"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent基准测试构建方法，包括主流基准详解（SWE-bench Verified重点）、基准污染问题、自定义任务集设计、对抗样本构造、基准维护策略与选型指南。"
 references: 22
 ---
-
 # 第3章：基准测试构建
 
 > **方法论视角**：如需从"评测框架测什么/用什么环境/怎么判定"的方法论视角对比 HELM/MT-Bench/AgentBench 等框架，可参阅 [方法论Wiki · 模块2 核心评测框架对比](../agent-eval-methodology-wiki/02-frameworks/02-core-frameworks.md)。

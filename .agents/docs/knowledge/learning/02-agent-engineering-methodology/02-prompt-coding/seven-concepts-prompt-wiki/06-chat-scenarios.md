@@ -6,8 +6,8 @@ date: "2026-07-13"
 version: "1.0"
 status: "completed"
 source: "OpenAI Prompt Engineering指南 + GPT-5.6实践"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/06-chat-scenarios.toml"
 ---
-
 # Chat场景实战指南
 
 ---

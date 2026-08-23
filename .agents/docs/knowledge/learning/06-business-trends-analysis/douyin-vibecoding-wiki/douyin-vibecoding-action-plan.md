@@ -1,12 +1,12 @@
 ---
 title: "抖音 Vibecoding 人气赛道·执行行动计划"
 source: "基于《抖音人气赛道创作指南深度分析报告》"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.toml"
 plan_date: "2026-07-11"
 deadline: "2026-07-15 23:59（抖音征集期截止）"
 version: "1.0"
 tags: ["vibecoding", "抖音", "执行计划", "行动指南", "TRAE大赛"]
 ---
-
 # 抖音 Vibecoding 人气赛道·执行行动计划
 
 > ⏰ **时间窗口**：即日起至 **2026年7月15日 23:59**（抖音征集期截止）

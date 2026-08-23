@@ -7,12 +7,12 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Selection-Matrix", "ROI"]
 maturity: "L1"
 source: "extraction-from-35-techniques"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.toml"
 prerequisites:
   - "llm-token-optimization-decision-framework-overview"
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化技术选型矩阵
 
 > 本文档对35种优化技术按实施难度和预期收益进行四象限分类，提供Quick Wins优先推荐清单、团队规模分层推荐、成本敏感度分层策略。

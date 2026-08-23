@@ -2,12 +2,12 @@
 id: miaowu-meoo-practice-cases-facts
 title: 秒悟Meoo实训案例 - 事实采集
 source: https://alidocs.dingtalk.com/i/nodes/N7dx2rn0JbxOaqnAC2Xb1GeQWMGjLRb3
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/archive/01-facts.toml"
 version: 1.1
 date: "2026-07-31"
 tags: [七概念, R, 事实, 秒悟, Meoo, 实训案例]
 g1-gate: passed
 ---
-
 # 秒悟Meoo实训案例 - 事实采集
 
 ## 文档元信息

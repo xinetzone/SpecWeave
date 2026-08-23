@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-01-architecture
 title: "conda/conda-docs 整体架构"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/01-architecture.toml"
 category: "learning"
 tags: ["conda", "conda-source", "architecture", "directory-tree", "sphinx", "conda-docs", "layered-dependency"]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda 源码仓库整体目录树与分层依赖、conda-docs 构建架构，以及两套文档体系的差异对比"
 ---
-
 # conda/conda-docs 整体架构
 
 本章从「目录树 → 分层依赖 → 文档构建」三个维度建立 conda 源码与文档体系的整体认知，并在最后对比仓内文档与独立 conda-docs 两套体系的关系与差异。

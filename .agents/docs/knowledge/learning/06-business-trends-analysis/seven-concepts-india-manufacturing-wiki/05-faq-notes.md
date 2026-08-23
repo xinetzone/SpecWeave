@@ -2,6 +2,7 @@
 id: "faq-notes"
 title: "常见问题与注意事项"
 source: "seven-concepts-india-manufacturing-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/05-faq-notes.toml"
 date: "2026-07-14"
 version: "1.0"
 ---

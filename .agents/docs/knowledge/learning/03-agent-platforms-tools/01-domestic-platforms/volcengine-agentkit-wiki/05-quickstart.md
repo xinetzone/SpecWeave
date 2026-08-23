@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-05"
 title: "快速入门指南"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/05-quickstart.toml"
 category: "learning"
 tags: ["AgentKit", "快速入门", "HelloWorld", "安装部署", "FAQ"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 05 快速入门指南
 
 ## 前置条件清单

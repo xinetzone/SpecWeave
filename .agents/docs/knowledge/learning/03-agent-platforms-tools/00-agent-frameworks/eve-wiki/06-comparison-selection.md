@@ -2,6 +2,7 @@
 id: "eve-wiki-06"
 title: "竞品对比与选型"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/06-comparison-selection.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "mastra", "langgraph", "comparison", "selection"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 eve_version_target: "2026 public preview"
 ---
-
 # 06 竞品对比与选型
 
 本章将 Eve 与当前主流的两大开源 Agent 框架——Mastra 与 LangGraph——进行多维对比，帮助读者判断"何时该选择 Eve、何时该选择其他框架"。Mastra 是一个跨平台的 TypeScript Agent 框架；LangGraph 则是以 Python 生态为核心、最成熟的图结构（Graph）工作流框架。三者都内置持久化（延续 Agent 执行状态的能力），但在部署边界、生产级能力开箱程度与生态成熟度上差异明显。

@@ -2,6 +2,7 @@
 id: git-baidu-sync-pitfalls-anti-patterns
 title: Git 百度网盘同步 - 坑点与反模式
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/11-pitfalls-anti-patterns.toml"
 created: 2026-07-31
 tags:
   - git
@@ -12,7 +13,6 @@ tags:
   - adversarial-review
   - seven-concepts
 ---
-
 # Git 百度网盘同步 - 坑点与反模式
 
 本文档是七概念方法论中 V（对抗审查/Villain）阶段的产出。我们从四个对抗视角系统性攻击已设计的 Git+百度网盘同步方案，发现潜在问题、边界情况和失败场景，并给出加固措施。

@@ -2,11 +2,11 @@
 id: "practice-guide"
 title: "第三章 - 实践操作指南"
 source: "微信公众号文章+官方安装文档"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/03-practice-guide.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["实践指南", "部署教程", "MonkeyCode", "私有化部署", "Docker"]
 ---
-
 # 第三章 - 实践操作指南
 
 在第二章中，我们深度解析了MonkeyCode的产品特性和架构设计。本章将提供详细的实践操作指南，帮助你从零开始完成部署、配置和使用。

@@ -2,9 +2,8 @@
 id: "open-code-review-wiki-log"
 title: "Open Code Review 完全指南 — 变更日志"
 source: "https://github.com/snyk/open-code-review"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/log.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/log.toml"
 ---
-
 # Changelog
 
 ## 2026-08-22

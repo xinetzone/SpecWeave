@@ -4,8 +4,8 @@ title: "2025年7月初中国AI行业动态深度分析"
 category: "knowledge"
 date: "2026-08-22"
 source: "https://mp.weixin.qq.com/s/RQnDdXDMvjYMFJz25qt0Gw"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/rqndd/README.toml"
 ---
-
 # 2025年7月初中国AI行业动态深度分析
 
 > 飞飞杂谈微信公众号行业周评深度分析，涵盖阿里禁Claude、三大超级App AI助手、可灵180亿估值、大厂战略重校准与产业链加速五大议题

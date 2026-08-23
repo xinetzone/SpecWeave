@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-12"
 title: "延伸资源与推荐阅读"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/12-resources.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "资源", "推荐阅读", "进阶"]
 ---
-
 ## 一、本文来源
 
 本文核心理论框架和案例来源于微信公众号文章《从Prompt到Harness：AI Agent的七大组件》（作者：曲凯/五年产品经理）。该文从产品经理视角系统性地提出了Harness七大组件框架。

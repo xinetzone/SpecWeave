@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/03-quickstart.toml"
 summary: "Intel Neural Compressor 快速上手指南，包含完整的 PyTorch CPU 模型量化示例代码与详细注释。"
 tags: ["neural-compressor", "quickstart", "code-example", "pytorch"]
 ---
-
 # 快速开始
 
 本章将通过两个完整的可运行示例，帮助您快速上手 Intel® Neural Compressor。第一个示例是在 **CPU（中央处理器）** 上运行的视觉模型量化，无需特殊硬件；第二个示例演示如何加载仅权重（Weight-Only）量化的大语言模型。

@@ -6,8 +6,8 @@ date: "2026-07-13"
 version: "1.0"
 status: "completed"
 source: "七概念Prompt Wiki精华汇总"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/13-quick-reference.toml"
 ---
-
 # 快速参考速查表（一页纸）
 
 ---

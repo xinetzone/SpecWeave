@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-05"
 title: "Cordis — 插件系统与依赖注入"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/05-plugin-system.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/05-plugin-system.toml"
 ---
-
 # Cordis — 插件系统与依赖注入
 
 > 一句话摘要：本章讲解 Cordis 的插件（Plugin）系统——插件可以以函数、构造函数或 `apply` 对象三种形态存在；`@Inject` 装饰器声明依赖；`RegistryService.plugin` 负责装配；`Service` 继承与 `reflect.provide/get` 实现依赖注入；并给出最小插件的完整代码。

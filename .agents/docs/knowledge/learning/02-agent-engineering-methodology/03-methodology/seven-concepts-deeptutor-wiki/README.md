@@ -6,9 +6,9 @@ date: "2026-07-14"
 version: "1.0"
 status: "completed"
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/README.toml"
 tags: [七概念, 方法论, DeepTutor, 教程]
 ---
-
 # 七概念×DeepTutor实践教程
 
 > **L2级Agent工程方法论实践教程**，将SpecWeave R-I-E-C-A-F-V七概念方法论系统映射到DeepTutor AI学习助手的真实产品实践中。通过剖析一个完整的Agent应用架构，展示七概念方法论在实际产品设计、模块划分、工作流设计中的具体体现，帮助读者从理论到实践建立完整的认知。

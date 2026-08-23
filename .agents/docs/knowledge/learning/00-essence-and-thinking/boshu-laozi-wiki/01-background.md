@@ -2,6 +2,7 @@
 id: "boshu-laozi-wiki-01"
 title: "历史背景与出土"
 source: "公共领域知识（马王堆帛书老子研究）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/boshu-laozi-wiki/01-background.toml"
 ---
 # 历史背景与出土
 

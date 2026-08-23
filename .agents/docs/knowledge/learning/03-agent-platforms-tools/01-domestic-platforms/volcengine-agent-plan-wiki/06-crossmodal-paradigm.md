@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-06"
 title: "跨模态范式洞察：从单模态解决问题到跨模态创造可能"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/06-crossmodal-paradigm.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["volcengine", "agent-plan", "跨模态", "范式演进", "Harness"]

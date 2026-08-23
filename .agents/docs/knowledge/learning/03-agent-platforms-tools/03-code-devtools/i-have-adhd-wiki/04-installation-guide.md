@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-install
 title: 五、跨平台安装指南
 source: external/libs/i-have-adhd/INSTALL.md 安装文档整理
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/04-installation-guide.toml"
 ---
-
 # 五、跨平台安装指南
 
 ## 5.1 安装概述

@@ -2,6 +2,7 @@
 id: "thesis-writing-sociolinguistics-videos"
 title: "十二、社会语言学视频资源"
 source: "WebSearch 检索归档（2026-07-17）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/11-sociolinguistics-video-resources.toml"
 retrieved_at: "2026-07-17"
 applies_to: "语言学及应用语言学专业（社会语言学方向）"
 ---

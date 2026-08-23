@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-04"
 title: "AgentKit SDK & CLI 工具链"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/04-agentkit-sdk-cli.toml"
 category: "learning"
 tags: ["AgentKit", "SDK", "CLI", "装饰器API", "部署模式"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 04 AgentKit SDK & CLI 工具链
 
 ## 装饰器式 API 设计

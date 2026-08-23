@@ -2,8 +2,8 @@
 id: 06-agent-init-flow
 title: Agent 初始化流程事实记录
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/06-agent-init-flow.toml"
 ---
-
 # Agent 初始化流程事实记录
 
 ## model_post_init 方法执行步骤

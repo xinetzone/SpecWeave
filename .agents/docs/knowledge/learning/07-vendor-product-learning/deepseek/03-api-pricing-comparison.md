@@ -3,6 +3,7 @@ id: "deepseek-v4-api-pricing"
 title: "03 API峰谷定价与竞品对比"
 version: "1.0"
 source: "api-docs.deepseek.com/zh-cn/quick_start/pricing + 潮新闻/中新经纬/新浪财经报道 + costgoat.com/geotoolbox.ai第三方分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/03-api-pricing-comparison.toml"
 type: "Wiki Document"
 description: "DeepSeek API峰谷定价完整价格表、缓存机制、竞品对比、错峰优化建议"
 tags: ["DeepSeek", "API", "定价", "峰谷定价", "缓存命中", "竞品对比", "成本优化"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "DeepSeek API于2026年8月17日起执行峰谷定价，高峰7小时价格是空闲17小时的2倍。V4-Pro高峰输出27元/百万tokens，空闲13.5元；V4-Flash高峰输出9元，空闲4.5元。缓存命中输入极便宜（0.05-0.30元）。即便涨价，仍显著低于GPT-5.5和Claude Opus。"
 last_verified: "2026-08-19"
 ---
-
 # 03 API峰谷定价与竞品对比
 
 > ⚠️ 本章价格为2026年8月17日生效的最新定价。API定价可能调整，请以[官方定价页面](https://api-docs.deepseek.com/zh-cn/quick_start/pricing/)实时显示为准。

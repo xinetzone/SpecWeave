@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-01-a
 title: A - 原子化 (Atomization)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/05-a-atomization.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, A, 原子化, 理论]
 ---
-
 # A - 原子化 (Atomization)
 
 ---

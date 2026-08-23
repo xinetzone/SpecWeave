@@ -2,8 +2,8 @@
 id: "i-have-adhd-wiki-reverse-adaptation"
 title: "十二、逆向适配创新方法论"
 source: "analyze-i-have-adhd-article/analysis-report.md#第四章"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/11-reverse-adaptation-innovation.toml"
 ---
-
 # 十二、逆向适配创新方法论
 
 > **【SpecWeave 方法论补充】** 本章提炼 i-have-adhd 项目中隐含的通用创新方法论——"逆向适配"（Reverse Adaptation）。这是一种从特殊群体/极端场景出发，将成熟辅助策略反向迁移到主流产品设计的系统化创新方法。

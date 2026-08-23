@@ -2,6 +2,7 @@
 id: "echobird-wiki-advanced-pages"
 title: "高级功能模块"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/08-advanced-pages.toml"
 category: "learning"
 tags: ["echobird", "advanced", "aipulse", "aicareer", "skills", "ssh", "usage"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 高级功能模块（AiPulse/AiCareer/MotherAgent/Skills/SSH/
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 08 高级功能模块
 
 除四大核心场景（安装修复 Agent / 一键本地大模型 / 我的 AI 项目 / 应用管理器）外，EchoBird 还内置了一批**高级功能模块**，用于把 Agent 工具从"配置器"升级为"日常信息中枢"。本章基于前端 `src/pages/` 与后端 `src-tauri/src/services/` 下的真实源码整理，覆盖 AiPulse 新闻流、AiCareer 职业统计、MotherAgent 母亲 Agent、Skills 技能模块、SSH 客户端、用量查询、自更新与反馈八个模块。

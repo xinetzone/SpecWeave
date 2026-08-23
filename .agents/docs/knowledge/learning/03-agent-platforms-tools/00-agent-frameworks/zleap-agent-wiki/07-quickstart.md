@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-quickstart"
 title: "快速上手指南"
 source: "https://github.com/Zleap-AI/Zleap-Agent (README) + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/07-quickstart.toml"
 category: "learning"
 tags: ["zleap-agent", "quickstart", "install", "setup", "cli", "web-ui", "environment-variables", "pnpm"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent 快速上手指南：环境要求、安装依赖、启动 
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 07 快速上手指南
 
 ## 环境要求

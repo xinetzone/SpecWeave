@@ -2,6 +2,7 @@
 title: "DeepSeek-V4 免费方案 Wiki 教程导航"
 date: "2026-08-19"
 source: "官方API文档 + DeepSeek官网 + 14个权威来源交叉验证"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/README.toml"
 tags: ["DeepSeek", "DeepSeek-V4", "免费方案", "API定价", "大模型", "AI工具", "Wiki教程"]
 category: "learning/07-vendor-product-learning"
 ---

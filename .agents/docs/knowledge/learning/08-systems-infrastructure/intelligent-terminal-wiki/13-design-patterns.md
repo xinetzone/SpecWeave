@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch13-patterns"
 title: "第13章 - 架构设计模式萃取"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/13-design-patterns.toml"
 date: "2026-08-03"
 ---
-
 # 🔍 E阶段（萃取）- 可复用设计模式库
 
 本章是R-I-E-A学习链路的**E阶段（萃取）**核心产出，基于前12章对Intelligent Terminal架构的完整理解，提炼出6+1个可复用的架构设计模式。这些模式不仅适用于终端AI集成场景，也可迁移到其他需要多进程协作、跨语言集成、低延迟UI交互的桌面应用开发中。

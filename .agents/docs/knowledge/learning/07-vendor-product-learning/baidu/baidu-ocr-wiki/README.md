@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-baidu-baidu-ocr-wiki-index"
 title: "百度 Unlimited-OCR 长文档解析技术完全指南"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---

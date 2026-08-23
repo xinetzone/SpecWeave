@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-09"
 title: "DeepSeek Harness 完全指南 — 工具系统与 Capability Seam"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/09-tools-capability-seam.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/09-tools-capability-seam.toml"
 ---
-
 # 09 工具系统与 Capability Seam
 
 工具是 Agent 与外部世界交互的手和脚。DeepSeek Harness 没有把工具做成一组写死的函数集合，而是通过 **Capability Seam** 抽象将工具的「接口定义」「实现」「使用」三者彻底分离，实现了真正的「一次替换，全局生效」。这是 dsh 架构设计中最精妙的部分之一。

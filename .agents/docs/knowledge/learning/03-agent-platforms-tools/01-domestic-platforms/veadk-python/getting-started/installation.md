@@ -2,6 +2,7 @@
 id: veadk-python-installation
 title: 安装指南
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/getting-started/installation.toml"
 category: learning
 tags:
 - VeADK
@@ -16,8 +17,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 安装指南，涵盖系统要求、PyPI安装、uv安装、源码构建、验证安装及常见问题
 wiki_version: '1.0'
 ---
-
-
 # VeADK-Python 安装指南
 
 本文档介绍如何在不同环境下安装和配置 VeADK-Python 开发框架。

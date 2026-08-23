@@ -2,6 +2,7 @@
 id: "echobird-wiki-architecture"
 title: "技术架构深度解析"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/02-architecture.toml"
 category: "learning"
 tags: ["echobird", "tauri", "rust", "architecture"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 的 Tauri+Rust 前后端分层架构、前端页面/后端服
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 02 技术架构深度解析
 
 ## 2.1 总体架构：Tauri + Rust 前后端分层

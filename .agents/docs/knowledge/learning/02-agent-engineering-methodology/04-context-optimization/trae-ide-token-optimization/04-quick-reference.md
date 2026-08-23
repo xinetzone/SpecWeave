@@ -4,6 +4,7 @@ title: "3分钟快速参考卡"
 date: 2026-08-01
 type: quick-reference
 source: "seven-concepts summary"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/04-quick-reference.toml"
 ---
 # Trae IDE Token 节省：3分钟快速参考卡
 

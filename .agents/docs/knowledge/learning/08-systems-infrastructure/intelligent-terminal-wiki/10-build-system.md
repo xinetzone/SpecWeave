@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch10-build"
 title: "第10章 - 构建系统与开发环境"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/10-build-system.toml"
 date: "2026-08-03"
 ---
-
 # 第10章 构建系统与开发环境
 
 Intelligent Terminal 采用**双构建系统**架构：Rust WTA 代理组件使用 Cargo，C++ Windows Terminal 应用使用 MSBuild/Visual Studio。两者独立构建但产物相互依赖——C++ 打包项目会自动从 Cargo 输出目录复制 `wta.exe` 到包内。理解这两个构建系统的协作方式和常见陷阱是高效开发的关键。

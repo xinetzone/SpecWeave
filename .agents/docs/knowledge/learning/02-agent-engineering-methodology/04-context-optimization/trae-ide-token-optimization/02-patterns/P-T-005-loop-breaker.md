@@ -8,6 +8,7 @@ layer: "practice"
 maturity: "L1-experimental"
 validation_count: 1
 source: "llm-token-optimization principles extension"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/02-patterns/P-T-005-loop-breaker.toml"
 ---
 # P-T-005: 循环熔断模式
 

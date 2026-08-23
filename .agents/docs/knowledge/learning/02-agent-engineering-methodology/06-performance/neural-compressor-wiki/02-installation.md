@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/installation_guide.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/02-installation.toml"
 summary: "Intel Neural Compressor PyTorch 后端的安装步骤、依赖说明与不同硬件环境的配置要点。"
 tags: ["neural-compressor", "installation", "pytorch", "setup"]
 ---
-
 # 安装指南
 
 本章将详细介绍 Intel® Neural Compressor 的安装流程，包括前置条件检查、不同硬件平台的框架依赖安装、以及安装验证方法。

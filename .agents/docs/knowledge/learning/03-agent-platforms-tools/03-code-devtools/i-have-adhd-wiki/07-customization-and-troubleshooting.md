@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-custom
 title: 八、自定义开发与故障排查
 source: external/libs/i-have-adhd/INSTALL.md 自定义与排障整理
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/07-customization-and-troubleshooting.toml"
 ---
-
 # 八、自定义开发与故障排查
 
 ## 8.1 自定义概述

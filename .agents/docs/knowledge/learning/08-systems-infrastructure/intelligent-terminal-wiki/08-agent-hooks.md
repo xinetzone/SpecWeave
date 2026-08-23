@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch08-hooks"
 title: "第8章 - wt-agent-hooks Shell 集成"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/08-agent-hooks.toml"
 date: "2026-08-03"
 ---
-
 # 第8章 wt-agent-hooks Shell 集成
 
 `wt-agent-hooks` 是 Windows Terminal Agent (WTA) 的插件/扩展捆绑系统，负责将各类 Agent CLI（Copilot、Claude、Gemini、Codex、OpenCode）的生命周期事件通过钩子桥接到 Windows Terminal COM 服务器，实现跨窗格的 Agent 会话实时追踪、工具调用可视化和 Autofix 自动修复触发。

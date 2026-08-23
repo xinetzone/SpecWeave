@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Context 执行上下文
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/context.toml"
 description: PyInvoke Context 执行上下文的完整 API 参考，涵盖 run/sudo 方法、cd/prefix 上下文管理器、Config 代理访问与 MockContext 测试替身。
 tags: [pyinvoke, context, run, sudo, cd, prefix, mockcontext, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/context.py
 ---
-
 # Context 执行上下文
 
 ## 概述

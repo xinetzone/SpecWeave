@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-01"
 title: "book-to-skill 完全指南 — 核心架构"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/01-core-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/01-core-architecture.toml"
 ---
-
 # 核心架构
 
 book-to-skill 采用**双层架构**设计：确定性的 Python 提取器 + 规范驱动的 Agent 生成器。这种分离是理解整个项目的关键。

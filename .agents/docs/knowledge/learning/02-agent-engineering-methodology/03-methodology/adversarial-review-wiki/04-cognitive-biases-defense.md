@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-biases"
 title: "04、认知偏差防御"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/04-cognitive-biases-defense.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 04、认知偏差防御
 
 ## 1. 概述

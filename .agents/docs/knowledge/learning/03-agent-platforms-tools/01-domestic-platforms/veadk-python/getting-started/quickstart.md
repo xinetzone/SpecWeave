@@ -2,6 +2,7 @@
 id: veadk-python-quickstart
 title: 快速入门：Hello World
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/getting-started/quickstart.toml"
 category: learning
 tags:
 - VeADK
@@ -16,8 +17,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 快速入门教程，5分钟创建你的第一个AI Agent，包含完整可运行代码和逐行解释
 wiki_version: '1.0'
 ---
-
-
 # 快速入门：Hello World
 
 本文档将引导你在 5 分钟内创建你的第一个 VeADK Agent，并完成一次完整的对话。

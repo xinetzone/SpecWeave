@@ -2,9 +2,8 @@
 id: "quantdinger-02-seven-concepts-report"
 title: "QuantDinger：自托管AI量化交易平台 — 七概念方法论报告"
 source: "微信公众号「极客之家」"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/02-seven-concepts-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/02-seven-concepts-report.toml"
 ---
-
 # 七概念方法论编排报告：QuantDinger自托管AI量化平台知识沉淀
 
 > **编排元数据**
@@ -12,7 +11,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-age
 > - scenario: knowledge（知识沉淀）
 > - chain: R→I→E→V→入库
 > - depth: standard
-> - source: [analysis-report.md](00-overview.md) + [article-content.md](article-content.md)
+> - source: [analysis-report.md](00-overview.md) + [01-article-content.md](01-article-content.md)
 > - created: 2026-08-01
 
 ---
@@ -532,7 +531,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-age
 
 | 产出物 | 状态 | 路径 |
 |--------|------|------|
-| 文章原文内容 | ✅ 已获取 | [article-content.md](article-content.md) |
+| 文章原文内容 | ✅ 已获取 | [article-content.md](01-article-content.md) |
 | 完整分析报告（学习笔记+洞察总结） | ✅ 已生成 | [analysis-report.md](00-overview.md)（568行） |
 | 事实清单（36条） | ✅ 已生成 | 本报告R阶段 |
 | 核心洞察（4条，含四元组） | ✅ 已生成 | 本报告I阶段 |

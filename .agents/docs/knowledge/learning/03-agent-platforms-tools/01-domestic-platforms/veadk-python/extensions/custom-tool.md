@@ -2,13 +2,12 @@
 id: custom-tool
 title: 自定义工具开发完整指南
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/extensions/custom-tool.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 自定义工具开发完整指南
 
 本文档详细介绍如何在 VeADK 中开发自定义工具，包括函数式工具、类式工具和工具集（Toolset）的开发方法。

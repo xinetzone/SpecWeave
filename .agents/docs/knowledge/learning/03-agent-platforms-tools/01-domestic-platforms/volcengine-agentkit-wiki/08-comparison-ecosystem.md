@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-08"
 title: "竞品对比与生态定位"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/08-comparison-ecosystem.toml"
 category: "learning"
 tags: ["AgentKit", "竞品对比", "生态定位"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 08 竞品对比与生态定位
 
 ## 生态位定位图

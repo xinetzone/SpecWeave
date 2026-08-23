@@ -1,7 +1,7 @@
 ---
 title: "MDX + GraphQL 概述与核心概念"
 source: "insight:retrospective-sphinx-graphql-okf-combination-insights-20260805"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/00-overview.toml"
 date: "2026-08-05"
 tags: [mdx, graphql, overview, concepts, architecture]
 category: "learning"

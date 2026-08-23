@@ -2,6 +2,7 @@
 id: "eve-wiki-overview"
 title: "教程总览与知识地图"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/00-overview.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "wiki教程", "nextjs-for-agents"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # 00 教程总览与知识地图
 
 ## Eve 产品生态全景图

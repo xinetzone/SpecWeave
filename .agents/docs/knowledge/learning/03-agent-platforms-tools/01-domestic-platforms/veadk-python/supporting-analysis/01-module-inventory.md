@@ -2,8 +2,8 @@
 id: 01-module-inventory
 title: veadk/ 目录结构清单
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/01-module-inventory.toml"
 ---
-
 ## 顶层 .py 文件列表
 
 veadk/ 目录下顶层包含以下 .py 文件：

@@ -2,6 +2,7 @@
 id: "eve-wiki-07"
 title: "工程化理念与趋势洞察"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/07-engineering-philosophy-trends.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "engineering", "trends", "frontend", "ai-infra"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 eve_version_target: "2026 public preview"
 ---
-
 # 07 工程化理念与趋势洞察
 
 本章从工程哲学与行业趋势的视角解读 Eve：为什么"能跑"的 Demo 不等于"能管"的生产 Agent；Agent 竞争重心正在从模型能力转向工程底座；以及 Vercel 如何把前端工程化经验迁移到 AI 领域。这是理解 Eve 定位与价值的关键一章。

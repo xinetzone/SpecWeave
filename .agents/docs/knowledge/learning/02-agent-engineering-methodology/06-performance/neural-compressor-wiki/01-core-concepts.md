@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/01-core-concepts.toml"
 summary: "Intel Neural Compressor 的核心概念、模型压缩技术分类、架构设计与工作流程详解。"
 tags: ["neural-compressor", "architecture", "core-concepts", "workflow"]
 ---
-
 # 核心概念与架构
 
 ## 模型压缩基本概念

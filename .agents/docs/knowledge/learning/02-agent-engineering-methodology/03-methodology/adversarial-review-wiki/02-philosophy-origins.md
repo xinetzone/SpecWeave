@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-philosophy-origins"
 title: "02、思想源头追溯"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/02-philosophy-origins.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 对抗性审查：思想源头追溯
 
 对抗性审查不是凭空产生的"新发明"，而是人类文明中多条思想线索在数字时代/AI时代的汇聚与系统化。本章追溯六大思想源头，理解对抗性思维的深层哲学基础。

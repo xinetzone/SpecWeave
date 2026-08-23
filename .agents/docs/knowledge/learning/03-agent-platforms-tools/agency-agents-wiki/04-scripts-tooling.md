@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-04"
 title: "The Agency 完全指南 — 脚本体系"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/04-scripts-tooling.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/04-scripts-tooling.toml"
 ---
-
 # The Agency 完全指南 — 脚本体系
 
 > 一句话摘要：本章深入讲解 The Agency 的脚本体系——`scripts/` 目录下那一整套把"源 Agent 文件"转换为 16 种工具格式、再安装到对应工具目录的 Shell / Python 脚本，它们构成了整个项目"一次定义、处处可用"的自动化引擎。

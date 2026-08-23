@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/04-quantization-techniques.toml"
 summary: "Intel Neural Compressor 支持的主要量化技术：静态量化、动态量化、仅权重量化、FP8 量化、SmoothQuant 的原理、适用场景与使用方法。"
 tags: ["neural-compressor", "quantization", "static-quantization", "dynamic-quantization", "fp8"]
 ---
-
 # 主流量化技术详解
 
 本章将详细介绍 Intel Neural Compressor 支持的五种主流量化技术，包括每种技术的基本原理、适用场景、代码示例和关键注意事项。

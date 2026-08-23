@@ -2,6 +2,7 @@
 id: "hermes-agent-wiki-03-cli-commands"
 title: "03 Hermes Agent CLI 与斜杠命令详解"
 source: "NousResearch/hermes-agent 本地源码仓库（website/docs/reference/cli-commands.md / reference/slash-commands.md / hermes_cli/commands.py）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/03-cli-commands.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 主要 CLI 子命令、会话内斜杠命令，以及 COMMAND_REGISTRY 集中注册机制的详解"
 status: "stable"

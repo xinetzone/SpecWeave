@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-05"
 title: "DeepSeek Harness 完全指南 — 核心架构：一切皆插件"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/05-architecture-everything-plugin.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/05-architecture-everything-plugin.toml"
 ---
-
 # 05 核心架构：一切皆插件
 
 「一切皆插件」是 DeepSeek Harness 最核心的设计哲学。与传统框架将核心逻辑硬编码在主干中不同，dsh 从底层元框架到上层 Agent 循环、工具、UI，所有组件都是地位平等的插件，没有任何特权内核存在。本章深入解读这一架构设计。

@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-00-overview
 title: "conda 源码与 conda-docs 文档 Wiki 教程总览"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/00-overview.toml"
 category: "learning"
 tags: ["conda", "conda-source", "package-manager", "architecture", "sphinx", "wiki-tutorial"]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda 包管理器源码与 conda-docs 文档体系的系统学习教程总览，含分层架构定位、10 章导航与分级阅读路径"
 ---
-
 # conda 源码与 conda-docs 文档 Wiki 教程总览
 
 本教程系统性学习 conda 包管理器源码（本地镜像 `external/libs/conda-dev/conda`）与 conda 官方文档站点源码（本地镜像 `external/libs/conda-dev/conda-docs`），梳理其模块分层、依赖关系与文档构建架构，帮助不同技术水平的读者循序渐进地读懂 conda 的内部实现。

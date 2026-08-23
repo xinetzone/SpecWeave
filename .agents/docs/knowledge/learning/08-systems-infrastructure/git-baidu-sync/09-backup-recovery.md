@@ -2,6 +2,7 @@
 id: git-baidu-sync-backup-recovery
 title: Git 网盘同步备份与灾难恢复
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/09-backup-recovery.toml"
 created: 2026-07-31
 tags:
   - git
@@ -12,7 +13,6 @@ tags:
   - bundle
   - disaster-recovery
 ---
-
 # Git 网盘同步备份与灾难恢复
 
 本文档描述百度网盘多设备 Git 同步系统中的备份策略、`git bundle` 原理、损坏诊断方法以及完整的灾难恢复流程。配套工具为 `git-backup`（`git-backup.ps1`/`git-backup.sh`）。

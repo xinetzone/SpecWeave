@@ -2,6 +2,7 @@
 id: "thesis-writing-formatting"
 title: "七、格式规范与排版"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/06-formatting-and-style.toml"
 ---
 # 七、格式规范与排版
 

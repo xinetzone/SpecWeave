@@ -2,11 +2,11 @@
 id: "wsl-wiki-10-glossary-references"
 title: "术语表与参考资料"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/10-glossary-references.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "glossary", "references", "terminology", "cross-reference"]
 ---
-
 # 术语表与参考资料
 
 ## 第一部分：术语表（Glossary）

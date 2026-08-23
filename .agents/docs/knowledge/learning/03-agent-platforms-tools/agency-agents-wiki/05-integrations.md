@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-05"
 title: "The Agency 完全指南 — 多工具集成"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/05-integrations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/05-integrations.toml"
 ---
-
 # The Agency 完全指南 — 多工具集成
 
 > 一句话摘要：本章系统讲解 The Agency 如何把一套 Agent 角色文件集成到 16 种 AI 编程工具——每种工具装到哪个目录、用什么文件格式、是否需要转换、如何在会话中激活，以及 `tools.json` 是如何成为这一切的"权威安装契约"。

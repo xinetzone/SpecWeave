@@ -1,6 +1,7 @@
 ---
 type: "Installation Guide"
 title: "PyInvoke 安装指南"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/overview/installation.toml"
 description: "pip 安装、版本要求、安装验证"
 tags: ["invoke", "installation", "setup", "pip"]
 date: "2026-08-21"
@@ -11,7 +12,6 @@ sources:
     resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/pyproject.toml"
     title: "PyInvoke pyproject.toml - Dependencies and Python version requirements"
 ---
-
 # 安装指南
 
 ## 环境要求

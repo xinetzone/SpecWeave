@@ -2,8 +2,8 @@
 id: 08-memory-facts
 title: Memory 模块事实记录
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/08-memory-facts.toml"
 ---
-
 # Memory 模块事实记录
 
 ## ShortTermMemory 类

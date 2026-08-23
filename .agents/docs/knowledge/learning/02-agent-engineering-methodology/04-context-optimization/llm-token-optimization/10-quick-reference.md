@@ -7,11 +7,11 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Quick-Reference", "Cheat-Sheet"]
 maturity: "L1"
 source: "zhujian-wudao-frontend-backend-separation-principle"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.toml"
 prerequisites: []
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化快速参考卡（3分钟速查）
 
 > 🎯 **本文档是前台视图**：假设读者只有3分钟，提供最核心、最可操作的信息。完整论证、详细步骤、案例数据请阅读后台文档。

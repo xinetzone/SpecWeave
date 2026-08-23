@@ -2,9 +2,8 @@
 id: "github-cli-wiki-04"
 title: "Actions 与 CI/CD 集成指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/04-actions-cicd.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/04-actions-cicd.toml"
 ---
-
 # Actions 与 CI/CD 集成指南
 
 本章介绍使用 `gh` 命令行工具管理 GitHub Actions 的完整生命周期：从工作流（Workflow）的启停管理、运行（Run）的追踪与重试，到缓存（Cache）清理、密钥（Secret）和变量（Variable）的安全配置。

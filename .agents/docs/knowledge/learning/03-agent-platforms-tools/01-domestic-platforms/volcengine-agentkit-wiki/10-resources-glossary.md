@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-10"
 title: "术语表与参考资源"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/10-resources-glossary.toml"
 category: "learning"
 tags: ["AgentKit", "术语表", "参考资源", "贡献指南"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 10 术语表与参考资源
 
 ## Part A：官方参考资源清单

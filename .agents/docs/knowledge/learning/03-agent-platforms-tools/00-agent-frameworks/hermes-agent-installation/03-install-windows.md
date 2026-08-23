@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - Windows PowerShell 安装指南"
 chapter: 3
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/03-install-windows.toml"
   - external/libs/hermes-agent/scripts/install.ps1
   - external/libs/hermes-agent/README.md
   - external/libs/hermes-agent/.env.example
@@ -10,7 +11,6 @@ source:
   - external/libs/hermes-agent/website/i18n/zh-Hans/docusaurus-plugin-content-docs/current/user-guide/windows-native.md
   - external/libs/hermes-agent/website/i18n/zh-Hans/docusaurus-plugin-content-docs/current/user-guide/windows-wsl-quickstart.md
 ---
-
 # 3. Windows PowerShell 安装指南
 
 本章面向 Windows 10/11 用户，详细说明如何使用官方 `install.ps1` 脚本在原生 Windows 上完成 Hermes Agent 的安装，包括一键安装命令、执行策略配置、Windows 特有注意事项（8.3 短路径、长路径、CRLF、pywin32）、环境变量配置、终端重启要求、WSL2 备选方案以及 Windows 专属故障排查。所有内容均以项目源码中的 `scripts/install.ps1`、`README.md`、`.env.example` 与 `pyproject.toml` 为准。

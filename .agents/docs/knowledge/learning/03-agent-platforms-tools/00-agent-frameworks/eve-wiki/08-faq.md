@@ -2,6 +2,7 @@
 id: "eve-wiki-08"
 title: "FAQ、适用范围与局限性"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/08-faq.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "faq", "limitations", "scope"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 eve_version_target: "2026 public preview"
 ---
-
 # 08 FAQ、适用范围与局限性
 
 本章以问答形式汇总 Eve 使用过程中的常见问题、适用团队范围与当前局限性，帮助读者快速判断 Eve 是否适合自身项目，以及如何正确看待其能力边界。

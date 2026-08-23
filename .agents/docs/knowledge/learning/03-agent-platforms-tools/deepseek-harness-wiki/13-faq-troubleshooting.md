@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-13"
 title: "DeepSeek Harness 完全指南 — 常见问题与故障排查"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/13-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/13-faq-troubleshooting.toml"
 ---
-
 # 13 常见问题与故障排查
 
 本章收集了 dsh v0.1 预览版阶段用户最常遇到的问题，每个问题都给出「症状→原因→解决方案」的完整排查路径。遇到问题时先来这里查一查，90% 的问题都能快速解决。

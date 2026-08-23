@@ -2,6 +2,7 @@
 id: "boshu-laozi-wiki-00"
 title: "帛书老子 Wiki 教程概述"
 source: "公共领域知识（马王堆帛书老子研究）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/boshu-laozi-wiki/00-overview.toml"
 ---
 # 帛书老子 Wiki 教程概述
 

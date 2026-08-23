@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-01-ps5-ps7-differences"
 title: "PowerShell 5.1 vs 7+ 核心差异速查"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/01-ps5-ps7-differences.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "powershell-7", "compatibility", "differences", "api", "syntax"]
 ---
-
 # PowerShell 5.1 vs 7+ 核心差异速查
 
 本章列出 PowerShell 5.1（Windows-only，基于 .NET Framework 4.x，2016 年特性冻结）与 PowerShell 7+（跨平台，基于 .NET Core/.NET 5+，持续迭代）之间的核心差异。所有 AI 易错点使用 ⚠️ 标记。

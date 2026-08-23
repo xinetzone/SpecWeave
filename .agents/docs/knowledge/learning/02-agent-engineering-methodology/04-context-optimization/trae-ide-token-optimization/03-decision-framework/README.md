@@ -1,6 +1,7 @@
 ---
 id: "trae-token-decision-index"
 title: "决策框架"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/03-decision-framework/README.toml"
 date: 2026-08-01
 type: index
 ---

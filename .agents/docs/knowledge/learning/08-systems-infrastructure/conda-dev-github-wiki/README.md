@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-index
 title: "conda .github 元仓库 Wiki 教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/README.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-meta-repo", "org-governance", "github-actions", "issue-template", "wiki-tutorial"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 组织级元仓库的系统学习教程：仓库结构、7 个工作流、4 个 Issue 模板、社区健康文件与中央同步模型"
 ---
-
 # conda .github 元仓库 Wiki 教程
 
 本教程系统学习 conda 组织的组织级元仓库 `conda/.github`（本地镜像 `external/libs/conda-dev/.github`），解析其文件夹结构、全部配置文件（7 个 GitHub Actions 工作流、4 个 Issue Form 模板、社区健康文件）与功能实现（Issue Sorting、标签体系、`conda/infrastructure` 中央同步模型），并提供常见操作指南、最佳实践与注意事项，帮助开发人员快速掌握组织级 `.github` 元仓库的搭建、使用与维护。

@@ -3,6 +3,7 @@ id: "deepseek-v4-flash-capabilities"
 title: "05 DeepSeek-V4-Flash 能力详解"
 version: "1.0"
 source: "HuggingFace deepseek-ai/DeepSeek-V4-Flash + api-docs.deepseek.com + 官方博客"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/05-v4-flash-capabilities.toml"
 type: "Wiki Document"
 description: "DeepSeek-V4-Flash轻量模型能力、与Pro版差异、适用场景、自托管方案"
 tags: ["DeepSeek", "DeepSeek-V4-Flash", "MoE", "284B参数", "开源", "MIT协议", "自托管"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "V4-Flash是284B总参数/13B激活的MoE轻量模型，MIT协议完全开源，支持1M上下文和思考模式，性能接近Pro但成本仅1/3，适合高并发场景和自托管。"
 last_verified: "2026-08-19"
 ---
-
 # 05 DeepSeek-V4-Flash 能力详解
 
 ## 5.1 模型基本信息

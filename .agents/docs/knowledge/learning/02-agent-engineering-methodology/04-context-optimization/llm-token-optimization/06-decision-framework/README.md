@@ -1,6 +1,7 @@
 ---
 id: "docs-knowledge-learning-llm-token-optimization-06-decision-framework-index"
 title: "Token 优化决策框架"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/README.toml"
 category: "knowledge"
 date: "2026-08-01"
 ---

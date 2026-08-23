@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-06"
 title: "book-to-skill 完全指南 — 安装与使用"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/06-installation-usage.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/06-installation-usage.toml"
 ---
-
 # 安装与使用
 
 book-to-skill 提供两种安装方式：作为 Agent Skill 集成到 AI 助手环境中，或作为独立 CLI 工具直接使用。本章详细介绍安装流程、依赖管理、环境预检和基本使用方法。

@@ -2,6 +2,7 @@
 id: cross-cultural-adversarial-review-protocol
 title: 跨文化对抗性审查标准与"反向语义漂移"防御机制
 source: cross-cultural-first-principles-comparison Task 0
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.toml"
 parent_protocol: ../00-adversarial-review-protocol.md
 created_at: "2026-07-13"
 status: in-progress

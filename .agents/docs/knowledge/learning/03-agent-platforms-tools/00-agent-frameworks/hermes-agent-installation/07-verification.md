@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 安装验证"
 chapter: 7
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/07-verification.toml"
   - external/libs/hermes-agent/hermes_cli/doctor.py
   - external/libs/hermes-agent/hermes_cli/status.py
   - external/libs/hermes-agent/hermes_cli/main.py
@@ -15,7 +16,6 @@ source:
   - external/libs/hermes-agent/tools/browser_tool.py
   - external/libs/hermes-agent/README.md
 ---
-
 # 7. 安装验证
 
 本章说明 Hermes Agent 安装完成后的完整验证流程，包括版本检查、环境诊断、状态查看、基础对话测试、工具功能验证、TUI 界面验证、浏览器工具验证、网关验证，以及日志位置与查看方法。建议按照本章顺序逐项验证，确保安装完整可用。

@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-11"
 title: "Cordis — FAQ 与注意事项"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/11-faq-notes.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/11-faq-notes.toml"
 ---
-
 # Cordis — FAQ 与注意事项
 
 > 一句话摘要：本章汇总学习与使用 Cordis 时的常见问题与注意事项，重点是「API 未稳定、活跃开发中」的核心提醒，以及异步效应、注入语义、HMR 前置条件等易踩坑点。

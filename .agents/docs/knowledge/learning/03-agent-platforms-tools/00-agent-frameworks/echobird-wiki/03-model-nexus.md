@@ -2,6 +2,7 @@
 id: "echobird-wiki-model-nexus"
 title: "Model Nexus 模型中心"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/03-model-nexus.toml"
 category: "learning"
 tags: ["echobird", "model-nexus", "model-directory", "api-key"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Model Nexus 模型中心的数据模型（modelDirectory.json 的 prov
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 03 Model Nexus 模型中心
 
 ## 3.1 模型中心是什么

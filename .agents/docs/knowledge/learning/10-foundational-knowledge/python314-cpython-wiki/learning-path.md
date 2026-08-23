@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-learning-path"
 title: "Python 3.14 新特性学习路径规划"
 source: "https://docs.python.org/zh-cn/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/learning-path.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/learning-path.toml"
 ---
-
 # Python 3.14 新特性学习路径规划
 
 > **定位**：本文档为不同角色、不同基础的开发者提供从"知道 Python 3.14 有什么"到"能在生产中应用 Python 3.14 新特性"的系统化学习路径。

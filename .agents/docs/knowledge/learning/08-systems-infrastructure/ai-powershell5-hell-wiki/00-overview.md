@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-00-overview"
 title: "背景与问题陈述——为什么 AI+PS5 是\"地狱难度\""
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/00-overview.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "compatibility", "problem-statement", "four-fractures"]
 ---
-
 # 背景与问题陈述——为什么 AI+PS5 是"地狱难度"
 
 ## 1. 问题现象：AI 生成 PS5 代码的系统性高失败率

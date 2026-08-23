@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch06-protocols"
 title: "第6章 - 通信协议栈"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/06-protocols.toml"
 date: "2026-08-03"
 ---
-
 # 第6章 通信协议栈
 
 通信协议栈是 Intelligent Terminal 的核心骨架，负责在 C++ 终端进程、Rust WTA 编排器、Agent CLI 子进程之间建立可靠、安全、分层的跨进程通信通道。整个栈采用三层架构设计，从底层终端 I/O 到高层 JSON-RPC 业务协议逐层封装，每层职责单一、边界清晰。

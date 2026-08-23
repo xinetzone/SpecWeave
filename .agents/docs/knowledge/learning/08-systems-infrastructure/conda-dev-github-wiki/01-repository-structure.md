@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-01-repository-structure
 title: "conda .github 元仓库仓库整体架构"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/01-repository-structure.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/01-repository-structure.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-meta-repo", "repository-structure", "org-governance", "github-actions", "template-sync", "wiki-tutorial"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库的完整目录结构、各文件职责、与普通仓库 .github/ 的对比及同步体系定位"
 ---
-
 # conda .github 元仓库仓库整体架构
 
 ## 1. 仓库定位

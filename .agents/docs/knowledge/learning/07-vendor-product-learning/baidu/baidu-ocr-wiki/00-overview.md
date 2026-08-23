@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-00"
 title: "百度 Unlimited-OCR 长文档解析技术完全指南 — 概述"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/00-overview.toml"
 ---
-
 # 百度 Unlimited-OCR 长文档解析技术完全指南 — 概述
 
 > 一句话摘要：百度开源的Unlimited-OCR以3B总参数/500M激活参数的MoE小模型，通过R-SWA非对称注意力机制模仿人类"抄书"模式，在OmniDocBench上以93.23%/93.92%的SOTA成绩反超235B大模型，实现40+页文档"一气呵成"解析且推理速度恒定（TPS 7847领先35%），是机制创新远胜参数堆砌的典范。

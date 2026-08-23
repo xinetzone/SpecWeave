@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module6-faq"
 title: "模块6：常见问题解答"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/06-faq/06-faq-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "faq", "troubleshooting", "pitfalls"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "Agent评测落地中的常见问题解答，覆盖选型、实施、踩坑三大类共22条FAQ。"
 references: 8
 ---
-
 # 模块6：常见问题解答
 
 > **方法论视角**：本模块以问答形式覆盖评测选型、实施与踩坑三类高频问题。若需完整的术语解释与权威参考来源（学术论文、官方文档、开源项目），请参阅 [工程手册 · 第10章 术语表与参考资源](../../agent-evaluation-wiki/10-resources.md)。

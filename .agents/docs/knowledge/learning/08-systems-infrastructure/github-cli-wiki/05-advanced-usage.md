@@ -2,9 +2,8 @@
 id: "github-cli-wiki-05"
 title: "高级用法指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/05-advanced-usage.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/05-advanced-usage.toml"
 ---
-
 # 高级用法指南
 
 本章涵盖 GitHub CLI（`gh`）的高级功能，包括 API 调用、别名系统、扩展管理、搜索语法、标签管理、规则集、工件签名验证、`--json` 输出与 `jq` 组合等。掌握这些能力后，你将能够将 `gh` 深度集成到自动化脚本和 CI/CD 流水线中。

@@ -2,6 +2,7 @@
 id: git-baidu-sync-cross-platform-config
 title: Git 跨平台配置最佳实践（网盘同步场景）
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/02-cross-platform-config.toml"
 created: 2026-07-31
 tags:
   - git
@@ -10,7 +11,6 @@ tags:
   - baidu-netdisk
   - sync
 ---
-
 # Git 跨平台配置最佳实践（网盘同步场景）
 
 本文档针对百度网盘等云同步场景，整理 Git 在 Windows/macOS/Linux 三大平台间协作时的配置最佳实践，避免因换行符、文件权限、符号链接、大小写敏感等差异导致同步冲突和文件损坏。

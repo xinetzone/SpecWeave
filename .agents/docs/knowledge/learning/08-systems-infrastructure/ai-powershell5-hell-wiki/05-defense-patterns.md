@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-05-defense-patterns"
 title: "防御性模式与最佳实践总览"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/05-defense-patterns.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "defensive-patterns", "best-practices", "reusable-patterns"]
 ---
-
 # 防御性模式与最佳实践总览
 
 本章介绍 5 个可复用防御模式，所有模式均已纳入 V 阶段三视角 12 个攻击点的对抗审查加固。每个模式解决特定场景下的 AI×PS5 兼容性问题，可单独使用也可组合使用。

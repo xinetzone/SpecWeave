@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-best-practices"
 title: "最佳实践与反模式"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/07-best-practices.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/07-best-practices.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "best-practices", "anti-patterns", "dry-run", "intent-verbs", "resolution"]

@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-02"
 title: "The Agency 完全指南 — Agent 文件格式解析"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/02-agent-format.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/02-agent-format.toml"
 ---
-
 # The Agency 完全指南 — Agent 文件格式解析
 
 > 一句话摘要：本章深入一个 Agent 文件内部，逐字段解析 YAML frontmatter（name / description / color / emoji / vibe），再拆解正文的 8 大章节结构，并以 AI Engineer 为例做原文摘录与设计意图解读，最后对比不同部门 Agent 的共性结构。

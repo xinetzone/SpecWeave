@@ -7,13 +7,13 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Checklist", "Launch", "Preflight"]
 maturity: "L1"
 source: "extraction-from-cases-and-best-practices"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/05-quick-checklist.toml"
 prerequisites:
   - "llm-token-optimization-anti-patterns"
   - "llm-token-optimization-best-practice-patterns"
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化快速启动Checklist
 
 > 这是一份LLM应用上线前的token优化检查清单，按优先级P0/P1/P2排序。P0必须上线前完成，P1上线后1周内完成，P2长期迭代优化。每条均**可操作、可验证**，做完直接打勾。

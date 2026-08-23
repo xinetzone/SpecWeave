@@ -2,8 +2,8 @@
 id: "i-have-adhd-wiki-action-first-paradigm"
 title: "十一、行动优先输出范式深度解析"
 source: "analyze-i-have-adhd-article/analysis-report.md#第三章"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/10-action-first-paradigm.toml"
 ---
-
 # 十一、行动优先输出范式深度解析
 
 > **【SpecWeave 方法论补充】** 本章基于七概念知识沉淀方法论，从 i-have-adhd 实践中提炼出可跨场景复用的 Agent 输出设计哲学框架——"行动优先 vs 解释优先"双范式决策体系。这是对 i-have-adhd 四条核心规则的元层面抽象，适用于所有 AI 交互场景。

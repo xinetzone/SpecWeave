@@ -1,6 +1,7 @@
 ---
 type: "Architecture"
 title: "PyInvoke 核心架构总览"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/overview/architecture.toml"
 description: "Task→Collection→Parser→Executor→Context→Runner 的完整调用链"
 tags: ["invoke", "architecture", "call-chain", "internals"]
 date: "2026-08-21"
@@ -20,7 +21,6 @@ sources:
     resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/runners.py"
     title: "PyInvoke runners.py"
 ---
-
 # 核心架构总览
 
 Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser → Collection → Executor → Context → Runner**。

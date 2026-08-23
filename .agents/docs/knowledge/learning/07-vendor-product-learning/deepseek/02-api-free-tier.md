@@ -3,6 +3,7 @@ id: "deepseek-v4-api-free-tier"
 title: "02 API新用户免费额度详解"
 version: "1.0"
 source: "platform.deepseek.com + api-docs.deepseek.com + costgoat.com + 51CTO实测 + gitcode实战教程"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/02-api-free-tier.toml"
 type: "Wiki Document"
 description: "DeepSeek API新用户500万tokens免费额度的完整说明：领取方式、有效期、适用模型、消耗估算"
 tags: ["DeepSeek", "API", "免费额度", "500万tokens", "开发者", "platform.deepseek.com"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "注册DeepSeek开发者平台即赠500万tokens（无需信用卡），有效期约30天，覆盖V4-Pro和V4-Flash所有API功能，足够独立开发者做2-4周原型验证。"
 last_verified: "2026-08-19"
 ---
-
 # 02 API新用户免费额度详解
 
 ## 2.1 免费额度概览

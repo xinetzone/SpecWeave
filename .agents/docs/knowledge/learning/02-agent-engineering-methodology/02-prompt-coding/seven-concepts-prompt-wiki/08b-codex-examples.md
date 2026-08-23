@@ -6,8 +6,8 @@ date: "2026-07-14"
 version: "1.0"
 status: "completed"
 source: "OpenAI Codex最佳实践"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/08b-codex-examples.toml"
 ---
-
 # Codex/Agent开发实战：8个场景模板
 
 ---

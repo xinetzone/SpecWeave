@@ -2,8 +2,8 @@
 id: 02-agent-class-signatures
 title: Agent 类公开方法和属性签名提取
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/02-agent-class-signatures.toml"
 ---
-
 ## 文件位置
 veadk/agent.py，类 `Agent(LlmAgent)`。
 

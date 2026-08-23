@@ -2,6 +2,7 @@
 id: "agent-evaluation-toolchain-selection"
 title: "第8章：评测工具链选型"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/08-toolchain-selection.toml"
 category: "learning"
 tags: ["agent-evaluation", "toolchain", "open-source", "commercial", "build-vs-buy", "ci-cd-integration", "mlflow", "observability"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent评测工具链选型方法，包括开源vs商用vs自研决策框架、开源工具对比、商用平台评估维度、自研框架设计、分阶段技术栈推荐与工具链集成方案。"
 references: 22
 ---
-
 # 第8章：评测工具链选型
 
 ---

@@ -2,6 +2,7 @@
 id: "pythagorean-theorem-proof-methods"
 title: "三、经典证明方法"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/03-proof-methods.toml"
 ---
 # 三、经典证明方法
 

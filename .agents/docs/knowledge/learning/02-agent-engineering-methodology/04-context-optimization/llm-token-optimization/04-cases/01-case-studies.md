@@ -10,6 +10,7 @@ tags:
   - cost-optimization
   - context-engineering
 source:
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.toml"
   - engineering-blogs
   - academic-papers
   - conference-talks
@@ -22,7 +23,6 @@ description: |
   包含智能客服、代码助手、RAG系统、Agent智能体、长文档处理、内容生成等场景，
   所有案例均提供公开可验证的量化数据与来源链接。
 ---
-
 # LLM Token节省策略实际应用案例集
 
 ## 案例对比总结表

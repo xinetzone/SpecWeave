@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-04-practice-exercises
 title: 实践练习
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/04-learning-path/01-practice-exercises.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [练习, 实践]
 ---
-
 # 实践练习
 
 ---

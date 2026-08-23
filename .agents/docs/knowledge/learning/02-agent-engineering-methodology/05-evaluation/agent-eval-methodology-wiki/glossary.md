@@ -2,13 +2,13 @@
 id: "agent-eval-methodology-glossary"
 title: "Agent评测方法论：核心术语表"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/glossary.toml"
 category: "learning"
 tags: ["agent-evaluation", "glossary", "methodology"]
 date: "2026-08-05"
 version: "0.1"
 status: "draft"
 ---
-
 # Agent评测方法论：核心术语表
 
 > 本术语表收录 Agent 评测体系化建设涉及的核心术语，每个术语附一句话通俗解释，帮助不同背景的读者快速对齐概念。

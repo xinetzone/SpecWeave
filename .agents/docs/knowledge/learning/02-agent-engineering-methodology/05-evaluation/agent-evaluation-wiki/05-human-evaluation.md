@@ -2,6 +2,7 @@
 id: "agent-evaluation-human-evaluation"
 title: "第5章：人工评估方法论"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/05-human-evaluation.toml"
 category: "learning"
 tags: ["agent-evaluation", "human-evaluation", "annotation", "inter-rater-reliability", "cohens-kappa", "quality-control", "human-in-the-loop"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent人工评估方法论，包括人工评估的不可替代性、评估维度设计、标注规范制定、评估员培训、一致性检验方法、质量控制机制与人机协作策略。"
 references: 22
 ---
-
 # 第5章：人工评估方法论
 
 ---

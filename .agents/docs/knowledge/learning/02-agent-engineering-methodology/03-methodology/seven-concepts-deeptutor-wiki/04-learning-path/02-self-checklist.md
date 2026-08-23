@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-04-self-checklist
 title: 自学质量检查清单
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/04-learning-path/02-self-checklist.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [自检, 清单, 工具]
 ---
-
 # 自学质量检查清单
 
 ---

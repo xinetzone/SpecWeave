@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-00"
 title: "Python 3.14 + CPython 源码深度指南 — 概述"
 source: "https://docs.python.org/3.14/whatsnew/3.14.html"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/00-overview.toml"
 ---
-
 # Python 3.14 + CPython 源码深度指南 — 概述
 
 > 一句话摘要：Python 3.14 是自 Python 3.0 以来最具变革性的版本——自由线程（无 GIL）正式进入官方支持阶段、Copy-and-Patch JIT 随官方二进制分发、t-strings 模板字符串、延迟注解求值、多解释器标准库支持、Zstandard 压缩内建等重磅特性同时落地。本教程以官方文档和 [CPython v3.14.0 源码](https://github.com/python/cpython/tree/v3.14.0) 为根基，从语言特性、内部架构到迁移实战系统讲解。

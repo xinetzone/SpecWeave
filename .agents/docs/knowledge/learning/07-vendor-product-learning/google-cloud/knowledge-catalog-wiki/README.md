@@ -11,12 +11,12 @@ tags:
   - ai-agents
   - wiki
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.toml"
   - https://github.com/GoogleCloudPlatform/knowledge-catalog
   - vendor/knowledge-catalog/
 category: knowledge/learning/07-vendor-product-learning
 maturity: L1-draft
 ---
-
 # Google Cloud Knowledge Catalog Wiki
 
 > 面向AI工程师的数据目录与元数据管理知识库——理解OKF开放知识格式，掌握元数据即代码工作流，构建Agent原生的数据上下文基础设施。

@@ -3,6 +3,7 @@ id: okf-ecosystem-infrastructure-02-bundle-registry
 title: "02 OKF Bundle 分发注册机制"
 version: "1.0"
 source: ".chaos/libs/awesome-okf-kit 深度分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/02-bundle-registry.toml"
 type: "Wiki Tutorial"
 description: "OKF bundle 社区注册表机制：registry.yaml 字段 Schema、okf get 消费流程、validate_registry.py 校验规则、发布流程与许可政策"
 tags: ["OKF", "bundle", "registry", "okf-kit", "分发", "awesome-okf-kit"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.1/v0.2"
 ---
-
 # 02 OKF Bundle 分发注册机制
 
 > 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [awesome-okf-kit](https://github.com/vinodborole/awesome-okf-kit)（社区 bundle 注册表）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。

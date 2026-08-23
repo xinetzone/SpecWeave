@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/08-resources.toml"
 summary: "Intel Neural Compressor 相关术语表、官方文档链接、参考论文与学习资源。"
 tags: ["neural-compressor", "glossary", "resources", "references"]
 ---
-
 # 术语表与资源
 
 本章汇总了使用 Intel Neural Compressor 和模型量化领域的核心术语，以及官方文档、相关项目、论文和博客等学习资源，方便读者查阅和深入学习。

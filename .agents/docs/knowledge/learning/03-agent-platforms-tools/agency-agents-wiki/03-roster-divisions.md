@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-03"
 title: "The Agency 完全指南 — 部门名册"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/03-roster-divisions.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/03-roster-divisions.toml"
 ---
-
 # The Agency 完全指南 — 部门名册
 
 > 一句话摘要：本章全面讲解 The Agency 的 17 个部门名册，用分类树、汇总表和逐部门子表呈现每个部门的 Agent 数量、核心成员、代表 Agent 能力与典型业务场景，并给出跨部门组合协作的实战建议，帮助你像搭积木一样按需挑选 Agent 组建自己的"虚拟团队"。

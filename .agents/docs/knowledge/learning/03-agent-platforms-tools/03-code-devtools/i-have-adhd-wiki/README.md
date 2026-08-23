@@ -2,6 +2,7 @@
 id: "i-have-adhd-wiki-readme"
 title: "i-have-adhd Wiki 目录索引"
 source: "external/libs/i-have-adhd 知识沉淀"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.toml"
 ---
 # i-have-adhd Wiki 目录索引
 

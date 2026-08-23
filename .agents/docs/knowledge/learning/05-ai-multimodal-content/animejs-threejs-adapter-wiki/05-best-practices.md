@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/05-best-practices.toml"
 ---
-
 # 最佳实践与常见陷阱
 
 > 🎯 **本章目标**：总结 Anime.js + Three.js 适配器在实际项目中的性能优化策略、调试技巧、常见踩坑点，帮助开发者避开陷阱、写出高性能且稳定的 3D 动画代码。

@@ -2,6 +2,7 @@
 id: "agent-evaluation-continuous-evaluation"
 title: "第9章：持续评测体系"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/09-continuous-evaluation.toml"
 category: "learning"
 tags: ["agent-evaluation", "continuous-evaluation", "ci-cd", "five-gates", "shadow-mode", "ab-testing", "evaluation-driven-development", "maturity-model"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent持续评测体系建设，包括Agent-Native CI/CD理念、五门质量门禁详解、五门流水线流程图、回归检测、版本对比、趋势可视化、评测驱动开发、落地路线图、中小团队快速上手方案与成熟度自评矩阵。"
 references: 22
 ---
-
 # 第9章：持续评测体系
 
 > **方法论视角**：如需从"评测体系如何分阶段落地"（八阶段流程）的方法论视角理解本主题，可参阅 [方法论Wiki · 模块4 八阶段实施步骤](../agent-eval-methodology-wiki/04-implementation/04-implementation-overview.md)。

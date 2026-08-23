@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Config 配置系统
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/config.toml"
 description: PyInvoke Config 配置系统的完整 API 参考，涵盖七层合并优先级、DataProxy 属性代理、配置文件加载（YAML/JSON/Python）、环境变量集成与配置文件查找路径。
 tags: [pyinvoke, config, dataproxy, merge, yaml, json, environment-variables, core-api]
 date: 2026-08-21
@@ -10,7 +11,6 @@ sources:
   - external/libs/pyinvoke/invoke/invoke/config.py
   - external/libs/pyinvoke/invoke/invoke/env.py
 ---
-
 # Config 配置系统
 
 ## 概述

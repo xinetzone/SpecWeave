@@ -2,6 +2,7 @@
 id: "eve-wiki-09"
 title: "术语表与参考资源"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/09-glossary-resources.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "glossary", "resources", "references"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # 09 术语表与参考资源
 
 本章汇总 Eve 的核心术语表与参考资源清单，帮助读者快速建立概念框架，并获取进一步学习的官方与社区材料。

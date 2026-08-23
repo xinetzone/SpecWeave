@@ -2,6 +2,7 @@
 id: "eve-wiki-readme"
 title: "Vercel Eve 开源 Agent 框架 Wiki 教程"
 source: "https://blog.nixapi.com/blog/vercel-eve-agent-framework-2026/ + https://zhuanlan.zhihu.com/p/2051780593944416346 + https://zhuanlan.zhihu.com/p/2050951746332124853 + https://juejin.cn/post/7657863114352754726 + https://vercel.com/eve"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/README.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "nextjs-for-agents", "filesystem-first", "durable-execution", "sandbox", "mcp", "typescript", "ai-agent", "open-source"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # Vercel Eve 开源 Agent 框架 Wiki 教程
 
 > **Eve 是 Vercel 发布的开源 AI Agent 框架，定位"Next.js for Agents"**。它把 Agent 视为一个文件目录（filesystem-first），用 Markdown 定义指令与技能、用 TypeScript 定义工具，内置持久化执行、沙箱计算、人工审批、MCP 连接等生产级能力，开箱即用。

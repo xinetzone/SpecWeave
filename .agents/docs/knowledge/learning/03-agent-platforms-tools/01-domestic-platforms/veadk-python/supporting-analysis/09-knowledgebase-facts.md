@@ -2,8 +2,8 @@
 id: 09-knowledgebase-facts
 title: KnowledgeBase 模块事实记录
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/09-knowledgebase-facts.toml"
 ---
-
 # KnowledgeBase 模块事实记录
 
 ## KnowledgeBase 类

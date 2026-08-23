@@ -7,13 +7,13 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Constraints", "Anti-Patterns", "Guardrails"]
 maturity: "L1"
 source: "zhujian-wudao-constraint-driven-design-methodology"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.toml"
 prerequisites:
   - "llm-token-optimization-first-principles"
   - "llm-token-optimization-anti-patterns"
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化禁止事项清单（约束驱动）
 
 > 本文档采用竹简悟道项目萃取的"约束驱动设计"方法论，从Token优化的核心哲学推导出不可逾越的行为边界。在边界内给予最大自主空间，在边界外明确禁止。每条禁令均标注出处，确保可追溯。

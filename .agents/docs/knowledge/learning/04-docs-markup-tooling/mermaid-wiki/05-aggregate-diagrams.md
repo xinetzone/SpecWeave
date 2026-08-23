@@ -2,6 +2,7 @@
 id: "mermaid-wiki-05-aggregate"
 title: "Mermaid 可视化图表：Gantt / Pie / Journey / Timeline / Sankey / QuadrantChart"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/05-aggregate-diagrams.toml"
 category: "learning"
 tags: ["mermaid", "diagram", "gantt", "pie", "journey", "timeline", "sankey", "quadrantChart", "markup", "visualization"]
 date: "2026-08-06"

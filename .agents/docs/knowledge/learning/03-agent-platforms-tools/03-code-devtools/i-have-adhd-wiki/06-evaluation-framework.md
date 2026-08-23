@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-eval
 title: 七、评估框架与质量保障
 source: external/libs/i-have-adhd/evals/ 评估体系分析
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/06-evaluation-framework.toml"
 ---
-
 # 七、评估框架与质量保障
 
 ## 7.1 为什么需要评估

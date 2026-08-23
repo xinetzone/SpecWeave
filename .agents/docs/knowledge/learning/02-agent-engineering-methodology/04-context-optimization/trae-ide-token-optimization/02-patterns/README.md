@@ -4,6 +4,7 @@ title: "可复用模式索引"
 date: 2026-08-01
 type: patterns-index
 source: "seven-concepts E阶段萃取"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/02-patterns/README.toml"
 ---
 # 可复用模式索引
 

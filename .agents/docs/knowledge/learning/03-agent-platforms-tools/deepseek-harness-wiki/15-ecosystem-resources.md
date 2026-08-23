@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-15"
 title: "DeepSeek Harness 完全指南 — 生态与资源链接"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/15-ecosystem-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/15-ecosystem-resources.toml"
 ---
-
 # 15 生态与资源链接
 
 恭喜你读完了整个教程！最后一章我们整理了 DeepSeek Harness 相关的所有官方资源、社区内容、深度阅读文章和生态动态，方便你继续学习、跟踪进展、参与社区。

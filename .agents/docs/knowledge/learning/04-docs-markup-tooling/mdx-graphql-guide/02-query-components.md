@@ -1,7 +1,7 @@
 ---
 title: "MDX + GraphQL 查询组件开发"
 source: "insight:retrospective-sphinx-graphql-okf-combination-insights-20260805"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/02-query-components.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/02-query-components.toml"
 date: "2026-08-05"
 tags: [mdx, graphql, components, schema, patterns]
 category: "learning"

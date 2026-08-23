@@ -2,6 +2,7 @@
 id: "hermes-agent-wiki-10-architecture-source"
 title: "10 架构解析与源码导读"
 source: "NousResearch/hermes-agent 本地源码仓库（website/docs/developer-guide/architecture.md、agent-loop.md、plugins/index.md；源码 run_agent.py、cli.py、hermes_cli/、gateway/run.py、tools/、plugins/、skills/、tests/）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/10-architecture-source.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 架构解析与源码导读：AIAgent 核心循环、整体架构、CLI/TUI/桌面、gateway 架构、项目结构与关键文件、插件系统、核心窄腰在代码中的体现"
 status: "stable"

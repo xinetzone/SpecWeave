@@ -2,13 +2,12 @@
 id: custom-extension
 title: 自定义Extension开发指南
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/extensions/custom-extension.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 自定义Extension开发指南
 
 本文档介绍 VeADK 中 Extension（扩展）的概念和开发方法。VeADK 提供两种 Extension 模式：渠道扩展（Channel Extension）和插件扩展（Plugin Extension）。

@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-06"
 title: "DeepSeek Harness 完全指南 — Agent 循环与事件模型"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/06-agent-loop-events.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/06-agent-loop-events.toml"
 ---
-
 # 06 Agent 循环与事件模型
 
 Agent 循环（Agent Loop）是 Harness 的心脏——它决定了输入如何被处理、模型如何被调用、工具如何被执行、结果如何返回。dsh 将循环拆解为极其清晰的 Turn/Step 模型，并在每个关键节点暴露类型化事件，让插件可以在任意环节介入。本章详解这套机制。

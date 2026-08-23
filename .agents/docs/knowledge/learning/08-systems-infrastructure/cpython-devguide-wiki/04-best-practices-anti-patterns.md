@@ -4,12 +4,12 @@ title: "04 - 最佳实践与反模式"
 date: 2026-08-19
 tags: [cpython, best-practices, anti-patterns, checklist, mental-models, growth]
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/04-best-practices-anti-patterns.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
 maturity: L1-draft
 ---
-
 # 04 - 最佳实践与反模式
 
 本章总结了新贡献者最容易犯的10个错误，提供PR提交前检查清单，帮助你建立正确的贡献心智模型。

@@ -2,6 +2,7 @@
 id: "agent-evaluation-metrics-design"
 title: "第2章：指标体系设计"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/02-metrics-design.toml"
 category: "learning"
 tags: ["agent-evaluation", "metrics", "pass-at-k", "rag-metrics", "agent-metrics", "efficiency", "safety", "aws-framework"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent评测指标体系设计，包括14大类指标分类、核心指标深度解析、AWS三层评估框架、指标计算方法与适用场景、指标选择指南。"
 references: 22
 ---
-
 # 第2章：指标体系设计
 
 > **方法论视角**：如需从"能力/效率/安全/人本商业"四维框架（含北极星与分层原则）的方法论视角理解本主题，可参阅 [方法论Wiki · 模块3 关键指标体系](../agent-eval-methodology-wiki/03-metrics/03-metrics-overview.md)。

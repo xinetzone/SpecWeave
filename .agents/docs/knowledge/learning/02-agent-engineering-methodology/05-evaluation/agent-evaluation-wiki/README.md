@@ -1,7 +1,7 @@
 ---
 id: "agent-evaluation-methodology-wiki-index"
 title: "Agent评测体系化建设方法论"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/README.toml"
 category: "learning"
 date: "2026-08-05"
 tags: ["agent-evaluation", "evaluation-methodology", "benchmark", "metrics", "ci-cd", "llm-as-judge"]

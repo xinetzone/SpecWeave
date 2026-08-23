@@ -2,6 +2,7 @@
 id: "orca-wiki-architecture"
 title: "核心架构与技术栈"
 source: "d:\AI\external\tools\orca 本地开源源码（package.json / README.md / src 目录结构）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/01-core-architecture.toml"
 category: "learning"
 tags: ["orca", "stablyai", "electron", "electron-vite", "react", "typescript", "xterm.js", "node-pty", "ssh2", "react-native", "expo", "sherpa-onnx", "agent-browser", "multi-agent", "wiki教程"]
 date: "2026-08-03"
@@ -12,7 +13,6 @@ last_verified: "2026-08-03"
 wiki_version: "1.0"
 
 ---
-
 # 01 核心架构与技术栈
 
 > 本章基于 Orca 本地开源源码（`d:\AI\external\tools\orca`）的 `package.json` 依赖清单与 `src` 目录结构解析，是理解后续各章功能实现机理的基础。所有技术栈信息均以本地源码为权威依据。

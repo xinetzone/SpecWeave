@@ -14,9 +14,8 @@ summary: "收集12个最常见问题并给出简明解答，总结8条核心最�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/06-faq-and-best-practices.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/06-faq-and-best-practices.toml"
 ---
-
 # 06 FAQ与最佳实践
 
 ## 6.1 常见问题（FAQ）

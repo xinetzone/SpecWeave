@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-09"
 title: "Python 3.14 迁移指南"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#porting-to-python-3-14"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/09-migration-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/09-migration-guide.toml"
 ---
-
 # Python 3.14 迁移指南
 
 本章提供从 Python 3.13（或更早版本）迁移到 Python 3.14 的实用指南，包括废弃 API 对照、行为变更注意事项、C 扩展迁移步骤和常见问题解决方案。

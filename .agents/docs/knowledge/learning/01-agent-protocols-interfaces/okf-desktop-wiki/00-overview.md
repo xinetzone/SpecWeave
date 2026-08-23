@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-overview"
 title: "00 概述与知识地图"
 version: "1.0"
 source: "github.com/vinodborole/okf-desktop 源码 + README.md"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/00-overview.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 教程全景：OKF 生态定位、核心架构原则、五大界面、架构流程图、学习目标与三条阅读路径"
 tags: ["okf-desktop", "okf-kit", "OKF", "pywebview", "React", "桌面应用", "wiki教程"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 00 概述与知识地图
 
 ## 0.1 okf-desktop 是什么

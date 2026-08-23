@@ -2,13 +2,12 @@
 id: tracing-module
 title: 可观测性与Tracing
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/tracing.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 可观测性与Tracing
 
 ## 概述

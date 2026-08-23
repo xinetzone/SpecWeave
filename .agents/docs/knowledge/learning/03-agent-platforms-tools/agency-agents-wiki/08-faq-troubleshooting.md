@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-08"
 title: "The Agency 完全指南 — 常见问题解答"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/08-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/08-faq-troubleshooting.toml"
 ---
-
 # The Agency 完全指南 — 常见问题解答
 
 > 一句话摘要：本章以「问题 + 答案」的形式，系统解答 The Agency 的基础概念、安装、使用、工具兼容、维护与排查六大类高频问题，并附一张「安装失败排查」流程图，帮助你在遇到问题时快速定位与解决。

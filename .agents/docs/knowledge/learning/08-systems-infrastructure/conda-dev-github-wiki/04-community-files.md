@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-04-community-files
 title: "社区健康文件详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/04-community-files.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/04-community-files.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "code-of-conduct", "community", "github-profile", "gitignore", "governance"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库社区健康文件详解"
 ---
-
 # 社区健康文件详解
 
 > 本章解析 `conda-dev/.github` 元仓库根目录下的"社区健康文件"（Community Health Files）。它们是 GitHub 组织/仓库层面的"软基础设施"，定义了社区的行为规范、协作流程与对外门面。本章对象即 04-community-files：`CODE_OF_CONDUCT.md`、`HOW_WE_USE_GITHUB.md`、`profile/README.md` 与 `.gitignore`。

@@ -8,6 +8,7 @@ layer: "practice"
 maturity: "L1-experimental"
 validation_count: 1
 source: "community forum experience"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/02-patterns/P-T-001-static-reduction.toml"
 ---
 # P-T-001: 静态减负模式
 

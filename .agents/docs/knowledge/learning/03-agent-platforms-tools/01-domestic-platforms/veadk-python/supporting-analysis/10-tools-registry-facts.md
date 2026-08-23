@@ -2,8 +2,8 @@
 id: 10-tools-registry-facts
 title: Tools 注册表事实记录
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/10-tools-registry-facts.toml"
 ---
-
 # Tools 注册表事实记录
 
 ## tools/ 目录结构和内置工具文件列表

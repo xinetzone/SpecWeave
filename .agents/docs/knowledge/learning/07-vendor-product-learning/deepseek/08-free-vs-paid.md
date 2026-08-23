@@ -3,6 +3,7 @@ id: "deepseek-v4-free-vs-paid"
 title: "08 免费vs付费对比与选型决策"
 version: "1.0"
 source: "官方API文档 + platform.deepseek.com + 14个权威来源综合"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/08-free-vs-paid.toml"
 type: "Wiki Document"
 description: "DeepSeek免费方案与付费路径的多维对比，不同用户画像的选型建议，成本估算决策树"
 tags: ["DeepSeek", "免费vs付费", "选型决策", "成本估算", "决策树"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "网页/App永久免费零成本，API新用户赠500万tokens，付费仅影响API用量计费，价格仍比GPT-5.5便宜8倍以上。提供不同用户画像的选型建议和成本估算。"
 last_verified: "2026-08-19"
 ---
-
 # 08 免费vs付费对比与选型决策
 
 ## 8.1 "免费"与"付费"的正确理解

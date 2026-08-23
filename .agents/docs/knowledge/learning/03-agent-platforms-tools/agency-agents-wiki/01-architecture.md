@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-01"
 title: "The Agency 完全指南 — 文件夹架构"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/01-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/01-architecture.toml"
 ---
-
 # The Agency 完全指南 — 文件夹架构
 
 > 一句话摘要：本章带你走进 The Agency 源仓库的目录结构，理解顶层文件、`divisions.json`（17 个部门的权威清单）、`tools.json`（16 种工具的安装契约）以及 17 个部门目录与若干特殊目录各自扮演的角色，为后续理解 Agent 文件格式与多工具集成打下基础。

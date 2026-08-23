@@ -2,6 +2,7 @@
 id: "i-have-adhd-wiki-philosophy"
 title: "二、设计理念"
 source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 认知原理分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/01-design-philosophy.toml"
 ---
 # 二、设计理念
 

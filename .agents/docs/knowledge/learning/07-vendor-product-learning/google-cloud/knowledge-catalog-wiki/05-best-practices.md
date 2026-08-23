@@ -1,6 +1,7 @@
 ---
 id: knowledge-catalog-wiki-best-practices
 title: 05 - 最佳实践与反模式
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/05-best-practices.toml"
 date: 2026-08-15
 tags:
   - best-practices
@@ -9,7 +10,6 @@ tags:
   - agent-integration
 maturity: L1-draft
 ---
-
 # 05 - 最佳实践与反模式
 
 > 🔥 **本章重点**：5个必须避免的反模式、OKF编写检查清单、Agent集成模式、常见问题解答。

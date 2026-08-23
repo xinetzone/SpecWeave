@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-03-cli-commands
 title: "CLI 命令层"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/03-cli-commands.toml"
 category: "learning"
 tags: [conda, source-code, cli, argparse, main, subcommands]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "拆解 conda 命令行的入口、命令注册/分发机制、argparse 扩展与 main_*.py 命令分类，说明 CLI 如何调用 core 与 gateways 完成实际工作。"
 ---
-
 # CLI 命令层
 
 ## 1. 引言：从 `conda install numpy` 到代码执行

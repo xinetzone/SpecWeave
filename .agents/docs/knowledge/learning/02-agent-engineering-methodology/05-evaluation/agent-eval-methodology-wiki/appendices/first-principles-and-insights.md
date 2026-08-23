@@ -2,13 +2,13 @@
 id: "agent-eval-methodology-first-principles-insights"
 title: "F阶段第一性原理分析与I阶段核心洞察"
 source: "seven-concepts:F阶段+I阶段产物"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/first-principles-and-insights.toml"
 category: "learning"
 tags: ["agent-evaluation", "first-principles", "insight", "G2"]
 date: "2026-08-05"
 status: "draft"
 summary: "Agent评测体系化建设的第一性原理公理体系、假设剥离辨析，以及三条带完整四元组（陈述/证据/反常识/行动）的核心洞察。"
 ---
-
 # F阶段第一性原理分析与I阶段核心洞察
 
 > 本文件包含七概念方法论的 **F（第一性原理）阶段** 与 **I（洞察）阶段** 产出物。F 阶段从本质出发界定 Agent 评测的核心问题、剥离默认假设、提炼公理；I 阶段基于公理与 R 阶段事实清单（F-xxx 编号）提炼三条核心洞察，每条含完整四元组。通过 G2 质量门。

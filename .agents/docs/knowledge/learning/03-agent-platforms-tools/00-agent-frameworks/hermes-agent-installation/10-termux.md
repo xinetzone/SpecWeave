@@ -2,12 +2,12 @@
 title: "Hermes Agent 安装方案 - Termux（Android）特殊安装说明"
 chapter: 10
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/10-termux.toml"
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/constraints-termux.txt
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/README.md
 ---
-
 # 10. Termux（Android）特殊安装说明
 
 本章面向希望在 Android 设备上通过 Termux 运行 Hermes Agent 的用户，详细说明 Termux 环境的特殊限制、系统依赖安装、安装脚本的 Termux 专属行为、`[termux]` / `[termux-all]` extras 构成、不支持的功能清单、存储权限配置、后台保活方法、常见故障排查以及性能优化建议。所有内容均以项目源码中的 `scripts/install.sh`、`constraints-termux.txt`、`pyproject.toml` 与 `README.md` 为准。

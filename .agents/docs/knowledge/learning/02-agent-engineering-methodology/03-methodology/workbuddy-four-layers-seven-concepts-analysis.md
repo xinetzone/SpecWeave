@@ -6,6 +6,7 @@ source_article:
   title: "从 Prompt 到 Loop：四层工程打造稳定可控的 AI Agent"
   author: "Anne（WorkBuddy团队策略产品经理）"
   source: "微信公众号「Founder Park」"
+  x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/workbuddy-four-layers-seven-concepts-analysis.toml"
   publish_date: "2026-07"
   url: "https://mp.weixin.qq.com/s/GkhemHUAhKWV-3Uxaa1Mqg"
 report_type: "深度技术分析报告"

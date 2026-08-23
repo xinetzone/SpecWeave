@@ -2,9 +2,8 @@
 id: "quantdinger-01-article-content"
 title: "QuantDinger：自托管AI量化交易平台 — 文章原文"
 source: "微信公众号「极客之家」"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/01-article-content.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/01-article-content.toml"
 ---
-
 丛林 丛林
 
 在小说阅读器读本章

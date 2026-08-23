@@ -9,11 +9,11 @@ tags:
   - computation-graph
   - type-system
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/01-core-concepts.toml"
   - https://onnx.ai/onnx/intro/concepts.html
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX 核心概念详解
 
 本章系统讲解ONNX的11个核心概念，贯穿案例使用**线性回归**：`y = X @ W + b`。

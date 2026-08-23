@@ -3,6 +3,7 @@ id: "deepseek-v4-glossary"
 title: "10 术语表"
 version: "1.0"
 source: "API文档 + 官方技术博客 + AI/大模型通用术语"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/10-glossary.toml"
 type: "Wiki Document"
 description: "DeepSeek-V4免费方案相关的专业术语解释，帮助初学者理解文档中的技术概念"
 tags: ["DeepSeek", "术语表", "Token", "MoE", "API", "上下文", "KV Cache", "峰谷定价"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "整理文档中15+个专业术语的中英文对照和通俗解释，包括Token、MoE、上下文窗口、KV Cache、缓存命中、Tool Calls、FIM、MTP、SFT、RLHF等。"
 last_verified: "2026-08-19"
 ---
-
 # 10 术语表
 
 ## A

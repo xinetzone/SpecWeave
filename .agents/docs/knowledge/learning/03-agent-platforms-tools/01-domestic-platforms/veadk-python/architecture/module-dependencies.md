@@ -2,6 +2,7 @@
 id: veadk-python-module-dependencies
 title: 架构参考：模块依赖关系与分层约束
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/architecture/module-dependencies.toml"
 category: learning
 tags:
 - VeADK
@@ -16,8 +17,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 模块依赖关系详解，包含核心模块依赖图、六层分层架构说明、Agent/Runner聚焦依赖图，以及单向依赖、核心层纯净等依赖规则
 wiki_version: '1.0'
 ---
-
-
 # 架构参考：模块依赖关系与分层约束
 
 本文档详细展示 VeADK 核心模块间的 import/依赖关系，通过 Mermaid 图表可视化六层分层架构，并明确定义模块依赖规则，为代码贡献者和架构师提供准确的架构参考。

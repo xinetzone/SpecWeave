@@ -2,10 +2,10 @@
 id: "llm-token-optimization-methods-overview"
 title: "Token优化技术方法总览"
 source: "本知识库原创整理，综合各分类文档"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/00-methods-overview.toml"
 tags: ["overview", "token-optimization", "llm", "methods"]
 category: "methods"
 ---
-
 # LLM Token优化技术方法总览
 
 本目录系统梳理大语言模型（LLM）token节省的五大类优化方案，总计35种具体技术，覆盖从提示词工程到推理引擎的完整优化栈。

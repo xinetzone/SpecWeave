@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-cases"
 title: "08、实战案例集"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/08-practice-cases.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.1"
 status: "completed"
 ---
-
 # 08、实战案例集
 
 ## 1. 概述

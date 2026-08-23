@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-05"
 title: "book-to-skill 完全指南 — 安全模型"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/05-security-model.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/05-security-model.toml"
 ---
-
 # 安全模型
 
 ## 文档→Agent 供应链攻击面

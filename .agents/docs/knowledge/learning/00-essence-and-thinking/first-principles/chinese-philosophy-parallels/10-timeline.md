@@ -2,6 +2,7 @@
 id: timeline
 title: 中西哲学根本性思维发展时间线
 source: cross-cultural-first-principles-comparison Task 8
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/10-timeline.toml"
 created_at: "2026-07-13"
 status: completed
 version: "1.0"

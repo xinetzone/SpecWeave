@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-02"
 title: "产品架构与核心能力"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/02-core-architecture.toml"
 category: "learning"
 tags: ["AgentKit", "VeADK", "火山引擎", "AI Agent", "wiki教程"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 02 产品架构与核心能力
 
 ## Agent Ready 基础设施分层架构图

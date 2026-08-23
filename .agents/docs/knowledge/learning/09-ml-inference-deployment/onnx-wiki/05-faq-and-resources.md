@@ -9,12 +9,12 @@ tags:
   - glossary
   - references
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/05-faq-and-resources.toml"
   - https://onnx.ai
   - https://github.com/onnx/onnx
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX FAQ与资源
 
 常见问题解答、学习资源链接、术语表。

@@ -7,6 +7,7 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Decision-Framework", "Best-Practices"]
 maturity: "L1"
 source: "extraction-from-previous-research"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/00-framework-overview.toml"
 prerequisites:
   - "llm-token-optimization-principles-first-principles"
   - "llm-token-optimization-methods-overview"
@@ -15,7 +16,6 @@ prerequisites:
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化决策框架总览
 
 > 本框架是LLM Token优化知识体系的决策层，基于前面完成的底层原理、35种优化技术、24个工具、9个案例、评估体系，萃取而成的可操作决策指南。帮助开发者在不同场景下快速选择合适的优化技术组合，避免盲目试错。

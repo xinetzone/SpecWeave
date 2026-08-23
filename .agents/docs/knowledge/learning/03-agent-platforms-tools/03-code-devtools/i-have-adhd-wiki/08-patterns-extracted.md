@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-patterns
 title: 九、可复用模式萃取
 source: 基于i-have-adhd项目的七概念方法论萃取(E阶段)
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/08-patterns-extracted.toml"
 ---
-
 # 九、可复用模式萃取
 
 > **【SpecWeave 方法论补充】** 本章为七概念知识沉淀 E 阶段（萃取）产出，对原项目内容进行了方法论层面的抽象和跨领域迁移分析，属于二次创作增值内容。原项目 SKILL.md 中只列出了规则本身，未做模式化提炼。

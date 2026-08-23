@@ -7,13 +7,13 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Patterns", "Best-Practices", "G3-Verified"]
 maturity: "L1"
 source: "extraction-from-9-cases-multi-domain-verified"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.toml"
 prerequisites:
   - "llm-token-optimization-selection-matrix"
 validation_count: 2
 reuse_count: 0
 g3_migration_verified: true
 ---
-
 # Token优化可复用最佳实践模式
 
 > 本文档萃取5个经过多案例验证的可复用模式，每个模式包含触发场景、核心问题、解决方案、本质路径映射、效果数据、反模式、G3迁移验证。

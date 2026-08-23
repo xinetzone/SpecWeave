@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch04-helper-tui"
 title: "第4章 - WTA Rust 核心 - Helper 与 TUI"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/04-wta-helper-tui.toml"
 date: "2026-08-03"
 ---
-
 # 第4章 WTA Rust 核心 - Helper 与 TUI
 
 ## 4.1 wta-helper 概述

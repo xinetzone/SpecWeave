@@ -3,6 +3,7 @@ id: "deepseek-v4-third-party-free"
 title: "07 第三方免费路径与风险提示"
 version: "1.0"
 source: "OpenRouter/HuggingFace/第三方聚合平台公开信息 + 百度百科DeepSeek词条"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/07-third-party-free.toml"
 type: "Wiki Document"
 description: "通过第三方平台免费体验DeepSeek-V4的路径汇总，以及各平台的限制和风险提示"
 tags: ["DeepSeek", "第三方平台", "OpenRouter", "HuggingFace", "免费额度", "风险提示"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "除官方渠道外，OpenRouter、HuggingFace、硅基流动等第三方平台也提供DeepSeek模型的免费额度，但各有限制且可能存在隐私和稳定性风险，建议优先使用官方渠道。"
 last_verified: "2026-08-19"
 ---
-
 # 07 第三方免费路径与风险提示
 
 ## 7.1 为什么考虑第三方？

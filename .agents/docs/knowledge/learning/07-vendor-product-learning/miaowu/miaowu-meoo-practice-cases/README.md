@@ -2,12 +2,12 @@
 id: miaowu-meoo-practice-cases-guide
 title: 秒悟Meoo实训案例学习指南
 source: 基于钉钉文档《秒悟Meoo实训案例》萃取生成，二次点击规则来自《秒悟大使入驻指南》
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-meoo-practice-cases/README.toml"
 version: 1.1
 date: "2026-07-31"
 tags: [七概念, E, 萃取, 秒悟, Meoo, 实训案例, 学习指南]
 g3-gate: passed
 ---
-
 # 秒悟Meoo实训案例学习指南
 
 > **30秒快速上手**

@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-05"
 title: "Python 3.14 标准库重大改进"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#improved-modules"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/05-stdlib-improvements.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/05-stdlib-improvements.toml"
 ---
-
 # Python 3.14 标准库重大改进
 
 除了新增模块外，Python 3.14 对许多已有标准库模块进行了重要改进。本章精选对开发者影响最大的改进，按模块分类介绍。

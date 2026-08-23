@@ -7,11 +7,11 @@ tags:
   - architecture
   - positioning
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/00-overview.toml"
   - vendor/knowledge-catalog/README.md
   - vendor/knowledge-catalog/okf/README.md
 maturity: L1-draft
 ---
-
 # 00 - Knowledge Catalog 总览与架构全景
 
 > TL;DR：Knowledge Catalog是Google Cloud的AI原生数据目录，其核心创新是OKF——一种用Markdown+YAML表示知识的开放格式，将"知识即代码"理念落地，为AI Agent提供可验证、可追溯、可版本控制的数据上下文。

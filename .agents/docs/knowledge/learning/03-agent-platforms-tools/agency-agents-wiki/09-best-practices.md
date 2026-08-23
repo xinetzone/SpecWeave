@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-09"
 title: "The Agency 完全指南 — 最佳实践指南"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/09-best-practices.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/09-best-practices.toml"
 ---
-
 # The Agency 完全指南 — 最佳实践指南
 
 > 一句话摘要：本章从 Agent 选择、安装、使用、自定义、团队落地以及与 AI 编程助手结合六个维度，提炼 The Agency 的实战最佳实践，并配一张「团队落地 Agent 体系」流程图与一份速查清单，帮助你从"会用"进阶到"用得专业"。

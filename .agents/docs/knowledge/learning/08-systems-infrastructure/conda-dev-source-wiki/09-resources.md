@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-09-resources
 title: "术语表与参考资料"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/09-resources.toml"
 category: "learning"
 tags: ["conda", "glossary", "reference", "resources", "reading-list"]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda 源码学习术语表、权威参考链接与按难度分级的扩展阅读路线"
 ---
-
 # 术语表与参考资料
 
 本章提供 conda 源码学习所需的术语表、权威链接与分级阅读建议，术语均与 `conda/base/constants.py`、`conda/core/`、`conda/plugins/` 源码对应。

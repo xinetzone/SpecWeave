@@ -2,13 +2,13 @@
 id: "agent-eval-methodology-fact-list"
 title: "R阶段事实清单"
 source: "seven-concepts:R阶段产物"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/fact-list.toml"
 category: "learning"
 tags: ["agent-evaluation", "methodology", "fact-list", "G1"]
 date: "2026-08-05"
 status: "draft"
 summary: "Agent评测体系化建设方法论的客观事实清单，编号F-001起，作为后续洞察（I阶段）的证据基础。"
 ---
-
 # R阶段事实清单
 
 > 本文件是七概念方法论 **R（复盘）阶段** 的产出物，收录 Agent 评测体系化建设的客观事实。所有条目为可验证的客观陈述，不含因果推断与主观评价。通过 G1 质量门（事实无因果词、可追溯、数据完整）。

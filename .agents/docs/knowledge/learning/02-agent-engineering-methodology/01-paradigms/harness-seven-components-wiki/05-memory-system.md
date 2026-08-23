@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-05"
 title: "记忆系统（Memory System）：便签本与档案柜"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/05-memory-system.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "记忆系统", "memory", "上下文", "偏好"]
 ---
-
 ## 一、什么是记忆系统
 
 记忆系统（Memory System）是Agent的"便签本和档案柜"——存的是当前任务上下文和长期偏好。

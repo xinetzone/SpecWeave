@@ -1,6 +1,7 @@
 ---
 id: "volcengine-agentkit-wiki-maintenance"
 title: "AgentKit Wiki 版本维护手册"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/MAINTENANCE.toml"
 category: "learning"
 tags: ["AgentKit", "维护手册", "版本更新", "MAINTENANCE"]
 date: "2026-07-31"

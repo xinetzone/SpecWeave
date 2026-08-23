@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-05"
 title: "Python 3.14 标准库 annotationlib 全面详解"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/05-annotationlib.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/05-annotationlib.toml"
 ---
-
 # Python 3.14 标准库 annotationlib 全面详解
 
 > 一句话摘要：`annotationlib` 是 Python 3.14 新增的标准库模块，提供一组底层工具，用于在惰性求值的注解存在前向引用等极端情况时，仍然以可靠、可控的方式（通过 VALUE / FORWARDREF / STRING 三种格式）内省模块、类和函数上的注解，取代了直接解析 `__annotations__` 属性的脆弱做法。

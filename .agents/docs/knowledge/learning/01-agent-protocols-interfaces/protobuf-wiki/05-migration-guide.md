@@ -9,12 +9,12 @@ tags:
   - wire-format
   - caffe
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.toml"
   - https://protobuf.dev/programming-guides/proto3#migrating-from-proto2
   - https://protobuf.dev/editions/migration
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # 迁移指南
 
 本文档提供proto2→proto3、proto2/proto3→Editions的迁移检查清单、渐进式迁移策略、线格式兼容性边界说明，并以caffe.proto为实例做迁移成本评估。

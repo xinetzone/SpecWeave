@@ -11,10 +11,10 @@ tags:
   - provenance
   - attested-computation
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/01-okf-spec.toml"
   - vendor/knowledge-catalog/okf/SPEC.md (OKF v0.2)
 maturity: L1-draft
 ---
-
 # 01 - OKF开放知识格式规范详解（v0.2）
 
 > 本章基于OKF v0.2官方规范编写，完整覆盖Bundle结构、Frontmatter字段、信任/来源/生命周期体系、认证计算(Attested Computation)四大核心主题。

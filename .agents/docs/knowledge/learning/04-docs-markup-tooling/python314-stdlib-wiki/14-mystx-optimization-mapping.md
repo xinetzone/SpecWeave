@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-14"
 title: "Python 3.14 标准库 → mystx 主题优化机会映射笔记"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/14-mystx-optimization-mapping.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/14-mystx-optimization-mapping.toml"
 ---
-
 # Python 3.14 标准库 → mystx 主题优化机会映射笔记
 
 > 一句话摘要：本笔记将 `python314-stdlib-wiki` 六个模块（`contextlib` / `contextvars` / `sys.monitoring` / `annotationlib` / `dataclasses` / `traceback`）的系统学习成果，映射到 `mystx` Sphinx 主题（`d:\spaces\SpecWeave\playground\books\libs\mystx\src\mystx`）的具体优化机会，明确每项 stdlib 能力在 mystx 代码中的落点、优化动作与量化收益预判，并诚实标注「暂无收益明确落点」的模块，避免为凑齐六模块而强行引入无收益改造。

@@ -3,6 +3,7 @@ id: "deepseek-v4-pro-capabilities"
 title: "04 DeepSeek-V4-Pro 能力详解"
 version: "1.0"
 source: "官方技术博客 + HuggingFace deepseek-ai/DeepSeek-V4-Pro + weibo.com/深度求索 + HuggingFace排行榜"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/04-v4-pro-capabilities.toml"
 type: "Wiki Document"
 description: "DeepSeek-V4-Pro正式版技术规格、模型能力、基准表现、适用场景详解"
 tags: ["DeepSeek", "DeepSeek-V4-Pro", "MoE", "1.6T参数", "Agent能力", "1M上下文", "384K输出"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "V4-Pro是1.6T参数MoE架构旗舰模型（49B激活），支持1M上下文+384K输出，原生Agent能力，SWE-bench Pro 80.6%排名第一。网页/App免费满血使用。"
 last_verified: "2026-08-19"
 ---
-
 # 04 DeepSeek-V4-Pro 能力详解
 
 ## 4.1 模型基本信息

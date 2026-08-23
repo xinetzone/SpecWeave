@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-11"
 title: "DeepSeek Harness 完全指南 — 与 Claude Code/Codex/MCP 生态互操作"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/11-ecosystem-interop.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/11-ecosystem-interop.toml"
 ---
-
 # 11 与 Claude Code/Codex/MCP 生态互操作
 
 Agent 生态不是零和博弈。DeepSeek Harness 在设计之初就把「降低用户迁移成本、避免生态冷启动」作为核心目标之一——它不要求你抛弃已有的工具和习惯，而是通过无缝的互操作层，让你过去在 Claude Code、Codex、MCP 上的投资可以平滑复用。dsh 是来加入这个生态，而不是来重新发明一切的。

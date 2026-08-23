@@ -4,6 +4,7 @@ title: "参考资料"
 date: 2026-08-01
 type: references
 source: "web search + community posts"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/references.toml"
 ---
 # 参考资料
 

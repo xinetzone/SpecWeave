@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-02-workflows
 title: "GitHub Actions 工作流详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/02-workflows-deep-dive.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/02-workflows-deep-dive.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-actions", "workflow", "cla", "stale-bot", "ci"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库 7 个 GitHub Actions 工作流详解"
 ---
-
 # GitHub Actions 工作流详解
 
 conda/.github 元仓库通过 7 个工作流自动化大部分仓库治理工作。它们全部集中在 `.github/workflows/`，本文逐一拆解触发事件、权限声明、任务步骤与关键配置语义，最后提炼跨工作流共性模式。

@@ -2,6 +2,7 @@
 id: "echobird-wiki-comparison-trends"
 title: "对比与趋势洞察"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/10-comparison-trends.toml"
 category: "learning"
 tags: ["echobird", "comparison", "trends", "agent-desktop", "eve", "langgraph"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 与同类工具（Eve/Orca/LangGraph/官方 CLI）的对比�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 10 对比与趋势洞察
 
 本章将 EchoBird 放入更广阔的 AI Agent 工具生态中，从**定位、部署形态、目标用户、核心能力、生态**五个维度与四类代表工具进行对比，并据此提炼 Agent 桌面化趋势与技术选型建议，帮助读者判断"什么场景该用 EchoBird、什么场景可能不需要"。

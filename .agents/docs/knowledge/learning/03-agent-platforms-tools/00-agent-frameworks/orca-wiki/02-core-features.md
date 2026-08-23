@@ -2,6 +2,7 @@
 id: "orca-wiki-features"
 title: "八大核心功能详解"
 source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（README / docs/readme/README.zh-CN.md）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/02-core-features.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "mobile-companion", "ssh", "design-mode", "ai-diff", "github", "linear", "terminal-splits", "multi-agent"]
 date: "2026-08-03"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 orca_version_target: "1.4.165-rc.0"
 
 ---
-
 # 02 八大核心功能详解
 
 本章是 Orca 核心能力的总览。Orca 的定位是"面向 100x 构建者的 AI 编排器"——并排运行 Codex、Claude Code、OpenCode 或 Pi，每个都在自己的 worktree 中运行，并在一个地方统一跟踪。这八大功能共同构成了"多 Agent 并行 + 远程监控指挥 + 零上下文切换评审"的完整编排闭环。

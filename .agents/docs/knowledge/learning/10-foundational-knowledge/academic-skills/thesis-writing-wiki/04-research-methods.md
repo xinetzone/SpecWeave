@@ -2,6 +2,7 @@
 id: "thesis-writing-research-methods"
 title: "五、研究方法"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/04-research-methods.toml"
 ---
 # 五、研究方法
 

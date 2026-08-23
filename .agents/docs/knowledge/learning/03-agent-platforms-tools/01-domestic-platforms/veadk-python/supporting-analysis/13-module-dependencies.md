@@ -2,8 +2,8 @@
 id: 13-module-dependencies
 title: VeADK模块依赖关系与分层架构
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/13-module-dependencies.toml"
 ---
-
 # VeADK 模块依赖关系与分层架构
 
 本文档通过 Mermaid 图表展示 VeADK 核心模块间的 import/依赖关系，并进行分层架构说明。

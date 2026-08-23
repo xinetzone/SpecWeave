@@ -2,6 +2,7 @@
 id: source-validation-log
 title: 来源验证日志
 source: cross-cultural-first-principles-comparison Task 8
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.toml"
 created_at: "2026-07-13"
 status: completed
 version: "1.0"

@@ -2,6 +2,7 @@
 id: "echobird-wiki-quickstart"
 title: "快速上手指南"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/09-quickstart.toml"
 category: "learning"
 tags: ["echobird", "quickstart", "install", "model-nexus", "app-manager"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 四步快速上手：安装 EchoBird→安装 Agent→配置�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 09 快速上手指南
 
 本章面向第一次接触 EchoBird 的用户，用**四步**带你从零把一个 AI Agent 跑起来。全程不需要碰终端、不需要改配置文件、不需要查环境变量——这正是 EchoBird 的核心设计：它把"安装工具、配置模型、切换模型"这些通常要手工折腾的环节，全部收敛到图形界面里，并**直接写入每个工具的原生配置文件**（如 `~/.grok/config.toml`、`~/.kimi-code/config.toml`），让你在模型中心配好一处 provider，任意支持的工具都能一键指向它。

@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-07"
 title: "Python 3.14 C API 与扩展开发"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-c-api-features"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/07-c-api-changes.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/07-c-api-changes.toml"
 ---
-
 # Python 3.14 C API 与扩展开发
 
 Python 3.14 对 C API 进行了多项重要变更——PEP 741 统一配置 API、PEP 757 C 级整数导出、PEP 768 远程调试接口，以及 Limited API 的进一步不透明化。本章面向 C 扩展开发者，讲解新增 API、变更影响和迁移方案。

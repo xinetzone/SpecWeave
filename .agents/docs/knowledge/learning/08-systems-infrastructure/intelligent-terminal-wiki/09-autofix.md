@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch09-autofix"
 title: "第9章 - Autofix 自动错误检测与修复"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/09-autofix.toml"
 date: "2026-08-03"
 ---
-
 # 第9章 Autofix 自动错误检测与修复
 
 Autofix 是 Intelligent Terminal 的核心智能功能之一，能够自动检测终端命令失败（通过 OSC 133;D 退出码），自动分析错误原因并提供修复建议，用户确认后可一键执行修复命令。Autofix 采用**建议优先**（Suggest-first）模式：自动触发时仅显示检测提示，用户主动激活后才调用 LLM 分析，避免未经用户同意的自动执行。

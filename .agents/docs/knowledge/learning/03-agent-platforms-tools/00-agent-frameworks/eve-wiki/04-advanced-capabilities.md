@@ -2,6 +2,7 @@
 id: "eve-wiki-04"
 title: "进阶能力：子 Agent、定时任务与多 Agent 协作"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/04-advanced-capabilities.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "subagents", "schedules", "multi-agent"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # 04 进阶能力：子 Agent、定时任务与多 Agent 协作
 
 ## Subagents：子 Agent 委派

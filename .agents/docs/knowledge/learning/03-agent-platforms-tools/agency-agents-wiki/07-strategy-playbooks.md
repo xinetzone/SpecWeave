@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-07"
 title: "The Agency 完全指南 — 策略与运行手册"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/07-strategy-playbooks.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/07-strategy-playbooks.toml"
 ---
-
 # The Agency 完全指南 — 策略与运行手册
 
 > 一句话摘要：本章深入 The Agency 的 `strategy/` 指挥中枢，讲解 NEXUS 多 Agent 编排策略（7 阶段流水线 + 质量门 + 可度量成果）、三大部署模式、协调模板（激活提示词与交接模板）、四个场景运行手册（runbook）与七个分阶段操作手册（playbook），并给出快速上手与高管简报的定位说明。

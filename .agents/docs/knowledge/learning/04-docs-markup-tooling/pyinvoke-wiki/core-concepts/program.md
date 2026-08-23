@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Program CLI 入口
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/program.toml"
 description: PyInvoke Program CLI 入口类的完整 API 参考，涵盖核心 CLI 选项、任务发现、--list/--help/--complete 行为、执行流程与二进制分发。
 tags: [pyinvoke, program, cli, entrypoint, binary, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/program.py
 ---
-
 # Program CLI 入口
 
 ## 概述

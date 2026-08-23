@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-02"
 title: "book-to-skill 完全指南 — 提取器深度解析"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/02-extractor-deep-dive.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/02-extractor-deep-dive.toml"
 ---
-
 # 提取器深度解析
 
 Python 提取器是 book-to-skill 的确定性基础——它不理解内容，但它把各种格式的文档**可靠地**变成干净的纯文本。

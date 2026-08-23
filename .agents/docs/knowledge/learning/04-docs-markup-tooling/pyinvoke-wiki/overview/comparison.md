@@ -1,13 +1,13 @@
 ---
 type: "Comparison"
 title: "PyInvoke 与同类工具对比"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/overview/comparison.toml"
 description: "Invoke vs Make/Fabric/Nox/Tox/Shell Script 定位差异"
 tags: ["invoke", "comparison", "make", "fabric", "nox", "tox", "shell"]
 date: "2026-08-21"
 status: "stable"
 author: "SpecWeave"
 ---
-
 # 与同类工具对比
 
 ## 对比总览

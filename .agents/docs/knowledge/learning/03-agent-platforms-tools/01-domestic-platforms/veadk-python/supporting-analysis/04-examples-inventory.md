@@ -2,8 +2,8 @@
 id: 04-examples-inventory
 title: examples/ 目录示例清单
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/04-examples-inventory.toml"
 ---
-
 ## 示例清单（共13个）
 
 | 编号 | 目录名 | README 描述功能 | 核心 .py 文件名 |

@@ -2,6 +2,7 @@
 id: comparison-with-western-first-principles
 title: 与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架
 source: cross-cultural-first-principles-comparison Task 6
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.toml"
 created_at: "2026-07-13"
 status: in-progress
 version: "1.0"

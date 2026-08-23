@@ -2,9 +2,8 @@
 id: "deep-learning-atomic-design-00"
 title: "深度学习原子化设计指南"
 source: "docs/knowledge/engineering/deep-learning-atomic-design/index.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/00-overview.toml"
 ---
-
 # 深度学习原子化设计指南
 
 ## 目录

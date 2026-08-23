@@ -2,9 +2,8 @@
 id: "agent-runtime-protocol-wiki-02"
 title: "执行模型：Agent 如何跑起来（Part 1）"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/02-execution-model.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/02-execution-model.toml"
 ---
-
 # 02 执行模型：Agent 如何跑起来（Part 1）
 
 这一部分对应任务生命周期里的"创建任务"和"执行步骤"：一个外部请求如何变成 Run，Run 又如何被拆成 Step、Tool Call、Subagent task 和状态事件。

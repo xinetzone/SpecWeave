@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-validation-log"
 title: "10、来源验证档案（自举验证）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/10-source-validation-log.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 10、来源验证档案（自举验证）
 
 ---

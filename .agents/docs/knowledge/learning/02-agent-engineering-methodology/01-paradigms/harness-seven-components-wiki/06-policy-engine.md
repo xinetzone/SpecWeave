@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-06"
 title: "策略引擎（Policy Engine）：规则红线与强制约束"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/06-policy-engine.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "策略引擎", "policy-engine", "安全", "红线"]
 ---
-
 ## 一、为什么策略引擎最容易被低估
 
 很多人做Agent喜欢讲模型、工具、知识库，但上线以后最容易出事的往往是策略。**策略引擎（Policy Engine）** 是最被低估的组件。

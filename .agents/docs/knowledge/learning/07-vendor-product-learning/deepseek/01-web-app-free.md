@@ -3,6 +3,7 @@ id: "deepseek-v4-web-app-free"
 title: "01 网页端与App免费使用详解"
 version: "1.0"
 source: "chat.deepseek.com + 官网 + apidog.com实测 + 51CTO限流分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/01-web-app-free.toml"
 type: "Wiki Document"
 description: "DeepSeek网页端和官方App免费使用的完整指南：入口、登录、功能、限制、注意事项"
 tags: ["DeepSeek", "免费", "网页版", "App", "chat.deepseek.com"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "DeepSeek网页端(chat.deepseek.com)和App完全免费，默认V4-Pro模型，支持文件上传/联网搜索/三档推理，无硬性对话次数限制，无付费会员计划。高峰期可能有fair-use软限流。"
 last_verified: "2026-08-19"
 ---
-
 # 01 网页端与App免费使用详解
 
 ## 1.1 访问入口

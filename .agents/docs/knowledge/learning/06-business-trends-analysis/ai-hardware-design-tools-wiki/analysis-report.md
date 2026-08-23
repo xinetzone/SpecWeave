@@ -4,10 +4,10 @@ title: "AI硬件设计工具生态深度洞察报告——基于《10个AI硬件
 category: "knowledge"
 date: "2026-08-01"
 source: "https://mp.weixin.qq.com/s/YAm3b7kKkAPbFKgPpsTRVA"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/analysis-report.toml"
 author: "硬件狗哥（原文），AI分析整合"
 tags: ["ai-hardware", "eda", "pcb-design", "circuit-design", "ai-tools", "hardware-startup", "maker"]
 ---
-
 # AI硬件设计工具生态深度洞察报告
 ## ——基于《10个AI硬件设计常用网站》的系统分析
 

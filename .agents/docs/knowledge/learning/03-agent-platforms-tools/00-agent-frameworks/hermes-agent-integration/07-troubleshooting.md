@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-07-troubleshooting"
 title: "07 常见问题及解决方案"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 Wiki（Troubleshooting）+ 集成实践"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/07-troubleshooting.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-integration/07-troubleshooting.toml"
 type: "Wiki Tutorial"
 description: "集成常见问题及解决方案：插件未发现/未启用/schema 不匹配/provider 单实例/Windows 路径/name 冲突/restart"
 status: "stable"

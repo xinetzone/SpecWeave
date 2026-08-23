@@ -6,8 +6,8 @@ date: "2026-07-13"
 version: "1.0"
 status: "completed"
 source: "OpenAI官方Prompting指南 + GPT-5.6新写法"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/07-work-scenarios.toml"
 ---
-
 # Work场景实战指南
 
 ---

@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-03"
 title: "VeADK 智能体开发框架"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/03-veadk-framework.toml"
 category: "learning"
 tags: ["AgentKit", "VeADK", "火山引擎", "SDK", "开发框架"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 03 VeADK 智能体开发框架
 
 ## 什么是 VeADK？与 Google ADK 的兼容性

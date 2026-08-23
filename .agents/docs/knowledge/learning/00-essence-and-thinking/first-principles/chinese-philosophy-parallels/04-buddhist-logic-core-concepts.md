@@ -2,6 +2,7 @@
 id: buddhist-logic-core-concepts
 title: 佛教因明学核心概念：现量、比量、宗因喻
 source: cross-cultural-first-principles-comparison Task 4
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.toml"
 review_protocol: 00-cross-cultural-review-protocol.md
 created_at: "2026-07-13"
 status: in-progress

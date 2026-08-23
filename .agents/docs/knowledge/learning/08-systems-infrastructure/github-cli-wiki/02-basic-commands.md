@@ -2,9 +2,8 @@
 id: "github-cli-wiki-02"
 title: "基础命令指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/02-basic-commands.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/02-basic-commands.toml"
 ---
-
 # 基础命令指南
 
 本章介绍 GitHub CLI（`gh`）最常用的核心命令，涵盖仓库（repo）、议题（issue）、代码片段（gist）和浏览器（browse）四大模块。每个命令包含用途说明、基本语法、常用参数和实用示例。

@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-overview"
 title: "Jira 集成插件教程总览"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/00-overview.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "claude-code", "agent-skill", "plugin", "overview", "tutorial"]

@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-01"
 title: "产品介绍与核心概念"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/01-product-intro.toml"
 category: "learning"
 tags: ["AgentKit", "VeADK", "火山引擎", "AI Agent", "wiki教程"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 01 产品介绍与核心概念
 
 ## 什么是 AgentKit

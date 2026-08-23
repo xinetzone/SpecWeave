@@ -1,10 +1,10 @@
 ---
 title: "BrowserAct 官网完整学习教程：Cloud+Local双模式Agent浏览器平台"
 source: "BrowserAct官方网站 https://www.browseract.com/?co-from=QD"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.toml"
 date: "2026-08-03"
 tags: ["browseract", "ai-agent", "browser-automation", "web-scraping", "cloud", "skillhub", "data-api", "zapier", "n8n", "residential-proxy"]
 ---
-
 # BrowserAct 官网完整学习教程：Cloud+Local双模式Agent浏览器平台
 
 > **官网地址**: https://www.browseract.com/?co-from=QD

@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-01-c
 title: C - 原子提交 (Atomic Commit)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/04-c-atomic-commit.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, C, 原子提交, 理论]
 ---
-
 # C - 原子提交 (Atomic Commit)
 
 ---

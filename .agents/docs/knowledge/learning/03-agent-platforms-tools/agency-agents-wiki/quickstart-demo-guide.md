@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-quickstart"
 title: "The Agency 完全指南 — 新开发者快速上手演示"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/quickstart-demo-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/quickstart-demo-guide.toml"
 ---
-
 # The Agency 完全指南 — 新开发者快速上手演示
 
 > 一句话摘要：这是一份面向新开发者的**可复制粘贴**的分步演示教程。它会带你从零开始——先自动检测你本机装了哪款 AI 编程工具，再据此一步步克隆仓库、预览 Agent、安装到你常用的工具、激活第一个 Agent，最后用一个 5 人小团队跑通一个最小 MVP 场景。全程约 10 分钟。

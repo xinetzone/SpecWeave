@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-creation-process-record"
 title: "创作过程记录：从资料收集到内容撰写"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/creation-process-record.toml"
 category: "learning"
 tags: ["creation-process", "methodology", "thinking-log", "decision-record"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "记录Agent评测方法论Wiki教程从资料收集、框架搭建、内容撰写到审核修订的完整创作过程，包含各阶段的思考过程、决策依据与挑战解决方案。"
 references: 6
 ---
-
 # 创作过程记录：从资料收集到内容撰写
 
 > 本文件记录《Agent评测方法论》Wiki教程的完整创作过程，涵盖**资料收集、框架搭建、内容撰写**三个阶段（审核修订阶段在V对抗审查完成后补充）。记录的目的是复盘创作方法论，沉淀可复用模式。

@@ -2,6 +2,7 @@
 id: git-baidu-sync-repo-init-workflow
 title: Git 网盘仓库初始化与新设备加入工作流
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/03-repo-init-workflow.toml"
 created: 2026-07-31
 tags:
   - git
@@ -10,7 +11,6 @@ tags:
   - workflow
   - initialization
 ---
-
 # Git 网盘仓库初始化与新设备加入工作流
 
 本文档详细描述两种核心场景的完整操作流程：

@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-04"
 title: "Python 3.14 新模块详解"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-modules"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/04-new-modules.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/04-new-modules.toml"
 ---
-
 # Python 3.14 新模块详解
 
 Python 3.14 引入了四个重要的新模块/包，分别服务于类型注解、多解释器并行、模板字符串和数据压缩。本章逐一详解每个新模块的 API、使用场景和最佳实践。

@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-architecture"
 title: "架构设计：双技能插件"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/01-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/01-architecture.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "architecture", "plugin", "skill", "directory-structure", "data-flow"]

@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-08"
 title: "Python 3.14 构建系统与平台支持"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#build-changes"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/08-build-platform.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/08-build-platform.toml"
 ---
-
 # Python 3.14 构建系统与平台支持
 
 本章介绍 Python 3.14 的构建选项变更、官方二进制新特性、平台支持扩展和签名机制变化。

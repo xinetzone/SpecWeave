@@ -2,11 +2,11 @@
 title: "Hermes Agent 安装方案 - 官方脚本安装指南（Linux/macOS/WSL2）"
 chapter: 2
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/02-install-script.toml"
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/setup-hermes.sh
   - external/libs/hermes-agent/README.md
 ---
-
 # 2. 官方脚本安装指南（Linux/macOS/WSL2）
 
 本章面向 Linux、macOS 与 WSL2 用户，详细说明如何使用官方 `install.sh` 脚本完成 Hermes Agent 的一键安装，包括命令参数、安装阶段、目录布局以及安装后的验证方法。所有内容均以项目源码中的 `scripts/install.sh`、`setup-hermes.sh` 与 `README.md` 为准。

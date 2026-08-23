@@ -2,6 +2,7 @@
 id: "thesis-writing-revision"
 title: "八、修改与润色"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/07-revision-and-polishing.toml"
 ---
 # 八、修改与润色
 

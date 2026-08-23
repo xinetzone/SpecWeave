@@ -2,6 +2,7 @@
 id: git-baidu-sync-conflict-detection
 title: Git 网盘同步冲突检测与处理
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/06-conflict-detection.toml"
 created: 2026-07-31
 tags:
   - git
@@ -10,7 +11,6 @@ tags:
   - conflict-detection
   - data-safety
 ---
-
 # Git 网盘同步冲突检测与处理
 
 本文档详细描述百度网盘多设备 Git 同步系统中的冲突检测机制，包括百度网盘冲突副本的产生原因、命名规则、对 Git 仓库的危害、检测策略、分级处理方案及安全清理流程。

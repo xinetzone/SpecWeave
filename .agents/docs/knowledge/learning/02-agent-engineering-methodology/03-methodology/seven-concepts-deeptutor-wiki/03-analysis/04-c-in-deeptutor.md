@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-03-c
 title: C原子提交在DeepTutor中的体现
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/03-analysis/04-c-in-deeptutor.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [分析, C, 原子提交, 模式切换]
 ---
-
 # C原子提交在DeepTutor中的体现
 
 ---

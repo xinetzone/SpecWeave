@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-jql"
 title: "JQL 查询语言"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/06-jql.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/06-jql.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "jql", "query", "search", "operators", "functions"]

@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-06"
 title: "百度 Unlimited-OCR 可迁移模式与行业启示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/06-transferable-patterns.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/06-transferable-patterns.toml"
 ---
-
 # 百度 Unlimited-OCR 可迁移模式与行业启示
 
 > R-SWA的核心思想——参考侧全可见+输出侧滑窗+静态/动态信息分区——不是OCR专属技巧，而是适用于所有"有明确静态参考、逐token输出"任务的通用架构模式。本章分析可迁移到其他领域的设计模式，并给出具体改造方向。

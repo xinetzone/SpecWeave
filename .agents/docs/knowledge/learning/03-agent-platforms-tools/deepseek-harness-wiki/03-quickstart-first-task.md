@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-03"
 title: "DeepSeek Harness 完全指南 — 快速上手：第一个任务"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/03-quickstart-first-task.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/03-quickstart-first-task.toml"
 ---
-
 # 03 快速上手：第一个任务
 
 本章带你走完从打开 Web UI 到完成第一个 Agent 任务的完整流程。

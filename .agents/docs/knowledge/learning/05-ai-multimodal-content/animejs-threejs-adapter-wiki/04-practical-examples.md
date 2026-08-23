@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/04-practical-examples.toml"
 ---
-
 # 实战案例
 
 本章通过三个完整的实战案例，展示 Anime.js Three.js 适配器在真实项目场景中的应用。每个案例聚焦不同的特性组合，帮助你从"知道API"过渡到"会用API解决实际问题"。

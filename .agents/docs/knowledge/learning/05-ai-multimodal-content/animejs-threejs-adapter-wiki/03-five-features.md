@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/03-five-features.toml"
 ---
-
 # 五大核心特性详解
 
 Anime.js Three.js 适配器通过五大核心特性，系统性解决了原生 Three.js 动画开发的六大痛点。本章将逐一详解每个特性的功能、解决的问题、API 使用方法和注意事项。

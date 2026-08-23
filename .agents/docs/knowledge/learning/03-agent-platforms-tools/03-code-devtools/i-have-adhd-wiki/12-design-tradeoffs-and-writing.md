@@ -2,8 +2,8 @@
 id: "i-have-adhd-wiki-design-tradeoffs"
 title: "十三、设计取舍与技术写作借鉴"
 source: "analyze-i-have-adhd-article/analysis-report.md#第五章"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.toml"
 ---
-
 # 十三、设计取舍与技术写作借鉴
 
 > **【SpecWeave 方法论补充】** 本章对 i-have-adhd 项目的四个关键设计决策进行中立的 trade-off 分析，并提炼其介绍文章的写作技巧，为 Agent Skills 开发者和技术写作者提供可复用的借鉴。

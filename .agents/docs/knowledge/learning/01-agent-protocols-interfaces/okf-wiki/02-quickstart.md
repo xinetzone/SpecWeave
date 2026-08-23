@@ -14,9 +14,8 @@ summary: "OKF零安装零依赖，6个步骤创建一个Agent工具知识库Bund
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/02-quickstart.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/02-quickstart.toml"
 ---
-
 # 02 5分钟快速入门
 
 OKF不需要安装任何软件、SDK、数据库，只需要文本编辑器和终端（可选）。`cat`能读，`git`能管，OKF就能工作。

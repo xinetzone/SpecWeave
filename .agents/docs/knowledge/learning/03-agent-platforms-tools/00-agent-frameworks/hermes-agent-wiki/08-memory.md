@@ -2,6 +2,7 @@
 id: "hermes-agent-wiki-08-memory"
 title: "08 记忆系统"
 source: "NousResearch/hermes-agent 本地源码仓库（website/docs/user-guide/features/memory.md、honcho.md、memory-providers.md、developer-guide/memory-provider-plugin.md；源码 agent/memory_manager.py、agent/memory_provider.py、tools/memory_tool.py）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/08-memory.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 记忆系统详解：持久记忆、记忆组件、memory provider ABC、Honcho 辩证式建模、FTS5 会话搜索、用户画像、记忆工具与命令"
 status: "stable"

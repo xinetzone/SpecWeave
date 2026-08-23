@@ -2,6 +2,7 @@
 id: "i-have-adhd-wiki-rules"
 title: "三、核心规则"
 source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 规则详解"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/02-core-rules.toml"
 ---
 # 三、核心规则
 

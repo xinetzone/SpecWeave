@@ -4,8 +4,8 @@ title: "AI赋能的Feature Flag全生命周期治理"
 category: "knowledge"
 date: "2026-08-22"
 source: "InfoQ QCon 2026 北京站"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/README.toml"
 ---
-
 # AI赋能的Feature Flag全生命周期治理
 
 > 快手资深服务端架构师闫文亮在QCon 2026北京站分享的深度分析，系统解读AI+AST双引擎治理技术债的范式——不确定性探索+确定性校验+自进化闭环

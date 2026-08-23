@@ -2,6 +2,7 @@
 id: "hermes-agent-wiki-00-overview"
 title: "00 Hermes Agent 产品总览"
 source: "NousResearch/hermes-agent 本地源码仓库（README.zh-CN.md / AGENTS.md / website/docs/architecture.md）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/00-overview.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 产品总览：定位、学习闭环、运行形态、设计哲学、章节导航与前置知识"
 status: "stable"

@@ -2,6 +2,7 @@
 id: "echobird-wiki-faq-glossary"
 title: "FAQ 与术语表"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/11-faq-glossary.toml"
 category: "learning"
 tags: ["echobird", "faq", "glossary", "terms"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 常见问题解答（FAQ）与核心术语词表（15+ 术语
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 11 FAQ 与术语表
 
 ## 11.1 常见问题

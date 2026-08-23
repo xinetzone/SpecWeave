@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-15"
 title: "会话持久化与遥测"
 source: "https://open-codereview.ai/docs/telemetry"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/15-session-telemetry.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/15-session-telemetry.toml"
 ---
 # 会话持久化与遥测
 

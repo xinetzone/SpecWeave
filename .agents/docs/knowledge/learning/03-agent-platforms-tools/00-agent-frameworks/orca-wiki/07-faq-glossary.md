@@ -2,6 +2,7 @@
 id: "orca-wiki-faq"
 title: "FAQ 与术语表"
 source: "https://www.onorca.dev/ 官网 FAQ + d:\AI\external\tools\orca 本地开源源码（README.md / skill-guides/orchestration.md）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/07-faq-glossary.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "faq", "glossary", "worktree", "orchestration", "multi-agent", "wiki教程"]
 date: "2026-08-03"
@@ -12,7 +13,6 @@ last_verified: "2026-08-03"
 wiki_version: "1.0"
 
 ---
-
 # 07 FAQ 与术语表
 
 > 本章是本教程的速查手册：第一部分汇总新手最常问的 9 个问题，第二部分为 18 个核心术语提供一句话通俗解释。术语对应的底层机制详见第 01 章（架构）、第 02 章（核心功能）、第 03 章（CLI 与编排）。

@@ -2,6 +2,7 @@
 id: cross-cultural-methodology-framework
 title: 跨文化第一性原理思维方法论与操作指南
 source: cross-cultural-first-principles-comparison Task 7
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.toml"
 created_at: "2026-07-13"
 status: in-progress
 version: "1.0"

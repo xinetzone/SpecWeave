@@ -2,11 +2,11 @@
 id: wsl-wiki-02-quickstart
 title: "快速开始"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/02-quickstart.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "quickstart", "getting-started", "basic-commands", "interop"]
 ---
-
 # 快速开始
 
 本章帮助你在安装完成后快速上手 WSL，掌握基本命令、运行第一个 Linux 程序，并体验 Windows 与 Linux 的无缝互操作。

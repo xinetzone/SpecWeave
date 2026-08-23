@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-03"
 title: "工具注册表（Tool Registry）：Agent的手脚管理"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/03-tool-registry.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "工具注册表", "tool-registry", "工具调用"]
 ---
-
 ## 一、什么是工具注册表
 
 工具注册表（Tool Registry）是管理Agent"手脚"的地方。如果说模型是大脑，工具就是Agent的手脚——它要能打开日历查时间、打开地图看距离、进入预订系统看有没有包间。工具注册表管的就是这些"手脚"。

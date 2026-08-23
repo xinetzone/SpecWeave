@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module3-metrics-overview"
 title: "模块3：关键指标体系（总览）"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/03-metrics/03-metrics-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "metrics", "indicator-system", "four-dimensions", "overview"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "Agent评测关键指标体系的四维总览，说明能力、效率、安全、人本与商业四大维度的定位、关系与北极星指标选取原则。"
 references: 6
 ---
-
 # 模块3：关键指标体系（总览）
 
 > **方法论视角**：本模块从"能力/效率/安全/人本商业"四维框架的视角组织指标体系。若需完整的指标分类（14大类）、核心指标计算方法（pass@k、RAG 四指标等）与 AWS 三层评估框架，请参阅 [工程手册 · 第2章 指标体系设计](../../agent-evaluation-wiki/02-metrics-design.md)。

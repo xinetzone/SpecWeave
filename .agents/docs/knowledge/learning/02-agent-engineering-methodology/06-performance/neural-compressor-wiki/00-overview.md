@@ -6,10 +6,10 @@ category: "learning"
 author: "SpecWeave"
 status: "stable"
 source: "https://intel.github.io/neural-compressor/latest/docs/source/Welcome.html"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/neural-compressor-wiki/00-overview.toml"
 summary: "Intel Neural Compressor 开源模型压缩库系统性中文教程，涵盖核心概念、安装指南、快速开始、量化技术、API 概览、最佳实践与常见问题。"
 tags: ["neural-compressor", "model-compression", "quantization", "pytorch", "tutorial"]
 ---
-
 # Intel Neural Compressor 教程总览
 
 ## 什么是 Intel Neural Compressor

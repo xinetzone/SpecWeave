@@ -2,6 +2,7 @@
 id: git-baidu-sync-health-check
 title: Git 网盘同步健康检查与诊断
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/07-health-check.toml"
 created: 2026-07-31
 tags:
   - git
@@ -11,7 +12,6 @@ tags:
   - diagnostics
   - maintenance
 ---
-
 # Git 网盘同步健康检查与诊断
 
 本文档描述百度网盘多设备 Git 同步系统中的健康检查机制，包括定期检查的必要性、检查项分类、三级状态分级、自动修复策略以及问题处理流程。配套工具为 `git-doctor`（`git-doctor.ps1`/`git-doctor.sh`）。

@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-model-providers-runtime"
 title: "模型提供方与运行时入口"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/05-model-providers-runtime.toml"
 category: "learning"
 tags: ["zleap-agent", "model-provider", "openai-compatible", "anthropic", "sse", "conversation-service", "web-ui", "cli", "inbound", "outbound"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent 模型提供方与运行时入口：OpenAI-compatible/Anth
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 05 模型提供方与运行时入口
 
 本章讲清楚"模型从哪里来"以及"所有入口如何汇聚到同一个运行时"。

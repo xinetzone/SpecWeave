@@ -2,11 +2,11 @@
 id: "overview"
 title: "七概念方法论解析MonkeyCode开源Vibe Coding平台"
 source: "微信公众号「AI产品银海」+七概念方法论体系"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["七概念", "MonkeyCode", "Vibe Coding", "开源", "私有化部署", "AI编码"]
 ---
-
 # 七概念方法论解析MonkeyCode开源Vibe Coding平台
 
 ## 📖 教程概述

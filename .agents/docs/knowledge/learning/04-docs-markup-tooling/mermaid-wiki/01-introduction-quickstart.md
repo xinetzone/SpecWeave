@@ -2,6 +2,7 @@
 id: "mermaid-wiki-quickstart"
 title: "Mermaid 入门与快速开始"
 source: "https://mermaid.js.org/ | https://mermaid.live/ | 官方文档 intro 与配置页"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/01-introduction-quickstart.toml"
 category: "learning"
 tags: ["mermaid", "quickstart", "入门", "doc-rot", "mermaid.live", "cdn", "npm", "svg", "tutorial"]
 date: "2026-08-06"

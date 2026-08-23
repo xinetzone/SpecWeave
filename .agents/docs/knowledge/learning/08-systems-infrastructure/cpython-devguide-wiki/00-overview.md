@@ -4,12 +4,12 @@ title: "00 - 总览：CPython贡献全景图"
 date: 2026-08-19
 tags: [cpython, overview, beginner, contribution, quickstart]
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/00-overview.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
 maturity: L1-draft
 ---
-
 # 00 - 总览：CPython贡献全景图
 
 本wiki是CPython开发者指南（DevGuide）的中文知识提炼，旨在帮助开发者快速理解CPython贡献体系，从环境搭建到PR合入，建立完整的心智模型。

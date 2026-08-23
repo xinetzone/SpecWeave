@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-api-data-flow"
 title: "04 API 与数据流"
 version: "1.0"
 source: "ui/src/api.js + ui/src/links.js + README.md（What's wired 表）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/04-api-and-data-flow.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 的 API 端点全景、SSE 流式协议、链接分类算法、数据存储位置（~/.okf + OS keychain）"
 tags: ["okf-desktop", "api", "SSE", "数据流", "链接分类", "引用深链"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 04 API 与数据流
 
 ## 4.1 端点全景

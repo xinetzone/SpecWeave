@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module4-implementation"
 title: "模块4：八阶段实施步骤"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/04-implementation/04-implementation-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "implementation", "eight-stage", "landing-checklist", "workflow"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "Agent评测体系落地的八阶段实施步骤，每阶段含输入/输出/工具/验收标准/常见坑，并给出0-8周落地清单。"
 references: 10
 ---
-
 # 模块4：八阶段实施步骤
 
 > **方法论视角**：本模块从"评测体系如何分阶段落地"的视角展开。若需把评测嵌入 CI/CD 持续流水线（五门质量门禁、回归检测、评测驱动开发），请参阅 [工程手册 · 第9章 持续评测体系](../../agent-evaluation-wiki/09-continuous-evaluation.md)。

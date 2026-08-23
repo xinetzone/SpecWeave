@@ -2,9 +2,8 @@
 id: "ai-engineering-four-milestones-wiki-04"
 title: "第三站：Harness Engineering - 关键一跃"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/04-harness-engineering.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/04-harness-engineering.toml"
 ---
-
 # 第三站：Harness Engineering - 关键一跃
 
 ## Harness定义

@@ -2,9 +2,8 @@
 id: "github-cli-wiki-01"
 title: "安装与配置指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/01-installation.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/01-installation.toml"
 ---
-
 # 安装与配置指南
 
 本章介绍 GitHub CLI（`gh`）在各主流操作系统上的安装方法、认证流程、Shell 补全配置以及环境变量设置。

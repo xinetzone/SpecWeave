@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-seven-concepts"
 title: "okf-kit Wiki 教程 — 七概念方法论执行报告"
 source: "https://github.com/vinodborole/okf-kit"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.toml"
 ---
-
 # okf-kit Wiki 教程 — 七概念方法论执行报告
 
 ## 执行概览

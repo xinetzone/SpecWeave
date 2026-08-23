@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-04"
 title: "Cordis — 效应与协同效应机制"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/04-effects-coeffects.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/04-effects-coeffects.toml"
 ---
-
 # Cordis — 效应与协同效应机制
 
 > 一句话摘要：本章深入讲解 Cordis 如何把论文的「可逆效应」与「响应式协同效应」落地为源码机制——`Fiber.effect` 返回 disposable（逆）、`@Inject`/`provide` 实现依赖注入（coeffect）、`symbols` 符号体系、以及 `getTraceable`/`createCallable` 等可追踪代理。

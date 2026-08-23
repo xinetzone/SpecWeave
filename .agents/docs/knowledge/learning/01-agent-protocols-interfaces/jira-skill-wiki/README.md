@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-jira-skill-wiki-index"
 title: "Jira 集成插件教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-19"
 source: "seven-concepts-cmd:jira-skill-wiki"

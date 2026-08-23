@@ -4,6 +4,7 @@ title: "微软Copilot成本困境与多模型时代"
 category: "knowledge"
 date: "2026-07-13"
 source: "https://mp.weixin.qq.com/s/_w-Fbz0KNQIntGbreDumdA"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/README.toml"
 ---
 # 微软Copilot成本困境与多模型时代
 

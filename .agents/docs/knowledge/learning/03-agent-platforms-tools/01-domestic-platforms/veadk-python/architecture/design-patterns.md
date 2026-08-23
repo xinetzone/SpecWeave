@@ -2,6 +2,7 @@
 id: veadk-python-design-patterns
 title: 架构模式：核心设计模式解析
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/architecture/design-patterns.toml"
 category: learning
 tags:
 - VeADK
@@ -17,8 +18,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 7个核心设计模式深度解析：继承扩展模式、条件插件挂载、回调链、运行时策略、配置降级、RunProcessor装饰器链、凭证服务单例
 wiki_version: '1.0'
 ---
-
-
 # 架构模式：核心设计模式解析
 
 VeADK 在保持与 Google ADK 生态兼容的同时，运用了一系列经典且实用的设计模式来解决框架扩展问题。本文档基于代码库的深入分析，提炼出 7 个核心设计模式，每个模式包含问题背景、实现方式、代码位置引用和使用注意事项。

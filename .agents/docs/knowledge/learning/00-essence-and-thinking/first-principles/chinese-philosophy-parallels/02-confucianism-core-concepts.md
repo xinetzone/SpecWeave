@@ -2,6 +2,7 @@
 id: confucianism-core-concepts
 title: 儒家思想核心概念：本、体用、格物致知、诚
 source: cross-cultural-first-principles-comparison Task 2
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.toml"
 review_protocol: 00-cross-cultural-review-protocol.md
 created_at: "2026-07-13"
 status: in-progress

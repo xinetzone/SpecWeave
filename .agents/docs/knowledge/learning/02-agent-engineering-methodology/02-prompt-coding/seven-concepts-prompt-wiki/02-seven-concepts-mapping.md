@@ -1,12 +1,12 @@
 ---
 id: "seven-concepts-prompt-mapping"
 title: "02、七概念方法论与Prompt Engineering映射"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/02-seven-concepts-mapping.toml"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
 status: "completed"
 ---
-
 # 七概念方法论与Prompt Engineering映射
 
 ---

@@ -2,6 +2,7 @@
 id: veadk-python-glossary
 title: VeADK-Python 术语表
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/glossary.toml"
 category: learning
 tags:
 - VeADK
@@ -16,8 +17,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 核心术语表，包含20+个常用术语的中英文对照和通俗解释
 wiki_version: '1.0'
 ---
-
-
 # VeADK-Python 术语表
 
 本术语表收录 VeADK-Python 开发中常用的核心术语，以通俗易懂的方式解释其含义，适合有 Python 基础但初次接触 AI Agent 开发的开发者阅读。

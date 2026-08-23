@@ -2,6 +2,7 @@
 id: daoism-core-concepts
 title: 道家哲学核心概念：道、德、自然、无为
 source: cross-cultural-first-principles-comparison Task 1
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.toml"
 review_protocol: 00-cross-cultural-review-protocol.md
 created_at: "2026-07-13"
 status: in-progress

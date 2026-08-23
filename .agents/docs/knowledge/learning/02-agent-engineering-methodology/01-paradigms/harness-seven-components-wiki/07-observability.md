@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-07"
 title: "可观测性（Observability）：数据追踪与Badcase闭环"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/07-observability.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "可观测性", "observability", "监控", "badcase"]
 ---
-
 ## 一、没有可观测性就没有Agent运营
 你不知道它哪里好、哪里坏、哪里浪费成本、哪里反复出错——就无法优化。没有可观测性（Observability），就没有Agent运营。
 

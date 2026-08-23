@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-10"
 title: "okf-kit 完全指南 — FAQ 与排错"
 source: "https://github.com/vinodborole/okf-kit/issues"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/10-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/10-faq-troubleshooting.toml"
 ---
-
 # okf-kit 完全指南 — FAQ 与排错
 
 > 一句话摘要：本章汇总安装、爬取、同步、Chat/MCP 各环节的常见问题与解决方案，包括 Playwright 依赖缺失、Python 版本要求、爬取结果为空、同步阈值拒绝、端口被占用等典型问题。

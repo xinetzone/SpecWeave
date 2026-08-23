@@ -2,8 +2,8 @@
 id: 12-extension-points
 title: VeADK扩展点清单与注册机制
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/12-extension-points.toml"
 ---
-
 # VeADK 扩展点清单与注册机制
 
 本文档系统梳理 VeADK 框架中所有公开扩展点，包括基类/接口路径、需要实现的抽象方法、注册方式及代码示例位置。

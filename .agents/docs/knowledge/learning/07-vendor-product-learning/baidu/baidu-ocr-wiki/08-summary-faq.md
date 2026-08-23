@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-08"
 title: "百度 Unlimited-OCR 总结与常见问题"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/08-summary-faq.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/08-summary-faq.toml"
 ---
-
 # 百度 Unlimited-OCR 总结与常见问题
 
 > 本章是全系列教程的总结，包含核心要点回顾、关键信息速查表、常见问题解答和延伸阅读建议。如果你需要快速查找Unlimited-OCR的关键数据或解答疑问，直接查阅本章即可。

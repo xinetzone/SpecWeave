@@ -4,12 +4,12 @@ title: Awesome OKF 深度分析 - 原子行动项（A阶段）
 type: ActionItems
 version: 1.0
 source: 基于02-insights.md的"下次行动"和V阶段审查反馈拆解为原子行动项
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/05-action-items.toml"
 description: 从awesome-okf分析中提炼的4个原子行动项，可在SpecWeave中独立落地
 tags: [okf, awesome-okf, 行动项, action-items, atomization]
 category: case-study
 date: 2026-08-06
 ---
-
 # Awesome OKF 深度分析 - 原子行动项（A阶段）
 
 > **方法论说明**：本阶段将I阶段洞察中的"下次行动"拆解为原子行动项，每项严格符合5项原子标准：**(1)单一职责 (2)可验证 (3)有Owner角色 (4)有时间盒 (5)可独立交付**。行动项不要求立即执行，作为知识沉淀的落地钩子。

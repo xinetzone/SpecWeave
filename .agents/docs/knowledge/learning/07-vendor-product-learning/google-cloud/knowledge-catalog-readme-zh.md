@@ -2,10 +2,10 @@
 id: "google-cloud-knowledge-catalog-readme-zh"
 title: "Google Cloud 知识目录（Knowledge Catalog）README 中文版"
 source: "vendor/knowledge-catalog/README.md (https://github.com/GoogleCloudPlatform/knowledge-catalog)"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-readme-zh.toml"
 date: "2026-08-15"
 tags: ["Google Cloud", "Knowledge Catalog", "Dataplex", "数据目录", "元数据管理", "知识图谱", "AI智能体"]
 ---
-
 # 知识目录
 
 [知识目录](https://cloud.google.com/products/knowledge-catalog)（前身为 Dataplex）是一个 AI 驱动的数据目录和元数据管理平台。它为您的所有数据（结构化和非结构化）提供动态知识图谱，为 AI 智能体提供语义和业务上下文。

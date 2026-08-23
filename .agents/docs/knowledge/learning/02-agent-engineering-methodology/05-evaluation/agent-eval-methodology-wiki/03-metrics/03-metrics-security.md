@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module3-metrics-security"
 title: "模块3.6：安全维度指标详解"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/03-metrics/03-metrics-security.toml"
 category: "learning"
 tags: ["agent-evaluation", "metrics", "security", "ietf", "prompt-injection", "privacy", "compliance"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "基于IETF提出的4层55项安全评估框架，详解输入/提示层、模型/推理层、工具/行动层、系统/治理层的安全指标架构与关键指标。"
 references: 8
 ---
-
 # 模块3.6：安全维度指标详解
 
 > **方法论视角**：本模块从四维框架的"安全"视角展开。若需完整的指标分类（14大类）与核心指标计算方法（pass@k、RAG 四指标等），请参阅 [工程手册 · 第2章 指标体系设计](../../agent-evaluation-wiki/02-metrics-design.md)。

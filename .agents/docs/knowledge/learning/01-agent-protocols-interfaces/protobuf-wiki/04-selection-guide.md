@@ -8,12 +8,12 @@ tags:
   - decision-tree
   - best-practices
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.toml"
   - https://protobuf.dev/programming-guides/dos-donts
   - https://buf.build/blog
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # 选型决策指南
 
 本文档提供可操作的版本选型决策模型、场景匹配矩阵、常见误区反模式，帮助你在不同场景下选择合适的Protobuf版本。核心原则：**生态成熟度优先于功能丰富度，默认值优先于自定义配置**。

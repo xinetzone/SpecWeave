@@ -2,6 +2,7 @@
 id: "agent-evaluation-data-governance"
 title: "第6章：评测数据治理"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/06-data-governance.toml"
 category: "learning"
 tags: ["agent-evaluation", "data-governance", "data-versioning", "dvc", "privacy", "pii", "data-quality", "gold-set"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent评测数据治理方法，包括评测数据生命周期、数据采集策略、标注质量管理、版本管理、隐私保护、数据质量保障与数据集迭代策略。"
 references: 22
 ---
-
 # 第6章：评测数据治理
 
 ---

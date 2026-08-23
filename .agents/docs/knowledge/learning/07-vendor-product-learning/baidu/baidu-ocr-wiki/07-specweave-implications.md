@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-07"
 title: "百度 Unlimited-OCR 对SpecWeave的可行动启示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/07-specweave-implications.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/07-specweave-implications.toml"
 ---
-
 # 百度 Unlimited-OCR 对SpecWeave的可行动启示
 
 > R-SWA和Unlimited-OCR的技术思想可以直接应用于SpecWeave多智能体协作系统，无需训练新模型，仅通过Prompt工程和系统架构层面的改进，就能解决长上下文管理、智能体"忘记"规范、大文档处理等实际问题。本章给出两条可立即落地的具体建议。

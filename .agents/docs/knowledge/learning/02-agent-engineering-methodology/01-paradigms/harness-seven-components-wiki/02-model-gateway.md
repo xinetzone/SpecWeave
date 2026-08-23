@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-02"
 title: "模型网关（Model Gateway）：大脑调度中心"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/02-model-gateway.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "模型网关", "model-gateway", "模型路由"]
 ---
-
 ## 一、什么是模型网关
 
 模型网关（Model Gateway）是Agent的"大脑调度中心"。它解决的核心问题是：这次任务，到底该用哪个模型？不是所有任务都应该用最贵最强的大模型（Large Language Model, LLM）。

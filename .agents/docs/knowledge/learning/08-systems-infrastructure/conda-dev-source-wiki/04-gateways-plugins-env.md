@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-04-gateways-plugins-env
 title: "网关、插件与环境管理"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/04-gateways-plugins-env.toml"
 category: "learning"
 tags: [conda, gateways, plugins, env, notices, auxlib, source-code]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "系统梳理 conda 的 gateways/plugins/env/notices/auxlib/shell 六大支撑层的职责与关键类、函数。"
 ---
-
 # 网关、插件与环境管理
 
 本章从源码层梳理 conda 的六大「支撑层」。它们不直接面向用户命令，而是为 `conda install/create/remove` 等核心流程提供底层能力：网络下载、磁盘操作、插件扩展、环境文件解析、频道通知与内嵌辅助库。

@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-12"
 title: "Python 3.14 总结与资源"
 source: "https://docs.python.org/zh-cn/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/12-summary-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/12-summary-resources.toml"
 ---
-
 # Python 3.14 总结与资源
 
 本章总结 Python 3.14 的核心知识点，提供分角色学习路径、核心源码文件速查表和延伸阅读资源。

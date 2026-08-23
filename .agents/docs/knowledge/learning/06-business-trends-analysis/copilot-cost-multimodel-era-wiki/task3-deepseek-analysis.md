@@ -2,9 +2,9 @@
 id: "task3-deepseek-analysis"
 title: "DeepSeek V4技术优势与融资战略深度解析"
 source: "cleaned-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task3-deepseek-analysis.toml"
 created: "2026-07-09"
 ---
-
 # DeepSeek V4技术优势与融资战略深度解析
 
 ## 一、DeepSeek V4技术特点深度解析

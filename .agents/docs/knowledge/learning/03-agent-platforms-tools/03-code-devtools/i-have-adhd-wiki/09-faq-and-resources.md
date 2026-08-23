@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-faq
 title: 十、FAQ与资源汇总
 source: i-have-adhd常见问题与参考资源整理
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/09-faq-and-resources.toml"
 ---
-
 # 十、FAQ与资源汇总
 
 本章汇总 i-have-adhd 使用中的常见问题、快速参考卡、参考资源和许可说明，方便快速查阅。

@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-06-issue-sorting-labeling
 title: "Issue Sorting 与标签体系"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/06-issue-sorting-labeling.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/06-issue-sorting-labeling.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "issue-sorting", "labeling", "roadmap-board", "automation", "stale", "cla"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "Issue Sorting 概念、标签体系与自动化汇总"
 ---
-
 # Issue Sorting 与标签体系
 
 > 本章深度解读 `HOW_WE_USE_GITHUB.md` 的核心机制：Issue Sorting（Issue 排序）流程、标签体系语法与互斥/并发规则、Roadmap Board 流转、6 项自动化汇总以及常用回复模板。这是 Conda 社区如何管理海量 Issue 的方法论核心。

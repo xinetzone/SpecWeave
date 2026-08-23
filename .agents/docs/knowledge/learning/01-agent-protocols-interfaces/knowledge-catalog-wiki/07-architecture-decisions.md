@@ -14,9 +14,8 @@ summary: "客观呈现OKF/Knowledge Catalog作为早期方案的风险与局限�
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/07-architecture-decisions.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/07-architecture-decisions.toml"
 ---
-
 # 07 架构决策与方案对比
 
 > **本章定位说明**

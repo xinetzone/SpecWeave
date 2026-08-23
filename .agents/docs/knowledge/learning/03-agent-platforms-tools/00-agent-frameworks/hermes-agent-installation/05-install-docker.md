@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - Docker 容器化部署指南"
 chapter: 5
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/05-install-docker.toml"
   - external/libs/hermes-agent/Dockerfile
   - external/libs/hermes-agent/docker-compose.yml
   - external/libs/hermes-agent/docker-compose.windows.yml
@@ -18,7 +19,6 @@ source:
   - external/libs/hermes-agent/docker/s6-rc.d/dashboard/finish
   - external/libs/hermes-agent/docker/SOUL.md
 ---
-
 # 5. Docker 容器化部署指南
 
 本章详细说明如何使用 Docker 构建、部署和运维 Hermes Agent 容器。内容涵盖 Docker 镜像构建方法、`docker-compose.yml` 配置说明、卷挂载与权限配置、s6-overlay 进程管理机制、常用 `docker compose` 命令、环境变量传递方式、Dashboard 安全提示、镜像分层结构以及网络模式。所有信息均以项目源码中的 `Dockerfile`、`docker-compose.yml` 及 `docker/` 目录下的脚本为准。

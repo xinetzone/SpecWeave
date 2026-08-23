@@ -2,8 +2,8 @@
 id: 11-architecture-insights
 title: VeADK架构洞察与设计模式分析
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/11-architecture-insights.toml"
 ---
-
 # VeADK 架构洞察与设计模式分析
 
 基于对 veadk-python 代码库的深入阅读，本文档提炼出 10 条核心架构洞察，涵盖扩展模式、回调机制、运行时策略、配置管理、工具依赖、技能加载、凭证解析、横切关注点、云集成模式及 A2A 协议架构等关键设计决策。

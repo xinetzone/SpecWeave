@@ -2,13 +2,12 @@
 id: knowledgebase-module
 title: 知识库(RAG)详解
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/knowledgebase.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 知识库(RAG)详解
 
 KnowledgeBase 模块提供检索增强生成（Retrieval-Augmented Generation, RAG）能力，允许 Agent 从私有文档中检索相关信息，基于你的内容而非仅依赖模型通用知识回答问题。

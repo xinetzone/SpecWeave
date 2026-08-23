@@ -2,6 +2,7 @@
 id: veadk-python-api-index
 title: VeADK-Python API 索引
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/references/api-index.toml"
 category: learning
 tags:
 - VeADK
@@ -14,8 +15,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python 核心公开类与函数快速索引表
 wiki_version: '1.0'
 ---
-
-
 # VeADK-Python API 索引
 
 本页提供 VeADK-Python 所有公开类与函数的快速索引，方便开发者快速定位到对应模块文档。

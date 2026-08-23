@@ -2,6 +2,7 @@
 id: "llm-token-optimization-tool-survey"
 title: "LLM Token优化工具与框架调研报告"
 source: "deep-research调研结果"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/03-tools/01-tool-survey.toml"
 created_at: "2026-08-01"
 updated_at: "2026-08-01"
 category: "knowledge"
@@ -10,7 +11,6 @@ tags: ["LLM", "Token优化", "推理引擎", "Prompt缓存", "Token压缩"]
 authors: ["AI Research Assistant"]
 version: "1.0.0"
 ---
-
 # LLM Token优化工具与框架调研报告
 
 ## 概述

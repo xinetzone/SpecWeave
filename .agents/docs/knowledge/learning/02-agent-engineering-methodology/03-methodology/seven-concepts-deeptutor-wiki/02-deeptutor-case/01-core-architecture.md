@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-02-architecture
 title: DeepTutor核心架构
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/01-core-architecture.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [DeepTutor, 架构, 案例]
 ---
-
 # DeepTutor核心架构
 
 ---

@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-05"
 title: "快速开始与资源：官方链接汇总"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/05-quickstart-resources.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["volcengine", "agent-plan", "快速开始", "资源", "文档"]

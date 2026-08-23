@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-06"
 title: "应用场景与落地方案"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/06-application-scenarios.toml"
 category: "learning"
 tags: ["AgentKit", "火山引擎", "应用场景", "落地案例", "AI Agent"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 06 应用场景与落地方案
 
 ## 场景选型决策树

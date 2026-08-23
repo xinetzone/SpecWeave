@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-communication"
 title: "jira-communication 技能详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/04-jira-communication.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/04-jira-communication.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "jira-communication", "cli", "intent-verbs", "scripts", "authentication"]

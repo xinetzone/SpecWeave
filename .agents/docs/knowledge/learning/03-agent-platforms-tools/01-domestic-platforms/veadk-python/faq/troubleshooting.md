@@ -2,13 +2,12 @@
 id: troubleshooting
 title: 常见问题排查
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/faq/troubleshooting.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 常见问题排查
 
 本文档收集 VeADK 使用过程中常见的问题、症状、排查步骤和解决方案。

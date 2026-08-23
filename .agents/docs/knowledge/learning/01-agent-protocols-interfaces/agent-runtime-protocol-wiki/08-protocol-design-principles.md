@@ -2,9 +2,8 @@
 id: "agent-runtime-protocol-wiki-08"
 title: "Protocol 对象映射与设计原则"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/08-protocol-design-principles.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/08-protocol-design-principles.toml"
 ---
-
 # 08 Protocol 对象映射与设计原则
 
 ## Protocol 对象完整映射表

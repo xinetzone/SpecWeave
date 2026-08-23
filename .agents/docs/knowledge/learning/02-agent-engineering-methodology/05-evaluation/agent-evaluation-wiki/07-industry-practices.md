@@ -2,6 +2,7 @@
 id: "agent-evaluation-industry-practices"
 title: "第7章：行业实践案例"
 source: "spec:agent-evaluation-methodology-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/07-industry-practices.toml"
 category: "learning"
 tags: ["agent-evaluation", "industry-practices", "coding-agent", "rag-agent", "multi-tool-agent", "multi-agent", "aws-motorway", "anti-patterns"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "系统阐述AI Agent评测的行业实践案例，包括Coding Agent、RAG Agent、多工具Agent、多Agent协作、生产环境CI/CD五大案例，以及7个常见反模式警示。"
 references: 22
 ---
-
 # 第7章：行业实践案例
 
 > **方法论视角**：如需按"背景/做法/成果/经验教训/可复用要点"五要素阅读 8 个企业案例，可参阅 [方法论Wiki · 模块5 行业案例分析](../agent-eval-methodology-wiki/05-cases/05-cases-overview.md)。

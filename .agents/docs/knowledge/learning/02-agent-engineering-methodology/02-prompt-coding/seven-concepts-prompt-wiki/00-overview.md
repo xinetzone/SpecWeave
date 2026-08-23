@@ -1,12 +1,12 @@
 ---
 id: "seven-concepts-prompt-overview"
 title: "00、概述与背景"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/00-overview.toml"
 category: "knowledge"
 date: "2026-07-13"
 version: "1.0"
 status: "completed"
 ---
-
 # 七概念驱动的GPT-5.6 Prompt Engineering Wiki：概述与背景
 
 ---

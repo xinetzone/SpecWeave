@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-02"
 title: "Cordis — 文件结构与 Monorepo"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/02-repo-structure.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/02-repo-structure.toml"
 ---
-
 # Cordis — 文件结构与 Monorepo
 
 > 一句话摘要：本章解析 Cordis 的 monorepo 目录布局与根配置文件，说明 10 个包（core/loader/hmr/create/group/include/logger-console/timer/utils + 外部依赖）各自职责，以及 yarn workspaces + yakumo + vitest 的工程化协作方式。

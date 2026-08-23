@@ -2,9 +2,8 @@
 id: "github-cli-wiki-06"
 title: "常见问题与排错指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/06-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/06-faq-troubleshooting.toml"
 ---
-
 # 常见问题与排错指南
 
 本章汇总 GitHub CLI（`gh`）最常见的 12 个问题及其解决方案，涵盖认证失败、网络代理、版本升级、SSH 密钥、API 限流、权限问题、Shell 补全、安装故障、企业版连接、Token 作用域等场景。每个问题包含问题描述、错误症状、根本原因和逐步解决方案。

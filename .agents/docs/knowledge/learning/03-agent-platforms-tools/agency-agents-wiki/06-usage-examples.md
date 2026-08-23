@@ -2,9 +2,8 @@
 id: "agency-agents-wiki-06"
 title: "The Agency 完全指南 — 使用示例"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/06-usage-examples.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/06-usage-examples.toml"
 ---
-
 # The Agency 完全指南 — 使用示例
 
 > 一句话摘要：本章面向已经认识 The Agency 的读者，系统地讲解四种把 230+ 个专业 AI Agent 用起来的方式——安装桌面应用、接入 Claude Code、作为参考文件、接入其他工具，并给出可复制粘贴的命令行操作示例、真实的业务场景组合案例与 Agent 激活提示词模板。

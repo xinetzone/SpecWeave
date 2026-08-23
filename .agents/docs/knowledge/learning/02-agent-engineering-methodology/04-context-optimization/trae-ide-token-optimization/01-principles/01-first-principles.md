@@ -4,6 +4,7 @@ title: "第一性原理分析"
 date: 2026-08-01
 type: principles
 source: "seven-concepts I阶段洞察"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/01-principles/01-first-principles.toml"
 maturity: "L1-experimental"
 ---
 # 第一性原理分析

@@ -4,8 +4,8 @@ title: "因果AI与世界模型：零犀科技六年押注深度分析"
 category: "knowledge"
 date: "2026-08-22"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/README.toml"
 ---
-
 # 因果AI与世界模型：零犀科技六年押注深度分析
 
 > 新智元报道深度分析，系统解读零犀科技因果大模型技术架构——三步推演链、Pearl三级因果阶梯工程化、三层架构、八种干预载体与七项验证机制

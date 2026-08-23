@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-03"
 title: "Python 3.14 JIT 编译器与新执行模型"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#faster-cpython"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/03-jit-interpreter.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/03-jit-interpreter.toml"
 ---
-
 # Python 3.14 JIT 编译器与新执行模型
 
 Python 3.14 是第一个随官方二进制分发**实验性 JIT 编译器**的 Python 版本。与自由线程移除并行限制不同，JIT 专注于提升单线程执行速度。Python 3.14 的执行模型从简单的字节码解释器演进为三层架构：**Tier 1 自适应解释器 → Tier 2 micro-op 优化器 → Copy-and-Patch JIT 编译器**。

@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-01-r
 title: R - 复盘 (Retrospective)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/01-r-retrospective.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, R, 复盘, 理论]
 ---
-
 # R - 复盘 (Retrospective)
 
 ---

@@ -2,7 +2,7 @@
 id: "ai-engineering-notes-anthropic-financial-services"
 title: "Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱"
 source: "微信公众号文章《Anthropic金融服务Agent仓库解析》（极客之家）+ GitHub官方仓库 anthropics/financial-services"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/anthropic-financial-services-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/anthropic-financial-services-wiki.toml"
 date: "2026-07-04"
 tags: ["anthropic", "financial-services", "ai-agent", "claude", "mcp", "fintech", "vertical-industry", "investment-banking"]
 type: "Reference"

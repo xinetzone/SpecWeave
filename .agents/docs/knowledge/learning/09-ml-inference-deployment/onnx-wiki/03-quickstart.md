@@ -9,11 +9,11 @@ tags:
   - netron
   - deployment
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/03-quickstart.toml"
   - https://onnx.ai/get-started.html
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX 快速上手指南
 
 5分钟跑通你的第一个ONNX模型。

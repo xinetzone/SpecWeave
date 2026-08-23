@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/01-quickstart.toml"
 ---
-
 # 快速开始
 
 本章节将引导你从零开始搭建 Anime.js 4.5 + Three.js 适配器开发环境，并完成你的第一个 3D 动画示例。

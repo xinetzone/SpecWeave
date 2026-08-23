@@ -2,6 +2,7 @@
 id: "mermaid-wiki-overview"
 title: "Mermaid 教程总览"
 source: "https://mermaid.js.org/ | https://mermaid.live/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/00-overview.toml"
 category: "learning"
 tags: ["mermaid", "diagram", "可视化", "flowchart", "sequenceDiagram", "gantt", "sankey", "markdown", "tutorial", "overview"]
 date: "2026-08-06"

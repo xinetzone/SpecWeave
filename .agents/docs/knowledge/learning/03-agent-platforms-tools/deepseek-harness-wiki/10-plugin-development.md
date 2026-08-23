@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-10"
 title: "DeepSeek Harness 完全指南 — 插件开发入门"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/10-plugin-development.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/10-plugin-development.toml"
 ---
-
 # 10 插件开发入门
 
 DeepSeek Harness 的核心设计哲学是「一切皆插件」——从模型适配器、工具注册表，到 Agent 循环本身，没有任何特权内核代码，所有能力都通过插件提供。写插件是扩展 dsh 能力的唯一方式，也是最自然的方式。本章带你入门 dsh 插件开发。

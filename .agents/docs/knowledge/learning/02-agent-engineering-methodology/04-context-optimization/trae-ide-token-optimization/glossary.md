@@ -4,6 +4,7 @@ title: "术语表"
 date: 2026-08-01
 type: glossary
 source: "seven-concepts R阶段事实采集"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/glossary.toml"
 ---
 # 术语表
 

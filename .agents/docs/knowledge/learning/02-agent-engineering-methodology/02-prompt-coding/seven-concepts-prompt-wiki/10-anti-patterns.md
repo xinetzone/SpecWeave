@@ -6,8 +6,8 @@ date: "2026-07-13"
 version: "1.0"
 status: "completed"
 source: "GPT-5.6新写法指南 + 七概念治理层沉淀"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/10-anti-patterns.toml"
 ---
-
 # 反模式：20+个Prompt写法陷阱
 
 ---

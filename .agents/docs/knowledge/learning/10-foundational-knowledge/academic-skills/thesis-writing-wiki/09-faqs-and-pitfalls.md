@@ -2,6 +2,7 @@
 id: "thesis-writing-faqs-pitfalls"
 title: "十、常见问题与避坑指南"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/09-faqs-and-pitfalls.toml"
 ---
 # 十、常见问题与避坑指南
 

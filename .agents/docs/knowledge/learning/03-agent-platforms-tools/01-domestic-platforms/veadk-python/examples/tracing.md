@@ -2,14 +2,13 @@
 id: veadk-python-tracing
 title: 11 - 链路追踪示例
 source: d:\AI\.chaos\libs\veadk-python\examples\11_tracing\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/tracing.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 链路追踪示例 (Tracing & Observability)
 
 ## 1. 示例功能介绍

@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 环境要求与前置准备"
 chapter: 1
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/01-environment.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
@@ -14,7 +15,6 @@ source:
   - external/libs/hermes-agent/website/docs/getting-started/installation.md
   - external/libs/hermes-agent/README.md
 ---
-
 # 1. 环境要求与前置准备
 
 本章列出安装 Hermes Agent 前必须满足的操作系统、硬件、系统依赖与运行时版本要求。所有信息均以项目源码中的 `pyproject.toml`、安装脚本、`Dockerfile`、`package.json` 及官方平台支持文档为准。

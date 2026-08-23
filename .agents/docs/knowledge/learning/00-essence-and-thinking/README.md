@@ -7,7 +7,7 @@ date: "2026-08-21"
 version: "1.0"
 status: "stable"
 summary: "本质与思维——Learning Wiki 的第0主题，所有技术学习之前的思维地基。汇集第一性原理方法论、帛书老子原典深读、跨文化根本性思维比较等本质思考类知识资产。"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/00-essence-and-thinking/README.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/README.toml"
 ---
 # 00 本质与思维（Essence & Thinking）
 

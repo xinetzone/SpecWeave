@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 常见问题与故障排除"
 chapter: 8
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/08-troubleshooting.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/package.json
   - external/libs/hermes-agent/.npmrc
@@ -15,7 +16,6 @@ source:
   - external/libs/hermes-agent/docker/entrypoint-dispatch.sh
   - external/libs/hermes-agent/docker/stage2-hook.sh
 ---
-
 # 8. 常见问题与故障排除
 
 本章汇总 Hermes Agent 在安装、启动和运行过程中的常见问题，按问题类别组织。每个问题包含【症状】【原因】【解决方案】三部分，便于快速定位和修复。遇到问题时，建议首先运行 `hermes doctor` 进行自动诊断（详见 [第 9 节](#9-日志查看与诊断方法)）。

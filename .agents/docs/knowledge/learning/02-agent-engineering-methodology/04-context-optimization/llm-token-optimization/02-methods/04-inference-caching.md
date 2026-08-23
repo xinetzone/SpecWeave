@@ -2,10 +2,10 @@
 id: "llm-token-optimization-04-inference-caching"
 title: "增量推理与缓存"
 source: "vLLM官方文档、TMLR论文(Joint Encoding)、DigitalOcean教程、Introl技术博客综合整理"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/04-inference-caching.toml"
 tags: ["kv-cache", "pagedattention", "prefix-caching", "semantic-cache", "vllm", "inference", "token-optimization"]
 category: "methods"
 ---
-
 # 增量推理与缓存
 
 缓存与增量推理技术是推理引擎层面的核心优化，通过复用已计算的中间结果避免重复计算，在不改变输出结果的前提下降低延迟和成本。这类技术是现代LLM推理框架（vLLM、SGLang、TensorRT-LLM）的基础能力。

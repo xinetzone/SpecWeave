@@ -2,6 +2,7 @@
 id: "harness-seven-components-wiki-10"
 title: "案例分析：文章写作Agent的Harness拆解"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/10-case-study.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "案例分析", "文章Agent", "实战拆解"]

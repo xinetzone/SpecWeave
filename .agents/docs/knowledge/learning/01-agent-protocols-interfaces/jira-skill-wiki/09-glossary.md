@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-glossary"
 title: "术语表与资源"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/09-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/09-glossary.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "glossary", "reference", "terminology", "resources"]

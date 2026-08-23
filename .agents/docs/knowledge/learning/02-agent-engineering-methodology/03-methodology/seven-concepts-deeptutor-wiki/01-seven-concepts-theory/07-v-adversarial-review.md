@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-01-v
 title: V - 对抗性审查 (Adversarial Review)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/01-seven-concepts-theory/07-v-adversarial-review.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [七概念, V, 对抗性审查, 理论]
 ---
-
 # V - 对抗性审查 (Adversarial Review)
 
 ---

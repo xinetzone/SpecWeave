@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-methods-index"
 title: "方法论"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/methods/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/methods/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---

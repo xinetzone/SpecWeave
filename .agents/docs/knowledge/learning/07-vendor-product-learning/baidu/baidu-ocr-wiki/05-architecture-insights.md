@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-05"
 title: "百度 Unlimited-OCR 架构创新深度启示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/05-architecture-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/05-architecture-insights.toml"
 ---
-
 # 百度 Unlimited-OCR 架构创新深度启示
 
 > 500M激活参数打败235B大模型的本质不是"小模型逆袭"的鸡汤，而是机制创新对参数堆砌的降维打击——当你深刻理解任务本质并注入正确的归纳偏置时，小模型完全可以超越大模型两个数量级。本章从第一性原理出发，剖析R-SWA带来的架构思想革命。

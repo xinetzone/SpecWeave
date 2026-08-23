@@ -2,10 +2,10 @@
 id: "llm-token-optimization-05-dialog-management"
 title: "多轮对话管理"
 source: "arXiv论文(MT-OSC)、Microsoft Azure文档、LangChain文档、OpenAI官方文档、CSDN技术博客综合整理"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/05-dialog-management.toml"
 tags: ["dialog-management", "conversation-state", "history-truncation", "entity-tracking", "sliding-window", "token-optimization"]
 category: "methods"
 ---
-
 # 多轮对话管理
 
 多轮对话管理专门针对对话式AI场景，解决对话历史随轮次增长导致的token线性膨胀问题。这类技术平衡对话连贯性与token效率，是聊天机器人、AI助理、客服系统的核心基础能力。

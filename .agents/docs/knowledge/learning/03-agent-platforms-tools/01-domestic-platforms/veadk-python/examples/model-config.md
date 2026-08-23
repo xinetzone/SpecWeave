@@ -2,14 +2,13 @@
 id: veadk-python-model-config
 title: 08 - 模型配置示例
 source: d:\AI\.chaos\libs\veadk-python\examples\08_model_config\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/model-config.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 模型配置示例 (Model Configuration)
 
 ## 1. 示例功能介绍

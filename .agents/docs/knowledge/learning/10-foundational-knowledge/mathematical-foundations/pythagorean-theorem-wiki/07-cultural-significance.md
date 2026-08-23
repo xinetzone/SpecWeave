@@ -2,6 +2,7 @@
 id: "pythagorean-theorem-cultural-significance"
 title: "七、文化意义"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/07-cultural-significance.toml"
 ---
 # 七、文化意义
 

@@ -2,6 +2,7 @@
 id: veadk-python-memory
 title: 03 & 09 - 记忆示例（短期+长期）
 source:
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/memory.toml"
 - d:\AI\.chaos\libs\veadk-python\examples\03_short_term_memory\main.py
 - d:\AI\.chaos\libs\veadk-python\examples\09_long_term_memory\main.py
 category: learning
@@ -10,8 +11,6 @@ status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 记忆示例：短期记忆与长期记忆
 
 ## 1. 示例功能介绍

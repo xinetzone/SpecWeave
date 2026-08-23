@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-faq-resources"
 title: "06 FAQ 与术语表"
 version: "1.0"
 source: "README.md（Notes/Download 章节）+ 源码注释"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/06-faq-and-resources.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 常见问题解答、核心术语表、官方资源链接"
 tags: ["okf-desktop", "faq", "术语表", "glossary", "resources", "checklist"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 06 FAQ 与术语表
 
 ## 6.1 常见问题

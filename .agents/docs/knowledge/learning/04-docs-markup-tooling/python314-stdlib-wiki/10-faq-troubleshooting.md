@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-10"
 title: "Python 3.14 标准库教程 — FAQ 与排错"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/10-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/10-faq-troubleshooting.toml"
 ---
-
 # Python 3.14 标准库教程 — FAQ 与排错
 
 > 一句话摘要：本章以问答形式，分"运行时动态机制""`dataclasses`""`traceback`"三组，集中解答六模块在使用中的高频疑问，并给出常见错误信息与对策表，帮助你快速定位并解决问题。

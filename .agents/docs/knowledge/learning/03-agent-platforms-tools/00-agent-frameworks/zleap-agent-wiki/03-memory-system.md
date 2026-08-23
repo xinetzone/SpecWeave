@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-memory-system"
 title: "分区记忆系统"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/03-memory-system.toml"
 category: "learning"
 tags: ["zleap-agent", "memory", "person-memory", "event-memory", "experience-memory", "rrf", "recall", "postgresql", "extraction"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent 分区记忆系统：person/event/experience 三类记忆�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 03 分区记忆系统
 
 Zleap-Agent 的记忆不是"一个泛化的长期记忆桶"，而是**分区管理**，并且存储于 PostgreSQL——因为记忆参与 Agent 每一轮运行，需要检索、隔离、审计与回滚能力。

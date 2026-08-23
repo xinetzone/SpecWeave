@@ -2,11 +2,11 @@
 id: "monkeycode-deep-analysis"
 title: "第二章 - MonkeyCode产品深度解析"
 source: "微信公众号「AI产品银海」文章"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["MonkeyCode", "Vibe Coding", "长亭科技", "开源", "私有化部署", "安全审计"]
 ---
-
 # 第二章 - MonkeyCode产品深度解析
 
 在第一章中，我们系统学习了七概念方法论体系。本章将应用这套框架，对MonkeyCode进行深度产品解析，理解其设计背景、核心特性与技术架构。

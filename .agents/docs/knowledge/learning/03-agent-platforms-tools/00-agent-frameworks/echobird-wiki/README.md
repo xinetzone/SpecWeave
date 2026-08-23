@@ -2,6 +2,7 @@
 id: "echobird-wiki-readme"
 title: "EchoBird 源码级学习 Wiki 教程"
 source: "https://echobird.ai/# 官网 + d:\AI\external\tools\EchoBird 本地源码"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/README.toml"
 category: "learning"
 tags: ["echobird", "ai-agent", "tauri", "rust", "model-nexus", "codex-proxy", "local-llm", "tool-registry", "desktop-tool", "source-code"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 target_version: "v5.6.0"
 ---
-
 # EchoBird 源码级学习 Wiki 教程
 
 > **EchoBird 是 edison7009 开源的 AI Agent 桌面管理工具**，以 Tauri + Rust 构建，用一个共享的模型数据中心（Model Nexus）支撑"安装修复 Agent / 一键本地大模型 / 我的 AI 项目 / 应用管理器"四大场景，实现"配置一次，到处可用"。本教程基于官网站点与本地源码（v5.6.0）深度解析其技术实现。

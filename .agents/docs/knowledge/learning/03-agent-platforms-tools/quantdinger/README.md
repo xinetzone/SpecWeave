@@ -4,8 +4,8 @@ title: "QuantDinger：自托管AI量化交易平台"
 category: "knowledge"
 date: "2026-08-22"
 source: "微信公众号「极客之家」"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/README.toml"
 ---
-
 # QuantDinger：自托管AI量化交易平台
 
 > 微信公众号「极客之家」项目介绍深度分析，解读通过MCP协议将AI编程助手接入量化交易全流程的自托管开源基础设施

@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-overview"
 title: "教程总览与知识地图"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/00-overview.toml"
 category: "learning"
 tags: ["AgentKit", "VeADK", "火山引擎", "AI Agent", "wiki教程"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 00 教程总览与知识地图
 
 ## AgentKit 产品生态全景图

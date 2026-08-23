@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch11-logging"
 title: "第11章 - 日志系统与调试"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/11-logging-debugging.toml"
 date: "2026-08-03"
 ---
-
 # 第11章 日志系统与调试
 
 Intelligent Terminal 采用**结构化、多写入器、按版本隔离**的日志系统设计。Rust WTA 进程、C++ Terminal 端、PowerShell hooks 三个独立的写入器共享同一个按版本划分的日志目录，配合完善的级别控制、轮转策略和结构化 target 字段，让问题定位和端到端追踪变得高效可追溯。

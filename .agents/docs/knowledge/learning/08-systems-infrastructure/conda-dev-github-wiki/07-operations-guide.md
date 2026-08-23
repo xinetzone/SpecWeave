@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-07-operations-guide
 title: "常见操作指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/07-operations-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/07-operations-guide.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-actions", "operations", "troubleshooting", "workflow"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda .github 元仓库配置修改、功能扩展与问题排查指南"
 ---
-
 # 常见操作指南
 
 > 本章基于 `conda-dev/.github` 元仓库（`external/libs/conda-dev/.github`）的 7 个工作流、4 个 Issue 模板与 `template-files/config.yml` 实际结构编写。修改 `.github/` 下的文件时，请注意大部分文件由 `conda/infrastructure` 中央仓库同步而来，正确入口见下文"单一来源"说明。

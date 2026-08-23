@@ -2,8 +2,8 @@
 id: 03-dependencies
 title: pyproject.toml 依赖清单
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/03-dependencies.toml"
 ---
-
 ## [project.dependencies]（核心依赖）
 
 ```

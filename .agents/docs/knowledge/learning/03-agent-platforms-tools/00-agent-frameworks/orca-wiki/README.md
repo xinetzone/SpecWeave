@@ -2,6 +2,7 @@
 id: "orca-wiki-readme"
 title: "Orca 多代理 AI 编排器 Wiki 教程"
 source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/README.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-code", "codex", "opencode", "electron", "parallel-agents", "multi-agent", "yc"]
 date: "2026-08-03"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 orca_version_target: "1.4.165-rc.0"
 
 ---
-
 # Orca 多代理 AI 编排器 Wiki 教程
 
 面向 100x 构建者的 AI 编排器——并排运行 Codex、Claude Code、OpenCode 或 Pi，每个都在自己的 worktree 中运行，并在一个地方统一跟踪。

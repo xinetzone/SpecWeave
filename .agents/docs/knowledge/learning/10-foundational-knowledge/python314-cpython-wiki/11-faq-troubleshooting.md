@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-11"
 title: "Python 3.14 FAQ 与排障"
 source: "https://docs.python.org/zh-cn/3.14/faq/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/11-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/11-faq-troubleshooting.toml"
 ---
-
 # Python 3.14 FAQ 与排障
 
 本章收集 Python 3.14 升级和使用过程中的常见问题、已知问题和调试技巧。

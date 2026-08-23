@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-architecture"
 title: "01 架构深度解析"
 version: "1.0"
 source: "shell/app.py + ui/src/api.js + ui/src/links.js + ui/src/App.jsx"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/01-architecture.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 三层架构深度解析：shell 启动器、api.js 唯一集成点、单源无 CORS、token 传递、进程内服务器"
 tags: ["okf-desktop", "architecture", "pywebview", "SSE", "单源无CORS", "进程内服务器"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 01 架构深度解析
 
 ## 1.1 三层架构总览

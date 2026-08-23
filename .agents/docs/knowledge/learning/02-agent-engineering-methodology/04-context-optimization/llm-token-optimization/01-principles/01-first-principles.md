@@ -7,11 +7,11 @@ type: "knowledge"
 tags: ["LLM", "Token", "First-Principles", "Transformer", "Self-Attention", "KV-Cache", "Optimization"]
 maturity: "L1"
 source: "first-principles-analysis"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/01-principles/01-first-principles.toml"
 prerequisites: ["llm-token-optimization-principles-facts"]
 validation_count: 1
 reuse_count: 0
 ---
-
 # 大语言模型Token优化第一性原理分析
 
 ## 方法论说明

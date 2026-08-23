@@ -8,12 +8,12 @@ tags:
   - design-philosophy
   - evolution
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.toml"
   - https://protobuf.dev/programming-guides/field_presence
   - https://buf.build/blog/protobuf-editions-are-here
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # 核心功能演进
 
 本文档深入解析Protobuf 6个核心功能在proto2→proto3→Editions三阶段的变迁，解释每个变化背后的设计决策、生产教训，以及对迁移的影响。通过这些功能的演进历史，你可以清晰看到「显式控制→约定优先→feature原子化」的设计哲学三阶段跃迁。

@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-04"
 title: "Python 3.14 标准库 sys.monitoring 全面详解"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/04-sys-monitoring.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/04-sys-monitoring.toml"
 ---
-
 # Python 3.14 标准库 sys.monitoring 全面详解
 
 > 一句话摘要：`sys.monitoring` 是 Python 3.12 起提供的低开销、事件驱动的运行时监控命名空间，它用「工具标识符 + 事件集合 + 回调」三要素让调试器、覆盖率工具、性能分析器等按需订阅执行事件，相比传统的 `sys.settrace`/`sys.setprofile` 在性能与可控粒度上都有本质提升。

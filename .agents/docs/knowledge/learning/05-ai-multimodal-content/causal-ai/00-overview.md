@@ -2,9 +2,8 @@
 id: "causal-ai-00-overview"
 title: "因果AI与世界模型：零犀科技六年押注深度分析"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/00-overview.toml"
 ---
-
 # 新智元"因果AI与世界模型"文章系统性学习与深度洞察分析报告
 
 > 本报告基于新智元微信公众号发布的文章进行系统性学习与深度洞察分析，分为"学习笔记"（技术内容理解）与"洞察总结"（行业趋势与战略洞察）两个层次。

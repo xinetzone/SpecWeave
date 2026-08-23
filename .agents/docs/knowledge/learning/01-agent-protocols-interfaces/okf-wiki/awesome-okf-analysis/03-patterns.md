@@ -4,12 +4,12 @@ title: Awesome OKF 深度分析 - 模式萃取（E阶段）
 type: Patterns
 version: 1.0
 source: 从awesome-okf项目的4条洞察中萃取可复用架构模式
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/03-patterns.toml"
 description: 从awesome-okf萃取的2个可迁移模式：零依赖CLI聚合模式、规范留白扩展打样模式
 tags: [okf, awesome-okf, 模式, pattern, extraction]
 category: case-study
 date: 2026-08-06
 ---
-
 # Awesome OKF 深度分析 - 模式萃取（E阶段）
 
 > **方法论说明**：本阶段从I阶段4条洞察中萃取可迁移到非OKF场景的架构模式。每个模式包含完整TOML frontmatter、触发场景、核心结构、反模式、迁移验证（SpecWeave应用示例）。

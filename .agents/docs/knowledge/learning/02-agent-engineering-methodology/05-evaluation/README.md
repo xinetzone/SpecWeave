@@ -1,6 +1,7 @@
 ---
 id: "agent-methodology-evaluation"
 title: "Agent评测体系"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/README.toml"
 category: "learning"
 date: "2026-08-21"
 ---

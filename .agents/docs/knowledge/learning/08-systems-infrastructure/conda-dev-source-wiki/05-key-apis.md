@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-05-key-apis
 title: "关键 API 使用方法"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/05-key-apis.toml"
 category: "learning"
 tags: [conda, api, matchspec, channel, prefixdata, subdirdata, context, history, exports]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于真实源码讲解 conda.api、MatchSpec/Channel/Version、核心数据类、Context、History、exports 与 conda-docs 的用法与签名。"
 ---
-
 # 关键 API 使用方法
 
 本章聚焦 conda 可编程接口。所有签名均取自当前仓库真实源码。

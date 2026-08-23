@@ -4,12 +4,12 @@ title: "01 - 贡献者快速上手"
 date: 2026-08-19
 tags: [cpython, quickstart, setup, build, first-pr, codespaces]
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/01-contributor-quickstart.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
 maturity: L1-draft
 ---
-
 # 01 - 贡献者快速上手
 
 本章带你从零开始搭建CPython开发环境，提交你的第一个Pull Request。我们提供两种路径：**零配置Codespaces路径（5分钟）**和**本地环境路径（完整开发）**。

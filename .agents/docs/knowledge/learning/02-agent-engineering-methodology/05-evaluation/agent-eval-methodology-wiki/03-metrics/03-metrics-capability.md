@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module3-metrics-capability"
 title: "模块3.4：能力维度指标详解"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/03-metrics/03-metrics-capability.toml"
 category: "learning"
 tags: ["agent-evaluation", "metrics", "capability", "task-success", "tool-use", "planning", "memory"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "能力维度核心指标详解：任务完成率、推理规划、工具调用、记忆管理等16项指标，含定义、测量方法与参考阈值。"
 references: 8
 ---
-
 # 模块3.4：能力维度指标详解
 
 > **方法论视角**：本模块从四维框架的"能力"视角展开。若需完整的指标分类（14大类）与核心指标计算方法（pass@k、RAG 四指标等），请参阅 [工程手册 · 第2章 指标体系设计](../../agent-evaluation-wiki/02-metrics-design.md)。

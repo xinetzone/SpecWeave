@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-02-quickstart
 title: DeepTutor快速开始
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/02-deeptutor-case/03-quick-start.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [DeepTutor, 快速开始, 实践]
 ---
-
 # DeepTutor快速开始
 
 本章介绍DeepTutor的三种部署和使用方式：PyPI安装、Docker部署、CLI-only模式。

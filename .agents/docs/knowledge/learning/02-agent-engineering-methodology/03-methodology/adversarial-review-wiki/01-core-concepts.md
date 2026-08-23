@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-core-concepts"
 title: "01、核心概念定义"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/01-core-concepts.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.1"
 status: "completed"
 ---
-
 # 对抗性审查：核心概念定义
 
 ---

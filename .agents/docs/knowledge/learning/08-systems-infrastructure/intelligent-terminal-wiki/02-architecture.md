@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch02-architecture"
 title: "第2章 - 整体架构设计"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/02-architecture.toml"
 date: "2026-08-03"
 ---
-
 # 第2章 整体架构设计
 
 ## 2.1 架构总览（R阶段事实）

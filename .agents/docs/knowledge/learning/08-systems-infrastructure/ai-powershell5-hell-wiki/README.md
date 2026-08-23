@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-index"
 title: "AI大模型×PowerShell 5 兼容性防御 Wiki 教程"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/README.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "compatibility", "constrained-language-mode", "clm", "security", "defensive-programming"]
 ---
-
 # AI大模型×PowerShell 5 兼容性防御 Wiki 教程
 
 本教程是 AI 大模型（GPT-4/Claude/GitHub Copilot 等）为 Windows PowerShell 5.1 生成代码时的系统性兼容性防御 wiki，聚焦于"四重断裂"问题的识别、预防与修复。覆盖 24 个典型失败场景、14 个根因洞察、5 个可复用防御模式，经过三视角 12 个攻击点的对抗审查加固，帮助开发者在企业受限环境（CLM/WDAC/AppLocker）中生成可靠、安全、可运行的 PowerShell 5.1 代码。

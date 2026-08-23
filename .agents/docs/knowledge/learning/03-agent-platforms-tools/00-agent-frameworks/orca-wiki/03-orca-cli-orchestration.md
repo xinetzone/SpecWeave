@@ -2,6 +2,7 @@
 id: "orca-wiki-cli"
 title: "Orca CLI 与多 Agent 编排"
 source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（skill-guides/orca-cli.md、skill-guides/orchestration.md、skill-guides/orca-linear.md）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/03-orca-cli-orchestration.toml"
 category: "learning"
 tags: ["orca", "stablyai", "cli", "orchestration", "worktree", "terminal", "automations", "browser", "linear", "multi-agent", "worker_done", "dispatch", "run", "task"]
 date: "2026-08-03"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 orca_version_target: "1.4.165-rc.0"
 
 ---
-
 # 03 Orca CLI 与多 Agent 编排
 
 Orca 提供一套以 `orca` 为入口的公开 CLI，用于操作 Orca 托管的 worktree、终端、仓库、自动化任务、内嵌浏览器与任务编排。当 Orca 运行中的编辑器/运行时是事实来源（source of truth）时，应优先使用 `orca` CLI 而非裸 `git worktree`、临时 PTY、Playwright 或 Computer Use。本章将系统解析 `orca` CLI 的八大命令族，并深入讲解 Orca 的多 Agent 编排机制。

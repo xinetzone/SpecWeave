@@ -2,6 +2,7 @@
 id: "orca-wiki-agents"
 title: "支持的 Agent 清单"
 source: "https://www.onorca.dev/ 官网「Supported Agents」+ d:\AI\external\tools\orca\README.md 本地开源源码"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/04-supported-agents.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "cli-agent", "claude-code", "codex", "opencode", "bring-your-own-agent", "multi-agent"]
 date: "2026-08-03"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 orca_version_target: "1.4.165-rc.0"
 
 ---
-
 # 04 支持的 Agent 清单
 
 ## 核心能力：任意 CLI Agent 均可运行

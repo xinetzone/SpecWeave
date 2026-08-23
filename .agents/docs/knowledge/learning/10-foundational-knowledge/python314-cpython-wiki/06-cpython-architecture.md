@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-06"
 title: "CPython 源码架构总览"
 source: "https://github.com/python/cpython/tree/v3.14.0"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/06-cpython-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/06-cpython-architecture.toml"
 ---
-
 # CPython 源码架构总览
 
 理解 CPython 的源码架构是深入理解 Python 3.14 新特性（自由线程、JIT、延迟注解等）的基础。本章带你从顶层目录结构出发，逐层深入 CPython 的核心运行时、对象系统、编译器、GC 和内存管理。

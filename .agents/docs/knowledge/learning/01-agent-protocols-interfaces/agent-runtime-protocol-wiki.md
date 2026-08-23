@@ -3,9 +3,8 @@ title: "Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）"
 date: "2026-07-04"
 tags: ["agent-runtime", "agent-protocol", "langgraph", "openai-assistants", "autogen", "claude-sdk", "mcp", "thread", "run", "checkpoint", "artifact", "event", "human-in-the-loop", "error-recovery", "multi-agent", "observability"]
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.toml"
 ---
-
 > **本教程已扩展为原子化 Wiki 目录，请参阅 [agent-runtime-protocol-wiki/](agent-runtime-protocol-wiki/README.md)**
 
 # Agent Runtime Protocol 完整教程

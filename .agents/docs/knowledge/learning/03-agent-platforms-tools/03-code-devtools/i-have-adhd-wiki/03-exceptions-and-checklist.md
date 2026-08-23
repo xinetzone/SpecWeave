@@ -2,6 +2,7 @@
 id: "i-have-adhd-wiki-exceptions"
 title: "四、例外场景与自检清单"
 source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 例外规则分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/03-exceptions-and-checklist.toml"
 ---
 # 四、例外场景与自检清单
 

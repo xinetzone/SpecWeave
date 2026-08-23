@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-03-f
 title: F第一性原理在DeepTutor中的体现
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/03-analysis/06-f-in-deeptutor.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [分析, F, 第一性原理, 架构设计]
 ---
-
 # F第一性原理在DeepTutor中的体现
 
 ---

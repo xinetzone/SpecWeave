@@ -2,6 +2,7 @@
 id: "eve-wiki-02"
 title: "目录结构与核心能力"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/02-directory-core-capabilities.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "instructions", "tools", "skills", "sandbox"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.1"
 eve_version_target: "2026 public preview"
 ---
-
 # 02 目录结构与核心能力
 
 ## 目录结构总览

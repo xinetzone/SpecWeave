@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-tools"
 title: "07、开源工具链指南"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/07-open-source-tools.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 ## 1. 概述
 
 LLM/AI系统红队测试工具正在快速发展，覆盖从快速扫描到深度编排的不同需求。本文档汇总当前主流开源红队测试工具，为工具选型和使用提供参考。

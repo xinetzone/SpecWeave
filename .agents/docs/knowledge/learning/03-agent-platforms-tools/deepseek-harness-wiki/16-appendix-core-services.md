@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-16"
 title: "DeepSeek Harness 完全指南 — 附录：核心服务速查表"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/16-appendix-core-services.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/16-appendix-core-services.toml"
 ---
-
 # 附录：核心服务速查表
 
 本附录列出 dsh 运行时上下文中所有核心 `ctx.*` 服务的快速参考，方便插件开发时查阅。基于源码自动生成的能力图整理。

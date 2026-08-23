@@ -2,6 +2,7 @@
 id: "veadk-python-adversarial-review"
 title: "V阶段：对抗审查报告（多视角质量验证）"
 source: "seven-concepts: veadk-python-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/14-adversarial-review.toml"
 category: "learning"
 tags: ["VeADK", "对抗审查", "质量验证", "文档审查", "多视角"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "VeADK-Python Wiki 四视角对抗审查报告，包含12个问题发现、关键问题修正记录、20个API签名抽查结果（准确率90%）及改进建议"
 wiki_version: "1.0"
 ---
-
 # V阶段：对抗审查报告（多视角质量验证）
 
 ## 审查概述

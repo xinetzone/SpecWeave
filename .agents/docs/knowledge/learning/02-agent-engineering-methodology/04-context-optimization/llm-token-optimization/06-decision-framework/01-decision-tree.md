@@ -7,12 +7,12 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Decision-Tree", "Scenarios"]
 maturity: "L1"
 source: "extraction-from-9-cases"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.toml"
 prerequisites:
   - "llm-token-optimization-decision-framework-overview"
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化场景决策树
 
 > 本文档覆盖6大典型应用场景的优化决策路径，每个场景提供特征识别、三级优化优先级、预期收益和注意事项。

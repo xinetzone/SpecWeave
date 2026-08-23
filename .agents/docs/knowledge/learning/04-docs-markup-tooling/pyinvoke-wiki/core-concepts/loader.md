@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Loader 任务加载
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/loader.toml"
 description: PyInvoke Loader 任务加载器的完整 API 参考，涵盖 FilesystemLoader 的递归向上搜索、tasks.py/包发现、模块导入与 sys.path 管理。
 tags: [pyinvoke, loader, filesystem-loader, module-loading, tasks-discovery, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/loader.py
 ---
-
 # Loader 任务加载
 
 ## 概述

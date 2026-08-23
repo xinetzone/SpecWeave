@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Parser 参数解析
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/parser.toml"
 description: PyInvoke Parser 参数解析系统的完整 API 参考，涵盖 Argument 参数定义、ParserContext 上下文、ParseMachine 状态机、标志处理、值解析与 ParseResult。
 tags: [pyinvoke, parser, argument, parsercontext, flags, cli-parsing, core-api]
 date: 2026-08-21
@@ -11,7 +12,6 @@ sources:
   - external/libs/pyinvoke/invoke/invoke/parser/parser.py
   - external/libs/pyinvoke/invoke/invoke/parser/context.py
 ---
-
 # Parser 参数解析
 
 ## 概述

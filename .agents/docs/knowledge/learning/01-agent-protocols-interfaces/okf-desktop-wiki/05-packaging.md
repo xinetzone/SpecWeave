@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-packaging"
 title: "05 跨平台打包"
 version: "1.0"
 source: "build.sh + okf-desktop.spec + version_info.txt + README.md（Package 章节）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/05-packaging.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 的 PyInstaller 打包策略：进程内服务器冻结、依赖排除、三平台差异、签名公证"
 tags: ["okf-desktop", "packaging", "pyinstaller", "冻结", "跨平台", "签名"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 05 跨平台打包
 
 ## 5.1 打包目标

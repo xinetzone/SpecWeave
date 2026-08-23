@@ -2,8 +2,8 @@
 id: 07-runner-facts
 title: Runner 类事实记录
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/07-runner-facts.toml"
 ---
-
 # Runner 类事实记录
 
 ## Runner 类签名和继承关系

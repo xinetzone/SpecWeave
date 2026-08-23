@@ -2,11 +2,11 @@
 id: git-advanced-wiki-00-overview
 title: "Git 仓库类型与核心概念"
 source: "internal:git-clone-no-local-bare-explanation"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-advanced-wiki/00-overview.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["git", "bare-repository", "working-directory", "git-directory", "transport-protocol"]
 ---
-
 # Git 仓库类型与核心概念
 
 ## 1. Git 仓库的两种形态

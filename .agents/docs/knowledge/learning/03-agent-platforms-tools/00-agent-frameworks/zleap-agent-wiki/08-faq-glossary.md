@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-faq-glossary"
 title: "FAQ 与术语表"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/08-faq-glossary.toml"
 category: "learning"
 tags: ["zleap-agent", "faq", "glossary", "workspace", "context", "memory", "rrf", "mcp", "gateway", "turn-loop"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent FAQ 与术语表：常见问题解答（适合用户、是
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 08 FAQ 与术语表
 
 ## FAQ

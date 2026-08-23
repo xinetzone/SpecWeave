@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-03"
 title: "Cordis — 核心抽象与架构"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/03-core-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/03-core-architecture.toml"
 ---
-
 # Cordis — 核心抽象与架构
 
 > 一句话摘要：本章讲解 Cordis 核心库 `packages/core` 的七大核心抽象——`Context`、`Service`、`Fiber`、`Registry`、`Reflect`、`Events`、`Logger`——各自的职责、关键成员与相互协作关系，这是理解后续效应/协同效应机制、生命周期与装配的基础。

@@ -2,13 +2,12 @@
 id: skills
 title: Skills 技能系统详解
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/skills.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # Skills 技能系统详解
 
 ## 概述

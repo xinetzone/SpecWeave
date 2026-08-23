@@ -10,11 +10,11 @@ tags:
   - cli
   - git-workflow
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/03-metadata-as-code.toml"
   - vendor/knowledge-catalog/toolbox/mdcode/README.md
   - vendor/knowledge-catalog/toolbox/README.md
 maturity: L1-draft
 ---
-
 # 03 - 元数据即代码（mdcode/kcmd工具链）
 
 > Metadata as Code (mdcode) 是Knowledge Catalog面向生产的工具链，为数据管理员、数据生产者和AI Agent提供基于源码制品的元数据管理和上下文工程UX。用户和Agent可以使用开发者友好的工作流（版本控制、CI/CD）创作、管理和丰富元数据制品。

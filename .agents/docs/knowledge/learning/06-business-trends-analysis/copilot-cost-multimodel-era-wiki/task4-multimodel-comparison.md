@@ -2,10 +2,10 @@
 id: "task4-multimodel-comparison"
 title: "多模型时代四家典型产品策略系统对比分析"
 source: "cleaned-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task4-multimodel-comparison.toml"
 created: "2026-07-09"
 task: "task4"
 ---
-
 # 多模型时代四家典型产品策略系统对比分析
 
 ## 一、四家产品多模型策略系统梳理

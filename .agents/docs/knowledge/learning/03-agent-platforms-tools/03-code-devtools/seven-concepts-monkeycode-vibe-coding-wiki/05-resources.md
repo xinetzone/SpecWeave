@@ -2,11 +2,11 @@
 id: "resources"
 title: "第五章 - 资源扩展链接"
 source: "公开资源整理"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/05-resources.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["资源链接", "MonkeyCode", "Vibe Coding", "开源项目", "私有化部署"]
 ---
-
 # 第五章 - 资源扩展链接
 
 本章汇总MonkeyCode、Vibe Coding、私有化部署相关的官方资源、开源项目、学习资料和工具链接，方便读者进一步深入学习和实践。

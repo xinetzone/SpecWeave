@@ -5,6 +5,7 @@ type: "architecture"
 date: "2026-07-23"
 maturity: "L2-validated"
 source: "七概念方法论R→I→E→V知识沉淀链路：d:/spaces/SpecWeave/external/chaos/caffe/caffex/include 与 src 目录依赖分析"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/03-include-src-dependency-analysis.toml"
 analysis_date: "2026-07-22"
 methodology: "seven-concepts R→I→E→V"
 related_patterns:
@@ -21,7 +22,6 @@ tags:
   - 架构模式
   - 七概念方法论
 ---
-
 # Caffe include/src 目录依赖关系系统性分析
 
 > **方法论链路**：R（复盘事实采集）→ I（洞察根因分析）→ E（可复用模式萃取）→ V（多视角对抗审查）  

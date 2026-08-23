@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 手动源码安装指南"
 chapter: 4
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/04-install-manual.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/package.json
   - external/libs/hermes-agent/web/package.json
@@ -14,7 +15,6 @@ source:
   - external/libs/hermes-agent/website/docs/getting-started/installation.md
   - external/libs/hermes-agent/scripts/install.sh
 ---
-
 # 4. 手动源码安装指南
 
 本章面向希望完全掌控安装过程的开发者、贡献者以及 CI/CD 环境，详细说明如何从 Git 仓库手动克隆并安装 Hermes Agent。内容涵盖仓库克隆、uv 与 venv+pip 两种 Python 环境方案、完整的依赖说明（核心依赖与可选 extras）、Node.js 前端依赖安装与构建、开发者模式、Playwright 浏览器安装、`hermes` 命令的 PATH 配置，以及 `setup-hermes.sh` 一键脚本的使用。所有信息均以项目源码中的 `pyproject.toml`、`package.json`、`setup-hermes.sh`、`README.md` 与 `AGENTS.md` 为准。

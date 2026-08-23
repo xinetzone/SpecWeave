@@ -2,13 +2,12 @@
 id: memory-module
 title: 记忆系统详解（ShortTermMemory & LongTermMemory）
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/memory.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 记忆系统详解
 
 VeADK 提供了双层记忆架构：**短期记忆（ShortTermMemory）** 和 **长期记忆（LongTermMemory）**，分别用于会话上下文管理和跨会话持久化记忆。

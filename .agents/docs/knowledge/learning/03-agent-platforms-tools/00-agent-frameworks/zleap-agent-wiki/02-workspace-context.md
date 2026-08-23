@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-workspace-context"
 title: "Workspace 隔离与上下文组装"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/02-workspace-context.toml"
 category: "learning"
 tags: ["zleap-agent", "workspace", "context-assembly", "cache-breakpoint", "kernel", "routing", "main-space", "work-space"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent Workspace 隔离机制与上下文组装：main/work 空�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 02 Workspace 隔离与上下文组装
 
 本章是 Zleap-Agent 的核心，讲清楚"Workspace 隔离"在代码层面到底如何实现，以及 Context 如何被组装成运行时布局。

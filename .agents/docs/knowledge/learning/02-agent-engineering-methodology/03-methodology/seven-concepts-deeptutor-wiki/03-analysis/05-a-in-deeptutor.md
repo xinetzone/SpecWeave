@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-03-a
 title: A原子化在DeepTutor中的体现
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/03-analysis/05-a-in-deeptutor.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [分析, A, 原子化, 模块设计]
 ---
-
 # A原子化在DeepTutor中的体现
 
 ---

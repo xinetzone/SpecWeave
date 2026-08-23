@@ -2,11 +2,11 @@
 id: "assessment"
 title: "第六章 - 学习效果评估方法"
 source: "学习评估体系设计"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/06-assessment.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["学习评估", "效果检验", "知识测试", "实践评估", "七概念"]
 ---
-
 # 第六章 - 学习效果评估方法
 
 本章建立基于柯氏四级评估模型的学习效果检验体系，从知识理解到成果产出全链路评估学习成效，配套量化评分标准、进度跟踪工具和持续改进机制，确保学习目标可达成、可衡量、可验证。

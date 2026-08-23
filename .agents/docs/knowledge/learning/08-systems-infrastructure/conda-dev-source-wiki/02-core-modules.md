@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-02-core-modules
 title: "核心模块：base/common/models/core 与根级模块"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/02-core-modules.toml"
 category: "learning"
 tags: [conda, source-code, architecture, core-modules, base, common, models, core]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "逐层拆解 conda 主包的 base/common/models/core 四个核心分层与根级模块，说明各自职责并列出真实关键类型与函数。"
 ---
-
 # 核心模块：base/common/models/core 与根级模块
 
 ## 1. 引言：conda 的四层核心 + 根级入口

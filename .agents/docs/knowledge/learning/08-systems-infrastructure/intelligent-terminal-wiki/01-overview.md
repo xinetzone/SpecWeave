@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch01-overview"
 title: "第1章 - 项目概述与快速开始"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/01-overview.toml"
 date: "2026-08-03"
 ---
-
 # 第1章 项目概述与快速开始
 
 ## 1.1 Intelligent Terminal 是什么

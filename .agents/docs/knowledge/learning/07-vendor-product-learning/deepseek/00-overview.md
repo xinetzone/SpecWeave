@@ -3,6 +3,7 @@ id: "deepseek-v4-free-plan-overview"
 title: "00 DeepSeek-V4 免费方案全景"
 version: "1.0"
 source: "官方API文档 + DeepSeek官网 + 14个权威来源交叉验证"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/00-overview.toml"
 type: "Research Report"
 description: "DeepSeek-V4正式版免费方案全景：三层免费路径对比、核心结论速览、适用人群推荐"
 tags: ["DeepSeek", "DeepSeek-V4", "免费方案", "API定价", "大模型", "AI工具"]
@@ -14,7 +15,6 @@ summary: "DeepSeek-V4正式版采用三层免费金字塔：网页/App永久免�
 last_verified: "2026-08-19"
 research_session: "sc-20260819-deepseek-v4-free-plan"
 ---
-
 # 00 DeepSeek-V4 免费方案全景
 
 > **信息更新时间**：2026年8月19日 | **定价生效时间**：2026年8月17日0时（北京时间）

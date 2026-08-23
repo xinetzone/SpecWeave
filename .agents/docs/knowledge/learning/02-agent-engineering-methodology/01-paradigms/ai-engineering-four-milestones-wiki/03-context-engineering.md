@@ -2,9 +2,8 @@
 id: "ai-engineering-four-milestones-wiki-03"
 title: "第二站：Context Engineering"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/03-context-engineering.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/03-context-engineering.toml"
 ---
-
 # 第二站：Context Engineering
 
 ## Agent需要完整任务环境

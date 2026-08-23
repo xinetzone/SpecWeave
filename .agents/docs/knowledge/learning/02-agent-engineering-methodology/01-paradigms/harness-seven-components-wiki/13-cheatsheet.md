@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-13"
 title: "速查手册：七大组件一页纸"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/13-cheatsheet.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "速查", "cheatsheet", "手册"]
 ---
-
 > 本页是七大组件的快速参考卡，适合在设计或评审Agent时快速对照。
 
 ## 一、七大组件速查表

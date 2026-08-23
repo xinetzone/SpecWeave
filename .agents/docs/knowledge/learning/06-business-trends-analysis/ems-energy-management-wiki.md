@@ -10,6 +10,7 @@ status: "stable"
 author: "工业可视化（原文作者）"
 summary: "开源EMS能源管理系统energy-management深度分析：基于Vue3+SpringCloud Alibaba微服务架构，支持50+工业协议，ShardingSphere分片实现秒级5万条数据处理，全链路可视化配置，代码注释率>40%。含技术架构解析、四大核心亮点、部署门槛评估、6项风险识别和11项可借鉴要点。"
 source: "ems-energy-management-wiki/analysis-report.md"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ems-energy-management-wiki.toml"
 ---
 # 开源EMS能源管理系统深度分析Wiki
 

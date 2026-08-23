@@ -2,11 +2,11 @@
 id: "seven-concepts-framework"
 title: "第一章 - 七概念知识框架"
 source: "七概念方法论体系"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["七概念", "R-I-E-C-A-F-V", "方法论", "认知框架"]
 ---
-
 # 第一章 - 七概念知识框架
 
 > **R=复盘 | I=洞察 | E=萃取 | C=原子提交 | A=原子化 | F=第一性原理 | V=对抗性审查**

@@ -1,7 +1,7 @@
 ---
 id: conda-dev-github-wiki-00-overview
 title: "conda .github 元仓库 Wiki 教程总览"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.toml"
 source: "spec:create-conda-dev-github-wiki-tutorial"
 category: "learning"
 tags: ["conda", "github-meta-repo", "org-governance", "github-actions", "wiki-tutorial"]
@@ -10,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda-dev/.github 元仓库 Wiki 教程总览"
 ---
-
 # conda .github 元仓库 Wiki 教程总览
 
 ## 1. 教程引言：为什么研究 conda 的 `.github` 元仓库

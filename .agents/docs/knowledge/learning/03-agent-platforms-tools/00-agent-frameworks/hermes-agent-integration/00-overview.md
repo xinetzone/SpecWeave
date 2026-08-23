@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-00-overview"
 title: "00 集成总览与两条路径"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 Wiki + SpecWeave 现状"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-integration/00-overview.toml"
 type: "Wiki Tutorial"
 description: "SpecWeave 接入 Hermes Agent 集成总览：集成目标、两条路径、章节导航、前置知识"
 status: "stable"

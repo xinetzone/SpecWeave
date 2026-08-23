@@ -2,6 +2,7 @@
 id: "echobird-wiki-overview"
 title: "教程总览与知识地图"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/00-overview.toml"
 category: "learning"
 tags: ["echobird", "ai-agent", "wiki教程", "tauri", "rust"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 教程体系全景：产品生态 Mermaid 图 + 12 章导航�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 00 教程总览与知识地图
 
 ## EchoBird 产品生态全景图

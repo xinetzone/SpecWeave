@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-glossary"
 title: "11、核心术语表"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/11-glossary.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.1"
 status: "completed"
 ---
-
 # 对抗性审查：核心术语表
 
 ---

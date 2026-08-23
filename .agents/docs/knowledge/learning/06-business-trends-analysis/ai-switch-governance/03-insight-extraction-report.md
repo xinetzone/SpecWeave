@@ -2,9 +2,8 @@
 id: "ai-switch-governance-03-insight-extraction-report"
 title: "AI赋能的Feature Flag全生命周期治理 — 深度洞察与模式萃取"
 source: "InfoQ QCon 2026 北京站"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/03-insight-extraction-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/03-insight-extraction-report.toml"
 ---
-
 # 深度洞察与模式萃取报告
 
 > 本报告基于 [00-overview.md](00-overview.md)、[01-article-content.md](01-article-content.md) 和 [02-seven-concepts-report.md](02-seven-concepts-report.md) 进行深化洞察分析（I阶段）与模式萃取（E阶段），在原有3条洞察、2个模式基础上，新增2条深层洞察、2个可复用模式，形成完整的洞察体系与模式库。
@@ -338,7 +337,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-bus
 | 报告 | 洞察数 | 模式数 | 定位 |
 |------|--------|--------|------|
 | [00-overview.md](00-overview.md) | — | 4个认知模型 | 学习笔记+洞察总结（基础层） |
-| [seven-concepts-report.md](seven-concepts-report.md) | 3条 | 2个 | R→I→E→V知识沉淀（标准层） |
+| [02-seven-concepts-report.md](02-seven-concepts-report.md) | 3条 | 2个 | R→I→E→V知识沉淀（标准层） |
 | **本报告** | **5条（+2新增）** | **4个（+2新增）** | **I→E深化萃取（深化层）** |
 
 本报告在 seven-concepts-report.md 基础上深化，新增2条深层洞察（I-04错误投资化、I-05下界抬升）和2个可复用模式（模式3责任转移治理、模式4错误黑名单单调进化），形成完整的洞察体系与模式库。

@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-08"
 title: "实践指南与项目案例：玩转Agent Plan与CookBook案例库"
 source: "https://bytedance.larkoffice.com/wiki/LuwYwRaeMi13vWkiTrWcTSFmnCg"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/08-practice-cases.toml"
 date: "2026-08-12"
 category: "learning"
 tags: ["volcengine", "agent-plan", "实践指南", "CookBook", "案例库", "Seedance", "Seedream"]

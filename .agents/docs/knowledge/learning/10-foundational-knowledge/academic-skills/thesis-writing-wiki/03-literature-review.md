@@ -2,6 +2,7 @@
 id: "thesis-writing-literature-review"
 title: "四、文献综述"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/03-literature-review.toml"
 ---
 # 四、文献综述
 

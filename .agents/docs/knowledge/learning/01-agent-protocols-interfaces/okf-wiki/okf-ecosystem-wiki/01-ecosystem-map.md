@@ -3,6 +3,7 @@ id: okf-ecosystem-infrastructure-01-ecosystem-map
 title: "01 OKF 生态资源图谱"
 version: "1.0"
 source: ".chaos/libs/awesome-okf 上游英文版深度分析"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/01-ecosystem-map.toml"
 type: "Wiki Tutorial"
 description: "OKF 上游生态资源九大分类图谱、build-okf-bundle.mjs 批转实现原理、社区工具清单"
 tags: ["OKF", "生态图谱", "ecosystem", "build-okf-bundle", "awesome-okf"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
 ---
-
 # 01 OKF 生态资源图谱
 
 > 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [awesome-okf](https://github.com/linyiru/awesome-okf)（**上游英文版**）的生态资源分类与工程实现。OKF 通用规范概念请参考 [okf-wiki 主教程](../README.md)。

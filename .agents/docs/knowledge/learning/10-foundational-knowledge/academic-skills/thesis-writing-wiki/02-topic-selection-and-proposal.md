@@ -2,6 +2,7 @@
 id: "thesis-writing-topic-selection"
 title: "三、选题与开题"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/02-topic-selection-and-proposal.toml"
 ---
 # 三、选题与开题
 

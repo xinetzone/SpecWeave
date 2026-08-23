@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-04"
 title: "回报与激励：套餐奖励与Cookbook收录"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/04-rewards-recognition.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["volcengine", "agent-plan", "共创计划", "奖励", "Cookbook"]

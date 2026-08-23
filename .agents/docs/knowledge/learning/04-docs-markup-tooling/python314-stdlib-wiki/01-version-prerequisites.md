@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-01"
 title: "Python 3.14 标准库教程 — 版本背景与模块可用性"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/01-version-prerequisites.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/01-version-prerequisites.toml"
 ---
-
 # Python 3.14 标准库教程 — 版本背景与模块可用性
 
 > 一句话摘要：本教程覆盖的六个模块"年龄"差异很大——`contextlib` 长期存在、`dataclasses`/`contextvars` 于 3.7 引入、`traceback` 关键 API 于 3.4/3.5 引入、`sys.monitoring` 于 3.12 引入、`annotationlib` 为 3.14 全新模块；在动手前先确认所用 Python 版本，能避免绝大多数 `ImportError` / `AttributeError`。

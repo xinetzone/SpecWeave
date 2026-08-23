@@ -2,11 +2,11 @@
 id: "faq"
 title: "第四章 - 常见问题解答（FAQ）"
 source: "MonkeyCode常见问题整理"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/04-faq.toml"
 version: "1.0"
 created_at: "2026-07-14"
 tags: ["FAQ", "常见问题", "MonkeyCode", "故障排查", "部署问题"]
 ---
-
 # 第四章 - 常见问题解答（FAQ）
 
 本章汇总MonkeyCode部署、使用、配置过程中的常见问题与解决方案，分为五大类，方便快速定位和解决问题。

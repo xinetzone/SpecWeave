@@ -2,6 +2,7 @@
 id: "volcengine-agent-plan-wiki-00"
 title: "Agent Plan 共创计划：概述与学习目标"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/00-overview.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["volcengine", "agent-plan", "方舟", "多模态", "共创计划"]

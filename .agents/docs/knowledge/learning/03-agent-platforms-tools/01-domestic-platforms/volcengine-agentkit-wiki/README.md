@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-readme"
 title: "火山引擎 AgentKit Wiki 教程"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/README.toml"
 category: "learning"
 tags: ["AgentKit", "VeADK", "火山引擎", "AI Agent", "wiki教程"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 火山引擎 AgentKit Wiki 教程
 
 企业级 AI Agent 基础设施平台从入门到精通的结构化教程。

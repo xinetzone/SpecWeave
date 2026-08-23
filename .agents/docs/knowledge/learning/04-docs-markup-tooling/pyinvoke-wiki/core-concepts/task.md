@@ -1,6 +1,7 @@
 ---
 type: wiki
 title: Task 与 @task 装饰器
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/task.toml"
 description: PyInvoke 核心 Task 类与 @task 装饰器的完整 API 参考，涵盖参数映射规则、Call 对象与自动短标志生成。
 tags: [pyinvoke, task, decorator, core-api]
 date: 2026-08-21
@@ -9,7 +10,6 @@ author: SpecWeave
 sources:
   - external/libs/pyinvoke/invoke/invoke/tasks.py
 ---
-
 # Task 与 @task 装饰器
 
 ## 概述

@@ -7,12 +7,12 @@ type: "knowledge"
 tags: ["LLM", "Token", "Optimization", "Anti-Patterns", "Pitfalls"]
 maturity: "L1"
 source: "extraction-from-cases-and-error-patterns"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/04-anti-patterns.toml"
 prerequisites:
   - "llm-token-optimization-best-practice-patterns"
 validation_count: 1
 reuse_count: 0
 ---
-
 # Token优化反模式与常见误区
 
 > 本文档总结7个最常见的Token优化反模式，每个反模式包含现象描述、根因分析、正确做法、真实案例。了解反模式比了解正确做法更重要——在错误场景使用正确技术同样会导致失败。

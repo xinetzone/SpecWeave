@@ -2,8 +2,8 @@
 id: i-have-adhd-wiki-persistence
 title: 六、持久化机制详解
 source: external/libs/i-have-adhd/hooks/ 钩子系统分析
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/05-always-on-mechanism.toml"
 ---
-
 # 六、持久化机制详解
 
 ## 6.1 为什么需要持久化

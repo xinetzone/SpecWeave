@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-12"
 title: "DeepSeek Harness 完全指南 — 无头模式与 SDK 使用"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/12-headless-sdk.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/12-headless-sdk.toml"
 ---
-
 # 12 无头模式与 SDK 使用
 
 前 11 章我们主要介绍了 dsh 的 Web UI 交互模式——打开浏览器、选择工作区、配置模型、在输入框里发任务。但很多场景下你不需要 UI：你可能想在 CI/CD 流水线里跑自动化任务，或者想把 dsh 嵌入到你自己的应用、IDE 插件、内部平台里。这时候就需要用到 dsh 的无头（Headless）模式和各种 SDK。

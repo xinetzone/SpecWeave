@@ -2,13 +2,12 @@
 id: a2a-module
 title: Agent2Agent(A2A)协议支持
 source: veadk-python codebase analysis
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/modules/a2a.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # Agent2Agent(A2A)协议支持
 
 ## 概述

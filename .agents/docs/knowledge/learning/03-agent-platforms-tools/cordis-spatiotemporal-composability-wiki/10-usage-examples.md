@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-10"
 title: "Cordis — 使用示例"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/10-usage-examples.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/10-usage-examples.toml"
 ---
-
 # Cordis — 使用示例
 
 > 一句话摘要：本章给出可运行的完整代码示例——最小插件、依赖注入、可逆副作用、声明式装配，并辅以一张整体的数据流架构图，帮助你从「概念理解」切换到「动手使用」。

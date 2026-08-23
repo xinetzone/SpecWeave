@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 配置说明"
 chapter: 6
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/06-configuration.toml"
   - external/libs/hermes-agent/.env.example
   - external/libs/hermes-agent/cli-config.yaml.example
   - external/libs/hermes-agent/hermes_cli/setup.py
@@ -14,7 +15,6 @@ source:
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/docker/stage2-hook.sh
 ---
-
 # 6. 配置说明
 
 本章详细说明 Hermes Agent 的配置体系，包括 `.env` 环境变量文件、`config.yaml` 行为配置文件、交互式配置向导、模型与工具管理命令，以及终端后端选择。所有配置文件均存放于 `~/.hermes/` 目录下。

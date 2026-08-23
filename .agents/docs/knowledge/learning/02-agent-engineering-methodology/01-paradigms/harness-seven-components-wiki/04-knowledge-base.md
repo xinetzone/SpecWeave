@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-04"
 title: "知识库引擎（Knowledge Base Engine）：业务参考书与判断力缓存"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/04-knowledge-base.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "知识库", "knowledge-base", "RAG", "业务知识"]
 ---
-
 ## 一、什么是知识库引擎
 
 知识库引擎（Knowledge Base Engine）是Agent的"业务资料来源"——更形象的说法是Agent的"参考书"。很多人把它等同于RAG（向量检索，Retrieval-Augmented Generation），但从产品经理视角看，它不能只被理解成向量检索，它更像Agent的业务资料来源。

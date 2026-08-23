@@ -1,6 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-okf-wiki-index"
 title: "OKF 开放知识格式"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-05"
 ---

@@ -6,8 +6,8 @@ date: "2026-07-13"
 version: "1.0"
 status: "completed"
 source: "GPT-5.6新写法指南"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/05-before-after-examples.toml"
 ---
-
 # 6组Before/After实战对照
 
 ---

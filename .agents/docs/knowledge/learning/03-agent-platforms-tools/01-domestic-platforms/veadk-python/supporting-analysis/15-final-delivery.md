@@ -2,6 +2,7 @@
 id: "veadk-python-final-delivery"
 title: "V阶段：最终交付清单"
 source: "seven-concepts: veadk-python-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/supporting-analysis/15-final-delivery.toml"
 category: "learning"
 tags: ["VeADK", "最终交付", "验收清单", "版本发布"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "VeADK-Python Wiki V阶段最终交付物清单，包含完整文档列表、统计信息、结构树和遗留问题说明"
 wiki_version: "1.0"
 ---
-
 # V阶段：最终交付清单
 
 ## 版本信息

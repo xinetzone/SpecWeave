@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-13"
 title: "OKF 工具链基于 Python 3.14 标准库优化 — 优化前后对比记录"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/13-okf-optimization-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/13-okf-optimization-report.toml"
 ---
-
 # OKF 工具链基于 Python 3.14 标准库优化 — 优化前后对比记录
 
 > 一句话摘要：本记录逐项列出 `okf` 工具链（`d:\AI\projects\xuanspace\tools\okf`）在 Python 3.14 标准库优化前后的可量化指标差异——单元测试通过数、代码覆盖率、`ruff check` 告警数、数据类实例内存占用、拓扑排序队列微基准耗时，并给出「优化前 / 优化后 / 变化量」。

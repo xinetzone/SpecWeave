@@ -14,9 +14,8 @@ summary: "20+核心术语定义，完整的官方资源链接、相关标准链�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.toml"
 ---
-
 # 07 资源与术语表
 
 ## 7.1 核心术语表（Glossary）

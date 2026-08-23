@@ -4,6 +4,7 @@ title: "Trae IDE Token 节省方法体系"
 date: 2026-08-01
 type: knowledge
 source: "seven-concepts methodology knowledge沉淀: sc-20260801-token-saving-analysis"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/trae-ide-token-optimization/README.toml"
 domain: "tool-usage"
 maturity: "L1-experimental"
 validation_count: 1

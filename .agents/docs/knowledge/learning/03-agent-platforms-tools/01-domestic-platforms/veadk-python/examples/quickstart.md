@@ -2,14 +2,13 @@
 id: veadk-python-quickstart
 title: 01 - 最小Agent示例
 source: d:\AI\.chaos\libs\veadk-python\examples\01_quickstart\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/quickstart.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # 最小Agent示例 (Quickstart)
 
 ## 1. 示例功能介绍

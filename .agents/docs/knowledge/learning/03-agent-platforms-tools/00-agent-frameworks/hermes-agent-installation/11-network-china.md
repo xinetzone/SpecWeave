@@ -2,6 +2,7 @@
 title: "Hermes Agent 安装方案 - 国内网络环境优化指南"
 chapter: 11
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/11-network-china.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/package.json
   - external/libs/hermes-agent/.npmrc
@@ -13,7 +14,6 @@ source:
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
 ---
-
 # 11. 国内网络环境优化指南
 
 本章面向位于中国大陆网络环境下的用户，汇总 Hermes Agent 安装与运行过程中涉及的所有境外资源的镜像加速方案。Hermes Agent 的安装链路需要访问 GitHub（源码克隆）、PyPI（Python 包）、npm registry（Node 包）、nodejs.org（Node 二进制）、Playwright CDN（浏览器二进制）、Docker Hub（容器镜像）、Hugging Face（模型文件）以及境外模型 API 端点；在不做任何优化时，上述任一环节都可能导致安装中断或速度极慢。

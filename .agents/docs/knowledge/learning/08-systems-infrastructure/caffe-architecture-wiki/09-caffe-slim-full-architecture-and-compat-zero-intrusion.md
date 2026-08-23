@@ -2,6 +2,7 @@
 title: Caffe-Slim 全面架构分析与compat层零侵入替换机制
 date: 2026-07-27
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/09-caffe-slim-full-architecture-and-compat-zero-intrusion.toml"
   analyzer: SpecWeave AI Agent
   target: "projects/xuanspace/vendor/caffe/caffe-slim"
   upstream: "projects/xuanspace/vendor/caffe/caffex (BVLC Caffe完整版)"
@@ -11,7 +12,6 @@ source:
   dependency: "protobuf + BLAS + tvm-ffi (移除boost/glog/gflags/hdf5/lmdb/leveldb/opencv)"
   build_system: "CMake + scikit-build-core (PEP 517)"
 ---
-
 # Caffe-Slim 全面架构分析与compat层零侵入替换机制
 
 ## 一、项目概览

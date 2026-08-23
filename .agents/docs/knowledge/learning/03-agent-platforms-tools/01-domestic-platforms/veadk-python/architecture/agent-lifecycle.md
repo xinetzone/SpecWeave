@@ -2,6 +2,7 @@
 id: veadk-python-agent-lifecycle
 title: 架构详解：Agent 生命周期与执行流程
 source: 'seven-concepts: veadk-python-wiki'
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/architecture/agent-lifecycle.toml"
 category: learning
 tags:
 - VeADK
@@ -17,8 +18,6 @@ author: seven-concepts knowledge-scenario
 summary: VeADK-Python Agent 生命周期详解，包含 model_post_init 19步初始化流程、Runner执行流程、事件流转、运行时策略选择等核心机制
 wiki_version: '1.0'
 ---
-
-
 # 架构详解：Agent 生命周期与执行流程
 
 本文档详细解析 VeADK Agent 从创建到执行完成的完整生命周期，包括初始化阶段的 19 步自动装配流程、Runner 执行时的消息处理管道、事件流转机制，以及多运行时策略选择逻辑。

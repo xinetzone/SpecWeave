@@ -2,9 +2,8 @@
 id: "ai-switch-governance-00-overview"
 title: "AI赋能的Feature Flag全生命周期治理"
 source: "InfoQ QCon 2026 北京站"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/00-overview.toml"
 ---
-
 # 《让开关自我消亡：AI赋能的Feature Flag全生命周期治理》分析报告
 
 > 本报告基于快手资深服务端架构师闫文亮在 QCon 全球软件开发大会 2026 北京站的分享实录，由 InfoQ 编辑整理。报告分为"学习笔记（技术内容理解）"与"洞察总结（行业趋势与战略洞察）"两个层次，力求完整还原原文技术脉络，并给出独立、批判性的行业判断。

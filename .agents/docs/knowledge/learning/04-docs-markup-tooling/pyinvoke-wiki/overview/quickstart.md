@@ -1,6 +1,7 @@
 ---
 type: "Tutorial"
 title: "PyInvoke 5 分钟快速上手"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/overview/quickstart.toml"
 description: "创建第一个任务文件、通过 CLI 和 Python API 调用任务"
 tags: ["invoke", "quickstart", "getting-started", "tutorial"]
 date: "2026-08-21"
@@ -14,7 +15,6 @@ sources:
     resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/program.py"
     title: "PyInvoke program.py - CLI entry point"
 ---
-
 # 5 分钟快速上手
 
 ## 第一步：创建任务文件

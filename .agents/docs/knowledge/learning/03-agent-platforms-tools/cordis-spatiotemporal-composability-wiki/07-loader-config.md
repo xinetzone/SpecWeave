@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-07"
 title: "Cordis — 声明式加载与配置合并"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/07-loader-config.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/07-loader-config.toml"
 ---
-
 # Cordis — 声明式加载与配置合并
 
 > 一句话摘要：本章讲解 `plugin-loader` 包如何把插件的装配关系声明到 YAML/JSON 配置中，并通过 `Loader`/`Entry`/`EntryGroup`/`EntryTree` 四层结构与 `isolate` 服务隔离机制，实现配置的声明式加载、增量合并与写回。

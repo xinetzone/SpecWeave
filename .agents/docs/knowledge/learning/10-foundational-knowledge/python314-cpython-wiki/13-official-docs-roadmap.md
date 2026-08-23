@@ -2,9 +2,8 @@
 id: "python314-cpython-wiki-13"
 title: "官方文档四大支柱导览（tutorial / library / extending / howto）"
 source: "https://docs.python.org/zh-cn/3.14/tutorial/index.html"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/13-official-docs-roadmap.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/13-official-docs-roadmap.toml"
 ---
-
 # 官方文档四大支柱导览
 
 > **定位**：本教程的 00-12 章聚焦「Python 3.14 新特性 + CPython 源码」，默认读者已具备 Python 基础。本章补齐另一块拼图——**官方文档四大基础支柱**的完整导览，让你能系统性地从官方原始文档学习语言基础、标准库全景、C 扩展嵌入与实践指南，并与 3.14 的深度章节建立映射。

@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-gateway-tasks"
 title: "IM 网关与定时任务"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/06-gateway-tasks.toml"
 category: "learning"
 tags: ["zleap-agent", "gateway", "feishu", "wechat", "im", "channel-supervisor", "cron", "tasks", "worker"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent IM 网关与定时任务：飞书/微信/飞书 CLI 适配
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 06 IM 网关与定时任务
 
 本章讲 Zleap-Agent 如何接入外部渠道（飞书/微信）以及如何定时触发 Agent 运行，两者都汇入 `ConversationService`。

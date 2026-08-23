@@ -3,6 +3,7 @@ id: "deepseek-v4-faq-mythbusting"
 title: "09 FAQ常见问题与误区澄清"
 version: "1.0"
 source: "官方声明 + api-docs.deepseek.com + 潮新闻/中新经纬/新浪财经等权威媒体辟谣报道 + 平台实测"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/deepseek/09-faq-mythbusting.toml"
 type: "Wiki Document"
 description: "DeepSeek-V4免费方案相关的常见问题解答和不实信息澄清，帮助用户辨别真伪"
 tags: ["DeepSeek", "FAQ", "误区澄清", "谣言", "会员", "收费", "限流"]
@@ -13,7 +14,6 @@ author: "seven-concepts knowledge-scenario"
 summary: "澄清关于DeepSeek收费、会员、限流等常见谣言。官方明确：网页/App永久免费无会员、8月17日涨价仅针对API、'79.9元会员'是假消息、限流是公平使用策略而非收费前兆。"
 last_verified: "2026-08-19"
 ---
-
 # 09 FAQ常见问题与误区澄清
 
 ## 9.1 关于"收费"与"免费"

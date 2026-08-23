@@ -9,11 +9,11 @@ tags:
   - tutorial
   - linear-regression
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/02-python-api.toml"
   - https://onnx.ai/onnx/intro/python.html
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---
-
 # ONNX Python API实战
 
 本章通过从零构建**线性回归**模型，系统讲解ONNX Python API。代码基于onnx 1.23.0，可直接复制运行。

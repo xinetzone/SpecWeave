@@ -1,6 +1,7 @@
 ---
 id: "docs-knowledge-learning-llm-token-optimization-04-cases-index"
 title: "Token 优化案例"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/README.toml"
 category: "knowledge"
 date: "2026-08-01"
 ---

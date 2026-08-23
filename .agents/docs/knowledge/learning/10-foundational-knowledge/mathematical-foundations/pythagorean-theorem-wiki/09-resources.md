@@ -2,6 +2,7 @@
 id: "pythagorean-theorem-resources"
 title: "九、学习资源"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/mathematical-foundations/pythagorean-theorem-wiki/09-resources.toml"
 ---
 # 九、学习资源
 

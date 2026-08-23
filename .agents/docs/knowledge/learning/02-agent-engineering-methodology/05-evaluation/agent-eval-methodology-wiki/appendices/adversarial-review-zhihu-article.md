@@ -2,6 +2,7 @@
 id: "zhihu-article-seven-concepts-adversarial-review"
 title: "V阶段：知乎文章四视角对抗审查与修订对比"
 source: "seven-concepts:V阶段产物"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/adversarial-review-zhihu-article.toml"
 category: "learning"
 tags: ["zhihu-article", "adversarial-review", "V-stage", "four-perspectives", "revision-log"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "对《用方法论编排，而不是靠灵感》知乎文章进行魔鬼代言人、新人、老板、未来四视角对抗审查，汇总意见分级，记录采纳修订的对比。"
 references: 6
 ---
-
 # V阶段：知乎文章四视角对抗审查与修订对比
 
 > 本文件是七概念方法论 **V（对抗审查）阶段** 的产出物。对知乎文章《用方法论编排，而不是靠灵感：我如何用 seven-concepts-cmd 产出了一整部 Wiki 教程》进行四视角对抗审查，汇总意见并按 P0-P3 分级，采纳 ≥2 条进行实质性修订，记录修订前后对比。通过 V 门。

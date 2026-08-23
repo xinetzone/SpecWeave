@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-adversarial-review"
 title: "V阶段：四视角对抗审查与内容修订"
 source: "seven-concepts:V阶段产物"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/adversarial-review.toml"
 category: "learning"
 tags: ["agent-evaluation", "adversarial-review", "V-stage", "four-perspectives", "revision-log"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "对Agent评测方法论Wiki内容进行魔鬼代言人、新人、老板、未来四视角对抗审查，汇总意见分级，并记录采纳修订的对比。"
 references: 6
 ---
-
 # V阶段：四视角对抗审查与内容修订
 
 > 本文件是七概念方法论 **V（对抗审查）阶段** 的产出物。对 Wiki 教程全部内容（模块1-6及附录）进行四视角对抗审查，汇总意见并按 P0-P3 分级，采纳 ≥3 条进行实质性修订，记录修订前后对比。通过 V 门。

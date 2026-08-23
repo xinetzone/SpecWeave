@@ -2,11 +2,11 @@
 id: seven-concepts-deeptutor-03-e
 title: E萃取在DeepTutor中的体现
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/seven-concepts-deeptutor-wiki/03-analysis/03-e-in-deeptutor.toml"
 version: 1.0
 date: "2026-07-14"
 tags: [分析, E, 萃取, Knowledge Center]
 ---
-
 # E萃取在DeepTutor中的体现
 
 ---

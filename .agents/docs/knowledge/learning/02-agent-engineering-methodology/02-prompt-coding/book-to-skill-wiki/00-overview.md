@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-00"
 title: "book-to-skill 完全指南 — 总览"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/00-overview.toml"
 ---
-
 # book-to-skill 完全指南 — 总览
 
 > 将任意技术书籍、文档文件夹或多源资料转换为统一的 Agent Skill —— 可按需加载、无幻觉、24×-51× token 节省

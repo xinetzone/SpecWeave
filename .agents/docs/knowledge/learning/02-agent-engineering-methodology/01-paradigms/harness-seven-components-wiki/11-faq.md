@@ -2,11 +2,11 @@
 id: "harness-seven-components-wiki-11"
 title: "常见问题解答（FAQ）"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/11-faq.toml"
 date: "2026-07-13"
 category: "learning"
 tags: ["harness", "faq", "常见问题", "疑问解答"]
 ---
-
 # 常见问题解答（FAQ）
 
 ## 一、概念理解类

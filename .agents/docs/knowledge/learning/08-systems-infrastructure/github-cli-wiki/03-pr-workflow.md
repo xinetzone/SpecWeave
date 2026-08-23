@@ -2,9 +2,8 @@
 id: "github-cli-wiki-03"
 title: "Pull Request 工作流指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/03-pr-workflow.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/03-pr-workflow.toml"
 ---
-
 # Pull Request 工作流指南
 
 本章介绍使用 `gh` 命令行工具完成 Pull Request（PR）的完整生命周期管理：从创建、审查、合并到关闭，以及 Fork 工作流等进阶场景。

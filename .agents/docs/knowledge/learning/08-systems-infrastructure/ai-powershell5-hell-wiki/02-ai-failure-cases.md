@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-02-ai-failure-cases"
 title: "三大领域 24 个 AI 失败案例集"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/02-ai-failure-cases.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "failure-cases", "compatibility-errors", "parsererror"]
 ---
-
 # 三大领域 24 个 AI 失败案例集
 
 本章收录 AI 大模型为 PowerShell 5.1 生成代码时的 24 个典型失败案例，按三大应用领域分组。每个案例包含：AI 生成的典型错误代码、PS5 下实际报错信息、问题描述、PS5 兼容正确写法。所有注入示例已按 V 阶段 S-01 加固要求脱敏。

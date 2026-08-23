@@ -2,6 +2,7 @@
 id: "mermaid-quote-rules-checklist"
 title: "Mermaid 引号规则检查清单"
 source: "从02-06文件修复实践中萃取"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/mermaid-quote-rules-checklist.toml"
 category: "learning"
 tags: ["mermaid", "checklist", "quote-rules", "syntax", "best-practices", "troubleshooting"]
 date: "2026-08-06"

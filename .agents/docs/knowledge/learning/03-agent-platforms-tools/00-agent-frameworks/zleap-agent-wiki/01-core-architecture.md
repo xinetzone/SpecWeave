@@ -2,6 +2,7 @@
 id: "zleap-agent-wiki-core-architecture"
 title: "核心架构与技术栈"
 source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/01-core-architecture.toml"
 category: "learning"
 tags: ["zleap-agent", "architecture", "monorepo", "pnpm", "postgresql", "pgvector", "packages"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "Zleap-Agent 核心架构与技术栈：pnpm monorepo、TypeScript、13
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 01 核心架构与技术栈
 
 ## 技术栈总览

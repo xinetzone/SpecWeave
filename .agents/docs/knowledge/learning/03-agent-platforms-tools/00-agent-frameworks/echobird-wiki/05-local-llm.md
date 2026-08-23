@@ -2,6 +2,7 @@
 id: "echobird-wiki-local-llm"
 title: "本地大模型服务"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/05-local-llm.toml"
 category: "learning"
 tags: ["echobird", "local-llm", "vllm", "sglang", "llama.cpp", "gpu"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 本地大模型服务的引擎选择（vLLM/SGLang/llama.cpp�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 05 本地大模型服务
 
 EchoBird 的"本地大模型服务"（Local Server 页面）让用户无需购买云端 API、即可在本地一键运行大模型，并把本地模型以 OpenAI/Anthropic 兼容协议暴露给 EchoBird 的 Agent 工具生态。其核心逻辑位于 Rust 后端 `src-tauri/src/services/local_llm/` 与前端 `src/pages/LocalServer/`。

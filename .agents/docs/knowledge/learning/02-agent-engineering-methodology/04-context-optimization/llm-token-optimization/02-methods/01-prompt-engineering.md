@@ -2,10 +2,10 @@
 id: "llm-token-optimization-01-prompt-engineering"
 title: "提示词工程优化"
 source: "行业实践、IBM开发者文档、CSDN技术博客、AI Wiki综合整理"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/01-prompt-engineering.toml"
 tags: ["prompt-engineering", "token-optimization", "llm"]
 category: "methods"
 ---
-
 # 提示词工程优化
 
 提示词工程优化是最直接、投入产出比最高的token节省手段，无需修改模型架构或基础设施，仅通过优化输入提示的结构和内容即可实现显著的token节省。

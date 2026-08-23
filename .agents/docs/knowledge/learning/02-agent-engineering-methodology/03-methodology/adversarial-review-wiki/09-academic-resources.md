@@ -1,12 +1,12 @@
 ---
 id: "adversarial-review-academic"
 title: "09、学术资源与推荐阅读"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/09-academic-resources.toml"
 category: "knowledge"
 date: "2026-07-10"
 version: "1.0"
 status: "completed"
 ---
-
 # 09、学术资源与推荐阅读
 
 ## 1. 概述

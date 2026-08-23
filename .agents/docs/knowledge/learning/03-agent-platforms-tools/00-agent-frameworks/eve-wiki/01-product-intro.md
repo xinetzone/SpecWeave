@@ -2,6 +2,7 @@
 id: "eve-wiki-01"
 title: "产品介绍与核心概念"
 source: "eve-framework-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/01-product-intro.toml"
 category: "learning"
 tags: ["eve", "vercel", "agent-framework", "nextjs-for-agents", "产品定位"]
 date: "2026-08-04"
@@ -12,7 +13,6 @@ last_verified: "2026-08-04"
 wiki_version: "1.0"
 eve_version_target: "2026 public preview"
 ---
-
 # 01 产品介绍与核心概念
 
 ## 什么是 Eve

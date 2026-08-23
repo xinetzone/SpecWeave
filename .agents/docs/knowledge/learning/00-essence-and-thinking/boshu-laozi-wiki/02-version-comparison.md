@@ -2,6 +2,7 @@
 id: "boshu-laozi-wiki-02"
 title: "版本体系对照"
 source: "公共领域知识（马王堆帛书老子研究）"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/boshu-laozi-wiki/02-version-comparison.toml"
 ---
 # 版本体系对照
 

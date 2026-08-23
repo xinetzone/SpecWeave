@@ -2,6 +2,7 @@
 id: conda-dev-source-wiki-08-best-practices
 title: "最佳实践指南"
 source: "spec:create-conda-dev-source-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/08-best-practices.toml"
 category: "learning"
 tags: ["conda", "best-practices", "plugin-development", "api-usage", "contribution"]
 date: "2026-08-20"
@@ -9,7 +10,6 @@ status: "stable"
 author: "SpecWeave"
 summary: "conda 环境管理、通道求解、API 调用、插件开发、源码贡献与文档写作的实践准则与反模式"
 ---
-
 # 最佳实践指南
 
 本章把源码阅读所得落回工程实践：环境管理、通道求解、程序化调用、插件开发、源码贡献、文档写作，并给出 ≥3 个反模式。所有 API 名称以 `conda/core/solve.py`、`conda/plugins/` 源码为准。

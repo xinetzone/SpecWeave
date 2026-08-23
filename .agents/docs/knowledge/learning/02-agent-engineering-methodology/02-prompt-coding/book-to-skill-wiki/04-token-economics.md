@@ -2,9 +2,8 @@
 id: "book-to-skill-wiki-04"
 title: "book-to-skill 完全指南 — Token 经济学与性能"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/04-token-economics.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/04-token-economics.toml"
 ---
-
 # Token 经济学与性能
 
 book-to-skill 的核心价值主张之一是 **24×-51× 的 token 节省**。这不是营销口号——有专门的测量工具和数学解释。

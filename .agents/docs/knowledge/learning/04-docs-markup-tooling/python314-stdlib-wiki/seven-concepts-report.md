@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-seven-concepts"
 title: "Python 3.14 标准库教程 — 七概念方法论执行报告"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/seven-concepts-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/seven-concepts-report.toml"
 ---
-
 # Python 3.14 标准库教程 — 七概念方法论执行报告
 
 > 本报告是 [Python 3.14 标准库教程](00-overview.md)的七概念方法论执行记录，沿「事实采集（R）→ 洞察分析（I）→ 萃取产出（E）」三段链路展开，对六个标准库模块（`contextlib` / `contextvars` / `sys.monitoring` / `annotationlib` / `dataclasses` / `traceback`）的系统学习过程做方法论复盘与知识沉淀。

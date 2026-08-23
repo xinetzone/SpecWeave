@@ -2,9 +2,9 @@
 id: "intelligent-terminal-ch03-wta-master"
 title: "第3章 - WTA Rust 核心 - Master 多路复用器"
 source: "spec:create-intelligent-terminal-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/intelligent-terminal-wiki/03-wta-master.toml"
 date: "2026-08-03"
 ---
-
 # 第3章 WTA Rust 核心 - Master 多路复用器
 
 ## 3.1 wta-master 概述

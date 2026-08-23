@@ -4,6 +4,7 @@ title: "AI硬件设计工具生态深度洞察——10个AI硬件设计常用网
 category: "knowledge"
 date: "2026-08-01"
 source: "https://mp.weixin.qq.com/s/YAm3b7kKkAPbFKgPpsTRVA"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/README.toml"
 ---
 # AI硬件设计工具生态深度洞察——10个AI硬件设计常用网站系统分析
 

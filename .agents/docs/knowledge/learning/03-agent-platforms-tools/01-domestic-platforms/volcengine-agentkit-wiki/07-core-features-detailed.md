@@ -2,6 +2,7 @@
 id: "volcengine-agentkit-wiki-07"
 title: "核心功能深度解析"
 source: "seven-concepts: volcengine-agentkit-wiki"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/07-core-features-detailed.toml"
 category: "learning"
 tags: ["AgentKit", "Identity", "Gateway", "A2A", "Observability", "Evaluation", "深度解析"]
 date: "2026-07-31"
@@ -13,7 +14,6 @@ wiki_version: "1.0"
 agentkit_version_target: "2026Q3"
 
 ---
-
 # 07 核心功能深度解析
 
 ## 说明：差异化治理能力优先解析原则

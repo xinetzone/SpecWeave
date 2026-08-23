@@ -2,6 +2,7 @@
 id: "echobird-wiki-codex-proxy"
 title: "Codex Proxy 协议转换"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/06-codex-proxy.toml"
 category: "learning"
 tags: ["echobird", "codex-proxy", "protocol-conversion", "responses-api", "chat-completions", "sse", "tauri", "rust"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird Codex Proxy 的协议转换能力：127.0.0.1:53682 本地服
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 06 Codex Proxy 协议转换
 
 EchoBird 内置一个 **Codex Proxy（Codex 协议代理）**，是一个运行在本地、以 Rust 编写的 HTTP 服务。它把 OpenAI Codex 客户端使用的 **Responses API（响应式 API）** 协议，翻译成各家模型服务商通用的 **Chat Completions（聊天补全）** 协议，从而让 Codex 客户端可以对接任意第三方模型（DeepSeek、GLM、Qwen、MiMo 等），而不必依赖 OpenAI 官方模型。其完整实现位于 `src-tauri/src/services/codex_proxy/` 目录。

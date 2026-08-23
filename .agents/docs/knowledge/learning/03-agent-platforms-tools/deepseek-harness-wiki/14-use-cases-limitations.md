@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-14"
 title: "DeepSeek Harness 完全指南 — 适用场景与风险提示"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/14-use-cases-limitations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/14-use-cases-limitations.toml"
 ---
-
 # 14 适用场景与风险提示
 
 > ⚠️ **重要风险提示**：在决定是否使用 dsh 之前，请务必完整阅读本章。DeepSeek Harness 目前是 **v0.1 开发者预览版**，不是生产就绪的产品。理解它能做什么、不能做什么、风险在哪里，能帮你避免很多不必要的坑和失望。

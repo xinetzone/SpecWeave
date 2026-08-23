@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-core-concepts"
 title: "GraphQL 核心概念"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/01-core-concepts.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "api", "query-language", "core-concepts", "sdl", "resolver", "schema"]

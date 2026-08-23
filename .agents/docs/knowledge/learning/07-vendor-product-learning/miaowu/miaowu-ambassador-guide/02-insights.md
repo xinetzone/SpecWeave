@@ -2,12 +2,12 @@
 id: miaowu-ambassador-guide-02-i
 title: I - 洞察 (Insight) - 秒悟大使入驻关键洞察
 source: 基于01-facts.md事实提炼
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/02-insights.toml"
 version: 1.0
 date: "2026-07-30"
 tags: [七概念, I, 洞察, 秒悟大使, 推广返佣]
 g2-gate: passed
 ---
-
 # 秒悟大使入驻关键洞察
 
 ---

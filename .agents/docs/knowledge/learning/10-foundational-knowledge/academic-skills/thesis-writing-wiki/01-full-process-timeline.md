@@ -2,6 +2,7 @@
 id: "thesis-writing-timeline"
 title: "二、全流程时间线"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/academic-skills/thesis-writing-wiki/01-full-process-timeline.toml"
 ---
 # 二、全流程时间线
 

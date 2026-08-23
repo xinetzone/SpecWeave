@@ -2,6 +2,7 @@
 id: mohism-core-concepts
 title: 墨家方法论核心概念：三表法、类、故、理
 source: cross-cultural-first-principles-comparison Task 3
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.toml"
 review_protocol: 00-cross-cultural-review-protocol.md
 created_at: "2026-07-13"
 status: in-progress

@@ -2,6 +2,7 @@
 id: "orca-wiki-value"
 title: "核心价值总结与行业趋势"
 source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/06-value-and-trends.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "parallel-agents", "multi-agent", "bring-your-own-agent", "git-worktree", "industry-trend", "yc", "wiki教程"]
 date: "2026-08-03"
@@ -12,7 +13,6 @@ last_verified: "2026-08-03"
 wiki_version: "1.0"
 
 ---
-
 # 06 核心价值总结与行业趋势
 
 > 本章是 Orca 教程的总纲性收束，站在全教程的制高点回看产品哲学与行业趋势，帮助读者跳出一招一式的功能细节，理解 Orca 为什么值得被当作"下一代开发工具"来布局。内容与 [00 项目概述与核心定位](./00-overview.md) 首尾呼应。

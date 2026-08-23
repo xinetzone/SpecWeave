@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-01"
 title: "Cordis — 背景理论与论文"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/01-background-paper.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/01-background-paper.toml"
 ---
-
 # Cordis — 背景理论与论文
 
 > 一句话摘要：本章讲解支撑 Cordis 的学术论文《A Programming Paradigm for Spatiotemporal Composability》的核心思想——从「动态组合」的两大正交维度（时间与空间）出发，把经典的效应（effect）与协同效应（coeffect）概念抬升为运行时机制（可逆效应与响应式协同效应），并统一为单一上下文类型，构成一种编程范式。

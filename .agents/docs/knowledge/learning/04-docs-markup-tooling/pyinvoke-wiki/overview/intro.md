@@ -1,6 +1,7 @@
 ---
 type: "Python Library"
 title: "PyInvoke 项目介绍与定位"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/overview/intro.toml"
 description: "PyInvoke 是什么、核心价值、设计哲学和适用场景"
 tags: ["invoke", "python", "task-runner", "cli", "automation", "overview"]
 date: "2026-08-21"
@@ -14,7 +15,6 @@ sources:
     resource: "https://github.com/pyinvoke/invoke"
     title: "PyInvoke GitHub Repository"
 ---
-
 # PyInvoke 项目介绍
 
 **PyInvoke**（简称 Invoke）是一个 Pythonic 的任务执行工具库，让你用纯 Python 代码定义和运行命令行任务，替代 Make、Shell 脚本和其他任务运行器。

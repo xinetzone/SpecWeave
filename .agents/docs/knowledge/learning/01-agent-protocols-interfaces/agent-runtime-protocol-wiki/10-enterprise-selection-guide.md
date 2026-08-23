@@ -2,9 +2,8 @@
 id: "agent-runtime-protocol-wiki-10"
 title: "企业级 Agent Runtime 选型指南"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/10-enterprise-selection-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/10-enterprise-selection-guide.toml"
 ---
-
 # 10 企业级 Agent Runtime 选型指南
 
 > 基于九条 Protocol 设计原则，新增企业级安全合规/多租户/扩展性/运维管控/部署灵活性五大扩展维度，提供分层选型框架而非单一框架推荐。

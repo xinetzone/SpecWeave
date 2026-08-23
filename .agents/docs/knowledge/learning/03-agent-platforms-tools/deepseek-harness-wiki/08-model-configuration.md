@@ -2,9 +2,8 @@
 id: "deepseek-harness-wiki-08"
 title: "DeepSeek Harness 完全指南 — 模型配置与多模型支持"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/08-model-configuration.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/08-model-configuration.toml"
 ---
-
 # 08 模型配置与多模型支持
 
 DeepSeek Harness 的设计哲学是「模型无关」——默认深度优化 DeepSeek V4 系列，但不绑定任何单一厂商。通过统一的模型抽象层，你可以无缝切换不同供应商的模型，甚至为不同任务配置专用模型。本章详细介绍 dsh 的模型配置体系。

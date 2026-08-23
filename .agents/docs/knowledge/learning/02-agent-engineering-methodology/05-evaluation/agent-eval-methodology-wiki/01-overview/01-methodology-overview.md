@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module1-overview"
 title: "模块1：Agent评测方法论概述"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/01-overview/01-methodology-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "methodology", "maturity-model", "misconception", "quality-loop"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "界定Agent评测体系化建设的本质问题，阐明其业务价值，给出评测能力成熟度模型（0-5级），并剖析4个最常见的认知误区。"
 references: 8
 ---
-
 # 模块1：Agent评测方法论概述
 
 > **方法论视角**：本模块从七概念方法论链路的视角展开，聚焦"为什么评测、评测成熟度与常见误区"。若需完整的工程化评测理论基础（评测范式演进、信效度理论、能力框架），请参阅 [工程手册 · 第1章 评测理论基础](../../agent-evaluation-wiki/01-theory-foundations.md)。

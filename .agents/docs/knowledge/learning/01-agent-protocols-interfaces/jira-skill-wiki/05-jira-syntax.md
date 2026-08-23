@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-syntax"
 title: "jira-syntax 技能详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/05-jira-syntax.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/05-jira-syntax.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "jira-syntax", "wiki-markup", "templates", "validation", "markdown"]

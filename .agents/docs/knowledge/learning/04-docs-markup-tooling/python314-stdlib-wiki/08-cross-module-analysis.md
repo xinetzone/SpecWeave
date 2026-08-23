@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-08"
 title: "Python 3.14 标准库教程 — 跨模块综合分析"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/08-cross-module-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/08-cross-module-analysis.toml"
 ---
-
 # Python 3.14 标准库教程 — 跨模块综合分析
 
 > 一句话摘要：`contextlib`、`contextvars`、`sys.monitoring`、`annotationlib` 四个模块构成 Python 运行时"动态能力"的底层拼图；而 `dataclasses` 与 `traceback` 则分别补上"声明式数据建模"与"运行时异常诊断"两块基石。六个模块彼此补充、跨簇协作，共同覆盖"减少样板、可靠运行、可观测"这条日常开发主线。

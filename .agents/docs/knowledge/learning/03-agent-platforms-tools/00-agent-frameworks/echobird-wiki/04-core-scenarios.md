@@ -2,6 +2,7 @@
 id: "echobird-wiki-core-scenarios"
 title: "四大核心场景"
 source: "echobird-source-wiki-learning"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/04-core-scenarios.toml"
 category: "learning"
 tags: ["echobird", "core-scenarios", "react-loop", "agent-tools", "local-llm", "my-projects", "app-manager"]
 date: "2026-08-04"
@@ -11,7 +12,6 @@ summary: "EchoBird 四大核心场景（安装修复 Agent / 一键本地大模�
 last_verified: "2026-08-04"
 wiki_version: "1.0"
 ---
-
 # 04 四大核心场景
 
 EchoBird 把"把 AI 工具用起来之前那段路铺平"的产品哲学，落实到 **四个核心场景** 上：安装修复 Agent、一键本地大模型、我的 AI 项目、应用管理器。它们共享同一个 **Model Nexus（模型中心）**——统一管理 API Key / Base URL / 模型名的数据中心，从而形成"**安装 Agent → 配置模型 → 分配模型 → 启动**"的顺滑闭环，全程无需手改配置文件。

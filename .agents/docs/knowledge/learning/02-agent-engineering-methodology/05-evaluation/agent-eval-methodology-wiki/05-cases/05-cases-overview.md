@@ -2,6 +2,7 @@
 id: "agent-eval-methodology-module5-cases"
 title: "模块5：8个行业案例分析"
 source: "spec:agent-eval-methodology-wiki"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/05-cases/05-cases-overview.toml"
 category: "learning"
 tags: ["agent-evaluation", "cases", "openai", "langchain", "nubank", "aws", "jpmorgan", "harvey", "ibm", "similarweb"]
 date: "2026-08-05"
@@ -10,7 +11,6 @@ author: "SpecWeave"
 summary: "解析OpenAI、LangChain、Similarweb、Nubank、AWS、JPMorgan、Harvey、IBM八大企业Agent评测实践，每案例含背景/做法/成果/方法论映射/反模式/可复用要点六要素，映射公理体系与四维指标。"
 references: 10
 ---
-
 # 模块5：8个行业案例分析
 
 > **方法论视角**：本模块按"背景/做法/成果/经验教训/可复用要点"五要素解析 8 个企业案例。若需按场景视角（Coding Agent/RAG Agent/多工具/多Agent 协作）阅读评测实践与反模式，请参阅 [工程手册 · 第7章 行业实践案例](../../agent-evaluation-wiki/07-industry-practices.md)。

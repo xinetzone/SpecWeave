@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-09"
 title: "Cordis — 辅助包"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/09-aux-packages.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/09-aux-packages.toml"
 ---
-
 # Cordis — 辅助包
 
 > 一句话摘要：本章快速讲解六个辅助包（create / group / include / logger-console / timer / utils）的职责与关键用法，它们是 Cordis 核心库之外的可选能力扩展，可在需要时按需装配。

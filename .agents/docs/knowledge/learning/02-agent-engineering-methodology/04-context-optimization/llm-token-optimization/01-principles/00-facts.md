@@ -6,10 +6,10 @@ type: "knowledge"
 tags: ["LLM", "Token", "Tokenization", "Transformer", "KV-Cache", "PagedAttention", "Pricing"]
 maturity: "L1"
 source: "deep-research"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/01-principles/00-facts.toml"
 validation_count: 1
 reuse_count: 0
 ---
-
 # 大语言模型Token节省机制底层原理事实清单
 
 ## 零、核心术语速查（新手必读）

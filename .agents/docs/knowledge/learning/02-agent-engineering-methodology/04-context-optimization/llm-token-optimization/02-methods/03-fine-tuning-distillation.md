@@ -2,10 +2,10 @@
 id: "llm-token-optimization-03-fine-tuning-distillation"
 title: "模型微调与蒸馏"
 source: "UT Austin CS371N课程、Ephizen技术博客、CSDN技术博客、arXiv论文(QEFT)、DigitalOcean教程综合整理"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods/03-fine-tuning-distillation.toml"
 tags: ["fine-tuning", "lora", "distillation", "quantization", "speculative-decoding", "token-optimization"]
 category: "methods"
 ---
-
 # 模型微调与蒸馏
 
 模型层面的优化通过改变模型本身或推理方式来降低单次推理成本，这类技术通常需要模型训练或专用推理框架支持，但能带来根本性的效率提升，适合大规模部署场景。

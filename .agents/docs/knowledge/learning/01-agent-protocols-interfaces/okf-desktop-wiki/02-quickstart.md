@@ -3,6 +3,7 @@ id: "okf-desktop-wiki-quickstart"
 title: "02 安装与快速入门"
 version: "1.0"
 source: "README.md（Download/Run it 章节）+ shell/requirements.txt + ui/package.json"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/02-quickstart.toml"
 type: "Wiki Tutorial"
 description: "okf-desktop 两种安装方式：下载预构建包 / 从源码构建，三平台启动说明与首次使用流程"
 tags: ["okf-desktop", "quickstart", "安装", "预构建", "源码构建", "快速上手"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-19"
 wiki_version: "1.0"
 okf_version_target: "okf-kit 0.3.3+"
 ---
-
 # 02 安装与快速入门
 
 okf-desktop 提供两种运行方式：**下载预构建包**（零门槛）与**从源码构建**（便于二次开发）。

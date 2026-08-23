@@ -2,12 +2,12 @@
 id: miaowu-ambassador-guide
 title: 秒悟大使入驻指南（结构化版）
 source: 基于01-facts.md和02-insights.md萃取生成
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/miaowu-ambassador-guide.toml"
 version: 1.0
 date: "2026-07-30"
 tags: [七概念, E, 萃取, 秒悟大使, 入驻指南, 推广返佣]
 g3-gate: passed
 ---
-
 # 秒悟大使入驻指南
 
 > **30秒快速上手**

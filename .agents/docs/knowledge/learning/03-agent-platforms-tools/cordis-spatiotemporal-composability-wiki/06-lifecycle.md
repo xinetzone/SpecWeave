@@ -2,9 +2,8 @@
 id: "cordis-spatiotemporal-composability-wiki-06"
 title: "Cordis — 生命周期与 Fiber 状态机"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/06-lifecycle.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/06-lifecycle.toml"
 ---
-
 # Cordis — 生命周期与 Fiber 状态机
 
 > 一句话摘要：本章深入讲解 `Fiber`（纤维）——每个插件的运行时实例。它用一个六态状态机管理插件生命周期，用 `ctx.effect()` 收集可逆副作用（disposable），用 `epoch` 机制实现依赖变化触发的自动加载/卸载，并提供 `await`/`restart`/`update` 等控制原语。

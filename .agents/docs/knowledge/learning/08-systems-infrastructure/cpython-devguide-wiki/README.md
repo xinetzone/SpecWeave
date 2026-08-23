@@ -10,13 +10,13 @@ tags:
   - wiki
   - navigation
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/README.toml"
   - https://devguide.python.org
   - https://github.com/python/cpython
   - external/libs/python/devguide
 category: knowledge/learning
 maturity: L1-draft
 ---
-
 # CPython Developer's Guide Wiki
 
 > 面向开发者的CPython贡献实战指南——讲清贡献心智模型，指出工程反模式，提供可执行的操作路径。

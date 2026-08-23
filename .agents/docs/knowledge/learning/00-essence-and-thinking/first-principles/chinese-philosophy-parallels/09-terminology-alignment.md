@@ -2,6 +2,7 @@
 id: terminology-alignment
 title: 术语统一表
 source: cross-cultural-first-principles-comparison Task 8
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/09-terminology-alignment.toml"
 created_at: "2026-07-13"
 status: completed
 version: "1.0"

@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/02-core-concepts.toml"
 ---
-
 # 核心概念
 
 Anime.js + Three.js 适配器的设计基于四个核心理念：适配器模式、关注点分离、API扁平化、前端知识迁移。理解这四个概念是掌握这套技术栈的关键。

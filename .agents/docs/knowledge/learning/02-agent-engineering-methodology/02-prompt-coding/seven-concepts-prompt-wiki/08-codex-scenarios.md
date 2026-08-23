@@ -6,8 +6,8 @@ date: "2026-07-14"
 version: "1.1"
 status: "completed"
 source: "OpenAI Codex最佳实践 + GPT-5.6新写法"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/08-codex-scenarios.toml"
 ---
-
 # Codex/Agent开发基础：安全原则与标准结构
 
 ---

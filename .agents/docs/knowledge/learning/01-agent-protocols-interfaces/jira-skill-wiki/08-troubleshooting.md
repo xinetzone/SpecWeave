@@ -1,7 +1,7 @@
 ---
 id: "jira-skill-wiki-troubleshooting"
 title: "故障排查"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/08-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/08-troubleshooting.toml"
 source: "seven-concepts-cmd:jira-skill-wiki"
 category: "learning"
 tags: ["jira", "troubleshooting", "authentication", "errors", "resolution", "import"]

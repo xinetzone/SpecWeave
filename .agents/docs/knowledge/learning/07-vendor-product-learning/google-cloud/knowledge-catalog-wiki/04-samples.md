@@ -10,11 +10,11 @@ tags:
   - search
   - metadata-enrichment
 source:
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/04-samples.toml"
   - vendor/knowledge-catalog/samples/discovery/
   - vendor/knowledge-catalog/samples/enrichment/
 maturity: L1-draft
 ---
-
 # 04 - 示例智能体实战
 
 > samples/目录包含两个完整的示例智能体：Discovery Agent（语义搜索发现）和Enrichment Agent（元数据自动丰富），展示如何在实际应用中使用Knowledge Catalog API为AI Agent赋能。

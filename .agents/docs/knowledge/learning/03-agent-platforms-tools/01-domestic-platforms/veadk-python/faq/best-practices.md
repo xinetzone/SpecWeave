@@ -2,13 +2,12 @@
 id: best-practices
 title: 最佳实践与常见反模式
 source: veadk-python codebase analysis (11-architecture-insights.md)
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/faq/best-practices.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 ---
-
-
 # 最佳实践与常见反模式
 
 本文档基于 VeADK 架构洞察（10条核心设计决策）和代码分析，提炼出开发最佳实践和应当避免的反模式。

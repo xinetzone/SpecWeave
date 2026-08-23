@@ -2,14 +2,13 @@
 id: veadk-python-a2ui
 title: A2UI - Agent驱动UI示例
 source: d:\AI\.chaos\libs\veadk-python\examples\a2ui_agent\agent.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/a2ui.toml"
 category: learning
 date: '2026-08-05'
 status: stable
 wiki_version: '1.0'
 stage: E
 ---
-
-
 # A2UI示例 (Agent-to-UI)
 
 ## 1. 示例功能介绍

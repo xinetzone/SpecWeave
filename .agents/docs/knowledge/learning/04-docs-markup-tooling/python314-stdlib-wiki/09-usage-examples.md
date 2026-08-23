@@ -2,9 +2,8 @@
 id: "python314-stdlib-wiki-09"
 title: "Python 3.14 标准库教程 — 综合使用示例"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/09-usage-examples.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/09-usage-examples.toml"
 ---
-
 # Python 3.14 标准库教程 — 综合使用示例
 
 > 一句话摘要：本章给出七个多模块组合的可运行示例——前三个围绕"运行时动态机制"（`ExitStack` 管理多资源 + `contextvars` 请求级状态、`Token` 上下文管理器 + `annotationlib` 内省注解、`sys.monitoring` 统计调用 + `contextvars` 按任务归因），后四个围绕"数据结构与诊断"（`dataclasses` 建模、`traceback` 日志化、结构化栈上报、二者组合），把六模块能力串成真实用法。

@@ -2,9 +2,8 @@
 id: "baidu-ocr-wiki-02"
 title: "百度 Unlimited-OCR 性能数据与基准测试"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/02-performance-data.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/02-performance-data.toml"
 ---
-
 # 百度 Unlimited-OCR 性能数据与基准测试
 
 > 性能亮点：仅500M激活参数（约为Qwen3-VL的1/470）在OmniDocBench v1.5上反超235B大模型达4.08个百分点，端到端精度93.23%（v1.6达93.92%）；40+页长文档编辑距离<0.11、内容重复度仅3%；输出6144 token时TPS达7847，领先DeepSeek-OCR 35%——小模型机制创新完胜大模型参数堆砌。

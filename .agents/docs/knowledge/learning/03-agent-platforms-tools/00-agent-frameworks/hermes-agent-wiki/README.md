@@ -2,6 +2,7 @@
 id: "hermes-agent-wiki-readme"
 title: "Hermes Agent 学习 Wiki 教程"
 source: "https://github.com/NousResearch/hermes-agent + https://hermes-agent.nousresearch.com/docs/"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/README.toml"
 category: "learning"
 tags: ["hermes", "agent", "self-evolving", "learning-loop", "nous-research", "message-gateway", "skill", "memory", "mcp", "cron", "delegation", "architecture"]
 date: "2026-08-10"
@@ -12,7 +13,6 @@ last_verified: "2026-08-10"
 wiki_version: "1.0"
 description: "Hermes Agent 学习 Wiki 教程：自进化 AI Agent 的唯一内置学习闭环深度解析"
 ---
-
 # Hermes Agent 学习 Wiki 教程
 
 **唯一内置学习闭环的自进化 AI Agent** —— Nous Research 出品，把"学习"内建到运行时里：从经验创建技能、在使用中改进技能、主动持久化知识、搜索过往对话、跨会话构建深度理解。
