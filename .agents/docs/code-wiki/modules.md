@@ -1,183 +1,158 @@
+---
+source:
+  - ../../../AGENTS.md
+  - ../../../apps/AGENTS.md
+  - ../../../projects/AGENTS.md
+  - ../../../vendor/AGENTS.md
+  - ../../scripts/README.md
+status: stable
+updated_at: 2026-08-23
+---
+
 # 模块职责
 
-## 顶层模块职责矩阵
+## 顶层模块矩阵
 
-| 模块 | 路径 | 职责 | 关键文件 |
-|---|---|---|---|
-| 全局契约 | `AGENTS.md` | 智能体入口、全局规则、上下文路由 | `AGENTS.md` |
-| 规范容器 | `.agents/` | 角色、提示词、协议、工作流、规则、脚本等机器可读规范 | `.agents/README.md` |
-| 规格文档 | `.trae/specs/` | Spec-driven 开发过程资产 | `spec.md`、`tasks.md`、`checklist.md` |
-| 应用工作区 | `apps/` | 稳定应用与共享模块承载区 | `apps/README.md` |
-| 项目文档 | `docs/` | 面向人类读者的文档、知识库、复盘、模板、Code Wiki | `.agents/docs/README.md` |
-| 提示词萃取系统 | `apps/dev-tools/prompt_extraction/` | 可执行 Python 子项目，完成提示词处理与优化 | `pipeline.py`、`models.py` |
-
-## `.agents/` 子模块职责
-
-| 子目录 | 职责 | 说明 |
+| 模块 | 当前职责 | 代表入口 |
 |---|---|---|
-| `roles/` | 智能体角色定义 | 定义 orchestrator、architect、developer、reviewer、tester、co-founder 等角色职责与边界 |
-| `modules/` | 自我演进模块 | 定义自我洞察、自我复盘、自我萃取、自我进化、自我迭代、自我验证、自我管理、自我发展 |
-| `prompts/` | 系统提示词 | 按角色保存 `system-prompt.md` 和 `few-shot.md` |
-| `tools/` | 工具调用规范 | 定义文件操作、代码执行、搜索、通信等工具使用规则 |
-| `protocols/` | 协作协议 | 定义任务交接、消息传递、冲突解决、依赖管理、应用开发生命周期 |
-| `workflows/` | 标准工作流 | 定义功能开发、代码审查、测试流程 |
-| `templates/` | 模板资产 | 保存任务模板、交接模板 |
-| `scripts/` | 验证与自动化脚本 | 提供 Git 忽略、链接、规格一致性、导航、溯源、权限等检查 |
-| `teams/` | 团队管理 | 管理团队生命周期、权限系统、角色自动创建等 |
-| `worlds/` | 协作执行与环境管理 | 管理多用户权限、协作编辑、环境变量、资源隔离、状态监控等 |
-| `rules/` | 治理规则 | 保存硬编码识别、允许场景、替代方案、检测与执行规则 |
+| `AGENTS.md` | 启动协议、区域分流、规范总入口 | [AGENTS.md](../../../AGENTS.md#L3-L32) |
+| `.agents/` | 规范主权区、脚本实现区、知识沉淀区 | [AGENTS.md](../../../AGENTS.md#L49-L80) |
+| `.trae/specs/` | Spec 驱动开发的过程文档 | [context-routing.md](../../context-routing.md#L53-L55) |
+| `apps/` | 内置应用区，可直接修改 | [apps/AGENTS.md](../../../apps/AGENTS.md#L21-L35) |
+| `projects/` | 第一方 git submodule 区 | [projects/AGENTS.md](../../../projects/AGENTS.md#L14-L25) |
+| `vendor/` | 第三方与协作型依赖区 | [vendor/AGENTS.md](../../../vendor/AGENTS.md#L15-L25) |
+| `docs/` | Sphinx 公开文档站工程 | [docs/tasks.py](../../../docs/tasks.py#L54-L128) |
+| `bundles/` / `promotion/` / `templates/` | 内容打包、推广与模板资产 | 当前工作树 |
 
-## `docs/` 子模块职责
+## `.agents/` 子系统
 
-| 子目录或文件 | 职责 |
+### 规范目录
+
+| 子目录 | 主要职责 |
 |---|---|
-| `docs/knowledge/` | 技术知识库，保存架构决策、运维经验、故障排查记录 |
-| `docs/retrospective/` | 复盘文档体系，保存复盘报告、模式库、决策框架、概念与模板 |
-| `docs/templates/` | 文档模板，如应用 README、库 README、Spec README 模板 |
-| `docs/task-summaries/` | 任务执行总结 |
-| `docs/code-wiki/` | 本 Code Wiki 文档集 |
-| `.agents/docs/project-overview.md` | 项目定位与设计理念 |
-| `.agents/docs/project-structure.md` | 项目目录结构说明 |
-| `.agents/docs/tech-stack.md` | 技术栈与环境要求 |
-| `.agents/docs/verification-automation.md` | 验证与自动化说明 |
+| `roles/` | 角色定义与职责边界 |
+| `modules/` | 自我演进模块定义 |
+| `prompts/` | 系统提示词与 few-shot |
+| `protocols/` | 协作协议、路由协议、工作区发现与提示词自举 |
+| `rules/` | 全局治理、阶段守卫、内容分级、硬编码治理等 |
+| `workflows/` | 功能开发、代码审查、测试流程 |
+| `templates/` | 任务、交接与图表模板 |
+| `skills/` | 规范化 Skill 门面 |
+| `teams/` / `worlds/` | 团队协作与环境治理 |
+| `docs/` | 知识库、复盘、项目文档、Code Wiki |
 
-## `apps/dev-tools/prompt_extraction/` 子模块职责
+### 脚本目录
 
-### 模块总览
+`.agents/scripts/` 是整个仓库最重要的执行层，按职责可以分成 4 类：
 
-| 子模块 | 职责 | 典型输入 | 典型输出 |
-|---|---|---|---|
-| `input/` | 处理单条文本和批量文件输入 | 文本、CSV、JSON、TXT、Markdown | `PromptRecord` 列表 |
-| `preprocessing/` | 清洗文本、提取 Markdown 结构、识别元数据、标准化文本 | 原始提示词文本 | 清洗文本、结构信息、元数据 |
-| `extraction/` | 提取指令、约束、预期输出格式 | 清洗后文本、Markdown 结构 | `FeatureSet` |
-| `assessment/` | 计算提示词质量评分 | 文本、`FeatureSet` | `QualityScore` |
-| `optimization/` | 对低质量提示词生成优化版本 | `PromptRecord` | `OptimizationResult` |
-| `constants/` | 统一保存阈值、关键词、正则、路径、样式常量 | 无业务输入 | 常量导出 |
-| `messages/` | 统一保存错误文案、建议文案、UI 文案 | 无业务输入 | 文案常量 |
-| `ui/` | Streamlit 可视化应用与组件 | 用户上传或输入 | 页面展示、导出按钮 |
-| `tests/` | 单元测试与集成测试 | 测试样例 | 测试结果 |
+| 类别 | 代表文件 | 说明 |
+|---|---|---|
+| 聚合 CLI | `docgen.py`、`repo-check.py`、`agents.py` | 统一入口，负责参数解析与流程编排 |
+| 检查器 | `check-links.py`、`check-gitignore.py`、`check-duplication.py` | 把规则落到自动验证 |
+| 生成器/修复器 | `build-ref-index.py`、`generate-readme.py`、`finalize-atomization.py` | 生成导航、索引、报告或做批量修复 |
+| 子系统包 | `lib/`、`sg_dashboard/`、`mdi/` | 共享库与较完整的领域实现 |
 
-### 输入模块
+速查表来源见 [scripts/README.md](../../scripts/README.md#L24-L53)。
 
-`input/` 由 `parser.py` 和 `input_handler.py` 组成。
+## `.agents/scripts/lib/` 共享库
+
+`lib/` 不是杂项目录，而是脚本生态的复用中心。可以按“基础设施”和“领域能力”两类理解。
+
+### 基础设施模块
+
+| 模块 | 职责 | 关键入口 |
+|---|---|---|
+| `project.py` | 解析项目根、`.agents/` 和脚本目录路径 | [resolve_project_root()](../../scripts/lib/project.py#L18-L53) |
+| `cli.py` | 安全输出、CLI 通用选项与打印行为 | `lib/cli.py` |
+| `atomic_write.py` | 原子写入文本和缓存 | `lib/atomic_write.py` |
+| `frontmatter.py` | 统一 YAML/TOML frontmatter 解析 | [parse_frontmatter_unified()](../../scripts/lib/frontmatter.py#L508-L536) |
+| `markdown.py` | 标题、摘要、链接与 marker 区更新 | `lib/markdown.py` |
+| `cache.py` | JSON 缓存与 TTL 管理 | `lib/cache.py` |
+
+### 领域能力模块
+
+| 模块 | 职责 | 关键入口 |
+|---|---|---|
+| `link_fixer/` | 断链检测与自动修复 | [fix_broken_links()](../../scripts/lib/link_fixer/cli.py#L32-L110) |
+| `spec_loader.py` | 规范渐进式加载 | [SpecLoader](../../scripts/lib/spec_loader.py#L376-L497) |
+| `stage_guardrails/` | 阶段状态机、边界校验、运行时拦截 | [StageStateManager](../../scripts/lib/stage_guardrails/state/manager.py#L21-L115) |
+| `quality_report.py` | 质量结果聚合与统计 | `lib/quality_report.py` |
+| `duplication.py` | 跨文件重复块检测 | `lib/duplication.py` |
+| `checks/` | 可组合的轻量检查器 | `lib/checks/` |
+
+## `sg_dashboard/` 子系统
+
+`sg_dashboard/` 是一个独立的“日志解析 -> 统计聚合 -> HTML 展示”子系统：
 
 | 文件 | 职责 |
 |---|---|
-| `parser.py` | 根据文件扩展名识别格式，解析 CSV、JSON、TXT、Markdown 文件 |
-| `input_handler.py` | 将单条文本或批量文件统一转换为 `PromptRecord` |
+| `models.py` | 定义 `LogEntry`、`SessionStats`、`AggregateStats` 三个 dataclass |
+| `parser.py` | 解析 SG-LOG/PDR-LOG 文本日志 |
+| `aggregator.py` | 把日志聚合到会话与全局统计 |
+| `renderer.py` | 渲染自包含 HTML 报表 |
+| `cli.py` | 聚合整个子系统的命令入口 |
 
-支持格式：
+核心数据模型见 [models.py](../../scripts/sg_dashboard/models.py#L25-L107)，日志解析入口见 [parser.py](../../scripts/sg_dashboard/parser.py#L29-L77)。
 
-- CSV：自动识别提示词列，优先匹配 `prompt`、`text` 等关键词。
-- JSON：要求顶层为对象数组，自动识别提示词字段。
-- TXT：每个非空行视为一条提示词。
-- Markdown：按一级或二级标题拆分区块；无标题时整体作为一条记录。
+## `apps/` 区域
 
-### 预处理模块
+### 规范角色
 
-`preprocessing/` 包含两个文件：
+[apps/AGENTS.md](../../../apps/AGENTS.md#L21-L35) 将 `apps/` 定义为主仓库内置应用区，理论上包含 `docker-images/`、`ai-agents/`、`dev-tools/`、`samples/` 等分组。
 
-| 文件 | 职责 |
+### 当前工作树
+
+当前 checkout 中可见内容以这些目录为主：
+
+| 目录 | 当前职责 |
 |---|---|
-| `cleaner.py` | 空白规范化、Markdown/HTML 标记去除、Markdown 结构提取、URL/email/代码块识别 |
-| `normalizer.py` | 全角字符转半角、中文标点标准化 |
+| `apps/samples/cow-demo/` | C++ COW 读写分离示例 |
+| `apps/tests/onnx_adaround/` | ONNX 量化相关 Python 包与测试 |
+| `apps/shared/` | 共享占位目录 |
 
-重要设计点：Markdown 结构和元数据会在去除格式标记前提取，以避免结构信息在清洗过程中丢失。
+这意味着 `apps/AGENTS.md` 更像“完整路由蓝图”，而当前工作树只包含其中一部分实现。
 
-### 特征提取模块
+## `projects/` 区域
 
-`extraction/extractor.py` 提取三类核心特征：
+`projects/` 存放第一方子项目，当前路由和实际登记基本一致：
 
-| 特征 | 来源 | 说明 |
+| 子项目 | 当前定位 | 代表入口 |
 |---|---|---|
-| 指令 | 指令关键词、祈使句、Markdown 标题 | 表示用户希望完成的核心动作 |
-| 约束 | 约束关键词、Markdown 列表项 | 表示格式、内容、风格等限制条件 |
-| 预期输出 | 输出关键词、代码块、格式关键词 | 表示希望返回的结构或类型 |
+| `xuanspace` | Python 3.14.6+ monorepo 工程 | [projects/xuanspace/pyproject.toml](../../../projects/xuanspace/pyproject.toml#L5-L119) |
+| `awesome-okf-xs` | OKF 文档库子项目 | [projects/AGENTS.md](../../../projects/AGENTS.md#L27-L33) |
 
-### 质量评估模块
+其中 `xuanspace` 自带 `tools/xs/` CLI，[`xs` 命令入口](../../../projects/xuanspace/tools/xs/pyproject.toml#L37-L38) 指向 `xs.cli:app`。
 
-`assessment/evaluator.py` 从三个维度评分：
+## `vendor/` 区域
 
-| 维度 | 评分逻辑 |
-|---|---|
-| 清晰度 | 从 100 分起扣，考虑文本长度、结构层次、歧义词 |
-| 完整性 | 从 0 分起加，考虑指令、约束、上下文、示例、输出格式五要素 |
-| 可执行性 | 从 0 分起加，考虑动作动词、约束可验证性、输出可判定性 |
+`vendor/` 既是依赖区，也是外部方法论资产区。当前登记来自两份权威来源：
 
-综合评分按照权重计算，并基于等级阈值判定“优、良、中、差”。
+- [vendor/AGENTS.md](../../../vendor/AGENTS.md#L27-L39)
+- [`.gitmodules`](../../../.gitmodules#L1-L35)
 
-### 优化模块
+按作用可分为：
 
-`optimization/optimizer.py` 在综合评分低于质量阈值时触发优化，依次执行：
-
-1. 补充缺失要素。
-2. 消除歧义表达。
-3. 重组为标准 Markdown 结构。
-4. 生成优化前后 diff。
-
-### UI 模块
-
-`ui/app.py` 是 Streamlit 应用入口，提供：
-
-- 输入方式选择。
-- 文件上传。
-- 手动输入。
-- 处理结果表格。
-- 评分卡。
-- 雷达图。
-- 优化差异展示。
-- 导出按钮。
-
-`ui/components/` 保存可复用 UI 组件：
-
-| 组件 | 职责 |
-|---|---|
-| `score_card.py` | 展示质量评分卡 |
-| `radar_chart.py` | 使用 Plotly 绘制评分雷达图 |
-| `diff_viewer.py` | 展示优化前后差异 |
-| `export_button.py` | 提供结果导出按钮 |
-
-## 自动化脚本模块职责
-
-| 脚本 | 职责 |
-|---|---|
-| `check-gitignore.py` | 验证临时依赖路径是否被 `.gitignore` 覆盖 |
-| `check-links.py` | 扫描 Markdown 链接，校验本地文件引用和可选外部 URL |
-| `check-spec-consistency.py` | 检查 `spec.md`、`tasks.md`、`checklist.md` 一致性 |
-| `generate-nav.py` | 生成并更新 README 和 docs README 的导航表 |
-| `check-move.py` | 移动 Markdown 文件时调整相对链接并可更新引用 |
-| `check-source-traceability.py` | 扫描 `source` 溯源字段，建立源文件到派生产物索引 |
-| `check-role-permissions.py` | 校验角色 frontmatter 中权限字段完整性 |
-| `ci-check.ps1` / `ci-check.sh` | 组合运行主要验证任务 |
-
-## `.agents/scripts/lib` 共享工具库子模块
-
-`lib/` 目录为自动化脚本和测试提供可复用的共享代码库，零第三方依赖（除pytest外）。
-
-| 子模块 | 职责 | 关键文件 |
+| 子模块 | 类型 | 当前作用 |
 |---|---|---|
-| `collaboration/` | 多智能体协作机制 | `conflict_resolution.py`：职责/技术/资源三类冲突仲裁，含死锁预防与升级机制 |
-| `testing/` | 测试模板与辅助工具 | `multi_agent.py`：多智能体边界/边缘场景生成器、参数化装饰器 |
-| `checks/` | 通用检查基类 | `base.py`、`filename.py`、`sensitive_info.py`、`mermaid.py`、`vendor.py` |
-| `link_fixer/` | Markdown链接修复 | `finder.py`、`resolver.py`、`processor.py`：断链检测与自动修复 |
-| `check_hardcode/` | 硬编码检测 | `scanner.py`、`checks_numeric.py`、`checks_string.py`：数值/字符串硬编码扫描 |
-| `check_concurrent_safety/` | 并发安全检查 | `scanner.py`、`visitor.py`：Python代码并发安全静态分析 |
-| `check_pattern_quality/`、`check_skill_quality/`、`check_spec_adoption/` | 质量检查套件 | 分别检查Mermaid模式、Skill规范、Spec采用率 |
-| `docs/` | API文档 | 编号01-15的模块API说明（面向脚本开发者） |
+| `vendor/flexloop` | 协作型依赖 | 提供可跨边界调用的技能与规则资产 |
+| `vendor/ark-cli` | 第三方只读依赖 | CLI 工具 |
+| `vendor/awesome-okf*` | 第三方只读依赖 | OKF 生态工具与模板 |
+| `vendor/knowledge-catalog` | 第三方只读依赖 | 知识目录相关项目 |
 
-### `lib/collaboration/conflict_resolution.py` 核心设计
+## `.trae/specs/` 过程资产区
 
-- **三类冲突仲裁规则**：
-  - 职责冲突：能力匹配优先→初始分配优先级→历史归属→负载均衡
-  - 技术冲突：规范优先→最佳实践→可维护性→最小变更→架构师终裁
-  - 资源冲突：串行访问→优先级调度→锁超时→资源隔离
-- **升级机制**：无agent匹配所需能力、双方拒绝结果、超出能力范围、**所有候选负载均无效**时返回`ESCALATED`状态，`needs_human=True`
-- **负载值防御性校验**（P0修复）：负载均衡前显式校验load∈[0,100]且为数值类型，负值/超100/缺失/非数值的agent被过滤，全无效时升级，过滤时输出[WARNING]日志
-- **死锁预防**：所有锁操作有超时，重复拒绝幂等，两轮拒绝后自动升级
+`.trae/specs/` 保存的是任务执行过程中的规格文档，而不是最终长期知识。当前工作树里能看到大量 `*-okf-wiki`、`*-wiki`、`*-fix` 等主题目录，说明这个仓库长期用 Spec 驱动方式沉淀任务过程。
 
-### `lib/testing/multi_agent.py` 核心设计
+## `docs/` 站点工程
 
-- **策略矩阵**：4种优先级策略 × 4种负载策略，覆盖正常/极端调度场景
-- **一键参数化**：`@parametrize_agent_counts` 装饰器自动注入N=1,2,3,5,10测试用例
-- **边缘场景覆盖**：`edge_scenarios()` 提供18个预构建场景，包含空输入、畸形数据、完全平局、50/100大规模、部分/无能力匹配
-- **防御性测试**：内置10项标准断言参考（`BOUNDARY_ASSERTIONS`），确保测试覆盖确定性、防饥饿、超时保护、防御性拷贝等关键属性
+根 `docs/` 目录的职责很明确：
+
+- 保存公开站点的内容页
+- 通过 [tasks.py](../../../docs/tasks.py#L54-L128) 调用 Sphinx make-mode
+- 和 `.agents/docs/` 形成“公开站点”与“知识主容器”的职责分工
+
+## 模块观察结论
+
+- `.agents/` 是仓库的主体，`apps/`、`projects/`、`vendor/` 更像承载层。
+- `.agents/scripts/lib` 是整个脚本生态的复用重心，很多顶层脚本只是门面。
+- `apps/` 路由文件包含比当前 checkout 更完整的目标结构，使用时要区分“蓝图”与“实况”。
