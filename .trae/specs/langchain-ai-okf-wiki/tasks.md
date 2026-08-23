@@ -1,7 +1,7 @@
 # LangChain-AI 开源项目 OKF Wiki 教程生成 - Implementation Plan
 
 ## Task 1: 创建 langchain-ai 分组目录结构和分组索引（占位）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -14,7 +14,7 @@
   - `rule` TR-1.2: 20 个 bundle 目录骨架完整；evidence: 目录列表验证
 
 ## Task 2: langchain（Python 核心框架）- R 阶段事实采集
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -28,7 +28,7 @@
   - `rubric` TR-2.3: 事实覆盖完整性（Runnable/Message/Tool/ChatModel 等核心抽象全覆盖）；scale 1-5；threshold >= 4
 
 ## Task 3: langchain（Python 核心框架）- I 阶段架构洞察
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 2
 - **Description**:
@@ -41,7 +41,7 @@
   - `rubric` TR-3.2: 知识地图合理性；scale 1-5；threshold >= 4
 
 ## Task 4: langchain（Python 核心框架）- E 阶段文档生成
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 3
 - **Description**:
@@ -56,7 +56,7 @@
   - `rule` TR-4.3: 所有文档 frontmatter 完整
 
 ## Task 5: langchain - V 阶段独立验证
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
@@ -69,7 +69,7 @@
   - `rule` TR-5.2: 链接 0 断链、frontmatter 全合规
 
 ## Task 6: langgraph（Python 编排框架）- R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 对 langgraph 执行完整 R→I→E→V 五阶段。聚焦 libs/ 下 graph 抽象（StateGraph/Graph/节点/边/条件边）、State/Schema、checkpoint（持久化）、message 管理、cli。采用分层采样，不逐包解析全 monorepo。
@@ -79,7 +79,7 @@
   - `rubric` TR-6.2: 文档质量评分 >= 4
 
 ## Task 7: langchainjs（JS 核心框架）- R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 对 langchainjs 执行完整 R→I→E→V。聚焦 libs/langchain-core（Runnable/messages/tools/prompts）、libs/langchain 组装、pnpm+turbo 工作区布局。
@@ -89,7 +89,7 @@
   - `rubric` TR-7.2: 文档质量评分 >= 4
 
 ## Task 8: langgraphjs（JS 编排框架）- R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 对 langgraphjs 执行完整 R→I→E→V。聚焦 StateGraph/节点/边/checkpoint/通道、与 langchainjs 的集成。
@@ -99,7 +99,7 @@
   - `rubric` TR-8.2: 文档质量评分 >= 4
 
 ## Task 9: langchain-google - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 langchain-google 执行 R→I→E→V。聚焦 Google GenAI/VertexAI ChatModel 与 Embeddings 集成、provider 抽象与鉴权。
@@ -109,7 +109,7 @@
   - `rubric` TR-9.2: 文档质量评分 >= 4
 
 ## Task 10: langchain-mongodb - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 langchain-mongodb 执行 R→I→E→V。聚焦 MongoDB VectorStore 与 Atlas Vector Search 集成、集合索引与文档写入。
@@ -119,7 +119,7 @@
   - `rubric` TR-10.2: 文档质量评分 >= 4
 
 ## Task 11: langsmith-sdk - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 langsmith-sdk 执行 R→I→E→V。聚焦可观测性核心：trace/run/feedback 上报、js/ 与 python/ 双语言 SDK 结构、评测（evaluation）接口。
@@ -129,7 +129,7 @@
   - `rubric` TR-11.2: 文档质量评分 >= 4
 
 ## Task 12: langsmith-cli - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 langsmith-cli（Go）执行 R→I→E→V。聚焦 CLI 命令结构（eval/trace/run 等）、Go 语言实现与 LangSmith API 对接。
@@ -139,7 +139,7 @@
   - `rubric` TR-12.2: 文档质量评分 >= 4
 
 ## Task 13: deepagents + lca-deepagents - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 deepagents 执行 R→I→E→V，lca-deepagents 作为变体整合进 deepagents bundle 的 references/examples。聚焦深度研究 Agent 的 planning/sub-agent/todo/context 管理（libs/acp、libs/cli）。
@@ -149,7 +149,7 @@
   - `rubric` TR-13.2: 文档质量评分 >= 4
 
 ## Task 14: deepagentsjs - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 deepagentsjs（TypeScript）执行 R→I→E→V。聚焦 JS 版深度研究 Agent 的实现与 deepagents（Python）的对应关系。
@@ -159,7 +159,7 @@
   - `rubric` TR-14.2: 文档质量评分 >= 4
 
 ## Task 15: open-swe - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 open-swe 执行 R→I→E→V。聚焦 SWE Agent 架构（agent/ dispatch/reviewer/reconcile/scheduler）、基于 langgraph 的编排、UI（ui/）与 desktop（desktop/）。
@@ -169,7 +169,7 @@
   - `rubric` TR-15.2: 文档质量评分 >= 4
 
 ## Task 16: openevals - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 openevals 执行 R→I→E→V。聚焦 LLM 评测器（exact/llm-as-judge/types/utils）js/ 与 python/ 双语言实现与评判协议。
@@ -179,7 +179,7 @@
   - `rubric` TR-16.2: 文档质量评分 >= 4
 
 ## Task 17: openwiki - R→I→E→V 全流程
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 对 openwiki（TypeScript）执行 R→I→E→V。聚焦 Wiki/文档 Agent（src/agent、src/cli、src/config、认证与 token 管理）。
@@ -189,7 +189,7 @@
   - `rubric` TR-17.2: 文档质量评分 >= 4
 
 ## Task 18: 轻量项目 bundle 生成（openwork / chat-langchain / social-media-agent）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**: 为 openwork、chat-langchain、social-media-agent 生成轻量 bundle：项目概述 + 核心概念（≥1 篇）+ 信源参考 + log.md。
@@ -198,7 +198,7 @@
   - `rule` TR-18.1: 3 个 bundle 各含 index.md、concepts/（≥1）、references/（≥1）、log.md；frontmatter 完整、链接 0 断链
 
 ## Task 19: 基础设施/文档仓库参考 bundle 生成（docs / helm / terraform）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: low
 - **Depends On**: Task 1
 - **Description**: 为 docs（文档站 + src/*.mdx 结构索引）、helm、terraform 生成参考型 bundle：项目概述 + references/ 信源目录索引 + log.md，无深度概念文档。
@@ -207,7 +207,7 @@
   - `rule` TR-19.1: 3 个 bundle 各含 index.md、references/ 信源索引、log.md；frontmatter 完整、链接 0 断链
 
 ## Task 20: 分组索引与总导航更新
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
 - **Description**:
@@ -219,7 +219,7 @@
   - `rule` TR-20.2: bundles/index.md 含 langchain-ai 分组，groups: 17、total_bundles: 130；evidence: frontmatter 字段验证
 
 ## Task 21: 全局最终验证
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 20
 - **Description**:
