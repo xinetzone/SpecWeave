@@ -1,3 +1,7 @@
+---
+okf_version: "0.2"
+---
+
 # 📚 知识库
 
 本目录汇集 SpecWeave 项目沉淀的**外部知识学习成果与技术研究**，包括对主流 AI Agent 平台/工具的系统学习 Wiki、AI 工程化深度分析、算法艺术探索，以及深度学习原子化设计研究。
@@ -12,22 +16,22 @@
 :hidden:
 
 learning/03-agent-platforms-tools/README
-ai-engineering/README
+ai-engineering/index
 ```
 
 | 分类 | 说明 | 入门推荐 |
 |------|------|---------|
-| **[Agent 平台与工具学习 Wiki](learning/03-agent-platforms-tools/README.md)** | 主流 AI Agent 开发平台与工具的系统学习教程（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个 Wiki） | [DeepSeek Harness 完全指南](learning/03-agent-platforms-tools/deepseek-harness-wiki/00-overview.md) |
+| **[Agent 平台与工具学习 Wiki](learning/03-agent-platforms-tools/README.md)** | 主流 AI Agent 开发平台与工具的系统学习教程（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个 Wiki） | [DeepSeek Harness 完全指南](learning/03-agent-platforms-tools/deepseek-harness-wiki/index.md) |
 | **[OKF（开放知识格式）主题导航](learning/okf-topic-index.md)** | OKF 格式规范 + OKF 工具链的统一主题索引（横跨协议接口与工具平台，含 okf-wiki / okf-kit-wiki / 自研 okf 工具） | [OKF 主题导航](learning/okf-topic-index.md) |
-| **[Python 3.14 标准库教程](learning/python314-stdlib-wiki/00-overview.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](learning/python314-stdlib-wiki/00-overview.md) |
-| **[AI Engineering](ai-engineering/README.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/loop-engineering-knowledge-base.md) |
-| **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/philosophy.md) |
-| **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/ai-agent-atomic-design-analysis.md) |
+| **[Python 3.14 标准库教程](learning/python314-stdlib-wiki/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](learning/python314-stdlib-wiki/index.md) |
+| **[AI Engineering](ai-engineering/index.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/concepts/loop-engineering-knowledge-base.md) |
+| **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
+| **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 
 ## 🎯 如何使用
 
 - **刚接触 AI Agent 开发？** 从 [Agent 平台与工具 Wiki](learning/03-agent-platforms-tools/README.md) 开始，选择一个感兴趣的框架系统学习
-- **想了解 AI 工程化方法论？** 阅读 [AI Engineering](ai-engineering/README.md) 下的 Loop Engineering 等知识库
+- **想了解 AI 工程化方法论？** 阅读 [AI Engineering](ai-engineering/index.md) 下的 Loop Engineering 等知识库
 - **想寻找可复用模式？** 前往 [复盘与模式库](../retrospective/index.md) 获取项目自身沉淀的最佳实践与反模式
 
 ## 接入约定

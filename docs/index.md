@@ -1,3 +1,7 @@
+---
+okf_version: "0.2"
+---
+
 # SpecWeave 文档中心
 
 ![repo size][repo-size-badge]
@@ -55,7 +59,7 @@
 
 SpecWeave 是一套给 AI 智能体使用的"员工手册"：以 AGENTS.md 为统一入口，提供角色定义、协作协议、质量门禁与自我演进机制的多智能体协作开放标准。
 
-本网站是 SpecWeave 的官方文档中心，包含使用指南、技术文档、知识库与可复用模式库。想快速了解项目是什么，请先阅读 [项目介绍](tech/intro.md)。
+本网站是 SpecWeave 的官方文档中心，包含使用指南、技术文档、知识库与可复用模式库。想快速了解项目是什么，请先阅读 [项目介绍](tech/concepts/intro.md)。
 
 ---
 
@@ -65,9 +69,9 @@ SpecWeave 是一套给 AI 智能体使用的"员工手册"：以 AGENTS.md 为�
 
 | 路径 | 适合谁 | 你将学到 |
 |------|--------|---------|
-| [项目介绍](tech/intro.md) | 所有人 | SpecWeave 是什么、解决什么问题、核心概念 |
-| [快速开始](tech/quickstart.md) | 想立即使用的开发者 | 如何在项目中装载和使用 SpecWeave |
-| [核心功能](tech/features.md) | 已入门想深入了解 | `.agents/` 目录详解、角色体系、工作流引擎 |
+| [项目介绍](tech/concepts/intro.md) | 所有人 | SpecWeave 是什么、解决什么问题、核心概念 |
+| [快速开始](tech/concepts/quickstart.md) | 想立即使用的开发者 | 如何在项目中装载和使用 SpecWeave |
+| [核心功能](tech/concepts/features.md) | 已入门想深入了解 | `.agents/` 目录详解、角色体系、工作流引擎 |
 
 ---
 

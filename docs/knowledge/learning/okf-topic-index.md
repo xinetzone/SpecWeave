@@ -4,6 +4,16 @@ title: "OKF（开放知识格式）主题知识导航"
 date: "2026-08-19"
 category: "learning"
 tags: ["okf", "open-knowledge-format", "index", "navigation", "wiki"]
+type: Reference
+description: "OKF（开放知识格式）相关知识的统一导航总入口，按格式规范与工具链两大子域归类，附版本说明与推荐学习路径"
+generated:
+  by: "process:docs-to-okf-conversion"
+  at: "2026-08-22T00:00:00Z"
+verified:
+  by: "process:seven-concepts-v"
+  at: "2026-08-22T00:00:00Z"
+status: "stable"
+stale_after: "2027-08-22"
 ---
 
 # OKF（开放知识格式）主题知识导航
@@ -44,9 +54,9 @@ OKF 项目知识分为两个**正交维度**，阅读前请先厘清：
 
 | 位置 | 内容 | 章节数 | 入口 |
 |------|------|:------:|------|
-| `03-agent-platforms-tools/okf-kit-wiki/` | **okf-kit 第三方工具教程**（v0.3.3，将网站转为 OKF bundle；零 Key 爬取、增量同步、Chat、MCP/HTTP 服务） | 12 | [00-overview](03-agent-platforms-tools/okf-kit-wiki/00-overview.md) |
+| `03-agent-platforms-tools/okf-kit-wiki/` | **okf-kit 第三方工具教程**（v0.3.3，将网站转为 OKF bundle；零 Key 爬取、增量同步、Chat、MCP/HTTP 服务） | 12 | [index](03-agent-platforms-tools/okf-kit-wiki/index.md) |
 | `projects/xuanspace/docs/okf/` | **本项目自研 `okf` 工具官方文档**（OKF v0.2 命令行工具链，零运行时依赖、Harness 架构） | 10 | [index](../../../projects/xuanspace/docs/okf/index.md) |
-| `python314-stdlib-wiki/`（12/13 章） | **自研 `okf` 工具的 Python 3.14 标准库优化报告**（优化前后 100% 覆盖率、内存 -69.8% 等量化对比） | 2 | [13-优化报告](python314-stdlib-wiki/13-okf-optimization-report.md) |
+| `python314-stdlib-wiki/`（references/13 章） | **自研 `okf` 工具的 Python 3.14 标准库优化报告**（优化前后 100% 覆盖率、内存 -69.8% 等量化对比） | 2 | [13-优化报告](python314-stdlib-wiki/references/13-okf-optimization-report.md) |
 
 ---
 
