@@ -47,6 +47,9 @@ def compute_x_toml_ref(md_path: Path, project_root: Path) -> str:
         x-toml-ref的相对路径字符串（正斜杠分隔）。
     """
     rel_path = md_path.relative_to(project_root).as_posix()
+    # 去除 .agents/ 前缀，因为 TOML 文件镜像在 .meta/toml/docs/ 下（不含 .agents/）
+    if rel_path.startswith('.agents/'):
+        rel_path = rel_path[8:]
     toml_rel = '.meta/toml/' + rel_path.replace('.md', '.toml')
     parent_depth = len(Path(rel_path).parent.parts)
     if parent_depth == 0:
@@ -57,6 +60,8 @@ def compute_x_toml_ref(md_path: Path, project_root: Path) -> str:
 def get_toml_target_path(md_path: Path, project_root: Path) -> Path:
     """获取MD文件对应的TOML文件绝对路径。"""
     rel_path = md_path.relative_to(project_root).as_posix()
+    if rel_path.startswith('.agents/'):
+        rel_path = rel_path[8:]
     toml_rel = '.meta/toml/' + rel_path.replace('.md', '.toml')
     return (project_root / toml_rel).resolve()
 
