@@ -70,7 +70,7 @@ graph LR
 ### 学习内容
 
 #### Day 1：全景概览
-- [ ] 阅读速查卡片 [python314-cheatsheet.html](python314-cheatsheet.html)（10 分钟通读）
+- [ ] 阅读速查卡片 [python314-cheatsheet.html](/python314-cheatsheet.html)（10 分钟通读）
 - [ ] 阅读 Wiki [00-overview.md](/index.md)（30 分钟）
   - 重点关注：十大变革速记、PEP 一览表、版本信息
 - [ ] 浏览官方 [What's New in Python 3.14](https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html)（1 小时，挑感兴趣的章节读）
@@ -431,7 +431,7 @@ graph LR
 ### 本教程资源
 | 资源 | 路径 |
 |------|------|
-| 速查卡片 | [python314-cheatsheet.html](python314-cheatsheet.html) |
+| 速查卡片 | [python314-cheatsheet.html](/python314-cheatsheet.html) |
 | Wiki 教程目录 | [00-overview.md](/index.md) |
 | 官方文档四大支柱导览 | [13-official-docs-roadmap.md](/references/13-official-docs-roadmap.md) |
 | 实战示例 | [10-practical-examples.md](/examples/10-practical-examples.md) |
@@ -486,4 +486,4 @@ graph LR
 ---
 
 - [← 返回教程首页](/index.md)
-- [速查卡片](python314-cheatsheet.html) →
+- [速查卡片](/python314-cheatsheet.html) →
