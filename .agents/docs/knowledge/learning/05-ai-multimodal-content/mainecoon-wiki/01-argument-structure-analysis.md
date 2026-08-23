@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-01-argument-structure-analysis"
 title: "MaineCoon 文章论证逻辑与信息结构分析"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/01-argument-structure-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/01-argument-structure-analysis.toml"
 ---
-
 # MaineCoon 文章论证逻辑与信息结构分析
 
 > 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第二部分，评估文章的论证质量、结构组织与数据搭配。

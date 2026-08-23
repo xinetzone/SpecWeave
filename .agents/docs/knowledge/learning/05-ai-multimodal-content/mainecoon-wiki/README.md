@@ -4,8 +4,8 @@ title: "MaineCoon 实时音视频基础模型与 Social World Model"
 category: "knowledge"
 date: "2026-08-22"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/README.toml"
 ---
-
 # MaineCoon 实时音视频基础模型与 Social World Model
 
 > catnip.ai 发布的 22B 参数实时音视频基础模型深度分析，涵盖成本/速度/时长三角困境突破、Agentic Streaming Inference 架构与 Social World Model 范式

@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-archive-content-value-assessment"
 title: "MaineCoon 文章内容价值评估（归档）"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/archive-content-value-assessment.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/archive-content-value-assessment.toml"
 ---
-
 # MaineCoon 文章内容价值评估
 
 > 本文档从 [02-content-value-and-knowledge.md](02-content-value-and-knowledge.md) §5 归档为独立文档，评估 MaineCoon 文章对行业与读者的价值。

@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-03-technical-breakthrough-analysis"
 title: "MaineCoon 技术突破深度解析与应用场景评估"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/03-technical-breakthrough-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/03-technical-breakthrough-analysis.toml"
 ---
-
 # MaineCoon 技术突破深度解析与应用场景评估
 
 > 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第四部分，深度解析三角困境突破的量化证据与架构逻辑，并评估五大应用场景的可行性。

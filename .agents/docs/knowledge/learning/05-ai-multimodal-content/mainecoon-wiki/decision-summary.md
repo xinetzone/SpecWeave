@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-decision-summary"
 title: "MaineCoon 分析决策摘要"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/decision-summary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/decision-summary.toml"
 ---
-
 # MaineCoon 分析决策摘要
 
 > 快速决策参考卡。完整 F+V 深度分析（6 条假设剥离 + 4 公理推导 + 16 条对抗审查意见）见 [05-critique-and-methodology.md](05-critique-and-methodology.md) §15。

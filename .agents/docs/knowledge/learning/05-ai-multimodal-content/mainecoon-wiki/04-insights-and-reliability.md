@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-04-insights-and-reliability"
 title: "MaineCoon 洞见萃取与可靠性评估"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/04-insights-and-reliability.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/04-insights-and-reliability.toml"
 ---
-
 # MaineCoon 洞见萃取与可靠性评估
 
 > 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第五部分，萃取五大洞见（含四元组），并评估信息来源可靠性、时效性与技术专业性。

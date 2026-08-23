@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-00-overview"
 title: "MaineCoon 实时音视频基础模型 — 概述"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/00-overview.toml"
 ---
-
 # MaineCoon 文章基本信息与核心观点
 
 > 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第一部分，涵盖文章基本信息（Task 1 内容预处理）与核心观点提炼。

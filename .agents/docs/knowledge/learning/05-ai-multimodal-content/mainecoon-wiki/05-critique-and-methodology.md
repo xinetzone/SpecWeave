@@ -2,12 +2,11 @@
 id: "mainecoon-wiki-05-critique-and-methodology"
 title: "MaineCoon 批判性思考与七概念方法论分析"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/05-critique-and-methodology.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/05-critique-and-methodology.toml"
 ---
-
 # MaineCoon 批判性思考与七概念方法论分析
 
-> 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第六部分，包含批判性思考、SpecWeave 关联分析与七概念方法论（F+V）深度审视。方法论模式已萃取为独立文档，详见 [三角困境→架构级解决框架](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [诚实承认局限性信任构建策略](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
+> 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第六部分，包含批判性思考、SpecWeave 关联分析与七概念方法论（F+V）深度审视。方法论模式已萃取为独立文档，详见 [三角困境→架构级解决框架]../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [诚实承认局限性信任构建策略]../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
 
 ---
 
@@ -101,7 +100,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 
 ### 14.2 可借鉴的产品方法论
 
-> 以下五大方法论中,方法论一(三角困境)与方法论四(诚实承认局限性)已萃取为完整模式文档,详见 [trilemma-architectural-resolution.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [honest-limitation-acknowledgment.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
+> 以下五大方法论中,方法论一(三角困境)与方法论四(诚实承认局限性)已萃取为完整模式文档,详见 [trilemma-architectural-resolution.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [honest-limitation-acknowledgment.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
 
 #### 14.2.1 方法论一:三角困境框架
 
@@ -119,7 +118,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 - **核心步骤**: 1)困境识别(明确三角矛盾的三个维度及其耦合关系) 2)根因分析(判断困境源于本质矛盾还是架构遗留) 3)架构重定义(从目标场景出发重新设计训练/架构/部署全链路) 4)帕累托验证(确认三个维度均未牺牲且至少一维显著改善)
 - **反模式**: 1)在三角内做权重妥协(牺牲一维换另一维,本质仍是零和) 2)仅优化单一维度而忽视维度间耦合 3)将架构遗留误判为本质矛盾而放弃突破
 - **迁移验证**: SpecWeave 的"质量 vs 速度 vs 完整"文档生成三角困境,可通过角色定义 + Skill 体系 + 协议设计的架构级重定义突破,而非在单一维度调参
-- **完整模式文档**: [trilemma-architectural-resolution.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)
+- **完整模式文档**: [trilemma-architectural-resolution.md]../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)
 
 #### 14.2.2 方法论二:个人经历引入的叙事结构
 
@@ -151,7 +150,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 
 文章在 #04 章节主动承认模型局限,这种策略可被 SpecWeave 的能力边界声明/角色定义借鉴:
 
-- **当前 SpecWeave**:[.agents/capability-boundaries.md](../../../../.agents/capability-boundaries.md) 已经采用"职责边界 + 禁止事项"的诚实表述
+- **当前 SpecWeave**:[.agents/capability-boundaries.md](../../../../../capability-boundaries.md) 已经采用"职责边界 + 禁止事项"的诚实表述
 - **借鉴方向**:可在角色定义中更主动地说明"当前局限 + 改进方向",而非仅说明"职责边界",以增强智能体协作的可信度
 
 **结构化要素**:
@@ -159,7 +158,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 - **核心步骤**: 1)识别局限(列出当前不成熟/不支持的能力,具体而非模糊) 2)主动披露(在优势陈述后紧跟局限说明,而非隐藏在末尾) 3)改进方向(为每个局限给出改进路径与时间表) 4)差异化定位(与"只说优势"的内容形成对比,建立专业形象)
 - **反模式**: 1)只说优势不说局限(降低可信度,读者会自行脑补更差的局限) 2)局限说明过于模糊(如"还有一些不足",不具体) 3)局限无改进方向(显得消极,让读者怀疑团队是否在改进)
 - **迁移验证**: SpecWeave 角色定义可在"职责边界"之外增加"当前局限 + 改进方向"段落,增强智能体协作的可信度
-- **完整模式文档**: [honest-limitation-acknowledgment.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)
+- **完整模式文档**: [honest-limitation-acknowledgment.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)
 
 #### 14.2.5 方法论五:从需求侧出发的产品定位
 
@@ -178,7 +177,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 
 ## 15. 七概念方法论分析（F+V）
 
-> 本章节应用七概念方法论中的 F（第一性原理）与 V（对抗审查）两个阶段，是 F+V 分析的权威源。知识库速查版本见 [mainecoon-social-world-model-wiki.md](mainecoon-social-world-model-wiki.md)，决策速查卡见 [decision-summary.md](decision-summary.md)，批判性评论见 [critical-review-draft.md](critical-review-draft.md)。
+> 本章节应用七概念方法论中的 F（第一性原理）与 V（对抗审查）两个阶段，是 F+V 分析的权威源。知识库速查版本见 [06-social-world-model-wiki.md](06-social-world-model-wiki.md)，决策速查卡见 [decision-summary.md](decision-summary.md)，批判性评论见 [critical-review-draft.md](critical-review-draft.md)。
 
 ### 15.1 第一性原理分析（F）
 

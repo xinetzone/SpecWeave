@@ -2,9 +2,8 @@
 id: "mainecoon-wiki-02-content-value-and-knowledge"
 title: "MaineCoon 文章内容价值与知识点萃取"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/02-content-value-and-knowledge.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/02-content-value-and-knowledge.toml"
 ---
-
 # MaineCoon 文章内容价值与知识点萃取
 
 > 本节为 [analysis-report.md](analysis-report.md) 原子化拆分的第三部分，评估文章的行业/读者价值，并萃取五大场景、三大技术突破等关键知识点。
