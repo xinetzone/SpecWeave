@@ -1,0 +1,7 @@
+id = "python314-cpython-wiki-13"
+title = "官方文档四大支柱导览（tutorial / library / extending / howto）"
+category = "knowledge/learning/10-foundational-knowledge/python314-cpython-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["python314", "official-docs", "tutorial", "standard-library", "extending", "embedding", "howto", "roadmap", "foundation"]

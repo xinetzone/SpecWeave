@@ -203,10 +203,12 @@ sources:
 |------|------|------|---------|
 | **源模式文档（完整方法论）** | **L2** | [source-code-to-okf-wiki-workflow.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md) | **首次使用必读**——含完整案例、失败复盘、检验标准、跨场景迁移 |
 | **Prompt模板集** | **L2** | [references/prompt-templates.md](references/prompt-templates.md) | 每阶段执行时复制对应Prompt |
+| **批量文档转换模式** | **L2** | [batch-docs-to-okf-bundle-conversion.md](../../docs/retrospective/patterns/methodology-patterns/concepts/batch-docs-to-okf-bundle-conversion.md) | 非源码文档（Wiki/报告/笔记）批量转换为OKF Bundle时参考，含9个反模式 |
 | 七概念方法论编排 | L1 | [seven-concepts-cmd](../seven-concepts-cmd/SKILL.md) | 本模式是七概念在知识沉淀场景的具体化 |
 | 原子提交 | L1 | [atomic-commit-cmd](../atomic-commit-cmd/SKILL.md) | C阶段模式入库时使用 |
 | 链接检查 | L1 | [link-check-cmd](../link-check-cmd/SKILL.md) | V阶段链接验证时使用 |
 
 ## 12. Changelog
 
+- **v1.1.0** (2026-08-22): 扩展非源码文档转换场景，新增「批量Markdown文档→OKF Bundle转换模式」参考（31个Bundle、368文件实战验证）。
 - **v1.0.0** (2026-08-21): 初始版本，从PyInvoke v3.0.3 OKF Wiki生成实践萃取，封装R→I→E→V→C五阶段工作流、OKF文档规范、7个反模式、Grep级API验证机制。

@@ -1,0 +1,7 @@
+id = "cordis-spatiotemporal-composability-wiki-05"
+title = "Cordis — 插件系统与依赖注入"
+category = "knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["cordis", "plugin", "dependency-injection", "inject", "service", "provider"]

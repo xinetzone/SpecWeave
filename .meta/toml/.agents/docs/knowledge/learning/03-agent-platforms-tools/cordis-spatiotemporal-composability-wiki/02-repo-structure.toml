@@ -1,0 +1,7 @@
+id = "cordis-spatiotemporal-composability-wiki-02"
+title = "Cordis — 文件结构与 Monorepo"
+category = "knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["cordis", "monorepo", "yarn-workspaces", "repository-structure", "typescript"]

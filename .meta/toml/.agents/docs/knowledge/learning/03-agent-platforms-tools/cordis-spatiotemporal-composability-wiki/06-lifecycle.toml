@@ -1,0 +1,7 @@
+id = "cordis-spatiotemporal-composability-wiki-06"
+title = "Cordis — 生命周期与 Fiber 状态机"
+category = "knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["cordis", "fiber", "lifecycle", "state-machine", "effect", "disposable", "epoch"]

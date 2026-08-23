@@ -1,0 +1,7 @@
+id = "baidu-ocr-wiki-07"
+title = "百度 Unlimited-OCR 对SpecWeave的可行动启示"
+category = "knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki"
+date = "2026-08-03"
+version = "1.0"
+status = "stable"
+tags = ["SpecWeave", "上下文管理", "智能体", "R-SWA", "架构设计"]

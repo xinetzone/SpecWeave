@@ -1,0 +1,7 @@
+id = "github-cli-wiki-07"
+title = "命令速查表与最佳实践"
+category = "knowledge/learning/08-systems-infrastructure/github-cli-wiki"
+date = "2026-08-23"
+version = "1.0"
+status = "stable"
+tags = ["github-cli", "gh", "cheatsheet", "best-practices", "quick-reference", "automation"]

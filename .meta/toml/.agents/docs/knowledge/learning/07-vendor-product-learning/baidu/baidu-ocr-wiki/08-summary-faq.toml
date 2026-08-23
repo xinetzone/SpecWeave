@@ -1,0 +1,7 @@
+id = "baidu-ocr-wiki-08"
+title = "百度 Unlimited-OCR 总结与常见问题"
+category = "knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki"
+date = "2026-08-03"
+version = "1.0"
+status = "stable"
+tags = ["OCR", "总结", "FAQ", "速查表", "资源", "vLLM", "SGLang", "批量推理"]

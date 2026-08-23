@@ -25,6 +25,12 @@ date: "2026-07-09"
 | [总结与展望](08-summary.md) | 总结与展望 |  |
 | [常见问题（FAQ）](09-faq.md) | 常见问题（FAQ） |  |
 | [资源与参考链接](10-resources.md) | 资源与参考链接 |  |
+| [CLI 命令完整参考](11-cli-reference.md) | `ocr` 命令行工具完整参考，补充全部子命令、Flag、JSON 输出格式、退出码与共享参数。 | 补充 |
+| [LLM 协议与 Provider 详解](12-llm-providers.md) | LLMClient 接口契约、三种协议实现、19 个内置 Provider、Endpoint 四策略解析链、Token 计数与自定义 Provider。 | 补充 |
+| [内置工具与 MCP 集成](13-tools-mcp.md) | Registry 注册机制、Provider 接口、6 个内置工具详解、code_comment 评论机制、MCP 集成与工具自定义。 | 补充 |
+| [审查规则系统技术参考](14-review-rules.md) | ProjectRule 结构、Glob 匹配语法、默认排除模式、系统规则映射、文件过滤五门算法与安全限制。 | 补充 |
+| [会话持久化与遥测](15-session-telemetry.md) | JSONL 会话日志、Manifest 系统、会话恢复、评论查询、OpenTelemetry 集成与内嵌 Web 查看器。 | 补充 |
+| [变更日志](log.md) | Open Code Review Wiki 变更日志。 | 补充 |
 
 <!-- README_INDEX_END -->
 

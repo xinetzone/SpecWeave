@@ -16,6 +16,7 @@ date: "2026-08-21"
 |------|---------|-----------|
 | 📐 **数学推理** | `mathematical-foundations/` | 数学证明、数论规律与应用的系统化理解 |
 | ✍️ **学术写作** | `academic-skills/` | 从选题到答辩的学术论文写作全流程 |
+| 🐍 **编程语言基础** | `python314-cpython-wiki/` | Python 3.14 语言特性、CPython 源码架构与自由线程/JIT 等核心技术 |
 
 ---
 
@@ -25,6 +26,7 @@ date: "2026-08-21"
 |-----------|--------|---------|
 | [数学推理(mathematical-foundations)](mathematical-foundations/pythagorean-theorem-wiki/README.md) | 9篇 | **勾股定理系统教程**：历史、八大证明方法、毕达哥拉斯三元组、推广与应用 |
 | [学术写作(academic-skills)](academic-skills/thesis-writing-wiki/README.md) | 12篇 | **论文写作全流程指南**：选题→文献综述→研究方法→结构→答辩，含FAQ与实战资源 |
+| [Python 3.14 + CPython(python314-cpython-wiki)](python314-cpython-wiki/README.md) | 17篇 | **Python 3.14 源码深度指南**：自由线程、JIT、t-strings、CPython架构、C API、迁移实战，共14章+3篇补充文档 |
 
 ---
 

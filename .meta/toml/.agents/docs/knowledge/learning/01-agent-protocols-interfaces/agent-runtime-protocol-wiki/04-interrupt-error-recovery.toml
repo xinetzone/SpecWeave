@@ -1,0 +1,7 @@
+id = "agent-runtime-protocol-wiki-04"
+title = "中断与错误恢复"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "interrupt", "recovery", "hitl", "error-handling", "error-as-data"]
