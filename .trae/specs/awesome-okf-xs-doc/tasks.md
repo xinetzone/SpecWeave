@@ -127,7 +127,7 @@
   - `programmatic` TR-5.2: `git check-ignore doc/bundles/` 返回成功
 - **Notes**: 现有 .gitignore 已有 `docs/_build/`（复数），需同时保留并添加 `doc/_build/`（单数）
 
-## [ ] Task 6: 构建验证和链接完整性测试
+## [x] Task 6: 构建验证和链接完整性测试
 
 - **Priority**: high
 - **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5
