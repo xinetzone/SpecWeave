@@ -4,13 +4,13 @@ title: "Learning Wiki 主题分类体系"
 category: "learning"
 tags: ["categories", "learning-wiki", "knowledge-architecture", "topic-classification", "learning-path"]
 date: "2026-08-22"
-version: "1.5"
+version: "1.6"
 status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的11主题分类体系设计（00-10），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
 x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/CATEGORIES.toml"
-changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）; 2026-08-23a | audit | Task 22迁移审核：补充04/07/08主题缺失Wiki条目（+12），更新统计摘要(137→149 Wiki)，修复count_wikis.py NON_WIKI_WIKIS列表; 2026-08-23b | audit | Task 22收尾：修复pyinvoke-wiki/index.md→README.md，更新count_wikis.py支持10主题，补充10主题缺失条目（python314-cpython-wiki），修正08主题统计(10→11)，更新统计摘要(149→150 Wiki)"
+changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）; 2026-08-23a | audit | Task 22迁移审核：补充04/07/08主题缺失Wiki条目（+12），更新统计摘要(137→149 Wiki)，修复count_wikis.py NON_WIKI_WIKIS列表; 2026-08-23b | audit | Task 22收尾：修复pyinvoke-wiki/index.md→README.md，更新count_wikis.py支持10主题，补充10主题缺失条目（python314-cpython-wiki），修正08主题统计(10→11)，更新统计摘要(149→150 Wiki); 2026-08-23c | feat | 迁移codewhale-wiki（8个内容文件+README+9个TOML元数据）至03-code-devtools/，补充03主题Wiki清单（统计150→151 Wiki）"
 ---
 # Learning Wiki 主题分类体系
 
@@ -166,7 +166,7 @@ flowchart TD
 |------|------|----------|---------|
 | 1 | 08 底层系统 | [WSL学习计划](08-systems-infrastructure/wsl-learning-plan.md)、[WSL CLI与架构](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) | 掌握Windows/Linux互操作底层机制 |
 | 2 | 01 协议与接口 | [FFI外部函数接口](01-agent-protocols-interfaces/ffi-wiki/00-overview.md)、[IDL接口定义语言](01-agent-protocols-interfaces/idl-wiki/00-overview.md)、[TVM FFI](01-agent-protocols-interfaces/tvm-ffi-wiki/00-overview.md) | 理解跨语言调用与接口定义底层技术 |
-| 3 | 01 协议与接口 | [Agent Runtime Protocol](01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) | 深入生产级Agent运行时协议设计 |
+| 3 | 01 协议与接口 | [Agent Runtime Protocol](01-agent-protocols-interfaces/agent-runtime-protocol-wiki/README.md) | 深入生产级Agent运行时协议设计 |
 | 4 | 02 工程方法论 | [Headroom上下文压缩](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md)、[DSpark推理加速](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | 掌握Agent性能优化底层技术 |
 
 ---
@@ -222,7 +222,7 @@ flowchart TD
 |--------|---------|-----------|------|
 | Agent通信协议教程 | [agent-communication-protocols-wiki.md](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | MCP/ACP/A2A/ANP四层协议栈完整教程，含协议对比、交互流程、代码示例 | 原子化 |
 | Agent Interface深度解析 | [agent-interface-deep-dive/00-overview.md](01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.md) | 从Agent视角解析Interface/API/ABI/Protocol四层技术栈在MCP/ACP/A2A生态中的具体体现 | 原子化 |
-| Agent Runtime Protocol | [agent-runtime-protocol-wiki.md](01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md) | 生产级Agent运行时协议对象与八大维度解析，覆盖LangGraph/OpenAI Assistants/AutoGen/Claude SDK | 单文件 |
+| Agent Runtime Protocol | [agent-runtime-protocol-wiki/README.md](01-agent-protocols-interfaces/agent-runtime-protocol-wiki/README.md) | 生产级Agent运行时协议对象与八大维度解析，覆盖LangGraph/OpenAI Assistants/AutoGen/Claude SDK | 原子化 |
 | Agent Skills开放标准 | [agent-skills-open-standard-wiki.md](01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | agentskills.io开放标准完整指南，含目录结构、SKILL.md格式、渐进式披露、客户端集成 | 单文件 |
 | Agent Skills完整教程 | [agent-skills-wiki/00-overview.md](01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) | agentskills.io官方教程原子化拆解，含快速入门、最佳实践、描述优化、质量评估、脚本使用 | 原子化 |
 | 国内Skill/MCP生态盘点 | [domestic-skill-mcp-ecosystem-wiki.md](01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.md) | 16个国内品牌的Agent化浪潮盘点，覆盖微信/飞书/钉钉/支付等生态 | 单文件 |
@@ -345,6 +345,7 @@ flowchart TD
 | TRAE v3.3.74版本发布笔记 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) | TRAE IDE版本更新：Browser配置聚合页、Windows MSSDK接入 | 单文件 |
 | The Agency项目 | [the-agency-project-wiki.md](03-agent-platforms-tools/the-agency-project-wiki.md) | The Agency多Agent项目学习笔记 | 单文件 |
 | 七概念解析MonkeyCode开源Vibe Coding | [seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md](03-agent-platforms-tools/03-code-devtools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md) | 基于七概念方法论解析MonkeyCode开源私有化Vibe Coding平台，含知识框架、产品解析、部署指南、FAQ、资源链接、学习评估 | 原子化 |
+| CodeWhale 终端AI编程助手 | [codewhale-wiki/README.md](03-agent-platforms-tools/03-code-devtools/codewhale-wiki/README.md) | Rust终端AI编程助手完整教程，36个LLM提供商路由、Plan/Act/Operate三种运行模式、Fleet多智能体工作流与嵌套宪法 | 原子化 |
 
 ---
 
@@ -512,6 +513,12 @@ flowchart TD
 | 火山引擎ARK大模型平台 | [volcengine-ark-introduction-analysis-report.md](07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 火山引擎ARK大模型服务平台介绍分析 | 单文件 |
 | 火山引擎维京AI搜索推荐 | [viking-ai-search-rec-core-notes.md](07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 火山引擎维京AI搜索推荐产品核心笔记 | 单文件 |
 
+**完整Wiki清单（百度系列）**：
+
+| Wiki名 | 入口文件 | 一句话说明 | 类型 |
+|--------|---------|-----------|------|
+| 百度Unlimited-OCR | [baidu-ocr-wiki/README.md](07-vendor-product-learning/baidu/baidu-ocr-wiki/README.md) | 百度无限长文档OCR技术完整教程，含R-SWA参考侧滑动窗口注意力核心架构、性能数据、局限性风险、可迁移模式 | 原子化 |
+
 ---
 
 ### 08 底层系统与基础设施
@@ -607,15 +614,15 @@ flowchart TD
 | 00 | 本质与思维 | 2 | 2 | 0 |
 | 01 | Agent协议与接口技术栈 | 17 | 13 | 4 |
 | 02 | Agent工程方法论 | 25 | 15 | 10 |
-| 03 | Agent平台与工具生态 | 33 | 18 | 15 |
+| 03 | Agent平台与工具生态 | 34 | 19 | 15 |
 | 04 | 文档工具链与标记语言 | 10 | 8 | 2 |
 | 05 | AI多模态与内容生成 | 10 | 5 | 5 |
 | 06 | AI商业与趋势观察 | 14 | 11 | 3 |
 | 07 | 厂商产品学习系列 | 24 | 11 | 13 |
-| 08 | 底层系统与基础设施 | 10 | 9 | 1 |
+| 08 | 底层系统与基础设施 | 11 | 10 | 1 |
 | 09 | ML推理与部署 | 1 | 1 | 0 |
 | 10 | 通用基础知识 | 3 | 3 | 0 |
-| **合计** | | **150** | **99** | **51** |
+| **合计** | | **151** | **98** | **53** |
 
 > **注**：Wiki数量统计仅包含各主题入口文件（.md），原子化Wiki的子章节文件（如`00-overview.md`、`01-core-concepts.md`等）不计入统计。
 
