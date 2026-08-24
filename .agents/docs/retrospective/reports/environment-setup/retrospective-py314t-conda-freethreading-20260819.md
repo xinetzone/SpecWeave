@@ -34,7 +34,7 @@ category: "environment-setup"
 | py314t 环境（临时位→标准位） | `.temp/conda-envs/py314t` → `D:\Users\xinzo\anaconda3\envs\py314t` | 完成 |
 | 基准脚本（多线程数扫描） | `.temp/gil_nogil_scan.py` | 完成 |
 | 环境导出文件 | `.temp/environment.yml` | 完成（已去 prefix） |
-| 使用说明 | `.trae/specs/create-python314t-conda-env/USAGE.md` | 完成 |
+| 使用说明 | [python-314t-conda-env-usage](../../../knowledge/tech/python-314t-conda-env-usage.md) | 完成 |
 | 性能曲线图（归档） | [assets/gil-vs-nogil-curve.png](./retrospective-py314t-conda-freethreading-20260819-assets/gil-vs-nogil-curve.png) | 完成 |
 | 扫描数据（归档） | [assets/scan-nogil.json](./retrospective-py314t-conda-freethreading-20260819-assets/scan-nogil.json) / [scan-gil.json](./retrospective-py314t-conda-freethreading-20260819-assets/scan-gil.json) | 完成 |
 | 本复盘报告 | 本文件 | 完成 |
