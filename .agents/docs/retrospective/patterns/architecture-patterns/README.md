@@ -72,6 +72,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [android-single-activity-navigation.md](android-single-activity-navigation.md) | 单一 Activity + Navigation 组件多页面架构（Fragment + 导航图组织） | L1 实验性 | Android 多页面导航 |
 | [android-mvvm-livedata-fragment.md](android-mvvm-livedata-fragment.md) | MVVM + LiveData 标准分层（ViewModel 数据 + Fragment observe 订阅） | L1 实验性 | Android MVVM 架构 |
 | [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 零逻辑客户端桌面应用可冻结架构：GUI 零逻辑 + 后端单源托管 UI/API 无 CORS + 进程内线程服务器支持 PyInstaller 单文件冻结 | L1 实验性 | 把成熟 CLI/服务端工具链封装为可单文件分发的桌面 GUI 应用 |
+| [jupyter-extension-registration.md](jupyter-extension-registration.md) | Jupyter 扩展/插件注册三端对照：jupyter_server 包内钩子函数 vs fps 声明式 entry-point vs jupyterlab 前端插件，三层发现机制各司其职 | L1 实验性 | Jupyter 生态源码阅读、跨语言插件系统设计、扩展未加载排查 |
+| [jupyter-kernel-zmq-channels.md](jupyter-kernel-zmq-channels.md) | Jupyter 内核通信 ZMQ 多通道协议：shell/iopub/stdin/control/hb 五通道职责分离，通道类 trait 装配点可插拔，控制可抢占、心跳不阻塞 | L1 实验性 | Jupyter 内核/客户端协议阅读、交互式运行时设计、内核通信调试 |
 
 ## 成熟度定义
 

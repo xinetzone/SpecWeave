@@ -1,63 +1,76 @@
-# Code Wiki：AI 智能体开发规范体系
+---
+source:
+  - ../../../AGENTS.md
+  - ../../../README.md
+  - ../../context-routing.md
+  - ../../global-core-rules.md
+  - ../../scripts/README.md
+status: stable
+updated_at: 2026-08-23
+---
+
+# SpecWeave Code Wiki
 
 ## 文档定位
 
-本 Code Wiki 面向希望快速理解、维护或扩展本仓库的开发者与 AI 智能体，系统说明项目整体架构、主要模块职责、关键类与函数、依赖关系、运行与验证方式。
+这套 Code Wiki 面向希望理解、维护或扩展 `SpecWeave` 的开发者与智能体，重点回答 6 个问题：
 
-本仓库不是单一业务应用，而是由两类资产组成的复合型项目：
+1. 这个仓库到底是什么。
+2. 代码与规范分别放在哪里。
+3. 核心脚本与共享库如何协同。
+4. 子项目与 vendor 依赖如何接入主仓库。
+5. 常用运行、测试与构建入口是什么。
+6. 当前工作树和规范声明之间有哪些已知差异。
 
-1. **智能体开发规范体系**：以 `AGENTS.md` 为入口，以 `.agents/` 为规范容器，定义多智能体协作开发中的角色、协议、工作流、工具规范、治理规则与验证脚本。
-2. **提示词萃取系统**：位于 `apps/dev-tools/prompt_extraction/` 的 Python 子项目，提供从提示词文本或文件中抽取结构化特征、评估质量、生成优化结果和可视化展示的完整流水线。
+本仓库的核心不是单一业务应用，而是一个以 [AGENTS.md](../../../AGENTS.md#L1-L34) 为统一入口的多智能体工作区规范仓库，叠加若干 `apps/`、`projects/`、`vendor/` 子区域以及文档站、自动化脚本和 Spec 资产。
 
-## 文档目录
+## 文档清单
 
-| 文档 | 内容 |
+| 文档 | 说明 |
 |---|---|
-| [项目总览](project-overview.md) | 项目定位、目录结构、核心设计理念 |
-| [整体架构](architecture.md) | 入口路由架构、规范体系架构、提示词萃取流水线架构 |
-| [模块职责](modules.md) | `.agents/`、`docs/`、`.trae/specs/`、`apps/dev-tools/prompt_extraction/` 等主要模块职责 |
-| [关键类与函数](key-apis.md) | `PromptRecord`、`Pipeline`、解析、清洗、提取、评分、优化等关键 API |
-| [依赖关系](dependencies.md) | Python 依赖、模块依赖、文档资产依赖与治理脚本依赖 |
-| [运行与验证指南](runtime.md) | 环境准备、运行 Streamlit UI、执行测试、运行治理脚本 |
-| [调试指南](debugging.md) | 冲突解决模块日志配置、异常排查、负载校验诊断与常见问题 |
+| [overview.md](overview.md) | 仓库定位、顶层结构、设计目标与当前工作树快照 |
+| [architecture.md](architecture.md) | 路由架构、规范层与执行层、关键数据流与区域边界 |
+| [modules.md](modules.md) | 顶层目录、核心子系统、脚本包与子区域职责矩阵 |
+| [key-apis.md](key-apis.md) | 核心类、函数、CLI 入口与它们之间的调用关系 |
+| [dependencies.md](dependencies.md) | 语言栈、共享库依赖、子项目依赖与 submodule 关系 |
+| [runtime.md](runtime.md) | 仓库级、文档级、应用级、子项目级的运行与验证命令 |
+| [debugging.md](debugging.md) | 常见故障、工作树漂移、日志排查与调试入口 |
 
-## 快速理解路径
-
-如果你是首次接触该项目，建议按以下顺序阅读：
+## 推荐阅读顺序
 
 ```mermaid
 flowchart LR
-    A["项目总览"] --> B["整体架构"]
-    B --> C["模块职责"]
-    C --> D["关键类与函数"]
-    D --> E["依赖关系"]
-    E --> F["运行与验证指南"]
-    F --> G["调试指南"]
+    A["overview.md"] --> B["architecture.md"]
+    B --> C["modules.md"]
+    C --> D["key-apis.md"]
+    D --> E["dependencies.md"]
+    E --> F["runtime.md"]
+    F --> G["debugging.md"]
 ```
 
-## 核心结论
+## 关键结论
 
-- `AGENTS.md` 是全仓库智能体上下文路由入口，负责全局规则、角色索引、协议索引和任务路由。
-- `.agents/` 是机器可读规范容器，保存角色、提示词、工具规范、协议、工作流、模板、脚本、团队与环境管理规范。
-- `docs/` 是面向人类读者的文档、知识库和复盘资产集合。
-- `.trae/specs/` 保存 Spec-driven 开发过程中的规格、任务与检查清单。
-- `apps/dev-tools/prompt_extraction/` 是可执行 Python 子项目，核心采用流水线架构，以 `PromptRecord` 贯穿输入解析、文本清洗、特征提取、质量评估、优化生成和结果导出。
-- 项目验证分为两类：规范体系验证脚本与 Python 子项目测试套件。
+- 仓库的真实主入口是 [AGENTS.md](../../../AGENTS.md#L3-L32)，它定义启动协议、内容敏感度分流和四大顶层区域。
+- 核心实现重心在 [`.agents/`](../../README.md) 与 [`.agents/scripts/`](../../scripts/README.md#L8-L23)，其中前者保存规则与协议，后者保存自动化脚本与共享库。
+- `apps/`、`projects/`、`vendor/` 三个区域不是同一类资产：`apps/` 可直接修改，`projects/` 和 `vendor/` 以 git submodule 为主，边界由 [根 AGENTS.md](../../../AGENTS.md#L38-L47) 与 [`.gitmodules`](../../../.gitmodules#L1-L35) 共同定义。
+- `docs/` 是对外 Sphinx 文档站工程，[`docs/tasks.py`](../../../docs/tasks.py#L1-L128) 提供 HTML、linkcheck、doctest 等 invoke 任务。
+- 当前 `code-wiki` 目录之前的内容已经过时，曾指向当前工作树中不存在的 `prompt_extraction` 项目；本次重写以当前 checkout 为准，同时保留“规范声明”和“工作树实况”的区分。
 
-## 主要源码入口
+## 主要入口
 
-| 入口 | 说明 |
+| 入口 | 用途 |
 |---|---|
-| [`AGENTS.md`](../../../AGENTS.md) | 智能体全局契约与上下文路由入口 |
-| [`.agents/README.md`](../../README.md) | 智能体规范容器说明 |
-| [`README.md`](../../README.md) | 面向读者的项目主入口 |
-| [`apps/dev-tools/prompt_extraction/pipeline.py`](../../../apps/dev-tools/prompt_extraction/pipeline.py) | 提示词萃取系统流水线编排器 |
-| [`apps/dev-tools/prompt_extraction/models.py`](../../../apps/dev-tools/prompt_extraction/models.py) | 提示词萃取系统核心数据模型 |
-| [`apps/dev-tools/prompt_extraction/ui/app.py`](../../../apps/dev-tools/prompt_extraction/ui/app.py) | Streamlit 可视化主应用 |
-| [`.agents/scripts/README.md`](../../scripts/README.md) | 自动化验证脚本索引 |
+| [AGENTS.md](../../../AGENTS.md#L3-L32) | 启动协议、四大区域、核心规范入口 |
+| [README.md](../../../README.md#L70-L143) | 面向人类读者的项目定位与使用说明 |
+| [context-routing.md](../../context-routing.md#L21-L100) | 任务类型到规范入口的路由表 |
+| [global-core-rules.md](../../global-core-rules.md#L13-L33) | 文档边界、沟通语言、内容级别、三阶段原则 |
+| [apps/AGENTS.md](../../../apps/AGENTS.md#L37-L61) | 内置应用区路由与应用分组 |
+| [projects/AGENTS.md](../../../projects/AGENTS.md#L27-L33) | 第一方子项目路由 |
+| [vendor/AGENTS.md](../../../vendor/AGENTS.md#L27-L39) | 第三方与协作型依赖路由 |
+| [.agents/scripts/README.md](../../scripts/README.md#L8-L23) | 自动化脚本、共享库与脚本速查表 |
 
-## 维护建议
+## 维护约定
 
-- 当 `.agents/` 规范、`apps/dev-tools/prompt_extraction/` 源码或运行方式发生变化时，应同步更新本 Code Wiki。
-- 架构图、流程图和依赖图优先使用 Mermaid，便于版本化和审查。
-- 新增文档建议继续使用 kebab-case 文件名，并保持模块化、可导航的组织方式。
+- 当顶层结构、脚本入口、子模块清单或运行命令发生变化时，应同步更新本目录文档。
+- 文档中的“当前工作树”结论以当前 checkout 为准；若规范文件中的声明与工作树不一致，应在 [debugging.md](debugging.md) 中记录差异而不是默默覆盖。
+- 对源码入口的引用优先使用带行号的相对链接，便于后续审查与增量维护。
