@@ -31,7 +31,7 @@ category: "environment-setup"
 ### 1.3 交付物清单
 | 交付物 | 路径 | 状态 |
 |--------|------|------|
-| py314t 环境（临时位→标准位） | `.temp/conda-envs/py314t` → `D:\Users\xinzo\anaconda3\envs\py314t` | 完成 |
+| py314t 环境（临时位→标准位） | `.temp/conda-envs/py314t` → `<USER_HOME>\anaconda3\envs\py314t` | 完成 |
 | 基准脚本（多线程数扫描） | `.temp/gil_nogil_scan.py` | 完成 |
 | 环境导出文件 | `.temp/environment.yml` | 完成（已去 prefix） |
 | 使用说明 | [python-314t-conda-env-usage](../../../knowledge/tech/python-314t-conda-env-usage.md) | 完成 |
