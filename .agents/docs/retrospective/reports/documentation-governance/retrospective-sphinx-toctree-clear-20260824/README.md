@@ -1,7 +1,7 @@
 ---
 type: Retrospective
 title: awesome-okf-xs Sphinx toctree 警告清零里程碑复盘（2026-08-24）
-description: 基于 seven-concepts 编排（R→I→E→C），对 awesome-okf-xs 文档构建中 4888 个 toc.not_included 警告的根因分析、自动化修复脚本开发、867 文件变更与 2 个原子提交的完整复盘；2026-08-24 跟进推进 A-2——「toctree 与目录文件清单一致性校验」并入 check-toctrees.py 门禁
+description: 基于 seven-concepts 编排（R→I→E→C），对 awesome-okf-xs 文档构建中 4888 个 toc.not_included 警告的根因分析、自动化修复脚本开发、867 文件变更与 2 个原子提交的完整复盘；2026-08-24 跟进推进 A-2（一致性校验并入门禁）与 A-1（bundle 根 index.md 治理强化并入门禁）
 tags: [retrospective, sphinx, toctree, myst-parser, okf, awesome-okf-xs, milestone]
 generated: { by: "process:seven-concepts", at: "2026-08-24" }
 verified: { by: "process:seven-concepts", at: "2026-08-24" }
@@ -14,6 +14,8 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 > 场景：里程碑复盘。链路：R（事实）→ I（洞察）→ E（萃取）→ C（原子提交）。
 > 产出物关联：`.temp/fix_toctrees.py`（自动化脚本）、867 文件变更、2 个原子提交（`e661cd1` / `afc989b`）、本报告。
 > **2026-08-24 跟进（A-2 推进）**：将「toctree 与目录文件清单一致性校验」并入既有 CI 门禁 `scripts/check-toctrees.py`——新增 `check_consistency` 一致性检查与 `consistency` 自检拦截用例，真实树零缺失条目。
+>
+> **2026-08-24 跟进（A-1 推进）**：将「bundle 根 index.md 治理强化」机器化入门禁——新增 `check_bundle_root_index` 检查（doc/bundles 下含子目录却缺 index.md 的目录报「缺失 index.md」）与 `missingbundle` 自检拦截用例；规范侧在 `.agents/global-core-rules.md` §3 与 `okf-spec/concepts/bundle-structure.md` 明确此为本项目 MUST（OKF 标准为 MAY）。真实树零缺失，2 个原子提交（`ebb9276` / `d1f6f9c`）。
 
 ## 1. R 事实采集（G1 通过：无因果词、可溯源）
 
@@ -34,6 +36,9 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 | R-13 | `scripts/check-toctrees.py` 为既有 CI 门禁（提交 `a4056b8`，接入 `.github/workflows/pages.yml`），但仅含断链 + 全局可达性两类检查，无「目录文件清单一致性」 | 脚本阅读 / git log |
 | R-14 | A-2 向 `check-toctrees.py` 新增 `expected_entries`/`_to_docname`/`check_consistency`：对每个含 toctree 的 index.md 比对目录内容清单（子目录 index 与直接 .md 文件） | 脚本 diff |
 | R-15 | 一致性检查在真实树运行零缺失条目（867 文件修复后目录清单已一致）；`--self-test` 5 用例全部通过，其中 `consistency` 用例唯一覆盖「文件经其他路径可达但其所在目录 toctree 未收录」的盲区 | 脚本执行 |
+| R-16 | A-1 运行 `python scripts/check-toctrees.py` 退出码 0；扫描 doc/bundles 下「含子目录却缺 index.md」目录数 = 0（现行树已满足 MUST，门禁缺的是机器可探测约束，无既有破坏需修复） | 脚本执行 |
+| R-17 | A-1 向 `check-toctrees.py` 新增 `check_bundle_root_index`：对 doc/bundles 下「含非隐藏子目录却缺 index.md」的目录报「缺失 index.md」，粒度限定 bundle 根，对「含 .md 无子目录」的叶目录不强制；并新增 `missingbundle` 自检拦截用例 | 脚本 diff |
+| R-18 | A-1 规范侧双落地：`.agents/global-core-rules.md` §3 与 `okf-spec/concepts/bundle-structure.md` 明确「含子目录的 bundle 根必须生成 index.md」为本项目 MUST（OKF 标准中 index.md 为 MAY）；`--self-test` 升至 6 用例全部通过 | 文件阅读 / 脚本执行 |
 
 ## 2. I 洞察（G2 通过：四元组完整）
 
@@ -71,7 +76,7 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 
 | # | 行动项 | 优先级 | 状态 | 验收标准 |
 |---|--------|:--:|:--:|----------|
-| A-1 | OKF bundle 生成规范纳入"必须生成 index.md 并带 toctree"约束 | 高 | 🔲 待推进 | bundle 目录扫描零缺失 index.md |
+| A-1 | OKF bundle 生成规范纳入"必须生成 index.md 并带 toctree"约束 | 高 | ✅ 已完成（2026-08-24） | bundle 目录扫描零缺失 index.md——`check_bundle_root_index` 并入 `check-toctrees.py` 门禁，真实树零缺失、自检升 6 用例通过；规范侧于 `global-core-rules.md` §3 与 `okf-spec`（bundle-structure.md）双落地 |
 | A-2 | 新增 toctree 与目录文件清单一致性校验脚本 | 中 | ✅ 已完成（2026-08-24） | 已有 toctree 文件无缺失条目告警——`check_consistency` 并入 `check-toctrees.py`，真实树零缺失条目、自检 5 用例通过 |
 | A-3 | 将目录树完整性修复工作流沉淀为可复用模式 | 中 | ✅ 已完成（2026-08-24） | pattern 入库并登记索引——`okf-bundle-toctree-repair-workflow`（process-patterns）+ `toctree-dynamic-verification`（tools-automation）两个 L1 模式已入库，索引与交叉引用已更新 |
 | A-4 | 修复剩余 6406 个非 TOC 警告（myst.header / myst.topmatter） | 低 | 🔲 待推进 | 内容格式警告分类归零 |
@@ -81,4 +86,5 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 - 修改文件数与 git `867 files changed, 9209 insertions` 一致（R-2/R-10 三查通过）
 - 警告数 4888 → 0 与 dummy 构建日志 `.temp/build-dummy.log` 一致
 - A-2 一致性检查：`python scripts/check-toctrees.py` 在真实树零缺失条目；`--self-test` 5 用例通过（R-15 三查通过）
+- A-1 bundle 根 index 检查：`python scripts/check-toctrees.py` 退出码 0；`--self-test` 升 6 用例全部通过（含新增 `missingbundle` 拦截用例）（R-16/R-17/R-18 三查通过）
 - 报告引用路径均为相对路径，无 `file:///` 绝对路径
