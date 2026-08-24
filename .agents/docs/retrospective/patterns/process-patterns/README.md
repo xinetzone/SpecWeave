@@ -25,6 +25,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [external-url-dead-bucket-fix-sop.md](external-url-dead-bucket-fix-sop.md) | 外部URL死链分桶治理SOP（P-Link-ExtBucket-v1）：去超时噪声→按二级域分桶→A桶URL迁移纠正/B桶内联失效注记/C桶白名单保留→清缓存复检，统计口径必须三列拆分 | L1 实验性 | 外链硬错误≥10条、3+域名各≥2条、BibTeX文献管理、博客友链页死链清理 |
 | [monorepo-ci-blindspot-detection.md](monorepo-ci-blindspot-detection.md) | Monorepo子项目CI盲区检测五步法：审计根testpaths→审计子项目配置→collect-only计数对比→检查构建命令→选择修复方案，解决主CI绿灯但子项目测试从未执行的陷阱 | L1 候选 | pytest/pnpm/cargo/gradle等任意Monorepo项目、子项目/子模块CI覆盖审计、新增子项目后的CI验证、CI配置重构验证 |
 | [pdf-book-to-okf-wiki.md](pdf-book-to-okf-wiki.md) | PDF书籍→OKF-MyST Wiki四阶段工作流：环境准备→结构探查→工具降级链→清洗转换→确定性校验→Sphinx构建验证，含三层忠实边界与已知边界 | L1 实验性 | 纯文本排版书籍/论文PDF→OKF规范Markdown知识库→Sphinx+MyST+mystx静态Wiki |
+| [okf-bundle-toctree-repair-workflow.md](okf-bundle-toctree-repair-workflow.md) | OKF bundle 目录树完整性修复工作流：全量扫描三类问题（缺index.md/缺toctree/缺条目）→建索引/追加/补充分类处理→精确追加定位闭合→dry-run验证→git兜底回滚，修复toc.not_included警告 | L1 实验性 | Sphinx/MyST知识库出现大量toc.not_included警告、OKF bundle目录树不完整、任意目录树驱动内容组织批量补导航 |
 
 ## 成熟度定义
 

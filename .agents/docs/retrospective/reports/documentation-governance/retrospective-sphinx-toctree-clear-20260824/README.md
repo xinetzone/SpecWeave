@@ -73,7 +73,7 @@ source: "projects/awesome-okf-xs 文档构建 toc.not_included 警告清零任�
 |---|--------|:--:|:--:|----------|
 | A-1 | OKF bundle 生成规范纳入"必须生成 index.md 并带 toctree"约束 | 高 | 🔲 待推进 | bundle 目录扫描零缺失 index.md |
 | A-2 | 新增 toctree 与目录文件清单一致性校验脚本 | 中 | ✅ 已完成（2026-08-24） | 已有 toctree 文件无缺失条目告警——`check_consistency` 并入 `check-toctrees.py`，真实树零缺失条目、自检 5 用例通过 |
-| A-3 | 将目录树完整性修复工作流沉淀为可复用模式 | 中 | 🔲 待推进 | pattern 入库并登记索引 |
+| A-3 | 将目录树完整性修复工作流沉淀为可复用模式 | 中 | ✅ 已完成（2026-08-24） | pattern 入库并登记索引——`okf-bundle-toctree-repair-workflow`（process-patterns）+ `toctree-dynamic-verification`（tools-automation）两个 L1 模式已入库，索引与交叉引用已更新 |
 | A-4 | 修复剩余 6406 个非 TOC 警告（myst.header / myst.topmatter） | 低 | 🔲 待推进 | 内容格式警告分类归零 |
 
 ## 6. 数据验证

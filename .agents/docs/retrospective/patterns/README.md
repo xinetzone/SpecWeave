@@ -154,6 +154,7 @@ skills = []
 > - Docker模板升级+验证闭环方法论编排复盘（2个代码模式+1个流程模式+1个方法论模式入库）：code-patterns/`dockerfile-python-code-safe-embedding`（L2，Dockerfile中Python代码安全嵌入三方案）、process-patterns/`container-verify-script-permission-model`（L2，容器验证脚本权限安全模型含mkdtemp+显式chmod）、methodology-patterns/governance-strategy/`template-placeholder-granularity-design`（L2，模板占位符粒度设计三类型+命名规范）；skeleton模板升级6项：USER root、双sed源替换、UID/GID冲突处理、chown conda bin、chmod 2775、三个新占位符
 > - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
 > - caffe-ffi CMake原子化重构里程碑复盘（2个L1代码模式入库）：code-patterns/`editable-install-stale-so`（L1，editable安装stale .so处理：重编译后对比build/与源码树路径的.so符号并显式复制刷新，含protobuf descriptor重复注册反模式）；code-patterns/`cxx-build-regression-verification`（L1，C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功）
+> - awesome-okf-xs Sphinx toctree 警告清零里程碑复盘（2个L1模式入库）：process-patterns/`okf-bundle-toctree-repair-workflow`（L1，OKF bundle目录树完整性修复工作流：三类问题分类→建索引/追加/补充→精确追加定位闭合→dry-run→git兜底，4888警告清零867文件变更）；methodology-patterns/tools-automation/`toctree-dynamic-verification`（L1，toctree动态验证法：BFS可达性+单目录清单一致性+选项行/示例过滤+自检用例，演进为CI门禁check-toctrees.py）
 
 ## 使用方式
 
