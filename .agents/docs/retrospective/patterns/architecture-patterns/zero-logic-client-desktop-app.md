@@ -10,6 +10,7 @@ related_patterns:
   - "tool-skill-separation"
   - "three-layer-capability-openness"
   - "zero-update-client-design"
+  - "hardware-minimal-software-complex"
 ---
 > **提炼自**：okf-desktop 桌面客户端学习复盘 —— 把成熟 CLI/服务端工具链封装为可单文件打包的桌面 GUI 应用
 
@@ -174,3 +175,4 @@ okf-desktop 在三个支柱之上的可冻结工程化细节：
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 互补 | GUI→CLI→API 三层能力开放中，本模式解决 GUI 层如何薄化接入后端 |
 | [zero-update-client-design.md](zero-update-client-design.md) | 思想同源 | "能力在服务端实现、客户端零逻辑"与"控制端实现、被控端零更新"思想一致 |
 | [io-boundary-pure-function-core.md](io-boundary-pure-function-core.md) | 关联 | 后端"纯函数核心 + IO 边界"可进一步强化单一事实源的可测性 |
+| [hardware-minimal-software-complex.md](../methodology-patterns/product-growth/hardware-minimal-software-complex.md) | 同族（零负担家族·逻辑维度） | 本模式让 GUI 前端"零逻辑"、硬件极简让硬件"零负担"，都是把复杂度上移到可迭代侧，让受限侧保持零负担 |

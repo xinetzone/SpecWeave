@@ -10,6 +10,7 @@ related_patterns:
   - "local-capability-guarantee"
   - "configurable-by-default-principle"
   - "tool-skill-separation"
+  - "hardware-minimal-software-complex"
 tags:
   - zero-config
   - graceful-degradation
@@ -178,6 +179,7 @@ okf-kit（OKF 的 Python 实现，v0.3.3）的源码研读确认了"零 Key 优�
 | [local-capability-guarantee.md](../methodology-patterns/product-growth/local-capability-guarantee.md) | 姊妹模式（正交维度） | 该模式处理"断网/离线"维度（核心离线可用），本模式处理"零凭据/零配置"维度（核心无前置依赖可用）；两者同属"核心 vs 增强"分层思想，可结合使用（核心功能既离线又零凭据） |
 | [configurable-by-default-principle.md](../code-patterns/configurable-by-default-principle.md) | 相关（前置依赖更进一步） | 该模式处理"配置值有合理默认"，本模式更进一步——核心功能连"配置"动作都不需要；增强能力降级时可复用其"默认值"设计 |
 | [tool-skill-separation.md](tool-skill-separation.md) | 同族不同维度 | 该模式按"变化频率"分离能力层与知识层，本模式按"前置依赖"分离核心层与增强层，两者正交互补 |
+| [hardware-minimal-software-complex.md](../methodology-patterns/product-growth/hardware-minimal-software-complex.md) | 同族（零负担家族·配置维度） | 硬件极简让硬件"零负担"、本模式让核心功能"零配置"，都是把复杂度/门槛迁移到可迭代侧或增强层，让受限侧零负担 |
 
 ---
 
