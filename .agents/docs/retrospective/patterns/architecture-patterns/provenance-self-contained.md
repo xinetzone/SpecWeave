@@ -1,7 +1,7 @@
 ---
 id: "provenance-self-contained"
 title: "溯源自包含：知识包脱离宿主仓库的可移植分发"
-source: "../../../reports/milestone/okf-spec-bundle-review-fix-retrospective-20260821.md"
+source: "../../../reports/project-governance/okf-spec-bundle-review-fix-retrospective-20260821.md"
 maturity: "L1-draft"
 validation_count: 1
 reuse_count: 0

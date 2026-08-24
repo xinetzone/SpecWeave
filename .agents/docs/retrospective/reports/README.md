@@ -9,7 +9,7 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/reports/README.to
 
 ## 一、分类标准
 
-复盘报告按内容主题划分为 11 个一级分类，各分类的定义与边界如下：
+复盘报告按内容主题划分为 20 个一级分类，各分类的定义与边界如下：
 
 | 分类目录 | 主题 | 定义与边界 |
 |---|---|---|
@@ -25,6 +25,14 @@ x-toml-ref: "../../../../.meta/toml/.agents/docs/retrospective/reports/README.to
 | `project-reports/` | 项目级独立报告 | 以单文件 Markdown 形式交付的完整复盘报告（非原子化子目录结构），以及独立的项目结项复盘、规范度量批量报告。关注"简洁交付的项目级总结"。 |
 | `task-reports/` | 任务执行复盘 | 单任务执行过程的完整复盘报告，包含Spec Mode流程回顾、问题处理、经验沉淀。关注"单次任务执行的全过程复盘与可复用模式提取"。 |
 | `iteration-reports/` | 迭代复盘 | 迭代/阶段级别的完整复盘报告，包含 Spec 模式七阶段工作流、系统性验证、PARTIAL 修复闭环。关注"迭代/阶段交付的全过程复盘与质量保障机制验证"。 |
+| `documentation-governance/` | 文档治理 | Sphinx/MyST 文档工程治理、toctree 目录树完整性、index.md 结构规范、文档构建警告治理、invocations 构建封装。关注"文档体系的导航结构与构建质量保障"的工程实践。 |
+| `adversarial-reviews/` | 对抗审查 | 对抗性评审产出（魔鬼代言人/新人/老板/未来四视角攻击记录），对方案、报告与决策的多视角证伪加固。关注"通过对抗审查暴露方案盲区与隐含假设"的验证实践。 |
+| `bug-fix/` | 故障修复 | 具体故障/缺陷的根因分析与修复复盘，含工具增强、Docker 构建修复、PyTorch 集成等。关注"Bug 定位→修复→预防→闭环"的问题处置实践。 |
+| `bugfix/` | 修复类复盘 | 修复类复盘报告（CI 质量门、Docker entrypoint、TVM/LLVM 符号可见性、VTA 硬编码等）。与 `bug-fix/` 同属修复域，历史命名差异保留。 |
+| `build-engineering/` | 构建工程 | Docker/DevContainer 镜像构建、conda 环境、Nuitka 编译、CMake 工程、发布流水线、构建性能优化。关注"构建/打包/发布环节的工程实践与质量保障"。 |
+| `code-optimization/` | 代码优化 | 算子优化、性能调优、FFI 边界重构、内存零拷贝、精度修正、代码库提取。关注"运行时性能与代码质量的双重优化实践"。 |
+| `environment-setup/` | 环境搭建 | WSL/Docker/GPU 环境配置、系统级环境迁移、桌面/系统设置修复、conda free-threading 环境。关注"开发环境与系统环境的搭建与排障"。 |
+| `feature-development/` | 功能开发 | 新功能开发完整复盘（如 CaffeProto L2Norm 算子、Skill 自动加载器）。关注"从需求到交付的功能开发全流程"。 |
 
 ## 二、报告清单
 
@@ -339,13 +347,166 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 |---|---|
 | `myst-to-agentspec-migration-analysis/` | MyST Directives/Roles系统在Agent Spec开发中的可迁移性技术评估（v1.2.0），66份存量文档统计分析、解析器代码审计、六维技术支持评估（MDI/API/ABI/MCP/ACP/A2A）、LLM×Sphinx生态融合7个创新场景、MyST-NB可执行文档专题、保守/平衡/激进三方案对比，12章原子化交付 |
 
+### documentation-governance/（3 份）
+
+文档治理目录，存放 Sphinx/MyST 文档工程治理、toctree 目录树完整性、index.md 结构规范相关的复盘与洞察报告。
+
+| 报告名称（目录/文件） | 简要说明 |
+|---|---|
+| `retrospective-sphinx-toctree-clear-20260824/` | awesome-okf-xs Sphinx toctree 警告清零里程碑复盘：4888 个 toc.not_included 警告根因分析、自动化修复脚本开发、867 文件变更与 2 个原子提交，萃取 OKF bundle 目录树完整性修复工作流与 toctree 动态验证法 |
+| `retrospective-invocations-bundle-okf-update-20260824/` | invocations bundle OKF 更新复盘：invocations Collection 封装 Sphinx 构建、任务入口统一与参数收敛、CI/本地命令一致性 |
+| `insight-index-structure-duality-20260824.md` | **index.md 两种结构洞察报告**：okf-spec 风格（层级路由）vs trae-skills 风格（扁平索引）的本质差异、判别框架与反模式，R→I→E→V 四阶段分析 |
+
+### iteration-reports/（2 份）
+
+迭代复盘目录，存放迭代/阶段级别的完整复盘报告（Spec 模式七阶段工作流、系统性验证、PARTIAL 修复闭环）。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-config-file-placement-governance-20260718/` | 配置文件放置治理迭代复盘：配置文件组织规范的制定与实施闭环 |
+| `weekly-2026-07-20/` | 2026-07-20 周迭代复盘 |
+
+### adversarial-reviews/（29 份）
+
+对抗审查目录，存放对抗性评审产出（魔鬼代言人/新人/老板/未来四视角攻击记录），对方案、报告与决策的多视角证伪加固。
+
+| 报告名称 | 简要说明 |
+|---|---|
+| `adversarial-review-20260713T*.md`（5 份） | 2026-07-13 对抗性评审记录：方案/报告的魔鬼代言人与多视角证伪攻击 |
+| `adversarial-review-20260718T*.md`（3 份） | 2026-07-18 对抗性评审记录 |
+| `adversarial-review-20260719T*.md`（6 份） | 2026-07-19 对抗性评审记录 |
+| `adversarial-review-20260729T*.md`（3 份） | 2026-07-29 对抗性评审记录 |
+| `adversarial-review-20260810T*.md`（1 份） | 2026-08-10 对抗性评审记录 |
+| `adversarial-review-20260814T*.md`（8 份） | 2026-08-14 对抗性评审记录 |
+| `adversarial-review-20260819T*.md`（3 份） | 2026-08-19 对抗性评审记录 |
+
+### bug-fix/（7 项）
+
+故障修复目录，存放具体故障/缺陷的根因分析与修复复盘（工具增强、Docker 构建修复、PyTorch 集成、COW 语义修复等）。
+
+| 报告名称（目录/文件） | 简要说明 |
+|---|---|
+| `cow-blob-cow-semantics-fix-20260801.md`（+ charts html） | COW blob 写时复制语义修复复盘：OverlayFS Copy-on-Write 语义纠正与镜像体积优化 |
+| `docker-build/`（5 个子报告） | Docker 构建修复合集：caffe docker 运行时、caffe ops 正确性测试、conda 构建修复、xmnn Nuitka docker 运行时、xmnn wheel 打包数据目录 |
+| `retrospective-xmnn-pytorch-integration-20260723/` | XMNN PyTorch 集成复盘：PyTorch 集成方案设计与落地 |
+
+### bugfix/（5 份）
+
+修复类复盘目录，存放 CI 质量门、Docker entrypoint、TVM/LLVM 符号可见性、VTA 硬编码等修复类复盘。与 `bug-fix/` 同属修复域，历史命名差异保留。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-ci-quality-gates-path-migration-20260718/` | CI 质量门路径迁移修复复盘 |
+| `retrospective-docker-commit-entrypoint-fix-20260718/` | Docker commit/entrypoint 修复复盘 |
+| `retrospective-tvm-llvm-weak-symbol-leak-fix-20260721/` | TVM/LLVM 弱符号泄漏修复复盘 |
+| `retrospective-tvm-symbol-visibility-fix-20260718/` | TVM 符号可见性修复复盘 |
+| `retrospective-vta-hw-path-hardcode-fix-20260717/` | VTA 硬件路径硬编码修复复盘 |
+
+### build-engineering/（29 份原子化 + 8 份独立报告）
+
+构建工程目录，存放 Docker/DevContainer 镜像构建、conda 环境、Nuitka 编译、CMake 工程、发布流水线、构建性能优化等复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `retrospective-agents-atomization-seven-docker-projects-20260807/` | 七个 Docker 项目原子化构建复盘 |
+| `retrospective-ai-dev-variant-bugfix-logging-20260813/` | AI dev 变体镜像日志修复复盘 |
+| `retrospective-caffe-ffi-jupyter-dev-docker-20260729/` | caffe-ffi Jupyter dev docker 构建复盘 |
+| `retrospective-caffe-ffi-logging-python-wrapper-20260728/` | caffe-ffi logging python wrapper 复盘 |
+| `retrospective-caffe-ffi-protobuf7-build-20260728/` | caffe-ffi protobuf7 构建复盘 |
+| `retrospective-caffe-ffi-tests-enable-20260801/` | caffe-ffi 测试启用构建复盘 |
+| `retrospective-caffe-ffi-wsl-tooling-20260729/` | caffe-ffi WSL 工具链构建复盘 |
+| `retrospective-caffe-jupyter-docker-build-export-20260727/` | caffe Jupyter docker 构建导出复盘 |
+| `retrospective-caffe-standalone-caffex-removal-20260727/` | caffe standalone caffex 移除复盘 |
+| `retrospective-chaos-ai-portable-docker-20260811/` | chaos AI 便携 docker 镜像复盘 |
+| `retrospective-chaos-ai-portable-slim-20260811/` | chaos AI 便携 slim 镜像复盘 |
+| `retrospective-cmake-atomization-caffe-ffi-round2-20260729/` | caffe-ffi CMake 原子化第二轮复盘 |
+| `retrospective-devcontainer-agents-atomization-verify-20260807/` | DevContainer agents 原子化验证复盘 |
+| `retrospective-devcontainer-base-seven-concepts-20260807/` | DevContainer 基础镜像七概念构建复盘 |
+| `retrospective-devcontainer-base-seven-concepts-v2-20260819/` | DevContainer 基础镜像七概念 v2 构建复盘 |
+| `retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814/` | DevContainer conda libmamba free-threading v2.1 复盘 |
+| `retrospective-devcontainer-slim-images-20260819/` | DevContainer slim 镜像瘦身复盘 |
+| `retrospective-devcontainer-v221-conda-perf-20260814/` | DevContainer v2.2.1 conda 性能复盘 |
+| `retrospective-jupyter-ssh-base-seven-concepts-20260807/` | Jupyter SSH 基础镜像七概念构建复盘 |
+| `retrospective-llama-cpp-python-cuda-build-20260820/` | llama-cpp-python CUDA 构建复盘 |
+| `retrospective-nativebuild-automation-20260802/` | 原生构建自动化复盘 |
+| `retrospective-pycaffe-full-build-scripts-20260727/` | pycaffe 完整构建脚本复盘 |
+| `retrospective-standalone-finalize-docker-save-20260727/` | standalone 收尾 docker save 复盘 |
+| `retrospective-xmnn-docker-gpu-variant-20260727/` | xmnn docker GPU 变体镜像复盘 |
+| `retrospective-xmnn-docker-timezone-20260727/` | xmnn docker 时区配置复盘 |
+| `retrospective-xmnn-four-layer-release-pipeline-20260810/` | xmnn 四层发布流水线复盘 |
+| `retrospective-xmnn-pyproject-deps-audit-20260727/` | xmnn pyproject 依赖审计复盘 |
+| `retrospective-xmnn-runtime-docker-optional-pytorch-20260727/` | xmnn runtime docker 可选 PyTorch 复盘 |
+| `retrospective-xmnn-wheel-scikit-build-nuitka-20260726/` | xmnn wheel scikit-build-nuitka 打包复盘 |
+
+| 独立报告（单文件） | 简要说明 |
+|---|---|
+| `docker-build-verification-caffe-ffi-20260801.md` | caffe-ffi docker 构建验证 |
+| `insight-jupyter-kernel-expose-host-ide-20260814.md` | Jupyter kernel 暴露宿主 IDE 洞察 |
+| `insight-onnx-quantization-benchmark-analysis-20260808.md` | ONNX 量化基准分析洞察 |
+| `insight-palmdet-compile-failure-20260812.md` | PalmDet 编译失败洞察 |
+| `retrospective-docker-buildkit-observability-20260807.md` | Docker BuildKit 可观测性复盘 |
+| `retrospective-onnx-quantize-kit-test-coverage-20260816.md` | ONNX 量化套件测试覆盖复盘 |
+| `summary-palmdet-compile-fix-20260812.md` | PalmDet 编译修复摘要 |
+| `troubleshooting-devcontainer-jupyter-gil-20260819.md` | DevContainer Jupyter GIL 排障 |
+
+### code-optimization/（22 份）
+
+代码优化目录，存放算子优化、性能调优、FFI 边界重构、内存零拷贝、精度修正、代码库提取等复盘。
+
+| 报告名称（原子化目录） | 简要说明 |
+|---|---|
+| `report-batch-hardening-float-precision-20260802/` | 批处理加固浮点精度报告 |
+| `report-c1-kink-protection-rollout-20260802/` | C1 kink 防护推广报告 |
+| `report-pooling-backward-gradient-routing-20260803/` | pooling 反向梯度路由报告 |
+| `retrospective-blob-shape-tvm-ffi-refactor-20260727/` | blob shape TVM FFI 重构复盘 |
+| `retrospective-caffe-ffi-cpp-py-boundary-fix-20260801/` | caffe-ffi C++/Python 边界修复复盘 |
+| `retrospective-caffe-ffi-deconv-neuron-zerocopy-20260801/` | caffe-ffi deconv neuron 零拷贝复盘 |
+| `retrospective-caffe-ffi-p3b-test-milestone-20260731/` | caffe-ffi P3B 测试里程碑复盘 |
+| `retrospective-caffe-ffi-p3c-activation-logging-20260731/` | caffe-ffi P3C 激活日志复盘 |
+| `retrospective-caffe-ffi-viz-insert-splits-20260801/` | caffe-ffi 可视化插入 splits 复盘 |
+| `retrospective-caffe-ffi-win32-dll-assert-helper-module-20260801/` | caffe-ffi win32 DLL assert helper 模块复盘 |
+| `retrospective-caffe-ops-library-extraction-20260727/` | caffe ops 代码库提取复盘 |
+| `retrospective-caffe-rmsnorm-transpose-removal-20260721/` | caffe RMSNorm transpose 消除复盘 |
+| `retrospective-caffe-slim-batch-inference-mnist-20260727/` | caffe-slim MNIST 批量推理复盘 |
+| `retrospective-caffe-slim-bvlc-compat-20260727/` | caffe-slim BVLC 兼容性复盘 |
+| `retrospective-caffe-slim-bvlc-logging-20260727/` | caffe-slim BVLC 日志复盘 |
+| `retrospective-caffe-slim-inference-notebook-20260727/` | caffe-slim 推理 notebook 复盘 |
+| `retrospective-caffe-slim-tvm-ffi-20260723/` | caffe-slim TVM FFI 复盘 |
+| `retrospective-demo-ffi-math-ops-boundary-perf-20260728/` | demo FFI math ops 边界性能复盘 |
+| `retrospective-float-precision-elu-kink-20260802/` | 浮点精度 ELU kink 修复复盘 |
+| `retrospective-pycaffe-image-preprocessing-20260723/` | pycaffe 图像预处理复盘 |
+| `retrospective-split-zerocopy-cow-milestone-20260731/` | split 零拷贝 COW 里程碑复盘 |
+| `retrospective-task11-cow-fix-20260801/` | task11 COW 修复复盘 |
+
+### environment-setup/（4 份原子化 + 1 份独立报告 + 1 资产目录）
+
+环境搭建目录，存放 WSL/Docker/GPU 环境配置、系统级环境迁移、桌面/系统设置修复、conda free-threading 环境等复盘。
+
+| 报告名称（目录/文件） | 简要说明 |
+|---|---|
+| `retrospective-docker-cache-to-wsl-migration-20260818/` | Docker 镜像缓存迁移 WSL 复盘 |
+| `retrospective-windows-desktop-icons-missing-20260819/` | Windows 桌面图标缺失修复复盘 |
+| `retrospective-wsl-docker-gpu-fix-20260815/` | WSL Docker GPU 修复复盘 |
+| `retrospective-wsl-ubuntu2604-install-migration-20260722/` | WSL Ubuntu 26.04 安装迁移复盘 |
+| `retrospective-py314t-conda-freethreading-20260819.md` | Python 3.14t conda free-threading 环境复盘 |
+| `retrospective-py314t-conda-freethreading-20260819-assets/` | free-threading 环境搭建资产目录（scan-gil.json 等） |
+
+### feature-development/（2 份）
+
+功能开发目录，存放新功能开发完整复盘（从需求到交付的全流程）。
+
+| 报告名称 | 简要说明 |
+|---|---|
+| `retrospective-caffeproto-l2norm-20260721.md` | CaffeProto L2Norm 算子功能开发复盘 |
+| `retrospective-skill-auto-loader-20260807.md` | Skill 自动加载器功能开发复盘 |
+
 ## 三、文件组织规则
 
 `docs/retrospective/reports/` 目录下的文件组织遵循以下规则：
 
 ### 3.1 主题子文件夹
 
-11 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主；`incident-reports/` 聚焦事件型目录复盘。
+20 个主题子文件夹分别存放对应主题的复盘报告。各文件夹内以原子化子目录为主；`insight-extraction/` 下额外包含 `standalone/` 子目录存放独立洞察卡片（单文件形式，不属于特定原子化报告）；`project-reports/` 以独立单文件报告为主；`incident-reports/` 聚焦事件型目录复盘。
 
 ### 3.2 四文件标准结构
 
@@ -400,7 +561,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 
 **禁止在 `reports/` 根目录下直接放置报告目录或独立 `.md` 文件。** 所有新增报告必须遵循以下流程：
 
-1. **判定归属分类**：根据报告主题，对照「一、分类标准」表格确定应归入的一级分类目录。若现有 11 个分类均无法覆盖，应先讨论是否新增分类，而非直接放入根目录。
+1. **判定归属分类**：根据报告主题，对照「一、分类标准」表格确定应归入的一级分类目录。若现有 20 个分类均无法覆盖，应先讨论是否新增分类，而非直接放入根目录。
 2. **放入对应子目录**：将报告目录放入对应的分类子目录下（如 `project-governance/xxx/`、`competitive-analysis/xxx/`）。
 3. **更新索引**：在本文档中同步更新以下三处：分类报告清单（第二节）、按日期查找表（四.1）、按关键词查找表（四.2）。若报告类型在四.3 中无对应条目，一并补充。
 4. **运行验证**：执行 `.agents/scripts/check-report-categorization.py` 确认无未归类报告。
@@ -552,6 +713,60 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-08-12 | `retrospective-xmnn-container-health-fix-20260812.md` | task-reports |
 | 2026-08-19 | `retrospective-chaos-epub-books-classification-20260819.md` | task-reports |
 | 2026-08-22 | `retrospective-jupyter-okf-wiki-group-20260822/` | competitive-analysis |
+| 2026-08-24 | `insight-index-structure-duality-20260824.md` | documentation-governance |
+| 2026-07-13 | `adversarial-reviews/adversarial-review-20260713T070637Z.md` 等 5 份 | adversarial-reviews |
+| 2026-07-18 | `adversarial-reviews/adversarial-review-20260718T070940Z.md` 等 3 份 | adversarial-reviews |
+| 2026-07-19 | `adversarial-reviews/adversarial-review-20260719T004345Z.md` 等 6 份 | adversarial-reviews |
+| 2026-07-29 | `adversarial-reviews/adversarial-review-20260729T121427Z.md` 等 3 份 | adversarial-reviews |
+| 2026-08-10 | `adversarial-reviews/adversarial-review-20260810T000044Z.md` | adversarial-reviews |
+| 2026-08-14 | `adversarial-reviews/adversarial-review-20260814T100023Z.md` 等 8 份 | adversarial-reviews |
+| 2026-08-19 | `adversarial-reviews/adversarial-review-20260819T093126Z.md` 等 3 份 | adversarial-reviews |
+| 2026-07-21 | `bug-fix/docker-build/retrospective-conda-build-fix-20260721/` | bug-fix |
+| 2026-07-22 | `bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/` | bug-fix |
+| 2026-07-22 | `bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/` | bug-fix |
+| 2026-07-22 | `bug-fix/docker-build/retrospective-xmnn-wheel-packaging-data-dirs-20260722/` | bug-fix |
+| 2026-07-23 | `bug-fix/retrospective-xmnn-pytorch-integration-20260723/` | bug-fix |
+| 2026-07-27 | `bug-fix/docker-build/retrospective-caffe-ops-correctness-test-20260727/` | bug-fix |
+| 2026-08-01 | `bug-fix/cow-blob-cow-semantics-fix-20260801.md` | bug-fix |
+| 2026-07-17 | `bugfix/retrospective-vta-hw-path-hardcode-fix-20260717/` | bugfix |
+| 2026-07-18 | `bugfix/retrospective-ci-quality-gates-path-migration-20260718/` | bugfix |
+| 2026-07-18 | `bugfix/retrospective-docker-commit-entrypoint-fix-20260718/` | bugfix |
+| 2026-07-18 | `bugfix/retrospective-tvm-symbol-visibility-fix-20260718/` | bugfix |
+| 2026-07-21 | `bugfix/retrospective-tvm-llvm-weak-symbol-leak-fix-20260721/` | bugfix |
+| 2026-07-26 | `build-engineering/retrospective-xmnn-wheel-scikit-build-nuitka-20260726/` | build-engineering |
+| 2026-07-27 | `build-engineering/retrospective-xmnn-runtime-docker-optional-pytorch-20260727/` | build-engineering |
+| 2026-07-28 | `build-engineering/retrospective-caffe-ffi-protobuf7-build-20260728/` | build-engineering |
+| 2026-07-29 | `build-engineering/retrospective-cmake-atomization-caffe-ffi-round2-20260729/` | build-engineering |
+| 2026-08-01 | `build-engineering/docker-build-verification-caffe-ffi-20260801.md` | build-engineering |
+| 2026-08-02 | `build-engineering/retrospective-nativebuild-automation-20260802/` | build-engineering |
+| 2026-08-07 | `build-engineering/retrospective-devcontainer-base-seven-concepts-20260807/` | build-engineering |
+| 2026-08-07 | `build-engineering/retrospective-docker-buildkit-observability-20260807.md` | build-engineering |
+| 2026-08-08 | `build-engineering/insight-onnx-quantization-benchmark-analysis-20260808.md` | build-engineering |
+| 2026-08-10 | `build-engineering/retrospective-xmnn-four-layer-release-pipeline-20260810/` | build-engineering |
+| 2026-08-11 | `build-engineering/retrospective-chaos-ai-portable-docker-20260811/` | build-engineering |
+| 2026-08-12 | `build-engineering/summary-palmdet-compile-fix-20260812.md` | build-engineering |
+| 2026-08-13 | `build-engineering/retrospective-ai-dev-variant-bugfix-logging-20260813/` | build-engineering |
+| 2026-08-14 | `build-engineering/retrospective-devcontainer-conda-libmamba-ft-v2.1-20260814/` | build-engineering |
+| 2026-08-16 | `build-engineering/retrospective-onnx-quantize-kit-test-coverage-20260816.md` | build-engineering |
+| 2026-08-19 | `build-engineering/troubleshooting-devcontainer-jupyter-gil-20260819.md` | build-engineering |
+| 2026-08-20 | `build-engineering/retrospective-llama-cpp-python-cuda-build-20260820/` | build-engineering |
+| 2026-07-21 | `code-optimization/retrospective-caffe-rmsnorm-transpose-removal-20260721/` | code-optimization |
+| 2026-07-23 | `code-optimization/retrospective-caffe-slim-tvm-ffi-20260723/` | code-optimization |
+| 2026-07-27 | `code-optimization/retrospective-caffe-ops-library-extraction-20260727/` | code-optimization |
+| 2026-07-28 | `code-optimization/retrospective-demo-ffi-math-ops-boundary-perf-20260728/` | code-optimization |
+| 2026-07-31 | `code-optimization/retrospective-split-zerocopy-cow-milestone-20260731/` | code-optimization |
+| 2026-08-01 | `code-optimization/retrospective-task11-cow-fix-20260801/` | code-optimization |
+| 2026-08-02 | `code-optimization/report-batch-hardening-float-precision-20260802/` | code-optimization |
+| 2026-08-03 | `code-optimization/report-pooling-backward-gradient-routing-20260803/` | code-optimization |
+| 2026-07-22 | `environment-setup/retrospective-wsl-ubuntu2604-install-migration-20260722/` | environment-setup |
+| 2026-08-15 | `environment-setup/retrospective-wsl-docker-gpu-fix-20260815/` | environment-setup |
+| 2026-08-18 | `environment-setup/retrospective-docker-cache-to-wsl-migration-20260818/` | environment-setup |
+| 2026-08-19 | `environment-setup/retrospective-windows-desktop-icons-missing-20260819/` | environment-setup |
+| 2026-08-19 | `environment-setup/retrospective-py314t-conda-freethreading-20260819.md` | environment-setup |
+| 2026-07-21 | `feature-development/retrospective-caffeproto-l2norm-20260721.md` | feature-development |
+| 2026-08-07 | `feature-development/retrospective-skill-auto-loader-20260807.md` | feature-development |
+| 2026-07-18 | `iteration-reports/retrospective-config-file-placement-governance-20260718/` | iteration-reports |
+| 2026-07-20 | `iteration-reports/weekly-2026-07-20/` | iteration-reports |
 | 无日期后缀 | 其余全部报告（在文件名中以 `retrospective-report-*` 或 `retrospective-insight-*` 命名） | 各分类 |
 
 ### 4.2 按关键词查找
@@ -568,6 +783,15 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
 | 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
 | 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析、README自动生成、标记区域、增量更新、文档覆盖、索引更新、docgen、caffe-ffi、OpenMP、Conv v4、并行优化、双层并行隔离、OMP抖动诊断、CV%、P99/P50、自适应线程数、环境变量自检、容器健康、unhealthy、健康探针、ENABLE_SSH、ENABLE_DOCKER、探针-部署模式对齐、supervisorctl | `task-reports/` | 全部 22 份报告 |
+| 文档治理、toctree、toc.not_included、index.md 结构、okf-spec 风格、trae-skills 风格、层级路由、扁平索引、Sphinx构建、invocations、构建警告治理 | `documentation-governance/` | 全部 3 份报告 |
+| 对抗审查、魔鬼代言人、证伪、对抗性评审、adversarial review、边界试探、反例搜索 | `adversarial-reviews/` | 全部 29 份报告 |
+| COW、OverlayFS、Docker构建修复、conda构建、PyTorch集成、Nuitka运行时、数据目录、正确性测试 | `bug-fix/` | 全部 7 份报告 |
+| CI质量门、Docker entrypoint、TVM/LLVM符号、VTA硬编码、弱符号泄漏、符号可见性 | `bugfix/` | 全部 5 份报告 |
+| Docker、DevContainer、conda、Nuitka、CMake、scikit-build-core、发布流水线、镜像构建、Jupyter、GPU、free-threading镜像、LLM构建 | `build-engineering/` | 全部 37 份报告（29 原子化 + 8 独立） |
+| 算子优化、零拷贝、FFI、精度、COW、卷积、池化、反向梯度、blob形状、ELU | `code-optimization/` | 全部 22 份报告 |
+| WSL、Docker GPU、free-threading、conda 3.14t、桌面图标、缓存迁移、Ubuntu 26.04 | `environment-setup/` | 全部 5 份报告 |
+| L2Norm算子、Skill自动加载器、功能开发、CaffeProto | `feature-development/` | 全部 2 份报告 |
+| 迭代、周复盘、周报、weekly、配置放置治理 | `iteration-reports/` | 全部 2 份报告 |
 
 ### 4.3 按报告类型查找
 

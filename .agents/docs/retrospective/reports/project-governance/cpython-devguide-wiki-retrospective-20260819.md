@@ -33,7 +33,7 @@
 | 治理与社区 | `cpython-devguide-wiki/03-governance-community.md` | ✅ |
 | 最佳实践与反模式 | `cpython-devguide-wiki/04-best-practices-anti-patterns.md` | ✅ |
 | FAQ与资源 | `cpython-devguide-wiki/05-faq-resources.md` | ✅ |
-| **里程碑复盘报告** | `.agents/docs/retrospective/reports/milestone/cpython-devguide-wiki-retrospective-20260819.md` | ✅ |
+| **里程碑复盘报告** | `.agents/docs/retrospective/reports/project-governance/cpython-devguide-wiki-retrospective-20260819.md` | ✅ |
 
 ***
 
