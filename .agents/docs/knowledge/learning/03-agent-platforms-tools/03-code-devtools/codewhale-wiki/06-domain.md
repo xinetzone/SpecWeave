@@ -2,8 +2,8 @@
 id: "codewhale-wiki-06"
 title: "终端AI编程助手领域知识"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/06-domain.toml"
 ---
+
 # 终端AI编程助手领域知识
 
 > "在你的终端里读取仓库、修改文件、运行检查、留下收据。"

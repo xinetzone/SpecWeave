@@ -2,8 +2,8 @@
 id: "codewhale-wiki-04"
 title: "版本演进记录"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/04-changelog.toml"
 ---
+
 # 版本演进记录
 
 > 本文档记录 CodeWhale 从 deepseek-tui 单人小工具到多智能体编码平台的完整演进历程，涵盖关键版本变更、品牌更名事件和未来发展方向。

@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-06"
 title: "okf-kit 完全指南 — Chat 对话系统"
 source: "https://github.com/vinodborole/okf-kit/tree/main/okf_kit/chat"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/06-chat-system.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/06-chat-system.toml"
 ---
+
 # okf-kit 完全指南 — Chat 对话系统
 
 > 一句话摘要：okf-kit chat 采用 Agent 式导航策略——LLM 不直接接收整个 bundle，而是通过 list_directory/read_concept 工具像人类浏览文件一样逐级查找相关内容后再回答；无 LLM 配置时自动回退到零 Key 关键词检索模式，核心设计是"渐进式展开而非全量塞入上下文"。

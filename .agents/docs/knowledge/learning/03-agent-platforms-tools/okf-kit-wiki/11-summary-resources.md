@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-11"
 title: "okf-kit 完全指南 — 总结与资源"
 source: "https://github.com/vinodborole/okf-kit"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/11-summary-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/11-summary-resources.toml"
 ---
+
 # okf-kit 完全指南 — 总结与资源
 
 > 一句话摘要：okf-kit 以"零核心 LLM 依赖、渐进式导航、可移植 bundle"为设计哲学，将文档网站转化为自包含的 Markdown 知识包，通过 CLI、MCP、HTTP API 三种方式消费，是构建本地化 AI 知识库的轻量基础设施。

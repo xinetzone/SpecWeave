@@ -2,8 +2,9 @@
 id: "minit2i-wiki-01"
 title: "核心设计哲学：每一步都做减法"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/01-design-philosophy.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/01-design-philosophy.toml"
 ---
+
 # 核心设计哲学：每一步都做减法
 
 > "T2I不再是高不可攀的围墙。欢迎使用并改进它，打造更简洁的基线。"

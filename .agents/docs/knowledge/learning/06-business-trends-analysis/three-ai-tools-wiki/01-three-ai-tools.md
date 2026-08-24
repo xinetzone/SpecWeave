@@ -1,7 +1,7 @@
 ---
 id: "three-ai-tools-wiki-01"
 title: "三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/01-three-ai-tools.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/01-three-ai-tools.toml"
 source: "https://mp.weixin.qq.com/s/gFlPzfjpY8zs3tOcw3o5Lg"
 date: "2026-07-04"
 tags: ["ai-tools", "intelligent-terminal", "claudian", "book-to-skill", "ai-agent", "terminal", "obsidian", "claude-code", "agent-skills"]

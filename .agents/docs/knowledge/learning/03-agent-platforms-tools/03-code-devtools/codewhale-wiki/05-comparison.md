@@ -2,8 +2,8 @@
 id: "codewhale-wiki-05"
 title: "CodeWhale 核心功能对比表"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/05-comparison.toml"
 ---
+
 # CodeWhale 核心功能对比表
 
 > 面向团队快速介绍，一页看清 CodeWhale 的定位、能力与差异化优势。

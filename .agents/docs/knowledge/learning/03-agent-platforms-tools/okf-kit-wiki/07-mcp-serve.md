@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-07"
 title: "okf-kit 完全指南 — MCP 与 HTTP 服务"
 source: "https://github.com/vinodborole/okf-kit/tree/main/okf_kit"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/07-mcp-serve.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/07-mcp-serve.toml"
 ---
+
 # okf-kit 完全指南 — MCP 与 HTTP 服务
 
 > 一句话摘要：okf-kit 提供两种服务暴露方式——stdio MCP 服务器（`okf serve-mcp`）供 Claude Code/Cursor 等 AI 编辑器直接集成本地 bundle，FastAPI HTTP 服务器（`okf serve`）提供 REST API + SSE 流式输出供桌面 GUI 使用，两种方式都复用 bundle_nav.py 共享导航逻辑。

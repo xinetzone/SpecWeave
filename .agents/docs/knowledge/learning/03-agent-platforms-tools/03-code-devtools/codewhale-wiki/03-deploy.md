@@ -2,8 +2,8 @@
 id: "codewhale-wiki-03"
 title: "安装渠道与提供商配置"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/03-deploy.toml"
 ---
+
 # 安装渠道与提供商配置
 
 > 本文档覆盖 CodeWhale 的完整安装与配置流程，从安装渠道选择到提供商（Provider）配置、生命周期 Hook、搜索后端、上下文分层管理和沙箱安全，为不同平台的用户提供一站式部署指南。

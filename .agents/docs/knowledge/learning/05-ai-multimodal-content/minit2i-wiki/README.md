@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-05-ai-multimodal-content-minit2i-wiki-index"
 title: "MiniT2I极简文生图模型完全指南"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---

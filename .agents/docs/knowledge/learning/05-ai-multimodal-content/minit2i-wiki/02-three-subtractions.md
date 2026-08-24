@@ -2,8 +2,9 @@
 id: "minit2i-wiki-02"
 title: "技术路线三大减法：VAE、AdaLN与私有数据"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/02-three-subtractions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/02-three-subtractions.toml"
 ---
+
 # 技术路线三大减法：VAE、AdaLN与私有数据
 
 本章深入解析MiniT2I在技术路线上的三个激进减法决策，以及支撑每个决策的技术逻辑和实验证据。

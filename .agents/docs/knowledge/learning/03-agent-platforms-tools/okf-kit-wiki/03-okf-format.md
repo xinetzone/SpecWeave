@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-03"
 title: "okf-kit 完全指南 — OKF 格式与 Bundle 结构"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/okf.py"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/03-okf-format.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/03-okf-format.toml"
 ---
+
 # okf-kit 完全指南 — OKF 格式与 Bundle 结构
 
 > 一句话摘要：OKF（Open Knowledge Format v0.1）将知识表示为"目录中带 YAML frontmatter 的 Markdown 文件"，每个非保留 Markdown 文件必须包含 `type` 字段标识概念类型，每个目录有 `index.md` 供 Agent 渐进式导航，state.json 存储爬取元数据用于增量同步。

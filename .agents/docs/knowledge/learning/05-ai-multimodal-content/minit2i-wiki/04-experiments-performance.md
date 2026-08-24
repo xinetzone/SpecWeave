@@ -2,8 +2,9 @@
 id: "minit2i-wiki-04"
 title: "实验结果与性能分析"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/04-experiments-performance.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/04-experiments-performance.toml"
 ---
+
 # 实验结果与性能分析
 
 本章系统梳理MiniT2I的模型规格、计算效率、评测基准结果、训练成本和消融实验结论，用数据展示极简架构的实际性能。

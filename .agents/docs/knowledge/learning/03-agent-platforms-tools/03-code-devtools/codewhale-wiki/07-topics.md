@@ -2,8 +2,8 @@
 id: "codewhale-wiki-07"
 title: "设计哲学与行业洞察"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/07-topics.toml"
 ---
+
 # 设计哲学与行业洞察
 
 > "确定性代码优于概率性推理。"

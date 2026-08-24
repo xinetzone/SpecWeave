@@ -2,8 +2,9 @@
 id: "minit2i-wiki-03"
 title: "MM-JiT架构深度解析：回归朴素Transformer"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/03-mm-jit-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/03-mm-jit-architecture.toml"
 ---
+
 # MM-JiT架构深度解析：回归朴素Transformer
 
 MM-JiT（Multi-Modal Joint Transformer）是MiniT2I提出的核心架构创新。它不是在现有MM-DiT架构上做增量改进，而是从第一性原理出发重新思考多模态条件注入的方式，最终回归到接近标准预归一化Transformer的极简设计。

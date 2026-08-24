@@ -1,7 +1,6 @@
 ---
 id: "foundational-knowledge-index"
 title: "通用基础知识"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/README.toml"
 category: "learning"
 date: "2026-08-21"
 ---

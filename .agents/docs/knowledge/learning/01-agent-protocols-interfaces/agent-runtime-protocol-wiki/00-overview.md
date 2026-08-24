@@ -2,8 +2,9 @@
 id: "agent-runtime-protocol-wiki-00"
 title: "Agent Runtime Protocol 完整教程 — 概述"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/00-overview.toml"
 ---
+
 # Agent Runtime Protocol 完整教程 — 概述
 
 > **原文参考**: https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg

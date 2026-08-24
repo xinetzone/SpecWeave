@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-baidu-index"
 title: "百度 产品学习"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---

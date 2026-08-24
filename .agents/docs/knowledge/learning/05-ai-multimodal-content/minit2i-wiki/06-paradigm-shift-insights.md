@@ -2,8 +2,9 @@
 id: "minit2i-wiki-06"
 title: "范式转移与方法论启示"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/06-paradigm-shift-insights.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/06-paradigm-shift-insights.toml"
 ---
+
 # 范式转移与方法论启示
 
 MiniT2I的意义不仅在于一个高性能基线模型，更在于它标志着文生图领域正在发生的深层范式转移。本章从五个维度解析其启示，并为AI研究者和工程师提供可复用的实践建议。

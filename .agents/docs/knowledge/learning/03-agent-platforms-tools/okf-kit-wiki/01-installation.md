@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-01"
 title: "okf-kit 完全指南 — 安装与配置"
 source: "https://github.com/vinodborole/okf-kit"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/01-installation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/01-installation.toml"
 ---
+
 # okf-kit 完全指南 — 安装与配置
 
 > 一句话摘要：okf-kit 支持 pip/uvx 多种安装方式，最小安装无浏览器无 LLM SDK 可秒级完成，通过 7 个可选 extras 按需启用 JS 渲染/LLM 对话/LLM富化/MCP 服务/HTTP API 功能，所有用户数据存储在 `~/.okf/` 目录下。

@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-00"
 title: "okf-kit 完全指南 — 概述"
 source: "https://github.com/vinodborole/okf-kit"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/00-overview.toml"
 ---
+
 # okf-kit 完全指南 — 概述
 
 > 一句话摘要：本教程系统讲解 okf-kit（v0.3.3）的安装、命令体系、OKF 格式规范、核心架构、增量同步、Chat 对话、MCP 服务、HTTP API、Registry 机制与扩展开发，帮助开发者将任意网站转换为 AI Agent 可直接读取的可移植知识包，且核心爬取路径无需任何 API Key。

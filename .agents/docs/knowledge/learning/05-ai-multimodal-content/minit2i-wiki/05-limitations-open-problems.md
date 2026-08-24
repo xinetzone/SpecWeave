@@ -2,8 +2,9 @@
 id: "minit2i-wiki-05"
 title: "局限性与开放问题：诚实面对不足"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/05-limitations-open-problems.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/05-limitations-open-problems.toml"
 ---
+
 # 局限性与开放问题：诚实面对不足
 
 MiniT2I团队在论文中主动、明确地指出了模型的四个未解问题。这种坦诚面对局限的科学态度本身就是研究价值的重要组成部分——所有局限都被准确定位为工程性或数据性问题，而非动摇MM-JiT核心洞察的原理性缺陷。

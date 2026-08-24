@@ -2,8 +2,9 @@
 id: "minit2i-wiki-07"
 title: "总结、常见问题与学习资源"
 source: "https://github.com/PeppaKing8/minit2i-jax"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/07-summary-faq-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/07-summary-faq-resources.toml"
 ---
+
 # 总结、常见问题与学习资源
 
 本章汇总MiniT2I的10条关键要点，解答常见问题，并提供术语表和学习资源索引。

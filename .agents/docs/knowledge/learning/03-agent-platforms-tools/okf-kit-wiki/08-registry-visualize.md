@@ -2,8 +2,9 @@
 id: "okf-kit-wiki-08"
 title: "okf-kit 完全指南 — Registry 与可视化"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/08-registry-visualize.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/08-registry-visualize.toml"
 ---
+
 # okf-kit 完全指南 — Registry 与可视化
 
 > 一句话摘要：okf-kit 通过 awesome-okf-kit 社区 Registry 实现 bundle 的发布发现与一键安装，`okf visualize` 生成自包含 HTML 知识图谱展示页面间链接关系，`okf zip` 将 bundle 打包为可分享的 zip 文件。

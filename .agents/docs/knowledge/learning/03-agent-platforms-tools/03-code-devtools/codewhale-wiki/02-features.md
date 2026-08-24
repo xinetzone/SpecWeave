@@ -2,8 +2,8 @@
 id: "codewhale-wiki-02"
 title: "核心功能详解"
 source: "https://github.com/Hmbown/CodeWhale"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/02-features.toml"
 ---
+
 # 核心功能详解
 
 > CodeWhale 是一款面向专业开发者的本地优先 AI 编程助手。其核心设计理念围绕"可控性"与"可审计性"展开，通过四条核心能力支柱——模型路由、嵌套宪法、多模式运行和 Fleet 多智能体工作流——构建了一套完整的编码代理（Coding Agent）基础设施。
