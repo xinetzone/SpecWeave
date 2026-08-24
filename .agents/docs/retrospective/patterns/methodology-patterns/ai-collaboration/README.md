@@ -70,6 +70,7 @@ date: "2026-07-09"
 | [苏格拉底提问纠错模式（Socratic Questioning Correction）](./socratic-questioning-correction.md) | 苏格拉底提问纠错模式（Socratic Questioning Correction） | L1 | `苏格拉底提问` `纠错方式` `协作模式` |
 | [源码锚点二次校验协议：研究-编写阶段的质量传递契约](./source-anchor-verification-protocol.md) | 源码锚点二次校验协议：研究-编写阶段的质量传递契约 | L1 |  |
 | [源码阅读→OKF Wiki生成工作流](./source-code-to-okf-wiki-workflow.md) | 源码阅读→OKF Wiki生成工作流 | L1 |  |
+| [源码→OKF 对抗性更新工作流](./source-code-to-okf-adversarial-update.md) | 源码→OKF 对抗性更新工作流 | L1 |  |
 | [Spec 驱动 + 知识库驱动的文档批量产出模式](./spec-driven-batch-doc-generation.md) | Spec 驱动 + 知识库驱动的文档批量产出模式 | - |  |
 | [Spec 驱动子代理执行模式](./spec-driven-subagent-execution.md) | Spec 驱动子代理执行模式 | - |  |
 | [Spec Mode文档创建工作流：前置规划→原子执行→门禁验证](./spec-mode-doc-creation-workflow.md) | Spec Mode文档创建工作流：前置规划→原子执行→门禁验证 | L2 |  |
