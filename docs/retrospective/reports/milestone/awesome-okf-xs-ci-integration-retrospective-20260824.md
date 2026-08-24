@@ -144,15 +144,27 @@ tags: ["里程碑复盘", "七概念", "GitHub Actions", "CI/CD", "UTF-8", "Sphi
 - **反模式**：仅做正向冒烟（只测放行）、探针文件残留仓库、gate 放被保护步骤之后。
 - **迁移验证**：适用于任何 CI 平台（GitHub Actions / GitLab / Jenkins）的任意门禁脚本。
 
+### 入库登记（沉淀至方法论模式库）
+
+本报告三条洞察已于 2026-08-24 经七概念「知识沉淀」链路（R→I→E→V→C）萃取为独立模式并入库：
+
+| 报告来源 | 模式 ID | 模式文档 | 成熟度 | 状态 |
+|---|---|---|---|---|
+| 洞察 1（CI 是放大器非源头） | `bp-preflight-integrity-gate` | [前置完整性门禁](../../../patterns/methodology-patterns/preflight-integrity-gate.md) | L1-draft | ✅ 已入库 |
+| 洞察 2 / 模式 E-1 | `bp-history-based-doc-repair` | [历史基线文档修复法](../../../patterns/methodology-patterns/history-based-doc-repair.md) | L1-draft | ✅ 已入库 |
+| 洞察 3 / 模式 E-2 | `bp-destructive-probe-gate` | [破坏性探针双向验证门禁](../../../patterns/methodology-patterns/destructive-probe-gate.md) | L1-draft | ✅ 已入库 |
+
+> 三模式经 4 视角对抗审查（V 门）后入库，索引已更新至 [methodology-patterns/README.md](../../../patterns/methodology-patterns/README.md)。洞察 1 在报告 E 阶段原未独立编号，现以其对应行动沉淀为独立模式 `bp-preflight-integrity-gate`。
+
 ---
 
 ## 五、行动项清单（G4：行动项原子化 ✅）
 
 | # | 行动项 | 责任人 | 验收标准 | 状态 |
 |---|---|---|---|---|
-| A1 | 将「文本修复优先用版本历史取信源」沉淀为模式文档并入库 | 见 SuggestService 后雾仓库 READ.md 合规 | 模式文档含触发场景/步骤/反模式/迁移验证 | 建议入库 |
-| A2 | 为 `check-utf8.py` 增加 CI 内跑探针的自检步骤（可选，验证 gate 持续有效） | Agent | scripts 目录含自测脚本或 CI step 内联测试 | 待办 |
-| A3 | 检查仓库是否还有其他历史提交存在同类 UTF-8 损坏（用 check-utf8.py 全量扫描基线提交） | Agent | 扫描历史提交无损坏，或建立排除清单 | 待办 |
+| A1 | 将「文本修复优先用版本历史取信源」沉淀为模式文档并入库 | Agent | 模式文档含触发场景/步骤/反模式/迁移验证 | ✅ 已完成（bp-history-based-doc-repair 已入库，见入库登记） |
+| A2 | 为 `check-utf8.py` 增加 CI 内跑探针的自检步骤（可选，验证 gate 持续有效） | Agent | scripts 目录含自测脚本或 CI step 内联测试 | ✅ 已完成（check-utf8.py 增 `--self-test` 探针双向自检，pages.yml 增 gate self-test 步骤） |
+| A3 | 检查仓库是否还有其他历史提交存在同类 UTF-8 损坏（用 check-utf8.py 全量扫描基线提交） | Agent | 扫描历史提交无损坏，或建立排除清单 | ✅ 已完成（新增 scan-history-utf8.py 全量扫描 5598 个历史文本 blob，非法者恰为已知 12 个 jupyter-book 文件且 HEAD 已修复，无未知残留） |
 
 ---
 
@@ -192,7 +204,7 @@ tags: ["里程碑复盘", "七概念", "GitHub Actions", "CI/CD", "UTF-8", "Sphi
 |---|---|---|
 | G1 | 事实无因果词 | ✅ 28 条客观事实 |
 | G2 | 洞察四元组完整 | ✅ 3 条洞察均含陈述/证据/反常识/行动 |
-| G3 | 模式可迁移 | ✅ 2 个模式均含迁移验证，跨场景适用 |
+| G3 | 模式可迁移 | ✅ 3 个模式均含迁移验证，跨场景适用（E-1/E-2 + 洞察1沉淀的前置完整性门禁） |
 | G4 | 行动项原子化 | ✅ 3 项均可独立验证 |
 
 > 本报告遵循七概念方法论 R→I→E→C 链路，事实均基于可追溯的提交记录与 CI 运行日志，数据经三查法核验。

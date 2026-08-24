@@ -29,6 +29,9 @@ date: "2026-07-04"
 | bp-plugin-bridge-standard-integration | [插件桥接规范集成法](plugin-bridge-standard-integration.md) | L1-draft | 1 | 1 | 需要把一套工作区规范（AGENTS协议/路由/Skill）接入已运行的Agent平台，且目录感知地自动生效时。案例：Hermes接入SpecWeave规范 |
 | bp-automation-idempotent-four-elements | [自动化幂等四要素](automation-idempotent-four-elements.md) | L1-draft | 1 | 1 | 编写部署/启用/验证类操作脚本（安装器/环境引导/CI初始化）需保证幂等可重跑时。案例：specweave-bridge install.py |
 | bp-three-layer-repair-closure | [三层修复闭环](three-layer-repair-closure.md) | L1-draft | 1 | 1 | 反复复发型故障需根治而非治标时。案例：Windows截图工具10天3次复发双源头根因（治标→断源→兜底→沉淀） |
+| bp-preflight-integrity-gate | [前置完整性门禁](preflight-integrity-gate.md) | L1-draft | 1 | 0 | 本地工具对内容损坏容错、引入CI严格解析后首曝损坏时，应把格式/编码完整性检查前置为构建前首道gate。案例：awesome-okf-xs 12个UTF-8损坏文档在Sphinx构建阶段暴露，新增check-utf8.py前置扫描 |
+| bp-history-based-doc-repair | [历史基线文档修复法](history-based-doc-repair.md) | L1-draft | 1 | 0 | 文本型数据编码损坏且损坏提交前存在完好历史版本时，用git历史作权威信源：定位基线提交+分离合法编辑+三层字节校验重建。案例：awesome-okf-xs 12个UTF-8文档以6fe904e基线+保留f78d5c4合法frontmatter重建 |
+| bp-destructive-probe-gate | [破坏性探针双向验证门禁](destructive-probe-gate.md) | L1-draft | 1 | 0 | 为CI新增校验性gate脚本时，需构造破坏性探针断言非零退出（拦得住）+移除后断言零退出（放得行），否则gate形同虚设。案例：awesome-okf-xs check-utf8.py探针坏文件exit 1+移除exit 0双向闭环 |
 
 ## 成熟度等级说明
 
