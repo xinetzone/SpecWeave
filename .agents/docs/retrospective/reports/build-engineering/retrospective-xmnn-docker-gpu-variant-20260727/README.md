@@ -29,9 +29,9 @@ pattern_extracted: docker-gpu-variant-quick-creation
 |---|------|
 | F1 | 任务时间：2026-07-27，任务来源：用户请求"提交torch-gpu版本镜像" |
 | F2 | 用户在容器 `root@11ab59c8235d` 内执行了 pip install，安装了 torch-2.13.0、cuda-toolkit-13.0.3、cuda-bindings-13.3.1、triton-3.7.1、nvidia-cuda-runtime-cu13、nvidia-cudnn-cu13、nvidia-cublas-cu13 等包 |
-| F3 | 原 Docker 配置目录：[dev-llvm22/](../../../../../../external/chaos/xmtools/docker/dev-llvm22/)，Dockerfile 第114行安装 PyTorch 时使用 `--index-url https://download.pytorch.org/whl/cpu` 强制 CPU 版本 |
+| F3 | 原 Docker 配置目录：[dev-llvm22/](../../../../../../external/chaos/xmtools/docker/dev-llvm22)，Dockerfile 第114行安装 PyTorch 时使用 `--index-url https://download.pytorch.org/whl/cpu` 强制 CPU 版本 |
 | F4 | 原 Docker 配置包含：Dockerfile(199行)、build-docker.sh、build-and-test.sh、run-build.sh、verify-wheel.sh、miniconda.sh |
-| F5 | 新建目录：[dev-llvm22-torch-gpu/](../../../../../../external/chaos/xmtools/docker/dev-llvm22-torch-gpu/) |
+| F5 | 新建目录：[dev-llvm22-torch-gpu/](../../../../../../external/chaos/xmtools/docker/dev-llvm22-torch-gpu) |
 | F6 | 新建文件：[Dockerfile](../../../../../../external/chaos/xmtools/docker/dev-llvm22-torch-gpu/Dockerfile)（215行） |
 | F7 | 新建文件：[build-docker.sh](../../../../../../external/chaos/xmtools/docker/dev-llvm22-torch-gpu/build-docker.sh)（119行） |
 | F8 | miniconda.sh 复制操作被 sandbox 拒绝，改为在 build-docker.sh 中自动创建软链接逻辑 |

@@ -50,7 +50,7 @@ related: [retrospective-caffe-slim-bvlc-compat-20260727, retrospective-caffe-ops
 | [__init__.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe-customer/python/caffe_patches/caffe/__init__.py) | 重写（371+/243-） | 完整BVLC兼容层（_BlobProxy/_BlobsDict/_LayerProxy/_LayersList/_ParamsDict/Net类）+ 结构化日志系统 |
 | [Dockerfile](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe-customer/Dockerfile) | 修改（16行） | Jupyter包版本放宽、`-fpermissive` 编译选项、阿里云镜像源build-arg支持 |
 | [build_and_log.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/build_and_log.sh) | 新建（28行） | 国内镜像源构建脚本，日志重定向，失败自动输出tail |
-| [test_bvlc_compat.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/workspace/test_bvlc_compat.py) | 修改 | 适配简化兼容层，移除对 `top_names`/`bottom_names` 的强依赖 |
+| test_bvlc_compat.py | 修改 | 适配简化兼容层，移除对 `top_names`/`bottom_names` 的强依赖 |
 
 ### 1.4 日志覆盖范围
 

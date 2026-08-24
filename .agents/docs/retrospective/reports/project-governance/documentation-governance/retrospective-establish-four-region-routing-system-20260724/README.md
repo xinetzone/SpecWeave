@@ -27,10 +27,10 @@ status: completed
 ### 主要产出物
 
 1. **[apps/AGENTS.md](../../../../../../../apps/AGENTS.md)** - 应用区入口路由文件（新建）
-2. **[apps/.agents/README.md](../../../../../../../apps/.agents/)** - apps 区域元数据容器文档（新建）
+2. **[apps/.agents/README.md](../../../../../../../apps/.agents/README.md)** - apps 区域元数据容器文档（新建）
 3. **[AGENTS.md](../../../../../../../AGENTS.md)** - 根 AGENTS.md 启动协议重构（更新）
 4. **[.agents/context-routing.md](../../../../../../context-routing.md)** - 上下文路由表更新（更新）
-5. **[apps/README.md](../../../../../../../apps/)** - apps 区域 README 智能体入口补充（更新）
+5. **[apps/README.md](../../../../../../../apps/README.md)** - apps 区域 README 智能体入口补充（更新）
 
 ### Spec 文档
 

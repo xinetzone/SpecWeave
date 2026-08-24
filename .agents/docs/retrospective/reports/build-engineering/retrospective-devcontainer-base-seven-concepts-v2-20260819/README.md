@@ -359,10 +359,10 @@ version_matrix:
 
 6. ⬜ **[文档同步]** 同步README.md和variants/AGENTS.md的变体链描述，消除版本漂移；为conda-llvm/onnx-pytorch/ai-dev/llm-agent补全AGENTS.md
 7. 🟡 **[公理注释更新]** 更新Dockerfile头部P3/P7公理注释，明确"删除式清理vs修改式清理"的本质区别
-   - → 知识层已完成：两类清理本质区分已写入 [dockerfile-runtime-logical-layering v1.4](../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) 和 [docker-cow-same-layer-modification](../../patterns/code-patterns/docker-cow-same-layer-modification.md)；待落地：Dockerfile头部注释P3/P7同步更新
+   - → 知识层已完成：两类清理本质区分已写入 [dockerfile-runtime-logical-layering v1.4](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) 和 [docker-cow-same-layer-modification](../../../patterns/code-patterns/docker-cow-same-layer-modification.md)；待落地：Dockerfile头部注释P3/P7同步更新
 8. ⬜ **[代码重构]** 评估entrypoint.sh拆分方案，将fixuid、chown策略、服务配置等核心逻辑抽取为独立脚本
 9. 🟡 **[模式复用]** 将FixUID抽取为共享Shell库（shared/lib/fixuid.sh或.agents/scripts/lib/），供其他Docker镜像复用
-   - → 知识层已完成：FixUID已沉淀为L2模式 [fixuid-runtime-uid-mapping](../../patterns/code-patterns/fixuid-runtime-uid-mapping.md) 入库（含6步标准做法+5反模式+4领域迁移）；待落地：代码抽取为共享Shell库
+   - → 知识层已完成：FixUID已沉淀为L2模式 [fixuid-runtime-uid-mapping](../../../patterns/code-patterns/fixuid-runtime-uid-mapping.md) 入库（含6步标准做法+5反模式+4领域迁移）；待落地：代码抽取为共享Shell库
 10. ⬜ **[测试增强]** 添加C扩展free-threading并发竞态测试脚本
 11. ⬜ **[文档补充]** 增加ARCHITECTURE.md架构图+QUICKSTART场景决策树
 
@@ -380,8 +380,8 @@ version_matrix:
 
 | 模式 | 操作 | 成熟度 | 关联行动项 | 入库路径 |
 |------|------|--------|-----------|---------|
-| fixuid-runtime-uid-mapping | 🆕 新建 | L2-validated | #9（知识层） | [code-patterns/fixuid-runtime-uid-mapping.md](../../patterns/code-patterns/fixuid-runtime-uid-mapping.md) |
-| dockerfile-runtime-logical-layering | 🔄 升级v1.4 | L2-validated | #7（知识层） | [code-patterns/dockerfile-runtime-logical-layering.md](../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
+| fixuid-runtime-uid-mapping | 🆕 新建 | L2-validated | #9（知识层） | [code-patterns/fixuid-runtime-uid-mapping.md](../../../patterns/code-patterns/fixuid-runtime-uid-mapping.md) |
+| dockerfile-runtime-logical-layering | 🔄 升级v1.4 | L2-validated | #7（知识层） | [code-patterns/dockerfile-runtime-logical-layering.md](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
 
 v1.4新增内容：①两类清理本质区分对照表；②悬空符号链接`[ -e ] \|\| [ -L ]`双重检查反模式；③conda-libmamba+solver+单次mamba create性能优化要点。
 

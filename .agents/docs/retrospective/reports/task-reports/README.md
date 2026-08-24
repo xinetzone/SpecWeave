@@ -37,8 +37,7 @@ date: "2026-07-09"
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [Report Malformed Data Handling 20260709](./report-malformed-data-handling-20260709/README.md) | 3 |  |
-| 📋 [Retro 20260426 Caffe Ffi Memlog](./retro-20260426-caffe-ffi-memlog/) | 0 |  |
-| 📋 [Retro 20260728 Tvm Ffi Wiki](./retro-20260728-tvm-ffi-wiki/) | 3 |  |
+| 📋 [Retro 20260728 Tvm Ffi Wiki](retro-20260728-tvm-ffi-wiki) | 3 |  |
 | ✅ [Retrospective Adversarial Review Cmd 20260710](./retrospective-adversarial-review-cmd-20260710/README.md) | 1 |  |
 | ✅ [Retrospective Adversarial Review Kg 20260710](./retrospective-adversarial-review-kg-20260710/README.md) | 2 |  |
 | ✅ [Retrospective Adversarial Review Questions 20260710](./retrospective-adversarial-review-questions-20260710/README.md) | 2 |  |
@@ -52,12 +51,11 @@ date: "2026-07-09"
 | ✅ [Retrospective Caffe Edge Ops Test Checklist 20260727](./retrospective-caffe-edge-ops-test-checklist-20260727/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Ffi Conda Build 20260730](./retrospective-caffe-ffi-conda-build-20260730/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Ffi Memlog 20260728](./retrospective-caffe-ffi-memlog-20260728/README.md) | 1 |  |
-| 📋 [Retrospective Caffe Ffi Zerocopy phase1 20260731](./retrospective-caffe-ffi-zerocopy-phase1-20260731/) | 0 |  |
 | ✅ [Retrospective Caffe Forward Pass Notebook 20260727](./retrospective-caffe-forward-pass-notebook-20260727/README.md) | 2 |  |
 | ✅ [Retrospective Caffe Jupyter Docker Build 20260726](./retrospective-caffe-jupyter-docker-build-20260726/README.md) | 1 |  |
 | ✅ [Retrospective Caffe Proto 20260722](./retrospective-caffe-proto-20260722/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Slim Rename 20260724](./retrospective-caffe-slim-rename-20260724/README.md) | 3 |  |
-| 📋 [Retrospective Cmd Log Compliance Fix 20260728](./retrospective-cmd-log-compliance-fix-20260728/) | 1 |  |
+| 📋 [Retrospective Cmd Log Compliance Fix 20260728](retrospective-cmd-log-compliance-fix-20260728) | 1 |  |
 | ✅ [Retrospective Codex Article Analysis 20260706](./retrospective-codex-article-analysis-20260706/README.md) | 1 |  |
 | ✅ [Retrospective Concurrent Report Atomization 20260708](./retrospective-concurrent-report-atomization-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Concurrent Safety Checker 20260708](./retrospective-concurrent-safety-checker-20260708/README.md) | 3 |  |
@@ -91,7 +89,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Vendor Check Module 20260707](./retrospective-vendor-check-module-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](./retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
 | ✅ [Retrospective Wsl Wiki Tutorial 20260720](./retrospective-wsl-wiki-tutorial-20260720/README.md) | 1 |  |
-| 📋 [Retrospective Xmnn Dual Image Accuracy 20260812](./retrospective-xmnn-dual-image-accuracy-20260812/) | 2 |  |
+| 📋 [Retrospective Xmnn Dual Image Accuracy 20260812](retrospective-xmnn-dual-image-accuracy-20260812) | 2 |  |
 | ✅ [Retrospective Xmnn Export Entrypoint Fix 20260718](./retrospective-xmnn-export-entrypoint-fix-20260718/README.md) | 3 |  |
 | ✅ [Retrospective Xmnn Nuitka Docker Deployment 20260722](./retrospective-xmnn-nuitka-docker-deployment-20260722/README.md) | 1 |  |
 | ✅ [Retrospective Xmnn Runtime Repackaging 20260718](./retrospective-xmnn-runtime-repackaging-20260718/README.md) | 1 |  |

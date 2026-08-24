@@ -51,7 +51,7 @@ category: "retrospective"
 
 ## 存放位置说明
 
-遵循现有项目惯例（参考 [retrospective-specweave-contest](../../../retrospective-specweave-contest-advantage-analysis-20260624/insights/README.md) 和 [retrospective-tuyaopen](../../../retrospective-tuyaopen-learning-report-optimization-20260630/insights/README.md)）：
+遵循现有项目惯例（参考 [retrospective-specweave-contest](README.md) 和 [retrospective-tuyaopen](README.md)）：
 
 | 产出物类型 | 存放位置 | 说明 |
 |-----------|---------|------|

@@ -51,4 +51,4 @@ OKF渐进式披露设计：
 - [lazy-loading-pattern](../../../../patterns/methodology-patterns/ai-collaboration/lazy-loading-pattern.md)（工具/MCP元数据懒加载，同家族不同场景）
 - [context-lifecycle-layering](../../../../patterns/methodology-patterns/ai-collaboration/context-lifecycle-layering.md)（提示词五层生命周期管理）
 - [开源仓库四层架构识别法](../../../../patterns/methodology-patterns/research-knowledge/open-source-repo-four-layer-identification.md)
-- [渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)
+- [渐进式披露三层架构](../../../../../../capabilities/ARCHITECTURE.md)

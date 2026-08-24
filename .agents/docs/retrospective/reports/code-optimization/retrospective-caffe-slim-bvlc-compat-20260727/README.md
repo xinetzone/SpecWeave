@@ -46,9 +46,9 @@ related: [retrospective-caffe-slim-inference-notebook-20260727, dependency-shimm
 |------|------|---------|---------|
 | [_caffe.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/src/caffe/_caffe.cpp#L206-L309) | +104 行（共311行） | 修改 | 8个tvm-ffi导出函数（层元数据+参数零拷贝访问） |
 | [_compat.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/_compat.py) | 390 行 | 新建 | BlobProxy类、LayerProxy类、enable_bvlc_compat()猴子补丁函数 |
-| [compat.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/compat.py) | 31 行 | 新建 | 兼容层入口模块，`import caffe.compat` 自动调用 enable_bvlc_compat() |
+| compat.py | 31 行 | 新建 | 兼容层入口模块，`import caffe.compat` 自动调用 enable_bvlc_compat() |
 | [test_compat_basic.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/test_compat_basic.py) | 691 行 | 新建 | 38个Mock单元测试（不依赖真实模型和编译后的C++扩展） |
-| [test_bvlc_compat.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/workspace/test_bvlc_compat.py) | 232 行 | 新建 | 12项端到端测试（基于fgvsirfeature模型，需Docker中运行） |
+| test_bvlc_compat.py | 232 行 | 新建 | 12项端到端测试（基于fgvsirfeature模型，需Docker中运行） |
 | [spec.md](../../../../../../.trae/specs/caffe-slim-bvlc-compat/spec.md) | - | 新建 | PRD：功能需求、非功能需求、验收标准、不支持功能 |
 | [tasks.md](../../../../../../.trae/specs/caffe-slim-bvlc-compat/tasks.md) | - | 新建 | 7个任务分解（C++扩展→BlobProxy→blobs→forward→layers/params→加载机制→端到端验证） |
 | [checklist.md](../../../../../../.trae/specs/caffe-slim-bvlc-compat/checklist.md) | - | 新建 | 6大类40+验证点，代码层面已全部通过Mock测试 |

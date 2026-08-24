@@ -255,7 +255,7 @@ P3-C阶段完成11层Backward验证后，剩余需要实现Backward的训练层�
 
 ## 端到端训练目标
 
-端到端梯度流验证脚本已就绪：[test_e2e_gradient_flow.py](../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_e2e_gradient_flow.py)
+端到端梯度流验证脚本已就绪：test_e2e_gradient_flow.py
 
 ```
 Data → Conv → BN → ReLU → Pool → IP → ReLU → Dropout → Scale → Bias → Eltwise → Concat → IP → Softmax → SoftmaxWithLoss → Loss

@@ -111,7 +111,7 @@ source: "avoid_c1_discontinuity helper推广应用"
 |------|---------|------|------|
 | [caffe_test_helpers.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340) | 新增函数 | +55 | `avoid_c1_discontinuity`共享helper（含完整docstring） |
 | [scripts/check_c1_kink_protection.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py) | 新增CI脚本 | +158 | C¹拐点防护静态检查 |
-| [float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md) | 文档更新 | +50 | helper函数API文档+策略选择决策树 |
+| [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md) | 文档更新 | +50 | helper函数API文档+策略选择决策树 |
 
 ### 4.2 重构代码
 
@@ -185,7 +185,7 @@ tests/python/test_p3c_activations_ip.py ...........                     [100%]
 ## 相关资源
 
 - **共享helper函数**：[caffe_test_helpers.py: avoid_c1_discontinuity](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340)
-- **最佳实践指南**：[float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md)
+- **最佳实践指南**：[float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md)
 - **CI检查脚本**：[check_c1_kink_protection.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py)
 - **前序批量加固报告**：[report-batch-hardening-float-precision-20260802](../report-batch-hardening-float-precision-20260802/README.md)
 - **ELU拐点专项复盘**：[retrospective-float-precision-elu-kink-20260802](../retrospective-float-precision-elu-kink-20260802/README.md)

@@ -37,13 +37,13 @@ export_date: "2026-07-04"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | 原子文件1/7 |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | 原子文件2/7 |
-| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | 原子文件3/7 |
-| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | 原子文件4/7 |
-| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | 原子文件5/7 |
-| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | 原子文件6/7 |
-| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | 原子文件7/7 |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件1/7 |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件2/7 |
+| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件3/7 |
+| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件4/7 |
+| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件5/7 |
+| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件6/7 |
+| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | 原子文件7/7 |
 | 8个TOML元数据文件 | 对应目录下*.toml | 索引页+7个原子文件的元数据 |
 | 原子提交 | Commit 3bea7b68 | 16文件，662行新增，560行删除 |
 

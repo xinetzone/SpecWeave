@@ -63,7 +63,7 @@ tags: ["caffe", "jupyter-notebook", "python", "deep-learning", "forward-pass", "
 
 | 产出物 | 位置 | 说明 |
 |--------|------|------|
-| Jupyter Notebook | [01_caffe_forward_pass.ipynb](../../../../../../projects/xuanspace/vendor/caffe/workspace/01_caffe_forward_pass.ipynb) | 183KB，25 cells，Caffe 前向传播完整示例 |
+| Jupyter Notebook | 01_caffe_forward_pass.ipynb | 183KB，25 cells，Caffe 前向传播完整示例 |
 | Docker 容器 | `caffe-jupyter` | healthy，端口 8888(Jupyter)/2222(SSH) |
 | 启动脚本 | [run-jupyter.sh](../../../../../../projects/xuanspace/vendor/caffe/docker/origin/run-jupyter.sh) | 已修复挂载路径问题 |
 

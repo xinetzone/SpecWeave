@@ -304,7 +304,7 @@ docker run --rm \
 
 ## 7. 参考链接
 
-- [Docker 作为规范构建环境（方法论）](../../patterns/methodology-patterns/docker-canonical-build-environment.md)
+- [Docker 作为规范构建环境（方法论）](../../patterns/methodology-patterns/governance-strategy/docker-canonical-build-environment.md)
 - [构建失败分层排查法](../../patterns/code-patterns/build-failure-layered-triage.md)
 - [CMake列表变更诊断输出模式](../../patterns/code-patterns/cmake-list-removal-diagnostic-output.md)
 - [caffe-ffi README](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/README.md)

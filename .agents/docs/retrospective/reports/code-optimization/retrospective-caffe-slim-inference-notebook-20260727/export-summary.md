@@ -14,7 +14,7 @@ type: export-summary
 |--------|------|------|
 | 复盘报告 | [README.md](README.md) | 完整复盘报告（事实→洞察→模式→行动项） |
 | 洞察提取 | [insight-extraction.md](insight-extraction.md) | 5条核心洞察及根因分类 |
-| Notebook 模板 | [02_caffe_slim_inference.ipynb](../../../../../../projects/xuanspace/vendor/caffe/workspace/02_caffe_slim_inference.ipynb) | caffe-slim 推理模板（8个cell，含API速查+预处理+自检） |
+| Notebook 模板 | 02_caffe_slim_inference.ipynb | caffe-slim 推理模板（8个cell，含API速查+预处理+自检） |
 
 ## 模式萃取清单
 

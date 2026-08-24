@@ -37,19 +37,19 @@ coverage_final: 96%
 
 | 测试文件 | 对应模块 | 用例数 | 测试类数 | 覆盖率 |
 |---|---|---|---|---|
-| [test_accuracy.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_accuracy.py) | `accuracy.py` | 18 | 3 | 91% |
-| [test_benchmark.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_benchmark.py) | `benchmark.py` | 26 | 4 | 96% |
-| [test_calibration.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_calibration.py) | `calibration.py` | 21 | 3 | **100%** |
-| [test_model_detect.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_model_detect.py) | `model_detect.py` | 25 | 4 | 81% |
-| [test_quantize.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize.py) | `quantize.py` (便捷函数/数据类) | 24 | 6 | — |
-| [test_quantize_coverage.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_coverage.py) | `quantize.py` (回退/异常/边界专项) | **32** | **10** | **96%** ✅ |
-| [test_reporting.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_reporting.py) | `reporting.py` | 26 | 5 | 96% |
+| [test_accuracy.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_accuracy.py) | `accuracy.py` | 18 | 3 | 91% |
+| [test_benchmark.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_benchmark.py) | `benchmark.py` | 26 | 4 | 96% |
+| [test_calibration.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_calibration.py) | `calibration.py` | 21 | 3 | **100%** |
+| [test_model_detect.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_model_detect.py) | `model_detect.py` | 25 | 4 | 81% |
+| [test_quantize.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize.py) | `quantize.py` (便捷函数/数据类) | 24 | 6 | — |
+| [test_quantize_coverage.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_coverage.py) | `quantize.py` (回退/异常/边界专项) | **32** | **10** | **96%** ✅ |
+| [test_reporting.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_reporting.py) | `reporting.py` | 26 | 5 | 96% |
 
 ### 2.2 集成测试（23用例，1个文件）
 
 | 测试文件 | 覆盖路径 | 用例数 | 测试类数 |
 |---|---|---|---|
-| [test_quantize_integration.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_integration.py) | 静态量化主路径 + auto_quantize + 回滚链 | 23 | 5 |
+| [test_quantize_integration.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_integration.py) | 静态量化主路径 + auto_quantize + 回滚链 | 23 | 5 |
 
 ---
 
@@ -76,7 +76,7 @@ TOTAL                                1040    290    72%
 - 原有单元测试：`quantize.py` 覆盖率 85%
 - **专项覆盖率测试加入后**：`quantize.py` 覆盖率 **96%** ✅（回退路径/异常/边界/所有策略分支/verbose日志/结果序列化均被覆盖）
 
-**quantize.py 剩余11行未覆盖分析**（详见 [test-quantize-coverage-catalog.md](../../../apps/docker-images/devcontainer-base/scripts/docs/test-quantize-coverage-catalog.md)）：
+**quantize.py 剩余11行未覆盖分析**（详见 [test-quantize-coverage-catalog.md](../../../../../apps/docker-images/devcontainer-base/scripts/docs/test-quantize-coverage-catalog.md)）：
 
 | 未覆盖类型 | 行数 | 原因 | 补充测试ROI |
 |-----------|------|------|------------|
@@ -178,7 +178,7 @@ TOTAL                                1040    290    72%
 
 ## 6. 集成测试核心覆盖路径
 
-集成测试（[test_quantize_integration.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_integration.py)）专门覆盖单元测试未触及的静态量化主路径：
+集成测试（[test_quantize_integration.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_integration.py)）专门覆盖单元测试未触及的静态量化主路径：
 
 | 测试类 | 覆盖函数/路径 | 关键验证点 |
 |---|---|---|
@@ -201,7 +201,7 @@ TOTAL                                1040    290    72%
 
 ## 7. 测试基础设施
 
-### 7.1 Fixtures（[conftest.py](../../../apps/docker-images/devcontainer-base/scripts/tests/conftest.py)）
+### 7.1 Fixtures（[conftest.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/conftest.py)）
 
 使用onnx helper直接创建轻量测试模型，**零外部依赖（不依赖torch）**：
 
@@ -269,7 +269,7 @@ python -m pytest tests/test_quantize_integration.py::TestStaticQdqIntegration -v
 
 ## 10. 专项覆盖率测试（新增）
 
-专项覆盖率测试 [test_quantize_coverage.py](../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_coverage.py) 新增32个测试用例，覆盖：
+专项覆盖率测试 [test_quantize_coverage.py](../../../../../apps/docker-images/devcontainer-base/scripts/tests/test_quantize_coverage.py) 新增32个测试用例，覆盖：
 
 | 测试类 | 用例数 | 覆盖目标 |
 |--------|--------|---------|
@@ -284,7 +284,7 @@ python -m pytest tests/test_quantize_integration.py::TestStaticQdqIntegration -v
 | TestBuildFallbackChainExtraCoverage | 2 | 未知策略链、去重逻辑 |
 | TestFinalCoverageBoost | 7 | 最终覆盖率补充（fp16路径、static_qdq/quint8策略、wrapper、HAS_FP16标志等） |
 
-详细用例清单见：[test-quantize-coverage-catalog.md](../../../apps/docker-images/devcontainer-base/scripts/docs/test-quantize-coverage-catalog.md)
+详细用例清单见：[test-quantize-coverage-catalog.md](../../../../../apps/docker-images/devcontainer-base/scripts/docs/test-quantize-coverage-catalog.md)
 
 ---
 

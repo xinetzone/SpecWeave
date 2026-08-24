@@ -24,7 +24,7 @@ session_id: "sc-20260815-knowledge-catalog-wiki"
 | 指标 | 数值/说明 |
 |------|----------|
 | 学习对象 | vendor/knowledge-catalog（Google Cloud开源仓库，Apache 2.0许可） |
-| 产出物主目录 | [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/) |
+| 产出物主目录 | [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md) |
 | 文档数量 | 7个文件（1个入口README + 6篇章节教程） |
 | 总字数 | ~15,000字（中文） |
 | 核心概念覆盖 | OKF开放知识格式、Attested Computation、Reference Agent、mdcode/kcmd、Discovery/Enrichment Agent |
@@ -69,7 +69,7 @@ C（原子化提交/归档交付）
 
 ## 二、产出物文件清单
 
-Wiki教程已存放于学习目录 [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/)：
+Wiki教程已存放于学习目录 [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md)：
 
 | 文件 | 路径 | 内容摘要 | 行数(约) |
 |------|------|----------|---------|

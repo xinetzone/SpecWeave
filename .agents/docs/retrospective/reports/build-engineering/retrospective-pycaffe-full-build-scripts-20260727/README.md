@@ -149,7 +149,7 @@ tags:
 | Dockerfile | [tests/docker/Dockerfile](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/docker/Dockerfile) | 三阶段构建的完整BVLC PyCaffe Dockerfile |
 | build-and-test.sh | [tests/docker/build-and-test.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/docker/build-and-test.sh) | Linux/macOS Bash一键构建测试脚本 |
 | build-and-test.ps1 | [tests/docker/build-and-test.ps1](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/docker/build-and-test.ps1) | Windows PowerShell一键构建测试脚本 |
-| .dockerignore | [tests/docker/.dockerignore](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/docker/.dockerignore) | Docker构建上下文排除规则（已放至caffe根目录） |
+| .dockerignore | [tests/docker/.dockerignore](../../../../../templates/docker-snippets/skeleton/.dockerignore) | Docker构建上下文排除规则（已放至caffe根目录） |
 | README.md | [tests/docker/README.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/tests/docker/README.md) | 使用说明文档（快速开始、API清单、FAQ） |
 | 复盘报告（本文件） | docs/retrospective/reports/build-engineering/retrospective-pycaffe-full-build-scripts-20260727/README.md | 七概念方法论复盘报告 |
 

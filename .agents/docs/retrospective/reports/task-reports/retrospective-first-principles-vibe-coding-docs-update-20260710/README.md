@@ -33,7 +33,7 @@ retrospective-first-principles-vibe-coding-docs-update-20260710/
 
 ## 执行摘要
 
-**任务背景**：用户要求用"第一性原理"更新 [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) 和对应复盘报告。原文档v1.1仅完成了"事实学习"层面，缺少"践行验证"闭环。
+**任务背景**：用户要求用"第一性原理"更新 [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) 和对应复盘报告。原文档v1.1仅完成了"事实学习"层面，缺少"践行验证"闭环。
 
 **核心发现**：从第一性原理出发，学习文档的本质目标是"建立可复用的知识资产，指导未来实践"，而非"记录学了什么"。原文档缺失4个关键内容：践行验证、践行鸿沟洞察、已沉淀模式双向链接、本项目亲身案例。
 
@@ -77,7 +77,7 @@ retrospective-first-principles-vibe-coding-docs-update-20260710/
 
 | 文件 | 修改类型 | 主要变更 |
 |------|---------|---------|
-| [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | 大版本更新 | v1.1→v1.2，新增践行鸿沟章节、3项启示、4个FAQ、完整模式链接、3次验证记录 |
+| [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | 大版本更新 | v1.1→v1.2，新增践行鸿沟章节、3项启示、4个FAQ、完整模式链接、3次验证记录 |
 | [README.md](../../insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md) | 更新 | L3验证标记、validation_count更新、反面案例链接、changelog |
 | [insight-extraction.md](../../insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/insight-extraction.md) | 更新 | L3践行验证说明、模式表格更新、行动项新增 |
 | [check-links.py](../../../../../scripts/check-links.py) | 功能升级 | 三层验证（ok/directory/missing三态返回）、目录→warning、frontmatter目录检测 |
@@ -91,7 +91,7 @@ retrospective-first-principles-vibe-coding-docs-update-20260710/
 
 - 📊 **想看执行过程和问题分析** → [execution-retrospective.md](execution-retrospective.md)
 - 💡 **想看可复用洞察和模式** → [insight-extraction.md](insight-extraction.md)
-- 📚 **回到学习文档v1.2** → [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)
+- 📚 **回到学习文档v1.2** → [vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md)
 - 🔗 **原外部学习复盘** → [retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
 - 🧬 **递归践行定律模式** → [practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)
 - 📝 **文档更新第一性原理模式** → [document-update-first-principles.md](../../../patterns/methodology-patterns/document-architecture/document-update-first-principles.md)

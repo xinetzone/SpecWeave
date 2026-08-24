@@ -204,7 +204,7 @@ import tvm → import tvm.relay.frontend.caffe → import tvm.relay.testing
 
 ### 对项目的知识更新
 
-本次任务验证和更新了以下项目硬约束（[project_memory](../../../../../../../memory/projects/-d-spaces-SpecWeave/project_memory.md)）：
+本次任务验证和更新了以下项目硬约束（project_memory）：
 
 - ✅ PyTorch/torchvision 是可选依赖（已记录，本次执行验证）
 - 🆕 pytest 是 XMNN 运行时核心依赖（tvm.testing 通过 caffe frontend 传递依赖）

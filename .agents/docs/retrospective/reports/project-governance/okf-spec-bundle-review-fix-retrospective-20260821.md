@@ -27,9 +27,9 @@
 
 | 交付物 | 路径 | 状态 |
 |--------|------|------|
-| 进程登记文档 | [seven-concepts-v.md](../../../../../projects/awesome-okf-xs/bundles/okf-spec/references/processes/seven-concepts-v.md) | ✅ |
-| Bundle 索引（含信任说明） | [index.md](../../../../../projects/awesome-okf-xs/bundles/okf-spec/index.md) | ✅ |
-| 更新日志 | [log.md](../../../../../projects/awesome-okf-xs/bundles/okf-spec/log.md) | ✅ |
+| 进程登记文档 | [seven-concepts-v.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/references/processes/seven-concepts-v.md) | ✅ |
+| Bundle 索引（含信任说明） | [index.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | ✅ |
+| 更新日志 | [log.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/log.md) | ✅ |
 | 18 个内容文档合规修正 | `okf-spec/concepts/*.md` + `okf-spec/examples/*.md` | ✅ |
 | 第一个原子提交（P2） | `a58146b` | ✅ |
 | 第二个原子提交（P1） | `2b62350` | ✅ |

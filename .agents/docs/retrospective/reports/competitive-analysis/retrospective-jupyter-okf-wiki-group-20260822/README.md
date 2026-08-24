@@ -103,8 +103,8 @@ xeus-lite-demo 无独立本地源码仓库，sources 字段无法指向真实文
 | 任务规格 | [spec.md](../../../../../../.trae/specs/jupyter-okf-wiki-group/spec.md) | 任务需求规格 |
 | 任务分解 | [tasks.md](../../../../../../.trae/specs/jupyter-okf-wiki-group/tasks.md) | 任务分解与批量分组 |
 | 进度记录 | [progress.md](../../../../../../.trae/specs/jupyter-okf-wiki-group/progress.md) | 进度文档（T11.4 最终化，含 5 条问题经验） |
-| Bundle 索引 | [bundles](../../../../../../projects/awesome-okf-xs/bundles/jupyter/) | 65 个 OKF bundle 目录 |
-| 源码仓库 | [external/libs/jupyter](../../../../../../external/libs/jupyter/) | Jupyter 生态源码（事实来源） |
+| Bundle 索引 | [bundles](../../../../../../projects/awesome-okf-xs/doc/bundles/document/jupyter/) | 65 个 OKF bundle 目录 |
+| 源码仓库 | [external/libs/jupyter](../../../../../../external/libs/jupyter) | Jupyter 生态源码（事实来源） |
 
 ## 关联报告
 

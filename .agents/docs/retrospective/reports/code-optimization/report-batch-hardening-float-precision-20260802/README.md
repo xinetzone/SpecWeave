@@ -59,10 +59,10 @@ source: "float-precision-testing-guide.md 模式批量应用"
 
 | # | 文件 | 问题描述 | 修正内容 |
 |---|------|---------|---------|
-| 4 | [float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md#L24-L37) | sigmoid负饱和阈值错误 | 初始指南写"x < -16.6"精确为0，实际需x ≤ -89（exp溢出为inf） |
-| 5 | [float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md#L113-L146) | 缺少C¹不连续拐点分类 | 新增§2.3两类拐点区分（C¹连续vs C¹不连续），补充ReLU/PReLU防护策略 |
-| 6 | [float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md#L158-L170) | 检查清单不完整 | 新增"sigmoid正负饱和不对称"和"C¹不连续拐点防护"两个检查项 |
-| 7 | [float-precision-testing-guide.md](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md#L50-L65) | 代码示例错误 | `sigmoid(-80)==0.0` → `sigmoid(-100)==0.0`（-80非精确零）；新增推离拐点代码片段 |
+| 4 | [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md#L24-L37) | sigmoid负饱和阈值错误 | 初始指南写"x < -16.6"精确为0，实际需x ≤ -89（exp溢出为inf） |
+| 5 | [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md#L113-L146) | 缺少C¹不连续拐点分类 | 新增§2.3两类拐点区分（C¹连续vs C¹不连续），补充ReLU/PReLU防护策略 |
+| 6 | [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md#L158-L170) | 检查清单不完整 | 新增"sigmoid正负饱和不对称"和"C¹不连续拐点防护"两个检查项 |
+| 7 | [float-precision-testing-guide.md](../../../../knowledge/best-practices/float-precision-testing-guide.md#L50-L65) | 代码示例错误 | `sigmoid(-80)==0.0` → `sigmoid(-100)==0.0`（-80非精确零）；新增推离拐点代码片段 |
 
 ### 3.3 构建产物清理
 
@@ -181,7 +181,7 @@ x = np.where(x > 0, np.maximum(x, 2*h), np.minimum(x, -2*h))
 
 **关键教训**：sigmoid(-80) ≈ 1.8e-35（亚正规数但非精确零），sigmoid(-89)才精确为0。初始指南中对称套用"|x| > 17"是错误的，正饱和是ULP舍入（距离1的ULP），负饱和是exp溢出（距离0的溢出边界），两者机制完全不同。
 
-这一发现已修正到[float-precision-testing-guide.md §1.1](file:///d:/.agents/docs/knowledge/best-practices/float-precision-testing-guide.md#L26-L37)。
+这一发现已修正到[float-precision-testing-guide.md §1.1](../../../../knowledge/best-practices/float-precision-testing-guide.md#L26-L37)。
 
 ---
 

@@ -49,13 +49,13 @@ commit: "afa9d346"
 
 | 序号 | 子项目 | 基础镜像 | 用途 | 原有AGENTS.md | 规则文件数 |
 |------|--------|---------|------|:------------:|:---------:|
-| 1 | [jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
-| 2 | [devcontainer-base](../../../../../../apps/docker-images/devcontainer-base/) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
-| 3 | [docker-ssh-dind](../../../../../../apps/docker-images/docker-ssh-dind/) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
-| 4 | [pytorch-base](../../../../../../apps/docker-images/pytorch-base/) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
-| 5 | [caffe-ffi-jupyter](../../../../../../apps/docker-images/caffe-ffi-jupyter/) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
-| 6 | [caffe-ffi-cross](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-cross) | ubuntu:26.04 | Linux→macOS/Windows 交叉编译镜像 | ❌ 无 → 新建 | 2 |
-| 7 | [xmnn-runtime/docker](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker) | ubuntu:24.04 | xmnn Python wheel 运行时镜像 | ❌ 无 → 新建 | 3 |
+| 1 | [jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/README.md) | ubuntu:26.04 | Jupyter Lab + SSH 基础开发镜像 | ✅ 已有（已拆分） | 4 |
+| 2 | [devcontainer-base](../../../../../../apps/docker-images/devcontainer-base/README.md) | ubuntu:26.04 | DevContainer 基础镜像（含Docker-in-Docker支持） | ✅ 已有 | 4 |
+| 3 | [docker-ssh-dind](../../../../../../apps/docker-images/docker-ssh-dind/README.md) | docker:dind | SSH + DinD 特权容器 | ✅ 已有 | 3 |
+| 4 | [pytorch-base](../../../../../../apps/docker-images/pytorch-base/README.md) | nvidia/cuda | PyTorch GPU 训练基础镜像 | ✅ 已有 | 3 |
+| 5 | [caffe-ffi-jupyter](../../../../../../apps/docker-images/caffe-ffi-jupyter/README.md) | jupyter-ssh-base | Caffe FFI Jupyter 开发镜像 | ✅ 已有 | 2 |
+| 6 | [caffe-ffi-cross](../../../../../../apps/docker-images/caffe-ffi-cross) | ubuntu:26.04 | Linux→macOS/Windows 交叉编译镜像 | ❌ 无 → 新建 | 2 |
+| 7 | [xmnn-runtime/docker](../../../../../../apps/docker-images/xmnn-runtime/docker) | ubuntu:24.04 | xmnn Python wheel 运行时镜像 | ❌ 无 → 新建 | 3 |
 
 **统计**：7个子项目，其中5个原有AGENTS.md，2个无AGENTS.md（本次新建）；共生成21个原子规则文件。
 
@@ -355,13 +355,13 @@ refactor(agents): 全面原子化7个Docker子项目的.agents规则体系
 - 🆕 [check-rules-id-uniqueness.ps1](../../../../../scripts/check-rules-id-uniqueness.ps1) — Rules ID唯一性批量检查脚本
 
 ### 原子化项目文件
-- [jupyter-ssh-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/.agents/) — 4规则文件
-- [devcontainer-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/.agents/) — 4规则文件
-- [docker-ssh-dind/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/docker-ssh-dind/.agents/) — 3规则文件（含Containerfile）
-- [pytorch-base/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/pytorch-base/.agents/) — 3规则文件
-- [caffe-ffi-jupyter/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-jupyter/.agents/) — 2规则文件
-- [caffe-ffi-cross/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/caffe-ffi-cross/.agents/) — 2规则文件（交叉编译）
-- [xmnn-runtime/docker/.agents/](file:///d:/spaces/SpecWeave/apps/docker-images/xmnn-runtime/docker/.agents/) — 3规则文件（UID自适应）
+- [jupyter-ssh-base/.agents/](../../../../../../apps/docker-images/jupyter-ssh-base/.agents/README.md) — 4规则文件
+- [devcontainer-base/.agents/](../../../../../../apps/docker-images/devcontainer-base/.agents/README.md) — 4规则文件
+- [docker-ssh-dind/.agents/](../../../../../../apps/docker-images/docker-ssh-dind/.agents/README.md) — 3规则文件（含Containerfile）
+- [pytorch-base/.agents/](../../../../../../apps/docker-images/pytorch-base/.agents/README.md) — 3规则文件
+- [caffe-ffi-jupyter/.agents/](../../../../../../apps/docker-images/caffe-ffi-jupyter/.agents/README.md) — 2规则文件
+- [caffe-ffi-cross/.agents/](../../../../../../apps/docker-images/caffe-ffi-cross/.agents/README.md) — 2规则文件（交叉编译）
+- [xmnn-runtime/docker/.agents/](../../../../../../apps/docker-images/xmnn-runtime/docker/.agents/README.md) — 3规则文件（UID自适应）
 
 ### 关联已有模式
 - [dockerfile-runtime-logical-layering.md](../../../patterns/code-patterns/dockerfile-runtime-logical-layering.md) — 六步逻辑分层（全部7项目对齐）

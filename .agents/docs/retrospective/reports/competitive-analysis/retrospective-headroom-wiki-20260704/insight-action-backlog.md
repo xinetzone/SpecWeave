@@ -30,7 +30,7 @@ ssot:
 
 ## 已完成产出物
 
-- ✅ Wiki核心产出物：[headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/headroom-context-compression-wiki.md) 及11个原子章节已提交（commit a0091c65，28文件，1691行）
+- ✅ Wiki核心产出物：[headroom-context-compression-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/README.md) 及11个原子章节已提交（commit a0091c65，28文件，1691行）
 - ✅ 知识库索引已更新
 - ✅ Spec三件套已归档
 

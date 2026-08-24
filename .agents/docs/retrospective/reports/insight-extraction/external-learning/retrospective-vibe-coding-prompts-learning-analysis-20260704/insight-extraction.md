@@ -130,7 +130,7 @@ first_principles_extraction_date: "2026-07-13"
 | 更新 reports/README.md 索引 | - | 中 | orchestrator | external-learning 部分新增本次复盘条目 | ✅ 已完成 | 2026-07-08 | [reports/README.md](../../../README.md)已添加条目 |
 | PowerShell URL 特殊字符处理陷阱记录 | 洞察 5 | 中 | orchestrator | 工程教训文档新增"PowerShell URL 引号包裹"条目 | ✅ 已完成 | 2026-07-08 | 已记录在 defuddle-web-extraction-preferred.md 模式的"PowerShell URL 处理注意事项"章节 |
 | 修正链接格式为相对路径 | - | 高 | orchestrator | 回退错误的file:///格式，使用相对路径遵循开发规范 | ✅ 已完成 | 2026-07-09 | 本目录所有文件链接已修正为相对路径 |
-| 学习文档v1.2践行深化更新 | 洞察1+践行事件 | 高 | orchestrator | 新增践行鸿沟反面案例、3项新启示、4个FAQ、完整模式链接，第一性原理模式升级L3 | ✅ 已完成 | 2026-07-10 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)更新至v1.2（~530行） |
+| 学习文档v1.2践行深化更新 | 洞察1+践行事件 | 高 | orchestrator | 新增践行鸿沟反面案例、3项新启示、4个FAQ、完整模式链接，第一性原理模式升级L3 | ✅ 已完成 | 2026-07-10 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md)更新至v1.2（~530行） |
 
 ---
 

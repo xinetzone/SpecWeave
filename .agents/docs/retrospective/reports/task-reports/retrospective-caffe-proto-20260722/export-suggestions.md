@@ -55,7 +55,7 @@ category: "export-suggestions"
 | [../../../../../../external/chaos/caffe/gen_proto.py](../../../../../../external/chaos/caffe/gen_proto.py) | 代码生成 |
 | [../../../../../../external/chaos/caffe/protos/caffe.proto](../../../../../../external/chaos/caffe/protos/caffe.proto) | Proto 定义 |
 | [../../../../../../external/chaos/caffe/caffex/src/caffe/proto/caffe.proto](../../../../../../external/chaos/caffe/caffex/src/caffe/proto/caffe.proto) | 原始 Proto 定义 |
-| [../../../../knowledge/learning/caffe-architecture-wiki/README.md](../../../../knowledge/learning/caffe-architecture-wiki/README.md) | 架构深度分析 |
+| [../../../../knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.md](../../../../knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.md) | 架构深度分析 |
 
 ## 下一步行动建议
 
