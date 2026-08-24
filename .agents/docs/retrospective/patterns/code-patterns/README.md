@@ -11,6 +11,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | 模式 | 说明 | 成熟度 | 适用场景 |
 |------|------|--------|---------|
 | [safe-table-edit.md](safe-table-edit.md) | Markdown 表格安全修改策略，整表替换优先、局部替换仅限文本修改 | L1 实验性 | Markdown 表格结构修改 |
+| [markdown-nested-fence-escalation.md](markdown-nested-fence-escalation.md) | Markdown/MyST嵌套围栏升级法：代码块内含```围栏时外层升级为N+1反引号，首尾对称升级，杜绝围栏泄漏导致的标题跳跃/未知指令/转场异常等多类构建错误 | L1 实验性 | Markdown/MyST文档代码块嵌套、Sphinx/mkdocs/GitHub Markdown渲染错误修复 |
 | [invocations-collection-sphinx-build-wrapping.md](invocations-collection-sphinx-build-wrapping.md) | 复用 vendor invocations.docs Collection 包装 Sphinx 构建：build 注入 -E -b html、clean 复用并回收空父目录、Windows pty 可配置、ns.configure 注入 source/target | L1 实验性 | Sphinx 项目 invoke 任务化、vendor invocations 能力复用 |
 | [mermaid-safe-coding-rules.md](mermaid-safe-coding-rules.md) | Mermaid 安全编码五规则，覆盖空行/引号/列表触发/Subgraph/边标签，配套自动化检查脚本 | L4 标准化 | Mermaid 图表编写（防渲染失败） |
 | [mermaid-trap-cheatsheet.md](mermaid-trap-cheatsheet.md) | Mermaid 8 类常见陷阱速查表，快速排查渲染问题 | L4 标准化 | Mermaid 渲染故障快速排查 |

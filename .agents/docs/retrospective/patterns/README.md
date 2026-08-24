@@ -155,6 +155,7 @@ skills = []
 > - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
 > - caffe-ffi CMake原子化重构里程碑复盘（2个L1代码模式入库）：code-patterns/`editable-install-stale-so`（L1，editable安装stale .so处理：重编译后对比build/与源码树路径的.so符号并显式复制刷新，含protobuf descriptor重复注册反模式）；code-patterns/`cxx-build-regression-verification`（L1，C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功）
 > - awesome-okf-xs Sphinx toctree 警告清零里程碑复盘（2个L1模式入库）：process-patterns/`okf-bundle-toctree-repair-workflow`（L1，OKF bundle目录树完整性修复工作流：三类问题分类→建索引/追加/补充→精确追加定位闭合→dry-run→git兜底，4888警告清零867文件变更）；methodology-patterns/tools-automation/`toctree-dynamic-verification`（L1，toctree动态验证法：BFS可达性+单目录清单一致性+选项行/示例过滤+自检用例，演进为CI门禁check-toctrees.py）
+> - awesome-okf-xs Sphinx构建错误修复里程碑复盘（1个L1代码模式入库）：code-patterns/`markdown-nested-fence-escalation`（L1，Markdown/MyST嵌套围栏升级法：外层围栏N+1反引号+首尾对称升级+五步法识别修复，解决围栏泄漏导致的标题跳跃/未知指令/转场异常等多类构建错误，5文件7处修复20ERROR/WARNING清零；含4反模式+5跨领域迁移场景）
 
 ## 使用方式
 
