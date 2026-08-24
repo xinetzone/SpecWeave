@@ -27,6 +27,8 @@ date: "2026-07-09"
 | [Docker模板升级+五条红线验证+方法论编排复盘报告](./retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+五条红线验证+方法论编排复盘报告 | L2 | `docker` `template` `verification` |
 | [第一性原理指令集与知识库双向关联建立 — 任务复盘](./retrospective-first-principles-knowledge-link-20260709.md) | *** | - |  |
 | [Hermes Conda 环境创建与源码安装复盘](./retrospective-hermes-conda-setup-20260812.md) | Hermes Conda 环境创建与源码安装复盘 | - | `conda` `hermes` `python-environment` |
+| [OKF Desktop Wiki教程构建复盘](./retrospective-okf-desktop-wiki-tutorial-20260819/README.md) | OKF Desktop Wiki教程构建复盘 | - | `okf` `wiki` `sphinx` `tutorial` |
+| [awesome-okf-xs Sphinx构建错误修复里程碑复盘](./retrospective-okf-xs-sphinx-build-fix-20260824.md) | awesome-okf-xs Sphinx构建20个ERROR/WARNING修复，围栏泄漏+脚注缺失根因分析 | L1 | `sphinx` `myst` `okf` `build-fix` `markdown-fences` `footnotes` |
 | [右侧侧边栏UI美化七概念复盘报告](./retrospective-sidebar-ui-beautification-20260714.md) | 右侧侧边栏UI美化七概念复盘报告 | L2 | `UI美化` `Tailwind CSS` `frontend-design` |
 | [WeasyPrint第一性原理学习与wiki教程生成复盘报告](./retrospective-weasyprint-learning-20260713.md) | WeasyPrint第一性原理学习与wiki教程生成复盘报告 | - | `retrospective` `weasyprint` `wiki` |
 | [xmnn 容器 unhealthy 误报诊断与修复复盘](./retrospective-xmnn-container-health-fix-20260812.md) | xmnn 容器 unhealthy 误报诊断与修复复盘 | - |  |
