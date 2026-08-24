@@ -79,6 +79,10 @@ class TestIsValid:
         ok, msg = fn._is_valid("08b-codex-examples.md", ".md")
         assert ok, f"Two-digit appendix prefix should be allowed: {msg}"
 
+    def test_three_digit_prefix_allowed(self):
+        ok, msg = fn._is_valid("001-overview-architecture.md", ".md")
+        assert ok, f"Three-digit prefix should be allowed: {msg}"
+
     def test_consecutive_hyphens(self):
         ok, msg = fn._is_valid("my--file.py", ".py")
         assert not ok
