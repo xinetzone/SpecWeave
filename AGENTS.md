@@ -122,7 +122,7 @@
 
 | 资源 | 入口 |
 |---|---|
-| 🏆 最高可信度知识库（OKF 知识束） | [projects/awesome-okf-xs/doc/bundles/](projects/awesome-okf-xs/doc/bundles/index.md)（10 技术域/28 分组/248 知识束；所有相关概念、术语、技术事实的冲突裁决依据，只读引用） |
+| 🏆 最高可信度知识库（OKF 知识包） | [projects/awesome-okf-xs/doc/bundles/](projects/awesome-okf-xs/doc/bundles/index.md)（10 技术域/28 分组/248 知识包；所有相关概念、术语、技术事实的冲突裁决依据，只读引用） |
 | 技术知识库 | [docs/knowledge/](.agents/docs/knowledge/README.md) |
 | 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/README.md) |
 | 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/README.md) |

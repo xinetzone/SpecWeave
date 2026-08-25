@@ -52,7 +52,7 @@
 
 ### 最高可信度知识库
 
-概念、术语与技术事实的冲突裁决依据为 [projects/awesome-okf-xs/doc/bundles/](../../../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识束库，10 技术域/28 分组/248 束，只读引用）。本知识库为二级知识源：与 bundles 描述不一致时以 bundles 为准；bundles 未覆盖的概念由本库与其他二级知识源补充。
+概念、术语与技术事实的冲突裁决依据为 [projects/awesome-okf-xs/doc/bundles/](../../../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包库，10 技术域/28 分组/248 包，只读引用）。本知识库为二级知识源：与 bundles 描述不一致时以 bundles 为准；bundles 未覆盖的概念由本库与其他二级知识源补充。
 
 ### 回溯报告
 

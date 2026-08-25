@@ -7,7 +7,7 @@ source: "projects/awesome-okf-xs/doc/bundles/index.md"
 
 ## Why
 
-`projects/awesome-okf-xs/doc/bundles/`（10 个技术域、28 个分组、248 个 OKF 知识束）已是本项目实际规模最大的结构化知识库，但根 `AGENTS.md`、`.agents/context-routing.md`、`.agents/global-core-rules.md` 均未登记该知识库，也未定义知识源可信度分级。智能体查阅概念时只能依赖 `.agents/docs/knowledge/`，无法感知 bundles 的存在与权威地位，存在"就近取材"偏差风险。需要将该知识库正式纳入智能体路由体系，并以规范形式确立其"最高可信度"地位。
+`projects/awesome-okf-xs/doc/bundles/`（10 个技术域、28 个分组、248 个 OKF 知识包）已是本项目实际规模最大的结构化知识库，但根 `AGENTS.md`、`.agents/context-routing.md`、`.agents/global-core-rules.md` 均未登记该知识库，也未定义知识源可信度分级。智能体查阅概念时只能依赖 `.agents/docs/knowledge/`，无法感知 bundles 的存在与权威地位，存在"就近取材"偏差风险。需要将该知识库正式纳入智能体路由体系，并以规范形式确立其"最高可信度"地位。
 
 ## What Changes
 
@@ -56,7 +56,7 @@ source: "projects/awesome-okf-xs/doc/bundles/index.md"
 
 #### Scenario: bundles 未覆盖时回退
 
-- **WHEN** 智能体查询的概念在 bundles 中不存在对应知识束
+- **WHEN** 智能体查询的概念在 bundles 中不存在对应知识包
 - **THEN** 智能体回退至 `.agents/docs/knowledge/` 等二级知识源，不因 bundles 缺失而中断任务
 
 ### Requirement: 上下文路由条目
@@ -75,7 +75,7 @@ source: "projects/awesome-okf-xs/doc/bundles/index.md"
 #### Scenario: 跨边界调用可定位
 
 - **WHEN** SpecWeave 智能体按 `projects/AGENTS.md` 的可用资产索引查找 awesome-okf-xs 资产
-- **THEN** 存在 bundles 知识束库条目，路径指向 `doc/bundles/index.md`
+- **THEN** 存在 bundles 知识包库条目，路径指向 `doc/bundles/index.md`
 
 ## MODIFIED Requirements
 
