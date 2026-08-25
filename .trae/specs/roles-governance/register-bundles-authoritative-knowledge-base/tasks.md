@@ -5,7 +5,7 @@
 - [x] Task 3: 在 `.agents/context-routing.md` 常规任务路由表新增「概念查阅/知识检索（最高可信度源）」条目，必读入口指向 bundles 根索引，注明优先级高于 `.agents/docs/knowledge/`
 - [x] Task 4: 在 `projects/AGENTS.md` awesome-okf-xs「可用资产索引」表中新增 bundles 资产行（路径 `awesome-okf-xs/doc/bundles/index.md` + 最高可信度知识库说明）
 - [x] Task 5: 在 `.agents/docs/knowledge/README.md` 相关资源区添加最高可信度源说明，指向 bundles 根索引
-- [ ] Task 6: 验证与原子提交：运行链接检查确认新增引用有效，确认 `projects/awesome-okf-xs/` 子项目内部文件零修改（git status 验证），按 Conventional Commits 规范提交（docs 类型，中文描述，显式逐文件 git add）
+- [x] Task 6: 验证与原子提交：运行链接检查确认新增引用有效，确认 `projects/awesome-okf-xs/` 子项目内部文件零修改（git status 验证），按 Conventional Commits 规范提交（docs 类型，中文描述，显式逐文件 git add）
 
 # Task Dependencies
 
