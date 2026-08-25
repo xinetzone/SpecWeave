@@ -28,7 +28,7 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 
 | 子项目 | AGENTS.md 入口 | 说明 |
 |--------|---------------|------|
-| xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.13+ monorepo 项目管理工具 |
+| xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.14.6+ monorepo 项目管理工具 |
 | awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
 
 ### 嵌套优先级
@@ -97,7 +97,7 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 资产 | 路径 | 说明 |
 |------|------|------|
 | 入门指南 | [xuanspace/.agents/ONBOARDING.md](xuanspace/.agents/ONBOARDING.md) | 快速开始、能力速查表、常用 xs 命令 |
-| 全局核心规则 | [xuanspace/.agents/global-core-rules.md](xuanspace/.agents/global-core-rules.md) | Python 3.13+、多包管理器、YAML/TOML 二分法等 |
+| 全局核心规则 | [xuanspace/.agents/global-core-rules.md](xuanspace/.agents/global-core-rules.md) | Python 3.14.6+、多包管理器、YAML/TOML 二分法等 |
 | 上下文路由表 | [xuanspace/.agents/context-routing.md](xuanspace/.agents/context-routing.md) | 任务类型→必读规范映射 |
 | 文档元数据规范 | [xuanspace/.agents/rules/frontmatter.md](xuanspace/.agents/rules/frontmatter.md) | YAML/TOML 内容-元数据二分法 |
 | 工作区发现协议 | [xuanspace/.agents/protocols/workspace-discovery.md](xuanspace/.agents/protocols/workspace-discovery.md) | 五步发现流程 |
