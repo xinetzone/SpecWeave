@@ -113,6 +113,7 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 全局核心规则 | [awesome-okf-xs/.agents/global-core-rules.md](awesome-okf-xs/.agents/global-core-rules.md) | 启动协议、内容敏感度分流、OKF 文档规范 |
 | 上下文路由表 | [awesome-okf-xs/.agents/context-routing.md](awesome-okf-xs/.agents/context-routing.md) | 任务类型→必读规范映射 |
 | 文档元数据规范 | [awesome-okf-xs/.agents/rules/frontmatter.md](awesome-okf-xs/.agents/rules/frontmatter.md) | YAML/TOML 内容-元数据二分法 |
+| 知识束库（最高可信度知识库） | [awesome-okf-xs/doc/bundles/index.md](awesome-okf-xs/doc/bundles/index.md) | OKF 知识束总索引（10 技术域/28 分组/248 束），SpecWeave 项目概念、术语、技术事实的最高可信源与冲突裁决依据，只读引用 |
 
 ## 边界声明
 
