@@ -64,6 +64,8 @@ date: "2026-07-09"
 | [七概念驱动的技术Wiki创作方法论](./seven-concepts-wiki-creation-methodology.md) | 七概念驱动的技术Wiki创作方法论 | L1 |  |
 | [Skill 发现协议增强 SOP](./skill-discovery-protocol.md) | Skill 发现协议增强 SOP | L1 |  |
 | [Skill 五要素模型（Skill Five Elements Model）](./skill-five-elements-model.md) | Skill 五要素模型（Skill Five Elements Model） | L1 |  |
+| [技能意图路由（Skill Intent Routing）](./skill-intent-routing.md) | 技能意图路由（Skill Intent Routing） | L2 已验证 | `skill` `意图路由` `SKILL.md` |
+| [技能知识操作分离（Skill Knowledge-Operation Separation）](./skill-knowledge-operation-separation.md) | 技能知识操作分离（Skill Knowledge-Operation Separation） | L2 | `skill` `知识操作分离` `架构设计` |
 | [Skill渐进式披露封装模式（SKILL.md Metadata + Python Executor）](./skill-progressive-disclosure-encapsulation.md) | Skill渐进式披露封装模式（SKILL.md Metadata + Python Executor） | L1 |  |
 | [Skill标准化操作流程模式（Four Principles for Workflow Skill Design）](./skill-standardized-workflow-pattern.md) | Skill标准化操作流程模式（Four Principles for Workflow Skill Design） | L1 |  |
 | [AI Skill 三层价值模型](./skill-three-layer-value-model.md) | AI Skill 三层价值模型 | L2 |  |
