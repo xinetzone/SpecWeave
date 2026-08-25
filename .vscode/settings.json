@@ -1,4 +1,11 @@
 {
     "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "powershell.powerShellDefaultVersion": "PowerShell (x64)"
+    "powershell.powerShellDefaultVersion": "PowerShell (x64)",
+    "python-envs.pythonProjects": [
+        {
+            "path": ".",
+            "envManager": "ms-python.python:conda",
+            "packageManager": "ms-python.python:conda"
+        }
+    ]
 }
