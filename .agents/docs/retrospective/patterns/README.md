@@ -117,7 +117,7 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 51 | 8 | 11 | 3 | 0 |
+| architecture-patterns/ | 52 | 9 | 11 | 3 | 0 |
 | code-patterns/ | 144 | 6 | 6 | 0 | 2 |
 | process-patterns/ | 11 | 9 | 2 | 0 | 0 |
 | methodology-patterns/ | 423 | 69 | 45 | 11 | 2 |
