@@ -1,11 +1,23 @@
-"""Jupyter Podman Rootless image build task."""
+"""Jupyter Podman Rootless image build task.
+
+Three-tier backend priority:
+  1. podman-compose build (declarative)
+  2. podman-py SDK (REST API)
+  3. CLI direct calls (fallback)
+"""
 from pathlib import Path
 
 from invoke import Context, task
 from invoke.exceptions import Exit
 
-from .client import get_client, sdk_build_kwargs, sdk_available
+from .client import compose_available, get_client, sdk_build_kwargs, sdk_available
+from .compose_backend import compose_build, is_compose_ready
 from .utils import MIRROR_CHOICES, detect_runtime, run_cmd
+
+
+def _should_use_compose():
+    """Check if we should use podman-compose backend."""
+    return compose_available() and is_compose_ready()
 
 
 def _build_via_sdk(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache):
@@ -72,6 +84,8 @@ def _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, n
         cmd_parts.append("--no-cache")
 
     cmd_parts.extend(build_args)
+    cmd_parts.append("-f")
+    cmd_parts.append("Containerfile")
     cmd_parts.append(".")
 
     cmd = " ".join(cmd_parts)
@@ -93,8 +107,10 @@ def build(
 ):
     """Build Jupyter container image.
 
-    Prefers podman-py SDK (requires Podman socket running),
-    automatically falls back to CLI commands when SDK unavailable.
+    Three-tier backend priority:
+      1. podman-compose build (declarative YAML config)
+      2. podman-py SDK (requires Podman socket)
+      3. CLI direct commands (fallback)
     """
     if tag is None:
         tag = c.container.get("image_tag", "jupyter-podman-rootless:latest")
@@ -108,5 +124,18 @@ def build(
     print(f"Build context: {project_root}")
     print(f"Mirror config: APT={apt_mirror}, Conda={conda_mirror}, PIP={pip_mirror}")
 
+    # Tier 1: podman-compose build
+    if _should_use_compose():
+        print("[Backend] Using podman-compose (Tier 1)")
+        build_args = {
+            "APT_MIRROR": apt_mirror,
+            "CONDA_MIRROR": conda_mirror,
+            "PIP_MIRROR": pip_mirror,
+        }
+        if compose_build(project_root=project_root, no_cache=no_cache, build_args=build_args):
+            return
+        print("[Compose] Build failed, falling back to SDK/CLI...")
+
+    # Tier 2 + 3: SDK then CLI
     if not _build_via_sdk(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache):
         _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache)

@@ -1,6 +1,6 @@
 # jupyter-podman-rootless
 
-> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务，invoke 替代 docker-compose 进行任务编排。
+> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。支持三层后端编排：podman-compose 声明式编排（优先）→ podman-py SDK → CLI 直接调用。
 
 ---
 
@@ -19,6 +19,8 @@
 | **镜像源** | APT/Conda/PIP 均支持 official / tuna / aliyun |
 | **构建优化** | 7层镜像分层（按变化频率），内置计时器 + 语法验证 |
 | **运行时检测** | 自动检测 podman/docker，WSL2 路径自动转换 |
+| **编排方式** | 三层后端：podman-compose 声明式（优先）→ podman-py SDK → CLI；也可直接使用 `podman-compose up -d` |
+| **配置管理** | `.env` 环境变量文件 + `compose.yaml` 标准声明式配置，自动生成密码/token |
 
 ---
 
@@ -29,27 +31,58 @@
 - **Podman**（推荐）或 **Docker** 已安装
 - **Python ≥3.10**（用于运行 invoke 任务）
 - Linux 宿主机需要 FUSE 支持（`--device /dev/fuse`）
+- **可选**：`podman-compose`（声明式编排，推荐安装）
 
 ### 安装 invoke
 
 ```bash
+# 基础安装（CLI fallback模式）
 pip install -e .
-# 或直接安装
-pip install invoke>=2.0
+
+# 安装 podman-compose 支持（推荐，声明式编排）
+pip install -e ".[compose]"
+
+# 安装完整功能（podman-py SDK + podman-compose）
+pip install -e ".[full]"
 ```
 
-### 30秒上手
+### 两种使用方式
+
+#### 方式一：invoke 封装（推荐，自动密码生成 + 路径转换）
 
 ```bash
 # 1. 构建镜像（使用清华镜像源加速）
 invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna
 
-# 2. 启动容器（自动生成密码和token）
+# 2. 启动容器（自动生成密码和token，自动创建.env）
 invoke run
 
 # 3. 查看访问信息（启动时会打印）
 # SSH:  ssh -p 2222 devuser@localhost
 # Jupyter Lab: http://localhost:8888/lab?token=<自动生成的token>
+```
+
+#### 方式二：直接使用 podman-compose（标准Compose Spec）
+
+```bash
+# 1. 复制环境变量模板
+cp .env.example .env
+# 编辑 .env 设置密码、端口、镜像源等
+
+# 2. 构建并启动（后台运行）
+podman-compose up -d --build
+
+# 3. 查看状态
+podman-compose ps
+
+# 4. 查看日志
+podman-compose logs -f
+
+# 5. 进入容器
+podman-compose exec jupyter bash
+
+# 6. 停止并删除
+podman-compose down
 ```
 
 ### 进入容器

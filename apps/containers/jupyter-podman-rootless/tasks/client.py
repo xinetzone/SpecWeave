@@ -1,13 +1,15 @@
 """Podman/Docker client wrapper module.
 
-Provides SDK-first, CLI-fallback container runtime client management:
-- Prefers official podman-py SDK (PodmanClient.from_env() auto-detection)
-- Automatically falls back to CLI calls when SDK unavailable
-- Supports with context manager for auto cleanup
+Provides three-tier backend priority for container management:
+- Tier 1: podman-compose (declarative YAML config, daemon-less, rootless-first)
+- Tier 2: podman-py SDK (PodmanClient.from_env() auto-detection)
+- Tier 3: CLI direct calls (fallback when both unavailable)
+Supports with context manager for auto cleanup.
 """
 from __future__ import annotations
 
 import os
+import shutil
 from contextlib import contextmanager
 
 # Try importing podman-py SDK (optional dependency)
@@ -21,10 +23,18 @@ except ImportError:
     PodmanNotFound = Exception
     _SDK_AVAILABLE = False
 
+# Check for podman-compose (daemon-less declarative backend)
+_COMPOSE_AVAILABLE = shutil.which("podman-compose") is not None
+
 
 def sdk_available():
     """Check if podman-py SDK is available."""
     return _SDK_AVAILABLE
+
+
+def compose_available():
+    """Check if podman-compose command is available."""
+    return _COMPOSE_AVAILABLE
 
 
 @contextmanager
@@ -136,6 +146,7 @@ def sdk_build_kwargs(
 __all__ = [
     "APIError",
     "PodmanNotFound",
+    "compose_available",
     "get_client",
     "sdk_available",
     "sdk_build_kwargs",

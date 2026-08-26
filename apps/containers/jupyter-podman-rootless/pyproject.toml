@@ -11,10 +11,13 @@ requires-python = ">=3.10"
 license = {text = "MIT"}
 dependencies = [
     "invoke>=2.0",
+    "python-dotenv>=1.0.0",
 ]
 
 [project.optional-dependencies]
 sdk = ["podman>=5.0.0"]
+compose = ["podman-compose>=1.0.0"]
+full = ["podman>=5.0.0", "podman-compose>=1.0.0"]
 
 [tool.setuptools]
 py-modules = []
