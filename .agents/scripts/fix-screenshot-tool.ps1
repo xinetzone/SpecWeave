@@ -1,4 +1,4 @@
-﻿#Requires -Version 5.1
+#Requires -Version 5.1
 # PWSH7-EXEMPT: Windows 系统维护脚本，有意兼容 Windows PowerShell 5.1，无需 pwsh7
 
 <#
@@ -57,6 +57,10 @@ try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch {}
 $runtimeLog = 'Microsoft-Windows-AppModel-Runtime/Admin'
 $errorIds    = @(208, 216)
 
+$script:lastFixTime = [datetime]::MinValue
+$script:consecutiveFailures = 0
+$script:nextRetryAfter = [datetime]::MinValue
+
 function Write-Info { param([string]$m) Write-Host $m }
 function Write-Ok   { param([string]$m) Write-Host $m -ForegroundColor Green }
 function Write-Warn { param([string]$m) Write-Host $m -ForegroundColor Yellow }
@@ -65,7 +69,12 @@ function Write-Head { param([string]$m) Write-Host ""; Write-Host "===== $m ====
 
 function Show-AppErrorLog {
     Write-Head "截图工具最近错误日志 (AppModel-Runtime, Id 208/216)"
-    $errs = Get-WinEvent -LogName $runtimeLog -MaxEvents 200 -ErrorAction SilentlyContinue |
+    $events = Get-WinEventInternal -MaxEvents 200
+    if ($null -eq $events) {
+        Write-Warn "无法读取事件日志 $runtimeLog（可能需要管理员权限或日志通道未启用）"
+        return
+    }
+    $errs = $events |
         Where-Object { $_.Id -in $errorIds -and $_.Message -match [regex]::Escape($PackageName) } |
         Select-Object -First 10
     if (-not $errs) {
@@ -79,11 +88,41 @@ function Show-AppErrorLog {
     }
 }
 
-# 获取指定时间点之后、与目标包相关的 208/216 错误
+function Get-WinEventInternal {
+    param([int]$MaxEvents = 500)
+    try {
+        $events = Get-WinEvent -FilterHashtable @{ LogName = $runtimeLog; Id = $errorIds } -MaxEvents $MaxEvents -ErrorAction Stop
+        if ($null -eq $events) { return @() }
+        return $events
+    }
+    catch [System.Eventing.Reader.EventLogNotFoundException] {
+        return $null
+    }
+    catch {
+        if ($_.Exception.Message -match 'No events were found|找不到|没有匹配') {
+            return @()
+        }
+        try {
+            $events = Get-WinEvent -LogName $runtimeLog -MaxEvents $MaxEvents -ErrorAction Stop |
+                Where-Object { $_.Id -in $errorIds }
+            if ($null -eq $events) { return @() }
+            return $events
+        }
+        catch {
+            return $null
+        }
+    }
+}
+
 function Get-AppRuntimeErrors {
     param([datetime]$Since = [datetime]::MinValue)
-    Get-WinEvent -LogName $runtimeLog -MaxEvents 500 -ErrorAction SilentlyContinue |
-        Where-Object { $_.TimeCreated -gt $Since -and $_.Id -in $errorIds -and $_.Message -match [regex]::Escape($PackageName) }
+    $events = Get-WinEventInternal -MaxEvents 500
+    if ($null -eq $events) { return @() }
+    return @($events | Where-Object {
+        $_.TimeCreated -gt $Since -and
+        $_.TimeCreated -gt $script:lastFixTime -and
+        $_.Message -match [regex]::Escape($PackageName)
+    })
 }
 
 # 执行一次完整修复：关进程 -> 重注册 -> 验证。成功返回 $true。
@@ -98,7 +137,7 @@ function Repair-PackageRuntime {
     Write-Ok "已找到: $($pkg.PackageFullName) (Status: $($pkg.Status))"
 
     Write-Info "检查是否有正在运行的截图工具进程..."
-    $installPrefix = $pkg.InstallLocation.TrimEnd('\')
+    $installPrefix = $pkg.InstallLocation.TrimEnd('\') + '\'
     $running = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
         Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($installPrefix, [System.StringComparison]::OrdinalIgnoreCase) }
     if ($running) {
@@ -124,19 +163,20 @@ function Repair-PackageRuntime {
     }
 
     Write-Info "验证修复结果..."
-    $before = (Get-Date).AddMinutes(-1)
+    $beforeLaunch = Get-Date
     if ($Launch) {
         Start-Process -FilePath "explorer.exe" -ArgumentList "ms-screenclip:" -ErrorAction SilentlyContinue
         Start-Sleep -Seconds 4
         Write-Info "已触发启动，等待 4 秒检查是否产生新错误..."
     }
 
-    $newErrs = Get-AppRuntimeErrors -Since $before
+    $newErrs = Get-AppRuntimeErrors -Since $beforeLaunch
     if ($newErrs) {
         Write-Warn "修复后仍检测到错误事件："
         Show-AppErrorLog
         return $false
     }
+    $script:lastFixTime = Get-Date
     return $true
 }
 
@@ -151,20 +191,37 @@ if ($Watch) {
     Write-Head "守护模式启动：每 $WatchIntervalSeconds 秒检查 208/216 错误，检测到即自动修复"
     Write-Info "按 Ctrl+C 停止。"
     while ($true) {
-        $since = (Get-Date).AddSeconds(-$WatchIntervalSeconds)
+        $now = Get-Date
+        $since = $now.AddSeconds(-$WatchIntervalSeconds)
+        $ts = $now.ToString('yyyy-MM-dd HH:mm:ss')
         $errs = Get-AppRuntimeErrors -Since $since
-        $ts = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
         if ($errs) {
+            if ($now -lt $script:nextRetryAfter) {
+                $waitSec = [int]($script:nextRetryAfter - $now).TotalSeconds
+                Write-Warn "[$ts] 连续失败 $script:consecutiveFailures 次，退避中，${waitSec}s 后重试..."
+                Start-Sleep -Seconds ([Math]::Min($waitSec, $WatchIntervalSeconds))
+                continue
+            }
             Write-Warn "[$ts] 检测到 $PackageName 运行时错误 $(@($errs).Count) 条，执行自动修复..."
             $ok = Repair-PackageRuntime -Launch (-not $NoLaunch)
             if ($ok) {
                 Write-Ok "[$ts] 自愈成功，截图工具已恢复。"
+                $script:consecutiveFailures = 0
+                $script:nextRetryAfter = [datetime]::MinValue
             }
             else {
-                Write-Err "[$ts] 自愈失败，请手动运行本脚本排查（建议先重装截图工具）。"
+                $script:consecutiveFailures++
+                $backoff = [Math]::Min($WatchIntervalSeconds * [Math]::Pow(2, $script:consecutiveFailures - 1), 3600)
+                $script:nextRetryAfter = (Get-Date).AddSeconds($backoff)
+                Write-Err "[$ts] 自愈失败（连续 $script:consecutiveFailures 次），${backoff}s 后重试。建议手动重装截图工具。"
             }
         }
         else {
+            if ($script:consecutiveFailures -gt 0) {
+                Write-Ok "[$ts] 恢复正常，重置失败计数。"
+                $script:consecutiveFailures = 0
+                $script:nextRetryAfter = [datetime]::MinValue
+            }
             Write-Info "[$ts] 未检测到错误，继续监视..."
         }
         Start-Sleep -Seconds $WatchIntervalSeconds
