@@ -13,6 +13,9 @@ dependencies = [
     "invoke>=2.0",
 ]
 
+[project.optional-dependencies]
+sdk = ["podman>=5.0.0"]
+
 [tool.setuptools]
 py-modules = []
 

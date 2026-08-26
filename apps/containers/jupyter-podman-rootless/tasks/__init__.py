@@ -11,8 +11,6 @@
     invoke exec       - 在容器中执行命令
     invoke container.* - 容器管理子命令集合
 """
-from __future__ import annotations
-
 from invoke import Collection
 
 from . import container
