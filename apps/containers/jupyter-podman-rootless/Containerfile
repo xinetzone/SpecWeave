@@ -44,7 +44,7 @@ ARG PYTHON_VERSION
 ARG PYTHON_BUILD
 
 LABEL maintainer="SpecWeave"
-LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
+LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + OMLMD(ML model OCI artifact) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
 LABEL version="1.0-ft"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
@@ -300,11 +300,11 @@ RUN echo "=== Layer 2/7: Install Miniforge3 + configure .condarc ===" && \
     echo "[TIMER] Layer 2/7 (miniforge+.condarc) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 3/7: 创建main conda环境 (Python 3.14 cp314t + Jupyter)
-# 变化频率：中（Python/Jupyter版本升级时改）
-# 原则：使用mamba单次solve，同层完成安装+清理+strip+验证free-threading
+# Layer 3/7: 创建main conda环境 (Python 3.14 cp314t + Jupyter + OMLMD)
+# 变化频率：中（Python/Jupyter/OMLMD版本升级时改）
+# 原则：使用mamba单次solve，pip安装OMLMD（含Python 3.14 fallback），同层完成安装+清理+strip+验证free-threading
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter ===" && \
+RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter + OMLMD ===" && \
     _STAGE_START=$(date +%s) && \
     export PYTHONDONTWRITEBYTECODE=1 && \
     . "${CONDA_DIR}/etc/profile.d/conda.sh" && \
@@ -336,6 +336,10 @@ RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHO
     echo "[OK] main env created in ${_mamba_elapsed}s" && \
     echo "[OK] Python version: $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')" && \
     echo "[OK] Jupyter version: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)" && \
+    echo "[INFO] Installing OMLMD (OCI Artifact for ML model & metadata)..." && \
+    /opt/conda/envs/main/bin/pip install --no-cache-dir omlmd || \
+    /opt/conda/envs/main/bin/pip install --no-cache-dir --ignore-requires-python omlmd && \
+    echo "[OK] omlmd version: $(/opt/conda/envs/main/bin/python -c 'import omlmd; print(omlmd.__version__)' 2>&1)" && \
     echo "[CLEAN] Removing tk/tcl from main env..." && \
     rm -rf /opt/conda/envs/main/lib/tk8.6 /opt/conda/envs/main/lib/tcl8.6 /opt/conda/envs/main/lib/tcl8 /opt/conda/envs/main/lib/tk8 2>/dev/null || true && \
     rm -f /opt/conda/envs/main/lib/libtk8.6.so /opt/conda/envs/main/lib/libtcl8.6.so 2>/dev/null || true && \
@@ -566,6 +570,7 @@ RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
     pip --version && echo "[OK] pip available" && \
     conda --version && echo "[OK] conda available" && \
     jupyter --version >/dev/null 2>&1 && echo "[OK] jupyter available" && \
+    python -c "import omlmd; print(f'[OK] omlmd {omlmd.__version__} available (ML model OCI artifact)')" && \
     podman --version && echo "[OK] podman available" && \
     crun --version >/dev/null 2>&1 && echo "[OK] crun available" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
