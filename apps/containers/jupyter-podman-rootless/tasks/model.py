@@ -1,8 +1,10 @@
-"""ML model management tasks via OMLMD (OCI Artifact for ML model & metadata).
+"""ML model management tasks via OMLMD (OCI Artifact) and OLOT (KServe ModelCar).
 
-Provides push/pull/config commands for ML model versioning via OCI registries.
-OMLMD runs inside the Jupyter container; tasks exec into the running container.
-Three-tier exec backend:
+Provides commands for two complementary ML model distribution paradigms:
+  - OMLMD: push/pull/config — custom media type ML model artifacts (x-mlmodel)
+  - OLOT:  pack/extract    — KServe ModelCar standard OCI images (/models/)
+
+All commands run inside the Jupyter container via three-tier exec backend:
   1. podman-compose exec (declarative, daemon-less)
   2. podman-py SDK exec_run (REST API)
   3. CLI podman exec (fallback)
@@ -192,4 +194,95 @@ def model_config(c, target=None, output_format="yaml", plain_http=True, containe
 
     print(f"[Model] Metadata config for: {target}")
     cmd = _build_config_cmd(target=target, output_format=output_format, plain_http=plain_http)
+    _exec_in_container(c, container_name, cmd)
+
+
+def _build_pack_cmd(base, target, files, modelcard=None, root_dir=None,
+                    labels=None, annotations=None, plain_http=True):
+    parts = ["cd", _DEFAULT_WORKDIR, "&&", "olot_car.py", "pack",
+             "--base", _quote(base), "--target", _quote(target)]
+    if modelcard:
+        parts.extend(["--modelcard", _quote(modelcard)])
+    if root_dir:
+        parts.extend(["--root-dir", _quote(root_dir)])
+    if labels:
+        for lbl in labels:
+            parts.extend(["-l", _quote(str(lbl))])
+    if annotations:
+        for ann in annotations:
+            parts.extend(["-a", _quote(str(ann))])
+    if not plain_http:
+        parts.append("--no-plain-http")
+    for f in files:
+        parts.append(_quote(str(f)))
+    return " ".join(parts)
+
+
+def _build_extract_cmd(source, output, tar_filter_dir="/models", plain_http=True):
+    parts = ["cd", _DEFAULT_WORKDIR, "&&", "olot_car.py", "extract",
+             "--source", _quote(source), "--output", _quote(output)]
+    if tar_filter_dir != "/models":
+        parts.extend(["--tar-filter-dir", _quote(tar_filter_dir)])
+    if not plain_http:
+        parts.append("--no-plain-http")
+    return " ".join(parts)
+
+
+@task(iterable=["file", "label", "annotation"], help={
+    "base": "Base image reference (required, e.g., quay.io/mmortari/hello-world-wait:latest)",
+    "target": "Target ModelCar image reference (e.g., localhost:5000/my-model:v1)",
+    "file": "Model file path inside container (repeatable, -f path)",
+    "modelcard": "Path to ModelCarD README.md inside container",
+    "root-dir": "Root directory for preserving subdirectory structure",
+    "label": "OCI image labels key=value (repeatable, -l key=value)",
+    "annotation": "OCI manifest annotations key=value (repeatable, -a key=value)",
+    "plain-http": "Use plain HTTP (no TLS) for registry connection (default: True)",
+    "container-name": "Container name override",
+})
+def pack(c, base, target=None, file=None, modelcard=None, root_dir=None,
+         label=None, annotation=None, plain_http=True, container_name=None):
+    """Pack model files into KServe ModelCar image and push to registry via olot.
+
+    Creates a standard OCI image with model files at /models/ (KServe ModelCar),
+    using the pure-Python oras-py backend (no Docker daemon required).
+    Specify --no-plain-http for HTTPS registries (GHCR, Docker Hub, etc.).
+    """
+    if not file:
+        raise Exit("At least one --file/-f is required (model file to pack)")
+    if container_name is None:
+        container_name = c.container.get("container_name", "jupyter-podman")
+
+    target = _resolve_target(c, target)
+    print(f"[ModelCar] Packing {len(file)} file(s) into: {target}")
+    print(f"[ModelCar] Base image: {base}")
+    cmd = _build_pack_cmd(
+        base=base, target=target, files=file, modelcard=modelcard,
+        root_dir=root_dir, labels=label, annotations=annotation,
+        plain_http=plain_http,
+    )
+    _exec_in_container(c, container_name, cmd)
+
+
+@task(help={
+    "source": "Source ModelCar image reference to extract from",
+    "output": "Output directory inside container (default: ./extracted-models/)",
+    "tar-filter-dir": "Directory prefix to extract (default: /models)",
+    "plain-http": "Use plain HTTP (no TLS) for registry connection (default: True)",
+    "container-name": "Container name override",
+})
+def extract(c, source, output="./extracted-models", tar_filter_dir="/models",
+            plain_http=True, container_name=None):
+    """Extract /models directory from KServe ModelCar image to local path.
+
+    Reverse of pack: pulls a ModelCar image and extracts its /models content
+    to the specified output directory inside the container.
+    """
+    if container_name is None:
+        container_name = c.container.get("container_name", "jupyter-podman")
+
+    print(f"[ModelCar] Extracting /models from: {source} -> {output}")
+    cmd = _build_extract_cmd(
+        source=source, output=output, tar_filter_dir=tar_filter_dir,
+        plain_http=plain_http,
+    )
     _exec_in_container(c, container_name, cmd)

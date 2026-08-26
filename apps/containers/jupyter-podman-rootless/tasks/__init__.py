@@ -10,9 +10,11 @@
     invoke logs       - 查看容器日志
     invoke exec       - 在容器中执行命令
     invoke container.* - 容器管理子命令集合
-    invoke model.push  - 推送ML模型到OCI registry（OMLMD）
-    invoke model.pull  - 从OCI registry拉取ML模型
-    invoke model.config - 查看模型元数据配置
+    invoke model.push    - 推送ML模型到OCI registry（OMLMD artifact）
+    invoke model.pull    - 从OCI registry拉取ML模型（OMLMD artifact）
+    invoke model.config  - 查看模型元数据配置（OMLMD）
+    invoke model.pack    - 打包模型为KServe ModelCar镜像并推送（OLOT）
+    invoke model.extract - 从ModelCar镜像提取/models到本地（OLOT）
 """
 from invoke import Collection
 
@@ -33,7 +35,7 @@ ns.add_task(container.exec_task)
 # 添加container子集合
 ns.add_collection(Collection.from_module(container), name="container")
 
-# 添加model子集合（OMLMD模型管理，不提升到根命名空间）
+# 添加model子集合（OMLMD模型artifact管理 + OLOT ModelCar打包，不提升到根命名空间）
 ns.add_collection(Collection.from_module(model), name="model")
 
 # 默认配置
