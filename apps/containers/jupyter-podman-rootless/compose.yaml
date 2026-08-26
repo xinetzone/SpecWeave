@@ -5,7 +5,14 @@
 #   1. Copy .env.example to .env and configure
 #   2. podman-compose up -d
 #   3. With local model registry: podman-compose --profile registry up -d
-#   4. Or use `invoke run` for enhanced experience (auto password generation, WSL2 path handling)
+#   4. With dev tools pass-through: podman-compose -f compose.yaml -f compose.dev.yaml up -d
+#   5. Or use `invoke run` for enhanced experience (auto password generation, WSL2 path handling)
+#
+# ── Toolbx-style Host Resource Pass-through ─────────────────────────
+# Philosophy: "pass-through over isolation" for development environments.
+# Uncomment the blocks below OR use compose.dev.yaml override for deeper
+# host integration (SSH agent, git config, GUI apps, GPU, /run/host escape hatch).
+# See: https://containertoolbx.org/  (Toolbx pass-through design reference)
 
 name: jupyter-podman-rootless
 
@@ -23,18 +30,57 @@ services:
     ports:
       - "${SSH_PORT:-2222}:22"
       - "${JUPYTER_PORT:-8888}:8888"
+    # ── Host network mode (alternative to port mapping, Toolbx-style) ──
+    # Uncomment to use host network (no port mapping needed, access host services directly):
+    # network_mode: host
     volumes:
       - ${WORKSPACE:-./workspace}:/workspace
+      # ── Dev pass-through mounts (uncomment to enable) ──
+      # SSH agent for git operations inside container (Toolbx-style):
+      # - ${SSH_AUTH_SOCK:-/dev/null}:/tmp/ssh-auth.sock:ro
+      # Git config (read-only, no need to reconfigure git in container):
+      # - ${HOME:-/home/user}/.gitconfig:/home/devuser/.gitconfig:ro
+      # SSH keys (read-only, for git+ssh operations):
+      # - ${HOME:-/home/user}/.ssh:/home/devuser/.ssh:ro
+      # X11 socket for GUI apps (firefox, matplotlib interactive, etc.):
+      # - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Wayland socket for GUI apps:
+      # - ${XDG_RUNTIME_DIR:-/run/user/1000}/${WAYLAND_DISPLAY:-wayland-0}:/tmp/wayland-0:ro
+      # /run/host escape hatch (access host filesystem, Toolbx-style):
+      # - /:/run/host:rslave
+      # Host DNF/Pip cache to speed up package installs:
+      # - ${HOME:-/home/user}/.cache/pip:/home/devuser/.cache/pip
     devices:
       - /dev/fuse:/dev/fuse
+      # ── GPU/device pass-through (uncomment to enable) ──
+      # Intel/AMD GPU (Mesa, /dev/dri):
+      # - /dev/dri:/dev/dri
+      # NVIDIA GPU (requires NVIDIA Container Toolkit / CDI):
+      #   For CDI (recommended): add to container config via `podman container runlabel`
+      #   Or use nvidia.com/gpu: all with nvidia-ctk configured
+      # USB devices (for hardware access):
+      # - /dev/bus/usb:/dev/bus/usb
     security_opt:
       - label=disable
     cgroupns: host
+    # ── ulimits (uncomment for large builds/ML workloads, Toolbx-style) ──
+    # ulimits:
+    #   nofile:
+    #     soft: 65536
+    #     hard: 65536
     environment:
       USER_PASSWORD: ${USER_PASSWORD:-changeme}
       JUPYTER_TOKEN: ${JUPYTER_TOKEN:-changeme}
       SSH_PUBLIC_KEY: ${SSH_PUBLIC_KEY:-}
       GRANT_SUDO: ${GRANT_SUDO:-no}
+      # ── Dev pass-through env vars (uncomment to enable) ──
+      # SSH agent socket path (must match volume mount above):
+      # SSH_AUTH_SOCK: /tmp/ssh-auth.sock
+      # X11/Wayland for GUI apps:
+      # DISPLAY: ${DISPLAY:-:0}
+      # WAYLAND_DISPLAY: ${WAYLAND_DISPLAY:-wayland-0}
+      # XDG_RUNTIME_DIR: /tmp/runtime
+      # QT_X11_NO_MITSHM: "1"
     restart: unless-stopped
     # tty: true  # uncomment for interactive shell debugging
 

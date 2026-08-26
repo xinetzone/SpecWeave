@@ -46,6 +46,9 @@ ARG PYTHON_BUILD
 LABEL maintainer="SpecWeave"
 LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + OMLMD(ML model OCI artifact) + OLOT(KServe ModelCar) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
 LABEL version="1.0-ft"
+LABEL com.github.containers.toolbox="true" \
+      com.github.debarshiray.toolbox="true" \
+      usage="This image is compatible with toolbox create/enter (Toolbx interactive dev container)"
 
 # ── 元数据层：环境变量声明（不产生层，仅元数据） ──
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -114,6 +117,7 @@ RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" 
         uidmap \
         fuse-overlayfs \
         slirp4netns \
+        libcap2-bin \
     && echo "[OK] System packages installed" && \
     echo "[INFO] Verifying key package versions:" && \
     echo "  - git: $(git --version 2>/dev/null | awk '{print $3}')" && \
@@ -420,11 +424,14 @@ RUN echo "=== Layer 4/7: Create user devuser + subuid/subgid + directories + Pod
     echo "[BUILD] Creating directories..." && \
     mkdir -p /workspace /root/.jupyter /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config/containers \
         /run/sshd /var/log/supervisor /etc/supervisor/conf.d \
-        /etc/containers/containers.conf.d && \
+        /etc/containers/containers.conf.d /run/host && \
     chmod 777 /workspace && \
     chmod 700 /home/devuser/.ssh /root/.ssh && \
     chown -R devuser:devuser /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config && \
     echo "[OK] Directories created with proper permissions" && \
+    echo "[BUILD] Creating Toolbx compatibility markers..." && \
+    touch /run/.toolboxenv /run/.containerenv /etc/hosts /etc/resolv.conf /etc/machine-id && \
+    echo "[OK] Toolbx markers: /run/.toolboxenv, /run/.containerenv, /run/host" && \
     echo "[BUILD] Configuring conda initialization..." && \
     echo "# Initialize conda for login shells" > /etc/profile.d/conda-init.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/profile.d/conda-init.sh && \
@@ -581,6 +588,9 @@ RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
     python -c "import olot; print(f'[OK] olot {olot.__version__} available (KServe ModelCar packager)')" && \
     test -x /usr/local/bin/olot_car.py && echo "[OK] olot_car.py helper script available" && \
     python /usr/local/bin/olot_car.py --help >/dev/null 2>&1 && echo "[OK] olot_car.py CLI functional" && \
+    test -d /run/host && echo "[OK] /run/host mount point exists (Toolbx compatibility)" && \
+    test -f /run/.toolboxenv && echo "[OK] /run/.toolboxenv marker exists (Toolbx compatibility)" && \
+    capsh --print >/dev/null 2>&1 && echo "[OK] capsh available (Toolbx capability boundary)" && \
     podman --version && echo "[OK] podman available" && \
     crun --version >/dev/null 2>&1 && echo "[OK] crun available" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \

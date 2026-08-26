@@ -1,0 +1,56 @@
+---
+# compose.dev.yaml — Dev tools pass-through override (Toolbx-style "透传优于隔离")
+#
+# Usage:
+#   podman-compose -f compose.yaml -f compose.dev.yaml up -d
+#   invoke run  # invoke auto-detects compose.yaml; for dev override use:
+#               #   CONTAINER_COMPOSE_FILES="compose.yaml:compose.dev.yaml" invoke run
+#
+# Enables:
+#   - SSH agent passthrough (git push/pull without reconfiguring keys in container)
+#   - Git config read-only mount (~/.gitconfig)
+#   - SSH keys read-only mount (~/.ssh for git+ssh)
+#   - X11/Wayland GUI support (matplotlib interactive, firefox, etc.)
+#   - Pip cache mount (faster pip installs, reuses host cache)
+#   - ulimits: nofile 65536 (for large ML workloads)
+#   - Environment variables: DISPLAY, WAYLAND_DISPLAY, XDG_RUNTIME_DIR, SSH_AUTH_SOCK
+#
+# Security note: All mounts are read-only where possible. SSH agent socket gives
+# the container access to your SSH keys — only use with trusted images.
+#
+# Optional GPU support: also add compose.gpu.yaml (if created):
+#   podman-compose -f compose.yaml -f compose.dev.yaml -f compose.gpu.yaml up -d
+#
+# Optional host network (no port mapping needed, access host localhost):
+#   Add network_mode: host to jupyter service (commented below)
+
+services:
+  jupyter:
+    volumes:
+      # SSH agent socket (git operations use host SSH keys)
+      - ${SSH_AUTH_SOCK:-/dev/null}:/tmp/ssh-auth.sock:ro
+      # Git user config (name/email/aliases — no reconfiguration needed)
+      - ${HOME:-/home/user}/.gitconfig:/home/devuser/.gitconfig:ro
+      # SSH keys read-only (for git+ssh clone/push)
+      - ${HOME:-/home/user}/.ssh:/home/devuser/.ssh:ro
+      # X11 socket for GUI apps
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      # Pip cache (faster package installs, shares host cache)
+      - ${HOME:-/home/user}/.cache/pip:/home/devuser/.cache/pip
+      # Wayland socket (uncomment if using Wayland)
+      # - ${XDG_RUNTIME_DIR:-/run/user/1000}/${WAYLAND_DISPLAY:-wayland-0}:/tmp/wayland-0:ro
+      # /run/host escape hatch (access host filesystem — powerful, use with care)
+      # - /:/run/host:rslave
+    environment:
+      SSH_AUTH_SOCK: /tmp/ssh-auth.sock
+      DISPLAY: ${DISPLAY:-:0}
+      # WAYLAND_DISPLAY: ${WAYLAND_DISPLAY:-wayland-0}
+      XDG_RUNTIME_DIR: /tmp/runtime-user
+      QT_X11_NO_MITSHM: "1"
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    # Uncomment for host network mode (no port mapping needed):
+    # network_mode: host
+    # ports: !reset []  # clear port mappings when using host network
