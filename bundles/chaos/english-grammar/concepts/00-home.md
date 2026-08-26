@@ -1,0 +1,54 @@
+---
+type: Concept
+title: "旋元佑进阶语法笔记（首页）"
+description: "全书入口与概述：旋元佑《语法俱乐部》的定位、内容来源与知识包导航"
+prerequisites: []
+foreshadows: [03, 27]
+tags: [语法, 入门, 概述]
+generated: { by: source-code-to-okf-wiki/E, at: 2026-08-25T00:00:00Z }
+verified: { by: source-code-to-okf-wiki/V, at: 2026-08-25T00:00:00Z }
+status: stable
+stale_after: 2027-08-25
+sources:
+  - id: source-index
+    resource: "/references/source-index.md"
+    title: "原始首页信源登记"
+---
+
+# 旋元佑进阶语法笔记
+
+《语法俱乐部》是﹝台﹞旋元佑所著的一本偏重理解、适合自习的英语语法著作。全书以「征服英文句子写作」为目标，带领读者逐步打通英文句子写作的所有环节：从简单句的五种基本句型出发，经过名词短语、动词短语、修饰语等句子元素的处理，建立起复合句（compound sentences）与复杂句（complex sentences）的架构，最终抵达最有挑战性的简化从句（reduced clauses，台湾术语：减化子句）。
+
+全书遵循「简单句→复合句→简化从句」的三层次句法递进框架。正如本书「引：广读学英语」一章所揭示的核心理念：**语法是广读的工具，而非目的**——学习语法句型，是为了在大量阅读中看懂难句、在写作中写出正确而富有变化的句子。
+
+> **内容来源说明**
+>
+> 本篇大量内容来源于 [liby](https://github.com/liby) 和 [codeyu](https://github.com/codeyu) 整理的[旋元佑进阶文法](https://grammar.looping.me/introduction)（@[github](https://github.com/liby/advanced-grammar)）。
+>
+> 里面的内容会随着我学习的进度而更新。现阶段只是搬运。
+
+## 本知识包结构
+
+本知识包共 31 篇概念文档，按学习路径分为七个部分：
+
+- **入门篇（00-05）**：序、前言、广读方法论、两岸术语对照、正文目录
+- **基础句法篇（06, 12）**：基本句型、比较句法
+- **词类篇（07-11）**：名词短语、代名词、形容词、副词、介词
+- **动词体系篇（13-19）**：分词、动词时态、语态、语气助动词、语气、动名词、不定式短语
+- **复合句与从句篇（20-24）**：对等连词、复合句、名词从句、副词从句、关系从句
+- **句法综合应用篇（25-26）**：主语动词一致性、倒装句
+- **简化从句篇（27-30）**：简化从句总论、关系从句简化、名词从句简化、副词从句简化
+
+建议的阅读顺序即编号顺序（00→30）。进入正文之前，强烈建议先阅读 [04 两岸英语术语对照表](/concepts/04-terminology-cross-strait.md)，消除术语障碍。
+
+## 相关概念
+
+### 进阶拓展
+
+- [01 序：我学英语的经验](/concepts/01-preface.md) — 作者自述学习方法，建议从这里开始
+- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 全书教学法基础：语法为广读服务
+
+### 关联参考
+
+- [04 两岸英语术语对照表](/concepts/04-terminology-cross-strait.md) — 阅读正文前的术语准备
+- [05 正文目录](/concepts/05-chapter-toc.md) — 全部 25 个正文章节导航
