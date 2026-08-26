@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "jupyter-podman-rootless"
@@ -18,9 +18,17 @@ dependencies = [
 sdk = ["podman>=5.0.0"]
 compose = ["podman-compose>=1.0.0"]
 full = ["podman>=5.0.0", "podman-compose>=1.0.0"]
+model = ["omlmd>=0.2.0", "olot[oras-py]>=0.2.0"]
 
-[tool.setuptools]
-py-modules = []
+[tool.scikit-build]
+wheel.packages = ["tasks"]
+build.verbose = false
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.9"
+
+[tool.scikit-build.cmake]
+build-type = "Release"
+args = ["-G", "Ninja"]
 
 [tool.invoke]
 package = "tasks"
