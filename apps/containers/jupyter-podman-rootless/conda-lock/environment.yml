@@ -1,0 +1,35 @@
+# =============================================================================
+# environment.yml — Python 3.14t (free-threading) Jupyter 基础环境
+# =============================================================================
+# 最小化 Jupyter 运行环境，使用 Python 3.14 free-threading (cp314t) 版本。
+# 不预装 numpy/pandas 等大型数据科学包，保持精简。
+#
+# 使用方式：
+#   1. 直接创建环境：
+#      conda env create -f environment.yml
+#   2. 或生成锁文件后安装（推荐可复现构建）：
+#      conda-lock lock --file environment.yml --platform linux-64
+#      conda-lock install --name main conda-linux-64.lock
+#
+# 注意：
+#   - =*_cp314t 后缀锁定 free-threading 构建（Py_GIL_DISABLED=1）
+#   - channel_priority: strict 确保严格频道优先级
+# =============================================================================
+
+name: main
+
+channels:
+  - conda-forge
+  - defaults
+
+channel_priority: strict
+
+dependencies:
+  - python=3.14=*_cp314t
+  - pip
+  - jupyterlab>=4.3
+  - notebook>=7.3
+  - jupyter-server>=2.0
+  - ipykernel>=6.29
+  - nbconvert>=7.16
+  - ipywidgets>=8.1

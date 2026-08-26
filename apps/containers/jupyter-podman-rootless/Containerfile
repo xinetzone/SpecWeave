@@ -1,0 +1,618 @@
+# syntax=docker/dockerfile:1.7-labs
+# =============================================================================
+# Jupyter Podman Rootless - Containerfile (7-layer single-image build)
+# Project: SpecWeave Jupyter + Podman(rootless) Development Container
+# Base: ubuntu:26.04 | OpenSSH Server + Jupyter Lab/Notebook + Podman(rootless)
+# Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14 cp314t free-threading, libmamba solver)
+# Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
+# Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
+# Services: sshd(22) + jupyter(8888), managed by supervisord; podman(rootless) for user
+#
+# Build: podman build -t jupyter-podman-rootless .
+# CN:    podman build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t jupyter-podman-rootless .
+# Run:   podman run -d --device /dev/fuse --security-opt label=disable -p 2222:22 -p 8888:8888 \
+#          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -v $(pwd)/workspace:/workspace jupyter-podman-rootless
+# Debug: podman run -it --rm --device /dev/fuse --security-opt label=disable jupyter-podman-rootless bash
+#
+# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.4):
+#   Layer 1/7: 系统包安装 + APT镜像 + locale/timezone + Podman包 (变化频率: 最低)
+#   Layer 2/7: Miniforge3下载安装 + .condarc配置 (变化频率: 低)
+#   Layer 3/7: 创建main conda环境 (Python cp314t + Jupyter) (变化频率: 中)
+#   Layer 4/7: 用户创建 + subuid/subgid + 目录权限 + Podman配置 (变化频率: 中)
+#   Layer 5/7: 配置文件COPY + 权限设置 + 语法验证 (变化频率: 高)
+#   Layer 6/7: 最终元数据 + 清理 + 最终验证 (变化频率: 最低)
+#   Layer 7/7: 运行时声明 (不产生层，元数据)
+#
+# Build Timing: 每个Layer结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
+# =============================================================================
+
+ARG APT_MIRROR=official
+ARG PIP_MIRROR=official
+ARG CONDA_MIRROR=official
+ARG PYTHON_VERSION=3.14
+ARG PYTHON_BUILD=cp314t
+
+# -----------------------------------------------------------------------------
+# Stage: Runtime - Single-image with Miniforge3 (no builder stage)
+# -----------------------------------------------------------------------------
+FROM ubuntu:26.04
+
+ARG APT_MIRROR
+ARG PIP_MIRROR
+ARG CONDA_MIRROR
+ARG PYTHON_VERSION
+ARG PYTHON_BUILD
+
+LABEL maintainer="SpecWeave"
+LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
+LABEL version="1.0-ft"
+
+# ── 元数据层：环境变量声明（不产生层，仅元数据） ──
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8 \
+    CONDA_DIR=/opt/conda \
+    CONDA_DEFAULT_ENV=main \
+    PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}" \
+    PYTHONDONTWRITEBYTECODE=1 \
+    NON_ROOT_USER=devuser \
+    JUPYTER_PORT=8888 \
+    SSH_PORT=22 \
+    GRANT_SUDO=no \
+    ALLOW_ROOT_SSH=no
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 1/7: 系统包安装 + APT镜像配置 + locale/timezone + Podman
+# 变化频率：最低（基础镜像确定后很少改）
+# 原则：--no-install-recommends，同层完成镜像配置+locale+tz+Podman安装+清理
+#       初始化计时器 /tmp/.build-timer
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[TIMER] Build started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    echo "START=$_STAGE_START" > /tmp/.build-timer && \
+    echo "[BUILD] Configuring APT mirror: ${APT_MIRROR:-official}" && \
+    if [ "${APT_MIRROR}" = "aliyun" ]; then \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.aliyun.com|g; s|http://security.ubuntu.com|http://mirrors.aliyun.com|g' /etc/apt/sources.list 2>/dev/null || true; \
+        echo "[BUILD] Using Aliyun APT mirror"; \
+    elif [ "${APT_MIRROR}" = "tuna" ]; then \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
+        sed -i 's|http://archive.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g; s|http://security.ubuntu.com|http://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true; \
+        echo "[BUILD] Using Tsinghua TUNA APT mirror"; \
+    else \
+        echo "[BUILD] Using official APT sources"; \
+    fi && \
+    echo "[INFO] Updating APT package lists..." && \
+    apt-get update -qq && \
+    echo "[INFO] Installing system packages (--no-install-recommends)..." && \
+    apt-get install -y --no-install-recommends -qq \
+        binutils \
+        ca-certificates \
+        curl \
+        locales \
+        openssh-server \
+        openssh-client \
+        procps \
+        pwgen \
+        sudo \
+        supervisor \
+        tini \
+        tzdata \
+        vim-tiny \
+        wget \
+        bzip2 \
+        xz-utils \
+        git \
+        podman \
+        crun \
+        conmon \
+        uidmap \
+        fuse-overlayfs \
+        slirp4netns \
+    && echo "[OK] System packages installed" && \
+    echo "[INFO] Verifying key package versions:" && \
+    echo "  - git: $(git --version 2>/dev/null | awk '{print $3}')" && \
+    echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
+    echo "  - podman: $(podman --version 2>/dev/null | awk '{print $3}')" && \
+    echo "  - crun: $(crun --version 2>/dev/null | head -1 | awk '{print $2}')" && \
+    echo "  - fuse-overlayfs: $(fuse-overlayfs --version 2>/dev/null | head -1 | awk '{print $2}')" && \
+    echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
+    sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
+    locale-gen zh_CN.UTF-8 && \
+    update-locale LANG=zh_CN.UTF-8 && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    echo "[BUILD] zh_CN locale + Asia/Shanghai timezone ready" && \
+    echo "[STRIP] Stripping Podman binaries (same-layer, no COW)..." && \
+    for _bin in /usr/bin/podman /usr/bin/crun /usr/bin/conmon; do \
+        [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+    done && \
+    for _bin in /usr/libexec/podman/rootlessport /usr/libexec/podman/quadlet; do \
+        [ -f "$_bin" ] && strip --strip-all "$_bin" 2>/dev/null || true; \
+    done && \
+    rm -f /usr/libexec/podman/podman-testing 2>/dev/null || true && \
+    echo "[OK] Podman binaries stripped" && \
+    rm -rf /var/lib/apt/lists/* && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _TOTAL=$((_NOW - $(grep '^START=' /tmp/.build-timer | cut -d= -f2))) && \
+    echo "S1=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 1/7 (system+locale+podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 2/7: Miniforge3下载安装 + .condarc配置
+# 变化频率：低（Miniforge版本升级时改）
+# 原则：内联安装逻辑，架构检测，镜像源支持，同层完成安装+配置+strip+清理
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Layer 2/7: Install Miniforge3 + configure .condarc ===" && \
+    _STAGE_START=$(date +%s) && \
+    export PYTHONDONTWRITEBYTECODE=1 && \
+    echo "[INFO] Detecting architecture..." && \
+    ARCH=$(uname -m) && \
+    case "$ARCH" in \
+        x86_64)  CONDA_ARCH="x86_64" ;; \
+        aarch64) CONDA_ARCH="aarch64" ;; \
+        *) echo "[ERROR] Unsupported architecture: $ARCH"; exit 1 ;; \
+    esac && \
+    echo "[OK] Architecture: $ARCH ($CONDA_ARCH)" && \
+    echo "[INFO] Downloading Miniforge3 installer (conda-forge official)..." && \
+    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
+        DL_URLS=( \
+            "https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" \
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
+        ); \
+        echo "[BUILD] Using Tsinghua TUNA mirror for Miniforge"; \
+    elif [ "${CONDA_MIRROR}" = "aliyun" ]; then \
+        DL_URLS=( \
+            "https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" \
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
+        ); \
+        echo "[BUILD] Using Aliyun mirror for Miniforge"; \
+    else \
+        DL_URLS=( \
+            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
+        ); \
+        echo "[BUILD] Using official GitHub for Miniforge"; \
+    fi && \
+    DL_OK=0 && \
+    for dl_url in "${DL_URLS[@]}"; do \
+        echo "[INFO] Trying: $dl_url"; \
+        if curl -fsSL --connect-timeout 30 --max-time 300 --retry 3 --retry-delay 5 \
+            -L -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then \
+            echo "[OK] Downloaded from: $dl_url"; \
+            DL_OK=1; \
+            break; \
+        else \
+            echo "[WARN] Failed, trying next source..."; \
+        fi; \
+    done && \
+    if [ "$DL_OK" = "0" ]; then \
+        echo "[ERROR] Failed to download Miniforge3 from all sources"; \
+        cat /tmp/conda_dl_err.log; \
+        exit 1; \
+    fi && \
+    echo "[INFO] Installing Miniforge3 to ${CONDA_DIR}..." && \
+    bash /tmp/miniforge.sh -b -p "${CONDA_DIR}" -f && \
+    rm -f /tmp/miniforge.sh /tmp/conda_dl_err.log && \
+    echo "[OK] Miniforge3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)" && \
+    . "${CONDA_DIR}/etc/profile.d/conda.sh" && \
+    echo "[OK] conda.sh sourced" && \
+    echo "[ACTION] Writing system-level ${CONDA_DIR}/.condarc..." && \
+    case "${CONDA_MIRROR}" in \
+        tuna) \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                'show_channel_urls: true' \
+                'channel_priority: strict' \
+                'default_channels_alias: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+                'custom_channels:' \
+                '  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud' \
+                'ssl_verify: true' \
+                'auto_activate_base: false' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 120' \
+                'remote_max_retries: 5' \
+                'remote_backoff_factor: 3' \
+                'repodata_threads: 8' \
+                'execute_threads: 8' \
+                'solver: libmamba' \
+                > "${CONDA_DIR}/.condarc"; \
+            ;; \
+        aliyun) \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                'show_channel_urls: true' \
+                'channel_priority: strict' \
+                'default_channels_alias: https://mirrors.aliyun.com/anaconda/cloud' \
+                'custom_channels:' \
+                '  conda-forge: https://mirrors.aliyun.com/anaconda/cloud' \
+                'ssl_verify: true' \
+                'auto_activate_base: false' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 120' \
+                'remote_max_retries: 5' \
+                'remote_backoff_factor: 3' \
+                'repodata_threads: 8' \
+                'execute_threads: 8' \
+                'solver: libmamba' \
+                > "${CONDA_DIR}/.condarc"; \
+            ;; \
+        *) \
+            printf '%s\n' \
+                'channels:' \
+                '  - conda-forge' \
+                'show_channel_urls: true' \
+                'channel_priority: strict' \
+                'ssl_verify: true' \
+                'auto_activate_base: false' \
+                'remote_connect_timeout_secs: 30' \
+                'remote_read_timeout_secs: 300' \
+                'remote_max_retries: 5' \
+                'remote_backoff_factor: 3' \
+                'repodata_threads: 8' \
+                'execute_threads: 8' \
+                'solver: libmamba' \
+                > "${CONDA_DIR}/.condarc"; \
+            ;; \
+    esac && \
+    echo "[OK] .condarc configured:" && \
+    cat "${CONDA_DIR}/.condarc" && \
+    echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)" && \
+    echo "[CLEAN] Removing anaconda-anon-usage telemetry..." && \
+    "${CONDA_DIR}/bin/conda" remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
+    echo "[CLEAN] Removing test suites and tk/tcl from base env..." && \
+    find "${CONDA_DIR}/lib" -type d -path "*/python*/test" -prune -exec rm -rf {} + 2>/dev/null || true && \
+    find "${CONDA_DIR}/lib" -type d -path "*/python*/unittest/test" -prune -exec rm -rf {} + 2>/dev/null || true && \
+    find "${CONDA_DIR}/lib" -type d -path "*/python*/site-packages/*/tests" -prune -exec rm -rf {} + 2>/dev/null || true && \
+    rm -rf "${CONDA_DIR}/lib/tk8.6" "${CONDA_DIR}/lib/tcl8.6" "${CONDA_DIR}/lib/tk8" "${CONDA_DIR}/lib/tcl8" 2>/dev/null || true && \
+    rm -f "${CONDA_DIR}/lib/libtk8.6.so" "${CONDA_DIR}/lib/libtcl8.6.so" 2>/dev/null || true && \
+    rm -f "${CONDA_DIR}/bin/tclsh"* "${CONDA_DIR}/bin/wish"* 2>/dev/null || true && \
+    echo "[CLEAN] Removing .pyc/__pycache__..." && \
+    find "${CONDA_DIR}" -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
+    find "${CONDA_DIR}" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[STRIP] Stripping Miniforge base binaries..." && \
+    find "${CONDA_DIR}/bin" -type f -executable ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" ! -name "*.pm" \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    if [ -f "${CONDA_DIR}/micromamba/micromamba" ]; then \
+        strip --strip-all "${CONDA_DIR}/micromamba/micromamba" 2>/dev/null || true; \
+    fi && \
+    find "${CONDA_DIR}/lib" -name "*.so*" -type f \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find "${CONDA_DIR}/sbin" "${CONDA_DIR}/libexec" -type f -executable \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    echo "[PERM] Setting base conda permissions..." && \
+    chown -R root:root "${CONDA_DIR}" 2>/dev/null || true && \
+    chmod -R a+rX "${CONDA_DIR}" 2>/dev/null || true && \
+    find "${CONDA_DIR}/bin" -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
+    echo "[OK] Miniforge3 base setup complete" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S2=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 2/7 (miniforge+.condarc) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 3/7: 创建main conda环境 (Python 3.14 cp314t + Jupyter)
+# 变化频率：中（Python/Jupyter版本升级时改）
+# 原则：使用mamba单次solve，同层完成安装+清理+strip+验证free-threading
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter ===" && \
+    _STAGE_START=$(date +%s) && \
+    export PYTHONDONTWRITEBYTECODE=1 && \
+    . "${CONDA_DIR}/etc/profile.d/conda.sh" && \
+    echo "[INFO] Configuring PIP mirror: ${PIP_MIRROR:-official}..." && \
+    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
+        "${CONDA_DIR}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
+        "${CONDA_DIR}/bin/pip" config set global.trusted-host mirrors.aliyun.com; \
+        echo "[BUILD] Using Aliyun PyPI mirror"; \
+    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
+        "${CONDA_DIR}/bin/pip" config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ && \
+        "${CONDA_DIR}/bin/pip" config set global.trusted-host pypi.tuna.tsinghua.edu.cn; \
+        echo "[BUILD] Using Tsinghua TUNA PyPI mirror"; \
+    else \
+        echo "[BUILD] Using official PyPI"; \
+    fi && \
+    echo "[INFO] Creating 'main' env with Python ${PYTHON_VERSION}=*_${PYTHON_BUILD} + Jupyter (single mamba solve)..." && \
+    _mamba_start=$(date +%s) && \
+    mamba create -y -n main -c conda-forge --override-channels -q \
+        "python=${PYTHON_VERSION}=*_${PYTHON_BUILD}" \
+        "python_abi=*=*_${PYTHON_BUILD}" \
+        pip \
+        "jupyterlab>=4.4" \
+        "notebook>=7.3" \
+        ipykernel \
+        nbconvert \
+        jupyter_server \
+        ipywidgets && \
+    _mamba_elapsed=$(($(date +%s) - _mamba_start)) && \
+    echo "[OK] main env created in ${_mamba_elapsed}s" && \
+    echo "[OK] Python version: $(/opt/conda/envs/main/bin/python --version 2>&1 | awk '{print $2}')" && \
+    echo "[OK] Jupyter version: $(/opt/conda/envs/main/bin/jupyter --version 2>&1 | head -1)" && \
+    echo "[CLEAN] Removing tk/tcl from main env..." && \
+    rm -rf /opt/conda/envs/main/lib/tk8.6 /opt/conda/envs/main/lib/tcl8.6 /opt/conda/envs/main/lib/tcl8 /opt/conda/envs/main/lib/tk8 2>/dev/null || true && \
+    rm -f /opt/conda/envs/main/lib/libtk8.6.so /opt/conda/envs/main/lib/libtcl8.6.so 2>/dev/null || true && \
+    rm -f /opt/conda/envs/main/bin/tclsh* /opt/conda/envs/main/bin/wish* 2>/dev/null || true && \
+    echo "[CLEAN] Removing nbclassic (legacy frontend)..." && \
+    find /opt/conda/envs/main/lib/python3.*/site-packages -type d -name "nbclassic*" -exec rm -rf {} + 2>/dev/null || true && \
+    rm -f /opt/conda/envs/main/bin/jupyter-nbclassic 2>/dev/null || true && \
+    echo "[CLEAN] Removing pandoc-server, pandoc-lua, and test dirs..." && \
+    rm -f /opt/conda/envs/main/bin/pandoc-server /opt/conda/envs/main/bin/pandoc-lua 2>/dev/null || true && \
+    find /opt/conda/envs/main/lib/python3.*/test -type d -name test -prune -exec rm -rf {} + 2>/dev/null || true && \
+    find /opt/conda/envs/main/lib/python3.*/site-packages -type d -name tests -prune -exec rm -rf {} + 2>/dev/null || true && \
+    find /opt/conda/envs/main/share/jupyter -path "*/staging/node_modules" -prune -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN] Removing .pyc/__pycache__..." && \
+    find /opt/conda/envs/main -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
+    find /opt/conda/envs/main -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[STRIP] Stripping main env binaries..." && \
+    find /opt/conda/envs/main/bin -type f -executable \
+        ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find /opt/conda/envs/main/lib -name "*.so*" -type f \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    if [ -f /opt/conda/envs/main/bin/node ]; then \
+        strip --strip-all /opt/conda/envs/main/bin/node 2>/dev/null || true; \
+    fi && \
+    echo "[PERM] Setting main env permissions..." && \
+    chown -R root:root /opt/conda/envs/main 2>/dev/null || true && \
+    chmod -R a+rX /opt/conda/envs/main 2>/dev/null || true && \
+    find /opt/conda/envs/main/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [FREE-THREADING VERIFICATION]                  │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    /opt/conda/envs/main/bin/python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'Python is NOT a free-threading build (Py_GIL_DISABLED != 1)!'; assert not sys._is_gil_enabled(), 'GIL is still enabled at runtime!'; print(f'[OK] Python {sys.version} is free-threading (cp314t confirmed, GIL disabled)')" && \
+    echo "" && \
+    echo "[OK] main env ready" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S3=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 3/7 (mamba create main env) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 4/7: 用户创建 + subuid/subgid + 目录权限 + Podman配置
+# 变化频率：中（新增用户/目录/Podman配置时改）
+# 原则：UID 1000优先，subuid/subgid配置rootless Podman，目录权限正确
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Layer 4/7: Create user devuser + subuid/subgid + directories + Podman config ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[BUILD] Creating docker group (for compatibility)..." && \
+    if ! getent group docker >/dev/null 2>&1; then \
+        groupadd -r docker; \
+        echo "[OK] docker group created"; \
+    else \
+        echo "[INFO] docker group already exists: GID=$(getent group docker | cut -d: -f3)"; \
+    fi && \
+    echo "[BUILD] Creating devuser..." && \
+    if getent passwd devuser >/dev/null 2>&1; then \
+        echo "[INFO] User devuser already exists (UID=$(id -u devuser)), ensuring group membership..."; \
+        usermod -aG sudo,docker devuser; \
+    elif ! getent passwd 1000 >/dev/null 2>&1; then \
+        echo "[INFO] UID 1000 is free, creating devuser with UID 1000"; \
+        useradd -m -s /bin/bash -u 1000 -G sudo,docker devuser; \
+    else \
+        EXISTING_USER=$(getent passwd 1000 | cut -d: -f1); \
+        echo "[INFO] UID 1000 occupied by '${EXISTING_USER}', auto-assigning UID for devuser"; \
+        useradd -m -s /bin/bash -G sudo,docker devuser; \
+    fi && \
+    echo "[OK] User devuser created: UID=$(id -u devuser) GID=$(id -g devuser) groups=$(groups devuser)" && \
+    echo "[BUILD] Configuring /etc/subuid and /etc/subgid for rootless Podman..." && \
+    echo "devuser:100000:65536" > /etc/subuid && \
+    echo "devuser:100000:65536" > /etc/subgid && \
+    echo "[OK] subuid/subgid configured: devuser:100000:65536" && \
+    echo "[BUILD] Creating directories..." && \
+    mkdir -p /workspace /root/.jupyter /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config/containers \
+        /run/sshd /var/log/supervisor /etc/supervisor/conf.d \
+        /etc/containers/containers.conf.d && \
+    chmod 777 /workspace && \
+    chmod 700 /home/devuser/.ssh /root/.ssh && \
+    chown -R devuser:devuser /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config && \
+    echo "[OK] Directories created with proper permissions" && \
+    echo "[BUILD] Configuring conda initialization..." && \
+    echo "# Initialize conda for login shells" > /etc/profile.d/conda-init.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> /etc/profile.d/conda-init.sh && \
+    echo "conda activate main" >> /etc/profile.d/conda-init.sh && \
+    chmod +x /etc/profile.d/conda-init.sh && \
+    echo "[OK] /etc/profile.d/conda-init.sh created" && \
+    echo "[BUILD] Configuring devuser .bashrc..." && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> /home/devuser/.bashrc && \
+    echo "conda activate main" >> /home/devuser/.bashrc && \
+    chown devuser:devuser /home/devuser/.bashrc && \
+    echo "[OK] devuser .bashrc configured" && \
+    echo "[BUILD] Configuring /etc/environment PATH..." && \
+    echo "PATH=/opt/conda/envs/main/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
+    echo "[OK] /etc/environment PATH updated" && \
+    echo "[BUILD] Creating Podman rootless configuration..." && \
+    printf '%s\n' \
+        '[containers]' \
+        'cgroup_manager = "cgroupfs"' \
+        'events_logger = "file"' \
+        'log_driver = "k8s-file"' \
+        '' \
+        '[engine]' \
+        'cgroup_manager = "cgroupfs"' \
+        'events_logger = "file"' \
+        > /etc/containers/containers.conf.d/rootless.conf && \
+    echo "[OK] /etc/containers/containers.conf.d/rootless.conf created" && \
+    echo "[BUILD] Creating user-level storage.conf for fuse-overlayfs..." && \
+    printf '%s\n' \
+        '[storage]' \
+        'driver = "overlay"' \
+        'runroot = ""' \
+        'graphroot = ""' \
+        '' \
+        '[storage.options]' \
+        'additionalimagestores = []' \
+        '' \
+        '[storage.options.overlay]' \
+        'mount_program = "/usr/bin/fuse-overlayfs"' \
+        'mountopt = "nodev,metacopy=on"' \
+        'skip_mount_home = "false"' \
+        '' \
+        '[storage.options.thinpool]' \
+        > /home/devuser/.config/containers/storage.conf && \
+    chown devuser:devuser /home/devuser/.config/containers/storage.conf && \
+    chmod 644 /home/devuser/.config/containers/storage.conf && \
+    echo "[OK] User-level storage.conf configured for fuse-overlayfs" && \
+    echo "[BUILD] Configuring sudo for devuser (NOPASSWD)..." && \
+    echo "devuser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/devuser && \
+    chmod 0440 /etc/sudoers.d/devuser && \
+    echo "[OK] sudoers configured for devuser (NOPASSWD)" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S4=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 4/7 (user+subuid+perms+podman-config) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 5/7: 配置文件COPY + 权限设置 + 语法验证
+# 变化频率：高（配置调整时改，前面层缓存不会失效）
+# 原则：所有COPY集中，同层做权限+清理CRLF+全部语法验证
+# ═══════════════════════════════════════════════════════════════════
+COPY config/sshd_config /etc/ssh/sshd_config
+COPY config/supervisord.conf /etc/supervisor/supervisord.conf
+COPY config/supervisor/conf.d/ /etc/supervisor/conf.d/
+COPY config/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
+COPY config/containers/storage.conf /etc/containers/storage.conf
+COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY --chmod=755 scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
+
+RUN echo "=== Layer 5/7: Install configs, fix permissions, validate syntax ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[BUILD] Setting permissions on config files..." && \
+    chown -R devuser:devuser /home/devuser/.jupyter && \
+    chmod 600 /home/devuser/.jupyter/jupyter_notebook_config.py 2>/dev/null || true && \
+    echo "[BUILD] Converting CRLF to LF for all scripts and configs..." && \
+    for f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh; do \
+        if [ -f "$f" ]; then \
+            sed -i 's/\r$//' "$f"; \
+            echo "[OK] CRLF stripped: $f"; \
+        fi; \
+    done && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [VALIDATION CHECKPOINT - Layer 5/7]            │" && \
+    echo "│  Running syntax validation for all configs      │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    echo "[VALIDATE 1/4] sshd -t (SSH daemon config syntax)..." && \
+    sshd -t && echo "[OK] sshd_config syntax valid" && \
+    echo "[VALIDATE 2/4] bash -n entrypoint.sh (shell syntax)..." && \
+    bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
+    echo "[VALIDATE 3/4] bash -n healthcheck.sh (shell syntax)..." && \
+    bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
+    echo "[VALIDATE 4/4] Checking supervisord config..." && \
+    test -f /etc/supervisor/supervisord.conf && echo "[OK] supervisord.conf exists" && \
+    echo "" && \
+    echo "[OK] All 4 validation checks passed" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "S5=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 5/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 6/7: 最终元数据 + 清理 + 最终验证
+# 变化频率：最低（版本发布时改）
+# 原则：写入build-info，清理/tmp，最终验证所有关键二进制，输出耗时汇总
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
+    _STAGE_START=$(date +%s) && \
+    DEVUSER_UID=$(id -u devuser) && \
+    echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/jupyter-podman-build-info && \
+    echo "BASE_IMAGE=ubuntu:26.04" >> /etc/jupyter-podman-build-info && \
+    echo "BUILD_TYPE=single-image-7layer" >> /etc/jupyter-podman-build-info && \
+    echo "LOCALE=zh_CN.UTF-8" >> /etc/jupyter-podman-build-info && \
+    echo "TIMEZONE=Asia/Shanghai" >> /etc/jupyter-podman-build-info && \
+    echo "NON_ROOT_USER=devuser" >> /etc/jupyter-podman-build-info && \
+    echo "NON_ROOT_UID=${DEVUSER_UID}" >> /etc/jupyter-podman-build-info && \
+    echo "CONDA_DIR=/opt/conda" >> /etc/jupyter-podman-build-info && \
+    echo "CONDA_DEFAULT_ENV=main" >> /etc/jupyter-podman-build-info && \
+    echo "PYTHON_VERSION=${PYTHON_VERSION}" >> /etc/jupyter-podman-build-info && \
+    echo "PYTHON_BUILD=${PYTHON_BUILD}" >> /etc/jupyter-podman-build-info && \
+    echo "PODMAN_MODE=rootless" >> /etc/jupyter-podman-build-info && \
+    echo "PODMAN_STORAGE_DRIVER=fuse-overlayfs" >> /etc/jupyter-podman-build-info && \
+    echo "SERVICES=sshd,jupyter" >> /etc/jupyter-podman-build-info && \
+    echo "SUPERVISOR=enabled" >> /etc/jupyter-podman-build-info && \
+    echo "BUILD_TIMER=enabled" >> /etc/jupyter-podman-build-info && \
+    cat /etc/jupyter-podman-build-info && \
+    echo "[OK] Build info written to /etc/jupyter-podman-build-info" && \
+    echo "[BUILD] Running final cleanup..." && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/* /var/tmp/* && \
+    echo "[OK] APT cache and /tmp cleaned" && \
+    echo "" && \
+    echo "┌─────────────────────────────────────────────────┐" && \
+    echo "│  [FINAL VERIFICATION - Layer 6/7]               │" && \
+    echo "│  Verifying all critical binaries are runnable   │" && \
+    echo "└─────────────────────────────────────────────────┘" && \
+    tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
+    supervisord --version && echo "[OK] supervisord available" && \
+    sshd -t && echo "[OK] sshd config valid" && \
+    python --version && echo "[OK] python available (main env)" && \
+    pip --version && echo "[OK] pip available" && \
+    conda --version && echo "[OK] conda available" && \
+    jupyter --version >/dev/null 2>&1 && echo "[OK] jupyter available" && \
+    podman --version && echo "[OK] podman available" && \
+    crun --version >/dev/null 2>&1 && echo "[OK] crun available" && \
+    bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
+    bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
+    python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1 and not sys._is_gil_enabled(); print('[OK] Python free-threading verified at final checkpoint (cp314t, GIL disabled)')" && \
+    echo "" && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
+    _S1=$(grep '^S1=' /tmp/.build-timer | cut -d= -f2) && \
+    _S2=$(grep '^S2=' /tmp/.build-timer | cut -d= -f2) && \
+    _S3=$(grep '^S3=' /tmp/.build-timer | cut -d= -f2) && \
+    _S4=$(grep '^S4=' /tmp/.build-timer | cut -d= -f2) && \
+    _S5=$(grep '^S5=' /tmp/.build-timer | cut -d= -f2) && \
+    _T1=$((_S1 - _START)) && \
+    _T2=$((_S2 - _S1)) && \
+    _T3=$((_S3 - _S2)) && \
+    _T4=$((_S4 - _S3)) && \
+    _T5=$((_S5 - _S4)) && \
+    _T6=$_ELAPSED && \
+    _TOTAL=$((_NOW - _START)) && \
+    echo "╔══════════════════════════════════════════════════════════════╗" && \
+    echo "║         BUILD TIMING SUMMARY (7-Layer Single Image)        ║" && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  Layer 1/7  system+locale+podman pkgs  %5ds               ║\n" $_T1 && \
+    printf "║  Layer 2/7  miniforge+.condarc         %5ds               ║\n" $_T2 && \
+    printf "║  Layer 3/7  mamba create main env      %5ds               ║\n" $_T3 && \
+    printf "║  Layer 4/7  user+subuid+podman-config  %5ds               ║\n" $_T4 && \
+    printf "║  Layer 5/7  configs+syntax validation  %5ds               ║\n" $_T5 && \
+    printf "║  Layer 6/7  metadata+final verify      %5ds               ║\n" $_T6 && \
+    echo "╠══════════════════════════════════════════════════════════════╣" && \
+    printf "║  BUILD TOTAL                           %5ds               ║\n" $_TOTAL && \
+    echo "╚══════════════════════════════════════════════════════════════╝" && \
+    echo "" && \
+    rm -f /tmp/.build-timer && \
+    echo "[BUILD] ========== BUILD COMPLETE ==========" && \
+    echo ""
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 7/7: 运行时声明（不产生镜像层，仅元数据）
+# ═══════════════════════════════════════════════════════════════════
+WORKDIR /workspace
+VOLUME ["/workspace"]
+EXPOSE 22 8888
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=45s --retries=3 \
+    CMD /usr/local/bin/healthcheck.sh
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/entrypoint.sh"]
+CMD []
