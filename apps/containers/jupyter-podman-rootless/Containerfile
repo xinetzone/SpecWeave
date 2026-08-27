@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7-labs
 # =============================================================================
-# Jupyter Podman Rootless - Containerfile (7-layer single-image build)
+# Jupyter Podman Rootless - Containerfile (3-stage multistage build)
 # Project: SpecWeave Jupyter + Podman(rootless) Development Container
 # Base: ubuntu:26.04 | OpenSSH Server + Jupyter Lab/Notebook + Podman(rootless)
 # Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14 cp314t free-threading, libmamba solver)
@@ -8,22 +8,25 @@
 # Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
 # Services: sshd(22) + jupyter(8888), managed by supervisord; podman(rootless) for user
 #
+# Build stages:
+#   Stage 1/3: base-runtime  - 系统运行时基础（Ubuntu + APT包 + locale/tz + Podman）
+#   Stage 2/3: conda-builder - Miniforge下载 + main环境创建 + 深度清理（隔离构建环境）
+#   Stage 3/3: final         - COPY --from=conda-builder /opt/conda + 用户/配置/验证
+#
 # Build: podman build -t jupyter-podman-rootless .
 # CN:    podman build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t jupyter-podman-rootless .
 # Run:   podman run -d --device /dev/fuse --security-opt label=disable -p 2222:22 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -v $(pwd)/workspace:/workspace jupyter-podman-rootless
 # Debug: podman run -it --rm --device /dev/fuse --security-opt label=disable jupyter-podman-rootless bash
 #
-# Runtime Stage Layering (dockerfile-runtime-logical-layering pattern v1.4):
-#   Layer 1/7: 系统包安装 + APT镜像 + locale/timezone + Podman包 (变化频率: 最低)
-#   Layer 2/7: Miniforge3下载安装 + .condarc配置 (变化频率: 低)
-#   Layer 3/7: 创建main conda环境 (Python cp314t + Jupyter) (变化频率: 中)
-#   Layer 4/7: 用户创建 + subuid/subgid + 目录权限 + Podman配置 (变化频率: 中)
-#   Layer 5/7: 配置文件COPY + 权限设置 + 语法验证 (变化频率: 高)
-#   Layer 6/7: 最终元数据 + 清理 + 最终验证 (变化频率: 最低)
-#   Layer 7/7: 运行时声明 (不产生层，元数据)
+# Runtime Stage Layering (final stage, dockerfile-runtime-logical-layering pattern v1.4):
+#   Layer 1/5: 从base-runtime继承（系统包+locale+tz+Podman） (变化频率: 最低)
+#   Layer 2/5: COPY --from=conda-builder /opt/conda (Miniforge+main env) (变化频率: 低)
+#   Layer 3/5: 用户创建 + subuid/subgid + 目录权限 + Podman配置 (变化频率: 中)
+#   Layer 4/5: 配置文件COPY + 权限设置 + 语法验证 (变化频率: 高)
+#   Layer 5/5: 最终元数据 + 清理 + 最终验证 (变化频率: 最低)
 #
-# Build Timing: 每个Layer结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
+# Build Timing: 每个Stage结束时输出 [TIMER]，最终final阶段输出汇总表
 # =============================================================================
 
 ARG APT_MIRROR=official
@@ -32,25 +35,20 @@ ARG CONDA_MIRROR=official
 ARG PYTHON_VERSION=3.14
 ARG PYTHON_BUILD=cp314t
 
-# -----------------------------------------------------------------------------
-# Stage: Runtime - Single-image with Miniforge3 (no builder stage)
-# -----------------------------------------------------------------------------
-FROM ubuntu:26.04
+# ═══════════════════════════════════════════════════════════════════
+# Stage 1/3: base-runtime — 系统运行时基础（不含构建工具）
+# 变化频率：最低
+# 原则：--no-install-recommends，仅安装运行时必需的系统包，同层清理apt lists
+# ═══════════════════════════════════════════════════════════════════
+FROM ubuntu:26.04 AS base-runtime
 
 ARG APT_MIRROR
-ARG PIP_MIRROR
-ARG CONDA_MIRROR
-ARG PYTHON_VERSION
-ARG PYTHON_BUILD
 
 LABEL maintainer="SpecWeave"
-LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + OMLMD(ML model OCI artifact) + OLOT(KServe ModelCar) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
-LABEL version="1.0-ft"
 LABEL com.github.containers.toolbox="true" \
       com.github.debarshiray.toolbox="true" \
       usage="This image is compatible with toolbox create/enter (Toolbx interactive dev container)"
 
-# ── 元数据层：环境变量声明（不产生层，仅元数据） ──
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Asia/Shanghai \
     LANG=zh_CN.UTF-8 \
@@ -68,15 +66,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-# ═══════════════════════════════════════════════════════════════════
-# Layer 1/7: 系统包安装 + APT镜像配置 + locale/timezone + Podman
-# 变化频率：最低（基础镜像确定后很少改）
-# 原则：--no-install-recommends，同层完成镜像配置+locale+tz+Podman安装+清理
-#       初始化计时器 /tmp/.build-timer
-# ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" && \
+RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese locale + Podman ===" && \
     _STAGE_START=$(date +%s) && \
-    echo "[TIMER] Build started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    echo "[TIMER] base-runtime stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
     echo "START=$_STAGE_START" > /tmp/.build-timer && \
     echo "[BUILD] Configuring APT mirror: ${APT_MIRROR:-official}" && \
     if [ "${APT_MIRROR}" = "aliyun" ]; then \
@@ -90,13 +82,13 @@ RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" 
     else \
         echo "[BUILD] Using official APT sources"; \
     fi && \
-    echo "[INFO] Updating APT package lists..." && \
     apt-get update -qq && \
-    echo "[INFO] Installing system packages (--no-install-recommends)..." && \
+    echo "[INFO] Installing RUNTIME packages (--no-install-recommends, no build tools)..." && \
     apt-get install -y --no-install-recommends -qq \
         binutils \
         ca-certificates \
-        curl \
+        bzip2 \
+        xz-utils \
         locales \
         openssh-server \
         openssh-client \
@@ -107,9 +99,7 @@ RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" 
         tini \
         tzdata \
         vim-tiny \
-        wget \
-        bzip2 \
-        xz-utils \
+        curl \
         git \
         podman \
         crun \
@@ -118,8 +108,8 @@ RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" 
         fuse-overlayfs \
         slirp4netns \
         libcap2-bin \
-    && echo "[OK] System packages installed" && \
-    echo "[INFO] Verifying key package versions:" && \
+    && echo "[OK] Runtime system packages installed" && \
+    echo "[INFO] Verifying key runtime package versions:" && \
     echo "  - git: $(git --version 2>/dev/null | awk '{print $3}')" && \
     echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
     echo "  - podman: $(podman --version 2>/dev/null | awk '{print $3}')" && \
@@ -144,18 +134,43 @@ RUN echo "=== Layer 1/7: Install system packages + Chinese locale + Podman ===" 
     rm -rf /var/lib/apt/lists/* && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _TOTAL=$((_NOW - $(grep '^START=' /tmp/.build-timer | cut -d= -f2))) && \
-    echo "S1=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 1/7 (system+locale+podman) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "BASE=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Stage 1/3 base-runtime took ${_ELAPSED}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 2/7: Miniforge3下载安装 + .condarc配置
-# 变化频率：低（Miniforge版本升级时改）
-# 原则：内联安装逻辑，架构检测，镜像源支持，同层完成安装+配置+strip+清理
+# Stage 2/3: conda-builder — Miniforge + conda环境构建（隔离构建阶段）
+# 变化频率：低
+# 原则：此阶段包含curl/wget等下载工具和binutils（strip），仅用于构建/opt/conda；
+#       此阶段的层全部不进入最终镜像，仅/opt/conda通过COPY --from进入final
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 2/7: Install Miniforge3 + configure .condarc ===" && \
+FROM ubuntu:26.04 AS conda-builder
+
+ARG CONDA_MIRROR
+ARG PIP_MIRROR
+ARG PYTHON_VERSION
+ARG PYTHON_BUILD
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    CONDA_DIR=/opt/conda \
+    CONDA_DEFAULT_ENV=main \
+    PATH="/opt/conda/envs/main/bin:/opt/conda/bin:${PATH}" \
+    PYTHONDONTWRITEBYTECODE=1
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + create main env ===" && \
     _STAGE_START=$(date +%s) && \
-    export PYTHONDONTWRITEBYTECODE=1 && \
+    echo "[TIMER] conda-builder stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    apt-get update -qq && \
+    echo "[INFO] Installing BUILD tools (curl/wget/binutils for strip, bzip2/xz for archives)..." && \
+    apt-get install -y --no-install-recommends -qq \
+        curl \
+        wget \
+        bzip2 \
+        xz-utils \
+        binutils \
+        ca-certificates \
+    && echo "[OK] Build tools installed" && \
     echo "[INFO] Detecting architecture..." && \
     ARCH=$(uname -m) && \
     case "$ARCH" in \
@@ -205,7 +220,6 @@ RUN echo "=== Layer 2/7: Install Miniforge3 + configure .condarc ===" && \
     rm -f /tmp/miniforge.sh /tmp/conda_dl_err.log && \
     echo "[OK] Miniforge3 installed: $("${CONDA_DIR}/bin/conda" --version 2>&1)" && \
     . "${CONDA_DIR}/etc/profile.d/conda.sh" && \
-    echo "[OK] conda.sh sourced" && \
     echo "[ACTION] Writing system-level ${CONDA_DIR}/.condarc..." && \
     case "${CONDA_MIRROR}" in \
         tuna) \
@@ -266,52 +280,10 @@ RUN echo "=== Layer 2/7: Install Miniforge3 + configure .condarc ===" && \
                 > "${CONDA_DIR}/.condarc"; \
             ;; \
     esac && \
-    echo "[OK] .condarc configured:" && \
-    cat "${CONDA_DIR}/.condarc" && \
+    echo "[OK] .condarc configured" && \
     echo "[INFO] mamba version: $(mamba --version 2>&1 | head -1)" && \
     echo "[CLEAN] Removing anaconda-anon-usage telemetry..." && \
     "${CONDA_DIR}/bin/conda" remove -y -n base anaconda-anon-usage --force 2>/dev/null || true && \
-    echo "[CLEAN] Removing test suites and tk/tcl from base env..." && \
-    find "${CONDA_DIR}/lib" -type d -path "*/python*/test" -prune -exec rm -rf {} + 2>/dev/null || true && \
-    find "${CONDA_DIR}/lib" -type d -path "*/python*/unittest/test" -prune -exec rm -rf {} + 2>/dev/null || true && \
-    find "${CONDA_DIR}/lib" -type d -path "*/python*/site-packages/*/tests" -prune -exec rm -rf {} + 2>/dev/null || true && \
-    rm -rf "${CONDA_DIR}/lib/tk8.6" "${CONDA_DIR}/lib/tcl8.6" "${CONDA_DIR}/lib/tk8" "${CONDA_DIR}/lib/tcl8" 2>/dev/null || true && \
-    rm -f "${CONDA_DIR}/lib/libtk8.6.so" "${CONDA_DIR}/lib/libtcl8.6.so" 2>/dev/null || true && \
-    rm -f "${CONDA_DIR}/bin/tclsh"* "${CONDA_DIR}/bin/wish"* 2>/dev/null || true && \
-    echo "[CLEAN] Removing .pyc/__pycache__..." && \
-    find "${CONDA_DIR}" -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
-    find "${CONDA_DIR}" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
-    echo "[STRIP] Stripping Miniforge base binaries..." && \
-    find "${CONDA_DIR}/bin" -type f -executable ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" ! -name "*.pm" \
-        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    if [ -f "${CONDA_DIR}/micromamba/micromamba" ]; then \
-        strip --strip-all "${CONDA_DIR}/micromamba/micromamba" 2>/dev/null || true; \
-    fi && \
-    find "${CONDA_DIR}/lib" -name "*.so*" -type f \
-        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    find "${CONDA_DIR}/sbin" "${CONDA_DIR}/libexec" -type f -executable \
-        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
-    echo "[PERM] Setting base conda permissions..." && \
-    chown -R root:root "${CONDA_DIR}" 2>/dev/null || true && \
-    chmod -R a+rX "${CONDA_DIR}" 2>/dev/null || true && \
-    find "${CONDA_DIR}/bin" -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
-    echo "[OK] Miniforge3 base setup complete" && \
-    _NOW=$(date +%s) && \
-    _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
-    _TOTAL=$((_NOW - _START)) && \
-    echo "S2=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 2/7 (miniforge+.condarc) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
-
-# ═══════════════════════════════════════════════════════════════════
-# Layer 3/7: 创建main conda环境 (Python 3.14 cp314t + Jupyter + OMLMD + OLOT)
-# 变化频率：中（Python/Jupyter/OMLMD/OLOT版本升级时改）
-# 原则：使用mamba单次solve，pip安装OMLMD+OLOT[oras-py]（含Python 3.14 fallback），同层完成安装+清理+strip+验证free-threading
-# ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHON_BUILD} + Jupyter + OMLMD + OLOT ===" && \
-    _STAGE_START=$(date +%s) && \
-    export PYTHONDONTWRITEBYTECODE=1 && \
-    . "${CONDA_DIR}/etc/profile.d/conda.sh" && \
     echo "[INFO] Configuring PIP mirror: ${PIP_MIRROR:-official}..." && \
     if [ "${PIP_MIRROR}" = "aliyun" ]; then \
         "${CONDA_DIR}/bin/pip" config set global.index-url https://mirrors.aliyun.com/pypi/simple/ && \
@@ -343,59 +315,129 @@ RUN echo "=== Layer 3/7: Create 'main' env with Python ${PYTHON_VERSION} ${PYTHO
     echo "[INFO] Installing OMLMD (OCI Artifact for ML model & metadata)..." && \
     /opt/conda/envs/main/bin/pip install --no-cache-dir omlmd || \
     /opt/conda/envs/main/bin/pip install --no-cache-dir --ignore-requires-python omlmd && \
-    echo "[OK] omlmd version: $(/opt/conda/envs/main/bin/python -c 'import omlmd; print(omlmd.__version__)' 2>&1)" && \
+    echo "[OK] omlmd installed: $(/opt/conda/envs/main/bin/python -c 'import importlib.metadata; print(importlib.metadata.version("omlmd"))' 2>&1)" && \
     echo "[INFO] Installing OLOT (KServe ModelCar packager, oras-py backend)..." && \
     /opt/conda/envs/main/bin/pip install --no-cache-dir "olot[oras-py]" || \
     /opt/conda/envs/main/bin/pip install --no-cache-dir --ignore-requires-python "olot[oras-py]" && \
-    echo "[OK] olot version: $(/opt/conda/envs/main/bin/python -c 'import olot; print(olot.__version__)' 2>&1)" && \
-    echo "[CLEAN] Removing tk/tcl from main env..." && \
-    rm -rf /opt/conda/envs/main/lib/tk8.6 /opt/conda/envs/main/lib/tcl8.6 /opt/conda/envs/main/lib/tcl8 /opt/conda/envs/main/lib/tk8 2>/dev/null || true && \
-    rm -f /opt/conda/envs/main/lib/libtk8.6.so /opt/conda/envs/main/lib/libtcl8.6.so 2>/dev/null || true && \
-    rm -f /opt/conda/envs/main/bin/tclsh* /opt/conda/envs/main/bin/wish* 2>/dev/null || true && \
+    echo "[OK] olot installed: $(/opt/conda/envs/main/bin/python -c 'import importlib.metadata; print(importlib.metadata.version("olot"))' 2>&1)" && \
+    echo "[CLEAN] === DEEP CLEAN of /opt/conda (before COPY to final stage) ===" && \
+    echo "[CLEAN] Removing tk/tcl from base and main env..." && \
+    for env_dir in "${CONDA_DIR}" "${CONDA_DIR}/envs/main"; do \
+        rm -rf "$env_dir/lib/tk8.6" "$env_dir/lib/tcl8.6" "$env_dir/lib/tk8" "$env_dir/lib/tcl8" 2>/dev/null || true; \
+        rm -f "$env_dir/lib/libtk8.6.so" "$env_dir/lib/libtcl8.6.so" 2>/dev/null || true; \
+        rm -f "$env_dir/bin/tclsh"* "$env_dir/bin/wish"* 2>/dev/null || true; \
+    done && \
     echo "[CLEAN] Removing nbclassic (legacy frontend)..." && \
     find /opt/conda/envs/main/lib/python3.*/site-packages -type d -name "nbclassic*" -exec rm -rf {} + 2>/dev/null || true && \
     rm -f /opt/conda/envs/main/bin/jupyter-nbclassic 2>/dev/null || true && \
-    echo "[CLEAN] Removing pandoc-server, pandoc-lua, and test dirs..." && \
+    echo "[CLEAN] Removing pandoc-server, pandoc-lua..." && \
     rm -f /opt/conda/envs/main/bin/pandoc-server /opt/conda/envs/main/bin/pandoc-lua 2>/dev/null || true && \
-    find /opt/conda/envs/main/lib/python3.*/test -type d -name test -prune -exec rm -rf {} + 2>/dev/null || true && \
-    find /opt/conda/envs/main/lib/python3.*/site-packages -type d -name tests -prune -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN] Removing test directories..." && \
+    for env_dir in "${CONDA_DIR}" "${CONDA_DIR}/envs/main"; do \
+        find "$env_dir/lib" -type d -path "*/python*/test" -prune -exec rm -rf {} + 2>/dev/null || true; \
+        find "$env_dir/lib" -type d -path "*/python*/unittest/test" -prune -exec rm -rf {} + 2>/dev/null || true; \
+        find "$env_dir/lib" -type d -path "*/python*/site-packages/*/tests" -prune -exec rm -rf {} + 2>/dev/null || true; \
+        find "$env_dir/lib/python3.*/test" -type d -name test -prune -exec rm -rf {} + 2>/dev/null || true; \
+        find "$env_dir/lib/python3.*/site-packages" -type d -name tests -prune -exec rm -rf {} + 2>/dev/null || true; \
+    done && \
     find /opt/conda/envs/main/share/jupyter -path "*/staging/node_modules" -prune -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN] Removing conda package cache and index..." && \
+    "${CONDA_DIR}/bin/conda" clean -a -y -q 2>/dev/null || true && \
+    rm -rf "${CONDA_DIR}/pkgs"/* 2>/dev/null || true && \
+    rm -rf "${CONDA_DIR}/envs/main/conda-meta/history" 2>/dev/null || true && \
     echo "[CLEAN] Removing .pyc/__pycache__..." && \
-    find /opt/conda/envs/main -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
-    find /opt/conda/envs/main -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
-    echo "[STRIP] Stripping main env binaries..." && \
-    find /opt/conda/envs/main/bin -type f -executable \
-        ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" \
+    find "${CONDA_DIR}" -type f \( -name "*.pyc" -o -name "*.pyo" \) -delete 2>/dev/null || true && \
+    find "${CONDA_DIR}" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true && \
+    echo "[CLEAN] Removing man pages, docs, info files..." && \
+    rm -rf "${CONDA_DIR}/man" "${CONDA_DIR}/share/man" "${CONDA_DIR}/share/doc" "${CONDA_DIR}/info" "${CONDA_DIR}/share/info" 2>/dev/null || true && \
+    for env_dir in "${CONDA_DIR}" "${CONDA_DIR}/envs/main"; do \
+        rm -rf "$env_dir/share/man" "$env_dir/share/doc" "$env_dir/info" "$env_dir/share/info" 2>/dev/null || true; \
+    done && \
+    echo "[STRIP] Stripping ALL binaries in /opt/conda (bin + lib)..." && \
+    find "${CONDA_DIR}/bin" -type f -executable ! -name "*.py" ! -name "*.sh" ! -name "*.rb" ! -name "*.pl" ! -name "*.pm" \
         -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    if [ -f "${CONDA_DIR}/micromamba/micromamba" ]; then \
+        strip --strip-all "${CONDA_DIR}/micromamba/micromamba" 2>/dev/null || true; \
+    fi && \
+    find "${CONDA_DIR}/lib" -name "*.so*" -type f \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    find "${CONDA_DIR}/sbin" "${CONDA_DIR}/libexec" -type f -executable \
+        -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
+    for env_bin in /opt/conda/envs/main/bin /opt/conda/envs/main/lib; do \
+        find "$env_bin" -type f -executable ! -name "*.py" ! -name "*.sh" \
+            -exec strip --strip-unneeded {} \; 2>/dev/null || true; \
+    done && \
     find /opt/conda/envs/main/lib -name "*.so*" -type f \
         -exec strip --strip-unneeded {} \; 2>/dev/null || true && \
     if [ -f /opt/conda/envs/main/bin/node ]; then \
         strip --strip-all /opt/conda/envs/main/bin/node 2>/dev/null || true; \
     fi && \
-    echo "[PERM] Setting main env permissions..." && \
-    chown -R root:root /opt/conda/envs/main 2>/dev/null || true && \
-    chmod -R a+rX /opt/conda/envs/main 2>/dev/null || true && \
+    chown -R root:root "${CONDA_DIR}" 2>/dev/null || true && \
+    chmod -R a+rX "${CONDA_DIR}" 2>/dev/null || true && \
+    find "${CONDA_DIR}/bin" -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
     find /opt/conda/envs/main/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
-    echo "│  [FREE-THREADING VERIFICATION]                  │" && \
+    echo "│  [FREE-THREADING VERIFICATION - builder]        │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    /opt/conda/envs/main/bin/python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'Python is NOT a free-threading build (Py_GIL_DISABLED != 1)!'; assert not sys._is_gil_enabled(), 'GIL is still enabled at runtime!'; print(f'[OK] Python {sys.version} is free-threading (cp314t confirmed, GIL disabled)')" && \
+    /opt/conda/envs/main/bin/python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1, 'Python is NOT a free-threading build!'; assert not sys._is_gil_enabled(), 'GIL is still enabled!'; print(f'[OK] Python {sys.version} is free-threading (cp314t confirmed, GIL disabled)')" && \
     echo "" && \
-    echo "[OK] main env ready" && \
+    echo "[CLEAN] Removing apt cache from builder stage (not strictly necessary but tidy)..." && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    echo "[TIMER] Stage 2/3 conda-builder took ${_ELAPSED}s" && \
+    echo "[INFO] /opt/conda size after deep clean: $(du -sh /opt/conda 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "" && \
+    echo "[OK] conda-builder stage complete: /opt/conda is ready for COPY --from"
+
+# ═══════════════════════════════════════════════════════════════════
+# Stage 3/3: final (runtime) — 最终运行时镜像
+# 变化频率：高（配置修改）
+# 原则：从base-runtime继承系统层，仅COPY成品/opt/conda，不包含任何构建工具
+# ═══════════════════════════════════════════════════════════════════
+FROM base-runtime AS final
+
+LABEL description="Ubuntu 26.04 with Jupyter + Podman(rootless) + OMLMD(ML model OCI artifact) + OLOT(KServe ModelCar) + Miniforge3(Python 3.14 cp314t free-threading, conda-forge, libmamba solver), managed by supervisord"
+LABEL version="2.0-ms"
+
+# 重新声明ARG（多阶段构建中ARG作用域限定在单个FROM之前，需要在使用阶段再次声明）
+ARG PYTHON_VERSION
+ARG PYTHON_BUILD
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# ═══════════════════════════════════════════════════════════════════
+# Layer 2/5 (final): COPY --from=conda-builder 成品/opt/conda
+# 变化频率：低（conda环境变更时）
+# 原则：COPY整个/opt/conda目录（已在builder阶段完成清理和strip）
+# ═══════════════════════════════════════════════════════════════════
+RUN echo "=== Stage 3/3: final runtime — Starting final assembly ===" && \
+    _FINAL_START=$(date +%s) && \
+    echo "FINAL_START=$_FINAL_START" >> /tmp/.build-timer && \
+    echo ""
+
+COPY --from=conda-builder /opt/conda /opt/conda
+
+RUN echo "=== Layer 2/5: COPY --from=conda-builder /opt/conda ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[OK] /opt/conda copied from conda-builder stage" && \
+    echo "[INFO] Copied /opt/conda size: $(du -sh /opt/conda 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "[INFO] conda version: $(conda --version 2>&1)" && \
+    echo "[INFO] Python version: $(python --version 2>&1)" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
-    echo "S3=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 3/7 (mamba create main env) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "L2=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 2/5 (COPY conda) took ${_ELAPSED}s | base-runtime+L2 cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 4/7: 用户创建 + subuid/subgid + 目录权限 + Podman配置
-# 变化频率：中（新增用户/目录/Podman配置时改）
-# 原则：UID 1000优先，subuid/subgid配置rootless Podman，目录权限正确
+# Layer 3/5: 用户创建 + subuid/subgid + 目录权限 + Podman配置
+# 变化频率：中
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 4/7: Create user devuser + subuid/subgid + directories + Podman config ===" && \
+RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Podman config ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[BUILD] Creating docker group (for compatibility)..." && \
     if ! getent group docker >/dev/null 2>&1; then \
@@ -486,13 +528,12 @@ RUN echo "=== Layer 4/7: Create user devuser + subuid/subgid + directories + Pod
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
-    echo "S4=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 4/7 (user+subuid+perms+podman-config) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "L3=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 3/5 (user+subuid+perms+podman-config) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 5/7: 配置文件COPY + 权限设置 + 语法验证
-# 变化频率：高（配置调整时改，前面层缓存不会失效）
-# 原则：所有COPY集中，同层做权限+清理CRLF+全部语法验证
+# Layer 4/5: 配置文件COPY + 权限设置 + 语法验证
+# 变化频率：高
 # ═══════════════════════════════════════════════════════════════════
 COPY config/sshd_config /etc/ssh/sshd_config
 COPY config/supervisord.conf /etc/supervisor/supervisord.conf
@@ -504,7 +545,7 @@ COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=755 scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY --chmod=755 scripts/olot_car.py /usr/local/bin/olot_car.py
 
-RUN echo "=== Layer 5/7: Install configs, fix permissions, validate syntax ===" && \
+RUN echo "=== Layer 4/5: Install configs, fix permissions, validate syntax ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[BUILD] Setting permissions on config files..." && \
     chown -R devuser:devuser /home/devuser/.jupyter && \
@@ -519,7 +560,7 @@ RUN echo "=== Layer 5/7: Install configs, fix permissions, validate syntax ===" 
     chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/olot_car.py && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
-    echo "│  [VALIDATION CHECKPOINT - Layer 5/7]            │" && \
+    echo "│  [VALIDATION CHECKPOINT - Layer 4/5]            │" && \
     echo "│  Running syntax validation for all configs      │" && \
     echo "└─────────────────────────────────────────────────┘" && \
     echo "[VALIDATE 1/5] sshd -t (SSH daemon config syntax)..." && \
@@ -528,7 +569,7 @@ RUN echo "=== Layer 5/7: Install configs, fix permissions, validate syntax ===" 
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
     echo "[VALIDATE 3/5] bash -n healthcheck.sh (shell syntax)..." && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
-    echo "[VALIDATE 4/5] python -c 'import py_compile; py_compile.compile(\"/usr/local/bin/olot_car.py\", doraise=True)' (Python syntax)..." && \
+    echo "[VALIDATE 4/5] python py_compile olot_car.py (Python syntax)..." && \
     python -c "import py_compile; py_compile.compile('/usr/local/bin/olot_car.py', doraise=True)" && echo "[OK] olot_car.py Python syntax valid" && \
     echo "[VALIDATE 5/5] Checking supervisord config..." && \
     test -f /etc/supervisor/supervisord.conf && echo "[OK] supervisord.conf exists" && \
@@ -538,20 +579,19 @@ RUN echo "=== Layer 5/7: Install configs, fix permissions, validate syntax ===" 
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
-    echo "S5=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 5/7 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+    echo "L4=$_NOW" >> /tmp/.build-timer && \
+    echo "[TIMER] Layer 4/5 (config+validation) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 6/7: 最终元数据 + 清理 + 最终验证
-# 变化频率：最低（版本发布时改）
-# 原则：写入build-info，清理/tmp，最终验证所有关键二进制，输出耗时汇总
+# Layer 5/5: 最终元数据 + 清理 + 最终验证
+# 变化频率：最低
 # ═══════════════════════════════════════════════════════════════════
-RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
+RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     _STAGE_START=$(date +%s) && \
     DEVUSER_UID=$(id -u devuser) && \
     echo "BUILD_DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)" > /etc/jupyter-podman-build-info && \
     echo "BASE_IMAGE=ubuntu:26.04" >> /etc/jupyter-podman-build-info && \
-    echo "BUILD_TYPE=single-image-7layer" >> /etc/jupyter-podman-build-info && \
+    echo "BUILD_TYPE=multistage-3stage" >> /etc/jupyter-podman-build-info && \
     echo "LOCALE=zh_CN.UTF-8" >> /etc/jupyter-podman-build-info && \
     echo "TIMEZONE=Asia/Shanghai" >> /etc/jupyter-podman-build-info && \
     echo "NON_ROOT_USER=devuser" >> /etc/jupyter-podman-build-info && \
@@ -574,9 +614,12 @@ RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
     echo "[OK] APT cache and /tmp cleaned" && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
-    echo "│  [FINAL VERIFICATION - Layer 6/7]               │" && \
+    echo "│  [FINAL VERIFICATION - Layer 5/5]               │" && \
     echo "│  Verifying all critical binaries are runnable   │" && \
     echo "└─────────────────────────────────────────────────┘" && \
+    echo "[INFO] Final image size estimate (du -sh /): $(du -sh / 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "[INFO] /opt/conda size: $(du -sh /opt/conda 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "" && \
     tini --version >/dev/null 2>&1 && echo "[OK] tini (init) available" && \
     supervisord --version && echo "[OK] supervisord available" && \
     sshd -t && echo "[OK] sshd config valid" && \
@@ -584,8 +627,8 @@ RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
     pip --version && echo "[OK] pip available" && \
     conda --version && echo "[OK] conda available" && \
     jupyter --version >/dev/null 2>&1 && echo "[OK] jupyter available" && \
-    python -c "import omlmd; print(f'[OK] omlmd {omlmd.__version__} available (ML model OCI artifact)')" && \
-    python -c "import olot; print(f'[OK] olot {olot.__version__} available (KServe ModelCar packager)')" && \
+    python -c "import omlmd; print('[OK] omlmd available (ML model OCI artifact)')" && \
+    python -c "import olot; print('[OK] olot available (KServe ModelCar packager)')" && \
     test -x /usr/local/bin/olot_car.py && echo "[OK] olot_car.py helper script available" && \
     python /usr/local/bin/olot_car.py --help >/dev/null 2>&1 && echo "[OK] olot_car.py CLI functional" && \
     test -d /run/host && echo "[OK] /run/host mount point exists (Toolbx compatibility)" && \
@@ -599,38 +642,35 @@ RUN echo "=== Layer 6/7: Final metadata, cleanup, and verification ===" && \
     echo "" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
-    _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
-    _S1=$(grep '^S1=' /tmp/.build-timer | cut -d= -f2) && \
-    _S2=$(grep '^S2=' /tmp/.build-timer | cut -d= -f2) && \
-    _S3=$(grep '^S3=' /tmp/.build-timer | cut -d= -f2) && \
-    _S4=$(grep '^S4=' /tmp/.build-timer | cut -d= -f2) && \
-    _S5=$(grep '^S5=' /tmp/.build-timer | cut -d= -f2) && \
-    _T1=$((_S1 - _START)) && \
-    _T2=$((_S2 - _S1)) && \
-    _T3=$((_S3 - _S2)) && \
-    _T4=$((_S4 - _S3)) && \
-    _T5=$((_S5 - _S4)) && \
-    _T6=$_ELAPSED && \
-    _TOTAL=$((_NOW - _START)) && \
+    _FINAL_START=$(grep '^FINAL_START=' /tmp/.build-timer | cut -d= -f2) && \
+    _L2=$(grep '^L2=' /tmp/.build-timer | cut -d= -f2) && \
+    _L3=$(grep '^L3=' /tmp/.build-timer | cut -d= -f2) && \
+    _L4=$(grep '^L4=' /tmp/.build-timer | cut -d= -f2) && \
+    _T2=$((_L2 - _FINAL_START)) && \
+    _T3=$((_L3 - _L2)) && \
+    _T4=$((_L4 - _L3)) && \
+    _T5=$_ELAPSED && \
+    _TOTAL=$((_NOW - _FINAL_START)) && \
     echo "╔══════════════════════════════════════════════════════════════╗" && \
-    echo "║         BUILD TIMING SUMMARY (7-Layer Single Image)        ║" && \
+    echo "║      BUILD TIMING SUMMARY (3-Stage Multistage Build)        ║" && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
-    printf "║  Layer 1/7  system+locale+podman pkgs  %5ds               ║\n" $_T1 && \
-    printf "║  Layer 2/7  miniforge+.condarc         %5ds               ║\n" $_T2 && \
-    printf "║  Layer 3/7  mamba create main env      %5ds               ║\n" $_T3 && \
-    printf "║  Layer 4/7  user+subuid+podman-config  %5ds               ║\n" $_T4 && \
-    printf "║  Layer 5/7  configs+syntax validation  %5ds               ║\n" $_T5 && \
-    printf "║  Layer 6/7  metadata+final verify      %5ds               ║\n" $_T6 && \
+    printf "║  Final Stage (inherited from base-runtime)   (cached)      ║\n" && \
+    printf "║  Layer 2/5  COPY --from=conda-builder /opt/conda  %4ds     ║\n" $_T2 && \
+    printf "║  Layer 3/5  user+subuid+podman-config             %4ds     ║\n" $_T3 && \
+    printf "║  Layer 4/5  configs+syntax validation             %4ds     ║\n" $_T4 && \
+    printf "║  Layer 5/5  metadata+final verify                 %4ds     ║\n" $_T5 && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
-    printf "║  BUILD TOTAL                           %5ds               ║\n" $_TOTAL && \
+    printf "║  FINAL STAGE TOTAL                               %4ds     ║\n" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
+    echo "[INFO] Build stages: base-runtime (system) → conda-builder (build /opt/conda) → final (runtime assembly)" && \
+    echo "[INFO] Build tools (curl/wget/binutils) are NOT in final image (isolated in conda-builder stage)" && \
     rm -f /tmp/.build-timer && \
-    echo "[BUILD] ========== BUILD COMPLETE ==========" && \
+    echo "[BUILD] ========== BUILD COMPLETE (multistage-3stage) ==========" && \
     echo ""
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 7/7: 运行时声明（不产生镜像层，仅元数据）
+# 运行时声明（不产生镜像层，仅元数据）
 # ═══════════════════════════════════════════════════════════════════
 WORKDIR /workspace
 VOLUME ["/workspace"]
