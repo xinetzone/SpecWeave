@@ -265,6 +265,8 @@ c.ServerApp.root_dir = '/workspace'
 c.ServerApp.allow_root = True
 c.ServerApp.allow_origin = '${JUPYTER_ALLOW_ORIGIN:-}'
 c.ServerApp.allow_credentials = True
+c.ContentsManager.allow_hidden = True
+c.FileContentsManager.allow_hidden = True
 JUPYTER_RUNTIME_EOF
 
     chmod 777 /workspace 2>/dev/null || true

@@ -30,3 +30,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# Temporary workspace (not tracked, for ad-hoc testing)
+.temp/

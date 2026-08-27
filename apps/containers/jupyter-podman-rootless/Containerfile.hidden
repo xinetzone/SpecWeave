@@ -1,0 +1,16 @@
+# Incremental Containerfile: patch existing image with allow_hidden config
+# Usage: podman build -t localhost/jupyter-podman-rootless:latest -f Containerfile.hidden .
+FROM localhost/jupyter-podman-rootless:latest
+
+# Copy fixed jupyter config with allow_hidden = True
+COPY config/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
+COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
+
+# Ensure correct ownership/permissions
+RUN chown root:root /root/.jupyter/jupyter_notebook_config.py && \
+    chmod 644 /root/.jupyter/jupyter_notebook_config.py && \
+    chown devuser:devuser /home/devuser/.jupyter/jupyter_notebook_config.py && \
+    chmod 644 /home/devuser/.jupyter/jupyter_notebook_config.py && \
+    echo "=== Patched config verification ===" && \
+    grep -n 'allow_hidden' /root/.jupyter/jupyter_notebook_config.py && \
+    grep -n 'allow_hidden' /home/devuser/.jupyter/jupyter_notebook_config.py

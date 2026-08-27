@@ -9,3 +9,6 @@ c.ServerApp.allow_origin = ''
 c.ServerApp.allow_credentials = True
 c.ServerApp.disable_check_xsrf = False
 c.ServerApp.terminado_settings = {'shell_command': ['/bin/bash']}
+
+c.ContentsManager.allow_hidden = True
+c.FileContentsManager.allow_hidden = True
