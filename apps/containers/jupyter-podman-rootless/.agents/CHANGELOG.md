@@ -10,6 +10,17 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 | 类型 | 变更 |
 |------|------|
+| feat | jpman `-w/--workspace` 自定义工作区挂载：支持CLI参数覆盖.env配置，Windows路径自动转换为WSL/mnt/路径 |
+| feat | jpman .env安全加载：逐行解析（非source），剥离CRLF，支持引号值，反斜杠路径不被破坏 |
+| feat | jpman 短变量名兼容：CONTAINER_NAME/SSH_PORT/IMAGE_TAG/USER_PASSWORD 自动fallback到JUPYTER_*前缀 |
+| feat | jpman WORKSPACE优先级链：-w CLI > WORKSPACE env > JUPYTER_WORKSPACE env > .env > 默认workspace |
+| fix | jpman: 移除podman create错误的-d标志（create本身不启动，-d是run的选项） |
+| fix | jpman: CRLF行结尾导致bash语法错误（脚本转为LF，.env加载自动剥离\r） |
+| fix | jpman: cmd_restart参数透传丢失（"$@"透传给cmd_start） |
+| fix | jpman: bash source破坏Windows反斜杠路径（重写为安全逐行解析） |
+| docs | 更新docs/14-jpman-cli.md：补充-w参数、短名兼容表、WORKSPACE优先级、路径自动转换说明 |
+| docs | 更新.env.example：补充jpman路径自动转换说明和短名兼容注释 |
+| docs | 里程碑复盘+4个L2模式入库（bash-safe-dotenv-loading/wsl-windows-path-autoconvert/multi-entrypoint-config-unification/cross-platform-bash-preflight-checklist） |
 | feat | jpman零依赖CLI：跨平台bash/cmd/ps1脚本，无需Python依赖 |
 | feat | 镜像缓存：jpman save/load，pigz多线程压缩，manifest元数据，latest软链接 |
 | feat | WSL2一键导出：jpman wsl-export，自动配置wsl.conf+Conda激活+冒烟测试验证 |
