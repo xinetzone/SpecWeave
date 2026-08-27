@@ -75,8 +75,6 @@ def _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, n
         runtime,
         "build",
         "--format docker",
-        "--security-opt label=disable",
-        "--device /dev/fuse",
         "-t", tag,
     ]
 
