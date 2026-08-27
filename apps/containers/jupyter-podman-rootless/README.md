@@ -1,24 +1,46 @@
 # jupyter-podman-rootless
 
-> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容。
+> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
 
 ---
 
 ## 快速开始
 
+### 方式一：jpman 零依赖 CLI（推荐，WSL/Linux/macOS）
+
 ```bash
-# 安装依赖（推荐：invoke + podman-compose）
+# WSL/Linux：直接使用（无需安装Python依赖）
+bash bin/jpman rebuild-all   # 全量构建镜像（清华源加速）
+bash bin/jpman start         # 启动容器（幂等，自动处理依赖）
+bash bin/jpman info          # 查看访问信息
+
+# 安装为全局命令（可选）
+bash bin/jpman install       # 创建symlink到 ~/.local/bin/jpman
+jpman status                 # 之后可全局使用
+```
+
+Windows 用户可使用 `bin\jpman.cmd` 或 `bin\jpman.ps1`。
+
+### 方式二：invoke 封装（功能完整，需要Python依赖）
+
+```bash
+# 安装依赖（invoke + podman-compose）
 pip install -e ".[compose]"
 
-# 构建镜像（使用清华镜像源加速）
+# 构建镜像（清华镜像源加速）
 invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna
 
 # 启动容器（自动生成密码和token，端口2222:22, 8888:8888）
 invoke run
+```
 
-# 查看访问信息（启动时会打印）
-# SSH:       ssh -p 2222 devuser@localhost
-# Jupyter:   http://localhost:8888/lab?token=<自动生成的token>
+### 访问信息
+
+启动成功后，终端会打印访问信息：
+```
+SSH:       ssh -p 2222 devuser@localhost
+Jupyter:   http://localhost:8888/lab?token=<自动生成的token>
+Password:  <自动生成或配置的密码>
 ```
 
 详细使用指南见 [docs/](docs/README.md)。
@@ -31,7 +53,7 @@ invoke run
 |------|------|
 | [docs/README.md](docs/README.md) | 文档索引 |
 | [docs/00-overview.md](docs/00-overview.md) | 特性一览 |
-| [docs/01-getting-started.md](docs/01-getting-started.md) | 快速开始：前置条件、三种使用方式 |
+| [docs/01-getting-started.md](docs/01-getting-started.md) | 快速开始：前置条件、四种使用方式 |
 | [docs/02-invoke-reference.md](docs/02-invoke-reference.md) | Invoke命令参考：核心命令、ML命令、参数说明 |
 | [docs/03-environment-variables.md](docs/03-environment-variables.md) | 环境变量参考 |
 | [docs/04-image-architecture.md](docs/04-image-architecture.md) | 镜像架构：7层构建、7步启动、服务管理 |
@@ -44,6 +66,9 @@ invoke run
 | [docs/11-free-threading.md](docs/11-free-threading.md) | Python Free-Threading（无GIL）说明 |
 | [docs/12-healthcheck.md](docs/12-healthcheck.md) | 健康检查机制 |
 | [docs/13-faq.md](docs/13-faq.md) | 常见问题解答 |
+| [docs/14-jpman-cli.md](docs/14-jpman-cli.md) | jpman 零依赖CLI参考 |
+| [docs/15-wsl-export.md](docs/15-wsl-export.md) | WSL2发行版导出与使用 |
+| [docs/16-image-cache.md](docs/16-image-cache.md) | 镜像缓存与增量重建 |
 
 ### 🤖 AI协作者规范
 
@@ -66,17 +91,22 @@ invoke run
 |------|------|
 | **基础镜像** | Ubuntu 26.04 |
 | **Python** | 3.14 cp314t (free-threading，无GIL)，Miniforge3 + libmamba |
-| **Jupyter** | JupyterLab ≥4.4 + Notebook ≥7.3，端口 8888 |
+| **Jupyter** | JupyterLab ≥4.4 + Notebook ≥7.3，端口 8888，支持隐藏文件显示 |
 | **SSH** | OpenSSH Server，端口 22，支持密码/公钥认证 |
-| **Podman** | Rootless 模式（fuse-overlayfs + crun），支持 DinP |
+| **Podman** | Rootless 模式（fuse-overlayfs + crun），支持 DinP（容器内运行容器） |
 | **服务管理** | supervisord 管理 sshd + jupyter，tini 作为 PID 1 |
-| **非root用户** | devuser (UID 1000)，sudo 默认关闭 |
+| **非root用户** | devuser (UID 1000)，sudo 默认关闭（`--grant-sudo`/`GRANT_SUDO=yes` 开启） |
 | **中文环境** | zh_CN.UTF-8 locale + Asia/Shanghai 时区 |
 | **镜像源** | APT/Conda/PIP 均支持 official / tuna / aliyun |
 | **三层后端** | podman-compose（优先）→ podman-py SDK → CLI fallback |
-| **ML 模型** | OMLMD OCI artifact分发 + OLOT KServe ModelCar打包 |
+| **ML 模型** | OMLMD OCI artifact分发 + OLOT KServe ModelCar打包 + 本地model-registry |
 | **Toolbx 兼容** | 可直接 `toolbox create/enter`，自动透传HOME/cwd/X11 |
 | **开发透传** | compose.dev.yaml：SSH agent/git/X11/pip cache（opt-in） |
+| **零依赖CLI** | `jpman`：纯bash脚本，无需Python依赖，提供快速管理 |
+| **镜像缓存** | `.image-cache/`：podman save/load 快速备份恢复，pigz多线程压缩 |
+| **WSL2导出** | 一键导出为WSL2发行版，自动配置wsl.conf和Conda激活 |
+| **增量重建** | `Containerfile.hidden`：配置变更快速重建（<10秒） |
+| **跨平台** | 支持WSL/Linux/macOS（bash）+ Windows（cmd/ps1） |
 
 ## 项目结构
 
@@ -84,23 +114,67 @@ invoke run
 jupyter-podman-rootless/
 ├── AGENTS.md              # AI协作者入口（SpecWeave路由）
 ├── README.md              # 本文件（项目入口）
-├── Containerfile          # 7层镜像构建定义
+├── Containerfile          # 7层镜像构建定义（全量构建）
+├── Containerfile.hidden   # 增量构建补丁（仅配置变更，<10秒）
 ├── entrypoint.sh          # 7步启动脚本
-├── compose.yaml           # podman-compose编排
-├── compose.dev.yaml       # 开发透传覆盖
-├── pyproject.toml         # Python项目配置（invoke依赖）
-├── tasks/                 # invoke任务定义
+├── compose.yaml           # podman-compose编排（jupyter + model-registry）
+├── compose.dev.yaml       # 开发透传覆盖（opt-in）
+├── pyproject.toml         # Python项目配置（invoke + scikit-build-core）
+├── CMakeLists.txt         # scikit-build-core CMake配置
+├── .env.example           # 环境变量模板
+├── .containerignore       # Podman构建忽略规则
+├── .gitignore             # Git忽略规则
+├── bin/                   # jpman零依赖CLI
+│   ├── jpman              # WSL/Linux/macOS bash版本
+│   ├── jpman.cmd          # Windows cmd版本
+│   └── jpman.ps1          # Windows PowerShell版本
+├── tasks/                 # invoke任务定义（三层后端架构）
 ├── config/                # 配置文件（sshd/supervisord/jupyter/podman）
 ├── scripts/               # 辅助脚本（healthcheck/olot_car）
-├── conda-lock/            # Conda环境定义
+├── conda-lock/            # Conda环境定义（含omlmd+olot）
 ├── docs/                  # 人类可读文档（原子化拆分）
-└── .agents/               # AI协作者规范容器（原子化拆分）
+├── .agents/               # AI协作者规范容器（原子化拆分）
+├── .image-cache/          # 镜像缓存目录（git忽略）
+└── .wsl-cache/            # WSL发行版缓存目录（git忽略）
 ```
 
 ## 核心命令速查
 
+### jpman CLI（零依赖）
+
 ```bash
-# 查看所有可用命令（13个：8核心+5model）
+# 容器生命周期
+bash bin/jpman start       # 启动容器（幂等，自动等待健康检查）
+bash bin/jpman stop        # 停止并删除容器
+bash bin/jpman restart     # 重启
+bash bin/jpman status      # 查看状态（含镜像信息）
+bash bin/jpman info        # 查看访问信息（URL、凭证、端口）
+bash bin/jpman url         # 仅打印Jupyter URL（方便复制粘贴）
+
+# 交互
+bash bin/jpman shell       # 进入容器shell（devuser）
+bash bin/jpman shell --root # 以root进入
+bash bin/jpman logs        # 查看日志（--follow/-f 实时跟踪）
+bash bin/jpman exec CMD    # 以devuser执行命令
+bash bin/jpman root CMD    # 以root执行命令
+
+# 构建与缓存
+bash bin/jpman rebuild     # 增量重建（仅配置变更，<10秒）
+bash bin/jpman rebuild-all # 全量重建（需要网络，较慢）
+bash bin/jpman save        # 保存镜像到.image-cache/（备份）
+bash bin/jpman load        # 从.image-cache/加载镜像
+
+# WSL2集成
+bash bin/jpman wsl-export  # 一键导出为WSL2发行版
+bash bin/jpman wsl-verify  # 验证WSL2发行版环境（冒烟测试）
+bash bin/jpman keepalive   # 启动WSL保活进程（防止容器自动退出）
+bash bin/jpman install     # 安装为全局命令
+```
+
+### invoke 封装（功能完整）
+
+```bash
+# 查看所有可用命令
 invoke --list
 
 # 构建与运行
@@ -118,12 +192,12 @@ invoke model.push ./model --ref localhost:5000/models/bert:v1
 invoke model.pack ./model --base jupyter-podman-rootless:latest --ref localhost:5000/models/car:v1
 ```
 
-## 三种使用方式
+## 四种使用方式
 
-1. **invoke封装（推荐）**：自动密码生成、路径转换、三层后端选择
-2. **podman-compose直接使用**：标准Compose Spec，支持多文件覆盖和profiles
-3. **开发透传模式**：叠加compose.dev.yaml，透传SSH agent/GUI/pip cache
-4. **Toolbx模式**：`toolbox create/enter`，深度主机集成
+1. **jpman零依赖CLI（推荐快速上手）**：纯bash实现，无需Python依赖，提供镜像缓存、WSL导出、增量重建等实用功能
+2. **invoke封装（推荐日常开发）**：自动密码生成、路径转换、三层后端选择、ML模型管理完整功能
+3. **podman-compose直接使用**：标准Compose Spec，支持多文件覆盖和profiles
+4. **Toolbx模式**：`toolbox create/enter`，深度主机集成，透传HOME/cwd/X11
 
 详见 [docs/01-getting-started.md](docs/01-getting-started.md)。
 

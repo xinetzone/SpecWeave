@@ -28,6 +28,12 @@
 - **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
+- **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
+- **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复，pigz 多线程压缩
+- **WSL2 集成**：一键导出为 WSL2 发行版，自动配置 wsl.conf 和 Conda 激活，含环境验证脚本
+- **增量重建**：`Containerfile.hidden` 支持配置变更快速重建（<10秒）
+- **构建系统**：使用 scikit-build-core + CMake 进行 Python 包构建
+- **跨平台**：支持 WSL/Linux/macOS（bash）+ Windows（cmd/ps1）
 - **父级工作区**：SpecWeave 根目录（`../../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
 - **AI资产容器**：`.agents/` 目录（本项目特有规则，已按单一职责原子化拆分）
 
@@ -45,19 +51,28 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │       ├─ invoke-tasks.md    ← invoke任务开发规范（三层后端/client.py）
        │       ├─ ml-models.md       ← ML模型管理规范（OMLMD/OLOT/model-registry）
        │       └─ build-test.md      ← 构建与测试规范
-       ├─ docs/                       ← 人类可读文档（原子化拆分，14个文档+索引）
+       ├─ bin/                       ← jpman零依赖CLI（跨平台）
+       │   ├─ jpman                  ← WSL/Linux/macOS bash版本
+       │   ├─ jpman.cmd              ← Windows cmd版本
+       │   └─ jpman.ps1              ← Windows PowerShell版本
+       ├─ docs/                       ← 人类可读文档（原子化拆分，17个文档+索引）
        │   └─ README.md              ← 文档索引
-       ├─ pyproject.toml             ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras）
+       ├─ pyproject.toml             ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras，scikit-build-core）
+       ├─ CMakeLists.txt             ← scikit-build-core CMake配置
        ├─ tasks/                     ← invoke任务定义目录
        ├─ config/                    ← 配置文件目录
        ├─ scripts/                   ← 辅助脚本
        ├─ conda-lock/                ← conda环境定义（environment.yml，含omlmd+olot）
        ├─ Containerfile              ← Podman构建定义（7层架构，含Toolbx兼容标记）
+       ├─ Containerfile.hidden       ← 增量构建补丁（配置变更快速重建）
        ├─ entrypoint.sh              ← 容器启动脚本（7步启动流程）
        ├─ compose.yaml               ← podman-compose 声明式编排（jupyter + model-registry服务）
        ├─ compose.dev.yaml           ← 开发透传覆盖文件（SSH/git/X11/pip cache，opt-in）
        ├─ .env.example               ← 环境变量模板（含REGISTRY_*和DEV透传说明）
-       └─ .containerignore           ← Docker/Podman构建忽略规则
+       ├─ .containerignore           ← Docker/Podman构建忽略规则
+       ├─ .gitignore                 ← Git忽略规则（含.image-cache/.wsl-cache）
+       ├─ .image-cache/              ← 镜像缓存目录（git忽略）
+       └─ .wsl-cache/                ← WSL发行版缓存目录（git忽略）
 ```
 
 **嵌套优先原则**：进入本目录后优先读取本文件；详细约束按主题加载 `.agents/rules/` 对应文件；未覆盖的规则回退到 SpecWeave 根 AGENTS.md。
@@ -72,6 +87,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | compose编排/profiles/透传配置 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml服务定义、compose.dev.yaml透传、安全设计 |
 | invoke任务开发 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端架构、client.py封装、任务编写规范、路径自动转换 |
 | ML模型管理（OMLMD/OLOT） | [.agents/rules/ml-models.md](.agents/rules/ml-models.md) | OCI artifact分发、ModelCar打包、本地model-registry |
+| jpman CLI脚本修改 | [bin/jpman](bin/jpman) | 零依赖CLI脚本，bash实现，需保持跨平台兼容 |
 | 镜像构建与测试 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build/run命令、7步验证流程、常见问题排查 |
 | AI资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/目录结构、父级继承关系 |
 | 人类可读文档索引 | [docs/README.md](docs/README.md) | 使用指南、参考文档、FAQ |
@@ -92,6 +108,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | Compose编排规范 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml/dev.yaml/profiles/透传/安全 |
 | Invoke任务规范 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端/client.py/任务编写规范 |
 | ML模型规范 | [.agents/rules/ml-models.md](.agents/rules/ml-models.md) | OMLMD/OLOT/ModelCar/model-registry |
+| jpman CLI | [bin/jpman](bin/jpman) | 零依赖CLI脚本（跨平台bash/cmd/ps1） |
 | 构建测试规范 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | 构建/运行/验证/问题排查 |
 | 人类可读文档 | [docs/README.md](docs/README.md) | 使用文档索引（快速开始/参考/FAQ） |
 
@@ -116,11 +133,19 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 三层后端自动降级（compose→SDK→CLI） | [invoke-tasks.md](.agents/rules/invoke-tasks.md#三层后端架构clientpy) |
 | invoke命令兼容性保证（命名空间/参数/输出） | [invoke-tasks.md](.agents/rules/invoke-tasks.md#命令兼容性保证) |
 | OMLMD/OLOT cp314t兼容（--ignore-requires-python） | [ml-models.md](.agents/rules/ml-models.md#python兼容性说明) |
+| jpman CLI跨平台兼容（bash/cmd/ps1保持功能一致） | [bin/jpman](bin/jpman) |
+| Jupyter隐藏文件显示（allow_hidden=True） | [config/jupyter_notebook_config.py](config/jupyter_notebook_config.py) |
+| 镜像缓存目录（.image-cache/）和WSL缓存（.wsl-cache/）git忽略 | [.gitignore](.gitignore) |
 
 ## 快速开始
 
 ```bash
-# 安装依赖（invoke + podman-compose）
+# 方式一：jpman零依赖CLI（推荐快速上手，无需Python依赖）
+bash bin/jpman rebuild-all   # 全量构建镜像（清华源加速）
+bash bin/jpman start         # 启动容器
+bash bin/jpman info          # 查看访问信息
+
+# 方式二：安装依赖（invoke + podman-compose）
 pip install -e ".[compose]"
 
 # 构建镜像（清华源加速）
@@ -149,6 +174,7 @@ invoke --list
 
 完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-08-27** | feat: jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建
 - **2026-08-27** | refactor: 文档原子化拆分（AGENTS.md→.agents/rules/，README.md→docs/）
 - **2026-08-27** | feat: R1-R5（三层后端架构+OMLMD+OLOT+Toolbx透传）
 - **2026-08-26** | feat: 初始版本发布（7层Containerfile+7步Entrypoint+invoke+healthcheck）

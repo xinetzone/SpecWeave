@@ -10,6 +10,17 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 | 类型 | 变更 |
 |------|------|
+| feat | jpman零依赖CLI：跨平台bash/cmd/ps1脚本，无需Python依赖 |
+| feat | 镜像缓存：jpman save/load，pigz多线程压缩，manifest元数据，latest软链接 |
+| feat | WSL2一键导出：jpman wsl-export，自动配置wsl.conf+Conda激活+冒烟测试验证 |
+| feat | 增量重建：Containerfile.hidden + jpman rebuild，配置变更<10秒完成 |
+| feat | WSL保活：jpman keepalive自动启动sleep infinity防止容器退出 |
+| feat | jpman install：全局命令安装symlink到~/.local/bin |
+| refactor | 文档更新：README.md、AGENTS.md、docs/README.md更新，新增3个文档（共17个） |
+| docs | 新增docs/14-jpman-cli.md：jpman CLI完整参考 |
+| docs | 新增docs/15-wsl-export.md：WSL2发行版导出与使用指南 |
+| docs | 新增docs/16-image-cache.md：镜像缓存与增量重建指南 |
+| fix | .agents/README.md父级路径修正（4级向上而非3级） |
 | refactor | AGENTS.md精简为路由入口，约束迁移至.agents/rules/（7个主题文件）；README.md原子化至docs/（14个文档） |
 | feat | R5/Toolbx集成：Toolbx兼容标记(LABEL+/run/host+markers+capsh)、compose.dev.yaml透传覆盖文件、注释式透传文档 |
 | feat | R4/OLOT集成：KServe ModelCar标准镜像打包(model.pack/extract)、olot_car.py辅助脚本 |

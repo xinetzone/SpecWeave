@@ -5,7 +5,7 @@ source: "README.md"
 ---
 # jupyter-podman-rootless 文档
 
-基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容。
+基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
 
 ## 文档目录
 
@@ -14,7 +14,7 @@ source: "README.md"
 | 文档 | 说明 |
 |------|------|
 | [00-overview.md](00-overview.md) | 特性一览 |
-| [01-getting-started.md](01-getting-started.md) | 快速开始：前置条件、安装invoke、三种使用方式 |
+| [01-getting-started.md](01-getting-started.md) | 快速开始：前置条件、四种使用方式 |
 
 ### 使用参考
 
@@ -22,12 +22,15 @@ source: "README.md"
 |------|------|
 | [02-invoke-reference.md](02-invoke-reference.md) | Invoke任务参考：核心命令、ML命令、参数说明 |
 | [03-environment-variables.md](03-environment-variables.md) | 环境变量参考：运行时变量、构建时变量 |
-| [04-image-architecture.md](04-image-architecture.md) | 镜像架构：7层构建、7步启动、服务管理、Compose架构 |
+| [14-jpman-cli.md](14-jpman-cli.md) | jpman 零依赖CLI参考：容器管理、构建、WSL集成 |
+| [16-image-cache.md](16-image-cache.md) | 镜像缓存与增量重建 |
+| [15-wsl-export.md](15-wsl-export.md) | WSL2发行版导出与使用 |
 
-### 高级主题
+### 架构与高级主题
 
 | 文档 | 说明 |
 |------|------|
+| [04-image-architecture.md](04-image-architecture.md) | 镜像架构：7层构建、7步启动、服务管理、Compose架构 |
 | [05-rootless-podman.md](05-rootless-podman.md) | Rootless Podman说明：容器内运行容器 |
 | [06-ml-model-management.md](06-ml-model-management.md) | ML模型管理：OMLMD+OLOT、ModelCar打包 |
 | [07-toolbx-passthrough.md](07-toolbx-passthrough.md) | Toolbx透传开发模式：透传配置、安全设计 |
@@ -51,6 +54,17 @@ source: "README.md"
 
 ## 快速开始
 
+### 方式一：jpman 零依赖 CLI（推荐快速上手）
+
+```bash
+# WSL/Linux：直接使用（无需安装Python依赖）
+bash bin/jpman rebuild-all   # 全量构建镜像（清华源加速）
+bash bin/jpman start         # 启动容器（幂等，自动等待健康检查）
+bash bin/jpman info          # 查看访问信息
+```
+
+### 方式二：invoke 封装（功能完整）
+
 ```bash
 # 安装依赖（invoke）
 pip install -e ".[compose]"
@@ -66,11 +80,19 @@ invoke run
 # Jupyter Lab: http://localhost:8888/lab?token=<自动生成的token>
 ```
 
-详见 [01-getting-started.md](01-getting-started.md)。
+详见 [01-getting-started.md](01-getting-started.md) 和 [14-jpman-cli.md](14-jpman-cli.md)。
+
+## 四种使用方式
+
+1. **jpman零依赖CLI（推荐快速上手）**：纯bash实现，无需Python依赖，提供镜像缓存、WSL导出、增量重建等实用功能
+2. **invoke封装（推荐日常开发）**：自动密码生成、路径转换、三层后端选择、ML模型管理完整功能
+3. **podman-compose直接使用**：标准Compose Spec，支持多文件覆盖和profiles
+4. **Toolbx模式**：`toolbox create/enter`，深度主机集成，透传HOME/cwd/X11
 
 ## 变更日志
 
-- 2026-08-27 | refactor | README.md原子化至docs/目录（14个文档），AGENTS.md精简为路由入口并迁移至.agents/
+- 2026-08-27 | feat | jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建
+- 2026-08-27 | refactor | README.md原子化至docs/目录（17个文档），AGENTS.md精简为路由入口并迁移至.agents/
 - 2026-08-27 | feat | R5/Toolbx集成：Toolbx兼容标记、compose.dev.yaml透传
 - 2026-08-27 | feat | R4/OLOT集成：KServe ModelCar打包
 - 2026-08-27 | feat | R3/OMLMD集成：ML模型OCI artifact分发
