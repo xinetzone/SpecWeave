@@ -277,7 +277,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `retrospective-first-principles-analogy-error-20260709/` | Markdown 链接格式决策错误事件复盘：13个文件误改、18分钟闭环修正，沉淀“决策前三查”检查点 | 2026-07-09 | incident |
 | `retrospective-ui-beautification-failure-20260714/` | UI美化连续两轮未达预期事件复盘：工程优化与视觉美化错位、文本 AI 视觉盲飞、反馈闭环缺失 | 2026-07-14 | incident |
 
-### project-reports/（3 份独立报告 + 5 份原子化复盘）
+### project-reports/（3 份独立报告 + 6 份原子化复盘）
 
 项目级独立复盘报告目录，存放以单文件 Markdown 形式交付的完整复盘报告（区别于原子化子目录结构）。
 
@@ -291,6 +291,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | `dockerfile-optimization-retro-20260703.md` | Dockerfile 全面优化复盘：层缓存重排（构建速度提升400倍）、.dockerignore 创建、错误处理统一、兼容性保障，含变化频率分层原则等6条最佳实践 |
 | `retrospective-scikit-build-core-wiki-20260705/` | scikit-build-core Wiki 教程创建复盘：7章2864行教程交付、模式反馈环延迟分析、分层行数治理验证、cross-wiki-reference-directory-first L2升级（validation_count 2→3） |
 | `retrospective-first-principles-knowledge-system-20260710/` | 第一性原理知识体系v1.0→v1.7构建项目系统性复盘：9个文件（4主报告+5支撑分析，v1.2），完整时间线（8版本/15commit/35文件/4609行）、12核心决策5-Whys分析、10个问题深度复盘、14个方法论应用、10条关键洞察（9条高度普适）、7条改进建议、7个元洞察、SOP模板v1.3沉淀、元复盘checklist（`.agents/checklists/meta-retrospective-checklist.md`）创建，行动项100%闭环，验证"做事→复盘→元复盘→修复→方法论迭代"完整闭环 |
+| `retrospective-xuanspace-comprehensive-20260826/` | Xuanspace 全量历史全面复盘（322次提交/07-24~08-25）：30条事实清单（G1），3条洞察四元组（冲刺式节奏/质量前置/结构重心，G2），双轨演进制L1模式（G3），4视角8条对抗意见采纳5条（V），5项原子化行动项（G4），G1-G4+V全质量门通过 |
 
 ### task-reports/（26 份）
 
@@ -714,6 +715,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 2026-08-19 | `retrospective-chaos-epub-books-classification-20260819.md` | task-reports |
 | 2026-08-22 | `retrospective-jupyter-okf-wiki-group-20260822/` | competitive-analysis |
 | 2026-08-24 | `insight-index-structure-duality-20260824.md` | documentation-governance |
+| 2026-08-26 | `retrospective-xuanspace-comprehensive-20260826/` | project-reports |
 | 2026-07-13 | `adversarial-reviews/adversarial-review-20260713T070637Z.md` 等 5 份 | adversarial-reviews |
 | 2026-07-18 | `adversarial-reviews/adversarial-review-20260718T070940Z.md` 等 3 份 | adversarial-reviews |
 | 2026-07-19 | `adversarial-reviews/adversarial-review-20260719T004345Z.md` 等 6 份 | adversarial-reviews |
@@ -781,7 +783,7 @@ XMNPU 工具链相关的开发环境构建、权限修复等复盘。
 | 竞品分析、赛事分析、Competitive、SWOT、增长飞轮、风险识别、参赛策略、差异化优势、学习资料、Demo 生成、初赛指南、人气分、Session ID、认知锚点、配图、AI Skill、角色设计、风格克制、原子化视觉、Claude Tag、SpecForge、WSL、wslc、Container API、hvsocket、plan9、drvfs、mini_init、三源三角验证、preview API、CLI 短形态、通信通道拓扑、API 投影分层、Podman、Docker 替代、容器方案对比、隔离模型、rootless、CNI、OCI 标准、契约匹配、选型决策树、向日葵、Sunlogin、IPKVM、无网远控、远程控制硬件、KVM、HDMI采集、USB仿真、4G/5G远控、物理隔离、BIOS级控制、远控鼠标、智能鼠标、MM110、BM110、智能PDU、智能插座、插线板、功耗差异、三层漏斗、双产品矩阵、逐行配图教程、插画设计、小黑宋、SpecForge结构化、涂鸦Open、报告优化、学习指南、语音合成、ViiTorVoice、TTS、实时生成、长文本优化、流式输出、Karpathy、multi-cast、多智能体、Claude Code、上下文注入、400K token、Context Engineering、Eve框架、移动开发、Text-to-CAD、生成式设计、免费API、Agnes AI、21个免费模型、PPIO、Headroom、实时视频AI、虚拟形象、MopMonk、硬件测试、系统测试、无网远控启动U盘、BootBox、离线远控U盘、4G智能摄像头、SU1、硬件对比评测、P4 vs P1Pro、安全风险、摄像头安全、智能插座、智能家居远程控制、开源项目Wiki、技术文档分析、贝锐、Oray、Zleap-Agent、Agent Harness、Workspace-first、本地小模型、Context Engineering、Agent Loop、记忆系统、多模型协作、Prompt→Loop→Harness、上下文治理、记忆三层治理、经验记忆脱敏、Channel Fracture、OpenClaw、Hermes Agent、WildClawBench、Agentic Harness Engineering | `competitive-analysis/` | 全部 25 份报告 |
 | 知识内容、Wiki教程、Agent通信协议、A2A、MCP、ACP、技术文档、类比锚点、自包含约束、Spec Mode三段式、PRD→tasks→checklist、Mermaid图 | `knowledge-content/` | 全部 1 份报告 |
 | 标准评估、工具评估、Markdown标准、MyST、reStructuredText、Directives、Roles、Sphinx、文档迁移、可行性评估、解析器审计、六维技术支持评估、MDI/API/ABI/MCP/ACP/A2A、LLM×Sphinx融合、MyST-NB、可执行文档、三方案对比 | `standards-tools/` | 全部 1 份报告 |
-| 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理 | `project-reports/` | 全部 3 份独立报告 + 2 份原子化复盘 |
+| 项目报告、独立报告、Dockerfile、层缓存、.dockerignore、构建速度优化、规范度量、批量对比、Frontmatter治理、xuanspace、玄境、双轨演进制、全量历史、冲刺式节奏、质量前置、结构重心 | `project-reports/` | 全部 3 份独立报告 + 6 份原子化复盘 |
 | 任务复盘、任务执行、Spec Mode、403处理、信息源兜底、外部网站访问障碍、贝锐、Oray、蒲公英、花生壳、洋葱头、OrayClaw、AI产品矩阵、MCP远程控制、AI网关、分层兜底策略、元复盘、知识沉淀工作流、子代理三不准、暂存区污染、Git提交卫生、子代理越权提交、原子提交、vendor管理、子模块、跨平台测试、调试日志、ark-cli、SSO配置、OAuth、CLI工具、测试覆盖、代码分支分析、README自动生成、标记区域、增量更新、文档覆盖、索引更新、docgen、caffe-ffi、OpenMP、Conv v4、并行优化、双层并行隔离、OMP抖动诊断、CV%、P99/P50、自适应线程数、环境变量自检、容器健康、unhealthy、健康探针、ENABLE_SSH、ENABLE_DOCKER、探针-部署模式对齐、supervisorctl | `task-reports/` | 全部 22 份报告 |
 | 文档治理、toctree、toc.not_included、index.md 结构、okf-spec 风格、trae-skills 风格、层级路由、扁平索引、Sphinx构建、invocations、构建警告治理 | `documentation-governance/` | 全部 3 份报告 |
 | 对抗审查、魔鬼代言人、证伪、对抗性评审、adversarial review、边界试探、反例搜索 | `adversarial-reviews/` | 全部 29 份报告 |

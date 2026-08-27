@@ -74,6 +74,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 零逻辑客户端桌面应用可冻结架构：GUI 零逻辑 + 后端单源托管 UI/API 无 CORS + 进程内线程服务器支持 PyInstaller 单文件冻结 | L1 实验性 | 把成熟 CLI/服务端工具链封装为可单文件分发的桌面 GUI 应用 |
 | [jupyter-extension-registration.md](jupyter-extension-registration.md) | Jupyter 扩展/插件注册三端对照：jupyter_server 包内钩子函数 vs fps 声明式 entry-point vs jupyterlab 前端插件，三层发现机制各司其职 | L1 实验性 | Jupyter 生态源码阅读、跨语言插件系统设计、扩展未加载排查 |
 | [jupyter-kernel-zmq-channels.md](jupyter-kernel-zmq-channels.md) | Jupyter 内核通信 ZMQ 多通道协议：shell/iopub/stdin/control/hb 五通道职责分离，通道类 trait 装配点可插拔，控制可抢占、心跳不阻塞 | L1 实验性 | Jupyter 内核/客户端协议阅读、交互式运行时设计、内核通信调试 |
+| [graph-first-agent-architecture.md](graph-first-agent-architecture.md) | 图优先Agent架构：有向图建模控制流+类型化共享状态+条件路由+检查点暂停恢复+可观测性前置，"按图执行"替代"自由对话"，经行业跨框架证据与AndroidWorld 100%案例双重验证 | L2 已验证 | 生产级Agent系统、复杂多步工作流、需审计追踪/人机审核/失败恢复的长任务、CI/CD与数据管道同构场景 |
 | [event-driven-guardian.md](event-driven-guardian.md) | 事件驱动守护：用 OS 原生事件触发（schtasks ONEVENT/systemd path）替代常驻轮询进程，消除"守护进程即单点故障"递归问题，配冷却锁防事件风暴 + 幂等修复 + 最高权限，根治截图工具反复损坏实证 | L1 实验性 | 系统级自愈/守护、UWP/应用运行时注册修复、服务崩溃自动重启、错误日志触发的自动修复 |
 
 ## 成熟度定义
