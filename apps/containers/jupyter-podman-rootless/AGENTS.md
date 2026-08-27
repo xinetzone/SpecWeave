@@ -5,14 +5,14 @@
 > ```
 > 步骤 1：读取本文件全文
 > 步骤 2：确认父级工作区 — 本项目是 SpecWeave apps/ 下的子应用，全局规则继承自 SpecWeave 根 AGENTS.md
-> 步骤 3：按上下文路由表加载本项目特有规范
+> 步骤 3：按上下文路由表加载本项目特有规范（.agents/rules/ 下对应文件）
 > 步骤 3.5：自检 — 确认已理解父级规则与本项目特有约束
 > 步骤 4：在规范指导下执行任务
 > ```
 >
 > 本文件是 jupyter-podman-rootless 子项目的 AI 协作者入口。本项目是一个基于 Podman rootless 模式的
 > Jupyter 开发容器构建项目，所有全局规则（沟通语言、提交规范、上下文节省等）继承自 SpecWeave 根工作区，
-> 本文件仅定义本项目特有的上下文路由与约束入口。
+> 本文件仅定义本项目特有的上下文路由与约束入口。详细规则已原子化拆分至 `.agents/rules/` 目录。
 
 ## 项目概述
 
@@ -29,152 +29,111 @@
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
 - **父级工作区**：SpecWeave 根目录（`../../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
+- **AI资产容器**：`.agents/` 目录（本项目特有规则，已按单一职责原子化拆分）
 
 ## 嵌套路由关系
 
 ```
 SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
   └─ apps/containers/jupyter-podman-rootless/AGENTS.md（本文件，项目路由入口）
-       ├─ pyproject.toml      ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras）
-       ├─ tasks/              ← invoke任务定义目录
-       │   ├── __init__.py    ← 任务入口与命名空间（核心命令+model.*命令）
-       │   ├── utils.py       ← 工具函数（运行时检测/路径转换/随机字符串）
-       │   ├── client.py      ← Podman/Docker client wrapper（三层后端优先级检测）
-       │   ├── compose_backend.py ← podman-compose 后端封装
-       │   ├── build.py       ← 镜像构建任务
-       │   ├── manage.py      ← 容器生命周期管理（run/stop/status/clean）
-       │   ├── interact.py    ← 容器交互（shell/logs/exec）
-       │   ├── model.py       ← ML模型管理（push/pull/config/pack/extract via OMLMD/OLOT）
-       │   └── container.py   ← 向后兼容聚合模块
-       ├─ config/             ← 配置文件目录
-       │   ├─ supervisord.conf ← supervisord 主配置
-       │   ├─ sshd_config      ← SSH 服务配置
-       │   ├─ jupyter_notebook_config.py ← Jupyter 基础配置
-       │   ├─ supervisor/      ← supervisord 配置
-       │   │   └─ conf.d/      ← sshd/jupyter服务配置文件
-       │   └─ containers/      ← Podman容器存储配置（fuse-overlayfs）
-       ├─ scripts/             ← 辅助脚本
-       │   ├── healthcheck.sh  ← 健康检查脚本（sshd+jupyter+podman）
-       │   ├── olot_car.py     ← 容器内OLOT ModelCar辅助脚本
-       │   └── lib/            ← 脚本共享库（彩色日志等）
-       ├─ conda-lock/          ← conda环境定义（environment.yml，含omlmd+olot）
-       ├─ Containerfile        ← Podman构建定义（7层架构，含Toolbx兼容标记）
-       ├─ entrypoint.sh        ← 容器启动脚本（7步启动流程）
-       ├─ compose.yaml         ← podman-compose 声明式编排（jupyter + model-registry服务）
-       ├─ compose.dev.yaml     ← 开发透传覆盖文件（SSH/git/X11/pip cache，opt-in）
-       ├─ .env.example         ← 环境变量模板（含REGISTRY_*和DEV透传说明）
-       ├─ .containerignore     ← Docker/Podman构建忽略规则
-       └─ README.md            ← 使用文档（含ML模型管理、Toolbx透传、三层后端章节）
+       ├─ .agents/README.md          ← AI资产容器索引
+       │   └─ rules/
+       │       ├─ containerfile.md   ← Containerfile 编写规范（7层架构/Toolbx兼容/free-threading）
+       │       ├─ entrypoint.md      ← Entrypoint 启动脚本规范（7步启动流程）
+       │       ├─ services.md        ← supervisord/SSH/Jupyter/Podman服务配置规范
+       │       ├─ compose.md         ← compose编排/profiles/透传配置规范
+       │       ├─ invoke-tasks.md    ← invoke任务开发规范（三层后端/client.py）
+       │       ├─ ml-models.md       ← ML模型管理规范（OMLMD/OLOT/model-registry）
+       │       └─ build-test.md      ← 构建与测试规范
+       ├─ docs/                       ← 人类可读文档（原子化拆分，14个文档+索引）
+       │   └─ README.md              ← 文档索引
+       ├─ pyproject.toml             ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras）
+       ├─ tasks/                     ← invoke任务定义目录
+       ├─ config/                    ← 配置文件目录
+       ├─ scripts/                   ← 辅助脚本
+       ├─ conda-lock/                ← conda环境定义（environment.yml，含omlmd+olot）
+       ├─ Containerfile              ← Podman构建定义（7层架构，含Toolbx兼容标记）
+       ├─ entrypoint.sh              ← 容器启动脚本（7步启动流程）
+       ├─ compose.yaml               ← podman-compose 声明式编排（jupyter + model-registry服务）
+       ├─ compose.dev.yaml           ← 开发透传覆盖文件（SSH/git/X11/pip cache，opt-in）
+       ├─ .env.example               ← 环境变量模板（含REGISTRY_*和DEV透传说明）
+       └─ .containerignore           ← Docker/Podman构建忽略规则
 ```
 
-**嵌套优先原则**：进入本目录后优先读取本文件；未覆盖的规则回退到 SpecWeave 根 AGENTS.md。
+**嵌套优先原则**：进入本目录后优先读取本文件；详细约束按主题加载 `.agents/rules/` 对应文件；未覆盖的规则回退到 SpecWeave 根 AGENTS.md。
 
 ## 上下文路由表
 
 | 任务类型 | 必读入口 | 说明 |
 |---------|---------|------|
-| invoke任务开发 | tasks/ 目录 | 使用invoke进行构建、测试、部署等任务管理 |
-| Containerfile/Dockerfile编写 | 参考../../docker-images/jupyter-ssh-base/ | 多阶段构建规范适配Podman，注意Toolbx LABEL/markers |
-| supervisord/SSH/Jupyter服务配置 | config/supervisor/conf.d/ | 多服务管理配置 |
-| Podman rootless配置 | config/containers/ | rootless模式下的Podman配置 |
-| ML模型管理（OMLMD/OLOT） | tasks/model.py + scripts/olot_car.py | OCI artifact分发、ModelCar打包逻辑 |
-| compose编排/profiles | compose.yaml + compose.dev.yaml | 服务定义、registry profile、透传配置 |
-| 三层后端逻辑 | tasks/client.py + tasks/compose_backend.py | 后端自动降级机制 |
-| 全局规则（提交/代码风格/沟通） | [../../../AGENTS.md](../../../AGENTS.md) → [.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 回退到父级工作区 |
-| Skill使用 | [.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| Containerfile修改/构建优化 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 7层架构、Toolbx兼容、free-threading、层缓存策略、安全规范 |
+| entrypoint.sh启动脚本 | [.agents/rules/entrypoint.md](.agents/rules/entrypoint.md) | 7步启动流程、日志规范、信号处理、Podman初始化、Jupyter配置 |
+| supervisord/SSH/Jupyter/Podman服务配置 | [.agents/rules/services.md](.agents/rules/services.md) | 多服务管理、权限配置、存储驱动 |
+| compose编排/profiles/透传配置 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml服务定义、compose.dev.yaml透传、安全设计 |
+| invoke任务开发 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端架构、client.py封装、任务编写规范、路径自动转换 |
+| ML模型管理（OMLMD/OLOT） | [.agents/rules/ml-models.md](.agents/rules/ml-models.md) | OCI artifact分发、ModelCar打包、本地model-registry |
+| 镜像构建与测试 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build/run命令、7步验证流程、常见问题排查 |
+| AI资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/目录结构、父级继承关系 |
+| 人类可读文档索引 | [docs/README.md](docs/README.md) | 使用指南、参考文档、FAQ |
+| 全局规则（提交/代码风格/沟通） | [../../../AGENTS.md](../../../AGENTS.md) → [../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 回退到父级工作区 |
+| Skill使用 | [../../../.agents/skills/](../../../.agents/skills/) | 所有SpecWeave全局Skill可用 |
+| 复盘/洞察/原子化/原子提交 | [../../../.agents/commands/](../../../.agents/commands/) | 七概念指令集，通过父级调用 |
 
-## 核心约束速查
+## 核心规范入口
 
-| 约束主题 | 说明 |
-|---------|------|
-| 运行时 | 优先使用 Podman，同时兼容 Docker；.containerignore 双兼容 |
-| 用户模式 | Rootless 模式运行，禁止容器内使用 root 用户作为默认用户 |
-| 非root用户 | devuser (UID 1000)，sudo 默认关闭（GRANT_SUDO=yes/--grant-sudo 开启） |
-| Python版本 | Python 3.14t (cp314t, free-threading, 无GIL) |
-| Python发行版 | Miniforge3 (conda-forge)，main环境；omlmd/olot通过--ignore-requires-python兼容cp314t |
-| 任务管理 | 使用 invoke，任务定义在 tasks/ 目录；13个命令（8核心+5model） |
-| 三层后端 | podman-compose（优先）→ podman-py SDK → CLI fallback；自动检测对用户透明 |
-| 可选依赖 | podman-compose/podman-py/omlmd/olot均为可选，未安装时自动降级不影响核心功能 |
-| 服务管理 | supervisord管理sshd(22)、jupyter(8888)；Podman按需rootless运行 |
-| 中文环境 | locale: zh_CN.UTF-8, timezone: Asia/Shanghai |
-| 工作目录 | /workspace |
-| 透传设计 | 默认隔离优先，所有透传（SSH/GUI/GPU/hostnet）均为opt-in；compose.yaml注释文档+compose.dev.yaml开箱覆盖 |
-| Toolbx兼容 | 镜像内置com.github.containers.toolbox=true LABEL、/run/host、/.toolboxenv、capsh |
-| 模型仓库 | model-registry服务通过profile: registry启用，默认不启动 |
-| invoke命令兼容 | 所有invoke命令名/参数/输出格式对用户透明，新增功能通过新命令/新参数添加 |
-| 敏感信息 | 禁止硬编码密码/密钥，通过环境变量注入 |
+| 规范 | 入口 | 说明 |
+|-----|------|------|
+| 父级全局规则 | [../../../AGENTS.md](../../../AGENTS.md) | SpecWeave根工作区入口（启动协议必经之路） |
+| 本文件入口 | AGENTS.md（本文件） | jupyter-podman-rootless子项目路由入口 |
+| AI资产容器 | [.agents/README.md](.agents/README.md) | .agents/目录索引与父级继承关系 |
+| Containerfile规范 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 7层架构/Toolbx兼容/free-threading/层缓存/安全 |
+| 入口点脚本规范 | [.agents/rules/entrypoint.md](.agents/rules/entrypoint.md) | 7步启动流程/日志/信号/Podman初始化 |
+| 服务配置规范 | [.agents/rules/services.md](.agents/rules/services.md) | supervisord/SSH/Jupyter/Podman配置 |
+| Compose编排规范 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml/dev.yaml/profiles/透传/安全 |
+| Invoke任务规范 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端/client.py/任务编写规范 |
+| ML模型规范 | [.agents/rules/ml-models.md](.agents/rules/ml-models.md) | OMLMD/OLOT/ModelCar/model-registry |
+| 构建测试规范 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | 构建/运行/验证/问题排查 |
+| 人类可读文档 | [docs/README.md](docs/README.md) | 使用文档索引（快速开始/参考/FAQ） |
+
+## 项目约束速览
+
+详细约束已按主题拆分到 `.agents/rules/` 下各文件，以下是核心约束索引：
+
+| 约束主题 | 所在文件 |
+|---------|---------|
+| 中文环境（locale/timezone）、基础镜像锁定 | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
+| 7层构建架构、层缓存优化、Toolbx兼容标记 | [containerfile.md](.agents/rules/containerfile.md#7层构建设计) |
+| Python 3.14 cp314t free-threading配置 | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
+| 非root用户（devuser/UID1000/docker组/sudo） | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
+| Rootless Podman配置（fuse-overlayfs/crun/subuid） | [containerfile.md](.agents/rules/containerfile.md#rootless-podman配置) |
+| 敏感信息（禁止硬编码密码/密钥） | [containerfile.md](.agents/rules/containerfile.md#安全规范) |
+| 镜像优化（--no-install-recommends/缓存清理） | [containerfile.md](.agents/rules/containerfile.md#体积优化) |
+| tini init进程、7步启动流程 | [entrypoint.md](.agents/rules/entrypoint.md#基础约定) |
+| 启动日志规范、信号处理、Podman初始化 | [entrypoint.md](.agents/rules/entrypoint.md#7步启动流程) |
+| SSH配置（PermitRootLogin/主机密钥/公钥注入） | [entrypoint.md](.agents/rules/entrypoint.md#7步启动流程) |
+| supervisord服务管理（sshd/jupyter优先级） | [services.md](.agents/rules/services.md#supervisord配置) |
+| compose透传安全设计（opt-in/只读挂载） | [compose.md](.agents/rules/compose.md#安全设计原则) |
+| 三层后端自动降级（compose→SDK→CLI） | [invoke-tasks.md](.agents/rules/invoke-tasks.md#三层后端架构clientpy) |
+| invoke命令兼容性保证（命名空间/参数/输出） | [invoke-tasks.md](.agents/rules/invoke-tasks.md#命令兼容性保证) |
+| OMLMD/OLOT cp314t兼容（--ignore-requires-python） | [ml-models.md](.agents/rules/ml-models.md#python兼容性说明) |
 
 ## 快速开始
 
 ```bash
-# 安装依赖（invoke）
-pip install -e .
+# 安装依赖（invoke + podman-compose）
+pip install -e ".[compose]"
+
+# 构建镜像（清华源加速）
+invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna
+
+# 启动容器（自动生成密码和token）
+invoke run
 
 # 查看可用任务（应列出13个：8核心+5model）
 invoke --list
-
-# 构建镜像
-invoke build
-
-# 运行容器（后台启动，端口2222:22, 8888:8888，挂载./workspace）
-invoke run
-
-# 开发透传模式（podman-compose直接使用）
-podman-compose -f compose.yaml -f compose.dev.yaml up -d
-
-# 启动本地模型仓库+开发透传
-podman-compose -f compose.yaml -f compose.dev.yaml --profile registry up -d
-
-# 查看容器状态
-invoke status
-
-# 查看日志
-invoke logs
-
-# 进入容器shell（devuser）
-invoke shell
-
-# ML模型操作示例
-invoke model.push ./model --ref localhost:5000/models/bert:v1
-invoke model.pack ./model --base jupyter-podman-rootless:latest --ref localhost:5000/models/car:v1
-
-# 在容器中执行命令
-invoke exec --command "python --version"
-
-# 停止容器
-invoke stop
-
-# 清理（删除容器和镜像）
-invoke clean --image
 ```
 
-## 环境变量
-
-### 运行时环境变量
-
-| 变量 | 默认值 | 说明 |
-|------|-------|------|
-| USER_PASSWORD | 随机生成 | devuser用户密码 |
-| JUPYTER_TOKEN | 随机生成 | Jupyter访问token |
-| JUPYTER_PASSWORD | 无 | Jupyter密码（与token二选一） |
-| SSH_PUBLIC_KEY | 无 | SSH公钥（注入authorized_keys） |
-| GRANT_SUDO | no | 是否授予devuser无密码sudo权限 |
-| ALLOW_ROOT_SSH | no | 是否允许root SSH登录 |
-| APT_MIRROR | official | APT镜像源（official/tuna/aliyun） |
-| CONDA_MIRROR | official | Conda镜像源（official/tuna/aliyun） |
-| PIP_MIRROR | official | PIP镜像源（official/tuna/aliyun） |
-| DEBUG | 0 | 设为1启用entrypoint调试输出 |
-| REGISTRY_URL | localhost:5000 | ML模型OCI registry地址 |
-| REGISTRY_PORT | 5000 | 本地model-registry服务端口 |
-| REGISTRY_PLAIN_HTTP | true | 本地registry使用HTTP |
-
-## Invoke 命令清单
-
-| 命名空间 | 命令 | 功能 |
-|---------|------|------|
-| (root) | build, run, stop, status, shell, logs, exec, clean | 核心8命令 |
-| container.* | build, run, stop, status, shell, logs, exec, clean | 核心命令别名（命名空间隔离） |
-| model.* | push, pull, config, pack, extract | ML模型管理5命令（OMLMD/OLOT） |
+完整构建、运行、验证命令和常见问题排查见 [.agents/rules/build-test.md](.agents/rules/build-test.md)，用户文档见 [docs/](docs/README.md)。
 
 ## 引用父级 SpecWeave 规范
 
@@ -183,13 +142,13 @@ invoke clean --image
 - 正确引用父级 `../../../AGENTS.md`
 - 遵循嵌套优先原则，未覆盖的规则回退到父级工作区
 - 支持工作区发现协议的五步发现流程
+- AI资产已原子化拆分至 `.agents/` 目录，遵循单一职责原则
+- 人类可读文档已原子化拆分至 `docs/` 目录
 
 ## 变更日志
 
-- 2026-08-27 | feat | R5/Toolbx集成：Toolbx兼容标记(LABEL+/run/host+markers+capsh)、compose.dev.yaml透传覆盖文件、注释式透传文档
-- 2026-08-27 | feat | R4/OLOT集成：KServe ModelCar标准镜像打包(model.pack/extract)、olot_car.py辅助脚本
-- 2026-08-27 | feat | R3/OMLMD集成：ML模型OCI artifact分发(model.push/pull/config)、model-registry compose service(profile:registry)
-- 2026-08-27 | feat | R2/podman-compose集成：声明式compose.yaml编排、.env配置管理、compose_backend.py
-- 2026-08-27 | feat | R1/podman-py SDK集成：三层exec后端架构、client.py封装
-- 2026-08-26 | feat | 完整实现：Containerfile(7层)、entrypoint.sh(7步)、config/配置、invoke任务、healthcheck
-- 2026-08-26 | feat | 初始化项目结构：AGENTS.md、目录结构、pyproject.toml、.containerignore、README.md
+完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
+
+- **2026-08-27** | refactor: 文档原子化拆分（AGENTS.md→.agents/rules/，README.md→docs/）
+- **2026-08-27** | feat: R1-R5（三层后端架构+OMLMD+OLOT+Toolbx透传）
+- **2026-08-26** | feat: 初始版本发布（7层Containerfile+7步Entrypoint+invoke+healthcheck）
