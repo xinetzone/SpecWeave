@@ -354,23 +354,23 @@ pre-commit 配置（事实 #251-254）使用 ruff-pre-commit v0.15.18（ruff-che
 
 1. **使用 scaffold 创建骨架**：`python -m script.scaffold integration`，根据提示输入 domain、name、iot_class 等信息
 2. **实现 manifest.json**：填写所有必需字段，声明 dependencies、requirements、发现规则
-3. **实现 ConfigFlow 和平台实体**：参考[配置流](/concepts/15-config-flow)和[平台开发模式](/concepts/16-platform-pattern)
+3. **实现 ConfigFlow 和平台实体**：参考[配置流](/concepts/15-config-flow.md)和[平台开发模式](/concepts/16-platform-pattern.md)
 4. **运行单集成 hassfest**：`python -m script.hassfest --integration-path homeassistant/components/<domain>`，快速验证
 5. **运行 generate 模式**：`python -m script.hassfest --action generate`，自动修复生成文件
-6. **编写测试**：参考[测试模式](/concepts/18-testing-patterns)
+6. **编写测试**：参考[测试模式](/concepts/18-testing-patterns.md)
 7. **运行 ruff 和 mypy**：`ruff check homeassistant/components/<domain>` 和 `mypy homeassistant/components/<domain>`
 8. **提交前全量验证**：`python -m script.hassfest --requirements --action validate`
 
 ## 延伸阅读
 
-- [集成架构](/concepts/14-component-architecture)
-- [配置流](/concepts/15-config-flow)
-- [平台开发模式](/concepts/16-platform-pattern)
-- [测试模式](/concepts/18-testing-patterns)
-- [Util 工具集](/concepts/13-utilities)
+- [集成架构](/concepts/14-component-architecture.md)
+- [配置流](/concepts/15-config-flow.md)
+- [平台开发模式](/concepts/16-platform-pattern.md)
+- [测试模式](/concepts/18-testing-patterns.md)
+- [Util 工具集](/concepts/13-utilities.md)
 
 ## 相关概念
 
-- [集成架构](/concepts/14-component-architecture) — hassfest 验证集成的 manifest.json、目录结构和生命周期函数规范
-- [平台开发模式](/concepts/16-platform-pattern) — hassfest 检查平台实体的 supported_features、翻译键和代码规范
-- [测试模式](/concepts/18-testing-patterns) — hassfest 验证测试文件存在性和质量，与 pytest 测试框架配合保障集成质量
+- [集成架构](/concepts/14-component-architecture.md) — hassfest 验证集成的 manifest.json、目录结构和生命周期函数规范
+- [平台开发模式](/concepts/16-platform-pattern.md) — hassfest 检查平台实体的 supported_features、翻译键和代码规范
+- [测试模式](/concepts/18-testing-patterns.md) — hassfest 验证测试文件存在性和质量，与 pytest 测试框架配合保障集成质量

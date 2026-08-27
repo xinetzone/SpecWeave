@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于帛书《老子》文本校勘、异文辨证、经义训诂等研究领域，是研究《老子》传本源流不可或缺的基础文献。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的帛书甲本、帛书乙本概念，以及 [variants/](../variants/) 目录下的关键异文概念引用。
+本书适用于帛书《老子》文本校勘、异文辨证、经义训诂等研究领域，是研究《老子》传本源流不可或缺的基础文献。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的帛书甲本、帛书乙本概念，以及 [variants/](../variants/index.md) 目录下的关键异文概念引用。
 
 ## 出版信息
 

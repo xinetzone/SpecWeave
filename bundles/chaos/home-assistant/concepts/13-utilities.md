@@ -18,7 +18,7 @@ sources:
 
 # Util 工具集
 
-`homeassistant/util/` 是 Home Assistant 的底层工具库，提供与框架无关的纯 Python 实用函数。与依赖 `HomeAssistant` 实例的 [Helpers 工具库](/concepts/12-helpers-library)不同，util 模块不依赖事件循环或 HA 运行时，可以在任何上下文中安全导入。util 覆盖日期时间处理、JSON/YAML 序列化、异步工具、颜色空间转换、单位系统、超时管理、标识符生成和网络工具等领域，是整个 HA 代码库的基础积木。
+`homeassistant/util/` 是 Home Assistant 的底层工具库，提供与框架无关的纯 Python 实用函数。与依赖 `HomeAssistant` 实例的 [Helpers 工具库](/concepts/12-helpers-library.md)不同，util 模块不依赖事件循环或 HA 运行时，可以在任何上下文中安全导入。util 覆盖日期时间处理、JSON/YAML 序列化、异步工具、颜色空间转换、单位系统、超时管理、标识符生成和网络工具等领域，是整个 HA 代码库的基础积木。
 
 ## util 通用工具（`util/__init__.py`）
 
@@ -607,13 +607,13 @@ def handle_light(...):
 
 ## 延伸阅读
 
-- [Helpers 工具库](/concepts/12-helpers-library)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
-- [实体模型](/concepts/09-entity-model)
+- [Helpers 工具库](/concepts/12-helpers-library.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
+- [实体模型](/concepts/09-entity-model.md)
 
 ## 相关概念
 
-- [Helpers 工具库](/concepts/12-helpers-library) — 在 util 无状态工具之上构建的有状态框架级抽象
-- [配置系统](/concepts/05-configuration) — yaml 加载、!secret 标签、JSON 序列化等 util 模块为配置系统提供底层支持
-- [集成架构](/concepts/14-component-architecture) — 集成开发广泛使用 dt、json、async_ 等 util 工具处理时间、序列化与并发
+- [Helpers 工具库](/concepts/12-helpers-library.md) — 在 util 无状态工具之上构建的有状态框架级抽象
+- [配置系统](/concepts/05-configuration.md) — yaml 加载、!secret 标签、JSON 序列化等 util 模块为配置系统提供底层支持
+- [集成架构](/concepts/14-component-architecture.md) — 集成开发广泛使用 dt、json、async_ 等 util 工具处理时间、序列化与并发

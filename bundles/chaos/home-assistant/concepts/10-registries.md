@@ -21,7 +21,7 @@ sources:
 
 # 注册表
 
-注册表（Registry）是 Home Assistant 中持久化用户自定义配置和元数据的核心子系统。与[状态机](/concepts/07-state-machine)保存实体的实时状态不同，注册表保存的是跨重启持久化的数据：设备名称、区域分配、实体禁用状态、自定义实体 ID 等。HA 启动时并行加载所有注册表（事实 #213），它们是用户与系统交互的持久化层。
+注册表（Registry）是 Home Assistant 中持久化用户自定义配置和元数据的核心子系统。与[状态机](/concepts/07-state-machine.md)保存实体的实时状态不同，注册表保存的是跨重启持久化的数据：设备名称、区域分配、实体禁用状态、自定义实体 ID 等。HA 启动时并行加载所有注册表（事实 #213），它们是用户与系统交互的持久化层。
 
 ## 注册表体系概览
 
@@ -338,13 +338,13 @@ snapshot 测试中，序列化器会将 entry 的 `id`、`config_entry_id`、`de
 
 ## 延伸阅读
 
-- [实体模型](/concepts/09-entity-model)
-- [状态机](/concepts/07-state-machine)
-- [配置管理](/concepts/05-configuration)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
+- [实体模型](/concepts/09-entity-model.md)
+- [状态机](/concepts/07-state-machine.md)
+- [配置管理](/concepts/05-configuration.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
 
 ## 相关概念
 
-- [实体模型](/concepts/09-entity-model) — Entity 的 unique_id 与 EntityRegistry 关联，实现实体管理
-- [配置系统](/concepts/05-configuration) — 注册表数据持久化在 .storage/ 目录的 JSON 文件中
-- [配置流](/concepts/15-config-flow) — ConfigEntry 为设备和实体提供配置入口关联
+- [实体模型](/concepts/09-entity-model.md) — Entity 的 unique_id 与 EntityRegistry 关联，实现实体管理
+- [配置系统](/concepts/05-configuration.md) — 注册表数据持久化在 .storage/ 目录的 JSON 文件中
+- [配置流](/concepts/15-config-flow.md) — ConfigEntry 为设备和实体提供配置入口关联

@@ -259,8 +259,8 @@ Relax Pass 体系体现了以下设计哲学：
 
 ## 相关概念
 
-- [Pass 基础设施](/concepts/03-pass-infrastructure) — Relax Pass 基于 TVM 通用 Pass 框架，使用 PassContext 管理优化级别和依赖
-- [Relax 图级 IR](/concepts/11-relax-ir) — Pass 变换的目标 IR，涵盖 BindingBlock、DataflowBlock、Function 等节点
-- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder) — Pass 实现中使用 BlockBuilder 进行归一化和增量重写
-- [Relax 算子体系](/concepts/13-relax-ops) — 算子融合和合法化依赖 OpPatternKind 和 FLegalize 等算子属性
-- [VM 字节码虚拟机](/concepts/18-vm-bytecode) — LowerRuntimeBuiltin/VMShapeLower 等 Pass 将 Relax 降级为 VM 字节码
+- [Pass 基础设施](/concepts/03-pass-infrastructure.md) — Relax Pass 基于 TVM 通用 Pass 框架，使用 PassContext 管理优化级别和依赖
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — Pass 变换的目标 IR，涵盖 BindingBlock、DataflowBlock、Function 等节点
+- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder.md) — Pass 实现中使用 BlockBuilder 进行归一化和增量重写
+- [Relax 算子体系](/concepts/13-relax-ops.md) — 算子融合和合法化依赖 OpPatternKind 和 FLegalize 等算子属性
+- [VM 字节码虚拟机](/concepts/18-vm-bytecode.md) — LowerRuntimeBuiltin/VMShapeLower 等 Pass 将 Relax 降级为 VM 字节码

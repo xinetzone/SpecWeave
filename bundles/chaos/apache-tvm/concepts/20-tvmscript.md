@@ -218,8 +218,8 @@ TVMScript 的设计体现了以下原则：
 
 ## 相关概念
 
-- [TIRx 中间表示](/concepts/05-tirx-ir) — TVMScript 的 TIR 方言用于直接编写 PrimFunc、Buffer、For 循环等张量级 IR
-- [Relax 图级 IR](/concepts/11-relax-ir) — TVMScript 的 Relax 方言用于定义神经网络模型的图级函数和数据流块
-- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder) — TVMScript Relax 方言底层通过 BlockBuilder 的 Emit/DataflowScope 构建 IR
-- [SBlock 声明式调度](/concepts/07-sblock-schedule) — TVMScript 可表达 TIR 调度规则，与 Schedule/Trace 机制协同
-- [Pass 基础设施](/concepts/03-pass-infrastructure) — TVMScript 是 Pass 单元测试用例的标准输入输出格式，支持打印-解析往返验证
+- [TIRx 中间表示](/concepts/05-tirx-ir.md) — TVMScript 的 TIR 方言用于直接编写 PrimFunc、Buffer、For 循环等张量级 IR
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — TVMScript 的 Relax 方言用于定义神经网络模型的图级函数和数据流块
+- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder.md) — TVMScript Relax 方言底层通过 BlockBuilder 的 Emit/DataflowScope 构建 IR
+- [SBlock 声明式调度](/concepts/07-sblock-schedule.md) — TVMScript 可表达 TIR 调度规则，与 Schedule/Trace 机制协同
+- [Pass 基础设施](/concepts/03-pass-infrastructure.md) — TVMScript 是 Pass 单元测试用例的标准输入输出格式，支持打印-解析往返验证

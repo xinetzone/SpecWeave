@@ -493,4 +493,3 @@ No less than 和 as well as 一样是比较级的连词，主语动词一致性�
 - [18 动名词](/concepts/18-gerunds.md) — 动名词作主语时动词用单数
 - [19 不定式短语](/concepts/19-infinitives.md) — 不定式短语作主语时动词用单数
 - [22 名词从句](/concepts/22-noun-clauses.md) — 名词从句作主语时动词用单数
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「主词/主语」「受词/宾语」等两岸术语差异对照

@@ -363,13 +363,13 @@ INFO homeassistant.core: Starting Home Assistant
 
 ## 延伸阅读
 
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [配置系统](/concepts/05-configuration)
-- [事件总线](/concepts/06-event-bus)
-- [安装与启动](/concepts/02-installation-runner)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [配置系统](/concepts/05-configuration.md)
+- [事件总线](/concepts/06-event-bus.md)
+- [安装与启动](/concepts/02-installation-runner.md)
 
 ## 相关概念
 
-- [HomeAssistant 核心对象](/concepts/03-core-object) — 启动过程中创建的根对象及其 CoreState 状态机
-- [配置系统](/concepts/05-configuration) — Stage A 加载的 configuration.yaml 与 Config 对象
-- [集成架构](/concepts/14-component-architecture) — Stage 2 加载的集成依赖解析、平台转发与生命周期函数
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — 启动过程中创建的根对象及其 CoreState 状态机
+- [配置系统](/concepts/05-configuration.md) — Stage A 加载的 configuration.yaml 与 Config 对象
+- [集成架构](/concepts/14-component-architecture.md) — Stage 2 加载的集成依赖解析、平台转发与生命周期函数

@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于郭店楚简《老子》文本校勘、战国文字研究、《老子》早期传本研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的郭店楚简本概念和 [variants/](../variants/) 目录下的异文概念引用。
+本书适用于郭店楚简《老子》文本校勘、战国文字研究、《老子》早期传本研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的郭店楚简本概念和 [variants/](../variants/index.md) 目录下的异文概念引用。
 
 ## 出版信息
 

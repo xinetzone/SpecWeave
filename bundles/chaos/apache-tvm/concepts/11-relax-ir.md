@@ -168,8 +168,8 @@ Relax IR 的设计体现了以下架构原则：
 
 ## 相关概念
 
-- [FFI 基础设施](/concepts/01-ffi-foundation) — Relax 表达式节点与对象系统基于 TVM-FFI 的引用计数和反射机制构建
-- [TIRx 中间表示](/concepts/05-tirx-ir) — Relax 通过 `call_tir` 桥接 TIR PrimFunc，实现图级到张量级的衔接
-- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder) — 构建 Relax IR 的核心接口，负责 Emit、归一化和作用域管理
-- [Relax 算子体系](/concepts/13-relax-ops) — Relax Call 节点调用的算子集合，携带类型推导与合法化属性
-- [Relax 变换 Pass](/concepts/14-relax-passes) — 对 Relax IR 进行融合、合法化、内存规划等优化的编译 Pass 体系
+- [FFI 基础设施](/concepts/01-ffi-foundation.md) — Relax 表达式节点与对象系统基于 TVM-FFI 的引用计数和反射机制构建
+- [TIRx 中间表示](/concepts/05-tirx-ir.md) — Relax 通过 `call_tir` 桥接 TIR PrimFunc，实现图级到张量级的衔接
+- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder.md) — 构建 Relax IR 的核心接口，负责 Emit、归一化和作用域管理
+- [Relax 算子体系](/concepts/13-relax-ops.md) — Relax Call 节点调用的算子集合，携带类型推导与合法化属性
+- [Relax 变换 Pass](/concepts/14-relax-passes.md) — 对 Relax IR 进行融合、合法化、内存规划等优化的编译 Pass 体系

@@ -479,13 +479,13 @@ def fast_handler(event: Event) -> None:
 
 ## 延伸阅读
 
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [三层架构](/concepts/01-architecture)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [三层架构](/concepts/01-architecture.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
 
 ## 相关概念
 
-- [HomeAssistant 核心对象](/concepts/03-core-object) — EventBus 作为 hass.bus 子系统的持有者与生命周期
-- [状态机](/concepts/07-state-machine) — 状态变更时通过 EventBus 发布 state_changed 事件的紧密协作者
-- [服务注册表](/concepts/08-service-registry) — 服务调用前后通过 EventBus 发布 call_service 事件
-- [Helpers 工具库](/concepts/12-helpers-library) — async_track_state_change 等高级事件跟踪封装
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — EventBus 作为 hass.bus 子系统的持有者与生命周期
+- [状态机](/concepts/07-state-machine.md) — 状态变更时通过 EventBus 发布 state_changed 事件的紧密协作者
+- [服务注册表](/concepts/08-service-registry.md) — 服务调用前后通过 EventBus 发布 call_service 事件
+- [Helpers 工具库](/concepts/12-helpers-library.md) — async_track_state_change 等高级事件跟踪封装

@@ -383,7 +383,6 @@ Unit 3 is <u>longer than</u> Unit 4.（第三课比第四课长。）
 
 ### 前置知识
 
-- [09 形容词](/concepts/09-adjectives.md) — 形容词比较级与最高级变化的基础
 - [10 副词](/concepts/10-adverbs.md) — 副词比较级与程度副词（as、more）的用法
 - [20 对等连词](/concepts/20-coordinate-conjunctions.md) — 对等从句的对称要求与省略，与比较句法特色相通（软依赖，建议先读）
 
@@ -396,4 +395,3 @@ Unit 3 is <u>longer than</u> Unit 4.（第三课比第四课长。）
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「子句/从句」「介系词/介词」等两岸术语差异说明

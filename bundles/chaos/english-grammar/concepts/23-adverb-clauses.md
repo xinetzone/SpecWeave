@@ -396,6 +396,5 @@ The virus <u>thrives</u> <u>where people live in close proximity to one another<
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「子句/从句」「介系词/介词」等两岸术语差异对照
 - [24 关系从句](/concepts/24-relative-clauses.md) — 同属从属从句的形容词从句，三种从属从句至此完整
 - [26 倒装句](/concepts/26-inversion.md) — no sooner … than 等连词的例句涉及否定副词前移倒装

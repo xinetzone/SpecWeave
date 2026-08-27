@@ -179,6 +179,4 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「介系词/介词」「不定词/不定式」等两岸术语差异说明
 - [13 分词](/concepts/13-participles.md) — 「be + V-en 不一定是被动态」的过去分词语态辨析出处
-- [06 基本句型](/concepts/06-basic-sentence-patterns.md) — 三种含宾语基本句型（S+V+O / S+V+O1+O2 / S+V+O+C）的原始定义

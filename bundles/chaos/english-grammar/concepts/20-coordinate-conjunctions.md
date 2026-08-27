@@ -182,5 +182,4 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「连词/Conjunction」等语法术语的两岸译法对照
 - [12 比较句法](/concepts/12-comparative-patterns.md) — more...than、as...as 等比较结构的平行对称要求

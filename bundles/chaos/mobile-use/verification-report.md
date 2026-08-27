@@ -76,7 +76,7 @@ sources:
 | /references/facts.md | ✅ |
 | /references/insights.md | ✅ |
 | /references/mobile-use-source.md | ✅ |
-| /references/verification-report.md | ✅ |
+| /verification-report.md | ✅ |
 
 ## 4. Grep API 验证
 
@@ -239,7 +239,7 @@ CLI 参数与 `main.py` 中 Typer 定义逐项比对：
 | references/facts.md | ✅ | — | ✅ | — |
 | references/insights.md | ✅ | — | ✅ | — |
 | references/mobile-use-source.md | ✅ | — | ✅ | — |
-| references/verification-report.md | ✅ | — | ✅ | — |
+| verification-report.md | ✅ | — | ✅ | — |
 
 ## 7. 内容质量检查
 

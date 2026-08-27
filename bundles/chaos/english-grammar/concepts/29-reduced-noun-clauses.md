@@ -437,5 +437,3 @@ sources:
 ### 关联参考
 
 - [28 关系从句简化](/concepts/28-reduced-relative-clauses.md) — 同属简化从句篇，关系从句省略 which is/that is 的平行做法
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「减化子句/简化从句」「不定词/不定式」等两岸术语差异对照
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 简化从句服务于写作简洁与广读理解，回顾语法学习的最终目的

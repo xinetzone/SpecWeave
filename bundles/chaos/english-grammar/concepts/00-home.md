@@ -39,16 +39,12 @@ sources:
 - **句法综合应用篇（25-26）**：主语动词一致性、倒装句
 - **简化从句篇（27-30）**：简化从句总论、关系从句简化、名词从句简化、副词从句简化
 
-建议的阅读顺序即编号顺序（00→30）。进入正文之前，强烈建议先阅读 [04 两岸英语术语对照表](/concepts/04-terminology-cross-strait.md)，消除术语障碍。
 
 ## 相关概念
 
 ### 进阶拓展
 
 - [01 序：我学英语的经验](/concepts/01-preface.md) — 作者自述学习方法，建议从这里开始
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 全书教学法基础：语法为广读服务
 
 ### 关联参考
 
-- [04 两岸英语术语对照表](/concepts/04-terminology-cross-strait.md) — 阅读正文前的术语准备
-- [05 正文目录](/concepts/05-chapter-toc.md) — 全部 25 个正文章节导航

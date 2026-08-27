@@ -267,8 +267,8 @@ TOPI 的设计体现了以下原则：
 
 ## 相关概念
 
-- [TE 张量表达式](/concepts/15-te-tensor-expression) — TOPI 算子内部使用 `te.compute` 和 `te.placeholder` 描述张量计算
-- [调度原语](/concepts/08-schedule-primitives) — TOPI 为各硬件后端提供调度模板，应用 split/fuse/cache_read 等原语优化循环
-- [Target 与代码生成](/concepts/04-target-codegen) — TOPI 通过 Target 系统分发到 CUDA/x86/ARM 等后端的专用调度实现
-- [Relax 算子体系](/concepts/13-relax-ops) — Relax 算子合法化时调用 TOPI 获取计算定义和 TIR PrimFunc
-- [MetaSchedule 自动调度](/concepts/09-meta-schedule) — TOPI 默认调度作为 MetaSchedule 自动搜索的起点和 fallback
+- [TE 张量表达式](/concepts/15-te-tensor-expression.md) — TOPI 算子内部使用 `te.compute` 和 `te.placeholder` 描述张量计算
+- [调度原语](/concepts/08-schedule-primitives.md) — TOPI 为各硬件后端提供调度模板，应用 split/fuse/cache_read 等原语优化循环
+- [Target 与代码生成](/concepts/04-target-codegen.md) — TOPI 通过 Target 系统分发到 CUDA/x86/ARM 等后端的专用调度实现
+- [Relax 算子体系](/concepts/13-relax-ops.md) — Relax 算子合法化时调用 TOPI 获取计算定义和 TIR PrimFunc
+- [MetaSchedule 自动调度](/concepts/09-meta-schedule.md) — TOPI 默认调度作为 MetaSchedule 自动搜索的起点和 fallback

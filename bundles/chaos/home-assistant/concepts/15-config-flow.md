@@ -328,14 +328,14 @@ ConfigFlow 中所有用户可见的字符串（步骤标题、描述、错误消
 
 ## 延伸阅读
 
-- [集成架构](/concepts/14-component-architecture)
-- [平台开发模式](/concepts/16-platform-pattern)
-- [配置系统](/concepts/05-configuration)
-- [hassfest 工具链](/concepts/17-hassfest-tooling)
+- [集成架构](/concepts/14-component-architecture.md)
+- [平台开发模式](/concepts/16-platform-pattern.md)
+- [配置系统](/concepts/05-configuration.md)
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md)
 
 ## 相关概念
 
-- [集成架构](/concepts/14-component-architecture) — ConfigFlow 是集成的配置入口，ConfigEntry 驱动 async_setup_entry
-- [配置系统](/concepts/05-configuration) — ConfigEntry 与 YAML 配置并存，存储在 .storage/core.config_entries
-- [平台开发模式](/concepts/16-platform-pattern) — ConfigEntry 转发到各平台的 async_setup_entry
-- [测试模式](/concepts/18-testing-patterns) — MockConfigEntry 用于在测试中模拟配置条目的加载与卸载
+- [集成架构](/concepts/14-component-architecture.md) — ConfigFlow 是集成的配置入口，ConfigEntry 驱动 async_setup_entry
+- [配置系统](/concepts/05-configuration.md) — ConfigEntry 与 YAML 配置并存，存储在 .storage/core.config_entries
+- [平台开发模式](/concepts/16-platform-pattern.md) — ConfigEntry 转发到各平台的 async_setup_entry
+- [测试模式](/concepts/18-testing-patterns.md) — MockConfigEntry 用于在测试中模拟配置条目的加载与卸载

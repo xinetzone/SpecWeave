@@ -257,14 +257,14 @@ class MyLight(LightEntity):
 
 ## 延伸阅读
 
-- [HA 概览](/concepts/00-overview)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
-- [事件总线](/concepts/06-event-bus)
+- [HA 概览](/concepts/00-overview.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
+- [事件总线](/concepts/06-event-bus.md)
 
 ## 相关概念
 
-- [HomeAssistant 核心对象](/concepts/03-core-object) — 核心层根对象，持有事件总线、状态机、服务注册表等子系统
-- [实体模型](/concepts/09-entity-model) — 平台层的 Entity 基类体系与标准化实体抽象
-- [集成架构](/concepts/14-component-architecture) — 集成层的目录结构、manifest 契约与生命周期三函数
-- [平台开发模式](/concepts/16-platform-pattern) — 平台实体基类选择、EntityDescription 声明式模式与服务注册
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — 核心层根对象，持有事件总线、状态机、服务注册表等子系统
+- [实体模型](/concepts/09-entity-model.md) — 平台层的 Entity 基类体系与标准化实体抽象
+- [集成架构](/concepts/14-component-architecture.md) — 集成层的目录结构、manifest 契约与生命周期三函数
+- [平台开发模式](/concepts/16-platform-pattern.md) — 平台实体基类选择、EntityDescription 声明式模式与服务注册

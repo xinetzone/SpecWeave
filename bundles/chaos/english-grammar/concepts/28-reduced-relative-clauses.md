@@ -405,5 +405,3 @@ I’m glad <u>because I have</u> <u>something</u> [that I can look forward to]. 
 ### 关联参考
 
 - [19 不定式短语](/concepts/19-infinitives.md) — 不定式作形容词（to do 修饰名词）源自含语气助动词的关系从句简化
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 简化从句的目的是写作简洁、辅助阅读，呼应「语法是广读的工具」的定位
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「减化子句/简化从句」「同位格」等两岸术语差异对照

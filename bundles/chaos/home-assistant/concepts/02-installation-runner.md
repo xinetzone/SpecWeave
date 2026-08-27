@@ -298,12 +298,12 @@ HA 在 `runner.py` 中注册了系统信号处理器（通过 `helpers/signal.py
 
 ## 延伸阅读
 
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [启动流程详解](/concepts/04-bootstrap-lifecycle)
-- [配置系统](/concepts/05-configuration)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [启动流程详解](/concepts/04-bootstrap-lifecycle.md)
+- [配置系统](/concepts/05-configuration.md)
 
 ## 相关概念
 
-- [启动流程](/concepts/04-bootstrap-lifecycle) — runner.py 之后的 bootstrap 阶段编排与集成加载顺序
-- [配置系统](/concepts/05-configuration) — 配置目录结构、configuration.yaml 与 ConfigFlow 配置管理
-- [HomeAssistant 核心对象](/concepts/03-core-object) — runner 创建并持有的 HomeAssistant 运行时根对象
+- [启动流程](/concepts/04-bootstrap-lifecycle.md) — runner.py 之后的 bootstrap 阶段编排与集成加载顺序
+- [配置系统](/concepts/05-configuration.md) — 配置目录结构、configuration.yaml 与 ConfigFlow 配置管理
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — runner 创建并持有的 HomeAssistant 运行时根对象

@@ -45,10 +45,7 @@ sources:
 
 ### 进阶拓展
 
-- [06 基本句型](/concepts/06-basic-sentence-patterns.md) — 正文第一章：简单句的五种基本句型
 - [27 简化从句](/concepts/27-reduced-clauses-introduction.md) — 全书最终目标：简化从句总论
 
 ### 关联参考
 
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 语法学习与广读的关系
-- [04 两岸英语术语对照表](/concepts/04-terminology-cross-strait.md) — 本篇出现的两岸术语对照

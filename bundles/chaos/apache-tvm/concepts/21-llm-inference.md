@@ -203,9 +203,9 @@ TVM LLM 推理支持的设计体现了以下原则：
 
 ## 相关概念
 
-- [Relax 图级 IR](/concepts/11-relax-ir) — LLM 模型通过 Relax NN 前端定义，动态形状和控制流由 Relax 原生支持
-- [MetaSchedule 自动调度](/concepts/09-meta-schedule) — dlight GPU 自动调度规则为注意力和 GEMV 等 LLM 算子生成高性能 kernel
-- [Runtime Module 系统](/concepts/17-runtime-module) — LLM 推理在 TVM Runtime 上执行，使用 NDArray/DeviceAPI/ThreadPool 等基础设施
-- [VM 字节码虚拟机](/concepts/18-vm-bytecode) — PagedKVCache 和 AttentionBackend 是 VM 运行时的一等组件，支撑 LLM 执行
-- [Relax 变换 Pass](/concepts/14-relax-passes) — 算子融合、混合精度、内存规划等 Pass 共同优化 LLM 推理性能
-- [Relax 算子体系](/concepts/13-relax-ops) — attention、RoPE、KV cache 操作等 LLM 核心算子在 Relax 算子层定义并合法化
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — LLM 模型通过 Relax NN 前端定义，动态形状和控制流由 Relax 原生支持
+- [MetaSchedule 自动调度](/concepts/09-meta-schedule.md) — dlight GPU 自动调度规则为注意力和 GEMV 等 LLM 算子生成高性能 kernel
+- [Runtime Module 系统](/concepts/17-runtime-module.md) — LLM 推理在 TVM Runtime 上执行，使用 NDArray/DeviceAPI/ThreadPool 等基础设施
+- [VM 字节码虚拟机](/concepts/18-vm-bytecode.md) — PagedKVCache 和 AttentionBackend 是 VM 运行时的一等组件，支撑 LLM 执行
+- [Relax 变换 Pass](/concepts/14-relax-passes.md) — 算子融合、混合精度、内存规划等 Pass 共同优化 LLM 推理性能
+- [Relax 算子体系](/concepts/13-relax-ops.md) — attention、RoPE、KV cache 操作等 LLM 核心算子在 Relax 算子层定义并合法化

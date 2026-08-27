@@ -398,12 +398,12 @@ await hass.services.async_call("homeassistant", "reload_all_yaml")
 
 ## 延伸阅读
 
-- [启动流程](/concepts/04-bootstrap-lifecycle)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [三层架构](/concepts/01-architecture)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [三层架构](/concepts/01-architecture.md)
 
 ## 相关概念
 
-- [启动流程](/concepts/04-bootstrap-lifecycle) — 配置在 bootstrap Stage A 中的加载时机与初始化过程
-- [配置流](/concepts/15-config-flow) — ConfigFlow GUI 配置向导与 ConfigEntry 持久化存储
-- [注册表](/concepts/10-registries) — 存储在 .storage/ 目录的实体、设备、区域注册表
+- [启动流程](/concepts/04-bootstrap-lifecycle.md) — 配置在 bootstrap Stage A 中的加载时机与初始化过程
+- [配置流](/concepts/15-config-flow.md) — ConfigFlow GUI 配置向导与 ConfigEntry 持久化存储
+- [注册表](/concepts/10-registries.md) — 存储在 .storage/ 目录的实体、设备、区域注册表

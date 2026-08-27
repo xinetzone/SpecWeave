@@ -219,8 +219,8 @@ TE 在 TVM 四层栈中位于 TIR 之上、Relax 之下：
 
 ## 相关概念
 
-- [TIRx 中间表示](/concepts/05-tirx-ir) — TE 通过 `create_prim_func` 降级为 TIR PrimFunc，进入张量级 IR 层
-- [调度原语](/concepts/08-schedule-primitives) — TE 描述的计算与调度分离，可通过 split/fuse/reorder 等原语优化循环
-- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder) — Relax BlockBuilder 的 `emit_te` 方法将 TE 计算嵌入图级 IR
-- [TOPI 算子库](/concepts/16-topi-operator-library) — TOPI 基于 TE 构建，提供神经网络常用算子的计算定义和调度模板
-- [MetaSchedule 自动调度](/concepts/09-meta-schedule) — TE/TOPI 生成的 PrimFunc 是 MetaSchedule 自动调优的目标对象
+- [TIRx 中间表示](/concepts/05-tirx-ir.md) — TE 通过 `create_prim_func` 降级为 TIR PrimFunc，进入张量级 IR 层
+- [调度原语](/concepts/08-schedule-primitives.md) — TE 描述的计算与调度分离，可通过 split/fuse/reorder 等原语优化循环
+- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder.md) — Relax BlockBuilder 的 `emit_te` 方法将 TE 计算嵌入图级 IR
+- [TOPI 算子库](/concepts/16-topi-operator-library.md) — TOPI 基于 TE 构建，提供神经网络常用算子的计算定义和调度模板
+- [MetaSchedule 自动调度](/concepts/09-meta-schedule.md) — TE/TOPI 生成的 PrimFunc 是 MetaSchedule 自动调优的目标对象

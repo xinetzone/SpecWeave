@@ -94,7 +94,7 @@ print(info.has_time)    # 是否包含时间函数
 
 ## Event Helpers：事件辅助
 
-`helpers/event.py` 提供高级事件跟踪函数（事实 #155-171），封装了在[事件总线](/concepts/06-event-bus)上手动注册监听器的常见模式。
+`helpers/event.py` 提供高级事件跟踪函数（事实 #155-171），封装了在[事件总线](/concepts/06-event-bus.md)上手动注册监听器的常见模式。
 
 ### async_track_state_change
 
@@ -510,14 +510,14 @@ tools = await async_get_tools(hass)
 
 ## 延伸阅读
 
-- [实体模型](/concepts/09-entity-model)
-- [事件总线](/concepts/06-event-bus)
-- [Util 工具集](/concepts/13-utilities)
-- [服务注册表](/concepts/08-service-registry)
+- [实体模型](/concepts/09-entity-model.md)
+- [事件总线](/concepts/06-event-bus.md)
+- [Util 工具集](/concepts/13-utilities.md)
+- [服务注册表](/concepts/08-service-registry.md)
 
 ## 相关概念
 
-- [事件总线](/concepts/06-event-bus) — async_track_state_change 等事件跟踪 helper 的底层通信通道
-- [实体模型](/concepts/09-entity-model) — Entity 基类、EntityComponent、EntityPlatform 等 helper 提供实体管理框架
-- [Util 工具集](/concepts/13-utilities) — 底层无状态工具函数（dt、json、yaml），helpers 在其上构建有状态抽象
-- [配置流](/concepts/15-config-flow) — Selector、config_validation 等 helper 为 ConfigFlow 提供表单构建支持
+- [事件总线](/concepts/06-event-bus.md) — async_track_state_change 等事件跟踪 helper 的底层通信通道
+- [实体模型](/concepts/09-entity-model.md) — Entity 基类、EntityComponent、EntityPlatform 等 helper 提供实体管理框架
+- [Util 工具集](/concepts/13-utilities.md) — 底层无状态工具函数（dt、json、yaml），helpers 在其上构建有状态抽象
+- [配置流](/concepts/15-config-flow.md) — Selector、config_validation 等 helper 为 ConfigFlow 提供表单构建支持

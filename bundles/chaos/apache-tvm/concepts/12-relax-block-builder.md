@@ -208,8 +208,8 @@ BlockBuilder 不仅是 IR 构建工具，更是 Relax 语义模型的具体实�
 
 ## 相关概念
 
-- [Relax 图级 IR](/concepts/11-relax-ir) — BlockBuilder 所构建的目标 IR，包含 Var/Binding/Function 等节点体系
-- [Relax 算子体系](/concepts/13-relax-ops) — Emit 时调用算子的 FNormalize 进行归一化，算子属性驱动构建过程
-- [Relax 变换 Pass](/concepts/14-relax-passes) — Pass 实现中广泛使用 BlockBuilder 和 DataflowBlockRewrite 增量重写 IR
-- [TE 张量表达式](/concepts/15-te-tensor-expression) — `emit_te` 方法将 TE 计算桥接为 Relax 中的 `call_tir` 表达式
-- [TVMScript DSL](/concepts/20-tvmscript) — TVMScript 的 Relax 方言底层通过 BlockBuilder 构建 IR 节点
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — BlockBuilder 所构建的目标 IR，包含 Var/Binding/Function 等节点体系
+- [Relax 算子体系](/concepts/13-relax-ops.md) — Emit 时调用算子的 FNormalize 进行归一化，算子属性驱动构建过程
+- [Relax 变换 Pass](/concepts/14-relax-passes.md) — Pass 实现中广泛使用 BlockBuilder 和 DataflowBlockRewrite 增量重写 IR
+- [TE 张量表达式](/concepts/15-te-tensor-expression.md) — `emit_te` 方法将 TE 计算桥接为 Relax 中的 `call_tir` 表达式
+- [TVMScript DSL](/concepts/20-tvmscript.md) — TVMScript 的 Relax 方言底层通过 BlockBuilder 构建 IR 节点

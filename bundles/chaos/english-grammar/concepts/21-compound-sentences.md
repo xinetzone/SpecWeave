@@ -145,5 +145,4 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「从句（子句）/Clause」「复合句」等术语的两岸译法对照
 - [27 简化从句](/concepts/27-reduced-clauses-introduction.md) — 本章「句子的三种层次」直接预告的高级层次：省略重复与空洞部分的简化从句

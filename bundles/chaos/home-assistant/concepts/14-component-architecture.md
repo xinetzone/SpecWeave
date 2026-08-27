@@ -286,16 +286,16 @@ type MyConfigEntry = ConfigEntry[MyCoordinator]
 
 ## 延伸阅读
 
-- [配置流](/concepts/15-config-flow)
-- [平台开发模式](/concepts/16-platform-pattern)
-- [hassfest 工具链](/concepts/17-hassfest-tooling)
-- [测试模式](/concepts/18-testing-patterns)
-- [三层架构](/concepts/01-architecture)
-- [实体模型](/concepts/09-entity-model)
+- [配置流](/concepts/15-config-flow.md)
+- [平台开发模式](/concepts/16-platform-pattern.md)
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md)
+- [测试模式](/concepts/18-testing-patterns.md)
+- [三层架构](/concepts/01-architecture.md)
+- [实体模型](/concepts/09-entity-model.md)
 
 ## 相关概念
 
-- [三层架构：核心-集成-平台](/concepts/01-architecture) — 集成层在三层架构中的定位与平台转发机制
-- [配置流](/concepts/15-config-flow) — ConfigFlow 为集成提供 GUI 配置向导，生成 ConfigEntry
-- [平台开发模式](/concepts/16-platform-pattern) — 集成通过 platform 模块创建各领域 Entity 子类
-- [实体模型](/concepts/09-entity-model) — 集成的 async_setup_entry 创建 Entity 并注册到平台
+- [三层架构：核心-集成-平台](/concepts/01-architecture.md) — 集成层在三层架构中的定位与平台转发机制
+- [配置流](/concepts/15-config-flow.md) — ConfigFlow 为集成提供 GUI 配置向导，生成 ConfigEntry
+- [平台开发模式](/concepts/16-platform-pattern.md) — 集成通过 platform 模块创建各领域 Entity 子类
+- [实体模型](/concepts/09-entity-model.md) — 集成的 async_setup_entry 创建 Entity 并注册到平台

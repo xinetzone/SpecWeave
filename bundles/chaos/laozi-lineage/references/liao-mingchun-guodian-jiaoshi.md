@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于郭店楚简《老子》文字考释、《老子》成书过程研究、先秦儒道关系研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的郭店楚简本概念和 [variants/](../variants/) 目录下的异文概念引用，是对彭浩《郭店楚简老子校读》的重要补充。
+本书适用于郭店楚简《老子》文字考释、《老子》成书过程研究、先秦儒道关系研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的郭店楚简本概念和 [variants/](../variants/index.md) 目录下的异文概念引用，是对彭浩《郭店楚简老子校读》的重要补充。
 
 ## 出版信息
 

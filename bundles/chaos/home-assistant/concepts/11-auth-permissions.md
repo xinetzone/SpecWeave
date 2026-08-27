@@ -376,13 +376,13 @@ HomeAssistantError
 
 ## 延伸阅读
 
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [服务注册表](/concepts/08-service-registry)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
-- [配置管理](/concepts/05-configuration)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [服务注册表](/concepts/08-service-registry.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
+- [配置管理](/concepts/05-configuration.md)
 
 ## 相关概念
 
-- [HomeAssistant 核心对象](/concepts/03-core-object) — AuthManager 作为 hass.auth 子系统挂载在核心对象上
-- [配置系统](/concepts/05-configuration) — 认证数据存储在 .storage/auth，受 private 权限保护
-- [注册表](/concepts/10-registries) — 用户、权限组与实体/设备注册表共同构成 HA 的访问控制基础
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — AuthManager 作为 hass.auth 子系统挂载在核心对象上
+- [配置系统](/concepts/05-configuration.md) — 认证数据存储在 .storage/auth，受 private 权限保护
+- [注册表](/concepts/10-registries.md) — 用户、权限组与实体/设备注册表共同构成 HA 的访问控制基础

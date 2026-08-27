@@ -15,7 +15,7 @@ stale_after: 2027-08-23
 
 ## 目录分组
 
-* [concepts/](concepts/) - 核心概念：15 篇概念文档，分两批排列，覆盖从架构基础到应用生态的完整知识体系
+* [concepts/](concepts/index.md) - 核心概念：15 篇概念文档，分两批排列，覆盖从架构基础到应用生态的完整知识体系
   * [TuyaOpen IoT 框架概览](concepts/00-overview.md)
   * [TAL 抽象层架构](concepts/01-tal-architecture.md)
   * [系统服务](concepts/02-system-services.md)
@@ -31,9 +31,9 @@ stale_after: 2027-08-23
   * [OpenClaw 云 API](concepts/12-openclaw-api.md)
   * [Home Assistant 集成](concepts/13-ha-integration.md)
   * [IoT 开发完整工作流](concepts/14-iot-workflow.md)
-* [examples/](examples/) - 使用示例：固件项目完整创建示例
+* [examples/](examples/index.md) - 使用示例：固件项目完整创建示例
   * [TuyaOpen 固件快速入门](examples/firmware-quickstart.md)
-* [references/](references/) - 信源登记簿：5 篇信源文件，含 R 阶段事实清单、I 阶段洞察与源码登记
+* [references/](references/index.md) - 信源登记簿：5 篇信源文件，含 R 阶段事实清单、I 阶段洞察与源码登记
   * [TuyaOpen 核心框架事实清单](references/facts-tuyaopen-core.md)
   * [TuyaOpen 技能与生态事实清单](references/facts-tuya-skills-ecosystem.md)
   * [架构洞察](references/insights.md)

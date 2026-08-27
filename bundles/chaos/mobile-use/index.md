@@ -15,7 +15,7 @@ stale_after: 2027-08-23
 
 ## 目录分组
 
-* [concepts/](concepts/) - 核心概念：7 篇概念文档，按编号排列，覆盖从项目概览到多 Agent 架构到 SDK 接口的完整知识体系
+* [concepts/](concepts/index.md) - 核心概念：7 篇概念文档，按编号排列，覆盖从项目概览到多 Agent 架构到 SDK 接口的完整知识体系
   * [mobile-use 项目概览](concepts/00-overview.md)
   * [多 Agent 协作架构](concepts/01-multi-agent-architecture.md)
   * [设备控制抽象层](concepts/02-device-control.md)
@@ -23,10 +23,10 @@ stale_after: 2027-08-23
   * [LLM 配置与可插拔体系](concepts/04-llm-configuration.md)
   * [SDK 双层 API 与生命周期](concepts/05-sdk-layer.md)
   * [图结构与状态管理](concepts/06-graph-state.md)
-* [examples/](examples/) - 使用示例：CLI 命令实际用法
+* [examples/](examples/index.md) - 使用示例：CLI 命令实际用法
   * [CLI 命令使用示例](examples/cli-usage.md)
-* [references/](references/) - 信源登记簿：4 篇信源文件，含 R 阶段事实清单、I 阶段洞察、源码登记与验证报告
+* [references/](references/index.md) - 信源登记簿：3 篇信源文件，含 R 阶段事实清单、I 阶段洞察、源码登记
   * [事实清单](references/facts.md)
   * [架构洞察](references/insights.md)
   * [mobile-use 源码](references/mobile-use-source.md)
-  * [验证报告](references/verification-report.md)
+* [验证报告](verification-report.md) - V 阶段验证报告，结构检查、API 验证与修复记录

@@ -168,5 +168,4 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「动名词/Gerund」「非限定动词」等术语的两岸译法对照
 - [13 分词](/concepts/13-participles.md) — 现在分词与动名词同形（V-ing），靠词类（形容词/名词）区分，本章提供两个检验位置

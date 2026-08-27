@@ -360,13 +360,13 @@ async def test_my_integration(hass):
 
 ## 延伸阅读
 
-- [事件总线](/concepts/06-event-bus)
-- [启动流程详解](/concepts/04-bootstrap-lifecycle)
-- [三层架构](/concepts/01-architecture)
+- [事件总线](/concepts/06-event-bus.md)
+- [启动流程详解](/concepts/04-bootstrap-lifecycle.md)
+- [三层架构](/concepts/01-architecture.md)
 
 ## 相关概念
 
-- [启动流程](/concepts/04-bootstrap-lifecycle) — HomeAssistant 实例从创建到运行的完整生命周期阶段
-- [事件总线](/concepts/06-event-bus) — hass.bus 子系统的发布-订阅机制与 Event 对象结构
-- [状态机](/concepts/07-state-machine) — hass.states 子系统的 State 对象存储与状态变更事件
-- [服务注册表](/concepts/08-service-registry) — hass.services 子系统的服务注册、调用与实体服务模式
+- [启动流程](/concepts/04-bootstrap-lifecycle.md) — HomeAssistant 实例从创建到运行的完整生命周期阶段
+- [事件总线](/concepts/06-event-bus.md) — hass.bus 子系统的发布-订阅机制与 Event 对象结构
+- [状态机](/concepts/07-state-machine.md) — hass.states 子系统的 State 对象存储与状态变更事件
+- [服务注册表](/concepts/08-service-registry.md) — hass.services 子系统的服务注册、调用与实体服务模式

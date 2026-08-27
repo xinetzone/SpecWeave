@@ -206,8 +206,8 @@ Runtime Module 系统体现了以下设计原则：
 
 ## 相关概念
 
-- [FFI 基础设施](/concepts/01-ffi-foundation) — Runtime 通过 `ffi::Function` 统一函数调用约定，Module/NDArray 基于 FFI 对象系统
-- [Object 对象系统](/concepts/02-object-system) — Module、NDArray、DeviceAPI 等运行时对象均继承自 Object 引用计数体系
-- [VM 字节码虚拟机](/concepts/18-vm-bytecode) — VMExecutable 是 Module 的一种实现，包含 Relax 编译后的字节码和常量池
-- [RPC 与分布式](/concepts/19-rpc-distributed) — RPCModule 作为 Module 的远程代理，透明转发函数调用到远程设备
-- [Target 与代码生成](/concepts/04-target-codegen) — 各后端代码生成器产出 DSOModule（.so/.dll），由 Runtime 动态加载执行
+- [FFI 基础设施](/concepts/01-ffi-foundation.md) — Runtime 通过 `ffi::Function` 统一函数调用约定，Module/NDArray 基于 FFI 对象系统
+- [Object 对象系统](/concepts/02-object-system.md) — Module、NDArray、DeviceAPI 等运行时对象均继承自 Object 引用计数体系
+- [VM 字节码虚拟机](/concepts/18-vm-bytecode.md) — VMExecutable 是 Module 的一种实现，包含 Relax 编译后的字节码和常量池
+- [RPC 与分布式](/concepts/19-rpc-distributed.md) — RPCModule 作为 Module 的远程代理，透明转发函数调用到远程设备
+- [Target 与代码生成](/concepts/04-target-codegen.md) — 各后端代码生成器产出 DSOModule（.so/.dll），由 Runtime 动态加载执行

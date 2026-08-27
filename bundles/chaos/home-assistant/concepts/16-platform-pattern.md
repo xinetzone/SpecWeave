@@ -25,7 +25,7 @@ sources:
 
 ## 实体继承层次
 
-所有平台实体最终继承自 `Entity` 基类（helpers/entity.py）。[实体模型](/concepts/09-entity-model)已详细介绍了 Entity 的属性体系和生命周期。平台层在此基础上扩展平台特有的状态、属性和服务。
+所有平台实体最终继承自 `Entity` 基类（helpers/entity.py）。[实体模型](/concepts/09-entity-model.md)已详细介绍了 Entity 的属性体系和生命周期。平台层在此基础上扩展平台特有的状态、属性和服务。
 
 ```text
 Entity
@@ -258,16 +258,16 @@ class MyLight(LightEntity):
 
 ## 延伸阅读
 
-- [实体模型](/concepts/09-entity-model)
-- [集成架构](/concepts/14-component-architecture)
-- [配置流](/concepts/15-config-flow)
-- [Helpers 工具库](/concepts/12-helpers-library)
-- [注册表](/concepts/10-registries)
-- [hassfest 工具链](/concepts/17-hassfest-tooling)
+- [实体模型](/concepts/09-entity-model.md)
+- [集成架构](/concepts/14-component-architecture.md)
+- [配置流](/concepts/15-config-flow.md)
+- [Helpers 工具库](/concepts/12-helpers-library.md)
+- [注册表](/concepts/10-registries.md)
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md)
 
 ## 相关概念
 
-- [集成架构](/concepts/14-component-architecture) — 平台模块由集成的 async_setup_entry 通过 platform.async_forward_entry_setups 转发加载
-- [实体模型](/concepts/09-entity-model) — 各平台 Entity 子类（LightEntity、SensorEntity 等）继承自 Entity 基类
-- [配置流](/concepts/15-config-flow) — ConfigEntry 为平台实体提供配置数据和运行时数据
-- [hassfest 工具链](/concepts/17-hassfest-tooling) — hassfest 验证平台代码规范、supported_features 和翻译键完整性
+- [集成架构](/concepts/14-component-architecture.md) — 平台模块由集成的 async_setup_entry 通过 platform.async_forward_entry_setups 转发加载
+- [实体模型](/concepts/09-entity-model.md) — 各平台 Entity 子类（LightEntity、SensorEntity 等）继承自 Entity 基类
+- [配置流](/concepts/15-config-flow.md) — ConfigEntry 为平台实体提供配置数据和运行时数据
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md) — hassfest 验证平台代码规范、supported_features 和翻译键完整性

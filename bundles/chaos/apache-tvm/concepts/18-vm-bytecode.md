@@ -191,8 +191,8 @@ VM 字节码架构的设计体现了以下考量：
 
 ## 相关概念
 
-- [Relax 图级 IR](/concepts/11-relax-ir) — VM 是 Relax 图级 IR 的默认执行后端，支持动态形状和控制流
-- [Relax 变换 Pass](/concepts/14-relax-passes) — VMShapeLower、LowerRuntimeBuiltin 等 Pass 将 Relax 降级为 VM 可执行格式
-- [Runtime Module 系统](/concepts/17-runtime-module) — VMExecutable 作为 Module 实现被加载，通过 `ffi::Function` 调用设备代码
-- [LLM 推理支持](/concepts/21-llm-inference) — VM 内置 PagedKVCache 和 AttentionBackend，为 LLM 推理提供核心运行时支持
-- [FFI 基础设施](/concepts/01-ffi-foundation) — VM 字节码中的算子调用通过 `ffi::Function` 打包调用约定分发到 TIR 编译函数
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — VM 是 Relax 图级 IR 的默认执行后端，支持动态形状和控制流
+- [Relax 变换 Pass](/concepts/14-relax-passes.md) — VMShapeLower、LowerRuntimeBuiltin 等 Pass 将 Relax 降级为 VM 可执行格式
+- [Runtime Module 系统](/concepts/17-runtime-module.md) — VMExecutable 作为 Module 实现被加载，通过 `ffi::Function` 调用设备代码
+- [LLM 推理支持](/concepts/21-llm-inference.md) — VM 内置 PagedKVCache 和 AttentionBackend，为 LLM 推理提供核心运行时支持
+- [FFI 基础设施](/concepts/01-ffi-foundation.md) — VM 字节码中的算子调用通过 `ffi::Function` 打包调用约定分发到 TIR 编译函数

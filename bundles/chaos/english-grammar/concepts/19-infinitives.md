@@ -336,5 +336,4 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「不定式（不定词）/Infinitive」术语的两岸译法对照
 - [17 语气](/concepts/17-moods.md) — 不定式属于表达「不确定」意味的条件语气，研判是否使用不定式需回到语气判断

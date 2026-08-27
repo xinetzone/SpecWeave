@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于西汉简帛《老子》文本研究、《老子》分章与篇序演变研究、汉代隶书与书法研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的北大汉简本概念和 [variants/](../variants/) 目录下的分章异文概念引用。
+本书适用于西汉简帛《老子》文本研究、《老子》分章与篇序演变研究、汉代隶书与书法研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的北大汉简本概念和 [variants/](../variants/index.md) 目录下的分章异文概念引用。
 
 ## 出版信息
 

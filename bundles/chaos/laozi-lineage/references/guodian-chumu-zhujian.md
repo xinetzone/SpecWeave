@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于战国楚文字研究、《老子》早期传本研究、先秦思想史等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的郭店楚简本概念、[archaeology/](../archaeology/) 目录下的郭店楚墓概念，以及 [variants/](../variants/) 目录下的异文概念引用。
+本书适用于战国楚文字研究、《老子》早期传本研究、先秦思想史等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的郭店楚简本概念、[archaeology/](../archaeology/index.md) 目录下的郭店楚墓概念，以及 [variants/](../variants/index.md) 目录下的异文概念引用。
 
 ## 出版信息
 

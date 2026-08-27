@@ -286,5 +286,4 @@ He <u>might be</u> able to help if he <u>were</u> here.（要是有他在，说�
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「语气/Mood」等语法术语的两岸译法对照
 - [14 动词时态](/concepts/14-verb-tenses.md) — 虚拟语气以过去时、过去完成时为表达手段，需时态知识支撑

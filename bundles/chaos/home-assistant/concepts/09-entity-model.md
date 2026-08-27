@@ -24,7 +24,7 @@ sources:
 
 # 实体模型
 
-实体（Entity）是 Home Assistant 中对设备能力的抽象表示。一个智能灯泡可能同时是一个 `light` 实体（开关与亮度）和一个 `sensor` 实体（用电量监控）。每个实体在[状态机](/concepts/07-state-machine)中有一条状态记录，通过[服务注册表](/concepts/08-service-registry)暴露可调用的操作。实体模型定义于 `helpers/entity.py`，是所有平台实体（LightEntity、SensorEntity 等）的共同根基。
+实体（Entity）是 Home Assistant 中对设备能力的抽象表示。一个智能灯泡可能同时是一个 `light` 实体（开关与亮度）和一个 `sensor` 实体（用电量监控）。每个实体在[状态机](/concepts/07-state-machine.md)中有一条状态记录，通过[服务注册表](/concepts/08-service-registry.md)暴露可调用的操作。实体模型定义于 `helpers/entity.py`，是所有平台实体（LightEntity、SensorEntity 等）的共同根基。
 
 ## Entity 基类
 
@@ -367,14 +367,14 @@ async def async_setup(hass, config):
 
 ## 延伸阅读
 
-- [状态机](/concepts/07-state-machine)
-- [服务注册表](/concepts/08-service-registry)
-- [注册表](/concepts/10-registries)
-- [三层架构](/concepts/01-architecture)
+- [状态机](/concepts/07-state-machine.md)
+- [服务注册表](/concepts/08-service-registry.md)
+- [注册表](/concepts/10-registries.md)
+- [三层架构](/concepts/01-architecture.md)
 
 ## 相关概念
 
-- [状态机](/concepts/07-state-machine) — Entity 通过 async_write_ha_state 将状态写入 StateMachine
-- [注册表](/concepts/10-registries) — unique_id 关联 EntityRegistry，实现实体 ID 自定义与禁用管理
-- [平台开发模式](/concepts/16-platform-pattern) — 各平台 Entity 子类（LightEntity、SensorEntity 等）继承自 Entity
-- [集成架构](/concepts/14-component-architecture) — 集成通过 async_setup_entry 创建 Entity 并添加到 Home Assistant
+- [状态机](/concepts/07-state-machine.md) — Entity 通过 async_write_ha_state 将状态写入 StateMachine
+- [注册表](/concepts/10-registries.md) — unique_id 关联 EntityRegistry，实现实体 ID 自定义与禁用管理
+- [平台开发模式](/concepts/16-platform-pattern.md) — 各平台 Entity 子类（LightEntity、SensorEntity 等）继承自 Entity
+- [集成架构](/concepts/14-component-architecture.md) — 集成通过 async_setup_entry 创建 Entity 并添加到 Home Assistant

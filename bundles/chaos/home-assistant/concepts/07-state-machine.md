@@ -18,7 +18,7 @@ sources:
 
 # 状态机
 
-状态机（StateMachine）是 Home Assistant 中存储和管理所有实体当前状态的核心子系统。每个实体——无论是灯光、传感器还是媒体播放器——在状态机中都有一条对应的 State 记录。状态机通过 `hass.states` 访问，与[事件总线](/concepts/06-event-bus)紧密协作，在状态变化时发布事件。
+状态机（StateMachine）是 Home Assistant 中存储和管理所有实体当前状态的核心子系统。每个实体——无论是灯光、传感器还是媒体播放器——在状态机中都有一条对应的 State 记录。状态机通过 `hass.states` 访问，与[事件总线](/concepts/06-event-bus.md)紧密协作，在状态变化时发布事件。
 
 ## State 对象
 
@@ -253,11 +253,11 @@ STATE_OPEN = "open"
 
 ## 延伸阅读
 
-- [事件总线](/concepts/06-event-bus)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
+- [事件总线](/concepts/06-event-bus.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
 
 ## 相关概念
 
-- [事件总线](/concepts/06-event-bus) — 状态变更时发布 state_changed 和 state_reported 事件的底层通道
-- [服务注册表](/concepts/08-service-registry) — 服务调用可修改状态，状态变更也会触发服务响应
-- [实体模型](/concepts/09-entity-model) — Entity 通过 async_write_ha_state 向 StateMachine 写入状态
+- [事件总线](/concepts/06-event-bus.md) — 状态变更时发布 state_changed 和 state_reported 事件的底层通道
+- [服务注册表](/concepts/08-service-registry.md) — 服务调用可修改状态，状态变更也会触发服务响应
+- [实体模型](/concepts/09-entity-model.md) — Entity 通过 async_write_ha_state 向 StateMachine 写入状态

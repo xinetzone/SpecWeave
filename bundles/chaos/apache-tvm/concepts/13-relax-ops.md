@@ -196,8 +196,8 @@ Relax 算子体系的设计体现了以下原则：
 
 ## 相关概念
 
-- [Relax 图级 IR](/concepts/11-relax-ir) — 算子以 Call 节点形式存在于 Relax 函数中，是图级 IR 的核心组成部分
-- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder) — BlockBuilder 的 Normalize 阶段调用算子的 FInferType/FNormalize 进行类型推导与归一化
-- [Relax 变换 Pass](/concepts/14-relax-passes) — LegalizeOps/FuseOps 等 Pass 根据算子属性执行合法化和融合
-- [TE 张量表达式](/concepts/15-te-tensor-expression) — FLegalize 将高层 Relax 算子降级为基于 TE 描述的 TIR PrimFunc
-- [TOPI 算子库](/concepts/16-topi-operator-library) — Relax 算子合法化时调用 TOPI 获取计算定义和调度模板
+- [Relax 图级 IR](/concepts/11-relax-ir.md) — 算子以 Call 节点形式存在于 Relax 函数中，是图级 IR 的核心组成部分
+- [BlockBuilder 与 Dataflow](/concepts/12-relax-block-builder.md) — BlockBuilder 的 Normalize 阶段调用算子的 FInferType/FNormalize 进行类型推导与归一化
+- [Relax 变换 Pass](/concepts/14-relax-passes.md) — LegalizeOps/FuseOps 等 Pass 根据算子属性执行合法化和融合
+- [TE 张量表达式](/concepts/15-te-tensor-expression.md) — FLegalize 将高层 Relax 算子降级为基于 TE 描述的 TIR PrimFunc
+- [TOPI 算子库](/concepts/16-topi-operator-library.md) — Relax 算子合法化时调用 TOPI 获取计算定义和调度模板

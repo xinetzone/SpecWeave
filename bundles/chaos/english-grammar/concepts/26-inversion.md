@@ -273,4 +273,3 @@ Be 动词后面的地方副词 there 扮演主语补足语的角色。如果把�
 - [22 名词从句](/concepts/22-noun-clauses.md) — 引用句（直接/间接引句）作宾语从句移到句首构成倒装的构造来源
 - [24 关系从句](/concepts/24-relative-clauses.md) — 类似 there is/are 构造的关系从句倒装（in which roam the deadly pirana）
 - [12 比较句法](/concepts/12-comparative-patterns.md) — 比较级副词从句中 than does his wife 的倒装与歧义消解
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「子句/从句」「助动词」等两岸术语差异对照

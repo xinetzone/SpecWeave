@@ -458,4 +458,3 @@ Experts estimate that the last of our oil reserves <u>will have been</u> deplete
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「进行式/进行时」「介系词/介词」等两岸术语差异说明

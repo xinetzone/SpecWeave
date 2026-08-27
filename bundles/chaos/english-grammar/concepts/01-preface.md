@@ -71,7 +71,6 @@ sources:
 ### 进阶拓展
 
 - [02 前言](/concepts/02-introduction.md) — 全书目标与结构说明
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 本篇提到的「阅读法」的完整方法论展开
 
 ### 关联参考
 

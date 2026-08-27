@@ -382,6 +382,5 @@ sources:
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「子句/从句」「受词/宾语」等两岸术语差异对照
 - [23 副词从句](/concepts/23-adverb-clauses.md) — 同属从属从句，构造相似但角色不同：副词从句是可有可无的修饰语
 - [24 关系从句](/concepts/24-relative-clauses.md) — 同属从属从句的形容词从句，修饰名词而非充当名词

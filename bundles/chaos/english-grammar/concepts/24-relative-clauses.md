@@ -952,6 +952,5 @@ After the stroke, John is not <u>the man</u> <u>who he used to be</u>. 先行词
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「子句/从句」「减化子句/简化从句」等两岸术语差异对照
 - [22 名词从句](/concepts/22-noun-clauses.md) — 复合关系代词引导的从句升格为名词从句，「厘清混淆点」一节与名词从句直接对比
 - [13 分词](/concepts/13-participles.md) — 分词作形容词的用法是关系从句省略简化后的产物

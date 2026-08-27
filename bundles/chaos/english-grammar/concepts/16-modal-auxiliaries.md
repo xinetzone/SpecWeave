@@ -390,5 +390,4 @@ Need 除了当助动词，也可以当做动词使用。例如：
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「助动词」「语气助动词」等术语的两岸差异说明
 - [12 比较句法](/concepts/12-comparative-patterns.md) — would rather ... than 的前后对称要求与比较连词 than

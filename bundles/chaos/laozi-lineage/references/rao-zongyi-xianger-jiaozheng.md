@@ -26,7 +26,7 @@ sources:
 
 ## 适用范围
 
-本书适用于早期道教史、《老子》宗教化阐释、敦煌文献研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的想尔注本概念引用。
+本书适用于早期道教史、《老子》宗教化阐释、敦煌文献研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的想尔注本概念引用。
 
 ## 出版信息
 

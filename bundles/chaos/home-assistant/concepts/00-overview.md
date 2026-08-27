@@ -91,7 +91,7 @@ Home Assistant 的架构可以从两个维度理解：分层结构和运行时�
 - **集成层（Integrations）**：位于 `homeassistant/components/`，每个集成是一个独立的 Python 包，负责与特定设备或服务通信。集成通过 `manifest.json` 自描述，由加载器动态发现和初始化。
 - **平台层（Platforms）**：集成创建的实体属于某个平台（如 light、sensor），平台定义了实体的标准接口、属性和服务。一个集成可以同时转发到多个平台（如 Tuya 同时提供 light、switch、sensor 等实体）。
 
-详细说明见[三层架构](/concepts/01-architecture)。
+详细说明见[三层架构](/concepts/01-architecture.md)。
 
 ### 运行时对象关系
 
@@ -119,7 +119,7 @@ HomeAssistant
 4. **Bootstrap Stage 2**：加载用户配置的所有集成和 ConfigEntry
 5. **HA 启动完成**：触发 `homeassistant_started` 事件
 
-详细说明见[启动流程](/concepts/04-bootstrap-lifecycle)。
+详细说明见[启动流程](/concepts/04-bootstrap-lifecycle.md)。
 
 ## 技术栈概览
 
@@ -172,16 +172,16 @@ tests/
 
 ## 延伸阅读
 
-- [三层架构：核心-集成-平台](/concepts/01-architecture)
-- [安装与启动](/concepts/02-installation-runner)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [启动流程详解](/concepts/04-bootstrap-lifecycle)
-- [配置系统](/concepts/05-configuration)
-- [事件总线](/concepts/06-event-bus)
+- [三层架构：核心-集成-平台](/concepts/01-architecture.md)
+- [安装与启动](/concepts/02-installation-runner.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [启动流程详解](/concepts/04-bootstrap-lifecycle.md)
+- [配置系统](/concepts/05-configuration.md)
+- [事件总线](/concepts/06-event-bus.md)
 
 ## 相关概念
 
-- [三层架构：核心-集成-平台](/concepts/01-architecture) — 理解 HA 的分层设计与核心子系统组织方式
-- [HomeAssistant 核心对象](/concepts/03-core-object) — 深入了解运行时根对象及其持有的四大子系统
-- [实体模型](/concepts/09-entity-model) — 掌握设备能力的标准化抽象与 Entity 基类体系
-- [集成架构](/concepts/14-component-architecture) — 学习如何开发连接外部设备与服务的集成
+- [三层架构：核心-集成-平台](/concepts/01-architecture.md) — 理解 HA 的分层设计与核心子系统组织方式
+- [HomeAssistant 核心对象](/concepts/03-core-object.md) — 深入了解运行时根对象及其持有的四大子系统
+- [实体模型](/concepts/09-entity-model.md) — 掌握设备能力的标准化抽象与 Entity 基类体系
+- [集成架构](/concepts/14-component-architecture.md) — 学习如何开发连接外部设备与服务的集成

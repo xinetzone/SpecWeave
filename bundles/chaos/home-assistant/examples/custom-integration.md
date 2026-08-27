@@ -488,8 +488,8 @@ pytest tests/components/example_smartlight/ -v
 
 ## 延伸阅读
 
-- [集成架构](/concepts/14-component-architecture)
-- [配置流](/concepts/15-config-flow)
-- [平台开发模式](/concepts/16-platform-pattern)
-- [hassfest 工具链](/concepts/17-hassfest-tooling)
-- [测试模式](/concepts/18-testing-patterns)
+- [集成架构](/concepts/14-component-architecture.md)
+- [配置流](/concepts/15-config-flow.md)
+- [平台开发模式](/concepts/16-platform-pattern.md)
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md)
+- [测试模式](/concepts/18-testing-patterns.md)

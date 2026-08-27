@@ -15,7 +15,7 @@ stale_after: 2027-08-23
 
 ## 目录分组
 
-* [concepts/](concepts/) - 核心概念：12 篇概念文档，分两批排列，从标准入门到实战模式
+* [concepts/](concepts/index.md) - 核心概念：12 篇概念文档，分两批排列，从标准入门到实战模式
   * [00 — AI Agent Skills 生态概览](concepts/00-overview.md)
   * [01 — SKILL.md 标准与渐进式披露](concepts/01-skill-md-standard.md)
   * [02 — agency-agents 部门化人格体系](concepts/02-agency-agents-division.md)
@@ -28,9 +28,9 @@ stale_after: 2027-08-23
   * [09 — Retro Skill 自省与演进模式](concepts/09-retro-skill-introspection.md)
   * [10 — Skill 脚本工具模式（Python/Shell）](concepts/10-skill-tooling-scripts.md)
   * [11 — 多工具兼容与集成模式](concepts/11-integration-patterns.md)
-* [examples/](examples/) - 使用示例：SKILL.md 编写教程
+* [examples/](examples/index.md) - 使用示例：SKILL.md 编写教程
   * [SKILL.md 编写示例](examples/skill-authoring.md)
-* [references/](references/) - 信源登记簿：13 篇信源文件，含 R 阶段事实清单、I 阶段洞察与源码登记
+* [references/](references/index.md) - 信源登记簿：13 篇信源文件，含 R 阶段事实清单、I 阶段洞察与源码登记
   * [agency-agents 事实清单](references/facts-agency-agents.md)
   * [awesun-mcp 事实清单](references/facts-awesun-mcp.md)
   * [awesun-skill 事实清单](references/facts-awesun-skill.md)

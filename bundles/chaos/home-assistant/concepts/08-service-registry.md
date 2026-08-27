@@ -21,7 +21,7 @@ sources:
 
 # 服务注册表
 
-服务注册表（ServiceRegistry）是 Home Assistant 中管理所有可调用服务的核心子系统。服务是 HA 对外暴露操作能力的标准方式——打开灯光、调用脚本、触发自动化，都通过服务调用完成。服务注册表通过 `hass.services` 访问，与[事件总线](/concepts/06-event-bus)和[状态机](/concepts/07-state-machine)并列为三大核心子系统。
+服务注册表（ServiceRegistry）是 Home Assistant 中管理所有可调用服务的核心子系统。服务是 HA 对外暴露操作能力的标准方式——打开灯光、调用脚本、触发自动化，都通过服务调用完成。服务注册表通过 `hass.services` 访问，与[事件总线](/concepts/06-event-bus.md)和[状态机](/concepts/07-state-machine.md)并列为三大核心子系统。
 
 ## 核心概念
 
@@ -362,14 +362,14 @@ await hass.services.async_call(
 
 ## 延伸阅读
 
-- [事件总线](/concepts/06-event-bus)
-- [状态机](/concepts/07-state-machine)
-- [HomeAssistant 核心对象](/concepts/03-core-object)
-- [实体模型](/concepts/09-entity-model)
+- [事件总线](/concepts/06-event-bus.md)
+- [状态机](/concepts/07-state-machine.md)
+- [HomeAssistant 核心对象](/concepts/03-core-object.md)
+- [实体模型](/concepts/09-entity-model.md)
 
 ## 相关概念
 
-- [事件总线](/concepts/06-event-bus) — 服务调用前后发布 call_service 事件的通信通道
-- [状态机](/concepts/07-state-machine) — 实体服务执行后状态变化通过 StateMachine 持久化
-- [实体模型](/concepts/09-entity-model) — async_register_entity_service 将服务注册到 Entity 平台
-- [平台开发模式](/concepts/16-platform-pattern) — 各平台通过 async_register_entity_service 暴露平台专属服务
+- [事件总线](/concepts/06-event-bus.md) — 服务调用前后发布 call_service 事件的通信通道
+- [状态机](/concepts/07-state-machine.md) — 实体服务执行后状态变化通过 StateMachine 持久化
+- [实体模型](/concepts/09-entity-model.md) — async_register_entity_service 将服务注册到 Entity 平台
+- [平台开发模式](/concepts/16-platform-pattern.md) — 各平台通过 async_register_entity_service 暴露平台专属服务

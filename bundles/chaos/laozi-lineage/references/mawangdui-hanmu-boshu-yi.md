@@ -30,7 +30,7 @@ sources:
 
 ## 适用范围
 
-本书适用于马王堆帛书《老子》文本研究、黄老思想研究、汉初文字与书法研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/) 目录下的帛书甲本、帛书乙本概念，以及 [archaeology/](../archaeology/) 目录下的马王堆汉墓概念引用。
+本书适用于马王堆帛书《老子》文本研究、黄老思想研究、汉初文字与书法研究等领域。在本 bundle 中，本书被 [manuscripts/](../manuscripts/index.md) 目录下的帛书甲本、帛书乙本概念，以及 [archaeology/](../archaeology/index.md) 目录下的马王堆汉墓概念引用。
 
 ## 出版信息
 

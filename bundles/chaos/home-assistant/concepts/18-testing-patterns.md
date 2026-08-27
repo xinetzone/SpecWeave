@@ -412,15 +412,15 @@ MariaDB 测试矩阵包含 6 个版本，PostgreSQL 包含 2 个版本（事实 
 
 ## 延伸阅读
 
-- [hassfest 工具链](/concepts/17-hassfest-tooling)
-- [集成架构](/concepts/14-component-architecture)
-- [配置流](/concepts/15-config-flow)
-- [平台开发模式](/concepts/16-platform-pattern)
-- [启动流程](/concepts/04-bootstrap-lifecycle)
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md)
+- [集成架构](/concepts/14-component-architecture.md)
+- [配置流](/concepts/15-config-flow.md)
+- [平台开发模式](/concepts/16-platform-pattern.md)
+- [启动流程](/concepts/04-bootstrap-lifecycle.md)
 
 ## 相关概念
 
-- [集成架构](/concepts/14-component-architecture) — 测试 async_setup_entry、async_unload_entry 等集成生命周期函数
-- [配置流](/concepts/15-config-flow) — 使用 MockConfigEntry 测试 ConfigFlow 的各步骤和迁移逻辑
-- [平台开发模式](/concepts/16-platform-pattern) — 测试各平台 Entity 的状态更新、服务调用和 supported_features
-- [hassfest 工具链](/concepts/17-hassfest-tooling) — hassfest 验证测试文件完整性，与 pytest 共同构成质量保障体系
+- [集成架构](/concepts/14-component-architecture.md) — 测试 async_setup_entry、async_unload_entry 等集成生命周期函数
+- [配置流](/concepts/15-config-flow.md) — 使用 MockConfigEntry 测试 ConfigFlow 的各步骤和迁移逻辑
+- [平台开发模式](/concepts/16-platform-pattern.md) — 测试各平台 Entity 的状态更新、服务调用和 supported_features
+- [hassfest 工具链](/concepts/17-hassfest-tooling.md) — hassfest 验证测试文件完整性，与 pytest 共同构成质量保障体系

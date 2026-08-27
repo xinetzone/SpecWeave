@@ -128,5 +128,3 @@ sources:
 - [13 分词](/concepts/13-participles.md) — 现在分词与过去分词作形容词是非限定动词构件，此处深化为从句省略的产物
 - [18 动名词](/concepts/18-gerunds.md) — V-ing 作名词的用法是名词从句简化的构件基础
 - [19 不定式短语](/concepts/19-infinitives.md) — to V 的不定式语气与语气助动词的对应是简化从句的构件基础
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 简化从句的目的是写作简洁、辅助阅读，呼应「语法是广读的工具」的定位
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「减化子句/简化从句」「动状词」等两岸术语差异对照

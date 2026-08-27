@@ -480,5 +480,3 @@ No one <u>but</u>(= except) <u>a fool</u> would accept a challenge like that.（
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「介系词/介词」「受词/宾语」等两岸术语差异说明
-- [07 名词短语](/concepts/07-noun-phrases.md) — 「普通名词抽象化」观念的原始出处（第二章）

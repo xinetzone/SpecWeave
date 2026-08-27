@@ -183,8 +183,8 @@ TVM RPC 与分布式系统的设计体现了以下原则：
 
 ## 相关概念
 
-- [Runtime Module 系统](/concepts/17-runtime-module) — RPCModule 是 Module 的远程代理，通过统一接口访问远程设备上的模块
-- [MetaSchedule 自动调度](/concepts/09-meta-schedule) — RPC 是自动调优的关键基础设施，将编译内核发送到目标设备远程测量性能
-- [VM 字节码虚拟机](/concepts/18-vm-bytecode) — VM 可通过 RPC 在远程设备上加载执行，支持分布式模型推理
-- [Target 与代码生成](/concepts/04-target-codegen) — RPC 支持交叉编译工作流，在开发机编译、在目标设备运行
-- [Relax 算子体系](/concepts/13-relax-ops) — Relax 的 ccl/distributed 算子在 Disco 分布式引擎上映射为集合通信原语
+- [Runtime Module 系统](/concepts/17-runtime-module.md) — RPCModule 是 Module 的远程代理，通过统一接口访问远程设备上的模块
+- [MetaSchedule 自动调度](/concepts/09-meta-schedule.md) — RPC 是自动调优的关键基础设施，将编译内核发送到目标设备远程测量性能
+- [VM 字节码虚拟机](/concepts/18-vm-bytecode.md) — VM 可通过 RPC 在远程设备上加载执行，支持分布式模型推理
+- [Target 与代码生成](/concepts/04-target-codegen.md) — RPC 支持交叉编译工作流，在开发机编译、在目标设备运行
+- [Relax 算子体系](/concepts/13-relax-ops.md) — Relax 的 ccl/distributed 算子在 Disco 分布式引擎上映射为集合通信原语

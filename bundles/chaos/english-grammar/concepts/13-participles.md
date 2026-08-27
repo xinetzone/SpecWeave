@@ -185,7 +185,6 @@ This is a <u>good</u> book.（这是一本好书。）
 
 ### 前置知识
 
-- [09 形容词](/concepts/09-adjectives.md) — 形容词的两种主要位置（名词短语中、补语位置），是分词作形容词的位置基础
 
 ### 进阶拓展
 
@@ -197,5 +196,4 @@ This is a <u>good</u> book.（这是一本好书。）
 
 ### 关联参考
 
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「减化子句/简化从句」「进行式/进行时」「不定词/不定式」等术语说明
 - [22 名词从句](/concepts/22-noun-clauses.md) — 本章 that 从句例句（I found that my wallet was stolen）的结构背景

@@ -697,12 +697,9 @@ The man <u>can’t find</u> a job easily, [for he has a criminal record]. V 副�
 
 ### 进阶拓展
 
-- [05 正文目录](/concepts/05-chapter-toc.md) — 全书正文至此全部读完，可循目录回顾简化从句篇与全书各章脉络
 
 ### 关联参考
 
 - [13 分词](/concepts/13-participles.md) — 分词构句的核心构件 V-ing/V-en，回溯分词作形容词的词类基础
 - [28 关系从句简化](/concepts/28-reduced-relative-clauses.md) — 句中与句尾分词短语的两种诠释，可对照关系从句简化的指示功能
 - [29 名词从句简化](/concepts/29-reduced-noun-clauses.md) — 同属简化从句篇，名词从句省略 that 的平行做法
-- [04 两岸术语对照](/concepts/04-terminology-cross-strait.md) — 「减化子句/简化从句」等两岸术语差异对照
-- [03 引：广读学英语](/concepts/03-extensive-reading-method.md) — 学完全书终章后回顾语法学习的最终目的：语法是广读的工具而非目的
