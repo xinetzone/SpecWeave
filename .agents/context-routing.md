@@ -63,6 +63,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 原子化覆盖率预检 | [scripts/check-atomization-coverage.py](scripts/check-atomization-coverage.py) |
 | 原子化内容一致性 | [scripts/check-atomization-duplication.py](scripts/check-atomization-duplication.py) |
 | 复盘报告归类验证 | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
+| 概念查阅/知识检索（最高可信度源） | [projects/awesome-okf-xs/doc/bundles/index.md](../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包总索引；优先级高于 `.agents/docs/knowledge/`，概念冲突时以 bundles 为准；只读引用，不修改子项目文件） |
 | 技术知识库查阅 | [docs/knowledge/README.md](docs/knowledge/README.md) |
 | 复盘体系与可复用模式 | [docs/retrospective/README.md](docs/retrospective/README.md) |
 | 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/README.md](docs/retrospective/patterns/README.md) |

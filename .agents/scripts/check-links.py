@@ -289,13 +289,55 @@ def check_external_link(url: str, timeout: int) -> tuple[str, int, str]:
     return (url, status, error)
 
 
-def check_local_link(file_path: Path, url: str) -> tuple[str, str, str]:
+def _find_bundle_root(fp: Path) -> Path | None:
+    """向上查找最近一次出现过的 OKF bundle 根目录。
+
+    OKF/bundle 约定（source-code-to-okf-wiki 工作流反模式4）：以 `/` 前缀的链接
+    （如 `/concepts/00-overview.md`）表示**相对 bundle 根**的路径，而非文件系统根。
+    bundle 根以「同时包含 index.md 与 log.md」为签名，从文件所在目录逐级向上
+    查找最近的满足目录即返回；找不到返回 None。
+    """
+    cur = fp.resolve().parent
+    for _ in range(16):  # 限制向上深度，防止极端路径耗尽
+        if (cur / "log.md").exists() and (cur / "index.md").exists():
+            return cur
+        nxt = cur.parent
+        if nxt == cur:  # 到达文件系统根
+            break
+        cur = nxt
+    return None
+
+
+def _resolve_local_target(
+    fp: Path, ref: str, scan_root: Path | None = None
+) -> Path:
+    """解析本地文件引用为绝对路径，正确处理 `/` 前缀的 bundle-relative 路径。
+
+    以 `/` 开头的引用优先解析到「最近的 bundle 根」；若未找到 bundle 根则回退到
+    scan_root（--path 指定的扫描根）；两者均无时按旧行为解析到文件所在目录
+    （Windows 上会被 pathlib 当作文件系统根，非 `/` 前缀引用不受影响）。
+    """
+    clean = ref.split("#")[0]
+    if clean.startswith("/"):
+        bundle_root = _find_bundle_root(fp)
+        root = bundle_root or scan_root
+        if root is not None:
+            return (root / clean.lstrip("/")).resolve()
+    return (fp.parent / clean).resolve()
+
+
+def check_local_link(
+    file_path: Path, url: str, scan_root: Path | None = None
+) -> tuple[str, str, str]:
     """检查本地文件引用是否有效。返回 (url, status, message)。
 
     status:
       - "ok": 目标是文件，链接可正常打开
       - "directory": 目标是目录（IDE/Markdown渲染器无法直接打开目录，应链接到README.md）
       - "missing": 目标不存在（断链）
+
+    scan_root: 可选，--path 指定的扫描根目录；用于将 `/` 前缀的 bundle-relative
+      链接解析到 bundle 根（无 bundle 根发现时的回退基准）。
     """
     base_dir = file_path.parent
     clean_url = url.split("#")[0]
@@ -312,7 +354,7 @@ def check_local_link(file_path: Path, url: str) -> tuple[str, str, str]:
             p = p[1:]
         target = Path(p)
     else:
-        target = (base_dir / clean_url).resolve()
+        target = _resolve_local_target(file_path, clean_url, scan_root)
 
     if not target.exists():
         # 跳过 .gitignore 排除路径、未初始化 submodule、模板占位符
@@ -375,7 +417,9 @@ def _normalize_path_value(value: str) -> str:
     return value.strip().strip('"').strip("'")
 
 
-def _check_single_path(md_path: Path, field_name: str, path_value: str) -> tuple[Path, str, str, str] | None:
+def _check_single_path(
+    md_path: Path, field_name: str, path_value: str, scan_root: Path | None = None
+) -> tuple[Path, str, str, str] | None:
     """检查单个路径值是否有效。返回 (md_path, field_name, path_value, error_message) 或 None（通过）。"""
     v = _normalize_path_value(path_value)
     if not v:
@@ -385,7 +429,7 @@ def _check_single_path(md_path: Path, field_name: str, path_value: str) -> tuple
     clean_path = v.split('#')[0]
     if not clean_path:
         return None
-    target = (md_path.parent / clean_path).resolve()
+    target = _resolve_local_target(md_path, clean_path, scan_root)
     if not target.exists():
         # 跳过 .gitignore 排除路径、未初始化 submodule、模板占位符
         if _is_skipped_link_target(v):
@@ -403,6 +447,7 @@ def check_frontmatter_paths(
     md_files: list[Path],
     fields: list[str] | None = None,
     check_related_fields: bool = True,
+    scan_root: Path | None = None,
 ) -> list[tuple[Path, str, str, str]]:
     """校验 Markdown 文件 frontmatter 中包含路径的字段是否指向有效文件。
 
@@ -440,7 +485,7 @@ def check_frontmatter_paths(
                 for v in value:
                     values_to_check.extend(_extract_paths_from_value(str(v)))
             for v in values_to_check:
-                result = _check_single_path(md_path, field_name, v)
+                result = _check_single_path(md_path, field_name, v, scan_root)
                 if result:
                     broken.append(result)
     return broken
@@ -1095,7 +1140,8 @@ def main(argv=None) -> int:
     warning_local = []
     print(f"\n1. 检查本地文件引用（共 {len(local_links)} 个）...")
     for file_path, text, url, line_num in local_links:
-        url_str, status, message = check_local_link(file_path, url)
+        file_root = file_root_map.get(file_path.resolve(), roots[0])
+        url_str, status, message = check_local_link(file_path, url, scan_root=file_root)
         if status == "missing":
             file_root = file_root_map.get(file_path.resolve(), roots[0])
             rel_path = file_path.relative_to(file_root) if file_root in file_path.parents else file_path
@@ -1182,7 +1228,9 @@ def main(argv=None) -> int:
         print(f"\n3. 检查 frontmatter 路径字段有效性（共 {len(md_files)} 个文件）...")
         if args.check_x_toml_ref and not args.check_frontmatter_paths:
             print("   注意: --check-x-toml-ref 已废弃，自动升级为 --check-frontmatter-paths（检查source/x-toml-ref/related_*等所有路径字段）")
-        broken_frontmatter = check_frontmatter_paths(md_files)
+        broken_frontmatter = check_frontmatter_paths(
+            md_files, scan_root=roots[0] if len(roots) == 1 else None
+        )
         if broken_frontmatter:
             print(f"   失败: {len(broken_frontmatter)} 个 frontmatter 路径问题")
             for md_path, field_name, ref, error in broken_frontmatter:

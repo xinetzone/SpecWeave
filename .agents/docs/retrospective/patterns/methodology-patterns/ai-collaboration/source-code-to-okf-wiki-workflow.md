@@ -12,7 +12,7 @@ validation_count: 1
 
 ## 成熟度
 
-L1 已验证（1次验证，2026-08-21 PyInvoke v3.0.3 源码Wiki）
+L1 已验证（2次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki）
 
 ## 模式概述
 
@@ -186,6 +186,35 @@ sources:
 | V | 虚构`Response`类修复 + 信源补全 + 链接验证 | Grep验证关键API存在性 |
 | C | 本模式文档 + 通用prompt模板 | 沉淀为L1模式 |
 
+### 迁移验证案例：tiktoken v0.14.0（2026-08-25）
+
+在首次 PyInvoke 验证的基础上，本工作流对 OpenAI tiktoken v0.14.0 完成了第 2 次跨场景迁移验证，验证范围从"单层 Python 库"扩展到"Python 门面 + Rust 核心双层的复合库"。
+
+#### 案例代表性
+
+- **双层语言库**：Python 侧（`tiktoken/` 门面层 + `tiktoken_ext/` 插件层）负责 API、注册表、词表加载与教学模块，Rust 侧（`src/lib.rs` 核心算法 + `src/py.rs` PyO3 绑定）负责高性能 BPE 编码，经 PyO3 封装为 `_tiktoken` 扩展模块被 Python 调用。R→E 阶段需按语言分层采集事实，不能混为单层。
+- **中小型库、事实密度高**：全库约 170 条事实（Python 层 F-001~ 与 Rust 层分开编号），产出 9 篇概念 + 2 篇示例 + 5 篇参考，V 阶段零问题通过。
+- **"不存在符号"负向验证的代表性**：本案例首次系统性验证了一个此前未被显式记录的现象——AI 对"常见 API 名"存在虚构倾向，需在 V 阶段对**不存在的符号**也做负数 Grep（反向验证），将"如实声明'该 API 不存在'"而非"编造其存在"固化为产出一部分。
+
+#### 经验教训
+
+1. **双层语言库按层拆分 R 阶段事实采集并分开编号**：tiktoken 的 Python 事实（封装 API、注册表、模型映射、词表加载）与 Rust 事实（`CoreBPE`、`byte_pair_encode`、`Merge`、`_byte_pair_merge_large`、PyO3 绑定函数）语义与粒度差异大。产出 `facts-python.md` 与 `facts-rust.md` 两份事实文件分别编号，比单文件混编更利于 E 阶段概念文档按层取材、V 阶段按层 Grep。对任何双层/多语言复合库，R 阶段应"按技术层拆分事实采集"，而非要求一份事实清单覆盖全部。
+2. **PyO3/FFI 绑定命名需依赖实际模块名而非惯例**：tiktoken 的 Python 包 `__init__.py` 导入的底层扩展模块是 `_tiktoken`（非常见的 `_core`），`py.rs` 中的 `#[pymodule]` 实际注册名是 `_tiktoken`。R 阶段必须以源码中 PyO3 `#[pymodule]` 注解与实际 import 语句为准，不能凭"其他 Rust 库常用 _core"的惯例猜测绑定模块名。
+3. **对"常见 API 名"虚构倾向做显式负向验证**：在提炼/生成阶段，AI 倾向于把其他库或训练数据中的"合理"API（如 `string_ordinal`、`load_async`、`core_bpe`、`insert_sorted`、`_core` 模块等）当作 tiktoken 真实 API。V 阶段对这些符号在整个源码树做负数 Grep 后确认均不存在，文档据实标注"该符号 v0.14.0 中不存在"，从而把潜在的虚构转化为准确的负向声明。负向验证（证明某符号**真的不存在**）与正向验证（证明某符号**确实存在**）同等重要。
+4. **Rust 导出模块命名以 py.rs 实际 pymodule 名为准**：文档中引用 Rust 侧暴露给 Python 的模块/函数名（如 `_tiktoken`、`TiktokenBuffer`、`encode_tiktoken_buffer`）时，需对照 `py.rs` 的 `#[pyfunction]`/`#[pymodule]` 注解与实际暴露名，而非 `lib.rs` 内部 Rust 函数名——包裹暴露层与内部实现层的标识符可以不同，V 阶段验证时应分别以 `py.rs` 暴露名为准核对 Python 侧调用、以 `lib.rs` 符号名核对 Rust 侧事实，避免两层混淆。
+
+#### 反模式（本案例复用 ≥5 条）
+
+本案例通过零问题验证反过来印证了以下既有反模式的正确性，可继续复用：
+
+- **反模式3"一次生成所有文档"**（避免）：9 概念 + 2 示例 + 5 参考 + 4 索引/日志共 20 个文件分批生成，保证后期文档对事实清单的遵循度。
+- **反模式2"信源后置"**（避免）：先建 `references/`（facts-python、facts-rust、source、background-research），概念文档 sources 字段统一指向已存在信源文件。
+- **反模式4"Index先写"**（避免）：根/层索引均在全部内容文档生成后统一补齐，index 无遗漏、无 frontmatter。
+- **反模式7"交叉链接使用相对路径"**（避免）：概念文档统一使用 `/` 开头的 bundle-relative 绝对路径，链接全部有效。
+- **反模式5"不验证API真实性"**（避免）：V 阶段逐符号 Grep，正面验证 Python/Rust 全部 API 存在，免于虚构混入。
+
+这些反模式在双层库场景同样成立，无需为语言层差异修改——佐证了反模式清单的跨场景稳定性。
+
 ## 失败案例
 
 ### 案例：虚构的Response类混入文档（PyInvoke实践）
@@ -253,6 +282,10 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 ### 反模式7："交叉链接使用相对路径"
 
 在文档中使用 `../concepts/xxx.md` 这类相对路径。后果：文件移动后链接断裂，路径不一致增加维护成本。**正确做法**：统一使用 `/` 开头的bundle-relative绝对路径（如 `/concepts/02-task-basics.md`）。
+
+### 反模式8："双层语言库按惯例命名而非按源码命名导出模块"（tiktoken 新增）
+
+对 Python 门面 + Rust 核心（或其它 FFI）双层库，直接凭惯例假设底层扩展模块名（如假设 Rust 绑定模块叫 `_core`）或把 `lib.rs` 内部函数名当作 Python 侧可调用 API。后果：文档引用不存在的模块名/暴露名，读者照抄 import 直接报错（tiktoken 实际绑定模块是 `_tiktoken` 而非 `_core`，暴露层与实现层标识符也不同）。**正确做法**：R 阶段以源码中 PyO3/FFI 的 `#[pymodule]`/`#[pyfunction]` 注解与实际 import 语句为准登记暴露名，V 阶段分别以"暴露层实际名核对接口调用、以内部符号名核对实现层事实"。双层库值得单列此反模式，因其命名歧义风险高于单层库。
 
 ## 通用Prompt模板
 
@@ -361,5 +394,6 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
+- 2026-08-25 | pattern | 新增"迁移验证案例：tiktoken v0.14.0"（Python门面+Rust核心双层库第2次验证，validation_count 1→2）：沉淀4条经验教训（按层拆分R阶段事实采集、PyO3绑定名以源码实际模块名为准、对"常见API名"虚构做负向Grep验证、Rust导出模块以py.rs pymodule名为准），复用≥5条既有反模式，新增反模式8"双层语言库按惯例命名而非按源码命名导出模块"
 - 2026-08-23 | pattern | R阶段新增"大型C/C++项目头文件优先采集"专项小节，反向传播自新沉淀模式 cpp-header-first-fact-collection（L2，Apache TVM/TuyaOpen 双案例验证）
 - 2026-08-21 | pattern | 初始创建：从 PyInvoke v3.0.3 OKF Wiki 生成实践萃取

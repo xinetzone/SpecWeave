@@ -191,3 +191,64 @@ class TestFileUrlPosixResolution:
         checked_url, status, msg = cl.check_local_link(test_file, url)
         assert status == "missing", f"不存在的 POSIX 路径应报告 missing，status='{status}', msg='{msg}'"
 
+
+class TestBundleRelativeRootResolved:
+    """修复：`/` 前缀链接应解析为 bundle 相对路径而非文件系统根路径。
+
+    背景：OKF 工作流反模式4 规定 bundle 内交叉链接统一使用 `/` 开头的
+    bundle-relative 路径（如 `/concepts/00-overview.md`）。旧实现用
+    `(base_dir / url)` 解析，Windows 路径库把 `/concepts/...` 当作文件系统根，
+    丢弃 base_dir 导致误报断链（`D:\\concepts\\...`）。本测试锁定该行为。
+    """
+
+    def _build_bundle(self, tmp_path):
+        bundle = tmp_path / "bundle"
+        bundle.mkdir()
+        (bundle / "index.md").write_text("# index", encoding="utf-8")
+        (bundle / "log.md").write_text("- log", encoding="utf-8")
+        concepts = bundle / "concepts"
+        concepts.mkdir()
+        (concepts / "target.md").write_text("# target", encoding="utf-8")
+        (concepts / "sub-doc.md").write_text("# sub", encoding="utf-8")
+        return bundle
+
+    def test_root_prefix_resolves_to_bundle_root(self, tmp_path):
+        """`/concepts/target.md` 应解析到 bundle 根下的 concepts/target.md。"""
+        bundle = self._build_bundle(tmp_path)
+        test_file = bundle / "concepts" / "sub-doc.md"
+
+        checked_url, status, msg = cl.check_local_link(test_file, "/concepts/target.md")
+        assert status == "ok", f"bundle 相对链接应通过，status='{status}', msg='{msg}'"
+
+    def test_missing_when_target_absent(self, tmp_path):
+        """`/` 前缀指向不存在的文件应如实报告 missing（而非路径解析错误）。"""
+        bundle = self._build_bundle(tmp_path)
+        test_file = bundle / "concepts" / "sub-doc.md"
+
+        checked_url, status, msg = cl.check_local_link(test_file, "/concepts/not-exist.md")
+        assert status == "missing", f"不在的 bundle 目标应报告 missing，status='{status}', msg='{msg}'"
+
+    def test_scan_root_fallback_without_bundle_roots(self, tmp_path):
+        """无 bundle 根时，传入 scan_root 应作为 `/` 前缀链接的基准。"""
+        root = tmp_path / "scanroot"
+        root.mkdir()
+        sub = root / "nested"
+        sub.mkdir()
+        (root / "target.md").write_text("# t", encoding="utf-8")
+        (sub / "doc.md").write_text("# d", encoding="utf-8")
+
+        checked_url, status, msg = cl.check_local_link(
+            sub / "doc.md", "/target.md", scan_root=root
+        )
+        assert status == "ok", f"scan_root 回退应通过，status='{status}', msg='{msg}'"
+
+    def test_frontmatter_bundle_root_resolved(self, tmp_path):
+        """frontmatter sources 中的 `/references/...` 也应按 bundle 根解析。"""
+        bundle = self._build_bundle(tmp_path)
+        (bundle / "references").mkdir()
+        (bundle / "references" / "facts.md").write_text("# facts", encoding="utf-8")
+        sub_doc = bundle / "concepts" / "sub-doc.md"
+
+        result = cl._check_single_path(sub_doc, "source", "/references/facts.md")
+        assert result is None, f"frontmatter bundle 相对路径应通过，实际: {result}"
+
