@@ -4,7 +4,7 @@ title: "Jupyter Podman Rootless 七轮优化里程碑复盘报告"
 date: "2026-08-27"
 completion_date: "2026-08-27"
 type: "Report"
-description: "Jupyter Podman Rootless 开发容器从初始创建到七轮功能迭代+构建系统迁移的里程碑复盘"
+description: "Jupyter Podman Rootless 开发容器从初始创建到七轮功能迭代+构建系统迁移的里程碑复盘，已沉淀5个可复用模式（1方法论+1架构+3代码）"
 status: "stable"
 source: "apps/containers/jupyter-podman-rootless/ 目录下8个原子提交"
 milestone-name: "Jupyter Podman Rootless 七轮优化"
@@ -271,9 +271,33 @@ project(
 |---|---|---|---|
 | G1 事实无因果词 | 事实描述纯客观，无"因为/所以/导致/错误" | ✅ | 第二章20条事实均为客观陈述 |
 | G2 洞察四元组完整 | 每个洞察包含现象+根因+影响+建议 | ✅ | 第三章5个洞察均包含完整四元组 |
-| G3 模式可迁移 | 模式包含触发场景+核心步骤+反模式+迁移验证 | ✅ | 第四章3个模式均满足可迁移标准 |
+| G3 模式可迁移 | 模式包含触发场景+核心步骤+反模式+迁移验证 | ✅ | 第四章3个模式均满足可迁移标准；5个洞察/模式已全部沉淀入库（见第八章） |
 | G4 行动项原子化 | 单一职责、可独立验证、有验收标准 | ✅ | 第六章4个行动项满足原子化标准 |
 
 ---
 
+## 八、模式沉淀索引
+
+> 本次复盘共萃取5个洞察+3个模式，已全部沉淀为可复用模式入库，形成三层模式网络：
+
+| 来源 | 模式名称 | 分类 | 入库路径 | 成熟度 |
+|------|---------|------|---------|--------|
+| 洞察 I1 | 能力栈渐进构建 | methodology-patterns/governance-strategy | [capability-stack-progressive-building.md](../../../patterns/methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | L1-draft |
+| 模式 P1（洞察I2） | 容器开发工具七层栈+三层后端降级架构 | architecture-patterns | [container-devtool-seven-layer-stack.md](../../../patterns/architecture-patterns/container-devtool-seven-layer-stack.md) | L1-draft |
+| 模式 P2（洞察I3） | scikit-build-core纯Python项目最小配置 | code-patterns | [scikit-build-core-pure-python-minimal.md](../../../patterns/code-patterns/scikit-build-core-pure-python-minimal.md) | L1-draft |
+| 洞察 I4 | TOML表声明一致性原则 | code-patterns | [toml-table-declaration-consistency.md](../../../patterns/code-patterns/toml-table-declaration-consistency.md) | L1-draft |
+| 模式 P3（洞察I5） | invoke任务分层命名空间模式 | code-patterns | [invoke-layered-namespace-tasks.md](../../../patterns/code-patterns/invoke-layered-namespace-tasks.md) | L1-draft |
+
+**三层模式关系**：
+```
+方法论层（能力栈渐进构建）：定义"按什么顺序迭代"
+  └─ 架构层（容器开发工具七层栈）：定义"容器工具应做成什么结构"
+      ├─ 代码层（scikit-build-core纯Python最小配置）：L7构建系统配置模板
+      ├─ 代码层（invoke任务分层命名空间）：任务入口组织模式
+      └─ 代码层（TOML表声明一致性）：跨工具配置陷阱防御
+```
+
+---
+
 *报告生成时间：2026-08-27 | 方法论：seven-concepts（R→I→E→C） | 提交链路：cd9ccb99..aab2eb3e*
+*模式沉淀完成时间：2026-08-27 | 沉淀模式数：5 | 方法论1 + 架构1 + 代码3*

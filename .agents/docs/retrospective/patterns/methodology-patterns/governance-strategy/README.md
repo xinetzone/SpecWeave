@@ -34,6 +34,7 @@ date: "2026-07-09"
 | [瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级](./bottleneck-first-refactoring.md) | 瓶颈优先重构法：按全局瓶颈而非实施难度排序重构优先级 | L2 |  |
 | [有界迭代预算：长时程自主系统的强制收敛契约](./bounded-iteration-budget.md) | 有界迭代预算：长时程自主系统的强制收敛契约 | L1-draft | `迭代预算` `强制收敛` `长时程自主` |
 | [能力复制边界判断法](./capability-replication-boundary.md) | 能力复制边界判断法 | L1 | `能力迁移` `产业转移` `组织扩张` |
+| [能力栈渐进构建：按依赖分层的复杂系统迭代方法论](./capability-stack-progressive-building.md) | 构建复杂工具/平台时，按能力依赖栈从下到上逐层实现：基础运行时→程序化API→声明式编排→领域能力→外部互通→文档→构建系统；每轮单一维度、原子提交可回退、文档后置、基建最后。避免大爆炸式集成导致的多维度变更难以定位问题。 | L1-draft | `incremental` `capability-stack` `iterative-development` `dependency-ordering` `atomic-commit` |
 | [章节类型分层文件大小策略](./chapter-type-tiered-file-size.md) | 章节类型分层文件大小策略 | L1 |  |
 | [认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense）](./cognitive-practice-gap-recursive-defense.md) | 认知偏差递归防御体系（Cognitive Practice Gap Recursive Defense） | L2 | `践行鸿沟` `递归践行` `认知偏差` |
 | [组合价值评估三原则（Combination Value Triple Test）](./combination-value-triple-test.md) | 组合价值评估三原则（Combination Value Triple Test） | L1 | `decision-making` `combination-evaluation` `anti-overengineering` |
