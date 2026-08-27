@@ -33,3 +33,6 @@ Thumbs.db
 
 # Temporary workspace (not tracked, for ad-hoc testing)
 .temp/
+
+# Image cache (podman save archives for backup/recovery)
+.image-cache/

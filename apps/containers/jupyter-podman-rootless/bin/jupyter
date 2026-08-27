@@ -1,0 +1,463 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# jupyter — Zero-dependency CLI for jupyter-podman-rootless container management
+#
+# Quick start:
+#   # From WSL (after running: bash bin/jupyter install):
+#   jupyter start && jupyter info
+#
+# Usage (WSL/Linux) — from project root:
+#   bash bin/jupyter <command>
+#   # Or after 'jupyter install', from anywhere:
+#   jupyter <command>
+#
+# Usage (Windows PowerShell/cmd) — from project root:
+#   bin\jupyter.cmd <command>
+#
+# Commands:
+#   start       Start container (idempotent; creates if not exists)
+#   stop        Stop and remove container
+#   restart     Stop then start
+#   status      Show container status
+#   shell       Enter container shell (devuser by default, --root for root)
+#   logs        View container logs (-f for follow)
+#   exec CMD    Execute command in container (devuser)
+#   root CMD    Execute command in container (root)
+#   info        Show access info (URL, credentials, ports)
+#   url         Print Jupyter Lab URL (for quick copy-paste)
+#   save        Save image to .image-cache/ for backup
+#   load        Load image from .image-cache/
+#   rebuild     Incremental rebuild (config changes only, <10s)
+#   rebuild-all Full rebuild from Containerfile (slow, needs network)
+#   keepalive   Start WSL keepalive process (prevents container auto-exit)
+#   install     Install symlink to ~/.local/bin/jupyter for global WSL access
+#   help        Show this help message
+#
+# All defaults can be overridden via environment variables or a .env file
+# in the project root. See source for variable names (JUPYTER_*).
+# ==============================================================================
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Auto-locate project root (script lives in <project>/bin/jupyter)
+# ---------------------------------------------------------------------------
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+# ---------------------------------------------------------------------------
+# Load .env file if present (project root or current directory)
+# ---------------------------------------------------------------------------
+load_env() {
+    local env_files=("$PROJECT_ROOT/.env" "$PWD/.env")
+    for f in "${env_files[@]}"; do
+        if [[ -f "$f" ]]; then
+            # shellcheck disable=SC1090
+            set -a; source "$f"; set +a
+        fi
+    done
+}
+load_env
+
+# ---------------------------------------------------------------------------
+# Default configuration (overridable via env vars or .env)
+# ---------------------------------------------------------------------------
+CONTAINER_NAME="${JUPYTER_CONTAINER_NAME:-jupyter-chaos-test}"
+IMAGE="${JUPYTER_IMAGE:-localhost/jupyter-podman-rootless:latest}"
+SSH_PORT="${JUPYTER_SSH_PORT:-2222}"
+JUPYTER_PORT="${JUPYTER_PORT:-8888}"
+PASSWORD="${JUPYTER_PASSWORD:-devpass123}"
+TOKEN="${JUPYTER_TOKEN:-chaostest2026}"
+WORKSPACE="${JUPYTER_WORKSPACE:-$(cd "$PROJECT_ROOT/../../.." && pwd)}"
+CACHE_DIR="$PROJECT_ROOT/.image-cache"
+WSL_DISTRO="${JUPYTER_WSL_DISTRO:-Ubuntu}"
+
+# Colors (disable if not a tty)
+if [[ -t 1 ]]; then
+    C_RESET='\033[0m'; C_GREEN='\033[0;32m'; C_YELLOW='\033[0;33m'
+    C_RED='\033[0;31m'; C_CYAN='\033[0;36m'; C_BOLD='\033[1m'
+else
+    C_RESET=''; C_GREEN=''; C_YELLOW=''; C_RED=''; C_CYAN=''; C_BOLD=''
+fi
+
+info()  { echo -e "${C_GREEN}[INFO]${C_RESET}  $*"; }
+warn()  { echo -e "${C_YELLOW}[WARN]${C_RESET}  $*"; }
+error() { echo -e "${C_RED}[ERROR]${C_RESET} $*" >&2; }
+die()   { error "$*"; exit 1; }
+
+# ---------------------------------------------------------------------------
+# Pre-flight checks
+# ---------------------------------------------------------------------------
+check_podman() {
+    command -v podman &>/dev/null || die "podman not found. Install podman in WSL first."
+}
+
+container_exists() {
+    podman ps -a --format '{{.Names}}' 2>/dev/null | grep -qx "$CONTAINER_NAME"
+}
+
+container_running() {
+    podman ps --format '{{.Names}}' 2>/dev/null | grep -qx "$CONTAINER_NAME"
+}
+
+image_exists() {
+    podman image exists "$IMAGE" 2>/dev/null
+}
+
+ensure_image() {
+    if ! image_exists; then
+        # Check cache
+        local cached="$CACHE_DIR/jupyter-podman-rootless-latest.tar.gz"
+        if [[ -f "$cached" ]]; then
+            warn "Image not found locally but cache exists. Loading from cache..."
+            cmd_load
+        else
+            die "Image '$IMAGE' not found. Build it first: $0 rebuild-all"
+        fi
+    fi
+}
+
+ensure_wsl_keepalive() {
+    # If running inside WSL and keepalive not running, start it
+    if grep -qi microsoft /proc/version 2>/dev/null; then
+        if ! pgrep -f "sleep infinity" &>/dev/null; then
+            setsid sleep infinity & disown
+            info "Started WSL keepalive (sleep infinity)"
+        fi
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+cmd_help() {
+    sed -n '2,/^set -euo/p' "$0" | grep -E '^#|^# jupyter' | sed 's/^# \?//'
+    echo ""
+    echo -e "${C_BOLD}Project root:${C_RESET} $PROJECT_ROOT"
+    echo -e "${C_BOLD}Container:${C_RESET}    $CONTAINER_NAME"
+    echo -e "${C_BOLD}Image:${C_RESET}        $IMAGE"
+    echo -e "${C_BOLD}Workspace:${C_RESET}    $WORKSPACE"
+}
+
+cmd_start() {
+    check_podman
+    ensure_image
+    ensure_wsl_keepalive
+
+    if container_running; then
+        info "Container '$CONTAINER_NAME' is already running."
+        cmd_info
+        return 0
+    fi
+
+    if container_exists; then
+        info "Removing stopped container '$CONTAINER_NAME'..."
+        podman rm -f "$CONTAINER_NAME" &>/dev/null
+    fi
+
+    info "Creating container '$CONTAINER_NAME'..."
+    podman create -d \
+        --name "$CONTAINER_NAME" \
+        --device /dev/fuse \
+        --security-opt label=disable \
+        --cgroupns=host \
+        --restart unless-stopped \
+        -p "${SSH_PORT}:22" \
+        -p "${JUPYTER_PORT}:8888" \
+        -v "${WORKSPACE}:/workspace" \
+        -e USER_PASSWORD="$PASSWORD" \
+        -e JUPYTER_TOKEN="$TOKEN" \
+        -e GRANT_SUDO=yes \
+        "$IMAGE"
+
+    info "Starting container..."
+    podman start "$CONTAINER_NAME"
+
+    # Wait for healthy
+    info "Waiting for services to be ready..."
+    local waited=0
+    while [[ $waited -lt 60 ]]; do
+        if podman healthcheck run "$CONTAINER_NAME" &>/dev/null; then
+            break
+        fi
+        sleep 2
+        waited=$((waited + 2))
+        echo -n "."
+    done
+    echo ""
+
+    if container_running; then
+        info "Container started successfully."
+        cmd_info
+    else
+        die "Container failed to start. Check logs: $0 logs"
+    fi
+}
+
+cmd_stop() {
+    check_podman
+    if container_exists; then
+        info "Stopping and removing container '$CONTAINER_NAME'..."
+        podman stop -t 5 "$CONTAINER_NAME" 2>/dev/null || true
+        podman rm -f "$CONTAINER_NAME" 2>/dev/null || true
+        info "Container removed."
+    else
+        info "Container '$CONTAINER_NAME' does not exist."
+    fi
+}
+
+cmd_restart() {
+    cmd_stop
+    cmd_start
+}
+
+cmd_status() {
+    check_podman
+    if container_running; then
+        echo -e "${C_GREEN}●${C_RESET} ${C_BOLD}$CONTAINER_NAME${C_RESET}  ${C_GREEN}running${C_RESET}"
+        echo ""
+        podman ps --filter "name=$CONTAINER_NAME" --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+        echo ""
+        podman healthcheck run "$CONTAINER_NAME" 2>/dev/null \
+            && echo -e "  Health: ${C_GREEN}healthy${C_RESET}" \
+            || echo -e "  Health: ${C_YELLOW}starting/unhealthy${C_RESET}"
+    elif container_exists; then
+        echo -e "${C_YELLOW}○${C_RESET} ${C_BOLD}$CONTAINER_NAME${C_RESET}  ${C_YELLOW}stopped${C_RESET}"
+        podman ps -a --filter "name=$CONTAINER_NAME" --format "table {{.ID}}\t{{.Image}}\t{{.Status}}"
+    else
+        echo -e "${C_RED}○${C_RESET} ${C_BOLD}$CONTAINER_NAME${C_RESET}  ${C_RED}not created${C_RESET}"
+        echo ""
+        echo "  Start it with: $0 start"
+    fi
+    if image_exists; then
+        local img_id img_size
+        img_id=$(podman images "$IMAGE" --format '{{.ID}}' | head -c12)
+        img_size=$(podman images "$IMAGE" --format '{{.Size}}')
+        echo -e "  Image: $IMAGE ($img_id, $img_size)"
+    else
+        echo -e "  Image: ${C_RED}$IMAGE not found${C_RESET}"
+    fi
+}
+
+cmd_shell() {
+    check_podman
+    local user="devuser"
+    if [[ "${1:-}" == "--root" ]]; then
+        user="root"
+        shift
+    fi
+    container_running || die "Container not running. Start it first: $0 start"
+    exec podman exec -it -u "$user" "$CONTAINER_NAME" bash -l
+}
+
+cmd_logs() {
+    check_podman
+    container_exists || die "Container does not exist."
+    if [[ "${1:-}" == "-f" || "${1:-}" == "--follow" ]]; then
+        exec podman logs -f "$CONTAINER_NAME"
+    else
+        exec podman logs --tail 100 "$CONTAINER_NAME"
+    fi
+}
+
+cmd_exec() {
+    check_podman
+    container_running || die "Container not running. Start it first: $0 start"
+    exec podman exec -it -u devuser "$CONTAINER_NAME" "$@"
+}
+
+cmd_root() {
+    check_podman
+    container_running || die "Container not running. Start it first: $0 start"
+    exec podman exec -it -u root "$CONTAINER_NAME" "$@"
+}
+
+cmd_info() {
+    check_podman
+    echo ""
+    echo -e "${C_BOLD}${C_CYAN}╔══════════════════════════════════════════════════╗${C_RESET}"
+    echo -e "${C_BOLD}${C_CYAN}║       Jupyter Podman Rootless — Access Info      ║${C_RESET}"
+    echo -e "${C_BOLD}${C_CYAN}╚══════════════════════════════════════════════════╝${C_RESET}"
+    echo ""
+    echo -e "  ${C_BOLD}Jupyter Lab:${C_RESET}  ${C_GREEN}http://localhost:${JUPYTER_PORT}/lab?token=${TOKEN}${C_RESET}"
+    echo -e "  ${C_BOLD}SSH:${C_RESET}          ssh -p ${SSH_PORT} devuser@localhost"
+    echo -e "  ${C_BOLD}Password:${C_RESET}     ${PASSWORD}"
+    echo ""
+    echo -e "  ${C_BOLD}Container:${C_RESET}    $CONTAINER_NAME"
+    echo -e "  ${C_BOLD}Image:${C_RESET}        $IMAGE"
+    echo -e "  ${C_BOLD}Mount:${C_RESET}        $WORKSPACE → /workspace"
+    echo ""
+    if container_running; then
+        echo -e "  ${C_BOLD}Status:${C_RESET}       ${C_GREEN}● running${C_RESET}"
+    elif container_exists; then
+        echo -e "  ${C_BOLD}Status:${C_RESET}       ${C_YELLOW}○ stopped${C_RESET}"
+    else
+        echo -e "  ${C_BOLD}Status:${C_RESET}       ${C_RED}○ not created${C_RESET}"
+    fi
+    echo ""
+}
+
+cmd_url() {
+    echo "http://localhost:${JUPYTER_PORT}/lab?token=${TOKEN}"
+}
+
+cmd_save() {
+    check_podman
+    image_exists || die "Image '$IMAGE' not found."
+    mkdir -p "$CACHE_DIR"
+
+    local image_id timestamp outfile latest_link
+    image_id=$(podman images "$IMAGE" --format '{{.ID}}' | head -c12)
+    timestamp=$(date +%Y%m%d-%H%M%S)
+    outfile="$CACHE_DIR/jupyter-podman-rootless-${image_id}-${timestamp}.tar.gz"
+    latest_link="$CACHE_DIR/jupyter-podman-rootless-latest.tar.gz"
+
+    info "Saving image $IMAGE ($image_id)..."
+    info "  Output: $outfile"
+
+    local start_ts=$SECONDS
+    if command -v pigz &>/dev/null; then
+        podman save "$IMAGE" --format docker-archive | pigz -p "$(nproc)" > "$outfile"
+    else
+        podman save "$IMAGE" --format docker-archive | gzip > "$outfile"
+    fi
+    local elapsed=$((SECONDS - start_ts))
+
+    local size hash
+    size=$(du -sh "$outfile" | cut -f1)
+    hash=$(sha256sum "$outfile" | cut -d' ' -f1)
+    ln -sf "$(basename "$outfile")" "$latest_link"
+
+    # Write manifest
+    cat > "$CACHE_DIR/manifest.txt" <<EOF
+# Jupyter Podman Rootless Image Cache
+IMAGE_NAME=$IMAGE
+IMAGE_ID=$image_id
+IMAGE_FILE=$(basename "$outfile")
+SIZE=$size
+SHA256=$hash
+SAVED=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+SAVE_TOOK=${elapsed}s
+EOF
+
+    gzip -t "$outfile" && info "Integrity: OK"
+    info "Saved $size in ${elapsed}s"
+    info "Restore with: $0 load"
+}
+
+cmd_load() {
+    check_podman
+    local archive="$CACHE_DIR/jupyter-podman-rootless-latest.tar.gz"
+    [[ -f "$archive" ]] || die "No cached image found at $archive. Run '$0 save' first."
+
+    info "Loading image from $archive..."
+    local start_ts=$SECONDS
+    gunzip -c "$archive" | podman load
+    local elapsed=$((SECONDS - start_ts))
+    info "Image loaded in ${elapsed}s"
+    podman images "$IMAGE"
+}
+
+cmd_rebuild() {
+    check_podman
+    [[ -f "$PROJECT_ROOT/Containerfile.hidden" ]] || die "Containerfile.hidden not found."
+
+    local build_dir
+    build_dir=$(mktemp -d)
+    info "Incremental build (config patch only)..."
+    cp "$PROJECT_ROOT/Containerfile.hidden" "$build_dir/Containerfile"
+    mkdir -p "$build_dir/config"
+    cp "$PROJECT_ROOT/config/jupyter_notebook_config.py" "$build_dir/config/"
+
+    # If container is running, stop it first
+    if container_running; then
+        info "Stopping running container for rebuild..."
+        podman stop -t 5 "$CONTAINER_NAME" 2>/dev/null || true
+        podman rm -f "$CONTAINER_NAME" 2>/dev/null || true
+    fi
+
+    podman build -t "$IMAGE" "$build_dir"
+    rm -rf "$build_dir"
+    info "Incremental build complete."
+    cmd_start
+}
+
+cmd_rebuild_all() {
+    check_podman
+    info "Full rebuild from Containerfile (this may take a while)..."
+    # Build from project root for correct context
+    (cd "$PROJECT_ROOT" && podman build \
+        --build-arg APT_MIRROR=tuna \
+        --build-arg CONDA_MIRROR=tuna \
+        --build-arg PIP_MIRROR=tuna \
+        -t "$IMAGE" -f Containerfile .)
+    info "Full rebuild complete."
+}
+
+cmd_keepalive() {
+    if grep -qi microsoft /proc/version 2>/dev/null; then
+        if pgrep -f "sleep infinity" &>/dev/null; then
+            info "WSL keepalive is already running."
+        else
+            setsid sleep infinity & disown
+            info "WSL keepalive started (sleep infinity)."
+        fi
+    else
+        warn "Not running inside WSL, keepalive not needed."
+    fi
+}
+
+cmd_install() {
+    local target="${1:-$HOME/.local/bin}"
+    mkdir -p "$target"
+    local link="$target/jupyter"
+    if [[ -L "$link" ]] || [[ -f "$link" ]]; then
+        warn "$link already exists, overwriting..."
+        rm -f "$link"
+    fi
+    ln -s "$SCRIPT_DIR/jupyter" "$link"
+    info "Symlinked jupyter CLI to $link"
+    if [[ ":$PATH:" != *":$target:"* ]]; then
+        warn "$target is not in your PATH."
+        echo "  Add this to your ~/.bashrc:"
+        echo "    export PATH=\"$target:\$PATH\""
+    else
+        info "You can now run 'jupyter' from anywhere."
+        info "  Try: jupyter status"
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Main dispatch
+# ---------------------------------------------------------------------------
+main() {
+    local cmd="${1:-help}"
+    shift || true
+
+    case "$cmd" in
+        start)      cmd_start "$@" ;;
+        stop)       cmd_stop "$@" ;;
+        restart)    cmd_restart "$@" ;;
+        status|ps)  cmd_status "$@" ;;
+        shell|sh)   cmd_shell "$@" ;;
+        logs)       cmd_logs "$@" ;;
+        exec)       cmd_exec "$@" ;;
+        root)       cmd_root "$@" ;;
+        info)       cmd_info "$@" ;;
+        url)        cmd_url "$@" ;;
+        save)       cmd_save "$@" ;;
+        load)       cmd_load "$@" ;;
+        rebuild)    cmd_rebuild "$@" ;;
+        rebuild-all) cmd_rebuild_all "$@" ;;
+        keepalive)  cmd_keepalive "$@" ;;
+        install)    cmd_install "$@" ;;
+        help|-h|--help) cmd_help "$@" ;;
+        *)
+            error "Unknown command: $cmd"
+            echo ""
+            cmd_help
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
