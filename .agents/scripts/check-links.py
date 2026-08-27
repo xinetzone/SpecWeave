@@ -177,10 +177,14 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
     content = file_path.read_text(encoding="utf-8")
     links = []
 
-    # 收集引用式链接定义
+    # 收集引用式链接定义（排除脚注 [^id]: ...）
     ref_defs = {}
     for m in REF_LINK_RE.finditer(content):
-        ref_id = m.group(1).lower()
+        ref_id = m.group(1)
+        # 脚注定义以 ^ 开头，不是链接，跳过
+        if ref_id.startswith("^"):
+            continue
+        ref_id = ref_id.lower()
         ref_url = m.group(2).strip()
         if not is_template_placeholder(ref_url):
             ref_defs[ref_id] = _strip_link_title(ref_url)
@@ -197,15 +201,19 @@ def parse_links(file_path: Path) -> list[tuple[str, str, int]]:
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, url, line_num))
 
-    # 解析引用式链接使用 (不含定义行)
+    # 解析引用式链接使用 (不含定义行，排除脚注 [^id][^id] 模式)
     for m in REF_USAGE_RE.finditer(content):
         if is_code_fence_context(content, m.start()):
             continue
         if _is_image_syntax(content, m.start()):
             continue
-        ref_id = m.group(2).strip().lower()
+        text = m.group(1)
+        ref_id_raw = m.group(2).strip()
+        # 脚注使用（任一 group 以 ^ 开头），跳过
+        if text.startswith("^") or ref_id_raw.startswith("^"):
+            continue
+        ref_id = ref_id_raw.lower()
         if ref_id and ref_id in ref_defs:
-            text = m.group(1)
             line_num = content[: m.start()].count("\n") + 1
             links.append((text, ref_defs[ref_id], line_num))
 
