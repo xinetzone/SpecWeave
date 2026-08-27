@@ -36,3 +36,6 @@ Thumbs.db
 
 # Image cache (podman save archives for backup/recovery)
 .image-cache/
+
+# WSL distro cache (VHDX files and rootfs exports)
+.wsl-cache/

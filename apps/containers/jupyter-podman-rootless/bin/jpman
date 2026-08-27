@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# jupyter — Zero-dependency CLI for jupyter-podman-rootless container management
+# jpman — Zero-dependency CLI for jupyter-podman-rootless container management
 #
 # Quick start:
-#   # From WSL (after running: bash bin/jupyter install):
-#   jupyter start && jupyter info
+#   # From WSL (after running: bash bin/jpman install):
+#   jpman start && jpman info
 #
 # Usage (WSL/Linux) — from project root:
-#   bash bin/jupyter <command>
-#   # Or after 'jupyter install', from anywhere:
-#   jupyter <command>
+#   bash bin/jpman <command>
+#   # Or after 'jpman install', from anywhere:
+#   jpman <command>
 #
 # Usage (Windows PowerShell/cmd) — from project root:
-#   bin\jupyter.cmd <command>
+#   bin\jpman.cmd <command>
+#   # PowerShell 7+ native version:
+#   pwsh -File bin/jpman.ps1 <command>
 #
 # Commands:
 #   start       Start container (idempotent; creates if not exists)
@@ -29,8 +31,10 @@
 #   load        Load image from .image-cache/
 #   rebuild     Incremental rebuild (config changes only, <10s)
 #   rebuild-all Full rebuild from Containerfile (slow, needs network)
+#   wsl-export  Export image cache as WSL2 distro (one-click convert)
+#   wsl-verify  Verify WSL2 distro environment (Smoke Test)
 #   keepalive   Start WSL keepalive process (prevents container auto-exit)
-#   install     Install symlink to ~/.local/bin/jupyter for global WSL access
+#   install     Install symlink to ~/.local/bin/jpman for global WSL access
 #   help        Show this help message
 #
 # All defaults can be overridden via environment variables or a .env file
@@ -39,7 +43,7 @@
 set -euo pipefail
 
 # ---------------------------------------------------------------------------
-# Auto-locate project root (script lives in <project>/bin/jupyter)
+# Auto-locate project root (script lives in <project>/bin/jpman)
 # ---------------------------------------------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
@@ -69,7 +73,12 @@ PASSWORD="${JUPYTER_PASSWORD:-devpass123}"
 TOKEN="${JUPYTER_TOKEN:-chaostest2026}"
 WORKSPACE="${JUPYTER_WORKSPACE:-$(cd "$PROJECT_ROOT/../../.." && pwd)}"
 CACHE_DIR="$PROJECT_ROOT/.image-cache"
+WSL_CACHE_DIR="$PROJECT_ROOT/.wsl-cache"
 WSL_DISTRO="${JUPYTER_WSL_DISTRO:-Ubuntu}"
+WSL_TARGET_DISTRO="${JUPYTER_WSL_TARGET_DISTRO:-jupyter-podman-rootless}"
+WSL_INSTALL_DIR="${JUPYTER_WSL_INSTALL_DIR:-}"
+WSL_DEFAULT_USER="${JUPYTER_WSL_DEFAULT_USER:-devuser}"
+CONDA_PATH="${JUPYTER_CONDA_PATH:-/opt/conda}"
 
 # Colors (disable if not a tty)
 if [[ -t 1 ]]; then
@@ -127,10 +136,84 @@ ensure_wsl_keepalive() {
 }
 
 # ---------------------------------------------------------------------------
+# WSL helper functions
+# ---------------------------------------------------------------------------
+in_wsl() {
+    grep -qi microsoft /proc/version 2>/dev/null
+}
+
+wsl_exe() {
+    # Find wsl.exe (Windows interop)
+    if command -v wsl.exe &>/dev/null; then
+        echo "wsl.exe"
+    elif [[ -x "/mnt/c/Windows/System32/wsl.exe" ]]; then
+        echo "/mnt/c/Windows/System32/wsl.exe"
+    else
+        echo ""
+    fi
+}
+
+check_wsl() {
+    in_wsl || die "This command must run inside WSL."
+    local wsl
+    wsl=$(wsl_exe)
+    [[ -n "$wsl" ]] || die "wsl.exe not found. Ensure WSL Interop is enabled."
+    echo "$wsl"
+}
+
+wsl_to_win_path() {
+    # Convert WSL path (/mnt/d/...) to Windows path (D:\...)
+    local wsl_path="$1"
+    if command -v wslpath &>/dev/null; then
+        wslpath -w "$wsl_path"
+    else
+        die "wslpath not found; cannot convert paths. Ensure you are running in a modern WSL distribution."
+    fi
+}
+
+win_to_wsl_path() {
+    # Convert Windows path (D:\...) to WSL path (/mnt/d/...)
+    local win_path="$1"
+    if command -v wslpath &>/dev/null; then
+        wslpath -u "$win_path"
+    else
+        die "wslpath not found; cannot convert paths. Ensure you are running in a modern WSL distribution."
+    fi
+}
+
+wsl_distro_exists() {
+    local distro="$1"
+    local wsl
+    wsl=$(wsl_exe)
+    # wsl.exe outputs UTF-16 LE with null bytes; strip them and compare case-insensitively
+    "$wsl" -l -q 2>/dev/null | tr -d '\0\r' | tr '[:upper:]' '[:lower:]' | grep -Fxq "$(echo "$distro" | tr '[:upper:]' '[:lower:]')"
+}
+
+wsl_terminate() {
+    local distro="$1"
+    local wsl
+    wsl=$(wsl_exe)
+    "$wsl" --terminate "$distro" 2>/dev/null || true
+}
+
+check_rootful_podman() {
+    # Check if sudo podman works (non-interactive)
+    if sudo -n podman info &>/dev/null 2>&1; then
+        echo "sudo podman"
+    elif podman info &>/dev/null 2>&1; then
+        warn "Using rootless podman; UID/GID mapping may cause permission issues in WSL distro."
+        warn "Consider enabling passwordless sudo for podman, or run 'sudo -v' first."
+        echo "podman"
+    else
+        die "podman not found or not accessible. Install podman and ensure sudo access."
+    fi
+}
+
+# ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
 cmd_help() {
-    sed -n '2,/^set -euo/p' "$0" | grep -E '^#|^# jupyter' | sed 's/^# \?//'
+    sed -n '2,/^set -euo/p' "$0" | grep -E '^#|^# jpman' | sed 's/^# \?//'
     echo ""
     echo -e "${C_BOLD}Project root:${C_RESET} $PROJECT_ROOT"
     echo -e "${C_BOLD}Container:${C_RESET}    $CONTAINER_NAME"
@@ -409,20 +492,266 @@ cmd_keepalive() {
 cmd_install() {
     local target="${1:-$HOME/.local/bin}"
     mkdir -p "$target"
-    local link="$target/jupyter"
+    local link="$target/jpman"
     if [[ -L "$link" ]] || [[ -f "$link" ]]; then
         warn "$link already exists, overwriting..."
         rm -f "$link"
     fi
-    ln -s "$SCRIPT_DIR/jupyter" "$link"
-    info "Symlinked jupyter CLI to $link"
+    ln -s "$SCRIPT_DIR/jpman" "$link"
+    info "Symlinked jpman CLI to $link"
     if [[ ":$PATH:" != *":$target:"* ]]; then
         warn "$target is not in your PATH."
         echo "  Add this to your ~/.bashrc:"
         echo "    export PATH=\"$target:\$PATH\""
     else
-        info "You can now run 'jupyter' from anywhere."
-        info "  Try: jupyter status"
+        info "You can now run 'jpman' from anywhere."
+        info "  Try: jpman status"
+    fi
+}
+
+cmd_wsl_export() {
+    local distro_name="$WSL_TARGET_DISTRO"
+    local install_dir="$WSL_INSTALL_DIR"
+    local force=0
+
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --distro-name|-n) distro_name="$2"; shift 2 ;;
+            --install-dir|-d) install_dir="$2"; shift 2 ;;
+            --force|-f) force=1; shift ;;
+            *) die "Unknown option for wsl-export: $1" ;;
+        esac
+    done
+
+    local wsl
+    wsl=$(check_wsl)
+    info "WSL bridge: exporting image as WSL2 distro '$distro_name'..."
+
+    # Determine install directory
+    if [[ -z "$install_dir" ]]; then
+        install_dir="$WSL_CACHE_DIR/$distro_name"
+    fi
+    mkdir -p "$install_dir"
+    local install_dir_win
+    install_dir_win=$(wsl_to_win_path "$install_dir")
+
+    # Check if distro already exists
+    if wsl_distro_exists "$distro_name"; then
+        if [[ $force -eq 1 ]]; then
+            warn "WSL distro '$distro_name' already exists, unregistering (--force)..."
+            "$wsl" --unregister "$distro_name"
+        else
+            die "WSL distro '$distro_name' already exists. Use --force to overwrite, or choose a different name with --distro-name."
+        fi
+    fi
+
+    # Ensure image is available (load from cache if needed)
+    local podman_cmd
+    podman_cmd=$(check_rootful_podman)
+
+    # Find cached image archive
+    local cached_archive="$CACHE_DIR/jupyter-podman-rootless-latest.tar.gz"
+    if [[ ! -f "$cached_archive" ]]; then
+        # Try timestamped archives
+        cached_archive=$(ls -t "$CACHE_DIR"/jupyter-podman-rootless-*.tar.gz 2>/dev/null | head -1)
+    fi
+    [[ -f "$cached_archive" ]] || die "No cached image found. Run 'jpman save' first, or build the image."
+
+    info "Using cached image: $cached_archive"
+    local rootfs_out="$CACHE_DIR/${distro_name}-rootfs.tar.gz"
+    local rootfs_out_win
+    rootfs_out_win=$(wsl_to_win_path "$rootfs_out")
+
+    # Step 1: Load image and export rootfs via Podman
+    if [[ ! -f "$rootfs_out" ]] || [[ $force -eq 1 ]]; then
+        info "Step 1/5: Loading image into Podman..."
+        gunzip -c "$cached_archive" | $podman_cmd load
+
+        info "Step 2/5: Creating container and exporting flat rootfs (gzip -1)..."
+        local image_tag
+        image_tag=$($podman_cmd images --format '{{.Repository}}:{{.Tag}}' | grep -v '<none>' | head -1)
+        if [[ -z "$image_tag" ]]; then
+            local image_id
+            image_id=$($podman_cmd images -q | head -1)
+            image_tag="$IMAGE"
+            $podman_cmd tag "$image_id" "$image_tag"
+        fi
+        info "  Image tag: $image_tag"
+
+        local tmp_container="wsl-export-$$"
+        # Ensure cleanup of temp container on error/exit
+        local cleanup_cmd="$podman_cmd rm -f '$tmp_container' >/dev/null 2>&1 || true"
+        trap "$cleanup_cmd" EXIT
+        $podman_cmd rm -f "$tmp_container" >/dev/null 2>&1 || true
+        $podman_cmd create --name "$tmp_container" "$image_tag" >/dev/null
+        $podman_cmd export "$tmp_container" | gzip -1 > "$rootfs_out"
+        $podman_cmd rm "$tmp_container" >/dev/null
+        trap - EXIT
+
+        local rootfs_size
+        rootfs_size=$(du -sh "$rootfs_out" | cut -f1)
+        info "  RootFS exported: $rootfs_size"
+    else
+        info "RootFS already exists, skipping export (use --force to rebuild): $rootfs_out"
+    fi
+
+    # Step 2: Import into WSL
+    info "Step 3/5: Importing into WSL2 at $install_dir_win..."
+    mkdir -p "$install_dir"
+    "$wsl" --import "$distro_name" "$install_dir_win" "$rootfs_out_win" --version 2
+
+    # Step 3: Configure wsl.conf and conda
+    info "Step 4/5: Configuring wsl.conf and Conda activation..."
+    "$wsl" -d "$distro_name" -u root -- sh -c "cat > /etc/wsl.conf << 'EOF'
+[user]
+default=$WSL_DEFAULT_USER
+
+[boot]
+systemd=false
+
+[automount]
+enabled=true
+mountFsTab=true
+options=\"metadata,umask=0022,fmask=0011,dmask=0000\"
+
+[network]
+generateHosts=true
+generateResolvConf=true
+EOF
+echo 'wsl.conf written'"
+
+    # Configure conda
+    if "$wsl" -d "$distro_name" -u root -- test -f "$CONDA_PATH/etc/profile.d/conda.sh"; then
+        "$wsl" -d "$distro_name" -u root -- sh -c "cat > /etc/profile.d/conda.sh << 'EOF'
+. $CONDA_PATH/etc/profile.d/conda.sh
+conda activate base
+EOF
+chmod +x /etc/profile.d/conda.sh
+echo 'Conda activation configured'"
+    else
+        warn "Conda init script not found at $CONDA_PATH, skipping conda configuration."
+    fi
+
+    # Step 4: Terminate to apply config
+    info "Step 5/5: Restarting WSL distro to apply configuration..."
+    wsl_terminate "$distro_name"
+    sleep 2
+
+    # Verify default user
+    local verified_user
+    verified_user=$("$wsl" -d "$distro_name" -- sh -l -c "whoami" 2>/dev/null || echo "")
+    if [[ "$verified_user" != "$WSL_DEFAULT_USER" ]]; then
+        warn "Default user may not be set correctly (got: '$verified_user', expected: '$WSL_DEFAULT_USER')."
+        warn "Try: wsl --shutdown then retry. Or manually check /etc/wsl.conf."
+    else
+        info "Default user verified: $verified_user"
+    fi
+
+    # Run smoke test
+    echo ""
+    info "Running quick verification..."
+    cmd_wsl_verify "$distro_name" || true
+
+    echo ""
+    info "✅ WSL export complete!"
+    echo ""
+    echo "  Enter environment:  wsl -d $distro_name"
+    echo "  Run JupyterLab:     wsl -d $distro_name -- jupyter lab --no-browser --ip=0.0.0.0"
+    echo "  Start SSH+Jupyter:  wsl -d $distro_name -u root -- supervisord -c /etc/supervisor/supervisord.conf"
+    echo "  Unregister:         wsl --unregister $distro_name"
+    echo ""
+}
+
+cmd_wsl_verify() {
+    local distro_name="${1:-$WSL_TARGET_DISTRO}"
+    local wsl
+    wsl=$(check_wsl)
+
+    if ! wsl_distro_exists "$distro_name"; then
+        die "WSL distro '$distro_name' does not exist."
+    fi
+
+    echo ""
+    echo -e "${C_BOLD}${C_CYAN}🔍 WSL Distro Verification: $distro_name${C_RESET}"
+    echo ""
+
+    local pass=0
+    local fail=0
+
+    run_check() {
+        local name="$1"
+        local cmd="$2"
+        local expect="${3:-.+}"
+        echo -n "  [$name] "
+        local result
+        result=$("$wsl" -d "$distro_name" -- sh -l -c "$cmd" 2>&1)
+        local rc=$?
+        if [[ $rc -eq 0 ]] && echo "$result" | grep -Eq "$expect"; then
+            echo -e "${C_GREEN}✅ PASS${C_RESET}"
+            echo -e "      → $(echo "$result" | head -1)"
+            pass=$((pass + 1))
+        else
+            echo -e "${C_RED}❌ FAIL${C_RESET}"
+            echo -e "      → $result"
+            fail=$((fail + 1))
+        fi
+    }
+
+    echo -e "${C_BOLD}  Basic Environment${C_RESET}"
+    run_check "Startup"     "echo OK" "OK"
+    run_check "User"        "whoami" "^$WSL_DEFAULT_USER$"
+    run_check "Writable"    "touch /tmp/test && rm /tmp/test && echo WRITABLE" "WRITABLE"
+    run_check "Home dir"    "echo \$HOME" "/home/$WSL_DEFAULT_USER"
+
+    # Check Windows drive mounts (best-effort)
+    echo -e "${C_BOLD}  Drive Mounts${C_RESET}"
+    if "$wsl" -d "$distro_name" -- sh -l -c "ls /mnt/c/ >/dev/null 2>&1"; then
+        run_check "C: drive" "ls /mnt/c/ >/dev/null && echo C-MOUNT-OK" "C-MOUNT-OK"
+    else
+        echo -e "  [C: drive]  ${C_YELLOW}⚠️  SKIP (C: not mounted)${C_RESET}"
+    fi
+    if "$wsl" -d "$distro_name" -- sh -l -c "ls /mnt/d/ >/dev/null 2>&1"; then
+        run_check "D: drive" "ls /mnt/d/ >/dev/null && echo D-MOUNT-OK" "D-MOUNT-OK"
+    else
+        echo -e "  [D: drive]  ${C_YELLOW}⚠️  SKIP (D: not mounted)${C_RESET}"
+    fi
+
+    echo -e "${C_BOLD}  Python/Conda Environment${C_RESET}"
+    run_check "Conda"       "conda --version 2>&1" "conda"
+    run_check "Python"      "python --version 2>&1" "Python 3\\.14"
+    run_check "Python path" "which python" "$CONDA_PATH"
+
+    # Free-threading check (written separately to avoid nested quote escaping issues with run_check)
+    echo -n "  [Free-thread] "
+    ft_result=$("$wsl" -d "$distro_name" -- sh -l -c 'python -c "import sys; print(sys._is_gil_enabled() if hasattr(sys, \"_is_gil_enabled\") else True)"' 2>&1)
+    ft_rc=$?
+    if [[ $ft_rc -eq 0 ]] && [[ "$ft_result" == "False" ]]; then
+        echo -e "${C_GREEN}✅ PASS${C_RESET}"
+        echo -e "      → GIL disabled (free-threading active)"
+        pass=$((pass + 1))
+    else
+        echo -e "${C_RED}❌ FAIL${C_RESET}"
+        echo -e "      → $ft_result"
+        fail=$((fail + 1))
+    fi
+
+    run_check "Pip"         "pip --version 2>&1" "pip"
+
+    echo -e "${C_BOLD}  Jupyter & Tools${C_RESET}"
+    run_check "JupyterLab"  "jupyter lab --version 2>&1" "^[0-9]"
+    run_check "Git"         "git --version 2>&1" "git version"
+    run_check "Bash"        "bash --version | head -1" "GNU bash"
+    run_check "Locale"      "locale 2>/dev/null | grep LANG= | head -1" "zh_CN\\.UTF-8|en_US\\.UTF-8"
+
+    echo ""
+    echo -e "${C_BOLD}  Results: ${C_GREEN}$pass passed${C_RESET}, ${C_RED}$fail failed${C_RESET}"
+    echo ""
+
+    if [[ $fail -eq 0 ]]; then
+        return 0
+    else
+        return 1
     fi
 }
 
@@ -448,6 +777,8 @@ main() {
         load)       cmd_load "$@" ;;
         rebuild)    cmd_rebuild "$@" ;;
         rebuild-all) cmd_rebuild_all "$@" ;;
+        wsl-export) cmd_wsl_export "$@" ;;
+        wsl-verify) cmd_wsl_verify "$@" ;;
         keepalive)  cmd_keepalive "$@" ;;
         install)    cmd_install "$@" ;;
         help|-h|--help) cmd_help "$@" ;;
