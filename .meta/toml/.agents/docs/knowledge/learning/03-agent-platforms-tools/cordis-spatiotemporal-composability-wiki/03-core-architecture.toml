@@ -1,0 +1,7 @@
+id = "cordis-spatiotemporal-composability-wiki-03"
+title = "Cordis — 核心抽象与架构"
+category = "knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["cordis", "core", "context", "service", "fiber", "registry", "reflect", "events", "logger"]

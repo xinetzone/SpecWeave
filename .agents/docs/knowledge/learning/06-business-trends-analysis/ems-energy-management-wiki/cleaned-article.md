@@ -2,12 +2,12 @@
 title: "支持 50 多种协议，终于开源了。"
 date: "2026-07-09"
 source: "微信公众号文章"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ems-energy-management-wiki/cleaned-article.toml"
 author: "工业可视化"
 publish_time: "2026年7月7日 21:00"
 opensource_url: "https://gitee.com/guangdong122/energy-management"
 original_url: "https://mp.weixin.qq.com/s/hPNSIy3TwWtf5lX0kVhM2A?from=industrynews&color_scheme=light#rd"
 ---
-
 # 支持 50 多种协议，终于开源了。
 
 ---

@@ -46,7 +46,7 @@ status: completed
 
 | 文件 | 行数 | 类型 | 核心功能 |
 |------|------|------|---------|
-| [src/xmpack/wheel.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/distlib/wheel.py) | 415 | Python | Wheel 打包脚本（含库捆绑器） |
+| src/xmpack/wheel.py | 415 | Python | Wheel 打包脚本（含库捆绑器） |
 | [packaging/pyproject.toml](../../../../../../external/libs/book-to-skill/pyproject.toml) | 196 | TOML | 包元数据、依赖声明、CMake 配置 |
 | [environment.yml](../../../../../../apps/docker-images/pytorch-base/environment.yml) | 139 | YAML | Conda 环境配置（运行+开发） |
 | [docker/Dockerfile.runtime](file:///d:/spaces/SpecWeave/external/xmhub/xmnn/docker/Dockerfile.runtime) | 175 | Dockerfile | 多阶段运行时镜像构建 |

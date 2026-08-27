@@ -8,7 +8,7 @@ status: "stable"
 author: "丸美小沐"
 summary: "系统对比 DeepSeek V4、Kimi K2.7 Code、MiniMax M3、GLM 5.2 四款国产 AI 模型，按不写代码-文案类、不写代码-多模态资料、写代码、高并发批量任务四类人群给出推荐方案，并深入剖析国产模型信任问题，提出'能力是入场券，信任才是留下来的理由'核心洞察。"
 source: "https://mp.weixin.qq.com/s/WM3bIS42FPoiQgDw_SVrTA"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.toml"
 ---
 # 国产AI模型对比与使用场景推荐
 
@@ -287,7 +287,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-busine
 
 - 本项目的 [AGENTS.md](../../../../../AGENTS.md) 定义了多角色智能体协作架构，文章的场景化模型选择可为其提供模型选型参考
 - 本项目的 [Agent 通信协议完整教程](../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) 介绍了 Agent 通信协议，国产模型的 API 接入需遵循这些协议标准
-- 本项目的 [Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) 介绍了 LLM 编程准则，GLM 5.2 / Kimi K2.7 Code 等 coding 模型的使用应遵循这些准则
+- 本项目的 [Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) 介绍了 LLM 编程准则，GLM 5.2 / Kimi K2.7 Code 等 coding 模型的使用应遵循这些准则
 
 ---
 
@@ -314,7 +314,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-busine
 - 项目智能体入口：[AGENTS.md](../../../../../AGENTS.md)
 - 知识库索引：[项目知识库](../../README.md)
 - Agent 通信协议教程：[Agent 通信协议完整教程](../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)
-- Karpathy LLM 编程准则：[Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)
+- Karpathy LLM 编程准则：[Karpathy LLM 编程准则完整教程](../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md)
 - 知识库模板：[template.md](../../template.md)
 
 ---

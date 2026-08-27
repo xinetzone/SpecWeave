@@ -1,0 +1,111 @@
+{
+  "name": "AI Dev (ai-dev) - Full AI/ML/NLP Stack (Dual-Env)",
+  "image": "devcontainer-base:ai-dev-latest",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "devuser",
+
+  "forwardPorts": [22, 8888],
+  "portsAttributes": {
+    "22": { "label": "SSH", "onAutoForward": "silent" },
+    "8888": { "label": "JupyterLab", "onAutoForward": "openBrowser" }
+  },
+
+  "containerEnv": {
+    "USER_PASSWORD": "dev",
+    "JUPYTER_TOKEN": "dev",
+    "TZ": "Asia/Shanghai",
+    "GRANT_SUDO": "yes",
+    "WORKSPACE_CHOWN_MODE": "named-only",
+    "PYTHON_GIL": "1",
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "1",
+    "KMP_DUPLICATE_LIB_OK": "TRUE",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+    "PIP_USER": "1"
+  },
+
+  "runArgs": [
+    "--gpus", "all",
+    "--privileged",
+    "--security-opt", "seccomp=unconfined",
+    "--cap-add=SYS_PTRACE",
+    "--ipc=host",
+    "--ulimit", "memlock=-1",
+    "--shm-size=16g"
+  ],
+
+  "mounts": [
+    "source=devcontainer-pip-cache,target=/root/.cache/pip,type=volume",
+    "source=devcontainer-conda-pkgs,target=/opt/conda/pkgs,type=volume",
+    "source=devcontainer-hf-cache,target=/home/devuser/.cache/huggingface,type=volume",
+    "source=docker-data-vol,target=/var/lib/docker,type=volume"
+  ],
+
+  "hostRequirements": {
+    "cpus": 8,
+    "memory": "32gb",
+    "storage": "128gb",
+    "gpu": true
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "ms-azuretools.vscode-docker",
+        "editorconfig.editorconfig",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "esbenp.prettier-vscode",
+        "foxundermoon.shell-format"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/bin/python",
+        "python.terminal.activateEnvironment": false,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "jupyter.jupyterServerType": "local",
+        "jupyter.askForKernelRestart": false,
+        "jupyter.interactiveWindow.textEditor.executeWithShiftEnter": true,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": { "path": "/bin/bash", "args": ["-l"] }
+        },
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": false,
+        "[python]": {
+          "editor.tabSize": 4,
+          "editor.insertSpaces": true,
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.ruff": "explicit"
+          }
+        },
+        "[json]": { "editor.tabSize": 2 },
+        "[yaml]": { "editor.tabSize": 2 },
+        "[markdown]": { "editor.tabSize": 2, "editor.wordWrap": "bounded" }
+      }
+    }
+  },
+
+  "postCreateCommand": "python -c \"import transformers,datasets,fastapi,pandas;print(f'✅ ai-dev base env ready (GIL): {len([m for m in [\\\"transformers\\\",\\\"datasets\\\",\\\"fastapi\\\",\\\"pandas\\\"]])} core packages verified')\" && /opt/conda/envs/main/bin/python -c \"import torch,sys;print(f'✅ main env PyTorch {torch.__version__}, CUDA={torch.cuda.is_available()}, GIL disabled={not sys._is_gil_enabled()}')\"",
+
+  "postStartCommand": "python -c \"import sys; print(f'Default python: {sys.version.split()[0]}, GIL={sys._is_gil_enabled()}')\" && /opt/conda/envs/main/bin/python -c \"import torch; print(f'PyTorch {torch.__version__}, GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \\\"None\\\"}'); print('Jupyter kernel: Python 3 (AI Dev)')\" && echo 'SSH: ssh devuser@localhost -p <port> (password: dev) | JupyterLab: http://localhost:8888?token=dev' && echo 'TIP: Use `/opt/conda/envs/main/bin/python` for PyTorch/CUDA/free-threading; `python` for base GIL env (47 NLP/data packages)'",
+
+  "shutdownAction": "stopContainer"
+}

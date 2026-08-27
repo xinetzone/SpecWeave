@@ -1,35 +1,37 @@
 ---
 id: "learning-hub"
 title: "Learning Wiki 知识库"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/README.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/README.toml"
 ---
 # Learning Wiki 知识库
 
-Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集 Agent 协议、工程方法论、平台工具、文档标记、多模态内容、商业趋势、厂商产品、系统基础设施八大主题的学习笔记与深度 Wiki。
+Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇集本质思维（00）、Agent 协议（01）、工程方法论（02）、平台工具（03）、文档标记（04）、多模态内容（05）、商业趋势（06）、厂商产品（07）、系统基础设施（08）、推理部署（09）、通用基础（10）十一大主题的学习笔记与深度 Wiki。
 
 ## 📊 统计数字
 
 | 指标 | 数值 |
 |------|------|
-| 总 Wiki 数 | 65 |
-| 原子化 Wiki | 26 |
-| 单文件 Wiki | 39 |
-| 主题数 | 8（含 2 个厂商二级子目录）+ 1 个跨领域专题 |
-| 文件总数 | ~318 |
+| 总 Wiki 数 | 100 |
+| 原子化 Wiki | 46 |
+| 单文件 Wiki | 54 |
+| 主题数 | 11（00-10编号主题） |
+| 文件总数 | ~328 |
 
 ## 🧭 快速导航
 
 | 编号 | 主题名称 | 一句话描述 | Wiki 数量 | 入口链接 |
 |------|----------|-----------|-----------|----------|
-| 01 | Agent 协议与接口 | Agent 通信协议、Skills 开放标准、接口四层抽象、FFI/IDL 底层技术 | 9 | [01-agent-protocols-interfaces/](01-agent-protocols-interfaces/README.md) |
-| 02 | Agent 工程方法论 | Harness/Headroom/Karpathy/LongCat 等工程方法论与 Prompt 模式 | 7 | [02-agent-engineering-methodology/](02-agent-engineering-methodology/README.md) |
-| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 15 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
-| 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 4 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
+| **00** | **本质与思维** | **第一性原理、帛书老子原典深读、批判性思维、对抗性审查——所有技术学习的思维地基** | **2** | **[00-essence-and-thinking/](00-essence-and-thinking/README.md)** |
+| 01 | Agent 协议与接口 | Agent 通信协议、Skills 开放标准、接口四层抽象、FFI/IDL 底层技术 | 10 | [01-agent-protocols-interfaces/](01-agent-protocols-interfaces/README.md) |
+| 02 | Agent 工程方法论 | 范式演进/Prompt工程/七概念方法论/上下文优化/评测体系/推理加速6大主题域 | 19 | [02-agent-engineering-methodology/](02-agent-engineering-methodology/README.md) |
+| 03 | Agent 平台与工具 | Anthropic/TRAE/浏览器/安全/量化/翻译/火山引擎AgentKit等各类 Agent 平台与工具 | 16 | [03-agent-platforms-tools/](03-agent-platforms-tools/README.md) |
+| 04 | 文档与标记工具 | MyST Markdown、HTML 声明式更新、Python 构建工具 | 5 | [04-docs-markup-tooling/](04-docs-markup-tooling/README.md) |
 | 05 | AI 多模态内容 | AI 短剧、3D 动画、音频生成、AI 配图、文本转 CAD | 6 | [05-ai-multimodal-content/](05-ai-multimodal-content/README.md) |
-| 06 | 商业趋势分析 | AI 变现、国产模型对比、个人 IP 趋势、供应链风险分析 | 6 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
-| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品 | 14 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
-| 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 2 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
-| - | 跨领域思维方法论 | 第一性原理思维方法（哲学/物理/商业跨领域） | 1 | [first-principles/](first-principles/README.md) |
+| 06 | 商业趋势分析 | AI商业化、火山引擎生态、模型对比、个人IP、AI硬件、供应链风险、Vibecoding创作 | 12 | [06-business-trends-analysis/](06-business-trends-analysis/README.md) |
+| 07 | 厂商产品学习 | 向日葵远程控制系列、涂鸦 TuyaOpen AI-IoT、火山引擎系列产品、叮当OKR管理工具 | 25 | [07-vendor-product-learning/](07-vendor-product-learning/README.md) |
+| 08 | 系统与基础设施 | WSL 命令树架构与系统学习计划 | 5 | [08-systems-infrastructure/](08-systems-infrastructure/README.md) |
+| 09 | ML 推理与部署 | ONNX 开放神经网络交换格式、推理引擎与模型部署落地 | 1 | [09-ml-inference-deployment/](09-ml-inference-deployment/README.md) |
+| 10 | 通用基础知识 | 数学推理（勾股定理）与学术论文写作等通识基础 | 2 | [10-foundational-knowledge/](10-foundational-knowledge/README.md) |
 
 > 详细的分类说明与边界定义见 [CATEGORIES.md](CATEGORIES.md)。
 
@@ -55,13 +57,13 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| AI 四大工程概念演进 | Prompt → Context → Harness → Loop 范式演进 | [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/four-engineering-concepts-wiki.md) |
-| Harness Engineering 驾驭工程 | 阿里 Harness Engineering 系统教程（10 章原子化） | [harness-engineering-wiki.md](02-agent-engineering-methodology/harness-engineering-wiki.md) |
-| Headroom 上下文压缩中间件 | 6 种压缩算法 + CCR 可逆机制（11 章原子化） | [headroom-context-compression-wiki.md](02-agent-engineering-methodology/headroom-context-compression-wiki.md) |
-| Karpathy LLM 编程准则教程 | GitHub 61.6k 星项目四条准则完整教程（8 章原子化） | [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) |
-| LongCat-2.0 Agent 能力实测 | 美团 1.6T MoE 模型接入 Claude Code 实战（9 章原子化） | [longcat-agent-learning-wiki.md](02-agent-engineering-methodology/longcat-agent-learning-wiki.md) |
-| DeepSeek DSpark 推理加速论文 | DSpark 推理加速论文深度解析 | [dspark-paper-wiki.md](02-agent-engineering-methodology/dspark-paper-wiki.md) |
-| Vibe Coding 两大神级 Prompt | 第一性原理 + 对抗式审查双 Prompt 模式 | [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) |
+| AI 四大工程概念演进 | Prompt → Context → Harness → Loop 范式演进 | [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md) |
+| Harness Engineering 驾驭工程 | 阿里 Harness Engineering 系统教程（10 章原子化） | [harness-engineering-wiki.md](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) |
+| Headroom 上下文压缩中间件 | 6 种压缩算法 + CCR 可逆机制（11 章原子化） | [headroom-context-compression-wiki.md](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md) |
+| Karpathy LLM 编程准则教程 | GitHub 61.6k 星项目四条准则完整教程（8 章原子化） | [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) |
+| LongCat-2.0 Agent 能力实测 | 美团 1.6T MoE 模型接入 Claude Code 实战（9 章原子化） | [longcat-agent-learning-wiki.md](02-agent-engineering-methodology/06-performance/longcat-agent-learning-wiki.md) |
+| DeepSeek DSpark 推理加速论文 | DSpark 推理加速论文深度解析 | [dspark-paper-wiki.md](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) |
+| Vibe Coding 两大神级 Prompt | 第一性原理 + 对抗式审查双 Prompt 模式 | [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) |
 
 ### 03 Agent 平台与工具
 
@@ -114,7 +116,11 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | Papi酱个人 IP 创业趋势 | "把公司做小，把IP做大"趋势观察（9 章原子化） | [papi-jiang-solo-ip-trend-wiki.md](06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) |
 | 七概念印度制造业供应链风险分析 | 基于七概念理论框架分析印度塔塔电子泄密事件（7 章原子化） | [seven-concepts-india-manufacturing-wiki/](06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/README.md) |
 | 三大 AI 工具分析 | 三大 AI 工具深度剖析 | [three-ai-tools-wiki.md](06-business-trends-analysis/three-ai-tools-wiki.md) |
-| 火山引擎 KickArt 营销创作 | AI 营销创作平台分析 | [volcengine-kickart-marketing-creation-analysis.md](06-business-trends-analysis/volcengine-kickart-marketing-creation-analysis.md) |
+| 火山引擎AI产品生态 | 火山引擎全栈AI产品矩阵深度学习（8个产品分析） | [volcengine-ai-ecosystem-wiki/](06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.md) |
+| 抖音Vibecoding创作指南 | Vibecoding内容传播方法论+行动计划+设计规范 | [douyin-vibecoding-wiki/](06-business-trends-analysis/douyin-vibecoding-wiki/README.md) |
+| Copilot成本与多模型时代 | Copilot成本危机+DeepSeek MoE+多模型架构演进 | [copilot-cost-multimodel-era-wiki/](06-business-trends-analysis/copilot-cost-multimodel-era-wiki/README.md) |
+| AI硬件设计工具生态 | 10个AI驱动硬件设计工具系统分析 | [ai-hardware-design-tools-wiki/](06-business-trends-analysis/ai-hardware-design-tools-wiki/README.md) |
+| 开源EMS能源管理系统 | Vue3+SpringCloud微服务架构开源EMS深度分析 | [ems-energy-management-wiki/](06-business-trends-analysis/ems-energy-management-wiki/README.md) |
 
 ### 07 厂商产品学习
 
@@ -147,8 +153,14 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| ACEP 云手机 | 一站式云手机解决方案+四大能力+超低延时音视频 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md) |
-| Mobile Use Agent 移动端 AI 智能体 | 云手机+豆包视觉大模型的企业级移动端 Agent，含 MCP 协议实践 | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) |
+| ACEP 云手机 | 一站式云手机解决方案+四大能力+超低延时音视频 | [volcengine-acep-cloudphone-analysis.md](07-vendor-product-learning/volcengine/volcengine-acep-cloudphone-analysis.md) |
+| Mobile Use Agent 移动端 AI 智能体 | 云手机+豆包视觉大模型的企业级移动端 Agent，含 MCP 协议实践 | [volcengine-mobile-use-agent-analysis.md](07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) |
+
+#### 🎯 叮当OKR（DingTalk OKR）系列
+
+| Wiki | 说明 | 链接 |
+|------|------|------|
+| 叮当OKR帮助手册Wiki | OKR目标与关键结果法完整知识库，含核心概念/制定方法/实施指南/评分复盘/模板案例/工具使用/附录（37个原子化文件），附v2.0制定指南 | [okr-wiki/](07-vendor-product-learning/okr-wiki/00-overview.md) |
 
 ### 08 系统与基础设施
 
@@ -157,13 +169,14 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | WSL CLI 命令树与架构 | 基于源码核实的 WSL CLI 命令树与四层架构 | [wsl-cli-and-architecture-wiki.md](08-systems-infrastructure/wsl-cli-and-architecture-wiki.md) |
 | WSL 系统学习计划 | 4 周 WSL 系统学习路径 + 5 个实操练习 | [wsl-learning-plan.md](08-systems-infrastructure/wsl-learning-plan.md) |
 
-### 跨领域思维方法论
+### 00 本质与思维
 
-> 不局限于 Agent 技术栈的通用思维方法与认知工具，可应用于所有知识工作场景。
+> 思维地基层——在学习具体技术之前，先建立正确的思维方式。适用于所有知识工作场景的元方法论。
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、时间线、方法论框架 | [first-principles/](first-principles/README.md) |
+| 第一性原理知识档案 | 哲学起源+物理应用+商业案例跨领域系统化档案，含对抗性审查质量控制、术语表、方法论框架、跨文化哲学比较（chinese-philosophy-parallels/）、思维训练题库等子模块（v2.0） | [first-principles/](00-essence-and-thinking/first-principles/README.md) |
+| 帛书老子 Wiki 教程 | 马王堆出土《老子》甲乙本版本学与核心概念系统教程（8章原子化），为第一性原理跨文化道家部分提供原典深读材料，与第一性原理平级 | [boshu-laozi-wiki/](00-essence-and-thinking/boshu-laozi-wiki/00-overview.md) |
 
 ---
 
@@ -171,11 +184,11 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 ### 🟢 入门者推荐（从概念到实践）
 
-1. **第一性原理思维方法** → [first-principles/](first-principles/README.md)——建立反类比、回归本质的思维基础（所有技术学习的元方法论）
-2. **四大工程概念演进** → [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/four-engineering-concepts-wiki.md)——建立 AI 工程全局认知
-3. **Karpathy LLM 编程准则** → [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md)——养成正确的 AI 协作编程习惯
+1. **第一性原理思维方法** → [00-essence-and-thinking/first-principles/](00-essence-and-thinking/first-principles/README.md)——建立反类比、回归本质的思维基础（所有技术学习的元方法论）
+2. **四大工程概念演进** → [four-engineering-concepts-wiki.md](02-agent-engineering-methodology/01-paradigms/four-engineering-concepts-wiki.md)——建立 AI 工程全局认知
+3. **Karpathy LLM 编程准则** → [karpathy-llm-coding-guidelines-tutorial.md](02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md)——养成正确的 AI 协作编程习惯
 4. **Agent 通信协议（MCP/ACP/A2A/ANP）** → [agent-communication-protocols-wiki.md](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md)——理解 Agent 互联互通的基础
-5. **Vibe Coding 两大 Prompt** → [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md)——掌握生成+验证双 Prompt 闭环
+5. **Vibe Coding 两大 Prompt** → [vibe-coding-prompts-learning-analysis.md](02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md)——掌握生成+验证双 Prompt 闭环
 
 ### 🔵 垂直领域推荐（按方向深入）
 

@@ -10,6 +10,9 @@ related_patterns:
   -   - "usb-hid-emulation-plug-and-play"
   -   - "ipkvm-bypass-control"
   -   - "technology-encapsulation-user-simplicity"
+  -   - "zero-update-client-design"
+  -   - "zero-logic-client-desktop-app"
+  -   - "zero-config-core-enhancement"
 ---
 # 硬件极简软件复杂模式（把复杂性留给云端和软件）
 
@@ -94,3 +97,6 @@ related_patterns:
 | [usb-hid-emulation-plug-and-play.md](../../architecture-patterns/usb-hid-emulation-plug-and-play.md) | 技术实现 | USB-HID即插即用是"硬件极简免驱"的典型技术手段 |
 | [ipkvm-bypass-control.md](../../architecture-patterns/ipkvm-bypass-control.md) | 技术实现 | IPKVM旁路模式将视频采集/远控逻辑封装在硬件中，被控机零配置 |
 | [pain-point-first-entry.md](pain-point-first-entry.md) | 产品策略 | 极简硬件降低用户尝试门槛，有助于痛点切入策略的成功 |
+| [zero-update-client-design.md](../../architecture-patterns/zero-update-client-design.md) | 同族实例（零负担家族·更新维度） | 本模式让硬件"零负担"、被控端零更新让被控端"零更新"，都是把复杂度上移到可迭代侧，让不可升级侧零负担 |
+| [zero-logic-client-desktop-app.md](../../architecture-patterns/zero-logic-client-desktop-app.md) | 同族实例（零负担家族·逻辑维度） | 本模式让硬件"零负担"、零逻辑客户端让 GUI"零逻辑"，都是把逻辑上移到后端/云端可迭代侧 |
+| [zero-config-core-enhancement.md](../../architecture-patterns/zero-config-core-enhancement.md) | 同族实例（零负担家族·配置维度） | 本模式让硬件"零配置"、零配置核心让核心功能"零配置"，都是让不可迁移成本的一侧保持零负担 |

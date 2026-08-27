@@ -86,7 +86,7 @@ commit: 51901700
    - 本次MUA实践案例（434行产品概览+917行技术指南）
 
 3. **参考范例**：
-   - 产品概览范例：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)
+   - 产品概览范例：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)
    - 技术指南范例：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)
    - 对照案例：CUA单文档1331行（单层模式）
 
@@ -303,9 +303,9 @@ Spec主题选择是每次创建Spec都需要做的决策，建议以独立模式
 在两个文档之间添加双向交叉引用，形成完整的文档导航：
 
 1. 在 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 开头（前言/简介部分）添加：
-   > **前置阅读**：本文档是MUA的技术实现指南，聚焦"怎么用"。如需了解MUA产品定位、核心能力、应用场景等"是什么"层面的内容，请先阅读 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)。
+   > **前置阅读**：本文档是MUA的技术实现指南，聚焦"怎么用"。如需了解MUA产品定位、核心能力、应用场景等"是什么"层面的内容，请先阅读 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)。
 
-2. 在 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md) 结尾（总结/后续阅读部分）添加：
+2. 在 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) 结尾（总结/后续阅读部分）添加：
    > **技术实现**：如需了解MUA Skill安装、API调用、鉴权配置、OpenClaw部署、故障排查等技术实现细节，请参考 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)。
 
 **验收标准**：

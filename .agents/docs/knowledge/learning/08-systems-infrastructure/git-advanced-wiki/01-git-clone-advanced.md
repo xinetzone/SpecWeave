@@ -2,11 +2,11 @@
 id: git-advanced-wiki-01-git-clone-advanced
 title: "git clone 高级参数详解（--no-local --bare 重点）"
 source: "internal:git-clone-no-local-bare-explanation"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-advanced-wiki/01-git-clone-advanced.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["git", "git-clone", "--bare", "--no-local", "--mirror", "advanced-usage"]
 ---
-
 # git clone 高级参数详解（--no-local --bare 重点）
 
 ## 1. `git clone --bare`：创建裸仓库

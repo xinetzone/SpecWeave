@@ -2,6 +2,7 @@
 id: "mermaid-wiki-08-integrations-ecosystem"
 title: "Mermaid 集成与生态（Integrations & Ecosystem）"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/08-integrations-ecosystem.toml"
 category: "learning"
 tags: ["mermaid","integration","mermaid-cli","mmdc","mermaid-live","cdn","npm","ecosystem","markup"]
 date: "2026-08-06"

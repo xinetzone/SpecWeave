@@ -1,0 +1,391 @@
+---
+id: python314-cpython-wiki-tasks
+title: "Python 3.14 + CPython 源码深度 Wiki 教程 — 实施计划"
+date: "2026-08-19"
+spec: "spec.md"
+---
+
+# Python 3.14 + CPython 源码深度 Wiki 教程 — 实施计划
+
+## Task 1: 创建 Wiki 目录与 00-overview.md 概述
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: None
+- **Description**:
+  - 创建输出目录 `docs/knowledge/learning/python314-cpython-wiki/`
+  - 编写 00-overview.md：一句话摘要、教程介绍、为什么 Python 3.14 重要（与 3.13/3.12 对比表）、目标受众矩阵、章节导航表（13 章）、整体架构 mermaid 图（Python 3.14 新特性全景图）、核心特性概览表（含 PEP 编号）、版本信息表、Python 发展时间线
+  - 包含 3.12→3.13→3.14 演进对比，突出 3.14 的变革性
+- **Acceptance Criteria Addressed**: AC-1, AC-6
+- **Test Requirements**:
+  - `rule` TR-1.1: 00-overview.md 存在且 frontmatter 字段完整（id/title/source/date/category/tags）
+  - `rule` TR-1.2: 章节导航表包含全部 13 章的标题和难度标注
+  - `rubric` TR-1.3: 概述章节质量；scale 1-5；anchors 1=内容空洞/3=基本完整但缺乏吸引力/5=引人入胜有清晰的学习路径指引；threshold >= 4；evidence=章节内容审查
+
+## Task 2: 编写 01-language-features.md 语言新特性
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**:
+  - PEP 758 无括号 except/except*（语法示例、与旧写法对比、代码示例）
+  - PEP 765 finally 控制流警告（示例：为什么这是问题、如何修复）
+  - PEP 649/749 延迟注解求值（核心机制详解、annotationlib 模块、Format 枚举三种格式）
+  - PEP 750 t-strings 模板字符串（语法、Template/Interpolation 对象、与 f-strings 对比、安全使用场景）
+  - 内置函数变更（map strict 参数、float.from_number、memoryview 下标、NotImplemented TypeError 等）
+  - 字节码变更概览（新增/移除操作码表）
+  - 其他语言变更（C99 复数运算规则、__debug__ 检测、-O 模式语法检测增强）
+  - 每个特性标注对应源码文件路径
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4
+- **Test Requirements**:
+  - `rule` TR-2.1: 覆盖 PEP 758/765/649/749/750 五个语言级 PEP
+  - `rule` TR-2.2: 每个 PEP 至少有 1 个可运行代码示例
+  - `rule` TR-2.3: t-strings 示例包含 Template 对象迭代访问各部分的演示
+  - `rubric` TR-2.4: 语言特性讲解清晰度；scale 1-5；anchors 1=仅罗列/3=有示例但解释浅/5=有动机+设计+示例+坑点；threshold >= 4
+
+## Task 3: 编写 02-free-threading.md 自由线程（无GIL）深度解析
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - PEP 703/779 背景：为什么要去掉 GIL、三阶段路线图、3.14 的位置（第二阶段正式支持）
+  - 启用方式：构建选项（--disable-gil）、运行时（PYTHON_GIL=0 或 python3.14t）、检测 API
+  - 单线程开销数据（5-10%）与多线程扩展性
+  - 内存模型变更：
+    - QSBR（Quiescent-State Based Reclamation）原理与实现（引用 InternalDocs/qsbr.md + Python/qsbr.c）
+    - BRC（Batched Reference Counting）批量引用计数
+    - 关键区段（Critical Sections）：Python/critical_section.c
+    - Parking Lot 锁原语
+    - mimalloc 内存分配器集成
+  - 线程安全模型：哪些操作是线程安全的、哪些需要锁
+  - C 扩展兼容性：如何适配自由线程、GIL 宏映射
+  - asyncio 自由线程支持
+  - 已知限制与最佳实践
+  - mermaid 图：自由线程架构全景（GIL vs FT 对比）
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5, AC-8
+- **Test Requirements**:
+  - `rule` TR-3.1: 覆盖 QSBR/BRC/关键区段/parking lot/mimalloc 五大核心组件
+  - `rule` TR-3.2: 源码引用使用 CPython 源码树相对路径 + GitHub v3.14.0 链接，指向 Python/qsbr.c、Python/brc.c、Python/critical_section.c、Python/parking_lot.c、Objects/mimalloc/ 等实际文件
+  - `rubric` TR-3.3: 自由线程原理解析深度；scale 1-5；anchors 1=只说"去掉GIL"/3=有概念解释但缺乏实现细节/5=原理到实现到代码引用完整闭环；threshold >= 4
+
+## Task 4: 编写 03-jit-interpreter.md JIT 编译器与新执行模型
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**:
+  - 执行模型演进：Tier 1 自适应解释器 → Tier 2 uop 优化器 → JIT 编译
+  - 尾调用解释器（Tail-Call Interpreter）：原理、构建选项、性能提升数据（3-5%）
+  - 自适应特化（PEP 659）：类型特化、特化失败/去特化
+  - Tier 2 优化器：
+    - micro-op（uop）架构
+    - Trace 记录器触发条件（JUMP_BACKWARD/RESUME 热度阈值）
+    - uop 优化器（Python/optimizer.c、optimizer_analysis.c）
+  - Copy-and-Patch JIT：
+    - 原理：stencil + 运行时补丁
+    - 构建时 stencil 生成（Tools/jit/）
+    - 运行时编译流程
+    - LLVM 依赖与 stencil 生成
+  - 启用方式：PYTHON_JIT=1 环境变量、--enable-experimental-jit 构建选项
+  - JIT 限制与性能特征
+  - mermaid 图：Tier 1/Tier 2/JIT 三层执行架构
+  - 引用 InternalDocs/jit.md、Python/jit.c、Python/bytecodes.c 等
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-5, AC-9
+- **Test Requirements**:
+  - `rule` TR-4.1: 覆盖 Tier 1 特化、Tier 2 uop 优化器、Copy-and-Patch JIT 三层架构
+  - `rule` TR-4.2: 源码引用使用相对路径 + GitHub 链接，指向 InternalDocs/jit.md 和 Python/jit.c、Python/assemble.c、Tools/jit/ 等实际文件
+  - `rubric` TR-4.3: JIT 原理解释质量；scale 1-5；anchors 1=概念模糊/3=有基本流程但缺乏深度/5=从字节码到机器码完整链路清晰；threshold >= 4
+
+## Task 5: 编写 04-new-modules.md 新模块详解
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - annotationlib 模块（PEP 749）：
+    - Format 枚举（VALUE/FORWARDREF/STRING）
+    - get_annotations() 函数
+    - 三种格式的使用场景
+    - 与 get_type_hints() 的关系
+    - 源码：Lib/annotationlib.py
+  - concurrent.interpreters 模块（PEP 734）：
+    - Interpreter 类创建与管理
+    - 通道（Channel）通信
+    - InterpreterPoolExecutor
+    - CSP/Actor 并发模型
+    - 与 multiprocessing/threading/asyncio 对比
+    - 当前限制
+    - 源码：Modules/_interpretersmodule.c（如存在）或 Lib 层实现
+  - string.templatelib 模块（PEP 750）：
+    - Template/Interpolation 类
+    - 自定义字符串转换
+    - SQL/HTML 安全转义示例
+    - 源码：Objects/interpolationobject.c、Lib/string/templatelib.py
+  - compression 包（PEP 784）：
+    - compression.zstd 使用示例
+    - compression 包结构（zstd/lzma/bz2/gzip/zlib 统一接口）
+    - tarfile/zipfile/shutil 的 Zstd 支持
+    - 与 zlib/bz2/lzma 性能对比
+    - 源码：Modules/_zstd/、Lib/compression/
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-10, AC-11, AC-12
+- **Test Requirements**:
+  - `rule` TR-5.1: 四个新模块（annotationlib/concurrent.interpreters/string.templatelib/compression）均有独立小节
+  - `rule` TR-5.2: 每个模块有可运行的 Hello World 级代码示例
+  - `rule` TR-5.3: t-strings 示例包含 SQL 注入防护和 HTML 转义的安全用例
+  - `rubric` TR-5.4: 新模块讲解实用性；scale 1-5；anchors 1=照搬文档/3=有示例但无最佳实践/5=有示例+陷阱+选型建议+性能对比；threshold >= 4
+
+## Task 6: 编写 05-stdlib-improvements.md 标准库重大改进
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 5
+- **Description**:
+  - REPL 增强：语法高亮（_pyrepl）、自动补全、PYTHON_BASIC_REPL 回退
+  - asyncio 增强：
+    - 内省 CLI（python -m asyncio ps/pstree）
+    - call_graph 工具
+    - 自由线程支持、10-20% 性能提升
+    - 任务双向链表
+  - pathlib 增强：递归 copy/move、Path.info 缓存、无缓冲读取加速
+  - uuid 新功能：v6/v7/v8 支持（RFC 9562）、NIL/MAX 常量
+  - pdb 增强：远程附加（-p PID）、inline 模式、语法高亮、async 支持
+  - argparse 增强：彩色输出、suggest_on_error、程序名自动反映
+  - inspect 增强：annotation_format 参数、unquote_annotations、ispackage
+  - 其他精选改进：
+    - json 彩色输出与 CLI 推荐
+    - pickle 协议 5 默认
+    - unittest 彩色输出与新断言方法
+    - heapq 大顶堆支持
+    - operator.is_none()/is_not_none()
+    - struct 复数类型（F/D 格式符）
+    - unicodedata 16.0.0
+    - http.server 深色模式与 HTTPS
+    - imaplib IDLE 命令
+    - faulthandler C 栈追踪
+  - 每个改进模块有简要示例
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-4
+- **Test Requirements**:
+  - `rule` TR-6.1: 至少覆盖 10 个以上标准库模块的改进
+  - `rule` TR-6.2: REPL/asyncio/pathlib/pdb 四个重点模块有代码示例
+  - `rubric` TR-6.3: 改进项选择与讲解质量；scale 1-5；anchors 1=罗列琐碎API/3=覆盖主要改进/5=精选最有价值改进并讲清使用场景；threshold >= 4
+
+## Task 7: 编写 06-cpython-architecture.md CPython 源码架构总览
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**:
+  - 顶层目录架构全景（mermaid 图）：Include/Lib/Modules/Objects/Python/Parser/Grammar/Doc/Programs/Tools/InternalDocs/Misc
+  - 三层头文件体系：公共 API（Include/*.h）→ CPython API（Include/cpython/）→ 内部 API（Include/internal/pycore_*.h）
+  - Python/ 核心运行时详解：
+    - ceval.c/ceval_gil.c 解释器循环
+    - compile.c/ast.c/symtable.c 编译器
+    - gc.c/gc_gil.c/gc_free_threading.c 垃圾回收（GIL vs FT 双模式）
+    - pylifecycle.c/pystate.c 生命周期与状态管理
+    - import.c 导入系统
+    - specialize.c 自适应特化
+  - Objects/ 内置类型系统：
+    - 对象模型基础（object.c/typeobject.c/obmalloc.c）
+    - 核心类型实现文件映射表（dict/list/str/int/float/set/tuple/function/code/frame 等）
+    - 类型槽位机制（slots.c）
+  - Modules/ 内置扩展：
+    - 子目录模块（_io/_sre/_ssl/_zstd/_multiprocessing/_remote_debugging）
+    - 关键单文件模块
+  - Parser/ 与 Grammar/：
+    - PEG 解析器（pegen）
+    - python.gram 语法定义
+    - ASDL 与 AST 生成
+  - Lib/ 标准库结构
+  - 构建系统概览（configure/Makefile.pre.in/Setup）
+  - mermaid 图：CPython 架构分层图（应用层→标准库→内置模块→核心运行时→内存管理→平台抽象）
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-5, AC-13
+- **Test Requirements**:
+  - `rule` TR-7.1: 覆盖顶层所有主要目录（至少 Include/Lib/Modules/Objects/Python/Parser/Grammar 七个核心目录）
+  - `rule` TR-7.2: 三层头文件体系有清晰的表格说明和路径引用
+  - `rule` TR-7.3: 所有源码引用路径（相对路径）均对应 CPython v3.14.0 源码树中的真实文件，GitHub 链接可访问
+  - `rubric` TR-7.4: 架构讲解清晰度；scale 1-5；anchors 1=仅列目录/3=有目录说明但缺乏关系/5=有分层图+文件映射+数据流说明；threshold >= 4
+
+## Task 8: 编写 07-c-api-changes.md C API 与扩展开发
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 7
+- **Description**:
+  - PEP 741：统一配置 C API（PyInitConfig_* 系列）
+  - PEP 757：C 级整数导出 API（PyLong_GetNativeLayout/Export/FreeExport/LongWriter）
+  - 新增 C API 汇总表（按功能分类：类型/对象/导入/监控/Unicode/内存/迭代器/整数等）
+  - Limited API 3.14+ 变更：
+    - Py_TYPE/Py_REFCNT 变为不透明函数调用
+    - 移除 PySequence_Fast_* 宏
+    - 影响与迁移
+  - 自由线程 C API 适配：
+    - 引用计数变更（immortal 对象、延迟引用计数）
+    - PyUnstable_Object_IsUniqueReferencedTemporary
+    - 锁/GIL 宏变更
+  - 移除的 C API 列表与替代方案
+  - 弃用的 C API 列表（Py_HUGE_VAL、Py_IS_NAN 等改用 C99 标准宏）
+  - PEP 768 远程调试接口 C API
+  - 稳定 ABI（stable_abi.toml）变更
+  - C 扩展适配 3.14 的检查清单
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3
+- **Test Requirements**:
+  - `rule` TR-8.1: 覆盖 PEP 741/757/768 三个 C API 相关 PEP
+  - `rule` TR-8.2: Limited API 变更有明确的迁移指导
+  - `rubric` TR-8.3: C API 内容对扩展开发者的实用价值；scale 1-5；anchors 1=仅罗列API/3=有新增列表/5=有迁移checklist+示例+适配代码；threshold >= 4
+
+## Task 9: 编写 08-build-platform.md 构建系统与平台支持
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 7
+- **Description**:
+  - 构建选项变更：
+    - --with-tail-call-interp（尾调用解释器）
+    - --without-remote-debug（禁用远程调试）
+    - 安全编译器选项默认启用
+    - WITH_FREELISTS 移除
+    - Autoconf 2.72 要求
+  - 官方二进制新特性：
+    - Windows/macOS 包含实验性 JIT（PYTHON_JIT=1 启用）
+    - Android 官方二进制
+    - Emscripten Tier 3 支持（PEP 776）
+  - PEP 739：build-details.json
+  - PEP 761：PGP 签名停止、Sigstore 替代
+  - 平台支持变化：
+    - FreeBSD 平台名简化
+    - Windows C99 实数/复数运算
+    - iOS/macOS stdout/stderr 重定向
+  - 自由线程构建说明（python3.14t 命名约定）
+- **Acceptance Criteria Addressed**: AC-1, AC-2
+- **Test Requirements**:
+  - `rule` TR-9.1: 覆盖主要构建选项变更和平台扩展
+  - `rubric` TR-9.2: 构建信息实用性；scale 1-5；anchors 1=照搬whatsnew/3=有基本汇总/5=有选型建议和注意事项；threshold >= 3
+
+## Task 10: 编写 09-migration-guide.md 迁移指南
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 8
+- **Description**:
+  - Python 3.13→3.14 迁移 checklist
+  - 废弃 API 对照表（3 列：3.13 API → 3.14 状态 → 替代方案/修复建议）：
+    - from __future__ import annotations 弃用
+    - asyncio policy 系统弃用
+    - codecs.open() 弃用
+    - os.popen()/os.spawn*() 软弃用
+    - argparse.FileType 弃用
+    - 其他
+  - 移除 API 替代方案（ast 常量类、asyncio ChildWatcher、pathlib 额外参数、urllib URLopener 等）
+  - 行为变更注意事项：
+    - multiprocessing 默认 forkserver（Unix 非 macOS）
+    - functools.partial 变为方法描述符
+    - types.UnionType === typing.Union
+    - pickle 错误类型变化
+    - int() 不再委托 __trunc__
+    - NotImplemented 布尔上下文 TypeError
+    - 增量 GC 在 3.14.5 回退
+  - C 扩展迁移指南：
+    - Py_REFCNT/Py_TYPE 不透明化适配
+    - 自由线程兼容性检查清单
+    - 移除的 C API 替代
+  - 字节码变更对代码生成工具/反汇编工具的影响
+  - 常见升级错误与解决方案 FAQ 前置
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-7, AC-14
+- **Test Requirements**:
+  - `rule` TR-10.1: 废弃 API 对照表至少覆盖 10+ 个废弃项
+  - `rule` TR-10.2: C 扩展迁移有可操作的检查清单
+  - `rule` TR-10.3: 明确标注增量 GC 回退这一重要行为变更
+  - `rubric` TR-10.4: 迁移指南实用性；scale 1-5；anchors 1=仅罗列变更/3=有before/after示例/5=有对照表+checklist+常见坑+修复代码；threshold >= 4
+
+## Task 11: 编写 10-practical-examples.md 实战示例
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 6
+- **Description**:
+  - 示例1：延迟注解迁移实战——将旧代码从 __future__ annotations 迁移到 annotationlib
+  - 示例2：t-strings 安全 SQL 查询构建器
+  - 示例3：自由线程多线程性能基准测试（对比 GIL 模式 vs FT 模式）
+  - 示例4：多解释器并行计算（concurrent.interpreters vs multiprocessing）
+  - 示例5：Zstandard 压缩文件读写（对比 gzip/lzma）
+  - 示例6：asyncio 任务图可视化（call_graph 实战）
+  - 示例7：pdb 远程调试附加到运行进程
+  - 示例8：尾调用解释器性能对比基准
+  - 每个示例包含：目标、代码、预期输出、源码引用、注意事项
+- **Acceptance Criteria Addressed**: AC-1, AC-4
+- **Test Requirements**:
+  - `rule` TR-11.1: 包含至少 6 个实战示例（覆盖 t-strings/FT/多解释器/zstd/asyncio/pdb）
+  - `rule` TR-11.2: 自由线程示例标注 PYTHON_GIL=0 或 python3.14t 运行要求
+  - `rubric` TR-11.3: 示例教育价值；scale 1-5；anchors 1=Hello World级/3=有实际用途但注释不足/5=有注释+输出说明+扩展思考；threshold >= 4
+
+## Task 12: 编写 11-faq-troubleshooting.md FAQ 与排障
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 10
+- **Description**:
+  - 安装与构建 FAQ：如何获取自由线程版本？JIT 为什么不生效？
+  - 兼容性 FAQ：
+    - 我的 C 扩展支持自由线程吗？
+    - from __future__ import annotations 现在该用什么？
+    - multiprocessing 默认行为变了怎么办？
+  - 性能 FAQ：
+    - 为什么我的代码在 3.14 上变慢了？（5-10% FT 开销）
+    - 如何启用 JIT？JIT 对哪些代码有效？
+    - 增量 GC 怎么回事？（3.14.5 回退说明）
+  - 已知问题与规避方案：
+    - triton 不支持 free-threading
+    - 第三方库 FT 兼容性状态
+    - t-strings 与 f-strings 何时选用
+  - 错误消息改进速查
+  - 调试技巧：pdb 远程附加、faulthandler C 栈、asyncio ps 命令
+- **Acceptance Criteria Addressed**: AC-1, AC-2
+- **Test Requirements**:
+  - `rule` TR-12.1: FAQ 至少覆盖 15+ 个常见问题
+  - `rubric` TR-12.2: FAQ 实用价值；scale 1-5；anchors 1=问题太简单/3=覆盖常见问题/5=问题真实且答案有深度有解决方案；threshold >= 4
+
+## Task 13: 编写 12-summary-resources.md 总结与资源
+- **Status**: `pending`
+- **Priority**: medium
+- **Depends On**: Task 12
+- **Description**:
+  - Python 3.14 核心知识点回顾（十大变革速记）
+  - 版本矩阵：Python 3.14 关键版本信息（Python版本/自由线程状态/JIT状态/平台支持等）
+  - 学习路径建议：
+    - 应用开发者阅读路径
+    - 库作者阅读路径
+    - C 扩展开发者阅读路径
+    - 源码贡献者阅读路径
+  - 核心源码文件速查表（文件名 → 功能 → 章节引用）
+  - 延伸阅读资源：
+    - 官方文档链接（whatsnew、PEP 索引、C API 文档、InternalDocs）
+    - PEP 清单与链接
+    - 推荐博客/演讲/视频
+    - CPython 开发者指南
+  - Python 3.14 之后展望（3.15/3.16 可能的方向：JIT 默认启用、FT 性能优化、更多平台支持）
+  - 与全教程的交叉引用索引
+- **Acceptance Criteria Addressed**: AC-1, AC-6
+- **Test Requirements**:
+  - `rule` TR-13.1: 包含分角色学习路径
+  - `rule` TR-13.2: 包含核心源码文件速查表（至少 20+ 个关键文件）
+  - `rule` TR-13.3: 包含本教程 13 章的完整索引
+
+## Task 14: 生成 seven-concepts-report.md 七概念执行报告
+- **Status**: `pending`
+- **Priority**: low
+- **Depends On**: Task 13
+- **Description**:
+  - 记录七概念方法论执行过程：R（事实采集）、I（洞察提炼）、E（模式萃取/教程结构设计）、V（对抗审查）、C（原子提交）
+  - 包含质量门通过记录（G1-G4+V门）
+  - 关键洞察记录
+  - 反模式与注意事项
+- **Acceptance Criteria Addressed**: NFR-6
+- **Test Requirements**:
+  - `rule` TR-14.1: seven-concepts-report.md 存在且记录完整链路
+  - `rubric` TR-14.2: 报告质量；scale 1-3；anchors 1=走过场/3=完整记录质量门和洞察；threshold >= 3
+
+## Task 15: 收尾 — 链接验证、导航完整性检查
+- **Status**: `pending`
+- **Priority**: high
+- **Depends On**: Task 13
+- **Description**:
+  - 验证所有章节间的内部链接（上一章/下一章导航）
+  - 验证所有源码引用（相对路径与 CPython v3.14.0 源码树结构一致，GitHub 链接格式正确）
+  - 检查 frontmatter 完整性（所有 14 个文件）
+  - 检查 mermaid 图表语法正确性
+  - 检查代码块语言标记正确性
+  - 更新 learning 目录下的索引文件（如果需要，在 README.md 中添加本 Wiki 的链接）
+- **Acceptance Criteria Addressed**: AC-1, AC-3, AC-6
+- **Test Requirements**:
+  - `rule` TR-15.1: 无断链内部引用
+  - `rule` TR-15.2: 所有源码引用相对路径正确、GitHub 链接格式规范
+  - `rule` TR-15.3: 所有 mermaid 图表可正常渲染（语法检查通过）

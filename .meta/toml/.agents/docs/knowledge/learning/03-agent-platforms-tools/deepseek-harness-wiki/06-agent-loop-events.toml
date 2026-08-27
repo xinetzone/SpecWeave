@@ -1,0 +1,7 @@
+id = "deepseek-harness-wiki-06"
+title = "DeepSeek Harness 完全指南 — Agent 循环与事件模型"
+category = "knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki"
+date = "2026-08-17"
+version = "1.0"
+status = "stable"
+tags = ["deepseek", "agent", "harness", "loop", "event", "turn", "step", "waterfall"]

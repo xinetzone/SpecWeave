@@ -1,0 +1,107 @@
+{
+  "name": "LLM Agent (llm-agent) - LangChain/LangGraph + LLM SDKs",
+  "image": "devcontainer-base:llm-agent-latest",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "devuser",
+
+  "forwardPorts": [22, 8888],
+  "portsAttributes": {
+    "22": { "label": "SSH", "onAutoForward": "silent" },
+    "8888": { "label": "JupyterLab", "onAutoForward": "openBrowser" }
+  },
+
+  "containerEnv": {
+    "USER_PASSWORD": "dev",
+    "JUPYTER_TOKEN": "dev",
+    "TZ": "Asia/Shanghai",
+    "GRANT_SUDO": "yes",
+    "WORKSPACE_CHOWN_MODE": "named-only",
+    "PYTHON_GIL": "1",
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "1",
+    "KMP_DUPLICATE_LIB_OK": "TRUE",
+    "NVIDIA_VISIBLE_DEVICES": "all",
+    "NVIDIA_DRIVER_CAPABILITIES": "compute,utility",
+    "PIP_USER": "1"
+  },
+
+  "runArgs": [
+    "--gpus", "all",
+    "--privileged",
+    "--security-opt", "seccomp=unconfined",
+    "--cap-add=SYS_PTRACE",
+    "--ipc=host",
+    "--shm-size=16g"
+  ],
+
+  "mounts": [
+    "source=devcontainer-pip-cache,target=/root/.cache/pip,type=volume",
+    "source=devcontainer-conda-pkgs,target=/opt/conda/pkgs,type=volume",
+    "source=devcontainer-hf-cache,target=/home/devuser/.cache/huggingface,type=volume",
+    "source=devcontainer-chroma,target=/home/devuser/.cache/chroma,type=volume",
+    "source=docker-data-vol,target=/var/lib/docker,type=volume"
+  ],
+
+  "hostRequirements": {
+    "cpus": 8,
+    "memory": "32gb",
+    "storage": "128gb",
+    "gpu": true
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "redhat.vscode-yaml",
+        "streetsidesoftware.code-spell-checker",
+        "ms-azuretools.vscode-docker",
+        "editorconfig.editorconfig",
+        "charliermarsh.ruff",
+        "ms-python.mypy-type-checker",
+        "esbenp.prettier-vscode",
+        "foxundermoon.shell-format",
+        "ms-vscode.makefile-tools"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/bin/python",
+        "python.terminal.activateEnvironment": false,
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.autoImportCompletions": true,
+        "jupyter.jupyterServerType": "local",
+        "jupyter.askForKernelRestart": false,
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": { "path": "/bin/bash", "args": ["-l"] }
+        },
+        "files.eol": "\n",
+        "files.trimTrailingWhitespace": true,
+        "editor.formatOnSave": true,
+        "[python]": {
+          "editor.tabSize": 4,
+          "editor.insertSpaces": true,
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit",
+            "source.fixAll.ruff": "explicit"
+          }
+        },
+        "[json]": { "editor.tabSize": 2 },
+        "[yaml]": { "editor.tabSize": 2 },
+        "[markdown]": { "editor.tabSize": 2, "editor.wordWrap": "bounded" }
+      }
+    }
+  },
+
+  "postCreateCommand": "python -c \"from langchain_core.messages import HumanMessage;from langgraph.graph import StateGraph,END;import openai,anthropic,faiss,chromadb;print('✅ llm-agent ready: LangChain+LangGraph+OpenAI+Anthropic+FAISS+Chroma verified')\"",
+
+  "postStartCommand": "echo '=== LLM Agent Container Ready ===' && python -c \"import sys; print(f'Default env: Python {sys.version.split()[0]}, GIL={sys._is_gil_enabled()} (base env with 50+ packages)')\" && /opt/conda/envs/main/bin/python -c \"import torch; print(f'PyTorch {torch.__version__}, CUDA={torch.cuda.is_available()} (main ft env via /opt/conda/envs/main/bin/python)')\" && echo 'SSH: ssh devuser@localhost -p <port> (password: dev)' && echo 'JupyterLab: http://localhost:8888?token=dev (kernel: Python 3 AI Dev)'",
+
+  "shutdownAction": "stopContainer"
+}

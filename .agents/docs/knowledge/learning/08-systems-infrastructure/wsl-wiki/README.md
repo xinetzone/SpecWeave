@@ -2,11 +2,11 @@
 id: "wsl-wiki-index"
 title: "WSL 完整 Wiki 教程"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/README.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "windows-subsystem-for-linux", "wsl2", "linux", "tutorial", "wiki"]
 ---
-
 # WSL 完整 Wiki 教程
 
 本教程是 WSL（Windows Subsystem for Linux）的系统性学习 wiki，从基础概念到高级架构、从 CLI 命令到 Container API 集成，全方位覆盖 WSL 技术栈，帮助开发者在 Windows 平台高效使用和集成 Linux 环境。

@@ -1,216 +1,173 @@
-# 调试指南
-
-本文档记录共享工具库模块的日志配置、异常排查方法和常见问题诊断流程。
-
+---
+source:
+  - ../../../apps/AGENTS.md
+  - ../../../.gitmodules
+  - ../../scripts/lib/project.py
+  - ../../scripts/lib/stage_guardrails/runtime.py
+  - ../../scripts/sg_dashboard/parser.py
+  - ../../../docs/tasks.py
+status: stable
+updated_at: 2026-08-23
 ---
 
-## 多智能体冲突解决模块（ConflictResolver）
+# 调试指南
 
-### 日志配置
+## 先判断是哪一层出问题
 
-`ConflictResolver` 支持通过构造函数注入自定义日志函数，便于与上层系统的日志框架集成。
+在 `SpecWeave` 中，问题通常来自 4 个层面：
 
-```python
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger("conflict_resolver")
-
-def log_fn(msg: str) -> None:
-    """将ConflictResolver日志桥接到标准logging"""
-    if msg.startswith("[WARNING]"):
-        logger.warning(msg)
-    else:
-        logger.info(msg)
-
-resolver = ConflictResolver(logger=log_fn)
-```
-
-**默认行为**：不传入 `logger` 参数时，日志消息被丢弃（静默模式），适合生产环境不产生额外输出。
-
-### 日志消息格式
-
-所有日志消息遵循统一格式：`[动作/级别] [task_id]: 详细描述`。
-
-| 消息前缀 | 级别 | 含义 |
+| 层面 | 典型症状 | 先看哪里 |
 |---|---|---|
-| `冲突报告` | INFO | 收到冲突报告，开始处理 |
-| `开始仲裁` | INFO | 启动仲裁流程 |
-| `能力匹配` | INFO | 能力筛选阶段，列出匹配候选 |
-| `仲裁` | INFO | 唯一匹配候选直接分配 |
-| `负载校验` | INFO | 负载校验阶段，列出有效候选及负载分布 |
-| `[WARNING] 负载校验` | WARNING | 存在负载异常的agent被过滤，列出异常原因 |
-| `负载均衡` | INFO | 多候选按最低负载分配，列出并列情况 |
-| `历史归属` | INFO | 按模块历史归属原则分配 |
-| `全局负载均衡` | INFO | 进入无能力约束的全局负载均衡路径 |
-| `默认分配` | INFO | agents不足时默认分配给发起方 |
-| `升级` | INFO/ WARNING | 触发升级机制 |
-| `[WARNING] 升级` | WARNING | 全异常负载等严重异常导致的升级 |
-| `仲裁结果` | INFO | 最终仲裁结论 |
+| 路由层 | 智能体读错规范、走错区域 | [AGENTS.md](../../../AGENTS.md#L3-L32) |
+| 工作树层 | 路由表里有目录，但当前 checkout 没有 | [apps/AGENTS.md](../../../apps/AGENTS.md#L37-L61) 与当前文件树 |
+| 脚本层 | 检查器/生成器运行失败 | `.agents/scripts/` |
+| 文档层 | Sphinx 构建失败、链接断裂 | `docs/` 与 `.agents/docs/` |
 
-### 决策分支日志链路
+## 常见问题 1：规范文件和当前工作树不一致
 
-一次完整的职责冲突仲裁，日志输出链路如下：
+### 现象
 
-```
-冲突报告 [TASK-ID]: 描述 (类型: responsibility)
-开始仲裁 [TASK-ID]: 启动仲裁流程
-能力匹配 [TASK-ID]: 需'xxx'能力, 总agents=N, 匹配候选=[...]
-负载校验 [TASK-ID]: 有效候选M个, 负载分布: {...}
-负载均衡 [TASK-ID]: 最低负载=X, winner=agent_id(并列K个), 按能力+负载均衡分配
-仲裁结果 [TASK-ID]: status=resolved, winner=agent_id, reason=按能力匹配+负载均衡原则
-```
+- `apps/AGENTS.md` 提到了很多应用，但当前工作树里找不到对应目录。
+- Code Wiki、README 或导航表指向一个当前不存在的路径。
 
-### 负载值校验诊断
+### 排查方法
 
-负载校验是冲突解决模块最核心的防御逻辑。新增了 `_diagnose_load` 和 `_log_load_validation` 两个辅助方法。
+1. 先看规范声明是否存在，例如 [apps/AGENTS.md](../../../apps/AGENTS.md#L37-L61)。
+2. 再看当前工作树是否真的存在该目录。
+3. 最后用 [`.gitmodules`](../../../.gitmodules#L1-L35) 判断它是否应该来自 submodule。
 
-#### 负载异常类型与诊断信息
+### 处理原则
 
-| 异常类型 | 诊断信息示例 | 处理方式 |
-|---|---|---|
-| 负载缺失 | `缺失(None)` | agent字典中无`load`键或值为None |
-| 类型异常（非数值） | `类型异常(str='high')` | load为字符串等非int/float类型 |
-| 类型异常（布尔值） | `类型异常(bool=True)` | load为True/False（bool是int子类，需额外排除） |
-| 非数值(NaN) | `非数值(NaN)` | load为float('nan')（通过isinstance检查但0<=NaN<=100为False） |
-| 负值 | `负值(-50)` | load小于0 |
-| 超范围 | `超范围(150>100)` | load大于100 |
+- 把“规范蓝图”和“当前 checkout 实况”分开记录。
+- 不要因为路由表里出现某个路径，就默认当前工作树一定存在。
 
-#### 负载校验日志示例
+## 常见问题 2：脚本找不到项目根目录
 
-**部分异常（过滤后继续）**：
+### 现象
 
-```
-[WARNING] 负载校验 [TASK-001]: 过滤2个负载异常agent: bad_agent[负值(-50)], over_agent[超范围(150>100)]
-负载校验 [TASK-001]: 有效候选3个, 负载分布: {'good_agent': 50, 'low_agent': 10, 'mid_agent': 40}
-```
+- 从非仓库根目录运行脚本时出现路径错误。
+- 某些脚本对 `AGENTS.md` 或 `.agents/` 定位失败。
 
-**全异常（触发升级）**：
+### 关键实现
 
-```
-[WARNING] 负载校验 [TASK-002]: 过滤3个负载异常agent: b1[负值(-10)], b2[超范围(200>100)], b3[缺失(None)]
-[WARNING] 升级 [TASK-002]: 所有3个候选agent负载值均异常: b1[负值(-10)], b2[超范围(200>100)], b3[缺失(None)]
-仲裁结果 [TASK-002]: status=escalated, winner=None, reason=无有效负载数据的候选agent
-```
+[resolve_project_root()](../../scripts/lib/project.py#L18-L53) 的逻辑是：
 
-### 常见问题排查
+- 优先向上查找 `AGENTS.md`
+- 找不到时回退到 `README.md`
 
-#### 问题1：预期应该RESOLVED但返回了ESCALATED
+### 建议
 
-**排查步骤**：
+- 优先在仓库根目录执行主仓脚本。
+- 如果编写新脚本，优先复用 `lib.project`，不要手写 `parent.parent.parent`。
 
-1. 检查日志中是否有 `无agent具备所需能力` —— 说明所有agent的`capabilities`列表中都不包含`required_capability`指定的值
-2. 检查日志中是否有 `所有N个候选agent负载值均异常` —— 说明所有匹配agent的load值都不在[0,100]有效范围内
-3. 检查日志中是否有 `双方均拒绝` —— 说明`rejected_by`列表中已有双方ID，触发了拒绝升级
+## 常见问题 3：阶段守卫拦截了操作
 
-**解决方案**：
+### 现象
 
-- 能力问题：确认agent的`capabilities`字段拼写和大小写是否与`required_capability`完全匹配
-- 负载问题：检查数据源是否正确生成了int/float类型的load值，范围应在0-100之间
-- 拒绝问题：检查是否重复调用`add_rejection()`导致双方都拒绝
+- 某个动作被提示“不允许在当前阶段执行”。
+- 日志里出现拦截、绕过或边界拒绝信息。
 
-#### 问题2：负载最低的agent没有被选中
+### 关键入口
 
-**排查步骤**：
+- [GuardrailRuntime](../../scripts/lib/stage_guardrails/runtime.py#L83-L207)
+- [BoundaryChecker](../../scripts/lib/stage_guardrails/boundary.py#L450-L549)
+- [StageStateManager](../../scripts/lib/stage_guardrails/state/manager.py#L21-L115)
 
-1. 查看日志中的 `能力匹配` 行，确认该agent是否在匹配候选列表中
-2. 查看 `负载校验` 日志中的 `有效候选` 和 `负载分布`，确认该agent是否被过滤
-3. 若该agent负载异常，查看 `[WARNING] 负载校验` 行中的具体异常原因
+### 排查顺序
 
-**常见原因**：
+1. 当前是否已经进入某个阶段。
+2. 当前角色是否合法。
+3. 当前操作是否属于只读豁免。
+4. 是否触发了 baby-code 探针豁免逻辑。
 
-- agent的`capabilities`不包含所需能力（被能力过滤排除）
-- agent的load值为负值或超100（被负载校验过滤）
-- agent的load为布尔值`True`/`False`（在Python中`True==1`，`False==0`，会导致误判，已修复）
+### 推荐做法
 
-#### 问题3：多agent相同最低负载时winner不确定
+- 先看 `current_stage`、`current_role`。
+- 再检查 `BoundaryChecker.check()` 返回的 `violation_type` 与 `deny_reason`。
 
-**排查步骤**：
+## 常见问题 4：SG Dashboard 没有读到日志
 
-查看 `负载均衡` 日志中的并列信息：
+### 现象
 
-```
-负载均衡 [TASK-003]: 最低负载=30, winner=a1(并列2个, 全部并列: ['a1', 'a2']), 按能力+负载均衡分配
-```
+- 仪表盘为空。
+- 明明有日志文件，但统计结果为 0。
 
-**说明**：多个agent负载相同时，Python `min()` 函数返回第一个遇到的最低值元素，winner取决于字典迭代顺序。这在Python 3.7+中是插入顺序确定的，但多进程/分布式环境下不应依赖此行为。如需确定性平局打破，应在调用方增加优先级或历史归属信息。
+### 关键实现
 
-#### 问题4：技术冲突/资源冲突没有详细日志
+[parse_log_file()](../../scripts/sg_dashboard/parser.py#L39-L77) 只会处理包含以下前缀的行：
 
-技术冲突（`_resolve_technical`）和资源冲突（`_resolve_resource`）目前的日志覆盖度低于职责冲突。如果需要排查这两类冲突的详细决策过程，可以：
+- `[SG-LOG]`
+- `[PDR-LOG]`
 
-1. 在调用`resolve()`前通过`logger`参数注入日志收集器
-2. 在`resolve()`入口已有`冲突报告`和`仲裁结果`两条日志，可确认输入输出
-3. 如需更细粒度日志，可在对应方法中补充`_log()`调用
+### 排查方法
 
-### 快速调试脚本
+1. 确认日志文件编码是 UTF-8。
+2. 确认日志行真的包含上面的结构化前缀。
+3. 确认日志目录路径正确，且文件后缀在 `*.log` 或 `*.txt` 范围内。
 
-使用以下代码快速验证冲突解决模块的日志输出：
+## 常见问题 5：文档站构建失败
 
-```python
-import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.agents/scripts'))
+### 现象
 
-from lib.collaboration.conflict_resolution import (
-    ConflictResolver, ConflictReport, ConflictType, ResolutionStatus
-)
+- `invoke html` 失败。
+- `sphinx-build` 未找到。
+- `linkcheck` 或 `doctest` 阶段报错。
 
-def debug_logger(msg):
-    print(f"[DEBUG] {msg}")
+### 关键依据
 
-resolver = ConflictResolver(logger=debug_logger)
+[docs/tasks.py](../../../docs/tasks.py#L26-L51) 通过 `subprocess.run()` 调用 `sphinx-build -M`，如果系统中没有 `sphinx-build`，会直接抛出友好的 `Exit` 错误。
 
-agents = {
-    "dev1": {"role": "developer", "priority": 2, "load": 30, "capabilities": ["coding"]},
-    "dev2": {"role": "developer", "priority": 2, "load": 60, "capabilities": ["coding"]},
-}
+### 排查方法
 
-report = ConflictReport(
-    reporter_id="dev1", opponent_id="dev2",
-    conflict_type=ConflictType.RESPONSIBILITY,
-    description="调试测试", task_id="DEBUG-001",
-    required_capability="coding",
-)
+1. 确认已安装 `docs/requirements.txt`。
+2. 确认 `sphinx-build` 在 PATH 中，或通过 `SPHINXBUILD` 显式指定。
+3. 如果只有外链检查失败，可先单跑 `invoke linkcheck` 缩小范围。
 
-result = resolver.resolve(report, agents=agents)
-print(f"结果: {result.status.value}, winner={result.winner}, reason={result.reason}")
-```
+## 常见问题 6：导航或链接批量更新后出现断链
 
-也可直接运行演示脚本查看完整日志效果：
+### 建议工具链
+
+先后运行：
 
 ```powershell
-python .agents/scripts/tests/demo_enhanced_logging.py
+python .agents\scripts\build-ref-index.py --stats
+python .agents\scripts\check-links.py
+python .agents\scripts\docgen.py nav
 ```
 
-### 关键修复记录
+如果是文件移动后的修链场景，再用 `link_fixer.fix_broken_links()` 或相应包装脚本。
 
-| 修复日期 | 问题 | 修复方式 | 影响日志 |
-|---|---|---|---|
-| 2026-07-09 | 无能力匹配agent时错误返回RESOLVED | 无匹配候选时返回ESCALATED | `升级 [task_id]: 无agent具备所需能力` |
-| 2026-07-09 | 负载值超出[0,100]范围导致错误比较 | 比较前过滤无效负载，全异常升级 | `[WARNING] 负载校验` / `[WARNING] 升级` |
-| 2026-07-09 | bool类型load（True=1/False=0）被误判为有效 | 添加`isinstance(load, bool)`排除 | `类型异常(bool=True/False)` |
-| 2026-07-09 | 异常负载无日志难以排查 | 新增`_diagnose_load`和`_log_load_validation` | 全决策分支结构化日志 |
-| 2026-07-09 | NaN负载值（float('nan')）通过isinstance检查但诊断为空 | 添加`load != load`检测NaN | `非数值(NaN)` |
+## 调试策略建议
 
-### 压力测试
+### 先确认事实，再修问题
 
-针对生产环境边界情况的压力测试套件位于 [test_conflict_resolution_stress.py](../../scripts/tests/test_conflict_resolution_stress.py)，覆盖以下9类场景：
+这个仓库里很多错误并不是代码逻辑 bug，而是“路由声明、工作树状态、submodule 初始化、文档主容器”之间的认知偏差。优先确认：
 
-| 测试类 | 场景 | 关键验证点 |
-|---|---|---|
-| TestStressLargeScaleAnomaly | 大规模异常污染 | 100-1000个agent池、5%-70%异常率，不崩溃、winner正确、5秒内完成 |
-| TestStressAnomalyRateGradient | 异常率梯度测试 | 0%-100%异常率，winner始终为正常agent中负载最低者 |
-| TestStressConcurrency | 并发调用测试 | 20线程并发无竞态，结果一致性验证 |
-| TestStressRepeatedCalls | 连续调用稳定性 | 1000次重复调用无状态污染，日志收集器无泄漏 |
-| TestStressBoundaryValues | 边界值攻击测试 | NaN/Inf/complex/bytes/complex等13种极端值过滤，0/100边界值正确接受 |
-| TestStressMixedConflictTypes | 混合冲突类型 | 资源/技术冲突在异常数据下不崩溃 |
-| TestStressLogFlood | 日志洪泛测试 | 1000个全异常agent不崩溃，None日志收集器正常工作 |
-| TestStressDeterminism | 确定性验证 | 相同异常模式多次调用结果一致 |
-| TestStressDefensiveCopy | 深度防御校验 | 1000次调用后输入agents不被修改，report对象不被篡改 |
-| TestStressDiagnosticCompleteness | 诊断完整性 | 6种异常类型诊断消息精确匹配 |
+1. 我看到的是规范蓝图还是当前工作树？
+2. 这个路径来自主仓还是 submodule？
+3. 这一步属于文档问题、脚本问题还是路由问题？
 
-运行方式：
+### 缩小范围优先
+
+不要一开始就跑全量 CI。更高效的顺序通常是：
+
+1. 复现最小命令
+2. 确认输入路径
+3. 单跑对应脚本
+4. 最后再跑全量检查
+
+## 最小排障命令集
 
 ```powershell
-python -m pytest .agents/scripts/tests/test_conflict_resolution_stress.py -v
+python .agents\scripts\repo-check.py all
+python .agents\scripts\check-links.py
+python .agents\scripts\docgen.py nav
+cd docs; invoke html
+```
+
+如果是 submodule 相关问题，再补：
+
+```bash
+git submodule status
+git submodule update --init --recursive
 ```

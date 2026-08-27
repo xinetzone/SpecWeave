@@ -22,7 +22,7 @@ tags: ["first-principles", "cross-cultural", "chinese-philosophy", "seven-concep
 
 ### 1.1 项目背景
 
-v1.0西方第一性原理档案（[first-principles/](../knowledge/learning/first-principles/README.md)）建立后，用户要求推进跨文化扩展——系统收集中国古代哲学（道家、儒家、墨家、佛教因明学）中与"第一性原理"具有相似内涵或功能的核心概念，进行跨文化四维比较分析，增强第一性原理研究的文化包容性和深度。
+v1.0西方第一性原理档案（[first-principles/](../knowledge/learning/00-essence-and-thinking/first-principles/README.md)）建立后，用户要求推进跨文化扩展——系统收集中国古代哲学（道家、儒家、墨家、佛教因明学）中与"第一性原理"具有相似内涵或功能的核心概念，进行跨文化四维比较分析，增强第一性原理研究的文化包容性和深度。
 
 ### 1.2 项目目标与完成状态
 
@@ -38,19 +38,19 @@ v1.0西方第一性原理档案（[first-principles/](../knowledge/learning/firs
 
 | 序号 | 文件 | 核心内容 |
 |------|------|---------|
-| 00 | [00-cross-cultural-review-protocol.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) | CP-1至CP-7"反向语义漂移"七级防御机制 |
-| 01 | [01-daoism-core-concepts.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md) | 道/德/自然/无为（《道德经》11章+《庄子》3篇） |
-| 02 | [02-confucianism-core-concepts.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md) | 本末/体用/格物致知/诚（含朱熹vs王阳明对比） |
-| 03 | [03-mohism-core-concepts.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) | 三表法/类/故/理（小故/大故必要充要条件分析） |
-| 04 | [04-buddhist-logic-core-concepts.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md) | 现量/比量/宗因喻/因三相（陈那新因明） |
-| 05 | [05-cross-cultural-comparison-framework.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md) | 四维框架+20维度跨体系比较矩阵 |
-| 06 | [06-comparison-with-western-first-principles.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md) | 7条共通原则+8个独特贡献+5组互补+七步框架 |
-| 07 | [07-cross-cultural-methodology-framework.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) | 七步法操作细则+10个误区+6类场景适配 |
-| 08 | [08-concept-mapping-table.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md) | 16组范畴对照+10个不可翻译概念+10类错误警示 |
-| 09 | [09-terminology-alignment.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md) | 术语统一表（道/儒/墨/佛36条+西方10条） |
-| 10 | [10-timeline.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/10-timeline.md) | 前8世纪-17世纪中西对照时间线+5个关键节点 |
-| 11 | [11-source-validation-log.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) | 8个权威注本记录+CP检查汇总+偏差排查 |
-| - | [README.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/README.md) | 主索引、阅读指南、核心结论摘要 |
+| 00 | [00-cross-cultural-review-protocol.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) | CP-1至CP-7"反向语义漂移"七级防御机制 |
+| 01 | [01-daoism-core-concepts.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/01-daoism-core-concepts.md) | 道/德/自然/无为（《道德经》11章+《庄子》3篇） |
+| 02 | [02-confucianism-core-concepts.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/02-confucianism-core-concepts.md) | 本末/体用/格物致知/诚（含朱熹vs王阳明对比） |
+| 03 | [03-mohism-core-concepts.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) | 三表法/类/故/理（小故/大故必要充要条件分析） |
+| 04 | [04-buddhist-logic-core-concepts.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/04-buddhist-logic-core-concepts.md) | 现量/比量/宗因喻/因三相（陈那新因明） |
+| 05 | [05-cross-cultural-comparison-framework.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/05-cross-cultural-comparison-framework.md) | 四维框架+20维度跨体系比较矩阵 |
+| 06 | [06-comparison-with-western-first-principles.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/06-comparison-with-western-first-principles.md) | 7条共通原则+8个独特贡献+5组互补+七步框架 |
+| 07 | [07-cross-cultural-methodology-framework.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) | 七步法操作细则+10个误区+6类场景适配 |
+| 08 | [08-concept-mapping-table.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/08-concept-mapping-table.md) | 16组范畴对照+10个不可翻译概念+10类错误警示 |
+| 09 | [09-terminology-alignment.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/09-terminology-alignment.md) | 术语统一表（道/儒/墨/佛36条+西方10条） |
+| 10 | [10-timeline.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/10-timeline.md) | 前8世纪-17世纪中西对照时间线+5个关键节点 |
+| 11 | [11-source-validation-log.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) | 8个权威注本记录+CP检查汇总+偏差排查 |
+| - | [README.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/README.md) | 主索引、阅读指南、核心结论摘要 |
 
 **总计**：12个核心文件，引用权威注本8个，古文原文约35+章/篇，🟢A级资料占比100%。
 
@@ -59,7 +59,7 @@ v1.0西方第一性原理档案（[first-principles/](../knowledge/learning/firs
 - [cross-domain-semantic-drift.md](patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md) 升级至v1.1.1，添加双向关联引用
 - 模式索引[README.md](patterns/methodology-patterns/research-knowledge/README.md)已更新
 
-v1.0主档案[README.md](../knowledge/learning/first-principles/README.md)已升级至v1.8，添加v2.0链接。
+v1.0主档案[README.md](../knowledge/learning/00-essence-and-thinking/first-principles/README.md)已升级至v1.8，添加v2.0链接。
 
 ***
 
@@ -96,7 +96,7 @@ v1.0主档案[README.md](../knowledge/learning/first-principles/README.md)已升
   - 5组互补关系中有"还原分析vs整体观照"、"形式化vs实践性"等，说明两种传统各有盲区
   - 儒家"本末"概念强调"本立而道生"对应价值定向；道家"无为"、因明"异品遍无性"对应边界意识
 - **反常识**：人们通常认为第一性原理是"价值中立"的纯粹理性方法，但实际上任何"从零开始"的重构都隐含价值前提（"为什么这个问题值得解决？""什么算'最根本'？"），而v1.0框架没有显式处理这些前提——这不是缺陷，而是它诞生于工程问题解决场景的适配特征；但在跨领域/人文/复杂系统问题中，价值定向和边界意识必须显式化
-- **下次行动**：可考虑更新[first-principles.md指令集](../knowledge/learning/first-principles/README.md)，将v2.0七步框架作为"复杂问题/跨领域问题扩展版"整合进去，保留v1.0六步作为"工程问题快速版"
+- **下次行动**：可考虑更新[first-principles.md指令集](../knowledge/learning/00-essence-and-thinking/first-principles/README.md)，将v2.0七步框架作为"复杂问题/跨领域问题扩展版"整合进去，保留v1.0六步作为"工程问题快速版"
 
 ***
 
@@ -174,11 +174,11 @@ v1.0主档案[README.md](../knowledge/learning/first-principles/README.md)已升
 
 | # | 改进项 | 执行状态 | 涉及文件 |
 |---|--------|---------|---------|
-| 1 | **指令集整合**：v2.0七步框架整合进first-principles.md | ✅ 完成 | [first-principles.md](../knowledge/learning/first-principles/README.md) 添加"版本选择"章节，含v1.0/v2.0对比表和选择决策树；知识库档案部分添加v2.0跨文化档案链接 |
-| 2 | **CP协议补充**：诠释自觉原则+CP适用层级 | ✅ 完成 | [00-cross-cultural-review-protocol.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) 新增§1.4"诠释自觉原则"（区分无意识错置vs有意识诠释创新）、§1.5"CP适用层级"（个人思考/内部分享/知识档案/公开发表四级裁剪） |
-| 3 | **场景决策树**：v1.0/v2.0选择决策树 | ✅ 完成 | [07-cross-cultural-methodology-framework.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) 新增§4"场景判断决策树"，含mermaid流程图、4个关键判断节点、双向切换信号 |
-| 4 | **名家补充**：惠施/公孙龙逻辑思想 | ✅ 完成 | [03-mohism-core-concepts.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) 新增附录"名家逻辑思想补充参考"，含公孙龙"白马非马"概念分析、惠施"合同异"相对性思考、名家与墨家关系、历史中断教训 |
-| 5 | **注本选择说明**：王弼vs河上公取舍理由 | ✅ 完成 | [11-source-validation-log.md](../knowledge/learning/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) 新增§7"注本选择倾向说明"，透明披露5个注本选择的诠释倾向、可能偏见和应对措施 |
+| 1 | **指令集整合**：v2.0七步框架整合进first-principles.md | ✅ 完成 | [first-principles.md](../knowledge/learning/00-essence-and-thinking/first-principles/README.md) 添加"版本选择"章节，含v1.0/v2.0对比表和选择决策树；知识库档案部分添加v2.0跨文化档案链接 |
+| 2 | **CP协议补充**：诠释自觉原则+CP适用层级 | ✅ 完成 | [00-cross-cultural-review-protocol.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/00-cross-cultural-review-protocol.md) 新增§1.4"诠释自觉原则"（区分无意识错置vs有意识诠释创新）、§1.5"CP适用层级"（个人思考/内部分享/知识档案/公开发表四级裁剪） |
+| 3 | **场景决策树**：v1.0/v2.0选择决策树 | ✅ 完成 | [07-cross-cultural-methodology-framework.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) 新增§4"场景判断决策树"，含mermaid流程图、4个关键判断节点、双向切换信号 |
+| 4 | **名家补充**：惠施/公孙龙逻辑思想 | ✅ 完成 | [03-mohism-core-concepts.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/03-mohism-core-concepts.md) 新增附录"名家逻辑思想补充参考"，含公孙龙"白马非马"概念分析、惠施"合同异"相对性思考、名家与墨家关系、历史中断教训 |
+| 5 | **注本选择说明**：王弼vs河上公取舍理由 | ✅ 完成 | [11-source-validation-log.md](../knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/11-source-validation-log.md) 新增§7"注本选择倾向说明"，透明披露5个注本选择的诠释倾向、可能偏见和应对措施 |
 
 ## 七、模式入库记录
 

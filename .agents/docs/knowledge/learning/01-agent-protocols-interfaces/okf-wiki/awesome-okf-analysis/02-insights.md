@@ -4,12 +4,12 @@ title: Awesome OKF 深度分析 - 本质洞察（I+F阶段）
 type: Insights
 version: 1.0
 source: 基于01-facts.md的34条事实进行第一性原理分析
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/02-insights.toml"
 description: awesome-okf 项目核心洞察，揭示零依赖设计、双层架构、规范扩展方法论的trade-off
 tags: [okf, awesome-okf, 洞察, insight, first-principles]
 category: case-study
 date: 2026-08-06
 ---
-
 # Awesome OKF 深度分析 - 本质洞察（I+F阶段）
 
 > **方法论说明**：本阶段基于R阶段34条客观事实，运用第一性原理追问"为什么这么设计"，揭示设计trade-off。每条洞察包含四元组：**陈述（核心观点）→ 证据（Fxx事实引用）→ 反常识（容易被忽略的取舍）→ 下次行动（可落地方向）**。

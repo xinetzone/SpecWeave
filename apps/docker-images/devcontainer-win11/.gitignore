@@ -1,0 +1,22 @@
+# Build artifacts
+workspace/
+*.tar
+
+# Env files (sensitive)
+.env
+.env.dev
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+scripts/*.log
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# PowerShell
+*.ps1.bak

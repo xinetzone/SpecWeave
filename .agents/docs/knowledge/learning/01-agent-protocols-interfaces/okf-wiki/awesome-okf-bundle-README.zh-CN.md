@@ -3,6 +3,7 @@ type: Translation
 title: Awesome OKF 中文翻译
 description: linyiru/awesome-okf 项目 README 的中文翻译，OKF（开放知识格式）生态资源精选列表
 source: vendor/awesome-okf-bundle/README.md
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-bundle-README.zh-CN.toml"
 tags:
   - OKF
   - 开放知识格式
@@ -11,7 +12,6 @@ tags:
   - Markdown
   - 翻译
 ---
-
 # Awesome OKF [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 > 一份精心整理的 **开放知识格式（Open Knowledge Format, OKF）** 资源列表——这是 Google 推出的开放、厂商中立的规范，用于将知识表示为带有 YAML frontmatter 的 Markdown 文件，AI 智能体无需自定义集成即可读取。本列表践行了它所收录的理念：它本身就是作为一个符合规范的 OKF bundle 发布的（见下文）。

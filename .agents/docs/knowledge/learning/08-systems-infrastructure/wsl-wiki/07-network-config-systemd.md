@@ -2,11 +2,11 @@
 id: "wsl-wiki-07-network-config-systemd"
 title: "网络、配置管理与systemd"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/07-network-config-systemd.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "networking", "wsl.conf", ".wslconfig", "systemd", "gns", "dns", "nat", "mirroring"]
 ---
-
 # 网络、配置管理与systemd
 
 本文档介绍 WSL2 的网络架构、配置文件体系以及 systemd 支持的详细用法。

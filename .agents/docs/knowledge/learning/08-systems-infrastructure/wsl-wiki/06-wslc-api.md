@@ -2,11 +2,11 @@
 id: "wsl-wiki-06-wslc-api"
 title: "WSL Container API 三语言编程接口"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/06-wslc-api.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "wslc", "container-api", "c-api", "csharp-api", "cpp-api", "session", "container", "process", "preview"]
 ---
-
 # WSL Container API 三语言编程接口
 
 > ⚠️ **Preview 状态**：当前 WSLC 处于 **preview** 阶段，GA 计划 **2026 年秋季**。preview 期间 API 可能有不兼容变更，仅用于可行性评估，不要部署到生产环境。

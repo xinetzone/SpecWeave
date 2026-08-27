@@ -4,8 +4,8 @@ version: 1.0.0
 created: 2026-07-31
 updated: 2026-07-31
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/10-troubleshooting.toml"
 ---
-
 # Git 百度网盘同步 - 故障排查手册
 
 ## 快速诊断流程图

@@ -1,0 +1,30 @@
+- [x] Checkpoint 1: 已按七概念知识沉淀链路完成 R→I→E→V 规划，场景、链路和质量门记录清晰。
+- [x] Checkpoint 2: `spec/facts.md` 覆盖官网 17 个公开页面，每页至少 3 条可溯源事实。
+- [x] Checkpoint 3: R 阶段事实无“用于/目的是/设计为/因此”等推断性表述。
+- [x] Checkpoint 4: `spec/facts.md` 已复核并记录 `strict`、`maxExpand` 等与现有文档不一致的官网默认值。
+- [x] Checkpoint 5: `spec/insights.md` 包含 3-5 个洞察四元组（陈述、证据、反常识/差异、行动）。
+- [x] Checkpoint 6: `spec/insights.md` 的文档地图覆盖全部新增、更新和保留文档。
+- [x] Checkpoint 7: `references/katex-website.md` 已登记官网 17 个页面及其稳定 ID、URL、标题和用途。
+- [x] Checkpoint 8: `references/katex-source.md` 仍准确登记 KaTeX v0.18.4 源码核心文件。
+- [x] Checkpoint 9: 所有 concepts/examples 文档的 `sources` 均指向已存在的 reference 文件或有效外部 URL。
+- [x] Checkpoint 10: 00、01、10、15、16 完整覆盖首页、Browser、Node、API、Options、CLI 的使用信息。
+- [x] Checkpoint 11: 11、12、13、14、17、18 完整覆盖样式字体、Auto-render、官方扩展、字体加载、安全和错误处理。
+- [x] Checkpoint 12: 19、20、21、22、23 完整覆盖 Supported Functions、Support Table、Common Issues、Migration、Users/Versions/Libs。
+- [x] Checkpoint 13: 现有 Lexer、MacroExpander、Parser、Render Pipeline、DOM Tree、Function Registry、Macro System 源码级内容未被误删或弱化。
+- [x] Checkpoint 14: 8 个 examples 均存在，代码块标注语言，API/Options 与官网事实一致。
+- [x] Checkpoint 15: `examples/custom-macros.md` 明确展示共享 `macros` 对象和 `\gdef` 持久化的安全边界。
+- [x] Checkpoint 16: `examples/security-trust.md` 明确说明不可信输入、trust、HTML 消毒和错误消息转义。
+- [x] Checkpoint 17: `examples/cli-render.md` 覆盖官网 CLI 主要参数，至少包括输入、输出、display mode、宏、错误处理。
+- [x] Checkpoint 18: 根 `index.md` 列出全部 24 篇概念文档和 8 篇示例，并包含使用、架构、扩展、排障/迁移学习路径。
+- [x] Checkpoint 19: `concepts/index.md`、`examples/index.md`、`references/index.md` 存在且不含 YAML frontmatter。
+- [x] Checkpoint 20: `log.md` 存在，记录 2026-08-23 本次官网学习与融合增强。
+- [x] Checkpoint 21: 每个非保留 Markdown 文档均有合法 YAML frontmatter 和非空 `type`。
+- [x] Checkpoint 22: 根 `index.md` frontmatter 包含 `okf_version: "0.2"`；其他文件未错误声明 `okf_version`。
+- [x] Checkpoint 23: 所有 bundle 内交叉引用使用 `/` 开头 bundle-relative 路径，目标文件存在。
+- [x] Checkpoint 24: 产物文档中不存在 `file:///` 绝对路径。
+- [x] Checkpoint 25: 文档中没有将已确认错误的 `strict: false` 或 `maxExpand: Infinity` 表述为 v0.18.4 官网默认值。
+- [x] Checkpoint 26: 新增/更新文档中引用的 API、Options、CLI 参数均可在 facts/reference 中找到来源。
+- [x] Checkpoint 27: 每批 E 阶段生成/更新文件不超过 7 个，references 先于 concepts/examples，index 最后生成。
+- [x] Checkpoint 28: 独立验证子智能体已完成结构检查、链接检查、官网覆盖检查和抽查事实核验。
+- [x] Checkpoint 29: V 阶段发现的问题均已修复或在任务清单中闭环。
+- [x] Checkpoint 30: 最终任务清单 `tasks.md` 中所有任务状态均为 `[x]`，无未完成项。

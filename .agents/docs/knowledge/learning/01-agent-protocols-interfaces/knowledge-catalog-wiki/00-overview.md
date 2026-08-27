@@ -14,9 +14,8 @@ summary: "Knowledge Catalog（原Dataplex）是Google Cloud推出的AI驱动数�
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 kc_version_target: "preview"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/00-overview.toml"
 ---
-
 > **⚠️ 技术预览版提示**
 > - Knowledge Catalog（原Dataplex）目前处于技术预览阶段
 > - OKF开放知识格式目前处于**v0.2 Draft极早期阶段**（2026年6月首次发布）

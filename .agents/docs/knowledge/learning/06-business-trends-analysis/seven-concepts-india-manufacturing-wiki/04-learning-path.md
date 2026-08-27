@@ -2,6 +2,7 @@
 id: "learning-path"
 title: "学习路径与操作指南"
 source: "seven-concepts-india-manufacturing-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/04-learning-path.toml"
 date: "2026-07-14"
 version: "1.0"
 ---

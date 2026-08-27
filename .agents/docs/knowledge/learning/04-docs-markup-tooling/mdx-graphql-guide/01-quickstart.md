@@ -1,7 +1,7 @@
 ---
 title: "MDX + GraphQL 5分钟快速上手"
 source: "insight:retrospective-sphinx-graphql-okf-combination-insights-20260805"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/01-quickstart.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/01-quickstart.toml"
 date: "2026-08-05"
 tags: [mdx, graphql, quickstart, nextjs, tutorial]
 category: "learning"

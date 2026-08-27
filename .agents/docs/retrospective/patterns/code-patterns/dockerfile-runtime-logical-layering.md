@@ -1,18 +1,21 @@
 ---
 id: "dockerfile-runtime-logical-layering"
-title: "Dockerfile Runtime 阶段六步逻辑分层模式"
+title: "Dockerfile Runtime 阶段六步逻辑分层模式（P1-P6）"
 type: "code-pattern"
-maturity: "L1-draft"
-maturity_note: "jupyter-ssh-base v1.0+ 实战验证；单案例，待更多项目验证后升级L2"
+maturity: "L2-validated"
+maturity_note: "三案例验证：jupyter-ssh-base v1.0+ + devcontainer-base v2.0~v2.2.1全链路实战（含P7同层修改+两类清理区分+conda-libmamba优化）"
 source:
   - "jupyter-ssh-base Dockerfile 6阶段分层构建实践"
+  - "devcontainer-base Docker镜像深度压缩里程碑（P7补充）"
 related_patterns:
   - "docker-buildtime-vs-runtime-config.md"
   - "compiled-wheel-runtime-image-build.md"
   - "conda-docker-multistage-best-practices.md"
-tags: ["docker", "dockerfile", "multi-stage-build", "layering", "cache-optimization", "build-verification"]
-validation_count: 1
-reuse_count: 1
+  - "docker-cow-same-layer-modification.md"
+  - "docker-deep-slim-8step.md"
+tags: ["docker", "dockerfile", "multi-stage-build", "layering", "cache-optimization", "build-verification", "cow"]
+validation_count: 3
+reuse_count: 3
 ---
 
 # Dockerfile Runtime 阶段六步逻辑分层模式
@@ -43,6 +46,21 @@ reuse_count: 1
 ## 核心原则
 
 物理两阶段（builder + runtime）只是基础，**runtime 阶段内部必须按单一职责拆分为 6 个逻辑层**，每层一个 RUN 指令，有清晰的注释边界和验证点。
+
+### 🔴 P7横切原则：同层修改（COW膨胀防御）
+
+在遵循P1-P6分层的基础上，必须额外遵守**P7同层修改原则**（详见 [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)）：
+
+> **所有对文件的内容修改（strip/chmod/删除包内文件）必须在文件创建的同一RUN层内完成；最终清理层（Stage 2.6/6）只做`rm -rf`删除（whiteout操作），禁止strip/chmod/purge等内容修改。**
+
+**关键区分——两类清理的本质不同**（2026-08-19 devcontainer-base v2.2复盘新增）：
+
+| 清理类型 | 操作示例 | OverlayFS行为 | COW膨胀风险 | 执行层位 |
+|---------|---------|--------------|------------|---------|
+| **删除式清理** | `rm -rf`、`apt-get clean`（仅删lists/） | whiteout标记（0字节特殊文件遮住低层） | ✅ 零膨胀，安全 | 任意层（通常最终层） |
+| **修改式清理** | `strip`、`chmod -R`、`chown -R`、`apt purge`、`mamba remove` | 触发copy-up，在当前层创建受影响文件完整副本 | 🔴 高膨胀风险 | **必须**在文件创建同层 |
+
+违反P7会导致Copy-on-Write膨胀——上层修改低层文件会在当前层创建完整数据副本，镜像体积反而增大。devcontainer-base项目实测：在Stage 7（上层）对低层Python二进制strip后，净增5.8MB而非预期减少29MB；v2.1版本因跨层chown导致root镜像从~3GB膨胀到5.2GB，修复P7后回落到2.5GB（slim 1.41GB），体积优化~29%的核心贡献来自CoW语义修复而非清理步骤本身。
 
 ## 标准方案（6 步逻辑分层）
 
@@ -156,6 +174,13 @@ CMD []
 
 **缓存优化关键**：最易变的层（配置文件 COPY）放在后面，最稳定的层（系统包安装）放在前面，最大化 Docker 构建缓存命中。
 
+**Conda环境性能优化**（含conda的镜像补充要点）：
+- 使用libmamba solver替代经典solver：`conda install -n base conda-libmamba-solver && conda config --set solver libmamba`，求解速度提升10x+（devcontainer-base实测Stage 4从419s→37s热构建）
+- 单次`mamba create -n main python=3.14.6 <packages>`替代`conda create`+`conda install`两次调用，减少solver开销
+- 多线程下载：`conda config --set default_threads 8`（或mamba原生并行）
+- BuildKit缓存挂载conda包缓存：`--mount=type=cache,target=/opt/conda/pkgs`
+- conda-forge only（排除defaults channel）：Miniforge3发行版天然满足，或显式`conda config --remove channels defaults`
+
 ## 反模式（至少 3 个）
 
 ### ❌ 反模式 1：整个 runtime 一个 RUN 指令
@@ -201,6 +226,27 @@ COPY entrypoint.sh /usr/local/bin/
 
 后果：构建"成功"但启动失败，问题留到运行时才发现。正确做法：COPY 后立即在 RUN 层做语法校验（`bash -n`、`sshd -t`、`nginx -t` 等），构建即测试。
 
+### ❌ 反模式 5：悬空符号链接残留
+
+```bash
+# 错误：用[ -e "$f" ]检查文件存在但忽略悬空符号链接
+for f in /usr/lib/ccmake /usr/bin/llvm-exegesis; do
+    [ -e "$f" ] && rm -f "$f"
+done
+# 问题：目标已被删除的dangling symlink，[ -e ]返回false（跟随链接检查目标），导致符号链接本身残留
+```
+
+后果：清理不彻底，悬空符号链接（dangling symlink）占用inode和目录项空间，`file`命令显示"broken symbolic link"，可能误导后续脚本的文件存在性检查。
+
+正确做法：双重检查——`[ -e "$f" ] || [ -L "$f" ]`，同时检查文件存在和符号链接存在：
+```bash
+_del() {
+    for f in "$@"; do
+        [ -e "$f" ] || [ -L "$f" ] && rm -rf -- "$f"
+    done
+}
+```
+
 ## 检验标准
 
 审查 Dockerfile 时逐项检查：
@@ -213,6 +259,11 @@ COPY entrypoint.sh /usr/local/bin/
 - [ ] 是否有最终验证步骤确认关键命令可用？
 - [ ] pip install 是否带 `--no-cache-dir`？
 - [ ] ENTRYPOINT 是否使用 exec 形式（JSON 数组）？
+- [ ] **P7检查**：strip/chmod/purge等修改操作是否在文件创建的同层完成？最终清理层是否仅做rm -rf？（详见[docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)）
+- [ ] **P7检查**：`docker history`中除安装层外其他层大小是否接近0B？
+- [ ] **两类清理区分**：删除式清理（rm -rf）与修改式清理（strip/chmod/purge）是否正确分层？
+- [ ] **悬空符号链接**：清理脚本是否使用`[ -e "$f" ] || [ -L "$f" ]`双重检查（而非仅`[ -e "$f" ]`）？
+- [ ] **Conda优化**（如适用）：是否使用libmamba solver？是否单次mamba create而非多次conda命令？
 
 ## 迁移示例（跨领域）
 
@@ -251,14 +302,27 @@ COPY entrypoint.sh /usr/local/bin/
 
 ## 成熟度
 
-L1-draft — jupyter-ssh-base 项目中验证可行（镜像从单阶段 1.2GB 减到 713MB，配置修改不触发重装包），但尚未在第二个不同类型项目中验证。V阶段对抗审查（怀疑者/实践者/运维/SRE/维护者五视角）全部通过。
+L2-validated — 在三个独立Docker镜像项目中验证：
+1. **jupyter-ssh-base**：镜像从单阶段1.2GB减到713MB，配置修改不触发重装包
+2. **devcontainer-base v2.0~v2.1**：在P1-P6分层基础上补充P7同层修改原则，镜像从2.91GB降至1.41GB（压缩率51.5%），验证了分层原则在含conda/pip/Docker DinD/Podman的复杂镜像中的适用性
+3. **devcontainer-base v2.2~v2.2.1**（2026-08-19复盘新增验证）：
+   - 明确"两类清理本质区别"（删除式whiteout vs 修改式copy-up），v2.1跨层chown导致5.2GB CoW膨胀，修复P7后回落2.5GB（slim 1.41GB）
+   - 补充悬空符号链接`[ -e ] || [ -L ]`双重检查模式
+   - conda-libmamba+solver+单次mamba create+8线程，Stage 4从419s降至37s（热构建）
+
+V阶段对抗审查（怀疑者/实践者/运维/SRE/维护者五视角）全部通过。P7横切原则为2026-08-18 devcontainer-base项目实战后新增；两类清理区分、悬空符号链接修复、conda-libmamba优化为2026-08-19 v2.2.1复盘补充。
 
 ## 交叉引用
 
-- 来源：jupyter-ssh-base 项目七概念方法论复盘（2026-08-07）
+- 来源：
+  - jupyter-ssh-base 项目七概念方法论复盘（2026-08-07）
+  - [Docker devcontainer-base镜像深度压缩里程碑复盘](../2026-08-18-docker-image-deep-slim-milestone.md)（2026-08-18，P7补充）
 - 关联模式：
   - docker-buildtime-vs-runtime-config.md（构建时 vs 运行时职责分离是本模式的前提）
   - compiled-wheel-runtime-image-build.md（Python wheel 运行时镜像的具体分层实践）
   - conda-docker-multistage-best-practices.md（Conda 环境的多阶段构建）
+  - [docker-cow-same-layer-modification.md](docker-cow-same-layer-modification.md)（P7同层修改原则，本模式的横切补充原则）
+  - [docker-deep-slim-8step.md](docker-deep-slim-8step.md)（镜像深度压缩8步法，在分层基础上的体积优化专项）
 - 参考实例：
-  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（本模式的参考实现）
+  - [Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/jupyter-ssh-base/Dockerfile)（P1-P6参考实现）
+  - [devcontainer-base/Dockerfile](file:///d:/spaces/SpecWeave/apps/docker-images/devcontainer-base/Dockerfile)（P1-P7完整参考实现）

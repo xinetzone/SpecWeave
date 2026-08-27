@@ -1,0 +1,7 @@
+id = "minit2i-wiki-03"
+title = "MM-JiT架构深度解析：回归朴素Transformer"
+category = "knowledge/learning/05-ai-multimodal-content/minit2i-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["minit2i", "MM-JiT", "MM-DiT", "架构设计", "Transformer", "文本适配器"]

@@ -2,6 +2,7 @@
 id: git-baidu-sync-directory-structure
 title: 百度网盘 Git 同步空间目录结构
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/01-directory-structure.toml"
 created: 2026-07-31
 tags:
   - git
@@ -9,7 +10,6 @@ tags:
   - sync
   - directory-structure
 ---
-
 # 百度网盘 Git 同步空间目录结构
 
 本文档定义百度网盘同步空间的标准目录布局，用于实现多设备间 Git 仓库的安全同步。

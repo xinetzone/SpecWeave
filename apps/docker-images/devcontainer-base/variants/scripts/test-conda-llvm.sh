@@ -5,11 +5,13 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="test-conda-llvm"
 LOG_JSON_OUTPUT="/tmp/test-conda-llvm-events.jsonl"
 
 TAG="latest"
 IMAGE=""
+ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman（容器引擎抽象库定义）
 
 TEST_PASS=0
 TEST_FAIL=0
@@ -55,11 +57,11 @@ skip() {
 }
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 test_llvm_config_version() {
@@ -270,7 +272,7 @@ test_supervisord_config() {
 
 test_jupyter_executable() {
     local rc
-    docker run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
+    ${ENGINE} run --rm "$IMAGE" bash -c 'test -x /opt/conda/envs/main/bin/jupyter' >/dev/null 2>&1
     rc=$?
     if [ "$rc" -eq 0 ]; then
         pass "T14: Jupyter executable exists (/opt/conda/envs/main/bin/jupyter)"
@@ -413,6 +415,8 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:conda-llvm-${TAG}"
 fi
 
+detect_engine
+
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║       Conda-LLVM Variant Unit Test Suite                    ║"
@@ -422,7 +426,7 @@ log_info "Testing image: ${IMAGE}"
 echo ""
 
 log_step "Verifying image exists"
-if ! docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+if ! engine_image_exists; then
     log_fatal "Image not found: ${IMAGE}. Please build it first."
 fi
 log_ok "Image exists: ${IMAGE}"

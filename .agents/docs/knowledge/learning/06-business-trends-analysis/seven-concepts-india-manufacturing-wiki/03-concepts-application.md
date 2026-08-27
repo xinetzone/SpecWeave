@@ -2,6 +2,7 @@
 id: "concepts-application"
 title: "七概念理论应用指南"
 source: "seven-concepts-india-manufacturing-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/03-concepts-application.toml"
 date: "2026-07-14"
 version: "1.0"
 ---

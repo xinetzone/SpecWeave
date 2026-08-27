@@ -23,7 +23,7 @@ reuse_count: 1
 
 ## 执行摘要
 
-使用七概念方法论（R-I-E-C-A-F-V）对 [apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
+使用七概念方法论（R-I-E-C-A-F-V）对 [apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/README.md) 项目进行系统性复盘+洞察+模式萃取。该项目是基于 Ubuntu 26.04 + Python 3.14 的 Jupyter Lab + SSH 远程开发基础镜像，采用 Docker 多阶段构建，镜像体积 713MB。
 
 **方法论执行链路**：R(复盘) → I(洞察) → E(萃取) → V(对抗审查)，跳过 C(原子提交)/A(原子化)/F(第一性原理)（C/A 为代码重构、F 在 I 阶段已天然体现）。
 
@@ -35,7 +35,7 @@ reuse_count: 1
 - 全部通过 G1-G4 质量门检查
 
 **关键数据**：
-- 项目位置：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/)
+- 项目位置：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/README.md)
 - 基础镜像：ubuntu:26.04
 - Python 环境：Python 3.14 /opt/venv
 - 镜像体积：713 MB（多阶段构建后）
@@ -50,7 +50,7 @@ reuse_count: 1
 
 ### F01. 项目定位与架构
 
-- 项目路径：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/)
+- 项目路径：[apps/docker-images/jupyter-ssh-base](../../../../../../apps/docker-images/jupyter-ssh-base/README.md)
 - 项目类型：Docker 基础开发镜像（Jupyter Lab + SSH 远程访问）
 - 用途：作为 caffe-ffi-jupyter 等上层应用镜像的 base 镜像
 - 基础镜像：ubuntu:26.04

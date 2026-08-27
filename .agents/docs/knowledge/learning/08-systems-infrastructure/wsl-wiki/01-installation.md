@@ -2,11 +2,11 @@
 id: wsl-wiki-01-installation
 title: "安装与发行版管理"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/01-installation.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "installation", "setup", "distribution", "upgrade", "wsl2"]
 ---
-
 # 安装与发行版管理
 
 本章介绍 WSL 的系统要求、安装步骤、发行版管理命令以及常见安装问题排查。

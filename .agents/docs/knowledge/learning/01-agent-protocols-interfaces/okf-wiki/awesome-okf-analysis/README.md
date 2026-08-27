@@ -4,13 +4,13 @@ title: Awesome OKF 深度案例分析
 type: CaseStudy
 version: 1.0
 source: yzfly/awesome-okf 七概念方法论深度分析
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/README.toml"
 description: 使用七概念方法论（R-I-E-V-A）对中文OKF生态项目awesome-okf进行深度案例分析，产出可迁移架构模式与原子行动项
 tags: [okf, awesome-okf, 案例分析, seven-concepts, case-study]
 category: case-study
 date: 2026-08-06
 okf_version_analyzed: "v0.1"
 ---
-
 # Awesome OKF 深度案例分析
 
 > **本报告定位**：这是一份**案例研究（Case Study）**，聚焦于 [yzfly/awesome-okf](https://github.com/yzfly/awesome-okf) 这个中文OKF生态项目的架构设计与工程实践。OKF通用规范教程请返回 [okf-wiki 主页](../README.md)。

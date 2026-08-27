@@ -7,7 +7,7 @@ date: "2026-07-04"
 status: "completed"
 completed_date: "2026-07-06"
 source: "https://mp.weixin.qq.com/s/HPjh-NHQ_4XEFfzVB1jlXQ"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.toml"
 ---
 # Papi酱关闭公司回归个人IP：资源链接
 
@@ -56,8 +56,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-bus
 |------|------|---------|
 | AI变现完整指南 | [ai-monetization-wiki/00-overview.md](../ai-monetization-wiki/00-overview.md) | AI产品从市场分析到盈利策略的全流程方法论，包含8大核心模块、3类应用场景 |
 | Agent通信协议完整教程 | [agent-communication-protocols-wiki.md](../../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | MCP/ACP/A2A/ANP四层协议栈，理解AI时代个体与组织的协作模式 |
-| Karpathy LLM编程准则 | [karpathy-llm-coding-guidelines-tutorial.md](../../02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | "简约至上、精确编辑"等原则同样适用于创业：最小可行产品、精准扩张 |
-| Vibe Coding两大神级Prompt | [vibe-coding-prompts-learning-analysis.md](../../02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | 第一性原理与对抗式审查思维可应用于创业模式的思考与验证 |
+| Karpathy LLM编程准则 | [karpathy-llm-coding-guidelines-tutorial.md](../../02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | "简约至上、精确编辑"等原则同样适用于创业：最小可行产品、精准扩张 |
+| Vibe Coding两大神级Prompt | [vibe-coding-prompts-learning-analysis.md](../../02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | 第一性原理与对抗式审查思维可应用于创业模式的思考与验证 |
 
 ---
 

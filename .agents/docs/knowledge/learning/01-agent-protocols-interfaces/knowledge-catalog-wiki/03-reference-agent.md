@@ -14,9 +14,8 @@ summary: "从源码角度深度解析knowledge-catalog参考Agent的实现机制
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/03-reference-agent.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/03-reference-agent.toml"
 ---
-
 # 03 参考Agent实现原理与运行指南
 
 > **本章定位说明**

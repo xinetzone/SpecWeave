@@ -23,7 +23,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 火山引擎AgentKit企业级AI Agent平台产品页（SPA架构） |
-| 核心学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md)（13章 + 6个Mermaid图表） |
+| 核心学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md)（13章 + 6个Mermaid图表） |
 | Spec 文件数 | 3个（spec.md / tasks.md / checklist.md） |
 | 任务时间线阶段 | 7个阶段（上下文恢复→启动协议→Spec规划→内容提取→深度分析→文档生成→复盘） |
 | 工作流模式 | Spec Mode（规划→实施→验证）+ 浏览器自动化 + Sub-Agent委派 |
@@ -54,7 +54,7 @@ template_upgrade: "2026-07-06 v1.2"
 | Spec 定义 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/spec.md) | 13个FR、10个AC、10个开放问题 |
 | Spec 任务 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/tasks.md) | 11个任务（全部标记[x]完成） |
 | Spec 清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-agentkit/checklist.md) | 3大维度50+检查点 |
-| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表（核心产出） |
+| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表（核心产出） |
 
 **复盘报告**：
 
@@ -73,7 +73,7 @@ template_upgrade: "2026-07-06 v1.2"
 | Spec文档创建工作流 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 升级（validation_count 4→5，新增形态B文件产出说明、产出物决策矩阵、案例5） | ✅ 已落地 |
 | 外部网站分析兜底策略 | [external-website-analysis-fallback-strategy.md](../../../patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 升级（validation_count 8→9，SPA预判规则已完善） | ✅ 已落地 |
 | B2B AI产品最后一公里框架 | [b2b-ai-last-mile-positioning-framework.md](../../../patterns/methodology-patterns/research-knowledge/b2b-ai-last-mile-positioning-framework.md) | 新建模式（六步定位法、四大价值支柱、开发框架vs生产平台对比） | ✅ 已落地 |
-| AI Agent双身份安全模型 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 学习笔记第五章已详细记录双身份模型、三层安全架构 | ✅ 已记录 |
+| AI Agent双身份安全模型 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) | 学习笔记第五章已详细记录双身份模型、三层安全架构 | ✅ 已记录 |
 | 产出物保存决策矩阵 | [spec-mode-doc-creation-workflow.md](../../../patterns/methodology-patterns/ai-collaboration/spec-mode-doc-creation-workflow.md) | 决策矩阵已整合至Spec工作流模式 | ✅ 已落地 |
 | Harness编排设计哲学 | [b2b-ai-last-mile-positioning-framework.md](../../../patterns/methodology-patterns/research-knowledge/b2b-ai-last-mile-positioning-framework.md) | 待多次验证后沉淀为正式模式 | ⏳ 待观察 |
 
@@ -109,4 +109,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [retrospective-agnes-free-api-learning-20260704](../retrospective-agnes-free-api-learning-20260704/README.md) — 同类Spec Mode+Sub-Agent委派任务复盘，本任务吸取其tasks.md标记规范经验，复用并验证了深度分析任务Spec工作流
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类Spec Mode+Sub-Agent委派任务复盘
 - 源任务spec目录：`analyze-volcengine-agentkit` — 本次任务的Spec三件套
-- 核心学习笔记：[volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) — 13章深度分析报告
+- 核心学习笔记：[volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) — 13章深度分析报告

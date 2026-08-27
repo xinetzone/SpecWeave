@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-queries"
 title: "GraphQL 查询语言"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/02-queries.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/02-queries.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "api", "query-language", "fields", "arguments", "aliases", "fragments", "variables", "directives", "mutations"]

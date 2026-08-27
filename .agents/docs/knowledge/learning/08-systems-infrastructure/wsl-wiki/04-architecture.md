@@ -2,11 +2,11 @@
 id: "wsl-wiki-04-architecture"
 title: "核心架构与进程模型"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/04-architecture.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "wsl2", "architecture", "hvsocket", "com", "mini-init", "plan9", "gns", "relay", "mermaid"]
 ---
-
 # 核心架构与进程模型
 
 ## 1. WSL2 三层架构概览

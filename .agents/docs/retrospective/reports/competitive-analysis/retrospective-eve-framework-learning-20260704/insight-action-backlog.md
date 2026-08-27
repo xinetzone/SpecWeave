@@ -65,7 +65,7 @@ ssot:
 - **执行方案**: 如需要，将对话中的分析输出整理为独立的学习笔记文档存入docs/knowledge/learning/
 - **DoD**: 学习笔记整理完成并归档
 - **执行结果**: ✅ 已完成（2026-08-04）——已沉淀为 **eve-wiki 结构化教程**（10章 + README，11个文件），位于 `docs/knowledge/learning/03-agent-platforms-tools/eve-wiki/`，覆盖产品定位、目录结构、生产级能力、进阶能力、对比选型、快速上手、工程理念、FAQ、术语表
-- **产出物**: [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md)
+- **产出物**: [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/README.md)
 - **提交**: 已完成（2026-08-04，含 v1.1 源码校准）
 
 ## 执行记录

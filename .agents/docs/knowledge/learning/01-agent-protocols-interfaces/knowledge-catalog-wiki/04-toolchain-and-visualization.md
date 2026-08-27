@@ -14,9 +14,8 @@ summary: "系统讲解Knowledge Catalog可视化系统的功能特性与技术�
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/04-toolchain-and-visualization.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/04-toolchain-and-visualization.toml"
 ---
-
 # 04 工具链与可视化系统
 
 > **本章定位说明**

@@ -14,9 +14,8 @@ summary: "客观呈现OKF的早期阶段风险、已知局限性，与8种常见
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/04-limitations-and-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/04-limitations-and-comparison.toml"
 ---
-
 # 04 局限性与方案对比
 
 > ⚠️ **理性看待OKF**：本教程在介绍OKF价值的同时，有责任客观呈现其局限性和风险。任何技术选型都应基于自身场景评估，不要因为"Google出品"或"AI新概念"就盲目追随。

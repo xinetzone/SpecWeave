@@ -129,7 +129,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 | docs/knowledge/learning/README.md | 添加 first-principles/ 目录的导航链接和跨领域专题区块 | ✅ 已更新 |
 | docs/retrospective/patterns/methodology-patterns/research-knowledge/README.md | 沉淀模式后更新索引 | ✅ 已更新 (commit 58e2b4a3 + 12daa22c) |
 | .agents/commands/README.md | 添加 first-principles.md 指令集入口 | ✅ 已更新 (commit 9ea2287e) |
-| docs/knowledge/learning/first-principles/README.md | 添加指令集交叉引用反向链接 | ✅ 已更新 (commit 65ce05b7) |
+| docs/knowledge/learning/00-essence-and-thinking/first-principles/README.md | 添加指令集交叉引用反向链接 | ✅ 已更新 (commit 65ce05b7) |
 
 ---
 

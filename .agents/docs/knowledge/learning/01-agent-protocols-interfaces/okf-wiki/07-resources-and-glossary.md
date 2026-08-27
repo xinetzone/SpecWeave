@@ -14,9 +14,8 @@ summary: "20+核心术语定义，完整的官方资源链接、相关标准链�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.toml"
 ---
-
 # 07 资源与术语表
 
 ## 7.1 核心术语表（Glossary）
@@ -93,8 +92,8 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-
 | OKF生态基建知识 | [okf-ecosystem-wiki](./okf-ecosystem-wiki/README.md) | OKF生态基建层系统知识：生态资源图谱、bundle分发注册机制、bundle工程化发布模板、okf-kit工具链命令速查 |
 | Agent Skills Wiki | [agent-skills-wiki](../agent-skills-wiki/README.md) | Skills是程序层，OKF是知识层，互补 |
 | Agent通信协议 | [agent-communication-protocols](../agent-communication-protocols/README.md) | MCP/A2A/ACP等Agent协议，OKF与MCP互补 |
-| Harness七组件 | [harness-seven-components-wiki](../../02-agent-engineering-methodology/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位 |
-| 七概念方法论 | [seven-concepts-prompt-wiki](../../02-agent-engineering-methodology/seven-concepts-prompt-wiki/README.md) | 本教程使用七概念方法论知识沉淀场景产出 |
+| Harness七组件 | [harness-seven-components-wiki](../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位 |
+| 七概念方法论 | [seven-concepts-prompt-wiki](../../02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.md) | 本教程使用七概念方法论知识沉淀场景产出 |
 | 接口/API/ABI/Protocol概念辨析 | [interface-api-abi-protocol-wiki](../interface-api-abi-protocol-wiki/README.md) | OKF本质是知识层的接口标准 |
 
 ## 7.6 延伸阅读建议

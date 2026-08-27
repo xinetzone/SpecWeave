@@ -25,7 +25,7 @@ _SCRIPT_DIR = Path(__file__).resolve().parent
 
 from constants import (
     SCRIPT_DIR, KNOWLEDGE_DIR, DOCS_DIR, OUTPUT_FILE,
-    CATEGORY_INDEX_FILE, TAG_INDEX_DIR, EXCLUDE_FILES, GENERATED_DIRS,
+    CATEGORY_INDEX_FILE, CATEGORY_INDEX_DIR, TAG_INDEX_DIR, EXCLUDE_FILES, GENERATED_DIRS,
     DEFAULT_META, DESC_TRUNCATE_LENGTH, REQUIRED_FIELDS,
 )
 
@@ -43,12 +43,32 @@ parse_frontmatter_unified = _lib_frontmatter.parse_frontmatter_unified
 
 TAG_BUCKETS = [
     ("01-0-9.md", "0-9"),
-    ("02-a-f.md", "A-F"),
-    ("03-g-l.md", "G-L"),
-    ("04-m-r.md", "M-R"),
-    ("05-s-z.md", "S-Z"),
-    ("06-other.md", "中文与其他"),
+    ("02-a.md", "A"),
+    ("03-b-c.md", "B-C"),
+    ("04-d-f.md", "D-F"),
+    ("05-g-l.md", "G-L"),
+    ("06-m-n.md", "M-N"),
+    ("07-o-p.md", "O-P"),
+    ("08-q-r.md", "Q-R"),
+    ("09-s-t.md", "S-T"),
+    ("10-u-z.md", "U-Z"),
+    ("11-other-symbols.md", "符号与其他"),
+    ("12-cjk-1.md", "中文一"),
+    ("13-cjk-2.md", "中文二"),
+    ("14-cjk-3.md", "中文三（含未分类）"),
+    ("15-cjk-4.md", "中文四"),
+    ("16-cjk-5.md", "中文五"),
 ]
+
+# 大分类子分片定义：顶层分类 -> [(分片文件名后缀, 包含的子目录前缀列表), ...]
+# 用于将超过阈值的大分类分片，按文件路径的二级目录前缀分发
+CATEGORY_SUBSHARDS = {
+    "learning": [
+        ("00-02", ("00-", "01-", "02-")),
+        ("03-04", ("03-", "04-")),
+        ("05-08", ("05-", "06-", "07-", "08-")),
+    ],
+}
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -314,27 +334,57 @@ def _top_level_category(category: str) -> str:
 
 
 def _get_top_level_hub_link(top_level: str) -> str:
-    """返回顶层分类在首页中的入口链接。"""
+    """返回顶层分类的入口链接（优先子目录README，其次分类分片，最后锚点）。"""
     hub_readme = KNOWLEDGE_DIR / top_level / "README.md"
     if hub_readme.exists():
         return _build_md_link(Path(top_level) / "README.md", top_level)
-    return _build_md_link(Path(f"category-index.md#{top_level.lower()}"), top_level)
+    # 链接到分类分片文件
+    return _build_md_link(Path("categories") / f"{top_level}.md", top_level)
 
 
 def _bucket_file_for_tag(tag: str) -> str:
-    """按标签首字符将标签分发到固定分片。"""
+    """按标签首字符将标签分发到细粒度分片，控制单文件大小。"""
     first = tag[:1].casefold()
+    cp = ord(tag[0])
     if first.isdigit():
         return "01-0-9.md"
-    if "a" <= first <= "f":
-        return "02-a-f.md"
-    if "g" <= first <= "l":
-        return "03-g-l.md"
-    if "m" <= first <= "r":
-        return "04-m-r.md"
-    if "s" <= first <= "z":
-        return "05-s-z.md"
-    return "06-other.md"
+    if first == 'a':
+        return "02-a.md"
+    if first in ('b', 'c'):
+        return "03-b-c.md"
+    if 'd' <= first <= 'f':
+        return "04-d-f.md"
+    if 'g' <= first <= 'l':
+        return "05-g-l.md"
+    if first in ('m', 'n'):
+        return "06-m-n.md"
+    if first in ('o', 'p'):
+        return "07-o-p.md"
+    if first in ('q', 'r'):
+        return "08-q-r.md"
+    if first in ('s', 't'):
+        return "09-s-t.md"
+    if 'u' <= first <= 'z':
+        return "10-u-z.md"
+    # 非拉丁字母、非数字
+    if cp < 0x3400:
+        # 符号、标点、拉丁文扩展、希腊文、西里尔文、日文假名等
+        return "11-other-symbols.md"
+    # CJK字符按码点5路分片，确保每片<80KB
+    if cp < 0x5B00:
+        # CJK Ext A + 早期CJK统一汉字 U+3400~U+5AFF
+        return "12-cjk-1.md"
+    if cp < 0x672A:
+        # U+5B00~U+6729（不含"未"U+672A）
+        return "13-cjk-2.md"
+    if cp < 0x6800:
+        # U+672A(未)~U+67FF，包含"未分类"标签（538条目）
+        return "14-cjk-3.md"
+    if cp < 0x7E00:
+        # U+6800~U+7DFF
+        return "15-cjk-4.md"
+    # U+7E00+：剩余CJK统一汉字、兼容汉字等
+    return "16-cjk-5.md"
 
 
 def _bucket_tag_index(tag_index: dict) -> dict:
@@ -482,50 +532,216 @@ def _generate_root_readme(entries: list, groups: dict, tag_index: dict, sorted_b
     _write_markdown(OUTPUT_FILE, lines)
 
 
-def _generate_category_index(entries: list, groups: dict) -> None:
-    """生成完整分类索引页。"""
+def _get_subshard_for_entry(top_level: str, path: Path) -> str | None:
+    """根据文件路径判断条目属于哪个子分片，返回子分片后缀；无匹配返回第一个分片。"""
+    subshards = CATEGORY_SUBSHARDS.get(top_level)
+    if not subshards:
+        return None
+    rel = str(path).replace("\\", "/")
+    parts = rel.split("/", 2)
+    if len(parts) < 2 or parts[0] != top_level:
+        return subshards[0][0]
+    sub_part = parts[1] if len(parts) > 1 else ""
+    for suffix, prefixes in subshards:
+        if any(sub_part.startswith(p) for p in prefixes):
+            return suffix
+    return subshards[0][0]  # 不匹配任何前缀时默认第一分片
+
+
+def _generate_category_shard_file(
+    file_path: Path,
+    title: str,
+    cat_entries: list,
+    link_prefix: str = "..",
+    extra_nav: list[str] | None = None,
+) -> None:
+    """生成单个分类分片文件内容（通用）。
+
+    Args:
+        link_prefix: 条目前缀路径。单文件分片用 ".."（categories/ → knowledge/），
+                     子分片（categories/top/）用 "../.."。
+    """
+    prefix = Path(link_prefix)
     lines = [
-        "# 分类总索引",
+        f"# {title}",
         "",
-        "- [返回知识库首页](README.md)",
-        "- [按标签检索](tags/README.md)",
-        "",
-        "## 统计摘要",
-        "",
-        f"- **总条目数**：{len(entries)}",
-        "",
-        "| 分类 | 数量 |",
-        "|------|------|",
+        f"- [返回分类总索引]({link_prefix}/category-index.md)",
+        f"- [返回知识库首页]({link_prefix}/README.md)",
+        f"- [按标签检索]({link_prefix}/tags/README.md)",
     ]
+    if extra_nav:
+        lines.extend(extra_nav)
+    lines.append("")
 
-    for category in sorted(groups.keys()):
-        lines.append(f"| {_escape_md(category)} | {len(groups[category])} |")
+    total = sum(len(items) for _, items in cat_entries)
+    lines.append(f"> 本分片收录 **{len(cat_entries)}** 个子分类，共 **{total}** 条条目。")
+    lines.append("")
 
-    lines.extend([
-        "",
-        "## 按类别浏览",
-        "",
-    ])
-
-    for category in sorted(groups.keys()):
-        cat_entries = groups[category]
-        lines.append(f"### {category}")
+    for cat, items in cat_entries:
+        depth = cat.count("/")
+        heading = "#" * (3 + depth)
+        lines.append(f"{heading} {cat}")
         lines.append("")
         lines.append("| 标题 | 摘要 | 日期 | 标签 |")
         lines.append("|------|------|------|------|")
-        for path, meta in cat_entries:
-            title = meta.get("title", path.stem)
+        for path, meta in items:
+            title_txt = meta.get("title", path.stem)
             summary = meta.get("summary", "")
             date = meta.get("date", "")
             tags = meta.get("tags", [])
-            link = _build_md_link(path, title)
+            link = _build_md_link(prefix / path, title_txt)
             lines.append(
                 f"| {link} | {_escape_md(summary)} | {_escape_md(date)} | {_escape_md(_format_tags(tags))} |"
             )
         lines.append("")
 
     _append_footer(lines)
+    _write_markdown(file_path, lines)
+
+
+def _generate_category_shard(top_level: str, categories: dict) -> None:
+    """生成单个顶层分类的分片文件（支持子分片）。"""
+    # 收集属于该顶层分类的所有子分类条目
+    cat_entries_all = []
+    for cat, items in sorted(categories.items()):
+        cat_top = cat.split("/", 1)[0]
+        if cat_top == top_level:
+            cat_entries_all.append((cat, items))
+
+    subshards = CATEGORY_SUBSHARDS.get(top_level)
+    if not subshards:
+        # 无子分片定义：单文件模式
+        _generate_category_shard_file(
+            CATEGORY_INDEX_DIR / f"{top_level}.md",
+            f"分类索引：{top_level}",
+            cat_entries_all,
+            link_prefix="..",
+        )
+        return
+
+    # ── 子分片模式 ──
+    subdir = CATEGORY_INDEX_DIR / top_level
+    subdir.mkdir(parents=True, exist_ok=True)
+
+    # 按文件路径将单个条目分发到子分片（不按category组，因为很多条目category只有顶层名）
+    subshard_entries: dict[str, list] = {suffix: [] for suffix, _ in subshards}
+    for cat, items in cat_entries_all:
+        for path, meta in items:
+            suffix = _get_subshard_for_entry(top_level, path)
+            subshard_entries[suffix].append((cat, path, meta))
+
+    # 生成子分片Hub页 (README.md) — Hub在子目录中，link_prefix="../.."
+    hub_lines = [
+        f"# 分类索引：{top_level}",
+        "",
+        "- [返回分类总索引](../category-index.md)",
+        "- [返回知识库首页](../../README.md)",
+        "- [按标签检索](../../tags/README.md)",
+        "",
+        f"本分类条目较多，已按主题拆分为 **{len(subshards)}** 个子分片：",
+        "",
+        "| 分片 | 范围 | 条目数 | 链接 |",
+        "|------|------|--------|------|",
+    ]
+    shard_descriptions = {
+        "00-02": "本质与思维 · 协议与接口 · 工程方法论",
+        "03-04": "平台与工具 · 文档与标记",
+        "05-08": "AI多模态 · 商业趋势 · 厂商产品 · 系统基础设施",
+    }
+    for suffix, _label in subshards:
+        entries = subshard_entries[suffix]
+        desc = shard_descriptions.get(suffix, suffix)
+        link = _build_md_link(Path(f"{suffix}.md"), f"{top_level}-{suffix}")
+        hub_lines.append(f"| {suffix} | {desc} | {len(entries)} | {link} |")
+
+    hub_lines.append("")
+    _append_footer(hub_lines)
+    _write_markdown(subdir / "README.md", hub_lines)
+
+    # 生成各子分片文件 — 子分片在子目录中，link_prefix="../.."
+    shard_labels = {
+        "00-02": "本质与思维 · 协议与接口 · 工程方法论",
+        "03-04": "平台与工具 · 文档与标记",
+        "05-08": "AI多模态 · 商业趋势 · 厂商产品 · 系统基础设施",
+    }
+    for suffix, _prefixes in subshards:
+        raw_entries = subshard_entries[suffix]
+        # 在子分片内按category分组
+        cat_map: dict[str, list] = defaultdict(list)
+        for cat, path, meta in raw_entries:
+            cat_map[cat].append((path, meta))
+        sub_cat_entries = sorted(cat_map.items())
+        label_text = shard_labels.get(suffix, suffix)
+        nav_back = [f"- [返回{top_level}分片索引](README.md)"]
+        _generate_category_shard_file(
+            subdir / f"{suffix}.md",
+            f"分类索引：{top_level} · {label_text}",
+            sub_cat_entries,
+            link_prefix="../..",
+            extra_nav=nav_back,
+        )
+
+
+def _generate_category_index(entries: list, groups: dict) -> None:
+    """生成分类索引Hub页及各分片文件。"""
+    top_level_counts = defaultdict(int)
+    top_level_subcats = defaultdict(int)
+    for category, items in groups.items():
+        top = category.split("/", 1)[0]
+        top_level_counts[top] += len(items)
+        top_level_subcats[top] += 1
+
+    # ── Hub页 ──
+    lines = [
+        "# 分类总索引",
+        "",
+        "- [返回知识库首页](README.md)",
+        "- [按标签检索](tags/README.md)",
+        "",
+        "分类索引已按顶层分类拆分为独立分片，避免单文件过大；条目较多的分类进一步拆分为子分片。先在下表选择分类，再进入对应分片查看详细条目。",
+        "",
+        "## 统计摘要",
+        "",
+        f"- **总条目数**：{len(entries)}",
+        f"- **分类路径数**：{len(groups)}",
+        f"- **顶层分类数**：{len(top_level_counts)}",
+        "",
+        "| 顶层分类 | 子分类数 | 条目数 | 入口 |",
+        "|----------|----------|--------|------|",
+    ]
+
+    for top_level in sorted(top_level_counts, key=lambda x: -top_level_counts[x]):
+        count = top_level_counts[top_level]
+        subcats = top_level_subcats[top_level]
+        if top_level in CATEGORY_SUBSHARDS:
+            # 子分片模式：链接到子目录Hub
+            shard_link = _build_md_link(Path("categories") / top_level / "README.md", top_level)
+        else:
+            shard_link = _build_md_link(Path("categories") / f"{top_level}.md", top_level)
+        lines.append(f"| {_escape_md(top_level)} | {subcats} | {count} | {shard_link} |")
+
+    lines.append("")
+    _append_footer(lines)
     _write_markdown(CATEGORY_INDEX_FILE, lines)
+
+    # ── 分片文件 ──
+    CATEGORY_INDEX_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 清理旧的分片文件（单文件模式）
+    new_shard_files = {f"{tl}.md" for tl in top_level_counts if tl not in CATEGORY_SUBSHARDS}
+    new_shard_dirs = {tl for tl in top_level_counts if tl in CATEGORY_SUBSHARDS}
+    for f in CATEGORY_INDEX_DIR.glob("*.md"):
+        if f.name not in new_shard_files:
+            f.unlink()
+    # 清理不再需要的子分片目录
+    for d in CATEGORY_INDEX_DIR.iterdir():
+        if d.is_dir() and d.name not in new_shard_dirs:
+            import shutil
+            shutil.rmtree(d)
+
+    # 生成各分片
+    for top_level in top_level_counts:
+        _generate_category_shard(top_level, groups)
 
 
 def _generate_tag_indexes(tag_index: dict) -> None:
@@ -612,9 +828,13 @@ def generate_readme(entries: list):
     _generate_category_index(entries, groups)
     _generate_tag_indexes(tag_index)
 
+    # 统计顶层分类数
+    _top_levels = set(cat.split("/", 1)[0] for cat in groups.keys())
+
     print(f"[完成] 入口页已生成：{OUTPUT_FILE}")
-    print(f"[完成] 分类索引已生成：{CATEGORY_INDEX_FILE}")
-    print(f"[完成] 标签索引目录已生成：{TAG_INDEX_DIR}")
+    print(f"[完成] 分类索引Hub已生成：{CATEGORY_INDEX_FILE}")
+    print(f"[完成] 分类分片目录已生成：{CATEGORY_INDEX_DIR}（{len(_top_levels)} 个分片）")
+    print(f"[完成] 标签索引目录已生成：{TAG_INDEX_DIR}（{len(TAG_BUCKETS)} 个分片）")
     print(f"  - 总条目数：{len(entries)}")
     print(f"  - 分类数：{len(groups)}")
     print(f"  - 标签数：{len(tag_index)}")

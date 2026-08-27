@@ -11,6 +11,9 @@ related_patterns:
   -   - "usb-hid-emulation-plug-and-play"
   -   - "local-capability-guarantee"
   -   - "ipkvm-bypass-control"
+  -   - "hardware-minimal-software-complex"
+  -   - "zero-logic-client-desktop-app"
+  -   - "zero-config-core-enhancement"
 ---
 > **提炼自**：向日葵AI开发者生态系统学习萃取 —— 被控端零更新兼容性设计
 
@@ -217,3 +220,5 @@ AI Agent → MCP协议（新）→ 控制端 → 向日葵远控协议（旧）�
 | [ipkvm-bypass-control.md](ipkvm-bypass-control.md) | 理念一致 | IPKVM硬件旁路控制也是"不依赖被控端软件"的理念——通过HDMI+USB物理接入，被控端零安装 |
 | [local-capability-guarantee.md](../methodology-patterns/product-growth/local-capability-guarantee.md) | 产品策略 | 本地能力保障是产品层面的策略（核心能力本地可用），本模式是架构层面的实现（新能力兼容存量客户端） |
 | [hardware-minimal-software-complex.md](../methodology-patterns/product-growth/hardware-minimal-software-complex.md) | 理念一致 | 硬件最小化软件复杂度和本模式都是"把复杂度放在能快速迭代的一侧，让不能/不易升级的一侧保持简单稳定" |
+| [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 同族（零负担家族·逻辑维度） | "能力在服务端实现、客户端零逻辑"与"控制端实现、被控端零更新"同源于同一"复杂度上移·受限侧零负担"抽象 |
+| [zero-config-core-enhancement.md](zero-config-core-enhancement.md) | 同族（零负担家族·配置维度） | 本模式让被控端"零更新"、零配置核心让核心功能"零配置"，都是让不可迁移成本的一侧保持零负担 |

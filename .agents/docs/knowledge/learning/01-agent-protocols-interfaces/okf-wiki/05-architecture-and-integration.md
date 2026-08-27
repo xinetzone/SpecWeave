@@ -14,9 +14,8 @@ summary: "OKF作为Agent四层架构独立知识层的定位，与MCP连接层�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/05-architecture-and-integration.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/05-architecture-and-integration.toml"
 ---
-
 # 05 架构定位与Agent集成
 
 ## 5.1 Agent技术栈四层架构

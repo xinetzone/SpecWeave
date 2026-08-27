@@ -12,6 +12,7 @@ from ..python310_version_check import enforce_python310
 enforce_python310()
 
 import os
+import re
 from pathlib import Path
 
 from .constants import TEMPLATE_LINK_TEXTS, TEMPLATE_URL_PATTERNS
@@ -139,7 +140,8 @@ def is_template_link(text: str, url: str) -> bool:
 def is_code_fence_context(content: str, pos: int) -> bool:
     """判断位置 pos 是否在代码块或行内代码内部（避免修改代码示例中的链接）。"""
     before = content[:pos]
-    fence_count = before.count("```")
+    # 只统计行首的围栏标记（```），排除行内代码中的 ``` 干扰
+    fence_count = len(re.findall(r'^[ \t]*`{3,}', before, re.MULTILINE))
     if fence_count % 2 == 1:
         return True
     line_start = before.rfind("\n") + 1

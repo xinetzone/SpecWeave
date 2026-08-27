@@ -1,0 +1,47 @@
+{
+  "gil_enabled": true,
+  "python": "3.14.3 | packaged by Anaconda, Inc. | (main, Feb 24 2026, 22:45:56) [MSC v.1942 64 bit (AMD64)]",
+  "soabi": "cp314-win_amd64",
+  "serial_s": 0.4535,
+  "rows": [
+    {
+      "workers": 1,
+      "serial_s": 0.4535
+    },
+    {
+      "workers": 1,
+      "thread_s": 0.4061,
+      "pool_s": 0.4056,
+      "thread_speedup": 1.117,
+      "pool_speedup": 1.118
+    },
+    {
+      "workers": 2,
+      "thread_s": 0.4089,
+      "pool_s": 0.3992,
+      "thread_speedup": 1.109,
+      "pool_speedup": 1.136
+    },
+    {
+      "workers": 4,
+      "thread_s": 0.4011,
+      "pool_s": 0.3972,
+      "thread_speedup": 1.131,
+      "pool_speedup": 1.142
+    },
+    {
+      "workers": 8,
+      "thread_s": 0.3928,
+      "pool_s": 0.3926,
+      "thread_speedup": 1.154,
+      "pool_speedup": 1.155
+    },
+    {
+      "workers": 12,
+      "thread_s": 0.3944,
+      "pool_s": 0.4007,
+      "thread_speedup": 1.15,
+      "pool_speedup": 1.132
+    }
+  ]
+}

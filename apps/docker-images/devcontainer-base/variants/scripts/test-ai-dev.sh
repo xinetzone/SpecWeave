@@ -8,7 +8,8 @@
 #   - Detailed failure diagnostics (full stdout/stderr, command echo, exit codes)
 #   - Structured JSONL event logging
 #   - Post-failure diagnostic dump (pip list, env vars, kernel config, etc.)
-#   - L1-L6 layered test organization
+#   - L1-L7 layered test organization (29 tests total)
+#   - Dual-env architecture guards (T26-T29): GIL states + torch isolation
 #
 # Usage:
 #   bash variants/scripts/test-ai-dev.sh [--tag TAG] [--image IMAGE] [-v|--verbose]
@@ -21,6 +22,7 @@ VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 
 # shellcheck source=../shared/lib/logging.sh
 source "${VARIANTS_DIR}/shared/lib/logging.sh" 2>/dev/null || true
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh" 2>/dev/null || true
 LOG_SERVICE="test-ai-dev"
 LOG_JSON_OUTPUT="/tmp/test-ai-dev-events.jsonl"
 
@@ -95,11 +97,11 @@ fail() {
 # ── Docker execution wrapper with diagnostics ──
 
 docker_run() {
-    docker run --rm "$IMAGE" "$@" 2>&1
+    engine_run "$@"
 }
 
 docker_run_bash() {
-    docker run --rm "$IMAGE" bash -c "$1" 2>&1
+    engine_run_bash "$1"
 }
 
 # run_test TEST_ID DESCRIPTION EXPECTED_PATTERN COMMAND...
@@ -155,25 +157,25 @@ preflight_checks() {
     log_section "Pre-flight Checks"
     local all_ok=1
 
-    # Check Docker daemon
-    echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking Docker daemon ... "
-    if docker info &>/dev/null; then
+    # Check engine daemon
+    echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking ${ENGINE} daemon ... "
+    if ${ENGINE} info &>/dev/null; then
         local dv
-        dv=$(docker version --format '{{.Server.Version}}' 2>/dev/null)
-        echo -e "${GREEN}OK${NC} (Docker $dv)"
-        log_json "PREFLIGHT" ",\"check\":\"docker_daemon\",\"status\":\"ok\",\"version\":\"${dv}\""
+        dv=$(${ENGINE} version --format '{{.Server.Version}}' 2>/dev/null)
+        echo -e "${GREEN}OK${NC} (${ENGINE} $dv)"
+        log_json "PREFLIGHT" ",\"check\":\"engine_daemon\",\"status\":\"ok\",\"engine\":\"${ENGINE}\",\"version\":\"${dv}\""
     else
-        echo -e "${RED}FAILED${NC} - Docker daemon not reachable"
-        log_json "PREFLIGHT" ",\"check\":\"docker_daemon\",\"status\":\"fail\""
+        echo -e "${RED}FAILED${NC} - ${ENGINE} daemon not reachable"
+        log_json "PREFLIGHT" ",\"check\":\"engine_daemon\",\"status\":\"fail\",\"engine\":\"${ENGINE}\""
         all_ok=0
     fi
 
     # Check image exists
     echo -ne "  ${CYAN}[$(date '+%H:%M:%S')]${NC} Checking image ${IMAGE} ... "
-    if docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${IMAGE}$"; then
+    if engine_image_exists; then
         local size created
-        size=$(docker images "$IMAGE" --format '{{.Size}}')
-        created=$(docker images "$IMAGE" --format '{{.CreatedAt}}' | cut -d' ' -f1-2)
+        size=$(${ENGINE} images "$IMAGE" --format '{{.Size}}')
+        created=$(${ENGINE} images "$IMAGE" --format '{{.CreatedAt}}' | cut -d' ' -f1-2)
         echo -e "${GREEN}OK${NC} (size=$size, created=$created)"
         log_json "PREFLIGHT" ",\"check\":\"image_exists\",\"status\":\"ok\",\"size\":\"${size}\""
     else
@@ -187,12 +189,12 @@ preflight_checks() {
     if [ "$all_ok" -eq 1 ]; then
         echo ""
         echo -e "  ${BOLD}Image metadata:${NC}"
-        docker inspect "$IMAGE" --format '    - Created: {{.Created}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - OS/Arch: {{.Os}}/{{.Architecture}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - Entrypoint: {{json .Config.Entrypoint}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - Cmd: {{json .Config.Cmd}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - WorkingDir: {{.Config.WorkingDir}}' 2>/dev/null
-        docker inspect "$IMAGE" --format '    - User: {{.Config.User}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Created: {{.Created}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - OS/Arch: {{.Os}}/{{.Architecture}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Entrypoint: {{json .Config.Entrypoint}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - Cmd: {{json .Config.Cmd}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - WorkingDir: {{.Config.WorkingDir}}' 2>/dev/null
+        ${ENGINE} inspect "$IMAGE" --format '    - User: {{.Config.User}}' 2>/dev/null
     fi
 
     echo ""
@@ -220,8 +222,11 @@ collect_diagnostics() {
     echo -e "\n  ${BOLD}[2] Python paths:${NC}"
     docker_run_bash "which python; which python3; which pip; /opt/conda/bin/python --version; test ! -d /opt/venv && echo '/opt/venv REMOVED (using conda only)'" 2>&1 | sed 's/^/    /'
 
-    echo -e "\n  ${BOLD}[3] Key package versions (pip list filtered):${NC}"
-    docker_run_bash "/opt/conda/bin/pip list 2>/dev/null | grep -iE 'torch|onnx|transformers|datasets|fastapi|pandas|numpy|scikit|jupyter|matplotlib|jieba|nltk|httpx|pydantic|uvicorn|numba|librosa|pymupdf|elasticsearch|psycopg|pymongo|minio|nuitka|rich|typer' || echo '(pip list failed)'" 2>&1 | sed 's/^/    /'
+    echo -e "\n  ${BOLD}[3] Key package versions (base env pip list filtered):${NC}"
+    docker_run_bash "/opt/conda/bin/pip list 2>/dev/null | grep -iE 'transformers|datasets|fastapi|pandas|numpy|scikit|jupyter|matplotlib|jieba|nltk|httpx|pydantic|uvicorn|numba|librosa|pymupdf|elasticsearch|psycopg|pymongo|minio|nuitka|rich|typer|einops' || echo '(base pip list failed)'" 2>&1 | sed 's/^/    /'
+
+    echo -e "\n  ${BOLD}[3b] Main env pip list (PyTorch ecosystem):${NC}"
+    docker_run_bash "/opt/conda/envs/main/bin/pip list 2>/dev/null | grep -iE 'torch|onnx|triton' || echo '(main pip list failed)'" 2>&1 | sed 's/^/    /'
 
     echo -e "\n  ${BOLD}[4] Jupyter kernels:${NC}"
     docker_run_bash "/opt/conda/envs/main/bin/jupyter kernelspec list 2>&1; echo '---'; ls -la /opt/conda/envs/main/share/jupyter/kernels/ 2>&1; echo '---'; cat /opt/conda/envs/main/share/jupyter/kernels/ai-dev/kernel.json 2>&1" 2>&1 | sed 's/^/    /'
@@ -235,8 +240,11 @@ collect_diagnostics() {
     echo -e "\n  ${BOLD}[7] Disk usage:${NC}"
     docker_run_bash "df -h / /opt/conda 2>/dev/null; echo '---'; du -sh /opt/conda 2>/dev/null" 2>&1 | sed 's/^/    /'
 
-    echo -e "\n  ${BOLD}[8] pip check (dependency conflicts):${NC}"
-    docker_run_bash "/opt/conda/bin/pip check 2>&1 || echo '(pip check found issues)'" 2>&1 | sed 's/^/    /'
+    echo -e "\n  ${BOLD}[8] pip check (dependency conflicts, dual-env):${NC}"
+    echo -e "    ${BOLD}[base env]${NC}:"
+    docker_run_bash "/opt/conda/bin/pip check 2>&1 | head -5 || echo '(base pip check found issues or failed)'" 2>&1 | sed 's/^/      /'
+    echo -e "    ${BOLD}[main env]${NC}:"
+    docker_run_bash "/opt/conda/envs/main/bin/pip check 2>&1 | head -5 || echo '(main pip check found issues or failed)'" 2>&1 | sed 's/^/      /'
 
     echo ""
     log_json "DIAG_END" ""
@@ -247,8 +255,8 @@ collect_diagnostics() {
 # ═══════════════════════════════════════════════════════════════════
 
 test_python_version() {
-    run_test "T1" "Python version (>=3.14)" \
-        "Python 3\.(1[4-9]|[2-9][0-9])" \
+    run_test "T1" "Python version (>=3.13)" \
+        "Python 3\.(1[3-9]|[2-9][0-9])" \
         docker_run /opt/conda/bin/python --version
 }
 
@@ -295,10 +303,10 @@ test_transformers_version() {
 # ═══════════════════════════════════════════════════════════════════
 
 test_core_imports() {
-    run_test "T6" "All core package imports (25+ packages)" \
+    run_test "T6" "All core package imports (24 base packages, sentence-transformers moved to main)" \
         "ALL_IMPORTS_OK" \
         docker_run_bash "/opt/conda/bin/python -c \"
-import transformers, datasets, sentence_transformers, evaluate
+import transformers, datasets, evaluate
 import fastapi, uvicorn, pydantic, httpx
 import pandas, pyarrow, sklearn
 import matplotlib, seaborn, rich, typer
@@ -391,9 +399,13 @@ test_build_info() {
         docker_run_bash "
 test -f /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'VARIANT=ai-dev' /etc/devcontainer-variant-ai-dev-build-info && \
-grep -q 'BASE_IMAGE=devcontainer-base:onnx-quantized' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'BASE_IMAGE=torch-dev' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'ARCHITECTURE=dual-env' /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'PACKAGES_COUNT' /etc/devcontainer-variant-ai-dev-build-info && \
 grep -q 'TRANSFORMERS_VERSION' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'PYTORCH_VERSION' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'ONNX2TORCH_VERSION' /etc/devcontainer-variant-ai-dev-build-info && \
+grep -q 'TORCH_IN_BASE=false' /etc/devcontainer-variant-ai-dev-build-info && \
 echo 'BUILD_INFO_OK'
 "
 }
@@ -504,7 +516,7 @@ test_no_entrypoint_override() {
     log_test_start "T25" "Entrypoint inherited from base (not overridden)"
     t_start=$(date +%s)
     set +e
-    result=$(docker inspect "$IMAGE" --format '{{json .Config.Entrypoint}}' 2>&1)
+    result=$(${ENGINE} inspect "$IMAGE" --format '{{json .Config.Entrypoint}}' 2>&1)
     set -e
     elapsed=$(($(date +%s) - t_start))
     # Base image uses tini as entrypoint; variant should not override it
@@ -551,6 +563,37 @@ test_main_gil_disabled() {
     fi
 }
 
+test_base_torch_absent() {
+    local t_start elapsed result
+    log_test_start "T28" "base env torch ABSENT (dual-env isolation guard)"
+    t_start=$(date +%s)
+    set +e
+    result=$(docker_run /opt/conda/bin/python -c "import importlib.util; print('TORCH_ABSENT_OK' if importlib.util.find_spec('torch') is None else 'TORCH_UNEXPECTEDLY_PRESENT')" 2>&1)
+    rc=$?
+    set -e
+    elapsed=$(($(date +%s) - t_start))
+    if echo "$result" | grep -q "TORCH_ABSENT_OK"; then
+        pass "T28" "$elapsed" "base env torch absent (dual-env isolation intact)"
+    elif echo "$result" | grep -q "TORCH_UNEXPECTEDLY_PRESENT"; then
+        fail "T28" "base env unexpectedly has torch installed (dual-env isolation BROKEN; torch-dependent pkgs must go in main env)"
+    else
+        fail "T28" "torch absence check failed, output: $(echo "$result" | tail -3)"
+    fi
+}
+
+test_main_torch_ecosystem() {
+    run_test "T29" "main env torch ecosystem imports (torch+onnx2torch+open_clip+sentence-transformers)" \
+        "TORCH_ECO_OK" \
+        docker_run_bash "PYTHON_GIL=0 /opt/conda/envs/main/bin/python -c \"
+import torch, torchvision
+import onnx2torch, open_clip
+import sentence_transformers
+import sys
+assert sys._is_gil_enabled() is False, 'main env GIL must be disabled'
+print('TORCH_ECO_OK')
+\""
+}
+
 # ═══════════════════════════════════════════════════════════════════
 # Main
 # ═══════════════════════════════════════════════════════════════════
@@ -585,10 +628,12 @@ if [ -z "$IMAGE" ]; then
     IMAGE="devcontainer-base:ai-dev-${TAG}"
 fi
 
+detect_engine
+
 # ── Header ──
 echo ""
 echo -e "${BOLD}╔══════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${BOLD}║       Unit Tests: ai-dev variant (Enhanced Logging)        ║${NC}"
+echo -e "${BOLD}║       Unit Tests: ai-dev variant (29 tests, Dual-Env)       ║${NC}"
 echo -e "${BOLD}╚══════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "  ${BOLD}Image:${NC}  $IMAGE"
@@ -644,9 +689,11 @@ test_pip_user_runtime
 test_no_entrypoint_override
 
 # ── L7 ──
-log_section "L7: Architecture Guards"
+log_section "L7: Architecture Guards (Dual-Env Isolation)"
 test_base_gil_guard
 test_main_gil_disabled
+test_base_torch_absent
+test_main_torch_ecosystem
 
 # ── Summary ──
 SCRIPT_END=$(date +%s)

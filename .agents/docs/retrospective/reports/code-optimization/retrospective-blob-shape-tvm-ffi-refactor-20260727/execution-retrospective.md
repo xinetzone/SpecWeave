@@ -10,7 +10,7 @@ date: 2026-07-27
 
 ### 1.1 初始需求
 
-用户在 [architecture-map.md:58](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/.agents/architecture-map.md#L58-L58) 中指出，Blob 类当前使用 `vector<int> shape_` 存储张量形状存在设计不足，建议评估 [tvm-ffi/include/tvm/ffi/container](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/container) 目录下的容器类作为替代方案。
+用户在 [architecture-map.md:58](../../../../../../projects/xuanspace/vendor/caffe/.agents/architecture-map.md#L58-L58) 中指出，Blob 类当前使用 `vector<int> shape_` 存储张量形状存在设计不足，建议评估 [tvm-ffi/include/tvm/ffi/container](../../../../../../projects/xuanspace/vendor/tvm-ffi/include/tvm/ffi/container) 目录下的容器类作为替代方案。
 
 ### 1.2 任务目标
 

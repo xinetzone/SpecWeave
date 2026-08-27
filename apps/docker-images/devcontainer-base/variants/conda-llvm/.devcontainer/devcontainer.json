@@ -1,0 +1,91 @@
+{
+  "name": "Conda LLVM (conda-llvm)",
+  "image": "devcontainer-base:conda-llvm-latest",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "devuser",
+
+  "forwardPorts": [22, 8888],
+  "portsAttributes": {
+    "22": { "label": "SSH", "onAutoForward": "silent" },
+    "8888": { "label": "JupyterLab", "onAutoForward": "openBrowser" }
+  },
+
+  "containerEnv": {
+    "USER_PASSWORD": "dev",
+    "JUPYTER_TOKEN": "dev",
+    "TZ": "Asia/Shanghai",
+    "GRANT_SUDO": "yes",
+    "WORKSPACE_CHOWN_MODE": "named-only",
+    "PYTHON_GIL": "0",
+    "CCACHE_DIR": "/ccache",
+    "CCACHE_MAXSIZE": "5G",
+    "CCACHE_COMPRESS": "1"
+  },
+
+  "runArgs": [
+    "--privileged",
+    "--security-opt", "seccomp=unconfined",
+    "--cap-add=SYS_PTRACE",
+    "--shm-size=4g"
+  ],
+
+  "mounts": [
+    "source=devcontainer-pip-cache,target=/root/.cache/pip,type=volume",
+    "source=devcontainer-conda-pkgs,target=/opt/conda/pkgs,type=volume",
+    "source=devcontainer-ccache,target=/ccache,type=volume",
+    "source=docker-data-vol,target=/var/lib/docker,type=volume"
+  ],
+
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-toolsai.jupyter",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker",
+        "editorconfig.editorconfig",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "xaver.clang-format",
+        "twxs.cmake",
+        "ms-vscode.cmake-tools",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/opt/conda/envs/main/bin/python",
+        "python.terminal.activateEnvironment": false,
+        "python.analysis.typeCheckingMode": "basic",
+        "jupyter.jupyterServerType": "local",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": { "path": "/bin/bash", "args": ["-l"] }
+        },
+        "files.eol": "\n",
+        "editor.formatOnSave": true,
+        "C_Cpp.default.compilerPath": "/opt/conda/envs/main/bin/clang",
+        "cmake.cmakePath": "/opt/conda/envs/main/bin/cmake",
+        "[python]": {
+          "editor.tabSize": 4,
+          "editor.insertSpaces": true
+        },
+        "[c]": { "editor.tabSize": 2 },
+        "[cpp]": { "editor.tabSize": 2 },
+        "[cmake]": { "editor.tabSize": 2 }
+      }
+    }
+  },
+
+  "postCreateCommand": "/opt/conda/envs/main/bin/python -c \"import sys;print(f'✅ LLVM/Clang + Python {sys.version.split()[0]}, GIL disabled, ccache at /ccache')\" && llvm-config --version && clang --version | head -1 && cmake --version | head -1",
+
+  "postStartCommand": "echo 'Container ready | SSH: devuser@localhost:<port> (pw=dev) | JupyterLab: http://localhost:8888?token=dev | ccache: /ccache (persisted)'",
+
+  "shutdownAction": "stopContainer"
+}

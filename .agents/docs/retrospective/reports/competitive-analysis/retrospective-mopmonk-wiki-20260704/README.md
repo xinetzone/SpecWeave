@@ -52,13 +52,13 @@ template_upgrade: "2026-07-06 v1.2"
 | 文件 | 路径 | 行数 |
 |------|------|------|
 | 索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | - |
-| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/00-overview.md) | - |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/01-core-concepts.md) | - |
-| MiniMax M3 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/02-minimax-m3.md) | - |
-| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/03-core-technologies.md) | - |
-| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/04-learning-guide.md) | - |
-| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/05-faq.md) | - |
-| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki/06-resources.md) | - |
+| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| MiniMax M3 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - |
 | Spec定义 | [spec.md](../../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |

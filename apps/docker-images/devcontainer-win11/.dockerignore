@@ -1,0 +1,50 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+!config/**
+README.md
+CHANGELOG.md
+docs/
+
+# Scripts not needed in build context (only scripts/dockerfile/ is used)
+scripts/build.ps1
+scripts/build.sh
+scripts/start.ps1
+scripts/healthcheck.ps1
+examples/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temp
+*.tmp
+*.bak
+*.log
+
+# Workspace (will be mounted at runtime)
+workspace/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# CI
+.github/
+.ci/
+
+# .agents (AI meta directory, not needed in image)
+.agents/

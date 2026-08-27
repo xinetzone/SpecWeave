@@ -21,6 +21,15 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
 | [provenance-driven-trust.md](provenance-driven-trust.md) | 溯源驱动信任：无人值守系统的机器可验证信任基础设施——内容校验码+仅追加日志+机器可验证Sign-off凭证+自积累知识库，信任建立在不可篡改溯源链而非智能体自我声明之上 | L1-draft | 无人值守自主系统、AI辅助软件工程、DevOps流水线、自动化内容生成、供应链安全 |
 | [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
+| [knowledge-as-code-paradigm.md](knowledge-as-code-paradigm.md) | 知识即代码：软件工程范式向知识管理迁移法，复用Git/PR/CI/CR等成熟实践而非重新发明，Docs as Code的AI时代扩展版 | L1 实验性 | AI Agent知识系统、技术团队知识库、需要可审计可追溯的文档体系 |
+| [verifiable-knowledge-claim.md](verifiable-knowledge-claim.md) | 可验证知识声明：自然语言描述→可执行+可验证规范，runtime+parameters+executor+attester五元组，借鉴密码学"不信任只验证"思想消除Agent计算幻觉 | L1 实验性 | AI Agent消费的指标体系、数据质量规则、合规检查、高可信度知识系统 |
+| [trust-first-metadata.md](trust-first-metadata.md) | 信任优先元数据：AI原生知识体系的字段设计优先级倒置——信任/来源/生命周期字段为一等公民，三级Trust Tier（unverified→machine-confirmed→human-reviewed），禁止Agent自证可信 | L1 实验性 | AI Agent知识库/RAG系统、人机协作知识管理、元数据schema设计、数据目录/治理平台 |
+| [provenance-self-contained.md](provenance-self-contained.md) | 溯源自包含：知识包脱离宿主仓库的可移植分发，溯源资源引用改为包内相对路径+登记唯一权威信源，脱离仓库仍自洽可离线校验 | L1-draft | 知识包/bundle打包分发、离线知识库、可移植溯源分发、单包随附溯源交付 |
+| [agent-knowledge-graph-navigation.md](agent-knowledge-graph-navigation.md) | Agent知识图谱导航：三层索引+Frontmatter预过滤+图结构显式链接，让Agent像浏览器加载网页一样分层导航知识而非一次性全量加载，token消耗降低60-80%，经 okf-kit v0.3.3 实现二次验证 | L2 已验证 | AI Agent知识库/知识Bundle/RAG文档组织、面向Agent消费的文档系统、MCP工具文档 |
+| [zero-config-core-enhancement.md](zero-config-core-enhancement.md) | 零配置核心+可选增强降级：核心功能（本质价值）零凭据零配置开箱即用，增强功能（AI/云端/高级检索）可选并优雅降级，消除"不配置就完全不能用"的冷启动问题，经 okf-kit v0.3.3 零Key实践验证 | L1 实验性 | 开发者工具/CLI/SDK/Agent工具设计、以低试入门槛获客的开源/商业工具 |
+| [default-scope-explicit-expansion.md](default-scope-explicit-expansion.md) | 默认范围收敛·显式放开：边界可控的遍历/搜索/授权设计模式，默认收敛到最小充分范围，显式参数才放开边界，避免爬虫/扫描器/查询无意识扩散失控，经 okf-kit v0.3.3 爬取 scope 实践验证 | L1 实验性 | 爬虫/站点镜像、递归扫描、批量查询、授权系统、任何「无参数就可能扩散」的CLI/API |
+| [io-boundary-pure-function-core.md](io-boundary-pure-function-core.md) | IO边界抽象隔离·纯函数核心：IO适配层与核心业务逻辑解耦的设计模式，核心写成纯函数（零副作用、离线可测），IO实现通过抽象接口可插拔替换，经 okf-kit v0.3.3 Fetcher 抽象层实践验证 | L1 实验性 | 爬虫/数据存取/第三方服务集成等需要多后端/离线单测的系统 |
+| [content-fingerprint-incremental-sync.md](content-fingerprint-incremental-sync.md) | 内容指纹变更检测·增量同步：基于SHA256内容哈希而非时间戳判断数据变更，指纹不变则跳过写入，产出干净Git diff，经 okf-kit v0.3.3 Markdown SHA256增量同步实践验证 | L1 实验性 | 爬虫/站点镜像结果同步、知识库增量更新、版本控制友好的数据管道 |
 | [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
 | [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
 | [iot-device-category-mapping.md](iot-device-category-mapping.md) | IoT 设备分类到平台映射，实现设备自动发现和实体创建 | L1 实验性 | IoT 平台设备发现、多设备类型支持 |
@@ -46,6 +55,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
 | [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
 | [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
+| [agent-workspace-template.md](agent-workspace-template.md) | 智能体工作区枢纽模板：从成熟体系剥离项目特定内容+参数化占位符，产出可复制到新项目的通用脚手架（模板 AGENTS.md + 精简 .agents/ 骨架 + 模式文档） | L1 实验性 | 新项目引导智能体工作区、多项目治理体系统一、成熟体系复用萃取 |
 | [dependency-shimming-layer.md](dependency-shimming-layer.md) | 依赖裁剪适配层：compat/头文件shim零侵入替换重依赖，依赖四分类法+三层shim（别名/内联/空桩）+渐进式裁剪，源文件零修改即可从10依赖降到3依赖 | L2 已验证 | 大型C++库裁剪、开源fork适配、跨平台移植、微服务拆分防腐层、渐进式重构 |
 | [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
 | [zerocopy-cow-readwrite-separation.md](zerocopy-cow-readwrite-separation.md) | 零拷贝COW读写分离模式：const/non-const编译期区分读写意图+引用计数O(1)共享+写时自动克隆+分层增量上线+双重开关回退，在读多写少场景实现性能与安全的平衡 | L2 已验证 | 深度学习框架张量传递、大对象IPC、消息队列广播、协作文档编辑、不可变数据结构、操作系统内存管理 |
@@ -61,6 +71,10 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [five-stage-batch-pipeline.md](five-stage-batch-pipeline.md) | 批量处理五步管道：Discover→Parse→Validate→Cache→Report五阶段正交拆分，错误隔离+增量缓存+双格式输出（JSON+Markdown），单项目失败不中断整体流程 | L2 已验证 | 代码质量检查工具、文件系统扫描器、数据ETL管道、批量内容处理器、CI检查脚本 |
 | [android-single-activity-navigation.md](android-single-activity-navigation.md) | 单一 Activity + Navigation 组件多页面架构（Fragment + 导航图组织） | L1 实验性 | Android 多页面导航 |
 | [android-mvvm-livedata-fragment.md](android-mvvm-livedata-fragment.md) | MVVM + LiveData 标准分层（ViewModel 数据 + Fragment observe 订阅） | L1 实验性 | Android MVVM 架构 |
+| [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 零逻辑客户端桌面应用可冻结架构：GUI 零逻辑 + 后端单源托管 UI/API 无 CORS + 进程内线程服务器支持 PyInstaller 单文件冻结 | L1 实验性 | 把成熟 CLI/服务端工具链封装为可单文件分发的桌面 GUI 应用 |
+| [jupyter-extension-registration.md](jupyter-extension-registration.md) | Jupyter 扩展/插件注册三端对照：jupyter_server 包内钩子函数 vs fps 声明式 entry-point vs jupyterlab 前端插件，三层发现机制各司其职 | L1 实验性 | Jupyter 生态源码阅读、跨语言插件系统设计、扩展未加载排查 |
+| [jupyter-kernel-zmq-channels.md](jupyter-kernel-zmq-channels.md) | Jupyter 内核通信 ZMQ 多通道协议：shell/iopub/stdin/control/hb 五通道职责分离，通道类 trait 装配点可插拔，控制可抢占、心跳不阻塞 | L1 实验性 | Jupyter 内核/客户端协议阅读、交互式运行时设计、内核通信调试 |
+| [event-driven-guardian.md](event-driven-guardian.md) | 事件驱动守护：用 OS 原生事件触发（schtasks ONEVENT/systemd path）替代常驻轮询进程，消除"守护进程即单点故障"递归问题，配冷却锁防事件风暴 + 幂等修复 + 最高权限，根治截图工具反复损坏实证 | L1 实验性 | 系统级自愈/守护、UWP/应用运行时注册修复、服务崩溃自动重启、错误日志触发的自动修复 |
 
 ## 成熟度定义
 

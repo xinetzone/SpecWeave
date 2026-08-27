@@ -1,0 +1,7 @@
+id = "agent-runtime-protocol-wiki-03"
+title = "状态管理：生产级 Agent 的分水岭"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "state-management", "checkpoint", "persistence", "concurrency"]

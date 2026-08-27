@@ -20,6 +20,8 @@ CONDA_MIRROR="${CONDA_MIRROR:-official}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.14.6}"
 PYTHON_BUILD="${PYTHON_BUILD:-cp314t}"
 BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE:-standard}"
+INSTALL_PODMAN="${INSTALL_PODMAN:-true}"
+BUILD_ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman
 DEEP_VERIFY=false
 VERIFY=false
 VERIFY_ONLY=false
@@ -51,6 +53,8 @@ Options:
   --python-ver VER       Python version (default: 3.14.6)
   --python-build BUILD   Python build: cp314t (free-threading, default) | cp314 (standard)
   --verify-mode MODE     Build verification mode: standard (default) | fast | off
+  --podman               Include Podman rootless (default: true)
+  --no-podman            Exclude Podman to reduce image size (~80MB)
   --deep-verify          Run deep verification (numpy/pandas) after build
   --verify               Run embedded service verification after build
   --verify-only           Only verify existing image (skip build)
@@ -75,6 +79,7 @@ Examples:
   $0 --verify-only --tag conda-libmamba-ft        # Verify existing image only
   $0 --python-build cp314                         # Build standard (GIL) Python
   $0 --no-quick-test                              # Build without smoke test
+  $0 --no-podman                                  # Build without Podman (smaller image)
 
 Docker modes:
   DinD (Docker-in-Docker): Requires --privileged flag for fully isolated Docker daemon
@@ -104,6 +109,8 @@ while [[ $# -gt 0 ]]; do
         --python-ver) PYTHON_VERSION="$2"; shift 2 ;;
         --python-build) PYTHON_BUILD="$2"; shift 2 ;;
         --verify-mode) BUILD_VERIFY_MODE="$2"; shift 2 ;;
+        --podman) INSTALL_PODMAN=true; shift ;;
+        --no-podman) INSTALL_PODMAN=false; shift ;;
         --deep-verify) DEEP_VERIFY=true; shift ;;
         --verify) VERIFY=true; shift ;;
         --verify-only) VERIFY_ONLY=true; VERIFY=true; shift ;;
@@ -122,6 +129,24 @@ fi
 
 cd "$PROJECT_DIR"
 
+# ── 构建引擎自动检测（auto: 优先docker，回退podman） ──
+if [ "$BUILD_ENGINE" = "auto" ]; then
+    if docker info >/dev/null 2>&1; then
+        BUILD_ENGINE="docker"
+    elif podman info >/dev/null 2>&1; then
+        BUILD_ENGINE="podman"
+    else
+        log_error "Neither docker nor podman is available. Please install one or set BUILD_ENGINE explicitly."
+        exit 1
+    fi
+fi
+if ! command -v "$BUILD_ENGINE" >/dev/null 2>&1; then
+    log_error "Build engine '${BUILD_ENGINE}' not found in PATH"
+    exit 1
+fi
+ENGINE="$BUILD_ENGINE"  # shorthand for commands
+log_info "Build engine: ${ENGINE} ($(${ENGINE} --version 2>/dev/null | head -1))"
+
 # ── 加载 .env 文件（如果存在） ──
 if [ -f "$PROJECT_DIR/.env" ]; then
     log_info "Loading build environment from .env file..."
@@ -139,6 +164,8 @@ log_set_field "docker_mirror" "$DOCKER_MIRROR"
 log_set_field "conda_mirror" "$CONDA_MIRROR"
 log_set_field "network_host" "$NETWORK_HOST"
 log_set_field "verify_mode" "$BUILD_VERIFY_MODE"
+log_set_field "install_podman" "$INSTALL_PODMAN"
+log_set_field "build_engine" "$ENGINE"
 log_set_field "deep_verify" "$DEEP_VERIFY"
 
 # ── 错误处理 ──
@@ -166,24 +193,27 @@ preflight_checks() {
     local checks_ok=0
     local checks_fail=0
 
-    # Check 1: Docker daemon
-    log_info "[1/7] Checking Docker daemon..."
-    if docker info >/dev/null 2>&1; then
-        local docker_ver
-        docker_ver=$(docker --version 2>/dev/null | awk '{print $3}' | tr -d ',')
-        log_ok "  Docker is running (version: ${docker_ver})"
+    # Check 1: Container runtime daemon
+    log_info "[1/7] Checking ${ENGINE} runtime..."
+    if ${ENGINE} info >/dev/null 2>&1; then
+        local engine_ver
+        engine_ver=$(${ENGINE} --version 2>/dev/null | head -1 | awk '{print $NF}' | tr -d ',')
+        log_ok "  ${ENGINE} is available (version: ${engine_ver})"
         checks_ok=$((checks_ok + 1))
     else
-        log_fail "  Docker daemon is not running. Please start Docker first."
+        log_fail "  ${ENGINE} is not running. Please start ${ENGINE} first."
         checks_fail=$((checks_fail + 1))
     fi
 
-    # Check 2: BuildKit support
-    log_info "[2/7] Checking BuildKit support..."
-    if docker buildx version >/dev/null 2>&1; then
+    # Check 2: BuildKit/buildah support
+    log_info "[2/7] Checking builder support..."
+    if [ "$ENGINE" = "docker" ] && docker buildx version >/dev/null 2>&1; then
         local buildx_ver
         buildx_ver=$(docker buildx version 2>/dev/null | awk '{print $2}')
         log_ok "  buildx available (version: ${buildx_ver})"
+        checks_ok=$((checks_ok + 1))
+    elif [ "$ENGINE" = "podman" ]; then
+        log_ok "  podman native builder (BuildKit-compatible)"
         checks_ok=$((checks_ok + 1))
     else
         log_warn "  buildx not found; falling back to legacy builder"
@@ -241,6 +271,7 @@ preflight_checks() {
     printf "    %-20s %s\n" "Network mode:" "$([ "$NETWORK_HOST" = true ] && echo 'host' || echo 'bridge')"
     printf "    %-20s %s\n" "Cache:" "$([ -n "$NO_CACHE" ] && echo 'disabled' || echo 'enabled')"
     printf "    %-20s %s\n" "Verify mode:" "${BUILD_VERIFY_MODE}"
+    printf "    %-20s %s\n" "Podman:" "$([ "$INSTALL_PODMAN" = true ] && echo 'yes (rootless)' || echo 'no (smaller image)')"
     printf "    %-20s %s\n" "Deep verify:" "$([ "$DEEP_VERIFY" = true ] && echo 'yes (numpy/pandas)' || echo 'no')"
     printf "    %-20s %s\n" "Quick test:" "$([ "$QUICK_TEST" = true ] && echo 'yes' || echo 'no')"
     printf "    %-20s %s\n" "Full verify:" "$([ "$VERIFY" = true ] && echo 'yes' || echo 'no')"
@@ -281,7 +312,7 @@ quick_smoke_test() {
     local test_failed=0
 
     log_info "Starting test container (bridge network)..."
-    if ! docker run -d --name "$test_container" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
+    if ! ${ENGINE} run -d --name "$test_container" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
         log_fail "Failed to start test container"
         return 1
     fi
@@ -292,12 +323,12 @@ quick_smoke_test() {
     run_test() {
         local name="$1"; shift
         log_info "  Testing: ${name}..."
-        if docker exec "$test_container" "$@" >/dev/null 2>&1; then
+        if ${ENGINE} exec "$test_container" "$@" >/dev/null 2>&1; then
             log_ok "    ${name}: PASS"
             test_passed=$((test_passed + 1))
         else
             local output
-            output=$(docker exec "$test_container" "$@" 2>&1 || true)
+            output=$(${ENGINE} exec "$test_container" "$@" 2>&1 || true)
             log_fail "    ${name}: FAIL"
             log_error "    Output: ${output}"
             test_failed=$((test_failed + 1))
@@ -307,7 +338,7 @@ quick_smoke_test() {
     # 1. Python version check
     log_info "  Testing: Python ${PYTHON_VERSION}..."
     local py_ver
-    py_ver=$(docker exec "$test_container" python --version 2>&1)
+    py_ver=$(${ENGINE} exec "$test_container" python --version 2>&1)
     if echo "$py_ver" | grep -q "Python ${PYTHON_VERSION}"; then
         log_ok "    Python version: ${py_ver} - PASS"
         test_passed=$((test_passed + 1))
@@ -319,9 +350,9 @@ quick_smoke_test() {
     # 2. Python build type detection (cp314t vs cp314)
     log_info "  Testing: Python build type..."
     local py_build_actual
-    py_build_actual=$(docker exec "$test_container" python -c "import sysconfig; print('cp314t' if sysconfig.get_config_var('Py_GIL_DISABLED') else 'cp314')" 2>&1)
+    py_build_actual=$(${ENGINE} exec "$test_container" python -c "import sysconfig; print('cp314t' if sysconfig.get_config_var('Py_GIL_DISABLED') else 'cp314')" 2>&1)
     local gil_status
-    gil_status=$(docker exec "$test_container" python -c "import sys; print('enabled' if sys._is_gil_enabled() else 'disabled')" 2>&1)
+    gil_status=$(${ENGINE} exec "$test_container" python -c "import sys; print('enabled' if sys._is_gil_enabled() else 'disabled')" 2>&1)
     if [ "$py_build_actual" = "$PYTHON_BUILD" ]; then
         log_ok "    Python build: ${py_build_actual} (GIL ${gil_status} by default) - PASS"
         test_passed=$((test_passed + 1))
@@ -336,7 +367,7 @@ quick_smoke_test() {
     # 4. libmamba solver
     log_info "  Testing: libmamba solver..."
     local solver
-    solver=$(docker exec "$test_container" conda config --show solver 2>&1 | grep "solver:" | awk '{print $2}')
+    solver=$(${ENGINE} exec "$test_container" conda config --show solver 2>&1 | grep "solver:" | awk '{print $2}')
     if [ "$solver" = "libmamba" ]; then
         log_ok "    Default solver: libmamba - PASS"
         test_passed=$((test_passed + 1))
@@ -348,7 +379,7 @@ quick_smoke_test() {
     # 5. conda-forge channel only (no defaults)
     log_info "  Testing: channels (conda-forge only)..."
     local channels
-    channels=$(docker exec "$test_container" conda config --show channels 2>&1)
+    channels=$(${ENGINE} exec "$test_container" conda config --show channels 2>&1)
     if echo "$channels" | grep -q "conda-forge" && ! echo "$channels" | grep -qE "^\s*-\s+defaults"; then
         log_ok "    Channels: conda-forge only - PASS"
         test_passed=$((test_passed + 1))
@@ -366,7 +397,7 @@ quick_smoke_test() {
 
     # 8. Conda can solve a package (dry-run, with timeout to avoid hanging)
     log_info "  Testing: conda solve (dry-run, timeout=30s)..."
-    if timeout 30 docker exec "$test_container" conda install -y --dry-run tinycss2 >/dev/null 2>&1; then
+    if timeout 30 ${ENGINE} exec "$test_container" conda install -y --dry-run tinycss2 >/dev/null 2>&1; then
         log_ok "    Conda solve with libmamba: PASS"
         test_passed=$((test_passed + 1))
     else
@@ -379,9 +410,9 @@ quick_smoke_test() {
         log_info "  Testing: free-threading demo (concurrent performance)..."
         local demo_script="${PROJECT_DIR}/examples/free_threading_demo.py"
         if [ -f "$demo_script" ]; then
-            docker cp "$demo_script" "$test_container:/tmp/free_threading_demo.py" 2>/dev/null
+            ${ENGINE} cp "$demo_script" "$test_container:/tmp/free_threading_demo.py" 2>/dev/null
             local demo_output
-            demo_output=$(timeout 90 docker exec -e BENCHMARK_RANGE=500000 "$test_container" \
+            demo_output=$(timeout 90 ${ENGINE} exec -e BENCHMARK_RANGE=500000 "$test_container" \
                 python /tmp/free_threading_demo.py 2>&1)
             local demo_rc=$?
             if [ $demo_rc -eq 0 ] && echo "$demo_output" | grep -q "No-GIL\|free-threading\|无GIL" && \
@@ -406,9 +437,9 @@ quick_smoke_test() {
 
     # 10. C extension ABI compatibility verification
     log_info "  Testing: C extension ABI compatibility..."
-    if docker exec "$test_container" test -x /usr/local/bin/verify-cext.sh; then
+    if ${ENGINE} exec "$test_container" test -x /usr/local/bin/verify-cext.sh; then
         local cext_output
-        cext_output=$(timeout 30 docker exec "$test_container" bash /usr/local/bin/verify-cext.sh 2>&1)
+        cext_output=$(timeout 30 ${ENGINE} exec "$test_container" bash /usr/local/bin/verify-cext.sh 2>&1)
         local cext_rc=$?
         if [ $cext_rc -eq 0 ]; then
             log_ok "    C extension verification: PASS (all C exts load correctly)"
@@ -426,8 +457,36 @@ quick_smoke_test() {
         test_passed=$((test_passed + 1))
     fi
 
+    # 11. Python cache cleanliness check (P7: no __pycache__ bloat)
+    log_info "  Testing: Python cache cleanliness (no __pycache__ bloat)..."
+    local pycache_output
+    pycache_output=$(${ENGINE} exec "$test_container" clean-pycache.sh --check /opt/conda /usr 2>&1)
+    local pycache_rc=$?
+    if [ $pycache_rc -eq 0 ]; then
+        log_ok "    Python cache clean: PASS (no __pycache__/.pyc found)"
+        test_passed=$((test_passed + 1))
+    else
+        log_fail "    Python cache clean: FAIL"
+        log_error "    clean-pycache.sh output: ${pycache_output}"
+        test_failed=$((test_failed + 1))
+    fi
+
+    # 12. Podman availability (conditional on INSTALL_PODMAN)
+    if [ "$INSTALL_PODMAN" = true ]; then
+        run_test "podman available" podman --version
+    else
+        log_info "  Testing: podman not installed (--no-podman)..."
+        if ${ENGINE} exec "$test_container" command -v podman >/dev/null 2>&1; then
+            log_warn "    podman is present but INSTALL_PODMAN=false (unexpected)"
+            test_passed=$((test_passed + 1))
+        else
+            log_ok "    podman correctly absent (INSTALL_PODMAN=false)"
+            test_passed=$((test_passed + 1))
+        fi
+    fi
+
     # Cleanup
-    docker rm -f "$test_container" >/dev/null 2>&1
+    ${ENGINE} rm -f "$test_container" >/dev/null 2>&1
 
     echo ""
     log_summary "$test_passed" "$test_failed" "$((test_passed + test_failed))" 0 "$([ $test_failed -eq 0 ] && echo success || echo failed)"
@@ -447,11 +506,11 @@ verify_image() {
     local verify_container="verify-${IMAGE_NAME}-$(date +%s)"
     local verify_result=0
 
-    if ! docker run -d --privileged --name "$verify_container" \
+    if ! ${ENGINE} run -d --privileged --name "$verify_container" \
         -e USER_PASSWORD=verifypass \
         -e JUPYTER_TOKEN=verifytoken \
         -e ENABLE_DOCKER=yes \
-        -p 0:22 -p 0:8888 \
+        -p 22 -p 8888 \
         "$FULL_IMAGE"; then
         log_error "Failed to start verification container"
         return 1
@@ -461,10 +520,10 @@ verify_image() {
     sleep 25
 
     log_info "Running healthcheck..."
-    docker exec "$verify_container" /usr/local/bin/healthcheck.sh || verify_result=1
+    ${ENGINE} exec "$verify_container" /usr/local/bin/healthcheck.sh || verify_result=1
 
     log_info "Verifying Docker daemon (DinD mode)..."
-    if docker exec "$verify_container" docker info >/dev/null 2>&1; then
+    if ${ENGINE} exec "$verify_container" ${ENGINE} info >/dev/null 2>&1; then
         log_ok "Docker daemon is running"
     else
         log_error "Docker daemon not responding"
@@ -472,12 +531,12 @@ verify_image() {
     fi
 
     log_info "Verifying Jupyter API..."
-    docker exec "$verify_container" curl -sf http://localhost:8888/api >/dev/null || {
+    ${ENGINE} exec "$verify_container" curl -sf http://localhost:8888/api >/dev/null || {
         log_error "Jupyter API not responding"
         verify_result=1
     }
 
-    docker rm -f "$verify_container" >/dev/null 2>&1
+    ${ENGINE} rm -f "$verify_container" >/dev/null 2>&1
 
     if [ "$verify_result" -eq 0 ]; then
         log_ok "All verification checks passed"
@@ -513,25 +572,49 @@ if [ "$NETWORK_HOST" = true ]; then
 fi
 
 # ── 执行构建（plain progress + tee到日志文件） ──
-log_info "Starting docker build (progress=plain, output to console + log file)..."
+log_info "Starting ${ENGINE} build (progress=plain, output to console + log file)..."
 echo ""
 
 set +e  # 暂时关闭set -e以便我们自己处理错误
-DOCKER_BUILDKIT=1 docker build \
-    ${NO_CACHE} \
-    ${NETWORK_ARG} \
-    --progress=plain \
-    --build-arg APT_MIRROR="${APT_MIRROR}" \
-    --build-arg PIP_MIRROR="${PIP_MIRROR}" \
-    --build-arg DOCKER_MIRROR="${DOCKER_MIRROR}" \
-    --build-arg CONDA_MIRROR="${CONDA_MIRROR}" \
-    --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
-    --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
-    --build-arg BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE}" \
-    --build-arg BUILDKIT_INLINE_CACHE=1 \
-    -t "${FULL_IMAGE}" \
-    . 2>&1 | tee "$BUILD_LOG_FILE"
-BUILD_EXIT_CODE=${PIPESTATUS[0]}
+if [ "$ENGINE" = "docker" ]; then
+    DOCKER_BUILDKIT=1 docker build \
+        ${NO_CACHE} \
+        ${NETWORK_ARG} \
+        --progress=plain \
+        --build-arg APT_MIRROR="${APT_MIRROR}" \
+        --build-arg PIP_MIRROR="${PIP_MIRROR}" \
+        --build-arg DOCKER_MIRROR="${DOCKER_MIRROR}" \
+        --build-arg CONDA_MIRROR="${CONDA_MIRROR}" \
+        --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
+        --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
+        --build-arg BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE}" \
+        --build-arg INSTALL_PODMAN="${INSTALL_PODMAN}" \
+        --build-arg BUILDKIT_INLINE_CACHE=1 \
+        -t "${FULL_IMAGE}" \
+        . 2>&1 | tee "$BUILD_LOG_FILE"
+    BUILD_EXIT_CODE=${PIPESTATUS[0]}
+else
+    # podman build (native BuildKit-compatible, no DOCKER_BUILDKIT needed)
+    # --format docker: required for SHELL directive support
+    # Default to --network=host for podman (WSL2 rootless DNS needs it)
+    _PODMAN_NETWORK="${NETWORK_ARG:---network=host}"
+    podman build \
+        ${NO_CACHE} \
+        ${_PODMAN_NETWORK} \
+        --format docker \
+        --layers \
+        --build-arg APT_MIRROR="${APT_MIRROR}" \
+        --build-arg PIP_MIRROR="${PIP_MIRROR}" \
+        --build-arg DOCKER_MIRROR="${DOCKER_MIRROR}" \
+        --build-arg CONDA_MIRROR="${CONDA_MIRROR}" \
+        --build-arg PYTHON_VERSION="${PYTHON_VERSION}" \
+        --build-arg PYTHON_BUILD="${PYTHON_BUILD}" \
+        --build-arg BUILD_VERIFY_MODE="${BUILD_VERIFY_MODE}" \
+        --build-arg INSTALL_PODMAN="${INSTALL_PODMAN}" \
+        -t "${FULL_IMAGE}" \
+        . 2>&1 | tee "$BUILD_LOG_FILE"
+    BUILD_EXIT_CODE=${PIPESTATUS[0]}
+fi
 set -e
 
 if [ "$BUILD_EXIT_CODE" -ne 0 ]; then
@@ -556,7 +639,7 @@ log_metric "build_duration_seconds" "$BUILD_DURATION" "seconds"
 
 echo ""
 log_ok "Build complete: ${FULL_IMAGE}"
-IMAGE_SIZE=$(docker images --format '{{.Size}}' "${FULL_IMAGE}" | head -1)
+IMAGE_SIZE=$(${ENGINE} images --format '{{.Size}}' "${FULL_IMAGE}" | head -1)
 log_info "Image size: ${IMAGE_SIZE}"
 log_metric "image_size_mb" "$(echo "$IMAGE_SIZE" | grep -oE '[0-9.]+' | head -1)" "mb"
 log_info "Build log saved to: ${BUILD_LOG_FILE}"
@@ -573,13 +656,13 @@ fi
 echo ""
 log_info "═══════════════════════════════════════════════════════════"
 log_info "Quick start (DinD mode - fully isolated Docker):"
-echo "  docker run -d --privileged -p 2222:22 -p 8888:8888 \\"
+echo "  ${ENGINE} run -d --privileged -p 2222:22 -p 8888:8888 \\"
 echo "    -v \$(pwd)/workspace:/workspace \\"
 echo "    -e USER_PASSWORD=mypassword -e JUPYTER_TOKEN=mysecret \\"
 echo "    -e ENABLE_DOCKER=yes ${FULL_IMAGE}"
 echo ""
 log_info "Quick start (DooD mode - uses host Docker, no --privileged):"
-echo "  docker run -d -p 2222:22 -p 8888:8888 \\"
+echo "  ${ENGINE} run -d -p 2222:22 -p 8888:8888 \\"
 echo "    -v \$(pwd)/workspace:/workspace \\"
 echo "    -v /var/run/docker.sock:/var/run/docker.sock:ro \\"
 echo "    -e USER_PASSWORD=mypassword -e JUPYTER_TOKEN=mysecret \\"
@@ -596,7 +679,7 @@ log_info "      Use DooD mode if you only need access to the host's Docker."
 echo ""
 if [ -n "$REGISTRY" ]; then
     log_info "To push:"
-    echo "  docker push ${FULL_IMAGE}"
+    echo "  ${ENGINE} push ${FULL_IMAGE}"
 fi
 log_info "═══════════════════════════════════════════════════════════"
 
@@ -616,7 +699,7 @@ if $QUICK_TEST; then
     if [ "$PYTHON_BUILD" = "cp314t" ] && [ -f "$SCRIPT_DIR/ft_benchmark.py" ]; then
         echo ""
         log_step "Free-Threading Performance Benchmark"
-        python3 "$SCRIPT_DIR/ft_benchmark.py" --image "$FULL_IMAGE" --quick \
+        python3 "$SCRIPT_DIR/ft_benchmark.py" --image "$FULL_IMAGE" --docker-cmd "$ENGINE" --quick \
             --log "${PROJECT_DIR}/logs/benchmarks/ft-benchmark-$(date +%Y%m%d).jsonl" || {
             log_warn "ft-benchmark did not meet threshold (see log for details)"
         }
@@ -632,31 +715,31 @@ if $DEEP_VERIFY; then
     DEEP_FAILED=0
 
     log_info "Starting container for deep verification..."
-    if docker run -d --name "$DEEP_CONTAINER" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
+    if ${ENGINE} run -d --name "$DEEP_CONTAINER" "$FULL_IMAGE" tail -f /dev/null >/dev/null 2>&1; then
         sleep 2
 
         # Install numpy and pandas in the running container
         log_info "Installing numpy and pandas (this may take a minute)..."
-        if timeout 180 docker exec "$DEEP_CONTAINER" conda install -y -n main --solver=libmamba numpy pandas >/dev/null 2>&1; then
+        if timeout 180 ${ENGINE} exec "$DEEP_CONTAINER" conda install -y -n main --solver=libmamba numpy pandas >/dev/null 2>&1; then
             log_ok "numpy + pandas installed successfully"
         else
             log_fail "Failed to install numpy/pandas (network or solver issue)"
-            docker rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
+            ${ENGINE} rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
             exit 1
         fi
 
         # Run verify-cext.sh --deep in the container
         log_info "Running deep C extension verification..."
-        if timeout 60 docker exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep -q; then
+        if timeout 60 ${ENGINE} exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep -q; then
             log_ok "Deep verification: PASS (numpy/pandas C extensions compatible with cp314t)"
             DEEP_PASSED=1
         else
             log_fail "Deep verification: FAIL (numpy/pandas C extensions have issues)"
             DEEP_FAILED=1
-            docker exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep 2>&1 | tail -30 || true
+            ${ENGINE} exec "$DEEP_CONTAINER" bash /usr/local/bin/verify-cext.sh --deep 2>&1 | tail -30 || true
         fi
 
-        docker rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
+        ${ENGINE} rm -f "$DEEP_CONTAINER" >/dev/null 2>&1
 
         if [ $DEEP_FAILED -gt 0 ]; then
             log_error "Deep verification failed! numpy/pandas may not be fully compatible with cp314t free-threading."

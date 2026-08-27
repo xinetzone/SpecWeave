@@ -2,6 +2,7 @@
 id: "mermaid-wiki-03-sequence-diagram"
 title: "Mermaid 时序图（Sequence Diagram）"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/03-sequence-diagram.toml"
 category: "learning"
 tags: ["mermaid","diagram","sequence","sequenceDiagram","markup","visualization"]
 date: "2026-08-06"

@@ -2,11 +2,11 @@
 id: "wsl-wiki-08-debugging-dev-env"
 title: "调试诊断与开发环境搭建"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/08-debugging-dev-env.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "debugging", "diagnostics", "development", "vscode", "gpu", "cuda", "docker", "debug-shell"]
 ---
-
 # 调试诊断与开发环境搭建
 
 本文档介绍 WSL 的调试诊断工具、日志收集方法、常见问题排查流程，以及开发环境搭建指南。

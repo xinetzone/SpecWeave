@@ -80,26 +80,26 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
-| 00-概述 | [00-overview.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/00-overview.md) | ~100 |
-| 01-四原则 | [01-four-principles.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/01-four-principles.md) | ~200 |
-| 02-代码示例 | [02-code-examples.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/02-code-examples.md) | ~250 |
-| 03-快速开始 | [03-quickstart.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/03-quickstart.md) | ~300 |
-| 04-SpecWeave整合 | [04-specweave-integration.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/04-specweave-integration.md) | ~120 |
-| 05-资源 | [05-resources.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/05-resources.md) | ~180 |
-| 06-Multica平台🆕 | [06-multica-platform.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/06-multica-platform.md) | ~500 |
-| 规则整合文件 | [ai-coding-guidelines.md](../../../../../../../.agents/rules/ai-coding-guidelines.md) | ~150 |
+| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
+| 00-概述 | [00-overview.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~100 |
+| 01-四原则 | [01-four-principles.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~200 |
+| 02-代码示例 | [02-code-examples.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~250 |
+| 03-快速开始 | [03-quickstart.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~300 |
+| 04-SpecWeave整合 | [04-specweave-integration.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~120 |
+| 05-资源 | [05-resources.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~180 |
+| 06-Multica平台🆕 | [06-multica-platform.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~500 |
+| 规则整合文件 | [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md) | ~150 |
 | **阶段一二小计** | **9个文件** | **~1880行** |
 
 ### 阶段三：模式应用、工具与模板
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/07-multica-cli-skill.md) | ~553（重构后） |
-| Git UTF-8提交工具🆕 | [git-commit-utf8.py](../../../../../../../.agents/scripts/git-commit-utf8.py) | ~220 |
-| scripts/README更新🔄 | [scripts/README.md](../../../../../../../.agents/scripts/README.md) | +30行 |
-| 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](../../../../../../../.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |
-| 洞察萃取模板🆕 | [insight-extraction-template.md](../../../../../../../.agents/templates/insight-extraction-template.md) | ~90 |
+| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~553（重构后） |
+| Git UTF-8提交工具🆕 | [git-commit-utf8.py](../../../../../scripts/git-commit-utf8.py) | ~220 |
+| scripts/README更新🔄 | [scripts/README.md](README.md) | +30行 |
+| 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](../../../../../templates/tutorial-cognitive-ladder-template.md) | ~283 |
+| 洞察萃取模板🆕 | [insight-extraction-template.md](../../../../../templates/insight-extraction-template.md) | ~90 |
 | 复盘报告更新🔄 | README.md + execution-retrospective.md + export-suggestions.md | ~150 |
 | **阶段三小计** | **7个文件（3新4改）** | **~1326行** |
 

@@ -3,8 +3,8 @@ id: "fail-loud-over-silent-fallback"
 title: "显式报错优于静默降级：自动化系统故障显性化原则"
 source: "../../../reports/project-reports/retrospective-specweave-full-project-20260719/README.md#33-经验教训"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/fail-loud-over-silent-fallback.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 tags: ["显式报错", "静默降级", "故障显性化", "fail-fast", "silent-failure", "自动化系统设计", "错误处理", "防御性设计"]
 related_patterns:
@@ -14,8 +14,9 @@ related_patterns:
   - "first-principles-decision-quality-gate"
   - "git-hooks-three-tier-trust"
 ---
-> **来源**：SpecWeave全项目复盘（2026-07-19）——docgen stats路径断链3天无人发现的根因分析
-> **验证次数**：1次实战验证（docgen stats静默返回0污染3天changelog）
+> **来源1**：SpecWeave全项目复盘（2026-07-19）——docgen stats路径断链3天无人发现的根因分析
+> **来源2**：torch-dev镜像构建里程碑复盘（2026-08-20）——验证层 `[SKIP]+exit(0)` 放过 GPU 静默降级的防线缺陷分析
+> **验证次数**：2次实战验证（docgen stats静默返回0污染3天changelog；torch-dev 验证层 SKIP 放过 CPU 版降级）
 
 # 显式报错优于静默降级：自动化系统故障显性化原则
 
@@ -65,6 +66,22 @@ flowchart LR
     style D fill:#90EE90
     style G fill:#ffcccc
 ```
+
+## torch-dev实战案例：验证层 `[SKIP]+exit(0)` 放过 GPU 静默降级
+
+| 要素 | 内容 |
+|------|------|
+| 时间 | 2026-08-20（torch-dev 镜像构建） |
+| 场景 | pip 引入 `--extra-index-url` 备用源后，阿里云仅有 CPU 版 torch 2.9.1（无 cu130），若主索引故障会静默安装 CPU 版 |
+| 静默降级代码 | `verify.sh` 的 `verify_all_slim_gpu`：CUDA 不可用时打印 `[SKIP]` 并 `sys.exit(0)` |
+| 退出码 | 0（正常，且 `[SKIP]` 不是 `[FAIL]`） |
+| 隐患 | verify.sh 会放过所有 GPU 相关错误——构建"成功"，但运行时 CUDA 不可用 |
+| 修复方案 | 在 torch-dev Stage 3 增加 `torch.version.cuda` 硬断言：CPU 构建（版本空/None）时构建 FAIL 而非 SKIP |
+| 验证 | 真实 CUDA torch(13.0) → PASS；模拟 CPU(None) → 正确 FAIL |
+
+### 关键差异：本次是"SKIP 语义"的静默失败
+
+docgen 案例的静默是**返回哨兵值 0 并正常退出**；torch-dev 案例的静默是**验证函数遇不可用环境时 `[SKIP]+exit(0)`**。两者本质相同——错误状态未被显性化为失败，只是 SKIP/0 让 `exit(0)` 掩盖了问题。**对核心契约（镜像必须是 CUDA 版、统计必须真实）而言，"跳过验证"也是静默降级，必须改为显式 FAIL。**
 
 ## 反模式：什么时候"看起来优雅"的降级实际上是隐患
 
@@ -117,6 +134,7 @@ flowchart LR
 - [ ] CI步骤中是否有 `continue-on-error: true`？如果有，下游是否检查了该步骤的结果？
 - [ ] 错误消息是否包含足够的诊断信息？
 - [ ] 是否有测试用例覆盖"依赖不可用"的场景？
+- [ ] 验证/检查函数中是否有 `[SKIP]`/`skip`/`continue-on-error` 标注？若跳过的是核心契约（镜像版本、统计数据、架构要求），必须改为显式 FAIL？
 
 ## 与其他模式的关系
 
@@ -125,6 +143,7 @@ flowchart LR
 | [automated-stats-three-defense-lines.md](automated-stats-three-defense-lines.md) | 被包含 | 三防线模式的防线1（路径存在性校验）是本原则在stats场景的具体实现 |
 | [nonlinear-correction-cost.md](nonlinear-correction-cost.md) | 理论基础 | 静默降级的修复成本是非线性增长的——发现越晚成本越高，这正是显性报错ROI极高的原因 |
 | [tool-failure-three-tier-degradation.md](../tools-automation/tool-failure-three-tier-degradation.md) | 适用域区分 | 工具故障降级处理的是"工具调用时出故障怎么办"（运行时容错），本模式处理的是"代码设计时如何处理错误"（设计时防御）；互补不冲突 |
+| [pip-dual-index-mirror-fallback](../../code-patterns/pip-dual-index-mirror-fallback.md) | 触发互补 | torch-dev 双索引下载的验证层硬断言步骤正是本原则的具体落地（下载治标、验证兜底防静默降级）；本原则为其反模式"验证层 SKIP 无拦截"提供理论依据 |
 | [git-hooks-three-tier-trust.md](../tools-automation/git-hooks-three-tier-trust.md) | 思想同源 | Git hooks三级信任的核心思想是"不信任必须显性化"，与本模式"错误必须显性化"一致 |
 | [first-principles-decision-quality-gate.md](first-principles-decision-quality-gate.md) | 防御层 | 第一性原理决策门禁要求显性化隐性假设，本模式要求显性化错误状态 |
 
@@ -144,3 +163,4 @@ flowchart LR
 ## Changelog
 
 - 2026-07-19 | create | 初始版本，从SpecWeave全项目复盘提炼，L1成熟度
+- 2026-08-20 | update | 新增 torch-dev 镜像构建实战案例（验证层 `[SKIP]+exit(0)` 放过 GPU 静默降级 → 改为 `torch.version.cuda` 硬断言 FAIL），补充"SKIP 语义"静默失败关键差异；validation_count 1→2，maturity L1→L2；新增检查清单项与关联模式

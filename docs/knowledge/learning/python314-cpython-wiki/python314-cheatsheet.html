@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 3.14 新特性速查卡片</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700;900&family=Playfair+Display:wght@700;900&display=swap');
+
+  :root {
+    --py-blue: #306998;
+    --py-blue-light: #4B8BBE;
+    --py-yellow: #FFD43B;
+    --py-yellow-light: #FFF0D4;
+    --py-dark: #1a1a2e;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --code-green: #a6e3a1;
+    --code-yellow: #f9e2af;
+    --code-blue: #89b4fa;
+    --code-red: #f38ba8;
+    --code-purple: #cba6f7;
+    --code-cyan: #94e2d5;
+    --ft-red: #e74c3c;
+    --ft-red-light: #fde8e6;
+    --jit-orange: #e67e22;
+    --jit-orange-light: #fef0e2;
+    --ts-green: #27ae60;
+    --ts-green-light: #e6f8ed;
+    --ann-purple: #8e44ad;
+    --ann-purple-light: #f4e8f8;
+    --mod-teal: #16a085;
+    --mod-teal-light: #e3f8f3;
+    --std-blue: #2980b9;
+    --std-blue-light: #e6f2fa;
+    --text: #2c3e50;
+    --text-light: #5d6d7e;
+    --border: #d5d8dc;
+    --bg: #fafbfc;
+    --card: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--py-blue) 0%, var(--py-blue-light) 60%, var(--py-yellow) 60%, var(--py-yellow) 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  .header::after {
+    content: '🐍';
+    position: absolute;
+    bottom: -15px; right: 20px;
+    font-size: 80px;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+  }
+  .header-left h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .header-left h1 span { color: var(--py-yellow); }
+  .header-left .subtitle {
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+  .header-right {
+    text-align: right;
+    color: var(--py-dark);
+  }
+  .header-right .version {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .header-right .date {
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 4px;
+    opacity: 0.8;
+  }
+  .header-right .tag {
+    display: inline-block;
+    background: var(--py-dark);
+    color: var(--py-yellow);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 8px;
+    font-weight: 700;
+  }
+
+  /* ===== QUICK STATS BAR ===== */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .stat-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    text-align: center;
+    border-top: 3px solid;
+  }
+  .stat-item.ft { border-top-color: var(--ft-red); }
+  .stat-item.jit { border-top-color: var(--jit-orange); }
+  .stat-item.ts { border-top-color: var(--ts-green); }
+  .stat-item.ann { border-top-color: var(--ann-purple); }
+  .stat-item.mi { border-top-color: var(--mod-teal); }
+  .stat-item .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .stat-item.ft .stat-num { color: var(--ft-red); }
+  .stat-item.jit .stat-num { color: var(--jit-orange); }
+  .stat-item.ts .stat-num { color: var(--ts-green); }
+  .stat-item.ann .stat-num { color: var(--ann-purple); }
+  .stat-item.mi .stat-num { color: var(--mod-teal); }
+  .stat-item .stat-label {
+    font-size: 11px;
+    color: var(--text-light);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ===== MAIN GRID ===== */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header .icon {
+    font-size: 16px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .card-body {
+    padding: 12px 14px;
+  }
+
+  /* Card color variants */
+  .card.ft .card-header { background: var(--ft-red-light); color: var(--ft-red); }
+  .card.ft .icon { background: var(--ft-red); color: white; }
+  .card.jit .card-header { background: var(--jit-orange-light); color: var(--jit-orange); }
+  .card.jit .icon { background: var(--jit-orange); color: white; }
+  .card.ts .card-header { background: var(--ts-green-light); color: var(--ts-green); }
+  .card.ts .icon { background: var(--ts-green); color: white; }
+  .card.ann .card-header { background: var(--ann-purple-light); color: var(--ann-purple); }
+  .card.ann .icon { background: var(--ann-purple); color: white; }
+  .card.mod .card-header { background: var(--mod-teal-light); color: var(--mod-teal); }
+  .card.mod .icon { background: var(--mod-teal); color: white; }
+  .card.std .card-header { background: var(--std-blue-light); color: var(--std-blue); }
+  .card.std .icon { background: var(--std-blue); color: white; }
+  .card.pyblue .card-header { background: #dbeafe; color: var(--py-blue); }
+  .card.pyblue .icon { background: var(--py-blue); color: white; }
+  .card.migrate .card-header { background: #fef3c7; color: #92400e; }
+  .card.migrate .icon { background: #d97706; color: white; }
+  .card.cmd .card-header { background: #f3e8ff; color: #7c3aed; }
+  .card.cmd .icon { background: #7c3aed; color: white; }
+
+  /* ===== CODE BLOCKS ===== */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 11.5px;
+    line-height: 1.55;
+    padding: 10px 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 8px 0;
+    white-space: pre;
+  }
+  pre .kw { color: var(--code-purple); font-weight: 500; }
+  pre .fn { color: var(--code-blue); }
+  pre .str { color: var(--code-green); }
+  pre .num { color: var(--code-yellow); }
+  pre .cmt { color: #6c7086; font-style: italic; }
+  pre .op { color: var(--code-red); }
+  pre .var { color: var(--code-text); }
+  pre .cls { color: var(--code-yellow); }
+  pre .dec { color: var(--code-cyan); }
+
+  /* ===== LISTS ===== */
+  ul.feature-list {
+    list-style: none;
+    padding: 0;
+  }
+  ul.feature-list li {
+    font-size: 12px;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    color: var(--text);
+    line-height: 1.45;
+  }
+  ul.feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--py-blue);
+    font-weight: 700;
+    font-size: 11px;
+  }
+  ul.feature-list li b {
+    color: var(--py-dark);
+  }
+  ul.feature-list li .pep {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: #f0f3f5;
+    color: var(--text-light);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-left: 3px;
+  }
+
+  /* ===== INLINE CODE ===== */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    background: #f0f3f5;
+    padding: 1px 5px;
+    border-radius: 4px;
+    color: var(--py-blue);
+    font-weight: 500;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-weight: 400;
+  }
+
+  /* ===== BADGE ===== */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge.new { background: var(--ts-green-light); color: var(--ts-green); }
+  .badge.exp { background: var(--jit-orange-light); color: var(--jit-orange); }
+  .badge.dep { background: var(--ft-red-light); color: var(--ft-red); }
+  .badge.ft { background: var(--ft-red-light); color: var(--ft-red); }
+
+  /* ===== TABLE ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+    margin: 8px 0;
+  }
+  table th {
+    background: #f8f9fa;
+    font-weight: 700;
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--border);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-light);
+  }
+  table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #f0f2f4;
+    vertical-align: top;
+  }
+  table td code {
+    font-size: 10.5px;
+  }
+  table tr:last-child td { border-bottom: none; }
+
+  /* ===== SPAN 2/3 COLS ===== */
+  .col-span-2 { grid-column: span 2; }
+  .col-span-3 { grid-column: span 3; }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 8px 0;
+  }
+
+  /* ===== SMALL NOTE ===== */
+  .note {
+    font-size: 10.5px;
+    color: var(--text-light);
+    padding: 6px 10px;
+    background: #fefce8;
+    border-left: 3px solid #eab308;
+    border-radius: 0 6px 6px 0;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .note.danger {
+    background: var(--ft-red-light);
+    border-left-color: var(--ft-red);
+    color: #922b21;
+  }
+  .note.info {
+    background: var(--std-blue-light);
+    border-left-color: var(--std-blue);
+    color: #1a5276;
+  }
+
+  /* ===== CMD LIST ===== */
+  .cmd-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11.5px;
+    border-bottom: 1px dashed #eee;
+  }
+  .cmd-item:last-child { border-bottom: none; }
+  .cmd-item .cmd-desc {
+    flex: 1;
+    color: var(--text-light);
+    font-size: 11px;
+  }
+  .cmd-item code {
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--text-light);
+    padding: 12px;
+  }
+  .footer a { color: var(--py-blue); text-decoration: none; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+    .col-span-2, .col-span-3 { grid-column: span 2; }
+    .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .col-span-2, .col-span-3 { grid-column: span 1; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .header { flex-direction: column; text-align: center; gap: 12px; }
+    .header-right { text-align: center; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; }
+    .page { padding: 0; max-width: 100%; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Python <span>3.14</span><br>新特性速查卡</h1>
+      <div class="subtitle">Free-Threading · Copy-and-Patch JIT · t-Strings · Deferred Annotations · Interpreters · Zstd</div>
+    </div>
+    <div class="header-right">
+      <div class="version">3.14</div>
+      <div class="date">Released 2025-10-07</div>
+      <div class="tag">CPython v3.14.0</div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item ft">
+      <div class="stat-num">🔓</div>
+      <div class="stat-label">自由线程<br>正式支持</div>
+    </div>
+    <div class="stat-item jit">
+      <div class="stat-num">⚡</div>
+      <div class="stat-label">Copy-Patch<br>JIT 实验</div>
+    </div>
+    <div class="stat-item ts">
+      <div class="stat-num">📝</div>
+      <div class="stat-label">t-Strings<br>模板字符串</div>
+    </div>
+    <div class="stat-item ann">
+      <div class="stat-num">🔄</div>
+      <div class="stat-label">延迟注解<br>PEP 649/749</div>
+    </div>
+    <div class="stat-item mi">
+      <div class="stat-num">📦</div>
+      <div class="stat-label">4 个<br>新模块</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid">
+
+    <!-- FREE THREADING -->
+    <div class="card ft">
+      <div class="card-header"><span class="icon">🔓</span> 自由线程（无 GIL）<span class="badge ft">PEP 703/779</span></div>
+      <div class="card-body">
+        <pre><span class="cmt"># 启用方式</span>
+<span class="cmt"># 1. 使用自由线程二进制</span>
+python3.14t script.py
+
+<span class="cmt"># 2. 运行时环境变量</span>
+PYTHON_GIL=<span class="num">0</span> python3.<span class="num">14</span> script.py
+PYTHON_GIL=<span class="num">1</span> python3.14t script.py  <span class="cmt"># 强制启用GIL</span>
+
+<span class="cmt"># 检测运行模式</span>
+<span class="kw">import</span> sys
+<span class="kw">if</span> <span class="fn">hasattr</span>(sys, <span class="str">'_is_gil_enabled'</span>):
+    ft = <span class="kw">not</span> sys._is_gil_enabled()</pre>
+        <ul class="feature-list">
+          <li><b>单线程开销</b>：约 5-10%</li>
+          <li><b>多线程扩展</b>：接近线性（4核≈3.5x）</li>
+          <li><b>五大组件</b>：QSBR · BRC · 关键区段 · Parking Lot · mimalloc</li>
+        </ul>
+        <div class="note danger">C 扩展需标记 <code>Py_MOD_GIL</code> 或适配后标记 <code>Py_MOD_FREE_THREADED</code></div>
+      </div>
+    </div>
+
+    <!-- JIT -->
+    <div class="card jit">
+      <div class="card-header"><span class="icon">⚡</span> Copy-and-Patch JIT <span class="badge exp">实验性</span></div>
+      <div class="card-body">
+        <pre><span class="cmt"># 启用 JIT</span>
+PYTHON_JIT=<span class="num">1</span> python3.<span class="num">14</span> script.py
+
+<span class="cmt"># 构建时启用</span>
+./configure --enable-experimental-jit</pre>
+        <ul class="feature-list">
+          <li><b>Tier 1</b>：尾调用解释器（+3-5%）<span class="pep">--with-tail-call-interp</span></li>
+          <li><b>Tier 2</b>：uop 优化器（1.2-2x）</li>
+          <li><b>Tier 3</b>：JIT 机器码（1.5-5x）</li>
+        </ul>
+        <div class="note">Stencil AOT 编译 + 运行时 Patch，比传统 JIT 编译快 100x。对类型稳定的数字循环效果最好。</div>
+      </div>
+    </div>
+
+    <!-- T-STRINGS -->
+    <div class="card ts">
+      <div class="card-header"><span class="icon">📝</span> t-Strings 模板字符串 <span class="badge new">PEP 750</span></div>
+      <div class="card-body">
+        <pre><span class="cmt"># t-strings 返回 Template 对象</span>
+name = <span class="str">"World"</span>
+t = t<span class="str">"Hello, {name}!"</span>
+<span class="fn">str</span>(t)  <span class="cmt"># "Hello, World!"</span>
+
+<span class="cmt"># 逐段访问（安全SQL/HTML）</span>
+<span class="kw">from</span> string.templatelib <span class="kw">import</span> Template, Interpolation
+<span class="kw">for</span> part <span class="kw">in</span> t:
+    <span class="kw">if</span> <span class="fn">isinstance</span>(part, str): ...  <span class="cmt"># 静态文本</span>
+    <span class="kw">else</span>: part.value, part.expr  <span class="cmt"># 插值</span></pre>
+        <ul class="feature-list">
+          <li><b>对比 f-strings</b>：延迟求值、可拦截、可转义</li>
+          <li><b>安全场景</b>：SQL 参数化 · HTML 转义 · i18n · DSL</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ANNOTATIONS -->
+    <div class="card ann">
+      <div class="card-header"><span class="icon">🔄</span> 延迟注解 <span class="badge new">PEP 649/749</span></div>
+      <div class="card-body">
+        <pre><span class="cmt"># 无需 __future__ annotations！</span>
+<span class="cmt"># 前向引用自然工作</span>
+<span class="kw">class</span> <span class="cls">Node</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, next: Node|<span class="kw">None</span>=<span class="kw">None</span>):
+        self.next = next
+
+<span class="kw">import</span> annotationlib
+<span class="kw">from</span> annotationlib <span class="kw">import</span> Format
+ann = annotationlib.<span class="fn">get_annotations</span>(
+    Node, format=Format.VALUE)
+<span class="cmt"># VALUE=真实类型, STRING=字符串, FORWARDREF=对象</span></pre>
+        <div class="note"><code>from __future__ import annotations</code> 已<b>软弃用</b>，直接删除即可！</div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:12px;">
+          <p style="font-weight:700;color:var(--ann-purple);margin-bottom:4px;">⚡ 类型系统更多变更</p>
+          <pre style="font-size:11px;"><span class="cmt"># UnionType = Union：| 语法完全统一</span>
+<span class="fn">print</span>(int | str)  <span class="cmt"># "int | str"（旧: "Union[int, str]"）</span>
+<span class="fn">isinstance</span>(int|str, typing.Union)  <span class="cmt"># True!</span>
+
+<span class="cmt"># io.Reader/Writer 替代 typing.IO</span>
+<span class="kw">from</span> io <span class="kw">import</span> Reader, Writer  <span class="cmt"># 真正的 Protocol</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEW MODULES -->
+    <div class="card mod">
+      <div class="card-header"><span class="icon">📦</span> 新模块</div>
+      <div class="card-body">
+        <table>
+          <tr><th>模块</th><th>用途</th></tr>
+          <tr><td><code>annotationlib</code></td><td>注解统一访问 API，三种 Format</td></tr>
+          <tr><td><code>concurrent.<br>interpreters</code></td><td>子解释器真并行，Channel 通信</td></tr>
+          <tr><td><code>string.<br>templatelib</code></td><td>Template / Interpolation 类</td></tr>
+          <tr><td><code>compression.<br>zstd</code></td><td>Zstandard 压缩（比 gzip 快 3-5x）</td></tr>
+        </table>
+        <pre><span class="cmt"># InterpreterPoolExecutor</span>
+<span class="kw">from</span> concurrent.interpreters <span class="kw">import</span> InterpreterPoolExecutor
+<span class="kw">with</span> InterpreterPoolExecutor(max_workers=<span class="num">4</span>) <span class="kw">as</span> ex:
+    results = <span class="fn">list</span>(ex.<span class="fn">map</span>(fn, tasks))</pre>
+      </div>
+    </div>
+
+    <!-- BUILD & CMD -->
+    <div class="card cmd">
+      <div class="card-header"><span class="icon">🔧</span> 构建与命令速查</div>
+      <div class="card-body">
+        <div class="cmd-item"><code>--disable-gil</code><span class="cmd-desc">构建自由线程版</span></div>
+        <div class="cmd-item"><code>--with-tail-call-interp</code><span class="cmd-desc">尾调用解释器</span></div>
+        <div class="cmd-item"><code>--enable-experimental-jit</code><span class="cmd-desc">启用 JIT</span></div>
+        <div class="cmd-item"><code>PYTHON_JIT=1</code><span class="cmd-desc">运行时启用 JIT</span></div>
+        <div class="cmd-item"><code>PYTHON_GIL=0/1</code><span class="cmd-desc">运行时控制 GIL</span></div>
+        <div class="cmd-item"><code>python3.14t</code><span class="cmd-desc">自由线程可执行文件</span></div>
+        <div class="cmd-item"><code>python -m asyncio ps/pstree</code><span class="cmd-desc">asyncio 任务内省（树形）</span></div>
+        <div class="cmd-item"><code>python -m pdb -p PID</code><span class="cmd-desc">pdb 远程附加</span></div>
+        <div class="cmd-item"><code>python -m json</code><span class="cmd-desc">JSON 彩色格式化</span></div>
+      </div>
+    </div>
+
+    <!-- LANGUAGE CHANGES -->
+    <div class="card pyblue col-span-2">
+      <div class="card-header"><span class="icon">📐</span> 语法 & 内置变更</div>
+      <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+        <div>
+          <p style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--py-dark);">无括号 except <span class="pep" style="font-family:'JetBrains Mono',monospace;font-size:10px;background:#f0f3f5;color:var(--text-light);padding:1px 5px;border-radius:4px;">PEP 758</span></p>
+          <pre><span class="kw">try</span>: risky()
+<span class="kw">except</span> ValueError, TypeError:  <span class="cmt"># 无括号！</span>
+    handle()
+<span class="cmt"># as 绑定时仍需括号: except (V,T) as e:</span></pre>
+          <p style="font-size:12px;font-weight:700;margin:10px 0 6px;color:var(--py-dark);">finally 控制流警告 <span class="pep" style="font-family:'JetBrains Mono',monospace;font-size:10px;background:#f0f3f5;color:var(--text-light);padding:1px 5px;border-radius:4px;">PEP 765</span></p>
+          <pre><span class="cmt"># SyntaxWarning: 'return' in finally</span>
+<span class="cmt"># 将 return/break/continue 移出 finally</span></pre>
+          <p style="font-size:12px;font-weight:700;margin:10px 0 6px;color:var(--py-dark);">map(strict=True)</p>
+          <pre><span class="kw">from</span> builtins <span class="kw">import</span> map
+<span class="fn">list</span>(<span class="fn">map</span>(fn, a, b, strict=<span class="kw">True</span>))
+<span class="cmt"># 长度不一致抛 ValueError</span></pre>
+        </div>
+        <div>
+          <p style="font-size:12px;font-weight:700;margin-bottom:6px;color:var(--py-dark);">NotImplemented TypeError</p>
+          <pre><span class="cmt"># 布尔上下文使用 NotImplemented → TypeError</span>
+<span class="cmt"># 正确写法:</span>
+<span class="kw">if</span> result <span class="kw">is</span> NotImplemented: <span class="kw">return</span> NotImplemented</pre>
+          <p style="font-size:12px;font-weight:700;margin:10px 0 6px;color:var(--py-dark);">float.from_number()</p>
+          <pre>float.<span class="fn">from_number</span>(<span class="num">3</span>)      <span class="cmt"># 3.0</span>
+float.<span class="fn">from_number</span>(<span class="num">10**400</span>) <span class="cmt"># OverflowError</span></pre>
+          <p style="font-size:12px;font-weight:700;margin:10px 0 6px;color:var(--py-dark);">operator 新函数</p>
+          <pre><span class="kw">from</span> operator <span class="kw">import</span> is_none, is_not_none
+<span class="fn">list</span>(<span class="fn">filter</span>(is_not_none, items))</pre>
+          <p style="font-size:12px;font-weight:700;margin:10px 0 6px;color:var(--py-dark);">UUID v6/v7/v8 <span class="pep" style="font-family:'JetBrains Mono',monospace;font-size:10px;background:#f0f3f5;color:var(--text-light);padding:1px 5px;border-radius:4px;">RFC 9562</span></p>
+          <pre><span class="kw">import</span> uuid
+uid = uuid.<span class="fn">uuid7</span>()  <span class="cmt"># 时间排序，适合DB主键</span>
+uuid.NIL, uuid.MAX  <span class="cmt"># 常量</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- STDLIB -->
+    <div class="card std">
+      <div class="card-header"><span class="icon">📚</span> 标准库改进精选</div>
+      <div class="card-body">
+        <ul class="feature-list">
+          <li><b>REPL</b>：语法高亮、自动补全默认开启</li>
+          <li><b>asyncio</b>：<code>ps/pstree</code> CLI、<code>capture/print_call_graph</code>、<code>create_task(kwargs=...)</code>、自由线程、双向链表</li>
+          <li><b>concurrent.futures</b>：<code>InterpreterPoolExecutor</code>、forkserver 默认、<code>terminate/kill_workers()</code></li>
+          <li><b>pathlib</b>：<code>Path.copy/move</code>、<code>Path.info</code> 缓存</li>
+          <li><b>pdb</b>：远程附加 <code>-p PID</code>、async 支持</li>
+          <li><b>argparse</b>：彩色输出、<code>suggest_on_error</code></li>
+          <li><b>inspect</b>：<code>annotation_format</code>、<code>unquote_annotations</code>、<code>ispackage()</code></li>
+          <li><b>json</b>：<code>python -m json</code> 彩色 CLI、错误路径注释</li>
+          <li><b>unittest</b>：<code>assertHasAttr/IsSubclass/StartsWith/EndsWith</code></li>
+          <li><b>heapq</b>：<code>heapify_max/heappop_max</code> 等大顶堆函数</li>
+          <li><b>logging</b>：<code>QueueListener</code> 支持 <code>with</code> 语句</li>
+          <li><b>pickle</b>：协议 5 默认</li>
+          <li><b>struct</b>：F/D 复数格式符</li>
+          <li><b>http.server</b>：HTTPS 支持、深色模式</li>
+          <li><b>faulthandler</b>：C 栈追踪</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- MIGRATION -->
+    <div class="card migrate col-span-2">
+      <div class="card-header"><span class="icon">🚨</span> 迁移速查表</div>
+      <div class="card-body">
+        <table>
+          <tr><th>3.13 及之前</th><th>3.14 状态</th><th>替代方案</th></tr>
+          <tr><td><code>from __future__ import annotations</code></td><td><span class="badge dep">软弃用</span></td><td>直接删除（PEP 649 默认启用）</td></tr>
+          <tr><td><code>codecs.open()</code></td><td><span class="badge dep">弃用</span></td><td><code>open(encoding=...)</code></td></tr>
+          <tr><td><code>argparse.FileType</code></td><td><span class="badge dep">弃用</span></td><td><code>pathlib.Path</code> + <code>open()</code></td></tr>
+          <tr><td><code>os.popen/spawn*()</code></td><td><span class="badge dep">软弃用</span></td><td><code>subprocess</code></td></tr>
+          <tr><td><code>asyncio.ChildWatcher</code></td><td><span class="badge dep" style="background:var(--ft-red-light);color:var(--ft-red);">移除</span></td><td>不再需要</td></tr>
+          <tr><td><code>ast.Num/Str</code></td><td><span class="badge dep" style="background:var(--ft-red-light);color:var(--ft-red);">移除</span></td><td><code>ast.Constant</code></td></tr>
+          <tr><td><code>urllib.URLopener</code></td><td><span class="badge dep" style="background:var(--ft-red-light);color:var(--ft-red);">移除</span></td><td><code>urllib.request.urlopen</code></td></tr>
+          <tr><td><code>Py_HUGE_VAL</code>（C API）</td><td><span class="badge dep" style="background:var(--ft-red-light);color:var(--ft-red);">移除</span></td><td>C99 <code>HUGE_VAL</code></td></tr>
+          <tr><td><code>Py_IS_NAN/INFINITY</code></td><td><span class="badge dep" style="background:var(--ft-red-light);color:var(--ft-red);">移除</span></td><td>C99 <code>isnan/isinf</code></td></tr>
+          <tr><td><code>obj->ob_refcnt</code>（Limited API）</td><td><span class="badge dep">不透明化</span></td><td><code>Py_REFCNT/Py_SET_REFCNT</code></td></tr>
+        </table>
+        <div class="note danger" style="margin-top:10px;">⚠️ multiprocessing 默认启动方法从 <code>fork</code> 改为 <code>forkserver</code>（Linux）；增量 GC 在 3.14.5 回退为分代 GC。</div>
+      </div>
+    </div>
+
+    <!-- THREAD SAFETY -->
+    <div class="card ft">
+      <div class="card-header"><span class="icon">🛡️</span> 自由线程安全速查</div>
+      <div class="card-body">
+        <table>
+          <tr><th>操作</th><th>安全</th></tr>
+          <tr><td><code>d[key]</code>, <code>key in d</code></td><td>✅ 无锁读</td></tr>
+          <tr><td><code>d[key] = v</code></td><td>✅ 关键区段</td></tr>
+          <tr><td><code>lst.append(x)</code></td><td>✅ 关键区段</td></tr>
+          <tr><td><code>lst[i]</code></td><td>✅</td></tr>
+          <tr><td><code>counter += 1</code></td><td>❌ 需锁</td></tr>
+          <tr><td><code>if k in d: d[k]</code></td><td>❌ TOCTOU</td></tr>
+          <tr><td>不可变对象读取</td><td>✅</td></tr>
+        </table>
+        <pre><span class="cmt"># C 扩展关键区段</span>
+Py_BEGIN_CRITICAL_SECTION(self);
+self->value = new_val;
+Py_END_CRITICAL_SECTION();</pre>
+      </div>
+    </div>
+
+    <!-- C API -->
+    <div class="card ann">
+      <div class="card-header"><span class="icon">🔌</span> C API 新增</div>
+      <div class="card-body">
+        <ul class="feature-list">
+          <li><b>PEP 741</b>：<code>PyInitConfig</code> 统一初始化</li>
+          <li><b>PEP 757</b>：<code>PyLong_Export/FreeExport</code> 零拷贝整数</li>
+          <li><b>PEP 768</b>：远程调试 API</li>
+          <li><code>Py_NewRef / Py_XNewRef</code></li>
+          <li><code>PyObject_GetOptionalAttr</code></li>
+          <li><code>Py_Is(a, b)</code></li>
+          <li><code>PyUnicode_EqualToUTF8</code></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SOURCE MAP -->
+    <div class="card pyblue">
+      <div class="card-header"><span class="icon">🗂️</span> CPython 关键源码</div>
+      <div class="card-body">
+        <table>
+          <tr><th>文件</th><th>功能</th></tr>
+          <tr><td><code>Python/ceval.c</code></td><td>解释器循环</td></tr>
+          <tr><td><code>Python/qsbr.c</code></td><td>QSBR 无锁回收</td></tr>
+          <tr><td><code>Python/jit.c</code></td><td>Copy-Patch JIT</td></tr>
+          <tr><td><code>Python/optimizer.c</code></td><td>Tier 2 uop 优化</td></tr>
+          <tr><td><code>Objects/dictobject.c</code></td><td>字典实现</td></tr>
+          <tr><td><code>Grammar/python.gram</code></td><td>PEG 语法定义</td></tr>
+          <tr><td><code>InternalDocs/</code></td><td>qsbr.md · jit.md</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- PEPS -->
+    <div class="card cmd col-span-3">
+      <div class="card-header"><span class="icon">📜</span> Python 3.14 核心 PEPs</div>
+      <div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:11px;">
+          <div><b style="color:var(--ft-red);">PEP 703</b> 无 GIL（Phase 2）</div>
+          <div><b style="color:var(--jit-orange);">PEP 744</b> JIT 官方特性</div>
+          <div><b style="color:var(--ts-green);">PEP 750</b> t-strings</div>
+          <div><b style="color:var(--ann-purple);">PEP 649</b> 延迟注解</div>
+          <div><b style="color:var(--ann-purple);">PEP 749</b> annotationlib</div>
+          <div><b style="color:var(--mod-teal);">PEP 734</b> 多解释器 stdlib</div>
+          <div><b style="color:var(--mod-teal);">PEP 784</b> Zstandard</div>
+          <div><b style="color:var(--py-blue);">PEP 758</b> 无括号 except</div>
+          <div><b style="color:var(--py-blue);">PEP 765</b> finally 警告</div>
+          <div><b style="color:var(--std-blue);">PEP 741</b> 配置 C API</div>
+          <div><b style="color:var(--std-blue);">PEP 757</b> 整数导出 API</div>
+          <div><b style="color:var(--std-blue);">PEP 768</b> 远程调试接口</div>
+          <div><b style="color:#92400e;">PEP 761</b> Sigstore 替代 PGP</div>
+          <div><b style="color:#92400e;">PEP 739</b> build-details.json</div>
+          <div><b style="color:#92400e;">PEP 776</b> Emscripten Tier 3</div>
+          <div><b style="color:var(--ft-red);">PEP 779</b> 自由线程受支持</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Python 3.14 Cheat Sheet · 基于 <a href="https://github.com/python/cpython/tree/v3.14.0">CPython v3.14.0</a> · <a href="https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html">What's New in Python 3.14</a> · 生成日期 2026-08-19
+  </div>
+
+</div>
+</body>
+</html>

@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-03-first-principles-analysis"
 title: "第一性原理本质矛盾分析"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/03-first-principles-analysis.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "first-principles", "root-cause-analysis", "axioms"]
 ---
-
 # 第一性原理本质矛盾分析
 
 本章从第一性原理出发，解构两个普遍存在的隐含假设，从语言设计、训练数据、执行环境三个维度进行本质矛盾分析，最终推导出"四重断裂"结论。

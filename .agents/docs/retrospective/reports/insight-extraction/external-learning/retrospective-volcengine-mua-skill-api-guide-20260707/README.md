@@ -100,7 +100,7 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 - ClawHub Skill页面（byted-ai-mobileuse-agent）
 
 ### 前置与关联产出
-- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
+- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
 - 本次技术指南：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)（917行）
 - 同系列CUA分析：[volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)（1331行）
 

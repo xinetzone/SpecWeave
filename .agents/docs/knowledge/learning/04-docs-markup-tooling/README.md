@@ -27,6 +27,7 @@ date: "2026-07-09"
 | ✅ [Mermaid 官方文档教程](mermaid-wiki/README.md) | 11 | 基于 mermaid.js.org 官方文档的系统学习教程，覆盖 17 种图表类型语法、配置主题、集成生态 |
 | ✅ [MyST Markdown 教程](myst-markdown-tutorial/README.md) | 18 | （2个子目录） |
 | ✅ [scikit-build-core 构建系统](scikit-build-core-wiki/README.md) | 8 |  |
+| ✅ [Python 3.14 标准库教程](python314-stdlib-wiki/README.md) | 20 | Python 3.14 六个核心标准库模块系统教程（contextlib/contextvars/sys.monitoring/annotationlib/dataclasses/traceback） |
 | ✅ [Weasyprint Wiki](weasyprint-wiki/README.md) | 15 |  |
 
 

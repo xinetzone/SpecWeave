@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-07-checklists"
 title: "兼容性预检+安全审查Checklist"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/07-checklists.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "checklist", "compatibility", "security-audit", "preflight"]
 ---
-
 # 兼容性预检+安全审查Checklist
 
 本章提供经过V阶段加固的兼容性预检和安全审查Checklist，用于AI生成PowerShell 5.1脚本后的验证工作。

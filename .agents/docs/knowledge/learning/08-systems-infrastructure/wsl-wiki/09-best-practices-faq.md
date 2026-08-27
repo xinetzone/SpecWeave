@@ -2,11 +2,11 @@
 id: "wsl-wiki-09-best-practices-faq"
 title: "最佳实践与FAQ"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/09-best-practices-faq.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "best-practices", "faq", "troubleshooting", "performance", "tips"]
 ---
-
 # 最佳实践与FAQ
 
 本章汇总 WSL2 日常使用中的最佳实践建议，以及按类别整理的常见问题解答。

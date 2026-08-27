@@ -1,0 +1,13 @@
+id = "skill-intent-routing"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "bundles/chaos/ai-agent-skills/concepts/08-jira-skill-engineering.md#意图映射 + bundles/chaos/ai-agent-skills/libs/tests/agent-rules-skill/skills/agent-rules/SKILL.md#Scripts"
+
+[bindings]
+rules = []
+references = ["skill-discovery-protocol.md", "lazy-loading-pattern.md", "skill-knowledge-operation-separation.md"]
+skills = []

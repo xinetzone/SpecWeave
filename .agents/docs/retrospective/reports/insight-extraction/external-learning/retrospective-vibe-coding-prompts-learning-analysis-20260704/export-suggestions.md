@@ -25,7 +25,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/reports/
 | Spec PRD | [spec.md](../../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 高 - Spec 模式 PRD 范例(中等规模) |
 | 任务计划 | [tasks.md](../../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 高 - 4 任务 + 12 子任务拆分范例 |
 | 验收清单 | [checklist.md](../../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 高 - 20 项 checklist 设计范例 |
-| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 极高 - 416 行 Vibe Coding Prompt 深度分析,11 章节 |
+| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | 极高 - 416 行 Vibe Coding Prompt 深度分析,11 章节 |
 | 知识库索引 | [README.md](../../../../../knowledge/README.md) | ✅ 已更新 | 中 - 自动生成,覆盖 7 个 tag |
 | 复盘报告四件套 | 本目录 | ✅ 已完成 | 高 - 中等规模学习分析复盘范例 |
 

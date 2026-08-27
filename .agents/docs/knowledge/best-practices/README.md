@@ -59,11 +59,13 @@ date: "2026-07-30"
 | [eight-dimensions-concurrent-safety-spec.md](eight-dimensions-concurrent-safety-spec.md) | 并发安全八维检查法技术规格（12类反模式检测规则与消歧策略） | `concurrency` `static-analysis` `specification` `anti-pattern` |
 | [ast-static-analysis-disambiguation.md](ast-static-analysis-disambiguation.md) | Python AST静态分析五类消歧法（降低误报的核心策略） | `AST` `static-analysis` `python` `false-positive` |
 | [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md) | IDE Agent环境下CLI工具配置四步法（安装验证→沙箱预判→非交互认证→配置验证） | `cli` `setup` `agent-environment` `sandbox` `newbie-guide` |
+| [cli-task-vs-user-interface-invoke-typer.md](cli-task-vs-user-interface-invoke-typer.md) | CLI工具选型二分法（invoke任务编排 vs typer用户接口，Windows平台冒烟三件套+4反模式） | `cli` `invoke` `typer` `task-runner` `selection` `anti-pattern` |
 | [mermaid-guide.md](mermaid-guide.md) | Mermaid图表一站式操作手册（安全编码六规则+自动检查工具） | `mermaid` `visualization` `ci` `安全编码` |
 | [multi-file-edit-reliability.md](multi-file-edit-reliability.md) | 多文件编辑操作可靠性指南（级联编号成本/Edit工具陷阱/串行vs并行策略） | `edit` `multi-file` `reliability` `tool-pitfalls` |
 | [parser-complexity-budget.md](parser-complexity-budget.md) | Parser复杂度预算Checklist（三层架构/20+边界case测试/时间预算预估） | `parser` `complexity-budget` `TDD` `semi-structured-parsing` |
 | [pattern-validation-v3-template-batch-upgrade.md](pattern-validation-v3-template-batch-upgrade.md) | 方法论模式验证报告（分类处置决策树+三阶段渐进推广验证） | `pattern-validation` `governance` `batch-upgrade` `phased-rollout` |
 | [git-hook-chain-architecture.md](git-hook-chain-architecture.md) | 链式pre-commit钩子架构实践（跨平台Shell入口+Python链式主入口模式） | `git-hooks` `pre-commit` `architecture` `cross-platform` `automation` |
+| [git-commit-mojibake-diagnosis.md](git-commit-mojibake-diagnosis.md) | Git提交中文乱码双层分离验证法（显示层 vs 存储层，git cat-file字节比对，误判reset重提教训+可靠重提方案） | `git` `encoding` `mojibake` `utf-8` `gbk` `windows` `commit` `diagnosis` |
 | [b2b-product-info-collection-sop.md](b2b-product-info-collection-sop.md) | B2B/旗舰产品信息源分层采集规范（五层信息源优先级策略） | `信息采集` `B2B` `SOP` `多源验证` `Defuddle` |
 | [ai-anthropomorphic-crisis-intervention-implementation.md](ai-anthropomorphic-crisis-intervention-implementation.md) | AI拟人化互动服务极端情绪干预机制技术实施方案（合规方案） | `合规` `安全` `AI安全` `危机干预` |
 | [symbol-visibility-control.md](symbol-visibility-control.md) | C/C++共享库符号可见性控制最佳实践（--exclude-libs,ALL精确控制、静态注册保护、5大反模式） | `C/C++` `linker` `symbol-visibility` `shared-library` `LLVM` `TVM` `CMake` |
@@ -99,7 +101,7 @@ date: "2026-07-30"
 
 | 场景分类 | 推荐阅读路径 |
 |---------|-------------|
-| 🔧 工具链/环境配置 | [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md) → [trae-agent-sandbox-guide.md](trae-agent-sandbox-guide.md) |
+| 🔧 工具链/环境配置 | [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md) → [cli-task-vs-user-interface-invoke-typer.md](cli-task-vs-user-interface-invoke-typer.md) → [trae-agent-sandbox-guide.md](trae-agent-sandbox-guide.md) |
 | 🧵 并发编程 | [concurrent-code-safety-review.md](concurrent-code-safety-review.md) → [eight-dimensions-concurrent-safety-spec.md](eight-dimensions-concurrent-safety-spec.md) → [ast-static-analysis-disambiguation.md](ast-static-analysis-disambiguation.md) |
 | 📊 文档/可视化 | [mermaid-guide.md](mermaid-guide.md) |
 | ✏️ 编辑/重构 | [multi-file-edit-reliability.md](multi-file-edit-reliability.md) |

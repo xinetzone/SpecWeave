@@ -2,6 +2,7 @@
 id: "theory-framework"
 title: "理论框架：七概念理论详解"
 source: "seven-concepts-india-manufacturing-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/01-theory-framework.toml"
 date: "2026-07-14"
 version: "1.0"
 ---

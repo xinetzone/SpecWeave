@@ -82,7 +82,7 @@ coverage: "25/25 C++ layers Forward (100%), 19/19 layers Backward gradient valid
 | [param_propagate_down_初始化检查清单](../../../../knowledge/best-practices/caffe-ffi-param-propagate-down-initialization.md) | Layer初始化陷阱预防 |
 | [测试基础设施性能优化](../../../../knowledge/best-practices/test-infra-performance-optimization.md) | "测量不要猜"原则+分层GC策略 |
 | [浮点数精度测试指南](../../../../knowledge/best-practices/float-precision-testing-guide.md) | ULP饱和规则+C¹拐点防护 |
-| [numpy参考实现默认值对齐原则](../../../../knowledge/best-practices/numpy-reference-default-alignment.md) | 框架枚举默认值对齐+显式优于隐式+反向验证shape |
+| numpy参考实现默认值对齐原则 | 框架枚举默认值对齐+显式优于隐式+反向验证shape |
 
 ## Backward覆盖矩阵
 

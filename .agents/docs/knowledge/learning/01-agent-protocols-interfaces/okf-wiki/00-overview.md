@@ -14,9 +14,8 @@ summary: "OKF是Google Cloud 2026年6月发布的开放知识表示规范，定�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/00-overview.toml"
 ---
-
 > **⚠️ 版本早期警示**
 > - OKF目前处于**v0.2 Draft极早期阶段**（2026年6月首次发布）
 > - 本教程基于现有公开信息整理，是趋势分析而非确定性预测

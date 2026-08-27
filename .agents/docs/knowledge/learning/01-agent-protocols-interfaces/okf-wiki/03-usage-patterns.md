@@ -14,9 +14,8 @@ summary: "覆盖数据目录、Agent知识库、团队Runbook三种典型场景�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/03-usage-patterns.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/03-usage-patterns.toml"
 ---
-
 # 03 使用模式与最佳实践
 
 ## 3.1 三种典型使用场景

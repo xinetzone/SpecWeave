@@ -170,5 +170,5 @@ WebFetch 对微信公众平台文章（mp.weixin.qq.com）提取失败，返回�
 ## 导航
 
 - [复盘报告源文件](../../task-reports/retrospective-analyze-wechat-article-3dnk-20260706.md)
-- [分析报告源文件](../../../../../../.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.md)
+- 分析报告源文件
 - [返回洞察萃取索引](../standalone/README.md)

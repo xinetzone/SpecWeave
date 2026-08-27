@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-14-markdown-workflows"
 title: "十四、Markdown 工作流实战：Pandoc & MyST 组合指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/14-markdown-workflows.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/14-markdown-workflows.toml"
 source: "实战经验沉淀 | https://pandoc.org/MANUAL.html | https://mystmd.org/guide"
 category: "learning"
 tags: ["weasyprint","pandoc","myst","markdown","workflow","best-practice","integration"]

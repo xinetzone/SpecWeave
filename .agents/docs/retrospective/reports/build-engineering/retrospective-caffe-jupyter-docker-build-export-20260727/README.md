@@ -369,7 +369,7 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 
 ### A1（低优先级）：为Caffe Docker构建添加build.sh自动化脚本
 - **问题**：当前构建需要手动输入较长的docker build命令，路径和参数容易出错
-- **建议**：在[docker/origin/](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/origin)下创建build.sh脚本封装构建+验证+导出流程
+- **建议**：在[docker/origin/](../../../../../../projects/xuanspace/vendor/caffe/docker/origin/README.md)下创建build.sh脚本封装构建+验证+导出流程
 - **验收标准**：`./build.sh`一条命令完成构建、验证、导出到指定目录
 - **注意**：caffex是vendor submodule不可修改，但docker/origin/属于外层包装，可以添加脚本
 
@@ -418,7 +418,7 @@ Spec规划文档:
 
 ## 相关报告索引
 
-- [retrospective-caffe-standalone-caffex-removal-20260727](retrospective-caffe-standalone-caffex-removal-20260727/README.md) — Caffe standalone版本caffex依赖移除
+- [retrospective-caffe-standalone-caffex-removal-20260727](README.md) — Caffe standalone版本caffex依赖移除
 - [compiled-wheel-runtime-image-build](../../../patterns/code-patterns/compiled-wheel-runtime-image-build.md) — 编译Python Wheel运行时镜像构建模式（相关模式）
 - [docker-modular-build-orchestration](../../../patterns/architecture-patterns/docker-modular-build-orchestration.md) — Docker模块化构建编排模式（相关模式）
 - [wsl-distro-install-migration-guide](../../../patterns/code-patterns/wsl-distro-install-migration-guide.md) — WSL发行版安装迁移指南

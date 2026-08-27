@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-glossary"
 title: "GraphQL 术语表与参考资料"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/11-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/11-glossary.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "glossary", "reference", "terminology", "resources"]

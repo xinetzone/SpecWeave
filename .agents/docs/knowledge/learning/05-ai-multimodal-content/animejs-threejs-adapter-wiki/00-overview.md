@@ -7,6 +7,7 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/00-overview.toml"
 summary: "Anime.js 4.5官方Three.js适配器系统性教程，涵盖快速开始、核心概念、五大核心特性、实战案例、最佳实践、常见问题与资源，让3D动画写起来像CSS transform一样直观。"
 ---
 # Anime.js 4.5+Three.js 适配器教程

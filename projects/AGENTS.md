@@ -29,13 +29,15 @@ projects/AGENTS.md 与 projects/.agents/ 由 SpecWeave 主权区维护，直接�
 | 子项目 | AGENTS.md 入口 | 说明 |
 |--------|---------------|------|
 | xuanspace | [projects/xuanspace/AGENTS.md](xuanspace/AGENTS.md) | 玄境（Xuanspace）Python 3.13+ monorepo 项目管理工具 |
+| awesome-okf-xs | [projects/awesome-okf-xs/AGENTS.md](awesome-okf-xs/AGENTS.md) | 玄境项目 OKF（开源知识格式）文档库 |
 
 ### 嵌套优先级
 
 ```
 SpecWeave 根 AGENTS.md
   └─ projects/AGENTS.md（本文件，projects 区域入口）
-       └─ projects/xuanspace/AGENTS.md（xuanspace 子项目入口）
+       ├─ projects/xuanspace/AGENTS.md（xuanspace 子项目入口）
+       └─ projects/awesome-okf-xs/AGENTS.md（awesome-okf-xs 子项目入口）
 ```
 
 进入任意子目录后，优先读取**离当前工作目录最近**的 AGENTS.md。若子项目规则与本文件冲突，以子项目为准（子项目覆盖父层）。
@@ -103,6 +105,15 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | 项目模板 | [xuanspace/tools/templates/](xuanspace/tools/templates/) | Python/C++/静态项目模板 |
 | xs CLI 工具 | [xuanspace/tools/xs/](xuanspace/tools/xs/) | 项目脚手架命令行工具 |
 
+### awesome-okf-xs 子项目
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| 入门指南 | [awesome-okf-xs/.agents/ONBOARDING.md](awesome-okf-xs/.agents/ONBOARDING.md) | 快速开始、能力速查表、文档库结构 |
+| 全局核心规则 | [awesome-okf-xs/.agents/global-core-rules.md](awesome-okf-xs/.agents/global-core-rules.md) | 启动协议、内容敏感度分流、OKF 文档规范 |
+| 上下文路由表 | [awesome-okf-xs/.agents/context-routing.md](awesome-okf-xs/.agents/context-routing.md) | 任务类型→必读规范映射 |
+| 文档元数据规范 | [awesome-okf-xs/.agents/rules/frontmatter.md](awesome-okf-xs/.agents/rules/frontmatter.md) | YAML/TOML 内容-元数据二分法 |
+
 ## 边界声明
 
 | 资产 | 归属 | SpecWeave 可修改 | 说明 |
@@ -113,6 +124,9 @@ projects 区域内各子项目可被 SpecWeave 跨边界调用的资产清单。
 | projects/xuanspace/ | xuanspace 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
 | projects/xuanspace/AGENTS.md | xuanspace 子项目 | ❌ 否 | 子项目自治入口 |
 | projects/xuanspace/.agents/ | xuanspace 子项目 | ❌ 否 | 子项目规范体系 |
+| projects/awesome-okf-xs/ | awesome-okf-xs 子项目 | ❌ 否 | 通过 gitlink 追踪，修改需走子项目开发流程 |
+| projects/awesome-okf-xs/AGENTS.md | awesome-okf-xs 子项目 | ❌ 否 | 子项目自治入口 |
+| projects/awesome-okf-xs/.agents/ | awesome-okf-xs 子项目 | ❌ 否 | 子项目规范体系 |
 
 ## 跨子项目调用规范
 

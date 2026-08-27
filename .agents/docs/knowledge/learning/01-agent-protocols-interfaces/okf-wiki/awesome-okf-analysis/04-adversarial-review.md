@@ -4,12 +4,12 @@ title: Awesome OKF 深度分析 - 对抗性审查（V阶段）
 type: AdversarialReview
 version: 1.0
 source: 对02-insights.md的4条洞察和03-patterns.md的2个模式进行四视角攻击
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/04-adversarial-review.toml"
 description: 四视角对抗审查记录与修正回应：魔鬼代言人(逻辑)、新手开发者(可读性)、成本敏感CTO(ROI)、学术研究员(准确性)
 tags: [okf, awesome-okf, 对抗审查, adversarial-review, v-stage]
 category: case-study
 date: 2026-08-06
 ---
-
 # Awesome OKF 深度分析 - 对抗性审查（V阶段）
 
 > **方法论说明**：本阶段组织四视角对抗审查，对I阶段洞察和E阶段模式进行系统性攻击。审查意见分类：🔴关键问题（必须100%修正）、🟡次要问题（≥30%修正）、🟢观察性问题（记录即可）。禁止客套话，所有意见必须具体到段落/句子/模式要素。

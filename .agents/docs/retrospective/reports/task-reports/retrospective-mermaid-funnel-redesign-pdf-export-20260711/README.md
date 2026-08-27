@@ -114,6 +114,6 @@ Mermaid.js等前端可视化库的API Promise通常只代表"任务已提交"，
 
 ## 6. 经验关联
 
-- 关联模式：[mermaid-safe-coding-rules.md](../../patterns/code-patterns/mermaid-safe-coding-rules.md)（验证了安全编码规则的有效性）
+- 关联模式：[mermaid-safe-coding-rules.md](../../../patterns/code-patterns/mermaid-safe-coding-rules.md)（验证了安全编码规则的有效性）
 - 关联经验：Mermaid黑白配色经验（Experience 1073667，init配置curve:linear解决曲线遮挡）
 - 待沉淀：三段式PDF导出法可进一步验证后升级为L2模式并加入脚本库

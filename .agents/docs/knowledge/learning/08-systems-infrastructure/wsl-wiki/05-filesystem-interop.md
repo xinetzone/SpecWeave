@@ -2,11 +2,11 @@
 id: "wsl-wiki-05-filesystem-interop"
 title: "文件系统互操作"
 source: "spec:create-wsl-wiki-tutorial"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/05-filesystem-interop.toml"
 date: "2026-07-20"
 category: "learning"
 tags: ["wsl", "filesystem", "drvfs", "plan9", "interop", "wsl$", "namespace", "permission"]
 ---
-
 # 文件系统互操作
 
 ## 1. 概述

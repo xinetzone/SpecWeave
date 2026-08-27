@@ -1,11 +1,11 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-knowledge-catalog-wiki-index"
 title: "Knowledge Catalog 知识目录平台"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-06"
 tags: ["knowledge-catalog", "dataplex", "okf", "google-cloud", "ai-agent", "data-catalog", "knowledge-graph"]
 ---
-
 # Knowledge Catalog 知识目录平台完整指南
 
 > **⚠️ 技术预览版提示**

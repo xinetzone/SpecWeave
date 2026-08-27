@@ -48,7 +48,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/com
 
 - [retrospective-wsl-learning-plan-20260701](../retrospective-wsl-learning-plan-20260701/README.md) — 同类先例：基于 `external/` 本地仓库的学习教程制作
 - [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/README.md) — 同类先例：外部开源Skill学习与知识库归档
-- [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines-tutorial.md) — 源知识条目（任务产出物）
+- [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) — 源知识条目（任务产出物）
 - [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md) — 已整合的SpecWeave规则文件
 - [insight-windows-git-encoding-20260701.md](../../insight-extraction/standalone/insight-windows-git-encoding-20260701.md) — Windows Git编码问题（本次最终解决为共享工具）
 - [tutorial-cognitive-ladder.md](../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md) — 本次沉淀的教程认知阶梯模式（L2）

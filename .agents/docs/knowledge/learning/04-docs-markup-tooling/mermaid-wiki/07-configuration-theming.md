@@ -2,6 +2,7 @@
 id: "mermaid-wiki-07-configuration-theming"
 title: "Mermaid 配置与主题（Configuration & Theming）"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/07-configuration-theming.toml"
 category: "learning"
 tags: ["mermaid","configuration","theming","theme","themeVariables","securityLevel","dagre","elk","markup"]
 date: "2026-08-06"

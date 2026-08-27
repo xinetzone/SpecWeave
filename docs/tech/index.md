@@ -1,3 +1,7 @@
+---
+okf_version: "0.2"
+---
+
 # 📦 技术文档
 
 本目录集中承载 **SpecWeave 本项目** 的技术相关文档。全部项目技术资产（包含项目介绍、快速开始、核心功能、贡献指南与变更日志）均位于本目录下，与同级 [通用知识](../general/index.md)（方法论、哲学等）完全隔离。
@@ -6,13 +10,15 @@
 :maxdepth: 2
 :caption: 技术文档
 
-intro
-quickstart
-features
-contributing
-changelog
-release-onnx-quantized-v2
-release-onnx-pytorch-v1-1
+concepts/intro
+concepts/quickstart
+concepts/features
+concepts/contributing
+concepts/changelog
+concepts/four-layer-logging-pattern
+references/release-onnx-quantized-v2
+references/release-onnx-pytorch-v1-1
+references/readme
 ```
 
 :::{note}
@@ -23,11 +29,15 @@ release-onnx-pytorch-v1-1
 
 | 路径 | 说明 |
 |---|---|
-| `intro.md` | 项目介绍与定位 |
-| `quickstart.md` | 环境初始化与首次接入 |
-| `features.md` | 核心功能与 `.agents/` 详解 |
-| `contributing.md` | PR 流程、代码审查与规范遵循 |
-| `changelog.md` | 项目级变更日志 |
+| `concepts/intro.md` | 项目介绍与定位 |
+| `concepts/quickstart.md` | 环境初始化与首次接入 |
+| `concepts/features.md` | 核心功能与 `.agents/` 详解 |
+| `concepts/contributing.md` | PR 流程、代码审查与规范遵循 |
+| `concepts/changelog.md` | 项目级变更日志 |
+| `concepts/four-layer-logging-pattern.md` | 自动化脚本四层日志增强模式 |
+| `references/release-onnx-pytorch-v1-1.md` | onnx-pytorch v1.1.0 发布说明 |
+| `references/release-onnx-quantized-v2.md` | onnx-quantized v2.0.0 发布说明 |
+| `references/readme.md` | 自动生成的文档索引 |
 
 ## 边界
 

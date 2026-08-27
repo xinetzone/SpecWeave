@@ -185,7 +185,7 @@ date: "2026-07-07"
 
 | 文件 | 路径 | 规模 |
 |------|------|------|
-| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表 |
+| 结构化学习笔记 | [volcengine-agentkit-platform-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-agentkit-platform-analysis.md) | 13章 + 6个Mermaid图表 |
 
 ### 3. 复盘报告（当前产出）
 

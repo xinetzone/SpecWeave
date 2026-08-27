@@ -2,12 +2,12 @@
 title: "开源EMS能源管理系统深度洞察分析报告"
 date: "2026-07-09"
 source: "https://mp.weixin.qq.com/s/hPNSIy3TwWtf5lX0kVhM2A?from=industrynews&color_scheme=light#rd"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ems-energy-management-wiki/analysis-report.toml"
 theme: "retrospectives-insights"
 author: "工业可视化（原文作者）"
 project_name: "energy-management"
 project_url: "https://gitee.com/guangdong122/energy-management"
 ---
-
 # 开源EMS能源管理系统深度洞察分析报告
 
 ## 1. 执行摘要

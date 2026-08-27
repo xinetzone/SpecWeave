@@ -494,7 +494,7 @@ Caffe Proto 项目
 | [gen_proto.py](../../../../../../external/chaos/caffe/gen_proto.py) | 代码生成 |
 | [protos/caffe.proto](../../../../../../external/chaos/caffe/protos/caffe.proto) | Proto 定义 |
 | [caffex/src/caffe/proto/caffe.proto](../../../../../../external/chaos/caffe/caffex/src/caffe/proto/caffe.proto) | 原始 Proto 定义 |
-| [caffe-architecture-wiki/README.md](../../../../knowledge/learning/caffe-architecture-wiki/README.md) | 架构深度分析 |
+| [caffe-architecture-wiki/README.md](../../../../knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.md) | 架构深度分析 |
 
 ---
 

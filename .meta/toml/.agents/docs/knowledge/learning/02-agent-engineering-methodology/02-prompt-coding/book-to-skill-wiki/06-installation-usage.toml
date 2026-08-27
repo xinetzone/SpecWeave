@@ -1,0 +1,7 @@
+id = "book-to-skill-wiki-06"
+title = "book-to-skill 完全指南 — 安装与使用"
+category = "knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["book-to-skill", "installation", "usage", "cli", "dependency-management", "agent-skill", "environment-check", "batch-processing"]

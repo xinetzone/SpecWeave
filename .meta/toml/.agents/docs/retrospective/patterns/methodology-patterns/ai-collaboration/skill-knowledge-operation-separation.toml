@@ -1,0 +1,13 @@
+id = "skill-knowledge-operation-separation"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "bundles/chaos/ai-agent-skills/concepts/08-jira-skill-engineering.md#双技能拆分：操作与知识分离"
+
+[bindings]
+rules = []
+references = ["skill-three-part-structure.md", "skill-five-elements-model.md", "skill-intent-routing.md"]
+skills = []

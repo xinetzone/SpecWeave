@@ -1,0 +1,7 @@
+id = "deepseek-harness-wiki-07"
+title = "DeepSeek Harness 完全指南 — 会话日志与可观测性"
+category = "knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki"
+date = "2026-08-16"
+version = "1.0"
+status = "stable"
+tags = ["deepseek", "agent", "harness", "session-log", "trajectory", "observability", "fork", "replay"]

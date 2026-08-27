@@ -1,0 +1,7 @@
+id = "deepseek-harness-wiki-log"
+title = "DeepSeek Harness 完全指南 — 变更日志"
+category = "knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["deepseek", "agent", "harness", "changelog", "log"]

@@ -9,12 +9,12 @@ tags:
   - proto3
   - editions
 source:
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.toml"
   - https://protobuf.dev/programming-guides/proto3
   - https://protobuf.dev/editions/features
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---
-
 # 三版对比矩阵（proto2 vs proto3 vs Editions）
 
 本文档从12个核心维度对比proto2、proto3（v3.15+）、Editions 2023/2024的差异，标注每个差异对兼容性的影响级别，并提供同一Message在三版中的代码示例。

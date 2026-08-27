@@ -2,7 +2,7 @@
 id: "rainman-translate-book-wiki"
 title: "Rainman Translate Book Wiki 教程"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki.toml"
 ---
 # Rainman Translate Book Wiki 教程
 
@@ -22,14 +22,14 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-
 
 | 序号 | 章节 | 文件 | 内容概要 |
 |---|---|---|---|
-| 00 | 教程概述与学习目标 | [rainman-translate-book-wiki/00-overview.md](rainman-translate-book-wiki/00-overview.md) | 项目背景介绍、学习目标、前置知识要求、文档导航 |
-| 01 | 核心功能详解 | [rainman-translate-book-wiki/01-core-concepts.md](rainman-translate-book-wiki/01-core-concepts.md) | 五大核心功能：并行子代理翻译、术语表锁定、相邻上下文、断点续传、多格式输出 |
-| 02 | 安装部署指南 | [rainman-translate-book-wiki/02-installation.md](rainman-translate-book-wiki/02-installation.md) | 环境要求、分平台安装步骤（macOS/Linux/Windows）、三种 Skill 安装方式、验证安装 |
-| 03 | 使用流程 | [rainman-translate-book-wiki/03-usage.md](rainman-translate-book-wiki/03-usage.md) | 快速上手、指定 EPUB 封面、修改术语表后重新翻译、完整工作流程图解 |
-| 04 | 局限性与注意事项 | [rainman-translate-book-wiki/04-limitations.md](rainman-translate-book-wiki/04-limitations.md) | 环境依赖门槛、Calibre 格式丢失风险、适用场景边界、与 Claude 网页版/CAT 工具对比 |
-| 05 | 总结与回顾 | [rainman-translate-book-wiki/05-summary.md](rainman-translate-book-wiki/05-summary.md) | 核心要点回顾、关键 Takeaway、下一步学习建议 |
-| 06 | 常见问题 | [rainman-translate-book-wiki/06-faq.md](rainman-translate-book-wiki/06-faq.md) | 翻译质量、费用、语言支持、中断恢复、术语修正、图片翻译、与 Claude 网页版区别 |
-| 07 | 资源链接 | [rainman-translate-book-wiki/07-resources.md](rainman-translate-book-wiki/07-resources.md) | 原始资源、官方仓库、依赖工具、本项目内相关 Wiki |
+| 00 | 教程概述与学习目标 | [rainman-translate-book-wiki/00-overview.md](06-content-translation/rainman-translate-book-wiki/00-overview.md) | 项目背景介绍、学习目标、前置知识要求、文档导航 |
+| 01 | 核心功能详解 | [rainman-translate-book-wiki/01-core-concepts.md](06-content-translation/rainman-translate-book-wiki/01-core-concepts.md) | 五大核心功能：并行子代理翻译、术语表锁定、相邻上下文、断点续传、多格式输出 |
+| 02 | 安装部署指南 | [rainman-translate-book-wiki/02-installation.md](06-content-translation/rainman-translate-book-wiki/02-installation.md) | 环境要求、分平台安装步骤（macOS/Linux/Windows）、三种 Skill 安装方式、验证安装 |
+| 03 | 使用流程 | [rainman-translate-book-wiki/03-usage.md](06-content-translation/rainman-translate-book-wiki/03-usage.md) | 快速上手、指定 EPUB 封面、修改术语表后重新翻译、完整工作流程图解 |
+| 04 | 局限性与注意事项 | [rainman-translate-book-wiki/04-limitations.md](06-content-translation/rainman-translate-book-wiki/04-limitations.md) | 环境依赖门槛、Calibre 格式丢失风险、适用场景边界、与 Claude 网页版/CAT 工具对比 |
+| 05 | 总结与回顾 | [rainman-translate-book-wiki/05-summary.md](06-content-translation/rainman-translate-book-wiki/05-summary.md) | 核心要点回顾、关键 Takeaway、下一步学习建议 |
+| 06 | 常见问题 | [rainman-translate-book-wiki/06-faq.md](06-content-translation/rainman-translate-book-wiki/06-faq.md) | 翻译质量、费用、语言支持、中断恢复、术语修正、图片翻译、与 Claude 网页版区别 |
+| 07 | 资源链接 | [rainman-translate-book-wiki/07-resources.md](06-content-translation/rainman-translate-book-wiki/07-resources.md) | 原始资源、官方仓库、依赖工具、本项目内相关 Wiki |
 
 ---
 

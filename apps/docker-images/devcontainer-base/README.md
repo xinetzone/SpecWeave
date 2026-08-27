@@ -3,7 +3,7 @@ id: devcontainer-base-readme
 title: DevContainer Base - 标准化开发容器基础镜像
 source: "apps/docker-images/devcontainer-base/README.md"
 category: application-readme
-updated: 2026-08-14
+updated: 2026-08-19
 ---
 
 # DevContainer Base - 标准化开发容器基础镜像 (SSH + Docker + Podman + Jupyter)
@@ -28,6 +28,7 @@ updated: 2026-08-14
 | [⚙️ 配置参考](#️-配置参考) | 构建参数 vs 运行时变量两张表 | 高级用户 |
 | [📋 服务管理](#-服务管理) | supervisorctl + 健康检查 | 运维/调试 |
 | [🧩 镜像变体 & 扩展](#-镜像变体--扩展) | 6级变体依赖链 + 作为Base镜像 | 镜像维护者 |
+| [🔧 Slim 镜像构建与验证](#-slim-镜像构建与验证) | 全链路构建脚本 + 清理策略 + 验证清单 | 构建/维护镜像 ⭐ |
 | [🧪 ONNX 量化工具包](#-onnx-量化工具包) | onnx_quantize_kit 高层API指南 | 模型工程师 |
 | [🔄 CI/CD 流水线](#-cicd-流水线) | 双CI配置 + 手动触发命令 | CI维护者 |
 | [❓ FAQ & 故障排查](#-faq--故障排查) | 5条最常见问题及解决方案 | 遇到问题时 ⭐ |
@@ -41,13 +42,13 @@ updated: 2026-08-14
 | # | 特性 | 一句话说明 |
 |---|------|-----------|
 | 1 | **Ubuntu 26.04 基础** | 固定标签 + 中文 locale zh_CN.UTF-8 + Asia/Shanghai 时区 |
-| 2 | **Python 3.14.6 free-threading** | Miniforge3 (conda-forge) + cp314t 无GIL构建，`PYTHON_GIL=1` 可切兼容模式 |
+| 2 | **Python 3.14.6 free-threading** | Miniforge3 (conda-forge) + cp314t 无GIL构建，`PYTHON_GIL=1` 可切兼容模式；Jupyter 已注入 `PYTHON_GIL=0` 防 C 扩展自动启用 GIL（见 [FAQ Q6](#q6jupyter-kernel-里-gil-被重新启用free-threading-并行失效来源2026-08-19-gil-修复记录)） |
 | 3 | **四大服务可独立启停** | SSH(22) + Docker DinD/DooD + Podman(rootless) + JupyterLab(8888)，通过 ENVs 控制 |
 | 4 | **双容器运行时** | Docker DinD（完全隔离，需--privileged）/ DooD（挂载宿主socket，无需特权）；Podman rootless 备选 |
 | 5 | **Supervisord 统一管理** | 服务自动重启、优先级调度、日志聚合 |
 | 6 | **安全增强** | 非 root 用户 devuser(UID 1000) + SSH ED25519 密钥 + Jupyter Token/密码 + SSH host keys启动时生成 |
 | 7 | **国内源一键加速** | APT/PyPI/Docker CE/Conda 均可独立切镜像源（aliyun/tuna/official） |
-| 8 | **多阶段最小化构建** | 7 Stage单镜像 + BuildKit缓存挂载 + 激进清理策略，镜像~2.38GB |
+| 8 | **Slim 镜像优化** | CoW 层序优化 + 激进清理策略，root ~1.41GB / conda-llvm ~3.18GB / onnx-quantized ~3.5GB（较优化前节省 ~1.7GB） |
 
 ---
 
@@ -340,19 +341,21 @@ Docker HEALTHCHECK 参数：`interval=30s` / `timeout=10s` / `start-period=60s` 
 ### 变体依赖链（6级，按构建拓扑排序）
 
 ```
-base（你在这里）
+base (slim: ~1.41GB)
   ↓  Ubuntu 26.04 + SSH + Docker + Podman + Jupyter + Miniforge3 + Python 3.14.6 cp314t
 conda
   ↓  镜像源配置 + 基础验证（Miniforge3已在base中）
-conda-llvm
-  ↓  LLVM 22.1.8 + Clang + CMake + Ninja（via conda-forge）
-onnx-pytorch
-  ↓  PyTorch CPU + ONNX Runtime 1.28.0 + onnxsim
-onnx-quantized
+conda-llvm (slim: ~3.18GB)
+  ↓  LLVM 22.1.8 + Clang + CMake + Ninja + ccache + pandoc（via conda-forge）
+onnx-dev (slim: ~3.38GB)
+  ↓  ONNX 1.22 + ONNX Runtime 1.29
+onnx-quantized (slim: ~3.50GB)
   ↓  onnxruntime.quantization 量化工具链（INT8/FP16）+ onnx_quantize_kit
 ai-dev
      全栈 AI/ML/NLP 生态 50+ 包 + JupyterLab 4.x + AI 内核
 ```
+
+> ⚠️ `onnx-pytorch` 变体基于 `conda-llvm`，与 `onnx-dev` 平行；Slim 构建链为 `root → conda-llvm → onnx-dev → onnx-quantized`。
 
 | 变体 | 核心组件（简） | 构建命令 |
 |------|--------------|---------|
@@ -383,6 +386,240 @@ RUN pip install your-pip-pkg && pip cache purge
 USER devuser
 # ENTRYPOINT 保持不变，服务按环境变量自动启动
 ```
+
+---
+
+## 🔧 Slim 镜像构建与验证
+
+> 本节介绍如何在 WSL2 环境中构建经过瘦身优化的 Slim 镜像，包含全链路构建脚本、清理策略说明和验证步骤。
+
+### 前置条件
+
+| 项 | 要求 |
+|----|------|
+| **运行环境** | WSL2（推荐 Ubuntu/Debian 发行版） |
+| **磁盘空间** | ≥20GB 可用空间（全链路构建需 ~15GB） |
+| **Docker** | WSL2 内已安装 Docker CE（构建脚本会自动启动 dockerd） |
+| **网络** | 能访问国内镜像源（aliyun/bfsu）或配置了代理 |
+
+### 构建脚本概览
+
+项目根目录提供三个构建/验证脚本：
+
+| 脚本 | 用途 | 场景 |
+|------|------|------|
+| `build-slim-chain.sh` | **全链路构建**（root → conda-llvm → onnx-dev → onnx-quantized） | 首次构建、root Dockerfile 变更后 |
+| `build-slim.sh` | **增量构建**（仅变体层：conda-llvm → onnx-dev → onnx-quantized） | 仅变体/cleanup 脚本变更后（root 已构建） |
+| `validate-slim.sh` | **功能验证**（编译/推理/量化冒烟测试） | 构建完成后验证功能完整性 |
+
+### 全链路构建（推荐首次使用）
+
+全链路构建脚本 `build-slim-chain.sh` 自动完成 8 个步骤：
+
+```
+[1/8] 重启 dockerd 并配置镜像加速
+[2/8] 检查磁盘空间
+[3/8] 清理失败构建缓存
+[4/8] 构建 root 镜像 devcontainer-base:slim
+[5/8] 构建 conda-llvm-slim
+[6/8] 构建 onnx-dev-slim
+[7/8] 构建 onnx-quantized-slim
+[8/8] 输出最终镜像大小 + 日志位置
+```
+
+**执行命令（在 WSL2 中）：**
+
+```bash
+cd /mnt/d/spaces/SpecWeave/apps/docker-images/devcontainer-base
+bash build-slim-chain.sh
+```
+
+脚本自动使用国内镜像源：
+- APT: `aliyun`
+- Docker CE: `aliyun`
+- Conda: `bfsu`（北外镜像）
+- PyPI: `aliyun`
+- Docker Hub 拉取：`daemon.json` 中配置的 7 个 registry-mirrors
+
+构建日志保存在 `logs/` 目录下：
+- `logs/build-root-slim.log`
+- `logs/build-conda-llvm-slim.log`
+- `logs/build-onnx-dev-slim.log`
+- `logs/build-onnx-quantized-slim.log`
+
+### 增量构建（root 未变更时）
+
+当仅修改了变体 Dockerfile 或清理脚本（如 `variants/shared/lib/cleanup.sh`）时，root 镜像无需重建，使用增量构建：
+
+```bash
+# 确认 dockerd 运行中
+docker info >/dev/null 2>&1 || {
+    pkill dockerd 2>/dev/null; sleep 1; rm -f /var/run/docker.sock
+    mkdir -p /etc/docker && cp daemon.json /etc/docker/daemon.json
+    nohup dockerd >/tmp/dockerd.log 2>&1 & sleep 5
+}
+
+# 构建 conda-llvm（cleanup.sh 变更影响此层）
+cd variants
+DOCKER_BUILDKIT=1 docker build \
+    --progress=plain \
+    -f conda-llvm/Dockerfile \
+    --build-arg BASE_TAG=slim \
+    --build-arg APT_MIRROR=aliyun \
+    --build-arg CONDA_MIRROR=bfsu \
+    --build-arg PIP_MIRROR=aliyun \
+    -t devcontainer-base:conda-llvm-slim \
+    .
+
+# 构建 onnx-dev
+DOCKER_BUILDKIT=1 docker build \
+    --progress=plain \
+    -f onnx-dev/Dockerfile \
+    --build-arg BASE_TAG=slim \
+    --build-arg APT_MIRROR=aliyun \
+    --build-arg CONDA_MIRROR=bfsu \
+    --build-arg PIP_MIRROR=aliyun \
+    -t devcontainer-base:onnx-dev-slim \
+    .
+
+# 构建 onnx-quantized
+DOCKER_BUILDKIT=1 docker build \
+    --progress=plain \
+    -f onnx-quantized/Dockerfile \
+    --build-arg BASE_TAG=slim \
+    --build-arg APT_MIRROR=aliyun \
+    --build-arg CONDA_MIRROR=bfsu \
+    --build-arg PIP_MIRROR=aliyun \
+    -t devcontainer-base:onnx-quantized-slim \
+    .
+```
+
+> 变体通过 `BASE_TAG=slim` 引用 root 镜像 `devcontainer-base:slim`，构建链自动按 Docker 层缓存逐层生效。
+
+### 清理策略说明
+
+Slim 镜像的瘦身效果来自两方面：**CoW 层序优化**（消除 `chown -R` 导致的 copy-on-write 膨胀）和**激进清理**（移除冗余组件）。清理逻辑集中在 `variants/shared/lib/cleanup.sh`，由 `cleanup_all_aggressive` 统一调度：
+
+```
+cleanup_all_aggressive() 调用顺序：
+  ├── cleanup_pycache        → Python __pycache__/.pyc
+  ├── cleanup_binaries       → strip ELF + 删除非必要 .a 静态库
+  ├── cleanup_llvm_devtools  → LLVM/Clang 冗余工具（详见下表）
+  ├── cleanup_dev_headers    → LLVM/Clang 开发头文件（保留，见下表）
+  ├── cleanup_conda_pip_cache → conda clean + pip cache purge
+  ├── cleanup_apt            → apt clean + lists 删除
+  └── cleanup_tmp            → /tmp + /var/tmp 安全清理
+```
+
+#### LLVM/Clang 组件保留/删除决策
+
+| 组件 | 大小 | 决策 | 理由 |
+|------|------|------|------|
+| clang / clang++ / lld | - | ✅ 保留 | 核心编译器/链接器 |
+| clang-tidy / clangd | - | ✅ 保留 | IDE 静态分析/LSP |
+| clang-format | - | ✅ 保留 | 代码格式化 |
+| **pandoc** | 156MB | ✅ **保留** | Jupyter nbconvert 导出 PDF/DOCX 硬依赖 |
+| **LLVM/Clang dev headers** | 64MB | ✅ **保留** | TVM/MLIR/LLVM Pass 开发编译链接必需 |
+| **cmake/{llvm,clang,lld}** | (含上) | ✅ **保留** | `find_package(LLVM)` CMake 集成必需 |
+| **clang-include-cleaner** | 小 | ✅ **保留** | clangd include 诊断依赖 |
+| **cpack** | ~15MB | ✅ **保留** | CMake 打包（DEB/RPM/NSIS） |
+| clang-offload-bundler | 小 | ✅ **保留** | OpenMP target offload |
+| llvm-config / llvm-ar 等 | - | ✅ 保留 | 核心 LLVM 工具链 |
+| **llvm-exegesis** | 71MB | ❌ 删除 | CPU 指令基准测试（仅编译器后端开发用） |
+| **ccmake** | ~16MB | ❌ 删除 | CMake curses TUI（容器内无人使用） |
+| **wasm-ld / ld64.lld / lld-link** | 21MB | ❌ 删除 | WebAssembly/macOS/Windows 交叉链接器 |
+| **libexec/llvm** | 21MB | ❌ 删除 | LLVM 内部构建辅助工具 |
+| pandoc-server / pandoc-lua | (含pandoc) | ❌ 删除 | pandoc 辅助组件（非 nbconvert 必需） |
+| tblgen 工具 | ~6MB | ❌ 删除 | .td 代码生成器（LLVM 自身开发专用） |
+| clang-rename/move/query 等 | 小 | ❌ 删除 | 重构 CLI 工具（IDE 内置功能已覆盖） |
+| Windows/macOS 交叉工具 | 小 | ❌ 删除 | llvm-cvtres/llvm-rc/llvm-windres 等 |
+| llvm-mca/xray 等 | 小 | ❌ 删除 | 高级分析/性能调试工具 |
+
+#### 额外修复：悬空符号链接
+
+`_del()` 辅助函数使用 `[ -e "$f" ] || [ -L "$f" ]` 检查（而非仅 `[ -e ]`），确保悬空符号链接（dangling symlink，如 `llvm-exegesis -> llvm-exegesis-22` 在目标文件已删后）也能被正确清理。
+
+### 验证步骤
+
+构建完成后执行验证脚本：
+
+```bash
+bash validate-slim.sh
+```
+
+该脚本依次对三个 slim 镜像执行冒烟测试：
+
+**Test 1: conda-llvm-slim**
+- Python 版本 + free-threading (GIL disabled) 检查
+- Clang/LLVM/CMake/Ninja/ccache 版本
+- C++17 编译运行测试（`clang++ -std=c++17`）
+
+**Test 2: onnx-dev-slim**
+- ONNX / ONNX Runtime 导入
+- 创建简单 ReLU 模型 → ONNX Runtime 推理验证
+
+**Test 3: onnx-quantized-slim**
+- `onnxruntime.quantization.quantize_dynamic` 导入
+- `onnxconverter_common` / `onnxsim` 可用性
+
+**手动深度验证（可选）：**
+
+```bash
+# 1. 验证 pandoc 可用（Jupyter 导出）
+docker run --rm --entrypoint bash devcontainer-base:onnx-quantized-slim \
+  -c 'echo "# Test" | pandoc -o /tmp/test.html && echo "pandoc: OK"'
+
+# 2. 验证 LLVM CMake config 存在
+docker run --rm --entrypoint bash devcontainer-base:conda-llvm-slim \
+  -c 'ls /opt/conda/envs/main/lib/cmake/llvm/LLVMConfig.cmake && echo "CMake config: OK"'
+
+# 3. 验证 clang-include-cleaner 可用（clangd 依赖）
+docker run --rm --entrypoint bash devcontainer-base:conda-llvm-slim \
+  -c 'which clang-include-cleaner && echo "include-cleaner: OK"'
+
+# 4. 验证 ONNX 量化端到端
+docker run --rm --entrypoint bash devcontainer-base:onnx-quantized-slim -c '
+python -c "
+from onnxruntime.quantization import quantize_dynamic, QuantType
+import onnx, numpy as np, tempfile, os
+from onnx import helper, TensorProto
+X = helper.make_tensor_value_info(\"X\", TensorProto.FLOAT, [1,3])
+Y = helper.make_tensor_value_info(\"Y\", TensorProto.FLOAT, [1,2])
+W = helper.make_tensor(\"W\", TensorProto.FLOAT, [3,2], np.random.randn(3,2).astype(np.float32).flatten().tolist())
+node = helper.make_node(\"MatMul\", [\"X\",\"W\"], [\"Y\"])
+model = helper.make_model(helper.make_graph([node],\"test\",[X],[Y],[W]), opset_imports=[helper.make_opsetid(\"\",13)])
+with tempfile.NamedTemporaryFile(suffix=\".onnx\",delete=False) as f:
+    onnx.save(model,f.name); p=f.name
+quantize_dynamic(p, p+\".int8.onnx\", weight_type=QuantType.QInt8)
+print(\"ONNX quantization end-to-end: OK\")
+os.unlink(p); os.unlink(p+\".int8.onnx\")
+"'
+
+# 5. 确认已删除的组件不存在
+docker run --rm --entrypoint bash devcontainer-base:conda-llvm-slim \
+  -c '! test -e /opt/conda/envs/main/bin/llvm-exegesis-22 && echo "llvm-exegesis removed: OK"'
+```
+
+### 预期镜像大小
+
+| 镜像 | Slim 大小 | 说明 |
+|------|----------|------|
+| `devcontainer-base:slim` | ~1.41GB | root 基础镜像 |
+| `devcontainer-base:conda-llvm-slim` | ~3.18GB | + LLVM/Clang/CMake/Ninja/ccache/pandoc |
+| `devcontainer-base:onnx-dev-slim` | ~3.38GB | + ONNX/ONNX Runtime |
+| `devcontainer-base:onnx-quantized-slim` | ~3.50GB | + 量化工具链 |
+
+> 相比 CoW 问题修复前（~5.2GB），净节省约 **1.7GB**，且所有核心功能完整保留。
+
+### 常见构建问题
+
+| 问题 | 原因 | 解决方案 |
+|------|------|---------|
+| `E: Package 'docker-ce' has no installation candidate` | Docker CE 官方源在国内不可达 | 构建时加 `--build-arg DOCKER_MIRROR=aliyun`（脚本已默认配置） |
+| `dial tcp: i/o timeout` 拉取镜像 | Docker Hub 连接超时 | 确认 `daemon.json` 中 registry-mirrors 已配置；或尝试 `docker pull` 手动测试镜像源 |
+| `no space left on device` | 磁盘空间不足 | `docker builder prune -af` 清理构建缓存；`docker system prune -af` 清理全部无用资源 |
+| 构建缓存导致旧代码生效 | BuildKit 缓存了旧层 | `docker builder prune -af` 后重新构建；或加 `--no-cache` 强制全量构建 |
+| WSL2 内存不足被 OOM Kill | WSL2 默认内存限制过小 | 在 `%USERPROFILE%\.wslconfig` 中设置 `memory=8GB` 或更高，然后 `wsl --shutdown` |
 
 ---
 
@@ -453,6 +690,11 @@ gh workflow run onnx-quantize-ci.yml --ref main
 ### Q5：容器内时间不对（非 Asia/Shanghai 时区）？（来源：Dockerfile 时区配置反模式）
 **A**：本镜像已在构建阶段三层保障时区（apt tzdata + `/etc/localtime`软链 + `/etc/timezone`写入 + ENV TZ=Asia/Shanghai）。如仍异常：① 确认宿主机不是 Windows Docker Desktop 的 WSL2 后端（需手动同步 WSL2 时区）；② 启动时加 `-e TZ=Asia/Shanghai` 覆盖。
 
+### Q6：Jupyter kernel 里 GIL 被重新启用，free-threading 并行失效？（来源：2026-08-19 GIL 修复记录）
+**A**：free-threading Python（cp314t）加载**未声明 `Py_MOD_GIL_USED`** 的 C 扩展时，会通过 `PyUnstable_Module_SetGIL` 自动启用 GIL。Jupyter 栈依赖的 `_brotli` 正是此类扩展——因此修复前出现 **bash 上下文 `_is_gil_enabled()=False`、Jupyter kernel 内 `=True`** 的诡异不一致。修复方式：在 `/etc/supervisor/conf.d/jupyter.conf` 的 `environment=` 中注入 `PYTHON_GIL="0"`，使 supervisord 启动 Jupyter 时显式保持 GIL 关闭（kernel 作为子进程继承该变量）。验证：在 kernel 中执行 `import sys; print(sys._is_gil_enabled())` 应输出 `False`。
+
+> ⚠️ **注意**：`jupyter.conf` 的 `environment=` 优先级高于 `docker run -e`。若需为 Jupyter 切回 GIL 兼容模式（`PYTHON_GIL=1`），需同时修改 supervisord 配置，仅 `-e PYTHON_GIL=1` 启动不会覆盖它。Bash/脚本上下文可通过 `python -X gil=0` / `PYTHON_GIL=0` 临时控制。
+
 ---
 
 ## 📚 深入阅读导航
@@ -468,6 +710,7 @@ gh workflow run onnx-quantize-ci.yml --ref main
 | [docs/PY314T-C-EXTENSION-GUIDE.md](docs/PY314T-C-EXTENSION-GUIDE.md) | Python 3.14t free-threading C 扩展编译指南 + CMake 模板 | 需要编译 C/C++ 扩展为 cp314t ABI |
 | [docs/CONDA-PERF-INTEGRATION-GUIDE.md](docs/CONDA-PERF-INTEGRATION-GUIDE.md) | Conda 性能优化集成指南：libmamba solver、缓存、频道优先级 | conda install 慢 / 依赖求解卡死 |
 | [docs/TECH-ADVISORY-defaults-channel-abi-risk.md](docs/TECH-ADVISORY-defaults-channel-abi-risk.md) | ⚠️ defaults channel ABI 不兼容风险公告 + 规避方案 | 混用 defaults + conda-forge 前必读（本镜像默认禁用defaults） |
+| [docs/jupyter-gil-fix-quickstart.md](docs/jupyter-gil-fix-quickstart.md) | Jupyter GIL 问题修复·新开发者快速上手指南：症状识别、fix-jupyter-gil.sh 三步上手、输出解读、3个易踩坑 | 新入职开发者 · Jupyter 多线程不并行 / kernel 内 GIL 异常时 ⭐ |
 
 ---
 
@@ -487,8 +730,8 @@ gh workflow run onnx-quantize-ci.yml --ref main
 | **Docker CE** | 官方仓库最新稳定版（支持 Aliyun 镜像加速） |
 | **Podman** | Ubuntu 26.04 官方源（rootless 模式） |
 | **OpenSSH / Supervisor** | Ubuntu 26.04 官方包 |
-| **镜像大小** | ~2.38GB |
-| **镜像变体** | conda-llvm → onnx-dev → onnx-quantized → ai-dev（4级功能变体） |
+| **镜像大小** | root slim ~1.41GB / conda-llvm ~3.18GB / onnx-dev ~3.38GB / onnx-quantized ~3.50GB |
+| **镜像变体** | conda-llvm → onnx-dev → onnx-quantized → ai-dev（4级功能变体，slim标签） |
 | **ONNX量化工具包** | onnx_quantize_kit（基于 onnxruntime.quantization 原生 API 封装） |
 
 > 📜 **完整变更历史**见 [CHANGELOG.md](CHANGELOG.md)。

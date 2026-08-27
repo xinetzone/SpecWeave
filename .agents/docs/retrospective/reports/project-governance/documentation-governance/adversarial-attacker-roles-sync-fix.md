@@ -28,7 +28,7 @@ commit: 20d79b8c
 
 ### 已修复（命令文档 adversarial-review.md）
 
-共修改9处，文件：[adversarial-review.md](../commands/adversarial-review.md)
+共修改9处，文件：[adversarial-review.md](../../../../knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/appendices/adversarial-review.md)
 
 | 位置 | 修改内容 |
 |------|---------|
@@ -44,7 +44,7 @@ commit: 20d79b8c
 
 ### 未修复（wiki知识库，待同步）
 
-wiki知识库 [adversarial-review-wiki/](../docs/knowledge/learning/02-agent-engineering-methodology/adversarial-review-wiki/) 下共10个文件、40+处引用仍使用旧的"四大攻击者（安全/性能/边界/时序）"定义：
+wiki知识库 [adversarial-review-wiki/](../../../../knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/README.md) 下共10个文件、40+处引用仍使用旧的"四大攻击者（安全/性能/边界/时序）"定义：
 
 | 文件 | 旧引用数 | 说明 |
 |------|---------|------|

@@ -111,10 +111,10 @@ source: "七概念方法论编排（场景1里程碑复盘R→I→E→C标准链
 
 | 模式编号 | 名称 | 入库位置 | 成熟度 | 迁移验证域 |
 |---------|------|---------|--------|----------|
-| **P-Link-Migrate-v1** | 跨迁移断链批量修复 SOP（四步桶分法） | [cross-migration-link-fix-sop.md](file:///d:/AI/.agents/docs/retrospective/patterns/process-patterns/cross-migration-link-fix-sop.md) | L1 实验性 | Python/TS/Java import 路径重写（成功） |
-| **P-Link-ExtBucket-v1** | 外部 URL 死链分桶治理 SOP（去噪→分桶→A/B/C 三判因→复检） | [external-url-dead-bucket-fix-sop.md](file:///d:/AI/.agents/docs/retrospective/patterns/process-patterns/external-url-dead-bucket-fix-sop.md) | L1 实验性 | Zotero/BibTeX 文献 dead URL 清理（成功） |
+| **P-Link-Migrate-v1** | 跨迁移断链批量修复 SOP（四步桶分法） | [cross-migration-link-fix-sop.md](../../../../patterns/process-patterns/cross-migration-link-fix-sop.md) | L1 实验性 | Python/TS/Java import 路径重写（成功） |
+| **P-Link-ExtBucket-v1** | 外部 URL 死链分桶治理 SOP（去噪→分桶→A/B/C 三判因→复检） | [external-url-dead-bucket-fix-sop.md](../../../../patterns/process-patterns/external-url-dead-bucket-fix-sop.md) | L1 实验性 | Zotero/BibTeX 文献 dead URL 清理（成功） |
 
-两模式已同步写入 **process-patterns 索引页** [README.md](file:///d:/AI/.agents/docs/retrospective/patterns/process-patterns/README.md#L23-L24) 第 23–24 行登记。
+两模式已同步写入 **process-patterns 索引页** [README.md](../../../../patterns/process-patterns/README.md#L23-L24) 第 23–24 行登记。
 
 ---
 

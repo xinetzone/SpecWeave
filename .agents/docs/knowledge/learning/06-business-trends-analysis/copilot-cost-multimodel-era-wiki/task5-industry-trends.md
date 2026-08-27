@@ -2,11 +2,11 @@
 id: "task5-industry-trends"
 title: "从Copilot成本困境看多模型时代产业趋势转变深度洞察"
 source: "task2-copilot-analysis.md, task3-deepseek-analysis.md, task4-multimodel-comparison.md"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task5-industry-trends.toml"
 created: "2026-07-09"
 theme: "retrospectives-insights"
 task: "task5"
 ---
-
 # 从Copilot成本困境看多模型时代产业趋势转变深度洞察
 
 ## 核心摘要

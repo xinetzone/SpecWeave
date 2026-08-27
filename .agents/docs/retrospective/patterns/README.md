@@ -117,14 +117,15 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 51 | 8 | 11 | 3 | 0 |
+| architecture-patterns/ | 52 | 9 | 11 | 3 | 0 |
 | code-patterns/ | 144 | 6 | 6 | 0 | 2 |
-| process-patterns/ | 10 | 8 | 2 | 0 | 0 |
+| process-patterns/ | 11 | 9 | 2 | 0 | 0 |
 | methodology-patterns/ | 423 | 69 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **618** | **83** | **62** | **14** | **4** |
+| **合计** | **619** | **84** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - 《帛书老子注读》PDF转OKF-MyST Wiki里程碑复盘（1个L1流程模式入库）：process-patterns/`pdf-book-to-okf-wiki`（L1，四阶段工作流：环境准备→结构探查→工具降级链→清洗转换→确定性校验→Sphinx构建验证，含三层忠实边界+3反模式+已知边界）
 > - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）
 > - XMNN pyproject.toml依赖审计复盘（1个L1流程模式入库+1个L1→L2代码模式升级+规范集成）：process-patterns/`python-wheel-dependency-audit-wda4`（L1，WDA-4四步法：静态扫描→动态补全→格式验证→端到端验证）；code-patterns/`compiled-wheel-runtime-image-build`（L1→L2，补充依赖最小化策略/SSOT原则/2个反模式，3案例验证）；已集成至development-standards.md新增"Python Wheel打包与依赖管理规范"章节
 > - daoflows/caffe开源项目知识沉淀（4个架构模式入库，ADR标准格式）：architecture-patterns/`dependency-shimming-layer`（L2，依赖裁剪适配层，compat/shim零侵入渐进式重构）；architecture-patterns/`c-abi-dynamic-binding`（L3，C ABI动态语言绑定，纯C ABI+不透明句柄+DLPack零拷贝）；architecture-patterns/`declarative-op-compiler-backend`（L3，声明式算子+编译器后端，N+M替代N×M多后端支持）；architecture-patterns/`four-step-extension-recipe`（L2，扩展四步法，Schema→生成→实现→5类测试矩阵）
@@ -153,6 +154,9 @@ skills = []
 > - Docker模板升级+验证闭环方法论编排复盘（2个代码模式+1个流程模式+1个方法论模式入库）：code-patterns/`dockerfile-python-code-safe-embedding`（L2，Dockerfile中Python代码安全嵌入三方案）、process-patterns/`container-verify-script-permission-model`（L2，容器验证脚本权限安全模型含mkdtemp+显式chmod）、methodology-patterns/governance-strategy/`template-placeholder-granularity-design`（L2，模板占位符粒度设计三类型+命名规范）；skeleton模板升级6项：USER root、双sed源替换、UID/GID冲突处理、chown conda bin、chmod 2775、三个新占位符
 > - Docker模板升级萃取总结文档入库：`docker-template-pattern-extraction-20260722`（L2，3个模式的关系图+萃取质量评估+递进关系分析），独立Markdown文档位于 patterns/ 根目录
 > - caffe-ffi CMake原子化重构里程碑复盘（2个L1代码模式入库）：code-patterns/`editable-install-stale-so`（L1，editable安装stale .so处理：重编译后对比build/与源码树路径的.so符号并显式复制刷新，含protobuf descriptor重复注册反模式）；code-patterns/`cxx-build-regression-verification`（L1，C++扩展构建回归验证：环境确认→宏/符号验证(strings)→全量回归→日志归档，应对错误环境/宏脱节/结果不归档三类静默假成功）
+> - awesome-okf-xs Sphinx toctree 警告清零里程碑复盘（2个L1模式入库）：process-patterns/`okf-bundle-toctree-repair-workflow`（L1，OKF bundle目录树完整性修复工作流：三类问题分类→建索引/追加/补充→精确追加定位闭合→dry-run→git兜底，4888警告清零867文件变更）；methodology-patterns/tools-automation/`toctree-dynamic-verification`（L1，toctree动态验证法：BFS可达性+单目录清单一致性+选项行/示例过滤+自检用例，演进为CI门禁check-toctrees.py）
+> - awesome-okf-xs Sphinx构建错误修复里程碑复盘（1个L1代码模式入库）：code-patterns/`markdown-nested-fence-escalation`（L1，Markdown/MyST嵌套围栏升级法：外层围栏N+1反引号+首尾对称升级+五步法识别修复，解决围栏泄漏导致的标题跳跃/未知指令/转场异常等多类构建错误，5文件7处修复20ERROR/WARNING清零；含4反模式+5跨领域迁移场景）
+> - awesome-okf-xs Sphinx 大文档构建加速与计量方法论编排复盘（1个L1方法论模式入库）：methodology-patterns/tools-automation/`sphinx-build-acceleration-metering`（L1，read/write 分相测速定位 write 串行渲染是慢源；计量 builder 必须与生产同源——pseudoxml 不调 pygments 故高亮类警告 0 条为假阴性；suppress_warnings 做确定性低成本清零；4 反模式+3 跨领域迁移）
 
 ## 使用方式
 

@@ -1,0 +1,13 @@
+id = "okf-bundle-toctree-repair-workflow"
+domain = "process"
+layer = "process"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "../../reports/documentation-governance/retrospective-sphinx-toctree-clear-20260824/README.md#3-e-萃取g3-通过模式可迁移"
+
+[bindings]
+rules = []
+references = ["pdf-book-to-okf-wiki.md", "content-entry-index-trinity.md", "toctree-dynamic-verification.md", "spec-as-code-automated-gates.md"]
+skills = []

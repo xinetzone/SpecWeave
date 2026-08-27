@@ -199,5 +199,5 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 
 - 前序复盘报告：[retrospective-caffe-standalone-caffex-removal-20260727](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md)
 - 回归测试文档：[REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
-- Docker导出Spec：[docker-image-save-20260727](file:///d:/spaces/SpecWeave/.trae/specs/docker-image-save-20260727/)
+- Docker导出Spec：[docker-image-save-20260727](../../../../../../.trae/specs/docker-image-save-20260727)
 - 镜像归档：`D:\BaiduSyncdisk\docker\caffe-cpu-standalone-jupyter_20260727.tar.gz`（490MB）

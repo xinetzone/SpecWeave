@@ -2,6 +2,7 @@
 id: "mermaid-wiki-04-class-state-er"
 title: "Mermaid 结构型图表：类图 / 状态图 / ER 图"
 source: "https://mermaid.js.org/"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/04-class-state-er.toml"
 category: "learning"
 tags: ["mermaid", "diagram", "classDiagram", "stateDiagram", "erDiagram", "markup", "visualization", "structure"]
 date: "2026-08-06"

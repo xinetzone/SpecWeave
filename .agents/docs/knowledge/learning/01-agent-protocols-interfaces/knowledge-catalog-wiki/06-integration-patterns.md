@@ -14,9 +14,8 @@ summary: "详解OKF在企业环境中的落地路径与集成模式：包括试�
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/06-integration-patterns.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/06-integration-patterns.toml"
 ---
-
 # 06 集成模式与最佳实践
 
 > **本章定位说明**

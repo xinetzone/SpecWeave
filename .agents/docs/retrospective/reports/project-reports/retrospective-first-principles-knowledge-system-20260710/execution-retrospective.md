@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/reports/pro
 
 ### 1.1 Git提交历史（按时间正序）
 
-验证命令：`git log --reverse --pretty=format:"%h|%ad|%s" --date=short -- "docs/knowledge/learning/first-principles/"`
+验证命令：`git log --reverse --pretty=format:"%h|%ad|%s" --date=short -- "docs/knowledge/learning/00-essence-and-thinking/first-principles/"`
 
 | Commit Hash | 日期 | 提交信息 | 对应版本 |
 |-------------|------|---------|---------|

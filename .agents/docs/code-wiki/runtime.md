@@ -1,256 +1,264 @@
+---
+source:
+  - ../../../.github/workflows/ci-quality-gates.yml
+  - ../../../.github/workflows/docs-pages.yml
+  - ../../../docs/tasks.py
+  - ../../scripts/ci-check.ps1
+  - ../../scripts/ci-check.sh
+  - ../../scripts/docgen.py
+  - ../../../apps/ai-agents/eve-minimal-agent/README.md
+  - ../../../apps/ai-agents/eve-minimal-agent/package.json
+  - ../../../apps/docker-images/jupyter-ssh-base/README.md
+  - ../../../apps/tests/onnx_adaround/README.md
+  - ../../../projects/xuanspace/README.md
+  - ../../../projects/xuanspace/.github/workflows/ci.yml
+  - ../../../vendor/flexloop/README.md
+  - ../../../vendor/flexloop/apps/chaos/mise.toml
+status: stable
+updated_at: 2026-08-23
+---
+
 # 运行与验证指南
 
-## 环境要求
+## 运行分层
 
-本仓库包含文档规范体系和 Python 子项目两类内容。不同任务所需环境不同。
+这个仓库没有单一“启动命令”，常见运行入口分成 5 类：
 
-| 场景 | 必需工具 | 说明 |
+1. 仓库治理命令
+2. 文档站构建命令
+3. `apps/` 中示例或应用命令
+4. `projects/` 中子项目命令
+5. `vendor/` 中外部协作项目命令
+
+## 环境矩阵
+
+| 场景 | 必需工具 | 依据 |
 |---|---|---|
-| 阅读和使用规范体系 | AI 编码工具、Git | 将仓库根目录作为工作目录，AI 工具读取 `AGENTS.md` |
-| 运行治理脚本 | Python、Git | 执行 `.agents/scripts/` 下的检查脚本 |
-| 运行提示词萃取系统 | Python、pip | 安装 `apps/dev-tools/prompt_extraction/requirements.txt` |
-| 运行 Web UI | Python、pip、Streamlit | 使用 Streamlit 启动 `apps/dev-tools/prompt_extraction/ui/app.py` |
-| 运行测试 | Python、pip、pytest | 执行 `apps/dev-tools/prompt_extraction/tests/` 测试套件 |
+| 运行主仓脚本 | Python、Git | `.agents/scripts/` |
+| 跑全仓检查 | Python、PowerShell 7 或 Bash | [`ci-check.ps1`](../../scripts/ci-check.ps1) / [`ci-check.sh`](../../scripts/ci-check.sh) |
+| 构建文档站 | Python、Sphinx、invoke | [docs/tasks.py](../../../docs/tasks.py#L54-L128) |
+| 运行 Node 应用 | Node.js 24+ | [eve-minimal-agent/package.json](../../../apps/ai-agents/eve-minimal-agent/package.json#L26-L28) |
+| 运行 Docker 镜像示例 | Docker / Podman / Compose | `apps/docker-images/*` |
+| 运行子项目 | 各子项目自己的 Python/工具链 | `projects/`、`vendor/` |
 
-## 安装提示词萃取系统依赖
+## 仓库级常用命令
 
-在仓库根目录执行：
+### 全量检查
 
-```powershell
-python -m pip install -r apps\prompt_extraction\requirements.txt
-```
-
-依赖包括：
-
-- `streamlit`
-- `pandas`
-- `pytest`
-- `plotly`
-
-## 运行 Streamlit UI
-
-在仓库根目录执行：
-
-```powershell
-python -m streamlit run apps\prompt_extraction\ui\app.py
-```
-
-启动后可以在浏览器中使用可视化界面，支持：
-
-- 上传 CSV、JSON、TXT、Markdown 文件。
-- 手动输入单条提示词。
-- 查看质量评分、等级、雷达图、优化建议和优化 diff。
-- 导出处理结果。
-
-## 以 Python 代码调用流水线
-
-可在仓库根目录下通过 Python 调用：
-
-```python
-from apps.prompt_extraction.pipeline import Pipeline
-
-pipeline = Pipeline()
-record = pipeline.run_single("请生成一份结构化项目总结，包含背景、问题、方案和结论。")
-print(record.quality.overall)
-print(record.quality.grade)
-print(record.optimization.triggered)
-```
-
-批量处理文件：
-
-```python
-from apps.prompt_extraction.pipeline import Pipeline
-
-pipeline = Pipeline()
-records = pipeline.run_batch("prompts.csv")
-pipeline.export_results(records, "results.csv")
-```
-
-## 运行 Python 测试
-
-在仓库根目录执行：
-
-```powershell
-python -m pytest apps\prompt_extraction\tests
-```
-
-测试覆盖模块包括：
-
-| 测试文件 | 覆盖范围 |
-|---|---|
-| `test_input.py` | 输入解析与输入处理 |
-| `test_preprocessing.py` | 清洗与标准化 |
-| `test_extraction.py` | 指令、约束、输出格式提取 |
-| `test_assessment.py` | 清晰度、完整性、可执行性评分 |
-| `test_optimization.py` | 优化触发、补缺、消歧、重组、diff |
-| `test_pipeline.py` | 单条、批量、导出等流水线能力 |
-| `test_integration.py` | 端到端场景 |
-
-## 运行规范体系验证脚本
-
-### 检查 Git 忽略规则
-
-```powershell
-python .agents\scripts\check-gitignore.py
-```
-
-用途：验证临时依赖路径是否被 `.gitignore` 覆盖，并检查 Git 状态中是否存在不应提交的临时产物。
-
-### 检查 Markdown 链接
-
-```powershell
-python .agents\scripts\check-links.py
-```
-
-如需检查外部 URL：
-
-```powershell
-python .agents\scripts\check-links.py --check-external
-```
-
-### 检查规格文档一致性
-
-```powershell
-python .agents\scripts\check-spec-consistency.py
-```
-
-也可以检查指定 spec 目录：
-
-```powershell
-python .agents\scripts\check-spec-consistency.py --spec-dir .trae\specs\create-agents-md-and-config
-```
-
-### 生成文档导航
-
-```powershell
-python .agents\scripts\generate-nav.py
-```
-
-用途：扫描 `docs/` 目录并更新 README 导航表。
-
-### 检查源文档溯源关系
-
-```powershell
-python .agents\scripts\check-source-traceability.py
-```
-
-查询某个源文件变更会影响哪些派生产物：
-
-```powershell
-python .agents\scripts\check-source-traceability.py --affected README.md
-```
-
-### 检查角色权限声明
-
-```powershell
-python .agents\scripts\check-role-permissions.py
-```
-
-用途：校验角色文件 TOML frontmatter 中 tier 字段与权限声明完整性。
-
-## 运行 CI 综合检查
-
-PowerShell 环境：
+Windows PowerShell 7:
 
 ```powershell
 .\.agents\scripts\ci-check.ps1
 ```
 
-Shell 环境：
+Linux / macOS:
 
 ```bash
-./.agents/scripts/ci-check.sh
+bash ./.agents/scripts/ci-check.sh
 ```
 
-注意：当前 PowerShell 脚本中包含文件名规范检查步骤，若对应脚本缺失或仓库版本未同步，可能需要先确认 `.agents/scripts/` 下实际脚本清单。
+这两条命令分别来自：
 
-## 常见开发任务命令
+- [ci-check.ps1](../../scripts/ci-check.ps1#L1-L357)
+- [ci-check.sh](../../scripts/ci-check.sh#L1-L219)
 
-| 任务 | 命令 |
+### 文档导航与看板生成
+
+```powershell
+python .agents\scripts\docgen.py nav
+python .agents\scripts\docgen.py dashboard
+python .agents\scripts\docgen.py apps
+python .agents\scripts\docgen.py all
+```
+
+来源见 [docgen.py](../../scripts/docgen.py#L1-L17)。
+
+### 常用检查器
+
+```powershell
+python .agents\scripts\repo-check.py all
+python .agents\scripts\check-links.py
+python .agents\scripts\build-ref-index.py --stats
+```
+
+## 文档站构建
+
+### 安装依赖
+
+```powershell
+python -m pip install -r docs\requirements.txt
+```
+
+来源见 [docs-pages.yml](../../../.github/workflows/docs-pages.yml#L35-L39)。
+
+### 本地构建
+
+```powershell
+cd docs
+invoke html
+invoke linkcheck
+invoke doctest
+invoke clean
+```
+
+这些任务最终都转发到 [docs/tasks.py](../../../docs/tasks.py#L54-L128) 中的 `build/html/linkcheck/doctest/clean`。
+
+## 测试与 CI
+
+### 主仓脚本测试
+
+CI 中运行的测试命令是：
+
+```powershell
+python -m pytest tests/ -v --tb=short --cov=. --cov-report=term
+```
+
+其工作目录是 `.agents/scripts/`，来源见 [ci-quality-gates.yml](../../../.github/workflows/ci-quality-gates.yml#L61-L64)。
+
+### CI 中的其他关键检查
+
+CI 还会运行：
+
+```powershell
+python .agents\scripts\repo-check.py all
+python .agents\scripts\check-links.py
+python .agents\scripts\docgen.py all
+python .agents\scripts\generate-readme.py --check
+```
+
+来源见 [ci-quality-gates.yml](../../../.github/workflows/ci-quality-gates.yml#L65-L138)。
+
+## `apps/` 代表性运行方式
+
+### `eve-minimal-agent`
+
+```bash
+cd apps/ai-agents/eve-minimal-agent
+npm install
+npm run dev
+npm run build
+npm run start
+npm run typecheck
+```
+
+来源：
+
+- [README.md](../../../apps/ai-agents/eve-minimal-agent/README.md#L22-L36)
+- [package.json](../../../apps/ai-agents/eve-minimal-agent/package.json#L10-L15)
+
+### `jupyter-ssh-base`
+
+```bash
+cd apps/docker-images/jupyter-ssh-base
+bash scripts/build.sh
+./run.sh run
+docker compose up -d
+docker compose logs -f
+docker compose down
+```
+
+来源：
+
+- [README.md](../../../apps/docker-images/jupyter-ssh-base/README.md#L42-L109)
+- `scripts/build.sh`
+- `run.sh`
+
+### `onnx_adaround`
+
+```powershell
+cd apps\tests\onnx_adaround
+pip install -e .
+pip install -e ".[dev]"
+python -m onnx_adaround --help
+pytest --cov=onnx_adaround
+ruff check onnx_adaround
+```
+
+来源见 [onnx_adaround/README.md](../../../apps/tests/onnx_adaround/README.md#L21-L79)。
+
+## `projects/` 代表性运行方式
+
+### `xuanspace`
+
+常见安装方式：
+
+```bash
+cd projects/xuanspace
+pdm install
+pdm run xs --help
+```
+
+或：
+
+```bash
+pip install -e ".[dev]"
+xs --help
+```
+
+或：
+
+```bash
+uv pip install -e ".[dev]"
+xs --help
+```
+
+常见命令：
+
+```bash
+xs list
+xs doctor
+xs build
+xs docs build
+xs docs linkcheck
+```
+
+来源：
+
+- [projects/xuanspace/README.md](../../../projects/xuanspace/README.md#L61-L91)
+- [projects/xuanspace/.github/workflows/ci.yml](../../../projects/xuanspace/.github/workflows/ci.yml#L83-L133)
+
+## `vendor/` 代表性运行方式
+
+### `flexloop/apps/chaos`
+
+```bash
+cd vendor/flexloop/apps/chaos
+uv sync --group dev --group docs
+uv run pytest
+mise run docs-html
+mise run test
+mise run lint
+```
+
+更完整的初始化序列：
+
+```bash
+mise trust
+mise install
+mise run sync
+mise run init
+mise run check-env
+```
+
+来源：
+
+- [vendor/flexloop/README.md](../../../vendor/flexloop/README.md#L66-L81)
+- `vendor/flexloop/docs/tech/quickstart.md`
+- [mise.toml](../../../vendor/flexloop/apps/chaos/mise.toml#L19-L125)
+
+## 按改动区域选择验证命令
+
+| 你修改了哪里 | 建议优先运行 |
 |---|---|
-| 安装提示词萃取依赖 | `python -m pip install -r apps\prompt_extraction\requirements.txt` |
-| 启动 Web UI | `python -m streamlit run apps\prompt_extraction\ui\app.py` |
-| 运行全部提示词萃取测试 | `python -m pytest apps\prompt_extraction\tests` |
-| 检查 Git 忽略规则 | `python .agents\scripts\check-gitignore.py` |
-| 检查本地 Markdown 链接 | `python .agents\scripts\check-links.py` |
-| 检查规格一致性 | `python .agents\scripts\check-spec-consistency.py` |
-| 更新文档导航 | `python .agents\scripts\generate-nav.py` |
-| 运行 PowerShell CI 检查 | `.\.agents\scripts\ci-check.ps1` |
-
-## 输入文件格式说明
-
-### CSV
-
-CSV 文件应包含提示词列，列名可以是 `prompt`、`text`、`content` 等可被关键词匹配的名称。若无法匹配，解析器会回退使用第一列。
-
-```csv
-prompt
-请生成项目总结
-请分析销售数据
-```
-
-### JSON
-
-JSON 顶层应为对象数组。解析器会自动识别提示词字段。
-
-```json
-[
-  {"prompt": "请生成项目总结"},
-  {"prompt": "请分析销售数据"}
-]
-```
-
-### TXT
-
-每个非空行视为一条提示词。
-
-```text
-请生成项目总结
-请分析销售数据
-```
-
-### Markdown
-
-Markdown 文件优先按一级或二级标题拆分区块；若无标题，则整个文件作为一条提示词。
-
-```markdown
-# 任务一
-请生成项目总结。
-
-## 任务二
-请分析销售数据。
-```
-
-## 结果导出说明
-
-`Pipeline.export_results` 默认导出 CSV，字段包括：
-
-- `id`
-- `original_text`
-- `cleaned_text`
-- `instructions`
-- `constraints`
-- `expected_output`
-- `clarity`
-- `completeness`
-- `executability`
-- `overall`
-- `grade`
-- `optimized_text`
-- `improvements`
-- `error`
-
-导出文件使用 `utf-8-sig` 编码，便于 Excel 正确识别中文。
-
-## 验证建议
-
-修改不同区域后建议运行不同验证：
-
-| 修改区域 | 建议验证 |
-|---|---|
-| `apps/dev-tools/prompt_extraction/` 源码 | `python -m pytest apps\prompt_extraction\tests` |
-| `docs/` 文档 | `python .agents\scripts\check-links.py` |
-| `.agents/roles/` | `python .agents\scripts\check-role-permissions.py` |
+| `.agents/docs/` | `python .agents\scripts\check-links.py` |
+| `.agents/scripts/` | `cd .agents\scripts && python -m pytest tests/ -v --tb=short` |
+| `docs/` | `cd docs && invoke html && invoke linkcheck` |
 | `.trae/specs/` | `python .agents\scripts\check-spec-consistency.py` |
-| `.gitignore` 或临时目录规则 | `python .agents\scripts\check-gitignore.py` |
-| README 导航相关文档 | `python .agents\scripts\generate-nav.py` 后检查 diff |
+| `apps/tests/onnx_adaround/` | `pytest --cov=onnx_adaround` |
+| `projects/xuanspace/` | `xs doctor && xs docs build` |
+
+## 使用提醒
+
+- `apps/`、`projects/`、`vendor/` 各自有独立运行方式，不要假设全仓统一用同一套包管理器。
+- 对于 submodule，先确认目录已初始化并与当前 checkout 同步。
+- 运行仓库级脚本时，默认从仓库根目录执行最稳妥。

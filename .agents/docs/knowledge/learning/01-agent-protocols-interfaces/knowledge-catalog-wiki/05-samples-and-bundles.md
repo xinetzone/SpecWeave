@@ -14,9 +14,8 @@ summary: "深度解析Google官方提供的4个OKF示例Bundle：GA4电商数据
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/05-samples-and-bundles.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/05-samples-and-bundles.toml"
 ---
-
 # 05 示例Bundle深度解析
 
 > **本章定位说明**

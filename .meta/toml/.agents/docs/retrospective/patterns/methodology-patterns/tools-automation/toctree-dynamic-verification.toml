@@ -1,0 +1,13 @@
+id = "toctree-dynamic-verification"
+domain = "methodology"
+layer = "tools"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "../../../reports/documentation-governance/retrospective-sphinx-toctree-clear-20260824/README.md#3-e-萃取g3-通过模式可迁移"
+
+[bindings]
+rules = []
+references = ["validation-semantic-gap.md", "spec-as-code-automated-gates.md", "link-check-dual-coverage.md", "tool-self-validation.md", "dry-run-first.md", "okf-bundle-toctree-repair-workflow.md"]
+skills = []

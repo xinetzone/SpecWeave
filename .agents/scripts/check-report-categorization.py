@@ -30,14 +30,30 @@ from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_error, print_header, print_summary, add_common_args
 
 # ── 已知分类目录 ──────────────────────────────────────────────
+# 同步自 docs/retrospective/reports/README.md「一、分类标准」
+# 维护规则：新增/删除一级分类时，须同步更新本白名单与 README 分类标准表
 
 KNOWN_CATEGORIES = {
+    "adversarial-reviews",
     "atomization",
+    "bug-fix",
+    "bugfix",
+    "build-engineering",
+    "code-optimization",
     "competitive-analysis",
+    "documentation-governance",
+    "environment-setup",
+    "feature-development",
+    "incident-reports",
     "insight-extraction",
+    "iteration-reports",
+    "knowledge-content",
     "project-governance",
+    "project-reports",
     "roles-teams",
     "spec-system",
+    "standards-tools",
+    "task-reports",
 }
 
 REPORTS_DIR_NAME = ".agents/docs/retrospective/reports"

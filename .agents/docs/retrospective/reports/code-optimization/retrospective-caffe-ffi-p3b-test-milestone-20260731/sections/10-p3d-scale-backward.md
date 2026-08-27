@@ -129,7 +129,7 @@ this->param_propagate_down_.resize(this->blobs_.size(), true);
 
 ## 端到端梯度流验证
 
-[test_e2e_gradient_flow.py](../../../../../../../projects/xuanspace/libs/caffe-ffi/tests/python/test_e2e_gradient_flow.py)（6个测试用例）：
+test_e2e_gradient_flow.py（6个测试用例）：
 
 验证完整网络 `Data→Conv→BN→ReLU→Pool→IP→ReLU→Dropout→IP→SoftmaxWithLoss`：
 1. Forward+Backward无崩溃

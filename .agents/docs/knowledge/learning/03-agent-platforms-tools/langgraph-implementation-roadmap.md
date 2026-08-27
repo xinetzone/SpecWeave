@@ -1,5 +1,6 @@
 ---
 title: LangGraph 生产级落地实施路线图
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/langgraph-implementation-roadmap.toml"
 version: "1.0"
 date: "2026-08-04"
 type: implementation-roadmap

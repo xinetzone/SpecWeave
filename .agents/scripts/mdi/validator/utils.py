@@ -19,12 +19,13 @@ from python310_version_check import enforce_python310
 enforce_python310()
 
 from pathlib import Path
+import re
 
 
 def is_code_fence_context(content: str, pos: int) -> bool:
     """判断位置是否在代码块内。"""
     before = content[:pos]
-    fence_count = before.count("```")
+    fence_count = len(re.findall(r'^[ \t]*`{3,}', before, re.MULTILINE))
     if fence_count % 2 == 1:
         return True
     line_start = before.rfind("\n") + 1

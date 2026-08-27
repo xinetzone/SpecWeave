@@ -1,0 +1,7 @@
+id = "okf-topic-index"
+title = "OKF（开放知识格式）主题知识导航"
+category = "knowledge/learning/01-agent-protocols-interfaces/okf-wiki"
+date = "2026-08-19"
+version = "1.0"
+status = "stable"
+tags = ["okf", "open-knowledge-format", "index", "navigation", "wiki"]

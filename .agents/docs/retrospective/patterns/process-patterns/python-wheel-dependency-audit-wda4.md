@@ -3,15 +3,15 @@ id: "python-wheel-dependency-audit-wda4"
 title: "Python Wheel依赖审计四步法（WDA-4）"
 type: process-pattern
 date: 2026-07-27
-maturity: L1-draft
-maturity_note: "单案例验证（XMNN pyproject.toml依赖审计），待第二个独立Python wheel项目验证后升级L2"
+maturity: L2
+maturity_note: "双案例验证（XMNN pyproject.toml依赖审计 + mystx Sphinx 主题库依赖断层），升级 L2"
 source: "../../reports/build-engineering/retrospective-xmnn-pyproject-deps-audit-20260727/README.md#模式-p1python-wheel-依赖审计四步法wda-4"
 related_patterns:
   - "../code-patterns/compiled-wheel-runtime-image-build.md"
   - "../code-patterns/python-implicit-dependency-detection.md"
   - "../methodology-patterns/governance-strategy/dev-env-dockerfile-optimization.md"
 tags: ["python", "wheel", "pyproject.toml", "dependency-management", "packaging", "import-scan", "docker", "static-analysis", "end-to-end-test"]
-validation_count: 1
+validation_count: 2
 reuse_count: 0
 ---
 
@@ -220,6 +220,23 @@ python -m xmnn.tools.accuracy --help
 - **后果**：用户安装 wheel 时会被迫安装这些开发工具，增加安装时间和依赖冲突风险
 - **正确做法**：开发/测试工具放在 `[project.optional-dependencies].dev` 组，用户安装时不包含
 
+## 失败案例（V2 成功偏误防御）
+
+| 案例 | 失败表现 | 根因 | 教训 |
+|------|---------|------|------|
+| 仅静态 import 扫描即发布 | 扫描通过、声明看似完整，用户 `pip install` 后调用 `df.to_markdown()` 报 `ImportError: tabulate` | 遗漏传递/动态依赖，静态扫描只覆盖显式 import，未覆盖方法级触发依赖 | 静态扫描只是起点，必须执行动态/传递依赖补全 + 干净环境端到端验证 |
+| 开发环境「隐式可用」掩盖缺失声明 | 开发容器测试全绿，发布 wheel 后用户环境报 `ModuleNotFoundError` | 开发环境预装依赖未在 pyproject.toml 声明，Wheel METADATA 缺 `Requires-Dist` | 以 pyproject.toml 为单一数据源，在全新 venv 仅 `pip install wheel`（不带 --no-deps）验证 |
+
+## 反目标用户与不适用场景（V2 确认偏误防御）
+
+| 反目标用户/场景 | 不适用原因 | 适配策略 |
+|----------------|-----------|---------|
+| 纯 sdist 分发（不打包 wheel） | 依赖由安装时解析，无 METADATA `Requires-Dist` 驱动 | 轻度：仅做依赖清单盘点，跳过 wheel 元数据验证 |
+| 单脚本小工具（无或极少数第三方依赖） | 四步法成本高于手动维护，收益趋近于零 | 中度：仅做静态 import 扫描即可 |
+| 固定运行环境、不对外发布的应用 | 直接锁定 requirements.txt 即可，无需 wheel 分发审计 | 中度：跳过步骤4 Docker 同步 |
+| 强离线/无网络烟测环境 | 步骤4 端到端验证需网络 pip 下载依赖 | 轻度/中度：预缓存 wheel 到离线镜像再验证 |
+| 需要严格可复现锁定（uv.lock/poetry.lock） | SSOT 需与锁定文件协同，否则声明与锁定漂移 | 中度：以锁定文件为准，四步法仅做交叉核对 |
+
 ## 检验标准
 
 做完之后怎么知道做对了？
@@ -246,6 +263,15 @@ python -m xmnn.tools.accuracy --help
   3. 验证24个依赖字符串（21核心+3可选组）格式正确
   4. 同步3个Docker文件，在干净环境中端到端验证
 - **结果**：核心依赖7→21个，新增3个可选组，端到端测试100%通过
+
+### 场景1b：mystx Sphinx 主题库依赖断层（第二个独立验证案例，2026-08-20）
+
+- **初始状态**：`dependencies = []` 与代码顶层 `import sphinx/myst_nb`、README 依赖清单三方矛盾；`requires-python`（≥3.10）与 README（3.12+）、CI（3.13）三处口径漂移
+- **执行步骤**：
+  1. 静态扫描确认 sphinx/myst-nb 为「import 即崩」的硬依赖，移入 `dependencies`
+  2. 新增 `import mystx` 冒烟测试作为打包门禁
+  3. 统一 `requires-python` / README / CI 三处 Python 版本口径
+- **结果**：✅ 验证本模式「声明/文档/环境三处一致」识别信号在 Sphinx 主题库领域成立，双案例支撑升级 L2
 
 ### 场景2：requirements.txt → pyproject.toml 迁移（推断）
 
@@ -294,3 +320,4 @@ python -m xmnn.tools.accuracy --help
 ## Changelog
 
 - **2026-07-27** (v1.0.0): 初始版本，从 XMNN pyproject.toml 依赖审计复盘萃取，单案例验证，标记 L1-draft
+- **2026-08-20** (v1.1.0): 补充第二个独立验证案例 mystx（Sphinx 主题库依赖断层 + 三处版本口径漂移），maturity L1-draft→L2

@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-best-practices"
 title: "GraphQL 最佳实践"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/08-best-practices.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/08-best-practices.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "best-practices", "schema-design", "performance", "security", "error-handling", "anti-patterns"]

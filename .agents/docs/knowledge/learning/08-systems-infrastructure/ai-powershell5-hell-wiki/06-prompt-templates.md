@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-06-prompt-templates"
 title: "即用型Prompt模板库"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/06-prompt-templates.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "prompt-engineering", "defensive-prompt", "templates"]
 ---
-
 # 即用型Prompt模板库
 
 本章提供经过V阶段对抗审查加固的Prompt模板，用于约束AI大模型生成Windows PowerShell 5.1兼容代码。所有模板均已纳入安全加固措施。

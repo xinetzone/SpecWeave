@@ -25,7 +25,7 @@ date: "2026-07-09"
 
 ## 📚 分类索引
 
-共 13 篇操作指南，按主题分为 8 大类：
+共 15 篇操作指南，按主题分为 8 大类：
 
 ### 💬 Discourse / 论坛自动化
 
@@ -49,6 +49,7 @@ date: "2026-07-09"
 |------|-----------|------|
 | [html-body-extraction.md](html-body-extraction.md) | HTML正文提取双方案：正则提取（首选）+ 边界标记索引截取法（兜底），含HTML清洗六步流程 | ✅ stable |
 | [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) | 微信公众号文章提取双路径决策模型：defuddle CLI 与 PowerShell Invoke-WebRequest 互为兜底 | ✅ stable |
+| [epub-to-markdown-conversion-research.md](epub-to-markdown-conversion-research.md) | EPUB转Markdown方案系统性调研：pandoc/calibre/pypandoc/ebooklib对比、复杂元素保真、问题方案、性能实测、适用场景矩阵（七概念方法编排） | 🔍 reviewed |
 
 ### 🛡️ 工具降级与可靠性
 
@@ -79,6 +80,7 @@ date: "2026-07-09"
 | 文档 | 一句话摘要 | 状态 |
 |------|-----------|------|
 | [caffe-docker-sop.md](caffe-docker-sop.md) | Caffe Docker 容器构建与运行完整 SOP：构建→验证→运行→导出→故障排查，含 5 阶段 Dockerfile、6 项验证清单、8 项故障排查 | ✅ stable |
+| [docker-cache-wsl-migration-guide.md](docker-cache-wsl-migration-guide.md) | Docker镜像缓存→WSL2发行版迁移完整指南：双方案（Podman桥接推荐+Python离线备用）+方案选择决策树+导入后配置+验证清单+17项故障排查 | 🔍 reviewed |
 
 ---
 
@@ -97,6 +99,7 @@ date: "2026-07-09"
 | 📦 想使用flexloop功能 | [vendor-flexloop-integration-guide.md](vendor-flexloop-integration-guide.md) | 严禁直接修改vendor/flexloop/，按决策树选合规路径 |
 | 📋 PowerShell多行字符串 | [windows-powershell-heredoc.md](windows-powershell-heredoc.md) | 用 `@'...'@` Here-String 替代 `<<'EOF'` |
 | 🐳 构建 Caffe Docker 镜像 | [caffe-docker-sop.md](caffe-docker-sop.md) | 一键构建：`./build/build-multistage.sh --target runtime --verify` |
+| 🐳 Docker镜像转WSL发行版 | [docker-cache-wsl-migration-guide.md](docker-cache-wsl-migration-guide.md) | 首选Podman桥接方案，无WSL时用Python脚本Bootstrap |
 
 ### 跨文档导航
 

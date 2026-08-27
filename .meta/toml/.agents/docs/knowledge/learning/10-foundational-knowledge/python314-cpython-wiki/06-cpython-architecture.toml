@@ -1,0 +1,7 @@
+id = "python314-cpython-wiki-06"
+title = "CPython 源码架构总览"
+category = "knowledge/learning/10-foundational-knowledge/python314-cpython-wiki"
+date = "2026-08-22"
+version = "1.0"
+status = "stable"
+tags = ["python314", "cpython", "architecture", "ceval", "gc", "objects", "parser"]

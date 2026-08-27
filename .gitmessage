@@ -1,0 +1,45 @@
+# <type>(<scope>): <subject>
+#
+# 示例：docs(python314): 补充 typing.Union 别名化和 asyncio create_task kwargs 遗漏特性
+#
+## Type（类型，必须小写）：
+#   feat       新功能
+#   fix        Bug 修复
+#   docs       文档更新
+#   refactor   重构（不改变功能）
+#   test       测试相关
+#   chore      构建/工具/依赖
+#   perf       性能优化
+#   ci         CI/CD 配置
+#
+## Scope（范围，可选）：
+#   python314, skills, scripts, mdi, docker, ci, rules, lib 等
+#
+## Subject（主题，必填）：
+#   - 中文描述"为什么"而非"做了什么"
+#   - 不超过 50 个字符
+#   - 句末不加句号
+#   - 禁止写"update"、"fix"、"提交代码"等无意义描述
+#
+## Body（正文，可选，与主题空一行）：
+#   - 详细说明变更原因和背景
+#   - 列出关键改动点（用 - 列表）
+#   - 说明影响范围和注意事项
+#   - 修复类提交须标注预防措施类型：
+#     [prevent: test-case]  添加了测试用例
+#     [prevent: rule]      添加了规则/检查
+#     [prevent: doc]       添加了文档说明
+#
+## Footer（页脚，可选）：
+#   - 关联 Issue：Closes #123
+#   - 破坏性变更：BREAKING CHANGE: <描述>
+#
+# ── 提交前检查 ──
+# □ 一次提交只做一件事（单一职责）
+# □ 显式 git add <文件>，禁止 git add .
+# □ 无 __pycache__/、*.pyc、临时文件混入
+# □ 无敏感信息（密钥、密码、token）
+# □ commit message 使用中文，写"为什么"
+# □ Windows 中文提交使用 python .agents/scripts/git-commit-utf8.py
+# □ 提交后运行 git log -1 验证无乱码
+#

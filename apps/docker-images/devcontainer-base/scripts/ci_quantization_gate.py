@@ -55,7 +55,7 @@ sys.path.insert(0, SCRIPT_DIR)
 from onnx_quantize_kit import (
     auto_quantize, QuantizationConfig, AccuracyThresholds,
     FileCalibrationReader, RandomCalibrationReader,
-    detect_model_type, ModelType,
+    detect_model_type, ModelType, detect_input_info,
     build_report,
 )
 
@@ -140,9 +140,29 @@ def main():
         if args.min_speedup:
             thresholds.min_speedup = args.min_speedup
 
-    # 校准数据Reader
-    input_name_for_calib = args.input_name or "input"
-    shape_for_calib = input_shape or (1, 3, 224, 224)
+    # 校准数据Reader（Bug #3修复：不再硬编码(1,3,224,224)，优先自动检测）
+    input_name_for_calib = args.input_name
+    shape_for_calib = input_shape
+
+    # 自动检测输入信息
+    if input_shape is None or args.input_name is None:
+        try:
+            detected_name, detected_shape = detect_input_info(args.model, args.threads)
+            if input_shape is None:
+                shape_for_calib = detected_shape
+            if args.input_name is None:
+                input_name_for_calib = detected_name
+        except Exception:
+            pass
+
+    # 安全fallback
+    if shape_for_calib is None:
+        shape_for_calib = (1, 10)
+        if not args.ci or args.verbose:
+            print("[CI-GATE] ⚠️  Warning: Could not auto-detect input shape, using fallback (1,10). "
+                  "Please specify --input-shape for non-trivial models.")
+    if input_name_for_calib is None:
+        input_name_for_calib = "input"
     if args.calib_dir and os.path.isdir(args.calib_dir):
         calib_reader = FileCalibrationReader(
             input_name=input_name_for_calib,

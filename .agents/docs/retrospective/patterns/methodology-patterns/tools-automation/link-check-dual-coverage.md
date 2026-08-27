@@ -1,10 +1,10 @@
 ---
 id: "link-check-dual-coverage"
 title: "链接检查双覆盖原则"
-source: "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察3"
+source: "../../../reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-extraction.md#洞察3 + ../../../reports/task-reports/retrospective-okf-desktop-wiki-tutorial-20260819/insight-extraction.md"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/link-check-dual-coverage.toml"
-maturity: "L1"
-validation_count: 1
+maturity: "L2"
+validation_count: 2
 reuse_count: 0
 tags: ["tools-automation", "link-check", "frontmatter", "quality", "reference-integrity"]
 parent_retrospective: "retrospective-best-practices-readme-link-fix-20260709"
@@ -133,8 +133,9 @@ python .agents/scripts/check-links.py --path <目录> --check-frontmatter-paths
 ## 验证状态
 
 - ✅ 工具实现：check-links.py 已实现 `--check-frontmatter-paths` 参数（超额交付）
-- ✅ 本次任务验证：通过人工检查 frontmatter 发现并修复了2处问题
+- ✅ 第一次验证：通过人工检查 frontmatter 发现并修复了2处问题
 - ✅ 后续验证：58个现有测试无回归
+- ✅ 第二次验证（2026-08-19，okf-desktop 复盘）：复盘报告与模式沉淀阶段，对新增的 x-toml-ref、source、related_patterns 等路径字段执行 check-links.py 自动化核验，确认交叉引用 100% 可达；同时印证"链接数量少也不应跳过自动化检查"——人工核验容易遗漏 frontmatter 隐性路径
 
 ## 关联资源
 

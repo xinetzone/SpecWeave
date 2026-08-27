@@ -2,11 +2,11 @@
 id: "git-advanced-wiki-index"
 title: "Git 高级命令 Wiki 教程"
 source: "internal:git-clone-no-local-bare-explanation"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-advanced-wiki/README.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["git", "git-clone", "bare-repository", "version-control", "tutorial", "wiki"]
 ---
-
 # Git 高级命令 Wiki 教程
 
 本教程是 Git 版本控制系统的高级命令系统性学习 wiki，聚焦于日常开发中不常用但在特定场景下至关重要的高级参数与工作模式，涵盖裸仓库创建、本地克隆优化、镜像同步、子模块管理等进阶主题，帮助开发者在面对服务器部署、仓库迁移、CI/CD 集成等特殊需求时选择正确的命令组合。

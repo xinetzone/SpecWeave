@@ -33,7 +33,7 @@ source: "caffe-slim docker 推理环境搭建与 notebook 模板验证"
 | 文件 | 操作 | 说明 |
 |------|------|------|
 | [build-workspace.sh](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/pycaffe-customer/build-workspace.sh) | 修改 | 多目录 COPY（workspace + tests + caffe-slim/tests），垃圾文件清理，权限修复 |
-| [02_caffe_slim_inference.ipynb](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/workspace/02_caffe_slim_inference.ipynb) | 新建→修复 | caffe-slim 推理模板，含 API 速查、预处理指南、排查清单、自检代码 |
+| 02_caffe_slim_inference.ipynb | 新建→修复 | caffe-slim 推理模板，含 API 速查、预处理指南、排查清单、自检代码 |
 
 ### 1.3 遇到的问题与解决
 

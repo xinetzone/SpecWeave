@@ -14,9 +14,8 @@ summary: "深入解析OKF的极简设计哲学：最少约定、生产者消费�
 last_verified: "2026-08-05"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/01-core-concepts.toml"
 ---
-
 # 01 核心概念与设计哲学
 
 ## 1.1 最少约定原则（Minimally Opinionated）

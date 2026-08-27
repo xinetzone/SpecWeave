@@ -2,10 +2,10 @@
 id: "task2-copilot-analysis"
 title: "Copilot发展历程与成本困境深度分析"
 source: "cleaned-article.md"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task2-copilot-analysis.toml"
 created: "2026-07-09"
 theme: "retrospectives-insights"
 ---
-
 # Copilot发展历程与成本困境深度分析
 
 ## 一、关键数据概览

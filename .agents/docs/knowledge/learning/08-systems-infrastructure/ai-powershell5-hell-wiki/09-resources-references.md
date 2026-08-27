@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-09-resources-references"
 title: "参考资料与延伸阅读"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/09-resources-references.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "references", "microsoft-docs", "security", "compatibility", "resources"]
 ---
-
 # 参考资料与延伸阅读
 
 本章提供本Wiki引用的权威来源、官方文档、工具推荐和延伸阅读资源。

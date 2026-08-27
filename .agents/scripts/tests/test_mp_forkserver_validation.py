@@ -61,7 +61,7 @@ def _worker_that_uses_locks(lock, results_q, worker_id):
 
 def _thread_that_holds_lock(lock, stop_event):
     """后台线程：持有锁一段时间"""
-    lock.acquire()
+    lock.acquire()  # nosec: 测试用例故意持有锁验证fork死锁场景
     while not stop_event.is_set():
         time.sleep(0.01)
     lock.release()

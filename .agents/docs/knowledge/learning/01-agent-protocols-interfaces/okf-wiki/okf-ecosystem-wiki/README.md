@@ -3,6 +3,7 @@ id: okf-ecosystem-infrastructure-index
 title: "OKF 生态基建知识"
 version: "1.0"
 source: "四个 OKF 相关文件夹系统学习（R→I→E→V→C 知识沉淀）"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/README.toml"
 type: "Wiki Tutorial"
 description: "OKF 生态基建层系统知识：生态资源图谱、bundle 分发注册机制、bundle 工程化发布模板"
 tags: ["OKF", "生态基建", "ecosystem", "bundle", "registry", "template", "okf-kit"]
@@ -15,7 +16,6 @@ last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.1/v0.2"
 ---
-
 # OKF 生态基建知识
 
 > 本系列系统沉淀 OKF 生态的**基建层**知识，回答三个问题：**OKF 有哪些资源？如何消费现成 bundle？如何把网站发布为自更新 bundle？**

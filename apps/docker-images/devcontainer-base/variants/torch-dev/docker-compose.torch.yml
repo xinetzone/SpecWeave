@@ -1,0 +1,137 @@
+# =============================================================================
+# torch-dev Docker Compose 配置
+# =============================================================================
+# 设计原则（经验963255）：
+#   - 端口通过环境变量集中声明，不硬编码，避免启动时修改compose文件导致配置漂移
+#   - 默认端口避开onnx-dev(2222/8888)、主镜像(2222/8888)、llvm(2225/8890)等
+#   - start-torch-dev.sh 自动检测端口冲突并通过 -e 覆盖，不修改本文件
+#
+# 使用方式:
+#   # 方式1：通过一键启动脚本（推荐，含自动端口检测+验证）
+#   bash scripts/start-torch-dev.sh
+#
+#   # 方式2：手动启动（DinD模式，推荐）
+#   SSH_PORT=2226 JUPYTER_PORT=8891 docker compose -f docker-compose.torch.yml --profile dind up -d
+#
+#   # 方式3：DooD模式（共享宿主机Docker，无需--privileged）
+#   SSH_PORT=2227 JUPYTER_PORT=8892 docker compose -f docker-compose.torch.yml --profile dood up -d
+#
+#   # 自定义凭据
+#   USER_PASSWORD=mypass JUPYTER_TOKEN=mytoken bash scripts/start-torch-dev.sh
+#
+#   # 停止
+#   docker compose -f docker-compose.torch.yml --profile dind down
+# =============================================================================
+
+x-torch-common-env: &torch-common-env
+  TZ: ${TZ:-Asia/Shanghai}
+  LANG: ${LANG:-zh_CN.UTF-8}
+  USER_PASSWORD: ${USER_PASSWORD:-torchdev}
+  GRANT_SUDO: ${GRANT_SUDO:-yes}
+  ALLOW_ROOT_SSH: ${ALLOW_ROOT_SSH:-no}
+  ENABLE_SSH: ${ENABLE_SSH:-yes}
+  ENABLE_PODMAN: ${ENABLE_PODMAN:-no}
+  DEBUG: ${DEBUG:-0}
+  JUPYTER_TOKEN: ${JUPYTER_TOKEN:-torchdev123}
+  JUPYTER_ALLOW_ORIGIN: ${JUPYTER_ALLOW_ORIGIN:-*}
+  WORKSPACE_CHOWN_MODE: ${WORKSPACE_CHOWN_MODE:-named-only}
+
+services:
+  # ─── DinD 模式（推荐）- Docker-in-Docker，完全隔离，需要 --privileged ───
+  torch-dev-dind:
+    image: devcontainer-base:torch-dev-latest
+    container_name: torch-dev
+    profiles: ["dind"]
+    privileged: true
+    ports:
+      # ⚠️ 端口通过环境变量覆盖，不建议直接修改此处（避免配置漂移）
+      # start-torch-dev.sh 自动检测冲突并传入 SSH_PORT / JUPYTER_PORT
+      - "${SSH_PORT:-2226}:22"
+      - "${JUPYTER_PORT:-8891}:8888"
+    volumes:
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      - ./examples:/opt/torch-dev/examples:ro
+      - torch-dev-docker-storage:/var/lib/docker
+      - torch-dev-conda-pkgs:/opt/conda/pkgs
+    environment:
+      <<: *torch-common-env
+      ENABLE_DOCKER: yes
+      ENABLE_JUPYTER: yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    tty: true
+    stdin_open: true
+    # ── 资源限制（按需取消注释）──
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 16G
+    #       cpus: '8.0'
+    #     reservations:
+    #       memory: 4G
+    # ── GPU 支持（NVIDIA Container Toolkit 必需）──
+    # runtime: nvidia
+    # environment:
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    #   - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+  # ─── DooD 模式 - Docker-out-of-Docker，共享宿主机Docker，无需 --privileged ───
+  torch-dev-dood:
+    image: devcontainer-base:torch-dev-latest
+    container_name: torch-dev-dood
+    profiles: ["dood"]
+    ports:
+      - "${SSH_PORT_DOOD:-2227}:22"
+      - "${JUPYTER_PORT_DOOD:-8892}:8888"
+    volumes:
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      - ./examples:/opt/torch-dev/examples:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - torch-dev-conda-pkgs-dood:/opt/conda/pkgs
+    environment:
+      <<: *torch-common-env
+      ENABLE_DOCKER: yes
+      ENABLE_JUPYTER: yes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 45s
+    tty: true
+    stdin_open: true
+
+  # ─── SSH-only 模式（最小化）- 仅 SSH，无 Docker/Jupyter ───
+  torch-dev-ssh:
+    image: devcontainer-base:torch-dev-latest
+    container_name: torch-dev-ssh
+    profiles: ["ssh-only"]
+    ports:
+      - "${SSH_PORT:-2228}:22"
+    volumes:
+      - ${WORKSPACE_DIR:-./workspace}:/workspace
+      - ./examples:/opt/torch-dev/examples:ro
+    environment:
+      <<: *torch-common-env
+      ENABLE_DOCKER: no
+      ENABLE_JUPYTER: no
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    tty: true
+    stdin_open: true
+
+volumes:
+  torch-dev-docker-storage:
+  torch-dev-conda-pkgs:
+  torch-dev-conda-pkgs-dood:

@@ -14,9 +14,8 @@ summary: "深入解析Knowledge Catalog平台的三大设计哲学、核心概�
 last_verified: "2026-08-06"
 wiki_version: "1.0"
 okf_version_target: "v0.2"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/01-core-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/01-core-concepts.toml"
 ---
-
 # 01 核心概念与平台架构
 
 ## 1.1 核心设计哲学

@@ -31,7 +31,7 @@ ALLOWED_EXTENSIONS = {
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')
 NON_ASCII = re.compile(r'[^\x00-\x7F]')
 CONSECUTIVE_HYPHENS = re.compile(r'--+')
-STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(?:\d{4}-\d{2}-\d{2}-|\d{2}[a-z]?-))\d')
+STARTS_WITH_NUMBER = re.compile(r'^[/\\]?(?!(?:\d{4}-\d{2}-\d{2}-|\d{2,}[a-z]?-))\d')
 EXCLUDED_DIRS = BASE_EXCLUDED | {"venv", ".chaos", "logs"}
 EXCLUDED_FILES = {"报名帖_竹简悟道.md", "竹简悟道_完整版.html"}
 

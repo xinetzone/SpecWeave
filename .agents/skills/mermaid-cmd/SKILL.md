@@ -113,6 +113,22 @@ L0路由匹配（ONBOARDING.md能力速查表）
 
 > **为什么复杂图需要团队协作？** 大型架构图（>20节点、多subgraph）单角色难以兼顾"结构正确性、语法规范性、渲染兼容性"三个维度——architect关注模块关系正确性，developer负责语法细节，reviewer把关规范合规，tester验证多环境渲染。四角色分工协作才能确保复杂图表质量。
 
+## 4.5 知识面与操作面分离（加载分层）
+
+本 Skill 依据「技能知识操作分离」模式（见 [skill-knowledge-operation-separation.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-knowledge-operation-separation.md)），将能力分为两个可独立加载的面：
+
+| 面 | 内容 | 加载时机 | 工具依赖 |
+|----|------|---------|---------|
+| **知识面** | 安全编码六规则（§6）、语法 Gotchas（§9）、模板（templates/mermaid-templates/） | 编写/创建图表（纯写作任务） | 无（纯参考，不触发脚本执行） |
+| **操作面** | check-mermaid.py 检查/修复脚本（§5 步骤4） | 检查/修复已有图表 | 需脚本执行（python） |
+
+**加载路由**：
+- 用户意图 = 创建/编写图表 → 仅加载知识面（六规则+模板），不调用检查脚本、不暴露执行工具
+- 用户意图 = 检查/修复图表 → 加载操作面（check-mermaid.py）
+- 组合意图（编写+检查）→ 先知识面后操作面
+
+> **为什么分离？** 纯写作任务（用户只想写一段 Mermaid）只需要语法规则和模板，加载检查脚本调用方式会占用上下文并暴露不必要的执行工具。参照 jira-skill：`jira-syntax`（纯知识，无 allowed-tools）与 `jira-communication`（操作脚本）独立分发，实现上下文隔离与权限收窄。
+
 ## 5. 核心步骤（快速开始）
 
 ```

@@ -224,4 +224,4 @@ Caffe协议中global_pooling=true时kernel_size字段被忽略，输出尺寸为
 - [AVE Pooling梯度路由模式](../../../../knowledge/best-practices/caffe-pooling-ave-gradient-routing.md)
 - [手算已知值验证方法论](../../../../knowledge/best-practices/hand-computed-gradient-verification.md)
 - [数值梯度诊断日志规范](../../../../knowledge/best-practices/numerical-gradient-diagnostic-logging.md)
-- [C¹拐点防护报告](retrospective-float-precision-elu-kink-20260802/README.md)
+- [C¹拐点防护报告](README.md)

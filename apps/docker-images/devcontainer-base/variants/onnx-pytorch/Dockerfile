@@ -20,9 +20,15 @@
 #
 # Variant Stage Layering (additional 4 layers on top of conda-llvm variant):
 #   Stage 1/4: Timer initialization + base verification
-#   Stage 2/4: Install PyTorch CPU + torchvision via pip (CPU index) + aggressive cleanup
-#   Stage 3/4: Install ONNX ecosystem + onnx-pytorch-init.sh + permission verification + cleanup
-#   Stage 4/4: build-info + cleanup + final verification + PyTorch/ONNX smoke test + timing summary
+#   Stage 2/4: Install PyTorch CPU + torchvision via pip (CPU index) + same-layer cleanup
+#   Stage 3/4: Install ONNX ecosystem + onnx-pytorch-init.sh + permission verify (no chmod -R) + same-layer cleanup
+#   Stage 4/4: build-info → verification → smoke test → final rm-only cleanup → timing summary
+#
+# Optimization Principles (P7 + docker-deep-slim-8step):
+#   - 同层修改原则(P7): strip/chmod/chown只针对本层创建的文件；低层文件继承权限不修改
+#   - verify→clean顺序: 验证/冒烟测试完成后再执行最终清理，确保验证产生的缓存被删除
+#   - 最终层纯rm: Stage4清理仅做rm -rf/conda clean/pip purge，不做strip/chmod等内容修改
+#   - 不盲目strip: 不对conda/bin的低层二进制strip（COW膨胀风险远大于节省空间）
 #
 # Build Timing: 每个Stage结束时输出 [TIMER] 本阶段耗时+累计耗时，最终输出汇总表
 # =============================================================================
@@ -93,11 +99,12 @@ RUN echo "" && \
     echo '[OK] Stage 1 complete'
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 2/4 (追加层2): 在 conda base 环境安装 CPU 版 PyTorch + torchvision + 激进清理
+# Stage 2/4 (追加层2): 在 conda base 环境安装 CPU 版 PyTorch + torchvision + 同层清理
 # 变化频率：中（PyTorch 版本升级时改）
 # 原则：在 base 环境直接安装；使用 CPU 专用索引下载（避免误装 CUDA 版）；
 #       使用 BuildKit cache 挂载 /opt/conda/pkgs 加速重复构建；
-#       安装后立即清理：strip 二进制、删除 __pycache__/.pyc、conda clean、pip cache purge
+#       安装后立即同层清理：删除 __pycache__/.pyc、conda clean、pip cache purge；
+#       P7原则：不对低层conda/bin执行strip（COW膨胀风险远大于节省空间）
 # ═══════════════════════════════════════════════════════════════════
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=locked \
     --mount=type=cache,target=/root/.cache/pip,sharing=locked \
@@ -165,13 +172,14 @@ echo "  - torchvision: $(python -c 'import torchvision;print(torchvision.__versi
 echo "  - cuda available: $(python -c 'import torch;print(torch.cuda.is_available())')"
 
 echo ""
-echo "[ACTION] Aggressive cleanup after PyTorch install..."
+echo "[ACTION] Cleanup after PyTorch install (same-layer, no COW)..."
 find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+# Note: 不strip /opt/conda/bin 下的文件——pip安装的console_scripts是Python shebang脚本无需strip，
+#       而低层base镜像的二进制strip会触发COW膨胀（违反P7原则），节省的空间远小于COW代价
 conda clean -yafq 2>/dev/null || true
 pip cache purge 2>/dev/null || true
-find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
-echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache, strip)"
+echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache)"
 
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
@@ -185,8 +193,8 @@ STAGE2_EOF
 # ═══════════════════════════════════════════════════════════════════
 # Stage 3/4 (追加层3): ONNX 生态安装 + onnx-pytorch-init.sh + 权限验证 + 清理
 # 变化频率：中
-# 原则：安装 ONNX 生态工具；创建备选激活脚本；设置权限；验证工具可用性；
-#       安装后立即执行激进清理
+# 原则：安装 ONNX 生态工具；创建备选激活脚本；验证权限（继承自base，不chmod -R）；
+#       验证工具可用性；安装后立即同层清理（P7原则：不递归修改低层文件权限）
 # ═══════════════════════════════════════════════════════════════════
 RUN <<'STAGE3_EOF'
 echo ""
@@ -263,11 +271,12 @@ printf '%s\n' \
 chmod +x /etc/profile.d/onnx-pytorch-init.sh
 echo "[OK] /etc/profile.d/onnx-pytorch-init.sh created"
 echo ""
-echo "[ACTION] Ensuring /opt/conda permissions for devuser..."
-chown -R root:root /opt/conda
-chmod -R a+rX /opt/conda
-find /opt/conda/bin -type f -executable -exec chmod a+x {} \; 2>/dev/null || true
-echo "[OK] Permissions verified"
+echo "[ACTION] Verifying /opt/conda permissions (inherited from base image)..."
+# P7原则：不对低层/opt/conda执行递归chown/chmod——会触发大规模COW复制
+# base镜像中/opt/conda权限已正确设置为root:root a+rX，继承即可
+echo "  - conda dir owner: $(stat -c '%U:%G' /opt/conda 2>/dev/null)"
+echo "  - conda dir perms: $(stat -c '%a' /opt/conda 2>/dev/null)"
+echo "[OK] Permissions inherited from base (no chmod -R on /opt/conda to avoid COW bloat)"
 echo ""
 echo "[ACTION] Quick tool availability check (before cleanup)..."
 echo "  - torch: $(python -c 'import torch;print(torch.__version__)')"
@@ -275,7 +284,8 @@ echo "  - onnx: $(python -c 'import onnx;print(onnx.__version__)')"
 echo "  - onnxruntime: $(python -c 'import onnxruntime;print(onnxruntime.__version__)')"
 echo "[OK] Core tools accessible"
 echo ""
-chown devuser:devuser /home/devuser/.bashrc
+# /home/devuser/.bashrc 是本层COPY/创建的文件，同层chown安全（不触发COW）
+chown devuser:devuser /home/devuser/.bashrc 2>/dev/null || true
 echo "[OK] devuser .bashrc ownership preserved"
 echo ""
 echo "[ACTION] Ensuring devuser login shell sources conda init via .bash_profile..."
@@ -289,13 +299,13 @@ chown devuser:devuser /home/devuser/.bash_profile
 echo "[OK] devuser .bash_profile configured to source onnx-pytorch-init.sh"
 
 echo ""
-echo "[ACTION] Aggressive cleanup after ONNX ecosystem install..."
+echo "[ACTION] Cleanup after ONNX ecosystem install (same-layer, no COW)..."
 find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
 find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+# Note: 不strip /opt/conda/bin 且不递归chmod /opt/conda——违反P7触发COW膨胀
 conda clean -yafq 2>/dev/null || true
 pip cache purge 2>/dev/null || true
-find /opt/conda/bin -type f -executable -exec strip --strip-unneeded {} \; 2>/dev/null || true
-echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache, strip)"
+echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache)"
 
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
@@ -307,15 +317,16 @@ echo '[OK] Stage 3 complete'
 STAGE3_EOF
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage 4/4 (追加层4): build-info + 清理 + 最终验证 + PyTorch/ONNX 冒烟 + 汇总表
+# Stage 4/4 (追加层4): build-info + 最终验证 + PyTorch/ONNX冒烟 + 清理 + 汇总表
 # 变化频率：最低
-# 原则：写入 variant build-info；清理 conda/pip 缓存；
-#       最终验证所有组件可用；确认 Jupyter 服务不受影响；输出耗时汇总表
+# 原则：写入 variant build-info；最终验证所有组件可用；冒烟测试；
+#       验证/冒烟后再清理（verify→clean顺序，防止验证产生的__pycache__残留）；
+#       输出耗时汇总表。P7原则：最终层仅做rm -rf清理，不做strip/chmod等内容修改
 # ═══════════════════════════════════════════════════════════════════
 RUN <<'STAGE4_EOF'
 echo ""
 echo "########################################################################"
-echo "# [ONNX-PYTORCH VARIANT STAGE 4/4] Final Metadata, Cleanup, Verification"
+echo "# [ONNX-PYTORCH VARIANT STAGE 4/4] Final Metadata, Verification, Smoke Test, Cleanup"
 echo "########################################################################"
 echo ""
 _STAGE_START=$(date +%s)
@@ -355,15 +366,6 @@ printf '%s\n' \
     > /etc/devcontainer-variant-onnx-pytorch-build-info
 echo "[OK] Build metadata written:"
 cat /etc/devcontainer-variant-onnx-pytorch-build-info
-echo ""
-echo "[ACTION] Running final cleanup..."
-find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
-find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
-conda clean -yafq 2>/dev/null || true
-pip cache purge 2>/dev/null || true
-apt-get clean 2>/dev/null || true
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-echo "[OK] Cleanup complete (pycache, pyc, conda clean, pip cache purge, apt clean, tmp)"
 echo ""
 echo "┌─────────────────────────────────────────────────┐"
 echo "│  [VALIDATION CHECKPOINT - Stage 4/4]           │"
@@ -440,6 +442,17 @@ PYSMOKE
 rm -f /tmp/simple.onnx
 echo "[OK] PyTorch + ONNX smoke test passed"
 echo ""
+echo "[ACTION] Final cleanup (AFTER verification - verify→clean order, P7: rm only, no modification)..."
+find /opt/conda/lib -name "__pycache__" -type d -exec rm -rf {} + 2>/dev/null || true
+find /opt/conda/lib -name "*.pyc" -delete 2>/dev/null || true
+find /opt/conda/lib -name "*.pyo" -delete 2>/dev/null || true
+# P7原则：最终层只做rm -rf删除（whiteout），不做strip/chmod/purge
+conda clean -yafq 2>/dev/null || true
+pip cache purge 2>/dev/null || true
+apt-get clean 2>/dev/null || true
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache 2>/dev/null || true
+echo "[OK] Final cleanup complete (pycache, pyc, conda clean, pip cache, apt clean, tmp)"
+echo ""
 _NOW=$(date +%s)
 _ELAPSED=$((_NOW - _STAGE_START))
 _START=$(grep '^START=' /tmp/.onnx-pytorch-variant-build-timer | cut -d= -f2)
@@ -451,14 +464,14 @@ _OT2=$((_ONXS2 - _ONXS1))
 _OT3=$((_ONXS3 - _ONXS2))
 _OT4=$_ELAPSED
 _OTOTAL=$((_NOW - _START))
-echo "[TIMER] Stage 4/4 (metadata+final verify) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_OTOTAL}s"
+echo "[TIMER] Stage 4/4 (metadata+verify+smoke+cleanup) took ${_ELAPSED}s | ONNX-PyTorch variant cumulative: ${_OTOTAL}s"
 echo "╔══════════════════════════════════════════════════════════════╗"
 echo "║   BUILD TIMING SUMMARY (ONNX-PyTorch Variant - 4 Add Stages) ║"
 echo "╠══════════════════════════════════════════════════════════════╣"
 printf "║  Stage 1/4  init+base verify          %5ds               ║\n" $_OT1
 printf "║  Stage 2/4  pytorch cpu+cleanup       %5ds               ║\n" $_OT2
-printf "║  Stage 3/4  onnx ecosystem+cleanup    %5ds               ║\n" $_OT3
-printf "║  Stage 4/4  metadata+final verify     %5ds               ║\n" $_OT4
+printf "║  Stage 3/4  onnx ecosystem+init+cleanup  %5ds            ║\n" $_OT3
+printf "║  Stage 4/4  metadata+verify+smoke+cleanup %5ds           ║\n" $_OT4
 echo "╠══════════════════════════════════════════════════════════════╣"
 printf "║  ONNX-PYTORCH VARIANT TOTAL (add-on)   %5ds               ║\n" $_OTOTAL
 echo "╚══════════════════════════════════════════════════════════════╝"

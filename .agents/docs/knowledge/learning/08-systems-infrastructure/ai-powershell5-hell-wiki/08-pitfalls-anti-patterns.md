@@ -2,11 +2,11 @@
 id: "ai-powershell5-hell-wiki-08-pitfalls-anti-patterns"
 title: "陷阱与反模式清单"
 source: "internal:ai-powershell5-research-rfive"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/ai-powershell5-hell-wiki/08-pitfalls-anti-patterns.toml"
 date: "2026-07-31"
 category: "learning"
 tags: ["powershell", "powershell-5.1", "ai-coding", "pitfalls", "anti-patterns", "security-hardening", "v-stage"]
 ---
-
 # 陷阱与反模式清单
 
 本章汇总AI生成PowerShell 5.1代码时最常见的陷阱、反模式，以及V阶段对抗审查发现的18个安全加固项。所有反模式均经过三视角（红队/企业管理员/未来维护者）攻击验证。

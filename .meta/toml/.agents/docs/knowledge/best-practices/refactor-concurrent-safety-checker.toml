@@ -1,0 +1,5 @@
+id = "refactor-concurrent-safety-checker"
+title = "并发安全检查器策略模式重构"
+category = "knowledge/best-practices"
+date = "2026-08-12"
+version = "1.0"

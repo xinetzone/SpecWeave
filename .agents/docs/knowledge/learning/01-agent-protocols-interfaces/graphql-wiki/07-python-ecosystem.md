@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-python-ecosystem"
 title: "Python GraphQL 生态"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/07-python-ecosystem.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/07-python-ecosystem.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "python", "graphene", "strawberry", "ariadne", "fastapi", "django", "flask", "gql-client", "graphql-core"]

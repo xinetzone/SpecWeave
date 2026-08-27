@@ -7,8 +7,8 @@ date: "2026-08-03"
 status: "active"
 author: "SpecWeave"
 source: "spec:animejs-threejs-adapter-wiki"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/06-faq.toml"
 ---
-
 # Anime.js Three.js 适配器 - 常见问题解答
 
 本文档整理了使用 Anime.js 4.5 Three.js 适配器过程中最常见的问题与解决方案。

@@ -51,7 +51,7 @@ template_upgrade: "2026-07-06 v1.2"
 
 本次复盘已从"单篇文章分析"延伸为"完整框架学习闭环"，后续阶段产出如下：
 
-- **源码学习与校准**：深度阅读本地源码 `external/tools/eve/docs/`，校正了公开资料中的过时写法（`model.md`→`defineAgent`、`requireApproval`→`approval: always()`、连接定义方式等），沉淀为 [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md)（10章，v1.1）。
+- **源码学习与校准**：深度阅读本地源码 `external/tools/eve/docs/`，校正了公开资料中的过时写法（`model.md`→`defineAgent`、`requireApproval`→`approval: always()`、连接定义方式等），沉淀为 [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/README.md)（10章，v1.1）。
 - **跨框架对比**：对比了 **Eve 与 LangGraph** 在子 Agent 管理上的实现差异（声明式文件目录约定 vs 编程式图抽象），印证了洞见1的"方法论迁移"判断。
 - **模式沉淀**：从洞察中提取并入库了 **4 个 L1 模式**（methodology-overflow-paradigm、demo-prod-six-layer-model、three-tier-tool-fallback、tool-skill-separation），详见 [insight-extraction.md](insight-extraction.md)。
 - **🔬 六层模型普适性验证**（本次新增）：系统性对比 **LangChain/LangGraph 1.0** 与 **CrewAI** 两大主流Agent框架，按六层能力模型逐项验证，结论为**普适性验证通过**（5/6层完全验证，L3补充分层实现说明），详见 [framework-comparison-validation.md](framework-comparison-validation.md)。
@@ -63,4 +63,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [spec-driven-development.md](../../../patterns/methodology-patterns/creative-design/spec-driven-development.md) — 本次验证的方法论模式：Spec驱动开发
 - [two-stage-outline-then-expand.md](../../../patterns/methodology-patterns/ai-collaboration/two-stage-outline-then-expand.md) — 本次验证的方法论模式：两阶段先大纲后展开
 - [defuddle-web-extraction-preferred.md](../../../patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) — 本次触发工具回退链
-- [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/eve-wiki/README.md) — 本次延伸沉淀的结构化框架教程
+- [eve-wiki 教程](../../../../knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/README.md) — 本次延伸沉淀的结构化框架教程

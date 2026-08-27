@@ -6,6 +6,7 @@ VARIANTS_DIR="$(dirname "$SCRIPT_DIR")"
 PROJECT_DIR="$(dirname "$VARIANTS_DIR")"
 
 source "${VARIANTS_DIR}/shared/lib/logging.sh"
+source "${VARIANTS_DIR}/shared/lib/container-engine.sh"
 LOG_SERVICE="build-conda-llvm"
 LOG_JSON_OUTPUT="/tmp/build-conda-llvm-events.jsonl"
 
@@ -15,6 +16,7 @@ TAG="latest"
 SKIP_BUILD=false
 VARIANT="conda-llvm"
 DEP_VARIANT="conda"
+ENGINE="${BUILD_ENGINE:-auto}"  # auto|docker|podman（容器引擎抽象库定义）
 
 usage() {
     cat << EOF
@@ -38,17 +40,17 @@ EOF
 }
 
 check_docker() {
-    log_step "Checking Docker availability"
-    if ! docker info >/dev/null 2>&1; then
-        log_fatal "Docker daemon is not running or not accessible"
+    log_step "Checking ${ENGINE} availability"
+    if ! ${ENGINE} info >/dev/null 2>&1; then
+        log_fatal "${ENGINE} daemon is not running or not accessible"
     fi
-    log_ok "Docker is available"
+    log_ok "${ENGINE} is available"
     echo ""
 }
 
 image_exists() {
     local image="$1"
-    docker images --format '{{.Repository}}:{{.Tag}}' | grep -q "^${image}$"
+    ${ENGINE} images --format '{{.Repository}}:{{.Tag}}' | sed 's|^[^/]*/||' | grep -qx "${image}"
 }
 
 check_base_image() {
@@ -127,7 +129,7 @@ print_final_report() {
     
     if image_exists "$image"; then
         local image_size
-        image_size=$(docker images --format '{{.Size}}' "$image" | head -1)
+        image_size=$(${ENGINE} images --format '{{.Size}}' "$image" | head -1)
         
         echo "┌─────────────────────────────────────────────────┐"
         echo "│  BUILD SUCCESSFUL                               │"
@@ -141,8 +143,8 @@ print_final_report() {
         
         log_info "Quick verification:"
         echo ""
-        docker run --rm "$image" llvm-config --version 2>&1 | head -1 | sed 's/^/  llvm-config: /'
-        docker run --rm "$image" clang++ --version 2>&1 | head -1 | sed 's/^/  clang++:     /'
+        ${ENGINE} run --rm "$image" llvm-config --version 2>&1 | head -1 | sed 's/^/  llvm-config: /'
+        ${ENGINE} run --rm "$image" clang++ --version 2>&1 | head -1 | sed 's/^/  clang++:     /'
         echo ""
         
         return 0
@@ -203,6 +205,7 @@ log_info "No cache:         $([ -n "$NO_CACHE" ] && echo 'yes' || echo 'no')"
 log_info "Skip build:       ${SKIP_BUILD}"
 echo ""
 
+detect_engine
 check_docker
 
 if [ "$SKIP_BUILD" = false ]; then

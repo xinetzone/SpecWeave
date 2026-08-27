@@ -1,7 +1,7 @@
 ---
 id: "graphql-wiki-server-concepts"
 title: "GraphQL 服务端核心概念"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/06-server-concepts.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/06-server-concepts.toml"
 source: "spec:create-graphql-wiki-tutorial"
 category: "learning"
 tags: ["graphql", "api", "server", "schema", "resolver", "context", "dataloader", "middleware", "cors", "n+1-problem"]

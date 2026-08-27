@@ -2,6 +2,7 @@
 id: git-baidu-sync-locking-mechanism
 title: Git 网盘同步锁机制设计与实现
 source: original
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/04-locking-mechanism.toml"
 created: 2026-07-31
 tags:
   - git
@@ -10,7 +11,6 @@ tags:
   - locking
   - concurrency
 ---
-
 # Git 网盘同步锁机制设计与实现
 
 本文档详细描述百度网盘多设备 Git 同步系统中的分布式锁机制，包括锁的设计原理、文件格式、生命周期、算法伪代码、超时策略及局限性说明。

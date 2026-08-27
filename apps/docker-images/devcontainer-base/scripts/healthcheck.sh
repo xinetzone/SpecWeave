@@ -1,18 +1,32 @@
 #!/bin/bash
 #
 # devcontainer-base healthcheck script
-# Checks SSH, Docker (DinD/DooD), and Jupyter services conditionally
+# Checks SSH, Docker (DinD/DooD), Podman (rootless), and Jupyter services conditionally.
+#
+# Timeout budget (HEALTHCHECK --timeout=10s, reserve 1s overhead → 9s for probes):
+#   SSH:    pgrep instant + TCP probe 2s
+#   Docker: socket checks instant + docker ps 3s + docker info 2s (cosmetic, skipped if ps fails)
+#   Podman: binary check instant + podman ps 3s (rootless via su -)
+#   Jupyter: pgrep instant + curl --max-time 2s
+#   Worst case (all functional probes hang simultaneously): 2+3+3+2 = 10s (edge case = system failure)
+#
+# Design principle: functional probe > existence check.
+#   Process/socket existence alone is insufficient (process may be hung/zombie).
+#   Each service runs a minimal command that proves the daemon/runtime can respond.
 #
 # Note: This script requires executable permission. In Dockerfile, use:
-#   COPY scripts/healthcheck.sh /usr/local/bin/
-#   RUN chmod +x /usr/local/bin/healthcheck.sh
+#   COPY --chmod=755 scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 # or COPY with --chmod=+x (BuildKit required)
 
 ENABLE_SSH="${ENABLE_SSH:-yes}"
 ENABLE_DOCKER="${ENABLE_DOCKER:-yes}"
+ENABLE_PODMAN="${ENABLE_PODMAN:-no}"
 ENABLE_JUPYTER="${ENABLE_JUPYTER:-yes}"
 SSH_PORT="${SSH_PORT:-22}"
 JUPYTER_PORT="${JUPYTER_PORT:-8888}"
+PODMAN_USER="${NON_ROOT_USER:-devuser}"
+# Pre-resolve PODMAN_UID for XDG_RUNTIME_DIR (used by rootless podman)
+PODMAN_UID=$(id -u "${PODMAN_USER}" 2>/dev/null || echo "1000")
 FAIL=0
 SERVICES_ENABLED=0
 
@@ -32,40 +46,53 @@ check_ssh() {
 }
 
 check_docker() {
-    DOCKER_MODE="socket"
-    DOCKER_PORT_DESC="/var/run/docker.sock"
+    DOCKER_MODE="dood"
+    DOCKER_SOCK="/var/run/docker.sock"
 
-    if pgrep -x dockerd >/dev/null 2>&1 || pgrep -f containerd >/dev/null 2>&1; then
+    # Detect DinD vs DooD: dockerd running inside container → DinD; socket mounted from host → DooD
+    if pgrep -x dockerd >/dev/null 2>&1; then
         DOCKER_MODE="dind"
-        DOCKER_PORT_DESC="2375/socket"
     fi
 
-    if [ ! -S /var/run/docker.sock ]; then
-        echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: FAILED (socket not found)"
+    if [ ! -S "${DOCKER_SOCK}" ]; then
+        echo "[HEALTHCHECK] docker (${DOCKER_MODE}) ${DOCKER_SOCK}: FAILED (socket not found)"
         FAIL=1
         return
     fi
 
-    if [ ! -r /var/run/docker.sock ] || [ ! -w /var/run/docker.sock ]; then
-        echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: FAILED (socket not accessible)"
+    if [ ! -r "${DOCKER_SOCK}" ] || [ ! -w "${DOCKER_SOCK}" ]; then
+        echo "[HEALTHCHECK] docker (${DOCKER_MODE}) ${DOCKER_SOCK}: FAILED (socket not accessible)"
         FAIL=1
         return
     fi
 
-    DOCKER_VERSION=$(timeout 5 docker info --format '{{.ServerVersion}}' 2>/dev/null)
-    if [ -n "$DOCKER_VERSION" ]; then
-        if [ "$DOCKER_MODE" = "dind" ]; then
-            echo "[HEALTHCHECK] docker (DinD) port ${DOCKER_PORT_DESC}: OK (version ${DOCKER_VERSION})"
-        else
-            echo "[HEALTHCHECK] docker (DooD) port ${DOCKER_PORT_DESC}: OK (version ${DOCKER_VERSION})"
-        fi
+    # 最小功能探测：docker ps 能正常返回即证明 daemon 可响应请求，而非仅检查 socket/进程存在
+    if ! timeout 3 docker ps >/dev/null 2>&1; then
+        echo "[HEALTHCHECK] docker (${DOCKER_MODE}) ${DOCKER_SOCK}: FAILED (docker ps failed)"
+        FAIL=1
+        return
+    fi
+
+    # 附带版本信息（可选展示，失败不判定为不健康——ps 已证明 daemon 可响应）
+    DOCKER_VERSION=$(timeout 2 docker info --format '{{.ServerVersion}}' 2>/dev/null)
+    echo "[HEALTHCHECK] docker (${DOCKER_MODE}) ${DOCKER_SOCK}: OK${DOCKER_VERSION:+ (version ${DOCKER_VERSION})}"
+}
+
+check_podman() {
+    # Rootless Podman：以非 root 用户（默认 devuser）按需运行，无常驻 daemon。
+    # 用 podman ps 作为最小功能探测，验证 rootless 运行时可用，而非仅检查二进制存在。
+    # 显式设置 XDG_RUNTIME_DIR 以确保 rootless podman 能找到运行时目录（容器内无 systemd-logind）。
+    if ! command -v podman >/dev/null 2>&1; then
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: FAILED (binary not found)"
+        FAIL=1
+        return
+    fi
+
+    if timeout 3 su - "${PODMAN_USER}" -c "XDG_RUNTIME_DIR=/run/user/${PODMAN_UID} podman ps >/dev/null 2>&1"; then
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: OK"
     else
-        if timeout 5 docker ps >/dev/null 2>&1; then
-            echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: OK"
-        else
-            echo "[HEALTHCHECK] docker port ${DOCKER_PORT_DESC}: FAILED"
-            FAIL=1
-        fi
+        echo "[HEALTHCHECK] podman (rootless) as ${PODMAN_USER}: FAILED (podman ps failed)"
+        FAIL=1
     fi
 }
 
@@ -76,7 +103,8 @@ check_jupyter() {
         return
     fi
 
-    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${JUPYTER_PORT}/api" 2>/dev/null || echo "000")
+    # --max-time 2: HTTP API must respond within 2s (localhost should be near-instant)
+    HTTP_CODE=$(curl -s --max-time 2 -o /dev/null -w "%{http_code}" "http://127.0.0.1:${JUPYTER_PORT}/api" 2>/dev/null || echo "000")
     if [ "$HTTP_CODE" = "200" ] || [ "$HTTP_CODE" = "302" ] || [ "$HTTP_CODE" = "401" ] || [ "$HTTP_CODE" = "403" ]; then
         echo "[HEALTHCHECK] jupyter port ${JUPYTER_PORT}: OK (HTTP ${HTTP_CODE})"
     else
@@ -93,6 +121,11 @@ fi
 if [ "$ENABLE_DOCKER" = "yes" ]; then
     SERVICES_ENABLED=1
     check_docker
+fi
+
+if [ "$ENABLE_PODMAN" = "yes" ]; then
+    SERVICES_ENABLED=1
+    check_podman
 fi
 
 if [ "$ENABLE_JUPYTER" = "yes" ]; then

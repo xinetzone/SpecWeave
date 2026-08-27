@@ -4,9 +4,9 @@ related_task: Task 6
 date: 2026-07-09
 version: "1.0"
 source: cleaned-article.md
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/task6-quality-assessment.toml"
 assessment_date: 2026-07-09
 ---
-
 # 微软Copilot与DeepSeek文章信息质量评估报告
 
 ## 一、信息来源权威性评估

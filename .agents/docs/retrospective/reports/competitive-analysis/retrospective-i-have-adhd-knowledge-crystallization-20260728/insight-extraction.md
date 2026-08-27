@@ -79,7 +79,7 @@ total_patterns: 7
 - **证据引用**：08-patterns-extracted.md是完全的新增价值（方法论抽象），原项目SKILL.md只列规则未做模式提炼；04-installation-guide.md中5.11节Trae IDE适配基于Agent Skills标准推理补充，原项目INSTALL.md未提及Trae
 - **根因分析**：七概念E阶段（萃取）天然要求超越原项目文档进行抽象，这是知识沉淀的核心价值——不是复制文档而是提炼可迁移方法论。但增值内容的正确性无法通过"与原项目对照"验证，需要独立的质量保障机制。当前Wiki未对两类内容做显式区分，读者无法判断哪些是原项目内容、哪些是二次创作
 - **改进建议**：增值内容使用显式标记区分（如"> **【SpecWeave方法论补充】**"标识）；对非原文的推理补充内容，V阶段增加"正确性验证"视角；模式萃取等深度增值内容至少经过1次对抗审查
-- **✅ 闭环落地**：Wiki 3处增值内容已添加blockquote标记：(1) [04-installation-guide.md 5.11节](../../../../knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/04-installation-guide.md)（Trae IDE适配）、(2) [08-patterns-extracted.md章节头](../../../../knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/08-patterns-extracted.md)（模式萃取全章）、(3) [09-faq-and-resources.md Q9](../../../../knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/09-faq-and-resources.md)（设计原理关联）。
+- **✅ 闭环落地**：Wiki 3处增值内容已添加blockquote标记：(1) [04-installation-guide.md 5.11节](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.md)（Trae IDE适配）、(2) [08-patterns-extracted.md章节头](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.md)（模式萃取全章）、(3) [09-faq-and-resources.md Q9](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.md)（设计原理关联）。
 
 ---
 
