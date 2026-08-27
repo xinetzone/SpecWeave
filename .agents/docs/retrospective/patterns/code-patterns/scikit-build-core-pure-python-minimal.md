@@ -229,7 +229,7 @@ python -m pip show -f <your-package-name>
 见陷阱4——这是最隐蔽的错误，会导致pip install挂起无输出。
 
 ### ❌ 反模式3：先迁移构建系统再做功能
-构建系统是基础设施，应在功能稳定后统一迁移升级。功能快速迭代期反复修改构建配置是浪费时间。（参考[capability-stack-progressive-building](methodology-patterns/governance-strategy/capability-stack-progressive-building.md)）
+构建系统是基础设施，应在功能稳定后统一迁移升级。功能快速迭代期反复修改构建配置是浪费时间。（参考[capability-stack-progressive-building](../methodology-patterns/governance-strategy/capability-stack-progressive-building.md)）
 
 ### ❌ 反模式4：使用cmake.verbose而非build.verbose
 scikit-build-core >=0.10已废弃cmake.verbose，必须用build.verbose。
@@ -402,7 +402,7 @@ where = ["src"]
 |------|------|
 | [conda-build-scikit-build-core-native](conda-build-scikit-build-core-native.md) | 互补：本模式是**纯Python+pip wheel**最小配置；那个模式是**C/C++原生扩展+conda-build**的完整配置 |
 | [capability-stack-progressive-building](../methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | 方法论基础：构建系统迁移在七层栈中位于L7，应在功能稳定后最后进行 |
-| [container-devtool-seven-layer-stack](architecture-patterns/container-devtool-seven-layer-stack.md) | 配套架构：L7构建系统层使用本模式的配置 |
+| [container-devtool-seven-layer-stack](../architecture-patterns/container-devtool-seven-layer-stack.md) | 配套架构：L7构建系统层使用本模式的配置 |
 
 ## Changelog
 

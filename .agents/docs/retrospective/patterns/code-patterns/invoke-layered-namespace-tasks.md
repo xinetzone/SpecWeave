@@ -363,8 +363,8 @@ tasks/
 
 | 模式 | 关系 |
 |------|------|
-| [capability-stack-progressive-building](methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | 方法论基础：L2-L5各层能力对应的任务按本模式分层组织 |
-| [container-devtool-seven-layer-stack](architecture-patterns/container-devtool-seven-layer-stack.md) | 配套架构：容器七层栈的任务入口使用本模式 |
+| [capability-stack-progressive-building](../methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | 方法论基础：L2-L5各层能力对应的任务按本模式分层组织 |
+| [container-devtool-seven-layer-stack](../architecture-patterns/container-devtool-seven-layer-stack.md) | 配套架构：容器七层栈的任务入口使用本模式 |
 | [scikit-build-core-pure-python-minimal](scikit-build-core-pure-python-minimal.md) | 配套构建：pyproject.toml中[tool.invoke]配置与构建配置共存 |
 
 ## Changelog
