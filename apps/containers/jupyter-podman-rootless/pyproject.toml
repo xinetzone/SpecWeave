@@ -7,7 +7,7 @@ name = "jupyter-podman-rootless"
 version = "0.1.0"
 description = "基于Podman rootless的Jupyter开发容器（Python 3.14t + Miniforge3 + SSH + Podman + OMLMD + OLOT ModelCar + Toolbx兼容透传模式）"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 license = {text = "MIT"}
 dependencies = [
     "invoke>=2.0",
