@@ -18,6 +18,7 @@
 #
 # Commands:
 #   start       Start container (idempotent; creates if not exists)
+#               -w, --workspace PATH  Mount host PATH to /workspace in container
 #   stop        Stop and remove container
 #   restart     Stop then start
 #   status      Show container status
@@ -38,7 +39,13 @@
 #   help        Show this help message
 #
 # All defaults can be overridden via environment variables or a .env file
-# in the project root. See source for variable names (JUPYTER_*).
+# in the project root. Key variables:
+#   WORKSPACE           Host directory to mount to /workspace (default: <project>/workspace)
+#                       Relative paths in env var resolve against current directory;
+#                       -w/--workspace resolves relative paths against current directory.
+#   JUPYTER_WORKSPACE   Fallback for WORKSPACE (backward compatibility)
+#   JUPYTER_CONTAINER_NAME, JUPYTER_IMAGE, JUPYTER_SSH_PORT, JUPYTER_PORT,
+#   JUPYTER_PASSWORD, JUPYTER_TOKEN, etc. (see source for full list)
 # ==============================================================================
 set -euo pipefail
 
@@ -49,29 +56,102 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 # ---------------------------------------------------------------------------
-# Load .env file if present (project root or current directory)
+# Path conversion helper: Windows path -> WSL path
+#   D:\foo\bar  -> /mnt/d/foo/bar
+#   D:/foo/bar  -> /mnt/d/foo/bar
+#   /mnt/d/...  -> returned as-is (already WSL)
+#   ./foo, ~/foo, /absolute -> returned as-is
+# ---------------------------------------------------------------------------
+_win_to_wsl_path() {
+    local p="$1"
+    # Already a WSL/Linux path (starts with / or ./ or ~/ or relative without drive letter)
+    if [[ "$p" == /* ]] || [[ "$p" == ./* ]] || [[ "$p" == ~/* ]] || [[ "$p" == "" ]]; then
+        echo "$p"
+        return
+    fi
+    # Match Windows drive letter: C:\..., D:/..., etc.
+    if [[ "$p" =~ ^([A-Za-z]):[\\/](.*)$ ]]; then
+        local drive="${BASH_REMATCH[1],,}"  # lowercase
+        local rest="${BASH_REMATCH[2]}"
+        rest="${rest//\\//}"  # backslashes -> forward slashes
+        echo "/mnt/$drive/$rest"
+        return
+    fi
+    # Broken path from bash source (backslashes eaten): D:spacesSpecWeave -> can't auto-fix
+    # Return as-is; caller will handle
+    echo "$p"
+}
+
+# ---------------------------------------------------------------------------
+# Load .env file safely — parses KEY=VALUE line by line without shell interpretation,
+# so Windows paths with backslashes (D:\foo\bar) are preserved correctly.
+# Also strips CRLF and auto-converts Windows paths (WORKSPACE) to WSL paths.
 # ---------------------------------------------------------------------------
 load_env() {
     local env_files=("$PROJECT_ROOT/.env" "$PWD/.env")
     for f in "${env_files[@]}"; do
         if [[ -f "$f" ]]; then
-            # shellcheck disable=SC1090
-            set -a; source "$f"; set +a
+            while IFS= read -r line || [[ -n "$line" ]]; do
+                # Strip CR and leading/trailing whitespace
+                line="${line//$'\r'/}"
+                line="${line#"${line%%[![:space:]]*}"}"
+                line="${line%"${line##*[![:space:]]}"}"
+                # Skip comments and empty lines
+                [[ -z "$line" || "$line" == \#* ]] && continue
+                # Parse KEY=VALUE (first = only, value may contain =)
+                if [[ "$line" =~ ^([A-Za-z_][A-Za-z0-9_]*)=(.*)$ ]]; then
+                    local key="${BASH_REMATCH[1]}"
+                    local val="${BASH_REMATCH[2]}"
+                    # Strip surrounding quotes if present
+                    if [[ "$val" =~ ^\"(.*)\"$ ]] || [[ "$val" =~ ^\'(.*)\'$ ]]; then
+                        val="${BASH_REMATCH[1]}"
+                    fi
+                    # Only set if not already set by an earlier (higher priority) file or env
+                    # Priority: existing env > $PWD/.env > $PROJECT_ROOT/.env
+                    # But since we iterate project-root first, then PWD, and PWD should override:
+                    # We use a simpler approach: always export (later files override earlier)
+                    # and pre-existing env vars take precedence (checked in defaults section)
+                    export "$key"="$val"
+                fi
+            done < "$f"
         fi
     done
+
+    # Auto-convert WORKSPACE from Windows path to WSL path if needed
+    if [[ -n "${WORKSPACE:-}" ]]; then
+        WORKSPACE="$(_win_to_wsl_path "$WORKSPACE")"
+        export WORKSPACE
+    fi
 }
 load_env
 
 # ---------------------------------------------------------------------------
 # Default configuration (overridable via env vars or .env)
+# Priority: CLI args (-w) > JUPYTER_* env > short-name env (from .env) > hardcoded defaults
+# Note: WORKSPACE is handled separately below because it needs path resolution.
 # ---------------------------------------------------------------------------
-CONTAINER_NAME="${JUPYTER_CONTAINER_NAME:-jupyter-chaos-test}"
-IMAGE="${JUPYTER_IMAGE:-localhost/jupyter-podman-rootless:latest}"
-SSH_PORT="${JUPYTER_SSH_PORT:-2222}"
+CONTAINER_NAME="${JUPYTER_CONTAINER_NAME:-${CONTAINER_NAME:-jupyter-chaos-test}}"
+IMAGE="${JUPYTER_IMAGE:-${IMAGE_TAG:-localhost/jupyter-podman-rootless:latest}}"
+# IMAGE_TAG from .env may be just "name:tag" without registry; ensure localhost/ prefix for podman images
+if [[ "$IMAGE" != */* ]]; then
+    IMAGE="localhost/$IMAGE"
+fi
+SSH_PORT="${JUPYTER_SSH_PORT:-${SSH_PORT:-2222}}"
 JUPYTER_PORT="${JUPYTER_PORT:-8888}"
-PASSWORD="${JUPYTER_PASSWORD:-devpass123}"
+PASSWORD="${JUPYTER_PASSWORD:-${USER_PASSWORD:-devpass123}}"
 TOKEN="${JUPYTER_TOKEN:-chaostest2026}"
-WORKSPACE="${JUPYTER_WORKSPACE:-$(cd "$PROJECT_ROOT/../../.." && pwd)}"
+# WORKSPACE: host directory to mount to /workspace
+# Priority: --workspace CLI arg > WORKSPACE env > JUPYTER_WORKSPACE env (compat) > $PROJECT_ROOT/workspace default
+# - CLI arg (-w) and env var relative paths: resolved against user's current working directory
+# - Default: $PROJECT_ROOT/workspace (stable, inside the app directory)
+if [[ -n "${WORKSPACE:-}" ]]; then
+    # WORKSPACE explicitly set via env — keep as-is (resolved in cmd_start against cwd)
+    :
+elif [[ -n "${JUPYTER_WORKSPACE:-}" ]]; then
+    WORKSPACE="$JUPYTER_WORKSPACE"
+else
+    WORKSPACE="$PROJECT_ROOT/workspace"
+fi
 CACHE_DIR="$PROJECT_ROOT/.image-cache"
 WSL_CACHE_DIR="$PROJECT_ROOT/.wsl-cache"
 WSL_DISTRO="${JUPYTER_WSL_DISTRO:-Ubuntu}"
@@ -226,6 +306,38 @@ cmd_start() {
     ensure_image
     ensure_wsl_keepalive
 
+    # Parse start command options: -w/--workspace
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -w|--workspace)
+                WORKSPACE="$2"
+                shift 2
+                ;;
+            *)
+                error "Unknown option for start: $1"
+                echo "Usage: $0 start [-w|--workspace PATH]"
+                return 1
+                ;;
+        esac
+    done
+
+    # Convert Windows path to WSL path if needed (e.g. -w D:\my-project from Windows interop)
+    WORKSPACE="$(_win_to_wsl_path "$WORKSPACE")"
+
+    # Resolve workspace to absolute path and create if it doesn't exist
+    # WORKSPACE is relative to current working directory (where user runs jpman)
+    if [[ "$WORKSPACE" != /* ]] && [[ "$WORKSPACE" != ~/* ]]; then
+        WORKSPACE="$PWD/$WORKSPACE"
+    elif [[ "$WORKSPACE" == ~/* ]]; then
+        WORKSPACE="$HOME/${WORKSPACE#~/}"
+    fi
+    if [[ ! -d "$WORKSPACE" ]]; then
+        info "Creating workspace directory: $WORKSPACE"
+        mkdir -p "$WORKSPACE"
+    fi
+    # Resolve to absolute canonical path
+    WORKSPACE="$(cd "$WORKSPACE" && pwd)"
+
     if container_running; then
         info "Container '$CONTAINER_NAME' is already running."
         cmd_info
@@ -238,7 +350,8 @@ cmd_start() {
     fi
 
     info "Creating container '$CONTAINER_NAME'..."
-    podman create -d \
+    info "  Mounting $WORKSPACE -> /workspace"
+    podman create \
         --name "$CONTAINER_NAME" \
         --device /dev/fuse \
         --security-opt label=disable \
@@ -290,7 +403,7 @@ cmd_stop() {
 
 cmd_restart() {
     cmd_stop
-    cmd_start
+    cmd_start "$@"
 }
 
 cmd_status() {

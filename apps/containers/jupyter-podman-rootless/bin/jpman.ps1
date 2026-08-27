@@ -63,7 +63,15 @@ $SshPort        = if ($env:JUPYTER_SSH_PORT)       { [int]$env:JUPYTER_SSH_PORT 
 $JupyterPort    = if ($env:JUPYTER_PORT)           { [int]$env:JUPYTER_PORT }       else { 8888 }
 $Password       = if ($env:JUPYTER_PASSWORD)       { $env:JUPYTER_PASSWORD }        else { 'devpass123' }
 $Token          = if ($env:JUPYTER_TOKEN)          { $env:JUPYTER_TOKEN }           else { 'chaostest2026' }
-$Workspace      = if ($env:JUPYTER_WORKSPACE)      { $env:JUPYTER_WORKSPACE }       else { Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $ProjectRoot)) }
+# WORKSPACE: host directory to mount to /workspace
+# Priority: --workspace CLI arg (passed to bash) > WORKSPACE env > JUPYTER_WORKSPACE env (compat) > <project>/workspace default
+if ($env:WORKSPACE) {
+    $Workspace = $env:WORKSPACE
+} elseif ($env:JUPYTER_WORKSPACE) {
+    $Workspace = $env:JUPYTER_WORKSPACE
+} else {
+    $Workspace = Join-Path $ProjectRoot 'workspace'
+}
 $CacheDir       = Join-Path $ProjectRoot '.image-cache'
 $WslCacheDir    = Join-Path $ProjectRoot '.wsl-cache'
 $WslDistro      = if ($env:JUPYTER_WSL_DISTRO)       { $env:JUPYTER_WSL_DISTRO }       else { 'Ubuntu' }
@@ -539,6 +547,7 @@ function Show-Help {
 
  Commands:
    start       Start container (idempotent; creates if not exists)
+               -w, --workspace PATH  Mount host PATH to /workspace in container
    stop        Stop and remove container
    restart     Stop then start
    status      Show container status
@@ -563,7 +572,13 @@ function Show-Help {
    help        Show this help message
 
  All defaults can be overridden via environment variables or a .env file
- in the project root. Variable names use JUPYTER_* prefix.
+ in the project root. Key variables:
+   WORKSPACE           Host directory to mount to /workspace (default: <project>/workspace)
+                       Relative paths resolve against current directory;
+                       -w/--workspace also resolves relative paths against current directory.
+   JUPYTER_WORKSPACE   Fallback for WORKSPACE (backward compatibility)
+   JUPYTER_CONTAINER_NAME, JUPYTER_IMAGE, JUPYTER_SSH_PORT, JUPYTER_PORT,
+   JUPYTER_PASSWORD, JUPYTER_TOKEN, etc. (see source for full list)
 
 ==============================================================================
 '@
