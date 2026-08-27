@@ -288,6 +288,69 @@ podman-machine-default是Podman Desktop的内部VM，ssh端口转发容易出问
    ```
 3. **不推荐**：`podman machine ssh`（ssh端口转发本身不稳定）
 
+### 错误：容器启动30-60秒后自动退出（SIGTERM）
+
+**原因**：WSL2 rootless podman 缺少 `--cgroupns=host`，启动容器的 WSL bash 会话退出时，容器的 cgroup 被清理，导致容器收到 SIGTERM。
+
+**修复方案（三要素缺一不可）**：
+1. `--cgroupns=host`：让容器使用宿主机的 cgroup namespace
+2. `--restart unless-stopped`：容器异常退出时自动重启
+3. WSL keepalive 进程：保持一个 `sleep infinity` 后台进程防止WSL会话回收
+
+```bash
+# 启动容器的标准模板
+podman create \
+  --name <container> \
+  --cgroupns=host \
+  --device /dev/fuse \
+  --security-opt label=disable \
+  --restart unless-stopped \
+  -p <ports> \
+  -v <mounts> \
+  <image>
+podman start <container>
+
+# WSL keepalive（在另一个WSL窗口或后台运行）
+setsid sleep infinity &
+disown
+```
+
+**诊断**：`podman ps -a` 看到容器状态是 `Exited (143)` 或 `Exited (137)` 即为SIGTERM/SIGKILL。
+
+### 技巧：增量镜像补丁构建（秒级配置热修复）
+
+当只需修改配置文件、不需要重新下载/编译依赖时，使用增量Containerfile避免全量构建（全量构建在WSL 9p文件系统上极慢，且网络波动容易导致conda/pip下载失败）：
+
+```dockerfile
+# Containerfile.patch
+FROM <existing-image>:latest
+COPY fixed-config.conf /etc/app/config.conf
+RUN chmod 644 /etc/app/config.conf  # 可选：修复权限
+```
+
+```bash
+# 增量构建（<10秒完成，无需网络）
+# 注意：在WSL原生ext4上执行，不要在/mnt/d (9p)上构建
+mkdir -p ~/build-patch
+cp Containerfile.patch ~/build-patch/Containerfile
+cp fixed-config.conf ~/build-patch/
+cd ~/build-patch && podman build --format docker -t <image-name>:latest .
+rm -rf ~/build-patch
+```
+
+**适用场景**：配置文件修改、entrypoint脚本小改、权限修复。
+**不适用**：新增系统包、新增pip/conda依赖、基础镜像变更（需全量构建）。
+
+### JupyterLab 隐藏文件双条件问题
+
+**现象**：API 返回 `.hidden_dir` 但文件浏览器不显示。
+
+**根因**：隐藏文件可见性需要同时满足两个条件：
+1. **服务端**：`c.ContentsManager.allow_hidden = True` + `c.FileContentsManager.allow_hidden = True`（在jupyter_notebook_config.py中）
+2. **前端**：JupyterLab 菜单 View → Show Hidden Files（用户必须手动勾选）
+
+**修复**：服务端配置写入镜像（或运行时修改），然后提示用户在UI中启用 Show Hidden Files 并按 Ctrl+Shift+R 硬刷新。
+
 ### 通用诊断原则
 
 **先验证再恐慌**：看到WARN/ERROR不要急着改配置，先跑最小功能验证：
