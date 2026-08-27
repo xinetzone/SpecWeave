@@ -1,0 +1,13 @@
+id = "event-driven-guardian"
+domain = "architecture"
+layer = "architecture"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = ".agents/scripts/fix-screenshot-tool.ps1"
+
+[bindings]
+rules = []
+references = ["iot-event-driven-state-update.md"]
+skills = []
