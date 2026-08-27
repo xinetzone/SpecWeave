@@ -1,0 +1,11 @@
+- [ ] think/psi 域四个子bundle之间的交叉引用路径全部修复正确
+- [ ] viz/3b1b 域 videos 引用 manim 的路径全部修复
+- [ ] document/sphinx 域 sphinx-argparse 和 alabaster 的链接全部修复
+- [ ] python/cpython、meta/okf-spec、document/jupyter 等零散错误全部修复
+- [ ] think/laozi 无效引用已妥善处理（注释或移除链接）
+- [ ] 自动链接修复（--fix）已正确执行，无误伤
+- [ ] 运行 `python .agents/scripts/check-links.py --path projects/awesome-okf-xs/doc/bundles` 显示本地断链数为 0
+- [ ] 运行 `python scripts/check-toctrees.py doc/bundles` 在 awesome-okf-xs 目录下执行通过
+- [ ] 运行 `python scripts/check-utf8.py doc/bundles` 在 awesome-okf-xs 目录下执行通过
+- [ ] git diff 检查确认仅修改了链接URL部分，链接文本和正文内容未被改动
+- [ ] 抽查至少20个修复后的链接，路径计算正确，目标文件存在
