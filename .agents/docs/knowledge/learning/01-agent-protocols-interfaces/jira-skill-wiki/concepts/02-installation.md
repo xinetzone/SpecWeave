@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-installation"
+type: Concept
 title: "安装与配置"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/02-installation.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件安装与配置完整指南，涵盖六种安装方式、凭证文件配置、Server/DC 与 Cloud 的认证差异、环境校验命令。"
 tags: ["jira", "installation", "configuration", "credentials", "authentication", "uv"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件安装与配置完整指南，涵盖六种安装方式、凭证文件配置、Server/DC 与 Cloud 的认证差异、环境校验命令。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 2 章：安装与配置
 
@@ -137,3 +146,10 @@ uv run scripts/core/jira-validate.py
 ```
 
 `jira-validate.py` 会检查凭证是否存在、Jira 实例是否可达。若校验失败，参考第 8 章故障排查。
+
+## 相关概念
+
+- [架构设计](/concepts/01-architecture.md)：理解插件架构
+- [快速开始](/concepts/03-quickstart.md)：安装后快速上手
+- [故障排查](/concepts/08-troubleshooting.md)：安装问题排查
+- [官方文档信源](/references/official-docs.md)：外部参考资源

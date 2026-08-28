@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-best-practices"
+type: Concept
 title: "最佳实践与反模式"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/07-best-practices.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件最佳实践与反模式汇总，涵盖意图动词优先、dry-run 预览、无编辑化、精确流转名、resolution 字段处理与多阶段工作流 walk。"
 tags: ["jira", "best-practices", "anti-patterns", "dry-run", "intent-verbs", "resolution"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件最佳实践与反模式汇总，涵盖意图动词优先、dry-run 预览、无编辑化、精确流转名、resolution 字段处理与多阶段工作流 walk。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
 ---
 # 第 7 章：最佳实践与反模式
 
@@ -103,3 +112,10 @@ jira-transition.py path PROJ-123 Closed --dry-run   # 预览第一步
 | 把语法校验与发帖命令串联 | 校验作为独立门禁步骤 |
 | 用 Markdown 语法写 Jira 内容 | 使用 Jira wiki 标记（见第 5 章） |
 | 终态流转不传 `--resolution` | 显式传入与结果匹配的 resolution |
+
+## 相关概念
+
+- [jira-communication 技能](/concepts/04-jira-communication.md)：意图动词详解
+- [JQL 查询语言](/concepts/06-jql.md)：高效查询技巧
+- [故障排查](/concepts/08-troubleshooting.md)：问题解决指南
+- [工作流自动化示例](/examples/workflow-automation.md)：实操示例

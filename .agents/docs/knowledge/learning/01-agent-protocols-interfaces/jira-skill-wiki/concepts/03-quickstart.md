@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-quickstart"
+type: Concept
 title: "快速开始"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/03-quickstart.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件快速开始指南，覆盖搜索、工单详情、创建、流转、评论、工时、冲刺看板、工具查询的完整命令示例。"
 tags: ["jira", "quickstart", "cli", "search", "worklog", "transition", "examples"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件快速开始指南，覆盖搜索、工单详情、创建、流转、评论、工时、冲刺看板、工具查询的完整命令示例。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
 ---
 # 第 3 章：快速开始
 
@@ -128,3 +137,10 @@ uv run scripts/utility/jira-link.py create PROJ-123 PROJ-456 --type "Blocks" --d
 ```
 
 下一章将深入讲解 `jira-communication` 技能的脚本体系与意图动词机制。
+
+## 相关概念
+
+- [jira-communication 技能](/concepts/04-jira-communication.md)：深入了解API操作
+- [JQL 查询语言](/concepts/06-jql.md)：高级搜索技巧
+- [最佳实践](/concepts/07-best-practices.md)：工程经验总结
+- [CLI API 参考](/references/api-reference.md)：完整命令参考

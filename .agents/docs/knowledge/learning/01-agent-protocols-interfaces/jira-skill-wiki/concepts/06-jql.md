@@ -1,14 +1,26 @@
 ---
-id: "jira-skill-wiki-jql"
+type: Concept
 title: "JQL 查询语言"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/06-jql.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "JQL 查询语言完整参考，涵盖排序、比较/文本/列表/历史操作符、用户/日期/冲刺/版本函数、常见查询与引号规则、Cloud 与 Server/DC 差异。"
 tags: ["jira", "jql", "query", "search", "operators", "functions"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "JQL 查询语言完整参考，涵盖排序、比较/文本/列表/历史操作符、用户/日期/冲刺/版本函数、常见查询与引号规则、Cloud 与 Server/DC 差异。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 6 章：JQL 查询语言
 
@@ -173,3 +185,10 @@ NOT status = Done
 - [JQL 操作符（Cloud）](https://support.atlassian.com/jira-software-cloud/docs/jql-operators/)
 - [JQL 函数（Cloud）](https://support.atlassian.com/jira-software-cloud/docs/jql-functions/)
 - [JQL 操作符（Server/DC）](https://confluence.atlassian.com/jirasoftwareserver/advanced-searching-operators-reference-939938753.html)
+
+## 相关概念
+
+- [快速开始](/concepts/03-quickstart.md)：搜索命令入门
+- [jira-communication 技能](/concepts/04-jira-communication.md)：API操作详解
+- [最佳实践](/concepts/07-best-practices.md)：查询优化建议
+- [CLI API 参考](/references/api-reference.md)：search命令参数

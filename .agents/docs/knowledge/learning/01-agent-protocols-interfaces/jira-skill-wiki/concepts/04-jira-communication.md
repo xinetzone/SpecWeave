@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-communication"
+type: Concept
 title: "jira-communication 技能详解"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/04-jira-communication.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "jira-communication 技能完整详解，涵盖自动触发条件、三层脚本体系、意图动词机制（work/qa/qa-fail/act）、通用选项与认证方式。"
 tags: ["jira", "jira-communication", "cli", "intent-verbs", "scripts", "authentication"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "jira-communication 技能完整详解，涵盖自动触发条件、三层脚本体系、意图动词机制（work/qa/qa-fail/act）、通用选项与认证方式。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
 ---
 # 第 4 章：jira-communication 技能详解
 
@@ -143,3 +152,10 @@ jira-issue.py --json get PROJ-123
 在工单内容与评论中，只陈述**发生了什么**，不评价"做得多好"。脚本与模板均遵循此原则，避免 AI 在工单中写入自我褒扬式措辞。
 
 下一章介绍负责内容规范的 `jira-syntax` 技能。
+
+## 相关概念
+
+- [架构设计](/concepts/01-architecture.md)：理解三层脚本体系
+- [jira-syntax 技能](/concepts/05-jira-syntax.md)：内容格式规范
+- [最佳实践](/concepts/07-best-practices.md)：意图动词使用建议
+- [CLI API 参考](/references/api-reference.md)：完整命令参考

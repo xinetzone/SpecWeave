@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-glossary"
+type: Concept
 title: "术语表与资源"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/09-glossary.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件核心术语表与参考资料索引，包含 22 个核心术语的中文翻译与通俗解释，以及插件源码、官方语法与 JQL 参考等资源汇总。"
 tags: ["jira", "glossary", "reference", "terminology", "resources"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件核心术语表与参考资料索引，包含 22 个核心术语的中文翻译与通俗解释，以及插件源码、官方语法与 JQL 参考等资源汇总。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 9 章：术语表与资源
 
@@ -131,7 +140,7 @@ summary: "Jira 集成插件核心术语表与参考资料索引，包含 22 个�
 
 ## 9.3 学习路径建议
 
-1. 先通读 [总览](00-overview.md) 与 [架构设计](01-architecture.md)，建立整体认知。
-2. 按 [安装与配置](02-installation.md) 完成环境准备，再用 [快速开始](03-quickstart.md) 上手命令。
-3. 深入 [jira-communication](04-jira-communication.md) 与 [jira-syntax](05-jira-syntax.md) 两大技能。
-4. 掌握 [JQL](06-jql.md) 后，结合 [最佳实践与反模式](07-best-practices.md) 提升使用质量，遇到问题查阅 [故障排查](08-troubleshooting.md)。
+1. 先通读 [总览](/concepts/00-overview.md) 与 [架构设计](/concepts/01-architecture.md)，建立整体认知。
+2. 按 [安装与配置](/concepts/02-installation.md) 完成环境准备，再用 [快速开始](/concepts/03-quickstart.md) 上手命令。
+3. 深入 [jira-communication](/concepts/04-jira-communication.md) 与 [jira-syntax](/concepts/05-jira-syntax.md) 两大技能。
+4. 掌握 [JQL](/concepts/06-jql.md) 后，结合 [最佳实践与反模式](/concepts/07-best-practices.md) 提升使用质量，遇到问题查阅 [故障排查](/concepts/08-troubleshooting.md)。

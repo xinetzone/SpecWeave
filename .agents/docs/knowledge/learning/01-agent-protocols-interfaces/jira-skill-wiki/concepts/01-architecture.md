@@ -1,14 +1,26 @@
 ---
-id: "jira-skill-wiki-architecture"
+type: Concept
 title: "架构设计：双技能插件"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/01-architecture.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件架构设计详解，涵盖系统总览、目录结构、双技能组件划分、三层脚本体系、数据流与四项关键设计决策。"
 tags: ["jira", "architecture", "plugin", "skill", "directory-structure", "data-flow"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件架构设计详解，涵盖系统总览、目录结构、双技能组件划分、三层脚本体系、数据流与四项关键设计决策。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 1 章：架构设计
 
@@ -105,3 +117,10 @@ jira-skill/
 | 单依赖版本钉扎 | `atlassian-python-api` 钉扎在 `>=3.41,<4` | 主目标为 Jira Server/DC 9.12，v4 在 DC 上有回归风险 |
 
 关于 `atlassian-python-api` 的版本钉扎值得特别说明：v4 为 Jira Cloud 新增了 `search/jql` 端点（因 Atlassian 在 Cloud 上移除了 `/rest/api/3/search`），但在 DC 上到 4.0.5 前存在回归。由于该插件的主目标是 Jira Server/DC，故选择钉扎 v3，仅在具备 Cloud 测试租户后才考虑升级。
+
+## 相关概念
+
+- [教程总览](/concepts/00-overview.md)：返回教程总览
+- [安装与配置](/concepts/02-installation.md)：环境搭建指南
+- [jira-communication 技能](/concepts/04-jira-communication.md)：API操作技能详解
+- [源码结构信源](/references/source-code.md)：源码目录结构参考

@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-syntax"
+type: Concept
 title: "jira-syntax 技能详解"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/05-jira-syntax.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "jira-syntax 技能完整详解，涵盖 Jira wiki 标记与 Markdown 的语法对照、Bug/特性模板、提交前语法校验清单与常见错误。"
 tags: ["jira", "jira-syntax", "wiki-markup", "templates", "validation", "markdown"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "jira-syntax 技能完整详解，涵盖 Jira wiki 标记与 Markdown 的语法对照、Bug/特性模板、提交前语法校验清单与常见错误。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 5 章：jira-syntax 技能详解
 
@@ -106,3 +115,10 @@ ${CLAUDE_SKILL_DIR}/scripts/validate-jira-syntax.sh path/to/content.txt
 - [官方 Jira Wiki Markup](https://jira.atlassian.com/secure/WikiRendererHelpAction.jspa?section=all) — 官方语法参考。
 
 下一章介绍检索工单的 JQL 查询语言。
+
+## 相关概念
+
+- [jira-communication 技能](/concepts/04-jira-communication.md)：API操作技能
+- [快速开始](/concepts/03-quickstart.md)：命令快速上手
+- [语法模板示例](/examples/syntax-templates.md)：模板实操示例
+- [官方文档信源](/references/official-docs.md)：Wiki Markup官方参考

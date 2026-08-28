@@ -1,14 +1,23 @@
 ---
-id: "jira-skill-wiki-troubleshooting"
+type: Concept
 title: "故障排查"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/08-troubleshooting.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件故障排查指南，涵盖 uv 未安装、环境文件缺失、认证失败、导入错误、resolution 字段无法设置等常见问题与解决步骤。"
 tags: ["jira", "troubleshooting", "authentication", "errors", "resolution", "import"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件故障排查指南，涵盖 uv 未安装、环境文件缺失、认证失败、导入错误、resolution 字段无法设置等常见问题与解决步骤。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # 第 8 章：故障排查
 
@@ -86,3 +95,10 @@ jira-search.py query "project = PROJ AND statusCategory = Done AND resolution is
 ## 8.8 认证通道自查
 
 若 MCP 连接器看似无权访问，不要据此断定"无 Jira 访问"——该连接器与脚本是两套独立系统。运行 `jira-setup.py` 检查配置，并向用户**立即、明确**说明状态，而非将问题埋进选项里。
+
+## 相关概念
+
+- [安装与配置](/concepts/02-installation.md)：环境文件与凭证设置
+- [jira-communication 技能](/concepts/04-jira-communication.md)：脚本运行方式与目录结构
+- [JQL 查询语言](/concepts/06-jql.md)：查询语法与字段引用
+- [最佳实践与反模式](/concepts/07-best-practices.md)：resolution 字段处理与 dry-run 规范

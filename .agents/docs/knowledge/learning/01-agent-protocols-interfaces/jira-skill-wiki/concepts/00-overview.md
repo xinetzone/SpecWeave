@@ -1,14 +1,26 @@
 ---
-id: "jira-skill-wiki-overview"
+type: Concept
 title: "Jira 集成插件教程总览"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/00-overview.toml"
-source: "seven-concepts-cmd:jira-skill-wiki"
-category: "learning"
+description: "Jira 集成插件系统性技术教程总览，涵盖插件定位、双技能架构、核心特性、版本演进、章节导航与前置知识要求。"
 tags: ["jira", "claude-code", "agent-skill", "plugin", "overview", "tutorial"]
-date: "2026-08-19"
-status: "stable"
-author: "SpecWeave"
-summary: "Jira 集成插件系统性技术教程总览，涵盖插件定位、双技能架构、核心特性、版本演进、章节导航与前置知识要求。"
+generated:
+  by: "source-code-to-okf-wiki"
+  date: "2026-08-28T00:00:00Z"
+verified:
+  by: "grep-verification"
+  date: "2026-08-28T00:00:00Z"
+status: stable
+stale_after: "2027-08-28T00:00:00Z"
+sources:
+  - resource: "/references/source-code.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/api-reference.md"
+    type: "source-code"
+    trust: high
+  - resource: "/references/official-docs.md"
+    type: "official-docs"
+    trust: high
 ---
 # Jira 集成插件教程
 
@@ -48,15 +60,15 @@ jira-skill 在架构上刻意追求"轻"与"快"，其核心特性可归纳为�
 
 | 章节 | 内容 |
 |------|------|
-| [第 1 章：架构设计](01-architecture.md) | 目录结构、组件划分、数据流与关键设计决策 |
-| [第 2 章：安装与配置](02-installation.md) | 六种安装方式与凭证配置 |
-| [第 3 章：快速开始](03-quickstart.md) | 从搜索到流转的完整命令示例 |
-| [第 4 章：jira-communication 技能](04-jira-communication.md) | API 操作脚本体系与意图动词 |
-| [第 5 章：jira-syntax 技能](05-jira-syntax.md) | Jira wiki 标记语法、模板与校验 |
-| [第 6 章：JQL 查询语言](06-jql.md) | 检索工单的查询语法 |
-| [第 7 章：最佳实践与反模式](07-best-practices.md) | 意图动词、dry-run、防报到等工程经验 |
-| [第 8 章：故障排查](08-troubleshooting.md) | 认证、导入、字段设置等常见问题 |
-| [第 9 章：术语表与资源](09-glossary.md) | 核心术语解释与参考资料索引 |
+| [第 1 章：架构设计](/concepts/01-architecture.md) | 目录结构、组件划分、数据流与关键设计决策 |
+| [第 2 章：安装与配置](/concepts/02-installation.md) | 六种安装方式与凭证配置 |
+| [第 3 章：快速开始](/concepts/03-quickstart.md) | 从搜索到流转的完整命令示例 |
+| [第 4 章：jira-communication 技能](/concepts/04-jira-communication.md) | API 操作脚本体系与意图动词 |
+| [第 5 章：jira-syntax 技能](/concepts/05-jira-syntax.md) | Jira wiki 标记语法、模板与校验 |
+| [第 6 章：JQL 查询语言](/concepts/06-jql.md) | 检索工单的查询语法 |
+| [第 7 章：最佳实践与反模式](/concepts/07-best-practices.md) | 意图动词、dry-run、防报到等工程经验 |
+| [第 8 章：故障排查](/concepts/08-troubleshooting.md) | 认证、导入、字段设置等常见问题 |
+| [第 9 章：术语表与资源](/concepts/09-glossary.md) | 核心术语解释与参考资料索引 |
 
 ## 前置知识要求
 
@@ -67,3 +79,10 @@ jira-skill 在架构上刻意追求"轻"与"快"，其核心特性可归纳为�
 - 了解 Python 生态的基础概念（如依赖管理、CLI 脚本）有助于理解第 4 章，但非必需。
 
 若对 Agent Skills 标准本身感兴趣，可先阅读本知识库中的 [Agent 技能知识库](../agent-skills-wiki/README.md)。
+
+## 相关概念
+
+- [架构设计](/concepts/01-architecture.md)：深入理解双技能插件的架构设计
+- [安装与配置](/concepts/02-installation.md)：完成环境准备
+- [快速开始](/concepts/03-quickstart.md)：上手常用命令
+- [CLI API 参考](/references/api-reference.md)：完整命令参考
