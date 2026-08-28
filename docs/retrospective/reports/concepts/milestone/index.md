@@ -19,6 +19,7 @@
 | milestone-okf-ecosystem-20260819 | OKF 生态整体建设 | 2026-08-19 | ✅ 已完成 | 七概念R→I→E→C | 30条客观事实、3条核心洞察(vendor固化转折点+索引先行收敛+子里程碑独立闭环)、1个可复用模式(规范→固化→自建→收敛四层生态建设法)、G1-G4质量门全部通过 | [okf-ecosystem-milestone-retrospective-20260819.md](okf-ecosystem-milestone-retrospective-20260819.md) |
 | milestone-torch-dev-mirror-build-20260820 | torch-dev 镜像构建与 files.pythonhosted.org IPv6 下载问题修复 | 2026-08-20 | ✅ 已完成 | 七概念R→I→E→V→C | 25条客观事实、3条核心洞察(下载层治标+验证层兜底/合并语义静默降级/Copy补丁漂移)、1个可复用模式(E-1 主索引+备用源双通道)、V对抗审查4视角8实测揪出P1静默降级、4项原子行动项，G1-G4+V门全部通过 | [torch-dev-mirror-build-retrospective-20260820.md](torch-dev-mirror-build-retrospective-20260820.md) |
 | milestone-jira-skill-wiki-vendor-sync-20260828 | Jira Skill Wiki 供应商源码同步 | 2026-08-28 | ✅ 已完成 | 七概念R→I→E→V→C | 28条客观事实、3条核心洞察(信源持久性盲区/计数完整性盲区/规范演进被动债)、1个可迁移模式(信源稳定性门)、V对抗审查4视角12条意见采纳4条、4项原子行动项，G1-G4+V门全部通过 | [jira-skill-wiki-vendor-sync-milestone-20260828.md](jira-skill-wiki-vendor-sync-milestone-20260828.md) |
+| milestone-okf-wiki-conversion-20260828 | docs 目录 OKF v0.2 Wiki 教程规范化改造 | 2026-08-28 | ✅ 已完成 | 七概念R→I→E→C | 32条客观事实、3条核心洞察(导航结构瓶颈/级联警告效应/修复脚本质量门)、2个可迁移模式(导航收敛修复法L2+级联缺陷定位法L1)、Sphinx构建421→0警告、10项原子行动项，G1-G4质量门全部通过 | [okf-wiki-conversion-milestone-20260828.md](okf-wiki-conversion-milestone-20260828.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -49,6 +50,7 @@ loop-engineering-patterns-20260801
 octo-platform-wiki-retrospective-20260704
 okf-ecosystem-milestone-retrospective-20260819
 okf-python314-stdlib-optimization-retrospective-20260818
+okf-wiki-conversion-milestone-20260828
 retrospective-hermes-specweave-integration-20260812
 session-atomic-commit-insight-extraction-20260706
 specweave-knowledge-scaling-milestone-20260801
