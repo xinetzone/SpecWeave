@@ -12,9 +12,12 @@
 | awesome-okf-bundle | main@ebe906b7 | git@github.com:linyiru/awesome-okf.git | 2026-08-06 | CC0-1.0 | third_party | main | linyiru/awesome-okf 上游 OKF 列表与 bundle 构建器 |
 | awesome-okf-kit | main@5e862eeb | git@github.com:vinodborole/awesome-okf-kit.git | 2026-08-06 | MIT | third_party | main | OKF bundle 注册表工具集 |
 | okf-bundle-template | main@a0883c7b | git@github.com:vinodborole/okf-bundle-template.git | 2026-08-06 | 未声明 | third_party | main | OKF bundle 发布模板 |
+| knowledge-catalog | main | git@github.com:GoogleCloudPlatform/knowledge-catalog.git | 2026-08-06 | Apache-2.0 | third_party | — | Google Cloud Knowledge Catalog 元数据管理平台 |
+| jira-skill | v3.29.0@b0dba28 | git@github.com:netresearch/jira-skill.git | 2026-08-28 | MIT AND CC-BY-SA-4.0 | third_party | — | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills） |
 
 ## 更新记录
 
+- 2026-08-28 | 引入 jira-skill 子模块（v3.29.0，third_party，MIT AND CC-BY-SA-4.0，Netresearch Jira MCP Skill 工具集）
 - 2026-08-06 | 引入 awesome-okf-bundle、awesome-okf-kit、okf-bundle-template 子模块（从 .chaos/libs/ 迁移至 vendor/，修复架构边界）
 - 2026-08-06 | 引入 awesome-okf 子模块（从根目录迁移至 vendor/，修复架构边界）
 - 2026-06-29 | 修复 flexloop 遗留反向依赖链接（9处失效外链），推送到 flexloop main 分支

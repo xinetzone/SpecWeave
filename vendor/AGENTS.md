@@ -36,6 +36,7 @@ vendor/AGENTS.md 与 vendor/.agents/ 由 SpecWeave 主权区维护,直接纳入�
 | awesome-okf-kit | third_party | 无（第三方项目） | OKF bundle 注册表工具集 |
 | okf-bundle-template | third_party | 无（第三方项目） | OKF bundle 发布模板 |
 | knowledge-catalog | third_party | 无（第三方项目） | Google Cloud Knowledge Catalog 元数据管理平台（第三方只读依赖） |
+| jira-skill | third_party | 无（第三方项目） | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills，第三方只读依赖） |
 
 ### 嵌套优先级
 
@@ -186,6 +187,7 @@ flexloop 的验证与检查脚本存放在 [vendor/flexloop/apps/chaos/.agents/s
 | vendor/awesome-okf-kit/ | awesome-okf-kit 子模块 | ❌ 否 | OKF bundle 注册表工具集第三方只读依赖，禁止本地修改 |
 | vendor/okf-bundle-template/ | okf-bundle-template 子模块 | ❌ 否 | OKF bundle 发布模板第三方只读依赖，禁止本地修改 |
 | vendor/knowledge-catalog/ | third_party 子模块 | ❌ 否 | Google Cloud Knowledge Catalog 第三方只读依赖,禁止本地修改 |
+| vendor/jira-skill/ | third_party 子模块 | ❌ 否 | Netresearch Jira MCP Skill 第三方只读依赖（MIT AND CC-BY-SA-4.0），禁止本地修改 |
 
 ## 跨边界调用规范
 

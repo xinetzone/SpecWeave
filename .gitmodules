@@ -33,3 +33,6 @@
 	path = projects/awesome-okf-xs
 	url = git@github.com:awesome-flexloop/awesome-okf.git
 	branch = main
+[submodule "vendor/jira-skill"]
+	path = vendor/jira-skill
+	url = git@github.com:netresearch/jira-skill.git

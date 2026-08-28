@@ -22,6 +22,8 @@
 | awesome-okf-bundle | main@ebe906b7 (子模块) | third_party | 2026-08-06 | linyiru/awesome-okf 上游 OKF 列表与 bundle 构建器 |
 | awesome-okf-kit | main@5e862eeb (子模块) | third_party | 2026-08-06 | OKF bundle 注册表工具集 |
 | okf-bundle-template | main@a0883c7b (子模块) | third_party | 2026-08-06 | OKF bundle 发布模板 |
+| knowledge-catalog | (子模块) | third_party | 2026-08-06 | Google Cloud Knowledge Catalog 元数据管理平台（第三方只读依赖） |
+| jira-skill | v3.29.0@b0dba28 (子模块) | third_party | 2026-08-28 | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills，第三方只读依赖） |
 
 ## 使用说明
 
