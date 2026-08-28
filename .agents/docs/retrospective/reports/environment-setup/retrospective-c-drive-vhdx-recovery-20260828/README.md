@@ -187,4 +187,5 @@ note: 单案例待验证
 - 前序案例：[retrospective-docker-cache-to-wsl-migration-20260818](../retrospective-docker-cache-to-wsl-migration-20260818/README.md)（vhdx 处理先例，模式1的第二案例）
 - 模式1已入库：[vhdx-two-phase-recovery-sop](../../../patterns/process-patterns/vhdx-two-phase-recovery-sop.md)（process-patterns，L2，validation_count=2，含实际案例与跨场景迁移）
 - 模式2已入库：[nested-engine-storage-externalize](../../../patterns/process-patterns/nested-engine-storage-externalize.md)（process-patterns，L1，validation_count=1，反模式实证完整，正向卷外置实施待下次构建任务验证后升 L2）
+- 洞察I-1诊断侧面已入库：[nested-disk-blindspot-diagnosis](../../../patterns/process-patterns/nested-disk-blindspot-diagnosis.md)（process-patterns，L1，validation_count=1，四层下钻诊断链；与模式2/模式1构成诊断→预防→治理三部曲）
 - 相关约定：`vmIdleTimeout=-1` 保活约定（AGENTS 项目记忆）

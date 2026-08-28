@@ -29,6 +29,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [svf-compiler-migration.md](svf-compiler-migration.md) | SVF 编译器迁移模式（Spike-Validate-Fallback）：识别ABI变体→最小Spike→失败记录→回退设计→最复杂模块预验证→全量构建→决策记录七步，防止直接全量构建返工和sed降级补丁技术债 | L2 已验证 | 原生编译器（Nuitka/Cython/mypyc）迁移新Python版本或ABI变体、CUDA/Emscripten工具链升级、编译器兼容性未知的场景 |
 | [vhdx-two-phase-recovery-sop.md](vhdx-two-phase-recovery-sop.md) | VHDX 二相回收 SOP：sparse 在线相与 compact 离线相互斥二选一；离线相含停 wslservice+vmcompute、清 sparse 标志、diskpart compact 全流程，含 6 类故障排查与 5 个实战反模式 | L2 已验证 | WSL2/Podman machine/Hyper-V 虚拟磁盘 vhdx 膨胀回收、系统盘空间治理、容器镜像清理后宿主空间未归还 |
 | [nested-engine-storage-externalize.md](nested-engine-storage-externalize.md) | 嵌套引擎存储卷外置模式：容器内 podman-in-podman/dinod 存储指向命名卷或显式挂载，避免镜像层写可写层形成黑洞；含双重不可见排查路径与僵尸容器处置，与 VHDX 二相回收构成预防/治理对 | L1 实验性 | 常驻容器内嵌套构建、CI docker-in-docker、可写层膨胀监控、容器磁盘配额治理 |
+| [nested-disk-blindspot-diagnosis.md](nested-disk-blindspot-diagnosis.md) | 嵌套容器磁盘盲区诊断模式：双重不可见（宿主 system df 只见总量 + 容器内 du 权限遮蔽低估4倍）下的四层下钻诊断链（system df→df/du矛盾→root du→UpperDir diff），结论须全链条数字交叉验证闭合 | L1 实验性 | 多层虚拟化栈磁盘占用对不上账、可写层异常膨胀定位、僵尸容器排查、vhdx 增速与挂载内容不匹配 |
 
 ## 成熟度定义
 
