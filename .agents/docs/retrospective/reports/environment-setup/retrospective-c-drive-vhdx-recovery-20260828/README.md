@@ -185,4 +185,5 @@ note: 单案例待验证
 ## 七、关联
 
 - 前序案例：[retrospective-docker-cache-to-wsl-migration-20260818](../retrospective-docker-cache-to-wsl-migration-20260818/README.md)（vhdx 处理先例，模式1的第二案例）
+- 模式1已入库：[vhdx-two-phase-recovery-sop](../../../patterns/process-patterns/vhdx-two-phase-recovery-sop.md)（process-patterns，L2，validation_count=2，含实际案例与跨场景迁移）
 - 相关约定：`vmIdleTimeout=-1` 保活约定（AGENTS 项目记忆）
