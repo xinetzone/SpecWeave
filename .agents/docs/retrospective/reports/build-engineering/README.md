@@ -9,10 +9,11 @@ type: "index"
 
 > 本目录收录构建系统、编译工具链、打包发布、Docker镜像、依赖管理等构建工程相关的复盘报告。
 
-## 报告清单（29份）
+## 报告清单（30份）
 
 | 报告名称 | 简要说明 | 日期 |
 |---|---|---|
+| `retrospective-xmnn-py314-rebuild-20260828/` | XMNN Python 3.14 Wheel & Docker 镜像重构里程碑复盘（R→I→E→V链路）：Nuitka 4.1.3 cp314t free-threading 编译失败（allocator.h:606），回退到 cp314 GIL 模式；base env 升级 Python 3.14.0 cp314，main env 提供 clang/LLVM 工具链跨环境编译；三阶段 Docker（py314-base→builder→final）+ conda build string 锁定 `*_cp314`；Podman 适配（cgroupfs/format docker/localhost 前缀/.dockerignore 无行内注释）；5 模型精度验证全通过（余弦相似度 > 0.99）；10 项 AC + 独立审查 pass；萃取"SVF 编译器迁移"和"跨 conda 环境工具链引用"两个可复用模式 | 2026-08-28 |
 | `retrospective-jupyter-podman-rootless-seven-rounds-20260827/` | Jupyter Podman Rootless 七轮优化里程碑复盘（R→I→E→C链路）：8个提交/7轮迭代/19文件+2859行，从基础setuptools框架到scikit-build-core+CMake+Ninja现代化构建；覆盖七层能力栈（基础镜像→SDK→编排→ML模型分发→ModelCar→Toolbx透传→构建系统）；萃取3个可复用模式（容器开发工具七层能力栈、scikit-build-core纯Python最小配置、invoke任务分层命名空间）；记录6个构建迁移陷阱与修复方案 | 2026-08-27 |
 | `retrospective-llama-cpp-python-cuda-build-20260820/` | llama-cpp-python CUDA编译部署里程碑复盘（R-I-E-C链路）：Windows 11 + RTX 5050(SM 120) + Python 3.14.3 环境下完成0.3.35 CUDA版源码编译（436编译单元/15分钟/90MB wheel/ggml-cuda.dll 49.7MB）；解决MSVC版本兼容（14.44而非默认14.51）、PATH超长、conda run子进程隔离、pip缓存权限、site-packages/bin目录缺失6类问题；萃取"Windows CUDA扩展源码编译三板斧"模式（L1） | 2026-08-20 |
 | `troubleshooting-devcontainer-jupyter-gil-20260819.md` | devcontainer-base Jupyter kernel GIL 被重新启用故障排查（I→F→V→C→R→I→E链路）：**根因**为 Jupyter 栈 C 扩展 `_brotli` 未声明 `Py_MOD_GIL_USED`，free-threading 下经 `PyUnstable_Module_SetGIL` 自动拉起 GIL（bash 上下文 False / kernel 内 True 的不一致）；**修复**为 jupyter.conf `environment=` 注入 `PYTHON_GIL="0"` + 重建 base（根因落 base 层）+ conda-llvm 幂等 sed 防御纵深；E2E 验证 kernel GIL=False、5/5 校验 PASS；清理悬空旧镜像 1.8GB；README 沉淀 FAQ Q6 | 2026-08-19 |
