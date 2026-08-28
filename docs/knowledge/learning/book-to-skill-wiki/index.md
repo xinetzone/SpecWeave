@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # book-to-skill 总览
 
 > 将任意技术书籍、文档文件夹或多源资料转换为统一的 Agent Skill —— 可按需加载、无幻觉、24×-51× token 节省
@@ -83,3 +79,11 @@ book-to-skill 的解决方案：**把书籍编译成结构化的 Agent Skill，�
 ---
 
 **事实来源**：本章节基于以下事实编号 F-002, F-003, F-005, F-030
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

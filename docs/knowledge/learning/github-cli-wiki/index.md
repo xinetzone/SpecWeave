@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # GitHub CLI (gh) 完全指南 — 概述
 
 > 一句话摘要：本教程系统讲解 GitHub CLI（`gh`）的安装、核心命令、PR 工作流、CI/CD 集成、高级用法和排错技巧，帮助开发者在命令行中高效完成 GitHub 全流程操作，尤其适用于 AI 辅助开发场景。
@@ -184,3 +180,11 @@ graph TB
 ---
 
 - [下一章：安装与配置指南](/concepts/01-installation.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

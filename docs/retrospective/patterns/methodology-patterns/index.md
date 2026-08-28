@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 方法论模式库索引
 
 > 本目录存放经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式。每个模式均通过G1-G4质量门与V对抗审查。
@@ -54,3 +50,13 @@ okf_version: "0.2"
 - [网页内容→结构化学习笔记 模式库](../../../reports/concepts/milestone/web-content-learning-notes-patterns-20260801.md)
 - [萃取指令集](../../../../.agents/commands/extraction.md)
 - [七概念方法论编排指令集](../../../../.agents/commands/seven-concepts.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+destructive-probe-gate
+history-based-doc-repair
+log
+preflight-integrity-gate
+```

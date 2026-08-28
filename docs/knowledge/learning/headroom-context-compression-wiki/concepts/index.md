@@ -7,3 +7,15 @@
 - [06-advanced-features](/concepts/06-advanced-features.md)
 - [07-quick-start](/concepts/07-quick-start.md)
 - [08-insights-patterns](/concepts/08-insights-patterns.md)
+
+```{toctree}
+:maxdepth: 2
+
+01-core-architecture
+02-compression-algorithms
+03-ccr-mechanism
+04-integration-methods
+06-advanced-features
+07-quick-start
+08-insights-patterns
+```

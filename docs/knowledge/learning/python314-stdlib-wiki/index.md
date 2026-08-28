@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # Python 3.14 标准库教程 — 概述
 
 > 一句话摘要：本教程系统讲解 Python 3.14 标准库中六个与日常开发密切相关的模块——`contextlib`（上下文管理器）、`contextvars`（上下文变量）、`sys.monitoring`（事件监控）、`annotationlib`（注解内省）、`dataclasses`（声明式数据类）与 `traceback`（栈回溯诊断），帮助你在一个运行中的 Python 程序里可靠地管理动态上下文状态、程序元数据，并以更少样板定义数据结构、以更可控方式诊断运行时错误。
@@ -112,3 +108,12 @@ okf_version: "0.2"
 ## 六、章节导航
 
 - [下一章：版本背景与模块可用性](/concepts/01-version-prerequisites.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

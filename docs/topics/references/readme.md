@@ -1,4 +1,6 @@
 ---
+orphan: true
+
 id: "docs-topics-index"
 title: "Topics"
 category: "topics"

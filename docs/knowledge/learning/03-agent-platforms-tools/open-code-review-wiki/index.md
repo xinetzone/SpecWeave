@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # Open Code Review 完全指南 — 概述
 
 > 一句话摘要：本教程系统讲解阿里巴巴开源的 AI 代码审查 CLI 工具 Open Code Review（`ocr`）的安装、命令体系、规则配置、CI/CD 集成与高级用法，帮助开发者在命令行中以行级精度自动化审查 Git diff，尤其适用于 AI 辅助开发与流水线门禁场景。
@@ -316,3 +312,11 @@ ocr delegate rule src/main.go src/handler.go  # 查看特定文件的规则
 ---
 
 - [下一章：安装与配置](/concepts/01-installation.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

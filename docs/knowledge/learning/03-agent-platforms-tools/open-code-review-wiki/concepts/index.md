@@ -7,3 +7,15 @@
 - [审查规则系统](06-review-rules.md) — OCR 审查规则系统解析，涵盖四层优先级合并、ProjectRule 结构、Glob 匹配语法、内置默认排除、系统规则映射、文件过滤算法与 ocr rules check 调试命令。
 - [会话持久化、遥测与查看器](07-session-telemetry.md) — OCR 可观测性三件套详解，涵盖 JSONL 会话日志、Manifest 双边界状态机、会话恢复重放、OpenTelemetry Span/Metric 体系与嵌入式查看器。
 - [集成与扩展](08-integrations.md) — OCR 集成生态梳理，涵盖 CI/CD 流水线、Agent 工具链、委托模式、Agent Skill、VS Code 扩展与 MCP 服务器集成方式。
+
+```{toctree}
+:maxdepth: 2
+
+01-installation
+03-architecture
+04-llm-providers
+05-tools-mcp
+06-review-rules
+07-session-telemetry
+08-integrations
+```

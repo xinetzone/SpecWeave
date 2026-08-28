@@ -21,3 +21,24 @@
 | [子代理分析任务标准化指令](subagent-standardized-instruction.md) | L2-validated | Pattern |
 | [技术文章Wiki化批量生成模式](tech-article-to-wiki-batch-generation.md) | L2-validated | Pattern |
 | [三层修复闭环](three-layer-repair-closure.md) | L1-draft | Pattern |
+
+```{toctree}
+:maxdepth: 2
+
+batch-docs-to-okf-bundle-conversion
+content-funnel-analysis
+cross-framework-atomic-analysis
+dual-engine-uncertainty-certainty
+dual-layer-analysis-report
+error-blacklist-monotonic-evolution
+evaluation-driven-self-evolution
+integration-over-invention
+knowledge-compilation
+layered-chained-spec
+lowering-barriers-creates-markets
+offline-first-architecture
+responsibility-transfer-governance
+subagent-standardized-instruction
+tech-article-to-wiki-batch-generation
+three-layer-repair-closure
+```

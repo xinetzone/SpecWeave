@@ -359,3 +359,8 @@ CodeWhale 的长期愿景可以概括为：
 | **CI/CD** | 14 个工作流 | ci.yml、nightly.yml、release.yml 等 |
 | **国际化** | 15 种语言 | 含简体中文、繁体中文 |
 | **开源协议** | MIT | 版权 2024-2025 |
+
+```{toctree}
+:maxdepth: 2
+
+```

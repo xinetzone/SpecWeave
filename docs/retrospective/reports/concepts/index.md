@@ -8,3 +8,12 @@
 | [competitive-analysis](competitive-analysis/index.md) | 竞争分析与深度洞察报告 |
 | [knowledge](knowledge/index.md) | 知识沉淀报告 |
 | [milestone](milestone/index.md) | 里程碑复盘报告 |
+
+```{toctree}
+:maxdepth: 2
+
+adversarial-review/index
+competitive-analysis/index
+knowledge/index
+milestone/index
+```

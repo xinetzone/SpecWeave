@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # Cordis 时空可组合性框架 — 概述
 
 > 一句话摘要：本教程系统讲解 Cordis —— 一个处于活跃开发期的 TypeScript「时空可组合性（Spatiotemporal Composability）元框架」，以及支撑它的学术论文《A Programming Paradigm for Spatiotemporal Composability》。教程覆盖背景理论、monorepo 文件结构、核心抽象（Context/Service/Fiber/Registry）、可逆效应与响应式协同效应机制、插件系统、生命周期、声明式加载器、热更新、辅助包与使用示例。
@@ -226,3 +222,12 @@ graph TB
 ---
 
 - [下一章：背景理论与论文](/references/01-background-paper.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

@@ -1,4 +1,6 @@
 ---
+orphan: true
+
 okf_version: "0.2"
 type: "Reference"
 description: "导航索引文件"

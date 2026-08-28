@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 📚 知识库
 
 本目录汇集 SpecWeave 项目沉淀的**外部知识学习成果与技术研究**，包括对主流 AI Agent 平台/工具的系统学习 Wiki、AI 工程化深度分析、算法艺术探索，以及深度学习原子化设计研究。
@@ -15,8 +11,11 @@ okf_version: "0.2"
 :caption: 知识库
 :hidden:
 
-learning/03-agent-platforms-tools/README
 ai-engineering/index
+algorithmic-art/index
+engineering/index
+learning/index
+log
 ```
 
 | 分类 | 说明 | 入门推荐 |

@@ -1,5 +1,4 @@
-# Changelog
-
+# 变更日志
 ## 2026-08-22 **Initialization**
 
 - Initial OKF v0.2 Bundle creation

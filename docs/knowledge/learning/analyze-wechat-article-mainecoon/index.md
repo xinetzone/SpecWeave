@@ -1,6 +1,3 @@
----
-okf_version: "0.2"
----
 # MaineCoon 文章基本信息与核心观点
 
 > 本节为 [analysis-report.md](/references/analysis-report.md) 原子化拆分的第一部分，涵盖文章基本信息（Task 1 内容预处理）与核心观点提炼。
@@ -102,3 +99,11 @@ okf_version: "0.2"
 > "这三个问题,成本、速度和时长,过去整个行业一直陷在一个三角困境里面……MaineCoon 从架构层面解决了这个三角难题。它第一天就是奔着实时流式场景设计的,训练框架、模型架构到推理部署,几乎都重新设计了一遍。"
 
 该论点将 MaineCoon 的技术突破归因于"架构级重新设计"而非"参数堆砌或局部优化",强调了"第一天就奔着实时流式场景设计"的产品定位决定论。
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 🌐 通用知识
 
 本目录汇集与 SpecWeave 无直接耦合、但对智能体协作或开发哲学有滋养价值的**通用知识**，与同级 [技术文档](../tech/index.md) 形成双轨隔离。
@@ -10,6 +6,8 @@ okf_version: "0.2"
 :maxdepth: 2
 :caption: 目录
 
+references/index
+log
 ```
 
 ## 计划承载内容

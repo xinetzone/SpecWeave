@@ -8,3 +8,12 @@
 | [archive-content-value-assessment.md](/references/archive-content-value-assessment.md) | Reference | §5内容价值评估归档文档，评估行业启示价值与读者实用价值 |
 | [critical-review-draft.md](/references/critical-review-draft.md) | Report | 叙事视角批判性评论，含三大致命盲点、价值边界和从业者建议 |
 | [decision-summary.md](/references/decision-summary.md) | Reference | 决策速查卡，含4条公理、3个P0级发现和团队建议行动项 |
+
+```{toctree}
+:maxdepth: 2
+
+analysis-report
+archive-content-value-assessment
+critical-review-draft
+decision-summary
+```

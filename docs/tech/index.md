@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 📦 技术文档
 
 本目录集中承载 **SpecWeave 本项目** 的技术相关文档。全部项目技术资产（包含项目介绍、快速开始、核心功能、贡献指南与变更日志）均位于本目录下，与同级 [通用知识](../general/index.md)（方法论、哲学等）完全隔离。
@@ -10,15 +6,9 @@ okf_version: "0.2"
 :maxdepth: 2
 :caption: 技术文档
 
-concepts/intro
-concepts/quickstart
-concepts/features
-concepts/contributing
-concepts/changelog
-concepts/four-layer-logging-pattern
-references/release-onnx-quantized-v2
-references/release-onnx-pytorch-v1-1
-references/readme
+concepts/index
+references/index
+log
 ```
 
 :::{note}

@@ -1,4 +1,4 @@
-# Build Log — analyze-wechat-article-mainecoon
+# 变更日志
 
 ## 2026-08-22
 

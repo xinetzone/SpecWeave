@@ -307,3 +307,8 @@ CodeWhale 的 6 项关键设计决策构成了其架构基础：
 | 4 | **跨平台** | Windows/Linux/macOS 一致体验 | Rust 编译 + crossterm 跨平台终端 |
 | 5 | **最小依赖** | 运行时依赖极简 | 单个二进制文件，无外部运行时 |
 | 6 | **本地优先运行时 API** | 本地模型直连，无需密钥 | localhost 端口直连，支持 vLLM/SGLang/Ollama |
+
+```{toctree}
+:maxdepth: 2
+
+```

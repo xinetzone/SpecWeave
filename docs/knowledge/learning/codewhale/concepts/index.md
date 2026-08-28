@@ -19,3 +19,12 @@
 ## 深度研究
 
 * [设计哲学与行业洞察](topics/index.md) — 模型路由战略意义、硬编码安全 vs Prompt 工程、终端宣言、竞争格局与未来趋势判断
+
+```{toctree}
+:maxdepth: 2
+
+general/index
+tech/index
+topics/index
+comparison
+```

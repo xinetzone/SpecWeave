@@ -13,3 +13,21 @@
 - [11 与 Claude Code/Codex/MCP 生态互操作](11-ecosystem-interop.md) — 介绍 dsh 与 Claude Code hooks 桥接、Codex 一键配置、MCP 客户端支持、AGENTS.md 规则读取与任务委托共存策略。
 - [12 无头模式与 SDK 使用](12-headless-sdk.md) — 讲解无头模式一次性执行、Python SDK（自带 Node 运行时）、JSON-RPC 跨语言通信、ACP 服务端与嵌入应用场景。
 - [14 适用场景与风险提示](14-use-cases-limitations.md) — 提供适用与不适用场景决策表、v0.1 预览版八大风险声明、Windows 平台限制与版本跟踪升级建议。
+
+```{toctree}
+:maxdepth: 2
+
+01-introduction-background
+02-installation-setup
+03-quickstart-first-task
+04-four-modes
+05-architecture-everything-plugin
+06-agent-loop-events
+07-session-log-observability
+08-model-configuration
+09-tools-capability-seam
+10-plugin-development
+11-ecosystem-interop
+12-headless-sdk
+14-use-cases-limitations
+```

@@ -12,3 +12,16 @@
 | [06-installation-usage.md](/concepts/06-installation-usage.md) | Tutorial | 两种安装方式、可选依赖、Skill 位置优先级、基本示例 |
 | [07-extending-development.md](/concepts/07-extending-development.md) | Tutorial | 新增格式支持、修改生成行为、工具脚本详解 |
 | [08-transferable-patterns.md](/concepts/08-transferable-patterns.md) | Pattern | 五个可迁移工程模式：编译时付费、规范驱动、分层防御等 |
+
+```{toctree}
+:maxdepth: 2
+
+01-core-architecture
+02-extractor-deep-dive
+03-skill-md-spec
+04-token-economics
+05-security-model
+06-installation-usage
+07-extending-development
+08-transferable-patterns
+```

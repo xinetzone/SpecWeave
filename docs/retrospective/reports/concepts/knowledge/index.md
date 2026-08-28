@@ -16,3 +16,10 @@
 4. 报告文件命名格式：`<任务标识>-seven-concepts-analysis-<YYYYMMDD>.md`
 5. 新增报告后必须更新本README索引
 6. 归档后必须运行 `python .agents/scripts/check-links.py --path docs/retrospective/reports/knowledge/` 验证链接有效性
+
+```{toctree}
+:maxdepth: 2
+
+kicrd-seven-concepts-analysis-20260704
+libtv-wiki-knowledge-precipitation-20260704
+```

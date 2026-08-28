@@ -1,4 +1,6 @@
 ---
+orphan: true
+
 id: "docs-tech-index"
 title: "Tech"
 category: "tech"
@@ -38,8 +40,8 @@ stale_after: "2027-08-22"
 
 ## 🔗 相关资源
 
-- [🏠 返回上级：docs](../../README.md)
-- [📚 文档首页](../../README.md)
+- [🏠 返回上级：docs](../../index.md)
+- [📚 文档首页](../../index.md)
 
 ---
 

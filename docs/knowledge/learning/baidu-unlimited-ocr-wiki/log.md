@@ -1,5 +1,4 @@
-# Conversion Log
-
+# 变更日志
 ## 2026-08-22
 
 - Source: baidu-unlimited-ocr-wiki (9 files)

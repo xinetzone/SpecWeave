@@ -10,3 +10,14 @@
 | [04-insights-and-reliability.md](/concepts/04-insights-and-reliability.md) | Report | 五大洞见萃取（含四元组）与信息来源可靠性、时效性、技术专业性评估 |
 | [05-critique-and-methodology.md](/concepts/05-critique-and-methodology.md) | Report | 批判性思考、SpecWeave关联分析与七概念方法论F+V深度审视 |
 | [mainecoon-social-world-model-wiki.md](/concepts/mainecoon-social-world-model-wiki.md) | Concept | Social World Model知识库速查，含场景价值评估表、关键技术概念和竞争格局 |
+
+```{toctree}
+:maxdepth: 2
+
+01-argument-structure-analysis
+02-content-value-and-knowledge
+03-technical-breakthrough-analysis
+04-insights-and-reliability
+05-critique-and-methodology
+mainecoon-social-world-model-wiki
+```

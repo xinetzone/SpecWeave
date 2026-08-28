@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # AI Engineering 知识库
 
 本目录存放AI Agent工程化领域的知识库文档。
@@ -17,3 +13,10 @@ okf_version: "0.2"
 - **技能工具**：`.agents/skills/loop-engineering-cmd/`（设计验证与知识查询命令行工具）
 - **专家角色**：`.agents/roles/loop-engineering-expert/`（Harness架构师专家角色）
 - **模式库**：`docs/retrospective/reports/milestone/loop-engineering-patterns-20260801.md`（5个最佳实践+5个反模式）
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+log
+```

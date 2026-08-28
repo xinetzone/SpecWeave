@@ -1,6 +1,3 @@
----
-okf_version: "0.2"
----
 # Python 3.14 + CPython 源码深度指南 — 概述
 
 > 一句话摘要：Python 3.14 是自 Python 3.0 以来最具变革性的版本——自由线程（无 GIL）正式进入官方支持阶段、Copy-and-Patch JIT 随官方二进制分发、t-strings 模板字符串、延迟注解求值、多解释器标准库支持、Zstandard 压缩内建等重磅特性同时落地。本教程以官方文档和 [CPython v3.14.0 源码](https://github.com/python/cpython/tree/v3.14.0) 为根基，从语言特性、内部架构到迁移实战系统讲解。
@@ -230,3 +227,12 @@ timeline
 
 - 上一章：本章为教程概述（00）
 - [下一章：语言新特性](/concepts/01-language-features.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

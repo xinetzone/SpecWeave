@@ -6,7 +6,7 @@ completion_date: "2026-08-20"
 type: "Report"
 description: "torch-dev 镜像构建里程碑复盘报告"
 status: "stable"
-source: "d:\spaces\SpecWeave\apps\docker-images\devcontainer-base\variants\torch-dev（Dockerfile + shared/lib/install-helpers.sh + shared/lib/verify.sh）"
+source: 'd:\spaces\SpecWeave\apps\docker-images\devcontainer-base\variants\torch-dev（Dockerfile + shared/lib/install-helpers.sh + shared/lib/verify.sh）'
 milestone-name: "torch-dev 镜像构建与 files.pythonhosted.org IPv6 下载问题修复"
 time-range: "2026-08-20"
 methodology: "七概念方法论（R→I→E→V→C 链路，里程碑复盘场景）"

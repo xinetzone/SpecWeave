@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 深度学习原子化设计指南
 
 ## 目录
@@ -1058,3 +1054,10 @@ if __name__ == "__main__":
 **参考来源**: 
 - `ai-agent-atomic-design-analysis.md`
 - `deep-learning-atomic-components.md`
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+log
+```

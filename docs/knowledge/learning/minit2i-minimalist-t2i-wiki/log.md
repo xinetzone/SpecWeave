@@ -1,5 +1,4 @@
-# Conversion Log
-
+# 变更日志
 ## 2026-08-22
 
 - Source: minit2i-minimalist-t2i-wiki (8 files)

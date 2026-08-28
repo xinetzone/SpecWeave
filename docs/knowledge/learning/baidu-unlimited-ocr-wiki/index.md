@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 百度 Unlimited-OCR 长文档解析技术完全指南 — 概述
 
 > 一句话摘要：百度开源的Unlimited-OCR以3B总参数/500M激活参数的MoE小模型，通过R-SWA非对称注意力机制模仿人类"抄书"模式，在OmniDocBench上以93.23%/93.92%的SOTA成绩反超235B大模型，实现40+页文档"一气呵成"解析且推理速度恒定（TPS 7847领先35%），是机制创新远胜参数堆砌的典范。
@@ -172,3 +168,11 @@ flowchart TB
 ---
 
 - [下一章：核心架构与设计理念](/concepts/01-core-architecture.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

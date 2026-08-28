@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 🔄 复盘与模式库
 
 本目录汇集 SpecWeave 项目**自身演进过程中的复盘报告与可复用模式沉淀**。通过七概念方法论（R-I-E-C-A-F-V）编排，将实践经验提炼为经过质量门验证的可迁移模式。
@@ -15,8 +11,9 @@ okf_version: "0.2"
 :caption: 复盘与模式
 :hidden:
 
-patterns/methodology-patterns/README
-reports/milestone/README
+patterns/index
+reports/index
+log
 ```
 
 | 板块 | 说明 | 入门推荐 |

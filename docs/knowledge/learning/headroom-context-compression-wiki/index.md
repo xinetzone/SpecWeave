@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # Headroom AI Agent上下文压缩中间件 — 概述
 
 > 一句话摘要：Headroom是一个夹在AI Agent与LLM之间的开源上下文压缩中间件，通过内容感知路由选择6种压缩算法，配合CCR可逆机制实现10144→1260 token（87.6%压缩率）且质量不降反升，支持4种零成本接入方式，是AI Coding场景下节省Token成本的利器。
@@ -126,3 +122,11 @@ AI Agent → [工具输出/命令结果/代码/RAG/文件/对话历史] → Head
 ---
 
 - [下一章：核心架构与设计理念](/concepts/01-core-architecture.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

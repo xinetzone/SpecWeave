@@ -101,9 +101,11 @@ SpecWeave 是一套给 AI 智能体使用的"员工手册"：以 AGENTS.md 为�
 :caption: 文档导航
 :hidden:
 
-tech/index
-knowledge/index
-retrospective/index
 general/index
+knowledge/index
+refactor/index
+retrospective/index
+tech/index
 topics/index
+log
 ```

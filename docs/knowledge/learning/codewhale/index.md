@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # CodeWhale 知识库
 
 > **"潜入深海，你不必亲自下潜。"**
@@ -78,3 +74,10 @@ graph TB
 | [版本演进记录](/concepts/tech/changelog.md) | 关注者 | 10 分钟 |
 | [终端AI编程助手领域知识](/concepts/general/domain/index.md) | 架构师 | 25 分钟 |
 | [设计哲学与行业洞察](/concepts/topics/index.md) | 研究者 | 30 分钟 |
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+log
+```

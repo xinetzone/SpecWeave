@@ -6,3 +6,14 @@
 - [04-harness-engineering.md](/concepts/04-harness-engineering.md) — 第三站：Harness Engineering - 关键一跃（Concept）
 - [05-loop-engineering.md](/concepts/05-loop-engineering.md) — 第四站：Loop Engineering（Concept）
 - [06-insights-patterns.md](/concepts/06-insights-patterns.md) — 深度洞察与可复用方法论（Pattern）
+
+```{toctree}
+:maxdepth: 2
+
+01-bottleneck-migration
+02-prompt-engineering
+03-context-engineering
+04-harness-engineering
+05-loop-engineering
+06-insights-patterns
+```

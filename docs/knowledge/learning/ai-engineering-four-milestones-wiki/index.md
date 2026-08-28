@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 概述与学习目标
 
 ## 背景
@@ -59,3 +55,11 @@ AI 圈造新词的速度，已经超过学习速度。Prompt Engineering 刚整�
 | 07 | 总结、FAQ与资源 | [/references/07-summary-faq-resources.md](/references/07-summary-faq-resources.md) |
 
 ← 返回 [索引页](/references/ai-engineering-four-milestones-wiki.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```

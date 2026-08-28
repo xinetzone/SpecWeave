@@ -130,3 +130,35 @@ templates_path = ["_templates"]
 
 
 napoleon_use_ivar = True
+
+
+# --- frontmatter 裸日期/时间戳自动加引号 -------------------------------
+# myst_parser 会把无引号的 YAML 日期解析为 datetime.date 对象，进而在
+# dict_to_fm_field_list 中 json.dumps 时报 "Object of type date is not
+# JSON serializable"。此钩子在解析前为 frontmatter 内的裸日期/时间戳补上
+# 双引号，避免逐个文件修改。覆盖行级（`stale_after: 2027-02-23`）与
+# 嵌套 map（`at: 2026-08-23 }` / `at: 2026-08-23T10:00:00+08:00 }`）两种场景。
+import re as _re
+
+_ISO_DATETIME_RE = _re.compile(
+    r"([A-Za-z_][A-Za-z0-9_-]*\s*:\s*)"
+    r"(\d{4}-\d{2}-\d{2}(?:[Tt]\d{2}:\d{2}:\d{2}(?:[+-]\d{2}:\d{2}|Z)?)?)"
+)
+
+_FRONTMATTER_DELIM = _re.compile(r"^(?:---|\+\+\+|\.\.\.)\s*$", _re.MULTILINE)
+
+
+def _quote_frontmatter_dates(app, docname, source):
+    """source-read 钩子：为 frontmatter 块内无引号的裸日期/时间戳补上双引号。"""
+    text = source[0]
+    delims = list(_FRONTMATTER_DELIM.finditer(text))
+    if len(delims) < 2:
+        return
+    fm = text[delims[0].end(): delims[1].start()]
+    quoted = _ISO_DATETIME_RE.sub(r'\1"\2"', fm)
+    if quoted != fm:
+        source[0] = text[: delims[0].end()] + quoted + text[delims[1].start():]
+
+
+def setup(app):
+    app.connect("source-read", _quote_frontmatter_dates)

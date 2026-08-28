@@ -32,3 +32,24 @@
 2. 报告frontmatter必须包含id、date、type、source字段
 3. G1-G4质量门必须全部通过才可归档
 4. 新增报告后必须更新本README索引
+
+```{toctree}
+:maxdepth: 2
+
+retrospective-agency-deep-learning-20260706/index
+analyze-wechat-article-eeb14-retrospective-20260704
+four-engineering-concepts-wiki-retrospective-20260704
+harness-engineering-wiki-retrospective-20260803
+karpathy-llm-wiki-analysis-retrospective-20260707
+libtv-wiki-retrospective-20260704
+loop-engineering-milestone-acceptance-20260801
+loop-engineering-patterns-20260801
+octo-platform-wiki-retrospective-20260704
+okf-ecosystem-milestone-retrospective-20260819
+okf-python314-stdlib-optimization-retrospective-20260818
+retrospective-hermes-specweave-integration-20260812
+session-atomic-commit-insight-extraction-20260706
+specweave-knowledge-scaling-milestone-20260801
+torch-dev-mirror-build-retrospective-20260820
+web-content-learning-notes-patterns-20260801
+```

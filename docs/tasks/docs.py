@@ -1,5 +1,9 @@
-#!/usr/bin/env python3
-"""Invoke-only tasks for building the Sphinx documentation."""
+"""Sphinx 文档构建任务——自包含实现，不依赖 invocations。
+
+提供 help(default)/build/html/clean/linkcheck/doctest 任务，
+使用 sphinx-build -M make-mode 语义。
+"""
+from __future__ import annotations
 
 import os
 import shlex
@@ -70,12 +74,12 @@ def help(
 @task
 def build(
     _ctx,
-    target: str,
+    target: str = "html",
     sourcedir: str = ".",
     builddir: str = "_build",
     opts: str = "",
 ) -> None:
-    """Build docs via ``sphinx-build -M``."""
+    """Build docs via ``sphinx-build -M`` (default target: html)."""
     _run_sphinx_make_mode(
         target=target,
         sourcedir=sourcedir,

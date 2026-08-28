@@ -1,8 +1,3 @@
----
-okf_version: "0.2"
----
-
-
 # The Agency 完全指南 — 概述
 
 > 一句话摘要：本教程系统讲解 AI 专家角色库项目 **The Agency（agency-agents）**——一个包含 230+ 个专职 AI Agent、横跨 17 个部门的"AI 梦之队"，教你如何通过一套 Markdown 角色文件，在 Claude Code、Cursor、Codex 等 16 种 AI 编程工具中调用这些各怀绝技的专家，让它们像真实团队一样协作交付成果。
@@ -176,3 +171,12 @@ The Agency 的每个 Agent 都遵循统一的设计哲学，以下是构成其�
 
 - 上一章：本章为教程概述（00）
 - [下一章：文件夹架构](/concepts/01-architecture.md) →
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

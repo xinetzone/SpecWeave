@@ -1,4 +1,6 @@
 ---
+orphan: true
+
 id: "docs-general-index"
 title: "General"
 category: "general"

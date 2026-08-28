@@ -10,3 +10,16 @@
 | [策略与运行手册](/concepts/07-strategy-playbooks.md) | Pattern | — |
 | [最佳实践指南](/concepts/09-best-practices.md) | Pattern | — |
 | [新开发者快速上手演示](/concepts/quickstart-demo-guide.md) | Tutorial | — |
+
+```{toctree}
+:maxdepth: 2
+
+01-architecture
+02-agent-format
+03-roster-divisions
+04-scripts-tooling
+05-integrations
+07-strategy-playbooks
+09-best-practices
+quickstart-demo-guide
+```

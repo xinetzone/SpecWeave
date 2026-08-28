@@ -9,3 +9,13 @@
 | [03-pr-workflow.md](/concepts/03-pr-workflow.md) | Pull Request 全生命周期管理：创建、审查、合并、关闭及 Fork 工作流 |
 | [04-actions-cicd.md](/concepts/04-actions-cicd.md) | GitHub Actions 工作流管理、运行追踪、缓存清理及密钥变量配置 |
 | [05-advanced-usage.md](/concepts/05-advanced-usage.md) | API 调用、别名系统、扩展管理、搜索语法、标签管理、规则集及 JSON 输出 |
+
+```{toctree}
+:maxdepth: 2
+
+01-installation
+02-basic-commands
+03-pr-workflow
+04-actions-cicd
+05-advanced-usage
+```

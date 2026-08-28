@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # DeepSeek Harness Wiki 总览导航
 
 ## 教程简介
@@ -102,3 +98,11 @@ okf_version: "0.2"
 ---
 
 → [01 项目介绍与背景](/concepts/01-introduction-background.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+references/index
+log
+```
