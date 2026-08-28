@@ -75,6 +75,33 @@ F-003: <模块A> 中的 <对象> 被 <模块B> 的 <方法> 引用，传递 <数
 3. 生成 examples/ 示例文档
 4. **最后生成各级 index.md**（根index含okf_version frontmatter，子目录index无frontmatter）
 
+### E阶段：index.md 生成（最后一步）
+
+```
+请为 `<bundle路径>` 生成各级 index.md 导航文件（所有内容文档已定稿）。
+
+【硬性规则】每个 index.md 必须同时包含：
+1. 人类可读导航——表格/列表链接（给读者）
+2. `{toctree}` 指令块（给 Sphinx/CI）——缺失即导航断头，CI 门禁会报"未收录(不可达)"
+
+【各级 toctree 收录范围】
+- 根 index.md（含 okf_version frontmatter）：concepts/index、examples/index、references/index、log
+- 子目录 index.md（无 frontmatter）：本目录全部内容文件的 stem（按文件名排序，跳过 index.md/readme.md）
+- 分组 index.md：各束的 <bundle>/index
+
+【toctree 块格式】
+```{toctree}
+:hidden:
+:maxdepth: 2
+
+<条目1>
+<条目2>
+```
+
+【生成后验证】运行 `python scripts/check-toctrees.py`（或 `invoke gates.toctrees`），
+必须输出"toctree 检查通过"才算完成；报"未收录(不可达)"说明某级 index 缺 toctree 或收录不全。
+```
+
 ## V阶段：独立审查
 
 ```
@@ -85,7 +112,7 @@ F-003: <模块A> 中的 <对象> 被 <模块B> 的 <方法> 引用，传递 <数
 3. 链接检查：所有交叉链接的目标文件是否存在（使用Grep/Glob验证）
 4. 事实溯源检查：对文档中引用的每个类名/方法名，用Grep在 `<源码路径>` 中验证存在性——这是最关键的检查项
 5. 代码示例检查：代码示例语法是否正确，API调用是否匹配源码中的签名
-6. Index检查：各级index.md是否完整列出所有对应目录的文件，子目录index不应有frontmatter
+6. Index检查：各级index.md是否完整列出所有对应目录的文件，子目录index不应有frontmatter；**每个index.md（根+子目录+分组）必须含`{toctree}`块**——只有表格链接没有toctree块即导航断头，须追加隐藏toctree收录本目录全部内容文件
 7. 虚构API检测：对文档中出现的所有import语句和类实例化，逐一在源码中Grep验证
 
 输出检查报告，按严重程度（🔴虚构API/🟡链接断裂/🟢格式问题）列出发现的问题，然后逐一修复。
