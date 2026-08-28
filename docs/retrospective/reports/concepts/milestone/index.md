@@ -18,6 +18,7 @@
 | milestone-okf-python314-stdlib-optimization-20260818 | OKF 工具链基于 Python 3.14 标准库优化 | 2026-08-18 | ✅ 已完成 | 七概念R→I→E→C | 22条客观事实、3条核心洞察(防御分支覆盖率瓶颈+monkey-patch迁移+slots零代价)、1个可复用模式(标准库系统优化四步法)、G1-G4质量门全部通过 | [okf-python314-stdlib-optimization-retrospective-20260818.md](okf-python314-stdlib-optimization-retrospective-20260818.md) |
 | milestone-okf-ecosystem-20260819 | OKF 生态整体建设 | 2026-08-19 | ✅ 已完成 | 七概念R→I→E→C | 30条客观事实、3条核心洞察(vendor固化转折点+索引先行收敛+子里程碑独立闭环)、1个可复用模式(规范→固化→自建→收敛四层生态建设法)、G1-G4质量门全部通过 | [okf-ecosystem-milestone-retrospective-20260819.md](okf-ecosystem-milestone-retrospective-20260819.md) |
 | milestone-torch-dev-mirror-build-20260820 | torch-dev 镜像构建与 files.pythonhosted.org IPv6 下载问题修复 | 2026-08-20 | ✅ 已完成 | 七概念R→I→E→V→C | 25条客观事实、3条核心洞察(下载层治标+验证层兜底/合并语义静默降级/Copy补丁漂移)、1个可复用模式(E-1 主索引+备用源双通道)、V对抗审查4视角8实测揪出P1静默降级、4项原子行动项，G1-G4+V门全部通过 | [torch-dev-mirror-build-retrospective-20260820.md](torch-dev-mirror-build-retrospective-20260820.md) |
+| milestone-jira-skill-wiki-vendor-sync-20260828 | Jira Skill Wiki 供应商源码同步 | 2026-08-28 | ✅ 已完成 | 七概念R→I→E→V→C | 28条客观事实、3条核心洞察(信源持久性盲区/计数完整性盲区/规范演进被动债)、1个可迁移模式(信源稳定性门)、V对抗审查4视角12条意见采纳4条、4项原子行动项，G1-G4+V门全部通过 | [jira-skill-wiki-vendor-sync-milestone-20260828.md](jira-skill-wiki-vendor-sync-milestone-20260828.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -40,6 +41,7 @@ retrospective-agency-deep-learning-20260706/index
 analyze-wechat-article-eeb14-retrospective-20260704
 four-engineering-concepts-wiki-retrospective-20260704
 harness-engineering-wiki-retrospective-20260803
+jira-skill-wiki-vendor-sync-milestone-20260828
 karpathy-llm-wiki-analysis-retrospective-20260707
 libtv-wiki-retrospective-20260704
 loop-engineering-milestone-acceptance-20260801
