@@ -31,10 +31,12 @@ from .interact import exec_task, logs, shell
 from .manage import clean, run, status, stop
 from .utils import (
     MIRROR_CHOICES,
+    check_runtime_ready,
     container_exists,
     container_running,
     detect_runtime,
     generate_random_string,
+    normalize_path_str,
     run_cmd,
     to_posix_path,
 )
@@ -44,6 +46,7 @@ __all__ = [
     "MIRROR_CHOICES",
     "PodmanNotFound",
     "build",
+    "check_runtime_ready",
     "clean",
     "compose_available",
     "compose_build",
@@ -60,6 +63,7 @@ __all__ = [
     "get_client",
     "is_compose_ready",
     "logs",
+    "normalize_path_str",
     "run",
     "run_cmd",
     "sdk_available",
