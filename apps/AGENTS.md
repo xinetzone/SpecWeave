@@ -57,6 +57,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | samples/ | cow-demo | —（遵循根规范） | ❌ 无 | 零拷贝COW读写分离模式C++示例框架 |
 | samples/ | short-video-site | —（遵循根规范） | ❌ 无 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | samples/ | zleap-workspace-first-prototype | —（遵循根规范） | ❌ 无 | 工作区首个原型（多模型路由） |
+| samples/ | serial-camera-controller | —（遵循根规范） | ❌ 无 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 | 根级 | shared | —（遵循根规范） | ❌ 无 | 跨应用共享资源目录 |
 | 根级 | tests | —（遵循根规范） | ❌ 无 | 测试用例目录 |
 
@@ -234,6 +235,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/samples/cow-demo/ | 应用自治（遵循根规范） | ✅ 是 | 零拷贝COW读写分离模式C++示例框架 |
 | apps/samples/short-video-site/ | 应用自治（遵循根规范） | ✅ 是 | ReelVibe 短视频网站（AI全流程开发Demo） |
 | apps/samples/zleap-workspace-first-prototype/ | 应用自治（遵循根规范） | ✅ 是 | 工作区首个原型（多模型路由） |
+| apps/samples/serial-camera-controller/ | 应用自治（遵循根规范） | ✅ 是 | 串口控制USB摄像头抓图/录像（CH340+OpenCV+pyserial，双协议三线程架构） |
 
 > **与 projects/vendor 的本质区别**：apps/ 下的所有资产都标记为「✅ 可直接修改」，因为它们都是主仓库的一部分；而 projects/vendor 是 git submodule，标记为「❌ 不可直接修改」。
 
