@@ -133,6 +133,7 @@ date: "2026-07-09"
 | [Skill迁移位置治理：统一Skill存放位置的五步标准化流程](./skill-migration-position-governance.md) | Skill迁移位置治理：统一Skill存放位置的五步标准化流程 | L1 |  |
 | [规范可发现性保障模式（Spec Discoverability Guarantee）](./spec-discoverability-guarantee.md) | 规范可发现性保障模式（Spec Discoverability Guarantee） | L1 |  |
 | [规范层纵深防御模型：安全设计前置](./spec-level-defense-in-depth.md) | 规范层纵深防御模型：安全设计前置 | L2 |  |
+| [机制组合互斥预检：双保险堆叠前四查](./mutual-exclusion-composability-precheck.md) | 机制组合互斥预检：双保险堆叠前四查（查作用层/互斥声明/最小组合探针/解锁路径） | L1 |  |
 | [Spec引用验证通用原则（Specification Reference Validation Pattern）](./spec-reference-validation.md) | Spec引用验证通用原则（Specification Reference Validation Pattern） | L2 |  |
 | [规范三同步原则：新规范落地必须完成的三个同步动作](./spec-triple-sync.md) | 新规范发布后必须立即完成三个同步动作：①顶层开发规范引用 ②导航入口更新 ③存量迁移示范，三个动作缺一不可，解决"规范悬空"问题——规范写了但没人看、看到了不会用、想用但没示例 | L2 | `规范落地` `治理策略` `文档索引` |
 | [强约束语言自检启发式](./strong-constraint-self-check.md) | 强约束语言自检启发式 | L1 |  |
