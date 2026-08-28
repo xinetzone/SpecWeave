@@ -12,7 +12,7 @@
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 36 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 52 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 49 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
-| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 138 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
+| [governance-strategy](#governance-strategy--治理与优先级策略) | 治理与优先级策略 | 139 | 体系治理、优先级排序、问题解决、规范防护、方法论构造性验证 |
 | [ai-collaboration](#ai-collaboration--ai协作与提示词设计) | AI协作与提示词设计 | 70 | AI Skill设计、人机协作模式、提示词工程、输出行为规范、团队共享AI同事、主动介入Agent、安全信任设计、源码锚点二次校验、契约文档协调中枢、模块级agents扩展、references渐进式披露、Gotchas领域特化、视觉通用操作、输出格式-协作能力映射、生态壁垒评估、诚实承认局限性信任构建 |
 | [creative-design](#creative-design--创意与设计原则) | 创意与设计原则 | 10 | 创意生成、视觉设计、认知锚点、角色驱动设计 |
 | [product-growth](#product-growth--产品开发与竞争策略) | 产品开发与竞争策略 | 44 | 产品定位、赛事增长、竞争策略、交付流水线、硬件产品设计、To B合规策略、三层商业模式、IoT技术架构、本地保底信任、双版本矩阵、AI转型MCP路径、专业能力平民化、垂直场景AI三要素、全链路闭环、风控前置、爆款复刻、双模式分层、多触点AIDA转化 |
@@ -271,6 +271,7 @@
 | [dual-mode-submodule-governance.md](governance-strategy/dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |
 | [dual-quality-gate-subagent.md](governance-strategy/dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |
 | [dual-track-metadata-consistency.md](governance-strategy/dual-track-metadata-consistency.md) | 双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步 | L1 |
+| [dual-track-progressive-evolution.md](governance-strategy/dual-track-progressive-evolution.md) | 双轨演进制：在依赖生态不成熟阶段内部化实现先行、外部依赖后置，按就绪度渐进切换轨道 | L1 |
 | [duplication-interest-model.md](governance-strategy/duplication-interest-model.md) | 重复代码利息模型：复制一时爽，维护火葬场 | L1 |
 | [elastic-workflow-classification.md](governance-strategy/elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |
 | [entropy-law-automation-principle.md](governance-strategy/entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 |

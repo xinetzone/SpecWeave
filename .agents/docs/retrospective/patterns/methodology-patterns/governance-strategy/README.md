@@ -52,6 +52,7 @@ date: "2026-07-09"
 | [双模式子模块治理框架：分类管理 Git Submodule](./dual-mode-submodule-governance.md) | 双模式子模块治理框架：分类管理 Git Submodule | L2 |  |
 | [子代理双重质量门模式（事前约束+事后校验）](./dual-quality-gate-subagent.md) | 子代理双重质量门模式（事前约束+事后校验） | L2 |  |
 | [双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步](./dual-track-metadata-consistency.md) | 双轨元数据一致性模式：Frontmatter-正文漂移与TOML双星同步 | L1 | `metadata` `frontmatter` `toml` |
+| [双轨演进制：依赖成熟度渐进切换模式](./dual-track-progressive-evolution.md) | 双轨演进制：在依赖生态不成熟阶段内部化实现先行、外部依赖后置，按就绪度渐进切换轨道 | L1 | `dual-track` `dependency-maturity` `monorepo` |
 | [重复代码利息模型：复制一时爽，维护火葬场](./duplication-interest-model.md) | 重复代码有利息成本：复制时节省几秒钟本金，但每次修改需同步改所有副本付利息，遗漏副本导致bug付违约金。维护成本与需要同步修改的位置数量成正比。决策矩阵：重复2次+逻辑可能变→应该提取；重复≥3次→必须提取。 | L1 | `重复代码` `DRY` `技术债务` |
 | [弹性流程分级：按变更风险选择流程路径](./elastic-workflow-classification.md) | 弹性流程分级：按变更风险选择流程路径 | L2 |  |
 | [熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos）](./entropy-law-automation-principle.md) | 熵增定律自动化第一性原理（Entropy Law: Automation Against Chaos） | L2 | `第一性原理` `熵增定律` `自动化` |

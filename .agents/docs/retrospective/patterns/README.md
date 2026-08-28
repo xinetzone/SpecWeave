@@ -117,14 +117,15 @@ skills = []
 
 | 目录 | 数量 | L1 | L2 | L3 | L4 |
 |------|------|----|----|----|----|
-| architecture-patterns/ | 52 | 9 | 11 | 3 | 0 |
-| code-patterns/ | 144 | 6 | 6 | 0 | 2 |
+| architecture-patterns/ | 77 | 9 | 11 | 3 | 0 |
+| code-patterns/ | 207 | 6 | 6 | 0 | 2 |
 | process-patterns/ | 11 | 9 | 2 | 0 | 0 |
-| methodology-patterns/ | 423 | 69 | 45 | 11 | 2 |
+| methodology-patterns/ | 478 | 70 | 45 | 11 | 2 |
 | analysis-cards/ | 3 | 3 | 0 | 0 | 0 |
-| **合计** | **619** | **84** | **62** | **14** | **4** |
+| **合计** | **762** | **85** | **62** | **14** | **4** |
 
 > 注：统计数据为合并后结果，建议执行 pattern-maturity.py check-index --fix 重新生成精确数字。
+> - xuanspace 全面复盘洞察萃取（1个L1方法论模式入库+验证计划归档）：governance-strategy/`dual-track-progressive-evolution`（L1，双轨演进制：依赖成熟度渐进切换，内部化实现先行+外部依赖后置+契约测试先行，含4反模式+2跨场景迁移，验证计划已归档待第二案例升级L2）
 > - 《帛书老子注读》PDF转OKF-MyST Wiki里程碑复盘（1个L1流程模式入库）：process-patterns/`pdf-book-to-okf-wiki`（L1，四阶段工作流：环境准备→结构探查→工具降级链→清洗转换→确定性校验→Sphinx构建验证，含三层忠实边界+3反模式+已知边界）
 > - caffe-ffi 内存调试日志体系复盘（3个L2代码模式入库+2个现有模式更新）：code-patterns/`zero-copy-tensor-verification`（L2，四维验证：类型/形状→写入回读→拷贝隔离→持久共享，2+案例含反模式）、`resource-counter-primitive-binding`（L2，RAII资源计数器最低层原语绑定，原子操作+调用点日志，杜绝高层遗漏）、`ffi-memory-leak-autouse-fixture`（L2，pytest autouse fixture基线对比双维度泄漏检测，强制GC+opt-out）；code-patterns/`cross-platform-backtrace-leak-diagnosis`（candidate→validated，去除候选标记，补充交叉引用）、`cross-language-three-layer-logging`（统一maturity格式为L2，补充与内存调试三模式交叉引用）
 > - XMNN pyproject.toml依赖审计复盘（1个L1流程模式入库+1个L1→L2代码模式升级+规范集成）：process-patterns/`python-wheel-dependency-audit-wda4`（L1，WDA-4四步法：静态扫描→动态补全→格式验证→端到端验证）；code-patterns/`compiled-wheel-runtime-image-build`（L1→L2，补充依赖最小化策略/SSOT原则/2个反模式，3案例验证）；已集成至development-standards.md新增"Python Wheel打包与依赖管理规范"章节
