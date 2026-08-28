@@ -111,6 +111,7 @@ L1 宿主层  → L2 机器层矛盾 → L3 提权核实 → L4 可写层解剖
 
 ## 关联文档
 
+- 可执行 SOP：[nested-disk-blindspot-diagnosis-sop.md](nested-disk-blindspot-diagnosis-sop.md)（本模式的四层下钻可操作细化，含判定阈值与故障排查）
 - 复盘报告：[retrospective-c-drive-vhdx-recovery-20260828](../../reports/environment-setup/retrospective-c-drive-vhdx-recovery-20260828/README.md)（洞察 I-1）
 - 预防模式：[nested-engine-storage-externalize.md](nested-engine-storage-externalize.md)（诊断发现黑洞后如何避免复发）
 - 治理模式：[vhdx-two-phase-recovery-sop.md](vhdx-two-phase-recovery-sop.md)（诊断定位后如何物理回收）
