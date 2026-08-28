@@ -3,14 +3,10 @@ type: Example
 title: "工作流自动化示例"
 description: "演示意图动词、多步转换路径、QA上下文聚合、版本管理等高级工作流自动化模式。"
 tags: ["jira", "workflow", "automation", "intent-verbs", "qa", "transition"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/api-reference.md"
     type: "source-code"

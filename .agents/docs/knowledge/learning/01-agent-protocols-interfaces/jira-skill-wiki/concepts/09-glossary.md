@@ -3,14 +3,10 @@ type: Concept
 title: "术语表与资源"
 description: "Jira 集成插件核心术语表与参考资料索引，包含 22 个核心术语的中文翻译与通俗解释，以及插件源码、官方语法与 JQL 参考等资源汇总。"
 tags: ["jira", "glossary", "reference", "terminology", "resources"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

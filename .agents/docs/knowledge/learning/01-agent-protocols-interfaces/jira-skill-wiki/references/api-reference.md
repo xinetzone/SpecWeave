@@ -3,25 +3,21 @@ type: Reference
 title: "CLI API 参考信源"
 description: "jira-communication 所有CLI脚本的子命令、选项和参数完整登记"
 tags: ["jira", "cli", "api", "reference"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/skills/jira-communication/scripts/core/"
+  - resource: "file:///d:/AI/vendor/jira-skill/skills/jira-communication/scripts/core/"
     type: "source-code"
     trust: high
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/skills/jira-communication/scripts/workflow/"
+  - resource: "file:///d:/AI/vendor/jira-skill/skills/jira-communication/scripts/workflow/"
     type: "source-code"
     trust: high
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/skills/jira-communication/scripts/utility/"
+  - resource: "file:///d:/AI/vendor/jira-skill/skills/jira-communication/scripts/utility/"
     type: "source-code"
     trust: high
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/skills/jira-communication/scripts/lib/"
+  - resource: "file:///d:/AI/vendor/jira-skill/skills/jira-communication/scripts/lib/"
     type: "source-code"
     trust: high
 ---
@@ -361,9 +357,13 @@ tempo-account.py account create|link ...
 
 ### changelog.py
 
-- `extract_status_transitions(issue) -> list[dict]`
-- `compute_time_in_status(...) -> dict[str, timedelta]`
-- `classify_transition(transition, status_sets) -> TransitionKind`
+- `parse_jira_datetime(s: str) -> datetime` — 解析 Jira ISO 8601 日期时间字符串
+- `extract_status_transitions(issue: dict) -> list[dict]` — 从工单数据提取状态变更历史
+- `compute_time_in_status(issue_created: datetime, transitions: list[dict], current_status: str, now: datetime) -> dict[str, timedelta]` — 计算各状态停留时间
+- `extract_status_transitions_with_authors(issue: dict) -> list[dict]` — 提取状态变更记录（含作者信息）
+- `classify_transition(transition: dict, status_sets: dict) -> TransitionKind` — 分类转换类型
+- `find_transition_window(transitions: list[dict], target_index: int) -> tuple[datetime | None, datetime | None]` — 查找指定转换的时间窗口
+- `format_timedelta(delta: timedelta) -> str` — 将 timedelta 格式化为人类可读字符串
 - TransitionKind: into_qa, reject, forward, resolved, out, other
 
 ### errors.py

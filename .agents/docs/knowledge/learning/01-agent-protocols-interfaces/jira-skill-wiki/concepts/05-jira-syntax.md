@@ -3,14 +3,10 @@ type: Concept
 title: "jira-syntax 技能详解"
 description: "jira-syntax 技能完整详解，涵盖 Jira wiki 标记与 Markdown 的语法对照、Bug/特性模板、提交前语法校验清单与常见错误。"
 tags: ["jira", "jira-syntax", "wiki-markup", "templates", "validation", "markdown"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

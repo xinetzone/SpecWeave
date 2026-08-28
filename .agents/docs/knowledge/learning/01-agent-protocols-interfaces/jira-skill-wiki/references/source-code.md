@@ -3,22 +3,18 @@ type: Reference
 title: "源码结构信源"
 description: "jira-skill v3.29.0 源码目录结构、模块划分和版本信息登记"
 tags: ["jira", "source-code", "architecture", "reference"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/README.md"
+  - resource: "file:///d:/AI/vendor/jira-skill/README.md"
     type: "source-code"
     trust: high
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/pyproject.toml"
+  - resource: "file:///d:/AI/vendor/jira-skill/pyproject.toml"
     type: "source-code"
     trust: high
-  - resource: "file:///d:/.chaos/libs/tests/jira-skill/.claude-plugin/plugin.json"
+  - resource: "file:///d:/AI/vendor/jira-skill/.claude-plugin/plugin.json"
     type: "source-code"
     trust: high
 ---
@@ -59,8 +55,8 @@ jira-skill/
 │       ├── references/           # 2个参考文档
 │       ├── templates/            # 2个模板文件
 │       └── scripts/              # shell 验证脚本
-├── tests/                        # 23个测试文件
-├── pyproject.toml
+├── tests/                        # 24个 test_*.py + conftest.py（共25个 Python 文件）
+├── pyproject.toml                # 仅含 ruff/bandit 工具配置，无 [project] 表
 └── README.md
 ```
 

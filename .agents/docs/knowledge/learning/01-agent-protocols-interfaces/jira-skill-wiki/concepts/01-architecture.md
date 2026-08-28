@@ -3,14 +3,10 @@ type: Concept
 title: "架构设计：双技能插件"
 description: "Jira 集成插件架构设计详解，涵盖系统总览、目录结构、双技能组件划分、三层脚本体系、数据流与四项关键设计决策。"
 tags: ["jira", "architecture", "plugin", "skill", "directory-structure", "data-flow"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"
@@ -53,7 +49,7 @@ jira-skill/
 │   ├── jira-communication/    # API 操作技能
 │   │   ├── SKILL.md           # 技能定义（触发条件、用法）
 │   │   ├── AGENTS.md          # 脚本开发指南
-│   │   ├── references/        # 16 份按主题拆分的参考文档（JQL、工时、附件等）
+│   │   ├── references/        # 17 份按主题拆分的参考文档（JQL、工时、附件等）
 │   │   └── scripts/
 │   │       ├── core/          # 核心操作（工单、搜索、工时等）
 │   │       ├── workflow/      # 工作流操作（创建、流转、评论、看板等）

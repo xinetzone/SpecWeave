@@ -3,14 +3,10 @@ type: Concept
 title: "jira-communication 技能详解"
 description: "jira-communication 技能完整详解，涵盖自动触发条件、三层脚本体系、意图动词机制（work/qa/qa-fail/act）、通用选项与认证方式。"
 tags: ["jira", "jira-communication", "cli", "intent-verbs", "scripts", "authentication"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

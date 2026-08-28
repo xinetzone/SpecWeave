@@ -3,14 +3,10 @@ type: Concept
 title: "最佳实践与反模式"
 description: "Jira 集成插件最佳实践与反模式汇总，涵盖意图动词优先、dry-run 预览、无编辑化、精确流转名、resolution 字段处理与多阶段工作流 walk。"
 tags: ["jira", "best-practices", "anti-patterns", "dry-run", "intent-verbs", "resolution"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

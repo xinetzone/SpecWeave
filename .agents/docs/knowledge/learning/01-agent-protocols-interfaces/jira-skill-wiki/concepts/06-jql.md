@@ -3,14 +3,10 @@ type: Concept
 title: "JQL 查询语言"
 description: "JQL 查询语言完整参考，涵盖排序、比较/文本/列表/历史操作符、用户/日期/冲刺/版本函数、常见查询与引号规则、Cloud 与 Server/DC 差异。"
 tags: ["jira", "jql", "query", "search", "operators", "functions"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

@@ -3,14 +3,10 @@ type: Concept
 title: "Jira 集成插件教程总览"
 description: "Jira 集成插件系统性技术教程总览，涵盖插件定位、双技能架构、核心特性、版本演进、章节导航与前置知识要求。"
 tags: ["jira", "claude-code", "agent-skill", "plugin", "overview", "tutorial"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

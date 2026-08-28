@@ -3,14 +3,10 @@ type: Concept
 title: "故障排查"
 description: "Jira 集成插件故障排查指南，涵盖 uv 未安装、环境文件缺失、认证失败、导入错误、resolution 字段无法设置等常见问题与解决步骤。"
 tags: ["jira", "troubleshooting", "authentication", "errors", "resolution", "import"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

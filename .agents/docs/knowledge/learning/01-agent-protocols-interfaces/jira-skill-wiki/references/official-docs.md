@@ -3,14 +3,10 @@ type: Reference
 title: "官方文档与外部资源信源"
 description: "Jira API、Agent Skills 标准、Wiki Markup 官方文档等外部参考资源登记"
 tags: ["jira", "documentation", "official", "reference"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "manual-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-02-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "https://developer.atlassian.com/cloud/jira/platform/rest/v3/"
     type: "official-docs"

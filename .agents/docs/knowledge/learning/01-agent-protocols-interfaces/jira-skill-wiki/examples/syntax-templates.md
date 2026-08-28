@@ -3,14 +3,10 @@ type: Example
 title: "Wiki Markup 模板使用示例"
 description: "演示如何使用 jira-syntax 技能的 Bug 报告和特性请求模板，包括 wiki markup 语法填充、验证和提交流程。"
 tags: ["jira", "wiki-markup", "templates", "syntax", "validation", "bug-report"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/source-code.md"
     type: "source-code"

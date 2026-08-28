@@ -3,11 +3,9 @@ okf_version: "0.2"
 title: "Jira Skill 教程"
 description: "基于源码 v3.29.0 的 jira-skill 系统性技术教程，涵盖双技能架构、CLI 使用、JQL 查询、最佳实践与故障排查。"
 tags: ["jira", "claude-code", "agent-skill", "cli", "tutorial"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 ---
 
 # Jira Skill 教程

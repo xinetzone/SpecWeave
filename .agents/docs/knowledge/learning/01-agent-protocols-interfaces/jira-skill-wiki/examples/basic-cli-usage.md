@@ -3,14 +3,10 @@ type: Example
 title: "基础 CLI 使用示例"
 description: "通过真实命令示例演示 jira-communication 的核心操作：搜索、获取、创建、评论、工时和附件管理。"
 tags: ["jira", "cli", "examples", "search", "issue", "comment", "worklog"]
-generated:
-  by: "source-code-to-okf-wiki"
-  date: "2026-08-28T00:00:00Z"
-verified:
-  by: "grep-verification"
-  date: "2026-08-28T00:00:00Z"
+generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
+verified: { by: "process:seven-concepts-v", at: "2026-08-29T00:00:00Z" }
 status: stable
-stale_after: "2027-08-28T00:00:00Z"
+stale_after: "2027-08-29T00:00:00Z"
 sources:
   - resource: "/references/api-reference.md"
     type: "source-code"
