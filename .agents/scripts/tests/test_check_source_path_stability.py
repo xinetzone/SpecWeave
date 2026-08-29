@@ -82,6 +82,12 @@ class TestClassify:
         assert sps.normalize_token("d:/AI/.chaos/x/") == "d:/AI/.chaos/x"
         assert sps.normalize_token("d:/AI/x),") == "d:/AI/x"
 
+    def test_normalize_strips_fragment(self):
+        # 行号锚点/章节锚点必须剥离，否则存在性复验对带锚链接全部误报
+        assert sps.normalize_token("file:///d:/AI/vendor/x.py#L10-L20") == "d:/AI/vendor/x.py"
+        assert sps.normalize_token("file:///d:/AI/vendor/x.py#章节") == "d:/AI/vendor/x.py"
+        assert sps.normalize_token(r"d:/AI/vendor/x.py#L1") == "d:/AI/vendor/x.py"
+
 
 class TestPathLike:
     def test_drive_path(self):
@@ -118,6 +124,17 @@ class TestAuditForms:
         temp = [f for f in findings if f.stability == "temporary"]
         assert len(temp) == 1
         assert temp[0].form == "link"
+
+    def test_link_with_anchor_existing_file(self, project):
+        """带行号锚点的 file:/// 链接指向已存在文件时 exists=True（防锚点误报回归）。"""
+        target = project / "vendor" / "stable-lib" / "README.md"
+        target.write_text("# stable\n", encoding="utf-8")
+        url = "file:///" + target.as_posix() + "#L1-L5"
+        _write(project, "docs/c.md", f"[源码]({url})\n")
+        findings = sps.scan_file(project / "docs/c.md", project)
+        links = [f for f in findings if f.form == "link"]
+        assert len(links) == 1
+        assert links[0].exists is True  # 锚点剥离后存在性复验必须通过
 
     def test_frontmatter_bare_path(self, project):
         """frontmatter 载体裸路径（source 字段，相对 vendor 路径）。"""

@@ -137,7 +137,7 @@ class Finding:
 # 归一化与分类
 # ---------------------------------------------------------------------------
 def normalize_token(token: str) -> str:
-    """剥离 URL 前缀与尾随标点，得到可比的路径字符串。"""
+    """剥离 URL 前缀、片段锚点与尾随标点，得到可比的路径字符串。"""
     t = token.strip()
     if t.startswith("file:///"):
         rest = unquote(t[len("file:///"):])
@@ -146,6 +146,9 @@ def normalize_token(token: str) -> str:
             t = rest
         else:
             t = "/" + rest
+    # 剥离片段锚点（如 #L10-L20、#章节）：文件系统路径不含锚点，
+    # 否则带行号锚点的链接存在性复验会全部误报为不存在
+    t = t.split("#", 1)[0]
     return t.rstrip(_TRAILING_PUNCT).rstrip("\\/")
 
 
