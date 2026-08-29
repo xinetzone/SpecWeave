@@ -19,10 +19,10 @@
 - [x] Task 5: 索引同步
   - [x] SubTask 5.1: ai-agent 分组索引 31→34 + 新小节 + toctree 3 行
   - [x] SubTask 5.2: 域索引与总索引 total_bundles 283→286、ai 域 110→113；qwen-ui-agent 互链已建立
-- [ ] Task 6: C 阶段——原子提交
-  - [ ] SubTask 6.1: awesome-okf-xs 子模块原子提交
-  - [ ] SubTask 6.2: SpecWeave 主仓库子模块指针提交
-  - [ ] SubTask 6.3: G5 门自检
+- [x] Task 6: C 阶段——原子提交（子模块 `d67de37b` 49 文件 +4754/-7；主仓库 `ba6bbaab9` 10 文件 +1565/-1，预提交钩子全过，工作区干净，未 push）
+  - [x] SubTask 6.1: awesome-okf-xs 子模块原子提交
+  - [x] SubTask 6.2: SpecWeave 主仓库子模块指针提交
+  - [x] SubTask 6.3: G5 门自检
 
 # Task Dependencies
 
