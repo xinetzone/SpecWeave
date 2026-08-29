@@ -46,6 +46,7 @@ date: "2026-07-09"
 | [精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则](./precision-over-recall.md) | 精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则 | L1 |  |
 | [先强后弱两级匹配分类](./progressive-two-level-matching-classification.md) | 高置信度精确匹配先行分类，遗留项用更丰富特征（正则+作者库+N-gram高频词）再回捞，两轮即可大幅提升分类率；挑战「规则一次写全就能分好」的默认假设，避免一次性穷尽规则的过度工程 | L1 | `分类分拣` `递进匹配` `规则迭代` |
 | [引号/包裹机制作用边界定律（Quoting Scope Limits）](./quoting-scope-limits.md) | 引号/包裹机制作用边界定律（Quoting Scope Limits） | L2 | `引号边界` `两阶段解析` `分层架构` |
+| [声明-回收鸿沟（Logical Delete ≠ Physical Reclaim）](./logical-delete-physical-reclaim-gap.md) | 声明-回收鸿沟：删除是元数据记账、物理回收需显式触发且记账一次性；运维三问（删除是记账吗/何时兑现/兑现代价），适用于TRIM/VACUUM/GC/git gc全家族 | L1 | `逻辑删除` `物理回收` `gc` `vacuum` |
 | [重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery）](./refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery） | L1 |  |
 | [相对路径三类特殊踩坑案例](./relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例 | L3 |  |
 | [企业SaaS云文档DOM提取适配方案（草案）](./saas-doc-extraction-adaptation-draft.md) | 企业SaaS云文档DOM提取适配方案（草案） | - |  |

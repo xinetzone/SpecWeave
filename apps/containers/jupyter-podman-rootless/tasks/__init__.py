@@ -16,6 +16,9 @@
     invoke model.pack    - 打包模型为KServe ModelCar镜像并推送（OLOT）
     invoke model.extract - 从ModelCar镜像提取/models到本地（OLOT）
 """
+import platform
+import shutil
+
 from invoke import Collection
 
 from . import container, model
@@ -39,20 +42,28 @@ ns.add_collection(Collection.from_module(container), name="container")
 ns.add_collection(Collection.from_module(model), name="model")
 
 # 默认配置
-ns.configure(
-    {
-        "container": {
-            "image_tag": "jupyter-podman-rootless:latest",
-            "container_name": "jupyter-podman",
-            "ssh_port": 2222,
-            "jupyter_port": 8888,
-            "workspace": "./workspace",
-            "apt_mirror": "official",
-            "conda_mirror": "official",
-            "pip_mirror": "official",
-        },
-        "model": {
-            "registry_url": "localhost:5000",
-        },
-    }
-)
+config = {
+    "container": {
+        "image_tag": "jupyter-podman-rootless:latest",
+        "container_name": "jupyter-podman",
+        "ssh_port": 2222,
+        "jupyter_port": 8888,
+        "workspace": "./workspace",
+        "apt_mirror": "official",
+        "conda_mirror": "official",
+        "pip_mirror": "official",
+    },
+    "model": {
+        "registry_url": "localhost:5000",
+    },
+}
+
+# Windows 上使用 PowerShell 7 (pwsh) 作为 shell
+# - cmd.exe 在沙箱环境中 PATH 被清空
+# - Windows PowerShell 5.x 不支持 && 语法
+if platform.system() == "Windows":
+    pwsh = shutil.which("pwsh") or shutil.which("powershell")
+    if pwsh:
+        config["run"] = {"shell": pwsh}
+
+ns.configure(config)

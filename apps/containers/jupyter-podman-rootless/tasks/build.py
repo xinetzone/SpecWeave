@@ -5,6 +5,7 @@ Three-tier backend priority:
   2. podman-py SDK (REST API)
   3. CLI direct calls (fallback)
 """
+import platform
 from pathlib import Path
 
 from invoke import Context, task
@@ -89,7 +90,7 @@ def _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, n
     cmd = " ".join(cmd_parts)
 
     with c.cd(str(project_root)):
-        run_cmd(c, cmd, pty=True)
+        run_cmd(c, cmd, pty=platform.system() != "Windows")
 
     print(f"Build complete: {tag}")
 

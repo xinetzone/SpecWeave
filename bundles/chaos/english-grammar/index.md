@@ -17,63 +17,64 @@ stale_after: 2027-08-25
 
 ## 概念文档
 
-概念文档分批生成中，完整索引将在 E 阶段完成后填充。
+全部 31 篇概念文档已生成完毕。完整分组导航见 [concepts/index.md](concepts/index.md)，各文档的详细前置依赖见其 frontmatter 中的 `prerequisites` 字段。
 
 ### 入门篇（00-05）
 
-- 00 首页
-- 01 序：我学英语的经验
-- 02 前言
-- 03 引：广读学英语
-- 04 两岸英语术语对照表
-- 05 正文目录
+- [00 首页](concepts/00-home.md)
+- [01 序：我学英语的经验](concepts/01-preface.md)
+- [02 前言](concepts/02-introduction.md)
+- [03 引：广读学英语](concepts/03-extensive-reading-method.md)
+- [04 两岸英语术语对照表](concepts/04-terminology-cross-strait.md)
+- [05 正文目录](concepts/05-chapter-toc.md)
 
 ### 基础句法篇（06, 12）
 
-- 06 第一章 基本句型
-- 12 第六章 比较句法
+- [06 第一章 基本句型](concepts/06-basic-sentence-patterns.md)
+- [12 第六章 比较句法](concepts/12-comparative-patterns.md)
 
 ### 词类篇（07-11）
 
-- 07 第二章 名词短语
-- 08 第三章 代名词
-- 09 第四章 形容词
-- 10 第五章 副词
-- 11 第七章 介词
+- [07 第二章 名词短语](concepts/07-noun-phrases.md)
+- [08 第三章 代名词](concepts/08-pronouns.md)
+- [09 第四章 形容词](concepts/09-adjectives.md)
+- [10 第五章 副词](concepts/10-adverbs.md)
+- [11 第七章 介词](concepts/11-prepositions.md)
 
 ### 动词体系篇（13-19）
 
-- 13 第八章 分词
-- 14 第九章 动词时态
-- 15 第十章 语态
-- 16 第十一章 语气助动词
-- 17 第十二章 语气
-- 18 第十三章 动名词
-- 19 第十四章 不定式短语
+- [13 第八章 分词](concepts/13-participles.md)
+- [14 第九章 动词时态](concepts/14-verb-tenses.md)
+- [15 第十章 语态](concepts/15-voice.md)
+- [16 第十一章 语气助动词](concepts/16-modal-auxiliaries.md)
+- [17 第十二章 语气](concepts/17-moods.md)
+- [18 第十三章 动名词](concepts/18-gerunds.md)
+- [19 第十四章 不定式短语](concepts/19-infinitives.md)
 
 ### 复合句与从句篇（20-24）
 
-- 20 第十五章 对等连词
-- 21 第十六章 复合句
-- 22 第十七章 名词从句
-- 23 第十八章 副词从句
-- 24 第十九章 关系从句
+- [20 第十五章 对等连词](concepts/20-coordinate-conjunctions.md)
+- [21 第十六章 复合句](concepts/21-compound-sentences.md)
+- [22 第十七章 名词从句](concepts/22-noun-clauses.md)
+- [23 第十八章 副词从句](concepts/23-adverb-clauses.md)
+- [24 第十九章 关系从句](concepts/24-relative-clauses.md)
 
 ### 句法综合应用篇（25-26）
 
-- 25 第二十章 主语动词一致性
-- 26 第二十一章 倒装句
+- [25 第二十章 主语动词一致性](concepts/25-subject-verb-agreement.md)
+- [26 第二十一章 倒装句](concepts/26-inversion.md)
 
 ### 简化从句篇（27-30）
 
-- 27 第二十二章 简化从句（总论）
-- 28 第二十三章 关系从句简化
-- 29 第二十四章 名词从句简化
-- 30 第二十五章 副词从句简化
+- [27 第二十二章 简化从句（总论）](concepts/27-reduced-clauses-introduction.md)
+- [28 第二十三章 关系从句简化](concepts/28-reduced-relative-clauses.md)
+- [29 第二十四章 名词从句简化](concepts/29-reduced-noun-clauses.md)
+- [30 第二十五章 副词从句简化](concepts/30-reduced-adverb-clauses.md)
 
 ## 示例
 
 - [示例索引](examples/index.md) — 例句内嵌说明
+- [广读材料推荐](examples/extensive-reading-materials.md) — VOA/CDLP/The Key/Project Gutenberg 免费广读资源清单
 
 ## 参考资料
 

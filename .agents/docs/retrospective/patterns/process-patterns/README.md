@@ -26,6 +26,11 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/proce
 | [monorepo-ci-blindspot-detection.md](monorepo-ci-blindspot-detection.md) | Monorepo子项目CI盲区检测五步法：审计根testpaths→审计子项目配置→collect-only计数对比→检查构建命令→选择修复方案，解决主CI绿灯但子项目测试从未执行的陷阱 | L1 候选 | pytest/pnpm/cargo/gradle等任意Monorepo项目、子项目/子模块CI覆盖审计、新增子项目后的CI验证、CI配置重构验证 |
 | [pdf-book-to-okf-wiki.md](pdf-book-to-okf-wiki.md) | PDF书籍→OKF-MyST Wiki四阶段工作流：环境准备→结构探查→工具降级链→清洗转换→确定性校验→Sphinx构建验证，含三层忠实边界与已知边界 | L1 实验性 | 纯文本排版书籍/论文PDF→OKF规范Markdown知识库→Sphinx+MyST+mystx静态Wiki |
 | [okf-bundle-toctree-repair-workflow.md](okf-bundle-toctree-repair-workflow.md) | OKF bundle 目录树完整性修复工作流：全量扫描三类问题（缺index.md/缺toctree/缺条目）→建索引/追加/补充分类处理→精确追加定位闭合→dry-run验证→git兜底回滚，修复toc.not_included警告 | L1 实验性 | Sphinx/MyST知识库出现大量toc.not_included警告、OKF bundle目录树不完整、任意目录树驱动内容组织批量补导航 |
+| [svf-compiler-migration.md](svf-compiler-migration.md) | SVF 编译器迁移模式（Spike-Validate-Fallback）：识别ABI变体→最小Spike→失败记录→回退设计→最复杂模块预验证→全量构建→决策记录七步，防止直接全量构建返工和sed降级补丁技术债 | L2 已验证 | 原生编译器（Nuitka/Cython/mypyc）迁移新Python版本或ABI变体、CUDA/Emscripten工具链升级、编译器兼容性未知的场景 |
+| [vhdx-two-phase-recovery-sop.md](vhdx-two-phase-recovery-sop.md) | VHDX 二相回收 SOP：sparse 在线相与 compact 离线相互斥二选一；离线相含停 wslservice+vmcompute、清 sparse 标志、diskpart compact 全流程，含 6 类故障排查与 5 个实战反模式 | L2 已验证 | WSL2/Podman machine/Hyper-V 虚拟磁盘 vhdx 膨胀回收、系统盘空间治理、容器镜像清理后宿主空间未归还 |
+| [nested-engine-storage-externalize.md](nested-engine-storage-externalize.md) | 嵌套引擎存储卷外置模式：容器内 podman-in-podman/dinod 存储指向命名卷或显式挂载，避免镜像层写可写层形成黑洞；含双重不可见排查路径与僵尸容器处置，与 VHDX 二相回收构成预防/治理对 | L1 实验性 | 常驻容器内嵌套构建、CI docker-in-docker、可写层膨胀监控、容器磁盘配额治理 |
+| [nested-disk-blindspot-diagnosis.md](nested-disk-blindspot-diagnosis.md) | 嵌套容器磁盘盲区诊断模式：双重不可见（宿主 system df 只见总量 + 容器内 du 权限遮蔽低估4倍）下的四层下钻诊断链（system df→df/du矛盾→root du→UpperDir diff），结论须全链条数字交叉验证闭合 | L1 实验性 | 多层虚拟化栈磁盘占用对不上账、可写层异常膨胀定位、僵尸容器排查、vhdx 增速与挂载内容不匹配 |
+| [nested-disk-blindspot-diagnosis-sop.md](nested-disk-blindspot-diagnosis-sop.md) | 嵌套磁盘盲区诊断 SOP：四层下钻链的可执行细化（L1预警→L2矛盾检测→L3提权核实→L4 UpperDir解剖→L5数字闭合验收），含僵尸容器处置、7类故障排查与 lsof inode 泄漏分支，每层判定阈值与命令 | L1 实验性 | 同上模式的实操执行：宿主磁盘对不上账时的标准排查手册 |
 
 ## 成熟度定义
 

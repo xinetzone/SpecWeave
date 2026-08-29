@@ -106,16 +106,16 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/source-code-to-okf-wiki/SKILL.to
 
 ```
 <bundle-name>/
-├── index.md              # 根索引（含 okf_version frontmatter）
+├── index.md              # 根索引（含 okf_version frontmatter + toctree）
 ├── log.md                # 变更日志
 ├── concepts/             # 概念文档
-│   ├── index.md          # 概念索引（无frontmatter）
+│   ├── index.md          # 概念索引（无frontmatter，必须含 toctree 块）
 │   └── 00-xxx.md ~ NN-xxx.md
 ├── examples/             # 示例文档
-│   ├── index.md
+│   ├── index.md          # 必须含 toctree 块
 │   └── ...
 └── references/           # 信源登记
-    ├── index.md
+    ├── index.md          # 必须含 toctree 块
     └── <source>.md
 ```
 
@@ -149,6 +149,26 @@ sources:
 
 > **为什么交叉链接用`/`开头而非`../`相对路径？** 相对路径（`../concepts/xxx.md`）在文件移动后链接断裂，且不同目录深度需要不同层级的`../`，维护成本高。`/`开头的bundle-relative绝对路径从bundle根目录解析，不随文件位置变化，路径风格统一。
 
+### 6.4 index.md 导航规范（toctree 必填）
+
+**每个 index.md（根 + 全部子目录）必须包含 `{toctree}` 指令块**，收录本目录全部内容文档（跳过 index/readme/log 由根处理）：
+
+````markdown
+```{toctree}
+:hidden:
+:maxdepth: 2
+
+00-first-doc
+01-second-doc
+```
+````
+
+- **根 index.md** 的 toctree 收录 `concepts/index`、`examples/index`、`references/index`、`log`；分组 index.md 收录各束的 `<bundle>/index`
+- **子目录 index.md** 的 toctree 收录本目录全部内容文件（stem 形式，按文件名排序）
+- toctree 与人类可读的表格/列表链接**并存**——表格给读者，toctree 给 Sphinx/CI 导航
+
+> **为什么表格链接不能替代 toctree？** Markdown 表格链接只对人类读者有效；Sphinx 与 CI 质量门（`check-toctrees.py`）从 `doc/index.md` 沿 `{toctree}` 指令块做 BFS 导航，子目录 index 缺 toctree 块即导航断头，其下全部内容文档被判"未收录(不可达)"——即使表格链接完好无损。containers 域曾因此产生 52 个门禁失败项（6 束 18 个子目录 index 缺 toctree，2026-08-28 修复）。
+
 ## 7. 安全检查清单（质量门）
 
 - [ ] **G1-R阶段**：事实清单无推断性表述（"用于"/"目的是"等），每个事实指向源码路径，核心模块全覆盖
@@ -159,6 +179,7 @@ sources:
 - [ ] 每批生成文档数≤7（防止上下文过载导致质量下降）
 - [ ] 代码块标注语言，API调用与facts.md事实一致
 - [ ] 子目录index.md不含frontmatter（仅根index.md保留okf_version）
+- [ ] 每个index.md（根+子目录+分组）均含`{toctree}`块且收录本目录全部内容文档；生成后运行 `invoke gates.toctrees`（或 `python scripts/check-toctrees.py`）验证导航链完整
 
 > **为什么V阶段Grep验证是"必须"而非"建议"？** AI在生成"看起来合理"的代码时非常危险——越是常见的编程模式（如HTTP响应对象`Response`），AI越容易凭训练数据的"统计惯性"编造不存在的API。PyInvoke实践中就出现了虚构的`Response`类，代码示例看起来完全合理但源码中根本不存在。V阶段的Grep验证是拦截虚构API的最后一道防线，不可省略。
 
@@ -174,10 +195,11 @@ sources:
 | 单批生成>7个文件 | 上下文过载 | 拆分为更小批次 |
 | references/未创建就开始写concepts/ | 违反信源先行 | 暂停，先生成references/ |
 | index.md含frontmatter字段 | 不符合OKF规范 | 移除frontmatter |
+| 子目录index.md只有表格链接、无`{toctree}`块 | CI门禁报"未收录(不可达)"，整束内容导航断头 | 按§6.4追加隐藏toctree块，收录本目录全部内容文件 |
 | 交叉链接出现`../` | 路径风格不一致 | 替换为`/`开头路径 |
 | V阶段发现>1个虚构API | E阶段事实遵循度不足 | 全面Grep验证所有文档 |
 
-## 9. 反模式速查（7个致命错误）
+## 9. 反模式速查（8个致命错误）
 
 | # | 反模式 | 后果 | 正确做法 |
 |---|--------|------|---------|
@@ -188,6 +210,7 @@ sources:
 | 5 | 不验证API真实性就交付 | 虚构API混入文档，读者照抄报错 | V阶段Grep验证关键类名/方法名 |
 | 6 | 产出物留在spec目录不入库 | 下次同类任务无法复用，经验浪费 | C阶段迁移模式到patterns/目录 |
 | 7 | 交叉链接使用`../`相对路径 | 文件移动后链接断裂，维护成本高 | 统一使用`/`开头bundle-relative路径 |
+| 8 | 子目录index.md用表格链接替代`{toctree}`块 | Sphinx/CI导航BFS断头，束内全部内容"未收录(不可达)"（containers域52项门禁失败实证） | 每个index.md必含隐藏toctree块（§6.4），与表格链接并存 |
 
 ## 10. Gotchas（陷阱与反直觉行为）
 
@@ -210,5 +233,6 @@ sources:
 
 ## 12. Changelog
 
+- **v1.2.0** (2026-08-28): 新增§6.4「index.md 导航规范（toctree 必填）」与反模式8（表格链接替代toctree），源于 containers 域 52 项 toctrees 门禁失败修复实践；G4检查清单增加toctree门禁验证项。
 - **v1.1.0** (2026-08-22): 扩展非源码文档转换场景，新增「批量Markdown文档→OKF Bundle转换模式」参考（31个Bundle、368文件实战验证）。
 - **v1.0.0** (2026-08-21): 初始版本，从PyInvoke v3.0.3 OKF Wiki生成实践萃取，封装R→I→E→V→C五阶段工作流、OKF文档规范、7个反模式、Grep级API验证机制。

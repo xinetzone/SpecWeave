@@ -11,13 +11,16 @@ from pathlib import Path
 
 from dotenv import dotenv_values
 from invoke import Context, task
+from invoke.exceptions import Exit
 
 from .client import PodmanNotFound, compose_available, get_client, sdk_available, sdk_run_kwargs
 from .compose_backend import compose_down, compose_ps, compose_up, is_compose_ready
 from .utils import (
+    check_runtime_ready,
     container_exists as cli_container_exists,
     detect_runtime,
     generate_random_string,
+    normalize_path_str,
     run_cmd,
     to_posix_path,
 )
@@ -48,7 +51,7 @@ def _load_or_create_env(c, project_root, ssh_port, jupyter_port, workspace,
         "IMAGE_TAG": get_val("IMAGE_TAG", None, c.container.get("image_tag", "jupyter-podman-rootless:latest")),
         "SSH_PORT": get_val("SSH_PORT", ssh_port, c.container.get("ssh_port", 2222)),
         "JUPYTER_PORT": get_val("JUPYTER_PORT", jupyter_port, c.container.get("jupyter_port", 8888)),
-        "WORKSPACE": get_val("WORKSPACE", workspace, c.container.get("workspace", "./workspace")),
+        "WORKSPACE": normalize_path_str(get_val("WORKSPACE", workspace, c.container.get("workspace", "./workspace"))),
         "USER_PASSWORD": get_val("USER_PASSWORD", None, ""),
         "JUPYTER_TOKEN": get_val("JUPYTER_TOKEN", None, ""),
         "SSH_PUBLIC_KEY": get_val("SSH_PUBLIC_KEY", ssh_public_key, ""),
@@ -375,14 +378,21 @@ def run(
         print(f"Creating workspace directory: {workspace_path}")
         workspace_path.mkdir(parents=True, exist_ok=True)
 
+    # Pre-flight: check container runtime is reachable
+    ready, hint = check_runtime_ready()
+    if not ready:
+        print(f"[Error] {hint}")
+        raise Exit(1)
+
     # Tier 1: podman-compose path
     if _should_use_compose():
         print("[Backend] Using podman-compose (Tier 1)")
         env = _load_or_create_env(
-            c, project_root, ssh_port, jupyter_port, str(workspace_path),
+            c, project_root, ssh_port, jupyter_port, workspace_posix,
             user_password, jupyter_token, ssh_public_key, grant_sudo,
             apt_mirror, conda_mirror, pip_mirror,
         )
+        print(f"[Compose] Mounting {env['WORKSPACE']} -> /workspace")
         success = compose_up(project_root=project_root, build=False, detach=detach, env=env)
         if success:
             print("\n" + "=" * 60)
@@ -405,6 +415,7 @@ def run(
 
     print(f"Starting container: {name}")
     print(f"Using image: {tag}")
+    print(f"Mounting {workspace_posix} -> /workspace")
 
     # Tier 2 + 3: SDK then CLI
     sdk_ok = False

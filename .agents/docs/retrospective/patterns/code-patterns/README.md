@@ -187,6 +187,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-
 | [pytest-factory-fixture-pattern.md](pytest-factory-fixture-pattern.md) | pytest工厂Fixture模式：fixture返回可调用工厂函数（闭包捕获依赖）+yield分割创建清理+多实例追踪列表自动销毁，含4个变体（配置默认值/autouse清理/无状态return/异步资源）和4个反模式 | L2 已验证 | pytest测试中需要动态创建多实例资源、工厂创建资源需自动清理、测试参数动态决定场景 |
 | [okf-sources-path-normalization.md](okf-sources-path-normalization.md) | OKF sources 路径规范化：提取→映射表→拼5级../前缀→存在性过滤四步修复，正则字符类禁含`.`防吞点，无源码仓库标注豁免 | L1 实验性 | OKF/带sources字段的批量文档修复、bundle与源码目录命名差异映射、正则提取路径 |
 | [conda-shell-hook-activation-noop.md](conda-shell-hook-activation-noop.md) | Conda Shell Hook 静默失效激活检测模式：conda activate rc=0 但 `$env:CONDA_DEFAULT_ENV` 不变 → hook 未加载；补齐 conda-hook.ps1 + profile 幂等激活 + 绝对路径兜底三方案，以事后环境变量/解释器路径为唯一可信判据 | L1 实验性 | 沙箱/包装/non-interactive shell 中 conda activate 不生效、期望默认 Python 环境(如 py314)却落到 base、CI runner 环境切换 |
+| [cross-conda-toolchain.md](cross-conda-toolchain.md) | 跨Conda环境工具链引用模式：环境盘点→PATH分层→CC/CXX显式指向→LD_LIBRARY_PATH共享库→构建期断言→kernel双环境处理六步，实现"解释器在A环境、编译器在B环境"的跨环境原生编译，避免重建GB级工具链 | L1 实验性 | 双/多conda环境镜像原生编译、基础镜像不可控的下游构建镜像、GPU镜像CUDA toolkit跨环境引用 |
 
 ## Android 模式命名规范
 
