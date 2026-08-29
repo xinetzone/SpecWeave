@@ -1,7 +1,7 @@
 ***
 
 name: docx-template-report
-version: 1.0.0
+version: 1.0.1
 description: "当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能。提供模板驱动报告生成能力：输入校验→模板/数据准备→渲染→产物校验→交付。基于 docxtpl + python-docx，必须使用 py314 环境。不要硬编码 Word 排版——模板是唯一事实来源，代码只填数据。"
 argument-hint: "<模板.docx路径> <数据(JSON/YAML/dict)> <输出.docx路径>"
 user-invocable: true
@@ -85,6 +85,8 @@ py -3.14 -m pip install docxtpl==0.20.2 python-docx==1.2.0 lxml==6.1.2
 * 无模板 → 用 `pandoc` 从 Markdown 生成基础模板，或在 Word 中新建并加 Jinja2 占位符
 
 * 数据整理为渲染上下文（dict）
+
+> **内置模板**（`templates/`）：`sample-report.docx`（通用报告，三段式示例）；`tech-guide-template.docx`（技术文档，含封面/更新记录/多级章节/代码块/参数表，契约见 [references/tech-guide-template.md](references/tech-guide-template.md)）
 
 ### 步骤3：渲染
 
@@ -190,11 +192,13 @@ context = {"rows": [{"col1": "x", "col2": "y"}]}
 | ---------------- | -- | ---------------------------------------------------------------------------------------------------------- | ----------------------- |
 | 方案设计文档           | 设计 | [docx-template-report-skill-design.md](../../docs/knowledge/learning/docx-template-report-skill-design.md) | 理解设计背景与第一性原理推导          |
 | Jinja2 模板编写指南    | L2 | [references/template-guide.md](references/template-guide.md)                                               | 编写模板占位符时（A-2 行动项）       |
+| 技术文档模板契约        | L2 | [references/tech-guide-template.md](references/tech-guide-template.md)                                     | 使用 `templates/tech-guide-template.docx` 时（数据契约/边界/反模式） |
 | 错误分类与排查          | L2 | [references/troubleshooting.md](references/troubleshooting.md)                                             | 渲染异常/产物失败/乱码排查（A-3 行动项） |
 | docxtpl 官方文档     | 外部 | <https://docxtpl.readthedocs.io/>                                                                          | 高级语法（条件/循环/图片）          |
 | python-docx 官方文档 | 外部 | <https://python-docx.readthedocs.io/>                                                                      | 底层 API 细节               |
 
 ## 10. Changelog
 
+* **v1.0.1** (2026-08-29): 新增 `templates/tech-guide-template.docx` 技术文档模板（从 XMNN SDK 使用指南萃取，含封面/更新记录/多级章节/代码块/4列参数表），配套契约文档 `references/tech-guide-template.md`。
 * **v1.0.0** (2026-08-29): 初始版本，封装模板驱动报告生成能力（输入校验→渲染→产物校验五步工作流 + 三段式示例 + 6 条反模式），运行环境锁定 py314。
 
