@@ -131,6 +131,7 @@ class Finding:
     stability: str     # temporary / stable / env-bound / relative / unknown
     exists: Optional[bool]  # True/False/None（不可解析时不检查）
     in_code_block: bool
+    anchor_ok: Optional[bool] = None  # 行号锚点（#Lxx）是否在目标文件范围内；None=无锚点/不可复验
 
 
 # ---------------------------------------------------------------------------
@@ -196,6 +197,56 @@ def _is_path_like(text: str) -> bool:
     if segments & TEMP_SEGMENTS or segments & STABLE_SEGMENTS:
         return True
     return any(sub in norm for sub in TEMP_SUBSTRINGS + STABLE_SUBSTRINGS)
+
+
+# ---------------------------------------------------------------------------
+# 行号锚点复验（#Lxx / #Lxx-Lyy / #Lxx-yy）
+# ---------------------------------------------------------------------------
+# 行号锚点形态：GitHub 风格 #L10、#L10-L20、#L10-20；章节锚点（#中文标题）不复验
+LINE_ANCHOR_RE = re.compile(r"#L(\d+)(?:-L?(\d+))?", re.IGNORECASE)
+
+_line_count_cache: dict[Path, Optional[int]] = {}
+
+
+def _file_line_count(path: Path) -> Optional[int]:
+    """读取文件总行数（带缓存）；不可读返回 None。"""
+    if path in _line_count_cache:
+        return _line_count_cache[path]
+    count: Optional[int]
+    try:
+        with path.open("r", encoding="utf-8", errors="replace") as fh:
+            count = sum(1 for _ in fh)
+    except OSError:
+        count = None
+    _line_count_cache[path] = count
+    return count
+
+
+def check_anchor(
+    raw_token: str, fs_path: Optional[Path], exists: Optional[bool]
+) -> Optional[bool]:
+    """行号锚点越界复验：目标文件存在时，#Lxx 行号不得超出文件总行数。
+
+    返回 True（锚点行在范围内）/ False（起始行或结束行越界）/
+    None（无行号锚点、目标不存在/非文件/不可读——不复验）。
+    章节锚点（#标题）无法静态复验行号，返回 None。
+    """
+    if exists is not True or fs_path is None:
+        return None
+    m = LINE_ANCHOR_RE.search(raw_token)
+    if not m:
+        return None
+    try:
+        start = int(m.group(1))
+        end = int(m.group(2)) if m.group(2) else start
+    except (TypeError, ValueError):
+        return None
+    if not fs_path.is_file():
+        return None
+    total = _file_line_count(fs_path)
+    if total is None:
+        return None
+    return start >= 1 and end <= total
 
 
 # ---------------------------------------------------------------------------
@@ -372,6 +423,7 @@ def scan_file(path: Path, project_root: Path) -> list[Finding]:
                 stability=stability,
                 exists=exists,
                 in_code_block=in_code,
+                anchor_ok=check_anchor(tok, fs_path, exists),
             ))
     return findings
 
@@ -448,8 +500,12 @@ def _print_findings(findings: list[Finding], title: str) -> None:
         exists_tag = (
             "" if f.exists is None else ("  ✅存在" if f.exists else "  ❌不存在")
         )
+        anchor_tag = (
+            "" if f.anchor_ok is None
+            else ("" if f.anchor_ok else "  ⚠️锚点行越界")
+        )
         print(
-            f"  L{f.line}:C{f.col}  [{f.form}/{f.stability}]{code_tag}{exists_tag}"
+            f"  L{f.line}:C{f.col}  [{f.form}/{f.stability}]{code_tag}{exists_tag}{anchor_tag}"
         )
         print(f"       {f.token}")
     print("=" * 88)
@@ -527,14 +583,17 @@ def main(argv: Optional[list[str]] = None) -> int:
             findings.extend(scan_file(md, project_root))
 
     blocking = [
-        f for f in findings if f.stability == "temporary" or f.exists is False
+        f for f in findings
+        if f.stability == "temporary" or f.exists is False or f.anchor_ok is False
     ]
     env_bound = [f for f in findings if f.stability == "env-bound"]
+    anchor_oob = [f for f in findings if f.anchor_ok is False]
 
     if args.json:
         print(_findings_to_json(
             findings, mode="audit", scanned_files=scanned,
             blocking_count=len(blocking), env_bound_count=len(env_bound),
+            anchor_out_of_bounds_count=len(anchor_oob),
         ))
         return 1 if blocking else 0
 
@@ -543,10 +602,11 @@ def main(argv: Optional[list[str]] = None) -> int:
         f"{len(findings)} 条路径引用"
         f"（临时 {sum(1 for f in findings if f.stability == 'temporary')}、"
         f"不存在 {sum(1 for f in findings if f.exists is False)}、"
+        f"锚点越界 {len(anchor_oob)}、"
         f"环境绑定 {len(env_bound)}）。"
     )
     if blocking:
-        _print_findings(blocking, "结果：❌ 拦截——存在临时信源引用或失效路径")
+        _print_findings(blocking, "结果：❌ 拦截——存在临时信源引用、失效路径或锚点行越界")
         if env_bound:
             print(f"[{GATE}] 另有 {len(env_bound)} 条环境绑定绝对路径（警告，不拦截）。")
         return 1

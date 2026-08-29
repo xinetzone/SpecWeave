@@ -136,6 +136,54 @@ class TestAuditForms:
         assert len(links) == 1
         assert links[0].exists is True  # 锚点剥离后存在性复验必须通过
 
+    def test_anchor_within_range(self, project):
+        """行号锚点在目标文件行数范围内 → anchor_ok=True。"""
+        target = project / "vendor" / "stable-lib" / "ten.py"
+        target.write_text("".join(f"line {i}\n" for i in range(1, 11)), encoding="utf-8")
+        for anchor in ("#L5", "#L1", "#L10", "#L3-L7", "#L3-7"):
+            sps._line_count_cache.clear()
+            url = "file:///" + target.as_posix() + anchor
+            doc = _write(project, f"docs/in{anchor.replace('#', '')}.md", f"[x]({url})\n")
+            findings = sps.scan_file(doc, project)
+            links = [f for f in findings if f.form == "link"]
+            assert len(links) == 1, anchor
+            assert links[0].anchor_ok is True, anchor
+
+    def test_anchor_out_of_bounds(self, project):
+        """行号锚点超出目标文件行数 → anchor_ok=False（纳入拦截）。"""
+        target = project / "vendor" / "stable-lib" / "three.py"
+        target.write_text("a\nb\nc\n", encoding="utf-8")
+        for anchor in ("#L10", "#L1-L99", "#L0"):
+            sps._line_count_cache.clear()
+            url = "file:///" + target.as_posix() + anchor
+            doc = _write(project, f"docs/oob{anchor.replace('#', '')}.md", f"[x]({url})\n")
+            findings = sps.scan_file(doc, project)
+            links = [f for f in findings if f.form == "link"]
+            assert len(links) == 1, anchor
+            assert links[0].exists is True, anchor   # 文件存在
+            assert links[0].anchor_ok is False, anchor  # 但锚点行越界
+
+    def test_section_anchor_not_checked(self, project):
+        """章节锚点（#标题）无法静态复验行号 → anchor_ok=None。"""
+        target = project / "vendor" / "stable-lib" / "doc.md"
+        target.write_text("# 标题\n正文\n", encoding="utf-8")
+        url = "file:///" + target.as_posix() + "#核心做法"
+        doc = _write(project, "docs/sec.md", f"[x]({url})\n")
+        findings = sps.scan_file(doc, project)
+        links = [f for f in findings if f.form == "link"]
+        assert len(links) == 1
+        assert links[0].exists is True
+        assert links[0].anchor_ok is None
+
+    def test_audit_exit_1_on_anchor_oob(self, project):
+        """锚点越界单条命中即拦截（退出码 1）。"""
+        target = project / "vendor" / "stable-lib" / "small.py"
+        target.write_text("a\nb\n", encoding="utf-8")
+        url = "file:///" + target.as_posix() + "#L42"
+        _write(project, "docs/oob.md", f"[x]({url})\n")
+        rc = sps.main(["--path", str(project)])
+        assert rc == 1
+
     def test_frontmatter_bare_path(self, project):
         """frontmatter 载体裸路径（source 字段，相对 vendor 路径）。"""
         content = (
