@@ -3,8 +3,6 @@
 提供 help(default)/build/html/clean/linkcheck/doctest 任务，
 使用 sphinx-build -M make-mode 语义。
 """
-from __future__ import annotations
-
 import os
 import shlex
 import subprocess
