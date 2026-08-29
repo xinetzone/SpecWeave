@@ -9,7 +9,7 @@ tags: ["hermes-okf", "OKF", "Open Knowledge Format", "Agent记忆", "持久记�
 # Hermes OKF（基于OKF的Agent持久记忆）Wiki教程 - Product Requirement Document
 
 ## Overview
-- **Summary**: 基于 hermes-okf 官方仓库（GitHub EliaszDev/hermes-okf，v0.5.9）与 OKF 生态中文索引，系统创建一份原子化的 Hermes OKF Wiki 教程。Hermes OKF 是首个基于 Google Open Knowledge Format（OKF）构建的开源 Agent 持久记忆系统，专为 Hermes agent 生态设计。教程覆盖项目定位、核心特性、五层架构、快速上手、Hermes 插件 CLI、独立 CLI、Agent 集成、RAG 集成、故障排查与路线图，输出到 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/` 目录。
+- **Summary**: 基于 hermes-okf 官方仓库（GitHub EliaszDev/hermes-okf，v0.5.9）与 OKF 生态中文索引，系统创建一份原子化的 Hermes OKF Wiki 教程。Hermes OKF 是首个基于 Google Open Knowledge Format（OKF）构建的开源 Agent 持久记忆系统，专为 Hermes agent 生态设计。教程覆盖项目定位、核心特性、五层架构、快速上手、Hermes 插件 CLI、独立 CLI、Agent 集成、RAG 集成、故障排查与路线图，输出到 `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/` 目录。
 - **Purpose**: 帮助 AI Agent 开发者、Hermes 生态用户、知识工程师快速掌握 Hermes OKF——如何用纯 Markdown + YAML（无数据库、无锁定）为 Agent 构建持久、结构化、可版本化的记忆层，并理解其在 OKF 生态中的定位（"OKF 当 Agent 记忆层"的代表项目）。
 - **Target Users**: AI Agent 开发者、Hermes agent 用户、知识工程师、架构师、技术决策者、对 OKF 生态感兴趣的技术人员。
 
@@ -73,7 +73,7 @@ tags: ["hermes-okf", "OKF", "Open Knowledge Format", "Agent记忆", "持久记�
 - **Dependencies**:
   - 参考现有 wiki 格式：`okf-wiki/`（00-overview 等章节结构）、`okf-ecosystem-wiki/`、`knowledge-catalog-wiki/`
   - 资料来源：hermes-okf 官方 README（v0.5.9）、vendor/awesome-okf/references/hermes-okf.md、resources-zh.md
-  - 输出路径：`.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/`
+  - 输出路径：`docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/`
 
 ## Assumptions
 - 输出目录归类在 `okf-wiki/` 子目录下是合理的（Hermes OKF 是 OKF 生态的 Agent 记忆层工具）
@@ -178,4 +178,4 @@ tags: ["hermes-okf", "OKF", "Open Knowledge Format", "Agent记忆", "持久记�
 ## Impact
 - **Affected specs**: okf-wiki（`01-agent-protocols-interfaces/okf-wiki/`）知识体系
 - **Affected code**: 无源代码变更；仅新增知识文档 + 更新 okf-wiki/README.md 索引
-- **Affected docs**: `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/`（新建）、`okf-wiki/README.md`（更新索引）
+- **Affected docs**: `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/`（新建）、`okf-wiki/README.md`（更新索引）

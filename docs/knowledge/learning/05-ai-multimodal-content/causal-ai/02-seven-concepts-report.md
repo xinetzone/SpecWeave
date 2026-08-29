@@ -2,7 +2,7 @@
 id: "causal-ai-02-seven-concepts-report"
 title: "因果AI与世界模型：零犀科技六年押注深度分析 — 七概念方法论报告"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/02-seven-concepts-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/02-seven-concepts-report.toml"
 ---
 # 七概念方法论编排报告：零犀因果大模型与世界模型文章知识沉淀
 

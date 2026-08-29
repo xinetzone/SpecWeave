@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-python314-stdlib-wiki-index"
 title: "Python 3.14 标准库教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -39,7 +39,7 @@ date: "2026-08-22"
 ## 相关资源
 
 - [返回上级：文档标记与工具生态](../README.md)
-- [文档首页](../../../../../README.md)
+- [文档首页](../../../../../.agents/README.md)
 - [Python 3.14 官方文档](https://docs.python.org/3.14/)
 - [CPython GitHub 仓库](https://github.com/python/cpython)
 

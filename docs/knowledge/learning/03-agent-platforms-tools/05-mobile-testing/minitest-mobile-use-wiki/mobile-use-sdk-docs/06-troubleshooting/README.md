@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-mobile-use-sdk-docs-06-troubleshooting-index"
 title: "故障排查"
-x-toml-ref: "../../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/README.toml"
+x-toml-ref: "../../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
@@ -22,7 +22,7 @@ date: "2026-07-09"
 
 ## 🔗 相关资源
 
-- [📚 文档首页](../../../../../../../README.md)
+- [📚 文档首页](../../../../../../../../.agents/docs/README.md)
 
 ---
 

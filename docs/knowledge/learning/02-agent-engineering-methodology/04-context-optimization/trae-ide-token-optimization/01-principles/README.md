@@ -11,5 +11,5 @@ type: index
 
 | 文档 | 内容 |
 |-----|------|
-| [00-facts.md](./00-facts.md) | Token消耗结构、用户实测数据、已验证事实清单 |
-| [01-first-principles.md](./01-first-principles.md) | 第一性原理分析、认知错位、核心杠杆 |
+| [00-facts.md](00-facts.md) | Token消耗结构、用户实测数据、已验证事实清单 |
+| [01-first-principles.md](01-first-principles.md) | 第一性原理分析、认知错位、核心杠杆 |

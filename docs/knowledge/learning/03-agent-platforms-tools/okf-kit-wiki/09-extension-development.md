@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-09"
 title: "okf-kit 完全指南 — 扩展与开发"
 source: "https://github.com/vinodborole/okf-kit"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/09-extension-development.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/09-extension-development.toml"
 ---
-
 # okf-kit 完全指南 — 扩展与开发
 
 > 一句话摘要：okf-kit 采用模块化分层架构，核心模块（crawl/mapper/writer/okf）无 LLM 依赖，Fetcher 层可扩展新的抓取后端，Provider 层可扩展新的 LLM 服务，与 calknowledge 平台形成"轻量核心+增强平台"的生态关系。

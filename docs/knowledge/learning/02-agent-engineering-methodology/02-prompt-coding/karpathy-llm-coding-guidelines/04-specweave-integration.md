@@ -163,7 +163,7 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 除了规范整合，项目中还存放了完整的学习教程，位于：
 
-[docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/](./README.md)
+[docs/knowledge/learning/02-agent-engineering-methodology/karpathy-llm-coding-guidelines/](README.md)
 
 包含：
 - [00-overview.md](00-overview.md) - 概述与背景故事

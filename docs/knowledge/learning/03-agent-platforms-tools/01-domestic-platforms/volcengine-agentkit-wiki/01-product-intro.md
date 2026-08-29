@@ -111,4 +111,4 @@ timeline
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [00 教程总览](./00-overview.md) | [README](./README.md) | → [02 产品架构与核心能力](./02-core-architecture.md) |
+| ← [00 教程总览](00-overview.md) | [README](README.md) | → [02 产品架构与核心能力](02-core-architecture.md) |

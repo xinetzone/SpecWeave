@@ -122,4 +122,4 @@ flowchart LR
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [01 产品定位与核心价值](./01-product-positioning.md) | [README](./README.md) | → [03 Model Nexus 模型中心](./03-model-nexus.md) |
+| ← [01 产品定位与核心价值](01-product-positioning.md) | [README](README.md) | → [03 Model Nexus 模型中心](03-model-nexus.md) |

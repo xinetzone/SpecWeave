@@ -2,7 +2,7 @@
 title: "mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析"
 category: "learning"
 source: "external: 不存在-GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.toml"
 date: "2026-07-07"
 status: "published"
 author: "AI 深度研究"
@@ -1172,4 +1172,4 @@ mobile-use在AndroidWorld基准测试中达到100%准确率，这一里程碑具
 *补充更新：2026-07-07（解答Hopper/Video Analyzer/MCP集成3个Open Questions，沉淀2个架构模式到patterns库）*
 *补充更新：2026-07-07（新增第十三章：Minitap商业产品与开源生态，补充开源-商业双轮模式、Minitest零脚本QA Agent、AndroidWorld产品化意义等商业视角）*
 *分析方法：GitHub 网页内容分析 + 本地代码库静态分析（graph/agents/controllers/tools/sdk 核心模块深度阅读）*
-*模式沉淀：[normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2双重验证）、[multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1首次萃取）*
+*模式沉淀：[normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md)（L2双重验证）、[multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)（L1首次萃取）*

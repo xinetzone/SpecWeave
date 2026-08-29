@@ -2,7 +2,7 @@
 id: "github-cli-wiki-02"
 title: "基础命令指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/02-basic-commands.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/02-basic-commands.toml"
 ---
 # 基础命令指南
 

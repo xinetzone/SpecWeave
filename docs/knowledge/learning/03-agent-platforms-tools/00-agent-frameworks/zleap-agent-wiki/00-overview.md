@@ -77,4 +77,4 @@ Zleap-Agent 围绕一个非常实际的判断构建：
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← 这是教程第 1 章 | [README](./README.md) | → [01 核心架构与技术栈](./01-core-architecture.md) |
+| ← 这是教程第 1 章 | [README](README.md) | → [01 核心架构与技术栈](01-core-architecture.md) |

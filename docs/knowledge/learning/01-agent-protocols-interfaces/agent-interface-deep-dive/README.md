@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-agent-interface-deep-dive-index"
 title: "Agent 接口深度解析"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
@@ -27,7 +27,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
-- [📚 文档首页](../../../../README.md)
+- [📚 文档首页](../../../../../.agents/docs/README.md)
 
 ---
 

@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-seven-concepts"
 title: "Python 3.14 + CPython Wiki 教程 — 七概念方法论执行报告"
 source: "https://github.com/python/cpython/tree/v3.14.0"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/seven-concepts-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/seven-concepts-report.toml"
 ---
 # Python 3.14 + CPython Wiki 教程 — 七概念方法论执行报告
 

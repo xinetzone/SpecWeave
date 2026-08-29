@@ -2,7 +2,7 @@
 id: "tool-failure-degradation-matrix"
 title: "关键路径工具失败降级矩阵"
 source: "../../retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/insight-extraction.md#洞察1"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/tool-failure-degradation-matrix.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/tool-failure-degradation-matrix.toml"
 category: "operations"
 tags: ["工具降级", "降级矩阵", "webfetch", "defuddle", "浏览器mcp", "关键路径", "三级降级", "标准化"]
 date: "2026-07-06"
@@ -120,7 +120,7 @@ flowchart TD
 - **事不过二原则**：子代理最多重试 1 次（总共 2 次尝试），第二次失败后必须切换策略
 - 委派格式敏感任务时，必须在 Query 中包含"格式参照样本"和"完整性检查清单"
 - 一次 `general_purpose_task` 调用只委派一个原子任务，禁止多任务合并委派
-- 子代理产出必须经验收检查（参见 [subagent-output-quality-checklist.md](../../../templates/subagent-output-quality-checklist.md)）
+- 子代理产出必须经验收检查（参见 [subagent-output-quality-checklist.md](../../../.agents/templates/subagent-output-quality-checklist.md)）
 
 ### 2.5 文档链接验证
 
@@ -181,9 +181,9 @@ flowchart TD
 | 关联规范 | 关系 |
 |---------|------|
 | [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) | 微信公众号场景的详细降级指南，本矩阵 §2.1 的深度展开 |
-| [subagent-output-quality-checklist.md](../../../templates/subagent-output-quality-checklist.md) | 子代理委派质量门，本矩阵 §2.4 的预防性补充 |
-| [.agents/tools/](../../../tools/README.md) | 工具使用规范，本矩阵是其失败应对的补充 |
-| [docs/retrospective/patterns/](../../retrospective/patterns/README.md) | 可复用模式库，本矩阵本身是 L3 标准化模式 |
+| [subagent-output-quality-checklist.md](../../../.agents/templates/subagent-output-quality-checklist.md) | 子代理委派质量门，本矩阵 §2.4 的预防性补充 |
+| [.agents/tools/](../../../.agents/tools/README.md) | 工具使用规范，本矩阵是其失败应对的补充 |
+| [docs/retrospective/patterns/](../../../.agents/docs/retrospective/patterns/README.md) | 可复用模式库，本矩阵本身是 L3 标准化模式 |
 
 ## 五、验证案例
 
@@ -197,9 +197,9 @@ flowchart TD
 
 - [wechat-mp-content-extraction.md](wechat-mp-content-extraction.md) — 微信公众号内容提取双路径决策模型
 - [html-body-extraction.md](html-body-extraction.md) — HTML 正文提取操作指南
-- [subagent-output-quality-checklist.md](../../../templates/subagent-output-quality-checklist.md) — 通用子代理输出质量校验清单
-- [subagent-wiki-delivery-checklist.md](../../../templates/subagent-wiki-delivery-checklist.md) — Wiki 子代理委派与产出验收检查清单
-- [retrospective-dspark-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/README.md) — 本矩阵 v1.0 来源复盘（工具降级洞察）
+- [subagent-output-quality-checklist.md](../../../.agents/templates/subagent-output-quality-checklist.md) — 通用子代理输出质量校验清单
+- [subagent-wiki-delivery-checklist.md](../../../.agents/templates/subagent-wiki-delivery-checklist.md) — Wiki 子代理委派与产出验收检查清单
+- [retrospective-dspark-wiki-20260704](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/README.md) — 本矩阵 v1.0 来源复盘（工具降级洞察）
 
 ## Changelog
 

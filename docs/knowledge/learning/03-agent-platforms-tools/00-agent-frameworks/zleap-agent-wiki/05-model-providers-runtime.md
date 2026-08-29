@@ -116,4 +116,4 @@ inbound (Web/CLI/IM/任务)
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [04 Skill 与工具权限](./04-skills-tools-permissions.md) | [README](./README.md) | → [06 IM 网关与定时任务](./06-gateway-tasks.md) |
+| ← [04 Skill 与工具权限](04-skills-tools-permissions.md) | [README](README.md) | → [06 IM 网关与定时任务](06-gateway-tasks.md) |

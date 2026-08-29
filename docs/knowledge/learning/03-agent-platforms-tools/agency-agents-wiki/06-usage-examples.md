@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-06"
 title: "The Agency 完全指南 — 使用示例"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/06-usage-examples.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/06-usage-examples.toml"
 ---
 # The Agency 完全指南 — 使用示例
 

@@ -1,7 +1,7 @@
 ---
 id: "pattern-validation-v3-template-batch-upgrade"
 title: "方法论模式第3次验证报告：模板批量升级场景"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.toml"
 category: "best-practices"
 tags: ["pattern-validation", "L2-pattern", "phased-rollout", "classification-disposition", "batch-upgrade", "governance", "methodology-evolution"]
 date: "2026-07-06"
@@ -13,8 +13,8 @@ summary: "分类处置决策树(Classification-Disposition Decision Tree)与三�
 
 > **验证场景**：comprehensive-retrospective-template v1.2 批量标准化升级（61个复盘项目）
 > **验证模式**：
-> 1. [classification-disposition-decision-tree](../../retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)（分类处置决策树）
-> 2. [phased-rollout-validation](../../retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)（三阶段渐进推广验证）
+> 1. [classification-disposition-decision-tree](../../../.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)（分类处置决策树）
+> 2. [phased-rollout-validation](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)（三阶段渐进推广验证）
 > **验证次数**：第3次（validation_count 2 → 3）
 > **验证日期**：2026-07-06
 
@@ -29,7 +29,7 @@ comprehensive-retrospective-template 升级至 v1.2.0，新增三项要素：
 
 本次升级目标是将新模板要素推广到所有 2026-06-29 及之后创建的复盘项目。这是两个治理模式首次应用于**轻量级模板升级**场景（前两次验证分别为元原子化批量推广和文档治理检查清单升级）。
 
-**验证来源复盘项目**：[retrospective-template-v1.2-batch-upgrade-20260706](../../retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/README.md)
+**验证来源复盘项目**：[retrospective-template-v1.2-batch-upgrade-20260706](../../../.agents/docs/retrospective/reports/project-governance/documentation-governance/retrospective-template-v1.2-batch-upgrade-20260706/README.md)
 
 ---
 
@@ -162,8 +162,8 @@ comprehensive-retrospective-template 升级至 v1.2.0，新增三项要素：
 ### 6.2 两个模式的文档更新
 
 已更新两个模式文件：
-- [classification-disposition-decision-tree](../../retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)：新增案例3，validation_count 2→3
-- [phased-rollout-validation](../../retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)：新增案例3并记录"P1后集中格式校验"新增实践，validation_count 2→3
+- [classification-disposition-decision-tree](../../../.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/classification-disposition-decision-tree.md)：新增案例3，validation_count 2→3
+- [phased-rollout-validation](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/phased-rollout-validation.md)：新增案例3并记录"P1后集中格式校验"新增实践，validation_count 2→3
 
 ### 6.3 升级为L3的前置条件
 

@@ -9,7 +9,7 @@ tags: ["Hermes", "hermes-agent", "Nous Research", "Agent框架", "wiki教程", "
 # Hermes Agent 学习 Wiki 教程 - Product Requirement Document
 
 ## Overview
-- **Summary**: 基于 Hermes Agent 官方中文文档（hermes-agent.nousresearch.com/docs/zh-Hans/）与本地源码仓库 `external/libs/hermes-agent`（NousResearch/hermes-agent），系统创建一份原子化的 Hermes Agent 学习 Wiki 教程。Hermes 是由 Nous Research 构建的自进化 AI Agent，是"唯一内置学习闭环"的智能代理——从经验创建技能、在使用中改进技能、主动持久化知识、搜索过往对话、跨会话构建深度理解。教程覆盖产品定位、核心特性、快速安装上手、CLI/斜杠命令、配置、消息网关、工具与工具集、技能系统、记忆系统、MCP 集成、定时调度、委派与并行、架构解析与源码导读，输出到 `.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/` 目录。
+- **Summary**: 基于 Hermes Agent 官方中文文档（hermes-agent.nousresearch.com/docs/zh-Hans/）与本地源码仓库 `external/libs/hermes-agent`（NousResearch/hermes-agent），系统创建一份原子化的 Hermes Agent 学习 Wiki 教程。Hermes 是由 Nous Research 构建的自进化 AI Agent，是"唯一内置学习闭环"的智能代理——从经验创建技能、在使用中改进技能、主动持久化知识、搜索过往对话、跨会话构建深度理解。教程覆盖产品定位、核心特性、快速安装上手、CLI/斜杠命令、配置、消息网关、工具与工具集、技能系统、记忆系统、MCP 集成、定时调度、委派与并行、架构解析与源码导读，输出到 `docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/` 目录。
 - **Purpose**: 帮助 AI Agent 开发者、Hermes 生态用户、知识工程师、架构师快速掌握 Hermes Agent——如何用一套代理核心运行在 CLI/消息网关/TUI/桌面端，如何通过闭环学习（记忆+技能）跨会话成长，如何通过插件与技能扩展而非扩张核心，以及其"核心窄腰、能力在边缘"的架构哲学。
 - **Target Users**: AI Agent 开发者、Hermes 用户、知识工程师、架构师、技术决策者、对自进化 Agent 框架感兴趣的技术人员。
 
@@ -77,7 +77,7 @@ tags: ["Hermes", "hermes-agent", "Nous Research", "Agent框架", "wiki教程", "
 - **Dependencies**:
   - 参考现有 wiki 格式：`hermes-agent-integration/`、`echobird-wiki/`、`eve-wiki/`、`zleap-agent-wiki/`
   - 资料来源：<https://hermes-agent.nousresearch.com/docs/zh-Hans/>（官方中文文档）、`external/libs/hermes-agent/`（本地源码：README.zh-CN.md、AGENTS.md、website/docs/ 目录结构、核心 Python 文件）
-  - 输出路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/`
+  - 输出路径：`docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/`
 
 ## Assumptions
 - 输出目录归类在 `03-agent-platforms-tools/` 下是合理的（Hermes 属 Agent 平台/工具）
@@ -177,4 +177,4 @@ tags: ["Hermes", "hermes-agent", "Nous Research", "Agent框架", "wiki教程", "
 ## Impact
 - **Affected specs**: `03-agent-platforms-tools/` Agent 平台知识体系；与 `hermes-agent-integration/`、`01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/` 形成互补
 - **Affected code**: 无源代码变更；仅新增知识文档 + 更新 03-agent-platforms-tools/README.md 索引
-- **Affected docs**: `.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/`（新建）、`03-agent-platforms-tools/README.md`（更新索引）
+- **Affected docs**: `docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/`（新建）、`03-agent-platforms-tools/README.md`（更新索引）

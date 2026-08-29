@@ -350,12 +350,12 @@ OKF设计了**渐进式披露**机制应对规模问题：
 
 你已经完成了Knowledge Catalog Wiki的全部内容。回顾一下：
 
-1. **[00-overview.md](./00-overview.md)**：理解了产品定位和"知识即代码"范式
-2. **[01-okf-spec.md](./01-okf-spec.md)**：掌握了OKF v0.2完整规范
-3. **[02-reference-agent.md](./02-reference-agent.md)**：了解了参考智能体和可视化器
-4. **[03-metadata-as-code.md](./03-metadata-as-code.md)**：学会了kcmd工具链和Git工作流
-5. **[04-samples.md](./04-samples.md)**：看到了Discovery/Enrichment Agent实战
-6. **[05-best-practices.md](./05-best-practices.md)**：知道了如何避坑
+1. **[00-overview.md](00-overview.md)**：理解了产品定位和"知识即代码"范式
+2. **[01-okf-spec.md](01-okf-spec.md)**：掌握了OKF v0.2完整规范
+3. **[02-reference-agent.md](02-reference-agent.md)**：了解了参考智能体和可视化器
+4. **[03-metadata-as-code.md](03-metadata-as-code.md)**：学会了kcmd工具链和Git工作流
+5. **[04-samples.md](04-samples.md)**：看到了Discovery/Enrichment Agent实战
+6. **[05-best-practices.md](05-best-practices.md)**：知道了如何避坑
 
 ### 下一步建议
 
@@ -366,4 +366,4 @@ OKF设计了**渐进式披露**机制应对规模问题：
 
 ---
 
-返回入口：[README.md](./README.md)
+返回入口：[README.md](README.md)

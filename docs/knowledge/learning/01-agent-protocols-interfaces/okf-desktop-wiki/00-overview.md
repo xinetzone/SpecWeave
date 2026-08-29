@@ -168,4 +168,4 @@ okf-desktop/
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| （无，是第一章） | [README](./README.md) | [01 架构深度解析](./01-architecture.md) |
+| （无，是第一章） | [README](README.md) | [01 架构深度解析](01-architecture.md) |

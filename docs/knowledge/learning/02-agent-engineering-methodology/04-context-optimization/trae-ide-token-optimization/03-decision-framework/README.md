@@ -11,4 +11,4 @@ type: index
 
 | 文档 | 内容 |
 |-----|------|
-| [01-quick-checklist.md](./01-quick-checklist.md) | 14项快速检查清单，上手即用 |
+| [01-quick-checklist.md](01-quick-checklist.md) | 14项快速检查清单，上手即用 |

@@ -1,7 +1,7 @@
 ---
 id: "vendor-flexloop-integration-guide"
 title: "vendor/flexloop 功能集成方案决策指南"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
 category: "operations"
 tags: ["vendor", "flexloop", "agentforge", "submodule", "集成方案", "三区域模型", "四不原则"]
 date: "2026-06-29"
@@ -13,7 +13,7 @@ summary: "当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，�
 
 ## 背景
 
-SpecWeave 通过 git submodule 引入 flexloop（AgentForge）作为规范参考实现，当前锁定版本为 `v0.7.1-270-gd618849 (d618849a)`。在日常开发中，经常会遇到需要"新增 flexloop 功能"的需求，但根据[三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)和[外部依赖四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)，**直接在 `vendor/flexloop/` 内部新增或修改文件是严格禁止的**（违反"不侵入"原则，会导致 submodule permanent dirty，版本控制混乱）。
+SpecWeave 通过 git submodule 引入 flexloop（AgentForge）作为规范参考实现，当前锁定版本为 `v0.7.1-270-gd618849 (d618849a)`。在日常开发中，经常会遇到需要"新增 flexloop 功能"的需求，但根据[三区域边界模型](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)和[外部依赖四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)，**直接在 `vendor/flexloop/` 内部新增或修改文件是严格禁止的**（违反"不侵入"原则，会导致 submodule permanent dirty，版本控制混乱）。
 
 本文档提供一份决策指南，帮助开发者根据功能类型选择正确的合规集成路径。
 
@@ -87,10 +87,10 @@ flowchart LR
 |------|---------|
 | **1. 评估通用性** | 判断脚本是否仅适用于 flexloop 特定场景？是否对 SpecWeave 有跨项目复用价值？仅萃取有普遍价值的内容。 |
 | **2. 阅读理解** | 完整阅读原始实现，理解其依赖关系、前置假设、输入输出约定、边界条件处理。确认是否导入 flexloop 特有模块？路径是否硬编码？ |
-| **3. 适配改写** | 复制到 [`.agents/scripts/`](../../../scripts/README.md)，调整命名符合 SpecWeave 风格；修改路径处理使用 [`.agents/scripts/lib/`](../../../scripts/lib/README.md) 共享库（如 `lib.cli` 输出规范、`lib.project` 路径工具）；移除 flexloop 特有约束和依赖。 |
+| **3. 适配改写** | 复制到 [`.agents/scripts/`](../../../.agents/scripts/README.md)，调整命名符合 SpecWeave 风格；修改路径处理使用 [`.agents/scripts/lib/`](../../../.agents/scripts/lib/README.md) 共享库（如 `lib.cli` 输出规范、`lib.project` 路径工具）；移除 flexloop 特有约束和依赖。 |
 | **4. 来源标注** | Python 文件头添加 `# Source: vendor/flexloop/apps/chaos/.agents/scripts/xxx.py`；Markdown frontmatter 添加 `source = "..."`；如有重大适配修改，简要说明。 |
-| **5. 测试验证** | 在 [`.agents/scripts/tests/conftest.py`](../../../scripts/tests/conftest.py) 编写适配测试；运行测试确认在 SpecWeave 环境中正常工作；确保不依赖 flexloop 特有路径。 |
-| **6. 登记更新** | 更新 [`.agents/scripts/README.md`](../../../scripts/README.md) 索引；运行 `python .agents/scripts/check-duplication.py` 确认无重复代码；如适用更新案例文档。 |
+| **5. 测试验证** | 在 [`.agents/scripts/tests/conftest.py`](../../../.agents/scripts/tests/conftest.py) 编写适配测试；运行测试确认在 SpecWeave 环境中正常工作；确保不依赖 flexloop 特有路径。 |
+| **6. 登记更新** | 更新 [`.agents/scripts/README.md`](../../../.agents/scripts/README.md) 索引；运行 `python .agents/scripts/check-duplication.py` 确认无重复代码；如适用更新案例文档。 |
 
 **禁止行为**：
 - ❌ `sys.path.insert(0, "vendor/flexloop/...")` 后直接 import
@@ -114,9 +114,9 @@ flowchart LR
    [flexloop Python 规则](../../../vendor/flexloop/apps/chaos/.agents/rules/python.md)
    ```
 
-2. **案例对照**：在 [`.agents/cases/agentforge-adoption.md`](../../../cases/agentforge-adoption.md) 中添加对照分析表格，说明本体系与 AgentForge 的对应关系。
+2. **案例对照**：在 [`.agents/cases/agentforge-adoption.md`](../../../.agents/cases/agentforge-adoption.md) 中添加对照分析表格，说明本体系与 AgentForge 的对应关系。
 
-3. **模式固化**：如果需要将参考模式转化为 SpecWeave 的强制规则，在 SpecWeave 主权区（如 [`.agents/rules/`](../../../rules/README.md)）新建/修改规则文件，**标注参考来源**。
+3. **模式固化**：如果需要将参考模式转化为 SpecWeave 的强制规则，在 SpecWeave 主权区（如 [`.agents/rules/`](../../../.agents/rules/README.md)）新建/修改规则文件，**标注参考来源**。
 
 **关键约束**：
 - 使用相对路径，禁止 `file:///` 绝对路径（跨机器/克隆位置会断链）
@@ -161,7 +161,7 @@ sequenceDiagram
 **关键约束**：
 - 采用**固定 commit 锁定策略**，禁止 `branch = main` 配置和 `git submodule update --remote`
 - 更新前必须查看 flexloop `CHANGELOG.md`，评估 breaking changes（目录结构变化、脚本接口变更）
-- 提交必须**同时包含** gitlink 变更和 [vendor/VERSION.md](../../../../vendor/VERSION.md) 更新，保持元数据一致
+- 提交必须**同时包含** gitlink 变更和 [vendor/VERSION.md](../../../vendor/VERSION.md) 更新，保持元数据一致
 - 更新后必须运行 `repo-check.py vendor --deep` 执行 5 项深度检查
 
 **版本标识格式**：`v0.7.1-270-gd618849 (d618849a)`（tag + commit 数 + 短哈希 + 完整哈希前缀）
@@ -206,13 +206,13 @@ flowchart TB
 
 | 工具类型 | 建议存放位置 |
 |---------|------------|
-| vendor 验证检查项扩展 | [`.agents/scripts/lib/checks/vendor.py`](../../../scripts/lib/checks/vendor.py) |
-| 新增独立验证脚本 | [`.agents/scripts/`](../../../scripts/README.md) |
+| vendor 验证检查项扩展 | [`.agents/scripts/lib/checks/vendor.py`](../../../.agents/scripts/lib/checks/vendor.py) |
+| 新增独立验证脚本 | [`.agents/scripts/`](../../../.agents/scripts/README.md) |
 | 协同协议/操作指南 | [docs/knowledge/](../README.md) 新增文档 |
-| 萃取脚本包装器 | [`.agents/scripts/`](../../../scripts/README.md)，标注 flexloop 来源 |
-| vendor 元数据配置 | [vendor/](../../../../vendor/README.md) 根级（README.md、VERSION.md 扩展） |
+| 萃取脚本包装器 | [`.agents/scripts/`](../../../.agents/scripts/README.md)，标注 flexloop 来源 |
+| vendor 元数据配置 | [vendor/](../../../vendor/README.md) 根级（README.md、VERSION.md 扩展） |
 
-**示例**：如果要给 `repo-check.py vendor --deep` 增加第6项检查（如"检测过期萃取脚本"），应该修改 [vendor.py](../../../scripts/lib/checks/vendor.py)，在现有 `_check_*` 函数族中新增 `_check_outdated_extractions()` 方法，而不是修改 vendor/flexloop/ 内的任何文件。
+**示例**：如果要给 `repo-check.py vendor --deep` 增加第6项检查（如"检测过期萃取脚本"），应该修改 [vendor.py](../../../.agents/scripts/lib/checks/vendor.py)，在现有 `_check_*` 函数族中新增 `_check_outdated_extractions()` 方法，而不是修改 vendor/flexloop/ 内的任何文件。
 
 ## 快速检查清单
 
@@ -241,7 +241,7 @@ flowchart TB
 ## 参考
 
 - [VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md) — flexloop 子模块协同规范（完整版）
-- [三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md) — 外部代码依赖的主权划分模型
-- [外部依赖四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md) — submodule 管理铁律
-- [临时依赖管理协议](../../../protocols/dependency-management.md) — 依赖管理的协议定义
+- [三区域边界模型](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md) — 外部代码依赖的主权划分模型
+- [外部依赖四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md) — submodule 管理铁律
+- [临时依赖管理协议](../../../.agents/protocols/dependency-management.md) — 依赖管理的协议定义
 - [submodule-modified-content 故障排查](../troubleshooting/submodule-modified-content.md) — submodule dirty 状态的根因分析与修复

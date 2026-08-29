@@ -96,4 +96,4 @@ flowchart TD
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← 这是教程第 1 章 | [README](./README.md) | → [01 产品定位与核心价值](./01-product-positioning.md) |
+| ← 这是教程第 1 章 | [README](README.md) | → [01 产品定位与核心价值](01-product-positioning.md) |

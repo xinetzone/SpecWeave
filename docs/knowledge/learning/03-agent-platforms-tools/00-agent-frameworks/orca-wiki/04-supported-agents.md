@@ -86,4 +86,4 @@ Orca 奉行 **"自带 Agent / 自带订阅"**（Bring your own Agent / Subscript
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [03 Orca CLI 与多 Agent 编排](./03-orca-cli-orchestration.md) | [README](./README.md) | → [05 快速上手指南](./05-quickstart.md) |
+| ← [03 Orca CLI 与多 Agent 编排](03-orca-cli-orchestration.md) | [README](README.md) | → [05 快速上手指南](05-quickstart.md) |

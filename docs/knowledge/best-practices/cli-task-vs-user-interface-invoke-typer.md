@@ -74,7 +74,7 @@ summary: "invoke 与 typer 并非同类竞争工具——invoke 是任务执行�
 
 ### 步骤 4 详解：Windows 平台冒烟测试三件套
 
-本地 [tasks.py](../../../../vendor/flexloop/apps/chaos/tasks.py) 曾为绕开 Windows 控制台编码自实现 `_write()` 输出辅助函数（`_console_encoding`/`os.write`），说明平台差异是比框架特性更真实的成本。选型后必须验证：
+本地 [tasks.py](../../../vendor/flexloop/apps/chaos/tasks.py) 曾为绕开 Windows 控制台编码自实现 `_write()` 输出辅助函数（`_console_encoding`/`os.write`），说明平台差异是比框架特性更真实的成本。选型后必须验证：
 
 | 验证项 | 关注点 |
 |--------|--------|
@@ -117,9 +117,9 @@ summary: "invoke 与 typer 并非同类竞争工具——invoke 是任务执行�
 - **invoke 官方**：[pyinvoke.org](https://www.pyinvoke.org/) · [docs.pyinvoke.org](https://docs.pyinvoke.org/)
 - **typer 官方**：[typer.tiangolo.com](https://typer.tiangolo.com/features/) · [Alternatives](https://typer.tiangolo.com/alternatives/)
 - **社区证据**：[invoke issue #762](https://github.com/pyinvoke/invoke/issues/762) · [typer-invoke (PyPI)](https://pypi.org/project/typer-invoke/)
-- **本地实例**：[tasks.py](../../../../vendor/flexloop/apps/chaos/tasks.py)（invoke 用法）· [pyproject.toml](../../../../vendor/flexloop/apps/chaos/pyproject.toml)（依赖声明）
+- **本地实例**：[tasks.py](../../../vendor/flexloop/apps/chaos/tasks.py)（invoke 用法）· [pyproject.toml](../../../vendor/flexloop/apps/chaos/pyproject.toml)（依赖声明）
 - **相关 best-practices**：
-  - [cli-setup-in-agent-environment.md](./cli-setup-in-agent-environment.md)：IDE Agent 环境下 CLI 工具配置操作手册
+  - [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md)：IDE Agent 环境下 CLI 工具配置操作手册
 
 ---
 

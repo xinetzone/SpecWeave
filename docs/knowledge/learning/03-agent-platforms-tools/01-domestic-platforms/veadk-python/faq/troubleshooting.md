@@ -36,7 +36,7 @@ wiki_version: '1.0'
    echo $ARK_API_KEY
    ```
 2. 确认显式传参优先级：显式传参 `model_api_key` > 环境变量 > config.yaml
-   参考：[API Key四级优先级](../faq/best-practices.md#61-api-key四级优先级)
+   参考：[API Key四级优先级](best-practices.md#61-api-key四级优先级)
 3. 如果使用 `model_api_key_name`，确认ARK Token服务可达
 4. 检查 `CLOUD_PROVIDER` 环境变量是否正确
    - 国内火山引擎：`CLOUD_PROVIDER=volcengine`（默认）

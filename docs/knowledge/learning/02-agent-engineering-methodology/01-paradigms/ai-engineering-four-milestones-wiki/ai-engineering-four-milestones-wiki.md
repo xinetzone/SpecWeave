@@ -2,7 +2,7 @@
 id: "ai-engineering-four-milestones-wiki-single-file"
 title: "AI工程的四个路标：沿瓶颈外移主线（单文件导航版）"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/ai-engineering-four-milestones-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/ai-engineering-four-milestones-wiki.toml"
 ---
 # AI工程的四个路标：沿瓶颈外移主线
 

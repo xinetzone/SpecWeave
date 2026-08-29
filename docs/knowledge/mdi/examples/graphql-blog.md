@@ -16,7 +16,7 @@ tags:
   - blog
   - api
   - mdi-example
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/graphql-blog.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi/examples/graphql-blog.toml"
 ---
 # Blog GraphQL API
 

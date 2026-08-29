@@ -2,7 +2,7 @@
 id: "book-to-skill-wiki-08"
 title: "book-to-skill 完全指南 — 可复用工程模式"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/08-transferable-patterns.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/08-transferable-patterns.toml"
 ---
 # 可复用工程模式
 

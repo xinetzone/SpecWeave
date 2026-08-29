@@ -357,4 +357,4 @@ ORCA terminal send --terminal <handle> --text "<task brief>" --enter --json
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [02 八大核心功能详解](./02-core-features.md) | [README](./README.md) | → [04 支持的 Agent 清单](./04-supported-agents.md) |
+| ← [02 八大核心功能详解](02-core-features.md) | [README](README.md) | → [04 支持的 Agent 清单](04-supported-agents.md) |

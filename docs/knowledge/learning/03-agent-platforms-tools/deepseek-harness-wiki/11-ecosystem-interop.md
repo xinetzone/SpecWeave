@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-11"
 title: "DeepSeek Harness 完全指南 — 与 Claude Code/Codex/MCP 生态互操作"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/11-ecosystem-interop.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/11-ecosystem-interop.toml"
 ---
 # 11 与 Claude Code/Codex/MCP 生态互操作
 

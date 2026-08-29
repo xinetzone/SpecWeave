@@ -162,4 +162,4 @@ VeADK 三语言 SDK 均在 GitHub 开源，接受社区 Issue 与 Pull Request �
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [02 架构](./02-core-architecture.md) | [README](./README.md) | → [04 SDK & CLI](./04-agentkit-sdk-cli.md) |
+| ← [02 架构](02-core-architecture.md) | [README](README.md) | → [04 SDK & CLI](04-agentkit-sdk-cli.md) |

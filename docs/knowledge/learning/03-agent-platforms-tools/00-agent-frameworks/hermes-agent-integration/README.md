@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-hermes-agent-integration-index"
 title: "SpecWeave 接入 Hermes Agent 集成指南"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/README.toml"
 ---
 # SpecWeave 接入 Hermes Agent 集成指南
 
@@ -66,6 +66,6 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-
 - [hermes-okf Wiki](https://github.com/EliaszDev/hermes-okf/wiki)（Quick-Start / CLI-Reference / Troubleshooting）
 - [hermes-okf Wiki 教程](../../../01-agent-protocols-interfaces/okf-wiki/README.md)（项目内，基础概念）
 - [OKF 开放知识格式指南](../../../01-agent-protocols-interfaces/okf-wiki/README.md)（项目内）
-- [SpecWeave 能力注册中心](../../../../../../capability-registry.md)（SpecWeave 能力全量索引）
-- [SpecWeave skills 索引](../../../../../../skills/README.md)
-- [SpecWeave commands 指令集目录](../../../../../../commands/README.md)
+- [SpecWeave 能力注册中心](../../../../../../.agents/capability-registry.md)（SpecWeave 能力全量索引）
+- [SpecWeave skills 索引](../../../../../../.agents/skills/README.md)
+- [SpecWeave commands 指令集目录](../../../../../../.agents/commands/README.md)

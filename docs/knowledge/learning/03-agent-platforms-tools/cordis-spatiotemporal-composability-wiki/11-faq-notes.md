@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-11"
 title: "Cordis — FAQ 与注意事项"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/11-faq-notes.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/11-faq-notes.toml"
 ---
 # Cordis — FAQ 与注意事项
 

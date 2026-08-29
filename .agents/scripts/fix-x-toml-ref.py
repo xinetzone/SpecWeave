@@ -5,10 +5,10 @@
 根据文件在项目中的位置，自动计算到 .meta/toml/ 下对应 TOML 文件的相对路径。
 镜像布局（双轨制，命名空间前缀保留）：
   .meta/toml/<md 仓库相对路径，.md 换 .toml>
-  例如 .agents/docs/knowledge/x.md -> .meta/toml/.agents/docs/knowledge/x.toml
+  例如 docs/knowledge/x.md -> .meta/toml/docs/knowledge/x.toml
        .trae/specs/y.md            -> .meta/toml/.trae/specs/y.toml
 路径计算公式：
-  1. MD文件相对于项目根的路径 P（如 .agents/docs/knowledge/x.md）
+  1. MD文件相对于项目根的路径 P（如 docs/knowledge/x.md）
   2. MD文件所在目录距项目根的深度 N（父目录的路径段数）
   3. x-toml-ref = '../' * N + '.meta/toml/' + P（.md 后缀替换为 .toml）
 
@@ -17,8 +17,8 @@
 曾导致 dry-run 误报 2338 个"将修复"，实际会把正确链接改成断链）。
 
 用法：
-    python fix-x-toml-ref.py --dir .agents/docs/knowledge/ [--dry-run] [--write] [--create-toml]
-    python fix-x-toml-ref.py --file .agents/docs/knowledge/x.md --dry-run
+    python fix-x-toml-ref.py --dir docs/knowledge/ [--dry-run] [--write] [--create-toml]
+    python fix-x-toml-ref.py --file docs/knowledge/x.md --dry-run
 """
 
 

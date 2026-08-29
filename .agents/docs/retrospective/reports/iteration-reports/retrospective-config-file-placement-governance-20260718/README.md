@@ -106,7 +106,7 @@ session: "retro-20260718-config-file-placement-governance"
 
 | 文件 | 行数 | 字节数 | 说明 |
 |------|------|--------|------|
-| [config-file-placement-convention.md](../../../../../../.agents/docs/knowledge/best-practices/config-file-placement-convention.md) | 432 | 31071 | 7 章节 + 反模式 |
+| [config-file-placement-convention.md](../../../../../../docs/knowledge/best-practices/config-file-placement-convention.md) | 432 | 31071 | 7 章节 + 反模式 |
 
 #### 修改的现有文件
 - `.agents/scripts/ci-check.ps1` 与 `ci-check.sh`：新增步骤 17（文件放置，阻塞）、18（.temp 生命周期，14天警告/30天错误）
@@ -343,7 +343,7 @@ session: "retro-20260718-config-file-placement-governance"
 - [verify-sitecustomize-autoload.py](../../../../../../.agents/scripts/verify-sitecustomize-autoload.py)
 - [check-file-placement.py](../../../../../../.agents/scripts/check-file-placement.py)
 - [check-temp-lifecycle.py](../../../../../../.agents/scripts/check-temp-lifecycle.py)
-- [config-file-placement-convention.md](../../../../../../.agents/docs/knowledge/best-practices/config-file-placement-convention.md)
+- [config-file-placement-convention.md](../../../../../../docs/knowledge/best-practices/config-file-placement-convention.md)
 
 ### 关联复盘
 - [retrospective-ci-quality-gates-path-migration-20260718](../../bugfix/retrospective-ci-quality-gates-path-migration-20260718/README.md)（前置复盘，CI 质量门禁路径迁移）

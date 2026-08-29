@@ -14,7 +14,7 @@ tags:
   - user
   - crud
   - mdi-example
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/user-api.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi/examples/user-api.toml"
 ---
 # 用户管理 API
 

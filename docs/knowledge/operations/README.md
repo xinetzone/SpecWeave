@@ -1,7 +1,7 @@
 ---
 id: "operations-index"
 title: "运维操作指南库"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/README.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/README.toml"
 category: "operations"
 date: "2026-07-09"
 ---
@@ -117,4 +117,4 @@ date: "2026-07-09"
 - [📁 故障排查指南](../troubleshooting/README.md) - 操作过程中遇到问题时查阅
 - [📁 架构决策记录](../decisions/README.md) - 理解操作背后的决策依据
 - [📁 团队最佳实践库](../best-practices/README.md) - 通用方法论与Checklist
-- [🔧 check-links.py](../../../scripts/check-links.py) - 文档链接有效性验证工具
+- [🔧 check-links.py](../../../.agents/scripts/check-links.py) - 文档链接有效性验证工具

@@ -116,4 +116,4 @@ Eve 的工程理念可以概括为三点：
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [06 竞品对比与选型](./06-comparison-selection.md) | [README](./README.md) | → [08 FAQ 与适用范围](./08-faq.md) |
+| ← [06 竞品对比与选型](06-comparison-selection.md) | [README](README.md) | → [08 FAQ 与适用范围](08-faq.md) |

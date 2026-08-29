@@ -26,7 +26,7 @@
   - [x] SubTask 3.3: G3 质量门验证 — 模式包含触发条件+核心步骤+反模式+迁移验证
 
 - [x] Task 4: 创建最佳实践 `dataloader-pickle-diagnosis-sop.md` ✅ G3 通过
-  - [x] SubTask 4.1: 在 `.agents/docs/knowledge/best-practices/` 创建文件，包含 frontmatter（id/title/category/tags/date/status/summary）
+  - [x] SubTask 4.1: 在 `docs/knowledge/best-practices/` 创建文件，包含 frontmatter（id/title/category/tags/date/status/summary）
   - [x] SubTask 4.2: 编写正文：5 步诊断流程（复现→定位→识别→修复→验证）、6 种不可序列化模式对照表、3 种修复方案模板、跨启动模式验证矩阵、常见错误信息对照表、环境变量速查、代码审查附加检查项
   - [x] SubTask 4.3: G3 质量门验证 — SOP 可迁移（有触发条件+核心步骤+反模式+迁移验证）
 

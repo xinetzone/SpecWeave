@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-readme"
 title: "Hermes Agent 学习 Wiki 教程"
 source: "https://github.com/NousResearch/hermes-agent + https://hermes-agent.nousresearch.com/docs/"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/README.toml"
 category: "learning"
 tags: ["hermes", "agent", "self-evolving", "learning-loop", "nous-research", "message-gateway", "skill", "memory", "mcp", "cron", "delegation", "architecture"]
 date: "2026-08-10"

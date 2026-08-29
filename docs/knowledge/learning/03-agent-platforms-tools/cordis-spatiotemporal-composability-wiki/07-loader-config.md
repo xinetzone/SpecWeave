@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-07"
 title: "Cordis — 声明式加载与配置合并"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/07-loader-config.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/07-loader-config.toml"
 ---
 # Cordis — 声明式加载与配置合并
 

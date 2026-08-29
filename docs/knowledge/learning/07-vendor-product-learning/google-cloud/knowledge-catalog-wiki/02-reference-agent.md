@@ -203,7 +203,7 @@ HTML将Bundle嵌入为JSON blob，使用：
 
 ## 五、预构建Bundles解析
 
-仓库中包含4个现成的可浏览bundle，由参考智能体生成并提交到[`bundles/`](../okf/bundles/)：
+仓库中包含4个现成的可浏览bundle，由参考智能体生成并提交到[`bundles/`](../okf/bundles)：
 
 | Bundle | 数据集 | 特点 | viz.html |
 |--------|--------|------|----------|
@@ -285,4 +285,4 @@ src/reference_agent/
 
 ---
 
-继续阅读：[03-metadata-as-code.md - 元数据即代码工具链(kcmd/mdcode)](./03-metadata-as-code.md)
+继续阅读：[03-metadata-as-code.md - 元数据即代码工具链(kcmd/mdcode)](03-metadata-as-code.md)

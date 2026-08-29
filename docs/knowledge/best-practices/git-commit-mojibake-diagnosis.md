@@ -30,7 +30,7 @@ summary: "Windows 环境下 git 提交中文信息在终端显示乱码，但存
 
 **适用范围**：
 - Windows 环境下提交含中文 commit message 后，`git log`/`git show` 显示乱码的排查
-- 使用 [git-commit-utf8.py](../../../scripts/git-commit-utf8.py) 或命令行 `-m` 提交中文时的结果验证
+- 使用 [git-commit-utf8.py](../../../.agents/scripts/git-commit-utf8.py) 或命令行 `-m` 提交中文时的结果验证
 - 任何需要判断「显示问题 vs 存储问题」的编码排查场景
 
 ---
@@ -114,7 +114,7 @@ os.remove(p)
 
 ### 3.2 备选：git-commit-utf8.py
 
-项目已有 [git-commit-utf8.py](../../../scripts/git-commit-utf8.py) 工具（自动处理编码）。注意：**它返回的 PASS 信息在终端仍可能显示为乱码，必须用第二节的双层验证法确认存储字节**。
+项目已有 [git-commit-utf8.py](../../../.agents/scripts/git-commit-utf8.py) 工具（自动处理编码）。注意：**它返回的 PASS 信息在终端仍可能显示为乱码，必须用第二节的双层验证法确认存储字节**。
 
 ### 3.3 反模式
 
@@ -137,11 +137,11 @@ os.remove(p)
 
 ## 关联资源
 
-- **脚本工具**：[git-commit-utf8.py](../../../scripts/git-commit-utf8.py)（Windows 中文提交工具）
+- **脚本工具**：[git-commit-utf8.py](../../../.agents/scripts/git-commit-utf8.py)（Windows 中文提交工具）
 - **相关 best-practices**：
-  - [git-push-rejected-resolution.md](./git-push-rejected-resolution.md)：Git 推送冲突解决
-  - [git-hook-chain-architecture.md](./git-hook-chain-architecture.md)：pre-commit 钩子架构
-  - [windows-zero-friction-development-guide.md](./windows-zero-friction-development-guide.md)：Windows 环境开发指南
+  - [git-push-rejected-resolution.md](git-push-rejected-resolution.md)：Git 推送冲突解决
+  - [git-hook-chain-architecture.md](git-hook-chain-architecture.md)：pre-commit 钩子架构
+  - [windows-zero-friction-development-guide.md](windows-zero-friction-development-guide.md)：Windows 环境开发指南
 
 ---
 

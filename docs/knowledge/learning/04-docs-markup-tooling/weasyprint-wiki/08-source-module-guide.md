@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-08-source"
 title: "源码模块导览"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","source-code","modules","architecture"]
@@ -112,9 +112,9 @@ weasyprint/
 1. **从入口开始**：先读 [__init__.py](../../../mdi/generated/case1/__init__.py) 理解公共 API
 2. **理解渲染流程**：读 [document.py](../../../../../../external/WeasyPrint/weasyprint/document.py) 的 `Document.render()` 方法了解六步管线
 3. **CSS 级联**：读 [css/__init__.py](../../../mdi/generated/case1/__init__.py) 的 `StyleFor` 类
-4. **盒树构建**：读 [formatting_structure/build.py](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py)
+4. **盒树构建**：读 [formatting_structure/build.py](../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py)
 5. **布局核心**：读 [layout/__init__.py](../../../mdi/generated/case1/__init__.py) 的 `layout_document()` 和 `make_all_pages()`
-6. **页面布局**：深入 [layout/page.py](../../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) 理解分页和边距盒
+6. **页面布局**：深入 [layout/page.py](../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) 理解分页和边距盒
 7. **绘制输出**：读 [draw/__init__.py](../../../mdi/generated/case1/__init__.py) 和 [pdf/__init__.py](../../../mdi/generated/case1/__init__.py)
 
 ---

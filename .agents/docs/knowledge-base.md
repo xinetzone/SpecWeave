@@ -8,7 +8,7 @@
 
 | 知识库 | 路径 | 内容 |
 |--------|------|------|
-| 技术知识库 | [docs/knowledge/](knowledge/README.md) | 架构决策记录（ADR）、运维操作手册、故障排查指南 |
+| 技术知识库 | [docs/knowledge/](../../docs/knowledge/README.md) | 架构决策记录（ADR）、运维操作手册、故障排查指南 |
 | 复盘文档体系 | [docs/retrospective/](retrospective/README.md) | 项目复盘报告、可复用模式（代码/架构/方法论）、模板、决策框架、知识概念 |
 
 ## 技术知识库
@@ -21,7 +21,7 @@
 - **platform/** — 平台相关文档
 - **best-practices/** — 最佳实践
 
-详见 [docs/knowledge/README.md](knowledge/README.md)。
+详见 [docs/knowledge/README.md](../../docs/knowledge/README.md)。
 
 ## 复盘文档体系
 

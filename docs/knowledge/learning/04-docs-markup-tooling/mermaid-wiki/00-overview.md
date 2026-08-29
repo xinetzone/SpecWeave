@@ -119,9 +119,9 @@ flowchart TB
 | 资产 | 定位 | 与本教程的关系 |
 |------|------|----------------|
 | [Mermaid 图表操作指南](../../../best-practices/mermaid-guide.md) | SpecWeave 项目内写 Mermaid 的一站式操作手册（安全编码六规则、check-mermaid.py 自动检查、渲染排查流程） | 教程教你「会画」；操作指南教你「在本项目内画得安全、可过 CI」。写图前请先过安全编码六规则（禁止空行、中文加引号、`<br/>` 换行、subgraph 纯英文 ID 等） |
-| [mermaid-cmd 指令集](../../../../../skills/mermaid-cmd/SKILL.md) | Mermaid 图表管理命令 Skill（create/check/fix/verify 全生命周期） | 需要在实际任务中创建/检查/修复图表时，调用该 Skill 而非手写 |
-| [mermaid 图表管理指令集](../../../../../commands/mermaid.md) | 完整执行流程 / RACI 矩阵 / CMD-LOG 规范 | mermaid-cmd Skill 的 L2 层细节，复杂图表协作时使用 |
-| [check-mermaid.py](../../../../../scripts/lib/checks/mermaid.py) | 自动检测 10 类安全编码问题的脚本 | 写完图表后运行，确保符合安全规范 |
+| [mermaid-cmd 指令集](../../../../../.agents/skills/mermaid-cmd/SKILL.md) | Mermaid 图表管理命令 Skill（create/check/fix/verify 全生命周期） | 需要在实际任务中创建/检查/修复图表时，调用该 Skill 而非手写 |
+| [mermaid 图表管理指令集](../../../../../.agents/commands/mermaid.md) | 完整执行流程 / RACI 矩阵 / CMD-LOG 规范 | mermaid-cmd Skill 的 L2 层细节，复杂图表协作时使用 |
+| [check-mermaid.py](../../../../../.agents/scripts/lib/checks/mermaid.py) | 自动检测 10 类安全编码问题的脚本 | 写完图表后运行，确保符合安全规范 |
 
 > **实践建议**：本教程的示例图表主要面向「学习与理解」，不一定每条都满足项目安全编码规范；在 SpecWeave 项目正式文档中嵌入 Mermaid 图表时，务必以 [mermaid-guide.md](../../../best-practices/mermaid-guide.md) 的安全编码六规则为准，并运行 `check-mermaid.py` 校验。
 

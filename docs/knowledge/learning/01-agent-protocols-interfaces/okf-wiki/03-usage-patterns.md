@@ -53,7 +53,7 @@ tags: ["growth", "core-metric"]
 `SELECT COUNT(DISTINCT user_id) FROM events WHERE ... AND event_type != 'test'`
 
 ## 相关
-- [MAU](./mau.md) | [events表](../product/events.md)
+- [MAU](mau.md) | [events表](../product/events.md)
 ```
 
 **适用边界**：专业数据目录工具（dbt docs/DataHub）的轻量补充或上层入口索引。
@@ -209,7 +209,7 @@ def main():
         fm = parse_fm(p)
         title = fm.get("title", p.stem).strip().strip('"')
         desc = fm.get("description", "").strip().strip('"')
-        entries.append(f"- [{title}](./{md}) — {desc}")
+        entries.append(f"- [{title}](%7Bmd%7D) — {desc}")
     entries.sort()
     Path("index.md").write_text(
         "# Knowledge Index\n\n_自动生成，勿手动编辑_\n\n" + "\n".join(entries) + "\n",
@@ -252,4 +252,4 @@ Bundle用SemVer（MAJOR.MINOR.PATCH）：
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [02 5分钟快速入门](./02-quickstart.md) | [README](./README.md) | [04 局限性与方案对比](./04-limitations-and-comparison.md) |
+| [02 5分钟快速入门](02-quickstart.md) | [README](README.md) | [04 局限性与方案对比](04-limitations-and-comparison.md) |

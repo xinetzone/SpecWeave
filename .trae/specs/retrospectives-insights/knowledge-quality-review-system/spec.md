@@ -70,7 +70,7 @@ version: 1.0
 
 ## Assumptions
 - 用户已了解七概念方法论基础（知道R/F/I/E/V/A/C分别是什么）
-- 产出物存放路径：`.agents/docs/knowledge/quality-assurance/`
+- 产出物存放路径：`docs/knowledge/quality-assurance/`
 - 实战案例产出物最终归入七概念方法论案例库
 - 评审模板和SOP将成为对抗性审查指令集的配套文档
 

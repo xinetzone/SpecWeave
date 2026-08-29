@@ -47,13 +47,13 @@ tags: ["七概念", "MonkeyCode", "Vibe Coding", "开源", "私有化部署", "A
 
 | 章节 | 标题 | 核心内容 |
 |------|------|----------|
-| **第一章** | [七概念知识框架](./01-seven-concepts-framework.md) | R-I-E-C-A-F-V七概念详解、五层认知模型、触发决策树 |
-| **第二章** | [MonkeyCode产品深度解析](./02-monkeycode-deep-analysis.md) | 产品背景、核心特性、技术架构、开源策略、差异化优势 |
-| **第三章** | [实践操作指南](./03-practice-guide.md) | 系统要求、私有化部署步骤、基础使用、模型配置 |
-| **第四章** | [常见问题解答（FAQ）](./04-faq.md) | 部署、使用、模型配置、安全、故障排查等常见问题解答 |
-| **第五章** | [资源扩展链接](./05-resources.md) | 官方资源、开源社区、Vibe Coding相关、私有化部署资源 |
-| **第六章** | [学习效果评估方法](./06-assessment.md) | 四级评估体系、知识测试、实践项目、持续改进机制 |
-| **第七章** | [附录：七概念应用案例](./07-seven-concepts-applied.md) | 七概念方法论在MonkeyCode分析中的完整应用案例 |
+| **第一章** | [七概念知识框架](01-seven-concepts-framework.md) | R-I-E-C-A-F-V七概念详解、五层认知模型、触发决策树 |
+| **第二章** | [MonkeyCode产品深度解析](02-monkeycode-deep-analysis.md) | 产品背景、核心特性、技术架构、开源策略、差异化优势 |
+| **第三章** | [实践操作指南](03-practice-guide.md) | 系统要求、私有化部署步骤、基础使用、模型配置 |
+| **第四章** | [常见问题解答（FAQ）](04-faq.md) | 部署、使用、模型配置、安全、故障排查等常见问题解答 |
+| **第五章** | [资源扩展链接](05-resources.md) | 官方资源、开源社区、Vibe Coding相关、私有化部署资源 |
+| **第六章** | [学习效果评估方法](06-assessment.md) | 四级评估体系、知识测试、实践项目、持续改进机制 |
+| **第七章** | [附录：七概念应用案例](07-seven-concepts-applied.md) | 七概念方法论在MonkeyCode分析中的完整应用案例 |
 
 ## 🗺️ 学习路径
 
@@ -114,4 +114,4 @@ flowchart TD
 
 ---
 
-**下一步**：开始阅读 [第一章 七概念知识框架](./01-seven-concepts-framework.md)，系统学习R-I-E-C-A-F-V方法论体系。
+**下一步**：开始阅读 [第一章 七概念知识框架](01-seven-concepts-framework.md)，系统学习R-I-E-C-A-F-V方法论体系。

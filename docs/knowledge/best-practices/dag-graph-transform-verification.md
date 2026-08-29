@@ -5,7 +5,7 @@ date: "2026-08-01"
 category: "best-practices"
 tags: ["dag", "graph-transform", "visualization", "verification", "caffe", "insert-splits", "in-place"]
 source: "../../retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/README.md"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/dag-graph-transform-verification.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/dag-graph-transform-verification.toml"
 related_patterns: ["graph-transform-validator-architecture", "protobuf-text-minimal-parser"]
 ---
 

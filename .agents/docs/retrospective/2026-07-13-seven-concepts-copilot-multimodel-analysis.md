@@ -10,7 +10,7 @@ tags: ["seven-concepts", "methodology", "ai-industry", "copilot", "deepseek", "m
 
 # 七概念视角：《微软Copilot成本困境与多模型时代》深度透视报告
 
-> **分析对象**：[analysis-report.md](../knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md)（微软Copilot成本困境与多模型时代产业变革深度分析报告）
+> **分析对象**：[analysis-report.md](../../../docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md)（微软Copilot成本困境与多模型时代产业变革深度分析报告）
 > **分析日期**：2026-07-13
 > **方法论**：七概念方法论编排（场景：知识沉淀+深度洞察，链路：R→I→E→F→V）
 > **报告类型**：方法论应用洞察报告
@@ -32,7 +32,7 @@ tags: ["seven-concepts", "methodology", "ai-industry", "copilot", "deepseek", "m
 
 | 维度 | 事实记录 |
 |------|---------|
-| **分析对象** | [analysis-report.md](../knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md)，约20000字，10个章节 |
+| **分析对象** | [analysis-report.md](../../../docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md)，约20000字，10个章节 |
 | **文章来源** | 微信公众号"发现明日产品"（爱范儿/ifanr），发布于2026年中期 |
 | **核心事件** | 微软Copilot取消"无限包月"转向按用量计费，考虑引入DeepSeek V4作为平价模型 |
 | **关键数据点** | M365 Copilot 2000万付费席位、单季度净增500万、GitHub Copilot 470万订阅、DeepSeek V4 1.6万亿参数MoE架构、74亿美元融资 |
@@ -225,8 +225,8 @@ tags: ["seven-concepts", "methodology", "ai-industry", "copilot", "deepseek", "m
 
 | 资源 | 路径 |
 |------|------|
-| 原分析报告 | [analysis-report.md](../knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md) |
-| 分析wiki目录 | [copilot-cost-multimodel-era-wiki/](../knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/README.md) |
+| 原分析报告 | [analysis-report.md](../../../docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/analysis-report.md) |
+| 分析wiki目录 | [copilot-cost-multimodel-era-wiki/](../../../docs/knowledge/learning/06-business-trends-analysis/copilot-cost-multimodel-era-wiki/README.md) |
 | 七概念方法论索引 | [seven-concepts-methodology-index.md](patterns/methodology-patterns/governance-strategy/seven-concepts-methodology-index.md) |
 | 七概念质量标准 | [seven-concepts-quality-standards.md](patterns/methodology-patterns/governance-strategy/seven-concepts-quality-standards.md) |
 | 方法论编排Skill | [seven-concepts-cmd](../../skills/mermaid-cmd/SKILL.md) |

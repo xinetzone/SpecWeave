@@ -140,4 +140,4 @@ const breakpoints: CacheBreakpoint[] = [
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [01 核心架构与技术栈](./01-core-architecture.md) | [README](./README.md) | → [03 分区记忆系统](./03-memory-system.md) |
+| ← [01 核心架构与技术栈](01-core-architecture.md) | [README](README.md) | → [03 分区记忆系统](03-memory-system.md) |

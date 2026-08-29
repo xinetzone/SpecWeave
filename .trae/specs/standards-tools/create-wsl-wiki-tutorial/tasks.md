@@ -9,7 +9,7 @@
 - **Priority**: 高
 - **Depends On**: 无
 - **Description**:
-  - 创建目录 `.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/`
+  - 创建目录 `docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/`
   - 编写 README.md 导航入口文件
   - README 包含：教程概述、适用读者、章节列表（12-15章）、阅读路径建议、与现有两份WSL文档的关联
   - README 中关联 wsl-learning-plan.md 和 wsl-cli-and-architecture-wiki.md 作为扩展阅读
@@ -233,7 +233,7 @@
 - **Priority**: 低
 - **Depends On**: Task 1-10 全部完成
 - **Description**:
-  - 读取 `.agents/docs/knowledge/learning/08-systems-infrastructure/README.md`
+  - 读取 `docs/knowledge/learning/08-systems-infrastructure/README.md`
   - 在索引中添加 wsl-wiki/ 条目
   - 添加简要说明和相对路径链接
   - 保持现有文档索引格式

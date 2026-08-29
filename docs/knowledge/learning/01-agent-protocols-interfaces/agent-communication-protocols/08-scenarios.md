@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#08-典型应用场景"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/08-scenarios.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/08-scenarios.toml"
 id: "application-scenarios"
 title: "08、典型应用场景"
 ---
@@ -282,7 +282,7 @@ flowchart TD
 
 ### 8.5.5 为什么只选MCP，不需要ACP/A2A
 
-这个问题的本质是理解**纵向连接与横向通信的区别**（详见 [05-comparison.md:93-142](./05-comparison.md#54-纵向-vs-横向mcp与acpa2aanp的本质区别)）：
+这个问题的本质是理解**纵向连接与横向通信的区别**（详见 [05-comparison.md:93-142](05-comparison.md#54-纵向-vs-横向mcp与acpa2aanp的本质区别)）：
 
 1. **这不是Agent间通信场景**：IDE中只有一个编码Agent，没有多个自主Agent需要协作，因此不需要ACP/A2A这些横向通信协议
 2. **这是纯纵向工具连接场景**：Agent需要"连接"文件系统、终端、Git等工具/数据源，这正是MCP的设计目标——Agent的USB-C接口
@@ -361,7 +361,7 @@ flowchart TD
 > - ANP规范目前（2025-2026年）仍在早期探索阶段（TRL 2-3），尚无稳定规范、成熟SDK或大规模生产部署
 > - 去中心化Agent经济涉及技术、法律、监管等多重挑战，成熟还需要时间
 > - 建议**跟踪进展、技术储备、原型验证**，但**不要在生产系统中重度依赖**
-> - 参考 [05-comparison.md:496-509](./05-comparison.md#58-分阶段采用路线图) 分阶段采用路线图阶段4建议
+> - 参考 [05-comparison.md:496-509](05-comparison.md#58-分阶段采用路线图) 分阶段采用路线图阶段4建议
 
 当前阶段（2025-2026年）生产落地重点仍在 **MCP + A2A/ACP** 组合，ANP作为长期方向保持关注即可。
 
@@ -380,5 +380,5 @@ flowchart TD
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [07、实现与部署最佳实践](./07-implementation.md) |
-| **下一章** | [09、术语表与常见问题](./09-glossary.md) |
+| 上一章 | [07、实现与部署最佳实践](07-implementation.md) |
+| **下一章** | [09、术语表与常见问题](09-glossary.md) |

@@ -1,6 +1,6 @@
 ---
 source: "https://mystmd.org/guide/syntax-overview"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/basic-syntax.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/basic-syntax.toml"
 id: "examples-basic-syntax"
 title: "MyST Markdown 基础语法示例"
 ---
@@ -240,7 +240,7 @@ MyST 完全兼容标准 Markdown 语法，以下是常用示例。
 
 ```
 [外部链接](https://mystmd.org)
-[相对链接](./00-overview.md)
+[相对链接](00-overview.md)
 ```
 
 渲染效果：

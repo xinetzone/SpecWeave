@@ -1,7 +1,7 @@
 ---
 id: "myst-markdown-tutorial-readme"
 title: "MyST Markdown 技术教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/README.toml"
 ---
 # MyST Markdown 技术教程
 
@@ -11,7 +11,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-doc
 
 **MyST（Markedly Structured Text）** 是 CommonMark Markdown 的超集，专为技术文档、学术写作和可计算叙事设计。它在保持 Markdown 简洁易写的基础上，融合了 reStructuredText/Sphinx 的强大扩展能力，支持指令（Directives）、角色（Roles）、交叉引用、数学公式、学术引用、UI 组件等出版级功能。
 
-本教程采用"概念+示例+实战"三段式教学，配合 [examples/](./examples/README.md) 目录中的可运行代码示例，帮助读者从零基础到熟练运用 MyST 构建专业文档。
+本教程采用"概念+示例+实战"三段式教学，配合 [examples/](examples/README.md) 目录中的可运行代码示例，帮助读者从零基础到熟练运用 MyST 构建专业文档。
 
 ---
 
@@ -56,7 +56,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-doc
    ```
    访问 http://localhost:3000 即可预览文档效果
 
-> 💡 详细安装与配置见 [00-quick-start.md](./00-quick-start.md)
+> 💡 详细安装与配置见 [00-quick-start.md](00-quick-start.md)
 
 ---
 
@@ -68,62 +68,62 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-doc
 
 | 文档 | 说明 |
 |------|------|
-| [00-quick-start.md](./00-quick-start.md) | 快速上手：安装、初始化、第一个文档 |
-| [01-introduction.md](./01-introduction.md) | MyST 简介：设计理念、与 CommonMark/RST 的关系、生态概览 |
-| [02-basic-syntax-part1.md](./02-basic-syntax-part1.md) | 基础语法（上）：标题、段落、列表、链接、图片、强调 |
-| [03-basic-syntax-part2.md](./03-basic-syntax-part2.md) | 基础语法（下）：代码块、表格、分隔线、转义字符 |
+| [00-quick-start.md](00-quick-start.md) | 快速上手：安装、初始化、第一个文档 |
+| [01-introduction.md](01-introduction.md) | MyST 简介：设计理念、与 CommonMark/RST 的关系、生态概览 |
+| [02-basic-syntax-part1.md](02-basic-syntax-part1.md) | 基础语法（上）：标题、段落、列表、链接、图片、强调 |
+| [03-basic-syntax-part2.md](03-basic-syntax-part2.md) | 基础语法（下）：代码块、表格、分隔线、转义字符 |
 
 ### 第二部分：高级语法
 
 | 文档 | 说明 |
 |------|------|
-| [04-advanced-directives-roles.md](./04-advanced-directives-roles.md) | 指令与角色：MyST 扩展系统的核心机制 |
-| [05-advanced-cross-references.md](./05-advanced-cross-references.md) | 交叉引用：文档内引用、文档间引用、自动编号 |
-| [06-advanced-math-code.md](./06-advanced-math-code.md) | 数学公式与代码：LaTeX 数学、代码块增强、可执行代码 |
-| [07-advanced-notes-citations.md](./07-advanced-notes-citations.md) | 脚注与引用：脚注、尾注、参考文献、BibTeX 集成 |
+| [04-advanced-directives-roles.md](04-advanced-directives-roles.md) | 指令与角色：MyST 扩展系统的核心机制 |
+| [05-advanced-cross-references.md](05-advanced-cross-references.md) | 交叉引用：文档内引用、文档间引用、自动编号 |
+| [06-advanced-math-code.md](06-advanced-math-code.md) | 数学公式与代码：LaTeX 数学、代码块增强、可执行代码 |
+| [07-advanced-notes-citations.md](07-advanced-notes-citations.md) | 脚注与引用：脚注、尾注、参考文献、BibTeX 集成 |
 
 ### 第三部分：组件系统
 
 | 文档 | 说明 |
 |------|------|
-| [08-components-admonitions.md](./08-components-admonitions.md) | 提示框组件：注意、警告、提示、重要、危险等各类提示框 |
-| [09-components-ui.md](./09-components-ui.md) | UI 组件：卡片、标签页、折叠面板、按钮、下拉菜单 |
-| [10-components-figures.md](./10-components-figures.md) | 图表组件：图片增强、图表标题、子图布局、图注 |
+| [08-components-admonitions.md](08-components-admonitions.md) | 提示框组件：注意、警告、提示、重要、危险等各类提示框 |
+| [09-components-ui.md](09-components-ui.md) | UI 组件：卡片、标签页、折叠面板、按钮、下拉菜单 |
+| [10-components-figures.md](10-components-figures.md) | 图表组件：图片增强、图表标题、子图布局、图注 |
 
 ### 第四部分：工具链与实战
 
 | 文档 | 说明 |
 |------|------|
-| [11-tooling-sphinx.md](./11-tooling-sphinx.md) | Sphinx 集成：在 Sphinx 项目中使用 MyST 解析器 |
-| [12-tooling-jupyter-book.md](./12-tooling-jupyter-book.md) | Jupyter Book：构建可计算书籍和文档站点 |
-| [13-tooling-mystmd.md](./13-tooling-mystmd.md) | mystmd 工具链：新一代 MyST 命令行工具与构建系统 |
-| [14-case-study-tech-docs.md](./14-case-study-tech-docs.md) | 实战案例：技术文档站点构建全流程 |
-| [15-case-study-academic.md](./15-case-study-academic.md) | 实战案例：学术论文与技术报告写作 |
-| [16-faq.md](./16-faq.md) | 常见问题与排错指南 |
+| [11-tooling-sphinx.md](11-tooling-sphinx.md) | Sphinx 集成：在 Sphinx 项目中使用 MyST 解析器 |
+| [12-tooling-jupyter-book.md](12-tooling-jupyter-book.md) | Jupyter Book：构建可计算书籍和文档站点 |
+| [13-tooling-mystmd.md](13-tooling-mystmd.md) | mystmd 工具链：新一代 MyST 命令行工具与构建系统 |
+| [14-case-study-tech-docs.md](14-case-study-tech-docs.md) | 实战案例：技术文档站点构建全流程 |
+| [15-case-study-academic.md](15-case-study-academic.md) | 实战案例：学术论文与技术报告写作 |
+| [16-faq.md](16-faq.md) | 常见问题与排错指南 |
 
 ### 附录
 
 | 文档 | 说明 |
 |------|------|
-| [appendix/cheat-sheet.md](./appendix/cheat-sheet.md) | 语法速查表：常用语法快速查阅 |
-| [appendix/resources.md](./appendix/resources.md) | 学习资源：官方文档、社区、工具推荐 |
+| [appendix/cheat-sheet.md](appendix/cheat-sheet.md) | 语法速查表：常用语法快速查阅 |
+| [appendix/resources.md](appendix/resources.md) | 学习资源：官方文档、社区、工具推荐 |
 
 ---
 
 ## 学习路径建议
 
 - **零基础入门**：按顺序阅读 00 → 03，配合 examples/basic/ 目录示例动手练习
-- **快速查语法**：直接查阅 [appendix/cheat-sheet.md](./appendix/cheat-sheet.md)
+- **快速查语法**：直接查阅 [appendix/cheat-sheet.md](appendix/cheat-sheet.md)
 - **技术文档作者**：重点学习 04、05、08-10、14 章节
 - **学术写作**：重点学习 06、07、15 章节
 - **工具链集成**：根据需求选择 11-13 章节
-- **遇到问题**：先查阅 [16-faq.md](./16-faq.md)，再参考 [appendix/resources.md](./appendix/resources.md)
+- **遇到问题**：先查阅 [16-faq.md](16-faq.md)，再参考 [appendix/resources.md](appendix/resources.md)
 
 ---
 
 ## 子目录说明
 
-### [examples/](./examples/README.md) - 可直接运行的代码示例
+### [examples/](examples/README.md) - 可直接运行的代码示例
 
 本目录包含与教程各章节配套的完整示例文件，所有示例均可直接复制使用：
 
@@ -134,7 +134,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-doc
 - `citations/` - 参考文献示例
 - `projects/` - 完整项目示例（Sphinx/Jupyter Book/mystmd）
 
-### [appendix/](./appendix/README.md) - 附录资料
+### [appendix/](appendix/README.md) - 附录资料
 
 - `cheat-sheet.md` - MyST 语法速查表（一页纸版本）
 - `resources.md` - 官方链接、社区资源、推荐工具清单

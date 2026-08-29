@@ -30,16 +30,16 @@ eve_version_target: "2026 public preview"
 
 | 章号 | 文件名 | 标题 | 一句话简介 |
 |------|--------|------|-----------|
-| 00 | [00-overview.md](./00-overview.md) | 教程总览与知识地图 | Eve 生态全景图、10 章导航、三条阅读路径、交叉引用矩阵 |
-| 01 | [01-product-intro.md](./01-product-intro.md) | 产品介绍与核心概念 | 定位（Next.js for Agents）、与 AI SDK/Agent Loop 层次区分、及 A 目录哲学 |
-| 02 | [02-directory-core-capabilities.md](./02-directory-core-capabilities.md) | 目录结构与核心能力 | agent.ts/instructions.md/tools/skills/sandbox 详解 |
-| 03 | [03-production-capabilities.md](./03-production-capabilities.md) | 生产级能力详解 | durable execution/approvals/connections/channels/tracing/evals |
-| 04 | [04-advanced-capabilities.md](./04-advanced-capabilities.md) | 进阶能力 | subagents/schedules/多 Agent 协作实战模式 |
-| 05 | [05-quickstart.md](./05-quickstart.md) | 快速上手指南 | 官方九步 + 五步快启 + 最小指令先行 + 部署说明 |
-| 06 | [06-comparison-selection.md](./06-comparison-selection.md) | 竞品对比与选型 | Eve vs Mastra vs LangGraph、适用团队边界、选型决策树 |
-| 07 | [07-engineering-philosophy-trends.md](./07-engineering-philosophy-trends.md) | 工程化理念与趋势洞察 | Demo→生产、工程底座竞争、前端工程化迁移 |
-| 08 | [08-faq.md](./08-faq.md) | FAQ 与适用范围 | 常见问题、适用团队、局限性 |
-| 09 | [09-glossary-resources.md](./09-glossary-resources.md) | 术语表与参考资源 | 核心术语 + 5 个来源 + 官方文档 + 知识库扩展 |
+| 00 | [00-overview.md](00-overview.md) | 教程总览与知识地图 | Eve 生态全景图、10 章导航、三条阅读路径、交叉引用矩阵 |
+| 01 | [01-product-intro.md](01-product-intro.md) | 产品介绍与核心概念 | 定位（Next.js for Agents）、与 AI SDK/Agent Loop 层次区分、及 A 目录哲学 |
+| 02 | [02-directory-core-capabilities.md](02-directory-core-capabilities.md) | 目录结构与核心能力 | agent.ts/instructions.md/tools/skills/sandbox 详解 |
+| 03 | [03-production-capabilities.md](03-production-capabilities.md) | 生产级能力详解 | durable execution/approvals/connections/channels/tracing/evals |
+| 04 | [04-advanced-capabilities.md](04-advanced-capabilities.md) | 进阶能力 | subagents/schedules/多 Agent 协作实战模式 |
+| 05 | [05-quickstart.md](05-quickstart.md) | 快速上手指南 | 官方九步 + 五步快启 + 最小指令先行 + 部署说明 |
+| 06 | [06-comparison-selection.md](06-comparison-selection.md) | 竞品对比与选型 | Eve vs Mastra vs LangGraph、适用团队边界、选型决策树 |
+| 07 | [07-engineering-philosophy-trends.md](07-engineering-philosophy-trends.md) | 工程化理念与趋势洞察 | Demo→生产、工程底座竞争、前端工程化迁移 |
+| 08 | [08-faq.md](08-faq.md) | FAQ 与适用范围 | 常见问题、适用团队、局限性 |
+| 09 | [09-glossary-resources.md](09-glossary-resources.md) | 术语表与参考资源 | 核心术语 + 5 个来源 + 官方文档 + 知识库扩展 |
 
 ## 内容快照声明
 

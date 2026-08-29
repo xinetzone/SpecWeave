@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-00-overview"
 title: "MaineCoon 实时音视频基础模型 — 概述"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/00-overview.toml"
 ---
 # MaineCoon 文章基本信息与核心观点
 

@@ -6,7 +6,7 @@
 本教程旨在填补这一空白：通过对两个文件夹的逐文件学习与事实采集，将 conda 源码的分层架构、11 个核心包模块、公开 Python API、典型使用场景、常见问题与最佳实践沉淀为通俗易读、适合不同技术水平的 wiki 教程。
 
 ## What Changes
-- **新增** 11 个原子化 Markdown 文档，构成完整的 conda 源码与文档 wiki 教程，放置于 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录
+- **新增** 11 个原子化 Markdown 文档，构成完整的 conda 源码与文档 wiki 教程，放置于 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录
 - **新增** 教程总览与导航索引（`00-overview.md`），含 Mermaid 分层架构定位图与学习路径
 - **新增** 整体架构章节（`01-architecture.md`），说明 `conda` 源码分层架构、`conda-docs` 文档架构及二者关系
 - **新增** 核心模块章节（`02-core-modules.md`），覆盖 `base`/`common`/`models`/`core` 及根级模块（`api`/`resolve`/`exports`/`activate` 等）
@@ -24,7 +24,7 @@
 - **Affected specs**: 无（独立新增 wiki 教程，不修改已有 spec）
 - **Affected code**: 无代码改动，仅文档新增
 - **Affected files**:
-  - 新增：`.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 下 11 个文件（`00-overview.md` ~ `09-resources.md` + `README.md`）
+  - 新增：`docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 下 11 个文件（`00-overview.md` ~ `09-resources.md` + `README.md`）
   - 可能由 `docgen-cmd` 后续自动纳入 Learning Wiki 索引（不在本 spec 范围内）
 - **Related wikis**:
   - [conda-dev-github-wiki](../08-systems-infrastructure/conda-dev-github-wiki/00-overview.md) — 同属 conda-dev 主题，聚焦 `.github` 组织治理，与本教程（源码架构）互补
@@ -134,7 +134,7 @@ The system SHALL ensure all wiki files follow consistent metadata and navigation
 
 ## Assumptions
 - 读者具备基础 Python 与包管理概念（环境/包/依赖），部分章节面向有用源码研究需求的读者
-- 教程放置于 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录
+- 教程放置于 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录
 - 完成后可由 `docgen-cmd` 自动纳入 Learning Wiki 索引（不在本 spec 验收范围内）
 
 ## Acceptance Criteria

@@ -2,7 +2,7 @@
 """
 DataLoader Pickle 序列化问题诊断检查清单脚本
 
-基于诊断 SOP 文档：.agents/docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.md
+基于诊断 SOP 文档：docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.md
 
 功能：
 1. 诊断模式：运行完整的5步诊断流程

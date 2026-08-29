@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "faq", "resources", "troubleshooting", "references"]
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/headroom-context-compression-wiki/09-faq-resources.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/09-faq-resources.toml"
 type: "Reference"
 description: "汇集Headroom八大常见问题解答（信息安全、语言支持、效果验证、CCR保障、竞品对比、规模适配、本地模型等），整理官方资源链接、延伸阅读参考与故障排查速查表。"
 generated:

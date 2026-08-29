@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-02-quickstart"
 title: "02 Hermes Agent 快速安装与上手"
 source: "NousResearch/hermes-agent 本地源码仓库（README.zh-CN.md / website/docs/getting-started/installation.md / getting-started/quickstart.md / scripts/ 安装脚本）"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/02-quickstart.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/02-quickstart.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 快速上手：安装、初始化、第一个对话、升级的完整可复制命令与预期"
 status: "stable"

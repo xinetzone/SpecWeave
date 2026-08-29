@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-03-configuration"
 title: "03 配置文件设置"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 Wiki（Quick-Start）"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/03-configuration.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/03-configuration.toml"
 type: "Wiki Tutorial"
 description: "Hermes 配置文件设置：config.yaml、HERMES_HOME、project 级插件、hermes-okf 自动配置"
 status: "stable"

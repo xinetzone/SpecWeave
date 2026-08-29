@@ -376,4 +376,4 @@ helper.set_model_props(model, {
 
 ---
 
-**上一章**：[03-quickstart.md - 快速上手](./03-quickstart.md) | **下一章**：[05-faq-and-resources.md - FAQ与资源](./05-faq-and-resources.md)
+**上一章**：[03-quickstart.md - 快速上手](03-quickstart.md) | **下一章**：[05-faq-and-resources.md - FAQ与资源](05-faq-and-resources.md)

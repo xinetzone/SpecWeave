@@ -54,7 +54,7 @@ status: "completed"
 
 | 文件 | 归类原因 | 备注 |
 |---|---|---|
-| `.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | `source` 被改写为 `external: 不存在-...README.md`，原始来源不再可直接定位 | 伴随少量正文字符改动，但主风险仍是溯源退化 |
+| `docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | `source` 被改写为 `external: 不存在-...README.md`，原始来源不再可直接定位 | 伴随少量正文字符改动，但主风险仍是溯源退化 |
 | `.agents/docs/retrospective/patterns/code-patterns/command-injection-prevention.md` | `source` 从具体源文件退化为 `README.md` | 明确应恢复 |
 | `.agents/docs/retrospective/patterns/code-patterns/defensive-config-cache-deepcopy.md` | `source` 从具体源文件退化为 `README.md` | 明确应恢复 |
 | `.agents/docs/retrospective/patterns/code-patterns/dynamic-path-derivation.md` | `source` 退化为 `README.md` | 另含 Windows 路径示例被改写 |
@@ -76,12 +76,12 @@ status: "completed"
 
 | 文件 | 归类原因 | 备注 |
 |---|---|---|
-| `.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | 多处正文链接从 `.agents/scripts/...` 改写到 `scripts/...` 相对路径体系 | 需确认是正确相对路径还是误去前缀 |
-| `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | 正文中一处源码链接被改成纯文本目录说明 | 属于典型“去链接化” |
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | 报告仅捕获到 frontmatter 异动，但未证明正文受损 | 低置信度样本，建议先做精确 diff 再决定是否修复 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | 多处外部源码链接被改成纯文本路径，Windows 路径分隔符被异常规范化 | 需恢复可点击引用 |
-| `.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | 章节末尾的多条内部导航链接被改写或删减 | 可能影响学习路径完整性 |
-| `.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.md` | 表格内多个链接被改为纯文本或错误相对路径 | 兼有 `.agents/` 前缀漂移问题 |
+| `docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | 多处正文链接从 `.agents/scripts/...` 改写到 `scripts/...` 相对路径体系 | 需确认是正确相对路径还是误去前缀 |
+| `docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | 正文中一处源码链接被改成纯文本目录说明 | 属于典型“去链接化” |
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | 报告仅捕获到 frontmatter 异动，但未证明正文受损 | 低置信度样本，建议先做精确 diff 再决定是否修复 |
+| `docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | 多处外部源码链接被改成纯文本路径，Windows 路径分隔符被异常规范化 | 需恢复可点击引用 |
+| `docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | 章节末尾的多条内部导航链接被改写或删减 | 可能影响学习路径完整性 |
+| `docs/knowledge/operations/vendor-flexloop-integration-guide.md` | 表格内多个链接被改为纯文本或错误相对路径 | 兼有 `.agents/` 前缀漂移问题 |
 
 **后续建议**
 

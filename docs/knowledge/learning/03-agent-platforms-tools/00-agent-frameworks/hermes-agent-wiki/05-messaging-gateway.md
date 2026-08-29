@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-05-messaging-gateway"
 title: "05 消息网关"
 source: "hermes-agent user-guide/messaging/index.md + user-guide/messaging/relay.md + profiles.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/05-messaging-gateway.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/05-messaging-gateway.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 消息网关：约 28 平台支持、单进程多平台、gateway setup/start、跨平台连续性、relay、与 CLI 共享核心"
 status: "stable"
@@ -71,7 +71,7 @@ hermes gateway start        # 启动默认网关服务
 hermes gateway start --system  # 以系统服务方式启动（需 sudo，示例/需验证）
 ```
 
-配置以平台为单位写入 `~/.hermes/gateway-config.yaml`；不同 profile 可运行各自独立的网关（见 [04 配置体系](./04-configuration.md) 的 profiles 部分）。
+配置以平台为单位写入 `~/.hermes/gateway-config.yaml`；不同 profile 可运行各自独立的网关（见 [04 配置体系](04-configuration.md) 的 profiles 部分）。
 
 ## 5.4 跨平台对话连续性
 
@@ -98,4 +98,4 @@ hermes gateway start --system  # 以系统服务方式启动（需 sudo，示例
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [04 配置体系](./04-configuration.md) | [README](./README.md) | [06 工具与工具集](./06-tools-toolsets.md) |
+| [04 配置体系](04-configuration.md) | [README](README.md) | [06 工具与工具集](06-tools-toolsets.md) |

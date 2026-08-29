@@ -3,7 +3,7 @@
 **版本**：v1.0  
 **更新日期**：2026-06-02  
 **适用范围**：SpecWeave 项目内所有文档、脚本、配置文件  
-**关联工具**：[`check-sensitive-info.py`](../../../scripts/check-sensitive-info.py)
+**关联工具**：[`check-sensitive-info.py`](../../../.agents/scripts/check-sensitive-info.py)
 
 ---
 

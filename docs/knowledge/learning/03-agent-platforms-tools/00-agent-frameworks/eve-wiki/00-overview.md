@@ -107,4 +107,4 @@ flowchart TD
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← 这是教程第 1 章 | [README](./README.md) | → [01 产品介绍与核心概念](./01-product-intro.md) |
+| ← 这是教程第 1 章 | [README](README.md) | → [01 产品介绍与核心概念](01-product-intro.md) |

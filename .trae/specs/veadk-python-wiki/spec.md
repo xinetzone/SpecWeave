@@ -77,7 +77,7 @@
 ## Assumptions
 - veadk-python 代码库已完整存在于 `d:\AI\.chaos\libs\veadk-python` 路径
 - 用户具备基础 Python 知识和 LLM/Agent 相关概念基础
-- Wiki 产出物存放路径默认在 `.agents/docs/knowledge/learning/veadk-python/` 下（公开内容标准路径），如有特殊需求可调整
+- Wiki 产出物存放路径默认在 `docs/knowledge/learning/veadk-python/` 下（公开内容标准路径），如有特殊需求可调整
 - 不需要运行 veadk-python 的测试套件或实际调用云服务 API，静态代码分析足以支撑文档准确性
 - examples/ 目录下的示例代码足以覆盖主要使用场景
 
@@ -117,11 +117,11 @@
 ### AC-6: 产出物路径与格式规范
 - **Given**: Wiki 文档全部完成
 - **When**: 最终交付检查
-- **Then**: 所有文件位于正确目录（`.agents/docs/knowledge/learning/veadk-python/`），文件名遵循 kebab-case，Markdown 格式正确，frontmatter 符合 MDI 规范
+- **Then**: 所有文件位于正确目录（`docs/knowledge/learning/veadk-python/`），文件名遵循 kebab-case，Markdown 格式正确，frontmatter 符合 MDI 规范
 - **Verification**: `programmatic`（文件名检查脚本）+ `human-judgment`
 
 ## Open Questions
-- [ ] Wiki 产出物的具体存放位置：使用默认的 `.agents/docs/knowledge/learning/veadk-python/` 还是用户指定其他路径？
+- [ ] Wiki 产出物的具体存放位置：使用默认的 `docs/knowledge/learning/veadk-python/` 还是用户指定其他路径？
 - [ ] 是否需要包含 frontend/（TypeScript 前端部分）的详细分析文档，还是仅做简要提及？
 - [ ] Wiki 中代码示例的详细程度：是保持最小可运行片段，还是包含完整配置和错误处理？
 - [ ] 是否需要生成 Mermaid 架构图/流程图？（建议包含，但需确认）

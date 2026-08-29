@@ -1,7 +1,7 @@
 # Checklist
 
 ## 目录结构
-- [ ] Wiki目录 `animejs-threejs-adapter-wiki/` 已创建在正确路径（`.agents/docs/knowledge/learning/05-ai-multimodal-content/`）
+- [ ] Wiki目录 `animejs-threejs-adapter-wiki/` 已创建在正确路径（`docs/knowledge/learning/05-ai-multimodal-content/`）
 - [ ] 包含10个文件：README.md、00-overview.md、01-quickstart.md、02-core-concepts.md、03-five-features.md、04-practical-examples.md、05-best-practices.md、06-faq.md、07-resources.md
 - [ ] 所有文件名遵循两位数前缀命名规范（00-、01-、02-...）
 

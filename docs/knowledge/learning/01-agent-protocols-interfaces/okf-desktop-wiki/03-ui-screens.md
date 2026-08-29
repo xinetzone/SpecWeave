@@ -203,4 +203,4 @@ const PROVIDERS = [
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [02 安装与快速入门](./02-quickstart.md) | [README](./README.md) | [04 API 与数据流](./04-api-and-data-flow.md) |
+| [02 安装与快速入门](02-quickstart.md) | [README](README.md) | [04 API 与数据流](04-api-and-data-flow.md) |

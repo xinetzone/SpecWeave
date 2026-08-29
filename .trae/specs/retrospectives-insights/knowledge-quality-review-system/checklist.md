@@ -1,7 +1,7 @@
 # 知识质量保障体系建设 - Verification Checklist
 
 ## 产出物完整性
-- [x] 目录 `.agents/docs/knowledge/quality-assurance/` 创建成功
+- [x] 目录 `docs/knowledge/quality-assurance/` 创建成功
 - [x] 入口 README.md 存在且包含完整索引和使用指南
 - [x] 单人/少人替代评审方案文档存在，包含至少3种核心方案
 - [x] "高效阅读技术文档"七概念实战案例文档存在
@@ -65,7 +65,7 @@
 - [x] README有所有文档的链接
 - [x] 文档之间有合理的交叉引用（替代方案→SOP→模板之间互相链接）
 - [x] 链接到现有指令集的路径正确（adversarial-review.md、knowledge-sedimentation.md等）
-- [x] 运行 `python .agents/scripts/check-links.py --path .agents/docs/knowledge/quality-assurance/` 无断链
+- [x] 运行 `python .agents/scripts/check-links.py --path docs/knowledge/quality-assurance/` 无断链
 - [x] 所有Markdown链接使用相对路径，无 `file:///` 绝对路径
 
 ## 最终验收

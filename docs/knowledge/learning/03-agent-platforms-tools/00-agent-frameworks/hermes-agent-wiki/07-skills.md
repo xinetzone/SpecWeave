@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-07-skills"
 title: "07 技能系统"
 source: "hermes-agent user-guide/features/skills.md + user-guide/features/curator.md + developer-guide/creating-skills.md + reference/skills-catalog.md + 源码 agent/curator.py"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/07-skills.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/07-skills.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 技能系统：过程记忆、SKILL.md 标准、skills/ 与 optional-skills/、技能中心、curator 生命周期、技能分类"
 status: "stable"
@@ -133,4 +133,4 @@ agent 通过 `skill_manage` 工具创建/修改技能，动作包括 `patch`、`
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [06 工具与工具集](./06-tools-toolsets.md) | [README](./README.md) | [08 记忆系统](./08-memory.md) |
+| [06 工具与工具集](06-tools-toolsets.md) | [README](README.md) | [08 记忆系统](08-memory.md) |

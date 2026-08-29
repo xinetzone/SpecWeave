@@ -17,15 +17,15 @@ content-sensitivity: Public（帛书老子原文属公共领域）
 
 ## What Changes
 
-- 新增 wiki 教程目录 `.agents/docs/knowledge/learning/boshu-laozi-wiki/`
+- 新增 wiki 教程目录 `docs/knowledge/learning/boshu-laozi-wiki/`
 - 按 `NN-slug.md` 命名约定生成 8 个原子化章节 + README 索引
 - 章节内容基于公共领域知识，涵盖：帛书老子背景与出土、版本体系、结构差异（德经在前）、核心概念（道/德/无为/自然）、注读方法论、与传世本对照、可复用模式、FAQ 与资源
 - 遵循 seven-concepts 场景4 链路：R（事实采集）→ I（洞察）→ E（模式萃取）→ V（对抗审查）→ C（原子提交入库）
 
 ## Impact
 
-- 新增目录：`.agents/docs/knowledge/learning/boshu-laozi-wiki/`
-- 需更新导航：`.agents/docs/knowledge/learning/README.md`（Learning Wiki 索引）与 `CATEGORIES.md`（统计与清单）按 docgen 约定由 generate-readme.py 自动处理标记区域
+- 新增目录：`docs/knowledge/learning/boshu-laozi-wiki/`
+- 需更新导航：`docs/knowledge/learning/README.md`（Learning Wiki 索引）与 `CATEGORIES.md`（统计与清单）按 docgen 约定由 generate-readme.py 自动处理标记区域
 - 不修改任何现有文件内容（仅可能追加索引表行）
 - 不破坏任何现有功能
 

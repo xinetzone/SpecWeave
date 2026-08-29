@@ -16,7 +16,7 @@ orca_version_target: "1.4.165-rc.0"
 ---
 # 05 快速上手指南
 
-本章带领你用 **五步** 完成 Orca 从零到能跑：安装 → 启动登录 → 添加 Agent → 创建并分发 worktree → 并行监控与择优合并。所有命令均以代码块呈现，可直接复制到终端执行。本章是初次体验 Orca 的最佳入口，建议与 [01 核心架构](./01-core-architecture.md)、[03 Orca CLI 与多 Agent 编排](./03-orca-cli-orchestration.md) 配合阅读。
+本章带领你用 **五步** 完成 Orca 从零到能跑：安装 → 启动登录 → 添加 Agent → 创建并分发 worktree → 并行监控与择优合并。所有命令均以代码块呈现，可直接复制到终端执行。本章是初次体验 Orca 的最佳入口，建议与 [01 核心架构](01-core-architecture.md)、[03 Orca CLI 与多 Agent 编排](03-orca-cli-orchestration.md) 配合阅读。
 
 > **📌 前置条件**：一个可用的 Git 仓库（本地或远程均可）、至少一个已安装到本机的 CLI Agent（如 Claude Code、Codex）。Orca 支持 macOS / Windows / Linux 三平台桌面端，以及 iOS / Android 移动 Companion。
 
@@ -91,7 +91,7 @@ orca terminal create --worktree active --command "codex" --json
 orca worktree create --name my-task --agent claude --prompt "帮我重构这个模块" --json
 ```
 
-> **👀 延伸**：除内置 Agent 外，任何安装了 CLI 的 Agent（如 OpenCode、Cursor CLI、GitHub Copilot、Qwen Code 等）均可通过 `orca terminal create --command "<agent>"` 方式接入。Agent 清单详见 [04 支持的 Agent 清单](./04-supported-agents.md)。
+> **👀 延伸**：除内置 Agent 外，任何安装了 CLI 的 Agent（如 OpenCode、Cursor CLI、GitHub Copilot、Qwen Code 等）均可通过 `orca terminal create --command "<agent>"` 方式接入。Agent 清单详见 [04 支持的 Agent 清单](04-supported-agents.md)。
 
 ## 第四步：创建并分发 worktree（一个提示分发到多个隔离 worktree）
 
@@ -170,10 +170,10 @@ orca worktree show --worktree active --json
 | 第四步 | 创建并分发 worktree | 一个提示分发到多个隔离 worktree（`--agent` + `--prompt`） |
 | 第五步 | 并行监控与择优合并 | 终端分屏、移动端监控、`orca worktree ps`、diff 注释 |
 
-至此，你已完成 Orca 的快速上手，能够并行运行多个 Agent 并择优合并。后续可深入学习 [06 核心价值总结与行业趋势](./06-value-and-trends.md) 理解其行业定位，或查阅 [07 FAQ 与术语表](./07-faq-glossary.md) 解决常见问题。
+至此，你已完成 Orca 的快速上手，能够并行运行多个 Agent 并择优合并。后续可深入学习 [06 核心价值总结与行业趋势](06-value-and-trends.md) 理解其行业定位，或查阅 [07 FAQ 与术语表](07-faq-glossary.md) 解决常见问题。
 
 ---
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [04 支持的 Agent 清单](./04-supported-agents.md) | [README](./README.md) | [06 核心价值总结与行业趋势](./06-value-and-trends.md) → |
+| ← [04 支持的 Agent 清单](04-supported-agents.md) | [README](README.md) | [06 核心价值总结与行业趋势](06-value-and-trends.md) → |

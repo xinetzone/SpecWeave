@@ -21,7 +21,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/` 下创建目录
+  - 在 `docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/` 下创建目录
   - 创建 README.md：YAML frontmatter + 定位说明（把 SpecWeave 接入 Hermes 的实战指导）+ 章节索引表 + 阅读路径 + 与 hermes-okf-wiki/okf-wiki 的关系 + 相关资源
   - frontmatter 使用 YAML（--- 分隔），遵循现有原子化 wiki 格式
 - **Acceptance Criteria**: AC-1, AC-2, AC-10

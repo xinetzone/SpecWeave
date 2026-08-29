@@ -30,15 +30,15 @@ zleap_version_target: "0.3.3"
 
 | 章号 | 文件名 | 标题 | 一句话简介 |
 |------|--------|------|-----------|
-| 00 | [00-overview.md](./00-overview.md) | 项目概述与核心定位 | workspace-first 哲学、"Workspace Is All Agents Need"、项目背景（v0.3.3、预览状态、License 未定）、核心概念初览 |
-| 01 | [01-core-architecture.md](./01-core-architecture.md) | 核心架构与技术栈 | pnpm monorepo、13 个 package 职责、PostgreSQL+pgvector 存储、架构分层 |
-| 02 | [02-workspace-context.md](./02-workspace-context.md) | Workspace 隔离与上下文组装 | main/work 空间、数据库为唯一真源、路由提示、Context 稳定/半稳定/可变三块组装、缓存断点不变量 |
-| 03 | [03-memory-system.md](./03-memory-system.md) | 分区记忆系统 | person/event/experience 三类记忆、A/B 双线、prefetch/recall、RRF 多路径召回、抽取管线 |
-| 04 | [04-skills-tools-permissions.md](./04-skills-tools-permissions.md) | Skill 与工具权限 | SKILL.md 入口、SkillRegistry、敏感性审计、request_approval/full_access 权限、MCP Runtime |
-| 05 | [05-model-providers-runtime.md](./05-model-providers-runtime.md) | 模型提供方与运行时入口 | OpenAI-compatible/Anthropic、Web UI/CLI、ConversationService 统一数据流 |
-| 06 | [06-gateway-tasks.md](./06-gateway-tasks.md) | IM 网关与定时任务 | 飞书/微信接入、ChannelSupervisor、定时任务服务、如何接入 ConversationService |
-| 07 | [07-quickstart.md](./07-quickstart.md) | 快速上手指南 | 环境要求、安装、启动 Web UI、配置模型、CLI 使用、常用命令与环境变量 |
-| 08 | [08-faq-glossary.md](./08-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 核心术语通俗解释 |
+| 00 | [00-overview.md](00-overview.md) | 项目概述与核心定位 | workspace-first 哲学、"Workspace Is All Agents Need"、项目背景（v0.3.3、预览状态、License 未定）、核心概念初览 |
+| 01 | [01-core-architecture.md](01-core-architecture.md) | 核心架构与技术栈 | pnpm monorepo、13 个 package 职责、PostgreSQL+pgvector 存储、架构分层 |
+| 02 | [02-workspace-context.md](02-workspace-context.md) | Workspace 隔离与上下文组装 | main/work 空间、数据库为唯一真源、路由提示、Context 稳定/半稳定/可变三块组装、缓存断点不变量 |
+| 03 | [03-memory-system.md](03-memory-system.md) | 分区记忆系统 | person/event/experience 三类记忆、A/B 双线、prefetch/recall、RRF 多路径召回、抽取管线 |
+| 04 | [04-skills-tools-permissions.md](04-skills-tools-permissions.md) | Skill 与工具权限 | SKILL.md 入口、SkillRegistry、敏感性审计、request_approval/full_access 权限、MCP Runtime |
+| 05 | [05-model-providers-runtime.md](05-model-providers-runtime.md) | 模型提供方与运行时入口 | OpenAI-compatible/Anthropic、Web UI/CLI、ConversationService 统一数据流 |
+| 06 | [06-gateway-tasks.md](06-gateway-tasks.md) | IM 网关与定时任务 | 飞书/微信接入、ChannelSupervisor、定时任务服务、如何接入 ConversationService |
+| 07 | [07-quickstart.md](07-quickstart.md) | 快速上手指南 | 环境要求、安装、启动 Web UI、配置模型、CLI 使用、常用命令与环境变量 |
+| 08 | [08-faq-glossary.md](08-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 核心术语通俗解释 |
 
 ## 内容快照声明
 

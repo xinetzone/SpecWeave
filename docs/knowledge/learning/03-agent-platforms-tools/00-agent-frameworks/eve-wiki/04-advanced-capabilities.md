@@ -148,4 +148,4 @@ Schedules 基于 Vercel Workflows，工作在没有活跃会话的情况下也�
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [03 生产级能力详解](./03-production-capabilities.md) | [README](./README.md) | → [05 快速上手指南](./05-quickstart.md) |
+| ← [03 生产级能力详解](03-production-capabilities.md) | [README](README.md) | → [05 快速上手指南](05-quickstart.md) |

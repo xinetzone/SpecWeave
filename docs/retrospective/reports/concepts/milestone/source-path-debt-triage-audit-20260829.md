@@ -126,7 +126,7 @@ D-1 于分诊同日完成修复并通过验收，原子提交 `685506db`（fix(d
 
 - GATE-SPS 复扫（13,587 文件）：knowledge 区活动（非 p0/p1/p2 前缀）文档 spaces 令牌仅剩上述 7 个 B 类教学文件；锚点行越界 **0**
 - 单元测试：`python -m pytest .agents/scripts/tests/test_check_source_path_stability.py -q` → **36 passed**
-- 提交纪律：显式暂存（`git add .agents/docs/knowledge/`）、UTF-8 无 BOM 提交信息（`-F`）、`git show --stat` 核验零混入——并行会话的 `projects/awesome-okf-xs` 子模块指针与 docx 产物均未入提交
+- 提交纪律：显式暂存（`git add docs/knowledge/`）、UTF-8 无 BOM 提交信息（`-F`）、`git show --stat` 核验零混入——并行会话的 `projects/awesome-okf-xs` 子模块指针与 docx 产物均未入提交
 
 ### 6.4 根 `docs/` 空壳旧树处置决策（登记不改写）
 
@@ -134,6 +134,6 @@ D-1 于分诊同日完成修复并通过验收，原子提交 `685506db`（fix(d
 
 | 子集 | 命中文件 | 令牌数 | 判定 |
 |------|-------:|-------:|------|
-| `docs/knowledge/learning/book-to-skill-wiki/` 旧副本 | 10 | 96 | 规范新版在 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/`（复扫 0 令牌），旧副本随空壳树废弃 |
+| `docs/knowledge/learning/book-to-skill-wiki/` 旧副本 | 10 | 96 | 规范新版在 `docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/`（复扫 0 令牌），旧副本随空壳树废弃 |
 | python314 系列 wiki 旧 shell 副本 | 4 | 7 | 规范新版已在本次 D-1 修复，旧副本废弃 |
 | 复盘/审计报告与里程碑索引 | 4 | 13 | A 类历史证据（报告正文引用的分析对象令牌，本报告即含 9 条） |

@@ -2,8 +2,8 @@
 id: "codewhale-wiki-00"
 title: "CodeWhale 项目概述"
 source: "https://github.com/Hmbown/CodeWhale"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/00-overview.toml"
 ---
-
 # CodeWhale 项目概述
 
 > **"潜入深海，你不必亲自下潜。"**
@@ -204,5 +204,5 @@ CodeWhale 的差异化优势在于**模型无关性**（不被单一供应商锁
 
 ## 下一步
 
-- 准备开始使用？→ [安装与首次使用指南](./01-quickstart.md)
-- 返回知识库首页 → [CodeWhale 知识库](./README.md)
+- 准备开始使用？→ [安装与首次使用指南](01-quickstart.md)
+- 返回知识库首页 → [CodeWhale 知识库](README.md)

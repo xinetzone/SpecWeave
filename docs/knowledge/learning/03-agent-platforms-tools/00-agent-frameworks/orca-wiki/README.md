@@ -31,14 +31,14 @@ orca_version_target: "1.4.165-rc.0"
 
 | 章号 | 文件名 | 标题 | 一句话简介 |
 |------|--------|------|-----------|
-| 00 | [00-overview.md](./00-overview.md) | 项目概述与核心定位 | Orca 定位、背景（Stably.ai/YC/MIT/Star 数）、传统痛点 vs 解决方案对照表 |
-| 01 | [01-core-architecture.md](./01-core-architecture.md) | 核心架构与技术栈 | Electron+TypeScript 技术栈、工作区/编排/终端/浏览器分层、架构示意图 |
-| 02 | [02-core-features.md](./02-core-features.md) | 八大核心功能详解 | 移动 Companion、并行 Worktree、终端分屏、设计模式、GitHub&Linear、SSH Worktree、注释 AI Diff、拖拽文件 |
-| 03 | [03-orca-cli-orchestration.md](./03-orca-cli-orchestration.md) | Orca CLI 与多 Agent 编排 | worktree/terminal/repo/automations/browser/linear/computer 命令面 + Run/Task/Dispatch/worker_done 编排机制 |
-| 04 | [04-supported-agents.md](./04-supported-agents.md) | 支持的 Agent 清单 | 任意 CLI Agent 均可运行，25+ 款 Agent 清单与简要说明 |
-| 05 | [05-quickstart.md](./05-quickstart.md) | 快速上手指南 | 安装、启动登录、添加 Agent、创建分发 worktree、并行监控五步流程 |
-| 06 | [06-value-and-trends.md](./06-value-and-trends.md) | 核心价值总结与行业趋势 | "IDE 从代码编辑器向代理编排器演进"、自带 Agent 理念、与开篇定位呼应 |
-| 07 | [07-faq-glossary.md](./07-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 15+ 核心术语通俗解释 |
+| 00 | [00-overview.md](00-overview.md) | 项目概述与核心定位 | Orca 定位、背景（Stably.ai/YC/MIT/Star 数）、传统痛点 vs 解决方案对照表 |
+| 01 | [01-core-architecture.md](01-core-architecture.md) | 核心架构与技术栈 | Electron+TypeScript 技术栈、工作区/编排/终端/浏览器分层、架构示意图 |
+| 02 | [02-core-features.md](02-core-features.md) | 八大核心功能详解 | 移动 Companion、并行 Worktree、终端分屏、设计模式、GitHub&Linear、SSH Worktree、注释 AI Diff、拖拽文件 |
+| 03 | [03-orca-cli-orchestration.md](03-orca-cli-orchestration.md) | Orca CLI 与多 Agent 编排 | worktree/terminal/repo/automations/browser/linear/computer 命令面 + Run/Task/Dispatch/worker_done 编排机制 |
+| 04 | [04-supported-agents.md](04-supported-agents.md) | 支持的 Agent 清单 | 任意 CLI Agent 均可运行，25+ 款 Agent 清单与简要说明 |
+| 05 | [05-quickstart.md](05-quickstart.md) | 快速上手指南 | 安装、启动登录、添加 Agent、创建分发 worktree、并行监控五步流程 |
+| 06 | [06-value-and-trends.md](06-value-and-trends.md) | 核心价值总结与行业趋势 | "IDE 从代码编辑器向代理编排器演进"、自带 Agent 理念、与开篇定位呼应 |
+| 07 | [07-faq-glossary.md](07-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 15+ 核心术语通俗解释 |
 
 ## 内容快照声明
 

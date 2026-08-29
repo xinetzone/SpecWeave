@@ -6,7 +6,7 @@ date: "2026-08-15"
 source: "apps/docker-images/devcontainer-base/variants/onnx-pytorch/RELEASE.md"
 type: "Reference"
 description: "devcontainer-base:onnx-pytorch 镜像 v1.1.0 发布清单，适配 conda-llvm jupyter 迁移至 main 环境，23/23 测试通过。"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/tech/release-onnx-pytorch-v1-1.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/tech/release-onnx-pytorch-v1-1.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -16,7 +16,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # onnx-pytorch v1.1.0 发布清单（Release Manifest）
 
 > 本清单基于已构建并验证通过的 `devcontainer-base:onnx-pytorch-latest`（**v1.1.0**）镜像生成。

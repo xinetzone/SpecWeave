@@ -17,7 +17,7 @@ GitHub 组织级 `.github` 元仓库（meta-repository）是大型开源组织�
 本教程旨在系统回答上述问题，将 `conda/.github` 元仓库的完整结构、配置语义、实现逻辑沉淀为可复用知识，填补知识库在"GitHub 组织级社区基础设施"领域的空白。
 
 ## What Changes
-- **新增** 10 个原子化 Markdown 文档，构成完整的 conda-dev/.github 元仓库 wiki 教程，放置于 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录
+- **新增** 10 个原子化 Markdown 文档，构成完整的 conda-dev/.github 元仓库 wiki 教程，放置于 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录
 - **新增** 教程总览与导航索引（`00-overview.md`）
 - **新增** 仓库整体架构章节（`01-repository-structure.md`），涵盖根级文件、`.github/` 各子目录及文件作用、与普通仓库 `.github/` 的区别
 - **新增** GitHub Actions 工作流详解章节（`02-workflows-deep-dive.md`），逐一对 `cla.yml`/`issues.yml`/`labels.yml`/`lock.yml`/`project.yml`/`stale.yml`/`update.yml` 七个工作流解析配置项含义、参数说明与使用场景
@@ -34,11 +34,11 @@ GitHub 组织级 `.github` 元仓库（meta-repository）是大型开源组织�
 - **Affected specs**: 无（独立新增 wiki 教程，不修改已有 spec）
 - **Affected code**: 无代码改动，仅文档新增
 - **Affected files**:
-  - 新增：`.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.md` ~ `09-resources.md` + `README.md` 共 11 个文件
+  - 新增：`docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.md` ~ `09-resources.md` + `README.md` 共 11 个文件
   - 可能由 `docgen-cmd` 后续自动纳入 Learning Wiki 索引（不在本 spec 范围内）
 - **Related wikis**:
-  - [git-advanced-wiki](../../../.agents/docs/knowledge/learning/08-systems-infrastructure/git-advanced-wiki/00-overview.md) — 同属 08 系统与基础设施主题，Git 底层操作与 GitHub 组织治理互补
-  - [git-baidu-sync](../../../.agents/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/README.md) — 同主题，Git 仓库同步工作流实践
+  - [git-advanced-wiki](../../../docs/knowledge/learning/08-systems-infrastructure/git-advanced-wiki/00-overview.md) — 同属 08 系统与基础设施主题，Git 底层操作与 GitHub 组织治理互补
+  - [git-baidu-sync](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/README.md) — 同主题，Git 仓库同步工作流实践
 
 ## Background & Context
 GitHub 通过 `.github` 特殊目录约定提供组织级（organization）和仓库级社区功能配置：
@@ -161,7 +161,7 @@ The system SHALL ensure all wiki files follow consistent metadata and navigation
 ## Assumptions
 - 读者具备基础 GitHub 使用经验（Issue/PR/分支），了解 YAML 语法
 - 读者了解 GitHub Actions 基本概念（workflow/job/step/event）
-- 教程放置于 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录
+- 教程放置于 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录
 - 完成后可由 `docgen-cmd` 自动纳入 Learning Wiki 索引（不在本 spec 验收范围内）
 
 ## Acceptance Criteria

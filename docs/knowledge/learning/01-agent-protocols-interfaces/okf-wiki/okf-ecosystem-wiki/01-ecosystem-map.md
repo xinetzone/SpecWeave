@@ -18,7 +18,7 @@ okf_version_target: "v0.2"
 ---
 # 01 OKF 生态资源图谱
 
-> 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [awesome-okf](https://github.com/linyiru/awesome-okf)（**上游英文版**）的生态资源分类与工程实现。OKF 通用规范概念请参考 [okf-wiki 主教程](../README.md)。
+> 本页属于 [OKF 生态基建知识](README.md) 系列，聚焦 [awesome-okf](https://github.com/linyiru/awesome-okf)（**上游英文版**）的生态资源分类与工程实现。OKF 通用规范概念请参考 [okf-wiki 主教程](../README.md)。
 
 ## 1.1 定位与来源
 
@@ -26,9 +26,9 @@ okf_version_target: "v0.2"
 
 | 仓库文件 | 作用 |
 |---------|------|
-| [README.md](../../../../../../../vendor/awesome-okf-bundle/README.md) | 人类可读的 Awesome 列表（资源主入口） |
-| [bundle/index.md](../../../../../../../vendor/awesome-okf-bundle/bundle/index.md) | 由 README 生成的 OKF v0.2 合规范 bundle 索引 |
-| [scripts/build-okf-bundle.mjs](../../../../../../../vendor/awesome-okf-bundle/scripts/build-okf-bundle.mjs) | 批转脚本：README → 合规范 bundle 的自动化实现 |
+| [README.md](../../../../../../vendor/awesome-okf-bundle/README.md) | 人类可读的 Awesome 列表（资源主入口） |
+| [bundle/index.md](../../../../../../vendor/awesome-okf-bundle/bundle/index.md) | 由 README 生成的 OKF v0.2 合规范 bundle 索引 |
+| [scripts/build-okf-bundle.mjs](../../../../../../vendor/awesome-okf-bundle/scripts/build-okf-bundle.mjs) | 批转脚本：README → 合规范 bundle 的自动化实现 |
 
 > **为什么不能直接让仓库根目录是 bundle？** OKF 要求每个非保留 `.md` 文件都带非空 `type` 的 frontmatter，而 Awesome 列表的 README.md 因 awesome-lint 校验无法强制加 frontmatter。因此用 `bundle/` 子目录镜像资源，README 与 bundle 解耦。
 
@@ -113,4 +113,4 @@ generated: { by: "process:build-okf-bundle", at: "2026-07-31T00:00:00Z" }
 
 | 上一页 | 目录 | 下一页 |
 |--------|------|--------|
-| [README](./README.md) | [OKF 生态基建](./README.md) | [02 Bundle 分发注册机制](./02-bundle-registry.md) |
+| [README](README.md) | [OKF 生态基建](README.md) | [02 Bundle 分发注册机制](02-bundle-registry.md) |

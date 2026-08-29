@@ -1,7 +1,7 @@
 ---
 id: "agent-skills-wiki-resources"
 source: "agent-skills-open-standard-wiki.md#十四资源链接"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.toml"
 ---
 ## 十四、资源链接
 
@@ -15,11 +15,11 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-age
 ### 本地资源
 - **本地源码副本**：[external/agentskills](../../../../../../external/agentskills/README.md)
 - **验证工具源码**：[skills-ref/src/skills_ref/__init__.py](../../../mdi/generated/case1/__init__.py)（位于 `external/agentskills/` 下）
-- **验证工具测试**：[skills-ref/tests](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/tests/)
+- **验证工具测试**：[skills-ref/tests](../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/tests)
 - **官方文档副本**：[docs/](../../../README.md)
 
 ### 本项目相关
-- **本项目 Skills 目录**：[.agents/skills/](../../../../../skills/README.md)
-- **渐进式披露模式**：[progressive-context-disclosure.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- **Skill 五要素模型**：[skill-five-elements-model.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
-- **Markdown 即接口模式**：[markdown-as-interface.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)
+- **本项目 Skills 目录**：[.agents/skills/](../../../../../.agents/skills/README.md)
+- **渐进式披露模式**：[progressive-context-disclosure.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- **Skill 五要素模型**：[skill-five-elements-model.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
+- **Markdown 即接口模式**：[markdown-as-interface.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)

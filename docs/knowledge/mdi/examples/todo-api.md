@@ -14,7 +14,7 @@ tags:
   - todo
   - demo
   - mdi-example
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/todo-api.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi/examples/todo-api.toml"
 ---
 # Todo API
 

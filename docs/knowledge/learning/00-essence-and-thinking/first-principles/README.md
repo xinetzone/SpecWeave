@@ -2,7 +2,7 @@
 id: first-principles-archive
 title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9 + future research tasks
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/README.toml"
 created_at: "2026-07-09"
 last_updated: "2026-08-21"
 status: in-progress
@@ -258,7 +258,7 @@ README.md（了解档案定位与偏差警示）
 
 本档案是SpecWeave项目知识体系的组成部分。相关文档提示：
 
-- 第一性原理的执行规范见 [第一性原理指令集](../../../../../commands/first-principles.md) — 定义了触发条件、6步执行流程、RACI责任分配与质量验收标准
+- 第一性原理的执行规范见 [第一性原理指令集](../../../../../.agents/commands/first-principles.md) — 定义了触发条件、6步执行流程、RACI责任分配与质量验收标准
 - 提示词工程模式相关文档可在项目内检索"prompt engineering patterns"
 - Agent工程方法论相关资料可检索"agent methodology"
 - 批判性思维与认知偏差相关资料可检索"cognitive biases"、"critical thinking"

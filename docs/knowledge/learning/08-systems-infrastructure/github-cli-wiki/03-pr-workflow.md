@@ -2,7 +2,7 @@
 id: "github-cli-wiki-03"
 title: "Pull Request 工作流指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/03-pr-workflow.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/03-pr-workflow.toml"
 ---
 # Pull Request 工作流指南
 

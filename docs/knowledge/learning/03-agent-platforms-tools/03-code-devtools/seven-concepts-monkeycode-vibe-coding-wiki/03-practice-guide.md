@@ -370,6 +370,6 @@ MonkeyCode支持移动端浏览器访问，方便随时随地查看和管理项�
 
 ## 十一、继续阅读
 
-上一章：[第二章 - MonkeyCode产品深度解析](./02-monkeycode-deep-analysis.md)
+上一章：[第二章 - MonkeyCode产品深度解析](02-monkeycode-deep-analysis.md)
 
-下一章：[第四章 - 常见问题与解答](./04-faq.md)
+下一章：[第四章 - 常见问题与解答](04-faq.md)

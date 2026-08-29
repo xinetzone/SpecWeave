@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-04-insights-and-reliability"
 title: "MaineCoon 洞见萃取与可靠性评估"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/04-insights-and-reliability.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/04-insights-and-reliability.toml"
 ---
 # MaineCoon 洞见萃取与可靠性评估
 

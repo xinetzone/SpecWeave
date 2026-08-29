@@ -160,4 +160,4 @@ EchoBird 支持三种推理引擎（推理引擎指把大模型加载到显存/�
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [04 四大核心场景](./04-core-scenarios.md) | [README](./README.md) | → [06 Codex Proxy 协议转换](./06-codex-proxy.md) |
+| ← [04 四大核心场景](04-core-scenarios.md) | [README](README.md) | → [06 Codex Proxy 协议转换](06-codex-proxy.md) |

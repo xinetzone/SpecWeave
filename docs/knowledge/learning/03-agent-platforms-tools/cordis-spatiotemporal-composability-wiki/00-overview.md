@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-00"
 title: "Cordis 时空可组合性框架 — 概述"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/00-overview.toml"
 ---
 # Cordis 时空可组合性框架 — 概述
 

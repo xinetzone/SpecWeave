@@ -1,7 +1,7 @@
 ---
 id: "idl-wiki-resources"
 title: "九、学习资源与参考资料：术语表、权威规范与扩展阅读"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/09-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/09-resources.toml"
 source: "spec:create-idl-wiki-tutorial"
 category: "learning"
 tags: ["idl", "resources", "glossary", "references", "further-reading", "specifications"]
@@ -123,7 +123,7 @@ summary: "IDL 相关术语表、权威参考资料、按难度分级的扩展阅
 | --- | --- | --- |
 | Interface/API/ABI/Protocol 概念 wiki | 互补关系——该 wiki 讲"接口本身"，本教程讲"描述接口的语言" | [`00-overview.md`](../interface-api-abi-protocol-wiki/00-overview.md) |
 | Agent Interface Deep Dive | AI Agent 接口视角，IDL 在 AI 工具定义场景的延伸 | [`agent-interface-deep-dive/`](../agent-interface-deep-dive/README.md) |
-| MDI 项目复盘洞察 | 探索 Markdown 作为 AI-friendly IDL 的实践经验 | [`insight-extraction.md`](../../../../retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) |
+| MDI 项目复盘洞察 | 探索 Markdown 作为 AI-friendly IDL 的实践经验 | [`insight-extraction.md`](../../../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md) |
 
 ## 结尾说明
 

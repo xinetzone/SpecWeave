@@ -203,6 +203,6 @@ type User { id: ID! name: String! }
 
 - MDI 规范文档：[mdi-spec-v1.0.md](../../mdi-spec-v1.0.md)
 - MDI 研究报告：[mdi-research-report.md](../../mdi-research-report.md)
-- MDI 生成代码示例：[generated/](../generated/)
-- MDI 工具源码：[../../../../scripts/mdi/](../../../../scripts/mdi/)
-- 内置英文示例：[../../../../scripts/mdi/examples/](../../../../scripts/mdi/examples/)
+- MDI 生成代码示例：[generated/](../generated)
+- MDI 工具源码：[../../../../scripts/mdi/](../../../../.agents/scripts/mdi)
+- 内置英文示例：[../../../../scripts/mdi/examples/](../../../../.agents/scripts/mdi/examples)

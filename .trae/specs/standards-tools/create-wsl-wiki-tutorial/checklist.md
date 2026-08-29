@@ -2,7 +2,7 @@
 
 ## 一、目录结构完整性
 
-- [ ] `wsl-wiki/` 目录已创建在 `.agents/docs/knowledge/learning/08-systems-infrastructure/` 下
+- [ ] `wsl-wiki/` 目录已创建在 `docs/knowledge/learning/08-systems-infrastructure/` 下
 - [ ] 目录包含 README.md 导航入口文件
 - [ ] 包含 12 个以上编号章节文件（00-overview.md 到 14/15-*.md）
 - [ ] 所有章节文件使用两位数字编号前缀（00-、01-、02-...）
@@ -111,7 +111,7 @@
 
 ## 八、知识库导航更新
 
-- [ ] `.agents/docs/knowledge/learning/08-systems-infrastructure/README.md` 已更新
+- [ ] `docs/knowledge/learning/08-systems-infrastructure/README.md` 已更新
 - [ ] 索引中添加了 wsl-wiki/ 条目
 - [ ] 条目包含简要说明和相对路径链接
 - [ ] 现有其他条目未被破坏

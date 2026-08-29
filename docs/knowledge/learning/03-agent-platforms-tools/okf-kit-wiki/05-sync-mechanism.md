@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-05"
 title: "okf-kit 完全指南 — 增量同步机制"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/sync.py"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/05-sync-mechanism.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/05-sync-mechanism.toml"
 ---
-
 # okf-kit 完全指南 — 增量同步机制
 
 > 一句话摘要：okf-kit 的增量同步基于每个页面 Markdown 正文的 SHA-256 content hash 判断变更，只对 added/changed 页面写入文件、删除 removed 页面，unchanged 页面保持字节级一致，并设有安全阈值防止网络异常导致误删。

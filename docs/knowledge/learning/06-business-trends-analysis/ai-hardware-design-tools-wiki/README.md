@@ -28,5 +28,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trend
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../README.md)
-- [📋 对应的Spec文档](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-hardware-design-tools/spec.md)
+- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📋 对应的Spec文档](../../../../../.trae/specs/retrospectives-insights/analyze-ai-hardware-design-tools/spec.md)

@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-15"
 title: "mystx 主题基于 Python 3.14 标准库优化 — 优化前后对比记录"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/15-mystx-optimization-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/15-mystx-optimization-report.toml"
 ---
 # mystx 主题基于 Python 3.14 标准库优化 — 优化前后对比记录
 

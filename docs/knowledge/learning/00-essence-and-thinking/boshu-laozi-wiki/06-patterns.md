@@ -108,4 +108,4 @@ P-001 与 P-002 是同一方法论的两层：
 - [x] 跨场景迁移示例：古籍/翻译/工程（P-001）；考古/工程/AI（P-002），均以表格呈现
 - [x] 关系说明：明确 P-001 为操作层、P-002 为认知层，可组合使用
 - [x] 图示：含 1 个 mermaid 流程图展示 P-001 五步流程
-- [x] 可溯源：模式均引用 F 编号（F-001~F-016）与 I 编号（I-001~I-003），源自 [facts.md](../../../../../../.trae/specs/boshu-laozi-wiki/facts.md) 与 [insights.md](../../../../../../.trae/specs/boshu-laozi-wiki/insights.md)
+- [x] 可溯源：模式均引用 F 编号（F-001~F-016）与 I 编号（I-001~I-003），源自 [facts.md](../../../../../.trae/specs/boshu-laozi-wiki/facts.md) 与 [insights.md](../../../../../.trae/specs/boshu-laozi-wiki/insights.md)

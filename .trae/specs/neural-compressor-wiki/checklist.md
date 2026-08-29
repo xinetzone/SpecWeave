@@ -1,7 +1,7 @@
 # Intel Neural Compressor Wiki 教程 - Verification Checklist
 
 ## 结构与规范检查
-- [x] 目录 `neural-compressor-wiki/` 已创建在 `.agents/docs/knowledge/learning/` 下
+- [x] 目录 `neural-compressor-wiki/` 已创建在 `docs/knowledge/learning/` 下
 - [x] 所有预期文件（00-overview.md 到 08-resources.md + README.md）均存在（共10个文件）
 - [x] 文件命名符合 `XX-<topic>.md` 格式，与现有 wiki 风格一致
 - [x] 每个文件包含完整的 YAML frontmatter（id、title、category、date、tags、summary、source）

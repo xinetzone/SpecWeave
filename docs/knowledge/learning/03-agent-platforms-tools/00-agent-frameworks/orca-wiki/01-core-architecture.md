@@ -169,4 +169,4 @@ flowchart TB
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [00 项目概述与核心定位](./00-overview.md) | [README](./README.md) | → [02 八大核心功能详解](./02-core-features.md) |
+| ← [00 项目概述与核心定位](00-overview.md) | [README](README.md) | → [02 八大核心功能详解](02-core-features.md) |

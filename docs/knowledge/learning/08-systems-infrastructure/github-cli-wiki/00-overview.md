@@ -2,7 +2,7 @@
 id: "github-cli-wiki-00"
 title: "GitHub CLI (gh) 完全指南 — 概述"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/00-overview.toml"
 ---
 # GitHub CLI (gh) 完全指南 — 概述
 

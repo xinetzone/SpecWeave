@@ -2,7 +2,7 @@
 id: okf-topic-index
 title: "OKF（开放知识格式）主题知识导航"
 source: "docs/knowledge/learning/okf-topic-index.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.toml"
 date: "2026-08-19"
 category: "learning"
 tags: ["okf", "open-knowledge-format", "index", "navigation", "wiki"]
@@ -17,7 +17,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # OKF（开放知识格式）主题知识导航
 
 > 本文档是项目中全部 OKF（Open Knowledge Format，开放知识格式）相关知识的**统一导航总入口**。OKF 相关知识当前散布在多个目录、横跨两套文档树与两个分类号，本文档将它们收敛到单一切入点，并按「格式规范」与「工具链」两大子域归类，附版本说明与推荐路径。
@@ -46,7 +45,7 @@ OKF 项目知识分为两个**正交维度**，阅读前请先厘清：
 |------|------|:------:|------|
 | `01-agent-protocols-interfaces/okf-wiki/` | **OKF 格式规范完整教程**（设计哲学、核心概念、5 分钟快速入门、使用模式、方案对比、架构集成、FAQ、术语表） | 8 | [README](README.md) |
 | `01-agent-protocols-interfaces/knowledge-catalog-wiki/` | **OKF 参考实现工具链教程**（Google 官方 knowledge-catalog，含 02 章节 OKF v0.2 规范实现视角解析） | 9 | [00-overview](../knowledge-catalog-wiki/00-overview.md) |
-| `projects/awesome-okf-xs/` | **OKF 文档库子项目**（玄境项目「道」的载体，以 OKF bundle 组织文档/复盘/洞察/模式） | — | [README](../../../../../../projects/awesome-okf-xs/README.md) |
+| `projects/awesome-okf-xs/` | **OKF 文档库子项目**（玄境项目「道」的载体，以 OKF bundle 组织文档/复盘/洞察/模式） | — | [README](../../../../../projects/awesome-okf-xs/README.md) |
 
 ---
 
@@ -57,7 +56,7 @@ OKF 项目知识分为两个**正交维度**，阅读前请先厘清：
 | 位置 | 内容 | 章节数 | 入口 |
 |------|------|:------:|------|
 | `03-agent-platforms-tools/okf-kit-wiki/` | **okf-kit 第三方工具教程**（v0.3.3，将网站转为 OKF bundle；零 Key 爬取、增量同步、Chat、MCP/HTTP 服务） | 12 | [README](../../03-agent-platforms-tools/okf-kit-wiki/README.md) |
-| `projects/xuanspace/docs/okf/` | **本项目自研 `okf` 工具官方文档**（OKF v0.2 命令行工具链，零运行时依赖、Harness 架构） | 10 | [index](../../../../../../projects/xuanspace/docs/okf/index.md) |
+| `projects/xuanspace/docs/okf/` | **本项目自研 `okf` 工具官方文档**（OKF v0.2 命令行工具链，零运行时依赖、Harness 架构） | 10 | [index](../../../../../projects/xuanspace/docs/okf/index.md) |
 | `04-docs-markup-tooling/python314-stdlib-wiki/`（13 章） | **自研 `okf` 工具的 Python 3.14 标准库优化报告**（优化前后 100% 覆盖率、内存 -69.8% 等量化对比） | 2 | [13-优化报告](../../04-docs-markup-tooling/python314-stdlib-wiki/13-okf-optimization-report.md) |
 
 ---

@@ -2,7 +2,7 @@
 title: "Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南"
 category: "learning"
 source: "https://www.minitap.ai/docs"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-official-docs-wiki.toml"
 date: "2026-07-07"
 status: "published"
 summary: "Minitest与Mobile Use SDK官方文档系统化学习教程，涵盖minitest AI QA工程师完整使用指南（入门、套件管理、运行测试、分类集成、参考手册）和mobile-use开源SDK深度教程（介绍安装、快速开始、核心概念、示例、SDK参考、故障排除），包含FAQ、最佳实践、术语表和资源链接。"
@@ -239,8 +239,8 @@ graph TB
 |---|---|---|
 | Minitap.ai官方Wiki完整学习教程 | 产品深度解析、AndroidWorld基准、客户案例、融资报道 | [minitap-official-wiki.md](minitap-official-wiki.md) |
 | mobile-use深度学习分析 | SDK技术架构、核心模块深度解析 | [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) |
-| 多代理闭环执行架构 | 架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
-| 规范化坐标抽象 | 跨平台坐标系统一技术 | [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| 多代理闭环执行架构 | 架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| 规范化坐标抽象 | 跨平台坐标系统一技术 | [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 
 ---
 

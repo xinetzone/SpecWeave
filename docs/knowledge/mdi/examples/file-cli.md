@@ -14,7 +14,7 @@ tags:
   - file
   - utility
   - mdi-example
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/file-cli.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi/examples/file-cli.toml"
 ---
 # 文件操作 CLI 工具
 

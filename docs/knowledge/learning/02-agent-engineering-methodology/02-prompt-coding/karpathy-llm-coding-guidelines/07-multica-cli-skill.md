@@ -83,11 +83,11 @@ structure: "tutorial-cognitive-ladder"
 Mention 链接在 Multica 中是**触发器**，不是文本装饰：
 
 ```markdown
-[@Name](mention://agent/<agent-id>)   # 🔴 入队该 Agent（触发运行！）
-[@Name](mention://squad/<squad-id>)   # 🔴 入队 Squad Leader（触发运行！）
-[@Name](mention://member/<user-id>)   # ✅ 人员链接（无副作用）
-[MUL-123](mention://issue/<issue-id>) # ✅ Issue 链接（安全交叉引用）
-[@all](mention://all/all)             # ✅ 广播（不触发具体 Agent 运行）
+[@Name](mention%3A/agent/%3Cagent-id%3E)   # 🔴 入队该 Agent（触发运行！）
+[@Name](mention%3A/squad/%3Csquad-id%3E)   # 🔴 入队 Squad Leader（触发运行！）
+[@Name](mention%3A/member/%3Cuser-id%3E)   # ✅ 人员链接（无副作用）
+[MUL-123](mention%3A/issue/%3Cissue-id%3E) # ✅ Issue 链接（安全交叉引用）
+[@all](mention%3A/all/all)             # ✅ 广播（不触发具体 Agent 运行）
 ```
 
 **Mention 安全三规则**：
@@ -307,7 +307,7 @@ multica issue metadata set MUL-123 --key note --value "正在调查中，第3次
 ❌ **错误做法**：凭名字猜 UUID，或为了礼貌而感谢
 ```markdown
 感谢 @builder-agent 的帮助！
-[@builder-agent](mention://agent/猜测的uuid)
+[@builder-agent](mention%3A/agent/%E7%8C%9C%E6%B5%8B%E7%9A%84uuid)
 // → 如果 UUID 错误，mention 会失败；如果 UUID 正确，会触发 Agent 再次运行
 ```
 
@@ -317,7 +317,7 @@ multica agent list --output json   # 获取真实 agent UUID
 multica squad list --output json   # 获取真实 squad UUID
 ```
 ```markdown
-请 [@builder-agent](mention://agent/<真实uuid>) 开始实现这个功能。
+请 [@builder-agent](mention%3A/agent/%3C%E7%9C%9F%E5%AE%9Euuid%3E) 开始实现这个功能。
 ```
 
 ### 3.9 其他资源（探索式学习）

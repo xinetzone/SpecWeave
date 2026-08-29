@@ -89,4 +89,4 @@ my-agent/
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [00 教程总览](./00-overview.md) | [README](./README.md) | → [02 目录结构与核心能力](./02-directory-core-capabilities.md) |
+| ← [00 教程总览](00-overview.md) | [README](README.md) | → [02 目录结构与核心能力](02-directory-core-capabilities.md) |

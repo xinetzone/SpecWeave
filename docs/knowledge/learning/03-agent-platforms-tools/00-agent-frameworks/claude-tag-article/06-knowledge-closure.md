@@ -10,7 +10,7 @@ status: "stable"
 author: "SpecWeave"
 summary: "本知识条目复盘闭环状态：复盘报告索引、已萃取可复用模式（2项L1）、方法论沉淀（2项操作指南）。"
 source: "claude-tag-article.md#知识沉淀闭环"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/06-knowledge-closure.toml"
 ---
 # Claude Tag：知识沉淀闭环（2026-07-03 更新）
 
@@ -19,17 +19,17 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-
 ### 复盘报告
 
 本次知识捕获已完成四阶段复盘，产出完整复盘报告：
-- [README.md](../../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md) — 复盘概览与闭环状态
-- [execution-retrospective.md](../../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md) — 执行过程复盘（含微信公众号内容获取技术突破）
-- [insight-extraction.md](../../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md) — 5项核心洞察 + 2条规律认知萃取
-- [export-suggestions.md](../../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.md) — 改进建议与行动计划
+- [README.md](../../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md) — 复盘概览与闭环状态
+- [execution-retrospective.md](../../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md) — 执行过程复盘（含微信公众号内容获取技术突破）
+- [insight-extraction.md](../../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/insight-extraction.md) — 5项核心洞察 + 2条规律认知萃取
+- [export-suggestions.md](../../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/export-suggestions.md) — 改进建议与行动计划
 
 ### 已萃取可复用模式
 
 | 洞察ID | 洞察名称 | 模式文件 | 成熟度 |
 |--------|---------|---------|--------|
-| INS-001 | 团队共享 AI 同事模式 | [team-shared-ai-colleague.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) | L1 |
-| INS-002 | Ambient Mode 主动介入范式 | [ambient-proactive-agent.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) | L1 |
+| INS-001 | 团队共享 AI 同事模式 | [team-shared-ai-colleague.md](../../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md) | L1 |
+| INS-002 | Ambient Mode 主动介入范式 | [ambient-proactive-agent.md](../../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md) | L1 |
 
 ### 方法论沉淀
 

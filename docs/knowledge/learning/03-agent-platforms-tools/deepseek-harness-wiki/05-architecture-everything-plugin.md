@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-05"
 title: "DeepSeek Harness 完全指南 — 核心架构：一切皆插件"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/05-architecture-everything-plugin.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/05-architecture-everything-plugin.toml"
 ---
 # 05 核心架构：一切皆插件
 

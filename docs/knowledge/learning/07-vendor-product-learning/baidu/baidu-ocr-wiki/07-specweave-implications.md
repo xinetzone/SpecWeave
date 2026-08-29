@@ -2,7 +2,7 @@
 id: "baidu-ocr-wiki-07"
 title: "百度 Unlimited-OCR 对SpecWeave的可行动启示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/07-specweave-implications.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/07-specweave-implications.toml"
 ---
 # 百度 Unlimited-OCR 对SpecWeave的可行动启示
 

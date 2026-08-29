@@ -240,4 +240,4 @@ flowchart LR
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [03 Model Nexus 模型中心](./03-model-nexus.md) | [README](./README.md) | → [05 本地大模型服务](./05-local-llm.md) |
+| ← [03 Model Nexus 模型中心](03-model-nexus.md) | [README](README.md) | → [05 本地大模型服务](05-local-llm.md) |

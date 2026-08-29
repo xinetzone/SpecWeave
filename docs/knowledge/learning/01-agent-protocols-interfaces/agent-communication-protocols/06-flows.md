@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#06-交互流程与协作模式"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.toml"
 id: "interaction-flows"
 title: "06、交互流程与协作模式"
 ---
@@ -525,5 +525,5 @@ flowchart TD
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [05、协议对比与选型指南](./05-comparison.md) |
-| **下一章** | [07、实现与部署最佳实践](./07-implementation.md) |
+| 上一章 | [05、协议对比与选型指南](05-comparison.md) |
+| **下一章** | [07、实现与部署最佳实践](07-implementation.md) |

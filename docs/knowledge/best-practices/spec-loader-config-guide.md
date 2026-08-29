@@ -1,7 +1,7 @@
 # spec-loader.toml 配置速查手册
 
 > 配置文件路径：`.agents/config/spec-loader.toml`
-> 对应代码：[spec_loader.py](../../../scripts/lib/spec_loader.py)、[spec-loader CLI](../../../scripts/spec-loader.py)
+> 对应代码：[spec_loader.py](../../../.agents/scripts/lib/spec_loader.py)、[spec-loader CLI](../../../.agents/scripts/spec-loader.py)
 
 ## 快速开始
 

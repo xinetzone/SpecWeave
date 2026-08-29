@@ -46,12 +46,12 @@ status: "completed"
 
 | 文件 | 判定理由 | 建议 |
 |---|---|---|
-| `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md` | 新增子目录索引，承担导航入口 | 纳入新基线 |
-| `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md` | 新增子目录索引，承担导航入口 | 纳入新基线 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md` | 为空壳资源目录补充入口说明 | 纳入新基线 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md` | 为语法子目录补充入口说明 | 纳入新基线 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md` | 为模板子目录补充入口说明 | 纳入新基线 |
-| `.agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.md` | 为 `openai` 学习目录建立一级入口 | 纳入新基线 |
+| `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md` | 新增子目录索引，承担导航入口 | 纳入新基线 |
+| `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md` | 新增子目录索引，承担导航入口 | 纳入新基线 |
+| `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md` | 为空壳资源目录补充入口说明 | 纳入新基线 |
+| `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md` | 为语法子目录补充入口说明 | 纳入新基线 |
+| `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md` | 为模板子目录补充入口说明 | 纳入新基线 |
+| `docs/knowledge/learning/07-vendor-product-learning/openai/README.md` | 为 `openai` 学习目录建立一级入口 | 纳入新基线 |
 | `.agents/docs/retrospective/archives/xinet/core/README.md` | 为归档分层目录补充边界说明 | 纳入新基线 |
 | `.agents/docs/retrospective/archives/xinet/reference/README.md` | 为归档分层目录补充边界说明 | 纳入新基线 |
 | `.agents/docs/retrospective/archives/xinet/temporary/README.md` | 为归档分层目录补充边界说明 | 纳入新基线 |

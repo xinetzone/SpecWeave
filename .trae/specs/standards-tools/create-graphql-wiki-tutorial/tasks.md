@@ -4,7 +4,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 在 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/` 下创建 `graphql-wiki/` 目录
+  - 在 `docs/knowledge/learning/01-agent-protocols-interfaces/` 下创建 `graphql-wiki/` 目录
   - 创建 README.md 作为导航入口，包含文档索引表
   - README.md 遵循现有 wiki 格式（YAML frontmatter、README_INDEX_START/END 标记、相关资源链接）
   - 规划章节编号：00-overview 到 12-resources
@@ -176,7 +176,7 @@
 - **Description**: 
   - 更新 graphql-wiki/README.md，在 <!-- README_INDEX_START --> 和 <!-- README_INDEX_END --> 之间填充完整的文档索引表
   - 确保每个章节都有正确的链接和说明
-  - 更新父目录 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/README.md`，添加 graphql-wiki 入口
+  - 更新父目录 `docs/knowledge/learning/01-agent-protocols-interfaces/README.md`，添加 graphql-wiki 入口
   - 检查所有交叉引用链接正确性
 - **Acceptance Criteria Addressed**: [AC-1, AC-5, AC-6]
 - **Test Requirements**:

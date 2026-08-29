@@ -45,7 +45,7 @@ Apache TVM FFI（Foreign Function Interface）是为机器学习系统设计的�
 - **C++17基础**：理解模板、智能指针、移动语义、命名空间等现代C++特性
 - **Python基础**：熟悉Python对象模型、ctypes/cffi等绑定方式
 - **FFI/ABI基本概念**：了解动态链接、符号可见性、调用约定等基础知识
-  - 可参考：本 TVM FFI Wiki 章节「[01 基础概念](./01-core-concepts.md)」或对应入门 Wiki
+  - 可参考：本 TVM FFI Wiki 章节「[01 基础概念](01-core-concepts.md)」或对应入门 Wiki
 
 ## 章节导航表
 
@@ -141,7 +141,7 @@ flowchart TD
 
 ### 相关知识
 
-- [FFI 基础概念](./01-core-concepts.md)（本 Wiki 第 1 章）
+- [FFI 基础概念](01-core-concepts.md)（本 Wiki 第 1 章）
 - [DLPack 标准](https://github.com/dmlc/dlpack)
 - [Apache TVM 官方网站](https://tvm.apache.org/)
 

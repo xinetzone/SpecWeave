@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-04-data-conversion"
 title: "04 数据格式转换方法"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 + OKF 规范 + SpecWeave 现状"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/04-data-conversion.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/04-data-conversion.toml"
 type: "Wiki Tutorial"
 description: "数据格式转换：AGENTS.md 契约→plugin.yaml+register(ctx)、知识库 markdown→OKF concept/bundle、tool schema 定义"
 status: "stable"

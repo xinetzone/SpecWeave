@@ -1,7 +1,7 @@
 # 《帛书老子注读》Wiki 教程 - 验证检查清单
 
 ## 结构完整性
-- [x] 目录 `.agents/docs/knowledge/learning/boshu-laozi-wiki/` 存在
+- [x] 目录 `docs/knowledge/learning/boshu-laozi-wiki/` 存在
 - [x] 00-overview.md 存在且内容完整
 - [x] 01-background.md 存在且内容完整
 - [x] 02-version-comparison.md 存在且内容完整
@@ -37,5 +37,5 @@
 - [x] 中文表述清晰，术语首次出现附解释
 
 ## 导航集成
-- [x] `.agents/docs/knowledge/learning/README.md` 索引已更新（统计 65→66、原子化 26→27）
+- [x] `docs/knowledge/learning/README.md` 索引已更新（统计 65→66、原子化 26→27）
 - [x] 统计数字与 CATEGORIES.md 清单已同步（合计 69→70、原子化 24→25）

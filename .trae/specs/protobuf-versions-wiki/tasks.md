@@ -78,7 +78,7 @@ version: "1.0"
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**:
-  - 创建目录 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
+  - 创建目录 `docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
   - 基于 R 阶段验证后的事实，编写版本时间线文档 01-version-timeline.md
   - 文档结构：
     - 简介
@@ -224,7 +224,7 @@ version: "1.0"
 - **Priority**: medium
 - **Depends On**: Task 11
 - **Description**:
-  - 运行 `python .agents/scripts/check-links.py --path ".agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki"` 验证所有链接
+  - 运行 `python .agents/scripts/check-links.py --path "docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki"` 验证所有链接
   - 同时检查被修改的 idl-wiki 文件链接
   - 检查所有文档的 frontmatter 完整性
   - 检查文档编号连续性（00-05）

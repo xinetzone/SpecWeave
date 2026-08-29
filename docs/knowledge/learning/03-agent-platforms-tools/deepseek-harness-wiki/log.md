@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-log"
 title: "DeepSeek Harness 完全指南 — 变更日志"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/log.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/log.toml"
 ---
 # Changelog
 

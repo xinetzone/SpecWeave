@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-08"
 title: "The Agency 完全指南 — 常见问题解答"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/08-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/08-faq-troubleshooting.toml"
 ---
 # The Agency 完全指南 — 常见问题解答
 

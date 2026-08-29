@@ -9,7 +9,7 @@ status: "stable"
 author: ""
 summary: "Learning Wiki知识库59个Wiki的系统化学习路径推荐，包含8主题内部学习顺序、前置依赖、关联知识点、角色定制路径"
 source: ""
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/LEARNING-PATHS.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/LEARNING-PATHS.toml"
 changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成分主题详细学习路径"
 ---
 # Learning Wiki 学习路径推荐表
@@ -366,7 +366,7 @@ changelog: "2026-07-05 | docs | 初始创建：基于8主题分类体系生成�
 | **Skill开发** | 01 | [01 Skills标准](01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) → [01 Skills教程](01-agent-protocols-interfaces/agent-skills-wiki/00-overview.md) → [05 Ian小嘿](05-ai-multimodal-content/ian-xiaohei-illustrations.md) → [07 涂鸦Skills](07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) |
 | **上下文压缩** | 02 | [02 Headroom](02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki.md) → [02 LongCat](02-agent-engineering-methodology/06-performance/longcat-agent-learning-wiki.md)（Token效率对比）→ [02 DSpark](02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md)（推理级压缩） |
 | **Agent协作** | 01-03 | [01 A2A协议](01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) → [02 Harness多Agent](02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki.md) → [03 Octo](03-agent-platforms-tools/octo-platform-wiki.md) → [03 The Agency](03-agent-platforms-tools/the-agency-project-wiki.md) → [03 Claude Tag](03-agent-platforms-tools/claude-tag-article.md)（团队协作） |
-| **软硬结合** | 07 | [07 Oray矩阵](07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md) → [07 开机盒子](07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) → [07 无网远控](07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) → [07 涂鸦SDK](07-vendor-product-learning/tuya/tuya-open-learning-report.md) → [05 摄像头SU1](05-ai-multimodal-content/../07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md) |
+| **软硬结合** | 07 | [07 Oray矩阵](07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md) → [07 开机盒子](07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md) → [07 无网远控](07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) → [07 涂鸦SDK](07-vendor-product-learning/tuya/tuya-open-learning-report.md) → [05 摄像头SU1](07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md) |
 | **AI变现** | 06 | [06 AI变现指南](06-business-trends-analysis/ai-monetization-wiki/00-overview.md) → [03 QuantDinger](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md)（SaaS+金融）→ [03 MopMonk](03-agent-platforms-tools/mopmonk-security-agent-wiki.md)（安全SaaS）→ [07 Oray矩阵](07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md)（软硬结合变现） |
 
 ### 按问题类型快速定位

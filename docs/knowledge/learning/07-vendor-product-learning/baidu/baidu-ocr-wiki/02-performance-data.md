@@ -2,7 +2,7 @@
 id: "baidu-ocr-wiki-02"
 title: "百度 Unlimited-OCR 性能数据与基准测试"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/02-performance-data.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/02-performance-data.toml"
 ---
 # 百度 Unlimited-OCR 性能数据与基准测试
 

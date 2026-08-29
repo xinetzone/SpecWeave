@@ -9,7 +9,7 @@ scenario: "知识沉淀（R→I→E→V→C链路）"
 tags: ["七概念", "复盘", "知识沉淀", "技术学习", "API准确性", "LAV模型"]
 gates_passed: ["G1", "G2", "G3", "G4"]
 spec_dir: ".trae/specs/retrospectives-insights/animejs-threejs-adapter-analysis/"
-output_doc: ".agents/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md"
+output_doc: "docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md"
 ---
 
 # Anime.js 4.5+Three.js适配器学习分析任务七概念复盘报告
@@ -32,7 +32,7 @@ output_doc: ".agents/docs/knowledge/learning/05-ai-multimodal-content/animejs-th
 | F04 | 文章作者：认真努力的小四子（微信公众号） |
 | F05 | Spec目录位置：d:\AI\.trae\specs\retrospectives-insights\animejs-threejs-adapter-analysis\ |
 | F06 | 初始Spec文档包含3个文件：spec.md(98行)、tasks.md(34行)、checklist.md(23行) |
-| F07 | 产出文档实际位置：[animejs-threejs-adapter-analysis.md](../knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)(542行→约570行) |
+| F07 | 产出文档实际位置：[animejs-threejs-adapter-analysis.md](../../../docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)(542行→约570行) |
 | F08 | 任务初始分解为4个Task，共18个SubTask，复盘前全部标记为[x]完成 |
 | F09 | Checklist初始包含20个验证项，复盘前全部标记为[x]完成 |
 | F10 | 知识库索引README.md已在learning分类下新增条目 |

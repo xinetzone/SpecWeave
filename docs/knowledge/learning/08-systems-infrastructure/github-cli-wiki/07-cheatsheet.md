@@ -2,7 +2,7 @@
 id: "github-cli-wiki-07"
 title: "命令速查表与最佳实践"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/07-cheatsheet.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/07-cheatsheet.toml"
 ---
 # 命令速查表与最佳实践
 

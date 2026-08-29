@@ -324,4 +324,4 @@ flowchart LR
 
 ---
 
-继续阅读：[05-best-practices.md - 最佳实践与反模式](./05-best-practices.md)
+继续阅读：[05-best-practices.md - 最佳实践与反模式](05-best-practices.md)

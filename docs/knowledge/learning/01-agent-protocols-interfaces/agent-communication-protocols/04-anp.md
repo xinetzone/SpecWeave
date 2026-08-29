@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#04-anp协议概述"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/04-anp.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/04-anp.toml"
 id: "anp-protocol"
 title: "04、ANP协议概述：Agent Network Protocol"
 ---
@@ -422,5 +422,5 @@ ANP提交IETF草案并由中国移动/中国电信/中国联通/华为联合推�
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [03、A2A协议详解：Agent-to-Agent Protocol](./03-a2a.md) |
-| **下一章** | [05、四层协议对比与选型指南](./05-comparison.md) |
+| 上一章 | [03、A2A协议详解：Agent-to-Agent Protocol](03-a2a.md) |
+| **下一章** | [05、四层协议对比与选型指南](05-comparison.md) |

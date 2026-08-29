@@ -171,6 +171,6 @@ tags: ["资源链接", "MonkeyCode", "Vibe Coding", "开源项目", "私有化�
 
 ## 继续阅读
 
-上一章：[第四章 - 常见问题解答（FAQ）](./04-faq.md)
+上一章：[第四章 - 常见问题解答（FAQ）](04-faq.md)
 
-下一章：[第六章 - 学习评估](./06-assessment.md)
+下一章：[第六章 - 学习评估](06-assessment.md)

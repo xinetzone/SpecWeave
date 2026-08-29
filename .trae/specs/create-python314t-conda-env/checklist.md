@@ -14,6 +14,6 @@
 - [x] SOABI 包含 `t`(cp314t/cpython-314t)  → **`cp314t-win_amd64`**
 
 ## 资源与使用说明
-- [x] 可用 `conda activate py314t` 激活（需先设 `CONDA_ENVS_DIRS`，见 [python-314t-conda-env-usage](../../../.agents/docs/knowledge/tech/python-314t-conda-env-usage.md)）
-- [x] 使用说明文档存在于 `.agents/docs/knowledge/tech/python-314t-conda-env-usage.md`，激活/GIL校验/退出命令完整可复制
+- [x] 可用 `conda activate py314t` 激活（需先设 `CONDA_ENVS_DIRS`，见 [python-314t-conda-env-usage](../../../docs/knowledge/tech/python-314t-conda-env-usage.md)）
+- [x] 使用说明文档存在于 `docs/knowledge/tech/python-314t-conda-env-usage.md`，激活/GIL校验/退出命令完整可复制
 - [x] 未破坏任何现有环境；未改动 CPython 源码工作树

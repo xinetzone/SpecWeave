@@ -219,4 +219,4 @@ export GEMINI_API_KEY=<your-key>  # 或配置Vertex AI
 
 ---
 
-继续阅读：[01-okf-spec.md - OKF开放知识格式规范详解](./01-okf-spec.md)
+继续阅读：[01-okf-spec.md - OKF开放知识格式规范详解](01-okf-spec.md)

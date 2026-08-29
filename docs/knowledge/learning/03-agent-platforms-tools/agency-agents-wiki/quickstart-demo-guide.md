@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-quickstart"
 title: "The Agency 完全指南 — 新开发者快速上手演示"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/quickstart-demo-guide.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/quickstart-demo-guide.toml"
 ---
 # The Agency 完全指南 — 新开发者快速上手演示
 

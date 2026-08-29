@@ -1,7 +1,7 @@
 ---
 id: "myst-example-figures-tables-demo"
 title: "示例：图片与表格"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/figures-tables-demo.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/figures-tables-demo.toml"
 ---
 # 示例：图片与表格组件
 
@@ -48,7 +48,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-
 <div style="clear: both;"></div>
 
 :::{note}
-本地图片请使用相对路径，例如：`![架构图](./images/architecture.png)`，建议在文档同级创建 `images/` 文件夹。
+本地图片请使用相对路径，例如：`![架构图](images/architecture.png)`，建议在文档同级创建 `images/` 文件夹。
 :::
 
 ---
@@ -289,7 +289,7 @@ images/
 
 引用方式：
 ```markdown
-![系统架构](./images/architecture.png)
+![系统架构](images/architecture.png)
 ```
 
 或带标签的 figure：

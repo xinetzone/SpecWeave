@@ -42,8 +42,8 @@ OKF 项目知识分为两个**正交维度**，阅读前请先厘清：
 
 | 位置 | 内容 | 章节数 | 入口 |
 |------|------|:------:|------|
-| `01-agent-protocols-interfaces/okf-wiki/` | **OKF 格式规范完整教程**（设计哲学、核心概念、5 分钟快速入门、使用模式、方案对比、架构集成、FAQ、术语表） | 8 | [README](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md) |
-| `01-agent-protocols-interfaces/knowledge-catalog-wiki/` | **OKF 参考实现工具链教程**（Google 官方 knowledge-catalog，含 02 章节 OKF v0.2 规范实现视角解析） | 9 | [00-overview](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/00-overview.md) |
+| `01-agent-protocols-interfaces/okf-wiki/` | **OKF 格式规范完整教程**（设计哲学、核心概念、5 分钟快速入门、使用模式、方案对比、架构集成、FAQ、术语表） | 8 | [README](01-agent-protocols-interfaces/okf-wiki/README.md) |
+| `01-agent-protocols-interfaces/knowledge-catalog-wiki/` | **OKF 参考实现工具链教程**（Google 官方 knowledge-catalog，含 02 章节 OKF v0.2 规范实现视角解析） | 9 | [00-overview](01-agent-protocols-interfaces/knowledge-catalog-wiki/00-overview.md) |
 | `projects/awesome-okf-xs/` | **OKF 文档库子项目**（玄境项目「道」的载体，以 OKF bundle 组织文档/复盘/洞察/模式） | — | [README](../../../projects/awesome-okf-xs/README.md) |
 
 ---

@@ -442,4 +442,4 @@ pre-alpha → alpha → beta（feature freeze）→ RC → final
 
 ## 下一步
 
-👉 [03 - 治理与社区：沟通渠道、分类处理、核心团队与AI政策](./03-governance-community.md)
+👉 [03 - 治理与社区：沟通渠道、分类处理、核心团队与AI政策](03-governance-community.md)

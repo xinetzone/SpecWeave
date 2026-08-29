@@ -7,7 +7,7 @@ source: "用户需求：系统性研究LLM token节省机制"
 date: "2026-08-01"
 status: "completed"
 completion_date: "2026-08-01"
-output_path: ".agents/docs/knowledge/learning/llm-token-optimization/"
+output_path: "docs/knowledge/learning/llm-token-optimization/"
 ---
 
 # 大语言模型Token节省机制全面探索 - Product Requirement Document

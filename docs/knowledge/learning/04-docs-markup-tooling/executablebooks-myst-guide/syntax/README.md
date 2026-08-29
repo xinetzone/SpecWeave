@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-executablebooks-myst-guide-syntax-index"
 title: "语法速查"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.toml"
 category: "knowledge"
 date: "2026-07-15"
 ---
@@ -17,4 +17,4 @@ date: "2026-07-15"
 ## 相关资源
 
 - [返回上级：ExecutableBooks 与 MyST Markdown 学习资料库](../README.md)
-- [文档首页](../../../../../README.md)
+- [文档首页](../../../../../../.agents/docs/README.md)

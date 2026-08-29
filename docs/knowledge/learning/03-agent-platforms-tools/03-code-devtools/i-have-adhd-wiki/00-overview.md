@@ -71,7 +71,7 @@ i-have-adhd 的设计基于ADHD认知科学的五个核心事实，这也是其1
 
 | 章节 | 文件 | 内容简介 |
 |------|------|---------|
-| 一、概述 | [00-overview.md](./00-overview.md) | 项目介绍、核心理念、适用人群、文档索引 |
+| 一、概述 | [00-overview.md](00-overview.md) | 项目介绍、核心理念、适用人群、文档索引 |
 | 二、设计理念 | 01-design-philosophy.md | ADHD认知原理、五条核心事实、设计思路溯源 |
 | 三、核心规则 | 02-core-rules.md | 10条输出规则详解、正反示例、适用边界 |
 | 四、例外场景与自检清单 | 03-exceptions-and-checklist.md | 何时可以打破规则、6种例外情况处理、Pre-send检查清单 |
@@ -81,4 +81,4 @@ i-have-adhd 的设计基于ADHD认知科学的五个核心事实，这也是其1
 | 八、自定义开发与故障排查 | 07-customization-and-troubleshooting.md | Fork自定义、SKILL.md修改、私有版本部署、常见问题排查 |
 | 九、可复用模式萃取 | 08-patterns-extracted.md | 可复用模式提炼、SpecWeave集成思考、反模式识别 |
 | 十、FAQ与资源汇总 | 09-faq-and-resources.md | 常见问题解答、使用技巧、资源汇总 |
-| 目录索引 | [README.md](./README.md) | 完整章节列表与快速导航 |
+| 目录索引 | [README.md](README.md) | 完整章节列表与快速导航 |

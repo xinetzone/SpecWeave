@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "performance", "benchmarks", "token-savings", "quality"]
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/headroom-context-compression-wiki/05-performance-data.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/05-performance-data.toml"
 type: "Reference"
 description: "基于真实AI Coding场景的压缩率与质量评估数据：代码/日志场景压缩率85-91%，数学与事实问答准确率零掉分甚至提升，工具调用成功率达97%，从注意力机制、噪声过滤等角度分析质量不降反升的原因。"
 generated:

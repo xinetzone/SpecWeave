@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-deep-learning-atomic-design-index"
 title: "深度学习原子化设计"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -25,7 +25,7 @@ date: "2026-08-22"
 
 - [返回上级：Agent 工程方法论](../README.md)
 - [AI Engineering 学习笔记](../ai-engineering-notes/README.md)
-- [知识库首页](../../../../../../README.md)
+- [知识库首页](../../../../../README.md)
 
 ---
 

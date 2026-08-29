@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-export"
 title: "向日葵Wiki移动端远程控制更新导出建议与后续方向"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/export-suggestions.toml"
 date: "2026-07-06"
 ---
 # 导出建议与后续方向
@@ -36,7 +36,7 @@ date: "2026-07-06"
 | 文档 | 路径 | 说明 |
 |------|------|------|
 | 向日葵远程控制综合分析Wiki | [../sunlogin-comprehensive-analysis-wiki.md](../sunlogin-comprehensive-analysis-wiki.md) | 本次更新的主文档，新增3.2.3移动端远程控制章节 |
-| Spec规划目录 | [../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/](../../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/spec.md) | 本次任务的Spec规划文档（spec.md/tasks.md/checklist.md） |
+| Spec规划目录 | [../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/](../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/spec.md) | 本次任务的Spec规划文档（spec.md/tasks.md/checklist.md） |
 
 ### 2.2 向日葵系列关联文档
 

@@ -69,7 +69,7 @@ okf-desktop 是 OKF（Open Knowledge Format）生态的**桌面消费端**。它
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
-- [📚 知识库首页](../../../../README.md)
+- [📚 知识库首页](../../../../../.agents/docs/README.md)
 - [📖 OKF 开放知识格式完整指南](../okf-wiki/README.md) - okf-desktop 所消费的 bundle 格式规范
 - [🛠️ Knowledge Catalog 工具链](../knowledge-catalog-wiki/README.md) - Google Cloud 官方 OKF 参考实现
 - [🌐 OKF 生态基建知识](../okf-wiki/okf-ecosystem-wiki/README.md) - bundle 分发注册机制、okf-kit 工具链命令速查

@@ -104,4 +104,4 @@ score(item) = Σ over paths  1 / (k + rank_path(item))
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [02 Workspace 隔离与上下文组装](./02-workspace-context.md) | [README](./README.md) | → [04 Skill 与工具权限](./04-skills-tools-permissions.md) |
+| ← [02 Workspace 隔离与上下文组装](02-workspace-context.md) | [README](README.md) | → [04 Skill 与工具权限](04-skills-tools-permissions.md) |

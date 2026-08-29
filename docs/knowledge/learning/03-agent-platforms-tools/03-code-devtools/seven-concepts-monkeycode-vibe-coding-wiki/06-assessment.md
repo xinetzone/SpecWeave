@@ -444,8 +444,8 @@ flowchart TD
 
 ## 继续阅读
 
-上一章：[第五章 - 资源扩展链接](./05-resources.md)
+上一章：[第五章 - 资源扩展链接](05-resources.md)
 
-下一章：[第七章 - 七概念综合应用](./07-seven-concepts-applied.md)
+下一章：[第七章 - 七概念综合应用](07-seven-concepts-applied.md)
 
-返回首页：[MonkeyCode Vibe Coding Wiki 总览](./00-overview.md)
+返回首页：[MonkeyCode Vibe Coding Wiki 总览](00-overview.md)

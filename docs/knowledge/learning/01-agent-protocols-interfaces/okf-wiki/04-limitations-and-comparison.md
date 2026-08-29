@@ -198,4 +198,4 @@ OKF的设计哲学是对的：极简、开放、Git-native、人和Agent共读�
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [03 使用模式与最佳实践](./03-usage-patterns.md) | [README](./README.md) | [05 架构定位与Agent集成](./05-architecture-and-integration.md) |
+| [03 使用模式与最佳实践](03-usage-patterns.md) | [README](README.md) | [05 架构定位与Agent集成](05-architecture-and-integration.md) |

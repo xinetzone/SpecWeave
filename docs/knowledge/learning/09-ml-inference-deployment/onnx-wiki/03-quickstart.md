@@ -77,7 +77,7 @@ print(f"支持的opset版本: {onnx.defs.onnx_opset_version()}")
 
 ## 5分钟Hello World
 
-我们直接用[02-python-api.md](./02-python-api.md)中的线性回归示例，快速跑通：
+我们直接用[02-python-api.md](02-python-api.md)中的线性回归示例，快速跑通：
 
 ```python
 import numpy as np
@@ -233,7 +233,7 @@ with open("resnet50.onnx", "wb") as f:
 
 - 如果你不知道部署目标支持什么版本，**选17或18**——兼容性最好
 - 如果你明确知道部署用最新版onnxruntime，可以选更高版本
-- 参考：[04-best-practices.md](./04-best-practices.md) 中的opset选择策略
+- 参考：[04-best-practices.md](04-best-practices.md) 中的opset选择策略
 
 ### Q3：导出时报错"Could not export an operator"？
 
@@ -262,11 +262,11 @@ with open("resnet50.onnx", "wb") as f:
 ## 下一步
 
 - ✅ 你已经能跑通ONNX模型了
-- 📖 想深入理解核心概念 → 读 [01-core-concepts.md](./01-core-concepts.md)
-- 🛠️ 想手写/修改ONNX图 → 读 [02-python-api.md](./02-python-api.md)
-- ⚠️ 想避开生产踩坑 → 直接读 **[04-best-practices.md](./04-best-practices.md)**（最重要！）
-- ❓ 遇到问题 → 查 [05-faq-and-resources.md](./05-faq-and-resources.md)
+- 📖 想深入理解核心概念 → 读 [01-core-concepts.md](01-core-concepts.md)
+- 🛠️ 想手写/修改ONNX图 → 读 [02-python-api.md](02-python-api.md)
+- ⚠️ 想避开生产踩坑 → 直接读 **[04-best-practices.md](04-best-practices.md)**（最重要！）
+- ❓ 遇到问题 → 查 [05-faq-and-resources.md](05-faq-and-resources.md)
 
 ---
 
-**上一章**：[02-python-api.md - Python API实战](./02-python-api.md) | **下一章**：[04-best-practices.md - 最佳实践与反模式](./04-best-practices.md)
+**上一章**：[02-python-api.md - Python API实战](02-python-api.md) | **下一章**：[04-best-practices.md - 最佳实践与反模式](04-best-practices.md)

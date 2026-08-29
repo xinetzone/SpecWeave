@@ -114,4 +114,4 @@ eve_version_target: "2026 public preview"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [05 快速上手指南](./05-quickstart.md) | [README](./README.md) | → [07 工程化理念与趋势洞察](./07-engineering-philosophy-trends.md) |
+| ← [05 快速上手指南](05-quickstart.md) | [README](README.md) | → [07 工程化理念与趋势洞察](07-engineering-philosophy-trends.md) |

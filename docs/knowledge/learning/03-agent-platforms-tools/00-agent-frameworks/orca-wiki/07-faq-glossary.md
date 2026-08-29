@@ -101,4 +101,4 @@ wiki_version: "1.0"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [06 核心价值总结与行业趋势](./06-value-and-trends.md) | [README](./README.md) | → 本章为末尾章节 |
+| ← [06 核心价值总结与行业趋势](06-value-and-trends.md) | [README](README.md) | → 本章为末尾章节 |

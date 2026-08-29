@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#02-acp协议详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/02-acp.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/02-acp.toml"
 id: "acp-protocol"
 title: "02、ACP协议详解：Agent Communication Protocol"
 ---
@@ -445,5 +445,5 @@ ACP和A2A虽同属Agent间通信协议，但设计目标和适用场景截然不
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [01、MCP协议详解：Model Context Protocol](./01-mcp.md) |
-| **下一章** | [03、A2A协议详解：Agent-to-Agent Protocol](./03-a2a.md) |
+| 上一章 | [01、MCP协议详解：Model Context Protocol](01-mcp.md) |
+| **下一章** | [03、A2A协议详解：Agent-to-Agent Protocol](03-a2a.md) |

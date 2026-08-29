@@ -229,4 +229,4 @@ Codex Proxy 在工程上体现了几个值得借鉴的设计理念：
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [05 本地大模型服务](./05-local-llm.md) | [README](./README.md) | → [07 工具注册表](./07-tool-registry.md) |
+| ← [05 本地大模型服务](05-local-llm.md) | [README](README.md) | → [07 工具注册表](07-tool-registry.md) |

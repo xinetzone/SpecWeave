@@ -11,7 +11,7 @@ date: "2026-08-03"
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 在 `.agents/docs/knowledge/learning/intelligent-terminal-wiki/` 下创建目录结构（遵循路径解析规则 docs/ → .agents/docs/）
+  - 在 `docs/knowledge/learning/intelligent-terminal-wiki/` 下创建目录结构（遵循路径解析规则 docs/ → .agents/docs/）
   - 创建 README.md 作为导航入口，包含：
     - 项目简介与学习路径建议
     - 完整章节索引（12个核心章节）
@@ -20,7 +20,7 @@ date: "2026-08-03"
   - README.md 包含 YAML frontmatter 和双向导航
 - **Acceptance Criteria Addressed**: AC-1, AC-6, AC-7
 - **Test Requirements**:
-  - `programmatic` TR-1.1: 目录 `.agents/docs/knowledge/learning/intelligent-terminal-wiki/` 存在
+  - `programmatic` TR-1.1: 目录 `docs/knowledge/learning/intelligent-terminal-wiki/` 存在
   - `programmatic` TR-1.2: README.md 文件存在且包含 YAML frontmatter（id、title、source、date）
   - `programmatic` TR-1.3: README.md 列出至少12个章节的链接
   - `human-judgement` TR-1.4: 学习路径建议清晰合理，从入门到进阶
@@ -305,7 +305,7 @@ date: "2026-08-03"
   - 检查所有内部交叉引用（章节间引用）的正确性
   - 检查源码引用路径格式（相对于 intelligent-terminal 根目录）
   - 运行 link-check 验证链接有效性
-  - 更新 `.agents/docs/knowledge/learning/README.md` 添加 intelligent-terminal-wiki 索引条目
+  - 更新 `docs/knowledge/learning/README.md` 添加 intelligent-terminal-wiki 索引条目
 - **Acceptance Criteria Addressed**: AC-1, AC-6, AC-7
 - **Test Requirements**:
   - `programmatic` TR-15.1: README.md 中所有章节链接可点击跳转

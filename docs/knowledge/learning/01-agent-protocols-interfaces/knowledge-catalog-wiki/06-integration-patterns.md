@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 # 06 集成模式与最佳实践
 
 > **本章定位说明**
-> - 前五章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](./00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](./01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](./02-okf-specification.md)）、参考Agent实现（[03 参考Agent实现原理与运行指南](./03-reference-agent.md)）、工具链与可视化（[04 工具链与可视化系统](./04-toolchain-and-visualization.md)）和示例Bundle深度解析（[05 示例Bundle深度解析](./05-samples-and-bundles.md)）。
+> - 前五章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](02-okf-specification.md)）、参考Agent实现（[03 参考Agent实现原理与运行指南](03-reference-agent.md)）、工具链与可视化（[04 工具链与可视化系统](04-toolchain-and-visualization.md)）和示例Bundle深度解析（[05 示例Bundle深度解析](05-samples-and-bundles.md)）。
 > - 本章聚焦**企业级集成模式与落地实践**——在掌握OKF基础用法后，如何将Knowledge Catalog真正融入企业现有技术栈和工作流，实现知识资产的可持续积累与演进。
 > - 本章大量交叉引用OKF Wiki的使用模式（[okf-wiki 03 使用模式与最佳实践](../okf-wiki/03-usage-patterns.md)）和架构集成（[okf-wiki 05 架构定位与Agent集成](../okf-wiki/05-architecture-and-integration.md)），并结合Knowledge Catalog的工具能力进行深度展开。
 
@@ -39,9 +39,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
   - 一个内部工具的Agent使用说明
   - 一组核心业务指标的初步定义
 - 新文档采用OKF格式编写，**不迁移任何旧文档**
-- 使用[参考Agent](./03-reference-agent.md)从一个小型BigQuery数据集自动生成第一个Bundle
-- 打开[可视化工具](./04-toolchain-and-visualization.md)查看生成的知识图谱，建立直观认知
-- 参考[GA4示例Bundle](./05-samples-and-bundles.md#52-bundle-1ga4---ga4电商数据集)的结构作为模板
+- 使用[参考Agent](03-reference-agent.md)从一个小型BigQuery数据集自动生成第一个Bundle
+- 打开[可视化工具](04-toolchain-and-visualization.md)查看生成的知识图谱，建立直观认知
+- 参考[GA4示例Bundle](05-samples-and-bundles.md#52-bundle-1ga4---ga4电商数据集)的结构作为模板
 
 **成功标志**：
 - 团队3-5人理解OKF基本思想（Markdown+frontmatter、交叉链接、Bundle组织）
@@ -65,9 +65,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
   - 统一type命名约定（如`BigQuery Table`而非`table`或`bq-table`）
   - 确定必填扩展字段（owner、stale_after、verified等）
   - 制定tags分类规范
-- 使用[参考Agent](./03-reference-agent.md)定期（如每周）从数据源同步元数据
+- 使用[参考Agent](03-reference-agent.md)定期（如每周）从数据源同步元数据
 - 运行[index自动生成脚本](../okf-wiki/03-usage-patterns.md#35-index自动化脚本)保持索引更新
-- 参考[Stack Overflow示例Bundle](./05-samples-and-bundles.md#53-bundle-2stackoverflow---stack-overflow公开数据集)学习多表关系的文档化
+- 参考[Stack Overflow示例Bundle](05-samples-and-bundles.md#53-bundle-2stackoverflow---stack-overflow公开数据集)学习多表关系的文档化
 
 **成功标志**：
 - 该业务域形成完整Bundle（至少20+个Concept文档）
@@ -83,9 +83,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 - 将OKF知识检索正式接入生产Agent的RAG流程，Agent回答问题时**优先查询OKF知识**
 - 利用`verified`、`confidence`、`stale_after`等元数据做可信度筛选（参考[Agent消费流程](../okf-wiki/05-architecture-and-integration.md#54-agent如何消费okf-bundle)）
 - 实现与现有数据目录（Unity Catalog/Collibra等）的双向同步（详见[6.4节](#64-与现有数据目录集成模式)）
-- 引入Attested Computation模式，对核心业务指标建立可信计算链（参考[Acme Retail示例](./05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)）
+- 引入Attested Computation模式，对核心业务指标建立可信计算链（参考[Acme Retail示例](05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)）
 - CI流水线集成OKF验证：frontmatter格式检查、断链检测、必填字段校验
-- 参考[比特币区块链示例Bundle](./05-samples-and-bundles.md#54-bundle-3crypto_bitcoin---比特币区块链数据集)学习复杂关系和性能信息的文档化
+- 参考[比特币区块链示例Bundle](05-samples-and-bundles.md#54-bundle-3crypto_bitcoin---比特币区块链数据集)学习复杂关系和性能信息的文档化
 
 **成功标志**：
 - Agent回答业务问题时幻觉率明显下降（建议量化对比）
@@ -160,7 +160,7 @@ flowchart LR
 **实施步骤**：
 
 1. **初始批量加载**：
-   - 配置参考Agent连接BigQuery（参考[03参考Agent运行指南](./03-reference-agent.md)）
+   - 配置参考Agent连接BigQuery（参考[03参考Agent运行指南](03-reference-agent.md)）
    - 运行`enrich --source bq --dataset <your-dataset>`生成初始Bundle
    - 这一步自动完成Dataset/Table级别的技术元数据文档化
 
@@ -175,7 +175,7 @@ flowchart LR
    - 数据Owner审核PR后合并到主分支
 
 4. **关系文档化**：
-   - 手工添加`references/joins/`目录，文档化核心表间连接路径（参考[Stack Overflow的joins设计](./05-samples-and-bundles.md#533-核心概念文档解析)）
+   - 手工添加`references/joins/`目录，文档化核心表间连接路径（参考[Stack Overflow的joins设计](05-samples-and-bundles.md#533-核心概念文档解析)）
    - 区分对等关联（双下划线`__`）和主从包含（三下划线`___`）关系
 
 **核心价值**：
@@ -289,8 +289,8 @@ verified: true
 3. 在#incidents频道同步状态
 
 ## 相关资源
-- [支付服务架构文档](./payment-service-architecture.md)
-- [数据库故障切换Playbook](./db-failover.md)
+- [支付服务架构文档](payment-service-architecture.md)
+- [数据库故障切换Playbook](db-failover.md)
 - [故障升级流程](../policies/escalation-policy.md)
 ```
 
@@ -368,7 +368,7 @@ flowchart LR
 2. **消费者多样共存**：
    - 同一个Bundle，人用GitHub看、Agent用RAG读、搜索引擎索引、可视化工具画图
    - 新增消费者不需要改生产端，只要能解析Markdown+frontmatter即可
-   - 这就是[OKF规范](./02-okf-specification.md)作为"厂商中立格式"的核心价值
+   - 这就是[OKF规范](02-okf-specification.md)作为"厂商中立格式"的核心价值
 
 3. **契约稳定**：
    - Markdown文件格式50年不变（相比专有数据目录的二进制/数据库格式）
@@ -606,7 +606,7 @@ OKF规范只定义了核心字段，鼓励按需扩展，但扩展字段设计�
 
 **原则3：优先复用已有标准字段**
 - OKF核心字段（title/type/description/tags/sources/verified等）能满足就不要加自定义字段
-- 参考[Acme Retail示例](./05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)中使用的标准字段（owner/stale_after/verified等）
+- 参考[Acme Retail示例](05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)中使用的标准字段（owner/stale_after/verified等）
 
 ### 6.6.2 企业级推荐扩展字段集
 
@@ -679,7 +679,7 @@ OKF规范只定义了核心字段，鼓励按需扩展，但扩展字段设计�
 6. **从reference_agent自动生成开始**
    - 先自动从BigQuery生成基础Bundle，再人工补充业务知识
    - 不要一开始就手工写所有文档
-   - 参考：[03参考Agent实现原理](./03-reference-agent.md)
+   - 参考：[03参考Agent实现原理](03-reference-agent.md)
 
 7. **可信度分层管理**
    - 生产环境Agent只依赖`verified: true`且未过期的知识
@@ -690,7 +690,7 @@ OKF规范只定义了核心字段，鼓励按需扩展，但扩展字段设计�
 8. **重视可视化的认知价值**
    - 经常打开viz.html，用知识图谱建立全局视野
    - 图中稠密连接的节点是核心概念，稀疏孤立的节点可能需要补充链接
-   - 参考：[04工具链与可视化系统](./04-toolchain-and-visualization.md)
+   - 参考：[04工具链与可视化系统](04-toolchain-and-visualization.md)
 
 9. **Playbook要可执行可演练**
    - Runbook/Playbook中的命令必须可以直接复制粘贴执行
@@ -701,7 +701,7 @@ OKF规范只定义了核心字段，鼓励按需扩展，但扩展字段设计�
     - 核心业务指标一定要用Attested Computation模式
     - 建立policy→metric→computation→skill→attester完整信任链
     - 财务、合规、对外披露数据尤其需要
-    - 参考：[05 Acme Retail企业级示例解析](./05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)
+    - 参考：[05 Acme Retail企业级示例解析](05-samples-and-bundles.md#55-bundle-4acme_retail---acme-retail企业级示例)
 
 ---
 
@@ -736,14 +736,14 @@ OKF规范只定义了核心字段，鼓励按需扩展，但扩展字段设计�
 - Agent消费OKF流程：[okf-wiki 05 Agent如何消费OKF Bundle](../okf-wiki/05-architecture-and-integration.md#54-agent如何消费okf-bundle)
 
 **Knowledge Catalog Wiki相关章节**：
-- OKF规范type字段定义：[02 OKF开放知识格式规范深度解析](./02-okf-specification.md)
-- reference_agent使用指南：[03 参考Agent实现原理与运行指南](./03-reference-agent.md)
-- 可视化工具使用：[04 工具链与可视化系统](./04-toolchain-and-visualization.md)
-- 四个官方示例Bundle深度解析（特别是Acme Retail企业级示例）：[05 示例Bundle深度解析](./05-samples-and-bundles.md)
-- 架构决策与方案对比（选型参考）：[07 架构决策与方案对比](./07-architecture-decisions.md)（下一章）
+- OKF规范type字段定义：[02 OKF开放知识格式规范深度解析](02-okf-specification.md)
+- reference_agent使用指南：[03 参考Agent实现原理与运行指南](03-reference-agent.md)
+- 可视化工具使用：[04 工具链与可视化系统](04-toolchain-and-visualization.md)
+- 四个官方示例Bundle深度解析（特别是Acme Retail企业级示例）：[05 示例Bundle深度解析](05-samples-and-bundles.md)
+- 架构决策与方案对比（选型参考）：[07 架构决策与方案对比](07-architecture-decisions.md)（下一章）
 
 ---
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [05 示例Bundle深度解析](./05-samples-and-bundles.md) | [README](./README.md) | [07 架构决策与方案对比](./07-architecture-decisions.md) |
+| [05 示例Bundle深度解析](05-samples-and-bundles.md) | [README](README.md) | [07 架构决策与方案对比](07-architecture-decisions.md) |

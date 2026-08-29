@@ -144,6 +144,6 @@ tvm-ffi在xuanspace项目中是caffe-ffi的核心依赖，理解tvm-ffi对于开
 - **Notes**: 使用链接检查工具验证
 
 ## Open Questions
-- [ ] 教程产出物的最终存放位置：`.agents/docs/knowledge/tech/tvm-ffi-wiki/` 是否合适？还是放在其他位置？
+- [ ] 教程产出物的最终存放位置：`docs/knowledge/tech/tvm-ffi-wiki/` 是否合适？还是放在其他位置？
 - [ ] 是否需要包含与项目中已有caffe-ffi代码的对照讲解，帮助理解tvm-ffi在实际项目中的应用？
 - [ ] 是否需要包含Docker环境下的构建和测试说明？

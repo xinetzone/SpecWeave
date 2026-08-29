@@ -2,9 +2,8 @@
 id: "ai-engineering-notes-log"
 title: "AI Engineering 知识库变更日志"
 source: "docs/knowledge/ai-engineering/log.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/log.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/log.toml"
 ---
-
 # 变更日志
 
 ## 2026-08-22

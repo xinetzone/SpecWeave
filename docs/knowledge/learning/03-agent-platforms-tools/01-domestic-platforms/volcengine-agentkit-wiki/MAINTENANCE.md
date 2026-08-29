@@ -43,7 +43,7 @@ python .agents/scripts/check-wiki-staleness.py --wiki volcengine-agentkit-wiki
 
 ## 2. 版本标注规范
 
-参考 [docs-version-annotation 模板](../../../../../../templates/shell-snippets/docs-version-annotation.md)：
+参考 [docs-version-annotation 模板](../../../../../../.agents/templates/shell-snippets/docs-version-annotation.md)：
 
 ### 2.1 frontmatter 必填字段
 
@@ -125,13 +125,13 @@ flowchart TD
 
 ```powershell
 # 1. 链接检查（无断链）
-python .agents/scripts/check-links.py --path .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
+python .agents/scripts/check-links.py --path docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
 
 # 2. frontmatter 一致性
-python .agents/scripts/check-frontmatter.py --path .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
+python .agents/scripts/check-frontmatter.py --path docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
 
 # 3. 行数合规（每文件<300行）
-python .agents/scripts/check-file-size.py --path .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/ --max-lines 300
+python .agents/scripts/check-file-size.py --path docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/ --max-lines 300
 
 # 4. 人工检查清单
 #   - [ ] 代码示例可运行（至少语法正确）
@@ -176,8 +176,8 @@ python .agents/scripts/check-file-size.py --path .agents/docs/knowledge/learning
 python .agents/scripts/check-wiki-staleness.py --wiki volcengine-agentkit-wiki
 
 # === 更新后完整验证 ===
-python .agents/scripts/check-links.py --path .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
-python .agents/scripts/check-frontmatter.py --path .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
+python .agents/scripts/check-links.py --path docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
+python .agents/scripts/check-frontmatter.py --path docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/
 
 # === 版本号批量更新（替换所有文件的 last_verified）===
 # 注意：手动更新每个文件的 last_verified 更安全；批量脚本慎用
@@ -203,7 +203,7 @@ python .agents/scripts/check-frontmatter.py --path .agents/docs/knowledge/learni
 - **日常维护**：知识库自动维护（通过 docgen-cmd 检查链接和frontmatter一致性）
 - **季度体检**：建议在每季度首周执行 T2 触发器检查
 - **大版本响应**：T1/T4 触发时，建议指派负责人在窗口期内完成更新
-- **更新后通知**：更新完成后，在 `[最近更新]` 板块（`.agents/docs/knowledge/README.md`）置顶变更记录
+- **更新后通知**：更新完成后，在 `[最近更新]` 板块（`docs/knowledge/README.md`）置顶变更记录
 
 ---
 

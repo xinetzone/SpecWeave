@@ -39,7 +39,7 @@ SpecWeave 经过1538+次提交迭代，已构建完整的AI协作工程体系，
 | 质量检查/自动化脚本 | 35+ | `.agents/scripts/` | L3-L4（CI集成） |
 | Skill技能门面 | 18个 | `.agents/skills/`、内置Skill | L3（封装完善） |
 | 可复用模式(patterns) | 488个 | `.agents/docs/retrospective/patterns/` | L1-L4 |
-| 最佳实践(best-practices) | 21个 | `.agents/docs/knowledge/best-practices/` | L3-L4 |
+| 最佳实践(best-practices) | 21个 | `docs/knowledge/best-practices/` | L3-L4 |
 | 容器化模板 | 3套 | `apps/`（PyTorch/Docker-DIND/XMNN） | L2-L3 |
 | MCP服务器实现 | 1个 | `.agents/scripts/mdi/` | L3 |
 | 提示词萃取系统 | 1套完整Pipeline | `apps/prompt_extraction/` | L3 |

@@ -1,7 +1,7 @@
 ---
 id: "wsl-cli-and-architecture-wiki"
 title: "WSL CLI 命令树与架构 Wiki 参考手册"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.toml"
 category: "learning"
 tags: ["wsl", "wslc", "cli", "command-tree", "argument-definitions", "architecture", "mermaid", "interop", "systemd", "wslservice", "com", "binfmt", "hvsocket", "source-verification"]
 date: "2026-07-01"
@@ -562,7 +562,7 @@ doc/docs/api-reference/c/
 
 ### 7.2 第三次实证结论
 
-本次任务是**三源三角验证法的第三次实证**（前两次见 [triangular-source-verification.md](../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)）：
+本次任务是**三源三角验证法的第三次实证**（前两次见 [triangular-source-verification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)）：
 
 1. **第一次实证**（Claude Tag 文章学习）：源码 + 微信公众号 + 官方博客
 2. **第二次实证**（WSL 学习计划初版）：源码 + wsl.dev + learn.microsoft.com

@@ -18,7 +18,7 @@ tags: ["python", "free-threading", "no-gil", "concurrency", "performance"]
 
 ### 1.1 Free-Threading 是什么
 
-Python 3.13 引入实验性 free-threading 构建，3.14 进一步稳定。核心改变是**移除全局解释器锁（GIL）**，使同一进程内多个线程能真正并行执行 Python 字节码，而非因 GIL 排队互斥。本分析基于 Windows 11 原生实测数据（详见[环境复盘报告](../../retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819.md)）。
+Python 3.13 引入实验性 free-threading 构建，3.14 进一步稳定。核心改变是**移除全局解释器锁（GIL）**，使同一进程内多个线程能真正并行执行 Python 字节码，而非因 GIL 排队互斥。本分析基于 Windows 11 原生实测数据（详见[环境复盘报告](../../../.agents/docs/retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819.md)）。
 
 ### 1.2 实测数据（多线程数扫描 · 纯 Python CPU 密集）
 
@@ -29,7 +29,7 @@ Python 3.13 引入实验性 free-threading 构建，3.14 进一步稳定。核�
 | **8** | **0.048s** | **5.26x** | 0.393s | 1.15x |
 | 12 | 0.056s | 4.51x | 0.401s | 1.13x |
 
-![GIL vs no-GIL 性能曲线](../../retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819-assets/gil-vs-nogil-curve.png)
+![GIL vs no-GIL 性能曲线](../../../.agents/docs/retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819-assets/gil-vs-nogil-curve.png)
 
 **曲线解读**：no-GIL 加速比随线程数线性爬升至峰值 **5.26x** 后回落；标准 GIL 全程水平线 ~1.1x。8 线程时 no-GIL 相对 GIL 耗时降 **88%**。
 
@@ -105,5 +105,5 @@ Free-Threading 是**定向武器**：专治"纯 Python 数字/逻辑运算 + 多
 ***
 
 ## 关联资源
-- 实测数据与图表：[环境复盘报告](../../retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819.md)
+- 实测数据与图表：[环境复盘报告](../../../.agents/docs/retrospective/reports/environment-setup/retrospective-py314t-conda-freethreading-20260819.md)
 - CLI 基准工具：`.agents/scripts/gil-bench/gil-bench.py`

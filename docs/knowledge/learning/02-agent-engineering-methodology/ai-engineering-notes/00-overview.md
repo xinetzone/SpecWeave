@@ -2,9 +2,8 @@
 id: "ai-engineering-notes-00"
 title: "AI Engineering 知识库"
 source: "docs/knowledge/ai-engineering/index.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/00-overview.toml"
 ---
-
 # AI Engineering 知识库
 
 本目录存放AI Agent工程化领域的知识库文档。

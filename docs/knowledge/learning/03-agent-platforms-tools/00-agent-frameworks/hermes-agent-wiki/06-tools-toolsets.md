@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-06-tools-toolsets"
 title: "06 工具与工具集"
 source: "hermes-agent 源码 tools/ + reference/tools-reference.md + reference/toolsets-reference.md + AGENTS.md + user-guide/features/tools.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/06-tools-toolsets.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/06-tools-toolsets.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 工具与工具集：40+ 内置工具、TOOLSETS 工具集系统、Footprint Ladder 决策、服务门控 check_fn、终端后端"
 status: "stable"
@@ -89,4 +89,4 @@ Hermes 用 **Footprint Ladder（足迹阶梯）** 决定一项新能力应以何
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [05 消息网关](./05-messaging-gateway.md) | [README](./README.md) | [07 技能系统](./07-skills.md) |
+| [05 消息网关](05-messaging-gateway.md) | [README](README.md) | [07 技能系统](07-skills.md) |

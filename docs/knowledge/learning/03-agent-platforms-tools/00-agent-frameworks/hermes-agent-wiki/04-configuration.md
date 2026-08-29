@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-04-configuration"
 title: "04 配置体系"
 source: "hermes-agent 源码 cli-config.yaml.example + user-guide/configuration.md + user-guide/profiles.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/04-configuration.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/04-configuration.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 配置体系：config.yaml 顶层 section、.env 密钥隔离、HERMES_HOME 环境变量、profiles 多实例、配置优先级"
 status: "stable"
@@ -111,4 +111,4 @@ profile 与 gateway（网关）也联动——不同 profile 可运行各自独�
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [03 CLI 与斜杠命令](./03-cli-commands.md) | [README](./README.md) | [05 消息网关](./05-messaging-gateway.md) |
+| [03 CLI 与斜杠命令](03-cli-commands.md) | [README](README.md) | [05 消息网关](05-messaging-gateway.md) |

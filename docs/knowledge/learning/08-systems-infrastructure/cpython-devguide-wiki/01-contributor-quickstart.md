@@ -406,4 +406,4 @@ Fixes gh-12345
 
 ## 下一步
 
-👉 [02 - 深度开发流程：Git工作流、PR生命周期、版本管理与测试体系](./02-development-workflow.md)
+👉 [02 - 深度开发流程：Git工作流、PR生命周期、版本管理与测试体系](02-development-workflow.md)

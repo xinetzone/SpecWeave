@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-12"
 title: "Cordis — 总结与资源"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/12-summary-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/12-summary-resources.toml"
 ---
 # Cordis — 总结与资源
 

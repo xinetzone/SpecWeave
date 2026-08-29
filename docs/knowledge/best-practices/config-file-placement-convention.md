@@ -2,7 +2,7 @@
 id: "config-file-placement-convention"
 title: "配置文件放置治理与 .temp/ 临时文件约定"
 source: ".trae/specs/standards-tools/config-file-placement-governance/spec.md"
-x-toml-ref: ".meta/toml/.agents/docs/knowledge/best-practices/config-file-placement-convention.toml"
+x-toml-ref: ".meta/toml/docs/knowledge/best-practices/config-file-placement-convention.toml"
 category: "best-practices"
 tags:
   - file-placement
@@ -30,7 +30,7 @@ summary: "SpecWeave 项目关键配置文件的标准存放路径、放置决策
 - CI/预提交钩子对错误放置的自动检测依据
 - `.temp/` 下任何中间产物的命名、保留期与清理
 
-**溯源**：本约定由 [config-file-placement-governance spec](../../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 落地，spec 中的 "Requirement: 文件放置治理文档" 定义了完整 Scenario。
+**溯源**：本约定由 [config-file-placement-governance spec](../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 落地，spec 中的 "Requirement: 文件放置治理文档" 定义了完整 Scenario。
 
 ---
 
@@ -169,13 +169,13 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 
 ### 3.3 验证方式
 
-运行 [verify-sitecustomize-autoload.py](../../../scripts/verify-sitecustomize-autoload.py) 可复现地检查上述链路是否正常工作，覆盖三种场景：
+运行 [verify-sitecustomize-autoload.py](../../../.agents/scripts/verify-sitecustomize-autoload.py) 可复现地检查上述链路是否正常工作，覆盖三种场景：
 
 1. **裸终端**（未加载 profile、未运行 setup 脚本）：脚本报告 `PYTHONPATH` 未包含 `.agents/scripts/`，`sitecustomize.py` 不会被自动加载，以非零退出码退出并提示修复方法
 2. **已持久化 PYTHONPATH 的新终端**：脚本报告 `.agents/scripts/` 在 `sys.path` 中、`import sitecustomize` 成功且 `sitecustomize.__file__` 指向 `.agents/scripts/sitecustomize.py`、stdout/stderr 编码为 utf-8，以零退出码退出
 3. **已加载 profile.ps1 的终端**：与场景 2 一致
 
-详细 Scenario 见 [config-file-placement-governance spec](../../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 的 "Requirement: sitecustomize.py 自动加载验证"。
+详细 Scenario 见 [config-file-placement-governance spec](../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 的 "Requirement: sitecustomize.py 自动加载验证"。
 
 ---
 
@@ -197,7 +197,7 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 |------|------|
 | **根目录污染** | 项目根目录本应只保留项目级元配置（`.gitignore`、`.git/`、`.githooks/`、`AGENTS.md`、`README.md`、`.trae/`、`.agents/`、`docs/`、`vendor/` 等），把 Python 启动脚本放根目录破坏了这一约定 |
 | **组织不一致** | `setup-utf8-env.ps1`、`profile.ps1`、`Install-Profile.ps1` 等配套脚本都在 `.agents/scripts/` 下，唯独 `sitecustomize.py` 在根目录，造成"配置文件分散在两处"的认知负担 |
-| **与 `.agents/` 架构违背** | SpecWeave 的 `.agents/` 是 AI 智能体与脚本的统一容器（见 [AGENTS.md](../../../../AGENTS.md) 核心规范入口表），脚本类资产统一放 `.agents/scripts/` 是既定架构 |
+| **与 `.agents/` 架构违背** | SpecWeave 的 `.agents/` 是 AI 智能体与脚本的统一容器（见 [AGENTS.md](../../../AGENTS.md) 核心规范入口表），脚本类资产统一放 `.agents/scripts/` 是既定架构 |
 | **`sys.path[0]` 不确定性** | `sys.path[0]` 实际是脚本所在目录，不是 cwd。用户从子目录执行 `python ../xxx.py` 时 `sys.path[0]` 不再是项目根，根目录的 `sitecustomize.py` 不会被加载——所谓"零配置"只在特定 cwd 下成立，并非真正可靠 |
 | **多项目切换冲突** | 若多个项目都在根目录放 `sitecustomize.py`，从一个项目切到另一个项目时，旧的 cwd 仍可能命中错误的 `sitecustomize.py`，引发难以排查的编码问题 |
 | **CI 环境失效** | CI 流水线通常不在项目根目录执行 Python，根目录的 `sitecustomize.py` 在 CI 中可能完全不生效，导致本地通过、CI 失败 |
@@ -206,13 +206,13 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 
 迁移到 `.agents/scripts/` 后，自动加载通过**显式 `PYTHONPATH` 注入**实现，而非依赖 cwd 的隐式行为：
 
-- [profile.ps1](../../../scripts/profile.ps1#L23-L31)：第 23-31 行明确将 `.agents/scripts/` 注入 `PYTHONPATH`
-- [setup-utf8-env.ps1](../../../scripts/setup-utf8-env.ps1)：`-Scope User` 模式持久化 `PYTHONPATH` 到用户环境变量
+- [profile.ps1](../../../.agents/scripts/profile.ps1#L23-L31)：第 23-31 行明确将 `.agents/scripts/` 注入 `PYTHONPATH`
+- [setup-utf8-env.ps1](../../../.agents/scripts/setup-utf8-env.ps1)：`-Scope User` 模式持久化 `PYTHONPATH` 到用户环境变量
 
 **收益**：
 - 自动加载不再依赖 cwd，从任何目录执行 Python 都能正确加载
 - 配套脚本集中管理，组织一致
-- 通过 [verify-sitecustomize-autoload.py](../../../scripts/verify-sitecustomize-autoload.py) 可复现验证，CI 与本地行为一致
+- 通过 [verify-sitecustomize-autoload.py](../../../.agents/scripts/verify-sitecustomize-autoload.py) 可复现验证，CI 与本地行为一致
 
 ### 4.4 经验沉淀
 
@@ -269,7 +269,7 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 | 预提交钩子触发 | （由 `.githooks/pre-commit` 自动调用） | 存在错误放置 → 提交被阻止并显示修复指引 |
 | CI 质量门禁触发 | （由 CI 流水线调用） | 存在错误放置 → CI 失败 |
 
-详细 Scenario 见 [config-file-placement-governance spec](../../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 的 "Requirement: 关键配置文件放置校验"。
+详细 Scenario 见 [config-file-placement-governance spec](../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md) 的 "Requirement: 关键配置文件放置校验"。
 
 ---
 
@@ -277,11 +277,11 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 
 ### 6.1 定义与溯源
 
-`.temp/` 是项目根目录下的临时文件目录，由 [.gitignore](../../../../.gitignore#L2) 第 2 行规则 `.temp/` 排除版本控制。
+`.temp/` 是项目根目录下的临时文件目录，由 [.gitignore](../../../.gitignore#L2) 第 2 行规则 `.temp/` 排除版本控制。
 
 **语义**：`可随时清理`。存放任务执行过程中的中间产物，不保证持久性，任何脚本与团队成员均可在遵循本节规则的前提下清理其内容。
 
-**溯源依据**：[.gitignore](../../../../.gitignore#L2) 第 1 行注释 `# 任务中间产物（.temp/ 为可随时清理的临时文件）` 与第 2 行规则 `.temp/` 共同确立了"可随时清理"的语义契约——本节约定将该语义转化为可执行的命名、保留期与清理规则，替代"靠记忆清理"的人工模式。
+**溯源依据**：[.gitignore](../../../.gitignore#L2) 第 1 行注释 `# 任务中间产物（.temp/ 为可随时清理的临时文件）` 与第 2 行规则 `.temp/` 共同确立了"可随时清理"的语义契约——本节约定将该语义转化为可执行的命名、保留期与清理规则，替代"靠记忆清理"的人工模式。
 
 ### 6.2 用途分类（按子目录组织）
 
@@ -344,7 +344,7 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 | `.agents/` 下放临时文件 | ❌ 禁止 | `.agents/` 是规范容器，非临时产物区 |
 | `docs/` 下放临时文件 | ❌ 禁止 | `docs/` 是正式文档区 |
 | `vendor/` 下放临时文件 | ❌ 禁止 | `vendor/` 是第三方依赖区 |
-| `external/`、`playground/` | ⚠️ 不适用 | 这两个目录有独立语义（外部参考库、个人沙箱），不是 `.temp/` 的替代品，详见 [.gitignore](../../../../.gitignore#L10-L12) |
+| `external/`、`playground/` | ⚠️ 不适用 | 这两个目录有独立语义（外部参考库、个人沙箱），不是 `.temp/` 的替代品，详见 [.gitignore](../../../.gitignore#L10-L12) |
 
 ### 6.5 保留期
 
@@ -403,25 +403,25 @@ Python 启动时（在执行用户代码前）会依次触发以下机制，本�
 | 把 `sitecustomize.py` 放回项目根目录 | 短期"零配置"便利，长期造成根目录污染、组织不一致、cwd 依赖、多项目冲突、CI 失效（见第四节根因分析） | 放 `.agents/scripts/`，通过 `PYTHONPATH` 显式注入 |
 | 把 `.pth` 文件放项目根目录期望自动加载 | `.pth` 文件只在 `site-packages` 等 site 目录被扫描，放根目录无效 | 通过 `PYTHONPATH` 注入 `.agents/scripts/` |
 | 新增关键配置文件后不更新 `check-file-placement.py` 受管清单 | 新文件被错放时无法被自动检测 | 同步更新受管清单与本约定第一节路径表 |
-| 修改 `.gitignore` 移除 `.temp/` 排除规则 | `.temp/` 内容会被 git 跟踪，"可随时清理"语义失效 | 保留 [.gitignore](../../../../.gitignore#L2) 第 2 行规则不动；若需调整清理策略，修改本约定或 `check-temp-lifecycle.py` |
+| 修改 `.gitignore` 移除 `.temp/` 排除规则 | `.temp/` 内容会被 git 跟踪，"可随时清理"语义失效 | 保留 [.gitignore](../../../.gitignore#L2) 第 2 行规则不动；若需调整清理策略，修改本约定或 `check-temp-lifecycle.py` |
 
 ---
 
 ## 关联资源
 
-- **Spec 来源**：[config-file-placement-governance spec](../../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md)
-- **`.gitignore` 溯源**：[.gitignore](../../../../.gitignore#L2) 第 2 行 `.temp/` 规则
+- **Spec 来源**：[config-file-placement-governance spec](../../../.trae/specs/standards-tools/config-file-placement-governance/spec.md)
+- **`.gitignore` 溯源**：[.gitignore](../../../.gitignore#L2) 第 2 行 `.temp/` 规则
 - **关键脚本**：
-  - [sitecustomize.py](../../../scripts/sitecustomize.py)：UTF-8 自动加载模块
-  - [profile.ps1](../../../scripts/profile.ps1)：PowerShell profile，注入 `PYTHONPATH`
-  - [setup-utf8-env.ps1](../../../scripts/setup-utf8-env.ps1)：UTF-8 环境一键配置
-  - [verify-sitecustomize-autoload.py](../../../scripts/verify-sitecustomize-autoload.py)：自动加载验证脚本
-  - [check-file-placement.py](../../../scripts/check-file-placement.py)：放置校验脚本
-  - [check-temp-lifecycle.py](../../../scripts/check-temp-lifecycle.py)：`.temp/` 生命周期检查与清理
+  - [sitecustomize.py](../../../.agents/scripts/sitecustomize.py)：UTF-8 自动加载模块
+  - [profile.ps1](../../../.agents/scripts/profile.ps1)：PowerShell profile，注入 `PYTHONPATH`
+  - [setup-utf8-env.ps1](../../../.agents/scripts/setup-utf8-env.ps1)：UTF-8 环境一键配置
+  - [verify-sitecustomize-autoload.py](../../../.agents/scripts/verify-sitecustomize-autoload.py)：自动加载验证脚本
+  - [check-file-placement.py](../../../.agents/scripts/check-file-placement.py)：放置校验脚本
+  - [check-temp-lifecycle.py](../../../.agents/scripts/check-temp-lifecycle.py)：`.temp/` 生命周期检查与清理
 - **相关 best-practices**：
-  - [directory-migration-checklist.md](./directory-migration-checklist.md)：目录迁移五步法（本约定的文件迁移依据）
-  - [cli-setup-in-agent-environment.md](./cli-setup-in-agent-environment.md)：IDE Agent 环境下 CLI 工具配置操作手册
-- **架构参考**：[AGENTS.md](../../../../AGENTS.md) 核心规范入口表（`.agents/` 容器约定）
+  - [directory-migration-checklist.md](directory-migration-checklist.md)：目录迁移五步法（本约定的文件迁移依据）
+  - [cli-setup-in-agent-environment.md](cli-setup-in-agent-environment.md)：IDE Agent 环境下 CLI 工具配置操作手册
+- **架构参考**：[AGENTS.md](../../../AGENTS.md) 核心规范入口表（`.agents/` 容器约定）
 
 ---
 

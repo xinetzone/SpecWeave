@@ -381,8 +381,8 @@ type_str = tensor_dtype_to_string(TensorProto.FLOAT)     # "FLOAT"
 4. ✅ ReferenceEvaluator预测结果与手动计算一致
 5. ✅ 可选参数示例中，不传threshold用默认值，传了则覆盖
 
-> **下一章**：[03-quickstart.md - 快速上手指南](./03-quickstart.md) 将带你5分钟跑通第一个ONNX模型。
+> **下一章**：[03-quickstart.md - 快速上手指南](03-quickstart.md) 将带你5分钟跑通第一个ONNX模型。
 
 ---
 
-**上一章**：[01-core-concepts.md - 核心概念详解](./01-core-concepts.md) | **下一章**：[03-quickstart.md - 快速上手](./03-quickstart.md)
+**上一章**：[01-core-concepts.md - 核心概念详解](01-core-concepts.md) | **下一章**：[03-quickstart.md - 快速上手](03-quickstart.md)

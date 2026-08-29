@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-cordis-spatiotemporal-composability-wiki-index"
 title: "Cordis 时空可组合性框架完全指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -34,7 +34,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent平台与工具生态调研](../../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [论文仓库](https://github.com/cordiverse/paper)
 - [论文标题] A Programming Paradigm for Spatiotemporal Composability
 

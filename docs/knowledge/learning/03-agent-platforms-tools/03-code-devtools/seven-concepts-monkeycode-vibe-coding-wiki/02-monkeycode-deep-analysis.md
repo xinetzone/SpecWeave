@@ -326,6 +326,6 @@ Vibe Coding不是要"取代程序员"，而是要重新分配编程工作中人�
 
 ## 九、继续阅读
 
-上一章：[第一章 - 七概念知识框架](./01-seven-concepts-framework.md)
+上一章：[第一章 - 七概念知识框架](01-seven-concepts-framework.md)
 
-下一章：[第三章 - 实践操作指南](./03-practice-guide.md)
+下一章：[第三章 - 实践操作指南](03-practice-guide.md)

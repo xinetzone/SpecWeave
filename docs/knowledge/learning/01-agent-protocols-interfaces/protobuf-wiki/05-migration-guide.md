@@ -292,5 +292,5 @@ Google正在开发Prototiller自动化迁移工具，它可以：
 ---
 
 **导航**：
-- ← 上一章：[04-selection-guide.md - 选型决策指南](./04-selection-guide.md)
+- ← 上一章：[04-selection-guide.md - 选型决策指南](04-selection-guide.md)
 - ↑ 上级：[README](../README.md)

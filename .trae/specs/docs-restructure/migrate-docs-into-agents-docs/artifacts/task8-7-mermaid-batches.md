@@ -82,7 +82,7 @@ type: "mermaid-governance-batches"
 
 | 批次 | 范围 | 目录簇 | 主要文件示例 | 主要问题 | 建议动作 |
 |---|---|---|---|---|---|
-| H1 | 七概念/学习型 Wiki | `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/`、`.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/`、`.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/` | `01-seven-concepts-framework.md`、`07-seven-concepts-applied.md`、`00-overview.md`、`10-case-study.md` | 裸节点、裸边标签、整组目录写法不一致 | 按“目录簇”为单位修，不按单文件跳着修；修完一簇立即复扫该簇 |
+| H1 | 七概念/学习型 Wiki | `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/`、`docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/`、`docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/` | `01-seven-concepts-framework.md`、`07-seven-concepts-applied.md`、`00-overview.md`、`10-case-study.md` | 裸节点、裸边标签、整组目录写法不一致 | 按“目录簇”为单位修，不按单文件跳着修；修完一簇立即复扫该簇 |
 
 说明：
 
@@ -92,7 +92,7 @@ type: "mermaid-governance-batches"
 
 | 批次 | 范围 | 目录簇 | 主要文件示例 | 主要问题 | 建议动作 |
 |---|---|---|---|---|---|
-| H2 | 厂商产品学习与技术分析 | `.agents/docs/knowledge/learning/07-vendor-product-learning/openai/`、`.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/`、`.agents/docs/knowledge/mdi-research/` | `volcengine-computer-use-agent-analysis.md`、`volcengine-eip-analysis.md`、`03-technical-architecture.md` | 裸节点、participant 别名、少量 style warning | 归入 `SubTask 8.9` 第二批；适合按“文档用途”连续清理 |
+| H2 | 厂商产品学习与技术分析 | `docs/knowledge/learning/07-vendor-product-learning/openai/`、`docs/knowledge/learning/07-vendor-product-learning/volcengine/`、`docs/knowledge/mdi-research/` | `volcengine-computer-use-agent-analysis.md`、`volcengine-eip-analysis.md`、`03-technical-architecture.md` | 裸节点、participant 别名、少量 style warning | 归入 `SubTask 8.9` 第二批；适合按“文档用途”连续清理 |
 
 ### 批次 H3：高复用模式文档
 

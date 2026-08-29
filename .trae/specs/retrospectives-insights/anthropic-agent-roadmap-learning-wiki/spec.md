@@ -4,19 +4,19 @@
 Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏界面字符串中挖出至少六条重磅产品线——Conway永久在线智能体、Orbit主动助手、Operon科研平台、BugCrawl代码审计、文件级记忆系统、多语言语音模式，同时GPT-5.6也在悄悄内测。这标志着AI正在走出聊天框，从被动响应转向主动工作、永久在线、垂直专精的Agent生态时代。需要系统学习该网页内容并沉淀为一份结构清晰、通俗易懂的wiki教程，便于读者理解Anthropic的Agent战略布局和即将到来的AI工作流变革。
 
 ## What Changes
-- 新增 wiki 教程文档 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，作为 Anthropic Agent 产品线路线图的系统性学习资料
+- 新增 wiki 教程文档 `docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，作为 Anthropic Agent 产品线路线图的系统性学习资料
 - 文档包含目录导航系统，覆盖文章背景、Conway永久在线智能体、文件级记忆、Orbit主动助手、Operon科研平台、BugCrawl代码审计、生态护城河升级、GPT-5.6竞争、行业影响分析等核心内容
 - 整理关键功能点、技术架构、产品定位与战略意义
 - 提供内容三维评估（专业性/准确性/时效性）与个人洞察分析
 - 汇总相关资源链接（原文、TestingCatalog原始爆料、相关产品页面）
-- 在 `.agents/docs/knowledge/README.md` 知识库索引中登记新增的学习文档
+- 在 `docs/knowledge/README.md` 知识库索引中登记新增的学习文档
 - **BREAKING**: 无破坏性变更（纯新增文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
-  - 修改 `.agents/docs/knowledge/README.md`（追加索引条目）
+  - 新增 `docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
+  - 修改 `docs/knowledge/README.md`（追加索引条目）
 
 ## Background & Context
 - **产品来源**: TestingCatalog从Claude代码引用和隐藏界面字符串中挖掘的未发布产品线
@@ -30,7 +30,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
 
 #### Scenario: 用户打开文档导航
 - **WHEN** 用户打开 `anthropic-agent-roadmap-wiki.md`
@@ -214,10 +214,10 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 - **AND** 链接以 Markdown 标准链接格式呈现
 
 ### Requirement: 知识库索引登记
-系统 SHALL 在 `.agents/docs/knowledge/README.md` 的学习类目下登记新增的 Anthropic Agent 路线图学习文档条目。
+系统 SHALL 在 `docs/knowledge/README.md` 的学习类目下登记新增的 Anthropic Agent 路线图学习文档条目。
 
 #### Scenario: 索引可发现
-- **WHEN** 用户浏览 `.agents/docs/knowledge/README.md`
+- **WHEN** 用户浏览 `docs/knowledge/README.md`
 - **THEN** 能够在 learning 类目下看到 Anthropic Agent 路线图学习 wiki 的条目
 - **AND** 条目包含文档标题与相对路径链接
 
@@ -245,7 +245,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 ### AC-1: Wiki 教程文档创建完成
 - **Given**: spec.md 中定义的所有功能需求已明确
 - **When**: 所有任务完成并通过验证
-- **Then**: `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 包含目录导航、背景概述、Conway详解、文件记忆、Orbit、Operon、BugCrawl、生态升级、GPT-5.6竞争、行业洞察、内容评估、FAQ、资源链接等完整章节
+- **Then**: `docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 包含目录导航、背景概述、Conway详解、文件记忆、Orbit、Operon、BugCrawl、生态升级、GPT-5.6竞争、行业洞察、内容评估、FAQ、资源链接等完整章节
 - **Verification**: `human-judgment`
 
 ### AC-2: Conway 永久在线智能体讲解完整
@@ -304,7 +304,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 
 ### AC-11: 知识库索引已登记
 - **Given**: wiki 文档创建完成
-- **When**: 用户浏览 `.agents/docs/knowledge/README.md`
+- **When**: 用户浏览 `docs/knowledge/README.md`
 - **Then**: learning 类目下出现 Anthropic Agent 路线图学习文档条目
 - **Verification**: `programmatic`
 
@@ -321,7 +321,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 ## 执行复盘（七概念方法论）
 
 ### 客观事实清单（R阶段）
-- F01: 主文档实际存放路径为`.agents/docs/knowledge/learning/03-agent-platforms-tools/`，初始spec错误写为`docs/knowledge/learning/`
+- F01: 主文档实际存放路径为`docs/knowledge/learning/03-agent-platforms-tools/`，初始spec错误写为`docs/knowledge/learning/`
 - F02: 初始NFR-5预估字数4000-6000字，实际最终文档约10865中文字符
 - F03: Windows PowerShell环境下，含`&amp;`符号的URL直接使用defuddle命令会导致解析错误
 - F04: 微信公众号文章URL包含查询参数和锚点，使用defuddle parse子命令更稳定
@@ -334,7 +334,7 @@ Anthropic在Opus 4.8发布一周后，被TestingCatalog从代码引用和隐藏�
 - F11: 文件名`anthropic-agent-roadmap-wiki.md`通过kebab-case命名规范校验
 - F12: frontmatter包含title、source、date、tags、category、status、author、summary共8个字段
 - F13: 文档格式参考现有wiki风格，使用📋目录emoji、中文数字编号章节
-- F14: 知识库索引已在`.agents/docs/knowledge/README.md`中登记
+- F14: 知识库索引已在`docs/knowledge/README.md`中登记
 - F15: 文档明确区分了代码挖掘信息（可信度较高）与GPT-5.6传闻（可信度较低）
 
 ### 核心洞察（I阶段）

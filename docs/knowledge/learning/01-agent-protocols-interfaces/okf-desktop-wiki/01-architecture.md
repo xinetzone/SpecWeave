@@ -195,4 +195,4 @@ def start_server(ui_dir: pathlib.Path) -> tuple[str, str]:
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [00 概述与知识地图](./00-overview.md) | [README](./README.md) | [02 安装与快速入门](./02-quickstart.md) |
+| [00 概述与知识地图](00-overview.md) | [README](README.md) | [02 安装与快速入门](02-quickstart.md) |

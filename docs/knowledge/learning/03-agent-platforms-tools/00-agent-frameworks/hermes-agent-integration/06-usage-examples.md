@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-06-usage-examples"
 title: "06 调用方式示例"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 Wiki（Quick-Start）+ SpecWeave 现状"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/06-usage-examples.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/06-usage-examples.toml"
 type: "Wiki Tutorial"
 description: "调用方式示例：hermes plugins install、hermes okf、Hermes 会话内工具调用、with_context 召回"
 status: "stable"

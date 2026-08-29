@@ -9,7 +9,7 @@ source: "基于spec.md验收标准派生的验证检查点"
 > **验证结果**：✅ 全部43个检查点通过 | 验证日期：2026-07-28 | 方法论：七概念R→I→E→V知识沉淀链路
 
 ## 结构完整性检查
-- [x] CP-1: Wiki目录 `i-have-adhd-wiki/` 已创建于正确路径 `.agents/docs/knowledge/learning/03-agent-platforms-tools/`
+- [x] CP-1: Wiki目录 `i-have-adhd-wiki/` 已创建于正确路径 `docs/knowledge/learning/03-agent-platforms-tools/`
 - [x] CP-2: 存在 `00-overview.md` 入口文件
 - [x] CP-3: 存在 `README.md` 目录索引文件
 - [x] CP-4: 存在 `01-design-philosophy.md` 设计理念章节

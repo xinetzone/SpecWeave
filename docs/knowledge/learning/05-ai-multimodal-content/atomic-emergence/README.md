@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-05-ai-multimodal-content-atomic-emergence-index"
 title: "Atomic Emergence 原子涌现"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -24,7 +24,7 @@ date: "2026-08-22"
 ## 相关资源
 
 - [返回上级：AI 多模态内容](../README.md)
-- [知识库首页](../../../../../README.md)
+- [知识库首页](../../../../../.agents/README.md)
 
 ---
 

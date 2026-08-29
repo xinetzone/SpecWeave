@@ -114,12 +114,12 @@
     10. 最佳实践、FAQ、术语表、资源链接
   - frontmatter包含正确的title/source/date/tags/x-toml-ref
   - 文件名：areal-official-practical-wiki.md
-  - 存放路径：.agents/docs/knowledge/learning/03-agent-platforms-tools/
+  - 存放路径：docs/knowledge/learning/03-agent-platforms-tools/
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9
 - **Test Requirements**:
   - `human-judgement` TR-7.1: 文档结构完整，十大章节齐全
   - `human-judgement` TR-7.2: frontmatter格式正确，字段完整
-  - `human-judgement` TR-7.3: 文件路径正确：.agents/docs/knowledge/learning/03-agent-platforms-tools/areal-official-practical-wiki.md
+  - `human-judgement` TR-7.3: 文件路径正确：docs/knowledge/learning/03-agent-platforms-tools/areal-official-practical-wiki.md
   - `human-judgement` TR-7.4: 文件名kebab-case纯英文
   - `human-judgement` TR-7.5: 标题层级从h1开始，无跳级
   - `human-judgement` TR-7.6: 所有代码块和命令与官方文档/代码一致
@@ -150,7 +150,7 @@
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**:
-  - 在 .agents/docs/knowledge/learning/03-agent-platforms-tools/README.md 中新增条目
+  - 在 docs/knowledge/learning/03-agent-platforms-tools/README.md 中新增条目
   - 添加与概念篇areal-agent-rl-wiki.md的交叉引用
   - 确保tags准确：areal、rl-training、agentic-rl、online-rl、llm-alignment、distributed-training、pytorch、sglang、vllm、fsdp、megatron
 - **Acceptance Criteria Addressed**: AC-10

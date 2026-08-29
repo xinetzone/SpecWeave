@@ -3,6 +3,7 @@ id: "four-layer-logging-pattern"
 title: "自动化脚本四层日志增强模式"
 description: "通用自动化脚本模板的五层日志模型、必备日志组件、DRY-RUN 一致性原则与反模式清单，可调试性为核心质量属性。"
 source: "docs/tech/concepts/four-layer-logging-pattern.md"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/four-layer-logging-pattern.toml"
 type: "Pattern"
 generated:
   by: "process:docs-to-okf-conversion"
@@ -13,7 +14,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 自动化脚本四层日志增强模式
 
 > **模式来源**：基于路径迁移脚本模板 [path-migration-template.py](../../../.agents/scripts/templates/path-migration-template.py) 日志增强实战萃取

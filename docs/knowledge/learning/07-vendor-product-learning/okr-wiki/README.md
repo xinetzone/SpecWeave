@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-index"
 title: "OKR 方法论知识库"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---
@@ -15,20 +15,20 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
-| [叮当OKR帮助手册Wiki](./00-overview.md) | 叮当OKR帮助手册Wiki |  |
-| [OKR制定指南Wiki手册](./okr-guide.md) | OKR制定指南Wiki手册 |  |
+| [叮当OKR帮助手册Wiki](00-overview.md) | 叮当OKR帮助手册Wiki |  |
+| [OKR制定指南Wiki手册](okr-guide.md) | OKR制定指南Wiki手册 |  |
 
 ## 📁 子目录导航
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| ✅ [附录](./appendix/README.md) | 2 |  |
-| ✅ [核心概念](./concepts/README.md) | 7 |  |
-| ✅ [实施指南](./implementation/README.md) | 7 |  |
-| ✅ [方法论](./methods/README.md) | 5 |  |
-| ✅ [评分体系](./scoring/README.md) | 5 |  |
-| ✅ [模板库](./templates/README.md) | 8 |  |
-| ✅ [工具集](./tools/README.md) | 3 |  |
+| ✅ [附录](appendix/README.md) | 2 |  |
+| ✅ [核心概念](concepts/README.md) | 7 |  |
+| ✅ [实施指南](implementation/README.md) | 7 |  |
+| ✅ [方法论](methods/README.md) | 5 |  |
+| ✅ [评分体系](scoring/README.md) | 5 |  |
+| ✅ [模板库](templates/README.md) | 8 |  |
+| ✅ [工具集](tools/README.md) | 3 |  |
 
 
 <!-- README_INDEX_END -->
@@ -36,7 +36,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：厂商产品学习](../README.md)
-- [📚 文档首页](../../../../README.md)
+- [📚 文档首页](../../../../../.agents/docs/README.md)
 
 ---
 

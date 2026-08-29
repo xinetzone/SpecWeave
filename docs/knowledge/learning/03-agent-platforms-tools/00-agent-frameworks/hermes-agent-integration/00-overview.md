@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-00-overview"
 title: "00 集成总览与两条路径"
 source: "hermes-agent 插件文档 v2.5.0 + hermes-okf v0.5.9 Wiki + SpecWeave 现状"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/00-overview.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/00-overview.toml"
 type: "Wiki Tutorial"
 description: "SpecWeave 接入 Hermes Agent 集成总览：集成目标、两条路径、章节导航、前置知识"
 status: "stable"
@@ -31,7 +31,7 @@ SpecWeave 可供暴露的能力资产包括：
 | 指令集 | `.agents/commands/` | 复盘/洞察/萃取/原子化/原子提交/mermaid 等 14 项 |
 | 脚本库 | `.agents/scripts/` | 25+ 验证/生成/CI 自动化脚本 |
 | 角色 | `.agents/roles/` | 7 角色定义（orchestrator/architect/developer/reviewer/tester/co-founder/thesis-advisor 等） |
-| 知识库 | `.agents/docs/knowledge/` | 学习教程、复盘、模式库、wiki |
+| 知识库 | `docs/knowledge/` | 学习教程、复盘、模式库、wiki |
 | vendor 子模块 | `vendor/` | flexloop（9 技能）、ark-cli、awesome-okf 等 |
 
 ## 0.2 两条集成路径
@@ -60,8 +60,8 @@ SpecWeave 可供暴露的能力资产包括：
 
 - [Hermes OKF Wiki 教程](../../../01-agent-protocols-interfaces/okf-wiki/README.md) — hermes-okf 基础概念、五层架构、CLI、Agent 集成
 - [OKF 开放知识格式指南](../../../01-agent-protocols-interfaces/okf-wiki/README.md) — OKF 规范、Bundle/Concept/Frontmatter
-- [SpecWeave 能力注册中心](../../../../../../capability-registry.md) — SpecWeave 全量能力索引
-- [SpecWeave skills 索引](../../../../../../skills/README.md) — SpecWeave Skill 分类与触发词
+- [SpecWeave 能力注册中心](../../../../../../.agents/capability-registry.md) — SpecWeave 全量能力索引
+- [SpecWeave skills 索引](../../../../../../.agents/skills/README.md) — SpecWeave Skill 分类与触发词
 
 ## 0.4 章节导航与阅读路径
 

@@ -121,7 +121,7 @@ my-catalog/
 
 两种链接形式：
 - **Bundle绝对链接**（推荐）：以`/`开头，相对于Bundle根目录解析，如`[customers](/tables/customers.md)`，移动子目录时稳定
-- **相对链接**：标准markdown相对路径，如`[neighbor](./other.md)`
+- **相对链接**：标准markdown相对路径，如`[neighbor](other.md)`
 
 **链接语义**：A链接到B表示有关系（父子/连接/依赖/相关），关系类型由上下文文字表达，不由链接语法表达。OKF不做RDF式谓词标准化。
 
@@ -150,7 +150,7 @@ for f in *.md; do
   if [ "$f" != "index.md" ] && [ "$f" != "log.md" ]; then
     desc=$(grep -m1 '^description:' "$f" | cut -d'"' -f2)
     title=$(grep -m1 '^title:' "$f" | cut -d'"' -f2)
-    echo "- [$title](./$f) — $desc" >> index.md
+    echo "- [$title](%24f) — $desc" >> index.md
   fi
 done
 ```
@@ -259,4 +259,4 @@ GROUP BY 1
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [00 概述与知识地图](./00-overview.md) | [README](./README.md) | [02 快速入门](./02-quickstart.md) |
+| [00 概述与知识地图](00-overview.md) | [README](README.md) | [02 快速入门](02-quickstart.md) |

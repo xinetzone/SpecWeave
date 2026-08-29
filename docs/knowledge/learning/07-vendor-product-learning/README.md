@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-07-vendor-product-learning-index"
 title: "厂商产品学习"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/README.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
@@ -15,23 +15,23 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
-| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](./volcengine-acep-cloudphone-analysis.md) | 火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景 | `ACEP` `火山引擎` `云手机` |
-| [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](./volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景 | `Mobile Use Agent` `火山引擎` `云手机` |
+| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](volcengine-acep-cloudphone-analysis.md) | 火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景 | `ACEP` `火山引擎` `云手机` |
+| [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景 | `Mobile Use Agent` `火山引擎` `云手机` |
 
 ## 📁 子目录导航
 
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
-| ✅ [Comparison](./comparison/README.md) | 3 |  |
-| ✅ [Deepseek](./deepseek/README.md) | 12 |  |
-| ✅ [Google Cloud](./google-cloud/README.md) | 2 | （1个子目录） |
-| ✅ [Miaowu](./miaowu/README.md) | 1 | （2个子目录） |
-| ✅ [OKR 方法论知识库](./okr-wiki/README.md) | 3 | （7个子目录） |
-| ✅ [Openai](./openai/README.md) | 1 | （1个子目录） |
-| ✅ [Oray](./oray/README.md) | 3 | （1个子目录） |
-| ✅ [向日葵远程控制](./sunlogin/README.md) | 16 | （3个子目录） |
-| ✅ [涂鸦智能](./tuya/README.md) | 4 |  |
-| ✅ [火山引擎](./volcengine/README.md) | 12 |  |
+| ✅ [Comparison](comparison/README.md) | 3 |  |
+| ✅ [Deepseek](deepseek/README.md) | 12 |  |
+| ✅ [Google Cloud](google-cloud/README.md) | 2 | （1个子目录） |
+| ✅ [Miaowu](miaowu/README.md) | 1 | （2个子目录） |
+| ✅ [OKR 方法论知识库](okr-wiki/README.md) | 3 | （7个子目录） |
+| ✅ [Openai](openai/README.md) | 1 | （1个子目录） |
+| ✅ [Oray](oray/README.md) | 3 | （1个子目录） |
+| ✅ [向日葵远程控制](sunlogin/README.md) | 16 | （3个子目录） |
+| ✅ [涂鸦智能](tuya/README.md) | 4 |  |
+| ✅ [火山引擎](volcengine/README.md) | 12 |  |
 
 
 <!-- README_INDEX_END -->
@@ -39,7 +39,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Learning Wiki 知识库](../README.md)
-- [📚 文档首页](../../../README.md)
+- [📚 文档首页](../../../../.agents/docs/README.md)
 
 ---
 

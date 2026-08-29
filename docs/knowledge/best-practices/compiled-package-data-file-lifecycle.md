@@ -1,7 +1,7 @@
 ---
 id: "compiled-package-data-file-lifecycle"
 title: "编译型Python包数据文件生命周期管理"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/compiled-package-data-file-lifecycle.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/compiled-package-data-file-lifecycle.toml"
 category: "best-practices"
 tags: ["Python", "Nuitka", "Cython", "wheel", "data-files", "packaging", "TVM", "relay"]
 date: "2026-07-23"
@@ -14,7 +14,7 @@ summary: "基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Py
 
 > 基于TVM .rly数据文件缺失修复实战复盘的经验总结。核心教训：**编译型Python包（Nuitka/Cython）的最大陷阱是数据文件断层**——编译流程只关注Python源码→C的转换，但数据文件（.rly/.dat/.json等）需要通过post_compile_cmds显式处理，且必须建立全生命周期验证机制。
 
-**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
+**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../../.agents/docs/retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
 
 ---
 

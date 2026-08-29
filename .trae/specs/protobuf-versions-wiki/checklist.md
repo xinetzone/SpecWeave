@@ -23,7 +23,7 @@
 - [x] 每个文档有完整 YAML frontmatter（id、title、date、tags、source 字段）
 - [x] 每个文档有章末导航（上一章/返回目录/下一章）
 - [x] 文档编号连续无跳跃（00→01→02→03→04→05）
-- [x] 文档位于正确目录：`.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
+- [x] 文档位于正确目录：`docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
 
 ## 交叉引用验证
 - [x] protobuf-wiki 中引用了 caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md 作为 proto2/proto3 对比实例

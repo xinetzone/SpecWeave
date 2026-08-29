@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-10-foundational-knowledge-python314-cpython-wiki-index"
 title: "Python 3.14 + CPython 源码深度指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -37,7 +37,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：通用基础知识](../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [Python 3.14 官方文档（中文）](https://docs.python.org/zh-cn/3.14/)
 - [Python 3.14 What's New](https://docs.python.org/3.14/whatsnew/3.14.html)
 - [CPython v3.14.0 源码](https://github.com/python/cpython/tree/v3.14.0)

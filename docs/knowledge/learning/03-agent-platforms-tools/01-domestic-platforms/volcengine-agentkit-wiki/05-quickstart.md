@@ -248,9 +248,9 @@ if __name__ == "__main__":
 
 根据您的角色与目标选择合适的进阶路径：
 
-- **深入开发路线**（开发者/平台工程师）：[07 核心功能深度解析](./07-core-features-detailed.md)，掌握 Identity/Gateway/A2A/Session-Memory/Knowledge 五大模块集成模式。
-- **场景学习路线**（产品/架构师）：[06 应用场景与落地方案](./06-application-scenarios.md)，学习四大典型场景架构与三大行业落地框架。
-- **最佳实践路线**（投产团队）：[09 FAQ 与最佳实践](./09-faq-best-practices.md)，查阅 15+ FAQ、8 条最佳实践与 Demo→生产 12 项检查清单。
+- **深入开发路线**（开发者/平台工程师）：[07 核心功能深度解析](07-core-features-detailed.md)，掌握 Identity/Gateway/A2A/Session-Memory/Knowledge 五大模块集成模式。
+- **场景学习路线**（产品/架构师）：[06 应用场景与落地方案](06-application-scenarios.md)，学习四大典型场景架构与三大行业落地框架。
+- **最佳实践路线**（投产团队）：[09 FAQ 与最佳实践](09-faq-best-practices.md)，查阅 15+ FAQ、8 条最佳实践与 Demo→生产 12 项检查清单。
 
 ## 本章小结
 
@@ -258,4 +258,4 @@ if __name__ == "__main__":
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [04 SDK & CLI](./04-agentkit-sdk-cli.md) | [README](./README.md) | → [06 应用场景](./06-application-scenarios.md) |
+| ← [04 SDK & CLI](04-agentkit-sdk-cli.md) | [README](README.md) | → [06 应用场景](06-application-scenarios.md) |

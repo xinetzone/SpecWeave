@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-02-capability-mapping"
 title: "02 SpecWeave 能力盘点与映射矩阵"
 source: "SpecWeave 仓库现状（capability-registry.md / skills/README.md / commands/README.md / AGENTS.md）"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/02-capability-mapping.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/02-capability-mapping.toml"
 type: "Wiki Tutorial"
 description: "SpecWeave 能力体系盘点与到 Hermes tool/skill/hook/memory provider/context engine 的映射矩阵"
 status: "stable"
@@ -15,7 +15,7 @@ wiki_version: "1.0"
 
 ## 2.1 SpecWeave 能力盘点
 
-基于仓库真实目录盘点可暴露的能力资产（详见 [SpecWeave 能力注册中心](../../../../../../capability-registry.md) 与 [skills 索引](../../../../../../skills/README.md)）。
+基于仓库真实目录盘点可暴露的能力资产（详见 [SpecWeave 能力注册中心](../../../../../../.agents/capability-registry.md) 与 [skills 索引](../../../../../../.agents/skills/README.md)）。
 
 ### 2.1.1 Skills（19 个，分三类）
 
@@ -43,7 +43,7 @@ orchestrator、architect、developer、reviewer、tester、co-founder、thesis-a
 
 ### 2.1.6 Knowledge 知识库
 
-`.agents/docs/knowledge/`：学习教程（okf-wiki、hermes-okf-wiki、echobird-wiki 等）、复盘报告、可复用模式库。
+`docs/knowledge/`：学习教程（okf-wiki、hermes-okf-wiki、echobird-wiki 等）、复盘报告、可复用模式库。
 
 ### 2.1.7 Vendor 子模块
 

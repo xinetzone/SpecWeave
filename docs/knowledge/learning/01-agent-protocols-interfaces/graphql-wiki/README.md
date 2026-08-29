@@ -31,7 +31,7 @@ source: "spec:create-graphql-wiki-tutorial"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
-- [📚 文档首页](../../../../README.md)
+- [📚 文档首页](../../../../../.agents/docs/README.md)
 
 ---
 

@@ -46,7 +46,7 @@ scenario: "knowledge-precipitation"
 | 文件 | 路径 | 说明 |
 |------|------|------|
 | 主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) | 514行，11章节完整学习教程 |
-| TOML元数据 | [audiox-turbo-audio-generation-wiki.toml](../../../../../../.meta/toml/.agents/docs/knowledge/learning/audiox-turbo-audio-generation-wiki.toml) | 元数据文件 |
+| TOML元数据 | [audiox-turbo-audio-generation-wiki.toml](../../../../../../docs/knowledge/learning/audiox-turbo-audio-generation-wiki.toml) | 元数据文件 |
 | Spec定义 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md) | 需求规格文档 |
 | Spec任务 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/tasks.md) | 任务分解 |
 | Spec清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/checklist.md) | 验收清单（30项） |

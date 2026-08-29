@@ -179,4 +179,4 @@ Google Cloud官方提供了OKF的完整参考实现和工具链——**Knowledge
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| （无，是第一章） | [README](./README.md) | [01 核心概念](./01-core-concepts.md) |
+| （无，是第一章） | [README](README.md) | [01 核心概念](01-core-concepts.md) |

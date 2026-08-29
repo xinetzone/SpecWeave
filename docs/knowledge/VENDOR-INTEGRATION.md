@@ -1,6 +1,6 @@
 # 跨项目子模块协同规范
 
-> ⚠️ **本文档已迁移**：权威版本位于 [.agents/VENDOR-INTEGRATION.md](../../VENDOR-INTEGRATION.md)
+> ⚠️ **本文档已迁移**：权威版本位于 [.agents/VENDOR-INTEGRATION.md](../../.agents/VENDOR-INTEGRATION.md)
 >
 > 本文档是面向 AI 智能体的跨子模块协同治理规范（L2成熟度），已归档至 `.agents/` 根目录。本文件仅作为导航指针保留，请勿在此处编辑内容。
 

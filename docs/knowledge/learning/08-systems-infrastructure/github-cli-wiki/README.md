@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-08-systems-infrastructure-github-cli-wiki-index"
 title: "GitHub CLI (gh) 完全指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-23"
 ---
@@ -30,7 +30,7 @@ date: "2026-08-23"
 ## 🔗 相关资源
 
 - [🏠 返回上级：系统与基础设施](../../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [GitHub 仓库](https://github.com/cli/cli)
 - [官方手册](https://cli.github.com/manual/)
 

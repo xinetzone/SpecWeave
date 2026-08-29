@@ -18,7 +18,7 @@ agentkit_version_target: "2026Q3"
 
 ## 说明：差异化治理能力优先解析原则
 
-如「洞察 2」所揭示，AgentKit 8 大模块的本质架构是「治理外环包裹业务内环」，治理侧的 Identity + Gateway + Observability + Evaluation 组合是区分企业级生产平台与玩具级 Demo 平台的根本标志。本章选取 **Identity、Gateway、A2A、Observability、Evaluation** 5 个最具差异化的模块进行深度解析，其余 Runtime、Session、Memory、Knowledge 4 个业务内环模块可参考 [02 架构章](./02-core-architecture.md) 的架构层说明。
+如「洞察 2」所揭示，AgentKit 8 大模块的本质架构是「治理外环包裹业务内环」，治理侧的 Identity + Gateway + Observability + Evaluation 组合是区分企业级生产平台与玩具级 Demo 平台的根本标志。本章选取 **Identity、Gateway、A2A、Observability、Evaluation** 5 个最具差异化的模块进行深度解析，其余 Runtime、Session、Memory、Knowledge 4 个业务内环模块可参考 [02 架构章](02-core-architecture.md) 的架构层说明。
 
 ---
 
@@ -300,10 +300,10 @@ flowchart TD
 
 | 模块 | 简要说明 | 关联章节 |
 |---|---|---|
-| **Runtime** | Serverless 运行时，秒级扩缩容 + 多租户隔离 + Tool Executor 调度 | [02 Serverless 底座](./02-core-architecture.md#serverless-弹性运行底座) |
-| **Session** | 短期上下文持久化，TTL 自动过期，视为「消耗品」数据 | [02 数据层](./02-core-architecture.md#agent-ready-基础设施分层架构图) |
-| **Memory** | 长期记忆分层存储，跨会话沉淀召回，视为「知识资产」需审批 | [02 数据层](./02-core-architecture.md#agent-ready-基础设施分层架构图) |
-| **Knowledge** | RAG 检索增强标准组件，多源统一检索 + 向量重排序 | [02 数据层](./02-core-architecture.md#agent-ready-基础设施分层架构图) |
+| **Runtime** | Serverless 运行时，秒级扩缩容 + 多租户隔离 + Tool Executor 调度 | [02 Serverless 底座](02-core-architecture.md#serverless-弹性运行底座) |
+| **Session** | 短期上下文持久化，TTL 自动过期，视为「消耗品」数据 | [02 数据层](02-core-architecture.md#agent-ready-基础设施分层架构图) |
+| **Memory** | 长期记忆分层存储，跨会话沉淀召回，视为「知识资产」需审批 | [02 数据层](02-core-architecture.md#agent-ready-基础设施分层架构图) |
+| **Knowledge** | RAG 检索增强标准组件，多源统一检索 + 向量重排序 | [02 数据层](02-core-architecture.md#agent-ready-基础设施分层架构图) |
 
 ## 本章小结
 
@@ -313,4 +313,4 @@ flowchart TD
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [06 场景](./06-application-scenarios.md) | [README](./README.md) | → [08 竞品对比](./08-comparison-ecosystem.md) |
+| ← [06 场景](06-application-scenarios.md) | [README](README.md) | → [08 竞品对比](08-comparison-ecosystem.md) |

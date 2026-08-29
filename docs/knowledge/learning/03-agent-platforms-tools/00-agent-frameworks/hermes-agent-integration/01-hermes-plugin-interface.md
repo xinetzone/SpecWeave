@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-01-plugin-interface"
 title: "01 Hermes Agent 插件接口规范"
 source: "NousResearch/hermes-agent 插件文档 v2.5.0"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/01-hermes-plugin-interface.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/01-hermes-plugin-interface.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 插件接口规范：插件三类、发现路径、启用机制、plugin.yaml、register(ctx)、tool schema"
 status: "stable"

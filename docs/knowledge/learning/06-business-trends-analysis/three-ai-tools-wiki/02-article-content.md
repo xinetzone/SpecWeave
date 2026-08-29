@@ -1,7 +1,7 @@
 ---
 id: "three-ai-tools-wiki-02"
 title: "文章原文存档：三个热门AI工具"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/02-article-content.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/02-article-content.toml"
 source: "https://mp.weixin.qq.com/s/gFlPzfjpY8zs3tOcw3o5Lg"
 date: "2026-07-04"
 tags: ["ai-tools", "intelligent-terminal", "claudian", "book-to-skill", "original-article"]

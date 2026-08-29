@@ -2,7 +2,7 @@
 title: "Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命"
 category: "learning"
 source: "external: 不存在-Minitap官网（https://www.minitap.ai/）、GitHub开源仓库、Forbes报道、学术论文"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitap-official-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitap-official-wiki.toml"
 date: "2026-07-07"
 status: "published"
 summary: "深度解析Minitap.ai AI驱动的移动端测试平台，核心产品minitest作为完全自主的AI QA工程师，在AndroidWorld基准测试中达到100%任务成功率（全球第一），实现零脚本、零维护、零flake的移动端测试范式革命。涵盖技术架构、集成生态、客户案例、成本效益分析及开源mobile-use SDK。"
@@ -221,9 +221,9 @@ minitest的技术架构建立在开源项目**mobile-use**之上，该SDK提供�
 
 > **相关技术深度分析**:
 > - [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) - mobile-use SDK深度学习分析
-> - [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) - 多代理闭环执行架构
-> - [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) - 规范化坐标抽象技术
-> - [mobile-use深度学习复盘](../../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) - mobile-use深度学习复盘
+> - [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) - 多代理闭环执行架构
+> - [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) - 规范化坐标抽象技术
+> - [mobile-use深度学习复盘](../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) - mobile-use深度学习复盘
 
 ---
 
@@ -516,9 +516,9 @@ Minitap已拥有超过20家企业客户，涵盖多个行业：
 | 文档 | 内容说明 | 链接 |
 |------|----------|------|
 | **mobile-use深度学习分析** | mobile-use开源SDK的技术架构、核心模块、实现细节深度解析 | [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) |
-| **mobile-use深度学习复盘** | mobile-use技术研究过程的完整复盘、关键洞察与经验总结 | [mobile-use-deep-learning-analysis/](../../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) |
-| **多代理闭环执行架构** | minitest多代理协作的闭环执行机制、任务规划与验证流程 | [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
-| **规范化坐标抽象** | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| **mobile-use深度学习复盘** | mobile-use技术研究过程的完整复盘、关键洞察与经验总结 | [mobile-use-deep-learning-analysis/](../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) |
+| **多代理闭环执行架构** | minitest多代理协作的闭环执行机制、任务规划与验证流程 | [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| **规范化坐标抽象** | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 
 ### 12.5 关键信息来源汇总
 

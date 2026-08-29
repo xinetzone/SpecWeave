@@ -2,7 +2,7 @@
 id: "ai-engineering-four-milestones-wiki-06"
 title: "深度洞察与可复用方法论"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/06-insights-patterns.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/06-insights-patterns.toml"
 ---
 # 深度洞察与可复用方法论
 

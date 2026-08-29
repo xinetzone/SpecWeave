@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-11"
 title: "CLI 命令完整参考"
 source: "https://open-codereview.ai/docs/cli-reference"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/11-cli-reference.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/11-cli-reference.toml"
 ---
 # CLI 命令完整参考
 

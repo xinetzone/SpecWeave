@@ -100,4 +100,4 @@ Linux 包约 140 MB 主要来自 GTK + ICU + Python。spec 已通过 `excludes`�
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [05 跨平台打包](./05-packaging.md) | [README](./README.md) | （已完成，是最后一章） |
+| [05 跨平台打包](05-packaging.md) | [README](README.md) | （已完成，是最后一章） |

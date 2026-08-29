@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-01-argument-structure-analysis"
 title: "MaineCoon 文章论证逻辑与信息结构分析"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/01-argument-structure-analysis.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/01-argument-structure-analysis.toml"
 ---
 # MaineCoon 文章论证逻辑与信息结构分析
 

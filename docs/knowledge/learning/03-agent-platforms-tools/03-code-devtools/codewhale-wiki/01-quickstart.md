@@ -2,8 +2,8 @@
 id: "codewhale-wiki-01"
 title: "CodeWhale 安装与首次使用指南"
 source: "https://github.com/Hmbown/CodeWhale"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/01-quickstart.toml"
 ---
-
 # CodeWhale 安装与首次使用指南
 
 > 四步上手：安装 → 首次会话（无需密钥）→ 连接提供商 → Fleet Workflow

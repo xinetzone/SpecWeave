@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-implementation-index"
 title: "实施指南"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/implementation/README.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---
@@ -26,7 +26,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：叮当OKR Wiki](../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../../.agents/docs/README.md)
 
 ---
 

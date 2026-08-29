@@ -58,7 +58,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-
 - [**返回上级目录**](README.md) — 本教程 Wiki 首页
 - [**返回教程总览**](00-overview.md) — 第 00 章，教程全貌与章节导航
 - [**原始学习分析文档**](../animejs-threejs-adapter-analysis.md) — 本教程的前置学习分析，包含六大痛点、五大核心功能、代码对比与价值分析
-- **其他前端相关教程** — 请关注 [05-ai-multimodal-content](../) 目录下其他内容，该目录收录了 AI 多模态与前端创意开发相关的各类 Wiki 教程
+- **其他前端相关教程** — 请关注 [05-ai-multimodal-content](..) 目录下其他内容，该目录收录了 AI 多模态与前端创意开发相关的各类 Wiki 教程
 
 ## 本教程文件清单
 

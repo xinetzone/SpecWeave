@@ -110,4 +110,4 @@ EchoBird 内置 Codex Proxy，绑定 `127.0.0.1:53682`，负责把不同的模�
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [09 快速上手指南](./09-quickstart.md) | [README](./README.md) | → [11 FAQ 与术语表](./11-faq-glossary.md) |
+| ← [09 快速上手指南](09-quickstart.md) | [README](README.md) | → [11 FAQ 与术语表](11-faq-glossary.md) |

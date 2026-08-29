@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#01-mcp协议详解"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.toml"
 id: "mcp-protocol"
 title: "01、MCP协议详解：Model Context Protocol"
 ---
@@ -335,5 +335,5 @@ sequenceDiagram
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [00、概述与背景](./00-overview.md) |
-| **下一章** | [02、ACP协议详解：Agent Communication Protocol](./02-acp.md) |
+| 上一章 | [00、概述与背景](00-overview.md) |
+| **下一章** | [02、ACP协议详解：Agent Communication Protocol](02-acp.md) |

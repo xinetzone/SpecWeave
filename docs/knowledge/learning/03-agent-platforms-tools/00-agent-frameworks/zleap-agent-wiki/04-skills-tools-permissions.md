@@ -90,4 +90,4 @@ Skill 是一类可复用能力包，通常以 `SKILL.md` 为入口文件。它�
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [03 分区记忆系统](./03-memory-system.md) | [README](./README.md) | → [05 模型提供方与运行时入口](./05-model-providers-runtime.md) |
+| ← [03 分区记忆系统](03-memory-system.md) | [README](README.md) | → [05 模型提供方与运行时入口](05-model-providers-runtime.md) |

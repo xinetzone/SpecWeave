@@ -171,8 +171,8 @@ export default defineSandbox({
 
 ## connections/ 与 evals/：外部连接与评测
 
-- `connections/`：MCP 与 OpenAPI 外部服务连接，文件名即连接名（`agent/connections/linear.ts` → `linear`）。模型永不直接看到 URL 或凭证。详见 [03 生产级能力](./03-production-capabilities.md)。
-- `evals/`：位于 `agent/` 旁，存放评测检查（`.eval.ts` 文件），用 `defineEval` 定义，跑 `eve eval` 验证行为回归。详见 [03 生产级能力](./03-production-capabilities.md)。
+- `connections/`：MCP 与 OpenAPI 外部服务连接，文件名即连接名（`agent/connections/linear.ts` → `linear`）。模型永不直接看到 URL 或凭证。详见 [03 生产级能力](03-production-capabilities.md)。
+- `evals/`：位于 `agent/` 旁，存放评测检查（`.eval.ts` 文件），用 `defineEval` 定义，跑 `eve eval` 验证行为回归。详见 [03 生产级能力](03-production-capabilities.md)。
 
 ## 本章小结
 
@@ -184,4 +184,4 @@ export default defineSandbox({
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [01 产品介绍与核心概念](./01-product-intro.md) | [README](./README.md) | → [03 生产级能力详解](./03-production-capabilities.md) |
+| ← [01 产品介绍与核心概念](01-product-intro.md) | [README](README.md) | → [03 生产级能力详解](03-production-capabilities.md) |

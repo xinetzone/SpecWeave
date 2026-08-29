@@ -4,18 +4,18 @@
 Zleap-Agent 是一个 **workspace-first** 的 Agent Harness（面向本地模型与 OpenAI-compatible 模型），其核心命题是"Agent 不应在每一步都看到所有工具、记忆、规则与历史，而应先在知道自己身处哪个 Workspace 后，只拿到该 Workspace 真正需要的上下文"。它把运行时按 Workspace 拆分，每个 Workspace 拥有独立的提示词、工具、技能、记忆、模型与执行历史，对本地小模型、企业内网部署与权限/数据边界敏感的工作流有重要参考价值。需要系统学习其源码与文档，沉淀为一份结构清晰、通俗易懂的 wiki 教程，便于不同技术水平的读者理解这套 workspace-first 的 Agent 运行时设计，并为后续架构讨论或借鉴提供参考。
 
 ## What Changes
-- 新增 wiki 教程文档集 `.agents/docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/`，作为 Zleap-Agent 的系统性学习资料
+- 新增 wiki 教程文档集 `docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/`，作为 Zleap-Agent 的系统性学习资料
 - 文档集包含 `README.md` 索引 + 8 章递进式教程（00 概览 → 05 网关任务 → 07 快速上手 → 08 FAQ）
 - 覆盖核心概念（Workspace 隔离 / Context 组装 / 分区记忆 / Skill / 权限 / 模型提供方 / 网关 / 任务 / 会话服务）
 - 从源码深读中提炼 5-8 条架构洞察
-- 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md` 中登记新增文档条目
+- 在 `docs/knowledge/learning/03-agent-platforms-tools/README.md` 中登记新增文档条目
 - **BREAKING**: 无破坏性变更（纯新增学习文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `.agents/docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/` 目录（README.md + 8 章）
-  - 修改 `.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md`（追加索引条目）
+  - 新增 `docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/` 目录（README.md + 8 章）
+  - 修改 `docs/knowledge/learning/03-agent-platforms-tools/README.md`（追加索引条目）
 
 ## Background & Context
 - **项目名称**: Zleap-Agent（GitHub: Zleap-AI/Zleap-Agent）
@@ -34,7 +34,7 @@ Zleap-Agent 是一个 **workspace-first** 的 Agent Harness（面向本地模型
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档集主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档集，放置在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/`，其中 `README.md` 作为索引，包含标题、适用人群、章节快速导航表、内容快照声明、资源链接；每章文档遵循分文件命名（`00-*.md`、`01-*.md`…），顶部含 YAML frontmatter，底部含上一章/返回目录/下一章导航。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档集，放置在 `docs/knowledge/learning/03-agent-platforms-tools/zleap-agent-wiki/`，其中 `README.md` 作为索引，包含标题、适用人群、章节快速导航表、内容快照声明、资源链接；每章文档遵循分文件命名（`00-*.md`、`01-*.md`…），顶部含 YAML frontmatter，底部含上一章/返回目录/下一章导航。
 
 #### Scenario: 用户打开教程索引
 - **WHEN** 用户打开 `zleap-agent-wiki/README.md`
@@ -122,7 +122,7 @@ Zleap-Agent 是一个 **workspace-first** 的 Agent Harness（面向本地模型
 - **AND** 洞察与源码文件路径可追溯
 
 ### Requirement: 知识库索引登记
-系统 SHALL 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md` 的对应类目下登记新增的 Zleap-Agent 学习文档条目。
+系统 SHALL 在 `docs/knowledge/learning/03-agent-platforms-tools/README.md` 的对应类目下登记新增的 Zleap-Agent 学习文档条目。
 
 #### Scenario: 索引可发现
 - **WHEN** 用户浏览 `03-agent-platforms-tools/README.md`

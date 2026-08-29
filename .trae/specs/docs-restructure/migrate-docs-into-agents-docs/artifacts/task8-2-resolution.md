@@ -23,12 +23,12 @@ status: "completed"
 
 以下文件已确认为迁移后新增但合理的目录入口/边界说明文档，应在后续基线重生成或 allowlist 补录时视为“保留项”：
 
-1. `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md`
-2. `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md`
-3. `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md`
-4. `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md`
-5. `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md`
-6. `.agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.md`
+1. `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md`
+2. `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md`
+3. `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md`
+4. `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md`
+5. `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md`
+6. `docs/knowledge/learning/07-vendor-product-learning/openai/README.md`
 7. `.agents/docs/retrospective/archives/xinet/core/README.md`
 8. `.agents/docs/retrospective/archives/xinet/reference/README.md`
 9. `.agents/docs/retrospective/archives/xinet/temporary/README.md`

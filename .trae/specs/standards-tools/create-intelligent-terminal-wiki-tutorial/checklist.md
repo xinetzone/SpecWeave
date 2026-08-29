@@ -8,7 +8,7 @@ date: "2026-08-03"
 # Intelligent Terminal 完整 Wiki 教程 - Verification Checklist
 
 ## 目录结构与基础规范
-- [ ] Wiki 目录 `.agents/docs/knowledge/learning/intelligent-terminal-wiki/` 已创建
+- [ ] Wiki 目录 `docs/knowledge/learning/intelligent-terminal-wiki/` 已创建
 - [ ] README.md 导航入口存在且包含 YAML frontmatter（id、title、source、date）
 - [ ] README.md 包含完整章节索引（13个章节文件链接）
 - [ ] README.md 包含学习路径建议和前置知识说明
@@ -71,7 +71,7 @@ date: "2026-08-03"
 - [ ] 首章（01-overview）无上一章链接，有下一章链接
 - [ ] 末章（13-design-patterns）有上一章链接，无下一章链接（可指向README）
 - [ ] 章节间交叉引用使用正确的相对路径
-- [ ] `.agents/docs/knowledge/learning/README.md` 已更新，包含 intelligent-terminal-wiki 索引条目
+- [ ] `docs/knowledge/learning/README.md` 已更新，包含 intelligent-terminal-wiki 索引条目
 - [ ] 运行 link-check 无断链
 
 ## 内容质量

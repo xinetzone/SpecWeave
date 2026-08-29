@@ -59,7 +59,7 @@ assert len(backups) >= 1
 print(f"TR-6.4 PASS: {len(backups)} backups listed")
 
 # TR-6.5: Git历史查询
-kb_file = ".agents/docs/knowledge/templates/knowledge-entry-template.md"
+kb_file = "docs/knowledge/templates/knowledge-entry-template.md"
 ok, commits, msg = list_knowledge_history(kb_file)
 assert ok, f"TR-6.5 FAIL: {msg}"
 print(f"TR-6.5 PASS: {len(commits)} commits found")

@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-01"
 title: "Python 3.14 语言新特性"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/01-language-features.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/01-language-features.toml"
 ---
 # Python 3.14 语言新特性
 

@@ -103,6 +103,6 @@ source: "torch-dev-mirror-build-retrospective-20260820"
 ## 参考链接
 
 - [里程碑复盘报告](../../../../docs/retrospective/reports/milestone/torch-dev-mirror-build-retrospective-20260820.md)
-- [torch-dev Dockerfile](../../../../apps/docker-images/devcontainer-base/variants/torch-dev/Dockerfile)
-- [install-helpers.sh](../../../../apps/docker-images/devcontainer-base/variants/shared/lib/install-helpers.sh)
-- [verify.sh](../../../../apps/docker-images/devcontainer-base/variants/shared/lib/verify.sh)
+- [torch-dev Dockerfile](../../../apps/docker-images/devcontainer-base/variants/torch-dev/Dockerfile)
+- [install-helpers.sh](../../../apps/docker-images/devcontainer-base/variants/shared/lib/install-helpers.sh)
+- [verify.sh](../../../apps/docker-images/devcontainer-base/variants/shared/lib/verify.sh)

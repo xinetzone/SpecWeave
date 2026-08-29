@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#07-技术实现要点与代码示例"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/07-implementation.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/07-implementation.toml"
 id: "implementation-guide"
 title: "07、技术实现要点与代码示例"
 ---
@@ -1466,5 +1466,5 @@ async def connect_sse_with_retry(task_id, max_retries=5):
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [06、典型交互流程与场景模式](./06-flows.md) |
-| **下一章** | [08、应用场景与选型指南](./08-scenarios.md) |
+| 上一章 | [06、典型交互流程与场景模式](06-flows.md) |
+| **下一章** | [08、应用场景与选型指南](08-scenarios.md) |

@@ -58,12 +58,12 @@ maturity: L1-draft
 
 | 编号 | 文档 | 内容 | 阅读时间 |
 |------|------|------|----------|
-| 00 | [00-overview.md](./00-overview.md) | **总览**：TL;DR快速结论、贡献全景图、一页纸速查表、3条核心洞察 | 10分钟 |
-| 01 | [01-contributor-quickstart.md](./01-contributor-quickstart.md) | **贡献者快速上手**：环境搭建、编译构建、第一个PR完整流程（Unix/macOS/Windows） | 30分钟（含动手） |
-| 02 | [02-development-workflow.md](./02-development-workflow.md) | **深度开发流程**：Git工作流详解、PR生命周期、开发周期与版本管理、测试体系 | 40分钟 |
-| 03 | [03-governance-community.md](./03-governance-community.md) | **治理与社区**：沟通渠道、Issue Triage、核心团队、安全政策、AI工具政策 | 25分钟 |
-| 04 | [04-best-practices-anti-patterns.md](./04-best-practices-anti-patterns.md) | **最佳实践与反模式**（🔥**重点**）：10个反模式、PR质量检查清单、贡献者成长路径 | 25分钟 |
-| 05 | [05-faq-resources.md](./05-faq-resources.md) | **FAQ与资源**：常见问题解答、术语表、CPython源码目录地图、外部学习资源 | 20分钟（查阅） |
+| 00 | [00-overview.md](00-overview.md) | **总览**：TL;DR快速结论、贡献全景图、一页纸速查表、3条核心洞察 | 10分钟 |
+| 01 | [01-contributor-quickstart.md](01-contributor-quickstart.md) | **贡献者快速上手**：环境搭建、编译构建、第一个PR完整流程（Unix/macOS/Windows） | 30分钟（含动手） |
+| 02 | [02-development-workflow.md](02-development-workflow.md) | **深度开发流程**：Git工作流详解、PR生命周期、开发周期与版本管理、测试体系 | 40分钟 |
+| 03 | [03-governance-community.md](03-governance-community.md) | **治理与社区**：沟通渠道、Issue Triage、核心团队、安全政策、AI工具政策 | 25分钟 |
+| 04 | [04-best-practices-anti-patterns.md](04-best-practices-anti-patterns.md) | **最佳实践与反模式**（🔥**重点**）：10个反模式、PR质量检查清单、贡献者成长路径 | 25分钟 |
+| 05 | [05-faq-resources.md](05-faq-resources.md) | **FAQ与资源**：常见问题解答、术语表、CPython源码目录地图、外部学习资源 | 20分钟（查阅） |
 
 ---
 
@@ -72,30 +72,30 @@ maturity: L1-draft
 ### 30分钟首PR路径
 > 我只想提交第一个PR，不想搞懂所有流程
 
-1. 读 [00-overview.md](./00-overview.md) 的TL;DR部分（3分钟）
-2. 用GitHub Codespaces零配置开始（见 [01-contributor-quickstart.md](./01-contributor-quickstart.md) 的Codespaces节，2分钟）
-3. 找一个带`easy`标签的issue，按[01-quickstart](./01-contributor-quickstart.md)的步骤提交PR（20分钟）
-4. 提交前对照 [04-best-practices-anti-patterns.md](./04-best-practices-anti-patterns.md) 的checklist自查（5分钟）
+1. 读 [00-overview.md](00-overview.md) 的TL;DR部分（3分钟）
+2. 用GitHub Codespaces零配置开始（见 [01-contributor-quickstart.md](01-contributor-quickstart.md) 的Codespaces节，2分钟）
+3. 找一个带`easy`标签的issue，按[01-quickstart](01-contributor-quickstart.md)的步骤提交PR（20分钟）
+4. 提交前对照 [04-best-practices-anti-patterns.md](04-best-practices-anti-patterns.md) 的checklist自查（5分钟）
 
 ### 2小时理解路径
 > 我要系统性了解CPython贡献流程
 
-1. 完整读 [00-overview.md](./00-overview.md) 建立全景图
-2. [01-contributor-quickstart.md](./01-contributor-quickstart.md) 跟着搭建本地环境
-3. [02-development-workflow.md](./02-development-workflow.md) 理解完整开发周期
-4. [03-governance-community.md](./03-governance-community.md) 了解社区和治理
-5. [04-best-practices-anti-patterns.md](./04-best-practices-anti-patterns.md) 通读反模式
-6. 遇到问题查 [05-faq-resources.md](./05-faq-resources.md)
+1. 完整读 [00-overview.md](00-overview.md) 建立全景图
+2. [01-contributor-quickstart.md](01-contributor-quickstart.md) 跟着搭建本地环境
+3. [02-development-workflow.md](02-development-workflow.md) 理解完整开发周期
+4. [03-governance-community.md](03-governance-community.md) 了解社区和治理
+5. [04-best-practices-anti-patterns.md](04-best-practices-anti-patterns.md) 通读反模式
+6. 遇到问题查 [05-faq-resources.md](05-faq-resources.md)
 
 ### 深度参与路径
 > 我想成为长期贡献者/triager/core dev
 
 1. 完成上述2小时路径
 2. 从easy issues开始，逐步挑战complex issues
-3. 参与Issue Triage（[03-governance-community.md](./03-governance-community.md)）
+3. 参与Issue Triage（[03-governance-community.md](03-governance-community.md)）
 4. 在Discourse的Core Development分类参与讨论
 5. 阅读PEP 13（治理）、PEP 8（Python风格）、PEP 7（C风格）
-6. 参考 [04-best-practices.md](./04-best-practices-anti-patterns.md) 的贡献者成长路径
+6. 参考 [04-best-practices.md](04-best-practices-anti-patterns.md) 的贡献者成长路径
 
 ---
 
@@ -147,4 +147,4 @@ cpython-devguide-wiki/
 
 ---
 
-**开始阅读**：[00-overview.md - 总览与核心洞察](./00-overview.md)
+**开始阅读**：[00-overview.md - 总览与核心洞察](00-overview.md)

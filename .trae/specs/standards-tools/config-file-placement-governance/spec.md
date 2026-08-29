@@ -16,7 +16,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-plac
 - 新增 **sitecustomize.py 自动加载验证脚本**：可复现地检查新终端会话中 sitecustomize.py 是否被 Python 自动加载，覆盖三种场景（裸终端 / 已运行 setup-utf8-env.ps1 / 已加载 profile.ps1）
 - 新增 **关键配置文件放置校验脚本**：扫描项目根目录与 `.agents/scripts/`，检测关键配置文件是否被错误放置到根目录
 - 新增 **`.temp/` 生命周期治理脚本**：按用途分类检查 `.temp/` 下内容的保留期，输出过期清单并支持 `--clean` 清理
-- 新增 **文件放置治理文档**：在 `.agents/docs/knowledge/best-practices/` 下沉淀关键配置文件的标准存放路径表、放置决策树，以及 `.temp/` 临时文件治理约定（定义、用途分类、命名规则、保留期、清理机制、责任人）
+- 新增 **文件放置治理文档**：在 `docs/knowledge/best-practices/` 下沉淀关键配置文件的标准存放路径表、放置决策树，以及 `.temp/` 临时文件治理约定（定义、用途分类、命名规则、保留期、清理机制、责任人）
 - 新增 **预提交钩子集成**：将放置校验脚本与 `.temp` 生命周期检查接入 `.githooks/` 与 CI 质量门禁，阻止错误放置的文件进入仓库，并告警/阻塞过期临时内容
 - **不修改**已迁移的 sitecustomize.py 本身（保持三层防御逻辑不变）
 - **不修改** `.gitignore` 中已存在的 `.temp/` 排除规则（保留"可随时清理"语义，由生命周期脚本提供确定性清理而非依赖人工记忆）
@@ -28,7 +28,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-plac
   - 新增：`.agents/scripts/verify-sitecustomize-autoload.py`（验证脚本）
   - 新增：`.agents/scripts/check-file-placement.py`（放置校验脚本）
   - 新增：`.agents/scripts/check-temp-lifecycle.py`（`.temp/` 生命周期检查与清理脚本）
-  - 新增：`.agents/docs/knowledge/best-practices/config-file-placement-convention.md`（治理文档，含 `.temp/` 治理小节）
+  - 新增：`docs/knowledge/best-practices/config-file-placement-convention.md`（治理文档，含 `.temp/` 治理小节）
   - 修改：`.agents/scripts/lib/checks/`（新增 `file_placement` 与 `temp_lifecycle` 检查模块，供 ci-check 集成）
   - 修改：`.githooks/pre-commit`（追加放置校验与 `.temp` 生命周期调用）
 - **Affected docs**: `windows-terminal-utf8-complete-guide.md`、`windows-platform-compatibility-guide.md`（补充自动加载验证小节）
@@ -91,7 +91,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-plac
 
 ### Requirement: 文件放置治理文档
 
-系统 SHALL 在 `.agents/docs/knowledge/best-practices/` 下提供一份配置文件放置约定文档，覆盖关键配置文件放置规则与 `.temp/` 临时文件治理约定。
+系统 SHALL 在 `docs/knowledge/best-practices/` 下提供一份配置文件放置约定文档，覆盖关键配置文件放置规则与 `.temp/` 临时文件治理约定。
 
 #### Scenario: 团队成员查阅放置约定
 

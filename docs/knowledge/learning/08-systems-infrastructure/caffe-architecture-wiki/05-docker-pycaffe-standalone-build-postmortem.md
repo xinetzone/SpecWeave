@@ -530,7 +530,7 @@ TVM-FFI 在 PyCaffe 中的角色:
 ### 10.5 可复用知识沉淀路径
 
 本次萃取的方法论应沉淀到以下位置：
-1. **本文档**: `.agents/docs/knowledge/learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md`
+1. **本文档**: `docs/knowledge/learning/caffe-architecture-wiki/05-docker-pycaffe-standalone-build-postmortem.md`
 2. **Docker构建模板**: 可从本次Dockerfile提炼出通用"C++ Python extension 多阶段Dockerfile模板"
 3. **CMake模板**: `define_docker_target` 函数模式可复用于其他CMake+Docker项目
 4. **TVM-FFI集成指南**: RPATH $ORIGIN + _caffe.py 桥接模式可作为其他C++→Python FFI项目的参考

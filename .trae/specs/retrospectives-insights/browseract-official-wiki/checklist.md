@@ -1,6 +1,6 @@
 # BrowserAct 官网完整学习教程 - 验证清单
 
-- [x] Checkpoint 1: Wiki文档文件已创建在正确路径（.agents/docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.md）
+- [x] Checkpoint 1: Wiki文档文件已创建在正确路径（docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.md）
 - [x] Checkpoint 2: 文档包含符合规范的YAML frontmatter（title/source/date/tags字段完整）
 - [x] Checkpoint 3: 目录导航系统完整，包含所有章节锚点链接
 - [x] Checkpoint 4: 准确引用官网标语"Build reusable web scrapers in the cloud, or give your local Agent a browser."

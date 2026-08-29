@@ -13,14 +13,14 @@ status: "completed"
 ## 处理范围
 
 - 仅处理 `task8-7-mermaid-batches.md` 中 `H1/H2` 批次的高价值样本，共 8 个文件：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md`
-  - `.agents/docs/knowledge/mdi-research/01-feasibility-analysis.md`
-  - `.agents/docs/knowledge/mdi-research/02-ecosystem-comparison.md`
-  - `.agents/docs/knowledge/mdi-research/03-technical-architecture.md`
-  - `.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md`
-  - `.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md`
+  - `docs/knowledge/mdi-research/01-feasibility-analysis.md`
+  - `docs/knowledge/mdi-research/02-ecosystem-comparison.md`
+  - `docs/knowledge/mdi-research/03-technical-architecture.md`
+  - `docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md`
+  - `docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md`
 - 未处理纯归档或历史产出目录。
 - 未修改 `AGENTS.md`、`project-governance/documentation-governance` 路径、`tasks.md`。
 - 处理策略：只做 Mermaid 安全写法最小修复，不改动图表表达意图与正文结构。
@@ -35,14 +35,14 @@ status: "completed"
 
 | 文件 | 批次 | 修复动作 | 结果 |
 |---|---|---|---|
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md` | H1 | 删除 Mermaid 代码块内空行 | 七组件总览图通过定向 Mermaid 校验 |
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md` | H1 | 将 `subgraph` 中文 ID 改为英文 ID + 中文标题；去除空行；将边标签改为安全引号写法 | 组件协作流程图通过定向 Mermaid 校验 |
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md` | H1 | 将两个图中的裸中文 `subgraph` ID 改为英文 ID；为中文 participant 别名补引号；清除代码块内空行 | 架构图与时序图均通过定向 Mermaid 校验 |
-| `.agents/docs/knowledge/mdi-research/01-feasibility-analysis.md` | H2 | 将 `可行性维度`、`评分` 两个 `subgraph` 改为安全英文 ID | 可行性评估图通过定向 Mermaid 校验 |
-| `.agents/docs/knowledge/mdi-research/02-ecosystem-comparison.md` | H2 | 将三个 `subgraph` 改为安全英文 ID；同步更新 `style` 目标，消除中文 ID 引发的 warning | 互补关系图通过定向 Mermaid 校验且无 warning |
-| `.agents/docs/knowledge/mdi-research/03-technical-architecture.md` | H2 | 将五个层级 `subgraph` 改为安全英文 ID；同步更新 `style` 目标 | 模块依赖关系图通过定向 Mermaid 校验且无 warning |
-| `.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md` | H2 | 将 3 组流程/架构图中的中文 `subgraph` ID 统一改为英文 ID + 中文标题 | 自有设备接入、整体架构、Agent 通信图均通过定向 Mermaid 校验 |
-| `.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md` | H2 | 将 2 组网络/生态图中的中文 `subgraph` ID 改为安全英文 ID + 中文标题 | 容灾架构图与生态协同图通过定向 Mermaid 校验 |
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md` | H1 | 删除 Mermaid 代码块内空行 | 七组件总览图通过定向 Mermaid 校验 |
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md` | H1 | 将 `subgraph` 中文 ID 改为英文 ID + 中文标题；去除空行；将边标签改为安全引号写法 | 组件协作流程图通过定向 Mermaid 校验 |
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md` | H1 | 将两个图中的裸中文 `subgraph` ID 改为英文 ID；为中文 participant 别名补引号；清除代码块内空行 | 架构图与时序图均通过定向 Mermaid 校验 |
+| `docs/knowledge/mdi-research/01-feasibility-analysis.md` | H2 | 将 `可行性维度`、`评分` 两个 `subgraph` 改为安全英文 ID | 可行性评估图通过定向 Mermaid 校验 |
+| `docs/knowledge/mdi-research/02-ecosystem-comparison.md` | H2 | 将三个 `subgraph` 改为安全英文 ID；同步更新 `style` 目标，消除中文 ID 引发的 warning | 互补关系图通过定向 Mermaid 校验且无 warning |
+| `docs/knowledge/mdi-research/03-technical-architecture.md` | H2 | 将五个层级 `subgraph` 改为安全英文 ID；同步更新 `style` 目标 | 模块依赖关系图通过定向 Mermaid 校验且无 warning |
+| `docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md` | H2 | 将 3 组流程/架构图中的中文 `subgraph` ID 统一改为英文 ID + 中文标题 | 自有设备接入、整体架构、Agent 通信图均通过定向 Mermaid 校验 |
+| `docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md` | H2 | 将 2 组网络/生态图中的中文 `subgraph` ID 改为安全英文 ID + 中文标题 | 容灾架构图与生态协同图通过定向 Mermaid 校验 |
 
 ## 校验记录
 
@@ -56,7 +56,7 @@ status: "completed"
 - 执行命令：
 
 ```bash
-python -X utf8 -c "import sys; from pathlib import Path; sys.path.insert(0, str(Path('.agents/scripts').resolve())); from lib.checks import mermaid; root = Path('.').resolve(); files = [Path(r'.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md'), Path(r'.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md'), Path(r'.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md'), Path(r'.agents/docs/knowledge/mdi-research/01-feasibility-analysis.md'), Path(r'.agents/docs/knowledge/mdi-research/02-ecosystem-comparison.md'), Path(r'.agents/docs/knowledge/mdi-research/03-technical-architecture.md'), Path(r'.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md'), Path(r'.agents/docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md')]; total_err = total_warn = 0; bad = 0; print('[检查] 定向 Mermaid 校验');\
+python -X utf8 -c "import sys; from pathlib import Path; sys.path.insert(0, str(Path('.agents/scripts').resolve())); from lib.checks import mermaid; root = Path('.').resolve(); files = [Path(r'docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/00-overview.md'), Path(r'docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/01-core-concepts.md'), Path(r'docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/10-case-study.md'), Path(r'docs/knowledge/mdi-research/01-feasibility-analysis.md'), Path(r'docs/knowledge/mdi-research/02-ecosystem-comparison.md'), Path(r'docs/knowledge/mdi-research/03-technical-architecture.md'), Path(r'docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md'), Path(r'docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md')]; total_err = total_warn = 0; bad = 0; print('[检查] 定向 Mermaid 校验');\
 for f in files:\
     issues, fixes, diffs = mermaid._process_file((root / f).resolve(), root, fix=False, dry_run=False);\
     errs = [i for i in issues if i[1] == 'error']; warns = [i for i in issues if i[1] == 'warning'];\
@@ -80,8 +80,8 @@ sys.exit(1 if total_err else 0)"
 ## 第二批处理范围
 
 - 本批继续执行 `SubTask 8.9`，按 `task8-7-mermaid-batches.md` 的 `H1` 目录簇策略处理：
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/`
 - 处理原则保持不变：只修 Mermaid 真问题，优先用检查器自动修复机械性问题，再对残留 `subgraph` 中文 ID / `end` 保留字等问题做最小手工收尾。
 - 未修改 `AGENTS.md`、`project-governance/documentation-governance` 路径、`tasks.md`。
 
@@ -92,12 +92,12 @@ sys.exit(1 if total_err else 0)"
 - 扫描范围：目录内 `8` 个 Markdown 文件。
 - 实际修改文件：`6` 个。
 - 自动修复覆盖文件：
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/03-practice-guide.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/06-assessment.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/07-seven-concepts-applied.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/03-practice-guide.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/06-assessment.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/07-seven-concepts-applied.md`
 - 自动修复动作：
   - 删除 Mermaid 代码块空行。
   - 为中文/空格节点与边标签补双引号。
@@ -112,12 +112,12 @@ sys.exit(1 if total_err else 0)"
 - 扫描范围：目录内 `7` 个 Markdown 文件。
 - 实际修改文件：`6` 个。
 - 自动修复覆盖文件：
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/README.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/01-theory-framework.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/03-concepts-application.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/04-learning-path.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/05-faq-notes.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/06-resources.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/README.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/01-theory-framework.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/03-concepts-application.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/04-learning-path.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/05-faq-notes.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/06-resources.md`
 - 自动修复动作：
   - 删除 Mermaid 代码块空行。
   - 为中文/空格节点与 participant 别名补双引号。
@@ -131,19 +131,19 @@ sys.exit(1 if total_err else 0)"
 ### 1. 编辑器诊断
 
 - 对 5 个手工收尾文件运行诊断，结果均为 `0` 个新增问题：
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/01-theory-framework.md`
-  - `.agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/03-concepts-application.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/00-overview.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/01-seven-concepts-framework.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki/02-monkeycode-deep-analysis.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/01-theory-framework.md`
+  - `docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/03-concepts-application.md`
 
 ### 2. 目录簇复扫
 
 - 执行命令：
 
 ```bash
-python .agents/scripts/check-mermaid.py --path ".agents/docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki"
-python .agents/scripts/check-mermaid.py --path ".agents/docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki"
+python .agents/scripts/check-mermaid.py --path "docs/knowledge/learning/03-agent-platforms-tools/seven-concepts-monkeycode-vibe-coding-wiki"
+python .agents/scripts/check-mermaid.py --path "docs/knowledge/learning/06-business-trends-analysis/seven-concepts-india-manufacturing-wiki"
 ```
 
 - 复扫结果：
@@ -269,10 +269,10 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
   - `.agents/docs/retrospective/reports/`
   - `project-governance/documentation-governance` 路径
 - 盘点后优先选择 5 组高价值目标：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/`
   - `.agents/docs/retrospective/patterns/architecture-patterns/`
   - `.agents/docs/retrospective/patterns/code-patterns/`
-  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+  - `docs/knowledge/best-practices/mermaid-guide.md`
   - `.agents/docs/quality/mermaid-manual-fix-guide.md`
 - 选择理由：
   - `harness-seven-components-wiki` 仍是高复用 Agent 工程方法论文档簇，第一批只修了入口样本，剩余核心章节继续被频繁引用。
@@ -285,18 +285,18 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 
 - 扫描范围：目录内 `15` 个 Markdown 文件。
 - 自动修复覆盖文件：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/02-model-gateway.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/05-memory-system.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/06-policy-engine.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/07-observability.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/09-practice-guide.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/02-model-gateway.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/05-memory-system.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/06-policy-engine.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/07-observability.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/09-practice-guide.md`
 - 自动修复动作：
   - 删除 Mermaid 代码块空行。
   - 为中文/空格节点和边标签补双引号。
   - 将节点内容中的 `\n` 统一替换为 `<br/>`。
 - 手工收尾文件：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
 - 手工收尾动作：
   - 将 `顶层/中层/底层` 3 个裸中文 `subgraph` ID 改为 `TOP_LAYER/MIDDLE_LAYER/BOTTOM_LAYER`，并同步更新层间连接。
 
@@ -329,7 +329,7 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 ### 文档 D：`mermaid-guide.md`
 
 - 文件：
-  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+  - `docs/knowledge/best-practices/mermaid-guide.md`
 - 修复动作：
   - 将示例图中的保留字节点 `END` 改为 `FINISH`，并同步更新 `style` 语句。
 - 说明：
@@ -349,11 +349,11 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 ### 1. 编辑器诊断
 
 - 对 6 个手工收尾文件运行诊断，结果均为 `0` 个新增问题：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki/08-configuration.md`
   - `.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md`
   - `.agents/docs/retrospective/patterns/code-patterns/checklist-to-assertion-conversion.md`
   - `.agents/docs/retrospective/patterns/code-patterns/example-driven-test-generation.md`
-  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`
+  - `docs/knowledge/best-practices/mermaid-guide.md`
   - `.agents/docs/quality/mermaid-manual-fix-guide.md`
 
 ### 2. 目录簇复扫
@@ -361,7 +361,7 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 - 执行命令：
 
 ```bash
-python .agents/scripts/check-mermaid.py --path ".agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki"
+python .agents/scripts/check-mermaid.py --path "docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki"
 python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patterns/architecture-patterns"
 python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patterns/code-patterns"
 ```
@@ -375,7 +375,7 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 
 - 对无法直接通过 `--path <file>` 校验的文档，使用检查器底层 `_process_file()` 做文件级复扫。
 - 复扫结果：
-  - `.agents/docs/knowledge/best-practices/mermaid-guide.md`：`errors=0 warnings=0`
+  - `docs/knowledge/best-practices/mermaid-guide.md`：`errors=0 warnings=0`
   - `.agents/docs/quality/mermaid-manual-fix-guide.md`：`errors=0 warnings=0`
 
 ## 第四批备注
@@ -392,19 +392,19 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
   - `.agents/docs/retrospective/reports/`
   - `project-governance/documentation-governance` 路径
 - 本批目标文件：
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md`
-  - `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
-  - `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
-  - `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md`
+  - `docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
+  - `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
+  - `docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
   - `.agents/docs/patterns/pattern-comparison-implement-review-harden-vs-configurable-by-default.md`
   - `.agents/docs/retrospective/patterns/methodology-patterns/product-growth/deadline-breakpoint-first.md`
-  - `.agents/docs/knowledge/learning/CATEGORIES.md`
-  - `.agents/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
-  - `.agents/docs/knowledge/myst-unified-ecosystem/01-idl.md`
+  - `docs/knowledge/learning/CATEGORIES.md`
+  - `docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
+  - `docs/knowledge/myst-unified-ecosystem/01-idl.md`
   - `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
-  - `.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
+  - `docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
   - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md`
   - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/pre-check-duplication-layered-sedimentation.md`
   - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md`
@@ -418,34 +418,34 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
   - 中文/空格节点引号
   - `\n` 到 `<br/>`
   - 可自动识别的边标签安全写法
-- 其中 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md` 在自动修复后即已通过，不再需要手工补丁。
+- 其中 `docs/knowledge/learning/02-agent-engineering-methodology/workbuddy-four-layers-seven-concepts-analysis.md` 在自动修复后即已通过，不再需要手工补丁。
 
 ### 2. 手工收尾阶段
 
 #### A. `subgraph` 中文 ID → 英文 ID
 
-- `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
+- `docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`
   - 将 `应用层/语言抽象层/服务抽象层/本地二进制层/网络通信层/系统层` 改为英文 `subgraph` ID。
-- `.agents/docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
+- `docs/knowledge/learning/02-agent-engineering-methodology/seven-concepts-prompt-wiki/02-seven-concepts-mapping.md`
   - 将 `感知层/认知层/验证层/执行层/沉淀层` 改为英文 `subgraph` ID。
-- `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
+- `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`
   - 将两个裸中文 `subgraph` 标题改为 `META_LOOP` / `INNER_LOOP` 安全格式。
-- `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+- `docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
   - 将 `根源/原理/规则` 改为 `ROOT_CAUSE_LAYER` / `PRINCIPLE_LAYER` / `RULE_LAYER`。
-- `.agents/docs/knowledge/learning/CATEGORIES.md`
+- `docs/knowledge/learning/CATEGORIES.md`
   - 将 `核心技术层/横向能力层` 改为英文 `subgraph` ID。
-- `.agents/docs/knowledge/myst-unified-ecosystem/01-idl.md`
+- `docs/knowledge/myst-unified-ecosystem/01-idl.md`
   - 将 `痛点/方案` 改为 `PAIN_POINTS` / `SOLUTION_SPACE`。
 - `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
   - 将 `四步方法论/验证发布` 改为 `FOUR_STEP_METHOD` / `VALIDATION_RELEASE`。
 
 #### B. `end/END` 保留字节点替换
 
-- `.agents/docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
+- `docs/knowledge/learning/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md`
   - 将终止节点 `End` 改为 `BeginAnalysis`，并同时去除代码块内空行。
-- `.agents/docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
+- `docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md`
   - 将 `End` 改为 `Finish`，同步更新三处引用。
-- `.agents/docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
+- `docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md`
   - 将 `END` 改为 `FINISH`。
 - `.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/knowledge-sedimentation-workflow-sop.md`
   - 将 `End` 改为 `Complete`，并同步更新 `style` 目标。
@@ -464,7 +464,7 @@ python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patte
 
 #### D. `style` 目标同步收尾
 
-- `.agents/docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
+- `docs/knowledge/learning/douyin-vibecoding-guide-analysis.md`
   - 将 `style 根源/原理/规则` 同步改为英文 ID，消除 warning。
 - `.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/signal-identification-four-step.md`
   - 将 `style 四步方法论/验证发布` 同步改为英文 ID，消除 warning。

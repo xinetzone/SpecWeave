@@ -129,4 +129,4 @@ city in the world.
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [04 进阶能力](./04-advanced-capabilities.md) | [README](./README.md) | → [06 竞品对比与选型](./06-comparison-selection.md) |
+| ← [04 进阶能力](04-advanced-capabilities.md) | [README](README.md) | → [06 竞品对比与选型](06-comparison-selection.md) |

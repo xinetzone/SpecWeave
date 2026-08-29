@@ -2,9 +2,8 @@
 id: "atomic-emergence-log"
 title: "Atomic Emergence 变更日志"
 source: "docs/knowledge/algorithmic-art/atomic-emergence/log.md"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/log.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/log.toml"
 ---
-
 # 变更日志
 
 ## 2026-08-22

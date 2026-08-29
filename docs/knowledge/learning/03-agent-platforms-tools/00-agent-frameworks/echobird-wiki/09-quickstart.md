@@ -104,4 +104,4 @@ curl -fsSL https://echobird.ai/install.sh | sh
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [08 高级功能模块](./08-advanced-pages.md) | [README](./README.md) | → [10 对比与趋势洞察](./10-comparison-trends.md) |
+| ← [08 高级功能模块](08-advanced-pages.md) | [README](README.md) | → [10 对比与趋势洞察](10-comparison-trends.md) |

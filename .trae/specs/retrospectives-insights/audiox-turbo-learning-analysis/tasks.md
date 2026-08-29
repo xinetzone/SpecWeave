@@ -107,7 +107,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/audiox-t
   - 将所有内容整合为完整的学习wiki文档
   - 文档采用YAML frontmatter格式（title/source/date/tags）
   - 文件命名遵循kebab-case规范：audiox-turbo-audio-generation-wiki.md
-  - 保存路径：.agents/docs/knowledge/learning/（根目录docs/已废弃）
+  - 保存路径：docs/knowledge/learning/（根目录docs/已废弃）
   - 创建对应的TOML元数据文件在.meta/toml/目录
   - 验证文件实际存在且内容完整
 - **Notes**: 参考已有wiki的文档结构和格式风格；注意路径规范遵循AGENTS.md全局核心规则

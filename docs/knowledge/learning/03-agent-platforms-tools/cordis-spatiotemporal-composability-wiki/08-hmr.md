@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-08"
 title: "Cordis — 热更新 HMR"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/08-hmr.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/08-hmr.toml"
 ---
 # Cordis — 热更新 HMR
 

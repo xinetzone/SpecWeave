@@ -18,7 +18,7 @@ okf_version_target: "v0.1/v0.2"
 ---
 # 02 OKF Bundle 分发注册机制
 
-> 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [awesome-okf-kit](https://github.com/vinodborole/awesome-okf-kit)（社区 bundle 注册表）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。
+> 本页属于 [OKF 生态基建知识](README.md) 系列，聚焦 [awesome-okf-kit](https://github.com/vinodborole/awesome-okf-kit)（社区 bundle 注册表）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。
 
 ## 2.1 定位与核心思想
 
@@ -114,4 +114,4 @@ okf chat rust-book --provider ollama   # 用本地模型与知识库对话
 
 | 上一页 | 目录 | 下一页 |
 |--------|------|--------|
-| [01 生态资源图谱](./01-ecosystem-map.md) | [OKF 生态基建](./README.md) | [03 Bundle 工程化模板](./03-bundle-template.md) |
+| [01 生态资源图谱](01-ecosystem-map.md) | [OKF 生态基建](README.md) | [03 Bundle 工程化模板](03-bundle-template.md) |

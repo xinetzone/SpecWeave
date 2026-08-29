@@ -89,7 +89,7 @@ Knowledge Catalog（原Google Cloud Dataplex）是Google Cloud推出的AI驱动�
 
 - [📖 OKF开放知识格式完整指南](../okf-wiki/README.md) - Knowledge Catalog核心格式规范详解
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
-- [📚 知识库首页](../../../../README.md)
+- [📚 知识库首页](../../../../../.agents/docs/README.md)
 - [🔗 官方GitHub仓库](https://github.com/GoogleCloudPlatform/knowledge-catalog)
 - [☁️ Google Cloud Knowledge Catalog](https://cloud.google.com/products/knowledge-catalog)
 

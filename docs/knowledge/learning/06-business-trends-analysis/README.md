@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-06-business-trends-analysis-index"
 title: "商业趋势分析"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/README.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/README.toml"
 category: "knowledge"
 date: "2026-08-21"
 ---
@@ -79,7 +79,7 @@ date: "2026-08-21"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Learning Wiki 知识库](../README.md)
-- [📚 文档首页](../../../README.md)
+- [📚 文档首页](../../../../.agents/docs/README.md)
 
 ---
 

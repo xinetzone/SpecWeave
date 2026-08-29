@@ -9,7 +9,7 @@ status: "stable"
 author: "涌现与超越（原文）；SpecWeave AI（分析）"
 source: "https://mp.weixin.qq.com/s/lax4rCS72s2XBiQpjuqwyg"
 summary: "以第一性原理六步法拆解公众号文章《你以为的自由是一种幻觉》，从认知局限、知识建构、人机协作出发，提炼AI时代保持认知主体性的六条公理与行动框架。"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.toml"
 ---
 # 《你以为的自由是一种幻觉》第一性原理分析
 
@@ -232,8 +232,8 @@ AI 对齐（AI Alignment）通常指 AI 对齐人类价值观，但文章反转�
 - 第一性原理核心概念术语表：[06-concepts-glossary.md](../06-concepts-glossary.md)
 - 第一性原理在 AI 时代的应用：[14-first-principles-in-ai-era.md](../14-first-principles-in-ai-era.md)
 - 认知科学基础：[13-cognitive-science-foundations.md](../13-cognitive-science-foundations.md)
-- SpecWeave 启动协议（框架先的系统实现）：[AGENTS.md](../../../../../../../AGENTS.md)
-- 三阶段递进原则：[three-stage-universal-principle.md](../../../../../../rules/three-stage-universal-principle.md)（如存在）
+- SpecWeave 启动协议（框架先的系统实现）：[AGENTS.md](../../../../../../AGENTS.md)
+- 三阶段递进原则：[three-stage-universal-principle.md](../../../../../../.agents/rules/three-stage-universal-principle.md)（如存在）
 
 ---
 

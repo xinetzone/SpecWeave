@@ -202,4 +202,4 @@ CPython社区不是封闭的精英俱乐部，而是一个有**渗透膜**的开
 
 ## 下一步
 
-👉 [01 - 贡献者快速上手：从零开始你的第一个PR](./01-contributor-quickstart.md)
+👉 [01 - 贡献者快速上手：从零开始你的第一个PR](01-contributor-quickstart.md)

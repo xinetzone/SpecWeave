@@ -1,7 +1,7 @@
 # Tasks
 
 - [x] Task 1: 创建 Agnes Pavo 学习 wiki 教程文档主框架
-  - [x] SubTask 1.1: 在 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.1: 在 `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
   - [x] SubTask 1.2: 编写"Agnes AI 概述与核心数据"章节，阐述免费策略、3周增长历程（1万亿→5万亿Token）、三项核心数据（567万张图/周、237万秒视频/周）、免费策略对创作者/开发者的撬动效应
 
 - [x] Task 2: 编写 Pavo 平台定位与四大核心模块章节
@@ -48,7 +48,7 @@
   - [x] SubTask 10.1: 汇总所有相关资源链接为 Markdown 标准格式：①原文链接②Agnes官网（agnes-ai.com）③Pavo平台（https://app.pavo-ai.work/）④API Platform（platform.agnes-ai.com）⑤开发者文档（agnes-ai.com/doc）⑥GitHub Issues看板⑦GitHub Projects看板
 
 - [x] Task 11: 确认文档分类目录位置
-  - [x] SubTask 11.1: 确认文档放置在正确分类目录 `.agents/docs/knowledge/learning/05-ai-multimodal-content/` 下（多模态内容分类）
+  - [x] SubTask 11.1: 确认文档放置在正确分类目录 `docs/knowledge/learning/05-ai-multimodal-content/` 下（多模态内容分类）
   - [x] SubTask 11.2: 确认同目录下存在 `libtv-ai-shortdrama-wiki.md` 等同类型竞品文档，便于横向对比
   - [x] SubTask 11.3: 标注：知识库索引通过 `scripts/generate_index.py` 自动生成，需运行该脚本更新入口索引
 
@@ -75,7 +75,7 @@
 - Task 13 依赖 Task 12 完成（复盘在任务完成后执行）
 
 # 完成统计
-- 文档实际位置：`.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
+- 文档实际位置：`docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
 - 文档字数：约 8465 字（不含空白字符）
 - 章节数量：11 个（一至十一）
 - FAQ 数量：8 个（Q1-Q8）

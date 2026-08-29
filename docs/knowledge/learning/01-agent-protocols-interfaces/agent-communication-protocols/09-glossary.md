@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#09-术语表"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/09-glossary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/09-glossary.toml"
 id: "glossary"
 title: "09、术语表"
 ---
@@ -29,7 +29,7 @@ title: "09、术语表"
 
 **详细说明**：面向跨组织、跨厂商、跨公网场景设计，采用HTTP+JSON-RPC 2.0，强制HTTPS和OAuth 2.1，支持有状态Task模型、SSE流式进度、Webhook回调，目前已有150+厂商支持。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### ACP (Agent Communication Protocol)（Agent通信协议）
 
@@ -39,7 +39,7 @@ title: "09、术语表"
 
 **详细说明**：面向本地/边缘/气隙环境设计，采用REST API，零SDK依赖，支持mDNS零配置发现、gRPC/ZeroMQ/IPC多种低延迟传输，无需外部服务器即可运行。
 
-**参考章节**：[02、ACP - Agent通信协议](./02-acp.md)
+**参考章节**：[02、ACP - Agent通信协议](02-acp.md)
 
 ### Agent Card（Agent名片）
 
@@ -49,7 +49,7 @@ title: "09、术语表"
 
 **详细说明**：通常以JSON格式存在，通过Well-Known URI（A2A）或mDNS广播（ACP）发布，包含Agent名称、描述、能力列表、服务端点URL、支持的认证方式等信息，是Agent发现和互操作的基础。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### ANP (Agent Network Protocol)（Agent网络协议）
 
@@ -59,7 +59,7 @@ title: "09、术语表"
 
 **详细说明**：基于W3C DID/VC标准，采用JSON-LD语义数据格式，解决去中心化发现、自主身份、可验证信任、智能合约支付等问题，目前仍处于早期探索阶段。
 
-**参考章节**：[04、ANP - Agent网络协议](./04-anp.md)
+**参考章节**：[04、ANP - Agent网络协议](04-anp.md)
 
 ### Artifact（工件）
 
@@ -69,7 +69,7 @@ title: "09、术语表"
 
 **详细说明**：可以是文本、文件、结构化数据等多种形式，作为Task执行结果的一部分返回给请求方，包含Artifact名称、描述、MIME类型和实际内容。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### Client-Server Architecture（客户端-服务器架构）
 
@@ -79,7 +79,7 @@ title: "09、术语表"
 
 **详细说明**：一方作为Server暴露能力（MCP Server暴露工具/资源/提示，A2A Server暴露Agent服务），另一方作为Client调用这些能力，通信通过明确定义的请求-响应模式进行。
 
-**参考章节**：[05、协议对比与选型指南](./05-comparison.md)
+**参考章节**：[05、协议对比与选型指南](05-comparison.md)
 
 ### DID (Decentralized Identifier，去中心化标识符)
 
@@ -89,7 +89,7 @@ title: "09、术语表"
 
 **详细说明**：一种新型的可验证、去中心化数字标识符，由Agent自己生成和控制，无需在中心化平台注册，配合DID Document和可验证凭证实现自主身份和信任验证。
 
-**参考章节**：[04、ANP - Agent网络协议](./04-anp.md)
+**参考章节**：[04、ANP - Agent网络协议](04-anp.md)
 
 ### Human-in-the-loop（人在回路）
 
@@ -99,7 +99,7 @@ title: "09、术语表"
 
 **详细说明**：在A2A中通过Task的`input-required`状态实现，当Agent执行到需要人工确认、审批或补充信息的节点时暂停任务，等待人类输入后继续执行，是企业级工作流中的常见模式。
 
-**参考章节**：[08、典型应用场景](./08-scenarios.md)
+**参考章节**：[08、典型应用场景](08-scenarios.md)
 
 ### JSON-LD（JSON for Linking Data）
 
@@ -109,7 +109,7 @@ title: "09、术语表"
 
 **详细说明**：通过`@context`字段为JSON数据添加语义上下文，使不同系统能够理解数据的含义而不仅仅是结构，是语义网和去中心化应用中实现数据互操作的关键技术。
 
-**参考章节**：[04、ANP - Agent网络协议](./04-anp.md)
+**参考章节**：[04、ANP - Agent网络协议](04-anp.md)
 
 ### JSON-RPC 2.0
 
@@ -119,7 +119,7 @@ title: "09、术语表"
 
 **详细说明**：基于JSON格式的无状态RPC协议，定义了请求、响应、通知三种消息类型，简单轻量易于实现，MCP和A2A都使用它作为基础消息格式。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### Long-running Task（长时任务）
 
@@ -129,7 +129,7 @@ title: "09、术语表"
 
 **详细说明**：A2A通过有状态Task模型原生支持长时任务，任务状态持久化，支持SSE实时推送进度、Webhook异步通知状态变更、任务中断后恢复，解决了HTTP短连接无法处理长任务的问题。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### MCP (Model Context Protocol)（模型上下文协议）
 
@@ -139,7 +139,7 @@ title: "09、术语表"
 
 **详细说明**：被称为"AI的USB-C接口"，解决Agent如何标准化连接外部工具、数据源和系统的纵向连接问题，定义了Tool、Resource、Prompt三种原语，支持stdio和HTTP多种传输方式。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### mDNS (multicast DNS)
 
@@ -149,7 +149,7 @@ title: "09、术语表"
 
 **详细说明**：在本地网络中通过组播广播实现服务的自动发现，无需DNS服务器，类似AirPrint发现打印机，ACP用它实现本地Agent的零配置发现，开机即用。
 
-**参考章节**：[02、ACP - Agent通信协议](./02-acp.md)
+**参考章节**：[02、ACP - Agent通信协议](02-acp.md)
 
 ### Message（消息）
 
@@ -159,7 +159,7 @@ title: "09、术语表"
 
 **详细说明**：包含role（user/assistant/system等）和多个Part，承载Agent间交换的所有信息，可以是对话消息、指令、响应或事件通知。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### MIME (Multipurpose Internet Mail Extensions)
 
@@ -169,7 +169,7 @@ title: "09、术语表"
 
 **详细说明**：最初为电子邮件设计，现已成为互联网内容类型标识的通用标准（如`text/plain`、`application/json`、`image/png`），协议使用它进行内容协商和类型标识，确保接收方正确解析内容。
 
-**参考章节**：[02、ACP - Agent通信协议](./02-acp.md)
+**参考章节**：[02、ACP - Agent通信协议](02-acp.md)
 
 ### OAuth 2.1
 
@@ -179,7 +179,7 @@ title: "09、术语表"
 
 **详细说明**：OAuth 2.0的整合优化版本，简化并统一了最佳实践，MCP 2025-06规范强制要求使用，A2A推荐使用，提供安全的授权和Token机制，解决Agent访问受保护资源的身份验证问题。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### OpenAPI
 
@@ -189,7 +189,7 @@ title: "09、术语表"
 
 **详细说明**：原名Swagger，是REST API的机器可读描述格式，ACP使用OpenAPI定义Agent接口，支持自动生成文档、客户端SDK、测试用例，零SDK依赖即可快速集成。
 
-**参考章节**：[02、ACP - Agent通信协议](./02-acp.md)
+**参考章节**：[02、ACP - Agent通信协议](02-acp.md)
 
 ### P2P (Peer-to-Peer，对等网络)
 
@@ -199,7 +199,7 @@ title: "09、术语表"
 
 **详细说明**：通信双方地位平等，没有客户端/服务器的明确区分，每个节点既是服务提供者也是服务消费者，支持直接点对点通信，无需中心化服务器中转，容错性高。
 
-**参考章节**：[02、ACP - Agent通信协议](./02-acp.md)
+**参考章节**：[02、ACP - Agent通信协议](02-acp.md)
 
 ### Part（消息片段）
 
@@ -209,7 +209,7 @@ title: "09、术语表"
 
 **详细说明**：分TextPart（文本）、FilePart（文件）、DataPart（结构化数据）三种类型，一个Message可以包含多个不同类型的Part，支持在一条消息中混合传递文本、文件和结构化数据。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### Prompt（提示模板）
 
@@ -219,7 +219,7 @@ title: "09、术语表"
 
 **详细说明**：由MCP Server提供的可复用提示词模板，包含参数占位符，Agent可以发现并调用这些模板，减少重复编写提示词的工作，常用于特定任务的标准化提示。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### Resource（资源）
 
@@ -229,7 +229,7 @@ title: "09、术语表"
 
 **详细说明**：通过URI唯一标识的可读取数据源，如文件、数据库记录、API响应等，Agent可以按需读取，支持分页和范围读取，避免一次性加载过多数据，是MCP管理上下文的重要机制。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### SDK (Software Development Kit)
 
@@ -239,7 +239,7 @@ title: "09、术语表"
 
 **详细说明**：为特定协议提供的封装库，包含API封装、类型定义、常用工具、示例代码等，帮助开发者快速接入协议。ACP刻意采用零SDK设计，原生HTTP即可使用；MCP和A2A提供全语言官方SDK。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### SSE (Server-Sent Events)
 
@@ -249,7 +249,7 @@ title: "09、术语表"
 
 **详细说明**：基于HTTP的服务器向客户端单向推送技术，建立一次HTTP连接后服务器可以持续向客户端发送事件，用于实时推送任务进度、工具输出流、状态更新等，比轮询高效。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### State Machine（状态机）
 
@@ -259,7 +259,7 @@ title: "09、术语表"
 
 **详细说明**：Task从submitted（已提交）→working（执行中）→completed（已完成）/failed（失败）/canceled（已取消），中间可以进入input-required（需要人工输入），定义清晰的状态转换规则，确保长时任务可跟踪、可恢复。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### stdio（Standard Input/Output）
 
@@ -269,7 +269,7 @@ title: "09、术语表"
 
 **详细说明**：MCP Server作为子进程启动，通过标准输入（stdin）接收请求，通过标准输出（stdout）返回响应，是本地进程间通信最快的方式，延迟可低至亚毫秒级，是IDE中MCP的首选传输方式。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### Streamable HTTP
 
@@ -279,7 +279,7 @@ title: "09、术语表"
 
 **详细说明**：MCP对HTTP传输的升级，支持在HTTP连接上进行双向流式通信，兼容SSE，可穿越防火墙和负载均衡，解决了传统HTTP请求-响应模式无法支持流式交互的问题。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### Task（任务）
 
@@ -289,7 +289,7 @@ title: "09、术语表"
 
 **详细说明**：A2A的核心概念，代表一个需要执行的工作单元，有唯一ID、状态、历史消息、产出Artifact，贯穿从提交到完成的整个生命周期，支持长时运行、进度跟踪、人工介入、状态查询。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### Tool（工具）
 
@@ -299,7 +299,7 @@ title: "09、术语表"
 
 **详细说明**：MCP Server暴露给Agent调用的可执行能力，如文件读写、API调用、数据库查询、终端执行等，每个Tool有明确的参数Schema和返回值定义，Agent通过tools/list发现，通过tools/call调用。
 
-**参考章节**：[01、MCP - 模型上下文协议](./01-mcp.md)
+**参考章节**：[01、MCP - 模型上下文协议](01-mcp.md)
 
 ### VC (Verifiable Credential，可验证凭证)
 
@@ -309,7 +309,7 @@ title: "09、术语表"
 
 **详细说明**：由可信任第三方签发的、密码学可验证的数字凭证，如Agent能力认证、厂商资质、声誉评价等，不可伪造、可验证、可选择性披露，是ANP去中心化信任体系的核心组件。
 
-**参考章节**：[04、ANP - Agent网络协议](./04-anp.md)
+**参考章节**：[04、ANP - Agent网络协议](04-anp.md)
 
 ### Webhook
 
@@ -319,7 +319,7 @@ title: "09、术语表"
 
 **详细说明**：Agent预先注册一个回调URL，当任务状态发生变化时（如完成、失败、需要输入），A2A Server主动向该URL发送HTTP POST通知，无需客户端轮询，是异步任务通知的常用方式。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ### Well-Known URI
 
@@ -329,7 +329,7 @@ title: "09、术语表"
 
 **详细说明**：RFC 8615定义的标准路径前缀，用于在域名根路径下发布标准化元数据。A2A规定Agent Card必须发布在`/.well-known/agent.json`，Agent只需知道对方的域名即可发现其Agent Card。
 
-**参考章节**：[03、A2A - Agent间通信协议](./03-a2a.md)
+**参考章节**：[03、A2A - Agent间通信协议](03-a2a.md)
 
 ---
 
@@ -338,5 +338,5 @@ title: "09、术语表"
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [08、典型应用场景](./08-scenarios.md) |
-| **下一章** | [10、参考资源与延伸阅读](./10-resources.md) |
+| 上一章 | [08、典型应用场景](08-scenarios.md) |
+| **下一章** | [10、参考资源与延伸阅读](10-resources.md) |

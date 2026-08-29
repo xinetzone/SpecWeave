@@ -94,4 +94,4 @@ Zleap-Agent 采用 pnpm workspace 的 monorepo 布局，所有业务代码集中
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [00 项目概述与核心定位](./00-overview.md) | [README](./README.md) | → [02 Workspace 隔离与上下文组装](./02-workspace-context.md) |
+| ← [00 项目概述与核心定位](00-overview.md) | [README](README.md) | → [02 Workspace 隔离与上下文组装](02-workspace-context.md) |

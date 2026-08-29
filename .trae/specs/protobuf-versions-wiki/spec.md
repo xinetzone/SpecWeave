@@ -26,8 +26,8 @@ version: "1.0"
 
 ## Background & Context
 - **现有知识资产**:
-  - [idl-wiki/04-major-idl-specs.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md) 中有 protobuf 简要介绍（约40行）
-  - [caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md](../../../.agents/docs/knowledge/learning/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) 中有 proto2/proto3 详细对比（七概念方法论产出）
+  - [idl-wiki/04-major-idl-specs.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.md) 中有 protobuf 简要介绍（约40行）
+  - [caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md](../../../docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) 中有 proto2/proto3 详细对比（七概念方法论产出）
   - Caffe 项目（external/chaos/caffe）使用 proto2 作为配置 DSL，是典型的 proto2 遗留系统实例
 - **技术背景**:
   - Protobuf 经历了：Google 内部原型（2001）→ 开源 proto2（2008）→ proto3（2016，随 gRPC 推广）→ Editions（2022 提出，2023/2024 正式发布）四个主要阶段
@@ -70,7 +70,7 @@ version: "1.0"
 - **Technical**:
   - 文档格式为 Markdown，遵循项目现有 frontmatter 规范（YAML frontmatter，含 id、title、date、tags、source 等字段）
   - 文件链接使用 `file:///` 绝对路径格式（与 idl-wiki、caffe-architecture-wiki 现有风格保持一致）
-  - 输出目录：`.agents/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
+  - 输出目录：`docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/`
 - **Dependencies**:
   - protobuf 官方文档（protobuf.dev）作为主要信息来源
   - 现有 caffe-architecture-wiki 中的 proto2/proto3 分析作为事实基础

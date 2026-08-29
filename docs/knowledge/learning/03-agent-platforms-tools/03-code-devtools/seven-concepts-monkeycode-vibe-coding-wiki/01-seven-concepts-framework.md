@@ -329,4 +329,4 @@ MonkeyCode是一款AI驱动的Vibe Coding编程工具，它通过自然语言交
 
 本章介绍了七概念方法论的整体框架。下一章我们将应用这个框架对MonkeyCode进行深度分析：
 
-→ [第二章 - MonkeyCode深度分析](./02-monkeycode-deep-analysis.md)
+→ [第二章 - MonkeyCode深度分析](02-monkeycode-deep-analysis.md)

@@ -6,7 +6,7 @@ version: "1.0"
 
 ## Why
 
-Mermaid 是 SpecWeave 项目首选的图表可视化工具（见 AGENTS.md 全局规则），但当前知识库中只有项目内部的 [mermaid-guide.md](../../../.agents/docs/knowledge/best-practices/mermaid-guide.md)（操作手册，偏"怎么做"），缺少一套基于 Mermaid 官方权威文档（[mermaid.ai/docs](https://mermaid.ai/docs)）与在线编辑器（[mermaid.live](https://mermaid.live/edit)）的系统性学习 wiki，覆盖"图表类型全览、语法、配置、主题、集成"等完整知识层。
+Mermaid 是 SpecWeave 项目首选的图表可视化工具（见 AGENTS.md 全局规则），但当前知识库中只有项目内部的 [mermaid-guide.md](../../../docs/knowledge/best-practices/mermaid-guide.md)（操作手册，偏"怎么做"），缺少一套基于 Mermaid 官方权威文档（[mermaid.ai/docs](https://mermaid.ai/docs)）与在线编辑器（[mermaid.live](https://mermaid.live/edit)）的系统性学习 wiki，覆盖"图表类型全览、语法、配置、主题、集成"等完整知识层。
 
 本教程旨在系统学习官方文档与在线编辑器，沉淀结构化、可检索、可复现的 wiki 教程，填补知识库在"Mermaid 全景知识"这一领域的空白，与现有操作指南形成互补（操作指南讲项目内规范，本教程讲 Mermaid 本体能力）。
 
@@ -34,7 +34,7 @@ Mermaid 是 SpecWeave 项目首选的图表可视化工具（见 AGENTS.md 全�
 - **Affected files**:
   - 新增：`docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/00-overview.md` ~ `10-cheatsheet.md` 共 11 个文件 + `README.md`
   - 更新：`04-docs-markup-tooling/README.md`（追加子目录导航条目）
-- **Related wikis**: 关联现有 [mermaid-guide.md](../../../.agents/docs/knowledge/best-practices/mermaid-guide.md)（本项目操作指南）与 `mermaid-cmd` 指令集
+- **Related wikis**: 关联现有 [mermaid-guide.md](../../../docs/knowledge/best-practices/mermaid-guide.md)（本项目操作指南）与 `mermaid-cmd` 指令集
 
 ## Background & Context
 

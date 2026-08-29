@@ -16,7 +16,7 @@
 
 ## 2026-08-23
 
-- 原子化迁移：从 `docs/knowledge/learning/three-ai-tools-learning-wiki/` 迁移至 `.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
+- 原子化迁移：从 `docs/knowledge/learning/three-ai-tools-learning-wiki/` 迁移至 `docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
 - 扁平化目录结构：移除 `concepts/`、`references/` 子目录，所有内容文件置于 wiki 根目录
 - 文件重命名：
   - `index.md` → `00-overview.md`
@@ -25,6 +25,6 @@
   - `references/seven-concepts-report.md` → `03-seven-concepts-report.md`
 - 合并节索引文件（`concepts/index.md`、`references/index.md`）至 `README.md`
 - 统一 frontmatter：添加 `id`（格式 `three-ai-tools-wiki-NN`）、`x-toml-ref`（6 级 `../` 深度）、`source`（原文 URL）
-- 生成 TOML 元数据文件至 `.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
+- 生成 TOML 元数据文件至 `.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
 - 修复内部链接：bundle-relative 绝对路径改为同目录扁平链接
 - 旧单文件 `three-ai-tools-wiki.md` 更新为重定向，指向新 wiki 目录

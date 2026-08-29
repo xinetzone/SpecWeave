@@ -10,7 +10,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 创建目标目录 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`
+  - 创建目标目录 `docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`
   - 编写 `00-overview.md`，包含评测体系四层结构（战略层→方法论层→执行层→基础设施层）Mermaid概念层次图、11章导航表、目标读者说明、三档阅读路径、与项目内相关wiki的关联指引
   - 添加完整YAML frontmatter
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-13, AC-14
@@ -182,7 +182,7 @@
 - **Depends On**: Task 11
 - **Description**: 
   - 创建 `README.md` 目录索引文件，包含文档索引表、教程核心价值、相关资源链接
-  - 更新上级目录 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/README.md`，新增agent-evaluation-wiki索引条目（从9个专题变为10个专题）
+  - 更新上级目录 `docs/knowledge/learning/02-agent-engineering-methodology/README.md`，新增agent-evaluation-wiki索引条目（从9个专题变为10个专题）
   - 确保wiki可被项目其他部分发现
 - **Acceptance Criteria Addressed**: AC-2
 - **Test Requirements**:

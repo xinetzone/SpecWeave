@@ -63,7 +63,7 @@
 ## [x] ACT-04: 扩展分析章节增加💡知识拓展标记
 
 - **完成情况**:
-  - ✅ 在[06-crossmodal-paradigm.md](../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)添加4处💡标记+章节开头📌说明
+  - ✅ 在[06-crossmodal-paradigm.md](../../../docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/06-crossmodal-paradigm.md)添加4处💡标记+章节开头📌说明
   - ✅ 修复重复标题问题
 - **Acceptance Criteria**: ✅
 

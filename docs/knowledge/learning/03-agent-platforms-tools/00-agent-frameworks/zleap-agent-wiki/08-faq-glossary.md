@@ -75,4 +75,4 @@ Skill 是可复用能力包，通常以 `SKILL.md` 为入口。Web UI 提供 `sk
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [07 快速上手指南](./07-quickstart.md) | [README](./README.md) | → 这是教程最后一章 |
+| ← [07 快速上手指南](07-quickstart.md) | [README](README.md) | → 这是教程最后一章 |

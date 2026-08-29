@@ -28,7 +28,7 @@ status: "blocked"
 | 全仓复验 | `python .agents/scripts/repo-check.py all` | 失败；Mermaid 子项报 `70` 个问题文件、`725` 个错误、`166` 个警告 | 未达到“只剩已决策历史/生成债务” |
 | Git 忽略规则 | `python .agents/scripts/repo-check.py gitignore` | 通过 | 非 Mermaid 子项正常 |
 | vendor 合规 | `python .agents/scripts/repo-check.py vendor` | 通过 | 非 Mermaid 子项正常 |
-| 高价值目录簇抽样 A | `python .agents/scripts/check-mermaid.py --path ".agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki"` | `15` 文件，`0` 错误，`0` 警告 | `SubTask 8.9` 已治理目录保持稳定 |
+| 高价值目录簇抽样 A | `python .agents/scripts/check-mermaid.py --path "docs/knowledge/learning/02-agent-engineering-methodology/harness-seven-components-wiki"` | `15` 文件，`0` 错误，`0` 警告 | `SubTask 8.9` 已治理目录保持稳定 |
 | 高价值目录簇抽样 B | `python .agents/scripts/check-mermaid.py --path ".agents/docs/retrospective/patterns/methodology-patterns/governance-strategy"` | `109` 文件，`0` 错误，`0` 警告 | `SubTask 8.9` 已治理目录保持稳定 |
 | 迁移专项链接/frontmatter 复验 | `python .agents/scripts/check-links.py --path .agents/docs --check-frontmatter-paths` | 通过；本地断链 `0`、frontmatter 路径问题 `0`、目录链接 warning `0` | 迁移专项自动化门禁已恢复通过 |
 | 基线覆盖复验 | 读取 `docs-baseline-manifest.json` 并重算 `.agents/docs` 当前文件集合 | 基线 `2683` 文件 `0 missing`；当前文件 `2708`；新增文件 `25` | 物理迁移覆盖仍成立，但新增文件未稳定收敛 |

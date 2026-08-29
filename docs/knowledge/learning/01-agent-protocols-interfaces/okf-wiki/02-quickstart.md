@@ -85,8 +85,8 @@ cat config.json
 
 ## Notes
 - 命令在沙箱中执行，有文件系统权限限制
-- 大文件读取请使用 [文件读取工具](./file-read.md)
-- 网页交互请使用 [浏览器自动化工具](./browser.md)
+- 大文件读取请使用 [文件读取工具](file-read.md)
+- 网页交互请使用 [浏览器自动化工具](browser.md)
 ````
 
 ### Step 3: 第二个Concept - 浏览器工具
@@ -128,8 +128,8 @@ tags: [web, browser, automation, playwright]
 - 提取动态加载数据时
 
 ## Notes
-- 下载文件后，使用 [文件读取工具](./file-read.md) 读取
-- 批量静态抓取可配合curl通过 [Bash工具](./bash.md) 执行
+- 下载文件后，使用 [文件读取工具](file-read.md) 读取
+- 批量静态抓取可配合curl通过 [Bash工具](bash.md) 执行
 - 默认使用无头模式
 ````
 
@@ -174,7 +174,7 @@ tags: [file, io, read, filesystem]
 - 沙箱外路径受权限限制
 
 ## Notes
-- 需要修改文件时，配合 [Bash工具](./bash.md) 使用Edit/Write
+- 需要修改文件时，配合 [Bash工具](bash.md) 使用Edit/Write
 - 使用Glob先定位路径，避免猜测
 - 大文件用offset/limit分段，避免token溢出
 ```
@@ -189,9 +189,9 @@ index.md**没有frontmatter**，直接是内容：
 这个Bundle描述了AI Agent常用的三个核心工具。
 
 ## 核心工具
-* [Bash命令执行](./bash.md) - 执行shell命令，系统操作和脚本运行
-* [浏览器自动化](./browser.md) - 网页导航、交互、截图、数据提取
-* [文件读取](./file-read.md) - 读取本地文件内容，支持多种格式
+* [Bash命令执行](bash.md) - 执行shell命令，系统操作和脚本运行
+* [浏览器自动化](browser.md) - 网页导航、交互、截图、数据提取
+* [文件读取](file-read.md) - 读取本地文件内容，支持多种格式
 ```
 
 index是Bundle的目录表，人和Agent都从这里开始浏览。
@@ -205,9 +205,9 @@ log.md也没有frontmatter，按ISO日期倒序记录变更：
 
 ## 2026-08-05
 * **创建**: 初始Bundle，包含三个核心Agent工具
-* **创建**: 添加[Bash工具](./bash.md)文档与示例
-* **创建**: 添加[浏览器工具](./browser.md)文档与注意事项
-* **创建**: 添加[文件读取工具](./file-read.md)文档与最佳实践
+* **创建**: 添加[Bash工具](bash.md)文档与示例
+* **创建**: 添加[浏览器工具](browser.md)文档与注意事项
+* **创建**: 添加[文件读取工具](file-read.md)文档与最佳实践
 ```
 
 ## 2.3 快速验证：三规则检查清单
@@ -246,4 +246,4 @@ log.md也没有frontmatter，按ISO日期倒序记录变更：
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [01 核心概念与设计哲学](./01-core-concepts.md) | [README](./README.md) | [03 使用模式与最佳实践](./03-usage-patterns.md) |
+| [01 核心概念与设计哲学](01-core-concepts.md) | [README](README.md) | [03 使用模式与最佳实践](03-usage-patterns.md) |

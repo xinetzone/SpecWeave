@@ -669,6 +669,6 @@ journalctl --vacuum-size=500M
 
 ## 继续阅读
 
-上一章：[第三章 - 实践操作指南](./03-practice-guide.md)
+上一章：[第三章 - 实践操作指南](03-practice-guide.md)
 
-下一章：[第五章 - 资源与参考](./05-resources.md)
+下一章：[第五章 - 资源与参考](05-resources.md)

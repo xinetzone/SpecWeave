@@ -10,7 +10,7 @@
   - 添加官网链接开头引用
 - **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-10]
 - **Test Requirements**:
-  - `programmatic` TR-1.1: 文件存在于正确路径.agents/docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.md ✅
+  - `programmatic` TR-1.1: 文件存在于正确路径docs/knowledge/learning/03-agent-platforms-tools/browseract-official-wiki.md ✅
   - `programmatic` TR-1.2: YAML frontmatter包含所有必填字段 ✅
   - `human-judgement` TR-1.3: 目录导航结构完整，所有章节链接可跳转 ✅
   - `programmatic` TR-1.4: 包含官网URL引用 ✅
@@ -150,7 +150,7 @@
 - **Priority**: high
 - **Depends On**: Task 9
 - **Description**: 
-  - 在.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md的根级文档索引表格中新增BrowserAct官网教程条目
+  - 在docs/knowledge/learning/03-agent-platforms-tools/README.md的根级文档索引表格中新增BrowserAct官网教程条目
   - 条目包含：标题、摘要、核心价值
   - 遵循现有索引格式，保持表格结构一致
   - 摘要突出官网版特色（Cloud+Local双模式、SkillHub、Data API、集成生态）
@@ -161,4 +161,4 @@
   - `human-judgement` TR-10.2: 摘要准确概括官网版教程内容 ✅
   - `human-judgement` TR-10.3: 标签设置合理 ✅
   - `programmatic` TR-10.4: 表格格式保持一致 ✅
-- **Notes**: 路径修正为.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md（项目实际知识库位置）
+- **Notes**: 路径修正为docs/knowledge/learning/03-agent-platforms-tools/README.md（项目实际知识库位置）

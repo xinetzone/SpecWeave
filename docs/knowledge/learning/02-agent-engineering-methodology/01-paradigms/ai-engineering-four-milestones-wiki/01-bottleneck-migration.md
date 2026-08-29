@@ -2,7 +2,7 @@
 id: "ai-engineering-four-milestones-wiki-01"
 title: "瓶颈外移：AI工程演进的主线规律"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/01-bottleneck-migration.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/01-bottleneck-migration.toml"
 ---
 # 瓶颈外移：AI工程演进的主线规律
 

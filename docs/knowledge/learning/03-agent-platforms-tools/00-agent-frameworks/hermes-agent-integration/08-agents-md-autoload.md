@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-08-agents-md-autoload"
 title: "08 AGENTS.md 与 .agents/ 的自动加载机制"
 source: "hermes-agent 官方 Context Files 文档 + prompt_builder.py + subdirectory_hints.py + issue #14471/#502"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/08-agents-md-autoload.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/08-agents-md-autoload.toml"
 type: "Wiki Tutorial"
 description: "Hermes 如何自动加载 AGENTS.md 与 .agents/：原生单文件约定、渐进式发现、优先级、安全扫描，以及让 .agents/ 规范库被加载的方法"
 status: "stable"
@@ -39,7 +39,7 @@ Hermes 的上下文文件机制只认**单个 markdown 文件**（AGENTS.md / CL
 **优先级系统**：每会话仅加载**一种**项目上下文类型，首个匹配胜出：
 `.hermes.md` → `AGENTS.md` → `CLAUDE.md` → `.cursorrules`。`SOUL.md` 始终独立加载，作为 Agent 身份。
 
-> SpecWeave 根目录已有完整 [AGENTS.md](../../../../../../../AGENTS.md)，Hermes 会自动将其注入系统提示 ✅
+> SpecWeave 根目录已有完整 [AGENTS.md](../../../../../../AGENTS.md)，Hermes 会自动将其注入系统提示 ✅
 
 ## 8.3 AGENTS.md 的两种加载机制
 
@@ -125,7 +125,7 @@ tools:
 
 ### 方法三：OKF 记忆层挂载 — 知识库检索
 
-把 `.agents/docs/knowledge/` 的知识库转换为 **OKF bundle**，作为 Hermes Memory Provider 挂接，使其成为可检索、跨会话持久化的记忆层。参考 [03 配置文件](03-configuration.md) 与 [04 数据格式转换](04-data-conversion.md) 的 OKF 部分。
+把 `docs/knowledge/` 的知识库转换为 **OKF bundle**，作为 Hermes Memory Provider 挂接，使其成为可检索、跨会话持久化的记忆层。参考 [03 配置文件](03-configuration.md) 与 [04 数据格式转换](04-data-conversion.md) 的 OKF 部分。
 
 > **三条路径可并行**：AGENTS.md 路由保证"知道规范在哪"，插件保证"高频能力可调用"，OKF 保证"知识可检索"。
 
@@ -153,10 +153,10 @@ tools:
 - [01 插件接口规范](01-hermes-plugin-interface.md) — 方法二依赖
 - [03 配置文件](03-configuration.md) — 方法三依赖
 - [04 数据格式转换](04-data-conversion.md) — 方法二/三依赖
-- [SpecWeave AGENTS.md](../../../../../../../AGENTS.md) — 启动协议与路由表
+- [SpecWeave AGENTS.md](../../../../../../AGENTS.md) — 启动协议与路由表
 
 ---
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [07 常见问题](07-troubleshooting.md) | [README](./README.md) | （无，末章） |
+| [07 常见问题](07-troubleshooting.md) | [README](README.md) | （无，末章） |

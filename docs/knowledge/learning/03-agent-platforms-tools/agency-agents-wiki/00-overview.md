@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-00"
 title: "The Agency 完全指南 — 概述"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/00-overview.toml"
 ---
 # The Agency 完全指南 — 概述
 

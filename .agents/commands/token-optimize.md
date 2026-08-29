@@ -71,7 +71,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
 ### S0：启动与P0禁令预检
 
 - 确认operation类型和优化目标
-- **强制执行P0禁令检查**（参考[09-constraints.md](../docs/knowledge/learning/llm-token-optimization/09-constraints.md)）：
+- **强制执行P0禁令检查**（参考[09-constraints.md](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.md)）：
   - C-001：确认质量底线，禁止牺牲不可接受质量
   - C-003：检查是否已有可观测性基线，无基线先建监控
   - C-024：检查是否有黄金测试集，无基线先建质量基线
@@ -81,21 +81,21 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
 
 ### S1：现状审计与浪费点识别
 
-- 查阅[快速参考卡](../docs/knowledge/learning/llm-token-optimization/10-quick-reference.md)了解核心数据
+- 查阅[快速参考卡](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md)了解核心数据
 - 根据operation类型执行：
   - **audit**：分析Token使用分布，识别Top 5浪费点
   - **design/review**：收集现有系统Prompt结构、缓存策略、上下文管理方式
   - **quickwin**：直接识别5项P0速赢项
   - **roadmap**：评估当前成熟度阶段
   - **evaluate**：收集优化前后指标数据
-- 参考[决策树](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/01-decision-tree.md)选择优化路径
+- 参考[决策树](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.md)选择优化路径
 - 记录CMD-LOG: AUDIT_COMPLETED
 
 ### S2：方案设计与技术选型
 
 - 根据审计结果选择三大路径实施顺序：**减少(Reduce) → 复用(Reuse) → 压缩(Compress)**
-- 参考[选型矩阵](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/02-selection-matrix.md)选择技术组合
-- 参考[最佳实践模式](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/03-patterns.md)选择适用模式（P-001~P-005）：
+- 参考[选型矩阵](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.md)选择技术组合
+- 参考[最佳实践模式](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.md)选择适用模式（P-001~P-005）：
   - **P-001 渐进式优化**：所有场景必选，按四阶段路线图推进
   - **P-002 分层缓存**：高流量系统必选（静态前缀→语义→会话三层）
   - **P-003 质量-成本动态平衡**：多用户层级/多任务复杂度场景必选
@@ -117,7 +117,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
   - 灰度发布与回退策略
 - **review模式**：输出评审报告：
   - P0-P2禁令逐条检查结果
-  - 识别反模式（参考[反模式清单](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/04-anti-patterns.md)）
+  - 识别反模式（参考[反模式清单](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/04-anti-patterns.md)）
   - 风险等级评估（🔴阻断/🟡需改进/🟢通过）
   - 改进建议
 - **quickwin模式**：输出5项P0速赢操作步骤：
@@ -126,7 +126,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
   3. 重构Prompt静态前缀排序
   4. 精简系统提示冗余修饰
   5. 接入可观测性监控
-- **roadmap模式**：输出四阶段路线图（参考[快速参考卡](../docs/knowledge/learning/llm-token-optimization/10-quick-reference.md)四阶段表）
+- **roadmap模式**：输出四阶段路线图（参考[快速参考卡](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md)四阶段表）
 - **evaluate模式**：输出效果评估报告
 - 记录CMD-LOG: GUIDANCE_PROVIDED
 
@@ -151,7 +151,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
   - 黄金测试集定期回归
   - 缓存命中率监控
   - 优化反弹预警
-- 提醒参考[跨行业案例](../docs/knowledge/learning/llm-token-optimization/04-cases/01-case-studies.md)设定期望值
+- 提醒参考[跨行业案例](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.md)设定期望值
 - 记录CMD-LOG: CMD_COMPLETE
 
 **三大路径决策树**：
@@ -192,7 +192,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
 - 所有涉及上线的方案包含灰度发布和自动回退策略
 - Quick Wins项1-2周可落地，预期降本30-50%
 - 渐进式路线图四阶段完整，不跳步（C-004）
-- 引用知识库文档路径正确，术语使用[术语表](../docs/knowledge/learning/llm-token-optimization/glossary.md)标准定义
+- 引用知识库文档路径正确，术语使用[术语表](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/glossary.md)标准定义
 
 ## 约束条件
 
@@ -241,20 +241,20 @@ x-toml-ref: "../../.meta/toml/.agents/commands/token-optimize.toml"
 
 - [Token Optimizer角色定义](../roles/token-optimizer.md)
 - [LLM Token优化知识库](../docs/knowledge/learning/llm-token-optimization/README.md)
-- [快速参考卡（3分钟速查）](../docs/knowledge/learning/llm-token-optimization/10-quick-reference.md)
-- [27条禁令清单（P0-P3分级）](../docs/knowledge/learning/llm-token-optimization/09-constraints.md)
-- [决策树](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/01-decision-tree.md)
-- [选型矩阵](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/02-selection-matrix.md)
-- [最佳实践模式P-001~P-005](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/03-patterns.md)
-- [反模式与常见陷阱](../docs/knowledge/learning/llm-token-optimization/06-decision-framework/04-anti-patterns.md)
-- [跨行业案例参考](../docs/knowledge/learning/llm-token-optimization/04-cases/01-case-studies.md)
-- [评估指标体系](../docs/knowledge/learning/llm-token-optimization/05-evaluation/01-metrics-framework.md)
-- [术语表](../docs/knowledge/learning/llm-token-optimization/glossary.md)
+- [快速参考卡（3分钟速查）](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md)
+- [27条禁令清单（P0-P3分级）](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.md)
+- [决策树](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.md)
+- [选型矩阵](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.md)
+- [最佳实践模式P-001~P-005](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.md)
+- [反模式与常见陷阱](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/04-anti-patterns.md)
+- [跨行业案例参考](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.md)
+- [评估指标体系](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/05-evaluation/01-metrics-framework.md)
+- [术语表](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/glossary.md)
 - [token-optimize-cmd Skill门面](../skills/token-optimize-cmd/SKILL.md)
 - [CMD-LOG日志规范](../rules/cmd-log-specification.md)
 - [阶段守卫规则](../rules/stage-guardrails.md)
 
 ### 知识库资料档案
 
-- [Token优化快速参考](../docs/knowledge/learning/llm-token-optimization/10-quick-reference.md) — 3分钟速查卡，涵盖P0速赢清单、模式选择决策树、三维权衡速查表、常见陷阱预警。指令集定义"做什么"（执行流程），快速参考提供"怎么做"（操作细节）
+- [Token优化快速参考](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md) — 3分钟速查卡，涵盖P0速赢清单、模式选择决策树、三维权衡速查表、常见陷阱预警。指令集定义"做什么"（执行流程），快速参考提供"怎么做"（操作细节）
 - [Token优化知识库总览](../docs/knowledge/learning/llm-token-optimization/README.md) — 29份结构化文档完整索引，含原理/方法/工具/案例/评估/决策框架全模块

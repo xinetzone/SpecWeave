@@ -1,7 +1,7 @@
 ---
 id: "archive-wiki-linkage-guide"
 title: "归档搭配Wiki联动机制指南"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/archive-wiki-linkage-guide.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/archive-wiki-linkage-guide.toml"
 category: "best-practices"
 tags: ["archive", "wiki", "knowledge-management", "retrospective", "learning-wiki", "知识沉淀", "归档升级", "联动机制"]
 date: "2026-07-31"
@@ -20,7 +20,7 @@ summary: "SpecWeave项目中归档（retrospective）与Wiki（learning wiki）�
 | 维度 | 归档（Archive） | Wiki（系统化知识库） |
 |------|----------------|---------------------|
 | **定位** | 单任务过程记录与原始资料仓库 | 面向复用的主题化知识体系 |
-| **目录位置** | `.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `.agents/docs/knowledge/learning/NN-<theme>/<topic>-wiki/`（原子化）或 `.agents/docs/knowledge/learning/NN-<theme>/<topic>-wiki.md`（单文件） |
+| **目录位置** | `.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `docs/knowledge/learning/NN-<theme>/<topic>-wiki/`（原子化）或 `docs/knowledge/learning/NN-<theme>/<topic>-wiki.md`（单文件） |
 | **命名规则** | `retrospective-<topic>-<YYYYMMDD>/`（带日期后缀，体现任务时效性） | `<topic>-wiki/` 或 `<topic>-wiki.md`（无日期，主题持久化） |
 | **核心读者** | 复盘审计者、未来执行类似任务的智能体 | 系统学习者、知识检索者 |
 | **内容结构** | 保留执行上下文：原文→分析报告→执行过程→深度洞察 | 面向认知的章节结构：总览→核心概念→分主题讲解→对比→术语→资源 |
@@ -115,7 +115,7 @@ flowchart LR
 ### 3.3 链接路径规范
 
 - 归档位于：`.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/`
-- Wiki位于：`.agents/docs/knowledge/learning/NN-<theme>/<topic>-wiki/`
+- Wiki位于：`docs/knowledge/learning/NN-<theme>/<topic>-wiki/`
 - 归档→Wiki相对路径：从归档README出发，需向上6级再进入knowledge/learning/
   - 路径示例：`../../../../knowledge/learning/NN-<theme>/<topic>-wiki/00-overview.md`
 - Wiki→归档相对路径：从Wiki 00-overview.md出发，需向上4级再进入retrospective/

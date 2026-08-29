@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-15"
 title: "DeepSeek Harness 完全指南 — 生态与资源链接"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/15-ecosystem-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/15-ecosystem-resources.toml"
 ---
 # 15 生态与资源链接
 

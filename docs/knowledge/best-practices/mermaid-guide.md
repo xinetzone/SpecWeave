@@ -1,7 +1,7 @@
 ---
 id: "mermaid-guide"
 title: "Mermaid 图表操作指南"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/mermaid-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/mermaid-guide.toml"
 category: "best-practices"
 tags: ["mermaid", "图表", "可视化", "check-mermaid", "安全编码", "六规则", "模板", "ci"]
 date: "2026-06-29"
@@ -29,7 +29,7 @@ flowchart LR
 
 ### 第1步：复制起步模板
 
-从 [safe-starter.md](../../../templates/mermaid-templates/safe-starter.md) 复制代码块。模板代码块内用 `%%` 注释内置了完整安全规则提醒，编辑时直接可见：
+从 [safe-starter.md](../../../.agents/templates/mermaid-templates/safe-starter.md) 复制代码块。模板代码块内用 `%%` 注释内置了完整安全规则提醒，编辑时直接可见：
 
 ```mermaid
 %% ============================================================
@@ -56,7 +56,7 @@ flowchart TB
     style CHECK fill:#fff3cd,stroke:#ffc107,color:#000
 ```
 
-其他布局模板见 [mermaid-templates/](../../../templates/mermaid-templates/README.md) 目录（含左→右流程图、分层流程图、决策图、时序图、状态图、思维导图）。
+其他布局模板见 [mermaid-templates/](../../../.agents/templates/mermaid-templates/README.md) 目录（含左→右流程图、分层流程图、决策图、时序图、状态图、思维导图）。
 
 ### 第2步：填写节点和连线
 
@@ -176,7 +176,7 @@ flowchart LR
 
 ### check-mermaid.py 检测能力
 
-项目内置的 [check-mermaid.py](../../../scripts/lib/checks/mermaid.py) 可自动检测以下 10 类问题：
+项目内置的 [check-mermaid.py](../../../.agents/scripts/lib/checks/mermaid.py) 可自动检测以下 10 类问题：
 
 | # | 检测项 | 对应规则 | 自动修复 |
 |---|--------|---------|---------|
@@ -216,7 +216,7 @@ python .agents/scripts/repo-check.py mermaid
 
 ### CI 集成
 
-[ci-check.ps1](../../../scripts/ci-check.ps1#L43-L51) / [ci-check.sh](../../../scripts/ci-check.sh#L44-L52) 第4步已集成 Mermaid 检查，CI 流水线中 Mermaid 检查失败会阻断提交。提交前建议运行完整 CI 检查：
+[ci-check.ps1](../../../.agents/scripts/ci-check.ps1#L43-L51) / [ci-check.sh](../../../.agents/scripts/ci-check.sh#L44-L52) 第4步已集成 Mermaid 检查，CI 流水线中 Mermaid 检查失败会阻断提交。提交前建议运行完整 CI 检查：
 
 ```powershell
 .\.agents\scripts\ci-check.ps1
@@ -272,26 +272,26 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 - ✅ 支持 subgraph 分组
 - ⚠️ 节点内 `\n` 不会换行
 - ⚠️ 空行严格禁止
-- 起步推荐：使用 [safe-starter.md](../../../templates/mermaid-templates/safe-starter.md)
+- 起步推荐：使用 [safe-starter.md](../../../.agents/templates/mermaid-templates/safe-starter.md)
 
 ### sequenceDiagram（时序图）
 
 - `\n` 在 Note 和消息文本中可以换行，但统一用 `<br/>` 更安全
 - participant 中文别名必须加引号：`participant A as "开发者"`
 - 箭头语法：`->>`（虚线箭头）、`-->>`（虚线响应）
-- 模板：[sequence-diagram.md](../../../templates/mermaid-templates/sequence-diagram.md)
+- 模板：[sequence-diagram.md](../../../.agents/templates/mermaid-templates/sequence-diagram.md)
 
 ### stateDiagram-v2（状态图）
 
 - ✅ 支持 `<br/>` 换行
 - 状态描述含空格需加引号
 - 迁移标签含空格需加引号
-- 模板：[state-diagram.md](../../../templates/mermaid-templates/state-diagram.md)
+- 模板：[state-diagram.md](../../../.agents/templates/mermaid-templates/state-diagram.md)
 
 ### mindmap（思维导图）
 
 - 语法与 flowchart 差异较大，注意缩进层级
-- 模板：[mindmap.md](../../../templates/mermaid-templates/mindmap.md)
+- 模板：[mindmap.md](../../../.agents/templates/mermaid-templates/mindmap.md)
 
 ---
 
@@ -329,11 +329,11 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 
 | 文档 | 用途 |
 |------|------|
-| [mermaid.md](../../../commands/mermaid.md) | ⭐ Mermaid图表管理指令集（执行流程/RACI/CMD-LOG规范） |
-| [safe-starter.md](../../../templates/mermaid-templates/safe-starter.md) | 推荐起步模板（内置安全注释） |
-| [mermaid-templates/](../../../templates/mermaid-templates/README.md) | 8种布局模板目录 |
-| [mermaid-safe-coding-rules.md](../../retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 六规则详细说明与正反例 |
-| [mermaid-trap-cheatsheet.md](../../retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md) | 9大陷阱速查表 |
-| [check-mermaid.py](../../../scripts/check-mermaid.py) | 自动化检查脚本 |
-| [ci-check.ps1](../../../scripts/ci-check.ps1) | CI综合检查脚本 |
-| [development-standards.md](../../development-standards.md) | 开发规范（含Mermaid章节） |
+| [mermaid.md](../../../.agents/commands/mermaid.md) | ⭐ Mermaid图表管理指令集（执行流程/RACI/CMD-LOG规范） |
+| [safe-starter.md](../../../.agents/templates/mermaid-templates/safe-starter.md) | 推荐起步模板（内置安全注释） |
+| [mermaid-templates/](../../../.agents/templates/mermaid-templates/README.md) | 8种布局模板目录 |
+| [mermaid-safe-coding-rules.md](../../../.agents/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 六规则详细说明与正反例 |
+| [mermaid-trap-cheatsheet.md](../../../.agents/docs/retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md) | 9大陷阱速查表 |
+| [check-mermaid.py](../../../.agents/scripts/check-mermaid.py) | 自动化检查脚本 |
+| [ci-check.ps1](../../../.agents/scripts/ci-check.ps1) | CI综合检查脚本 |
+| [development-standards.md](../../../.agents/docs/development-standards.md) | 开发规范（含Mermaid章节） |

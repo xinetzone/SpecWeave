@@ -125,8 +125,8 @@ curl "https://forum.example.com/posts/456.json"
 - `short_url`: 短URL格式（`upload://abcDEF123.png`），用于在帖子中引用
 
 **在帖子中引用上传文件的Markdown格式：**
-- 图片：`![alt text](upload://abcDEF123.png)`
-- 附件：`[filename.pdf|attachment](upload://abcDEF123.pdf)`
+- 图片：`![alt text](upload%3A/abcDEF123.png)`
+- 附件：`[filename.pdf|attachment](upload%3A/abcDEF123.pdf)`
 
 **示例请求：**
 ```bash

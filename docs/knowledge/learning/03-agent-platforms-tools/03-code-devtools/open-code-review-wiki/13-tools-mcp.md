@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-13"
 title: "内置工具与 MCP 集成"
 source: "https://open-codereview.ai/docs/tools"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/13-tools-mcp.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/13-tools-mcp.toml"
 ---
 # 内置工具与 MCP 集成
 

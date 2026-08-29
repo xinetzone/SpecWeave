@@ -1,6 +1,6 @@
 ---
 source: "agent-skills-open-standard-wiki.md#十验证工具skills-ref"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/09-skills-ref-tool.toml"
 id: "agent-skills-wiki-skills-ref-tool"
 title: "验证一个技能目录"
 ---
@@ -41,7 +41,7 @@ skills-ref read-properties path/to/skill
 skills-ref to-prompt path/to/skill-a path/to/skill-b
 ```
 
-> **源码锚点**：CLI 实现见 [cli.py](../../../../../scripts/lib/cli.py)
+> **源码锚点**：CLI 实现见 [cli.py](../../../../../.agents/scripts/lib/cli.py)
 
 #### validate 命令
 
@@ -104,7 +104,7 @@ prompt = to_prompt([Path("skill-a"), Path("skill-b")])
 print(prompt)
 ```
 
-> **源码锚点**：公共 API 见 [__init__.py](../../../../../../apps/dev-tools/prompt_extraction/__init__.py)；提示生成见 [prompt.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/rich/prompt.py)
+> **源码锚点**：公共 API 见 [__init__.py](../../../../../apps/dev-tools/prompt_extraction/__init__.py)；提示生成见 [prompt.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/rich/prompt.py)
 
 ### 10.4 验证检查清单
 

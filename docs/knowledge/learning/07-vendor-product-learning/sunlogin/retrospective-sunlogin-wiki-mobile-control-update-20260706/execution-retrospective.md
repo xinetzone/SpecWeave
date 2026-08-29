@@ -1,7 +1,7 @@
 ---
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-execution"
 title: "向日葵Wiki移动端远程控制功能更新执行过程复盘"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/execution-retrospective.toml"
 date: "2026-07-06"
 ---
 # 执行过程复盘
@@ -131,9 +131,9 @@ date: "2026-07-06"
 
 | 产出物 | 路径 | 状态 |
 |--------|------|------|
-| PRD需求文档 | [spec.md](../../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/spec.md) | ✅ 完成 |
-| 任务计划 | [tasks.md](../../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/tasks.md) | ✅ 5个任务全部完成 |
-| 验证检查清单 | [checklist.md](../../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/checklist.md) | ✅ 24项全部通过 |
+| PRD需求文档 | [spec.md](../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/spec.md) | ✅ 完成 |
+| 任务计划 | [tasks.md](../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/tasks.md) | ✅ 5个任务全部完成 |
+| 验证检查清单 | [checklist.md](../../../../../../.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/checklist.md) | ✅ 24项全部通过 |
 
 ### 5.3 复盘文档
 

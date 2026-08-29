@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 # 07 架构决策与方案对比
 
 > **本章定位说明**
-> - 前六章分别介绍了平台概述（[00 概述与知识地图](./00-overview.md)）、核心概念（[01 核心概念与平台架构](./01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](./02-okf-specification.md)）、参考Agent（[03 参考Agent实现原理与运行指南](./03-reference-agent.md)）、工具链可视化（[04 工具链与可视化系统](./04-toolchain-and-visualization.md)）、示例Bundle（[05 示例Bundle深度解析](./05-samples-and-bundles.md)）和集成模式（[06 集成模式与最佳实践](./06-integration-patterns.md)）。
+> - 前六章分别介绍了平台概述（[00 概述与知识地图](00-overview.md)）、核心概念（[01 核心概念与平台架构](01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](02-okf-specification.md)）、参考Agent（[03 参考Agent实现原理与运行指南](03-reference-agent.md)）、工具链可视化（[04 工具链与可视化系统](04-toolchain-and-visualization.md)）、示例Bundle（[05 示例Bundle深度解析](05-samples-and-bundles.md)）和集成模式（[06 集成模式与最佳实践](06-integration-patterns.md)）。
 > - 本章从**架构师/技术决策者**视角出发，客观分析OKF/Knowledge Catalog的局限性与风险，与主流替代方案做全面对比，提供选型决策框架和风险缓解建议。
 > - 本章内容与[okf-wiki 04 局限性与方案对比](../okf-wiki/04-limitations-and-comparison.md)形成互补：OKF Wiki侧重OKF格式本身的对比，本章结合Knowledge Catalog完整工具链（参考Agent、可视化、示例Bundle等）做整体方案对比。
 
@@ -190,7 +190,7 @@ Google有停止早期产品的历史先例（Google Reader、Inbox、Wave、Knol
 | **成本** | 💰💰 商业许可成本高，Databricks平台绑定 | 💰 零许可成本 |
 | **核心优势** | 企业级治理能力完善、和Databricks生态深度集成、商业支持SLA | 业务知识层灵活、Agent友好、Git版本化、可包含Playbook/Attested Computation等执行型知识、可跨系统连接 |
 | **核心劣势** | 锁定Databricks生态、成本高、主要面向结构化数据、业务知识表达能力弱、Agent消费需要定制 | 无原生权限/审计/治理、需要自行集成、无商业支持 |
-| **关系** | **互补共存，定位不同**。UC是技术元数据治理层，OKF是业务知识编排与Agent消费层。最佳实践：UC管技术元数据+权限+血缘，OKF补充业务定义、Playbook、指标计算逻辑，双向链接（详见[06集成模式章节](./06-integration-patterns.md#64-与现有数据目录集成模式)） | |
+| **关系** | **互补共存，定位不同**。UC是技术元数据治理层，OKF是业务知识编排与Agent消费层。最佳实践：UC管技术元数据+权限+血缘，OKF补充业务定义、Playbook、指标计算逻辑，双向链接（详见[06集成模式章节](06-integration-patterns.md#64-与现有数据目录集成模式)） | |
 | **适用场景** | 已经深度使用Databricks、需要强数据治理与权限控制、以结构化数据为主、预算充足 | 需要Agent消费知识、需要跨系统连接知识、开发者团队主导、需要将知识和代码放在一起管理、预算有限 |
 
 ---
@@ -211,7 +211,7 @@ Google有停止早期产品的历史先例（Google Reader、Inbox、Wave、Knol
 | **成本** | 💰💰💰 非常昂贵，百万级/年起，按用户/资产收费 | 💰 零许可成本，纯人力成本 |
 | **核心优势** | 企业级数据治理能力完整、商业支持SLA、行业最佳实践内置、适合合规要求高的大型企业 | 轻量、灵活、Agent原生、开放无锁定、Git工作流、低门槛起步、可包含执行型知识 |
 | **核心劣势** | 极其昂贵、实施周期长（6-12个月）、笨重不灵活、Agent时代适应性弱、定制成本高、锁定风险 | 无企业级治理功能、需要自建、无商业支持、早期风险 |
-| **关系** | **互补而非替代**。Collibra/Alation适合作为企业级数据治理的系统-of-record，OKF适合作为敏捷的上层知识编排与Agent消费层，两者通过resource字段双向链接（参考[06章集成模式](./06-integration-patterns.md#642-推荐集成架构双向同步互补模式)） | |
+| **关系** | **互补而非替代**。Collibra/Alation适合作为企业级数据治理的系统-of-record，OKF适合作为敏捷的上层知识编排与Agent消费层，两者通过resource字段双向链接（参考[06章集成模式](06-integration-patterns.md#642-推荐集成架构双向同步互补模式)） | |
 | **适用场景** | 超大型企业、强合规要求（金融/医疗/政府）、预算充足、有专门的数据治理团队、已经采购或正在采购此类产品 | 敏捷团队、需要快速落地、Agent需求优先、开发者主导、预算有限、希望先试点再规模化 |
 
 ---
@@ -351,7 +351,7 @@ flowchart TD
 - 已有Collibra/Unity Catalog/Confluence等投资
 - 不替换现有系统，OKF作为Agent友好的业务知识层
 - 通过resource字段双向链接
-- 这是绝大多数企业的推荐路径（详见[06章6.4节](./06-integration-patterns.md#64-与现有数据目录集成模式)）
+- 这是绝大多数企业的推荐路径（详见[06章6.4节](06-integration-patterns.md#64-与现有数据目录集成模式)）
 
 **路径3：观望等待（黄色节点）**
 - 认可OKF方向，但担心早期风险
@@ -420,7 +420,7 @@ flowchart TD
 **缓解措施**：
 1. **最小集成**：第一阶段只用OKF+Git+viz.html，不做任何系统集成，验证价值
 2. **分阶段集成**：试点阶段→团队阶段→企业阶段，每个阶段集成必要的系统，不提前集成
-3. **复用参考设计**：参考[06章集成模式](./06-integration-patterns.md)中的架构，不要从零设计
+3. **复用参考设计**：参考[06章集成模式](06-integration-patterns.md)中的架构，不要从零设计
 4. **利用互补关系**：不替换现有系统，而是双向链接共存，减少集成范围
 
 ### 7.5.3 试点阶段风险控制Checklist
@@ -492,13 +492,13 @@ flowchart TD
 4. 试点后基于实际效果再决策是否扩大
 
 **如果你是AI Agent开发者**：
-1. 直接从[00概述](./00-overview.md)→[02OKF规范](./02-okf-specification.md)→[03参考Agent](./03-reference-agent.md)开始
-2. 下载一个示例Bundle（如[GA4示例](./05-samples-and-bundles.md)），跑起来看看效果
+1. 直接从[00概述](00-overview.md)→[02OKF规范](02-okf-specification.md)→[03参考Agent](03-reference-agent.md)开始
+2. 下载一个示例Bundle（如[GA4示例](05-samples-and-bundles.md)），跑起来看看效果
 3. 用OKF格式写你自己的Agent工具文档，体验工作流
 4. 对比一下纯向量RAG和加了OKF元数据后的效果差异
 
 **如果你是数据工程师/数据治理专家**：
-1. 重点阅读[06集成模式章节](./06-integration-patterns.md)，理解OKF与现有数据目录的互补关系
+1. 重点阅读[06集成模式章节](06-integration-patterns.md)，理解OKF与现有数据目录的互补关系
 2. 考虑用reference_agent从BigQuery生成一个数据集的OKF Bundle，体验自动生成
 3. 评估双向链接模式是否适合你的组织
 
@@ -536,14 +536,14 @@ flowchart TD
 - Agent消费OKF流程：[okf-wiki 05 Agent如何消费OKF Bundle](../okf-wiki/05-architecture-and-integration.md#54-agent如何消费okf-bundle)
 
 **Knowledge Catalog Wiki相关章节**：
-- 集成模式与现有系统共存方案：[06 集成模式与最佳实践](./06-integration-patterns.md)（特别是6.4节与现有数据目录集成）
-- 四个官方示例Bundle学习企业级用法：[05 示例Bundle深度解析](./05-samples-and-bundles.md)（特别是Acme Retail示例）
-- 参考Agent运行指南快速体验：[03 参考Agent实现原理与运行指南](./03-reference-agent.md)
-- 核心概念回顾：[01 核心概念与平台架构](./01-core-concepts.md)
-- 资源与术语表：[08 资源与术语表](./08-resources-and-glossary.md)（下一章）
+- 集成模式与现有系统共存方案：[06 集成模式与最佳实践](06-integration-patterns.md)（特别是6.4节与现有数据目录集成）
+- 四个官方示例Bundle学习企业级用法：[05 示例Bundle深度解析](05-samples-and-bundles.md)（特别是Acme Retail示例）
+- 参考Agent运行指南快速体验：[03 参考Agent实现原理与运行指南](03-reference-agent.md)
+- 核心概念回顾：[01 核心概念与平台架构](01-core-concepts.md)
+- 资源与术语表：[08 资源与术语表](08-resources-and-glossary.md)（下一章）
 
 ---
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [06 集成模式与最佳实践](./06-integration-patterns.md) | [README](./README.md) | [08 资源与术语表](./08-resources-and-glossary.md) |
+| [06 集成模式与最佳实践](06-integration-patterns.md) | [README](README.md) | [08 资源与术语表](08-resources-and-glossary.md) |

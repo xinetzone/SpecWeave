@@ -1,7 +1,7 @@
 ---
 id: "file-io-concurrency-safety"
 title: "文件 I/O 并发安全规范：原子写入、日志模板与重试策略"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/file-io-concurrency-safety.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/file-io-concurrency-safety.toml"
 category: "best-practices"
 tags: ["concurrency", "file-io", "atomic-write", "logging", "retry-pattern", "windows", "defensive-programming"]
 date: "2026-07-12"
@@ -13,7 +13,7 @@ summary: "基于原子写入重构实战（11个模块统一改造、46个测试
 
 > 基于 spec_loader 冷启动优化与原子写入方案推广到全项目11个模块的实战经验。核心教训：**直接 `write_text()`/`json.dump()` 在多进程场景下不是安全操作**——Windows文件锁、内容截断、tmp残留等问题在压测中暴露，必须使用统一的原子写入工具和标准化的日志/重试模式。
 
-**洞察来源**：[原子写入重构性能对比报告](../../retrospective/2026-07-12-atomic-write-refactoring.md)
+**洞察来源**：[原子写入重构性能对比报告](../../../.agents/docs/retrospective/2026-07-12-atomic-write-refactoring.md)
 
 ---
 
@@ -399,13 +399,13 @@ def atomic_edit_text(
 | 多进程并发 | ✅ | 8进程并发写入无损坏、无tmp泄漏 |
 | 原子编辑 | ✅ | 基本替换/标记区域/异常传播/无tmp残留 |
 
-参考实现：[test_atomic_write.py](../../../scripts/tests/test_atomic_write.py)（46个测试用例）
+参考实现：[test_atomic_write.py](../../../.agents/scripts/tests/test_atomic_write.py)（46个测试用例）
 
 ---
 
 ## 相关资源
 
-- [atomic_write.py 源码](../../../scripts/lib/atomic_write.py)
-- [原子写入重构性能对比报告](../../retrospective/2026-07-12-atomic-write-refactoring.md)
-- [并发代码安全审查六维检查法](./concurrent-code-safety-review.md)
-- [八维并发安全规范](./eight-dimensions-concurrent-safety-spec.md)
+- [atomic_write.py 源码](../../../.agents/scripts/lib/atomic_write.py)
+- [原子写入重构性能对比报告](../../../.agents/docs/retrospective/2026-07-12-atomic-write-refactoring.md)
+- [并发代码安全审查六维检查法](concurrent-code-safety-review.md)
+- [八维并发安全规范](eight-dimensions-concurrent-safety-spec.md)

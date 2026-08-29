@@ -41,6 +41,6 @@
 .agents/commands/        ← 命令集详细文档（单命令集SOP）
 .agents/skills/          ← Skill门面（触发词+执行指引+日志）
 `.agents/docs/development-standards.md` ← 开发规范（代码风格、提交规范）
- .agents/docs/knowledge/  ← 技术知识库（架构决策、故障排查、操作指南）
+ docs/knowledge/  ← 技术知识库（架构决策、故障排查、操作指南）
  .agents/docs/retrospective/patterns/  ← 可复用模式（代码/架构/方法论模式）
 ```

@@ -2,7 +2,7 @@
 id: "open-code-review-wiki-12"
 title: "LLM 协议与 Provider 详解"
 source: "https://open-codereview.ai/docs/configuration"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/12-llm-providers.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/12-llm-providers.toml"
 ---
 # LLM 协议与 Provider 详解
 

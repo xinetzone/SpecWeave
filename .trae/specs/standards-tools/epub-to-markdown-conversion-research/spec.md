@@ -23,7 +23,7 @@ change-id: "epub-to-markdown-conversion-research"
 
 ## Impact
 - Affected specs: 无既有 spec 直接影响（属于新增调研任务）
-- Affected code: 无生产代码变更；产出物为调研报告（Markdown），存放于 `.agents/docs/knowledge/` 下
+- Affected code: 无生产代码变更；产出物为调研报告（Markdown），存放于 `docs/knowledge/` 下
 
 ## 内容敏感度
 - 级别：**公开（Public）** —— 研究对象为开源工具/官方文档/公开文章，无访问控制

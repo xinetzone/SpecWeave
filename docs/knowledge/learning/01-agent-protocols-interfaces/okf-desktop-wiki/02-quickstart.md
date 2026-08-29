@@ -117,4 +117,4 @@ API key 存储在操作系统钥匙串（OS keychain），不在 bundle 内。
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [01 架构深度解析](./01-architecture.md) | [README](./README.md) | [03 五大界面详解](./03-ui-screens.md) |
+| [01 架构深度解析](01-architecture.md) | [README](README.md) | [03 五大界面详解](03-ui-screens.md) |

@@ -2,7 +2,7 @@
 title: "故障排除与反馈"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"
-x-toml-ref: "../../../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.toml"
+x-toml-ref: "../../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/06-troubleshooting/00-overview.toml"
 date: "2026-07-07"
 tags: ["mobile-use", "mobile-automation", "troubleshooting", "debugging", "feedback", "support"]
 summary: "故障排除与反馈章节包含常见问题诊断、解决方案和反馈指南。"
@@ -15,8 +15,8 @@ summary: "故障排除与反馈章节包含常见问题诊断、解决方案和�
 
 | 页面 | 说明 |
 |------|------|
-| [常见问题排查](./01-troubleshooting.md) | 设备连接、服务器、任务执行、LLM/API、系统环境等常见问题的诊断和解决方案 |
-| [反馈指南](./02-providing-feedback.md) | 如何提交 Bug 报告、功能建议，以及获取社区支持 |
+| [常见问题排查](01-troubleshooting.md) | 设备连接、服务器、任务执行、LLM/API、系统环境等常见问题的诊断和解决方案 |
+| [反馈指南](02-providing-feedback.md) | 如何提交 Bug 报告、功能建议，以及获取社区支持 |
 
 ## 快速参考
 

@@ -111,7 +111,7 @@ Task 1 (R阶段事实采集) → Task 2 (I阶段洞察分析) → Task 3 (E阶�
 **Depends On:** Task 4
 
 **Description:**
-按照spec.md中的Requirements创建11篇原子化wiki文档，存放在 `.agents/docs/knowledge/learning/07-vendor-product-learning/deepseek/` 目录下。每篇文档包含YAML frontmatter、章节导航、结构化内容。
+按照spec.md中的Requirements创建11篇原子化wiki文档，存放在 `docs/knowledge/learning/07-vendor-product-learning/deepseek/` 目录下。每篇文档包含YAML frontmatter、章节导航、结构化内容。
 
 文档清单：
 1. `00-overview.md` — 总览与导航

@@ -341,6 +341,6 @@ flowchart TD
 
 ## 继续阅读
 
-上一章：[第六章 - 学习效果评估方法](./06-assessment.md)
+上一章：[第六章 - 学习效果评估方法](06-assessment.md)
 
-返回首页：[MonkeyCode Vibe Coding Wiki 总览](./00-overview.md)
+返回首页：[MonkeyCode Vibe Coding Wiki 总览](00-overview.md)

@@ -128,7 +128,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
    ```
 4. **核心原则**：所有规则都在 `SKILL.md` 一个文件里，没有隐藏硬编码，改这一个文件就改变所有行为。
 
-详细自定义流程见第八章：[07-customization-and-troubleshooting.md](./07-customization-and-troubleshooting.md)
+详细自定义流程见第八章：[07-customization-and-troubleshooting.md](07-customization-and-troubleshooting.md)
 
 ---
 
@@ -253,11 +253,11 @@ Trae 对 Agent Skills 标准的兼容性很好，核心 SKILL.md 不需要修改
 - **Agent Skills 开放标准 Wiki**: [../../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md](../../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
   - Agent Skills 标准详解、开发指南、跨平台适配
 
-- **七概念方法论**: [../../../../../../commands/seven-concepts.md](../../../../../../commands/seven-concepts.md)
+- **七概念方法论**: [../../../../../../commands/seven-concepts.md](../../../../../../.agents/commands/seven-concepts.md)
   - 本 Wiki 使用的 R-I-E-C-A-F-V 七概念方法论
   - 了解模式萃取、复盘、洞察等知识沉淀方法
 
-- **i-have-adhd Wiki 目录**: [README.md](./README.md)
+- **i-have-adhd Wiki 目录**: [README.md](README.md)
   - 本 Wiki 的索引页，含所有章节链接
 
 ### 各平台插件文档
@@ -316,13 +316,13 @@ SOFTWARE.
 
 | 章节 | 文件路径 |
 |------|---------|
-| 一、概述与设计哲学 | [00-overview.md](./00-overview.md) |
-| 二、设计哲学与认知原理 | [01-design-philosophy.md](./01-design-philosophy.md) |
-| 三、核心规则（10条详解） | [02-core-rules.md](./02-core-rules.md) |
-| 四、例外场景与自检清单 | [03-exceptions-and-checklist.md](./03-exceptions-and-checklist.md) |
-| 五、多平台安装指南 | [04-installation-guide.md](./04-installation-guide.md) |
-| 六、Always-On 自动激活机制 | [05-always-on-mechanism.md](./05-always-on-mechanism.md) |
-| 七、评估框架（A/B测试Rubric） | [06-evaluation-framework.md](./06-evaluation-framework.md) |
-| 八、自定义开发与故障排查 | [07-customization-and-troubleshooting.md](./07-customization-and-troubleshooting.md) |
-| 九、可复用模式萃取（本章之前） | [08-patterns-extracted.md](./08-patterns-extracted.md) |
+| 一、概述与设计哲学 | [00-overview.md](00-overview.md) |
+| 二、设计哲学与认知原理 | [01-design-philosophy.md](01-design-philosophy.md) |
+| 三、核心规则（10条详解） | [02-core-rules.md](02-core-rules.md) |
+| 四、例外场景与自检清单 | [03-exceptions-and-checklist.md](03-exceptions-and-checklist.md) |
+| 五、多平台安装指南 | [04-installation-guide.md](04-installation-guide.md) |
+| 六、Always-On 自动激活机制 | [05-always-on-mechanism.md](05-always-on-mechanism.md) |
+| 七、评估框架（A/B测试Rubric） | [06-evaluation-framework.md](06-evaluation-framework.md) |
+| 八、自定义开发与故障排查 | [07-customization-and-troubleshooting.md](07-customization-and-troubleshooting.md) |
+| 九、可复用模式萃取（本章之前） | [08-patterns-extracted.md](08-patterns-extracted.md) |
 | 十、FAQ与资源汇总（本章） | 当前文件 |

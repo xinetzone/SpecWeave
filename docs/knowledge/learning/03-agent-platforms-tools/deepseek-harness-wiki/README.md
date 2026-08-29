@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-deepseek-harness-wiki-index"
 title: "DeepSeek Harness 完全指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -38,7 +38,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent平台与工具生态调研](../../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [GitHub 仓库](https://github.com/deepseek-ai/deepseek-harness)
 
 ---

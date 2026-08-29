@@ -52,12 +52,12 @@ maturity: L1-draft
 
 | 编号 | 文档 | 内容 | 阅读时间 |
 |------|------|------|----------|
-| 00 | [00-overview.md](./00-overview.md) | **总览**：产品定位、核心价值主张、仓库架构全景、一页纸速查表 | 15分钟 |
-| 01 | [01-okf-spec.md](./01-okf-spec.md) | **OKF开放知识格式规范（核心）**：Bundle结构、Frontmatter字段、信任/来源/生命周期、认证计算 | 40分钟 |
-| 02 | [02-reference-agent.md](./02-reference-agent.md) | **参考智能体**：Python实现、两阶段运行机制（BQ+Web）、可视化器使用 | 30分钟 |
-| 03 | [03-metadata-as-code.md](./03-metadata-as-code.md) | **元数据即代码（mdcode/kcmd）**：TypeScript库、CLI工作流、MCP服务器集成 | 35分钟 |
-| 04 | [04-samples.md](./04-samples.md) | **示例智能体**：Discovery Agent发现智能体、Enrichment Agent丰富智能体实战 | 25分钟 |
-| 05 | [05-best-practices.md](./05-best-practices.md) | **最佳实践与反模式（🔥重点）**：5个反模式、OKF编写检查清单、Agent集成模式 | 20分钟 |
+| 00 | [00-overview.md](00-overview.md) | **总览**：产品定位、核心价值主张、仓库架构全景、一页纸速查表 | 15分钟 |
+| 01 | [01-okf-spec.md](01-okf-spec.md) | **OKF开放知识格式规范（核心）**：Bundle结构、Frontmatter字段、信任/来源/生命周期、认证计算 | 40分钟 |
+| 02 | [02-reference-agent.md](02-reference-agent.md) | **参考智能体**：Python实现、两阶段运行机制（BQ+Web）、可视化器使用 | 30分钟 |
+| 03 | [03-metadata-as-code.md](03-metadata-as-code.md) | **元数据即代码（mdcode/kcmd）**：TypeScript库、CLI工作流、MCP服务器集成 | 35分钟 |
+| 04 | [04-samples.md](04-samples.md) | **示例智能体**：Discovery Agent发现智能体、Enrichment Agent丰富智能体实战 | 25分钟 |
+| 05 | [05-best-practices.md](05-best-practices.md) | **最佳实践与反模式（🔥重点）**：5个反模式、OKF编写检查清单、Agent集成模式 | 20分钟 |
 
 ---
 
@@ -66,19 +66,19 @@ maturity: L1-draft
 ### 30分钟快速了解路径
 > 我只想知道Knowledge Catalog是什么、OKF解决什么问题
 
-1. 读 [00-overview.md](./00-overview.md)（15分钟）
-2. 扫一眼 [01-okf-spec.md](./01-okf-spec.md) 的核心概念部分（10分钟）
-3. 看 [05-best-practices.md](./05-best-practices.md) 的反模式快速避坑（5分钟）
+1. 读 [00-overview.md](00-overview.md)（15分钟）
+2. 扫一眼 [01-okf-spec.md](01-okf-spec.md) 的核心概念部分（10分钟）
+3. 看 [05-best-practices.md](05-best-practices.md) 的反模式快速避坑（5分钟）
 
 ### 2小时深度上手路径
 > 我要用OKF构建知识库，或集成kcmd到我的Agent工作流
 
-1. 完整读 [00-overview.md](./00-overview.md)
-2. [01-okf-spec.md](./01-okf-spec.md) 通读OKF规范（重点理解信任和认证计算）
-3. [02-reference-agent.md](./02-reference-agent.md) 了解参考实现
-4. [03-metadata-as-code.md](./03-metadata-as-code.md) 跟着kcmd CLI走一遍pull/push流程
-5. [04-samples.md](./04-samples.md) 看两个示例智能体如何组合使用
-6. [05-best-practices.md](./05-best-practices.md) 通读所有反模式
+1. 完整读 [00-overview.md](00-overview.md)
+2. [01-okf-spec.md](01-okf-spec.md) 通读OKF规范（重点理解信任和认证计算）
+3. [02-reference-agent.md](02-reference-agent.md) 了解参考实现
+4. [03-metadata-as-code.md](03-metadata-as-code.md) 跟着kcmd CLI走一遍pull/push流程
+5. [04-samples.md](04-samples.md) 看两个示例智能体如何组合使用
+6. [05-best-practices.md](05-best-practices.md) 通读所有反模式
 
 ---
 
@@ -126,4 +126,4 @@ knowledge-catalog-wiki/
 
 ---
 
-**开始阅读**：[00-overview.md - 总览](./00-overview.md)
+**开始阅读**：[00-overview.md - 总览](00-overview.md)

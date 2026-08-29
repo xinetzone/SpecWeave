@@ -18,18 +18,18 @@ summary: "12文件Wiki教程全量验收：文件齐全✓ frontmatter一致✓ 
 
 | 序号 | 文件名 | 路径 | 行数 | 状态 |
 |------|--------|------|------|------|
-| 1 | README.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md | 38 | ✓ |
-| 2 | 00-overview.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/00-overview.md | 97 | ✓ |
-| 3 | 01-product-intro.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/01-product-intro.md | 77 | ✓ |
-| 4 | 02-core-architecture.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/02-core-architecture.md | 107 | ✓ |
-| 5 | 03-veadk-framework.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/03-veadk-framework.md | 125 | ✓ |
-| 6 | 04-agentkit-sdk-cli.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/04-agentkit-sdk-cli.md | 203 | ✓ |
-| 7 | 05-quickstart.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/05-quickstart.md | 225 | ✓ |
-| 8 | 06-application-scenarios.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/06-application-scenarios.md | 217 | ✓ |
-| 9 | 07-core-features-detailed.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/07-core-features-detailed.md | 246 | ✓ |
-| 10 | 08-comparison-ecosystem.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/08-comparison-ecosystem.md | 139 | ✓ |
-| 11 | 09-faq-best-practices.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/09-faq-best-practices.md | 101 | ✓ |
-| 12 | 10-resources-glossary.md | .agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/10-resources-glossary.md | 116 | ✓ |
+| 1 | README.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md | 38 | ✓ |
+| 2 | 00-overview.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/00-overview.md | 97 | ✓ |
+| 3 | 01-product-intro.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/01-product-intro.md | 77 | ✓ |
+| 4 | 02-core-architecture.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/02-core-architecture.md | 107 | ✓ |
+| 5 | 03-veadk-framework.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/03-veadk-framework.md | 125 | ✓ |
+| 6 | 04-agentkit-sdk-cli.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/04-agentkit-sdk-cli.md | 203 | ✓ |
+| 7 | 05-quickstart.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/05-quickstart.md | 225 | ✓ |
+| 8 | 06-application-scenarios.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/06-application-scenarios.md | 217 | ✓ |
+| 9 | 07-core-features-detailed.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/07-core-features-detailed.md | 246 | ✓ |
+| 10 | 08-comparison-ecosystem.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/08-comparison-ecosystem.md | 139 | ✓ |
+| 11 | 09-faq-best-practices.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/09-faq-best-practices.md | 101 | ✓ |
+| 12 | 10-resources-glossary.md | docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/10-resources-glossary.md | 116 | ✓ |
 
 ### 1.2 中间产物文件（5个）
 
@@ -222,7 +222,7 @@ d:\AI\.agents\docs\knowledge\learning\03-agent-platforms-tools\volcengine-agentk
 ├── 09-faq-best-practices.md
 └── 10-resources-glossary.md
 ```
-位置完全符合 spec.md Assumptions 节约定（`.agents/docs/knowledge/learning/03-agent-platforms-tools/` 下）。
+位置完全符合 spec.md Assumptions 节约定（`docs/knowledge/learning/03-agent-platforms-tools/` 下）。
 
 ### 7.4 后续建议
 1. **运行 docgen 更新索引**：执行 docgen-cmd 扫描知识库目录，将本教程 12 文件自动纳入知识库导航索引与 Spec 看板。

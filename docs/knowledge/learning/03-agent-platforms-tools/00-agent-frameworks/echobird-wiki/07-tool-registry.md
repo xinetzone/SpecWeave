@@ -338,4 +338,4 @@ tools/
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [06 Codex Proxy 协议转换](./06-codex-proxy.md) | [README](./README.md) | → [08 高级功能模块](./08-advanced-pages.md) |
+| ← [06 Codex Proxy 协议转换](06-codex-proxy.md) | [README](README.md) | → [08 高级功能模块](08-advanced-pages.md) |

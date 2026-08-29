@@ -231,7 +231,7 @@ skill/
    - GitHub Copilot → `.github/skills/{name}/SKILL.md`
 4. Agent CLI 自动发现并读取这些文件
 
-> 💡 本教程的 [karpathy-llm-coding-guidelines](./README.md) 就是一个典型的 Skill —— 挂载到 Agent 后，它就会自动遵守 Karpathy 的四条准则。
+> 💡 本教程的 [karpathy-llm-coding-guidelines](README.md) 就是一个典型的 Skill —— 挂载到 Agent 后，它就会自动遵守 Karpathy 的四条准则。
 
 ### 4. Issue 与任务执行
 
@@ -309,7 +309,7 @@ Karpathy 的四条准则（Think Before Coding / Simplicity First / Surgical Cha
 
 ### 3. Mention 副作用的安全设计
 
-Multica 的 `[@agent](mention://agent/<id>)` 机制本身就体现了"先思考再行动"：
+Multica 的 `[@agent](mention%3A/agent/%3Cid%3E)` 机制本身就体现了"先思考再行动"：
 - `@agent` 和 `@squad` 会触发任务入队（有副作用）
 - `@member` 只是人员链接（无副作用）
 - `@issue` 是安全的交叉引用

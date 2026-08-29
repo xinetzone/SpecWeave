@@ -153,7 +153,7 @@ def test_pickle(obj, name="object"):
 | `XMN_MP_START_METHOD` | 可选设置 multiprocessing 启动方式（fork/forkserver/spawn） | 空（系统默认） |
 | `XMN_DEBUG_PICKLE` | 设为 1 启用 pickle 诊断 DEBUG 日志 | 0（关闭） |
 
-> 环境变量方案零侵入，不改变函数签名，用户按需启用。详见诊断 SOP [dataloader-pickle-diagnosis-sop.md](../../../knowledge/best-practices/dataloader-pickle-diagnosis-sop.md)。
+> 环境变量方案零侵入，不改变函数签名，用户按需启用。详见诊断 SOP [dataloader-pickle-diagnosis-sop.md](../../../../../docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.md)。
 
 ## 相关案例
 
@@ -173,4 +173,4 @@ def test_pickle(obj, name="object"):
 - [Python multiprocessing 文档](https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods)
 - [PyTorch DataLoader 文档](https://pytorch.org/docs/stable/data.html)
 - 互补模式：[python-314-multiprocessing-fork-compat.md](python-314-multiprocessing-fork-compat.md)（运行时兼容层）
-- 诊断 SOP：[dataloader-pickle-diagnosis-sop.md](../../../knowledge/best-practices/dataloader-pickle-diagnosis-sop.md)
+- 诊断 SOP：[dataloader-pickle-diagnosis-sop.md](../../../../../docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.md)

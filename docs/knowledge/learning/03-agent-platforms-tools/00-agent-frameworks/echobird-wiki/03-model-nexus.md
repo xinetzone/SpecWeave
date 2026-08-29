@@ -78,4 +78,4 @@ wiki_version: "1.0"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [02 技术架构深度解析](./02-architecture.md) | [README](./README.md) | → [04 四大核心场景](./04-core-scenarios.md) |
+| ← [02 技术架构深度解析](02-architecture.md) | [README](README.md) | → [04 四大核心场景](04-core-scenarios.md) |

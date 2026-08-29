@@ -78,7 +78,7 @@ tags: ["agent-evaluation", "llm-eval", "llm-as-judge", "benchmark", "ci-cd", "ra
 
 ## Constraints
 
-* **Technical**: 文档使用Markdown + YAML frontmatter（MDI v1.0），文件名kebab-case纯英文数字前缀，目录放置于 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`；单文件<400行；所有内部链接使用相对路径；Mermaid图表遵循六规则安全编码
+* **Technical**: 文档使用Markdown + YAML frontmatter（MDI v1.0），文件名kebab-case纯英文数字前缀，目录放置于 `docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`；单文件<400行；所有内部链接使用相对路径；Mermaid图表遵循六规则安全编码
 
 * **Business**: 基于权威来源编写，所有技术观点标注来源；量化数据（如SOTA准确率）需有引用；方法论需可落地（中小团队可执行）
 
@@ -184,4 +184,4 @@ tags: ["agent-evaluation", "llm-eval", "llm-as-judge", "benchmark", "ci-cd", "ra
 
 - **Affected specs**: 无直接影响的其他spec
 - **Affected code**: 仅新增文档文件，不涉及任何代码改动
-- **Affected docs**: `.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`（新建目录，12个文件）、`.agents/docs/knowledge/learning/02-agent-engineering-methodology/README.md`（更新索引新增条目）
+- **Affected docs**: `docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/`（新建目录，12个文件）、`docs/knowledge/learning/02-agent-engineering-methodology/README.md`（更新索引新增条目）

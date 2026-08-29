@@ -1,7 +1,7 @@
 ---
 id: "submodule-modified-content"
 title: "Git Submodule 显示 modified content 或 dirty 状态"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/submodule-modified-content.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/submodule-modified-content.toml"
 category: "troubleshooting"
 tags: ["git", "submodule", "vendor", "dirty", "modified-content"]
 date: "2026-06-29"
@@ -81,8 +81,8 @@ flowchart TD
 
 ### 长期防护
 
-1. **遵循"不侵入"原则**：永远不在 submodule 目录内创建或修改主项目维护的文件，详见[外部依赖四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
-2. **采用元数据外置模式**：所有元数据放在 vendor/ 根级（README.md、VERSION.md），详见 [Submodule 元数据外置模式](../../retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
+1. **遵循"不侵入"原则**：永远不在 submodule 目录内创建或修改主项目维护的文件，详见[外部依赖四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
+2. **采用元数据外置模式**：所有元数据放在 vendor/ 根级（README.md、VERSION.md），详见 [Submodule 元数据外置模式](../../../.agents/docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
 3. **自动化验证**：使用 `python .agents/scripts/repo-check.py vendor --deep` 定期检查 submodule 清洁度
 4. **.gitignore 保护**：确保 `.gitignore` 对 vendor/ 目录有正确规则：
    ```gitignore
@@ -101,8 +101,8 @@ flowchart TD
 
 ## 参考
 
-- [VENDOR-INTEGRATION.md](../../../VENDOR-INTEGRATION.md) - Vendor 协同操作指南（权威版本）
-- [三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)
-- [四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
-- [Submodule 元数据外置模式](../../retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
-- [本次复盘报告](../../retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.md)
+- [VENDOR-INTEGRATION.md](../../../.agents/VENDOR-INTEGRATION.md) - Vendor 协同操作指南（权威版本）
+- [三区域边界模型](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)
+- [四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)
+- [Submodule 元数据外置模式](../../../.agents/docs/retrospective/patterns/architecture-patterns/submodule-metadata-externalization.md)
+- [本次复盘报告](../../../.agents/docs/retrospective/reports/spec-system/retrospective-vendor-submodule-collaboration-20260629/README.md)

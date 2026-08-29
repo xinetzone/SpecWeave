@@ -44,12 +44,12 @@ maturity: L1-draft
 
 | 编号 | 文档 | 内容 | 阅读时间 |
 |------|------|------|----------|
-| 00 | [00-overview.md](./00-overview.md) | **总览**：TL;DR快速结论、阅读路径、一页纸速查表、可迁移模式 | 10分钟 |
-| 01 | [01-core-concepts.md](./01-core-concepts.md) | **核心概念详解**：11个主题（计算图本质、5大组件、类型系统、opset、控制流等），线性回归贯穿案例 | 30分钟 |
-| 02 | [02-python-api.md](./02-python-api.md) | **Python API实战**：4大Helper函数、完整线性回归示例、序列化/校验、Reference Runtime、Initializer可选参数模式 | 40分钟（含动手） |
-| 03 | [03-quickstart.md](./03-quickstart.md) | **快速上手**：安装、5分钟Hello World、Netron可视化、PyTorch/TF导出概览 | 15分钟 |
-| 04 | [04-best-practices.md](./04-best-practices.md) | **最佳实践与反模式**（🔥**重点**）：6个反模式（每个含问题/后果/正确做法）、opset选择策略、检查清单 | 25分钟 |
-| 05 | [05-faq-and-resources.md](./05-faq-and-resources.md) | **FAQ与资源**：12个常见问题、官方/工具/框架资源链接、25个关键术语表 | 15分钟（查阅） |
+| 00 | [00-overview.md](00-overview.md) | **总览**：TL;DR快速结论、阅读路径、一页纸速查表、可迁移模式 | 10分钟 |
+| 01 | [01-core-concepts.md](01-core-concepts.md) | **核心概念详解**：11个主题（计算图本质、5大组件、类型系统、opset、控制流等），线性回归贯穿案例 | 30分钟 |
+| 02 | [02-python-api.md](02-python-api.md) | **Python API实战**：4大Helper函数、完整线性回归示例、序列化/校验、Reference Runtime、Initializer可选参数模式 | 40分钟（含动手） |
+| 03 | [03-quickstart.md](03-quickstart.md) | **快速上手**：安装、5分钟Hello World、Netron可视化、PyTorch/TF导出概览 | 15分钟 |
+| 04 | [04-best-practices.md](04-best-practices.md) | **最佳实践与反模式**（🔥**重点**）：6个反模式（每个含问题/后果/正确做法）、opset选择策略、检查清单 | 25分钟 |
+| 05 | [05-faq-and-resources.md](05-faq-and-resources.md) | **FAQ与资源**：12个常见问题、官方/工具/框架资源链接、25个关键术语表 | 15分钟（查阅） |
 
 ---
 
@@ -58,20 +58,20 @@ maturity: L1-draft
 ### 30分钟快速部署路径
 > 我只想把PyTorch模型转ONNX部署，不想搞懂底层概念
 
-1. 读 [00-overview.md](./00-overview.md) 的TL;DR部分（2分钟）
-2. 读 [03-quickstart.md](./03-quickstart.md)（15分钟）
-3. 重点看 [04-best-practices.md](./04-best-practices.md) 的反模式部分（10分钟）
-4. 遇到问题查 [05-faq-and-resources.md](./05-faq-and-resources.md)
+1. 读 [00-overview.md](00-overview.md) 的TL;DR部分（2分钟）
+2. 读 [03-quickstart.md](03-quickstart.md)（15分钟）
+3. 重点看 [04-best-practices.md](04-best-practices.md) 的反模式部分（10分钟）
+4. 遇到问题查 [05-faq-and-resources.md](05-faq-and-resources.md)
 
 ### 2小时深度理解路径
 > 我要手写/修改ONNX图，需要理解API和底层机制
 
-1. 完整读 [00-overview.md](./00-overview.md)
-2. [01-core-concepts.md](./01-core-concepts.md) 建立正确心智模型
-3. [02-python-api.md](./02-python-api.md) 跟着手敲线性回归示例
-4. [04-best-practices.md](./04-best-practices.md) 通读所有反模式
-5. [03-quickstart.md](./03-quickstart.md) 看框架导出部分
-6. 遇到问题查 [05-faq-and-resources.md](./05-faq-and-resources.md)
+1. 完整读 [00-overview.md](00-overview.md)
+2. [01-core-concepts.md](01-core-concepts.md) 建立正确心智模型
+3. [02-python-api.md](02-python-api.md) 跟着手敲线性回归示例
+4. [04-best-practices.md](04-best-practices.md) 通读所有反模式
+5. [03-quickstart.md](03-quickstart.md) 看框架导出部分
+6. 遇到问题查 [05-faq-and-resources.md](05-faq-and-resources.md)
 
 ---
 
@@ -119,4 +119,4 @@ onnx-wiki/
 
 ---
 
-**开始阅读**：[00-overview.md - 总览](./00-overview.md)
+**开始阅读**：[00-overview.md - 总览](00-overview.md)

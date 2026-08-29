@@ -1,7 +1,7 @@
 ---
 id: "myst-appendix-cheat-sheet"
 title: "附录A：MyST Markdown 速查表"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/cheat-sheet.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/appendix/cheat-sheet.toml"
 ---
 # 附录A：MyST Markdown 速查表
 
@@ -24,7 +24,7 @@ x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-
 | `- [ ] 待办`<br>`- [x] 完成` | ☐ 待办<br>☑ 完成 | 任务列表 |
 | `术语`<br>`: 定义内容` | **术语**<br>&nbsp;&nbsp;&nbsp;定义内容 | 定义列表 |
 | ``文字`（原外部链接 2026-07 复检已失效：url）` | `文字`（原外部链接 2026-07 复检已失效：url） | 外部链接 |
-| `[文字](./other.md)` | [文字](#) | 内部文档链接 |
+| `[文字](other.md)` | [文字](#) | 内部文档链接 |
 | `[文字](#锚点)` | [文字](#锚点) | 锚点链接 |
 | `<mail@example.com>` | <mail@example.com> | 邮箱链接自动识别 |
 | `![alt](img.png)` | ![图片](#) | 基础图片语法 |

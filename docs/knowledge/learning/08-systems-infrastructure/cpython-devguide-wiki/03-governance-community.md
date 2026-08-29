@@ -369,4 +369,4 @@ CPython不是唯一的Python实现，但它是参考实现，其他实现通常�
 
 ## 下一步
 
-👉 [04 - 最佳实践与反模式：10个常见陷阱、PR检查清单与成长路径](./04-best-practices-anti-patterns.md)
+👉 [04 - 最佳实践与反模式：10个常见陷阱、PR检查清单与成长路径](04-best-practices-anti-patterns.md)

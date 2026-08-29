@@ -14,7 +14,7 @@ tags:
   - data
   - query
   - mdi-example
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/mdi/examples/generate-api.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/mdi/examples/generate-api.toml"
 ---
 # 数据生成 API
 

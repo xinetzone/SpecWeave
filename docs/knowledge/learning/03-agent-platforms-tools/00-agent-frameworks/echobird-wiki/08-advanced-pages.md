@@ -159,4 +159,4 @@ Windows 实现要点：
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [07 工具注册表](./07-tool-registry.md) | [README](./README.md) | → [09 快速上手指南](./09-quickstart.md) |
+| ← [07 工具注册表](07-tool-registry.md) | [README](README.md) | → [09 快速上手指南](09-quickstart.md) |

@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-05-auth-permission"
 title: "05 权限认证流程"
 source: "hermes-agent 插件文档 v2.5.0 + SpecWeave 现状"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/05-auth-permission.toml"
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/05-auth-permission.toml"
 type: "Wiki Tutorial"
 description: "权限认证流程：插件 name 消毒、路径安全、manifest_version、HERMES_HOME、API key 环境变量、project 插件权限"
 status: "stable"
@@ -63,7 +63,7 @@ export HOME_ASSISTANT_TOKEN="..."
 export APIARIO_API_KEY="..."   # model provider 示例
 ```
 
-> **安全原则**：密钥不进仓库、不进 plugin.yaml、不进 `~/.hermes/config.yaml`，一律用环境变量。SpecWeave 的 [数据安全规则](../../../../../../rules/README.md) 同样适用。
+> **安全原则**：密钥不进仓库、不进 plugin.yaml、不进 `~/.hermes/config.yaml`，一律用环境变量。SpecWeave 的 [数据安全规则](../../../../../../.agents/rules/README.md) 同样适用。
 
 ## 5.6 project 插件权限开启
 

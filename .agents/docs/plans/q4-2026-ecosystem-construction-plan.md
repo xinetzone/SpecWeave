@@ -95,7 +95,7 @@ flowchart TB
 
 | # | 子里程碑 | 关键动作 | 交付物 | 优先级 |
 |---|---------|---------|--------|--------|
-| A1 | **上游规范资产盘点**（10月） | 扫描 `.agents/docs/knowledge/` 与 `docs/knowledge/` 全部 wiki 教程，识别其上游规范/参考实现；按「是否公开 spec、是否需本地固化、是否需自建工具」产出 vendor 固化需求矩阵 | 资产盘点报告 + vendor 优先级矩阵 | 🔴 高 |
+| A1 | **上游规范资产盘点**（10月） | 扫描 `docs/knowledge/` 与 `docs/knowledge/` 全部 wiki 教程，识别其上游规范/参考实现；按「是否公开 spec、是否需本地固化、是否需自建工具」产出 vendor 固化需求矩阵 | 资产盘点报告 + vendor 优先级矩阵 | 🔴 高 |
 | A2 | **高价值上游 vendor 固化**（11月） | 对矩阵中 ≥4 个高价值上游执行 git submodule 固化（复用 OKF 的 awesome-okf/knowledge-catalog 三轮迁移经验：游离状态→submodule、锁定版本、明确「第三方 vs 自建」边界） | 4+ 个 submodule 固化 + 迁移记录 | 🔴 高 |
 | A3 | **自建配套工具**（12月） | 基于已固化规范，自建 1-2 个配套工具（复用 OKF 工具链架构：零运行时依赖、插件化 Harness、CLI 子命令） | 1-2 个 tools/ 子项目 | 🟡 中 |
 

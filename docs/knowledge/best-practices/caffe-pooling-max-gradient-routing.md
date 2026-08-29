@@ -191,7 +191,7 @@ MAX Pooling Backward必须覆盖以下参数组合：
 |------|------|
 | [AVE Pooling梯度路由](caffe-pooling-ave-gradient-routing.md) | 姊妹模式：均匀分配而非winner-takes-all |
 | [手算梯度验证](hand-computed-gradient-verification.md) | L1层验证方法 |
-| [三层测试验证法](../../retrospective/patterns/code-patterns/three-layer-test-validation.md) | 通用测试框架 |
+| [三层测试验证法](../../../.agents/docs/retrospective/patterns/code-patterns/three-layer-test-validation.md) | 通用测试框架 |
 | [C¹拐点防护](float-precision-testing-guide.md) | 数值梯度精度注意事项 |
 
 ## 8. 测试文件参考

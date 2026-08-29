@@ -130,4 +130,4 @@ pnpm test          # 运行 package tests
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [06 IM 网关与定时任务](./06-gateway-tasks.md) | [README](./README.md) | → [08 FAQ 与术语表](./08-faq-glossary.md) |
+| ← [06 IM 网关与定时任务](06-gateway-tasks.md) | [README](README.md) | → [08 FAQ 与术语表](08-faq-glossary.md) |

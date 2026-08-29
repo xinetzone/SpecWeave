@@ -30,18 +30,18 @@ target_version: "v5.6.0"
 
 | 章号 | 文件名 | 标题 | 一句话简介 |
 |------|--------|------|-----------|
-| 00 | [00-overview.md](./00-overview.md) | 教程总览与知识地图 | EchoBird 生态全景图、12 章导航、三条阅读路径 |
-| 01 | [01-product-positioning.md](./01-product-positioning.md) | 产品定位与核心价值 | 解决 60% 用户安装配置痛点、"配置一次到处可用" |
-| 02 | [02-architecture.md](./02-architecture.md) | 技术架构深度解析 | Tauri+Rust 前后端分层、入口初始化流程、依赖清单 |
-| 03 | [03-model-nexus.md](./03-model-nexus.md) | Model Nexus 模型中心 | modelDirectory.json 数据模型、API Key 加密、配置一次到处可用 |
-| 04 | [04-core-scenarios.md](./04-core-scenarios.md) | 四大核心场景 | 安装修复/本地大模型/AI 项目/应用管理器的源码实现 |
-| 05 | [05-local-llm.md](./05-local-llm.md) | 本地大模型服务 | vLLM/SGLang/llama.cpp 引擎选择、GPU 检测、模型下载、进程管理 |
-| 06 | [06-codex-proxy.md](./06-codex-proxy.md) | Codex Proxy 协议转换 | 127.0.0.1:53682 绑定、Responses↔Chat 转换、多厂商适配、流式处理 |
-| 07 | [07-tool-registry.md](./07-tool-registry.md) | 工具注册表 | config.json/paths.json 结构、25+ 工具、官方端点恢复 |
-| 08 | [08-advanced-pages.md](./08-advanced-pages.md) | 高级功能模块 | AiPulse/AiCareer/MotherAgent/Skills/SSH 等 |
-| 09 | [09-quickstart.md](./09-quickstart.md) | 快速上手指南 | 四步快速上手：安装→装 Agent→配模型→绑定启动 |
-| 10 | [10-comparison-trends.md](./10-comparison-trends.md) | 对比与趋势洞察 | 与同类工具对比、Agent 桌面化趋势 |
-| 11 | [11-faq-glossary.md](./11-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 核心术语词表 |
+| 00 | [00-overview.md](00-overview.md) | 教程总览与知识地图 | EchoBird 生态全景图、12 章导航、三条阅读路径 |
+| 01 | [01-product-positioning.md](01-product-positioning.md) | 产品定位与核心价值 | 解决 60% 用户安装配置痛点、"配置一次到处可用" |
+| 02 | [02-architecture.md](02-architecture.md) | 技术架构深度解析 | Tauri+Rust 前后端分层、入口初始化流程、依赖清单 |
+| 03 | [03-model-nexus.md](03-model-nexus.md) | Model Nexus 模型中心 | modelDirectory.json 数据模型、API Key 加密、配置一次到处可用 |
+| 04 | [04-core-scenarios.md](04-core-scenarios.md) | 四大核心场景 | 安装修复/本地大模型/AI 项目/应用管理器的源码实现 |
+| 05 | [05-local-llm.md](05-local-llm.md) | 本地大模型服务 | vLLM/SGLang/llama.cpp 引擎选择、GPU 检测、模型下载、进程管理 |
+| 06 | [06-codex-proxy.md](06-codex-proxy.md) | Codex Proxy 协议转换 | 127.0.0.1:53682 绑定、Responses↔Chat 转换、多厂商适配、流式处理 |
+| 07 | [07-tool-registry.md](07-tool-registry.md) | 工具注册表 | config.json/paths.json 结构、25+ 工具、官方端点恢复 |
+| 08 | [08-advanced-pages.md](08-advanced-pages.md) | 高级功能模块 | AiPulse/AiCareer/MotherAgent/Skills/SSH 等 |
+| 09 | [09-quickstart.md](09-quickstart.md) | 快速上手指南 | 四步快速上手：安装→装 Agent→配模型→绑定启动 |
+| 10 | [10-comparison-trends.md](10-comparison-trends.md) | 对比与趋势洞察 | 与同类工具对比、Agent 桌面化趋势 |
+| 11 | [11-faq-glossary.md](11-faq-glossary.md) | FAQ 与术语表 | 常见问题解答 + 核心术语词表 |
 
 ## 内容快照声明
 

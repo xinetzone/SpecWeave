@@ -1,6 +1,6 @@
 ---
 source: "agent-skills-open-standard-wiki.md#四skillmd-格式规范"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/03-skill-md-format.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/03-skill-md-format.toml"
 id: "agent-skills-wiki-skill-md-format"
 title: "四、SKILL.md 格式规范"
 ---
@@ -21,7 +21,7 @@ description: 描述技能功能和触发时机（1-1024字符）
 指令正文（Markdown 格式）...
 ```
 
-> **源码锚点**：frontmatter 解析逻辑见 [parser.py:30-64](../../../../../../apps/dev-tools/prompt_extraction/input/parser.py#L30-L64)
+> **源码锚点**：frontmatter 解析逻辑见 [parser.py:30-64](../../../../../apps/dev-tools/prompt_extraction/input/parser.py#L30-L64)
 
 ## 4.2 Frontmatter 字段规范
 
@@ -34,7 +34,7 @@ description: 描述技能功能和触发时机（1-1024字符）
 | `allowed-tools` | ❌ | 空格分隔的工具模式字符串 | 预批准使用的工具（实验性功能） |
 | `metadata` | ❌ | 键值对映射 | 自定义元数据（客户端特定属性） |
 
-> **源码锚点**：字段约束常量见 [validator/ 包（✅已拆分）](../../../../../scripts/mdi/validator/__init__.py)（原validator.py已拆分为模块化包，入口为__init__.py，原行号引用已过时）
+> **源码锚点**：字段约束常量见 [validator/ 包（✅已拆分）](../../../../../.agents/scripts/mdi/validator/__init__.py)（原validator.py已拆分为模块化包，入口为__init__.py，原行号引用已过时）
 
 ### 4.2.1 `name` 字段详解
 
@@ -60,7 +60,7 @@ name: pdf_processing    # ❌ 不允许下划线（仅允许字母、数字、�
 - 支持 Unicode 国际字符（中文、俄文等），但必须是**小写**形式
 - 名称经过 **NFKC 规范化**后与目录名比较（解决预组合/分解字符问题，如 `café` 的两种 Unicode 表示）
 
-> **源码锚点**：name 验证逻辑见 [validator/ 包（✅已拆分）](../../../../../scripts/mdi/validator/__init__.py)（核心逻辑在 [core.py](../../../../../scripts/mdi/validator/core.py)）；NFKC 测试见 [test_validator.py:267-290](../../../../../../external/agentskills/skills-ref/tests/test_validator.py#L267-L290)
+> **源码锚点**：name 验证逻辑见 [validator/ 包（✅已拆分）](../../../../../.agents/scripts/mdi/validator/__init__.py)（核心逻辑在 [core.py](../../../../../.agents/scripts/mdi/validator/core.py)）；NFKC 测试见 [test_validator.py:267-290](../../../../../../external/agentskills/skills-ref/tests/test_validator.py#L267-L290)
 
 ### 4.2.2 `description` 字段详解
 
@@ -80,7 +80,7 @@ description: Helps with PDFs.    # ❌ 太模糊
 - 明确列出适用场景，包括用户未直接提及领域名称的情况
 - 保持简洁（硬限制 1024 字符）
 
-> **源码锚点**：description 验证见 [validator/ 包（✅已拆分）](../../../../../scripts/mdi/validator/__init__.py)
+> **源码锚点**：description 验证见 [validator/ 包（✅已拆分）](../../../../../.agents/scripts/mdi/validator/__init__.py)
 
 ### 4.2.3 完整 Frontmatter 示例
 

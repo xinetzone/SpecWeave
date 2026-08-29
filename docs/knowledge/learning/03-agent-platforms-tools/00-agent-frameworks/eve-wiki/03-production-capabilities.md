@@ -144,4 +144,4 @@ export default defineEval({
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [02 目录结构与核心能力](./02-directory-core-capabilities.md) | [README](./README.md) | → [04 进阶能力](./04-advanced-capabilities.md) |
+| ← [02 目录结构与核心能力](02-directory-core-capabilities.md) | [README](README.md) | → [04 进阶能力](04-advanced-capabilities.md) |

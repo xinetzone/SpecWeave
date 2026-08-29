@@ -156,4 +156,4 @@ flowchart LR
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [01 产品介绍](./01-product-intro.md) | [README](./README.md) | → [03 VeADK开发框架](./03-veadk-framework.md) |
+| ← [01 产品介绍](01-product-intro.md) | [README](README.md) | → [03 VeADK开发框架](03-veadk-framework.md) |

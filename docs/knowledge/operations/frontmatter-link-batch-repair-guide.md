@@ -2,7 +2,7 @@
 id: "frontmatter-link-batch-repair-guide"
 title: "Frontmatter 路径与链接批量修复流程指南"
 source: "../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md#8阶段修复记录"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/frontmatter-link-batch-repair-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/frontmatter-link-batch-repair-guide.toml"
 category: "operations"
 tags: ["frontmatter", "链接修复", "批量修复", "check-links", "路径规范化", "external标记"]
 date: "2026-07-10"
@@ -286,12 +286,12 @@ python .agents/scripts/check-links.py --path docs > .trae/documents/check-links-
 
 | 工具 | 用途 | 文档 |
 |------|------|------|
-| `check-links.py` | 链接校验 + frontmatter 路径检查 + `--fix` 自动修复 | [检查类脚本](../../../scripts/docs/usage/01-check-scripts.md#check-linkspy) |
-| `generate-readme.py` | 批量创建缺失 README + `--check` 门禁 | [生成与构建脚本](../../../scripts/docs/usage/02-generate-build-scripts.md#generate-readmepy) |
+| `check-links.py` | 链接校验 + frontmatter 路径检查 + `--fix` 自动修复 | [检查类脚本](../../../.agents/scripts/docs/usage/01-check-scripts.md#check-linkspy) |
+| `generate-readme.py` | 批量创建缺失 README + `--check` 门禁 | [生成与构建脚本](../../../.agents/scripts/docs/usage/02-generate-build-scripts.md#generate-readmepy) |
 
 ### 6.2 批量修复脚本
 
-8 个修复与分析脚本的完整使用说明见 [批量修复脚本使用说明](../../../scripts/docs/usage/04-fix-scripts.md)，包含每个脚本的 CLI 用法、输入输出格式、依赖关系和 5 步批量修复推荐流程。
+8 个修复与分析脚本的完整使用说明见 [批量修复脚本使用说明](../../../.agents/scripts/docs/usage/04-fix-scripts.md)，包含每个脚本的 CLI 用法、输入输出格式、依赖关系和 5 步批量修复推荐流程。
 
 ### 6.3 脚本间依赖关系
 
@@ -352,9 +352,9 @@ python .agents/scripts/check-links.py --path docs/retrospective
 
 本指南提炼自 2026-07-10 的实际修复工作，完整复盘记录见：
 
-- [best-practices 断链修复复盘](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 完整复盘报告
-- [行动项 Backlog](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md) — 7 项行动项 + 8 阶段修复记录
-- [执行复盘](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.md) — 执行过程与瓶颈分析
+- [best-practices 断链修复复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 完整复盘报告
+- [行动项 Backlog](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md) — 7 项行动项 + 8 阶段修复记录
+- [执行复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.md) — 执行过程与瓶颈分析
 
 ### 修复成果
 

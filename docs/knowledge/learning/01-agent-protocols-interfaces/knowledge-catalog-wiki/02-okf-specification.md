@@ -257,7 +257,7 @@ Concept之间使用标准Markdown链接表示关系（参见 [okf-wiki 链接规
 
 **相对链接示例**：
 ```markdown
-参见 [相邻概念](./other.md)。
+参见 [相邻概念](other.md)。
 ```
 
 ### 2.4.2 链接语义与断链容忍
@@ -294,7 +294,7 @@ Concept之间使用标准Markdown链接表示关系（参见 [okf-wiki 链接规
 
 # 另一个章节
 
-* [子目录](subdir/) - 子目录的简短描述
+* [子目录](subdir) - 子目录的简短描述
 ```
 
 ### 2.5.2 实现要点
@@ -555,8 +555,8 @@ bundles/finance/
 - OKF核心概念：[okf-wiki 01 核心概念](../okf-wiki/01-core-concepts.md)
 - OKF快速入门实操：[okf-wiki 02 快速入门](../okf-wiki/02-quickstart.md)
 - OKF架构与Agent集成：[okf-wiki 05 架构定位与Agent集成](../okf-wiki/05-architecture-and-integration.md)
-- Knowledge Catalog平台架构：[01 核心概念与平台架构](./01-core-concepts.md)
+- Knowledge Catalog平台架构：[01 核心概念与平台架构](01-core-concepts.md)
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [01 核心概念与平台架构](./01-core-concepts.md) | [README](./README.md) | [03 参考Agent实现](./03-reference-agent.md) |
+| [01 核心概念与平台架构](01-core-concepts.md) | [README](README.md) | [03 参考Agent实现](03-reference-agent.md) |

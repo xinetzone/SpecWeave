@@ -6,7 +6,7 @@ date: "2026-08-14"
 source: "apps/docker-images/devcontainer-base/variants/onnx-quantized/RELEASE.md"
 type: "Reference"
 description: "devcontainer-base:onnx-quantized 镜像 v2.0.0 发布清单，基础镜像迁移至 onnx-dev（free-threading 纯 ONNX 架构），24/24 测试通过。"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/tech/release-onnx-quantized-v2.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/tech/release-onnx-quantized-v2.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -16,7 +16,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # onnx-quantized v2.0.0 发布清单（Release Manifest）
 
 > 本清单基于已构建并验证通过的 `devcontainer-base:onnx-quantized-latest`（**v2.0.0**）镜像生成。

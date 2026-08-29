@@ -4,7 +4,7 @@ date: "2026-07-12"
 updated: "2026-07-13"
 type: "best-practice"
 source: "spec-loader.py 三场景性能实测（-v日志量化分析）+ P0/P1/P2优化后benchmark验证"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/l2-progressive-disclosure-performance.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/l2-progressive-disclosure-performance.toml"
 title: "L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录（P0+P1+P2完成）"
 ---
 # L2 渐进式披露加载器性能优化：实测基线、优化建议与实施记录
@@ -262,11 +262,11 @@ python .agents/scripts/spec-loader.py task "代码审查" -l -v
 
 | 文件 | 职责 |
 |------|------|
-| [spec_loader.py](../../../scripts/lib/spec_loader.py) | L2加载器核心库（含分层加载、磁盘缓存、耗时日志） |
-| [spec-loader.py](../../../scripts/spec-loader.py) | CLI入口（benchmark/task/audit/cache-stats） |
-| [atomic_write.py](../../../scripts/lib/atomic_write.py) | 跨平台原子写入工具（缓存文件持久化使用） |
-| [spec-loader.toml](../../../config/spec-loader.toml) | 生产配置（缓存开关、版本号、LRU大小等） |
-| [test_spec_loader.py](../../../scripts/tests/test_spec_loader.py) | 单元测试（79个用例，含轻量模式/权重匹配/角色截断/批量读取/日志审计/并发写入/缓存失效/重试场景） |
+| [spec_loader.py](../../../.agents/scripts/lib/spec_loader.py) | L2加载器核心库（含分层加载、磁盘缓存、耗时日志） |
+| [spec-loader.py](../../../.agents/scripts/spec-loader.py) | CLI入口（benchmark/task/audit/cache-stats） |
+| [atomic_write.py](../../../.agents/scripts/lib/atomic_write.py) | 跨平台原子写入工具（缓存文件持久化使用） |
+| [spec-loader.toml](../../../.agents/config/spec-loader.toml) | 生产配置（缓存开关、版本号、LRU大小等） |
+| [test_spec_loader.py](../../../.agents/scripts/tests/test_spec_loader.py) | 单元测试（79个用例，含轻量模式/权重匹配/角色截断/批量读取/日志审计/并发写入/缓存失效/重试场景） |
 | [l2-progressive-disclosure-optimization.md](l2-progressive-disclosure-optimization.md) | 功能性优化建议（路由/覆盖/集成） |
 | [file-io-concurrency-safety.md](file-io-concurrency-safety.md) | 文件I/O并发安全最佳实践（原子写入/日志/重试通用规范） |
 
@@ -353,7 +353,7 @@ python -m pytest .agents/scripts/tests/test_spec_loader.py -v
 
 ### 8.1 原子写入规范
 
-磁盘缓存文件 `.agents/.cache/spec-loader.json` 的持久化采用原子写入模式，通过 [atomic_write.py](../../../scripts/lib/atomic_write.py) 实现，确保：
+磁盘缓存文件 `.agents/.cache/spec-loader.json` 的持久化采用原子写入模式，通过 [atomic_write.py](../../../.agents/scripts/lib/atomic_write.py) 实现，确保：
 
 - **读者永远不会看到部分写入的内容**：写入过程中数据先写到临时文件，`os.replace()` 成功的瞬间原子替换目标文件
 - **多进程并发安全**：每个进程使用唯一临时文件名（含PID+6位随机hex后缀），不会发生临时文件碰撞
@@ -398,7 +398,7 @@ SpecLoader 在关键路径使用分阶段计时日志，每个子步骤独立使
 - 成功日志：`_log.debug()`
 - 失败日志：`_log.warning()`，包含 `error=...` 和 `elapsed=...`
 
-**模板A：缓存保存操作**（对应 [spec_loader.py:476-535](../../../scripts/lib/spec_loader.py#L476-L535)）：
+**模板A：缓存保存操作**（对应 [spec_loader.py:476-535](../../../.agents/scripts/lib/spec_loader.py#L476-L535)）：
 
 ```python
 _t_save_start = time.perf_counter()
@@ -427,7 +427,7 @@ except OSError as e:
                  (time.perf_counter() - _t_save_start) * 1000)
 ```
 
-**模板B：文件读取操作**（对应 [spec_loader.py:538-639](../../../scripts/lib/spec_loader.py#L538-L639)）：
+**模板B：文件读取操作**（对应 [spec_loader.py:538-639](../../../.agents/scripts/lib/spec_loader.py#L538-L639)）：
 
 ```python
 _t_read_start = time.perf_counter()
@@ -444,7 +444,7 @@ _log.debug("内存缓存命中 | layer=%s | path=%s | chars=%d | 来源=%s | "
            _t_resolve_ms, _t_memcheck_ms, _t_total_ms)
 ```
 
-**模板C：加载流程步骤计时**（对应 [spec_loader.py:733-812](../../../scripts/lib/spec_loader.py#L733-L812)）：
+**模板C：加载流程步骤计时**（对应 [spec_loader.py:733-812](../../../.agents/scripts/lib/spec_loader.py#L733-L812)）：
 
 ```python
 _t_step = time.perf_counter()
@@ -471,7 +471,7 @@ Windows 平台上 `os.replace()` 可能因以下原因短暂失败：
 | `retry_interval_ms` | **10** | 重试间隔10ms（给AV/索引器足够时间释放锁） |
 | `stale_max_age_sec` | **3600** | 临时文件超过1小时视为陈旧，写入前自动清理 |
 
-**重试算法**（对应 [atomic_write.py:75-94](../../../scripts/lib/atomic_write.py#L75-L94)）：
+**重试算法**（对应 [atomic_write.py:75-94](../../../.agents/scripts/lib/atomic_write.py#L75-L94)）：
 
 ```python
 def _atomic_replace_with_retry(src, dst, max_retries=3, interval_ms=10):
@@ -742,10 +742,10 @@ python -m pytest .agents/scripts/tests/test_spec_loader.py -v
 
 | 文件 | 职责 |
 |------|------|
-| [spec_loader.py](../../../scripts/lib/spec_loader.py) | 核心库：四层架构+磁盘缓存+轻量模式+权重匹配+按需加载+L0/L1a批量读取 |
-| [spec-loader.py](../../../scripts/spec-loader.py) | CLI入口：benchmark/task/audit/cache-stats，支持`-l`/`--primary-only` |
-| [atomic_write.py](../../../scripts/lib/atomic_write.py) | 跨平台原子写入+Windows重试策略 |
-| [test_spec_loader.py](../../../scripts/tests/test_spec_loader.py) | 79个单元测试用例，覆盖核心加载/缓存/轻量模式/权重匹配/角色截断/批量读取/日志审计/并发/重试 |
+| [spec_loader.py](../../../.agents/scripts/lib/spec_loader.py) | 核心库：四层架构+磁盘缓存+轻量模式+权重匹配+按需加载+L0/L1a批量读取 |
+| [spec-loader.py](../../../.agents/scripts/spec-loader.py) | CLI入口：benchmark/task/audit/cache-stats，支持`-l`/`--primary-only` |
+| [atomic_write.py](../../../.agents/scripts/lib/atomic_write.py) | 跨平台原子写入+Windows重试策略 |
+| [test_spec_loader.py](../../../.agents/scripts/tests/test_spec_loader.py) | 79个单元测试用例，覆盖核心加载/缓存/轻量模式/权重匹配/角色截断/批量读取/日志审计/并发/重试 |
 
 ### 12.4 关键决策记录
 

@@ -1,7 +1,7 @@
 ---
 id: "relative-path-repair-pitfalls"
 title: "相对路径批量修复三类非直觉陷阱与修复方案"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/relative-path-repair-pitfalls.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/relative-path-repair-pitfalls.toml"
 category: "troubleshooting"
 tags: ["relative-path", "broken-links", "replace-all", "edit-tool", "markdown", "check-links", "batch-repair", "path-depth"]
 date: "2026-07-07"
@@ -15,7 +15,7 @@ summary: "记录批量修复 Markdown 相对路径断链时遇到的三类非直
 
 在一次复盘报告批量断链修复任务中（共修复 481 个断链），表面看相对路径修复是机械操作：找到错误路径 → 替换为正确路径。但实际执行过程中出现了"越修越多"和"修完仍错"两类异常——错误不发生在计算层，而发生在**工具替换机制**和**目录定位层**。
 
-本文档将这三类陷阱的修复逻辑整理为可操作的技术指南，配套 [relative-path-pitfalls.md](../../retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) 模式文档使用：模式文档侧重方法论与可复用性，本文档侧重具体修复操作与验证流程。
+本文档将这三类陷阱的修复逻辑整理为可操作的技术指南，配套 [relative-path-pitfalls.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) 模式文档使用：模式文档侧重方法论与可复用性，本文档侧重具体修复操作与验证流程。
 
 ## 问题/场景
 
@@ -345,8 +345,8 @@ flowchart TD
 
 ## 参考
 
-- [相对路径三类特殊踩坑案例（模式文档）](../../retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) — 方法论视角的同源文档，包含成熟度评估与模式关系图
-- [check-links.py 链接检查工具](../../../scripts/check-links.py) — 项目内置断链检测与自动修复工具
-- [link-check-cmd Skill](../../../skills/link-check-cmd/SKILL.md) — 链接检查命令的 Skill 门面
+- [相对路径三类特殊踩坑案例（模式文档）](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/relative-path-pitfalls.md) — 方法论视角的同源文档，包含成熟度评估与模式关系图
+- [check-links.py 链接检查工具](../../../.agents/scripts/check-links.py) — 项目内置断链检测与自动修复工具
+- [link-check-cmd Skill](../../../.agents/skills/link-check-cmd/SKILL.md) — 链接检查命令的 Skill 门面
 - [Move-Item 目录重命名报 Access Denied 错误](move-item-access-denied.md) — 同类 Windows 路径操作故障排查文档
 - [跳过 AGENTS.md 启动协议导致三重连锁输出错误](agents-md-startup-protocol-skipped.md) — 同类工具使用陷阱故障排查文档

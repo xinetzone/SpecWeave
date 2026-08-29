@@ -1,7 +1,7 @@
 ---
 id: "docker-cache-wsl-migration-guide"
 title: "Docker镜像缓存→WSL2发行版迁移操作指南"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/docker-cache-wsl-migration-guide.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-migration-guide.toml"
 category: "operations"
 date: "2026-08-18"
 status: "reviewed"

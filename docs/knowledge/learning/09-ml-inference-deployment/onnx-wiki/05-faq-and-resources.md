@@ -254,13 +254,13 @@ for out in model.graph.output:
 
 ## 与本Wiki其他章节交叉引用
 
-- [00-overview.md](./00-overview.md)：总览与TL;DR快速结论
-- [01-core-concepts.md](./01-core-concepts.md)：核心概念详解（如果某个术语不理解来这里查）
-- [02-python-api.md](./02-python-api.md)：Python API实战代码
-- [03-quickstart.md](./03-quickstart.md)：5分钟快速上手
-- [04-best-practices.md](./04-best-practices.md)：**6个反模式与最佳实践**（生产必读）
-- [README.md](./README.md)：Wiki入口导航
+- [00-overview.md](00-overview.md)：总览与TL;DR快速结论
+- [01-core-concepts.md](01-core-concepts.md)：核心概念详解（如果某个术语不理解来这里查）
+- [02-python-api.md](02-python-api.md)：Python API实战代码
+- [03-quickstart.md](03-quickstart.md)：5分钟快速上手
+- [04-best-practices.md](04-best-practices.md)：**6个反模式与最佳实践**（生产必读）
+- [README.md](README.md)：Wiki入口导航
 
 ---
 
-**上一章**：[04-best-practices.md - 最佳实践与反模式](./04-best-practices.md) | **返回入口**：[README.md](./README.md)
+**上一章**：[04-best-practices.md - 最佳实践与反模式](04-best-practices.md) | **返回入口**：[README.md](README.md)

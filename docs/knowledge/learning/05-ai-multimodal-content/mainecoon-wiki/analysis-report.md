@@ -2,13 +2,13 @@
 id: "mainecoon-wiki-analysis-report"
 title: "MaineCoon 深度洞察分析报告索引页"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/analysis-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/analysis-report.toml"
 ---
 # MaineCoon 实时音视频模型文章深度洞察分析报告
 
 > 本报告基于微信公众号文章《MaineCoon:实时音视频基础模型》(作者:阿颖)进行系统性学习、深度洞察与知识萃取,按 Task 1-8 顺序完成内容预处理、核心观点提炼、五大场景解析、三大技术突破萃取、来源可靠性评估、批判性思考与 SpecWeave 关联分析。
 >
-> **本报告已于 2026-08-05 完成原子化拆分**，原 1248 行内容按分析维度拆分为 6 个原子文件，本文件为索引页。原文缓存见 [_article_ff4S2ZTY.md](../../../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md)，规格见 [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)，任务清单见 [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md)。
+> **本报告已于 2026-08-05 完成原子化拆分**，原 1248 行内容按分析维度拆分为 6 个原子文件，本文件为索引页。原文缓存见 [_article_ff4S2ZTY.md](../../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md)，规格见 [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md)，任务清单见 [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md)。
 ---
 
 ## 📑 原子化导航
@@ -35,8 +35,8 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-
 
 以下模式已从本报告中萃取为独立模式文档：
 
-- [三角困境→架构级解决框架](../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)（源自 §14.2.1）
-- [诚实承认局限性信任构建策略](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)（源自 §14.2.4）
+- [三角困境→架构级解决框架](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)（源自 §14.2.1）
+- [诚实承认局限性信任构建策略](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)（源自 §14.2.4）
 
 ---
 
@@ -118,12 +118,12 @@ MaineCoon 作为 2026 年中实时音视频模型的代表产品,其发布标志
 
 ### C. 引用文档
 
-- [_article_ff4S2ZTY.md](../../../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md):文章原文缓存
-- [spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md):分析任务规格
-- [tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md):任务清单
-- [.agents/capability-boundaries.md](../../../../../capability-boundaries.md):SpecWeave 能力边界声明
-- [.agents/README.md](../../../../../../.agents/README.md):SpecWeave 规范容器
-- [docs/retrospective/](../../../../../../.agents/docs/retrospective/README.md):SpecWeave 复盘体系与可复用模式
+- [_article_ff4S2ZTY.md](../../../../../.trae/specs/retrospectives-insights/_article_ff4S2ZTY.md):文章原文缓存
+- [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md):分析任务规格
+- [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md):任务清单
+- [.agents/capability-boundaries.md](../../../../../.agents/capability-boundaries.md):SpecWeave 能力边界声明
+- [.agents/README.md](../../../../../.agents/README.md):SpecWeave 规范容器
+- [docs/retrospective/](../../../../../.agents/docs/retrospective/README.md):SpecWeave 复盘体系与可复用模式
 
 ### D. 待独立验证项清单
 

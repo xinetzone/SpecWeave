@@ -29,7 +29,7 @@ maturity: "L2-validated"
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
 - [📚 IDL Wiki 基础教程](../idl-wiki/README.md) — IDL概念与protobuf语法基础
 - [🔍 Caffe proto2/proto3 对比实例](../../caffe-architecture-wiki/04-proto2-vs-proto3-serialization-analysis.md) — proto2实际使用案例与对比分析
-- [📚 文档首页](../../../../README.md)
+- [📚 文档首页](../../../../../.agents/docs/README.md)
 
 ---
 

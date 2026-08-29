@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-14"
 title: "Python 3.14 标准库 → mystx 主题优化机会映射笔记"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/14-mystx-optimization-mapping.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/14-mystx-optimization-mapping.toml"
 ---
 # Python 3.14 标准库 → mystx 主题优化机会映射笔记
 

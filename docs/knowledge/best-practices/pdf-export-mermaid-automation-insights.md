@@ -1,7 +1,7 @@
 ---
 id: "pdf-export-mermaid-automation-insights"
 title: "从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.toml"
 category: "best-practices"
 tags: ["pdf导出", "mermaid", "playwright", "pandoc", "自动化", "工程洞察", "工具封装", "质量保证"]
 date: "2026-07-11"
@@ -227,4 +227,4 @@ python .agents/scripts/mermaid-full-scan.py --json
 - [mermaid-full-scan.py](../../../../../.agents/scripts/mermaid-full-scan.py) — Mermaid全量扫描脚本
 - [check-mermaid.py](../../../../../.agents/scripts/check-mermaid.py) — Mermaid语法检查与修复（单文件/目录）
 - [Mermaid图表操作指南](mermaid-guide.md) — Mermaid安全编码六规则
-- [任务复盘报告](../../retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) — 原始复盘报告
+- [任务复盘报告](../../../.agents/docs/retrospective/reports/task-reports/retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) — 原始复盘报告

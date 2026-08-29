@@ -5,7 +5,7 @@ version: 1.0
 # WSL 完整 Wiki 教程 - PRD
 
 ## Overview
-- **Summary**: 基于已有的 WSL 学习计划和 CLI/架构参考手册，在 `.agents/docs/knowledge/learning/08-systems-infrastructure/` 下创建原子化多章节的 WSL wiki 教程目录 `wsl-wiki/`。
+- **Summary**: 基于已有的 WSL 学习计划和 CLI/架构参考手册，在 `docs/knowledge/learning/08-systems-infrastructure/` 下创建原子化多章节的 WSL wiki 教程目录 `wsl-wiki/`。
 - **Purpose**: 当前知识库中 WSL 相关内容仅有两份单文件文档，缺少面向开发者的系统性、原子化、可循序学习的教程。通过知识沉淀链路，将现有知识重组为结构化教程，参考 tvm-ffi-wiki 的 16 章原子化编号结构。
 - **Target Users**: 需要学习 WSL 的开发者、在 Windows 上使用 Linux 开发环境的工程师、集成 WSL Container API（WSLC）的应用开发者、需要理解 WSL 底层架构的系统工程师。
 
@@ -36,7 +36,7 @@ version: 1.0
 - WSL2 核心通信机制：Windows 侧 COM（wsl.exe↔wslservice.exe）+ Windows↔Linux 侧 hvsocket（5 条独立通道，含 wsl.exe→relay 直接 IO 中继）
 
 ## Functional Requirements
-- **FR-1**: 系统 SHALL 在 `.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/` 下创建原子化教程目录，包含 README.md 导航入口 + 12-15 个编号章节文件（00-overview.md 到 14/15-resources.md）
+- **FR-1**: 系统 SHALL 在 `docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/` 下创建原子化教程目录，包含 README.md 导航入口 + 12-15 个编号章节文件（00-overview.md 到 14/15-resources.md）
 - **FR-2**: 系统 SHALL 确保教程内容覆盖 WSL 全部核心知识领域：概述安装、整体架构、CLI 完整参考、Linux 侧核心进程、文件系统互操作、Container API（三语言投影）、网络、配置管理、systemd、调试诊断、开发环境、最佳实践、FAQ、术语表、资源
 - **FR-3**: 系统 SHALL 整合现有 wsl-learning-plan.md 和 wsl-cli-and-architecture-wiki.md 的所有核心内容，避免知识丢失
 - **FR-4**: 系统 SHALL 为每个 md 文件添加标准 YAML frontmatter，包含字段：id、title、source（固定为 "spec:create-wsl-wiki-tutorial"）、date、category、tags
@@ -55,7 +55,7 @@ version: 1.0
 - **Technical**: 纯 Markdown 产出，Mermaid 语法符合规范，严格遵循现有 tvm-ffi-wiki 格式参考
 - **Business**: 内容基于现有两份文档 + 公开官方文档（wsl.dev、learn.microsoft.com），无外部付费资源依赖
 - **Dependencies**: 依赖已有两份 WSL 文档作为主要内容基础，依赖 tvm-ffi-wiki 作为格式参考模板
-- **Path**: 最终产出物路径固定为 `.agents/docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/`
+- **Path**: 最终产出物路径固定为 `docs/knowledge/learning/08-systems-infrastructure/wsl-wiki/`
 
 ## Assumptions
 - external/WSL 源码目录在当前环境不可用，主要基于已有两份文档 + 公开官方文档（wsl.dev、learn.microsoft.com）编写

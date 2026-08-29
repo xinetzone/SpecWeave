@@ -159,7 +159,7 @@ Google Cloud官方提供了完整的OKF参考实现和工具链——**Knowledge
 
 ## 5.8 与SpecWeave现有知识库的结合思考
 
-本项目的知识库（`.agents/docs/knowledge/`）和OKF思想有天然契合点：
+本项目的知识库（`docs/knowledge/`）和OKF思想有天然契合点：
 - 已经在用Markdown+frontmatter的方式组织知识，和OKF核心理念一致
 - 现有wiki原子化结构、frontmatter元数据、交叉链接，都符合OKF思想
 - 可以逐步引入更多OKF约定：更明确的type字段、sources引用、verified状态、log.md变更历史
@@ -169,4 +169,4 @@ Google Cloud官方提供了完整的OKF参考实现和工具链——**Knowledge
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [04 局限性与方案对比](./04-limitations-and-comparison.md) | [README](./README.md) | [06 FAQ与最佳实践](./06-faq-and-best-practices.md) |
+| [04 局限性与方案对比](04-limitations-and-comparison.md) | [README](README.md) | [06 FAQ与最佳实践](06-faq-and-best-practices.md) |

@@ -2,7 +2,7 @@
 id: mdi-conclusion
 title: MDI研究报告 - 结论
 source: "mdi-research-report.md#8-结论"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/07-conclusion.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/07-conclusion.toml"
 ---
 # 结论
 

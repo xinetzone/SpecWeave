@@ -205,4 +205,4 @@ Knowledge Catalog与OKF要做的，就是让这些核心资产有一个开放、
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [README（目录）](./README.md) | [README](./README.md) | [01 核心概念与平台架构](./01-core-concepts.md) |
+| [README（目录）](README.md) | [README](README.md) | [01 核心概念与平台架构](01-core-concepts.md) |

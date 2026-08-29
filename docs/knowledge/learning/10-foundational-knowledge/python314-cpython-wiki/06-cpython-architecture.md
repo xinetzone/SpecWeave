@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-06"
 title: "CPython 源码架构总览"
 source: "https://github.com/python/cpython/tree/v3.14.0"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/06-cpython-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/06-cpython-architecture.toml"
 ---
 # CPython 源码架构总览
 

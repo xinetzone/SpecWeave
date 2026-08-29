@@ -2,7 +2,7 @@
 id: mdi-executive-summary
 title: MDI研究报告 - 执行摘要
 source: "mdi-research-report.md#1-执行摘要"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/00-executive-summary.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/00-executive-summary.toml"
 ---
 # 执行摘要
 

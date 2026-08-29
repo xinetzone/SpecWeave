@@ -108,4 +108,4 @@ A: OKF v0.2有专门的元数据支持：`generated`字段记录生成者（agen
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [05 架构定位与Agent集成](./05-architecture-and-integration.md) | [README](./README.md) | [07 资源与术语表](./07-resources-and-glossary.md) |
+| [05 架构定位与Agent集成](05-architecture-and-integration.md) | [README](README.md) | [07 资源与术语表](07-resources-and-glossary.md) |

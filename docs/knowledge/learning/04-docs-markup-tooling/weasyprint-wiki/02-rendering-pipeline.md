@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-02-pipeline"
 title: "架构深度解析：六步渲染管线"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/02-rendering-pipeline.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/02-rendering-pipeline.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","architecture","pipeline","rendering"]
@@ -59,11 +59,11 @@ Step 6: 绘制输出     →  PDF 字节流
 
 ### 3.4 Step 4: 格式化结构构建（盒树）
 
-**入口**: [build_formatting_structure()](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L63-L94)
+**入口**: [build_formatting_structure()](../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L63-L94)
 
 将 DOM 元素树转换为 CSS 视觉格式化模型中的盒树：
 
-- **盒类型映射**（[BOX_TYPE_FROM_DISPLAY](../../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L18-L42)）：block→BlockBox, inline→InlineBox, table→TableBox, flex→FlexBox, grid→GridBox 等
+- **盒类型映射**（[BOX_TYPE_FROM_DISPLAY](../../../../../external/chaos/npu_tvm/3rdparty/OpenCL-Headers/build.py#L18-L42)）：block→BlockBox, inline→InlineBox, table→TableBox, flex→FlexBox, grid→GridBox 等
 - **匿名盒创建**：表格/Flex/Grid 缺失的包装盒，Block-Inline 混排时的匿名盒
 - **文本处理**：空白折叠、文本变换、引号替换
 - **替换元素**：`<img>`/`<svg>`/`<embed>`/`<object>` 通过 `@handler` 装饰器注册
@@ -90,7 +90,7 @@ for loop in range(max_loops):  # 最多 8 遍
 
 | 模块 | 职责 |
 |------|------|
-| [page.py](../../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) | 页面创建、边距盒、分页决策 |
+| [page.py](../../../../../external/chaos/npu_tvm/3rdparty/flashinfer/python/flashinfer/page.py) | 页面创建、边距盒、分页决策 |
 | [block.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/markdown_it/rules_core/block.py) | 块级布局、行盒、浮动 |
 | [inline.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/markdown_it/rules_core/inline.py) | 行内布局、文本断行 |
 | [table.py](../../../../../../projects/xuanspace/.test-venv/Lib/site-packages/rich/table.py) | 表格布局、边框折叠 |

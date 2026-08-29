@@ -7,7 +7,7 @@ tags: ["areal", "rl-training", "agentic-rl", "online-rl", "llm-alignment", "dist
 ---
 # AReaL 2.0 官方实战教程：从安装到在线RL微服务部署
 
-> 📚 **相关文档**：本文为实战教程篇，概念原理篇请参考 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](./areal-agent-rl-wiki.md)
+> 📚 **相关文档**：本文为实战教程篇，概念原理篇请参考 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](areal-agent-rl-wiki.md)
 
 ## 目录
 
@@ -28,7 +28,7 @@ tags: ["areal", "rl-training", "agentic-rl", "online-rl", "llm-alignment", "dist
 
 **AReaL**（Asynchronous Reinforcement Learning，异步强化学习）是一个专为大规模语言模型推理和Agent应用设计的强化学习基础设施，由清华大学IIIS与蚂蚁集团AReaL团队开发。
 
-> 💡 **概念篇交叉引用**：关于AReaL的异步RL范式、解耦PPO损失、参数重分配等核心原理，请阅读 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](./areal-agent-rl-wiki.md)。
+> 💡 **概念篇交叉引用**：关于AReaL的异步RL范式、解耦PPO损失、参数重分配等核心原理，请阅读 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](areal-agent-rl-wiki.md)。
 
 ### 1.1 AReaL 2.0亮点
 
@@ -346,7 +346,7 @@ MoE混合并行语法：`megatron:(attn:d1p4t2c2|ffn:d1p4t1e4)`
 
 ## 四、核心概念与架构
 
-> 💡 **概念篇交叉引用**：关于异步RL、解耦PPO损失、staleness控制等深入原理，请参考 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](./areal-agent-rl-wiki.md)。
+> 💡 **概念篇交叉引用**：关于异步RL、解耦PPO损失、staleness控制等深入原理，请参考 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](areal-agent-rl-wiki.md)。
 
 ### 4.1 核心组件
 
@@ -1518,4 +1518,4 @@ actor:
 
 ---
 
-> 📚 **继续学习**：本文为实战教程篇，异步RL核心原理、解耦PPO数学推导、参数重分配机制等深入内容，请阅读 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](./areal-agent-rl-wiki.md)。
+> 📚 **继续学习**：本文为实战教程篇，异步RL核心原理、解耦PPO数学推导、参数重分配机制等深入内容，请阅读 [AReaL Agent RL Wiki：异步强化学习系统概念与原理](areal-agent-rl-wiki.md)。

@@ -1,7 +1,7 @@
 ---
 id: "troubleshooting-index"
 title: "故障排查指南库"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/troubleshooting/README.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/README.toml"
 category: "troubleshooting"
 date: "2026-07-09"
 ---
@@ -107,5 +107,5 @@ flowchart TD
 - [📁 运维操作指南](../operations/README.md) - 正向操作流程手册（避免踩坑）
 - [📁 架构决策记录](../decisions/README.md) - 理解设计决策背后的权衡
 - [📁 团队最佳实践库](../best-practices/README.md) - 预防问题的方法论和Checklist
-- [📁 复盘报告目录](../../retrospective/reports/README.md) - 故障的原始复盘来源
-- [🔧 check-links.py](../../../scripts/check-links.py) - 链接检查与自动修复工具
+- [📁 复盘报告目录](../../../.agents/docs/retrospective/reports/README.md) - 故障的原始复盘来源
+- [🔧 check-links.py](../../../.agents/scripts/check-links.py) - 链接检查与自动修复工具

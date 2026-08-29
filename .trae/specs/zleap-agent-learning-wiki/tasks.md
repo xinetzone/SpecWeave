@@ -49,7 +49,7 @@
   - [x] SubTask 10.2: 编写 ≥10 个核心术语表（Workspace、Context Layout、Person/Event/Experience Memory、Skill、RRF、MCP、Gateway、Turn Loop、Approval、main/work 等）
 
 - [x] Task 11: 在知识库索引中登记新文档
-  - [x] SubTask 11.1: 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md` 的对应类目下追加 Zleap-Agent 学习 wiki 条目，包含文档标题与相对路径链接
+  - [x] SubTask 11.1: 在 `docs/knowledge/learning/03-agent-platforms-tools/README.md` 的对应类目下追加 Zleap-Agent 学习 wiki 条目，包含文档标题与相对路径链接
 
 - [x] Task 12: 验证与质量检查
   - [x] SubTask 12.1: 检查所有章节文件命名符合 kebab-case 规范（`00-*.md`、`README.md`）

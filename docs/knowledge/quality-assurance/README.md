@@ -26,10 +26,10 @@ source: seven-concepts V阶段方法论补充
 
 | 文件 | 内容 | 什么时候看 |
 |------|------|-----------|
-| [solo-review-methods.md](./solo-review-methods.md) | 单人/少人替代评审方案 | 找不到人帮你评审的时候 |
-| [reading-tech-docs-case.md](./reading-tech-docs-case.md) | 高效阅读技术文档·七概念实战案例 | 要啃大文档/读paper/学新东西的时候 |
-| [adversarial-review-sop.md](./adversarial-review-sop.md) | "找三个人杠一遍"标准化SOP | 有评审资源，要组织正式评审的时候 |
-| [review-checklist-templates.md](./review-checklist-templates.md) | 知识评审清单模板（2份） | 评审的时候对着勾，防止漏项 |
+| [solo-review-methods.md](solo-review-methods.md) | 单人/少人替代评审方案 | 找不到人帮你评审的时候 |
+| [reading-tech-docs-case.md](reading-tech-docs-case.md) | 高效阅读技术文档·七概念实战案例 | 要啃大文档/读paper/学新东西的时候 |
+| [adversarial-review-sop.md](adversarial-review-sop.md) | "找三个人杠一遍"标准化SOP | 有评审资源，要组织正式评审的时候 |
+| [review-checklist-templates.md](review-checklist-templates.md) | 知识评审清单模板（2份） | 评审的时候对着勾，防止漏项 |
 
 ---
 

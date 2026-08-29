@@ -1,22 +1,22 @@
 ---
 id: "agent-skills-wiki-project-comparison"
 source: "agent-skills-open-standard-wiki.md#十二与本项目现有-skill-体系的对比"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.toml"
 ---
 ## 十二、与本项目现有 Skill 体系的对比
 
 ### 12.1 对齐情况
 
-我们当前的 Skill 体系（位于 [.agents/skills/](../../../../../skills/README.md)）与 Agent Skills 开放标准高度对齐：
+我们当前的 Skill 体系（位于 [.agents/skills/](../../../../../.agents/skills/README.md)）与 Agent Skills 开放标准高度对齐：
 
 | 开放标准特性 | 本项目状态 | 位置 |
 |------------|----------|------|
 | SKILL.md 核心文件 | ✅ 已实现 | 每个技能目录下 |
 | name/description frontmatter | ✅ 已实现 | SKILL.md 头部 |
-| scripts/ 目录 | ✅ 已实现 | 如 [link-check-cmd](../../../../../skills/link-check-cmd/SKILL.md) |
+| scripts/ 目录 | ✅ 已实现 | 如 [link-check-cmd](../../../../../.agents/skills/link-check-cmd/SKILL.md) |
 | references/ 目录 | ✅ 已实现 | 如各技能的参考文档 |
-| 渐进式披露理念 | ✅ 已实现 | [progressive-context-disclosure.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) |
-| 五要素模型 | ✅ 已扩展 | [skill-five-elements-model.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) |
+| 渐进式披露理念 | ✅ 已实现 | [progressive-context-disclosure.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) |
+| 五要素模型 | ✅ 已扩展 | [skill-five-elements-model.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) |
 
 ### 12.2 本项目扩展特性
 
@@ -47,7 +47,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-age
 
 **重要发现**：通过阅读 skills-ref 源码和测试用例，我们确认 name 字段**支持 Unicode 国际字符**（中文、俄文等），而不仅是 ASCII 小写字母。这与我们之前的理解略有不同。
 
-源码中的实际验证逻辑（[validator/ 包（✅已拆分）](../../../../../scripts/mdi/validator/__init__.py)，核心逻辑在 [core.py](../../../../../scripts/mdi/validator/core.py)）使用 `c.isalnum()`，在 Python 中这对 Unicode 字母返回 True。测试用例明确验证了：
+源码中的实际验证逻辑（[validator/ 包（✅已拆分）](../../../../../.agents/scripts/mdi/validator/__init__.py)，核心逻辑在 [core.py](../../../../../.agents/scripts/mdi/validator/core.py)）使用 `c.isalnum()`，在 Python 中这对 Unicode 字母返回 True。测试用例明确验证了：
 - 中文名称 `技能` 通过验证（[test_validator.py:165-176](../../../../../../external/agentskills/skills-ref/tests/test_validator.py#L165-L176)）
 - 俄文名称 `мой-навык` 通过验证（[test_validator.py:179-190](../../../../../../external/agentskills/skills-ref/tests/test_validator.py#L179-L190)）
 

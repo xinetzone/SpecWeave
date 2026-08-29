@@ -132,7 +132,7 @@
 - **Priority**: high
 - **Depends On**: Task 6
 - **Description**: 
-  - 读取[README.md](../../../../.agents/docs/knowledge/learning/first-principles/README.md)的文件导航表（第151-164行表格）
+  - 读取[README.md](../../../../docs/knowledge/learning/first-principles/README.md)的文件导航表（第151-164行表格）
   - 在表格末尾新增序号12的行：
     - 序号：12
     - 文件名：12-exercises.md（带正确file:///链接）

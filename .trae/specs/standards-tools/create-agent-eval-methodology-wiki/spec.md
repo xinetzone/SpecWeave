@@ -57,7 +57,7 @@
 
 ## Assumptions
 - 用户认可使用七概念方法论（R-I-E-C-A-F-V）指导创作流程
-- 用户接受wiki教程存放在 `.agents/docs/knowledge/` 目录下
+- 用户接受wiki教程存放在 `docs/knowledge/` 目录下
 - 用户接受创作过程记录作为wiki的一部分或附录存在
 - 知乎文章风格定位为"专业科普"而非"营销软文"
 - 允许在wiki中引用项目内已有的方法论模式作为参考
@@ -132,6 +132,6 @@
 
 > 以下问题在创作执行阶段已全部解决，记录决策结果供追溯。
 
-- [x] **wiki教程最终存放目录**：`.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-eval-methodology-wiki/`（归属于「Agent工程方法论」专题，与工程手册 `agent-evaluation-wiki/` 互为参阅）
+- [x] **wiki教程最终存放目录**：`docs/knowledge/learning/02-agent-engineering-methodology/agent-eval-methodology-wiki/`（归属于「Agent工程方法论」专题，与工程手册 `agent-evaluation-wiki/` 互为参阅）
 - [x] **知乎文章是否模拟知乎平台格式**：是。产出 `zhihu-article-seven-concepts-wiki-creation-publish.md` 为发布版，去除YAML frontmatter与内部链接，可直接粘贴知乎编辑器
 - [x] **创作过程记录的形式**：独立文档，存放于 `appendices/creation-process-record.md`，完整覆盖资料收集/框架搭建/内容撰写/审核修订四阶段

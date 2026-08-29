@@ -225,6 +225,6 @@ source: seven-concepts V阶段配套工具
 
 ## 配套流程
 
-评审会怎么组织？看[《对抗评审标准化SOP》](./adversarial-review-sop.md)，按流程来不吵架、效率高。
+评审会怎么组织？看[《对抗评审标准化SOP》](adversarial-review-sop.md)，按流程来不吵架、效率高。
 
-找不到人评审？用[《单人/少人替代评审方案》](./solo-review-methods.md)里的方法自检，一个人也能把好关。
+找不到人评审？用[《单人/少人替代评审方案》](solo-review-methods.md)里的方法自检，一个人也能把好关。

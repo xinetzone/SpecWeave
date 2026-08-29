@@ -96,4 +96,4 @@ EchoBird 内置 **usage_providers** 用量查询模块（11 个提供方，含 D
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [10 对比与趋势洞察](./10-comparison-trends.md) | [README](./README.md) | → 这是教程最后一章 |
+| ← [10 对比与趋势洞察](10-comparison-trends.md) | [README](README.md) | → 这是教程最后一章 |

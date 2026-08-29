@@ -1,7 +1,7 @@
 # Checklist
 
 ## 文档结构与完整性
-- [x] `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录存在
+- [x] `docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 目录存在
 - [x] 包含 `00-overview.md` 到 `09-resources.md` + `README.md` 共 11 个文件
 - [x] 每个原子文档 < 350 行
 

@@ -190,7 +190,7 @@ python .agents/scripts/spec-loader-warmup.py --check --json
 
 ## 预热脚本参考
 
-完整预热脚本：[spec-loader-warmup.py](../../../scripts/spec-loader-warmup.py)
+完整预热脚本：[spec-loader-warmup.py](../../../.agents/scripts/spec-loader-warmup.py)
 
 ```bash
 # 预热全部任务类型（execution+planning）

@@ -83,4 +83,4 @@ eve_version_target: "2026 public preview"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [07 工程化理念与趋势洞察](./07-engineering-philosophy-trends.md) | [README](./README.md) | → [09 术语表与参考资源](./09-glossary-resources.md) |
+| ← [07 工程化理念与趋势洞察](07-engineering-philosophy-trends.md) | [README](README.md) | → [09 术语表与参考资源](09-glossary-resources.md) |

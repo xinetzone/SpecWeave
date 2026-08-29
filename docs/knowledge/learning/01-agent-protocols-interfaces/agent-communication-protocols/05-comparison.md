@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#05-协议对比与分层架构"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/05-comparison.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/05-comparison.toml"
 id: "protocol-comparison"
 title: "05、协议对比与分层架构"
 ---
@@ -523,5 +523,5 @@ flowchart TD
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [04、ANP协议概述：Agent Network Protocol](./04-anp.md) |
-| **下一章** | [06、典型交互流程与最佳实践](./06-flows.md) |
+| 上一章 | [04、ANP协议概述：Agent Network Protocol](04-anp.md) |
+| **下一章** | [06、典型交互流程与最佳实践](06-flows.md) |

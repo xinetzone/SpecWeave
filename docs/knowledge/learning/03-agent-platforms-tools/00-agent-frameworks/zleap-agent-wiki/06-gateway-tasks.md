@@ -90,4 +90,4 @@ wiki_version: "1.0"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [05 模型提供方与运行时入口](./05-model-providers-runtime.md) | [README](./README.md) | → [07 快速上手指南](./07-quickstart.md) |
+| ← [05 模型提供方与运行时入口](05-model-providers-runtime.md) | [README](README.md) | → [07 快速上手指南](07-quickstart.md) |

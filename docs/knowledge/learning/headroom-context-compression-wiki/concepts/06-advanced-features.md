@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "shared-memory", "self-evolution", "headroom-learn", "sqlite", "vector-db"]
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/headroom-context-compression-wiki/06-advanced-features.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/06-advanced-features.toml"
 type: "Concept"
 description: "Headroom进阶功能包括基于SQLite+向量库的跨Agent共享记忆与headroom learn自进化机制，自动从失败会话中提炼规则写入AGENTS.md，与SpecWeave自我进化理念高度共鸣，实现从工具到伙伴的三层跃迁。"
 generated:

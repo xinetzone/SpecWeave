@@ -87,4 +87,4 @@ eve_version_target: "2026 public preview"
 
 | 上一章 | 返回目录 |
 |--------|---------|
-| ← [08 FAQ 与适用范围](./08-faq.md) | [README](./README.md) |
+| ← [08 FAQ 与适用范围](08-faq.md) | [README](README.md) |

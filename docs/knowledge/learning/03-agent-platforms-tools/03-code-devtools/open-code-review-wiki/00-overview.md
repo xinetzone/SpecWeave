@@ -46,14 +46,14 @@ Open Code Review 通过"确定性工程 × Agent 混合驱动"的混合架构，
 
 | 章节 | 内容 |
 |------|------|
-| [00 - 概述与学习目标](./00-overview.md) | 背景、核心主题、学习目标、前置知识 |
-| [01 - 核心概念与设计理念](./01-core-concepts.md) | 通用 Agent 方案三大问题、确定性工程×Agent 混合驱动 |
-| [02 - 安装与配置指南](./02-installation.md) | npm 安装、LLM 配置、验证安装 |
-| [03 - 使用流程与命令详解](./03-usage.md) | ocr review、ocr scan、参数说明 |
-| [04 - 关键技术优化](./04-optimizations.md) | 假阴性/假阳性/定位/Token 四大优化 |
-| [05 - 集成与高级用法](./05-integrations.md) | Claude Code 集成、CI/CD、自定义规则、可观测性 |
-| [06 - 效果验证与质量评估](./06-effectiveness.md) | 内部数据、评测对比、AACR-Bench |
-| [07 - 局限性与对比](./07-limitations.md) | 适用边界、已知问题、与 CC/Codex 对比 |
-| [08 - 总结与展望](./08-summary.md) | 核心要点、未来规划 |
-| [09 - 常见问题（FAQ）](./09-faq.md) | 常见问题及解答 |
-| [10 - 资源链接](./10-resources.md) | 原始资源、官方资源、相关学习资源 |
+| [00 - 概述与学习目标](00-overview.md) | 背景、核心主题、学习目标、前置知识 |
+| [01 - 核心概念与设计理念](01-core-concepts.md) | 通用 Agent 方案三大问题、确定性工程×Agent 混合驱动 |
+| [02 - 安装与配置指南](02-installation.md) | npm 安装、LLM 配置、验证安装 |
+| [03 - 使用流程与命令详解](03-usage.md) | ocr review、ocr scan、参数说明 |
+| [04 - 关键技术优化](04-optimizations.md) | 假阴性/假阳性/定位/Token 四大优化 |
+| [05 - 集成与高级用法](05-integrations.md) | Claude Code 集成、CI/CD、自定义规则、可观测性 |
+| [06 - 效果验证与质量评估](06-effectiveness.md) | 内部数据、评测对比、AACR-Bench |
+| [07 - 局限性与对比](07-limitations.md) | 适用边界、已知问题、与 CC/Codex 对比 |
+| [08 - 总结与展望](08-summary.md) | 核心要点、未来规划 |
+| [09 - 常见问题（FAQ）](09-faq.md) | 常见问题及解答 |
+| [10 - 资源链接](10-resources.md) | 原始资源、官方资源、相关学习资源 |

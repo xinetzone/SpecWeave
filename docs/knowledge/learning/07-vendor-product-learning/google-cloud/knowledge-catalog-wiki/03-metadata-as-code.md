@@ -320,4 +320,4 @@ npm run test
 
 ---
 
-继续阅读：[04-samples.md - 示例智能体实战（Discovery/Enrichment）](./04-samples.md)
+继续阅读：[04-samples.md - 示例智能体实战（Discovery/Enrichment）](04-samples.md)

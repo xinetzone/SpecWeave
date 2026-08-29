@@ -9,7 +9,7 @@ status: "stable"
 author: ""
 summary: "Learning Wiki 知识库的11主题分类体系设计（00-10），含思维地基层，包含分类原则、主题关系图、学习路径与各主题完整Wiki清单"
 source: ""
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/CATEGORIES.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/CATEGORIES.toml"
 changelog: "2026-07-05 | docs | 初始创建：建立8主题分类体系; 2026-07-09 | docs | 添加跨领域思维方法论专题（第一性原理知识档案），更新统计摘要(67→68 Wiki)、Mermaid关联关系图; 2026-08-19 | docs | 新增帛书老子Wiki教程（马王堆帛书老子研究，8个原子化文件），更新统计摘要(69→70 Wiki); 2026-08-21a | refactor | 散落Wiki归类整理：18个Wiki移入8主题目录、删除重复文件、合并okr-guide、统计70→88 Wiki; 2026-08-21b | refactor | 帛书老子Wiki移入first-principles/作为子Wiki（v2.1道家原典深读）; 2026-08-22a | refactor | 新增00-本质与思维主题作为思维地基层（编号00），分类体系从8主题扩展为9主题（00-08），first-principles+boshu-laozi-wiki归入00; 2026-08-22b | refactor | 目录结构修正：boshu-laozi-wiki从first-principles/子目录提升为00主题下与first-principles平级的独立Wiki; 2026-08-21c | refactor | OKR Wiki重新归类：从独立专题移入07厂商产品学习系列（叮当OKR为SaaS管理工具产品），okr-wiki/移入07-vendor-product-learning/下，07统计24→25，删除独立专题分类; 2026-08-22c | refactor | 02-Agent工程方法论分组归类：14个wiki+12个散落文件按6大主题域分组（01-paradigms/02-prompt-coding/03-methodology/04-context-optimization/05-evaluation/06-performance），更新Wiki清单从7条补全至19条，修复断链与旧路径引用，统计88→97 Wiki; 2026-08-22d | refactor | 一级目录重构：解决04/05/06编号冲突，06-ai-ml-inference重编号为09-ml-inference-deployment，新建10-foundational-knowledge收纳mathematical-foundations+academic-skills（原04/05孤儿目录），统计97→100 Wiki，分类体系从9主题扩展为11主题（00-10）; 2026-08-23a | audit | Task 22迁移审核：补充04/07/08主题缺失Wiki条目（+12），更新统计摘要(137→149 Wiki)，修复count_wikis.py NON_WIKI_WIKIS列表; 2026-08-23b | audit | Task 22收尾：修复pyinvoke-wiki/index.md→README.md，更新count_wikis.py支持10主题，补充10主题缺失条目（python314-cpython-wiki），修正08主题统计(10→11)，更新统计摘要(149→150 Wiki); 2026-08-23c | feat | 迁移codewhale-wiki（8个内容文件+README+9个TOML元数据）至03-code-devtools/，补充03主题Wiki清单（统计150→151 Wiki）"
 ---
 # Learning Wiki 主题分类体系
@@ -445,10 +445,10 @@ flowchart TD
 | 三大AI工具分析 | [three-ai-tools-wiki.md](06-business-trends-analysis/three-ai-tools-wiki.md) | 三大AI工具对比分析 | 单文件 |
 | 火山引擎AI产品生态 | [volcengine-ai-ecosystem-wiki/README.md](06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.md) | 火山引擎全系产品深度解析：基础设施→Agent平台→开发者工具→应用创作→生态增长 | 原子化 |
 | 抖音Vibecoding创作指南 | [douyin-vibecoding-wiki/README.md](06-business-trends-analysis/douyin-vibecoding-wiki/README.md) | 抖音AI编程内容创作方法论、视觉规范、执行计划 | 原子化 |
-| 微软Copilot成本困境与多模型时代 | [copilot-cost-multimodel-era-wiki/](06-business-trends-analysis/copilot-cost-multimodel-era-wiki/) | Copilot成本困境、DeepSeek V4冲击、多模型架构产业变革 | 原子化 |
-| AI硬件设计工具生态 | [ai-hardware-design-tools-wiki/](06-business-trends-analysis/ai-hardware-design-tools-wiki/) | 10个AI硬件设计工具深度分析、PCB/EDA/电路设计全链路 | 原子化 |
-| 开源EMS能源管理系统 | [ems-energy-management-wiki/](06-business-trends-analysis/ems-energy-management-wiki/) | 开源能源管理系统深度洞察、50+协议支持 | 原子化 |
-| 七概念印度制造业供应链风险 | [seven-concepts-india-manufacturing-wiki/](06-business-trends-analysis/seven-concepts-india-manufacturing-wiki/) | 基于七概念方法论的印度制造业供应链风险系统分析 | 原子化 |
+| 微软Copilot成本困境与多模型时代 | [copilot-cost-multimodel-era-wiki/](06-business-trends-analysis/copilot-cost-multimodel-era-wiki) | Copilot成本困境、DeepSeek V4冲击、多模型架构产业变革 | 原子化 |
+| AI硬件设计工具生态 | [ai-hardware-design-tools-wiki/](06-business-trends-analysis/ai-hardware-design-tools-wiki) | 10个AI硬件设计工具深度分析、PCB/EDA/电路设计全链路 | 原子化 |
+| 开源EMS能源管理系统 | [ems-energy-management-wiki/](06-business-trends-analysis/ems-energy-management-wiki) | 开源能源管理系统深度洞察、50+协议支持 | 原子化 |
+| 七概念印度制造业供应链风险 | [seven-concepts-india-manufacturing-wiki/](06-business-trends-analysis/seven-concepts-india-manufacturing-wiki) | 基于七概念方法论的印度制造业供应链风险系统分析 | 原子化 |
 | AI拟人化互动服务管理办法 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 五部门AI拟人化互动服务管理办法深度解读、合规自查清单 | 单文件 |
 | 华秋智联×星宸科技战略合作 | [huaqiu-sigmastar-partnership-analysis-20260709.md](06-business-trends-analysis/huaqiu-sigmastar-partnership-analysis-20260709.md) | 打通芯片量产最后一公里、端边侧AI生态分析 | 单文件 |
 

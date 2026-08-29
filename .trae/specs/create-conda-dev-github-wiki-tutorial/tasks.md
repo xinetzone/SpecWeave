@@ -21,7 +21,7 @@
 ## 任务详细分解
 
 ### Task 1: 创建 `00-overview.md` 教程总览与导航索引
-- [ ] Step 1.1: 在 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录下创建 `00-overview.md`
+- [ ] Step 1.1: 在 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/` 目录下创建 `00-overview.md`
 - [ ] Step 1.2: 编写 YAML frontmatter（id/title/x-toml-ref/source/category/tags/date/status/author/summary）
 - [ ] Step 1.3: 编写教程引言，简述 conda `.github` 元仓库的价值与学习意义
 - [ ] Step 1.4: 绘制 Mermaid 概念定位图（组织级元仓库在 GitHub 组织治理栈中的位置）

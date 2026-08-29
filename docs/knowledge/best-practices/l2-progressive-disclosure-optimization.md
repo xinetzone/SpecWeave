@@ -3,14 +3,14 @@ id: "l2-progressive-disclosure-optimization"
 date: "2026-07-12"
 type: "best-practice"
 source: "spec-loader.py audit验证 + 多场景加载实测"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.toml"
 title: "L2 渐进式披露机制优化建议"
 ---
 # L2 渐进式披露机制优化建议
 
 ## 1. 背景与现状
 
-L2 渐进式披露运行时规范加载器（[spec_loader.py](../../../scripts/lib/spec_loader.py) + [spec-loader.py](../../../scripts/spec-loader.py)）已实现四层按需加载架构（L0入口→L1a核心规则→L1b索引→L2详细规范），当前支持 20 种任务类型路由、39 个规范文件、-v 详细性能日志追踪（路由匹配/L2解析/预算决策全链路DEBUG）。
+L2 渐进式披露运行时规范加载器（[spec_loader.py](../../../.agents/scripts/lib/spec_loader.py) + [spec-loader.py](../../../.agents/scripts/spec-loader.py)）已实现四层按需加载架构（L0入口→L1a核心规则→L1b索引→L2详细规范），当前支持 20 种任务类型路由、39 个规范文件、-v 详细性能日志追踪（路由匹配/L2解析/预算决策全链路DEBUG）。
 
 ### 1.1 当前架构实测数据（2026-07-12 一期优化后）
 
@@ -245,12 +245,12 @@ python .agents/scripts/spec-loader.py task "开发功能并测试和审查" -v
 
 | 文件 | 职责 |
 |------|------|
-| [spec_loader.py](../../../scripts/lib/spec_loader.py) | L2加载器核心库（SpecLoader类、TASK_ROUTING、四层加载、磁盘缓存、日志） |
-| [spec-loader.py](../../../scripts/spec-loader.py) | CLI入口（task/layer/list-types/audit/cache-stats/cache-clear/warmup子命令） |
-| [.agents/.cache/spec-loader.json](../../../.cache/spec-loader.json) | 磁盘缓存文件（mtime+字符数持久化，自动版本化失效） |
-| [docgen.py](../../../scripts/docgen.py) | stats子命令自动统计核心指标 |
-| [context-routing.md](../../../context-routing.md) | L1b上下文路由表（与TASK_ROUTING需保持同步） |
-| [02-skills.md](../../../capability-registry/02-skills.md) | Skill注册索引（L1b能力注册中心分册） |
-| [global-core-rules.md](../../../global-core-rules.md) | L1a全局核心规则（始终加载） |
-| [capability-boundaries.md](../../../capability-boundaries.md) | L1a能力边界声明（始终加载） |
-| [ONBOARDING.md](../../../ONBOARDING.md) | L0入口速查（始终加载） |
+| [spec_loader.py](../../../.agents/scripts/lib/spec_loader.py) | L2加载器核心库（SpecLoader类、TASK_ROUTING、四层加载、磁盘缓存、日志） |
+| [spec-loader.py](../../../.agents/scripts/spec-loader.py) | CLI入口（task/layer/list-types/audit/cache-stats/cache-clear/warmup子命令） |
+| [.agents/.cache/spec-loader.json](../../../.agents/.cache/spec-loader.json) | 磁盘缓存文件（mtime+字符数持久化，自动版本化失效） |
+| [docgen.py](../../../.agents/scripts/docgen.py) | stats子命令自动统计核心指标 |
+| [context-routing.md](../../../.agents/context-routing.md) | L1b上下文路由表（与TASK_ROUTING需保持同步） |
+| [02-skills.md](../../../.agents/capability-registry/02-skills.md) | Skill注册索引（L1b能力注册中心分册） |
+| [global-core-rules.md](../../../.agents/global-core-rules.md) | L1a全局核心规则（始终加载） |
+| [capability-boundaries.md](../../../.agents/capability-boundaries.md) | L1a能力边界声明（始终加载） |
+| [ONBOARDING.md](../../../.agents/ONBOARDING.md) | L0入口速查（始终加载） |

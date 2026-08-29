@@ -18,7 +18,7 @@ okf_version_target: "v0.1"
 ---
 # 03 OKF Bundle 工程化发布模板
 
-> 本页属于 [OKF 生态基建知识](./README.md) 系列，聚焦 [okf-bundle-template](https://github.com/vinodborole/okf-bundle-template)（GitHub 模板仓库）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。
+> 本页属于 [OKF 生态基建知识](README.md) 系列，聚焦 [okf-bundle-template](https://github.com/vinodborole/okf-bundle-template)（GitHub 模板仓库）。OKF 通用概念请参考 [okf-wiki 主教程](../README.md)。
 
 ## 3.1 定位
 
@@ -102,4 +102,4 @@ okf-bundle-template        awesome-okf-kit
 
 | 上一页 | 目录 | 下一页 |
 |--------|------|--------|
-| [02 Bundle 分发注册机制](./02-bundle-registry.md) | [OKF 生态基建](./README.md) | （已完成，是本系列最后一章） |
+| [02 Bundle 分发注册机制](02-bundle-registry.md) | [OKF 生态基建](README.md) | （已完成，是本系列最后一章） |

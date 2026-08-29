@@ -1,7 +1,7 @@
 # Orca 多代理 AI 编排器学习与 Wiki 教程文档 - 验收检查清单
 
 ## 基础框架
-- [x] AC-1: 原子化 wiki 教程创建完成（README.md 索引 + 分章文件），位于 .agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/
+- [x] AC-1: 原子化 wiki 教程创建完成（README.md 索引 + 分章文件），位于 docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/
 - [x] AC-2: 目录导航系统可用（相对链接，无 file:/// 绝对路径）
 
 ## 内容章节

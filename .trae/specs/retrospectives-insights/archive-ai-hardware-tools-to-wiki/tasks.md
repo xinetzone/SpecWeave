@@ -69,7 +69,7 @@
 - **Description**: 
   - 使用atomic-commit-cmd提交wiki目录下的新增文件
   - 提交信息格式：docs(knowledge): 归档AI硬件设计工具生态深度洞察报告到商业趋势分析wiki
-  - 仅提交 `.agents/docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/` 下的新文件
+  - 仅提交 `docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/` 下的新文件
 - **Acceptance Criteria Addressed**: [AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7]
 - **Test Requirements**:
   - `programmatic` TR-5.1: 提交成功，仅包含wiki目录下的3个新文件

@@ -197,7 +197,7 @@ docs/ 是基于 Sphinx/Jupyter Book 的文档站点，包含：
   - 转换工作量大（31 Bundle、280 文件），必须分批执行
   - 原地转换存在风险——需确保 Git 工作区干净，每个 Batch 可独立回滚
 - **Dependencies**：
-  - OKF v0.2 规范定义（参考 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/02-okf-specification.md`）
+  - OKF v0.2 规范定义（参考 `docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/02-okf-specification.md`）
   - source-code-to-okf-wiki Skill 工作流（`d:\AI\.agents\skills\source-code-to-okf-wiki\SKILL.md`）
   - seven-concepts-cmd Skill 编排逻辑
   - Git 版本控制（原子提交）

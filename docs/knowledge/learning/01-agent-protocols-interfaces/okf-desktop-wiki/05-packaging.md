@@ -116,4 +116,4 @@ macOS 还额外通过 `BUNDLE` 把产物包装成 `.app`，使其可临时签名
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [04 API 与数据流](./04-api-and-data-flow.md) | [README](./README.md) | [06 FAQ 与术语表](./06-faq-and-resources.md) |
+| [04 API 与数据流](04-api-and-data-flow.md) | [README](README.md) | [06 FAQ 与术语表](06-faq-and-resources.md) |

@@ -1,7 +1,7 @@
 ---
 title: "向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁"
 source: "https://sunlogin.oray.com/, https://gf-oray.com.cn/#ai, https://service.oray.com/question/50496.html, https://service.oray.com/question/17615.html, https://service.oray.com/question/51527.html"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.toml"
 date: "2026-07-06"
 tags: ["向日葵", "Sunlogin", "Oray", "贝锐科技", "远程控制", "产品矩阵", "商业模式", "软硬结合", "AI Agent", "MCP", "竞品分析"]
 ---
@@ -1326,7 +1326,7 @@ A：各服务等级支持远控的移动设备数量不同：尝鲜版支持1台
 
 ### 模式库参考
 
-- [架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md)（包含从向日葵产品线萃取的多个模式）
+- [架构模式库](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/README.md)（包含从向日葵产品线萃取的多个模式）
   - user-sovereignty-default.md（用户主权默认）
   - full-process-defense-depth.md（全流程纵深防御）
   - non-intrusive-security-ux.md（非侵入式安全UX）

@@ -2,9 +2,8 @@
 id: "github-cli-wiki-log"
 title: "GitHub CLI (gh) 完全指南 — 变更日志"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/log.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/log.toml"
 ---
-
 # Log
 
 ## 2026-08-22

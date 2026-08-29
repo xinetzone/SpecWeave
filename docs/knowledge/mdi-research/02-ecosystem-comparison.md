@@ -2,7 +2,7 @@
 id: mdi-ecosystem-comparison
 title: MDI研究报告 - 生态对比分析
 source: "mdi-research-report.md#3-生态对比分析"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/02-ecosystem-comparison.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/02-ecosystem-comparison.toml"
 ---
 # 生态对比分析
 

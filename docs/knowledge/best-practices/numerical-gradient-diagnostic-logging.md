@@ -215,7 +215,7 @@ AssertionError: conv1.blobs[0] gradient check FAILED
 | 模式 | 关系 |
 |------|------|
 | [C¹拐点数值梯度防护](float-precision-testing-guide.md) | WARNING中kink_suspects的解决方案 |
-| [三层测试验证法](../../retrospective/patterns/code-patterns/three-layer-test-validation.md) | L3数值梯度层必须用此日志工具 |
+| [三层测试验证法](../../../.agents/docs/retrospective/patterns/code-patterns/three-layer-test-validation.md) | L3数值梯度层必须用此日志工具 |
 | [测试基础设施性能优化](test-infra-performance-optimization.md) | 日志系统本身不能成为性能瓶颈 |
 | [手算梯度验证](hand-computed-gradient-verification.md) | L1已知值验证，不需要数值梯度 |
 

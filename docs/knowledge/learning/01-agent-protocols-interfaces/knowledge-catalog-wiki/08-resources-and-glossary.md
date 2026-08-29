@@ -115,14 +115,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 
 | 章节 | 路径 | 核心内容 |
 |------|------|---------|
-| Knowledge Catalog概述与知识地图 | [./00-overview.md](./00-overview.md) | 平台背景动机、设计哲学、整体架构、9章导航、三条阅读路径 |
-| 核心概念与平台架构 | [./01-core-concepts.md](./01-core-concepts.md) | 知识图谱、动态元数据、Bundle/Concept/Frontmatter核心概念、四层平台架构 |
-| OKF开放知识格式规范深度解析 | [./02-okf-specification.md](./02-okf-specification.md) | OKF v0.2规范详解、frontmatter字段定义、信任层级与来源溯源、链接规则 |
-| 参考Agent实现原理与运行指南 | [./03-reference-agent.md](./03-reference-agent.md) | BQ Pass与Web Pass双阶段工作流、生产端配置、单概念迭代开发、凭证配置 |
-| 工具链与可视化系统 | [./04-toolchain-and-visualization.md](./04-toolchain-and-visualization.md) | 交互式知识图谱浏览器、Cytoscape.js图渲染、Markdown实时渲染、搜索与过滤 |
-| 示例Bundle深度解析 | [./05-samples-and-bundles.md](./05-samples-and-bundles.md) | GA4电商、Stack Overflow、比特币区块链、Acme Retail示例剖析 |
-| 集成模式与最佳实践 | [./06-integration-patterns.md](./06-integration-patterns.md) | 企业落地四阶段路径、与现有数据目录集成、Git工作流集成、生产消费解耦模式 |
-| 架构决策与方案对比 | [./07-architecture-decisions.md](./07-architecture-decisions.md) | 与Unity Catalog/Collibra等方案对比、OKF局限性分析、选型决策树、风险评估 |
+| Knowledge Catalog概述与知识地图 | [./00-overview.md](00-overview.md) | 平台背景动机、设计哲学、整体架构、9章导航、三条阅读路径 |
+| 核心概念与平台架构 | [./01-core-concepts.md](01-core-concepts.md) | 知识图谱、动态元数据、Bundle/Concept/Frontmatter核心概念、四层平台架构 |
+| OKF开放知识格式规范深度解析 | [./02-okf-specification.md](02-okf-specification.md) | OKF v0.2规范详解、frontmatter字段定义、信任层级与来源溯源、链接规则 |
+| 参考Agent实现原理与运行指南 | [./03-reference-agent.md](03-reference-agent.md) | BQ Pass与Web Pass双阶段工作流、生产端配置、单概念迭代开发、凭证配置 |
+| 工具链与可视化系统 | [./04-toolchain-and-visualization.md](04-toolchain-and-visualization.md) | 交互式知识图谱浏览器、Cytoscape.js图渲染、Markdown实时渲染、搜索与过滤 |
+| 示例Bundle深度解析 | [./05-samples-and-bundles.md](05-samples-and-bundles.md) | GA4电商、Stack Overflow、比特币区块链、Acme Retail示例剖析 |
+| 集成模式与最佳实践 | [./06-integration-patterns.md](06-integration-patterns.md) | 企业落地四阶段路径、与现有数据目录集成、Git工作流集成、生产消费解耦模式 |
+| 架构决策与方案对比 | [./07-architecture-decisions.md](07-architecture-decisions.md) | 与Unity Catalog/Collibra等方案对比、OKF局限性分析、选型决策树、风险评估 |
 
 ### 8.3.3 相关Wiki交叉引用
 
@@ -134,7 +134,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 | 接口/API/ABI/Protocol概念辨析 | [../interface-api-abi-protocol-wiki/README.md](../interface-api-abi-protocol-wiki/README.md) | OKF本质是知识层的接口标准，与API/Protocol概念一脉相承 |
 | Harness七组件 | [../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/README.md](../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位深度契合 |
 | 七概念方法论 | [../../02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.md](../../02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.md) | 本教程使用七概念方法论知识沉淀场景产出 |
-| 知识库首页 | [../../../../README.md](../../../../README.md) | 整个技术知识库的总入口 |
+| 知识库首页 | [../../../../README.md](../../../../../.agents/docs/README.md) | 整个技术知识库的总入口 |
 
 ## 8.4 学习建议
 
@@ -142,20 +142,20 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 
 **如果你是AI Agent开发者：**
 1. 先完成快速上手路径（00→01→02→05→08），建立整体认知
-2. 重点阅读[03参考Agent实现](./03-reference-agent.md)和[04工具链](./04-toolchain-and-visualization.md)，理解如何生产和消费OKF知识
+2. 重点阅读[03参考Agent实现](03-reference-agent.md)和[04工具链](04-toolchain-and-visualization.md)，理解如何生产和消费OKF知识
 3. 动手做一个小Bundle（从你的业务领域选3-5个核心概念），运行参考Agent或手动编写
 4. 尝试用viz.html可视化你的Bundle，体验知识图谱导航
 5. 思考OKF如何与你现有RAG/知识库系统集成——可以先从非核心业务试点
 
 **如果你是数据工程师/数据治理专家：**
 1. 先走架构决策路径（00→01→02→06→07→08），判断是否适合团队
-2. 重点阅读[06集成模式](./06-integration-patterns.md)和[07架构决策](./07-architecture-decisions.md)，理解落地路径
+2. 重点阅读[06集成模式](06-integration-patterns.md)和[07架构决策](07-architecture-decisions.md)，理解落地路径
 3. 对比现有数据目录（Unity Catalog/Collibra等），思考OKF的互补价值而非替代价值
 4. 从元数据导出开始试点：用脚本从现有系统导出几个核心表的元数据为OKF格式
 5. 建立Git工作流规范，让元数据变更像代码一样走PR评审
 
 **如果你是架构师/技术决策者：**
-1. 完整阅读所有章节，特别关注[07架构决策](./07-architecture-decisions.md)的风险评估和选型决策树
+1. 完整阅读所有章节，特别关注[07架构决策](07-architecture-decisions.md)的风险评估和选型决策树
 2. 理解三层定位：模型是租的、框架是工具、Skills是招式，知识才是企业自己的护城河
 3. 评估当前阶段（技术预览版）适合的投入程度：建议小范围试点而非All-in
 4. 关注生态发展：OKF目前极早期（v0.2），建议每3-6个月复查一次生态成熟度
@@ -186,4 +186,4 @@ Knowledge Catalog与OKF代表了一个重要方向：数据与知识应该像HTM
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [07 架构决策与方案对比](./07-architecture-decisions.md) | [README](./README.md) | **本教程结束** 🎉 |
+| [07 架构决策与方案对比](07-architecture-decisions.md) | [README](README.md) | **本教程结束** 🎉 |

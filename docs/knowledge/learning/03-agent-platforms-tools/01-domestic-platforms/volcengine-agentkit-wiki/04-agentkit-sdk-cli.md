@@ -241,4 +241,4 @@ flowchart TD
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [03 VeADK](./03-veadk-framework.md) | [README](./README.md) | → [05 快速入门](./05-quickstart.md) |
+| ← [03 VeADK](03-veadk-framework.md) | [README](README.md) | → [05 快速入门](05-quickstart.md) |

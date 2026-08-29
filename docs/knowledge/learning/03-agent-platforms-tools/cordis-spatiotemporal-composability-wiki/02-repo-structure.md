@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-02"
 title: "Cordis — 文件结构与 Monorepo"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/02-repo-structure.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/02-repo-structure.toml"
 ---
 # Cordis — 文件结构与 Monorepo
 

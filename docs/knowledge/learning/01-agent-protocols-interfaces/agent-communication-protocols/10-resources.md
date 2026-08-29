@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#10-资源与参考链接"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/10-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/10-resources.toml"
 id: "resources"
 title: "10、资源与参考链接"
 ---
@@ -144,5 +144,5 @@ ANP目前暂无统一官方规范，主要基于以下W3C标准构建：
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [09、术语表](./09-glossary.md) |
-| **下一章** | [11、快速参考](./11-quick-reference.md) |
+| 上一章 | [09、术语表](09-glossary.md) |
+| **下一章** | [11、快速参考](11-quick-reference.md) |

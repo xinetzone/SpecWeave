@@ -2,7 +2,7 @@
 id: mdi-technical-architecture
 title: MDI研究报告 - 技术架构深度解析
 source: "mdi-research-report.md#4-技术架构深度解析"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/mdi-research/03-technical-architecture.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/03-technical-architecture.toml"
 ---
 # 技术架构深度解析
 

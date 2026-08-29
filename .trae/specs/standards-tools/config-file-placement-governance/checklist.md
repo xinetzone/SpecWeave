@@ -27,7 +27,7 @@
 
 ## 文件放置治理文档
 
-- [x] `.agents/docs/knowledge/best-practices/config-file-placement-convention.md` 文档已创建
+- [x] `docs/knowledge/best-practices/config-file-placement-convention.md` 文档已创建
 - [x] 文档包含关键配置文件标准路径表（文件名 / 标准位置 / 用途 / 自动加载机制依赖）
 - [x] 文档包含放置决策树（根目录 vs `.agents/scripts/` vs `.agents/docs/`）
 - [x] 文档包含 Python 自动加载约定（sitecustomize.py、.pth 文件）与 PYTHONPATH 关系说明
@@ -95,4 +95,4 @@
 - [x] `windows-terminal-utf8-complete-guide.md` 新增"自动加载验证"小节
 - [x] `windows-platform-compatibility-guide.md` 脚本表补充三个新脚本
 - [x] 所有新增脚本与文档的交叉引用使用相对路径（禁 `file:///` 绝对路径）
-- [x] 通过 `python .agents/scripts/check-links.py --path .agents/scripts --path .agents/docs/knowledge/best-practices` 链接校验无断链
+- [x] 通过 `python .agents/scripts/check-links.py --path .agents/scripts --path docs/knowledge/best-practices` 链接校验无断链

@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#00-概述与背景"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/00-overview.toml"
 id: "agent-protocols-overview"
 title: "00、概述与背景"
 ---
@@ -168,4 +168,4 @@ flowchart TD
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
 | 上一章 | 无（本章为第一章） |
-| **下一章** | [01、MCP协议详解：Model Context Protocol](./01-mcp.md) |
+| **下一章** | [01、MCP协议详解：Model Context Protocol](01-mcp.md) |

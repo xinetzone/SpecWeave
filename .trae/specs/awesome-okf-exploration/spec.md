@@ -17,7 +17,7 @@ status: completed
 - **Current Status**: ✅ 全部七概念阶段已完成，质量门全部通过，报告已发布。
 
 ## Goals
-- ~~系统梳理 OKF 规范核心（v0.1）的硬性要求与设计哲学~~ → 由现有 [okf-wiki](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md) 覆盖，本报告引用而非重复 ✅
+- ~~系统梳理 OKF 规范核心（v0.1）的硬性要求与设计哲学~~ → 由现有 [okf-wiki](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md) 覆盖，本报告引用而非重复 ✅
 - ✅ 深度分析 awesome-okf 的 7 个 producer 插件的零依赖架构模式与 CLI 聚合设计
 - ✅ 拆解 7 个 Claude Code Skill 的工作流设计（okf-creator/awesome-to-okf/book-to-okf等）与核心原则
 - ✅ 评估 3 份扩展提案（i18n lang+canonical / 代码支持 / HTML一等公民）的设计 rationale 与向后兼容策略
@@ -35,12 +35,12 @@ status: completed
 - 不构建完整的 OKF bundle（仅做方法论探索演示）✅
 
 ## Background & Context
-- **现有知识库**: `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/` 已有8篇OKF通用教程（00-07），覆盖概述、核心概念、快速入门、使用模式、局限对比、架构集成、FAQ、资源术语表
+- **现有知识库**: `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/` 已有8篇OKF通用教程（00-07），覆盖概述、核心概念、快速入门、使用模式、局限对比、架构集成、FAQ、资源术语表
 - **OKF 规范版本**: awesome-okf 基于 OKF v0.1，现有 okf-wiki 基于 v0.2，两者存在版本差异（v0.2新增了provenance/trust/lifecycle字段）—— 报告中已明确版本差异声明
 - **awesome-okf 定位**: 云中江树维护的中文OKF生态项目，包含7个零依赖Python producer插件、7个Claude Code Skill、3份向后兼容扩展提案、OKF规范中文翻译，自身即符合OKF规范的bundle（dogfooding）
 - **仓库位置变更**: ~~原位于 `d:\AI\awesome-okf`~~ → **已迁移至 `d:\AI\vendor\awesome-okf`，作为第三方依赖 Git 子模块管理**（遵循 vendor 区域规范，禁止本地修改）
 - **七概念方法论定位**: 本任务属于"知识沉淀"场景（R→I→E→V→A），对具体项目做案例级深度分析
-- **报告存放位置**: `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`（okf-wiki 子目录，作为案例研究）✅ 已就位
+- **报告存放位置**: `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`（okf-wiki 子目录，作为案例研究）✅ 已就位
 - **额外产出**: 同时生成了 `knowledge-catalog-wiki`（位于同目录），与 okf-wiki 建立了双向链接
 - **本项目关联**: SpecWeave 已有 .agents/ 规范体系、MDI（Markdown as Interface）v1.0规范、原子化操作流程、Skill门面模式，与 awesome-okf 的设计存在多处可对比和借鉴之处
 
@@ -117,10 +117,10 @@ status: completed
 ## Deliverables Summary
 | 产出物 | 位置 | 状态 |
 |--------|------|------|
-| 分析报告6件套 | [awesome-okf-analysis/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/) | ✅ 完成 |
-| knowledge-catalog-wiki（10篇教程） | [knowledge-catalog-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/) | ✅ 额外完成 |
+| 分析报告6件套 | [awesome-okf-analysis/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis) | ✅ 完成 |
+| knowledge-catalog-wiki（10篇教程） | [knowledge-catalog-wiki/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki) | ✅ 额外完成 |
 | awesome-okf vendor迁移 | [vendor/awesome-okf/](../../../vendor/awesome-okf/) | ✅ 完成（41处路径引用修复） |
-| okf-wiki反向链接更新 | [okf-wiki/README.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md)、[07-resources-and-glossary.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.md)、[05-architecture-and-integration.md](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/05-architecture-and-integration.md) | ✅ 完成 |
+| okf-wiki反向链接更新 | [okf-wiki/README.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md)、[07-resources-and-glossary.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/07-resources-and-glossary.md)、[05-architecture-and-integration.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/05-architecture-and-integration.md) | ✅ 完成 |
 
 ## Open Questions (Resolved)
 - [x] 原子行动项是否需要立即执行，还是仅作为建议记录在报告中？→ **已决议**：仅作为建议记录，总计11小时时间盒，不要求立即执行

@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 # 04 工具链与可视化系统
 
 > **本章定位说明**
-> - 前三章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](./00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](./01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](./02-okf-specification.md)）和参考Agent实现（[03 参考Agent实现原理与运行指南](./03-reference-agent.md)）。
+> - 前三章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](02-okf-specification.md)）和参考Agent实现（[03 参考Agent实现原理与运行指南](03-reference-agent.md)）。
 > - 本章聚焦**消费端工具链**：可视化系统是OKF格式的概念验证消费者（Proof of Concept Consumer），与参考Agent（生产者）形成完整的生产-消费闭环；工具箱提供企业级元数据管理与智能充实能力。
 > - 可视化系统生成**零依赖自包含HTML**，无需后端、无需安装，直接在浏览器打开即可交互式浏览知识图谱，完美体现OKF"可移植、无锁定"的设计哲学。
 > - 工具箱（toolbox/）是Google官方提供的TypeScript实现，包含mdcode（元数据即代码）和enrichment（智能充实Agent）两大组件，面向生产环境使用。
@@ -866,10 +866,10 @@ Acme Retail示例特别值得研究，因为它展示了OKF在企业场景中的
 
 **Knowledge Catalog Wiki相关章节**：
 
-- 参考Agent（生产者）实现原理：[03 参考Agent实现原理与运行指南](./03-reference-agent.md)
-- OKF规范中links字段和图结构定义：[02 OKF开放知识格式规范深度解析](./02-okf-specification.md)
-- 样例Bundle深度剖析：[05 示例Bundle深度解析](./05-samples-and-bundles.md)（下一章）
-- 企业集成模式与最佳实践：[06 集成模式与最佳实践](./06-integration-patterns.md)
+- 参考Agent（生产者）实现原理：[03 参考Agent实现原理与运行指南](03-reference-agent.md)
+- OKF规范中links字段和图结构定义：[02 OKF开放知识格式规范深度解析](02-okf-specification.md)
+- 样例Bundle深度剖析：[05 示例Bundle深度解析](05-samples-and-bundles.md)（下一章）
+- 企业集成模式与最佳实践：[06 集成模式与最佳实践](06-integration-patterns.md)
 
 **官方资源**：
 
@@ -882,4 +882,4 @@ Acme Retail示例特别值得研究，因为它展示了OKF在企业场景中的
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [03 参考Agent实现原理与运行指南](./03-reference-agent.md) | [README](./README.md) | [05 示例Bundle深度解析](./05-samples-and-bundles.md) |
+| [03 参考Agent实现原理与运行指南](03-reference-agent.md) | [README](README.md) | [05 示例Bundle深度解析](05-samples-and-bundles.md) |

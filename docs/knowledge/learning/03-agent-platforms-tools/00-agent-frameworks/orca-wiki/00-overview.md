@@ -33,7 +33,7 @@ wiki_version: "1.0"
 | GitHub 仓库 | https://github.com/stablyai/orca |
 | 官网 | https://www.onorca.dev/ |
 
-> 因为每日更新，"功能清单永远追不上产品迭代"，README 也明确说明 changelog 才是真正的功能列表。本教程所覆盖的版本基准为 `1.4.165-rc.0`（详见 [README](./README.md) 内容快照声明）。
+> 因为每日更新，"功能清单永远追不上产品迭代"，README 也明确说明 changelog 才是真正的功能列表。本教程所覆盖的版本基准为 `1.4.165-rc.0`（详见 [README](README.md) 内容快照声明）。
 
 ## 核心价值一句话
 
@@ -70,4 +70,4 @@ wiki_version: "1.0"
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← 这是教程第 1 章 | [README](./README.md) | → [01 核心架构与技术栈](./01-core-architecture.md) |
+| ← 这是教程第 1 章 | [README](README.md) | → [01 核心架构与技术栈](01-core-architecture.md) |

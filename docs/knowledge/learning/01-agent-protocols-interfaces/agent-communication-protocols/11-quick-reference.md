@@ -1,7 +1,7 @@
 ---
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#11-快速参考"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.toml"
 id: "quick-reference"
 title: "11、快速参考速查表"
 ---
@@ -134,5 +134,5 @@ A: MCP要求OAuth2.1、A2A支持OAuth2/mTLS/API Key、ACP支持DID/RBAC，安全
 | 导航 | 链接 |
 |------|------|
 | 返回总览 | [Agent通信协议总览](../agent-communication-protocols-wiki.md) |
-| 上一章 | [10、资源与参考链接](./10-resources.md) |
+| 上一章 | [10、资源与参考链接](10-resources.md) |
 | **下一章** | 无（本章为最后一章）🎉 |

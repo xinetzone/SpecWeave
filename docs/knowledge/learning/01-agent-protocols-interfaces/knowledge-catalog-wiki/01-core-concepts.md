@@ -354,4 +354,4 @@ Web Pass内置安全限制：硬上限`--web-max-pages`、同域允许主机过�
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [00 概述与知识地图](./00-overview.md) | [README](./README.md) | [02 OKF格式规范](./02-okf-specification.md) |
+| [00 概述与知识地图](00-overview.md) | [README](README.md) | [02 OKF格式规范](02-okf-specification.md) |

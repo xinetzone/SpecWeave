@@ -24,7 +24,7 @@ source: "insight-palmdet-compile-failure-20260812 / summary-palmdet-compile-fix-
 
 ## 1. 概述
 
-在 XMNN 模型编译流程中，`config.toml` 的 `[input]` 段声明模型输入 `shape` 与 `layout`。**工具链强制按 NCHW 解包输入 shape**（见 [data.py](../../../../external/chaos/npuusertools/xmnn/data.py) 中 `N, C, H, W = model_shape`），并不会因 config 写成 NHWC 而自动转置。
+在 XMNN 模型编译流程中，`config.toml` 的 `[input]` 段声明模型输入 `shape` 与 `layout`。**工具链强制按 NCHW 解包输入 shape**（见 [data.py](../../../external/chaos/npuusertools/xmnn/data.py) 中 `N, C, H, W = model_shape`），并不会因 config 写成 NHWC 而自动转置。
 
 因此：**config 的输入 `shape` 必须与模型（Caffe/ONNX/PyTorch）的实际输入布局（NCHW 或 NHWC）显式对齐**，否则会产生连锁失败。本次 palmDet 模型编译失败即源于此，本文沉淀为可复用规范。
 
@@ -94,7 +94,7 @@ layout = "NV12"
 - **`_patch_onnx2pytorch_resize`**：按 ONNX 语义剥离 `scales`/`sizes` 的批/通道维前缀，确保 `scales=[1,1,2,2]` 正确映射为 `scale_factor=(2.0, 2.0)`。
 - **`_patch_onnx2pytorch_reshape`**：修复固定 `[1,-1]` reshape 在 batch>1 时的第一维坍缩。
 
-> **根因分层**：config 布局错误（主因）决定"输入非法"；算子转换缺陷（辅因）决定"即使输入正确，Resize/Reshape 仍转换错误"。二者独立，需分别修复。落地位置见 [adaround_onnx_export.py](../../../../external/chaos/npuusertools/xmnn/adaround/adaround_onnx_export.py)。
+> **根因分层**：config 布局错误（主因）决定"输入非法"；算子转换缺陷（辅因）决定"即使输入正确，Resize/Reshape 仍转换错误"。二者独立，需分别修复。落地位置见 [adaround_onnx_export.py](../../../external/chaos/npuusertools/xmnn/adaround/adaround_onnx_export.py)。
 
 ---
 
@@ -148,6 +148,6 @@ COMPILE_EXIT=0
 ## 6. 参考与溯源
 
 - 复盘报告：`build-engineering/summary-palmdet-compile-fix-20260812.md`、`insight-palmdet-compile-failure-20260812.md`（`../../retrospective/reports/build-engineering/`）
-- 示例配置（已修复）：[config.toml](../../../../external/chaos/models/debug/palmDet/config.toml)
-- 工具链实现：[compile_api.py](../../../../external/chaos/npuusertools/xmnn/compile_api.py)、[data.py](../../../../external/chaos/npuusertools/xmnn/data.py)
+- 示例配置（已修复）：[config.toml](../../../external/chaos/models/debug/palmDet/config.toml)
+- 工具链实现：[compile_api.py](../../../external/chaos/npuusertools/xmnn/compile_api.py)、[data.py](../../../external/chaos/npuusertools/xmnn/data.py)
 - 相关最佳实践：[compiled-package-data-file-lifecycle.md](compiled-package-data-file-lifecycle.md)、[dataloader-pickle-diagnosis-sop.md](dataloader-pickle-diagnosis-sop.md)

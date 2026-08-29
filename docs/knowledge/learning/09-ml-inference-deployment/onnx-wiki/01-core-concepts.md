@@ -270,4 +270,4 @@ Functions是**使用现有ONNX算子定义的算子组合**：
 
 ---
 
-**上一章**：[00-overview.md - 总览](./00-overview.md) | **下一章**：[02-python-api.md - Python API实战](./02-python-api.md)
+**上一章**：[00-overview.md - 总览](00-overview.md) | **下一章**：[02-python-api.md - Python API实战](02-python-api.md)

@@ -3,6 +3,7 @@ id: "contributing"
 title: "贡献指南"
 description: "SpecWeave 贡献流程，包括启动协议、Pull Request 提交、代码审查与开发规范。"
 source: "docs/tech/concepts/contributing.md"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/contributing.toml"
 type: "Reference"
 generated:
   by: "process:docs-to-okf-conversion"
@@ -13,7 +14,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 贡献指南
 
 欢迎参与 SpecWeave 项目贡献！无论是提交问题、改进文档还是贡献代码，我们都非常感谢。

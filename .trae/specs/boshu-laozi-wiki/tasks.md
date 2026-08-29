@@ -1,7 +1,7 @@
 # 《帛书老子注读》Wiki 教程 - 实施计划
 
 > 方法论链路：seven-concepts 场景4（知识沉淀）R→I→E→V→C
-> 章节文件存放：`.agents/docs/knowledge/learning/boshu-laozi-wiki/`
+> 章节文件存放：`docs/knowledge/learning/boshu-laozi-wiki/`
 
 ## [x] Task 1: R 阶段 - 事实采集（G1 质量门）
 - **Priority**: high
@@ -107,7 +107,7 @@
 - **Depends On**: Task 4-11
 - **Description**:
   - 生成 README.md（含文档索引表）
-  - 更新 `.agents/docs/knowledge/learning/README.md` 导航（标记区域由 docgen 处理）
+  - 更新 `docs/knowledge/learning/README.md` 导航（标记区域由 docgen 处理）
   - 运行 generate-readme.py / docgen 校验索引
 - **Verification**: 导航可点击、无断链
 

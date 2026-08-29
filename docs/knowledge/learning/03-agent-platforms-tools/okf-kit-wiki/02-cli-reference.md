@@ -2,9 +2,8 @@
 id: "okf-kit-wiki-02"
 title: "okf-kit 完全指南 — CLI 命令参考"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/cli.py"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/02-cli-reference.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/02-cli-reference.toml"
 ---
-
 # okf-kit 完全指南 — CLI 命令参考
 
 > 一句话摘要：okf-kit 使用 Python 标准库 argparse 提供 10 个 CLI 子命令，分为构建维护（build/validate/zip/sync）、知识消费（list/get/chat/visualize）和服务暴露（serve-mcp/serve）三类，`okf build --enrich` 可选调用 LLM 为 frontmatter 补充描述和标签。

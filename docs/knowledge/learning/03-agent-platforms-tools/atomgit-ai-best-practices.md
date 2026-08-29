@@ -3120,7 +3120,7 @@ curl -X POST http://localhost:8000/predict \
 python scripts/train.py --config configs/train_config.yaml
 ```
 
-更多使用示例见 [examples/](examples/) 目录。
+更多使用示例见 [examples/](examples) 目录。
 
 ## 五、API参考
 

@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-agent-runtime-protocol-wiki-index"
 title: "Agent Runtime Protocol 完整教程"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -41,7 +41,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent 协议与接口](../../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [微信公众号原文](https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg)
 - [MCP 规范](https://modelcontextprotocol.io/)
 - [LangGraph 文档](https://langchain-ai.github.io/langgraph/)

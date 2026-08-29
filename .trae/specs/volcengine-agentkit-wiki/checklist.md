@@ -32,7 +32,7 @@
 ## AC-1 目录结构完整
 - [x] Checkpoint AC1.1: 目标目录包含 README.md + 00-overview.md ~ 10-resources-glossary.md 共 12 个文件
 - [x] Checkpoint AC1.2: 12 个文件每个 < 300 行（NFR-1）
-- [x] Checkpoint AC1.3: 目录位置正确：`.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`
+- [x] Checkpoint AC1.3: 目录位置正确：`docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`
 
 ## AC-2 ~ AC-11 内容完整度
 - [x] Checkpoint AC2: 01-product-intro.md 包含：产品定义 + 4大痛点 + 8大功能模块详解 + 4大优势（每优势2-3证据）+ Mermaid 发展时间线

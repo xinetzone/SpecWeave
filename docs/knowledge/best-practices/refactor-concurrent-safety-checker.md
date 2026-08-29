@@ -7,7 +7,7 @@ source: "重构洞察-并发安全检查器职责拆分.md"
 tags: ["refactor", "concurrency", "strategy-pattern", "static-analysis"]
 type: "Report"
 description: "并发安全静态检查器ConcurrentSafetyVisitor类的策略模式重构报告，将924行巨型类拆分为1个协调器+8个独立检查器"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/refactor-concurrent-safety-checker.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/refactor-concurrent-safety-checker.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"

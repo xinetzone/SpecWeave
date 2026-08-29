@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-07"
 title: "The Agency 完全指南 — 策略与运行手册"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/07-strategy-playbooks.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/07-strategy-playbooks.toml"
 ---
 # The Agency 完全指南 — 策略与运行手册
 

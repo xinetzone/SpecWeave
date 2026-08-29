@@ -1,7 +1,7 @@
 ---
 id: "myst-tutorial-mystmd"
 title: "第13章：工具链集成 - mystmd（新一代）"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/13-tooling-mystmd.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/13-tooling-mystmd.toml"
 ---
 # 第13章：工具链集成 - mystmd（新一代）
 
@@ -204,7 +204,7 @@ plt.show()
 - 支持自定义模板和 React 组件嵌入
 
 ### 高级功能
-- **交叉引用**：`[](./syntax.md)` 跨文档引用，`{eq}`euler`` 引用公式
+- **交叉引用**：`[](syntax.md)` 跨文档引用，`{eq}`euler`` 引用公式
 - **参考文献**：配置 `bibliography` 后用 `{cite:p}`key`` 引用
 - **外部引用**：直接链接 DOI/URL，自动识别
 - **草稿版本**：`project.version` 标记版本

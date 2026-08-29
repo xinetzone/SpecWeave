@@ -349,6 +349,6 @@ Google内部   首个开源    gRPC发布    恢复未知    恢复        Editi
 ---
 
 **导航**：
-- ← 上一章：[00-overview.md - 总览](./00-overview.md)
+- ← 上一章：[00-overview.md - 总览](00-overview.md)
 - ↑ 上级：[README](../README.md)
-- → 下一章：[02-version-comparison.md - 三版对比矩阵](./02-version-comparison.md)
+- → 下一章：[02-version-comparison.md - 三版对比矩阵](02-version-comparison.md)

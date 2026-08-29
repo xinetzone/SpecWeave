@@ -17,10 +17,10 @@ validation_count: 1
 
 | 模块 | 路径 | 内容 |
 |-----|------|------|
-| 原理与事实 | [01-principles/](./01-principles/README.md) | Token消耗结构、实测数据、核心原理 |
-| 可复用模式 | [02-patterns/](./02-patterns/README.md) | P-T-001~P-T-005 五大节省模式详解 |
-| 决策框架 | [03-decision-framework/](./03-decision-framework/README.md) | ROI优先级、快速检查清单、反模式识别 |
-| 快速参考 | [04-quick-reference.md](./04-quick-reference.md) | 3分钟速查卡 |
+| 原理与事实 | [01-principles/](01-principles/README.md) | Token消耗结构、实测数据、核心原理 |
+| 可复用模式 | [02-patterns/](02-patterns/README.md) | P-T-001~P-T-005 五大节省模式详解 |
+| 决策框架 | [03-decision-framework/](03-decision-framework/README.md) | ROI优先级、快速检查清单、反模式识别 |
+| 快速参考 | [04-quick-reference.md](04-quick-reference.md) | 3分钟速查卡 |
 
 ## 核心结论
 
@@ -35,4 +35,4 @@ validation_count: 1
 
 ## 术语表
 
-参见 [glossary.md](./glossary.md)
+参见 [glossary.md](glossary.md)

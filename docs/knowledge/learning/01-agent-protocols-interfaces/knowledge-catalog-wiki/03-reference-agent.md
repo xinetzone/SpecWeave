@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 # 03 参考Agent实现原理与运行指南
 
 > **本章定位说明**
-> - 前两章从规范视角介绍了OKF格式（[01 核心概念与平台架构](./01-core-concepts.md)、[02 OKF规范深度解析](./02-okf-specification.md)）。
+> - 前两章从规范视角介绍了OKF格式（[01 核心概念与平台架构](01-core-concepts.md)、[02 OKF规范深度解析](02-okf-specification.md)）。
 > - 本章从**源码实现视角**出发，系统讲解knowledge-catalog参考Agent（reference agent）的内部工作原理、模块架构和使用方法。
 > - 参考Agent是OKF格式的**概念验证生产者（Proof of Concept Producer）**，演示了如何自动化从数据源（BigQuery）和权威文档自动生成OKF Bundle。
 > - 首次使用建议先完成 [okf-wiki 5分钟快速入门](../okf-wiki/02-quickstart.md) 的手工实操，建立OKF Bundle的感性认识后再阅读本章。
@@ -176,7 +176,7 @@ bundle工具模块负责OKF文档的读写和验证，是Agent与文件系统交
 
 **Frontmatter自动填充**（`bundle_tools.py:113-124`）：
 
-- `generated.by`：未提供时自动填充为 `reference_agent/<model>`，遵循Actor约定（参见 [02 OKF规范 §2.3.1](./02-okf-specification.md#231-actor约定统一身份标识)）。
+- `generated.by`：未提供时自动填充为 `reference_agent/<model>`，遵循Actor约定（参见 [02 OKF规范 §2.3.1](02-okf-specification.md#231-actor约定统一身份标识)）。
 - `generated.at`：未提供时自动填充为当前UTC ISO 8601时间戳。
 - 字段按`_PREFERRED_KEY_ORDER`排序输出，保持frontmatter键顺序一致。
 
@@ -477,11 +477,11 @@ reference_agent展示了如何基于OKF规范构建自动化知识生产Agent，
 **延伸阅读**：
 
 - OKF快速入门实操：[okf-wiki 02 5分钟快速入门](../okf-wiki/02-quickstart.md)
-- OKF规范深度解析：[02 OKF开放知识格式规范深度解析](./02-okf-specification.md)
-- OKF核心概念：[01 核心概念与平台架构](./01-core-concepts.md)
-- 可视化工具：[04 工具链与可视化](./04-toolchain-and-visualization.md)（下一章）
+- OKF规范深度解析：[02 OKF开放知识格式规范深度解析](02-okf-specification.md)
+- OKF核心概念：[01 核心概念与平台架构](01-core-concepts.md)
+- 可视化工具：[04 工具链与可视化](04-toolchain-and-visualization.md)（下一章）
 - 官方示例Recipes：参见 `okf/samples/` 目录下各数据集的运行配方
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [02 OKF开放知识格式规范深度解析](./02-okf-specification.md) | [README](./README.md) | [04 工具链与可视化](./04-toolchain-and-visualization.md) |
+| [02 OKF开放知识格式规范深度解析](02-okf-specification.md) | [README](README.md) | [04 工具链与可视化](04-toolchain-and-visualization.md) |

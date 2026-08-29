@@ -4,7 +4,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 创建产出物目录 `.agents/docs/knowledge/quality-assurance/`
+  - 创建产出物目录 `docs/knowledge/quality-assurance/`
   - 创建入口README.md，包含索引、使用指南、文件导航
   - 确保所有产出物有统一的YAML frontmatter格式
 - **Acceptance Criteria Addressed**: AC-4, AC-5
@@ -128,7 +128,7 @@
 - **Priority**: medium
 - **Depends On**: Task 6
 - **Description**: 
-  - 运行 `python .agents/scripts/check-links.py --path .agents/docs/knowledge/quality-assurance/` 验证链接有效性
+  - 运行 `python .agents/scripts/check-links.py --path docs/knowledge/quality-assurance/` 验证链接有效性
   - 对照checklist.md逐项自检所有产出物
   - 修复发现的问题
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5

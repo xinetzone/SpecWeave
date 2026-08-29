@@ -33,7 +33,7 @@ Agent Plan是火山引擎方舟面向Agent时代推出的**全新订阅产品**�
 
 > ⚠️ **归因说明**：原文仅以"字节SOTA级多模态模型（如Seedance、Seedream）"列举，"Seedance=生视频、Seedream=生图"为基于通用产品认知的推断，供定位参考，请以方舟控制台实际模型说明为准。
 
-> 💡 若需在控制台按模型名定位多模态能力，可查阅[实践指南与项目案例](./08-practice-cases.md)章对 Seedance/Seedream 及 CookBook 案例的说明。
+> 💡 若需在控制台按模型名定位多模态能力，可查阅[实践指南与项目案例](08-practice-cases.md)章对 Seedance/Seedream 及 CookBook 案例的说明。
 
 ## 二、订阅模式特点
 

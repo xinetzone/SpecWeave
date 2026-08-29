@@ -85,6 +85,6 @@ category: "learning"
 ## 🔗 相关资源
 
 * [🏠 返回上级：工具与库](../README.md)
-* [📚 知识库首页](../../../../README.md)
+* [📚 知识库首页](../../../../../.agents/docs/README.md)
 * [PyInvoke 官方文档](https://docs.pyinvoke.org/)
 * [PyInvoke GitHub](https://github.com/pyinvoke/invoke)

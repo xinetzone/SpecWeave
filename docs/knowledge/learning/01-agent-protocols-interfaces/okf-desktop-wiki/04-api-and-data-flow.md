@@ -169,4 +169,4 @@ README 的 Notes 里坦率说明：目前后端 `ask` 是**把完整答案分块
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [03 五大界面详解](./03-ui-screens.md) | [README](./README.md) | [05 跨平台打包](./05-packaging.md) |
+| [03 五大界面详解](03-ui-screens.md) | [README](README.md) | [05 跨平台打包](05-packaging.md) |

@@ -274,16 +274,16 @@ A: 如果PR描述中包含`Fixes gh-NNNNN`或`Closes gh-NNNNN`，合并时GitHub
 
 | 文件 | 标题 | 内容摘要 |
 |------|------|----------|
-| [README.md](./README.md) | Wiki首页 | 目录索引和使用说明 |
-| [00-overview.md](./00-overview.md) | 总览：CPython贡献全景图 | TL;DR、贡献者全景图、速查表、三条核心洞察、贡献难度分级 |
-| [01-contributor-quickstart.md](./01-contributor-quickstart.md) | 贡献者快速上手 | Codespaces、本地环境搭建（6步）、11步PR流程、跨平台编译、问题排查 |
-| [02-development-workflow.md](./02-development-workflow.md) | 深度开发流程 | Git工作流详解、PR生命周期、开发周期与版本管理、测试体系 |
-| [03-governance-community.md](./03-governance-community.md) | 治理与社区 | 沟通渠道、Issue Triage、核心团队结构、安全政策、AI使用指南 |
-| [04-best-practices-anti-patterns.md](./04-best-practices-anti-patterns.md) | 最佳实践与反模式 | 10个常见反模式、PR检查清单、成长路径、心智模型、实用技巧 |
-| [05-faq-resources.md](./05-faq-resources.md) | FAQ与资源 | 常见问题解答、术语表、源码目录地图、阅读路径、外部资源 |
+| [README.md](README.md) | Wiki首页 | 目录索引和使用说明 |
+| [00-overview.md](00-overview.md) | 总览：CPython贡献全景图 | TL;DR、贡献者全景图、速查表、三条核心洞察、贡献难度分级 |
+| [01-contributor-quickstart.md](01-contributor-quickstart.md) | 贡献者快速上手 | Codespaces、本地环境搭建（6步）、11步PR流程、跨平台编译、问题排查 |
+| [02-development-workflow.md](02-development-workflow.md) | 深度开发流程 | Git工作流详解、PR生命周期、开发周期与版本管理、测试体系 |
+| [03-governance-community.md](03-governance-community.md) | 治理与社区 | 沟通渠道、Issue Triage、核心团队结构、安全政策、AI使用指南 |
+| [04-best-practices-anti-patterns.md](04-best-practices-anti-patterns.md) | 最佳实践与反模式 | 10个常见反模式、PR检查清单、成长路径、心智模型、实用技巧 |
+| [05-faq-resources.md](05-faq-resources.md) | FAQ与资源 | 常见问题解答、术语表、源码目录地图、阅读路径、外部资源 |
 
 ---
 
 ## 下一步
 
-👉 [返回Wiki首页](./README.md)
+👉 [返回Wiki首页](README.md)

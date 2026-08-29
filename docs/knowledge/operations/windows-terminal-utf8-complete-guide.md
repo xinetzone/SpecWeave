@@ -1,7 +1,7 @@
 ---
 id: "windows-terminal-utf8-complete-guide"
 title: "Windows终端UTF-8编码完整配置指南"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"
 category: "operations"
 tags: ["windows", "powershell", "cmd", "utf-8", "encoding", "gbk", "chcp", "乱码"]
 date: "2026-07-01"
@@ -299,7 +299,7 @@ Trae终端无需额外配置，它使用的是系统PowerShell。
 
 ### 验证脚本
 
-使用 [verify-sitecustomize-autoload.py](../../../scripts/verify-sitecustomize-autoload.py) 一键验证 sitecustomize.py 是否在 Python 启动时被自动加载：
+使用 [verify-sitecustomize-autoload.py](../../../.agents/scripts/verify-sitecustomize-autoload.py) 一键验证 sitecustomize.py 是否在 Python 启动时被自动加载：
 
 ```powershell
 python .agents/scripts/verify-sitecustomize-autoload.py
@@ -422,7 +422,7 @@ python -X utf8 -c "from pathlib import Path; Path('output.md').write_text('中�
 
 ## 参考
 
-- 相关模式：[跨平台编码强制模式](../../retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md)
+- 相关模式：[跨平台编码强制模式](../../../.agents/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md)
 - 相关知识库：[Windows PowerShell文本管道可能污染中文文档输出](windows-powershell-pipe-utf8.md)
 - 相关知识库：[Windows PowerShell不支持heredoc语法](windows-powershell-heredoc.md)
 - 相关脚本：

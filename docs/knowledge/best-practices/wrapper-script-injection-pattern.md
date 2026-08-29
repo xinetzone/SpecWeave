@@ -1,7 +1,7 @@
 ---
 id: "wrapper-script-injection-pattern"
 title: "Wrapper脚本注入模式"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/wrapper-script-injection-pattern.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/wrapper-script-injection-pattern.toml"
 category: "best-practices"
 tags: ["Python", "wrapper", "runpy", "compiled-package", "runtime-patch", "compatibility"]
 date: "2026-07-23"
@@ -14,7 +14,7 @@ summary: "基于xmnn Nuitka编译包Python 3.14兼容性修复实战复盘，提
 
 > 基于xmnn Nuitka编译包Python 3.14兼容性修复实战复盘的经验总结。核心教训：**当无法修改编译产物源码时，wrapper脚本注入是最有效的兼容性修复策略**——它在import前注入配置（如multiprocessing start method），不侵入原代码，可随时移除，且提供透明的用户体验。
 
-**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
+**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../../.agents/docs/retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
 
 ---
 

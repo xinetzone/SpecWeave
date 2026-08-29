@@ -276,4 +276,4 @@ flowchart LR
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [05 快速入门](./05-quickstart.md) | [README](./README.md) | → [07 核心功能详解](./07-core-features-detailed.md) |
+| ← [05 快速入门](05-quickstart.md) | [README](README.md) | → [07 核心功能详解](07-core-features-detailed.md) |

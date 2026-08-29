@@ -76,4 +76,4 @@ EchoBird 的核心设计是 **一个共享的模型数据中心（Model Nexus）
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [00 教程总览](./00-overview.md) | [README](./README.md) | → [02 技术架构深度解析](./02-architecture.md) |
+| ← [00 教程总览](00-overview.md) | [README](README.md) | → [02 技术架构深度解析](02-architecture.md) |

@@ -102,7 +102,7 @@
 - **Priority**: high
 - **Depends On**: Task 5, Task 6
 - **Description**:
-  - 汇聚全部调研结论，撰写完整对比分析报告（Markdown），路径：`.agents/docs/knowledge/operations/epub-to-markdown-conversion-research.md`（若该分类不合适则按知识库结构调整）
+  - 汇聚全部调研结论，撰写完整对比分析报告（Markdown），路径：`docs/knowledge/operations/epub-to-markdown-conversion-research.md`（若该分类不合适则按知识库结构调整）
   - 报告结构：执行摘要、工具概述对比表、复杂元素对比、问题与方案、性能对比、编程自研方案、推荐与适用场景矩阵、操作步骤、来源附录
   - 报告 frontmatter 标注 source 溯源
   - 原子交付（C 阶段）：遵循 Conventional Commits 提交

@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-02"
 title: "DeepSeek Harness 完全指南 — 环境准备与安装"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/02-installation-setup.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/02-installation-setup.toml"
 ---
 # 02 环境准备与安装
 

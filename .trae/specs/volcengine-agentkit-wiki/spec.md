@@ -46,7 +46,7 @@ AgentKit 将上述能力标准化沉淀为 8 大平台组件：Runtime / Identit
 - **开源协议**: veadk-python/veadk-go/veadk-java 均在 GitHub 开源，接受社区贡献
 
 ### 内容敏感度
-火山引擎官网为公开产品页面，官方文档与 GitHub 开源仓库均为公开可访问内容，本教程属于 **Public（公开内容）** 级别，遵循标准工作流，产出物位于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`。
+火山引擎官网为公开产品页面，官方文档与 GitHub 开源仓库均为公开可访问内容，本教程属于 **Public（公开内容）** 级别，遵循标准工作流，产出物位于 `docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`。
 
 ## Functional Requirements
 
@@ -148,7 +148,7 @@ The system SHALL ensure all 11 wiki files follow consistent metadata and navigat
 - 读者具备基础 AI/ML 概念，了解大语言模型、RAG、Tool Calling 等基础概念
 - 读者具备 Python 编程基础（VeADK 最成熟的 SDK 语言）
 - 读者了解至少一种云服务的基本使用（账号、权限、部署）
-- 文档放置于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/` 目录
+- 文档放置于 `docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/` 目录
 - 教程内容为快照性质，基于 2026 年 7 月官方公开资料，后续读者需以官方文档更新为准
 
 ## Acceptance Criteria

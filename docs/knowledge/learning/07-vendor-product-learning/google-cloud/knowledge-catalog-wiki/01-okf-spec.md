@@ -331,7 +331,7 @@ stale_after: 2026-09-23   # 绝对日期；此日当天及之后内容过时
 
 - **相对**：标准Markdown相对路径。
   ```markdown
-  参见[相邻概念](./other.md)。
+  参见[相邻概念](other.md)。
   ```
 
 从概念A到概念B的链接断言一个*关系*。具体类型（父子、引用、连接、依赖）由周围散文传达，而非链接本身。构建图视图的消费者通常将所有链接视为无类型关系的有向边。
@@ -377,7 +377,7 @@ stale_after: 2026-09-23   # 绝对日期；此日当天及之后内容过时
 
 # 另一个章节
 
-* [子目录](subdir/) - 子目录的简短描述
+* [子目录](subdir) - 子目录的简短描述
 ```
 
 条目应包含链接概念frontmatter中的描述。生产者可以自动生成`index.md`；不存在时消费者可以即时合成一个。
@@ -508,4 +508,4 @@ Bundle可以在Bundle根`index.md` frontmatter块中用`okf_version: "0.2"`声�
 
 ---
 
-继续阅读：[02-reference-agent.md - 参考智能体实现](./02-reference-agent.md)
+继续阅读：[02-reference-agent.md - 参考智能体实现](02-reference-agent.md)

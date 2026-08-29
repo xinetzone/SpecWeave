@@ -45,7 +45,7 @@ integrity: "unchecked"
 ## 文件位置
 
 - 脚本：`SpecWeave/.agents/scripts/fix-hardcoded-paths.py`
-- 本文档：`SpecWeave/.agents/docs/knowledge/best-practices/fix-hardcoded-paths-guide.md`
+- 本文档：`SpecWeave/docs/knowledge/best-practices/fix-hardcoded-paths-guide.md`
 
 ## 正则逻辑说明
 

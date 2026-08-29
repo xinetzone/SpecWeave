@@ -2,7 +2,7 @@
 id: "quantdinger-00-overview"
 title: "QuantDinger：自托管AI量化交易平台"
 source: "微信公众号「极客之家」"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/00-overview.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/00-overview.toml"
 ---
 # 《QuantDinger：自托管AI量化交易平台》分析报告
 

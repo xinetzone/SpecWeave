@@ -19,7 +19,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 # 05 示例Bundle深度解析
 
 > **本章定位说明**
-> - 前四章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](./00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](./01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](./02-okf-specification.md)）、参考Agent实现（[03 参考Agent实现原理与运行指南](./03-reference-agent.md)）和工具链与可视化（[04 工具链与可视化系统](./04-toolchain-and-visualization.md)）。
+> - 前四章分别介绍了Knowledge Catalog平台概述（[00 概述与知识地图](00-overview.md)）、核心概念与架构（[01 核心概念与平台架构](01-core-concepts.md)）、OKF规范（[02 OKF规范深度解析](02-okf-specification.md)）、参考Agent实现（[03 参考Agent实现原理与运行指南](03-reference-agent.md)）和工具链与可视化（[04 工具链与可视化系统](04-toolchain-and-visualization.md)）。
 > - 本章聚焦**官方示例Bundle的深度剖析**——通过逐个拆解4个由浅入深的官方示例，读者可以直观理解OKF Bundle的实际组织结构、不同类型概念的文档写法、交叉链接的建立方式，以及企业级高级特性（如Attested Computation）的完整落地形态。
 > - 所有示例Bundle均位于 `okf/bundles/` 目录下，每个Bundle都已预先生成了 `viz.html` 可视化文件，读者可直接在浏览器中打开查看交互式知识图谱。
 
@@ -740,10 +740,10 @@ acme_retail是四个示例中**最有价值的一个**，它展示了OKF超越�
 - OKF使用模式（包括认证计算模式）：[okf-wiki 03 使用模式与最佳实践](../okf-wiki/03-usage-patterns.md)
 
 **Knowledge Catalog Wiki相关章节**：
-- OKF规范中type字段和概念类型定义：[02 OKF开放知识格式规范深度解析](./02-okf-specification.md)
-- 参考Agent如何自动生成Bundle：[03 参考Agent实现原理与运行指南](./03-reference-agent.md)
-- 可视化系统如何呈现Bundle结构：[04 工具链与可视化系统](./04-toolchain-and-visualization.md)
-- 企业集成模式与最佳实践：[06 集成模式与最佳实践](./06-integration-patterns.md)（下一章）
+- OKF规范中type字段和概念类型定义：[02 OKF开放知识格式规范深度解析](02-okf-specification.md)
+- 参考Agent如何自动生成Bundle：[03 参考Agent实现原理与运行指南](03-reference-agent.md)
+- 可视化系统如何呈现Bundle结构：[04 工具链与可视化系统](04-toolchain-and-visualization.md)
+- 企业集成模式与最佳实践：[06 集成模式与最佳实践](06-integration-patterns.md)（下一章）
 
 **官方资源**：
 - 官方GitHub仓库：https://github.com/googlecloudplatform/knowledge-catalog
@@ -755,4 +755,4 @@ acme_retail是四个示例中**最有价值的一个**，它展示了OKF超越�
 
 | 上一章 | 目录 | 下一章 |
 |--------|------|--------|
-| [04 工具链与可视化系统](./04-toolchain-and-visualization.md) | [README](./README.md) | [06 集成模式与最佳实践](./06-integration-patterns.md) |
+| [04 工具链与可视化系统](04-toolchain-and-visualization.md) | [README](README.md) | [06 集成模式与最佳实践](06-integration-patterns.md) |

@@ -113,6 +113,6 @@
 
 [11] 本项目复盘体系文档. 复盘报告合集 (2024-2026)[EB/OL]. [docs/retrospective/reports/](retrospective/reports/README.md)
 
-[12] 本项目知识库体系文档. 知识管理系统 (2025-2026)[EB/OL]. [docs/knowledge/](knowledge/README.md)
+[12] 本项目知识库体系文档. 知识管理系统 (2025-2026)[EB/OL]. [docs/knowledge/](../../docs/knowledge/README.md)
 
 [13] 本项目智能体规范体系. AGENTS.md 及 .agents/ 目录 (2025-2026)[EB/OL]. [.agents/](../README.md)

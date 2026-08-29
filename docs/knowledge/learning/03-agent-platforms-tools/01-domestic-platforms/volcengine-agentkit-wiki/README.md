@@ -31,17 +31,17 @@ agentkit_version_target: "2026Q3"
 
 | 章号 | 文件名 | 标题 | 一句话简介 |
 |------|--------|------|-----------|
-| 00 | [00-overview.md](./00-overview.md) | 教程总览与知识地图 | AgentKit 四层生态全景图、11章导航、三条阅读路径与知识库交叉引用 |
-| 01 | [01-product-intro.md](./01-product-intro.md) | 产品介绍与核心概念 | 产品定义、工程化四大痛点、八大功能模块、四大产品优势 |
-| 02 | [02-core-architecture.md](./02-core-architecture.md) | 产品架构与核心能力 | Agent Ready 分层架构、Harness 编排、Serverless 底座、安全与评测闭环 |
-| 03 | [03-veadk-framework.md](./03-veadk-framework.md) | VeADK 智能体开发框架 | 三语言 SDK 安装、VeADK Family 产品矩阵、DeepResearch 构建特性 |
-| 04 | [04-agentkit-sdk-cli.md](./04-agentkit-sdk-cli.md) | AgentKit SDK & CLI 工具链 | 装饰器 API、CLI 全命令、Local/Hybrid/Cloud 三种部署模式 |
-| 05 | [05-quickstart.md](./05-quickstart.md) | 快速入门指南 | 前置条件、五步标准上手指南、每步命令示例与常见错误排查 |
-| 06 | [06-application-scenarios.md](./06-application-scenarios.md) | 应用场景与落地方案 | 四大典型场景架构、五大行业落地框架、标准化 vs 定制化选型决策 |
-| 07 | [07-core-features-detailed.md](./07-core-features-detailed.md) | 核心功能深度解析 | Identity/Gateway/A2A/Session-Memory/Knowledge 五大模块深度集成 |
-| 08 | [08-comparison-ecosystem.md](./08-comparison-ecosystem.md) | 竞品对比与生态定位 | 十维度五平台对比、八维度选型评估框架、火山引擎 AI 矩阵定位 |
-| 09 | [09-faq-best-practices.md](./09-faq-best-practices.md) | FAQ 与最佳实践 | 十五常见问题、八条最佳实践、Demo 到生产十二项检查清单 |
-| 10 | [10-resources-glossary.md](./10-resources-glossary.md) | 术语表与参考资源 | 二十条术语表、官方文档链接汇总、知识库交叉引用扩展 |
+| 00 | [00-overview.md](00-overview.md) | 教程总览与知识地图 | AgentKit 四层生态全景图、11章导航、三条阅读路径与知识库交叉引用 |
+| 01 | [01-product-intro.md](01-product-intro.md) | 产品介绍与核心概念 | 产品定义、工程化四大痛点、八大功能模块、四大产品优势 |
+| 02 | [02-core-architecture.md](02-core-architecture.md) | 产品架构与核心能力 | Agent Ready 分层架构、Harness 编排、Serverless 底座、安全与评测闭环 |
+| 03 | [03-veadk-framework.md](03-veadk-framework.md) | VeADK 智能体开发框架 | 三语言 SDK 安装、VeADK Family 产品矩阵、DeepResearch 构建特性 |
+| 04 | [04-agentkit-sdk-cli.md](04-agentkit-sdk-cli.md) | AgentKit SDK & CLI 工具链 | 装饰器 API、CLI 全命令、Local/Hybrid/Cloud 三种部署模式 |
+| 05 | [05-quickstart.md](05-quickstart.md) | 快速入门指南 | 前置条件、五步标准上手指南、每步命令示例与常见错误排查 |
+| 06 | [06-application-scenarios.md](06-application-scenarios.md) | 应用场景与落地方案 | 四大典型场景架构、五大行业落地框架、标准化 vs 定制化选型决策 |
+| 07 | [07-core-features-detailed.md](07-core-features-detailed.md) | 核心功能深度解析 | Identity/Gateway/A2A/Session-Memory/Knowledge 五大模块深度集成 |
+| 08 | [08-comparison-ecosystem.md](08-comparison-ecosystem.md) | 竞品对比与生态定位 | 十维度五平台对比、八维度选型评估框架、火山引擎 AI 矩阵定位 |
+| 09 | [09-faq-best-practices.md](09-faq-best-practices.md) | FAQ 与最佳实践 | 十五常见问题、八条最佳实践、Demo 到生产十二项检查清单 |
+| 10 | [10-resources-glossary.md](10-resources-glossary.md) | 术语表与参考资源 | 二十条术语表、官方文档链接汇总、知识库交叉引用扩展 |
 
 ## 内容快照声明
 
@@ -53,9 +53,9 @@ agentkit_version_target: "2026Q3"
 | 覆盖 AgentKit 版本 | 2026Q3 |
 | 最后验证日期 | 2026-07-31 |
 | 文件总数 | 13（12 章教程 + 1 维护手册） |
-| 增量更新机制 | 详见 [MAINTENANCE.md](./MAINTENANCE.md) |
+| 增量更新机制 | 详见 [MAINTENANCE.md](MAINTENANCE.md) |
 
-**版本更新触发器**：当 T1（版本发布）/ T2（季度体检，每 90 天）/ T3（用户反馈）/ T4（新功能上线）/ T5（竞品重大变化）任一条件触发时，请按 [MAINTENANCE.md §3 增量更新SOP](./MAINTENANCE.md#3-增量更新-sop5-步标准流程) 执行更新。季度体检一键检查命令：
+**版本更新触发器**：当 T1（版本发布）/ T2（季度体检，每 90 天）/ T3（用户反馈）/ T4（新功能上线）/ T5（竞品重大变化）任一条件触发时，请按 [MAINTENANCE.md §3 增量更新SOP](MAINTENANCE.md#3-增量更新-sop5-步标准流程) 执行更新。季度体检一键检查命令：
 ```powershell
 python .agents/scripts/check-wiki-staleness.py --wiki volcengine-agentkit-wiki
 ```

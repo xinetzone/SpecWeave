@@ -3,7 +3,7 @@ id: "eight-dimensions-concurrent-safety-spec"
 title: "并发安全八维检查法技术规格"
 date: 2026-07-08
 source: "../../retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/retrospective-report.md#1.4-八维检查法规则详解"
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/eight-dimensions-concurrent-safety-spec.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/eight-dimensions-concurrent-safety-spec.toml"
 category: "best-practices"
 status: stable
 tags: ["concurrent-safety", "AST", "static-analysis", "eight-dimensions", "check-rules", "pre-commit"]
@@ -76,5 +76,5 @@ cross_refs:
 
 ## 更新记录
 
-- **2026-07-09**：从 `docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/` 迁移至 `docs/knowledge/best-practices/`，提升可发现性；DEFENSIVE维度新增第④类检测场景（NaN/Inf特殊浮点值泄漏），来源于conflict_resolution.py压力测试中发现的NaN诊断遗漏Bug——`float('nan')`通过isinstance(float)检查但所有比较返回False，可绕过范围校验诊断。详见[负载异常压力测试报告](../../retrospective/reports/task-reports/report-malformed-data-handling-20260709/stress-test-report.md#4-bug发现与修复)。
+- **2026-07-09**：从 `docs/retrospective/reports/task-reports/retrospective-concurrent-safety-checker-20260708/` 迁移至 `docs/knowledge/best-practices/`，提升可发现性；DEFENSIVE维度新增第④类检测场景（NaN/Inf特殊浮点值泄漏），来源于conflict_resolution.py压力测试中发现的NaN诊断遗漏Bug——`float('nan')`通过isinstance(float)检查但所有比较返回False，可绕过范围校验诊断。详见[负载异常压力测试报告](../../../.agents/docs/retrospective/reports/task-reports/report-malformed-data-handling-20260709/stress-test-report.md#4-bug发现与修复)。
 - **2026-07-08**：初始版本，从并发安全检查器复盘报告原子化拆分而来。

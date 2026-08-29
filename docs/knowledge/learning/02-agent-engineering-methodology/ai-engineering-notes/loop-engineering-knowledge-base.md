@@ -4,7 +4,7 @@ title: Loop Engineering 标准化知识库
 date: 2026-08-01
 original_type: knowledge-base
 source: Hugging Face SWE-bench实验、Karpathy AutoResearch实践、Shopify工程验证、Akshay Harness理论、Niklaus Harness Evolution方法论
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/loop-engineering-knowledge-base.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/loop-engineering-knowledge-base.toml"
 original_status: milestone
 version: "1.0"
 type: "Reference"

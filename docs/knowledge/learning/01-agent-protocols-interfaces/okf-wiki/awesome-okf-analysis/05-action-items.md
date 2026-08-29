@@ -39,7 +39,7 @@ date: 2026-08-06
 - **Owner角色**：Developer（开发者）
 - **预估时间盒**：2小时
 - **可独立交付**：是。审计完成后输出Markdown表格即可，无需等待其他行动项。
-- **落地路径建议**：审计结果可存入`.agents/docs/knowledge/learning/.../scripts-dependency-audit.md`，作为后续零依赖改造的依据。
+- **落地路径建议**：审计结果可存入`docs/knowledge/learning/.../scripts-dependency-audit.md`，作为后续零依赖改造的依据。
 
 ---
 
@@ -96,7 +96,7 @@ date: 2026-08-06
 - **预估时间盒**：2小时
 - **可独立交付**：是。仅需文档输出+审查记录，不涉及大规模重构。
 - **前置参考**：建议在A1（脚本审计）和A3（dogfooding自检）完成后执行，有更完整的现状数据。但不阻塞，可独立执行。
-- **落地路径建议**：文档存入`.agents/docs/knowledge/learning/`或`.agents/skills/`目录下作为README补充。
+- **落地路径建议**：文档存入`docs/knowledge/learning/`或`.agents/skills/`目录下作为README补充。
 
 ---
 

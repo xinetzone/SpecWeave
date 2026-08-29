@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-04-docs-markup-tooling-myst-markdown-tutorial-examples-index"
 title: "示例"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
@@ -25,7 +25,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：MyST Markdown 技术教程](../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../../.agents/docs/README.md)
 
 ---
 

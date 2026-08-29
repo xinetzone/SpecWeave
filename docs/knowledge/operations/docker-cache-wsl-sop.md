@@ -11,7 +11,7 @@ validation: "doctor 全绿 + list 10/10 ✅ + save/load 完整循环验证通过
 related_patterns:
   - "M-1 双轨引擎切换架构"
   - "M-2 写文件后调用跨壳逃逸模式"
-x-toml-ref: "../../.meta/toml/.agents/docs/knowledge/operations/docker-cache-wsl-sop.toml"
+x-toml-ref: "../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-sop.toml"
 ---
 
 # WSL Docker/Podman 镜像本地缓存操作 SOP
@@ -370,4 +370,4 @@ bash .agents/scripts/docker-cache doctor
 
 **[CMD-LOG] | cmd=seven-concepts | step=S9 | event=CHAIN_COMPLETED | chain=R→I→E→V→Export | gates="G1✅ G2✅ G3✅ V门✅" | deliverables="本 SOP 文档（含 24事实+3洞察+2模式+V阶段12条审查7条采纳）+ 操作验证通过 10/10 镜像"**
 
-**[CMD-LOG] | cmd=export-report | step=S6 | event=FILE_WRITTEN | path=.agents/docs/knowledge/operations/docker-cache-wsl-sop.md**
+**[CMD-LOG] | cmd=export-report | step=S6 | event=FILE_WRITTEN | path=docs/knowledge/operations/docker-cache-wsl-sop.md**

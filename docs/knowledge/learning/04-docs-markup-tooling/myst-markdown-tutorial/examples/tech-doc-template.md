@@ -1,7 +1,7 @@
 ---
 id: "myst-example-tech-doc-template"
 title: "模板：技术文档模板"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/tech-doc-template.toml"
 ---
 # {{项目名称}} - {{页面标题}}
 
@@ -148,7 +148,7 @@ print(result)
 详细说明高级场景...
 
 :::{seealso}
-更多示例见 [examples/](../examples/README.md) 目录或 [高级教程]({{高级教程路径}})。
+更多示例见 [examples/](README.md) 目录或 [高级教程]({{高级教程路径}})。
 :::
 
 ---
@@ -192,6 +192,6 @@ A: 参考 [配置章节](#配置) 或 [官方文档]({{文档链接}})。
 ## 相关链接
 
 - [GitHub 仓库]({{仓库地址}})
-- [问题反馈](../../../../../../../.trae/specs/retrospectives-insights/minitap-official-docs-wiki/raw-content/minitest/issues.md)
+- [问题反馈](../../../../../../.trae/specs/retrospectives-insights/minitap-official-docs-wiki/raw-content/minitest/issues.md)
 - [变更日志]({{变更日志路径}})
 - [上一节]({{上一节链接}}) | [下一节]({{下一节链接}})

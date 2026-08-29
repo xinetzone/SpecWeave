@@ -2,7 +2,7 @@
 id: "github-cli-wiki-06"
 title: "常见问题与排错指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/06-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/06-faq-troubleshooting.toml"
 ---
 # 常见问题与排错指南
 

@@ -2,7 +2,7 @@
 id: "book-to-skill-wiki-07"
 title: "book-to-skill 完全指南 — 扩展开发"
 source: "https://github.com/virgiliojr94/book-to-skill"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/07-extending-development.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/07-extending-development.toml"
 ---
 # 扩展开发
 

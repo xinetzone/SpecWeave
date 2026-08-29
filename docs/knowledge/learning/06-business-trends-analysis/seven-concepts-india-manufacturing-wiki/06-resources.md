@@ -20,10 +20,10 @@ version: "1.0"
 
 | 资料名称 | 来源 | 说明 |
 |---------|------|------|
-| 七概念理论官方定义 | [seven-concepts.md](../../../../../commands/seven-concepts.md) | 七概念理论的官方定义和详细说明 |
-| 复盘命令 | [retrospective.md](../../../../../commands/retrospective.md) | 复盘命令的使用说明和最佳实践 |
-| 洞察命令 | [insight.md](../../../../../commands/insight.md) | 洞察命令的使用说明和分析方法 |
-| 萃取命令 | [extraction.md](../../../../../commands/extraction.md) | 萃取命令的使用说明和模式沉淀方法 |
+| 七概念理论官方定义 | [seven-concepts.md](../../../../../.agents/commands/seven-concepts.md) | 七概念理论的官方定义和详细说明 |
+| 复盘命令 | [retrospective.md](../../../../../.agents/commands/retrospective.md) | 复盘命令的使用说明和最佳实践 |
+| 洞察命令 | [insight.md](../../../../../.agents/commands/insight.md) | 洞察命令的使用说明和分析方法 |
+| 萃取命令 | [extraction.md](../../../../../.agents/commands/extraction.md) | 萃取命令的使用说明和模式沉淀方法 |
 
 ### 事件相关资料
 

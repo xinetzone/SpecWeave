@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-04"
 title: "Cordis — 效应与协同效应机制"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/04-effects-coeffects.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/04-effects-coeffects.toml"
 ---
 # Cordis — 效应与协同效应机制
 

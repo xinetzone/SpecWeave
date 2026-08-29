@@ -55,7 +55,7 @@ Mobile Use Agent 定位为**企业级 AI 智能体**，其核心内涵包含三�
 
 ### 1.3 与 ACEP 云手机的关系
 
-Mobile Use Agent 与火山引擎 [ACEP 云手机](./volcengine-acep-cloudphone-analysis.md) 是"上层应用 + 底层基础设施"的协同关系：
+Mobile Use Agent 与火山引擎 [ACEP 云手机](volcengine-acep-cloudphone-analysis.md) 是"上层应用 + 底层基础设施"的协同关系：
 
 | 关系维度 | ACEP 云手机 | Mobile Use Agent |
 |---------|-----------|-----------------|
@@ -339,7 +339,7 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 
 | 产品 | 定位 | 与 Mobile Use Agent 关系 |
 |------|------|------------------------|
-| **[ACEP 云手机](./volcengine-acep-cloudphone-analysis.md)** | 云手机 IaaS/PaaS | 底层基础设施 |
+| **[ACEP 云手机](volcengine-acep-cloudphone-analysis.md)** | 云手机 IaaS/PaaS | 底层基础设施 |
 | **[HiAgent](../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md)** | 企业级 Agent 平台 | 互补：HiAgent 通用企业 Agent，Mobile Use Agent 专注移动端 |
 | **方舟大模型** | 模型服务 | 提供 LLM 能力 |
 | **Jeddak AICC** | 隐私计算 | 提供安全加密 |
@@ -381,7 +381,7 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 
 **模式**：Demo → MCP → 代码框架 → SDK
 
-**借鉴价值**：从体验到深度集成的渐进式披露，与本项目 [capabilities/](../../../../../capabilities/README.md) 的 L0/L1/L2 三层架构理念完全一致——L0 快速了解、L1 标准使用、L2 深度定制。
+**借鉴价值**：从体验到深度集成的渐进式披露，与本项目 [capabilities/](../../../../../.agents/capabilities/README.md) 的 L0/L1/L2 三层架构理念完全一致——L0 快速了解、L1 标准使用、L2 深度定制。
 
 ---
 
@@ -420,7 +420,7 @@ Jeddak AICC 是火山引擎的隐私计算解决方案，在 Mobile Use Agent �
 
 ### 10.3 本项目内相关 wiki
 
-- [火山引擎云手机（ACEP）完整学习笔记](./volcengine-acep-cloudphone-analysis.md) - Mobile Use Agent 的底层基础设施
+- [火山引擎云手机（ACEP）完整学习笔记](volcengine-acep-cloudphone-analysis.md) - Mobile Use Agent 的底层基础设施
 - [火山引擎 HiAgent 平台分析](../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md) - 火山引擎企业级 Agent 平台
 - [MCP 协议深度解析](../01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.md) - Mobile Use Agent 依赖的协议标准
 - [Agent 通信协议全景](../01-agent-protocols-interfaces/agent-communication-protocols/00-overview.md) - MCP 在协议生态中的定位

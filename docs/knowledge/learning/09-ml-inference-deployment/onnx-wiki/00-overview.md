@@ -102,25 +102,25 @@ onnx-wiki/
 > 我有个PyTorch模型要转ONNX部署，告诉我怎么做，别讲太多概念
 
 1. 读完本页TL;DR
-2. 直接读 [03-quickstart.md](./03-quickstart.md)
-3. 遇到问题查 [04-best-practices.md](./04-best-practices.md) 的反模式清单
+2. 直接读 [03-quickstart.md](03-quickstart.md)
+3. 遇到问题查 [04-best-practices.md](04-best-practices.md) 的反模式清单
 
 ### 阅读路径2：迁移实践者（适合需要手写/修改ONNX图，2小时）
 > 我要从头构建ONNX模型或者修改导出的图，需要知道API怎么用、有什么坑
 
 1. 读完本页
-2. [01-core-concepts.md](./01-core-concepts.md)：建立正确心智模型，重点看I-001~I-007洞察对应的概念
-3. [02-python-api.md](./02-python-api.md)：跟着线性回归示例手敲一遍
-4. [04-best-practices.md](./04-best-practices.md)：通读所有反模式，提前避坑
-5. 遇到问题查 [05-faq-and-resources.md](./05-faq-and-resources.md)
+2. [01-core-concepts.md](01-core-concepts.md)：建立正确心智模型，重点看I-001~I-007洞察对应的概念
+3. [02-python-api.md](02-python-api.md)：跟着线性回归示例手敲一遍
+4. [04-best-practices.md](04-best-practices.md)：通读所有反模式，提前避坑
+5. 遇到问题查 [05-faq-and-resources.md](05-faq-and-resources.md)
 
 ### 阅读路径3：深度理解（适合推理引擎/框架开发者，半天）
 > 我要做ONNX相关工具链或理解其设计哲学，想知道背后的设计决策
 
 1. 完整阅读所有文档
 2. 重点关注：
-   - [01-core-concepts.md](./01-core-concepts.md) 中的类型系统和opset版本机制
-   - [04-best-practices.md](./04-best-practices.md) 中的可迁移模式
+   - [01-core-concepts.md](01-core-concepts.md) 中的类型系统和opset版本机制
+   - [04-best-practices.md](04-best-practices.md) 中的可迁移模式
 3. 结合官方规范理解每个设计决策的权衡
 
 ---
@@ -197,4 +197,4 @@ onnx-wiki/
 
 ---
 
-**下一章**：[01-core-concepts.md - 核心概念详解](./01-core-concepts.md)
+**下一章**：[01-core-concepts.md - 核心概念详解](01-core-concepts.md)

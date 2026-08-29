@@ -55,7 +55,7 @@ Mermaid 图中禁止出现 `<script>`/`<img>`/`<iframe>` 等HTML标签，存在X
 
 ## 待修复清单
 
-### 1. [docs/knowledge/best-practices/mermaid-guide.md](../knowledge/best-practices/mermaid-guide.md)
+### 1. [docs/knowledge/best-practices/mermaid-guide.md](../../../docs/knowledge/best-practices/mermaid-guide.md)
 
 #### end 作节点ID（1 处）
 
@@ -71,7 +71,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 2. [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md](../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
+### 2. [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
 
 #### subgraph 裸中文ID（6 处）
 
@@ -119,7 +119,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 3. [docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md](../knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md)
+### 3. [docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-loop-engineering-article-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -139,7 +139,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 4. [docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md](../knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md)
+### 4. [docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md](../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/fable5-cost-optimization-wiki/04-selection-guide.md)
 
 #### end 作节点ID（1 处）
 
@@ -155,7 +155,7 @@ Emergency --> End["结束"]
 
 ---
 
-### 5. [docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md](../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+### 5. [docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md](../../../docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
 
 #### end 作节点ID（1 处）
 
@@ -171,7 +171,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 6. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md](../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+### 6. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
 
 #### subgraph 裸中文ID（12 处）
 
@@ -261,7 +261,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 7. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md](../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+### 7. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
 
 #### subgraph 裸中文ID（6 处）
 
@@ -309,7 +309,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 8. [docs/knowledge/learning/CATEGORIES.md](../knowledge/learning/CATEGORIES.md)
+### 8. [docs/knowledge/learning/CATEGORIES.md](../../../docs/knowledge/learning/CATEGORIES.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -329,7 +329,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 9. [docs/knowledge/learning/douyin-vibecoding-guide-analysis.md](../knowledge/learning/douyin-vibecoding-guide-analysis.md)
+### 9. [docs/knowledge/learning/douyin-vibecoding-guide-analysis.md](../../../docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -356,7 +356,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 10. [docs/knowledge/mdi-research/01-feasibility-analysis.md](../knowledge/mdi-research/01-feasibility-analysis.md)
+### 10. [docs/knowledge/mdi-research/01-feasibility-analysis.md](../../../docs/knowledge/mdi-research/01-feasibility-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -376,7 +376,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 11. [docs/knowledge/mdi-research/02-ecosystem-comparison.md](../knowledge/mdi-research/02-ecosystem-comparison.md)
+### 11. [docs/knowledge/mdi-research/02-ecosystem-comparison.md](../../../docs/knowledge/mdi-research/02-ecosystem-comparison.md)
 
 #### subgraph 裸中文ID（3 处）
 
@@ -403,7 +403,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 12. [docs/knowledge/mdi-research/03-technical-architecture.md](../knowledge/mdi-research/03-technical-architecture.md)
+### 12. [docs/knowledge/mdi-research/03-technical-architecture.md](../../../docs/knowledge/mdi-research/03-technical-architecture.md)
 
 #### subgraph 裸中文ID（5 处）
 
@@ -444,7 +444,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 13. [docs/knowledge/myst-unified-ecosystem/01-idl.md](../knowledge/myst-unified-ecosystem/01-idl.md)
+### 13. [docs/knowledge/myst-unified-ecosystem/01-idl.md](../../../docs/knowledge/myst-unified-ecosystem/01-idl.md)
 
 #### subgraph 裸中文ID（2 处）
 

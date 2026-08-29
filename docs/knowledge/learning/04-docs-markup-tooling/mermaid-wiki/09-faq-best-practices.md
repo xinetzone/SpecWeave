@@ -278,7 +278,7 @@ SpecWeave 项目在 [mermaid-guide.md](../../../best-practices/mermaid-guide.md)
 | ③ subgraph 安全格式 | 纯英文 ID + `["中文标题"]` | Q6、B3 |
 | ④ 边标签格式 | `-->|"标签"|` 无空格 | B10 |
 
-> **六规则的完整版**：见 [mermaid-guide.md 安全编码六规则章节](../../../best-practices/mermaid-guide.md#安全编码六规则)；**自动检查工具**：见 [check-mermaid.py](../../../../../scripts/check-mermaid.py)（检测 10 类问题，含自动修复）。
+> **六规则的完整版**：见 [mermaid-guide.md 安全编码六规则章节](../../../best-practices/mermaid-guide.md#安全编码六规则)；**自动检查工具**：见 [check-mermaid.py](../../../../../.agents/scripts/check-mermaid.py)（检测 10 类问题，含自动修复）。
 >
 > **实践总原则**：本教程的示例图表用于「学习与理解」，不一定每条都满足项目安全规范；在 SpecWeave 项目正式文档中嵌入 Mermaid 图表时，务必以安全编码六规则为准，并运行 `check-mermaid.py` 校验至 0 错误。
 

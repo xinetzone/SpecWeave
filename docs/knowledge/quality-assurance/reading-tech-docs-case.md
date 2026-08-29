@@ -257,4 +257,4 @@ source: 七概念方法论实战案例库
 
 ## 写完怎么验证质量？
 
-本文档写完后怎么验证质量？可以用[《单人/少人替代评审方案》](./solo-review-methods.md)自检，或者组织对抗评审，配套清单见[《知识评审清单模板》](./review-checklist-templates.md)。
+本文档写完后怎么验证质量？可以用[《单人/少人替代评审方案》](solo-review-methods.md)自检，或者组织对抗评审，配套清单见[《知识评审清单模板》](review-checklist-templates.md)。

@@ -1,17 +1,17 @@
 ---
 id: "spec-docs-to-knowledge-okf-migration"
-title: "docs/ 到 .agents/docs/knowledge/ OKF Wiki 教程迁移"
+title: "docs/ 到 docs/knowledge/ OKF Wiki 教程迁移"
 source: "用户请求 + 代码库现状分析"
 date: "2026-08-22"
 category: "spec"
 tags: ["migration", "okf-wiki", "knowledge-base", "docs", "refactor"]
 ---
 
-# docs/ 到 .agents/docs/knowledge/ OKF Wiki 教程迁移 - 产品需求文档
+# docs/ 到 docs/knowledge/ OKF Wiki 教程迁移 - 产品需求文档
 
 ## Overview
 
-- **Summary**：将废弃的根目录 `docs/`（Jupyter Book/Sphinx 文档站）中尚未迁移的全部内容，按照目标知识库既有的 11 主题编号分类体系（00-10）和 OKF Wiki 教程格式规范，完整迁移至 `.agents/docs/knowledge/` 及对应的 `.agents/docs/retrospective/` 等目录。迁移包括文件移动、frontmatter 标准化、TOML 元数据创建、内部链接修复、README.md 索引生成等完整格式转换。
+- **Summary**：将废弃的根目录 `docs/`（Jupyter Book/Sphinx 文档站）中尚未迁移的全部内容，按照目标知识库既有的 11 主题编号分类体系（00-10）和 OKF Wiki 教程格式规范，完整迁移至 `docs/knowledge/` 及对应的 `.agents/docs/retrospective/` 等目录。迁移包括文件移动、frontmatter 标准化、TOML 元数据创建、内部链接修复、README.md 索引生成等完整格式转换。
 - **Purpose**：根目录 `docs/` 已在 AGENTS.md 中声明废弃为空壳，但仍有约 198 个 Markdown 文件（含 13 个完整 Wiki 文件夹、15 个方法论模式、18 个复盘报告）未迁移至 `.agents/docs/` 有效文档容器，导致知识分散、路径引用混乱、文档站构建配置残留。本次迁移彻底消除双轨文档问题。
 - **Target Users**：项目维护者、AI Agent（需要统一路径访问知识库）、后续学习者
 
@@ -35,7 +35,7 @@ tags: ["migration", "okf-wiki", "knowledge-base", "docs", "refactor"]
 ## Background & Context
 
 - AGENTS.md 第 113 行明确声明："根目录 `docs/` 已废弃为空壳，所有文档引用均解析为 `.agents/docs/`"
-- 目标知识库 `.agents/docs/knowledge/` 已有 1288 条目、53 分类、2514 标签，采用编号分类体系
+- 目标知识库 `docs/knowledge/` 已有 1288 条目、53 分类、2514 标签，采用编号分类体系
 - 目标 learning/ 目录已建立 11 主题架构（00-本质与思维 到 10-通用基础），有 CATEGORIES.md 作为分类权威依据
 - 项目存在 `.agents/templates/wiki-spec-template.md`（v1.2.0）作为 Wiki 教程格式标准
 - 项目存在自动化工具：`generate-readme.py`（索引生成）、`fix-x-toml-ref.py`（路径修复）、`check-links.py`（链接检查）、`check-filename-convention.py`（文件名检查）
@@ -50,7 +50,7 @@ tags: ["migration", "okf-wiki", "knowledge-base", "docs", "refactor"]
 - **FR-4**：将 ai-engineering/、algorithmic-art/、engineering/ 下的知识文件迁移至合适位置
 - **FR-5**：将 retrospective/patterns/methodology-patterns/ 下 15 个模式文件迁移至 `.agents/docs/retrospective/patterns/methodology-patterns/`
 - **FR-6**：将 retrospective/reports/ 下 18 个复盘报告迁移至 `.agents/docs/retrospective/` 对应子目录
-- **FR-7**：将 tech/ 下 4 个未迁移文件归入 `.agents/docs/knowledge/tech/` 或根级对应位置
+- **FR-7**：将 tech/ 下 4 个未迁移文件归入 `docs/knowledge/tech/` 或根级对应位置
 - **FR-8**：将 refactor/ 下 1 个文件归入合适位置
 - **FR-9**：所有原子化 Wiki 文件 frontmatter 标准化为 4 字段（id/title/source/x-toml-ref）
 - **FR-10**：为所有原子化 Wiki 创建配套 `.meta/toml/` 镜像路径下的 TOML 元数据文件
@@ -185,5 +185,5 @@ tags: ["migration", "okf-wiki", "knowledge-base", "docs", "refactor"]
 | engineering/deep-learning-atomic-design/ | 3 | 02 工程方法论 | `learning/02-agent-engineering-methodology/` |
 | retrospective/patterns/methodology-patterns/ | 15 | 复盘模式库 | `.agents/docs/retrospective/patterns/methodology-patterns/` |
 | retrospective/reports/ | 18 | 复盘报告 | `.agents/docs/retrospective/` 对应子目录 |
-| tech/*.md | 4 | 技术文档 | `.agents/docs/knowledge/tech/` |
-| refactor/*.md | 1 | 重构记录 | `.agents/docs/knowledge/best-practices/` |
+| tech/*.md | 4 | 技术文档 | `docs/knowledge/tech/` |
+| refactor/*.md | 1 | 重构记录 | `docs/knowledge/best-practices/` |

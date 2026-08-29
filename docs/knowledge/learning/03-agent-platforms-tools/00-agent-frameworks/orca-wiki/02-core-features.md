@@ -252,4 +252,4 @@ Orca 自带 **VS Code 级别的编辑器**，且**处处自动保存**。你可�
 
 | 上一章 | 返回目录 | 下一章 |
 |--------|---------|--------|
-| ← [01 核心架构与技术栈](./01-core-architecture.md) | [README](./README.md) | → [03 Orca CLI 与多 Agent 编排](./03-orca-cli-orchestration.md) |
+| ← [01 核心架构与技术栈](01-core-architecture.md) | [README](README.md) | → [03 Orca CLI 与多 Agent 编排](03-orca-cli-orchestration.md) |

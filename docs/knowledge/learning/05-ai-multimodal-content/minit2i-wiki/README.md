@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-05-ai-multimodal-content-minit2i-wiki-index"
 title: "MiniT2I极简文生图模型完全指南"
-x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---
@@ -28,7 +28,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：AI多模态内容](../README.md)
-- [📚 文档首页](../../../../../README.md)
+- [📚 文档首页](../../../../../.agents/README.md)
 - [GitHub 仓库](https://github.com/PeppaKing8/minit2i-jax)
 - [技术博客](https://peppaking8.github.io/#/post/minit2i)
 
