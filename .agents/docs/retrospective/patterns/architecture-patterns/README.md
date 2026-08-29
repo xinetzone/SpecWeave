@@ -81,6 +81,17 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [lifecycle-differentiated-inheritance.md](lifecycle-differentiated-inheritance.md) | 生命周期差异化继承：继承只表达生命周期承诺不表达能力域相似——有状态成员继承携带状态初始化的基类，无状态成员有意不继承保持纯函数式，"不继承"是设计信号；贯穿性异常拼写是检索签名原样保留 | L1 已验证 | Agent/插件家族类层级设计、有状态-无状态分治、空实现基类治理、源码学习辨识继承意图 |
 | [asymmetric-multimodal-history-windowing.md](asymmetric-multimodal-history-windowing.md) | 多模态历史非对称窗口：文本全量回放（动作语义长存）+图像滑窗（history_n-1，参数只绑图像）+回放文本再合成（从结构化 action 反归一化重组规范文本，不回放原始输出），配合 mock LLM 契约测试无 LLM 验证 | L1 已验证 | 多模态多轮 Agent 上下文工程、GUI/视觉导航 Agent、多模态 token 经济优化 |
 | [normalization-convention-duality.md](normalization-convention-duality.md) | 归一化口径二元并存：同一语义量跨子系统存在两套各自内部一致的约定时登记而非"修复"（999 vs 1000），对照表完整呈现+跨边界显式约定口径+排障"先口径后模型" | L1 已验证 | 坐标/时间戳/分数等归一化治理、跨子系统数值接口约定、效果异常排查 |
+| [benchmark-unification-cross-validation.md](benchmark-unification-cross-validation.md) | 基准统一重排与多源交叉印证：异构基准统一重排为单一格式后同一套判分聚合（消除基准间口径差），双通道执行+与技术报告分数交叉印证（差距≤1点）作正确性证据 | L1 已验证 | 评测管线设计、多基准聚合跑分、分数复现与可信度论证 |
+| [triple-nested-virtualization-appliance.md](triple-nested-virtualization-appliance.md) | 三层嵌套虚拟化环境家电：DinD 套 Android 模拟器再套应用的单镜像家电化（OS+SDK+AVD+控制服务），socat 中继暴露 ADB+health 直通，entrypoint 十步编号化启动 | L1 已验证 | 移动端评测环境容器化、Android 模拟器 CI 部署、复杂环境一次拉起分发 |
+| [deterministic-eval-environment-trio.md](deterministic-eval-environment-trio.md) | 确定性评测环境三件套：状态快照回滚+时间冻结（白名单同步敏感应用）+后台清理固定顺序初始化，ground truth 稳定性来自把"现实变量"显式白名单化 | L1 已验证 | Agent 评测环境复现、含时间/状态敏感任务的基准设计、AVD/VM 快照管理 |
+| [agent-integration-minimal-surface.md](agent-integration-minimal-surface.md) | Agent 接入面最小化——封闭注册表+文件后门：接入收敛为一个抽象方法 predict，扩展走"封闭枚举注册表 + .py 路径动态加载"双通道，跨厂商 API 怪癖单点收敛在 BaseAgent 一个方法 | L1 已验证 | 多模型 Agent 平台接入层设计、插件注册表、跨厂商 API 兼容收敛 |
+| [three-tier-eval-scaling-orchestration.md](three-tier-eval-scaling-orchestration.md) | 评测编排三层扩张：进程内线程并行→SQLite WAL 队列+tmux 单 worker 轮询→pass@k 报告聚合，规模渐进而非一步上重型调度器，成功阈值显式容差（0.99） | L1 已验证 | 批量评测基础设施、容器集群任务编排、中小规模调度的轻量化选型 |
+| [simulated-user-conditional-tool-injection.md](simulated-user-conditional-tool-injection.md) | 模拟用户与按需工具注入：评测态"用户"由温度 0+seed 42 的独立 LLM 用户代理扮演（独立对话历史、背景注入），MCP 工具按任务 tag/apps 白名单过滤注入（默认置空），人工 input() 仅调试通道 | L1 已验证 | 交互式 Agent 评测、ask_user 人机通道设计、按任务能力的工具注入治理 |
+| [zero-code-closed-benchmark-repo.md](zero-code-closed-benchmark-repo.md) | 零代码仓库的封闭基准发布：仓库仅 README+静态页+CI（open repository ≠ open benchmark），评测能力托管为 endpoint 提交制私有服务（hidden test 隔离+频率限制）防过拟合 | L1 已验证 | 基准/竞赛发布策略、防泄漏评测设计、保密优先的学术基础设施 |
+| [weighted-multidimensional-composite-score.md](weighted-multidimensional-composite-score.md) | 多维加权综合分与分维度解读纪律：总分公式=权重声明而非能力全景，任务分布+统计口径脚注（Cost 仅可见输出 token）共同构成可解读性，解读须按维度拆分并注版本 | L1 已验证 | 基准榜单设计、多维度评分体系、跨模型成本/效果对比呈现 |
+| [verification-policy-checker-spectrum.md](verification-policy-checker-spectrum.md) | 固定验证策略与 checker 谱系：判分靠每任务预分配固定验证策略而非事后自由评审，六类 checker 从精确参数比对到 LLM 行为评审构成谱系，维度-checker 映射是显式设计决策 | L1 已验证 | 评测判分体系设计、LLM 评审与确定性校验混合、分数可解释性 |
+| [gap-filling-complementary-positioning.md](gap-filling-complementary-positioning.md) | 补空档式互补定位：定位策略是填"两层既有体系之间的空档"而非替代任何一方，用三层对照表声明自身坐标系，相邻体系显式写为互补层级（分数不可互替） | L1 已验证 | 基准/工具/产品生态定位、竞品叙事设计、技术体系坐标系声明 |
+| [zero-cdn-static-site-engineering.md](zero-cdn-static-site-engineering.md) | 零 CDN 纯静态学术站点工程：UI 库全本地 vendor 化换链接永续，展示图由 Playwright CI 对本地渲染页自动截屏（图即构建产物），入口 URL 由 site_config.js 统一注入，部署零构建 | L1 已验证 | 学术项目页、benchmark 榜单站、低维护长期可达的静态站点 |
 
 ## 成熟度定义
 
