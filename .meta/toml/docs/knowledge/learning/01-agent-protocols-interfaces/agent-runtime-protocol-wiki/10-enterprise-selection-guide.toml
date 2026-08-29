@@ -1,5 +1,7 @@
 id = "agent-runtime-protocol-wiki-10"
-title = "10 企业级 Agent Runtime 选型指南"
-category = "docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
-date = "2026-07-02"
+title = "企业级 Agent Runtime 选型指南"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "enterprise", "selection-guide", "security", "multi-tenant", "compliance"]

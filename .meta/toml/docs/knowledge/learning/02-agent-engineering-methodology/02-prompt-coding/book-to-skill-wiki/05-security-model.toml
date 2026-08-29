@@ -1,5 +1,7 @@
 id = "book-to-skill-wiki-05"
-title = "安全模型"
-category = "docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
-date = "2026-07-02"
+title = "book-to-skill 完全指南 — 安全模型"
+category = "knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["book-to-skill", "security", "prompt-injection", "defense-in-depth", "unicode-sanitization", "xxe", "supply-chain", "ci-sast"]

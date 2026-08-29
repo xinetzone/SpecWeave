@@ -1,5 +1,7 @@
 id = "github-cli-wiki-05"
 title = "高级用法指南"
-category = "docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki"
-date = "2026-07-02"
+category = "knowledge/learning/08-systems-infrastructure/github-cli-wiki"
+date = "2026-08-23"
 version = "1.0"
+status = "stable"
+tags = ["github-cli", "gh", "advanced", "api", "alias", "extension", "search", "label", "json", "jq"]
