@@ -34,9 +34,9 @@ wiki_version: "1.0"
 - **严重程度**：🔴关键
 - **位置**：
   - [getting-started/quickstart.md:266](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/quickstart.md#L266-L266)
-  - [examples/01_quickstart/.env.example:7](file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/.env.example#L7-L7)
+  - [examples/01_quickstart/.env.example:7](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/.env.example#L7-L7)
   - [modules/config.md:328](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/config.md#L328-L328)
-  - [veadk/consts.py:22](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L22-L22)
+  - [veadk/consts.py:22](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L22)
 - **问题描述**：
   - 代码默认值：`doubao-seed-2-1-pro-260628`（consts.py）
   - quickstart.md问题排查部分写的是：`doubao-seed-2-1-pro-260628`（正确）
@@ -232,4 +232,4 @@ VeADK-Python Wiki 整体质量良好，核心模块（Agent、Runner、Config、
 
 > **审查完成时间**：2026-08-05  
 > **审查范围**：VeADK-Python Wiki 全部文档（getting-started、modules、architecture、examples、extensions、faq、glossary）  
-> **抽查代码版本**：基于d:\AI\.chaos\libs\veadk-python代码库分析
+> **抽查代码版本**：基于d:\AI\vendor\veadk-python代码库分析

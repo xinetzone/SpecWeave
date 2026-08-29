@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了基于 OpenTelemetry 标准的完整可观测性解决方案，支持多种追踪后端（APMPlus、CozeLoop、TLS 日志服务、内存收集器等）。系统能够自动捕获 Agent 执行过程中的 LLM 调用、工具调用、用户输入输出等关键事件，并生成标准化的 Trace 数据用于调试、性能分析和质量评估。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/tracing/](file:///d:/AI/vendor/veadk-python/veadk/tracing/)
 
 ---
 
@@ -64,7 +64,7 @@ VeADK 提供了基于 OpenTelemetry 标准的完整可观测性解决方案，�
 
 `BaseTracer` 是所有 Tracer 实现的抽象基类，定义了统一的接口。
 
-> 源码位置：[tracing/base_tracer.py#L22-L58](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/base_tracer.py#L22-L58)
+> 源码位置：[tracing/base_tracer.py#L22-L58](file:///d:/AI/vendor/veadk-python/veadk/tracing/base_tracer.py#L22-L58)
 
 ```python
 class BaseTracer(ABC):
@@ -92,7 +92,7 @@ class BaseTracer(ABC):
 
 `OpentelemetryTracer` 是 VeADK 的核心 Tracer 实现，基于 OpenTelemetry 标准，支持多 Exporter 并行导出。
 
-> 源码位置：[tracing/telemetry/opentelemetry_tracer.py#L54-L200](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/opentelemetry_tracer.py#L54-L200)
+> 源码位置：[tracing/telemetry/opentelemetry_tracer.py#L54-L200](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/opentelemetry_tracer.py#L54-L200)
 
 ### 核心特性
 
@@ -188,8 +188,8 @@ VeADK 提供 4 种内置 Exporter，覆盖开发调试、生产监控、评估�
 **默认端点**：`http://apmplus-cn-beijing.volces.com:4317`
 **默认服务名**：`veadk_tracing`
 
-> 源码位置：[tracing/telemetry/exporters/apmplus_exporter.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/exporters/apmplus_exporter.py)
-> 默认配置：[consts.py#L44-L45](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L44-L45)
+> 源码位置：[tracing/telemetry/exporters/apmplus_exporter.py](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/exporters/apmplus_exporter.py)
+> 默认配置：[consts.py#L44-L45](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L44-L45)
 
 **支持的 Metrics：**
 
@@ -222,8 +222,8 @@ exporter = APMPlusExporter()
 **协议**：OTLP HTTP
 **默认端点**：`https://api.coze.cn/v1/loop/opentelemetry/v1/traces`
 
-> 源码位置：[tracing/telemetry/exporters/cozeloop_exporter.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/exporters/cozeloop_exporter.py)
-> 默认配置：[consts.py#L47-L49](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L47-L49)
+> 源码位置：[tracing/telemetry/exporters/cozeloop_exporter.py](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/exporters/cozeloop_exporter.py)
+> 默认配置：[consts.py#L47-L49](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L47-L49)
 
 **配置参数：**
 
@@ -257,8 +257,8 @@ exporter = CozeloopExporter()
 **默认端点**：`https://tls-cn-beijing.volces.com:4318/v1/traces`
 **默认区域**：`cn-beijing`
 
-> 源码位置：[tracing/telemetry/exporters/tls_exporter.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/exporters/tls_exporter.py)
-> 默认配置：[consts.py#L51-L52](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L51-L52)
+> 源码位置：[tracing/telemetry/exporters/tls_exporter.py](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/exporters/tls_exporter.py)
+> 默认配置：[consts.py#L51-L52](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L51-L52)
 
 **配置参数：**
 
@@ -318,7 +318,7 @@ VeADK 追踪以下类型的 Span：
 | `veadk.user.id` | 用户 ID |
 | `veadk.session.id` | 会话 ID |
 
-> 属性提取器源码：[tracing/telemetry/attributes/extractors/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/attributes/extractors/)
+> 属性提取器源码：[tracing/telemetry/attributes/extractors/](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/attributes/extractors/)
 
 ---
 
@@ -328,7 +328,7 @@ VeADK 追踪以下类型的 Span：
 
 通过 `should_trace_content()` 函数控制是否追踪消息内容（Prompt/Completion），避免敏感数据泄露。
 
-> 源码位置：[tracing/telemetry/content_tracing.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/content_tracing.py)
+> 源码位置：[tracing/telemetry/content_tracing.py](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/content_tracing.py)
 
 ```python
 def should_trace_content() -> bool:
@@ -372,7 +372,7 @@ def _upload_call_llm_metrics(
     """
 ```
 
-> 源码位置：[tracing/telemetry/telemetry.py#L58-L87](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/telemetry.py#L58-L87)
+> 源码位置：[tracing/telemetry/telemetry.py#L58-L87](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/telemetry.py#L58-L87)
 
 ### 工具调用指标
 
@@ -390,7 +390,7 @@ def _upload_tool_call_metrics(
     """
 ```
 
-> 源码位置：[tracing/telemetry/telemetry.py#L89-L113](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/telemetry.py#L89-L113)
+> 源码位置：[tracing/telemetry/telemetry.py#L89-L113](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/telemetry.py#L89-L113)
 
 ---
 
@@ -398,7 +398,7 @@ def _upload_tool_call_metrics(
 
 继承 `BaseExporter` 可开发自定义 Exporter：
 
-> 源码位置：[tracing/telemetry/exporters/base_exporter.py#L20-L39](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/exporters/base_exporter.py#L20-L39)
+> 源码位置：[tracing/telemetry/exporters/base_exporter.py#L20-L39](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/exporters/base_exporter.py#L20-L39)
 
 ```python
 from opentelemetry.sdk.trace.export import SpanExporter, BatchSpanProcessor

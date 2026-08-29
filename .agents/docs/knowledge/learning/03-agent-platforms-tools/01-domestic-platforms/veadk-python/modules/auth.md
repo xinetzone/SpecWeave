@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了完整的认证与凭证管理体系，支持多种认证方式，包括 API Key、OAuth2、请求签名、VeFaaS IAM 角色等。认证模块设计了清晰的优先级机制，并提供凭证服务用于安全地存储和管理用户凭证，同时内置了日志凭证脱敏功能以防止敏感信息泄露。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/](#)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/auth/](#)
 
 ---
 
@@ -115,7 +115,7 @@ def get_ark_token(
     return res["Result"]["ApiKey"]
 ```
 
-> 源码位置：[veauth/ark_veauth.py#L31-L149](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/veauth/ark_veauth.py#L31-L149)
+> 源码位置：[veauth/ark_veauth.py#L31-L149](file:///d:/AI/vendor/veadk-python/veadk/auth/veauth/ark_veauth.py#L31-L149)
 
 ### 各服务 Token 对应的环境变量
 
@@ -126,7 +126,7 @@ def get_ark_token(
 | Realtime 语音 | `MODEL_REALTIME_API_KEY` | - | Speech Token |
 | Speech | - | - | Speech 服务 Token |
 
-> 源码位置：[configs/model_configs.py#L31-L104](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L31-L104)
+> 源码位置：[configs/model_configs.py#L31-L104](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L31-L104)
 
 ---
 
@@ -134,7 +134,7 @@ def get_ark_token(
 
 `VeCredentialService` 是 VeADK 的用户凭证管理服务，扩展自 Google ADK 的 `BaseCredentialService`，支持按应用和用户维度安全存储凭证。
 
-> 源码位置：[ve_credential_service.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py)
+> 源码位置：[ve_credential_service.py](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py)
 
 ### 存储结构
 
@@ -240,7 +240,7 @@ if credential:
     print(f"Token: {credential.bearer_token}")
 ```
 
-> 源码位置：[ve_credential_service.py#L36-L203](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py#L36-L203)
+> 源码位置：[ve_credential_service.py#L36-L203](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py#L36-L203)
 
 ---
 
@@ -248,7 +248,7 @@ if credential:
 
 VeAuth 是 VeADK 对各类火山引擎云服务认证的抽象基类和实现集合，统一处理 AK/SK 配置、Token 获取和缓存。
 
-> 源码位置：[veauth/](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/veauth/)
+> 源码位置：[veauth/](file:///d:/AI/vendor/veadk-python/veadk/auth/veauth/)
 
 ### 目录结构
 
@@ -307,7 +307,7 @@ class BaseVeAuth(ABC, BaseAuth):
 1. 构造函数显式传入的 `access_key`/`secret_key`
 2. 环境变量 `VOLCENGINE_ACCESS_KEY`/`VOLCENGINE_SECRET_KEY`
 
-> 源码位置：[veauth/base_veauth.py#L21-L50](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/veauth/base_veauth.py#L21-L50)
+> 源码位置：[veauth/base_veauth.py#L21-L50](file:///d:/AI/vendor/veadk-python/veadk/auth/veauth/base_veauth.py#L21-L50)
 
 ### Ark 认证 (ark_veauth.py)
 
@@ -341,7 +341,7 @@ VeADK 通过 `ve_identity` 集成模块和 OAuth2 中间件提供完整的 OAuth
 
 `auth/middleware/oauth2_auth.py` 提供了 FastAPI OAuth2 认证中间件，可用于保护 Web 端点。
 
-> 源码位置：[middleware/oauth2_auth.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/middleware/oauth2_auth.py)
+> 源码位置：[middleware/oauth2_auth.py](file:///d:/AI/vendor/veadk-python/veadk/auth/middleware/oauth2_auth.py)
 
 ### VeIdentity OAuth2 集成
 
@@ -432,7 +432,7 @@ def ve_request(
 当使用 STS 临时凭证时，自动在请求头中添加 `X-Security-Token`。
 
 > 签名实现可参考 A2A Registry Client 中的 `_volc_sign_v4()` 函数：
-> [registry_client.py#L750-L816](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L750-L816)
+> [registry_client.py#L750-L816](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L750-L816)
 
 ---
 
@@ -468,7 +468,7 @@ logger.debug(
 )
 ```
 
-> 源码位置参考：[ve_faas.py#L165-L168](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L165-L168)
+> 源码位置参考：[ve_faas.py#L165-L168](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L165-L168)
 
 ---
 

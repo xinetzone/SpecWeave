@@ -20,9 +20,9 @@ VeADK 基于 Google ADK 的工具系统，提供三种工具开发方式：
 
 | 方式 | 适用场景 | 基类/装饰器 | 参考实现 |
 |---|---|---|---|
-| **函数式工具** | 简单无状态工具 | Python 函数（带类型提示） | [web_search.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L31-L118) |
-| **类式工具** | 需要状态管理、复杂参数、Tracing | `google.adk.tools.BaseTool` | [skills_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L567) |
-| **工具集（Toolset）** | 多个相关工具的组合 | `google.adk.tools.base_toolset.BaseToolset` | [vanna_toolset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py#L44-L262) |
+| **函数式工具** | 简单无状态工具 | Python 函数（带类型提示） | [web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L31-L118) |
+| **类式工具** | 需要状态管理、复杂参数、Tracing | `google.adk.tools.BaseTool` | [skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L567) |
+| **工具集（Toolset）** | 多个相关工具的组合 | `google.adk.tools.base_toolset.BaseToolset` | [vanna_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py#L44-L262) |
 
 ### 核心概念
 
@@ -105,7 +105,7 @@ def my_simple_tool(
         return {"error": f"Tool execution failed: {str(e)}"}
 ```
 
-**参考实现**：[get_city_weather](file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/main.py#L27-L41)、[web_search](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L31-L118)
+**参考实现**：[get_city_weather](file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/main.py#L27-L41)、[web_search](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L31-L118)
 
 ### 模板2：异步函数式工具
 
@@ -232,7 +232,7 @@ class MyStatefulTool(BaseTool):
         return f"Processed '{input_text}' (max={max_items}, verbose={verbose}, session={session_id})"
 ```
 
-**参考实现**：[SkillsTool](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L97)
+**参考实现**：[SkillsTool](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L97)
 
 ### 模板4：工具集（BaseToolset）
 
@@ -303,7 +303,7 @@ class MyToolSet(BaseToolset):
         return list(self._tools.values())
 ```
 
-**参考实现**：[VannaToolSet](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py#L44-L262)
+**参考实现**：[VannaToolSet](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py#L44-L262)
 
 ---
 
@@ -352,7 +352,7 @@ parameters=types.Schema(
 )
 ```
 
-**参考实现**：[SkillsTool._get_declaration()](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_tool.py#L78-L92)
+**参考实现**：[SkillsTool._get_declaration()](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L78-L92)
 
 ---
 
@@ -402,7 +402,7 @@ def search_database(
     ...
 ```
 
-**参考实现**：[web_search 描述](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L32-L39)、[SkillsTool 描述生成](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_tool.py#L54-L76)
+**参考实现**：[web_search 描述](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L32-L39)、[SkillsTool 描述生成](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L54-L76)
 
 ---
 
@@ -412,7 +412,7 @@ def search_database(
 
 ### 错误处理模式
 
-参考 [web_search.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L110-L118) 的实现：
+参考 [web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L110-L118) 的实现：
 
 ```python
 def my_tool(param: str) -> str | dict:
@@ -524,15 +524,15 @@ VeADK 在 `veadk/tools/builtin_tools/` 目录下提供了丰富的内置工具�
 
 | 工具 | 文件 | 特点 |
 |---|---|---|
-| 网页搜索 | [web_search.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py) | 火山引擎API签名、多级凭证链 |
-| 代码执行 | [run_code.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/run_code.py) | AgentKit沙箱调用、ToolContext使用 |
-| 图片生成 | [image_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_generate.py) | 多模态API调用 |
-| PPT生成 | [ppt_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/ppt_generate.py) | 子进程调用Node.js脚本 |
-| TTS语音合成 | [tts.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/tts.py) | 火山引擎语音服务集成 |
+| 网页搜索 | [web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py) | 火山引擎API签名、多级凭证链 |
+| 代码执行 | [run_code.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/run_code.py) | AgentKit沙箱调用、ToolContext使用 |
+| 图片生成 | [image_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_generate.py) | 多模态API调用 |
+| PPT生成 | [ppt_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/ppt_generate.py) | 子进程调用Node.js脚本 |
+| TTS语音合成 | [tts.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/tts.py) | 火山引擎语音服务集成 |
 
 ### 凭证获取模式
 
-内置工具统一遵循"工具专属环境变量 → ToolContext状态 → 全局环境变量 → IAM角色"的四级凭证链模式，参考 [web_search.py:40-65](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)：
+内置工具统一遵循"工具专属环境变量 → ToolContext状态 → 全局环境变量 → IAM角色"的四级凭证链模式，参考 [web_search.py:40-65](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)：
 
 ```python
 # 1. 工具专属环境变量

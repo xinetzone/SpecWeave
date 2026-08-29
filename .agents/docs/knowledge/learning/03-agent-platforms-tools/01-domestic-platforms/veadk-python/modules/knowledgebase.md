@@ -47,7 +47,7 @@ class KnowledgeBase(BaseModel):
 ```
 
 - 基类：`pydantic.BaseModel`
-- 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L92-L357](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L92-L357)
+- 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L92-L357](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L92-L357)
 
 ### 构造参数
 
@@ -63,14 +63,14 @@ class KnowledgeBase(BaseModel):
 | `enable_profile` | `bool` | `False` | 是否启用查询画像（profile）功能。启用后额外挂载 `load_kb_queries` 工具 |
 | `query_with_user_profile` | `bool` | `False` | 是否使用用户画像进行查询增强。需配合 Viking Memory 后端使用 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L126-L154](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L126-L154)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L126-L154](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L126-L154)
 
 **初始化校验逻辑**：
 - 若传入 `BaseKnowledgebaseBackend` 实例，直接使用该实例作为后端
 - 若 `backend_config` 非空，使用配置字典初始化后端
 - 否则必须提供 `index` 或 `app_name`，否则抛出 `ValueError("Either 'index' or 'app_name' must be provided.")`
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L156-L185](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L156-L185)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L156-L185](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L156-L185)
 
 ### 核心方法
 
@@ -86,7 +86,7 @@ def add_from_directory(self, directory: str, **kwargs) -> bool:
 
 **返回**：`bool` - 成功返回 `True`，失败返回 `False`
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L187-L211](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L187-L211)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L187-L211](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L187-L211)
 
 #### `add_from_files` 方法
 ```python
@@ -100,7 +100,7 @@ def add_from_files(self, files: list[str], **kwargs) -> bool:
 
 **返回**：`bool` - 成功返回 `True`，失败返回 `False`
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L213-L237](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L213-L237)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L213-L237](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L213-L237)
 
 #### `add_from_text` 方法
 ```python
@@ -114,7 +114,7 @@ def add_from_text(self, text: str | list[str], **kwargs) -> bool:
 
 **返回**：`bool` - 成功返回 `True`，失败返回 `False`
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L239-L263](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L239-L263)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L239-L263](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L239-L263)
 
 #### `search` 方法
 ```python
@@ -134,7 +134,7 @@ def search(self, query: str, top_k: int = 0, **kwargs) -> list[KnowledgebaseEntr
 - 后端返回 `str` → 包装为 `KnowledgebaseEntry(content=entry)`
 - 其他类型 → 记录错误日志并跳过
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L265-L282](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L265-L282)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L265-L282](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L265-L282)
 
 #### `close` 方法
 ```python
@@ -142,7 +142,7 @@ def close(self) -> None:
 ```
 释放后端资源。若后端实现了 `close()` 方法则调用，否则无操作。适用于需要显式关闭连接的后端（如数据库连接）。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L284-L288](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L284-L288)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L284-L288](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L284-L288)
 
 #### `__getattr__` 方法
 ```python
@@ -156,7 +156,7 @@ knowledgebase.delete(document_id="doc-123")
 # 等价于 knowledgebase._backend.delete(document_id="doc-123")
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L290-L295](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L290-L295)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L290-L295](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L290-L295)
 
 #### `generate_profiles` 方法（异步）
 ```python
@@ -168,7 +168,7 @@ async def generate_profiles(self, files: list[str], profile_path: str = ""):
 - `files: list[str]` - 待生成画像的文件路径列表
 - `profile_path: str` - 画像保存路径，为空时使用默认路径
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L297-L357](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L297-L357)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L297-L357](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L297-L357)
 
 ### KnowledgebaseEntry 结果结构
 
@@ -185,7 +185,7 @@ class KnowledgebaseEntry(BaseModel):
 | `content` | `str` | 检索到的文档片段文本内容 |
 | `metadata` | `dict \| None` | 可选元数据，可能包含来源文件、页码、相似度分数等 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/entry.py#L18-L25](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/entry.py#L18-L25)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/entry.py#L18-L25](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/entry.py#L18-L25)
 
 ### KnowledgebaseProfile 画像结构
 
@@ -204,7 +204,7 @@ class KnowledgebaseProfile(BaseModel):
 | `tags` | `list[str]` | 分类标签，建议 3-5 个 |
 | `keywords` | `list[str]` | 推荐查询关键词，建议 3-5 个 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/types.py#L18-L29](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/types.py#L18-L29)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/types.py#L18-L29](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/types.py#L18-L29)
 
 ---
 
@@ -221,7 +221,7 @@ class KnowledgebaseProfile(BaseModel):
 | `context_search` | `ContextSearchBackend` | 内置 | 火山引擎上下文搜索服务 |
 | `openviking` | `OpenVikingKnowledgeBackend` | 内置（openviking-sdk） | OpenViking 托管检索服务 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L30-L89](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L30-L89)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L30-L89](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L30-L89)
 
 **注意**：基于 llama-index 的向量后端（local/opensearch/redis/milvus）需要安装 `veadk-python[extensions]`。导入失败时会抛出明确的 ImportError 提示安装。
 
@@ -259,7 +259,7 @@ class BaseKnowledgebaseBackend(ABC, BaseModel):
 - `list_docs(**kwargs)` - 列出原始文档
 - `list_chunks(**kwargs)` - 列出向量化后的文档块
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/backends/base_backend.py#L20-L72](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/backends/base_backend.py#L20-L72)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/backends/base_backend.py#L20-L72](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/backends/base_backend.py#L20-L72)
 
 ---
 
@@ -329,7 +329,7 @@ if self.knowledgebase.enable_profile:
     self.tools.append(load_kb_queries)
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L316-L324](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L316-L324)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L316-L324](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L316-L324)
 
 ### 使用流程
 
@@ -343,7 +343,7 @@ if self.knowledgebase.enable_profile:
 
 `query_with_user_profile=True` 启用用户画像增强查询，需要配合 Viking Memory 后端使用，将长期记忆中的用户偏好信息用于检索结果的个性化排序。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L182-L185](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py#L182-L185)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L182-L185](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py#L182-L185)
 
 ---
 
@@ -362,7 +362,7 @@ if self.knowledgebase:
         self.tools.append(load_kb_queries)
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L324](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L324)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L324](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L324)
 
 ### 自动挂载的工具
 
@@ -415,7 +415,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-> 示例来源：[file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/main.py)
+> 示例来源：[file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/main.py](file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/main.py)
 
 ### 动态添加文本
 
@@ -565,7 +565,7 @@ You are a company assistant. Follow these rules:
 | database | `pip install "veadk-python[database]"` | redis |
 | extensions | `pip install "veadk-python[extensions]"` | llama-index 生态：local, opensearch, redis, milvus |
 
-> 依赖来源：[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L84](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L84)
+> 依赖来源：[file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L84](file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L84)
 
 **环境变量要求**：
 - 使用基于 llama-index 的向量后端时，需配置 Embedding 模型相关环境变量（如 `OPENAI_API_KEY` 或火山引擎 Ark 相关配置）

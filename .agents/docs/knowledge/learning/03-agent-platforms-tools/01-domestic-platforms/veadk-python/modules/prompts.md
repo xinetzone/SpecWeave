@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了 Prompt 管理、优化和评估相关工具，包括抽象的 PromptManager 接口、CozeLoop 云端 Prompt 管理集成、默认系统 Prompt 模板、Prompt 自动优化器、以及记忆处理 Prompt 模板。系统通过 Jinja2 模板引擎实现 Prompt 的动态渲染，支持基于 Agent 元信息和工具列表的智能优化。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/prompts/](file:///d:/AI/vendor/veadk-python/veadk/prompts/)
 
 ---
 
@@ -24,7 +24,7 @@ VeADK 提供了 Prompt 管理、优化和评估相关工具，包括抽象的 Pr
 
 `BasePromptManager` 定义了 Prompt 管理器的统一接口，所有 Prompt 管理实现必须继承此类。
 
-> 源码位置：[prompts/prompt_manager.py#L26-L30](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_manager.py#L26-L30)
+> 源码位置：[prompts/prompt_manager.py#L26-L30](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_manager.py#L26-L30)
 
 ```python
 class BasePromptManager(ABC):
@@ -46,7 +46,7 @@ class BasePromptManager(ABC):
 
 `CozeloopPromptManager` 是 VeADK 内置的 PromptManager 实现，通过 CozeLoop 平台进行 Prompt 的版本化管理和云端拉取。
 
-> 源码位置：[prompts/prompt_manager.py#L33-L79](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_manager.py#L33-L79)
+> 源码位置：[prompts/prompt_manager.py#L33-L79](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_manager.py#L33-L79)
 
 ```python
 class CozeloopPromptManager(BasePromptManager):
@@ -129,7 +129,7 @@ agent = Agent(
 
 当未配置自定义 instruction 或 CozeLoop Prompt 获取失败时，VeADK 使用内置默认指令。
 
-> 源码位置：[prompts/agent_default_prompt.py#L15-L28](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/agent_default_prompt.py#L15-L28)
+> 源码位置：[prompts/agent_default_prompt.py#L15-L28](file:///d:/AI/vendor/veadk-python/veadk/prompts/agent_default_prompt.py#L15-L28)
 
 ```python
 DEFAULT_INSTRUCTION = """You an AI agent created by the VeADK team.
@@ -160,7 +160,7 @@ You excel at the following tasks:
 DEFAULT_DESCRIPTION = """An AI agent developed by the VeADK team, specialized in data science, documentation, and software development."""
 ```
 
-> 源码位置：[prompts/agent_default_prompt.py#L30](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/agent_default_prompt.py#L30)
+> 源码位置：[prompts/agent_default_prompt.py#L30](file:///d:/AI/vendor/veadk-python/veadk/prompts/agent_default_prompt.py#L30)
 
 ---
 
@@ -168,7 +168,7 @@ DEFAULT_DESCRIPTION = """An AI agent developed by the VeADK team, specialized in
 
 VeADK 提供了基于 LLM 的 Prompt 自动优化功能，通过分析 Agent 的元信息和工具列表来优化系统 Prompt，使其更加精准高效。
 
-> 源码位置：[prompts/prompt_optimization.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_optimization.py)
+> 源码位置：[prompts/prompt_optimization.py](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_optimization.py)
 
 ### 核心优化模板
 
@@ -203,7 +203,7 @@ Please note that in your optimized prompt:
 """.strip()
 ```
 
-> 源码位置：[prompt_optimization.py#L59-L85](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_optimization.py#L59-L85)
+> 源码位置：[prompt_optimization.py#L59-L85](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_optimization.py#L59-L85)
 
 **优化原则：**
 1. **工具信息用于理解上下文**：不是简单地将工具列表添加到 Prompt 中，而是根据工具能力优化 Prompt 的表述
@@ -225,7 +225,7 @@ Please continue to optimize the prompt based on the feedback.
 """.strip()
 ```
 
-> 源码位置：[prompt_optimization.py#L87-L94](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_optimization.py#L87-L94)
+> 源码位置：[prompt_optimization.py#L87-L94](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_optimization.py#L87-L94)
 
 ### 渲染函数
 
@@ -267,7 +267,7 @@ def render_prompt_with_jinja2(agent: Agent):
     return template.render(context)
 ```
 
-> 源码位置：[prompt_optimization.py#L110-L150](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_optimization.py#L110-L150)
+> 源码位置：[prompt_optimization.py#L110-L150](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_optimization.py#L110-L150)
 
 **支持的工具类型：**
 | 工具类型 | 说明 | 处理方式 |
@@ -293,7 +293,7 @@ def render_prompt_feedback_with_jinja2(agent: Agent, feedback: str):
     return template.render(context)
 ```
 
-> 源码位置：[prompt_optimization.py#L97-L107](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_optimization.py#L97-L107)
+> 源码位置：[prompt_optimization.py#L97-L107](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_optimization.py#L97-L107)
 
 **优化工作流示例：**
 ```
@@ -311,7 +311,7 @@ def render_prompt_feedback_with_jinja2(agent: Agent, feedback: str):
 
 VeADK 内置了用于评估 LLM 响应质量的评估 Prompt，主要用于 Prompt 效果评估和回归测试。
 
-> 源码位置：[prompts/prompt_evaluator.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_evaluator.py)
+> 源码位置：[prompts/prompt_evaluator.py](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_evaluator.py)
 
 **eval_principle_prompt - 评估原则：**
 ```python
@@ -341,7 +341,7 @@ criteria_prompt = "Determine whether the actual output is factually correct base
 
 `prompt_memory_processor.py` 提供了用于从对话历史中提取重要信息并构建长期记忆的 Prompt 模板。
 
-> 源码位置：[prompts/prompt_memory_processor.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_memory_processor.py)
+> 源码位置：[prompts/prompt_memory_processor.py](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_memory_processor.py)
 
 ### MEMORY_PROCESSOR_SYSTEM_PROMPT
 
@@ -375,7 +375,7 @@ The actual messages are:
 """
 ```
 
-> 源码位置：[prompt_memory_processor.py#L17-L43](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_memory_processor.py#L17-L43)
+> 源码位置：[prompt_memory_processor.py#L17-L43](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_memory_processor.py#L17-L43)
 
 **核心功能：**
 1. **信息提取**：从用户和助手的对话中识别重要信息
@@ -397,7 +397,7 @@ def render_prompt(messages: list[dict]):
     return template.render(context)
 ```
 
-> 源码位置：[prompt_memory_processor.py#L46-L55](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_memory_processor.py#L46-L55)
+> 源码位置：[prompt_memory_processor.py#L46-L55](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_memory_processor.py#L46-L55)
 
 **输入格式：**
 ```python

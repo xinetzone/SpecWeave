@@ -1,7 +1,7 @@
 ---
 id: veadk-python-structured-output
 title: 07 - 结构化输出示例
-source: d:\AI\.chaos\libs\veadk-python\examples\07_structured_output\main.py
+source: d:\AI\vendor\veadk-python\examples\07_structured_output\main.py
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/structured-output.toml"
 category: learning
 date: '2026-08-05'
@@ -26,7 +26,7 @@ stage: E
 
 ## 2. 核心代码展示
 
-完整代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/07_structured_output/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/07_structured_output/main.py)：
+完整代码位于 [file:///d:/AI/vendor/veadk-python/examples/07_structured_output/main.py](file:///d:/AI/vendor/veadk-python/examples/07_structured_output/main.py)：
 
 ```python
 import asyncio

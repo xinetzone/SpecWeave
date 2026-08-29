@@ -1,7 +1,7 @@
 ---
 id: veadk-python-model-config
 title: 08 - 模型配置示例
-source: d:\AI\.chaos\libs\veadk-python\examples\08_model_config\main.py
+source: d:\AI\vendor\veadk-python\examples\08_model_config\main.py
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/model-config.toml"
 category: learning
 date: '2026-08-05'
@@ -25,7 +25,7 @@ stage: E
 
 ## 2. 核心代码展示
 
-完整代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/08_model_config/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/08_model_config/main.py)：
+完整代码位于 [file:///d:/AI/vendor/veadk-python/examples/08_model_config/main.py](file:///d:/AI/vendor/veadk-python/examples/08_model_config/main.py)：
 
 ```python
 import asyncio

@@ -34,8 +34,8 @@ VeADK 现有两类 Extension 实现：
 
 | 模式 | 参考实现 | 用途 |
 |---|---|---|
-| **Channel Extension** | [FeishuChannelExtension](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L269-L780) | 将外部消息渠道（飞书、钉钉等）桥接到 VeADK Runner |
-| **Plugin Extension** | [HarnessExtension](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/extension.py#L57-L120) | 通过 Google ADK Plugin 机制扩展 Runner 能力 |
+| **Channel Extension** | [FeishuChannelExtension](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L269-L780) | 将外部消息渠道（飞书、钉钉等）桥接到 VeADK Runner |
+| **Plugin Extension** | [HarnessExtension](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/extension.py#L57-L120) | 通过 Google ADK Plugin 机制扩展 Runner 能力 |
 
 ---
 
@@ -53,7 +53,7 @@ Channel Extension 用于将外部消息渠道（IM 平台、Webhook、消息队�
 
 ### FeishuChannelExtension 架构分析
 
-[FeishuChannelExtension](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L269-L780) 是渠道扩展的参考实现，其核心结构如下：
+[FeishuChannelExtension](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L269-L780) 是渠道扩展的参考实现，其核心结构如下：
 
 ```python
 class FeishuChannelExtension:
@@ -98,7 +98,7 @@ class MyChannelMessageContext:
     text: str           # 提取出的文本内容
 ```
 
-参考：[FeishuMessageContext](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L251-L263)
+参考：[FeishuMessageContext](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L251-L263)
 
 #### 步骤2：实现渠道扩展类
 
@@ -287,7 +287,7 @@ class MyChannelExtension:
         return value
 ```
 
-参考：[FeishuChannelExtension 完整实现](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L269-L780)
+参考：[FeishuChannelExtension 完整实现](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L269-L780)
 
 #### 步骤3：注册和使用
 
@@ -324,13 +324,13 @@ if __name__ == "__main__":
 
 ### Channel Extension 关键设计点
 
-1. **ID映射策略可定制**：通过 `session_id_factory` 和 `user_id_factory` 允许用户自定义ID映射逻辑，参考 [FeishuChannelExtension:342-366](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L342-L366)
+1. **ID映射策略可定制**：通过 `session_id_factory` 和 `user_id_factory` 允许用户自定义ID映射逻辑，参考 [FeishuChannelExtension:342-366](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L342-L366)
 2. **同步/异步自适应**：`_maybe_await` 工具方法自动处理同步和异步的渠道SDK方法
 3. **环境变量凭证**：支持从环境变量读取凭证，方便容器化部署
 4. **空消息过滤**：`ignore_empty_messages` 选项过滤无文本内容的消息
 5. **线程回复支持**：`reply_in_thread` 选项支持在线程/话题中回复
 6. **历史上下文收集**：参考飞书实现的 `_collect_reference_context` 可收集话题历史消息作为上下文
-7. **流式响应支持**：通过 `streaming` 参数启用流式输出，参考 [FeishuChannelExtension:466-512](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py#L466-L512)
+7. **流式响应支持**：通过 `streaming` 参数启用流式输出，参考 [FeishuChannelExtension:466-512](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py#L466-L512)
 
 ---
 
@@ -340,7 +340,7 @@ Plugin Extension 基于 Google ADK 的 Plugin 机制，用于在 Runner 层面�
 
 ### HarnessExtension 架构分析
 
-[HarnessExtension](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/extension.py#L57-L120) 是一个轻量级的门面类，它不包含核心逻辑，而是将实际功能委托给内部模块：
+[HarnessExtension](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/extension.py#L57-L120) 是一个轻量级的门面类，它不包含核心逻辑，而是将实际功能委托给内部模块：
 
 ```python
 class HarnessExtension:
@@ -375,7 +375,7 @@ class MyExtensionConfig(BaseModel):
     custom_param: str = "default_value"
 ```
 
-参考：[HarnessExtensionConfig](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/extension.py#L43-L55)
+参考：[HarnessExtensionConfig](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/extension.py#L43-L55)
 
 #### 步骤2：实现Extension类
 
@@ -442,7 +442,7 @@ class MyExtension:
         return self._build_plugins()
 ```
 
-参考：[HarnessExtension](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/extension.py#L57-L120)
+参考：[HarnessExtension](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/extension.py#L57-L120)
 
 #### 步骤3：使用Extension
 
@@ -511,7 +511,7 @@ runner = Runner(
 
 ### FeishuChannelExtension（飞书渠道）
 
-**文件**：[veadk/extensions/feishu_channel.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py)
+**文件**：[veadk/extensions/feishu_channel.py](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py)
 
 **功能特性**：
 - 基于 `lark_oapi` SDK 接入飞书机器人
@@ -523,11 +523,11 @@ runner = Runner(
 - 支持同步/异步渠道SDK方法自适应
 - 灵活的ID映射策略（可自定义session_id_factory/user_id_factory）
 
-**导出位置**：[veadk/extensions/__init__.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/__init__.py#L15-L17)
+**导出位置**：[veadk/extensions/__init__.py](file:///d:/AI/vendor/veadk-python/veadk/extensions/__init__.py#L15-L17)
 
 ### HarnessExtension（Harness插件集）
 
-**文件**：[veadk/extensions/harness/extension.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/extension.py)
+**文件**：[veadk/extensions/harness/extension.py](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/extension.py)
 
 **功能特性**：
 - 支持从环境变量自动配置（`from_env()` 类方法）

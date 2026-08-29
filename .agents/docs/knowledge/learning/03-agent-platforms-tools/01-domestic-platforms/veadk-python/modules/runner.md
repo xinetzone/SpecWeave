@@ -20,7 +20,7 @@ class Runner(ADKRunner):
 
 `Runner` 类是 VeADK 的对话运行器，在 Google ADK 的 `Runner` 基础上扩展了会话管理、记忆集成、追踪、媒体上传等功能。它是驱动 Agent 执行对话的核心入口。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L789](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L789)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L789](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L789)
 
 ---
 
@@ -37,7 +37,7 @@ class Runner(ADKRunner):
 | `app_name` | `str` | 应用名称，用于会话管理和对象路径 |
 | `run_processor` | `BaseRunProcessor` | 运行处理器实例 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L355-L466](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L355-L466)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L355-L466](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L355-L466)
 
 ---
 
@@ -60,7 +60,7 @@ RunnerMessage = Union[
 - `MediaMessage`：单轮多模态提示（文本 + 图片/视频）
 - `list`：上述类型的列表（支持多轮混合文本和多模态）
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L46-L52](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L46-L52)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L46-L52](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L46-L52)
 
 ---
 
@@ -100,7 +100,7 @@ def __init__(
 3. **RunProcessor 优先级**：Runner 参数 > Agent.run_processor > NoOpRunProcessor
 4. **消息拦截层注入**：在父类 `run_async` 外包裹消息拦截层，支持内联媒体上传和运行后处理
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L355-L466](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L355-L466)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L355-L466](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L355-L466)
 
 ---
 
@@ -163,7 +163,7 @@ async def run(
 - `AssertionError`：媒体 MIME 类型不在 `image/*` 或 `video/*` 中
 - `Exception`：底层 ADK/Agent 执行可能抛出的异常
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L468-L576](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L468-L576)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L468-L576](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L468-L576)
 
 ---
 
@@ -192,7 +192,7 @@ async def run_async(
 4. 刷新剩余的思考内容
 5. 调用 `post_run_process`（当前为空操作）
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L107-L198](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L107-L198)（装饰器定义）
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L107-L198](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L107-L198)（装饰器定义）
 
 ---
 
@@ -208,7 +208,7 @@ def get_trace_id(self) -> str
 
 `str`：Trace ID；如果 Agent 不是 VeADK Agent 实例或未配置追踪器，返回 `"<unknown_trace_id>"`。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L578-L607](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L578-L607)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L578-L607](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L578-L607)
 
 ---
 
@@ -254,7 +254,7 @@ path = runner.save_tracing_file(session_id=session_id)
 print(path)
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L640-L694](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L640-L694)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L640-L694](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L640-L694)
 
 ---
 
@@ -293,7 +293,7 @@ path = asyncio.run(runner.save_eval_set(session_id=session_id))
 print(path)
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L696-L729](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L696-L729)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L696-L729](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L696-L729)
 
 ---
 
@@ -340,7 +340,7 @@ asyncio.run(runner.run(messages="Hi!", session_id=session_id))
 asyncio.run(runner.save_session_to_long_term_memory(session_id=session_id))
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L731-L789](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L731-L789)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L731-L789](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L731-L789)
 
 ---
 
@@ -386,7 +386,7 @@ async for event in event_generator():
 2. 中间层：Runner 内置的 intercept_new_message 装饰器（媒体上传 + 日志）
 3. 最内层：ADKRunner.run_async 实际执行
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L541-L562](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L541-L562)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L541-L562](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L541-L562)
 
 ---
 
@@ -400,7 +400,7 @@ def intercept_new_message(process_func) -> Callable
 
 创建装饰器，在 `run_async` 调用前后插入前置/后置钩子。这是 Runner 内部使用的装饰器工厂。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L107-L198](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L107-L198)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L107-L198](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L107-L198)
 
 ### `_convert_messages`
 
@@ -415,7 +415,7 @@ def _convert_messages(
 
 将 VeADK `RunnerMessage` 转换为 Google ADK 消息列表。支持文本和多模态输入转换。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L201-L277](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L201-L277)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L201-L277](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L201-L277)
 
 ---
 

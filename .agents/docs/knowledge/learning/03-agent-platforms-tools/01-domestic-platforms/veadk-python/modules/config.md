@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 使用基于 Pydantic Settings 的分层配置系统，支持从环境变量、`.env` 文件和 `config.yaml` 文件加载配置。配置采用优先级覆盖机制，允许灵活地在不同环境中使用不同的配置。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/config.py](file:///d:/AI/vendor/veadk-python/veadk/config.py)
 
 ---
 
@@ -28,7 +28,7 @@ VeADK 的配置加载遵循以下优先级（从高到低）：
 4. **config.yaml 文件**：项目根目录下的 `config.yaml` 文件
 5. **默认值**：各配置类中定义的默认值
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L45-L146](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L45-L146)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/config.py#L45-L146](file:///d:/AI/vendor/veadk-python/veadk/config.py#L45-L146)
 
 ### 优先级说明
 
@@ -65,7 +65,7 @@ class VeADKConfig(BaseModel):
 
 全局单例 `settings = VeADKConfig()` 在模块加载时创建，可以通过 `from veadk.config import settings` 访问。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L64-L90](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L64-L90)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/config.py#L64-L90](file:///d:/AI/vendor/veadk-python/veadk/config.py#L64-L90)
 
 ---
 
@@ -102,7 +102,7 @@ class ModelConfig(BaseSettings):
 2. `api_key_name` 指定的命名密钥
 3. 账户中第一个 ARK 密钥（默认）
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L31-L54](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L31-L54)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L31-L54](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L31-L54)
 
 ---
 
@@ -127,7 +127,7 @@ class EmbeddingModelConfig(BaseSettings):
 | `dim` | `MODEL_EMBEDDING_DIM` | 嵌入向量维度 |
 | `api_base` | `MODEL_EMBEDDING_API_BASE` | 嵌入模型 API 基础 URL |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L57-L75](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L57-L75)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L57-L75](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L57-L75)
 
 ---
 
@@ -150,7 +150,7 @@ class RealtimeModelConfig(BaseSettings):
 | `name` | `MODEL_REALTIME_NAME` | `doubao_realtime_voice_model` | 实时模型名称 |
 | `api_base` | `MODEL_REALTIME_API_BASE` | `wss://openspeech.bytedance.com/api/v3/realtime/dialogue` | WebSocket API 地址 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L93-L104](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L93-L104)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L93-L104](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L93-L104)
 
 ---
 
@@ -176,7 +176,7 @@ class TOSConfig(BaseSettings):
 
 **BytePlus 自动适配**：当 `CLOUD_PROVIDER=byteplus` 时，endpoint 自动切换为 `tos-ap-southeast-1.bytepluses.com`，region 切换为 `ap-southeast-1`。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/database_configs.py#L158-L177](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/database_configs.py#L158-L177)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/database_configs.py#L158-L177](file:///d:/AI/vendor/veadk-python/veadk/configs/database_configs.py#L158-L177)
 
 ---
 
@@ -229,7 +229,7 @@ class TOSConfig(BaseSettings):
 | `project` | `DATABASE_VIKING_PROJECT` | `"default"` | Viking DB 项目名 |
 | `region` | `DATABASE_VIKING_REGION` | `"cn-beijing"` | 区域 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/database_configs.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/database_configs.py)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/database_configs.py](file:///d:/AI/vendor/veadk-python/veadk/configs/database_configs.py)
 
 ---
 
@@ -278,7 +278,7 @@ class TOSConfig(BaseSettings):
 - `ENABLE_COZELOOP=true`：启用 CozeLoop 导出器
 - `ENABLE_TLS=true`：启用 TLS 导出器
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/tracing_configs.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/tracing_configs.py)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/tracing_configs.py](file:///d:/AI/vendor/veadk-python/veadk/configs/tracing_configs.py)
 
 ---
 
@@ -304,7 +304,7 @@ class TOSConfig(BaseSettings):
 |------|----------|--------|------|
 | `api_key` | `PROMPT_PILOT_API_KEY` | 动态获取 | PromptPilot API Key |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/tool_configs.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/tool_configs.py)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/configs/tool_configs.py](file:///d:/AI/vendor/veadk-python/veadk/configs/tool_configs.py)
 
 ---
 
@@ -319,7 +319,7 @@ class TOSConfig(BaseSettings):
 5. 将这些键值对设置到环境变量中（如果环境变量中不存在同名键）
 6. `.env` 文件中的值优先级高于 `config.yaml`
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/misc.py#L132-L165](file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/misc.py#L132-L165)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/utils/misc.py#L132-L165](file:///d:/AI/vendor/veadk-python/veadk/utils/misc.py#L132-L165)
 
 ### 完整配置示例
 
@@ -405,7 +405,7 @@ veadk:
     tls: true
 ```
 
-> 参考文件：[file:///d:/AI/.chaos/libs/veadk-python/config.yaml.full](file:///d:/AI/.chaos/libs/veadk-python/config.yaml.full)
+> 参考文件：[file:///d:/AI/vendor/veadk-python/config.yaml.full](file:///d:/AI/vendor/veadk-python/config.yaml.full)
 
 ---
 
@@ -485,8 +485,8 @@ def getenv(
 3. 如果 `allow_false_values=False` 且值为空，抛出 `ValueError` 提示用户设置环境变量
 
 > 源码位置：
-> - [file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L92-L130](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L92-L130)
-> - [file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/misc.py#L105-L129](file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/misc.py#L105-L129)
+> - [file:///d:/AI/vendor/veadk-python/veadk/config.py#L92-L130](file:///d:/AI/vendor/veadk-python/veadk/config.py#L92-L130)
+> - [file:///d:/AI/vendor/veadk-python/veadk/utils/misc.py#L105-L129](file:///d:/AI/vendor/veadk-python/veadk/utils/misc.py#L105-L129)
 
 ---
 

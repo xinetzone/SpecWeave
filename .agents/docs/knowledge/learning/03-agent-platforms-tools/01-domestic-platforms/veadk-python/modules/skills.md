@@ -41,7 +41,7 @@ wiki_version: '1.0'
 
 ## Skills 加载模式
 
-VeADK 支持三种技能加载模式，由 `skills_mode` 参数控制。代码中定义在 [veadk/agent.py:170](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L170-L170)：
+VeADK 支持三种技能加载模式，由 `skills_mode` 参数控制。代码中定义在 [veadk/agent.py:170](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L170-L170)：
 
 ```python
 skills_mode: Optional[Literal["skills_sandbox", "aio_sandbox", "local"]] = None
@@ -49,7 +49,7 @@ skills_mode: Optional[Literal["skills_sandbox", "aio_sandbox", "local"]] = None
 
 ### 模式判定逻辑
 
-如果用户未显式设置 `skills_mode`，Agent 在 `load_skills()` 方法中会自动判定，代码位于 [veadk/agent.py:467-534](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L467-L534)：
+如果用户未显式设置 `skills_mode`，Agent 在 `load_skills()` 方法中会自动判定，代码位于 [veadk/agent.py:467-534](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L467-L534)：
 
 ```mermaid
 flowchart TD
@@ -75,7 +75,7 @@ flowchart TD
 
 **状态：Deprecated（已弃用）**
 
-代码参考：[veadk/agent.py:536-547](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L536-L547)
+代码参考：[veadk/agent.py:536-547](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L536-L547)
 
 当使用 `skills_mode='local'` 时，会触发 DeprecationWarning：
 
@@ -101,13 +101,13 @@ Agent(tools=[...]).
 - 本地技能：使用 `google.adk.skills.load_skill_from_dir()` + `google.adk.tools.skill_toolset.SkillToolset`
 - 远端技能空间：使用 `veadk.skills.VeSkillRegistry` + `SkillToolset`（通过 tools 参数传入）
 
-参考示例：[examples/15_legacy_skills/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/15_legacy_skills/main.py) 展示了新旧两种方式的对比。
+参考示例：[examples/15_legacy_skills/main.py](file:///d:/AI/vendor/veadk-python/examples/15_legacy_skills/main.py) 展示了新旧两种方式的对比。
 
 #### 2. skills_sandbox 模式（推荐）
 
 **状态：当前推荐模式**
 
-代码参考：[veadk/agent.py:587-590](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L587-L590)
+代码参考：[veadk/agent.py:587-590](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L587-L590)
 
 **特点：**
 - 技能在专用技能沙箱环境中执行
@@ -116,7 +116,7 @@ Agent(tools=[...]).
 - 适用于标准技能空间部署场景
 - SkillsToolset 在该模式下返回空工具列表（实际执行由沙箱处理）
 
-代码参考：[veadk/tools/skills_tools/skills_toolset.py:90-91](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L90-L91)
+代码参考：[veadk/tools/skills_tools/skills_toolset.py:90-91](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L90-L91)
 
 ```python
 case "skills_sandbox":
@@ -132,7 +132,7 @@ You can use the skills by calling the `execute_skills` tool.
 
 **状态：AIO 专用模式**
 
-代码参考：[veadk/agent.py:525-526](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L525-L526)
+代码参考：[veadk/agent.py:525-526](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L525-L526)
 
 **特点：**
 - 用于 All-in-One 类型的 AgentKit 工具
@@ -140,7 +140,7 @@ You can use the skills by calling the `execute_skills` tool.
 - 与 skills_sandbox 类似，但沙箱环境包含更完整的运行时
 - SkillsToolset 在该模式下同样返回空工具列表
 
-代码参考：[veadk/tools/skills_tools/skills_toolset.py:93-94](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L93-L94)
+代码参考：[veadk/tools/skills_tools/skills_toolset.py:93-94](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L93-L94)
 
 **触发条件：** AgentKit GetTool API 返回 ToolType 为 "All-in-one" 时自动选择。
 
@@ -160,7 +160,7 @@ You can use the skills by calling the `execute_skills` tool.
 
 每个技能必须包含一个 `SKILL.md` 文件作为技能清单，使用 YAML frontmatter 定义元数据。
 
-代码参考：[veadk/skills/utils.py:89-123](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L89-L123)
+代码参考：[veadk/skills/utils.py:89-123](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L89-L123)
 
 ### SKILL.md 格式
 
@@ -207,7 +207,7 @@ checklist:
 
 如果技能定义了 checklist，在 instruction 中会追加提示：
 
-代码参考：[veadk/agent.py:572-576](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L572-L576)
+代码参考：[veadk/agent.py:572-576](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L572-L576)
 
 ```
 Some skills have a checklist that you must complete step by step.
@@ -216,7 +216,7 @@ Use the `update_check_list` tool to mark each item as completed.
 
 使用 `update_check_list` 工具更新状态：
 
-代码参考：[veadk/skills/utils.py:35-50](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L35-L50)
+代码参考：[veadk/skills/utils.py:35-50](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L35-L50)
 
 ```python
 update_check_list(
@@ -229,7 +229,7 @@ update_check_list(
 
 当 `enable_skills_checklist=True` 时，会在 before_tool_callback 中注册初始化回调，在调用技能时自动初始化清单项状态。
 
-代码参考：[veadk/agent.py:379-397](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L379-L397)
+代码参考：[veadk/agent.py:379-397](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L379-L397)
 
 ### 技能目录结构
 
@@ -244,7 +244,7 @@ my-skill/
 
 ### 本地技能加载示例
 
-参考 [examples/15_legacy_skills/main.py:336-362](file:///d:/AI/.chaos/libs/veadk-python/examples/15_legacy_skills/main.py#L336-L362)：
+参考 [examples/15_legacy_skills/main.py:336-362](file:///d:/AI/vendor/veadk-python/examples/15_legacy_skills/main.py#L336-L362)：
 
 ```python
 (SKILL_DIR / "SKILL.md").write_text("""---
@@ -345,19 +345,19 @@ flowchart TD
 
 | 步骤 | 代码位置 |
 |-----|---------|
-| 入口触发 | [veadk/agent.py:377-397](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L377-L397) |
-| 模式自动判定 | [veadk/agent.py:467-534](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L467-L534) |
-| local 模式弃用警告 | [veadk/agent.py:536-547](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L536-L547) |
-| 本地目录加载 | [veadk/skills/utils.py:126-134](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L126-L134) |
-| SKILL.md 解析 | [veadk/skills/utils.py:89-123](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L89-L123) |
-| 云端技能加载 | [veadk/skills/utils.py:137-151](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L137-L151) |
-| SkillHub 空间加载 | [veadk/skills/utils.py:361-434](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/utils.py#L361-L434) |
-| SkillsToolset 挂载 | [veadk/agent.py:600](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L600-L600) |
-| 动态加载回调 | [veadk/agent.py:602-612](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L602-L612) |
+| 入口触发 | [veadk/agent.py:377-397](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L377-L397) |
+| 模式自动判定 | [veadk/agent.py:467-534](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L467-L534) |
+| local 模式弃用警告 | [veadk/agent.py:536-547](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L536-L547) |
+| 本地目录加载 | [veadk/skills/utils.py:126-134](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L126-L134) |
+| SKILL.md 解析 | [veadk/skills/utils.py:89-123](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L89-L123) |
+| 云端技能加载 | [veadk/skills/utils.py:137-151](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L137-L151) |
+| SkillHub 空间加载 | [veadk/skills/utils.py:361-434](file:///d:/AI/vendor/veadk-python/veadk/skills/utils.py#L361-L434) |
+| SkillsToolset 挂载 | [veadk/agent.py:600](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L600-L600) |
+| 动态加载回调 | [veadk/agent.py:602-612](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L602-L612) |
 
 ### Skill 数据模型
 
-代码参考：[veadk/skills/skill.py:19-32](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/skill.py#L19-L32)
+代码参考：[veadk/skills/skill.py:19-32](file:///d:/AI/vendor/veadk-python/veadk/skills/skill.py#L19-L32)
 
 ```python
 class Skill(BaseModel):
@@ -380,7 +380,7 @@ class Skill(BaseModel):
 
 `SkillsToolset` 是技能系统的核心工具集，它为 Agent 提供操作技能所需的工具。
 
-代码参考：[veadk/tools/skills_tools/skills_toolset.py:43-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L43-L100)
+代码参考：[veadk/tools/skills_tools/skills_toolset.py:43-100](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L43-L100)
 
 ### 初始化
 
@@ -404,7 +404,7 @@ SkillsToolset 内部注册了以下工具：
 
 注意：在 `skills_sandbox` 和 `aio_sandbox` 模式下，`get_tools()` 返回空列表，这些工具不会暴露给模型，技能执行完全由沙箱环境的 `execute_skills` 工具处理。
 
-代码参考：[veadk/tools/skills_tools/skills_toolset.py:86-99](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L86-L99)
+代码参考：[veadk/tools/skills_tools/skills_toolset.py:86-99](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L86-L99)
 
 ```python
 match self.skills_mode:
@@ -475,11 +475,11 @@ sequenceDiagram
 
 对于新代码，推荐使用 Google ADK 原生的 Skill 机制配合 VeSkillRegistry 来加载远端技能，而不是使用已弃用的 Agent(skills=...) 入口。
 
-代码参考：[veadk/skills/registry.py:38-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/registry.py#L38-L100)
+代码参考：[veadk/skills/registry.py:38-100](file:///d:/AI/vendor/veadk-python/veadk/skills/registry.py#L38-L100)
 
 ### 使用方式
 
-参考 [examples/15_legacy_skills/main.py:377-412](file:///d:/AI/.chaos/libs/veadk-python/examples/15_legacy_skills/main.py#L377-L412)：
+参考 [examples/15_legacy_skills/main.py:377-412](file:///d:/AI/vendor/veadk-python/examples/15_legacy_skills/main.py#L377-L412)：
 
 ```python
 from google.adk.skills import load_skill_from_dir
@@ -522,7 +522,7 @@ agent = Agent(
 
 远端技能需要下载并解压到本地才能被 ADK 加载，这个过程称为"物化"（materialization）。
 
-代码参考：[veadk/skills/materializer.py:44-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/skills/materializer.py#L44-L100)
+代码参考：[veadk/skills/materializer.py:44-100](file:///d:/AI/vendor/veadk-python/veadk/skills/materializer.py#L44-L100)
 
 物化流程：
 1. 检查本地缓存是否存在有效版本
@@ -618,7 +618,7 @@ agent = Agent(
 )
 ```
 
-代码参考：[examples/15_legacy_skills/main.py:378-412](file:///d:/AI/.chaos/libs/veadk-python/examples/15_legacy_skills/main.py#L378-L412)
+代码参考：[examples/15_legacy_skills/main.py:378-412](file:///d:/AI/vendor/veadk-python/examples/15_legacy_skills/main.py#L378-L412)
 
 ### 示例 3：沙箱模式自动判定
 
@@ -682,7 +682,7 @@ update_check_list(
 
 当 `enable_dynamic_load_skills=True` 时，会在 before_agent_callback 中添加 `check_skills` 回调，支持会话过程中动态加载新技能。
 
-代码参考：[veadk/agent.py:602-612](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L602-L612)
+代码参考：[veadk/agent.py:602-612](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L602-L612)
 
 ```python
 if self.enable_dynamic_load_skills:

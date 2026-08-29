@@ -36,3 +36,6 @@
 [submodule "vendor/jira-skill"]
 	path = vendor/jira-skill
 	url = git@github.com:netresearch/jira-skill.git
+[submodule "vendor/veadk-python"]
+	path = vendor/veadk-python
+	url = git@github.com:volcengine/veadk-python.git

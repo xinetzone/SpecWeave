@@ -41,7 +41,7 @@ VeADK 采用**四级优先级**配置体系，高优先级配置会覆盖低优�
 | 3 | config.yaml 文件 | 项目级配置、本地开发 | 在项目根目录创建 `config.yaml` |
 | 4（最低） | 框架默认值 | 快速原型、零配置启动 | 默认模型、默认API端点等 |
 
-配置加载逻辑定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L64-L146](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L64-L146)。
+配置加载逻辑定义在 [file:///d:/AI/vendor/veadk-python/veadk/config.py#L64-L146](file:///d:/AI/vendor/veadk-python/veadk/config.py#L64-L146)。
 
 ---
 
@@ -51,7 +51,7 @@ VeADK 采用**四级优先级**配置体系，高优先级配置会覆盖低优�
 
 ### 方式一：使用 config.yaml（推荐）
 
-在项目根目录创建 `config.yaml` 文件（[file:///d:/AI/.chaos/libs/veadk-python/README.md#L56-L65](file:///d:/AI/.chaos/libs/veadk-python/README.md#L56-L65)）：
+在项目根目录创建 `config.yaml` 文件（[file:///d:/AI/vendor/veadk-python/README.md#L56-L65](file:///d:/AI/vendor/veadk-python/README.md#L56-L65)）：
 
 ```yaml
 model:
@@ -63,9 +63,9 @@ model:
 ```
 
 > **注意**：
-> - 默认模型名称定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L22-L24](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L22-L24)，当前版本默认模型为 `doubao-seed-2-1-pro-260628`
+> - 默认模型名称定义在 [file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L24](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L24)，当前版本默认模型为 `doubao-seed-2-1-pro-260628`
 > - 默认 API 端点为 `https://ark.cn-beijing.volces.com/api/v3/`
-> - 简单配置示例见 [file:///d:/AI/.chaos/libs/veadk-python/config.yaml.simple](file:///d:/AI/.chaos/libs/veadk-python/config.yaml.simple)
+> - 简单配置示例见 [file:///d:/AI/vendor/veadk-python/config.yaml.simple](file:///d:/AI/vendor/veadk-python/config.yaml.simple)
 
 ### 方式二：使用 .env 文件
 
@@ -78,7 +78,7 @@ MODEL_AGENT_PROVIDER=openai
 MODEL_AGENT_API_BASE=https://ark.cn-beijing.volces.com/api/v3/
 ```
 
-.env 文件会在启动时自动加载（[file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L45-L52](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L45-L52)）。
+.env 文件会在启动时自动加载（[file:///d:/AI/vendor/veadk-python/veadk/config.py#L45-L52](file:///d:/AI/vendor/veadk-python/veadk/config.py#L45-L52)）。
 
 ### 方式三：代码中直接传参
 
@@ -99,7 +99,7 @@ agent = Agent(
 
 ## config.yaml 完整配置参考
 
-VeADK 提供了完整的配置文件示例 [file:///d:/AI/.chaos/libs/veadk-python/config.yaml.full](file:///d:/AI/.chaos/libs/veadk-python/config.yaml.full)。以下是各配置模块的详细说明。
+VeADK 提供了完整的配置文件示例 [file:///d:/AI/vendor/veadk-python/config.yaml.full](file:///d:/AI/vendor/veadk-python/config.yaml.full)。以下是各配置模块的详细说明。
 
 ### 模型配置（model）
 
@@ -147,7 +147,7 @@ model:
     api_key:
 ```
 
-模型默认值定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L20-L94](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L20-L94)。
+模型默认值定义在 [file:///d:/AI/vendor/veadk-python/veadk/consts.py#L20-L94](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L20-L94)。
 
 ### 火山引擎凭证配置（volcengine）
 
@@ -400,7 +400,7 @@ VeADK 使用火山引擎方舟（ARK）平台的大模型服务。以下是获�
 
 ## 环境变量列表
 
-VeADK 使用 `pydantic-settings` 管理环境变量，模型配置的环境变量前缀为 `MODEL_AGENT_`（[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L32-L32](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L32-L32)）。
+VeADK 使用 `pydantic-settings` 管理环境变量，模型配置的环境变量前缀为 `MODEL_AGENT_`（[file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L32-L32](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L32-L32)）。
 
 ### 核心环境变量
 
@@ -476,7 +476,7 @@ VeADK 采用容错设计理念，在配置缺失时提供多级降级策略，�
 
 ### API Key 四级降级链
 
-模型 API Key 的解析遵循严格的优先级链（[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L217-L232](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L217-L232)）：
+模型 API Key 的解析遵循严格的优先级链（[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L217-L232](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L217-L232)）：
 
 ```
 1. 显式传入 model_api_key 参数
@@ -493,7 +493,7 @@ VeADK 采用容错设计理念，在配置缺失时提供多级降级策略，�
 - 云端部署时可通过 IAM 角色自动获取凭证，无需显式配置 Key
 - 每一级降级都会尝试让 Agent 正常工作，而非直接报错
 
-**相关代码**（[file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L48-L54](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L48-L54)）：
+**相关代码**（[file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L48-L54](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L48-L54)）：
 ```python
 @cached_property
 def api_key(self) -> str:
@@ -506,7 +506,7 @@ def api_key(self) -> str:
 
 ### 模型 Fallback 策略
 
-当 `model_name` 配置为列表时，VeADK 自动实现模型故障转移（[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L257-L273](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L257-L273)）：
+当 `model_name` 配置为列表时，VeADK 自动实现模型故障转移（[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L257-L273](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L257-L273)）：
 
 - 列表第一个元素作为主模型
 - 剩余元素作为 fallback 模型
@@ -521,7 +521,7 @@ agent = Agent(
 
 ### BytePlus 自动映射
 
-当 `CLOUD_PROVIDER=byteplus` 时，框架自动将 BytePlus 凭证映射为火山引擎凭证（[file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L54-L61](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L54-L61)）：
+当 `CLOUD_PROVIDER=byteplus` 时，框架自动将 BytePlus 凭证映射为火山引擎凭证（[file:///d:/AI/vendor/veadk-python/veadk/config.py#L54-L61](file:///d:/AI/vendor/veadk-python/veadk/config.py#L54-L61)）：
 
 - `BYTEPLUS_ACCESS_KEY` → `VOLCENGINE_ACCESS_KEY`
 - `BYTEPLUS_SECRET_KEY` → `VOLCENGINE_SECRET_KEY`
@@ -529,7 +529,7 @@ agent = Agent(
 
 ### 会话服务降级
 
-Runner 初始化时的会话服务降级策略（[file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L422-L434](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L422-L434)）：
+Runner 初始化时的会话服务降级策略（[file:///d:/AI/vendor/veadk-python/veadk/runner.py#L422-L434](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L422-L434)）：
 
 ```
 1. 显式传入 session_service
@@ -543,7 +543,7 @@ Runner 初始化时的会话服务降级策略（[file:///d:/AI/.chaos/libs/vead
 
 ### 默认配置合并
 
-`model_extra_config` 使用字典合并策略（[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L239-L252](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L239-L252)）：
+`model_extra_config` 使用字典合并策略（[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L239-L252](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L239-L252)）：
 
 - 框架默认注入 `veadk-version`、`veadk-source`、加密头等标识
 - 用户配置通过 `|=` 运算符合并，优先级高于默认值
@@ -598,8 +598,8 @@ config.yaml
 配置完成后，建议继续阅读：
 
 - [快速入门](quickstart.md) - 5 分钟创建你的第一个 Agent
-- [examples/08_model_config/](file:///d:/AI/.chaos/libs/veadk-python/examples/08_model_config/) 目录查看模型配置示例
-- [examples/11_tracing/](file:///d:/AI/.chaos/libs/veadk-python/examples/11_tracing/) 目录查看链路追踪配置示例
+- [examples/08_model_config/](file:///d:/AI/vendor/veadk-python/examples/08_model_config/) 目录查看模型配置示例
+- [examples/11_tracing/](file:///d:/AI/vendor/veadk-python/examples/11_tracing/) 目录查看链路追踪配置示例
 
 ---
 

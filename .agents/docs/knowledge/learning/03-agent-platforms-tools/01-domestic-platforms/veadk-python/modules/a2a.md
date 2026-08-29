@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 完整支持 Agent2Agent（A2A）协议，实现了 Agent 之间的互操作能力。A2A 是由 Google 提出的开放协议，允许不同厂商、不同框架实现的 Agent 之间通过标准化 JSON-RPC 接口互相调用、传递消息和协作。VeADK 提供了从服务端暴露、AgentCard 生成、Hub 注册到客户端调用的完整四层架构支持。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/](#)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/a2a/](#)
 
 ---
 
@@ -113,7 +113,7 @@ def build(self) -> FastAPI:
 - `GET /.well-known/agent.json`：返回 AgentCard
 - `POST /`：A2A JSON-RPC 端点（处理 message/send、tasks/get 等）
 
-> 源码位置：[ve_a2a_server.py#L31-L64](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_a2a_server.py#L31-L64)
+> 源码位置：[ve_a2a_server.py#L31-L64](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_a2a_server.py#L31-L64)
 
 ---
 
@@ -155,7 +155,7 @@ AgentSkill(
 )
 ```
 
-> 源码位置：[agent_card.py#L21-L45](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/agent_card.py#L21-L45)
+> 源码位置：[agent_card.py#L21-L45](file:///d:/AI/vendor/veadk-python/veadk/a2a/agent_card.py#L21-L45)
 
 ---
 
@@ -195,7 +195,7 @@ import uvicorn
 uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-> 源码位置：[ve_a2a_server.py#L67-L93](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_a2a_server.py#L67-L93)
+> 源码位置：[ve_a2a_server.py#L67-L93](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_a2a_server.py#L67-L93)
 
 ---
 
@@ -216,7 +216,7 @@ uvicorn.run(app, host="0.0.0.0", port=8000)
 | `timeout_ms` | 60000 | `REGISTRY_TIMEOUT_MS` | 超时时间（毫秒） |
 | `poll_interval_ms` | 5000 | `REGISTRY_POLL_INTERVAL_MS` | 轮询间隔（毫秒） |
 
-> 源码位置：[registry_client.py#L61-L73](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L61-L73)
+> 源码位置：[registry_client.py#L61-L73](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L61-L73)
 
 ---
 
@@ -264,7 +264,7 @@ def search_agent_cards(
 - `RegistryError("CONFIG_MISSING", ...)`：缺少 space_id 配置
 - `RegistryError("AGENT_NOT_FOUND", ...)`：未找到匹配的 Agent
 
-> 源码位置：[registry_client.py#L139-L190](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L139-L190)
+> 源码位置：[registry_client.py#L139-L190](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L139-L190)
 
 ---
 
@@ -313,7 +313,7 @@ def create_task(
 7. 如返回 401 且有 OAuth2 配置，自动重试 M2M 认证
 8. 返回结果或任务信息
 
-> 源码位置：[registry_client.py#L202-L229](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L202-L229)
+> 源码位置：[registry_client.py#L202-L229](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L202-L229)
 
 ---
 
@@ -362,7 +362,7 @@ def poll_task(
 - `canceled`：任务被取消
 - `rejected`：任务被拒绝
 
-> 源码位置：[registry_client.py#L232-L248](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L232-L248)
+> 源码位置：[registry_client.py#L232-L248](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L232-L248)
 
 ---
 
@@ -392,7 +392,7 @@ Access Key / Secret Key 按以下顺序查找：
 5. 环境变量：`VOLCENGINE_ACCESS_KEY` / `VOLCENGINE_SECRET_KEY`
 6. VeFaaS IAM 角色（运行在 VeFaaS 环境时）
 
-> 源码位置：[registry_client.py#L305-L347](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L305-L347)
+> 源码位置：[registry_client.py#L305-L347](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L305-L347)
 
 ---
 
@@ -464,7 +464,7 @@ app = server.build()
 - `http://localhost:8000/.well-known/agent.json` 查看 AgentCard
 - `POST http://localhost:8000/` 发送 A2A 请求
 
-> 源码位置：[ve_a2a_server.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_a2a_server.py)
+> 源码位置：[ve_a2a_server.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_a2a_server.py)
 
 ---
 
@@ -610,7 +610,7 @@ agent = Agent(
 }
 ```
 
-> 协议实现参考：[registry_client.py#L691-L737](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L691-L737)
+> 协议实现参考：[registry_client.py#L691-L737](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L691-L737)
 
 ---
 
@@ -661,7 +661,7 @@ except RegistryError as e:
     return failure(e.code, e.message, e.diagnostics)
 ```
 
-> 源码位置：[registry_client.py#L49-L58](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/registry_client.py#L49-L58)
+> 源码位置：[registry_client.py#L49-L58](file:///d:/AI/vendor/veadk-python/veadk/a2a/registry_client.py#L49-L58)
 
 ---
 

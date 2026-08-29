@@ -1,7 +1,7 @@
 ---
 id: veadk-python-custom-tools
 title: 02 - 自定义工具示例
-source: d:\AI\.chaos\libs\veadk-python\examples\02_custom_tools\main.py
+source: d:\AI\vendor\veadk-python\examples\02_custom_tools\main.py
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/custom-tools.toml"
 category: learning
 date: '2026-08-05'
@@ -26,7 +26,7 @@ stage: E
 
 ## 2. 核心代码展示
 
-完整代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/main.py)：
+完整代码位于 [file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/main.py](file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/main.py)：
 
 ```python
 import asyncio

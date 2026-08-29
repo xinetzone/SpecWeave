@@ -3,8 +3,8 @@ id: veadk-python-memory
 title: 03 & 09 - 记忆示例（短期+长期）
 source:
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/memory.toml"
-- d:\AI\.chaos\libs\veadk-python\examples\03_short_term_memory\main.py
-- d:\AI\.chaos\libs\veadk-python\examples\09_long_term_memory\main.py
+- d:\AI\vendor\veadk-python\examples\03_short_term_memory\main.py
+- d:\AI\vendor\veadk-python\examples\09_long_term_memory\main.py
 category: learning
 date: '2026-08-05'
 status: stable
@@ -34,7 +34,7 @@ VeADK 提供两种记忆机制：
 
 ### 2.1 短期记忆示例
 
-代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/03_short_term_memory/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/03_short_term_memory/main.py)：
+代码位于 [file:///d:/AI/vendor/veadk-python/examples/03_short_term_memory/main.py](file:///d:/AI/vendor/veadk-python/examples/03_short_term_memory/main.py)：
 
 ```python
 import asyncio
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
 ### 2.2 长期记忆示例
 
-代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/09_long_term_memory/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/09_long_term_memory/main.py)：
+代码位于 [file:///d:/AI/vendor/veadk-python/examples/09_long_term_memory/main.py](file:///d:/AI/vendor/veadk-python/examples/09_long_term_memory/main.py)：
 
 ```python
 import asyncio

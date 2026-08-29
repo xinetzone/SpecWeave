@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了灵活的模型配置系统，支持火山引擎方舟（Ark）大模型服务和通过 LiteLLM 接入的多种模型提供商。系统内置了多模型 Fallback 降级策略、Responses API 支持、Embedding 模型配置和实时语音模型配置，并遵循 API Key 四级优先级机制进行认证。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/models/](#)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/models/](#)
 
 ---
 
@@ -36,7 +36,7 @@ VeADK 通过两种方式接入大模型：
 - 多模态输入（图片、视频、文件）
 - 多模型 Fallback
 
-> 源码位置：[models/ark_llm.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/ark_llm.py)
+> 源码位置：[models/ark_llm.py](file:///d:/AI/vendor/veadk-python/veadk/models/ark_llm.py)
 
 ### 2. LiteLLM - 统一多模型接口
 
@@ -55,7 +55,7 @@ DEFAULT_MODEL_AGENT_PROVIDER = "openai"
 DEFAULT_MODEL_AGENT_API_BASE = "https://ark.cn-beijing.volces.com/api/v3/"
 ```
 
-> 源码位置：[consts.py#L22-L24](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L22-L24)
+> 源码位置：[consts.py#L22-L24](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L24)
 
 ---
 
@@ -72,7 +72,7 @@ VeADK 内置了经过验证的默认模型配置：
 | 视频生成 | `doubao-seedance-2-0-260128` | `https://ark.cn-beijing.volces.com/api/v3/` |
 | 实时语音 | `doubao_realtime_voice_model` | `wss://openspeech.bytedance.com/api/v3/realtime/dialogue` |
 
-> 源码位置：[consts.py#L22-L72](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L22-L72)
+> 源码位置：[consts.py#L22-L72](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L72)
 
 ---
 
@@ -82,7 +82,7 @@ VeADK 内置了经过验证的默认模型配置：
 
 `ModelConfig` 类使用 Pydantic Settings，支持从环境变量自动加载配置。
 
-> 源码位置：[configs/model_configs.py#L31-L55](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L31-L55)
+> 源码位置：[configs/model_configs.py#L31-L55](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L31-L55)
 
 ```python
 class ModelConfig(BaseSettings):
@@ -120,7 +120,7 @@ class EmbeddingModelConfig(BaseSettings):
 | `api_base` | - | 方舟 API 地址 | API 基础 URL |
 | `api_key` | `MODEL_EMBEDDING_API_KEY` | 自动回退 | API Key（回退到 Agent 模型 Key → ARK 默认 Key） |
 
-> 源码位置：[configs/model_configs.py#L57-L75](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L57-L75)
+> 源码位置：[configs/model_configs.py#L57-L75](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L57-L75)
 
 ### RealtimeModelConfig - 实时语音模型配置
 
@@ -138,7 +138,7 @@ class RealtimeModelConfig(BaseSettings):
 | `api_base` | - | WSS 地址 | WebSocket 端点 |
 | `api_key` | `MODEL_REALTIME_API_KEY` | Speech Token | API Key（回退到语音服务 Token） |
 
-> 源码位置：[configs/model_configs.py#L93-L104](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/model_configs.py#L93-L104)
+> 源码位置：[configs/model_configs.py#L93-L104](file:///d:/AI/vendor/veadk-python/veadk/configs/model_configs.py#L93-L104)
 
 ---
 
@@ -210,8 +210,8 @@ async def _generate_content_with_fallbacks(
 2. ❌ 已开始输出 token 后失败 → 不切换，直接报错（避免内容混乱）
 3. Fallback 链按顺序遍历，直到成功或全部失败
 
-> 源码位置：[ark_llm.py#L777-L827](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/ark_llm.py#L777-L827)
-> 源码位置：[agent.py#L256-L293](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L256-L293)
+> 源码位置：[ark_llm.py#L777-L827](file:///d:/AI/vendor/veadk-python/veadk/models/ark_llm.py#L777-L827)
+> 源码位置：[agent.py#L256-L293](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L256-L293)
 
 ---
 
@@ -253,7 +253,7 @@ ArkLlm 支持的 Responses API 参数：
 | `context_management` | 上下文管理 |
 | `expire_at` | 缓存过期时间 |
 
-> 源码位置：[ark_llm.py#L85-L115](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/ark_llm.py#L85-L115)
+> 源码位置：[ark_llm.py#L85-L115](file:///d:/AI/vendor/veadk-python/veadk/models/ark_llm.py#L85-L115)
 
 ### 默认额外配置
 
@@ -273,7 +273,7 @@ DEFAULT_MODEL_EXTRA_CONFIG = {
 }
 ```
 
-> 源码位置：[consts.py#L25-L42](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L25-L42)
+> 源码位置：[consts.py#L25-L42](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L25-L42)
 
 ---
 
@@ -357,7 +357,7 @@ ResponseInputFileParam(
 - `https://...`：公网 URL
 - `file_id://xxx`：方舟文件 ID
 
-> 源码位置：[ark_llm.py#L165-L200](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/ark_llm.py#L165-L200)
+> 源码位置：[ark_llm.py#L165-L200](file:///d:/AI/vendor/veadk-python/veadk/models/ark_llm.py#L165-L200)
 
 ---
 

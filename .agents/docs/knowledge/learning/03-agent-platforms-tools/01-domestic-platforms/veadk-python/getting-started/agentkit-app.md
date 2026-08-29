@@ -26,7 +26,7 @@ wiki_version: '1.0'
 
 ## AgentKitApp 是什么
 
-`create_agentkit_app` 是 VeADK 提供的一个应用工厂函数（定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)），用于将一个 VeADK Agent 包装为符合 AgentKit 规范的 FastAPI Web 应用。
+`create_agentkit_app` 是 VeADK 提供的一个应用工厂函数（定义在 [file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)），用于将一个 VeADK Agent 包装为符合 AgentKit 规范的 FastAPI Web 应用。
 
 该函数基于 `agentkit-sdk-python` 的 `AgentkitAgentServerApp` 构建，自动集成以下能力：
 
@@ -72,7 +72,7 @@ wiki_version: '1.0'
 
 ### 最小示例
 
-以下是一个最小可运行的 AgentKit 应用（参考 [file:///d:/AI/.chaos/libs/veadk-python/README.md#L89-L95](file:///d:/AI/.chaos/libs/veadk-python/README.md#L89-L95)）：
+以下是一个最小可运行的 AgentKit 应用（参考 [file:///d:/AI/vendor/veadk-python/README.md#L89-L95](file:///d:/AI/vendor/veadk-python/README.md#L89-L95)）：
 
 ```python
 """
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     run_agentkit_app(app)
 ```
 
-飞书渠道使用环境变量 `FEISHU_APP_ID` 和 `FEISHU_APP_SECRET` 进行认证（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L338-L339](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L338-L339)），在独立后台线程中自动重连。
+飞书渠道使用环境变量 `FEISHU_APP_ID` 和 `FEISHU_APP_SECRET` 进行认证（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L338-L339](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L338-L339)），在独立后台线程中自动重连。
 
 ### 带子 Agent 的多智能体示例
 
@@ -224,7 +224,7 @@ def create_agentkit_app(
 ) -> FastAPI:
 ```
 
-定义位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)
+定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)
 
 **参数说明**：
 
@@ -249,7 +249,7 @@ def run_agentkit_app(
 ) -> None:
 ```
 
-定义位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120)
+定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120)
 
 **参数说明**：
 
@@ -423,23 +423,23 @@ docker run -p 8000:8000 --env-file .env my-veadk-app
 
 ### 1. 短期记忆默认配置
 
-如果 `root_agent` 未设置 `short_term_memory`，`create_agentkit_app` 会自动创建一个内存版 `ShortTermMemory(backend="local")`（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081)）。**内存版记忆在服务重启后会丢失**，生产环境建议配置数据库支持的短期记忆（PostgreSQL/MySQL/Redis）。
+如果 `root_agent` 未设置 `short_term_memory`，`create_agentkit_app` 会自动创建一个内存版 `ShortTermMemory(backend="local")`（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081)）。**内存版记忆在服务重启后会丢失**，生产环境建议配置数据库支持的短期记忆（PostgreSQL/MySQL/Redis）。
 
 ### 2. 飞书渠道线程模型
 
-`enable_feishu=True` 时，飞书连接在独立后台线程中运行，包含自动重连逻辑（每 5 秒重试）（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L289-L334](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L289-L334)）。应用关闭时会自动尝试优雅断开连接。
+`enable_feishu=True` 时，飞书连接在独立后台线程中运行，包含自动重连逻辑（每 5 秒重试）（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L289-L334](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L289-L334)）。应用关闭时会自动尝试优雅断开连接。
 
 ### 3. 路由优先级
 
-`create_agentkit_app` 会调整路由优先级，确保平台核心路由（`/ping`、`/run_sse`、Web UI 等）优先于其他路由（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L508-L539](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L508-L539)）。如果你需要添加自定义路由，建议在 `create_agentkit_app` 返回 app 之后再挂载，避免被平台路由覆盖。
+`create_agentkit_app` 会调整路由优先级，确保平台核心路由（`/ping`、`/run_sse`、Web UI 等）优先于其他路由（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L508-L539](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L508-L539)）。如果你需要添加自定义路由，建议在 `create_agentkit_app` 返回 app 之后再挂载，避免被平台路由覆盖。
 
 ### 4. Runtime Identity 版本要求
 
-使用 `identity` 参数需要 `agentkit-sdk-python >= 0.8.2`，否则会抛出 RuntimeError（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L89-L95](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L89-L95)）。
+使用 `identity` 参数需要 `agentkit-sdk-python >= 0.8.2`，否则会抛出 RuntimeError（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L89-L95](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L89-L95)）。
 
 ### 5. Web UI 条件挂载
 
-Web UI 仅在 `veadk/webui/index.html` 存在时才会挂载（[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L486-L505](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/app.py#L486-L505)）。某些最小化安装可能不包含 Web UI 文件，此时不会影响 API 功能。
+Web UI 仅在 `veadk/webui/index.html` 存在时才会挂载（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L486-L505](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L486-L505)）。某些最小化安装可能不包含 Web UI 文件，此时不会影响 API 功能。
 
 ---
 
@@ -447,7 +447,7 @@ Web UI 仅在 `veadk/webui/index.html` 存在时才会挂载（[file:///d:/AI/.c
 
 - [快速入门](quickstart.md) - Agent + Runner 基础用法
 - [配置指南](configuration.md) - 配置 API Key 和其他参数
-- [examples/basic-app/](file:///d:/AI/.chaos/libs/veadk-python/examples/basic-app/) - 完整可部署示例
+- [examples/basic-app/](file:///d:/AI/vendor/veadk-python/examples/basic-app/) - 完整可部署示例
 - [AgentKit 官方文档](https://github.com/volcengine/veadk-python) - 更多部署和集成文档
 
 ---

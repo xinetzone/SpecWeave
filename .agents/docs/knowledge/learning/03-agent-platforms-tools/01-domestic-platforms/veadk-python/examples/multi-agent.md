@@ -1,7 +1,7 @@
 ---
 id: veadk-python-multi-agent
 title: 06 - 多智能体协作示例
-source: d:\AI\.chaos\libs\veadk-python\examples\06_multi_agent\main.py
+source: d:\AI\vendor\veadk-python\examples\06_multi_agent\main.py
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/multi-agent.toml"
 category: learning
 date: '2026-08-05'
@@ -32,7 +32,7 @@ outliner（大纲师） → writer（写作者） → editor（编辑）
 
 ## 2. 核心代码展示
 
-完整代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/06_multi_agent/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/06_multi_agent/main.py)：
+完整代码位于 [file:///d:/AI/vendor/veadk-python/examples/06_multi_agent/main.py](file:///d:/AI/vendor/veadk-python/examples/06_multi_agent/main.py)：
 
 ```python
 import asyncio

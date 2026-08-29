@@ -20,17 +20,17 @@ VeADK 在 `veadk/integrations/` 目录下提供了以下云服务集成模块：
 
 | 模块 | 路径 | 功能 | 依赖SDK |
 |---|---|---|---|
-| VeFaaS函数计算 | [ve_faas/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas) | 代码打包上传、函数创建/更新、应用发布、容器镜像部署 | `volcenginesdkvefaas` |
-| APIG API网关 | [ve_apig/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_apig) | Serverless网关管理、服务/路由/上游配置 | `volcenginesdkapig` |
-| CR容器镜像仓库 | [ve_cr/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cr) | VPC隧道配置（容器镜像拉取网络打通） | 通过VeFaaS调用 |
-| TOS对象存储 | [ve_tos/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tos) | 媒体文件上传、内联数据托管、技能文件下载 | `tos` Python SDK |
-| TLS日志服务 | [ve_tls/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tls) | 日志导出、Trace数据上报 | `volcenginesdktls` |
-| VeIdentity身份认证 | [ve_identity/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity) | IAM凭证获取、OAuth2认证、MCP工具认证 | 内部HTTP API |
-| AgentKit平台 | [agentkit/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit) | 应用托管、会话能力管理、评估反馈 | HTTP API |
-| CozeLoop提示词平台 | [ve_cozeloop/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cozeloop) | 提示词版本管理、PromptManager后端 | HTTP API |
-| PromptPilot优化 | [ve_prompt_pilot/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_prompt_pilot) | 提示词优化集成 | HTTP API |
-| VikingDB向量数据库 | [ve_viking_db_memory/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_viking_db_memory) | VikingDB长期记忆后端 | `vikinguav` |
-| CodePipeline代码流水线 | [ve_code_pipeline/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_code_pipeline) | 代码流水线集成 | HTTP API |
+| VeFaaS函数计算 | [ve_faas/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas) | 代码打包上传、函数创建/更新、应用发布、容器镜像部署 | `volcenginesdkvefaas` |
+| APIG API网关 | [ve_apig/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_apig) | Serverless网关管理、服务/路由/上游配置 | `volcenginesdkapig` |
+| CR容器镜像仓库 | [ve_cr/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cr) | VPC隧道配置（容器镜像拉取网络打通） | 通过VeFaaS调用 |
+| TOS对象存储 | [ve_tos/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tos) | 媒体文件上传、内联数据托管、技能文件下载 | `tos` Python SDK |
+| TLS日志服务 | [ve_tls/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tls) | 日志导出、Trace数据上报 | `volcenginesdktls` |
+| VeIdentity身份认证 | [ve_identity/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity) | IAM凭证获取、OAuth2认证、MCP工具认证 | 内部HTTP API |
+| AgentKit平台 | [agentkit/](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit) | 应用托管、会话能力管理、评估反馈 | HTTP API |
+| CozeLoop提示词平台 | [ve_cozeloop/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cozeloop) | 提示词版本管理、PromptManager后端 | HTTP API |
+| PromptPilot优化 | [ve_prompt_pilot/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_prompt_pilot) | 提示词优化集成 | HTTP API |
+| VikingDB向量数据库 | [ve_viking_db_memory/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_viking_db_memory) | VikingDB长期记忆后端 | `vikinguav` |
+| CodePipeline代码流水线 | [ve_code_pipeline/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_code_pipeline) | 代码流水线集成 | HTTP API |
 
 参考：[云部署集成模块清单](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/12-extension-points.md#L170-L184)
 
@@ -42,7 +42,7 @@ VeADK 在 `veadk/integrations/` 目录下提供了以下云服务集成模块：
 
 ### 2.1 统一凭证初始化模式
 
-**参考实现**：[VeFaaS.__init__()](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L89)
+**参考实现**：[VeFaaS.__init__()](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L89)
 
 所有集成类的构造函数接收相同的凭证四元组：
 
@@ -87,7 +87,7 @@ class VeFaaS:
 
 ### 2.2 签名请求工具：ve_request()
 
-对于SDK未覆盖的OpenAPI接口，统一使用 [ve_request()](file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/volcengine_sign.py#L341-L393) 函数发送SigV4签名请求：
+对于SDK未覆盖的OpenAPI接口，统一使用 [ve_request()](file:///d:/AI/vendor/veadk-python/veadk/utils/volcengine_sign.py#L341-L393) 函数发送SigV4签名请求：
 
 ```python
 from veadk.utils.volcengine_sign import ve_request
@@ -132,7 +132,7 @@ def get_credentials():
     return ak, sk, session_token
 ```
 
-内置工具中的凭证链（参考[web_search.py:40-65](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)）更加完善：
+内置工具中的凭证链（参考[web_search.py:40-65](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)）更加完善：
 
 ```
 1. 工具专属环境变量（TOOL_WEB_SEARCH_ACCESS_KEY）
@@ -382,7 +382,7 @@ def my_cloud_sign_request(
     return response.json()
 ```
 
-参考火山引擎签名实现：[volcengine_sign.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/volcengine_sign.py#L100-L222)
+参考火山引擎签名实现：[volcengine_sign.py](file:///d:/AI/vendor/veadk-python/veadk/utils/volcengine_sign.py#L100-L222)
 
 ### 步骤4：凭证管理模式
 
@@ -464,13 +464,13 @@ def my_cloud_operation(
 
 | 模式 | 实现方式 | 参考 |
 |---|---|---|
-| 构造函数签名 | `(ak, sk, session_token="", region="cn-beijing")` | [ve_faas.py:52-65](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L65) |
-| SDK初始化 | `volcenginesdkcore.Configuration()` → `set_default()` → `ApiClient()` → 具体API实例 | [ve_faas.py:67-78](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L67-L78) |
-| 非SDK API调用 | 使用 `ve_request()` 发送签名请求 | [ve_faas.py:186-210](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L186-L210) |
-| 凭证获取 | 环境变量 → `get_credential_from_vefaas_iam()` | [web_search.py:52-63](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L52-L63) |
+| 构造函数签名 | `(ak, sk, session_token="", region="cn-beijing")` | [ve_faas.py:52-65](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L65) |
+| SDK初始化 | `volcenginesdkcore.Configuration()` → `set_default()` → `ApiClient()` → 具体API实例 | [ve_faas.py:67-78](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L67-L78) |
+| 非SDK API调用 | 使用 `ve_request()` 发送签名请求 | [ve_faas.py:186-210](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L186-L210) |
+| 凭证获取 | 环境变量 → `get_credential_from_vefaas_iam()` | [web_search.py:52-63](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L52-L63) |
 | BytePlus兼容 | `CLOUD_PROVIDER` 环境变量切换域名，自动映射AK/SK环境变量 | [config.py:54-61](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L215) |
 | 日志脱敏 | 正则替换 key/secret/token/password 字段 | 架构洞察9建议 |
-| 模块间依赖 | VeFaaS自动创建VeAPIG实例，一站式部署 | [ve_faas.py:80-85](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L80-L85) |
+| 模块间依赖 | VeFaaS自动创建VeAPIG实例，一站式部署 | [ve_faas.py:80-85](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L80-L85) |
 
 ### 最佳实践
 
@@ -489,7 +489,7 @@ def my_cloud_operation(
 
 VeADK 提供 `CloudAgentEngine` 类用于通过Python SDK部署Agent到VeFaaS，这是云集成的高级应用。
 
-参考：[vefaas.mdx文档](file:///d:/AI/.chaos/libs/veadk-python/docs/content/docs/framework/vefaas.mdx#L183-L315)
+参考：[vefaas.mdx文档](file:///d:/AI/vendor/veadk-python/docs/content/docs/framework/vefaas.mdx#L183-L315)
 
 ```python
 from veadk.cloud.cloud_agent_engine import CloudAgentEngine

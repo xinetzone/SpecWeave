@@ -57,7 +57,7 @@ RunProcessor 采用**装饰器模式**包装 Agent 的事件生成器（event ge
 
 ## 二、BaseRunProcessor 接口定义
 
-**文件**：[veadk/processors/base_run_processor.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py#L27-L120)
+**文件**：[veadk/processors/base_run_processor.py](file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py#L27-L120)
 
 ```python
 from abc import ABC, abstractmethod
@@ -96,7 +96,7 @@ class BaseRunProcessor(ABC):
 
 ### 默认实现：NoOpRunProcessor
 
-[NoOpRunProcessor](file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py#L91-L120) 是空实现，直接返回原始事件生成器，无任何开销：
+[NoOpRunProcessor](file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py#L91-L120) 是空实现，直接返回原始事件生成器，无任何开销：
 
 ```python
 class NoOpRunProcessor(BaseRunProcessor):
@@ -136,7 +136,7 @@ RunProcessor 选择遵循优先级链（参考架构洞察8）：
 
 ### AuthRequestProcessor（OAuth2认证处理器）
 
-**文件**：[veadk/integrations/ve_identity/auth_processor.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L159-L385)
+**文件**：[veadk/integrations/ve_identity/auth_processor.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L159-L385)
 
 这是最复杂的内置RunProcessor实现，展示了如何实现"对话中断→等待用户认证→恢复执行"的完整流程：
 
@@ -721,7 +721,7 @@ finally:
     runner.run_async = original_run_async  # 一定要恢复！
 ```
 
-参考：[AuthRequestProcessor:359-368](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L359-L368)
+参考：[AuthRequestProcessor:359-368](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L359-L368)
 
 ### 4. 事件注入格式
 
@@ -744,7 +744,7 @@ auth_content = types.Content(
 )
 ```
 
-参考：[AuthRequestProcessor:255-266](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L255-L266)
+参考：[AuthRequestProcessor:255-266](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L255-L266)
 
 ### 5. kwargs透传
 

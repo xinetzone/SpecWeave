@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 当前版本**提供** `AgentBuilder` 类，位于 `veadk.agent_builder` 模块。`AgentBuilder` 是一个基于 YAML 配置文件构建 Agent 的工厂类，支持通过声明式配置创建复杂的 Agent 层次结构（包括子 Agent 和工具）。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L38-L93](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L38-L93)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L38-L93](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L38-L93)
 
 ---
 
@@ -40,7 +40,7 @@ class AgentBuilder:
 | `"LoopAgent"` | `veadk.agents.LoopAgent` | 循环执行 Agent |
 | `"RemoteVeAgent"` | `veadk.a2a.RemoteVeAgent` | 远程 A2A Agent |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L29-L35](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L29-L35)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L29-L35](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L29-L35)
 
 ---
 
@@ -54,7 +54,7 @@ def __init__(self) -> None
 
 无参数构造函数，创建一个 AgentBuilder 实例。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L39-L40](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L39-L40)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L39-L40](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L39-L40)
 
 ---
 
@@ -88,7 +88,7 @@ def build(
 3. 调用 `_build(agent_config)` 递归构建 Agent（包括子 Agent）
 4. 返回构建好的根 Agent
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L83-L93](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L83-L93)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L83-L93](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L83-L93)
 
 ---
 
@@ -111,7 +111,7 @@ def _build(self, agent_config: dict) -> BaseAgent
    - 使用 `getattr` 获取函数对象
 3. **Agent 实例化**：根据 `type` 字段从 `AGENT_TYPES` 获取对应的类，传入配置参数、子 Agent 和工具进行实例化
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L42-L68](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L42-L68)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L42-L68](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L42-L68)
 
 ---
 
@@ -135,7 +135,7 @@ def _read_config(self, path: str) -> dict
 - 使用 `OmegaConf.load()` 加载 YAML 文件
 - 使用 `OmegaConf.to_container(resolve=True)` 解析并转换为普通 Python 字典
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L70-L81](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent_builder.py#L70-L81)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L70-L81](file:///d:/AI/vendor/veadk-python/veadk/agent_builder.py#L70-L81)
 
 ---
 

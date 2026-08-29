@@ -27,7 +27,7 @@ wiki_version: '1.0'
 - **提供few-shot示例**：通过示例展示期望的交互模式
 - **说明边界条件**：明确Agent不能做什么、遇到无法处理的情况如何回应
 
-**参考**：[examples/02_custom_tools/main.py:66-70](file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/main.py#L66-L70)
+**参考**：[examples/02_custom_tools/main.py:66-70](file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/main.py#L66-L70)
 
 ```python
 instruction=(
@@ -205,7 +205,7 @@ def my_tool(param: str, tool_context: ToolContext | None = None) -> dict:
 3. 全局环境变量
 4. IAM角色（云端部署）
 
-参考：[web_search.py:40-65](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)
+参考：[web_search.py:40-65](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)
 
 ### 4.5 ToolContext使用
 
@@ -262,7 +262,7 @@ API Key解析遵循严格优先级（参考[架构洞察7](file:///d:/AI/.agents
 - `config.yaml` 包含敏感信息，**不要提交到Git**
 - 使用 `.env` 文件管理本地配置，确保在 `.gitignore` 中
 - 生产环境通过环境变量注入，不依赖配置文件
-- 参考vefaas.mdx的警告：[config.yaml安全提示](file:///d:/AI/.chaos/libs/veadk-python/docs/content/docs/framework/vefaas.mdx#L129-L131)
+- 参考vefaas.mdx的警告：[config.yaml安全提示](file:///d:/AI/vendor/veadk-python/docs/content/docs/framework/vefaas.mdx#L129-L131)
 
 ### 6.4 BytePlus跨云配置
 

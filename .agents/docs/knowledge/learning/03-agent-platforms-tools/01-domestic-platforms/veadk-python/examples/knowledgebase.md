@@ -1,7 +1,7 @@
 ---
 id: veadk-python-knowledgebase
 title: 05 - 知识库RAG示例
-source: d:\AI\.chaos\libs\veadk-python\examples\05_knowledgebase_rag\main.py
+source: d:\AI\vendor\veadk-python\examples\05_knowledgebase_rag\main.py
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/knowledgebase.toml"
 category: learning
 date: '2026-08-05'
@@ -26,7 +26,7 @@ stage: E
 
 ## 2. 核心代码展示
 
-完整代码位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/main.py)：
+完整代码位于 [file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/main.py](file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/main.py)：
 
 ```python
 import asyncio
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-示例文档位于 [file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/docs/company_faq.md](file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/docs/company_faq.md)，包含公司年假、远程办公等政策信息。
+示例文档位于 [file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/docs/company_faq.md](file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/docs/company_faq.md)，包含公司年假、远程办公等政策信息。
 
 ---
 

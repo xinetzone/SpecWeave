@@ -71,7 +71,7 @@ agent = Agent(model_api_key="your_valid_api_key", ...)
    ```
 3. 如果是BytePlus用户，确认已设置`CLOUD_PROVIDER=byteplus`
 
-参考：[web_search.py凭证链](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)
+参考：[web_search.py凭证链](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L40-L65)
 
 ---
 
@@ -418,7 +418,7 @@ async def wrapper():
   ```
 - 减少不必要的依赖
 
-参考：[vefaas.mdx:223-228](file:///d:/AI/.chaos/libs/veadk-python/docs/content/docs/framework/vefaas.mdx#L223-L228)
+参考：[vefaas.mdx:223-228](file:///d:/AI/vendor/veadk-python/docs/content/docs/framework/vefaas.mdx#L223-L228)
 
 ### 问题 7.2：部署后访问返回502 Bad Gateway
 
@@ -455,7 +455,7 @@ async def wrapper():
 - 生产环境通过环境变量注入凭证
 - 本地开发使用`.env`文件（也加入忽略列表）
 
-参考：[vefaas.mdx:129-131](file:///d:/AI/.chaos/libs/veadk-python/docs/content/docs/framework/vefaas.mdx#L129-L131)
+参考：[vefaas.mdx:129-131](file:///d:/AI/vendor/veadk-python/docs/content/docs/framework/vefaas.mdx#L129-L131)
 
 ### 问题 7.4：APIG网关名称已存在
 
@@ -481,7 +481,7 @@ async def wrapper():
 3. 检查是否启用了所需权限（im:message、im:chat等）
 4. 检查飞书机器人已加入对应群组
 
-**参考**：[feishu_channel.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py)
+**参考**：[feishu_channel.py](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py)
 
 ### 问题 8.2：Extension注册后不生效
 

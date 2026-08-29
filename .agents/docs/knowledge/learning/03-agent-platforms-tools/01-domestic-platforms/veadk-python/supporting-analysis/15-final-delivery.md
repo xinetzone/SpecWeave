@@ -22,7 +22,7 @@ wiki_version: "1.0"
 | **发布日期** | 2026-08-05 |
 | **阶段** | V阶段（最终格式规范验证与收尾） |
 | **状态** | stable（稳定版） |
-| **代码基准** | d:\AI\.chaos\libs\veadk-python |
+| **代码基准** | d:\AI\vendor\veadk-python |
 
 ---
 
@@ -252,7 +252,7 @@ veadk-python/
 
 ### 4. 代码引用格式验证 ✅
 - 检查全部650处file:///源码引用
-- 格式统一为：file:///d:/AI/.chaos/libs/veadk-python/...
+- 格式统一为：file:///d:/AI/vendor/veadk-python/...
 - 无需修复的格式问题
 
 ### 5. 术语一致性检查 ✅

@@ -20,7 +20,7 @@ class Agent(LlmAgent):
 
 `Agent` 类是 VeADK 框架的核心类，基于 Google ADK 的 `LlmAgent` 扩展，集成了火山引擎 AI 能力，支持记忆模块、子 Agent、追踪器、知识库等高级功能，适用于 A2A（Agent-to-Agent）或面向用户的场景。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L751)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L751)
 
 ---
 
@@ -35,7 +35,7 @@ class Agent(LlmAgent):
 | `description` | `str` | `DEFAULT_DESCRIPTION` | Agent 描述，在 A2A 场景中有用 |
 | `instruction` | `Union[str, InstructionProvider]` | `DEFAULT_INSTRUCTION` | Agent 指令或指令提供者 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L107-L110](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L107-L110)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L107-L110](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L107-L110)
 
 ### 模型配置
 
@@ -48,7 +48,7 @@ class Agent(LlmAgent):
 | `model_api_key_name` | `str` | `Field(default_factory=lambda: settings.model.api_key_name)` | ARK API 密钥名称（默认从环境变量 `MODEL_AGENT_API_KEY_NAME` 获取）。当设置了 `model_api_key` 或 `MODEL_AGENT_API_KEY` 环境变量时，此参数被忽略 |
 | `model_extra_config` | `dict` | `Field(default_factory=dict)` | 模型请求的额外配置，包含 `extra_headers` 和 `extra_body` |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L112-L124](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L112-L124)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L112-L124](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L112-L124)
 
 ### 工具与子 Agent
 
@@ -59,7 +59,7 @@ class Agent(LlmAgent):
 | `skills` | `list[str]` | `Field(default_factory=list)` | 为 Agent 配备特定能力的技能列表 |
 | `skills_mode` | `Optional[Literal["skills_sandbox", "aio_sandbox", "local"]]` | `None` | 技能运行模式 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L126-L128](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L126-L128), [file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L168-L170](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L168-L170)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L126-L128](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L126-L128), [file:///d:/AI/vendor/veadk-python/veadk/agent.py#L168-L170](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L168-L170)
 
 ### Prompt 管理
 
@@ -68,7 +68,7 @@ class Agent(LlmAgent):
 | `prompt_manager` | `Optional[BasePromptManager]` | `None` | Prompt 管理器，用于动态生成指令 |
 | `example_store` | `Optional[BaseExampleProvider]` | `None` | 示例存储，用于提供问答示例 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L130](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L130), [file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L172](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L172)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L130](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L130), [file:///d:/AI/vendor/veadk-python/veadk/agent.py#L172](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L172)
 
 ### 记忆模块
 
@@ -79,7 +79,7 @@ class Agent(LlmAgent):
 | `long_term_memory` | `Optional[LongTermMemory]` | `None` | 跨会话长期记忆，用于持久化用户上下文 |
 | `auto_save_session` | `bool` | `False` | 是否自动将会话保存到长期记忆 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L132-L135](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L132-L135), [file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L166](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L166)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L132-L135](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L132-L135), [file:///d:/AI/vendor/veadk-python/veadk/agent.py#L166](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L166)
 
 ### 追踪与可观测性
 
@@ -87,7 +87,7 @@ class Agent(LlmAgent):
 |--------|------|--------|------|
 | `tracers` | `list[BaseTracer]` | `[]` | 用于遥测和监控的追踪器列表 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L137](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L137)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L137](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L137)
 
 ### 模型响应配置
 
@@ -97,7 +97,7 @@ class Agent(LlmAgent):
 | `enable_responses_cache` | `bool` | `True` | Ark Responses API 是否应复用 `previous_response_id` 和缓存以支持多轮延续 |
 | `context_cache_config` | `Optional[ContextCacheConfig]` | `None` | 上下文缓存配置 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L139-L142](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L139-L142)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L139-L142](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L139-L142)
 
 ### 运行时处理器
 
@@ -105,7 +105,7 @@ class Agent(LlmAgent):
 |--------|------|--------|------|
 | `run_processor` | `Optional[BaseRunProcessor]` | `None` | 可选的运行处理器，用于拦截和处理 Agent 执行流程。可用于实现横切关注点，如认证流程（OAuth2 via VeIdentity）、请求/响应日志、错误处理和重试逻辑、性能监控。若未提供，默认使用 `NoOpRunProcessor` |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L144-L162](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L144-L162)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L144-L162](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L144-L162)
 
 ### 授权与安全
 
@@ -113,7 +113,7 @@ class Agent(LlmAgent):
 |--------|------|--------|------|
 | `enable_authz` | `bool` | `False` | 是否启用 Agent 授权检查 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L164](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L164)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L164](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L164)
 
 ### 功能开关
 
@@ -125,7 +125,7 @@ class Agent(LlmAgent):
 | `enable_dynamic_load_skills` | `bool` | `False` | 是否启用技能动态加载 |
 | `enable_skills_checklist` | `bool` | `False` | 是否启用技能检查清单 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L174-L181](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L174-L181)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L174-L181](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L174-L181)
 
 ### 运行时后端
 
@@ -134,7 +134,7 @@ class Agent(LlmAgent):
 | `runtime` | `Literal["adk", "codex", "piagent"]` | `"adk"` | Agent 运行时后端。`"adk"`（默认）使用 Google ADK 内置 LLM 流程；`"codex"` 将内部 Agent 循环委托给 OpenAI Codex SDK；`"piagent"` 通过 RPC 模式将内部 Agent 循环委托给本地 Pi 编码 Agent 二进制文件。非 `"adk"` 运行时在 `veadk.runtime` 模块下实现 |
 | `codex_runtime_config` | `Optional[Any]` | `None` | 可选的 Codex 运行时配置（`veadk.runtime.codex.config.CodexRuntimeConfig` 或匹配的 dict）。Codex 默认采用故障关闭和调用隔离策略 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L184-L193](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L184-L193)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L184-L193](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L184-L193)
 
 ### A2UI 与 Tunnel
 
@@ -144,7 +144,7 @@ class Agent(LlmAgent):
 | `a2ui_catalog` | `Optional[Any]` | `None` | 可选的 A2UI 目录。接受目录 JSON 路径（字符串；相对路径相对于 Agent 目录解析，绝对路径按原样使用）、`veadk.a2ui.BaseA2UICatalog`、`A2uiCatalog` 或预构建的 `(A2uiCatalog, examples)` 元组。为 None 时，自动在 Agent 旁边发现 `catalog.json`，回退到捆绑的基本目录。仅在 `enable_a2ui=True` 时使用 |
 | `enable_tunnel` | `bool` | `False` | 启用 Tunnel。为 True 时，追加 `TunnelToolset`，使通过 `veadk.tunnel` 连接的本地资源服务器（如 MCP 服务器）显示为该 Agent 的工具。云应用还必须通过 `veadk.tunnel.mount_tunnel`/`mount_tunnel_if_enabled` 挂载 tunnel 路由 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L195-L212](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L195-L212)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L195-L212](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L195-L212)
 
 ---
 
@@ -188,7 +188,7 @@ agent = Agent(
 )
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L335-L350](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L335-L350)（授权检查回调注册示例）
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L335-L350](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L335-L350)（授权检查回调注册示例）
 
 ---
 
@@ -232,7 +232,7 @@ Pydantic 模型初始化后自动调用的方法，执行完整的初始化流�
 16. **Tunnel 工具注册**：若 `enable_tunnel=True`，添加 TunnelToolset
 17. **数据集生成回调注册**：若 `enable_dataset_gen=True`，注册数据集生成回调
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L214-L445](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L214-L445)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L214-L445](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L214-L445)
 
 ---
 
@@ -249,7 +249,7 @@ def update_model(self, model_name: str) -> None
 
 **说明**：此方法会复制现有模型配置并更新 model 字段，保持其他配置（api_key, api_base 等）不变。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L447-L451](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L447-L451)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L447-L451](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L447-L451)
 
 ---
 
@@ -275,7 +275,7 @@ def load_skills(self) -> None
 - `"skills_sandbox"`：技能沙箱模式
 - `"aio_sandbox"`：All-in-one 沙箱模式
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L453-L612](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L453-L612)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L453-L612](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L453-L612)
 
 ---
 
@@ -289,7 +289,7 @@ async def run(self, **kwargs)
 
 在 google-adk 2.x 中，`BaseAgent.run` 是 `@final` 异步生成器，工作流引擎内部调用；覆盖它会破坏 NodeRunner 执行。因此仅在 google-adk 1.x 版本中提供此方法，但会直接抛出 `NotImplementedError`。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L743-L751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L743-L751)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L743-L751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L743-L751)
 
 ---
 
@@ -343,7 +343,7 @@ agent = Agent(
 )
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py#L27-L120](file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py#L27-L120)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py#L27-L120](file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py#L27-L120)
 
 ---
 
@@ -377,7 +377,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-> 示例来源：[file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/main.py)
+> 示例来源：[file:///d:/AI/vendor/veadk-python/examples/01_quickstart/main.py](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/main.py)
 
 ### 带自定义工具的示例
 
@@ -429,4 +429,4 @@ agent = Agent(
 - 若 model-a 调用失败，自动尝试 model-b
 - 若 model-b 也失败，尝试 model-c
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L257-L266](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L257-L266)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L257-L266](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L257-L266)

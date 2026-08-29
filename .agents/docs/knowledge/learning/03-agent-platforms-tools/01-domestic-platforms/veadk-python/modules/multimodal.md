@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了丰富的多模态能力支持，包括图片输入输出、视频生成、文本转语音（TTS）、PPT 生成等功能。这些能力通过内置工具（Built-in Tools）的形式提供，Agent 可以像调用普通工具一样调用多模态生成能力。同时，ArkLLM 原生支持图片、视频、文件等多模态输入。
 
-> 相关源码位置：[veadk/tools/builtin_tools/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/)
+> 相关源码位置：[veadk/tools/builtin_tools/](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/)
 
 ---
 
@@ -39,7 +39,7 @@ VeADK 提供了丰富的多模态能力支持，包括图片输入输出、视�
 
 ArkLLM 通过火山引擎方舟 Responses API 原生支持多模态输入，包括图片、视频、文件。
 
-> 源码位置：[models/ark_llm.py#L165-L200](file:///d:/AI/.chaos/libs/veadk-python/veadk/models/ark_llm.py#L165-L200)
+> 源码位置：[models/ark_llm.py#L165-L200](file:///d:/AI/vendor/veadk-python/veadk/models/ark_llm.py#L165-L200)
 
 **支持的输入类型：**
 
@@ -74,7 +74,7 @@ ResponseInputVideoParam(
 
 `image_generate` 工具封装了火山引擎方舟的文生图 API，支持文本生成图片。
 
-> 源码位置：[tools/builtin_tools/image_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_generate.py)
+> 源码位置：[tools/builtin_tools/image_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_generate.py)
 
 **默认配置：**
 - 默认模型：`doubao-seedream-5-0-260128`
@@ -132,8 +132,8 @@ headers = {
 
 VeADK 还提供了 `image_edit` 工具用于图片编辑（图生图），默认模型为 `doubao-seededit-3-0-i2i-250628`。
 
-> 源码位置：[tools/builtin_tools/image_edit.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_edit.py)
-> 默认配置：[consts.py#L65-L66](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py#L65-L66)
+> 源码位置：[tools/builtin_tools/image_edit.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_edit.py)
+> 默认配置：[consts.py#L65-L66](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L65-L66)
 
 ---
 
@@ -143,7 +143,7 @@ VeADK 还提供了 `image_edit` 工具用于图片编辑（图生图），默认
 
 `video_generate` 工具封装了火山引擎方舟的视频生成 API，支持文生视频和图生视频等多种模式。视频生成是异步任务，需要轮询查询结果。
 
-> 源码位置：[tools/builtin_tools/video_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py)
+> 源码位置：[tools/builtin_tools/video_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py)
 
 **默认配置：**
 - 默认模型：`doubao-seedance-2-0-260128`
@@ -171,7 +171,7 @@ class VideoGenerationConfig:
     tools: Optional[List[Dict]] = None          # 工具（如联网搜索，仅文生视频支持）
 ```
 
-> 源码位置：[video_generate.py#L53-L68](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py#L53-L68)
+> 源码位置：[video_generate.py#L53-L68](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py#L53-L68)
 
 **支持的生成模式：**
 
@@ -212,7 +212,7 @@ def _should_disable_audio(model_name: str, generate_audio: Optional[bool]) -> Op
 
 `video_task_query` 工具用于查询异步视频生成任务的状态。
 
-> 源码位置：[video_generate.py#L224-L...](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py#L224)
+> 源码位置：[video_generate.py#L224-L...](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py#L224)
 
 **使用场景：**
 1. `video_generate` 调用超时（任务仍在运行）
@@ -233,7 +233,7 @@ class VideoTaskResult:
     execution_expires_after: Optional[int] = None  # 执行过期时间
 ```
 
-> 源码位置：[video_generate.py#L42-L50](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py#L42-L50)
+> 源码位置：[video_generate.py#L42-L50](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py#L42-L50)
 
 **Content 构建逻辑：**
 ```python
@@ -252,7 +252,7 @@ def _build_content(prompt: str, config: VideoGenerationConfig) -> list:
     return content
 ```
 
-> 源码位置：[video_generate.py#L71-L119](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py#L71-L119)
+> 源码位置：[video_generate.py#L71-L119](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py#L71-L119)
 
 ---
 
@@ -262,7 +262,7 @@ def _build_content(prompt: str, config: VideoGenerationConfig) -> list:
 
 `text_to_speech` 工具封装了火山引擎语音服务（VeSpeech），支持将文本转换为自然语音，输出 PCM 格式音频。
 
-> 源码位置：[tools/builtin_tools/tts.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/tts.py)
+> 源码位置：[tools/builtin_tools/tts.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/tts.py)
 
 **API 端点：**
 ```
@@ -317,8 +317,8 @@ payload = {
 
 VeADK 还提供了实时语音对话能力（Realtime Voice），支持全双工语音交互，基于 WebSocket 协议。
 
-> 源码位置：[veadk/realtime/](file:///d:/AI/.chaos/libs/veadk-python/veadk/realtime/)
-> 默认配置：[consts.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py)（RealtimeModelConfig）
+> 源码位置：[veadk/realtime/](file:///d:/AI/vendor/veadk-python/veadk/realtime/)
+> 默认配置：[consts.py](file:///d:/AI/vendor/veadk-python/veadk/consts.py)（RealtimeModelConfig）
 
 **相关模块：**
 - `realtime/live.py` - 实时对话核心
@@ -336,8 +336,8 @@ VeADK 还提供了实时语音对话能力（Realtime Voice），支持全双工
 `ppt_generate` 工具可以根据 Markdown 格式的大纲生成 PowerPoint（.pptx）文件，并生成 WebP 预览图。该工具通过 Node.js 子进程调用 `ppt_generate.mjs` 脚本完成 PPT 文件的生成。
 
 > 源码位置：
-> - Python 工具：[tools/builtin_tools/ppt_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/ppt_generate.py)
-> - Node.js 生成脚本：[tools/builtin_tools/ppt_generate.mjs](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/ppt_generate.mjs)
+> - Python 工具：[tools/builtin_tools/ppt_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/ppt_generate.py)
+> - Node.js 生成脚本：[tools/builtin_tools/ppt_generate.mjs](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/ppt_generate.mjs)
 
 ### 依赖要求
 
@@ -425,7 +425,7 @@ def _safe_filename(filename: str, title: str) -> str:
 
 `vod` 工具提供火山引擎视频点播（VOD）服务集成，支持视频上传、管理等操作。
 
-> 源码位置：[tools/builtin_tools/vod.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/vod.py)
+> 源码位置：[tools/builtin_tools/vod.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/vod.py)
 
 ---
 
@@ -447,7 +447,7 @@ def add_span_attributes(span: Span, tool_context: ToolContext, ...):
     # Token 使用量等属性
 ```
 
-> 源码位置：[image_generate.py#L121-L150](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_generate.py#L121-L150)
+> 源码位置：[image_generate.py#L121-L150](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_generate.py#L121-L150)
 
 ---
 

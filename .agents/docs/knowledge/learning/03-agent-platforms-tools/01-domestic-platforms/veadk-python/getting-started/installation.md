@@ -32,7 +32,7 @@ VeADK-Python 要求 **Python 3.10 或更高版本**。
 - 最低支持版本：Python 3.10
 - 推荐版本：Python 3.12（uv 安装示例使用 Python 3.12）
 
-版本约束定义在 [file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L10-L10](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L10-L10)：
+版本约束定义在 [file:///d:/AI/vendor/veadk-python/pyproject.toml#L10-L10](file:///d:/AI/vendor/veadk-python/pyproject.toml#L10-L10)：
 
 ```toml
 requires-python = ">=3.10"
@@ -70,7 +70,7 @@ VeADK-Python 支持以下操作系统：
 pip install veadk-python
 ```
 
-包名定义在 [file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L6-L6](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L6-L6)。
+包名定义在 [file:///d:/AI/vendor/veadk-python/pyproject.toml#L6-L6](file:///d:/AI/vendor/veadk-python/pyproject.toml#L6-L6)。
 
 #### 安装扩展功能
 
@@ -80,7 +80,7 @@ pip install veadk-python
 pip install "veadk-python[extensions]"
 ```
 
-`extensions` 额外依赖包含（[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L65-L78](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L65-L78)）：
+`extensions` 额外依赖包含（[file:///d:/AI/vendor/veadk-python/pyproject.toml#L65-L78](file:///d:/AI/vendor/veadk-python/pyproject.toml#L65-L78)）：
 - Redis 数据库支持
 - Cozeloop Prompt 管理器
 - LlamaIndex（知识库和长期记忆）
@@ -111,13 +111,13 @@ pip install "veadk-python[dev]"
 pip install "veadk-python[harness]"
 ```
 
-可选依赖完整列表参见 [file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L104](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L104)。
+可选依赖完整列表参见 [file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L104](file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L104)。
 
 ---
 
 ### 方式二：使用 uv 安装
 
-VeADK 项目推荐使用 `uv` 作为 Python 包管理器（[file:///d:/AI/.chaos/libs/veadk-python/README.md#L29-L29](file:///d:/AI/.chaos/libs/veadk-python/README.md#L29-L29)）。uv 是一个极速的 Python 包管理器和虚拟环境工具。
+VeADK 项目推荐使用 `uv` 作为 Python 包管理器（[file:///d:/AI/vendor/veadk-python/README.md#L29-L29](file:///d:/AI/vendor/veadk-python/README.md#L29-L29)）。uv 是一个极速的 Python 包管理器和虚拟环境工具。
 
 #### 安装 uv
 
@@ -164,7 +164,7 @@ uv pip install "veadk-python[extensions]"
 
 如需使用最新开发版本或参与贡献，可以从源码构建安装。
 
-完整源码构建流程参见 [file:///d:/AI/.chaos/libs/veadk-python/README.md#L27-L52](file:///d:/AI/.chaos/libs/veadk-python/README.md#L27-L52)。
+完整源码构建流程参见 [file:///d:/AI/vendor/veadk-python/README.md#L27-L52](file:///d:/AI/vendor/veadk-python/README.md#L27-L52)。
 
 ```bash
 # 克隆仓库
@@ -192,7 +192,7 @@ uv sync
 uv pip install -e .
 ```
 
-源码构建使用 setuptools 和 setuptools-scm（[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L1-L3](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L1-L3)），版本号从 git tag 自动推导。
+源码构建使用 setuptools 和 setuptools-scm（[file:///d:/AI/vendor/veadk-python/pyproject.toml#L1-L3](file:///d:/AI/vendor/veadk-python/pyproject.toml#L1-L3)），版本号从 git tag 自动推导。
 
 ---
 
@@ -215,11 +215,11 @@ from veadk import Agent, Runner
 print("Agent 和 Runner 导入成功")
 ```
 
-VeADK 采用懒加载机制，`Agent` 和 `Runner` 在首次访问时从对应模块导入（[file:///d:/AI/.chaos/libs/veadk-python/veadk/__init__.py#L24-L34](file:///d:/AI/.chaos/libs/veadk-python/veadk/__init__.py#L24-L34)）。
+VeADK 采用懒加载机制，`Agent` 和 `Runner` 在首次访问时从对应模块导入（[file:///d:/AI/vendor/veadk-python/veadk/__init__.py#L24-L34](file:///d:/AI/vendor/veadk-python/veadk/__init__.py#L24-L34)）。
 
 ### 方式二：命令行工具验证
 
-VeADK 安装后提供 `veadk` 命令行工具（[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L57-L58](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L57-L58)）：
+VeADK 安装后提供 `veadk` 命令行工具（[file:///d:/AI/vendor/veadk-python/pyproject.toml#L57-L58](file:///d:/AI/vendor/veadk-python/pyproject.toml#L57-L58)）：
 
 ```bash
 veadk --help
@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
 ## 核心依赖说明
 
-VeADK 核心依赖包含 34 个直接依赖项（[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L18-L55](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L18-L55)），主要依赖包括：
+VeADK 核心依赖包含 34 个直接依赖项（[file:///d:/AI/vendor/veadk-python/pyproject.toml#L18-L55](file:///d:/AI/vendor/veadk-python/pyproject.toml#L18-L55)），主要依赖包括：
 
 | 依赖包 | 版本约束 | 用途 |
 |--------|----------|------|
@@ -392,7 +392,7 @@ pip show veadk-python
 
 1. [配置指南](configuration.md) - 配置 API Key 和其他必要参数
 2. [快速入门](quickstart.md) - 5 分钟创建你的第一个 Agent
-3. [examples/01_quickstart/](file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/) 目录查看官方示例代码
+3. [examples/01_quickstart/](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/) 目录查看官方示例代码
 
 ---
 

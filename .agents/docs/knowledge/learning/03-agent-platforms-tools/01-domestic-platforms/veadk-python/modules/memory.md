@@ -43,7 +43,7 @@ class ShortTermMemory(BaseModel):
 ```
 
 - 基类：`pydantic.BaseModel`
-- 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L57-L290](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L57-L290)
+- 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L57-L290](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L57-L290)
 
 ### 构造参数
 
@@ -56,7 +56,7 @@ class ShortTermMemory(BaseModel):
 | `local_database_path` | `str` | `"/tmp/veadk_local_database.db"` | SQLite 本地数据库文件路径，仅 sqlite 后端使用 |
 | `after_load_memory_callback` | `Callable \| None` | `None` | 加载记忆后的回调函数，接收 `Session` 作为参数 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L79-L91](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L79-L91)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L79-L91](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L79-L91)
 
 ### 支持的后端
 
@@ -67,7 +67,7 @@ class ShortTermMemory(BaseModel):
 | `mysql` | `MysqlSTMBackend` | pymysql, aiomysql（内置依赖） | MySQL 数据库 |
 | `postgresql` | `PostgreSqlSTMBackend` | psycopg2-binary, asyncpg（内置依赖） | PostgreSQL 数据库 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L111-L125](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L111-L125)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L111-L125](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L111-L125)
 
 **使用 db_url 的方式**：
 ```python
@@ -78,7 +78,7 @@ ShortTermMemory(
 ```
 设置 `db_url` 后，将使用 `DatabaseSessionService` 自动识别数据库类型，忽略 `backend` 参数。若 URL 中密码包含特殊字符（如 `@`、`:`），需使用 `urllib.parse.quote_plus` 进行编码。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L94-L104](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L94-L104)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L94-L104](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L94-L104)
 
 ### 核心方法
 
@@ -89,7 +89,7 @@ def session_service(self) -> BaseSessionService:
 ```
 返回底层的会话服务实例，供 Runner 内部使用。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L132-L134](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L132-L134)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L132-L134](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L132-L134)
 
 #### `create_session` 方法
 ```python
@@ -102,7 +102,7 @@ async def create_session(
 ```
 创建或检索用户会话。若指定 `session_id` 的会话已存在则返回现有会话，否则创建新会话。对于数据库后端，会先列出该用户的所有会话并记录日志。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L136-L179](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L136-L179)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L136-L179](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L136-L179)
 
 #### `generate_profile` 方法
 ```python
@@ -116,7 +116,7 @@ async def generate_profile(
 ```
 使用一个 `memory_summarizer` Agent 将历史事件按内容分组，生成 JSON 格式的记忆分组配置，保存到文件系统 `./profiles/memory/<app_name>/<user_id>/<session_id>/` 目录，并返回分组名称列表。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L181-L240](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L181-L240)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L181-L240](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L181-L240)
 
 #### `compact_history_events` 方法
 ```python
@@ -135,7 +135,7 @@ async def compact_history_events(
 3. 在 agent.instruction 中追加提示文本，告知历史已压缩及可用分组
 4. 自动挂载 `load_history_events` 工具，允许 Agent 按需加载压缩的历史
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L242-L290](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L242-L290)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L242-L290](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L242-L290)
 
 ### 会话隔离机制
 
@@ -146,7 +146,7 @@ async def compact_history_events(
 
 相同 `session_id` 的后续调用会恢复历史对话上下文；不同 `session_id` 则创建独立会话。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L136-L179](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L136-L179)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L136-L179](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L136-L179)
 
 ### after_load_memory_callback 回调机制
 
@@ -164,7 +164,7 @@ stm = ShortTermMemory(
 
 回调通过 `wrap_get_session_with_callbacks` 包装 `get_session` 方法实现，在返回会话后触发。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L45-L54](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L45-L54), [file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L127-L130](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py#L127-L130)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L45-L54](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L45-L54), [file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L127-L130](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py#L127-L130)
 
 ---
 
@@ -180,7 +180,7 @@ class LongTermMemory(BaseMemoryService, BaseModel):
 ```
 
 - 基类：`google.adk.memory.base_memory_service.BaseMemoryService` + `pydantic.BaseModel`
-- 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L98-L496](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L98-L496)
+- 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L98-L496](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L98-L496)
 
 ### 构造参数
 
@@ -193,7 +193,7 @@ class LongTermMemory(BaseMemoryService, BaseModel):
 | `app_name` | `str` | `""` | 应用名称。若 `index` 未设置，则使用 `app_name` 作为索引名 |
 | `user_id` | `str` | `""` | **已废弃**，保留用于向后兼容 |
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L128-L150](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L128-L150)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L128-L150](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L128-L150)
 
 ### 支持的后端
 
@@ -209,7 +209,7 @@ class LongTermMemory(BaseMemoryService, BaseModel):
 
 > **注意**：`opensearch`、`redis`、`local` 等基于 llama-index 的后端需要安装 `veadk-python[extensions]`。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L42-L95](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L42-L95)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L42-L95](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L42-L95)
 
 ### 后端基类接口
 
@@ -234,7 +234,7 @@ class BaseLongTermMemoryBackend(ABC, BaseModel):
         """从后端检索记忆"""
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory_backends/base_backend.py#L20-L35](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory_backends/base_backend.py#L20-L35)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory_backends/base_backend.py#L20-L35](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory_backends/base_backend.py#L20-L35)
 
 ### 核心方法
 
@@ -254,7 +254,7 @@ async def add_session_to_memory(
 4. 调用后端 `save_memory` 存储
 5. openviking 后端使用 `asyncio.to_thread` 异步执行，其他后端同步执行
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L229-L293](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L229-L293)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L229-L293](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L229-L293)
 
 #### `search_memory` 方法
 ```python
@@ -270,7 +270,7 @@ async def search_memory(
 
 异常时返回空结果，不中断对话。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L295-L345](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L295-L345)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L295-L345](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L295-L345)
 
 #### `get_user_profile` 方法
 ```python
@@ -278,7 +278,7 @@ def get_user_profile(self, user_id: str) -> str:
 ```
 获取用户画像。**仅 `viking` 后端支持**，其他后端返回空字符串并记录错误日志。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L488-L496](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py#L488-L496)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L488-L496](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py#L488-L496)
 
 ### 记忆检索与存储机制
 
@@ -322,7 +322,7 @@ if previous_session_id and previous_session_id != session_id:
     await long_term_memory.add_session_to_memory(old_session)
 ```
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/save_session_callback.py#L39-L159](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/save_session_callback.py#L39-L159)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/memory/save_session_callback.py#L39-L159](file:///d:/AI/vendor/veadk-python/veadk/memory/save_session_callback.py#L39-L159)
 
 ---
 
@@ -342,11 +342,11 @@ Agent 初始化时自动完成以下集成：
 
 1. **长期记忆工具**：若配置了 `long_term_memory`，自动挂载 Google ADK 的 `load_memory` 工具，Agent 可在对话中调用此工具检索历史记忆。工具的 `custom_metadata["backend"]` 会被设置为当前后端类型。
 
-   > 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L326-L333](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L326-L333)
+   > 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L326-L333](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L326-L333)
 
 2. **自动保存回调**：若 `auto_save_session=True`，注册 `save_session_to_long_term_memory` 到 `after_agent_callback`。
 
-   > 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L354-L375](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L354-L375)
+   > 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L354-L375](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L354-L375)
 
 > **注意**：Runner 也需要传入 `short_term_memory` 参数才能启用持久化会话存储。
 
@@ -406,7 +406,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-> 示例来源：[file:///d:/AI/.chaos/libs/veadk-python/examples/03_short_term_memory/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/03_short_term_memory/main.py)
+> 示例来源：[file:///d:/AI/vendor/veadk-python/examples/03_short_term_memory/main.py](file:///d:/AI/vendor/veadk-python/examples/03_short_term_memory/main.py)
 
 ### 示例 2：长期记忆（跨会话回忆）
 
@@ -458,7 +458,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-> 示例来源：[file:///d:/AI/.chaos/libs/veadk-python/examples/09_long_term_memory/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/09_long_term_memory/main.py)
+> 示例来源：[file:///d:/AI/vendor/veadk-python/examples/09_long_term_memory/main.py](file:///d:/AI/vendor/veadk-python/examples/09_long_term_memory/main.py)
 
 ### 示例 3：使用 PostgreSQL 短期记忆
 
@@ -499,7 +499,7 @@ long_term_memory = LongTermMemory(
 | database | `pip install "veadk-python[database]"` | redis, mem0（长期记忆） |
 | extensions | `pip install "veadk-python[extensions]"` | llama-index 生态：opensearch, redis, local 向量检索（长期记忆） |
 
-> 依赖来源：[file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L84](file:///d:/AI/.chaos/libs/veadk-python/pyproject.toml#L60-L84)
+> 依赖来源：[file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L84](file:///d:/AI/vendor/veadk-python/pyproject.toml#L60-L84)
 
 **环境变量要求**：
 - 使用基于 llama-index 的向量后端（local/opensearch/redis 等）时，需配置 Embedding 模型相关环境变量（如 `OPENAI_API_KEY` 或火山引擎 Ark 相关配置）

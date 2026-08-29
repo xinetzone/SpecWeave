@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了完整的命令行工具 `veadk`，用于项目初始化、创建、部署、Web 服务启动、知识库管理、评估、Harness 部署等全生命周期管理。CLI 基于 Click 框架构建，提供一致的命令行体验。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli.py)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/cli/cli.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli.py)
 
 ---
 
@@ -26,24 +26,24 @@ VeADK 提供了完整的命令行工具 `veadk`，用于项目初始化、创建
 
 | 命令 | 用途 | 源码位置 |
 |------|------|----------|
-| `init` | 初始化可部署到火山引擎 FaaS 的新项目 | [cli_init.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_init.py) |
-| `create` | 创建本地 VeADK Agent 项目 | [cli_create.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_create.py) |
-| `deploy` | 部署项目到火山引擎 FaaS | [cli_deploy.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_deploy.py) |
-| `update` | 更新已部署云应用的函数代码 | [cli_update.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_update.py) |
-| `clean` | 删除云端 VeFaaS 应用 | [cli_clean.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_clean.py) |
-| `web` | 启动 ADK Web 服务器（支持内存集成） | [cli_web.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_web.py) |
-| `frontend` | 启动 A2UI Web UI + Agent API 服务器 | [cli_frontend.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_frontend.py) |
-| `studio` | 启动 VeADK Studio 管理界面 | [cli_frontend.py#L803-L869](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_frontend.py#L803-L869) |
-| `kb` | 知识库管理（添加文件等） | [cli_kb.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_kb.py) |
-| `eval` | 使用评估数据集评估 Agent | [cli_eval.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_eval.py) |
-| `harness` | Harness 服务器创建、配置、部署 | [cli_harness.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_harness.py) |
-| `agentkit` | AgentKit 兼容命令（invoke 等） | [cli_agentkit.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_agentkit.py) |
-| `pipeline` | 集成火山引擎 Code Pipeline 实现 CI/CD | [cli_pipeline.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_pipeline.py) |
-| `prompt` | 使用 PromptPilot 优化系统提示词 | [cli_prompt.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_prompt.py) |
-| `rl` | RL 强化学习脚手架命令组 | [cli_rl.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_rl.py) |
-| `uploadevalset` | 上传数据集到 CozeLoop 评估集 | [cli_uploadevalset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_uploadevalset.py) |
+| `init` | 初始化可部署到火山引擎 FaaS 的新项目 | [cli_init.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_init.py) |
+| `create` | 创建本地 VeADK Agent 项目 | [cli_create.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_create.py) |
+| `deploy` | 部署项目到火山引擎 FaaS | [cli_deploy.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_deploy.py) |
+| `update` | 更新已部署云应用的函数代码 | [cli_update.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_update.py) |
+| `clean` | 删除云端 VeFaaS 应用 | [cli_clean.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_clean.py) |
+| `web` | 启动 ADK Web 服务器（支持内存集成） | [cli_web.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_web.py) |
+| `frontend` | 启动 A2UI Web UI + Agent API 服务器 | [cli_frontend.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_frontend.py) |
+| `studio` | 启动 VeADK Studio 管理界面 | [cli_frontend.py#L803-L869](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_frontend.py#L803-L869) |
+| `kb` | 知识库管理（添加文件等） | [cli_kb.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_kb.py) |
+| `eval` | 使用评估数据集评估 Agent | [cli_eval.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_eval.py) |
+| `harness` | Harness 服务器创建、配置、部署 | [cli_harness.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_harness.py) |
+| `agentkit` | AgentKit 兼容命令（invoke 等） | [cli_agentkit.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_agentkit.py) |
+| `pipeline` | 集成火山引擎 Code Pipeline 实现 CI/CD | [cli_pipeline.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_pipeline.py) |
+| `prompt` | 使用 PromptPilot 优化系统提示词 | [cli_prompt.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_prompt.py) |
+| `rl` | RL 强化学习脚手架命令组 | [cli_rl.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_rl.py) |
+| `uploadevalset` | 上传数据集到 CozeLoop 评估集 | [cli_uploadevalset.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_uploadevalset.py) |
 
-> 命令注册位置：[cli.py#L77-L92](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli.py#L77-L92)
+> 命令注册位置：[cli.py#L77-L92](file:///d:/AI/vendor/veadk-python/veadk/cli/cli.py#L77-L92)
 
 ---
 
@@ -80,7 +80,7 @@ project-name/
 └── requirements.txt
 ```
 
-> 源码位置：[cli_init.py#L123-L214](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_init.py#L123-L214)
+> 源码位置：[cli_init.py#L123-L214](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_init.py#L123-L214)
 
 ---
 
@@ -104,7 +104,7 @@ agent_name/
 └── agent.py          # root_agent = Agent(...)
 ```
 
-> 源码位置：[cli_create.py#L116-L168](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_create.py#L116-L168)
+> 源码位置：[cli_create.py#L116-L168](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_create.py#L116-L168)
 
 ---
 
@@ -133,7 +133,7 @@ veadk deploy --vefaas-app-name NAME [OPTIONS]
 | `--path` | 本地项目路径 | `.` |
 | `--iam-role` | VeFaaS 函数 IAM 角色 | None |
 
-> 源码位置：[cli_deploy.py#L71-L233](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_deploy.py#L71-L233)
+> 源码位置：[cli_deploy.py#L71-L233](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_deploy.py#L71-L233)
 
 ---
 
@@ -151,7 +151,7 @@ veadk update --vefaas-app-name NAME [OPTIONS]
 - `--volcengine-secret-key`: Secret Key
 - `--path`: 本地代码路径，默认 `.`
 
-> 源码位置：[cli_update.py#L44-L108](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_update.py#L44-L108)
+> 源码位置：[cli_update.py#L44-L108](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_update.py#L44-L108)
 
 ---
 
@@ -168,7 +168,7 @@ veadk clean --vefaas-app-name NAME [OPTIONS]
 - `--volcengine-access-key`: Access Key
 - `--volcengine-secret-key`: Secret Key
 
-> 源码位置：[cli_clean.py#L37-L87](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_clean.py#L37-L87)
+> 源码位置：[cli_clean.py#L37-L87](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_clean.py#L37-L87)
 
 ---
 
@@ -196,7 +196,7 @@ veadk web [OPTIONS] [-- ADK_WEB_OPTIONS...]
 - 支持 OAuth2 认证中间件
 - 禁用 OpenAPI 文档端点（安全考虑）
 
-> 源码位置：[cli_web.py#L102-L246](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_web.py#L102-L246)
+> 源码位置：[cli_web.py#L102-L246](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_web.py#L102-L246)
 
 ---
 
@@ -230,7 +230,7 @@ veadk frontend [OPTIONS]
 - `--vite` 模式：仅服务 API，允许 Vite 开发服务器跨域（`http://localhost:5173`）
 - `--dev` 模式：Agent 选择器从本地 Agent 加载（而非云端运行时）
 
-> 源码位置：[cli_frontend.py#L739-L800](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_frontend.py#L739-L800)
+> 源码位置：[cli_frontend.py#L739-L800](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_frontend.py#L739-L800)
 
 ---
 
@@ -244,7 +244,7 @@ veadk studio [OPTIONS]
 
 参数与 `veadk frontend` 相同。Studio 模式下聊天/搜索/技能中心/历史记录功能被隐藏。
 
-> 源码位置：[cli_frontend.py#L803-L869](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_frontend.py#L803-L869)
+> 源码位置：[cli_frontend.py#L803-L869](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_frontend.py#L803-L869)
 
 ---
 
@@ -277,7 +277,7 @@ veadk kb add --backend local --path ./docs/intro.md
 veadk kb add --backend viking --app_name my_app --index kb1 --path ./docs/
 ```
 
-> 源码位置：[cli_kb.py#L21-L110](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_kb.py#L21-L110)
+> 源码位置：[cli_kb.py#L21-L110](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_kb.py#L21-L110)
 
 ---
 
@@ -309,7 +309,7 @@ veadk eval --evalset-file FILE [OPTIONS]
 - `adk`: Google ADK 评估器，使用内置指标
 - `deepeval`: DeepEval 评估器，支持 GEval 和 ToolCorrectnessMetric
 
-> 源码位置：[cli_eval.py#L58-L215](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_eval.py#L58-L215)
+> 源码位置：[cli_eval.py#L58-L215](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_eval.py#L58-L215)
 
 ---
 
@@ -350,7 +350,7 @@ veadk harness invoke --name my-harness --message "你好"
 veadk harness invoke -m "今天天气如何" --tools web_search
 ```
 
-> 源码位置：[cli_harness.py#L293-L963](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_harness.py#L293-L963)
+> 源码位置：[cli_harness.py#L293-L963](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_harness.py#L293-L963)
 
 ---
 
@@ -382,7 +382,7 @@ veadk agentkit invoke [MESSAGE] [OPTIONS]
 - `--user-id`: 用户 ID
 - `--session-id`: 会话 ID
 
-> 源码位置：[cli_agentkit.py#L29-L185](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_agentkit.py#L29-L185)
+> 源码位置：[cli_agentkit.py#L29-L185](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_agentkit.py#L29-L185)
 
 ---
 
@@ -416,7 +416,7 @@ veadk pipeline --github-url URL --github-branch BRANCH --github-token TOKEN [OPT
 4. 推送镜像到火山引擎容器镜像服务
 5. 更新 VeFaaS 函数使用新镜像
 
-> 源码位置：[cli_pipeline.py#L138-L286](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_pipeline.py#L138-L286)
+> 源码位置：[cli_pipeline.py#L138-L286](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_pipeline.py#L138-L286)
 
 ---
 
@@ -435,7 +435,7 @@ veadk prompt [OPTIONS]
 - `--workspace-id`: PromptPilot 工作区 ID（必填）
 - `--model-name`: 用于优化的模型名称，默认 `doubao-1.5-pro-32k-250115`
 
-> 源码位置：[cli_prompt.py#L30-L86](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_prompt.py#L30-L86)
+> 源码位置：[cli_prompt.py#L30-L86](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_prompt.py#L30-L86)
 
 ---
 
@@ -460,7 +460,7 @@ veadk rl init -p ark -w veadk_rl_ark_project
 veadk rl init -p lightning -w veadk_rl_lightning_project
 ```
 
-> 源码位置：[cli_rl.py#L29-L106](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_rl.py#L29-L106)
+> 源码位置：[cli_rl.py#L29-L106](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_rl.py#L29-L106)
 
 ---
 
@@ -483,7 +483,7 @@ veadk uploadevalset --file FILE [OPTIONS]
 - `OBSERVABILITY_OPENTELEMETRY_COZELOOP_EVALSET_ID` → evalset_id
 - `OBSERVABILITY_OPENTELEMETRY_COZELOOP_API_KEY` → api_key
 
-> 源码位置：[cli_uploadevalset.py#L31-L140](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli_uploadevalset.py#L31-L140)
+> 源码位置：[cli_uploadevalset.py#L31-L140](file:///d:/AI/vendor/veadk-python/veadk/cli/cli_uploadevalset.py#L31-L140)
 
 ---
 
@@ -515,7 +515,7 @@ CLI 命令通过环境变量进行配置，常用环境变量包括：
 
 执行 `veadk --version` 可查看当前 VeADK 版本，版本号定义在 `veadk/version.py`。
 
-> 源码位置：[cli.py#L65-L67](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli.py#L65-L67)
+> 源码位置：[cli.py#L65-L67](file:///d:/AI/vendor/veadk-python/veadk/cli/cli.py#L65-L67)
 
 ---
 

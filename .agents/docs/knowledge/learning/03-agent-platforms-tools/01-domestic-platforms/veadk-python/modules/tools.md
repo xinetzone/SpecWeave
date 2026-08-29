@@ -66,21 +66,21 @@ agent = Agent(
 )
 ```
 
-代码参考：[veadk/agent.py:126](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L126-L126)
+代码参考：[veadk/agent.py:126](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L126-L126)
 
 ### 方式二：自动条件挂载
 
-Agent 在初始化时（`model_post_init` 方法）会根据配置条件自动挂载相应的工具，无需用户手动添加。自动挂载逻辑位于 [veadk/agent.py:304-438](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L304-L438)。
+Agent 在初始化时（`model_post_init` 方法）会根据配置条件自动挂载相应的工具，无需用户手动添加。自动挂载逻辑位于 [veadk/agent.py:304-438](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L304-L438)。
 
 | 触发条件 | 挂载工具 | 代码位置 |
 |---------|---------|---------|
-| `self.knowledgebase` 不为 None | `LoadKnowledgebaseTool`；若 `enable_profile=True` 则附加 `load_kb_queries` | [agent.py:306-324](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L324) |
-| `self.long_term_memory` 不为 None | `load_memory`（来自 google.adk.tools） | [agent.py:326-333](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L326-L333) |
-| `self.skills` 非空 | `SkillsToolset`（技能工具集） | [agent.py:377-600](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L377-L600) |
-| `self.example_store` 不为 None | `ExampleTool` | [agent.py:399-402](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L399-L402) |
-| `self.enable_ghostchar=True` | `GhostcharTool` | [agent.py:404-410](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L404-L410) |
-| `self.enable_a2ui=True` | A2UI Toolset（`build_a2ui_toolset`） | [agent.py:412-416](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L412-L416) |
-| `self.enable_tunnel=True` | `TunnelToolset` | [agent.py:418-422](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L418-L422) |
+| `self.knowledgebase` 不为 None | `LoadKnowledgebaseTool`；若 `enable_profile=True` 则附加 `load_kb_queries` | [agent.py:306-324](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L324) |
+| `self.long_term_memory` 不为 None | `load_memory`（来自 google.adk.tools） | [agent.py:326-333](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L326-L333) |
+| `self.skills` 非空 | `SkillsToolset`（技能工具集） | [agent.py:377-600](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L377-L600) |
+| `self.example_store` 不为 None | `ExampleTool` | [agent.py:399-402](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L399-L402) |
+| `self.enable_ghostchar=True` | `GhostcharTool` | [agent.py:404-410](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L404-L410) |
+| `self.enable_a2ui=True` | A2UI Toolset（`build_a2ui_toolset`） | [agent.py:412-416](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L412-L416) |
+| `self.enable_tunnel=True` | `TunnelToolset` | [agent.py:418-422](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L418-L422) |
 
 ## 内置工具清单
 
@@ -106,7 +106,7 @@ veadk/tools/
 
 `veadk/tools/__init__.py` 维护了一个内置工具注册表 `_BUILTIN_TOOLS`，通过 `get_builtin_tool(name)` 可以按名称懒加载工具：
 
-代码参考：[veadk/tools/__init__.py:26-46](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/__init__.py#L26-L46)
+代码参考：[veadk/tools/__init__.py:26-46](file:///d:/AI/vendor/veadk-python/veadk/tools/__init__.py#L26-L46)
 
 | 工具名 | 模块路径 | 功能分类 |
 |-------|---------|---------|
@@ -132,92 +132,92 @@ veadk/tools/
 
 | 工具名 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |-------|---------|------|-------------|------|
-| `get_city_weather` | [demo_tools.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/demo_tools.py) | 获取指定城市固定天气数据（演示用） | 否（需手动添加） | 无 |
-| `get_location_weather` | [demo_tools.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/demo_tools.py) | 获取随机天气数据（演示用） | 否（需手动添加） | 无 |
-| `GhostcharTool` | [ghost_char.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/ghost_char.py) | 幽灵字符工具，确保模型响应以 `<` 开头 | `enable_ghostchar=True` | 无 |
-| `LoadKnowledgebaseTool` | [load_knowledgebase_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/load_knowledgebase_tool.py) | 知识库检索工具（旧版） | `knowledgebase` 已设置 | veadk.knowledgebase |
+| `get_city_weather` | [demo_tools.py](file:///d:/AI/vendor/veadk-python/veadk/tools/demo_tools.py) | 获取指定城市固定天气数据（演示用） | 否（需手动添加） | 无 |
+| `get_location_weather` | [demo_tools.py](file:///d:/AI/vendor/veadk-python/veadk/tools/demo_tools.py) | 获取随机天气数据（演示用） | 否（需手动添加） | 无 |
+| `GhostcharTool` | [ghost_char.py](file:///d:/AI/vendor/veadk-python/veadk/tools/ghost_char.py) | 幽灵字符工具，确保模型响应以 `<` 开头 | `enable_ghostchar=True` | 无 |
+| `LoadKnowledgebaseTool` | [load_knowledgebase_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/load_knowledgebase_tool.py) | 知识库检索工具（旧版） | `knowledgebase` 已设置 | veadk.knowledgebase |
 
 #### builtin_tools/ 标准内置工具
 
 | 工具名 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |-------|---------|------|-------------|------|
-| `LoadKnowledgebaseTool` | [load_knowledgebase.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/load_knowledgebase.py) | 知识库检索工具 | `knowledgebase` 已设置 | veadk.knowledgebase |
-| `load_kb_queries` | [load_kb_queries.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/load_kb_queries.py) | 知识库 Profile 查询工具 | `knowledgebase.enable_profile=True` | 知识库模块 |
-| `web_search` | [web_search.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_search.py) | 火山引擎网页搜索 | 否（需手动添加） | requests, volcengine sign |
-| `web_fetch` | [web_fetch.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_fetch.py) | 网页内容抓取 | 否（需手动添加） | httpx |
-| `web_scraper` | [web_scraper.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/web_scraper.py) | 网页爬虫工具 | 否（需手动添加） | - |
-| `parallel_web_search` | [parallel_web_search.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/parallel_web_search.py) | 并行多搜索引擎搜索 | 否（需手动添加） | asyncio |
-| `vesearch` | [vesearch.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/vesearch.py) | 火山引擎向量搜索 | 否（需手动添加） | - |
-| `link_reader` | [link_reader.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/link_reader.py) | 链接内容读取解析 | 否（需手动添加） | - |
-| `run_code` | [run_code.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/run_code.py) | 代码执行工具 | 否（需手动添加） | - |
-| `coding` | [coding.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/coding.py) | 编码辅助工具 | 否（需手动添加） | - |
-| `image_generate` | [image_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_generate.py) | 图像生成 | 否（需手动添加） | httpx |
-| `generate_image` | [generate_image.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/generate_image.py) | 图像生成（另一种实现） | 否（需手动添加） | - |
-| `image_edit` | [image_edit.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/image_edit.py) | 图像编辑 | 否（需手动添加） | - |
-| `video_generate` | [video_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py) | 视频生成 | 否（需手动添加） | httpx |
-| `video_task_query` | [video_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/video_generate.py) | 视频生成任务状态查询 | 与 `video_generate` 自动配对 | httpx |
-| `ppt_generate` | [ppt_generate.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/ppt_generate.py) | PPT 文档生成 | 否（需手动添加） | Node.js (ppt_generate.mjs) |
-| `tts` | [tts.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/tts.py) | 文本转语音 | 否（需手动添加） | - |
-| `vod` | [vod.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/vod.py) | 视频点播工具 | 否（需手动添加） | - |
-| `playwright` | [playwright.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/playwright.py) | Playwright 浏览器自动化 | 否（需手动添加） | playwright |
-| `mcp_router` | [mcp_router.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/mcp_router.py) | MCP 工具路由 | 否（需手动添加） | mcp |
-| `a2a_registry` | [a2a_registry.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/a2a_registry.py) | A2A 代理注册中心 | 否（需手动添加） | - |
-| `agent_authorization` | [agent_authorization.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/agent_authorization.py) | Agent 授权检查回调 | `enable_authz=True` | - |
-| `execute_skills` | [execute_skills.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/execute_skills.py) | 技能执行工具（沙箱模式） | 通过 SkillsToolset 间接使用 | - |
-| `lark` | [lark.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/lark.py) | 飞书集成工具 | 否（需手动添加） | lark-oapi |
-| `las` | [las.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/las.py) | LAS 日志服务工具 | 否（需手动添加） | - |
-| `llm_shield` | [llm_shield.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/llm_shield.py) | LLM 安全防护 | 否（需手动添加） | - |
-| `mobile_run` | [mobile_run.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/mobile_run.py) | 移动端运行工具 | 否（需手动添加） | - |
-| `run_sandbox_agent` | [run_sandbox_agent.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/run_sandbox_agent.py) | 沙箱 Agent 运行 | 否（需手动添加） | - |
-| `supabase_toolset` | [supabase_toolset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/supabase_toolset.py) | Supabase 工具集 | 否（需手动添加） | supabase |
-| `_agentkit` | [_agentkit.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/_agentkit.py) | AgentKit 内部工具 | 内部使用 | - |
+| `LoadKnowledgebaseTool` | [load_knowledgebase.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/load_knowledgebase.py) | 知识库检索工具 | `knowledgebase` 已设置 | veadk.knowledgebase |
+| `load_kb_queries` | [load_kb_queries.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/load_kb_queries.py) | 知识库 Profile 查询工具 | `knowledgebase.enable_profile=True` | 知识库模块 |
+| `web_search` | [web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py) | 火山引擎网页搜索 | 否（需手动添加） | requests, volcengine sign |
+| `web_fetch` | [web_fetch.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_fetch.py) | 网页内容抓取 | 否（需手动添加） | httpx |
+| `web_scraper` | [web_scraper.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_scraper.py) | 网页爬虫工具 | 否（需手动添加） | - |
+| `parallel_web_search` | [parallel_web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/parallel_web_search.py) | 并行多搜索引擎搜索 | 否（需手动添加） | asyncio |
+| `vesearch` | [vesearch.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/vesearch.py) | 火山引擎向量搜索 | 否（需手动添加） | - |
+| `link_reader` | [link_reader.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/link_reader.py) | 链接内容读取解析 | 否（需手动添加） | - |
+| `run_code` | [run_code.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/run_code.py) | 代码执行工具 | 否（需手动添加） | - |
+| `coding` | [coding.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/coding.py) | 编码辅助工具 | 否（需手动添加） | - |
+| `image_generate` | [image_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_generate.py) | 图像生成 | 否（需手动添加） | httpx |
+| `generate_image` | [generate_image.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/generate_image.py) | 图像生成（另一种实现） | 否（需手动添加） | - |
+| `image_edit` | [image_edit.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/image_edit.py) | 图像编辑 | 否（需手动添加） | - |
+| `video_generate` | [video_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py) | 视频生成 | 否（需手动添加） | httpx |
+| `video_task_query` | [video_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/video_generate.py) | 视频生成任务状态查询 | 与 `video_generate` 自动配对 | httpx |
+| `ppt_generate` | [ppt_generate.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/ppt_generate.py) | PPT 文档生成 | 否（需手动添加） | Node.js (ppt_generate.mjs) |
+| `tts` | [tts.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/tts.py) | 文本转语音 | 否（需手动添加） | - |
+| `vod` | [vod.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/vod.py) | 视频点播工具 | 否（需手动添加） | - |
+| `playwright` | [playwright.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/playwright.py) | Playwright 浏览器自动化 | 否（需手动添加） | playwright |
+| `mcp_router` | [mcp_router.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/mcp_router.py) | MCP 工具路由 | 否（需手动添加） | mcp |
+| `a2a_registry` | [a2a_registry.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/a2a_registry.py) | A2A 代理注册中心 | 否（需手动添加） | - |
+| `agent_authorization` | [agent_authorization.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/agent_authorization.py) | Agent 授权检查回调 | `enable_authz=True` | - |
+| `execute_skills` | [execute_skills.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/execute_skills.py) | 技能执行工具（沙箱模式） | 通过 SkillsToolset 间接使用 | - |
+| `lark` | [lark.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/lark.py) | 飞书集成工具 | 否（需手动添加） | lark-oapi |
+| `las` | [las.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/las.py) | LAS 日志服务工具 | 否（需手动添加） | - |
+| `llm_shield` | [llm_shield.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/llm_shield.py) | LLM 安全防护 | 否（需手动添加） | - |
+| `mobile_run` | [mobile_run.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/mobile_run.py) | 移动端运行工具 | 否（需手动添加） | - |
+| `run_sandbox_agent` | [run_sandbox_agent.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/run_sandbox_agent.py) | 沙箱 Agent 运行 | 否（需手动添加） | - |
+| `supabase_toolset` | [supabase_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/supabase_toolset.py) | Supabase 工具集 | 否（需手动添加） | supabase |
+| `_agentkit` | [_agentkit.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/_agentkit.py) | AgentKit 内部工具 | 内部使用 | - |
 
 #### mcp_tool/ MCP 协议工具
 
 | 工具名/类 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |----------|---------|------|-------------|------|
-| `TrustedMcpToolset` | [trusted_mcp_toolset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/mcp_tool/trusted_mcp_toolset.py) | 可信 MCP 服务器连接工具集 | 否（需手动添加） | mcp, google.adk mcp |
-| `TrustedMcpSessionManager` | [trusted_mcp_session_manager.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/mcp_tool/trusted_mcp_session_manager.py) | MCP 会话管理器 | TrustedMcpToolset 内部使用 | mcp |
+| `TrustedMcpToolset` | [trusted_mcp_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/mcp_tool/trusted_mcp_toolset.py) | 可信 MCP 服务器连接工具集 | 否（需手动添加） | mcp, google.adk mcp |
+| `TrustedMcpSessionManager` | [trusted_mcp_session_manager.py](file:///d:/AI/vendor/veadk-python/veadk/tools/mcp_tool/trusted_mcp_session_manager.py) | MCP 会话管理器 | TrustedMcpToolset 内部使用 | mcp |
 
 #### sandbox/ 沙箱工具
 
 | 工具名 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |-------|---------|------|-------------|------|
-| `browser_sandbox` | [browser_sandbox.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/sandbox/browser_sandbox.py) | 浏览器沙箱 | 否（需手动添加） | - |
-| `code_sandbox` | [code_sandbox.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/sandbox/code_sandbox.py) | 代码沙箱 | 否（需手动添加） | - |
-| `computer_sandbox` | [computer_sandbox.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/sandbox/computer_sandbox.py) | 计算机操作沙箱 | 否（需手动添加） | - |
+| `browser_sandbox` | [browser_sandbox.py](file:///d:/AI/vendor/veadk-python/veadk/tools/sandbox/browser_sandbox.py) | 浏览器沙箱 | 否（需手动添加） | - |
+| `code_sandbox` | [code_sandbox.py](file:///d:/AI/vendor/veadk-python/veadk/tools/sandbox/code_sandbox.py) | 代码沙箱 | 否（需手动添加） | - |
+| `computer_sandbox` | [computer_sandbox.py](file:///d:/AI/vendor/veadk-python/veadk/tools/sandbox/computer_sandbox.py) | 计算机操作沙箱 | 否（需手动添加） | - |
 
 #### skills_tools/ 技能相关工具
 
 | 工具名 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |-------|---------|------|-------------|------|
-| `SkillsToolset` | [skills_toolset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py) | 技能工具集（含文件操作、命令执行等） | `skills` 非空时自动挂载 | veadk.skills |
-| `SkillsTool` | [skills_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_tool.py) | 技能发现和加载工具 | SkillsToolset 内部 | - |
-| `bash_tool` | [bash_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/bash_tool.py) | Shell 命令执行工具 | SkillsToolset 内部（local模式） | - |
-| `file_tool` | [file_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/file_tool.py) | 文件读写编辑工具 | SkillsToolset 内部（local模式） | - |
-| `download_skills_tool` | [download_skills_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/download_skills_tool.py) | 技能下载工具 | SkillsToolset 内部 | - |
-| `register_skills_tool` | [register_skills_tool.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/register_skills_tool.py) | 技能注册工具 | SkillsToolset 内部 | - |
-| `session_path` | [session_path.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/session_path.py) | 会话路径工具 | SkillsToolset 内部 | - |
+| `SkillsToolset` | [skills_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py) | 技能工具集（含文件操作、命令执行等） | `skills` 非空时自动挂载 | veadk.skills |
+| `SkillsTool` | [skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py) | 技能发现和加载工具 | SkillsToolset 内部 | - |
+| `bash_tool` | [bash_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/bash_tool.py) | Shell 命令执行工具 | SkillsToolset 内部（local模式） | - |
+| `file_tool` | [file_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/file_tool.py) | 文件读写编辑工具 | SkillsToolset 内部（local模式） | - |
+| `download_skills_tool` | [download_skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/download_skills_tool.py) | 技能下载工具 | SkillsToolset 内部 | - |
+| `register_skills_tool` | [register_skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/register_skills_tool.py) | 技能注册工具 | SkillsToolset 内部 | - |
+| `session_path` | [session_path.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/session_path.py) | 会话路径工具 | SkillsToolset 内部 | - |
 
 #### vanna_tools/ Vanna 数据分析工具
 
 | 工具名 | 文件路径 | 功能 | 自动挂载条件 | 依赖 |
 |-------|---------|------|-------------|------|
-| `VannaToolset` | [vanna_toolset.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py) | Vanna AI 数据分析工具集 | 否（需手动添加） | vanna |
-| `run_sql` | [run_sql.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/run_sql.py) | SQL 执行工具 | VannaToolset 内部 | - |
-| `python` | [python.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/python.py) | Python 执行工具 | VannaToolset 内部 | - |
-| `file_system` | [file_system.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/file_system.py) | 文件系统工具 | VannaToolset 内部 | - |
-| `summarize_data` | [summarize_data.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/summarize_data.py) | 数据摘要工具 | VannaToolset 内部 | - |
-| `visualize_data` | [visualize_data.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/visualize_data.py) | 数据可视化工具 | VannaToolset 内部 | - |
-| `agent_memory` | [agent_memory.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/agent_memory.py) | Agent 记忆工具 | VannaToolset 内部 | - |
-| `vikingdb_agent_memory` | [vikingdb_agent_memory.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/vikingdb_agent_memory.py) | VikingDB 记忆工具 | VannaToolset 内部 | - |
-| `vanna_trainer` | [vanna_trainer.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/vanna_tools/vanna_trainer.py) | Vanna 训练工具 | VannaToolset 内部 | - |
+| `VannaToolset` | [vanna_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py) | Vanna AI 数据分析工具集 | 否（需手动添加） | vanna |
+| `run_sql` | [run_sql.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/run_sql.py) | SQL 执行工具 | VannaToolset 内部 | - |
+| `python` | [python.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/python.py) | Python 执行工具 | VannaToolset 内部 | - |
+| `file_system` | [file_system.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/file_system.py) | 文件系统工具 | VannaToolset 内部 | - |
+| `summarize_data` | [summarize_data.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/summarize_data.py) | 数据摘要工具 | VannaToolset 内部 | - |
+| `visualize_data` | [visualize_data.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/visualize_data.py) | 数据可视化工具 | VannaToolset 内部 | - |
+| `agent_memory` | [agent_memory.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/agent_memory.py) | Agent 记忆工具 | VannaToolset 内部 | - |
+| `vikingdb_agent_memory` | [vikingdb_agent_memory.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vikingdb_agent_memory.py) | VikingDB 记忆工具 | VannaToolset 内部 | - |
+| `vanna_trainer` | [vanna_trainer.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vanna_trainer.py) | Vanna 训练工具 | VannaToolset 内部 | - |
 
 ## 工具依赖自动补全机制
 
 Agent 在初始化时会调用 `_validate_tool_dependencies()` 方法检查工具依赖关系，目前仅实现了视频生成工具对的自动补全。
 
-代码参考：[veadk/agent.py:614-643](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L614-L643)
+代码参考：[veadk/agent.py:614-643](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L614-L643)
 
 ### 执行流程
 
@@ -269,7 +269,7 @@ def recommend_clothing(temperature_celsius: int) -> dict[str, str]:
     return {"result": advice}
 ```
 
-代码参考：[examples/02_custom_tools/main.py:44-59](file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/main.py#L44-L59)
+代码参考：[examples/02_custom_tools/main.py:44-59](file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/main.py#L44-L59)
 
 ### 方式二：继承 BaseTool（类工具）
 
@@ -395,7 +395,7 @@ class MyCustomFunctionTool(FunctionTool):
         # 自定义请求处理...
 ```
 
-代码参考：[veadk/tools/builtin_tools/load_knowledgebase.py:39-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/builtin_tools/load_knowledgebase.py#L39-L100)
+代码参考：[veadk/tools/builtin_tools/load_knowledgebase.py:39-100](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/load_knowledgebase.py#L39-L100)
 
 ### 方式三：使用 Toolset（工具集）
 
@@ -438,7 +438,7 @@ class MyToolset(BaseToolset):
         return {"result": f"Tool B: {param}"}
 ```
 
-代码参考：[veadk/tools/skills_tools/skills_toolset.py:43-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L43-L100)
+代码参考：[veadk/tools/skills_tools/skills_toolset.py:43-100](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_toolset.py#L43-L100)
 
 ### 注册到 Agent 的方式
 
@@ -473,7 +473,7 @@ VeADK 支持 MCP（Model Context Protocol）协议，通过 `TrustedMcpToolset` 
 
 ### TrustedMcpToolset 使用方式
 
-代码参考：[veadk/tools/mcp_tool/trusted_mcp_toolset.py:33-125](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/mcp_tool/trusted_mcp_toolset.py#L33-L125)
+代码参考：[veadk/tools/mcp_tool/trusted_mcp_toolset.py:33-125](file:///d:/AI/vendor/veadk-python/veadk/tools/mcp_tool/trusted_mcp_toolset.py#L33-L125)
 
 **支持的连接方式：**
 
@@ -574,7 +574,7 @@ agent = Agent(
 )
 ```
 
-代码参考：[veadk/tools/__init__.py:54-67](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/__init__.py#L54-L67)
+代码参考：[veadk/tools/__init__.py:54-67](file:///d:/AI/vendor/veadk-python/veadk/tools/__init__.py#L54-L67)
 
 ### 示例 3：自动挂载知识库工具
 

@@ -200,7 +200,7 @@ flowchart TD
 
 ## 二、Agent 核心依赖聚焦图
 
-下图聚焦 Agent 类（[veadk/agent.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py)）的直接依赖和条件挂载的扩展点，帮助理解 Agent 如何整合各个能力模块：
+下图聚焦 Agent 类（[veadk/agent.py](file:///d:/AI/vendor/veadk-python/veadk/agent.py)）的直接依赖和条件挂载的扩展点，帮助理解 Agent 如何整合各个能力模块：
 
 ```mermaid
 flowchart LR
@@ -246,7 +246,7 @@ flowchart LR
 
 ## 三、Runner 执行依赖聚焦图
 
-下图聚焦 Runner 类（[veadk/runner.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py)）的执行依赖和 RunProcessor 装饰器链机制：
+下图聚焦 Runner 类（[veadk/runner.py](file:///d:/AI/vendor/veadk-python/veadk/runner.py)）的执行依赖和 RunProcessor 装饰器链机制：
 
 ```mermaid
 flowchart TD
@@ -286,7 +286,7 @@ flowchart TD
     class ProcessorChain,P1,P2,P3 middleware
 ```
 
-**RunProcessor 三级优先级**（[veadk/runner.py:406-414](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L406-L414)）：
+**RunProcessor 三级优先级**（[veadk/runner.py:406-414](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L406-L414)）：
 1. `run()` 方法参数 `run_processor`（单次运行临时覆盖，最高优先级）
 2. Runner 构造函数参数 `run_processor`
 3. Agent 实例的 `run_processor`
@@ -321,13 +321,13 @@ L6 接入层 ──▶ L5 云集成层 ──▶ L4 协议层 ──▶ L3 后�
 
 | 模块 | 路径 | 核心职责 |
 |---|---|---|
-| Config | [veadk/config.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py)、[veadk/configs/](file:///d:/AI/.chaos/libs/veadk-python/veadk/configs/) | 配置加载、环境变量管理、`settings` 单例、`veadk_environments` 环境探测 |
-| Consts | [veadk/consts.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/consts.py) | 默认常量、默认模型配置、`DEFAULT_MODEL_EXTRA_CONFIG` 版本头信息 |
-| Logger | [veadk/utils/logger.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/utils/logger.py) | 统一日志接口封装 |
-| **Agent** | [veadk/agent.py:72](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L72) | **核心类**，继承 LlmAgent，整合所有扩展能力（memory/kb/tracers/processor 等） |
-| **Runner** | [veadk/runner.py:329](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L329) | **执行入口**，继承 ADK Runner，包装事件流、支持 RunProcessor 装饰器、媒体处理 |
-| Event Types | [veadk/types.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/types.py) | `MediaMessage` 等自定义类型扩展 |
-| VeCredentialService | [veadk/auth/ve_credential_service.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py) | 凭证存储服务，支持 app_name/user_id 双层隔离访问 |
+| Config | [veadk/config.py](file:///d:/AI/vendor/veadk-python/veadk/config.py)、[veadk/configs/](file:///d:/AI/vendor/veadk-python/veadk/configs/) | 配置加载、环境变量管理、`settings` 单例、`veadk_environments` 环境探测 |
+| Consts | [veadk/consts.py](file:///d:/AI/vendor/veadk-python/veadk/consts.py) | 默认常量、默认模型配置、`DEFAULT_MODEL_EXTRA_CONFIG` 版本头信息 |
+| Logger | [veadk/utils/logger.py](file:///d:/AI/vendor/veadk-python/veadk/utils/logger.py) | 统一日志接口封装 |
+| **Agent** | [veadk/agent.py:72](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L72) | **核心类**，继承 LlmAgent，整合所有扩展能力（memory/kb/tracers/processor 等） |
+| **Runner** | [veadk/runner.py:329](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L329) | **执行入口**，继承 ADK Runner，包装事件流、支持 RunProcessor 装饰器、媒体处理 |
+| Event Types | [veadk/types.py](file:///d:/AI/vendor/veadk-python/veadk/types.py) | `MediaMessage` 等自定义类型扩展 |
+| VeCredentialService | [veadk/auth/ve_credential_service.py](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py) | 凭证存储服务，支持 app_name/user_id 双层隔离访问 |
 
 **核心层纯净规则**：核心层的 import 语句只能引用 L0 基础层和核心层内部模块，绝不能 import L2-L6 的任何模块。扩展能力通过"接收抽象基类实例作为构造参数"的方式接入，而非直接 import 具体实现。
 
@@ -337,17 +337,17 @@ L6 接入层 ──▶ L5 云集成层 ──▶ L4 协议层 ──▶ L3 后�
 
 | 模块 | 路径 | 抽象方法/职责 |
 |---|---|---|
-| BaseRunProcessor | [veadk/processors/base_run_processor.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py) | `process_run()` 装饰器接口，横切关注点中间件抽象 |
-| BaseTracer | [veadk/tracing/base_tracer.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/base_tracer.py) | `dump()` Tracing 数据导出抽象 |
-| BasePromptManager | [veadk/prompts/prompt_manager.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/prompt_manager.py) | `get_prompt()` 提示词动态获取抽象 |
-| ShortTermMemory | [veadk/memory/short_term_memory.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory.py) | 会话级记忆封装，提供 `create_session/get_session` |
-| LongTermMemory | [veadk/memory/long_term_memory.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory.py) | 跨会话持久记忆封装，提供 `save/search`，自动挂载 `load_memory` 工具 |
-| KnowledgeBase | [veadk/knowledgebase/knowledgebase.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/knowledgebase.py) | RAG 知识库封装，提供 `add/query`，自动挂载 `load_kb` 工具 |
-| Builtin Tools | [veadk/tools/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tools/) | web_search、run_code、load_kb、视频生成等内置工具实现 |
-| Tunnel | [veadk/tunnel/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tunnel/) | `TunnelRegistry`、`BaseProtocol`、MCP 协议实现 |
-| A2UI | [veadk/a2ui/](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2ui/) | A2UI 组件目录、Toolset 封装 |
-| Reflector | [veadk/reflector/](file:///d:/AI/.chaos/libs/veadk-python/veadk/reflector/) | `BaseReflector` 反思机制抽象 |
-| Evaluation | [veadk/evaluation/](file:///d:/AI/.chaos/libs/veadk-python/veadk/evaluation/) | `BaseEvaluator`、`EvalSetRecorder` 评估框架 |
+| BaseRunProcessor | [veadk/processors/base_run_processor.py](file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py) | `process_run()` 装饰器接口，横切关注点中间件抽象 |
+| BaseTracer | [veadk/tracing/base_tracer.py](file:///d:/AI/vendor/veadk-python/veadk/tracing/base_tracer.py) | `dump()` Tracing 数据导出抽象 |
+| BasePromptManager | [veadk/prompts/prompt_manager.py](file:///d:/AI/vendor/veadk-python/veadk/prompts/prompt_manager.py) | `get_prompt()` 提示词动态获取抽象 |
+| ShortTermMemory | [veadk/memory/short_term_memory.py](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory.py) | 会话级记忆封装，提供 `create_session/get_session` |
+| LongTermMemory | [veadk/memory/long_term_memory.py](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory.py) | 跨会话持久记忆封装，提供 `save/search`，自动挂载 `load_memory` 工具 |
+| KnowledgeBase | [veadk/knowledgebase/knowledgebase.py](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/knowledgebase.py) | RAG 知识库封装，提供 `add/query`，自动挂载 `load_kb` 工具 |
+| Builtin Tools | [veadk/tools/](file:///d:/AI/vendor/veadk-python/veadk/tools/) | web_search、run_code、load_kb、视频生成等内置工具实现 |
+| Tunnel | [veadk/tunnel/](file:///d:/AI/vendor/veadk-python/veadk/tunnel/) | `TunnelRegistry`、`BaseProtocol`、MCP 协议实现 |
+| A2UI | [veadk/a2ui/](file:///d:/AI/vendor/veadk-python/veadk/a2ui/) | A2UI 组件目录、Toolset 封装 |
+| Reflector | [veadk/reflector/](file:///d:/AI/vendor/veadk-python/veadk/reflector/) | `BaseReflector` 反思机制抽象 |
+| Evaluation | [veadk/evaluation/](file:///d:/AI/vendor/veadk-python/veadk/evaluation/) | `BaseEvaluator`、`EvalSetRecorder` 评估框架 |
 
 **扩展契约稳定性**：L2 层的抽象基类接口一旦发布保持稳定，L3 层的具体实现可独立演进，不影响上层代码。
 
@@ -357,12 +357,12 @@ L6 接入层 ──▶ L5 云集成层 ──▶ L4 协议层 ──▶ L3 后�
 
 | 分类 | 模块路径 | 具体实现 |
 |---|---|---|
-| 短期记忆后端 | [memory/short_term_memory_backends/](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/short_term_memory_backends/) | SQLite、PostgreSQL、MySQL |
-| 长期记忆后端 | [memory/long_term_memory_backends/](file:///d:/AI/.chaos/libs/veadk-python/veadk/memory/long_term_memory_backends/) | InMemory、Redis、OpenSearch、Mem0、VikingDB、OpenViking、TOS Bucket |
-| 知识库后端 | [knowledgebase/backends/](file:///d:/AI/.chaos/libs/veadk-python/veadk/knowledgebase/backends/) | InMemory、Milvus、OpenSearch、Redis、VikingDB、OpenViking、TOS Vector、Context Search |
-| Tracer 导出器 | [tracing/telemetry/exporters/](file:///d:/AI/.chaos/libs/veadk-python/veadk/tracing/telemetry/exporters/) | InMemory、TLS、APMPlus、Cozeloop、OpenTelemetry |
-| VeAuth 认证 | [auth/veauth/](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/veauth/) | ARK、Speech、OpenSearch、PostgreSQL、Viking Mem0 等各服务的凭证获取 |
-| PromptManager 实现 | [prompts/](file:///d:/AI/.chaos/libs/veadk-python/veadk/prompts/) | `CozeloopPromptManager`（从 CozeLoop 获取提示词） |
+| 短期记忆后端 | [memory/short_term_memory_backends/](file:///d:/AI/vendor/veadk-python/veadk/memory/short_term_memory_backends/) | SQLite、PostgreSQL、MySQL |
+| 长期记忆后端 | [memory/long_term_memory_backends/](file:///d:/AI/vendor/veadk-python/veadk/memory/long_term_memory_backends/) | InMemory、Redis、OpenSearch、Mem0、VikingDB、OpenViking、TOS Bucket |
+| 知识库后端 | [knowledgebase/backends/](file:///d:/AI/vendor/veadk-python/veadk/knowledgebase/backends/) | InMemory、Milvus、OpenSearch、Redis、VikingDB、OpenViking、TOS Vector、Context Search |
+| Tracer 导出器 | [tracing/telemetry/exporters/](file:///d:/AI/vendor/veadk-python/veadk/tracing/telemetry/exporters/) | InMemory、TLS、APMPlus、Cozeloop、OpenTelemetry |
+| VeAuth 认证 | [auth/veauth/](file:///d:/AI/vendor/veadk-python/veadk/auth/veauth/) | ARK、Speech、OpenSearch、PostgreSQL、Viking Mem0 等各服务的凭证获取 |
+| PromptManager 实现 | [prompts/](file:///d:/AI/vendor/veadk-python/veadk/prompts/) | `CozeloopPromptManager`（从 CozeLoop 获取提示词） |
 
 **依赖注入模式示例**：
 ```python
@@ -377,12 +377,12 @@ agent = Agent(name="demo", short_term_memory=stm)
 
 | 模块 | 路径 | 核心职责 |
 |---|---|---|
-| VeA2AServer | [a2a/ve_a2a_server.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_a2a_server.py) | 将 VeADK Agent 包装为 A2A 协议 FastAPI 服务，`init_app()` 一站式构建 |
-| AgentCard | [a2a/agent_card.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/agent_card.py) | 从 Agent 元数据自动生成符合 A2A 标准的 AgentCard（能力自描述） |
-| VeAgentExecutor | [a2a/ve_agent_executor.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_agent_executor.py) | A2A 任务执行器，桥接 A2A JSON-RPC 请求到 VeADK Runner |
-| A2A Hub | [a2a/hub/](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/hub/) | A2A Hub 服务器/客户端，支持 agent 分组注册与发现 |
-| RemoteVeAgent | [a2a/remote_ve_agent.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/remote_ve_agent.py) | 远程 Agent 代理，像调用本地 Agent 一样调用远程 A2A Agent |
-| VeMiddlewares | [a2a/ve_middlewares.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/a2a/ve_middlewares.py) | A2A 请求/响应中间件机制，类似 HTTP 中间件 |
+| VeA2AServer | [a2a/ve_a2a_server.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_a2a_server.py) | 将 VeADK Agent 包装为 A2A 协议 FastAPI 服务，`init_app()` 一站式构建 |
+| AgentCard | [a2a/agent_card.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/agent_card.py) | 从 Agent 元数据自动生成符合 A2A 标准的 AgentCard（能力自描述） |
+| VeAgentExecutor | [a2a/ve_agent_executor.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_agent_executor.py) | A2A 任务执行器，桥接 A2A JSON-RPC 请求到 VeADK Runner |
+| A2A Hub | [a2a/hub/](file:///d:/AI/vendor/veadk-python/veadk/a2a/hub/) | A2A Hub 服务器/客户端，支持 agent 分组注册与发现 |
+| RemoteVeAgent | [a2a/remote_ve_agent.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/remote_ve_agent.py) | 远程 Agent 代理，像调用本地 Agent 一样调用远程 A2A Agent |
+| VeMiddlewares | [a2a/ve_middlewares.py](file:///d:/AI/vendor/veadk-python/veadk/a2a/ve_middlewares.py) | A2A 请求/响应中间件机制，类似 HTTP 中间件 |
 
 **四层 A2A 架构**：
 1. AgentCard 元数据层：Agent 能力自描述
@@ -396,17 +396,17 @@ agent = Agent(name="demo", short_term_memory=stm)
 
 | 模块 | 路径 | 集成的云服务 |
 |---|---|---|
-| VeFaaS | [integrations/ve_faas/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/) | 函数计算：代码打包、函数创建、应用发布、镜像部署 |
-| VeAPIG | [integrations/ve_apig/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_apig/) | API 网关：Serverless 网关、服务/路由/上游管理 |
-| VeCR | [integrations/ve_cr/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cr/) | 容器镜像仓库：VPC 隧道网络打通 |
-| VeTOS | [integrations/ve_tos/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tos/) | 对象存储：文件上传、媒体托管、内联数据上传 |
-| VeTLS | [integrations/ve_tls/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tls/) | 日志服务：日志导出、Trace 上报 |
-| VeIdentity | [integrations/ve_identity/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/) | 身份认证：IAM、OAuth2、MCP 工具认证、Function Tool 认证 |
-| AgentKit | [integrations/agentkit/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/) | AgentKit 平台：应用托管、会话能力、评估反馈、技能沙箱 |
-| CozeLoop | [integrations/ve_cozeloop/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cozeloop/) | CozeLoop 提示词平台集成 |
-| CloudAgentEngine | [cloud/cloud_agent_engine.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cloud/cloud_agent_engine.py) | 云端 Agent 引擎，统一调度 |
-| CloudApp | [cloud/cloud_app.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cloud/cloud_app.py) | 云端应用入口 |
-| Harness App | [cloud/harness_app/](file:///d:/AI/.chaos/libs/veadk-python/veadk/cloud/harness_app/) | Harness 运行时应用、环境映射、指标收集 |
+| VeFaaS | [integrations/ve_faas/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/) | 函数计算：代码打包、函数创建、应用发布、镜像部署 |
+| VeAPIG | [integrations/ve_apig/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_apig/) | API 网关：Serverless 网关、服务/路由/上游管理 |
+| VeCR | [integrations/ve_cr/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cr/) | 容器镜像仓库：VPC 隧道网络打通 |
+| VeTOS | [integrations/ve_tos/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tos/) | 对象存储：文件上传、媒体托管、内联数据上传 |
+| VeTLS | [integrations/ve_tls/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tls/) | 日志服务：日志导出、Trace 上报 |
+| VeIdentity | [integrations/ve_identity/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/) | 身份认证：IAM、OAuth2、MCP 工具认证、Function Tool 认证 |
+| AgentKit | [integrations/agentkit/](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/) | AgentKit 平台：应用托管、会话能力、评估反馈、技能沙箱 |
+| CozeLoop | [integrations/ve_cozeloop/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cozeloop/) | CozeLoop 提示词平台集成 |
+| CloudAgentEngine | [cloud/cloud_agent_engine.py](file:///d:/AI/vendor/veadk-python/veadk/cloud/cloud_agent_engine.py) | 云端 Agent 引擎，统一调度 |
+| CloudApp | [cloud/cloud_app.py](file:///d:/AI/vendor/veadk-python/veadk/cloud/cloud_app.py) | 云端应用入口 |
+| Harness App | [cloud/harness_app/](file:///d:/AI/vendor/veadk-python/veadk/cloud/harness_app/) | Harness 运行时应用、环境映射、指标收集 |
 
 **统一凭证初始化模式**：
 所有云集成模块构造函数都接收 `access_key`、`secret_key`、`session_token`、`region` 四元组，内部统一创建 `volcenginesdkcore.Configuration()` 设置凭证，再初始化对应 SDK 的 ApiClient。对于 SDK 未覆盖的 OpenAPI，统一通过 `ve_request()` 工具函数发送签名请求。
@@ -417,13 +417,13 @@ agent = Agent(name="demo", short_term_memory=stm)
 
 | 模块 | 路径 | 功能 |
 |---|---|---|
-| FeishuChannelExtension | [extensions/feishu_channel.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/feishu_channel.py) | 飞书渠道桥接：WebSocket 连接、消息接收、user/session 映射、流式响应、thread 历史 |
-| Harness Extension | [extensions/harness/](file:///d:/AI/.chaos/libs/veadk-python/veadk/extensions/harness/) | Harness 运行时扩展：插件系统、事件总线、JSONL 存储、模块（invocation_context、tool_compactor 等） |
-| CLI | [cli/cli.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/cli.py) + [cli/cli_*.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/cli/) | 命令行工具：init/create/deploy/web/frontend/kb/eval/rl/pipeline/harness 等 15+ 子命令 |
-| Web UI | [webui/](file:///d:/AI/.chaos/libs/veadk-python/webui/) | 静态 Web UI 资源 |
-| Frontend | [frontend/](file:///d:/AI/.chaos/libs/veadk-python/frontend/) | TypeScript/React 前端：工作台、沙箱、A2UI 组件、技能创建器、Studio 部署 |
-| Runtime (Codex) | [runtime/codex/](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/codex/) | Codex 运行时桥接，替代 ADK 原生执行循环 |
-| Runtime (PiAgent) | [runtime/piagent/](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/piagent/) | PiAgent 本地编码 Agent 二进制桥接 |
+| FeishuChannelExtension | [extensions/feishu_channel.py](file:///d:/AI/vendor/veadk-python/veadk/extensions/feishu_channel.py) | 飞书渠道桥接：WebSocket 连接、消息接收、user/session 映射、流式响应、thread 历史 |
+| Harness Extension | [extensions/harness/](file:///d:/AI/vendor/veadk-python/veadk/extensions/harness/) | Harness 运行时扩展：插件系统、事件总线、JSONL 存储、模块（invocation_context、tool_compactor 等） |
+| CLI | [cli/cli.py](file:///d:/AI/vendor/veadk-python/veadk/cli/cli.py) + [cli/cli_*.py](file:///d:/AI/vendor/veadk-python/veadk/cli/) | 命令行工具：init/create/deploy/web/frontend/kb/eval/rl/pipeline/harness 等 15+ 子命令 |
+| Web UI | [webui/](file:///d:/AI/vendor/veadk-python/veadk/webui/) | 静态 Web UI 资源 |
+| Frontend | [frontend/](file:///d:/AI/vendor/veadk-python/frontend/) | TypeScript/React 前端：工作台、沙箱、A2UI 组件、技能创建器、Studio 部署 |
+| Runtime (Codex) | [runtime/codex/](file:///d:/AI/vendor/veadk-python/veadk/runtime/codex/) | Codex 运行时桥接，替代 ADK 原生执行循环 |
+| Runtime (PiAgent) | [runtime/piagent/](file:///d:/AI/vendor/veadk-python/veadk/runtime/piagent/) | PiAgent 本地编码 Agent 二进制桥接 |
 
 ---
 

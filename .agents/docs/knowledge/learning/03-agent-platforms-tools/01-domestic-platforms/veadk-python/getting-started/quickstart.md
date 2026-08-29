@@ -88,7 +88,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-完整示例代码来自 [file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/main.py](file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/main.py)。
+完整示例代码来自 [file:///d:/AI/vendor/veadk-python/examples/01_quickstart/main.py](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/main.py)。
 
 ---
 
@@ -118,8 +118,8 @@ import asyncio
 from veadk import Agent, Runner
 ```
 - 从 `veadk` 包导入两个核心类：
-  - `Agent`：智能体类，定义 Agent 的身份、指令、模型、工具等（定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L751)）
-  - `Runner`：运行器类，负责驱动 Agent 执行对话、管理会话（定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L789](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L789)）
+  - `Agent`：智能体类，定义 Agent 的身份、指令、模型、工具等（定义在 [file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L751)）
+  - `Runner`：运行器类，负责驱动 Agent 执行对话、管理会话（定义在 [file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L789](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L789)）
 
 ### 定义 main 异步函数
 
@@ -183,7 +183,7 @@ answer = await runner.run(
 ```
 
 - `await`：等待异步操作完成
-- `runner.run()` 是执行对话的核心方法（定义在 [file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L468-L576](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L468-L576)）
+- `runner.run()` 是执行对话的核心方法（定义在 [file:///d:/AI/vendor/veadk-python/veadk/runner.py#L468-L576](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L468-L576)）
 
 `runner.run()` 方法参数：
 
@@ -196,7 +196,7 @@ answer = await runner.run(
 
 返回值：`str` 类型，即 Agent 的最终文本回复。
 
-> **注意**：README 中展示的极简写法 `agent.run("hello!")` 已在新版本中标记为废弃（[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L748-L751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L748-L751)），请使用 `Runner.run()` 方式。
+> **注意**：README 中展示的极简写法 `agent.run("hello!")` 已在新版本中标记为废弃（[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L748-L751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L748-L751)），请使用 `Runner.run()` 方式。
 
 ### 输出结果
 
@@ -284,7 +284,7 @@ Agent 回复：
 
 ## 代码变化：README 极简写法 vs 推荐写法
 
-README 中展示了一个极简示例（[file:///d:/AI/.chaos/libs/veadk-python/README.md#L73-L81](file:///d:/AI/.chaos/libs/veadk-python/README.md#L73-L81)）：
+README 中展示了一个极简示例（[file:///d:/AI/vendor/veadk-python/README.md#L73-L81](file:///d:/AI/vendor/veadk-python/README.md#L73-L81)）：
 
 ```python
 # README 中的极简写法（已废弃 agent.run 方式）
@@ -296,7 +296,7 @@ res = asyncio.run(agent.run("hello!"))
 print(res)
 ```
 
-但请注意：`Agent.run()` 方法在 google-adk >= 2.0.0 中已被标记为废弃（[file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L743-L751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L743-L751)），推荐使用 `Runner` 方式：
+但请注意：`Agent.run()` 方法在 google-adk >= 2.0.0 中已被标记为废弃（[file:///d:/AI/vendor/veadk-python/veadk/agent.py#L743-L751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L743-L751)），推荐使用 `Runner` 方式：
 
 ```python
 # 推荐写法（使用 Runner）
@@ -356,20 +356,20 @@ async def main():
 
 ### 2. 查看更多官方示例
 
-浏览 [examples/](file:///d:/AI/.chaos/libs/veadk-python/examples/) 目录，了解更多功能：
+浏览 [examples/](file:///d:/AI/vendor/veadk-python/examples/) 目录，了解更多功能：
 
 | 示例目录 | 内容 |
 |----------|------|
-| [01_quickstart/](file:///d:/AI/.chaos/libs/veadk-python/examples/01_quickstart/) | 快速入门（当前示例） |
-| [02_custom_tools/](file:///d:/AI/.chaos/libs/veadk-python/examples/02_custom_tools/) | 自定义工具 |
-| [03_short_term_memory/](file:///d:/AI/.chaos/libs/veadk-python/examples/03_short_term_memory/) | 短期记忆 |
-| [04_web_search/](file:///d:/AI/.chaos/libs/veadk-python/examples/04_web_search/) | 网页搜索 |
-| [05_knowledgebase_rag/](file:///d:/AI/.chaos/libs/veadk-python/examples/05_knowledgebase_rag/) | 知识库 RAG |
-| [06_multi_agent/](file:///d:/AI/.chaos/libs/veadk-python/examples/06_multi_agent/) | 多智能体协作 |
-| [07_structured_output/](file:///d:/AI/.chaos/libs/veadk-python/examples/07_structured_output/) | 结构化输出 |
-| [08_model_config/](file:///d:/AI/.chaos/libs/veadk-python/examples/08_model_config/) | 模型配置 |
-| [09_long_term_memory/](file:///d:/AI/.chaos/libs/veadk-python/examples/09_long_term_memory/) | 长期记忆 |
-| [11_tracing/](file:///d:/AI/.chaos/libs/veadk-python/examples/11_tracing/) | 链路追踪 |
+| [01_quickstart/](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/) | 快速入门（当前示例） |
+| [02_custom_tools/](file:///d:/AI/vendor/veadk-python/examples/02_custom_tools/) | 自定义工具 |
+| [03_short_term_memory/](file:///d:/AI/vendor/veadk-python/examples/03_short_term_memory/) | 短期记忆 |
+| [04_web_search/](file:///d:/AI/vendor/veadk-python/examples/04_web_search/) | 网页搜索 |
+| [05_knowledgebase_rag/](file:///d:/AI/vendor/veadk-python/examples/05_knowledgebase_rag/) | 知识库 RAG |
+| [06_multi_agent/](file:///d:/AI/vendor/veadk-python/examples/06_multi_agent/) | 多智能体协作 |
+| [07_structured_output/](file:///d:/AI/vendor/veadk-python/examples/07_structured_output/) | 结构化输出 |
+| [08_model_config/](file:///d:/AI/vendor/veadk-python/examples/08_model_config/) | 模型配置 |
+| [09_long_term_memory/](file:///d:/AI/vendor/veadk-python/examples/09_long_term_memory/) | 长期记忆 |
+| [11_tracing/](file:///d:/AI/vendor/veadk-python/examples/11_tracing/) | 链路追踪 |
 
 ### 3. 阅读核心概念文档
 

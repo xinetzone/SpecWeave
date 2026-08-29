@@ -88,7 +88,7 @@ flowchart TD
 
 ## model_post_init 逐阶段解析
 
-方法位置：[veadk/agent.py:214-445](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L214-L445)
+方法位置：[veadk/agent.py:214-445](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L214-L445)
 
 ### 阶段一：基础配置初始化（步骤 1-4）
 
@@ -162,7 +162,7 @@ self.model_extra_config |= {"extra_headers": headers, "extra_body": body}
 3. 传入 `fallbacks` 参数实现自动故障转移
 4. 用户自定义 model 时输出 warning 提示默认头可能缺失
 
-**代码位置**：[veadk/agent.py:256-300](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L256-L300)
+**代码位置**：[veadk/agent.py:256-300](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L256-L300)
 
 #### 步骤 6：Tracer 准备（第 302 行）
 
@@ -171,7 +171,7 @@ self._prepare_tracers()
 ```
 
 **做什么**：调用 `_prepare_tracers()` 方法，通过环境变量 `ENABLE_APMPLUS`/`ENABLE_COZELOOP`/`ENABLE_TLS` 自动探测并配置 Tracing 导出器。
-**详细流程**：[veadk/agent.py:645-696](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L645-L696)
+**详细流程**：[veadk/agent.py:645-696](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L645-L696)
 
 #### 步骤 7：工具依赖验证（第 304 行）
 
@@ -183,7 +183,7 @@ self._validate_tool_dependencies()
 - 有 `video_generate` 无 `video_task_query` → 自动补全 query 工具
 - 有 `video_task_query` 无 `video_generate` → 自动补全 generate 工具
 
-**代码位置**：[veadk/agent.py:614-643](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L614-L643)
+**代码位置**：[veadk/agent.py:614-643](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L614-L643)
 
 ---
 
@@ -193,17 +193,17 @@ self._validate_tool_dependencies()
 
 | 步骤 | 开关条件 | 挂载内容 | 挂载方式 | 代码位置 |
 |---|---|---|---|---|
-| 8 | `self.knowledgebase` 非空 | `LoadKnowledgebaseTool`、`load_kb_queries` | `self.tools.append()` | [veadk/agent.py:306-324](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L324) |
-| 9 | `self.long_term_memory is not None` | `load_memory` 工具（设置 backend metadata） | `self.tools.append()` | [veadk/agent.py:326-333](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L326-L333) |
-| 10 | `self.enable_authz = True` | `check_agent_authorization` | `before_agent_callback` 链 | [veadk/agent.py:335-349](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L335-L349) |
-| 11 | `self.prompt_manager` 非空 | `self.instruction = prompt_manager.get_prompt` | 替换 instruction | [veadk/agent.py:351-352](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L351-L352) |
-| 12 | `self.auto_save_session = True` | `save_session_to_long_term_memory` | `after_agent_callback` 链 | [veadk/agent.py:354-375](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L354-L375) |
-| 13 | `self.skills` 非空 | `load_skills()` + skills checklist 回调 | 工具+`before_tool_callback` | [veadk/agent.py:377-397](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L377-L397) |
-| 14 | `self.example_store` 非空 | `ExampleTool` | `self.tools.append()` | [veadk/agent.py:399-402](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L399-L402) |
-| 15 | `self.enable_ghostchar = True` | `GhostcharTool` + instruction 追加 | `self.tools.append()` + 修改 instruction | [veadk/agent.py:404-410](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L404-L410) |
-| 16 | `self.enable_a2ui = True` | `build_a2ui_toolset()` | `self.tools.append()` | [veadk/agent.py:412-416](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L412-L416) |
-| 17 | `self.enable_tunnel = True` | `TunnelToolset(agent_name=self.name)` | `self.tools.append()` | [veadk/agent.py:418-422](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L418-L422) |
-| 18 | `self.enable_dataset_gen = True` | `dataset_auto_gen_callback` | `after_agent_callback` 链 | [veadk/agent.py:424-438](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L424-L438) |
+| 8 | `self.knowledgebase` 非空 | `LoadKnowledgebaseTool`、`load_kb_queries` | `self.tools.append()` | [veadk/agent.py:306-324](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L324) |
+| 9 | `self.long_term_memory is not None` | `load_memory` 工具（设置 backend metadata） | `self.tools.append()` | [veadk/agent.py:326-333](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L326-L333) |
+| 10 | `self.enable_authz = True` | `check_agent_authorization` | `before_agent_callback` 链 | [veadk/agent.py:335-349](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L335-L349) |
+| 11 | `self.prompt_manager` 非空 | `self.instruction = prompt_manager.get_prompt` | 替换 instruction | [veadk/agent.py:351-352](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L351-L352) |
+| 12 | `self.auto_save_session = True` | `save_session_to_long_term_memory` | `after_agent_callback` 链 | [veadk/agent.py:354-375](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L354-L375) |
+| 13 | `self.skills` 非空 | `load_skills()` + skills checklist 回调 | 工具+`before_tool_callback` | [veadk/agent.py:377-397](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L377-L397) |
+| 14 | `self.example_store` 非空 | `ExampleTool` | `self.tools.append()` | [veadk/agent.py:399-402](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L399-L402) |
+| 15 | `self.enable_ghostchar = True` | `GhostcharTool` + instruction 追加 | `self.tools.append()` + 修改 instruction | [veadk/agent.py:404-410](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L404-L410) |
+| 16 | `self.enable_a2ui = True` | `build_a2ui_toolset()` | `self.tools.append()` | [veadk/agent.py:412-416](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L412-L416) |
+| 17 | `self.enable_tunnel = True` | `TunnelToolset(agent_name=self.name)` | `self.tools.append()` | [veadk/agent.py:418-422](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L418-L422) |
+| 18 | `self.enable_dataset_gen = True` | `dataset_auto_gen_callback` | `after_agent_callback` 链 | [veadk/agent.py:424-438](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L424-L438) |
 
 **回调链的双形态自适应机制**：步骤 10/12/13/18 中挂载回调时，框架自动处理单函数/列表两种形态：
 - 回调不存在 → 直接赋值为单个函数
@@ -233,7 +233,7 @@ logger.debug(f"Agent: {self.model_dump(include={'id', 'name', 'model_name', 'mod
 
 Runner 是 VeADK 的执行入口，负责消息输入转换、会话管理、RunProcessor 装饰器链应用、Agent 调用、事件流处理、响应输出全流程。
 
-方法位置：[veadk/runner.py:468-576](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L468-L576)
+方法位置：[veadk/runner.py:468-576](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L468-L576)
 
 ### 执行流程图
 
@@ -280,9 +280,9 @@ flowchart TD
 
 #### 阶段一：消息输入与会话管理
 
-1. **消息类型支持**：`RunnerMessage = Union[str, list[str], MediaMessage, list[MediaMessage], list[MediaMessage | str]]`（[veadk/runner.py:46-52](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L46-L52)）
-2. **消息转换**：`_convert_messages()` 将多种输入类型转为 ADK 标准 Message 列表（[veadk/runner.py:201-277](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L201-L277)）
-3. **会话自动创建**：配置了 `short_term_memory` 时，自动调用 `create_session(app_name, user_id, session_id)`，使用 assert 验证会话创建成功（[veadk/runner.py:526-535](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L526-L535)）
+1. **消息类型支持**：`RunnerMessage = Union[str, list[str], MediaMessage, list[MediaMessage], list[MediaMessage | str]]`（[veadk/runner.py:46-52](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L46-L52)）
+2. **消息转换**：`_convert_messages()` 将多种输入类型转为 ADK 标准 Message 列表（[veadk/runner.py:201-277](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L201-L277)）
+3. **会话自动创建**：配置了 `short_term_memory` 时，自动调用 `create_session(app_name, user_id, session_id)`，使用 assert 验证会话创建成功（[veadk/runner.py:526-535](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L526-L535)）
 4. **RunConfig 配置**：默认 `max_llm_calls` 从 `MODEL_AGENT_MAX_LLM_CALLS` 环境变量读取，默认值 100
 
 #### 阶段二：RunProcessor 装饰器链
@@ -306,9 +306,9 @@ async for event in event_generator():
     # 处理事件...
 ```
 
-**代码位置**：[veadk/runner.py:541-553](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L541-L553)
+**代码位置**：[veadk/runner.py:541-553](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L541-L553)
 
-**三级优先级解析**（[veadk/runner.py:406-414](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L406-L414)）：
+**三级优先级解析**（[veadk/runner.py:406-414](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L406-L414)）：
 1. `run()` 方法参数传入的 `run_processor`（最高，单次运行临时覆盖）
 2. Runner 构造参数的 `run_processor`
 3. Agent 实例的 `run_processor`
@@ -318,7 +318,7 @@ async for event in event_generator():
 
 #### 阶段三：模型调用与工具执行
 
-`self.run_async` 经过 `intercept_new_message(_upload_image_to_tos)` 装饰器包装（[veadk/runner.py:464-466](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L464-L466)），在调用前后插入 pre/post 钩子：
+`self.run_async` 经过 `intercept_new_message(_upload_image_to_tos)` 装饰器包装（[veadk/runner.py:464-466](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L464-L466)），在调用前后插入 pre/post 钩子：
 - `pre_run_process`：处理内联媒体数据（如图片上传到 TOS）
 - `post_run_process`：后置处理占位
 - thinking_parts 聚合逻辑和事件日志记录
@@ -411,7 +411,7 @@ async for event in get_runtime(self.runtime).run_async(self, ctx):
     yield event
 ```
 
-**代码位置**：[veadk/agent.py:733-741](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L733-L741)
+**代码位置**：[veadk/agent.py:733-741](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L733-L741)
 
 ### 运行时工厂与缓存
 
@@ -435,7 +435,7 @@ def get_runtime(name: str) -> BaseRuntime:
     raise ValueError(f"Unknown runtime: {name!r}")
 ```
 
-**代码位置**：[veadk/runtime/__init__.py:32-64](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/__init__.py#L32-L64)
+**代码位置**：[veadk/runtime/__init__.py:32-64](file:///d:/AI/vendor/veadk-python/veadk/runtime/__init__.py#L32-L64)
 
 ### 三种运行时对比
 
@@ -457,7 +457,7 @@ class BaseRuntime:
         ...
 ```
 
-**代码位置**：[veadk/runtime/base_runtime.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/base_runtime.py)
+**代码位置**：[veadk/runtime/base_runtime.py](file:///d:/AI/vendor/veadk-python/veadk/runtime/base_runtime.py)
 
 桥接层负责将外部运行时（Codex SDK、PiAgent 二进制）的输出转换回 ADK 标准 Event 流，使得上层 Runner 的会话管理、memory、tracing、RunProcessor 等功能无需修改即可复用于所有 runtime。
 

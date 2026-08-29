@@ -56,7 +56,7 @@ class Agent(LlmAgent):
         # 后续步骤：挂载 VeADK 扩展能力
 ```
 
-**代码位置**：[veadk/agent.py:72](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L72)
+**代码位置**：[veadk/agent.py:72](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L72)
 
 Runner 同样采用此模式：
 
@@ -70,7 +70,7 @@ class Runner(ADKRunner):
         super().__init__(...)
 ```
 
-**代码位置**：[veadk/runner.py:329](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L329-L329)
+**代码位置**：[veadk/runner.py:329](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L329-L329)
 
 ### 关键特征
 
@@ -84,7 +84,7 @@ class Runner(ADKRunner):
 - ✅ **兼容保证**：所有为 Google ADK 编写的代码可在 VeADK 中直接运行
 - ⚠️ **工具列表副作用**：初始化后 `self.tools` 会被自动追加工具，用户传入的初始 tools 列表会被修改
 - ⚠️ **方法重写风险**：如需重写父类方法，务必调用 `super()` 并保持接口兼容
-- ⚠️ **版本兼容**：VeADK 包含 ADK 版本判断逻辑（[veadk/agent.py:743-751](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L743-L751)），升级 ADK 版本时需注意兼容性
+- ⚠️ **版本兼容**：VeADK 包含 ADK 版本判断逻辑（[veadk/agent.py:743-751](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L743-L751)），升级 ADK 版本时需注意兼容性
 
 ---
 
@@ -135,7 +135,7 @@ if self.enable_tunnel:
     self.tools.append(TunnelToolset(agent_name=self.name))
 ```
 
-**代码位置**：[veadk/agent.py:306-438](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L438)
+**代码位置**：[veadk/agent.py:306-438](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L438)
 
 ### 挂载条件类型汇总
 
@@ -183,15 +183,15 @@ else:
     self.before_agent_callback = new_callback
 ```
 
-**代码位置示例**（authz 回调）：[veadk/agent.py:340-349](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L340-L349)
+**代码位置示例**（authz 回调）：[veadk/agent.py:340-349](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L340-L349)
 
 ### 三个回调点
 
 | 回调点 | 触发时机 | VeADK 挂载的回调 | 代码位置 |
 |---|---|---|---|
-| `before_agent_callback` | Agent 执行前 | `check_agent_authorization`、动态技能加载回调 | [veadk/agent.py:340-349](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L340-L349)、[veadk/agent.py:603-612](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L603-L612) |
-| `before_tool_callback` | 每个工具调用前 | 技能清单检查回调 `init_skill_check_list` | [veadk/agent.py:388-397](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L388-L397) |
-| `after_agent_callback` | Agent 执行后 | `save_session_to_long_term_memory`、`dataset_auto_gen_callback` | [veadk/agent.py:364-375](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L364-L375)、[veadk/agent.py:429-438](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L429-L438) |
+| `before_agent_callback` | Agent 执行前 | `check_agent_authorization`、动态技能加载回调 | [veadk/agent.py:340-349](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L340-L349)、[veadk/agent.py:603-612](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L603-L612) |
+| `before_tool_callback` | 每个工具调用前 | 技能清单检查回调 `init_skill_check_list` | [veadk/agent.py:388-397](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L388-L397) |
+| `after_agent_callback` | Agent 执行后 | `save_session_to_long_term_memory`、`dataset_auto_gen_callback` | [veadk/agent.py:364-375](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L364-L375)、[veadk/agent.py:429-438](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L429-L438) |
 
 ### "宽容输入、严格输出" API 设计策略
 
@@ -248,7 +248,7 @@ async for event in get_runtime(self.runtime).run_async(self, ctx):
     yield event
 ```
 
-**代码位置**：[veadk/agent.py:733-741](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L733-L741)
+**代码位置**：[veadk/agent.py:733-741](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L733-L741)
 
 **工厂函数带缓存和可选依赖隔离**：
 
@@ -273,7 +273,7 @@ def get_runtime(name: str) -> BaseRuntime:
     raise ValueError(f"Unknown runtime: {name!r}")
 ```
 
-**代码位置**：[veadk/runtime/__init__.py:32-64](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/__init__.py#L32-L64)
+**代码位置**：[veadk/runtime/__init__.py:32-64](file:///d:/AI/vendor/veadk-python/veadk/runtime/__init__.py#L32-L64)
 
 **策略接口定义**：
 
@@ -332,7 +332,7 @@ if not self.model_api_key:
 # 优先级1（最高）：显式传入的 model_api_key 参数（多租户动态切换场景）
 ```
 
-**代码位置**：[veadk/agent.py:223-232](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L223-L232)
+**代码位置**：[veadk/agent.py:223-232](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L223-L232)
 
 ### 优先级链对照表
 
@@ -350,19 +350,19 @@ if not self.model_api_key:
 2. `VOLCENGINE_ACCESS_KEY`/`VOLCENGINE_SECRET_KEY` 环境变量
 3. VEFAAS IAM 角色自动获取（含 `session_token`）
 
-**代码位置**：[veadk/agent.py:477-490](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L477-L490)
+**代码位置**：[veadk/agent.py:477-490](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L477-L490)
 
 **模型 Fallback 链**（故障转移）：
 - `model_name` 为列表时，第一个为主模型，其余为 fallback 模型
 - 主模型限流/故障时自动切换到 fallback 模型
 
-**代码位置**：[veadk/agent.py:258-273](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L258-L273)
+**代码位置**：[veadk/agent.py:258-273](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L258-L273)
 
 **BytePlus 环境变量自动映射**：
 - `BYTEPLUS_ACCESS_KEY` → `VOLCENGINE_ACCESS_KEY`
 - `BYTEPLUS_SECRET_KEY` → `VOLCENGINE_SECRET_KEY`
 
-**代码位置**：[veadk/config.py:54-61](file:///d:/AI/.chaos/libs/veadk-python/veadk/config.py#L54-L61)
+**代码位置**：[veadk/config.py:54-61](file:///d:/AI/vendor/veadk-python/veadk/config.py#L54-L61)
 
 ### 使用注意事项
 
@@ -437,7 +437,7 @@ async for event in event_generator():
     # 处理事件...
 ```
 
-**代码位置**：[veadk/runner.py:541-553](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L541-L553)
+**代码位置**：[veadk/runner.py:541-553](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L541-L553)
 
 **三级 RunProcessor 优先级**：
 
@@ -446,7 +446,7 @@ async for event in event_generator():
 3. `Agent(run_processor=...)` 实例配置
 4. 默认 `NoOpRunProcessor`
 
-**代码位置**：[veadk/runner.py:406-414](file:///d:/AI/.chaos/libs/veadk-python/veadk/runner.py#L406-L414)
+**代码位置**：[veadk/runner.py:406-414](file:///d:/AI/vendor/veadk-python/veadk/runner.py#L406-L414)
 
 ### 实际应用案例：OAuth2 认证处理器
 
@@ -473,7 +473,7 @@ class AuthRequestProcessor(BaseRunProcessor):
         return decorator
 ```
 
-**代码位置**：[veadk/integrations/ve_identity/auth_processor.py:271-286](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L271-L286)
+**代码位置**：[veadk/integrations/ve_identity/auth_processor.py:271-286](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/auth_processor.py#L271-L286)
 
 ### 使用注意事项
 
@@ -536,7 +536,7 @@ class VeCredentialService(BaseCredentialService):
         return self._credentials.get(app_name, {}).get(user_id, {}).get(credential_key)
 ```
 
-**代码位置**：[veadk/auth/ve_credential_service.py:36-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py#L36-L100)
+**代码位置**：[veadk/auth/ve_credential_service.py:36-100](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py#L36-L100)
 
 **ADK 标准接口兼容**：
 
@@ -550,7 +550,7 @@ async def load_credential(self, auth_config, callback_context):
     return await self.get_credential(app_name, user_id, auth_config.credential_key)
 ```
 
-**代码位置**：[veadk/auth/ve_credential_service.py:82-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py#L82-L100)
+**代码位置**：[veadk/auth/ve_credential_service.py:82-100](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py#L82-L100)
 
 ### 存储结构
 
@@ -583,13 +583,13 @@ _credentials = {
 
 | 模式名称 | 类型 | 解决的核心问题 | 关键代码位置 |
 |---|---|---|---|
-| 继承扩展模式 | 结构型 | 保持生态兼容的同时增量扩展能力 | [veadk/agent.py:72](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L72-L72) |
-| 条件插件挂载模式 | 行为型 | 可选能力按需启用、延迟导入隔离依赖 | [veadk/agent.py:306-438](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L306-L438) |
-| 回调链模式 | 行为型 | 多回调有序执行、双形态自适应 API | [veadk/agent.py:340-349](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L340-L349) |
-| 运行时策略模式 | 行为型 | 多执行引擎可切换、上层代码无感知 | [veadk/runtime/__init__.py:32-64](file:///d:/AI/.chaos/libs/veadk-python/veadk/runtime/__init__.py#L32-L64) |
-| 配置降级模式 | 行为型 | 多部署环境配置适配、多级 fallback | [veadk/agent.py:223-232](file:///d:/AI/.chaos/libs/veadk-python/veadk/agent.py#L223-L232) |
-| RunProcessor 装饰器链 | 结构型 | 横切关注点中间件、事件流拦截注入 | [veadk/processors/base_run_processor.py:27-88](file:///d:/AI/.chaos/libs/veadk-python/veadk/processors/base_run_processor.py#L27-L88) |
-| 凭证服务单例模式 | 创建型 | 多租户凭证统一存储、双层隔离 | [veadk/auth/ve_credential_service.py:36-100](file:///d:/AI/.chaos/libs/veadk-python/veadk/auth/ve_credential_service.py#L36-L100) |
+| 继承扩展模式 | 结构型 | 保持生态兼容的同时增量扩展能力 | [veadk/agent.py:72](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L72-L72) |
+| 条件插件挂载模式 | 行为型 | 可选能力按需启用、延迟导入隔离依赖 | [veadk/agent.py:306-438](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L306-L438) |
+| 回调链模式 | 行为型 | 多回调有序执行、双形态自适应 API | [veadk/agent.py:340-349](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L340-L349) |
+| 运行时策略模式 | 行为型 | 多执行引擎可切换、上层代码无感知 | [veadk/runtime/__init__.py:32-64](file:///d:/AI/vendor/veadk-python/veadk/runtime/__init__.py#L32-L64) |
+| 配置降级模式 | 行为型 | 多部署环境配置适配、多级 fallback | [veadk/agent.py:223-232](file:///d:/AI/vendor/veadk-python/veadk/agent.py#L223-L232) |
+| RunProcessor 装饰器链 | 结构型 | 横切关注点中间件、事件流拦截注入 | [veadk/processors/base_run_processor.py:27-88](file:///d:/AI/vendor/veadk-python/veadk/processors/base_run_processor.py#L27-L88) |
+| 凭证服务单例模式 | 创建型 | 多租户凭证统一存储、双层隔离 | [veadk/auth/ve_credential_service.py:36-100](file:///d:/AI/vendor/veadk-python/veadk/auth/ve_credential_service.py#L36-L100) |
 
 这些设计模式共同体现了 VeADK 的架构哲学：**兼容优先、渐进式复杂度、容错设计、约定优于配置**。简单场景使用默认值开箱即用，高级场景通过模式提供的扩展点自定义，API 形态随需求自然升级。
 

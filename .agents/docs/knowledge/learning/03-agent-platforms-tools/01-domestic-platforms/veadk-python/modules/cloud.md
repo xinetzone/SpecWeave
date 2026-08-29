@@ -14,7 +14,7 @@ wiki_version: '1.0'
 
 VeADK 提供了与火山引擎（Volcengine）云服务的完整集成，支持一键部署 Agent 到云端。集成模块覆盖了函数计算、容器镜像、API 网关、对象存储、日志服务、身份认证、评估服务、向量数据库等核心云服务，实现从代码到生产环境的全自动化部署流程。
 
-> 源码位置：[file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/)
+> 源码位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/](file:///d:/AI/vendor/veadk-python/veadk/integrations/)
 
 ---
 
@@ -40,7 +40,7 @@ VeADK 提供了与火山引擎（Volcengine）云服务的完整集成，支持�
 
 `VeFaaS` 类封装了火山引擎函数计算服务的操作，支持函数创建、代码上传、应用管理等功能，是 VeADK 云部署的核心模块。
 
-> 源码位置：[ve_faas/ve_faas.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py)
+> 源码位置：[ve_faas/ve_faas.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py)
 
 ### 类定义
 
@@ -117,7 +117,7 @@ def _upload_and_mount_code(self, function_id: str, path: str):
 - 支持 API Key 认证开关
 - 支持 MCP Session
 
-> 源码位置：[ve_faas.py#L52-L200](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L200)
+> 源码位置：[ve_faas.py#L52-L200](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L52-L200)
 
 ### 项目模板
 
@@ -133,7 +133,7 @@ VeFaaS 集成提供了两种 Cookiecutter 项目模板：
    - 包含：Flask Web 应用、静态文件、模板、Dockerfile
    - 示例：simple-blog（简单博客）
 
-> 模板位置：[ve_faas/template/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_faas/template/)
+> 模板位置：[ve_faas/template/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/template/)
 
 ---
 
@@ -141,7 +141,7 @@ VeFaaS 集成提供了两种 Cookiecutter 项目模板：
 
 `VeCR` 类封装了火山引擎容器镜像服务（Container Registry），支持镜像仓库实例创建、命名空间管理、仓库管理等操作。
 
-> 源码位置：[ve_cr/ve_cr.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cr/ve_cr.py)
+> 源码位置：[ve_cr/ve_cr.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cr/ve_cr.py)
 
 ### 类定义
 
@@ -192,7 +192,7 @@ def _create_instance(self, instance_name: str = DEFAULT_CR_INSTANCE_NAME) -> str
 | 仓库名 | `veadk-user-repo` | - |
 | API 版本 | `2022-05-12` | - |
 
-> 源码位置：[ve_cr.py#L28-L150](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cr/ve_cr.py#L28-L150)
+> 源码位置：[ve_cr.py#L28-L150](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cr/ve_cr.py#L28-L150)
 
 ---
 
@@ -200,7 +200,7 @@ def _create_instance(self, instance_name: str = DEFAULT_CR_INSTANCE_NAME) -> str
 
 `APIGateway` 类封装了火山引擎 API 网关服务，支持网关实例、服务、上游、路由的创建与管理。
 
-> 源码位置：[ve_apig/ve_apig.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_apig/ve_apig.py)
+> 源码位置：[ve_apig/ve_apig.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_apig/ve_apig.py)
 
 ### 类定义
 
@@ -247,7 +247,7 @@ def create_serverless_gateway(self, instance_name: str) -> str:
 **3. 上游管理**
 - `create_vefaas_upstream()`: 创建 VeFaaS 函数上游
 
-> 源码位置：[ve_apig.py#L24-L150](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_apig/ve_apig.py#L24-L150)
+> 源码位置：[ve_apig.py#L24-L150](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_apig/ve_apig.py#L24-L150)
 
 ---
 
@@ -255,7 +255,7 @@ def create_serverless_gateway(self, instance_name: str) -> str:
 
 `VeTOS` 类封装了火山引擎对象存储服务（TOS），支持文件上传、下载、删除等操作，可用于持久化存储 Agent 数据、多媒体文件等。
 
-> 源码位置：[ve_tos/ve_tos.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tos/ve_tos.py)
+> 源码位置：[ve_tos/ve_tos.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tos/ve_tos.py)
 
 ### 类定义
 
@@ -299,7 +299,7 @@ VeTOS 自动根据 `CLOUD_PROVIDER` 环境变量适配端点：
 pip install tos
 ```
 
-> 源码位置：[ve_tos.py#L33-L100](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tos/ve_tos.py#L33-L100)
+> 源码位置：[ve_tos.py#L33-L100](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tos/ve_tos.py#L33-L100)
 
 ---
 
@@ -307,7 +307,7 @@ pip install tos
 
 `VeTLS` 类封装了火山引擎日志服务（TLS），支持日志项目创建、日志主题管理、日志写入与查询，用于 Agent 运行日志收集与分析。
 
-> 源码位置：[ve_tls/ve_tls.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tls/ve_tls.py)
+> 源码位置：[ve_tls/ve_tls.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tls/ve_tls.py)
 
 ### 类定义
 
@@ -344,7 +344,7 @@ class VeTLS:
 pip install volcengine
 ```
 
-> 源码位置：[ve_tls.py#L23-L100](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_tls/ve_tls.py#L23-L100)
+> 源码位置：[ve_tls.py#L23-L100](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_tls/ve_tls.py#L23-L100)
 
 ---
 
@@ -352,7 +352,7 @@ pip install volcengine
 
 `ve_identity` 模块提供了与火山引擎 VeIdentity 身份认证服务的集成，支持 OAuth2、API Key、Workload 认证等多种认证方式，并提供了与 Agent 工具结合的认证中间件。
 
-> 源码位置：[ve_identity/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/)
+> 源码位置：[ve_identity/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/)
 
 ### 核心组件
 
@@ -411,7 +411,7 @@ github_tool = VeIdentityFunctionTool(
 5. Token 自动注入工具参数执行
 6. Token 缓存供后续使用
 
-> 源码位置：[ve_identity/__init__.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_identity/__init__.py)
+> 源码位置：[ve_identity/__init__.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_identity/__init__.py)
 
 ---
 
@@ -419,7 +419,7 @@ github_tool = VeIdentityFunctionTool(
 
 `agentkit` 模块提供了与火山引擎 AgentKit 平台的集成，主要支持评估功能。
 
-> 源码位置：[agentkit/](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/agentkit/)
+> 源码位置：[agentkit/](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/)
 
 ### 目录结构
 
@@ -451,7 +451,7 @@ agentkit/
 
 `ve_code_pipeline` 模块封装了火山引擎 Code Pipeline 服务，支持创建 CI/CD 流水线实现代码变更自动部署。
 
-> 源码位置：[ve_code_pipeline/ve_code_pipeline.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_code_pipeline/ve_code_pipeline.py)
+> 源码位置：[ve_code_pipeline/ve_code_pipeline.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_code_pipeline/ve_code_pipeline.py)
 
 流水线工作流程：
 1. 监听 GitHub 代码推送
@@ -472,7 +472,7 @@ agentkit/
 - 评估数据集管理
 - 指标收集
 
-> 源码位置：[ve_cozeloop/ve_cozeloop.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_cozeloop/ve_cozeloop.py)
+> 源码位置：[ve_cozeloop/ve_cozeloop.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_cozeloop/ve_cozeloop.py)
 
 主要用于 Tracing 模块的 CozeLoop Exporter 和 Prompt 模块的 CozeloopPromptManager。
 
@@ -482,7 +482,7 @@ agentkit/
 
 `ve_prompt_pilot` 模块集成了火山引擎 PromptPilot 服务，支持系统提示词的自动化优化。
 
-> 源码位置：[ve_prompt_pilot/ve_prompt_pilot.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_prompt_pilot/ve_prompt_pilot.py)
+> 源码位置：[ve_prompt_pilot/ve_prompt_pilot.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_prompt_pilot/ve_prompt_pilot.py)
 
 主要功能：
 - 分析现有 Prompt
@@ -498,7 +498,7 @@ agentkit/
 
 `ve_viking_db_memory` 模块提供了基于火山引擎 VikingDB 向量数据库的长期记忆存储实现。
 
-> 源码位置：[ve_viking_db_memory/ve_viking_db_memory.py](file:///d:/AI/.chaos/libs/veadk-python/veadk/integrations/ve_viking_db_memory/ve_viking_db_memory.py)
+> 源码位置：[ve_viking_db_memory/ve_viking_db_memory.py](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_viking_db_memory/ve_viking_db_memory.py)
 
 特点：
 - 支持高维向量存储与检索
