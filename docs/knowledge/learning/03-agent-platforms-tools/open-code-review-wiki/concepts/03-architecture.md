@@ -706,7 +706,7 @@ func (m *GitIgnoreMatcher) Match(path string) bool {
 
 **最后匹配优先**的含义：
 
-```gitignore
+```text
 # .gitignore 示例
 *.log           # 忽略所有 .log
 !important.log  # 但保留 important.log

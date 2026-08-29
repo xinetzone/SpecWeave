@@ -78,8 +78,6 @@ stale_after: "2027-08-22"
 
 ## 第一部分：最佳实践模式（Best Practices）
 
----
-
 ### BP-1：Spec前置规划+逐章原子委托模式（Spec-First Atomic Delegation）
 
 | 属性 | 值 |
@@ -416,8 +414,6 @@ Spec驱动文档创建流程中，创建者自我验证容易产生盲区：
 ---
 
 ## 第二部分：反模式（Anti-Patterns）
-
----
 
 ### AP-1：无规划直接生成模式（No-Spec Direct Generation）
 

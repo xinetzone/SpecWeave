@@ -120,5 +120,3 @@ Agent Runtime 是 Agent 的执行环境，负责：接收输入 → 调用 LLM �
 | **OpenAI** | Assistants API + Responses API + Agents SDK | 托管式 Agent Runtime | 2025.04 |
 | **AutoGen** | AutoGen 0.4 (Core + AgentChat) | 多 Agent 对话框架 | 0.4.x |
 | **Claude SDK** | Claude Agent SDK (Anthropic) | 代码执行 Agent | 0.1.x |
-
----

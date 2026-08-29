@@ -225,10 +225,10 @@ okf-kit 会自动将页面间的链接转换为相对路径链接：
   "created_at": "2026-08-18T14:30:00Z",
   "updated_at": "2026-08-18T14:35:00Z",
   "page_count": 42,
-  "pages": { ... },
-  "url_to_path": { ... },
-  "links": { ... },
-  "config": { ... }
+  "pages": {},
+  "url_to_path": {},
+  "links": {},
+  "config": {}
 }
 ```
 

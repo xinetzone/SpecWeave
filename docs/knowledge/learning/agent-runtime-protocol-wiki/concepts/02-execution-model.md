@@ -187,5 +187,3 @@ Deep Agents 把这一点推得更彻底：它默认提供 virtual filesystem，�
 执行模型不会统一。Loop 承载方式回答主循环放在哪里，编排协议模式回答哪些 Action 副作用会被 Runtime 提升为状态对象。复杂工作流适合图式 Runtime，简单任务适合代码式 Runtime，快速原型适合托管式 Runtime；ReAct、Plan-and-Execute、Conversation-style coordination 可以运行在不同 Runtime 之上，也可以在同一个 Runtime 内叠加。
 
 作为开发者，关键不是押注某一种 loop，而是让状态管理、工具调用、流式输出独立于具体执行模型。这样从代码式 Runtime 切到图式 Runtime，或从 ReAct 切到 Plan-and-Execute 时，其他能力仍然可以复用。
-
----

@@ -40,8 +40,6 @@ stale_after: "2027-08-22"
 
 ## 第一部分：最佳实践模式（Best Practices）
 
----
-
 ### BP-1：验证器锁定铁律模式
 
 | 属性 | 值 |
@@ -732,8 +730,6 @@ def two_level_loop():
 ---
 
 ## 第二部分：反模式（Anti-Patterns）
-
----
 
 ### AP-1：Agent自改验证器（自己给自己批作业）
 

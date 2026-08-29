@@ -149,5 +149,3 @@ LangGraph 是唯一支持 **Checkpoint回滚**的框架：
 Agent Runtime 应默认采用 Error-as-Data。Agent 的核心价值是自主决策，工具错误也应该优先作为可理解的数据交给模型处理；只有模型无法处理的系统级故障，才应该作为Exception向上抛。
 
 > **Checkpoint回滚是生产环境的明确缺口。** 长任务执行到后半段失败时，是否能从最近稳定状态恢复，直接决定这个Runtime能否承载真实业务流程。
-
----
