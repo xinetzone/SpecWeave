@@ -23,7 +23,7 @@ ALLOWED_EXTENSIONS = {
     ".md", ".py", ".js", ".ts", ".jsx", ".tsx", ".go", ".java",
     ".yaml", ".yml", ".json", ".toml", ".xml", ".html", ".css",
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
-    ".txt", ".csv", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg",
+    ".txt", ".csv", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
     ".ini", ".log", ".lock", ".env.example",
     ".ttf",
