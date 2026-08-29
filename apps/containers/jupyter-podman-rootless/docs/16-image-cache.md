@@ -1,13 +1,13 @@
 ---
 id: "jupyter-image-cache"
 title: "镜像缓存与增量重建"
-source: "bin/jpman, Containerfile.hidden"
+source: "bin/jpman, Containerfile"
 ---
 # 镜像缓存与增量重建
 
 本项目提供两种优化开发体验的机制：
 1. **镜像缓存**：使用 podman save/load 快速备份恢复镜像，避免重复构建
-2. **增量重建**：使用 Containerfile.hidden 进行配置变更的快速重建（<10秒）
+2. **增量重建**：`jpman rebuild` 基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5（<10秒）
 
 ## 镜像缓存
 
@@ -70,27 +70,9 @@ SAVE_TOOK=45s
 
 当只修改配置文件（如 jupyter_notebook_config.py）时，无需重新构建整个镜像，使用增量重建可以在10秒内完成更新。
 
-### Containerfile.hidden
+### 增量重建原理
 
-增量重建使用的 Containerfile 位于项目根目录：
-
-```dockerfile
-# Incremental Containerfile: patch existing image with allow_hidden config
-FROM localhost/jupyter-podman-rootless:latest
-
-# Copy fixed jupyter config with allow_hidden = True
-COPY config/jupyter_notebook_config.py /root/.jupyter/jupyter_notebook_config.py
-COPY config/jupyter_notebook_config.py /home/devuser/.jupyter/jupyter_notebook_config.py
-
-# Ensure correct ownership/permissions
-RUN chown root:root /root/.jupyter/jupyter_notebook_config.py && \
-    chmod 644 /root/.jupyter/jupyter_notebook_config.py && \
-    chown devuser:devuser /home/devuser/.jupyter/jupyter_notebook_config.py && \
-    chmod 644 /home/devuser/.jupyter/jupyter_notebook_config.py && \
-    echo "=== Patched config verification ===" && \
-    grep -n 'allow_hidden' /root/.jupyter/jupyter_notebook_config.py && \
-    grep -n 'allow_hidden' /home/devuser/.jupyter/jupyter_notebook_config.py
-```
+配置文件（如 `config/jupyter_notebook_config.py`）位于主 Containerfile 的 **Layer 4**（独立成层、变化频率高）。修改配置后重新构建时，Stage 1-3 与 Layer 2/3 缓存全部命中，仅 Layer 4/5 重建，因此秒级完成——无需单独的增量补丁文件。
 
 ### 使用增量重建
 
@@ -99,32 +81,30 @@ bash bin/jpman rebuild
 ```
 
 该命令会：
-1. 创建临时构建目录
-2. 复制 Containerfile.hidden 和 config/jupyter_notebook_config.py
-3. 如容器正在运行，先停止并删除
-4. 在临时目录执行 podman build
-5. 清理临时目录
-6. 自动启动新容器
+1. 如容器正在运行，先停止并删除
+2. 从项目根目录的主 Containerfile 构建（`--format docker` + tuna 三镜像源，与 rebuild-all 一致）
+3. 层缓存命中时秒级完成
+4. 自动启动新容器
 
-> ⚠️ **注意**：增量重建仅适用于配置文件变更。若修改了 Containerfile、conda 环境、apt 包等，需要使用 `jpman rebuild-all` 进行全量重建。
+> ⚠️ **注意**：增量重建的提速依赖层缓存有效（首次构建或缓存被清理后即为全量速度）。若修改了 Containerfile、conda 环境、apt 包等，同样使用 `jpman rebuild` 或 `jpman rebuild-all`，区别仅在于 rebuild 会自动重启容器。
 
 ### 何时使用哪种构建方式
 
 | 变更类型 | rebuild | rebuild-all |
 |----------|---------|-------------|
-| config/jupyter_notebook_config.py | ✅ | ❌ 浪费时间 |
-| config/sshd_config | ⚠️ 需更新 Containerfile.hidden | ✅ |
-| config/supervisord.conf | ⚠️ 需更新 Containerfile.hidden | ✅ |
-| conda-lock/environment.yml | ❌ | ✅ |
-| Containerfile（apt/pip 包） | ❌ | ✅ |
-| entrypoint.sh | ❌ | ✅ |
+| config/jupyter_notebook_config.py | ✅（秒级） | ✅（秒级，但不自动重启容器） |
+| config/sshd_config | ✅（秒级） | ✅（秒级，但不自动重启容器） |
+| config/supervisord.conf | ✅（秒级） | ✅（秒级，但不自动重启容器） |
+| conda-lock/environment.yml | ❌ 全量耗时 | ✅ |
+| Containerfile（apt/pip 包） | ❌ 全量耗时 | ✅ |
+| entrypoint.sh | ❌ 全量耗时 | ✅ |
 | tasks/*.py（invoke 任务） | ❌ 无需构建，直接生效 | ❌ |
 
 ## jpman 构建相关命令对比
 
 | 命令 | 速度 | 适用场景 | 说明 |
 |------|------|----------|------|
-| `jpman rebuild` | <10秒 | 仅配置文件变更 | 基于现有镜像打补丁 |
+| `jpman rebuild` | <10秒 | 仅配置文件变更 | 主 Containerfile 层缓存构建，自动重启容器 |
 | `jpman rebuild-all` | 20-40分钟 | 首次构建或重大变更 | 完整构建，默认使用清华源 |
 | `invoke build` | 20-40分钟 | 需要自定义镜像源 | 支持 --apt-mirror/--conda-mirror/--pip-mirror 选择源 |
 | `jpman load` | 2-5分钟 | 有缓存归档 | 从 .image-cache/ 加载 |

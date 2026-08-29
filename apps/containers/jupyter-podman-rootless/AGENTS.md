@@ -31,7 +31,7 @@
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
 - **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复，pigz 多线程压缩
 - **WSL2 集成**：一键导出为 WSL2 发行版，自动配置 wsl.conf 和 Conda 激活，含环境验证脚本
-- **增量重建**：`Containerfile.hidden` 支持配置变更快速重建（<10秒）
+- **增量重建**：`jpman rebuild` 基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5（<10秒）
 - **构建系统**：使用 scikit-build-core + CMake 进行 Python 包构建
 - **跨平台**：支持 WSL/Linux/macOS（bash）+ Windows（cmd/ps1）
 - **父级工作区**：SpecWeave 根目录（`../../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
@@ -64,7 +64,6 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        ├─ scripts/                   ← 辅助脚本
        ├─ conda-lock/                ← conda环境定义（environment.yml，含omlmd+olot）
        ├─ Containerfile              ← Podman构建定义（7层架构，含Toolbx兼容标记）
-       ├─ Containerfile.hidden       ← 增量构建补丁（配置变更快速重建）
        ├─ entrypoint.sh              ← 容器启动脚本（7步启动流程）
        ├─ compose.yaml               ← podman-compose 声明式编排（jupyter + model-registry服务）
        ├─ compose.dev.yaml           ← 开发透传覆盖文件（SSH/git/X11/pip cache，opt-in）

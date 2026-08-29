@@ -61,7 +61,7 @@ gate_g1_passed: true
 **MF021.** 最大文件行数：07-core-features-detailed.md = 246行。
 **MF022.** 总代码/文档行数（12个交付文件）：约1691行。
 **MF023.** Mermaid图总数：21个（分布于8个文件中，含flowchart/timeline/quadrantChart/sequence等类型）。
-**MF024.** 交付文件存放位置：`.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`。
+**MF024.** 交付文件存放位置：`docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/`。
 **MF025.** 中间产物存放位置：`.trae/specs/volcengine-agentkit-wiki/`。
 
 ## D. 质量门验证事实

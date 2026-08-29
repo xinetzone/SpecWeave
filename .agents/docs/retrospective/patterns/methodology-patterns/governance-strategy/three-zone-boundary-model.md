@@ -171,4 +171,4 @@ sequenceDiagram
 - 多个独立代码库之间的引用协同
 
 > 来源：establish-vendor-collaboration-framework spec 实践
-> 关联：[VENDOR-INTEGRATION.md](../../../../knowledge/VENDOR-INTEGRATION.md)、[外部依赖四不原则](four-negatives-external-dependency.md)
+> 关联：[VENDOR-INTEGRATION.md](../../../../../../docs/knowledge/VENDOR-INTEGRATION.md)、[外部依赖四不原则](four-negatives-external-dependency.md)

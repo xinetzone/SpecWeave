@@ -4,7 +4,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**: 
-  - 在 `.agents/docs/knowledge/learning/05-ai-multimodal-content/` 下创建 `animejs-threejs-adapter-wiki/` 目录
+  - 在 `docs/knowledge/learning/05-ai-multimodal-content/` 下创建 `animejs-threejs-adapter-wiki/` 目录
   - 创建 README.md 作为目录入口，包含教程简介、章节快速导航、与其他教程关联
 - **Acceptance Criteria Addressed**: AC-1, AC-7
 - **Test Requirements**:

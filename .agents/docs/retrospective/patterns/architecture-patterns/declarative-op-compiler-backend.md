@@ -3,7 +3,7 @@ id: "declarative-op-compiler-backend"
 source: "../../../knowledge/learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md"
 x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/architecture-patterns/declarative-op-compiler-backend.toml"
 ---
-> **提炼自**：[07-caffe-cpp-slim-tvm-ffi-modernization.md](../../../knowledge/learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) —— daoflows/caffe TVM Relax算子层设计
+> **提炼自**：[07-caffe-cpp-slim-tvm-ffi-modernization.md](../../../../../docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) —— daoflows/caffe TVM Relax算子层设计
 
 # 声明式算子 + 编译器后端模式（Declarative Operator + Compiler Backend）
 

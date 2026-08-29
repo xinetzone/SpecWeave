@@ -14,7 +14,7 @@ version: "1.0"
 
 ## What Changes
 
-- **新增** 1个原子化wiki目录：`.agents/docs/knowledge/learning/07-vendor-product-learning/deepseek/`
+- **新增** 1个原子化wiki目录：`docs/knowledge/learning/07-vendor-product-learning/deepseek/`
 - **新增** 调研总览（`00-overview.md`）：免费方案全景图、核心结论速览、三层免费路径对比
 - **新增** 网页端与App免费使用详解（`01-web-app-free.md`）：功能范围、模型能力、使用限制（fair-use节流）、登录方式、支持特性
 - **新增** API新用户免费额度详解（`02-api-free-tier.md`）：500万tokens赠送规则、有效期、适用模型、注册流程、额度消耗估算
@@ -34,8 +34,8 @@ version: "1.0"
 - **Affected specs**: 无（独立新增调研报告）
 - **Affected code**: 无代码改动，仅文档新增
 - **Affected files**:
-  - 新增：`.agents/docs/knowledge/learning/07-vendor-product-learning/deepseek/00-overview.md` ~ `10-glossary.md` 共11个文件
-  - 更新：`.agents/docs/knowledge/learning/07-vendor-product-learning/README.md`（追加子目录导航条目）
+  - 新增：`docs/knowledge/learning/07-vendor-product-learning/deepseek/00-overview.md` ~ `10-glossary.md` 共11个文件
+  - 更新：`docs/knowledge/learning/07-vendor-product-learning/README.md`（追加子目录导航条目）
 
 ## Background & Context
 

@@ -56,7 +56,7 @@ jpman status                 # 之后可在任意目录使用
 
 | 命令 | 说明 |
 |------|------|
-| `jpman rebuild` | 增量重建（仅配置变更，使用 Containerfile.hidden，<10秒） |
+| `jpman rebuild` | 增量重建（基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5，<10秒，自动重启容器） |
 | `jpman rebuild-all` | 全量重建（从 Containerfile 完整构建，需要网络） |
 | `jpman save` | 保存镜像到 `.image-cache/`（使用 pigz 多线程压缩） |
 | `jpman load` | 从 `.image-cache/` 加载镜像 |

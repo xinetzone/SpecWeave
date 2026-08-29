@@ -253,7 +253,7 @@ gates_passed: ["G1", "G2", "V", "G3"]
 | F031 | 文章中补充了设计细节：背景色值 #f8f5f0、提示词调整约二三十版 |
 | F032 | 创建了 promotion/README.md 作为全局推广运营目录规范文档 |
 | F033 | 创建了 promotion/miaowu-ambassador/README.md 作为项目说明文档 |
-| F034 | 入驻指南文档存放路径为 `.agents/docs/knowledge/learning/miaowu-ambassador-guide/` |
+| F034 | 入驻指南文档存放路径为 `docs/knowledge/learning/miaowu-ambassador-guide/` |
 | F035 | 知乎推广文章包含6个主体章节，共218行 |
 | F036 | 文章中两次植入推广链接，分别位于"准备工作"章节和结尾处 |
 | F037 | 文章中以加粗引用块形式标注了"二次点击"规则提醒 |
@@ -268,7 +268,7 @@ gates_passed: ["G1", "G2", "V", "G3"]
 | 推广目录全局规范 | [promotion/README.md](../README.md) | 目录结构、命名规范、内容规范 |
 | 秒悟大使项目说明 | [miaowu-ambassador/README.md](../miaowu-ambassador/README.md) | 推广链接、规则提醒、文章索引 |
 | 首篇知乎推广文 | [miaowu-ambassador/articles/zhihu/2026-07-31-zhujian-wudao-zero-code-tutorial-zhihu.md](../miaowu-ambassador/articles/zhihu/2026-07-31-zhujian-wudao-zero-code-tutorial-zhihu.md) | SDCP模式首次实践样本 |
-| 秒悟入驻指南 | [.agents/docs/knowledge/learning/miaowu-ambassador-guide/miaowu-ambassador-guide.md](../../.agents/docs/knowledge/learning/miaowu-ambassador-guide/miaowu-ambassador-guide.md) | 入驻流程、权益体系、避坑指南 |
+| 秒悟入驻指南 | [docs/knowledge/learning/miaowu-ambassador-guide/miaowu-ambassador-guide.md](../../docs/knowledge/learning/07-vendor-product-learning/miaowu/miaowu-ambassador-guide/miaowu-ambassador-guide.md) | 入驻流程、权益体系、避坑指南 |
 
 ---
 

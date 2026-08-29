@@ -23,7 +23,7 @@
 
 ## Background & Context
 - Intel Neural Compressor 是 Intel 开源的 Python 模型压缩库，支持 PyTorch、TensorFlow、JAX 等主流深度学习框架，提供静态量化、动态量化、SmoothQuant、仅权重量化、FP8 量化等多种压缩技术，广泛支持 Intel CPU/GPU/Gaudi 硬件。
-- 项目已有多个技术 wiki 教程（如 ffi-wiki、graphql-wiki、tvm-ffi-wiki），统一存放在 `.agents/docs/knowledge/learning/` 目录下，采用标准化的文件结构和 frontmatter 规范。
+- 项目已有多个技术 wiki 教程（如 ffi-wiki、graphql-wiki、tvm-ffi-wiki），统一存放在 `docs/knowledge/learning/` 目录下，采用标准化的文件结构和 frontmatter 规范。
 - 现有项目中已有 ONNX 量化相关的实践经验（见项目 memory 中的 onnx-quantized 相关内容），本 wiki 可与之形成互补。
 
 ## Functional Requirements
@@ -43,7 +43,7 @@
 - **NFR-5**: 遵循项目 markdown 编写规范（myst-parser 兼容）
 
 ## Constraints
-- **Technical**: 必须遵循项目现有 wiki 的文件结构与命名规范；必须使用 myst-parser 兼容的 markdown 语法；所有文件存放在 `.agents/docs/knowledge/learning/neural-compressor-wiki/` 目录下
+- **Technical**: 必须遵循项目现有 wiki 的文件结构与命名规范；必须使用 myst-parser 兼容的 markdown 语法；所有文件存放在 `docs/knowledge/learning/neural-compressor-wiki/` 目录下
 - **Business**: 内容基于公开的 Intel Neural Compressor 官方文档，遵守 Apache 2.0 许可证
 - **Dependencies**: 依赖 defuddle 工具抓取网页内容；依赖项目的 docgen 脚本生成索引
 

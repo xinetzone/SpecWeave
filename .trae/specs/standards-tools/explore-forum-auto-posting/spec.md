@@ -93,7 +93,7 @@
 - [报名帖_竹简悟道.md](../../../../apps/ai-agents/zhujian-wudao/报名帖_竹简悟道.md) — 竹简悟道报名帖
 
 ### 调研文档
-- [discourse-api-research.md](../../../../.agents/docs/knowledge/operations/discourse-api-research.md) — REST API和@discourse/mcp详细调研
+- [discourse-api-research.md](../../../../docs/knowledge/operations/discourse-api-research.md) — REST API和@discourse/mcp详细调研
 
 ## Functional Requirements
 

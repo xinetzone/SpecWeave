@@ -83,7 +83,7 @@
 
 | 资源 | 入口 |
 |---|---|
-| 技术知识库 | [docs/knowledge/](.agents/docs/knowledge/README.md) |
+| 技术知识库 | [docs/knowledge/](../../docs/knowledge/README.md) |
 | 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/README.md) |
 | 可复用模式库 | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/README.md) |
 

@@ -11,7 +11,7 @@
 
 ## [x] Task 1: 创建原子目录结构
 - **Priority**: high
-- **完成情况**：✅ 已完成。创建了docs/knowledge/learning/headroom-context-compression-wiki/、.meta/toml/.agents/docs/knowledge/learning/headroom-context-compression-wiki/、复盘目录
+- **完成情况**：✅ 已完成。创建了docs/knowledge/learning/headroom-context-compression-wiki/、.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/、复盘目录
 
 ## [x] Task 2: 创建概述章节(00-overview.md)
 - **Priority**: high

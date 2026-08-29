@@ -1,7 +1,7 @@
 ---
 name: source-code-to-okf-wiki
-version: 1.0.0
-description: "当用户提到'源码学习'、'读源码'、'源码阅读'、'生成Wiki'、'OKF Wiki'、'源码转文档'、'学习开源项目'、'读源码写文档'、'源码分析生成教程'、'深度学一个库'时，必须使用此技能。提供系统化的源码→OKF Wiki生成工作流：R→I→E→V→C五阶段链路（事实采集→架构洞察→批量生成→独立验证→模式沉淀），杜绝AI虚构API、事实无溯源、结构混乱、格式不统一四大问题。不要直接让AI读源码写文档——本Skill封装了信源先行、分批生成、Grep级API验证等经过实战验证的防护机制。"
+version: 1.3.0
+description: "当用户提到'源码学习'、'读源码'、'源码阅读'、'生成Wiki'、'OKF Wiki'、'源码转文档'、'学习开源项目'、'读源码写文档'、'源码分析生成教程'、'深度学一个库'时，必须使用此技能。提供系统化的源码→OKF Wiki生成工作流：阶段0信源稳定性预检 + R→I→E→V→C五阶段链路（事实采集→架构洞察→批量生成→独立验证→模式沉淀），杜绝AI虚构API、事实无溯源、结构混乱、格式不统一、信源临时路径断裂、数量陈述失真六大问题。不要直接让AI读源码写文档——本Skill封装了信源稳定性门预检、信源先行、分批生成、Grep级API验证、计数断言等经过实战验证的防护机制。"
 argument-hint: "<源码路径> <输出bundle路径> [OKF规范文件路径]"
 user-invocable: true
 paths:
@@ -22,17 +22,18 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/source-code-to-okf-wiki/SKILL.to
 
 ## 2. 功能描述
 
-系统化学习开源项目/库的源码并产出结构化 OKF v0.2 规范 Wiki 教程，采用 R→I→E→V→C 五阶段链路：
+系统化学习开源项目/库的源码并产出结构化 OKF v0.2 规范 Wiki 教程，采用**阶段0信源稳定性预检 + R→I→E→V→C 五阶段链路**：
 
 | 阶段 | 全称 | 核心产出 | 质量门 |
 |------|------|---------|--------|
+| **0** | Pre-flight（信源稳定性预检） | 信源分类表、vendor 子模块（固定 tag）、GATE-SPS 扫描记录 | G0：信源全部 stable，临时克隆零引用放行 |
 | **R** | Read/Retrospective（事实采集） | 编号事实清单 F-xxx，零推测 | G1：事实中无推断性表述 |
 | **I** | Insight（架构洞察） | 3-5个核心洞察四元组+知识地图 | G2：洞察含陈述/证据/反常识/行动 |
 | **E** | Extraction/Execution（批量生成） | OKF规范文档（concepts/examples/references/indexes） | G3：信源先行、分批生成、Index最后写 |
-| **V** | Verification（独立验证） | 验证报告+修复后的文档集 | G4：无虚构API（Grep验证）、链接无断裂、frontmatter完整 |
+| **V** | Verification（独立验证） | 验证报告+修复后的文档集 | G4：无虚构API（Grep验证）、计数断言一致、链接无断裂、frontmatter完整 |
 | **C** | Commit（模式沉淀） | 可复用模式文档+Prompt模板入库 | G5：模式含触发场景、反模式≥5、迁移验证 |
 
-核心防护机制：信源先行（references/先于concepts/生成）、分批生成（每批≤7文件）、Index最后写、Grep级API真实性验证。
+核心防护机制：**信源稳定性门预检**（阶段0，临时克隆必须升级为 vendor 子模块固定 tag）、信源先行（references/先于concepts/生成）、分批生成（每批≤7文件）、Index最后写、Grep级API真实性验证、**计数断言验证**（数量陈述经 Glob/Grep 独立复核）。
 
 > **为什么不能直接让AI"读源码写Wiki"？** AI生成技术文档的四大顽疾——虚构API（凭训练数据"统计惯性"编造不存在的类/方法）、事实无溯源（无法验证真伪）、结构混乱（学习路径凭直觉排列）、经验不可复用（下次从零开始）——根源都是把"读源码写文档"当作一次性内容生成任务，跳过了"建立事实基础"和"独立验证"两个关键环节。本Skill的五阶段链路强制在生成前建立零推测事实基础、生成后做Grep级API验证，从流程上杜绝虚构内容。
 
@@ -61,9 +62,28 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/source-code-to-okf-wiki/SKILL.to
 
 > **为什么快速查API和单篇文档不适用？** 五阶段流程的核心价值是**建立事实基础+独立验证**，这需要R阶段通读源码、V阶段Grep验证，对于"查一个函数怎么用"这类轻量需求是过度工程——投入产出比不划算。
 
-## 5. 核心步骤（五阶段工作流）
+## 5. 核心步骤（阶段0预检 + 五阶段工作流）
 
 ```
+步骤0：R阶段前置预检——信源稳定性门（G0，不可跳过）
+   0a. 信源分类：列出全部信源（源码仓库/克隆/下载包），按路径特征段分类：
+       - temporary：.chaos/、.tmp/、系统 Temp、缓存目录中的临时克隆
+       - stable：vendor/ 子模块、site-packages、系统安装目录
+       - env-bound：开发者机器任意绝对路径（Desktop、home 等）
+   0b. 临时信源升级：temporary/env-bound 信源必须先固定为可追溯副本——
+       首选 git submodule 固定到具体 release tag（记录 tag 名 + commit hash + 远程 URL），
+       次选固定到具体 commit hash；
+       ⚠️ 禁止固定 main/master/浮动分支（分支会前进、tag 可能被移动重打 = 信源漂移）；
+       tag 选型判据：文档引用集合 ∩ 版本变更集合 = ∅（引用的 API 在所选版本中全部存在）
+   0c. 路径引用生成：facts.md 与文档中的信源路径只指向 stable 位置（vendor/<lib>），
+       禁止 file:/// 指向临时目录
+   0d. 清理前扫描：临时克隆删除前必须运行 GATE-SPS——
+       python .agents/scripts/check-source-path-stability.py --target <待删目录>
+       rc=0（零引用）放行删除；rc=1（有引用）先迁移再删
+   0e. 持久性验证：文档定稿后运行 audit 模式——
+       python .agents/scripts/check-source-path-stability.py
+       rc=0 通过；复盘报告事实表等历史时点快照中的临时路径属预期命中，
+       按"历史记录 vs 活动引用"判据人工分流
 步骤1：确认输入参数（源码路径、输出bundle路径、OKF规范文件路径）
 步骤2：R阶段 - 源码深度阅读与事实采集
    2a. 列出源码目录结构，识别核心模块文件
@@ -88,6 +108,9 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/source-code-to-okf-wiki/SKILL.to
    5c. 代码示例检查：API调用与源码一致
    5d. Index完整性检查
    5e. 输出检查报告，逐一修复问题
+   5f. ⚡ 计数断言验证：对文档中所有"X个/Y份/Z处/N篇"类数量陈述，
+       用 Glob/Grep 独立计数比对（如"15个核心模块"→实际数目录/Grep定义；
+       "368个文件"→Glob 计数），数字不一致即修复——禁止凭印象写数量
 步骤6：C阶段 - 模式萃取与沉淀
    6a. 回顾流程顺利点和问题点
    6b. 补充反模式和迁移验证
@@ -171,10 +194,11 @@ sources:
 
 ## 7. 安全检查清单（质量门）
 
+- [ ] **G0-预检（R阶段前）**：信源已分类（temporary/stable/env-bound）；临时信源已升级为 vendor 子模块并固定到具体 tag/commit（禁止 main/master）；facts.md 信源路径全部指向 stable；清理前扫描与持久性验证已用 GATE-SPS 脚本执行（rc=0）
 - [ ] **G1-R阶段**：事实清单无推断性表述（"用于"/"目的是"等），每个事实指向源码路径，核心模块全覆盖
 - [ ] **G2-I阶段**：洞察四元组完整（陈述/证据/反常识/行动），知识地图有学习路径设计
 - [ ] **G3-E阶段**：references/信源文件先于其他文档生成，分批生成（每批≤7文件），index最后写
-- [ ] **G4-V阶段**：链接无断裂、无虚构API（Grep源码验证每个类名/方法名存在性）、frontmatter字段完整、index无遗漏
+- [ ] **G4-V阶段**：链接无断裂、无虚构API（Grep源码验证每个类名/方法名存在性）、**计数断言全部比对一致**（"X个/Y份/Z处"类陈述经 Glob/Grep 独立复核）、frontmatter字段完整、index无遗漏
 - [ ] **G5-C阶段**：模式文档含反模式（≥5个）、Prompt模板可复用、模式入库到正确目录
 - [ ] 每批生成文档数≤7（防止上下文过载导致质量下降）
 - [ ] 代码块标注语言，API调用与facts.md事实一致
@@ -198,8 +222,11 @@ sources:
 | 子目录index.md只有表格链接、无`{toctree}`块 | CI门禁报"未收录(不可达)"，整束内容导航断头 | 按§6.4追加隐藏toctree块，收录本目录全部内容文件 |
 | 交叉链接出现`../` | 路径风格不一致 | 替换为`/`开头路径 |
 | V阶段发现>1个虚构API | E阶段事实遵循度不足 | 全面Grep验证所有文档 |
+| 信源路径含 .chaos/.tmp/Temp 等临时段或 file:/// 绝对路径 | 临时信源，克隆清理后引用全部断裂 | 暂停R阶段，先执行步骤0信源升级（vendor 子模块 + 固定 tag） |
+| 信源版本固定在 main/master/浮动分支 | 信源漂移：分支前进后文档与信源不一致 | 改为固定 release tag/commit hash，并记录 hash 与获取方式 |
+| 文档出现"X个/Y份/Z处"数量陈述但未经独立计数 | 计数完整性盲区（验证了存在性、没验证数量） | V阶段用 Glob/Grep 独立计数比对（步骤5f） |
 
-## 9. 反模式速查（8个致命错误）
+## 9. 反模式速查（10个致命错误）
 
 | # | 反模式 | 后果 | 正确做法 |
 |---|--------|------|---------|
@@ -211,6 +238,8 @@ sources:
 | 6 | 产出物留在spec目录不入库 | 下次同类任务无法复用，经验浪费 | C阶段迁移模式到patterns/目录 |
 | 7 | 交叉链接使用`../`相对路径 | 文件移动后链接断裂，维护成本高 | 统一使用`/`开头bundle-relative路径 |
 | 8 | 子目录index.md用表格链接替代`{toctree}`块 | Sphinx/CI导航BFS断头，束内全部内容"未收录(不可达)"（containers域52项门禁失败实证） | 每个index.md必含隐藏toctree块（§6.4），与表格链接并存 |
+| 9 | 临时克隆直接开读、不固定版本（.chaos/libs 里 git clone 完就生成文档） | 克隆清理后 file:/// 引用全部断裂（veadk 案例 800 处引用迁移实证）；版本不可追溯，重跑无法复现 | 步骤0预检：信源升级为 vendor 子模块固定 release tag（记录 tag+commit hash），引用只指 stable |
+| 10 | 信源漂移：固定到 main/master/浮动分支，或只记 tag 名不记 commit hash | 分支前进/tag 被移动重打后，文档验证过的 API 与信源内容不一致，V 阶段结论失效 | 固定不可变 release tag/commit hash；tag 选型按"文档引用集合 ∩ 版本变更集合 = ∅"判定 |
 
 ## 10. Gotchas（陷阱与反直觉行为）
 
@@ -219,13 +248,17 @@ sources:
 - **初始V阶段不能只查链接和frontmatter**：链接有效+frontmatter完整≠内容准确。PyInvoke实践中初始V阶段只做了结构检查，遗漏了虚构的`Response`类。必须增加API真实性Grep验证。
 - **Windows路径分隔符陷阱**：源码路径在Grep命令中使用`/`或正确转义的`\\`，避免路径解析失败导致误判"API不存在"。
 - **分批并行委派时保持独立上下文**：通过general_purpose_task分批并行生成时，每个子任务必须独立获得完整的格式规范和相关事实清单，不能假设子任务共享主会话上下文。
+- **tag 也可能漂移**：固定版本时优先选择正式 release tag 并同时记录 commit hash——轻量 tag/分支 tag 可能被维护者移动重打，浮动分支必然前进；只记 tag 名不记 hash，事后无法证明"文档验证的就是这份代码"，也无法复现。
+- **临时克隆的引用断裂是"静默"的**：file:/// 指向 .chaos/libs 的链接在克隆存在时完全可用，问题只在清理后爆发——所以信源稳定性必须在 R 阶段开工前（步骤0）解决，而非 V 阶段修补。
 
 ## 11. 关键参考
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | **源模式文档（完整方法论）** | **L2** | [source-code-to-okf-wiki-workflow.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md) | **首次使用必读**——含完整案例、失败复盘、检验标准、跨场景迁移 |
+| **信源稳定性门模式** | **L2** | [source-stability-gate.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) | 步骤0预检的完整方法论（5步法+反模式+双案例验证） |
 | **Prompt模板集** | **L2** | [references/prompt-templates.md](references/prompt-templates.md) | 每阶段执行时复制对应Prompt |
+| **GATE-SPS 扫描脚本** | **L1 工具** | `.agents/scripts/check-source-path-stability.py` | 步骤0d/0e：清理前扫描（--target）与持久性 audit |
 | **批量文档转换模式** | **L2** | [batch-docs-to-okf-bundle-conversion.md](../../docs/retrospective/patterns/methodology-patterns/concepts/batch-docs-to-okf-bundle-conversion.md) | 非源码文档（Wiki/报告/笔记）批量转换为OKF Bundle时参考，含9个反模式 |
 | 七概念方法论编排 | L1 | [seven-concepts-cmd](../seven-concepts-cmd/SKILL.md) | 本模式是七概念在知识沉淀场景的具体化 |
 | 原子提交 | L1 | [atomic-commit-cmd](../atomic-commit-cmd/SKILL.md) | C阶段模式入库时使用 |
@@ -233,6 +266,7 @@ sources:
 
 ## 12. Changelog
 
+- **v1.3.0** (2026-08-29): R阶段前新增「步骤0 信源稳定性门预检」（G0）：信源分类→临时信源升级 vendor 子模块并固定 release tag（禁 main/master）→引用只指 stable→GATE-SPS 清理前扫描（--target）→持久性 audit；V阶段新增 5f 计数断言验证（"X个/Y份/Z处"类陈述经 Glob/Grep 独立复核）；新增反模式9（临时克隆直接开读不固定版本）与反模式10（信源漂移），早期预警信号新增 3 行，Gotchas 增 tag 漂移与静默断裂；源于 jira-skill v3.29.0 与 veadk-python 1.0.10 两次 vendor 同步里程碑（800 处引用迁移实证）；同步 frontmatter version 字段（1.0.0→1.3.0）并补 SKILL.toml 元数据镜像。
 - **v1.2.0** (2026-08-28): 新增§6.4「index.md 导航规范（toctree 必填）」与反模式8（表格链接替代toctree），源于 containers 域 52 项 toctrees 门禁失败修复实践；G4检查清单增加toctree门禁验证项。
 - **v1.1.0** (2026-08-22): 扩展非源码文档转换场景，新增「批量Markdown文档→OKF Bundle转换模式」参考（31个Bundle、368文件实战验证）。
 - **v1.0.0** (2026-08-21): 初始版本，从PyInvoke v3.0.3 OKF Wiki生成实践萃取，封装R→I→E→V→C五阶段工作流、OKF文档规范、7个反模式、Grep级API验证机制。

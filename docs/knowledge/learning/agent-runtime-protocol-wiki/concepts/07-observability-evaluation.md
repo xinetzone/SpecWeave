@@ -136,5 +136,3 @@ OpenTelemetry GenAI正在朝这个方向标准化，但目前还在早期阶段�
 OpenTelemetry GenAI 正在推动Trace语义标准化，但距离生产可用还有距离。在此之前，团队需要自行建立Trace、评测和Badcase闭环。
 
 > **看见问题 → 评价质量 → 归因分析 → 优化策略**——这个闭环跑不起来，Agent永远停留在"看起来很厉害但不敢用"的Demo阶段。
-
----

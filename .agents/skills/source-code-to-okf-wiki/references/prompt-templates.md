@@ -2,6 +2,33 @@
 
 > 各阶段执行时复制对应Prompt，替换`<占位符>`后使用。
 
+## 阶段0：信源稳定性预检（R阶段前必做，G0）
+
+```
+在开始源码学习之前，先执行信源稳定性预检（信源稳定性门）：
+
+1. 信源分类：列出本次全部信源（源码仓库/克隆/下载包），按路径特征段分类：
+   - temporary：.chaos/、.tmp/、系统 Temp、缓存目录中的临时克隆
+   - stable：vendor/ 子模块、site-packages、系统安装目录
+   - env-bound：开发者机器任意绝对路径（Desktop、home 等）
+2. 临时信源升级：temporary/env-bound 信源必须先固定为可追溯副本：
+   - 首选 git submodule 固定到具体 release tag，记录 tag 名 + commit hash + 远程 URL
+   - 次选固定到具体 commit hash
+   - 禁止固定 main/master/浮动分支（分支会前进 = 信源漂移）
+   - tag 选型判据：文档引用集合 ∩ 版本变更集合 = ∅（引用的 API 在所选版本中全部存在）
+3. 路径纪律：facts.md 与后续文档中的信源路径只指向 stable 位置（vendor/<lib>），
+   禁止 file:/// 指向临时目录
+4. 清理前扫描：临时克隆删除前运行
+   python .agents/scripts/check-source-path-stability.py --target <待删目录>
+   rc=0（零引用）才放行删除；rc=1 先迁移引用
+5. 持久性验证：文档定稿后运行 audit 模式
+   python .agents/scripts/check-source-path-stability.py
+   rc=0 通过；复盘报告事实表等历史时点快照中的临时路径属预期命中，
+   按"历史记录 vs 活动引用"判据人工分流
+
+预检通过前不进入 R 阶段。
+```
+
 ## R阶段：源码阅读与事实采集
 
 ```
@@ -114,8 +141,14 @@ F-003: <模块A> 中的 <对象> 被 <模块B> 的 <方法> 引用，传递 <数
 5. 代码示例检查：代码示例语法是否正确，API调用是否匹配源码中的签名
 6. Index检查：各级index.md是否完整列出所有对应目录的文件，子目录index不应有frontmatter；**每个index.md（根+子目录+分组）必须含`{toctree}`块**——只有表格链接没有toctree块即导航断头，须追加隐藏toctree收录本目录全部内容文件
 7. 虚构API检测：对文档中出现的所有import语句和类实例化，逐一在源码中Grep验证
+8. ⚡ 计数断言验证：扫描全部文档中"X个/Y份/Z处/N篇"类数量陈述，
+   用 Glob/Grep 独立计数逐项比对（如"15个核心模块"→实际数模块目录/Grep定义；
+   "368个文件"→Glob 计数），数字不一致即判定为问题
+9. 信源路径稳定性检查：运行
+   python .agents/scripts/check-source-path-stability.py
+   确认文档中无 temporary 信源引用（历史时点快照除外，需人工标注分流）
 
-输出检查报告，按严重程度（🔴虚构API/🟡链接断裂/🟢格式问题）列出发现的问题，然后逐一修复。
+输出检查报告，按严重程度（🔴虚构API/🔴计数失真/🟡链接断裂/🟢格式问题）列出发现的问题，然后逐一修复。
 修复后重新运行检查，直到所有问题清零。
 ```
 

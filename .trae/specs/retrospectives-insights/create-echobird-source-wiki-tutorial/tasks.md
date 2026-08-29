@@ -22,7 +22,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/` 创建目录骨架
+  - 在 `docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/` 创建目录骨架
   - 创建 README.md：目录导航、章节索引、学习路径、版本信息
   - 各章节文件（00-11）使用 YAML frontmatter（MDI v1.0），文件名 kebab-case 纯英文
   - **格式约束**：先读取同目录 eve-wiki/README.md 与 volcengine-agentkit-wiki/README.md 确认实际格式（frontmatter 风格、链接格式、章节结构），以其为权威标准

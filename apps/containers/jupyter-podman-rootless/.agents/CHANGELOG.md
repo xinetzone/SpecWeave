@@ -6,6 +6,15 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-08-29
+
+| 类型 | 变更 |
+|------|------|
+| feat | passt 固化进 Containerfile（Stage 1 apt 清单 + 版本回显 + Layer 5 最终验证），修复 DinP 场景 rootless 网络命名空间 pasta 缺失报错 |
+| fix | jpman rebuild-all/rebuild 补 `--format docker`：OCI 格式忽略 SHELL 指令导致 Stage 2 bash 数组语法在 dash 下报 Syntax error |
+| fix | Containerfile Miniforge 下载 `--max-time` 300s→900s：慢速链路（~200KB/s）拉取 124MB 安装包双源 4 次尝试全部超时 |
+| refactor | 合并 Containerfile.hidden 至主 Containerfile 并删除：Layer 4 吸收 root 配置权限与 allow_hidden 校验（VALIDATE 5/5→6/6）；jpman rebuild 改为主 Containerfile 层缓存构建（配置变更仅重建 Layer 4/5）；同步 AGENTS/README/docs/14/16、.agents/README、jpman-podman-ops SKILL.md 共 8 处引用 |
+
 ## 2026-08-27
 
 | 类型 | 变更 |

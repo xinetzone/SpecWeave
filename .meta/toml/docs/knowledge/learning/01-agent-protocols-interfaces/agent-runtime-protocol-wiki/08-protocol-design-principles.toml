@@ -1,5 +1,7 @@
 id = "agent-runtime-protocol-wiki-08"
-title = "08 Protocol 对象映射与设计原则"
-category = "docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
-date = "2026-07-02"
+title = "Protocol 对象映射与设计原则"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "design-principles", "protocol-objects", "mapping"]

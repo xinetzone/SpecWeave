@@ -250,7 +250,7 @@ tags: ["github-cli", "wiki-tutorial", "knowledge-base", "retrospective", "seven-
 
 | 文件 | 说明 |
 |------|------|
-| [00-overview.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/00-overview.md) | GitHub CLI 概述与教程导航 |
+| [00-overview.md](../../../../../../../docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/00-overview.md) | GitHub CLI 概述与教程导航 |
 | [01-installation.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/01-installation.md) | 安装指南（Windows/macOS/Linux） |
 | [02-basic-commands.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/02-basic-commands.md) | 基础命令（auth/repo/issue/gist/api） |
 | [03-pr-workflow.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/03-pr-workflow.md) | PR 工作流（create/review/merge/checkout） |

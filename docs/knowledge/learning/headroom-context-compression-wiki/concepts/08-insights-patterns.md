@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "design-patterns", "insights", "context-engineering", "trends", "harness-engineering"]
-x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/learning/headroom-context-compression-wiki/08-insights-patterns.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/08-insights-patterns.toml"
 type: "Pattern"
 description: "从Headroom萃取内容感知路由、可逆压缩、备忘录存储层次化三个可复用架构模式，分析Context Engineering、Token效率、本地优先三大行业趋势，总结五条开发者启示并关联Harness/Loop Engineering前沿理念。"
 generated:

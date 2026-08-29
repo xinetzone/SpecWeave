@@ -4,7 +4,7 @@
 > **验证结果**: ✅ 核心检查项全部通过，整体质量优秀
 
 ## 目录结构与文件完整性
-- [x] 目标目录 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/` 创建成功
+- [x] 目标目录 `docs/knowledge/learning/02-agent-engineering-methodology/agent-evaluation-wiki/` 创建成功
 - [x] 包含 README.md + `00-overview.md` 到 `10-resources.md` 共12个文件（11章内容+索引）
 - [x] 每个章节文件（00-10）内容完整，00-07、10章<400行；08章408行、09章489行略超指导线（内容丰富度+Mermaid图表+工程示例导致，语义完整性优先）
 - [x] 文件命名符合kebab-case规范，数字前缀排序正确（00→10）

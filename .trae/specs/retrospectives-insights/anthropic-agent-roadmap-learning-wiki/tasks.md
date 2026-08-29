@@ -1,7 +1,7 @@
 # Tasks
 
 - [x] Task 1: 创建 Anthropic Agent 路线图学习 wiki 教程文档主框架
-  - [x] SubTask 1.1: 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
+  - [x] SubTask 1.1: 在 `docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md` 创建文档骨架，包含 YAML frontmatter（title、source、date、tags）、H1 标题、文档元信息（来源、作者、更新日期）、完整目录导航系统（覆盖所有章节的锚点链接）
   - [x] SubTask 1.2: 编写"文章背景与核心论点"章节，阐述Opus 4.8发布一周后产品线曝光、六条产品线指向"Claude走出聊天框"、Anthropic内部名言"智能公司而非编程公司"、AI从聊天Bot向超级智能体生态转型
 
 - [x] Task 2: 编写 Conway 永久在线智能体章节
@@ -82,7 +82,7 @@
   - [x] SubTask 11.1: 汇总相关资源链接为Markdown标准格式：①原文链接（微信公众号新智元）②TestingCatalog原始爆料文章链接③X平台相关讨论（@chetaslua推文）④Anthropic官方产品页面⑤Claude Code相关资源⑥OpenAI官方博客（GPT-5相关更新）
 
 - [x] Task 12: 在知识库索引中登记新文档
-  - [x] SubTask 12.1: 在 `.agents/docs/knowledge/README.md` 的 learning 类目下追加 Anthropic Agent 路线图学习 wiki 条目，包含文档标题、摘要、日期、标签与相对路径链接
+  - [x] SubTask 12.1: 在 `docs/knowledge/README.md` 的 learning 类目下追加 Anthropic Agent 路线图学习 wiki 条目，包含文档标题、摘要、日期、标签与相对路径链接
   - [x] SubTask 12.2: 更新统计摘要数字（总条目数、learning类目数量相应+1）
 
 - [x] Task 13: 验证与质量检查
@@ -108,7 +108,7 @@
 
 # 预估统计
 - 预估文档字数：深度分析类wiki 8000–12000 字（实际中文字符约10865字，内容详实）
-- 文档实际路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
+- 文档实际路径：`docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md`
 - 预估章节数量：13 个（一至十二+结语）
 - FAQ 数量：10 个（Q1-Q10）
 - 预估表格数量：至少 2 个（核心信息汇总表、对比表）

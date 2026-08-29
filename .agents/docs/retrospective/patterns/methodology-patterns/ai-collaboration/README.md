@@ -27,9 +27,12 @@ date: "2026-07-09"
 | [上下文生命周期分层管理模式](./context-lifecycle-layering.md) | 上下文生命周期分层管理模式 | L2 |  |
 | [Context 恢复协议重执行模式（Context Recovery Protocol Rerun）](./context-recovery-protocol.md) | Context 恢复协议重执行模式（Context Recovery Protocol Rerun） | L2 |  |
 | [对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation）](./dialog-agent-four-layer-evaluation.md) | 对话Agent四层评测模式（Dialog Agent Four-Layer Evaluation） | L1 | `Agent评测` `对话系统` `四层架构` |
+| [不确定性探索+确定性校验双引擎架构模式](./dual-engine-uncertainty-certainty.md) | 不确定性探索+确定性校验双引擎架构模式 | L2-validated | `ai-engineering` `ai-safety` `dual-engine` |
 | [双区开发模型](./dual-zone-development-model.md) | 双区开发模型 | L2 |  |
 | [生态壁垒评估框架（Ecosystem Barrier Evaluation）](./ecosystem-barrier-evaluation.md) | 生态壁垒评估框架（Ecosystem Barrier Evaluation） | L2 |  |
 | [编辑-验证分离模式](./edit-verify-separation.md) | 编辑-验证分离模式 | L2 | `ai-collaboration` `quality-assurance` `workflow` |
+| [错误黑名单单调进化模式](./error-blacklist-monotonic-evolution.md) | 错误黑名单单调进化模式 | L2-validated | `quality-assurance` `regression-testing` `error-persistence` |
+| [评测驱动的自进化闭环模式](./evaluation-driven-self-evolution.md) | 评测驱动的自进化闭环模式 | L2-validated | `ai-engineering` `self-evolution` `evaluation-system` |
 | [外部内容事实验证](./external-content-fact-verification.md) | 外部内容事实验证 | L2 | `ai-collaboration` `fact-checking` `hallucination-defense` |
 | [外部技术文章学习三阶段闭环（LAV模型）](./external-tech-article-learning-closed-loop.md) | 外部技术文章学习三阶段闭环（LAV模型） | L1 | `ai-collaboration` `knowledge-management` `learning` |
 | [文件存在性验证门模式（File Existence Verification Gate）](./file-existence-verification-gate.md) | 文件存在性验证门模式（File Existence Verification Gate） | L2 | `文件验证` `存在性检查` `上下文压缩幻觉` |
@@ -42,6 +45,7 @@ date: "2026-07-09"
 | [人机协作70/30分工定律（Human-AI Collaboration 70/30 Rule）](./human-ai-collaboration-70-30-rule.md) | 人机协作70/30分工定律（Human-AI Collaboration 70/30 Rule） | L2 | `人机协作` `70/30定律` `分工` |
 | [「辅助人工」而非「全自动」的人机协作设计](./human-in-the-loop-augmentation.md) | 「辅助人工」而非「全自动」的人机协作设计 | L2 | `人机协作` `Human-in-the-loop` `AI辅助` |
 | [隔离优于共享模式](./isolation-over-sharing.md) | 隔离优于共享模式 | - |  |
+| [知识编译模式](./knowledge-compilation.md) | 知识编译模式 | L1-draft | `knowledge-management` `rag` `agent-skills` |
 | [分层缓存模式](./layered-caching-pattern.md) | 分层缓存模式 | L2-validated | `LLM` `Token` `Caching` |
 | [按需加载懒加载模式](./lazy-loading-pattern.md) | 按需加载懒加载模式 | L2-validated | `LLM` `Token` `Lazy-Loading` |
 | [LLM Token优化反模式集](./llm-token-optimization-anti-patterns.md) | LLM Token优化反模式集 | L2-validated | `LLM` `Token` `Optimization` |
@@ -49,6 +53,7 @@ date: "2026-07-09"
 | [Markdown即接口：用Markdown同时承载人类阅读与机器调用](./markdown-as-interface.md) | Markdown即接口：用Markdown同时承载人类阅读与机器调用 | L4 |  |
 | [中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy）](./medium-task-merged-delegation-strategy.md) | 中等规模任务合并委派策略（Medium-Scale Task Merged Delegation Strategy） | L2 | `子代理委派` `任务合并` `任务拆分` |
 | [模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化](./module-level-agents-extension.md) | 模块级 .agents/ 扩展模式：通过继承避免重复，仅补充模块特化 | L1 |  |
+| [多子项目生态→OKF知识束归并生成模式](./multi-repo-ecosystem-okf-bundle-generation.md) | 多子项目生态→OKF知识束归并生成模式 | L1 |  |
 | [导航枢纽文件名契约模式：全局清单 vs 局部清单](./navigation-hub-filename-contract.md) | [引言内容] | L2 |  |
 | [安全不打扰UX模式](./non-intrusive-security-ux.md) | 安全不打扰UX模式 | L1 | `security` `ux` `ai-agent` |
 | [输出行为规范（Output Behavior Specification）](./output-behavior-specification.md) | 输出行为规范（Output Behavior Specification） | L2 |  |
@@ -64,16 +69,16 @@ date: "2026-07-09"
 | [七概念驱动的技术Wiki创作方法论](./seven-concepts-wiki-creation-methodology.md) | 七概念驱动的技术Wiki创作方法论 | L1 |  |
 | [Skill 发现协议增强 SOP](./skill-discovery-protocol.md) | Skill 发现协议增强 SOP | L1 |  |
 | [Skill 五要素模型（Skill Five Elements Model）](./skill-five-elements-model.md) | Skill 五要素模型（Skill Five Elements Model） | L1 |  |
-| [技能意图路由（Skill Intent Routing）](./skill-intent-routing.md) | 技能意图路由（Skill Intent Routing） | L2 已验证 | `skill` `意图路由` `SKILL.md` |
-| [技能知识操作分离（Skill Knowledge-Operation Separation）](./skill-knowledge-operation-separation.md) | 技能知识操作分离（Skill Knowledge-Operation Separation） | L2 | `skill` `知识操作分离` `架构设计` |
+| [技能意图路由（Skill Intent Routing）](./skill-intent-routing.md) | 技能意图路由（Skill Intent Routing） | L2 |  |
+| [技能知识操作分离（Skill Knowledge-Operation Separation）](./skill-knowledge-operation-separation.md) | 技能知识操作分离（Skill Knowledge-Operation Separation） | L2 |  |
 | [Skill渐进式披露封装模式（SKILL.md Metadata + Python Executor）](./skill-progressive-disclosure-encapsulation.md) | Skill渐进式披露封装模式（SKILL.md Metadata + Python Executor） | L1 |  |
 | [Skill标准化操作流程模式（Four Principles for Workflow Skill Design）](./skill-standardized-workflow-pattern.md) | Skill标准化操作流程模式（Four Principles for Workflow Skill Design） | L1 |  |
 | [AI Skill 三层价值模型](./skill-three-layer-value-model.md) | AI Skill 三层价值模型 | L2 |  |
 | [苏格拉底提问纠错模式（Socratic Questioning Correction）](./socratic-questioning-correction.md) | 苏格拉底提问纠错模式（Socratic Questioning Correction） | L1 | `苏格拉底提问` `纠错方式` `协作模式` |
 | [源码锚点二次校验协议：研究-编写阶段的质量传递契约](./source-anchor-verification-protocol.md) | 源码锚点二次校验协议：研究-编写阶段的质量传递契约 | L1 |  |
-| [源码阅读→OKF Wiki生成工作流](./source-code-to-okf-wiki-workflow.md) | 源码阅读→OKF Wiki生成工作流 | L1 |  |
 | [源码→OKF 对抗性更新工作流](./source-code-to-okf-adversarial-update.md) | 源码→OKF 对抗性更新工作流 | L1 |  |
-| [信源稳定性门（Source Stability Gate）](./source-stability-gate.md) | 信源稳定性门：文档生成前预检信源路径持久性，防止临时目录清理导致file:///引用断裂 | L2 | `信源稳定性` `路径断裂` `质量门` `vendor子模块` |
+| [源码阅读→OKF Wiki生成工作流](./source-code-to-okf-wiki-workflow.md) | 源码阅读→OKF Wiki生成工作流 | L1 |  |
+| [信源稳定性门（Source Stability Gate）](./source-stability-gate.md) | 信源稳定性门（Source Stability Gate） | L2 | `信源稳定性` `路径断裂` `质量门` |
 | [Spec 驱动 + 知识库驱动的文档批量产出模式](./spec-driven-batch-doc-generation.md) | Spec 驱动 + 知识库驱动的文档批量产出模式 | - |  |
 | [Spec 驱动子代理执行模式](./spec-driven-subagent-execution.md) | Spec 驱动子代理执行模式 | - |  |
 | [Spec Mode文档创建工作流：前置规划→原子执行→门禁验证](./spec-mode-doc-creation-workflow.md) | Spec Mode文档创建工作流：前置规划→原子执行→门禁验证 | L2 |  |
@@ -81,6 +86,7 @@ date: "2026-07-09"
 | [风格-创意分离控制（Style-Creativity Separation Control）](./style-creativity-separation-control.md) | 风格-创意分离控制（Style-Creativity Separation Control） | L2 |  |
 | [子代理原子任务描述模板：六要素精确委托法](./subagent-atomic-task-template.md) | [...按照要素3的结构化大纲写正文内容...] | L2 |  |
 | [子代理"三不准"执行规范（Subagent Git Three Prohibitions）](./subagent-git-three-prohibitions.md) | 子代理"三不准"执行规范（Subagent Git Three Prohibitions） | L1 |  |
+| [子代理分析任务标准化指令](./subagent-standardized-instruction.md) | 子代理分析任务标准化指令 | L2-validated | `subagent` `agent-engineering` `quality-assurance` |
 | [症状-处方 QA 系统（Symptom-Prescription QA）](./symptom-prescription-qa.md) | 症状-处方 QA 系统（Symptom-Prescription QA） | L2 |  |
 | [任务类型预检防偏差](./task-type-precheck-bias-defense.md) | 任务类型预检防偏差 | L2 |  |
 | [团队共享 AI 同事模式（Team Shared AI Colleague）](./team-shared-ai-colleague.md) | 团队共享 AI 同事模式（Team Shared AI Colleague） | - |  |
@@ -101,4 +107,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-08-21 -->
+<!-- generated by generate-readme.py on 2026-08-29 -->

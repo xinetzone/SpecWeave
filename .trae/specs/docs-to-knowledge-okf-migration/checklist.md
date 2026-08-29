@@ -1,4 +1,4 @@
-# docs/ 到 .agents/docs/knowledge/ 迁移验证清单
+# docs/ 到 docs/knowledge/ 迁移验证清单
 
 > 状态：全部验证通过（2026-08-23）。任务 1-23 已完成，count_wikis.py 输出 151 与 CATEGORIES.md 统计一致。
 

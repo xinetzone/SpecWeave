@@ -344,7 +344,7 @@ ocr scan --format json --audience agent
 
 ### 4.1 概要
 
-```bash
+```text
 ocr session <sub-command>
 ocr sessions <sub-command>   # 别名
 

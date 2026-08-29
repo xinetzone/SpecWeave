@@ -212,10 +212,10 @@ stale_after: "2027-08-28"
 
 | # | 行动项 | 类型 | 优先级 | 状态 |
 |---|--------|------|--------|------|
-| A-1 | 在 source-code-to-okf-wiki 技能的 V 阶段检查清单中增加"计数断言验证"：对文档中所有"X个/Y份/Z个"类陈述执行 Glob/Grep 计数比对 | 流程改进 | high | 待执行 |
-| A-2 | 将"信源稳定性门"模式的5步预检流程内置于 source-code-to-okf-wiki 技能的 R 阶段之前 | 工具增强 | high | 待执行 |
-| A-3 | 开发 frontmatter 格式迁移脚本（块格式 ↔ inline flow），固化本次 PowerShell 批量替换逻辑为可复用工具 | 工具建设 | medium | 待执行 |
-| A-4 | 在 CI 中加入 frontmatter 格式检查（Grep `  date:` 零匹配 + Grep `generated: {` 计数），使规范演进时可批量发现不合规文件 | CI增强 | medium | 待执行 |
+| A-1 | 在 source-code-to-okf-wiki 技能的 V 阶段检查清单中增加"计数断言验证"：对文档中所有"X个/Y份/Z个"类陈述执行 Glob/Grep 计数比对 | 流程改进 | high | ✅ 已完成（2026-08-29，技能 v1.3.0：V 阶段检查清单第 8 项 + Prompt 模板计数断言项 + L2 模式文档同步；首次实践即 GATE-SPS 全量扫描"15 克隆/298 处引用"均以工具输出为准，提交 1ed76273） |
+| A-2 | 将"信源稳定性门"模式的5步预检流程内置于 source-code-to-okf-wiki 技能的 R 阶段之前 | 工具增强 | high | ✅ 已完成（2026-08-29，技能 v1.3.0 阶段0 Pre-flight 预检/G0 质量门：信源分类→临时信源升级（submodule 固定不可变 tag+hash）→路径只指 stable→清理前扫描→持久性 audit；配套 GATE-SPS 工具 check-source-path-stability.py，提交 42b6c8e6/1ed76273） |
+| A-3 | 开发 frontmatter 格式迁移脚本（块格式 ↔ inline flow），固化本次 PowerShell 批量替换逻辑为可复用工具 | 工具建设 | medium | ⊙ 已由现有工具兑现，无需新建（2026-08-29 核查：`.agents/scripts/migrate-frontmatter.py` 薄封装 + `lib/migrate_frontmatter/` 完整包已提供 scan/convert/rollback/verify/report 能力；`check-frontmatter.py` 第 5 条已内置"扁平结构（无多行缩进嵌套）"门禁） |
+| A-4 | 在 CI 中加入 frontmatter 格式检查（Grep `  date:` 零匹配 + Grep `generated: {` 计数），使规范演进时可批量发现不合规文件 | CI增强 | medium | 待执行（2026-08-29 核查：ci-check.ps1 流水线中尚无 frontmatter 格式检查项，check-frontmatter.py 未接入 CI） |
 
 ---
 
@@ -238,3 +238,6 @@ stale_after: "2027-08-28"
 | [209d5bfc](file:///d:/AI/.git) | 16:17:34 | docs(knowledge) | 27 | +2519/-133 |
 | [edda3939](file:///d:/AI/.git) | 16:29:56 | chore(vendor) | 5 | +11 |
 | [189e5f43](file:///d:/AI/.git) | 17:09:30 | docs(knowledge) | 21 | +501/-130 |
+| [42b6c8e6](file:///d:/AI/.git) | 2026-08-29 | feat(scripts) | 2 | +863 |
+| [1ed76273](file:///d:/AI/.git) | 2026-08-29 | docs(skill) | 4 | +117/-13 |
+| （本提交） | 2026-08-29 | docs(retrospective) | 2 | 行动项 A-1/A-2 闭环回写（A-3 标注已兑现、A-4 保持待执行） |

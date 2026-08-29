@@ -36,7 +36,7 @@ source: "AGENTS.md"
 | 资产 | 路径 | 说明 |
 |------|------|------|
 | jpman CLI | [../bin/jpman](../bin/jpman) | 零依赖CLI，纯bash实现，跨平台（bash/cmd/ps1） |
-| Containerfile.hidden | [../Containerfile.hidden](../Containerfile.hidden) | 增量构建补丁，配置变更快速重建 |
+| Containerfile | [../Containerfile](../Containerfile) | 多阶段构建定义（Layer 4/5 支持缓存增量重建） |
 | pyproject.toml | [../pyproject.toml](../pyproject.toml) | Python项目配置（scikit-build-core + invoke） |
 | CMakeLists.txt | [../CMakeLists.txt](../CMakeLists.txt) | scikit-build-core CMake配置 |
 | .env.example | [../.env.example](../.env.example) | 环境变量模板（含jpman和invoke两种配置方式） |

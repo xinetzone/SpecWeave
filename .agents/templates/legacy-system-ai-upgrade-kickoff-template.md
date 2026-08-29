@@ -329,8 +329,8 @@ summary: "基于七概念方法论萃取的 P-LEGACY-AI-UPGRADE-002 模式，为
 | P-LEGACY-AI-UPGRADE-002 模式原文 | `.trae/specs/volcengine-agentkit-wiki/patterns.md` 模式 2 | 5 步 SOP 详细定义与反模式说明 |
 | P-DEMO-TO-PROD-003 模式原文 | `.trae/specs/volcengine-agentkit-wiki/patterns.md` 模式 3 | 12 项生产检查完整标准与检查方法 |
 | P-AGENT-SELECT-001 选型框架 | `.trae/specs/volcengine-agentkit-wiki/patterns.md` 模式 1 | 若尚未选型，用此框架做平台评估 |
-| AgentKit Wiki 教程 | `.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md` | 若选用 AgentKit，11 章完整教程 |
-| MCP/A2A 协议 Wiki | `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/` | 协议细节参考 |
+| AgentKit Wiki 教程 | `docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/README.md` | 若选用 AgentKit，11 章完整教程 |
+| MCP/A2A 协议 Wiki | `docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/` | 协议细节参考 |
 
 ### 9.2 文档版本历史
 

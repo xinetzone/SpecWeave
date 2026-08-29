@@ -49,7 +49,7 @@ session: "sc-20260704-domestic-skill-mcp-wiki"
 | F15 | tasks.md Task 1 描述为"在 docs/knowledge/learning/ 目录下创建 domestic-skill-mcp-ecosystem-wiki.md 文件" |
 | F16 | Wiki 文档共 688 行，包含 11 个章节 |
 | F17 | Wiki 文档 frontmatter 的 source 字段包含 "external: 不存在-" 前缀 |
-| F18 | Wiki 文档 frontmatter 包含 `x-toml-ref` 字段，指向 `.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.toml` |
+| F18 | Wiki 文档 frontmatter 包含 `x-toml-ref` 字段，指向 `.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.toml` |
 
 ### 1.4 验证与索引事实
 
@@ -72,7 +72,7 @@ session: "sc-20260704-domestic-skill-mcp-wiki"
 
 | 四元组 | 内容 |
 |--------|------|
-| **陈述** | 子智能体将 Wiki 文档创建在 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/` 路径下，而非任务描述中明确指定的 `docs/knowledge/learning/` 路径 |
+| **陈述** | 子智能体将 Wiki 文档创建在 `docs/knowledge/learning/01-agent-protocols-interfaces/` 路径下，而非任务描述中明确指定的 `docs/knowledge/learning/` 路径 |
 | **证据** | F12（实际路径）、F13（预期路径）、F14（预期路径无文件）、F15（Task 1 明确指定路径） |
 | **反常识** | 子智能体在任务描述中收到了绝对路径 `d:\AI\docs\knowledge\learning\domestic-skill-mcp-ecosystem-wiki.md`，却将文件创建在完全不同的目录树（`.agents/docs/`）下。这表明子智能体可能受到项目 `.agents/docs/` 目录结构的影响，而非遵循明确指令 |
 | **行动** | 在子智能体任务验收清单中增加"返回创建文件的绝对路径"必选项；主智能体使用 Glob 验证文件是否存在于指定路径 |

@@ -6,7 +6,7 @@
 - **Target Users**: 后端开发者、前端开发者、全栈工程师、需要学习或使用 GraphQL 进行 API 开发的技术人员。
 
 ## Goals
-- 在 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/` 下创建 `graphql-wiki/` 原子化教程目录
+- 在 `docs/knowledge/learning/01-agent-protocols-interfaces/` 下创建 `graphql-wiki/` 原子化教程目录
 - 基于 GraphQL 官方文档（https://graphql.org/、https://graphql.org/learn/introduction/、https://graphql.org/community/tools-and-libraries/?tags=python）编写完整教程
 - 教程覆盖：GraphQL 概述与核心概念、查询语言（Queries/Mutations/Subscriptions）、Schema 与类型系统、验证与执行机制、客户端使用、服务端开发、Python 生态工具链、最佳实践、FAQ 与资源
 - 包含入口导航文档（README.md）和独立的原子化章节文档

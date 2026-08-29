@@ -14,7 +14,7 @@
   - [x] SubTask 2.4: 支持 `--json` 输出模式供 CI 集成，退出码 0=全部正确，1=存在错误放置
 
 - [x] Task 3: 创建文件放置治理文档
-  - [x] SubTask 3.1: 创建 `.agents/docs/knowledge/best-practices/config-file-placement-convention.md`
+  - [x] SubTask 3.1: 创建 `docs/knowledge/best-practices/config-file-placement-convention.md`
   - [x] SubTask 3.2: 编写关键配置文件标准路径表（文件名 / 标准位置 / 用途 / 自动加载机制依赖）
   - [x] SubTask 3.3: 编写放置决策树（判断"应放根目录"vs"应放 .agents/scripts/"vs"应放 .agents/docs/"的依据）
   - [x] SubTask 3.4: 编写根因分析章节：分析 sitecustomize.py 原本被放到根目录的原因（Python 自动加载约定便利性）与代价（根目录污染、组织不一致）
@@ -60,7 +60,7 @@
   - [x] SubTask 8.2: 修改 `classify_item` 函数（行 178-236）：将 `has_date` 字段语义扩展为"含日期或 task-id"，并在 `parse_date_from_name` 返回 None 时检查 task-id 模式；若 task-id 命中则将 `has_date=True`、`date_source="task-id"`（无基准日期可解析时回退 mtime）；告警原因中区分"缺少日期与 task-id"
   - [x] SubTask 8.3: 更新脚本 docstring 与 `--help` 输出（若存在），明确"日期或 task-id"两种合规条件
   - [x] SubTask 8.4: 测试验证：构造 `.temp/experiments/task-abc123/` 测试目录，运行脚本确认被识别为合规项（无"缺少日期"告警）；构造 `.temp/experiments/foo/`（无日期无 task-id）确认仍告警"缺少日期与 task-id"
-  - [x] SubTask 8.5: 同步更新 `.agents/docs/knowledge/best-practices/config-file-placement-convention.md` 第 6.3 节命名规则，明确 task-id 格式约定（如 `task-{alphanumeric-hyphen}`），并给出 task-id 合规示例
+  - [x] SubTask 8.5: 同步更新 `docs/knowledge/best-practices/config-file-placement-convention.md` 第 6.3 节命名规则，明确 task-id 格式约定（如 `task-{alphanumeric-hyphen}`），并给出 task-id 合规示例
 
 - [x] Task 9: 修复 check-temp-lifecycle.py 文本模式未对每项输出基准日期来源
   - 背景：Spec 模式第七阶段验证发现 checklist 第 9 项 PARTIAL——脚本 docstring（行 22）声明"输出中标注每项的基准日期来源"，JSON 模式（`TempItem.to_dict` 行 120）已对每项输出 `date_source`，但文本模式仅在过期项输出中显示 `({it.date_source})`（行 429），不合规项（行 410-417）与合规未过期项未单独列出 date_source

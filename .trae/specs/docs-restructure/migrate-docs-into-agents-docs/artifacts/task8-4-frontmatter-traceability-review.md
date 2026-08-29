@@ -20,7 +20,7 @@ status: "completed"
 
 | 文件 | 处理动作 | 依据 |
 |---|---|---|
-| `.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | 将 `source` 从 `external: 不存在-...` 恢复为基线中的具体 README 路径 | `.temp/backup/docs-before-agents-docs-20260715/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` |
+| `docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | 将 `source` 从 `external: 不存在-...` 恢复为基线中的具体 README 路径 | `.temp/backup/docs-before-agents-docs-20260715/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` |
 | `.agents/docs/retrospective/patterns/code-patterns/command-injection-prevention.md` | 将 `source` 从 `README.md` 恢复为基线中的原始模式汇总文件 | `.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/command-injection-prevention.md` |
 | `.agents/docs/retrospective/patterns/code-patterns/defensive-config-cache-deepcopy.md` | 将 `source` 从 `README.md` 恢复为基线中的原始模式汇总文件 | `.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/defensive-config-cache-deepcopy.md` |
 | `.agents/docs/retrospective/patterns/code-patterns/dynamic-path-derivation.md` | 将 `source` 从 `README.md` 恢复为基线中的原始模式汇总文件 | `.temp/backup/docs-before-agents-docs-20260715/retrospective/patterns/code-patterns/dynamic-path-derivation.md` |

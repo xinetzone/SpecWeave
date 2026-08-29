@@ -4,19 +4,19 @@
 Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模型 API 全部免费开放），3周内单周 Token 调用量从 1 万亿增长到 5 万亿，图片模型一周生成 567 万张图，视频模型一周生成 237 万秒（约 650 小时）。其新产品 Pavo 是一个 PC 端 AI 创作平台，将图片生成、视频生成、短剧创作整合进一个工作流，由 Agent 总指挥，实现从想法到成片一站式完成。需要系统学习该网页内容并沉淀为一份结构清晰、通俗易懂的 wiki 教程，便于读者理解这套免费 AI 创作方案及其核心优势。
 
 ## What Changes
-- 新增 wiki 教程文档 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，作为 Agnes AI 与 Pavo 平台的系统性学习资料
+- 新增 wiki 教程文档 `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，作为 Agnes AI 与 Pavo 平台的系统性学习资料
 - 文档包含目录导航系统，覆盖核心数据、四大模块、剧情短片工作流、Agent 功能、模型升级等核心内容
 - 整理关键功能点、操作流程、技术亮点与实用信息
 - 提供内容三维评估（专业性/准确性/时效性）与 FAQ 常见问题解答
 - 汇总相关资源链接（官网、Pavo平台、API平台、开发者文档、GitHub）
-- **索引说明**：知识库实际位于 `.agents/docs/knowledge/`，索引通过 `scripts/generate_index.py` 自动生成，本任务完成后需运行该脚本更新入口索引
+- **索引说明**：知识库实际位于 `docs/knowledge/`，索引通过 `scripts/generate_index.py` 自动生成，本任务完成后需运行该脚本更新入口索引
 - **BREAKING**: 无破坏性变更（纯新增文档）
 
 ## Impact
 - Affected specs: 无（独立新增学习文档）
 - Affected code:
-  - 新增 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
-  - 索引更新需运行 `python .agents/docs/knowledge/scripts/generate_index.py`（若脚本路径不同需先查找确认）
+  - 新增 `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`
+  - 索引更新需运行 `python docs/knowledge/scripts/generate_index.py`（若脚本路径不同需先查找确认）
 
 ## Background & Context
 - **产品名称**: Agnes AI（免费多模态模型API）+ Pavo（PC端AI创作平台）
@@ -30,7 +30,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 ## ADDED Requirements
 
 ### Requirement: Wiki 教程文档主框架
-系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
+系统 SHALL 提供一份 Markdown 格式的 wiki 教程文档，放置在 `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md`，文档顶部包含完整的目录导航系统，所有章节通过锚点链接支持跳转。
 
 #### Scenario: 用户打开文档导航
 - **WHEN** 用户打开 `agnes-pavo-creative-platform-wiki.md`
@@ -137,10 +137,10 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 - **AND** 链接以 Markdown 标准链接格式呈现
 
 ### Requirement: 知识库索引登记
-系统 SHALL 确认文档放置在正确的分类目录 `.agents/docs/knowledge/learning/05-ai-multimodal-content/` 下，该目录下已存在同类竞品文档 `libtv-ai-shortdrama-wiki.md`，便于读者横向对比。索引通过 `scripts/generate_index.py` 自动生成。
+系统 SHALL 确认文档放置在正确的分类目录 `docs/knowledge/learning/05-ai-multimodal-content/` 下，该目录下已存在同类竞品文档 `libtv-ai-shortdrama-wiki.md`，便于读者横向对比。索引通过 `scripts/generate_index.py` 自动生成。
 
 #### Scenario: 索引可发现
-- **WHEN** 用户浏览 `.agents/docs/knowledge/README.md` 及分类索引
+- **WHEN** 用户浏览 `docs/knowledge/README.md` 及分类索引
 - **THEN** 能够在 learning 类目下的 05-ai-multimodal-content 分类中看到 Agnes Pavo 学习 wiki 的条目
 - **AND** 同分类下可发现 LibTV 等同类AI短剧工具文档，支持横向对比
 
@@ -167,7 +167,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 ### AC-1: Wiki 教程文档创建完成
 - **Given**: spec.md 中定义的所有功能需求已明确
 - **When**: 所有任务完成并通过验证
-- **Then**: `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 包含目录导航、概述数据、平台介绍、四大模块、剧情短片八步工作流、Agent系统、模型升级、社区反馈、内容评估、FAQ、资源链接等完整章节
+- **Then**: `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` 包含目录导航、概述数据、平台介绍、四大模块、剧情短片八步工作流、Agent系统、模型升级、社区反馈、内容评估、FAQ、资源链接等完整章节
 - **Verification**: `human-judgment`
 
 ### AC-2: 核心数据完整准确
@@ -214,7 +214,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 
 ### AC-9: 文档放置于正确分类目录
 - **Given**: wiki 文档创建完成
-- **When**: 用户浏览 `.agents/docs/knowledge/learning/05-ai-multimodal-content/`
+- **When**: 用户浏览 `docs/knowledge/learning/05-ai-multimodal-content/`
 - **Then**: `agnes-pavo-creative-platform-wiki.md` 位于该分类目录下，与 `libtv-ai-shortdrama-wiki.md` 等同类型文档同目录
 - **Verification**: `programmatic`
 
@@ -249,11 +249,11 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 | F1 | 用户请求：学习微信公众号文章并形成结构化学习Wiki |
 | F4 | 创建了spec/tasks/checklist三件套在 `.trae/specs/retrospectives-insights/agnes-pavo-learning-wiki/` |
 | F5 | spec中初始记录的文档路径为 `docs/knowledge/learning/agnes-pavo-creative-platform-wiki.md` |
-| F6 | 实际文档路径为 `.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` |
+| F6 | 实际文档路径为 `docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md` |
 | F7 | 文档实际分类目录为 learning/05-ai-multimodal-content/ |
 | F8 | checklist交付物清单中路径指向不存在的位置 |
 | F9 | 同分类目录下已存在同类竞品文档 libtv-ai-shortdrama-wiki.md |
-| F10 | 知识库实际根目录为 `.agents/docs/knowledge/` |
+| F10 | 知识库实际根目录为 `docs/knowledge/` |
 | F13 | 知识库索引通过 `scripts/generate_index.py` 自动生成 |
 | F17 | 剧情短片工作流实际细化为8步（spec原计划6步） |
 
@@ -262,7 +262,7 @@ Agnes AI 采取激进的免费策略（文本、图片、视频三个核心模�
 **I-1：项目目录结构认知偏差——双知识库并行导致路径错位**
 - 陈述：任务执行中对知识库实际根目录认知存在系统性偏差，spec记录路径与项目实际路径不一致
 - 证据：F5、F6、F10
-- 反常识：项目根目录确实存在`docs/knowledge/`，但实际运营的知识库位于`.agents/docs/knowledge/`，上下文压缩后基于会话记忆假设路径而非验证
+- 反常识：项目根目录确实存在`docs/knowledge/`，但实际运营的知识库位于`docs/knowledge/`，上下文压缩后基于会话记忆假设路径而非验证
 - 下次行动：所有涉及文件路径的任务，执行第一步必须Glob/LS确认目标目录实际结构
 
 **I-2：索引维护机制黑箱——手动编辑vs自动生成脚本认知缺失**

@@ -97,5 +97,3 @@ Trace ID、Run ID、Step ID应该贯穿所有Event、Log和Artifact。没有可�
 九条设计原则的落地情况如何？五大主流框架（LangGraph、OpenAI Assistants、Agents SDK、AutoGen、Claude SDK）在每条原则上的遵循程度星级评分、选型决策矩阵、关键发现分析，请见：
 
 → **[09 框架对比：九条设计原则遵循度评估](/concepts/09-framework-comparison.md)**
-
----

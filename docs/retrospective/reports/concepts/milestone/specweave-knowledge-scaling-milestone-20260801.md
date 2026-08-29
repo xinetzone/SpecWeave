@@ -188,7 +188,7 @@ stale_after: "2027-08-22"
 - **单一职责**：系统整理Windows平台开发的兼容性问题与解决方案，形成可检查清单
 - **可独立验证**：指南包含编码、PowerShell、路径处理、权限、工具版本5大类共18项检查项（≥15要求）
 - **验收标准**：每个检查项有问题描述、解决方案、反模式、对应工具/脚本引用
-- **交付物**：[windows-zero-friction-development-guide.md](../../../../../.agents/docs/knowledge/best-practices/windows-zero-friction-development-guide.md)
+- **交付物**：[windows-zero-friction-development-guide.md](../../../../knowledge/best-practices/windows-zero-friction-development-guide.md)
 
 ---
 

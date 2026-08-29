@@ -35,7 +35,7 @@ Python 3.13 引入了基于 `_pyrepl` 的新 REPL，但默认使用旧版。Pyth
 - **历史搜索**：Ctrl+R 反向搜索历史命令
 - **括号匹配**：自动匹配括号/引号
 
-```python
+```console
 # 启动 Python 3.14 REPL
 $ python3.14
 Python 3.14.0 (main, Oct  7 2025, ...) [GCC ...] on linux

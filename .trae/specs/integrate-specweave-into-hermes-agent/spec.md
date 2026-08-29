@@ -9,7 +9,7 @@ tags: ["Hermes", "hermes-agent", "hermes-okf", "OKF", "集成指南", "插件开
 # 将 SpecWeave 工作区集成到 Hermes Agent 的技术指导文档
 
 ## Overview
-- **Summary**: 系统创建一份原子化的技术指导文档，说明如何将 **SpecWeave 整个工作区**（AGENTS.md 契约、.agents/ 规范体系、skills/commands/scripts/roles、知识库 docs/knowledge、apps/ 应用、vendor/ 子模块）作为能力来源集成到 Hermes Agent 中，使 Hermes 能够正确识别、调用和执行 SpecWeave 的功能。指导同时覆盖两条集成路径：(1) **Hermes Agent 框架本体**——将 SpecWeave 能力注册为 Hermes 插件（tools / skills / memory provider / context engine），(2) **Hermes OKF 记忆层**——将 SpecWeave 知识库作为可持久化、可检索的 OKF memory bundle 挂接到 Hermes 会话。产出物为一份面向 AI 开发者 / Hermes 用户 / 知识工程师的中文技术指导 Wiki，输出到 `.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`。
+- **Summary**: 系统创建一份原子化的技术指导文档，说明如何将 **SpecWeave 整个工作区**（AGENTS.md 契约、.agents/ 规范体系、skills/commands/scripts/roles、知识库 docs/knowledge、apps/ 应用、vendor/ 子模块）作为能力来源集成到 Hermes Agent 中，使 Hermes 能够正确识别、调用和执行 SpecWeave 的功能。指导同时覆盖两条集成路径：(1) **Hermes Agent 框架本体**——将 SpecWeave 能力注册为 Hermes 插件（tools / skills / memory provider / context engine），(2) **Hermes OKF 记忆层**——将 SpecWeave 知识库作为可持久化、可检索的 OKF memory bundle 挂接到 Hermes 会话。产出物为一份面向 AI 开发者 / Hermes 用户 / 知识工程师的中文技术指导 Wiki，输出到 `docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`。
 - **Purpose**: 帮助 Hermes Agent 使用者与 SpecWeave 维护者理解"如何把一套成熟的 AGENTS.md + .agents 能力体系（技能/命令/脚本/规范/知识）暴露给外部 Agent 宿主"，并提供可复制、可实操的接口规范、配置清单、数据格式转换、权限认证与调用示例。
 - **Target Users**: AI Agent 开发者、Hermes Agent 用户、知识工程师、架构师、SpecWeave 维护者。
 
@@ -67,7 +67,7 @@ tags: ["Hermes", "hermes-agent", "hermes-okf", "OKF", "集成指南", "插件开
 - **Dependencies**:
   - 参考现有 wiki 格式：`okf-wiki/hermes-okf-wiki/`、`okf-wiki/`、`echobird-wiki/`、`agency-agents-wiki/`
   - 资料来源：hermes-okf 官方 Wiki（Quick-Start / Home / 插件体系）、NousResearch/hermes-agent 插件文档、SpecWeave 仓库现状（AGENTS.md / .agents/capability-registry.md / skills / commands / scripts）
-  - 输出路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`
+  - 输出路径：`docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`
 
 ## Assumptions
 - 输出目录归类在 `03-agent-platforms-tools/` 下是合理的（Hermes 属 Agent 平台/工具）
@@ -147,4 +147,4 @@ tags: ["Hermes", "hermes-agent", "hermes-okf", "OKF", "集成指南", "插件开
 ## Impact
 - **Affected specs**: `03-agent-platforms-tools/` Agent 平台知识体系；与 `okf-wiki/hermes-okf-wiki/` 形成互补
 - **Affected code**: 无源代码变更；仅新增知识文档（技术指导），可选更新上级 README 索引
-- **Affected docs**: `.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`（新建）
+- **Affected docs**: `docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/`（新建）

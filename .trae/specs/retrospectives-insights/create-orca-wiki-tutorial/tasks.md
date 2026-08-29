@@ -1,15 +1,15 @@
 # Orca 多代理 AI 编排器学习与 Wiki 教程文档 - 实施计划
 
 ## 说明
-本项目采用原子化目录式 wiki 结构（参考 volcengine-agentkit-wiki / wsl-wiki / ai-powershell5-hell-wiki 的原子化组织方式）。目标目录：`.agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/`。
+本项目采用原子化目录式 wiki 结构（参考 volcengine-agentkit-wiki / wsl-wiki / ai-powershell5-hell-wiki 的原子化组织方式）。目标目录：`docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/`。
 
-> **格式约束（执行前必读）**：每个子代理创建文件前，必须先读取同目录 1-2 个现有同类 wiki 文件（如 `.agents/docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/00-overview.md`、`wsl-wiki/01-installation.md`）确认实际 frontmatter 风格、链接格式、章节结构，以现有文件为权威标准，而非仅凭本 spec 描述。
+> **格式约束（执行前必读）**：每个子代理创建文件前，必须先读取同目录 1-2 个现有同类 wiki 文件（如 `docs/knowledge/learning/03-agent-platforms-tools/volcengine-agentkit-wiki/00-overview.md`、`wsl-wiki/01-installation.md`）确认实际 frontmatter 风格、链接格式、章节结构，以现有文件为权威标准，而非仅凭本 spec 描述。
 
 ## [x] Task 1: 创建原子化 wiki 目录框架与 README 索引
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 创建 `.agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/` 目录
+  - 创建 `docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/` 目录
   - 创建 `README.md` 作为索引页：含 YAML frontmatter（title/source/date/tags）、项目一句话定位、目录导航（所有章节文件相对链接）、各章一句话摘要
   - 明确文件命名规范（kebab-case 纯英文、NN-*.md 编号）
   - **格式约束**：frontmatter 必须使用 YAML（--- 分隔），不得使用 TOML（+++ 分隔）；目录导航使用相对链接，禁止 file:/// 绝对路径
@@ -177,7 +177,7 @@
 - **Priority**: high
 - **Depends On**: Task 9
 - **Description**:
-  - 在 `.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md` 中新增 orca 教程条目
+  - 在 `docs/knowledge/learning/03-agent-platforms-tools/README.md` 中新增 orca 教程条目
   - 在「📚 子Wiki索引」表格新增一行：`[orca-wiki/](orca-wiki/README.md)`、文件数、核心主题摘要
   - 如适用，更新「Agent平台与工具生态分类」表与「快速导航」中相关位置
   - **格式约束**：先读取现有 README.md 确认实际表格格式，再追加新行
@@ -194,7 +194,7 @@
 - **Description**:
   - 主代理对子代理交付的 wiki 文档执行 5 项快速验收：
     1. **frontmatter 格式合规**：使用 YAML（--- 分隔）而非 TOML（+++ 分隔）
-    2. **文件路径正确**：位于 .agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/
+    2. **文件路径正确**：位于 docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/
     3. **文件名合规**：kebab-case、纯英文、无中文字符（运行 `python .agents/scripts/check-filename-convention.py` 验证）
     4. **内容完整性**：12 个 AC 全部满足，章节结构完整
     5. **链接有效性**：目录导航相对链接可跳转、外部 URL 指向正确资源（运行 `python .agents/scripts/check-links.py` 验证）

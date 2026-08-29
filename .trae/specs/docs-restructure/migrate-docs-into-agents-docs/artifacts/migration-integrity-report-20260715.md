@@ -39,19 +39,19 @@ type: "migration-integrity-report"
 
 | 文件 | 现象 | 初步判断 |
 |---|---|---|
-| `.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | `@@ -5,3 +5,3 @@
+| `docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | `@@ -5,3 +5,3 @@
  / -x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/l2-progressive-disclosure-optimiza...` | 除 frontmatter 层级修正外还伴随正文链接/文案变更 |
-| `.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | `@@ -3,3 +3,3 @@
+| `docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md` | `@@ -3,3 +3,3 @@
  / -x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/pdf-export-mermaid-automation-insi...` | frontmatter source 被回填为 README，疑似溯源退化 |
-| `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | `@@ -3,3 +3,3 @@
+| `docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | `@@ -3,3 +3,3 @@
  / -x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agen...` | 除 frontmatter 层级修正外还伴随正文链接/文案变更 |
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | `@@ -8,3 +8,2 @@
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | `@@ -8,3 +8,2 @@
  / -  x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ha...` | frontmatter 调整之外仍有非纯路径差异 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | `@@ -3,4 +3,4 @@
+| `docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | `@@ -3,4 +3,4 @@
  / -x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-...` | 除 frontmatter 层级修正外还伴随正文链接/文案变更 |
-| `.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | `@@ -11,3 +11,3 @@
+| `docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | `@@ -11,3 +11,3 @@
  / -x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/first-principles/15-cross-domain...` | 除 frontmatter 层级修正外还伴随正文链接/文案变更 |
-| `.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.md` | `@@ -3,3 +3,3 @@
+| `docs/knowledge/operations/vendor-flexloop-integration-guide.md` | `@@ -3,3 +3,3 @@
  / -x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml...` | 除 frontmatter 层级修正外还伴随正文链接/文案变更 |
 | `.agents/docs/README.md` | `@@ -1,4 +1,55 @@
  / -# 项目文档 / +# docs 文档边界说明` | 根 README 被重写为边界说明，属于结构性改写 |
@@ -66,13 +66,13 @@ type: "migration-integrity-report"
 
 ## 需人工复核文件（38 个）
 
-- `.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
-- `.agents/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md`：frontmatter source 被回填为 README，疑似溯源退化
-- `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
-- `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`：frontmatter 调整之外仍有非纯路径差异
-- `.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
-- `.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
-- `.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
+- `docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
+- `docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.md`：frontmatter source 被回填为 README，疑似溯源退化
+- `docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
+- `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md`：frontmatter 调整之外仍有非纯路径差异
+- `docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
+- `docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
+- `docs/knowledge/operations/vendor-flexloop-integration-guide.md`：除 frontmatter 层级修正外还伴随正文链接/文案变更
 - `.agents/docs/README.md`：根 README 被重写为边界说明，属于结构性改写
 - `.agents/docs/retrospective/patterns/code-patterns/command-injection-prevention.md`：frontmatter source 被回填为 README，疑似溯源退化
 - `.agents/docs/retrospective/patterns/code-patterns/defensive-config-cache-deepcopy.md`：frontmatter source 被回填为 README，疑似溯源退化
@@ -108,12 +108,12 @@ type: "migration-integrity-report"
 ## 当前新增文件（18 个）
 
 - `.agents/docs/.meta/toml/docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/first-principles-insight.toml`
-- `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md`
-- `.agents/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md`
-- `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md`
-- `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md`
-- `.agents/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md`
-- `.agents/docs/knowledge/learning/07-vendor-product-learning/openai/README.md`
+- `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.md`
+- `docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/README.md`
+- `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/resources/README.md`
+- `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.md`
+- `docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.md`
+- `docs/knowledge/learning/07-vendor-product-learning/openai/README.md`
 - `.agents/docs/retrospective/.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/task6-cowork-data-insights.toml`
 - `.agents/docs/retrospective/.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/task7-industry-insights.toml`
 - `.agents/docs/retrospective/archives/xinet/core/README.md`

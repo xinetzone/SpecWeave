@@ -18,7 +18,7 @@
 运行后会执行 6 个场景（成功/失败/超时/429退避/5xx重试/无效Key），逐个打印 PASS/FAIL，
 全部通过则退出码 0，任一失败则退出码 1。无需真实 API Key，无需联网。
 
-关联知识条目：SpecWeave/.agents/docs/knowledge/best-practices/api-integration-worked-example.md
+关联知识条目：SpecWeave/docs/knowledge/best-practices/api-integration-worked-example.md
 及 api-async-polling-pattern / api-error-handling-retry-strategy / api-long-text-file-parameter
 """
 

@@ -78,7 +78,7 @@
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**: 
-  - 创建 Wiki 根目录：`.agents/docs/knowledge/learning/veadk-python/`
+  - 创建 Wiki 根目录：`docs/knowledge/learning/veadk-python/`
   - 创建原子化子目录结构（按模块组织）
   - 生成术语表 glossary.md（≥15 个核心术语，如 Agent、Runner、Tool、Memory、KnowledgeBase、A2A、MCP、Skill、A2UI、LlmAgent、Flow、Callback、Tracer、KnowledgeBase、Session 等），每个术语包含英文原名、中文解释、一句话通俗说明
   - 生成首页 index.md：项目介绍、功能特性、适用场景、文档导航链接、快速链接

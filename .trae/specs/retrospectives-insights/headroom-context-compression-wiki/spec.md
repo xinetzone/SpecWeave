@@ -13,7 +13,7 @@
 - **Summary**: 基于微信公众号文章《给AI Agent装个"压缩层"：1万token压到1千，质量不降反升》，系统学习Headroom开源项目——一个夹在AI Agent和LLM之间的上下文压缩中间层。本教程涵盖项目架构、6种压缩算法、CCR可逆机制、4种接入方式、跨Agent记忆共享、自动学习教训等核心功能，形成完整的学习笔记与深度分析报告，并通过七概念方法论完成复盘+洞察+萃取+导出+原子提交全流程闭环。
 - **Purpose**: 系统性沉淀Headroom项目的核心技术原理、使用方法和设计思想，为AI Agent开发者提供上下文压缩领域的实用参考，帮助理解如何在不损失质量的前提下大幅降低Token消耗；同时通过复盘沉淀9条可复用洞察和3个设计模式。
 - **Target Users**: AI Agent开发者、Claude Code/Codex/Cursor等编程Agent深度用户、关注LLM成本优化的技术人员、对上下文工程(Context Engineering)感兴趣的研究者。
-- **交付物入口**：[00-overview.md](file:///d:/AI/docs/knowledge/learning/headroom-context-compression-wiki/00-overview.md)
+- **交付物入口**：[00-overview.md](../../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/00-overview.md)
 - **复盘报告入口**：[README.md](file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.md)
 
 ## Goals（全部达成 ✅）

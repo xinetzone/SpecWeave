@@ -242,7 +242,7 @@ JIT 效果有限的代码：
 
 Python 3.14 改进了多个错误消息，提供更清晰的建议：
 
-```python
+```pycon
 # NameError 现在提供相似变量名建议
 >>> pritn("hello")
 NameError: name 'pritn' is not defined. Did you mean: 'print'?

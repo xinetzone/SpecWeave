@@ -33,7 +33,7 @@
 - **Depends On**: Task 2
 - **Description**: 
   - 基于I阶段洞察，萃取ONNX知识结构模式
-  - 创建Wiki目录：`.agents/docs/knowledge/learning/06-ai-ml-inference/onnx-wiki/`
+  - 创建Wiki目录：`docs/knowledge/learning/06-ai-ml-inference/onnx-wiki/`
   - 设计7个原子文件的内容大纲
   - 完成G3质量门预检查（触发场景、核心步骤、反模式）
 - **Acceptance Criteria Addressed**: [AC-1, AC-6]

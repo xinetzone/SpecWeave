@@ -9,7 +9,7 @@ Mermaid 代码块的引号使用错误。覆盖 16 类图表的引号规则，�
     python check-mermaid-quotes.py --path .agents/docs/
     python check-mermaid-quotes.py --json file.md
 
-规则来源: .agents/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/mermaid-quote-rules-checklist.md
+规则来源: docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/mermaid-quote-rules-checklist.md
 """
 
 # ── 路径引导（遵循项目脚本规范）──────────────────────────────

@@ -24,7 +24,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**: 
-  - 在 `.agents/docs/knowledge/learning/` 下创建 `neural-compressor-wiki/` 目录
+  - 在 `docs/knowledge/learning/` 下创建 `neural-compressor-wiki/` 目录
   - 参考现有 wiki（如 ffi-wiki）创建基础文件框架：
     - 00-overview.md（总览）
     - 01-core-concepts.md（核心概念与架构）

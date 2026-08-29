@@ -47,7 +47,7 @@
 
 * **project\_memory记录**：project\_memory中详细记录了该模式的三标准验证（完整流程/检查清单/项目验证）和两个验证案例
 
-* **第一性原理框架**：[08-methodology-framework.md](../../../../.agents/docs/knowledge/learning/first-principles/08-methodology-framework.md)定义了六步操作流程，[first-principles.md](../../../../.agents/commands/first-principles.md)指令集定义了RACI矩阵和质量验收标准
+* **第一性原理框架**：[08-methodology-framework.md](../../../../docs/knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md)定义了六步操作流程，[first-principles.md](../../../../.agents/commands/first-principles.md)指令集定义了RACI矩阵和质量验收标准
 
 * **关联关系现状**：9个指令集中仅2个（file-creation.md、first-principles.md、mermaid.md后补）建立了知识库关联，其余7个因无对应系统性资料档案而未关联
 

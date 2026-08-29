@@ -21,12 +21,12 @@ status: "completed"
 
 | 文件 | 动作 | 说明 | 复核结果 |
 |---|---|---|---|
-| `.agents/docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | 已修复 | 将 `.agents/.cache/spec-loader.json` 从纯文本恢复为可点击链接；保留其余已适配到 `.agents/` 新层级的相对路径 | 目标 `../../../.cache/spec-loader.json` 存在 |
-| `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | 已修复 | 将 `skills-ref/src/skills_ref/` 从纯文本恢复为可点击链接；保留 `.agents/skills/` 等迁移后正确路径 | 目标 `../../../../../../external/agentskills/skills-ref/src/skills_ref/`、`../../../../../skills/README.md` 均存在 |
-| `.agents/docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | 复核后不改 | 差异仅表现为 `x-toml-ref` 层级调整与 frontmatter 排序；未发现正文链接/文案受损 | 现有 `x-toml-ref` 指向存在，不纳入本轮修复 |
-| `.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | 已修复 | 将开头 `weasyprint/` 目录引用从纯文本恢复为可点击链接；保留后续已适配的新相对路径 | 目标 `../../../../../../external/WeasyPrint/weasyprint/` 存在 |
-| `.agents/docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | 复核后不改 | 当前章节末尾内部导航、`AGENTS.md`、`rules/` 路径均能解析到真实目标，判定为迁移后的必要路径修正 | 6 条目标路径均存在，不纳入本轮修复 |
-| `.agents/docs/knowledge/operations/vendor-flexloop-integration-guide.md` | 已修复 | 将 `.agents/scripts/tests/` 从纯文本恢复为可点击链接；保留其余已适配到 `.agents/` 新层级的相对路径 | 目标 `../../../scripts/tests/` 存在 |
+| `docs/knowledge/best-practices/l2-progressive-disclosure-optimization.md` | 已修复 | 将 `.agents/.cache/spec-loader.json` 从纯文本恢复为可点击链接；保留其余已适配到 `.agents/` 新层级的相对路径 | 目标 `../../../.cache/spec-loader.json` 存在 |
+| `docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.md` | 已修复 | 将 `skills-ref/src/skills_ref/` 从纯文本恢复为可点击链接；保留 `.agents/skills/` 等迁移后正确路径 | 目标 `../../../../../../external/agentskills/skills-ref/src/skills_ref/`、`../../../../../skills/README.md` 均存在 |
+| `docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md` | 复核后不改 | 差异仅表现为 `x-toml-ref` 层级调整与 frontmatter 排序；未发现正文链接/文案受损 | 现有 `x-toml-ref` 指向存在，不纳入本轮修复 |
+| `docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.md` | 已修复 | 将开头 `weasyprint/` 目录引用从纯文本恢复为可点击链接；保留后续已适配的新相对路径 | 目标 `../../../../../../external/WeasyPrint/weasyprint/` 存在 |
+| `docs/knowledge/learning/first-principles/15-cross-domain-cases/freedom-illusion-ai-era.md` | 复核后不改 | 当前章节末尾内部导航、`AGENTS.md`、`rules/` 路径均能解析到真实目标，判定为迁移后的必要路径修正 | 6 条目标路径均存在，不纳入本轮修复 |
+| `docs/knowledge/operations/vendor-flexloop-integration-guide.md` | 已修复 | 将 `.agents/scripts/tests/` 从纯文本恢复为可点击链接；保留其余已适配到 `.agents/` 新层级的相对路径 | 目标 `../../../scripts/tests/` 存在 |
 
 ## 复核方法
 

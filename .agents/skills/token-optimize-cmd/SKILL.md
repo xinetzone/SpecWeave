@@ -200,14 +200,14 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/token-optimize-cmd/SKILL.toml"
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/步骤/日志） | L2 | [commands/token-optimize.md](../../commands/token-optimize.md) | 每次使用必读 |
 | LLM Token优化知识库首页 | L2 | [llm-token-optimization/README.md](../../docs/knowledge/learning/llm-token-optimization/README.md) | 了解知识体系 |
-| 快速参考卡（3分钟速查） | L2 | [10-quick-reference.md](../../docs/knowledge/learning/llm-token-optimization/10-quick-reference.md) | P0速赢+核心数据 |
-| 27条禁令清单 | L2 | [09-constraints.md](../../docs/knowledge/learning/llm-token-optimization/09-constraints.md) | review时逐条检查 |
-| 决策树 | L2 | [01-decision-tree.md](../../docs/knowledge/learning/llm-token-optimization/06-decision-framework/01-decision-tree.md) | 技术选型 |
-| 选型矩阵 | L2 | [02-selection-matrix.md](../../docs/knowledge/learning/llm-token-optimization/06-decision-framework/02-selection-matrix.md) | 技术组合选择 |
-| 最佳实践模式P-001~P-005 | L2 | [03-patterns.md](../../docs/knowledge/learning/llm-token-optimization/06-decision-framework/03-patterns.md) | design模式选择 |
-| 反模式与常见陷阱 | L2 | [04-anti-patterns.md](../../docs/knowledge/learning/llm-token-optimization/06-decision-framework/04-anti-patterns.md) | review时风险识别 |
-| 跨行业案例 | L2 | [01-case-studies.md](../../docs/knowledge/learning/llm-token-optimization/04-cases/01-case-studies.md) | 设定期望值 |
-| 评估指标体系 | L2 | [01-metrics-framework.md](../../docs/knowledge/learning/llm-token-optimization/05-evaluation/01-metrics-framework.md) | evaluate效果评估 |
+| 快速参考卡（3分钟速查） | L2 | [10-quick-reference.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md) | P0速赢+核心数据 |
+| 27条禁令清单 | L2 | [09-constraints.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.md) | review时逐条检查 |
+| 决策树 | L2 | [01-decision-tree.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.md) | 技术选型 |
+| 选型矩阵 | L2 | [02-selection-matrix.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.md) | 技术组合选择 |
+| 最佳实践模式P-001~P-005 | L2 | [03-patterns.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.md) | design模式选择 |
+| 反模式与常见陷阱 | L2 | [04-anti-patterns.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/04-anti-patterns.md) | review时风险识别 |
+| 跨行业案例 | L2 | [01-case-studies.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.md) | 设定期望值 |
+| 评估指标体系 | L2 | [01-metrics-framework.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/05-evaluation/01-metrics-framework.md) | evaluate效果评估 |
 | P0预检辅助脚本 | L1工具 | [scripts/check_token_p0.py](scripts/check_token_p0.py) | S0预检自动化 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式规范 |
 | 阶段守卫规则 | L2 | [stage-guardrails.md](../../rules/stage-guardrails.md) | 判断当前阶段约束 |

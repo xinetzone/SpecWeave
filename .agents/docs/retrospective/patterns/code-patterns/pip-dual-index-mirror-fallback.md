@@ -76,4 +76,4 @@ Docker/CI 镜像构建中，当主索引（`download.pytorch.org` / PyPI）的�
 
 - [Conda镜像源精确映射：custom_channels](conda-custom-channels-mirror.md)（conda 侧镜像配置，与 pip 双索引互补）
 - [预训练模型多源下载与多级验证](pretrained-model-download-validation.md)（非 pip 资产的 N fallback）
-- [ADR: torch-dev 双索引下载与 CUDA 硬断言](../../../knowledge/decisions/torch-dev-extra-index-cuda-assertion.md)
+- [ADR: torch-dev 双索引下载与 CUDA 硬断言](../../../../../docs/knowledge/decisions/torch-dev-extra-index-cuda-assertion.md)

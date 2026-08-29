@@ -65,7 +65,7 @@
 - [x] 链接以 Markdown 标准链接格式呈现
 
 ## 索引登记与分类
-- [x] 文档放置于正确分类目录：`.agents/docs/knowledge/learning/05-ai-multimodal-content/`
+- [x] 文档放置于正确分类目录：`docs/knowledge/learning/05-ai-multimodal-content/`
 - [x] 同目录下存在 `libtv-ai-shortdrama-wiki.md` 等同类型竞品文档，支持横向对比
 - [x] 已标注：知识库索引通过 `scripts/generate_index.py` 自动生成
 
@@ -83,12 +83,12 @@
 - [x] 文档篇幅约8465字，内容充实重点突出
 
 ## 交付物清单
-- [x] 主文档：[agnes-pavo-creative-platform-wiki.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
+- [x] 主文档：[agnes-pavo-creative-platform-wiki.md](../../../../docs/knowledge/learning/05-ai-multimodal-content/agnes-pavo-creative-platform-wiki.md)
 - [x] Spec文档：[spec.md](spec.md)
 - [x] 任务计划：[tasks.md](tasks.md)
 - [x] 验证清单：[checklist.md](checklist.md)
-- [x] 同目录竞品：[libtv-ai-shortdrama-wiki.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md)
-- [x] 知识库主入口：[README.md](../../../../.agents/docs/knowledge/README.md)
+- [x] 同目录竞品：[libtv-ai-shortdrama-wiki.md](../../../../docs/knowledge/learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.md)
+- [x] 知识库主入口：[README.md](../../../../docs/knowledge/README.md)
 
 ## 七概念方法论复盘（R→I→E）
 - [x] R阶段：采集20条客观事实，G1质量门通过（无因果推断词）

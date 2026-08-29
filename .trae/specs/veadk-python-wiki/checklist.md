@@ -27,7 +27,7 @@
 
 ## Wiki 文档结构检查
 
-- [x] Wiki 根目录创建在正确位置（`.agents/docs/knowledge/learning/veadk-python/`）
+- [x] Wiki 根目录创建在正确位置（`docs/knowledge/learning/veadk-python/`）
 - [x] 原子化子目录结构完整：getting-started/, architecture/, modules/, examples/, extensions/, faq/, references/
 - [x] 存在首页 index.md 作为导航入口
 - [x] 存在术语表 glossary.md，包含30个核心术语

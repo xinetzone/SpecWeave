@@ -1,5 +1,7 @@
 id = "docs-knowledge-learning-02-agent-engineering-methodology-02-prompt-coding-book-to-skill-wiki-index"
 title = "book-to-skill 完全指南"
-category = "docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
-date = "2026-07-02"
+category = "knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["book-to-skill", "knowledge-engineering", "agent-skill", "wiki", "tutorial", "index"]

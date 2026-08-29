@@ -142,7 +142,7 @@
 
 | 入口 | 说明 |
 |------|------|
-| [knowledge/README.md](knowledge/README.md) | 知识库索引，含决策记录、操作手册、故障排查 |
+| [knowledge/README.md](../../docs/knowledge/README.md) | 知识库索引，含决策记录、操作手册、故障排查 |
 
 ### 复盘文档体系
 

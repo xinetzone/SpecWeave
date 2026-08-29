@@ -585,7 +585,7 @@
 - **验证**：`test_cow.py` 38 passed；回归 `test_cow+test_blob+test_scale_backward+test_bias_backward+test_eltwise_backward+test_split_backward+test_p3b_eltwise_scale` **298 passed（5.36s）**
 - **DoD**：COW 覆盖层清单（Scale/Bias/Eltwise 恒等 + Split/Concat 已有）+ 回归测试通过 ✅
 - **补充：FFI 基础设施单元测试**：新增 [test_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_ffi_api.py) 覆盖 `_ffi_api.py`（库路径发现/平台库名/诊断记录/严格模式/FFI 注册表缓存/顶层 API 契约），**30 passed / 1 skipped**（纯 Python，不依赖 C++ 扩展，双模式可运行）
-- **补充：模式归档**：沉淀「恒等层 COW 零拷贝分离原则」至 [caffe-identity-layer-cow-separation.md](../../../.agents/docs/knowledge/best-practices/caffe-identity-layer-cow-separation.md)，并更新 best-practices 索引与深度学习/FFI 快速导航
+- **补充：模式归档**：沉淀「恒等层 COW 零拷贝分离原则」至 [caffe-identity-layer-cow-separation.md](../../../docs/knowledge/best-practices/caffe-identity-layer-cow-separation.md)，并更新 best-practices 索引与深度学习/FFI 快速导航
 
 ## [x] Task 32: P4-能力扩展（更多激活/归一化/损失层）
 - **Priority**: medium

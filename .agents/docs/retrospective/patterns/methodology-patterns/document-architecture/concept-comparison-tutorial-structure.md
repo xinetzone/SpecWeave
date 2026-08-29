@@ -105,11 +105,11 @@ related_patterns:
 
 | 章节 | 文件 | 内容 |
 |------|------|------|
-| L0 | [00-overview.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 四层抽象Mermaid图、核心区别速览表、阅读路径指南 |
-| L1 | [01-interface.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md) | Interface定义、6个核心特征、OOP/函数式场景、2个TypeScript案例 |
-| L2 | [02-api.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md) ~ [04-protocol.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | API（5种类型对比+3个主流案例）、ABI（5个技术特征+ctypes案例）、Protocol（三要素+5种协议对比） |
-| L3核心 | [05-comparison.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | 9维度对比表、5组关联关系、Mermaid架构层次图、5个FAQ、决策指南 |
-| L4 | [06-resources.md](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 17术语表、三分类参考资料、4个进阶方向 |
+| L0 | [00-overview.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/00-overview.md) | 四层抽象Mermaid图、核心区别速览表、阅读路径指南 |
+| L1 | [01-interface.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.md) | Interface定义、6个核心特征、OOP/函数式场景、2个TypeScript案例 |
+| L2 | [02-api.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/02-api.md) ~ [04-protocol.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.md) | API（5种类型对比+3个主流案例）、ABI（5个技术特征+ctypes案例）、Protocol（三要素+5种协议对比） |
+| L3核心 | [05-comparison.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md) | 9维度对比表、5组关联关系、Mermaid架构层次图、5个FAQ、决策指南 |
+| L4 | [06-resources.md](../../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/06-resources.md) | 17术语表、三分类参考资料、4个进阶方向 |
 
 效果：7个文件870行，最大文件164行（安全边际45%），所有导航链接有效。读者可以先读速览表建立全局认知，再深入感兴趣的章节，遇到混淆随时跳转对比章。
 
@@ -138,6 +138,41 @@ Interface章节有"定义→特征→案例"，API章节变成"历史→类型�
 读者读完三章还不知道四个概念是什么关系，一直带着困惑阅读。
 
 **正确做法**：00-overview.md的第一屏就是Mermaid层次关系图，先给地图再深入。
+
+## 失败案例与边界强化（V2）
+
+### 失败案例
+
+| 案例 | 失败表现 | 根因 | 教训 |
+|------|---------|------|------|
+| 传统"逐个定义+附录对比"结构的历史失败（2026-07-03 技术接口 Wiki 复盘·洞察1，本模式的诞生诱因） | 每个概念独立讲解定义，"X 和 Y 到底有什么区别"这一读者核心困惑直到文末附录甚至全文未正面回答，读者全程带着困惑阅读 | 作者按"自己的知识清单"而非"读者的认知困惑"组织内容；对比被当作附属品而非核心价值 | 概念类教程的设计重心是"区分"而非"定义"；对比章必须独立居中，本模式由此确立"四层抽象-对比中心"结构 |
+
+### 反目标用户/反目标场景
+
+| 反目标用户/场景 | 不适用原因 | 适配策略 |
+|----------------|-----------|---------|
+| 单一概念的深度教程 | 无对比对象，四层结构中的对比章无从建立 | 不适用：改用 tutorial-cognitive-ladder 六层结构 |
+| 纯 API/SDK 参考手册 | 读者按需查询不逐章阅读，认知层次叙事无意义 | 不适用：按模块/功能组织 |
+| 快速上手 How-to 指南 | 读者目标明确（完成一个操作），不需要概念辨析 | 不适用：用"问题→步骤→验证"三段式 |
+| 彼此无层次/包含关系的平行概念清单（同类工具列表等） | 强行按抽象层次排序会制造伪层次、伪对比，误导读者 | 中度：改用对比矩阵型选型表，不虚构抽象层次 |
+| 面向已知背景专家的内部 SOP | 概念辨析对专家是冗余信息 | 轻度：跳过 L0 总览与对比章，直接给操作内容 |
+
+### 早期预警信号
+
+| 预警信号 | 含义 | 应对 |
+|---------|------|------|
+| 章节顺序按字母序或随意排列 | 丢失了"层次即教学"的设计 | 按抽象层次从高到低重排 |
+| 写到一半仍无法一句话说清概念间的核心区别 | 概念关系未理清，对比章将空洞 | 暂停写作，先手工梳理概念关系图 |
+| FAQ 是泛泛问题而非真实混淆点 | 对比章未对准读者痛点 | 用"读者最常问的 X 和 Y 区别"重写 FAQ |
+| 每章内部结构不一致 | 横向对比失效 | 回到统一结构模板 |
+| 单章超过 300 行 | 原子化标准被破坏 | 按三层标准拆分文件 |
+
+### 适用前提
+
+- 主题涉及 ≥2 个存在真实混淆可能的关联概念，且概念间有可梳理的抽象层次/包含/依赖关系
+- 产出物为多文件原子化教程（每章独立文件），允许双向导航链接
+- 读者画像以"区分概念边界"为核心诉求（学习型读者而非检索型读者）
+- 团队能维护 Mermaid 层次图的准确性（概念关系变更时图需同步）
 
 ## 与其他模式的关系
 

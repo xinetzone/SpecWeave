@@ -1,7 +1,0 @@
-id = "baidu-ocr-wiki-03"
-title = "百度 Unlimited-OCR 快速上手指南"
-category = "knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki"
-date = "2026-08-03"
-version = "1.0"
-status = "stable"
-tags = ["OCR", "快速上手", "Transformers", "SGLang", "vLLM", "部署", "PyMuPDF", "批量推理"]

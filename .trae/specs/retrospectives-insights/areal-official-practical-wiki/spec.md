@@ -31,7 +31,7 @@
 - 不重复公众号文章中已有的行业背景和趋势分析（参考现有 areal-agent-rl-wiki.md）
 
 ## Background & Context
-- 现有 Wiki [areal-agent-rl-wiki.md](file:///d:/.agents/docs/knowledge/learning/03-agent-platforms-tools/areal-agent-rl-wiki.md) 仅基于微信公众号文章，侧重行业背景和概念介绍
+- 现有 Wiki [areal-agent-rl-wiki.md](../../../../docs/knowledge/learning/03-agent-platforms-tools/areal-agent-rl-wiki.md) 仅基于微信公众号文章，侧重行业背景和概念介绍
 - 用户提供了三个学习资源：官网、官方文档、本地代码仓库（v2.0版本，2026年7月发布）
 - 本地代码仓库位于 d:\AI\external\tools\AReaL，是完整的 AReaL 2.0 源码
 - v2.0 是重大架构升级，从单体训练框架重构为微服务架构
@@ -65,7 +65,7 @@
 - **NFR-6**: 文件名使用 kebab-case：areal-official-practical-wiki.md
 - **NFR-7**: frontmatter 使用 YAML（---）格式，包含 title/source/date/tags/x-toml-ref
 - **NFR-8**: 文档长度预估 800-1200 行，与现有 octo-platform-wiki.md 相当
-- **NFR-9**: 放置在 .agents/docs/knowledge/learning/03-agent-platforms-tools/ 目录下
+- **NFR-9**: 放置在 docs/knowledge/learning/03-agent-platforms-tools/ 目录下
 
 ## Constraints
 - **Technical**: 基于本地代码仓库（v2.0）和官方文档内容，不编造API或配置项

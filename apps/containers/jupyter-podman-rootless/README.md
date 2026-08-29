@@ -105,7 +105,7 @@ Password:  <自动生成或配置的密码>
 | **零依赖CLI** | `jpman`：纯bash脚本，无需Python依赖，提供快速管理 |
 | **镜像缓存** | `.image-cache/`：podman save/load 快速备份恢复，pigz多线程压缩 |
 | **WSL2导出** | 一键导出为WSL2发行版，自动配置wsl.conf和Conda激活 |
-| **增量重建** | `Containerfile.hidden`：配置变更快速重建（<10秒） |
+| **增量重建** | `jpman rebuild`：基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5（<10秒） |
 | **跨平台** | 支持WSL/Linux/macOS（bash）+ Windows（cmd/ps1） |
 
 ## 项目结构
@@ -114,8 +114,7 @@ Password:  <自动生成或配置的密码>
 jupyter-podman-rootless/
 ├── AGENTS.md              # AI协作者入口（SpecWeave路由）
 ├── README.md              # 本文件（项目入口）
-├── Containerfile          # 7层镜像构建定义（全量构建）
-├── Containerfile.hidden   # 增量构建补丁（仅配置变更，<10秒）
+├── Containerfile          # 多阶段构建定义（passt 已固化，Layer 4/5 支持缓存增量重建）
 ├── entrypoint.sh          # 7步启动脚本
 ├── compose.yaml           # podman-compose编排（jupyter + model-registry）
 ├── compose.dev.yaml       # 开发透传覆盖（opt-in）

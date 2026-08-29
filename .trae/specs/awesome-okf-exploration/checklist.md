@@ -76,7 +76,7 @@ status: all-passed
 - [x] knowledge-catalog-wiki与okf-wiki之间也建立了完整双向链接（额外完成）
 
 ## 产出物合规与非重复性检查 ✅ 通过
-- [x] 报告目录已创建：`.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`
+- [x] 报告目录已创建：`docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`
 - [x] 6个报告文件齐全：README.md、01-facts.md、02-insights.md、03-patterns.md、04-adversarial-review.md、05-action-items.md
 - [x] 所有文件名遵循kebab-case/数字前缀，纯英文无中文
 - [x] 所有.md文件有正确的YAML frontmatter，字段风格与okf-wiki一致
@@ -105,7 +105,7 @@ status: all-passed
 ## 最终交付物清单
 | 类别 | 路径 | 状态 |
 |------|------|------|
-| 分析报告 | [awesome-okf-analysis/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/) | ✅ 6件套完整 |
-| knowledge-catalog教程 | [knowledge-catalog-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/) | ✅ 10篇完整 |
+| 分析报告 | [awesome-okf-analysis/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis) | ✅ 6件套完整 |
+| knowledge-catalog教程 | [knowledge-catalog-wiki/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki) | ✅ 10篇完整 |
 | vendor子模块 | [vendor/awesome-okf/](../../../vendor/awesome-okf/) | ✅ 迁移完成 |
-| okf-wiki更新 | [okf-wiki/](../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/) | ✅ 5处反向链接 |
+| okf-wiki更新 | [okf-wiki/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki) | ✅ 5处反向链接 |

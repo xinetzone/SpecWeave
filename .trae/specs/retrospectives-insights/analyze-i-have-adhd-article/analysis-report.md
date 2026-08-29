@@ -8,10 +8,10 @@ date: 2026-07-28
 # i-have-adhd项目分析与Agent输出优化方法论沉淀
 
 > **📚 Wiki教程版本**：本报告已原子化为结构化Wiki教程，适合按章节渐进式学习：
-> [i-have-adhd Wiki 目录索引](file:///d:/spaces/SpecWeave/.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/README.md) |
-> [行动优先输出范式](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/10-action-first-paradigm.md) |
-> [逆向适配创新方法论](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |
-> [设计取舍与写作借鉴](../../../../.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
+> [i-have-adhd Wiki 目录索引](../../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.md) |
+> [行动优先输出范式](../../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/10-action-first-paradigm.md) |
+> [逆向适配创新方法论](../../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/11-reverse-adaptation-innovation.md) |
+> [设计取舍与写作借鉴](../../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/12-design-tradeoffs-and-writing.md)
 
 ## 执行摘要
 
@@ -1135,7 +1135,7 @@ V2审查提出的方法论改进建议（具体意见6及两个结构性缺陷�
   - 版本号升级至1.4
 - **v1.5**（2026-07-28）：原子化为Wiki教程：
   - 将报告深度分析内容原子化为3个Wiki章节：行动优先输出范式、逆向适配创新方法论、设计取舍与写作借鉴
-  - Wiki教程路径：`.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/`（10-12.md）
+  - Wiki教程路径：`docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/`（10-12.md）
   - 更新README.md索引，新增"方法论深度研究"学习路径
   - 文档头部添加Wiki链接导航
   - 版本号升级至1.5

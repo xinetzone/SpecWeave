@@ -1,7 +1,7 @@
 # GraphQL Wiki 教程验证清单
 
 ## 目录结构与文件完整性
-- [x] graphql-wiki/ 目录已创建在 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/` 下
+- [x] graphql-wiki/ 目录已创建在 `docs/knowledge/learning/01-agent-protocols-interfaces/` 下
 - [x] 包含 README.md 导航入口文件
 - [x] 包含 00-overview.md 总览章节
 - [x] 包含 01-core-concepts.md 核心概念章节

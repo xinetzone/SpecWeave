@@ -78,7 +78,7 @@ tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-c
 - **NFR-6**: 子代理产出物必须符合《子代理 Wiki 交付清单》的 5 项快速验收点
 
 ## Constraints
-- **Technical**: 文档必须使用 Markdown 格式，遵循项目命名规范，放置在 .agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/ 目录下，原子化拆分多文件
+- **Technical**: 文档必须使用 Markdown 格式，遵循项目命名规范，放置在 docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/ 目录下，原子化拆分多文件
 - **Business**: 基于官网公开内容与本地开源源码创建，不得添加未验证的信息，客观说明项目当前状态
 - **Dependencies**: 依赖已获取的官网内容与本地源码（README.md、skill-guides、package.json、目录结构），无需额外网络请求
 
@@ -95,7 +95,7 @@ tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-c
 - **When**: 所有任务完成并通过验证
 - **Then**: 原子化 wiki 教程包含 README.md 索引、目录导航、项目概述、核心架构、核心功能详解、CLI 与编排、Agent 清单、快速上手、FAQ 与术语表等完整章节
 - **Verification**: `human-judgement`
-- **Notes**: 文档应放置在 .agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/ 目录下，多文件原子化
+- **Notes**: 文档应放置在 docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/ 目录下，多文件原子化
 
 ### AC-2: 目录导航系统可用
 - **Given**: 用户打开 wiki 教程 README.md
@@ -189,4 +189,4 @@ tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-c
 ## Impact
 - **Affected specs**: 无直接影响的其他 spec（新建独立学习教程）
 - **Affected code**: 仅新增文档文件，不涉及代码改动
-- **Affected docs**: .agents/docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/（新建原子化目录）、.agents/docs/knowledge/learning/03-agent-platforms-tools/README.md（更新索引）
+- **Affected docs**: docs/knowledge/learning/03-agent-platforms-tools/orca-wiki/（新建原子化目录）、docs/knowledge/learning/03-agent-platforms-tools/README.md（更新索引）

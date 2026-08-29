@@ -19,6 +19,7 @@ status: "stable"
 stale_after: "2027-08-22"
 ---
 
+# 世界模型成为AI核心战场，底层密码「因果」终于藏不住了
 
 ASI启示录 ASI启示录
 
@@ -26,11 +27,11 @@ ASI启示录 ASI启示录
 
 去阅读
 
-### 新智元报道
+## 新智元报道
 
 ![](https://mmbiz.qpic.cn/sz_mmbiz_png/Rvq8Ow69CYWGxcbmnyYvqrSqhntcbPdelKBG0JLug4pEX8icjBSe5eib6PekswOSvrq8ybatQJRDr9Vib5WOKaUuibKfLb5qH3J4kEIYmC4NQJU/640?wx_fmt=png&from=appmsg)
 
-##### 【新智元导读】全世界都在为世界模型疯狂，底层密码「因果」终于藏不住了！就在硅谷2026年才如梦初醒时，一家中国黑马早已在无人区潜伏6年，把AI大模型的命门彻底打透。
+### 【新智元导读】全世界都在为世界模型疯狂，底层密码「因果」终于藏不住了！就在硅谷2026年才如梦初醒时，一家中国黑马早已在无人区潜伏6年，把AI大模型的命门彻底打透。
 
 没想到，「世界模型」带火了一个概念。
 

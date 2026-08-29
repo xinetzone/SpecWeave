@@ -1,5 +1,7 @@
 id = "baidu-ocr-wiki-06"
 title = "百度 Unlimited-OCR 可迁移模式与行业启示"
-category = "docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki"
-date = "2026-07-02"
+category = "knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki"
+date = "2026-08-03"
 version = "1.0"
+status = "stable"
+tags = ["OCR", "MoE", "小模型", "模式迁移", "代码生成", "R-SWA", "技术写作"]

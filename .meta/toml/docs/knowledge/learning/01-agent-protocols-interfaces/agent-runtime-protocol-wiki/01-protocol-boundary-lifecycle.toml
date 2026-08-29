@@ -1,5 +1,7 @@
 id = "agent-runtime-protocol-wiki-01"
-title = "01 Protocol 边界与最小生命周期"
-category = "docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
-date = "2026-07-02"
+title = "Protocol 边界与最小生命周期"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "protocol-boundary", "lifecycle", "task", "thread", "run"]

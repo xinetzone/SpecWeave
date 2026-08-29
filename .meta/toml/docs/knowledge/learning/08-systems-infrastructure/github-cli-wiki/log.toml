@@ -1,5 +1,7 @@
 id = "github-cli-wiki-log"
-title = "Log"
-category = "docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki"
-date = "2026-07-02"
+title = "GitHub CLI (gh) 完全指南 — 变更日志"
+category = "knowledge/learning/08-systems-infrastructure/github-cli-wiki"
+date = "2026-08-23"
 version = "1.0"
+status = "stable"
+tags = ["github-cli", "gh", "changelog", "log"]

@@ -21,10 +21,10 @@
 - 不提供Anime.js/Three.js的完整API参考（仅聚焦适配器相关API）
 
 ## Background & Context
-- 已有学习分析文档：[animejs-threejs-adapter-analysis.md](../../../../.agents/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)（570行，包含核心分析）
+- 已有学习分析文档：[animejs-threejs-adapter-analysis.md](../../../../docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)（570行，包含核心分析）
 - 已有七概念复盘报告：[2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md](../../../../.agents/docs/retrospective/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
 - 已沉淀LAV模式：[external-tech-article-learning-closed-loop.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-tech-article-learning-closed-loop.md)
-- 项目Wiki教程标准结构参考：[ffi-wiki](../../../../.agents/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/)（00-overview + 分章节 + README格式）
+- 项目Wiki教程标准结构参考：[ffi-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki)（00-overview + 分章节 + README格式）
 - 教程分类：属于前端3D动画/多媒体内容，应放置在 `05-ai-multimodal-content/` 目录下
 
 ## Functional Requirements
@@ -54,7 +54,7 @@
 - **Technical**: 必须使用Markdown格式，遵循项目现有文档风格（YAML frontmatter、标题层级、表格、代码块规范）
 - **Business**: 内容基于Anime.js 4.5版本，API可能随版本变化，必须标注版本提示
 - **Dependencies**: 依赖已有学习分析文档作为内容基础；参考官方文档验证API准确性
-- **Path**: 教程存放路径为 `.agents/docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/`
+- **Path**: 教程存放路径为 `docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-wiki/`
 
 ## Assumptions
 - 读者具备基础的Three.js知识（场景、相机、渲染器、几何体、材质基本概念）

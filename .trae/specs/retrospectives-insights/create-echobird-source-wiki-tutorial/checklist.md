@@ -1,6 +1,6 @@
 # EchoBird 源码级深度学习与 Wiki 教程文档 - 验证清单
 
-- [x] Checkpoint 1: echobird-wiki/ 目录已创建于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`，包含 README.md 与 00-11 章节文件
+- [x] Checkpoint 1: echobird-wiki/ 目录已创建于 `docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`，包含 README.md 与 00-11 章节文件
 - [x] Checkpoint 2: 各章节文件 frontmatter 使用 YAML 格式（--- 分隔），包含 title/source/date/tags 字段（遵循 MDI v1.0）
 - [x] Checkpoint 3: README.md 目录导航包含所有章节文件链接，可跳转
 - [x] Checkpoint 4: 00-overview 概述准确反映项目定位、技术栈（Tauri+Rust）、版本（v5.6.0）

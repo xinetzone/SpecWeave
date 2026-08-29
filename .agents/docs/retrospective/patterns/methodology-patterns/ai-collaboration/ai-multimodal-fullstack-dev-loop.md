@@ -1,6 +1,6 @@
 ---
 id: "ai-multimodal-fullstack-dev-loop"
-source: ".agents/docs/retrospective/2026-08-12-short-video-site-ai-fullstack-retro.md"
+source: "../../../2026-08-12-short-video-site-ai-fullstack-retro.md"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ai-multimodal-fullstack-dev-loop.toml"
 ---
 > **来源**：从 ReelVibe 短视频网站开发复盘（2026-08-12）萃取，项目使用 Seedream 生图、Seedance 生视频、WebSearch 调研，纯 HTML/CSS/JS 零依赖方案，经 3 轮原子提交完成。

@@ -9,7 +9,7 @@
     python .agents/scripts/check-absolute-path-links.py
 
     # 只扫描指定路径（文件或目录）
-    python .agents/scripts/check-absolute-path-links.py --path .agents/docs/knowledge
+    python .agents/scripts/check-absolute-path-links.py --path docs/knowledge
 
     # 扫描多个目录
     python .agents/scripts/check-absolute-path-links.py --paths .agents/docs .trae/specs

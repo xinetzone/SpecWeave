@@ -26,7 +26,7 @@ from pathlib import Path
 
 # ---- 常量 ----
 
-DEFAULT_WIKI_ROOT = Path("d:/AI/.agents/docs/knowledge/learning")
+DEFAULT_WIKI_ROOT = Path("d:/AI/docs/knowledge/learning")
 DEFAULT_THRESHOLD_DAYS = 90
 YAML_FM_RE = re.compile(r"^---\s*\n(.*?)\n---\s*$", re.MULTILINE | re.DOTALL)
 LAST_VERIFIED_RE = re.compile(r"^last_verified\s*:\s*[\"']?(\d{4}-\d{2}-\d{2})[\"']?\s*$", re.MULTILINE)

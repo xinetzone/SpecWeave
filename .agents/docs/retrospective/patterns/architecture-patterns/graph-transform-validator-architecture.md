@@ -175,7 +175,7 @@ flowchart TB
 - 与**三层+Profile解析生成架构（three-layer-parser-generator）**互补：本模式是图变换验证领域的专用四段架构，Parser层借鉴了三层解析的分层思想但更轻量
 - 使用**Protobuf文本格式最小解析器（protobuf-text-minimal-parser）**模式作为Parser层的具体实现
 - 与**示例驱动测试生成（example-driven-test-generation）**配合：内置测试用例就是典型的示例驱动测试
-- 相关最佳实践：[dag-graph-transform-verification.md](../../../knowledge/best-practices/dag-graph-transform-verification.md)
+- 相关最佳实践：[dag-graph-transform-verification.md](../../../../../docs/knowledge/best-practices/dag-graph-transform-verification.md)
 
 ## 边界与选型
 

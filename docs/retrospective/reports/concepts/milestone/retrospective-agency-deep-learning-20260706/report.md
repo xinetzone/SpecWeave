@@ -115,8 +115,6 @@ stale_after: "2027-08-22"
 
 ### 萃取模式：跨框架原子化设计分析模式
 
----
-
 ```yaml
 ---
 id: "bp-cross-framework-atomic-analysis"

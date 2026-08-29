@@ -555,25 +555,20 @@ cmd_load() {
 
 cmd_rebuild() {
     check_podman
-    [[ -f "$PROJECT_ROOT/Containerfile.hidden" ]] || die "Containerfile.hidden not found."
-
-    local build_dir
-    build_dir=$(mktemp -d)
-    info "Incremental build (config patch only)..."
-    cp "$PROJECT_ROOT/Containerfile.hidden" "$build_dir/Containerfile"
-    mkdir -p "$build_dir/config"
-    cp "$PROJECT_ROOT/config/jupyter_notebook_config.py" "$build_dir/config/"
-
-    # If container is running, stop it first
+    info "Cached incremental rebuild from Containerfile (config-only changes hit Layer 4/5 cache, seconds)..."
     if container_running; then
         info "Stopping running container for rebuild..."
         podman stop -t 5 "$CONTAINER_NAME" 2>/dev/null || true
         podman rm -f "$CONTAINER_NAME" 2>/dev/null || true
     fi
 
-    podman build -t "$IMAGE" "$build_dir"
-    rm -rf "$build_dir"
-    info "Incremental build complete."
+    (cd "$PROJECT_ROOT" && podman build \
+        --format docker \
+        --build-arg APT_MIRROR=tuna \
+        --build-arg CONDA_MIRROR=tuna \
+        --build-arg PIP_MIRROR=tuna \
+        -t "$IMAGE" -f Containerfile .)
+    info "Rebuild complete."
     cmd_start
 }
 
@@ -582,6 +577,7 @@ cmd_rebuild_all() {
     info "Full rebuild from Containerfile (this may take a while)..."
     # Build from project root for correct context
     (cd "$PROJECT_ROOT" && podman build \
+        --format docker \
         --build-arg APT_MIRROR=tuna \
         --build-arg CONDA_MIRROR=tuna \
         --build-arg PIP_MIRROR=tuna \

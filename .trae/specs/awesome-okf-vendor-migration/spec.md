@@ -33,7 +33,7 @@ id: awesome-okf-vendor-migration
 - awesome-okf 是云中江树（yzfly）维护的中文 OKF（Open Knowledge Format）生态项目，包含 7 个零依赖 Python 插件、7 个 Claude Code Skill、3 份扩展提案
 - 当前 awesome-okf 直接克隆在根目录 `awesome-okf/`，为 shallow clone（depth=1），当前 commit 约为 730e6ff
 - awesome-okf 在根目录 git 中状态为 untracked files（未被追踪），这是错误的放置方式
-- 主权区已有对 awesome-okf 的深度案例分析文档（位于 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`），其中包含大量 `file:///d:/AI/awesome-okf/` 绝对路径引用，迁移后需批量更新
+- 主权区已有对 awesome-okf 的深度案例分析文档（位于 `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/awesome-okf-analysis/`），其中包含大量 `file:///d:/AI/awesome-okf/` 绝对路径引用，迁移后需批量更新
 - 参考先例：`ark-cli-git-submodule` spec 已完成类似的第三方子模块集成，但本次是**迁移**而非从零添加，需额外处理路径更新和旧目录清理
 
 ## Functional Requirements

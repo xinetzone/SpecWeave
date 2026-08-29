@@ -41,7 +41,7 @@
 - **验证**: 形成 00/01 章节的架构框架与 Mermaid 图草稿
 
 ### Task 3: 创建 `00-overview.md` 教程总览与导航索引
-- [x] Step 3.1: 在 `.agents/docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 下创建 `00-overview.md`
+- [x] Step 3.1: 在 `docs/knowledge/learning/08-systems-infrastructure/conda-dev-source-wiki/` 下创建 `00-overview.md`
 - [x] Step 3.2: 编写 YAML frontmatter（id/title/source/category/tags/date/status/author/summary）
 - [x] Step 3.3: 编写教程引言（conda 源码学习价值 + 分层架构概览）
 - [x] Step 3.4: 绘制 Mermaid 分层架构定位图

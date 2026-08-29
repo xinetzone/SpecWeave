@@ -61,7 +61,7 @@ source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀
 - **NFR-4**: 示例对比（Before/After）必须使用表格或并列代码块清晰展示
 - **NFR-5**: 安装命令必须可直接复制执行，标注平台差异
 - **NFR-6**: 模式萃取部分必须包含触发场景、核心步骤、反模式、迁移验证四要素
-- **NFR-7**: 所有产出物存放于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/`
+- **NFR-7**: 所有产出物存放于 `docs/knowledge/learning/03-agent-platforms-tools/i-have-adhd-wiki/`
 
 ## Constraints
 - **Technical**: 
@@ -73,7 +73,7 @@ source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀
   - 尊重原项目MIT许可证，注明来源
 - **Dependencies**: 
   - 源文件路径：`d:\spaces\SpecWeave\external\libs\i-have-adhd\`
-  - 参考现有Wiki结构：`.agents/docs/knowledge/learning/03-agent-platforms-tools/`
+  - 参考现有Wiki结构：`docs/knowledge/learning/03-agent-platforms-tools/`
 
 ## Assumptions
 - 用户希望Wiki教程使用中文编写（根据用户profile偏好）

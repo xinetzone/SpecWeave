@@ -27,7 +27,7 @@ SpecWeave 知识库已有 `python-314-multiprocessing-fork-compat.md`（运行�
 - **Affected code**: 无（仅新增/更新 `.agents/docs/` 下的 Markdown 文档）
 - **Affected knowledge**:
   - `.agents/docs/retrospective/patterns/code-patterns/` 新增 1 个模式文件
-  - `.agents/docs/knowledge/best-practices/` 新增 1 个实践文档
+  - `docs/knowledge/best-practices/` 新增 1 个实践文档
   - 上述两个目录的 README.md 索引同步更新
 - **互补关系**：与已有的 `python-314-multiprocessing-fork-compat.md`、`python-version-upgrade-compatibility-check.md`、`wrapper-script-injection-pattern.md` 形成「运行时兼容层 + 源码层修复 + 升级检查 + 诊断 SOP」四位一体的知识闭环
 

@@ -1,4 +1,4 @@
-# docs/ 到 .agents/docs/knowledge/ OKF Wiki 教程迁移 - 实施计划
+# docs/ 到 docs/knowledge/ OKF Wiki 教程迁移 - 实施计划
 
 ## 任务分组策略
 
@@ -17,7 +17,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 将 `docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/` 全部 12 个文件迁移至 `.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/`
+  - 将 `docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/` 全部 12 个文件迁移至 `docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/`
   - 标准化 frontmatter 为原子化 Wiki 4 字段格式
   - 创建配套 TOML 元数据文件
   - 生成 README.md 索引
@@ -36,7 +36,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/` 全部 14 个文件迁移至 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/cordis-wiki/`
+  - 将 `docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/` 全部 14 个文件迁移至 `docs/knowledge/learning/01-agent-protocols-interfaces/cordis-wiki/`
   - 标准化 frontmatter、创建 TOML、生成 README、修复链接
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5, AC-6, AC-7
 - **Test Requirements**:
@@ -50,7 +50,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/` 全部 17 个文件迁移至 `.agents/docs/knowledge/learning/07-vendor-product-learning/deepseek/deepseek-harness-wiki/`
+  - 将 `docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/` 全部 17 个文件迁移至 `docs/knowledge/learning/07-vendor-product-learning/deepseek/deepseek-harness-wiki/`
   - 标准化 frontmatter、创建 TOML、生成 README、修复链接
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5, AC-6, AC-7
 - **Test Requirements**:
@@ -64,7 +64,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/` 全部 12 个文件迁移至 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-kit-wiki/`
+  - 将 `docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/` 全部 12 个文件迁移至 `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-kit-wiki/`
   - 标准化 frontmatter、创建 TOML、生成 README、修复链接
   - 注意与已有 okf-wiki 目录的交叉引用
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5, AC-6, AC-7
@@ -79,7 +79,7 @@
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/baidu-unlimited-ocr-wiki/` 全部 9 个文件迁移至 `.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/`
+  - 将 `docs/knowledge/learning/baidu-unlimited-ocr-wiki/` 全部 9 个文件迁移至 `docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/`
   - 仅 6 个文件需迁移（00-overview、01-core-architecture、03-quick-start 已存在同名文件，需对比确认是否为同一内容）
   - 标准化格式
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5
@@ -93,7 +93,7 @@
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/book-to-skill-wiki/` 全部 10 个文件迁移至 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/`
+  - 将 `docs/knowledge/learning/book-to-skill-wiki/` 全部 10 个文件迁移至 `docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/`
   - 8 个文件需迁移（00-overview、01-core-architecture 已存在同名文件）
   - 标准化格式
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5
@@ -107,7 +107,7 @@
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/github-cli-wiki/` 全部 9 个文件迁移至 `.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/`
+  - 将 `docs/knowledge/learning/github-cli-wiki/` 全部 9 个文件迁移至 `docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/`
   - 7 个文件需迁移（00-overview、01-installation 已存在同名文件）
   - RETROSPECTIVE.md 归入复盘目录或作为 wiki 附录
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5
@@ -121,7 +121,7 @@
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/minit2i-minimalist-t2i-wiki/` 全部 8 个文件迁移至 `.agents/docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/`
+  - 将 `docs/knowledge/learning/minit2i-minimalist-t2i-wiki/` 全部 8 个文件迁移至 `docs/knowledge/learning/05-ai-multimodal-content/minit2i-wiki/`
   - 6 个文件需迁移（00-overview、01-design-philosophy 已存在同名文件）
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5
 - **Test Requirements**:
@@ -133,7 +133,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/python314-cpython-wiki/` 全部 17 个 md + 1 个 html 迁移至 `.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/`
+  - 将 `docs/knowledge/learning/python314-cpython-wiki/` 全部 17 个 md + 1 个 html 迁移至 `docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/`
   - 14 个文件需迁移（00-overview、11-faq-troubleshooting 已存在同名文件）
   - python314-cheatsheet.html 作为附属资源保留
   - Python314-Learning-Path.md 和 learning-path.md 内容可能重复，需对比合并
@@ -148,7 +148,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/python314-stdlib-wiki/` 全部 18 个文件迁移至 `.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/`
+  - 将 `docs/knowledge/learning/python314-stdlib-wiki/` 全部 18 个文件迁移至 `docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/`
   - 17 个文件需迁移（仅 00-overview 已存在同名文件）
   - 包含 okf-optimization 和 mystx-optimization 系列报告
 - **Acceptance Criteria Addressed**: AC-1, AC-4, AC-5
@@ -162,7 +162,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 目标已有 `.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/` 但仅有 09-faq.md 和 README.md
+  - 目标已有 `docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/` 但仅有 09-faq.md 和 README.md
   - 从源目录补充 8 个缺失章节文件（01-installation 至 08-integrations、10-summary-resources）
   - 注意目标路径比源多了一层 `03-code-devtools/`，需调整链接
 - **Acceptance Criteria Addressed**: AC-2, AC-4, AC-5
@@ -176,7 +176,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 目标当前为单文件 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md`
+  - 目标当前为单文件 `docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki.md`
   - 源为完整文件夹含 12 个章节文件，需创建 `agent-runtime-protocol-wiki/` 目录
   - 将单文件内容与源文件夹章节合并，避免内容丢失
   - 原单文件可保留为入口概览或重定向
@@ -191,7 +191,7 @@
 - **Priority**: medium
 - **Depends On**: Task 1
 - **Description**:
-  - 将文件夹 8 个文件迁移至 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/`
+  - 将文件夹 8 个文件迁移至 `docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/`
   - 00-overview 和 05-loop-engineering 已存在，需对比合并
   - 根级 `ai-engineering-four-milestones-wiki.md` 单文件版本需处理（可能是旧版概览）
 - **Acceptance Criteria Addressed**: AC-1, AC-2, AC-4
@@ -204,7 +204,7 @@
 - **Priority**: low
 - **Depends On**: Task 1
 - **Description**:
-  - 将 2 个文件迁移至 `.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
+  - 将 2 个文件迁移至 `docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/`
   - article-content.md 已存在，仅需迁移 seven-concepts-report.md
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
@@ -276,9 +276,9 @@
 - **Depends On**: None
 - **Description**:
   - `docs/tech/contributing.md` → 评估是否已存在于 `.agents/docs/`
-  - `docs/tech/four-layer-logging-pattern.md` → `.agents/docs/knowledge/best-practices/`
-  - `docs/tech/release-onnx-*.md`（2 个）→ `.agents/docs/knowledge/tech/`
-  - `docs/refactor/refactor-concurrent-safety-checker-20260812.md` → `.agents/docs/knowledge/best-practices/`
+  - `docs/tech/four-layer-logging-pattern.md` → `docs/knowledge/best-practices/`
+  - `docs/tech/release-onnx-*.md`（2 个）→ `docs/knowledge/tech/`
+  - `docs/refactor/refactor-concurrent-safety-checker-20260812.md` → `docs/knowledge/best-practices/`
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
   - `programmatic` TR-19.1: 文件已迁移至合适位置
@@ -291,7 +291,7 @@
   - 更新 `learning/CATEGORIES.md`：在对应主题的 Wiki 清单表格中追加新增 Wiki，更新统计数字
   - 更新 `learning/README.md`：如有需要
   - 更新 `category-index.md`：重新生成或手动追加
-  - 更新 `.agents/docs/knowledge/README.md`：更新总条目数和最近更新
+  - 更新 `docs/knowledge/README.md`：更新总条目数和最近更新
   - 运行 `generate-readme.py` 为所有新迁移的 Wiki 文件夹生成/更新 README.md
 - **Acceptance Criteria Addressed**: AC-8
 - **Test Requirements**:
@@ -344,7 +344,7 @@
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
-  - 将 `docs/knowledge/learning/codewhale/` 的 8 个内容文件迁移至 `.agents/docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/`
+  - 将 `docs/knowledge/learning/codewhale/` 的 8 个内容文件迁移至 `docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/codewhale-wiki/`
   - 源→目标映射：concepts/tech/intro→00-overview、quickstart→01-quickstart、features→02-features、deploy→03-deploy、changelog→04-changelog、concepts/comparison→05-comparison、concepts/general/domain/index→06-domain、concepts/topics/index→07-topics
   - 标准化 frontmatter 为 4 字段（id/title/source/x-toml-ref）
   - 创建 9 个 TOML 元数据文件（8 内容 + README）

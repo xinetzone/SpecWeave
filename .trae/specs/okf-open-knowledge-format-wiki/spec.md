@@ -9,7 +9,7 @@ tags: ["OKF", "Open Knowledge Format", "知识标准", "Agent知识层", "wiki�
 # OKF开放知识格式Wiki教程 - Product Requirement Document
 
 ## Overview
-- **Summary**: 基于OKF官方规范（okf.md）、GitHub参考实现、以及3篇知乎深度分析文章，系统创建一份原子化的OKF（Open Knowledge Format）Wiki教程，全面覆盖OKF的设计理念、格式规范、快速上手、最佳实践、Agent集成、与相关标准对比等内容。教程采用8章节标准结构，输出到`.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/`目录。
+- **Summary**: 基于OKF官方规范（okf.md）、GitHub参考实现、以及3篇知乎深度分析文章，系统创建一份原子化的OKF（Open Knowledge Format）Wiki教程，全面覆盖OKF的设计理念、格式规范、快速上手、最佳实践、Agent集成、与相关标准对比等内容。教程采用8章节标准结构，输出到`docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/`目录。
 - **Purpose**: 帮助开发者、架构师、AI工程师快速掌握OKF开放知识格式，理解其作为Agent四层架构中"知识层"独立标准的核心价值，能够从零开始创建符合规范的Knowledge Bundle，并将其应用于企业知识管理、Agent系统构建等场景。
 - **Target Users**: AI应用开发者、Agent系统架构师、数据/知识工程师、技术决策者、企业知识管理负责人。
 

@@ -1,5 +1,7 @@
 id = "agent-runtime-protocol-wiki-09"
-title = "09 框架对比：九条设计原则遵循度评估"
-category = "docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
-date = "2026-07-02"
+title = "框架对比：九条设计原则遵循度评估"
+category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
+date = "2026-08-22"
 version = "1.0"
+status = "stable"
+tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "framework-comparison", "langgraph", "openai", "autogen", "claude"]

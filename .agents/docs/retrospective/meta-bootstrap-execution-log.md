@@ -151,7 +151,7 @@
 ## E萃取：方法论改进点（可落地）
 
 ### 改进1：F反例前置强制规则（来自洞察1）
-**更新对象**：[first-principles.md](../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+**更新对象**：[first-principles.md](../../../docs/knowledge/learning/00-essence-and-thinking/first-principles/README.md)
 **规则更新**：开发规则引擎/工具类/有明确输入输出的代码前，F阶段必须构造≥3个反例测试用例，其中至少1个是"看似离谱但真实存在"的边缘输入。反例清单作为V阶段的必跑测试集。
 
 ### 改进2：英文关键词lower()系统性检查（来自洞察2）

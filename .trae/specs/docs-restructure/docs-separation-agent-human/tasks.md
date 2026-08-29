@@ -51,7 +51,7 @@
 
 ### [ ] SubTask 1.1：创建目标目录结构
 - 在 `docs/` 下创建 `knowledge/learning/` 目录结构
-- 复制 `.agents/docs/knowledge/learning/CATEGORIES.md` 和 `LEARNING-PATHS.md`
+- 复制 `docs/knowledge/learning/CATEGORIES.md` 和 `LEARNING-PATHS.md`
 
 ### [ ] SubTask 1.2：迁移 05-08 主题 Wiki
 - 移动 `05-ai-multimodal-content/` 目录
@@ -225,8 +225,8 @@
 - 核对 `docs/` 文件数（应为迁移的所有文件）
 
 ### [ ] SubTask 7.3：清理空目录
-- 删除 `.agents/docs/knowledge/learning/` 等空目录
-- 删除 `.agents/docs/knowledge/best-practices/` 等空目录
+- 删除 `docs/knowledge/learning/` 等空目录
+- 删除 `docs/knowledge/best-practices/` 等空目录
 
 ### [ ] SubTask 7.4：更新主题 README
 - 在 `.trae/specs/docs-restructure/README.md` 中登记完成状态

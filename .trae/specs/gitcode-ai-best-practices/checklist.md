@@ -1,7 +1,7 @@
 # AtomGit AI社区平台最佳实践学习笔记 - Verification Checklist
 
 > **验收状态**: ✅ 全部通过 | **验收日期**: 2026-08-01 | **验收方法论**: 七概念R→I→E→C里程碑验收
-> **产出文件**: `.agents/docs/knowledge/learning/atomgit-ai-best-practices.md`（4390行，KE-4等级A级）
+> **产出文件**: `docs/knowledge/learning/atomgit-ai-best-practices.md`（4390行，KE-4等级A级）
 
 ## 内容完整性检查
 - [x] 学习笔记包含8个主要章节：模型管理、数据集管理、Space应用、Notebook开发、协作开发、安全、性能监控、总结
@@ -36,8 +36,8 @@
 - [x] 相关章节之间有合理的交叉引用（≥3处）
 
 ## 文件规范检查
-- [x] 文件保存路径正确：`.agents/docs/knowledge/learning/atomgit-ai-best-practices.md`
+- [x] 文件保存路径正确：`docs/knowledge/learning/atomgit-ai-best-practices.md`
 - [x] 文件名符合kebab-case命名规范（纯英文、短横线连接）
 - [x] 文件风格与现有learning目录下的文档保持一致
 - [x] frontmatter格式符合YAML规范（id/title/source/extracted/tags字段完整）
-- [x] 配套TOML元数据文件存在：`.meta/toml/.agents/docs/knowledge/learning/atomgit-ai-best-practices.toml`
+- [x] 配套TOML元数据文件存在：`.meta/toml/docs/knowledge/learning/atomgit-ai-best-practices.toml`

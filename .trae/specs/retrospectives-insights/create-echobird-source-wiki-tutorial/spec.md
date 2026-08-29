@@ -52,7 +52,7 @@ tags: ["echobird", "ai-agent", "tauri", "rust", "model-nexus", "codex-proxy", "l
   - 本地 LLM：server.rs 支持 vLLM/SGLang/llama.cpp，CUDA 检测，PID 文件管理
 
 ## Constraints
-- **Technical**: 文档使用 Markdown + YAML frontmatter（MDI v1.0），文件名 kebab-case 纯英文，目录放置于 `.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`
+- **Technical**: 文档使用 Markdown + YAML frontmatter（MDI v1.0），文件名 kebab-case 纯英文，目录放置于 `docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`
 - **Business**: 基于官网与本地源码事实编写，不得虚构未验证的技术细节；量化的工程收益需标注适用场景与测量方法
 - **Dependencies**: 依赖本地源码目录与官网内容，无需额外网络请求
 
@@ -138,4 +138,4 @@ tags: ["echobird", "ai-agent", "tauri", "rust", "model-nexus", "codex-proxy", "l
 ## Impact
 - **Affected specs**: 无直接影响的其他 spec
 - **Affected code**: 仅新增文档文件，不涉及 EchoBird 源码改动
-- **Affected docs**: `.agents/docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`（新建目录）、`03-agent-platforms-tools/README.md`（更新索引）
+- **Affected docs**: `docs/knowledge/learning/03-agent-platforms-tools/echobird-wiki/`（新建目录）、`03-agent-platforms-tools/README.md`（更新索引）

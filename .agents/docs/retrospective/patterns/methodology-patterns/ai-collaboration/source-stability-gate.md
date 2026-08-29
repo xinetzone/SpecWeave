@@ -3,7 +3,7 @@ id: "source-stability-gate"
 domain: "methodology"
 layer: "methodology"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 0
 documentation_level: "basic"
 source: "../../../../../../docs/retrospective/reports/concepts/milestone/jira-skill-wiki-vendor-sync-milestone-20260828.md#模式-E-1信源稳定性门"
@@ -40,7 +40,7 @@ tags: ["信源稳定性", "路径断裂", "质量门", "文档生成", "vendor�
 
 AI 辅助从源码生成文档时存在一个结构性盲区——**内容审查通过 ≠ 引用可持续**：
 
-> **`file:///` 是什么？** 这是 Markdown/HTML 中引用本地文件的 URI scheme（如 `[源码](file:///d:/AI/vendor/jira-skill/src/changelog.py#L10)`），OKF Wiki 等知识库规范使用此格式建立文档到源码的可点击追溯链接。与 `https://` 不同，`file:///` 引用指向本地文件系统，受本地目录生命周期影响。
+> **`file:///` 是什么？** 这是 Markdown/HTML 中引用本地文件的 URI scheme（如 `[源码](file:///d:/AI/vendor/jira-skill/scripts/detect_jira_issues.py#L10)`），OKF Wiki 等知识库规范使用此格式建立文档到源码的可点击追溯链接。与 `https://` 不同，`file:///` 引用指向本地文件系统，受本地目录生命周期影响。
 
 1. **生命周期不匹配**：文档是长期资产（月/年级别），临时克隆目录是短期资源（小时/天级别），两者生命周期存在数量级差异
 2. **断裂延迟暴露**：文档生成时 `file:///` 路径全部可达（临时目录存在），内容审查验证 API 名称和交叉链接均通过，但无人验证信源路径的持久性
@@ -178,6 +178,16 @@ Review 验证了 API 名称正确性和交叉链接可达性，但未验证 `fil
 
 **正确做法**：扫描与验证模式同时覆盖三类形态：`file:///` 正斜杠 URL、Windows 反斜杠绝对路径（`X:\...`）、POSIX 绝对路径；Windows 环境下同一物理路径的正斜杠与反斜杠两种写法都要匹配。
 
+### 反模式6：以登记清单替代验收复扫
+
+行动项按发现阶段的宽松统计登记缺陷规模，验收时按登记清单点验，不再用同等精度工具全量复扫。
+
+**实际案例**：veadk 里程碑 A-3 登记"9 处内部导航断链"（发现阶段宽松正则加人工甄别），验收阶段逐链接复验实测为 **33 个链接、32 行、4 个文件**（偏差 3.7 倍）；其中 1 行含 2 个链接，且宽松正则漏掉了表格内连续链接形态。若按 9 处清单点验即关闭，3/4 的真实断链会静默残留。
+
+**为什么错**：发现阶段的工具精度决定登记规模的可信度，"行动项已登记"不构成"规模已知"；跨阶段更换测量口径（宽松甄别→精确复验）时，登记数字仅为下限估计。
+
+**正确做法**：行动项登记必须附注测量方法与口径；验收必须用正式扫描工具（如 GATE-SPS `check-source-path-stability.py`）全量复扫，以复扫结果为准更正登记计数，复扫零发现方可关闭。
+
 ## 检验标准
 
 做完之后怎么知道做对了？
@@ -188,6 +198,8 @@ Review 验证了 API 名称正确性和交叉链接可达性，但未验证 `fil
 4. **清理扫描留痕**：临时目录删除前有 Grep 扫描记录，确认零匹配或已完成路径迁移
 5. **V阶段双重验证**：V 阶段对每个 `file:///` URL 同时有存在性验证（Test-Path）和稳定性验证（路径分类检查）记录
 6. **引用形态全覆盖**：扫描/验证的匹配模式覆盖 `file:///` 链接、反斜杠裸路径、POSIX 路径三类形态；Windows 环境下同一物理路径的两种斜杠写法均零残留
+7. **URI 片段锚点剥离**：存在性复验前必须从路径 token 中剥离片段锚点（`#L10`、`#L10-L20`、`#章节名`）——锚点是 URI fragment，不属于文件系统路径；不剥离会使全部带锚链接恒判"不存在"（案例3 实测：全仓 1167 个带锚链接中 568 个真实文件曾被误判，占修复前"不存在"基线约 12%）。工具层已由 GATE-SPS `normalize_token` 的 `split("#",1)[0]` 保障
+8. **元数据双轨与外部坐标复验**：frontmatter `source` 等字段存在 md 与 `.meta/toml` 双轨镜像时，稳定性扫描必须覆盖两轨（影子轨死路径无任何告警，案例3 中 TOML 镜像的 `libs/` 路径自创建起不可达）；临时克隆引用在 vendor/bundles 均无归宿时，必须改为 `external:<repo>@<tag>/<path>` 固定坐标引用（如 `external:github.com/netresearch/agent-rules-skill@v3.14.1/skills/agent-rules/SKILL.md`），tag 经远程仓库 `git ls-tree` 验证含目标文件
 
 ## 跨场景迁移示例
 
@@ -264,7 +276,21 @@ Jupyter Notebook 或数据分析报告中引用的数据源路径应指向版本
 1. **升级信源**：注册 `vendor/veadk-python` submodule（`git@github.com:volcengine/veadk-python.git`，Apache-2.0），固定至 tag `1.0.10`（commit `ffbf2957`）。tag 选型经差异分析：`1.0.10` 是 Wiki 生成时 commit `7bd1207` 的祖先，其间 5 个 commit 全部为 Studio 前端特性，Wiki 引用的核心框架文件（`veadk/agent.py`、`veadk/runner.py`、`veadk/tools/`、`examples/` 等）在 1.0.10 中均存在，内容漂移风险归零
 2. **批量替换**：41 个文件共 800 处引用迁移至 vendor 路径——788 处 `file:///` 正斜杠链接 + 12 处 frontmatter `source:` 反斜杠路径（第五步脚本最初只统计 `file:///`，反斜杠裸路径在替换前全量扫描中补获，提示第四步清理扫描的匹配模式必须覆盖两种斜杠变体）
 3. **复验结果**：`.chaos` 残留 0 处；661 个严格 Markdown 链接（227 个唯一目标）**信源链接缺失 0**；另修复 1 处生成时即畸形的链接（`webui/` 缺 `veadk/` 路径段）
-4. **附带发现（超出本模式边界）**：9 处 Wiki 内部导航链接生成时即断（缺少 `03-agent-platforms-tools/01-domestic-platforms/` 路径段，从未指向 `.chaos`），属输出层 file-existence-verification-gate 领域，另行处理
+4. **附带发现（超出本模式边界）**：9 处 Wiki 内部导航链接生成时即断（缺少 `03-agent-platforms-tools/01-domestic-platforms/` 路径段，从未指向 `.chaos`），属输出层 file-existence-verification-gate 领域，另行处理。**已闭环（案例3）**：逐链接复验实测 33 链接/32 行/4 文件（登记 9 处为宽松正则下限），全部改为相对路径并复验 67 OK/0 BROKEN
+
+### 案例3：里程碑行动项收尾中的工具判真率与归宿排除链（2026-08-29 同日，第 3 次验证）
+
+**发现方式**：案例2 父里程碑登记行动项 A-3（输出层内部断链修复）与 A-6（模式文档 source 归宿排查），执行链路 R→I→V→C；模式增量来自 V 阶段对抗审查而非失败回溯。
+
+**三个独立子结果**：
+
+1. **输出层断链验收复扫（反模式6）**：案例2 附带发现登记 9 处内部导航断链，验收阶段逐链接复验实测 **33 个链接、32 行、4 个文件**（3.7 倍偏差）。全部改为相对路径 `../` 形态（对未来迁移免疫），修复后链接复验 67 OK / 0 BROKEN
+2. **工具判真率缺陷（检验标准7）**：GATE-SPS 复扫中一个已修复的真实链接仍报"❌不存在"，代码通读定位为 `normalize_token` 不剥离 URI fragment——`Path("x.py#L10").exists()` 恒为 False。全仓实测 1167 个带锚链接中 568 个真实文件曾被误判（audit"不存在"基线 4850→4283）。修复并补 2 个回归测试（30→32 全绿）。**教训：质量门工具在合成测试集上全绿不等于在真实语料上判得准，未进入构造者想象空间的输入形态形成系统性误报类；工具误报只能由真实案例校准**
+3. **归宿排除链与双轨死路径（检验标准8）**：临时克隆清理后，模式文档 `skill-intent-routing.md` 的 source 失归宿；逐级排除（vendor 无此库 → bundles 无 libs/ 目录且 bundle 08 文档无对应内容）后采用 `external:github.com/netresearch/agent-rules-skill@v3.14.1` 固定坐标（tag 经 `git ls-tree` 验证）。同步发现其 `.meta/toml` 镜像中 `libs/` 路径自创建起即为死路径，双轨影子轨无复验机制
+
+**不改写边界**：过去时态的历史证据引用（veadk 源码常量默认值 `"/tmp/veadk_local_database.db"`、2026-08-25 实验测量脚本路径）与教学反例正文（`.chaos/libs`、`/tmp` 等讲授对象）按历史快照原则保留，稳定性扫描命中不改写。
+
+**验证结论**：模式在"工具层判真率"与"元数据双轨"两个新维度上通过独立案例验证，成熟度维持 L2，validation_count 2→3，检验标准增至 8 条、反模式增至 6 条。
 
 ## 与其他模式的关系
 
@@ -309,6 +335,7 @@ Jupyter Notebook 或数据分析报告中引用的数据源路径应指向版本
 ## Changelog
 
 <!-- changelog -->
+- 2026-08-29 | validate | v2.3：第3个独立案例（veadk 里程碑行动项 A-3/A-6 收尾，R→I→V→C）验证通过——新增反模式6「以登记清单替代验收复扫」（登记9处 vs 实测33链接/32行/4文件）、检验标准第7条「URI片段锚点剥离」（GATE-SPS 假阳性修复：全仓1167个带锚链接中568个曾被误判，工具已修复+2回归测试）、第8条「元数据双轨与外部坐标复验」（.meta/toml 影子轨死路径 + external: 固定 tag 归宿排除链）；validation_count 2→3，检验标准6→8条、反模式5→6条
 - 2026-08-29 | docs | v2.2：里程碑复盘（sc-20260829-veadk-source-stability-fix）补充反模式5「扫描只匹配链接语法」（案例2中12处frontmatter反斜杠裸路径初检漏统计）与检验标准第6条「引用形态全覆盖」
 - 2026-08-29 | fix | v2.1：案例2修复闭环——注册 vendor/veadk-python submodule 固定 tag 1.0.10（ffbf295），41个文件800处引用（788处file:/// + 12处frontmatter反斜杠路径）迁移至 vendor 并复验信源链接缺失0；补充教训：清理扫描匹配模式须覆盖两种斜杠变体；记录9处输出层内部断链为边界外发现
 - 2026-08-29 | validate | v2.0：第2个独立案例（veadk-python Wiki，64文件/788处file:///引用）前瞻性验证通过——模式五步检测零修改命中，成熟度 L1→L2，validation_count 1→2；发现更高风险变体（main分支跟踪克隆无tag锁定）；修复行动项待执行

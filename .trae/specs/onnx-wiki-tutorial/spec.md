@@ -59,7 +59,7 @@ maturity: L1-draft
 
 ## Constraints
 - **Technical**: 必须基于官方文档内容，不得编造API；遵循已有Wiki格式（参考protobuf-wiki）
-- **Business**: 产出物存放于`.agents/docs/knowledge/learning/`下合适的分类目录
+- **Business**: 产出物存放于`docs/knowledge/learning/`下合适的分类目录
 - **Dependencies**: 依赖defuddle已获取的官方文档内容、项目已有Wiki模板结构
 
 ## Assumptions

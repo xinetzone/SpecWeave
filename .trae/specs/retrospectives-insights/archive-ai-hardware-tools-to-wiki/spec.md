@@ -1,7 +1,7 @@
 # AI硬件设计工具分析报告归档到Wiki - Product Requirement Document
 
 ## Overview
-- **Summary**: 将已完成的微信公众号文章《一定要收藏！10个AI硬件设计的常用网站！》深度分析报告从 `.trae/specs/retrospectives-insights/analyze-ai-hardware-design-tools/` 归档到项目知识库wiki教程目录 `.agents/docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/`，按照wiki规范格式化，添加YAML frontmatter，创建README索引入口，并更新目录索引。
+- **Summary**: 将已完成的微信公众号文章《一定要收藏！10个AI硬件设计的常用网站！》深度分析报告从 `.trae/specs/retrospectives-insights/analyze-ai-hardware-design-tools/` 归档到项目知识库wiki教程目录 `docs/knowledge/learning/06-business-trends-analysis/ai-hardware-design-tools-wiki/`，按照wiki规范格式化，添加YAML frontmatter，创建README索引入口，并更新目录索引。
 - **Purpose**: 将临时分析产出物沉淀为可长期查阅、可检索、可被其他智能体和人类开发者发现的知识库条目，完善"商业趋势分析"分类下的AI工具生态内容。
 - **Target Users**: 硬件工程师、电子爱好者/创客、嵌入式开发者、硬件创业者、EDA行业从业者、AI应用落地研究者、知识库使用者
 
@@ -59,7 +59,7 @@
 - **NFR-4**: 文件结构清晰，与参考范例（copilot-cost-multimodel-era-wiki）风格一致
 
 ## Constraints
-- **Technical**: 仅在 `.agents/docs/knowledge/learning/06-business-trends-analysis/` 下创建文件，不修改其他位置文件
+- **Technical**: 仅在 `docs/knowledge/learning/06-business-trends-analysis/` 下创建文件，不修改其他位置文件
 - **Business**: 保留源spec文件不动，归档为复制而非移动
 - **Dependencies**: 源analysis-report.md已存在且内容完整
 - **Naming**: 必须使用纯英文kebab-case命名

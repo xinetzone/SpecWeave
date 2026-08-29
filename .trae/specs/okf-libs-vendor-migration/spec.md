@@ -42,7 +42,7 @@ id: okf-libs-vendor-migration
 - vendor 区域已有成熟规范与既有子模块：`vendor/flexloop`（owned_collab）、`vendor/ark-cli`（third_party）、`vendor/awesome-okf`（third_party，yzfly）、`vendor/knowledge-catalog`（third_party）
 - 三个源目录各自是独立 git 仓库（含 `.git`），但 `.chaos/` 整体**未被主仓库 git 跟踪**（`git ls-files .chaos` 为空），属于游离的外部依赖
 - `vendor/awesome-okf`（yzfly/awesome-okf）与 `.chaos/libs/awesome-okf`（linyiru/awesome-okf）是**两个不同项目**——前者是中文 OKF 生态工具链（docs/plugins/skills），后者是含 `bundle/` 构建器与 Awesome 列表的汇总项目，故采用 `vendor/awesome-okf-bundle` 独立路径
-- 主权区已有对三者的分析文档位于 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/`，其中 `01-ecosystem-map.md` 含 3 处对 `.chaos/libs/awesome-okf/` 的相对文件链接，迁移后需更新
+- 主权区已有对三者的分析文档位于 `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/okf-ecosystem-wiki/`，其中 `01-ecosystem-map.md` 含 3 处对 `.chaos/libs/awesome-okf/` 的相对文件链接，迁移后需更新
 - 参考先例：`awesome-okf-vendor-migration` spec 已完成类似的第三方子模块迁移流程，本次迁移类似但源位置不同（`.chaos/libs/` 而非根目录），且为批量三个目录
 
 ## Functional Requirements

@@ -29,7 +29,7 @@ status: "draft"
 - 不创建角色对应的Skill或Command
 
 ## Background & Context
-- 已完成LLM Token优化知识体系的系统化整理，产出29个结构化Markdown文档，位于 `.agents/docs/knowledge/learning/llm-token-optimization/`
+- 已完成LLM Token优化知识体系的系统化整理，产出29个结构化Markdown文档，位于 `docs/knowledge/learning/llm-token-optimization/`
 - 知识体系包含：01-原理、02-方法（35种技术）、03-工具（24个框架）、04-案例（9个跨行业案例）、05-评估（19项指标）、06-决策框架（决策树+选型矩阵+5模式+反模式+检查清单）、07-审查记录、08-元分析、09-约束清单（27条禁令P0-P3分级）、10-快速参考卡、术语表、参考文献
 - 现有7个角色（orchestrator、architect、developer、reviewer、tester、thesis-advisor、co-founder）均采用统一格式：YAML frontmatter（id/title/x-toml-ref/source）+ Description/Responsibilities/Non-Goals三段式结构
 - 角色索引在 `roles/README.md` 中维护，包含职责矩阵表格和文件结构说明
@@ -76,7 +76,7 @@ status: "draft"
   - Markdown表格修改必须替换整个表格（遵循project_memory约束）
 - **Business**: 角色定位为"专家顾问"角色，为其他角色提供专业支持，而非独立执行所有优化任务
 - **Dependencies**:
-  - 依赖现有知识库：`.agents/docs/knowledge/learning/llm-token-optimization/` 下的所有文档
+  - 依赖现有知识库：`docs/knowledge/learning/llm-token-optimization/` 下的所有文档
   - 依赖现有角色格式规范：参考architect.md、developer.md的结构
   - 依赖角色索引文件：`roles/README.md`
 

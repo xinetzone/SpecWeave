@@ -404,10 +404,10 @@ def search_bundle(bundle_dir: Path, query: str, limit: int = 10) -> list[dict]:
 
 对话历史存储在 `~/.okf/chats/<bundle-name>/<session-id>.jsonl`：
 
-```jsonl
+```json
 {"role": "system", "content": "...", "ts": "2026-08-18T14:30:00Z"}
 {"role": "user", "content": "如何配置MCP？", "ts": "2026-08-18T14:30:05Z"}
-{"role": "assistant", "content": "配置MCP需要...", "meta": {"sources": [...]}, "ts": "2026-08-18T14:30:15Z"}
+{"role": "assistant", "content": "配置MCP需要...", "meta": {"sources": []}, "ts": "2026-08-18T14:30:15Z"}
 ```
 
 每行一条 JSON 记录，使用 JSONL（JSON Lines）格式方便追加。

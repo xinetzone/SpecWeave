@@ -36,11 +36,11 @@ SpecWeave 工作区经过长期积累，已形成丰富的知识资产体系：
 | 资产类型 | 位置 | 数量 | 质量标记 |
 |---------|------|------|---------|
 | 可复用模式 | `.agents/docs/retrospective/patterns/` | ~380个 | 成熟度L1-L4（L4已集成CI） |
-| 最佳实践 | `.agents/docs/knowledge/best-practices/` | ~25篇 | 经过实战验证 |
+| 最佳实践 | `docs/knowledge/best-practices/` | ~25篇 | 经过实战验证 |
 | 项目复盘报告 | `.agents/docs/retrospective/` 根目录 | ~15份 | R-I-E完整闭环 |
 | 项目分析报告 | `playground/reports/` | ~6个项目 | 完整分析+洞察+模式萃取 |
 | 大赛作品分析 | `playground/semi-final-analysis/` | 4份 | TRAE大赛350件复赛作品分析 |
-| 学习wiki | `.agents/docs/knowledge/learning/` | ~30+个wiki | 结构化学习笔记 |
+| 学习wiki | `docs/knowledge/learning/` | ~30+个wiki | 结构化学习笔记 |
 | 可复用脚本 | `.agents/scripts/` | ~数十个 | 有测试覆盖 |
 | 模板/清单 | `.agents/templates/` `.agents/checklists/` | ~数十个 | 标准化模板 |
 

@@ -8,7 +8,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 在 `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/` 下创建目录
+  - 在 `docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/hermes-okf-wiki/` 下创建目录
   - 创建 README.md：YAML frontmatter + OKF 生态定位 + 章节索引表 + 阅读路径建议 + 相关资源（返回上级 okf-wiki）
   - frontmatter 使用 YAML（--- 分隔），遵循 okf-wiki 现有格式
 - **Acceptance Criteria**: AC-1, AC-2, AC-14
