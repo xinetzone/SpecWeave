@@ -20,6 +20,7 @@
 | milestone-torch-dev-mirror-build-20260820 | torch-dev 镜像构建与 files.pythonhosted.org IPv6 下载问题修复 | 2026-08-20 | ✅ 已完成 | 七概念R→I→E→V→C | 25条客观事实、3条核心洞察(下载层治标+验证层兜底/合并语义静默降级/Copy补丁漂移)、1个可复用模式(E-1 主索引+备用源双通道)、V对抗审查4视角8实测揪出P1静默降级、4项原子行动项，G1-G4+V门全部通过 | [torch-dev-mirror-build-retrospective-20260820.md](torch-dev-mirror-build-retrospective-20260820.md) |
 | milestone-screenshot-tool-guardian-20260825 | Windows 截图工具反复故障根治（事件驱动守护） | 2026-08-25 | ✅ 已完成 | 七概念R→I→E→C | 26条客观事实、3条核心洞察(事件驱动归零递归SPOF/复发需断根/实时触发需幂等防抖)、1个可复用模式(event-driven-guardian L1)、4项原子行动项，G1-G4质量门全部通过 | [screenshot-tool-event-driven-guardian-retrospective-20260825.md](screenshot-tool-event-driven-guardian-retrospective-20260825.md) |
 | milestone-blog-to-okf-bundle-20260828 | 博文→OKF知识包转化（两篇案例+模式L1→L2） | 2026-08-28 | ✅ 已完成 | 七概念R→I→E→V→A | 26条客观事实、3条核心洞察(核验是可信度放大器/单案例隐藏形态偏见/门禁环境须契约化)、1个L2模式(blog-article-to-okf-bundle，7步骤+10反模式+2异质案例)、V对抗6条意见采纳4条、5项原子行动项，G1/G2/G3/G4/V门全部通过 | [blog-to-okf-bundle-milestone-retrospective-20260828.md](blog-to-okf-bundle-milestone-retrospective-20260828.md) |
+| milestone-blog-to-okf-bundle-12posts-20260829 | 12篇博文→OKF知识包批量转化（L2模式批量验证） | 2026-08-29 | ✅ 已完成 | 七概念R→I→E→V | 30条客观事实、4条核心洞察(核验失效率与营销叙事浓度正相关/勘误四模式/骨架判据为操作可复现性/批量复用暴露三流程缺口)、12个bundle共123文件460事实、P0核验84项(59✅21⚠️4❌)、模式L2→L3升级建议(勘误四张清单+flagged状态+主题簇互链)、V对抗6条意见采纳5条、5项原子行动项，G1-G4+V门全部通过 | [blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md](blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md) |
 
 ## 知识沉淀里程碑模式库
 
