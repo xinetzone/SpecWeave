@@ -43,10 +43,11 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 | ~~pattern-extraction-cmd~~ | ~~"模式沉淀"、"萃取模式"~~ | ~~3~~ | ~~v1.0.0（已废弃，由extraction-cmd替代）~~ | ~~[skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md)~~ |
 
-### 脚本命令门面（8个）
+### 脚本命令门面（9个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
+| jpman-podman-ops | "jpman"、"启动jupyter容器"、"podman machine"、"工作区挂载"、"容器WARN分诊"、"fuse device"、"rootless排障"、"WSL保活"、"rebuild" | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | v1.0.0 | [skills/jpman-podman-ops/SKILL.md](../skills/jpman-podman-ops/SKILL.md) |
 | docker-cache-cmd | "保存镜像"、"缓存Docker镜像"、"docker缓存"、"镜像缓存"、"加载镜像"、"封存镜像"、"docker save/load"、"WSL重置恢复"、"镜像本地缓存" | docker-cache（bash脚本） | v1.0.0 | [skills/docker-cache-cmd/SKILL.md](../skills/docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | "镜像转WSL"、"docker镜像导入WSL"、"镜像转rootfs"、"podman export转wsl"、"WSL重置后恢复开发环境"、"docker-wsl-bridge"、"没有Docker Desktop怎么启动镜像" | wsl+podman跨Shell编排 | v1.0.0 | [skills/docker-wsl-bridge-cmd/SKILL.md](../skills/docker-wsl-bridge-cmd/SKILL.md) |
 | link-check-cmd | "链接检查"、"检查链接"、"断链"、"链接修复"、"fix links"、"check links"、"验证链接"、"死链" | check-links.py + lib/link_fixer.py | v1.0.0 | [skills/link-check-cmd/SKILL.md](../skills/link-check-cmd/SKILL.md) |

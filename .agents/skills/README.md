@@ -54,10 +54,11 @@ title: ".agents/skills/ 目录索引"
 | zhujian-insight-writer | 应用完整Skill | 为竹简悟道撰写基于帛书《老子》的哲学洞察（编号递增、结构规范、交叉引用完整），遵循三不铁律 | 撰写洞察、生成洞察、分析概念、补充洞察库、体道四法 | [apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](../../apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) |
 | dao-scholar-illustrations | 应用完整Skill | 生成道德经学者风格的中文哲学正文配图（极简手绘、墨色线条、留白美学），含九种构图模式 | 配图、文章插图、道德经学者、手绘、shot list、道家哲学配图 | [apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](../../apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) |
 
-### 脚本命令门面（8个）
+### 脚本命令门面（9个）
 
 | Skill名称 | 类型 | 对应脚本 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
+| jpman-podman-ops | 应用CLI门面 | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | jpman、启动jupyter容器、podman machine、工作区挂载、容器WARN分诊、fuse device、rootless排障、WSL保活、rebuild | [jpman-podman-ops/SKILL.md](jpman-podman-ops/SKILL.md) |
 | docker-cache-cmd | 脚本门面 | docker-cache（bash） | 保存镜像、缓存Docker镜像、docker缓存、镜像缓存、加载镜像、WSL重置恢复、docker save/load、镜像本地缓存 | [docker-cache-cmd/SKILL.md](docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | 跨Shell编排 | wsl+podman命令编排 | 镜像转WSL、docker镜像导入WSL、镜像转rootfs、podman export转wsl、WSL重置后恢复开发环境、docker-wsl-bridge | [docker-wsl-bridge-cmd/SKILL.md](docker-wsl-bridge-cmd/SKILL.md) |
 | link-check-cmd | 脚本门面 | check-links.py | 链接检查、断链修复、验证链接、提交前检查 | [link-check-cmd/SKILL.md](link-check-cmd/SKILL.md) |
@@ -117,6 +118,7 @@ flowchart LR
 
 ## Changelog
 
+- **v1.11** (2026-08-29): 新增 jpman-podman-ops 脚本命令门面（脚本门面从8个→9个；首个"应用CLI门面"类型，封装 apps/containers/jupyter-podman-rootless 的 jpman CLI 而非 .agents/scripts/），萃取 jupyter-podman-rootless 容器日常驾驶工作流：podman machine 就绪纪律（machine ssh/保活/禁 systemd=true）、jpman 幂等 start 与 Mounting 行核对、healthcheck 验证、WARN 警告先验法分诊（hello-world 最小验证→三板斧）、rootless 三必需参数与容器内 root 运行模型、rebuild/rebuild-all/save/load/wsl-export 场景路由。含 15 条反模式、9 项安全检查清单、12 条 Gotchas、10 处 Why 解释；基于 42 条事实与 4 条跨案例洞察、4 视角对抗审查，质量分 100/100。与 docker-cache-cmd（灾备缓存）、docker-wsl-bridge-cmd（WSL 转换）形成"日常驾驶↔灾备↔转换"边界路由。
 - **v1.10** (2026-08-29): 新增 blog-article-to-okf-wiki 工作流门面，封装博文/资讯文章→OKF 知识包转化七阶段工作流（敏感度预检→操作可复现性两问→归属决策树→F编号事实采集+P0权威核验勘误四张清单→三层知识拆分→信源先行生成→对抗审查与索引收尾），含13条反模式、8项机械门禁清单、双份F编号一致性核对、flagged状态管理；经13篇异质博文（7类内容形态）实战验证（492条事实/90项P0核验/拦截4项源文硬错误），对应L3模式文档 blog-article-to-okf-bundle。同步补登 source-code-to-okf-wiki（此前已存在但未入索引），新增"工作流门面"分类（2个），Skill 分类从三类扩展为四类。
 - **v1.9** (2026-08-18): 新增docker-wsl-bridge-cmd脚本命令门面（脚本门面从7个→8个），封装Docker镜像tar.gz→WSL2发行版的Podman桥接转换流程，支持convert/setup-workspace/verify/cleanup四个子命令，包含跨Shell路径映射、UID=1000用户自动探测、wsl.conf配置、conda非交互shell初始化、Smoke Test验证清单、12项错误处理、10个Gotchas陷阱。与docker-cache-cmd形成缓存→转换链路。基于oci-image-wsl-rootfs-bridge模式和实战验证（devcontainer-base:latest，26层/1.41GB）。
 - **v1.8** (2026-08-01): 新增token-optimize-cmd命令集门面（第10个），封装LLM Token使用优化全生命周期指导能力，支持六种操作方案（P0速赢/浪费审计/方案设计/方案评审/路线图/效果评估）。配套check_token_p0.py自动化P0约束预检脚本（15项P0禁令自动检测），含48个单元测试覆盖率100%。基于llm-token-optimization知识库（35种优化技术、5种可复用模式、27条约束清单）构建。
