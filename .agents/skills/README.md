@@ -8,9 +8,10 @@ title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引
 
-本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为三类：
+本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为四类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
+- **工作流门面**：对 `.agents/docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
 - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
 
@@ -38,6 +39,13 @@ title: ".agents/skills/ 目录索引"
 | forum-posting | 完整Skill | Discourse论坛自动化操作（发帖、编辑、回复、清理草稿等），支持双方案（MCP+Playwright脚本） | 发帖、编辑帖子、回复帖子、forum.trae.cn、forum-bot | [forum-posting/SKILL.md](forum-posting/SKILL.md) |
 | home-assistant | 完整Skill | Home Assistant智能家居系统集成（设备控制、状态查询、服务调用），REST API交互 | 智能家居、控制设备、查询状态、home assistant、ha_api | [home-assistant/SKILL.md](home-assistant/SKILL.md) |
 | git-commit-helper | 完整Skill | Git原子化提交规范执行（三查暂存法→预提交验证→构建提交信息→执行提交→验证结果），含validate_commit.py | 提交、commit、原子提交、代码提交、提交变更、git commit、保存更改 | [git-commit-helper/SKILL.md](git-commit-helper/SKILL.md) |
+
+### 工作流门面（2个）
+
+| Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
+|-----------|------|---------|-----------|-------------|
+| source-code-to-okf-wiki | 工作流门面 | 源码阅读→OKF Wiki 生成（R→I→E→V→C 五阶段，信源先行、分批生成、Grep级API验证，杜绝虚构API） | 源码学习、读源码、源码阅读、生成Wiki、OKF Wiki、源码转文档、深度学一个库 | [source-code-to-okf-wiki/SKILL.md](source-code-to-okf-wiki/SKILL.md) |
+| blog-article-to-okf-wiki | 工作流门面 | 博文/资讯文章→OKF 知识包转化（七阶段：敏感度预检→骨架两问→归属决策树→F编号事实+P0核验勘误四清单→三层拆分→信源先生成→对抗审查），13篇实战验证 | 博文转化、公众号文章、微信文章、转知识包、OKF bundle、OKF wiki、文章转文档、资讯转知识库 | [blog-article-to-okf-wiki/SKILL.md](blog-article-to-okf-wiki/SKILL.md) |
 
 ### 应用内置完整Skill（2个，来自 apps/zhujian-wudao）
 
@@ -109,6 +117,7 @@ flowchart LR
 
 ## Changelog
 
+- **v1.10** (2026-08-29): 新增 blog-article-to-okf-wiki 工作流门面，封装博文/资讯文章→OKF 知识包转化七阶段工作流（敏感度预检→操作可复现性两问→归属决策树→F编号事实采集+P0权威核验勘误四张清单→三层知识拆分→信源先行生成→对抗审查与索引收尾），含13条反模式、8项机械门禁清单、双份F编号一致性核对、flagged状态管理；经13篇异质博文（7类内容形态）实战验证（492条事实/90项P0核验/拦截4项源文硬错误），对应L3模式文档 blog-article-to-okf-bundle。同步补登 source-code-to-okf-wiki（此前已存在但未入索引），新增"工作流门面"分类（2个），Skill 分类从三类扩展为四类。
 - **v1.9** (2026-08-18): 新增docker-wsl-bridge-cmd脚本命令门面（脚本门面从7个→8个），封装Docker镜像tar.gz→WSL2发行版的Podman桥接转换流程，支持convert/setup-workspace/verify/cleanup四个子命令，包含跨Shell路径映射、UID=1000用户自动探测、wsl.conf配置、conda非交互shell初始化、Smoke Test验证清单、12项错误处理、10个Gotchas陷阱。与docker-cache-cmd形成缓存→转换链路。基于oci-image-wsl-rootfs-bridge模式和实战验证（devcontainer-base:latest，26层/1.41GB）。
 - **v1.8** (2026-08-01): 新增token-optimize-cmd命令集门面（第10个），封装LLM Token使用优化全生命周期指导能力，支持六种操作方案（P0速赢/浪费审计/方案设计/方案评审/路线图/效果评估）。配套check_token_p0.py自动化P0约束预检脚本（15项P0禁令自动检测），含48个单元测试覆盖率100%。基于llm-token-optimization知识库（35种优化技术、5种可复用模式、27条约束清单）构建。
 - **v1.7** (2026-07-13): seven-concepts-cmd品牌名称更新——对外名称从"七概念方法论编排"改为"方法论编排（Method Orchestrator）"，强调"编排"核心定位；"七概念"保留为底层方法论基础名称和兼容别名，SKILL.md升级至v1.1.0。

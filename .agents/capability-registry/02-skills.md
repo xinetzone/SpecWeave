@@ -15,6 +15,13 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API，零第三方依赖） | v1.2.0 | [skills/home-assistant/SKILL.md](../skills/home-assistant/SKILL.md) |
 | git-commit-helper | "提交"、"commit"、"原子提交"、"代码提交"、"提交变更"、"git commit"、"保存更改" | 1（内置validate_commit.py脚本，三查暂存法） | v1.1.0 | [skills/git-commit-helper/SKILL.md](../skills/git-commit-helper/SKILL.md) |
 
+### 工作流门面（2个）
+
+| Skill名 | 触发词 | 方案数 | 版本 | 路径 |
+|---------|--------|-------|------|------|
+| source-code-to-okf-wiki | "源码学习"、"读源码"、"源码阅读"、"生成Wiki"、"OKF Wiki"、"源码转文档"、"深度学一个库" | 1（R→I→E→V→C五阶段工作流，L2为源码转化模式文档+prompt模板） | v1.2.0 | [skills/source-code-to-okf-wiki/SKILL.md](../skills/source-code-to-okf-wiki/SKILL.md) |
+| blog-article-to-okf-wiki | "博文转化"、"公众号文章"、"微信文章"、"转知识包"、"OKF bundle"、"OKF wiki"、"文章转文档"、"资讯转知识库" | 1（七阶段工作流，L2为博文转化L3模式文档；13篇实战验证） | v1.0.0 | [skills/blog-article-to-okf-wiki/SKILL.md](../skills/blog-article-to-okf-wiki/SKILL.md) |
+
 ### 应用内置完整Skill（2个，来自 apps/zhujian-wudao）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
@@ -51,6 +58,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤，可独立完成复杂任务
+> - **工作流门面**：对 `.agents/docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面含触发词/阶段流程/质量门，L2 为完整模式文档）
 > - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 > - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run/预览机制、幂等性说明和错误处理
 

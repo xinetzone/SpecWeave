@@ -9,8 +9,8 @@ source:
   - milestone-blog-to-okf-bundle-12posts-20260829（12 篇批量转化复盘，84 项 P0 核验）
 maturity: validated
 maturity_level: L3
-validation_count: 12
-reuse_count: 10
+validation_count: 13
+reuse_count: 11
 tags: [博文转化, OKF, 知识包, 模型选型, 知识沉淀, 信源溯源, 商业分析, 事实核验, P0核验, 勘误模式]
 pattern_type: methodology
 category: documentation
@@ -37,6 +37,8 @@ category: documentation
 | 结构推导 | 从目录/模块层次推导章节 | 从文章叙述层次提炼三层知识 |
 | 归属判定 | 源码仓库名即归属锚点 | 文章主线实体需决策树判定 |
 | 可信度管理 | 源码即事实 | 区分博文事实/核验事实/作者观点 |
+
+**Skill 门面**：本模式已封装为可自动触发的 Skill [`blog-article-to-okf-wiki`](../../../../skills/blog-article-to-okf-wiki/SKILL.md)（L1 门面：触发词 + 七阶段骨架 + 安全清单；本文件为 L2 完整方法论，判据以本文件为准）。信源为本地源码目录时使用姊妹 Skill [`source-code-to-okf-wiki`](../../../../skills/source-code-to-okf-wiki/SKILL.md)。
 
 ## 核心步骤
 
@@ -268,7 +270,11 @@ Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相�
 
 L3 升级增量：①骨架判据改"操作可复现性两问"（案例5/6 驱动）；②信源距离预判+勘误四张清单（4❌21⚠️ 归因萃取）；③flagged 状态管理（案例8 实践固化）；④同主题 bundle 互链（豆包主题簇）；⑤双份事实编号一致性核对（460 vs 458 漂移驱动）；⑥反模式 10→13。
 
-**骨架覆盖说明**：技术教程/选型骨架（含 examples）经 3 案例验证（案例1/4/11）；商业分析/技术综述骨架（无 examples）经 9 案例验证；"资讯速报"骨架（单事件、stale_after 1-2 月）尚无独立案例，待后续验证。
+**L3 定稿后新增验证（2026-08-29）**：
+
+- ✅ 案例13 agora-gemini-transcribe（资讯速报骨架，厂商自宣新闻稿，32 事实/6 项 P0：5✅1⚠️0❌/10 文件，stale_after 2026-11-30）——**"资讯速报"骨架首个独立案例**，补齐骨架覆盖；唯一 ⚠️ 为"全球首个 Realtime API"措辞归属（API 为 OpenAI 产品，Agora 为 2024-10 首发语音合作方、2025-09-04 GA）。
+
+**骨架覆盖说明**：技术教程/选型骨架（含 examples）经 3 案例验证（案例1/4/11）；商业分析/技术综述骨架（无 examples）经 9 案例验证；"资讯速报"骨架（单事件、stale_after 1-2 月）经案例13 验证（agora-gemini-transcribe，2026-08-29）。四类骨架全部有案例覆盖。
 
 **复盘报告**：[12篇批量转化里程碑复盘](../../reports/concepts/milestone/blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md)（含 30 条事实、4 条洞察、勘误四模式萃取全过程）；[首批 2 篇复盘](../../reports/concepts/milestone/blog-to-okf-bundle-milestone-retrospective-20260828.md)。
 
