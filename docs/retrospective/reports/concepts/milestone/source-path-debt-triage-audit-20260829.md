@@ -67,7 +67,7 @@ GATE-SPS 路径提取正则的中文/符号边界缺陷产生的伪 token：
 
 | 债务项 | 规模 | 性质 | 修复路径 |
 |--------|-----:|------|---------|
-| **D-1** knowledge Wiki 中 `d:/spaces/SpecWeave` 旧机器路径 | 265 | book-to-skill-wiki concepts（单文件 14-23 条）等活动教程；前缀映射 `d:/spaces/SpecWeave/<rest>` → `d:/AI/<rest>` 实测可达 | 专项逐文档语义核验后批量映射（可达 557 条中的活动文档子集）；事实表子集归 A 类不动 |
+| **D-1** knowledge Wiki 中 `d:/spaces/SpecWeave` 旧机器路径 | 265 | book-to-skill-wiki concepts（单文件 14-23 条）等活动教程；前缀映射 `d:/spaces/SpecWeave/<rest>` → `d:/AI/<rest>` 实测可达 | ✅ **已闭环（2026-08-29，`685506db`）**：45 个活动文档逐文档语义核验后修复，活动教程 spaces 令牌清零；事实表子集归 A 类不动；详见第六章闭环记录 |
 | **D-2** bundles/chaos/tuya-iot 临时克隆引用 | 269 | facts-tuya-skills-ecosystem.md 引用 `.chaos/libs/TuyaOpen-dev-skills/`（已清理）；.cache 探针文件 | 信源归宿升级（vendor submodule 或 external 固定 tag），或在 bundle 中降级为不可变坐标引用 |
 | **D-3** `.chaos/` 临时克隆活动引用 | 139 | 跨区域分布，需逐条甄别活动文档 vs 历史记录 | 随各文档维护顺带修复 |
 | **D-4** `C:/Users/...` 环境绑定活动引用 | 129 | 开发者用户目录硬编码（knowledge 38、retro 36 等） | 活动文档子集改相对路径；历史子集归 A 类 |
@@ -88,7 +88,7 @@ GATE-SPS 路径提取正则的中文/符号边界缺陷产生的伪 token：
 本次分诊后，4,294 条失效引用的管理口径：
 
 - **立即修复**：0（锚点越界 10 条已在 ACT-2 闭环）
-- **后续专项**：D-1（约 200+ 条活动 Wiki）、D-2（269 条 bundle 信源升级）
+- **后续专项**：~~D-1（约 200+ 条活动 Wiki）~~ ✅ 已闭环（2026-08-29，`685506db`，45 文档，见第六章）、D-2（269 条 bundle 信源升级）
 - **顺带修复**：D-3/D-4 活动子集
 - **登记上报**：D-5 子模块、C 类工具误报
 - **明确不动**：A 类约 2,750 + B 类约 1,050
@@ -102,3 +102,38 @@ GATE-SPS audit 退出码 1 在可预见未来将持续（A/B 类预期命中）�
 - 前缀映射验证：`d:/spaces/<root>/<rest>` → `d:/AI/<rest>` 逐条 Test-Path，557/1,732 可达
 - 关联报告：[veadk A-3/A-6 闭环复盘](veadk-a3-a6-closure-retrospective-20260829.md)、[veadk 信源稳定性修复父里程碑](veadk-python-source-stability-fix-milestone-20260829.md)
 - 模式依据：[信源稳定性门 v2.3](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md)（检验标准 7/8、反模式 6、案例3 不改写边界）
+
+## 六、D-1 闭环记录（2026-08-29）
+
+D-1 于分诊同日完成修复并通过验收，原子提交 `685506db`（fix(docs)，45 文件，+91/-83）。
+
+### 6.1 修复构成（逐文档语义核验，无机械映射）
+
+| 组 | 文档数 | 处置 |
+|----|-------:|------|
+| D1 活动命令组 | 6 | 旧机器绝对路径改仓库相对路径写法（命令统一以仓库根为 CWD）：powershell-secure-download-verification、spec-loader-cold-start-storm-contingency、forum-automation、docker-cache-wsl-migration-guide（速查表 WSL 路径派生改写为 PowerShell 5.1/7 通用的 `-match`/`$matches` 形式并实测）、python-314t-conda-env-usage、tvm-ffi-wiki/12-faq |
+| D2 external 库坐标组 | 32 | 本地 `d:/spaces` 源码坐标升级为 GitHub 官方 URL 或剥离机器前缀：zleap（10）、weasyprint（11）、pyinvoke（5）、caffe（3）、python314-stdlib（3）；agentskills skills-ref 死链经上游仓库结构核实（WebFetch）后改 tree/blob URL；conda-docs、CPython 补 clone 指引 |
+| 分诊遗漏补修组 | 7 | devcontainer-ci-build-manual 2 处 file:/// 死链改相对链接（目标文件 Test-Path 实测存在）；docker-cache-wsl-sop WSL 挂载路径改占位写法；model-env-template、glm-model-call-example 的 `.chaos` 临时溯源按 mystx 先例剥离机器前缀；zleap README、agent-skills 09、conda-dev 06、chatgpt raw-content 补修 |
+
+（分组按修复手法聚类、计数有交叉，以提交文件清单 45 个为准。）
+
+### 6.2 边界遵守
+
+- **A 类归档零改动**：p0-/p1-/p2- 前缀的 22 个事实表/归档文件 spaces 令牌全部保留
+- **B 类教学零改动**：7 个活动教程文件中的残留令牌经逐字核验确认为教学反例/路径映射表/禁止项表格内容——fix-hardcoded-paths-guide、config-file-placement-convention、powershell-nativebuild-faq、powershell-nativebuild-refactoring-summary、seven-concepts-report 教训句、docker-cache-wsl-migration-guide（L138/142/143 WSL 映射教学，明示"替换为你自己的实际路径"）、frontmatter-link-batch-repair-guide
+
+### 6.3 验收实测
+
+- GATE-SPS 复扫（13,587 文件）：knowledge 区活动（非 p0/p1/p2 前缀）文档 spaces 令牌仅剩上述 7 个 B 类教学文件；锚点行越界 **0**
+- 单元测试：`python -m pytest .agents/scripts/tests/test_check_source_path_stability.py -q` → **36 passed**
+- 提交纪律：显式暂存（`git add .agents/docs/knowledge/`）、UTF-8 无 BOM 提交信息（`-F`）、`git show --stat` 核验零混入——并行会话的 `projects/awesome-okf-xs` 子模块指针与 docx 产物均未入提交
+
+### 6.4 根 `docs/` 空壳旧树处置决策（登记不改写）
+
+根 `docs/` 为空壳废弃树（规范引用一律解析至 `.agents/docs/`），其内 18 个 md 文件共 116 条 `d:/spaces` 令牌登记为 **deprecated 快照，不改写**：
+
+| 子集 | 命中文件 | 令牌数 | 判定 |
+|------|-------:|-------:|------|
+| `docs/knowledge/learning/book-to-skill-wiki/` 旧副本 | 10 | 96 | 规范新版在 `.agents/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/`（复扫 0 令牌），旧副本随空壳树废弃 |
+| python314 系列 wiki 旧 shell 副本 | 4 | 7 | 规范新版已在本次 D-1 修复，旧副本废弃 |
+| 复盘/审计报告与里程碑索引 | 4 | 13 | A 类历史证据（报告正文引用的分析对象令牌，本报告即含 9 条） |

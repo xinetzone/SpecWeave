@@ -194,7 +194,7 @@ audit 复扫中 [source-stability-gate.md](../../../../../.agents/docs/retrospec
 
 ### 4.3 后续优化方向
 
-本次为父里程碑的收尾闭环，6 项行动项（A-1 至 A-6）与本报告登记的 4 项行动项（ACT-1 至 ACT-4）均已全部完成（提交哈希见 4.2）。模式资产侧，信源稳定性门模式完成第 3 次独立验证沉淀（检验标准 8 条、反模式 6 条、validation_count=3）；工具侧，GATE-SPS 具备锚点剥离与行号越界复验双重能力，单元测试 36 全绿、全仓 anchor_oob=0。后续工作以 [ACT-3 分诊报告](source-path-debt-triage-audit-20260829.md) 登记的 D-1~D-5 活动信源债为队列（knowledge d:/spaces 265 条、tuya-iot 临时克隆 269 条、.chaos 139 条、C:/Users 129 条、xuanspace 子模块 76 条），按优先级分批修复；C 类约 200 条工具误报进入 GATE-SPS backlog（CJK 伪 token 识别、prose 行号后缀甄别）。
+本次为父里程碑的收尾闭环，6 项行动项（A-1 至 A-6）与本报告登记的 4 项行动项（ACT-1 至 ACT-4）均已全部完成（提交哈希见 4.2）。模式资产侧，信源稳定性门模式完成第 3 次独立验证沉淀（检验标准 8 条、反模式 6 条、validation_count=3）；工具侧，GATE-SPS 具备锚点剥离与行号越界复验双重能力，单元测试 36 全绿、全仓 anchor_oob=0。后续工作以 [ACT-3 分诊报告](source-path-debt-triage-audit-20260829.md) 登记的 D-1~D-5 活动信源债为队列（knowledge d:/spaces 265 条、tuya-iot 临时克隆 269 条、.chaos 139 条、C:/Users 129 条、xuanspace 子模块 76 条），按优先级分批修复；其中 **D-1 已于 2026-08-29 闭环**（提交 `685506db`，45 个活动教程文档逐文档语义核验修复，复扫活动文档 spaces 令牌清零、anchor_oob=0、36 测试全绿；根 `docs/` 空壳旧树 116 条登记 deprecated 不改写，详见分诊报告第六章），队列剩余 D-2~D-5；C 类约 200 条工具误报进入 GATE-SPS backlog（CJK 伪 token 识别、prose 行号后缀甄别）。
 
 ---
 
