@@ -210,7 +210,7 @@ WSL 内运行 jpman 时另有会话层保活：jpman start 会自动调用 keepa
 bash bin/jpman rebuild
 ```
 
-仅把 `Containerfile.hidden` 与 `config/jupyter_notebook_config.py` 复制到 mktemp 临时目录（WSL 原生 /tmp）做增量构建，完成后自动 start；运行中容器会先停止删除。
+直接从项目根的主 Containerfile 构建（`--format docker` + tuna 三镜像源）：配置文件位于 Layer 4 独立层，变更后 Stage 1-3 与 Layer 2/3 缓存全命中，仅 Layer 4/5 重建，秒级完成；完成后自动 start，运行中容器会先停止删除。提速依赖层缓存有效（首次构建或缓存清理后即为全量速度）。
 
 ### 8.2 全量重建 → rebuild-all
 
