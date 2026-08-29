@@ -3,7 +3,7 @@
 > 配套 [docx-template-report SKILL.md](../SKILL.md)，定义 `templates/tech-guide-template.docx` 的
 > 数据上下文契约、适用场景、边界与反模式。
 >
-> 模板萃取来源：`XMNN_SDK_使用指南v1.1.0.docx`（芯劢微 XMNPU 工具链使用指南）。
+> 模板萃取来源：一份真实 AI SDK 使用指南文档（已脱敏处理）。
 
 ## 1. 模板定位
 

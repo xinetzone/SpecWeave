@@ -203,6 +203,6 @@ context = {"rows": [{"col1": "x", "col2": "y"}]}
 ## 10. Changelog
 
 * **v1.1.0** (2026-08-29): tech-guide-template 扩展：单 4 列表格升级为 2/3/4/5 列四种预置表格（按 `tbl.cols` 条件切换），`sec.table` 改为 `sec.tables` 列表支持多表格；新增 `examples/tech-guide-render-example.py` 渲染示例脚本（覆盖全部列数类型 + 产物校验）；更新契约文档 v1.1.0。
-* **v1.0.1** (2026-08-29): 新增 `templates/tech-guide-template.docx` 技术文档模板（从 XMNN SDK 使用指南萃取，含封面/更新记录/多级章节/代码块/4列参数表），配套契约文档 `references/tech-guide-template.md`。
+* **v1.0.1** (2026-08-29): 新增 `templates/tech-guide-template.docx` 技术文档模板（从真实 SDK 使用指南萃取，含封面/更新记录/多级章节/代码块/4列参数表），配套契约文档 `references/tech-guide-template.md`。
 * **v1.0.0** (2026-08-29): 初始版本，封装模板驱动报告生成能力（输入校验→渲染→产物校验五步工作流 + 三段式示例 + 6 条反模式），运行环境锁定 py314。
 

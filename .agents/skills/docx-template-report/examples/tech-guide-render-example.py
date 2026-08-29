@@ -27,16 +27,16 @@ os.makedirs(OUT_DIR, exist_ok=True)
 # 数据上下文：完整示例，覆盖所有模板结构块
 # ============================================================
 context = {
-    "company": "示例微电子股份有限公司",
-    "doc_title": "XMNN SDK 使用指南",
+    "company": "示例科技股份有限公司",
+    "doc_title": "MyAI SDK 使用指南",
     "doc_meta": "版本 v1.1.0  2025-07-02",
 
     # ---- 更新记录（5 列表，独立于章节循环） ----
     "revisions": [
-        {"version": "1.0.0", "author": "刘新伟", "date": "2025-07-02",
-         "desc": "初始版本", "approver": "张振宇"},
-        {"version": "1.1.0", "author": "刘新伟", "date": "2025-08-01",
-         "desc": "新增量化原理与模型样例", "approver": "张振宇"},
+        {"version": "1.0.0", "author": "张三", "date": "2025-07-02",
+         "desc": "初始版本", "approver": "李四"},
+        {"version": "1.1.0", "author": "张三", "date": "2025-08-01",
+         "desc": "新增量化原理与模型样例", "approver": "李四"},
     ],
 
     # ---- 章节列表 ----
@@ -52,9 +52,9 @@ context = {
                     "title": "Conda 环境配置",
                     "paragraphs": ["创建并激活 Python 环境："],
                     "code": [
-                        "conda env create --file=xmnn.yaml",
-                        "conda activate xmenv",
-                        "pip install xm_gnpu-1.1.0-py3-none-any.whl",
+                        "conda env create --file=myai-env.yaml",
+                        "conda activate myaievn",
+                        "pip install myai_npu-1.1.0-py3-none-any.whl",
                     ],
                     # 2 列说明表示例
                     "tables": [
@@ -63,7 +63,7 @@ context = {
                             "headers": ["目录", "说明"],
                             "rows": [
                                 ["release/", "工具主程序"],
-                                ["npuusertools/", "NPU 用户工具集"],
+                                ["usertools/", "用户工具集"],
                                 ["models/", "示例模型文件"],
                             ],
                         },
@@ -90,7 +90,7 @@ context = {
         },
         {
             "title": "模型编译",
-            "intro": ["编译阶段将前端模型转换为 XMNN 格式，并执行量化优化。"],
+            "intro": ["编译阶段将前端模型转换为 MyAI 格式，并执行量化优化。"],
             "sections": [
                 {
                     "title": "编译参数",
@@ -105,7 +105,7 @@ context = {
                             "headers": ["参数名", "类型", "可选项", "说明"],
                             "rows": [
                                 ["name", "str", "", "模型名称，对应 models/ 下的子目录"],
-                                ["target", "str", "vta2.0, sim_vta2.0", "目标硬件平台"],
+                                ["target", "str", "hw_a, sim_hw_a", "目标硬件平台"],
                                 ["quant", "str", "int8, float", "量化方式，默认 int8"],
                             ],
                         },
@@ -132,17 +132,17 @@ context = {
         },
         {
             "title": "核心 API 参考",
-            "intro": ["XMNN Runtime C/C++ 核心数据结构体说明。"],
+            "intro": ["MyAI Runtime C/C++ 核心数据结构体说明。"],
             "sections": [
                 {
-                    "title": "xmnn_tensor_attr 结构体",
+                    "title": "myai_tensor_attr 结构体",
                     "paragraphs": ["描述输入输出 tensor 属性的结构体："],
                     "code": [
                         "typedef struct {",
                         "    uint32_t index;",
                         "    char name[64];",
                         "    uint32_t dims[4];",
-                        "} xmnn_tensor_attr;",
+                        "} myai_tensor_attr;",
                     ],
                     # 3 列属性表示例
                     "tables": [
@@ -180,14 +180,14 @@ def main():
     )
 
     checks = {
-        "封面标题": "XMNN SDK 使用指南" in table_text,
+        "封面标题": "MyAI SDK 使用指南" in table_text,
         "更新记录 v1.0.0": "1.0.0" in table_text,
         "更新记录 v1.1.0": "1.1.0" in table_text,
         "2列表格_目录说明": "release/" in table_text and "工具主程序" in table_text,
         "3列表格_结构体成员": "index" in table_text and "uint32_t" in table_text and "tensor 的索引位置" in table_text,
         "4列表格_编译参数": "name" in table_text and "模型名称" in table_text,
         "5列表格_命令选项": "-n / --name" in table_text and "指定模型名称" in table_text,
-        "代码块_Conda命令": "conda activate xmenv" in body_text,
+        "代码块_Conda命令": "conda activate myaievn" in body_text,
     }
 
     print("\n渲染校验：")
