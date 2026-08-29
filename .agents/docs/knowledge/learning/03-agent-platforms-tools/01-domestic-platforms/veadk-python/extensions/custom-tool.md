@@ -21,7 +21,7 @@ VeADK 基于 Google ADK 的工具系统，提供三种工具开发方式：
 | 方式 | 适用场景 | 基类/装饰器 | 参考实现 |
 |---|---|---|---|
 | **函数式工具** | 简单无状态工具 | Python 函数（带类型提示） | [web_search.py](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L31-L118) |
-| **类式工具** | 需要状态管理、复杂参数、Tracing | `google.adk.tools.BaseTool` | [skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L567) |
+| **类式工具** | 需要状态管理、复杂参数、Tracing | `google.adk.tools.BaseTool` | [skills_tool.py](file:///d:/AI/vendor/veadk-python/veadk/tools/skills_tools/skills_tool.py#L36-L557) |
 | **工具集（Toolset）** | 多个相关工具的组合 | `google.adk.tools.base_toolset.BaseToolset` | [vanna_toolset.py](file:///d:/AI/vendor/veadk-python/veadk/tools/vanna_tools/vanna_toolset.py#L44-L262) |
 
 ### 核心概念

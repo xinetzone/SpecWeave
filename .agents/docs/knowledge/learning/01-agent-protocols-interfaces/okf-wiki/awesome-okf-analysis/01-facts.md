@@ -97,7 +97,7 @@ date: 2026-08-06
 ## 四、扩展提案维度事实（docs/）
 
 **F23**：仓库包含3份向后兼容的扩展提案：(1)i18n扩展（`lang` + `canonical`字段）；(2)代码支持扩展（类型词表、扩展字段、行号锚点、有类型链接）；(3)HTML一等公民扩展（`.html`作为合法概念文件）。
-- 证据：[README.md](file:///d:/AI/vendor/awesome-okf/README.md#L72-L77) 三份提案清单；[dogfooding-zh.md](file:///d:/AI/vendor/awesome-okf/docs/dogfooding-zh.md#L121)
+- 证据：[README.md](file:///d:/AI/vendor/awesome-okf/README.md#L72-L77) 三份提案清单；[dogfooding-zh.md](file:///d:/AI/vendor/awesome-okf/docs/dogfooding-zh.md#L20)
 
 **F24**：三份扩展提案均遵循同一原则：只做向后兼容的次版本新增，不动任何MUST级别的硬要求。
 - 证据：[html-first-class-proposal-zh.md](file:///d:/AI/vendor/awesome-okf/docs/html-first-class-proposal-zh.md#L97-L100) 向后兼容性声明；[code-support-research-zh.md](file:///d:/AI/vendor/awesome-okf/docs/code-support-research-zh.md#L54) "不动任何MUST"声明

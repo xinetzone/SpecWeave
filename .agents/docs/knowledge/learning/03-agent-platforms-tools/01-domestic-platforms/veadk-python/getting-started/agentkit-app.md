@@ -26,7 +26,7 @@ wiki_version: '1.0'
 
 ## AgentKitApp 是什么
 
-`create_agentkit_app` 是 VeADK 提供的一个应用工厂函数（定义在 [file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)），用于将一个 VeADK Agent 包装为符合 AgentKit 规范的 FastAPI Web 应用。
+`create_agentkit_app` 是 VeADK 提供的一个应用工厂函数（定义在 [file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L963-L1053](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L963-L1053)），用于将一个 VeADK Agent 包装为符合 AgentKit 规范的 FastAPI Web 应用。
 
 该函数基于 `agentkit-sdk-python` 的 `AgentkitAgentServerApp` 构建，自动集成以下能力：
 
@@ -224,7 +224,7 @@ def create_agentkit_app(
 ) -> FastAPI:
 ```
 
-定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1051-L1105)
+定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L963-L1053](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L963-L1053)
 
 **参数说明**：
 
@@ -249,7 +249,7 @@ def run_agentkit_app(
 ) -> None:
 ```
 
-定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1108-L1120)
+定义位置：[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1056-L1061](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1056-L1061)
 
 **参数说明**：
 
@@ -423,7 +423,7 @@ docker run -p 8000:8000 --env-file .env my-veadk-app
 
 ### 1. 短期记忆默认配置
 
-如果 `root_agent` 未设置 `short_term_memory`，`create_agentkit_app` 会自动创建一个内存版 `ShortTermMemory(backend="local")`（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1079-L1081)）。**内存版记忆在服务重启后会丢失**，生产环境建议配置数据库支持的短期记忆（PostgreSQL/MySQL/Redis）。
+如果 `root_agent` 未设置 `short_term_memory`，`create_agentkit_app` 会自动创建一个内存版 `ShortTermMemory(backend="local")`（[file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1016-L1018](file:///d:/AI/vendor/veadk-python/veadk/integrations/agentkit/app.py#L1016-L1018)）。**内存版记忆在服务重启后会丢失**，生产环境建议配置数据库支持的短期记忆（PostgreSQL/MySQL/Redis）。
 
 ### 2. 飞书渠道线程模型
 
