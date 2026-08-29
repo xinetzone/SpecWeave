@@ -9,7 +9,7 @@ status: "stable"
 author: "SpecWeave"
 sources:
   - id: invoke-init
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/__init__.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/__init__.py"
     title: "PyInvoke __init__.py - Public API exports"
   - id: invoke-readme
     resource: "https://github.com/pyinvoke/invoke"
@@ -68,7 +68,7 @@ Invoke 解决的核心问题是：**如何用 Python 而不是 Makefile 或 Bash
 
 本教程基于 **Invoke v3.0.3**，对应源码路径：`external/libs/pyinvoke/invoke/invoke/`。
 
-Invoke 的核心公开 API 在 [__init__.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/__init__.py) 中导出，包括：
+Invoke 的核心公开 API 在 [__init__.py](https://github.com/pyinvoke/invoke/blob/main/invoke/__init__.py) 中导出，包括：
 
 ```python
 from .collection import Collection

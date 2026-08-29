@@ -198,8 +198,8 @@ PY
 # WSL 重置后 3 条命令恢复全部容器镜像
 # ============================================
 
-# 第 1 条：进入项目根（假设 SpecWeave 仓库仍在 D:\spaces\SpecWeave）
-cd /mnt/d/spaces/SpecWeave
+# 第 1 条：进入项目根（替换为仓库在 WSL 中的实际挂载路径，形如 /mnt/d/<path>/SpecWeave）
+cd /mnt/d/path/to/SpecWeave
 
 # 第 2 条：环境诊断（确认 bash/python3/flock 全，压缩工具可用）
 bash .agents/scripts/docker-cache doctor
@@ -331,7 +331,7 @@ bash .agents/scripts/docker-cache doctor
 | 一句话作用 | 解决 Windows 宿主（PowerShell/CMD）通过中间层调用 Unix shell（WSL/Git Bash/Docker 容器内 bash）的三层转义地狱问题 |
 | 适用 | 从 Windows 宿主触发，且 bash 命令 **> 3 行** 或包含 `$( )` / `$?` / `[ $x -eq 0 ]` / while/for 循环 / 数组下标 / heredoc 语法 |
 | ⛔ 不适用 | 单行无变量简单命令：`wsl ls -la /mnt/c` 直接调用即可，没必要写文件 |
-| 核心步骤（5 步） | ① **选项目受控临时目录**：`.docker-cache/temp/` / `.agents/temp/` / `playground/<user>/temp/` —— 不要选系统 `%TEMP%`（WSL 跨盘访问+反斜杠+空格路径乱码）<br/>② **UTF-8 + LF 写文件**：保留 `#!/bin/bash` shebang 和 Unix 换行，Windows 侧编码 UTF-8 而非 GBK<br/>③ **绝对路径调用**：`wsl -d Ubuntu -e bash /mnt/d/spaces/SpecWeave/.docker-cache/temp/script.sh` —— 避免相对路径在 WSL 起始目录不同导致 file not found<br/>④ **日志双写 tee**：脚本中每条关键输出 `| tee -a $LOG_FILE`，同时输出到终端和时间戳 .log 文件，事后可回溯（本次 save-all 日志 230 行用于 F-13~F-16 耗时统计）<br/>⑤ **自动清理 + 超时保护**：脚本末尾 `trap 'rm -f "$0"' EXIT`（V 审查 1.3 新增）或放在 `.gitignore` 目录下；大于 120s 的任务用 `run_in_background=true` 后台化（避免 Shell 工具默认 120s 前台超时留下 `.tmp.$$`） |
+| 核心步骤（5 步） | ① **选项目受控临时目录**：`.docker-cache/temp/` / `.agents/temp/` / `playground/<user>/temp/` —— 不要选系统 `%TEMP%`（WSL 跨盘访问+反斜杠+空格路径乱码）<br/>② **UTF-8 + LF 写文件**：保留 `#!/bin/bash` shebang 和 Unix 换行，Windows 侧编码 UTF-8 而非 GBK<br/>③ **绝对路径调用**：`wsl -d Ubuntu -e bash /mnt/d/path/to/SpecWeave/.docker-cache/temp/script.sh` —— 避免相对路径在 WSL 起始目录不同导致 file not found（路径替换为仓库实际挂载位置）<br/>④ **日志双写 tee**：脚本中每条关键输出 `| tee -a $LOG_FILE`，同时输出到终端和时间戳 .log 文件，事后可回溯（本次 save-all 日志 230 行用于 F-13~F-16 耗时统计）<br/>⑤ **自动清理 + 超时保护**：脚本末尾 `trap 'rm -f "$0"' EXIT`（V 审查 1.3 新增）或放在 `.gitignore` 目录下；大于 120s 的任务用 `run_in_background=true` 后台化（避免 Shell 工具默认 120s 前台超时留下 `.tmp.$$`） |
 | **⛔ 3 个反模式**（真实教训） | **AP-1 内嵌三层引号**：`powershell → wsl -e bash -c "cmd1 | while read x; do echo \"[$x] rc=\$rc\"; done"` —— PowerShell 把 `\"[` 解析为属性声明，报 `Missing ] at end of attribute`，行号完全不指向 bash 实际代码<br/>**AP-2 写到 %TEMP% 再传 WSL**：`C:\Users\…\AppData\Local\Temp` 需要 `/mnt/c/Users/…/Temp` 跨盘+Windows 权限，脚本中的 `$0` 变量（脚本自身路径）会出现反斜杠乱码<br/>**AP-3 不设后台保护**：大镜像压缩 20+ 分钟前台跑，Shell 工具 120s 超时切断 → 留下 `.tmp.$$` 半写文件；下次 save 触发原子写入检查，虽不会损坏旧缓存但浪费了压缩时间 |
 | 检验标准（5 项） | ① 脚本一次调用成功；② 日志文件完整；③ 非 0 返回值能被外层正确捕获；④ 产物路径稳定可复查（固定在 `.docker-cache/images/` 而非临时目录）；⑤ 多次执行幂等，不产生重复副作用 |
 | 跨领域迁移示例 | 🧭 **迁移到 Docker 容器内长脚本执行**：本地有 50+ 行 Python 要进容器跑，不要 `docker exec ctr python3 -c "…50 行代码…"`（引号地狱 + 路径混乱），改为「`docker cp script.py ctr:/tmp/x.py && docker exec ctr python3 /tmp/x.py`」两步走，与本模式"写文件→绝对路径调用"完全同构 |

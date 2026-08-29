@@ -250,7 +250,7 @@ category: "tech"
 
 ### Q: tvm-ffi 在 xuanspace 中如何使用？
 **A:**
-1. tvm-ffi 作为 vendor 子模块存在于：`d:\spaces\SpecWeave\projects\xuanspace\vendor\tvm-ffi`
+1. tvm-ffi 作为 vendor 子模块存在于：`projects/xuanspace/vendor/tvm-ffi`（仓库相对路径）
 2. 在 xuanspace 代码中直接 `#include <tvm/ffi/...>` 即可，CMake 已配置好头文件路径。
 3. Python 绑定随 xuanspace 一起构建，无需单独安装。
 4. 子模块更新：在 `projects/xuanspace` 目录执行 `git submodule update --remote vendor/tvm-ffi`。

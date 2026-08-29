@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-memory-system"
 title: "分区记忆系统"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/03-memory-system.toml"
 category: "learning"
 tags: ["zleap-agent", "memory", "person-memory", "event-memory", "experience-memory", "rrf", "recall", "postgresql", "extraction"]

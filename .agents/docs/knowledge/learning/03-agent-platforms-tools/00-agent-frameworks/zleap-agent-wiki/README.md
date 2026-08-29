@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-readme"
 title: "Zleap-Agent workspace-first Agent Harness Wiki 教程"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/README.toml"
 category: "learning"
 tags: ["zleap-agent", "agent-harness", "workspace", "agent-runtime", "local-models", "openai-compatible", "postgresql", "memory", "skill", "mcp", "gateway", "feishu", "wechat", "multi-agent"]
@@ -42,7 +42,7 @@ zleap_version_target: "0.3.3"
 
 ## 内容快照声明
 
-> 本教程基于 2026 年 8 月 Zleap-Agent 公开仓库（https://github.com/Zleap-AI/Zleap-Agent）与本地源码（d:\spaces\SpecWeave\external\libs\Zleap-Agent，含 README、package.json 及 10+ 核心源码文件）整理而成，为结构化知识快照性质。项目仍处于早期预览阶段，API、UI、打包与发布流程可能持续变化，后续请以仓库最新代码为准。
+> 本教程基于 2026 年 8 月 Zleap-Agent 公开仓库（https://github.com/Zleap-AI/Zleap-Agent，含 README、package.json 及 10+ 核心源码文件）整理而成，为结构化知识快照性质。项目仍处于早期预览阶段，API、UI、打包与发布流程可能持续变化，后续请以仓库最新代码为准。
 
 | 元数据 | 值 |
 |--------|-----|
@@ -62,6 +62,5 @@ zleap_version_target: "0.3.3"
 ## 资源链接
 
 - **GitHub**：https://github.com/Zleap-AI/Zleap-Agent
-- **本地源码**：d:\spaces\SpecWeave\external\libs\Zleap-Agent
 - **README_EN**：https://github.com/Zleap-AI/Zleap-Agent/blob/main/README_EN.md
 - **README_ZH**：https://github.com/Zleap-AI/Zleap-Agent/blob/main/README_ZH.md

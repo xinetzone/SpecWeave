@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-overview"
 title: "项目概述与核心定位"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/00-overview.toml"
 category: "learning"
 tags: ["zleap-agent", "workspace-first", "agent-harness", "context", "local-models"]

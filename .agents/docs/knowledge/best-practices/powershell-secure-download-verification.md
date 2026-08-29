@@ -31,19 +31,19 @@ Invoke-WebRequest -Uri $url -OutFile $outFile -SkipCertificateCheck
 
 ```powershell
 # 验证gzip格式文件（如WSL镜像/tar.gz）
-pwsh -File "D:\spaces\SpecWeave\.agents\scripts\Verify-FileIntegrity.ps1" `
+pwsh -File ".agents\scripts\Verify-FileIntegrity.ps1" `
     -FilePath "D:\Downloads\file.wsl" `
     -MinSizeMB 300 `
     -ExpectedFileType gzip
 
 # 验证ZIP格式文件
-pwsh -File "D:\spaces\SpecWeave\.agents\scripts\Verify-FileIntegrity.ps1" `
+pwsh -File ".agents\scripts\Verify-FileIntegrity.ps1" `
     -FilePath "D:\Downloads\file.zip" `
     -MinSizeMB 10 `
     -ExpectedFileType zip
 
 # 完整验证（含SHA256哈希）
-pwsh -File "D:\spaces\SpecWeave\.agents\scripts\Verify-FileIntegrity.ps1" `
+pwsh -File ".agents\scripts\Verify-FileIntegrity.ps1" `
     -FilePath "D:\Downloads\file.exe" `
     -MinSizeMB 1 `
     -ExpectedFileType exe `

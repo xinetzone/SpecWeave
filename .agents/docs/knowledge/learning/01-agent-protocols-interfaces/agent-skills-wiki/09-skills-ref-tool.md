@@ -8,12 +8,13 @@ title: "验证一个技能目录"
 
 ### 10.1 安装
 
-项目中已包含本地副本：[external/agentskills/skills-ref](../../../../../../external/agentskills/skills-ref/README.md)
+skills-ref 位于官方仓库：[agentskills/agentskills · skills-ref](https://github.com/agentskills/agentskills/tree/main/skills-ref)（clone 仓库后进入 `skills-ref/` 目录安装）
 
 使用 uv 安装（推荐）：
 
 ```bash
-cd d:\spaces\SpecWeave\external\agentskills\skills-ref
+# 先 clone 官方仓库：git clone https://github.com/agentskills/agentskills
+cd agentskills/skills-ref
 uv sync
 .venv\Scripts\Activate.ps1
 ```
@@ -21,7 +22,7 @@ uv sync
 或使用 pip：
 
 ```powershell
-cd d:\spaces\SpecWeave\external\agentskills\skills-ref
+cd agentskills/skills-ref
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -e .
@@ -126,7 +127,7 @@ print(prompt)
 ### 10.5 运行测试
 
 ```bash
-cd d:\spaces\SpecWeave\external\agentskills\skills-ref
+cd agentskills/skills-ref
 uv run pytest
 ```
 
@@ -139,4 +140,4 @@ uv run pytest
 - 国际化名称（中文、俄文）
 - NFKC Unicode 规范化
 
-> **测试文件**：[test_validator.py](../../../../../../external/agentskills/skills-ref/tests/test_validator.py)
+> **测试文件**：[test_validator.py](https://github.com/agentskills/agentskills/blob/main/skills-ref/tests/test_validator.py)

@@ -157,7 +157,8 @@ hello = "hello_plugin"
 **示例（终端）**：
 
 ```powershell
-cd d:\spaces\SpecWeave\external\libs\conda-dev\conda-docs\docs
+# 先 clone 文档仓库：git clone https://github.com/conda/conda-docs
+cd conda-docs\docs
 python -m sphinx -M html source build
 ```
 

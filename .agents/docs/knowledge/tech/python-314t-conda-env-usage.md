@@ -10,7 +10,7 @@
 | SOABI | `cp314t-win_amd64` |
 | 来源包 | `python-freethreading`（conda-forge） |
 | `python_abi` | `3.14 / 8_cp314t`（已持久化到 `conda-meta/pinned`） |
-| 环境前缀 | `D:\spaces\SpecWeave\.temp\conda-envs\py314t` |
+| 环境前缀 | `.temp\conda-envs\py314t`（仓库相对路径） |
 
 可执行文件：`python.exe`（即 `python3.14t.exe`）、`pythonw3.14t.exe`。
 
@@ -21,7 +21,7 @@
 先在当前终端设置 `CONDA_ENVS_DIRS`，再激活：
 
 ```powershell
-$env:CONDA_ENVS_DIRS = "D:\spaces\SpecWeave\.temp\conda-envs"
+$env:CONDA_ENVS_DIRS = ".temp\conda-envs"
 conda activate py314t
 ```
 
@@ -29,9 +29,9 @@ conda activate py314t
 
 ### 方式 B：直接使用环境前缀（无需激活）
 ```powershell
-conda run -p "D:\spaces\SpecWeave\.temp\conda-envs\py314t" python -c "import sys; print(sys.version)"
+conda run -p ".temp\conda-envs\py314t" python -c "import sys; print(sys.version)"
 # 或直接调用解释器
-"D:\spaces\SpecWeave\.temp\conda-envs\py314t\python.exe" --version
+".temp\conda-envs\py314t\python.exe" --version
 ```
 
 ## 校验 free-threading（no-GIL）已生效
@@ -65,16 +65,16 @@ conda deactivate
 
   第一步先导出（注意：文件名必须是支持的模式，如 `environment.yml`；且需先设 `CONDA_ENVS_DIRS` 才能找到本环境）：
   ```powershell
-  $env:CONDA_ENVS_DIRS = "D:\spaces\SpecWeave\.temp\conda-envs"
-  conda env export -n py314t -f "D:\spaces\SpecWeave\.temp\environment.yml"
+  $env:CONDA_ENVS_DIRS = ".temp\conda-envs"
+  conda env export -n py314t -f ".temp\environment.yml"
   ```
 
   第二步在非沙箱终端按导出的 spec 重建到标准位置（会包含 `python=3.14.6=*_cp314t` 与 `python_abi=*_cp314t`，保持 free-threading）：
   ```powershell
-  conda env create -n py314t -f "D:\spaces\SpecWeave\.temp\environment.yml"
+  conda env create -n py314t -f ".temp\environment.yml"
   ```
   （`.temp\environment.yml` 已替你生成；包已缓存在 `.temp\conda-pkgs`，重建较快。
   重建后建议再写一次 `conda-meta\pinned` 的 `python_abi 3.14 *_cp314t` 约束。）
   > 为什么不能叫 `py314t.yml`：`conda env export -f` 依据文件名自动识别格式，仅识别 `environment.*` 等约定名称；自定义文件名需加 `--format=environment-yaml`。
-- **test/debug CPython 源码**：`d:\spaces\SpecWeave\external\libs\python\cpython` 当前为 `main`（3.16.0a0）。
+- **test/debug CPython 源码**：需自行 clone [CPython](https://github.com/python/cpython)；本文写作时上游 `main` 为 3.16.0a0。
   本环境为 3.14.6t，用于 free-threading 相关调试；与源码版本强绑定时需另行切换 checkout（按 specs 决策，本次不切换）。

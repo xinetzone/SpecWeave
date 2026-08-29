@@ -9,16 +9,16 @@ status: "stable"
 author: "SpecWeave"
 sources:
   - id: invoke-program
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/program.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/program.py"
     title: "PyInvoke program.py"
   - id: invoke-executor
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/executor.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/executor.py"
     title: "PyInvoke executor.py"
   - id: invoke-context
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/context.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/context.py"
     title: "PyInvoke context.py"
   - id: invoke-runners
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/runners.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/runners.py"
     title: "PyInvoke runners.py"
 ---
 # 核心架构总览
@@ -86,7 +86,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Program（CLI 入口）
 
-[program.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/program.py) 是 Invoke 的 CLI 协调者。`Program.run()` 方法执行完整的启动流程：
+[program.py](https://github.com/pyinvoke/invoke/blob/main/invoke/program.py) 是 Invoke 的 CLI 协调者。`Program.run()` 方法执行完整的启动流程：
 
 1. 解析 `core_args()`（定义全局选项如 `--help`、`--list`、`--config`、`--echo` 等）
 2. 创建 `Config` 对象，加载多层配置
@@ -97,7 +97,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Parser（参数解析）
 
-[parser.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/parser.py) 负责将命令行字符串解析为结构化的 `ParseResult`。
+[parser.py](https://github.com/pyinvoke/invoke/blob/main/invoke/parser.py) 负责将命令行字符串解析为结构化的 `ParseResult`。
 
 - `Argument`：定义单个参数（名称、类型、默认值、短标志、是否为 iterable/incrementable/optional value）
 - `ParserContext`：跟踪解析状态
@@ -110,7 +110,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Collection（命名空间）
 
-[collection.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/collection.py) 是任务的组织容器。
+[collection.py](https://github.com/pyinvoke/invoke/blob/main/invoke/collection.py) 是任务的组织容器。
 
 - `add_task(task, name=None, aliases=(), default=False)`：添加任务
 - `add_collection(collection, name=None)`：嵌套子命名空间
@@ -119,7 +119,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Executor（执行器）
 
-[executor.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/executor.py) 管理任务执行流程。
+[executor.py](https://github.com/pyinvoke/invoke/blob/main/invoke/executor.py) 管理任务执行流程。
 
 - `execute(*tasks)`：核心执行入口，展开 pre/post 链、去重、依次执行
 - `expand_calls(calls)`：展开每个 Call 的 pre/post 依赖
@@ -128,7 +128,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Task（任务）
 
-[tasks.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/tasks.py) 定义任务对象。
+[tasks.py](https://github.com/pyinvoke/invoke/blob/main/invoke/tasks.py) 定义任务对象。
 
 - `@task` 装饰器将普通函数包装为 `Task` 实例
 - `Task.body`：原始函数
@@ -138,7 +138,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Context（上下文）
 
-[context.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/context.py) 是任务执行时传递给函数的第一个参数 `c`。
+[context.py](https://github.com/pyinvoke/invoke/blob/main/invoke/context.py) 是任务执行时传递给函数的第一个参数 `c`。
 
 - `c.run(command, **kwargs)`：执行本地 shell 命令，委托给 `self.config.runners.local`（默认 `Local` runner）
 - `c.sudo(command, **kwargs)`：以 sudo 执行命令
@@ -148,7 +148,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ### Runner（命令执行）
 
-[runners.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/runners.py) 负责实际的子进程创建和管理。
+[runners.py](https://github.com/pyinvoke/invoke/blob/main/invoke/runners.py) 负责实际的子进程创建和管理。
 
 - `Runner`：抽象基类，定义 `run()` 模板方法
 - `Local`：本地子进程实现（使用 pty 或 subprocess）
@@ -158,7 +158,7 @@ Invoke 的架构可以理解为一条清晰的调用链：**Program → Parser �
 
 ## Config（配置）
 
-[config.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/config.py) 是配置管理核心。
+[config.py](https://github.com/pyinvoke/invoke/blob/main/invoke/config.py) 是配置管理核心。
 
 - 七层配置合并：defaults → system → user → project → env → runtime → overrides
 - `DataProxy`：提供属性风格的配置访问（`config.run.echo`）

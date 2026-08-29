@@ -9,7 +9,7 @@ status: "stable"
 author: "SpecWeave"
 sources:
   - id: invoke-pyproject
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/pyproject.toml"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/pyproject.toml"
     title: "PyInvoke pyproject.toml - Dependencies and Python version requirements"
 ---
 # 安装指南

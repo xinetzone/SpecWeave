@@ -23,7 +23,7 @@ integrity: "unchecked"
 
 ## 1. 概述
 
-本条目沉淀自 `d:\spaces\chaos\flexloop\models\.env`，提供模型调用场景下的环境变量字段模板。**本模板只列出字段名与用途说明，所有值一律使用占位符（如 `<API_KEY>`、`<MODEL_PATH>`、`%USERPROFILE%` 等），绝不包含任何真实密钥、Token 或个人路径。**
+本条目沉淀自 chaos 工作区 `flexloop/models/.env`（临时工作目录），提供模型调用场景下的环境变量字段模板。**本模板只列出字段名与用途说明，所有值一律使用占位符（如 `<API_KEY>`、`<MODEL_PATH>`、`%USERPROFILE%` 等），绝不包含任何真实密钥、Token 或个人路径。**
 
 ---
 

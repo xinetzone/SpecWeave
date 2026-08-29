@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-skills-tools-permissions"
 title: "Skill 与工具权限"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/04-skills-tools-permissions.toml"
 category: "learning"
 tags: ["zleap-agent", "skill", "skill-registry", "sensitivity-audit", "permission", "approval", "mcp", "tool-policy"]

@@ -47,7 +47,7 @@ playwright install chromium
 运行以下命令，浏览器会自动打开forum.trae.cn，手动登录后回到终端按Enter保存登录状态：
 
 ```bash
-cd d:\spaces\SpecWeave\.agents\scripts
+cd .agents/scripts
 python forum-bot.py login
 ```
 

@@ -1,5 +1,5 @@
 ---
-source: "BVLC Caffe (caffex) 源码深度分析 (d:/spaces/SpecWeave/external/chaos/caffe/caffex)"
+source: "BVLC Caffe (caffex) 源码深度分析；上游仓库 https://github.com/BVLC/caffe"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.toml"
 analysis_date: "2026-07-22"
 methodology: "七概念方法论 R→I→E→V 知识沉淀链路"

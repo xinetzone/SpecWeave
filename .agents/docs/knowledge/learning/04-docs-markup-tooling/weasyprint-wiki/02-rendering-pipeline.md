@@ -2,7 +2,7 @@
 id: "weasyprint-02-pipeline"
 title: "架构深度解析：六步渲染管线"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/02-rendering-pipeline.toml"
-source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
+source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","architecture","pipeline","rendering"]
 date: "2026-07-13"

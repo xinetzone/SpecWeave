@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-core-architecture"
 title: "核心架构与技术栈"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/01-core-architecture.toml"
 category: "learning"
 tags: ["zleap-agent", "architecture", "monorepo", "pnpm", "postgresql", "pgvector", "packages"]

@@ -219,7 +219,7 @@ def my_task(c, output_dir="./build"):
 # Python 访问: c.config... 中使用 output_dir
 ```
 
-转换函数为 `translate_underscores()`（见 [parser/context.py](file:///d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/parser/context.py#L12-L13)），它会去除首尾下划线并将内部下划线替换为短横线。
+转换函数为 `translate_underscores()`（见 [parser/context.py](https://github.com/pyinvoke/invoke/blob/main/invoke/parser/context.py#L12-L13)），它会去除首尾下划线并将内部下划线替换为短横线。
 
 ### 2. 布尔默认值 → 标志参数
 

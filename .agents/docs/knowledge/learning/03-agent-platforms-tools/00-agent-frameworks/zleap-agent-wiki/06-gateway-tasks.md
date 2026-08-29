@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-gateway-tasks"
 title: "IM 网关与定时任务"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/06-gateway-tasks.toml"
 category: "learning"
 tags: ["zleap-agent", "gateway", "feishu", "wechat", "im", "channel-supervisor", "cron", "tasks", "worker"]

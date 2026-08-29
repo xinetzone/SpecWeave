@@ -162,10 +162,10 @@ python .agents/scripts/spec-loader-warmup.py --quiet
 
 ### Windows Task Scheduler
 ```powershell
-# 创建每日凌晨3点的计划任务
+# 创建每日凌晨3点的计划任务（-WorkingDirectory 替换为实际仓库根目录）
 $action = New-ScheduledTaskAction -Execute "python" `
     -Argument ".agents\scripts\spec-loader-warmup.py --quiet" `
-    -WorkingDirectory "D:\spaces\SpecWeave"
+    -WorkingDirectory "C:\path\to\SpecWeave"
 $trigger = New-ScheduledTaskTrigger -Daily -At 3am
 Register-ScheduledTask -TaskName "SpecLoader-Warmup" -Action $action -Trigger $trigger
 ```

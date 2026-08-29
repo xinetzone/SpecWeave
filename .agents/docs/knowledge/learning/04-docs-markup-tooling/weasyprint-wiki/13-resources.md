@@ -2,7 +2,7 @@
 id: "weasyprint-13-resources"
 title: "十三、相关资源链接"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/13-resources.toml"
-source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
+source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","resources","links","specifications"]
 date: "2026-07-13"

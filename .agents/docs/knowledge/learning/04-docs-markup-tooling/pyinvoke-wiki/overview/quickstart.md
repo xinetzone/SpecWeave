@@ -9,10 +9,10 @@ status: "stable"
 author: "SpecWeave"
 sources:
   - id: invoke-tasks
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/tasks.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/tasks.py"
     title: "PyInvoke tasks.py - @task decorator and Task class"
   - id: invoke-program
-    resource: "d:/spaces/SpecWeave/external/libs/pyinvoke/invoke/invoke/program.py"
+    resource: "https://github.com/pyinvoke/invoke/blob/main/invoke/program.py"
     title: "PyInvoke program.py - CLI entry point"
 ---
 # 5 分钟快速上手

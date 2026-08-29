@@ -543,7 +543,7 @@ Codex
 
 已采集内容的目录结构:
 ```
-d:\spaces\SpecWeave\docs\knowledge\learning\07-vendor-product-learning\openai\chatgpt-codex-wiki\
+.agents\docs\knowledge\learning\07-vendor-product-learning\openai\chatgpt-codex-wiki\
 ├── raw-content.md (本文件)
 └── screenshots\ (截图目录 - 需要手动访问页面获取截图)
     ├── full-page.png (建议手动截取完整页面)

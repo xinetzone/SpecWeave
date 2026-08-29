@@ -2,7 +2,7 @@
 id: "weasyprint-06-css-paged"
 title: "CSS 分页与打印特性"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/06-css-paged-media.toml"
-source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
+source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","css","paged-media","@page","pagination"]
 date: "2026-07-13"

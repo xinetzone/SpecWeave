@@ -6,7 +6,7 @@ x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-doc
 ---
 # mystx 主题单元测试用例清单（54 项）
 
-> 一句话摘要：本清单完整索引 `mystx` Sphinx 主题（`d:\spaces\SpecWeave\playground\books\libs\mystx`）测试套件的全部 54 项单元测试，按测试文件、被测模块、断言要点与 Spec 要求组织，并给出运行方式与维护约定（命名规范、覆盖率门槛、Python 3.14 特性「诚实记录」原则），作为团队后续维护的索引。
+> 一句话摘要：本清单完整索引 `mystx` Sphinx 主题测试套件的全部 54 项单元测试，按测试文件、被测模块、断言要点与 Spec 要求组织，并给出运行方式与维护约定（命名规范、覆盖率门槛、Python 3.14 特性「诚实记录」原则），作为团队后续维护的索引。
 
 ## 一、概览
 

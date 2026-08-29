@@ -61,12 +61,13 @@ validation:
 本指南使用以下路径（可根据实际情况调整）：
 
 ```powershell
+# 以下命令均以仓库根目录为当前工作目录（CWD）
 # Docker镜像缓存目录
-$cacheDir = "D:\spaces\SpecWeave\.docker-cache"
+$cacheDir = ".docker-cache"
 # WSL发行版安装目录（推荐非系统盘）
 $wslDir = "D:\WSL"
 # Python脚本位置（方案B）
-$pyScript = "D:\spaces\SpecWeave\.agents\scripts\docker-save-to-wsl-rootfs.py"
+$pyScript = ".agents\scripts\docker-save-to-wsl-rootfs.py"
 ```
 
 ### 前置检查
@@ -533,11 +534,17 @@ Remove-Item "$env:LOCALAPPDATA\Packages\*$distro*" -Recurse -Force -ErrorAction 
 # === 一键完整流程（方案A，已有Ubuntu WSL）===
 $image = "devcontainer-base:latest"
 $distro = "devcontainer-base"
-$cacheDir = "D:\spaces\SpecWeave\.docker-cache"
+$cacheDir = ".docker-cache"
 $wslDir = "D:\WSL"
 $rootfs = "$cacheDir\devcontainer-base-rootfs.tar.gz"
-$wslRootfs = "/mnt/d" + ($rootfs -replace '\\','/' -replace 'D:','')
-$wslImage = "/mnt/d" + ("$cacheDir\images\devcontainer-base_latest.tar.gz" -replace '\\','/' -replace 'D:','')
+# WSL 通过 /mnt/<盘符小写>/... 访问 Windows 文件：先解析缓存目录绝对路径再转换
+# （-match/$matches 写法兼容 Windows PowerShell 5.1 与 PowerShell 7+）
+$cacheWsl = (Resolve-Path $cacheDir).Path -replace '\\','/'
+if ($cacheWsl -match '^([A-Za-z]):(.*)$') {
+    $cacheWsl = "/mnt/" + $matches[1].ToLower() + $matches[2]
+}
+$wslRootfs = "$cacheWsl/devcontainer-base-rootfs.tar.gz"
+$wslImage = "$cacheWsl/images/devcontainer-base_latest.tar.gz"
 
 # Step A3-A4: WSL内以root身份加载+导出（避免sudo密码问题）
 wsl -d Ubuntu -u root -- bash -c "podman load -i $wslImage && podman create --name wsl-export $image && podman export wsl-export | gzip -1 > $wslRootfs && podman rm wsl-export"
@@ -556,10 +563,10 @@ wsl -d $distro -- bash -l -c "echo OK && whoami && python3 --version"
 
 ```powershell
 # === 一键完整流程（方案B，纯Python无额外WSL）===
-$cacheDir = "D:\spaces\SpecWeave\.docker-cache"
+$cacheDir = ".docker-cache"
 $wslDir = "D:\WSL"
 $distro = "devcontainer-base"
-$pyScript = "D:\spaces\SpecWeave\.agents\scripts\docker-save-to-wsl-rootfs.py"
+$pyScript = ".agents\scripts\docker-save-to-wsl-rootfs.py"
 $input = "$cacheDir\images\devcontainer-base_latest.tar.gz"
 $output = "$cacheDir\devcontainer-base-python-rootfs.tar.gz"
 

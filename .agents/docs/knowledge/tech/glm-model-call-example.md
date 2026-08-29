@@ -23,7 +23,7 @@ integrity: "unchecked"
 
 ## 1. 概述
 
-本条目沉淀自 `d:\spaces\chaos\flexloop\models\`（`main.py` 与 `main.ipynb`），涵盖 GLM 系列大模型的两类调用方式：
+本条目沉淀自 chaos 工作区 `flexloop/models/`（`main.py` 与 `main.ipynb`，临时工作目录），涵盖 GLM 系列大模型的两类调用方式：
 
 1. **本地模型加载**：使用 `transformers` + `torch` 加载本地 GLM 权重，支持单轮/多轮/流式对话。
 2. **云端 API 调用**：使用 `zai-sdk`（Z.AI）通过 OpenAI 兼容接口调用 `glm-5.1`。

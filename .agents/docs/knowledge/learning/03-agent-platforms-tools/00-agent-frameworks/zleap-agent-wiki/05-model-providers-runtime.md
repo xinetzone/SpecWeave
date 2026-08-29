@@ -1,7 +1,7 @@
 ---
 id: "zleap-agent-wiki-model-providers-runtime"
 title: "模型提供方与运行时入口"
-source: "https://github.com/Zleap-AI/Zleap-Agent + 本地源码 d:\spaces\SpecWeave\external\libs\Zleap-Agent"
+source: "https://github.com/Zleap-AI/Zleap-Agent"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/zleap-agent-wiki/05-model-providers-runtime.toml"
 category: "learning"
 tags: ["zleap-agent", "model-provider", "openai-compatible", "anthropic", "sse", "conversation-service", "web-ui", "cli", "inbound", "outbound"]

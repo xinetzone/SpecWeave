@@ -2,7 +2,7 @@
 id: "weasyprint-12-insights"
 title: "十二、架构洞察与个人理解"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/12-architecture-insights.toml"
-source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
+source: "https://weasyprint.org/ | https://weasyprint.com/ | https://github.com/Kozea/WeasyPrint"
 category: "learning"
 tags: ["weasyprint","architecture","design-philosophy","insights"]
 date: "2026-07-13"
