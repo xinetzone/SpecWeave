@@ -73,6 +73,7 @@ date: "2026-07-09"
 | [源码锚点二次校验协议：研究-编写阶段的质量传递契约](./source-anchor-verification-protocol.md) | 源码锚点二次校验协议：研究-编写阶段的质量传递契约 | L1 |  |
 | [源码阅读→OKF Wiki生成工作流](./source-code-to-okf-wiki-workflow.md) | 源码阅读→OKF Wiki生成工作流 | L1 |  |
 | [源码→OKF 对抗性更新工作流](./source-code-to-okf-adversarial-update.md) | 源码→OKF 对抗性更新工作流 | L1 |  |
+| [信源稳定性门（Source Stability Gate）](./source-stability-gate.md) | 信源稳定性门：文档生成前预检信源路径持久性，防止临时目录清理导致file:///引用断裂 | L2 | `信源稳定性` `路径断裂` `质量门` `vendor子模块` |
 | [Spec 驱动 + 知识库驱动的文档批量产出模式](./spec-driven-batch-doc-generation.md) | Spec 驱动 + 知识库驱动的文档批量产出模式 | - |  |
 | [Spec 驱动子代理执行模式](./spec-driven-subagent-execution.md) | Spec 驱动子代理执行模式 | - |  |
 | [Spec Mode文档创建工作流：前置规划→原子执行→门禁验证](./spec-mode-doc-creation-workflow.md) | Spec Mode文档创建工作流：前置规划→原子执行→门禁验证 | L2 |  |

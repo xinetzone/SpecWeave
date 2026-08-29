@@ -391,6 +391,7 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | batched-creation-independent-review | 依赖 | V阶段的独立审查与修复借鉴了分批创建+独立审查模式 |
 | external-content-fact-verification | 相关 | V阶段的Grep验证是外部内容事实验证在源码场景的应用 |
 | [cpp-header-first-fact-collection.md](../research-knowledge/cpp-header-first-fact-collection.md) | 专项细化 | 本工作流R阶段在大型C/C++项目上的细化——以include/头文件为API权威来源、实现文件仅用于验证、构建系统文件补充模块依赖，2次验证（Apache TVM/TuyaOpen） |
+| [source-stability-gate.md](source-stability-gate.md) | 前置门禁 | R阶段开始前必须执行的预检清单：信源分类（stable/temporary）→临时信源升级为vendor submodule→路径引用生成→清理前扫描→持久性验证，防止file:///引用在临时目录清理后断裂 |
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
