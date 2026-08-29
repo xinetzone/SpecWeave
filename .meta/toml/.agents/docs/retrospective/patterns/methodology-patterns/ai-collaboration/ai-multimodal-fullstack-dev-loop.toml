@@ -1,0 +1,19 @@
+id = "ai-multimodal-fullstack-dev-loop"
+domain = "methodology"
+layer = "methodology"
+maturity = "L2"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = ".agents/docs/retrospective/2026-08-12-short-video-site-ai-fullstack-retro.md"
+
+[bindings]
+rules = []
+references = []
+skills = []
+related_patterns = [
+  "progressive-templating",
+  "dual-zone-development-model",
+  "generation-validation-closed-loop",
+  "prompt-to-product-seven-steps",
+]
