@@ -172,10 +172,10 @@ audit 复扫中 [source-stability-gate.md](../../../../../.agents/docs/retrospec
 
 | # | 改进项 | 具体措施 | 优先级 | 验收标准 | 状态 |
 |---|--------|---------|--------|---------|------|
-| ACT-1 | 模式文档增补检验维度 | source-stability-gate 模式文档补「URI fragment 剥离」「TOML 镜像双轨复验」两条检验标准，validation_count 更新为 3 | 中 | 模式文档含新条目且与 GATE-SPS 实际行为一致 | 待规划 |
-| ACT-2 | 锚点行号有效性复验 | GATE-SPS 对 `#Lxx` 锚点复验目标行是否越界，audit 汇总增加越界计数 | 低 | 回归测试覆盖越界锚点；audit 输出含行号越界分类 | 待规划 |
-| ACT-3 | 全仓存量债务分诊 | 对 1356 个不带锚缺失 + 599 个带锚真缺失（大宗为 projects/xuanspace `d:/spaces` 旧机器路径）按历史快照原则批量甄别 | 低 | 分诊结论登记；活动文档真缺失清零或转行动项 | 待规划 |
-| ACT-4 | ai-multimodal TOML 镜像死引用 | 补建 ai-multimodal-fullstack-dev-loop.toml 镜像或登记 x-toml-ref 死引用 | 低 | x-toml-ref 解析有效或死引用在册 | 待规划 |
+| ACT-1 | 模式文档增补检验维度 | source-stability-gate 模式文档补「URI fragment 剥离」「TOML 镜像双轨复验」两条检验标准，validation_count 更新为 3 | 中 | 模式文档含新条目且与 GATE-SPS 实际行为一致 | ✅ 已完成 `51c8d823`（检验标准 6→8 条、反模式 5→6 条、validation_count=3） |
+| ACT-2 | 锚点行号有效性复验 | GATE-SPS 对 `#Lxx` 锚点复验目标行是否越界，audit 汇总增加越界计数 | 低 | 回归测试覆盖越界锚点；audit 输出含行号越界分类 | ✅ 已完成 `a2e37b25`（工具+4 测试，32→36 全绿）+ `5207d558`（10 处真实越界修复，anchor_oob 10→0） |
+| ACT-3 | 全仓存量债务分诊 | 对 1356 个不带锚缺失 + 599 个带锚真缺失（大宗为 projects/xuanspace `d:/spaces` 旧机器路径）按历史快照原则批量甄别 | 低 | 分诊结论登记；活动文档真缺失清零或转行动项 | ✅ 已完成 `b8d4d2a0`（[分诊报告](source-path-debt-triage-audit-20260829.md)：A 类约 2,750/B 类约 1,050 不改写、C 类约 200 登记 backlog、D-1~D-5 活动债务登记分批修复） |
+| ACT-4 | ai-multimodal TOML 镜像死引用 | 补建 ai-multimodal-fullstack-dev-loop.toml 镜像或登记 x-toml-ref 死引用 | 低 | x-toml-ref 解析有效或死引用在册 | ✅ 已完成 `96758a4c`（镜像补建，x-toml-ref 解析有效，fix-x-toml-ref dry-run 确认） |
 
 ### 4.2 关键提交索引
 
@@ -185,10 +185,16 @@ audit 复扫中 [source-stability-gate.md](../../../../../.agents/docs/retrospec
 | `e2653788` | docs(wiki) | A-3：veadk Wiki 33 处断链相对路径化 + CJK 分词歧义修正 |
 | `1f4a3dfc` | docs(patterns) | A-6：external tag 引用、教学示例真实路径、source 相对路径修正（md/toml 双轨） |
 | `cd1f644d` | docs(retrospective) | 父里程碑报告 A-3/A-6 闭环回写、F-025 计数更正 |
+| `41a6a291` | docs(retrospective) | 本复盘报告归档与里程碑索引登记 |
+| `51c8d823` | docs(patterns) | ACT-1：信源稳定性门模式第 3 次验证回灌（检验标准 6→8、反模式 5→6、案例 3） |
+| `a2e37b25` | feat(scripts) | ACT-2：GATE-SPS 行号锚点越界复验 + 4 回归测试（32→36） |
+| `5207d558` | fix(wiki) | ACT-2：vendor tag 1.0.10 固定后 10 处行号锚点越界修正（anchor_oob 10→0） |
+| `b8d4d2a0` | docs(retrospective) | ACT-3：全仓信源路径存量债务分诊审计报告与索引登记 |
+| `96758a4c` | fix(patterns) | ACT-4：补建 ai-multimodal-fullstack-dev-loop TOML 镜像，x-toml-ref 死引用闭环 |
 
 ### 4.3 后续优化方向
 
-本次为父里程碑的收尾闭环，6 项行动项（A-1 至 A-6）已全部完成。后续工作分两路：①模式资产侧，ACT-1 将本次两个检验维度回流入模式文档，完成 L2 模式的第 3 次验证沉淀；②债务治理侧，以修复后的 GATE-SPS 可信基线为起点，ACT-3 存量分诊专项可独立立项。
+本次为父里程碑的收尾闭环，6 项行动项（A-1 至 A-6）与本报告登记的 4 项行动项（ACT-1 至 ACT-4）均已全部完成（提交哈希见 4.2）。模式资产侧，信源稳定性门模式完成第 3 次独立验证沉淀（检验标准 8 条、反模式 6 条、validation_count=3）；工具侧，GATE-SPS 具备锚点剥离与行号越界复验双重能力，单元测试 36 全绿、全仓 anchor_oob=0。后续工作以 [ACT-3 分诊报告](source-path-debt-triage-audit-20260829.md) 登记的 D-1~D-5 活动信源债为队列（knowledge d:/spaces 265 条、tuya-iot 临时克隆 269 条、.chaos 139 条、C:/Users 129 条、xuanspace 子模块 76 条），按优先级分批修复；C 类约 200 条工具误报进入 GATE-SPS backlog（CJK 伪 token 识别、prose 行号后缀甄别）。
 
 ---
 
