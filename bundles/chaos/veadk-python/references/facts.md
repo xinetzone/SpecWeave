@@ -1,6 +1,6 @@
 # veadk-python 源码事实采集（R 阶段）
 
-> 采集对象：`d:\AI\.chaos\libs\veadk-python\`
+> 采集对象：`d:\AI\vendor\veadk-python\`
 > 采集原则：零推测，每条事实标注源码文件:行号
 > 采集日期：2026-08-23
 

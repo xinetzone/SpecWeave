@@ -61,7 +61,7 @@ sources:
 
 ## 关键源文件清单
 
-源码根路径：`d:\AI\.chaos\libs\veadk-python\veadk\`
+源码根路径：`d:\AI\vendor\veadk-python\veadk\`
 
 ### 核心模块
 

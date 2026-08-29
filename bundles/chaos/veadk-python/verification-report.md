@@ -3,7 +3,7 @@
 **验证日期**：2026-08-23
 **验证员**：source-code-to-okf-wiki/V
 **OKF 版本**：0.2
-**源码路径**：`d:\AI\.chaos\libs\veadk-python\veadk\`
+**源码路径**：`d:\AI\vendor\veadk-python\veadk\`
 **Bundle 路径**：`d:\AI\bundles\veadk-python\`
 
 ---
