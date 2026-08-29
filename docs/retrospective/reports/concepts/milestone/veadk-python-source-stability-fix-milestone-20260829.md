@@ -82,7 +82,7 @@ stale_after: "2027-08-29"
 | F-022 | 严格 Markdown 链接正则 `\]\(file:///([^)#\s]+)` 复验：661 处链接、227 个唯一路径 |
 | F-023 | 227 个唯一路径中信源类链接（veadk/examples/docs/frontend/config/tests/pyproject/README）缺失数 0；12 处 frontmatter 反斜杠 vendor 路径 Test-Path 全部存在 |
 | F-024 | 宽松正则 `file:///([^)\s#"]+)` 曾报告 36 个 MISSING；甄别分类为：21 个表格行相邻链接跨括号捕获的正则假象（对应目录 Test-Path 均存在）、2 个中文散文提及（"file:///格式的源码位置链接"）、10 个真实缺失（9 个内部导航断链 + 1 个 webui 链接）、3 个目录链接 |
-| F-025 | 9 处内部导航断链指向 `d:/AI/.agents/docs/knowledge/learning/veadk-python/...`（缺少 `03-agent-platforms-tools/01-domestic-platforms/` 路径段），均不含 .chaos，分布于 9 个文件 |
+| F-025 | 9 处内部导航断链指向 `d:/AI/.agents/docs/knowledge/learning/veadk-python/...`（缺少 `03-agent-platforms-tools/01-domestic-platforms/` 路径段），均不含 .chaos，分布于 9 个文件。**A-3 执行核验更正（2026-08-29）**：逐链接复验实测为 **33 个链接、32 行、4 个文件**（`supporting-analysis/14-adversarial-review.md` 12 处/11 行、`faq/best-practices.md` 11 处、`extensions/cloud-integration.md` 6 处、`extensions/custom-run-processor.md` 4 处）；F-024 的"9 个内部导航断链"为早期宽松正则漏计数，断链前缀路径 Test-Path=False、9 个断链目标文件在正确 Wiki 路径下全部存在 |
 | F-026 | 全工作区 Grep `\.chaos[\\/]libs[\\/]veadk-python` 命中 5 个文件：模式文档（历史记录章节）、`bundles/chaos/veadk-python/` 3 个文件（verification-report.md:6、references/veadk-source.md:64、references/facts.md:3，均为反引号包裹的散文式元数据声明）、`.trae/specs/veadk-python-wiki/spec.md`（2 处历史记录） |
 | F-027 | `bundles/chaos/veadk-python/` 含 22 个 md 文件，`file:///` 链接数 0、vendor 引用数 0，被 git 跟踪 |
 | F-028 | `.chaos/libs/veadk-python` 临时克隆修复后仍存在于磁盘，未删除 |
@@ -192,10 +192,10 @@ stale_after: "2027-08-29"
 |---|--------|------|--------|-------|------|
 | A-1 | 将模式第五步验证脚本固化为 `.agents/scripts/` 可复用工具：匹配三类路径形态 × 两种斜杠、路径特征段稳定性分类、Test-Path 存在性复验；并对 `.chaos/libs` 其余 15 个克隆执行全量扫描 | 工具建设 | high | AI 智能体 | ✅ 已完成（2026-08-29，提交 42b6c8e6）：GATE-SPS 工具 `check-source-path-stability.py` 双模式（audit + `--target` 清理前扫描），三类载体（link/frontmatter/prose）× 两种斜杠、特征段稳定性分类、存在性复验，30 个单元测试全绿。15 克隆全量扫描完成（298 处引用分类登记）：唯一零引用可安全删除候选为 awesun-usecase-skill-example；minitap-ai 147 处、ffi 55 处为最大活动信源债（bundles/ 活动引用，未来 vendor 迁移候选）；projects/tvm-ffi 约 30 处属子模块内部，主仓库不可直接修改，须走子项目流程；历史报告/spec 命中为预期快照不改写 |
 | A-2 | 信源稳定性门 5 步 + tag 选型子步骤（洞察 I-3）内置为 source-code-to-okf-wiki 技能 R 阶段前预检清单（延续案例1报告 A-2） | 流程改进 | high | AI 智能体 | ✅ 已完成（2026-08-29，提交 1ed76273）：技能升级 v1.3.0，新增阶段0 Pre-flight 预检（G0 质量门），SKILL.md/prompt-templates.md/L2 模式文档三处同步，反模式新增 2 条（临时克隆直接开读、信源漂移），V 阶段同步增计数断言验证（案例1报告 A-1 同期闭环） |
-| A-3 | 修复 veadk-python Wiki 9 处内部导航断链（补 `03-agent-platforms-tools/01-domestic-platforms/` 路径段或改为相对路径），属输出层 file-existence-verification-gate 领域 | 缺陷修复 | medium | AI 智能体 | 待执行 |
+| A-3 | 修复 veadk-python Wiki 9 处内部导航断链（补 `03-agent-platforms-tools/01-domestic-platforms/` 路径段或改为相对路径），属输出层 file-existence-verification-gate 领域 | 缺陷修复 | medium | AI 智能体 | ✅ 已完成（2026-08-29，提交 e2653788）：实测断链规模 33 个链接、32 行、4 个文件（F-025 已更正），全部改为相对路径 `../` 形态（与 Wiki 内部既有约定一致、对未来迁移免疫，而非补绝对路径段）；修复后链接复验 67 OK / 0 BROKEN，GATE-SPS audit 复扫四文件零信源命中（仅余 1 处 `/tmp/veadk_local_database.db` 源码常量引用，属历史审查证据按快照原则保留）；附带修正 14-adversarial-review.md 文末路径与中文粘连导致的分词歧义 |
 | A-4 | `bundles/chaos/veadk-python/` 3 处 .chaos 散文式元数据声明处理：重新生成 bundle 或手动同步 vendor 路径 | 数据一致 | low | AI 智能体 | ✅ 已完成（2026-08-29，3 处手动同步 vendor 路径，bundle 复验 .chaos 残留 0，提交 98b76d84） |
 | A-5 | `.chaos/libs/veadk-python` 临时克隆清理：第四步扫描已放行（活动引用 0，仅剩历史记录与 bundle 散文声明），删除不可逆 | 环境清理 | low | 用户决策/AI 执行 | ✅ 已完成（2026-08-29，用户确认后删除 210MB 克隆；删除后全类型扫描仅余 3 个历史记录文件引用） |
-| A-6 | 排查 ai-collaboration 目录其余模式文档 `source` 字段相对路径是否同样误指 `.agents/docs/retrospective/reports/`（本次发现并修复 source-stability-gate.md 一处） | 缺陷排查 | medium | AI 智能体 | 待执行（2026-08-29 GATE-SPS 全量扫描补充情报：新发现 `skill-intent-routing.md` frontmatter source 字段指 `.chaos/libs/tests` 一处活动元数据，纳入本项排查范围） |
+| A-6 | 排查 ai-collaboration 目录其余模式文档 `source` 字段相对路径是否同样误指 `.agents/docs/retrospective/reports/`（本次发现并修复 source-stability-gate.md 一处） | 缺陷排查 | medium | AI 智能体 | ✅ 已完成（2026-08-29，提交 1f4a3dfc）：audit 复扫确认四类问题并全部修复——① `skill-intent-routing.md` source 指 `.chaos/libs/tests/agent-rules-skill` 临时克隆（A-5 清理后失归宿），经排除法（vendor 无此库、bundles/libs 从未落地、bundle 08 文档无对应内容）改为 `external:github.com/netresearch/agent-rules-skill@v3.14.1` 固定 tag 引用，`.meta/toml` 镜像同步（原镜像 libs/ 路径本就是死路径）；② `source-stability-gate.md` 教学示例链接原为虚构路径 `vendor/jira-skill/src/changelog.py`（该仓库无 src 布局），改为真实存在的 `vendor/jira-skill/scripts/detect_jira_issues.py`；③ `ai-multimodal-fullstack-dev-loop.md` source 根相对写法解析失败，改为正确相对路径 `../../../2026-08-12-short-video-site-ai-fullstack-retro.md`；④ 不改写项：`skill-knowledge-operation-separation.md` L97/L136 的 2026-08-25 mermaid 实验脚本引用为过去时态历史测量证据，gate 文档正文 `.chaos/libs`/`/tmp`/`AppData/Local/Temp` 为教学反例，均按快照原则保留。V 阶段对抗审查另发现并修复 GATE-SPS 工具自身锚点假阳性缺陷（提交 ba8272c6）：`normalize_token` 不剥离 `#L10` 片段导致带行号锚链接恒判不存在，全量 audit 基线"不存在"由 4850 降至 4283（消除 567 个假阳性），新增 2 个回归测试（30→32 全绿） |
 
 ---
 
@@ -209,7 +209,7 @@ stale_after: "2027-08-29"
 2. **扫描锚点选择**（I-2）：路径扫描应锚定路径特征段（.chaos/.tmp/Temp）而非引用语法（file:///），引用载体有链接、frontmatter 字段、散文声明三类
 3. **版本固定决策**（I-3）：tag 选型是"文档引用集合 ∩ 版本变更集合 = ∅"的集合论判定，不是版本号新旧判断
 
-9 处输出层内部断链、bundles 元数据声明、临时克隆清理三项边界外事项已登记行动项，不混入本次原子提交。
+输出层内部断链（A-3，实测 33 链接/4 文件）、bundles 元数据声明（A-4）、临时克隆清理（A-5）、模式文档 source 排查（A-6）四项边界外行动项已全部闭环；A-6 对抗审查中额外修复 GATE-SPS 锚点假阳性工具缺陷，"修复→预防（回归测试）→闭环"链条在工具层再次成立。
 
 ---
 
@@ -224,4 +224,8 @@ stale_after: "2027-08-29"
 | 1b78dda6 | docs(retrospective) | 行动项 A-4/A-5 闭环状态更新 | 1 |
 | 42b6c8e6 | feat(scripts) | 行动项 A-1：GATE-SPS 信源路径稳定性扫描工具（双模式 + 30 单元测试，2 文件 863 增） | 2 |
 | 1ed76273 | docs(skill) | 行动项 A-2（含案例1报告 A-1/A-2）：source-code-to-okf-wiki v1.3.0 阶段0信源稳定性预检 + V 阶段计数断言（4 文件） | 4 |
-| （本提交） | docs(retrospective) | 行动项 A-1/A-2 闭环回写（15 克隆扫描结论、A-6 补充情报） | 1 |
+| 2cae15a8 | docs(retrospective) | 行动项 A-1/A-2 闭环回写（15 克隆扫描结论、A-6 补充情报） | 2 |
+| ba8272c6 | fix(scripts) | A-6 V 阶段发现：GATE-SPS normalize_token 剥离 `#L10` 片段锚点，消除带锚链接恒判不存在的假阳性（+2 回归测试，30→32 全绿；audit 基线"不存在"4850→4283） | 2 |
+| e2653788 | docs(wiki) | 行动项 A-3：veadk Wiki 33 个内部导航断链改相对路径（4 文件 33/33 行，链接复验 67 OK/0 BROKEN）+ 路径中文粘连分词修正 | 4 |
+| 1f4a3dfc | docs(patterns) | 行动项 A-6：skill-intent-routing md/toml 改 external 固定 tag 引用、gate 教学示例改真实路径、ai-multimodal source 相对路径修正 | 4 |
+| （本提交） | docs(retrospective) | 行动项 A-3/A-6 闭环回写（F-025 计数更正 9→33、工具缺陷记录、全部行动项状态终态） | 1 |
