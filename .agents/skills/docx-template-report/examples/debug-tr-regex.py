@@ -4,6 +4,8 @@ import os, re, zipfile
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 path = os.path.join(OUT, "debug-rowloop-A-tpl.docx")
+if not os.path.exists(path):
+    raise SystemExit(f"调试产物不存在：{path}\n请先运行 py -3.14 examples/debug-rowloop-patterns.py 生成变体模板。")
 with zipfile.ZipFile(path) as z:
     xml = z.read("word/document.xml").decode("utf-8")
 

@@ -7,6 +7,7 @@ from docx.oxml import OxmlElement
 from docxtpl import DocxTemplate
 
 OUTDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
+os.makedirs(OUTDIR, exist_ok=True)  # 产物目录不入库，运行时自创建
 
 
 def mk_p(text=None):

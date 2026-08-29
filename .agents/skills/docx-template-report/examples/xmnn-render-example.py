@@ -18,6 +18,7 @@ from docxtpl import DocxTemplate
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE = os.path.join(BASE, "templates", "xmnn-sdk-guide-template.docx")
 OUT = os.path.join(BASE, "examples", "output", "xmnn-template-example.docx")
+os.makedirs(os.path.dirname(OUT), exist_ok=True)  # 产物目录不入库，运行时自创建
 
 context = {
     "doc_title": "芯劢微XMNN SDK用户使用指南",

@@ -28,6 +28,12 @@ KEYWORDS = ["Xmsilicon", "芯劢微", "浙江", "XMNN", "XMNPU", "新伟", "水�
 
 for label, path in TARGETS:
     print(f"=== {label}: {os.path.basename(path)}")
+    if not os.path.exists(path):
+        rel = os.path.relpath(path, SKILL_DIR)
+        print(f"  [跳过] 产物不存在：{rel}")
+        print(f"         （渲染产物不入库，先运行 py -3.14 examples/xmnn-render-example.py 生成）")
+        print()
+        continue
     with zipfile.ZipFile(path) as z:
         allxml = ""
         for n in z.namelist():
