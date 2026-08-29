@@ -43,13 +43,14 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 | ~~pattern-extraction-cmd~~ | ~~"模式沉淀"、"萃取模式"~~ | ~~3~~ | ~~v1.0.0（已废弃，由extraction-cmd替代）~~ | ~~[skills/pattern-extraction-cmd/SKILL.md](../skills/pattern-extraction-cmd/SKILL.md)~~ |
 
-### 脚本命令门面（9个）
+### 脚本命令门面（10个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
 | jpman-podman-ops | "jpman"、"启动jupyter容器"、"podman machine"、"工作区挂载"、"容器WARN分诊"、"fuse device"、"rootless排障"、"WSL保活"、"rebuild" | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | v1.0.0 | [skills/jpman-podman-ops/SKILL.md](../skills/jpman-podman-ops/SKILL.md) |
 | docker-cache-cmd | "保存镜像"、"缓存Docker镜像"、"docker缓存"、"镜像缓存"、"加载镜像"、"封存镜像"、"docker save/load"、"WSL重置恢复"、"镜像本地缓存" | docker-cache（bash脚本） | v1.0.0 | [skills/docker-cache-cmd/SKILL.md](../skills/docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | "镜像转WSL"、"docker镜像导入WSL"、"镜像转rootfs"、"podman export转wsl"、"WSL重置后恢复开发环境"、"docker-wsl-bridge"、"没有Docker Desktop怎么启动镜像" | wsl+podman跨Shell编排 | v1.0.0 | [skills/docker-wsl-bridge-cmd/SKILL.md](../skills/docker-wsl-bridge-cmd/SKILL.md) |
+| wsl-ops-cmd | "WSL磁盘清理"、"vhdx压缩"、"盘爆红"、"Docker GPU不可用"、"--gpus报错"、"nvidia-container-toolkit"、"wsl --shutdown后Docker不自启"、"wsl.conf boot"、"setsid dockerd"、"Trae缓存清理"、"fstrim"、"孤儿卷/build cache清理" | compress-wsl-vhdx.ps1、Restart-WslDockerGpu.ps1、setup-wsl-docker-gpu.sh、cleanup-trae-cache.ps1（4脚本+存储清理五步法/GPU三层分诊两模式） | v1.0.0 | [skills/wsl-ops-cmd/SKILL.md](../skills/wsl-ops-cmd/SKILL.md) |
 | link-check-cmd | "链接检查"、"检查链接"、"断链"、"链接修复"、"fix links"、"check links"、"验证链接"、"死链" | check-links.py + lib/link_fixer.py | v1.0.0 | [skills/link-check-cmd/SKILL.md](../skills/link-check-cmd/SKILL.md) |
 | atomization-finalize-cmd | "原子化收尾"、"finalize atomization"、"文档拆分完成"、"文件移动后处理"、"断链修复导航更新"、"一键收尾" | finalize-atomization.py | v1.0.0 | [skills/atomization-finalize-cmd/SKILL.md](../skills/atomization-finalize-cmd/SKILL.md) |
 | docgen-cmd | "生成导航"、"更新导航"、"docgen"、"更新README"、"刷新看板"、"生成文档索引"、"应用清单" | docgen.py（含nav/dashboard/apps/stats/all子命令） | v1.1.0 | [skills/docgen-cmd/SKILL.md](../skills/docgen-cmd/SKILL.md) |
