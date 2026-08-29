@@ -1,7 +1,7 @@
 ***
 
 name: docx-template-report
-version: 1.2.0
+version: 1.2.1
 description: "当用户提到'模板驱动报告'、'生成报告'、'批量报告'、'报告生成'、'模板填充'、'生成docx'、'导出Word报告'、'周报'、'月报'、'报告模板'、'docxtpl'时，必须使用此技能。提供模板驱动报告生成能力：输入校验→模板/数据准备→渲染→产物校验→交付。基于 docxtpl + python-docx，必须使用 py314 环境。不要硬编码 Word 排版——模板是唯一事实来源，代码只填数据。"
 argument-hint: "<模板.docx路径> <数据(JSON/YAML/dict)> <输出.docx路径>"
 user-invocable: true
@@ -202,6 +202,7 @@ context = {"rows": [{"col1": "x", "col2": "y"}]}
 
 ## 10. Changelog
 
+* **v1.2.1** (2026-08-29): 封面布局调整——品牌栏左公司名、右版本号（版本号移至右上角醒目位置）；字号体系统一优化：正文/表格 11pt、H1 16pt、H2 13pt、封面标题 24pt、代码块 10pt，层级比例更协调。
 * **v1.2.0** (2026-08-29): **tech-guide-template v2 美化版**——科技蓝配色体系重构（深蓝 #1F4E79 / 中蓝 #2E75B6 / 浅蓝 #D6E4F0）；封面升级为三段式（品牌栏+大标题+信息表），带分隔线与标签列配色；表格升级深蓝表头白字 + 灰网格边框；代码块升级浅灰底纹 + Consolas 等宽字体；一级标题增加蓝色下分隔线；新增封面信息表字段（doc_status/doc_version/doc_date/doc_author）；示例脚本同步升级为 12 项断言校验；契约文档新增设计规范章节（配色/字体/页面布局）。
 * **v1.1.0** (2026-08-29): tech-guide-template 扩展：单 4 列表格升级为 2/3/4/5 列四种预置表格（按 `tbl.cols` 条件切换），`sec.table` 改为 `sec.tables` 列表支持多表格；新增 `examples/tech-guide-render-example.py` 渲染示例脚本（覆盖全部列数类型 + 产物校验）；更新契约文档 v1.1.0。
 * **v1.0.1** (2026-08-29): 新增 `templates/tech-guide-template.docx` 技术文档模板（从真实 SDK 使用指南萃取，含封面/更新记录/多级章节/代码块/4列参数表），配套契约文档 `references/tech-guide-template.md`。
