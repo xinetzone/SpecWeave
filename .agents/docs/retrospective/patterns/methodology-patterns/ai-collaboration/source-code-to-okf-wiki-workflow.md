@@ -2,7 +2,7 @@
 id: "source-code-to-okf-wiki-workflow"
 source: "spec:pyinvoke-okf-wiki"
 maturity: "L1"
-validation_count: 1
+validation_count: 4
 ---
 # 源码阅读→OKF Wiki生成工作流
 
@@ -12,7 +12,7 @@ validation_count: 1
 
 ## 成熟度
 
-L1 已验证（2次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki）
+L1 已验证（4次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki；2026-08-28 Protocol Buffers v37.0 超大规模 monorepo 双束；2026-08-29 Tongyi-MAI 多子项目生态归并三束）
 
 ## 模式概述
 
@@ -254,6 +254,27 @@ sources:
 
 本案例复用了反模式 2/3/4/5/7（信源先行、17 篇 concepts 分 3 批、index 最后写、Grep 验证 15+ 关键标识符零虚构、束内 `/` 路径），并新增反模式 9（束嵌套深度链接层级）与反模式 10（并行会话总索引竞态）。
 
+### 迁移验证案例：Tongyi-MAI 多子项目生态（2026-08-29）
+
+第 4 次跨场景迁移验证，规模从"单仓（或姊妹仓）"扩展到"一个目录下 5 个异质子项目生态"（2 个实现代码仓 + 基准官网 + Next.js 技术报告站 + 博客 stub 站），产出 3 个知识束共 45 个文件（206 条事实、15 个洞察四元组、20 篇 concepts）。
+
+#### 案例代表性
+
+- **归并决策**：5 个子项目按"是否有实现源码"归并为 3 束——实现仓独立成束源码精读（mai-ui / mobile-world），基准官网+网站仓合并为"设计精读"束（mobilepa-bench）并全文明示"非实现代码仓"，博客重定向 stub 仅登记存在性。
+- **按束拆分并行编排**：R 阶段 3 路并行事实采集（各出独立编号 facts 文件共 206 条）、E 阶段 3 束并行生成（每代理只写自己束目录），上下文全部以文件传递（facts/insights 落盘于 spec 目录）。
+- **编号前缀防冲突**：某束需同时引用两份 facts 时，主信源沿用 F-xxx 原编号、次信源改 WEB-A-xx 前缀并保留原编号映射，避免 F-001 重复或全局重编断溯源。
+- **计数口径修复实证**：V 阶段 Grep 验证发现 17 处计数偏差，典型如 AndroidController"Grep def 35 行"实际实例方法 32 个（嵌套函数陷阱）——催生反模式 14 与专项模式 [multi-repo-ecosystem-okf-bundle-generation.md](./multi-repo-ecosystem-okf-bundle-generation.md)。
+
+#### 经验教训
+
+1. **生态级任务先做归并决策再做事实采集**：束粒度决定 facts 文件拆分、并行路数与索引更新范围；归并错了会导致束内信源类型混杂（源码事实与网站声明混排）。
+2. **网站/Paper 型子项目的"负向声明"也是产出**：明示"该仓无实现代码"并引 README 原文为证，比虚构实现细节更可信；与 tiktoken 案例的"负向 Grep 验证"同构。
+3. **计数必须带口径并可分解验证**：凡"多少个方法/任务/文件"类事实，写明统计口径（含/不含什么），V 阶段用文档内部分解式清单（分组求和）交叉验证总数，而非只信 Grep 行数。
+
+#### 反模式（本案例新增反模式 14）
+
+复用反模式 2/3/4/5/7/10/11（信源先行、分批、index 最后写、Grep 验证 33 项符号、重读计数、toctree 块），新增反模式 14"Grep 匹配行数当成员计数，无统计口径"（见下文）。
+
 ## 失败案例
 
 ### 案例：虚构的Response类混入文档（PyInvoke实践）
@@ -347,6 +368,10 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 ### 反模式13："信源漂移——固定 main/master 或只记 tag 名不记 hash"（veadk 新增）
 
 固定信源版本时锚定浮动分支（main/master），或只记录 tag 名不记录 commit hash。后果：分支推进或 tag 被移动/重打后，文档事实与信源内容静默失配，且无 hash 无法复现与审计——"tag 也可能漂移"。**正确做法**：固定不可变 release tag 并同时记录 commit hash 双坐标；tag 选型按集合论判据"文档引用集合 ∩ 版本变更集合 = ∅"验证（引用的 API 在所选版本中全部存在），而非版本号新旧判断；禁止 main/master 作为文档信源锚点。
+
+### 反模式14："Grep匹配行数当成员计数，无统计口径"（Tongyi-MAI 新增）
+
+统计"类有多少方法/仓库有多少任务文件"时，直接把 `Grep "def "` 或目录列举的输出行数当作成员数量。后果：嵌套函数、继承成员、注释示例被计入（实测 AndroidController Grep 35 行，class 级实际实例方法 32 个，且文档自身分组清单求和 32 与标题 35 自相矛盾才暴露）；同类偏差在 V 阶段共发现 17 处。**正确做法**：计数类事实必须写明统计口径（"class 级 def，含 __init__，不含嵌套函数/不含 __init__.py"），V 阶段用文档内部分解式清单（分组求和）交叉验证总数。多子项目生态的归并决策、编号前缀、信源红线等生态级机制见专项模式 [multi-repo-ecosystem-okf-bundle-generation.md](./multi-repo-ecosystem-okf-bundle-generation.md)。
 
 ## 通用Prompt模板
 
@@ -456,10 +481,12 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | external-content-fact-verification | 相关 | V阶段的Grep验证是外部内容事实验证在源码场景的应用 |
 | [cpp-header-first-fact-collection.md](../research-knowledge/cpp-header-first-fact-collection.md) | 专项细化 | 本工作流R阶段在大型C/C++项目上的细化——以include/头文件为API权威来源、实现文件仅用于验证、构建系统文件补充模块依赖，2次验证（Apache TVM/TuyaOpen） |
 | [source-stability-gate.md](source-stability-gate.md) | 前置门禁 | R阶段开始前必须执行的预检清单：信源分类（stable/temporary）→临时信源升级为vendor submodule→路径引用生成→清理前扫描→持久性验证，防止file:///引用在临时目录清理后断裂 |
+| [multi-repo-ecosystem-okf-bundle-generation.md](./multi-repo-ecosystem-okf-bundle-generation.md) | 专项细化 | 本工作流在"多子项目生态"（实现仓+网站/论文仓混合）场景的细化——归并决策树、按束并行编排、编号前缀防冲突、信源红线、三级索引同步，1次验证（Tongyi-MAI 5子项目→3束） |
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
 - 2026-08-29 | pattern | 同步 source-code-to-okf-wiki SKILL v1.3.0：新增"阶段0（Pre-flight）：信源稳定性门预检"小节（信源分类→临时信源升级为 vendor submodule 固定 release tag+commit hash→路径只指 stable→清理前 GATE-SPS `--target` 扫描→持久性 audit，G0 质量门），由 veadk-python 案例实证（41 文件 800 处临时引用迁移）；V 阶段检查清单增第 8 项计数断言验证、第 9 项信源路径稳定性；新增反模式12"临时克隆直接开读，不固定版本"、反模式13"信源漂移——固定 main/master 或只记 tag 名不记 hash"；早期预警表与检验标准表同步增行；内嵌 V 阶段 Prompt 模板增第 7/8 项
+- 2026-08-29 | pattern | 新增"迁移验证案例：Tongyi-MAI 多子项目生态"（第4次验证，validation_count 1→4）：5 子项目（2 实现仓+基准官网+技术报告站+博客 stub）归并 3 束 45 文件；沉淀 3 条经验教训（先归并决策再采集、网站型子项目负向声明、计数带口径可分解验证），新增反模式 14"Grep匹配行数当成员计数"；反向传播新专项模式 multi-repo-ecosystem-okf-bundle-generation（L1）
 - 2026-08-25 | pattern | 新增"迁移验证案例：tiktoken v0.14.0"（Python门面+Rust核心双层库第2次验证，validation_count 1→2）：沉淀4条经验教训（按层拆分R阶段事实采集、PyO3绑定名以源码实际模块名为准、对"常见API名"虚构做负向Grep验证、Rust导出模块以py.rs pymodule名为准），复用≥5条既有反模式，新增反模式8"双层语言库按惯例命名而非按源码命名导出模块"
 - 2026-08-23 | pattern | R阶段新增"大型C/C++项目头文件优先采集"专项小节，反向传播自新沉淀模式 cpp-header-first-fact-collection（L2，Apache TVM/TuyaOpen 双案例验证）
 - 2026-08-21 | pattern | 初始创建：从 PyInvoke v3.0.3 OKF Wiki 生成实践萃取
