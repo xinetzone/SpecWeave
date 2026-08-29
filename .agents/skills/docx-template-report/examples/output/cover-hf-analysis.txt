@@ -1,0 +1,189 @@
+=== docDefaults ===
+{
+ "rPrDefault": {
+  "fonts": {
+   "ascii": "Times New Roman",
+   "hAnsi": "Times New Roman",
+   "eastAsia": "宋体",
+   "cs": "Times New Roman"
+  }
+ },
+ "pPrDefault": {}
+}
+
+=== 媒体文件 ===
+  /word/media/image1.png  image/png  128324 bytes
+  /word/media/image12.jpeg  image/jpeg  493367 bytes
+  /word/media/image11.png  image/png  132116 bytes
+  /word/media/image10.png  image/png  25450 bytes
+  /word/media/image9.png  image/png  21428 bytes
+  /word/media/image8.png  image/png  22513 bytes
+  /word/media/image7.png  image/png  29001 bytes
+  /word/media/image6.png  image/png  14808 bytes
+  /word/media/image5.png  image/png  27755 bytes
+  /word/media/image4.png  image/png  117990 bytes
+  /word/media/image3.png  image/png  162273 bytes
+  /word/media/image2.png  image/png  113297 bytes
+
+=== 页眉页脚 ===
+{"section": 0, "type": "header", "error": "'.//{http'"}
+{"section": 0, "type": "first_page_header", "linked": false, "paragraphs": [{"text": "", "style": "Header", "align": "left", "has_field": false, "rPr_sample": {}}], "tables": 1}
+{"section": 0, "type": "even_page_header", "linked": false, "paragraphs": [{"text": "", "style": "Header", "align": null, "has_field": false, "rPr_sample": {}}], "tables": 0}
+
+=== 前 45 个记录段落（封面/修订记录区）===
+[  0] style=Heading 1  len=4    '更新记录' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "numbering": {"ilvl": "0", "numId": "0"}} | rPr={}
+[  4] style=Heading 1  len=6    '开发环境准备' | pPr={"spacing": {"before": "156", "beforeLines": "50", "after": "312", "afterLines": "100", "line": "300", "lineRule": "auto"}} | rPr={}
+[  5] style=Normal     len=33   '1. 环境要求：本工具链当前仅支持在Linux操作系统环境下运行。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[  6] style=Normal     len=8    '2. 资源准备：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[  7] style=Normal     len=27   '解压“XMNN_SDK_V1.1.0.zip”压缩包；' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"left": "420", "firstLine": "420"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[  8] style=Normal     len=14   '解压后将获得两个核心文件夹：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"left": "420", "firstLine": "420"}} | rPr={}
+[  9] style=Normal     len=38   'release（工具主程序）和npuusertools（NPU用户工具集）。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"left": "840", "firstLine": "420"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 10] style=Normal     len=23   '3. 本工具链提供两种官方支持的环境配置方案：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"left": "420", "firstLine": "0", "firstLineChars": "0"}} | rPr={}
+[ 11] style=List Paragraph len=11   'Conda虚拟环境配置' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "2"}} | rPr={}
+[ 12] style=List Paragraph len=12   'Docker容器环境配置' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "2"}} | rPr={}
+[ 13] style=Heading 2  len=10   'Conda 环境配置' | pPr={"spacing": {"before": "240", "after": "240", "line": "300", "lineRule": "auto"}} | rPr={}
+[ 14] style=Heading 3  len=12   '安装 Anaconda3' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 15] style=Normal     len=50   '已安装 Anaconda3 的用户可跳过此步骤，未安装的用户请根据Anaconda3 文档' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 16] style=Heading 3  len=11   '构建 xmenv 环境' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 17] style=Normal     len=16   '创建并激活 Python 环境：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 18] style=code       len=10   'cd release' | pPr={} | rPr={}
+[ 19] style=code       len=33   'conda env create --file=xmnn.yaml' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 20] style=code       len=20   'conda activate xmenv' | pPr={} | rPr={}
+[ 21] style=Normal     len=43   '安装 xm_gnpu（xm_gnpu-1.1.0-py3-none-any.whl）：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 22] style=code       len=42   'pip install xm_gnpu-1.1.0-py3-none-any.whl' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 23] style=Normal     len=14   '工具链前端依赖（按需选择）：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[ 24] style=code       len=84   'pip3 install onnx torch torchvision --index-u' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 25] style=Heading 3  len=5    '启动工具链' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 26] style=Normal     len=12   '切换到工具链入口文件夹：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[ 27] style=code       len=22   '$ conda activate xmenv' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 28] style=code       len=18   '$ cd npuusertools/' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 29] style=code       len=4    '$ ls' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 30] style=code       len=82   'accuracy.py  bandwidth.py compile.py  excelre' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 31] style=Normal     len=11   '查看 demo 模型：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[ 32] style=code       len=15   '$ ls models/*/*' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 33] style=code       len=22   'models/caffe/resnet50:' | pPr={} | rPr={}
+[ 34] style=code       len=85   'ResNet-50-deploy.prototxt  ResNet-50-model.ca' | pPr={} | rPr={}
+[ 35] style=code       len=0    '' | pPr={} | rPr={}
+[ 36] style=code       len=20   'models/onnx/yolov5s:' | pPr={} | rPr={}
+[ 37] style=code       len=45   'config.toml  data  dataset.txt   yolov5s.onnx' | pPr={} | rPr={}
+[ 38] style=code       len=0    '' | pPr={} | rPr={}
+[ 39] style=code       len=24   'models/pytorch/resnet18:' | pPr={} | rPr={}
+[ 40] style=code       len=54   'config.toml  data  dataset.txt   model.py  re' | pPr={} | rPr={}
+[ 41] style=Normal     len=30   '以模型为例\xa0pytorch.resnet18，运行过程如下：' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}} | rPr={}
+[ 42] style=code       len=45   'python3 compile.py -n pytorch.resnet18 # 编译模型' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 43] style=code       len=58   'python3 inference.py -n pytorch.resnet18 -i c' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 44] style=code       len=46   'python3 accuracy.py -n pytorch.resnet18 # 精度分' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 45] style=code       len=47   'python3 bandwidth.py -n pytorch.resnet18 # 带宽' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 46] style=code       len=49   'python3 performance.py -n pytorch.resnet18 # ' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 47] style=code       len=49   'python3 excelreport.py -n pytorch.resnet18 # ' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+
+=== 全部 Heading 段落（验证编号方式）===
+[  0] Heading 1 | '更新记录' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "numbering": {"ilvl": "0", "numId": "0"}} | rPr={}
+[  4] Heading 1 | '开发环境准备' | pPr={"spacing": {"before": "156", "beforeLines": "50", "after": "312", "afterLines": "100", "line": "300", "lineRule": "auto"}} | rPr={}
+[ 13] Heading 2 | 'Conda 环境配置' | pPr={"spacing": {"before": "240", "after": "240", "line": "300", "lineRule": "auto"}} | rPr={}
+[ 14] Heading 3 | '安装 Anaconda3' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 16] Heading 3 | '构建 xmenv 环境' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 25] Heading 3 | '启动工具链' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 48] Heading 2 | 'Docker 环境配置' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 49] Heading 3 | '安装 Docker 工具' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 51] Heading 3 | '镜像准备' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 56] Heading 3 | '查询镜像信息' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 61] Heading 3 | '运行镜像' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 63] Heading 3 | '启动工具链' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 81] Heading 2 | '芯片准备' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[ 85] Heading 1 | 'XMNN 工具链 npuusertools' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 86] Heading 2 | 'XMNN 工具链 npuusertools 简介' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 95] Heading 2 | 'XMNN工具链结构概览' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[101] Heading 3 | '前端AI模型文件夹' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[104] Heading 3 | '核心功能' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[106] Heading 2 | 'XMNN 工具链 models 结构' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[107] Heading 3 | 'models/ 结构介绍' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"sz_half_pt": 30, "sz_pt": 15.0, "szCs_pt": 15.0}
+[112] Heading 4 | '配置文件' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={}
+[115] Heading 2 | 'XMNN 工具链工作流程' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[120] Heading 2 | '编译过程' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[122] Heading 3 | '准备阶段' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[124] Heading 4 | '准备模型文件' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[157] Heading 4 | '输入数据预处理' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[168] Heading 4 | '校准数据集准备' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={}
+[178] Heading 3 | '编译参数' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[191] Heading 3 | '模型编译' | pPr={} | rPr={}
+[203] Heading 2 | '模型推理' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[210] Heading 3 | '推理参数' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[220] Heading 2 | '精度分析' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[231] Heading 3 | '指标解释' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[236] Heading 2 | '带宽统计' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[275] Heading 2 | '性能分析' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[314] Heading 2 | '输出报告' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[322] Heading 1 | 'XMNN C/C++ 使用指南' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[324] Heading 2 | 'XMNN 芯片 C/C++ SDK 使用说明' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[361] Heading 2 | 'XMNN Runtime C/C++ 核心 API 详细说明' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[362] Heading 3 | 'xm_npu_init' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[364] Heading 3 | 'xm_npu_destroy' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[366] Heading 3 | 'xm_npu_query' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[368] Heading 3 | 'xm_npu_inputs_set' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[370] Heading 3 | 'xm_npu_run' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[372] Heading 3 | 'xm_npu_outputs_get' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[374] Heading 3 | 'xm_npu_preinit' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[376] Heading 2 | 'XMNN Runtime C/C++ 核心数据结构体说明' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[377] Heading 3 | 'xmnn_sdk_version' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[378] Heading 3 | 'xmnn_input_output_num' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[379] Heading 3 | 'xmnn_tensor_attr' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[380] Heading 3 | 'xmnn_input' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[381] Heading 3 | 'xmnn_output' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[382] Heading 3 | 'xmnn_npu_input_buffer' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[383] Heading 3 | 'xmnn_npu_sys_mem' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[388] Heading 1 | '量化原理' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[398] Heading 2 | '量化误差' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[400] Heading 2 | '线性对称量化和线性非对称量化' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[402] Heading 2 | 'Per-Layer量化和Per-Channel量化' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[407] Heading 2 | '量化算法' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[414] Heading 1 | '模型样例' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[423] Heading 2 | 'ResNet18 模型示例' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[425] Heading 3 | '模型编译及推理' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[428] Heading 4 | '模型编译' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[431] Heading 4 | 'Python 代码推理' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[448] Heading 4 | 'C 代码推理' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[450] Heading 3 | '模型评估' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[452] Heading 4 | '精度评估' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={}
+[458] Heading 4 | '性能评估' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[465] Heading 4 | '带宽分析' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[471] Heading 4 | '生成报告' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[476] Heading 2 | 'YOLOv5s 模型示例' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[478] Heading 3 | '模型编译及推理' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[481] Heading 4 | '模型编译' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[484] Heading 4 | 'Python 代码推理' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[508] Heading 4 | 'C 代码推理' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[510] Heading 3 | '模型评估' | pPr={"spacing": {"line": "300", "lineRule": "auto"}} | rPr={}
+[512] Heading 4 | '精度评估' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={}
+[517] Heading 4 | '性能评估' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[524] Heading 4 | '带宽分析' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[530] Heading 4 | '生成报告' | pPr={"spacing": {"before": "156", "after": "156", "line": "300", "lineRule": "auto"}} | rPr={"fonts": {"hint": "eastAsia"}}
+
+=== 含特殊颜色的正文段落（#4E95D9/#215F9A/#EE0000/#3B3B3B）===
+[ 27] style=code         color=215F9A '$ conda activate xmenv' | rPr={"italic": true, "color": "215F9A"}
+[ 28] style=code         color=215F9A '$ cd npuusertools/' | rPr={"italic": true, "color": "215F9A"}
+[ 29] style=code         color=215F9A '$ ls' | rPr={"italic": true, "color": "215F9A"}
+[ 32] style=code         color=215F9A '$ ls models/*/*' | rPr={"italic": true, "color": "215F9A"}
+[ 65] style=code         color=215F9A '$ docker run -it --rm -v xxx/npuusertools:/home/ xmnn bash' | rPr={"color": "215F9A"}
+
+=== code 样式段落样本（前 8 个）===
+[ 18] 'cd release' | pPr={} | rPr={}
+[ 19] 'conda env create --file=xmnn.yaml' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 20] 'conda activate xmenv' | pPr={} | rPr={}
+[ 22] 'pip install xm_gnpu-1.1.0-py3-none-any.whl' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 24] 'pip3 install onnx torch torchvision --index-url https://down' | pPr={} | rPr={"fonts": {"hint": "eastAsia"}}
+[ 27] '$ conda activate xmenv' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 28] '$ cd npuusertools/' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+[ 29] '$ ls' | pPr={} | rPr={"italic": true, "color": "215F9A"}
+
+=== List Paragraph 样式段落样本（前 10 个）===
+[ 11] 'Conda虚拟环境配置' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "2"}} | rPr={}
+[ 12] 'Docker容器环境配置' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "2"}} | rPr={}
+[ 90] '模型转换：支持 PyTorch、ONNX、Caffe 模型转为 XMNN 模型。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "3"}} | rPr={"fonts": {"eastAsia": "华文宋体"}, "bold": true}
+[ 91] '量化功能：支持将浮点模型量化为定点模型，并支持混合精度量化。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "3"}} | rPr={"fonts": {"eastAsia": "华文宋体"}, "bold": true}
+[ 92] '模型推理：将 XMNN 模型部署至指定 NPU 设备执行推理并获取结果，也可在计算机上仿真 NPU 运行环境进行推理。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "3"}} | rPr={"fonts": {"eastAsia": "华文宋体"}, "bold": true}
+[ 93] '性能和带宽评估：将 XMNN 模型部署到目标 NPU 设备运行，以评估模型在实际硬件上的性能表现及带宽占用情况。' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "3"}} | rPr={"fonts": {"eastAsia": "华文宋体"}, "bold": true}
+[ 94] '量化精度分析：通过计算模型量化后各层推理结果与浮点模型的余弦距离等指标，分析量化误差产生的环节，为提升量化模型精度提供优' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "3"}} | rPr={"fonts": {"eastAsia": "华文宋体"}, "bold": true}
+[ 99] '若模型文件存放在 models/caffe/demo 路径下，则模型名称为 caffe.demo；' | pPr={"indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "4"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[100] '若模型文件存放在 models/demo 路径下，则模型名称为 demo。' | pPr={"indent": {"firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "4"}} | rPr={"fonts": {"hint": "eastAsia"}}
+[134] 'caffe 模型' | pPr={"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}, "numbering": {"ilvl": "0", "numId": "5"}} | rPr={"fonts": {"hint": "eastAsia"}}

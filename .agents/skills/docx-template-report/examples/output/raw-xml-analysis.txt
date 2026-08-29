@@ -1,0 +1,81 @@
+=== 1. TOC 域检查 ===
+document.xml 中 TOC/REF 域: [' TOC \\o &quot;1-3&quot; \\h \\z \\u ', ' PAGEREF _Toc211500944 \\h ', ' PAGEREF _Toc211500945 \\h ', ' PAGEREF _Toc211500946 \\h ', ' PAGEREF _Toc211500947 \\h ']
+
+=== 2. H1 样式 numPr 原始 XML ===
+H1 style numPr: <w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>
+
+=== 3. 正文第2个 H1 段落（开发环境准备）原始 pPr ===
+<w:pPr><w:pStyle w:val="17"/><w:rPr><w:rFonts w:hint="eastAsia" w:asciiTheme="minorHAnsi" w:hAnsiTheme="minorHAnsi" w:eastAsiaTheme="minorEastAsia" w:cstheme="minorBidi"/><w:b w:val="0"/><w:bCs w:val="0"/><w:kern w:val="2"/><w:sz w:val="21"/><w:szCs w:val="22"/></w:rPr></w:pPr>
+
+=== 4. numId=1 在 numbering.xml 的映射 ===
+<w:num w:numId="1"><w:abstractNumId w:val="2"/></w:num>
+
+=== abstractNumId=2 的 L0 完整定义 ===
+<w:lvl w:ilvl="0" w:tentative="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:pStyle w:val="2"/><w:suff w:val="space"/><w:lvlText w:val="%1."/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="5669" w:hanging="425"/></w:pPr><w:rPr><w:rFonts w:hint="eastAsia"/></w:rPr></w:lvl>
+
+=== 5. T0 封面表格完整 XML（前 2500 字符）===
+长度: 5620
+表格内全部文本: ['浙江芯劢微电子股份有限公司', '（', '版本所有', '，', '翻版必究', '）']
+图片/绘图数: 0
+行数: 3
+  row0: text=['浙江芯劢微电子股份有限公司'] image=False
+  row1: text=['（', '版本所有', '，', '翻版必究', '）'] image=False
+  row2: text=[] image=False
+
+=== 6. 红色 #EE0000 run 所在段落完整文本 ===
+   注意：pytorch 需要使用 torch.jit.save 保存的模型。比如
+
+=== 7. 浅蓝 #4E95D9 run 上下文（hyperlink 检查）===
+
+=== 8. 部件清单（检查 settings/字体表等）===
+  [Content_Types].xml
+  _rels/
+  _rels/.rels
+  customXml/
+  customXml/_rels/
+  customXml/_rels/item1.xml.rels
+  customXml/_rels/item2.xml.rels
+  customXml/_rels/item3.xml.rels
+  customXml/item1.xml
+  customXml/item2.xml
+  customXml/item3.xml
+  customXml/itemProps1.xml
+  customXml/itemProps2.xml
+  customXml/itemProps3.xml
+  docProps/
+  docProps/app.xml
+  docProps/core.xml
+  docProps/custom.xml
+  word/
+  word/_rels/
+  word/_rels/document.xml.rels
+  word/_rels/header1.xml.rels
+  word/_rels/header3.xml.rels
+  word/document.xml
+  word/endnotes.xml
+  word/fontTable.xml
+  word/footer1.xml
+  word/footer2.xml
+  word/footer3.xml
+  word/footnotes.xml
+  word/header1.xml
+  word/header2.xml
+  word/header3.xml
+  word/media/
+  word/media/image1.png
+  word/media/image10.png
+  word/media/image11.png
+  word/media/image12.jpeg
+  word/media/image2.png
+  word/media/image3.png
+  word/media/image4.png
+  word/media/image5.png
+  word/media/image6.png
+  word/media/image7.png
+  word/media/image8.png
+  word/media/image9.png
+  word/numbering.xml
+  word/settings.xml
+  word/styles.xml
+  word/theme/
+  word/theme/theme1.xml

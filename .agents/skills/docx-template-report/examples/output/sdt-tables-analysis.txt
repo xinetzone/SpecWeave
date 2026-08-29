@@ -1,0 +1,60 @@
+D:\AI\.agents\skills\docx-template-report\examples\analyze-sdt-and-tables.py:49: FutureWarning: Truth-testing of elements was a source of confusion and will always return True in future versions. Use specific 'len(elem)' or 'elem is not None' test instead.
+  jc = el(el(p, "w:pPr") or p, "w:jc")
+sdt 块总数: 2
+
+=== sdt[0] ===
+  段落数: 16
+  含图片: True  含TOC域: False  域指令: []
+    style=None jc=center [sz=44 ea=黑体 b=N color=-] text='芯劢微XMNN SDK用户使用指南'
+    style=None jc=- [sz=- ea=None b=N color=-] text='文件状态：'
+    style=None jc=- [sz=- ea=None b=Y color=-] text='✔️正在修改'
+    style=None jc=- [sz=- ea=None b=N color=-] text='正式发布'
+    style=None jc=- [sz=- ea=- b=Y color=156082] text='当前版本：'
+    style=None jc=- [sz=- ea=None b=N color=-] text='1.1.0'
+
+=== sdt[1] ===
+  段落数: 64
+  含图片: False  含TOC域: True  域指令: [' TOC \\o "1-3" \\h \\z \\u ', ' HYPERLINK \\l "_Toc211500944" ', ' PAGEREF _Toc211500944 \\h ']
+    style=80 jc=center [sz=- ea=- b=N color=-] text='目录'
+    style=17 jc=- [sz=- ea=- b=N color=-] text='更新记录1'
+    style=17 jc=- [] text='1. 开发环境准备4'
+    style=21 jc=- [] text='1.1. Conda 环境配置4'
+    style=13 jc=- [] text='1.1.1. 安装 Anaconda34'
+    style=13 jc=- [] text='1.1.2. 构建 xmenv 环境4'
+    style=13 jc=- [] text='1.1.3. 启动工具链4'
+    style=21 jc=- [] text='1.2. Docker 环境配置5'
+
+=== T2 (6x2, style=26) 表头行完整格式 ===
+  r0c0: shd=000000 color=000000 b=N sz=- text='参数'
+  r0c1: shd=000000 color=000000 b=N sz=- text='说明'
+  r1c1: shd=None color=- b=Y sz=- text='-i表示以交互模式运行容器，-t表示为容器重新分配一个伪输入'
+  r1c1: shd=None color=- b=Y sz=- text='-i表示以交互模式运行容器，-t表示为容器重新分配一个伪输入'
+
+=== 分页空段（body 子元素 idx 4,5,7 附近）===
+  child[4] p style=None brs=[] text=''
+  child[5] p style=None brs=['page'] text=''
+  child[7] p style=None brs=['page'] text=''
+
+=== 封面 sdt[0] 之后/封面表 T0 的前后顺序确认 ===
+  [0] sdt
+  [1] tbl first='浙江芯劢微电子股份有限公司' rows=3
+  [2] p style=2 text='更新记录'
+  [3] tbl first='版本 ' rows=3
+  [4] p style=None text=''
+  [5] p style=None text=''
+  [6] sdt
+  [7] p style=None text=''
+  [8] p style=2 text='开发环境准备'
+
+=== 正文样式26/81 表格中表头黑底行统计 ===
+  T0 style=26 3x1 表头fills=[None] 首格='\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
+  T2 style=26 6x2 表头fills=['000000', '000000'] 首格='参数'
+  T3 style=26 4x2 表头fills=['auto', 'auto'] 首格='目录'
+  T4 style=26 7x2 表头fills=['auto', 'auto'] 首格='目录或文件'
+  T5 style=81 9x4 表头fills=[None, None, None, None] 首格='参数名'
+  T6 style=81 21x4 表头fills=[None, None, None, None] 首格='参数名'
+  T7 style=81 5x4 表头fills=[None, None, None, None] 首格='参数名'
+  T8 style=81 3x3 表头fills=[None, None, None] 首格='输入类型'
+  T9 style=81 4x3 表头fills=[None, None, None] 首格='输入类型'
+  T10 style=26 23x4 表头fills=[None, None, None, None] 首格='算子名称'
+  T11 style=26 2x5 表头fills=['auto', 'auto', 'auto', 'auto', 'auto'] 首格='参数名称'

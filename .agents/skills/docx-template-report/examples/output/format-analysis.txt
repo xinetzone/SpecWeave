@@ -1,0 +1,669 @@
+=== 1. 样式定义全览（id | type | name | basedOn）===
+     1 | PARAGRAPH (1)          | Normal
+     2 | PARAGRAPH (1)          | Heading 1  <- 1
+     3 | PARAGRAPH (1)          | Heading 2  <- 1
+     4 | PARAGRAPH (1)          | Heading 3  <- 1
+     5 | PARAGRAPH (1)          | Heading 4  <- 1
+     6 | PARAGRAPH (1)          | Heading 5  <- 1
+     7 | PARAGRAPH (1)          | Heading 6  <- 1
+     8 | PARAGRAPH (1)          | Heading 7  <- 1
+     9 | PARAGRAPH (1)          | Heading 8  <- 1
+    10 | PARAGRAPH (1)          | Heading 9  <- 1
+    27 | CHARACTER (2)          | Default Paragraph Font
+    25 | TABLE (3)              | Normal Table
+    11 | PARAGRAPH (1)          | toc 7  <- 1
+    12 | PARAGRAPH (1)          | toc 5  <- 1
+    13 | PARAGRAPH (1)          | toc 3  <- 1
+    14 | PARAGRAPH (1)          | toc 8  <- 1
+    15 | PARAGRAPH (1)          | Footer  <- 1
+    16 | PARAGRAPH (1)          | Header  <- 1
+    17 | PARAGRAPH (1)          | toc 1  <- 1
+    18 | PARAGRAPH (1)          | toc 4  <- 1
+    19 | PARAGRAPH (1)          | Subtitle  <- 1
+    20 | PARAGRAPH (1)          | toc 6  <- 1
+    21 | PARAGRAPH (1)          | toc 2  <- 1
+    22 | PARAGRAPH (1)          | toc 9  <- 1
+    23 | PARAGRAPH (1)          | HTML Preformatted  <- 1
+    24 | PARAGRAPH (1)          | Title  <- 1
+    26 | TABLE (3)              | Table Grid  <- 25
+    28 | CHARACTER (2)          | Strong  <- 27
+    29 | CHARACTER (2)          | page number  <- 27
+    30 | CHARACTER (2)          | FollowedHyperlink  <- 27
+    31 | CHARACTER (2)          | Hyperlink  <- 27
+    32 | CHARACTER (2)          | HTML Code  <- 27
+    33 | CHARACTER (2)          | 标题 1 字符  <- 27
+    34 | CHARACTER (2)          | 标题 2 字符  <- 27
+    35 | CHARACTER (2)          | 标题 3 字符  <- 27
+    36 | CHARACTER (2)          | 标题 4 字符  <- 27
+    37 | CHARACTER (2)          | 标题 5 字符  <- 27
+    38 | CHARACTER (2)          | 标题 6 字符  <- 27
+    39 | CHARACTER (2)          | 标题 7 字符  <- 27
+    40 | CHARACTER (2)          | 标题 8 字符  <- 27
+    41 | CHARACTER (2)          | 标题 9 字符  <- 27
+    42 | CHARACTER (2)          | 标题 字符  <- 27
+    43 | CHARACTER (2)          | 副标题 字符  <- 27
+    44 | PARAGRAPH (1)          | Quote  <- 1
+    45 | CHARACTER (2)          | 引用 字符  <- 27
+    46 | PARAGRAPH (1)          | List Paragraph  <- 1
+    47 | CHARACTER (2)          | 明显强调1  <- 27
+    48 | PARAGRAPH (1)          | Intense Quote  <- 1
+    49 | CHARACTER (2)          | 明显引用 字符  <- 27
+    50 | CHARACTER (2)          | 明显参考1  <- 27
+    51 | CHARACTER (2)          | 页眉 字符  <- 27
+    52 | CHARACTER (2)          | 页脚 字符  <- 27
+    53 | PARAGRAPH (1)          | 封面表格文本  <- 1
+    54 | PARAGRAPH (1)          | No Spacing
+    55 | CHARACTER (2)          | 无间隔 字符  <- 27
+    56 | PARAGRAPH (1)          | TOC 标题1  <- 2
+    57 | TABLE (3)              | 无格式表格 31  <- 25
+    58 | TABLE (3)              | OP_ExcelTableContent-911  <- 25
+    59 | PARAGRAPH (1)          | b63ee27f-4cf3-414c-9275-d88e3f90795e  <- 4
+    60 | PARAGRAPH (1)          | acbfdd8b-e11b-4d36-88ff-6049b138f862  <- 1
+    61 | CHARACTER (2)          | b63ee27f-4cf3-414c-9275-d88e3f90795e 字符  <- 35
+    62 | CHARACTER (2)          | acbfdd8b-e11b-4d36-88ff-6049b138f862 字符  <- 35
+    63 | PARAGRAPH (1)          | 表格文本  <- 1
+    64 | PARAGRAPH (1)          | code  <- 1
+    65 | CHARACTER (2)          | code 字符  <- 27
+    66 | CHARACTER (2)          | 未处理的提及1  <- 27
+    67 | CHARACTER (2)          | HTML 预设格式 字符  <- 27
+    68 | CHARACTER (2)          | Placeholder Text  <- 27
+    69 | CHARACTER (2)          | mord  <- 27
+    70 | CHARACTER (2)          | vlist-s  <- 27
+    71 | CHARACTER (2)          | mrel  <- 27
+    72 | CHARACTER (2)          | mtight  <- 27
+    73 | CHARACTER (2)          | mbin  <- 27
+    74 | CHARACTER (2)          | katex-mathml  <- 27
+    75 | CHARACTER (2)          | mopen  <- 27
+    76 | CHARACTER (2)          | mpunct  <- 27
+    77 | CHARACTER (2)          | mclose  <- 27
+    78 | PARAGRAPH (1)          | code-inline  <- 1
+    79 | CHARACTER (2)          | code-inline 字符  <- 27
+    80 | PARAGRAPH (1)          | TOC 标题2  <- 2
+    81 | TABLE (3)              | Grid Table Light  <- 25
+    82 | CHARACTER (2)          | markdown-inline-code  <- 27
+    83 | TABLE (3)              | OP_ExcelTableContent-2871  <- 25
+    84 | CHARACTER (2)          | Unresolved Mention  <- 27
+    85 | CHARACTER (2)          | markdown-bold-text  <- 27
+    86 | PARAGRAPH (1)          | Revision
+
+=== 2. 正文使用的样式ID -> 名称 ===
+   217 段  id=64     name=code
+   206 段  id=(default) name=?
+    34 段  id=4      name=Heading 3
+    32 段  id=46     name=List Paragraph
+    22 段  id=3      name=Heading 2
+    18 段  id=5      name=Heading 4
+     6 段  id=2      name=Heading 1
+     1 段  id=63     name=表格文本
+
+=== 3. 段落样式完整定义（非内置默认样式全量打印）===
+
+--- Normal (id=1) basedOn=None next=None ---
+    rPr: {"fonts": {"ascii": "Times New Roman", "hAnsi": "Times New Roman", "eastAsia": "华文仿宋", "cs": "Times New Roman"}, "sz_half_pt": 21, "sz_pt": 10.5, "szCs_pt": 11.0}
+    pPr: {"align": "both", "indent": {"firstLine": "200", "firstLineChars": "200"}}
+
+--- Heading 1 (id=2) basedOn=1 next=1 ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 36, "sz_pt": 18.0, "szCs_pt": 24.0, "color": "000000"}
+    pPr: {"spacing": {"before": "480", "after": "80", "line": "360", "lineRule": "auto"}, "indent": {"left": "0", "firstLine": "0", "firstLineChars": "0"}, "numbering": {"ilvl": "0", "numId": "1"}, "outlineLvl": "0", "shd_fill": "auto"}
+
+--- Heading 2 (id=3) basedOn=1 next=1 ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 32, "sz_pt": 16.0, "szCs_pt": 20.0, "color": "000000"}
+    pPr: {"spacing": {"before": "160", "after": "80", "line": "360", "lineRule": "auto"}, "indent": {"left": "0", "firstLine": "0", "firstLineChars": "0"}, "numbering": {"ilvl": "1", "numId": "1"}, "outlineLvl": "1", "shd_fill": "auto"}
+
+--- Heading 3 (id=4) basedOn=1 next=1 ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 30, "sz_pt": 15.0, "szCs_pt": 16.0, "color": "000000"}
+    pPr: {"spacing": {"before": "160", "after": "80", "line": "360", "lineRule": "auto"}, "indent": {"left": "0", "firstLine": "0", "firstLineChars": "0"}, "numbering": {"ilvl": "2", "numId": "1"}, "outlineLvl": "2"}
+
+--- Heading 4 (id=5) basedOn=1 next=1 ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 28, "sz_pt": 14.0, "szCs_pt": 14.0, "color": "000000"}
+    pPr: {"spacing": {"before": "50", "beforeLines": "50", "after": "50", "afterLines": "50", "line": "360", "lineRule": "auto"}, "indent": {"left": "0", "firstLine": "0", "firstLineChars": "0"}, "numbering": {"ilvl": "3", "numId": "1"}, "outlineLvl": "3"}
+
+--- Heading 5 (id=6) basedOn=1 next=1 ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "color": "000000"}
+    pPr: {"spacing": {"before": "80", "after": "40", "line": "360", "lineRule": "auto"}, "indent": {"left": "0", "firstLine": "0", "firstLineChars": "0"}, "numbering": {"ilvl": "4", "numId": "1"}, "outlineLvl": "4"}
+
+--- Heading 6 (id=7) basedOn=1 next=1 ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "bold": true, "color": "104862"}
+    pPr: {"spacing": {"before": "40"}, "outlineLvl": "5"}
+
+--- Heading 7 (id=8) basedOn=1 next=1 ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "bold": true, "color": "595959"}
+    pPr: {"spacing": {"before": "40"}, "outlineLvl": "6"}
+
+--- Heading 8 (id=9) basedOn=1 next=1 ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "color": "595959"}
+    pPr: {"outlineLvl": "7"}
+
+--- Heading 9 (id=10) basedOn=1 next=1 ---
+    rPr: {"fonts": {"eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "color": "595959"}
+    pPr: {"outlineLvl": "8"}
+
+--- toc 7 (id=11) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "eastAsiaTheme": "minorHAnsi"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "1260"}}
+
+--- toc 5 (id=12) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "eastAsiaTheme": "minorHAnsi"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "840"}}
+
+--- toc 3 (id=13) basedOn=1 next=1 ---
+    rPr: {"sz_half_pt": 20, "sz_pt": 10.0, "szCs_pt": 10.0}
+    pPr: {"indent": {"left": "420"}}
+
+--- toc 8 (id=14) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "eastAsiaTheme": "minorHAnsi"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "1470"}}
+
+--- Footer (id=15) basedOn=1 next=None ---
+    rPr: {"sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+
+--- Header (id=16) basedOn=1 next=None ---
+    rPr: {"sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"align": "center"}
+
+--- toc 1 (id=17) basedOn=1 next=1 ---
+    rPr: {"sz_half_pt": 20, "sz_pt": 10.0, "szCs_pt": 10.0, "bold": true}
+    pPr: {"spacing": {"before": "120", "after": "120"}, "indent": {"firstLine": "400"}}
+
+--- toc 4 (id=18) basedOn=1 next=1 ---
+    rPr: {"sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "630"}}
+
+--- Subtitle (id=19) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "majorHAnsi", "hAnsiTheme": "majorHAnsi", "eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "sz_half_pt": 28, "sz_pt": 14.0, "szCs_pt": 14.0, "color": "595959", "char_spacing_twips": "15"}
+    pPr: {"align": "center"}
+
+--- toc 6 (id=20) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "eastAsiaTheme": "minorHAnsi"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "1050"}}
+
+--- toc 2 (id=21) basedOn=1 next=1 ---
+    rPr: {"sz_half_pt": 20, "sz_pt": 10.0, "szCs_pt": 10.0}
+    pPr: {"indent": {"left": "210"}}
+
+--- toc 9 (id=22) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "eastAsiaTheme": "minorHAnsi"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+    pPr: {"indent": {"left": "1680"}}
+
+--- HTML Preformatted (id=23) basedOn=1 next=None ---
+    rPr: {"fonts": {"ascii": "Courier New", "hAnsi": "Courier New", "cs": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0, "szCs_pt": 10.0}
+
+--- Title (id=24) basedOn=1 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "majorHAnsi", "hAnsiTheme": "majorHAnsi", "eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "sz_half_pt": 56, "sz_pt": 28.0, "szCs_pt": 28.0, "char_spacing_twips": "-10"}
+    pPr: {"align": "center", "spacing": {"after": "80"}}
+
+--- Quote (id=44) basedOn=1 next=1 ---
+    rPr: {"italic": true, "color": "404040"}
+    pPr: {"align": "center", "spacing": {"before": "160"}}
+
+--- List Paragraph (id=46) basedOn=1 next=None ---
+    pPr: {"indent": {"left": "720"}}
+
+--- Intense Quote (id=48) basedOn=1 next=1 ---
+    rPr: {"italic": true, "color": "104862"}
+    pPr: {"align": "center", "spacing": {"before": "360", "after": "360"}, "indent": {"left": "864", "right": "864"}, "borders": ["top", "bottom"]}
+
+--- 封面表格文本 (id=53) basedOn=1 next=None ---
+    rPr: {"fonts": {"eastAsia": "宋体"}, "szCs_pt": 10.5}
+    pPr: {"align": "center"}
+
+--- No Spacing (id=54) basedOn=None next=None ---
+    rPr: {"fonts": {"asciiTheme": "minorHAnsi", "hAnsiTheme": "minorHAnsi", "eastAsiaTheme": "minorEastAsia", "cstheme": "minorBidi"}, "sz_half_pt": 22, "sz_pt": 11.0, "szCs_pt": 11.0}
+
+--- TOC 标题1 (id=56) basedOn=2 next=1 ---
+    rPr: {"sz_half_pt": 32, "sz_pt": 16.0, "szCs_pt": 16.0}
+    pPr: {"spacing": {"before": "240", "after": "0", "line": "259", "lineRule": "auto"}, "outlineLvl": "9"}
+
+--- b63ee27f-4cf3-414c-9275-d88e3f90795e (id=59) basedOn=4 next=60 ---
+    rPr: {"fonts": {"ascii": "微软雅黑", "hAnsi": "微软雅黑", "eastAsia": "微软雅黑"}, "sz_half_pt": 26, "sz_pt": 13.0, "bold": true, "color": "000000"}
+    pPr: {"spacing": {"before": "0", "after": "0", "line": "288", "lineRule": "auto"}}
+
+--- acbfdd8b-e11b-4d36-88ff-6049b138f862 (id=60) basedOn=1 next=None ---
+    rPr: {"fonts": {"ascii": "微软雅黑", "hAnsi": "微软雅黑", "eastAsia": "微软雅黑"}, "sz_half_pt": 22, "sz_pt": 11.0, "color": "000000"}
+    pPr: {"spacing": {"line": "288", "lineRule": "auto"}}
+
+--- 表格文本 (id=63) basedOn=1 next=None ---
+    rPr: {"fonts": {"eastAsia": "宋体"}, "szCs_pt": 10.5}
+    pPr: {"indent": {"firstLine": "0", "firstLineChars": "0"}}
+
+--- code (id=64) basedOn=1 next=None ---
+    rPr: {"fonts": {"eastAsia": "华文楷体"}, "sz_half_pt": 18, "sz_pt": 9.0, "color": "333333", "char_spacing_twips": "20"}
+    pPr: {"align": "left", "spacing": {"line": "240", "lineRule": "atLeast"}, "indent": {"left": "105", "leftChars": "50", "right": "105", "rightChars": "50", "firstLine": "0", "firstLineChars": "0"}, "borders": ["top", "left", "bottom", "right"], "shd_fill": "auto"}
+
+--- code-inline (id=78) basedOn=1 next=None ---
+    rPr: {"bold": true}
+    pPr: {"indent": {"firstLine": "0", "firstLineChars": "0"}}
+
+--- TOC 标题2 (id=80) basedOn=2 next=1 ---
+    rPr: {"fonts": {"asciiTheme": "majorHAnsi", "hAnsiTheme": "majorHAnsi", "eastAsiaTheme": "majorEastAsia"}, "sz_half_pt": 32, "sz_pt": 16.0, "szCs_pt": 16.0, "color": "104862"}
+    pPr: {"spacing": {"before": "240", "after": "0", "line": "259", "lineRule": "auto"}, "outlineLvl": "9", "shd_fill": "auto"}
+
+--- Revision (id=86) basedOn=None next=None ---
+    rPr: {"fonts": {"ascii": "Times New Roman", "hAnsi": "Times New Roman", "eastAsia": "华文仿宋", "cs": "Times New Roman"}, "sz_half_pt": 21, "sz_pt": 10.5, "szCs_pt": 11.0}
+
+=== 4. 字符样式（CHARACTER，仅打印有 rPr 定义的）===
+--- Strong (id=28) ---
+    rPr: {"bold": true}
+--- FollowedHyperlink (id=30) ---
+    rPr: {"underline": "single", "color": "96607D"}
+--- Hyperlink (id=31) ---
+    rPr: {"underline": "single", "color": "467886"}
+--- HTML Code (id=32) ---
+    rPr: {"fonts": {"ascii": "宋体", "hAnsi": "宋体", "eastAsia": "宋体", "cs": "宋体"}, "sz_half_pt": 24, "sz_pt": 12.0, "szCs_pt": 12.0}
+--- 标题 1 字符 (id=33) ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 36, "sz_pt": 18.0, "szCs_pt": 24.0, "color": "000000", "shd_fill": "auto"}
+--- 标题 2 字符 (id=34) ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 32, "sz_pt": 16.0, "szCs_pt": 20.0, "color": "000000", "shd_fill": "auto"}
+--- 标题 3 字符 (id=35) ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 30, "sz_pt": 15.0, "szCs_pt": 16.0, "color": "000000"}
+--- 标题 4 字符 (id=36) ---
+    rPr: {"fonts": {"eastAsia": "黑体", "cstheme": "majorBidi"}, "sz_half_pt": 28, "sz_pt": 14.0, "szCs_pt": 14.0, "color": "000000"}
+--- 标题 5 字符 (id=37) ---
+    rPr: {"fonts": {"eastAsia": "华文楷体", "cstheme": "majorBidi"}, "sz_half_pt": 21, "sz_pt": 10.5, "szCs_pt": 11.0, "color": "000000"}
+--- 标题 6 字符 (id=38) ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "bold": true, "color": "104862"}
+--- 标题 7 字符 (id=39) ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "bold": true, "color": "595959"}
+--- 标题 8 字符 (id=40) ---
+    rPr: {"fonts": {"cstheme": "majorBidi"}, "color": "595959"}
+--- 标题 9 字符 (id=41) ---
+    rPr: {"fonts": {"eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "color": "595959"}
+--- 标题 字符 (id=42) ---
+    rPr: {"fonts": {"asciiTheme": "majorHAnsi", "hAnsiTheme": "majorHAnsi", "eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "sz_half_pt": 56, "sz_pt": 28.0, "szCs_pt": 28.0, "char_spacing_twips": "-10"}
+--- 副标题 字符 (id=43) ---
+    rPr: {"fonts": {"asciiTheme": "majorHAnsi", "hAnsiTheme": "majorHAnsi", "eastAsiaTheme": "majorEastAsia", "cstheme": "majorBidi"}, "sz_half_pt": 28, "sz_pt": 14.0, "szCs_pt": 14.0, "color": "595959", "char_spacing_twips": "15"}
+--- 引用 字符 (id=45) ---
+    rPr: {"italic": true, "color": "404040"}
+--- 明显强调1 (id=47) ---
+    rPr: {"italic": true, "color": "104862"}
+--- 明显引用 字符 (id=49) ---
+    rPr: {"italic": true, "color": "104862"}
+--- 明显参考1 (id=50) ---
+    rPr: {"bold": true, "color": "104862", "char_spacing_twips": "5"}
+--- 页眉 字符 (id=51) ---
+    rPr: {"sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+--- 页脚 字符 (id=52) ---
+    rPr: {"sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 9.0}
+--- 无间隔 字符 (id=55) ---
+    rPr: {"szCs_pt": 11.0}
+--- b63ee27f-4cf3-414c-9275-d88e3f90795e 字符 (id=61) ---
+    rPr: {"fonts": {"ascii": "微软雅黑", "hAnsi": "微软雅黑", "eastAsia": "微软雅黑", "cstheme": "majorBidi"}, "sz_half_pt": 26, "sz_pt": 13.0, "szCs_pt": 16.0, "bold": true, "color": "000000", "shd_fill": "E8E8E8"}
+--- acbfdd8b-e11b-4d36-88ff-6049b138f862 字符 (id=62) ---
+    rPr: {"fonts": {"ascii": "微软雅黑", "hAnsi": "微软雅黑", "eastAsia": "微软雅黑", "cs": "Times New Roman"}, "sz_half_pt": 32, "sz_pt": 16.0, "szCs_pt": 11.0, "color": "000000", "shd_fill": "E8E8E8"}
+--- code 字符 (id=65) ---
+    rPr: {"fonts": {"eastAsia": "华文楷体"}, "sz_half_pt": 18, "sz_pt": 9.0, "szCs_pt": 11.0, "color": "333333", "shd_fill": "auto", "char_spacing_twips": "20"}
+--- 未处理的提及1 (id=66) ---
+    rPr: {"color": "605E5C", "shd_fill": "E1DFDD"}
+--- HTML 预设格式 字符 (id=67) ---
+    rPr: {"fonts": {"ascii": "Courier New", "hAnsi": "Courier New", "eastAsia": "华文宋体", "cs": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0, "szCs_pt": 10.0}
+--- Placeholder Text (id=68) ---
+    rPr: {"color": "666666"}
+--- code-inline 字符 (id=79) ---
+    rPr: {"fonts": {"eastAsia": "华文楷体"}, "sz_half_pt": 21, "sz_pt": 10.5, "szCs_pt": 11.0, "bold": true}
+--- Unresolved Mention (id=84) ---
+    rPr: {"color": "605E5C", "shd_fill": "E1DFDD"}
+
+=== 5. 表格样式（TABLE）===
+--- Normal Table (id=25) ---
+--- Table Grid (id=26) ---
+    borders: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+--- 无格式表格 31 (id=57) ---
+--- OP_ExcelTableContent-911 (id=58) ---
+    borders: {"top": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "191919", "sz": "4", "space": "0"}}
+--- Grid Table Light (id=81) ---
+    borders: {"top": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "BEBEBE", "themeColor": "background1", "themeShade": "BF", "sz": "4", "space": "0"}}
+--- OP_ExcelTableContent-2871 (id=83) ---
+    borders: {"top": {"val": "single", "color": "555555", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "555555", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "555555", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "555555", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "555555", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "555555", "sz": "4", "space": "0"}}
+
+=== 6. 编号定义（numbering）===
+num_map: {"1": "2", "2": "8", "3": "6", "4": "11", "5": "9", "6": "4", "7": "5", "8": "0", "9": "10", "10": "7", "11": "12", "12": "13", "13": "1", "14": "3", "15": "16", "16": "14", "17": "15"}
+
+abstractNumId=0:
+  L0: fmt=bullet text='\uf0b7' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Symbol", "hAnsi": "Symbol"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='\uf0d8' jc=left pPr={"indent": {"left": "851", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "1574", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1985", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2552", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "3119", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "3686", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "4253", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "4820", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=1:
+  L0: fmt=decimal text='%1.' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L1: fmt=decimal text='%2.' jc=left pPr={"indent": {"left": "568", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L2: fmt=decimal text='%3.' jc=left pPr={"indent": {"left": "852", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L3: fmt=decimal text='%4.' jc=left pPr={"indent": {"left": "1136", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L4: fmt=decimal text='%5.' jc=left pPr={"indent": {"left": "1420", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L5: fmt=decimal text='%6.' jc=left pPr={"indent": {"left": "1704", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L6: fmt=decimal text='%7.' jc=left pPr={"indent": {"left": "1988", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L7: fmt=decimal text='%8.' jc=left pPr={"indent": {"left": "2272", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L8: fmt=decimal text='%9.' jc=left pPr={"indent": {"left": "2556", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+
+abstractNumId=2:
+  L0: fmt=decimal text='%1.' jc=left pPr={"indent": {"left": "5669", "hanging": "425"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L1: fmt=decimal text='%1.%2.' jc=left pPr={"indent": {"left": "567", "hanging": "567"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L2: fmt=decimal text='%1.%2.%3.' jc=left pPr={"indent": {"left": "1276", "hanging": "709"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L3: fmt=decimal text='%1.%2.%3.%4.' jc=left pPr={"indent": {"left": "2552", "hanging": "851"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L4: fmt=decimal text='%1.%2.%3.%4.%5.' jc=left pPr={"indent": {"left": "992", "hanging": "992"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L5: fmt=decimal text='%1.%2.%3.%4.%5.%6.' jc=left pPr={"indent": {"left": "1134", "hanging": "1134"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L6: fmt=decimal text='%1.%2.%3.%4.%5.%6.%7.' jc=left pPr={"indent": {"left": "1276", "hanging": "1276"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L7: fmt=decimal text='%1.%2.%3.%4.%5.%6.%7.%8.' jc=left pPr={"indent": {"left": "1418", "hanging": "1418"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L8: fmt=decimal text='%1.%2.%3.%4.%5.%6.%7.%8.%9.' jc=left pPr={"indent": {"left": "1559", "hanging": "1559"}} rPr={"fonts": {"hint": "eastAsia"}}
+
+abstractNumId=3:
+  L0: fmt=bullet text='\uf0b7' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Symbol", "hAnsi": "Symbol"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='o' jc=left pPr={"indent": {"left": "568", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Courier New", "hAnsi": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L2: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "852", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1136", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1420", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1704", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1988", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2272", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2556", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=4:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "567", "hanging": "454"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf0d8' jc=left pPr={"indent": {"left": "1021", "hanging": "170"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='■' jc=left pPr={"indent": {"left": "1418", "firstLine": "170"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L3: fmt=bullet text='●' jc=left pPr={"indent": {"left": "2880", "hanging": "259"}} rPr={}
+  L4: fmt=bullet text='○' jc=left pPr={"indent": {"left": "3600", "hanging": "259"}} rPr={}
+  L5: fmt=bullet text='■' jc=left pPr={"indent": {"left": "4320", "hanging": "259"}} rPr={}
+  L6: fmt=bullet text='●' jc=left pPr={"indent": {"left": "5040", "hanging": "259"}} rPr={}
+  L7: fmt=bullet text='○' jc=left pPr={"indent": {"left": "5760", "hanging": "259"}} rPr={}
+  L8: fmt=bullet text='■' jc=left pPr={"indent": {"left": "6480", "hanging": "259"}} rPr={}
+
+abstractNumId=5:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "284", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='o' jc=left pPr={"indent": {"left": "568", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Courier New", "hAnsi": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L2: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "852", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1136", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1420", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1704", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1988", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2272", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2556", "hanging": "171"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=6:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "567", "hanging": "283"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "1300", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "1740", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "2180", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L4: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "2620", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L5: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "3060", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L6: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "3500", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L7: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "3940", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L8: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "4380", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+
+abstractNumId=7:
+  L0: fmt=decimal text='%1.' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L1: fmt=lowerLetter text='%2)' jc=left pPr={"indent": {"left": "1300", "hanging": "440"}} rPr={}
+  L2: fmt=lowerRoman text='%3.' jc=right pPr={"indent": {"left": "1740", "hanging": "440"}} rPr={}
+  L3: fmt=decimal text='%4.' jc=left pPr={"indent": {"left": "2180", "hanging": "440"}} rPr={}
+  L4: fmt=lowerLetter text='%5)' jc=left pPr={"indent": {"left": "2620", "hanging": "440"}} rPr={}
+  L5: fmt=lowerRoman text='%6.' jc=right pPr={"indent": {"left": "3060", "hanging": "440"}} rPr={}
+  L6: fmt=decimal text='%7.' jc=left pPr={"indent": {"left": "3500", "hanging": "440"}} rPr={}
+  L7: fmt=lowerLetter text='%8)' jc=left pPr={"indent": {"left": "3940", "hanging": "440"}} rPr={}
+  L8: fmt=lowerRoman text='%9.' jc=right pPr={"indent": {"left": "4380", "hanging": "440"}} rPr={}
+
+abstractNumId=8:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "1280", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "1720", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "2160", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "2600", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L4: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "3040", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L5: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "3480", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L6: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "3920", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L7: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "4360", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L8: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "4800", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+
+abstractNumId=9:
+  L0: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "851", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "1418", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "1985", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L4: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "2552", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L5: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "3119", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L6: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "3686", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L7: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "4253", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L8: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "4820", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+
+abstractNumId=10:
+  L0: fmt=bullet text='\uf0b7' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Symbol", "hAnsi": "Symbol"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='\uf0d8' jc=left pPr={"indent": {"left": "851", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "1574", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1985", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2552", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "3119", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "3686", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "4253", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "4820", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=11:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "860", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "1300", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "1740", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "2180", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L4: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "2620", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L5: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "3060", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L6: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "3500", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L7: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "3940", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L8: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "4380", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+
+abstractNumId=12:
+  L0: fmt=bullet text='\uf0b7' jc=left pPr={"indent": {"left": "720", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Symbol", "hAnsi": "Symbol"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='o' jc=left pPr={"indent": {"left": "284", "firstLine": "283"}} rPr={"fonts": {"hint": "default", "ascii": "Courier New", "hAnsi": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L2: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2160", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2880", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "3600", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "4320", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "5040", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "5760", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "6480", "hanging": "360"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=13:
+  L0: fmt=bullet text='\uf0c4' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L1: fmt=bullet text='o' jc=left pPr={"indent": {"left": "568", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Courier New", "hAnsi": "Courier New"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L2: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "852", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L3: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1136", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L4: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1420", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L5: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1704", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L6: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "1988", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L7: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2272", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+  L8: fmt=bullet text='\uf0a7' jc=left pPr={"indent": {"left": "2556", "hanging": "284"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}, "sz_half_pt": 20, "sz_pt": 10.0}
+
+abstractNumId=14:
+  L0: fmt=decimal text='%1.' jc=left pPr={"indent": {"left": "284", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L1: fmt=lowerLetter text='%2)' jc=left pPr={"indent": {"left": "568", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L2: fmt=lowerRoman text='%3.' jc=right pPr={"indent": {"left": "852", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L3: fmt=decimal text='%4.' jc=left pPr={"indent": {"left": "1136", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L4: fmt=lowerLetter text='%5)' jc=left pPr={"indent": {"left": "1420", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L5: fmt=lowerRoman text='%6.' jc=right pPr={"indent": {"left": "1704", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L6: fmt=decimal text='%7.' jc=left pPr={"indent": {"left": "1988", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L7: fmt=lowerLetter text='%8)' jc=left pPr={"indent": {"left": "2272", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L8: fmt=lowerRoman text='%9.' jc=right pPr={"indent": {"left": "2556", "hanging": "284"}} rPr={"fonts": {"hint": "eastAsia"}}
+
+abstractNumId=15:
+  L0: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "860", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L1: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "1300", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L2: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "1740", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L3: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "2180", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L4: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "2620", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L5: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "3060", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L6: fmt=bullet text='\uf06c' jc=left pPr={"indent": {"left": "3500", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L7: fmt=bullet text='\uf06e' jc=left pPr={"indent": {"left": "3940", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+  L8: fmt=bullet text='\uf075' jc=left pPr={"indent": {"left": "4380", "hanging": "440"}} rPr={"fonts": {"hint": "default", "ascii": "Wingdings", "hAnsi": "Wingdings"}}
+
+abstractNumId=16:
+  L0: fmt=decimal text='%1.' jc=left pPr={"indent": {"left": "640", "hanging": "440"}} rPr={"fonts": {"hint": "eastAsia"}}
+  L1: fmt=lowerLetter text='%2)' jc=left pPr={"indent": {"left": "1080", "hanging": "440"}} rPr={}
+  L2: fmt=lowerRoman text='%3.' jc=right pPr={"indent": {"left": "1520", "hanging": "440"}} rPr={}
+  L3: fmt=decimal text='%4.' jc=left pPr={"indent": {"left": "1960", "hanging": "440"}} rPr={}
+  L4: fmt=lowerLetter text='%5)' jc=left pPr={"indent": {"left": "2400", "hanging": "440"}} rPr={}
+  L5: fmt=lowerRoman text='%6.' jc=right pPr={"indent": {"left": "2840", "hanging": "440"}} rPr={}
+  L6: fmt=decimal text='%7.' jc=left pPr={"indent": {"left": "3280", "hanging": "440"}} rPr={}
+  L7: fmt=lowerLetter text='%8)' jc=left pPr={"indent": {"left": "3720", "hanging": "440"}} rPr={}
+  L8: fmt=lowerRoman text='%9.' jc=right pPr={"indent": {"left": "4160", "hanging": "440"}} rPr={}
+
+=== 7. 页眉页脚 ===
+{"section": 0, "type": "header", "error": "'.//{http'"}
+{"section": 0, "type": "first_page_header", "linked": false, "paragraphs": [{"text": "", "style": "Header", "align": "left", "has_field": false, "rPr_sample": {}}], "tables": 1}
+{"section": 0, "type": "even_page_header", "linked": false, "paragraphs": [{"text": "", "style": "Header", "align": null, "has_field": false, "rPr_sample": {}}], "tables": 0}
+
+=== 8. 表格首行（表头）格式采样 ===
+
+T0: 3行x1列 style=Table Grid align=None
+   表头单元格[0]: {"width": {"w": "5000", "type": "pct"}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}}}
+   数据单元格[0]: {"run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"align": "center", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}}}
+   表边框: {"top": {"val": "none", "color": "auto", "sz": "0", "space": "0"}, "left": {"val": "none", "color": "auto", "sz": "0", "space": "0"}, "bottom": {"val": "none", "color": "auto", "sz": "0", "space": "0"}, "right": {"val": "none", "color": "auto", "sz": "0", "space": "0"}, "insideH": {"val": "none", "color": "auto", "sz": "0", "space": "0"}, "insideV": {"val": "none", "color": "auto", "sz": "0", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T1: 3行x5列 style=OP_ExcelTableContent-911 align=None
+   表头单元格[0]: {"shd_fill": "191919", "width": {"w": "406", "type": "pct"}, "borders": ["top", "left", "bottom", "right", "insideH", "insideV"], "run_rPr": {"fonts": {"hint": "eastAsia"}, "bold": true, "color": "FFFFFF"}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {"fonts": {"hint": "eastAsia"}, "bold": true, "color": "000000"}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}, "shd_fill": "B8B0B0"}
+   表边框: {"top": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "191919", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "191919", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T2: 6行x2列 style=Table Grid align=None
+   表头单元格[0]: {"shd_fill": "000000", "width": {"w": "1271", "type": "dxa"}, "run_rPr": {"fonts": {"hint": "eastAsia"}, "color": "000000"}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T3: 4行x2列 style=Table Grid align=None
+   表头单元格[0]: {"shd_fill": "auto", "width": {"w": "1413", "type": "dxa"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T4: 7行x2列 style=Table Grid align=None
+   表头单元格[0]: {"shd_fill": "auto", "width": {"w": "1555", "type": "dxa"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T5: 9行x4列 style=Grid Table Light align=None
+   表头单元格[0]: {"width": {"w": "833", "type": "pct"}, "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T6: 21行x4列 style=Grid Table Light align=None
+   表头单元格[0]: {"width": {"w": "1340", "type": "pct"}, "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T7: 5行x4列 style=Grid Table Light align=None
+   表头单元格[0]: {"width": {"w": "1744", "type": "dxa"}, "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T8: 3行x3列 style=Grid Table Light align=None
+   表头单元格[0]: {"width": {"w": "1129", "type": "dxa"}, "run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T9: 4行x3列 style=Grid Table Light align=None
+   表头单元格[0]: {"width": {"w": "1129", "type": "dxa"}, "run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"align": "left", "spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "000000", "themeColor": "text1", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T10: 23行x4列 style=Table Grid align=None
+   表头单元格[0]: {"width": {"w": "3677", "type": "dxa"}, "run_rPr": {"fonts": {"hint": "eastAsia", "eastAsia": "华文楷体"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}}}
+   数据单元格[0]: {"run_rPr": {"fonts": {"hint": "eastAsia", "eastAsia": "华文楷体"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "420"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T11: 2行x5列 style=Table Grid align=None
+   表头单元格[0]: {"shd_fill": "auto", "width": {"w": "1517", "type": "dxa"}, "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '108', 'bottom': '0', 'right': '108'}
+
+T12: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T13: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T14: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T15: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T16: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T17: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "704", "type": "dxa"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T18: 4行x2列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "704", "type": "dxa"}, "run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T19: 3行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T20: 3行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T21: 17行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "1413", "type": "dxa"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T22: 10行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "1413", "type": "dxa"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T23: 8行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T24: 3行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
+
+T25: 3行x3列 style=Normal Table align=None
+   表头单元格[0]: {"width": {"w": "0", "type": "auto"}, "borders": ["top", "left", "bottom", "right"], "run_rPr": {"fonts": {"hint": "eastAsia"}}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}, "indent": {"firstLine": "0", "firstLineChars": "0"}}}
+   数据单元格[0]: {"run_rPr": {}, "pPr": {"spacing": {"line": "300", "lineRule": "auto"}}}
+   表边框: {"top": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "left": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "bottom": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "right": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideH": {"val": "single", "color": "auto", "sz": "4", "space": "0"}, "insideV": {"val": "single", "color": "auto", "sz": "4", "space": "0"}}
+   单元格边距(twips): {'top': '0', 'left': '10', 'bottom': '0', 'right': '10'}
