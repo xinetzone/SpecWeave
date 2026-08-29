@@ -1,0 +1,5 @@
+id = "submodule-ssh-stall-recovery-sop"
+title = "子模块 SSH 停滞换源恢复 SOP"
+category = "docs/retrospective/patterns/process-patterns"
+date = "2026-08-29"
+version = "1.0"

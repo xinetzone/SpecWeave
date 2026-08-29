@@ -6,7 +6,7 @@ date: 2026-07-16
 maturity: L1 实验性
 maturity_note: "单案例验证（4个仓库并行克隆成功），待第二个离线交付场景验证后升级L2"
 source: "../../reports/task-reports/retrospective-git-bundle-clone-20260716/README.md"
-related_patterns: ["bulk-replace-zero-omission-verify.md", "parallel-subprocess-observability.md"]
+related_patterns: ["bulk-replace-zero-omission-verify.md", "parallel-subprocess-observability.md", "../process-patterns/submodule-ssh-stall-recovery-sop.md"]
 tags: ["git", "bundle", "offline", "version-control", "code-delivery"]
 validation_count: 1
 reuse_count: 0
