@@ -193,8 +193,8 @@ stale_after: "2027-08-29"
 | A-1 | 将模式第五步验证脚本固化为 `.agents/scripts/` 可复用工具：匹配三类路径形态 × 两种斜杠、路径特征段稳定性分类、Test-Path 存在性复验；并对 `.chaos/libs` 其余 15 个克隆执行全量扫描 | 工具建设 | high | AI 智能体 | 待执行 |
 | A-2 | 信源稳定性门 5 步 + tag 选型子步骤（洞察 I-3）内置为 source-code-to-okf-wiki 技能 R 阶段前预检清单（延续案例1报告 A-2） | 流程改进 | high | AI 智能体 | 待执行 |
 | A-3 | 修复 veadk-python Wiki 9 处内部导航断链（补 `03-agent-platforms-tools/01-domestic-platforms/` 路径段或改为相对路径），属输出层 file-existence-verification-gate 领域 | 缺陷修复 | medium | AI 智能体 | 待执行 |
-| A-4 | `bundles/chaos/veadk-python/` 3 处 .chaos 散文式元数据声明处理：重新生成 bundle 或手动同步 vendor 路径 | 数据一致 | low | AI 智能体 | 待用户决策 |
-| A-5 | `.chaos/libs/veadk-python` 临时克隆清理：第四步扫描已放行（活动引用 0，仅剩历史记录与 bundle 散文声明），删除不可逆 | 环境清理 | low | 用户 | 待用户决策 |
+| A-4 | `bundles/chaos/veadk-python/` 3 处 .chaos 散文式元数据声明处理：重新生成 bundle 或手动同步 vendor 路径 | 数据一致 | low | AI 智能体 | ✅ 已完成（2026-08-29，3 处手动同步 vendor 路径，bundle 复验 .chaos 残留 0，提交 98b76d84） |
+| A-5 | `.chaos/libs/veadk-python` 临时克隆清理：第四步扫描已放行（活动引用 0，仅剩历史记录与 bundle 散文声明），删除不可逆 | 环境清理 | low | 用户决策/AI 执行 | ✅ 已完成（2026-08-29，用户确认后删除 210MB 克隆；删除后全类型扫描仅余 3 个历史记录文件引用） |
 | A-6 | 排查 ai-collaboration 目录其余模式文档 `source` 字段相对路径是否同样误指 `.agents/docs/retrospective/reports/`（本次发现并修复 source-stability-gate.md 一处） | 缺陷排查 | medium | AI 智能体 | 待执行 |
 
 ---
@@ -219,4 +219,6 @@ stale_after: "2027-08-29"
 |--------|------|------|--------|
 | 4d7fbcb7 | chore(vendor) | 引入 veadk-python 1.0.10 子模块并迁移 Wiki 信源引用（.gitmodules + gitlink + vendor 元数据3文件 + Wiki 41文件，641 增/632 删） | 46 |
 | a2442643 | docs(patterns) | 信源稳定性门模式萃取入库（L2 双案例验证 + 反模式5，模式文档 + 索引2文件，317 增） | 3 |
-| （本提交） | docs(retrospective) | 本里程碑复盘报告与 milestone 索引登记 | 2 |
+| 5427d1df | docs(retrospective) | 本里程碑复盘报告与 milestone 索引登记 | 2 |
+| 98b76d84 | docs(bundle) | 行动项 A-4：bundle 3 处溯源路径同步 vendor 信源（行动项 A-5 同窗口执行：删除 210MB 临时克隆，.chaos 为 gitignore 无仓库变更） | 3 |
+| （本提交） | docs(retrospective) | 行动项 A-4/A-5 闭环状态更新 | 1 |
