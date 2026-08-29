@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 """第五轮：封面表 r2 内容 / header XML / settings / 真实H1段落编号覆盖检查"""
-import sys, zipfile, re
+import sys, zipfile, re, glob
 
-src = sys.argv[1] if len(sys.argv) > 1 else r"d:\AI\.chaos\tests\old\work\doc\XMNN_SDK_使用指南v1.1.0.docx"
+# 源文档在本地 .chaos 工作区（不入库）；以通配符定位，不固化源文件名
+src = sys.argv[1] if len(sys.argv) > 1 else (
+    glob.glob(r"d:\AI\.chaos\tests\old\work\doc\*SDK*指南*.docx") or [None])[0]
 z = zipfile.ZipFile(src)
 doc_xml = z.read("word/document.xml").decode("utf-8")
 
 print("=== 1. 封面表 row2 原始 XML ===")
-m = re.search(r'<w:tbl>(?:(?!</w:tbl>).)*?浙江芯劢.*?</w:tbl>', doc_xml, re.S)
+# T0 封面隐形表即 document.xml 中的第一个表格（以表序定位，不固化源公司名）
+m = re.search(r'<w:tbl>(?:(?!</w:tbl>).)*?</w:tbl>', doc_xml, re.S)
 seg = m.group(0)
 rows = re.findall(r'<w:tr[ >].*?</w:tr>', seg, re.S)
 print(rows[2][:1500])

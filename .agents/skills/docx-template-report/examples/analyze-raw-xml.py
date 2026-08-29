@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """第四轮：原始 XML 验证——标题编号真实性 / T0封面第三行 / TOC域 / 颜色run完整文本"""
-import sys, zipfile, re
+import sys, zipfile, re, glob
 
-src = sys.argv[1] if len(sys.argv) > 1 else r"d:\AI\.chaos\tests\old\work\doc\XMNN_SDK_使用指南v1.1.0.docx"
+# 源文档在本地 .chaos 工作区（不入库）；以通配符定位，不固化源文件名
+src = sys.argv[1] if len(sys.argv) > 1 else (
+    glob.glob(r"d:\AI\.chaos\tests\old\work\doc\*SDK*指南*.docx") or [None])[0]
 z = zipfile.ZipFile(src)
 
 doc_xml = z.read("word/document.xml").decode("utf-8")
@@ -39,7 +41,8 @@ if m:
     print(l0.group(0) if l0 else "未找到")
 
 print("\n=== 5. T0 封面表格完整 XML（前 2500 字符）===")
-m = re.search(r'<w:tbl>(?:(?!</w:tbl>).)*?浙江芯劢.*?</w:tbl>', doc_xml, re.S)
+# T0 封面隐形表即 document.xml 中的第一个表格（以表序定位，不固化源公司名）
+m = re.search(r'<w:tbl>(?:(?!</w:tbl>).)*?</w:tbl>', doc_xml, re.S)
 if m:
     seg = m.group(0)
     print("长度:", len(seg))

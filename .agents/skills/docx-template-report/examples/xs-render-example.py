@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-xmnn-render-example.py — xmnn-sdk-guide-template.docx 渲染验证示例。
+xs-render-example.py — xs-sdk-guide-template.docx 渲染验证示例。
 
 覆盖全部块类型：封面字段 / 修订记录行循环(3行) / 目录域 / h1-h4 / 正文 / 列表 /
 代码块(多行) / shell 行 / 警告行 / 2-3-4-5 列表格 / 显式分页。
-渲染后执行 15 项结构断言，验证样式、编号链、页眉、表格保真。
+渲染后执行 37 项断言，验证样式、编号链、页眉、表格保真与品牌脱敏。
+演示数据全部为虚构中立数据，渲染产物不含任何品牌/人员关键词。
 
 运行：
-  py -3.14 examples/xmnn-render-example.py
+  py -3.14 examples/xs-render-example.py
 """
 import os
 import zipfile
@@ -16,25 +17,36 @@ from docx.oxml.ns import qn
 from docxtpl import DocxTemplate
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE = os.path.join(BASE, "templates", "xmnn-sdk-guide-template.docx")
-OUT = os.path.join(BASE, "examples", "output", "xmnn-template-example.docx")
+TEMPLATE = os.path.join(BASE, "templates", "xs-sdk-guide-template.docx")
+OUT = os.path.join(BASE, "examples", "output", "xs-template-example.docx")
 os.makedirs(os.path.dirname(OUT), exist_ok=True)  # 产物目录不入库，运行时自创建
 
+# 品牌检测词表以扫描器 scan-brand-residue.py 的 KEYWORDS 为唯一事实源，
+# 本示例不另立词表（检测签名单点维护，随扫描器更新）
+import importlib.util
+_spec = importlib.util.spec_from_file_location(
+    "scan_brand_residue",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "scan-brand-residue.py"))
+_scan = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_scan)
+BRAND_KEYWORDS = _scan.KEYWORDS
+
+# 演示数据均为虚构中立数据，不含任何真实品牌/人员信息
 context = {
-    "doc_title": "芯劢微XMNN SDK用户使用指南",
+    "doc_title": "XS SDK 用户使用指南",
     "doc_status": "正式发布",
     "doc_version": "1.1.0",
-    "doc_author": "XMNPU",
+    "doc_author": "张三",
     "doc_date": "2025-10-15",
-    "doc_reviewer": "张振宇",
-    "company": "浙江芯劢微电子股份有限公司",
+    "doc_reviewer": "李四",
+    "company": "示例科技有限公司",
     "copyright_notice": "（版本所有，翻版必究）",
     "revisions": [
-        {"version": "1.0.0", "author": "刘新伟", "date": "2025-07-02",
-         "description": "初始版本", "reviewer": "张振宇"},
-        {"version": "1.1.0", "author": "刘新伟", "date": "2025-10-15",
+        {"version": "1.0.0", "author": "王五", "date": "2025-07-02",
+         "description": "初始版本", "reviewer": "李四"},
+        {"version": "1.1.0", "author": "王五", "date": "2025-10-15",
          "description": "1.工具链移除对 caffe 环境的依赖；2.新增算子支持：matmul, softmax",
-         "reviewer": "张振宇"},
+         "reviewer": "李四"},
         {"version": "1.2.0", "author": "测试员", "date": "2026-08-29",
          "description": "模板渲染验证追加行", "reviewer": "审核员"},
     ],
@@ -44,17 +56,17 @@ context = {
         {"type": "list", "text": "Conda 虚拟环境配置"},
         {"type": "list", "text": "Docker 容器环境配置"},
         {"type": "h2", "text": "Conda 环境配置"},
-        {"type": "h3", "text": "构建 xmenv 环境"},
+        {"type": "h3", "text": "构建 xsenv 环境"},
         {"type": "h4", "text": "环境变量说明"},
         {"type": "p", "text": "创建并激活 Python 环境，依次执行以下命令："},
         {"type": "code", "lines": [
             "cd release",
-            "conda env create --file=xmnn.yaml",
-            "conda activate xmenv",
-            "pip install xm_gnpu-1.1.0-py3-none-any.whl",
+            "conda env create --file=xs.yaml",
+            "conda activate xsenv",
+            "pip install xs_sdk-1.1.0-py3-none-any.whl",
         ]},
-        {"type": "shell", "text": "$ conda activate xmenv"},
-        {"type": "shell", "text": "$ docker run -it --rm -v xxx/npuusertools:/home/ xmnn:latest"},
+        {"type": "shell", "text": "$ conda activate xsenv"},
+        {"type": "shell", "text": "$ docker run -it --rm -v xxx/npuusertools:/home/ xs:latest"},
         {"type": "warn", "text": "注意：pytorch 需要使用 torch.jit.save 保存的模型。"},
         {"type": "table", "cols": 2,
          "header": ["参数", "说明"],
@@ -98,13 +110,13 @@ def check(name, cond):
 
 # A. 文件与封面
 check("A1 输出文件非空", os.path.getsize(OUT) > 20_000)
-check("A2 封面标题渲染", "芯劢微XMNN SDK用户使用指南" in body_text)
+check("A2 封面标题渲染", "XS SDK 用户使用指南" in body_text)
 check("A3 版本/状态渲染", "1.1.0" in body_text and "正式发布" in body_text)
 check("A4 无残留 Jinja 标签", "{%" not in body_text and "{{" not in body_text and "{%" not in table_text and "{{" not in table_text)
 # 封面 sdt 内 作者/完成日期/审核 三字段
 cover_sdt = next(ch for ch in chk.element.body.iter(qn("w:sdt")))
 cover_text = "\n".join(t.text or "" for t in cover_sdt.iter(qn("w:t")))
-check("A5 封面作者/日期/审核渲染", "XMNPU" in cover_text and "2025-10-15" in cover_text and "张振宇" in cover_text)
+check("A5 封面作者/日期/审核渲染", "张三" in cover_text and "2025-10-15" in cover_text and "李四" in cover_text)
 # 模板内三字段确为变量标签（非硬编码）
 with zipfile.ZipFile(TEMPLATE) as z:
     tpl_xml = z.read("word/document.xml").decode("utf-8")
@@ -112,7 +124,7 @@ check("A6 模板封面三字段已变量化", all(
     tag in tpl_xml for tag in ("{{ doc_author }}", "{{ doc_date }}", "{{ doc_reviewer }}")))
 
 # B. 封面公司名（隐形表）与页眉
-check("B1 封面公司名", "浙江芯劢微电子股份有限公司" in table_text)
+check("B1 封面公司名", "示例科技有限公司" in table_text)
 hdr_text = ""
 for sec in chk.sections:
     for hdr in [sec.header, sec.first_page_header]:
@@ -122,7 +134,7 @@ for sec in chk.sections:
             for row in tbl.rows:
                 for cell in row.cells:
                     hdr_text += cell.text + "\n"
-check("B2 页眉公司名标签已渲染", "浙江芯劢微电子股份有限公司" in hdr_text)
+check("B2 页眉公司名标签已渲染", "示例科技有限公司" in hdr_text)
 # B3：页眉脱敏——VML 水印/品牌图形必须全部移除（logo 已占位化）
 with zipfile.ZipFile(OUT) as z:
     hdr_xml = "".join(
@@ -130,8 +142,8 @@ with zipfile.ZipFile(OUT) as z:
         for n in z.namelist() if n.startswith("word/header")
     )
 check("B3 页眉零水印零图形",
-      "<w:pict" not in hdr_xml and "PowerPlusWaterMark" not in hdr_xml
-      and "Xmsilicon" not in hdr_xml and "<w:drawing" not in hdr_xml)
+      "<w:pict" not in hdr_xml and "<w:drawing" not in hdr_xml
+      and all(kw not in hdr_xml for kw in BRAND_KEYWORDS))
 
 # C. 更新记录页
 check("C1 更新记录标题存在", "更新记录" in body_text)
@@ -210,19 +222,20 @@ with zipfile.ZipFile(TEMPLATE) as z:
         for n in z.namelist() if n.endswith(".xml")
     )
     tpl_names = z.namelist()
-check("H1 模板零水印(文字/元素)", "Xmsilicon" not in tpl_all
-      and "PowerPlusWaterMark" not in tpl_all and "<w:pict" not in tpl_all)
+    core_xml = z.read("docProps/core.xml").decode("utf-8", "ignore")
+check("H1 模板零品牌词零水印元素",
+      all(kw not in tpl_all for kw in BRAND_KEYWORDS) and "<w:pict" not in tpl_all)
 check("H2 模板零媒体文件", not any(n.startswith("word/media/") for n in tpl_names))
 check("H3 logo 占位标签存在", "{{ header_logo }}" in tpl_all and "{{ cover_logo }}" in tpl_all)
-check("H4 docProps 元数据已脱敏",
-      "新伟" not in tpl_all and "水之心" not in tpl_all and "芯劢微XMNPU工具链" not in tpl_all)
+check("H4 docProps 元数据已脱敏", all(kw not in core_xml for kw in BRAND_KEYWORDS))
 with zipfile.ZipFile(OUT) as z:
     out_all = "".join(
         z.read(n).decode("utf-8", "ignore")
         for n in z.namelist() if n.endswith(".xml")
     )
     out_names = z.namelist()
-check("H5 渲染产物零水印", "Xmsilicon" not in out_all and "PowerPlusWaterMark" not in out_all
+check("H5 渲染产物零品牌词零水印",
+      all(kw not in out_all for kw in BRAND_KEYWORDS) and "<w:pict" not in out_all
       and not any(n.startswith("word/media/") for n in out_names))
 check("H6 页眉无残留 Jinja 标签", "{{" not in hdr_xml and "{%" not in hdr_xml)
 

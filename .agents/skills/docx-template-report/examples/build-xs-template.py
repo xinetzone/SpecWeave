@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-build-xmnn-template.py — 从 XMNN SDK 使用指南源 DOCX 构建高保真 docxtpl 模板。
+build-xs-template.py — 从 SDK 使用指南源 DOCX 构建高保真 docxtpl 模板
+（产出 templates/xs-sdk-guide-template.docx）。
 
 策略（副本基底法）：
   1. 以源 DOCX 为基底打开 → styles.xml / numbering.xml / settings.xml / theme /
@@ -22,24 +23,32 @@ build-xmnn-template.py — 从 XMNN SDK 使用指南源 DOCX 构建高保真 doc
   4. settings.xml 注入 updateFields=true（Word 打开时提示更新目录域）；
   5. 页眉公司名替换为 {{ company }}（默认页眉 + 首页页眉两个部件）；
   6. 品牌资产脱敏（通用模板必须品牌中立）：
-     - 删除三个页眉部件的 VML 水印（PowerPlusWaterMarkObject，源文字 "Xmsilicon"）
-       与 mc:AlternateContent 装饰图形，清理水印独立空段落；
+     - 删除三个页眉部件的 VML 水印（PowerPlusWaterMarkObject，源水印文字为
+       原品牌英文标识）与 mc:AlternateContent 装饰图形，清理水印独立空段落；
      - logo 图片（页眉/封面 sdt）替换为占位标签 {{ header_logo }} / {{ cover_logo }}
        （渲染时可传 docxtpl.InlineImage 动态注入，不传则为空）；
      - 删除全部 image 部件关系（孤儿媒体随序列化自动排除，模板零媒体）；
      - docProps 元数据清空（作者真名/修改者/标题等）。
 
 运行：
-  py -3.14 examples/build-xmnn-template.py [源docx] [输出模板docx]
+  py -3.14 examples/build-xs-template.py [源docx] [输出模板docx]
 """
+import re
 import sys
+import glob
 from copy import deepcopy
 from docx import Document
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-SRC = sys.argv[1] if len(sys.argv) > 1 else r"d:\AI\.chaos\tests\old\work\doc\XMNN_SDK_使用指南v1.1.0.docx"
-OUT = sys.argv[2] if len(sys.argv) > 2 else r"templates\xmnn-sdk-guide-template.docx"
+# 源文档默认在本地 .chaos 工作区（不入库）；以通配符定位，脚本内不固化源文件名
+SRC = sys.argv[1] if len(sys.argv) > 1 else None
+if SRC is None:
+    _cands = glob.glob(r"d:\AI\.chaos\tests\old\work\doc\*SDK*指南*.docx")
+    if not _cands:
+        raise SystemExit("未定位到源 DOCX，请显式传入源文档路径参数")
+    SRC = _cands[0]
+OUT = sys.argv[2] if len(sys.argv) > 2 else r"templates\xs-sdk-guide-template.docx"
 
 # ---------------------------------------------------------------- 基础工具
 
@@ -196,9 +205,11 @@ for ch in children:
 # ---------------------------------------------------------------- 2. 封面 sdt 块
 
 cover_sdt = deepcopy(cover_sdt_src)
-for p in list(cover_sdt.iter(qn("w:p"))):
+# 第一遍：结构特征匹配（标题/状态/版本/日期），不固化任何源品牌或人员字样
+cover_ps = list(cover_sdt.iter(qn("w:p")))
+for p in cover_ps:
     txt = p_text(p).strip()
-    if "XMNN" in txt and "指南" in txt:
+    if "SDK" in txt and "指南" in txt:
         tag_paragraph(p, "{{ doc_title }}")
     elif "文件状态" in txt:
         tag_paragraph(p, "文件状态：{{ doc_status }}")
@@ -212,14 +223,22 @@ for p in list(cover_sdt.iter(qn("w:p"))):
             for r in runs[1:]:
                 p.remove(r)
         add_run(p, "{{ doc_version }}")
-    elif txt == "1.1.0":
-        delete_paragraph(p)
-    elif txt == "XMNPU":
-        tag_paragraph(p, "{{ doc_author }}")
-    elif txt == "2025-10-15":
+    elif re.fullmatch(r"\d+\.\d+\.\d+", txt):
+        delete_paragraph(p)          # 独立版本号值段（版本号已由 {{ doc_version }} 渲染）
+    elif re.fullmatch(r"\d{4}-\d{2}-\d{2}", txt):
         tag_paragraph(p, "{{ doc_date }}")
-    elif txt == "张振宇":
-        tag_paragraph(p, "{{ doc_reviewer }}")
+# 第二遍：人员字段以通用中文标签（"作 者："/"审 核："）为锚点——标签后第一个
+# 未处理的非空段即字段值，标签化后不再依赖源文档中的具体人员名/代号
+for _i, _p in enumerate(cover_ps):
+    _label = p_text(_p).strip().replace(" ", "").replace("：", ":")
+    if _label not in ("作者:", "审核:"):
+        continue
+    _tag = "{{ doc_author }}" if _label == "作者:" else "{{ doc_reviewer }}"
+    for _q in cover_ps[_i + 1:]:
+        _qtxt = p_text(_q).strip()
+        if _qtxt and "{{" not in _qtxt:
+            tag_paragraph(_q, _tag)
+            break
 sectPr.addprevious(cover_sdt)
 
 # ---------------------------------------------------------------- 3. 封面隐形表
@@ -229,7 +248,7 @@ cover_cells = [tc for tc in cover_tbl.iter(qn("w:tc"))]
 for tc in cover_cells:
     for p in tc.findall(qn("w:p")):
         txt = p_text(p)
-        if "浙江" in txt and "公司" in txt:
+        if "有限公司" in txt:
             tag_paragraph(p, "{{ company }}")
         elif "版本所有" in txt or "翻版" in txt:
             tag_paragraph(p, "{{ copyright_notice }}")
@@ -413,14 +432,15 @@ add_tag_p(sectPr, "{% endfor %}")
 # ---------------------------------------------------------------- 7. 页眉公司名标签化
 
 def tag_header_container(container):
+    # 公司名行以通用后缀「有限公司」为结构锚点，不固化源公司字样
     for p in container.paragraphs:
-        if "浙江" in p.text and "公司" in p.text:
+        if "有限公司" in p.text:
             tag_paragraph(p._p, "{{ company }}")
     for tbl in container.tables:
         for row in tbl.rows:
             for cell in row.cells:
                 for p in cell.paragraphs:
-                    if "浙江" in p.text and "公司" in p.text:
+                    if "有限公司" in p.text:
                         tag_paragraph(p._p, "{{ company }}")
 
 for section in doc.sections:

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 """模板制作前补充分析：body 块顺序 / 目录标题 / 分页符 / 代码块结构 / shell&warn 行 / 正文表格表头格式。"""
 import sys
+import glob
 from docx import Document
 from docx.oxml.ns import qn
 
-SRC = sys.argv[1] if len(sys.argv) > 1 else r"d:\AI\.chaos\tests\old\work\doc\XMNN_SDK_使用指南v1.1.0.docx"
+# 源文档在本地 .chaos 工作区（不入库）；以通配符定位，不固化源文件名
+SRC = sys.argv[1] if len(sys.argv) > 1 else (
+    glob.glob(r"d:\AI\.chaos\tests\old\work\doc\*SDK*指南*.docx") or [None])[0]
 doc = Document(SRC)
 body = doc.element.body
 

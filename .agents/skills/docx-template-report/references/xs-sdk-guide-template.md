@@ -1,19 +1,19 @@
 ---
-id: xmnn-sdk-guide-template-contract
+id: xs-sdk-guide-template-contract
 date: 2026-08-29
 type: template-contract
-source: "d:/AI/.chaos/tests/old/work/doc/XMNN_SDK_使用指南v1.1.0.docx"
+source: "脱敏前源 DOCX（企业 SDK 使用指南，位于本地 .chaos 临时工作区，不入库）"
 ---
 
-# XMNN SDK 指南模板契约（xmnn-sdk-guide-template）
+# XS SDK 指南模板契约（xs-sdk-guide-template）
 
-> 配套 [docx-template-report SKILL.md](../SKILL.md)，定义 `templates/xmnn-sdk-guide-template.docx`
+> 配套 [docx-template-report SKILL.md](../SKILL.md)，定义 `templates/xs-sdk-guide-template.docx`
 > 的数据上下文契约、格式规范、块类型清单、边界与反模式。
 >
-> 模板萃取来源：`XMNN_SDK_使用指南v1.1.0.docx`（芯劢微 XMNN SDK 用户使用指南，
-> 536 段落 / 26 表格 / 86 样式 / 12 媒体）。采用**副本基底法**构建——以源 DOCX
-> 为基底保留全部样式定义、编号链、主题、页眉、媒体，仅重建 body 并注入标签，
-> 因此视觉保真度为 100%（样式系统不是仿造，是源文档原件）。
+> 模板萃取来源：脱敏前的企业 SDK 用户使用指南 DOCX（536 段落 / 26 表格 /
+> 86 样式 / 12 媒体；位于本地 `.chaos` 临时工作区，不入库）。采用**副本基底法**
+> 构建——以源 DOCX 为基底保留全部样式定义、编号链、主题、页眉、媒体，仅重建
+> body 并注入标签，因此视觉保真度为 100%（样式系统不是仿造，是源文档原件）。
 
 ## 1. 模板定位
 
@@ -75,37 +75,38 @@ styleId 2/3/4/5/6，decimal 格式 `%1.` / `%1.%2.`。
 ## 3. 数据上下文契约
 
 ```python
+# 以下示例数据均为虚构中立数据，不含任何真实品牌/人员信息
 context = {
     # 封面 sdt 字段
-    "doc_title":       "芯劢微XMNN SDK用户使用指南",
+    "doc_title":       "XS SDK 用户使用指南",
     "doc_status":      "正式发布",          # 文件状态
     "doc_version":     "1.1.0",             # 当前版本
-    "doc_author":      "XMNPU",             # 作者
+    "doc_author":      "张三",              # 作者
     "doc_date":        "2025-10-15",        # 完成日期
-    "doc_reviewer":    "张振宇",            # 审核
+    "doc_reviewer":    "李四",              # 审核
     # 封面隐形表
-    "company":         "浙江芯劢微电子股份有限公司",   # 同时用于页眉
+    "company":         "示例科技有限公司",   # 同时用于页眉
     "copyright_notice": "（版本所有，翻版必究）",
     # 品牌 logo（可选，不传则位置留空；模板本体零媒体，见 6.1 脱敏说明）
     # "header_logo":  InlineImage(tpl, "logo.png", width=Mm(20)),   # 页眉表格左侧
     # "cover_logo":   InlineImage(tpl, "logo.png", width=Mm(40)),   # 封面 sdt 内
     # 修订记录（5 列深色表，行循环）
     "revisions": [
-        {"version": "1.0.0", "author": "刘新伟", "date": "2025-07-02",
-         "description": "初始版本", "reviewer": "张振宇"},
+        {"version": "1.0.0", "author": "王五", "date": "2025-07-02",
+         "description": "初始版本", "reviewer": "李四"},
         # ... 任意行数
     ],
     # 正文块（顺序渲染）
     "blocks": [
         {"type": "h1", "text": "开发环境准备"},
         {"type": "h2", "text": "Conda 环境配置"},
-        {"type": "h3", "text": "构建 xmenv 环境"},
+        {"type": "h3", "text": "构建 xsenv 环境"},
         {"type": "h4", "text": "环境变量说明"},
         {"type": "p",    "text": "正文段落……"},
         {"type": "list", "text": "列表项……"},
-        {"type": "shell", "text": "$ conda activate xmenv"},
+        {"type": "shell", "text": "$ conda activate xsenv"},
         {"type": "warn",  "text": "注意：……"},
-        {"type": "code",  "lines": ["cd release", "conda env create --file=xmnn.yaml"]},
+        {"type": "code",  "lines": ["cd release", "conda env create --file=xs.yaml"]},
         {"type": "table", "cols": 4,
          "header": ["参数名", "类型", "默认值", "说明"],
          "rows": [["batch_size", "int", "1", "批大小"], ...]},
@@ -161,7 +162,7 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 
 ## 5. 适用场景
 
-- 需要与源企业文档（XMNN SDK 指南）视觉完全一致的批量文档生成
+- 需要与源企业文档（企业 SDK 指南）视觉完全一致的批量文档生成
 - 依赖标题自动编号、深色修订表、代码块边框等源文档样式资产（logo/水印已脱敏，按需注入）
 - 内容可抽象为顺序块流（标题/段落/列表/代码/命令/警告/表格/分页）的技术手册
 - 修订记录行数、正文块数量、表格行数均为运行期数据，模板物理结构固定
@@ -177,7 +178,7 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 | 富文本混排（段内加粗/变色） | `{{r richtext}}` + RichText（见 template-guide.md） |
 | 合并单元格 | Word 手工，docxtpl 不支持动态合并 |
 | 斑马纹交替行底色 | 行循环为单物理行复制，无法逐行交替；需后处理 |
-| 更换品牌/样式 | 修改源基底 DOCX 后重跑 `examples/build-xmnn-template.py`（水印/元数据随源文件变化需复核脱敏） |
+| 更换品牌/样式 | 修改源基底 DOCX 后重跑 `examples/build-xs-template.py`（水印/元数据随源文件变化需复核脱敏） |
 | 新增块类型 | 在 build 脚本 blocks 段加 `{% if blk.type == "xxx" %}` 分支并重建模板 |
 
 ### 6.1 品牌资产脱敏（模板品牌中立）
@@ -187,7 +188,7 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 
 | 脱敏对象 | 源文档内容 | 处置 |
 |----------|-----------|------|
-| VML 水印 | 三个页眉部件的 `PowerPlusWaterMarkObject`（文字 "Xmsilicon"，斜向居中）+ `mc:AlternateContent` 装饰图形（椭圆） | 删除 `w:pict`/`mc:AlternateContent`，清理水印独立空段落 |
+| VML 水印 | 三个页眉部件的 `PowerPlusWaterMarkObject`（原品牌英文标识水印文字，斜向居中）+ `mc:AlternateContent` 装饰图形（椭圆） | 删除 `w:pict`/`mc:AlternateContent`，清理水印独立空段落 |
 | logo 图片 | image1.png（页眉表格 + 封面 sdt，共 3 处引用） | drawing run 替换为 `{{ header_logo }}`/`{{ cover_logo }}` 占位 |
 | 媒体文件 | 12 个媒体（logo + 正文截图 11 张，约 1.26MB） | 删除全部 image 部件关系，孤儿媒体随序列化排除（模板 1.25MB→43KB） |
 | WPS 自定义 XML | customXml/item1-3（校对缓存含源文术语、水印形状扩展） | 删除 customXml 部件关系 |
@@ -195,8 +196,8 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 | 核心元数据 | docProps/core.xml（作者真名、修改者、标题、打印时间） | 字段清空 |
 
 > **重建依赖说明**：模板文件自包含（styles/numbering/theme/header 骨架已继承，
-> 零媒体），渲染时不需要源文档。仅当需要**重建模板**时才依赖源基底
-> `XMNN_SDK_使用指南v1.1.0.docx`（位于 `.chaos/tests/old/work/doc/` 临时工作区，
+> 零媒体），渲染时不需要源文档。仅当需要**重建模板**时才依赖源基底 DOCX
+> （企业 SDK 使用指南，位于 `.chaos/tests/old/work/doc/` 临时工作区，
 > 若被清理需先恢复源文件），路径可通过构建脚本位置参数覆盖。
 
 ## 7. 反模式
@@ -216,16 +217,16 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 
 ## 8. 构建与验证
 
-- 模板构建（副本基底法）：[examples/build-xmnn-template.py](../examples/build-xmnn-template.py)
+- 模板构建（副本基底法）：[examples/build-xs-template.py](../examples/build-xs-template.py)
 
   ```
-  py -3.14 examples/build-xmnn-template.py [源docx] [输出模板docx]
+  py -3.14 examples/build-xs-template.py [源docx] [输出模板docx]
   ```
 
-- 渲染验证（37 项断言，含 H 组脱敏专项 6 项）：[examples/xmnn-render-example.py](../examples/xmnn-render-example.py)
+- 渲染验证（37 项断言，含 H 组脱敏专项 6 项）：[examples/xs-render-example.py](../examples/xs-render-example.py)
 
   ```
-  py -3.14 examples/xmnn-render-example.py
+  py -3.14 examples/xs-render-example.py
   ```
 
 - 品牌残留与 OPC 完整性扫描：[examples/scan-brand-residue.py](../examples/scan-brand-residue.py)
@@ -253,7 +254,7 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
 
 - **v1.1.0**（2026-08-29）：品牌资产脱敏
   - 背景：v1.0.0 副本基底法将源文档品牌资产一并继承（V 阶段对抗审查发现）
-  - 脱敏内容：三个页眉 `PowerPlusWaterMarkObject` 水印（文字 "Xmsilicon"）+
+  - 脱敏内容：三个页眉 `PowerPlusWaterMarkObject` 水印（原品牌英文标识文字）+
     椭圆装饰图形删除；logo 图片 3 处（页眉 ×2/封面 sdt ×1）替换为
     `{{ header_logo }}`/`{{ cover_logo }}` 占位；12 个媒体文件（约 1.26MB）
     随 image 关系删除全部排除；customXml/item1-3（WPS 校对缓存含水印形状扩展）
@@ -263,5 +264,13 @@ docxtpl 0.20.2 的表格行循环**必须**使用三行分离结构（经
     零媒体、logo 占位标签存在、元数据脱敏、页眉无残留标签；B3 由"logo 保留"
     反转为"零水印零图形"；G4 反转为"零媒体"）
   - 扫描工具：examples/scan-brand-residue.py（关键词/media/pict/悬空关系四查），
-    模板本体零残留、零悬空引用；渲染产物中的公司名/人员名为 context 演示数据
+    模板本体零残留、零悬空引用；渲染产物中的公司名/人员名原为 context 演示数据
     （预期行为，数据由使用者传入）
+
+- **v1.2.0**（2026-08-30）：品牌中立化更名
+  - 模板文件名由原产品代号更名为 `xs-sdk-guide-template.docx`（模板二进制内容
+    不变，仅文件更名；构建脚本/渲染示例/文档引用同步更名）
+  - 渲染示例演示数据全部替换为虚构中立数据（公司「示例科技有限公司」、
+    作者/审核「张三/李四」、示例命令 xs.yaml/xsenv/xs:latest），断言同步更新
+  - 验证：37 项断言全部 PASS；scan-brand-residue.py 扫描模板与渲染产物
+    品牌关键词均 0 命中；检测词表原样保留（扫描器职责）

@@ -1,20 +1,20 @@
 ---
-id: xmnn-template-usage-guide
+id: xs-template-usage-guide
 date: 2026-08-29
 type: usage-guide
-source: "templates/xmnn-sdk-guide-template.docx"
+source: "templates/xs-sdk-guide-template.docx"
 ---
 
-# 脱敏高保真技术文档模板使用说明（xmnn-sdk-guide-template）
+# 脱敏高保真技术文档模板使用说明（xs-sdk-guide-template）
 
 > 本指南面向**使用模板生成文档**的使用者：从零跑通渲染、组织数据、注入 logo、
 > 处理目录与交付自检。模板格式规范、构建机制与反模式清单（维护者视角）见
-> [xmnn-sdk-guide-template.md](xmnn-sdk-guide-template.md)；渲染异常排查见
+> [xs-sdk-guide-template.md](xs-sdk-guide-template.md)；渲染异常排查见
 > [troubleshooting.md](troubleshooting.md)。
 
 ## 1. 这份模板能做什么
 
-`templates/xmnn-sdk-guide-template.docx` 是以一份真实企业 SDK 使用指南为基底、
+`templates/xs-sdk-guide-template.docx` 是以一份真实企业 SDK 使用指南为基底、
 经副本基底法高保真复刻并**品牌脱敏**后的技术手册模板。渲染时只需传入一个
 Python dict，即可生成包含以下结构的 Word 文档：
 
@@ -52,7 +52,7 @@ py -3.14 -m pip install docxtpl==0.20.2 python-docx==1.2.0
 # 运行：py -3.14 render.py
 from docxtpl import DocxTemplate
 
-TPL = r"d:\AI\.agents\skills\docx-template-report\templates\xmnn-sdk-guide-template.docx"
+TPL = r"d:\AI\.agents\skills\docx-template-report\templates\xs-sdk-guide-template.docx"
 OUT = r"my-guide.docx"
 
 context = {
@@ -104,9 +104,9 @@ print(f"[OK] 已生成: {OUT}")
 运行后用 Word 打开 `my-guide.docx`，弹出"是否更新域"时选**是**，目录即生成。
 
 > 完整可运行示例（覆盖全部块类型与 2/3/4/5 列表格）见
-> [examples/xmnn-render-example.py](../examples/xmnn-render-example.py)，
-> 运行方式：`py -3.14 examples/xmnn-render-example.py`，产物在
-> `examples/output/xmnn-template-example.docx`。
+> [examples/xs-render-example.py](../examples/xs-render-example.py)，
+> 运行方式：`py -3.14 examples/xs-render-example.py`，产物在
+> `examples/output/xs-template-example.docx`。
 
 ## 4. 数据上下文（context）完整参考
 
@@ -225,7 +225,7 @@ doc.save(OUT)
 - 在 `blocks` 中放入 `{"type": "pagebreak"}` 即强制分页；
 - 每个 `h1` 建议开启新的一章（可在其前加 pagebreak）；
 - 正文内嵌截图：模板未内置图片块类型，建议渲染后在 Word 中手工插入，
-  或参照 [xmnn-sdk-guide-template.md](xmnn-sdk-guide-template.md) 第 6 节扩展新块类型。
+  或参照 [xs-sdk-guide-template.md](xs-sdk-guide-template.md) 第 6 节扩展新块类型。
 
 ## 6. 渲染之后：更新目录
 
@@ -285,20 +285,21 @@ py -3.14 examples\scan-brand-residue.py
 **Q7：能改模板的字体/配色吗？**
 可以在 Word 中直接修改样式（开始 → 样式 → 修改），改完另存为新模板使用；
 请勿删除含 Jinja 标签的段落/表格行。需要从另一份企业 DOCX 重新萃取时，
-使用 [examples/build-xmnn-template.py](../examples/build-xmnn-template.py)
+使用 [examples/build-xs-template.py](../examples/build-xs-template.py)
 重建（重建后须重新执行脱敏扫描，见契约文档 6.1 节）。
 
 **Q8：生成的文档里公司名/人员名是示例数据怎么办？**
-渲染示例脚本中的"芯劢微/张三"等仅为演示数据。实际使用时替换为你自己的
+渲染示例脚本中的公司名/人员名均为虚构中立演示数据（如「示例科技有限公司」
+「张三/李四」），不含任何真实品牌信息。实际使用时替换为你自己的
 context 即可；模板本身不含这些内容。
 
 ## 9. 工具与延伸阅读
 
 | 用途 | 资源 |
 |------|------|
-| 复制即用的完整渲染脚本（37 项断言） | [examples/xmnn-render-example.py](../examples/xmnn-render-example.py) |
+| 复制即用的完整渲染脚本（37 项断言） | [examples/xs-render-example.py](../examples/xs-render-example.py) |
 | 交付前品牌残留/包完整性自检 | [examples/scan-brand-residue.py](../examples/scan-brand-residue.py) |
-| 模板格式规范、块类型契约、脱敏细节（维护者视角） | [xmnn-sdk-guide-template.md](xmnn-sdk-guide-template.md) |
+| 模板格式规范、块类型契约、脱敏细节（维护者视角） | [xs-sdk-guide-template.md](xs-sdk-guide-template.md) |
 | 渲染异常/乱码/行循环排查 | [troubleshooting.md](troubleshooting.md) |
 | Jinja2 语法、RichText 富文本、InlineImage 高级用法 | [template-guide.md](template-guide.md) |
 | docxtpl 官方文档 | <https://docxtpl.readthedocs.io/> |

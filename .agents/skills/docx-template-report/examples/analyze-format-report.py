@@ -3,7 +3,7 @@
 import json
 import sys
 
-r = json.load(open(sys.argv[1] if len(sys.argv) > 1 else "examples/output/xmnn-format-report.json", encoding="utf-8"))
+r = json.load(open(sys.argv[1] if len(sys.argv) > 1 else "examples/output/xs-format-report.json", encoding="utf-8"))
 
 print("=== 1. 样式定义全览（id | type | name | basedOn）===")
 id2name = {}

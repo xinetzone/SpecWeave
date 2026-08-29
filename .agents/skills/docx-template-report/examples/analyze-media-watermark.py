@@ -15,11 +15,14 @@ analyze-media-watermark.py — R 阶段事实盘点：模板/源文档的媒体�
 import os
 import zipfile
 import re
+import glob
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 源文档在本地 .chaos 工作区（不入库）；以通配符定位，不固化源文件名
+_SRC = (glob.glob(r"d:\AI\.chaos\tests\old\work\doc\*SDK*指南*.docx") or [None])[0]
 TARGETS = [
-    ("源文档", r"d:\AI\.chaos\tests\old\work\doc\XMNN_SDK_使用指南v1.1.0.docx"),
-    ("XMNN模板", os.path.join(SKILL_DIR, "templates", "xmnn-sdk-guide-template.docx")),
+    ("源文档", _SRC),
+    ("xs模板", os.path.join(SKILL_DIR, "templates", "xs-sdk-guide-template.docx")),
 ]
 
 WATERMARK_MARKERS = [
