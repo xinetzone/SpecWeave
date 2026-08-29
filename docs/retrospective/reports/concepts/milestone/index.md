@@ -22,6 +22,7 @@
 | milestone-okf-wiki-conversion-20260828 | docs 目录 OKF v0.2 Wiki 教程规范化改造 | 2026-08-28 | ✅ 已完成 | 七概念R→I→E→C | 32条客观事实、3条核心洞察(导航结构瓶颈/级联警告效应/修复脚本质量门)、2个可迁移模式(导航收敛修复法L2+级联缺陷定位法L1)、Sphinx构建421→0警告、10项原子行动项，G1-G4质量门全部通过 | [okf-wiki-conversion-milestone-20260828.md](okf-wiki-conversion-milestone-20260828.md) |
 | milestone-veadk-python-source-stability-fix-20260829 | veadk-python Wiki 信源稳定性修复与模式L2验证 | 2026-08-29 | ✅ 已完成 | 七概念R→I→E→V→C | 33条客观事实、3条核心洞察(预防价值反事实度量/路径引用载体多样性/tag选型集合论)、信源稳定性门模式L1→L2(双案例/5反模式/6检验标准)、vendor/veadk-python@1.0.10注册、41文件800处引用迁移复验信源缺失0、V对抗审查4视角8条意见采纳3条、6项原子行动项，G1-G4+V门全部通过 | [veadk-python-source-stability-fix-milestone-20260829.md](veadk-python-source-stability-fix-milestone-20260829.md) |
 | milestone-veadk-a3-a6-closure-20260829 | veadk 里程碑行动项 A-3/A-6 闭环执行（含 GATE-SPS 锚点假阳性修复） | 2026-08-29 | ✅ 已完成 | 七概念R→I→V→C | 26条客观事实、3条核心洞察(登记验收测量口径同源/质量门假阳性同罪且由真实案例校准/临时信源删除后归宿排除链)、信源稳定性门模式第3次验证(新增锚点剥离+双轨复验2维度)、33断链相对路径化复验67/0、GATE-SPS修复568个存量假阳性(测试30→32)、4次原子提交零混入、4项原子行动项，G1-G4+V门全部通过 | [veadk-a3-a6-closure-retrospective-20260829.md](veadk-a3-a6-closure-retrospective-20260829.md) |
+| source-path-debt-triage-20260829 | 全仓信源路径存量债务分诊审计（veadk ACT-3 交付物） | 2026-08-29 | ✅ 已完成 | 信源稳定性门模式 v2.3 + 历史快照三分法 | 13,583 文件/7,002 引用双维聚类分诊；A 类历史快照约 2,750 条不改写、B 类教学/容器路径约 1,050 条不改写、C 类工具误报约 200 条登记 backlog、D-1~D-5 活动债务登记分批修复；d:/spaces 旧路径 1,732 条前缀映射实测可达 557；锚点行号越界复验先行归零（10→0，测试 32→36） | [source-path-debt-triage-audit-20260829.md](source-path-debt-triage-audit-20260829.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -55,6 +56,7 @@ okf-python314-stdlib-optimization-retrospective-20260818
 okf-wiki-conversion-milestone-20260828
 retrospective-hermes-specweave-integration-20260812
 session-atomic-commit-insight-extraction-20260706
+source-path-debt-triage-audit-20260829
 specweave-knowledge-scaling-milestone-20260801
 torch-dev-mirror-build-retrospective-20260820
 veadk-a3-a6-closure-retrospective-20260829
