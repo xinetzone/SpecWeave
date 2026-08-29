@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-seven-concepts"
 title: "Python 3.14 标准库教程 — 七概念方法论执行报告"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/seven-concepts-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/seven-concepts-report.toml"
 ---
 # Python 3.14 标准库教程 — 七概念方法论执行报告
 

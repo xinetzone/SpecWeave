@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-10"
 title: "Python 3.14 实战示例"
 source: "https://docs.python.org/zh-cn/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/10-practical-examples.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/10-practical-examples.toml"
 ---
 # Python 3.14 实战示例
 

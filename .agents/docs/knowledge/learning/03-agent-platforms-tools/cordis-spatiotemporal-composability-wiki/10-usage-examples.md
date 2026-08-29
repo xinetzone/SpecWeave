@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-10"
 title: "Cordis — 使用示例"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/10-usage-examples.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/10-usage-examples.toml"
 ---
 # Cordis — 使用示例
 

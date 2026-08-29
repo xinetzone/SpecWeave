@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-03"
 title: "Cordis — 核心抽象与架构"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/03-core-architecture.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/03-core-architecture.toml"
 ---
 # Cordis — 核心抽象与架构
 

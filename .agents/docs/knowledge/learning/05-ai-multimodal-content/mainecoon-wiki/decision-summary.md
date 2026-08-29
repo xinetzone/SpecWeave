@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-decision-summary"
 title: "MaineCoon 分析决策摘要"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/decision-summary.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/decision-summary.toml"
 ---
 # MaineCoon 分析决策摘要
 

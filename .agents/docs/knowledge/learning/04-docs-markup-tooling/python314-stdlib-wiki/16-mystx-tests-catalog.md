@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-16"
 title: "mystx 主题单元测试用例清单（54 项）"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/16-mystx-tests-catalog.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/16-mystx-tests-catalog.toml"
 ---
 # mystx 主题单元测试用例清单（54 项）
 

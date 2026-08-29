@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-03-dependencies"
 title: "核心依赖与技术栈"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/03-tech-stack-dependencies.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/03-tech-stack-dependencies.toml"
 source: "https://weasyprint.org/ | https://weasyprint.com/ | 源码 d:\\spaces\\SpecWeave\\external\\WeasyPrint"
 category: "learning"
 tags: ["weasyprint","dependencies","tech-stack","cffi","cairo","pango"]

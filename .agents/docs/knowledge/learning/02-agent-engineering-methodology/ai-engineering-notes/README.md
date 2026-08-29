@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-02-agent-engineering-methodology-ai-engineering-notes-index"
 title: "AI Engineering 学习笔记"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---

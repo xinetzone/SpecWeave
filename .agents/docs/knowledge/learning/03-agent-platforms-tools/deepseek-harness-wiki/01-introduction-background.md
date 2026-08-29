@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-01"
 title: "DeepSeek Harness 完全指南 — 项目介绍与背景"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/01-introduction-background.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/01-introduction-background.toml"
 ---
 # 01 项目介绍与背景
 

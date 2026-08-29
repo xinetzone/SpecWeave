@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-05-critique-and-methodology"
 title: "MaineCoon 批判性思考与七概念方法论分析"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/05-critique-and-methodology.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/05-critique-and-methodology.toml"
 ---
 # MaineCoon 批判性思考与七概念方法论分析
 

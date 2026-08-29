@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-11-glossary-faq-resources"
 title: "11 术语表 / FAQ / 资源"
 source: "NousResearch/hermes-agent 本地源码仓库（website/docs/reference/faq.md、environment-variables.md；README.zh-CN.md）"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/11-glossary-faq-resources.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/11-glossary-faq-resources.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 术语表、常见问题 FAQ 与官方资源链接，含相关 wiki 交叉引用"
 status: "stable"

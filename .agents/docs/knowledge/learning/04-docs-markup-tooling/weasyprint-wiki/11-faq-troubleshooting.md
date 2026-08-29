@@ -1,7 +1,7 @@
 ---
 id: "weasyprint-11-faq"
 title: "十一、常见问题与故障排查"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/11-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/11-faq-troubleshooting.toml"
 source: "https://weasyprint.org/ | https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#troubleshooting | 经验沉淀"
 category: "learning"
 tags: ["weasyprint","faq","troubleshooting","debugging","windows"]

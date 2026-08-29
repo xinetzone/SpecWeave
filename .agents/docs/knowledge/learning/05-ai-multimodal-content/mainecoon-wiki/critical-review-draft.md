@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-critical-review-draft"
 title: "批判性评论：MaineCoon 与 Social World Model 的虚与实"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/critical-review-draft.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/critical-review-draft.toml"
 ---
 # 批判性评论：MaineCoon 与 Social World Model 的虚与实
 

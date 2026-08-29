@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-03-agent-platforms-tools-cordis-spatiotemporal-composability-wiki-index"
 title: "Cordis 时空可组合性框架完全指南"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/README.toml"
 category: "knowledge"
 date: "2026-08-22"
 ---

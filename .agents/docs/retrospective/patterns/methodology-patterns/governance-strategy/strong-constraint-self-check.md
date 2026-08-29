@@ -1,7 +1,7 @@
 ---
 id: "strong-constraint-self-check"
 source: "../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md#模式5强约束语言自检启发式"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.toml"
 maturity: "L1"
 validation_count: 2
 reuse_count: 0

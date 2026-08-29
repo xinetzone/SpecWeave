@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-00"
 title: "Python 3.14 + CPython 源码深度指南 — 概述"
 source: "https://docs.python.org/3.14/whatsnew/3.14.html"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/00-overview.toml"
 ---
 # Python 3.14 + CPython 源码深度指南 — 概述
 

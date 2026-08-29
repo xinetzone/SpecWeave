@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-03"
 title: "The Agency 完全指南 — 部门名册"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/03-roster-divisions.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/03-roster-divisions.toml"
 ---
 # The Agency 完全指南 — 部门名册
 

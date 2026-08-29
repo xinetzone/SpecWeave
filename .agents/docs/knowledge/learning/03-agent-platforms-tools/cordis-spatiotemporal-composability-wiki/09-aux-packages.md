@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-09"
 title: "Cordis — 辅助包"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/09-aux-packages.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/09-aux-packages.toml"
 ---
 # Cordis — 辅助包
 

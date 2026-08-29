@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-12"
 title: "DeepSeek Harness 完全指南 — 无头模式与 SDK 使用"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/12-headless-sdk.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/12-headless-sdk.toml"
 ---
 # 12 无头模式与 SDK 使用
 

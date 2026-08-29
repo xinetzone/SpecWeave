@@ -1,7 +1,7 @@
 ---
 id: "docs-knowledge-learning-okr-wiki-index"
 title: "OKR 方法论知识库"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/okr-wiki/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---

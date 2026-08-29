@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-02"
 title: "Python 3.14 自由线程（无 GIL）深度解析"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#free-threaded-cpython"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/02-free-threading.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/02-free-threading.toml"
 ---
 # Python 3.14 自由线程（无 GIL）深度解析
 

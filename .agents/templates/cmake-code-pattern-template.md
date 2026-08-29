@@ -10,7 +10,7 @@ related_patterns:
   - "../../docs/retrospective/patterns/code-patterns/cmake-public-target-config-function.md"
   - "../../docs/retrospective/patterns/code-patterns/cmake-platform-specific-operation-encapsulation.md"
 tags: ["template", "cmake", "code-pattern", "build-system", "pattern-extraction"]
-x-toml-ref: "../../../.meta/toml/.agents/templates/cmake-code-pattern-template.toml"
+x-toml-ref: "../../.meta/toml/.agents/templates/cmake-code-pattern-template.toml"
 ---
 
 # CMake代码模式文档模板

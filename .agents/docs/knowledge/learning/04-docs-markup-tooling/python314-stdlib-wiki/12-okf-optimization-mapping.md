@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-12"
 title: "Python 3.14 标准库 → OKF 工具链优化机会映射笔记"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/12-okf-optimization-mapping.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/12-okf-optimization-mapping.toml"
 ---
 # Python 3.14 标准库 → OKF 工具链优化机会映射笔记
 

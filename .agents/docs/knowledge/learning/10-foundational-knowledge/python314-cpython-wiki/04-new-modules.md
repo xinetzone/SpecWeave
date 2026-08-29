@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-04"
 title: "Python 3.14 新模块详解"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-modules"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/04-new-modules.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/04-new-modules.toml"
 ---
 # Python 3.14 新模块详解
 

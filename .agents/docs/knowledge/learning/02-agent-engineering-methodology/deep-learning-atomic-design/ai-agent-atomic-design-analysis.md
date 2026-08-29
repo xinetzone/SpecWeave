@@ -2,7 +2,7 @@
 id: "ai-agent-atomic-design-analysis"
 title: AI Agent 原子化设计要素分析报告
 source: "docs/knowledge/engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/ai-agent-atomic-design-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/ai-agent-atomic-design-analysis.toml"
 date: 2026-07-04
 author: Trae AI Analysis
 version: 1.0

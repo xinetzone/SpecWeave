@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-01"
 title: "Cordis — 背景理论与论文"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/01-background-paper.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/01-background-paper.toml"
 ---
 # Cordis — 背景理论与论文
 

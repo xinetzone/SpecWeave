@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-03"
 title: "Python 3.14 标准库 contextvars 全面详解"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/03-contextvars.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/03-contextvars.toml"
 ---
 # Python 3.14 标准库 contextvars 全面详解
 

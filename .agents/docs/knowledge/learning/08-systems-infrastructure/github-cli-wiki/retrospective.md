@@ -2,7 +2,7 @@
 id: "github-cli-wiki-retrospective"
 title: "GitHub CLI Wiki 教程创建 — 复盘报告"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/retrospective.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/retrospective.toml"
 ---
 # GitHub CLI Wiki 教程创建 — 复盘报告
 

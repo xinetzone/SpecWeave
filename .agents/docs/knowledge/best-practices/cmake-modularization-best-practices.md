@@ -1,7 +1,7 @@
 ---
 id: "cmake-modularization-best-practices"
 title: "CMake项目模块化重构最佳实践"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/knowledge/best-practices/cmake-modularization-best-practices.toml"
+x-toml-ref: "../../../../.meta/toml/.agents/docs/knowledge/best-practices/cmake-modularization-best-practices.toml"
 category: "best-practices"
 date: "2026-07-29"
 tags: ["CMake", "modularization", "build-system", "refactoring", "cross-platform", "best-practice"]

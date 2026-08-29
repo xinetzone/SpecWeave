@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-analysis-report"
 title: "MaineCoon 深度洞察分析报告索引页"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/analysis-report.toml"
 ---
 # MaineCoon 实时音视频模型文章深度洞察分析报告
 

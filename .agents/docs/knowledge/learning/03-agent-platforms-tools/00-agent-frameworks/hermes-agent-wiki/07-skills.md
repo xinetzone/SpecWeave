@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-07-skills"
 title: "07 技能系统"
 source: "hermes-agent user-guide/features/skills.md + user-guide/features/curator.md + developer-guide/creating-skills.md + reference/skills-catalog.md + 源码 agent/curator.py"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/07-skills.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/07-skills.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 技能系统：过程记忆、SKILL.md 标准、skills/ 与 optional-skills/、技能中心、curator 生命周期、技能分类"
 status: "stable"

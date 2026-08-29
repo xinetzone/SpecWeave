@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-12"
 title: "Python 3.14 总结与资源"
 source: "https://docs.python.org/zh-cn/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/12-summary-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/12-summary-resources.toml"
 ---
 # Python 3.14 总结与资源
 

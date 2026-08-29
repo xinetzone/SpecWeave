@@ -2,7 +2,7 @@
 id: "ai-switch-governance-02-seven-concepts-report"
 title: "AI赋能的Feature Flag全生命周期治理 — 七概念方法论报告"
 source: "InfoQ QCon 2026 北京站"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/02-seven-concepts-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/02-seven-concepts-report.toml"
 ---
 # 七概念方法论编排报告：快手AI开关治理文章知识沉淀
 

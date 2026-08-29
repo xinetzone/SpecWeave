@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-13"
 title: "DeepSeek Harness 完全指南 — 常见问题与故障排查"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/13-faq-troubleshooting.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/13-faq-troubleshooting.toml"
 ---
 # 13 常见问题与故障排查
 

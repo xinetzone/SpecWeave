@@ -1,7 +1,7 @@
 ---
 id: "style-anchoring-consistency"
 source: "../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md#模式4风格锚定法"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.toml"
 maturity: "L1"
 validation_count: 3
 reuse_count: 0

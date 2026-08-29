@@ -2,7 +2,7 @@
 id: "ai-engineering-four-milestones-wiki-00"
 title: "概述与学习目标"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/00-overview.toml"
 ---
 # 概述与学习目标
 

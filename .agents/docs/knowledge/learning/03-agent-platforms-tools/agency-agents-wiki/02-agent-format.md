@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-02"
 title: "The Agency 完全指南 — Agent 文件格式解析"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/02-agent-format.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/02-agent-format.toml"
 ---
 # The Agency 完全指南 — Agent 文件格式解析
 

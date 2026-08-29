@@ -2,7 +2,7 @@
 id: "ai-engineering-notes-octo-platform"
 title: "明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施"
 source: "微信公众号文章《Octo：当 Agent 不再只活在对话框里》"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/octo-platform-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/octo-platform-wiki.toml"
 date: "2026-07-04"
 tags: ["octo", "mininglamp", "private-ai", "agent-collaboration", "a2a", "matter", "taste", "orchestration", "multi-agent", "trustworthy-ai"]
 type: "Reference"

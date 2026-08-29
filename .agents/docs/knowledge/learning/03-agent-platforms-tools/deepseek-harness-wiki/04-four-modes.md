@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-04"
 title: "DeepSeek Harness 完全指南 — 四种运行模式"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/04-four-modes.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/04-four-modes.toml"
 ---
 # 04 四种运行模式
 

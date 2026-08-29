@@ -2,7 +2,7 @@
 id: "agent-runtime-protocol-wiki-13"
 title: "总结、FAQ 与资源"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/13-summary-faq-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/13-summary-faq-resources.toml"
 ---
 # 13 总结、FAQ 与资源
 

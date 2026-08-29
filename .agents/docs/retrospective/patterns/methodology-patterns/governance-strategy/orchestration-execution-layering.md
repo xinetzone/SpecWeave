@@ -1,7 +1,7 @@
 ---
 id: "orchestration-execution-layering"
 source: "../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md#模式3编排-执行分层法"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.toml"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

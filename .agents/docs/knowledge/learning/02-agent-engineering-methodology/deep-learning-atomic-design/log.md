@@ -2,7 +2,7 @@
 id: "deep-learning-atomic-design-log"
 title: "深度学习原子化设计变更日志"
 source: "docs/knowledge/engineering/deep-learning-atomic-design/log.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/log.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/deep-learning-atomic-design/log.toml"
 ---
 
 # 变更日志

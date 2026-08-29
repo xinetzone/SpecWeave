@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-10"
 title: "DeepSeek Harness 完全指南 — 插件开发入门"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/10-plugin-development.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/10-plugin-development.toml"
 ---
 # 10 插件开发入门
 

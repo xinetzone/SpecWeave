@@ -2,7 +2,7 @@
 id: "mainecoon-wiki-06-social-world-model"
 title: "MaineCoon Social World Model 知识库"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/06-social-world-model-wiki.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/mainecoon-wiki/06-social-world-model-wiki.toml"
 ---
 # MaineCoon Social World Model 知识库
 

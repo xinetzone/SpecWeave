@@ -1,7 +1,7 @@
 ---
 id: "three-ai-tools-wiki-03"
 title: "七概念知识沉淀报告：三个热门AI工具"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/03-seven-concepts-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/03-seven-concepts-report.toml"
 source: "https://mp.weixin.qq.com/s/gFlPzfjpY8zs3tOcw3o5Lg"
 date: "2026-08-03"
 tags: ["ai-tools", "seven-concepts", "knowledge-compilation", "methodology", "report"]

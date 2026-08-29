@@ -2,7 +2,7 @@
 id: "causal-ai-01-article-content"
 title: "因果AI与世界模型：零犀科技六年押注深度分析 — 文章原文"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/01-article-content.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/05-ai-multimodal-content/causal-ai/01-article-content.toml"
 ---
 ASI启示录 ASI启示录
 

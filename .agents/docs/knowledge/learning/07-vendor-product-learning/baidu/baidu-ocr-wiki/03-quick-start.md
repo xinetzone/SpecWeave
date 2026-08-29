@@ -2,7 +2,7 @@
 id: "baidu-ocr-wiki-03"
 title: "百度 Unlimited-OCR 快速上手指南"
 source: "https://github.com/baidu/Unlimited-OCR"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/03-quick-start.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/03-quick-start.toml"
 ---
 # 百度 Unlimited-OCR 快速上手指南
 

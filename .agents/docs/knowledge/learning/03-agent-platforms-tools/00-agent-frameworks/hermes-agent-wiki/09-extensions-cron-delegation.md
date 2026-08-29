@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-09-extensions-cron-delegation"
 title: "09 扩展能力：MCP、定时任务与委派"
 source: "NousResearch/hermes-agent 本地源码仓库（website/docs/user-guide/features/mcp.md、cron.md、delegation.md、guides/automate-with-cron.md；源码 tools/delegate_tool.py、tools/mcp_tool.py、mcp_serve.py、cron/）"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/09-extensions-cron-delegation.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/09-extensions-cron-delegation.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 扩展能力详解：MCP 集成、cron 定时调度、委派与并行（delegate_task 与 subagent 生命周期）、角色（roles）"
 status: "stable"

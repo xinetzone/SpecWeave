@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-02-capability-mapping"
 title: "02 SpecWeave 能力盘点与映射矩阵"
 source: "SpecWeave 仓库现状（capability-registry.md / skills/README.md / commands/README.md / AGENTS.md）"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-integration/02-capability-mapping.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/02-capability-mapping.toml"
 type: "Wiki Tutorial"
 description: "SpecWeave 能力体系盘点与到 Hermes tool/skill/hook/memory provider/context engine 的映射矩阵"
 status: "stable"

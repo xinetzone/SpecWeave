@@ -2,7 +2,7 @@
 id: "agent-runtime-protocol-wiki-07"
 title: "可观测性与可评测性：看见问题与评价质量"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/07-observability-evaluation.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki/07-observability-evaluation.toml"
 ---
 # 07 可观测性与可评测性：看见问题与评价质量
 

@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-06"
 title: "Cordis — 生命周期与 Fiber 状态机"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/06-lifecycle.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/06-lifecycle.toml"
 ---
 # Cordis — 生命周期与 Fiber 状态机
 

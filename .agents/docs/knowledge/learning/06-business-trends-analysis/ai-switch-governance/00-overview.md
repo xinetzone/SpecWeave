@@ -2,7 +2,7 @@
 id: "ai-switch-governance-00-overview"
 title: "AI赋能的Feature Flag全生命周期治理"
 source: "InfoQ QCon 2026 北京站"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/06-business-trends-analysis/ai-switch-governance/00-overview.toml"
 ---
 # 《让开关自我消亡：AI赋能的Feature Flag全生命周期治理》分析报告
 

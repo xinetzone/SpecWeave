@@ -2,7 +2,7 @@
 id: "github-cli-wiki-05"
 title: "高级用法指南"
 source: "https://github.com/cli/cli"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/05-advanced-usage.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/05-advanced-usage.toml"
 ---
 # 高级用法指南
 

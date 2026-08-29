@@ -2,7 +2,7 @@
 id: "agency-agents-wiki-05"
 title: "The Agency 完全指南 — 多工具集成"
 source: "https://github.com/msitarzewski/agency-agents"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/05-integrations.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/agency-agents-wiki/05-integrations.toml"
 ---
 # The Agency 完全指南 — 多工具集成
 

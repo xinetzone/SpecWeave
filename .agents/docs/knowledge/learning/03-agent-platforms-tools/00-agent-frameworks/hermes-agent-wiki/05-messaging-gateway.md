@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-05-messaging-gateway"
 title: "05 消息网关"
 source: "hermes-agent user-guide/messaging/index.md + user-guide/messaging/relay.md + profiles.md"
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/05-messaging-gateway.toml"
+x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/05-messaging-gateway.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 消息网关：约 28 平台支持、单进程多平台、gateway setup/start、跨平台连续性、relay、与 CLI 共享核心"
 status: "stable"

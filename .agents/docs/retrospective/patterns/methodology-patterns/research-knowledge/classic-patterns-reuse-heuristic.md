@@ -6,7 +6,7 @@ source:
   - "../../architecture-patterns/reversibility-guarantee.md"
   - "../../architecture-patterns/content-type-routing.md"
   - "../ai-collaboration/layered-caching-pattern.md"
-x-toml-ref: "../../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/classic-patterns-reuse-heuristic.toml"
 maturity: "L2"
 validation_count: 6
 reuse_count: 0

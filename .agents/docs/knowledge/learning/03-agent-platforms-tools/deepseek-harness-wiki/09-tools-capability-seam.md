@@ -2,7 +2,7 @@
 id: "deepseek-harness-wiki-09"
 title: "DeepSeek Harness 完全指南 — 工具系统与 Capability Seam"
 source: "https://github.com/deepseek-ai/deepseek-harness"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/09-tools-capability-seam.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki/09-tools-capability-seam.toml"
 ---
 # 09 工具系统与 Capability Seam
 

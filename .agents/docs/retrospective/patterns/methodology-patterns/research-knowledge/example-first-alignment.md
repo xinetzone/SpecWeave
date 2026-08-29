@@ -10,7 +10,7 @@ tags:
   - 文档创作
   - 代码风格
 source: "retro:competitive-analysis-20260803-headroom-wiki"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/example-first-alignment.toml"
 related:
   - "classic-patterns-reuse-heuristic.md"
   - "../governance-strategy/pattern-tooling-progressive-extraction.md"

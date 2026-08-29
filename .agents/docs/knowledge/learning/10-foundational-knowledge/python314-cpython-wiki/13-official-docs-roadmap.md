@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-13"
 title: "官方文档四大支柱导览（tutorial / library / extending / howto）"
 source: "https://docs.python.org/zh-cn/3.14/tutorial/index.html"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/13-official-docs-roadmap.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/13-official-docs-roadmap.toml"
 ---
 # 官方文档四大支柱导览
 

@@ -4,7 +4,7 @@ title: Karpathy LLM Wiki 知识库方案文章深度洞察分析报告
 date: 2026-07-07
 original_type: knowledge-base
 source: wuhiufan《Karpathy发了一条推文2000万人看了，我照着他的方法搭了个知识库》(微信公众号文章) + Karpathy X推文(2026-04-02) + GitHub Gist
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/karpathy-llm-wiki-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/karpathy-llm-wiki-analysis.toml"
 original_status: completed
 version: "1.0"
 tags:

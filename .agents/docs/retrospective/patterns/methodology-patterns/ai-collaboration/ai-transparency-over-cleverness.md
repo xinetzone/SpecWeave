@@ -10,7 +10,7 @@ tags:
   - 可控性
   - Harness Engineering
 source: "retro:competitive-analysis-20260803-headroom-wiki"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ai-transparency-over-cleverness.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ai-transparency-over-cleverness.toml"
 related:
   - "file-existence-verification-gate.md"
   - "../../architecture-patterns/reversibility-guarantee.md"

@@ -2,7 +2,7 @@
 id: "quantdinger-02-seven-concepts-report"
 title: "QuantDinger：自托管AI量化交易平台 — 七概念方法论报告"
 source: "微信公众号「极客之家」"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/02-seven-concepts-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/quantdinger/02-seven-concepts-report.toml"
 ---
 # 七概念方法论编排报告：QuantDinger自托管AI量化平台知识沉淀
 

@@ -2,7 +2,7 @@
 id: "cordis-spatiotemporal-composability-wiki-05"
 title: "Cordis — 插件系统与依赖注入"
 source: "https://github.com/cordiverse/paper"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/05-plugin-system.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/03-agent-platforms-tools/cordis-spatiotemporal-composability-wiki/05-plugin-system.toml"
 ---
 # Cordis — 插件系统与依赖注入
 

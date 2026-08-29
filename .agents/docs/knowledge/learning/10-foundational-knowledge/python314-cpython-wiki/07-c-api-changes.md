@@ -2,7 +2,7 @@
 id: "python314-cpython-wiki-07"
 title: "Python 3.14 C API 与扩展开发"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-c-api-features"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/07-c-api-changes.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/07-c-api-changes.toml"
 ---
 # Python 3.14 C API 与扩展开发
 

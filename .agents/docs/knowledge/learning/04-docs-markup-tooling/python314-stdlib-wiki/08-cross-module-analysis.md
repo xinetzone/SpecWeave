@@ -2,7 +2,7 @@
 id: "python314-stdlib-wiki-08"
 title: "Python 3.14 标准库教程 — 跨模块综合分析"
 source: "https://docs.python.org/3.14/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/08-cross-module-analysis.toml"
+x-toml-ref: "../../../../../../.meta/toml/.agents/docs/knowledge/learning/04-docs-markup-tooling/python314-stdlib-wiki/08-cross-module-analysis.toml"
 ---
 # Python 3.14 标准库教程 — 跨模块综合分析
 

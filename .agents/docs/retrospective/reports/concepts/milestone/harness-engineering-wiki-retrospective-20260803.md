@@ -17,7 +17,7 @@ quality-gates:
   G4: "行动项原子化 ✅"
   V: "三视角对抗审查 ✅"
 tags: ["里程碑复盘", "七概念", "方法论编排", "模式萃取", "质量门", "Harness-Engineering", "Agent-Engineering", "AI-Agent", "Wiki学习", "技术文章分析"]
-x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/milestone/harness-engineering-wiki-retrospective-20260803.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/milestone/harness-engineering-wiki-retrospective-20260803.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
