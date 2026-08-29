@@ -37,7 +37,7 @@
 | F-012 | 真正"看图"的是视觉模型，DeepSeek拿到文字转录结果 | ✅ |
 | F-013 | Skill机制：放~/.claude/skills/<skill-name>/SKILL.md，模型调用而非用户调用，Claude启动时预加载name/description进系统提示，按上下文自动决定加载，无需斜杠命令 | ✅ Anthropic官方机制 |
 | F-014 | SKILL.md必须以YAML frontmatter开头，含name（≤64字符）和description（≤1024字符，含"做什么+何时用"） | ✅ |
-| F-015 | ⚠️ 仓库SKILL.md硬编码了他人机器路径/Users/wwu/.codex/skills/claude-vision-skill/vision.js共3处（本地路径/--url/--clipboard三种场景），最近提交者为waynewu411非作者本人，且是Codex路径，需替换为本机绝对路径 | ✅ 核验确认 |
+| F-015 | ⚠️ 仓库SKILL.md硬编码了他人机器路径~/.codex/skills/claude-vision-skill/vision.js共3处（本地路径/--url/--clipboard三种场景），最近提交者为waynewu411非作者本人，且是Codex路径，需替换为本机绝对路径 | ✅ 核验确认 |
 | F-016 | ⚠️ 仓库README主推安装方式是"场景A"：vision.js拷到项目根目录+合并CLAUDE.md，并非~/.claude/skills/标准安装 | ✅ 核验补充 |
 | F-017 | vision.js加载.env的require("dotenv")包在try{}catch{}里，不装dotenv会静默失败、Key退回默认值sk-xxx；必须在skill目录执行npm install dotenv——最容易踩的坑，不装不会报错但.env完全不生效 | ✅ |
 
