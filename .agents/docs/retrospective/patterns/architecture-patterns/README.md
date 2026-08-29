@@ -78,6 +78,7 @@ x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/archi
 | [graph-first-agent-architecture.md](graph-first-agent-architecture.md) | 图优先Agent架构：有向图建模控制流+类型化共享状态+条件路由+检查点暂停恢复+可观测性前置，"按图执行"替代"自由对话"，经行业跨框架证据与AndroidWorld 100%案例双重验证 | L2 已验证 | 生产级Agent系统、复杂多步工作流、需审计追踪/人机审核/失败恢复的长任务、CI/CD与数据管道同构场景 |
 | [event-driven-guardian.md](event-driven-guardian.md) | 事件驱动守护：用 OS 原生事件触发（schtasks ONEVENT/systemd path）替代常驻轮询进程，消除"守护进程即单点故障"递归问题，配冷却锁防事件风暴 + 幂等修复 + 最高权限，根治截图工具反复损坏实证 | L1 实验性 | 系统级自愈/守护、UWP/应用运行时注册修复、服务崩溃自动重启、错误日志触发的自动修复 |
 | [inference-shell-model-base-decoupling.md](inference-shell-model-base-decoupling.md) | 推理外壳与模型底座解耦：应用 src 是纯 OpenAI 兼容 API 客户端外壳（无 torch/transformers），推理栈外置为 vLLM 服务（引擎版本硬 pin + 端点契约 + 权重 HuggingFace 外置），Agent 环境与模型服务/评估环境分立 | L1 已验证 | LLM 应用架构设计、本地模型服务化部署、多底座对比评测、源码学习判断"模型仓库"是否含推理栈 |
+| [lifecycle-differentiated-inheritance.md](lifecycle-differentiated-inheritance.md) | 生命周期差异化继承：继承只表达生命周期承诺不表达能力域相似——有状态成员继承携带状态初始化的基类，无状态成员有意不继承保持纯函数式，"不继承"是设计信号；贯穿性异常拼写是检索签名原样保留 | L1 已验证 | Agent/插件家族类层级设计、有状态-无状态分治、空实现基类治理、源码学习辨识继承意图 |
 
 ## 成熟度定义
 
