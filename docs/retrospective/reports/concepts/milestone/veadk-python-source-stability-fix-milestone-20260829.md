@@ -190,12 +190,12 @@ stale_after: "2027-08-29"
 
 | # | 行动项 | 类型 | 优先级 | Owner | 状态 |
 |---|--------|------|--------|-------|------|
-| A-1 | 将模式第五步验证脚本固化为 `.agents/scripts/` 可复用工具：匹配三类路径形态 × 两种斜杠、路径特征段稳定性分类、Test-Path 存在性复验；并对 `.chaos/libs` 其余 15 个克隆执行全量扫描 | 工具建设 | high | AI 智能体 | 待执行 |
-| A-2 | 信源稳定性门 5 步 + tag 选型子步骤（洞察 I-3）内置为 source-code-to-okf-wiki 技能 R 阶段前预检清单（延续案例1报告 A-2） | 流程改进 | high | AI 智能体 | 待执行 |
+| A-1 | 将模式第五步验证脚本固化为 `.agents/scripts/` 可复用工具：匹配三类路径形态 × 两种斜杠、路径特征段稳定性分类、Test-Path 存在性复验；并对 `.chaos/libs` 其余 15 个克隆执行全量扫描 | 工具建设 | high | AI 智能体 | ✅ 已完成（2026-08-29，提交 42b6c8e6）：GATE-SPS 工具 `check-source-path-stability.py` 双模式（audit + `--target` 清理前扫描），三类载体（link/frontmatter/prose）× 两种斜杠、特征段稳定性分类、存在性复验，30 个单元测试全绿。15 克隆全量扫描完成（298 处引用分类登记）：唯一零引用可安全删除候选为 awesun-usecase-skill-example；minitap-ai 147 处、ffi 55 处为最大活动信源债（bundles/ 活动引用，未来 vendor 迁移候选）；projects/tvm-ffi 约 30 处属子模块内部，主仓库不可直接修改，须走子项目流程；历史报告/spec 命中为预期快照不改写 |
+| A-2 | 信源稳定性门 5 步 + tag 选型子步骤（洞察 I-3）内置为 source-code-to-okf-wiki 技能 R 阶段前预检清单（延续案例1报告 A-2） | 流程改进 | high | AI 智能体 | ✅ 已完成（2026-08-29，提交 1ed76273）：技能升级 v1.3.0，新增阶段0 Pre-flight 预检（G0 质量门），SKILL.md/prompt-templates.md/L2 模式文档三处同步，反模式新增 2 条（临时克隆直接开读、信源漂移），V 阶段同步增计数断言验证（案例1报告 A-1 同期闭环） |
 | A-3 | 修复 veadk-python Wiki 9 处内部导航断链（补 `03-agent-platforms-tools/01-domestic-platforms/` 路径段或改为相对路径），属输出层 file-existence-verification-gate 领域 | 缺陷修复 | medium | AI 智能体 | 待执行 |
 | A-4 | `bundles/chaos/veadk-python/` 3 处 .chaos 散文式元数据声明处理：重新生成 bundle 或手动同步 vendor 路径 | 数据一致 | low | AI 智能体 | ✅ 已完成（2026-08-29，3 处手动同步 vendor 路径，bundle 复验 .chaos 残留 0，提交 98b76d84） |
 | A-5 | `.chaos/libs/veadk-python` 临时克隆清理：第四步扫描已放行（活动引用 0，仅剩历史记录与 bundle 散文声明），删除不可逆 | 环境清理 | low | 用户决策/AI 执行 | ✅ 已完成（2026-08-29，用户确认后删除 210MB 克隆；删除后全类型扫描仅余 3 个历史记录文件引用） |
-| A-6 | 排查 ai-collaboration 目录其余模式文档 `source` 字段相对路径是否同样误指 `.agents/docs/retrospective/reports/`（本次发现并修复 source-stability-gate.md 一处） | 缺陷排查 | medium | AI 智能体 | 待执行 |
+| A-6 | 排查 ai-collaboration 目录其余模式文档 `source` 字段相对路径是否同样误指 `.agents/docs/retrospective/reports/`（本次发现并修复 source-stability-gate.md 一处） | 缺陷排查 | medium | AI 智能体 | 待执行（2026-08-29 GATE-SPS 全量扫描补充情报：新发现 `skill-intent-routing.md` frontmatter source 字段指 `.chaos/libs/tests` 一处活动元数据，纳入本项排查范围） |
 
 ---
 
@@ -221,4 +221,7 @@ stale_after: "2027-08-29"
 | a2442643 | docs(patterns) | 信源稳定性门模式萃取入库（L2 双案例验证 + 反模式5，模式文档 + 索引2文件，317 增） | 3 |
 | 5427d1df | docs(retrospective) | 本里程碑复盘报告与 milestone 索引登记 | 2 |
 | 98b76d84 | docs(bundle) | 行动项 A-4：bundle 3 处溯源路径同步 vendor 信源（行动项 A-5 同窗口执行：删除 210MB 临时克隆，.chaos 为 gitignore 无仓库变更） | 3 |
-| （本提交） | docs(retrospective) | 行动项 A-4/A-5 闭环状态更新 | 1 |
+| 1b78dda6 | docs(retrospective) | 行动项 A-4/A-5 闭环状态更新 | 1 |
+| 42b6c8e6 | feat(scripts) | 行动项 A-1：GATE-SPS 信源路径稳定性扫描工具（双模式 + 30 单元测试，2 文件 863 增） | 2 |
+| 1ed76273 | docs(skill) | 行动项 A-2（含案例1报告 A-1/A-2）：source-code-to-okf-wiki v1.3.0 阶段0信源稳定性预检 + V 阶段计数断言（4 文件） | 4 |
+| （本提交） | docs(retrospective) | 行动项 A-1/A-2 闭环回写（15 克隆扫描结论、A-6 补充情报） | 1 |
