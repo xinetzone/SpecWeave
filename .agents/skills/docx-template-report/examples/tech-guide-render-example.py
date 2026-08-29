@@ -29,7 +29,11 @@ os.makedirs(OUT_DIR, exist_ok=True)
 context = {
     "company": "示例科技股份有限公司",
     "doc_title": "MyAI SDK 使用指南",
-    "doc_meta": "版本 v1.1.0  2025-07-02",
+    "doc_meta": "版本 v1.1.0  2025-08-01",
+    "doc_status": "正式发布",
+    "doc_version": "1.1.0",
+    "doc_date": "2025-08-01",
+    "doc_author": "张三",
 
     # ---- 更新记录（5 列表，独立于章节循环） ----
     "revisions": [
@@ -180,9 +184,13 @@ def main():
     )
 
     checks = {
-        "封面标题": "MyAI SDK 使用指南" in table_text,
-        "更新记录 v1.0.0": "1.0.0" in table_text,
-        "更新记录 v1.1.0": "1.1.0" in table_text,
+        "封面标题": "MyAI SDK 使用指南" in body_text,
+        "封面_公司名": "示例科技股份有限公司" in table_text,
+        "封面_版本号": "1.1.0" in table_text,
+        "封面_状态": "正式发布" in table_text,
+        "封面_作者": "张三" in table_text,
+        "更新记录_v1.0.0": "1.0.0" in table_text,
+        "更新记录_v1.1.0": "1.1.0" in table_text,
         "2列表格_目录说明": "release/" in table_text and "工具主程序" in table_text,
         "3列表格_结构体成员": "index" in table_text and "uint32_t" in table_text and "tensor 的索引位置" in table_text,
         "4列表格_编译参数": "name" in table_text and "模型名称" in table_text,
