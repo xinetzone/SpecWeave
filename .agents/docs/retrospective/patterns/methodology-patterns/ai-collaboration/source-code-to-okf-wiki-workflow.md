@@ -33,7 +33,23 @@ L1 已验证（2次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 t
 
 ## 解决方案
 
-采用 R→I→E→V→C 五阶段链路，每阶段有明确产出与质量门：
+采用**阶段0信源稳定性预检 + R→I→E→V→C 五阶段链路**，每阶段有明确产出与质量门：
+
+### 阶段0（Pre-flight）：信源稳定性门预检（2026-08-29 v1.3.0 新增）
+
+**目标**：R 阶段开工前确保全部信源位于稳定位置、版本不可变，杜绝"文档生成时引用可用、临时克隆清理后全部断裂"的静默失效。完整方法论见 [source-stability-gate.md](source-stability-gate.md)，工具为 GATE-SPS（`.agents/scripts/check-source-path-stability.py`）。
+
+**步骤**：
+1. **信源分类**：列出全部信源，按路径特征段分类——temporary（`.chaos/`、`.tmp/`、系统 Temp、缓存目录中的临时克隆）、stable（`vendor/` 子模块、site-packages、系统安装目录）、env-bound（开发者机器任意绝对路径）
+2. **临时信源升级**：temporary/env-bound 信源必须先固定为可追溯副本——首选 git submodule 固定具体 release tag（记录 tag 名 + commit hash + 远程 URL），次选固定 commit hash；**禁止固定 main/master/浮动分支**
+3. **tag 选型子步骤**：判据是集合论判定"文档引用集合 ∩ 版本变更集合 = ∅"（引用的 API 在所选版本中全部存在），不是版本号新旧判断；只记 tag 名不记 hash 不可接受（tag 可能被移动重打）
+4. **路径纪律**：facts.md 与文档中的信源路径只指向 stable 位置（`vendor/<lib>`），禁止 `file:///` 指向临时目录；引用扫描锚定路径**特征段**（.chaos/.tmp/Temp）而非引用语法，覆盖 link/frontmatter 裸路径/prose 反引号三类载体
+5. **清理前扫描**（第四步）：临时克隆删除前运行 `python .agents/scripts/check-source-path-stability.py --target <待删目录>`，rc=0（零引用）放行、rc=1 先迁移
+6. **持久性验证**（第五步）：文档定稿后运行 audit 模式 `python .agents/scripts/check-source-path-stability.py`，rc=0 通过；复盘报告事实表等历史时点快照中的临时路径属预期命中，按"历史记录 vs 活动引用"判据人工分流——工具零漏报，不替代语义裁决
+
+**质量门（G0）**：信源全部 stable；固定版本为不可变 tag/commit；清理前扫描与持久性验证 rc=0。
+
+> **为什么预检必须在 R 阶段之前**：file:/// 指向临时克隆的链接在克隆存在时完全可用，断裂只在清理后爆发——此时修复成本是全量引用迁移（veadk 案例 41 文件 800 处引用），而预检成本是 5 分钟的子模块固定。信源稳定性是事实采集的前提条件：R 阶段记录的每一条"定义于 \<路径\>"事实都建立在信源路径之上。
 
 ### R阶段（Read/Retrospective）：源码深度阅读与事实采集
 
@@ -145,6 +161,8 @@ sources:
 5. **代码示例检查**：代码示例语法正确、API调用与源码一致
 6. **Index完整性检查**：各级index.md列出所有对应目录的文件
 7. **虚构API检测**：对文档中引用的每个类/方法，用Grep在源码中验证存在性
+8. **计数断言验证**：报告/文档中"X个/Y份/Z处"类数量陈述，必须经 Glob/Grep 独立计数比对一致（如"15个克隆298处引用"须与扫描工具输出一致），禁止凭印象写数
+9. **信源路径稳定性**：运行 `python .agents/scripts/check-source-path-stability.py`（audit 模式），temporary 信源引用零容忍；复盘报告事实表等历史时点快照按"历史记录 vs 活动引用"判据人工分流——工具零漏报，不替代语义裁决
 
 ### C阶段（Commit）：模式萃取与沉淀
 
@@ -273,6 +291,8 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | index.md中包含frontmatter字段 | 不符合OKF规范（子目录index不应有frontmatter） | 移除frontmatter，仅根index.md可保留okf_version |
 | 交叉链接中出现`../`相对路径 | 路径风格不一致 | 替换为`/`开头的bundle-relative绝对路径 |
 | V阶段检查发现1个以上虚构API | E阶段事实遵循度不足，可能还有更多未发现的虚构内容 | 对所有文档执行全面Grep验证，而非只抽查 |
+| 信源位于 `.chaos/`、系统 Temp 等临时目录，或版本固定为 main/master | 违反阶段0信源稳定性门（G0），临时克隆清理后引用将静默断裂 | 暂停R阶段，先将信源升级为 vendor submodule 并固定不可变 release tag + commit hash |
+| 文档/报告中出现"X个/Y份/Z处"数量陈述但未经工具计数 | 计数断言失真风险，数字可能凭印象写出 | 用 Glob/Grep 独立计数比对，数量以工具输出为准 |
 
 ## 反模式
 
@@ -319,6 +339,14 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 ### 反模式11："子目录 index.md 用表格链接替代 {toctree} 块"（containers 域修复新增）
 
 生成子目录（concepts/examples/references）index.md 时只写 Markdown 表格/列表链接，不追加 `{toctree}` 指令块。后果：表格对人类读者完全可用，但 Sphinx 与 CI 质量门（check-toctrees.py）从 doc/index.md 沿 toctree 边做 BFS，子目录 index 缺块即导航断头，其下全部内容被判"未收录(不可达)"——containers 域 6 个束 18 个子目录 index 因此产生 52 项门禁失败（2026-08-28 批量修复）。**正确做法**：每个 index.md（根+子目录+分组）必须同时含人类可读链接与隐藏 `{toctree}` 块（条目=本目录内容文件 stem，排序收录）；E 阶段 index 生成后运行 `invoke gates.toctrees` 验证导航链。该要求已固化至 source-code-to-okf-wiki SKILL §6.4 与 E 阶段 index 生成 Prompt 模板。
+
+### 反模式12："临时克隆直接开读，不固定版本"（veadk 新增）
+
+把临时克隆（`.chaos/libs/`、系统 Temp 目录）当作稳定信源直接开始 R 阶段阅读与文档生成，不固定 tag/commit。后果：克隆清理后全部 `file:///` 链接与 facts.md 路径**静默断裂**（链接在克隆存在时完全可用，断裂只在清理后爆发），修复成本是全量引用迁移——veadk-python 案例 41 个文件 800 处引用迁移；且浮动内容随时变化，已登记事实不可复现。**正确做法**：R 阶段前执行阶段0预检——临时信源先升级为 `vendor/` git submodule 并固定不可变 release tag（记录 tag 名 + commit hash + 远程 URL），facts.md 与文档路径只指 stable 位置；临时克隆删除前运行 GATE-SPS `--target` 扫描，零引用才放行。
+
+### 反模式13："信源漂移——固定 main/master 或只记 tag 名不记 hash"（veadk 新增）
+
+固定信源版本时锚定浮动分支（main/master），或只记录 tag 名不记录 commit hash。后果：分支推进或 tag 被移动/重打后，文档事实与信源内容静默失配，且无 hash 无法复现与审计——"tag 也可能漂移"。**正确做法**：固定不可变 release tag 并同时记录 commit hash 双坐标；tag 选型按集合论判据"文档引用集合 ∩ 版本变更集合 = ∅"验证（引用的 API 在所选版本中全部存在），而非版本号新旧判断；禁止 main/master 作为文档信源锚点。
 
 ## 通用Prompt模板
 
@@ -389,6 +417,8 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 4. 事实抽查：对文档中引用的每个类名/方法名，用Grep在 `<源码路径>` 中验证存在性
 5. 代码检查：代码示例语法是否正确，API调用是否匹配源码
 6. Index检查：各级index.md是否完整列出所有文件
+7. 计数断言：文档中"X个/Y份/Z处"类数量陈述，用Glob/Grep独立计数核对，不一致则修正为工具输出值
+8. 信源稳定性：运行 `python .agents/scripts/check-source-path-stability.py`（audit 模式），临时路径引用零容忍；历史时点快照（复盘事实表）人工标注分流
 
 输出检查报告，列出发现的问题，然后逐一修复。
 ```
@@ -397,10 +427,11 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 
 | 维度 | 检验点 |
 |---|---|
-| R阶段 | 事实清单无推断性表述、每个事实指向源码路径、核心模块全覆盖 |
+| 阶段0（G0） | 信源全部 stable（无 `.chaos/`/Temp 临时路径）、版本固定为不可变 tag + commit hash（禁 main/master）、清理前 `--target` 扫描与持久性 audit 均 rc=0 |
+| R阶段 | 事实清单无推断性表述、每个事实指向 stable 信源路径、核心模块全覆盖 |
 | I阶段 | 洞察四元组完整（陈述/证据/反常识/行动）、知识地图有学习路径设计 |
 | E阶段 | 信源文件先于其他文档生成、分批生成（每批≤7个文件）、index最后写 |
-| V阶段 | 链接无断裂、无虚构API（Grep验证）、frontmatter字段完整、index无遗漏 |
+| V阶段 | 链接无断裂、无虚构API（Grep验证）、frontmatter字段完整、index无遗漏、数量陈述经独立计数比对、信源路径稳定性 audit 通过 |
 | C阶段 | 模式文档含反模式（≥3个）、prompt模板可复用、模式入库到正确目录 |
 | G3（模式） | 本模式含触发场景、核心步骤、反模式（≥5）、检验标准、迁移示例 |
 
@@ -428,6 +459,7 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
+- 2026-08-29 | pattern | 同步 source-code-to-okf-wiki SKILL v1.3.0：新增"阶段0（Pre-flight）：信源稳定性门预检"小节（信源分类→临时信源升级为 vendor submodule 固定 release tag+commit hash→路径只指 stable→清理前 GATE-SPS `--target` 扫描→持久性 audit，G0 质量门），由 veadk-python 案例实证（41 文件 800 处临时引用迁移）；V 阶段检查清单增第 8 项计数断言验证、第 9 项信源路径稳定性；新增反模式12"临时克隆直接开读，不固定版本"、反模式13"信源漂移——固定 main/master 或只记 tag 名不记 hash"；早期预警表与检验标准表同步增行；内嵌 V 阶段 Prompt 模板增第 7/8 项
 - 2026-08-25 | pattern | 新增"迁移验证案例：tiktoken v0.14.0"（Python门面+Rust核心双层库第2次验证，validation_count 1→2）：沉淀4条经验教训（按层拆分R阶段事实采集、PyO3绑定名以源码实际模块名为准、对"常见API名"虚构做负向Grep验证、Rust导出模块以py.rs pymodule名为准），复用≥5条既有反模式，新增反模式8"双层语言库按惯例命名而非按源码命名导出模块"
 - 2026-08-23 | pattern | R阶段新增"大型C/C++项目头文件优先采集"专项小节，反向传播自新沉淀模式 cpp-header-first-fact-collection（L2，Apache TVM/TuyaOpen 双案例验证）
 - 2026-08-21 | pattern | 初始创建：从 PyInvoke v3.0.3 OKF Wiki 生成实践萃取
