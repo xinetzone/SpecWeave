@@ -32,13 +32,13 @@ VeADK 在 `veadk/integrations/` 目录下提供了以下云服务集成模块：
 | VikingDB向量数据库 | [ve_viking_db_memory/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_viking_db_memory) | VikingDB长期记忆后端 | `vikinguav` |
 | CodePipeline代码流水线 | [ve_code_pipeline/](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_code_pipeline) | 代码流水线集成 | HTTP API |
 
-参考：[云部署集成模块清单](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/12-extension-points.md#L170-L184)
+参考：[云部署集成模块清单](../supporting-analysis/12-extension-points.md#L170-L184)
 
 ---
 
 ## 二、火山引擎集成模式
 
-所有火山引擎云服务集成遵循高度一致的设计模式（参考[架构洞察9](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L263-L311)）。
+所有火山引擎云服务集成遵循高度一致的设计模式（参考[架构洞察9](../supporting-analysis/11-architecture-insights.md#L263-L311)）。
 
 ### 2.1 统一凭证初始化模式
 
@@ -110,7 +110,7 @@ response = ve_request(
 
 ### 2.3 凭证链获取模式
 
-凭证获取遵循统一的优先级链（参考[架构洞察7](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L193-L231)）：
+凭证获取遵循统一的优先级链（参考[架构洞察7](../supporting-analysis/11-architecture-insights.md#L193-L231)）：
 
 ```python
 from veadk.auth.veauth.utils import get_credential_from_vefaas_iam
@@ -143,7 +143,7 @@ def get_credentials():
 
 ### 2.4 BytePlus跨云兼容
 
-VeADK 自动映射 BytePlus 环境变量到火山引擎环境变量（[config.py:54-61](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L215)）：
+VeADK 自动映射 BytePlus 环境变量到火山引擎环境变量（[config.py:54-61](../supporting-analysis/11-architecture-insights.md#L215)）：
 
 - `BYTEPLUS_ACCESS_KEY` → `VOLCENGINE_ACCESS_KEY`
 - `BYTEPLUS_SECRET_KEY` → `VOLCENGINE_SECRET_KEY`
@@ -153,7 +153,7 @@ VeADK 自动映射 BytePlus 环境变量到火山引擎环境变量（[config.py
 
 ### 2.5 日志脱敏模式
 
-输出日志时必须对敏感信息脱敏，参考 [ve_faas.py:252-263](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L301) 的正则脱敏模式：
+输出日志时必须对敏感信息脱敏，参考 [ve_faas.py:252-263](../supporting-analysis/11-architecture-insights.md#L301) 的正则脱敏模式：
 
 ```python
 import re
@@ -468,7 +468,7 @@ def my_cloud_operation(
 | SDK初始化 | `volcenginesdkcore.Configuration()` → `set_default()` → `ApiClient()` → 具体API实例 | [ve_faas.py:67-78](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L67-L78) |
 | 非SDK API调用 | 使用 `ve_request()` 发送签名请求 | [ve_faas.py:186-210](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L186-L210) |
 | 凭证获取 | 环境变量 → `get_credential_from_vefaas_iam()` | [web_search.py:52-63](file:///d:/AI/vendor/veadk-python/veadk/tools/builtin_tools/web_search.py#L52-L63) |
-| BytePlus兼容 | `CLOUD_PROVIDER` 环境变量切换域名，自动映射AK/SK环境变量 | [config.py:54-61](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L215) |
+| BytePlus兼容 | `CLOUD_PROVIDER` 环境变量切换域名，自动映射AK/SK环境变量 | [config.py:54-61](../supporting-analysis/11-architecture-insights.md#L215) |
 | 日志脱敏 | 正则替换 key/secret/token/password 字段 | 架构洞察9建议 |
 | 模块间依赖 | VeFaaS自动创建VeAPIG实例，一站式部署 | [ve_faas.py:80-85](file:///d:/AI/vendor/veadk-python/veadk/integrations/ve_faas/ve_faas.py#L80-L85) |
 

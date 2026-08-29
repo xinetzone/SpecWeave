@@ -29,7 +29,7 @@ RunProcessor 采用**装饰器模式**包装 Agent 的事件生成器（event ge
                   [可中断/重试/循环]
 ```
 
-参考：[架构洞察8 - RunProcessor装饰器链模式](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L234-L260)
+参考：[架构洞察8 - RunProcessor装饰器链模式](../supporting-analysis/11-architecture-insights.md#L234-L260)
 
 ### 适用场景
 
@@ -108,7 +108,7 @@ class NoOpRunProcessor(BaseRunProcessor):
 
 ### 核心调用点
 
-RunProcessor 在 [runner.py:541-553](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L239-L241) 中通过Python装饰器语法应用：
+RunProcessor 在 [runner.py:541-553](../supporting-analysis/11-architecture-insights.md#L239-L241) 中通过Python装饰器语法应用：
 
 ```python
 @processor.process_run(runner=runner, message=message, **kwargs)
@@ -607,7 +607,7 @@ class AuditEventProcessor(BaseRunProcessor):
 
 当前VeADK的Runner只支持**单个**RunProcessor（通过三级优先级链选择一个），不支持多个Processor链式组合。
 
-参考：[runner.py:406-414](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L240)
+参考：[runner.py:406-414](../supporting-analysis/11-architecture-insights.md#L240)
 
 ### 组合多个Processor的方法
 
@@ -687,7 +687,7 @@ async for event in event_generator_func():
     pass  # 没有yield！
 ```
 
-参考：[架构洞察8 - 使用建议](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L255-L259)
+参考：[架构洞察8 - 使用建议](../supporting-analysis/11-architecture-insights.md#L255-L259)
 
 ### 2. 异步非阻塞
 

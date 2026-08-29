@@ -44,7 +44,7 @@ instruction=(
 - **工具描述质量优先**：工具的docstring/description是LLM选择工具的依据，务必写清晰
 - **注意自动追加工具**：传入knowledgebase/long_term_memory/enable_authz等参数时，框架会自动追加对应工具（架构洞察1）
 
-参考：[架构洞察1 - 初始化后检查工具列表](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L34-L38)
+参考：[架构洞察1 - 初始化后检查工具列表](../supporting-analysis/11-architecture-insights.md#L34-L38)
 
 ### 1.3 模型选择最佳实践
 
@@ -52,22 +52,22 @@ instruction=(
   ```python
   model_name=["doubao-pro", "doubao-lite"]  # 主模型 + fallback
   ```
-  参考：[架构洞察4 - Fallback模型链](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L117-L118)
+  参考：[架构洞察4 - Fallback模型链](../supporting-analysis/11-architecture-insights.md#L117-L118)
 
 - **按场景选择客户端**：
   - 需要豆包原生特性（多轮缓存、多模态）→ `enable_responses=True`（ArkLlm）
   - 需要通用OpenAI兼容接口 → `enable_responses=False`（LiteLlm）
-  参考：[架构洞察4 - 双客户端切换](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L118)
+  参考：[架构洞察4 - 双客户端切换](../supporting-analysis/11-architecture-insights.md#L118)
 
 - **不要覆盖默认头信息**：自定义 `model_extra_config` 时不要覆盖 `veadk-version`、`x-is-encrypted` 等默认头
-  参考：[架构洞察4 - 用户覆盖风险](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L124)
+  参考：[架构洞察4 - 用户覆盖风险](../supporting-analysis/11-architecture-insights.md#L124)
 
 ### 1.4 Runtime选择最佳实践
 
 - **默认使用 `runtime="adk"`**：获得最完整的Google ADK功能支持
 - **生产环境固定runtime类型**：避免运行时切换导致不可预测行为
 - **codex/piagent runtime注意功能差异**：非adk runtime不经过ADK原生LlmFlow，sub_agents复杂编排可能行为不一致
-参考：[架构洞察3 - 使用建议](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L104-L108)
+参考：[架构洞察3 - 使用建议](../supporting-analysis/11-architecture-insights.md#L104-L108)
 
 ---
 
@@ -242,7 +242,7 @@ def my_tool(param: str, tool_context: ToolContext | None = None) -> dict:
 
 ### 6.1 API Key四级优先级
 
-API Key解析遵循严格优先级（参考[架构洞察7](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L193-L231)）：
+API Key解析遵循严格优先级（参考[架构洞察7](../supporting-analysis/11-architecture-insights.md#L193-L231)）：
 
 1. **显式传参** `model_api_key="..."` → 优先级最高
 2. **环境变量** `MODEL_AGENT_API_KEY` → 容器化部署推荐
@@ -272,7 +272,7 @@ export CLOUD_PROVIDER=byteplus
 export BYTEPLUS_ACCESS_KEY=your_ak
 export BYTEPLUS_SECRET_KEY=your_sk
 ```
-框架会自动映射到火山引擎环境变量名，无需重复设置。参考：[架构洞察7 - BytePlus自动映射](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L215)
+框架会自动映射到火山引擎环境变量名，无需重复设置。参考：[架构洞察7 - BytePlus自动映射](../supporting-analysis/11-architecture-insights.md#L215)
 
 ---
 
@@ -323,7 +323,7 @@ agent = Agent(
 - 初始化后检查回调链确认顺序
 - 框架自动添加的回调顺序：authz → dynamic_load_skills（如需移除可初始化后过滤）
 
-参考：[架构洞察2 - 使用建议](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L70-L74)
+参考：[架构洞察2 - 使用建议](../supporting-analysis/11-architecture-insights.md#L70-L74)
 
 ---
 
@@ -335,7 +335,7 @@ agent = Agent(
 
 **风险**：local模式已标记 `DeprecationWarning`，是废弃功能。
 
-**代码依据**：[veadk/agent.py:537-547](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L180)
+**代码依据**：[veadk/agent.py:537-547](../supporting-analysis/11-architecture-insights.md#L180)
 
 **正确做法**：
 - 使用 Google ADK 原生的 `load_skill_from_dir`
@@ -393,7 +393,7 @@ agent = Agent(
 
 **风险**：框架会根据knowledgebase/memory/enable_authz等参数自动追加工具，可能引入预期外的工具。
 
-**代码依据**：[架构洞察1 - 隐式行为风险](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L30)
+**代码依据**：[架构洞察1 - 隐式行为风险](../supporting-analysis/11-architecture-insights.md#L30)
 
 **正确做法**：
 ```python
@@ -427,7 +427,7 @@ async def wrapper():
 
 **风险**：覆盖 `veadk-version`、`x-is-encrypted`、`veadk-source` 等默认头可能导致后端兼容性问题。
 
-**代码依据**：[架构洞察4 - 用户覆盖风险](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/supporting-analysis/11-architecture-insights.md#L124)
+**代码依据**：[架构洞察4 - 用户覆盖风险](../supporting-analysis/11-architecture-insights.md#L124)
 
 **正确做法**：只添加自定义头，不修改已有默认头。
 

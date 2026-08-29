@@ -33,9 +33,9 @@ wiki_version: "1.0"
 ### 问题1：默认模型名称描述与示例文件不一致
 - **严重程度**：🔴关键
 - **位置**：
-  - [getting-started/quickstart.md:266](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/quickstart.md#L266-L266)
+  - [getting-started/quickstart.md:266](../getting-started/quickstart.md#L266-L266)
   - [examples/01_quickstart/.env.example:7](file:///d:/AI/vendor/veadk-python/examples/01_quickstart/.env.example#L7-L7)
-  - [modules/config.md:328](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/config.md#L328-L328)
+  - [modules/config.md:328](../modules/config.md#L328-L328)
   - [veadk/consts.py:22](file:///d:/AI/vendor/veadk-python/veadk/consts.py#L22-L22)
 - **问题描述**：
   - 代码默认值：`doubao-seed-2-1-pro-260628`（consts.py）
@@ -47,19 +47,19 @@ wiki_version: "1.0"
 
 ### 问题2：quickstart.md存在空链接
 - **严重程度**：🔴关键
-- **位置**：[getting-started/quickstart.md:370-371](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/quickstart.md#L370-L371)
+- **位置**：[getting-started/quickstart.md:370-371](../getting-started/quickstart.md#L370-L371)
 - **问题描述**："下一步建议"中的`[Agent 类详解]()`和`[Runner 运行器]()`是空链接，点击无反应。
 - **修正状态**：✅已修正为正确的相对路径：`../modules/agent.md`和`../modules/runner.md`
 
 ### 问题3：配置优先级描述不完整
 - **严重程度**：🟡重要
-- **位置**：[modules/config.md:17-35](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/config.md#L17-L35)
+- **位置**：[modules/config.md:17-35](../modules/config.md#L17-L35)
 - **问题描述**：配置优先级中提到"代码参数 > 系统环境变量 > .env文件 > config.yaml > 默认值"，但没有详细说明config.yaml如何设置环境变量以及.env与config.yaml的加载顺序细节。
 - **修正状态**：🟢建议保留，当前描述对于入门用户已足够，高级细节可在后续版本补充
 
 ### 问题4：API Key优先级文档层级不一致
 - **严重程度**：🟡重要
-- **位置**：[modules/agent.md:43](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/agent.md#L43-L43) vs [modules/config.md:96-99](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/config.md#L96-L99)
+- **位置**：[modules/agent.md:43](../modules/agent.md#L43-L43) vs [modules/config.md:96-99](../modules/config.md#L96-L99)
 - **问题描述**：agent.md中model_api_key的四级优先级描述（显式参数>环境变量>key_name解析>默认ARK密钥）是完整的，但config.md中ModelConfig.api_key的优先级只列了3级，缺少"显式构造参数"这一级（因为config.md讲的是settings配置，不是Agent构造参数，所以实际不算错误，但可能造成混淆）。
 - **修正状态**：🟢文档定位不同，无需修正，在config.md中补充说明即可
 
@@ -69,19 +69,19 @@ wiki_version: "1.0"
 
 ### 问题5：异步编程概念未解释
 - **严重程度**：🟡重要
-- **位置**：[getting-started/quickstart.md:103-112](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/quickstart.md#L103-L112)
+- **位置**：[getting-started/quickstart.md:103-112](../getting-started/quickstart.md#L103-L112)
 - **问题描述**：代码示例中使用了`async/await`和`asyncio.run()`，但对于不熟悉Python异步编程的新手，缺少基础概念解释（什么是异步函数、为什么需要await、asyncio.run()做什么）。
 - **修正状态**：✅已在glossary.md中添加"asyncio"术语解释；新手可通过术语表链接了解
 
 ### 问题6：Runner首次出现时缺少术语表链接
 - **严重程度**：🟢建议
-- **位置**：[getting-started/quickstart.md:65](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/quickstart.md#L65-L65)
+- **位置**：[getting-started/quickstart.md:65](../getting-started/quickstart.md#L65-L65)
 - **问题描述**：第65行首次出现"Runner 运行器"时虽有解释，但未链接到glossary.md术语表。
 - **修正状态**：glossary.md已收录Runner术语，可在后续版本添加链接
 
 ### 问题7：Windows CMD激活脚本缺失
 - **严重程度**：🟡重要
-- **位置**：[getting-started/installation.md:140-144](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/getting-started/installation.md#L140-L144)
+- **位置**：[getting-started/installation.md:140-144](../getting-started/installation.md#L140-L144)
 - **问题描述**：uv安装和源码安装部分的虚拟环境激活脚本只提供了macOS/Linux和Windows PowerShell版本，缺少Windows CMD（命令提示符）的激活命令。
 - **修正状态**：✅已补充Windows CMD激活脚本：`.venv\Scripts\activate.bat`
 
@@ -91,7 +91,7 @@ wiki_version: "1.0"
 
 ### 问题8：设计模式章节篇幅占比过高
 - **严重程度**：🟡重要
-- **位置**：[architecture/design-patterns.md](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/architecture/design-patterns.md)
+- **位置**：[architecture/design-patterns.md](../architecture/design-patterns.md)
 - **问题描述**：design-patterns.md约595行，占Wiki总篇幅约25-30%，而快速入门（quickstart.md约377行）和核心API参考（agent.md约428行、runner.md约565行）的篇幅相对其使用频率来说偏薄。对于大多数用户，入门和API参考是最高频访问的内容。
 - **修正状态**：🟢建议后续迭代平衡篇幅，优先补充入门和常见使用场景
 
@@ -112,7 +112,7 @@ wiki_version: "1.0"
 
 ### 问题10：缺少清晰的学习路径
 - **严重程度**：🟡重要
-- **位置**：[index.md](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/index.md)
+- **位置**：[index.md](../index.md)
 - **问题描述**：Wiki首页虽有文档结构，但缺少面向不同角色（新手/进阶/专家）的清晰学习路径指引，新用户可能不知道按什么顺序阅读。
 - **修正状态**：🟢建议在index.md中添加"新手入门路径"、"进阶开发者路径"等指引
 
@@ -151,7 +151,7 @@ wiki_version: "1.0"
 
 ### 问题11：ShortTermMemory默认路径跨平台问题
 - **严重程度**：🟢建议
-- **位置**：[modules/memory.md:52](file:///d:/AI/.agents/docs/knowledge/learning/veadk-python/modules/memory.md#L52-L52)
+- **位置**：[modules/memory.md:52](../modules/memory.md#L52-L52)
 - **问题描述**：`local_database_path`默认值为`"/tmp/veadk_local_database.db"`（Linux/macOS路径），文档中未说明Windows系统下此路径的行为或Windows推荐路径。
 - **源码确认**：veadk/memory/short_term_memory.py:87默认值确实是"/tmp/..."，Windows用户需显式指定Windows路径。
 - **修正状态**：🟢建议在文档中补充Windows路径说明
@@ -232,4 +232,4 @@ VeADK-Python Wiki 整体质量良好，核心模块（Agent、Runner、Config、
 
 > **审查完成时间**：2026-08-05  
 > **审查范围**：VeADK-Python Wiki 全部文档（getting-started、modules、architecture、examples、extensions、faq、glossary）  
-> **抽查代码版本**：基于d:\AI\vendor\veadk-python代码库分析
+> **抽查代码版本**：基于 `d:\AI\vendor\veadk-python` 代码库分析
