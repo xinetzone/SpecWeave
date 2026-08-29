@@ -183,6 +183,13 @@ def main():
         cell.text for tbl in doc.tables for row in tbl.rows for cell in row.cells
     )
 
+    # 物理结构断言：行循环必须复制行而非横向增生单元格
+    # 顺序：封面品牌栏(1x2) / 封面信息表(4x2) / 修订表(1表头+2数据=3x5) /
+    #       ch1sec1 2列3数据(4x2) / ch1sec2 2列4数据(5x2) /
+    #       ch2sec1 4列3数据(4x4) / ch2sec2 5列4数据(5x5) / ch3sec1 3列3数据(4x3)
+    dims = [(len(t.rows), len(t.columns)) for t in doc.tables]
+    expected_dims = [(1, 2), (4, 2), (3, 5), (4, 2), (5, 2), (4, 4), (5, 5), (4, 3)]
+
     checks = {
         "封面标题": "MyAI SDK 使用指南" in body_text,
         "封面_公司名": "示例科技股份有限公司" in table_text,
@@ -196,7 +203,13 @@ def main():
         "4列表格_编译参数": "name" in table_text and "模型名称" in table_text,
         "5列表格_命令选项": "-n / --name" in table_text and "指定模型名称" in table_text,
         "代码块_Conda命令": "conda activate myaievn" in body_text,
+        "表格物理维度_三行分离行循环": dims == expected_dims,
+        "无残留Jinja标签": "{%" not in body_text and "{{" not in body_text
+        and "{%" not in table_text and "{{" not in table_text,
     }
+    if dims != expected_dims:
+        print(f"  [诊断] 实际维度: {dims}")
+        print(f"  [诊断] 期望维度: {expected_dims}")
 
     print("\n渲染校验：")
     all_pass = True
