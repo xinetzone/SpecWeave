@@ -1,6 +1,6 @@
 ---
 id: "skill-intent-routing"
-source: "../../../../../../bundles/chaos/ai-agent-skills/concepts/08-jira-skill-engineering.md#意图映射 + external:github.com/netresearch/agent-rules-skill@v3.14.1/skills/agent-rules/SKILL.md#Scripts（外部仓库固定 tag）"
+source: "../../../../../../docs/knowledge/learning/okf-bundles/chaos/ai-agent-skills/concepts/08-jira-skill-engineering.md#意图映射 + external:github.com/netresearch/agent-rules-skill@v3.14.1/skills/agent-rules/SKILL.md#Scripts（外部仓库固定 tag）"
 x-toml-ref: "../../../../../../.meta/toml/.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-intent-routing.toml"
 maturity: "L2"
 validation_count: 2

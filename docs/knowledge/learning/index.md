@@ -21,5 +21,6 @@ minit2i-minimalist-t2i-wiki/index
 python314-cpython-wiki/index
 python314-stdlib-wiki/index
 three-ai-tools-learning-wiki/index
+okf-bundles/index
 okf-topic-index
 ```
