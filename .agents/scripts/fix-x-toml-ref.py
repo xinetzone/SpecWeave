@@ -3,14 +3,22 @@
 自动生成/修复 Markdown 文件的 x-toml-ref 相对路径。
 
 根据文件在项目中的位置，自动计算到 .meta/toml/ 下对应 TOML 文件的相对路径。
+镜像布局（双轨制，命名空间前缀保留）：
+  .meta/toml/<md 仓库相对路径，.md 换 .toml>
+  例如 .agents/docs/knowledge/x.md -> .meta/toml/.agents/docs/knowledge/x.toml
+       .trae/specs/y.md            -> .meta/toml/.trae/specs/y.toml
 路径计算公式：
-  1. MD文件相对于项目根的路径 P（如 docs/knowledge/mdi-research/00-executive-summary.md）
-  2. MD文件所在目录距项目根的深度 N（路径中父目录的 / 数量）
-  3. x-toml-ref = '../' * N + '.meta/toml/' + P.replace('.md', '.toml')
+  1. MD文件相对于项目根的路径 P（如 .agents/docs/knowledge/x.md）
+  2. MD文件所在目录距项目根的深度 N（父目录的路径段数）
+  3. x-toml-ref = '../' * N + '.meta/toml/' + P（.md 后缀替换为 .toml）
+
+安全守卫：仅当计算出的目标 TOML 存在（或显式 --create-toml）时才改写 ref，
+避免把正确链接重定向到不存在的目标（历史教训：旧版剥离 .agents/ 前缀的公式
+曾导致 dry-run 误报 2338 个"将修复"，实际会把正确链接改成断链）。
 
 用法：
-    python fix-x-toml-ref.py --dir docs/knowledge/ [--dry-run] [--write] [--create-toml]
-    python fix-x-toml-ref.py --file docs/knowledge/mdi-research/00-executive-summary.md --dry-run
+    python fix-x-toml-ref.py --dir .agents/docs/knowledge/ [--dry-run] [--write] [--create-toml]
+    python fix-x-toml-ref.py --file .agents/docs/knowledge/x.md --dry-run
 """
 
 
@@ -47,10 +55,8 @@ def compute_x_toml_ref(md_path: Path, project_root: Path) -> str:
         x-toml-ref的相对路径字符串（正斜杠分隔）。
     """
     rel_path = md_path.relative_to(project_root).as_posix()
-    # 去除 .agents/ 前缀，因为 TOML 文件镜像在 .meta/toml/docs/ 下（不含 .agents/）
-    if rel_path.startswith('.agents/'):
-        rel_path = rel_path[8:]
-    toml_rel = '.meta/toml/' + rel_path.replace('.md', '.toml')
+    # 双轨镜像：TOML 路径 = .meta/toml/ + md 仓库相对路径（保留 .agents/.trae 等命名空间前缀）
+    toml_rel = '.meta/toml/' + (rel_path[:-3] + '.toml' if rel_path.endswith('.md') else rel_path)
     parent_depth = len(Path(rel_path).parent.parts)
     if parent_depth == 0:
         return toml_rel
@@ -58,11 +64,9 @@ def compute_x_toml_ref(md_path: Path, project_root: Path) -> str:
 
 
 def get_toml_target_path(md_path: Path, project_root: Path) -> Path:
-    """获取MD文件对应的TOML文件绝对路径。"""
+    """获取MD文件对应的TOML文件绝对路径（镜像路径保留命名空间前缀）。"""
     rel_path = md_path.relative_to(project_root).as_posix()
-    if rel_path.startswith('.agents/'):
-        rel_path = rel_path[8:]
-    toml_rel = '.meta/toml/' + rel_path.replace('.md', '.toml')
+    toml_rel = '.meta/toml/' + (rel_path[:-3] + '.toml' if rel_path.endswith('.md') else rel_path)
     return (project_root / toml_rel).resolve()
 
 
@@ -275,6 +279,18 @@ def process_file(md_path: Path, project_root: Path, dry_run: bool = True, create
             result['old_ref'] = existing_ref
             result['reason'] = '示例模板（example-wiki，路径故意指向docs/作为示例）'
             return result
+
+    # 安全守卫：目标 TOML 不存在且未启用 --create-toml 时，不改写/新增 ref（避免指向断链）
+    toml_path = get_toml_target_path(md_path, project_root)
+    if not toml_path.exists() and not create_toml:
+        result['status'] = 'skip'
+        result['old_ref'] = existing_ref
+        try:
+            missing = toml_path.relative_to(project_root).as_posix()
+        except ValueError:
+            missing = str(toml_path)
+        result['reason'] = f'目标TOML不存在，跳过（避免指向断链）: {missing}'
+        return result
 
     new_content, modified, old_ref = fix_x_toml_ref_in_content(content, new_ref)
     result['old_ref'] = old_ref
