@@ -94,4 +94,4 @@ stale_after: "2027-08-22"
 
 - 配套模式：[双层分析报告结构](dual-layer-analysis-report.md)（内容漏斗的L1-L3对应学习笔记层，L4-L5对应洞察总结层）
 - 配套模式：[子代理分析任务标准化指令](subagent-standardized-instruction.md)
-- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)
+- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/concepts/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "adversarial-review-core-concepts"
 title: "01、核心概念定义"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/01-core-concepts.toml"

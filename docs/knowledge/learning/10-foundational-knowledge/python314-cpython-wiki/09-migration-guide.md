@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-09"
 title: "Python 3.14 迁移指南"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#porting-to-python-3-14"

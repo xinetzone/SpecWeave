@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 10-tools-registry-facts
 title: Tools 注册表事实记录
 source: veadk-python codebase analysis

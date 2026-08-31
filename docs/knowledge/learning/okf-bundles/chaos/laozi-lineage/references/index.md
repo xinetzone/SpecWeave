@@ -18,3 +18,22 @@
 * [廖名春《郭店楚简老子校释》](liao-mingchun-guodian-jiaoshi.md) - 郭店楚简老子系统校释，清华大学出版社 2003
 * [王利器《文子疏义》](wang-liqi-wenzi-shuyi.md) - 今本《文子》权威整理本，中华书局 2000（方法论迁移验证用）
 * [河北省文物研究所定州汉简整理小组《定州西汉中山怀王墓竹简〈文子〉释文》](dingzhou-zhujian-wenzi.md) - 八角廊汉简《文子》首次系统公布，《文物》1995年第12期（方法论迁移验证用）
+
+```{toctree}
+:maxdepth: 2
+
+beida-han-jian-er
+changsha-mawangdui-jianbo-jicheng
+chen-guying-laozi-jinzhu-jinyi
+dingzhou-zhujian-wenzi
+gao-ming-boshu-jiaozhu
+guodian-chumu-zhujian
+henricks-lao-tzu-te-tao-ching
+liao-mingchun-guodian-jiaoshi
+lou-yanglie-wangbi-jiaoshi
+mawangdui-hanmu-boshu-yi
+peng-hao-guodian-jiaodu
+rao-zongyi-xianger-jiaozheng
+wang-ka-heshanggong-zhangju
+wang-liqi-wenzi-shuyi
+```

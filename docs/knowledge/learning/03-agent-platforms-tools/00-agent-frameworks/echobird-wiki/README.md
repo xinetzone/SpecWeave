@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-readme"
 title: "EchoBird 源码级学习 Wiki 教程"
-source: "https://echobird.ai/# 官网 + d:\AI\external\tools\EchoBird 本地源码"
+source: 'https://echobird.ai/# 官网 + d:\AI\external\tools\EchoBird 本地源码'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/echobird-wiki/README.toml"
 category: "learning"
 tags: ["echobird", "ai-agent", "tauri", "rust", "model-nexus", "codex-proxy", "local-llm", "tool-registry", "desktop-tool", "source-code"]

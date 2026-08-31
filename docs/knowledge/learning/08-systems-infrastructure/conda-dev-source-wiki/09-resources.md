@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-09-resources
 title: "术语表与参考资料"
 source: "spec:create-conda-dev-source-wiki-tutorial"

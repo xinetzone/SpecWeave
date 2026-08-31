@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-cli-and-architecture-wiki"
 title: "WSL CLI 命令树与架构 Wiki 参考手册"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-cli-and-architecture-wiki.toml"

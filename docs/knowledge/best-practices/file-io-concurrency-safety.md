@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "file-io-concurrency-safety"
 title: "文件 I/O 并发安全规范：原子写入、日志模板与重试策略"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/file-io-concurrency-safety.toml"

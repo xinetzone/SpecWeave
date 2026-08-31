@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "tuya-open-learning-report"
 title: "TuyaOpen 全面学习报告"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.toml"

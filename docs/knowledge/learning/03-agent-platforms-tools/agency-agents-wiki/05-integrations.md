@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agency-agents-wiki-05"
 title: "The Agency 完全指南 — 多工具集成"
 source: "https://github.com/msitarzewski/agency-agents"

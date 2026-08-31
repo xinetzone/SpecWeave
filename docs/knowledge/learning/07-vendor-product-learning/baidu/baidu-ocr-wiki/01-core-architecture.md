@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-01"
 title: "百度 Unlimited-OCR 核心架构与设计理念"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"

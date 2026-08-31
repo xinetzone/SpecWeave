@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "graphql-wiki-queries"
 title: "GraphQL 查询语言"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/02-queries.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-03"
 title: "K3/K4版本差异与产品策略"
 source: "../sunlogin-bootbox-analysis.md"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-07"
 title: "局限性与对比"
 source: "../open-code-review-wiki.md#局限性与对比"

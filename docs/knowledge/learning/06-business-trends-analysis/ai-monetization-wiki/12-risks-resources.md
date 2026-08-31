@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-monetization-risks-resources"
 title: "风险提示与资源推荐"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/12-risks-resources.toml"

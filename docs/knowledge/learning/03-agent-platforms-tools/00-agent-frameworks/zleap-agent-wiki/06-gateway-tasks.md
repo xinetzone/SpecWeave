@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-gateway-tasks"
 title: "IM 网关与定时任务"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

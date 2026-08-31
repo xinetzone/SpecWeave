@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "pdf-export-mermaid-automation-insights"
 title: "从实战到工具：三段式PDF导出、Mermaid全量扫描与三个工程洞察"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/pdf-export-mermaid-automation-insights.toml"

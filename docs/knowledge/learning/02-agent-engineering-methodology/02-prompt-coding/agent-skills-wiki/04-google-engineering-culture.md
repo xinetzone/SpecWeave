@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-google-engineering-culture"
 title: "Google工程文化术语解释"
 category: learning

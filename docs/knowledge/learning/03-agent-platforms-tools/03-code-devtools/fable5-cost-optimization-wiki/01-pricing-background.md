@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-01"
 title: "定价背景与按量计费转型"
 version: "1.0"

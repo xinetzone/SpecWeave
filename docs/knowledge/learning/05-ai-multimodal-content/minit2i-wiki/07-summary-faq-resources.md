@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-07"
 title: "总结、常见问题与学习资源"
 source: "https://github.com/PeppaKing8/minit2i-jax"

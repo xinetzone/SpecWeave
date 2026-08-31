@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-faq-glossary"
 title: "FAQ 与术语表"
 source: "echobird-source-wiki-learning"

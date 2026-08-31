@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-archive
 title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9 + future research tasks

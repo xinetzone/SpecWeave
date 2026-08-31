@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-language-runtime"
 title: "Python 与 Rust 技术对比 · 语言与运行时基础"
 category: "tech"

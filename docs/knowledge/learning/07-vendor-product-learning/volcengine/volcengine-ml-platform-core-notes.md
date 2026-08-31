@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-ml-platform-core-notes"
 title: "火山引擎机器学习平台核心笔记"
 source: "https://www.volcengine.com/product/ml-platform"

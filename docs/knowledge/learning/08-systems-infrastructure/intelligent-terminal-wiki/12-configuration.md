@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch12-config"
 title: "第12章 - 配置与设置详解"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

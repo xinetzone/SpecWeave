@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-07"
 title: "Python 3.14 C API 与扩展开发"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-c-api-features"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-08"
 title: "百度 Unlimited-OCR 总结与常见问题"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"

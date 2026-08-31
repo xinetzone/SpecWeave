@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step6
 title: "Step 6 专项练习——验证与迭代"
 source: "12-exercises.md#chapter-7"

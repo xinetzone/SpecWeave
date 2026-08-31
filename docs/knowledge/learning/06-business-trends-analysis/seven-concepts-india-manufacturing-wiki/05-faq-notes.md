@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "faq-notes"
 title: "常见问题与注意事项"
 source: "seven-concepts-india-manufacturing-wiki"

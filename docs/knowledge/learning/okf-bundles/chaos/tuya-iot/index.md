@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: Tuya IoT 知识包
-description: TuyaOpen 跨平台 IoT SDK——TAL/TKL 双层抽象、组件化构建、全栈 IoT 能力与 AI 开发技能
-tags: [tuya, iot, embedded, tal, sdk, smart-home]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # Tuya IoT 知识包
 
 本知识包（bundle）系统梳理 TuyaOpen 跨平台 IoT SDK 及其生态的架构与实现，涵盖 TAL/TKL 双层抽象、Kconfig+CMake 组件化构建、全栈 IoT 能力（系统服务/网络/安全/存储/P2P/AI）、BSP 板级支持、13 类外设驱动、10 个 AI 开发技能、OpenClaw 云 API 与 Home Assistant 集成。TuyaOpen 支持 T2/T3/T5AI/ESP32/LN882H/BK7231N/GD32/Linux 共 8 款芯片平台，是面向下一代 AI-agent 硬件的 C/C++ SDK。内容遵循 OKF v0.2 规范。
@@ -39,3 +28,13 @@ stale_after: 2027-08-23
   * [架构洞察](references/insights.md)
   * [TuyaOpen 核心框架源码](references/tuyaopen-core-source.md)
   * [TuyaOpen 技能与生态源码](references/tuya-skills-source.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

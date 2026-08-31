@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Mini改进建议"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/triage/suggestions"

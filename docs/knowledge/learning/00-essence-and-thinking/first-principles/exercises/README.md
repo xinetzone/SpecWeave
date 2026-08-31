@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-first-principles-exercises-index"
 title: "Exercises"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/README.toml"

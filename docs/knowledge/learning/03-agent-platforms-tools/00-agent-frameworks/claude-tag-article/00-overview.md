@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-overview"
 title: "Claude Tag：文章概述"
 category: learning

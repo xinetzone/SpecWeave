@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告"
 source: "https://gf-oray.com.cn/#ai, https://m.sohu.com/a/1013902693_99990263/"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.toml"

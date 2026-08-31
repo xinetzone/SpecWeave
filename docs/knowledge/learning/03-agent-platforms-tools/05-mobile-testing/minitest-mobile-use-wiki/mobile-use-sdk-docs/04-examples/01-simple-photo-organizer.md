@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "简单照片整理器"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/simple-photo-organizer"

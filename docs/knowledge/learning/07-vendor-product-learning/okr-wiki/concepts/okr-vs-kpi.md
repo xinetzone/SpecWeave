@@ -1,4 +1,6 @@
 ---
+type: Concept
+
 title: "OKR与KPI的区别"
 source: "https://www.dingteam.com/help/584"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/concepts/okr-vs-kpi.toml"

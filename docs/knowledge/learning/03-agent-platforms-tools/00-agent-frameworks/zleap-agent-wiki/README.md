@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-readme"
 title: "Zleap-Agent workspace-first Agent Harness Wiki 教程"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

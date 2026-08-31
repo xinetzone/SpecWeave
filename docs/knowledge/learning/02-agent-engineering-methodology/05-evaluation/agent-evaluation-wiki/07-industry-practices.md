@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-industry-practices"
 title: "第7章：行业实践案例"
 source: "spec:agent-evaluation-methodology-wiki"

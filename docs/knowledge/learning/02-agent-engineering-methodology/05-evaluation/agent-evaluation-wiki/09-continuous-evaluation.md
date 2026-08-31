@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-continuous-evaluation"
 title: "第9章：持续评测体系"
 source: "spec:agent-evaluation-methodology-wiki"

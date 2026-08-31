@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-05"
 title: "核心工程洞察"
 version: "1.0"

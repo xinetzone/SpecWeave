@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-05-ai-multimodal-content-index"
 title: "AI多模态内容"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/README.toml"

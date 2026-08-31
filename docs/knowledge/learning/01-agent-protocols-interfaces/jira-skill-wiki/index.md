@@ -1,13 +1,3 @@
----
-okf_version: "0.2"
-title: "Jira Skill 教程"
-description: "基于源码 v3.29.0 的 jira-skill 系统性技术教程，涵盖双技能架构、CLI 使用、JQL 查询、最佳实践与故障排查。"
-tags: ["jira", "claude-code", "agent-skill", "cli", "tutorial"]
-generated: { by: "source-code-to-okf-wiki", at: "2026-08-29T00:00:00Z" }
-status: stable
-stale_after: "2027-08-29T00:00:00Z"
----
-
 # Jira Skill 教程
 
 本知识包是对 [jira-skill](https://github.com/netresearch/jira-skill) v3.29.0 的系统性技术教程，以源码为权威事实来源，按 OKF v0.2 规范组织。
@@ -69,3 +59,12 @@ jira-skill 是一个面向 Claude Code 的开源插件，通过两个专业化�
 ## 变更日志
 
 详见 [log.md](/log.md)。
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

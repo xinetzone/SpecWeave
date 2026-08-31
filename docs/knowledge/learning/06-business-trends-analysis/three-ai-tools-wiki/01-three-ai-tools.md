@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "three-ai-tools-wiki-01"
 title: "三个热门AI工具完整指南：微软AI终端、Claudian笔记插件、book-to-skill书籍转Skill"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/01-three-ai-tools.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zhihu-article-agent-eval-methodology"
 title: "知乎文章：别再给Agent跑分了——谈谈评测体系化建设"
 source: "spec:agent-eval-methodology-wiki"

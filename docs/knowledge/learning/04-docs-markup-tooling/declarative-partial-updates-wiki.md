@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Declarative Partial Updates 完整教程：HTML 声明式局部更新能力解析"
 source: "微信公众号文章《HTML 最值得关注的一次升级：声明式局部更新》（作者：认真努力的小四子）"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/declarative-partial-updates-wiki.toml"

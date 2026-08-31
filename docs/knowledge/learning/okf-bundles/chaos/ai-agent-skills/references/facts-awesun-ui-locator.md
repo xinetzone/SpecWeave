@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "awesun-ui-locator 事实清单"
+---
+
 # awesun-ui-locator 事实清单
 
 > R阶段事实采集。源码路径：d:\AI\.chaos\libs\awesun-ui-locator\

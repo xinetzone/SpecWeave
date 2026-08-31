@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cross-domain-biology
 title: 生物学中的第一性原理思维案例
 source: first-principles-cross-domain Task 2

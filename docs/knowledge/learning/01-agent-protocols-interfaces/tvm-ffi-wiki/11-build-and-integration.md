@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "编译构建与项目集成"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

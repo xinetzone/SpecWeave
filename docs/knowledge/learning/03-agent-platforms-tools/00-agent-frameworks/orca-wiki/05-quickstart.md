@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-quickstart"
 title: "快速上手指南"
-source: "https://www.onorca.dev/download 官网 + d:\AI\external\tools\orca 本地开源源码（docs/readme/README.zh-CN.md、skill-guides/orca-cli.md）"
+source: 'https://www.onorca.dev/download 官网 + d:\AI\external\tools\orca 本地开源源码（docs/readme/README.zh-CN.md、skill-guides/orca-cli.md）'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/05-quickstart.toml"
 category: "learning"
 tags: ["orca", "stablyai", "quickstart", "安装", "worktree", "claude-code", "codex", "并行", "多agent", "入门"]

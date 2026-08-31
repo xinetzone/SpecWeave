@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-06"
 title: "百度 Unlimited-OCR 可迁移模式与行业启示"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "text-to-cad 完整学习教程：用AI生成可编辑CAD源代码"
 source: "微信公众号文章《机械设计又又又卡住了？这个开源项目让 AI 直接生成可编辑的 CAD 源代码》"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.toml"

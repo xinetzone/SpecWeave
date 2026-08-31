@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-prompt-examples"
 title: "05、6组Before/After实战对照"
 category: "knowledge"

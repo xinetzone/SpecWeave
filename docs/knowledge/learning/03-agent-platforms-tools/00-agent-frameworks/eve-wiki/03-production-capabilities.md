@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-03"
 title: "生产级能力详解"
 source: "eve-framework-wiki-learning"

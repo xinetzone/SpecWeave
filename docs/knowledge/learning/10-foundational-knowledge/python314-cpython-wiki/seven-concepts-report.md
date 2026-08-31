@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-seven-concepts"
 title: "Python 3.14 + CPython Wiki 教程 — 七概念方法论执行报告"
 source: "https://github.com/python/cpython/tree/v3.14.0"

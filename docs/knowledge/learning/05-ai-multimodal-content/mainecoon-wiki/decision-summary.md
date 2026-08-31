@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-wiki-decision-summary"
 title: "MaineCoon 分析决策摘要"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"

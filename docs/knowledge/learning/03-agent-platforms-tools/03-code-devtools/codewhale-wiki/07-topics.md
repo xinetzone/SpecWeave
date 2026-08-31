@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-07"
 title: "设计哲学与行业洞察"
 source: "https://github.com/Hmbown/CodeWhale"

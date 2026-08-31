@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-05"
 title: "总结与回顾"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"

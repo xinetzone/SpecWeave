@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "weasyprint-13-resources"
 title: "十三、相关资源链接"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/13-resources.toml"

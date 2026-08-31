@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step3
 title: Step 3 专项练习——拆解至基本要素
 source: "12-exercises.md#chapter-4"

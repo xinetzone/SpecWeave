@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-advanced-wiki-01-git-clone-advanced
 title: "git clone 高级参数详解（--no-local --bare 重点）"
 source: "internal:git-clone-no-local-bare-explanation"

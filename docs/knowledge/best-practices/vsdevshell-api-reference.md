@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "vsdevshell-api-reference"
 title: "VsDevShell 模块 API 参考文档"
 x-toml-ref: ""

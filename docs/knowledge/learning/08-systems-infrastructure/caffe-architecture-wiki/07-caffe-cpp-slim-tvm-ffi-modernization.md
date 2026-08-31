@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://github.com/daoflows/caffe (26 commits ahead of BVLC/caffe:master)"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.toml"
 analysis_date: "2026-07-24"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR制定指南Wiki手册"
 source: "https://alidocs.dingtalk.com/i/p/lPDmrJ7M8Do53mxd/docs/jkB7yl4ZK3vV6KYzXR6eJPMX2O6oxqw0"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/okr-guide.toml"

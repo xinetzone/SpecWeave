@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "symbol-visibility-control"
 title: "C/C++共享库符号可见性控制最佳实践"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/symbol-visibility-control.toml"

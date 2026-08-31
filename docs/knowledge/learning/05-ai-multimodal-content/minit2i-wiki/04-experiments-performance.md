@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-04"
 title: "实验结果与性能分析"
 source: "https://github.com/PeppaKing8/minit2i-jax"

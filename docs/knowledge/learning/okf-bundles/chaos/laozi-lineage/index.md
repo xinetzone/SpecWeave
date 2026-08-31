@@ -1,7 +1,3 @@
----
-okf_version: "0.2"
----
-
 # 《老子》传本源流谱系
 
 本知识包（bundle）系统梳理《老子》（《道德经》）从战国楚简、西汉帛书、汉简到传世本的传本源流谱系，涵盖考古发现、文本异文、校勘方法论等核心概念，遵循 OKF v0.2 规范。
@@ -29,3 +25,14 @@ okf_version: "0.2"
   * [避讳断代法](methodology/taboo-character-dating.md)
   * [传本源流重建法](methodology/manuscript-transmission-lineage.md)
 * [references/](references/index.md) - 信源登记簿：收录本 bundle 引用的 14 条学术信源概念
+
+```{toctree}
+:maxdepth: 2
+
+archaeology/index
+manuscripts/index
+methodology/index
+references/index
+variants/index
+log
+```

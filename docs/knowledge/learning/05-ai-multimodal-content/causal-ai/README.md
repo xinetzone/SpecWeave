@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-05-ai-multimodal-content-causal-ai-index"
 title: "因果AI与世界模型：零犀科技六年押注深度分析"
 category: "knowledge"

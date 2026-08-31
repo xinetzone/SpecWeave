@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-04-docs-markup-tooling-executablebooks-myst-guide-syntax-index"
 title: "语法速查"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/syntax/README.toml"

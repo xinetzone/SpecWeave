@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ems-energy-management-wiki"
 title: "开源EMS能源管理系统深度分析Wiki"
 category: learning

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-quickstart"
 title: "快速上手指南"
 source: "echobird-source-wiki-learning"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "atomgit-ai-best-practices"
 title: "AtomGit AI 平台最佳实践"
 source: "https://ai.gitcode.com/docs/faq/best-practices"

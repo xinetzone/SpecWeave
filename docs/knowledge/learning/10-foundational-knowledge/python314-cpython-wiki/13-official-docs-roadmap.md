@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-13"
 title: "官方文档四大支柱导览（tutorial / library / extending / howto）"
 source: "https://docs.python.org/zh-cn/3.14/tutorial/index.html"

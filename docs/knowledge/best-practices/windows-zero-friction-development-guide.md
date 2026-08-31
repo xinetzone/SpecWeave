@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "windows-zero-friction-guide"
 title: "Windows环境零摩擦开发指南"
 category: "best-practices"

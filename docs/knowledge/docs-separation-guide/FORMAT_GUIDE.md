@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 格式规范指南
 description: Markdown 格式规范与最佳实践
 last_updated: YYYY-MM-DD

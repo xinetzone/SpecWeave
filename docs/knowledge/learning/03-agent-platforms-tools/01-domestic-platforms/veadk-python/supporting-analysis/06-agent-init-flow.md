@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 06-agent-init-flow
 title: Agent 初始化流程事实记录
 source: veadk-python codebase analysis

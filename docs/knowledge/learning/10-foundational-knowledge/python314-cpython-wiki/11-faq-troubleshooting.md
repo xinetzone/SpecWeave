@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-11"
 title: "Python 3.14 FAQ 与排障"
 source: "https://docs.python.org/zh-cn/3.14/faq/"

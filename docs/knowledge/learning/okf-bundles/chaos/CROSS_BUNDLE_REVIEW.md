@@ -1,3 +1,8 @@
+---
+type: Wiki Document
+title: "跨 Bundle 一致性审查报告"
+---
+
 # 跨 Bundle 一致性审查报告
 
 > **审查日期**：2026-08-22

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-minitest-docs-index"
 title: "Minitest 文档"
 x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/README.toml"

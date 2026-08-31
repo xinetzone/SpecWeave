@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: further-reading
 title: 延伸阅读与资源索引
 source: first-principles-comprehensive-research Task 9

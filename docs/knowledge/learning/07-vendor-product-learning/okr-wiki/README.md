@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-okr-wiki-index"
 title: "OKR 方法论知识库"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/README.toml"

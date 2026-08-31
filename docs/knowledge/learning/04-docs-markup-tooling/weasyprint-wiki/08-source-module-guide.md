@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "weasyprint-08-source"
 title: "源码模块导览"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/08-source-module-guide.toml"

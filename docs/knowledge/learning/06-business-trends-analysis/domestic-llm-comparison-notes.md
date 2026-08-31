@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "domestic-llm-comparison-notes"
 title: "国产AI模型对比与使用场景推荐"
 category: "learning"

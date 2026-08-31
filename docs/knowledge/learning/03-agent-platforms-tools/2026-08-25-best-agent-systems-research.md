@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "2026 AI Agent 系统全景调研报告"
+---
+
 # 2026 AI Agent 系统全景调研报告
 
 > 基于 R-I-E-V 方法论编排的系统性调研

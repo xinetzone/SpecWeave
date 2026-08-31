@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step1
 title: Step 1 专项练习——问题定义与边界澄清
 source: "12-exercises.md#chapter-2"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-04-docs-markup-tooling-index"
 title: "文档标记与工具链"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/README.toml"

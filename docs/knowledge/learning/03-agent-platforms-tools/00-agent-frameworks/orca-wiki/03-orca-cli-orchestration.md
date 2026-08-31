@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-cli"
 title: "Orca CLI 与多 Agent 编排"
-source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（skill-guides/orca-cli.md、skill-guides/orchestration.md、skill-guides/orca-linear.md）"
+source: 'https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（skill-guides/orca-cli.md、skill-guides/orchestration.md、skill-guides/orca-linear.md）'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/03-orca-cli-orchestration.toml"
 category: "learning"
 tags: ["orca", "stablyai", "cli", "orchestration", "worktree", "terminal", "automations", "browser", "linear", "multi-agent", "worker_done", "dispatch", "run", "task"]

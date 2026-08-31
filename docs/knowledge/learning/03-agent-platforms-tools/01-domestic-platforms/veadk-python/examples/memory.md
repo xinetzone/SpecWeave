@@ -1,10 +1,12 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-memory
 title: 03 & 09 - 记忆示例（短期+长期）
 source:
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/memory.toml"
 - d:\AI\vendor\veadk-python\examples\03_short_term_memory\main.py
 - d:\AI\vendor\veadk-python\examples\09_long_term_memory\main.py
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/examples/memory.toml"
 category: learning
 date: '2026-08-05'
 status: stable

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-04"
 title: "第三站：Harness Engineering - 关键一跃"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

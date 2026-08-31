@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-04"
 title: "版本演进记录"
 source: "https://github.com/Hmbown/CodeWhale"

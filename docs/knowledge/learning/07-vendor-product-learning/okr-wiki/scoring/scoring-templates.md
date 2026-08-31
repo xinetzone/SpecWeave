@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR打分模板"
 source: "https://www.dingteam.com/help/604"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/scoring-templates.toml"

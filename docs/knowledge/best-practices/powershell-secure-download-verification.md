@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "powershell-secure-download-guide"
 title: "PowerShell安全下载文件最佳实践——三重防御验证指南"
 created_date: "2026-07-22"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-overview"
 title: "一、概述"
 source: "external/libs/i-have-adhd 源码分析"

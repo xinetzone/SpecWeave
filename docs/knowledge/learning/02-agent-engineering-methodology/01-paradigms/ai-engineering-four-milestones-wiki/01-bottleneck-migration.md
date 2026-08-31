@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-01"
 title: "瓶颈外移：AI工程演进的主线规律"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

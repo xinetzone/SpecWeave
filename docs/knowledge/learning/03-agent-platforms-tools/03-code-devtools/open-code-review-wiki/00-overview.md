@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-00"
 title: "概述与学习目标"
 source: "../open-code-review-wiki.md#概述与学习目标"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "术语表与参考资源"
 source: "https://alidocs.dingtalk.com/i/p/lPDmrJ7M8Do53mxd/docs/jkB7yl4ZK3vV6KYzXR6eJPMX2O6oxqw0"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/appendix/glossary.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-13"
 title: "内置工具与 MCP 集成"
 source: "https://open-codereview.ai/docs/tools"

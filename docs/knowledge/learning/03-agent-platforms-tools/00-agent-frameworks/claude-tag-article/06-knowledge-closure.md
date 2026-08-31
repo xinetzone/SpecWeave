@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-knowledge-closure"
 title: "Claude Tag：知识沉淀闭环"
 category: learning

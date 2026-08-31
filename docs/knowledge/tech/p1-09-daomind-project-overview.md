@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-09-daomind-project-overview
 title: DaoMind 项目概览（道家哲学 TypeScript 框架）
 source: d:\spaces\chaos\daoApps\DaoMind\README.md

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "hermes-agent-wiki-readme"
 title: "Hermes Agent 学习 Wiki 教程"
 source: "https://github.com/NousResearch/hermes-agent + https://hermes-agent.nousresearch.com/docs/"

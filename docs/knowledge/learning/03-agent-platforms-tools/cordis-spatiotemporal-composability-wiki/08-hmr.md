@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-08"
 title: "Cordis — 热更新 HMR"
 source: "https://github.com/cordiverse/paper"

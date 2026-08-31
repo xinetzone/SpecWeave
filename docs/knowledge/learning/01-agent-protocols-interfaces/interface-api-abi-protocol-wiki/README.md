@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-interface-api-abi-protocol-wiki-index"
 title: "Interface/API/ABI/Protocol 四层技术栈"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.toml"

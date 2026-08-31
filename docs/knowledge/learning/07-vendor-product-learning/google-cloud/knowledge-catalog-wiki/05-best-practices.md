@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-best-practices
 title: 05 - 最佳实践与反模式
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/05-best-practices.toml"

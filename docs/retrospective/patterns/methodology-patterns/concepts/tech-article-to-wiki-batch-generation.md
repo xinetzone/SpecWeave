@@ -183,8 +183,8 @@ stale_after: "2027-08-22"
 
 ## 关联资源
 
-- [Harness Engineering Wiki里程碑复盘报告](../../../reports/milestone/harness-engineering-wiki-retrospective-20260803.md)
-- [四大工程概念Wiki里程碑复盘](../../../reports/milestone/four-engineering-concepts-wiki-retrospective-20260704.md)
-- [LibTV Wiki知识沉淀报告](../../../reports/knowledge/libtv-wiki-knowledge-precipitation-20260704.md)
+- [Harness Engineering Wiki里程碑复盘报告](../../../reports/concepts/milestone/harness-engineering-wiki-retrospective-20260803.md)
+- [四大工程概念Wiki里程碑复盘](../../../reports/concepts/milestone/four-engineering-concepts-wiki-retrospective-20260704.md)
+- [LibTV Wiki知识沉淀报告](../../../reports/concepts/knowledge/libtv-wiki-knowledge-precipitation-20260704.md)
 - [子代理分析任务标准化指令模式](subagent-standardized-instruction.md)
 - 子代理Wiki交付检查清单：[`.agents/templates/subagent-wiki-delivery-checklist.md`](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md)

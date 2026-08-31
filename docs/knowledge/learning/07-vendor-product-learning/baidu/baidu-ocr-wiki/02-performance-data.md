@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-02"
 title: "百度 Unlimited-OCR 性能数据与基准测试"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"

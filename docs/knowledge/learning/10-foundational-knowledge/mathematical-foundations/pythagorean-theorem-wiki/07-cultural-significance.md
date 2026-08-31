@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-cultural-significance"
 title: "七、文化意义"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"

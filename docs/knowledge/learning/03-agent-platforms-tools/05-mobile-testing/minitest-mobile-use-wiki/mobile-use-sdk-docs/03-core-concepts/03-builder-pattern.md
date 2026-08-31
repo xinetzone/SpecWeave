@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Builder模式"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/builders"

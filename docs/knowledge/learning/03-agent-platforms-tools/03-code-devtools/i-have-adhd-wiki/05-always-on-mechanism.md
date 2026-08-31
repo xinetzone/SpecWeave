@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: i-have-adhd-wiki-persistence
 title: 六、持久化机制详解
 source: external/libs/i-have-adhd/hooks/ 钩子系统分析

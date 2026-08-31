@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-08"
 title: "多端协同策略分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-mobile-use-sdk-docs-04-examples-index"
 title: "示例"
 x-toml-ref: "../../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/04-examples/README.toml"

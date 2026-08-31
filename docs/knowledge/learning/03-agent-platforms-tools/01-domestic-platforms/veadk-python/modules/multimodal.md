@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: multimodal-module
 title: 多模态能力
 source: veadk-python codebase analysis

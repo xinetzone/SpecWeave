@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-examples"
 title: "实战案例"
 tags: ["tvm-ffi", "examples", "tutorial", "kernel"]

@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-versioning-best-practices
 title: MDI研究报告 - 版本控制与变更管理最佳实践
 source: "mdi-research-report.md#6-版本控制与变更管理最佳实践"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 项目概述
 description: 项目定位、核心价值与架构概览
 last_updated: YYYY-MM-DD

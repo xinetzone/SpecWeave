@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "archive-wiki-linkage-guide"
 title: "归档搭配Wiki联动机制指南"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/archive-wiki-linkage-guide.toml"

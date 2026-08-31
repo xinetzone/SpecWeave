@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-seven-concepts"
 title: "Cordis 时空可组合性 Wiki 教程 — 七概念方法论执行报告"
 source: "https://github.com/cordiverse/paper"

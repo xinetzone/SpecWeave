@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-06"
 title: "Q5Pro产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q5Pro产品详解"

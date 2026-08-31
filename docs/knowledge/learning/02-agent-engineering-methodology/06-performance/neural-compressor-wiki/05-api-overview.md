@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-api-overview"
 title: "API 概览"
 date: "2026-08-09"

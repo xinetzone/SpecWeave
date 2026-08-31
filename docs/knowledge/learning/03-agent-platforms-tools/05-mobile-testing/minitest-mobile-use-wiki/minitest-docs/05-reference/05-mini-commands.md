@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Mini命令参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/mini-commands"

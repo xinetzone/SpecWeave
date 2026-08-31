@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "MDX + GraphQL 可查询文档快速入门指南"
 source: "insight:retrospective-sphinx-graphql-okf-combination-insights-20260805"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/README.toml"

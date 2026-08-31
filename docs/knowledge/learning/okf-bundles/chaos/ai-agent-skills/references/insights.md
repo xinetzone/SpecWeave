@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "ai-agent-skills 架构洞察"
+---
+
 # ai-agent-skills 架构洞察
 
 > I阶段分析。基于 R 阶段 292 条事实（agency-agents 63 + awesun-mcp 32 + awesun-skill 29 + awesun-ui-locator 30 + jira-skill 57 + retro-skill 81）。

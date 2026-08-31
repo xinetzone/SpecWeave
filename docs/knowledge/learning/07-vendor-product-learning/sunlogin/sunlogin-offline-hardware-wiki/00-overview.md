@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-00"
 title: "概述与学习目标"
 source: "../sunlogin-offline-hardware-wiki.md#概述"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: concepts-glossary
 title: 第一性原理核心概念术语表与思维方式对比
 source: first-principles-comprehensive-research Task 6

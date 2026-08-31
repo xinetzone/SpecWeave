@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-okr-wiki-implementation-index"
 title: "实施指南"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/README.toml"

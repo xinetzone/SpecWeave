@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#05-协议对比与分层架构"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/05-comparison.toml"

@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "decisions-index"
 title: "架构决策记录(ADR)"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/decisions/README.toml"

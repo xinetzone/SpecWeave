@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "retro-skill 事实清单"
+---
+
 # retro-skill 事实清单
 
 > R阶段事实采集。源码路径：d:\AI\.chaos\libs\tests\retro-skill\

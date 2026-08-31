@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://mystmd.org/guide/syntax-overview, https://mystmd.org/guide/directives, https://mystmd.org/guide/roles"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/01-myst-syntax.toml"
 id: "executablebooks-myst-guide-myst-syntax"

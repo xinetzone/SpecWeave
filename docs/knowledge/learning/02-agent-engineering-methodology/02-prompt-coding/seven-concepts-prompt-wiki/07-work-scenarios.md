@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-work-scenarios"
 title: "07、Work场景实战指南"
 category: "knowledge"

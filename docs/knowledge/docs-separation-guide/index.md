@@ -1,9 +1,3 @@
----
-title: 文档分离方案知识库
-description: 基于第一性原理和七概念方法论，将 .agents/docs/ 中人类文档逐步迁移到 docs/ 的完整指南
-last_updated: 2026-07-16
----
-
 # 📚 文档分离方案知识库
 
 > 从第一性原理出发，区分受众而非来源——文档的价值由受众和触发机制决定，而非存储位置。实现"路径角色化"，让路径名本身承担"谁该读"的信号。
@@ -76,9 +70,13 @@ flowchart TD
 :caption: 目录
 :hidden:
 
-tech/index
 general/index
+tech/index
 topics/index
+DOC_TEMPLATE
+FORMAT_GUIDE
+KNOWLEDGE_GRAPH_EXAMPLE
+MAINTENANCE_GUIDE
 ```
 
 * {ref}`genindex`

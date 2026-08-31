@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "用户故事解析"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/anatomy"

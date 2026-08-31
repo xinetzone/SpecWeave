@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-08"
 title: "应用场景与选型指南"
 source: "../sunlogin-offline-hardware-wiki.md#应用场景与选型指南"

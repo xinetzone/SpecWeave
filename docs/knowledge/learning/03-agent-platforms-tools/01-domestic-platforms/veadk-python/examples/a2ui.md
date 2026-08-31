@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-a2ui
 title: A2UI - Agent驱动UI示例
 source: d:\AI\vendor\veadk-python\examples\a2ui_agent\agent.py

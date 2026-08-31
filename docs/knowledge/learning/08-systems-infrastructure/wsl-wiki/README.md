@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-index"
 title: "WSL 完整 Wiki 教程"
 source: "spec:create-wsl-wiki-tutorial"

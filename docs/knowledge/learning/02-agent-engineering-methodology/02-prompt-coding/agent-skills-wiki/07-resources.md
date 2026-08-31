@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-resources"
 title: "延伸学习资源"
 category: learning

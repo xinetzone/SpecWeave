@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 13-module-dependencies
 title: VeADK模块依赖关系与分层架构
 source: veadk-python codebase analysis

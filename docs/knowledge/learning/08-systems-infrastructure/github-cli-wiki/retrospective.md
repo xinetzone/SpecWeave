@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-retrospective"
 title: "GitHub CLI Wiki 教程创建 — 复盘报告"
 source: "https://github.com/cli/cli"

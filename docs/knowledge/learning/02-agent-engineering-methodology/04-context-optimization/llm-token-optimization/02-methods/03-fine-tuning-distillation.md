@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-03-fine-tuning-distillation"
 title: "模型微调与蒸馏"
 source: "UT Austin CS371N课程、Ephizen技术博客、CSDN技术博客、arXiv论文(QEFT)、DigitalOcean教程综合整理"

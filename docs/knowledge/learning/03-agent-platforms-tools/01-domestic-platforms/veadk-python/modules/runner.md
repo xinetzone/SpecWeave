@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: runner-module
 title: Runner 类 API 参考
 source: veadk-python codebase analysis

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-key-data"
 title: "Claude Tag：重要数据"
 category: learning

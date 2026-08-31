@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-04"
 title: "局限性与注意事项"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"

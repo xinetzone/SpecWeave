@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p1-07-test-deps-install
 title: 测试依赖安装说明
 source: d:\spaces\chaos\tests\index.md

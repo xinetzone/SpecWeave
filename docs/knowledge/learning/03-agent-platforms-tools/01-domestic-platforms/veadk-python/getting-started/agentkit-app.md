@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-agentkit-app
 title: AgentKit 应用工厂使用指南
 source: 'seven-concepts: veadk-python-wiki'

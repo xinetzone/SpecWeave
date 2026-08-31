@@ -1,4 +1,6 @@
 ---
+type: Concept
+
 title: "什么是OKR"
 source: "https://www.dingteam.com/help/584"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/concepts/what-is-okr.toml"

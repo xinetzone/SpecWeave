@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p2-14-tvm-vta-nuitka-pipeline
 title: TVM VTA 容器构建与 Nuitka 打包流水线说明
 source: d:\spaces\chaos\hub\sync\AGENTS.md

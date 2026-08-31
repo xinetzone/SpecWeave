@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki"
 title: "LongCat-2.0 Agent能力实测Wiki教程"
 category: learning

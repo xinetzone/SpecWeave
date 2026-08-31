@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "问题分类与集成总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/triage"

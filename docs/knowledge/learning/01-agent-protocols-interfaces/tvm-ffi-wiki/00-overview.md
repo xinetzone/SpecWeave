@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Ch00 - TVM FFI 概述与定位"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

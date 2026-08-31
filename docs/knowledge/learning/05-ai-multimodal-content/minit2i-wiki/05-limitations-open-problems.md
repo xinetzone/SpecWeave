@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-05"
 title: "局限性与开放问题：诚实面对不足"
 source: "https://github.com/PeppaKing8/minit2i-jax"

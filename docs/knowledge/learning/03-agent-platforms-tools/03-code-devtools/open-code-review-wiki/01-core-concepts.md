@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-01"
 title: "核心概念与设计理念"
 source: "../open-code-review-wiki.md#核心概念与设计理念"

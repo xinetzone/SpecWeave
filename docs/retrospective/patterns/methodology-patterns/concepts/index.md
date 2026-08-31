@@ -1,6 +1,6 @@
 # Concepts
 
-本目录包含经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式，共 15 个。
+本目录包含经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式，共 16 个。
 
 ## 模式清单
 
@@ -16,6 +16,7 @@
 | [知识编译模式](knowledge-compilation.md) | L1-draft | Pattern |
 | [分层链式规格模式](layered-chained-spec.md) | L1.5 | Pattern |
 | [降低门槛即创造市场模式](lowering-barriers-creates-markets.md) | L1-draft | Pattern |
+| [生成-登记同步法](nav-co-registration.md) | L1.5 | Pattern |
 | [离线优先架构模式](offline-first-architecture.md) | L1-draft | Pattern |
 | [责任转移治理模式](responsibility-transfer-governance.md) | L2-validated | Pattern |
 | [子代理分析任务标准化指令](subagent-standardized-instruction.md) | L2-validated | Pattern |
@@ -36,6 +37,7 @@ integration-over-invention
 knowledge-compilation
 layered-chained-spec
 lowering-barriers-creates-markets
+nav-co-registration
 offline-first-architecture
 responsibility-transfer-governance
 subagent-standardized-instruction

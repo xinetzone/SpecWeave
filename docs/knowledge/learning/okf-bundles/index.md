@@ -1,13 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: OKF 知识包集合
-description: SpecWeave 项目的 OKF（Open Knowledge Format）知识包集合入口，收录跨领域的源码学习知识包、技术架构剖析、人文学术研究等结构化知识
-tags: [okf, knowledge-bundles, 知识包, 源码学习, 跨领域]
-generated: { by: bundles-self-contained-refactor, at: 2026-08-27T00:00:00Z }
-stale_after: 2027-08-27
----
-
 # OKF 知识包集合
 
 本目录是 SpecWeave 项目的 OKF（Open Knowledge Format）知识包集合，采用自包含、自洽的结构化知识格式，每个知识包（bundle）可独立使用、移植和阅读。
@@ -28,3 +18,9 @@ stale_after: 2027-08-27
 - `verification-report.md` — 验证报告（经对抗审查通过的知识包）
 
 所有内部链接使用 bundle-relative 路径（以 `/` 开头），可在本地 Markdown 预览器和静态网站中正常工作。
+
+```{toctree}
+:maxdepth: 2
+
+chaos/index
+```

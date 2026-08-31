@@ -1,13 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: Chaos 知识包合集
-description: Chaos 分类知识包索引——涵盖 AI Agent 框架、编译器与深度学习、IoT 智能家居、人文学术、工具生态五大领域共 10 个 OKF 知识包
-tags: [chaos, okf, knowledge-bundle, ai-agent, iot, compiler, humanities]
-generated: { by: specweave-agent, at: 2026-08-27T00:00:00Z }
-stale_after: 2027-08-27
----
-
 # Chaos 知识包合集
 
 Chaos 分类收录跨领域、多样化的 OKF v0.2 知识包，涵盖 AI 智能体框架、深度学习编译器、IoT 智能家居、人文学术、工具生态五大技术与人文领域。每个知识包均遵循 OKF 规范构建，包含系统梳理的概念文档、实践示例与完整的信源事实登记。
@@ -36,3 +26,21 @@ Chaos 分类收录跨领域、多样化的 OKF v0.2 知识包，涵盖 AI 智能
 ## 工具与生态
 
 - [OKF 生态系统知识包](./okf-ecosystem/index.md) — OKF（Open Knowledge Format）生态——Bundle 数据模型、爬取构建流水线、增量同步与桌面阅读器
+
+```{toctree}
+:maxdepth: 2
+
+ai-agent-skills/index
+apache-tvm/index
+english-grammar/index
+home-assistant/index
+laozi-lineage/index
+mobile-use/index
+okf-ecosystem/index
+tiktoken/index
+tuya-iot/index
+veadk-python/index
+CROSS_BUNDLE_REVIEW
+PATTERNS_LESSONS
+retrospective-okf-wiki-build
+```

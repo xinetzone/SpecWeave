@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "parser-complexity-budget"
 title: "Parser 复杂度预算 Checklist"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/parser-complexity-budget.toml"

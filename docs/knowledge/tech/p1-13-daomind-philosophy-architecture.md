@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-13-daomind-philosophy-architecture
 title: DaoMind 2.0 哲学架构：无名/有名与 TypeScript 类型系统映射
 source: d:\spaces\chaos\daoApps\DaoMind\.trae\PHILOSOPHICAL-CORRECTION-SUMMARY.md

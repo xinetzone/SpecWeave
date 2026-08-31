@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-python-api
 title: ONNX Wiki - Python API实战
 date: 2026-08-09
@@ -9,8 +11,8 @@ tags:
   - tutorial
   - linear-regression
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/02-python-api.toml"
   - https://onnx.ai/onnx/intro/python.html
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/02-python-api.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

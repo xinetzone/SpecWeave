@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: terminology-alignment
 title: 术语统一表
 source: cross-cultural-first-principles-comparison Task 8

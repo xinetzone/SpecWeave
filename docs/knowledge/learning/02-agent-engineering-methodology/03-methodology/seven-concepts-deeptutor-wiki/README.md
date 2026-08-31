@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-index
 title: "七概念×DeepTutor实践教程"
 category: "learning"

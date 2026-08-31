@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-seven-concepts"
 title: "Python 3.14 标准库教程 — 七概念方法论执行报告"
 source: "https://docs.python.org/3.14/"

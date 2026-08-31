@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "标签索引"
+---
+
 # 标签索引
 
 - [返回知识库首页](../README.md)

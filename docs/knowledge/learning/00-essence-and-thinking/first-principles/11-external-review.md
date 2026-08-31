@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: external-review
 title: 第三方外部评审记录
 source: first-principles-comprehensive-research Task 9 (ACT-010)

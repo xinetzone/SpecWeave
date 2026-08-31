@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "governance-methodology-architecture"
 title: "SpecWeave 治理方法论体系架构"
 x-toml-ref: "../../.meta/toml/docs/knowledge/governance-methodology-architecture.toml"

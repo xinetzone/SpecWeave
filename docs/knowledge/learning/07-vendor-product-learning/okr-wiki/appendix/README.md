@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-okr-wiki-appendix-index"
 title: "附录"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/appendix/README.toml"

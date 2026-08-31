@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "Caffe-FFI Layer开发必查：param_propagate_down_初始化陷阱"
 date: 2026-08-03
 category: best-practices

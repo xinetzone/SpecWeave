@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "Caffe MAX Pooling梯度路由：Winner-Takes-All模式"
 date: 2026-08-03
 category: best-practices

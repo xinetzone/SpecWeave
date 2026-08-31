@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-12"
 title: "Python 3.14 标准库 → OKF 工具链优化机会映射笔记"
 source: "https://docs.python.org/3.14/"

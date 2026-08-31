@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-06"
 title: "常见问题"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"

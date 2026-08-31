@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "SDK介绍"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/introduction"

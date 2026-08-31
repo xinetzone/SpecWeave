@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-agent-lifecycle
 title: 架构详解：Agent 生命周期与执行流程
 source: 'seven-concepts: veadk-python-wiki'

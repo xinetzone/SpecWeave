@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-07-network-config-systemd"
 title: "网络、配置管理与systemd"
 source: "spec:create-wsl-wiki-tutorial"

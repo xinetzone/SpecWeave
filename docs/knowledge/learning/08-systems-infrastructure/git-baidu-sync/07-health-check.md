@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-health-check
 title: Git 网盘同步健康检查与诊断
 source: original

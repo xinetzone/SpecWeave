@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-11"
 title: "Cordis — FAQ 与注意事项"
 source: "https://github.com/cordiverse/paper"

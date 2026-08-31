@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "平台任务示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/platform-task-example"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "手动编写用户故事"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/authoring"

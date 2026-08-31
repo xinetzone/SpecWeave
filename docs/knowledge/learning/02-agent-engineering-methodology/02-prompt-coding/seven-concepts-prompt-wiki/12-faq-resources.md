@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-faq"
 title: "12、常见问题与资源索引"
 category: "reference"

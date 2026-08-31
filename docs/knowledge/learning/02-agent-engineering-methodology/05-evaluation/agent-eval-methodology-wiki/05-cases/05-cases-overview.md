@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module5-cases"
 title: "模块5：8个行业案例分析"
 source: "spec:agent-eval-methodology-wiki"

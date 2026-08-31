@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "TaskRequestBuilder"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/task-request-builder"

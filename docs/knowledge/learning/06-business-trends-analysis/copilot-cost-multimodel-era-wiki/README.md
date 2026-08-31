@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-copilot-cost-multimodel-era-wiki-index"
 title: "微软Copilot成本困境与多模型时代"
 category: "knowledge"

@@ -1,4 +1,6 @@
 ---
+type: Facts
+
 id: veadk-python-api-index
 title: VeADK-Python API 索引
 source: 'seven-concepts: veadk-python-wiki'

@@ -1,9 +1,3 @@
----
-title: API 参考
-description: 应用程序接口文档
-last_updated: YYYY-MM-DD
----
-
 # API 参考
 
 ## API 概览
@@ -69,3 +63,8 @@ flowchart TD
 
 - [核心功能](../features.md)
 - `integration-guide.md`
+
+```{toctree}
+:maxdepth: 2
+
+```

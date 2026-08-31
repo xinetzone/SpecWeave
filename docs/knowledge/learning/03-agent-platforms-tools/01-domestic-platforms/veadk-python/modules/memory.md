@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: memory-module
 title: 记忆系统详解（ShortTermMemory & LongTermMemory）
 source: veadk-python codebase analysis

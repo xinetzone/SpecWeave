@@ -25,3 +25,13 @@
 |------|--------|--------|---------|
 | [source.md](source.md) | tiktoken v0.14.0 源码树 | 详见文件 | Python 包结构与 Rust crate 结构、关键文件清单 |
 | [background-research.md](background-research.md) | 领域背景与研究过程 | — | BPE 分词背景、tiktoken 定位、研究思路与信源引用 |
+
+```{toctree}
+:maxdepth: 2
+
+background-research
+facts-python
+facts-rust
+insights
+source
+```

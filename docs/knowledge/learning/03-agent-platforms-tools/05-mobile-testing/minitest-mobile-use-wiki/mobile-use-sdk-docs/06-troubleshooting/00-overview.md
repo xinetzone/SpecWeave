@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "故障排除与反馈"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"

@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "pattern-validation-v3-template-batch-upgrade"
 title: "方法论模式第3次验证报告：模板批量升级场景"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/pattern-validation-v3-template-batch-upgrade.toml"

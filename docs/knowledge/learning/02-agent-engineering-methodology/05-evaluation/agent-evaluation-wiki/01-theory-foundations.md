@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-theory-foundations"
 title: "第1章：评测理论基础"
 source: "spec:agent-evaluation-methodology-wiki"

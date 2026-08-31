@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis"
 title: "向日葵开机盒子产品系统性学习与深度洞察分析报告"
 source: "https://sunlogin.oray.com/hardware/bootbox"

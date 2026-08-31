@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-skills-index"
 title: "20个核心技能索引"
 category: learning

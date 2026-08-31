@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-02"
 title: "产品架构与核心能力"
 source: "seven-concepts: volcengine-agentkit-wiki"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-02-ai-failure-cases"
 title: "三大领域 24 个 AI 失败案例集"
 source: "internal:ai-powershell5-research-rfive"

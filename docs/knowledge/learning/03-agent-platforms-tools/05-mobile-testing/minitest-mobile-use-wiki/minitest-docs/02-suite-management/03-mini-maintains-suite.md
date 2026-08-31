@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Mini自动维护套件"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/suite/mini-maintains-your-suite"

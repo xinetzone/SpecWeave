@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-toolchain-selection"
 title: "第8章：评测工具链选型"
 source: "spec:agent-evaluation-methodology-wiki"

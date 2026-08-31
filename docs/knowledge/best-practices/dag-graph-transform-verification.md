@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "dag-graph-transform-verification"
 title: "DAG图变换算法验证最佳实践"
 date: "2026-08-01"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-05-key-apis
 title: "关键 API 使用方法"
 source: "spec:create-conda-dev-source-wiki-tutorial"

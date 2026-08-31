@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-resources"
 title: "九、学习资源"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"

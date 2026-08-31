@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#01-mcp协议详解"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/01-mcp.toml"

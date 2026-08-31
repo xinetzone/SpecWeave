@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-00"
 title: "Fable 5成本优化技巧Wiki - 概述"
 version: "1.0"

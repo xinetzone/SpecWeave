@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-switch-governance-03-insight-extraction-report"
 title: "AI赋能的Feature Flag全生命周期治理 — 深度洞察与模式萃取"
 source: "InfoQ QCon 2026 北京站"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: business-innovation-cases
 title: 第一性原理商业创新实践案例
 source: first-principles-comprehensive-research Task 3

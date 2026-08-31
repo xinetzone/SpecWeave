@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "tuyaopen-dev-skills-learning"
 title: "TuyaOpen-dev-skills 学习笔记"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.toml"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "frontmatter-link-batch-repair-guide"
 title: "Frontmatter 路径与链接批量修复流程指南"
 source: "../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md#8阶段修复记录"

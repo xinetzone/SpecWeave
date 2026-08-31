@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-quickstart"
 title: "快速上手指南"
 category: learning

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 07-runner-facts
 title: Runner 类事实记录
 source: veadk-python codebase analysis

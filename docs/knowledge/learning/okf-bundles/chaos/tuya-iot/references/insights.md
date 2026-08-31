@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "tuya-iot 架构洞察"
+---
+
 # tuya-iot 架构洞察
 
 > I阶段分析。基于 R 阶段 599 条事实（TuyaOpen核心框架 339 条 + 技能与生态 260 条）。

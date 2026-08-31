@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: i-have-adhd-wiki-patterns
 title: 九、可复用模式萃取
 source: 基于i-have-adhd项目的七概念方法论萃取(E阶段)

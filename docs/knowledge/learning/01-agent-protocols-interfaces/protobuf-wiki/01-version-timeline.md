@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-version-timeline
 title: Protobuf Wiki - 版本演进时间轴
 date: 2026-07-23
@@ -7,9 +9,9 @@ tags:
   - version-history
   - evolution
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.toml"
   - https://protobuf.dev/history
   - https://github.com/protocolbuffers/protobuf/blob/main/CHANGES.txt
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/01-version-timeline.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

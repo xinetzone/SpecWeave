@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-eip-analysis"
 title: "火山引擎公网IP（EIP）完整学习笔记：云网络公网出入口基础组件"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/eip）+ 产品文档深度分析"

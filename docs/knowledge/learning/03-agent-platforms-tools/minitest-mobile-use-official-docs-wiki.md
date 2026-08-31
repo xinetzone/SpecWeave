@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南"
 category: "learning"
 source: "https://www.minitap.ai/docs"

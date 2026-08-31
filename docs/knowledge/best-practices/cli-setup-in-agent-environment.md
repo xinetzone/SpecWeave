@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "cli-setup-in-agent-environment"
 title: "IDE Agent 环境下 CLI 工具配置操作手册"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/cli-setup-in-agent-environment.toml"

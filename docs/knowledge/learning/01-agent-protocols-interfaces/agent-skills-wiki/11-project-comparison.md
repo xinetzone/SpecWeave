@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-wiki-project-comparison"
 source: "agent-skills-open-standard-wiki.md#十二与本项目现有-skill-体系的对比"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.toml"

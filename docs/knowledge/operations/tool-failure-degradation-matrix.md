@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "tool-failure-degradation-matrix"
 title: "关键路径工具失败降级矩阵"
 source: "../../retrospective/reports/competitive-analysis/retrospective-dspark-wiki-20260704/insight-extraction.md#洞察1"

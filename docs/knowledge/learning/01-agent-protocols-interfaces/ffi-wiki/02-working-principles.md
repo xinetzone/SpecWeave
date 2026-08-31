@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ffi-wiki-working-principles"
 title: "FFI 工作原理"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/02-working-principles.toml"

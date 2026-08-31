@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "智能通知助手"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/smart-notification-assistant"

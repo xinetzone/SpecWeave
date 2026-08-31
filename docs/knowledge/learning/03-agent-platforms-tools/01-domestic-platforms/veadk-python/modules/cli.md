@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cli-module
 title: CLI命令行工具参考
 source: veadk-python codebase analysis

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-06"
 title: "应用场景与落地方案"
 source: "seven-concepts: volcengine-agentkit-wiki"

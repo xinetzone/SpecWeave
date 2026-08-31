@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 02-agent-class-signatures
 title: Agent 类公开方法和属性签名提取
 source: veadk-python codebase analysis

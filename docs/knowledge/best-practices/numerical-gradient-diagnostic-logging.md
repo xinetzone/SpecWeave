@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "数值梯度诊断日志规范：从失败到根因的可观测性"
 date: 2026-08-03
 category: best-practices

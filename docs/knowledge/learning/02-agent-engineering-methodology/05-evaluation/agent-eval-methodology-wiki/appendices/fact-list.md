@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-fact-list"
 title: "R阶段事实清单"
 source: "seven-concepts:R阶段产物"

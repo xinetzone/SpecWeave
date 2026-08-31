@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-single-file"
 title: "AI工程的四个路标：沿瓶颈外移主线（单文件导航版）"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

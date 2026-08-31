@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-01
 title: "01 - 贡献者快速上手"
 date: 2026-08-19
 tags: [cpython, quickstart, setup, build, first-pr, codespaces]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/01-contributor-quickstart.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/01-contributor-quickstart.toml"
 maturity: L1-draft
 ---
 # 01 - 贡献者快速上手

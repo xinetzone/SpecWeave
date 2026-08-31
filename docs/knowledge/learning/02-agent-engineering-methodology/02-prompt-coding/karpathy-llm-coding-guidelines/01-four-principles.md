@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-four-principles"
 title: "四条核心原则详解"
 category: learning

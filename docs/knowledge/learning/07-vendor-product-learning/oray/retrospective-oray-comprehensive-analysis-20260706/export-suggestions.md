@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "retrospective-oray-comprehensive-analysis-20260706-export"
 title: "贝锐五大产品线综合分析导出建议与后续方向"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/retrospective-oray-comprehensive-analysis-20260706/export-suggestions.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-01"
 title: "核心设计哲学：每一步都做减法"
 source: "https://github.com/PeppaKing8/minit2i-jax"

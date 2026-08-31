@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-06"
 title: "跨Agent记忆与自动学习"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"

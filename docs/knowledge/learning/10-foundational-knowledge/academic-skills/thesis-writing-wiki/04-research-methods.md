@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "thesis-writing-research-methods"
 title: "五、研究方法"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"

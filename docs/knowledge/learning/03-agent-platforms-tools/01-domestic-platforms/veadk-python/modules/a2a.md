@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: a2a-module
 title: Agent2Agent(A2A)协议支持
 source: veadk-python codebase analysis

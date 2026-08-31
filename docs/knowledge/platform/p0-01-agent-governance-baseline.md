@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p0-01-agent-governance-baseline
 title: 工作区代理治理基线摘要
 source: d:\spaces\chaos\AGENTS.md

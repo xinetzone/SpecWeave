@@ -1,3 +1,8 @@
+---
+type: VerificationReport
+title: "V 阶段验证报告：okf-ecosystem Bundle"
+---
+
 # V 阶段验证报告：okf-ecosystem Bundle
 
 | 属性 | 值 |

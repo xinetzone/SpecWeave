@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵远程控制产品全面深度解析：国民远控的生态战略、商业模式与AI跃迁"
 source: "https://sunlogin.oray.com/, https://gf-oray.com.cn/#ai, https://service.oray.com/question/50496.html, https://service.oray.com/question/17615.html, https://service.oray.com/question/51527.html"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.toml"

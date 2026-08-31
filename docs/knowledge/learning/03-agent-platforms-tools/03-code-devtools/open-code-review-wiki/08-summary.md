@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-08"
 title: "总结与展望"
 source: "../open-code-review-wiki.md#总结与展望"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 行业分析
 description: 行业格局与演进趋势分析
 last_updated: YYYY-MM-DD

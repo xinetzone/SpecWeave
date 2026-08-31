@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "05 - 反射与注册机制"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

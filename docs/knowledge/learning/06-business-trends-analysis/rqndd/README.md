@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-rqndd-index"
 title: "2025年7月初中国AI行业动态深度分析"
 category: "knowledge"

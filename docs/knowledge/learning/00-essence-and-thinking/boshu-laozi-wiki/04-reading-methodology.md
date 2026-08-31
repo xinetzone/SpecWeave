@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-04"
 title: "注读方法论"
 source: "公共领域知识（马王堆帛书老子研究）"

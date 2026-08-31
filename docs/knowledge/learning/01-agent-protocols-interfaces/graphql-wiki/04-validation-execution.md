@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "graphql-wiki-validation-execution"
 title: "GraphQL 验证与执行"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/04-validation-execution.toml"

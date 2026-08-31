@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-03-first-principles-analysis"
 title: "第一性原理本质矛盾分析"
 source: "internal:ai-powershell5-research-rfive"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-interface-chapter"
 title: "Agent Interface：能力契约层"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/01-agent-interface.toml"

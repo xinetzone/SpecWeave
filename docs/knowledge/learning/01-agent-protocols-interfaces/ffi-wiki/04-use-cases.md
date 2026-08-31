@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ffi-wiki-use-cases"
 title: "实际应用案例与代码示例"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/04-use-cases.toml"

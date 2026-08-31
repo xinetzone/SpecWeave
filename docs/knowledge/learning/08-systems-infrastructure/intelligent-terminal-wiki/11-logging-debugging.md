@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch11-logging"
 title: "第11章 - 日志系统与调试"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-16"
 title: "mystx 主题单元测试用例清单（54 项）"
 source: "https://docs.python.org/3.14/"

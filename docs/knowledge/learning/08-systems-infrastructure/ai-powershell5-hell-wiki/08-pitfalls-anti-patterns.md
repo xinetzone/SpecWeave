@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-08-pitfalls-anti-patterns"
 title: "陷阱与反模式清单"
 source: "internal:ai-powershell5-research-rfive"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-01"
 title: "五大核心功能模块详解"
 source: "../sunlogin-bootbox-analysis.md"

@@ -1,22 +1,3 @@
----
-id: veadk-python-index
-title: VeADK-Python Wiki
-source: 'seven-concepts: veadk-python-wiki'
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/index.toml"
-category: learning
-tags:
-- VeADK
-- 火山引擎
-- AI Agent
-- Python
-- Wiki
-- 文档
-date: '2026-08-05'
-status: stable
-author: seven-concepts knowledge-scenario
-summary: VeADK-Python 开发知识库首页，提供项目介绍、核心特性、文档导航和学习路径
-wiki_version: '1.0'
----
 # VeADK-Python Wiki
 
 欢迎来到 VeADK-Python 开发知识库！VeADK（Volcano Engine Agent Development Kit）是火山引擎推出的企业级 AI Agent 开发框架，基于 Google ADK（Agent Development Kit）构建，深度集成火山引擎云服务生态，为开发者提供开箱即用、生产就绪的智能体开发体验。
@@ -127,3 +108,17 @@ VeADK-Python 在保持与 Google ADK 完全兼容的基础上，通过"继承+�
 ---
 
 > **版本说明**：本文档基于 VeADK-Python 代码库分析生成，对应 Wiki 版本 1.0。如发现文档内容与实际代码不符，请参考源代码为准。
+
+```{toctree}
+:maxdepth: 2
+
+architecture/index
+examples/index
+extensions/index
+faq/index
+getting-started/index
+modules/index
+references/index
+supporting-analysis/index
+glossary
+```

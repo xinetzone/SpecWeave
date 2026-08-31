@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: [文档标题]
 description: [文档描述]
 last_updated: YYYY-MM-DD

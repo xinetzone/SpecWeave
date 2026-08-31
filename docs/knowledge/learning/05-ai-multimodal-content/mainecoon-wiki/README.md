@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-05-ai-multimodal-content-mainecoon-wiki-index"
 title: "MaineCoon 实时音视频基础模型与 Social World Model"
 category: "knowledge"

@@ -34,3 +34,10 @@
 - tiktoken Python 包（`pip install tiktoken==0.14.0`）
 
 示例无需网络（内置词汇表文件）；如需按 OpenAI API 计费相关实践，网络访问由上层应用自行处理。
+
+```{toctree}
+:maxdepth: 2
+
+01-encoding-decoding
+02-model-token-counting
+```

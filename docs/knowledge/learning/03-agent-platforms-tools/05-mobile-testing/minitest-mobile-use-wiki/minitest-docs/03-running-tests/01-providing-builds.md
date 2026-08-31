@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "提供应用构建"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/builds"

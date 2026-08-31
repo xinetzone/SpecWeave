@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "三层路由协议"
+---
+
 # 三层路由协议
 
 > ⚠️ **本文档已迁移**：权威版本位于 [.agents/protocols/three-layer-routing.md](../../.agents/protocols/three-layer-routing.md)

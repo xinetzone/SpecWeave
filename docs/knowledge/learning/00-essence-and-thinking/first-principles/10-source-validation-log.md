@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: source-validation-log
 title: 来源验证档案与对抗性审查记录
 source: first-principles-comprehensive-research Task 8

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-ems-energy-management-wiki-index"
 title: "开源EMS能源管理系统深度分析"
 category: "knowledge"

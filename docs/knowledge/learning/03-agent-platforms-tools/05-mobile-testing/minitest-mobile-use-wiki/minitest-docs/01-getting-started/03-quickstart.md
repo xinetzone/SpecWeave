@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started/quickstart"

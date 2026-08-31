@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: skills
 title: Skills 技能系统详解
 source: veadk-python codebase analysis

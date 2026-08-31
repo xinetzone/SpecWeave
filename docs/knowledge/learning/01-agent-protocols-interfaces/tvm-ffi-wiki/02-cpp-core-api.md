@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "02 - C++ 核心 API：Any、Object、Function、Tensor"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

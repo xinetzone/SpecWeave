@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "task3-deepseek-analysis"
 title: "DeepSeek V4技术优势与融资战略深度解析"
 source: "cleaned-article.md"

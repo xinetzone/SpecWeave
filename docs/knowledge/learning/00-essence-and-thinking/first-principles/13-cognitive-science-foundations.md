@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cognitive-science-foundations
 title: 第一性原理思维的认知科学基础
 source: first-principles-future-research Task 2

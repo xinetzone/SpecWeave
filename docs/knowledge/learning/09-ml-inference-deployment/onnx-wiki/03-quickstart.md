@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-quickstart
 title: ONNX Wiki - 快速上手指南
 date: 2026-08-09
@@ -9,8 +11,8 @@ tags:
   - netron
   - deployment
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/03-quickstart.toml"
   - https://onnx.ai/get-started.html
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/03-quickstart.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

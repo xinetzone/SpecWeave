@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "concurrent-code-safety-review"
 title: "并发代码安全审查与Bug修复闭环指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/concurrent-code-safety-review.toml"

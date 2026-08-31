@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-api
 title: "03、API：应用程序编程接口"

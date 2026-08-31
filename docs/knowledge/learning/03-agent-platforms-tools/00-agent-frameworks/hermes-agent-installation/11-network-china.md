@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 国内网络环境优化指南"
 chapter: 11
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/11-network-china.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/package.json
   - external/libs/hermes-agent/.npmrc
@@ -13,6 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/.env.example
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/11-network-china.toml"
 ---
 # 11. 国内网络环境优化指南
 

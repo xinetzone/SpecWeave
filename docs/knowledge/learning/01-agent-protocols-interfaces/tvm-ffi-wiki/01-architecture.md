@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Ch01 - 系统架构与设计理念"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch06-protocols"
 title: "第6章 - 通信协议栈"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

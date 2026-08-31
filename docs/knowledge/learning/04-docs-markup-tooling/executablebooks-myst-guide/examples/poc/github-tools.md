@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "MyST MCP指令PoC示例 - GitHub Tools"
 version: "1.0.0"
 description: "示例MyST文档：使用mcp:指令定义MCP Server"

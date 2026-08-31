@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-05"
 title: "第四站：Loop Engineering"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

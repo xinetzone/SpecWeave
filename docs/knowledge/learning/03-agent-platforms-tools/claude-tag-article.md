@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article"
 title: "Claude Tag 文章知识捕获"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article.toml"

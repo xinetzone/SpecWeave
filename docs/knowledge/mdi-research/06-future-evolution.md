@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-future-evolution
 title: MDI研究报告 - 未来演进方向
 source: "mdi-research-report.md#7-未来演进方向"

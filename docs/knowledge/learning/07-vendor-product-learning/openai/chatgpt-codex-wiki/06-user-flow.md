@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-06"
 title: "用户交互流程分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

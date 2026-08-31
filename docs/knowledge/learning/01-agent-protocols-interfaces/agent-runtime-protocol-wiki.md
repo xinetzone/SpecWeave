@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Agent Runtime Protocol 完整教程：生产级 Agent 运行时协议对象与八大维度解析"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）"
 date: "2026-07-04"

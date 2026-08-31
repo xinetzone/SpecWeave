@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-quickstart"
 title: "快速开始"
 date: "2026-08-09"

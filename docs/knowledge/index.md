@@ -13,9 +13,34 @@
 
 ai-engineering/index
 algorithmic-art/index
+best-practices/index
+categories/index
+decisions/index
+docs-separation-guide/index
 engineering/index
 learning/index
+mdi/index
+mdi-research/index
+myst-unified-ecosystem/index
+operations/index
+platform/index
+quality-assurance/index
+scripts/index
+tags/index
+tech/index
+templates/index
+troubleshooting/index
+anti-crawler-strategy-playbook
+caffe-ffi-perf-instrumentation-template
+category-index
+governance-methodology-architecture
 log
+mdi-research-report
+mdi-spec-v1.0
+stage-guardrails-guide
+template
+three-layer-routing
+VENDOR-INTEGRATION
 ```
 
 | 分类 | 说明 | 入门推荐 |

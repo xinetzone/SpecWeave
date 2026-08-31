@@ -1,3 +1,8 @@
+---
+type: VerificationReport
+title: "veadk-python Bundle 验证报告"
+---
+
 # veadk-python Bundle 验证报告
 
 **验证日期**：2026-08-23

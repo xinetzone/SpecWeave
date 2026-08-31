@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 部署指南
 description: 文档托管、CI/CD 与发布流程
 last_updated: YYYY-MM-DD

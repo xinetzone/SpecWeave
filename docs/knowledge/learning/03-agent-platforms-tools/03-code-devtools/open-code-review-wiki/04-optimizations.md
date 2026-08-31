@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-04"
 title: "关键技术优化"
 source: "../open-code-review-wiki.md#关键技术优化"

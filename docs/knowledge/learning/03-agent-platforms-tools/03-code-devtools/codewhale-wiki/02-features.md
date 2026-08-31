@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-02"
 title: "核心功能详解"
 source: "https://github.com/Hmbown/CodeWhale"

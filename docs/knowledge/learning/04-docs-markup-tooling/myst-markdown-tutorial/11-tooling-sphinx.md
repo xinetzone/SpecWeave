@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-sphinx"
 title: "第11章：工具链集成 - Sphinx + myst-parser"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/11-tooling-sphinx.toml"

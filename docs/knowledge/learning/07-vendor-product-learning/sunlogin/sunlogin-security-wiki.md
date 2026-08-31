@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵远程控制安全产品完整学习教程：国民远控的全流程安全体系深度解析"
 source: "https://sunlogin.oray.com/product/safe?ici=sunlogin_navigation"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.toml"

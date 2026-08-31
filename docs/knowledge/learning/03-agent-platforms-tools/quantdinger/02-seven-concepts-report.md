@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "quantdinger-02-seven-concepts-report"
 title: "QuantDinger：自托管AI量化交易平台 — 七概念方法论报告"
 source: "微信公众号「极客之家」"

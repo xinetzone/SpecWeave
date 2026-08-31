@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-metadata-as-code
 title: 03 - 元数据即代码（mdcode/kcmd工具链）
 date: 2026-08-15
@@ -10,9 +12,9 @@ tags:
   - cli
   - git-workflow
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/03-metadata-as-code.toml"
   - vendor/knowledge-catalog/toolbox/mdcode/README.md
   - vendor/knowledge-catalog/toolbox/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/03-metadata-as-code.toml"
 maturity: L1-draft
 ---
 # 03 - 元数据即代码（mdcode/kcmd工具链）

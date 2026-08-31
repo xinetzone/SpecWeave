@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-readme"
 title: "Orca 多代理 AI 编排器 Wiki 教程"
-source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码"
+source: 'https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/README.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-code", "codex", "opencode", "electron", "parallel-agents", "multi-agent", "yc"]

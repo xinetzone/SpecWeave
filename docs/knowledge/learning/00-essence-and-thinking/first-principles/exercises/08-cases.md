@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "first-principles-exercises-cases"
 title: "综合案例分析"
 source: "12-exercises.md#第9章-综合案例分析"

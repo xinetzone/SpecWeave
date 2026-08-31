@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "chain-pre-commit-hooks"
 title: "链式pre-commit钩子架构实践指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/git-hook-chain-architecture.toml"

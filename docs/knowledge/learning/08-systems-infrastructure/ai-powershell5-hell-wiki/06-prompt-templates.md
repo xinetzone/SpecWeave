@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-06-prompt-templates"
 title: "即用型Prompt模板库"
 source: "internal:ai-powershell5-research-rfive"

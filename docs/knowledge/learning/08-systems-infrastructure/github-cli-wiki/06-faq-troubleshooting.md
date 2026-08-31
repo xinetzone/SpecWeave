@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-06"
 title: "常见问题与排错指南"
 source: "https://github.com/cli/cli"

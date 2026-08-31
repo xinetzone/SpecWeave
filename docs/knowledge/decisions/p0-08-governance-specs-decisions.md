@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p0-08-governance-specs-decisions
 title: 已批准治理 Specs 稳定决策集合
 source: d:\spaces\chaos\.trae\specs

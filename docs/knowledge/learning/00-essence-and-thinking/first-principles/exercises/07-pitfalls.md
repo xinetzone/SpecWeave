@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "first-principles-exercises-pitfalls"
 title: "误区识别专项练习"
 source: "12-exercises.md#第8章-误区识别专项练习"

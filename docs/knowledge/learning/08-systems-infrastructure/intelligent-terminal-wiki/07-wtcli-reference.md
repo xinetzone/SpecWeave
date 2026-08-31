@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch07-wtcli"
 title: "第7章 - wtcli 命令参考"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

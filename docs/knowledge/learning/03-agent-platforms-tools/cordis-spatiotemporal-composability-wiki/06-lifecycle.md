@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-06"
 title: "Cordis — 生命周期与 Fiber 状态机"
 source: "https://github.com/cordiverse/paper"

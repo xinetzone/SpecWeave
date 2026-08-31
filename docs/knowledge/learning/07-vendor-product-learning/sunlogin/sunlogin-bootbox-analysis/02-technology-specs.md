@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-02"
 title: "技术实现解析与硬件规格"
 source: "../sunlogin-bootbox-analysis.md"

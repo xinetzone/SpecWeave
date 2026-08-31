@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-seven-concepts"
 title: "okf-kit Wiki 教程 — 七概念方法论执行报告"
 source: "https://github.com/vinodborole/okf-kit"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "windows-platform-compatibility-guide"
 title: "Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南"
 source: "../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md#洞察4windows-powershell-url处理陷阱"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "常见问题解答（FAQ）"
 category: "learning"
 source: "https://www.minitap.ai/docs"

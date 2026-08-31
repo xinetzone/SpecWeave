@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-overview
 title: Protobuf Wiki - 总览
 date: 2026-07-23
@@ -9,10 +11,10 @@ tags:
   - grpc
   - protocols
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/00-overview.toml"
   - https://protobuf.dev
   - https://protobuf.com.cn
   - https://buf.build/blog
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/00-overview.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

@@ -1,4 +1,6 @@
 ---
+type: Insights
+
 id: miaowu-ambassador-guide-02-i
 title: I - 洞察 (Insight) - 秒悟大使入驻关键洞察
 source: 基于01-facts.md事实提炼

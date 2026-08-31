@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-interface
 title: "02、Interface：行为契约"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "three-ai-tools-wiki-03"
 title: "七概念知识沉淀报告：三个热门AI工具"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/03-seven-concepts-report.toml"

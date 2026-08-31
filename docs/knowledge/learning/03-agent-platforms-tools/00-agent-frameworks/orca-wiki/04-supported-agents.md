@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-agents"
 title: "支持的 Agent 清单"
-source: "https://www.onorca.dev/ 官网「Supported Agents」+ d:\AI\external\tools\orca\README.md 本地开源源码"
+source: 'https://www.onorca.dev/ 官网「Supported Agents」+ d:\AI\external\tools\orca\README.md 本地开源源码'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/04-supported-agents.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "cli-agent", "claude-code", "codex", "opencode", "bring-your-own-agent", "multi-agent"]

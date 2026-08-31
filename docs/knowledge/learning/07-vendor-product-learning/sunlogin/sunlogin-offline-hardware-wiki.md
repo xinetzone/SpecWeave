@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki"
 title: "向日葵五款无网远程控制硬件深度解析"
 source: "https://sunlogin.oray.com/hardware/kongkong2/;https://sunlogin.oray.com/hardware/q1;https://sunlogin.oray.com/hardware/q2pro-ble/;https://sunlogin.oray.com/hardware/Q0.5;https://sunlogin.oray.com/hardware/Q5Pro"

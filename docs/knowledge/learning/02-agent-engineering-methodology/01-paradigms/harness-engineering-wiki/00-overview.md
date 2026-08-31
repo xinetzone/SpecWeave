@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-engineering-wiki-00"
 title: "Harness Engineering（驾驭工程）：概述与学习目标"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"

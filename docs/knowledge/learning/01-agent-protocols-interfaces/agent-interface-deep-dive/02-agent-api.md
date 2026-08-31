@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-api-chapter"
 title: "Agent API：可调用方法层"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/02-agent-api.toml"

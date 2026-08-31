@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Agent核心类"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/agent"

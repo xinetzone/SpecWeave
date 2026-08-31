@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-key-concepts"
 title: "Claude Tag：关键概念与术语"
 category: learning

@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 安装验证"
 chapter: 7
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/07-verification.toml"
   - external/libs/hermes-agent/hermes_cli/doctor.py
   - external/libs/hermes-agent/hermes_cli/status.py
   - external/libs/hermes-agent/hermes_cli/main.py
@@ -15,6 +16,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/tools/file_tools.py
   - external/libs/hermes-agent/tools/browser_tool.py
   - external/libs/hermes-agent/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/07-verification.toml"
 ---
 # 7. 安装验证
 

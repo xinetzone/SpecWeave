@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-09"
 title: "相关资源链接"
 source: "../sunlogin-bootbox-analysis.md"

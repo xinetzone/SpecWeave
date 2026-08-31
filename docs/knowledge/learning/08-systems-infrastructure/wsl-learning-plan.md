@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-learning-plan"
 title: "WSL 系统学习计划"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/wsl-learning-plan.toml"

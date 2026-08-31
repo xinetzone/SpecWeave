@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-index"
 title: "商业趋势分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/README.toml"

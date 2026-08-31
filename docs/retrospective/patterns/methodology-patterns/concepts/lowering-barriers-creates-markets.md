@@ -95,5 +95,5 @@ stale_after: "2027-08-22"
 ## 关联资源
 
 - 配套模式：[整合优于发明模式](integration-over-invention.md)（降低门槛常通过整合已有工具来实现，两个模式在实践中高度协同）
-- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)
+- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/concepts/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)
 - 参考项目：[Project N.O.M.A.D](https://github.com/Project-NOMAD)（本模式的典型验证案例）

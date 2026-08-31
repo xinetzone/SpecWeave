@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-knowledgebase
 title: 05 - 知识库RAG示例
 source: d:\AI\vendor\veadk-python\examples\05_knowledgebase_rag\main.py

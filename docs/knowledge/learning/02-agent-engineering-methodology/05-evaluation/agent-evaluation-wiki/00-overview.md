@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-wiki-overview"
 title: "AI Agent 评测体系化建设方法论教程总览"
 source: "spec:agent-evaluation-methodology-wiki"

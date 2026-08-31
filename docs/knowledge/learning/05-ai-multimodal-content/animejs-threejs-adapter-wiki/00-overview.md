@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-overview"
 title: "Anime.js 4.5+Three.js 适配器教程总览"
 category: "learning"

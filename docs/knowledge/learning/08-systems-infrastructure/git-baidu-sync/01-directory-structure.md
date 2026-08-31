@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-directory-structure
 title: 百度网盘 Git 同步空间目录结构
 source: original

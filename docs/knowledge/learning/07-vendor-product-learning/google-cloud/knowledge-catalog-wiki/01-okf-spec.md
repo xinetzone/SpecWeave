@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-okf-spec
 title: 01 - OKF开放知识格式规范详解
 date: 2026-08-15
@@ -11,8 +13,8 @@ tags:
   - provenance
   - attested-computation
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/01-okf-spec.toml"
   - vendor/knowledge-catalog/okf/SPEC.md (OKF v0.2)
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/01-okf-spec.toml"
 maturity: L1-draft
 ---
 # 01 - OKF开放知识格式规范详解（v0.2）

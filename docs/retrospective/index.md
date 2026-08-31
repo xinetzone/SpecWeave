@@ -13,20 +13,21 @@
 
 patterns/index
 reports/index
+cross-reference-ledger
 log
 ```
 
 | 板块 | 说明 | 入门推荐 |
 |------|------|---------|
-| **[方法论模式库](patterns/methodology-patterns/README.md)** | 经过 G1-G4 质量门与 V 对抗审查的可复用方法论模式（15+ 个模式，含知识编译、双引擎架构、三层修复闭环等） | [知识编译模式](patterns/methodology-patterns/knowledge-compilation.md) — 将10个源文件深度编译为~4800token自包含参考 |
-| **里程碑复盘** | 项目重要里程碑节点的系统性复盘报告（知识 scaling、Loop Engineering、Harness Wiki 生成等） | [SpecWeave 知识 scaling 里程碑](reports/milestone/specweave-knowledge-scaling-milestone-20260801.md) |
-| **对抗审查报告** | 重要产出的对抗审查记录，证伪加固过程留痕 | [Headroom Wiki 对抗审查](reports/adversarial-review/adversarial-review-analyze-wechat-article-3dnk-20260803.md) |
-| **竞争分析** | 外部工具/平台的竞争性分析与对比研究 | [Headroom 上下文压缩分析](reports/competitive-analysis/retrospective-headroom-wiki-20260803/README.md) |
+| **[方法论模式库](patterns/methodology-patterns/index.md)** | 经过 G1-G4 质量门与 V 对抗审查的可复用方法论模式（22 个模式，含知识编译、双引擎架构、三层修复闭环、前置完整性门禁等） | [知识编译模式](patterns/methodology-patterns/concepts/knowledge-compilation.md) — 将10个源文件深度编译为~4800token自包含参考 |
+| **里程碑复盘** | 项目重要里程碑节点的系统性复盘报告（知识 scaling、Loop Engineering、Harness Wiki 生成等） | [SpecWeave 知识 scaling 里程碑](reports/concepts/milestone/specweave-knowledge-scaling-milestone-20260801.md) |
+| **对抗审查报告** | 重要产出的对抗审查记录，证伪加固过程留痕 | [Headroom Wiki 对抗审查](reports/concepts/adversarial-review/adversarial-review-analyze-wechat-article-3dnk-20260803.md) |
+| **竞争分析** | 外部工具/平台的竞争性分析与对比研究 | [Headroom 上下文压缩分析](reports/concepts/competitive-analysis/retrospective-headroom-wiki-20260803/index.md) |
 
 ## 🎯 如何使用
 
-- **想找可复用的方法论？** 直接浏览 [方法论模式库](patterns/methodology-patterns/README.md)，按"触发场景"列选择适合的模式
-- **想了解项目演进历程？** 阅读 [里程碑复盘](reports/milestone/README.md) 系列报告
+- **想找可复用的方法论？** 直接浏览 [方法论模式库](patterns/methodology-patterns/index.md)，按"触发场景"列选择适合的模式
+- **想了解项目演进历程？** 阅读 [里程碑复盘](reports/concepts/milestone/index.md) 系列报告
 - **想学习如何做复盘？** 参考任意一份里程碑报告的结构（事实→洞察→模式→行动）
 - **想贡献新模式？** 遵循模式入库流程：R（复盘采集）→ I（洞察提炼）→ E（模式萃取）→ V（对抗审查）→ 入库
 
@@ -44,6 +45,7 @@ log
 
 > 新增复盘或模式时：
 >
-> 1. 复盘报告放入 `reports/` 对应子目录（milestone/knowledge/adversarial-review/competitive-analysis）；
+> 1. 复盘报告放入 `reports/concepts/` 对应子目录（milestone/knowledge/adversarial-review/competitive-analysis）；
 > 2. 可复用模式放入 `patterns/methodology-patterns/` 并更新模式库索引；
-> 3. 重要内容在本页表格中追加条目以便发现。
+> 3. 重要内容在本页表格中追加条目以便发现；
+> 4. docs/ 与 .agents/docs/ 双体系引用边界及存量收敛进度见 [双体系引用收敛台账](cross-reference-ledger.md)。

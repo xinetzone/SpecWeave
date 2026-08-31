@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-ai-switch-governance-index"
 title: "AI赋能的Feature Flag全生命周期治理"
 category: "knowledge"

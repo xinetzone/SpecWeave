@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR与绩效的关系"
 source: "https://www.dingteam.com/help/649"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/okr-vs-performance.toml"

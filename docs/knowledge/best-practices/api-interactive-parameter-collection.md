@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "api-interactive-parameter-collection"
 title: "AskUserQuestion 分步交互式收集参数模式"
 category: "best-practices"

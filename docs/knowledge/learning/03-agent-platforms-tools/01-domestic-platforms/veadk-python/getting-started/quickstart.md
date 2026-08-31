@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-quickstart
 title: 快速入门：Hello World
 source: 'seven-concepts: veadk-python-wiki'

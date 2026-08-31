@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "python-version-upgrade-compatibility-check"
 title: "Python大版本升级破坏性变更检查清单"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/python-version-upgrade-compatibility-check.toml"

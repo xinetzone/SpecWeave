@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-multica-platform"
 title: "Multica 平台：AI Agent 协作管理平台"
 category: learning

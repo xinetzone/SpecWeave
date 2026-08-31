@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "别再逼Agent一次做对了：Loop Engineering与AI系统工程范式转移深度分析报告"
 author: "AI分析团队"
 date: "2026-07-09"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "任务与任务请求"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/tasks"

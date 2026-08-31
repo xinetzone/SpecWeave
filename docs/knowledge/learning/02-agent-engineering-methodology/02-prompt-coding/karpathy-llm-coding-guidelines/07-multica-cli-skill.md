@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-multica-cli-skill"
 title: "Multica CLI Skill：让外部 Agent 安全操作 Multica"
 category: learning

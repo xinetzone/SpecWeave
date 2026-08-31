@@ -1,9 +1,3 @@
----
-title: 第一性原理
-description: 从受众而非来源出发的核心洞察——文档分离方案的理论基础
-last_updated: 2026-07-16
----
-
 # 第一性原理
 
 从第一性原理出发，文档的本质区分维度是"受众"（人类 vs Agent），而非"来源"（原 docs/ vs .agents/）。路径名本身应承担"谁该读"的信号。
@@ -101,3 +95,8 @@ flowchart LR
 
 - [七概念方法论](../domain/index.md)
 - `methodology/index.md`
+
+```{toctree}
+:maxdepth: 2
+
+```

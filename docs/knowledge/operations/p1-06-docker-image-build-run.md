@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p1-06-docker-image-build-run
 title: Docker 镜像构建与运行手册摘要
 source: d:\spaces\chaos\docker\index.md

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-specweave-relevance"
 title: "Claude Tag：与 SpecWeave 的关联"
 category: learning

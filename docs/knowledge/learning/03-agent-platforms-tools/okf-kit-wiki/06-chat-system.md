@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-06"
 title: "okf-kit 完全指南 — Chat 对话系统"
 source: "https://github.com/vinodborole/okf-kit/tree/main/okf_kit/chat"

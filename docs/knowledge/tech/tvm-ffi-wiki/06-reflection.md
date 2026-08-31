@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-reflection"
 title: "Reflection 反射系统"
 tags: ["tvm-ffi", "reflection", "dataclass", "stubgen"]

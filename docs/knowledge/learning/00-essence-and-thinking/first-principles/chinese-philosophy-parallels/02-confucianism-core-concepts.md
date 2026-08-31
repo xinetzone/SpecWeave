@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: confucianism-core-concepts
 title: 儒家思想核心概念：本、体用、格物致知、诚
 source: cross-cultural-first-principles-comparison Task 2

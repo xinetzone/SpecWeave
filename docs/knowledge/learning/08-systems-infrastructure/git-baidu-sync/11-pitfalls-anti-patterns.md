@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-pitfalls-anti-patterns
 title: Git 百度网盘同步 - 坑点与反模式
 source: original

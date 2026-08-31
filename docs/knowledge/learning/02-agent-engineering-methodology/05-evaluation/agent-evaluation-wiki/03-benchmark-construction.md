@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-benchmark-construction"
 title: "第3章：基准测试构建"
 source: "spec:agent-evaluation-methodology-wiki"

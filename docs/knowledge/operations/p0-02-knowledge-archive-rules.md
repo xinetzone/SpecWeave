@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p0-02-knowledge-archive-rules
 title: 临时知识库归档规则正文
 source: d:\spaces\chaos\.agents\context\temp-knowledge-archive.md

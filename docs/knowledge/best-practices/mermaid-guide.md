@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "mermaid-guide"
 title: "Mermaid 图表操作指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/mermaid-guide.toml"

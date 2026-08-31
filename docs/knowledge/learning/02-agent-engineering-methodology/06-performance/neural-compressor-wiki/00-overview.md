@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-overview"
 title: "Intel Neural Compressor 教程总览"
 date: "2026-08-09"

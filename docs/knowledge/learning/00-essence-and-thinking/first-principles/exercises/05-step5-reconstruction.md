@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step5
 title: "Step 5 专项练习——从基本原理重新构建"
 source: "12-exercises.md#chapter-6"

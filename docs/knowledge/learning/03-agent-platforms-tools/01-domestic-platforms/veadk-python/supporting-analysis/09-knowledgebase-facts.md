@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 09-knowledgebase-facts
 title: KnowledgeBase 模块事实记录
 source: veadk-python codebase analysis

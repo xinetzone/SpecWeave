@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-02"
 title: "okf-kit 完全指南 — CLI 命令参考"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/cli.py"

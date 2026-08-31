@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 知识图谱示例
 description: 基于七概念框架的知识图谱示例
 last_updated: YYYY-MM-DD

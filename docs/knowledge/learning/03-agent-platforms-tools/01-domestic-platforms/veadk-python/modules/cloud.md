@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cloud-module
 title: 云部署集成
 source: veadk-python codebase analysis

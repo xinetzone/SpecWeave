@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-architecture"
 title: "技术架构深度解析"
 source: "echobird-source-wiki-learning"

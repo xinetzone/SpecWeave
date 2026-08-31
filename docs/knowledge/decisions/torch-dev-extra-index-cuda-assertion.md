@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "torch-dev-extra-index-cuda-assertion"
 title: "ADR: torch-dev 双索引下载与 CUDA 硬断言决策"
 x-toml-ref: ""

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-04"
 title: "book-to-skill 完全指南 — Token 经济学与性能"
 source: "https://github.com/virgiliojr94/book-to-skill"

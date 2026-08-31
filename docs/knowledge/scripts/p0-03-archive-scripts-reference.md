@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p0-03-archive-scripts-reference
 title: 归档脚本工具链说明集合
 source: d:\spaces\chaos\.agents\scripts\knowledge_archive.py

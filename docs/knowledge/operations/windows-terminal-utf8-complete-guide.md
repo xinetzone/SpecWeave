@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "windows-terminal-utf8-complete-guide"
 title: "Windows终端UTF-8编码完整配置指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-terminal-utf8-complete-guide.toml"

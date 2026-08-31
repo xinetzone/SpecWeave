@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "troubleshooting-index"
 title: "故障排查指南库"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/README.toml"

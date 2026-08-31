@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-communication-protocols-wiki"
 title: "Agent 通信协议完整教程：MCP/ACP/A2A/ANP 四层协议栈"
 category: "learning"

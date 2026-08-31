@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-02
 title: "02 - 深度开发流程"
 date: 2026-08-19
 tags: [cpython, workflow, git, testing, release, backport, lifecycle]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/02-development-workflow.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/02-development-workflow.toml"
 maturity: L1-draft
 ---
 # 02 - 深度开发流程

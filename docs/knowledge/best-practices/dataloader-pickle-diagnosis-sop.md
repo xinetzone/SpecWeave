@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "dataloader-pickle-diagnosis-sop"
 title: "DataLoader Pickle 序列化问题诊断 SOP"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.toml"

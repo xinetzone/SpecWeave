@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "核心概念"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/core-concepts/overview"

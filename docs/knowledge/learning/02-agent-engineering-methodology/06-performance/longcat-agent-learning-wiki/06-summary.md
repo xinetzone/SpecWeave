@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-06"
 title: "总结与回顾"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

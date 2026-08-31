@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-overview"
 title: "Python 与 Rust 技术对比分析报告 Wiki · 总览"
 category: "tech"

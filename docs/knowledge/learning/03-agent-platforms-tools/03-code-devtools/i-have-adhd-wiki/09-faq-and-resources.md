@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: i-have-adhd-wiki-faq
 title: 十、FAQ与资源汇总
 source: i-have-adhd常见问题与参考资源整理

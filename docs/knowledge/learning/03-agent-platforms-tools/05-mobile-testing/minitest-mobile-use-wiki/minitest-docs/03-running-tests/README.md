@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-minitest-docs-03-running-tests-index"
 title: "运行测试"
 x-toml-ref: "../../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/minitest-docs/03-running-tests/README.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "oray-product-series-index"
 title: "贝锐（Oray）集团产品学习系列"
 category: "learning"

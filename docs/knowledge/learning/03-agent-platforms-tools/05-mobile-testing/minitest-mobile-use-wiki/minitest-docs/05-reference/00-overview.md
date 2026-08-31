@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "参考文档总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference"

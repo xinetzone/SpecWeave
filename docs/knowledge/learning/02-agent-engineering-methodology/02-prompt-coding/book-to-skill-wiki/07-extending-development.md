@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-07"
 title: "book-to-skill 完全指南 — 扩展开发"
 source: "https://github.com/virgiliojr94/book-to-skill"

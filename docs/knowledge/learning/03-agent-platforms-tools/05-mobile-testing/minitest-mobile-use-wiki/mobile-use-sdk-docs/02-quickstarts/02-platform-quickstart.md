@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "平台快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/platform-quickstart"

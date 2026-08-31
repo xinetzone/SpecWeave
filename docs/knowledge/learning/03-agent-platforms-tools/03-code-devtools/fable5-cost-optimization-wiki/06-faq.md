@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-06"
 title: "常见问题解答"
 version: "1.0"

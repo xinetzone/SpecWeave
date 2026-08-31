@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - Docker 容器化部署指南"
 chapter: 5
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/05-install-docker.toml"
   - external/libs/hermes-agent/Dockerfile
   - external/libs/hermes-agent/docker-compose.yml
   - external/libs/hermes-agent/docker-compose.windows.yml
@@ -18,6 +19,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/docker/s6-rc.d/dashboard/run
   - external/libs/hermes-agent/docker/s6-rc.d/dashboard/finish
   - external/libs/hermes-agent/docker/SOUL.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/05-install-docker.toml"
 ---
 # 5. Docker 容器化部署指南
 

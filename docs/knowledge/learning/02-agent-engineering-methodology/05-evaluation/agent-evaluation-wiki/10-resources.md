@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-resources"
 title: "第10章：术语表与参考资源"
 source: "spec:agent-evaluation-methodology-wiki"

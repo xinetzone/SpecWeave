@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR检查清单"
 source: "https://www.dingteam.com/help/606"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/okr-checklist.toml"

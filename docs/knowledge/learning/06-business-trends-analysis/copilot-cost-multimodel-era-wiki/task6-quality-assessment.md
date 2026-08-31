@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: task6-quality-assessment
 related_task: Task 6
 date: 2026-07-09

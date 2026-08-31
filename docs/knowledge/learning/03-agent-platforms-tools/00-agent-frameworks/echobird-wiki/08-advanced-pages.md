@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-advanced-pages"
 title: "高级功能模块"
 source: "echobird-source-wiki-learning"

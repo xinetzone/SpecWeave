@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "GitHub Action参考"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/minitest-trigger-action"

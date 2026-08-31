@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "fix-hardcoded-paths-guide"
 title: "硬编码路径批量修复工具使用指南（fix-hardcoded-paths.py）"
 category: "best-practices"

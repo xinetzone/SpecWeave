@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "thesis-writing-timeline"
 title: "二、全流程时间线"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"

@@ -7,3 +7,15 @@
 - [04 - LLM 配置与可插拔体系](04-llm-configuration.md) — LLMConfig 层级模型、9 个提供商、fallback 机制、JSONC 配置加载、环境变量凭据
 - [05 - SDK 双层 API 与生命周期](05-sdk-layer.md) — Agent 类核心入口、AgentConfigBuilder 流式配置、TaskRequestBuilder、本地与云手机双路径
 - [06 - 图结构与状态管理](06-graph-state.md) — StateGraph 编译、State 字段与 reducer、条件门路由、消息通道隔离、遥测集成
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-multi-agent-architecture
+02-device-control
+03-tools-system
+04-llm-configuration
+05-sdk-layer
+06-graph-state
+```

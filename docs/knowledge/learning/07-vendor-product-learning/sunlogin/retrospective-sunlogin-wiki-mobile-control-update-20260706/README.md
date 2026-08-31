@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-readme"
 title: "向日葵Wiki移动端远程控制功能更新复盘"
 source: "https://service.oray.com/question/17615.html, ../sunlogin-comprehensive-analysis-wiki.md"

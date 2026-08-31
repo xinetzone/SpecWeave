@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-structure"
 title: "Claude Tag：原文结构框架"
 category: learning

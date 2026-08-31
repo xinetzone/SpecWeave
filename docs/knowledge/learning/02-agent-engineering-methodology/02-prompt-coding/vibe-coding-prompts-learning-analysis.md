@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "vibe-coding-prompts-learning-analysis"
 title: "Vibe Coding 两大神级 Prompt 学习分析"
 category: "learning"

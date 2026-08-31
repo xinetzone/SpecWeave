@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-anti-patterns"
 title: "10、反模式：20+个Prompt写法陷阱"
 category: "knowledge"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-05"
 title: "快速上手指南"
 source: "eve-framework-wiki-learning"

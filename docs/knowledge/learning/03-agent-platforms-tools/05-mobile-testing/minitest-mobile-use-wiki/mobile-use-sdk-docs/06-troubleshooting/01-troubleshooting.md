@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "常见问题排查"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/troubleshooting"

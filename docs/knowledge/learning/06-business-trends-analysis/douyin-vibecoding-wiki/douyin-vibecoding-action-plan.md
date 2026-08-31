@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "抖音 Vibecoding 人气赛道·执行行动计划"
 source: "基于《抖音人气赛道创作指南深度分析报告》"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-action-plan.toml"

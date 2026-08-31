@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "分类索引：knowledge"
+---
+
 # 分类索引：knowledge
 
 - [返回分类总索引](../category-index.md)

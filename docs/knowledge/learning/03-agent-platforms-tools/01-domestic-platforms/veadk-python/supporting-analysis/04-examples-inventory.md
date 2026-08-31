@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 04-examples-inventory
 title: examples/ 目录示例清单
 source: veadk-python codebase analysis

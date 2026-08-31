@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-object-system"
 title: "Object 对象系统"
 tags: ["tvm-ffi", "object", "reference-counting", "inheritance"]

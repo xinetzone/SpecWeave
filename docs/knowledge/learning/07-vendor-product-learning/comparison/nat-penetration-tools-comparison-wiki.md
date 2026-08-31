@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "nat-penetration-tools-comparison-2026"
 title: "神卓互联 vs cpolar vs 花生壳：三款主流内网穿透工具六维度全面对比分析（2026版）"
 source: "https://www.shenzhuohl.com/, https://www.cpolar.com/, https://hsk.oray.com/, 各品牌官方帮助文档与定价页面"

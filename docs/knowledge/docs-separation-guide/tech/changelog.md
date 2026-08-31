@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 变更日志
 description: 项目演进记录与版本变更详情
 last_updated: YYYY-MM-DD

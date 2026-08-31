@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-wiki-index"
 title: "Intelligent Terminal Wiki 教程索引"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://executablebooks.org, https://mystmd.org"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/06-resources.toml"
 id: "executablebooks-myst-guide-resources"

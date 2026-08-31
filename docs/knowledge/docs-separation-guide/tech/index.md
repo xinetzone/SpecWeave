@@ -1,8 +1,3 @@
----
-title: 核心知识
-description: 技术相关文档集合，包含 API 参考、集成指南、部署流程与变更日志
----
-
 # 🔧 核心知识
 
 本目录集中承载**项目技术相关**文档。全部项目技术资产（包含 API 参考、集成指南、部署流程与变更日志）均位于本目录下，与同级 [通用知识](../general/index.md) 完全隔离。
@@ -37,13 +32,11 @@ description: 技术相关文档集合，包含 API 参考、集成指南、部�
 :maxdepth: 2
 :caption: 技术文档
 
+api/index
+changelogs/index
+changelog
+deploy
+features
 intro
 quickstart
-features
-integration-guide
-api/index
-deploy
-build-conventions
-contributing
-changelog
 ```

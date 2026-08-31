@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "阶段守卫运行时使用指南"
+---
+
 # 阶段守卫运行时使用指南
 
 > ⚠️ **本文档已迁移**：权威版本位于 [.agents/rules/stage-guardrails-guide.md](../../.agents/rules/stage-guardrails-guide.md)

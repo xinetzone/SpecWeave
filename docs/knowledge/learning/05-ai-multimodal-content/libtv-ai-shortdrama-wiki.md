@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "LibTV AI 短剧创作工具学习 Wiki"
 source: "微信公众号文章《LibTV 相关功能介绍》（作者：阿枫）"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/libtv-ai-shortdrama-wiki.toml"

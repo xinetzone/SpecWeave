@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-modules-readme
 title: Modules
 source: 'seven-concepts: veadk-python-wiki'

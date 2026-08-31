@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-07"
 title: "Cordis — 声明式加载与配置合并"
 source: "https://github.com/cordiverse/paper"

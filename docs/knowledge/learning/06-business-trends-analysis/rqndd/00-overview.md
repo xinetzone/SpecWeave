@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rqndd-00-overview"
 title: "2025年7月初中国AI行业动态深度分析 — 概述"
 source: "https://mp.weixin.qq.com/s/RQnDdXDMvjYMFJz25qt0Gw"

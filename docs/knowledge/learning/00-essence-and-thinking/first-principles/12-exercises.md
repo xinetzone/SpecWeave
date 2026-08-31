@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises
 title: 第一性原理思维训练题库
 source: ACT-012 action item

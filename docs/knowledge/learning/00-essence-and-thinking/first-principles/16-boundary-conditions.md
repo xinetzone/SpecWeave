@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: boundary-conditions
 title: 第一性原理与类比推理的适用边界研究
 source: first-principles-future-research Task 1

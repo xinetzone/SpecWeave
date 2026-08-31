@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: models-module
 title: 模型配置
 source: veadk-python codebase analysis

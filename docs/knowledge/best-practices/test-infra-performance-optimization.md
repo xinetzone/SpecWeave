@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: 测试基础设施性能优化最佳实践
 date: 2026-08-03
 category: best-practices

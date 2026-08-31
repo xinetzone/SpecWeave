@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-02"
 title: "基础命令指南"
 source: "https://github.com/cli/cli"

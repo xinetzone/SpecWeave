@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p1-08-windows-sandbox-guide
 title: Windows 沙盒安装与配置操作手册摘要
 source: d:\spaces\chaos\.trae\documents\Windows 沙盒安装与配置操作手册.md

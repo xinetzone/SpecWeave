@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-social-world-model"
 title: "MaineCoon 实时音视频基础模型与 Social World Model 范式"
 source: "微信公众号文章《MaineCoon:实时音视频基础模型》（作者：阿颖）"

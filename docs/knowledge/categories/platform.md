@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "分类索引：platform"
+---
+
 # 分类索引：platform
 
 - [返回分类总索引](../category-index.md)

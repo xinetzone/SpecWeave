@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "thesis-writing-topic-selection"
 title: "三、选题与开题"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"

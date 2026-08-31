@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "task5-industry-trends"
 title: "从Copilot成本困境看多模型时代产业趋势转变深度洞察"
 source: "task2-copilot-analysis.md, task3-deepseek-analysis.md, task4-multimodel-comparison.md"

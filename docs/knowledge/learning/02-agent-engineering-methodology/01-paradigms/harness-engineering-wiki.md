@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-engineering-wiki"
 title: "Harness Engineering（驾驭工程）系统性学习Wiki"
 category: learning

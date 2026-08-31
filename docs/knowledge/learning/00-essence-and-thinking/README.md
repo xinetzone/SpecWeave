@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "essence-and-thinking"
 title: "本质与思维"
 category: "learning"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "BrowserStack快速开始"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/browserstack-quickstart"

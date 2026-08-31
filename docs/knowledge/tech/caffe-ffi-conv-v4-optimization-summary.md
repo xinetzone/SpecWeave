@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: caffe-ffi-conv-v4-optimization-summary
 title: caffe-ffi Conv v4 OpenMP 并行优化技术总结
 source: .agent/docs/retrospective/reports/task-reports/retrospective-caffe-ffi-conv-v4-milestone-20260805.md

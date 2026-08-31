@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: chinese-philosophy-parallels-archive
 title: 跨文化第一性原理比较研究档案
 source: cross-cultural-first-principles-comparison Task 8

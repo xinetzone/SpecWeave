@@ -16,3 +16,11 @@
 - 熟悉基础命令后，阅读[工作流自动化示例](/examples/workflow-automation.md)学习高级模式
 - 创建工单前参考[语法模板示例](/examples/syntax-templates.md)确保内容格式正确
 - 所有写操作命令建议先加 `--dry-run` 预览
+
+```{toctree}
+:maxdepth: 2
+
+basic-cli-usage
+syntax-templates
+workflow-automation
+```

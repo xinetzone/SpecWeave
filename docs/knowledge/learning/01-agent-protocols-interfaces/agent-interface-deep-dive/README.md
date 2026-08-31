@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-agent-interface-deep-dive-index"
 title: "Agent 接口深度解析"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/README.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR跟进与复盘"
 source: "https://www.dingteam.com/help/582"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/tracking-progress.toml"

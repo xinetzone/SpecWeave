@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "nativebuild-vsdevshell-module-extraction"
 title: "ADR: VsDevShell通用模块提取与NativeBuild推广决策"
 x-toml-ref: ""

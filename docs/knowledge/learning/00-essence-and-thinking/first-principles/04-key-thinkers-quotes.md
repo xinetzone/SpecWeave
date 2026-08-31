@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: key-thinkers-quotes
 title: 第一性原理核心学者与实践者论述汇编
 source: first-principles-comprehensive-research Task 4

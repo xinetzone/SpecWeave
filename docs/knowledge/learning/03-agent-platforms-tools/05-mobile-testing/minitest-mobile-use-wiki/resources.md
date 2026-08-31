@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "资源链接"
 category: "learning"
 source: "https://www.minitap.ai/docs"

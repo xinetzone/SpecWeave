@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-03-cli-commands
 title: "CLI 命令层"
 source: "spec:create-conda-dev-source-wiki-tutorial"

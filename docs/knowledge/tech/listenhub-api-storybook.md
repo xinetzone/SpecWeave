@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-storybook
 title: ListenHub API 规范——Storybook（解说视频/故事本）
 category: tech

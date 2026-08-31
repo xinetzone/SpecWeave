@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-08-systems-infrastructure-index"
 title: "系统基础设施"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/README.toml"

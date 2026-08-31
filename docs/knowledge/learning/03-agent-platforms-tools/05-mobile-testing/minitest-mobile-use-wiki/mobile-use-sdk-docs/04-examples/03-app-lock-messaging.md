@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "应用锁消息示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/app-lock-messaging"

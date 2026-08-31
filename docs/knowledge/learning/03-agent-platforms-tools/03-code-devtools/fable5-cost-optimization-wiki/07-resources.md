@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-07"
 title: "资源与参考链接"
 version: "1.0"

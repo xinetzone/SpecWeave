@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-03"
 title: "使用流程"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"

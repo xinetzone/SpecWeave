@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: AI Agent Skills 知识包
-description: AI Agent Skills 生态——SKILL.md 标准、MCP 工具协议、人格集合与工程化集成
-tags: [ai-agent, skill, mcp, agent-framework]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # AI Agent Skills 知识包
 
 本知识包（bundle）系统梳理 AI Agent Skills 生态的架构与实践，涵盖六个开源项目：agency-agents（部门化人格集合）、awesun-mcp（向日葵远程控制 MCP 服务器）、awesun-skill（MCP Skill 桥接）、awesun-ui-locator（截图 UI 元素定位）、jira-skill（Jira 工程化集成）、retro-skill（会话复盘与自省）。内容涵盖 SKILL.md 开放标准、MCP 工具协议、插件架构、PEP 723 脚本模式、机械信号检测、渐进式披露等核心概念，遵循 OKF v0.2 规范。
@@ -44,3 +33,13 @@ stale_after: 2027-08-23
   * [awesun-ui-locator 源码](references/awesun-ui-locator-source.md)
   * [jira-skill 源码](references/jira-skill-source.md)
   * [retro-skill 源码](references/retro-skill-source.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

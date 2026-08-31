@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "move-item-access-denied"
 title: "Move-Item 目录重命名报 Access Denied 错误"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/move-item-access-denied.toml"

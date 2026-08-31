@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-comparison-trends"
 title: "对比与趋势洞察"
 source: "echobird-source-wiki-learning"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "first-principles-exercises-practice-guide"
 title: "练习实践指南"
 source: "12-exercises.md#综合练习建议"

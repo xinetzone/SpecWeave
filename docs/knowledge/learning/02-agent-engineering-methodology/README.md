@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-engineering-methodology-index"
 title: "Agent工程方法论"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/README.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-okr-wiki-templates-index"
 title: "模板库"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/README.toml"

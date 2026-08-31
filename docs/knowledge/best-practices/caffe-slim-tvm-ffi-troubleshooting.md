@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "caffe-slim-tvm-ffi-troubleshooting"
 title: "Caffe-Slim TVM FFI 环境调试与错误排查手册"
 date: 2026-07-27

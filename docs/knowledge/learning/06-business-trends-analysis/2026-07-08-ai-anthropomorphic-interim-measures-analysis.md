@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "《人工智能拟人化互动服务管理暂行办法》深度分析报告"
 date: 2026-07-08
 source: "https://www.cac.gov.cn/2026-04/10/c_1777558395078289.htm, external: 临时分析草稿（已清理）"

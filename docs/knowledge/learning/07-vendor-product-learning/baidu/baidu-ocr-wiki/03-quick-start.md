@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-03"
 title: "百度 Unlimited-OCR 快速上手指南"
 source: "https://github.com/baidu/Unlimited-OCR"

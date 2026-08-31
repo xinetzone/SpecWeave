@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-08"
 title: "FAQ、适用范围与局限性"
 source: "eve-framework-wiki-learning"

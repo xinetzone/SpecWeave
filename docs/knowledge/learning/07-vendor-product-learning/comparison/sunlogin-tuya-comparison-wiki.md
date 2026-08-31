@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵远程控制 vs 涂鸦智能：远程控制SaaS与AIoT平台的七维度全面对比分析"
 source: "https://os.oray.com/, https://sunlogin.oray.com/, https://www.tuya.com/, 涂鸦智能FY2025财报, TuyaOpen开源项目文档"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/comparison/sunlogin-tuya-comparison-wiki.toml"

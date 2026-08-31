@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-quantdinger-index"
 title: "QuantDinger：自托管AI量化交易平台"
 category: "knowledge"

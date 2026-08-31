@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "template"
 title: ""
 x-toml-ref: "../../.meta/toml/docs/knowledge/template.toml"

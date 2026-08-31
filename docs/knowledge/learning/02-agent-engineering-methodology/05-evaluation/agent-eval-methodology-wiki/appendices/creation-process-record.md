@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-creation-process-record"
 title: "创作过程记录：从资料收集到内容撰写"
 source: "spec:agent-eval-methodology-wiki"

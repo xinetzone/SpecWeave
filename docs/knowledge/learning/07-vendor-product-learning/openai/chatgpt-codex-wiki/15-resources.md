@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-15"
 title: "相关资源链接"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

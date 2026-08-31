@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "AudioX-Turbo 极速音频生成完整学习教程：4步推理+6种任务统一+920万数据集的Anything-to-Audio框架"
 source: "微信公众号文章《4步出结果！AudioX-Turbo：极速音频生成，给视频配音，一键搞定》（作者：逛逛 GitHub） + GitHub 项目分析 + arXiv 论文分析"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.toml"

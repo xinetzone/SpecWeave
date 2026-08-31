@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-performance-engineering"
 title: "Python 与 Rust 技术对比 · 性能与工程化"
 category: "tech"

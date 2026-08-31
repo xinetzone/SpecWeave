@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-prompt-rules"
 title: "04、新范式核心规则：做减法而非做加法"
 category: "knowledge"

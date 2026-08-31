@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-13"
 title: "DeepSeek Harness 完全指南 — 常见问题与故障排查"
 source: "https://github.com/deepseek-ai/deepseek-harness"

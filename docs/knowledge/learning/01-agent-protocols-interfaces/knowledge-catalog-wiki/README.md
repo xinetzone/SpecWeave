@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-knowledge-catalog-wiki-index"
 title: "Knowledge Catalog 知识目录平台"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/README.toml"

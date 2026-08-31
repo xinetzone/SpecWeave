@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-01"
 title: "核心功能详解"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"

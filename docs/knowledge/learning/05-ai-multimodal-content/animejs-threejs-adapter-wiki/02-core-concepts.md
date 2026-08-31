@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-core-concepts"
 title: "核心概念"
 category: "learning"

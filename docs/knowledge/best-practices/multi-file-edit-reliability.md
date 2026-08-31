@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "multi-file-edit-reliability"
 title: "多文件编辑操作可靠性指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/multi-file-edit-reliability.toml"

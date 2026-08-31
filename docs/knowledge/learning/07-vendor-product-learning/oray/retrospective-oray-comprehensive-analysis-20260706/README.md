@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "retrospective-oray-comprehensive-analysis-20260706-readme"
 title: "贝锐五大产品线综合分析任务复盘"
 source: "../oray-comprehensive-analysis-wiki.md"

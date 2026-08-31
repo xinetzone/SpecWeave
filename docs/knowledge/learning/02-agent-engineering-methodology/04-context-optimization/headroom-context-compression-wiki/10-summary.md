@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-10"
 title: "总结与Takeaways"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Slack集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/mini-in-slack"

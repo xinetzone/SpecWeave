@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-exceptions"
 title: "四、例外场景与自检清单"
 source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 例外规则分析"

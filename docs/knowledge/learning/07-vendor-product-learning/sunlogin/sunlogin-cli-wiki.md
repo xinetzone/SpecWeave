@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵企业CLI（awesun-cli）完整学习教程：AI时代的命令行远控工具"
 source: "https://service.oray.com/question/51527.html"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.toml"

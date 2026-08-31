@@ -1,3 +1,8 @@
+---
+type: Guide
+title: "changelogs"
+---
+
 # changelogs
 
 本目录的索引文件。

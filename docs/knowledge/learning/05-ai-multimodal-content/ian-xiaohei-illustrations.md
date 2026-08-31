@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "Ian Xiaohei Illustrations（小嘿插图）学习笔记"
+---
+
 # Ian Xiaohei Illustrations（小嘿插图）学习笔记
 
 > **来源**：[微信公众号文章](https://mp.weixin.qq.com/s/5Hwn3et9k-XtEATC-SDR6A)

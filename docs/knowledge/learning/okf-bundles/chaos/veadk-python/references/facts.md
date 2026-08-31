@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "veadk-python 源码事实采集（R 阶段）"
+---
+
 # veadk-python 源码事实采集（R 阶段）
 
 > 采集对象：`d:\AI\vendor\veadk-python\`

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "agent-skills-open-standard-wiki.md#四skillmd-格式规范"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/03-skill-md-format.toml"
 id: "agent-skills-wiki-skill-md-format"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "freedom-illusion-ai-era"
 title: "《你以为的自由是一种幻觉》第一性原理分析"
 category: learning

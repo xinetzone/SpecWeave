@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "best-practices-index"
 title: "团队最佳实践库"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/README.toml"

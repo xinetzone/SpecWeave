@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-01"
 title: "安装与配置指南"
 source: "https://github.com/cli/cli"

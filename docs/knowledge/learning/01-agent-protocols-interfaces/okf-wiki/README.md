@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-okf-wiki-index"
 title: "OKF 开放知识格式"
 category: "knowledge"

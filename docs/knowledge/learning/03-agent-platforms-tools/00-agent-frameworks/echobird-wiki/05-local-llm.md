@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-local-llm"
 title: "本地大模型服务"
 source: "echobird-source-wiki-learning"

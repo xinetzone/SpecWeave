@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-02"
 title: "Cordis — 文件结构与 Monorepo"
 source: "https://github.com/cordiverse/paper"

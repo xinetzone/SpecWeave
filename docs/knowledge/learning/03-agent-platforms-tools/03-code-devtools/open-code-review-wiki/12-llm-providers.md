@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-12"
 title: "LLM 协议与 Provider 详解"
 source: "https://open-codereview.ai/docs/configuration"

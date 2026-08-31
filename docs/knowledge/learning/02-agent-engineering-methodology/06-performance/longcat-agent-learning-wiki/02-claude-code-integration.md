@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-02"
 title: "Claude Code接入LongCat-2.0配置指南"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

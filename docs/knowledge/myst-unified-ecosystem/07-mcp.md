@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-ecosystem-mcp
 title: "07、MCP：Model Context Protocol"

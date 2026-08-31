@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: LLM Token节省策略实际应用案例集
 date: 2026-08-01
 version: 1.0.0
@@ -10,11 +12,11 @@ tags:
   - cost-optimization
   - context-engineering
 source:
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.toml"
   - engineering-blogs
   - academic-papers
   - conference-talks
   - open-source-documentation
+x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.toml"
 coverage:
   scenarios: 6
   cases: 8

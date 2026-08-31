@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module4-implementation"
 title: "模块4：八阶段实施步骤"
 source: "spec:agent-eval-methodology-wiki"

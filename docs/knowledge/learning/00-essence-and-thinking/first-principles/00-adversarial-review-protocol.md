@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: adversarial-review-protocol
 title: 对抗性审查标准与验证流程
 source: first-principles-comprehensive-research Task 0

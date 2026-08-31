@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-monetization-scenario-industry"
 title: "行业解决方案场景：垂直行业AI变现路径"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/10-scenario-industry.toml"

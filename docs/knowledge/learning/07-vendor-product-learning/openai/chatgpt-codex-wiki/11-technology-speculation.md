@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-11"
 title: "技术实现推测"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

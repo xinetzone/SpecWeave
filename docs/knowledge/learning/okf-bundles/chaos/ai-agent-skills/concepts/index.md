@@ -17,3 +17,20 @@
 * [09 — Retro Skill 自省与演进模式](09-retro-skill-introspection.md) — 六种复盘模式、五层流水线、21 机械信号、七目标路由、No silent writes
 * [10 — Skill 脚本工具模式（Python/Shell）](10-skill-tooling-scripts.md) — PEP 723 内联依赖、click CLI、共享库组织、Shell 无依赖原则、信号注册模式
 * [11 — 多工具兼容与集成模式](11-integration-patterns.md) — 格式转换引擎、开放标准、插件规范、三种 installKind、字节级 format 约束
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-skill-md-standard
+02-agency-agents-division
+03-agent-persona-format
+04-mcp-protocol
+05-plugin-architecture
+06-awesun-remote-control
+07-ui-locator-pattern
+08-jira-skill-engineering
+09-retro-skill-introspection
+10-skill-tooling-scripts
+11-integration-patterns
+```

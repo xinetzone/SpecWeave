@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: methodology-framework
 title: 第一性原理方法论框架与实践指南
 source: first-principles-comprehensive-research Task 7

@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-features"
 title: "八大核心功能详解"
-source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（README / docs/readme/README.zh-CN.md）"
+source: 'https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码（README / docs/readme/README.zh-CN.md）'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/02-core-features.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "mobile-companion", "ssh", "design-mode", "ai-diff", "github", "linear", "terminal-splits", "multi-agent"]

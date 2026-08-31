@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "wrapper-script-injection-pattern"
 title: "Wrapper脚本注入模式"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/wrapper-script-injection-pattern.toml"

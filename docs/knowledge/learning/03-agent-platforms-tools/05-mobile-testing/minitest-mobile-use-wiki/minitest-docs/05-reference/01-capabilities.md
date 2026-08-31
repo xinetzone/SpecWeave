@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "能力范围"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/reference/capabilities"

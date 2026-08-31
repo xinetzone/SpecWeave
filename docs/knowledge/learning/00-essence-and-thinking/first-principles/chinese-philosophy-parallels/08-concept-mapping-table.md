@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: concept-mapping-table
 title: 跨文化概念对照总表
 source: cross-cultural-first-principles-comparison Task 8

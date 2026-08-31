@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-project-structure"
 title: "项目结构说明"
 tags: ["tvm-ffi", "project-structure"]

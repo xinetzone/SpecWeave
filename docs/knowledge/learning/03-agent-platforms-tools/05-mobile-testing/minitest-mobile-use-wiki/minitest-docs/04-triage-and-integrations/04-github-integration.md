@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "GitHub集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/github"

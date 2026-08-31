@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: academic-resources
 title: 第一性原理学术资源与推荐阅读
 source: first-principles-comprehensive-research Task 5

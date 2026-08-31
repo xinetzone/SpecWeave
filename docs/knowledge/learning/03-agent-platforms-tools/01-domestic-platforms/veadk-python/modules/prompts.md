@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: prompts-module
 title: Prompt管理与优化
 source: veadk-python codebase analysis

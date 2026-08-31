@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-04"
 title: "DeepSeek Harness 完全指南 — 四种运行模式"
 source: "https://github.com/deepseek-ai/deepseek-harness"

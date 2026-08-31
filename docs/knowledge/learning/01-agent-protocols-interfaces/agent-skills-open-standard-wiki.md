@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-open-standard-wiki"
 title: "Agent Skills 开放标准完整指南"
 category: "learning"

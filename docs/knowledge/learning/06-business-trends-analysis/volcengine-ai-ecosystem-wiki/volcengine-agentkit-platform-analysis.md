@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-platform-analysis"
 title: "火山引擎AgentKit企业级AI Agent平台深度学习笔记：生产级四大能力+四大价值支柱+打通PoC到生产最后一公里"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/agentkit）+ 产品UX深度分析"

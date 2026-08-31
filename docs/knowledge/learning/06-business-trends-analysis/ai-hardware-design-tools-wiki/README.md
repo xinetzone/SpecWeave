@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-ai-hardware-design-tools-wiki-index"
 title: "AI硬件设计工具生态深度洞察——10个AI硬件设计常用网站系统分析"
 category: "knowledge"

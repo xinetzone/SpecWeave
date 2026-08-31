@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: tracing-module
 title: 可观测性与Tracing
 source: veadk-python codebase analysis

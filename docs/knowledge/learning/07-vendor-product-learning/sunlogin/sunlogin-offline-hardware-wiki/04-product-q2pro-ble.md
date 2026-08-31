@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-04"
 title: "Q2Pro产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q2Pro产品详解"

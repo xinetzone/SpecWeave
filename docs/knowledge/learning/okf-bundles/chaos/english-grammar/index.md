@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: 旋元佑进阶语法
-description: 旋元佑《语法俱乐部》系统知识包，遵循「简单句→复合句→复杂句→简化从句」三层次句法递进框架，涵盖31篇概念文档、事实清单与信源登记
-tags: [english-grammar, 旋元佑, 语法俱乐部, 英语学习, 简化从句]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-25T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-25T00:00:00Z }
-stale_after: 2027-08-25
----
-
 # 旋元佑进阶语法
 
 旋元佑《语法俱乐部》是一本偏重理解、适合自习的英语语法著作，明确提出「简单句→复合句→简化从句」三层次句法认知框架。本知识包基于 liby/codeyu 整理的开源版本，包含 31 篇概念文档，覆盖基础句法、词类构建、动词体系、复合句与从句、句法综合应用、简化从句七大模块。
@@ -94,3 +83,12 @@ stale_after: 2027-08-25
 - [source-terminology.md](references/source-terminology.md) — 术语对照信源
 - [source-chapter-toc.md](references/source-chapter-toc.md) — 正文目录信源
 - [source-ch01.md](references/source-ch01.md) ~ [source-ch25.md](references/source-ch25.md) — 25个章节信源
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+```

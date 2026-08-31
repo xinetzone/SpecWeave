@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-04"
 title: "AgentKit SDK & CLI 工具链"
 source: "seven-concepts: volcengine-agentkit-wiki"

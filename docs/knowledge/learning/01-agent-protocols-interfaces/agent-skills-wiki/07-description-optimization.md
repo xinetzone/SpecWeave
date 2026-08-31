@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "agent-skills-open-standard-wiki.md#八优化技能描述触发准确率"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/07-description-optimization.toml"
 id: "agent-skills-wiki-description-optimization"

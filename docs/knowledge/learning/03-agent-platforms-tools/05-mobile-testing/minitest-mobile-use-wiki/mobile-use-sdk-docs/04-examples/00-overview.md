@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "使用示例"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples"

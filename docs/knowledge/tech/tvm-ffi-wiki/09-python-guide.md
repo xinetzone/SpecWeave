@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-python-guide"
 title: "Python 开发指南"
 tags: ["tvm-ffi", "python", "guide", "cython"]

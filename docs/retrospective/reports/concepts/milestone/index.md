@@ -23,6 +23,11 @@
 | milestone-veadk-python-source-stability-fix-20260829 | veadk-python Wiki 信源稳定性修复与模式L2验证 | 2026-08-29 | ✅ 已完成 | 七概念R→I→E→V→C | 33条客观事实、3条核心洞察(预防价值反事实度量/路径引用载体多样性/tag选型集合论)、信源稳定性门模式L1→L2(双案例/5反模式/6检验标准)、vendor/veadk-python@1.0.10注册、41文件800处引用迁移复验信源缺失0、V对抗审查4视角8条意见采纳3条、6项原子行动项，G1-G4+V门全部通过 | [veadk-python-source-stability-fix-milestone-20260829.md](veadk-python-source-stability-fix-milestone-20260829.md) |
 | milestone-veadk-a3-a6-closure-20260829 | veadk 里程碑行动项 A-3/A-6 闭环执行（含 GATE-SPS 锚点假阳性修复） | 2026-08-29 | ✅ 已完成 | 七概念R→I→V→C | 26条客观事实、3条核心洞察(登记验收测量口径同源/质量门假阳性同罪且由真实案例校准/临时信源删除后归宿排除链)、信源稳定性门模式第3次验证(新增锚点剥离+双轨复验2维度)、33断链相对路径化复验67/0、GATE-SPS修复568个存量假阳性(测试30→32)、4次原子提交零混入、4项原子行动项，G1-G4+V门全部通过 | [veadk-a3-a6-closure-retrospective-20260829.md](veadk-a3-a6-closure-retrospective-20260829.md) |
 | source-path-debt-triage-20260829 | 全仓信源路径存量债务分诊审计（veadk ACT-3 交付物） | 2026-08-29 | ✅ 已完成 | 信源稳定性门模式 v2.3 + 历史快照三分法 | 13,583 文件/7,002 引用双维聚类分诊；A 类历史快照约 2,750 条不改写、B 类教学/容器路径约 1,050 条不改写、C 类工具误报约 200 条登记 backlog、D-1~D-5 活动债务登记分批修复；d:/spaces 旧路径 1,732 条前缀映射实测可达 557；锚点行号越界复验先行归零（10→0，测试 32→36） | [source-path-debt-triage-audit-20260829.md](source-path-debt-triage-audit-20260829.md) |
+| milestone-docs-full-retrospective-20260831 | docs 文档中心全面复盘（规模审计×质量门禁×导航治理×双体系收敛） | 2026-08-31 | ✅ 已完成 | 七概念R→I→E（standard，用户指定范围未含V/C） | 32条客观事实（3491文件/114.31MB全量实测）、3条核心洞察（生成-消费断裂/双体系引用负债2:8/门禁报警-灭火断层）、1个L1.5模式候选（生成-登记同步法，3反模式+跨域迁移示例）、6项原子行动项登记（导航债务3849处分批治理），G1-G3质量门全部通过 | [docs-full-retrospective-20260831.md](docs-full-retrospective-20260831.md) |
+| milestone-agency-deep-learning-20260706 | Agency Agents 深度学习技术研究与分析 | 2026-07-06 | ✅ 已完成 | 七概念R→I→E→C | 对含233个AI Agent角色定义的开源仓库完成深度学习原子化分析，产出深度学习原子化设计指南（892行，6章+附录）、PyTorch/TensorFlow/HuggingFace三框架组件实现模式、2份分析报告（331+705行）、3条核心洞察、5个反模式，G1-G4质量门全部通过 | [retrospective-agency-deep-learning-20260706/report.md](retrospective-agency-deep-learning-20260706/report.md) |
+| milestone-harness-engineering-wiki-20260803 | Harness Engineering 系统性学习 Wiki 创建任务 | 2026-08-03 | ✅ 已完成 | 七概念R→I→E→V→C | 33条客观事实、3条核心洞察（文章→Wiki 8步流程/链接检查是必要质量门禁等）、8步标准模式+3个反模式+跨主题迁移验证、V三视角对抗审查、3项原子行动项，2小时交付10个原子文件，G1-G4+V门全部通过 | [harness-engineering-wiki-retrospective-20260803.md](harness-engineering-wiki-retrospective-20260803.md) |
+| loop-engineering-patterns-v1.0 | Loop Engineering 模式库沉淀 | 2026-08-01 | ✅ 已完成 | 模式库（BP/AP 体系） | 5个最佳实践模式（BP-1验证器锁定铁律～BP-5）+5个反模式（AP-1～AP-5）+Loop适用性决策树与BP优先级定位法，作为 MILESTONE-KNOWLEDGE-CLOOP-001 闭环模式的领域验证文档 | [loop-engineering-patterns-20260801.md](loop-engineering-patterns-20260801.md) |
+| milestone-octo-platform-wiki-20260704 | 明略科技 Octo 平台学习 Wiki 教程创建任务 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→C | 20条客观事实、3条核心洞察、2个可复用模式（含API文档融合/需求变更管理等跨领域迁移验证）、3项原子行动项，G1-G4质量门全部通过 | [octo-platform-wiki-retrospective-20260704.md](octo-platform-wiki-retrospective-20260704.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -36,13 +41,14 @@
 1. 所有里程碑复盘报告必须通过七概念方法论R→I→E→C链路生成
 2. 报告frontmatter必须包含id、date、type、source字段
 3. G1-G4质量门必须全部通过才可归档
-4. 新增报告后必须更新本README索引
+4. 新增报告后必须更新本索引（index.md）
 
 ```{toctree}
 :maxdepth: 2
 
 retrospective-agency-deep-learning-20260706/index
 analyze-wechat-article-eeb14-retrospective-20260704
+docs-full-retrospective-20260831
 four-engineering-concepts-wiki-retrospective-20260704
 harness-engineering-wiki-retrospective-20260803
 jira-skill-wiki-vendor-sync-milestone-20260828

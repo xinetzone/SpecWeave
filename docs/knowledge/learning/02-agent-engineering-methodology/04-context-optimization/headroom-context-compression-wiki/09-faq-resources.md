@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-09"
 title: "常见问题与资源链接"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"

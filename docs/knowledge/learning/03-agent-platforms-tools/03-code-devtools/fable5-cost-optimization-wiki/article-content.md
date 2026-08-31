@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 version: "1.0"
 title: "天才程序员体验卡+5！"
 source: "https://mp.weixin.qq.com/s/YirJ8-6_TZuFe9cLepFNSg?from=industrynews&color_scheme=light#rd"

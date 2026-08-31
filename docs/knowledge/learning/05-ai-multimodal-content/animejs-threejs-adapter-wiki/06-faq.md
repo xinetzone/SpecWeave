@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-faq"
 title: "常见问题解答"
 category: "learning"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch02-architecture"
 title: "第2章 - 整体架构设计"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

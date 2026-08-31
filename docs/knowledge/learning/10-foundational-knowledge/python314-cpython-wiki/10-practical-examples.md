@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-10"
 title: "Python 3.14 实战示例"
 source: "https://docs.python.org/zh-cn/3.14/"

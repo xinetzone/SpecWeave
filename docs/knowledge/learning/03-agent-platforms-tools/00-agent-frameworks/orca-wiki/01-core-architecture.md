@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-architecture"
 title: "核心架构与技术栈"
-source: "d:\AI\external\tools\orca 本地开源源码（package.json / README.md / src 目录结构）"
+source: 'd:\AI\external\tools\orca 本地开源源码（package.json / README.md / src 目录结构）'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/01-core-architecture.toml"
 category: "learning"
 tags: ["orca", "stablyai", "electron", "electron-vite", "react", "typescript", "xterm.js", "node-pty", "ssh2", "react-native", "expo", "sherpa-onnx", "agent-browser", "multi-agent", "wiki教程"]

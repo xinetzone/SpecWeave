@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-readme
 title: Google Cloud Knowledge Catalog Wiki - 入口导航
 date: 2026-08-15
@@ -11,9 +13,9 @@ tags:
   - ai-agents
   - wiki
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.toml"
   - https://github.com/GoogleCloudPlatform/knowledge-catalog
   - vendor/knowledge-catalog/
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.toml"
 category: knowledge/learning/07-vendor-product-learning
 maturity: L1-draft
 ---

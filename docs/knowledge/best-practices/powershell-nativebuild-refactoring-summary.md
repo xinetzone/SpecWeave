@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "powershell-nativebuild-refactoring-summary"
 title: "NativeBuild 三层架构重构总结（团队学习文档）"
 date: 2026-08-02

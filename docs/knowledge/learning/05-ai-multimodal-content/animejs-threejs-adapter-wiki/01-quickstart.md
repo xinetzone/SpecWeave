@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-quickstart"
 title: "快速开始"
 category: "learning"

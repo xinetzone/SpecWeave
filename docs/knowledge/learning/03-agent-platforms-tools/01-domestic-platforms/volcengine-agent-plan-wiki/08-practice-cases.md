@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agent-plan-wiki-08"
 title: "实践指南与项目案例：玩转Agent Plan与CookBook案例库"
 source: "https://bytedance.larkoffice.com/wiki/LuwYwRaeMi13vWkiTrWcTSFmnCg"

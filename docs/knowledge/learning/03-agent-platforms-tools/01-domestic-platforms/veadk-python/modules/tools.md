@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: tools
 title: Tools 工具系统详解
 source: veadk-python codebase analysis

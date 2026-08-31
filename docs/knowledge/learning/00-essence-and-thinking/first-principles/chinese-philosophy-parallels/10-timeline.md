@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: timeline
 title: 中西哲学根本性思维发展时间线
 source: cross-cultural-first-principles-comparison Task 8

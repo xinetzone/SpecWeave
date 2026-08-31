@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 01-module-inventory
 title: veadk/ 目录结构清单
 source: veadk-python codebase analysis

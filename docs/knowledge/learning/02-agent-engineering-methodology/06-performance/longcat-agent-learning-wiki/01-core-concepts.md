@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-01"
 title: "LongCat-2.0核心概念解析"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

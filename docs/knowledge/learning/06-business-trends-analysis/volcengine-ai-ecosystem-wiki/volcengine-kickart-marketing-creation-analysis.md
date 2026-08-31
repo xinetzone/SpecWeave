@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-kickart-marketing-creation-analysis"
 title: "火山引擎KickArt一站式电商营销创作Agent完整学习笔记：六大能力+四大场景+全链路闭环的营销视频生产平台"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/kickart）+ 火山引擎官方文档（https://www.volcengine.com/docs/6664，产品介绍页最近更新：2026-06-17）+ 产品UX深度分析"

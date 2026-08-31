@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 05-core-classes-list
 title: 核心类清单
 source: veadk-python codebase analysis

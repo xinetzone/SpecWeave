@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-mobile-use-agent-analysis"
 title: "火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/1583515?lang=zh）+ 产品架构深度分析"

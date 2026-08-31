@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 配置说明"
 chapter: 6
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/06-configuration.toml"
   - external/libs/hermes-agent/.env.example
   - external/libs/hermes-agent/cli-config.yaml.example
   - external/libs/hermes-agent/hermes_cli/setup.py
@@ -14,6 +15,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/.gitignore
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/docker/stage2-hook.sh
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/06-configuration.toml"
 ---
 # 6. 配置说明
 

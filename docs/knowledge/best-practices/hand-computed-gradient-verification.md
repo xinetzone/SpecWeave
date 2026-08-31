@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "手算梯度已知值验证：Backward测试L1层方法论"
 date: 2026-08-03
 category: best-practices

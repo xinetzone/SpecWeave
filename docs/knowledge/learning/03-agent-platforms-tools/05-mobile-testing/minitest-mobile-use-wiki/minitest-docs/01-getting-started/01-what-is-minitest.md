@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "什么是miniTest"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "叮当OKR帮助手册Wiki"
 source: "https://www.dingteam.com/help"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/00-overview.toml"

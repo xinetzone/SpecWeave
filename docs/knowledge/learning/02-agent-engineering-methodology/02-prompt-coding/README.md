@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-methodology-prompt-coding"
 title: "AI编程与Prompt工程"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/README.toml"

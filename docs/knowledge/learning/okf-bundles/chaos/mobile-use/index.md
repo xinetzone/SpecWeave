@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: mobile-use 知识包
-description: 基于 LangGraph 的 AI 多智能体移动端自动化框架——Android/iOS 设备自然语言控制
-tags: [mobile-automation, ai-agent, langgraph, android, ios]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # mobile-use 知识包
 
 本知识包（bundle）系统梳理 minitap-mobile-use（版本 3.6.3）的架构与实现。mobile-use 是一个基于 LangGraph 的 AI 多智能体系统，通过底层控制实现真实 Android 和 iOS 设备的自然语言自动化。内容涵盖多 Agent 协作架构、设备控制抽象层、工具系统、LLM 可插拔配置、SDK 双层 API 和图状态管理，遵循 OKF v0.2 规范。
@@ -30,3 +19,13 @@ stale_after: 2027-08-23
   * [架构洞察](references/insights.md)
   * [mobile-use 源码](references/mobile-use-source.md)
 * [验证报告](verification-report.md) - V 阶段验证报告，结构检查、API 验证与修复记录
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

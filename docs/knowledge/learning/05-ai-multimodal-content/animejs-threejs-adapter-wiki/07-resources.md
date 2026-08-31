@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-resources"
 title: "资源与术语表"
 category: "learning"

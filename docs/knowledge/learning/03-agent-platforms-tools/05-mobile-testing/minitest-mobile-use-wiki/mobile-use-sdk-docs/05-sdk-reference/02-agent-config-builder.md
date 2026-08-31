@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "AgentConfigBuilder"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/sdk-reference/agent-config-builder"

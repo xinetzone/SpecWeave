@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agency-agents-wiki-02"
 title: "The Agency 完全指南 — Agent 文件格式解析"
 source: "https://github.com/msitarzewski/agency-agents"

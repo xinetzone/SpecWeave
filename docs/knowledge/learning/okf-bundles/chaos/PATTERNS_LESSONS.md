@@ -1,3 +1,8 @@
+---
+type: Wiki Document
+title: "源码转 OKF Wiki 实践 — C 阶段经验沉淀"
+---
+
 # 源码转 OKF Wiki 实践 — C 阶段经验沉淀
 
 > **沉淀日期**：2026-08-22

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "interface-concept"
 title: "二、接口（Interface）：语言级行为抽象"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/01-interface.toml"

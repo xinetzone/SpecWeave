@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-quantization-techniques"
 title: "主流量化技术详解"
 date: "2026-08-09"

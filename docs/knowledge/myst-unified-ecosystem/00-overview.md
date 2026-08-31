@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-overview
 title: "00、总览：MyST Markdown 统一化接口生态体系"

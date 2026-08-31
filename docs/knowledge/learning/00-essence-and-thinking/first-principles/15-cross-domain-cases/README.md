@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cross-domain-cases
 title: 跨学科第一性原理案例库
 source: first-principles-cross-domain Task 1

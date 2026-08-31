@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-04-architecture"
 title: "核心架构与进程模型"
 source: "spec:create-wsl-wiki-tutorial"

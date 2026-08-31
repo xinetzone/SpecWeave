@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-17-daoyan-mcp-skill-spec
 title: MCP 技能开发与 REST API 集成规范——以道衍为例
 source: d:\spaces\chaos\daoApps\dao-yan\.trae\skills\daoyan-wisdom\SKILL.md

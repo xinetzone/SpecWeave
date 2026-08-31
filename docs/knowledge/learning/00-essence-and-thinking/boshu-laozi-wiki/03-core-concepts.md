@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-03"
 title: "核心概念解读"
 date: "2026-08-19"

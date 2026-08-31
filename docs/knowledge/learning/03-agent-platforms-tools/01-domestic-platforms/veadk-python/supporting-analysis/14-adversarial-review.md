@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "veadk-python-adversarial-review"
 title: "V阶段：对抗审查报告（多视角质量验证）"
 source: "seven-concepts: veadk-python-wiki"

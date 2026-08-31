@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-monetization-product-development"
 title: "产品开发：AI产品的构建与迭代流程"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/05-product-development.toml"

@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-00
 title: "00 - 总览：CPython贡献全景图"
 date: 2026-08-19
 tags: [cpython, overview, beginner, contribution, quickstart]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/00-overview.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/00-overview.toml"
 maturity: L1-draft
 ---
 # 00 - 总览：CPython贡献全景图

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-specweave-comparison"
 title: "与SpecWeave对比分析与借鉴建议"
 category: learning

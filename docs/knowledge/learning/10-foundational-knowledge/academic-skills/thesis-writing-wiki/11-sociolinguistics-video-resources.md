@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "thesis-writing-sociolinguistics-videos"
 title: "十二、社会语言学视频资源"
 source: "WebSearch 检索归档（2026-07-17）"

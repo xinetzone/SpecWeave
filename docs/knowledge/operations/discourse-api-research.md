@@ -1,3 +1,8 @@
+---
+type: Guide
+title: "Discourse论坛自动化方案调研报告"
+---
+
 # Discourse论坛自动化方案调研报告
 
 ## 一、Discourse REST API核心端点

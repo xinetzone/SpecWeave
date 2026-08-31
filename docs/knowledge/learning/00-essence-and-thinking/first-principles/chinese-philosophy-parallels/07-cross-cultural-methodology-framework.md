@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cross-cultural-methodology-framework
 title: 跨文化第一性原理思维方法论与操作指南
 source: cross-cultural-first-principles-comparison Task 7

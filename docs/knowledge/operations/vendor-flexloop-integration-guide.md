@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "vendor-flexloop-integration-guide"
 title: "vendor/flexloop 功能集成方案决策指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"

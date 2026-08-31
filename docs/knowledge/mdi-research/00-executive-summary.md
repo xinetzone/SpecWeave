@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-executive-summary
 title: MDI研究报告 - 执行摘要
 source: "mdi-research-report.md#1-执行摘要"

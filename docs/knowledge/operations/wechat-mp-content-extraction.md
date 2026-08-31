@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "wechat-mp-content-extraction"
 title: "微信公众号文章内容提取操作指南"
 source: "../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/execution-retrospective.md#内容获取路径分析"

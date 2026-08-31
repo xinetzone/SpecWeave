@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step4
 title: "Step 4 专项练习——质疑与验证"
 source: "12-exercises.md#chapter-5"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-09-faq-best-practices"
 title: "Mermaid 常见问题与最佳实践（FAQ & Best Practices）"
 source: "https://mermaid.js.org/"

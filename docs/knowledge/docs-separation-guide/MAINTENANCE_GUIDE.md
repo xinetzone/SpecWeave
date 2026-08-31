@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 维护指南
 description: 知识库维护与扩展指南
 last_updated: YYYY-MM-DD

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "docker-cache-wsl-migration-guide"
 title: "Docker镜像缓存→WSL2发行版迁移操作指南"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-migration-guide.toml"

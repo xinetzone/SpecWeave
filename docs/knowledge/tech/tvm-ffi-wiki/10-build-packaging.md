@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-build-packaging"
 title: "构建与打包"
 tags: ["tvm-ffi", "build", "cmake", "packaging", "wheel"]

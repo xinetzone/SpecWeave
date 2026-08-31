@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "relative-path-repair-pitfalls"
 title: "相对路径批量修复三类非直觉陷阱与修复方案"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/relative-path-repair-pitfalls.toml"

@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "微软Copilot放弃'无限用'，悄悄换上DeepSeek：多模型时代正式到来"
+---
+
 # 微软Copilot放弃"无限用"，悄悄换上DeepSeek：多模型时代正式到来
 
 ## 元数据

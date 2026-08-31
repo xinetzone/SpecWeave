@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-reward-plan-core-notes"
 title: "火山方舟协作奖励计划核心笔记"
 source: "https://www.volcengine.com/docs/82379/1391869?lang=zh"

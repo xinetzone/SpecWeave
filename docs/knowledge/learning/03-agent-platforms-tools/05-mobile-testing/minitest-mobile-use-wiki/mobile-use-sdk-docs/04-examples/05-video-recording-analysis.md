@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "视频录制分析"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/examples/video-transcription"

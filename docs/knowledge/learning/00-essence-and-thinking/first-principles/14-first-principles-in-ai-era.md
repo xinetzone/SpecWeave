@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-in-ai-era
 title: AI时代的第一性原理：人机协同的思维增强
 source: first-principles-future-research Task 3

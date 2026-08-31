@@ -105,7 +105,7 @@ stale_after: "2027-08-22"
 
 ## 关联资源
 
-- [Agency Agents 深度学习原子化设计指南](../../../../knowledge/engineering/deep-learning-atomic-design/deep-learning-atomic-design-guide.md)
-- [AI Agent 原子化设计分析报告](../../../../knowledge/engineering/deep-learning-atomic-design/ai-agent-atomic-design-analysis.md)
-- [深度学习框架原子化组件研究报告](../../../../knowledge/engineering/deep-learning-atomic-design/deep-learning-atomic-components.md)
-- [里程碑复盘报告](../../../reports/milestone/retrospective-agency-deep-learning-20260706/report.md)
+- [Agency Agents 深度学习原子化设计指南](../../../../knowledge/engineering/deep-learning-atomic-design/index.md)
+- [AI Agent 原子化设计分析报告](../../../../knowledge/engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md)
+- [深度学习框架原子化组件研究报告](../../../../knowledge/engineering/deep-learning-atomic-design/concepts/deep-learning-atomic-components.md)
+- [里程碑复盘报告](../../../reports/concepts/milestone/retrospective-agency-deep-learning-20260706/report.md)

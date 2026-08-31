@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "阅读运行报告"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/run-report"

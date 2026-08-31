@@ -43,3 +43,9 @@
 - TVM Python 包（`import tvm`）
 
 GPU 示例需要对应的硬件和驱动（CUDA/Metal/OpenCL/Vulkan），快速入门默认使用 CPU（LLVM 后端）。
+
+```{toctree}
+:maxdepth: 2
+
+tvm-quickstart
+```

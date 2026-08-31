@@ -17,3 +17,17 @@
 ## 洞察文件（Insights）
 
 * [Home Assistant 架构洞察](/references/insights.md) — I 阶段分析的核心架构洞察与概念文档知识地图
+
+```{toctree}
+:maxdepth: 2
+
+components-source
+core-source
+facts-components
+facts-core
+facts-helpers
+facts-tooling
+helpers-util-source
+insights
+tooling-source
+```

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "learning-hub"
 title: "Learning Wiki 知识库"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/README.toml"

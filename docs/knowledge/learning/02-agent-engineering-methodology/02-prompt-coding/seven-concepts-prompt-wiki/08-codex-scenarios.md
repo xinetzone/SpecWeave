@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-codex-scenarios"
 title: "08、Codex/Agent开发基础：安全原则与标准结构"
 category: "knowledge"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "foundational-knowledge-index"
 title: "通用基础知识"
 category: "learning"

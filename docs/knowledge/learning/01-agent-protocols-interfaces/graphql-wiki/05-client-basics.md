@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "graphql-wiki-client-basics"
 title: "GraphQL 客户端基础"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/05-client-basics.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "mobile-use 深度分析：首个 AndroidWorld 100% 准确率的多智能体移动自动化框架架构解析"
 category: "learning"
 source: "external: 不存在-GitHub 开源项目 minitap-ai/mobile-use + 本地代码库静态分析"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-cmd-practical-guide"
 title: "seven-concepts-cmd 实操避坑指南"
 source: "seven-concepts:复盘产物"

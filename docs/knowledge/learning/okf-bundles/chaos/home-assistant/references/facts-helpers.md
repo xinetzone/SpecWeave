@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "Home Assistant Helpers 与 Util 事实清单"
+---
+
 # Home Assistant Helpers 与 Util 事实清单
 
 > R 阶段事实采集。源码路径：`d:\AI\.chaos\libs\home-assistant\core\homeassistant\`。

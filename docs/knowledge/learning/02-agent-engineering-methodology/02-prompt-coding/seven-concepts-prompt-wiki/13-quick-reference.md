@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-quickref"
 title: "13、快速参考速查表（一页纸）"
 category: "reference"

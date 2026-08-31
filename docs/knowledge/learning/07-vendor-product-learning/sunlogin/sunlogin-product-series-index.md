@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-product-series-index"
 title: "向日葵（Sunlogin）产品学习系列"
 category: "learning"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "认识Mini代理"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/get-started/meet-mini"

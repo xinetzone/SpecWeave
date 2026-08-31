@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-wiki-overview"
 title: "TVM FFI 教程总览"
 tags: ["tvm-ffi", "ffi", "c++", "python", "ml-system"]

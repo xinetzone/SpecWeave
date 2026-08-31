@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-faq"
 title: "FAQ 与术语表"
-source: "https://www.onorca.dev/ 官网 FAQ + d:\AI\external\tools\orca 本地开源源码（README.md / skill-guides/orchestration.md）"
+source: 'https://www.onorca.dev/ 官网 FAQ + d:\AI\external\tools\orca 本地开源源码（README.md / skill-guides/orchestration.md）'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/07-faq-glossary.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "faq", "glossary", "worktree", "orchestration", "multi-agent", "wiki教程"]

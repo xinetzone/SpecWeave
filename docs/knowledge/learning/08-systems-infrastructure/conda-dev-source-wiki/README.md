@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "conda 源码与 conda-docs 文档 Wiki 教程"
+---
+
 # conda 源码与 conda-docs 文档 Wiki 教程
 
 本教程系统性学习 conda 包管理器源码（`external/libs/conda-dev/conda`）与 conda 官方文档站点源码（`external/libs/conda-dev/conda-docs`），帮助读者从整体架构到模块细节循序渐进地理解 conda 的内部实现与文档构建方式。

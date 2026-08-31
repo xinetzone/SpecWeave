@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "four-engineering-concepts-wiki"
 title: "AI 四大工程概念演进：Prompt → Context → Harness → Loop"
 source: "微信公众号文章《Prompt → Context → Harness → Loop：AI 圈这四个新词，一次性讲清楚》 by AllenTang"

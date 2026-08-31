@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "从入门到进阶操作指南"
 source: "spec:create-scikit-build-core-wiki-tutorial"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/04-quickstart-to-advanced.toml"

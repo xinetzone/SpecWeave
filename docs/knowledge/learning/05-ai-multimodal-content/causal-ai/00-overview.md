@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "causal-ai-00-overview"
 title: "因果AI与世界模型：零犀科技六年押注深度分析"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"

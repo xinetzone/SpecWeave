@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-overview"
 title: "Agent Skills 项目概述与背景"
 category: learning

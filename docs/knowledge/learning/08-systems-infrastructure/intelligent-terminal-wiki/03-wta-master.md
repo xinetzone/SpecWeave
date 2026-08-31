@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch03-wta-master"
 title: "第3章 - WTA Rust 核心 - Master 多路复用器"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

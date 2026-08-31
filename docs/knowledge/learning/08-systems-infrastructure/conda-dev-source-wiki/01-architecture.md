@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-01-architecture
 title: "conda/conda-docs 整体架构"
 source: "spec:create-conda-dev-source-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "b2b-product-info-collection-sop"
 title: "B2B/旗舰产品信息源分层采集规范"
 source: "../../retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/export-suggestions.md#问题1"

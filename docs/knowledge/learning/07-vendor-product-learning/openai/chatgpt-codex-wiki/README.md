@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "ChatGPT Codex Wiki 教程导航"
 date: 2026-07-08
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: knowledge-quality-assurance
 title: 知识质量保障工具箱
 source: seven-concepts V阶段方法论补充

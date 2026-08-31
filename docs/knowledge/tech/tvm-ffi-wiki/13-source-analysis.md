@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-source-analysis"
 title: "核心源码解析（进阶）"
 tags: ["tvm-ffi", "source-code", "internals", "advanced"]

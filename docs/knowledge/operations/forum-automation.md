@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "forum-automation"
 title: "Discourse论坛（forum.trae.cn）自动化操作指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/forum-automation.toml"

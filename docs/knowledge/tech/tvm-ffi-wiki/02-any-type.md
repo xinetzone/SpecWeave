@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-any-type"
 title: "Any/AnyView 类型系统"
 tags: ["tvm-ffi", "type-system", "any", "type-erasure"]

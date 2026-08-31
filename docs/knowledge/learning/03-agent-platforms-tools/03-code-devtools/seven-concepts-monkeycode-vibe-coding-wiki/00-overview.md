@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "overview"
 title: "七概念方法论解析MonkeyCode开源Vibe Coding平台"
 source: "微信公众号「AI产品银海」+七概念方法论体系"

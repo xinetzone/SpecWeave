@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-protocols-interfaces-index"
 title: "Agent协议与接口技术栈"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/README.toml"

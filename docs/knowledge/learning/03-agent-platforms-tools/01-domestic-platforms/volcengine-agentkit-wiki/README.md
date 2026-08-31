@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-readme"
 title: "火山引擎 AgentKit Wiki 教程"
 source: "seven-concepts: volcengine-agentkit-wiki"

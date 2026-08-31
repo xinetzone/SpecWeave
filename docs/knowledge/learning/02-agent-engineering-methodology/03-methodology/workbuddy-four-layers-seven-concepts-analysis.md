@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "七概念框架视角下的WorkBuddy四层工程深度分析报告"
 author: "SpecWeave Analysis Agent"
 date: "2026-07-14"

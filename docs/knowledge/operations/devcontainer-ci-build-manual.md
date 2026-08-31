@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "devcontainer-ci-build-manual"
 title: "DevContainer 变体构建与 CI 流水线操作手册"
 source: "seven-concepts-devcontainer-ci-20260807"

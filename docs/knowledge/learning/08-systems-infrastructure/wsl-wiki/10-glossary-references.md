@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-10-glossary-references"
 title: "术语表与参考资料"
 source: "spec:create-wsl-wiki-tutorial"

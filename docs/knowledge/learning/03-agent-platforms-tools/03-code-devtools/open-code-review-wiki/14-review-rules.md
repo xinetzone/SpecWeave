@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-14"
 title: "审查规则系统技术参考"
 source: "https://open-codereview.ai/docs/review-rules"

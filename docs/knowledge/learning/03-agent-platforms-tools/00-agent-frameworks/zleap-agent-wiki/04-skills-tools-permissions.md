@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-skills-tools-permissions"
 title: "Skill 与工具权限"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

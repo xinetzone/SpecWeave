@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: comparison-with-western-first-principles
 title: 与v1.0西方第一性原理的对比分析：共性、差异、互补与统一框架
 source: cross-cultural-first-principles-comparison Task 6

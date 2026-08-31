@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR周期设置"
 source: "https://www.dingteam.com/help/582"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/implementation/setting-cycle.toml"

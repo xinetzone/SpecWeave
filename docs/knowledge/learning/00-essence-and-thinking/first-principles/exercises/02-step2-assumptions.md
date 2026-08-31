@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step2
 title: Step 2 专项练习——现有方案与假设列举
 source: "12-exercises.md#chapter-3"

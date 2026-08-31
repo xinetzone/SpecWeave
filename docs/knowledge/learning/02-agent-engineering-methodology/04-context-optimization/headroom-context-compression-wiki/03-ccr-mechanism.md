@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-03"
 title: "CCR可逆机制深度解析"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"

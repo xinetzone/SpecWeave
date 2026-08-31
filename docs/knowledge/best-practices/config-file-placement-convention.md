@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "config-file-placement-convention"
 title: "配置文件放置治理与 .temp/ 临时文件约定"
 source: ".trae/specs/standards-tools/config-file-placement-governance/spec.md"

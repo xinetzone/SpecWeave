@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "iOS真机设置"
 category: "learning"
 source: "https://www.minitap.ai/docs/mobile-use-sdk/physical-ios-quickstart"

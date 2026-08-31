@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-07-vendor-product-learning-index"
 title: "厂商产品学习"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/README.toml"

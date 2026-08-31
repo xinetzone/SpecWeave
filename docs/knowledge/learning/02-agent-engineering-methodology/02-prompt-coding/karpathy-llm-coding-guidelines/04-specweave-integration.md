@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-specweave-integration"
 title: "SpecWeave 项目整合情况"
 category: learning

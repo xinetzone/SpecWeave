@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zhihu-article-seven-concepts-adversarial-review"
 title: "V阶段：知乎文章四视角对抗审查与修订对比"
 source: "seven-concepts:V阶段产物"

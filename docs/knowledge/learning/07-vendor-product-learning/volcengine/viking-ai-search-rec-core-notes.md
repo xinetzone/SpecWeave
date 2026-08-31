@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "viking-ai-search-rec-core-notes"
 title: "火山引擎Viking AI搜索推荐产品核心笔记"
 source: "https://www.volcengine.com/product/AI-Search-Rec"

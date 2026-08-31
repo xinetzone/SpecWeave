@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-lifecycle-model"
 title: "六阶段生命周期模型详解"
 category: learning

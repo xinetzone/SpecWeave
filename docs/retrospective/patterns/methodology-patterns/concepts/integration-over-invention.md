@@ -93,5 +93,5 @@ stale_after: "2027-08-22"
 ## 关联资源
 
 - 配套模式：[内容漏斗分析模式](content-funnel-analysis.md)（本模式萃取自该分析流程的 L5 洞察层）
-- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)
+- 分析报告案例：[analyze-wechat-article-3dnk 分析报告](../../../reports/concepts/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.md)
 - 参考项目：[Project N.O.M.A.D](https://github.com/Project-NOMAD)（本模式的典型验证案例）

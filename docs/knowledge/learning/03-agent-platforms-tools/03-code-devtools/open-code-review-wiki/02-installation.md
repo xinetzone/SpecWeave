@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-02"
 title: "安装与配置指南"
 source: "../open-code-review-wiki.md#安装与配置指南"

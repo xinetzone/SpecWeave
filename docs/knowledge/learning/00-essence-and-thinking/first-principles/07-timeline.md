@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: timeline
 title: 第一性原理发展时间线
 source: first-principles-comprehensive-research Task 6

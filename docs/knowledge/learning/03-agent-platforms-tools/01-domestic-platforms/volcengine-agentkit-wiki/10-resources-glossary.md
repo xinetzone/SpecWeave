@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-10"
 title: "术语表与参考资源"
 source: "seven-concepts: volcengine-agentkit-wiki"

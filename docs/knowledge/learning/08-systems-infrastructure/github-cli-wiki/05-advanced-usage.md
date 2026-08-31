@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-05"
 title: "高级用法指南"
 source: "https://github.com/cli/cli"

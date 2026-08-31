@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "Caffe层Backward验证标准工作流（L1-L2-L3三层法）"
 date: 2026-08-03
 category: best-practices

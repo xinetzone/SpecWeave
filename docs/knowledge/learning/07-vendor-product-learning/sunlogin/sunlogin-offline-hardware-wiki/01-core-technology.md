@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-01"
 title: "无网远程控制核心技术原理"
 source: "../sunlogin-offline-hardware-wiki.md#无网远程控制核心技术原理"

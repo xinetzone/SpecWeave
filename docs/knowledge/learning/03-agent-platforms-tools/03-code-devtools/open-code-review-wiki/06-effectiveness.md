@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-06"
 title: "效果验证与质量评估"
 source: "../open-code-review-wiki.md#效果验证与质量评估"

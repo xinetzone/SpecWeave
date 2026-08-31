@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-04"
 title: "Cordis — 效应与协同效应机制"
 source: "https://github.com/cordiverse/paper"

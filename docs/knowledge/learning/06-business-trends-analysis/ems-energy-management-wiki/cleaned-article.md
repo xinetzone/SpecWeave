@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "支持 50 多种协议，终于开源了。"
 date: "2026-07-09"
 source: "微信公众号文章"

@@ -1,3 +1,8 @@
+---
+type: best-practice
+title: "spec-loader.toml 配置速查手册"
+---
+
 # spec-loader.toml 配置速查手册
 
 > 配置文件路径：`.agents/config/spec-loader.toml`

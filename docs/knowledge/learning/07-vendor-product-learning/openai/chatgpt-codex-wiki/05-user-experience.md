@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-05"
 title: "用户体验策略分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

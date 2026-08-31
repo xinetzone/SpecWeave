@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 核心功能
 description: 关键特性与使用方法
 last_updated: YYYY-MM-DD

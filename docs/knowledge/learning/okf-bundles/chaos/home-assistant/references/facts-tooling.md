@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "Home Assistant 工具链与测试模式事实清单"
+---
+
 # Home Assistant 工具链与测试模式事实清单
 
 > R 阶段事实采集。源码根目录：`d:\AI\.chaos\libs\home-assistant\core\`

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-selection-guide
 title: Protobuf Wiki - 选型决策指南
 date: 2026-07-23
@@ -8,9 +10,9 @@ tags:
   - decision-tree
   - best-practices
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.toml"
   - https://protobuf.dev/programming-guides/dos-donts
   - https://buf.build/blog
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/04-selection-guide.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

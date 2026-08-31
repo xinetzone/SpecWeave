@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-mdi
 title: "11、MDI：Markdown Document Interface"

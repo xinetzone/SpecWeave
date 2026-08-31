@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: physics-applications
 title: 物理学中的第一性原理
 source: first-principles-comprehensive-research Task 2

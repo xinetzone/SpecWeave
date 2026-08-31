@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-06"
 title: "终端AI编程助手领域知识"
 source: "https://github.com/Hmbown/CodeWhale"

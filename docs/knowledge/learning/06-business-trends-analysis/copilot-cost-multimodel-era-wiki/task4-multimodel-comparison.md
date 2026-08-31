@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "task4-multimodel-comparison"
 title: "多模型时代四家典型产品策略系统对比分析"
 source: "cleaned-article.md"

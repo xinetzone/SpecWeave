@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-runtime-protocol-wiki-13"
 title: "总结、FAQ 与资源"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"

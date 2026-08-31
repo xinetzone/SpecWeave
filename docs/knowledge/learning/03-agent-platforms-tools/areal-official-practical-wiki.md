@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "AReaL 2.0 官方实战教程：从安装到在线RL微服务部署"
 source: "AReaL官网(https://areal-ai.io/)、官方文档(https://areal-ai.io/docs/en/intro.html)、本地代码仓库(d:\\AI\\external\\tools\\AReaL)"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/areal-official-practical-wiki.toml"

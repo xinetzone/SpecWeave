@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-05"
 title: "快速入门指南"
 source: "seven-concepts: volcengine-agentkit-wiki"

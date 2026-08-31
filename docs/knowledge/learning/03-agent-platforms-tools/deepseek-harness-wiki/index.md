@@ -104,5 +104,22 @@
 
 concepts/index
 references/index
+00-overview
+01-introduction-background
+02-installation-setup
+03-quickstart-first-task
+04-four-modes
+05-architecture-everything-plugin
+06-agent-loop-events
+07-session-log-observability
+08-model-configuration
+09-tools-capability-seam
+10-plugin-development
+11-ecosystem-interop
+12-headless-sdk
+13-faq-troubleshooting
+14-use-cases-limitations
+15-ecosystem-resources
+16-appendix-core-services
 log
 ```

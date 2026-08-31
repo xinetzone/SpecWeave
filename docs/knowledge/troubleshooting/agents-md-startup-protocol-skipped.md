@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "agents-md-startup-protocol-skipped"
 title: "跳过 AGENTS.md 启动协议导致三重连锁输出错误"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-searchinfinity-analysis"
 title: "豆包搜索（SearchInfinity）完整学习笔记：专为AI Agent打造的信息获取引擎"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/SearchInfinity）+ 产品UX深度分析"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "caffe-docker-sop"
 title: "Caffe Docker 容器构建与运行 SOP"
 source: "retrospective-caffe-docker-runtime-20260722"

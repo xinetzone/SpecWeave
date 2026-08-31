@@ -178,5 +178,17 @@ The Agency 的每个 Agent 都遵循统一的设计哲学，以下是构成其�
 concepts/index
 examples/index
 references/index
+00-overview
+01-architecture
+02-agent-format
+03-roster-divisions
+04-scripts-tooling
+05-integrations
+06-usage-examples
+07-strategy-playbooks
+08-faq-troubleshooting
+09-best-practices
+10-summary-resources
 log
+quickstart-demo-guide
 ```

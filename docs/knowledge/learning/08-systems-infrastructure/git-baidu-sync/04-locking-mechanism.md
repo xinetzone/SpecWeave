@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-locking-mechanism
 title: Git 网盘同步锁机制设计与实现
 source: original

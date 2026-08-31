@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "PyCaffe 独立 Docker 镜像构建 — 任务执行复盘报告"
+---
+
 # PyCaffe 独立 Docker 镜像构建 — 任务执行复盘报告
 
 > **报告编号**: Caffe-Docker-005

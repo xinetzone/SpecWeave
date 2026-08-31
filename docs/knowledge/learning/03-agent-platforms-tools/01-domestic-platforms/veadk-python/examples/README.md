@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-examples-readme
 title: Examples
 source: 'seven-concepts: veadk-python-wiki'

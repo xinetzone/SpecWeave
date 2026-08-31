@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-glossary"
 title: "Agent评测方法论：核心术语表"
 source: "spec:agent-eval-methodology-wiki"

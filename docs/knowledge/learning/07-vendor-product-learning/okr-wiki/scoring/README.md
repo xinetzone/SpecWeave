@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-okr-wiki-scoring-index"
 title: "评分体系"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/README.toml"

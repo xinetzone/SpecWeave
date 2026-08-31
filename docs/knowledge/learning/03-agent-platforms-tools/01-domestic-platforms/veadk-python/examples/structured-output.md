@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-structured-output
 title: 07 - 结构化输出示例
 source: d:\AI\vendor\veadk-python\examples\07_structured_output\main.py

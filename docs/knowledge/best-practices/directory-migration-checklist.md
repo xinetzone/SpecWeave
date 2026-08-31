@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: directory-migration-checklist
 title: 目录迁移五步法检查清单
 x-toml-ref: .meta/toml/docs/knowledge/best-practices/directory-migration-checklist.toml

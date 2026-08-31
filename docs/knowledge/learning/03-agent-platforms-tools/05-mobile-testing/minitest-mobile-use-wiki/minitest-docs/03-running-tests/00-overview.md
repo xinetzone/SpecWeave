@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "测试运行总览"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs"

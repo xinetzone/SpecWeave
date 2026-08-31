@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-07-configuration-theming"
 title: "Mermaid 配置与主题（Configuration & Theming）"
 source: "https://mermaid.js.org/"

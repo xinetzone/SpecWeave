@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "operations-index"
 title: "运维操作指南库"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/README.toml"

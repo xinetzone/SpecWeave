@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-core-concepts
 title: ONNX Wiki - 核心概念详解
 date: 2026-08-09
@@ -9,8 +11,8 @@ tags:
   - computation-graph
   - type-system
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/01-core-concepts.toml"
   - https://onnx.ai/onnx/intro/concepts.html
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/01-core-concepts.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

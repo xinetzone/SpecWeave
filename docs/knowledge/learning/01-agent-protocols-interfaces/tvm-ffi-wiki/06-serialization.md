@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "06 - 序列化：JSON、Base64、结构相等与哈希"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

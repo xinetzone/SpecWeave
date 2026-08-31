@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-application-scenarios"
 title: "潜在应用场景"
 category: learning

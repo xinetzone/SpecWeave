@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-03-sequence-diagram"
 title: "Mermaid 时序图（Sequence Diagram）"
 source: "https://mermaid.js.org/"

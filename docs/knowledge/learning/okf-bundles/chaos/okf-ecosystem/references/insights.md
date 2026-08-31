@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "okf-ecosystem 架构洞察"
+---
+
 # okf-ecosystem 架构洞察
 
 > I阶段分析。基于 R 阶段 311 条事实（okf-kit 247 条 + okf-desktop 64 条）。

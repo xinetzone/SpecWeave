@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-readme"
 title: "CodeWhale 知识库"
 source: "https://github.com/Hmbown/CodeWhale"

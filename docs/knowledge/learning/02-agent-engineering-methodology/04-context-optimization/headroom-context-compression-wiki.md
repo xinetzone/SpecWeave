@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-context-compression-wiki"
 title: "Headroom AI Agent上下文压缩中间件完整学习教程"
 category: learning

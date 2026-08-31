@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "开源EMS能源管理系统深度洞察分析报告"
 date: "2026-07-09"
 source: "https://mp.weixin.qq.com/s/hPNSIy3TwWtf5lX0kVhM2A?from=industrynews&color_scheme=light#rd"

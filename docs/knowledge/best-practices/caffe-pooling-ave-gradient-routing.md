@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "Caffe AVE Pooling梯度路由：均匀分配模式"
 date: 2026-08-03
 category: best-practices

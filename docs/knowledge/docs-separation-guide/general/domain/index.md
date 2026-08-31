@@ -1,9 +1,3 @@
----
-title: 七概念方法论
-description: R-I-E-C-A-F-V 在文档分离方案中的应用
-last_updated: 2026-07-16
----
-
 # 七概念方法论
 
 七概念方法论（R-I-E-C-A-F-V）是 SpecWeave 的核心工作框架，在文档分离方案中应用于迁移规划、执行和验证的全流程。
@@ -142,3 +136,8 @@ flowchart LR
 
 - [第一性原理](../philosophy/index.md)
 - `methodology/index.md`
+
+```{toctree}
+:maxdepth: 2
+
+```

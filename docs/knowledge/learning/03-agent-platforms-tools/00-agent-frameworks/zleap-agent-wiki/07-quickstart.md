@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-quickstart"
 title: "快速上手指南"
 source: "https://github.com/Zleap-AI/Zleap-Agent (README)"

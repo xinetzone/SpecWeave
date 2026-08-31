@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-tutorial"
 title: "Karpathy LLM 编程准则完整教程"
 category: learning

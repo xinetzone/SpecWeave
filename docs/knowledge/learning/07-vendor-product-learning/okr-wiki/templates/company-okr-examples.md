@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "公司级OKR示例"
 source: "https://www.dingteam.com/help/608"
 x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/company-okr-examples.toml"

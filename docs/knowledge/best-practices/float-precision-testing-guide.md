@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: 浮点数精度测试技术指南
 date: 2026-08-02
 category: best-practices

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-00"
 title: "MiniT2I极简文生图模型 — 概述与学习目标"
 source: "https://github.com/PeppaKing8/minit2i-jax"

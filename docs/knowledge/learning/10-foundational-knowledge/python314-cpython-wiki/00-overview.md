@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-00"
 title: "Python 3.14 + CPython 源码深度指南 — 概述"
 source: "https://docs.python.org/3.14/whatsnew/3.14.html"

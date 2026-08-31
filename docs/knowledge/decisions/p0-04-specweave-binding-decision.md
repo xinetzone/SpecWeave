@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p0-04-specweave-binding-decision
 title: SpecWeave 外部代理资产绑定边界
 source: d:\spaces\chaos\.agents\context\specweave-binding.md

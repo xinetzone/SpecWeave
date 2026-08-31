@@ -25,3 +25,17 @@ tiktoken v0.14.0 概念文档共 9 篇，按学习路径分入门 / 核心 / 进
 |------|------|------|
 | 07 | [OpenAI 公开词汇体系](07-openai-vocabularies.md) | 归纳 `tiktoken_ext/openai_public.py` 七个公开编码构造函数，对比 gpt2/字节级 /r50k/p50k/cl100k/o200k 各代词表的规模、特殊 token 与正则分化 |
 | 08 | [教学模块 SimpleBytePairEncoding](08-educational-module.md) | 拆解 `_educational.py` 的 `SimpleBytePairEncoding` 类与 bpe_encode/bpe_train 纯 Python 复现，并与 Rust 生产 `byte_pair_encode` 对照，体会可读性优先 vs 性能优先 |
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-getting-started
+02-encoding-api
+03-bpe-tokenizer
+04-rust-core
+05-registry-model
+06-encoder-loading
+07-openai-vocabularies
+08-educational-module
+```

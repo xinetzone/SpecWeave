@@ -1,12 +1,14 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - Termux（Android）特殊安装说明"
 chapter: 10
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/10-termux.toml"
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/constraints-termux.txt
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/10-termux.toml"
 ---
 # 10. Termux（Android）特殊安装说明
 

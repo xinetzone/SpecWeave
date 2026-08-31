@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 升级与卸载"
 chapter: 9
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/09-upgrade-uninstall.toml"
   - external/libs/hermes-agent/hermes_cli/update_cmd.py
   - external/libs/hermes-agent/hermes_cli/uninstall.py
   - external/libs/hermes-agent/hermes_cli/backup.py
@@ -13,6 +14,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/docker-compose.yml
   - external/libs/hermes-agent/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/09-upgrade-uninstall.toml"
 ---
 # 9. 升级与卸载
 

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-notes-00"
 title: "AI Engineering 知识库"
 source: "docs/knowledge/ai-engineering/index.md"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-05"
 title: "Cordis — 插件系统与依赖注入"
 source: "https://github.com/cordiverse/paper"

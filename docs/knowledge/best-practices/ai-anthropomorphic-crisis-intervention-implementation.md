@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: AI拟人化互动服务极端情绪干预机制技术实施方案
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/ai-anthropomorphic-crisis-intervention-implementation.toml"
 category: best-practices

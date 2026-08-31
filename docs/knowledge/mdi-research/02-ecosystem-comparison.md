@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-ecosystem-comparison
 title: MDI研究报告 - 生态对比分析
 source: "mdi-research-report.md#3-生态对比分析"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-core-insights"
 title: "Claude Tag：核心观点"
 category: learning

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-overview"
 title: "教程总览与知识地图"
 source: "eve-framework-wiki-learning"

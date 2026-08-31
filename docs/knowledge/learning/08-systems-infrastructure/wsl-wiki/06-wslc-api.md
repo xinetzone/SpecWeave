@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-06-wslc-api"
 title: "WSL Container API 三语言编程接口"
 source: "spec:create-wsl-wiki-tutorial"

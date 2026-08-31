@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "git-commit-mojibake-diagnosis"
 title: "Git 提交中文乱码排查：显示层 vs 存储层分离验证法"
 source: "seven-concepts 方法论编排 sc-20260821-git-commit-mojibake"

@@ -29,3 +29,17 @@
 | [ir-tir-source.md](ir-tir-source.md) | `d:\AI\.chaos\libs\ffi\tvm\` | 详见文件 | IR 核心、TIRx、Schedule、MetaSchedule |
 | [relax-te-topi-source.md](relax-te-topi-source.md) | `d:\AI\.chaos\libs\ffi\tvm\` | 664 | Relax 图级 IR、TE、TOPI 算子库 |
 | [runtime-target-arith-source.md](runtime-target-arith-source.md) | `d:\AI\.chaos\libs\ffi\tvm\` | 332 | Runtime、Target、Arith、Support、TVMScript、Driver |
+
+```{toctree}
+:maxdepth: 2
+
+facts-ir-tir
+facts-relax-te-topi
+facts-runtime-target-arith
+facts-tvm-ffi
+insights
+ir-tir-source
+relax-te-topi-source
+runtime-target-arith-source
+tvm-ffi-source
+```

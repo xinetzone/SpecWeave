@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "py314t — Python 3.14.6t（free-threading / no-GIL）环境使用说明"
+---
+
 # py314t — Python 3.14.6t（free-threading / no-GIL）环境使用说明
 
 ## 环境速览

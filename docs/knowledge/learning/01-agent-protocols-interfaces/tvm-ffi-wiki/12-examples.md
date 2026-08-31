@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "完整实战示例"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

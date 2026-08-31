@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "三个热门AI工具完整指南（已迁移）"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki.toml"
 date: "2026-07-04"

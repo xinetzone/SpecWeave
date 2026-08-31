@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-workspace-context"
 title: "Workspace 隔离与上下文组装"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

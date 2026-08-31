@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-05-aggregate"
 title: "Mermaid 可视化图表：Gantt / Pie / Journey / Timeline / Sankey / QuadrantChart"
 source: "https://mermaid.js.org/"
@@ -120,12 +122,7 @@ v11.16.0+ 支持以下配置（通过图前 YAML frontmatter 设置）：
 环形图示例：
 
 ```mermaid
----
-config:
-  pie:
-    donutHole: 0.5
-    legendPosition: bottom
----
+:config: {"pie": {"donutHole": 0.5, "legendPosition": "bottom"}}
 pie title 环形图示例
     "类别A" : 40
     "类别B" : 35

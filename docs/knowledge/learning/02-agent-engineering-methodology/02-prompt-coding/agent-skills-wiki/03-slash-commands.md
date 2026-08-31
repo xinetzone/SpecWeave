@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-slash-commands"
 title: "7个触发命令机制"
 category: learning

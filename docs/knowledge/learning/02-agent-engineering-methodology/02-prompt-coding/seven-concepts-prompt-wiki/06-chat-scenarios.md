@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-chat-scenarios"
 title: "06、Chat场景实战指南"
 category: "knowledge"

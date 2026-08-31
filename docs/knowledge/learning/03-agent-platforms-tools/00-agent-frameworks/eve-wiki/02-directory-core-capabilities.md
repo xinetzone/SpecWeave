@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-02"
 title: "目录结构与核心能力"
 source: "eve-framework-wiki-learning"

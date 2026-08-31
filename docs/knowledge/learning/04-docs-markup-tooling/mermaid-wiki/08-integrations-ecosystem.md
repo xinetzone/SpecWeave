@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-08-integrations-ecosystem"
 title: "Mermaid 集成与生态（Integrations & Ecosystem）"
 source: "https://mermaid.js.org/"

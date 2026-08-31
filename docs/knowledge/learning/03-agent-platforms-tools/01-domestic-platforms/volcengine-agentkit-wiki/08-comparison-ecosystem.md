@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-08"
 title: "竞品对比与生态定位"
 source: "seven-concepts: volcengine-agentkit-wiki"

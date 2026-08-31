@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-quickstart
 title: 01 - 最小Agent示例
 source: d:\AI\vendor\veadk-python\examples\01_quickstart\main.py

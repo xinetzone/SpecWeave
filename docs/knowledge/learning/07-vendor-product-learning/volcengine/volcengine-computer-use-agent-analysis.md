@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-computer-use-agent-analysis"
 title: "火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/2556112?lang=zh）+ 产品架构深度分析"

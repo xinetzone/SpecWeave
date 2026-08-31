@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ml-inference-deployment-index"
 title: "AI/ML推理与模型部署"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/README.toml"

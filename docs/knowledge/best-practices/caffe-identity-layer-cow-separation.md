@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "恒等层 COW 零拷贝分离原则（输入梯度与参数梯度分离）"
 date: 2026-08-04
 category: best-practices

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "MyST MCP指令演示示例"
 name: "github-tools"
 version: "1.0.0"

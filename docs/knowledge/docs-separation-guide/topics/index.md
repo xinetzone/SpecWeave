@@ -1,8 +1,3 @@
----
-title: 深度研究
-description: 设计洞见、行业分析与深层思考
----
-
 # 🔬 深度研究
 
 本专栏承载知识体系在演进过程中沉淀的**设计哲学、行业分析与深层思考**。不同于 [技术文档](../tech/index.md) 聚焦工程实现、[通用知识](../general/index.md) 关注跨学科滋养，本专栏着眼于"为什么这样设计"以及"未来往哪里走"——帮助读者建立对知识体系决策逻辑与战略视野的深度理解。
@@ -58,7 +53,4 @@ flowchart TD
 
 design-philosophy
 industry-analysis
-philosophical-insights
-product-insights
-architecture-insights
 ```

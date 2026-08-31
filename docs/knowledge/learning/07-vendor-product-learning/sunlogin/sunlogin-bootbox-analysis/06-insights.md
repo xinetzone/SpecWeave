@@ -1,4 +1,6 @@
 ---
+type: Insights
+
 id: "sunlogin-bootbox-analysis-06"
 title: "深度洞察与行业启示"
 source: "../sunlogin-bootbox-analysis.md"

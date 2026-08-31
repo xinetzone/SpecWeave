@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-quickstart"
 title: "Mermaid 入门与快速开始"
 source: "https://mermaid.js.org/ | https://mermaid.live/ | 官方文档 intro 与配置页"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "fable5-cost-optimization-wiki-04"
 title: "场景化选型决策指南"
 version: "1.0"

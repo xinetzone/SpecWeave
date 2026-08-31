@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-04-class-state-er"
 title: "Mermaid 结构型图表：类图 / 状态图 / ER 图"
 source: "https://mermaid.js.org/"

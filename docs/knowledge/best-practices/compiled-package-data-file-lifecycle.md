@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "compiled-package-data-file-lifecycle"
 title: "编译型Python包数据文件生命周期管理"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/compiled-package-data-file-lifecycle.toml"

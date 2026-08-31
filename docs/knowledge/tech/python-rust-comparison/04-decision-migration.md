@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-decision-migration"
 title: "Python 与 Rust 技术对比 · 决策矩阵与迁移路径"
 category: "tech"

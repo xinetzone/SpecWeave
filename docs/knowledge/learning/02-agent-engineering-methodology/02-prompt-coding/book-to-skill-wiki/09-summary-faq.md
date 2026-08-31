@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-09"
 title: "book-to-skill 完全指南 — 总结与常见问题"
 source: "https://github.com/virgiliojr94/book-to-skill"

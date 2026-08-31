@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-practical-examples"
 title: "实战案例"
 category: "learning"

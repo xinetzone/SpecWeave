@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki-06"
 title: "相关资源链接"
 source: "../mopmonk-security-agent-wiki.md#六相关资源链接"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-syntax-interface"
 title: "三、IDL 接口声明与方法描述：服务契约的通用范式"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/03-syntax-interface.toml"

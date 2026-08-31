@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "触发运行"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/runs/triggering-a-run"

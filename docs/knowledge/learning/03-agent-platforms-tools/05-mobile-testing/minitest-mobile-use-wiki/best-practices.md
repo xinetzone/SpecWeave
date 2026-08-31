@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "最佳实践"
 category: "learning"
 source: "https://www.minitap.ai/docs"

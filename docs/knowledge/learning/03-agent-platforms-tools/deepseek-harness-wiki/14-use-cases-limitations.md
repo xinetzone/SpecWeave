@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-14"
 title: "DeepSeek Harness 完全指南 — 适用场景与风险提示"
 source: "https://github.com/deepseek-ai/deepseek-harness"

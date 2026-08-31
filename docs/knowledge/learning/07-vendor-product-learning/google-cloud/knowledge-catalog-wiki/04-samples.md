@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-samples
 title: 04 - 示例智能体实战（Discovery/Enrichment）
 date: 2026-08-15
@@ -10,9 +12,9 @@ tags:
   - search
   - metadata-enrichment
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/04-samples.toml"
   - vendor/knowledge-catalog/samples/discovery/
   - vendor/knowledge-catalog/samples/enrichment/
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/04-samples.toml"
 maturity: L1-draft
 ---
 # 04 - 示例智能体实战

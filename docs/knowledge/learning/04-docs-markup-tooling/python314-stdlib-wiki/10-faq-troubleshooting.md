@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-10"
 title: "Python 3.14 标准库教程 — FAQ 与排错"
 source: "https://docs.python.org/3.14/"

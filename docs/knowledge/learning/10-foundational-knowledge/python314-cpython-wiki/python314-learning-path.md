@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-python314-learning-path"
 title: "Python 3.14 新特性学习路径规划（参考文档）"
 source: "https://docs.python.org/zh-cn/3.14/"

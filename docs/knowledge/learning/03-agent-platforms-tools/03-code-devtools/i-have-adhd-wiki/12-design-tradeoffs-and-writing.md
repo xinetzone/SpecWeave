@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-design-tradeoffs"
 title: "十三、设计取舍与技术写作借鉴"
 source: "analyze-i-have-adhd-article/analysis-report.md#第五章"

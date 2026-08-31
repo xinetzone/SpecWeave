@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵智能远控鼠标MM110/BM110产品学习与深度洞察分析报告"
 source: "https://sunlogin.oray.com/hardware/mm110, https://sunlogin.oray.com/hardware/mouse-bm110"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-mouse-bm110-mm110-analysis.toml"

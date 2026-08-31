@@ -1,11 +1,13 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 官方脚本安装指南（Linux/macOS/WSL2）"
 chapter: 2
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/02-install-script.toml"
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/setup-hermes.sh
   - external/libs/hermes-agent/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/02-install-script.toml"
 ---
 # 2. 官方脚本安装指南（Linux/macOS/WSL2）
 

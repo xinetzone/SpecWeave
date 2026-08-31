@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-overview
 title: 00 - 总览与架构全景
 date: 2026-08-15
@@ -7,9 +9,9 @@ tags:
   - architecture
   - positioning
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/00-overview.toml"
   - vendor/knowledge-catalog/README.md
   - vendor/knowledge-catalog/okf/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/00-overview.toml"
 maturity: L1-draft
 ---
 # 00 - Knowledge Catalog 总览与架构全景

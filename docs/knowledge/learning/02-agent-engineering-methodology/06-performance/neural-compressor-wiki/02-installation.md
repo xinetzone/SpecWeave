@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-installation"
 title: "安装指南"
 date: "2026-08-09"

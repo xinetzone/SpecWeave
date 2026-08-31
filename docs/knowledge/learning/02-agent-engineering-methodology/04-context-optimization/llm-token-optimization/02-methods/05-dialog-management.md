@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-05-dialog-management"
 title: "多轮对话管理"
 source: "arXiv论文(MT-OSC)、Microsoft Azure文档、LangChain文档、OpenAI官方文档、CSDN技术博客综合整理"

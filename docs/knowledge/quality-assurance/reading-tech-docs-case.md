@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: reading-tech-docs-case
 title: 如何高效啃技术文档？七概念实战案例
 source: 七概念方法论实战案例库

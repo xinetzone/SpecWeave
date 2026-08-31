@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Cursor和Claude集成"
 category: "learning"
 source: "https://www.minitap.ai/docs/minitest/integrations/cursor-and-claude"

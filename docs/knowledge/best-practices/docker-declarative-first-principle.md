@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "docker-declarative-first-principle"
 title: "Docker镜像更新的声明式优先原则"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/docker-declarative-first-principle.toml"

@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "cmake-modularization-best-practices"
 title: "CMake项目模块化重构最佳实践"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/cmake-modularization-best-practices.toml"

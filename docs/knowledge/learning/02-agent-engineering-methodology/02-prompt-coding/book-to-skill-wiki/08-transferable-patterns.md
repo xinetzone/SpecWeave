@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-08"
 title: "book-to-skill 完全指南 — 可复用工程模式"
 source: "https://github.com/virgiliojr94/book-to-skill"

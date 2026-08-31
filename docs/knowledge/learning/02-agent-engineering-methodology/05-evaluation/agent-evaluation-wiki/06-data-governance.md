@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-data-governance"
 title: "第6章：评测数据治理"
 source: "spec:agent-evaluation-methodology-wiki"

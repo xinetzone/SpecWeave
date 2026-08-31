@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-03
 title: "03 - 治理与社区"
 date: 2026-08-19
 tags: [cpython, governance, community, triage, security, ai-policy, communication]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/03-governance-community.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/03-governance-community.toml"
 maturity: L1-draft
 ---
 # 03 - 治理与社区

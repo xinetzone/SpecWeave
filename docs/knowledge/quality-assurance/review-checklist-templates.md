@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: review-checklist-templates
 title: 知识评审清单模板（2份开箱即用）
 source: seven-concepts V阶段配套工具

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-03"
 title: "okf-kit 完全指南 — OKF 格式与 Bundle 结构"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/okf.py"

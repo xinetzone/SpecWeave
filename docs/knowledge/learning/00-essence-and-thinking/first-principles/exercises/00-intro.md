@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-intro
 title: 第一性原理思维训练题库 — 使用指南
 source: "12-exercises.md#sections-1-5"

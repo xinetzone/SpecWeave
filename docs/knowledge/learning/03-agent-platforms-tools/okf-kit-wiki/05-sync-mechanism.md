@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-05"
 title: "okf-kit 完全指南 — 增量同步机制"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/sync.py"

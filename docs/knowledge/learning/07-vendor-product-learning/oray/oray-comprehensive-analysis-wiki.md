@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "贝锐（Oray）五大产品线综合分析Wiki：20年连接专家的软硬服铁三角与AI战略跃迁"
 source: "https://www.oray.com/, https://sunlogin.oray.com/, https://pgy.oray.com/, https://hsk.oray.com/, https://yct.oray.com/"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.toml"

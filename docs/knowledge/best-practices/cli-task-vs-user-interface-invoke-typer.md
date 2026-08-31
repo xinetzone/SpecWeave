@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "cli-task-vs-user-interface-invoke-typer"
 title: "CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）"
 source: "seven-concepts 方法论编排 sc-20260821-invoke-vs-typer"
@@ -17,7 +19,7 @@ date: "2026-08-21"
 status: "active"
 version: "1.0.0"
 author: "SpecWeave Team"
-summary: "invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。本文沉淀"任务编排 vs 用户接口"二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。"
+summary: "invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。本文沉淀“任务编排 vs 用户接口”二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。"
 ---
 
 # CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）

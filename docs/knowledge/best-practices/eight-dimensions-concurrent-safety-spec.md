@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "eight-dimensions-concurrent-safety-spec"
 title: "并发安全八维检查法技术规格"
 date: 2026-07-08

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pyinvoke-wiki-index"
 title: "PyInvoke Wiki 教程"
 source: "https://docs.pyinvoke.org/"

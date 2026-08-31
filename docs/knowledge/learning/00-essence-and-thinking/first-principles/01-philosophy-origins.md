@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: philosophy-origins
 title: 第一性原理的哲学起源与发展历程
 source: first-principles-comprehensive-research Task 1

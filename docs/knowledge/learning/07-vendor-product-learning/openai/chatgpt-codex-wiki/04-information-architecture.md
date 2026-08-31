@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-04"
 title: "信息架构与导航设计"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

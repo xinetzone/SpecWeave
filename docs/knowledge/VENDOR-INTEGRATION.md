@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "跨项目子模块协同规范"
+---
+
 # 跨项目子模块协同规范
 
 > ⚠️ **本文档已迁移**：权威版本位于 [.agents/VENDOR-INTEGRATION.md](../../.agents/VENDOR-INTEGRATION.md)

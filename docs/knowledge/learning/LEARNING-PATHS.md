@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "learning-paths"
 title: "Learning Wiki 学习路径推荐表"
 category: "learning"
