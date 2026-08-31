@@ -32,11 +32,14 @@ Phase 0 调研工作区：`.trae/specs/daojia-canon-okf-wiki/`
 
 ## Phase 1+：逐册入库（调研确认后展开，此处仅列骨架）
 
-- [ ] Task 6: 建 `think/daojia/` 分组总纲 index + 更新 `think/index.md`、`bundles/index.md`
-- [ ] Task 7: 逐著作建立 bundle（index + concepts/examples/references + facts/insights/log），按确认优先级展开
+- [x] Task 6: 建 `think/daojia/` 分组总纲 index + 更新 `think/index.md`、`bundles/index.md`
+- [x] Task 7: 逐著作建立 bundle（index + concepts/examples/references + facts/insights/log），按确认优先级展开
   - 每册复用「R 事实核校 → I 洞察 → E 模式 → V 双源抽查 → C 原子提交」子链路
-- [ ] Task 8: 每册 V 对抗审查（原文 10 处 + 事实 10 条抽查）+ `invoke gates.all` 质量门
-- [ ] Task 9: 逐册 atomic-commit 原子提交（`docs(bundles): 新增道家<著作>知识包`），同步主仓 gitlink（如适用）
+  - P0 五册：老子/庄子/阴符经以 cross-ref 纳入既有分组；新建淮南子、黄帝四经、抱朴子内篇三束
+- [x] Task 8: 每册 V 对抗审查（原文 10 处 + 事实 10 条抽查）+ `invoke gates.all` 质量门
+  - 三册各完成原文 10–17 处 + 事实 12 条双源抽查，发现并就地修正实质错误（如《经法》章名「六反→六分」）；gates.all 全绿（15 域/69 组/347 束）
+- [x] Task 9: 逐册 atomic-commit 原子提交（`docs(bundles): 新增道家<著作>知识包`），同步主仓 gitlink（如适用）
+  - 子模块 7d7cf78c（49 文件）+ 主仓 e6446a4a4（gitlink 同步），均验证 UTF-8 存储
 
 # Task Dependencies
 
