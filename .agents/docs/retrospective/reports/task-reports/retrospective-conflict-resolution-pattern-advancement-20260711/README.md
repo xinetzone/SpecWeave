@@ -55,7 +55,7 @@ flowchart LR
 |------|------|------|------|
 | 三段式SOP模式 | [implement-review-harden-sop.md](../../../patterns/methodology-patterns/governance-strategy/implement-review-harden-sop.md) | 203行 | ✅ 已创建 |
 | 可配置性默认原则模式 | [configurable-by-default-principle.md](../../../patterns/code-patterns/configurable-by-default-principle.md) | 282行 | ✅ 已创建 |
-| 模式对比总结 | [pattern-comparison-implement-review-harden-vs-configurable-by-default.md](../../../../patterns/pattern-comparison-implement-review-harden-vs-configurable-by-default.md) | 189行 | ✅ 已创建（新建目录） |
+| 模式对比总结 | [pattern-comparison-implement-review-harden-vs-configurable-by-default.md](../../../../../../docs/retrospective/patterns/pattern-comparison-implement-review-harden-vs-configurable-by-default.md) | 189行 | ✅ 已创建（新建目录，2026-08-31 迁入 docs/retrospective/patterns/） |
 | 原复盘报告更新 | [retrospective-report.md](../retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md) | 182行（+38） | ✅ 已更新 |
 | code-patterns索引 | [README.md](../../../patterns/code-patterns/README.md) | +1行 | ✅ 已更新 |
 | governance-strategy索引 | [README.md](../../../patterns/methodology-patterns/governance-strategy/README.md) | +1行 | ✅ 已更新 |

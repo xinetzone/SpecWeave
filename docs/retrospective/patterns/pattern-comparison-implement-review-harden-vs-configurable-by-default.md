@@ -2,7 +2,7 @@
 id: "pattern-comparison-implement-review-harden-vs-configurable-by-default"
 title: "模式对比：三段式SOP vs 可配置性默认原则"
 date: 2026-07-11
-source: "external: 不存在-docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md"
+source: "external: .agents/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md"
 type: "pattern-comparison"
 status: completed
 tags: ["comparison", "sop", "configurable", "governance", "code-pattern"]
@@ -20,7 +20,7 @@ related_patterns:
 
 | 维度 | **"实现→审查→加固"三段式SOP** | **可配置性默认原则** |
 |------|------------------------------|---------------------|
-| 完整文件 | [implement-review-harden-sop.md](../retrospective/patterns/methodology-patterns/governance-strategy/implement-review-harden-sop.md) | [configurable-by-default-principle.md](../retrospective/patterns/code-patterns/configurable-by-default-principle.md) |
+| 完整文件 | [implement-review-harden-sop.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/implement-review-harden-sop.md) | [configurable-by-default-principle.md](../../../.agents/docs/retrospective/patterns/code-patterns/configurable-by-default-principle.md) |
 | 模式层级 | 🏛️ **治理层（governance）** | 🔧 **代码层（code）** |
 | 抽象级别 | **流程/方法论**——回答"什么时候做什么事" | **编码技巧/设计原则**——回答"具体怎么写代码" |
 | 解决的核心问题 | 功能写完、测试全绿≠代码安全，Happy Path之外的死锁/活锁/饥饿等隐性缺陷漏检 | 业务规则硬编码导致扩展性差、测试困难、不同场景需要改代码 |
@@ -182,7 +182,7 @@ flowchart LR
 
 ## 共同起源
 
-两个模式均萃取自同一次任务复盘：[多智能体冲突解决机制实现与死锁风险修复复盘](../retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)（2026-07-08）。
+两个模式均萃取自同一次任务复盘：[多智能体冲突解决机制实现与死锁风险修复复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)（2026-07-08）。
 
 - 初始实现26个测试全绿，但主动审查发现8个问题（含2个高风险死锁缺陷）
 - 全部修复后新增13个预防测试，最终39个测试全部通过
