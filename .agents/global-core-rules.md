@@ -12,11 +12,11 @@ x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
 
 - **启动协议优先**：收到任何任务后，首先执行 [AGENTS.md](../AGENTS.md) 顶部的启动协议。在完成步骤 1-3.5（含自检）之前，不得加载任何 Skill 或调用任何生成工具。这是所有其他规则的先决条件——违反此规则会导致所有下游决策失去规范依据，并产生非线性返工成本。特别注意：即使工作目录不在 `vendor/` 内，也必须执行步骤 2.0（任务类型预检）检查是否需要 vendor 方法论资产，以及步骤 2.3（内容敏感度预检）判定公开/私域内容级别。
 - **内容敏感度分流**：任务启动时必须完成内容敏感度预检（步骤 2.3），按公开/私域两级选择工作流模式和存储位置：
-  - **公开内容**：公开发布的无访问控制内容（公开网页、开源代码、官方文档、公开新闻）→ 标准 Spec Mode，规划文档位于 `.trae/specs/<theme-subdir>/`，最终产出物位于 `.agents/docs/` 对应目录
+  - **公开内容**：公开发布的无访问控制内容（公开网页、开源代码、官方文档、公开新闻）→ 标准 Spec Mode，规划文档位于 `.trae/specs/<theme-subdir>/`，最终产出物（Wiki/知识包/报告/教程等对外可读文档）位于根 `docs/` 对应目录（OKF v0.2 文档中心）；智能体执行配套文档位于 `.agents/docs/`
   - **私域内容**：需访问控制的内容（内部会议、带 code/token 的私域分享链接、个人笔记、商业培训材料、含个人隐私/商业秘密内容）→ 私域工作流，跳过 `.trae/specs/` 公共规划区域，产出物直接存放于 `playground/` 下对应目录或用户指定目录
   - 判定信号：URL含 `share?code=`/`token=`/邀请码参数、企业内部域名、用户标注"私域/内部/保密/个人"、内容主题为内部会议/商业培训/个人笔记
-  - **就高不就低**：不确定时默认按私域处理，或向用户确认；私域内容不得在 `.trae/specs/` 或 `.agents/docs/` 下留下规划文档或产出物
-- **路径解析规则**：所有以 `docs/` 开头的相对路径引用，无论出现在哪个文件中，均解析为 `.agents/docs/`。根目录 `docs/` 已废弃为空壳，仅保留作为历史兼容占位。Agent 启动时不得尝试读取根 `docs/` 目录下的任何文件。`.agents/docs/` 是唯一有效的文档容器，承载人类可读文档与智能体专属文档两类内容。
+  - **就高不就低**：不确定时默认按私域处理，或向用户确认；私域内容不得在 `.trae/specs/`、`.agents/docs/` 或根 `docs/` 下留下规划文档或产出物
+- **路径解析规则**：文档双体系边界——根目录 `docs/` 为 OKF v0.2 文档中心（Sphinx 构建，面向人类读者与外部消费），`.agents/docs/` 为智能体执行配套文档（规范容器内部）。路径引用一律以文件/目录的实际位置为准使用相对路径，**禁止沿用"docs/ 自动解析为 .agents/docs/"的历史隐式规则**：①`.agents/` 内文件引用根 `docs/` 时使用 `../docs/...`；②`.agents/` 内文件引用 `.agents/docs/` 时使用 `docs/...`，仓库根文件引用时使用 `.agents/docs/...`；③新增对外可读文档一律入根 `docs/`，且 `docs/` 内文档不得新增指向 `.agents/docs/` 的跨区引用（存量约 660 处登记于 `docs/retrospective/cross-reference-ledger.md` 分批改写）；④复盘报告与模式库以 `docs/retrospective/` 为准，`.agents/docs/retrospective/` 为历史归档、冻结新增。
 - **沟通语言**：必须使用中文与用户交流，所有输出、注释、提交信息、文档均以中文为主。
 - **按需读取**：执行特定领域任务前，只读取与当前任务直接相关的 `.agents/` 规范，避免一次性加载全部上下文。
 - **上下文节省**：遵循"先搜索、再精读、只保留相关上下文"的原则，优先使用语义检索与精确匹配工具，剔除无关片段。多文件差异分析场景下采用「结构对比优先、全文精读兜底」策略：先用 Grep 提取标题/签名做结构对比确定差异集，再对差异集文件精读全文确定修改方案，避免全量精读带来的边际收益递减。
@@ -29,10 +29,10 @@ x-toml-ref: "../.meta/toml/.agents/global-core-rules.toml"
 - **三阶段递进原则**：所有演化过程（治理、知识库建设、抽象层级提升）严格遵循三阶段递进规律，顺序不可颠倒、中间阶段不可跳过：治理（修复→预防→闭环）、知识库（生成→重组→精确化）、抽象（具体→通用→元方法）。跳过中间阶段必然导致返工或问题复发，详见 [rules/three-stage-universal-principle.md](rules/three-stage-universal-principle.md)。
 - **元文档优先原则**：资源有限时，优先优化入口文档、索引、L1门面等元文档（描述文档的文档），而非深化L2内容。元文档篇幅占比<20%但对采纳率贡献>50%，ROI最高。入口文档>100行时优先精简，新增模块时先更新索引再写深度内容，详见 [rules/meta-document-priority-principle.md](rules/meta-document-priority-principle.md)。
 - **修复即闭环**：所有Bug修复必须遵循"修复→预防→闭环"三阶段SOP（详见 [rules/fix-prevent-close-loop.md](rules/fix-prevent-close-loop.md)），禁止纯点修复（只修当前问题不建立预防机制）。平凡修复（拼写错误、格式调整、注释修正等）可豁免，但必须在自查时确认符合豁免条件。修复提交必须在commit message中标注预防措施类型。
-- **查阅知识库**：执行任务前应主动查阅 [docs/knowledge/README.md](docs/knowledge/README.md) 技术知识库与 [docs/retrospective/README.md](docs/retrospective/README.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
+- **查阅知识库**：执行任务前应主动查阅 [../docs/knowledge/index.md](../docs/knowledge/index.md) 技术知识库与 [../docs/retrospective/index.md](../docs/retrospective/index.md) 复盘文档体系，了解已有经验、架构决策、可复用模式与最佳实践，避免重复踩坑。
 - **知识可信度分级**：项目知识源按可信度分为两级，概念类查询必须按级取材：
   - **一级（最高可信度）**：[projects/awesome-okf-xs/doc/bundles/](../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包库）——所有相关概念、术语、技术事实的最高可信源与冲突裁决依据
-  - **二级**：[docs/knowledge/](docs/knowledge/README.md) 技术知识库与 [docs/retrospective/](docs/retrospective/README.md) 复盘模式库
+  - **二级**：[../docs/knowledge/](../docs/knowledge/index.md) 技术知识库与 [../docs/retrospective/](../docs/retrospective/index.md) 复盘模式库
   - **冲突处理**：同一概念在不同知识源描述不一致时，以 bundles 为准，并在产出物中注明裁决依据来源；bundles 未覆盖的概念回退至二级知识源，不因 bundles 缺失而中断任务
   - **只读约束**：bundles 位于 git submodule（projects/awesome-okf-xs）内，智能体只读引用，不得直接修改其内部文件
 - **简单任务验证原则**：越是"看起来简单、不用想、批量执行"的任务（如格式统一、路径替换、批量修改），越要有意识执行基本验证。简单任务因为缺少Spec流程、代码审查等复杂任务保护层，大脑倾向走直觉捷径（类比推理），错误率反而可能更高。格式/路径/规范类决策必须执行"决策前三查"（查权威文档、查现有实例、查本质目标），详见 [pre-decision-three-checks.md](docs/retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)。来源：[第一性原理类比推理错误事件复盘](docs/retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)。
