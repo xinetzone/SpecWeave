@@ -34,6 +34,9 @@ htmlcov/
 # 支付宝 AI 付站点 Skill 本地开发目录
 .agents/skills/alipay-aipay/
 
+# Claude Code 技能 junction 桥接（本地产物不入库；规范源在 .agents/skills/，跨平台需用脚本重新生成）
+.claude/skills/
+
 # 虚拟环境
 .venv/
 venv/
