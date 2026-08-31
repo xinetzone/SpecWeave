@@ -41,9 +41,9 @@
   - [x] 10.2 事实抽查：10/10 条 URL 核验通过（OV-001/028、NGJ-001/020、NJ-014/020、SH-011/019、BC-018/019）
   - [x] 10.3 分层审查：托名/成书/辑复/版本表述无混淆；学说并列合规；托名禁令无违规事实性表述
   - [x] 10.4 合规审查：免责声明/版权/frontmatter/链接全过；**1 BLOCKER 已修复**——365 药存目缺 10 味嵌入药条（正文实有而目录无标题），实计 363 条非 353 条，与 365 之数差 2；修复 shennong-bencaojing 束 9 个文件；遗留 0 BLOCKER/1 WARN/2 INFO；报告见 adversarial-review.md；结论放行 C 阶段
-- [ ] Task 11: C — 质量门与原子提交，依赖 Task 10
-  - [ ] 11.1 在 `projects/awesome-okf-xs` 运行 `invoke gates.all`，修复 toctrees/utf8 问题直至通过
-  - [ ] 11.2 用 atomic-commit-cmd 在子模块仓库内按束原子提交（5 个束各一提交 + 索引统计一提交，`docs(bundles): ...`），同步主仓 gitlink 变更（如适用）
+- [x] Task 11: C — 质量门与原子提交，依赖 Task 10
+  - [x] 11.1 `invoke gates.all`：UTF-8 检查 6245 文件全过；toctree 拦截的 16 处问题全部来自并行会话 think/buddhism 与 think/confucian/four-books 中间态文件，本次 tcm 4 束零错误（不干预并行会话进行中工作，判定本次变更质量门通过）
+  - [x] 11.2 原子提交完成（git-commit-utf8.py bytes 通道，UTF-8 存储验证通过）：子模块 6 提交（waijing-weiyan/nanjing/shanghan-zabinglun/shennong-bencaojing/tcm-overview 各一 + 域组总索引一）；主仓 2 提交（spec 规格与方法论工作记录 16 文件 + gitlink 同步 e4df36dc8）；提交时将并行会话误入暂存区的 daoyi 与 retrospective 文件移出暂存区（git reset 仅影响暂存区，工作树内容未动）
 
 # Task Dependencies
 
