@@ -159,6 +159,7 @@ skills = []
 > - awesome-okf-xs Sphinx构建错误修复里程碑复盘（1个L1代码模式入库）：code-patterns/`markdown-nested-fence-escalation`（L1，Markdown/MyST嵌套围栏升级法：外层围栏N+1反引号+首尾对称升级+五步法识别修复，解决围栏泄漏导致的标题跳跃/未知指令/转场异常等多类构建错误，5文件7处修复20ERROR/WARNING清零；含4反模式+5跨领域迁移场景）
 > - awesome-okf-xs Sphinx 大文档构建加速与计量方法论编排复盘（1个L1方法论模式入库）：methodology-patterns/tools-automation/`sphinx-build-acceleration-metering`（L1，read/write 分相测速定位 write 串行渲染是慢源；计量 builder 必须与生产同源——pseudoxml 不调 pygments 故高亮类警告 0 条为假阴性；suppress_warnings 做确定性低成本清零；4 反模式+3 跨领域迁移）
 > - jupyter-podman-rootless jpman CLI工作区自定义挂载里程碑复盘（3个L2代码模式+1个L2检查清单入库）：code-patterns/`bash-safe-dotenv-loading`（L2，Bash安全.env加载：逐行词法解析禁止source，解决反斜杠路径破坏/CRLF污染/代码注入三类风险，双案例验证）、code-patterns/`wsl-windows-path-autoconvert`（L2，WSL Windows路径自动转换：纯Bash幂等转换不依赖wslpath，双案例验证）、code-patterns/`multi-entrypoint-config-unification`（L2，多入口配置接口统一：命名权威+fallback链+优先级文档化，双案例验证）；checklists/`cross-platform-bash-preflight-checklist`（L2，跨平台Bash脚本发布前8大类33项检查清单，从5个叠加bug萃取）
+> - 性学经典 OKF wiki 里程碑复盘 I-3 沉淀（1个L2代码模式入库）：code-patterns/`submodule-detached-head-ff-only-landing`（L2，子模块汇合仓库detached HEAD显式落分支法：提交后检测symbolic-ref→ff-only快进落分支→推送闭环，三会话案例yangsheng/fusheng/sexology，来源[retrospective-sexology-classics-wiki-20260830](../reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md) I-3/F-022）
 
 ## 使用方式
 

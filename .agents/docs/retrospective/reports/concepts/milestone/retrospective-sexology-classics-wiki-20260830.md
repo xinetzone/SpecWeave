@@ -160,4 +160,4 @@ stale_after: "2027-08-30"
 
 - **待核验清单**（27 处）按 spec 非目标保持标注，待权威馆藏信源出现时增量核验，是 bundle 的主要 stale_after 复核点。
 - **Sphinx 全量构建**因全仓 HTML 写出耗时中止，仅完成解析阶段；sexology 零警告已确认。
-- **迁移**：模式 1、2 已于 2026-08-31 独立沉淀为 patterns/ 文档：`documentation-patterns/source-trace-consistency-check.md`、`documentation-patterns/version-discrepancy-arbitration.md`（均 L1/draft，validation_count=1）。
+- **迁移**：模式 1、2 已于 2026-08-31 独立沉淀为 patterns/ 文档：`documentation-patterns/source-trace-consistency-check.md`、`documentation-patterns/version-discrepancy-arbitration.md`（均 L1/draft，validation_count=1）；洞察 I-3 已沉淀为 `code-patterns/submodule-detached-head-ff-only-landing.md`（L2，validation_count=3，覆盖 yangsheng/fusheng/sexology 三案例）。
