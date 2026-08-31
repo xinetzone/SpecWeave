@@ -5,7 +5,7 @@
 > 依赖顺序：T1 → T2 → T3/T4/T5（可并行）→ T6 → T7 → T8 → T9 → T10
 
 ## Task 1: R 阶段——联网调研与原典双源核对
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -20,7 +20,7 @@
   - `rubric` TR-1.3: 信源权威性；scale 1-5；anchors 1=通俗自媒体为主 / 3=原典有双源但现代研究信源弱 / 5=原典双源 + 期刊/出版社级现代研究信源齐备；threshold >= 4；证据：信源分级清单
 
 ## Task 2: 创建分组入口与 bundle 骨架
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T1
 - **Description**:
@@ -34,7 +34,7 @@
   - `rule` TR-2.2: bundle 根 toctree 列出的 7 个目标（concepts/index、examples/index、references/index、facts、insights、patterns、log）在 T6 完成后全部存在；证据：T8 质量门
 
 ## Task 3: 创建 concepts/ 概念文档（12 篇 + index）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T2
 - **Description**:
@@ -49,7 +49,7 @@
   - `rubric` TR-3.4: 单篇可读性（是什么/为什么/怎么读结构）；scale 1-5；anchors 1=资料堆砌无导读 / 3=内容完整但行文教科书化缺入口 / 5=每篇有定位提示、术语随文注释、与阅读地图呼应；threshold >= 4；证据：V 评审新人视角
 
 ## Task 4: 创建 examples/ 实践示例（3 篇 + index）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T2
 - **Description**:
@@ -64,7 +64,7 @@
   - `rubric` TR-4.3: 实操可跟做性；scale 1-5；anchors 1=只有结论无步骤 / 3=有步骤但缺"做完怎么知道对"检验 / 5=每步有输入、动作、预期结果与检验标准；threshold >= 4；证据：V 评审新人视角
 
 ## Task 5: 创建 references/ 信源文档（4 篇 + index）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T2
 - **Description**:
@@ -79,7 +79,7 @@
   - `rule` TR-5.2: 关键 URL（ctext 原典页、《文物》/出版社信息）抽测 ≥10 条可达或可查证；不可达者已换源或登记 U-xx；证据：抽测记录
 
 ## Task 6: 工作文档定稿（facts / insights / patterns 初稿 / log）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T3、T4、T5
 - **Description**:
@@ -95,7 +95,7 @@
   - `rule` TR-6.3: patterns.md 含触发场景（适用/不适用边界）、3-7 步骤、≥3 反模式、检验标准、≥1 跨领域迁移示例；证据：结构核对
 
 ## Task 7: 更新两级导航索引（C 入库）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T6
 - **Description**:
@@ -108,7 +108,7 @@
   - `rule` TR-7.2: bundles/index.md 五面（frontmatter/计数行/域节标题/分组表/toctree）计数一致；证据：T8 gates.bundles 输出
 
 ## Task 8: 质量门与构建验证
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T7
 - **Description**:
@@ -117,9 +117,10 @@
 - **Acceptance Criteria Addressed**: AC-6
 - **Test Requirements**:
   - `rule` TR-8.1: 四条命令退出码均为 0，输出无 FAIL/ERROR；证据：完整命令输出记录
+  - **Result（2026-08-31 实测）**：check-utf8 ✅ PASS（6768 文件均为有效 UTF-8）；check-bundles-index ✅ PASS（15 域 / 68 组 / 343 束，frontmatter、计数行、节标题、分组表、toctree 五面一致）；check-toctrees ⚠️ 余 5 处断链**全部位于并行会话 zhouyi 束**（zhouyi-works 的 usage/insights/patterns 与 text/jing-shang、text/jing-xia 五文件待该束作者补齐），本束零报错，属外部阻塞、不代写；sphinx-build 复构建已重跑（无 -W，断链仅 warning 不致命），结果见 review.md 质量门复验表
 
 ## Task 9: V 阶段独立对抗评审与修复
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: T8
 - **Description**:
@@ -137,13 +138,13 @@
   - `rubric` TR-9.3: 评审实质性（无表演式客套）；scale 1-5；anchors 1=无具体问题 / 3=有问题但浅 / 5=问题具体到文件/段落/论断且含反证；threshold >= 4；证据：review.md 意见内容
 
 ## Task 10: 收尾与看板登记
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: T9
 - **Description**:
   - 在 `.trae/specs/standards-tools/README.md` 登记本 spec（按该看板既有格式）；按需更新 `.trae/specs/README.md` 待办/计数
   - 输出任务完成总结（产出物清单、质量门记录、评审结论、未决 U 项清单）
-  - **不执行 git commit**（用户未明确要求；OKF 子模块提交由用户统一处理，总结中给出建议的提交粒度）
+  - **git 提交（2026-08-31 用户追加「原子提交」指令后执行）**：按 atomic-commit-cmd 技能执行——子模块 1 个 `docs(think)` 提交（22 个 V 阶段评审修复文件，zhouyi 并行内容与 mobile-world 他人变更不纳入，暂存态快照双门验证）；主仓库 1 个 `docs(specs)` 收尾提交（review.md + 看板登记 + tasks 状态）与 1 个 `chore(submodules)` 指针同步提交
 - **Acceptance Criteria Addressed**: AC-1
 - **Test Requirements**:
   - `rule` TR-10.1: standards-tools README 已登记本 spec 且链接可达；证据：文件 diff
