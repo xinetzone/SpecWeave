@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（14/23 完成）
+**主题状态**：🔧 进行中（15/24 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -35,6 +35,7 @@
 | [create-graphql-wiki-tutorial](create-graphql-wiki-tutorial/spec.md) | 📋 待启动 | 0% | [docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/](../../../docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/README.md) | GraphQL 完整 Wiki 教程：基于官方文档（graphql.org）学习，覆盖核心概念、查询语言、类型系统、Schema设计、执行机制、Python生态工具（Graphene/Strawberry/Ariadne/gql等）与最佳实践，以原子化章节形式组织，含≥15条术语表和代码示例 |
 | [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/spec.md) | ✅ 完成 | 100% | [.agents/scripts/generate-knowledge-graph.py](../../../.agents/scripts/generate-knowledge-graph.py) [12-knowledge-graph.html](../../../docs/knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html) | 第一性原理交互式知识图谱：从概念术语表和时间线Markdown自动提取节点（24概念+13人物+19事件+13文档+4时期=73节点）和关系（176边），生成vis-network力导向图HTML，支持点击详情、类型/领域筛选、搜索定位、邻居高亮、离线降级 |
 | [establish-pwsh7-windows-standard](establish-pwsh7-windows-standard/spec.md) | ✅ 完成 | 100% | [.agents/scripts/lib/pwsh7-version-check.ps1](../../../.agents/scripts/lib/pwsh7-version-check.ps1) [.agents/templates/pwsh7-script-template.ps1](../../../.agents/templates/pwsh7-script-template.ps1) [.agents/scripts/check-pwsh7-compliance.py](../../../.agents/scripts/check-pwsh7-compliance.py) [.agents/scripts/migrate-to-pwsh7.py](../../../.agents/scripts/migrate-to-pwsh7.py) [.agents/scripts/ci-check.ps1](../../../.agents/scripts/ci-check.ps1) [.agents/docs/development-standards.md](../../../.agents/docs/development-standards.md) [.agents/global-core-rules.md](../../../.agents/global-core-rules.md) [.agents/ONBOARDING.md](../../../.agents/ONBOARDING.md) | Windows PowerShell 7统一规范（pwsh7）：所有.ps1脚本必须使用pwsh7.4+执行，包含自包含版本校验代码块、标准脚本模板、合规性检查工具、批量迁移脚本、CI集成（过渡期warn-only），禁止使用PowerShell 5 |
+| [create-sexology-classics-wiki](create-sexology-classics-wiki/spec.md) | ✅ 完成 | 100% | [think/sexology/classics-reading/](../../../projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/index.md) | 性学经典著作 OKF Wiki 教程：六大板块著作提要与阅读路径（七概念 R→I→E→V→C 链路，104 条带信源事实，9 概念+3 示例+5 信源），独立评审修复后质量门全部通过 |
 
 ---
 
@@ -247,6 +248,11 @@ standards-tools/
 │   ├── source-home.md
 │   ├── source-introduction.md
 │   └── source-python-tools.md
+├── create-sexology-classics-wiki/
+│   ├── spec.md
+│   ├── tasks.md
+│   ├── checklist.md
+│   └── review.md
 ├── establish-mermaid-management-system/
 │   ├── spec.md
 │   ├── tasks.md

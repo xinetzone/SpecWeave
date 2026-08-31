@@ -10,12 +10,12 @@
 |---|---|---|---|---|---|---|
 | [core-foundation/](core-foundation/README.md) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
-| [standards-tools/](standards-tools/README.md) | 21 | 13 | 2 | 6 | 62% | [查看](standards-tools/README.md) |
+| [standards-tools/](standards-tools/README.md) | 22 | 14 | 2 | 6 | 64% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/README.md) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/README.md) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/README.md) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **61** | **53** | **2** | **6** | **87%** | — |
+| **合计** | **62** | **54** | **2** | **6** | **87%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
@@ -326,6 +326,7 @@ flowchart LR
 │   ├── analyze-script-merging/
 │   ├── check-academic-sources/
 │   ├── check-spec-consistency/
+│   ├── create-sexology-classics-wiki/
 │   ├── create-tvm-ffi-wiki-tutorial/
 │   ├── establish-mermaid-management-system/
 │   ├── establish-pwsh7-windows-standard/
