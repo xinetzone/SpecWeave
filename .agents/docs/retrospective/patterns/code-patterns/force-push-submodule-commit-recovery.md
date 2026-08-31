@@ -6,7 +6,7 @@ date: 2026-08-24
 maturity: L1 实验性
 maturity_note: "单案例验证（SpecWeave 仓库 git pull 修复），待第二个 force-push+子模块断链场景验证后升级 L2"
 source: "2026-08-24 SpecWeave git pull 断链修复会话：origin/main 引用 vendor/flexloop 被 force-push 剪除的 d3cb358，合流后收敛至 7754e53 并推送闭环" 
-related_patterns: ["git-bundle-offline-clone.md", "try-prepare-merge.md"]
+related_patterns: ["git-bundle-offline-clone.md", "try-prepare-merge.md", "../process-patterns/submodule-ssh-stall-recovery-sop.md"]
 tags: ["git", "submodule", "force-push", "version-control", "recovery", "gitlink"]
 validation_count: 1
 reuse_count: 0
