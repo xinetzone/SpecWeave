@@ -1,15 +1,23 @@
 ---
-name: public-domain-classics-okf-pattern
-version: 1.0.0
-created: 2026-08-31
-source: chemistry-classics-okf-wiki 任务实战萃取（7 束中西化学经典知识包生产）
-methodology: seven-concepts 场景4（知识沉淀）R→I→E→V→C
-status: applied
+id: "public-domain-classics-okf-bundle-workflow"
+source: "spec:chemistry-classics-okf-wiki"
+maturity: "L1"
+validation_count: 1
 ---
 
-# 生产模式：公版经典原文 + 现代解读 OKF 知识包
+# 公版经典原文→OKF知识包生成工作流
 
-> 从化学经典 7 束知识包（西方 4 + 中国 3，约 120 篇文档）的生产实践中萃取的可迁移模式，供未来物理、生物、数学等学科经典知识包复用。首例落地：`projects/awesome-okf-xs/doc/bundles/science/chemistry/`。
+## 模式类型
+
+方法论模式 / AI协作 / 知识沉淀
+
+## 成熟度
+
+L1 已验证（1 次验证：2026-08-30~31 中西化学经典 7 束 120 文档，`projects/awesome-okf-xs/doc/bundles/science/chemistry/`，V 阶段 54 条事实回源核验通过）
+
+## 模式概述
+
+为已进入公有领域的经典著作（古代典籍、1900 年前西方著作等）生产"原文选读 + 现代解读"式 OKF v0.2 知识包时，采用 seven-concepts 场景 4（知识沉淀）R→I→E→V→C 链路：公版信源实测登记与零推测事实采集（R）→ 四元组洞察（I）→ 每束 17 文件统一结构批量生成（E）→ fresh context 逐束事实回源对抗审查（V）→ 按线索原子提交（C）。核心价值是保证**引文可回溯、今译自撰无版权风险、信源 100% 实测、成就与局限并陈**，并沉淀可跨学科复用的生产模式。
 
 ## 1. 触发条件
 
@@ -96,6 +104,7 @@ status: applied
 | 无依据拔高/贬斥历史成就 | 立场失衡（如把炼丹术吹成"科学先驱"或斥为"迷信"） | 成就与局限并陈；争议结论标注"有争议/尚有争议" |
 | 忽视并行会话 | git add . 混入他人半成品 | 显式路径 add；status 区分归属 |
 | IDE 工具对新路径超时 | 反复失败浪费时间 | 直接改用 PowerShell UTF-8 无 BOM 写入并回读核验 |
+| PowerShell 批量替换函数嵌套数组参数 | 参数展平退化为"首字符→次字符"全局单字符替换，批量损坏文件 | 批量文本修复用 Python 脚本逐项 Replace 并报告命中数；损坏文件用 git restore 恢复后重修 |
 
 ## 4. 跨学科迁移示例
 
@@ -108,7 +117,7 @@ status: applied
 - 关键差异：博物学著作图版版权需逐一确认（多数已公版）；"现代视角"需注意进化生物学综合理论的后续修正。
 
 **数学经典**（可复用）：
-- 信源：Gutenberg/维基文库 + archive.org（欧拉、高斯原版扫描）；中国算经（ Euclide..... 《九章算术》）用 ctext；
+- 信源：Gutenberg/维基文库 + archive.org（欧拉、高斯原版扫描）；中国算经（《九章算术》《周髀算经》）用 ctext；
 - 关键差异：数学符号史（原文符号与现代记法差异大），今译需保留原符号并另附现代记法对照。
 
 ## 5. 规模与效率参考
