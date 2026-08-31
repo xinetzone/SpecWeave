@@ -19,5 +19,9 @@ show_navbar_depth = 1
 max_navbar_depth = 7
 use_fullscreen_button = true
 
+# 顶部导航栏常驻组件：显式置空，阻止 pydata-sphinx-theme 自动注入页头搜索按钮。
+# 搜索入口保留在左侧边栏（SBT sidebars 配置）与文章工具栏放大镜图标，Ctrl+K 快捷键不受影响。
+navbar_persistent = []
+
 # 图标链接配置
 icon_links = []
