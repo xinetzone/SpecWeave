@@ -228,7 +228,7 @@ retrospective 2632 = patterns 849 + reports 1704 + 配套与根级 79
 
 ## 8. 迁移后遗留债务 Backlog（Task 8 登记，2026-09-01 门禁终验实测）
 
-> 登记原则：本工程验收口径为"迁移回归 = 0"。下列各项均经 HEAD~5（五个迁移提交之前）基线比对或门禁逻辑判定为**预存债务**，不由本迁移引入；按治理归属分流，不在本工程修复。
+> 登记原则：本工程验收口径为"迁移回归 = 0"。下列各项均经迁移前基线（提交 `a9fdd43f`，即 C1 `ff2bde4c` 的父提交；分诊会话期 HEAD 为 C5 时曾以 `HEAD~5` 指代该提交）比对或门禁逻辑判定为**预存债务**，不由本迁移引入；按治理归属分流，不在本工程修复。
 
 ### 8.1 子模块待修清单（主仓门禁豁免，修复须走上游仓库流程）
 
@@ -257,7 +257,7 @@ retrospective 2632 = patterns 849 + reports 1704 + 配套与根级 79
 | # | 债务项 | 规模（2026-09-01 实测） | 基线证据 | 建议治理归属 |
 |---|---|---|---|---|
 | 1 | check-links 断链 | 728 条本地断链 + 230 条目录型链接警告（迁移完成后口径；迁移前 765，其中 37 条为本工程漏修、已修复并复跑验证 765→728） | 395 条指向异机 `d:\spaces\*` file:// 绝对链接、其余为历史内容重组缺口；均非迁移引入 | 链接治理专项：file:// 绝对链接清理 + 历史重组断链修复 |
-| 2 | 预存死链 7 条 | `commands/first-principles.md:197`；`commands/token-optimize.md:243,260`、`roles/token-optimizer.md:24`、`skills/token-optimize-cmd/SKILL.md:22,133,202` | `git cat-file -e HEAD~5:<目标>` 证实旧树即不存在（目录早已重组入编号分类 `learning/00-essence-and-thinking/`、`learning/02-agent-engineering-methodology/04-context-optimization/`） | 对应 skill/command 内容修复（改指新路径） |
+| 2 | 预存死链 7 条 | `commands/first-principles.md:197`；`commands/token-optimize.md:243,260`、`roles/token-optimizer.md:24`、`skills/token-optimize-cmd/SKILL.md:22,133,202` | `git cat-file -e a9fdd43f:<目标>` 证实旧树即不存在（目录早已重组入编号分类 `learning/00-essence-and-thinking/`、`learning/02-agent-engineering-methodology/04-context-optimization/`） | 对应 skill/command 内容修复（改指新路径） |
 | 3 | repo-check mermaid | 10880 错误 / 654 警告，921 文件（docs 814、.agents 63、.trae 37、apps 6、根 README 1） | Mermaid 块 `<br/>` 标签、中文节点/边标签未加引号；迁移内容字节一致（rename），迁移新增文件（19 导航 index、ledger、本 spec）零命中；门禁 [1/16] 无 continue-on-error，**基线即红** | Mermaid 安全编码治理专项（`repo-check.py mermaid --fix` 可自动修部分） |
 | 4 | repo-check filename | 作用域扫描：docs 2804（其中 2695 为 `docs/_build/` Sphinx 本地产物 .doctree/.mo/.js.map，已 gitignore 非仓库资产）、.agents 8（.psm1/.cmake/.cmd/.hpp/.pth）、apps 32（.conf/.onnx/.mp4 等）、.trae 7（旧 spec .mdx/.cfg）、.meta 0 | 迁移文件全部为合规英文名；违规均为预存扩展名与本地构建产物 | 扫描器增补 `_build` 排除；扩展名白名单评审 |
 | 5 | filename 根部扫描性能 | Windows 本地 rglob 全树 >10 分钟不返回（CPU 1100s+） | 扫描器遍历不剪枝 excluded 目录（vendor/projects/.git/node_modules 仅在 yield 后过滤）；CI Linux 全新检出不受影响 | 工具优化：os.walk 预剪枝 EXCLUDED_DIRS |
@@ -268,6 +268,8 @@ retrospective 2632 = patterns 849 + reports 1704 + 配套与根级 79
 | 10 | pattern-maturity 警告 | 475 项警告（错误已由 C8 修复至 0，327 通过） | 模式条目成熟度存量 | 模式库持续建设 |
 
 ### 8.3 复验命令（可复现）
+
+> 基线锚点：迁移前基线提交 `a9fdd43f`（分诊执行时为 `HEAD~5`）；断链预存、内容预存等判定均对照该树（如 `git cat-file -e a9fdd43f:<路径>`）。
 
 ```powershell
 python .agents/scripts/check-links.py                      # 债务 1、2

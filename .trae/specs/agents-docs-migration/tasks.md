@@ -110,7 +110,7 @@
   - `rule` TR-6.2：CI 工作流 `[16/16]` 行为 `--root docs/retrospective --bootstrap`；证据：.github/workflows/ci-quality-gates.yml diff。
   - `rule` TR-6.3：Grep `.agents/docs` 命中项仅限显式历史记录（ledger 台账、docs/log.md、本 spec 目录、已结项说明）；证据：Grep 结果分类清单。
   - `rule` TR-6.4：constants.py docgen 常量与 docgen.py 导航逻辑适配后，`python .agents/scripts/docgen.py all` 可运行且不引用旧路径；证据：命令运行输出。
-- **Completion Evidence**（2026-09-01）：五批次链接改写完成（提交 80fcd01e，754 个文件相对链接与规范口径收敛）；收尾复修 21 个 .agents 文件 37 处深度回归（depth-2/3 层级校正 + 9 处目录链接补 README.md，提交 50715b37），check-links 断链 765→728。TR-6.1：check-links 主仓范围非 exit 0，但残留 728 断链 + 230 目录警告经 HEAD~5 基线比对全部为预存债务（395 条异机 `d:\spaces` file:// + 历史重组缺口），**迁移回归 = 0**，37 条迁移漏修已全部修复；TR-6.2：CI `[16/16]` 为 `python .agents/scripts/check-version-ripple.py --root docs/retrospective --bootstrap`（.github/workflows/ci-quality-gates.yml）；TR-6.3：Grep `.agents/docs` 命中仅限历史语境（cross-reference-ledger、docs/log.md、本 spec 目录、迁移留痕）；TR-6.4：constants.py docgen 常量与 docgen.py 适配后 `docgen.py all` exit=0 且幂等（重生成 docs/index.md 与 apps/README.md 同已提交版本一致）。
+- **Completion Evidence**（2026-09-01）：五批次链接改写完成（提交 80fcd01e，754 个文件相对链接与规范口径收敛）；收尾复修 21 个 .agents 文件 37 处深度回归（depth-2/3 层级校正 + 9 处目录链接补 README.md，提交 50715b37），check-links 断链 765→728。TR-6.1：check-links 主仓范围非 exit 0，但残留 728 断链 + 230 目录警告经迁移前基线 `a9fdd43f`（分诊执行时为 HEAD~5）比对全部为预存债务（395 条异机 `d:\spaces` file:// + 历史重组缺口），**迁移回归 = 0**，37 条迁移漏修已全部修复；TR-6.2：CI `[16/16]` 为 `python .agents/scripts/check-version-ripple.py --root docs/retrospective --bootstrap`（.github/workflows/ci-quality-gates.yml）；TR-6.3：Grep `.agents/docs` 命中仅限历史语境（cross-reference-ledger、docs/log.md、本 spec 目录、迁移留痕）；TR-6.4：constants.py docgen 常量与 docgen.py 适配后 `docgen.py all` exit=0 且幂等（重生成 docs/index.md 与 apps/README.md 同已提交版本一致）。
 
 ## Task 7: 规范文档结项更新
 
@@ -162,7 +162,7 @@
 - **Test Requirements**:
   - `rule` TR-9.1：上述命令全部 exit 0（sphinx-build 若环境不可用则记录 blocked 原因，不阻断）；证据：全部命令输出日志。
   - `rule` TR-9.2：无新增非 md 资产断链（HTML/ttf/js 相对引用抽查）；证据：抽查记录。
-- **Completion Evidence**（2026-09-01，日志留存 `.chaos/temp/rc-*.log`、`frontmatter-postfix.log`）：TR-9.1 分诊结果——check-toctrees exit=0（全部内容文档可达）、check-utf8 5810 文件通过、check-frontmatter **exit=0（5805 文件均合规，两次独立复跑一致）**、version-ripple（CI 门 `--root docs/retrospective --bootstrap`）红错 0（467 警告为存量）、docgen all exit=0 幂等、pattern-maturity 0 FAIL（327 通过/475 警告）、repo-check gitignore/vendor/roles 三项 PASS；check-links 残留 728 断链+230 目录警告、generate-readme 205 缺 README、repo-check mermaid 10880 错误（921 文件）与 filename 作用域违规（docs 2804 中 2695 为 `_build/` 本地产物）经 HEAD~5 基线比对与区域分布分析全部证实为预存债务，**迁移回归 = 0**，分流登记 mapping.md §8；filename 根部全树扫描在 Windows 空转（rglob 不剪枝 EXCLUDED_DIRS）定性为工具缺陷，登记 backlog 第 5 项（CI Linux 全新检出不受影响）。TR-9.2：非 md 资产（.cc/.hpp/.py/.html/.ttf/.js/.png 等）随目录批次 git mv 迁移，check-toctrees 全可达验证覆盖引用完整性，无新增资产断链。
+- **Completion Evidence**（2026-09-01，日志留存 `.chaos/temp/rc-*.log`、`frontmatter-postfix.log`）：TR-9.1 分诊结果——check-toctrees exit=0（全部内容文档可达）、check-utf8 5810 文件通过、check-frontmatter **exit=0（5805 文件均合规，两次独立复跑一致）**、version-ripple（CI 门 `--root docs/retrospective --bootstrap`）红错 0（467 警告为存量）、docgen all exit=0 幂等、pattern-maturity 0 FAIL（327 通过/475 警告）、repo-check gitignore/vendor/roles 三项 PASS；check-links 残留 728 断链+230 目录警告、generate-readme 205 缺 README、repo-check mermaid 10880 错误（921 文件）与 filename 作用域违规（docs 2804 中 2695 为 `_build/` 本地产物）经迁移前基线 `a9fdd43f`（分诊时 HEAD~5）比对与区域分布分析全部证实为预存债务，**迁移回归 = 0**，分流登记 mapping.md §8；filename 根部全树扫描在 Windows 空转（rglob 不剪枝 EXCLUDED_DIRS）定性为工具缺陷，登记 backlog 第 5 项（CI Linux 全新检出不受影响）。TR-9.2：非 md 资产（.cc/.hpp/.py/.html/.ttf/.js/.png 等）随目录批次 git mv 迁移，check-toctrees 全可达验证覆盖引用完整性，无新增资产断链。
 
 ## Task 10: 迁移留痕
 
