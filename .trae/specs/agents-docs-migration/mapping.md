@@ -225,3 +225,57 @@ retrospective 2632 = patterns 849 + reports 1704 + 配套与根级 79
 - 九批次顺序按 tasks.md Task 2（①patterns 六类+mp 合并+docker-template → ②reports 21 目录+5 回补 → ③retro 配套目录与根级文件 → ④superpowers → ⑤templates → ⑥tech 落位 → ⑦topics 2 文档 → ⑧plans/task-summaries → ⑨thesis 入 _static）。
 - 每批次 git mv 前运行碰撞预检（目标已存在且不在 §1 合并清单内即报错中止）；迁移后 `.agents/docs/` 空目录移除。
 - 非 md 资产（.cc/.hpp/.py/.html/.json/.txt/.png/.ttf/.js/.gitkeep/.gitignore）随原目录批次迁移，不单独处理。
+
+## 8. 迁移后遗留债务 Backlog（Task 8 登记，2026-09-01 门禁终验实测）
+
+> 登记原则：本工程验收口径为"迁移回归 = 0"。下列各项均经 HEAD~5（五个迁移提交之前）基线比对或门禁逻辑判定为**预存债务**，不由本迁移引入；按治理归属分流，不在本工程修复。
+
+### 8.1 子模块待修清单（主仓门禁豁免，修复须走上游仓库流程）
+
+豁免依据：`.agents/scripts/constants.py:20-27` 的 `EXCLUDED_DIRS` 含 `projects`（与 `vendor` 同策略，附理由注释），主仓 check-links 等门禁不越界扫描子模块。
+
+**projects/xuanspace（25 处 `.agents/docs` 旧口径引用，2026-09-01 Grep 实测）：**
+
+| 位置 | 数量 | 性质 | 上游修复建议 |
+|---|---|---|---|
+| `libs/caffe-ffi/README.md` L58/L182/L184/L293 | 4 | 相对链接 `../../../../.agents/docs/retrospective/patterns/...`（methodology-patterns/docker-canonical-build-environment、code-patterns/build-failure-layered-triage） | 路径前缀 `.agents/docs/` → `docs/`，层级重算 |
+| `libs/caffe-ffi/docs/training/TRAINING_GUIDE.md:175` | 1 | 相对链接指向旧 reports 路径 | 同上 |
+| `libs/caffe-ffi/docs/testing/TESTING_GUIDELINES.md:346` | 1 | `file:///d:/spaces/SpecWeave/.agents/docs/...` 异机绝对链接 | 改为上游仓库间相对/规范引用，消除本机 file:// |
+| `libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md` L6/L123/L124 | 3 | 相对链接 `../../../../.agents/docs/retrospective/reports/...` | 前缀替换 |
+| `libs/caffe-ffi/scripts/check_c1_kink_protection.py:540` | 1 | 控制台提示文本 `.agents/docs/knowledge/best-practices/float-precision-testing-guide.md` | 文本路径更新 |
+| `vendor/caffe/AGENTS.md` L11/L74/L75、`vendor/caffe/.agents/README.md` L20/L25、`vendor/caffe/.agents/context-routing.md` L119/L123、`vendor/caffe/.agents/architecture-map.md:207`、`vendor/caffe/.agents/task-summary-caffe-proto-20260722.md` L76/L487 | 11 | 规范文本中指向 SpecWeave 主仓的旧路径引用（相对与 `file:///d:/spaces/...` 混合） | 统一改写为 `docs/...` 新口径，file:// 改相对 |
+| `vendor/caffe/docker/{standalone,origin,standalone/pycaffe-customer}/.agents/context-routing.md` | 3 | 文本引用 `.agents/docs/retrospective/patterns/` | 文本口径更新 |
+| `vendor/caffe/docker/local/conda/RUNTIME_IMAGE_USAGE.md:225` | 1 | GitHub blob URL `github.com/xinetzone/SpecWeave/blob/main/.agents/docs/...`——主仓迁移后**已 404** | 上游更新为 `.../blob/main/docs/...` |
+| `vendor/caffe/.trae/specs/readme-comprehensive-update/checklist.md:62` | 1 | `file:///d:/spaces/...` 异机链接 | 归档/spec 文本，改为相对或标注失效 |
+
+**projects/awesome-okf-xs（1 处）：** `doc/bundles/ai/ai-agent/a2a-mcp-convergence/log.md:14` 的 `resource: .agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md` 文本引用——上游更新为 `docs/...`。
+
+**projects/tvm-ffi：** 0 处命中，无需处理。
+
+### 8.2 主仓预存门禁债务（迁移回归 = 0）
+
+| # | 债务项 | 规模（2026-09-01 实测） | 基线证据 | 建议治理归属 |
+|---|---|---|---|---|
+| 1 | check-links 断链 | 728 条本地断链 + 230 条目录型链接警告（迁移完成后口径；迁移前 765，其中 37 条为本工程漏修、已修复并复跑验证 765→728） | 395 条指向异机 `d:\spaces\*` file:// 绝对链接、其余为历史内容重组缺口；均非迁移引入 | 链接治理专项：file:// 绝对链接清理 + 历史重组断链修复 |
+| 2 | 预存死链 7 条 | `commands/first-principles.md:197`；`commands/token-optimize.md:243,260`、`roles/token-optimizer.md:24`、`skills/token-optimize-cmd/SKILL.md:22,133,202` | `git cat-file -e HEAD~5:<目标>` 证实旧树即不存在（目录早已重组入编号分类 `learning/00-essence-and-thinking/`、`learning/02-agent-engineering-methodology/04-context-optimization/`） | 对应 skill/command 内容修复（改指新路径） |
+| 3 | repo-check mermaid | 10880 错误 / 654 警告，921 文件（docs 814、.agents 63、.trae 37、apps 6、根 README 1） | Mermaid 块 `<br/>` 标签、中文节点/边标签未加引号；迁移内容字节一致（rename），迁移新增文件（19 导航 index、ledger、本 spec）零命中；门禁 [1/16] 无 continue-on-error，**基线即红** | Mermaid 安全编码治理专项（`repo-check.py mermaid --fix` 可自动修部分） |
+| 4 | repo-check filename | 作用域扫描：docs 2804（其中 2695 为 `docs/_build/` Sphinx 本地产物 .doctree/.mo/.js.map，已 gitignore 非仓库资产）、.agents 8（.psm1/.cmake/.cmd/.hpp/.pth）、apps 32（.conf/.onnx/.mp4 等）、.trae 7（旧 spec .mdx/.cfg）、.meta 0 | 迁移文件全部为合规英文名；违规均为预存扩展名与本地构建产物 | 扫描器增补 `_build` 排除；扩展名白名单评审 |
+| 5 | filename 根部扫描性能 | Windows 本地 rglob 全树 >10 分钟不返回（CPU 1100s+） | 扫描器遍历不剪枝 excluded 目录（vendor/projects/.git/node_modules 仅在 yield 后过滤）；CI Linux 全新检出不受影响 | 工具优化：os.walk 预剪枝 EXCLUDED_DIRS |
+| 6 | generate-readme --check | 205 个目录缺 README，全在 docs/ 区（.agents=0、apps=0） | 与迁移前审计基线一致（175 PRE_EXISTING + 24 CARRIED_OVER + 6 伪报），迁移回归=0 | README 补全计划 |
+| 7 | ~~check-frontmatter~~ | **2026-09-01 终验：exit=0，5805 个文件全部合规**（Task 4 frontmatter 批量治理已完成，该项由红转绿，不再是债务） | 8-31 基线本已归零；迁移初期 2290 错误为迁入文件 FM 不合规，Task 4 已批量修复终验通过 | 已结项 |
+| 8 | version-ripple（CI 门，错误 0） | 467 警告（20 个文件无 x-toml-ref） | 红错已由 C7 清零，警告为存量 | TOML 镜像补全 |
+| 9 | .agents 区 templates 误报 | version-ripple 19 红 + 14 黄，全在 templates/ | `{{...}}` 占位符/虚构示例触发，fix 工具设计跳过模板，CI 从不扫描 .agents 区 | 工具规则：模板路径豁免（低优先级） |
+| 10 | pattern-maturity 警告 | 475 项警告（错误已由 C8 修复至 0，327 通过） | 模式条目成熟度存量 | 模式库持续建设 |
+
+### 8.3 复验命令（可复现）
+
+```powershell
+python .agents/scripts/check-links.py                      # 债务 1、2
+python .agents/scripts/repo-check.py mermaid               # 债务 3
+python .agents/scripts/repo-check.py filename --directory docs  # 债务 4（_build 产物）
+python .agents/scripts/generate-readme.py --check          # 债务 6
+python docs/scripts/check-frontmatter.py                   # 已结项：exit=0，5805 合规
+python .agents/scripts/check-version-ripple.py --root docs/retrospective --bootstrap  # 债务 8、9
+python .agents/scripts/pattern-maturity.py check           # 债务 10
+```
+

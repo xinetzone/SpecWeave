@@ -1,4 +1,12 @@
 # 变更日志
+## 2026-09-01
+
+- 文档中心统一迁移：`.agents/docs/` 全部内容迁入根 `docs/` 单文档中心（spec：`.trae/specs/agents-docs-migration/`，session sc-20260901-agents-docs-migration-resume）
+- 迁移规模：文档树 4360 个文件 git mv 落位（源 2698 = 迁入 2657 + 去重丢弃 41）；`.meta/toml` 镜像 1714 rename + 241 删除 + 1240 骨架新建 + 252 移动保留；x-toml-ref 路径批量重写；`.agents/docs/` 与 `.meta/toml/.agents/docs/` 实体消亡；`.meta/toml/.agents/` 399 个规范层镜像合法保留
+- 系列原子提交：docs(structure) 文档树迁移、chore(meta) TOML 镜像、chore(scripts) 门禁工具链适配、fix(links) 全仓链接收敛（754 文件）、docs(spec) 迁移档案；收尾四原子提交——fix(links) 补齐 .agents 区 37 处链接深度回归（check-links 断链 765→728）、fix(meta) 两处 TOML id/title 漂移对齐（version-ripple 红错清零）、fix(scripts) pattern-maturity 排除 index/log 导航文件、docs(changelog) docgen 统计同步 3173+
+- 门禁终验（迁移回归 = 0）：check-toctrees 通过、check-utf8 5810 文件通过、check-frontmatter 5805 文件全部合规（exit=0）、version-ripple（CI 门）红错 0、docgen all exit=0、pattern-maturity 0 FAIL（327 通过）、repo-check gitignore/vendor/roles 三项通过；check-links 残留 728 断链 + 230 目录警告全部经 HEAD~5 基线比对证实为预存债务（异机 file://、历史重组缺口）；generate-readme 205 缺 README 全预存；mermaid 10880 错误为基线即红的预存内容债务，均登记 backlog
+- 遗留债务登记：`.trae/specs/agents-docs-migration/mapping.md` §8——子模块待修清单（xuanspace 25 处旧口径引用、awesome-okf-xs 1 处，含 1 条迁移后已 404 的 GitHub blob URL）+ 主仓门禁债务清单 10 项（9 项预存债务分流治理、1 项 check-frontmatter 终验已转绿）+ 可复现复验命令
+
 ## 2026-08-31
 
 - docs 文档中心全量复盘行动项推进（session sc-20260831-docs-debt-remediation，源报告：retrospective/reports/concepts/milestone/docs-full-retrospective-20260831.md 第六章 ACT-1~ACT-6）
