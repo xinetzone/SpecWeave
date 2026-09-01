@@ -68,6 +68,28 @@ class TestFindMarkdownFiles:
         assert len(files) == 1
         assert files[0].name == "keep.md"
 
+    def test_repo_root_relative_exclude_works_in_subdir_scan(self, tmp_path):
+        # 工程根标记（resolve_project_root 以 AGENTS.md 为锚点）
+        (tmp_path / "AGENTS.md").write_text("# Root\n", encoding="utf-8")
+        scan_root = tmp_path / "sub"
+        excluded_dir = scan_root / "example-wiki"
+        excluded_dir.mkdir(parents=True)
+        (excluded_dir / "placeholder.md").write_text("# P\n", encoding="utf-8")
+        (scan_root / "keep.md").write_text("# K\n", encoding="utf-8")
+        # 排除项为工程根相对路径，扫描根为其子目录时仍应生效
+        files = md.find_markdown_files(scan_root, exclude_dirs=["sub/example-wiki"])
+        names = sorted(f.name for f in files)
+        assert names == ["keep.md"]
+
+    def test_absolute_path_exclude(self, tmp_path):
+        (tmp_path / "keep.md").write_text("# K\n", encoding="utf-8")
+        hidden = tmp_path / "private"
+        hidden.mkdir()
+        (hidden / "secret.md").write_text("# S\n", encoding="utf-8")
+        files = md.find_markdown_files(tmp_path, exclude_dirs=[str(hidden)])
+        assert len(files) == 1
+        assert files[0].name == "keep.md"
+
     def test_no_md_files(self, tmp_path):
         (tmp_path / "a.txt").write_text("text\n", encoding="utf-8")
         assert md.find_markdown_files(tmp_path) == []

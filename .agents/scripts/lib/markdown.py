@@ -17,7 +17,7 @@ from pathlib import Path
 from constants import EXCLUDED_DIRS
 from lib.atomic_write import atomic_edit_text
 from lib.link_fixer import INLINE_LINK_RE
-from lib.project import is_non_worktree_path
+from lib.project import is_non_worktree_path, resolve_project_root
 
 # 标题提取：匹配第一个一级标题
 TITLE_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
@@ -32,16 +32,31 @@ def find_markdown_files(
 
     默认排除 constants.EXCLUDED_DIRS 中的系统目录（.git、vendor、.venv、
     __pycache__、node_modules、.temp），可通过 exclude_dirs 传入额外排除
-    目录（按相对 root 的路径前缀匹配）。
+    目录。排除项采用双路匹配：①按相对扫描根的路径前缀匹配（兼容裸
+    目录名与扫描根相对路径）；②按工程根解析的绝对路径匹配（修复仓库
+    根相对路径排除项在子目录扫描时失效的问题）。
 
     Args:
         root: 扫描根目录。
-        exclude_dirs: 额外排除的目录（list 或 set），按相对路径前缀匹配。
+        exclude_dirs: 额外排除的目录（list 或 set）。
 
     Returns:
         匹配的 .md 文件 Path 列表。
     """
     extra = set(exclude_dirs) if exclude_dirs else set()
+    resolved_root = Path(root).resolve()
+    exclude_abs: list[Path] = []
+    for excl in extra:
+        excl_path = Path(excl)
+        if excl_path.is_absolute():
+            exclude_abs.append(excl_path.resolve())
+        else:
+            # 相对路径排除项以工程根为基准解析（如 ".agents/templates/..."）
+            try:
+                base = resolve_project_root(resolved_root)
+            except FileNotFoundError:
+                base = resolved_root
+            exclude_abs.append((base / excl_path).resolve())
     md_files: list[Path] = []
     for md_path in root.rglob("*.md"):
         parts = set(md_path.parts)
@@ -49,12 +64,21 @@ def find_markdown_files(
             continue
         if is_non_worktree_path(md_path, root):
             continue
+        # 路径①：相对扫描根的前缀匹配（兼容裸目录名）
         try:
-            rel_path = md_path.relative_to(root)
+            rel_str = md_path.relative_to(root).as_posix()
         except ValueError:
-            rel_path = md_path
-        rel_str = rel_path.as_posix()
-        if any(rel_str.startswith(excl.replace("\\", "/")) for excl in extra):
+            rel_str = None
+        if rel_str and any(
+            rel_str.startswith(excl.replace("\\", "/")) for excl in extra
+        ):
+            continue
+        # 路径②：工程根解析的绝对路径匹配（子目录扫描时仍生效）
+        resolved_md = md_path.resolve()
+        if any(
+            resolved_md == excl or resolved_md.is_relative_to(excl)
+            for excl in exclude_abs
+        ):
             continue
         md_files.append(md_path)
     return md_files
