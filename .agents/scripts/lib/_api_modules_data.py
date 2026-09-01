@@ -344,7 +344,7 @@ def get_module_definitions():
             "| 常量 | 类型 | 说明 |",
             "|------|------|------|",
             "| `ANSI_GREEN/ANSI_YELLOW/ANSI_RED/ANSI_CYAN/ANSI_RESET` | str | ANSI 颜色代码 |",
-            "| `EXCLUDED_DIRS` | set[str] | 文件扫描默认排除目录（.git/vendor/.venv/__pycache__/node_modules/.temp） |",
+            "| `EXCLUDED_DIRS` | set[str] | 文件扫描默认排除目录（.git/vendor/projects/.venv/__pycache__/node_modules/.temp/.chaos/.claude） |",
             "| `REQUIRED_RULES` / `TEMP_PATHS` | list | .gitignore 必需规则与临时路径 |",
             "| `LINK_CHECK_*` | - | check-links.py 默认参数（timeout/workers/user-agent等） |",
             "| `VALID_TIERS` / `ROLE_EXCLUDED_FILES` | - | 角色权限校验常量 |",

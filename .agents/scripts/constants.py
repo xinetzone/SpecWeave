@@ -17,8 +17,14 @@ enforce_python310()
 
 # ============================================================================
 # 通用排除目录（check-gitignore、check-links、check-source-traceability、check-move）
+# 说明：vendor/ 为第三方依赖 submodule、projects/ 为第一方子项目 submodule，
+# 二者均通过 gitlink 追踪外部仓库引用，主仓库的文档/链接检查不越界扫描
+# （子模块有自己的规范体系，问题须走子项目流程，见 AGENTS.md 四大顶层区域）。
+# .temp/ 与 .chaos/ 为 .gitignore 覆盖的本地临时/工作区目录，非版本控制资产，
+# 不纳入主仓检查（.chaos 为 flexloop chaos 本地工作区，可能含权限受限文件）。
+# .claude/ 为本地 AI 工具配置目录（未纳入版本控制），与仓库内容无关，同样不扫描。
 # ============================================================================
-EXCLUDED_DIRS = {".git", "vendor", ".venv", "__pycache__", "node_modules", ".temp"}
+EXCLUDED_DIRS = {".git", "vendor", "projects", ".venv", "__pycache__", "node_modules", ".temp", ".chaos", ".claude"}
 NON_WORKTREE_PATH_PREFIXES = {
     ".meta/backup",
     ".backups",
@@ -118,8 +124,8 @@ TARGETS = {
         "root_files_prefix": "../",
         "root_files": ROOT_FILES,
     },
-    ".agents/docs/README.md": {
-        "scan_dir": ".agents/docs/",
+    "docs/index.md": {
+        "scan_dir": "docs/",
         "marker_start": "<!-- NAV_TABLE_START -->",
         "marker_end": "<!-- NAV_TABLE_END -->",
         "link_prefix": "",

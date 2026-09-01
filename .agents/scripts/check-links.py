@@ -1128,10 +1128,19 @@ def main(argv=None) -> int:
 
     # 解析所有链接
     all_links: list[tuple[Path, str, str, int]] = []  # (文件, 文本, URL, 行号)
+    unreadable = 0
     for md_file in md_files:
-        links = parse_links(md_file)
+        try:
+            links = parse_links(md_file)
+        except OSError as exc:
+            # 权限受限/IO 异常的文件（如本地工作区中的只读文件）不应导致全量扫描崩溃
+            unreadable += 1
+            print(f"  警告: 无法读取 {md_file}（{exc.__class__.__name__}），已跳过")
+            continue
         for text, url, line_num in links:
             all_links.append((md_file, text, url, line_num))
+    if unreadable:
+        print(f"  跳过不可读文件: {unreadable} 个")
 
     # 分类链接
     external_links = [(f, t, u, ln) for f, t, u, ln in all_links if is_external_url(u)]

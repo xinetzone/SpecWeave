@@ -58,10 +58,14 @@ PREFIX_RULES: list[tuple[str, str]] = [
     ("knowledge/platform", "Reference"),
     ("knowledge/templates", "Reference"),
     ("knowledge/", "Reference"),
+    ("tech/code-wiki", "Wiki Tutorial"),
     ("tech/", "Guide"),
     ("refactor/", "Report"),
     ("general/", "Concept"),
     ("topics/", "Concept"),
+    ("superpowers/specs", "Spec"),
+    ("superpowers/plans", "Plan"),
+    ("superpowers/", "Reference"),
 ]
 DEFAULT_TYPE = "Reference"
 

@@ -2,7 +2,7 @@
 """文档索引与看板生成统一工具。
 
 聚合以下文档生成功能：
-  nav        - 自动生成 README.md / docs/README.md / .agents/docs/README.md 文档导航表
+  nav        - 自动生成 README.md / docs/README.md / docs/index.md 文档导航表
   dashboard  - 自动生成 .trae/specs/ 执行进度看板
   apps       - 自动生成 apps/README.md 应用清单索引表
   stats      - 自动统计并更新 README.md / AGENTS.md / .agents/README.md 核心数据指标
@@ -98,7 +98,9 @@ def _nav_scan_docs(root: Path, scan_dir: str, root_files: list[str] | None = Non
     scan_path = root / scan_dir
     if scan_path.exists():
         for md_file in sorted(scan_path.glob("*.md")):
-            if md_file.name == "README.md":
+            # 跳过 hub 页自身：README.md（旧惯例）与 index.md（OKF v0.2 文档中心惯例），
+            # 避免导航表出现自链接（迁移后 docs/ 入口为 docs/index.md）
+            if md_file.name in ("README.md", "index.md"):
                 continue
             title = _nav_extract_title(md_file)
             desc = _nav_extract_description(md_file)
@@ -629,7 +631,8 @@ def _stats_count_role_files(path: Path) -> int:
 
 def _stats_collect(root: Path) -> ProjectStats:
     agents = root / ".agents"
-    patterns_root = agents / "docs" / "retrospective" / "patterns"
+    # 模式库已随 .agents/docs/ 统一迁移至 docs/ 文档中心（OKF v0.2）
+    patterns_root = root / "docs" / "retrospective" / "patterns"
 
     critical_paths = [
         (agents / "scripts", "自动化脚本目录"),
@@ -816,7 +819,7 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
     snippet_updated = False
 
     for pattern_str in [
-        r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(.agents/docs/project-overview\.md\)。",
+        r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(docs/tech/references/project-overview\.md\)。",
         r"本体系经过 \*\*\d+\+ 次真实提交\*\* 持续迭代验证，.*?详见 \[项目概述\]\(docs/project-overview\.md\)。",
     ]:
         pattern = re.compile(pattern_str, re.DOTALL)
@@ -849,7 +852,7 @@ def _stats_update_readme(root: Path, stats: ProjectStats) -> bool:
 
 
 def _stats_update_changelog_archive(root: Path, stats: ProjectStats) -> bool:
-    archive = root / ".agents" / "docs" / "retrospective" / "reports" / "project-governance" / "documentation-governance" / "agents-manifest-changelog-archive.md"
+    archive = root / "docs" / "retrospective" / "reports" / "project-governance" / "documentation-governance" / "agents-manifest-changelog-archive.md"
     if not archive.exists():
         print(f"  跳过: {archive} 不存在")
         return False
@@ -1106,7 +1109,7 @@ def main():
     parser = argparse.ArgumentParser(description='文档索引与看板生成统一工具')
     subparsers = parser.add_subparsers(dest='command', help='可用子命令')
 
-    p_nav = subparsers.add_parser('nav', help='生成文档导航表（README.md / docs/README.md / .agents/docs/README.md）')
+    p_nav = subparsers.add_parser('nav', help='生成文档导航表（README.md / docs/README.md / docs/index.md）')
     add_common_args(p_nav)
 
     p_dash = subparsers.add_parser('dashboard', help='生成 Spec 执行进度看板（根 README.md）')
