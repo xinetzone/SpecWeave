@@ -29,6 +29,15 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | zhujian-insight-writer | "撰写洞察"、"生成洞察"、"分析概念"、"补充洞察库"、"体道四法" | 1（帛书《老子》哲学洞察撰写，三不铁律） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](../../apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) |
 | dao-scholar-illustrations | "配图"、"文章插图"、"道德经学者"、"手绘"、"shot list"、"道家哲学配图" | 1（道德经学者风格生图，九种构图模式） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](../../apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) |
 
+### Trae 内置工作流 Skill（2个，来自 external/doutops）
+
+| Skill名 | 触发词 | 方案数 | 版本 | 路径 |
+|---------|--------|-------|------|------|
+| trae-plan-mode | "规划"、"实施计划"、"plan mode"、"计划批准"、"先规划后执行"、"有界变更" | 1（单一实施计划+一次批准门，批准前禁写，计划落盘 .trae/documents/） | v1.0.0 | [skills/trae-plan-mode/SKILL.md](../skills/trae-plan-mode/SKILL.md) |
+| trae-spec-mode | "规范模式"、"spec mode"、"需求澄清"、"验收标准"、"任务队列"、"独立审查"、"恢复中断工作流" | 1（五阶段规范工作流，spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收+独立 Review 门） | v1.0.0 | [skills/trae-spec-mode/SKILL.md](../skills/trae-spec-mode/SKILL.md) |
+
+> 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版。
+
 ### 命令集门面（9个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
