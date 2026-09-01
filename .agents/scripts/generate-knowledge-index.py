@@ -43,7 +43,7 @@ from lib.knowledge_classification import (
 from lib.cli import add_knowledge_filter_args
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-KNOWLEDGE_BASE = PROJECT_ROOT / ".agents" / "docs" / "knowledge"
+KNOWLEDGE_BASE = PROJECT_ROOT / "docs" / "knowledge"
 
 
 def scan_knowledge_entries(

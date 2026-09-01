@@ -47,7 +47,7 @@ from lib.cli import (
 from lib.project import resolve_project_root
 
 DEFAULT_REPORTS_DIR = (
-    resolve_project_root(__file__) / ".agents" / "docs" / "retrospective" / "reports"
+    resolve_project_root(__file__) / "docs" / "retrospective" / "reports"
 )
 
 # 行动项章节标题（兼容中英文、编号前缀）
