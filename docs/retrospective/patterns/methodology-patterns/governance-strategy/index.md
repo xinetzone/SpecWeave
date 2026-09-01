@@ -32,6 +32,7 @@ data-validation-four-checks
 defensive-programming-first-principles
 dev-env-dockerfile-optimization
 docker-canonical-build-environment
+dual-env-drift-reconciliation
 dual-mode-submodule-governance
 dual-quality-gate-subagent
 dual-track-metadata-consistency
