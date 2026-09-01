@@ -35,13 +35,15 @@ flowchart LR
 
 ## 权限分级映射
 
-工作空间权限沿用 `../../teams/permission-system.md` 的 L1/L2/L3 分级体系，并按工作空间场景细化。
+> RBAC 权限模型定义见 [teams/permission-system.md](../../teams/permission-system.md)，本文仅描述工作区协作场景的扩展差异。
 
-| 级别 | 标识 | 工作空间典型权限 | 校验要求 |
-|---|---|---|---|
-| L1 | public | view_world_info、view_member_list、view_world_config（脱敏）、read_resource | 无需额外校验 |
-| L2 | internal | invite_member、modify_world_config、write_resource、switch_environment | 单次身份验证 |
-| L3 | privileged | dissolve_world、revoke_permission、modify_permission_policy、export_audit_log | 双重验证 + 操作日志 |
+工作空间权限沿用 L1/L2/L3 分级体系，级别标识与校验要求与团队级定义一致，典型权限按工作空间场景细化：
+
+| 级别 | 工作空间典型权限 |
+|---|---|
+| L1 | view_world_info、view_member_list、view_world_config（脱敏）、read_resource |
+| L2 | invite_member、modify_world_config、write_resource、switch_environment |
+| L3 | dissolve_world、revoke_permission、modify_permission_policy、export_audit_log |
 
 ## 权限分配与回收流程
 
