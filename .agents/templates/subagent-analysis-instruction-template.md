@@ -8,7 +8,7 @@ tags: ["subagent", "analysis", "instruction", "template", "standardized"]
 ---
 # 子代理分析任务标准化指令模板
 
-> 本模板基于 [BP-SUBAGENT-STD 模式](../../docs/retrospective/patterns/methodology-patterns/subagent-standardized-instruction.md)（L2-validated）。
+> 本模板基于 [BP-SUBAGENT-STD 模式](../../docs/retrospective/patterns/methodology-patterns/concepts/subagent-standardized-instruction.md)（L2-validated）。
 > 使用时将 `[占位符]` 替换为具体内容,删除不需要的步骤,保持指令长度≤2000字。
 
 ## 模板正文（复制以下内容到子代理任务描述中）
@@ -95,7 +95,7 @@ tags: ["subagent", "analysis", "instruction", "template", "standardized"]
 
 ## 关联资源
 
-- [BP-SUBAGENT-STD 模式文档](../../docs/retrospective/patterns/methodology-patterns/subagent-standardized-instruction.md)
-- [BP-DUAL-LAYER 双层分析报告结构](../../docs/retrospective/patterns/methodology-patterns/dual-layer-analysis-report.md)
+- [BP-SUBAGENT-STD 模式文档](../../docs/retrospective/patterns/methodology-patterns/concepts/subagent-standardized-instruction.md)
+- [BP-DUAL-LAYER 双层分析报告结构](../../docs/retrospective/patterns/methodology-patterns/concepts/dual-layer-analysis-report.md)
 - [子代理Wiki交付检查清单](subagent-wiki-delivery-checklist.md)
 - [子代理输出质量检查清单](subagent-output-quality-checklist.md)

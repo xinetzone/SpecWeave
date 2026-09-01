@@ -12,11 +12,11 @@
 
 | # | 模式 | 目录/文件 | 核心问题 | 关键文件 |
 |---|------|----------|---------|---------|
-| 1 | **基础镜像环境直用** (Build-Env-Reuse) | [01-build-env-reuse/](01-build-env-reuse/) | 已有build镜像时，runtime镜像无需新建conda环境 | Dockerfile.runtime模板、entrypoint.sh模板、.pth自初始化模板 |
-| 2 | **C扩展Wheel依赖捆绑** (Wheel-Dep-Bundling) | [02-wheel-dep-bundling/](02-wheel-dep-bundling/) | conda环境下C扩展wheel的非系统共享库依赖自包含 | [bundle_wheel_deps.py](02-wheel-dep-bundling/bundle_wheel_deps.py)（完整Python工具）、CMake集成、shell快速版 |
-| 3 | **多层命令脚本挂载** (Script-Mount) | [03-multi-layer-cli-script-mount/](03-multi-layer-cli-script-mount/) | PowerShell→WSL→Docker多层CLI嵌套时引号转义 | PowerShell/WSL验证模板、bash辅助函数、CI Actions模板 |
+| 1 | **基础镜像环境直用** (Build-Env-Reuse) | [01-build-env-reuse/](01-build-env-reuse/README.md) | 已有build镜像时，runtime镜像无需新建conda环境 | Dockerfile.runtime模板、entrypoint.sh模板、.pth自初始化模板 |
+| 2 | **C扩展Wheel依赖捆绑** (Wheel-Dep-Bundling) | [02-wheel-dep-bundling/](02-wheel-dep-bundling/README.md) | conda环境下C扩展wheel的非系统共享库依赖自包含 | [bundle_wheel_deps.py](02-wheel-dep-bundling/bundle_wheel_deps.py)（完整Python工具）、CMake集成、shell快速版 |
+| 3 | **多层命令脚本挂载** (Script-Mount) | [03-multi-layer-cli-script-mount/](03-multi-layer-cli-script-mount/README.md) | PowerShell→WSL→Docker多层CLI嵌套时引号转义 | PowerShell/WSL验证模板、bash辅助函数、CI Actions模板 |
 | 🧪 | **红线测试** | [test_docker_redlines.py](test_docker_redlines.py) | 五条红线pytest自动化断言 | pytest脚本，支持--image/--modules参数 |
-| 🏗️ | **项目骨架** | [skeleton/](skeleton/) | 一键初始化Docker runtime项目 | Dockerfile+entrypoint+build.sh+verify.sh+.dockerignore+CONFIG.md |
+| 🏗️ | **项目骨架** | [skeleton/](skeleton/CONFIG.md) | 一键初始化Docker runtime项目 | Dockerfile+entrypoint+build.sh+verify.sh+.dockerignore+CONFIG.md |
 
 ---
 

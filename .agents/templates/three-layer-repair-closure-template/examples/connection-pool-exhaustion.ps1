@@ -2,7 +2,7 @@
 # 连接池耗尽 · 三层修复闭环 具体示例脚本
 # ==============================================================================
 # 配套模板：../three-layer-repair-closure-template.ps1（通用骨架）
-# 配套模式：docs/retrospective/patterns/methodology-patterns/three-layer-repair-closure.md
+# 配套模式：docs/retrospective/patterns/methodology-patterns/concepts/three-layer-repair-closure.md
 #
 # 场景：数据库连接池周期性耗尽（如每两周连接数到顶），应用报
 #       "too many connections" / "connection pool exhausted"，重启应用恢复。

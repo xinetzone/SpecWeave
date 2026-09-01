@@ -1,12 +1,12 @@
 # 三层修复闭环 · 通用自动化脚本模板
 
-基于 [三层修复闭环模式](../../../docs/retrospective/patterns/methodology-patterns/three-layer-repair-closure.md)（`bp-three-layer-repair-closure`）生成的**通用自动化修复脚本模板**，用于处置"反复复发型故障"（同类问题修复后短期再次出现）。
+基于 [三层修复闭环模式](../../../docs/retrospective/patterns/methodology-patterns/concepts/three-layer-repair-closure.md)（`bp-three-layer-repair-closure`）生成的**通用自动化修复脚本模板**，用于处置"反复复发型故障"（同类问题修复后短期再次出现）。
 
 ## 模板定位
 
-- **配套模式**：[三层修复闭环](../../../docs/retrospective/patterns/methodology-patterns/three-layer-repair-closure.md)
+- **配套模式**：[三层修复闭环](../../../docs/retrospective/patterns/methodology-patterns/concepts/three-layer-repair-closure.md)
 - **参考实现**：[fix-screenshot-tool.ps1](../../scripts/fix-screenshot-tool.ps1)（Windows 截图工具修复，含 `-Watch` 守护模式）
-- **相关模式**：[自动化幂等四要素](../../../docs/retrospective/patterns/methodology-patterns/automation-idempotent-four-elements.md)（脚本遵循 E1-E4 幂等要素）
+- **相关模式**：[自动化幂等四要素](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/automation-idempotent-four-elements.md)（脚本遵循 E1-E4 幂等要素）
 
 ## 三层结构
 

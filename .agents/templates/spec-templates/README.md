@@ -11,7 +11,7 @@ source: "萃取自实战项目经验"
 
 | 模板 | 适用场景 | 来源 |
 |------|---------|------|
-| [cpp-dependency-slimming](cpp-dependency-slimming/) | C++ 项目依赖替换/瘦身（用新库替换旧依赖、移除boost/glog等） | 萃取自 Caffe→tvm-ffi 瘦身实战 |
+| [cpp-dependency-slimming](cpp-dependency-slimming/README.md) | C++ 项目依赖替换/瘦身（用新库替换旧依赖、移除boost/glog等） | 萃取自 Caffe→tvm-ffi 瘦身实战 |
 
 ## 使用方法
 

@@ -1,7 +1,7 @@
 # ==============================================================================
 # 三层修复闭环 · 通用自动化脚本模板
 # ==============================================================================
-# 配套模式：docs/retrospective/patterns/methodology-patterns/three-layer-repair-closure.md
+# 配套模式：docs/retrospective/patterns/methodology-patterns/concepts/three-layer-repair-closure.md
 # 参考实现：.agents/scripts/fix-screenshot-tool.ps1（-Watch 守护模式）
 #
 # 本模板将「三层修复闭环」方法论文档化，用于处置"反复复发型故障"：
