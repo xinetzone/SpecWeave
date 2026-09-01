@@ -6,7 +6,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/detection-and-reporting.toml"
 ---
 # 检测与报告机制
 
-> 本文档定义硬编码治理体系中的检测与报告机制，覆盖「自动初筛 → 人工深审 → 周期复盘」三层闭环。
+本文档定义硬编码治理体系中的检测与报告机制，覆盖「自动初筛 → 人工深审 → 周期复盘」三层闭环。
 
 ## 文档导航
 
@@ -19,5 +19,3 @@ x-toml-ref: "../../.meta/toml/.agents/rules/detection-and-reporting.toml"
 | [detection-and-reporting/05-periodic-reporting.md](detection-and-reporting/05-periodic-reporting.md) | 定期报告规范 | 报告周期、7章节报告模板、数据来源与处理流程 |
 | [detection-and-reporting/06-tool-integration.md](detection-and-reporting/06-tool-integration.md) | 工具集成建议 | CI脚本集成、6类外部工具推荐、自定义脚本模板、pre-commit配置 |
 | [detection-and-reporting/07-roles-constraints.md](detection-and-reporting/07-roles-constraints.md) | 角色职责与使用约束 | developer/reviewer/orchestrator/architect职责划分、5条使用约束 |
-
-**[返回上级](README.md)**

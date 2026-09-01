@@ -6,6 +6,7 @@ x-toml-ref: "../../.meta/toml/.agents/rules/cmd-log-specification.toml"
 ---
 # CMD-LOG 命令执行日志规范
 
+本规范定义 CMD-LOG 命令集执行日志的统一格式、事件模型、步骤编号与强制日志纪律，适用于 7 个命令集并与 SG-LOG/PDR-LOG 协同。
 
 ## 文档导航
 
@@ -16,11 +17,3 @@ x-toml-ref: "../../.meta/toml/.agents/rules/cmd-log-specification.toml"
 | [通用事件、步骤编号与命令集特有事件](cmd-log-specification/03-events-steps.md) | CMD_START/STEP_ENTER等5个通用生命周期事件、S0-S6步骤编号规范、7个命令集特有事件枚举、**§8强制日志纪律（5条铁律+违规判定标准）** |
 | [输出要求、日志解析与过滤分析](cmd-log-specification/04-output-parsing.md) | 零依赖输出要求、grep/awk快速过滤命令、Python正则解析示例、常见分析场景 |
 | [检查清单、日志集成关系与Changelog](cmd-log-specification/05-checklist-integration-changelog.md) | 实施检查清单（含11.2每次调用强制执行项）、与SG-LOG/PDR-LOG/应用日志的协作关系、版本更新历史（当前v1.3.0） |
-
----
-
-## 相关模式
-
-- - [阶段守卫规范](stage-guardrails.md)
-- - [PDR前置文档读取协议](../protocols/pre-document-reading.md)
-- - [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
