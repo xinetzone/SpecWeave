@@ -1,22 +1,22 @@
 ---
-name: trae-spec-mode
-version: 1.0.0
-description: '复杂仓库变更的端到端规范工作流（Spec Mode）。当工作复杂、高影响、跨多组件或跨会话、存在实质性歧义或质量风险、需要可追溯的决策/进度/完成证据，或需要恢复被中断的规范工作流时，必须使用此技能。触发词：规范模式、spec mode、需求澄清、验收标准、任务队列、独立审查、修复队列、恢复中断工作流。简单局部修改、纯头脑风暴、无后续实施的需求文档、代码审查、调试请勿使用；有界变更用 trae-plan-mode。'
+name: TRAE-spec-mode
+version: 1.0.1
+description: '复杂仓库变更的端到端规范工作流（Spec Mode）。当工作复杂、高影响、跨多组件或跨会话、存在实质性歧义或质量风险、需要可追溯的决策/进度/完成证据，或需要恢复被中断的规范工作流时，必须使用此技能。触发词：规范模式、spec mode、需求澄清、验收标准、任务队列、独立审查、修复队列、恢复中断工作流。简单局部修改、纯头脑风暴、无后续实施的需求文档、代码审查、调试请勿使用；有界变更用 TRAE-plan-mode。'
 argument-hint: "[复杂变更：需求|规划|实施|审查|恢复]"
 user-invocable: true
 paths:
-  - ".agents/skills/trae-spec-mode/**"
-source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-spec-mode/SKILL.md（Trae 内置 doutops skill，2026-09-01 集成，本地适配为中文）"
+  - ".agents/skills/TRAE-spec-mode/**"
+source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-spec-mode/SKILL.md（Trae 内置 doutops 原始路径，仅作溯源；本文件为独立适配版，以本地为准）"
 title: Spec Mode — 复杂变更端到端规范工作流
-x-toml-ref: "../../../.meta/toml/.agents/skills/trae-spec-mode/SKILL.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/TRAE-spec-mode/SKILL.toml"
 ---
-# trae-spec-mode — 复杂变更端到端规范工作流（Spec Mode）
+# TRAE-spec-mode — 复杂变更端到端规范工作流（Spec Mode）
 
-> 派生自 Trae 内置 doutops skill（溯源见 frontmatter `source`），按 SpecWeave Skill 五要素规范适配为中文。工作流语义、验收词汇与产物模板与上游保持一致；`external/` 非 git 目录，本文件为本地维护版本。
+> **本地独立适配版**（SpecWeave Skill 五要素规范，中文）。Trae 内置 doutops 同步可能以英文原版覆盖本文件——覆盖后按 git 历史（自 `0931e42df` 起）恢复本版即可，无需重新适配。工作流语义、验收词汇与产物模板与上游保持一致。
 
 ## 1. Skill ID
 
-`trae-spec-mode`（姊妹技能：[trae-plan-mode](../trae-plan-mode/SKILL.md)）
+`TRAE-spec-mode`（姊妹技能：[TRAE-plan-mode](../TRAE-plan-mode/SKILL.md)）
 
 ## 2. 功能描述
 
@@ -27,11 +27,11 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/trae-spec-mode/SKILL.toml"
 - 实施者自验 + 独立 Review 双重验收（`review.md`）；
 - 中断恢复：从既有产物续跑工作流。
 
-### 与 trae-plan-mode 的选型决策树
+### 与 TRAE-plan-mode 的选型决策树
 
 ```text
 需要实施仓库变更？
-├─ 变更有界、单一计划 + 一次批准即可控制 → [trae-plan-mode](../trae-plan-mode/SKILL.md)
+├─ 变更有界、单一计划 + 一次批准即可控制 → [TRAE-plan-mode](../TRAE-plan-mode/SKILL.md)
 ├─ 复杂/高影响/跨组件或跨会话/需持久化需求与独立审查 → 本技能（Spec Mode）
 ├─ 被中断的 Spec Mode 工作流需要恢复 → 本技能（从既有产物续跑）
 └─ 仅头脑风暴/需求文档（无后续实施）/代码审查/调试/局部小改 → 都不用
@@ -49,7 +49,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/trae-spec-mode/SKILL.toml"
 - 完成需要可追溯证据与独立 Review 门；
 - 被中断的 Spec Mode 工作流需要从既有产物恢复。
 
-不要用于简单局部修改、纯头脑风暴、无后续实施的需求文档、规划、代码审查、调试、解释或仓库分析。有界且结果清晰的变更用 [trae-plan-mode](../trae-plan-mode/SKILL.md)。
+不要用于简单局部修改、纯头脑风暴、无后续实施的需求文档、规划、代码审查、调试、解释或仓库分析。有界且结果清晰的变更用 [TRAE-plan-mode](../TRAE-plan-mode/SKILL.md)。
 
 ## 4. 输入与产物
 
@@ -263,7 +263,9 @@ Implement 期间 `review.md` 只读（即使先前 Review 轮次创建过它）�
 - Review 在 `review.md` 记录发现；Implement 在选取工作前把可行动发现固化到 `tasks.md`。
 - 队列含 `blocked` 项时不算清空，不得进入 Review。
 - "证据不可得"用 `blocked`，实现缺陷才用 `fail`。
+- Trae 内置同步覆盖本文件后内容会回退为英文原版——发现 language/五要素缺失即触发恢复（git 历史含本版全文）。
 
 ## 14. Changelog
 
-- **v1.0.0** (2026-09-01): 自 Trae 内置 doutops skill（原名 TRAE-spec-mode）集成并适配为中文版（产物模板保留英文骨架，见 references/artifact-templates.md）；目录名小写化为 trae-spec-mode 以符合开放标准 kebab-case 规范。
+- **v1.0.1** (2026-09-01): Trae 内置同步覆盖后恢复重写；目录名随同步路径采用大写 TRAE-*（终止命名拉锯，接受开放标准 name.format 2 项 WARN）；新增同步覆盖恢复指引。
+- **v1.0.0** (2026-09-01): 自 Trae 内置 doutops skill 集成并适配为中文版（产物模板保留英文骨架，见 references/artifact-templates.md）。

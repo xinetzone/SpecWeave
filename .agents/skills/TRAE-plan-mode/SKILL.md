@@ -1,33 +1,33 @@
 ---
-name: trae-plan-mode
-version: 1.0.0
-description: '有界仓库变更的规划-批准-执行工作流（Plan Mode）。当需要先调研仓库或向用户澄清才能确定实施步骤、且单一实施计划+一次批准门即可提供足够控制时，必须使用此技能。触发词：规划、实施计划、plan mode、计划批准、先规划后执行、有界变更、调研后规划。复杂工作（需持久化需求、验收标准、任务队列或独立审查）请勿使用，改用 trae-spec-mode。'
+name: TRAE-plan-mode
+version: 1.0.1
+description: '有界仓库变更的规划-批准-执行工作流（Plan Mode）。当需要先调研仓库或向用户澄清才能确定实施步骤、且单一实施计划+一次批准门即可提供足够控制时，必须使用此技能。触发词：规划、实施计划、plan mode、计划批准、先规划后执行、有界变更、调研后规划。复杂工作（需持久化需求、验收标准、任务队列或独立审查）请勿使用，改用 TRAE-spec-mode。'
 argument-hint: "[有界变更：调研|规划|批准|执行]"
 user-invocable: true
 paths:
-  - ".agents/skills/trae-plan-mode/**"
-source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-plan-mode/SKILL.md（Trae 内置 doutops skill，2026-09-01 集成，本地适配为中文）"
+  - ".agents/skills/TRAE-plan-mode/**"
+source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-plan-mode/SKILL.md（Trae 内置 doutops 原始路径，仅作溯源；本文件为独立适配版，以本地为准）"
 title: Plan Mode — 有界变更规划与执行
-x-toml-ref: "../../../.meta/toml/.agents/skills/trae-plan-mode/SKILL.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/TRAE-plan-mode/SKILL.toml"
 ---
-# trae-plan-mode — 有界变更规划与执行（Plan Mode）
+# TRAE-plan-mode — 有界变更规划与执行（Plan Mode）
 
-> 派生自 Trae 内置 doutops skill（溯源见 frontmatter `source`），按 SpecWeave Skill 五要素规范适配为中文。`external/` 非 git 目录，上游更新不自动同步，本文件为本地维护版本。
+> **本地独立适配版**（SpecWeave Skill 五要素规范，中文）。Trae 内置 doutops 同步可能以英文原版覆盖本文件——覆盖后按 git 历史（自 `0931e42df` 起）恢复本版即可，无需重新适配。工作流语义与上游保持一致。
 
 ## 1. Skill ID
 
-`trae-plan-mode`（姊妹技能：[trae-spec-mode](../trae-spec-mode/SKILL.md)）
+`TRAE-plan-mode`（姊妹技能：[TRAE-spec-mode](../TRAE-spec-mode/SKILL.md)）
 
 ## 2. 功能描述
 
 在实施前对**有界变更**进行规划，经批准后执行。核心操作：调研仓库 → 生成单一实施计划 → 请求批准 → 按计划实施并验证 → 汇报结果。
 
-### 与 trae-spec-mode 的选型决策树
+### 与 TRAE-spec-mode 的选型决策树
 
 ```text
 需要实施仓库变更？
 ├─ 需要调研或向用户澄清才能确定实施步骤，且一个计划+一次批准足够 → 本技能（Plan Mode）
-├─ 需要持久化需求产物、rule/rubric 验收标准、受管任务队列或独立 Review 门 → [trae-spec-mode](../trae-spec-mode/SKILL.md)
+├─ 需要持久化需求产物、rule/rubric 验收标准、受管任务队列或独立 Review 门 → [TRAE-spec-mode](../TRAE-spec-mode/SKILL.md)
 └─ 非编辑请求（解释/调查/分析/讨论）→ 直接回应，计划与批准可选
 ```
 
@@ -133,7 +133,9 @@ $(cwd)/.trae/documents/{NAME}_plan.md
 - 计划文档是实施辅助，不是需求规格——不要把它扩展成 Spec Mode 的产物与审查生命周期。
 - 范围实质变化必须重新走批准门，不能"顺手做掉"。
 - 计划落盘路径是 `.trae/documents/`，与 Spec Mode 的 `.trae/specs/` 不同，两者不要混用。
+- Trae 内置同步覆盖本文件后内容会回退为英文原版——发现 language/五要素缺失即触发恢复（git 历史含本版全文）。
 
 ## 9. Changelog
 
-- **v1.0.0** (2026-09-01): 自 Trae 内置 doutops skill（原名 TRAE-plan-mode）集成并适配为中文版；目录名小写化为 trae-plan-mode 以符合开放标准 kebab-case 规范。
+- **v1.0.1** (2026-09-01): Trae 内置同步覆盖后恢复重写；目录名随同步路径采用大写 TRAE-*（终止命名拉锯，接受开放标准 name.format 2 项 WARN）；新增同步覆盖恢复指引。
+- **v1.0.0** (2026-09-01): 自 Trae 内置 doutops skill 集成并适配为中文版。

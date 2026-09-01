@@ -33,10 +33,10 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
-| trae-plan-mode | "规划"、"实施计划"、"plan mode"、"计划批准"、"先规划后执行"、"有界变更" | 1（单一实施计划+一次批准门，批准前禁写，计划落盘 .trae/documents/） | v1.0.0 | [skills/trae-plan-mode/SKILL.md](../skills/trae-plan-mode/SKILL.md) |
-| trae-spec-mode | "规范模式"、"spec mode"、"需求澄清"、"验收标准"、"任务队列"、"独立审查"、"恢复中断工作流" | 1（五阶段规范工作流，spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收+独立 Review 门） | v1.0.0 | [skills/trae-spec-mode/SKILL.md](../skills/trae-spec-mode/SKILL.md) |
+| TRAE-plan-mode | "规划"、"实施计划"、"plan mode"、"计划批准"、"先规划后执行"、"有界变更" | 1（单一实施计划+一次批准门，批准前禁写，计划落盘 .trae/documents/） | v1.0.0 | [skills/TRAE-plan-mode/SKILL.md](../skills/TRAE-plan-mode/SKILL.md) |
+| TRAE-spec-mode | "规范模式"、"spec mode"、"需求澄清"、"验收标准"、"任务队列"、"独立审查"、"恢复中断工作流" | 1（五阶段规范工作流，spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收+独立 Review 门） | v1.0.0 | [skills/TRAE-spec-mode/SKILL.md](../skills/TRAE-spec-mode/SKILL.md) |
 
-> 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版。
+> 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版；Trae 同步覆盖后以本仓库版本为准（大写路径为权威位置）。
 
 ### 命令集门面（9个）
 

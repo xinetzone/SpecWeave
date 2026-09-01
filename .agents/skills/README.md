@@ -58,10 +58,10 @@ title: ".agents/skills/ 目录索引"
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
-| trae-plan-mode | 内置工作流 | 有界仓库变更的规划-批准-执行工作流（单一实施计划+一次批准门，批准前禁写），计划落盘 `.trae/documents/` | 规划、实施计划、plan mode、计划批准、先规划后执行、有界变更 | [trae-plan-mode/SKILL.md](trae-plan-mode/SKILL.md) |
-| trae-spec-mode | 内置工作流 | 复杂变更端到端规范工作流（Specify→Plan→Approve→Implement→Review 五阶段，spec/tasks/review 三产物落盘 `.trae/specs/`，rule/rubric 验收词汇+独立 Review 门，支持中断恢复） | 规范模式、spec mode、需求澄清、验收标准、任务队列、独立审查、恢复中断工作流 | [trae-spec-mode/SKILL.md](trae-spec-mode/SKILL.md) |
+| TRAE-plan-mode | 内置工作流 | 有界仓库变更的规划-批准-执行工作流（单一实施计划+一次批准门，批准前禁写），计划落盘 `.trae/documents/` | 规划、实施计划、plan mode、计划批准、先规划后执行、有界变更 | [TRAE-plan-mode/SKILL.md](TRAE-plan-mode/SKILL.md) |
+| TRAE-spec-mode | 内置工作流 | 复杂变更端到端规范工作流（Specify→Plan→Approve→Implement→Review 五阶段，spec/tasks/review 三产物落盘 `.trae/specs/`，rule/rubric 验收词汇+独立 Review 门，支持中断恢复） | 规范模式、spec mode、需求澄清、验收标准、任务队列、独立审查、恢复中断工作流 | [TRAE-spec-mode/SKILL.md](TRAE-spec-mode/SKILL.md) |
 
-> 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（`external/` 非 git 目录），已适配为中文五要素版，source 字段记录原始路径。
+> 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（`external/` 非 git 目录），已适配为中文五要素版，source 字段记录原始路径；Trae 同步覆盖后以本仓库版本为准。
 
 ### 脚本命令门面（10个）
 
@@ -128,7 +128,8 @@ flowchart LR
 
 ## Changelog
 
-- **v1.13** (2026-09-01): 新增「Trae 内置工作流 Skill」分类（2个：trae-plan-mode/trae-spec-mode，原名 TRAE-*，小写化以符合开放标准 kebab-case），自 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills 集成并适配为中文五要素版（保留原始工作流语义与产物模板骨架，frontmatter 补全 version/paths/source 溯源，description 改单行单引号触发式标量）。trae-plan-mode 承载有界变更"规划→批准→执行"（计划落盘 .trae/documents/，批准前禁写）；trae-spec-mode 承载复杂变更五阶段规范工作流（spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收词汇+独立 Review 门，支持中断恢复）。两者互为选型路由（有界→plan，复杂→spec）。同步注册 .agents/capability-registry/02-skills.md 与 .meta/toml 镜像。
+- **v1.14** (2026-09-01): TRAE-plan-mode/TRAE-spec-mode 目录名回归大写——实测 Trae 内置 doutops 同步会以 TRAE-* 大写路径回写 .agents/skills/ 并覆盖为英文原版（3 文件被还原），为终止命名拉锯，以同步路径为权威位置；内容恢复为中文独立适配版并在 SKILL.md 顶部固化"同步覆盖后按 git 历史恢复"指引。质量分 90/100（大写 name 触发开放标准 name.format/compliance 2 项 WARN，主动接受并文档化）。
+- **v1.13** (2026-09-01): 新增「Trae 内置工作流 Skill」分类（2个：TRAE-plan-mode/TRAE-spec-mode），自 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills 集成并适配为中文五要素版（保留原始工作流语义与产物模板骨架，frontmatter 补全 version/paths/source 溯源，description 改单行单引号触发式标量）。TRAE-plan-mode 承载有界变更"规划→批准→执行"（计划落盘 .trae/documents/，批准前禁写）；TRAE-spec-mode 承载复杂变更五阶段规范工作流（spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收词汇+独立 Review 门，支持中断恢复）。两者互为选型路由（有界→plan，复杂→spec）。同步注册 .agents/capability-registry/02-skills.md 与 .meta/toml 镜像。
 - **v1.12** (2026-08-29): 新增 wsl-ops-cmd 脚本命令门面（脚本门面从9个→10个），封装 WSL2 主机层运维四大 SOP：Docker GPU 三层分诊修复（Restart-WslDockerGpu.ps1 四层验证 + setup-wsl-docker-gpu.sh 幂等配置，L1/L2/L3 失败层路由）、Docker 存储清理五步法（L2-validated 模式：快照预检→三层保护带→按序清理→三重存活验证→VHDX 压缩收尾）、VHDX 物理压缩（compress-wsl-vhdx.ps1，fstrim→shutdown→Hyper-V/diskpart 双路径）、Trae 五变体缓存安全清理（cleanup-trae-cache.ps1，含"AI 会话在 Trae 内不可自清理"操作悖论警示）。核心铁律：三层 Shell 跨界禁止 PowerShell 展开 `$()`、daemon 不可达必须 ABORT、setsid 而非 nohup 持久化 dockerd。含 9 项安全清单、11 行错误表、15 条 Gotchas、5 处 Why 解释；基于 44 条事实与 4 条洞察、4 视角对抗审查（3 条意见采纳），质量分 100/100。与 jpman-podman-ops/docker-cache-cmd/docker-wsl-bridge-cmd 形成 WSL/容器运维家族边界路由。
 - **v1.11** (2026-08-29): 新增 jpman-podman-ops 脚本命令门面（脚本门面从8个→9个；首个"应用CLI门面"类型，封装 apps/containers/jupyter-podman-rootless 的 jpman CLI 而非 .agents/scripts/），萃取 jupyter-podman-rootless 容器日常驾驶工作流：podman machine 就绪纪律（machine ssh/保活/禁 systemd=true）、jpman 幂等 start 与 Mounting 行核对、healthcheck 验证、WARN 警告先验法分诊（hello-world 最小验证→三板斧）、rootless 三必需参数与容器内 root 运行模型、rebuild/rebuild-all/save/load/wsl-export 场景路由。含 15 条反模式、9 项安全检查清单、12 条 Gotchas、10 处 Why 解释；基于 42 条事实与 4 条跨案例洞察、4 视角对抗审查，质量分 100/100。与 docker-cache-cmd（灾备缓存）、docker-wsl-bridge-cmd（WSL 转换）形成"日常驾驶↔灾备↔转换"边界路由。
 - **v1.10** (2026-08-29): 新增 blog-article-to-okf-wiki 工作流门面，封装博文/资讯文章→OKF 知识包转化七阶段工作流（敏感度预检→操作可复现性两问→归属决策树→F编号事实采集+P0权威核验勘误四张清单→三层知识拆分→信源先行生成→对抗审查与索引收尾），含13条反模式、8项机械门禁清单、双份F编号一致性核对、flagged状态管理；经13篇异质博文（7类内容形态）实战验证（492条事实/90项P0核验/拦截4项源文硬错误），对应L3模式文档 blog-article-to-okf-bundle。同步补登 source-code-to-okf-wiki（此前已存在但未入索引），新增"工作流门面"分类（2个），Skill 分类从三类扩展为四类。
