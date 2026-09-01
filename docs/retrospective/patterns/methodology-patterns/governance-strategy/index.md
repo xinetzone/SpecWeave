@@ -27,6 +27,7 @@ commit-quality-gate-staging-inspection
 compliance-driven-rule-building
 config-persistence-full-chain-coverage
 convention-driven-creation
+credential-copy-minimization
 cross-wiki-reference-directory-first
 data-validation-four-checks
 defensive-programming-first-principles

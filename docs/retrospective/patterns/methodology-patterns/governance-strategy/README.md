@@ -45,6 +45,7 @@ date: "2026-07-09"
 | [合规驱动规则建设五步法](./compliance-driven-rule-building.md) | 合规驱动规则建设五步法 | L1 |  |
 | [配置持久化全链路覆盖模式](./config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 | `config` `persistence` `cmake` |
 | [约定驱动创建模型：范例即模板](./convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
+| [凭证副本最小化：目录镜像/备份/同步中的凭证防护法](./credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 | `credential` `backup-safety` `mirror` |
 | [跨Wiki引用目录优先验证模式](./cross-wiki-reference-directory-first.md) | 跨Wiki引用目录优先验证模式 | L2 |  |
 | [量化数据验证四查法](./data-validation-four-checks.md) | 量化数据验证四查法 | L2 | `data-validation` `documentation` `drift-detection` |
 | [防御性编程第一性原理：7项根因原则](./defensive-programming-first-principles.md) | 防御性编程第一性原理：7项根因原则 | L2 |  |
