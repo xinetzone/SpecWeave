@@ -64,6 +64,10 @@ id_dsa*
 credentials.json
 service-account*.json
 
+# Trae IDE 登录凭证（文件名级兜底，不依赖目录级忽略）
+**/trae-jwt-token
+**/*-jwt-token
+
 # 数据库文件
 *.sqlite
 *.db
