@@ -101,6 +101,7 @@ okf-wiki 04-limitations-and-comparison → 05-architecture-and-integration
 
 | 资源 | 路径 | 说明 |
 |------|------|------|
+| **OKF 源码学习知识包集合** | `docs/knowledge/learning/okf-bundles/` | 10 个自包含 OKF v0.2 知识包（TVM、tiktoken、Home Assistant、老子文献学、英语语法、veadk-python 等），concepts/examples/references 三层结构，入口 [okf-bundles/index.md](../../../okf-bundles/index.md) |
 | 自研 okf 工具源码 | `projects/xuanspace/tools/okf/` | OKF v0.2 零运行时依赖工具链实现 |
 | 工具链实现规划 | `.trae/specs/okf-toolchain-implementation/` | 自研 okf 工具的 spec/tasks/checklist |
 | stdlib 优化规划 | `.trae/specs/optimize-okf-python314-stdlib/` | okf 工具 Python 3.14 优化规划 |

@@ -26,4 +26,4 @@ stale_after: "2027-08-22"
 | [okf-kit 完全指南](okf-kit-wiki/index.md) | 将网站转换为 AI Agent 可直接读取的可移植 OKF 知识包：零 Key 爬取、增量同步、Agent 导航对话、MCP/HTTP 服务 | 12 |
 | [Open Code Review 完全指南](open-code-review-wiki/index.md) | 阿里巴巴开源的 AI 代码审查 CLI 工具，确定性工程 × Agent 混合 | 11 |
 
-> **📌 OKF 主题导航**：本目录中的 [okf-kit 完全指南](okf-kit-wiki/index.md) 属于「OKF 工具链」子域。如需了解 **OKF 格式规范本身**（设计哲学、Bundle/Concept/Frontmatter 规范），请参阅 [OKF 格式规范教程](../01-agent-protocols-interfaces/okf-wiki/README.md)；全部 OKF 相关知识的统一入口见 [OKF 主题知识导航](../okf-topic-index.md)。
+> **📌 OKF 主题导航**：本目录中的 [okf-kit 完全指南](okf-kit-wiki/index.md) 属于「OKF 工具链」子域。如需了解 **OKF 格式规范本身**（设计哲学、Bundle/Concept/Frontmatter 规范），请参阅 [OKF 格式规范教程](../01-agent-protocols-interfaces/okf-wiki/README.md)；全部 OKF 相关知识的统一入口见 [OKF 主题知识导航](../01-agent-protocols-interfaces/okf-wiki/okf-topic-index.md)。

@@ -230,7 +230,7 @@ okf-wiki/00-overview.md
 | 桌面阅读客户端 | [okf-desktop-wiki/00-overview.md](okf-desktop-wiki/00-overview.md)（OKF Desktop教程） |
 | 工具链实战 | [knowledge-catalog-wiki/00-overview.md](knowledge-catalog-wiki/00-overview.md)（Catalog参考实现） |
 
-> **📌 OKF 主题导航**：本目录中的 [okf-wiki](okf-wiki/README.md)（格式规范）、[okf-desktop-wiki](okf-desktop-wiki/00-overview.md)（桌面客户端）与 [knowledge-catalog-wiki](knowledge-catalog-wiki/00-overview.md)（参考实现）属于「OKF 知识格式生态」子域。如需了解 **OKF 工具链**（okf-kit 第三方工具、自研 okf 工具及其 Python 3.14 优化），请参阅 [OKF 主题知识导航](../okf-topic-index.md) 统一入口。
+> **📌 OKF 主题导航**：本目录中的 [okf-wiki](okf-wiki/README.md)（格式规范）、[okf-desktop-wiki](okf-desktop-wiki/00-overview.md)（桌面客户端）与 [knowledge-catalog-wiki](knowledge-catalog-wiki/00-overview.md)（参考实现）属于「OKF 知识格式生态」子域。如需了解 **OKF 工具链**（okf-kit 第三方工具、自研 okf 工具及其 Python 3.14 优化），请参阅 [OKF 主题知识导航](okf-wiki/okf-topic-index.md) 统一入口。
 
 ---
 
