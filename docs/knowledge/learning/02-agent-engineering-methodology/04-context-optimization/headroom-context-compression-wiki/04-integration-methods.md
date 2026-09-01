@@ -6,154 +6,466 @@ title: "四种接入方式详解"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/04-integration-methods.toml"
 ---
-## 五、四种接入方式详解
+# Headroom — 四种接入方式详解
 
-Headroom提供了四种灵活的接入方式，从几行代码集成到零代码开箱即用，覆盖不同用户的需求。
+> 本章详细介绍Headroom支持的四种接入方式：Library（API调用）、Proxy（零代码代理）、Agent Wrap（一键包装主流Agent）、MCP Server（标准工具协议），并提供选型建议表格帮助不同类型用户快速上手。
 
-### 5.1 Library方式：代码级集成
+---
 
-如果你在自己开发Python或TypeScript应用，想要在代码中直接集成压缩能力，Library方式是最直接的选择。只需要几行代码就能完成接入。
+## 1. 接入方式总览
 
-**Python示例：**
+Headroom在设计上遵循"**渐进式接入**"原则——从最简单的零代码方式到深度集成的API方式，用户可以根据自己的需求和技术能力选择最合适的接入路径，无需一开始就做大规模改造。
+
+| 接入方式 | 改造成本 | 技术要求 | 灵活度 | 适合人群 |
+|---------|---------|---------|-------|---------|
+| **Proxy** | ⭐ 零代码 | 会改base_url就行 | ⭐⭐ | 所有终端用户（最快体验） |
+| **Agent Wrap** | ⭐ 一条命令 | 会用命令行 | ⭐⭐⭐ | 主流AI Coding工具用户 |
+| **MCP Server** | ⭐⭐ 配置即可 | 了解MCP协议 | ⭐⭐⭐⭐ | Claude Desktop/Cursor等支持MCP的工具 |
+| **Library** | ⭐⭐⭐⭐ 代码集成 | 会写Python/TS | ⭐⭐⭐⭐⭐ | 自建Agent的开发者 |
+
+**建议路径**：先用Proxy体验效果 → 用Agent Wrap包日常使用的工具 → 如果是开发者再用Library深度集成。
+
+---
+
+## 2. Library：API调用方式
+
+Library方式适合**自建AI Agent的开发者**，通过Python或TypeScript SDK直接调用compress函数，在自己的代码中精确控制压缩逻辑。
+
+### Python SDK使用示例
+
+#### 安装
+
+```bash
+pip install headroom-ai
+```
+
+#### 基础使用：compress(messages)
 
 ```python
-from headroom import compress
+from headroom import Headroom
 
+# 初始化Headroom
+headroom = Headroom()
+
+# 你的原始消息列表（OpenAI格式）
 messages = [
-    {"role": "user", "content": "这里是大量的工具输出、文件内容..."},
-    # ... 更多消息
+    {"role": "system", "content": "You are a helpful coding assistant."},
+    {"role": "user", "content": "帮我看一下这个搜索结果"},
+    {"role": "tool", "tool_call_id": "search_1", "name": "search_code", "content": """
+[
+  {"id": 1, "file": "auth.py", "path": "/src/auth.py", "size": 4521, "language": "python", "content": "import os\\nimport jwt\\nfrom typing import Optional..."},
+  {"id": 2, "file": "auth.py", "path": "/src/auth.py", "size": 4521, "language": "python", "content": "..."},
+  // ... 还有47个搜索结果
+]
+"""}
 ]
 
-compressed_messages = compress(messages)
-# 然后把compressed_messages发给LLM即可
+# 一键压缩
+compressed_messages = headroom.compress(messages)
+
+# 压缩后的messages直接传给OpenAI
+from openai import OpenAI
+client = OpenAI()
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=compressed_messages,
+    tools=tools  # Headroom自动注入headroom_retrieve工具
+)
 ```
 
-**TypeScript示例：**
+#### 高级配置
+
+```python
+headroom = Headroom(
+    compression_level=0.7,  # 0-1，越高压缩越激进
+    cache_dir="~/.my-headroom-cache",  # 自定义缓存位置
+    algorithms={  # 针对不同类型内容的算法配置
+        "json": "smartcrusher",
+        "code": "codecompressor",
+        "natural_language": "kompress-v2-base"
+    },
+    retrieve_enabled=True  # 启用按需取回
+)
+```
+
+#### 单独压缩不同内容类型
+
+```python
+# 压缩代码
+compressed_code = headroom.compress_code(python_code, language="python")
+
+# 压缩JSON
+compressed_json = headroom.compress_json(api_response)
+
+# 压缩日志
+compressed_logs = headroom.compress_logs(server_logs, filter_level="WARN")
+```
+
+### TypeScript SDK使用示例
+
+#### 安装
+
+```bash
+npm install @headroom-ai/sdk
+```
+
+#### 基础使用
 
 ```typescript
-import { compress } from 'headroom-ai';
+import { Headroom } from '@headroom-ai/sdk';
+import OpenAI from 'openai';
+
+const headroom = new Headroom();
 
 const messages = [
-  { role: 'user', content: '这里是大量的工具输出、文件内容...' },
-  // ... 更多消息
+  { role: 'system', content: 'You are a helpful coding assistant.' },
+  { role: 'user', content: 'Analyze these search results' },
+  { role: 'tool', tool_call_id: 'search_1', name: 'search_code', content: largeSearchResults }
 ];
 
-const compressedMessages = await compress(messages);
-// 然后把compressedMessages发给LLM即可
+// 压缩
+const compressedMessages = await headroom.compress(messages);
+
+// 调用LLM
+const openai = new OpenAI();
+const response = await openai.chat.completions.create({
+  model: 'gpt-4o',
+  messages: compressedMessages,
+  tools: headroom.getTools()  // 获取包含headroom_retrieve的工具列表
+});
 ```
 
-**适用场景**：
-- 自己开发Agent应用
-- 需要在代码中精细控制压缩时机
-- 想要把压缩能力集成到现有工作流中
+### Library方式的优势
 
-### 5.2 Proxy方式：零代码代理
+- **最灵活**：可以精确控制在哪个环节压缩、压缩哪些内容
+- **可定制**：可以替换压缩算法、自定义压缩规则
+- **性能最好**：没有代理层的网络开销
+- **适合深度集成**：将压缩逻辑嵌入自己的Agent框架
 
-如果你已经有了OpenAI兼容的客户端，不想改任何代码，Proxy方式是最方便的选择。只需要启动一个本地代理，然后把客户端的API地址指向这个代理即可，零代码改动。
+---
 
-**启动命令：**
+## 3. Proxy：零代码代理方式
+
+Proxy方式是**所有接入方式中最简单的**——一条命令启动本地代理，然后把OpenAI SDK的base_url改成代理地址，零代码改动即可享受压缩。
+
+### 快速开始
+
+#### 1. 启动Proxy
 
 ```bash
 headroom proxy --port 8787
 ```
 
-然后把你的OpenAI客户端配置改成：
-- API Base URL: `http://localhost:8787`
-- API Key: （保持原来的key不变，Headroom只是本地代理，不会窃取你的key）
-
-**工作原理**：
-Headroom Proxy在本地启动一个兼容OpenAI API格式的HTTP代理服务，所有发往这个代理的请求都会被Headroom先压缩处理，然后转发给真正的LLM API，返回结果再原样返回给客户端。
-
-**适用场景**：
-- 使用任何OpenAI兼容的客户端（包括各种GUI工具、第三方客户端）
-- 不想修改任何代码
-- 需要快速试用Headroom效果
-
-### 5.3 Agent Wrap方式：一条命令包住主流编程Agent
-
-对于使用Claude Code、Codex、Cursor、Aider、Copilot等主流编程Agent的用户，Headroom提供了更简单的Wrap方式——一条命令直接把Agent包住，自动启用压缩。
-
-**用法：**
-
-```bash
-headroom wrap claude
-# 或者
-headroom wrap codex
-headroom wrap cursor
-headroom wrap aider
-headroom wrap copilot
+启动后你会看到：
+```
+Headroom Proxy running on http://localhost:8787
+→ Compression enabled: all requests will be automatically compressed
+→ CCR enabled: original data cached locally
+→ Dashboard available at http://localhost:8787/dashboard
 ```
 
-运行这个命令后，Headroom会启动一个包装层，Agent的所有LLM调用都会自动经过Headroom压缩，你正常使用Agent即可，不需要做任何其他配置。
+#### 2. 修改base_url
 
-**支持的Agent列表**：
-- Claude Code
-- OpenAI Codex
-- Cursor
-- Aider
-- GitHub Copilot
+**Python OpenAI SDK**：
+```python
+from openai import OpenAI
 
-这是普通用户最推荐的入门方式——安装完Headroom，跑一条`headroom wrap claude`，然后像平常一样用Claude Code就行，Token已经悄悄给你省下来了。
+# 只需要改base_url，其他完全不动
+client = OpenAI(
+    base_url="http://localhost:8787/v1"  # 原来可能是https://api.openai.com/v1
+)
 
-**适用场景**：
-- 使用主流编程Agent的普通用户
-- 想要零配置上手
-- 不想折腾代码或网络配置
+# 下面的代码和原来一模一样，不需要任何修改
+response = client.chat.completions.create(
+    model="gpt-4o",
+    messages=messages,
+    tools=tools
+)
+```
 
-### 5.4 MCP Server方式：通过MCP协议灵活控制
+**环境变量方式**（不改代码）：
+```bash
+export OPENAI_BASE_URL=http://localhost:8787/v1
+# 然后正常运行你的程序，所有请求自动经过Headroom压缩
+```
 
-如果你的客户端支持MCP（Model Context Protocol），Headroom可以作为MCP Server注册到客户端中，提供三个工具供模型主动调用。这种方式最灵活，模型可以自己决定什么时候压缩、什么时候取回原文。
+**TypeScript/JavaScript**：
+```typescript
+import OpenAI from 'openai';
 
-**注册后提供的三个工具：**
+const openai = new OpenAI({
+  baseURL: 'http://localhost:8787/v1'
+});
+```
 
-#### 1. headroom_compress
+### Proxy工作原理
 
-主动压缩指定内容。
+```
+┌─────────────┐     ┌──────────────────┐     ┌──────────────────┐
+│  你的代码    │────→│  Headroom Proxy  │────→│  OpenAI API      │
+│  (无改动)    │←────│  端口8787        │←────│  (真实API)       │
+└─────────────┘     └──────────────────┘     └──────────────────┘
+                          ↓
+                    ┌──────────────┐
+                    │ 本地缓存存储  │
+                    └──────────────┘
+```
 
-**功能**：将传入的内容按类型进行智能压缩。
+1. 你的代码把请求发给Headroom Proxy（以为是OpenAI）
+2. Proxy拦截请求，对messages和tools进行压缩
+3. Proxy自动注入`headroom_retrieve`工具定义
+4. Proxy把压缩后的请求转发给真实OpenAI API
+5. 如果模型返回`headroom_retrieve`工具调用，Proxy在本地处理，不转发给OpenAI
+6. 取回内容后，Proxy把内容注入上下文，继续转发请求
+7. 最终响应原样返回给你的代码
 
-**使用场景**：模型有一大段内容想要压缩后再使用时主动调用。
+### Proxy常用配置
 
-#### 2. headroom_retrieve
+```bash
+# 指定上游API地址（支持Azure OpenAI、Anthropic等兼容接口）
+headroom proxy --port 8787 --upstream https://your-azure-openai-endpoint.openai.azure.com
 
-取回原始内容（CCR机制的核心工具）。
+# 设置压缩级别
+headroom proxy --port 8787 --compression-level 0.8
 
-**功能**：根据压缩内容的标识，从本地缓存中取回原始未压缩内容。
+# 指定API key（避免从环境变量读取）
+headroom proxy --port 8787 --api-key sk-xxx
 
-**使用场景**：模型发现压缩后的上下文信息不足，需要查看细节时主动调用。这就是CCR机制中"R"的入口。
+# 启用详细日志（查看压缩效果）
+headroom proxy --port 8787 --verbose
 
-#### 3. headroom_stats
+# 启用Dashboard查看统计
+headroom proxy --port 8787 --dashboard
+```
 
-查看压缩统计数据。
+### Proxy方式的优势
 
-**功能**：返回当前会话的压缩统计，包括：
-- 原始Token总数
-- 压缩后Token总数
-- 节省的Token数量
-- 压缩率
-- 各算法使用情况
-
-**使用场景**：用户或模型想要了解压缩效果时调用。你也可以在命令行用`headroom perf`命令查看。
-
-**适用场景**：
-- 使用支持MCP的客户端（如Claude Desktop、支持MCP的IDE等）
-- 想要模型能够主动控制压缩和检索
-- 需要最灵活的使用方式
-
-### 5.5 选型建议
-
-不同场景下推荐的接入方式：
-
-| 使用场景 | 推荐接入方式 | 理由 |
-|----------|--------------|------|
-| 我是开发者，要在自己的Python/TS应用里用 | Library | 最灵活，代码级控制 |
-| 我用现成的OpenAI兼容客户端，不想改代码 | Proxy | 零代码，改个API地址就行 |
-| 我用Claude Code/Codex/Cursor编程 | Agent Wrap | 一条命令搞定，零配置 |
-| 我用支持MCP的客户端，想要模型主动控制 | MCP Server | 最灵活，模型可主动Retrieve |
-| 第一次用，想先试试效果 | Agent Wrap 或 Proxy | 上手最简单 |
-
-对于大多数用户来说，推荐从`headroom wrap claude`（或你常用的Agent）开始，这是最快体验到Headroom效果的方式。
+- **真正零代码**：除了改base_url，不需要改一行代码
+- **即开即用**：一条命令启动，立刻看到Token节省效果
+- **兼容性好**：任何使用OpenAI兼容接口的库/工具都能用
+- **可观测**：内置Dashboard可以看压缩率、Token节省统计
+- **支持隔离**：团队可以部署一个共享Proxy给所有人用
 
 ---
 
-[返回目录](../headroom-context-compression-wiki.md)
+## 4. Agent Wrap：一条命令包装主流Agent
+
+如果你日常使用Claude Code、Codex、Cursor、Aider、GitHub Copilot等AI Coding工具，Agent Wrap方式是最方便的——不需要改任何配置，一条命令就能"包住"这些工具，自动享受压缩。
+
+### 支持的Agent
+
+| 工具 | 命令 | 说明 |
+|------|------|------|
+| **Claude Code** | `headroom wrap claude` | 包装Anthropic官方Claude CLI |
+| **OpenAI Codex CLI** | `headroom wrap codex` | 包装OpenAI Codex命令行工具 |
+| **Cursor** | `headroom wrap cursor` | 包装Cursor编辑器（命令行启动模式） |
+| **Aider** | `headroom wrap aider` | 包装aider AI pair programming工具 |
+| **GitHub Copilot CLI** | `headroom wrap copilot` | 包装GitHub Copilot命令行 |
+| **自定义命令** | `headroom wrap -- <your-command>` | 包装任何OpenAI兼容的命令行工具 |
+
+### 使用示例
+
+#### 包装Claude Code
+
+```bash
+# 原来启动Claude Code
+claude
+
+# 用Headroom包装启动（效果一样，但自动压缩）
+headroom wrap claude
+```
+
+启动后会看到提示：
+```
+🚀 Headroom wrapping claude...
+→ Compression enabled for all conversations
+→ Original data cached at ~/.headroom/cache
+→ Run 'headroom stats' to see token savings
+```
+
+然后你正常使用Claude Code就行，所有的工具输出、代码读取、对话历史都会被自动压缩，模型需要时自动取回原文。
+
+#### 包装Aider
+
+```bash
+# 原来启动aider
+aider --model gpt-4o
+
+# 用Headroom包装
+headroom wrap aider -- --model gpt-4o
+```
+
+#### 包装任意自定义命令
+
+```bash
+# 包装你自己写的Python脚本
+headroom wrap -- python my_agent.py
+
+# 包装任何OpenAI兼容的CLI工具
+headroom wrap -- npx @openai/codex
+```
+
+### Wrap工作原理
+
+Agent Wrap本质上是**透明的进程包装器**：
+1. 设置环境变量`OPENAI_BASE_URL=http://localhost:xxxx`（自动启动随机端口的Proxy）
+2. 启动被包装的Agent进程
+3. Agent进程的所有OpenAI API调用自动经过Headroom Proxy压缩
+4. Agent退出时，自动关闭Proxy并打印本次会话的Token节省统计
+
+会话结束后，你会看到类似这样的统计：
+```
+📊 Session Statistics:
+→ Original tokens: 45,230
+→ Compressed tokens: 8,921
+→ Tokens saved: 36,309 (80.3%)
+→ Estimated cost saved: $0.47
+```
+
+### Agent Wrap的优势
+
+- **零配置**：不需要记Proxy端口，不需要改环境变量
+- **自动清理**：用完自动关闭Proxy，不会留后台进程
+- **会话统计**：每次用完都能看到省了多少Token、多少钱
+- **即包即用**：想给哪个工具加压缩就包哪个，不影响其他工具
+
+---
+
+## 5. MCP Server：标准工具协议
+
+MCP（Model Context Protocol）是Anthropic推出的开放工具协议，Headroom作为MCP Server提供三个标准工具，任何支持MCP的客户端（Claude Desktop、Cursor、Windsurf等）都可以直接接入。
+
+### MCP提供的三个工具
+
+Headroom MCP Server暴露三个标准工具：
+
+| 工具名 | 功能 |
+|-------|------|
+| `headroom_compress` | 主动压缩指定内容 |
+| `headroom_retrieve` | 从本地缓存取回原始内容（CCR核心） |
+| `headroom_stats` | 查看当前压缩统计、Token节省数据 |
+
+### 配置方法
+
+#### Claude Desktop配置
+
+编辑Claude Desktop的配置文件：
+
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+添加Headroom MCP配置：
+
+```json
+{
+  "mcpServers": {
+    "headroom": {
+      "command": "headroom",
+      "args": ["mcp"],
+      "env": {
+        "HEADROOM_CACHE_DIR": "~/.headroom/cache"
+      }
+    }
+  }
+}
+```
+
+重启Claude Desktop，你会在工具列表中看到headroom的三个工具。
+
+#### Cursor配置
+
+在Cursor中：
+1. 打开Settings → Features → MCP
+2. 点击"Add New MCP Server"
+3. 填写：
+   - Name: `headroom`
+   - Command: `headroom mcp`
+4. 保存，即可在Cursor中使用headroom工具
+
+### 工具使用示例
+
+#### headroom_compress
+
+用户可以主动让模型压缩内容：
+```
+用户：帮我把这个文件读一下，太长了先压缩一下
+模型：我来用headroom_compress压缩这个文件内容...
+[调用headroom_compress(content=file_content)]
+```
+
+或者Headroom可以配置为自动压缩所有读取的文件内容。
+
+#### headroom_retrieve
+
+当模型需要看细节时（和CCR机制配合）：
+```
+模型：这个函数的签名我看到了，让我取回具体实现看一下...
+[调用headroom_retrieve(content_id="file_abc123", focus="process_user_data function")]
+```
+
+#### headroom_stats
+
+你可以随时问模型：
+```
+用户：今天省了多少Token？
+模型：让我查一下统计数据...
+[调用headroom_stats()]
+→ 今日累计：原始Token 156,420，压缩后32,180，节省79.4%
+```
+
+### MCP方式的优势
+
+- **标准协议**：一次配置，所有支持MCP的工具都能用
+- **主动/被动结合**：既可以自动压缩，也可以让用户主动调用
+- **统一体验**：在不同工具中使用Headroom的方式保持一致
+- **生态兼容**：未来新出的MCP客户端可以无缝接入
+
+---
+
+## 6. 选型建议表格
+
+根据你的用户类型和使用场景，参考下表选择最合适的接入方式：
+
+| 用户类型 | 典型场景 | 推荐接入方式 | 上手命令/步骤 |
+|---------|---------|------------|-------------|
+| **非技术用户** | 用Claude/Cursor写代码，想省Token | **Agent Wrap** | `headroom wrap claude` 或 `headroom wrap cursor` |
+| **AI Coding爱好者** | 用aider/Codex等工具，想快速体验 | **Proxy** 或 **Agent Wrap** | 1. `headroom proxy --port 8787`<br>2. 改base_url即可；<br>或者直接`headroom wrap aider` |
+| **开发者（自己用）** | 自己写脚本调用LLM，不想改代码 | **Proxy** | `headroom proxy --port 8787` + `export OPENAI_BASE_URL=...` |
+| **Claude Desktop用户** | 用Claude Desktop做各种任务 | **MCP Server** | 按上文配置MCP即可，零代码侵入 |
+| **团队/企业用户** | 团队多人使用，想统一压缩和统计 | **Proxy（共享部署）** | 部署在内部服务器，团队共用一个endpoint |
+| **Agent框架开发者** | 自建Agent框架，想深度集成压缩逻辑 | **Library** | `pip install headroom-ai`，在代码中调用`compress()` |
+| **MCP生态用户** | 已经在用MCP工具，想统一管理 | **MCP Server** | 直接在MCP配置中加入headroom |
+
+### 混合使用建议
+
+你可以同时使用多种接入方式，它们共享同一个本地缓存：
+
+- 日常用Cursor IDE → 用MCP方式
+- 命令行用aider → 用`headroom wrap aider`
+- 自己跑脚本 → 用Proxy方式
+- 开发新Agent功能 → 用Library方式
+
+所有方式的压缩数据、缓存内容、统计信息都是互通的，因为它们都指向同一个本地Headroom实例。
+
+---
+
+## 7. 接入方式对比总结
+
+| 特性 | Library | Proxy | Agent Wrap | MCP Server |
+|------|---------|-------|-----------|-----------|
+| 改代码量 | 需要写代码 | 只改base_url | 零代码 | 配置文件 |
+| 启动方式 | 代码中初始化 | 手动启动/后台服务 | 自动启动 | 随客户端启动 |
+| 灵活度 | 最高（完全控制） | 高（配置参数） | 中（命令行参数） | 中（通过工具调用） |
+| 性能 | 最好（进程内调用） | 很好（本地环回网络） | 很好（本地Proxy） | 好（MCP协议开销） |
+| 适合集成深度 | 深度集成 | 透明代理 | 即开即用 | 生态兼容 |
+| 自动压缩 | 要手动调用compress | 自动压缩所有请求 | 自动压缩被包装进程 | 可配置自动/手动 |
+| CCR支持 | ✅ | ✅ | ✅ | ✅ |
+| 统计面板 | 需要自己实现 | 内置Dashboard | 会话后自动打印 | 通过headroom_stats查看 |
+
+**核心原则**：从最简单的方式开始，不够用了再升级到更灵活的方式。Headroom的设计让你可以无痛升级——你在Proxy方式下积累的缓存，换成Library方式照样用。
+
+---
+
+- ← [上一章：CCR可逆机制深度解析](03-ccr-mechanism.md)
+- [下一章：效果验证与数据分析](05-performance-data.md) →
