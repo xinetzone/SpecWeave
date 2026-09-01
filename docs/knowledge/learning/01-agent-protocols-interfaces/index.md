@@ -18,8 +18,8 @@ okf-desktop-wiki/index
 okf-wiki/index
 protobuf-wiki/index
 tvm-ffi-wiki/index
-agent-communication-protocols-wiki
-agent-runtime-protocol-wiki
-agent-skills-open-standard-wiki
-domestic-skill-mcp-ecosystem-wiki
+agent-communication-protocols-wiki.md
+agent-runtime-protocol-wiki.md
+agent-skills-open-standard-wiki.md
+domestic-skill-mcp-ecosystem-wiki.md
 ```
