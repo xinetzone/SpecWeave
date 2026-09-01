@@ -29,6 +29,8 @@
 | milestone-harness-engineering-wiki-20260803 | Harness Engineering 系统性学习 Wiki 创建任务 | 2026-08-03 | ✅ 已完成 | 七概念R→I→E→V→C | 33条客观事实、3条核心洞察（文章→Wiki 8步流程/链接检查是必要质量门禁等）、8步标准模式+3个反模式+跨主题迁移验证、V三视角对抗审查、3项原子行动项，2小时交付10个原子文件，G1-G4+V门全部通过 | [harness-engineering-wiki-retrospective-20260803.md](harness-engineering-wiki-retrospective-20260803.md) |
 | loop-engineering-patterns-v1.0 | Loop Engineering 模式库沉淀 | 2026-08-01 | ✅ 已完成 | 模式库（BP/AP 体系） | 5个最佳实践模式（BP-1验证器锁定铁律～BP-5）+5个反模式（AP-1～AP-5）+Loop适用性决策树与BP优先级定位法，作为 MILESTONE-KNOWLEDGE-CLOOP-001 闭环模式的领域验证文档 | [loop-engineering-patterns-20260801.md](loop-engineering-patterns-20260801.md) |
 | milestone-octo-platform-wiki-20260704 | 明略科技 Octo 平台学习 Wiki 教程创建任务 | 2026-07-04 | ✅ 已完成 | 七概念R→I→E→C | 20条客观事实、3条核心洞察、2个可复用模式（含API文档融合/需求变更管理等跨领域迁移验证）、3项原子行动项，G1-G4质量门全部通过 | [octo-platform-wiki-retrospective-20260704.md](octo-platform-wiki-retrospective-20260704.md) |
+| milestone-sexology-classics-wiki-20260830 | 性学经典 OKF Wiki 教程（create-sexology-classics-wiki） | 2026-08-30 | ✅ 已完成 | 七概念R→I→E→V→C | 交付24文件知识包104条事实(27处待核验)、V独立评审6项问题修复闭环(4类自动化门禁无法覆盖的隐患)、双仓提交推送(子模块16d6a514+主仓库bd8e45528)、25条事实+3条洞察(文档对抗审查价值/版本差异分版表述/detached HEAD陷阱)、2条可迁移模式 | [retrospective-sexology-classics-wiki-20260830.md](retrospective-sexology-classics-wiki-20260830.md) |
+| milestone-sexology-classics-wiki-fullchain-20260831 | 性学经典 OKF Wiki 教程全链路执行总结（规格→调研→构建→评审→交付→复盘→模式入库） | 2026-08-31 | ✅ 已完成 | 七概念+Spec Mode+task-execution-summary | 全链路7阶段记录、104条事实/24文件知识包、6项评审问题修复、双仓提交推送、2条L1模式入库(溯源一致性三查/版本差异判别)、6类执行故障零遗留闭环、6项关键决策与3类风险预警 | [sexology-classics-wiki-fullchain-summary-20260831.md](sexology-classics-wiki-fullchain-summary-20260831.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -66,8 +68,10 @@ okf-ecosystem-milestone-retrospective-20260819
 okf-python314-stdlib-optimization-retrospective-20260818
 okf-wiki-conversion-milestone-20260828
 retrospective-hermes-specweave-integration-20260812
+retrospective-sexology-classics-wiki-20260830
 screenshot-tool-event-driven-guardian-retrospective-20260825
 session-atomic-commit-insight-extraction-20260706
+sexology-classics-wiki-fullchain-summary-20260831
 source-path-debt-triage-audit-20260829
 specweave-knowledge-scaling-milestone-20260801
 torch-dev-mirror-build-retrospective-20260820

@@ -22,14 +22,16 @@ date: "2026-07-09"
 | [Caffe tvm-ffi 依赖统一迁移复盘报告](./2026-07-24-caffe-tvm-ffi-dependency-migration.md) | Caffe tvm-ffi 依赖统一迁移复盘报告 | - | `caffe` `tvm-ffi` `dependency-migration` |
 | [支付宝 AI Pay Skill Windows 安装任务复盘](./retrospective-alipay-aipay-windows-install-20260723.md) | 支付宝 AI Pay Skill Windows 安装任务复盘 | L1 | `windows` `cli-install` `skill-setup` |
 | [analyze-wechat-article-3dnk 任务复盘报告](./retrospective-analyze-wechat-article-3dnk-20260706.md) | analyze-wechat-article-3dnk 任务复盘报告 | - |  |
+| [《帛书老子注读》PDF转OKF-MyST Wiki 里程碑复盘](./retrospective-boshu-laozi-pdf-to-myst-wiki-20260821.md) | 《帛书老子注读》PDF转OKF-MyST Wiki 里程碑复盘 | - |  |
 | [Caffe docker/local 目录全面复盘报告](./retrospective-caffe-docker-local-20260724.md) | Caffe docker/local 目录全面复盘报告 | - | `caffe` `docker` `conda` |
 | [Conv v4 OpenMP并行优化里程碑复盘](./retrospective-caffe-ffi-conv-v4-milestone-20260805.md) | Conv v4 OpenMP并行优化里程碑复盘 | - |  |
 | [EPUB电子书分类任务里程碑复盘](./retrospective-chaos-epub-books-classification-20260819.md) | EPUB电子书分类任务里程碑复盘 | - |  |
+| [道医（Daoyi）OKF 知识包创建与总索引注册 · 任务执行总结报告](./retrospective-daoyi-okf-wiki-20260831.md) | 道医（Daoyi）OKF 知识包创建与总索引注册 · 任务执行总结报告 | - |  |
 | [Docker模板升级+五条红线验证+方法论编排复盘报告](./retrospective-docker-template-upgrade-20260722.md) | Docker模板升级+五条红线验证+方法论编排复盘报告 | L2 | `docker` `template` `verification` |
 | [第一性原理指令集与知识库双向关联建立 — 任务复盘](./retrospective-first-principles-knowledge-link-20260709.md) | *** | - |  |
 | [Hermes Conda 环境创建与源码安装复盘](./retrospective-hermes-conda-setup-20260812.md) | Hermes Conda 环境创建与源码安装复盘 | - | `conda` `hermes` `python-environment` |
-| [OKF Desktop Wiki教程构建复盘](./retrospective-okf-desktop-wiki-tutorial-20260819/README.md) | OKF Desktop Wiki教程构建复盘 | - | `okf` `wiki` `sphinx` `tutorial` |
-| [awesome-okf-xs Sphinx构建错误修复里程碑复盘](./retrospective-okf-xs-sphinx-build-fix-20260824.md) | awesome-okf-xs Sphinx构建20个ERROR/WARNING修复，围栏泄漏+脚注缺失根因分析 | L1 | `sphinx` `myst` `okf` `build-fix` `markdown-fences` `footnotes` |
+| [awesome-okf-xs Sphinx构建错误修复 里程碑复盘](./retrospective-okf-xs-sphinx-build-fix-20260824.md) | awesome-okf-xs Sphinx构建错误修复 里程碑复盘 | - |  |
+| [Podman WSL Rootless 容器警告诊断与解决 问题解决报告](./retrospective-podman-wsl-rootless-warnings-20260827.md) | Podman WSL Rootless 容器警告诊断与解决 问题解决报告 | - |  |
 | [右侧侧边栏UI美化七概念复盘报告](./retrospective-sidebar-ui-beautification-20260714.md) | 右侧侧边栏UI美化七概念复盘报告 | L2 | `UI美化` `Tailwind CSS` `frontend-design` |
 | [WeasyPrint第一性原理学习与wiki教程生成复盘报告](./retrospective-weasyprint-learning-20260713.md) | WeasyPrint第一性原理学习与wiki教程生成复盘报告 | - | `retrospective` `weasyprint` `wiki` |
 | [xmnn 容器 unhealthy 误报诊断与修复复盘](./retrospective-xmnn-container-health-fix-20260812.md) | xmnn 容器 unhealthy 误报诊断与修复复盘 | - |  |
@@ -40,7 +42,7 @@ date: "2026-07-09"
 | 子目录 | 文档数 | 说明 |
 |--------|--------|------|
 | ✅ [Report Malformed Data Handling 20260709](./report-malformed-data-handling-20260709/README.md) | 3 |  |
-| 📋 [Retro 20260728 Tvm Ffi Wiki](retro-20260728-tvm-ffi-wiki) | 3 |  |
+| 📋 [Retro 20260728 Tvm Ffi Wiki](./retro-20260728-tvm-ffi-wiki/) | 3 |  |
 | ✅ [Retrospective Adversarial Review Cmd 20260710](./retrospective-adversarial-review-cmd-20260710/README.md) | 1 |  |
 | ✅ [Retrospective Adversarial Review Kg 20260710](./retrospective-adversarial-review-kg-20260710/README.md) | 2 |  |
 | ✅ [Retrospective Adversarial Review Questions 20260710](./retrospective-adversarial-review-questions-20260710/README.md) | 2 |  |
@@ -58,7 +60,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Caffe Jupyter Docker Build 20260726](./retrospective-caffe-jupyter-docker-build-20260726/README.md) | 1 |  |
 | ✅ [Retrospective Caffe Proto 20260722](./retrospective-caffe-proto-20260722/README.md) | 3 |  |
 | ✅ [Retrospective Caffe Slim Rename 20260724](./retrospective-caffe-slim-rename-20260724/README.md) | 3 |  |
-| 📋 [Retrospective Cmd Log Compliance Fix 20260728](retrospective-cmd-log-compliance-fix-20260728) | 1 |  |
+| 📋 [Retrospective Cmd Log Compliance Fix 20260728](./retrospective-cmd-log-compliance-fix-20260728/) | 1 |  |
 | ✅ [Retrospective Codex Article Analysis 20260706](./retrospective-codex-article-analysis-20260706/README.md) | 1 |  |
 | ✅ [Retrospective Concurrent Report Atomization 20260708](./retrospective-concurrent-report-atomization-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Concurrent Safety Checker 20260708](./retrospective-concurrent-safety-checker-20260708/README.md) | 3 |  |
@@ -79,6 +81,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Mermaid Funnel Redesign Pdf Export 20260711](./retrospective-mermaid-funnel-redesign-pdf-export-20260711/README.md) | 1 |  |
 | ✅ [Retrospective Mermaid List Fix First Principles 20260710](./retrospective-mermaid-list-fix-first-principles-20260710/README.md) | 3 |  |
 | ✅ [Retrospective Minitap Wiki Creation 20260707](./retrospective-minitap-wiki-creation-20260707/README.md) | 1 |  |
+| ✅ [Retrospective Okf Desktop Wiki Tutorial 20260819](./retrospective-okf-desktop-wiki-tutorial-20260819/README.md) | 5 |  |
 | ✅ [Retrospective Pickle Sedimentation 20260723](./retrospective-pickle-sedimentation-20260723/README.md) | 4 |  |
 | ✅ [Retrospective Report Standardization 20260708](./retrospective-report-standardization-20260708/README.md) | 3 |  |
 | ✅ [Retrospective Risk Interceptor Pattern v2 20260728](./retrospective-risk-interceptor-pattern-v2-20260728/README.md) | 3 | （1个子目录） |
@@ -92,7 +95,7 @@ date: "2026-07-09"
 | ✅ [Retrospective Vendor Check Module 20260707](./retrospective-vendor-check-module-20260707/README.md) | 1 |  |
 | ✅ [Retrospective Vendor Deep Parallel Optimization 20260708](./retrospective-vendor-deep-parallel-optimization-20260708/README.md) | 1 |  |
 | ✅ [Retrospective Wsl Wiki Tutorial 20260720](./retrospective-wsl-wiki-tutorial-20260720/README.md) | 1 |  |
-| 📋 [Retrospective Xmnn Dual Image Accuracy 20260812](retrospective-xmnn-dual-image-accuracy-20260812) | 2 |  |
+| 📋 [Retrospective Xmnn Dual Image Accuracy 20260812](./retrospective-xmnn-dual-image-accuracy-20260812/) | 2 |  |
 | ✅ [Retrospective Xmnn Export Entrypoint Fix 20260718](./retrospective-xmnn-export-entrypoint-fix-20260718/README.md) | 3 |  |
 | ✅ [Retrospective Xmnn Nuitka Docker Deployment 20260722](./retrospective-xmnn-nuitka-docker-deployment-20260722/README.md) | 1 |  |
 | ✅ [Retrospective Xmnn Runtime Repackaging 20260718](./retrospective-xmnn-runtime-repackaging-20260718/README.md) | 1 |  |
@@ -109,4 +112,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-08-19 -->
+<!-- generated by generate-readme.py on 2026-08-31 -->

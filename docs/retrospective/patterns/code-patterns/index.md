@@ -113,6 +113,7 @@ fix-priority-chain
 fixuid-runtime-uid-mapping
 flat-nested-hybrid-scan
 force-push-submodule-commit-recovery
+submodule-detached-head-ff-only-landing
 framework-parameter-semantics-verification
 git-bundle-offline-clone
 gitignore-validation

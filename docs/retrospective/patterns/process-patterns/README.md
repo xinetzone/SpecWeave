@@ -31,7 +31,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/process-patterns
 | [vhdx-two-phase-recovery-sop.md](vhdx-two-phase-recovery-sop.md) | VHDX 二相回收 SOP：sparse 在线相与 compact 离线相互斥二选一；离线相含停 wslservice+vmcompute、清 sparse 标志、diskpart compact 全流程，含 6 类故障排查与 5 个实战反模式 | L2 已验证 | WSL2/Podman machine/Hyper-V 虚拟磁盘 vhdx 膨胀回收、系统盘空间治理、容器镜像清理后宿主空间未归还 |
 | [nested-engine-storage-externalize.md](nested-engine-storage-externalize.md) | 嵌套引擎存储卷外置模式：容器内 podman-in-podman/dinod 存储指向命名卷或显式挂载，避免镜像层写可写层形成黑洞；含双重不可见排查路径与僵尸容器处置，与 VHDX 二相回收构成预防/治理对 | L1 实验性 | 常驻容器内嵌套构建、CI docker-in-docker、可写层膨胀监控、容器磁盘配额治理 |
 | [nested-disk-blindspot-diagnosis.md](nested-disk-blindspot-diagnosis.md) | 嵌套容器磁盘盲区诊断模式：双重不可见（宿主 system df 只见总量 + 容器内 du 权限遮蔽低估4倍）下的四层下钻诊断链（system df→df/du矛盾→root du→UpperDir diff），结论须全链条数字交叉验证闭合 | L1 实验性 | 多层虚拟化栈磁盘占用对不上账、可写层异常膨胀定位、僵尸容器排查、vhdx 增速与挂载内容不匹配 |
-| [nested-disk-blindspot-diagnosis-sop.md](nested-disk-blindspot-diagnosis-sop.md) | 嵌套磁盘盲区诊断 SOP：四层下钻链的可执行细化（L1预警→L2矛盾检测→L3提权核实→L4 UpperDir解剖→L5数字闭合验收），含僵尸容器处置、7类故障排查与 lsof inode 泄漏分支，每层判定阈值与命令 | L1 实验性 | 同上模式的实操执行：宿主磁盘对不上账时的标准排查手册 |
+| [nested-disk-blindspot-diagnosis-sop.md](nested-disk-blindspot-diagnosis-sop.md) | 嵌套容器磁盘盲区诊断 SOP：四层下钻链的可执行细化（L1预警→L2矛盾检测→L3提权核实→L4 UpperDir解剖→L5数字闭合验收），含僵尸容器处置、7类故障排查与 lsof inode 泄漏分支，每层判定阈值与命令 | L1 实验性 | 同上模式的实操执行：宿主磁盘对不上账时的标准排查手册 |
+| [submodule-ssh-stall-recovery-sop.md](submodule-ssh-stall-recovery-sop.md) | 子模块 SSH 停滞换源恢复 SOP：确诊双通道差异→杀竞争传输保终端→残骸双清（工作区+.git/modules）→GIT_CONFIG_* 环境变量 insteadOf 整树换源→受控重跑→原命令退出码0+全树零脏标记验收，含 pull 后 pin 漂移收敛与 7 条反模式 | L2 已验证 | git submodule update 克隆停滞/Unable to find current revision、.gitmodules 用 SSH URL 而本机 SSH 大传输挂死、npm git+ssh 依赖停滞、CI 无 SSH key 场景 |
 
 ## 成熟度定义
 
