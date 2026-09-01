@@ -6,7 +6,7 @@ date: "2026-08-24"
 maturity: "L1-draft"
 maturity_note: "单案例（awesome-okf-xs CI 编码损坏于构建阶段暴露），待第二个独立案例验证升级 L2"
 source: "七概念方法论编排·知识沉淀(sc-20260824-milestone-retro)——awesome-okf-xs CI 集成里程碑复盘洞察1"
-source_report: ".agents/docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md（洞察1：CI 是编码损坏的「放大器」而非「源头」）"
+source_report: "docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md（洞察1：CI 是编码损坏的「放大器」而非「源头」）"
 related_patterns: ["bp-three-layer-repair-closure"]
 tags: ["ci", "quality-gate", "shift-left", "encoding", "utf-8", "sphinx", "docs", "continuation"]
 validation_count: 1
@@ -131,7 +131,7 @@ mindmap
 
 - 参考实现：[check-utf8.py](../../../../projects/awesome-okf-xs/scripts/check-utf8.py)（纯标准库 UTF-8 完整性扫描，77 行）
 - 工作流配置：`projects/awesome-okf-xs/.github/workflows/pages.yml`（UTF-8 检查步骤置于 Install dependencies 与 Sphinx 构建之前）
-- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../../../.agents/docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md)（洞察1 + 事实 F-3/F-4/F-5 + 决策2）
+- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md)（洞察1 + 事实 F-3/F-4/F-5 + 决策2）
 
 ## 对抗审查记录
 

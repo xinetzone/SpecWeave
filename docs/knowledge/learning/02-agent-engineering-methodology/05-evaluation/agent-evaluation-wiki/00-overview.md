@@ -126,16 +126,16 @@ graph TB
 本教程是 Agent 工程方法论系列的重要组成部分，与其他 wiki 形成知识网络：
 
 **前置基础**：
-- [harness-engineering-wiki](../harness-engineering-wiki/00-overview.md) — Harness 工程方法论，评测是 Harness 体系的核心观测组件，建议先理解 Harness 四铁律与六模式
-- [harness-seven-components-wiki](../harness-seven-components-wiki/00-overview.md) — Harness 七大组件，其中可观测性（Observability）组件与评测体系直接相关
+- [harness-engineering-wiki](../../01-paradigms/harness-engineering-wiki/00-overview.md) — Harness 工程方法论，评测是 Harness 体系的核心观测组件，建议先理解 Harness 四铁律与六模式
+- [harness-seven-components-wiki](../../01-paradigms/harness-seven-components-wiki/00-overview.md) — Harness 七大组件，其中可观测性（Observability）组件与评测体系直接相关
 
 **互补方法论**：
-- [adversarial-review-wiki](../adversarial-review-wiki/00-overview.md) — 对抗性评审方法论，其红队测试、认知偏差防御思想可直接应用于对抗性评测用例设计
-- [agent-skills-wiki](../agent-skills-wiki/00-overview.md) — Agent 技能体系，评测需覆盖各类技能的掌握程度与组合能力
+- [adversarial-review-wiki](../../03-methodology/adversarial-review-wiki/00-overview.md) — 对抗性评审方法论，其红队测试、认知偏差防御思想可直接应用于对抗性评测用例设计
+- [agent-skills-wiki](../../02-prompt-coding/agent-skills-wiki/00-overview.md) — Agent 技能体系，评测需覆盖各类技能的掌握程度与组合能力
 
 **评测驱动的工程实践**：
-- [seven-concepts-prompt-wiki](../seven-concepts-prompt-wiki/00-overview.md) — 七概念方法论，其中"复盘（R）-洞察（I）-萃取（E）"闭环依赖评测数据作为输入
-- [karpathy-llm-coding-guidelines](../karpathy-llm-coding-guidelines/00-overview.md) — Karpathy LLM 编码指南，其倡导的"先写测试"思想与评测驱动开发高度契合
+- [seven-concepts-prompt-wiki](../../02-prompt-coding/seven-concepts-prompt-wiki/00-overview.md) — 七概念方法论，其中"复盘（R）-洞察（I）-萃取（E）"闭环依赖评测数据作为输入
+- [karpathy-llm-coding-guidelines](00-overview.md) — Karpathy LLM 编码指南，其倡导的"先写测试"思想与评测驱动开发高度契合
 
 ---
 

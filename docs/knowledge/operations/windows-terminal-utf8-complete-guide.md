@@ -424,7 +424,7 @@ python -X utf8 -c "from pathlib import Path; Path('output.md').write_text('中�
 
 ## 参考
 
-- 相关模式：[跨平台编码强制模式](../../../.agents/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md)
+- 相关模式：[跨平台编码强制模式](../../retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md)
 - 相关知识库：[Windows PowerShell文本管道可能污染中文文档输出](windows-powershell-pipe-utf8.md)
 - 相关知识库：[Windows PowerShell不支持heredoc语法](windows-powershell-heredoc.md)
 - 相关脚本：

@@ -2,7 +2,7 @@
 
 > **版本**: 1.0 | **更新日期**: 2026-08-19 | **适用范围**: 所有 GPU/ML 变体（torch-dev/ai-dev/llm-agent 等）
 >
-> **深入阅读**: 完整方法论见 [docker-gpu-slimming-sop.md](../../../../.agents/docs/retrospective/patterns/code-patterns/docker-gpu-slimming-sop.md) | 实例参考 [torch-dev/SLIMMING-GUIDE.md](../variants/torch-dev/SLIMMING-GUIDE.md)
+> **深入阅读**: 完整方法论见 [docker-gpu-slimming-sop.md](../../../../docs/retrospective/patterns/code-patterns/docker-gpu-slimming-sop.md) | 实例参考 [torch-dev/SLIMMING-GUIDE.md](../variants/torch-dev/SLIMMING-GUIDE.md)
 
 ---
 
@@ -242,7 +242,7 @@ COPY shared/lib/cleanup.sh /usr/local/share/variant-framework/cleanup.sh
 
 | 文档 | 适合人群 | 内容 |
 |------|---------|------|
-| [docker-gpu-slimming-sop.md](../../../../.agents/docs/retrospective/patterns/code-patterns/docker-gpu-slimming-sop.md) | 方法论学习者 | 完整四步法SOP、第一性原理分析、反模式详解 |
+| [docker-gpu-slimming-sop.md](../../../../docs/retrospective/patterns/code-patterns/docker-gpu-slimming-sop.md) | 方法论学习者 | 完整四步法SOP、第一性原理分析、反模式详解 |
 | [torch-dev/SLIMMING-GUIDE.md](../variants/torch-dev/SLIMMING-GUIDE.md) | torch-dev维护者 | torch-dev专用瘦身记录、删除/保留清单、技术原理 |
 | [shared/lib/cleanup.sh](../variants/shared/lib/cleanup.sh) | 脚本维护者 | 清理函数源码和注释 |
 | [shared/scripts/r2-dtneeded-analysis.sh](../variants/shared/scripts/r2-dtneeded-analysis.sh) | R2分析执行者 | DT_NEEDED分析脚本源码，4种模式详解 |

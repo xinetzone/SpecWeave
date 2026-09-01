@@ -30,7 +30,7 @@ tags: ["信源稳定性", "技术债分诊", "GATE-SPS", "审计", "d:/spaces", 
 
 ### A 类：历史快照证据（不改写，约 2,750 条）
 
-事实表、复盘报告、spec 工作产物、模式案例中的时点路径，其语义是"记录当时发生了什么"，改写即销毁证据。与 [信源稳定性门模式 v2.3](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) 案例3"不改写边界"同源。
+事实表、复盘报告、spec 工作产物、模式案例中的时点路径，其语义是"记录当时发生了什么"，改写即销毁证据。与 [信源稳定性门模式 v2.3](../../../patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) 案例3"不改写边界"同源。
 
 | 来源区域 | 失效数 | 主要内容 | 处置 |
 |---------|-------:|---------|------|
@@ -101,7 +101,7 @@ GATE-SPS audit 退出码 1 在可预见未来将持续（A/B 类预期命中）�
 - 聚类维度：token 路径桶（d:/spaces、POSIX、.chaos、Temp、vendor/projects/bundles 等）× 引用来源区域（specs/reports/knowledge/patterns/bundles/apps 等）
 - 前缀映射验证：`d:/spaces/<root>/<rest>` → `d:/AI/<rest>` 逐条 Test-Path，557/1,732 可达
 - 关联报告：[veadk A-3/A-6 闭环复盘](veadk-a3-a6-closure-retrospective-20260829.md)、[veadk 信源稳定性修复父里程碑](veadk-python-source-stability-fix-milestone-20260829.md)
-- 模式依据：[信源稳定性门 v2.3](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md)（检验标准 7/8、反模式 6、案例3 不改写边界）
+- 模式依据：[信源稳定性门 v2.3](../../../patterns/methodology-patterns/ai-collaboration/source-stability-gate.md)（检验标准 7/8、反模式 6、案例3 不改写边界）
 
 ## 六、D-1 闭环记录（2026-08-29）
 

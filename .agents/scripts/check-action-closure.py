@@ -6,7 +6,7 @@
 并标记「假闭环」风险（洞察产出但未落为可验证行动的清单）。
 
 用法：
-  python check-action-closure.py                          # 扫描默认目录 .agents/docs/retrospective/reports/
+  python check-action-closure.py                          # 扫描默认目录 docs/retrospective/reports
   python check-action-closure.py --path <文件或目录>      # 指定目标
   python check-action-closure.py --path <dir> --json      # JSON 输出
 

@@ -9,7 +9,7 @@ paths:
   - ".agents/skills/jpman-podman-ops/**"
   - "apps/containers/jupyter-podman-rootless/bin/**"
 title: "jpman 容器日常运维 (jpman Podman Ops)"
-x-toml-ref: "../../.meta/toml/.agents/skills/jpman-podman-ops.toml"
+x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 ---
 # jpman 容器日常运维 (jpman Podman Ops)
 
@@ -314,7 +314,7 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 | 首次构建 / invoke 入门 | [01-getting-started.md](../../apps/containers/jupyter-podman-rootless/docs/01-getting-started.md) |
 | FAQ（SSH/registry/toolbox 等） | [13-faq.md](../../apps/containers/jupyter-podman-rootless/docs/13-faq.md) |
 | 构建与 7 步验证规范 | [build-test.md](../../apps/containers/jupyter-podman-rootless/.agents/rules/build-test.md) |
-| 2026-08-27 警告复盘（21 事实/5-Why/警告先验法） | [retrospective-podman-wsl-rootless-warnings-20260827.md](../../docs/retrospective/reports/task-reports/retrospective-podman-wsl-rootless-warnings-20260827.md) |
+| 2026-08-27 警告复盘（21 事实/5-Why/警告先验法） | [retrospective-podman-wsl-rootless-warnings-20260827.md](../../../docs/retrospective/reports/task-reports/retrospective-podman-wsl-rootless-warnings-20260827.md) |
 | 镜像灾备缓存 | [docker-cache-cmd/SKILL.md](../docker-cache-cmd/SKILL.md) |
 | 镜像转 WSL 发行版（通用桥接） | [docker-wsl-bridge-cmd/SKILL.md](../docker-wsl-bridge-cmd/SKILL.md) |
 | systemd 不支持上游依据 | [Podman Issue #28341](https://github.com/containers/podman/issues/28341) |

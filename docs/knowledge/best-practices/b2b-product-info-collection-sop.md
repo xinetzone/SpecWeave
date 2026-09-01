@@ -144,7 +144,7 @@ flowchart TD
 
 ## 与defuddle-web-extraction-preferred模式的配合
 
-本SOP是 [defuddle-web-extraction-preferred.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式在B2B/旗舰产品场景下的补充规范：
+本SOP是 [defuddle-web-extraction-preferred.md](../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md) 模式在B2B/旗舰产品场景下的补充规范：
 
 1. 四步预检查（URL可达性→标题验证→重定向检测→信息完整度评估）是采集前的必做步骤
 2. L1层使用defuddle作为主提取工具

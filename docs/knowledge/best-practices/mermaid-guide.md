@@ -334,8 +334,8 @@ Mermaid 渲染错误存在"分层屏蔽"效应——结构层错误会阻止解�
 | [mermaid.md](../../../.agents/commands/mermaid.md) | ⭐ Mermaid图表管理指令集（执行流程/RACI/CMD-LOG规范） |
 | [safe-starter.md](../../../.agents/templates/mermaid-templates/safe-starter.md) | 推荐起步模板（内置安全注释） |
 | [mermaid-templates/](../../../.agents/templates/mermaid-templates/README.md) | 8种布局模板目录 |
-| [mermaid-safe-coding-rules.md](../../../.agents/docs/retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 六规则详细说明与正反例 |
-| [mermaid-trap-cheatsheet.md](../../../.agents/docs/retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md) | 9大陷阱速查表 |
+| [mermaid-safe-coding-rules.md](../../retrospective/patterns/code-patterns/mermaid-safe-coding-rules.md) | 六规则详细说明与正反例 |
+| [mermaid-trap-cheatsheet.md](../../retrospective/patterns/code-patterns/mermaid-trap-cheatsheet.md) | 9大陷阱速查表 |
 | [check-mermaid.py](../../../.agents/scripts/check-mermaid.py) | 自动化检查脚本 |
 | [ci-check.ps1](../../../.agents/scripts/ci-check.ps1) | CI综合检查脚本 |
-| [development-standards.md](../../../.agents/docs/development-standards.md) | 开发规范（含Mermaid章节） |
+| [development-standards.md](../../tech/references/development-standards.md) | 开发规范（含Mermaid章节） |

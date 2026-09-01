@@ -40,8 +40,8 @@ status: "completed"
 
 - [🏠 返回上级：Agent工程方法论](../README.md)
 - [📚 知识库首页](../../../README.md)
-- [🔬 第一性原理知识库：对抗性审查协议](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
-- [🔄 方法论模式库：对抗式审查Prompt模式](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
+- [🔬 第一性原理知识库：对抗性审查协议](../../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
+- [🔄 方法论模式库：对抗式审查Prompt模式](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
 
 ---
 

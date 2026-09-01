@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "headroom-wiki-10"
 title: "总结与Takeaways"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/10-summary.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/10-summary.toml"
 ---
 ## 十一、总结与Takeaways
 
@@ -101,7 +101,7 @@ Headroom是Harness层（模型驾驭层）的一个典型组件。学会了Headr
 - 除了压缩，Harness层还有哪些可优化的点？（工具调用优化、错误重试、记忆管理、并行调度等）
 - CCR这种"可逆设计"模式还能用在哪些地方？
 
-带着这些问题去看[Harness Engineering Wiki](../harness-engineering-wiki.md)，你会有更深的体会。
+带着这些问题去看[Harness Engineering Wiki](../../01-paradigms/harness-engineering-wiki.md)，你会有更深的体会。
 
 ---
 

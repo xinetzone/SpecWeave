@@ -40,7 +40,7 @@ content_sensitivity: "public"
 - 该工作流产出的芯片名为AgentCore，是一款32位嵌入式处理器（基于开放ISA），达到1.230 GHz fmax、36.34 MXLOPS/W、零DRC/天线违规
 - 工作流完全使用开源EDA工具（Yosys/OpenROAD/Verilator/KLayout等），未使用任何商业EDA工具
 - 文章提出四个非处理器特有的核心架构属性：分层多智能体编排、受治理迭代循环、目标函数无关性、溯源与知识库
-- SpecWeave项目现有模式库中已有[多智能体闭环执行模式](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)，聚焦于观察-思考-行动的反馈循环，但尚未覆盖：
+- SpecWeave项目现有模式库中已有[多智能体闭环执行模式](../../../../docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)，聚焦于观察-思考-行动的反馈循环，但尚未覆盖：
   - 长时程自主系统的迭代预算治理机制（防止token黑洞）
   - 跨阶段协同优化的反馈边设计
   - 溯源驱动的自积累知识库模式
@@ -72,7 +72,7 @@ content_sensitivity: "public"
 ## Assumptions
 
 - 文章内容为Agentrys白皮书的中文翻译/转述，核心事实可信（已标注来源）
-- 现有模式库中[multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)聚焦短周期交互闭环，本文聚焦长时程自主系统治理，两者互补而非重复
+- 现有模式库中[multi-agent-closed-loop-execution.md](../../../../docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md)聚焦短周期交互闭环，本文聚焦长时程自主系统治理，两者互补而非重复
 - "受治理迭代预算"和"溯源驱动知识积累"在现有模式库中无直接对应模式
 
 ## Acceptance Criteria

@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "headroom-wiki-00"
 title: "Headroom：概述与学习目标"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/00-overview.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/00-overview.toml"
 ---
 ## 一、概述与学习目标
 

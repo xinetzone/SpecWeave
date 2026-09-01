@@ -197,9 +197,9 @@ status: "completed"
 
 | 文档 | 路径 | 简介 |
 |------|------|------|
-| 对抗性审查协议原始规范 | [../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) | 知识研究场景对抗审查协议原始版本 |
-| 第一性原理核心概念术语表 | [../../00-essence-and-thinking/first-principles/06-concepts-glossary.md](../../00-essence-and-thinking/first-principles/06-concepts-glossary.md) | 第一性原理思维相关术语，含确认偏差等认知偏差定义 |
-| 第一性原理知识库总览 | [../../00-essence-and-thinking/first-principles/README.md](../../00-essence-and-thinking/first-principles/README.md) | 第一性原理知识库入口 |
+| 对抗性审查协议原始规范 | [../../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md](../../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) | 知识研究场景对抗审查协议原始版本 |
+| 第一性原理核心概念术语表 | [../../../00-essence-and-thinking/first-principles/06-concepts-glossary.md](../../../00-essence-and-thinking/first-principles/06-concepts-glossary.md) | 第一性原理思维相关术语，含确认偏差等认知偏差定义 |
+| 第一性原理知识库总览 | [../../../00-essence-and-thinking/first-principles/README.md](../../../00-essence-and-thinking/first-principles/README.md) | 第一性原理知识库入口 |
 
 ### 6.2 对抗性审查知识库内部文档
 
@@ -220,8 +220,8 @@ status: "completed"
 
 | 文档 | 路径 | 简介 |
 |------|------|------|
-| 对抗式审查Prompt模式 | [../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | AI协作场景对抗审查Prompt标准模式 |
-| Agent通信协议速查表 | [../../01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.md](../../01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.md) | MCP/A2A/ACP/ANP协议速查（格式参考） |
+| 对抗式审查Prompt模式 | [../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md) | AI协作场景对抗审查Prompt标准模式 |
+| Agent通信协议速查表 | [../../../01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.md](../../../01-agent-protocols-interfaces/agent-communication-protocols/11-quick-reference.md) | MCP/A2A/ACP/ANP协议速查（格式参考） |
 
 ---
 

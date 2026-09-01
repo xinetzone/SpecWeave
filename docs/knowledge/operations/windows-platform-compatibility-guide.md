@@ -14,7 +14,7 @@ summary: "系统化记录 Windows 平台执行任务时的10类陷阱（编码�
 ---
 # Windows平台兼容性手册：AI智能体执行任务陷阱系统化指南
 
-> **本手册起源**：2026-07-04 Open Code Review Wiki 教程创建任务复盘中识别到"Windows PowerShell URL处理陷阱需要系统化文档"（[洞察4](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md)）。项目已有4个分散的 Windows 文档，但缺乏统一索引与新陷阱补充。本手册作为 Windows 平台兼容性问题的**统一入口**，整合现有资源并填补空白。
+> **本手册起源**：2026-07-04 Open Code Review Wiki 教程创建任务复盘中识别到"Windows PowerShell URL处理陷阱需要系统化文档"（[洞察4](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/insight-extraction.md)）。项目已有4个分散的 Windows 文档，但缺乏统一索引与新陷阱补充。本手册作为 Windows 平台兼容性问题的**统一入口**，整合现有资源并填补空白。
 >
 > **适用对象**：在 Windows 环境下执行任务的 AI 智能体与人类开发者
 > **核心目标**：将分散的 Windows 平台修复记录系统化为可复用的平台知识库，避免重复踩坑
@@ -43,7 +43,7 @@ Windows 系统默认使用 GBK（代码页936）作为非 Unicode 程序的编�
 
 ### 详细文档
 - **完整配置指南**：[windows-terminal-utf8-complete-guide.md](windows-terminal-utf8-complete-guide.md)（382行，涵盖系统级/用户级/项目级三层配置）
-- **复盘发现**：[finding-06-powershell-encoding-trap.md](../../../.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md)（PowerShell 5.x 需要 UTF-8 BOM + CRLF）
+- **复盘发现**：[finding-06-powershell-encoding-trap.md](../../retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md)（PowerShell 5.x 需要 UTF-8 BOM + CRLF）
 - **Spec**：[fix-windows-terminal-chinese-encoding](../../../.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/spec.md)
 
 ### 核心对策
@@ -404,7 +404,7 @@ PowerShell 5.x 对脚本文件的换行符有要求，LF-only 换行可能导致
 - Git 的 `core.autocrlf` 设置可能自动转换换行符
 
 ### 复盘发现
-> 来源：[finding-06-powershell-encoding-trap.md](../../../.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md)
+> 来源：[finding-06-powershell-encoding-trap.md](../../retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md)
 >
 > `ci-check.ps1` 使用 UTF-8 无 BOM + LF 换行写入后，PowerShell 5.x 报语法错误"字符串缺少终止符"和"意外的}"。
 
@@ -568,11 +568,11 @@ flowchart TD
 
 ### 项目内Spec与复盘
 - [fix-windows-terminal-chinese-encoding spec](../../../.trae/specs/standards-tools/fix-windows-terminal-chinese-encoding/spec.md) - Windows终端编码修复Spec
-- [finding-06-powershell-encoding-trap.md](../../../.agents/docs/retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md) - PowerShell编码陷阱复盘发现
-- [retrospective-open-code-review-wiki-20260704](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) - 本手册起源的复盘报告
+- [finding-06-powershell-encoding-trap.md](../../retrospective/reports/project-governance/tools-and-automation/retrospective-scripts-shared-lib-extraction-20260626/insights/finding-06-powershell-encoding-trap.md) - PowerShell编码陷阱复盘发现
+- [retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) - 本手册起源的复盘报告
 
 ### 项目内模式
-- [cross-platform-encoding-enforcement.md](../../../.agents/docs/retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md) - 跨平台编码强制模式
+- [cross-platform-encoding-enforcement.md](../../retrospective/patterns/code-patterns/cross-platform-encoding-enforcement.md) - 跨平台编码强制模式
 
 ### 外部参考
 - [PowerShell about_Quoting_Rules](https://learn.microsoft.com/zh-cn/powershell/module/microsoft.powershell.core/about/about_quoting_rules) - 官方引号规则
@@ -596,4 +596,4 @@ AI智能体在 Windows 环境下执行任务前，快速检查以下事项：
 
 ## 十六、Changelog
 
-- **v1.0.0** (2026-07-06): 初始版本，系统化整理10类Windows平台陷阱，整合4个已有文档，补充6类新陷阱（URL解析、路径分隔符、命令链接、引号差异、脚本扩展、环境变量）。来源：[retrospective-open-code-review-wiki-20260704](../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) 洞察4的高优行动项。
+- **v1.0.0** (2026-07-06): 初始版本，系统化整理10类Windows平台陷阱，整合4个已有文档，补充6类新陷阱（URL解析、路径分隔符、命令链接、引号差异、脚本扩展、环境变量）。来源：[retrospective-open-code-review-wiki-20260704](../../retrospective/reports/competitive-analysis/retrospective-open-code-review-wiki-20260704/README.md) 洞察4的高优行动项。

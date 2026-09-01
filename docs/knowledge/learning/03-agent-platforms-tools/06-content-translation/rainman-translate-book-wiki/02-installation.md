@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "rainman-translate-book-wiki-02"
 title: "安装部署指南"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/02-installation.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/06-content-translation/rainman-translate-book-wiki/02-installation.toml"
 ---
 # 安装部署指南
 

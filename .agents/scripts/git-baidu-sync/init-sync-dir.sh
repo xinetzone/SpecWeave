@@ -43,7 +43,7 @@ archive/     - 废弃仓库归档区，不再活跃的仓库移至此目录
 - 确保跨平台兼容（Windows/macOS/Linux）
 
 初始化脚本：init-sync-dir.ps1 / init-sync-dir.sh
-详细文档：请参考 .agents/docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/
+详细文档：请参考 docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/
 '
 
 GITIGNORE_CONTENT='# 忽略临时文件

@@ -21,5 +21,6 @@ contributing
 features
 four-layer-logging-pattern
 intro
+multi-agent-collab
 quickstart
 ```

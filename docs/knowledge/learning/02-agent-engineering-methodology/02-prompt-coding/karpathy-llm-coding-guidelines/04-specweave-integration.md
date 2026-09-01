@@ -29,11 +29,11 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 | Karpathy 原则 | 整合位置 | 说明 |
 |--------------|---------|------|
-| **原则一：编码前先思考（歧义澄清）** | [global-core-rules.md](../../../../../global-core-rules.md) | 新增「歧义主动澄清」全局核心规则 |
-| **原则二：简约至上** | [development-standards.md](../../../../development-standards.md) | 新增「简约设计原则」章节（6条具体规则） |
-| **原则三：精确编辑** | [developer.md](../../../../../roles/developer.md) | 新增「外科手术式精确编辑」职责与Non-Goals约束 |
-| **原则四：目标驱动** | [development-standards.md](../../../../development-standards.md) | 融入「简约设计原则」第6条 + 测试工作流 |
-| **完整速查指南** | [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md) | 独立规则文档，含一分钟速查表、正反例、工作流整合 |
+| **原则一：编码前先思考（歧义澄清）** | [global-core-rules.md](../../../../../../.agents/global-core-rules.md) | 新增「歧义主动澄清」全局核心规则 |
+| **原则二：简约至上** | [development-standards.md](../../../../../tech/references/development-standards.md) | 新增「简约设计原则」章节（6条具体规则） |
+| **原则三：精确编辑** | [developer.md](../../../../../../.agents/roles/developer.md) | 新增「外科手术式精确编辑」职责与Non-Goals约束 |
+| **原则四：目标驱动** | [development-standards.md](../../../../../tech/references/development-standards.md) | 融入「简约设计原则」第6条 + 测试工作流 |
+| **完整速查指南** | [ai-coding-guidelines.md](../../../../../../.agents/rules/ai-coding-guidelines.md) | 独立规则文档，含一分钟速查表、正反例、工作流整合 |
 
 ---
 
@@ -41,7 +41,7 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 ### 1. 全局核心规则：歧义主动澄清
 
-**文件：** [.agents/global-core-rules.md](../../../../../global-core-rules.md)
+**文件：** [.agents/global-core-rules.md](../../../../../../.agents/global-core-rules.md)
 
 新增规则（"代码修改"规则之后）：
 
@@ -51,7 +51,7 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 ### 2. 开发者角色：外科手术式精确编辑
 
-**文件：** [.agents/roles/developer.md](../../../../../roles/developer.md)
+**文件：** [.agents/roles/developer.md](../../../../../../.agents/roles/developer.md)
 
 **Responsibilities 新增：**
 > - **外科手术式精确编辑**：代码修改遵循最小改动原则，只修改被要求修改的部分；每一行代码变更都应能直接追溯到用户需求或任务要求；严格匹配项目现有代码风格，即使认为现有风格可改进也不擅自变更；因自身修改导致的孤儿代码（未使用的导入、变量、函数）必须清理
@@ -63,7 +63,7 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 ### 3. 开发规范：简约设计原则
 
-**文件：** [.agents/docs/development-standards.md](../../../../development-standards.md)
+**文件：** [docs/tech/references/development-standards.md](../../../../../tech/references/development-standards.md)
 
 新增完整章节（"代码风格"之后）：
 
@@ -84,7 +84,7 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 ### 4. 独立规则文档：AI编码行为准则
 
-**文件：** [.agents/rules/ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md)
+**文件：** [.agents/rules/ai-coding-guidelines.md](../../../../../../.agents/rules/ai-coding-guidelines.md)
 
 这是一份完整的独立规则文档，包含：
 
@@ -95,8 +95,8 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 - 📚 **溯源与参考** - 来源说明和整合位置记录
 
 同时更新了：
-- [.agents/rules/README.md](../../../../../rules/README.md) - 规则清单、场景导航、角色导航
-- [.agents/context-routing.md](../../../../../context-routing.md) - 上下文路由表
+- [.agents/rules/README.md](../../../../../../.agents/rules/README.md) - 规则清单、场景导航、角色导航
+- [.agents/context-routing.md](../../../../../../.agents/context-routing.md) - 上下文路由表
 
 ---
 
@@ -119,11 +119,11 @@ SpecWeave 项目已经将 Karpathy LLM 编程四条准则**有机融入**到现�
 
 ### AI 智能体使用
 
-所有 AI 智能体在启动时通过上下文路由表自动加载 [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md)，无需手动配置。
+所有 AI 智能体在启动时通过上下文路由表自动加载 [ai-coding-guidelines.md](../../../../../../.agents/rules/ai-coding-guidelines.md)，无需手动配置。
 
 ### 人类开发者使用
 
-1. **快速回顾**：看 [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md) 开头的「一分钟速查表」
+1. **快速回顾**：看 [ai-coding-guidelines.md](../../../../../../.agents/rules/ai-coding-guidelines.md) 开头的「一分钟速查表」
 2. **遇到具体问题**：查「常见陷阱速查」或「反例 vs 正例」
 3. **给 AI 描述任务时**：遵循原则四——给验收标准，别给具体步骤
 4. **Review AI 代码时**：用四条原则作为检查清单

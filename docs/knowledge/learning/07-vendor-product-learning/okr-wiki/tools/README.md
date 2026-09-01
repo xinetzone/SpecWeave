@@ -3,7 +3,7 @@ type: Wiki Tutorial
 
 id: "docs-knowledge-learning-okr-wiki-tools-index"
 title: "工具集"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/tools/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/tools/README.toml"
 category: "learning"
 date: "2026-07-09"
 ---
@@ -24,7 +24,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：叮当OKR Wiki](../README.md)
-- [📚 文档首页](../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../index.md)
 
 ---
 

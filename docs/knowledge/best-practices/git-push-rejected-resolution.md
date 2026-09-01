@@ -3,7 +3,7 @@ type: best-practice
 
 id: "git-push-rejected-resolution"
 title: "Git推送被拒绝（fetch first）问题解决指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/git-push-rejected-resolution.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/git-push-rejected-resolution.toml"
 category: "best-practices"
 tags: ["git", "push", "conflict", "merge", "rebase", "directory-restructure", "troubleshooting"]
 date: "2026-08-14"

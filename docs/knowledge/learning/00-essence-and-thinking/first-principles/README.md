@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: first-principles-archive
 title: 第一性原理系统化资料档案
 source: first-principles-comprehensive-research Task 9 + future research tasks
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/README.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/README.toml"
 created_at: "2026-07-09"
 last_updated: "2026-08-21"
 status: in-progress

@@ -211,4 +211,4 @@ python ../scripts/check-sensitive-info.py --exclude temp,build,dist
 
 ---
 生成时间：2026-07-08
-关联报告：[sensitive-info-sanitization-report.md](../docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-sanitization-report.md)
+关联报告：[sensitive-info-sanitization-report.md](../../docs/retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708/sensitive-info-sanitization-report.md)

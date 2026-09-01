@@ -1,7 +1,7 @@
 ---
 id: "mainecoon-insights-and-reliability"
 title: "MaineCoon 洞见萃取与可靠性评估"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/concepts/04-insights-and-reliability.toml"
 version: 1.1
 atomized_from: "analysis-report.md"
 type: Report

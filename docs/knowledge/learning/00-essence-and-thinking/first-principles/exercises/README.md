@@ -3,7 +3,7 @@ type: Wiki Tutorial
 
 id: "docs-knowledge-learning-first-principles-exercises-index"
 title: "Exercises"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/README.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/exercises/README.toml"
 category: "knowledge"
 date: "2026-07-10"
 ---
@@ -32,7 +32,7 @@ date: "2026-07-10"
 ## 🔗 相关资源
 
 - [🏠 返回上级：第一性原理系统化资料档案](../README.md)
-- [📚 文档首页](../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../index.md)
 
 ---
 

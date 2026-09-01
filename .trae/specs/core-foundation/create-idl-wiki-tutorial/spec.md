@@ -5,7 +5,7 @@ x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/create-idl-wiki-
 # IDL（接口定义语言）Wiki 教程 - Product Requirement Document
 
 ## Why
-当前项目知识库已有 `interface-api-abi-protocol-wiki` 等系统性技术教程，但缺少对 **IDL（Interface Definition Language，接口定义语言）** 这一关键技术的系统讲解。IDL 是分布式系统、跨语言调用、序列化协议设计的基石，且 MDI 项目复盘中明确提到 IDL 概念在 AI Agent 工具定义场景下的应用价值（参见 [insight-extraction.md#L45-L47](../../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L45-L47)）。
+当前项目知识库已有 `interface-api-abi-protocol-wiki` 等系统性技术教程，但缺少对 **IDL（Interface Definition Language，接口定义语言）** 这一关键技术的系统讲解。IDL 是分布式系统、跨语言调用、序列化协议设计的基石，且 MDI 项目复盘中明确提到 IDL 概念在 AI Agent 工具定义场景下的应用价值（参见 [insight-extraction.md#L45-L47](../../../../docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L45-L47)）。
 
 开发人员常对以下问题感到困惑：
 - Protocol Buffers、Thrift、CORBA IDL、COM IDL 这些"接口定义语言"到底有什么区别？

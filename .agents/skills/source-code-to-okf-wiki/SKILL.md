@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/source-code-to-okf-wiki/SKILL.to
 > ⚠️ **本Skill是知识沉淀工作流门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+五阶段流程+质量门+安全清单+反模式）
-> - L2：[源模式文档](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md)（完整方法论）+ [references/prompt-templates.md](references/prompt-templates.md)（各阶段Prompt模板）
+> - L2：[源模式文档](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md)（完整方法论）+ [references/prompt-templates.md](references/prompt-templates.md)（各阶段Prompt模板）
 
 ## 1. Skill ID
 `source-code-to-okf-wiki`
@@ -255,8 +255,8 @@ sources:
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| **源模式文档（完整方法论）** | **L2** | [source-code-to-okf-wiki-workflow.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md) | **首次使用必读**——含完整案例、失败复盘、检验标准、跨场景迁移 |
-| **信源稳定性门模式** | **L2** | [source-stability-gate.md](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) | 步骤0预检的完整方法论（5步法+反模式+双案例验证） |
+| **源模式文档（完整方法论）** | **L2** | [source-code-to-okf-wiki-workflow.md](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-code-to-okf-wiki-workflow.md) | **首次使用必读**——含完整案例、失败复盘、检验标准、跨场景迁移 |
+| **信源稳定性门模式** | **L2** | [source-stability-gate.md](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) | 步骤0预检的完整方法论（5步法+反模式+双案例验证） |
 | **Prompt模板集** | **L2** | [references/prompt-templates.md](references/prompt-templates.md) | 每阶段执行时复制对应Prompt |
 | **GATE-SPS 扫描脚本** | **L1 工具** | `.agents/scripts/check-source-path-stability.py` | 步骤0d/0e：清理前扫描（--target）与持久性 audit |
 | **批量文档转换模式** | **L2** | [batch-docs-to-okf-bundle-conversion.md](../../docs/retrospective/patterns/methodology-patterns/concepts/batch-docs-to-okf-bundle-conversion.md) | 非源码文档（Wiki/报告/笔记）批量转换为OKF Bundle时参考，含9个反模式 |

@@ -564,7 +564,7 @@ doc/docs/api-reference/c/
 
 ### 7.2 第三次实证结论
 
-本次任务是**三源三角验证法的第三次实证**（前两次见 [triangular-source-verification.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)）：
+本次任务是**三源三角验证法的第三次实证**（前两次见 [triangular-source-verification.md](../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md)）：
 
 1. **第一次实证**（Claude Tag 文章学习）：源码 + 微信公众号 + 官方博客
 2. **第二次实证**（WSL 学习计划初版）：源码 + wsl.dev + learn.microsoft.com

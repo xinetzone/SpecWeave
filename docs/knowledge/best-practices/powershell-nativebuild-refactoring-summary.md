@@ -450,4 +450,4 @@ pytorch-base、xmnn-runtime、jupyter-ssh-base三个脚本中重复的代码块�
 - [NativeBuild 构建常见问题 FAQ](powershell-nativebuild-faq.md) — 20个常见问题和解决方案
 - [VsDevShell API参考文档](vsdevshell-api-reference.md) — VsDevShell模块完整API
 - [CMake模块化重构最佳实践](cmake-modularization-best-practices.md) — CMake层面的类似重构经验
-- [完整七概念复盘报告](../../../.agents/docs/retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/README.md) — 含R/I/E/C/A/F/V完整方法论流程
+- [完整七概念复盘报告](../../retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/README.md) — 含R/I/E/C/A/F/V完整方法论流程

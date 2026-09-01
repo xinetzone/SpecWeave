@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "headroom-wiki-09"
 title: "常见问题与资源链接"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/09-faq-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/09-faq-resources.toml"
 ---
 ## 十、常见问题与资源链接
 
@@ -104,8 +104,8 @@ Headroom设计上支持扩展。虽然默认提供了6种压缩算法覆盖大�
 
 如果你对Headroom背后的Context Engineering和Harness Engineering理念感兴趣，可以延伸阅读：
 
-- [Harness Engineering Wiki](../harness-engineering-wiki.md)：Harness层设计理念与六大模式
-- [Loop Engineering相关内容](../longcat-agent-learning-wiki/05-loop-engineering.md)：Agent循环工程方法论
+- [Harness Engineering Wiki](../../01-paradigms/harness-engineering-wiki.md)：Harness层设计理念与六大模式
+- [Loop Engineering相关内容](../../06-performance/longcat-agent-learning-wiki/05-loop-engineering.md)：Agent循环工程方法论
 
 ---
 

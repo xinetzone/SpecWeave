@@ -30,8 +30,8 @@ spec_dirs = discover_spec_dirs(root)  # 发现所有 .trae/specs/ 下的 spec �
 
 ## 相关模式
 
-- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
-- [临时sys.path修改](../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)
+- [共享库引力定律](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [临时sys.path修改](../../../../docs/retrospective/patterns/code-patterns/temporary-syspath-modification.md)
 
 ---
 

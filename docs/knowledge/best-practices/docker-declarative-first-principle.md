@@ -3,7 +3,7 @@ type: best-practice
 
 id: "docker-declarative-first-principle"
 title: "Docker镜像更新的声明式优先原则"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/docker-declarative-first-principle.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/docker-declarative-first-principle.toml"
 category: "best-practices"
 tags: ["Docker", "Dockerfile", "docker-commit", "declarative", "image-build", "containerization"]
 date: "2026-07-23"
@@ -11,12 +11,11 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于xmnn-client Docker commit入口配置泄漏修复实战复盘，提炼Docker镜像更新的声明式优先原则：优先使用Dockerfile声明式构建，docker commit仅用于快速原型验证，避免运行时状态隐式继承导致的配置泄漏。"
 ---
-
 # Docker镜像更新的声明式优先原则
 
 > 基于xmnn-client Docker commit入口配置泄漏修复实战复盘的经验总结。核心教训：**docker commit是便捷但危险的操作**——它继承容器的完整运行时状态（ENTRYPOINT/CMD/环境变量），这种隐式继承容易导致临时配置（如tail -f /dev/null）泄漏为永久入口，破坏镜像的可重复构建性和可审计性。
 
-**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../../.agents/docs/retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
+**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
 
 ---
 

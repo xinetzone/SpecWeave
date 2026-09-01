@@ -167,7 +167,7 @@ L1只验证了特定配置，L2用numpy参考实现验证随机数据泛化正�
 
 ### 4.2 numpy参考实现原则
 
-参考[numpy参考实现先行](../../../.agents/docs/retrospective/patterns/code-patterns/numpy-reference-first.md)：
+参考[numpy参考实现先行](../../retrospective/patterns/code-patterns/numpy-reference-first.md)：
 - **纯numpy**，不依赖caffe_ffi
 - 数学公式直接对应论文/推导
 - 不追求性能，追求可读性和正确性
@@ -400,8 +400,8 @@ L3慢（每层可能10-60秒），确保L1/L2全通过后再跑L3，不要浪费
 
 | 资源 | 链接 |
 |------|------|
-| 三层测试验证法模式 | [three-layer-test-validation.md](../../../.agents/docs/retrospective/patterns/code-patterns/three-layer-test-validation.md) |
-| numpy参考实现先行 | [numpy-reference-first.md](../../../.agents/docs/retrospective/patterns/code-patterns/numpy-reference-first.md) |
+| 三层测试验证法模式 | [three-layer-test-validation.md](../../retrospective/patterns/code-patterns/three-layer-test-validation.md) |
+| numpy参考实现先行 | [numpy-reference-first.md](../../retrospective/patterns/code-patterns/numpy-reference-first.md) |
 | param_propagate_down初始化陷阱 | [caffe-ffi-param-propagate-down-initialization.md](caffe-ffi-param-propagate-down-initialization.md) |
 | MAX Pooling梯度路由 | [caffe-pooling-max-gradient-routing.md](caffe-pooling-max-gradient-routing.md) |
 | AVE Pooling梯度路由 | [caffe-pooling-ave-gradient-routing.md](caffe-pooling-ave-gradient-routing.md) |

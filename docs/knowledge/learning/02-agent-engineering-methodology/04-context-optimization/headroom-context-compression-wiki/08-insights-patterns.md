@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "headroom-wiki-08"
 title: "深度洞察与模式萃取"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/08-insights-patterns.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/08-insights-patterns.toml"
 ---
 ## 九、深度洞察与模式萃取
 
@@ -97,7 +97,7 @@ Headroom坚持本地部署、数据不出本地，顺应了这个趋势。未来
 
 ### 9.3 Headroom是Harness层的典型组件
 
-在[Harness Engineering](../harness-engineering-wiki.md)的框架下看，Headroom是一个非常典型的Harness层组件：
+在[Harness Engineering](../../01-paradigms/harness-engineering-wiki.md)的框架下看，Headroom是一个非常典型的Harness层组件：
 
 - 它不是模型本身
 - 它不改变模型的参数或能力

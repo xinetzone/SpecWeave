@@ -117,7 +117,7 @@ docker run --gpus all -it --rm xinetzone/pytorch:2.13.0-cuda12.6-py3.14.6-gpu
 | 构建流程规范 | [.agents/rules/build.md](.agents/rules/build.md) | build.sh参数、离线构建、多架构支持、验证流程 |
 | 使用说明 | [README.md](README.md) | 用户指南、常见问题、命令参考 |
 | 全局应用规范 | [../../AGENTS.md](../../AGENTS.md) | apps区域入口路由 |
-| 全局开发规范 | [.agents/docs/development-standards.md](.agents/docs/development-standards.md) | 代码风格、提交规范、文档规范 |
+| 全局开发规范 | [docs/tech/references/development-standards.md](../../../../docs/tech/references/development-standards.md) | 代码风格、提交规范、文档规范 |
 
 <a id="变更历史"></a>
 ## 变更历史

@@ -6,7 +6,7 @@ argument-hint: "<文章URL> [输出bundle分组]"
 user-invocable: true
 paths:
   - ".agents/skills/blog-article-to-okf-wiki/**"
-  - ".agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md"
+  - "docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md"
 title: "博文/资讯文章→OKF 知识包转化工作流 Skill"
 x-toml-ref: "../../../.meta/toml/.agents/skills/blog-article-to-okf-wiki/SKILL.toml"
 ---
@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/blog-article-to-okf-wiki/SKILL.t
 > ⚠️ **本Skill是知识沉淀工作流门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+七阶段流程+质量门+安全清单+反模式）
-> - L2：[博文类文章→OKF知识包转化模式（L3完整方法论）](../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md)（判据细节、demo 逐步对照、案例迁移记录）
+> - L2：[博文类文章→OKF知识包转化模式（L3完整方法论）](../../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md)（判据细节、demo 逐步对照、案例迁移记录）
 >
 > **术语速查**：OKF（Open Knowledge Format，开放知识格式，v0.2）；bundle（知识包，OKF 最小交付单元）；toctree（Sphinx 导航指令块，CI 门禁沿它做 BFS 导航）；P0（必核验级声明：数字/日期/官方表态/成效数字）；flagged（核心声明核验失败的 bundle 状态标记）；F 编号（事实登记编号，F-001 起）。
 
@@ -64,7 +64,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/blog-article-to-okf-wiki/SKILL.t
 
 ## 5. 核心步骤（七阶段工作流）
 
-> 以下为步骤骨架与判据；**完整规则、demo 逐步对照、13 案例迁移记录以 [L2 模式文档](../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md) 为准**。
+> 以下为步骤骨架与判据；**完整规则、demo 逐步对照、13 案例迁移记录以 [L2 模式文档](../../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md) 为准**。
 
 ### 步骤1：内容敏感度预检
 - 公开内容（无访问控制的公开博文/博客/新闻页）→ 标准工作流：spec 在 `.trae/specs/<theme>-okf-wiki/`，产出在 `projects/awesome-okf-xs/doc/bundles/`
@@ -248,8 +248,8 @@ sources:
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| **博文转化模式（完整方法论 L3）** | **L2** | [blog-article-to-okf-bundle.md](../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md) | **首次使用必读**——7 步骤完整判据、2 个 demo 逐步对照、13 案例迁移记录、勘误四清单详解 |
-| 12 篇批量转化里程碑复盘 | L2 | [blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md](../../docs/retrospective/reports/concepts/milestone/blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md) | 勘误四模式萃取过程、30 条事实、4 条洞察 |
+| **博文转化模式（完整方法论 L3）** | **L2** | [blog-article-to-okf-bundle.md](../../../docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md) | **首次使用必读**——7 步骤完整判据、2 个 demo 逐步对照、13 案例迁移记录、勘误四清单详解 |
+| 12 篇批量转化里程碑复盘 | L2 | [blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md](../../../docs/retrospective/reports/concepts/milestone/blog-to-okf-bundle-12posts-milestone-retrospective-20260829.md) | 勘误四模式萃取过程、30 条事实、4 条洞察 |
 | 源码→OKF Wiki（姊妹 Skill） | L1 | [source-code-to-okf-wiki/SKILL.md](../source-code-to-okf-wiki/SKILL.md) | 信源为本地源码目录时改用；OKF 结构规范两 Skill 一致 |
 | 方法论编排 | L1 | [seven-concepts-cmd/SKILL.md](../seven-concepts-cmd/SKILL.md) | 需要 R→I→E→V→C 元编排/质量门追溯时 |
 | 原子提交 | L1 | [atomic-commit-cmd/SKILL.md](../atomic-commit-cmd/SKILL.md) | C 阶段提交规范 |

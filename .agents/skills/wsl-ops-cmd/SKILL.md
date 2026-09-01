@@ -11,9 +11,8 @@ paths:
   - ".agents/scripts/setup-wsl-docker-gpu.sh"
   - ".agents/scripts/cleanup-trae-cache.ps1"
 title: WSL2 主机层运维（GPU/磁盘/Docker自启/缓存）
-x-toml-ref: "capability-registry/02-skills.md"
+x-toml-ref: "../../../.meta/toml/.agents/skills/wsl-ops-cmd/SKILL.toml"
 ---
-
 # wsl-ops-cmd — WSL2 主机层运维技能门面
 
 ## 1. Skill ID
@@ -301,11 +300,11 @@ pwsh -File D:\spaces\SpecWeave\.agents\scripts\cleanup-trae-cache.ps1
 
 | 参考 | 路径 | 何时查 |
 |---|---|---|
-| 存储清理五步法（L2-validated，完整脚本片段） | [wsl-docker-storage-cleanup-five-step-method.md](../../docs/retrospective/patterns/code-patterns/wsl-docker-storage-cleanup-five-step-method.md) | 执行 SOP-B 需要完整快照/awk 脚本 |
-| GPU 三层分诊模式（L1-draft，8 步 + 回滚 5 步） | [wsl-docker-gpu-triage.md](../../docs/retrospective/patterns/code-patterns/wsl-docker-gpu-triage.md) | GPU 手动修复/回滚/Podman CDI 迁移 |
+| 存储清理五步法（L2-validated，完整脚本片段） | [wsl-docker-storage-cleanup-five-step-method.md](../../../docs/retrospective/patterns/code-patterns/wsl-docker-storage-cleanup-five-step-method.md) | 执行 SOP-B 需要完整快照/awk 脚本 |
+| GPU 三层分诊模式（L1-draft，8 步 + 回滚 5 步） | [wsl-docker-gpu-triage.md](../../../docs/retrospective/patterns/code-patterns/wsl-docker-gpu-triage.md) | GPU 手动修复/回滚/Podman CDI 迁移 |
 | WSL 命令安全（三层 Shell 模型） | patterns/code-patterns/wsl-docker-command-safety.md | 跨层命令写法疑问 |
 | Desktop vs 原生 Docker 选型 | patterns/code-patterns/wsl2-docker-selection-decision.md | daemon 不可达且怀疑双 daemon 并存 |
-| GPU 修复复盘来源 | `.agents/docs/retrospective/reports/environment-setup/retrospective-wsl-docker-gpu-fix-20260815/` | 追溯案例细节 |
+| GPU 修复复盘来源 | `docs/retrospective/reports/environment-setup/retrospective-wsl-docker-gpu-fix-20260815/` | 追溯案例细节 |
 | 姊妹技能 | [jpman-podman-ops](../jpman-podman-ops/SKILL.md)、[docker-cache-cmd](../docker-cache-cmd/SKILL.md)、[docker-wsl-bridge-cmd](../docker-wsl-bridge-cmd/SKILL.md) | 容器驾驶/镜像灾备/发行版转换 |
 | NVIDIA 官方文档 | https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html | toolkit 版本与官方源 |
 | USTC 镜像帮助 | https://mirrors.ustc.edu.cn/help/libnvidia-container.html | 国内网络 apt 源异常 |

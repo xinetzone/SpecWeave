@@ -6,8 +6,11 @@
 :maxdepth: 2
 :caption: 技术文档
 
+code-wiki/index
 concepts/index
 references/index
+standards/index
+test-plans/index
 log
 ```
 

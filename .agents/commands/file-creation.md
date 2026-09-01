@@ -131,7 +131,7 @@ result = run(project_root, args)
 
 ## 关联资源
 
-- [文件创建前置检查模式](../docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
+- [文件创建前置检查模式](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/file-creation-precheck-pattern.md)
 - [文件命名规范](../rules/file-naming-convention.md)
 - [文件名检查脚本](../scripts/check-filename-convention.py)
 - [知识库入口](../docs/knowledge/README.md)

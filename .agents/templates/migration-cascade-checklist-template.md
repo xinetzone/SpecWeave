@@ -9,7 +9,7 @@ created_date: "2026-07-19"
 tags: [migration, refactor, checklist, cascade-update, path-migration, directory-restructure]
 trigger_conditions:
   - 任何涉及目录/文件重命名或位置迁移的 refactor 提交前
-  - docs/ 与 .agents/docs/ 等文档根路径调整
+  - docs/ 文档中心内部板块或根路径调整
   - 跨模块资源路径变更（脚本、模板、配置、TOML 元数据）
   - Spec 主题目录重组或归档
 validation_count: 0
@@ -20,7 +20,7 @@ related_patterns:
 ---
 # 迁移级联更新清单（Migration Cascade Update Checklist）
 
-> **来源**：从[SpecWeave全项目复盘报告](../docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)ACT-03萃取。核心教训：2026-07-15文档根路径迁移（`docs/`→`.agents/docs/`）后，docgen.py stats路径未同步更新，导致核心数据连续3天显示"模式0+"而未被发现。根本原因是缺少三类引用方的系统化扫描。本清单确保迁移类重构不遗漏任何引用方。
+> **来源**：从[SpecWeave全项目复盘报告](../../docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)ACT-03萃取。核心教训：2026-07-15文档根路径迁移（`docs/`→`.agents/docs/`）后，docgen.py stats路径未同步更新，导致核心数据连续3天显示"模式0+"而未被发现。根本原因是缺少三类引用方的系统化扫描。本清单确保迁移类重构不遗漏任何引用方。
 
 ---
 
@@ -31,7 +31,7 @@ related_patterns:
 ### 一、基础信息记录
 
 - [ ] **迁移源路径**（Source）：`<旧路径，如 docs/retrospective/>`
-- [ ] **迁移目标路径**（Target）：`<新路径，如 .agents/docs/retrospective/>`
+- [ ] **迁移目标路径**（Target）：`<新路径，如 docs/retrospective/>`
 - [ ] **迁移类型**：□ 目录整体迁移 □ 目录拆分 □ 文件重命名 □ 根路径变更 □ 其他：______
 - [ ] **影响域预估**：□ 仅文档链接 □ 含脚本硬编码 □ 含TOML元数据 □ 含CI配置
 

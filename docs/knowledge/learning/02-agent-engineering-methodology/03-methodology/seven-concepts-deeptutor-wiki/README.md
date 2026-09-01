@@ -135,9 +135,9 @@ README.md → 00-overview.md
 
 - [🏠 返回上级：Agent工程方法论](../README.md)
 - [📚 知识库首页](../../../README.md)
-- [🧬 七概念方法论：七概念指令集](../../../../../commands/seven-concepts.md)
-- [📖 七概念Prompt工程Wiki](../seven-concepts-prompt-wiki/README.md)
-- [🔄 方法论模式库](../../../../retrospective/patterns/README.md)
+- [🧬 七概念方法论：七概念指令集](../../../../../../.agents/commands/seven-concepts.md)
+- [📖 七概念Prompt工程Wiki](../../02-prompt-coding/seven-concepts-prompt-wiki/README.md)
+- [🔄 方法论模式库](../../../../../retrospective/patterns/index.md)
 - [🌐 DeepTutor GitHub](https://github.com/HKUDS/DeepTutor)
 
 ---

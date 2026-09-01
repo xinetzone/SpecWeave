@@ -1,7 +1,7 @@
 ---
 id: "mainecoon-technical-breakthrough-analysis"
 title: "MaineCoon 技术突破深度解析与应用场景评估"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/concepts/03-technical-breakthrough-analysis.toml"
 version: 1.1
 atomized_from: "analysis-report.md"
 type: Report

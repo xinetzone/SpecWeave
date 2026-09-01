@@ -15,7 +15,7 @@ summary: "基于多智能体冲突解决机制实现与死锁修复实战复盘�
 
 > 基于多智能体冲突解决机制（ConflictResolver）实现与死锁风险修复实战复盘的经验总结。核心教训：**"测试通过"是最低标准，不是完成标准**——功能实现+测试通过后主动进行安全审查，发现8个潜在问题（含2个高风险死锁/活锁缺陷），全部修复并新增13个预防测试闭环。
 
-**洞察来源**：[retrospective-conflict-resolution-mechanism-20260708](../../../.agents/docs/retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)
+**洞察来源**：[retrospective-conflict-resolution-mechanism-20260708](../../retrospective/reports/task-reports/retrospective-conflict-resolution-mechanism-20260708/retrospective-report.md)
 
 ---
 

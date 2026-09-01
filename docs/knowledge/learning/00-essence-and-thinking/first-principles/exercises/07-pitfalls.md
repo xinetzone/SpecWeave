@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "first-principles-exercises-pitfalls"
 title: "误区识别专项练习"
 source: "12-exercises.md#第8章-误区识别专项练习"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/07-pitfalls.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/exercises/07-pitfalls.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

@@ -37,8 +37,8 @@ last_verified: "2026-08-14"
 | **适用镜像** | `devcontainer-base:v2.2.1-opt` 及以上 |
 | **验证状态** | ✅ 已验证通过（10/10 验证项） |
 | **验证环境** | WSL2 Ubuntu + Docker 29.1.3 + Jupyter 2.20.0 |
-| **架构模式** | [容器开发服务宿主桥接模式](../../../../../../.agents/docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md) |
-| **关联报告** | [可行性分析报告](../../../../../../.agents/docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md) |
+| **架构模式** | [容器开发服务宿主桥接模式](../../../../../../docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md) |
+| **关联报告** | [可行性分析报告](../../../../../../docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md) |
 
 ## 归档内容
 
@@ -133,8 +133,8 @@ bash run-jupyter-ide.sh
 - [最佳实践](../../best-practices.md) — Docker DinD/Compose/镜像源最佳实践
 - [项目README](../../../README.md) — 项目总览和快速开始
 - [v2.2.1 更新日志](../../../CHANGELOG.md) — 镜像版本变更记录
-- [架构模式文档](../../../../../../.agents/docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md) — 模式定义、公理、反模式
-- [可行性分析报告](../../../../../../.agents/docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md) — F→V→I 完整分析链路
+- [架构模式文档](../../../../../../docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md) — 模式定义、公理、反模式
+- [可行性分析报告](../../../../../../docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md) — F→V→I 完整分析链路
 
 ## 变更记录
 

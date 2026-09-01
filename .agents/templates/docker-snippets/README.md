@@ -2,7 +2,7 @@
 
 > 基于 XMNN Nuitka 打包 + Docker 运行时镜像构建复盘萃取的可复用代码片段。
 >
-> **来源**：[retrospective-xmnn-nuitka-docker-runtime-20260722](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md)
+> **来源**：[retrospective-xmnn-nuitka-docker-runtime-20260722](../../../docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md)
 >
 > **配套Checklist**：[docker-build-optimization-checklist.md](../../checklists/docker-build-optimization-checklist.md)
 
@@ -51,8 +51,8 @@
 
 | 代码片段 | 对应正式模式 | 成熟度 |
 |---------|------------|--------|
-| Build-Env-Reuse | [compiled-wheel-runtime-image-build.md](../../docs/retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md) | L1 实验性 |
-| Wheel-Dep-Bundling | [python-native-extension-self-contained-wheel.md](../../docs/retrospective/patterns/code-patterns/python-native-extension-self-contained-wheel.md) | L2 可复用 |
-| Script-Mount | [direct-file-write-over-shell-pipe.md](../../docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md)（相关） | L1 实验性 |
-| 版本验证 | [python-package-version-standard-api.md](../../docs/retrospective/patterns/code-patterns/python-package-version-standard-api.md) | L2 可复用 |
-| Conda镜像源 | [conda-custom-channels-mirror.md](../../docs/retrospective/patterns/code-patterns/conda-custom-channels-mirror.md) | L2 可复用 |
+| Build-Env-Reuse | [compiled-wheel-runtime-image-build.md](../../../docs/retrospective/patterns/code-patterns/compiled-wheel-runtime-image-build.md) | L1 实验性 |
+| Wheel-Dep-Bundling | [python-native-extension-self-contained-wheel.md](../../../docs/retrospective/patterns/code-patterns/python-native-extension-self-contained-wheel.md) | L2 可复用 |
+| Script-Mount | [direct-file-write-over-shell-pipe.md](../../../docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md)（相关） | L1 实验性 |
+| 版本验证 | [python-package-version-standard-api.md](../../../docs/retrospective/patterns/code-patterns/python-package-version-standard-api.md) | L2 可复用 |
+| Conda镜像源 | [conda-custom-channels-mirror.md](../../../docs/retrospective/patterns/code-patterns/conda-custom-channels-mirror.md) | L2 可复用 |

@@ -12,7 +12,7 @@ status: "stable"
 author: "量子位"
 summary: "Claude Tag 相关参考链接汇总：原文、官方产品页、官方博客、媒体报道、复盘报告、已入库模式文件。"
 source: "claude-tag-article.md#参考链接"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/07-resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/claude-tag-article/07-resources.toml"
 ---
 # Claude Tag：参考链接
 
@@ -26,9 +26,9 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-pl
 
 ## SpecWeave 内部资源
 
-- 复盘报告：[retrospective-claude-tag-article-learning-20260629/](../../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md)
-- 团队共享AI同事模式：[team-shared-ai-colleague.md](../../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md)
-- 主动介入Agent模式：[ambient-proactive-agent.md](../../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md)
+- 复盘报告：[retrospective-claude-tag-article-learning-20260629/](../../../../../retrospective/reports/competitive-analysis/retrospective-claude-tag-article-learning-20260629/README.md)
+- 团队共享AI同事模式：[team-shared-ai-colleague.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/team-shared-ai-colleague.md)
+- 主动介入Agent模式：[ambient-proactive-agent.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/ambient-proactive-agent.md)
 
 ---
 

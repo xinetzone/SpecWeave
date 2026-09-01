@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "performance", "benchmarks", "token-savings", "quality"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/05-performance-data.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/references/05-performance-data.toml"
 type: "Reference"
 description: "基于真实AI Coding场景的压缩率与质量评估数据：代码/日志场景压缩率85-91%，数学与事实问答准确率零掉分甚至提升，工具调用成功率达97%，从注意力机制、噪声过滤等角度分析质量不降反升的原因。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 效果验证与数据分析
 
 > 本章用真实数据说话，展示Headroom在不同场景下的压缩率、质量评估结果，重点分析"省Token不以牺牲质量为代价"甚至"质量不降反升"这一反直觉现象的深层原因。

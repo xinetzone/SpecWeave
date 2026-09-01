@@ -6,7 +6,7 @@ Mermaid 代码块的引号使用错误。覆盖 16 类图表的引号规则，�
 
 用法:
     python check-mermaid-quotes.py [文件或目录...]
-    python check-mermaid-quotes.py --path .agents/docs/
+    python check-mermaid-quotes.py --path docs/
     python check-mermaid-quotes.py --json file.md
 
 规则来源: docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/mermaid-quote-rules-checklist.md

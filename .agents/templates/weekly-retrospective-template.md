@@ -18,7 +18,7 @@ related_patterns:
 ---
 # SpecWeave 周迭代复盘模板
 
-> **来源**：从[SpecWeave全项目复盘报告](../docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)ACT-04 萃取。使用流程：先运行 `python .agents/scripts/docgen.py weekly` 获取本周数据快照，复制本模板到对应周目录，基于数据撰写复盘。
+> **来源**：从[SpecWeave全项目复盘报告](../../docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)ACT-04 萃取。使用流程：先运行 `python .agents/scripts/docgen.py weekly` 获取本周数据快照，复制本模板到对应周目录，基于数据撰写复盘。
 
 ---
 

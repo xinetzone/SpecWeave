@@ -4,7 +4,7 @@ description: "Project N.O.M.A.D 开源项目文章系统性学习与深度洞察
 status: "stable"
 source: "https://mp.weixin.qq.com/s/3dnKdxAu0R0ey6SUJwyi8g"
 author: "小黑"
-x-toml-ref: "../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-3dnk/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/concepts/competitive-analysis/analyze-wechat-article-3dnk-20260706/analysis-report.toml"
 github: "https://github.com/Crosstalk-Solutions/project-nomad"
 publisher: "极客之家"
 analysis_date: "2026-07-06"
@@ -16,7 +16,6 @@ verified:
   at: "2026-08-22T00:00:00Z"
 stale_after: "2027-08-22"
 ---
-
 # Project N.O.M.A.D 开源项目文章系统性学习与深度洞察分析报告
 
 ## 一、学习笔记（技术内容理解层）

@@ -60,7 +60,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 > **Skill类型说明**：
 > - **完整Skill**：包含完整双方案实现、工具函数、详细步骤，可独立完成复杂任务
-> - **工作流门面**：对 `.agents/docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面含触发词/阶段流程/质量门，L2 为完整模式文档）
+> - **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面含触发词/阶段流程/质量门，L2 为完整模式文档）
 > - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 > - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run/预览机制、幂等性说明和错误处理
 

@@ -5,7 +5,7 @@ type: "Concept"
 description: "AI工程演进的瓶颈外移主线规律：模型变强导致瓶颈逐层外移，串联Prompt→Context→Harness→Loop四个工程阶段的递进与层层包含关系。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/01-bottleneck-migration.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/01-bottleneck-migration.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 瓶颈外移：AI工程演进的主线规律
 
 ## 瓶颈外移模型

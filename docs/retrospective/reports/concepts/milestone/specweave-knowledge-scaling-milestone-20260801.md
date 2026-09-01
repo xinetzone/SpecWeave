@@ -164,7 +164,7 @@ stale_after: "2027-08-22"
 - **单一职责**：在模式库目录下创建专项资产化流程文档，明确4类交付物标准
 - **可独立验证**：文档包含知识库、技能、角色、模式四类资产的交付清单与验收checklist（共24项）
 - **验收标准**：文档引用MILESTONE-KNOWLEDGE-CLOOP-001模式，且checklist项数不少于15项（实际24项）
-- **交付物**：[milestone-breakthrough-assetization-process.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md)
+- **交付物**：[milestone-breakthrough-assetization-process.md](../../../patterns/methodology-patterns/governance-strategy/milestone-breakthrough-assetization-process.md)
 
 ### 行动项3：为Token优化专家角色补充迁移验证案例 ✅
 - **单一职责**：在Token优化专家角色配置中新增2个跨领域Token优化迁移案例
@@ -176,7 +176,7 @@ stale_after: "2027-08-22"
 - **单一职责**：为知识构建方法论ACT改进创建标准化的效果验证模板
 - **可独立验证**：模板包含改进前基线、改进计划、改进后测量、结论四个必填部分
 - **验收标准**：模板以独立文件形式存在于标准文档目录下，且ACT-001/002/003已有对应填充示例
-- **交付物**：[act-improvement-validation-template.md](../../../../../.agents/docs/standards/act-improvement-validation-template.md)
+- **交付物**：[act-improvement-validation-template.md](../../../../tech/standards/act-improvement-validation-template.md)
 
 ### 行动项5：制定《工程攻坚复盘强制模板》 ✅
 - **单一职责**：为工程攻坚类任务（兼容性问题、性能优化、Bug修复等）创建标准化复盘模板

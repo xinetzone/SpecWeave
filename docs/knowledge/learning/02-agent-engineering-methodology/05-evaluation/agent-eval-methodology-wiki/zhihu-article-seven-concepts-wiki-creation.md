@@ -242,4 +242,4 @@ Use Skill: seven-concepts-cmd
 
 ---
 
-*本文基于一次真实的"七概念驱动 Wiki 教程创作"复盘撰写。完整过程记录见 [创作过程记录](appendices/creation-process-record.md)，方法论模式见 [七概念驱动的技术Wiki创作方法论](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/seven-concepts-wiki-creation-methodology.md)。*
+*本文基于一次真实的"七概念驱动 Wiki 教程创作"复盘撰写。完整过程记录见 [创作过程记录](appendices/creation-process-record.md)，方法论模式见 [七概念驱动的技术Wiki创作方法论](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/seven-concepts-wiki-creation-methodology.md)。*

@@ -176,6 +176,6 @@ wsl --import Ubuntu-Test D:\WSL\Ubuntu-Test $outFile --version 2
 
 ## 参考资料
 
-- [证书错误详细FAQ卡片](../../../.agents/docs/retrospective/patterns/analysis-cards/powershell-https-cert-bypass-download.md)
-- [WSL发行版安装迁移完整指南](../../../.agents/docs/retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md)
+- [证书错误详细FAQ卡片](../../retrospective/patterns/analysis-cards/powershell-https-cert-bypass-download.md)
+- [WSL发行版安装迁移完整指南](../../retrospective/patterns/code-patterns/wsl-distro-install-migration-guide.md)
 - [PowerShell Invoke-WebRequest 官方文档](https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/invoke-webrequest)

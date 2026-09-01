@@ -98,9 +98,9 @@ README.md（索引入口）
 
 - [🏠 返回上级：Agent工程方法论](../README.md)
 - [📚 知识库首页](../../../README.md)
-- [🧬 七概念方法论：七概念指令集](../../../../../commands/seven-concepts.md)
-- [🔄 方法论模式库：Prompt工程模式](../../../../retrospective/patterns/README.md)
-- [📖 对抗性审查Wiki：提升Prompt质量](../adversarial-review-wiki/README.md)
+- [🧬 七概念方法论：七概念指令集](../../../../../../.agents/commands/seven-concepts.md)
+- [🔄 方法论模式库：Prompt工程模式](../../../../../retrospective/patterns/index.md)
+- [📖 对抗性审查Wiki：提升Prompt质量](../../03-methodology/adversarial-review-wiki/README.md)
 
 ---
 

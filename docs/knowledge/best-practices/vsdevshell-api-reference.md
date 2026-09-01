@@ -3,7 +3,7 @@ type: best-practice
 
 id: "vsdevshell-api-reference"
 title: "VsDevShell 模块 API 参考文档"
-x-toml-ref: ""
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/vsdevshell-api-reference.toml"
 category: "best-practices"
 tags: ["powershell", "visual-studio", "msvc", "build-tools", "api-reference", "module"]
 date: "2026-08-02"
@@ -17,7 +17,7 @@ source: "nativebuild-vsdevshell-module-extraction"
 > **模块位置**：[VsDevShell.psm1](../../../.agents/scripts/lib/VsDevShell.psm1)
 > **关联决策**：[DM-003 - VsDevShell通用模块提取](../decisions/nativebuild-vsdevshell-module-extraction.md)
 > **测试覆盖**：[test_vsdevshell.Tests.ps1](../../../.agents/scripts/tests/test_vsdevshell.Tests.ps1)（33个测试用例）
-> **复盘报告**：[NativeBuild自动化构建系统复盘](../../../.agents/docs/retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/README.md)
+> **复盘报告**：[NativeBuild自动化构建系统复盘](../../retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802/README.md)
 
 ## 概述
 

@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "architecture", "middleware", "agent-harness", "interceptor-pattern"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/01-core-architecture.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/concepts/01-core-architecture.toml"
 type: "Concept"
 description: "Headroom作为Agent与LLM之间的透明压缩中间件，通过内容感知路由拦截全量信息流，采用四阶段工作流与四种渐进式接入方式，体现分层透明、对症下药、可逆设计三大工程思想。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 核心架构与设计理念
 
 > 本章深入解析Headroom的中间层定位、拦截内容类型、工作原理和四种接入方式总览，帮助理解其"压缩层"设计的本质思想。

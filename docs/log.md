@@ -8,6 +8,7 @@
 - ACT-5（P1）：双文档体系边界治理——根 AGENTS.md 文档边界条款与知识库表修订、global-core-rules 路径解析规则重写（R1-R6）；新建 retrospective/cross-reference-ledger.md 收敛台账（基线 675/164 处，B1-B5 分批）并登记 toctree；R2 冻结生效，新增跨区引用数=0
 - ACT-6（P2）：bp-nav-co-registration（生成-登记同步法，L1.5）入库终检通过——模式文件、concepts/index 表格与 toctree、主清单表、源报告 L138 交叉引用四处一致
 - 门禁回归：check-toctrees / check-frontmatter / check-utf8 全部 exit=0（2696 个文件）
+- 项目级复盘：新增 [doc-governance-program-retrospective-20260831.md](retrospective/reports/concepts/milestone/doc-governance-program-retrospective-20260831.md)（2026-07~08 文档治理工作项目级复盘，session retr-20260831-doc-governance）；34 条事实/4 条项目级洞察/6 项行动项（ACT-G1~G6）；里程碑索引表与 toctree 同步登记；门禁复验通过（utf8 5810/toctrees 全可达/frontmatter 5805）；待 co-founder 审批
 
 ## 2026-08-22
 

@@ -140,7 +140,7 @@ stale_after: "2027-08-29"
 | source 溯源链接修复 | 模式文档 source 字段修正为 6 级相对路径指向根 docs/ 报告 | F-032 |
 | Changelog v2.2 | 记录反模式5与检验标准第6条入库 | F-031 |
 
-模式文档：[source-stability-gate.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md)
+模式文档：[source-stability-gate.md](../../../patterns/methodology-patterns/ai-collaboration/source-stability-gate.md)
 
 ---
 

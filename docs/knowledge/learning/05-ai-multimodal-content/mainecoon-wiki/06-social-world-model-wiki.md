@@ -75,7 +75,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-
 - F+V 深度分析（权威源）：[05-critique-and-methodology.md](05-critique-and-methodology.md)
 - 决策速查卡：[decision-summary.md](decision-summary.md)
 - 批判性评论：[critical-review-draft.md](critical-review-draft.md)
-- 方法论模式：三角困境→架构级解决框架（[trilemma-architectural-resolution.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)）
+- 方法论模式：三角困境→架构级解决框架（[trilemma-architectural-resolution.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)）
 
 ---
 

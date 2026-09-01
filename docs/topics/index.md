@@ -10,6 +10,8 @@
 
 references/index
 log
+methodology-analysis-report
+reuse-and-generalization
 ```
 
 :::{note}

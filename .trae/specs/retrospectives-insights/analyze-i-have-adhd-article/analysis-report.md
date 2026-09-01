@@ -1074,8 +1074,8 @@ V1审查在原始案例（i-have-adhd编码助手）上下文内完成，审查�
 V2审查提出的方法论改进建议（具体意见6及两个结构性缺陷根因）已在二次验证复盘（见同目录 `retrospective-i-have-adhd-second-round-validation/validation-report.md`）中系统性落地：
 
 1. **两个核心模式文档升级至v2.0**：
-   - [action-first-output-paradigm.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)：补充4类边界场景完整适配策略、8个破规场景、6步范式判断决策流程、非技术用户/创意写作等专用输出模板；强约束表述全部柔化为"默认推荐+例外"模式；增加V2 5-Whys根因分析
-   - [reverse-adaptation-innovation.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md)：补充4个工业级失败案例、3个遗漏必要前提（源社区验证/跨多样性冲突/互惠性）、7个早期预警信号；增加两个5-Whys根因分析（成功偏误+模式成熟度与极简性张力）
+   - [action-first-output-paradigm.md](../../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md)：补充4类边界场景完整适配策略、8个破规场景、6步范式判断决策流程、非技术用户/创意写作等专用输出模板；强约束表述全部柔化为"默认推荐+例外"模式；增加V2 5-Whys根因分析
+   - [reverse-adaptation-innovation.md](../../../../docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md)：补充4个工业级失败案例、3个遗漏必要前提（源社区验证/跨多样性冲突/互惠性）、7个早期预警信号；增加两个5-Whys根因分析（成功偏误+模式成熟度与极简性张力）
 2. **3条执行模式独立入库**：编排-执行分层法、风格锚定法、强约束自检启发式从元复盘表格中提取为独立L1模式文档，入库至 `methodology-patterns/governance-strategy/` 目录
 3. **新增"知识沉淀二次验证SOP"**：将本次二次验证流程固化为标准SOP模式（8个Task+6类必查视角+4个质量门），推荐新萃取L2模式入库后1-2周内执行
 4. **方法论改进建议8条**：引入G4过程合规门、G3对创新类模式强制失败案例要求、强约束自检3检查点机制、E阶段执行模式强制入库、V→E修正回环机制等

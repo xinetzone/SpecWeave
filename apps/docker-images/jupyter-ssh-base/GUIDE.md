@@ -242,7 +242,7 @@ ssh -p 2222 jupyteruser@localhost 'echo $PATH'
 **如果 `which jupyter` 返回空或报错**，说明 SSH 非交互 PATH 配置有问题。检查：
 - Dockerfile 中是否有 `ENV PATH="/opt/venv/bin:${PATH}"`
 - `/etc/environment` 中是否包含 PATH 配置
-- 参考 [docker-ssh-noninteractive-path-fix 模式](../../.agents/docs/retrospective/patterns/code-patterns/docker-ssh-noninteractive-path-fix.md)
+- 参考 [docker-ssh-noninteractive-path-fix 模式](../../../docs/retrospective/patterns/code-patterns/docker-ssh-noninteractive-path-fix.md)
 
 ### 5.3 Jupyter HTTP 测试
 

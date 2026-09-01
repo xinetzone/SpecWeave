@@ -8,12 +8,12 @@ okf-kit Wiki 教程的七概念执行报告在 I（洞察）阶段识别出 **�
 
 ## What Changes
 
-- 补充 [agent-knowledge-graph-navigation.md](file:///d:/AI/.agents/docs/retrospective/patterns/architecture-patterns/agent-knowledge-graph-navigation.md)：
+- 补充 [agent-knowledge-graph-navigation.md](../../../docs/retrospective/patterns/architecture-patterns/agent-knowledge-graph-navigation.md)：
   - 新增「okf-kit v0.3.3 源码实现」作为第 4 个实战案例（与既有「OKF v0.2 规范」形成「规范 + 实现」双重独立验证）
   - frontmatter 追加 okf-kit 报告 source 交叉引用（必要时将 `source` 由单字符串转为列表，与库内 `navigation-hub-filename-contract` 一致）
   - `validation_count` 1 → 2，`maturity` L1 → L2
   - 更新文末版本说明
-- 更新 [README.md](file:///d:/AI/.agents/docs/retrospective/patterns/architecture-patterns/README.md) 索引：该模式行成熟度「L1 实验性」→「L2 已验证」，说明补充「okf-kit 实现验证」
+- 更新 [README.md](../../../docs/retrospective/patterns/architecture-patterns/README.md) 索引：该模式行成熟度「L1 实验性」→「L2 已验证」，说明补充「okf-kit 实现验证」
 - 补充交叉引用（okf-kit 报告 ↔ 模式）
 - 运行链接检查与文件名/格式校验，原子提交
 

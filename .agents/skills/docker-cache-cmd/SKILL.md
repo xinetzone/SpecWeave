@@ -6,7 +6,7 @@ argument-hint: "<save|load|build|list|clean|doctor> [镜像名] [选项]"
 user-invocable: true
 paths:
   - ".agents/scripts/docker-cache"
-  - ".agents/docs/tools/docker-cache.md"
+  - "docs/tech/references/docker-cache.md"
 title: "Docker Cache 镜像本地缓存管理 Skill"
 x-toml-ref: "../../../.meta/toml/.agents/skills/docker-cache-cmd/SKILL.toml"
 ---
@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/docker-cache-cmd/SKILL.toml"
 > ⚠️ **本Skill是脚本命令门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<300行，触发词+决策树+核心命令+安全清单）
-> - L2：脚本源码 [docker-cache](../../scripts/docker-cache) + 使用文档 [docker-cache.md](../../docs/tools/docker-cache.md)（完整实现与架构原理）
+> - L2：脚本源码 [docker-cache](../../scripts/docker-cache) + 使用文档 [docker-cache.md](../../../docs/tech/references/docker-cache.md)（完整实现与架构原理）
 
 ## 1. Skill ID
 `docker-cache-cmd`
@@ -183,7 +183,7 @@ bash .agents/scripts/docker-cache clean --all
 bash .agents/scripts/docker-cache clean --all -y
 ```
 
-> 完整参数表和更多用法见L2文档 [docker-cache.md](../../docs/tools/docker-cache.md)。
+> 完整参数表和更多用法见L2文档 [docker-cache.md](../../../docs/tech/references/docker-cache.md)。
 
 ## 6. 安全机制与并发保护
 
@@ -240,7 +240,7 @@ bash .agents/scripts/docker-cache clean --all -y
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| 使用文档（架构原理/工作流） | L2 | [docker-cache.md](../../docs/tools/docker-cache.md) | 理解架构、典型工作流、原子写入机制 |
+| 使用文档（架构原理/工作流） | L2 | [docker-cache.md](../../../docs/tech/references/docker-cache.md) | 理解架构、典型工作流、原子写入机制 |
 | 脚本源码（完整实现） | L2 | [docker-cache](../../scripts/docker-cache) | 调试问题、查看完整参数、理解锁机制 |
 | 产品需求规格 | Spec | [spec.md](../../../.trae/specs/docker-image-local-cache-management/spec.md) | 需求背景、验收标准 |
 | 任务分解 | Spec | [tasks.md](../../../.trae/specs/docker-image-local-cache-management/tasks.md) | 实现任务清单 |

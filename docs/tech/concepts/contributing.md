@@ -48,11 +48,11 @@ stale_after: "2027-08-22"
 
 ### 4. 开发规范
 
-完整开发规范见 `.agents/docs/development-standards.md`，核心要点：
+完整开发规范见 `docs/tech/references/development-standards.md`，核心要点：
 
 - **代码风格**：遵循现有代码风格，新增 `.agents/scripts/` 脚本前先查阅 `lib/README.md` 共享库，禁止重复实现已有功能
 - **测试要求**：单元测试覆盖率不低于 80%，关键模块不低于 90%，所有测试用例通过无回归
-- **文档边界**：`AGENTS.md`/`.agents/` 面向 AI 智能体，`.agents/docs/` 是唯一有效的文档容器
+- **文档边界**：根 `docs/` 是唯一文档中心（面向人类读者与外部消费），`AGENTS.md`/`.agents/` 面向 AI 智能体承载规范与执行资产
 - **路径引用**：Markdown 文档交叉引用使用相对路径，禁止 `file:///` 绝对路径
 
 ---

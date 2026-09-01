@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: "headroom-wiki-05"
 title: "效果验证与数据分析"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/05-performance-data.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/05-performance-data.toml"
 ---
 ## 六、效果验证与数据分析
 

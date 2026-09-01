@@ -31,7 +31,7 @@ status: "planning"
 - SpecWeave是一个成熟的多智能体协作工作台，包含：7个角色定义（Orchestrator/Architect/Developer/Reviewer/Tester等）、完整的启动协议、中心化/去中心化双模式协作、冲突解决仲裁机制、任务交接协议、阶段守卫运行时、自我演进四层闭环（感知/认知/执行/治理）、Skill五要素质量模型
 - 现有市面上智能体书籍多为"框架入门+Demo"模式，缺乏生产级系统架构设计的系统性方法论，本书定位填补这一空白
 - 相关核心资产位置：
-  - 多智能体协作架构：[multi-agent-collab.md](../../../.agents/docs/architecture/multi-agent-collab.md)
+  - 多智能体协作架构：[multi-agent-collab.md](../../../docs/tech/concepts/multi-agent-collab.md)
   - Skill开发规范：[skill-development.md](../../../.agents/rules/skill-development.md)
   - 角色定义：[roles/](../../../.agents/roles/)
   - 协作协议：[protocols/](../../../.agents/protocols/)

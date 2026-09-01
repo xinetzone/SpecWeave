@@ -56,6 +56,6 @@ project_url: "https://gitee.com/guangdong122/energy-management"
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 - [📋 对应的Spec文档](../../../../../.trae/specs/retrospectives-insights/analyze-ems-energy-management-article/spec.md)
 - [🔗 开源项目地址](https://gitee.com/guangdong122/energy-management)

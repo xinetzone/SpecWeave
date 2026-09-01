@@ -5,7 +5,7 @@ type: "Concept"
 description: "Loop Engineering作为AI工程第四站，瓶颈移到人自身：回合制到循环制的范式迁移、三人同期点响、harness假设过期与持续修订、人的新角色。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/05-loop-engineering.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/05-loop-engineering.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 第四站：Loop Engineering
 
 ## 瓶颈移到你自己身上

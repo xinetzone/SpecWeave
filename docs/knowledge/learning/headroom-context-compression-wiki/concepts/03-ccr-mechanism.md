@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "ccr", "reversible-compression", "cache-retrieve", "cold-hot-tiering"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/03-ccr-mechanism.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/concepts/03-ccr-mechanism.toml"
 type: "Concept"
 description: "CCR（Compress-Cache-Retrieve）三阶段可逆机制通过本地完整保留原始数据、按需焦点取回，解决压缩不可逆痛点，类比存储层次结构实现冷热分层，让模型在省Token的同时不丢失任何信息。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — CCR可逆机制深度解析
 
 > 本章深入解析Headroom最核心的创新——CCR（Compress-Cache-Retrieve）三阶段可逆机制，阐述如何解决"压完就没了"的行业痛点，实现"日常压缩版省钱+需要时翻原文"的理想状态。

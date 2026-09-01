@@ -46,7 +46,7 @@ tags: ["windows", "compatibility", "powershell", "encoding", "cross-platform", "
 
 **参考文档**：
 - [PowerShell兼容性防御研究](powershell-compatibility-research.md)（待补充）
-- [pwsh7-windows-standard](../../../.agents/docs/retrospective/reports/project-governance/standards-governance/retrospective-pwsh7-windows-standard-20260729)：PowerShell 7标准化复盘
+- [pwsh7-windows-standard](../../retrospective/reports/project-governance/standards-governance/retrospective-pwsh7-windows-standard-20260729)：PowerShell 7标准化复盘
 
 ### 三、路径处理（3项）
 
@@ -61,7 +61,7 @@ tags: ["windows", "compatibility", "powershell", "encoding", "cross-platform", "
 
 ### 五、工具版本（3项）
 
-- [ ] **WC-016**：Python版本统一使用3.10+，运行 `python --version` 验证（参考 [python310-unification](../../../.agents/docs/retrospective/reports/project-governance/standards-governance/retrospective-python310-unification-20260730)）
+- [ ] **WC-016**：Python版本统一使用3.10+，运行 `python --version` 验证（参考 [python310-unification](../../retrospective/reports/project-governance/standards-governance/retrospective-python310-unification-20260730)）
 - [ ] **WC-017**：Git版本不低于2.30，确保支持sparse-checkout等新特性
 - [ ] **WC-018**：Node.js、Rust、Go等工具版本通过 `.nvmrc`/`rust-toolchain`/`go.mod` 显式声明，避免版本差异
 

@@ -12,7 +12,7 @@
     python .agents/scripts/check-absolute-path-links.py --path docs/knowledge
 
     # 扫描多个目录
-    python .agents/scripts/check-absolute-path-links.py --paths .agents/docs .trae/specs
+    python .agents/scripts/check-absolute-path-links.py --paths docs .trae/specs
 
 退出码：
     0  无命中（通过门禁）

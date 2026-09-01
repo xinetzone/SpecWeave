@@ -69,7 +69,7 @@ Good First Issue 是专门为新贡献者准备的入门任务，满足以下条
 
 | 任务类型 | 具体示例 | 修改位置 | 预计耗时 |
 |---------|---------|---------|---------|
-| **修复错别字** | 文档中的错字、语法错误、标点问题 | `.agents/docs/` 下任意 `.md` 文件 | 5-10分钟 |
+| **修复错别字** | 文档中的错字、语法错误、标点问题 | `docs/` 下任意 `.md` 文件 | 5-10分钟 |
 | **修复断链** | Markdown中引用的相对路径404 | 包含错误链接的 `.md` 文件 | 10-15分钟 |
 | **补充注释** | Python脚本中难以理解的函数缺少docstring | `.agents/scripts/` 下的 `.py` 文件 | 10-20分钟 |
 | **改进翻译** | 中英文术语翻译不统一、表达不自然 | 任意 `.md` 文件 | 10-20分钟 |
@@ -109,7 +109,7 @@ Good First Issue 是专门为新贡献者准备的入门任务，满足以下条
 如果你完全不知道从哪里开始，按这个路径走：
 
 1. **5分钟阅读**：[AGENTS.md](AGENTS.md) 前100行，了解项目是什么
-2. **10分钟探索**：浏览 [.agents/docs/](.agents/docs/) 目录，看看哪个文档你最容易理解
+2. **10分钟探索**：浏览 [docs/](docs/tech/references) 文档中心目录，看看哪个文档你最容易理解
 3. **5分钟寻找**：在那个文档里找一个错别字或不通顺的句子
 4. **15分钟操作**：按本指南第1-5步，Fork→修改→提交PR
 5. **等待合入**：你已经是贡献者了！🎊
@@ -127,5 +127,5 @@ Good First Issue 是专门为新贡献者准备的入门任务，满足以下条
 > - `README.md`
 > - `MAINTAINERS.md` — 维护者清单与职责
 > - `BUSFACTOR.md` — 紧急接续维护手册
-> - `.agents/docs/development-standards.md`
+> - [development-standards.md](docs/tech/references/development-standards.md)
 > - `AGENTS.md`

@@ -31,7 +31,7 @@ from lib.project import resolve_project_root
 from lib.cli import print_pass, print_warn, print_header
 
 # 模式文件目录
-PATTERNS_DIR_NAME = ".agents/docs/retrospective/patterns"
+PATTERNS_DIR_NAME = "docs/retrospective/patterns"
 
 # 从模式文件中提取关键信息的正则
 TITLE_RE = re.compile(r"^# (.+)$", re.MULTILINE)

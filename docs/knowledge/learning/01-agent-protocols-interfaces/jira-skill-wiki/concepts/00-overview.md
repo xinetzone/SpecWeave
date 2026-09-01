@@ -74,7 +74,7 @@ jira-skill 在架构上刻意追求"轻"与"快"，其核心特性可归纳为�
 - 对 Jira 的基本概念有初步了解（如工单、项目、状态、冲刺等）。
 - 了解 Python 生态的基础概念（如依赖管理、CLI 脚本）有助于理解第 4 章，但非必需。
 
-若对 Agent Skills 标准本身感兴趣，可先阅读本知识库中的 [Agent 技能知识库](../agent-skills-wiki/README.md)。
+若对 Agent Skills 标准本身感兴趣，可先阅读本知识库中的 [Agent 技能知识库](../../agent-skills-wiki/README.md)。
 
 ## 相关概念
 

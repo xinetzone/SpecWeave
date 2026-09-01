@@ -12,7 +12,7 @@ assignees: []
 
 | 任务类型 | 具体示例 | 修改位置 | 预计耗时 | PR标题示例 |
 |---------|---------|---------|---------|-----------|
-| **🔤 修复错别字** | 文档中的错字、语法错误、标点问题、多字/漏字 | `.agents/docs/` 下任意 `.md` 文件 | 5-10分钟 | `docs: fix typo in xxx.md` |
+| **🔤 修复错别字** | 文档中的错字、语法错误、标点问题、多字/漏字 | `docs/` 下任意 `.md` 文件 | 5-10分钟 | `docs: fix typo in xxx.md` |
 | **🔗 修复断链** | Markdown中引用的相对路径404、锚点失效 | 包含错误链接的 `.md` 文件 | 10-15分钟 | `fix: correct link to xxx in yyy.md` |
 | **📝 补充注释** | Python脚本中缺少docstring的函数、难以理解的逻辑缺少行内注释 | `.agents/scripts/` 下的 `.py` 文件 | 10-20分钟 | `docs: add docstring for xxx function` |
 | **🌐 改进翻译/表达** | 中英文术语翻译不统一、句子不通顺、表达不自然 | 任意 `.md` 文件 | 10-20分钟 | `docs: improve wording in xxx section` |

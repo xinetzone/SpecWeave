@@ -6,7 +6,7 @@ date: "2026-08-24"
 maturity: "L1-draft"
 maturity_note: "单案例（awesome-okf-xs 12个UTF-8损坏文档重建），待第二个独立案例验证升级 L2"
 source: "七概念方法论编排·知识沉淀(sc-20260824-milestone-retro)——awesome-okf-xs CI 集成里程碑复盘模式E-1"
-source_report: ".agents/docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md（模式E-1 + 洞察2 + 事实F-7~F-12）"
+source_report: "docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md（模式E-1 + 洞察2 + 事实F-7~F-12）"
 related_patterns: ["bp-three-layer-repair-closure"]
 tags: ["document-repair", "utf-8", "encoding", "git-history", "data-recovery", "markdown", "baseline"]
 validation_count: 1
@@ -130,7 +130,7 @@ mindmap
 ## 配套资产
 
 - 参考实现：scripts/repair-bundles.py（逐文件基线比对重建脚本，当时为一次性修复脚本、未提交入库）
-- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../../../.agents/docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md)（模式E-1 + 洞察2 + 事实 F-7~F-12）
+- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md)（模式E-1 + 洞察2 + 事实 F-7~F-12）
 - 关联门禁：[check-utf8.py](../../../../projects/awesome-okf-xs/scripts/check-utf8.py)（修复后前置 gate 防复发，见前置完整性门禁 bp-preflight-integrity-gate）
 
 ## 对抗审查记录

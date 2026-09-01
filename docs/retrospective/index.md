@@ -11,8 +11,15 @@
 :caption: 复盘与模式
 :hidden:
 
+archives/index
+assets/index
+concepts/index
+frameworks/index
+guides/index
 patterns/index
+plans/index
 reports/index
+templates/index
 cross-reference-ledger
 log
 ```
@@ -48,4 +55,4 @@ log
 > 1. 复盘报告放入 `reports/concepts/` 对应子目录（milestone/knowledge/adversarial-review/competitive-analysis）；
 > 2. 可复用模式放入 `patterns/methodology-patterns/` 并更新模式库索引；
 > 3. 重要内容在本页表格中追加条目以便发现；
-> 4. docs/ 与 .agents/docs/ 双体系引用边界及存量收敛进度见 [双体系引用收敛台账](cross-reference-ledger.md)。
+> 4. 双体系引用收敛台账已随 `.agents/docs/` 整体迁入 `docs/` 而自然结项，历史记录见 [双体系引用收敛台账](cross-reference-ledger.md)。

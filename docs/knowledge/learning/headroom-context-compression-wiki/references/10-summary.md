@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "summary", "takeaways", "conclusion"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/10-summary.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/references/10-summary.toml"
 type: "Reference"
 description: "回顾Headroom核心定位、六种压缩算法、CCR可逆机制、四种接入方式与进阶功能，从个人、开发者、团队、行业四视角总结价值，提炼五条关键Takeaways并给出分角色下一步学习建议。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 总结与Takeaways
 
 > 本章是整个Wiki的总结：回顾Headroom的核心要点、总结项目价值、给出5条关键Takeaways，并提供下一步学习建议。读完这一章，你应该能清晰回答"Headroom是什么、为什么重要、我该怎么用"这三个问题。

@@ -3,7 +3,7 @@ type: best-practice
 
 id: "dataloader-pickle-diagnosis-sop"
 title: "DataLoader Pickle 序列化问题诊断 SOP"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/dataloader-pickle-diagnosis-sop.toml"
 category: "best-practices"
 tags: ["Python", "pickle", "serialization", "multiprocessing", "DataLoader", "diagnosis", "SOP", "checklist"]
 date: "2026-07-23"
@@ -11,14 +11,13 @@ status: "stable"
 author: "SpecWeave"
 summary: "DataLoader pickle 序列化问题诊断标准流程，整合诊断指南与检查清单精华。5 步流程 + 6 种不可序列化模式 + 3 种修复方案 + 跨启动模式验证矩阵，适用于 Python 3.14 forkserver 兼容性排查。"
 ---
-
 # DataLoader Pickle 序列化问题诊断 SOP
 
 > 基于 npuusertools 项目 Python 3.14 DataLoader forkserver 兼容性修复实战总结。核心经验：**spawn 模式是最好的序列化测试工具，pickle.dumps 是最快的诊断工具**。
 
 **溯源**：[task-summary-20260723.md](../../../../external/xmhub/npuusertools/.trae/specs/python314-dataloader-forkserver-compat/task-summary-20260723.md) | [DEBUG_PICKLE.md](../../../../external/xmhub/npuusertools/doc/DEBUG_PICKLE.md) | [PICKLE_CHECKLIST.md](../../../../external/xmhub/npuusertools/doc/PICKLE_CHECKLIST.md)
 
-**关联模式**：[pickle-serialization-source-fix.md](../../../.agents/docs/retrospective/patterns/code-patterns/pickle-serialization-source-fix.md)（源码层修复）| [python-314-multiprocessing-fork-compat.md](../../../.agents/docs/retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md)（运行时兼容层）| [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md)（升级检查清单）
+**关联模式**：[pickle-serialization-source-fix.md](../../retrospective/patterns/code-patterns/pickle-serialization-source-fix.md)（源码层修复）| [python-314-multiprocessing-fork-compat.md](../../retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md)（运行时兼容层）| [python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md)（升级检查清单）
 
 ---
 
@@ -89,8 +88,8 @@ summary: "DataLoader pickle 序列化问题诊断标准流程，整合诊断指�
 
 | 源码可改性 | 修复层级 | 参考文档 |
 |-----------|---------|---------|
-| ✅ 可修改源码 | 源码层修复（治本） | [pickle-serialization-source-fix.md](../../../.agents/docs/retrospective/patterns/code-patterns/pickle-serialization-source-fix.md) |
-| ❌ 不可修改源码 | 运行时兼容层（治标） | [python-314-multiprocessing-fork-compat.md](../../../.agents/docs/retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md) |
+| ✅ 可修改源码 | 源码层修复（治本） | [pickle-serialization-source-fix.md](../../retrospective/patterns/code-patterns/pickle-serialization-source-fix.md) |
+| ❌ 不可修改源码 | 运行时兼容层（治标） | [python-314-multiprocessing-fork-compat.md](../../retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md) |
 
 源码层修复三种方案（详见第三章）：
 - [ ] **方案 A**: 模块级命名类（最推荐）
@@ -247,8 +246,8 @@ python your_training_script.py
 
 ## 相关资源
 
-- 源码层修复模式：[pickle-serialization-source-fix.md](../../../.agents/docs/retrospective/patterns/code-patterns/pickle-serialization-source-fix.md)
-- 运行时兼容层模式：[python-314-multiprocessing-fork-compat.md](../../../.agents/docs/retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md)
+- 源码层修复模式：[pickle-serialization-source-fix.md](../../retrospective/patterns/code-patterns/pickle-serialization-source-fix.md)
+- 运行时兼容层模式：[python-314-multiprocessing-fork-compat.md](../../retrospective/patterns/code-patterns/python-314-multiprocessing-fork-compat.md)
 - Python 升级检查清单：[python-version-upgrade-compatibility-check.md](python-version-upgrade-compatibility-check.md)
 - [Python multiprocessing 文档](https://docs.python.org/3/library/multiprocessing.html#contexts-and-start-methods)
 - [PyTorch DataLoader 文档](https://pytorch.org/docs/stable/data.html)

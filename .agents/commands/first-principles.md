@@ -164,7 +164,7 @@ x-toml-ref: "../../.meta/toml/.agents/commands/first-principles.toml"
 
 ### 元审查（自检）
 
-> 方法论类指令集必须包含自检机制，确保执行质量而非表演式走过场。参照 [meta-review-in-command 模式](../docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-review-in-command.md)。
+> 方法论类指令集必须包含自检机制，确保执行质量而非表演式走过场。参照 [meta-review-in-command 模式](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/meta-review-in-command.md)。
 
 - **完整性检查**：6步流程是否全部执行？是否有跳过的步骤？假设剥离是否遗漏了关键假设？
 - **偏差自检**：分析者自身是否存在确认偏差（倾向于支持某个预设结论）？是否主动搜索了反方观点？
@@ -203,4 +203,4 @@ x-toml-ref: "../../.meta/toml/.agents/commands/first-principles.toml"
 - **v2.0 跨文化扩展档案**（复杂问题时参考）：
   - [跨文化第一性原理档案总览](../../docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/README.md) — 12个文件，道/儒/墨/佛四家概念系统
   - [v2.0七步框架操作指南](../../docs/knowledge/learning/00-essence-and-thinking/first-principles/chinese-philosophy-parallels/07-cross-cultural-methodology-framework.md) — 跨文化根本性思维七步法操作细则
-  - [跨文化比较防御方法论](../docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) — CP-1至CP-7反向格义防御七步法，跨文化研究时前置使用
+  - [跨文化比较防御方法论](../../docs/retrospective/patterns/methodology-patterns/research-knowledge/cross-cultural-reverse-hermeneutics-defense.md) — CP-1至CP-7反向格义防御七步法，跨文化研究时前置使用

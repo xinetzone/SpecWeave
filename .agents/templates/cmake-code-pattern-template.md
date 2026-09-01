@@ -15,13 +15,13 @@ x-toml-ref: "../../.meta/toml/.agents/templates/cmake-code-pattern-template.toml
 
 # CMake代码模式文档模板
 
-> **使用说明**：本模板从3个已验证CMake模式（四层模块化架构、公共目标配置函数、平台特定操作封装）的共性结构萃取而成。当你从CMake构建系统实践中提炼出新的可复用代码模式时，复制本模板，将 `{占位符}` 替换为实际内容即可入库到 `.agents/docs/retrospective/patterns/code-patterns/`。
+> **使用说明**：本模板从3个已验证CMake模式（四层模块化架构、公共目标配置函数、平台特定操作封装）的共性结构萃取而成。当你从CMake构建系统实践中提炼出新的可复用代码模式时，复制本模板，将 `{占位符}` 替换为实际内容即可入库到 `docs/retrospective/patterns/code-patterns/`。
 >
 > **适用场景**：编写CMake构建系统相关的代码模式入库文档（code-patterns/）。
 >
 > **结构说明**：9章节固定结构——概述→触发场景→核心步骤→反模式→检验标准→迁移验证→适用条件，与development-standard-template相比更聚焦CMake构建领域，步骤更具体、反模式更典型。
 >
-> **配套文件**：TOML元数据模板 [cmake-code-pattern-template.toml](cmake-code-pattern-template.toml)，填写后放置于 `.meta/toml/.agents/docs/retrospective/patterns/code-patterns/{pattern-id}.toml`。
+> **配套文件**：TOML元数据模板 [cmake-code-pattern-template.toml](cmake-code-pattern-template.toml)，填写后放置于 `.meta/toml/docs/retrospective/patterns/code-patterns/{pattern-id}.toml`。
 
 ---
 
@@ -46,7 +46,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/cmake-code-pattern-template.toml
 ---
 id: "{pattern-id-kebab-case}"
 source: "{来源复盘/项目名称与日期，如：caffe-ffi CMakeLists.txt第二轮深度原子化复盘 (2026-07-29)}"
-x-toml-ref: "../../../../../.meta/toml/.agents/docs/retrospective/patterns/code-patterns/{pattern-id-kebab-case}.toml"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/{pattern-id-kebab-case}.toml"
 ---
 ```
 

@@ -193,11 +193,11 @@ README.md（索引入口，了解完整知识体系）
 
 本Wiki是Agent工程方法论体系的组成部分，相关参考文档：
 
-- 七概念方法论原始指令集：[seven-concepts.md](../../../../../commands/seven-concepts.md)
-- 对抗性审查Wiki（提升Prompt质量保障能力）：[adversarial-review-wiki/README.md](../adversarial-review-wiki/README.md)
+- 七概念方法论原始指令集：[seven-concepts.md](../../../../../../.agents/commands/seven-concepts.md)
+- 对抗性审查Wiki（提升Prompt质量保障能力）：[adversarial-review-wiki/README.md](../../03-methodology/adversarial-review-wiki/README.md)
 - Agent工程方法论目录：[02-agent-engineering-methodology/README.md](../README.md)
-- SpecWeave知识库首页：[.agents/docs/README.md](../../../README.md)
-- 方法论模式库（可复用Prompt模式）：[retrospective/patterns/README.md](../../../../retrospective/patterns/README.md)
+- SpecWeave知识库首页：[docs/index.md](../../../../../index.md)
+- 方法论模式库（可复用Prompt模式）：[retrospective/patterns/README.md](../../../../../retrospective/patterns/index.md)
 
 ---
 

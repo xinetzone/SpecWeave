@@ -17,8 +17,8 @@ date: "2026-07-09"
 
 | 文档 | 说明 | 标签 |
 |------|------|------|
-| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](volcengine-acep-cloudphone-analysis.md) | 火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景 | `ACEP` `火山引擎` `云手机` |
-| [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景 | `Mobile Use Agent` `火山引擎` `云手机` |
+| [火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景](volcengine/volcengine-acep-cloudphone-analysis.md) | 火山引擎云手机（ACEP）完整学习笔记：一站式云手机解决方案+四大能力+四大优势+五大场景 | `ACEP` `火山引擎` `云手机` |
+| [火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景](volcengine/volcengine-mobile-use-agent-analysis.md) | 火山引擎Mobile Use Agent完整学习笔记：云手机+视觉大模型的企业级移动端AI智能体+六大优势+三层架构+四大场景 | `Mobile Use Agent` `火山引擎` `云手机` |
 
 ## 📁 子目录导航
 
@@ -41,7 +41,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Learning Wiki 知识库](../README.md)
-- [📚 文档首页](../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../index.md)
 
 ---
 

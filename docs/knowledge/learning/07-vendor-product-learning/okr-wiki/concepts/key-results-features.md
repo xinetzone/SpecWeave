@@ -3,7 +3,7 @@ type: Concept
 
 title: "Key Results（关键结果）的特征"
 source: "https://www.dingteam.com/help/584"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/concepts/key-results-features.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/concepts/key-results-features.toml"
 date: "2026-07-08"
 ---
 # Key Results（关键结果）的特征

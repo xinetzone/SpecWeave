@@ -36,7 +36,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：范式演进](../README.md)
-- [📚 文档首页](../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../index.md)
 - [📄 单文件导航版](ai-engineering-four-milestones-wiki.md)
 - [📝 变更日志](log.md)
 

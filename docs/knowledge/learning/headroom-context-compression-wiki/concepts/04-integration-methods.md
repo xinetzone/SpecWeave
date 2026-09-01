@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "integration", "library", "proxy", "mcp", "agent-wrap"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/04-integration-methods.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/concepts/04-integration-methods.toml"
 type: "Tutorial"
 description: "详解Headroom四种接入方式——Library API调用、Proxy零代码代理、Agent Wrap一键包装、MCP Server标准协议，含Python/TS代码示例、配置方法与选型建议，支持渐进式接入与混合使用。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 四种接入方式详解
 
 > 本章详细介绍Headroom支持的四种接入方式：Library（API调用）、Proxy（零代码代理）、Agent Wrap（一键包装主流Agent）、MCP Server（标准工具协议），并提供选型建议表格帮助不同类型用户快速上手。

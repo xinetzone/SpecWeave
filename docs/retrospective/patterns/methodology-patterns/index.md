@@ -19,8 +19,8 @@
 | bp-error-blacklist-monotonic-evolution | [错误黑名单单调进化模式](concepts/error-blacklist-monotonic-evolution.md) | L2-validated | 2 | 1 | 系统需持续提升可靠性，且"重犯已知错误"是主要故障来源时 |
 | bp-cross-framework-atomic-analysis | [跨框架原子化设计分析模式](concepts/cross-framework-atomic-analysis.md) | L1-draft | 1 | 0 | AI Agent 库需引入跨框架设计方法论（如原子化设计）并回写到具体 Agent 时 |
 | bp-layered-chained-spec | [分层链式规格模式](concepts/layered-chained-spec.md) | L1.5 | 1 | 0 | AI编程/多代理协作中需将vibe coding转化为"按图施工"工程流程时。案例：GitHub Spec Kit六命令+SpecWeave三件套双案例萃取 |
-| bp-plugin-bridge-standard-integration | [插件桥接规范集成法](../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/plugin-bridge-standard-integration.md) | L1-draft | 1 | 1 | 需要把一套工作区规范（AGENTS协议/路由/Skill）接入已运行的Agent平台，且目录感知地自动生效时。案例：Hermes接入SpecWeave规范 |
-| bp-automation-idempotent-four-elements | [自动化幂等四要素](../../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/automation-idempotent-four-elements.md) | L1-draft | 1 | 1 | 编写部署/启用/验证类操作脚本（安装器/环境引导/CI初始化）需保证幂等可重跑时。案例：specweave-bridge install.py |
+| bp-plugin-bridge-standard-integration | [插件桥接规范集成法](governance-strategy/plugin-bridge-standard-integration.md) | L1-draft | 1 | 1 | 需要把一套工作区规范（AGENTS协议/路由/Skill）接入已运行的Agent平台，且目录感知地自动生效时。案例：Hermes接入SpecWeave规范 |
+| bp-automation-idempotent-four-elements | [自动化幂等四要素](tools-automation/automation-idempotent-four-elements.md) | L1-draft | 1 | 1 | 编写部署/启用/验证类操作脚本（安装器/环境引导/CI初始化）需保证幂等可重跑时。案例：specweave-bridge install.py |
 | bp-three-layer-repair-closure | [三层修复闭环](concepts/three-layer-repair-closure.md) | L1-draft | 1 | 1 | 反复复发型故障需根治而非治标时。案例：Windows截图工具10天3次复发双源头根因（治标→断源→兜底→沉淀） |
 | bp-preflight-integrity-gate | [前置完整性门禁](preflight-integrity-gate.md) | L1-draft | 1 | 0 | 本地容错工具（编辑器/浏览器）掩盖的数据损坏（编码截断/非法字节/格式错误）需在 CI 依赖安装与构建之前主动曝光（shift-left）时。案例：awesome-okf-xs 12个UTF-8损坏文档于Sphinx构建阶段暴露 |
 | bp-destructive-probe-gate | [破坏性探针双向验证门禁](destructive-probe-gate.md) | L1-draft | 1 | 0 | 为 CI 新增校验性 gate 脚本（格式/编码/lint/门禁）时，需双向验证"异常输入拦得住、正常输入放得行"，防止 gate 逻辑缺陷形同虚设。案例：check-utf8.py 截断中文字节探针双向闭环 |
@@ -59,9 +59,20 @@
 ```{toctree}
 :maxdepth: 2
 
+ai-collaboration/index
 concepts/index
+creative-design/index
+document-architecture/index
+governance-strategy/index
+product-growth/index
+research-knowledge/index
+retrospective-knowledge/index
+spec-workflow/index
+tools-automation/index
+CATEGORIES
 destructive-probe-gate
 history-based-doc-repair
 log
 preflight-integrity-gate
+prompt-extraction
 ```

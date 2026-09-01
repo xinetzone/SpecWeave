@@ -1,4 +1,4 @@
-﻿# CI/CD pipeline check script
+# CI/CD pipeline check script
 # Usage: .\ci-check.ps1
 
 #Requires -Version 5.1
@@ -186,8 +186,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host "  PASS" -ForegroundColor Green
 Write-Host ""
 
-# 9. Generate docs (nav + dashboard + apps, including .agents/docs/README.md)
-Write-Host "[9/$totalSteps] Generate docs (nav+dashboard+apps, incl. .agents/docs/README.md)..." -ForegroundColor Yellow
+# 9. Generate docs (nav + dashboard + apps for the docs/ center)
+Write-Host "[9/$totalSteps] Generate docs (nav+dashboard+apps)..." -ForegroundColor Yellow
 python "$root\.agents\scripts\docgen.py" all
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: doc generation failed" -ForegroundColor Red

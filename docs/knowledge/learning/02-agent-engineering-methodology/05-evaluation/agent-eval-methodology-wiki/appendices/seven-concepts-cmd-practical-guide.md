@@ -112,4 +112,4 @@ references: 6
 
 ---
 
-*本指南基于 [seven-concepts-cmd 方法论编排技能](../README.md) 及本次 Wiki 教程创作复盘撰写。完整方法论见 [七概念方法论编译参考手册](../../../../../../skills/seven-concepts-cmd/references/compiled-methodology.md)。*
+*本指南基于 [seven-concepts-cmd 方法论编排技能](../README.md) 及本次 Wiki 教程创作复盘撰写。完整方法论见 [七概念方法论编译参考手册](../../../../../../../.agents/skills/seven-concepts-cmd/references/compiled-methodology.md)。*

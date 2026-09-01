@@ -34,7 +34,7 @@ meta_type: retrospective
 
 ## Background & Context
 - i-have-adhd知识沉淀任务（analyze-i-have-adhd-article）已完成，共产出7份核心文件、2个L2方法论模式、3条执行经验，G1-G3+V质量门全部通过
-- 第一次元复盘已完成并归档至[retrospective-i-have-adhd-knowledge-crystallization-20260728/](../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/README.md)
+- 第一次元复盘已完成并归档至[retrospective-i-have-adhd-knowledge-crystallization-20260728/](../../../../docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/README.md)
 - 第一次复盘萃取了3条新执行模式，但尚未经过"自我应用验证"——模式是从本次执行中总结出来的，需要反过来用这些模式审计执行过程本身，形成自指验证闭环
 - 七概念方法论中V（对抗审查）阶段在第一次执行中虽然产出9条意见，但仅针对原始文章分析，未对萃取的模式本身进行第二轮对抗
 - SpecWeave模式成熟度定义：L1（提出）→L2（单案例验证）→L3（多案例验证）→L4（生态标准化），当前2个模式和3条执行模式均为L2，需要至少1次额外验证才能考虑升级L3

@@ -94,9 +94,9 @@ summary: "WeasyPrint 是用 Python 编写的面向打印媒体的 HTML/CSS 渲�
 
 本教程的内容组织遵循以下可复用方法论模式：
 
-- [本质矛盾三步法](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.md)：第1章使用该方法分析PDF生成本质矛盾
-- [管线穿透法](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.md)：第2章和第8章使用该方法从入口到出口分析源码
-- [技术wiki四层需求结构](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.md)：整个教程的四层组织框架
+- [本质矛盾三步法](../../../../retrospective/patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.md)：第1章使用该方法分析PDF生成本质矛盾
+- [管线穿透法](../../../../retrospective/patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.md)：第2章和第8章使用该方法从入口到出口分析源码
+- [技术wiki四层需求结构](../../../../retrospective/patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.md)：整个教程的四层组织框架
 
 ---
 

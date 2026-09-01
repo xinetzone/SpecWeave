@@ -310,7 +310,7 @@ const nextConfig = {
 
 ## 与 OKF 开放知识协议集成
 
-基于 [Sphinx × GraphQL × OKF 组合洞察](../../../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md)，MDX + GraphQL 可以很自然地扩展 OKF 的三个核心层：
+基于 [Sphinx × GraphQL × OKF 组合洞察](../../../../retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md)，MDX + GraphQL 可以很自然地扩展 OKF 的三个核心层：
 
 ### 许可层嵌入（OKF 协议层 → 生产层）
 
@@ -624,7 +624,7 @@ import { Query } from '@/components/Query'
 - [urql 官方文档](https://formidable.com/open-source/urql/)
 - [Next.js MDX 文档](https://nextjs.org/docs/app/building-your-application/configuring/mdx)
 - [MDX 官方文档](https://mdxjs.com/)
-- [Sphinx × GraphQL × OKF 组合洞察报告](../../../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md)
+- [Sphinx × GraphQL × OKF 组合洞察报告](../../../../retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md)
 
 ---
 

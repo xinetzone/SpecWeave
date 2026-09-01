@@ -131,7 +131,7 @@ Linter输出不仅要告诉Agent"错了"，还要：
 3. **指向相关文档**：如果有更详细的规范，给出参考链接
 
 反例：`SyntaxError: invalid syntax`（没用，Agent不知道怎么改）
-正例：`错误：函数名必须使用snake_case（你用了camelCase: parseResume）。原因：项目规范要求所有Python函数使用snake_case，见 `.agents/docs/development-standards.md` 第3节。正确写法：parse_resume`
+正例：`错误：函数名必须使用snake_case（你用了camelCase: parseResume）。原因：项目规范要求所有Python函数使用snake_case，见 docs/tech/references/development-standards.md 第3节。正确写法：parse_resume`
 
 ---
 

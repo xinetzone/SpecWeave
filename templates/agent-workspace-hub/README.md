@@ -48,4 +48,4 @@ agent-workspace-hub/
 
 ## 关联资源
 
-- 可复用模式完整说明：[agent-workspace-template.md](../../.agents/docs/retrospective/patterns/architecture-patterns/agent-workspace-template.md)
+- 可复用模式完整说明：[agent-workspace-template.md](../../docs/retrospective/patterns/architecture-patterns/agent-workspace-template.md)

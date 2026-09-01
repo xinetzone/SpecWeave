@@ -13,7 +13,7 @@ status: "completed"
 
 ## 1. 概述
 
-认知偏差是审查有效性的最大敌人，没有之一。根据双系统理论（详见 [../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)），人类约95%的日常决策由System 1（快思考/自动直觉）主导，这个系统快速、低能耗但充满系统性偏差。在审查场景中，这意味着：
+认知偏差是审查有效性的最大敌人，没有之一。根据双系统理论（详见 [../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)），人类约95%的日常决策由System 1（快思考/自动直觉）主导，这个系统快速、低能耗但充满系统性偏差。在审查场景中，这意味着：
 
 - 你以为你在"客观审查"，实际上System 1已经在毫秒级给出了"看起来没问题"的直觉判断
 - 确认偏差会让你自动寻找支持"代码没问题"的证据，主动忽略反例
@@ -22,7 +22,7 @@ status: "completed"
 
 > 📚 **文献来源**：Tversky, A., & Kahneman, D. (1974). Judgment under Uncertainty: Heuristics and Biases. *Science*, 185(4157), 1124-1131. 🟢A级
 
-**与第一性原理认知偏差的关系**：本文不重复认知科学基础理论，只聚焦**审查/代码评审场景下的特有偏差表现**——同样是确认偏差，写代码时和审代码时的触发条件、具体表现、防御措施完全不同。基础理论请参阅：[../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md#7-认知偏差如何影响第一性原理思考](../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md#7-认知偏差如何影响第一性原理思考)
+**与第一性原理认知偏差的关系**：本文不重复认知科学基础理论，只聚焦**审查/代码评审场景下的特有偏差表现**——同样是确认偏差，写代码时和审代码时的触发条件、具体表现、防御措施完全不同。基础理论请参阅：[../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md#7-认知偏差如何影响第一性原理思考](../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md#7-认知偏差如何影响第一性原理思考)
 
 ---
 
@@ -47,7 +47,7 @@ status: "completed"
 
 ## 3. 审查场景偏差防御机制
 
-认知偏差是System 1的自动反应，**知道偏差存在不等于能避免偏差**（见复盘洞察 [cognitive-bias-checklist-defense.md](../../../../retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/cognitive-bias-checklist-defense.md)）。唯一有效的防御是**建立外部机制**，而不是依赖"我会注意的"。
+认知偏差是System 1的自动反应，**知道偏差存在不等于能避免偏差**（见复盘洞察 [cognitive-bias-checklist-defense.md](../../../../../retrospective/reports/insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/insights/cognitive-bias-checklist-defense.md)）。唯一有效的防御是**建立外部机制**，而不是依赖"我会注意的"。
 
 ### 3.1 机制化检查清单（而不是"我会注意的"）
 
@@ -119,4 +119,4 @@ status: "completed"
 
 ---
 
-*本文档聚焦审查场景的认知偏差防御，认知科学基础理论请参阅 [../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)。检查清单和工具模板见 [05-checklists-templates.md](05-checklists-templates.md)。本文可信度评级：偏差清单和防御机制🟢A级（基于认知科学共识+实战验证），多视角对抗/匿名审查🟢B级（工程实践验证，学术直接证据较少），时间间隔建议🟢B级（认知负荷研究支持，具体间隔时间为经验值）。*
+*本文档聚焦审查场景的认知偏差防御，认知科学基础理论请参阅 [../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)。检查清单和工具模板见 [05-checklists-templates.md](05-checklists-templates.md)。本文可信度评级：偏差清单和防御机制🟢A级（基于认知科学共识+实战验证），多视角对抗/匿名审查🟢B级（工程实践验证，学术直接证据较少），时间间隔建议🟢B级（认知负荷研究支持，具体间隔时间为经验值）。*

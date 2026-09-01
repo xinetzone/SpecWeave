@@ -24,9 +24,9 @@
 ## Background & Context
 - 第一性原理全面资料搜集项目已完成，沉淀了12个核心文档，覆盖哲学起源、物理应用、商业案例、方法论框架、对抗性审查等内容
 - 现有知识库主要覆盖物理和商业领域，存在学科偏向（ACT-007已部分补充传统行业案例，但跨学科覆盖仍不足）
-- 项目执行过程中识别出4个重要的后续研究方向，记录于[export-suggestions.md](../../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.md#L137-L145)第5章
+- 项目执行过程中识别出4个重要的后续研究方向，记录于[export-suggestions.md](../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-ai-code-assistant-project-analysis-20260625/export-suggestions.md#L137-L145)第5章
 - 现有文档已建立完整的质量保障体系：可信度双轨制评分、对抗性审查协议、偏差标注机制、来源分级标准
-- 相关可参考模式：[adversarial-review-protocol.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)、[credibility-dual-track.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md)
+- 相关可参考模式：[adversarial-review-protocol.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/adversarial-review-protocol.md)、[credibility-dual-track.md](../../../../docs/retrospective/patterns/methodology-patterns/research-knowledge/credibility-dual-track.md)
 
 ## Functional Requirements
 - **FR-1**: 认知科学基础研究文档（13-cognitive-science-foundations.md）

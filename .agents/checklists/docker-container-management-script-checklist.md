@@ -1,7 +1,7 @@
 ---
 id: "docker-container-management-script-checklist"
 title: "Docker容器一键管理脚本开发检查清单"
-source: ".agents/docs/retrospective/reports/task-reports/retrospective-caffe-jupyter-docker-build-20260726/README.md"
+source: "docs/retrospective/reports/task-reports/retrospective-caffe-jupyter-docker-build-20260726/README.md"
 related_patterns:
   - "docker-one-click-management-script.md"
   - "wsl-environment-detection.md"

@@ -44,7 +44,7 @@ okf_version: "0.2"
 [pr-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
-[python-link]: .agents/docs/tech-stack.md
+[python-link]: tech/references/tech-stack.md
 [scripts-badge]: https://img.shields.io/badge/脚本-401%2B-blue?style=flat
 [skills-badge]: https://img.shields.io/badge/Skills-21-success?style=flat
 [rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
@@ -89,6 +89,20 @@ SpecWeave 是一套给 AI 智能体使用的"员工手册"：以 AGENTS.md 为�
 
 ---
 
+## 📋 站点文件索引
+
+文档中心根目录下的独立文档（本表由 `docgen.py nav` 自动维护，请勿手工编辑标记区内内容）：
+
+<!-- NAV_TABLE_START -->
+
+| 文档 | 说明 |
+|------|------|
+| [变更日志](log.md) | 变更日志 |
+
+<!-- NAV_TABLE_END -->
+
+---
+
 ## 🔍 索引与搜索
 
 - {ref}`genindex` — 术语与API索引
@@ -105,7 +119,9 @@ general/index
 knowledge/index
 refactor/index
 retrospective/index
+superpowers/index
 tech/index
+templates/index
 topics/index
 log
 ```

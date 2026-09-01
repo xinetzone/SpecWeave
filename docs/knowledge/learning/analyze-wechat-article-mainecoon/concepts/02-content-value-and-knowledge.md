@@ -1,7 +1,7 @@
 ---
 id: "mainecoon-content-value-and-knowledge"
 title: "MaineCoon 文章内容价值与知识点萃取"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/concepts/02-content-value-and-knowledge.toml"
 version: 1.1
 atomized_from: "analysis-report.md"
 type: Report

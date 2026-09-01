@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: external-review
 title: 第三方外部评审记录
 source: first-principles-comprehensive-research Task 9 (ACT-010)
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/11-external-review.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/11-external-review.toml"
 created_at: "2026-07-09"
 version: "0.1"
 status: in-progress

@@ -9,7 +9,7 @@ usage_scenarios: ["架构评审", "技术选型", "产品决策", "个人规划"
 ---
 # 组合价值评估三原则决策记录模板
 
-> **L1方法论模式集成**：本模板应用 [combination-value-triple-test](../docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md) 决策质量门禁模式
+> **L1方法论模式集成**：本模板应用 [combination-value-triple-test](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md) 决策质量门禁模式
 >
 > **使用说明**：在决定投入资源实现任何技术/概念/产品组合前，强制按顺序回答三个问题，**任一问题答"否"即判定为伪需求**。可直接复制本模板到评审会议、技术方案文档或个人规划笔记中使用。
 
@@ -180,7 +180,7 @@ usage_scenarios: ["架构评审", "技术选型", "产品决策", "个人规划"
 
 ## 🔗 关联参考
 
-- [combination-value-triple-test.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md) - 三原则模式完整文档（含反模式清单、跨场景迁移示例、与其他决策模式的关系）
-- [tech-selection-three-checks.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/tech-selection-three-checks.md) - 技术选型三查法（偏好→惯例→本质），用于"选A还是B"类决策
-- [prove-usefulness-check.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/prove-usefulness-check.md) - 有用性自检模式（去掉X后系统是否仍成立），用于减法评估
-- [three-state-decision.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-state-decision.md) - 三态决策模式（做/明确不做/推迟）
+- [combination-value-triple-test.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/combination-value-triple-test.md) - 三原则模式完整文档（含反模式清单、跨场景迁移示例、与其他决策模式的关系）
+- [tech-selection-three-checks.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/tech-selection-three-checks.md) - 技术选型三查法（偏好→惯例→本质），用于"选A还是B"类决策
+- [prove-usefulness-check.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/prove-usefulness-check.md) - 有用性自检模式（去掉X后系统是否仍成立），用于减法评估
+- [three-state-decision.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/three-state-decision.md) - 三态决策模式（做/明确不做/推迟）

@@ -4,7 +4,7 @@ title: "自积累机制负反馈设计模板"
 source: "知识沉淀任务agentrys-ai-chip-design对抗审查(2026-07-28)"
 maturity: "L1"
 validation_count: 1
-x-toml-ref: "../../../.meta/toml/.agents/templates/self-accumulating-mechanism-template.toml"
+x-toml-ref: "../../.meta/toml/.agents/templates/self-accumulating-mechanism-template.toml"
 ---
 # 自积累机制负反馈设计模板（Self-Accumulating Mechanism Negative Feedback Template）
 

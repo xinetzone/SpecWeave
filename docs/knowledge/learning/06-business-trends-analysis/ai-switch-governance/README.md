@@ -31,4 +31,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trend
 ## 🔗 相关资源
 
 - [🏠 返回上级：06-business-trends-analysis](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

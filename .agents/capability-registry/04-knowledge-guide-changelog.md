@@ -6,14 +6,14 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 ---
 # 知识参考、快速查找指南与更新说明
 
-## 知识参考索引（.agents/docs/）
+## 知识参考索引（docs/）
 
 | 知识库 | 用途 | 触发关键词 | 安全等级 | 路径 |
 |--------|------|-----------|---------|------|
 | 技术知识库（knowledge） | 操作指南、排障经验、最佳实践、VENDOR集成方案 | "知识库"、"最佳实践"、"怎么操作"、"排障" | 只读 | [../docs/knowledge/README.md](../../docs/knowledge/README.md) |
-| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/README.md](../docs/retrospective/patterns/README.md) |
-| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/development-standards.md](../docs/development-standards.md) |
-| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/README.md](../docs/retrospective/README.md) |
+| 复盘模式库（patterns） | 可复用架构/代码/方法论模式、资产清单 | "模式库"、"复用模式"、"有没有现成方案" | 只读 | [../docs/retrospective/patterns/index.md](../../docs/retrospective/patterns/index.md) |
+| 开发规范（standards） | 代码风格、提交规范、Markdown规范、测试要求 | "开发规范"、"代码风格"、"提交规范"、"测试要求" | 只读 | [../docs/tech/references/development-standards.md](../../docs/tech/references/development-standards.md) |
+| 复盘体系（retrospective） | 复盘报告、洞察报告、经验萃取 | "复盘报告"、"经验总结"、"回顾文档" | 只读 | [../docs/retrospective/index.md](../../docs/retrospective/index.md) |
 
 ---
 
@@ -48,8 +48,8 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 ├─ 检查Skill是否符合五要素 → check-skill-quality.py
 ├─ 分析阶段守卫日志 → check-stage-guardrails.py / generate-sg-dashboard.py
 ├─ 查知识库/最佳实践 → docs/knowledge/
-├─ 查可复用模式 → .agents/docs/retrospective/patterns/
-├─ 查开发规范 → .agents/docs/development-standards.md
+├─ 查可复用模式 → docs/retrospective/patterns/
+├─ 查开发规范 → docs/tech/references/development-standards.md
 └─ 了解有哪些角色/模块/协议 → 读AGENTS.md索引表
 ```
 

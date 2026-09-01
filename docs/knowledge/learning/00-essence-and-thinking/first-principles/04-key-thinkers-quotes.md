@@ -4,7 +4,7 @@ type: Wiki Tutorial
 id: key-thinkers-quotes
 title: 第一性原理核心学者与实践者论述汇编
 source: first-principles-comprehensive-research Task 4
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/04-key-thinkers-quotes.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/04-key-thinkers-quotes.toml"
 created_at: "2026-07-09"
 status: completed
 ---

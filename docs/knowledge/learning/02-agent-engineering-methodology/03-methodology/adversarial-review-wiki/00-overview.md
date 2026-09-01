@@ -178,9 +178,9 @@ README.md（索引入口）
 
 本知识库是Agent工程方法论体系的组成部分，相关参考文档：
 
-- 对抗性审查标准与验证流程原始规范：[first-principles/00-adversarial-review-protocol.md](../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
-- 对抗式审查Prompt模式：[adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
-- 第一性原理知识库：[first-principles/README.md](../../00-essence-and-thinking/first-principles/README.md)
+- 对抗性审查标准与验证流程原始规范：[first-principles/00-adversarial-review-protocol.md](../../../00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
+- 对抗式审查Prompt模式：[adversarial-review-prompt-pattern.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)
+- 第一性原理知识库：[first-principles/README.md](../../../00-essence-and-thinking/first-principles/README.md)
 
 ---
 

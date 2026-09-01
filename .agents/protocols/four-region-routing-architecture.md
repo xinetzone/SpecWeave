@@ -351,10 +351,10 @@ title: <区域名称> 入口路由
 
 | 模式 | 位置 | 说明 |
 |------|------|------|
-| 三层路由协议 | [patterns/architecture-patterns/three-layer-routing-protocol.md](../docs/retrospective/patterns/architecture-patterns/three-layer-routing-protocol.md) | 路由设计详细规范与验证案例 |
-| 对称目录结构设计 | [patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md) | 最小结构模板与对称检查表 |
-| 入口对比表模式 | [patterns/methodology-patterns/document-architecture/entry-comparison-table.md](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-comparison-table.md) | 高密度对比表设计原则 |
-| 三层入口设计 | [patterns/architecture-patterns/triple-entry-design.md](../docs/retrospective/patterns/architecture-patterns/triple-entry-design.md) | AGENTS.md/README.md/workspace.yaml 三入口分离 |
+| 三层路由协议 | [patterns/architecture-patterns/three-layer-routing-protocol.md](../../docs/retrospective/patterns/architecture-patterns/three-layer-routing-protocol.md) | 路由设计详细规范与验证案例 |
+| 对称目录结构设计 | [patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md) | 最小结构模板与对称检查表 |
+| 入口对比表模式 | [patterns/methodology-patterns/document-architecture/entry-comparison-table.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-comparison-table.md) | 高密度对比表设计原则 |
+| 三层入口设计 | [patterns/architecture-patterns/triple-entry-design.md](../../docs/retrospective/patterns/architecture-patterns/triple-entry-design.md) | AGENTS.md/README.md/workspace.yaml 三入口分离 |
 
 ### 8.2 区域入口文件
 
@@ -368,5 +368,5 @@ title: <区域名称> 入口路由
 
 ### 8.3 验证来源
 
-- [四区域路由体系建立复盘报告](../docs/retrospective/reports/project-governance/documentation-governance/retrospective-establish-four-region-routing-system-20260724/README.md)
+- [四区域路由体系建立复盘报告](../../docs/retrospective/reports/project-governance/documentation-governance/retrospective-establish-four-region-routing-system-20260724/README.md)
 - [上下文路由表](context-routing.md)

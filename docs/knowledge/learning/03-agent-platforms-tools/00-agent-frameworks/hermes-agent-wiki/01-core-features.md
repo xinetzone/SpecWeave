@@ -2,7 +2,7 @@
 id: "hermes-agent-wiki-01-core-features"
 title: "01 Hermes Agent 核心特性详解"
 source: "NousResearch/hermes-agent 本地源码仓库（README.zh-CN.md / website/docs/user-guide/features/overview.md / AGENTS.md）"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-wiki/01-core-features.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-wiki/01-core-features.toml"
 type: "Wiki Tutorial"
 description: "Hermes Agent 七大核心特性：TUI、消息网关、闭环学习、cron 自动化、委派与并行、随处运行、研究就绪"
 status: "stable"

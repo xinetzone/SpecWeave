@@ -37,8 +37,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-
 
 以下模式已从本报告中萃取为独立模式文档：
 
-- [三角困境→架构级解决框架](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)（源自 §14.2.1）
-- [诚实承认局限性信任构建策略](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)（源自 §14.2.4）
+- [三角困境→架构级解决框架](../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md)（源自 §14.2.1）
+- [诚实承认局限性信任构建策略](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)（源自 §14.2.4）
 
 ---
 
@@ -125,7 +125,7 @@ MaineCoon 作为 2026 年中实时音视频模型的代表产品,其发布标志
 - [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md):任务清单
 - [.agents/capability-boundaries.md](../../../../../.agents/capability-boundaries.md):SpecWeave 能力边界声明
 - [.agents/README.md](../../../../../.agents/README.md):SpecWeave 规范容器
-- [docs/retrospective/](../../../../../.agents/docs/retrospective/README.md):SpecWeave 复盘体系与可复用模式
+- [docs/retrospective/](../../../../retrospective/index.md):SpecWeave 复盘体系与可复用模式
 
 ### D. 待独立验证项清单
 
