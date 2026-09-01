@@ -29,6 +29,8 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/task-retrospective-template/R
 |------|---------|--------|------|
 | **本模板（任务复盘）** | 单任务/单日复盘，有洞察和行动项 | 3 | 精简三文件，复制即用 |
 | [comprehensive-retrospective-template](../comprehensive-retrospective-template/README.md) | 全生命周期/里程碑复盘，含行动项闭环 | 7核心+2可选 | 多文件SSOT架构，适合周期≥1周的项目 |
+| [weekly-retrospective-template.md](../weekly-retrospective-template.md) | 周迭代复盘（配合 docgen weekly 数据快照） | 1 | 单文件周复盘清单 |
+| [engineering-debug-retrospective-template.md](../engineering-debug-retrospective-template.md) | P0/P1 工程攻坚复盘（强制模板） | 1 | 单文件五章节强制结构 |
 | [insight-extraction-template.md](../insight-extraction-template.md) | 快速洞察萃取，无完整报告需求 | 1 | 单文件三段式，只覆盖洞察部分 |
 
 ### 选择决策树
@@ -37,6 +39,8 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/task-retrospective-template/R
 复盘任务规模？
 ├─ 周期≥1周、提交≥50次、多角色 → comprehensive-retrospective-template
 ├─ 单任务/单日、有洞察和行动项 → 本模板（task-retrospective-template）⭐
+├─ 每周固定迭代复盘 → weekly-retrospective-template.md
+├─ P0/P1 工程攻坚 → engineering-debug-retrospective-template.md
 └─ 只需萃取洞察，无需完整报告 → insight-extraction-template.md
 ```
 

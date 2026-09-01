@@ -15,6 +15,7 @@ mandatory_sections: 5
 # P0/P1工程攻坚复盘强制模板
 
 > **强制要求**：所有P0/P1级bug修复、复杂兼容性问题、性能攻坚完成后，必须使用本模板产出复盘文档，不得省略任何章节。
+> **模板选型**：复盘模板家族对比表与选择决策树见 [task-retrospective-template/README.md](task-retrospective-template/README.md#与其他复盘模板的关系)。
 
 ---
 

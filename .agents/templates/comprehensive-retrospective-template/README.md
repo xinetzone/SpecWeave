@@ -8,6 +8,7 @@ x-toml-ref: "../../../.meta/toml/.agents/templates/comprehensive-retrospective-t
 # 综合复盘报告标准模板（多文件SSOT架构）
 
 > **来源**：基于 SpecWeave 13天全生命周期复盘（retrospective-specweave-full-lifecycle-20260705）沉淀，经去重优化后验证通过
+> **模板选型**：复盘模板家族对比表与选择决策树见 [task-retrospective-template/README.md](../task-retrospective-template/README.md#与其他复盘模板的关系)
 > **v1.3.0**：2026-07-06 新增批量治理SOP（四步法+四阶段+四层质量防御）、更新execution-phases批次组织为四阶段
 > **v1.2.0**：2026-07-06 新增场景适配指南和文件选择矩阵
 > **v1.0**：2026-07-05 首次发布

@@ -2,7 +2,7 @@
 title: "新用户首次配额告警引导流程设计"
 id: "new-user-first-quota-onboarding"
 source: "template:saas-pricing-quickref"
-x-toml-ref: "../../.meta/toml/.agents/templates/new-user-first-quota-onboarding.toml"
+x-toml-ref: "../../../.meta/toml/.agents/templates/new-user-first-quota-onboarding.toml"
 type: "ux-flow"
 maturity_level: "L2"
 created_date: "2026-07-08"
@@ -16,7 +16,7 @@ reuse_count: 0
 ---
 # 新用户首次配额告警引导流程设计
 
-> 配套文档：[saas-pricing-quickref.md](saas-pricing-quickref.md) | [saas-pricing-checklist-template.md](saas-pricing-checklist-template.md)
+> 配套文档：[saas-pricing-quickref.md](saas-pricing-quickref.md) | [saas-pricing-checklist-template.md](../saas-pricing-checklist-template.md)
 
 ---
 

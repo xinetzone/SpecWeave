@@ -51,6 +51,24 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | retrospectives-insights | [retrospectives-insights-task-template.md](theme-templates/retrospectives-insights-task-template.md) | 任务复盘、问题诊断、经验萃取 |
 | migration-archival | [migration-archival-task-template.md](theme-templates/migration-archival-task-template.md) | 外部内容迁移、沙箱治理、归档清理 |
 
+## 模板准入标准与归档区
+
+新增文档进入本目录前，按以下标准判定落位：
+
+| 判定 | 标准 | 落位 |
+|---|---|---|
+| 可复用模板 | 结构骨架 + 占位符（`{}`/`{{}}`/`<>`/空白待填字段），可参数化套用于不同项目 | 本目录根级或对应子目录 |
+| 一次性交付物 | 含项目特定数据、具体业务数值或特定用户场景的已填充内容，无法参数化复用 | `archive/` 归档区 |
+
+归档不是删除：归档文件仍可通过相对路径访问，保留历史可追溯。
+
+### 归档清单
+
+| 文件 | 归档原因 |
+|---|---|
+| [new-user-first-quota-onboarding.md](archive/new-user-first-quota-onboarding.md) | 已填充的特定场景设计文档（含特定产品内容与既定流程），无占位符、不可参数化 |
+| [saas-pricing-quickref.md](archive/saas-pricing-quickref.md) | 含特定产品实际定价数值的已填充速查卡，无占位符、不可参数化 |
+
 ## 使用方法
 
 1. **复制模板**：根据任务类型，复制对应的模板文件。

@@ -27,8 +27,8 @@ reuse_count: 0
 >
 > 配套文档：
 > - [ui-pitfalls-guide.md](ui-pitfalls-guide.md)
-> - [new-user-first-quota-onboarding.md](new-user-first-quota-onboarding.md)
-> - [saas-pricing-quickref.md](saas-pricing-quickref.md)
+> - [new-user-first-quota-onboarding.md](archive/new-user-first-quota-onboarding.md)（已归档）
+> - [saas-pricing-quickref.md](archive/saas-pricing-quickref.md)（已归档）
 
 ---
 
