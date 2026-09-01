@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-10"
 title: "资源与参考链接"
 source: "../open-code-review-wiki.md#资源与参考链接"

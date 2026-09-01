@@ -58,7 +58,7 @@ date: 2026-08-06
 - **Owner角色**：Architect（架构师）
 - **预估时间盒**：4小时
 - **可独立交付**：是。仅需文档输出，不涉及代码改动。
-- **落地路径建议**：文档存入`.agents/docs/standards/`或`.agents/rules/`，作为后续规范变更的指导文件。
+- **落地路径建议**：文档存入 `docs/tech/standards/` 或 `.agents/rules/`，作为后续规范变更的指导文件。
 
 ---
 

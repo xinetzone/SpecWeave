@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-methods-overview"
 title: "Token优化技术方法总览"
 source: "本知识库原创整理，综合各分类文档"

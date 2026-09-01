@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-00-overview
 title: "conda 源码与 conda-docs 文档 Wiki 教程总览"
 source: "spec:create-conda-dev-source-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-02"
 title: "book-to-skill 完全指南 — 提取器深度解析"
 source: "https://github.com/virgiliojr94/book-to-skill"

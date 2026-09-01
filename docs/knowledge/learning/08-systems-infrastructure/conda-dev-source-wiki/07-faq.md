@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-07-faq
 title: "常见问题解决方案"
 source: "spec:create-conda-dev-source-wiki-tutorial"

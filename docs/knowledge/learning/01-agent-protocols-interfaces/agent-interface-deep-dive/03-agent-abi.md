@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-abi-chapter"
 title: "Agent ABI：跨语言边界层"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/03-agent-abi.toml"

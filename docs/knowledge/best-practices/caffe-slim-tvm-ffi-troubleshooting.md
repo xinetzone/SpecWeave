@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "caffe-slim-tvm-ffi-troubleshooting"
 title: "Caffe-Slim TVM FFI 环境调试与错误排查手册"
 date: 2026-07-27
@@ -363,7 +365,7 @@ _tvm_ffi_init = os.path.join(VENDOR_DIR, "tvm-ffi", "python", "tvm_ffi", "__init
 assert os.path.exists(_tvm_ffi_init), f"VENDOR_DIR seems wrong: {VENDOR_DIR}"
 ```
 
-**参考模式**：[path-anchor-semantization.md](../../../.agents/docs/retrospective/patterns/code-patterns/path-anchor-semantization.md) — 每级parent赋予语义变量名，避免链式`.parent.parent`计算差一级。
+**参考模式**：[path-anchor-semantization.md](../../retrospective/patterns/code-patterns/path-anchor-semantization.md) — 每级parent赋予语义变量名，避免链式`.parent.parent`计算差一级。
 
 ---
 
@@ -574,12 +576,12 @@ source setup_env.sh  # 用source执行才能在当前shell设置环境变量
 
 | 参考文档 | 路径 | 说明 |
 |---------|------|------|
-| 复盘报告 | [retrospective-caffe-slim-batch-inference-mnist-20260727](../../../.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-slim-batch-inference-mnist-20260727/README.md) | 完整R-I-E复盘 |
-| 零拷贝分批推理模式 | [zero-copy-batch-inference-defense.md](../../../.agents/docs/retrospective/patterns/code-patterns/zero-copy-batch-inference-defense.md) | 分批推理代码模式 |
-| 模型下载验证模式 | [pretrained-model-download-validation.md](../../../.agents/docs/retrospective/patterns/code-patterns/pretrained-model-download-validation.md) | 模型下载验证代码模式 |
-| 路径锚点语义化 | [path-anchor-semantization.md](../../../.agents/docs/retrospective/patterns/code-patterns/path-anchor-semantization.md) | 避免.dirname差一级 |
-| 共享库符号双层控制 | [shared-lib-symbol-dual-layer-control.md](../../../.agents/docs/retrospective/patterns/code-patterns/shared-lib-symbol-dual-layer-control.md) | 动态库符号可见性 |
-| Python原生扩展自包含wheel | [python-native-extension-self-contained-wheel.md](../../../.agents/docs/retrospective/patterns/code-patterns/python-native-extension-self-contained-wheel.md) | 自包含wheel打包 |
+| 复盘报告 | [retrospective-caffe-slim-batch-inference-mnist-20260727](../../retrospective/reports/code-optimization/retrospective-caffe-slim-batch-inference-mnist-20260727/README.md) | 完整R-I-E复盘 |
+| 零拷贝分批推理模式 | [zero-copy-batch-inference-defense.md](../../retrospective/patterns/code-patterns/zero-copy-batch-inference-defense.md) | 分批推理代码模式 |
+| 模型下载验证模式 | [pretrained-model-download-validation.md](../../retrospective/patterns/code-patterns/pretrained-model-download-validation.md) | 模型下载验证代码模式 |
+| 路径锚点语义化 | [path-anchor-semantization.md](../../retrospective/patterns/code-patterns/path-anchor-semantization.md) | 避免.dirname差一级 |
+| 共享库符号双层控制 | [shared-lib-symbol-dual-layer-control.md](../../retrospective/patterns/code-patterns/shared-lib-symbol-dual-layer-control.md) | 动态库符号可见性 |
+| Python原生扩展自包含wheel | [python-native-extension-self-contained-wheel.md](../../retrospective/patterns/code-patterns/python-native-extension-self-contained-wheel.md) | 自包含wheel打包 |
 | FFI环境配置模式 | 见复盘报告E阶段模式1 | FFI绑定五步配置法 |
 
 ---

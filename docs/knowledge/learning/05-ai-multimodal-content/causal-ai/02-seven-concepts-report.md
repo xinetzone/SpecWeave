@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "causal-ai-02-seven-concepts-report"
 title: "因果AI与世界模型：零犀科技六年押注深度分析 — 七概念方法论报告"
 source: "https://mp.weixin.qq.com/s/stcgM_ps00Pr6gKOq0g5Pw"

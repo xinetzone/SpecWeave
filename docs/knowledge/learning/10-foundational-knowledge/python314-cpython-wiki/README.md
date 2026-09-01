@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-10-foundational-knowledge-python314-cpython-wiki-index"
 title: "Python 3.14 + CPython 源码深度指南"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/10-foundational-knowledge/python314-cpython-wiki/README.toml"

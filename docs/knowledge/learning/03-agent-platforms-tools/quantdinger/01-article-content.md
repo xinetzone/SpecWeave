@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "quantdinger-01-article-content"
 title: "QuantDinger：自托管AI量化交易平台 — 文章原文"
 source: "微信公众号「极客之家」"

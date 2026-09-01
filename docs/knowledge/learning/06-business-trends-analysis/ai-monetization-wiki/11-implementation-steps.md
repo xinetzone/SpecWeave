@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-monetization-implementation-steps"
 title: "实施步骤与关键成功因素"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/11-implementation-steps.toml"

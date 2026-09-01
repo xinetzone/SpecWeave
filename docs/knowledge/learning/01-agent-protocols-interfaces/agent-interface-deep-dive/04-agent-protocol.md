@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-protocol-chapter"
 title: "Agent Protocol：通信规则层"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/04-agent-protocol.toml"

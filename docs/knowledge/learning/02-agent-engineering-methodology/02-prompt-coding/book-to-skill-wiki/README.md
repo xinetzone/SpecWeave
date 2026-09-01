@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-02-agent-engineering-methodology-02-prompt-coding-book-to-skill-wiki-index"
 title: "book-to-skill 完全指南"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki/README.toml"

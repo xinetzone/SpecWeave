@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-interface-overview"
 title: "Agent视角：Interface/API/ABI/Protocol四层技术栈总览"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/00-overview.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-best-practices
 title: ONNX Wiki - 最佳实践与反模式
 date: 2026-08-09
@@ -9,9 +11,9 @@ tags:
   - pitfalls
   - production
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/04-best-practices.toml"
   - https://onnx.ai/onnx/intro/concepts.html
   - https://onnx.ai/onnx/intro/python.html
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/04-best-practices.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

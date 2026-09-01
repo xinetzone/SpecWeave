@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-03"
 title: "安装渠道与提供商配置"
 source: "https://github.com/Hmbown/CodeWhale"

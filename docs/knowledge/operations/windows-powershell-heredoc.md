@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "windows-powershell-heredoc"
 title: "Windows PowerShell 不支持 heredoc 语法"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/windows-powershell-heredoc.toml"

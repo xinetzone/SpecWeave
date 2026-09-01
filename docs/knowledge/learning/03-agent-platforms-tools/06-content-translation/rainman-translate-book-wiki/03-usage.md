@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: "rainman-translate-book-wiki-03"
 title: "使用流程"
 source: "https://mp.weixin.qq.com/s/99dnIuSUL4WHkm-_UzQYAw"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/rainman-translate-book-wiki/03-usage.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/06-content-translation/rainman-translate-book-wiki/03-usage.toml"
 ---
 # 使用流程
 

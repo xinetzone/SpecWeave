@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "SpecWeave 抖音VibeCoding图文·视觉设计规范"
 source: "基于SpecWeave参赛内容策划生成"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-design-spec.toml"

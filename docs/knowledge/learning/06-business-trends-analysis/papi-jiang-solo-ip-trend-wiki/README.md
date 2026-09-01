@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-papi-jiang-solo-ip-trend-wiki-index"
 title: "Papi酱单人IP趋势分析"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/README.toml"
@@ -29,7 +31,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 
 ---
 

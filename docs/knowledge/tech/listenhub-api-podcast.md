@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-podcast
 title: ListenHub API 规范——Podcast（播客节目生成）
 category: tech

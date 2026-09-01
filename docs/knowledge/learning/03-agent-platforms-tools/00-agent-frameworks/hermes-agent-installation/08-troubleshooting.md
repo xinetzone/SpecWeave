@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 常见问题与故障排除"
 chapter: 8
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/08-troubleshooting.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/package.json
   - external/libs/hermes-agent/.npmrc
@@ -15,6 +16,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/hermes_cli/uninstall.py
   - external/libs/hermes-agent/docker/entrypoint-dispatch.sh
   - external/libs/hermes-agent/docker/stage2-hook.sh
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/08-troubleshooting.toml"
 ---
 # 8. 常见问题与故障排除
 

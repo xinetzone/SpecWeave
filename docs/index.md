@@ -44,7 +44,7 @@ okf_version: "0.2"
 [pr-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
-[python-link]: .agents/docs/tech-stack.md
+[python-link]: tech/references/tech-stack.md
 [scripts-badge]: https://img.shields.io/badge/脚本-401%2B-blue?style=flat
 [skills-badge]: https://img.shields.io/badge/Skills-21-success?style=flat
 [rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
@@ -83,9 +83,23 @@ SpecWeave 是一套给 AI 智能体使用的"员工手册"：以 AGENTS.md 为�
 |------|------|---------|
 | **📦 [技术文档](tech/index.md)** | 本项目使用指南与技术规格 | 项目介绍、快速开始、核心功能、贡献指南、变更日志 |
 | **📚 [知识库](knowledge/index.md)** | 外部知识学习成果与技术研究 | 10+ 个 AI Agent 平台/工具学习 Wiki（DeepSeek Harness、The Agency 等）、AI Engineering 知识库、算法艺术探索 |
-| **🔄 [复盘与模式库](retrospective/index.md)** | 项目自身经验沉淀与可复用模式 | 15+ 经过质量门验证的方法论模式（知识编译、三层修复闭环等）、里程碑复盘报告、对抗审查记录 |
+| **🔄 [复盘与模式库](retrospective/index.md)** | 项目自身经验沉淀与可复用模式 | 22 个经过质量门验证的方法论模式（知识编译、三层修复闭环、生成-登记同步法等）、里程碑复盘报告、对抗审查记录 |
 | **🌐 [通用知识](general/index.md)** | 跨学科滋养与思维框架 | 七概念方法论、哲学基础、可复用思维模型 |
 | **🔬 [设计洞见](topics/index.md)** | 设计哲学与深层思考 | 项目决策逻辑、方法论沉淀、架构演进研究 |
+
+---
+
+## 📋 站点文件索引
+
+文档中心根目录下的独立文档（本表由 `docgen.py nav` 自动维护，请勿手工编辑标记区内内容）：
+
+<!-- NAV_TABLE_START -->
+
+| 文档 | 说明 |
+|------|------|
+| [变更日志](log.md) | 变更日志 |
+
+<!-- NAV_TABLE_END -->
 
 ---
 
@@ -105,7 +119,9 @@ general/index
 knowledge/index
 refactor/index
 retrospective/index
+superpowers/index
 tech/index
+templates/index
 topics/index
 log
 ```

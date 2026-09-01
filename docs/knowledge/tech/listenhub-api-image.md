@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-image
 title: ListenHub API 规范——Image Generation（AI 图片生成）
 category: tech

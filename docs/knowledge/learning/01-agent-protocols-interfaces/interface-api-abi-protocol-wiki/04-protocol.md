@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "protocol-concept"
 title: "五、协议（Protocol）：通信规则约定"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/04-protocol.toml"

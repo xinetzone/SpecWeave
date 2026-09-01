@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-05-defense-patterns"
 title: "防御性模式与最佳实践总览"
 source: "internal:ai-powershell5-research-rfive"

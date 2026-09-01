@@ -5,7 +5,7 @@ type: "Reference"
 description: "AI工程四个路标的总览导航页：学习目标、文档导航表与阅读建议，沿瓶颈外移主线串联Prompt→Context→Harness→Loop四个工程阶段。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/references/ai-engineering-four-milestones-wiki.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # AI工程的四个路标：沿瓶颈外移主线
 
 > 本 Wiki 以原子化方式拆解 AllenTang《AI 工程的四个路标（沿"瓶颈外移"主线）》一文，沿"瓶颈外移"主线串联 Prompt→Context→Harness→Loop 四个工程阶段，帮助读者建立可迁移的 AI 工程认知框架。

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: wsl-wiki-01-installation
 title: "安装与发行版管理"
 source: "spec:create-wsl-wiki-tutorial"

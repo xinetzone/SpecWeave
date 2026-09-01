@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-04-docs-markup-tooling-mermaid-wiki-index"
 title: "Mermaid 官方文档教程"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mermaid-wiki/README.toml"
@@ -33,7 +35,7 @@ date: "2026-08-06"
 ## 🔗 相关资源
 
 - [🏠 返回上级：文档标记与工具链](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 
 ---
 

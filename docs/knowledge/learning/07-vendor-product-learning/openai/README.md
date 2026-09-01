@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-07-vendor-product-learning-openai-index"
 title: "OpenAI 产品学习"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/openai/README.toml"
@@ -16,4 +18,4 @@ date: "2026-07-15"
 ## 相关资源
 
 - [返回上级：厂商产品学习](../README.md)
-- [文档首页](../../../../../.agents/docs/README.md)
+- [文档首页](../../../../index.md)

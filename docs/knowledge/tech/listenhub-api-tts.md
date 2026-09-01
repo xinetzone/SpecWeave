@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-tts
 title: ListenHub API 规范——TTS / Speech（文本转语音）
 category: tech

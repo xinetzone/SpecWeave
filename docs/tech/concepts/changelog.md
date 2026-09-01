@@ -19,7 +19,7 @@ stale_after: "2027-08-22"
 ## 变更日志位置
 
 - 主变更日志：根目录 [`CHANGELOG.md`](../../../CHANGELOG.md)
-- AGENTS.md 历史归档：`.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md`
+- AGENTS.md 历史归档：`docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md`
 
 ## 最近更新（自动统计）
 

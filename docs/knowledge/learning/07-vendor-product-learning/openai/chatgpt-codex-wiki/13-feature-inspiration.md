@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-13"
 title: "AI产品功能启发"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

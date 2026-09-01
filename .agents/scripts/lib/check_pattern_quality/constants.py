@@ -5,7 +5,7 @@ enforce_python310()
 
 import re
 
-PATTERNS_DIR = ".agents/docs/retrospective/patterns"
+PATTERNS_DIR = "docs/retrospective/patterns"
 MIN_PATTERN_LINES = 50
 MAX_PATTERN_LINES = 400
 RECOMMENDED_MIN_LINES = 80

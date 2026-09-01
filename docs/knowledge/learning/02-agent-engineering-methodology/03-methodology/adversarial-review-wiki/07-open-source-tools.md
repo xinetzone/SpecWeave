@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "adversarial-review-tools"
 title: "07、开源工具链指南"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/07-open-source-tools.toml"

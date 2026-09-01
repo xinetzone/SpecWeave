@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-03-c
 title: C原子提交在DeepTutor中的体现
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"

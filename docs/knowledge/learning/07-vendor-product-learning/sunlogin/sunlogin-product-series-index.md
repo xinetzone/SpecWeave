@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-product-series-index"
 title: "向日葵（Sunlogin）产品学习系列"
 category: "learning"
@@ -118,19 +120,19 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product
 
 ## 相关资源
 
-- **综合分析复盘报告**：[向日葵全面分析任务复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md) — 包含执行回顾、8项核心洞察萃取、改进建议
-- **贝锐全产品线分析复盘**：[贝锐五大产品线分析复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) — 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议
+- **综合分析复盘报告**：[向日葵全面分析任务复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md) — 包含执行回顾、8项核心洞察萃取、改进建议
+- **贝锐全产品线分析复盘**：[贝锐五大产品线分析复盘](../../../../retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) — 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议
 - **贝锐AI产品矩阵**：[贝锐AI产品矩阵系统性学习](oray-ai-product-matrix-analysis.md) — 包含OrayClaw AI底座、向日葵MCP远程控制、蒲公英X1 Pro AI路由器等AI新品学习
 - **向日葵CLI命令行工具**：[向日葵企业CLI（awesun-cli）完整学习教程](sunlogin-cli-wiki.md) — 基于MCP API的命令行主控端、AI Agent原生集成、批量运维实战
 - **HSK CLI零配置公网预览**：[HSK CLI（@aweray/hsk-cli）完整学习教程](hsk-cli-wiki.md) — 文件托管+内网穿透双模式、匿名免登、AI Agent沙盒适配、静态优先决策指南
 - **向日葵AI开发者生态**：[向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）深度解析](sunlogin-ai-developer-ecosystem-wiki.md) — 22个MCP工具详解、三大AI客户端配置实战、Skill封装与自定义开发、UI Locator视觉定位、视觉操作闭环
 - **单产品复盘报告**：
-  - [向日葵安全产品复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.md)
-  - [无网远控硬件复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.md)
-  - [开机盒子复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.md)
-  - [HSK CLI安装与文件托管复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/README.md)
-- **模式库**：[架构模式库](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/README.md) — 本系列萃取的架构模式
-- **方法论模式库**：[AI协作模式](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md) — AI协作相关方法论模式
+  - [向日葵安全产品复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-security-wiki-20260704/README.md)
+  - [无网远控硬件复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-offline-hardware-20260704/README.md)
+  - [开机盒子复盘](../../../../retrospective/reports/competitive-analysis/retrospective-sunlogin-bootbox-analysis-20260704/README.md)
+  - [HSK CLI安装与文件托管复盘](../../../../retrospective/reports/competitive-analysis/retrospective-hsk-cli-install-hosting-20260706/README.md)
+- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md) — 本系列萃取的架构模式
+- **方法论模式库**：[AI协作模式](../../../../retrospective/patterns/methodology-patterns/CATEGORIES.md) — AI协作相关方法论模式
 
 ---
 

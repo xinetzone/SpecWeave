@@ -159,8 +159,8 @@ class BuildConfig:
 
 ## 五、与相关模式的关系
 
-- **[static-registration-compile-config.md](../docs/retrospective/patterns/code-patterns/static-registration-compile-config.md)**：本清单是静态注册模式中"配置修复"步骤的具体展开
-- **[bulk-replace-zero-omission-verify.md](../docs/retrospective/patterns/code-patterns/bulk-replace-zero-omission-verify.md)**：步骤 4.2 的 Grep 验证采用此模式（全局 Grep 确认零遗漏）
+- **[static-registration-compile-config.md](../../docs/retrospective/patterns/code-patterns/static-registration-compile-config.md)**：本清单是静态注册模式中"配置修复"步骤的具体展开
+- **[bulk-replace-zero-omission-verify.md](../../docs/retrospective/patterns/code-patterns/bulk-replace-zero-omission-verify.md)**：步骤 4.2 的 Grep 验证采用此模式（全局 Grep 确认零遗漏）
 
 ---
 

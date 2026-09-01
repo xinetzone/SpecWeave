@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "Home Assistant 架构洞察"
+---
+
 # Home Assistant 架构洞察
 
 > I 阶段产出。基于 1599 条 R 阶段事实综合分析。

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-advanced-wiki-00-overview
 title: "Git 仓库类型与核心概念"
 source: "internal:git-clone-no-local-bare-explanation"

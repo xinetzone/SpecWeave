@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: 浮点数精度测试技术指南
 date: 2026-08-02
 category: best-practices
@@ -261,10 +263,10 @@ x = avoid_c1_discontinuity(x, h=EPS, margin=3.0)  # 3h安全边距
 
 ## 相关资源
 
-- **原始复盘报告**：[retrospective-caffe-ffi-p3b-test-milestone-20260731](../../../.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md)
-- **精度修复与ELU专项复盘**：[retrospective-float-precision-elu-kink-20260802](../../../.agents/docs/retrospective/reports/code-optimization/retrospective-float-precision-elu-kink-20260802/README.md)
-- **批量加固总结报告**：[report-batch-hardening-float-precision-20260802](../../../.agents/docs/retrospective/reports/code-optimization/report-batch-hardening-float-precision-20260802/README.md)
-- **C¹拐点防护推广覆盖率报告**：[report-c1-kink-protection-rollout-20260802](../../../.agents/docs/retrospective/reports/code-optimization/report-c1-kink-protection-rollout-20260802/README.md)
+- **原始复盘报告**：[retrospective-caffe-ffi-p3b-test-milestone-20260731](../../retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/README.md)
+- **精度修复与ELU专项复盘**：[retrospective-float-precision-elu-kink-20260802](../../retrospective/reports/code-optimization/retrospective-float-precision-elu-kink-20260802/README.md)
+- **批量加固总结报告**：[report-batch-hardening-float-precision-20260802](../../retrospective/reports/code-optimization/report-batch-hardening-float-precision-20260802/README.md)
+- **C¹拐点防护推广覆盖率报告**：[report-c1-kink-protection-rollout-20260802](../../retrospective/reports/code-optimization/report-c1-kink-protection-rollout-20260802/README.md)
 - **验证案例**：caffe-ffi P3-C/D阶段测试（test_p3c_activations_ip.py, test_activation_backward.py, test_p3d_slice_crop_deconv_lrn.py）
 - **共享Helper函数**：[caffe_test_helpers.py: avoid_c1_discontinuity](../../../projects/xuanspace/libs/caffe-ffi/tests/python/caffe_test_helpers.py#L284-L340)
 - **CI检查脚本**：[check_c1_kink_protection.py](../../../projects/xuanspace/libs/caffe-ffi/scripts/check_c1_kink_protection.py)

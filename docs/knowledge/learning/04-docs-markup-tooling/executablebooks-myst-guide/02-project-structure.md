@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://mystmd.org/guide/quickstart, https://mystmd.org/guide/configuration"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/02-project-structure.toml"
 id: "executablebooks-myst-guide-project-structure"

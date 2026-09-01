@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-best-practices"
 title: "最佳实践与常见陷阱"
 category: "learning"

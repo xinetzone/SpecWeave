@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "agent-skills-open-standard-wiki.md#十五快速参考卡"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/14-quick-reference.toml"
 id: "agent-skills-wiki-quick-reference"

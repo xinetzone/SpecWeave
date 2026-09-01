@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-skill-set-overview
 title: ListenHub 技能集总览——asr/tts/podcast/image-gen/content-parser/explainer 设计模式与共享规范
 category: tech

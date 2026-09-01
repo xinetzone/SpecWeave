@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-overview
 title: ONNX Wiki - 总览
 date: 2026-08-09
@@ -9,10 +11,10 @@ tags:
   - model-format
   - ml-deployment
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/00-overview.toml"
   - https://onnx.ai/onnx/intro/concepts.html
   - https://onnx.ai/onnx/intro/python.html
   - https://onnx.ai
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/00-overview.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

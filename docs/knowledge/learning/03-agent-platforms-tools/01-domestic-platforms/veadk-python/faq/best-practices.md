@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: best-practices
 title: 最佳实践与常见反模式
 source: veadk-python codebase analysis (11-architecture-insights.md)

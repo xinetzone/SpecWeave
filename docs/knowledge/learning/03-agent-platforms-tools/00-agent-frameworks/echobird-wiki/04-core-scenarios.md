@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-core-scenarios"
 title: "四大核心场景"
 source: "echobird-source-wiki-learning"

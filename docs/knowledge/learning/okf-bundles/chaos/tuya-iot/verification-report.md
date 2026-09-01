@@ -1,3 +1,8 @@
+---
+type: VerificationReport
+title: "tuya-iot Bundle 验证报告（V 阶段）"
+---
+
 # tuya-iot Bundle 验证报告（V 阶段）
 
 > 验证日期：2026-08-23

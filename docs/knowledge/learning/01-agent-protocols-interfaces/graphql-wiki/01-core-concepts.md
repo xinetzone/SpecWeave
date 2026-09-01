@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "graphql-wiki-core-concepts"
 title: "GraphQL 核心概念"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/01-core-concepts.toml"

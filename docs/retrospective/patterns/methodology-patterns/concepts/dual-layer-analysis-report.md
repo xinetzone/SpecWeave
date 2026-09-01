@@ -89,6 +89,6 @@ stale_after: "2027-08-22"
 
 ## 关联资源
 
-- [七概念方法论编排分析报告(kICrd)](../../../reports/knowledge/kicrd-seven-concepts-analysis-20260704.md)
-- [网页内容→结构化学习笔记 模式库](../../../reports/milestone/web-content-learning-notes-patterns-20260801.md)
+- [七概念方法论编排分析报告(kICrd)](../../../reports/concepts/knowledge/kicrd-seven-concepts-analysis-20260704.md)
+- [网页内容→结构化学习笔记 模式库](../../../reports/concepts/milestone/web-content-learning-notes-patterns-20260801.md)
 - 配套模式：[子代理分析任务标准化指令](subagent-standardized-instruction.md)

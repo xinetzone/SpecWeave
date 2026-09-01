@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "atomic-emergence-00"
 title: "Atomic Emergence — 原子涌现"
 source: "docs/knowledge/algorithmic-art/atomic-emergence/index.md"

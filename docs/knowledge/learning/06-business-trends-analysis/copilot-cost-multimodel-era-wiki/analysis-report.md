@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "analysis-report-copilot-deepseek-multimodel"
 title: "微软Copilot成本困境与多模型时代产业变革深度分析报告"
 theme: "retrospectives-insights"

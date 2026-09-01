@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "喵物（Miaowu）产品系列索引"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/miaowu/README.toml"
 date: "2026-08-21"

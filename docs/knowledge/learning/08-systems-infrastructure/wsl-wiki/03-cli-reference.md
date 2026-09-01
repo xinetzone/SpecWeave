@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-03-cli-reference"
 title: "CLI 完整命令参考"
 source: "spec:create-wsl-wiki-tutorial"

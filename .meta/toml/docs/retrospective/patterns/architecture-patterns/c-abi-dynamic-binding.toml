@@ -1,0 +1,5 @@
+id = "c-abi-dynamic-binding"
+title = "C ABI 动态语言绑定模式（C-ABI Dynamic Language Binding）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

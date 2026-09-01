@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-09"
 title: "常见问题解答"
 source: "../sunlogin-offline-hardware-wiki.md#常见问题解答"

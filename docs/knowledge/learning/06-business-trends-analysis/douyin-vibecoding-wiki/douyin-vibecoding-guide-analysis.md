@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "抖音人气赛道创作指南深度分析——基于第一性原理的vibecoding内容传播方法论"
 source: "https://bytedance.larkoffice.com/wiki/M56UwAfHtiKWE2keijKcHqBSnfg"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.toml"

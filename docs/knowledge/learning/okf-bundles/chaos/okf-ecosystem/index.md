@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: OKF 生态系统知识包
-description: OKF（Open Knowledge Format）生态——Bundle 数据模型、爬取构建流水线、增量同步与桌面阅读器
-tags: [okf, knowledge-format, bundle, cli, desktop]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # OKF 生态系统知识包
 
 本知识包（bundle）系统梳理 OKF（Open Knowledge Format）生态系统的架构与实现，涵盖 okf-kit（Python CLI 核心，版本 0.3.3）与 okf-desktop（桌面阅读器，版本 0.1.0）两个项目。内容包括 Bundle 数据模型、网站爬取构建流水线、增量同步机制、MCP/Chat/HTTP 三模服务架构、桌面同进程打包等核心概念，遵循 OKF v0.2 规范。
@@ -30,3 +19,13 @@ stale_after: 2027-08-23
   * [架构洞察](references/insights.md)
   * [okf-kit 源码](references/okf-kit-source.md)
   * [okf-desktop 源码](references/okf-desktop-source.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

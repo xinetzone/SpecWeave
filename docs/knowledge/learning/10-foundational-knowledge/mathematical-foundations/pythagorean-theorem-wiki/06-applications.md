@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-applications"
 title: "六、应用领域"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"

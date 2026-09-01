@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "adversarial-review-checklists"
 title: "05、检查清单与工具模板"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/05-checklists-templates.toml"

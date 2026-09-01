@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-09-resources-references"
 title: "参考资料与延伸阅读"
 source: "internal:ai-powershell5-research-rfive"

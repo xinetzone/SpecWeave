@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: model-config-input-layout-convention
 title: 模型编译 config 输入布局核验与修正规范（NCHW/NHWC）
 category: best-practices

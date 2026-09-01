@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-02"
 title: "版本体系对照"
 source: "公共领域知识（马王堆帛书老子研究）"

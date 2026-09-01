@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-relationships
 title: "12、关系全景：11个概念的形式化关系与交互"

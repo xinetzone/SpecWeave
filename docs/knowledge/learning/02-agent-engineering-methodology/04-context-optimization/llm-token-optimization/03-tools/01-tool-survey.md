@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-tool-survey"
 title: "LLM Token优化工具与框架调研报告"
 source: "deep-research调研结果"

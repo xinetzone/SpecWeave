@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-douyin-vibecoding-wiki-index"
 title: "抖音Vibecoding人气赛道创作指南"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/README.toml"
@@ -30,4 +32,4 @@ date: "2026-07-12"
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

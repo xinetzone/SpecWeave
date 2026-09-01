@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: buddhist-logic-core-concepts
 title: 佛教因明学核心概念：现量、比量、宗因喻
 source: cross-cultural-first-principles-comparison Task 4

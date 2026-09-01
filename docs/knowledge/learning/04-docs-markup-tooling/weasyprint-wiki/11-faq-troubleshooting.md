@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "weasyprint-11-faq"
 title: "十一、常见问题与故障排查"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/11-faq-troubleshooting.toml"

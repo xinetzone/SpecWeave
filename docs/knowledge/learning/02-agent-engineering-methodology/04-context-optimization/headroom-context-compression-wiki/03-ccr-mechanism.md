@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-03"
 title: "CCR可逆机制深度解析"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/03-ccr-mechanism.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/03-ccr-mechanism.toml"
 ---
 ## 四、CCR可逆机制深度解析
 

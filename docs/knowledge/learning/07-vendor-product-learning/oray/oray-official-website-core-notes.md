@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "贝锐(OSray)官网核心内容笔记"
+---
+
 # 贝锐(OSray)官网核心内容笔记
 
 > **来源**: https://os.oray.com/、https://www.oray.com/、https://sunlogin.oray.com/、https://pgy.oray.com/

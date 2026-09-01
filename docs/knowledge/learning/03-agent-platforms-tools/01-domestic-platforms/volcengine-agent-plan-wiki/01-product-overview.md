@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agent-plan-wiki-01"
 title: "产品详解：什么是Agent Plan"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"

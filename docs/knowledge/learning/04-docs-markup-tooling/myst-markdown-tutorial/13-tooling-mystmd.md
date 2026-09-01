@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-mystmd"
 title: "第13章：工具链集成 - mystmd（新一代）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/13-tooling-mystmd.toml"

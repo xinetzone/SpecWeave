@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-02-flowchart"
 title: "Mermaid 基础图表：流程图（Flowchart）"
 source: "https://mermaid.js.org/"

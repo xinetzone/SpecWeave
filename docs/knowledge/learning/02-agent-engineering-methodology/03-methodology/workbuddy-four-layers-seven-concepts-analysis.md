@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "七概念框架视角下的WorkBuddy四层工程深度分析报告"
 author: "SpecWeave Analysis Agent"
 date: "2026-07-14"
@@ -828,8 +830,8 @@ WorkBuddy Harness作为工程实践，在方法论完整性层面可以从七概
 |------|------|------|
 | 任务复盘（含幻觉事件完整记录） | [retrospective.md](../../../../../.trae/specs/retrospectives-insights/analyze-workbuddy-harness-seven-concepts/retrospective.md) | R-I-E-C链路复盘，4条核心洞察，6项行动项闭环 |
 | 团队分享简报 | [team-briefing.md](../../../../../.trae/specs/retrospectives-insights/analyze-workbuddy-harness-seven-concepts/team-briefing.md) | 故事化叙事+四个核心发现+7项检查清单 |
-| 可复用模式：外部内容事实验证 | [external-content-fact-verification.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md) | S-A-V三阶段事实保真工作流（L2成熟度） |
-| 防御检查清单：自指盲区 | [self-reference-blindspot-defense.md](../../../../checklists/self-reference-blindspot-defense.md) | 7项强制检查，防止"分析验证机制时犯验证机制防范的错误" |
+| 可复用模式：外部内容事实验证 | [external-content-fact-verification.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/external-content-fact-verification.md) | S-A-V三阶段事实保真工作流（L2成熟度） |
+| 防御检查清单：自指盲区 | [self-reference-blindspot-defense.md](../../../../../.agents/checklists/self-reference-blindspot-defense.md) | 7项强制检查，防止"分析验证机制时犯验证机制防范的错误" |
 | Harness Engineering Wiki | [harness-engineering-wiki/](../01-paradigms/harness-engineering-wiki/00-overview.md) | 阿里技术Harness Engineering系统化学习Wiki |
 | Loop Engineering文章分析 | [harness-loop-engineering-article-analysis.md](../01-paradigms/harness-loop-engineering-article-analysis.md) | 同系列文章分析：Loop Engineering与AI系统工程范式转移 |
 | 四代工程概念演进 | [four-engineering-concepts-wiki.md](../01-paradigms/four-engineering-concepts-wiki.md) | Prompt→Context→Harness→Loop四代范式演进总结 |

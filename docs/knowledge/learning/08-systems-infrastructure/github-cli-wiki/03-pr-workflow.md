@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-03"
 title: "Pull Request 工作流指南"
 source: "https://github.com/cli/cli"

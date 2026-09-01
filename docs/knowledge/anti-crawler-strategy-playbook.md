@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 title: "反爬策略预设清单"
 source: "retrospective-zhihu-637007780-analysis"
 x-toml-ref: "../../.meta/toml/docs/knowledge/anti-crawler-strategy-playbook.toml"
@@ -13,7 +15,7 @@ tags: [anti-crawler, web-scraping, fallback-strategy]
 
 **来源**：知乎 637007780 分析任务复盘（2026-07-06）——在 7 种策略试错中仅 1 种成功（agent-browser + 反自动化 flag + 桌面 UA），暴露了反爬策略缺乏预设清单导致的试错成本问题。
 
-**配套模式**：本清单是 [external-website-analysis-fallback-strategy.md](../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) 第二层"工具增强访问"的站点专属配置库，对应其"模式演进方向 #2：反爬策略预设清单库"。
+**配套模式**：本清单是 [external-website-analysis-fallback-strategy.md](../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) 第二层"工具增强访问"的站点专属配置库，对应其"模式演进方向 #2：反爬策略预设清单库"。
 
 ## 通用策略优先级决策树
 
@@ -79,7 +81,7 @@ agent-browser open "https://www.zhihu.com/question/<id>" \
 
 - **案例**：知乎问题 637007780（2026-07-06）
 - **结果**：7 策略试错后第 7 种成功，获取 3/23 条回答（覆盖率 13%，受登录墙限制）
-- **复盘报告**：[retrospective-zhihu-637007780-analysis-20260706](../../.agents/docs/retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/retrospective-report.md)
+- **复盘报告**：[retrospective-zhihu-637007780-analysis-20260706](../retrospective/reports/task-reports/retrospective-zhihu-637007780-analysis-20260706/retrospective-report.md)
 
 ---
 
@@ -218,7 +220,7 @@ SpecWeave 沙箱环境对网络访问有限制，以下策略在沙箱中**不�
 4. **策略 1-6 全部失败时**：
    - 考虑 headed 模式人工辅助（如环境支持）
    - 或切换到第三层（官方替代源）/第四层（第三方权威源）降级策略
-   - 参考 [external-website-analysis-fallback-strategy.md](../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) 的四层降级模型
+   - 参考 [external-website-analysis-fallback-strategy.md](../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) 的四层降级模型
 
 ### 非沙箱环境补充策略
 
@@ -269,9 +271,9 @@ agent-browser open "<target_url>" \
 
 | 关联文档 | 关系 | 说明 |
 |---|---|---|
-| [external-website-analysis-fallback-strategy.md](../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 上游模式 | 本清单是其第二层"工具增强访问"的站点专属配置库，对应其"模式演进方向 #2" |
-| [small-sample-analysis-methodology.md](../../.agents/docs/retrospective/patterns/methodology-patterns/research-knowledge/small-sample-analysis-methodology.md) | 下游降级 | 当反爬突破后仍只能获取少量样本时，启用小样本分析降级策略 |
-| [triangular-source-verification.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 验证互补 | 获取内容后通过三角验证法确保信息准确性 |
+| [external-website-analysis-fallback-strategy.md](../retrospective/patterns/methodology-patterns/research-knowledge/external-website-analysis-fallback-strategy.md) | 上游模式 | 本清单是其第二层"工具增强访问"的站点专属配置库，对应其"模式演进方向 #2" |
+| [small-sample-analysis-methodology.md](../retrospective/patterns/methodology-patterns/research-knowledge/small-sample-analysis-methodology.md) | 下游降级 | 当反爬突破后仍只能获取少量样本时，启用小样本分析降级策略 |
+| [triangular-source-verification.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 验证互补 | 获取内容后通过三角验证法确保信息准确性 |
 
 ---
 

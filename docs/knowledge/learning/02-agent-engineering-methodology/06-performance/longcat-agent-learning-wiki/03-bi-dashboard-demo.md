@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-03"
 title: "BI数据看板项目实战全流程"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

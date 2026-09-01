@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "papi-jiang-solo-ip-trend-faq"
 title: "Papi酱关闭公司回归个人IP：常见问题FAQ"
 category: "learning"

@@ -1,6 +1,6 @@
 import os
 
-base = r"d:\AI\.agents\docs\knowledge\learning"
+base = r"d:\AI\docs\knowledge\learning"
 
 categories = sorted([d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)) and (d.startswith('0') or d.startswith('10-'))])
 

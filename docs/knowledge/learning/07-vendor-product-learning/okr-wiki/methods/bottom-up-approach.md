@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "自下而上的共创方法"
 source: "https://www.dingteam.com/help/584"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/methods/bottom-up-approach.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/methods/bottom-up-approach.toml"
 date: "2026-07-08"
 ---
 # 自下而上的共创方法

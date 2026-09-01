@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-08"
 title: "资源与参考链接"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

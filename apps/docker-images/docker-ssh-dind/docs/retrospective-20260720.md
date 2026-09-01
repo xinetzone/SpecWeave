@@ -216,7 +216,7 @@ $utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 
 已加固的脚本：ci-check.ps1、path-migration-ci.ps1、test-wechat-extraction.ps1
 
-**与现有模式关系**：本模式是对 [direct-file-write-over-shell-pipe](../../../../.agents/docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md) 模式在Windows中文场景下的具体化补充。现有模式强调"不用shell管道写文件"，本模式补充了"Windows+中文"场景下的具体禁止操作和正确操作。
+**与现有模式关系**：本模式是对 [direct-file-write-over-shell-pipe](../../../../docs/retrospective/patterns/code-patterns/direct-file-write-over-shell-pipe.md) 模式在Windows中文场景下的具体化补充。现有模式强调"不用shell管道写文件"，本模式补充了"Windows+中文"场景下的具体禁止操作和正确操作。
 
 ### 模式2：Docker-in-Docker SSH 镜像标准结构
 

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module1-overview"
 title: "模块1：Agent评测方法论概述"
 source: "spec:agent-eval-methodology-wiki"

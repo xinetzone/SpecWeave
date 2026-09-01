@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-02-core-modules
 title: "核心模块：base/common/models/core 与根级模块"
 source: "spec:create-conda-dev-source-wiki-tutorial"

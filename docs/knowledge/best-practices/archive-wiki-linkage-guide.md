@@ -1,7 +1,9 @@
 ---
+type: best-practice
+
 id: "archive-wiki-linkage-guide"
 title: "归档搭配Wiki联动机制指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/archive-wiki-linkage-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/archive-wiki-linkage-guide.toml"
 category: "best-practices"
 tags: ["archive", "wiki", "knowledge-management", "retrospective", "learning-wiki", "知识沉淀", "归档升级", "联动机制"]
 date: "2026-07-31"
@@ -20,7 +22,7 @@ summary: "SpecWeave项目中归档（retrospective）与Wiki（learning wiki）�
 | 维度 | 归档（Archive） | Wiki（系统化知识库） |
 |------|----------------|---------------------|
 | **定位** | 单任务过程记录与原始资料仓库 | 面向复用的主题化知识体系 |
-| **目录位置** | `.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `docs/knowledge/learning/NN-<theme>/<topic>-wiki/`（原子化）或 `docs/knowledge/learning/NN-<theme>/<topic>-wiki.md`（单文件） |
+| **目录位置** | `docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `docs/knowledge/learning/NN-<theme>/<topic>-wiki/`（原子化）或 `docs/knowledge/learning/NN-<theme>/<topic>-wiki.md`（单文件） |
 | **命名规则** | `retrospective-<topic>-<YYYYMMDD>/`（带日期后缀，体现任务时效性） | `<topic>-wiki/` 或 `<topic>-wiki.md`（无日期，主题持久化） |
 | **核心读者** | 复盘审计者、未来执行类似任务的智能体 | 系统学习者、知识检索者 |
 | **内容结构** | 保留执行上下文：原文→分析报告→执行过程→深度洞察 | 面向认知的章节结构：总览→核心概念→分主题讲解→对比→术语→资源 |
@@ -114,12 +116,12 @@ flowchart LR
 
 ### 3.3 链接路径规范
 
-- 归档位于：`.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/`
+- 归档位于：`docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/`
 - Wiki位于：`docs/knowledge/learning/NN-<theme>/<topic>-wiki/`
-- 归档→Wiki相对路径：从归档README出发，需向上6级再进入knowledge/learning/
-  - 路径示例：`../../../../knowledge/learning/NN-<theme>/<topic>-wiki/00-overview.md`
-- Wiki→归档相对路径：从Wiki 00-overview.md出发，需向上4级再进入retrospective/
-  - 路径示例：`../../../retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/README.md`
+- 归档→Wiki相对路径：从归档README出发，需向上5级到达 `docs/` 再进入 knowledge/learning/
+  - 路径示例：`../../../../../knowledge/learning/NN-<theme>/<topic>-wiki/00-overview.md`
+- Wiki→归档相对路径：从Wiki 00-overview.md出发，需向上4级到达 `docs/` 再进入 retrospective/
+  - 路径示例：`../../../../retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/README.md`
 
 > ⚠️ **重要**：路径计算完成后必须运行链接检查验证：`python .agents/scripts/check-links.py --fix`
 
@@ -378,7 +380,7 @@ Wiki化完成后，逐项检查：
 以下原子化Wiki可作为结构参考：
 - [FFI外部函数接口Wiki](../learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md) — 7章标准原子化结构
 - [IDL接口定义语言Wiki](../learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md) — 9章教程结构
-- [Harness Engineering Wiki](../learning/02-agent-engineering-methodology/harness-engineering-wiki/00-overview.md) — 方法论类Wiki范例
+- [Harness Engineering Wiki](../learning/02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki/00-overview.md) — 方法论类Wiki范例
 - [向日葵无网远控硬件Wiki](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) — 厂商产品类Wiki范例
 
 ---

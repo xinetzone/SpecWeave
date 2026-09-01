@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "learning-hub"
 title: "Learning Wiki 知识库"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/README.toml"
@@ -69,8 +71,8 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 
 | Wiki | 说明 | 链接 |
 |------|------|------|
-| **火山引擎 AgentKit 企业级 AI Agent 平台** | 12章完整Wiki教程：七概念方法论沉淀，3个跨平台可复用模式，企业智能体从0到1必读 | **[volcengine-agentkit-wiki](03-agent-platforms-tools/volcengine-agentkit-wiki/README.md)** |
-| **Intelligent Terminal Wiki 教程** | 13章完整Wiki教程：Microsoft AI-native Windows Terminal深度解析，Helper+Master架构、ACP协议、COM集成、Autofix等核心技术 | **[intelligent-terminal-wiki](intelligent-terminal-wiki/README.md)** |
+| **火山引擎 AgentKit 企业级 AI Agent 平台** | 12章完整Wiki教程：七概念方法论沉淀，3个跨平台可复用模式，企业智能体从0到1必读 | **[volcengine-agentkit-wiki](03-agent-platforms-tools/01-domestic-platforms/volcengine-agentkit-wiki/README.md)** |
+| **Intelligent Terminal Wiki 教程** | 13章完整Wiki教程：Microsoft AI-native Windows Terminal深度解析，Helper+Master架构、ACP协议、COM集成、Autofix等核心技术 | **[intelligent-terminal-wiki](08-systems-infrastructure/intelligent-terminal-wiki/README.md)** |
 | Anthropic Agent 产品路线图 | Conway/Orbit/Operon/BugCrawl 等六条产品线解析 | [anthropic-agent-roadmap-wiki.md](03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md) |
 | Anthropic 金融服务 Agent 工具箱 | 华尔街 AI 金融 Agent 工具箱完整教程 | [anthropic-financial-services-wiki.md](03-agent-platforms-tools/anthropic-financial-services-wiki.md) |
 | AReaL 2.0 自演进 Agent | 蚂蚁集团在线强化学习基础设施 | [areal-agent-rl-wiki.md](03-agent-platforms-tools/areal-agent-rl-wiki.md) |
@@ -80,7 +82,7 @@ Learning Wiki 知识库——SpecWeave 项目的 AI 技术学习资料库，汇�
 | MopMonk 安全 Agent | MiniMax 安全 Agent + CyberGym 漏洞挖掘（7 章原子化） | [mopmonk-security-agent-wiki.md](03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
 | Octo 明略科技多 Agent 协作平台 | Private AI 时代多 Agent 协作基础设施 | [octo-platform-wiki.md](03-agent-platforms-tools/octo-platform-wiki.md) |
 | Open Code Review 代码评审工具 | 阿里开源 AI 代码评审工具（11 章原子化） | [open-code-review-wiki.md](03-agent-platforms-tools/open-code-review-wiki.md) |
-| **Intel Neural Compressor 模型量化工具** | Intel开源模型压缩工具完整教程：9章原子化Wiki，覆盖量化技术、API、最佳实践（静态/动态/仅权重/FP8/SmoothQuant/GPTQ/RTN） | **[neural-compressor-wiki/](neural-compressor-wiki/README.md)** |
+| **Intel Neural Compressor 模型量化工具** | Intel开源模型压缩工具完整教程：9章原子化Wiki，覆盖量化技术、API、最佳实践（静态/动态/仅权重/FP8/SmoothQuant/GPTQ/RTN） | **[neural-compressor-wiki/](02-agent-engineering-methodology/06-performance/neural-compressor-wiki/README.md)** |
 | QuantDinger AI 量化交易平台 | 开源自托管 AI 量化交易全链路平台 | [quantdinger-ai-trading-wiki.md](03-agent-platforms-tools/quantdinger-ai-trading-wiki.md) |
 | Rainman AI 翻译工具 | AI 翻译书工具教程（8 章原子化） | [rainman-translate-book-wiki.md](03-agent-platforms-tools/rainman-translate-book-wiki.md) |
 | TRAE v3.3.74 版本发布笔记 | TRAE IDE 版本更新：Browser 配置聚合页、Windows MSSDK 接入 | [trae-v3-3-74-release-notes.md](03-agent-platforms-tools/trae-v3-3-74-release-notes.md) |

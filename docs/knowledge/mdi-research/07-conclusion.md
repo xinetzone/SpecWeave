@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-conclusion
 title: MDI研究报告 - 结论
 source: "mdi-research-report.md#8-结论"

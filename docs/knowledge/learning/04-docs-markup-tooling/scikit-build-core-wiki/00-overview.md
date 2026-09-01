@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "scikit-build-core 全面教程：概述与导航"
 source: "spec:create-scikit-build-core-wiki-tutorial"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/00-overview.toml"

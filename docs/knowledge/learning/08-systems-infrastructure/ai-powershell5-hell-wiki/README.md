@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-index"
 title: "AI大模型×PowerShell 5 兼容性防御 Wiki 教程"
 source: "internal:ai-powershell5-research-rfive"

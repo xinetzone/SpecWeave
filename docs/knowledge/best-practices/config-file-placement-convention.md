@@ -1,8 +1,10 @@
 ---
+type: best-practice
+
 id: "config-file-placement-convention"
 title: "配置文件放置治理与 .temp/ 临时文件约定"
 source: ".trae/specs/standards-tools/config-file-placement-governance/spec.md"
-x-toml-ref: ".meta/toml/docs/knowledge/best-practices/config-file-placement-convention.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/config-file-placement-convention.toml"
 category: "best-practices"
 tags:
   - file-placement
@@ -18,7 +20,6 @@ version: "1.0.0"
 author: "SpecWeave Team"
 summary: "SpecWeave 项目关键配置文件的标准存放路径、放置决策树、Python 自动加载约定（sitecustomize.py / .pth / PYTHONPATH 关系）、sitecustomize.py 曾被错放根目录的根因分析，以及 .temp/ 临时文件的用途分类、命名规则、保留期与清理机制。"
 ---
-
 # 配置文件放置治理与 .temp/ 临时文件约定
 
 ## 概述
@@ -85,11 +86,11 @@ summary: "SpecWeave 项目关键配置文件的标准存放路径、放置决策
                               │                   │
                               ▼                   ▼
                   ┌────────────────────┐  ┌────────────────────────────┐
-                  │ 放 .agents/docs/   │  │ Q3: 文件是否是临时产物       │
+                  │ 放 docs/           │  │ Q3: 文件是否是临时产物       │
                   │ 下对应子目录        │  │     （备份/实验/导出/截图）？│
                   │ （knowledge/       │  └──────────────┬─────────────┘
                   │  retrospective/    │                 │
-                  │  rules/ 等）       │      ┌──────────┴──────────┐
+                  │  tech/ 等）        │      ┌──────────┴──────────┐
                   └────────────────────┘     是                    否
                                               │                     │
                                               ▼                     ▼
@@ -115,7 +116,7 @@ summary: "SpecWeave 项目关键配置文件的标准存放路径、放置决策
 
 ### 决策要点
 
-| 问题 | 倾向根目录 | 倾向 `.agents/scripts/` | 倾向 `.agents/docs/` | 倾向 `.temp/` |
+| 问题 | 倾向根目录 | 倾向 `.agents/scripts/` | 倾向 `docs/` | 倾向 `.temp/` |
 |------|-----------|------------------------|---------------------|---------------|
 | 谁加载它？ | 外部工具按约定扫描根目录（如 `.gitignore`、`.git/`、`.githooks/`、`.github/`） | Python 解释器、PowerShell、CI 脚本 | 团队成员、智能体查阅 | 一次性任务产物 |
 | 加载机制 | 工具硬编码扫描项目根 | `PYTHONPATH`、显式 `python <script>`、`. ./.agents/scripts/x.ps1` | 文档导航/链接 | 不被加载，仅暂存 |

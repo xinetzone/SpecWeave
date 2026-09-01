@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-github-wiki-00-overview
 title: "conda .github 元仓库 Wiki 教程总览"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/00-overview.toml"

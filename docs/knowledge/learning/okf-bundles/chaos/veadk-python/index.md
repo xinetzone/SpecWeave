@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: veadk-python 知识包
-description: 火山引擎 Agent Development Kit——基于 Google ADK 扩展的全链路 Python Agent 工程化框架
-tags: [ai-agent, adk, volcengine, llm, python, agent-framework]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # veadk-python 知识包
 
 本知识包（bundle）系统梳理 veadk-python（Volcengine Agent Development Kit）的架构与实现。veadk-python 是火山引擎推出的 Python Agent 开发工具包，在 Google ADK 基础上扩展，深度集成火山引擎方舟大模型、VikingDB、TOS、OpenSearch 等云服务，提供从 Agent 定义、配置驱动构建、记忆管理、知识库、评估到云部署的全链路工程化能力。内容遵循 OKF v0.2 规范。
@@ -35,3 +24,13 @@ stale_after: 2027-08-23
   * [架构洞察](references/insights.md)
   * [veadk-python 源码](references/veadk-source.md)
 * [验证报告](verification-report.md) - V 阶段结构/Frontmatter/链接/API/代码示例/索引/内容质量七项检查结果与问题修复记录
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

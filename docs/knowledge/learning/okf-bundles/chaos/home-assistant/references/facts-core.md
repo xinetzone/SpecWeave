@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "Home Assistant Core 核心架构事实清单"
+---
+
 # Home Assistant Core 核心架构事实清单
 
 > 源码基准路径：`d:\AI\.chaos\libs\home-assistant\core\homeassistant\`

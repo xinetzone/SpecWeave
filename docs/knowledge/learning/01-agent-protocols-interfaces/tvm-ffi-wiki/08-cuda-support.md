@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "08 - CUDA 支持"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

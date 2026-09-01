@@ -13,6 +13,21 @@
 ```{toctree}
 :maxdepth: 2
 
+agent-roles
+collaboration
+development-standards
+docker-cache
+knowledge-base
+mermaid-manual-fix-guide
+project-highlights
+project-overview
+project-structure
+raci-governance-standards
+related-links
 release-onnx-pytorch-v1-1
 release-onnx-quantized-v2
+roadmap
+tech-stack
+trae-project-adaptation-guide
+verification-automation
 ```

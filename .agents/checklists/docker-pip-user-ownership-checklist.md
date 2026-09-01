@@ -86,8 +86,8 @@ final 镜像是否面向交互式多用户（jupyter/SSH/dev）？
 
 | 关键问题 | 对应模式文件 |
 |---------|-------------|
-| 属主分离核心模式 | [docker-buildtime-runtime-ownership-separation.md](../docs/retrospective/patterns/code-patterns/docker-buildtime-runtime-ownership-separation.md) |
-| 构建时 vs 运行时配置分离 | [docker-buildtime-vs-runtime-config.md](../docs/retrospective/patterns/code-patterns/docker-buildtime-vs-runtime-config.md) |
-| BuildKit 优化三件套 | [docker-buildkit-optimization-best-practices.md](../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-best-practices.md) |
-| 运行时逻辑分层 | [dockerfile-runtime-logical-layering.md](../docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
-| 复盘原始报告 | [retrospective-chaos-ai-portable-slim-20260811](../docs/retrospective/reports/build-engineering/retrospective-chaos-ai-portable-slim-20260811/README.md) |
+| 属主分离核心模式 | [docker-buildtime-runtime-ownership-separation.md](../../docs/retrospective/patterns/code-patterns/docker-buildtime-runtime-ownership-separation.md) |
+| 构建时 vs 运行时配置分离 | [docker-buildtime-vs-runtime-config.md](../../docs/retrospective/patterns/code-patterns/docker-buildtime-vs-runtime-config.md) |
+| BuildKit 优化三件套 | [docker-buildkit-optimization-best-practices.md](../../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-best-practices.md) |
+| 运行时逻辑分层 | [dockerfile-runtime-logical-layering.md](../../docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
+| 复盘原始报告 | [retrospective-chaos-ai-portable-slim-20260811](../../docs/retrospective/reports/build-engineering/retrospective-chaos-ai-portable-slim-20260811/README.md) |

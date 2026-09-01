@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-05-ai-multimodal-content-causal-ai-index"
 title: "因果AI与世界模型：零犀科技六年押注深度分析"
 category: "knowledge"
@@ -28,4 +30,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-
 ## 🔗 相关资源
 
 - [🏠 返回上级：05-ai-multimodal-content](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledgebase-module
 title: 知识库(RAG)详解
 source: veadk-python codebase analysis

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Open Code Review 完整学习教程：阿里开源 AI 代码评审工具"
 source: "微信公众号文章《阿里开源 AI 代码评审工具 Open Code Review》"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.toml"

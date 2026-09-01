@@ -1,0 +1,5 @@
+id = "graphql-federated-knowledge-gateway"
+title = "GraphQL联邦开放知识网关：跨源开放知识的统一查询层"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

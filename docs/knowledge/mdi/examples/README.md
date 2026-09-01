@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "MDI 示例文档集合"
+---
+
 # MDI 示例文档集合
 
 本目录包含 Markdown Interface Specification（MDI）规范的完整示例文档，覆盖 Skill、WebApi、CliTool、GraphQL 四种 Profile 类型。每个示例均可直接通过 MDI 工具链进行解析、验证和代码生成。

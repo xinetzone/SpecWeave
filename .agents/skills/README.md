@@ -11,7 +11,7 @@ title: ".agents/skills/ 目录索引"
 本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为四类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
-- **工作流门面**：对 `.agents/docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
+- **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
 - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
 

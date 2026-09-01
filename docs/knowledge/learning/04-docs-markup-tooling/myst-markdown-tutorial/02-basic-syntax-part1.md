@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-basic-syntax-1"
 title: "第2章：基础语法（上）- 文本与格式"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/02-basic-syntax-part1.toml"

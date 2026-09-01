@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-india-manufacturing-wiki"
 title: "七概念印度制造业供应链风险分析教程"
 source: "seven-concepts-india-manufacturing-wiki"

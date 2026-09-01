@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "BVLC Caffe (caffex) 源码深度分析；上游仓库 https://github.com/BVLC/caffe"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/README.toml"
 analysis_date: "2026-07-22"

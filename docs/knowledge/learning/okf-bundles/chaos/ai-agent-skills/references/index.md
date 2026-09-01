@@ -21,3 +21,21 @@
 * [awesun-ui-locator 源码](awesun-ui-locator-source.md) — 截图 UI 定位器，五步工作流，coordinate_utils.py 坐标计算
 * [jira-skill 源码](jira-skill-source.md) — Jira 插件 v3.28.0，双技能 21 脚本，PEP 723，LazyJiraClient
 * [retro-skill 源码](retro-skill-source.md) — 复盘插件 v1.6.0，六种模式，21 机械信号，七目标路由
+
+```{toctree}
+:maxdepth: 2
+
+agency-agents-source
+awesun-mcp-source
+awesun-skill-source
+awesun-ui-locator-source
+facts-agency-agents
+facts-awesun-mcp
+facts-awesun-skill
+facts-awesun-ui-locator
+facts-jira-skill
+facts-retro-skill
+insights
+jira-skill-source
+retro-skill-source
+```

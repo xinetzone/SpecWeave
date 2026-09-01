@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-glossary"
 title: "11、术语表"
 category: "reference"

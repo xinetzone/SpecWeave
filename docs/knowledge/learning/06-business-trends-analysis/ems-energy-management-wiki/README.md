@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-ems-energy-management-wiki-index"
 title: "开源EMS能源管理系统深度分析"
 category: "knowledge"
@@ -54,6 +56,6 @@ project_url: "https://gitee.com/guangdong122/energy-management"
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 - [📋 对应的Spec文档](../../../../../.trae/specs/retrospectives-insights/analyze-ems-energy-management-article/spec.md)
 - [🔗 开源项目地址](https://gitee.com/guangdong122/energy-management)

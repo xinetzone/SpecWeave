@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://mystmd.org/guide/admonitions"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/examples/admonitions.toml"
 id: "examples-admonitions"

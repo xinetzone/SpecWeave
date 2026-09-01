@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-09"
 title: "术语表与参考资源"
 source: "eve-framework-wiki-learning"

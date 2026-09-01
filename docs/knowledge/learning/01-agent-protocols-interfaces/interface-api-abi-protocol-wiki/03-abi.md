@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "abi-concept"
 title: "四、ABI（应用二进制接口）：二进制兼容约定"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/03-abi.toml"

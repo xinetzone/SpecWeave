@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-05-ai-multimodal-content-atomic-emergence-index"
 title: "Atomic Emergence 原子涌现"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/05-ai-multimodal-content/atomic-emergence/README.toml"

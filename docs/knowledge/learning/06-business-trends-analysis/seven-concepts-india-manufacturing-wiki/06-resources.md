@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "resources"
 title: "参考资料与附录"
 source: "seven-concepts-india-manufacturing-wiki"

@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-12-daoapps-business-plan
 title: DAO Apps 商业计划书结论摘要
 source: d:\spaces\chaos\daoCollective\tests\reports\BUSINESS_PLAN-A.md

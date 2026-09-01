@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "powershell-nativebuild-faq"
 title: "PowerShell NativeBuild 构建常见问题 FAQ"
 date: 2026-08-02

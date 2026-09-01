@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-12"
 title: "DeepSeek Harness 完全指南 — 无头模式与 SDK 使用"
 source: "https://github.com/deepseek-ai/deepseek-harness"

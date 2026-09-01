@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "明略科技 Octo 平台学习 Wiki：Private AI 时代的多 Agent 协作基础设施"
 source: "微信公众号文章《Octo：当 Agent 不再只活在对话框里》"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/octo-platform-wiki.toml"

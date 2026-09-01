@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-model-providers-runtime"
 title: "模型提供方与运行时入口"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

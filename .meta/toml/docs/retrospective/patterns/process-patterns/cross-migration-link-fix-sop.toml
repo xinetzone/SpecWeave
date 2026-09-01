@@ -1,0 +1,5 @@
+id = "cross-migration-link-fix-sop"
+title = "跨迁移断链批量修复 SOP（P-Link-Migrate-v1）"
+category = "retrospective/patterns/process-patterns"
+date = "2026-07-02"
+version = "1.0"

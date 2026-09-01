@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-extensions-readme
 title: Extensions
 source: 'seven-concepts: veadk-python-wiki'

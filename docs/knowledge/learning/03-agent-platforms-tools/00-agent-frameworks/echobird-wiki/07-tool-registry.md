@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-tool-registry"
 title: "工具注册表"
 source: "echobird-source-wiki-learning"

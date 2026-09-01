@@ -1,0 +1,5 @@
+id = "flat-nested-hybrid-scan"
+title = "扁平+嵌套混合目录扫描模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

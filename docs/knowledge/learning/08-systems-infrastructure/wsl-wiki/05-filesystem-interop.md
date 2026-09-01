@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-05-filesystem-interop"
 title: "文件系统互操作"
 source: "spec:create-wsl-wiki-tutorial"

@@ -10,7 +10,7 @@
   python load-adversarial-addendum.py <目标文件路径> --inject-to <output.md>  # 注入到文件
 
 示例:
-  python load-adversarial-addendum.py .agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/bounded-iteration-budget.md
+  python load-adversarial-addendum.py docs/retrospective/patterns/methodology-patterns/governance-strategy/bounded-iteration-budget.md
   python load-adversarial-addendum.py review-prompt.md --inject-to review-prompt-augmented.md
 """
 

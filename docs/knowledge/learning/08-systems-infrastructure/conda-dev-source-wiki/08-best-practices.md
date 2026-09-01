@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-08-best-practices
 title: "最佳实践指南"
 source: "spec:create-conda-dev-source-wiki-tutorial"

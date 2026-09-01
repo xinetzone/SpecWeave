@@ -1,7 +1,9 @@
 ---
+type: best-practice
+
 id: directory-migration-checklist
 title: 目录迁移五步法检查清单
-x-toml-ref: .meta/toml/docs/knowledge/best-practices/directory-migration-checklist.toml
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/directory-migration-checklist.toml"
 category: best-practices
 tags:
   - migration
@@ -14,7 +16,6 @@ status: active
 version: 1.0.0
 author: SpecWeave Team
 ---
-
 # 目录迁移五步法检查清单
 
 ## 概述

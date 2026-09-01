@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://mystmd.org/guide/frontmatter"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/03-frontmatter-config.toml"
 id: "executablebooks-myst-guide-frontmatter-config"

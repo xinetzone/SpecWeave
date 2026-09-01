@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "常见问题解答 (FAQ)"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

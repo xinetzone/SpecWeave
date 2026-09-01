@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-engineering-wiki-09"
 title: "资源链接"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"
@@ -42,7 +44,7 @@ category: "learning"
 
 | Wiki | 路径 | 关联点 |
 |------|------|--------|
-| Agent通信协议 | [agent-communication-protocols](../../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | MCP/A2A协议相关，对应Harness的MCP层和未来趋势二 |
-| Agent Skills开放标准 | [agent-skills-open-standard-wiki](../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | Skill开发规范，对应"Agent昂贵Skill廉价"原则和模式2工具签名即文档 |
-| Loop Engineering | [longcat-agent-learning-wiki](../longcat-agent-learning-wiki.md) | LongCat Agent实测中的循环工程，对应模式4反馈回路 |
-| 多Agent安全护栏 | [mopmonk-security-agent-wiki](../../03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | 多Agent系统的安全护栏设计，对应悟空案例三层硬护栏 |
+| Agent通信协议 | [agent-communication-protocols](../../../01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) | MCP/A2A协议相关，对应Harness的MCP层和未来趋势二 |
+| Agent Skills开放标准 | [agent-skills-open-standard-wiki](../../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) | Skill开发规范，对应"Agent昂贵Skill廉价"原则和模式2工具签名即文档 |
+| Loop Engineering | [longcat-agent-learning-wiki](../../06-performance/longcat-agent-learning-wiki.md) | LongCat Agent实测中的循环工程，对应模式4反馈回路 |
+| 多Agent安全护栏 | [mopmonk-security-agent-wiki](../../../03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | 多Agent系统的安全护栏设计，对应悟空案例三层硬护栏 |

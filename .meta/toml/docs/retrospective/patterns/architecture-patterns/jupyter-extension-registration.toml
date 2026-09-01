@@ -1,0 +1,5 @@
+id = "jupyter-extension-registration"
+title = "Jupyter 扩展/插件注册三端对照：钩子函数 vs entry-point vs 前端插件"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-08-systems-infrastructure-github-cli-wiki-index"
 title: "GitHub CLI (gh) 完全指南"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/github-cli-wiki/README.toml"

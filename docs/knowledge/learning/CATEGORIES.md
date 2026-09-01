@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "learning-categories"
 title: "Learning Wiki 主题分类体系"
 category: "learning"

@@ -5,7 +5,7 @@ date: 2026-08-12
 scenario: innovation+knowledge
 chain: F→I→C→R→I→E
 tags: [短视频, AI开发, Agent Plan, Seedream, Seedance, 全栈]
-archived: ../../.agents/docs/retrospective/2026-08-12-short-video-site-ai-fullstack-retro.md
+archived: ../../../../docs/retrospective/reports/2026-08-12-short-video-site-ai-fullstack-retro.md
 ---
 
 > **归档说明**：本复盘已归档至中央复盘体系，归档版含完整提交记录与交付物清单。

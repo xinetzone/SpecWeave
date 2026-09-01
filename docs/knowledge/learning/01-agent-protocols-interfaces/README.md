@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-protocols-interfaces-index"
 title: "Agent协议与接口技术栈"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/README.toml"
@@ -66,7 +68,7 @@ date: "2026-08-21"
 |------|------|------|---------|
 | [agent-skills-wiki/](agent-skills-wiki/00-overview.md) | 子Wiki | 15篇 | **Agent Skills开放标准完整指南**：基于agentskills.io官方文档+源码核实，覆盖渐进式披露机制、目录结构、SKILL.md格式、最佳实践、评估体系、客户端5步集成 |
 | [agent-skills-open-standard-wiki.md](agent-skills-open-standard-wiki.md) | 索引页 | 单文件 | Skills开放标准索引入口，15章原子化文档导航，含掷骰子Skill最简示例（指向agent-skills-wiki/子目录） |
-| [jira-skill-wiki/](jira-skill-wiki/00-overview.md) | 子Wiki | 10篇 | **Jira集成插件实战教程**：Claude Code Jira插件完整教程，涵盖双技能架构（jira-communication API + jira-syntax标记语法）、六种安装方式、JQL查询、故障排查 |
+| [jira-skill-wiki/](jira-skill-wiki/concepts/00-overview.md) | 子Wiki | 10篇 | **Jira集成插件实战教程**：Claude Code Jira插件完整教程，涵盖双技能架构（jira-communication API + jira-syntax标记语法）、六种安装方式、JQL查询、故障排查 |
 
 ---
 
@@ -211,7 +213,7 @@ okf-wiki/00-overview.md
 |------|---------|
 | Skill快速入门 | [agent-skills-wiki/04-quickstart.md](agent-skills-wiki/04-quickstart.md)（创建第一个Skill） |
 | Skill最佳实践 | [agent-skills-wiki/05-best-practices.md](agent-skills-wiki/05-best-practices.md)（开发规范） |
-| 插件实战参考 | [jira-skill-wiki/00-overview.md](jira-skill-wiki/00-overview.md)（Jira插件完整教程） |
+| 插件实战参考 | [jira-skill-wiki/concepts/00-overview.md](jira-skill-wiki/concepts/00-overview.md)（Jira插件完整教程） |
 
 ### 🔌 跨语言互操作
 | 场景 | 推荐阅读 |

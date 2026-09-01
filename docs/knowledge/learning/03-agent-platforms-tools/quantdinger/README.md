@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-quantdinger-index"
 title: "QuantDinger：自托管AI量化交易平台"
 category: "knowledge"
@@ -28,4 +30,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/03-agent-platform
 ## 🔗 相关资源
 
 - [🏠 返回上级：03-agent-platforms-tools](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

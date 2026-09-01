@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "cli-setup-in-agent-environment"
 title: "IDE Agent 环境下 CLI 工具配置操作手册"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/cli-setup-in-agent-environment.toml"
@@ -29,7 +31,7 @@ summary: "针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI
 | 交互式登录 | 自动弹出浏览器、可键盘输入 | 无图形界面、非交互式 TTY，无法接收选择输入 | 反复重试 `xxx login` 总是报错 |
 | OAuth 授权码 | 浏览器自动回调完成 | 需要手动复制粘贴授权码 | 不知道有 `--no-browser` 模式 |
 
-> 💡 **洞察来源**：本手册方法论来自 [arkcli 安装配置复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.md)，该任务中新人典型踩坑路径为：安装→命令未找到→沙箱报错→交互式登录失败→反复重试，耗时约 15 分钟才完成。遵循本手册四步法，预计可在 5 分钟内完成。
+> 💡 **洞察来源**：本手册方法论来自 [arkcli 安装配置复盘](../../retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.md)，该任务中新人典型踩坑路径为：安装→命令未找到→沙箱报错→交互式登录失败→反复重试，耗时约 15 分钟才完成。遵循本手册四步法，预计可在 5 分钟内完成。
 
 ---
 
@@ -461,10 +463,10 @@ arkcli init-volc
 
 ## 关联资源
 
-- **复盘来源**：[retrospective-arkcli-setup-20260707](../../../.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.md)
-- **洞察萃取**：[insight-extraction.md](../../../.agents/docs/retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/insight-extraction.md)
+- **复盘来源**：[retrospective-arkcli-setup-20260707](../../retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/README.md)
+- **洞察萃取**：[insight-extraction.md](../../retrospective/reports/task-reports/retrospective-arkcli-setup-20260707/insight-extraction.md)
 - **排错补充**：[troubleshooting/](README.md) 目录中的问题排查记录
 - **相关模式**：
-  - [tool-failure-three-tier-degradation.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)：工具故障三级降级策略
-  - [dry-run-first.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)：先通过 --help 了解参数再执行
-  - [fine-grained-least-privilege.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)：最小权限原则（沙箱机制）
+  - [tool-failure-three-tier-degradation.md](../../retrospective/patterns/methodology-patterns/tools-automation/tool-failure-three-tier-degradation.md)：工具故障三级降级策略
+  - [dry-run-first.md](../../retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)：先通过 --help 了解参数再执行
+  - [fine-grained-least-privilege.md](../../retrospective/patterns/methodology-patterns/ai-collaboration/fine-grained-least-privilege.md)：最小权限原则（沙箱机制）

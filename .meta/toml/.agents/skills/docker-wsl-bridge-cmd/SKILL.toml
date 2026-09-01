@@ -1,0 +1,5 @@
+id = "skill"
+title = "Docker镜像→WSL2发行版桥接转换 Skill"
+category = "skills/docker-wsl-bridge-cmd"
+date = "2026-07-02"
+version = "1.0"

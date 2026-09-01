@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-06"
 title: "范式转移与方法论启示"
 source: "https://github.com/PeppaKing8/minit2i-jax"

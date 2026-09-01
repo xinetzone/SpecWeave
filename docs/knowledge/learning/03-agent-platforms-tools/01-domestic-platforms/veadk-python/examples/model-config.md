@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-model-config
 title: 08 - 模型配置示例
 source: d:\AI\vendor\veadk-python\examples\08_model_config\main.py

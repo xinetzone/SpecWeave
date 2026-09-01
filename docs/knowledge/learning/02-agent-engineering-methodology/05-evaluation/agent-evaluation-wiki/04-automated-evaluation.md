@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-automated-frameworks"
 title: "第4章：自动化评测框架"
 source: "spec:agent-evaluation-methodology-wiki"

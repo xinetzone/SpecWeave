@@ -5,7 +5,7 @@ type: "Concept"
 description: "Harness Engineering作为AI工程第三站的关键一跃：从调教模型转向设计模型外部世界，Agent=模型+Harness公式、复利效应与结构化防御方法论。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/04-harness-engineering.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/04-harness-engineering.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 第三站：Harness Engineering - 关键一跃
 
 ## Harness定义

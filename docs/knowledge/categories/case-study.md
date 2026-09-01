@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "分类索引：case-study"
+---
+
 # 分类索引：case-study
 
 - [返回分类总索引](../category-index.md)

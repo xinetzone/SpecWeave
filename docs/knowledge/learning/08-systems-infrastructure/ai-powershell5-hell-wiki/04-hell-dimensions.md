@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-04-hell-dimensions"
 title: "四大地狱维度结构化洞察"
 source: "internal:ai-powershell5-research-rfive"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-example-admonitions-demo"
 title: "示例：Admonitions 提示框样式大全"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/admonitions-demo.toml"

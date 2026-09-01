@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-methodology-paradigms"
 title: "范式演进与Agent架构"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/README.toml"

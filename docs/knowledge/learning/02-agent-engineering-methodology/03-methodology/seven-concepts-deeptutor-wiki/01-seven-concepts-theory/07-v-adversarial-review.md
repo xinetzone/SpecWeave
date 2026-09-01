@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-01-v
 title: V - 对抗性审查 (Adversarial Review)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"

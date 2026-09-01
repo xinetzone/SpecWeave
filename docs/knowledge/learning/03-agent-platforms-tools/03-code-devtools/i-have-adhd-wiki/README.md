@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-readme"
 title: "i-have-adhd Wiki 目录索引"
 source: "external/libs/i-have-adhd 知识沉淀"

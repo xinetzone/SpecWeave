@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-03"
 title: "Q1产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#Q1产品详解"

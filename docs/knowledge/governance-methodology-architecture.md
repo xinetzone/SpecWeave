@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "governance-methodology-architecture"
 title: "SpecWeave 治理方法论体系架构"
 x-toml-ref: "../../.meta/toml/docs/knowledge/governance-methodology-architecture.toml"
@@ -152,7 +154,7 @@ flowchart LR
 - 第二次暴露（7f302a0）：发现Markdown list解析冲突问题
 - 触发治理闭环：根因分析→安全模板→检测工具→操作指南→模式萃取→Mermaid治理成熟度达L3
 
-详细模式文档：[second-exposure-governance-loop.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md)
+详细模式文档：[second-exposure-governance-loop.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md)
 
 ### 3.2 节奏维度：波次式工作日节奏
 
@@ -189,7 +191,7 @@ flowchart TD
 - 波次3的修复是自然节奏：大规模基建后质量债务必然暴露，主动修复优于被动积累
 - 波次5的高密度体现"背景加工效应"：白天问题在潜意识中处理，晚间形成清晰方案后快速输出
 
-详细模式文档：[wave-workday-rhythm.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)
+详细模式文档：[wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)
 
 ### 3.3 认知防御维度：任务类型预检防偏差
 
@@ -226,7 +228,7 @@ flowchart TD
 
 **验证案例**：本方法论体系的落地执行本身就验证了这一模式——执行行动项前，先按步骤2.0检查任务类型，命中Skill开发则读取vendor/flexloop中的skill-creator/SKILL.md，而非直接在SpecWeave主权区凭经验编写。
 
-详细模式文档：[task-type-precheck-bias-defense.md](../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md)
+详细模式文档：[task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md)
 
 ### 3.4 知识沉淀维度：即时复盘沉淀
 
@@ -273,7 +275,7 @@ flowchart LR
 - **模式萃取时效性**：当天萃取的模式可以当天被其他模块复用
 - **降低认知负荷**：不需要事后回忆大量细节，每次复盘聚焦单一主题
 
-详细模式文档：[immediate-retrospective-sedimentation.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md)
+详细模式文档：[immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md)
 
 ---
 
@@ -339,9 +341,9 @@ flowchart LR
 | 四层跳层检测 | B2工具 | L2 | ✅ 已实现 | [check-stage-guardrails.py](../../.agents/scripts/check-stage-guardrails.py) |
 | 二次暴露治理闭环 | 治理触发 | L2 | ✅ 已纳入检查点 | [pre-document-reading.md](../../.agents/protocols/pre-document-reading.md) |
 | code-review治理闭环检查 | B2检查 | L1 | ✅ 已加入清单 | [code-review.md](../../.agents/workflows/code-review.md) |
-| 波次式工作日节奏 | 节奏模式 | L1 | ✅ 已入库（待多日验证） | [wave-workday-rhythm.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
-| 任务类型预检 | 认知防御 | L2 | ✅ 已在启动协议中执行 | [task-type-precheck-bias-defense.md](../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
-| 即时复盘沉淀 | 知识沉淀 | L2 | ✅ 已在执行中验证 | [immediate-retrospective-sedimentation.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
+| 波次式工作日节奏 | 节奏模式 | L1 | ✅ 已入库（待多日验证） | [wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) |
+| 任务类型预检 | 认知防御 | L2 | ✅ 已在启动协议中执行 | [task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) |
+| 即时复盘沉淀 | 知识沉淀 | L2 | ✅ 已在执行中验证 | [immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) |
 | 提交粒度预警 | B2工具 | L1 | ✅ 脚本完成，待CI集成 | [check-commit-size.py](../../.agents/scripts/check-commit-size.py) |
 | CMD-LOG遵循度 | B1规范 | L2 | ⏳ B1刚完成，待稳定后建B2 | [cmd-log-specification.md](../../.agents/rules/cmd-log-specification.md) |
 | CI编码安全 | B2/B1 | L2 | ✅ 跨平台设置完成 | [ci-check.ps1](../../.agents/scripts/ci-check.ps1)/[ci-check.sh](../../.agents/scripts/ci-check.sh) |
@@ -415,12 +417,12 @@ flowchart LR
 
 | 模式 | 分类 | 成熟度 |
 |------|------|--------|
-| [governance-four-layer-progressive.md](../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) | governance-strategy | L2 |
-| [second-exposure-governance-loop.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) | retrospective-knowledge | L2 |
-| [wave-workday-rhythm.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) | retrospective-knowledge | L1 |
-| [task-type-precheck-bias-defense.md](../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) | ai-collaboration | L2 |
-| [immediate-retrospective-sedimentation.md](../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) | retrospective-knowledge | L2 |
+| [governance-four-layer-progressive.md](../retrospective/patterns/methodology-patterns/governance-strategy/governance-four-layer-progressive.md) | governance-strategy | L2 |
+| [second-exposure-governance-loop.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/second-exposure-governance-loop.md) | retrospective-knowledge | L2 |
+| [wave-workday-rhythm.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md) | retrospective-knowledge | L1 |
+| [task-type-precheck-bias-defense.md](../retrospective/patterns/methodology-patterns/ai-collaboration/task-type-precheck-bias-defense.md) | ai-collaboration | L2 |
+| [immediate-retrospective-sedimentation.md](../retrospective/patterns/methodology-patterns/retrospective-knowledge/immediate-retrospective-sedimentation.md) | retrospective-knowledge | L2 |
 
 ### 7.4 溯源报告
 
-本文档萃取自：[retrospective-daily-20260629-full-day](../../.agents/docs/retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.md)
+本文档萃取自：[retrospective-daily-20260629-full-day](../retrospective/reports/project-governance/retrospective-daily-20260629-full-day/README.md)

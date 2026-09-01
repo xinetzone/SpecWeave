@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-08"
 title: "okf-kit 完全指南 — Registry 与可视化"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/"

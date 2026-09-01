@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-feature-evolution
 title: Protobuf Wiki - 核心功能演进
 date: 2026-07-23
@@ -8,9 +10,9 @@ tags:
   - design-philosophy
   - evolution
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.toml"
   - https://protobuf.dev/programming-guides/field_presence
   - https://buf.build/blog/protobuf-editions-are-here
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/03-feature-evolution.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

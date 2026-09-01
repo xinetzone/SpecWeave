@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module6-faq"
 title: "模块6：常见问题解答"
 source: "spec:agent-eval-methodology-wiki"

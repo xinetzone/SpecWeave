@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-07-vendor-product-learning-baidu-index"
 title: "百度 产品学习"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/README.toml"
@@ -16,5 +18,5 @@ date: "2026-08-22"
 ## 相关资源
 
 - [返回上级：厂商产品学习](../README.md)
-- [文档首页](../../../../../.agents/docs/README.md)
+- [文档首页](../../../../index.md)
 - [百度 Unlimited-OCR GitHub 仓库](https://github.com/baidu/Unlimited-OCR)

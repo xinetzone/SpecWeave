@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "analyze-volcengine-ark-introduction-report"
 title: "火山引擎方舟大模型平台入门文档深度分析报告"
 source: "../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-cloud-native-sandbox/extracted-content.md"

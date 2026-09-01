@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-03"
 title: "MM-JiT架构深度解析：回归朴素Transformer"
 source: "https://github.com/PeppaKing8/minit2i-jax"

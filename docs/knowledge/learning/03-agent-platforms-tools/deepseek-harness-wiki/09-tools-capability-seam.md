@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-09"
 title: "DeepSeek Harness 完全指南 — 工具系统与 Capability Seam"
 source: "https://github.com/deepseek-ai/deepseek-harness"

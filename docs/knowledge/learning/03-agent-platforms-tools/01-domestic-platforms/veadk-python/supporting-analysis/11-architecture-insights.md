@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 11-architecture-insights
 title: VeADK架构洞察与设计模式分析
 source: veadk-python codebase analysis

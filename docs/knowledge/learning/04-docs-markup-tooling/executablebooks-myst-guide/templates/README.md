@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-04-docs-markup-tooling-executablebooks-myst-guide-templates-index"
 title: "配置模板"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/templates/README.toml"
@@ -16,4 +18,4 @@ date: "2026-07-15"
 ## 相关资源
 
 - [返回上级：ExecutableBooks 与 MyST Markdown 学习资料库](../README.md)
-- [文档首页](../../../../../../.agents/docs/README.md)
+- [文档首页](../../../../../index.md)

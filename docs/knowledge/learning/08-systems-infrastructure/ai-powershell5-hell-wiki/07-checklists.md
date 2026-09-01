@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-07-checklists"
 title: "兼容性预检+安全审查Checklist"
 source: "internal:ai-powershell5-research-rfive"

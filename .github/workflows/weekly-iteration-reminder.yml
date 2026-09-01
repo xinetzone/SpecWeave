@@ -69,12 +69,12 @@ jobs:
               '',
               '### 复盘步骤',
               '1. 复制模板：`.agents/templates/weekly-retrospective-template.md`',
-              '2. 创建目录：`.agents/docs/retrospective/reports/iteration-reports/retrospective-weekly-' + dateCompact + '/`',
+              '2. 创建目录：`docs/retrospective/reports/iteration-reports/retrospective-weekly-' + dateCompact + '/`',
               '3. 在该目录下创建 README.md，粘贴模板并填写',
               '4. 运行 `python .agents/scripts/docgen.py nav` 更新索引',
               '5. 完成后关闭本 issue',
               '',
-              '参考：[全项目复盘报告 ACT-04](../../../.agents/docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)'
+              '参考：[全项目复盘报告 ACT-04](docs/retrospective/reports/project-reports/retrospective-specweave-full-project-20260719/README.md)'
             ];
             await github.rest.issues.create({
               owner: context.repo.owner,

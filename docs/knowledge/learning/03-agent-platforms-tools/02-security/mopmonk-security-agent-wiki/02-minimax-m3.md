@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki-02"
 title: "MiniMax M3基座：国产开源的六边形战士"
 source: "../mopmonk-security-agent-wiki.md#34-minimax-m3基座国产开源的六边形战士"

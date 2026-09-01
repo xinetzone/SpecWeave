@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "trae-agent-sandbox-guide"
 title: "TRAE Agent 沙箱配置与使用最佳实践指南"
 date: "2026-07-20"

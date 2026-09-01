@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-wiki-readme
 title: CPython Developer's Guide Wiki - 入口导航
 date: 2026-08-19
@@ -10,10 +12,10 @@ tags:
   - wiki
   - navigation
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/README.toml"
   - https://devguide.python.org
   - https://github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/README.toml"
 category: knowledge/learning
 maturity: L1-draft
 ---

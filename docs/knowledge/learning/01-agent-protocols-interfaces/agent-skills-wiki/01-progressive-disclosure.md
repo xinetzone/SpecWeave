@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "agent-skills-open-standard-wiki.md#二核心机制渐进式披露progressive-disclosure"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/01-progressive-disclosure.toml"
 id: "agent-skills-wiki-progressive-disclosure"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "assessment"
 title: "第六章 - 学习效果评估方法"
 source: "学习评估体系设计"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: miaowu-meoo-practice-cases-guide
 title: 秒悟Meoo实训案例学习指南
 source: 基于钉钉文档《秒悟Meoo实训案例》萃取生成，二次点击规则来自《秒悟大使入驻指南》

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "animejs-threejs-adapter-wiki-five-features"
 title: "五大核心特性详解"
 category: "learning"

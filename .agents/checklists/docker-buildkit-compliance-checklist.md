@@ -133,9 +133,9 @@ DOCKER_BUILDKIT=1 docker build --progress=plain -t test --target <first-stage> -
 
 | 检查项 | 对应模式文件 |
 |--------|-------------|
-| BuildKit缓存挂载完整最佳实践（含反模式清单、自动化检查、性能数据） | [docker-buildkit-optimization-best-practices.md](../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-best-practices.md) |
-| 7项目10文件跨项目审计对比报告（合规矩阵+修复记录+架构对比） | [docker-buildkit-optimization-project-comparison.md](../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-project-comparison.md) |
+| BuildKit缓存挂载完整最佳实践（含反模式清单、自动化检查、性能数据） | [docker-buildkit-optimization-best-practices.md](../../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-best-practices.md) |
+| 7项目10文件跨项目审计对比报告（合规矩阵+修复记录+架构对比） | [docker-buildkit-optimization-project-comparison.md](../../docs/retrospective/patterns/code-patterns/docker-buildkit-optimization-project-comparison.md) |
 | Docker构建全流程优化检查清单（wheel/Nuitka场景） | [docker-build-optimization-checklist.md](docker-build-optimization-checklist.md) |
-| APT层瘦身专项模式 | [docker-apt-layer-slimming.md](../docs/retrospective/patterns/code-patterns/docker-apt-layer-slimming.md) |
-| Runtime六步逻辑分层 | [dockerfile-runtime-logical-layering.md](../docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
-| Conda多阶段构建最佳实践 | [conda-docker-multistage-best-practices.md](../docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md) |
+| APT层瘦身专项模式 | [docker-apt-layer-slimming.md](../../docs/retrospective/patterns/code-patterns/docker-apt-layer-slimming.md) |
+| Runtime六步逻辑分层 | [dockerfile-runtime-logical-layering.md](../../docs/retrospective/patterns/code-patterns/dockerfile-runtime-logical-layering.md) |
+| Conda多阶段构建最佳实践 | [conda-docker-multistage-best-practices.md](../../docs/retrospective/patterns/code-patterns/conda-docker-multistage-best-practices.md) |

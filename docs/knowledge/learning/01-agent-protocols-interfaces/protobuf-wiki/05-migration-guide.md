@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-migration-guide
 title: Protobuf Wiki - 迁移指南
 date: 2026-07-23
@@ -9,9 +11,9 @@ tags:
   - wire-format
   - caffe
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.toml"
   - https://protobuf.dev/programming-guides/proto3#migrating-from-proto2
   - https://protobuf.dev/editions/migration
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/05-migration-guide.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-04-inference-caching"
 title: "增量推理与缓存"
 source: "vLLM官方文档、TMLR论文(Joint Encoding)、DigitalOcean教程、Introl技术博客综合整理"

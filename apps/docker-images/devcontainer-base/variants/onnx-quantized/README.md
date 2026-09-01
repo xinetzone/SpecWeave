@@ -116,7 +116,7 @@ python -m pytest tests/test_quantize_integration.py -v
 ```
 
 详细测试用例清单见：[test-quantize-coverage-catalog.md](../../scripts/docs/test-quantize-coverage-catalog.md)（32个专项测试用例+未覆盖代码分析）
-详细覆盖率报告见：[retrospective-onnx-quantize-kit-test-coverage-20260816.md](../../../../../.agents/docs/retrospective/reports/build-engineering/retrospective-onnx-quantize-kit-test-coverage-20260816.md)
+详细覆盖率报告见：[retrospective-onnx-quantize-kit-test-coverage-20260816.md](../../../../../docs/retrospective/reports/build-engineering/retrospective-onnx-quantize-kit-test-coverage-20260816.md)
 
 ---
 

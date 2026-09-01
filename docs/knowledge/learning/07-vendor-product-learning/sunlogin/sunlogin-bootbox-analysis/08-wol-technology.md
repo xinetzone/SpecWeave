@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-08"
 title: "WOL技术背景知识"
 source: "../sunlogin-bootbox-analysis.md"

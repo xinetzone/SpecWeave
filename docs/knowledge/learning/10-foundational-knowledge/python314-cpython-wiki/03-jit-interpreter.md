@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-03"
 title: "Python 3.14 JIT 编译器与新执行模型"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#faster-cpython"

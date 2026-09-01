@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-02-agent-engineering-methodology-01-paradigms-ai-engineering-four-milestones-wiki-index"
 title: "AI工程的四个路标：沿瓶颈外移主线"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/ai-engineering-four-milestones-wiki/README.toml"
@@ -34,7 +36,7 @@ date: "2026-08-22"
 ## 🔗 相关资源
 
 - [🏠 返回上级：范式演进](../README.md)
-- [📚 文档首页](../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../index.md)
 - [📄 单文件导航版](ai-engineering-four-milestones-wiki.md)
 - [📝 变更日志](log.md)
 

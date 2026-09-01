@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "papi-jiang-solo-ip-trend-wiki"
 title: "Papi酱关闭公司回归个人IP：创业趋势观察"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.toml"

@@ -15,7 +15,7 @@ date: "2026-07-31"
 
 > 📅 创建日期：2026-07-31
 > 🎯 用途：审查基类接口变更、算子性能日志埋点、Monorepo CI配置时快速对照
-> 📂 关联模式：[框架接口渐进式扩展](../docs/retrospective/patterns/code-patterns/progressive-interface-extension.md) | [单次遍历性能统计日志埋点](../docs/retrospective/patterns/code-patterns/single-pass-perf-instrumentation.md) | [Monorepo子项目CI盲区检测](../docs/retrospective/patterns/process-patterns/monorepo-ci-blindspot-detection.md)
+> 📂 关联模式：[框架接口渐进式扩展](../../docs/retrospective/patterns/code-patterns/progressive-interface-extension.md) | [单次遍历性能统计日志埋点](../../docs/retrospective/patterns/code-patterns/single-pass-perf-instrumentation.md) | [Monorepo子项目CI盲区检测](../../docs/retrospective/patterns/process-patterns/monorepo-ci-blindspot-detection.md)
 
 ---
 

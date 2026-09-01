@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-methodology-seven-concepts"
 title: "七概念方法论体系"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/README.toml"

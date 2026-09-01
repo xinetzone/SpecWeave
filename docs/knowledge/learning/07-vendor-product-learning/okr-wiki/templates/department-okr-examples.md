@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "部门级OKR示例"
 source: "https://www.dingteam.com/help/608"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/templates/department-okr-examples.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/templates/department-okr-examples.toml"
 date: "2026-07-08"
 ---
 # 部门级OKR示例

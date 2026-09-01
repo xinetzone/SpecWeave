@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 okf_version: "0.2"
 title: "Jira Skill 教程（已迁移）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/jira-skill-wiki/README.toml"

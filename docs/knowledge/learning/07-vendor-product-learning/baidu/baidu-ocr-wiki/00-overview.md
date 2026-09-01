@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "baidu-ocr-wiki-00"
 title: "百度 Unlimited-OCR 长文档解析技术完全指南 — 概述"
 source: "https://mp.weixin.qq.com/s/rO2yAeDZYbAoEXc7LqX-dg?from=industrynews&color_scheme=light#rd"

@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "api-async-polling-pattern"
 title: "异步生成接口'两段式'轮询模式"
 category: "best-practices"

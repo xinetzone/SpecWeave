@@ -1,10 +1,6 @@
----
-title: 第一性原理
-description: 从受众而非来源出发的核心洞察——文档分离方案的理论基础
-last_updated: 2026-07-16
----
-
 # 第一性原理
+
+> ⚠️ **历史决策记录（已被取代）**：本指南记录 2026-08-31 之前"人类文档入 `docs/`、Agent 文档入 `.agents/docs/`"的双体系分离决策。自 2026-08-31 起，`.agents/docs/` 已整体迁入根 `docs/`，根 `docs/` 成为唯一文档中心（OKF v0.2），`.agents/` 仅承载面向 AI 智能体的规范与执行资产。现行规则以根 [AGENTS.md](../../../../../AGENTS.md)「文档边界」条款与 [全局核心规则](../../../../../.agents/global-core-rules.md) 的路径解析规则为准；正文保留作为决策溯源。
 
 从第一性原理出发，文档的本质区分维度是"受众"（人类 vs Agent），而非"来源"（原 docs/ vs .agents/）。路径名本身应承担"谁该读"的信号。
 
@@ -101,3 +97,8 @@ flowchart LR
 
 - [七概念方法论](../domain/index.md)
 - `methodology/index.md`
+
+```{toctree}
+:maxdepth: 2
+
+```

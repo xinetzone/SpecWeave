@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-07"
 title: "命令速查表与最佳实践"
 source: "https://github.com/cli/cli"

@@ -1,4 +1,6 @@
 ---
+type: Facts
+
 id: veadk-python-references-readme
 title: References
 source: 'seven-concepts: veadk-python-wiki'

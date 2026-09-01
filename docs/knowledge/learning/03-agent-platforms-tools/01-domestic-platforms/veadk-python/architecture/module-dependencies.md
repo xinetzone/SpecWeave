@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-module-dependencies
 title: 架构参考：模块依赖关系与分层约束
 source: 'seven-concepts: veadk-python-wiki'

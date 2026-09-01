@@ -26,3 +26,18 @@
 | 07 | [最佳实践与反模式](/concepts/07-best-practices.md) | 意图动词优先、dry-run、安全实践 |
 | 08 | [故障排查](/concepts/08-troubleshooting.md) | 认证、依赖、字段设置等常见问题 |
 | 09 | [术语表与资源](/concepts/09-glossary.md) | 核心术语解释与参考资料 |
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-architecture
+02-installation
+03-quickstart
+04-jira-communication
+05-jira-syntax
+06-jql
+07-best-practices
+08-troubleshooting
+09-glossary
+```

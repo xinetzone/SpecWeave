@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-01"
 title: "产品介绍与核心概念"
 source: "eve-framework-wiki-learning"

@@ -293,7 +293,7 @@ python .agents/scripts/check-mermaid.py --exclude docs/templates
 
 | 参数 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
-| `--path PATH` | Path | `.agents/docs/retrospective/reports/` | 指定目标文件或目录 |
+| `--path PATH` | Path | `docs/retrospective/reports/` | 指定目标文件或目录 |
 | `--json` | flag | `false` | 以 JSON 格式输出结果（便于 CI 集成） |
 
 ### 使用示例
@@ -318,9 +318,9 @@ python .agents/scripts/check-action-closure.py --path playground/reports/ --json
 
 ## 相关模式
 
-- [工具链成熟度](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
-- [共享库引力定律](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
-- [Dry-Run预览优先](../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
+- [工具链成熟度](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/toolchain-maturity.md)
+- [共享库引力定律](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/shared-lib-gravity.md)
+- [Dry-Run预览优先](../../../../docs/retrospective/patterns/methodology-patterns/tools-automation/dry-run-first.md)
 
 ---
 

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-design-patterns
 title: 架构模式：核心设计模式解析
 source: 'seven-concepts: veadk-python-wiki'

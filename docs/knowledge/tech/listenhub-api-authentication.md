@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-authentication
 title: ListenHub API 规范——Authentication（认证与基础 URL）
 category: tech

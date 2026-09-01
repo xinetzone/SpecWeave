@@ -1,0 +1,5 @@
+id = "bounded-iteration-budget"
+title = "有界迭代预算：长时程自主系统的强制收敛契约"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

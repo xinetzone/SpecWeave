@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-03"
 title: "VeADK 智能体开发框架"
 source: "seven-concepts: volcengine-agentkit-wiki"

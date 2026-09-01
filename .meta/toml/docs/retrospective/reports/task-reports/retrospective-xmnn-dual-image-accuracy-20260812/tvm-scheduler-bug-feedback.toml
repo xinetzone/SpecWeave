@@ -1,0 +1,5 @@
+id = "tvm-scheduler-bug-feedback"
+title = "TVM VM 调度器 Bug 反馈报告"
+category = "retrospective/reports/task-reports/retrospective-xmnn-dual-image-accuracy-20260812"
+date = "2026-07-02"
+version = "1.0"

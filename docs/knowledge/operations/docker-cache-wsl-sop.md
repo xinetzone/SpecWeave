@@ -11,9 +11,8 @@ validation: "doctor 全绿 + list 10/10 ✅ + save/load 完整循环验证通过
 related_patterns:
   - "M-1 双轨引擎切换架构"
   - "M-2 写文件后调用跨壳逃逸模式"
-x-toml-ref: "../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-sop.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-sop.toml"
 ---
-
 # WSL Docker/Podman 镜像本地缓存操作 SOP
 
 > 🎯 **作用**：在 WSL2（Ubuntu）环境下，把全部容器镜像（Docker 或 Podman）持久化到 Windows 宿主文件系统，WSL2 重置/Docker 损坏后 **2-5 分钟**全部恢复，避免重新构建 20-40 分钟。

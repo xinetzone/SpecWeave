@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "api-error-handling-retry-strategy"
 title: "API 错误处理与重试策略"
 category: "best-practices"

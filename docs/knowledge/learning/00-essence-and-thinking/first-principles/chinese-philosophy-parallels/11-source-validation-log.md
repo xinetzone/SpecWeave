@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: source-validation-log
 title: 来源验证日志
 source: cross-cultural-first-principles-comparison Task 8

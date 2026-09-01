@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-faq-glossary"
 title: "FAQ 与术语表"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

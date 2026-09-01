@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 title: "资源链接"
 category: "learning"
 source: "https://www.minitap.ai/docs"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/resources.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/05-mobile-testing/minitest-mobile-use-wiki/resources.toml"
 date: "2026-07-07"
 tags: ["resources", "links", "minitest", "mobile-use", "资源", "链接"]
 summary: "汇总minitest和mobile-use SDK的官方资源链接，包括文档、GitHub、社区、博客、学术论文等，以及项目内相关Wiki交叉引用。"
@@ -170,8 +172,8 @@ uv add minitap-mobile-use
 
 | 文档 | 内容说明 | 链接 |
 |---|---|---|
-| 多代理闭环执行架构 | minitest多代理协作的闭环执行机制、任务规划与验证流程的架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
-| 规范化坐标抽象 | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| 多代理闭环执行架构 | minitest多代理协作的闭环执行机制、任务规划与验证流程的架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| 规范化坐标抽象 | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 
 ### 复盘文档
 

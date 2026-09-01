@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-cpp-guide"
 title: "C++ 开发指南"
 tags: ["tvm-ffi", "cpp", "guide", "cmake", "build"]

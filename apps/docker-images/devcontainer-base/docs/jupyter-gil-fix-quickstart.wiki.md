@@ -169,7 +169,7 @@ python examples/free_threading_demo.py   # 输出串行/多线程/多进程耗�
    它会用"金丝雀子进程"逐个 import 并报告哪个模块拉起了 GIL。工具源码：[scripts/check_gil_state.py](https://github.com/xinetzone/SpecWeave/blob/main/apps/docker-images/devcontainer-base/scripts/check_gil_state.py)
 2. **重建镜像**（源配置已被改坏/想根治）：见脚本 GIL-05 的重建指引，`base` 重建后所有变体自动继承修复。
 3. **查文档**：
-   - 根因与修复细节：[故障排查报告](https://github.com/xinetzone/SpecWeave/blob/main/.agents/docs/retrospective/reports/build-engineering/troubleshooting-devcontainer-jupyter-gil-20260819.md)
+   - 根因与修复细节：[故障排查报告](https://github.com/xinetzone/SpecWeave/blob/main/docs/retrospective/reports/build-engineering/troubleshooting-devcontainer-jupyter-gil-20260819.md)
    - CI 守卫规范：[variants-ci.md 第9章](https://github.com/xinetzone/SpecWeave/blob/main/apps/docker-images/devcontainer-base/.agents/workflows/variants-ci.md)
    - free-threading C 扩展编译指南：[PY314T-C-EXTENSION-GUIDE.md](https://github.com/xinetzone/SpecWeave/blob/main/apps/docker-images/devcontainer-base/docs/PY314T-C-EXTENSION-GUIDE.md)
    - 自测多线程并行：[examples/free_threading_demo.py](https://github.com/xinetzone/SpecWeave/blob/main/apps/docker-images/devcontainer-base/examples/free_threading_demo.py)

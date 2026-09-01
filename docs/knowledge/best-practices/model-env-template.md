@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: model-env-template
 title: 模型调用环境变量脱敏模板（.env 字段清单）
 category: best-practices

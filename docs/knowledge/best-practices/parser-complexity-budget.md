@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "parser-complexity-budget"
 title: "Parser 复杂度预算 Checklist"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/parser-complexity-budget.toml"
@@ -124,12 +126,12 @@ constants.py → block_parser.py → directive_parser.py → parser_facade.py �
 
 ## 相关模式与参考
 
-- **架构模式**：[three-layer-parser-generator](../../../.agents/docs/retrospective/patterns/architecture-patterns/three-layer-parser-generator.md)
-- **方法论模式**：[semi-structured-parsing-complexity-budget](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
-- **工程模式**：[conversion-point-debug-tracing](../../../.agents/docs/retrospective/patterns/code-patterns/conversion-point-debug-tracing.md)
-- **重构模式**：[thin-entry-shim](../../../.agents/docs/retrospective/patterns/architecture-patterns/thin-entry-shim.md)、[pattern-driven-refactoring](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/pattern-driven-refactoring.md)
-- **项目模式**：[two-phase-development](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/two-phase-development.md)
-- **MDI实战复盘**：[insight-extraction.md](../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md)（洞察7：半结构化解析复杂度）
+- **架构模式**：[three-layer-parser-generator](../../retrospective/patterns/architecture-patterns/three-layer-parser-generator.md)
+- **方法论模式**：[semi-structured-parsing-complexity-budget](../../retrospective/patterns/methodology-patterns/tools-automation/semi-structured-parsing-complexity-budget.md)
+- **工程模式**：[conversion-point-debug-tracing](../../retrospective/patterns/code-patterns/conversion-point-debug-tracing.md)
+- **重构模式**：[thin-entry-shim](../../retrospective/patterns/architecture-patterns/thin-entry-shim.md)、[pattern-driven-refactoring](../../retrospective/patterns/methodology-patterns/tools-automation/pattern-driven-refactoring.md)
+- **项目模式**：[two-phase-development](../../retrospective/patterns/methodology-patterns/governance-strategy/two-phase-development.md)
+- **MDI实战复盘**：[insight-extraction.md](../../retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md)（洞察7：半结构化解析复杂度）
 
 ---
 

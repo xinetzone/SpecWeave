@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: protobuf-wiki-version-comparison
 title: Protobuf Wiki - 三版对比矩阵
 date: 2026-07-23
@@ -9,9 +11,9 @@ tags:
   - proto3
   - editions
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.toml"
   - https://protobuf.dev/programming-guides/proto3
   - https://protobuf.dev/editions/features
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/protobuf-wiki/02-version-comparison.toml"
 category: knowledge/learning/01-agent-protocols-interfaces
 maturity: L2-validated
 ---

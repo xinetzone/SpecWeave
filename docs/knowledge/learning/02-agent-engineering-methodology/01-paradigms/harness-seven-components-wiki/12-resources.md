@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-seven-components-wiki-12"
 title: "延伸资源与推荐阅读"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: mohism-core-concepts
 title: 墨家方法论核心概念：三表法、类、故、理
 source: cross-cultural-first-principles-comparison Task 3

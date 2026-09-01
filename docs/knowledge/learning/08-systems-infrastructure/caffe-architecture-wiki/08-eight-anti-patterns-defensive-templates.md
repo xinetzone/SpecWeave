@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://github.com/daoflows/caffe现代化改造实战总结"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/08-eight-anti-patterns-defensive-templates.toml"
 analysis_date: "2026-07-24"

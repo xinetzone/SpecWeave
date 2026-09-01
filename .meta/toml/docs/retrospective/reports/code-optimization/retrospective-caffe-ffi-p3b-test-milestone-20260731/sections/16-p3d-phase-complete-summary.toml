@@ -1,0 +1,5 @@
+id = "16-p3d-phase-complete-summary"
+title = "P3-D 阶段完整技术总结报告（Dropout/Scale/Bias/Eltwise/Concat/Softmax Backward）"
+category = "retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/sections"
+date = "2026-07-02"
+version = "1.0"

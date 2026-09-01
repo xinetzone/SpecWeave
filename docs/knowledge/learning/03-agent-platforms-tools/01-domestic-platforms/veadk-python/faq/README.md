@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-faq-readme
 title: FAQ
 source: 'seven-concepts: veadk-python-wiki'

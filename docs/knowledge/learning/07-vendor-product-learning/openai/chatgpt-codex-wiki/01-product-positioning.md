@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-01"
 title: "产品定位与价值主张"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

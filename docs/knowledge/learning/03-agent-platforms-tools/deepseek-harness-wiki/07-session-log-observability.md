@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-07"
 title: "DeepSeek Harness 完全指南 — 会话日志与可观测性"
 source: "https://github.com/deepseek-ai/deepseek-harness"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch09-autofix"
 title: "第9章 - Autofix 自动错误检测与修复"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

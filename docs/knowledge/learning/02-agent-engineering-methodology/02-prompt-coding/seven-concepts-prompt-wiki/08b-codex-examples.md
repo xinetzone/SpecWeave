@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-codex-examples"
 title: "08b、Codex/Agent开发实战：8个场景模板"
 category: "knowledge"

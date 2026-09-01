@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-01"
 title: "CodeWhale 安装与首次使用指南"
 source: "https://github.com/Hmbown/CodeWhale"

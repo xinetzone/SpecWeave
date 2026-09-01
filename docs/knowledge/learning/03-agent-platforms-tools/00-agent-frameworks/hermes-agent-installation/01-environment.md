@@ -1,8 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "Hermes Agent 安装方案 - 环境要求与前置准备"
 chapter: 1
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/01-environment.toml"
   - external/libs/hermes-agent/pyproject.toml
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
@@ -14,6 +15,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/website/docs/getting-started/platform-support.md
   - external/libs/hermes-agent/website/docs/getting-started/installation.md
   - external/libs/hermes-agent/README.md
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/01-environment.toml"
 ---
 # 1. 环境要求与前置准备
 

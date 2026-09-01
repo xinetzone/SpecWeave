@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-04-gateways-plugins-env
 title: "网关、插件与环境管理"
 source: "spec:create-conda-dev-source-wiki-tutorial"

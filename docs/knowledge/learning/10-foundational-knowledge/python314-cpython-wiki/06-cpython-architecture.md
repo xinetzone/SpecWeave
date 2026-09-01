@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-06"
 title: "CPython 源码架构总览"
 source: "https://github.com/python/cpython/tree/v3.14.0"

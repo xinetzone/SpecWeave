@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-metrics-design"
 title: "第2章：指标体系设计"
 source: "spec:agent-evaluation-methodology-wiki"

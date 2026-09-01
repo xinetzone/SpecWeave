@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "参考资料与学习路径"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

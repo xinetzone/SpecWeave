@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch08-hooks"
 title: "第8章 - wt-agent-hooks Shell 集成"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

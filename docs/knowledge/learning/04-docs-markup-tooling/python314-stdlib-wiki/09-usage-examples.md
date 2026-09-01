@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-09"
 title: "Python 3.14 标准库教程 — 综合使用示例"
 source: "https://docs.python.org/3.14/"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "practice-guide"
 title: "第三章 - 实践操作指南"
 source: "微信公众号文章+官方安装文档"

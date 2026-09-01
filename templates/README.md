@@ -24,5 +24,5 @@ module: "templates"
 
 ## 关联资源
 
-- 模式文档：[agent-workspace-template.md](../.agents/docs/retrospective/patterns/architecture-patterns/agent-workspace-template.md)（可复用模式的完整说明）
+- 模式文档：[agent-workspace-template.md](../docs/retrospective/patterns/architecture-patterns/agent-workspace-template.md)（可复用模式的完整说明）
 - 根契约：[../AGENTS.md](../AGENTS.md)

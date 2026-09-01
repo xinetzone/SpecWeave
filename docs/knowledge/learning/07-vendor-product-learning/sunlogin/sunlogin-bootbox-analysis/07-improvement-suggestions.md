@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-07"
 title: "潜在改进空间与优化建议"
 source: "../sunlogin-bootbox-analysis.md"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-getting-started-readme
 title: Getting Started
 source: 'seven-concepts: veadk-python-wiki'

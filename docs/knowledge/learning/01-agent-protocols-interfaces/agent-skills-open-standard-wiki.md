@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-open-standard-wiki"
 title: "Agent Skills 开放标准完整指南"
 category: "learning"
@@ -89,9 +91,9 @@ skills-ref to-prompt path/to/skill
 ## 相关资源
 
 - **本项目 Skills 目录**：[.agents/skills/](../../../../.agents/skills/README.md)
-- **渐进式披露模式**：[progressive-context-disclosure.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- **Skill 五要素模型**：[skill-five-elements-model.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
-- **Markdown 即接口模式**：[markdown-as-interface.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)
+- **渐进式披露模式**：[progressive-context-disclosure.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- **Skill 五要素模型**：[skill-five-elements-model.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
+- **Markdown 即接口模式**：[markdown-as-interface.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)
 
 ---
 

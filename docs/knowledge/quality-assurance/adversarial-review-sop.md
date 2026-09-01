@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: adversarial-review-sop
 title: 找三个人杠一遍：对抗评审标准化SOP
 source: seven-concepts V阶段标准操作流程

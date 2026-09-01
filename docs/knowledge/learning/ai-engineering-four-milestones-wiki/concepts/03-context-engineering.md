@@ -5,7 +5,7 @@ type: "Concept"
 description: "Context Engineering作为AI工程第二站，解决给什么的问题：上下文组成、窗口约束、context rot、渐进式披露与给得准而非给得多的核心原则。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/03-context-engineering.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/03-context-engineering.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 第二站：Context Engineering
 
 ## Agent需要完整任务环境

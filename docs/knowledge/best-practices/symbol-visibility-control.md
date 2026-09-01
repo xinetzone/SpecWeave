@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "symbol-visibility-control"
 title: "C/C++共享库符号可见性控制最佳实践"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/symbol-visibility-control.toml"
@@ -13,7 +15,7 @@ summary: "基于TVM符号可见性控制修复实战复盘，提炼共享库符�
 
 > 基于TVM符号可见性控制修复实战复盘的经验总结。核心教训：**符号可见性控制需要精确区分"自身符号"与"依赖符号"**——粗粒度方案（如-fvisibility=hidden）会破坏静态注册机制，而精确方案（--exclude-libs,ALL）只隐藏第三方静态库符号，不影响主程序符号。
 
-**洞察来源**：[retrospective-tvm-symbol-visibility-fix-20260718](../../../.agents/docs/retrospective/reports/bugfix/retrospective-tvm-symbol-visibility-fix-20260718/README.md)
+**洞察来源**：[retrospective-tvm-symbol-visibility-fix-20260718](../../retrospective/reports/bugfix/retrospective-tvm-symbol-visibility-fix-20260718/README.md)
 
 ---
 
@@ -332,7 +334,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,l
 
 ## 参考资源
 
-- [TVM符号可见性修复复盘](../../../.agents/docs/retrospective/reports/bugfix/retrospective-tvm-symbol-visibility-fix-20260718/README.md)
+- [TVM符号可见性修复复盘](../../retrospective/reports/bugfix/retrospective-tvm-symbol-visibility-fix-20260718/README.md)
 - `LLVM Linker Documentation`（原外部链接 2026-07 复检已失效：llvm.org/docs/Linker.html）
 - [GCC Visibility Documentation](https://gcc.gnu.org/wiki/Visibility)
 - [ELF Symbol Visibility](https://refspecs.linuxfoundation.org/elf/gabi4+/ch4.symtab.html)

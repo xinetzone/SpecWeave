@@ -1,0 +1,5 @@
+id = "ps7-to-ps5-translation"
+title = "PS7→PS5语法降级转换模式（PS7-to-PS5-Translation）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

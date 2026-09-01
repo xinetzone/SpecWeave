@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-07"
 title: "工程化理念与趋势洞察"
 source: "eve-framework-wiki-learning"

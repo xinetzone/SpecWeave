@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "api-integration-worked-example"
 title: "API 集成模式组合实战示例：AI 播客自动生成"
 category: "best-practices"

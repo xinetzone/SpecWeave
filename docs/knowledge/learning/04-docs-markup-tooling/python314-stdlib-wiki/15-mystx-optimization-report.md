@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-15"
 title: "mystx 主题基于 Python 3.14 标准库优化 — 优化前后对比记录"
 source: "https://docs.python.org/3.14/"

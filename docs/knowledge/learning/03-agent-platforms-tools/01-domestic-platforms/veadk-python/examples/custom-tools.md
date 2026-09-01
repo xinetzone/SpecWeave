@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-custom-tools
 title: 02 - 自定义工具示例
 source: d:\AI\vendor\veadk-python\examples\02_custom_tools\main.py

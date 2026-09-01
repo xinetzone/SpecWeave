@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵智能PDU硬件产品完整学习教程"
 source: "https://sunlogin.oray.com/hardware/pdu/"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.toml"

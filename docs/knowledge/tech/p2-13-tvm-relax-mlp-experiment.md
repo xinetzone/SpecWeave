@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p2-13-tvm-relax-mlp-experiment
 title: TVM Relax 前端 MLP 实验记录
 source: d:\spaces\chaos\IO\test.ipynb

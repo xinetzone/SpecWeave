@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-methodology-wiki-index"
 title: "Agent评测体系化建设方法论"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-evaluation-wiki/README.toml"
@@ -52,6 +54,6 @@ summary: "AI Agent评测体系化建设方法论系统性教程，从理论基�
 
 - [🏠 返回上级：Agent工程方法论](../README.md)
 - [📚 知识库首页](../../../../README.md)
-- [🛡️ 对抗性审查方法论](../adversarial-review-wiki/00-overview.md) — 红队测试与对抗性评测思想
-- [🏗️ Harness七大组件](../harness-seven-components-wiki/00-overview.md) — 可观测性组件与评测体系的关联
-- [⚙️ Karpathy LLM编程准则](../karpathy-llm-coding-guidelines/00-overview.md) — "先写测试"思想与评测驱动开发
+- [🛡️ 对抗性审查方法论](../../03-methodology/adversarial-review-wiki/00-overview.md) — 红队测试与对抗性评测思想
+- [🏗️ Harness七大组件](../../01-paradigms/harness-seven-components-wiki/00-overview.md) — 可观测性组件与评测体系的关联
+- [⚙️ Karpathy LLM编程准则](00-overview.md) — "先写测试"思想与评测驱动开发

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-quote-rules-checklist"
 title: "Mermaid 引号规则检查清单"
 source: "从02-06文件修复实践中萃取"

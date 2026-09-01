@@ -1,0 +1,5 @@
+id = "five-stage-batch-pipeline"
+title = "批量处理五步管道模式（Five-Stage Batch Pipeline）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

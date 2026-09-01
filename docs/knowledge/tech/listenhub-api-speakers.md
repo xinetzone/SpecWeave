@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: listenhub-api-speakers
 title: ListenHub API 规范——Speakers（主播列表）
 category: tech

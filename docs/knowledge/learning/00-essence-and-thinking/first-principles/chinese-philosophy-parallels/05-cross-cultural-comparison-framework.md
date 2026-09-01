@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cross-cultural-comparison-framework
 title: 跨文化四维比较框架与比较矩阵
 source: cross-cultural-first-principles-comparison Task 5

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "book-to-skill-wiki-03"
 title: "book-to-skill 完全指南 — SKILL.md 生成规范详解"
 source: "https://github.com/virgiliojr94/book-to-skill"

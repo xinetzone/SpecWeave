@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-ecosystem-acp
 title: "08、ACP：Agent Communication Protocol"

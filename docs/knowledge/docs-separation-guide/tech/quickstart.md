@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 快速开始
 description: 环境初始化与首次接入指南
 last_updated: YYYY-MM-DD

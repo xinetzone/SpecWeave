@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 title: 设计哲学
 description: 知识体系的设计决策逻辑与底层原则
 last_updated: YYYY-MM-DD

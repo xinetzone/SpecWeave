@@ -1,0 +1,5 @@
+id = "export-suggestions"
+title = "导出建议：可复用模式与行动项"
+category = "retrospective/reports/bugfix/retrospective-docker-commit-entrypoint-fix-20260718"
+date = "2026-07-02"
+version = "1.0"

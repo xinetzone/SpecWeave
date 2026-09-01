@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-module-system"
 title: "Module 模块系统"
 tags: ["tvm-ffi", "module", "dynamic-loading", "dll"]

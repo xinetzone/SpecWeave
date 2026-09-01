@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "03 - 类型系统：DType、Enum、Optional、String"
 date: 2026-07-05
 source: "spec:create-tvm-ffi-wiki-tutorial"

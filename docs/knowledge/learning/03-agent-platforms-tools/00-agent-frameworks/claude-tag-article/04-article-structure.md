@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "claude-tag-article-structure"
 title: "Claude Tag：原文结构框架"
 category: learning
@@ -10,7 +12,7 @@ status: "stable"
 author: "量子位"
 summary: "原文四节结构概括：升级概览、先进团队先用Claude、实际部署、社区反响。"
 source: "claude-tag-article.md#结构框架"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/claude-tag-article/04-article-structure.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/claude-tag-article/04-article-structure.toml"
 ---
 # Claude Tag：原文结构框架
 

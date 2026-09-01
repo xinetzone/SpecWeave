@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 12-extension-points
 title: VeADK扩展点清单与注册机制
 source: veadk-python codebase analysis

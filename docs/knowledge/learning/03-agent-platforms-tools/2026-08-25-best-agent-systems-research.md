@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "2026 AI Agent 系统全景调研报告"
+---
+
 # 2026 AI Agent 系统全景调研报告
 
 > 基于 R-I-E-V 方法论编排的系统性调研
@@ -189,7 +194,7 @@
 
 <a id="pattern-graph-first"></a>
 
-`L2 已验证` `架构层` | 已沉淀入库：[模式库 · graph-first-agent-architecture](../../../../.agents/docs/retrospective/patterns/architecture-patterns/graph-first-agent-architecture.md)
+`L2 已验证` `架构层` | 已沉淀入库：[模式库 · graph-first-agent-architecture](../../../retrospective/patterns/architecture-patterns/graph-first-agent-architecture.md)
 
 **触发场景**：构建需要确定性控制流、状态管理和可观测性的生产级 Agent 系统。
 

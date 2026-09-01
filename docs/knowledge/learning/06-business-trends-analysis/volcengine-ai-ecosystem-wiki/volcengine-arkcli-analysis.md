@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-arkcli-analysis"
 title: "火山引擎方舟 Ark CLI 深度分析：AI原生命令行工具的双层Agent架构与CLI即Skill模式"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/82379/2536875?lang=zh） + external: 不存在-控制台页面（需登录：https://console.volcengine.com/ark/region:cn-beijing/arkcli） + Ark Docs MCP补充文档 + 产品深度分析"

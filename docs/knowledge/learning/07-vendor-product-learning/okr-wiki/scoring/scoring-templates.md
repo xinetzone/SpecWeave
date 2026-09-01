@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "OKR打分模板"
 source: "https://www.dingteam.com/help/604"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/scoring/scoring-templates.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/scoring/scoring-templates.toml"
 date: "2026-07-08"
 ---
 # OKR打分模板

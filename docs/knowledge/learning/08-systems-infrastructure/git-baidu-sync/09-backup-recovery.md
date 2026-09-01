@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-backup-recovery
 title: Git 网盘同步备份与灾难恢复
 source: original

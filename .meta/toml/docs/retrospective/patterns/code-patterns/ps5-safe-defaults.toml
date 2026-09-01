@@ -1,0 +1,5 @@
+id = "ps5-safe-defaults"
+title = "PS5安全默认值防护模式（PS5-Safe-Defaults）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

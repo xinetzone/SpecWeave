@@ -325,17 +325,17 @@ python .agents/scripts/check-action-first.py --log-demo
 ## 关联资源
 
 ### 模式文档
-- [行动优先输出范式模式文档](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) — L2模式完整定义、迁移验证、反模式分析
-- [逆向适配创新模式](../docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) — 本范式的方法论来源（ADHD→通用AI设计）
+- [行动优先输出范式模式文档](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) — L2模式完整定义、迁移验证、反模式分析
+- [逆向适配创新模式](../../docs/retrospective/patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) — 本范式的方法论来源（ADHD→通用AI设计）
 
 ### 提示词模板
 - [行动优先输出范式·提示词模板](../prompts/action-first-output-paradigm-addendum.md) — 可直接复制到系统提示词的完整版/轻量版
 
 ### 关联模式
-- [输出行为规范（Output Behavior Specification）](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md) — 本范式是行为规范在工具性交互场景的具体落地
-- [上下文渐进式披露（Progressive Context Disclosure）](../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) — 两者从输入/输出两端共同优化认知负荷
-- [约束驱动创造力（Constraint-Driven Creativity）](../docs/retrospective/patterns/methodology-patterns/creative-design/constraint-driven-creativity.md) — 本范式的格式约束本质上是约束驱动创造力在沟通领域的体现
+- [输出行为规范（Output Behavior Specification）](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/output-behavior-specification.md) — 本范式是行为规范在工具性交互场景的具体落地
+- [上下文渐进式披露（Progressive Context Disclosure）](../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) — 两者从输入/输出两端共同优化认知负荷
+- [约束驱动创造力（Constraint-Driven Creativity）](../../docs/retrospective/patterns/methodology-patterns/creative-design/constraint-driven-creativity.md) — 本范式的格式约束本质上是约束驱动创造力在沟通领域的体现
 
 ### 来源与验证
 - i-have-adhd开源项目分析报告：`.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md`
-- 知识沉淀元复盘：`.agents/docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/README.md`
+- 知识沉淀元复盘：`docs/retrospective/reports/competitive-analysis/retrospective-i-have-adhd-knowledge-crystallization-20260728/README.md`

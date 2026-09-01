@@ -23,7 +23,7 @@ template_upgrade: "2026-08-04 v1.1"
 - **Summary**: 对指定微信公众号文章《Vercel 放大招：前端 Agent 框架 Eve 来了！》（URL: https://mp.weixin.qq.com/s/8o8g4fNWhlAIRfCLV7Ze0w?from=industrynews&color_scheme=light#rd）进行系统性学习与深度洞察分析。文章系统介绍了Vercel新发布的开源AI Agent框架Eve，包括其核心设计理念（一个Agent就是一个目录）、快速上手、工具与Skill系统、生产级能力（持久化执行、沙箱计算、人工审批）、子Agent、评测、部署以及多渠道接入等核心内容。本任务完整提取网页内容，理解Eve框架的核心设计、技术架构、工程化理念，并深度挖掘其对前端开发、Agent工程化、AI应用开发的影响与行业意义。
 - **Purpose**: 通过系统性学习与深度洞察分析，不仅准确把握Eve框架的技术特性与使用方式，更挖掘Vercel在Agent工程化领域的战略布局、前端开发者在AI时代的新机遇、Agent开发从Demo到生产的工程化演进趋势，为后续技术选型、学习路径规划、项目实践提供有价值的洞察依据。
 - **Target Users**: 前端开发者、AI应用开发者、技术架构师、技术决策者、AI Agent领域研究者
-- **复盘报告入口**：[README.md](file:///d:/AI/.agents/docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.md)
+- **复盘报告入口**：[README.md](../../../../docs/retrospective/reports/competitive-analysis/retrospective-eve-framework-learning-20260704/README.md)
 
 ## Goals（全部达成 ✅）
 - ✅ 完整提取并阅读网页全部信息，包括文章主体、标题、作者、发布信息、图片说明、代码示例及相关链接

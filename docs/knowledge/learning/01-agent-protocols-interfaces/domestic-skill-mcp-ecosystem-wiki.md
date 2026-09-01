@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "国内 Skill/MCP 生态盘点：16 个品牌的 Agent 化浪潮"
 source: "external: 不存在-微信公众号文章《国内 Skill/MCP 生态盘点》作者：卡兹克、可达"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/domestic-skill-mcp-ecosystem-wiki.toml"

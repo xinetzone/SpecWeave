@@ -244,8 +244,8 @@ docker compose -f docker-compose.ide.yml restart
 ## 架构模式参考
 
 本配置基于 SpecWeave 架构模式库中的「容器开发服务宿主桥接模式」：
-- 模式文档：[.agents/docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md)
-- 可行性分析报告：[.agents/docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md](../../../../.agents/docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md)
+- 模式文档：[docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md](../../../../docs/retrospective/patterns/architecture-patterns/container-service-host-ide-bridge.md)
+- 可行性分析报告：[docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md](../../../../docs/retrospective/reports/build-engineering/insight-jupyter-kernel-expose-host-ide-20260814.md)
 - 配置归档：[examples/ide-bridge/INDEX.md](examples/ide-bridge/INDEX.md)
 - 五要素：服务绑定0.0.0.0 → 端口映射 → 认证 → CORS → 文件卷挂载
 - 反模式：遗漏CORS、遗漏volume、绑定127.0.0.1、直接暴露Kernel、无认证暴露端口

@@ -1,0 +1,5 @@
+id = "sensitive-info-sanitization-report"
+title = "敏感信息脱敏检查报告"
+category = "retrospective/reports/task-reports/retrospective-sensitive-info-hooks-20260708"
+date = "2026-07-02"
+version = "1.0"

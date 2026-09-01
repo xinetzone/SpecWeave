@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "TuyaOpen 核心框架事实清单"
+---
+
 # TuyaOpen 核心框架事实清单
 
 > 本清单基于 TuyaOpen 源码 `d:\AI\.chaos\libs\TuyaOpen\` 执行 R 阶段事实采集，所有事实均标注源码位置，零推测。

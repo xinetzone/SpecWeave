@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "vibe-coding-prompts-learning-analysis"
 title: "Vibe Coding 两大神级 Prompt 学习分析"
 category: "learning"
@@ -165,7 +167,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 - 越是简单任务，越要有意识启动第一性原理验证
 - 方法论内化需要刻意练习+检查点机制，仅靠理解远远不够
 
-> 事件完整复盘：[retrospective-first-principles-analogy-error-20260709/](../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)
+> 事件完整复盘：[retrospective-first-principles-analogy-error-20260709/](../../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)
 
 ---
 
@@ -235,7 +237,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 4. **按影响分级**:高影响(数据污染/系统崩溃)、中影响(功能异常)、低影响(体验问题)
 5. **修复后回归验证**:修复后必须用构造的反例集重新跑一遍,确保问题真正解决
 
-> 详细执行SOP见沉淀模式:[adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)(L2级验证,含四大攻击者角色定义)
+> 详细执行SOP见沉淀模式:[adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)(L2级验证,含四大攻击者角色定义)
 
 ### 工具实践:Claude Code Ultracode 与 Codex 多 Agent
 
@@ -373,7 +375,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 
 **适用范围**：不仅适用于AI Agent，也适用于人类操作者——简单任务恰恰是类比推理最容易自动激活、最需要强制打断的场景。
 
-> 沉淀模式：[pre-decision-three-checks.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)
+> 沉淀模式：[pre-decision-three-checks.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)
 
 ### 6. 简单任务慢做原则（2026-07-09践行新增）
 
@@ -383,7 +385,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 - 简单任务往往批量执行，错误被快速复制
 - 简单任务的错误不影响核心功能，更不容易被发现
 
-> 沉淀模式：[simple-task-high-risk.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
+> 沉淀模式：[simple-task-high-risk.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
 
 ### 7. 提问式纠错优于直接指正（2026-07-09践行新增）
 
@@ -393,7 +395,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 - 这本身就是第一性原理Prompt的正确用法——不是给答案，而是强制启动"回到基本事实"的思考过程
 - 自己发现的错误记忆更深刻，同时强化了方法论的应用
 
-> 沉淀模式：[socratic-questioning-correction.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)
+> 沉淀模式：[socratic-questioning-correction.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)
 
 ### 8. 践行鸿沟需要递归练习（2026-07-11补充）
 
@@ -402,7 +404,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineer
 - 建立错误→复盘→更新检查点→再次验证的闭环
 - 简单任务是最好的练习场——因为简单任务最容易暴露践行鸿沟
 
-> 沉淀模式：[practice-gap-recursive-practice.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)
+> 沉淀模式：[practice-gap-recursive-practice.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)
 
 ### 9. 跨领域复用:Prompt 方法论可迁移到非编码场景
 
@@ -415,7 +417,7 @@ SpecWeave 智能体在协助用户做方案审视、决策推演时,同样可以
 
 第一性原理不仅适用于代码BUG定位和架构设计，在产品功能定义领域同样威力巨大——通过"悬置→拆解→质疑→重构"四步法，可以避免竞品类比思维陷阱，从用户本质需求出发重新定义功能。这已沉淀为独立的方法论模式。
 
-> 沉淀模式：[first-principles-feature-analysis.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，悬置→拆解→质疑→重构四步SOP）
+> 沉淀模式：[first-principles-feature-analysis.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，悬置→拆解→质疑→重构四步SOP）
 
 ---
 
@@ -462,19 +464,19 @@ A:三个关键措施：①**建立强制检查点**——决策前三查（查�
 A:有。基于本次学习和后续多次践行验证（含反面案例+元方法论自举验证），已沉淀**9个可复用方法论模式**到模式库：
 
 **核心两大基石（L2/L3级）**：
-- [first-principles-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（第一性原理Prompt模式，L3级验证）
-- [adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)（对抗式审查Prompt模式，L2级验证，含反例构造五步法）
+- [first-principles-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（第一性原理Prompt模式，L3级验证）
+- [adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)（对抗式审查Prompt模式，L2级验证，含反例构造五步法）
 
 **践行鸿沟配套治理模式（从2026-07-09反面案例沉淀）**：
-- [pre-decision-three-checks.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)（决策前三查强制检查点）
-- [simple-task-high-risk.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
-- [socratic-questioning-correction.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（苏格拉底式提问纠错法）
-- [practice-gap-recursive-practice.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（践行鸿沟递归练习法）
+- [pre-decision-three-checks.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)（决策前三查强制检查点）
+- [simple-task-high-risk.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
+- [socratic-questioning-correction.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（苏格拉底式提问纠错法）
+- [practice-gap-recursive-practice.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（践行鸿沟递归练习法）
 
 **领域延伸应用模式**：
-- [first-principles-feature-analysis.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，产品功能定义四步SOP，L1实验性）
-- [defuddle-web-extraction-preferred.md](../../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（defuddle优先提取模式，L3级验证）
-- [medium-task-merged-delegation-strategy.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)（中等任务合并委派策略，L2级验证）
+- [first-principles-feature-analysis.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，产品功能定义四步SOP，L1实验性）
+- [defuddle-web-extraction-preferred.md](../../../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（defuddle优先提取模式，L3级验证）
+- [medium-task-merged-delegation-strategy.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)（中等任务合并委派策略，L2级验证）
 
 ---
 
@@ -496,21 +498,21 @@ A:有。基于本次学习和后续多次践行验证（含反面案例+元方�
 
 ### SpecWeave 内部关联
 
-- 代码审查工作流:[.agents/workflows/](../../../../workflows/README.md)
-- 可复用模式库:[patterns/](../../../retrospective/patterns/README.md)
-- 复盘体系:[retrospective/](../../../retrospective/README.md)
-- 开发规范:[development-standards.md](../../../development-standards.md)
-- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
-- 践行反面案例复盘:[retrospective-first-principles-analogy-error-20260709/](../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)（学完1小时即犯类比推理错误的教训）
-- 核心基石模式1:[first-principles-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（L3级验证）
-- 核心基石模式2:[adversarial-review-prompt-pattern.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)（L2级验证，含反例构造五步法）
-- 践行配套模式1:[pre-decision-three-checks.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)（决策前三查）
-- 践行配套模式2:[simple-task-high-risk.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
-- 践行配套模式3:[socratic-questioning-correction.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（苏格拉底式提问纠错）
-- 践行配套模式4:[practice-gap-recursive-practice.md](../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（践行鸿沟递归练习）
-- 领域延伸模式1:[first-principles-feature-analysis.md](../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，L1实验性）
-- 领域延伸模式2:[defuddle-web-extraction-preferred.md](../../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（defuddle优先提取，L3级验证）
-- 领域延伸模式3:[medium-task-merged-delegation-strategy.md](../../../retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)（中等任务合并委派，L2级验证）
+- 代码审查工作流:[.agents/workflows/](../../../../../.agents/workflows/README.md)
+- 可复用模式库:[patterns/](../../../../retrospective/patterns/index.md)
+- 复盘体系:[retrospective/](../../../../retrospective/index.md)
+- 开发规范:[development-standards.md](../../../../tech/references/development-standards.md)
+- 关联复盘报告:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../../../retrospective/reports/insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
+- 践行反面案例复盘:[retrospective-first-principles-analogy-error-20260709/](../../../../retrospective/reports/incident-reports/retrospective-first-principles-analogy-error-20260709/README.md)（学完1小时即犯类比推理错误的教训）
+- 核心基石模式1:[first-principles-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)（L3级验证）
+- 核心基石模式2:[adversarial-review-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/adversarial-review-prompt-pattern.md)（L2级验证，含反例构造五步法）
+- 践行配套模式1:[pre-decision-three-checks.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/pre-decision-three-checks.md)（决策前三查）
+- 践行配套模式2:[simple-task-high-risk.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/simple-task-high-risk.md)（简单任务高风险定律）
+- 践行配套模式3:[socratic-questioning-correction.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/socratic-questioning-correction.md)（苏格拉底式提问纠错）
+- 践行配套模式4:[practice-gap-recursive-practice.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)（践行鸿沟递归练习）
+- 领域延伸模式1:[first-principles-feature-analysis.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/first-principles-feature-analysis.md)（第一性原理功能分析法，L1实验性）
+- 领域延伸模式2:[defuddle-web-extraction-preferred.md](../../../../retrospective/patterns/methodology-patterns/tools-automation/defuddle-web-extraction-preferred.md)（defuddle优先提取，L3级验证）
+- 领域延伸模式3:[medium-task-merged-delegation-strategy.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md)（中等任务合并委派，L2级验证）
 
 ---
 

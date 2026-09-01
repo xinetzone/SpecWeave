@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-07"
 title: "五款产品横向对比分析"
 source: "../sunlogin-offline-hardware-wiki.md#五款产品横向对比分析"

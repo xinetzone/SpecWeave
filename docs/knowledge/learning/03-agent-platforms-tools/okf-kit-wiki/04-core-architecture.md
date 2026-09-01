@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-04"
 title: "okf-kit 完全指南 — 核心架构"
 source: "https://github.com/vinodborole/okf-kit/blob/main/okf_kit/"

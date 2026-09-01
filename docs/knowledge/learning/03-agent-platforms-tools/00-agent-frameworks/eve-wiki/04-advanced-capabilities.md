@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-04"
 title: "进阶能力：子 Agent、定时任务与多 Agent 协作"
 source: "eve-framework-wiki-learning"

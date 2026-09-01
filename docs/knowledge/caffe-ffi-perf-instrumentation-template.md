@@ -1,3 +1,8 @@
+---
+type: Reference
+title: "Caffe-FFI 层性能埋点 C++ 模板"
+---
+
 # Caffe-FFI 层性能埋点 C++ 模板
 
 > **P0/P1级性能监控统一模板** — 适用于所有Layer的Forward/Backward性能埋点

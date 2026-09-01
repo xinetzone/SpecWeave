@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-github-wiki-06-issue-sorting-labeling
 title: "Issue Sorting 与标签体系"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/06-issue-sorting-labeling.toml"

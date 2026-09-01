@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module3-metrics-human-commercial"
 title: "模块3.7：人本与商业维度指标详解"
 source: "spec:agent-eval-methodology-wiki"

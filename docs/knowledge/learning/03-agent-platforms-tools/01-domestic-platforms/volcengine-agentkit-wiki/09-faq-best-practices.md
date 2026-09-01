@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-09"
 title: "FAQ 与最佳实践"
 source: "seven-concepts: volcengine-agentkit-wiki"

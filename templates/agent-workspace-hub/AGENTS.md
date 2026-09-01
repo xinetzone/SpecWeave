@@ -69,7 +69,7 @@
 
 ## 开发规范
 
-完整开发规范（代码风格、提交规范、路径引用、原子化操作等）见 [.agents/docs/development-standards.md](.agents/docs/development-standards.md)。
+完整开发规范（代码风格、提交规范、路径引用、原子化操作等）见 [docs/tech/references/development-standards.md](../../docs/tech/references/development-standards.md)。
 
 - **代码风格**：遵循现有代码风格，新增脚本前先查阅共享库，禁止重复实现已有功能
 - **提交规范**：遵循 Conventional Commits（`type(scope): subject`），主体使用中文描述
@@ -84,7 +84,7 @@
 | 资源 | 入口 |
 |---|---|
 | 技术知识库 | [docs/knowledge/](../../docs/knowledge/README.md) |
-| 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/README.md) |
-| 可复用模式库 | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/README.md) |
+| 复盘体系与可复用模式 | [docs/retrospective/](../../docs/retrospective/index.md) |
+| 可复用模式库 | [docs/retrospective/patterns/](../../docs/retrospective/patterns/index.md) |
 
 > **{{PROJECT_NAME}} 项目说明**：{{PROJECT_DESC}}

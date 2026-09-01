@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "agents-md-startup-protocol-skipped"
 title: "跳过 AGENTS.md 启动协议导致三重连锁输出错误"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/troubleshooting/agents-md-startup-protocol-skipped.toml"
@@ -72,5 +74,5 @@ flowchart TD
 ## 参考
 
 - [AGENTS.md](../../../AGENTS.md) - 项目智能体全局契约（已强化启动协议）
-- [本次问题复盘报告](../../../.agents/docs/retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/README.md)
-- [复盘→洞察→导出知识闭环](../../../.agents/docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)
+- [本次问题复盘报告](../../retrospective/reports/project-governance/process-and-compliance/retrospective-session-agents-md-violation-20260624/README.md)
+- [复盘→洞察→导出知识闭环](../../retrospective/patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

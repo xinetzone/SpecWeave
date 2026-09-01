@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-overview"
 title: "项目概述与核心定位"
-source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码"
+source: 'https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/00-overview.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "claude-code", "codex", "opencode", "parallel-agents", "multi-agent", "yc"]

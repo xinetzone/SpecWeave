@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-01"
 title: "Python 3.14 语言新特性"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html"

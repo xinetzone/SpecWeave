@@ -68,10 +68,10 @@ Options:
   --help, -h              Show this help
 
 Examples:
-  $0 --old-path "docs/old" --new-path ".agents/docs/new"
-  $0 --old-path "docs/old" --new-path ".agents/docs/new" --dry-run
-  $0 --old-path "docs/old" --new-path ".agents/docs/new" --execute --auto-commit
-  $0 --old-path "docs/old" --new-path ".agents/docs/new" --scan-only --threshold 5
+  $0 --old-path "docs/old" --new-path "docs/new"
+  $0 --old-path "docs/old" --new-path "docs/new" --dry-run
+  $0 --old-path "docs/old" --new-path "docs/new" --execute --auto-commit
+  $0 --old-path "docs/old" --new-path "docs/new" --scan-only --threshold 5
 EOF
     exit 0
 }

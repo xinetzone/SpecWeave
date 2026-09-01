@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "orca-wiki-value"
 title: "核心价值总结与行业趋势"
-source: "https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码"
+source: 'https://www.onorca.dev/ 官网 + d:\AI\external\tools\orca 本地开源源码'
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/orca-wiki/06-value-and-trends.toml"
 category: "learning"
 tags: ["orca", "stablyai", "ai-orchestrator", "agent-ide", "worktree", "parallel-agents", "multi-agent", "bring-your-own-agent", "git-worktree", "industry-trend", "yc", "wiki教程"]

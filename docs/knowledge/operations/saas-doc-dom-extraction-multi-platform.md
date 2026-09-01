@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: saas-doc-dom-extraction-multi-platform
 title: SaaS云文档DOM提取多平台适配方案
 source:

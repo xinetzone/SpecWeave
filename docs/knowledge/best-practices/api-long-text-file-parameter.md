@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "api-long-text-file-parameter"
 title: "用 @file 传长文本请求体"
 category: "best-practices"

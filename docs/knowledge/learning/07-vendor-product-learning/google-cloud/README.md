@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-07-vendor-product-learning-google-cloud-index"
 title: "Google Cloud"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/README.toml"
@@ -18,4 +20,4 @@ date: "2026-08-15"
 ## 🔗 相关资源
 
 - [🏠 返回上级：厂商产品学习](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

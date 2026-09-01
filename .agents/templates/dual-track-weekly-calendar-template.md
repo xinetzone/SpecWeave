@@ -17,7 +17,7 @@ related_patterns:
 ---
 # 双轨复盘周执行日历模板
 
-> **来源**：[双轨复盘节奏模式](../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/dual-track-retrospective-cadence.md)。
+> **来源**：[双轨复盘节奏模式](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/dual-track-retrospective-cadence.md)。
 > **用途**：每周日用此模板规划下周的事件驱动+时间驱动双轨复盘节奏，确保节奏性活动不被任务洪流挤压。
 > **使用流程**：周日晚完成周复盘后 → 复制本模板到下周目录 → 填入下周已知事件驱动节点 → 填入时间驱动检查点 → 执行中随时补充。
 
@@ -102,7 +102,7 @@ related_patterns:
 
 ## 四、本周重点深度工作块安排
 
-> 参照波次式工作日节奏（[wave-workday-rhythm](../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)），上午深度块安排核心架构/编码，下午深度块安排扩展/新领域。
+> 参照波次式工作日节奏（[wave-workday-rhythm](../../docs/retrospective/patterns/methodology-patterns/retrospective-knowledge/wave-workday-rhythm.md)），上午深度块安排核心架构/编码，下午深度块安排扩展/新领域。
 
 | 日期 | 上午深度块（核心架构/基建） | 下午深度块（扩展/新领域） |
 |------|--------------------------|------------------------|

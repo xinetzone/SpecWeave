@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-addy-osmani-wiki"
 title: "Agent Skills（Addy Osmani）完整学习教程：谷歌Gemini团队的AI编程代理人工程技能库"
 category: learning

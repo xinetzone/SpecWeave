@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-reverse-adaptation"
 title: "十二、逆向适配创新方法论"
 source: "analyze-i-have-adhd-article/analysis-report.md#第四章"

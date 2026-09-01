@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cloud-integration
 title: 云服务集成指南
 source: veadk-python codebase analysis

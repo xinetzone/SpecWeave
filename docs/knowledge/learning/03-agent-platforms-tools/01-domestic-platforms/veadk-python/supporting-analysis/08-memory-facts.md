@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 08-memory-facts
 title: Memory 模块事实记录
 source: veadk-python codebase analysis

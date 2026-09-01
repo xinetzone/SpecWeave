@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki-04"
 title: "步骤式学习导读：入门/进阶/深入三层"
 source: "../mopmonk-security-agent-wiki.md#四步骤式学习导读"

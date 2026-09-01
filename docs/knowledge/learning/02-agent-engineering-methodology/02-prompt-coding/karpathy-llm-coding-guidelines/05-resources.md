@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-resources"
 title: "资源与参考链接"
 category: learning
@@ -151,10 +153,10 @@ multica-cli/
 
 | 资源 | 链接 | 说明 |
 |------|------|------|
-| AI 编码行为准则（规则文档） | [ai-coding-guidelines.md](../../../../../rules/ai-coding-guidelines.md) | 本项目整合后的完整规则，含一分钟速查表 |
-| 全局核心规则 | [global-core-rules.md](../../../../../global-core-rules.md) | 包含"歧义主动澄清"原则 |
-| 开发者角色定义 | [developer.md](../../../../../roles/developer.md) | 包含"外科手术式精确编辑"要求 |
-| 开发规范 | [development-standards.md](../../../../development-standards.md) | 包含"简约设计原则"章节 |
+| AI 编码行为准则（规则文档） | [ai-coding-guidelines.md](../../../../../../.agents/rules/ai-coding-guidelines.md) | 本项目整合后的完整规则，含一分钟速查表 |
+| 全局核心规则 | [global-core-rules.md](../../../../../../.agents/global-core-rules.md) | 包含"歧义主动澄清"原则 |
+| 开发者角色定义 | [developer.md](../../../../../../.agents/roles/developer.md) | 包含"外科手术式精确编辑"要求 |
+| 开发规范 | [development-standards.md](../../../../../tech/references/development-standards.md) | 包含"简约设计原则"章节 |
 | 本教程目录 | [.](README.md) | 你正在阅读的教程文档集合 |
 
 ---

@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "Examples 测试套件差异分析报告（3个FAIL用例根因分析与修复）"
+---
+
 # Examples 测试套件差异分析报告（3个FAIL用例根因分析与修复）
 
 **日期**: 2026-03-24

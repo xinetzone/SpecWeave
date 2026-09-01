@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "monkeycode-deep-analysis"
 title: "第二章 - MonkeyCode产品深度解析"
 source: "微信公众号「AI产品银海」文章"

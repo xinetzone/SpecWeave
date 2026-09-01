@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: "pyinvoke-wiki-index"
 title: "PyInvoke Wiki 教程"
 source: "https://docs.pyinvoke.org/"
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/index.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/pyinvoke-wiki/README.toml"
 date: "2026-07-20"
 tags: ["pyinvoke", "python", "task-runner", "cli", "automation", "makefile-alternative"]
 category: "learning"
@@ -85,6 +87,6 @@ category: "learning"
 ## 🔗 相关资源
 
 * [🏠 返回上级：工具与库](../README.md)
-* [📚 知识库首页](../../../../../.agents/docs/README.md)
+* [📚 知识库首页](../../../../index.md)
 * [PyInvoke 官方文档](https://docs.pyinvoke.org/)
 * [PyInvoke GitHub](https://github.com/pyinvoke/invoke)

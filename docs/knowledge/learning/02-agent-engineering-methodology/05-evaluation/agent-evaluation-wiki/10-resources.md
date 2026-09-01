@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-resources"
 title: "第10章：术语表与参考资源"
 source: "spec:agent-evaluation-methodology-wiki"
@@ -166,35 +168,35 @@ summary: "AI Agent评测核心术语表、权威参考来源分类整理、按�
 
 ### 前置与基础方法论
 
-- **[harness-engineering-wiki](../harness-engineering-wiki/00-overview.md)**：Harness工程方法论
+- **[harness-engineering-wiki](../../01-paradigms/harness-engineering-wiki/00-overview.md)**：Harness工程方法论
   - 评测是Harness体系「可观测性」组件的核心
   - Harness四铁律（可复现、可测量、可验证、可回滚）直接指导评测设计
   - 六模式中的「质量护栏」模式就是评测在工程化中的落地
 
-- **[harness-seven-components-wiki](../harness-seven-components-wiki/00-overview.md)**：Harness七大组件
+- **[harness-seven-components-wiki](../../01-paradigms/harness-seven-components-wiki/00-overview.md)**：Harness七大组件
   - 可观测性（Observability）组件：评测是其中的质量测量部分
   - 配置管理、实验管理组件支撑评测的版本化与对比
 
 ### 互补方法论
 
-- **[adversarial-review-wiki](../adversarial-review-wiki/00-overview.md)**：对抗性评审方法论
+- **[adversarial-review-wiki](../../03-methodology/adversarial-review-wiki/00-overview.md)**：对抗性评审方法论
   - 红队测试思想直接用于对抗性评测用例设计
   - 认知偏差防御帮助识别评测者本身的偏差（如位置偏差、锚定偏差）
   - 对抗性评审流程可直接用于人工评估环节的质量控制
 
-- **[agent-skills-wiki](../agent-skills-wiki/00-overview.md)**：Agent技能体系
+- **[agent-skills-wiki](../../02-prompt-coding/agent-skills-wiki/00-overview.md)**：Agent技能体系
   - 评测维度设计需对齐技能分类，覆盖各类技能的掌握程度
   - 技能组合能力是高阶Agent评测的重点
   - 技能迭代效果依赖评测数据验证
 
 ### 评测驱动的工程实践
 
-- **[seven-concepts-prompt-wiki](../seven-concepts-prompt-wiki/00-overview.md)**：七概念方法论
+- **[seven-concepts-prompt-wiki](../../02-prompt-coding/seven-concepts-prompt-wiki/00-overview.md)**：七概念方法论
   - 「复盘（R）-洞察（I）-萃取（E）」闭环需要评测数据作为输入
   - 「验证（V）」环节就是小型评测循环
   - 七概念的迭代节奏与持续评测周期相匹配
 
-- **[karpathy-llm-coding-guidelines](../karpathy-llm-coding-guidelines/00-overview.md)**：Karpathy LLM编码指南
+- **[karpathy-llm-coding-guidelines](00-overview.md)**：Karpathy LLM编码指南
   - 「先写测试」思想与EDD评测驱动开发高度契合
   - 编码规范中强调的可复现性、确定性直接对应评测的信度要求
   - Coding Agent的评测方法可参考该wiki中的实践

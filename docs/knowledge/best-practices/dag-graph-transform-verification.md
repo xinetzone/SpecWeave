@@ -1,14 +1,15 @@
 ---
+type: best-practice
+
 id: "dag-graph-transform-verification"
 title: "DAG图变换算法验证最佳实践"
 date: "2026-08-01"
 category: "best-practices"
 tags: ["dag", "graph-transform", "visualization", "verification", "caffe", "insert-splits", "in-place"]
 source: "../../retrospective/reports/code-optimization/retrospective-caffe-ffi-viz-insert-splits-20260801/README.md"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/dag-graph-transform-verification.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/dag-graph-transform-verification.toml"
 related_patterns: ["graph-transform-validator-architecture", "protobuf-text-minimal-parser"]
 ---
-
 # DAG图变换算法验证最佳实践
 
 > 源自 caffe-ffi InsertSplits DAG可视化脚本开发复盘

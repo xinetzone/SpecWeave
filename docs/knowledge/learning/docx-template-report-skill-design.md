@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "模板驱动报告生成 Skill 设计方案"
+---
+
 ***
 
 name: docx-template-report-skill-design

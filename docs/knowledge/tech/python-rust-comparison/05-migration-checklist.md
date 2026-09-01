@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-migration-checklist"
 title: "Python 迁移到 Rust 简易检查清单"
 category: "tech"

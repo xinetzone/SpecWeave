@@ -1,0 +1,5 @@
+id = "boundary-failure-modes"
+title = "C++/Python 交互边界失效模式流程图"
+category = "retrospective/reports/code-optimization/retrospective-caffe-ffi-cpp-py-boundary-fix-20260801"
+date = "2026-07-02"
+version = "1.0"

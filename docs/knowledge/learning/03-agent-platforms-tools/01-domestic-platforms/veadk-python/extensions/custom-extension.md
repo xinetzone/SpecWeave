@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: custom-extension
 title: 自定义Extension开发指南
 source: veadk-python codebase analysis

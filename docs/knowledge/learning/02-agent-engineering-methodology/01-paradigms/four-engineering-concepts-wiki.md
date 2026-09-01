@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "four-engineering-concepts-wiki"
 title: "AI 四大工程概念演进：Prompt → Context → Harness → Loop"
 source: "微信公众号文章《Prompt → Context → Harness → Loop：AI 圈这四个新词，一次性讲清楚》 by AllenTang"
@@ -574,7 +576,7 @@ Boris Cherny（Claude Code 创始人）的原话最能说明区别：
 ### 本项目相关学习资源
 
 - **Harness Engineering 系统性学习 Wiki**（基于阿里技术文章）：[harness-engineering-wiki.md](harness-engineering-wiki.md)
-- **Agent Skills 开放标准完整指南**（含渐进式披露机制详解）：[agent-skills-open-standard-wiki.md](../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
+- **Agent Skills 开放标准完整指南**（含渐进式披露机制详解）：[agent-skills-open-standard-wiki.md](../../01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md)
 - **知识库首页**：[../README.md](../../README.md)
 
 ---

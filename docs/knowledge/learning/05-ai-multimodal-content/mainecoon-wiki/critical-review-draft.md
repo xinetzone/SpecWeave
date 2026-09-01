@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-wiki-critical-review-draft"
 title: "批判性评论：MaineCoon 与 Social World Model 的虚与实"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"

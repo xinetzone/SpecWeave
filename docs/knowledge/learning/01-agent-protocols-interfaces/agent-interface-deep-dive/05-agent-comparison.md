@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-comparison-chapter"
 title: "对比分析：Agent四层技术栈协同"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/05-agent-comparison.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-09-best-practices-faq"
 title: "最佳实践与FAQ"
 source: "spec:create-wsl-wiki-tutorial"

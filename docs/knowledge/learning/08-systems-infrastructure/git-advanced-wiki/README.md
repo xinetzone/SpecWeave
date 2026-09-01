@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "git-advanced-wiki-index"
 title: "Git 高级命令 Wiki 教程"
 source: "internal:git-clone-no-local-bare-explanation"

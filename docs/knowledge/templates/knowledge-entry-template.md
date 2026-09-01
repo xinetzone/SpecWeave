@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: ""
 title: ""
 category: ""

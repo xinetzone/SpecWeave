@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-09"
 title: "工具集成与生态系统"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p0-05-task-classification-skeleton
 title: 任务分类与追踪骨架说明
 source: d:\spaces\chaos\tasks\README.md

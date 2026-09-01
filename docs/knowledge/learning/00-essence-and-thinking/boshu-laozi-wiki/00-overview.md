@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-00"
 title: "帛书老子 Wiki 教程概述"
 source: "公共领域知识（马王堆帛书老子研究）"

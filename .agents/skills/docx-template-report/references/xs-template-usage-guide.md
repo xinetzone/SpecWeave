@@ -25,7 +25,7 @@ Python dict，即可生成包含以下结构的 Word 文档：
   列表项、代码块、Shell 命令行（蓝色）、警告行（红色）、2/3/4/5 列参数表、分页符
 - **页眉**：公司名 + 页码域，首页页眉独立；logo 位置为占位符，可按需注入
 
-模板本体**零媒体、零水印、零品牌信息、零作者元数据**（19 个部件，约 30 KB），
+模板本体**零媒体、零水印、零品牌信息、零作者元数据**（19 个包内部件，30,826 字节），
 样式体系（字体、编号链、主题、表格底纹、代码块边框）完整继承自源文档。
 
 > **与 tech-guide-template.docx 如何选择？**
@@ -240,22 +240,34 @@ doc.save(OUT)
 
 ## 7. 品牌中立与交付自检
 
-模板本体经过三脱敏（图形元素 / 敏感部件关系 / 文档元数据），**不含任何源企业的
-水印、logo、图片、作者信息**。但请注意：
+模板本体经副本基底法**三脱敏**（图形元素 / 敏感部件关系 / 文档元数据），
+**不含任何源企业的水印、logo、图片、作者信息**；技能自带的渲染示例
+（[examples/xs-render-example.py](../examples/xs-render-example.py)）演示数据
+亦全部虚构中立——公司「示例科技有限公司」、人员张三/李四/王五、命令
+`xsenv` / `xs.yaml` / `xs_sdk` / `xs:latest` 均为假数据，渲染产物全包品牌词
+**零命中**（逐项扫描结论见 [xs-template-desensitization-scan.md](xs-template-desensitization-scan.md)）。
+
+但请注意，品牌中立的最终责任在**数据侧**：
 
 - 你传入的 `company`、`doc_author`、`revisions` 中的人员名等**数据**会如实渲染
-  进产物——品牌中立的责任在数据侧；对外交付前请确认 context 中没有不该出现的
-  内部名称、人员真名；
+  进产物；对外交付前请确认 context 中没有不该出现的内部名称、人员真名；
 - 模板不含水印，渲染产物也不会出现水印；如需水印请在 Word 中自行添加；
-- 交付前可运行全包自检脚本，确认产物零媒体残留、无悬空引用（Word 打开不修复）：
+- 注入自有 logo 时（见 5.1 节），图片文件本身不得携带源品牌标识。
+
+交付前运行全包自检脚本：
 
 ```powershell
+# 首次运行前先生成示例产物（examples/output 不入库，运行时自动创建）：
+py -3.14 examples\xs-render-example.py
+# 六查扫描：品牌关键词 / r:embed 引用 / word/media 媒体 /
+#           w:pict 水印元素 / rels 媒体关系 / 悬空关系引用
 py -3.14 examples\scan-brand-residue.py
 ```
 
-该脚本检查关键词残留、`word/media/` 媒体、VML 水印元素（`w:pict`）、
-关系悬空引用，覆盖两个内置模板与示例产物。输出"悬空关系引用: 无"即表示
-包结构完整。
+脚本扫描三个目标：xs 模板、tech-guide 模板、xs 渲染产物。每个目标输出
+「关键词残留: 无」「word/media/ 文件: 0」「w:pict 元素: 0」「悬空关系引用: 无」
+即表示品牌洁净且包结构完整（Word 打开不会触发修复提示）。渲染产物尚未生成时，
+脚本会跳过该目标并提示先运行渲染示例。
 
 ## 8. 常见问题（FAQ）
 
@@ -289,17 +301,20 @@ py -3.14 examples\scan-brand-residue.py
 重建（重建后须重新执行脱敏扫描，见契约文档 6.1 节）。
 
 **Q8：生成的文档里公司名/人员名是示例数据怎么办？**
-渲染示例脚本中的公司名/人员名均为虚构中立演示数据（如「示例科技有限公司」
-「张三/李四」），不含任何真实品牌信息。实际使用时替换为你自己的
-context 即可；模板本身不含这些内容。
+渲染示例脚本中的公司名（「示例科技有限公司」）、人员名（张三/李四/王五）、
+命令名（`xsenv` / `xs.yaml` / `xs_sdk` / `xs:latest`）均为虚构中立演示数据，
+不含任何真实品牌信息，全包扫描零命中。实际使用时替换为你自己的 context
+即可；模板本身不含这些内容，正式交付前请按第 7 节运行自检脚本。
 
 ## 9. 工具与延伸阅读
 
 | 用途 | 资源 |
 |------|------|
 | 复制即用的完整渲染脚本（37 项断言） | [examples/xs-render-example.py](../examples/xs-render-example.py) |
-| 交付前品牌残留/包完整性自检 | [examples/scan-brand-residue.py](../examples/scan-brand-residue.py) |
+| 交付前品牌残留/包完整性自检（六查三目标） | [examples/scan-brand-residue.py](../examples/scan-brand-residue.py) |
+| 脱敏扫描报告（六查逐项结论与零命中证据） | [xs-template-desensitization-scan.md](xs-template-desensitization-scan.md) |
 | 模板格式规范、块类型契约、脱敏细节（维护者视角） | [xs-sdk-guide-template.md](xs-sdk-guide-template.md) |
+| 从自有企业 DOCX 重建同款脱敏模板（维护者） | [examples/build-xs-template.py](../examples/build-xs-template.py) |
 | 渲染异常/乱码/行循环排查 | [troubleshooting.md](troubleshooting.md) |
 | Jinja2 语法、RichText 富文本、InlineImage 高级用法 | [template-guide.md](template-guide.md) |
 | docxtpl 官方文档 | <https://docxtpl.readthedocs.io/> |

@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "quickstart", "installation", "getting-started", "docker"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/07-quick-start.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/concepts/07-quick-start.toml"
 type: "Tutorial"
 description: "从环境要求、pip/npm/Docker三种安装方式到三步快速上手流程，提供Agent Wrap/Proxy/MCP/Library四种接入方式的验证方法与七类常见安装问题排查，帮助5分钟内体验Headroom压缩效果。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 快速上手指南
 
 > 本章提供从0到1的快速上手流程：环境要求、三种安装方式（pip/npm/Docker）、三步快速体验、各接入方式验证方法，以及常见安装问题排查，帮助你在5分钟内体验Headroom的压缩效果。

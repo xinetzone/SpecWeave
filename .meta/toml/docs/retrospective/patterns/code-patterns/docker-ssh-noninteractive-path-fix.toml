@@ -1,0 +1,5 @@
+id = "docker-ssh-noninteractive-path-fix"
+title = "Docker+SSH 非交互会话 PATH 四重保障模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

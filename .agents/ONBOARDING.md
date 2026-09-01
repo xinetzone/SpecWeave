@@ -58,7 +58,7 @@ Windows 必需：
 | 16 | pwsh7统一标准 | Windows脚本必须用pwsh7.4+，禁止PowerShell 5 |
 | 17 | Python 3.10+统一标准 | .agents/scripts下脚本必须要求Python 3.10+，禁止低版本运行 |
 
-> 💡 详细说明见 [development-standards.md](docs/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
+> 💡 详细说明见 [development-standards.md](../docs/tech/references/development-standards.md)，新增：[三阶段原则](rules/three-stage-universal-principle.md)、[元文档优先](rules/meta-document-priority-principle.md)、[修复即闭环](rules/fix-prevent-close-loop.md)
 
 ---
 

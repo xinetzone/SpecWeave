@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "frontmatter-link-batch-repair-guide"
 title: "Frontmatter 路径与链接批量修复流程指南"
 source: "../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md#8阶段修复记录"
@@ -352,9 +354,9 @@ python .agents/scripts/check-links.py --path docs/retrospective
 
 本指南提炼自 2026-07-10 的实际修复工作，完整复盘记录见：
 
-- [best-practices 断链修复复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 完整复盘报告
-- [行动项 Backlog](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md) — 7 项行动项 + 8 阶段修复记录
-- [执行复盘](../../../.agents/docs/retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.md) — 执行过程与瓶颈分析
+- [best-practices 断链修复复盘](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/README.md) — 完整复盘报告
+- [行动项 Backlog](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/insight-action-backlog.md) — 7 项行动项 + 8 阶段修复记录
+- [执行复盘](../../retrospective/reports/task-reports/retrospective-best-practices-readme-link-fix-20260709/execution-retrospective.md) — 执行过程与瓶颈分析
 
 ### 修复成果
 

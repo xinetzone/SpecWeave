@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-ai-hardware-design-tools-wiki-index"
 title: "AI硬件设计工具生态深度洞察——10个AI硬件设计常用网站系统分析"
 category: "knowledge"
@@ -28,5 +30,5 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trend
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 - [📋 对应的Spec文档](../../../../../.trae/specs/retrospectives-insights/analyze-ai-hardware-design-tools/spec.md)

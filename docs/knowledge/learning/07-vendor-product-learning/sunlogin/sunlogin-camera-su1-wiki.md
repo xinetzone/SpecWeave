@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵USB远程摄像头SU1完整学习教程：400万高清、双全向麦克风、远程视频多面手深度解析"
 source: "https://sunlogin.oray.com/hardware/camera-su1"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.toml"

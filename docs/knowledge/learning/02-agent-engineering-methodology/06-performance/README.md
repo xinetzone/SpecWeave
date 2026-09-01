@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-methodology-performance"
 title: "推理加速与性能优化"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/06-performance/README.toml"

@@ -1,0 +1,5 @@
+id = "ps5-security-audit"
+title = "PS5安全代码审查Checklist模式（PS5-Security-Audit）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

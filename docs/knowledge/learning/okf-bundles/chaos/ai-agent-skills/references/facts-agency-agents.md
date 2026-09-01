@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "agency-agents 事实清单"
+---
+
 # agency-agents 事实清单
 
 > R阶段事实采集。源码路径：d:\AI\.chaos\libs\agency-agents\

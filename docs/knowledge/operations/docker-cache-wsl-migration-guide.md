@@ -1,7 +1,9 @@
 ---
+type: Guide
+
 id: "docker-cache-wsl-migration-guide"
 title: "Docker镜像缓存→WSL2发行版迁移操作指南"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-migration-guide.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/docker-cache-wsl-migration-guide.toml"
 category: "operations"
 date: "2026-08-18"
 status: "reviewed"
@@ -19,7 +21,6 @@ validation:
   date: "2026-08-18"
   result: "两套方案均验证通过，Podman方案文件系统精确，Python方案功能可用"
 ---
-
 # Docker镜像缓存→WSL2发行版迁移操作指南
 
 ## 概述

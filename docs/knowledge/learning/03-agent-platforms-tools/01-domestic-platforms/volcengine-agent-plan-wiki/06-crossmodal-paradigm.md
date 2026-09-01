@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agent-plan-wiki-06"
 title: "跨模态范式洞察：从单模态解决问题到跨模态创造可能"
 source: "https://bytedance.larkoffice.com/wiki/W5eJwfn5biMffOkGP00coVAAnDe"

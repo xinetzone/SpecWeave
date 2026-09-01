@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-01-c
 title: C - 原子提交 (Atomic Commit)
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"

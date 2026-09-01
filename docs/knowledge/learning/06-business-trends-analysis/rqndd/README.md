@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-rqndd-index"
 title: "2025年7月初中国AI行业动态深度分析"
 category: "knowledge"
@@ -27,4 +29,4 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trend
 ## 🔗 相关资源
 
 - [🏠 返回上级：06-business-trends-analysis](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

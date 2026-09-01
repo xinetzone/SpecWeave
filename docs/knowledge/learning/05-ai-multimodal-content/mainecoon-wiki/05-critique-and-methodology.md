@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-wiki-05-critique-and-methodology"
 title: "MaineCoon 批判性思考与七概念方法论分析"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
@@ -100,7 +102,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 
 ### 14.2 可借鉴的产品方法论
 
-> 以下五大方法论中,方法论一(三角困境)与方法论四(诚实承认局限性)已萃取为完整模式文档,详见 [trilemma-architectural-resolution.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [honest-limitation-acknowledgment.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
+> 以下五大方法论中,方法论一(三角困境)与方法论四(诚实承认局限性)已萃取为完整模式文档,详见 [trilemma-architectural-resolution.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/trilemma-architectural-resolution.md) 与 [honest-limitation-acknowledgment.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)。
 
 #### 14.2.1 方法论一:三角困境框架
 
@@ -158,7 +160,7 @@ SpecWeave 当前的协作场景以"开发任务"为主(代码审查/测试/复�
 - **核心步骤**: 1)识别局限(列出当前不成熟/不支持的能力,具体而非模糊) 2)主动披露(在优势陈述后紧跟局限说明,而非隐藏在末尾) 3)改进方向(为每个局限给出改进路径与时间表) 4)差异化定位(与"只说优势"的内容形成对比,建立专业形象)
 - **反模式**: 1)只说优势不说局限(降低可信度,读者会自行脑补更差的局限) 2)局限说明过于模糊(如"还有一些不足",不具体) 3)局限无改进方向(显得消极,让读者怀疑团队是否在改进)
 - **迁移验证**: SpecWeave 角色定义可在"职责边界"之外增加"当前局限 + 改进方向"段落,增强智能体协作的可信度
-- **完整模式文档**: [honest-limitation-acknowledgment.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)
+- **完整模式文档**: [honest-limitation-acknowledgment.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/honest-limitation-acknowledgment.md)
 
 #### 14.2.5 方法论五:从需求侧出发的产品定位
 

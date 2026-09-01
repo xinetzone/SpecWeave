@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-15"
 title: "会话持久化与遥测"
 source: "https://open-codereview.ai/docs/telemetry"

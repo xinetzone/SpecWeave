@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-overview"
 title: "Karpathy LLM 编程准则：概述与背景"
 category: learning

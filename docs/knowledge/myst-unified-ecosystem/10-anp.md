@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-ecosystem-anp
 title: "10、ANP：Agent Network Protocol"

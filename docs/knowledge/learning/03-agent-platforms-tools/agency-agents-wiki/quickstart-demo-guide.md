@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agency-agents-wiki-quickstart"
 title: "The Agency 完全指南 — 新开发者快速上手演示"
 source: "https://github.com/msitarzewski/agency-agents"

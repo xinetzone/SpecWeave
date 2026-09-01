@@ -5,7 +5,7 @@ type: "Pattern"
 description: "深度洞察与可复用方法论：行业趋势、市场动态、四个可迁移认知模型（瓶颈外移、Agent=模型+Harness、复利式环境建设、回合制到循环制）与信息来源可靠性评估。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/06-insights-patterns.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/06-insights-patterns.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 深度洞察与可复用方法论
 
 ## 行业趋势洞察

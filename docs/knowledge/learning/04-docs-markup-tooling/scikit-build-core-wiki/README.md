@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-04-docs-markup-tooling-scikit-build-core-wiki-index"
 title: "scikit-build-core 构建系统"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/README.toml"
@@ -27,7 +29,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：文档标记与工具链](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)
 
 ---
 

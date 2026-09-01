@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-10"
 title: "定价策略与商业模式"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

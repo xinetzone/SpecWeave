@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-major-idl-specs"
 title: "四、主要 IDL 规范介绍：五大主流实现详解"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/04-major-idl-specs.toml"

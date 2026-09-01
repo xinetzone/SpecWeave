@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-history"
 title: "二、历史沿革"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"

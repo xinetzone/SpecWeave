@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-02-context-compression"
 title: "上下文压缩技术"
 source: "CSDN技术博客、arXiv论文(xRAG/CORE-RAG/LooComp)、Microsoft Semantic Kernel文档综合整理"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-applied"
 title: "第七章 - 附录：七概念应用案例"
 source: "七概念方法论实战应用"

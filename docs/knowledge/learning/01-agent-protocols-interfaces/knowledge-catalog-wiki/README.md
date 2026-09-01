@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-01-agent-protocols-interfaces-knowledge-catalog-wiki-index"
 title: "Knowledge Catalog 知识目录平台"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/README.toml"
@@ -89,7 +91,7 @@ Knowledge Catalog（原Google Cloud Dataplex）是Google Cloud推出的AI驱动�
 
 - [📖 OKF开放知识格式完整指南](../okf-wiki/README.md) - Knowledge Catalog核心格式规范详解
 - [🏠 返回上级：Agent协议与接口技术栈](../README.md)
-- [📚 知识库首页](../../../../../.agents/docs/README.md)
+- [📚 知识库首页](../../../../index.md)
 - [🔗 官方GitHub仓库](https://github.com/GoogleCloudPlatform/knowledge-catalog)
 - [☁️ Google Cloud Knowledge Catalog](https://cloud.google.com/products/knowledge-catalog)
 

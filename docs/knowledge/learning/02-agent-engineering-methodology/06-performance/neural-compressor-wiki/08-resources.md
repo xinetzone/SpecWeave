@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-resources"
 title: "术语表与资源"
 date: "2026-08-09"

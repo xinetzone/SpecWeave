@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-wiki-quickstart"
 source: "agent-skills-open-standard-wiki.md#五快速入门创建你的第一个-skill"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/04-quickstart.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-01-theory-index
 title: 七概念理论 - 索引
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"

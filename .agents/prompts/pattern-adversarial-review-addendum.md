@@ -4,7 +4,7 @@ title: "模式对抗审查补充攻击视角"
 source: "知识沉淀任务agentrys-ai-chip-design对抗审查(2026-07-28) + i-have-adhd V2审查(2026-07-28)"
 maturity: "L2 已验证"
 validation_count: 2
-x-toml-ref: "../../../.meta/toml/.agents/prompts/pattern-adversarial-review-addendum.toml"
+x-toml-ref: "../../.meta/toml/.agents/prompts/pattern-adversarial-review-addendum.toml"
 version: "2.0"
 ---
 # 模式对抗审查补充攻击视角（V阶段·治理/架构/创新类模式必选）

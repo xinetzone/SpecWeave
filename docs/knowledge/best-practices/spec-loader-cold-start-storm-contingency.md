@@ -1,3 +1,8 @@
+---
+type: best-practice
+title: "spec_loader 冷启动风暴应急预案"
+---
+
 # spec_loader 冷启动风暴应急预案
 
 > 适用场景：spec_loader 缓存版本升级、缓存文件批量清除、服务扩容/重启导致大量实例同时冷启动

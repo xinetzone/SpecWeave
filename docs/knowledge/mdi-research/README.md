@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "mdi-research-index"
 title: "MDI/MyST 文档工具研究"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/mdi-research/README.toml"

@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: "headroom-wiki-02"
 title: "六种压缩算法详解"
 source: "https://mp.weixin.qq.com/s/7zT5-9WDp8zi4naCC2EmOg?from=industrynews&color_scheme=light#rd"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/02-compression-algorithms.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/headroom-context-compression-wiki/02-compression-algorithms.toml"
 ---
 ## 三、六种压缩算法详解
 

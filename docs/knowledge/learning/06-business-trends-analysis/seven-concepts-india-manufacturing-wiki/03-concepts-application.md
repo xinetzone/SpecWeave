@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "concepts-application"
 title: "七概念理论应用指南"
 source: "seven-concepts-india-manufacturing-wiki"

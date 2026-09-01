@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 title: "权限管理与安全设置"
 source: "https://www.dingteam.com/help/653"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/okr-wiki/tools/permission-management.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/okr-wiki/tools/permission-management.toml"
 date: "2026-07-08"
 ---
 # 权限管理与安全设置

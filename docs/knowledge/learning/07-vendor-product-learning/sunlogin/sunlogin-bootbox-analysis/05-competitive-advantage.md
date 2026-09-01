@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-05"
 title: "竞争优势与市场定位分析"
 source: "../sunlogin-bootbox-analysis.md"

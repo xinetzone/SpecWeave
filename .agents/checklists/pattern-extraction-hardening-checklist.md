@@ -4,7 +4,7 @@ title: "新模式萃取补强检查清单"
 source: "知识沉淀任务agentrys-ai-chip-design对抗审查(2026-07-28)"
 maturity: "L1"
 validation_count: 1
-x-toml-ref: "../../../.meta/toml/.agents/checklists/pattern-extraction-hardening-checklist.toml"
+x-toml-ref: "../../.meta/toml/.agents/checklists/pattern-extraction-hardening-checklist.toml"
 ---
 # 新模式萃取补强检查清单（Pattern Extraction Hardening Checklist）
 

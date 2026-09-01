@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-index"
 title: "Agent评测方法论系统化资料档案"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/05-evaluation/agent-eval-methodology-wiki/README.toml"

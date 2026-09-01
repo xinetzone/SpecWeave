@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ffi-wiki-language-implementations"
 title: "不同编程语言中的 FFI 实现"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/03-language-implementations.toml"

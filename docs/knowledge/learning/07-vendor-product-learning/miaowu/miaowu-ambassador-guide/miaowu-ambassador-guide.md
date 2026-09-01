@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: miaowu-ambassador-guide
 title: 秒悟大使入驻指南（结构化版）
 source: 基于01-facts.md和02-insights.md萃取生成

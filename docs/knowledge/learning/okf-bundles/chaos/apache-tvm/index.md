@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: Apache TVM 深度学习编译器
-description: Apache TVM 四层栈架构知识包，涵盖 FFI 基础设施、TIR 张量 IR、Relax 图级 IR、Runtime 执行引擎、MetaSchedule 自动调度及 LLM 推理支持
-tags: [tvm, deep-learning, compiler, tir, relax, ffi, llm-inference]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-23T00:00:00Z }
-stale_after: 2027-08-23
----
-
 # Apache TVM 深度学习编译器
 
 Apache TVM 是一个开源的深度学习编译器栈，通过四层架构（FFI 基础设施 → TIR 张量 IR → Relax 图级 IR → Runtime 执行引擎）实现深度学习模型的跨硬件高性能编译与部署。本知识包基于 TVM 源码（版本 0.26.dev0）整理，包含 22 篇概念文档、实践示例和完整的事实参考。
@@ -72,3 +61,13 @@ Apache TVM 是一个开源的深度学习编译器栈，通过四层架构（FFI
 - [ir-tir-source.md](references/ir-tir-source.md)
 - [relax-te-topi-source.md](references/relax-te-topi-source.md)
 - [runtime-target-arith-source.md](references/runtime-target-arith-source.md)
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

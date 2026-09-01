@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: knowledge-catalog-wiki-reference-agent
 title: 02 - 参考智能体（Python实现）
 date: 2026-08-15
@@ -10,10 +12,10 @@ tags:
   - visualization
   - cytoscape
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/02-reference-agent.toml"
   - vendor/knowledge-catalog/okf/src/reference_agent/
   - vendor/knowledge-catalog/okf/README.md
   - vendor/knowledge-catalog/okf/pyproject.toml
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/02-reference-agent.toml"
 maturity: L1-draft
 ---
 # 02 - 参考智能体（Python实现）

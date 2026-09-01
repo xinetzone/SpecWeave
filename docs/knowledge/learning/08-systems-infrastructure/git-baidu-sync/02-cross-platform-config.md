@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-cross-platform-config
 title: Git 跨平台配置最佳实践（网盘同步场景）
 source: original

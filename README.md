@@ -42,9 +42,9 @@
 [pr-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg
 [pr-link]: CONTRIBUTING.md
 [python-badge]: https://img.shields.io/badge/python-3.10%2B-blue?logo=python&logoColor=white
-[python-link]: .agents/docs/tech-stack.md
-[scripts-badge]: https://img.shields.io/badge/脚本-412%2B-blue?style=flat
-[skills-badge]: https://img.shields.io/badge/Skills-23-success?style=flat
+[python-link]: docs/tech/references/tech-stack.md
+[scripts-badge]: https://img.shields.io/badge/脚本-419%2B-blue?style=flat
+[skills-badge]: https://img.shields.io/badge/Skills-28-success?style=flat
 [rules-badge]: https://img.shields.io/badge/规则-133%2B-orange?style=flat
 [commands-badge]: https://img.shields.io/badge/指令集-15-purple?style=flat
 [gitcode-badge]: https://img.shields.io/badge/GitCode-镜像-blue?logo=gitee
@@ -210,7 +210,7 @@ flowchart LR
 | **按需加载，不浪费** | AI 不会一次性读完所有文档，用到什么才读什么，效率高 |
 | **开放标准，不锁定** | 基于公开的 AGENTS.md 标准，任何 AI 工具都能用，不绑定特定平台 |
 
-> 更详细的技术数据（脚本数量、测试覆盖率等）请查看 [项目亮点详细文档](.agents/docs/project-highlights.md)。
+> 更详细的技术数据（脚本数量、测试覆盖率等）请查看 [项目亮点详细文档](docs/tech/references/project-highlights.md)。
 
 ---
 
@@ -224,17 +224,17 @@ flowchart LR
 
 | 文档 | 适合谁 | 说明 |
 |------|--------|------|
-| [项目概述](.agents/docs/project-overview.md) | 所有人 | 项目定位、设计理念与核心特性 |
-| [智能体角色体系](.agents/docs/agent-roles.md) | 想了解 AI 角色分工 | 7 个角色的职责和配合方式 |
-| [协作体系](.agents/docs/collaboration.md) | 想了解 AI 怎么协作 | 任务交接、消息传递、冲突解决 |
-| [开发规范](.agents/docs/development-standards.md) | 想贡献代码的人 | 代码风格、提交规范、测试要求 |
-| [项目结构](.agents/docs/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
-| [技术栈与环境](.agents/docs/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
-| [验证与自动化](.agents/docs/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
-| [可复用模式库](.agents/docs/retrospective/patterns/README.md) | 架构师/开发者 | 380+经过验证的架构模式、代码模式、方法论模式 |
-| [架构模式索引](.agents/docs/retrospective/patterns/architecture-patterns/README.md) | 架构师 | 42个系统架构设计可复用模式（含Caffe现代化改造4个新ADR） |
-| [泛化与资产复用](.agents/docs/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
-| [项目蓝图](.agents/docs/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
+| [项目概述](docs/tech/references/project-overview.md) | 所有人 | 项目定位、设计理念与核心特性 |
+| [智能体角色体系](docs/tech/references/agent-roles.md) | 想了解 AI 角色分工 | 7 个角色的职责和配合方式 |
+| [协作体系](docs/tech/references/collaboration.md) | 想了解 AI 怎么协作 | 任务交接、消息传递、冲突解决 |
+| [开发规范](docs/tech/references/development-standards.md) | 想贡献代码的人 | 代码风格、提交规范、测试要求 |
+| [项目结构](docs/tech/references/project-structure.md) | 想了解文件组织 | 完整目录树与职责说明 |
+| [技术栈与环境](docs/tech/references/tech-stack.md) | 技术人员 | 技术选型与环境依赖 |
+| [验证与自动化](docs/tech/references/verification-automation.md) | 技术人员 | 自动检查和验证机制 |
+| [可复用模式库](docs/retrospective/patterns/index.md) | 架构师/开发者 | 380+经过验证的架构模式、代码模式、方法论模式 |
+| [架构模式索引](docs/retrospective/patterns/architecture-patterns/README.md) | 架构师 | 42个系统架构设计可复用模式（含Caffe现代化改造4个新ADR） |
+| [泛化与资产复用](docs/topics/reuse-and-generalization.md) | 想迁移到其他项目 | 如何把规范用到自己的项目中 |
+| [项目蓝图](docs/tech/references/roadmap.md) | 想了解未来规划 | 短期目标与中长期战略 |
 | [贡献指南](CONTRIBUTING.md) | 想参与贡献 | 如何提建议、报问题、提交代码 |
 
 ---
@@ -263,5 +263,5 @@ flowchart LR
 - **问题反馈**：[GitCode Issues](https://gitcode.com/daoCollective/SpecWeave/issues)
 - **讨论交流**：[GitCode Pull Requests](https://gitcode.com/daoCollective/SpecWeave/pulls)
 
-> **想了解更多？** 如果你有技术背景，想了解底层架构和设计原理，可以从 [项目概述](.agents/docs/project-overview.md) 和 [项目亮点](.agents/docs/project-highlights.md) 开始深入阅读。
+> **想了解更多？** 如果你有技术背景，想了解底层架构和设计原理，可以从 [项目概述](docs/tech/references/project-overview.md) 和 [项目亮点](docs/tech/references/project-highlights.md) 开始深入阅读。
 

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "longcat-agent-learning-wiki-07"
 title: "常见问题（FAQ）"
 source: "https://mp.weixin.qq.com/s/ymt9W64FD5IwCDNeQFuheA"

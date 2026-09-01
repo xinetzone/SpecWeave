@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-tracing
 title: 11 - 链路追踪示例
 source: d:\AI\vendor\veadk-python\examples\11_tracing\main.py

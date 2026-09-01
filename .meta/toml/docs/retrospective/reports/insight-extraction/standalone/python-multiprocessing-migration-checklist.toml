@@ -1,0 +1,5 @@
+id = "python-multiprocessing-migration-checklist"
+title = "Python multiprocessing fork → forkserver 迁移检查清单"
+category = "retrospective/reports/insight-extraction/standalone"
+date = "2026-07-02"
+version = "1.0"

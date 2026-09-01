@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "DSpark 论文系统化学习 Wiki"
+---
+
 # DSpark 论文系统化学习 Wiki
 
 > **来源**：DeepSeek DSpark 论文（梁文锋署名）

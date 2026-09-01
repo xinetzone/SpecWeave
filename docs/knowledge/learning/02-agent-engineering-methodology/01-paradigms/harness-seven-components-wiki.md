@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-seven-components-wiki-index"
 title: "Harness七大组件Wiki教程"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki.toml"

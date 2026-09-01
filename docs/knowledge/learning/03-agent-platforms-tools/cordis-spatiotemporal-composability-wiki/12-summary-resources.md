@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "cordis-spatiotemporal-composability-wiki-12"
 title: "Cordis — 总结与资源"
 source: "https://github.com/cordiverse/paper"

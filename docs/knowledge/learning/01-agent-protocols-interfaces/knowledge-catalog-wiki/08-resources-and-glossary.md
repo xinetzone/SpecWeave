@@ -134,7 +134,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 | 接口/API/ABI/Protocol概念辨析 | [../interface-api-abi-protocol-wiki/README.md](../interface-api-abi-protocol-wiki/README.md) | OKF本质是知识层的接口标准，与API/Protocol概念一脉相承 |
 | Harness七组件 | [../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/README.md](../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/README.md) | Harness中的Knowledge Base组件与OKF定位深度契合 |
 | 七概念方法论 | [../../02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.md](../../02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/README.md) | 本教程使用七概念方法论知识沉淀场景产出 |
-| 知识库首页 | [../../../../README.md](../../../../../.agents/docs/README.md) | 整个技术知识库的总入口 |
+| 知识库首页 | [../../../../README.md](../../../../index.md) | 整个技术知识库的总入口 |
 
 ## 8.4 学习建议
 

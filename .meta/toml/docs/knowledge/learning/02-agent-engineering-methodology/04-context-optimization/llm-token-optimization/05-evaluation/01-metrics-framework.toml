@@ -1,0 +1,5 @@
+id = "llm-token-optimization-metrics-framework"
+title = "大语言模型Token节省效果量化评估指标体系"
+category = "knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/05-evaluation"
+date = "2026-07-02"
+version = "1.0"

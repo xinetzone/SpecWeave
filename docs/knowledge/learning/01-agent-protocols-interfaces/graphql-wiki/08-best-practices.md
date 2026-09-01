@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "graphql-wiki-best-practices"
 title: "GraphQL 最佳实践"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/graphql-wiki/08-best-practices.toml"

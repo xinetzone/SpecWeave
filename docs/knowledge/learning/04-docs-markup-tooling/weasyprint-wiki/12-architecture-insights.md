@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "weasyprint-12-insights"
 title: "十二、架构洞察与个人理解"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/12-architecture-insights.toml"

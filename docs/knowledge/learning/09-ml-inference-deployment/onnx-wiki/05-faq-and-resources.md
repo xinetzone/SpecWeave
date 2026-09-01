@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-faq-resources
 title: ONNX Wiki - FAQ与资源
 date: 2026-08-09
@@ -9,9 +11,9 @@ tags:
   - glossary
   - references
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/05-faq-and-resources.toml"
   - https://onnx.ai
   - https://github.com/onnx/onnx
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/05-faq-and-resources.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

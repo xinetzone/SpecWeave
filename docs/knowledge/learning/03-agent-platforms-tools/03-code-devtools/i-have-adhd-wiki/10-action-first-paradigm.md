@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-action-first-paradigm"
 title: "十一、行动优先输出范式深度解析"
 source: "analyze-i-have-adhd-article/analysis-report.md#第三章"

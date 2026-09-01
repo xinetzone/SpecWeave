@@ -1,0 +1,5 @@
+id = "four-step-extension-recipe"
+title = "扩展四步法模式（Four-Step Extension Recipe）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

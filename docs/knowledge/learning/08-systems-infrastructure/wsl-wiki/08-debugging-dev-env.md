@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "wsl-wiki-08-debugging-dev-env"
 title: "调试诊断与开发环境搭建"
 source: "spec:create-wsl-wiki-tutorial"

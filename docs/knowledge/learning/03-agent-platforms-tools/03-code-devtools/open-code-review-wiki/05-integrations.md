@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-05"
 title: "集成与高级用法"
 source: "../open-code-review-wiki.md#集成与高级用法"

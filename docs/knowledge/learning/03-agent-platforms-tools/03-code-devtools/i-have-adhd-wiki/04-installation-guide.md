@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: i-have-adhd-wiki-install
 title: 五、跨平台安装指南
 source: external/libs/i-have-adhd/INSTALL.md 安装文档整理

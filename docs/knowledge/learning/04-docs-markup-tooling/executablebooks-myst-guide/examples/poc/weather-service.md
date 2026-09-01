@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "MyST MCP Server PoC示例 - Weather Service"
 name: "weather-service"
 version: "2.0.0"

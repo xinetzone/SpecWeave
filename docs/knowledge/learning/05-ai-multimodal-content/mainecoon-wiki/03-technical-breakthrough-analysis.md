@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-wiki-03-technical-breakthrough-analysis"
 title: "MaineCoon 技术突破深度解析与应用场景评估"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"

@@ -5,7 +5,7 @@ type: "Reference"
 description: "总结、FAQ与资源链接：五大核心要点回顾、关键takeaway、三条学习路径、八个常见问题解答及原始文章与相关概念出处。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/07-summary-faq-resources.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/references/07-summary-faq-resources.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 总结、FAQ与资源链接
 
 ## 核心要点回顾

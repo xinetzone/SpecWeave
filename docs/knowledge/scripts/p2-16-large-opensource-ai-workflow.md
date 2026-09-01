@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p2-16-large-opensource-ai-workflow
 title: 大型开源项目 AI 协作工作流模式（PyTorch/Helion 范例）
 source: d:\spaces\chaos\hub\pytorch\AGENTS.md + d:\spaces\chaos\hub\helion\AGENTS.md

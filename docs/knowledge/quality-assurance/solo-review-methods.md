@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: solo-review-methods
 title: 没人帮你杠？四种自己给自己挑错的方法
 source: knowledge-sedimentation S5阶段单人替代方案

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-architecture-overview
 title: 架构概览：VeADK 整体架构设计
 source: 'seven-concepts: veadk-python-wiki'

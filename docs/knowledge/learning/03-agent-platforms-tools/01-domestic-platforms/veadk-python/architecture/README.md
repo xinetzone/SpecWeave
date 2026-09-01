@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-architecture-readme
 title: Architecture
 source: 'seven-concepts: veadk-python-wiki'

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-engineering-wiki-02"
 title: "四条反直觉铁律"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"

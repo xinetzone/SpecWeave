@@ -153,9 +153,9 @@ Spec 文档必须按照以下顺序包含六大核心章节。**推荐使用纯�
 
 ## 相关模式
 
-- [Spec九段叙事法](../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
-- [规范三同步原则](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
-- [双向导航链接](../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
+- [Spec九段叙事法](../../../docs/retrospective/patterns/methodology-patterns/product-growth/spec-nine-section-narrative.md)
+- [规范三同步原则](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/spec-triple-sync.md)
+- [双向导航链接](../../../docs/retrospective/patterns/methodology-patterns/document-architecture/bidirectional-navigation-links.md)
 ---
 
 ← 上一章: [01 概述](01-overview.md) | **[返回索引](../spec-writing-guide.md)** | 下一章: [03 必需元素清单](03-required-elements.md) →

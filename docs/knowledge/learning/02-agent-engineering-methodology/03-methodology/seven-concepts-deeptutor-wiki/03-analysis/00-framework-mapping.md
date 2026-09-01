@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: seven-concepts-deeptutor-03-mapping
 title: 七概念→DeepTutor映射总览表
 source: "https://mp.weixin.qq.com/s/MfTnEwjQlBJX4bf0JsqbRw"

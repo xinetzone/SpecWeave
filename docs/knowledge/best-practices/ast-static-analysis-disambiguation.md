@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "ast-static-analysis-disambiguation"
 title: "Python AST静态分析实践：五类消歧法降低误报"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/ast-static-analysis-disambiguation.toml"

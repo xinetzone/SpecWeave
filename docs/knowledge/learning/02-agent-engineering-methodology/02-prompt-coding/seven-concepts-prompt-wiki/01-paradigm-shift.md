@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-prompt-paradigm"
 title: "01、GPT-5.6范式变革：从规定过程到明确目标"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/01-paradigm-shift.toml"

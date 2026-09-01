@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-github-wiki-05-infrastructure-sync-model
 title: "中央同步模型"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/conda-dev-github-wiki/05-infrastructure-sync-model.toml"

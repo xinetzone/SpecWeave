@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch10-build"
 title: "第10章 - 构建系统与开发环境"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

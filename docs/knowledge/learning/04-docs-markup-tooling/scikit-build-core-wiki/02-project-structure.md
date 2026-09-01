@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "项目目录结构与模块功能"
 source: "spec:create-scikit-build-core-wiki-tutorial"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/02-project-structure.toml"

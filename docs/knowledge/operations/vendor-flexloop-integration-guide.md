@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "vendor-flexloop-integration-guide"
 title: "vendor/flexloop 功能集成方案决策指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/vendor-flexloop-integration-guide.toml"
@@ -13,7 +15,7 @@ summary: "当需要在 SpecWeave 中新增或使用 flexloop 相关功能时，�
 
 ## 背景
 
-SpecWeave 通过 git submodule 引入 flexloop（AgentForge）作为规范参考实现，当前锁定版本为 `v0.7.1-270-gd618849 (d618849a)`。在日常开发中，经常会遇到需要"新增 flexloop 功能"的需求，但根据[三区域边界模型](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)和[外部依赖四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)，**直接在 `vendor/flexloop/` 内部新增或修改文件是严格禁止的**（违反"不侵入"原则，会导致 submodule permanent dirty，版本控制混乱）。
+SpecWeave 通过 git submodule 引入 flexloop（AgentForge）作为规范参考实现，当前锁定版本为 `v0.7.1-270-gd618849 (d618849a)`。在日常开发中，经常会遇到需要"新增 flexloop 功能"的需求，但根据[三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md)和[外部依赖四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md)，**直接在 `vendor/flexloop/` 内部新增或修改文件是严格禁止的**（违反"不侵入"原则，会导致 submodule permanent dirty，版本控制混乱）。
 
 本文档提供一份决策指南，帮助开发者根据功能类型选择正确的合规集成路径。
 
@@ -241,7 +243,7 @@ flowchart TB
 ## 参考
 
 - [VENDOR-INTEGRATION.md](../VENDOR-INTEGRATION.md) — flexloop 子模块协同规范（完整版）
-- [三区域边界模型](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md) — 外部代码依赖的主权划分模型
-- [外部依赖四不原则](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md) — submodule 管理铁律
+- [三区域边界模型](../../retrospective/patterns/methodology-patterns/governance-strategy/three-zone-boundary-model.md) — 外部代码依赖的主权划分模型
+- [外部依赖四不原则](../../retrospective/patterns/methodology-patterns/governance-strategy/four-negatives-external-dependency.md) — submodule 管理铁律
 - [临时依赖管理协议](../../../.agents/protocols/dependency-management.md) — 依赖管理的协议定义
 - [submodule-modified-content 故障排查](../troubleshooting/submodule-modified-content.md) — submodule dirty 状态的根因分析与修复

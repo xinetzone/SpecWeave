@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: 03-dependencies
 title: pyproject.toml 依赖清单
 source: veadk-python codebase analysis

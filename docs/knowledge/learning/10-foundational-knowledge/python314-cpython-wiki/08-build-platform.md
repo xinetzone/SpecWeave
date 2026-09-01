@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-08"
 title: "Python 3.14 构建系统与平台支持"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#build-changes"

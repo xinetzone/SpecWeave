@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: Home Assistant
-description: 开源智能家居平台——核心架构、集成开发、测试与工具链
-tags: [home-assistant, smart-home, iot, python, asyncio]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-23T00:00:00Z }
-verified: { by: "Home Assistant 验证工程师", at: "2026-08-22" }
-stale_after: 2027-08-23
----
-
 # Home Assistant 知识包
 
 本知识包（bundle）系统梳理 Home Assistant 开源智能家居平台的核心架构与集成开发体系，涵盖三层架构（核心-集成-平台）、运行时内核（HomeAssistant 对象、事件总线、状态机、服务注册表、实体模型）、配置系统、认证权限、helpers/util 工具库、集成开发模式（manifest、ConfigFlow、平台实体基类）、hassfest 质量工具链（29 个验证器、四级 quality_scale）和 pytest 测试基础设施。内容基于 Home Assistant Core 源码提取，遵循 OKF v0.2 规范，零虚构。
@@ -55,3 +44,13 @@ stale_after: 2027-08-23
 * [示例索引](/examples/index.md) — 完整自定义集成示例
 * [信源登记簿](/references/index.md) — 4 个信源文件、4 个事实文件与洞察文件
 * [变更日志](/log.md) — 文档生成与验证记录
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

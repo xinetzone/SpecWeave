@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "retrospective-sunlogin-wiki-mobile-control-20260706-insight"
 title: "向日葵Wiki移动端远程控制更新洞察萃取"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/retrospective-sunlogin-wiki-mobile-control-update-20260706/insight-extraction.toml"

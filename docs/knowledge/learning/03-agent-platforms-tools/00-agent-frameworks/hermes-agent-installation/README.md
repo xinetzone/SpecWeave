@@ -1,10 +1,11 @@
 ---
+type: Wiki Tutorial
+
 title: Hermes Agent 完整安装方案
 project: hermes-agent
 version: 1.0.0
 created: 2026-08-10
 source:
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/README.toml"
   - external/libs/hermes-agent/README.md
   - external/libs/hermes-agent/README.zh-CN.md
   - external/libs/hermes-agent/pyproject.toml
@@ -15,6 +16,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platf
   - external/libs/hermes-agent/AGENTS.md
   - external/libs/hermes-agent/scripts/install.sh
   - external/libs/hermes-agent/scripts/install.ps1
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-installation/README.toml"
 ---
 # Hermes Agent 完整安装方案
 

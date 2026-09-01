@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-monetization-business-models"
 title: "商业模式设计：AI产品的盈利模式选择"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/03-business-models.toml"

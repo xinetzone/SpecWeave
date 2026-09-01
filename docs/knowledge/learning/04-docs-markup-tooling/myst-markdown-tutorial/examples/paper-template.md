@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-example-paper-template"
 title: "模板：学术论文模板"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/examples/paper-template.toml"

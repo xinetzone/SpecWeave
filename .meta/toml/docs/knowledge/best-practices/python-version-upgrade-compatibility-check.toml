@@ -1,0 +1,5 @@
+id = "python-version-upgrade-compatibility-check"
+title = "Python大版本升级破坏性变更检查清单"
+category = "knowledge/best-practices"
+date = "2026-07-02"
+version = "1.0"

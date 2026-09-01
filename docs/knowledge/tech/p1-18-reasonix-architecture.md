@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-18-reasonix-architecture
 title: Reasonix 架构：Python AI Agent 分层设计模式
 source: d:\spaces\chaos\hub\dao\src\reasonix

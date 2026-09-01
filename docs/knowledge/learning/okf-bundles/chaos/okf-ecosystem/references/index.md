@@ -5,3 +5,13 @@
 * [架构洞察](insights.md) — I 阶段分析的 5 个架构洞察与知识地图
 * [okf-kit 源码](okf-kit-source.md) — okf-kit 0.3.3 源码仓库登记与关键源文件清单
 * [okf-desktop 源码](okf-desktop-source.md) — okf-desktop 0.1.0 源码仓库登记与打包配置
+
+```{toctree}
+:maxdepth: 2
+
+facts-okf-desktop
+facts-okf-kit
+insights
+okf-desktop-source
+okf-kit-source
+```

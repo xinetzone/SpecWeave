@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-prompt-gcob"
 title: "03、GCOB四要素框架：Goal-Context-Output-Boundaries"
 category: "knowledge"

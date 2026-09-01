@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-06"
 title: "深度洞察与可复用方法论"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

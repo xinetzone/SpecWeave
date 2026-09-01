@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-03"
 title: "DeepSeek Harness 完全指南 — 快速上手：第一个任务"
 source: "https://github.com/deepseek-ai/deepseek-harness"

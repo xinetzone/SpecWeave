@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-overview"
 title: "教程总览与知识地图"
 source: "seven-concepts: volcengine-agentkit-wiki"

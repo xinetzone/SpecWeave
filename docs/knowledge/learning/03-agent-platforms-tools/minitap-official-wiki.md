@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Minitap.ai 官方Wiki完整学习教程：零脚本AI QA工程师minitest深度解析、AndroidWorld 100%基准测试、开源mobile-use SDK与移动端测试革命"
 category: "learning"
 source: "external: 不存在-Minitap官网（https://www.minitap.ai/）、GitHub开源仓库、Forbes报道、学术论文"
@@ -221,8 +223,8 @@ minitest的技术架构建立在开源项目**mobile-use**之上，该SDK提供�
 
 > **相关技术深度分析**:
 > - [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) - mobile-use SDK深度学习分析
-> - [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) - 多代理闭环执行架构
-> - [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) - 规范化坐标抽象技术
+> - [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) - 多代理闭环执行架构
+> - [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) - 规范化坐标抽象技术
 > - [mobile-use深度学习复盘](../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) - mobile-use深度学习复盘
 
 ---
@@ -517,8 +519,8 @@ Minitap已拥有超过20家企业客户，涵盖多个行业：
 |------|----------|------|
 | **mobile-use深度学习分析** | mobile-use开源SDK的技术架构、核心模块、实现细节深度解析 | [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) |
 | **mobile-use深度学习复盘** | mobile-use技术研究过程的完整复盘、关键洞察与经验总结 | [mobile-use-deep-learning-analysis/](../../../../.trae/specs/retrospectives-insights/mobile-use-deep-learning-analysis/spec.md) |
-| **多代理闭环执行架构** | minitest多代理协作的闭环执行机制、任务规划与验证流程 | [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
-| **规范化坐标抽象** | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| **多代理闭环执行架构** | minitest多代理协作的闭环执行机制、任务规划与验证流程 | [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| **规范化坐标抽象** | mobile-use中跨平台坐标系统一抽象技术细节 | [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 
 ### 12.5 关键信息来源汇总
 

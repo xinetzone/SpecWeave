@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "常见问题与最佳实践"
 source: "spec:create-scikit-build-core-wiki-tutorial"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/05-faq-and-best-practices.toml"

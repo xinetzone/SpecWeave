@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "caffe-docker-sop"
 title: "Caffe Docker 容器构建与运行 SOP"
 source: "retrospective-caffe-docker-runtime-20260722"
@@ -274,5 +276,5 @@ external/chaos/caffe/docker/local/
 | [RUNTIME_IMAGE_USAGE.md](../../../external/chaos/npu_tvm/docker/local/conda/RUNTIME_IMAGE_USAGE.md) | 运行时镜像使用指南 |
 | `assets/reference-project-index.md`（参考索引已归档） | 同类项目参考模板 |
 | `patterns/process-patterns/legacy-cpp-compat-checklist.md`（参考清单已归档） | 编译兼容性检查清单 |
-| [复盘报告](../../../.agents/docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md) | 全流程复盘 |
-| [导出报告](../../../.agents/docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/export-summary.md) | 项目汇总导出 |
+| [复盘报告](../../retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md) | 全流程复盘 |
+| [导出报告](../../retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/export-summary.md) | 项目汇总导出 |

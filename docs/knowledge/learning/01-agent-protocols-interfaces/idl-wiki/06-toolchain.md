@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-toolchain"
 title: "六、IDL 编译流程与工具链：从源文件到多语言桩代码"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/06-toolchain.toml"

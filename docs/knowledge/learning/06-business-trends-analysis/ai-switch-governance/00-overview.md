@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-switch-governance-00-overview"
 title: "AI赋能的Feature Flag全生命周期治理"
 source: "InfoQ QCon 2026 北京站"

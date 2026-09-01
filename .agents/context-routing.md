@@ -65,16 +65,16 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 复盘报告归类验证 | [scripts/check-report-categorization.py](scripts/check-report-categorization.py) |
 | 概念查阅/知识检索（最高可信度源） | [projects/awesome-okf-xs/doc/bundles/index.md](../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包总索引；优先级高于 `docs/knowledge/`，概念冲突时以 bundles 为准；只读引用，不修改子项目文件） |
 | 技术知识库查阅 | [docs/knowledge/README.md](../docs/knowledge/README.md) |
-| 复盘体系与可复用模式 | [docs/retrospective/README.md](docs/retrospective/README.md) |
-| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/README.md](docs/retrospective/patterns/README.md) |
-| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](docs/retrospective/assets/asset-inventory.md) |
-| 任务执行总结 | [docs/task-summaries/README.md](docs/task-summaries/README.md) |
-| 提示词工程模式 | [docs/retrospective/prompt-extraction.md](docs/retrospective/prompt-extraction.md) |
+| 复盘体系与可复用模式 | [docs/retrospective/README.md](../docs/retrospective/index.md) |
+| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/README.md](../docs/retrospective/patterns/index.md) |
+| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](../docs/retrospective/assets/asset-inventory.md) |
+| 任务执行总结 | [docs/task-summaries/README.md](../docs/retrospective/reports/task-reports/README.md) |
+| 提示词工程模式 | [docs/retrospective/prompt-extraction.md](../docs/retrospective/patterns/methodology-patterns/prompt-extraction.md) |
 | 提示词萃取系统 | [apps/dev-tools/prompt_extraction/](../apps/dev-tools/prompt_extraction/README.md) |
 | 提示词萃取系统架构 | [systems/prompt-extraction.md](systems/prompt-extraction.md) |
 | 项目复用案例 | [cases/agentforge-adoption.md](cases/agentforge-adoption.md) |
 | 指令集（复盘/洞察/第一性原理/对抗审查/萃取/方法论编排/导出报告/原子化/原子提交/Mermaid图表管理） | [commands/](commands/README.md) |
-| 七概念方法论体系（方法论编排底层方法论R-I-E-C-A-F-V/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md](docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) |
+| 七概念方法论体系（方法论编排底层方法论R-I-E-C-A-F-V/质量标准/实战演练） | [docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md](../docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) |
 | 硬编码治理规则体系 | [rules/](rules/README.md) |
 | 硬编码识别与判断 | [rules/identification-standards.md](rules/identification-standards.md) |
 | 硬编码替代方案查找 | [rules/alternatives-guide.md](rules/alternatives-guide.md) |
@@ -98,7 +98,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | 三层路由协议（完整版：apps/projects/vendor全覆盖） | [protocols/four-region-routing-architecture.md](protocols/four-region-routing-architecture.md)（四区域路由架构规范：架构定义、路由流程、对称结构、对比表、新增区域SOP）；vendor专用见 [protocols/three-layer-routing.md](protocols/three-layer-routing.md)（vendor→flexloop嵌套路由与异常分支） |
 | CMD-LOG命令集执行日志规范（5大命令集结构化日志/事件枚举/解析正则） | [rules/cmd-log-specification.md](rules/cmd-log-specification.md) |
 | 能力边界声明 | [capability-boundaries.md](capability-boundaries.md) |
-| 完整开发规范 | [docs/development-standards.md](docs/development-standards.md) |
+| 完整开发规范 | [docs/development-standards.md](../docs/tech/references/development-standards.md) |
 
 ## 🆕 新增顶层区域标准操作流程（SOP）
 
@@ -121,9 +121,9 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 
 ### 参考模式文档
 
-- [三层路由协议](docs/retrospective/patterns/architecture-patterns/three-layer-routing-protocol.md) - 路由设计规范
-- [对称目录结构设计](docs/retrospective/patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md) - 最小结构模板
-- [入口对比表模式](docs/retrospective/patterns/methodology-patterns/document-architecture/entry-comparison-table.md) - 对比表设计原则
+- [三层路由协议](../docs/retrospective/patterns/architecture-patterns/three-layer-routing-protocol.md) - 路由设计规范
+- [对称目录结构设计](../docs/retrospective/patterns/methodology-patterns/governance-strategy/symmetric-directory-structure.md) - 最小结构模板
+- [入口对比表模式](../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-comparison-table.md) - 对比表设计原则
 
 ## 关联入口
 

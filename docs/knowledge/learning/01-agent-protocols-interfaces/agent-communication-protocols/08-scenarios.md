@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#08-典型应用场景"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/08-scenarios.toml"

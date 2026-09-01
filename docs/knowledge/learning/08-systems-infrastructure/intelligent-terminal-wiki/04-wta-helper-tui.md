@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch04-helper-tui"
 title: "第4章 - WTA Rust 核心 - Helper 与 TUI"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

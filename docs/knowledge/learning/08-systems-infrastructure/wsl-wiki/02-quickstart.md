@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: wsl-wiki-02-quickstart
 title: "快速开始"
 source: "spec:create-wsl-wiki-tutorial"

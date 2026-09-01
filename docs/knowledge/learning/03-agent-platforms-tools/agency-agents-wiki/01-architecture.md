@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agency-agents-wiki-01"
 title: "The Agency 完全指南 — 文件夹架构"
 source: "https://github.com/msitarzewski/agency-agents"

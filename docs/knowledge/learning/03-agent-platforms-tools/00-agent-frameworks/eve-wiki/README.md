@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-readme"
 title: "Vercel Eve 开源 Agent 框架 Wiki 教程"
 source: "https://blog.nixapi.com/blog/vercel-eve-agent-framework-2026/ + https://zhuanlan.zhihu.com/p/2051780593944416346 + https://zhuanlan.zhihu.com/p/2050951746332124853 + https://juejin.cn/post/7657863114352754726 + https://vercel.com/eve"

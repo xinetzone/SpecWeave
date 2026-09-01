@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mainecoon-wiki-00-overview"
 title: "MaineCoon 实时音视频基础模型 — 概述"
 source: "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "weasyprint-07-advanced"
 title: "高级功能详解"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/07-advanced-features.toml"

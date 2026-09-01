@@ -1,0 +1,5 @@
+id = "layer-override-patch-drift"
+title = "分层覆盖补丁的版本漂移（layer override patch drift）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

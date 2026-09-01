@@ -1,4 +1,6 @@
 ---
+type: Wiki Document
+
 version: 1.0
 id: myst-unified-ecosystem-abi
 title: "04、ABI：应用程序二进制接口"

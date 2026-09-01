@@ -1,0 +1,5 @@
+id = "insight-extraction"
+title = "深度洞察分析：Caffe Docker算子正确性测试调试过程"
+category = "retrospective/reports/bug-fix/docker-build/retrospective-caffe-ops-correctness-test-20260727"
+date = "2026-07-02"
+version = "1.0"

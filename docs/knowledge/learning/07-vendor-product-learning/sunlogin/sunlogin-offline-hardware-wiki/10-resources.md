@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-10"
 title: "参考资料与链接"
 source: "../sunlogin-offline-hardware-wiki.md#参考资料与链接"

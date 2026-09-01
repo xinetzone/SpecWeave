@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-00"
 title: "概述与产品核心定位"
 source: "../sunlogin-bootbox-analysis.md"

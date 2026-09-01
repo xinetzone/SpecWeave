@@ -329,8 +329,8 @@ time mamba install -y -n base -c conda-forge --override-channels -q scipy
 
 | 资源 | 路径 |
 |------|------|
-| 性能优化模式文档 | `.agents/docs/retrospective/patterns/code-patterns/conda-build-performance-triple-optimization.md` |
-| v2.2.1 里程碑复盘报告 | `.agents/docs/retrospective/reports/build-engineering/retrospective-devcontainer-v221-conda-perf-20260814/README.md` |
-| 洞察萃取 | `.agents/docs/retrospective/reports/build-engineering/retrospective-devcontainer-v221-conda-perf-20260814/insight-extraction.md` |
+| 性能优化模式文档 | `docs/retrospective/patterns/code-patterns/conda-build-performance-triple-optimization.md` |
+| v2.2.1 里程碑复盘报告 | `docs/retrospective/reports/build-engineering/retrospective-devcontainer-v221-conda-perf-20260814/README.md` |
+| 洞察萃取 | `docs/retrospective/reports/build-engineering/retrospective-devcontainer-v221-conda-perf-20260814/insight-extraction.md` |
 | Dockerfile 实战参考 | `Dockerfile`（Stage 4/7 部分） |
 | CHANGELOG | `CHANGELOG.md`（v2.2.1-ft 章节） |

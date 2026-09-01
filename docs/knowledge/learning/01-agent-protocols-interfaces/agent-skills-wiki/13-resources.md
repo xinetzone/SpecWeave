@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-wiki-resources"
 source: "agent-skills-open-standard-wiki.md#十四资源链接"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/13-resources.toml"
@@ -20,6 +22,6 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 
 ### 本项目相关
 - **本项目 Skills 目录**：[.agents/skills/](../../../../../.agents/skills/README.md)
-- **渐进式披露模式**：[progressive-context-disclosure.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
-- **Skill 五要素模型**：[skill-five-elements-model.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
-- **Markdown 即接口模式**：[markdown-as-interface.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)
+- **渐进式披露模式**：[progressive-context-disclosure.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md)
+- **Skill 五要素模型**：[skill-five-elements-model.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md)
+- **Markdown 即接口模式**：[markdown-as-interface.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/markdown-as-interface.md)

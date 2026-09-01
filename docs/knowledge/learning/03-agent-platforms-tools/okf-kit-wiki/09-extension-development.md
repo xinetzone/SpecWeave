@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-09"
 title: "okf-kit 完全指南 — 扩展与开发"
 source: "https://github.com/vinodborole/okf-kit"

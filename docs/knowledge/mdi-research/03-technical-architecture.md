@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-technical-architecture
 title: MDI研究报告 - 技术架构深度解析
 source: "mdi-research-report.md#4-技术架构深度解析"

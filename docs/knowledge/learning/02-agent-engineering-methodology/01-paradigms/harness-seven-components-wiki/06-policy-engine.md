@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-seven-components-wiki-06"
 title: "策略引擎（Policy Engine）：规则红线与强制约束"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"

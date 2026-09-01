@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "tuyaopen-folder-learning-path"
 title: "TuyaOpen 目录学习路径（从 LINUX 闭环到 AI 能力区）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-folder-learning-path.toml"
@@ -37,4 +39,4 @@ summary: "针对 external/TuyaOpen 工作区的可执行学习路线：先跑通
 
 ## 3. 关联复盘材料
 
-- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../../.agents/docs/retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)
+- [TuyaOpen 目录全链路复盘（复盘+洞察+萃取+学习+导出）](../../../../retrospective/reports/insight-extraction/iot-ecosystem/retrospective-tuyaopen-folder-20260630/README.md)

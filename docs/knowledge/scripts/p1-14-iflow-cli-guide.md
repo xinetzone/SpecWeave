@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-14-iflow-cli-guide
 title: iFlow CLI AI 终端助手使用指南
 source: d:\spaces\chaos\iflow-cli\IFLOW.md

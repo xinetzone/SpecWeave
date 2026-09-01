@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: conda-dev-source-wiki-06-scenarios
 title: "典型应用场景"
 source: "spec:create-conda-dev-source-wiki-tutorial"

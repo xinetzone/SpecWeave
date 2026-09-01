@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch05-cpp-integration"
 title: "第5章 - C++ 集成层"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

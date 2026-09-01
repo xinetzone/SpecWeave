@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "veadk-python-final-delivery"
 title: "V阶段：最终交付清单"
 source: "seven-concepts: veadk-python-wiki"

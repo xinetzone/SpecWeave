@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "conda-forge-cross-compilation-guide"
 title: "conda-forge 交叉编译配置完整指南"
 category: "best-practices"

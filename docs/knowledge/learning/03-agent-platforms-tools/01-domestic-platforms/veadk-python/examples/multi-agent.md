@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-multi-agent
 title: 06 - 多智能体协作示例
 source: d:\AI\vendor\veadk-python\examples\06_multi_agent\main.py

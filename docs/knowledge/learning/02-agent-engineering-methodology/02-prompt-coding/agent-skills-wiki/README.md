@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-02-agent-engineering-methodology-agent-skills-wiki-index"
 title: "Agent 技能知识库"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/agent-skills-wiki/README.toml"

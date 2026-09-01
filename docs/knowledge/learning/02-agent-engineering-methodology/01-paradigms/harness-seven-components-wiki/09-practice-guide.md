@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-seven-components-wiki-09"
 title: "实践指南：从零搭建你的文章Agent"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"

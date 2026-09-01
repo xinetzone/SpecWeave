@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-adversarial-review"
 title: "V阶段：四视角对抗审查与内容修订"
 source: "seven-concepts:V阶段产物"

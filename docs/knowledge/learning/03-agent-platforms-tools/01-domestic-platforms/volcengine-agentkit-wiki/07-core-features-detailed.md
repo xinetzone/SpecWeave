@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-07"
 title: "核心功能深度解析"
 source: "seven-concepts: volcengine-agentkit-wiki"

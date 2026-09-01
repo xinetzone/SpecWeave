@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-overview"
 title: "Mermaid 教程总览"
 source: "https://mermaid.js.org/ | https://mermaid.live/"

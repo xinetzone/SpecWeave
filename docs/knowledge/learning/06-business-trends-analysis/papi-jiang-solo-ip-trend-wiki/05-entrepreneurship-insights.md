@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "papi-jiang-solo-ip-trend-insights"
 title: "Papi酱关闭公司回归个人IP：创业启示与实践要点"
 category: "learning"

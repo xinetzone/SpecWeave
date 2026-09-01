@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-bootbox-analysis-04"
 title: "网页设计与用户体验分析"
 source: "../sunlogin-bootbox-analysis.md"

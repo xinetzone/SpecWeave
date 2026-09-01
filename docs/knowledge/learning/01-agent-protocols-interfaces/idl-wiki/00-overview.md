@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-overview"
 title: "IDL（接口定义语言）Wiki 教程 - 总览"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "adversarial-review-cases"
 title: "08、实战案例集"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/08-practice-cases.toml"

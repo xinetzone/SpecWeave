@@ -358,7 +358,7 @@ L3 流程在启动前必须通过以下「形态-能力匹配」检查，避免�
 2. 文件路径包含 `.temp/baby/` → 标记为探针（跨平台路径分隔符）
 3. SG-LOG 中探针操作的 `BOUNDARY_CHECK` 和 `BOUNDARY_PASS` 日志 ctx 包含 `baby_code: true` 字段
 
-> **实现位置**：`lib/stage_guardrails/boundary.py` 的 `is_baby_code()` 函数 + `lib/stage_guardrails/runtime.py` 的 `guard_operation()` 方法。详见 [A3 实现说明](../docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/README.md#a3-实现说明baby-前缀运行时识别)。
+> **实现位置**：`lib/stage_guardrails/boundary.py` 的 `is_baby_code()` 函数 + `lib/stage_guardrails/runtime.py` 的 `guard_operation()` 方法。详见 [A3 实现说明](../../docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/README.md#a3-实现说明baby-前缀运行时识别)。
 
 ---
 
@@ -458,12 +458,12 @@ L3 流程在启动前必须通过以下「形态-能力匹配」检查，避免�
 
 ## 十一、相关模式
 
-- [弹性工作流分类](../docs/retrospective/patterns/methodology-patterns/governance-strategy/elastic-workflow-classification.md)——本模板的 L2/L3 流程定义源自该模式的 New Feature/Refactoring 路径；该模式定义变更风险适配原则，本模板将其扩展为 4 层级并新增 L0 探索级。详见 [A2 重叠评估](../docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/a2-overlap-assessment.md)
-- [豁免机制合法化](../docs/retrospective/patterns/methodology-patterns/governance-strategy/exemption-mechanism-legalization.md)——本模板的 L0 探针实现豁免（§3.3）是该模式的首个前瞻性验证场景；该模式定义了"通过显式标注创建合法例外通道"的 6 个设计要素
-- [学习-验证-采用](../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
-- [两阶段处理](../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
-- [Spec即代码自动门禁](../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
-- [三层检查工具模式](../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
+- [弹性工作流分类](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/elastic-workflow-classification.md)——本模板的 L2/L3 流程定义源自该模式的 New Feature/Refactoring 路径；该模式定义变更风险适配原则，本模板将其扩展为 4 层级并新增 L0 探索级。详见 [A2 重叠评估](../../docs/retrospective/reports/task-reports/retrospective-l0l3-template-design-20260706/a2-overlap-assessment.md)
+- [豁免机制合法化](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/exemption-mechanism-legalization.md)——本模板的 L0 探针实现豁免（§3.3）是该模式的首个前瞻性验证场景；该模式定义了"通过显式标注创建合法例外通道"的 6 个设计要素
+- [学习-验证-采用](../../docs/retrospective/patterns/methodology-patterns/governance-strategy/learn-validate-adopt.md)
+- [两阶段处理](../../docs/retrospective/patterns/methodology-patterns/document-architecture/two-phase-processing.md)
+- [Spec即代码自动门禁](../../docs/retrospective/patterns/methodology-patterns/tools-automation/spec-as-code-automated-gates.md)
+- [三层检查工具模式](../../docs/retrospective/patterns/code-patterns/three-tier-check-tool.md)
 
 ---
 

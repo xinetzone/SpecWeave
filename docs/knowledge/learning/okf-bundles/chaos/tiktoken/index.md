@@ -1,14 +1,3 @@
----
-okf_version: "0.2"
-type: Index
-title: tiktoken 源码学习知识包
-description: OpenAI tiktoken v0.14.0 源码学习知识包，涵盖双层架构总览、BPE 分词原理、Encoding 核心 API、Rust 原生内核、注册表与模型映射、词表加载缓存、OpenAI 公开词汇体系及教学模块，共 9 篇概念文档与 2 篇实践示例
-tags: [tiktoken, bpe, tokenizer, openai, pyo3, rust, encoding, source-code]
-generated: { by: source-code-to-okf-wiki/E, at: 2026-08-25T00:00:00Z }
-verified: { by: source-code-to-okf-wiki/V, at: 2026-08-25T00:00:00Z }
-stale_after: 2027-08-25
----
-
 # tiktoken 源码学习知识包
 
 tiktoken 是 OpenAI 官方的 BPE 分词库，采用「薄 Python 门面 + 重型 Rust 核心」的双层架构（基于 PyO3 绑定）。本知识包基于 tiktoken v0.14.0 源码整理，收入 9 篇概念文档，系统覆盖从安装快速上手、BPE 分词原理、Encoding 核心 API、Rust 原生内核、注册表与模型映射、词表加载缓存，到 OpenAI 公开词汇体系与教学模块的完整学习路径，并附实践示例与事实参考。
@@ -47,3 +36,13 @@ tiktoken 是 OpenAI 官方的 BPE 分词库，采用「薄 Python 门面 + 重�
 - [信源登记](references/source.md) — 源码树结构与关键文件清单
 - [背景调研](references/background-research.md) — 领域背景与研究过程
 - [References 索引](references/index.md) — 参考资料汇总列表
+
+```{toctree}
+:maxdepth: 2
+
+concepts/index
+examples/index
+references/index
+log
+verification-report
+```

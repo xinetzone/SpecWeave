@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-syntax-types"
 title: "二、IDL 类型系统：基本数据类型与注解机制"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/02-syntax-types.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-engineering-wiki-07"
 title: "批判性思考与评估"
 source: "https://mp.weixin.qq.com/s/0w_xMwto4sLx6J_85OhWQw?from=industrynews&color_scheme=light#rd"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-evaluation-human-evaluation"
 title: "第5章：人工评估方法论"
 source: "spec:agent-evaluation-methodology-wiki"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: cross-cultural-adversarial-review-protocol
 title: 跨文化对抗性审查标准与"反向语义漂移"防御机制
 source: cross-cultural-first-principles-comparison Task 0

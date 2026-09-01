@@ -1,4 +1,6 @@
 ---
+type: Facts
+
 id: miaowu-meoo-practice-cases-facts
 title: 秒悟Meoo实训案例 - 事实采集
 source: https://alidocs.dingtalk.com/i/nodes/N7dx2rn0JbxOaqnAC2Xb1GeQWMGjLRb3

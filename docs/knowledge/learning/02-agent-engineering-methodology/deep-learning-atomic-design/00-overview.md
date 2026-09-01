@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deep-learning-atomic-design-00"
 title: "深度学习原子化设计指南"
 source: "docs/knowledge/engineering/deep-learning-atomic-design/index.md"

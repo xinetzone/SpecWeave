@@ -96,6 +96,6 @@ stale_after: "2027-08-22"
 
 ## 关联资源
 
-- [七概念方法论编排分析报告(kICrd)](../../../reports/knowledge/kicrd-seven-concepts-analysis-20260704.md)
+- [七概念方法论编排分析报告(kICrd)](../../../reports/concepts/knowledge/kicrd-seven-concepts-analysis-20260704.md)
 - 配套模式：[双层分析报告结构](dual-layer-analysis-report.md)
 - 子代理交付检查清单：[`.agents/templates/subagent-wiki-delivery-checklist.md`](../../../../../.agents/templates/subagent-wiki-delivery-checklist.md)

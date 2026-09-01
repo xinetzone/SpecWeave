@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "MDX + GraphQL 可查询文档快速入门指南"
 source: "insight:retrospective-sphinx-graphql-okf-combination-insights-20260805"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/mdx-graphql-guide/README.toml"
@@ -11,7 +13,7 @@ summary: "面向JS项目的MDX+GraphQL可查询文档快速入门：5分钟搭�
 ---
 # MDX + GraphQL 可查询文档快速入门指南
 
-> 本指南基于 [Sphinx × GraphQL × OKF 组合洞察分析](../../../../../.agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md) 的结论，面向 JS 项目开发者，提供从零搭建「可查询文档」的完整快速入门路径。
+> 本指南基于 [Sphinx × GraphQL × OKF 组合洞察分析](../../../../retrospective/reports/insight-extraction/external-learning/retrospective-sphinx-graphql-okf-combination-insights-20260805/insight-extraction.md) 的结论，面向 JS 项目开发者，提供从零搭建「可查询文档」的完整快速入门路径。
 
 ## 为什么需要 MDX + GraphQL？
 

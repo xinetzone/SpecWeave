@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-containers"
 title: "Container 容器类型"
 tags: ["tvm-ffi", "container", "array", "map", "tensor"]

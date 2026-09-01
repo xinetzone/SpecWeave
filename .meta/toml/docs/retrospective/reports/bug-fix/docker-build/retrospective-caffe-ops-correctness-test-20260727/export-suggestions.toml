@@ -1,0 +1,5 @@
+id = "export-suggestions"
+title = "模式萃取建议"
+category = "retrospective/reports/bug-fix/docker-build/retrospective-caffe-ops-correctness-test-20260727"
+date = "2026-07-02"
+version = "1.0"

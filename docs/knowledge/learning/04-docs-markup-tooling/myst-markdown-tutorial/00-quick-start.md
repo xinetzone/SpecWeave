@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-quick-start"
 title: "第0章：快速上手（Quick Start）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/00-quick-start.toml"

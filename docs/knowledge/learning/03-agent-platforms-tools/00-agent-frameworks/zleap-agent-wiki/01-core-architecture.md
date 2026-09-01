@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-core-architecture"
 title: "核心架构与技术栈"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

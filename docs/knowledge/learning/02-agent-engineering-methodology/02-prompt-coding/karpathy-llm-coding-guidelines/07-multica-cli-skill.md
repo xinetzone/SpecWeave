@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-multica-cli-skill"
 title: "Multica CLI Skill：让外部 Agent 安全操作 Multica"
 category: learning
@@ -14,7 +16,7 @@ structure: "tutorial-cognitive-ladder"
 ---
 # Multica CLI Skill：让外部 Agent 安全操作 Multica
 
-> 本文档遵循 [教程认知阶梯模式](../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，按六层递进结构组织。你可以在任何一层停下来使用，也可以一直深入到设计理念层。
+> 本文档遵循 [教程认知阶梯模式](../../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)，按六层递进结构组织。你可以在任何一层停下来使用，也可以一直深入到设计理念层。
 
 | 层级 | 章节 | 你将获得 |
 |------|------|---------|
@@ -550,4 +552,4 @@ multica issue children <id> --output json
 - [02 - 代码示例](02-code-examples.md)：LLM编程中常见错误与正确做法的代码级正反例
 - multica-cli 仓库：https://github.com/multica-ai/multica-cli
 - Multica 主仓库：https://github.com/multica-ai/multica
-- [教程认知阶梯模式](../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)：本文档使用的结构设计方法论
+- [教程认知阶梯模式](../../../../../retrospective/patterns/methodology-patterns/document-architecture/tutorial-cognitive-ladder.md)：本文档使用的结构设计方法论

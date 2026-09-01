@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ffi-wiki-resources"
 title: "术语表与参考资料"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/07-resources.toml"

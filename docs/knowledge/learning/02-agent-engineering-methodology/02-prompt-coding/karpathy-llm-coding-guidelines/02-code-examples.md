@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-code-examples"
 title: "真实代码正反例"
 category: learning

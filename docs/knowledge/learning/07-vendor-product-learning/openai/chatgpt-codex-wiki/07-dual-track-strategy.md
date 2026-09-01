@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-07"
 title: "双轨产品策略解析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

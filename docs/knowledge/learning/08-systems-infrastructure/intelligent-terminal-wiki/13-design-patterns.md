@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch13-patterns"
 title: "第13章 - 架构设计模式萃取"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

@@ -27,3 +27,27 @@
 * [16 — 平台开发模式](/concepts/16-platform-pattern.md) — 掌握各平台实体基类（Light/Sensor/Switch/BinarySensor/Climate/Cover 等）的使用、PLATFORM_SCHEMA、async_forward_entry_setups 转发、EntityDescription 声明式模式、async_register_entity_service 实体服务注册与 supported_features 位标志
 * [17 — hassfest 工具链](/concepts/17-hassfest-tooling.md) — 掌握 hassfest 29 个验证插件架构、validate 与 generate 双模式、quality_scale 四级 54 条质量规则、dependencies AST 依赖检测、scaffold 脚手架、translations 翻译工具、codeowners 自动生成与 mypy.ini 自动生成
 * [18 — 测试模式](/concepts/18-testing-patterns.md) — 掌握 Home Assistant pytest 配置、conftest fixtures（hass/hass_client/snapshot）、tests/common.py 测试工具、syrupy 快照测试、MockConfigEntry、enable_custom_integrations、禁网/DNS 限制与 verify_cleanup 资源泄漏检测
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-architecture
+02-installation-runner
+03-core-object
+04-bootstrap-lifecycle
+05-configuration
+06-event-bus
+07-state-machine
+08-service-registry
+09-entity-model
+10-registries
+11-auth-permissions
+12-helpers-library
+13-utilities
+14-component-architecture
+15-config-flow
+16-platform-pattern
+17-hassfest-tooling
+18-testing-patterns
+```

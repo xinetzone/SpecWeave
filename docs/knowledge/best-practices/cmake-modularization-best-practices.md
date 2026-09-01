@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "cmake-modularization-best-practices"
 title: "CMake项目模块化重构最佳实践"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/cmake-modularization-best-practices.toml"
@@ -497,13 +499,13 @@ Options.cmake → Dependencies.cmake → CompilerConfig.cmake → TargetBuild.cm
 ## 十、相关资源
 
 ### 可复用模式（详细参考）
-- [cmake-four-layer-modular-architecture.md](../../../.agents/docs/retrospective/patterns/code-patterns/cmake-four-layer-modular-architecture.md) — 四层模块化架构模式
-- [cmake-public-target-config-function.md](../../../.agents/docs/retrospective/patterns/code-patterns/cmake-public-target-config-function.md) — 公共目标配置函数模式
-- [cmake-platform-specific-operation-encapsulation.md](../../../.agents/docs/retrospective/patterns/code-patterns/cmake-platform-specific-operation-encapsulation.md) — 平台特定操作封装模式
-- [conda-windows-cmake-dual-path.md](../../../.agents/docs/retrospective/patterns/code-patterns/conda-windows-cmake-dual-path.md) — Windows Conda双路径搜索模式
+- [cmake-four-layer-modular-architecture.md](../../retrospective/patterns/code-patterns/cmake-four-layer-modular-architecture.md) — 四层模块化架构模式
+- [cmake-public-target-config-function.md](../../retrospective/patterns/code-patterns/cmake-public-target-config-function.md) — 公共目标配置函数模式
+- [cmake-platform-specific-operation-encapsulation.md](../../retrospective/patterns/code-patterns/cmake-platform-specific-operation-encapsulation.md) — 平台特定操作封装模式
+- [conda-windows-cmake-dual-path.md](../../retrospective/patterns/code-patterns/conda-windows-cmake-dual-path.md) — Windows Conda双路径搜索模式
 
 ### 原始复盘报告
-- [Caffe-FFI CMakeLists.txt 第二轮深度原子化重构复盘](../../../.agents/docs/retrospective/reports/build-engineering/retrospective-cmake-atomization-caffe-ffi-round2-20260729/README.md)
+- [Caffe-FFI CMakeLists.txt 第二轮深度原子化重构复盘](../../retrospective/reports/build-engineering/retrospective-cmake-atomization-caffe-ffi-round2-20260729/README.md)
 
 ### 其他相关最佳实践
 - [symbol-visibility-control.md](symbol-visibility-control.md) — C/C++共享库符号可见性控制

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-stdlib-wiki-05"
 title: "Python 3.14 标准库 annotationlib 全面详解"
 source: "https://docs.python.org/3.14/"

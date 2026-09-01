@@ -1,4 +1,6 @@
 ---
+type: Insights
+
 id: miaowu-meoo-practice-cases-insights
 title: 秒悟Meoo实训案例 - 核心洞察
 source: 基于01-facts.md提炼

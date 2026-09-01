@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-04
 title: "04 - 最佳实践与反模式"
 date: 2026-08-19
 tags: [cpython, best-practices, anti-patterns, checklist, mental-models, growth]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/04-best-practices-anti-patterns.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/04-best-practices-anti-patterns.toml"
 maturity: L1-draft
 ---
 # 04 - 最佳实践与反模式

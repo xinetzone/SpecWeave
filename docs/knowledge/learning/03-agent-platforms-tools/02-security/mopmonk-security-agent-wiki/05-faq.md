@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki-05"
 title: "常见问题解答（FAQ）"
 source: "../mopmonk-security-agent-wiki.md#五常见问题解答faq"

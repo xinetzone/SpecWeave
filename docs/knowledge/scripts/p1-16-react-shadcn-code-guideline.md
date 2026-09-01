@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-16-react-shadcn-code-guideline
 title: React + TypeScript + shadcn/ui 项目代码规范
 source: d:\spaces\chaos\daoApps\dao-yan\CodeGuideline.md

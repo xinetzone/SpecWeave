@@ -51,7 +51,7 @@ A_CLASS_TARGETS = [
 
 B_CLASS_TARGETS = [
     {
-        "path": ".agents/docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md",
+        "path": "docs/retrospective/reports/task-reports/retrospective-first-principles-vibe-coding-docs-update-20260710/execution-retrospective.md",
         "session": "retr-20260710-first-principles-vibe-coding-update",
         "cmd": "retrospective",
         "start_msg": "开始复盘：第一性原理vibe-coding学习文档更新（里程碑复盘）",
@@ -60,7 +60,7 @@ B_CLASS_TARGETS = [
         "complete_ctx": '{"duration":"~105min","recursive_practice_count":5,"new_patterns":3,"tool_improvements":1}',
     },
     {
-        "path": ".agents/docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md",
+        "path": "docs/retrospective/reports/task-reports/retrospective-mermaid-list-fix-first-principles-20260710/execution-retrospective.md",
         "session": "retro-20260710-mermaid-fix-first-principles",
         "cmd": "retrospective",
         "start_msg": "开始复盘：Mermaid列表触发问题第一性原理修复",

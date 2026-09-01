@@ -1,0 +1,5 @@
+id = "dataloader-pickle-diagnosis-sop"
+title = "DataLoader Pickle 序列化问题诊断 SOP"
+category = "knowledge/best-practices"
+date = "2026-07-02"
+version = "1.0"

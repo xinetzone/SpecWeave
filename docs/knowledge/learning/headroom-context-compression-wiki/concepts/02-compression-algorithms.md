@@ -6,7 +6,7 @@ sources:
 date: "2026-08-03"
 category: "learning"
 tags: ["headroom", "compression-algorithms", "smartcrusher", "codecompressor", "kompress", "ast", "content-routing"]
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/02-compression-algorithms.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/headroom-context-compression-wiki/concepts/02-compression-algorithms.toml"
 type: "Concept"
 description: "Headroom基于内容感知路由为JSON、代码、自然语言、日志等不同类型内容选择SmartCrusher、CodeCompressor、Kompress-v2-base等六种专用压缩算法，利用结构特征而非统一模型实现高压缩率与质量保障。"
 generated:
@@ -18,7 +18,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # Headroom — 六种压缩算法详解
 
 > 本章详细解析Headroom的内容路由机制和六种内置压缩算法，重点阐述SmartCrusher、CodeCompressor、Kompress-v2-base三种核心算法的工作原理与设计特点。

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "thesis-writing-overview"
 title: "一、概述"
 source: "知识沉淀方法论SOP产出（本科/硕士毕业论文写作）"

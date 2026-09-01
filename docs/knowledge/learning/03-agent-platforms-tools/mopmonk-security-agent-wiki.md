@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki"
 title: "MopMonk 安全 Agent Wiki 教程"
 source: "https://mp.weixin.qq.com/s/Y_8DYQGuxgHdiw-a74ZN0w"

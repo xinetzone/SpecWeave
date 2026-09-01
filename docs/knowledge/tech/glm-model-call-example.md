@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: glm-model-call-example
 title: GLM 大模型调用可复用示例（本地加载 + API 调用）
 category: tech

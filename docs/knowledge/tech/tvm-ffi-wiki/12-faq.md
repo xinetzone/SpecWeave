@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-faq"
 title: "常见问题解答 (FAQ)"
 tags: ["tvm-ffi", "faq", "troubleshooting"]

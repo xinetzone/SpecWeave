@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "tvm-ffi-function-registry"
 title: "Function 函数与全局注册表"
 tags: ["tvm-ffi", "function", "packed-func", "registry"]

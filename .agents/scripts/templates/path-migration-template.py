@@ -604,7 +604,7 @@ def step5_verify(scan: Dict) -> Result:
         logger.info(f"  OK: 无残留旧路径引用")
 
     logger.info("  建议验证命令:")
-    logger.info(f"    python .agents/scripts/check-version-ripple.py --root .agents/docs --bootstrap")
+    logger.info(f"    python .agents/scripts/check-version-ripple.py --root docs/retrospective --bootstrap")
     logger.info(f"    python -m pytest .agents/scripts/tests/ -v")
     logger.info(f"    python .agents/scripts/check-links.py")
     r.duration = time.time() - start_time

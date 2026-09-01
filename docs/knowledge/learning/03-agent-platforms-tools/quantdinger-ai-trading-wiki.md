@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "quantdinger-ai-trading-wiki"
 title: "QuantDinger：开源AI量化交易基础设施层完整教程"
 source: "微信公众号文章《QuantDinger：开源的AI量化交易基础设施层》by 极客之家"

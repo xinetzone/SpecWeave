@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-arkcli-core-notes"
 title: "火山引擎方舟 Ark CLI 核心笔记"
 source: "https://www.volcengine.com/docs/82379/2536875?lang=zh"

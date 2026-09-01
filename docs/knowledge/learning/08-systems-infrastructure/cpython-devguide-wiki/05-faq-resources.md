@@ -1,13 +1,15 @@
 ---
+type: Wiki Tutorial
+
 id: cpython-devguide-05
 title: "05 - FAQ与资源"
 date: 2026-08-19
 tags: [cpython, faq, glossary, resources, directory-map, reference]
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/05-faq-resources.toml"
   - devguide.python.org
   - github.com/python/cpython
   - external/libs/python/devguide
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/cpython-devguide-wiki/05-faq-resources.toml"
 maturity: L1-draft
 ---
 # 05 - FAQ与资源

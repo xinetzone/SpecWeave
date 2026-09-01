@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-02"
 title: "核心功能详解"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

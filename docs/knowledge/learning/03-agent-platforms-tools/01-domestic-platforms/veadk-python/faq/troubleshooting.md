@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: troubleshooting
 title: 常见问题排查
 source: veadk-python codebase analysis

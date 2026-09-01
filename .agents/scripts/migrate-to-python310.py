@@ -57,7 +57,6 @@ EXCLUDE_DIR_EXACT = {
     ".venv",
     "venv",
     "docs",
-    ".agents/docs",
 }
 EXCLUDE_DIR_PATTERNS = (
     re.compile(r".*[.-]venv$", re.IGNORECASE),

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-product-positioning"
 title: "产品定位与核心价值"
 source: "echobird-source-wiki-learning"

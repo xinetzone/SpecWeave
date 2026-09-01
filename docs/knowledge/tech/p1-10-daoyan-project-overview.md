@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: p1-10-daoyan-project-overview
 title: 道衍 DaoYan 项目概览（帛书道德经 AI 对话系统）
 source: d:\spaces\chaos\daoApps\dao-yan\README.md

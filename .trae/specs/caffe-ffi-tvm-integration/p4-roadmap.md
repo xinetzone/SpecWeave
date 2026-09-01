@@ -108,5 +108,5 @@ P4 阶段完成标准（全部达成 ✅）：
 
 ## 六、附：相关文档
 
-- [P3 阶段总复盘](../../../.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/sections/19-p3-phase-retrospective.md)
+- [P3 阶段总复盘](../../../docs/retrospective/reports/code-optimization/retrospective-caffe-ffi-p3b-test-milestone-20260731/sections/19-p3-phase-retrospective.md)
 - [P3-E 验收报告](../../../projects/xuanspace/libs/caffe-ffi/docs/retrospectives/P3E_BACKWARD_ACCEPTANCE_REPORT_20260804.md)

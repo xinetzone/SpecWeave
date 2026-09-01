@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: custom-run-processor
 title: 自定义RunProcessor开发指南
 source: veadk-python codebase analysis

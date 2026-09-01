@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "DeepSeek-V4 免费方案 Wiki 教程导航"
 date: "2026-08-19"
 source: "官方API文档 + DeepSeek官网 + 14个权威来源交叉验证"

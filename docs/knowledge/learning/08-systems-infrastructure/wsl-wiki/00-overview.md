@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: wsl-wiki-00-overview
 title: "WSL 概述与核心概念"
 source: "spec:create-wsl-wiki-tutorial"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-comparison"
 title: "五、IDL 规范对比"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/05-comparison.toml"

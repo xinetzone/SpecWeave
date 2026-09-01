@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-hiagent-platform-analysis"
 title: "火山引擎HiAgent一站式数字员工派遣站完整学习笔记：八大优势+十大场景+企业级Agent全生命周期平台"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/hiagent）+ 产品UX深度分析"

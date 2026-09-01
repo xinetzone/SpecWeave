@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "resources"
 title: "第五章 - 资源扩展链接"
 source: "公开资源整理"

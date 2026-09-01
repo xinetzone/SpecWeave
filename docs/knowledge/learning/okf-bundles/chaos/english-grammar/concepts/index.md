@@ -59,3 +59,39 @@
 - [示例：广读材料推荐](../examples/extensive-reading-materials.md) — VOA/CDLP/The Key/Project Gutenberg 免费广读资源清单
 - [参考：架构洞察](../references/insights.md) — 知识地图与交叉链接策略
 - [参考：事实清单](../references/facts.md) — 83条事实采集清单
+
+```{toctree}
+:maxdepth: 2
+
+00-home
+01-preface
+02-introduction
+03-extensive-reading-method
+04-terminology-cross-strait
+05-chapter-toc
+06-basic-sentence-patterns
+07-noun-phrases
+08-pronouns
+09-adjectives
+10-adverbs
+11-prepositions
+12-comparative-patterns
+13-participles
+14-verb-tenses
+15-voice
+16-modal-auxiliaries
+17-moods
+18-gerunds
+19-infinitives
+20-coordinate-conjunctions
+21-compound-sentences
+22-noun-clauses
+23-adverb-clauses
+24-relative-clauses
+25-subject-verb-agreement
+26-inversion
+27-reduced-clauses-introduction
+28-reduced-relative-clauses
+29-reduced-noun-clauses
+30-reduced-adverb-clauses
+```

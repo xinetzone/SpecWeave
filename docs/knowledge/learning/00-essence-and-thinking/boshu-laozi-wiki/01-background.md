@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-01"
 title: "历史背景与出土"
 source: "公共领域知识（马王堆帛书老子研究）"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-overview"
 title: "项目概述与核心定位"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

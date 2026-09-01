@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-in-ai-era
 title: AI时代的第一性原理：人机协同的思维增强
 source: first-principles-future-research Task 3
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/14-first-principles-in-ai-era.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"

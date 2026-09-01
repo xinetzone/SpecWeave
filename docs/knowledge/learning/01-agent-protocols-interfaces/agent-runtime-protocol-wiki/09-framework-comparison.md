@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-runtime-protocol-wiki-09"
 title: "框架对比：九条设计原则遵循度评估"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）https://mp.weixin.qq.com/s/0N-RnpGVy_PLSDHMwAIFNg"

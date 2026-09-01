@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Minitest & Mobile Use SDK 官方文档完整教程：AI QA工程师与开源移动自动化SDK系统化学习指南"
 category: "learning"
 source: "https://www.minitap.ai/docs"
@@ -239,8 +241,8 @@ graph TB
 |---|---|---|
 | Minitap.ai官方Wiki完整学习教程 | 产品深度解析、AndroidWorld基准、客户案例、融资报道 | [minitap-official-wiki.md](minitap-official-wiki.md) |
 | mobile-use深度学习分析 | SDK技术架构、核心模块深度解析 | [mobile-use-deep-learning-analysis.md](mobile-use-deep-learning-analysis.md) |
-| 多代理闭环执行架构 | 架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
-| 规范化坐标抽象 | 跨平台坐标系统一技术 | [normalized-coordinate-abstraction.md](../../../../.agents/docs/retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
+| 多代理闭环执行架构 | 架构模式复用参考 | [multi-agent-closed-loop-execution.md](../../../retrospective/patterns/architecture-patterns/multi-agent-closed-loop-execution.md) |
+| 规范化坐标抽象 | 跨平台坐标系统一技术 | [normalized-coordinate-abstraction.md](../../../retrospective/patterns/architecture-patterns/normalized-coordinate-abstraction.md) |
 
 ---
 

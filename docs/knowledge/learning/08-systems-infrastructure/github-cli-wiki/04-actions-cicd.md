@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-04"
 title: "Actions 与 CI/CD 集成指南"
 source: "https://github.com/cli/cli"

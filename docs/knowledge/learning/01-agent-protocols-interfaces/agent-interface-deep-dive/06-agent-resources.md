@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-resources-chapter"
 title: "参考资料与学习路径"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-interface-deep-dive/06-agent-resources.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-first-principles-insights"
 title: "F阶段第一性原理分析与I阶段核心洞察"
 source: "seven-concepts:F阶段+I阶段产物"

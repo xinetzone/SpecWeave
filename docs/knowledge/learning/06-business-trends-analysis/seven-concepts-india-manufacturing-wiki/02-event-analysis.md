@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "event-analysis"
 title: "事件分析：印度塔塔电子泄密事件详解"
 source: "seven-concepts-india-manufacturing-wiki"

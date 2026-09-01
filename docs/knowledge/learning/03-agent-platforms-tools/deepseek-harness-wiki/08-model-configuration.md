@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-08"
 title: "DeepSeek Harness 完全指南 — 模型配置与多模型支持"
 source: "https://github.com/deepseek-ai/deepseek-harness"

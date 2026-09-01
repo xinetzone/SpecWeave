@@ -1,7 +1,7 @@
 ---
 id: "mainecoon-argument-structure-analysis"
 title: "MaineCoon 文章论证逻辑与信息结构分析"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/analysis-report.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/analyze-wechat-article-mainecoon/concepts/01-argument-structure-analysis.toml"
 version: 1.1
 atomized_from: "analysis-report.md"
 type: Report

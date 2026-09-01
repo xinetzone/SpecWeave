@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p2-15-npm-github-release-guide
 title: npm monorepo 包发布与 GitHub Release 操作流程
 source: d:\spaces\chaos\daoApps\DaoMind\.trae\RELEASE-SUMMARY-2.0.0.md

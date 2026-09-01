@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-06-advanced"
 title: "Mermaid 进阶图表：GitGraph / Requirement / Mindmap / Block / C4 / Zenuml"
 source: "https://mermaid.js.org/"

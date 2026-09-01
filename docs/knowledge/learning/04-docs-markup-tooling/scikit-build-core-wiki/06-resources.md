@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "参考资料与扩展阅读"
 source: "spec:create-scikit-build-core-wiki-tutorial"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/06-resources.toml"

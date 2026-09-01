@@ -1,3 +1,8 @@
+---
+type: VerificationReport
+title: "验证报告：ai-agent-skills bundle"
+---
+
 # 验证报告：ai-agent-skills bundle
 
 **验证日期**：2026-08-23

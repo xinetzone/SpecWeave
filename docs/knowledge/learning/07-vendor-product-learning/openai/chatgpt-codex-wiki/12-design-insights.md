@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-12"
 title: "可借鉴的设计理念"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

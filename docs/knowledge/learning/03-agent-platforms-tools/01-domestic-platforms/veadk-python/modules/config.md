@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: config-module
 title: 配置系统详解
 source: veadk-python codebase analysis

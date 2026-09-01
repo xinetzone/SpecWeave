@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "idl-wiki-vs-modern-formats"
 title: "八、与现代接口描述方式对比：从 RPC IDL 到 Web IDL 与 AI-friendly IDL"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/idl-wiki/08-vs-modern-formats.toml"
@@ -77,7 +79,7 @@ flowchart LR
 
 ## 与 MDI（Markdown Interface）的关联
 
-MDI 是项目内探索的 **"AI-friendly IDL"**，使用 Markdown 作为接口定义格式。项目复盘洞察（详见 [insight-extraction.md#L43-L47](../../../../../.agents/docs/retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L43-L47)）明确指出：
+MDI 是项目内探索的 **"AI-friendly IDL"**，使用 Markdown 作为接口定义格式。项目复盘洞察（详见 [insight-extraction.md#L43-L47](../../../../retrospective/reports/project-reports/retrospective-mdi-project-completion-20260702/insight-extraction.md#L43-L47)）明确指出：
 
 > "Markdown 是 LLM 最易理解与生成的格式，AI Agent 场景下 Markdown IDL 的上下文成本显著低于 YAML/JSON 格式的 OpenAPI 规范。"
 

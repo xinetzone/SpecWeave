@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "jira-skill 事实清单"
+---
+
 # jira-skill 事实清单
 
 > R阶段事实采集。源码路径：d:\AI\.chaos\libs\tests\jira-skill\

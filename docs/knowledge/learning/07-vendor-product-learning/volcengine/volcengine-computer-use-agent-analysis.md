@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-computer-use-agent-analysis"
 title: "火山引擎Computer Use Agent (CUA)深度分析：多模态大模型驱动的企业级桌面AI智能体——视觉感知·自主规划·桌面执行·任务闭环"
 source: "external: 不存在-火山引擎官方文档（https://www.volcengine.com/docs/6394/2556112?lang=zh）+ 产品架构深度分析"
@@ -73,7 +75,7 @@ CUA代表了从"基于规则的自动化"向"基于视觉理解的通用智能�
 
 ### 1.4 与Mobile Use Agent的产品矩阵关系
 
-CUA与[Mobile Use Agent](../volcengine-mobile-use-agent-analysis.md)共同构成火山引擎"端到端GUI Agent"产品矩阵：
+CUA与[Mobile Use Agent](volcengine-mobile-use-agent-analysis.md)共同构成火山引擎"端到端GUI Agent"产品矩阵：
 
 | 产品 | 运行环境 | 目标场景 | 底层基础设施 |
 |-----|---------|---------|------------|
@@ -1302,7 +1304,7 @@ CUA提出的「对话即办事」不仅仅是营销口号，代表了一种新�
 - [火山引擎云手机产品首页](https://www.volcengine.com/product/acep)
 
 ### 关联产品分析
-- [火山引擎Mobile Use Agent分析](../volcengine-mobile-use-agent-analysis.md) - CUA的移动端对应产品
+- [火山引擎Mobile Use Agent分析](volcengine-mobile-use-agent-analysis.md) - CUA的移动端对应产品
 - [火山引擎AI云原生沙箱分析](../../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-ai-cloud-native-sandbox-analysis.md) - Agent云端执行底座
 - [火山引擎HiAgent平台分析](../../06-business-trends-analysis/volcengine-ai-ecosystem-wiki/volcengine-hiagent-platform-analysis.md) - 企业级Agent平台
 

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-07-vendor-product-learning-baidu-baidu-ocr-wiki-index"
 title: "百度 Unlimited-OCR 长文档解析技术完全指南"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/baidu/baidu-ocr-wiki/README.toml"

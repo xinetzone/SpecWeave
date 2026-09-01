@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "intelligent-terminal-ch01-overview"
 title: "第1章 - 项目概述与快速开始"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

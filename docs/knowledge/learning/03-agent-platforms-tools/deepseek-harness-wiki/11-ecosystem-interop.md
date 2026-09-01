@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "deepseek-harness-wiki-11"
 title: "DeepSeek Harness 完全指南 — 与 Claude Code/Codex/MCP 生态互操作"
 source: "https://github.com/deepseek-ai/deepseek-harness"

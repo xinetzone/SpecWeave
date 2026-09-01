@@ -130,7 +130,7 @@ jobs:
         continue-on-error: true
 
       - name: "[16/16] Check version ripple (bootstrap + doc consistency)"
-        run: python .agents/scripts/check-version-ripple.py --root .agents/docs/retrospective --bootstrap
+        run: python .agents/scripts/check-version-ripple.py --root docs/retrospective --bootstrap
 
       - name: Verify generated docs are committed
         run: |

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module3-metrics-overview"
 title: "模块3：关键指标体系（总览）"
 source: "spec:agent-eval-methodology-wiki"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-ml-platform-analysis"
 title: "火山引擎机器学习平台完整学习笔记：企业级云原生MLOps平台六大功能+千亿大模型训练+性能提升79%"
 source: "external: 不存在-火山引擎官方产品页（https://www.volcengine.com/product/ml-platform）+ 产品深度分析"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-ai-cloud-native-sandbox-analysis"
 title: "火山引擎AI云原生沙箱解决方案深度分析：Agent时代的生产级执行底座——极致性能、海量弹性、实战验证、普惠成本"
 source: "external: 不存在-火山引擎官方解决方案页（https://www.volcengine.com/solutions/ai-cloud-native-sandbox）+ 产品UX深度分析"

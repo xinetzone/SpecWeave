@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-02-agent-engineering-methodology-ai-engineering-notes-index"
 title: "AI Engineering 学习笔记"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes/README.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "agent-skills-open-standard-wiki.md#三目录结构规范"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/02-directory-structure.toml"
 id: "agent-skills-wiki-directory-structure"

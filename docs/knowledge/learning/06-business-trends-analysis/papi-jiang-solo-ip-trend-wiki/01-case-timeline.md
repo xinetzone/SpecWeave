@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "papi-jiang-solo-ip-trend-timeline"
 title: "Papi酱关闭公司回归个人IP：案例全景与时间线"
 category: "learning"

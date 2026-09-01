@@ -100,8 +100,8 @@ python3 "$ROOT/.agents/scripts/pattern-maturity.py" check
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 
-# 9. Generate docs (nav + dashboard + apps, including .agents/docs/README.md)
-echo -e "${YELLOW}[9/$TOTAL] Generate docs (nav+dashboard+apps, incl. .agents/docs/README.md)...${NC}"
+# 9. Generate docs (nav + dashboard + apps for the docs/ center)
+echo -e "${YELLOW}[9/$TOTAL] Generate docs (nav+dashboard+apps)...${NC}"
 python3 "$ROOT/.agents/scripts/docgen.py" all
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
@@ -181,7 +181,7 @@ echo ""
 
 # 16. Version ripple check (模式更新后下游文档版本一致性, 含递归自举验证)
 echo -e "${YELLOW}[16/$TOTAL] Check version ripple (bootstrap + doc consistency)...${NC}"
-python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/.agents/docs/retrospective" --bootstrap
+python3 "$ROOT/.agents/scripts/check-version-ripple.py" --root "$ROOT/docs/retrospective" --bootstrap
 echo -e "  ${GREEN}PASS${NC}"
 echo ""
 

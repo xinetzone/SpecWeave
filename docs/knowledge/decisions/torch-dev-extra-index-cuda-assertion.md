@@ -1,7 +1,9 @@
 ---
+type: Reference
+
 id: "torch-dev-extra-index-cuda-assertion"
 title: "ADR: torch-dev 双索引下载与 CUDA 硬断言决策"
-x-toml-ref: ""
+x-toml-ref: "../../../.meta/toml/docs/knowledge/decisions/torch-dev-extra-index-cuda-assertion.toml"
 category: "decisions"
 tags: ["devcontainer", "torch-dev", "pip-mirror", "cuda", "extra-index", "silent-downgrade", "verify", "镜像构建"]
 date: "2026-08-20"
@@ -102,7 +104,7 @@ source: "torch-dev-mirror-build-retrospective-20260820"
 
 ## 参考链接
 
-- [里程碑复盘报告](../../../../docs/retrospective/reports/milestone/torch-dev-mirror-build-retrospective-20260820.md)
+- [里程碑复盘报告](../../retrospective/reports/concepts/milestone/torch-dev-mirror-build-retrospective-20260820.md)
 - [torch-dev Dockerfile](../../../apps/docker-images/devcontainer-base/variants/torch-dev/Dockerfile)
 - [install-helpers.sh](../../../apps/docker-images/devcontainer-base/variants/shared/lib/install-helpers.sh)
 - [verify.sh](../../../apps/docker-images/devcontainer-base/variants/shared/lib/verify.sh)

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-ark-introduction-core-notes"
 title: "火山引擎方舟大模型平台核心笔记"
 source: "https://console.volcengine.com/ark/region:cn-beijing/docs/82379/1099455?lang=zh"

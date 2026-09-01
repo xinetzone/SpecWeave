@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-framework"
 title: "第一章 - 七概念知识框架"
 source: "七概念方法论体系"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "theory-framework"
 title: "理论框架：七概念理论详解"
 source: "seven-concepts-india-manufacturing-wiki"

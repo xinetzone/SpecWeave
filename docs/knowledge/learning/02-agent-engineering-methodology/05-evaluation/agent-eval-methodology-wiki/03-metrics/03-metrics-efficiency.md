@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module3-metrics-efficiency"
 title: "模块3.5：效率维度指标详解"
 source: "spec:agent-eval-methodology-wiki"

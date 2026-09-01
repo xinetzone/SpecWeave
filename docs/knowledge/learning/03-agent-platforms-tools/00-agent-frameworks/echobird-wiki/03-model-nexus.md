@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-model-nexus"
 title: "Model Nexus 模型中心"
 source: "echobird-source-wiki-learning"

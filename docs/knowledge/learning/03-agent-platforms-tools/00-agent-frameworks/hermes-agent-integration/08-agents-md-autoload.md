@@ -2,7 +2,7 @@
 id: "hermes-agent-integration-08-agents-md-autoload"
 title: "08 AGENTS.md 与 .agents/ 的自动加载机制"
 source: "hermes-agent 官方 Context Files 文档 + prompt_builder.py + subdirectory_hints.py + issue #14471/#502"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/hermes-agent-integration/08-agents-md-autoload.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/hermes-agent-integration/08-agents-md-autoload.toml"
 type: "Wiki Tutorial"
 description: "Hermes 如何自动加载 AGENTS.md 与 .agents/：原生单文件约定、渐进式发现、优先级、安全扫描，以及让 .agents/ 规范库被加载的方法"
 status: "stable"

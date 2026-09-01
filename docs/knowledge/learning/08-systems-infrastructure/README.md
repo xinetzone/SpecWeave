@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-08-systems-infrastructure-index"
 title: "系统基础设施"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/08-systems-infrastructure/README.toml"
@@ -26,7 +28,7 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 返回上级：Learning Wiki 知识库](../README.md)
-- [📚 文档首页](../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../index.md)
 
 ---
 

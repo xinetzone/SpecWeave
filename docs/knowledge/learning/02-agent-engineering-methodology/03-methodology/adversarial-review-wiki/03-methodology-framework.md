@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "adversarial-review-methodology"
 title: "03、方法论框架"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/03-methodology-framework.toml"
@@ -44,7 +46,7 @@ status: "completed"
 
 **跳过条件**：若仅涉及单一领域且无学派分歧，可跳过。
 
-参考模式：[cross-domain-semantic-drift.md](../../../../retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)
+参考模式：[cross-domain-semantic-drift.md](../../../../../retrospective/patterns/methodology-patterns/research-knowledge/cross-domain-semantic-drift.md)
 
 ---
 
@@ -106,7 +108,7 @@ status: "completed"
 | **过度简化偏差** | 将复杂理论简化为口号式总结；忽略重要边界条件；无信息量表述 | 保留理论必要复杂性；明确标注适用范围与边界条件 |
 | **跨领域语义漂移** ⭐ | 同一术语在不同领域含义完全不同，默认按本领域含义理解 | 阶段0概念扫描；建立术语表；歧义术语首次出现标注领域语境 |
 
-📚 详细认知科学基础参见：[13-cognitive-science-foundations.md](../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)
+📚 详细认知科学基础参见：[13-cognitive-science-foundations.md](../../../00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)
 
 ---
 
@@ -360,11 +362,11 @@ AI写代码（或做方案）的核心矛盾：
 
 🟢A级
 
-- **第一性原理**：[02-philosophy-origins.md](02-philosophy-origins.md) + [08-methodology-framework.md](../../00-essence-and-thinking/first-principles/08-methodology-framework.md)——管"**做对的事**"，方向正确、根因被真正定位
+- **第一性原理**：[02-philosophy-origins.md](02-philosophy-origins.md) + [08-methodology-framework.md](../../../00-essence-and-thinking/first-principles/08-methodology-framework.md)——管"**做对的事**"，方向正确、根因被真正定位
 - **对抗性审查**：本文档——管"**把事做对**"，实现稳健、边界被覆盖、能稳定上线
 - **关系**：二者构成"生成-验证"完整闭环，是质量保障的阴阳两面
 
-参考模式：[first-principles-prompt-pattern.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
+参考模式：[first-principles-prompt-pattern.md](../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)
 
 ---
 
@@ -400,10 +402,10 @@ AI写代码（或做方案）的核心矛盾：
 
 | 关联模式 | 关系类型 | 关系说明 |
 |---------|---------|---------|
-| [triangular-source-verification.md](../../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 思想同源 | 三源验证和多Agent对抗审查都强调"多角度交叉验证"——前者用于知识来源验证，后者用于代码/方案验证 |
-| [tdd-static-analysis-five-test-suites.md](../../../../retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) | 互补 | TDD五套测试是自动化验证，对抗式审查是AI驱动的智能验证，二者互补——自动化覆盖可机械化检查的部分，对抗式审查覆盖需要创造性"攻击思维"的部分 |
-| [dual-quality-gate-subagent.md](../../../../retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 思想同源 | 双质量门禁与对抗式审查共享"多重验证"的质量保障理念 |
-| [multi-agent-parallel-execution.md](../../../../retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.md) | 实现基础 | 多Agent并行执行是对抗式审查的技术基础——五大攻击者必须真正并发独立思考 |
+| [triangular-source-verification.md](../../../../../retrospective/patterns/methodology-patterns/retrospective-knowledge/triangular-source-verification.md) | 思想同源 | 三源验证和多Agent对抗审查都强调"多角度交叉验证"——前者用于知识来源验证，后者用于代码/方案验证 |
+| [tdd-static-analysis-five-test-suites.md](../../../../../retrospective/patterns/methodology-patterns/tools-automation/tdd-static-analysis-five-test-suites.md) | 互补 | TDD五套测试是自动化验证，对抗式审查是AI驱动的智能验证，二者互补——自动化覆盖可机械化检查的部分，对抗式审查覆盖需要创造性"攻击思维"的部分 |
+| [dual-quality-gate-subagent.md](../../../../../retrospective/patterns/methodology-patterns/governance-strategy/dual-quality-gate-subagent.md) | 思想同源 | 双质量门禁与对抗式审查共享"多重验证"的质量保障理念 |
+| [multi-agent-parallel-execution.md](../../../../../retrospective/patterns/architecture-patterns/multi-agent-parallel-execution.md) | 实现基础 | 多Agent并行执行是对抗式审查的技术基础——五大攻击者必须真正并发独立思考 |
 
 ---
 

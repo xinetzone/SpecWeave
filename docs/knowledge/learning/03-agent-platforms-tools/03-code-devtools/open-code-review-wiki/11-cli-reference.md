@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-11"
 title: "CLI 命令完整参考"
 source: "https://open-codereview.ai/docs/cli-reference"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-eval-methodology-module2-frameworks"
 title: "模块2：核心评测框架对比"
 source: "spec:agent-eval-methodology-wiki"

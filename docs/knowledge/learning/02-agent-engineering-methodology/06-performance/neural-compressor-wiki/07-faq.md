@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-faq"
 title: "常见问题"
 date: "2026-08-09"

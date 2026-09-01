@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-glossary
 title: VeADK-Python 术语表
 source: 'seven-concepts: veadk-python-wiki'

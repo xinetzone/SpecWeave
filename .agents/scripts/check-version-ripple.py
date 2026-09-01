@@ -76,7 +76,7 @@ STEP5_VERIFY_PATTERN = re.compile(
 
 CANONICAL_ASSET_COUNT = 8
 CANONICAL_VERIFY_COUNT = 12
-CANONICAL_SOURCE = ".agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
+CANONICAL_SOURCE = "docs/retrospective/patterns/methodology-patterns/ai-collaboration/edit-verify-separation.md"
 
 
 @dataclass
@@ -429,7 +429,7 @@ def bootstrap_self_check(script_path: Path) -> list[str]:
 
 def main():
     parser = argparse.ArgumentParser(description="版本涟漪效应检测器")
-    parser.add_argument("--root", default=".agents/docs/retrospective", help="扫描根目录")
+    parser.add_argument("--root", default="docs/retrospective", help="扫描根目录")
     parser.add_argument("--auto-discover", action="store_true", help="启用自动发现模式")
     parser.add_argument("--bootstrap", action="store_true", help="递归自举验证（检查脚本自身一致性）")
     args = parser.parse_args()

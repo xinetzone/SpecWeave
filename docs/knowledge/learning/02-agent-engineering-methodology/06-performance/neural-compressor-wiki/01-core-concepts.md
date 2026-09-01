@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-core-concepts"
 title: "核心概念与架构"
 date: "2026-08-09"

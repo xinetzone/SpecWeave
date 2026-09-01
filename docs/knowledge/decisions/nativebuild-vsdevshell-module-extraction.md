@@ -1,7 +1,9 @@
 ---
+type: Reference
+
 id: "nativebuild-vsdevshell-module-extraction"
 title: "ADR: VsDevShell通用模块提取与NativeBuild推广决策"
-x-toml-ref: ""
+x-toml-ref: "../../../.meta/toml/docs/knowledge/decisions/nativebuild-vsdevshell-module-extraction.toml"
 category: "decisions"
 tags: ["native-build", "powershell", "module-design", "visual-studio", "conda", "uv", "decoupling"]
 date: "2026-08-02"
@@ -139,5 +141,5 @@ VsDevShell提取已经完成了最有价值的通用化（解决了跨项目MSVC
 - 通用模块：[VsDevShell.psm1](../../../.agents/scripts/lib/VsDevShell.psm1)
 - C++构建模块：[NativeBuild.psm1](../../../.agents/scripts/lib/NativeBuild.psm1)
 - VsDevShell测试：[test_vsdevshell.Tests.ps1](../../../.agents/scripts/tests/test_vsdevshell.Tests.ps1)
-- 完整复盘报告：[retrospective-nativebuild-automation-20260802](../../../.agents/docs/retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802)
+- 完整复盘报告：[retrospective-nativebuild-automation-20260802](../../retrospective/reports/build-engineering/retrospective-nativebuild-automation-20260802)
 - 相关模式：多策略自动发现、版本优先级排序、PATH长度自动恢复、薄包装模式

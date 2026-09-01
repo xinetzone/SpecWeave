@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "oray-product-series-index"
 title: "贝锐（Oray）集团产品学习系列"
 category: "learning"
@@ -19,7 +21,7 @@ tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "�
 | 文档类型 | 链接 | 说明 |
 |---------|------|------|
 | 集团综合分析Wiki | [贝锐五大产品线：从连接到AI执行的20年战略全景](oray-comprehensive-analysis-wiki.md) | 集团20年五阶段演进、五大产品矩阵全景、10维度横向对比、协同生态闭环、三层业务模式、三层技术架构范式、UX设计分析、市场策略、AI战略全景、11条核心洞察 |
-| 正式复盘报告 | [贝锐五大产品线分析复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) | 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议 |
+| 正式复盘报告 | [贝锐五大产品线分析复盘](../../../../retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) | 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议 |
 
 ## 子产品线索引
 
@@ -37,10 +39,10 @@ tags: ["贝锐", "Oray", "向日葵", "蒲公英", "花生壳", "洋葱头", "�
 
 ## 相关资源
 
-- **正式复盘报告**：[贝锐五大产品线分析复盘](../../../../../.agents/docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) — 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议
+- **正式复盘报告**：[贝锐五大产品线分析复盘](../../../../retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/README.md) — 包含执行回顾、四层漏斗洞察萃取、27项可操作检查清单、改进建议
 - **向日葵系列索引**：[向日葵产品学习系列索引](../sunlogin/sunlogin-product-series-index.md)
-- **模式库**：[架构模式库](../../../../../.agents/docs/retrospective/patterns/architecture-patterns/README.md)
-- **方法论模式库**：[AI协作模式](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/CATEGORIES.md)
+- **模式库**：[架构模式库](../../../../retrospective/patterns/architecture-patterns/README.md)
+- **方法论模式库**：[AI协作模式](../../../../retrospective/patterns/methodology-patterns/CATEGORIES.md)
 
 > **说明**：本目录下的 `retrospective-oray-comprehensive-analysis-20260706/` 子目录为复盘工作底稿，正式复盘报告已归档至 `docs/retrospective/reports/competitive-analysis/retrospective-oray-comprehensive-analysis-20260706/` 目录下。
 

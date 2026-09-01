@@ -5,7 +5,7 @@ type: "Concept"
 description: "Prompt Engineering作为AI工程第一站，解决怎么说的问题：模型预测本质、提示词配方六要素、效果差异与适用边界。"
 sources:
   - "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/02-prompt-engineering.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/ai-engineering-four-milestones-wiki/concepts/02-prompt-engineering.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -15,7 +15,6 @@ verified:
 status: "stable"
 stale_after: "2027-08-22"
 ---
-
 # 第一站：Prompt Engineering
 
 ## 模型本质：预测下一个字，不是思考

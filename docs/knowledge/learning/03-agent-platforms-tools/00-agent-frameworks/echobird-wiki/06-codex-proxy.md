@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "echobird-wiki-codex-proxy"
 title: "Codex Proxy 协议转换"
 source: "echobird-source-wiki-learning"

@@ -1,7 +1,7 @@
 ---
 title: "Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱"
 source: "微信公众号文章《Anthropic金融服务Agent仓库解析》（极客之家）+ GitHub官方仓库 anthropics/financial-services"
-x-toml-ref: "../../../.meta/toml/docs/knowledge/learning/anthropic-financial-services-wiki.toml"
+x-toml-ref: "../../../../.meta/toml/docs/knowledge/ai-engineering/concepts/anthropic-financial-services-wiki.toml"
 date: "2026-07-04"
 tags: ["anthropic", "financial-services", "ai-agent", "claude", "mcp", "fintech", "vertical-industry", "investment-banking"]
 type: "Reference"
@@ -861,6 +861,6 @@ Skill的本质是什么？是把**资深员工脑子里的隐性经验**，变�
 
 ### 11.2 本项目相关Wiki
 
-- [Agent Skills 开放标准完整指南](../agent-skills-open-standard-wiki.md) - 深入了解Skill的标准规范、设计原则和最佳实践，理解为什么Skill是企业知识沉淀的关键
-- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP](../agent-communication-protocols-wiki.md) - 了解MCP（Model Context Protocol）协议的技术细节，看懂数据连接器是怎么工作的
+- [Agent Skills 开放标准完整指南](../../learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) - 深入了解Skill的标准规范、设计原则和最佳实践，理解为什么Skill是企业知识沉淀的关键
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP](../../learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) - 了解MCP（Model Context Protocol）协议的技术细节，看懂数据连接器是怎么工作的
 - [明略科技Octo平台学习Wiki](/concepts/octo-platform-wiki.md) - 另一个多Agent协作平台的参考，对比不同Agent架构设计的思路

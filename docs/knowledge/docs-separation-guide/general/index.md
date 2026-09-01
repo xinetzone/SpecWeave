@@ -1,8 +1,3 @@
----
-title: 通用知识
-description: 跨学科知识与思维模型集合
----
-
 # 🌐 通用知识
 
 本目录汇集与本项目无直接耦合，但对知识体系有滋养价值的**通用知识**，与同级 [技术文档](../tech/index.md) 形成双轨隔离。
@@ -54,7 +49,6 @@ flowchart TD
 :maxdepth: 2
 :caption: 知识领域
 
-philosophy/index
 domain/index
-methodology/index
+philosophy/index
 ```

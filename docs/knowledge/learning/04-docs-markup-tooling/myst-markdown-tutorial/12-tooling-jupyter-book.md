@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-jupyter-book"
 title: "第12章：工具链集成 - Jupyter Book v1"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/12-tooling-jupyter-book.toml"

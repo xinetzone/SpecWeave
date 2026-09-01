@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "llm-token-optimization-01-prompt-engineering"
 title: "提示词工程优化"
 source: "行业实践、IBM开发者文档、CSDN技术博客、AI Wiki综合整理"

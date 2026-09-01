@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "learning-path"
 title: "学习路径与操作指南"
 source: "seven-concepts-india-manufacturing-wiki"

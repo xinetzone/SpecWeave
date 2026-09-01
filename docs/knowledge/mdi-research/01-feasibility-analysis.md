@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-feasibility-analysis
 title: MDI研究报告 - 可行性分析
 source: "mdi-research-report.md#2-可行性分析"

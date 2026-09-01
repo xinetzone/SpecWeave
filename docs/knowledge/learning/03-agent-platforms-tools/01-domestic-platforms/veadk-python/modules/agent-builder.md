@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: agent-builder-module
 title: AgentBuilder 使用指南
 source: veadk-python codebase analysis

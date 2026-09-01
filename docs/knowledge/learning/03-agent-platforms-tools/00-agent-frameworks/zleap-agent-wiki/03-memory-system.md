@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "zleap-agent-wiki-memory-system"
 title: "分区记忆系统"
 source: "https://github.com/Zleap-AI/Zleap-Agent"

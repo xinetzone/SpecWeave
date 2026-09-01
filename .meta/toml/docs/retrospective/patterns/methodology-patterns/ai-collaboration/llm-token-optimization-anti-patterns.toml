@@ -1,0 +1,5 @@
+id = "llm-token-optimization-anti-patterns"
+title = "LLM Token优化反模式集（Anti-Patterns Catalog）"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

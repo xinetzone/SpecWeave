@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 version: 1.0
 id: mdi-spec
 title: "MDI Spec v1.0：Markdown即接口规范"

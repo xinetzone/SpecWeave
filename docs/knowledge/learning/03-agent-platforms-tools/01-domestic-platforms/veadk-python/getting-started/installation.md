@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: veadk-python-installation
 title: 安装指南
 source: 'seven-concepts: veadk-python-wiki'

@@ -56,7 +56,7 @@ KNOWN_CATEGORIES = {
     "task-reports",
 }
 
-REPORTS_DIR_NAME = ".agents/docs/retrospective/reports"
+REPORTS_DIR_NAME = "docs/retrospective/reports"
 INDEX_FILE = "README.md"
 
 

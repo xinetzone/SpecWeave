@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "codewhale-wiki-05"
 title: "CodeWhale 核心功能对比表"
 source: "https://github.com/Hmbown/CodeWhale"

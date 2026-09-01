@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "mobile-use 架构洞察"
+---
+
 # mobile-use 架构洞察
 
 > I阶段分析。基于 R 阶段 265 条事实。

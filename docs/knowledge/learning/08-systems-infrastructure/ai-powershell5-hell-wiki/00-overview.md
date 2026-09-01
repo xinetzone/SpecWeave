@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-00-overview"
 title: "背景与问题陈述——为什么 AI+PS5 是\"地狱难度\""
 source: "internal:ai-powershell5-research-rfive"

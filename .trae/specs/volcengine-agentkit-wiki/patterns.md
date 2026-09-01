@@ -22,7 +22,7 @@ gate_g3_passed: true
 **模式 ID**：P-AGENT-SELECT-001（v2.0，V阶段采纳「供应商锁定风险」维度后升级为9维度）
 
 > **📎 可直接套用工具**：独立评分卡文件（含空白打分表+加权公式+决策矩阵+PoC验证清单+反模式）：
-> [P-AGENT-SELECT-001-agent-platform-selection-scorecard.md](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-scorecard.md)
+> [P-AGENT-SELECT-001-agent-platform-selection-scorecard.md](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-scorecard.md)
 >
 > 使用方法：复制评分卡文件到你的项目目录，填写候选平台信息和分数，自动得出加权总分和决策建议。
 
@@ -218,7 +218,7 @@ gate_g3_passed: true
 
 | 模式ID | 模式名称 | 模式类型 | 成熟度 | 归档路径 | 配套工具 |
 |--------|---------|---------|--------|---------|---------|
-| P-AGENT-SELECT-001 | 企业级AI Agent平台9维度选型评估框架 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.md` | [评分卡（可直接套用）](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-scorecard.md) |
+| P-AGENT-SELECT-001 | 企业级AI Agent平台9维度选型评估框架 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.md` | [评分卡（可直接套用）](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-scorecard.md) |
 | P-LEGACY-AI-UPGRADE-002 | 存量业务系统智能化改造5步SOP | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.md` | — |
 | P-DEMO-TO-PROD-003 | 智能体从Demo到生产的12项检查清单 | 方法论模式（治理策略） | L1 实验性 | `.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-DEMO-TO-PROD-003-demo-to-prod-checklist.md` | Copy-Paste快速检查清单（含在正文中） |
 

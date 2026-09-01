@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-03"
 title: "使用流程与命令详解"
 source: "../open-code-review-wiki.md#使用流程与命令详解"

@@ -1,6 +1,11 @@
+---
+type: Reference
+title: "分类索引：learning"
+---
+
 # 分类索引：learning
 
-- [返回分类总索引](../category-index.md)
+- [返回分类总索引](../../category-index.md)
 - [返回知识库首页](../../README.md)
 - [按标签检索](../../tags/README.md)
 

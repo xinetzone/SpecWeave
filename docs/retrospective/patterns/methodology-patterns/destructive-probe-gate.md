@@ -6,14 +6,13 @@ date: "2026-08-24"
 maturity: "L1-draft"
 maturity_note: "单案例（awesome-okf-xs check-utf8.py 双向验证），待第二个独立案例验证升级 L2"
 source: "七概念方法论编排·知识沉淀(sc-20260824-milestone-retro)——awesome-okf-xs CI 集成里程碑复盘模式E-2"
-source_report: "docs/retrospective/reports/milestone/awesome-okf-xs-ci-integration-retrospective-20260824.md（模式E-2 + 洞察3 + 事实F-19~F-21）"
+source_report: "docs/retrospective/reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md（模式E-2 + 洞察3 + 事实F-19~F-21）"
 related_patterns: ["bp-preflight-integrity-gate", "bp-history-based-doc-repair"]
 tags: ["ci", "quality-gate", "testing", "probe", "verification", "exit-code", "gate"]
 validation_count: 1
 reuse_count: 0
 documentation_level: "complete"
 abstract_level: "domain-general"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/destructive-probe-gate.toml"
 ---
 
 # 破坏性探针双向验证门禁
@@ -131,7 +130,7 @@ mindmap
 
 - 关联门禁实现：[check-utf8.py](../../../../projects/awesome-okf-xs/scripts/check-utf8.py)（含探针双向验证逻辑）
 - 工作流配置：`projects/awesome-okf-xs/.github/workflows/pages.yml`（UTF-8 check 置于 Install dependencies 前，见关键决策2）
-- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../reports/milestone/awesome-okf-xs-ci-integration-retrospective-20260824.md)（模式E-2 + 洞察3 + 事实 F-19~F-21）
+- 溯源复盘报告：[awesome-okf-xs-ci-integration-retrospective-20260824.md](../../reports/project-governance/awesome-okf-xs-ci-integration-retrospective-20260824.md)（模式E-2 + 洞察3 + 事实 F-19~F-21）
 - 关联模式：[前置完整性门禁 bp-preflight-integrity-gate](preflight-integrity-gate.md)（gate 前置到构建前首道检查）、[历史基线文档修复法 bp-history-based-doc-repair](history-based-doc-repair.md)（探针坏文件的修复信源）
 
 ## 对抗审查记录

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "open-code-review-wiki-09"
 title: "常见问题（FAQ）"
 source: "../open-code-review-wiki.md#常见问题faq"

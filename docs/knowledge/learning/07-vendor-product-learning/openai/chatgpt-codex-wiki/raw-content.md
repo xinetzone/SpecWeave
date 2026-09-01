@@ -1,3 +1,8 @@
+---
+type: Wiki Tutorial
+title: "ChatGPT Codex 页面原始内容采集"
+---
+
 # ChatGPT Codex 页面原始内容采集
 
 > 采集时间: 2026-07-08

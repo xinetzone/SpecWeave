@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 version: 1.1
 id: mdi-research-report
 title: "MDI (Markdown Interface) 深度研究报告"

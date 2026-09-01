@@ -1,3 +1,8 @@
+---
+type: Insights
+title: "veadk-python 架构洞察（I 阶段）"
+---
+
 # veadk-python 架构洞察（I 阶段）
 
 > 基于 R 阶段 131 条事实（`facts.md`）提炼，每条洞察含陈述/证据/反常识/行动四元组。

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "harness-seven-components-wiki-04"
 title: "知识库引擎（Knowledge Base Engine）：业务参考书与判断力缓存"
 source: "https://mp.weixin.qq.com/s/IOBCNtztxpinWrYW_AtYew?from=industrynews&color_scheme=light#rd"

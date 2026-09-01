@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: agent-module
 title: Agent 类完整 API 参考
 source: veadk-python codebase analysis

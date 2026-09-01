@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "eve-wiki-06"
 title: "竞品对比与选型"
 source: "eve-framework-wiki-learning"

@@ -1,0 +1,5 @@
+id = "graph-transform-validator-architecture"
+title = "图变换验证工具四段式架构：Parser→Analyzer→Transformer→Visualizer"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

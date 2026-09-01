@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: "python-rust-comparison-ecosystem-scenarios"
 title: "Python 与 Rust 技术对比 · 生态、应用场景与代码示例"
 category: "tech"

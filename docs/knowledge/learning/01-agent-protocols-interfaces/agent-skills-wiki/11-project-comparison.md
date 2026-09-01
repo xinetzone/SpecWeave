@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agent-skills-wiki-project-comparison"
 source: "agent-skills-open-standard-wiki.md#十二与本项目现有-skill-体系的对比"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-skills-wiki/11-project-comparison.toml"
@@ -15,8 +17,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocol
 | name/description frontmatter | ✅ 已实现 | SKILL.md 头部 |
 | scripts/ 目录 | ✅ 已实现 | 如 [link-check-cmd](../../../../../.agents/skills/link-check-cmd/SKILL.md) |
 | references/ 目录 | ✅ 已实现 | 如各技能的参考文档 |
-| 渐进式披露理念 | ✅ 已实现 | [progressive-context-disclosure.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) |
-| 五要素模型 | ✅ 已扩展 | [skill-five-elements-model.md](../../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) |
+| 渐进式披露理念 | ✅ 已实现 | [progressive-context-disclosure.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/progressive-context-disclosure.md) |
+| 五要素模型 | ✅ 已扩展 | [skill-five-elements-model.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/skill-five-elements-model.md) |
 
 ### 12.2 本项目扩展特性
 

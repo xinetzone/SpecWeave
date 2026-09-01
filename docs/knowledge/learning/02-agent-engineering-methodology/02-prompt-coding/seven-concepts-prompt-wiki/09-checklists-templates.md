@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "seven-concepts-checklists"
 title: "09、检查清单与可复用模板库"
 category: "knowledge"

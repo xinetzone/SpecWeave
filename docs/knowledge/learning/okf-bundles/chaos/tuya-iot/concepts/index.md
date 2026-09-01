@@ -20,3 +20,23 @@
 * [12 — OpenClaw 云 API](12-openclaw-api.md) — 涂鸦 2C 终端用户 API、7 大数据中心、10 大功能模块、REST/WebSocket 双协议与设备控制工作流
 * [13 — Home Assistant 集成](13-ha-integration.md) — Tuya v2 与 Smart Life 两代集成对比、16 个 HA 平台、配置流程与本地控制现状
 * [14 — IoT 开发完整工作流](14-iot-workflow.md) — 从环境搭建到 OTA 部署的十阶段流程、AI 技能辅助、嵌入式最佳实践与内存/实时性/功耗优化
+
+```{toctree}
+:maxdepth: 2
+
+00-overview
+01-tal-architecture
+02-system-services
+03-network-stack
+04-security-kv
+05-third-party-libs
+06-build-system
+07-p2p-communication
+08-ai-components
+09-board-support
+10-peripherals
+11-dev-skills
+12-openclaw-api
+13-ha-integration
+14-iot-workflow
+```

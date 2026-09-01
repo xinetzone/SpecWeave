@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "minit2i-wiki-02"
 title: "技术路线三大减法：VAE、AdaLN与私有数据"
 source: "https://github.com/PeppaKing8/minit2i-jax"

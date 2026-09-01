@@ -1,4 +1,6 @@
 ---
+type: Reference
+
 id: mdi-toolchain-guide
 title: MDI研究报告 - 工具链使用指南
 source: "mdi-research-report.md#5-工具链使用指南"

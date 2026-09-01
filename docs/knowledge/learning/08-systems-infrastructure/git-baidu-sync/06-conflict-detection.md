@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-conflict-detection
 title: Git 网盘同步冲突检测与处理
 source: original

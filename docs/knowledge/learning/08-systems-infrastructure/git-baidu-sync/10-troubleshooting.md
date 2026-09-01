@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: Git 百度网盘同步 - 故障排查手册
 version: 1.0.0
 created: 2026-07-31

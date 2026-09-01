@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 id: "multi-file-edit-reliability"
 title: "多文件编辑操作可靠性指南"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/multi-file-edit-reliability.toml"
@@ -15,7 +17,7 @@ summary: "基于IDL Wiki章节拆分实战复盘的多文件编辑操作可靠�
 
 ## 核心洞察：多文件编辑的真正成本不在内容创作
 
-**洞察来源**：[idl-wiki-split-retro-20260705](../../../.agents/docs/retrospective/reports/project-reports/idl-wiki-split-retro-20260705.md)
+**洞察来源**：[idl-wiki-split-retro-20260705](../../retrospective/reports/project-reports/idl-wiki-split-retro-20260705.md)
 
 多文件编辑任务（章节拆分、批量重命名、跨文件替换）的**有效内容创作时间通常只占 10-15%**，剩余时间消耗在：
 
@@ -52,9 +54,9 @@ Wiki/教程类文档的文件名通常包含数字编号（`01-xxx.md`、`02-xxx
 ### 操作 Checklist
 
 - [ ] **拆分前先评估位置**：是否可以在末尾追加新章节而非中间插入？
-- [ ] **创建时规划粒度**：Wiki教程创建时就合理规划章节粒度，避免事后拆分（参考 [wiki-pre-creation-three-checks](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)）
+- [ ] **创建时规划粒度**：Wiki教程创建时就合理规划章节粒度，避免事后拆分（参考 [wiki-pre-creation-three-checks](../../retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md)）
 - [ ] **级联影响清单**：拆分中间章节前，先用 `Glob`/`LS` 列出所有受影响文件，明确修改范围
-- [ ] **导航枢纽优先更新**：先更新目录页（如 `00-overview.md`），再逐个更新各章节导航（参考 [navigation-hub-filename-contract](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md)）
+- [ ] **导航枢纽优先更新**：先更新目录页（如 `00-overview.md`），再逐个更新各章节导航（参考 [navigation-hub-filename-contract](../../retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md)）
 - [ ] **链接检查兜底**：全部更新后运行 `check-links.py`，确保无断链
 
 ### 重编号操作步骤（中间拆分时）
@@ -93,7 +95,7 @@ Wiki/教程类文档的文件名通常包含数字编号（`01-xxx.md`、`02-xxx
 
 - [ ] **每次 Edit 前必须先 Read**：确认目标文本的**精确内容**，包括副标题、标点、空格
 - [ ] **复制粘贴而非手打**：从 Read 结果中直接复制目标字符串作为 old_string，不要凭记忆输入
-- [ ] **同文件多轮Edit谨慎**：参考 [search-replace-fragility](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md)，超过 2 处替换考虑整体读写策略
+- [ ] **同文件多轮Edit谨慎**：参考 [search-replace-fragility](../../retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md)，超过 2 处替换考虑整体读写策略
 - [ ] **失败后立即Read重试**：Edit 失败不要重试相同参数，先重新 Read 确认实际内容
 - [ ] **replace_all 仅用于安全场景**：确定目标串在文件中唯一且需全部替换时使用，避免误改
 
@@ -203,17 +205,17 @@ flowchart TD
 ## 相关模式与参考
 
 - **方法论模式**：
-  - [navigation-hub-filename-contract](../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md) — 导航枢纽文件名清单契约
-  - [search-replace-fragility](../../../.agents/docs/retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md) — SearchReplace 并发脆弱性
-  - [scripted-batch-correction](../../../.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/scripted-batch-correction.md) — 脚本化批量修正决策
-  - [wiki-pre-creation-three-checks](../../../.agents/docs/retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) — Wiki创建前三查
-  - [large-document-atomization-method](../../../.agents/docs/retrospective/patterns/methodology-patterns/document-architecture/large-document-atomization-method.md) — 大文档原子化方法
+  - [navigation-hub-filename-contract](../../retrospective/patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md) — 导航枢纽文件名清单契约
+  - [search-replace-fragility](../../retrospective/patterns/methodology-patterns/tools-automation/search-replace-fragility.md) — SearchReplace 并发脆弱性
+  - [scripted-batch-correction](../../retrospective/patterns/methodology-patterns/document-architecture/scripted-batch-correction.md) — 脚本化批量修正决策
+  - [wiki-pre-creation-three-checks](../../retrospective/patterns/methodology-patterns/governance-strategy/wiki-pre-creation-three-checks.md) — Wiki创建前三查
+  - [large-document-atomization-method](../../retrospective/patterns/methodology-patterns/document-architecture/large-document-atomization-method.md) — 大文档原子化方法
 - **操作指南**：
   - [windows-powershell-pipe-utf8](../operations/windows-powershell-pipe-utf8.md) — PowerShell 管道 UTF-8 编码
   - [windows-powershell-heredoc](../operations/windows-powershell-heredoc.md) — PowerShell heredoc 写法
 - **来源复盘**：
-  - [idl-wiki-split-retro-20260705](../../../.agents/docs/retrospective/reports/project-reports/idl-wiki-split-retro-20260705.md) — IDL Wiki语法章节拆分复盘
-  - [idl-wiki-tutorial-retro-20260704](../../../.agents/docs/retrospective/reports/project-reports/idl-wiki-tutorial-retro-20260704.md) — IDL Wiki教程创建复盘
+  - [idl-wiki-split-retro-20260705](../../retrospective/reports/project-reports/idl-wiki-split-retro-20260705.md) — IDL Wiki语法章节拆分复盘
+  - [idl-wiki-tutorial-retro-20260704](../../retrospective/reports/project-reports/idl-wiki-tutorial-retro-20260704.md) — IDL Wiki教程创建复盘
 
 ---
 

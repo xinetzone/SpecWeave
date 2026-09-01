@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mermaid-wiki-10-cheatsheet"
 title: "Mermaid 命令速查表（Cheatsheet）"
 source: "https://mermaid.js.org/"

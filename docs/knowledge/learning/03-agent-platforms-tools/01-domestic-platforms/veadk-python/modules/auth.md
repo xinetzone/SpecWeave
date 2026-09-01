@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: auth-module
 title: 认证与凭证服务
 source: veadk-python codebase analysis

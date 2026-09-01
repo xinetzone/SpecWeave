@@ -1,4 +1,6 @@
 ---
+type: best-practice
+
 title: "手算梯度已知值验证：Backward测试L1层方法论"
 date: 2026-08-03
 category: best-practices
@@ -250,10 +252,10 @@ Conv层手算复杂，推荐用1×1卷积或极小输入：
 
 | 模式 | 关系 |
 |------|------|
-| [三层测试验证法](../../../.agents/docs/retrospective/patterns/code-patterns/three-layer-test-validation.md) | L1是三层中的第一层 |
+| [三层测试验证法](../../retrospective/patterns/code-patterns/three-layer-test-validation.md) | L1是三层中的第一层 |
 | [MAX Pooling梯度路由](caffe-pooling-max-gradient-routing.md) | L1方法的Pooling应用案例 |
 | [AVE Pooling梯度路由](caffe-pooling-ave-gradient-routing.md) | L1方法的Pooling应用案例 |
-| [numpy参考实现先行](../../../.agents/docs/retrospective/patterns/code-patterns/numpy-reference-first.md) | L2层numpy验证方法论 |
+| [numpy参考实现先行](../../retrospective/patterns/code-patterns/numpy-reference-first.md) | L2层numpy验证方法论 |
 
 ## 9. 参考案例
 

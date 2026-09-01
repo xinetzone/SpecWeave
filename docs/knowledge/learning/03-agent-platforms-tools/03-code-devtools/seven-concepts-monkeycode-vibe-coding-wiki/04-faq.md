@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "faq"
 title: "第四章 - 常见问题解答（FAQ）"
 source: "MonkeyCode常见问题整理"

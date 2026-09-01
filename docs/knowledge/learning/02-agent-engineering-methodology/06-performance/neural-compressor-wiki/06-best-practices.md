@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "neural-compressor-wiki-best-practices"
 title: "最佳实践"
 date: "2026-08-09"

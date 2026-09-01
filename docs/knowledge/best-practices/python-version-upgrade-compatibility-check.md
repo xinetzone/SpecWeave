@@ -1,7 +1,9 @@
 ---
+type: best-practice
+
 id: "python-version-upgrade-compatibility-check"
 title: "Python大版本升级破坏性变更检查清单"
-x-toml-ref: "../../../../.meta/toml/docs/knowledge/best-practices/python-version-upgrade-compatibility-check.toml"
+x-toml-ref: "../../../.meta/toml/docs/knowledge/best-practices/python-version-upgrade-compatibility-check.toml"
 category: "best-practices"
 tags: ["Python", "version-upgrade", "compatibility", "multiprocessing", "breaking-changes", "checklist"]
 date: "2026-07-23"
@@ -9,12 +11,11 @@ status: "stable"
 author: "SpecWeave"
 summary: "基于xmnn-client Python 3.14迁移实战复盘，提炼Python大版本升级的破坏性变更检查清单，重点关注multiprocessing默认行为变更、弃用/移除模块、AST节点变更等隐蔽陷阱。"
 ---
-
 # Python大版本升级破坏性变更检查清单
 
 > 基于xmnn-client Python 3.14迁移实战复盘的经验总结。核心教训：**Python大版本升级的最大风险不是语法变更，而是运行时行为的默认值变更**——这类变更不会产生编译错误或导入错误，而是在运行时以隐蔽的方式失败。
 
-**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../../.agents/docs/retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
+**洞察来源**：[retrospective-xmnn-pytorch-integration-20260723](../../retrospective/reports/bug-fix/retrospective-xmnn-pytorch-integration-20260723/README.md)
 
 ---
 

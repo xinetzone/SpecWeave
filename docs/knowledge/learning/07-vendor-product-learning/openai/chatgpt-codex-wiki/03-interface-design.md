@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "chatgpt-codex-wiki-03"
 title: "界面设计与视觉分析"
 source: "https://chatgpt.com/zh-Hans-CN/codex/"

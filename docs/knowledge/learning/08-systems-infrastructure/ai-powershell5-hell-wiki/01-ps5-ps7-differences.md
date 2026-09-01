@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-powershell5-hell-wiki-01-ps5-ps7-differences"
 title: "PowerShell 5.1 vs 7+ 核心差异速查"
 source: "internal:ai-powershell5-research-rfive"

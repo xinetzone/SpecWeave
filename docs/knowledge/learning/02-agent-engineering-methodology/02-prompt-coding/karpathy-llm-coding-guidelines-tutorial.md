@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "karpathy-llm-coding-guidelines-tutorial"
 title: "Karpathy LLM 编程准则完整教程"
 category: learning
@@ -138,7 +140,7 @@ Karpathy 准则是 Multica Skill 生态的标杆项目。Multica 是开源的 AI
 
 SpecWeave 项目已将四条准则整合到现有规范体系中：
 
-- **歧义主动澄清** → [global-core-rules.md](../../../../global-core-rules.md)
-- **简约设计原则** → [development-standards.md](../../../development-standards.md)
-- **外科手术式精确编辑** → [developer.md](../../../../roles/developer.md)
-- **完整规则文档（含速查表）** → [ai-coding-guidelines.md](../../../../rules/ai-coding-guidelines.md)
+- **歧义主动澄清** → [global-core-rules.md](../../../../../.agents/global-core-rules.md)
+- **简约设计原则** → [development-standards.md](../../../../tech/references/development-standards.md)
+- **外科手术式精确编辑** → [developer.md](../../../../../.agents/roles/developer.md)
+- **完整规则文档（含速查表）** → [ai-coding-guidelines.md](../../../../../.agents/rules/ai-coding-guidelines.md)

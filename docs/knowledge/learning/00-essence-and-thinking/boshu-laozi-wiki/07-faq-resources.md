@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "boshu-laozi-wiki-07"
 title: "FAQ 与资源"
 source: "公共领域知识（马王堆帛书老子研究）"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-00"
 title: "概述与学习目标"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

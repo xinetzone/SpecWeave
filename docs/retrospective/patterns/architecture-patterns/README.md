@@ -1,0 +1,112 @@
+---
+type: Pattern
+id: "architecture-patterns-readme"
+x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/README.toml"
+---
+# 架构模式索引（architecture-patterns）
+
+本目录存放架构级可复用模式，聚焦于文件依赖拓扑、级联更新策略、系统结构设计等中观层面的最佳实践。
+
+## 模式清单
+
+| 模式 | 说明 | 成熟度 | 适用场景 |
+|------|------|--------|---------|
+| [container-devtool-seven-layer-stack.md](container-devtool-seven-layer-stack.md) | 容器开发工具七层栈+三层后端降级架构：L0CLI兜底→L1基础镜像→L2程序化SDK→L3声明式compose→L4领域能力→L5主机互通→L6文档→L7构建；SDK→compose→CLI自动降级，对业务代码屏蔽后端差异，optional-dependencies按后端分组 | L1-draft | 容器CLI工具、Podman/Docker开发环境、ML模型容器管理、容器化部署工具 |
+| [docker-modular-build-orchestration.md](docker-modular-build-orchestration.md) | Docker 模块化构建编排四层架构：CMake目标→独立上下文→嵌入式验证→一键运行脚本，支持多镜像依赖管理 | L2 已验证 | 多 Docker 镜像构建、C++/Python 深度学习项目镜像化、Docker 开发环境标准化 |
+| [dual-interface-repository.md](dual-interface-repository.md) | AI Skill 仓库的双界面架构：根目录面向人类，子目录面向 AI Agent | L2 已验证 | AI Skill/Plugin/Tool 项目的仓库结构设计 |
+| [cascade-update-topology.md](cascade-update-topology.md) | 多对多文件级联更新的拓扑排序，最小跳数优先原则 | L2 已验证 | 新建规范文件后的索引级联更新 |
+| [cascade-update-prerequisite-check.md](cascade-update-prerequisite-check.md) | 级联更新拓扑的前提检查，目标目录索引文件存在性验证 | L1 实验性 | 模式入库前的目录状态检查 |
+| [multi-agent-parallel-execution.md](multi-agent-parallel-execution.md) | 多智能体并行执行的任务拆分与冲突避免策略 | L2 已验证 | 复杂任务的多Agent协作执行 |
+| [lifecycle-protocol-three-phase.md](lifecycle-protocol-three-phase.md) | 智能体生命周期协议三阶段：感知/决策/执行 | L2 已验证 | Agent角色定义与生命周期管理 |
+| [incremental-regression-verification.md](incremental-regression-verification.md) | 增量式回归验证，每次变更后验证受影响范围 | L2 已验证 | 文档/代码修改后的质量保障 |
+| [perception-check-report-model.md](perception-check-report-model.md) | 感知-检查-报告三层诊断模型 | L2 已验证 | 问题诊断与状态感知 |
+| [prompt-defense-in-depth.md](prompt-defense-in-depth.md) | 提示词分层防御七层安全规则（来源→路径→执行→完整性→错误→范围→幂等），AI自动操作类提示词的标准安全模板 | L2 已验证 | AI自动执行文件/系统操作的提示词设计、一句话安装/自举提示词、跨智能体安全引导 |
+| [provenance-driven-trust.md](provenance-driven-trust.md) | 溯源驱动信任：无人值守系统的机器可验证信任基础设施——内容校验码+仅追加日志+机器可验证Sign-off凭证+自积累知识库，信任建立在不可篡改溯源链而非智能体自我声明之上 | L1-draft | 无人值守自主系统、AI辅助软件工程、DevOps流水线、自动化内容生成、供应链安全 |
+| [five-layer-document-architecture.md](five-layer-document-architecture.md) | 文档五层架构：规格→决策→质量→交付→萃取，AI协作项目通用骨架 | L2 已验证 | AI协作项目的文档体系搭建 |
+| [knowledge-as-code-paradigm.md](knowledge-as-code-paradigm.md) | 知识即代码：软件工程范式向知识管理迁移法，复用Git/PR/CI/CR等成熟实践而非重新发明，Docs as Code的AI时代扩展版 | L1 实验性 | AI Agent知识系统、技术团队知识库、需要可审计可追溯的文档体系 |
+| [verifiable-knowledge-claim.md](verifiable-knowledge-claim.md) | 可验证知识声明：自然语言描述→可执行+可验证规范，runtime+parameters+executor+attester五元组，借鉴密码学"不信任只验证"思想消除Agent计算幻觉 | L1 实验性 | AI Agent消费的指标体系、数据质量规则、合规检查、高可信度知识系统 |
+| [trust-first-metadata.md](trust-first-metadata.md) | 信任优先元数据：AI原生知识体系的字段设计优先级倒置——信任/来源/生命周期字段为一等公民，三级Trust Tier（unverified→machine-confirmed→human-reviewed），禁止Agent自证可信 | L1 实验性 | AI Agent知识库/RAG系统、人机协作知识管理、元数据schema设计、数据目录/治理平台 |
+| [provenance-self-contained.md](provenance-self-contained.md) | 溯源自包含：知识包脱离宿主仓库的可移植分发，溯源资源引用改为包内相对路径+登记唯一权威信源，脱离仓库仍自洽可离线校验 | L1-draft | 知识包/bundle打包分发、离线知识库、可移植溯源分发、单包随附溯源交付 |
+| [agent-knowledge-graph-navigation.md](agent-knowledge-graph-navigation.md) | Agent知识图谱导航：三层索引+Frontmatter预过滤+图结构显式链接，让Agent像浏览器加载网页一样分层导航知识而非一次性全量加载，token消耗降低60-80%，经 okf-kit v0.3.3 实现二次验证 | L2 已验证 | AI Agent知识库/知识Bundle/RAG文档组织、面向Agent消费的文档系统、MCP工具文档 |
+| [zero-config-core-enhancement.md](zero-config-core-enhancement.md) | 零配置核心+可选增强降级：核心功能（本质价值）零凭据零配置开箱即用，增强功能（AI/云端/高级检索）可选并优雅降级，消除"不配置就完全不能用"的冷启动问题，经 okf-kit v0.3.3 零Key实践验证 | L1 实验性 | 开发者工具/CLI/SDK/Agent工具设计、以低试入门槛获客的开源/商业工具 |
+| [default-scope-explicit-expansion.md](default-scope-explicit-expansion.md) | 默认范围收敛·显式放开：边界可控的遍历/搜索/授权设计模式，默认收敛到最小充分范围，显式参数才放开边界，避免爬虫/扫描器/查询无意识扩散失控，经 okf-kit v0.3.3 爬取 scope 实践验证 | L1 实验性 | 爬虫/站点镜像、递归扫描、批量查询、授权系统、任何「无参数就可能扩散」的CLI/API |
+| [io-boundary-pure-function-core.md](io-boundary-pure-function-core.md) | IO边界抽象隔离·纯函数核心：IO适配层与核心业务逻辑解耦的设计模式，核心写成纯函数（零副作用、离线可测），IO实现通过抽象接口可插拔替换，经 okf-kit v0.3.3 Fetcher 抽象层实践验证 | L1 实验性 | 爬虫/数据存取/第三方服务集成等需要多后端/离线单测的系统 |
+| [content-fingerprint-incremental-sync.md](content-fingerprint-incremental-sync.md) | 内容指纹变更检测·增量同步：基于SHA256内容哈希而非时间戳判断数据变更，指纹不变则跳过写入，产出干净Git diff，经 okf-kit v0.3.3 Markdown SHA256增量同步实践验证 | L1 实验性 | 爬虫/站点镜像结果同步、知识库增量更新、版本控制友好的数据管道 |
+| [iot-device-wrapper-pattern.md](iot-device-wrapper-pattern.md) | IoT 设备数据包装器模式，将 DP Code 抽象为类型安全的统一接口 | L1 实验性 | IoT 设备集成开发、多协议设备统一接口 |
+| [iot-event-driven-state-update.md](iot-event-driven-state-update.md) | IoT 事件驱动状态更新，通过 MQTT + dispatcher 实现实时同步 | L1 实验性 | IoT 设备状态同步、大规模设备管理 |
+| [iot-device-category-mapping.md](iot-device-category-mapping.md) | IoT 设备分类到平台映射，实现设备自动发现和实体创建 | L1 实验性 | IoT 平台设备发现、多设备类型支持 |
+| [iot-quirks-extension-mechanism.md](iot-quirks-extension-mechanism.md) | IoT Quirks 扩展机制，无需修改核心代码的设备定制化支持 | L1 实验性 | 非标准设备适配、用户自定义设备处理 |
+| [staged-startup-integration-loading.md](staged-startup-integration-loading.md) | 分阶段集成加载：stage 启动 + 并发装配 + 超时推进，优先确保基础能力可用 | L1 实验性 | 插件/集成数量多的系统冷启动治理 |
+| [submodule-metadata-externalization.md](submodule-metadata-externalization.md) | Git Submodule元数据外置：元数据放在submodule目录外，避免dirty状态和版本冲突 | L1 实验性 | Git子模块管理、跨项目协作、vendor目录治理 |
+| [metadata-layering.md](metadata-layering.md) | 元数据分层模式：核心标识内联+复杂索引元数据外部化，内容-元数据二分法判断字段归属 | L2 已验证 | 文档frontmatter管理、配置文件分层、API定义元数据设计 |
+| [tuyaopen-layered-porting-model.md](tuyaopen-layered-porting-model.md) | TuyaOpen 分层移植模型（TKL/TAL/TDD/TDL）作为移植与阅读的主索引 | L1 实验性 | 嵌入式 SDK 阅读、平台移植、驱动分层定位 |
+| [meta-capability-inversion.md](meta-capability-inversion.md) | 元能力依赖倒置：先实现原子能力再构建上层编排，避免框架先行导致的空中楼阁 | L2 已验证 | 自治理系统架构设计、AI Agent能力建设、平台型产品开发排期 |
+| [three-layer-parser-generator.md](three-layer-parser-generator.md) | IDL/DSL工具三层+Profile架构：Parser→Validator→Generator分层+Profile横切变体 | L1 实验性 | 标记语言解析器、代码生成器、多类型文档处理工具 |
+| [script-generator-pattern.md](script-generator-pattern.md) | 脚本生成器模式：Python 拼接 + Shell 执行的混合架构，各司其职，可调试性强 | L1 实验性 | 容器内多步构建、远程部署、CI/CD流水线 |
+| [markdown-to-knowledge-graph.md](markdown-to-knowledge-graph.md) | Markdown结构化文档→知识图谱自动化生成：自动解析+手工补充四层混合策略，数据视图分离 | L2 已验证 | 结构化Markdown知识库可视化、概念关系网络展示 |
+| [full-process-defense-depth.md](full-process-defense-depth.md) | 全流程纵深防御三层架构：事前预防+事中守护+事后追溯的"筛子模型" | L1 实验性 | 安全系统设计、AI Agent安全、企业应用、金融支付 |
+| [scenario-based-security-matrix.md](scenario-based-security-matrix.md) | 场景化安全矩阵：按典型使用场景配置差异化安全特性组合，避免一刀切 | L1 实验性 | 安全架构设计、权限系统、AI Agent工具授权、SaaS/云服务安全 |
+| [ipkvm-bypass-control.md](ipkvm-bypass-control.md) | IPKVM硬件旁路远控：HDMI采集+USB-HID仿真+独立网络链路+旁路部署，实现BIOS级无侵入远控 | L2 已验证 | 无网远控硬件、KVM over IP、物理隔离运维、BIOS级控制 |
+| [multi-mode-network-redundancy.md](multi-mode-network-redundancy.md) | 多模网络冗余接入：有线/WiFi/4G/5G/蓝牙多模并存+优先级切换+断网续连+近场兜底 | L2 已验证 | 工业控制设备、医疗设备、高可靠远控、无人值守设备 |
+| [usb-hid-emulation-plug-and-play.md](usb-hid-emulation-plug-and-play.md) | USB-HID仿真即插即用：枚举为标准USB键盘/鼠标，OS自带驱动免安装，BIOS级可用 | L2 已验证 | KVM/远控硬件、跨平台外设、即插即用型硬件、嵌入式控制 |
+| [agent-physical-actuator-paradigm.md](agent-physical-actuator-paradigm.md) | Agent物理执行器范式：五大设计原则（原子接口/感知闭环/场景协同/消费级易用/多层安全），AI通过已有智能硬件作用于物理世界 | L2 已验证 | AIoT智能家居、远程运维、无人值守、Agent硬件化、MCP化设备控制 |
+| [four-layer-ai-capability-architecture.md](four-layer-ai-capability-architecture.md) | AI开发者生态四层架构：MCP协议层→Skill封装层→CLI工具层→UI Locator视觉层，分层服务不同用户群体 | L1 实验性 | AI能力开放平台、MCP生态建设、SaaS平台AI化、远程控制AI能力设计 |
+| [zero-update-client-design.md](zero-update-client-design.md) | 被控端零更新设计：新能力在控制端/服务端实现，被控端通过已有远控协议（画面+键鼠）复用能力，无需升级 | L1 实验性 | 远控软件AI升级、IoT平台新功能兼容存量设备、SaaS新API兼容旧客户端 |
+| [normalized-coordinate-abstraction.md](normalized-coordinate-abstraction.md) | 归一化坐标抽象：使用[0.0,1.0]区间坐标替代绝对像素，从控制协议剥离分辨率变量，实现跨分辨率指令统一 | L2 已验证 | 远程桌面控制、UI自动化测试、RPA机器人、跨设备交互 |
+| [multi-agent-closed-loop-execution.md](multi-agent-closed-loop-execution.md) | 多智能体闭环执行与自动重规划：观察-思考-行动循环+Convergence收敛点+失败自动replan，从失败点恢复而非从零开始 | L1 实验性 | UI自动化、机器人控制、API编排、RPA、任何不确定环境下的Agent任务执行 |
+| [three-layer-capability-openness.md](three-layer-capability-openness.md) | 三层能力开放体系：GUI（终端用户）→CLI（开发者/脚本）→API/MCP（AI Agent）分层覆盖不同用户群，CLI是连接人类与机器的关键桥梁 | L1 实验性 | 平台型产品设计、开发者生态构建、AI Agent集成、SaaS能力开放 |
+| [triple-entry-design.md](triple-entry-design.md) | 三层入口设计：AGENTS.md面向AI+README.md面向人+workspace.yaml面向机器，关注点分离，三类受众各司其职 | L2 已验证 | AI协作型项目、Agent Workspace Hub工作区、需要零安装自举能力的项目 |
+| [three-layer-routing-protocol.md](three-layer-routing-protocol.md) | 三层路由协议：SpecWeave→子区域→子模块数据驱动路由，对称遍历+最长前缀匹配+状态恢复，可扩展多区域架构 | L3 可复用 | 多层嵌套monorepo、AI智能体上下文路由、插件/扩展系统架构 |
+| [agent-workspace-template.md](agent-workspace-template.md) | 智能体工作区枢纽模板：从成熟体系剥离项目特定内容+参数化占位符，产出可复制到新项目的通用脚手架（模板 AGENTS.md + 精简 .agents/ 骨架 + 模式文档） | L1 实验性 | 新项目引导智能体工作区、多项目治理体系统一、成熟体系复用萃取 |
+| [dependency-shimming-layer.md](dependency-shimming-layer.md) | 依赖裁剪适配层：compat/头文件shim零侵入替换重依赖，依赖四分类法+三层shim（别名/内联/空桩）+渐进式裁剪，源文件零修改即可从10依赖降到3依赖 | L2 已验证 | 大型C++库裁剪、开源fork适配、跨平台移植、微服务拆分防腐层、渐进式重构 |
+| [c-abi-dynamic-binding.md](c-abi-dynamic-binding.md) | C ABI动态语言绑定：纯C ABI+不透明句柄+DLPack开放张量标准，替代boost::python/pybind11实现跨语言跨版本稳定绑定，一次编写多语言可用零拷贝 | L3 可复用 | C/C++库多语言绑定、插件系统设计、跨语言RPC、嵌入式SDK API、ML框架多语言前端 |
+| [zerocopy-cow-readwrite-separation.md](zerocopy-cow-readwrite-separation.md) | 零拷贝COW读写分离模式：const/non-const编译期区分读写意图+引用计数O(1)共享+写时自动克隆+分层增量上线+双重开关回退，在读多写少场景实现性能与安全的平衡 | L2 已验证 | 深度学习框架张量传递、大对象IPC、消息队列广播、协作文档编辑、不可变数据结构、操作系统内存管理 |
+| [declarative-op-compiler-backend.md](declarative-op-compiler-backend.md) | 声明式算子+编译器后端：Python DSL描述"算什么"，TVM/MLIR编译器自动生成多后端代码，N+M替代N×M，性能关键路径保留手写kernel override，自动算子融合与全局优化 | L3 可复用 | ML框架多硬件后端、数据库查询优化器、着色器/图形渲染、信号处理编解码、DSL编译器设计 |
+| [four-step-extension-recipe.md](four-step-extension-recipe.md) | 扩展四步法：Schema/IDL扩展→代码/绑定生成→核心逻辑实现→测试矩阵验证，5类测试保障（序列化往返/prototxt解析/默认值/数值正确性/工具兼容性），降低第三方贡献门槛 | L2 已验证 | 框架插件/算子/中间件扩展、IDE插件开发、Web框架端点扩展、游戏引擎组件注册、可扩展平台设计 |
+| [governance-outer-ring.md](governance-outer-ring.md) | 治理外环包裹业务内环架构：Identity+Gateway+Observability+Evaluation四模块构成治理外环优先于业务内环（Runtime/A2A/Session-Memory/Knowledge）设计，企业级平台vs玩具级Demo的根本区分 | L1 实验性 | 企业级AI Agent平台、多租户SaaS架构、安全合规生产系统、从Demo到生产的架构演进 |
+| [data-lifecycle-economic-stratification.md](data-lifecycle-economic-stratification.md) | 数据生命周期经济分层：基于数据经济属性（消耗品vs知识资产）而非纯技术特征分层，Session类设TTL自动过期，Memory类设质量闸门+半衰期审计，避免记忆污染与治理成本浪费 | L1 实验性 | AI Agent记忆系统、CMS草稿/发布分层、数据湖热温冷分层、日志系统分层存储 |
+| [legacy-integration-dual-track.md](legacy-integration-dual-track.md) | 存量系统双轨接入两阶段法：第一阶段REST/OpenAPI快速转换一键接入（严格只读）验证价值，第二阶段基于Observability数据筛选Top 20%高频接口改造为标准协议，先接入再优化 | L1 实验性 | AI Agent平台存量系统接入、微服务API网关集成、遗留系统现代化改造、多云/混合云集成 |
+| [graph-transform-validator-architecture.md](graph-transform-validator-architecture.md) | 图变换验证工具四段式架构：最小Parser→独立Analyzer→忠实Transformer→双视图Visualizer，零依赖验证DAG变换正确性（before/after对比） | L1 实验性 | 深度学习框架图变换Pass验证、编译器IR变换验证、DAG结构变换调试、可视化验证工具 |
+| [demo-prod-six-layer-model.md](demo-prod-six-layer-model.md) | Demo-Prod六层能力模型：可靠性→可观测性→安全性→可维护性→可扩展性→可部署性，从Demo到生产需要补全六层能力底座而非优化 | L1 实验性 | AI应用/Agent框架生产就绪度评估、技术选型决策、团队能力建设评估 |
+| [tool-skill-separation.md](tool-skill-separation.md) | 工具与Skill职责分离：能力层（Tools，稳定通用）与知识层（Skills，易变业务）分离，按变化频率隔离，让变化频率不同的东西以不同节奏演进 | L1 实验性 | Agent架构设计、知识管理系统、能力与知识分层、软件架构"代码与配置分离" |
+| [document-as-queryable-api.md](document-as-queryable-api.md) | 文档即可查询API：结构化文档AST→GraphQL Schema自动生成，文档同时是人类可读页面和机器可查询知识接口，Sphinx/MDX双实现路径 | L1-draft | 大型API平台文档、框架文档、AI原生知识库、需要多维度检索的开发者门户 |
+| [five-stage-batch-pipeline.md](five-stage-batch-pipeline.md) | 批量处理五步管道：Discover→Parse→Validate→Cache→Report五阶段正交拆分，错误隔离+增量缓存+双格式输出（JSON+Markdown），单项目失败不中断整体流程 | L2 已验证 | 代码质量检查工具、文件系统扫描器、数据ETL管道、批量内容处理器、CI检查脚本 |
+| [android-single-activity-navigation.md](android-single-activity-navigation.md) | 单一 Activity + Navigation 组件多页面架构（Fragment + 导航图组织） | L1 实验性 | Android 多页面导航 |
+| [android-mvvm-livedata-fragment.md](android-mvvm-livedata-fragment.md) | MVVM + LiveData 标准分层（ViewModel 数据 + Fragment observe 订阅） | L1 实验性 | Android MVVM 架构 |
+| [zero-logic-client-desktop-app.md](zero-logic-client-desktop-app.md) | 零逻辑客户端桌面应用可冻结架构：GUI 零逻辑 + 后端单源托管 UI/API 无 CORS + 进程内线程服务器支持 PyInstaller 单文件冻结 | L1 实验性 | 把成熟 CLI/服务端工具链封装为可单文件分发的桌面 GUI 应用 |
+| [jupyter-extension-registration.md](jupyter-extension-registration.md) | Jupyter 扩展/插件注册三端对照：jupyter_server 包内钩子函数 vs fps 声明式 entry-point vs jupyterlab 前端插件，三层发现机制各司其职 | L1 实验性 | Jupyter 生态源码阅读、跨语言插件系统设计、扩展未加载排查 |
+| [jupyter-kernel-zmq-channels.md](jupyter-kernel-zmq-channels.md) | Jupyter 内核通信 ZMQ 多通道协议：shell/iopub/stdin/control/hb 五通道职责分离，通道类 trait 装配点可插拔，控制可抢占、心跳不阻塞 | L1 实验性 | Jupyter 内核/客户端协议阅读、交互式运行时设计、内核通信调试 |
+| [graph-first-agent-architecture.md](graph-first-agent-architecture.md) | 图优先Agent架构：有向图建模控制流+类型化共享状态+条件路由+检查点暂停恢复+可观测性前置，"按图执行"替代"自由对话"，经行业跨框架证据与AndroidWorld 100%案例双重验证 | L2 已验证 | 生产级Agent系统、复杂多步工作流、需审计追踪/人机审核/失败恢复的长任务、CI/CD与数据管道同构场景 |
+| [event-driven-guardian.md](event-driven-guardian.md) | 事件驱动守护：用 OS 原生事件触发（schtasks ONEVENT/systemd path）替代常驻轮询进程，消除"守护进程即单点故障"递归问题，配冷却锁防事件风暴 + 幂等修复 + 最高权限，根治截图工具反复损坏实证 | L1 实验性 | 系统级自愈/守护、UWP/应用运行时注册修复、服务崩溃自动重启、错误日志触发的自动修复 |
+| [inference-shell-model-base-decoupling.md](inference-shell-model-base-decoupling.md) | 推理外壳与模型底座解耦：应用 src 是纯 OpenAI 兼容 API 客户端外壳（无 torch/transformers），推理栈外置为 vLLM 服务（引擎版本硬 pin + 端点契约 + 权重 HuggingFace 外置），Agent 环境与模型服务/评估环境分立 | L1 已验证 | LLM 应用架构设计、本地模型服务化部署、多底座对比评测、源码学习判断"模型仓库"是否含推理栈 |
+| [lifecycle-differentiated-inheritance.md](lifecycle-differentiated-inheritance.md) | 生命周期差异化继承：继承只表达生命周期承诺不表达能力域相似——有状态成员继承携带状态初始化的基类，无状态成员有意不继承保持纯函数式，"不继承"是设计信号；贯穿性异常拼写是检索签名原样保留 | L1 已验证 | Agent/插件家族类层级设计、有状态-无状态分治、空实现基类治理、源码学习辨识继承意图 |
+| [asymmetric-multimodal-history-windowing.md](asymmetric-multimodal-history-windowing.md) | 多模态历史非对称窗口：文本全量回放（动作语义长存）+图像滑窗（history_n-1，参数只绑图像）+回放文本再合成（从结构化 action 反归一化重组规范文本，不回放原始输出），配合 mock LLM 契约测试无 LLM 验证 | L1 已验证 | 多模态多轮 Agent 上下文工程、GUI/视觉导航 Agent、多模态 token 经济优化 |
+| [normalization-convention-duality.md](normalization-convention-duality.md) | 归一化口径二元并存：同一语义量跨子系统存在两套各自内部一致的约定时登记而非"修复"（999 vs 1000），对照表完整呈现+跨边界显式约定口径+排障"先口径后模型" | L1 已验证 | 坐标/时间戳/分数等归一化治理、跨子系统数值接口约定、效果异常排查 |
+| [benchmark-unification-cross-validation.md](benchmark-unification-cross-validation.md) | 基准统一重排与多源交叉印证：异构基准统一重排为单一格式后同一套判分聚合（消除基准间口径差），双通道执行+与技术报告分数交叉印证（差距≤1点）作正确性证据 | L1 已验证 | 评测管线设计、多基准聚合跑分、分数复现与可信度论证 |
+| [triple-nested-virtualization-appliance.md](triple-nested-virtualization-appliance.md) | 三层嵌套虚拟化环境家电：DinD 套 Android 模拟器再套应用的单镜像家电化（OS+SDK+AVD+控制服务），socat 中继暴露 ADB+health 直通，entrypoint 十步编号化启动 | L1 已验证 | 移动端评测环境容器化、Android 模拟器 CI 部署、复杂环境一次拉起分发 |
+| [deterministic-eval-environment-trio.md](deterministic-eval-environment-trio.md) | 确定性评测环境三件套：状态快照回滚+时间冻结（白名单同步敏感应用）+后台清理固定顺序初始化，ground truth 稳定性来自把"现实变量"显式白名单化 | L1 已验证 | Agent 评测环境复现、含时间/状态敏感任务的基准设计、AVD/VM 快照管理 |
+| [agent-integration-minimal-surface.md](agent-integration-minimal-surface.md) | Agent 接入面最小化——封闭注册表+文件后门：接入收敛为一个抽象方法 predict，扩展走"封闭枚举注册表 + .py 路径动态加载"双通道，跨厂商 API 怪癖单点收敛在 BaseAgent 一个方法 | L1 已验证 | 多模型 Agent 平台接入层设计、插件注册表、跨厂商 API 兼容收敛 |
+| [three-tier-eval-scaling-orchestration.md](three-tier-eval-scaling-orchestration.md) | 评测编排三层扩张：进程内线程并行→SQLite WAL 队列+tmux 单 worker 轮询→pass@k 报告聚合，规模渐进而非一步上重型调度器，成功阈值显式容差（0.99） | L1 已验证 | 批量评测基础设施、容器集群任务编排、中小规模调度的轻量化选型 |
+| [simulated-user-conditional-tool-injection.md](simulated-user-conditional-tool-injection.md) | 模拟用户与按需工具注入：评测态"用户"由温度 0+seed 42 的独立 LLM 用户代理扮演（独立对话历史、背景注入），MCP 工具按任务 tag/apps 白名单过滤注入（默认置空），人工 input() 仅调试通道 | L1 已验证 | 交互式 Agent 评测、ask_user 人机通道设计、按任务能力的工具注入治理 |
+| [zero-code-closed-benchmark-repo.md](zero-code-closed-benchmark-repo.md) | 零代码仓库的封闭基准发布：仓库仅 README+静态页+CI（open repository ≠ open benchmark），评测能力托管为 endpoint 提交制私有服务（hidden test 隔离+频率限制）防过拟合 | L1 已验证 | 基准/竞赛发布策略、防泄漏评测设计、保密优先的学术基础设施 |
+| [weighted-multidimensional-composite-score.md](weighted-multidimensional-composite-score.md) | 多维加权综合分与分维度解读纪律：总分公式=权重声明而非能力全景，任务分布+统计口径脚注（Cost 仅可见输出 token）共同构成可解读性，解读须按维度拆分并注版本 | L1 已验证 | 基准榜单设计、多维度评分体系、跨模型成本/效果对比呈现 |
+| [verification-policy-checker-spectrum.md](verification-policy-checker-spectrum.md) | 固定验证策略与 checker 谱系：判分靠每任务预分配固定验证策略而非事后自由评审，六类 checker 从精确参数比对到 LLM 行为评审构成谱系，维度-checker 映射是显式设计决策 | L1 已验证 | 评测判分体系设计、LLM 评审与确定性校验混合、分数可解释性 |
+| [gap-filling-complementary-positioning.md](gap-filling-complementary-positioning.md) | 补空档式互补定位：定位策略是填"两层既有体系之间的空档"而非替代任何一方，用三层对照表声明自身坐标系，相邻体系显式写为互补层级（分数不可互替） | L1 已验证 | 基准/工具/产品生态定位、竞品叙事设计、技术体系坐标系声明 |
+| [zero-cdn-static-site-engineering.md](zero-cdn-static-site-engineering.md) | 零 CDN 纯静态学术站点工程：UI 库全本地 vendor 化换链接永续，展示图由 Playwright CI 对本地渲染页自动截屏（图即构建产物），入口 URL 由 site_config.js 统一注入，部署零构建 | L1 已验证 | 学术项目页、benchmark 榜单站、低维护长期可达的静态站点 |
+
+## 成熟度定义
+
+| 等级 | 定义 | 验证条件 |
+|------|------|---------|
+| L1 实验性 | 仅 1 次成功案例，待更多验证 | 验证次数 = 1 |
+| L2 已验证 | ≥ 2 次成功案例，模式稳定 | 验证次数 ≥ 2 |
+| L3 可复用 | 已被其他任务复用，有文档化示例 | 复用次数 ≥ 1 |
+
+> 详细评估标准见 [patterns/README.md](../index.md#模式成熟度评估标准)。
+
+## 使用方式
+
+1. 根据场景查找匹配模式
+2. 阅读模式正文了解拓扑结构与规则
+3. 按模式规则执行级联更新
+4. 验证后更新模式成熟度（若适用）

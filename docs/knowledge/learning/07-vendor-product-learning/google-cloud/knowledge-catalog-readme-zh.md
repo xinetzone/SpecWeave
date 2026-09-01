@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "google-cloud-knowledge-catalog-readme-zh"
 title: "Google Cloud 知识目录（Knowledge Catalog）README 中文版"
 source: "vendor/knowledge-catalog/README.md (https://github.com/GoogleCloudPlatform/knowledge-catalog)"

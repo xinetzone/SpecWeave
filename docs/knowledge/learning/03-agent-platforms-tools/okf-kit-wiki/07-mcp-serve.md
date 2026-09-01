@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "okf-kit-wiki-07"
 title: "okf-kit 完全指南 — MCP 与 HTTP 服务"
 source: "https://github.com/vinodborole/okf-kit/tree/main/okf_kit"

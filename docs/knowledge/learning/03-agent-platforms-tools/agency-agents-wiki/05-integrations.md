@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "agency-agents-wiki-05"
 title: "The Agency 完全指南 — 多工具集成"
 source: "https://github.com/msitarzewski/agency-agents"
@@ -104,7 +106,7 @@ graph TB
 - **是否需转换**：**否**。The Agency 本就为 Claude Code 而生，Agent 的 `.md` + YAML frontmatter 格式被 Claude Code 原生支持。
 - **激活方式**：在会话中按名称引用，例如"Activate Frontend Developer and help me build a React component."。
 - **安装命令**：`./scripts/install.sh --tool claude-code`
-- 详见 [integrations/claude-code/README.md](../../../../../../.chaos/libs/agency-agents/integrations/claude-code/README.md)。
+- 详见 [integrations/claude-code/README.md](../../../../../.chaos/libs/agency-agents/integrations/claude-code/README.md)。
 
 ### 4.2 GitHub Copilot
 
@@ -114,7 +116,7 @@ graph TB
 - **激活方式**：在 Copilot Chat 会话中按名称引用即可。
 - **安装命令**：`./scripts/install.sh --tool copilot`
 - **中文适配**：可用 `scripts/i18n/localize-agents-zh.ps1` 把 Agent 名本地化为中文，让 Copilot 的 Agent 选择器对中文用户更友好。
-- 详见 [integrations/github-copilot/README.md](../../../../../../.chaos/libs/agency-agents/integrations/github-copilot/README.md)。
+- 详见 [integrations/github-copilot/README.md](../../../../../.chaos/libs/agency-agents/integrations/github-copilot/README.md)。
 
 ### 4.3 Codex
 
@@ -123,7 +125,7 @@ graph TB
 - **是否需转换**：**是**。`convert_codex` 用 `toml_escape_string` 安全转义正文控制字符。
 - **激活方式**：按名称引用，例如"Use the Frontend Developer agent to review this component."。Codex 以 TOML 内的 `name` 字段为准，文件名 slug 只用于文件系统安全。
 - **安装命令**：`./scripts/convert.sh --tool codex && ./scripts/install.sh --tool codex`
-- 详见 [integrations/codex/README.md](../../../../../../.chaos/libs/agency-agents/integrations/codex/README.md)。
+- 详见 [integrations/codex/README.md](../../../../../.chaos/libs/agency-agents/integrations/codex/README.md)。
 
 ### 4.4 Gemini CLI
 
@@ -132,7 +134,7 @@ graph TB
 - **是否需转换**：**是**。`convert_gemini_cli` 生成子代理文件。
 - **激活方式**：在会话中引用，或直接 `gemini --agent frontend-developer "How should I structure this React component?"`。
 - **安装命令**：`./scripts/convert.sh --tool gemini-cli && ./scripts/install.sh --tool gemini-cli`
-- 详见 [integrations/gemini-cli/README.md](../../../../../../.chaos/libs/agency-agents/integrations/gemini-cli/README.md)。
+- 详见 [integrations/gemini-cli/README.md](../../../../../.chaos/libs/agency-agents/integrations/gemini-cli/README.md)。
 
 ### 4.5 Qwen Code
 
@@ -141,7 +143,7 @@ graph TB
 - **是否需转换**：**是**。`convert_qwen` 生成 SubAgent 文件。
 - **激活方式**：安装后在 Qwen Code 里运行 `/agents manage` 刷新，或重启会话。
 - **安装命令**：`./scripts/convert.sh --tool qwen && ./scripts/install.sh --tool qwen`（需在项目根目录运行）
-- 详见 [integrations/qwen/README.md](../../../../../../.chaos/libs/agency-agents/integrations/qwen/README.md)。
+- 详见 [integrations/qwen/README.md](../../../../../.chaos/libs/agency-agents/integrations/qwen/README.md)。
 
 ### 4.6 Cursor
 
@@ -150,7 +152,7 @@ graph TB
 - **是否需转换**：**是**。`convert_cursor` 生成规则文件，默认 `alwaysApply: false`。
 - **激活方式**：在提示中引用 `@frontend-developer`，或把 `.mdc` 的 `alwaysApply` 改为 `true` 设为常开。
 - **安装命令**：`./scripts/convert.sh --tool cursor && ./scripts/install.sh --tool cursor`（需在项目根目录）
-- 详见 [integrations/cursor/README.md](../../../../../../.chaos/libs/agency-agents/integrations/cursor/README.md)。
+- 详见 [integrations/cursor/README.md](../../../../../.chaos/libs/agency-agents/integrations/cursor/README.md)。
 
 ### 4.7 opencode
 
@@ -160,7 +162,7 @@ graph TB
 - **激活方式**：用 `@agent-name` 前缀调用，如 `@frontend-developer help build this component.`。
 - **容量限制**：opencode 约只能注册 119 个 Agent（上游 bug），过多时用 `--division` 收窄。
 - **安装命令**：`./scripts/install.sh --tool opencode`（需在项目根目录）
-- 详见 [integrations/opencode/README.md](../../../../../../.chaos/libs/agency-agents/integrations/opencode/README.md)。
+- 详见 [integrations/opencode/README.md](../../../../../.chaos/libs/agency-agents/integrations/opencode/README.md)。
 
 ### 4.8 Osaurus
 
@@ -178,7 +180,7 @@ graph TB
 - **激活方式**：在 Aider 会话中按名称引用，或 `aider --read CONVENTIONS.md`。
 - **注意**：roster 单文件格式**不支持按 Agent / 团队过滤**，安装即全量名册。
 - **安装命令**：`./scripts/convert.sh --tool aider && ./scripts/install.sh --tool aider`（需在项目根目录）
-- 详见 [integrations/aider/README.md](../../../../../../.chaos/libs/agency-agents/integrations/aider/README.md)。
+- 详见 [integrations/aider/README.md](../../../../../.chaos/libs/agency-agents/integrations/aider/README.md)。
 
 ### 4.10 Antigravity
 
@@ -187,7 +189,7 @@ graph TB
 - **是否需转换**：**是**。`convert_antigravity` 生成 skill 文件。
 - **激活方式**：按 slug 引用，如 `agency-backend-architect`。
 - **安装命令**：`./scripts/convert.sh --tool antigravity && ./scripts/install.sh --tool antigravity`
-- 详见 [integrations/antigravity/README.md](../../../../../../.chaos/libs/agency-agents/integrations/antigravity/README.md)。
+- 详见 [integrations/antigravity/README.md](../../../../../.chaos/libs/agency-agents/integrations/antigravity/README.md)。
 
 ### 4.11 Kimi
 
@@ -196,7 +198,7 @@ graph TB
 - **是否需转换**：**是**。`convert_kimi` 生成 YAML 与 system 文件。
 - **激活方式**：`kimi --agent-file ~/.config/kimi/agents/frontend-developer/agent.yaml`。
 - **安装命令**：`./scripts/convert.sh --tool kimi && ./scripts/install.sh --tool kimi`
-- 详见 [integrations/kimi/README.md](../../../../../../.chaos/libs/agency-agents/integrations/kimi/README.md)。
+- 详见 [integrations/kimi/README.md](../../../../../.chaos/libs/agency-agents/integrations/kimi/README.md)。
 
 ### 4.12 OpenClaw
 
@@ -205,7 +207,7 @@ graph TB
 - **是否需转换**：**是**。`convert_openclaw` 按 `##` 标题关键词把正文拆成 SOUL 与 AGENTS 两部分，另写 IDENTITY。
 - **激活方式**：安装后按 `agentId` 在 OpenClaw 会话中引用；若网关在运行，需 `openclaw gateway restart` 激活新 Agent。
 - **安装命令**：`./scripts/convert.sh --tool openclaw && ./scripts/install.sh --tool openclaw`
-- 详见 [integrations/openclaw/README.md](../../../../../../.chaos/libs/agency-agents/integrations/openclaw/README.md)。
+- 详见 [integrations/openclaw/README.md](../../../../../.chaos/libs/agency-agents/integrations/openclaw/README.md)。
 
 ### 4.13 Windsurf
 
@@ -215,7 +217,7 @@ graph TB
 - **激活方式**：在 Windsurf 会话中按名称引用。
 - **注意**：roster 单文件格式不支持按 Agent / 团队过滤。
 - **安装命令**：`./scripts/convert.sh --tool windsurf && ./scripts/install.sh --tool windsurf`（需在项目根目录）
-- 详见 [integrations/windsurf/README.md](../../../../../../.chaos/libs/agency-agents/integrations/windsurf/README.md)。
+- 详见 [integrations/windsurf/README.md](../../../../../.chaos/libs/agency-agents/integrations/windsurf/README.md)。
 
 ### 4.14 Hermes
 
@@ -225,7 +227,7 @@ graph TB
 - **激活方式**：插件暴露 `agency_agents_search` / `agency_agents_inspect` / `agency_agents_load` / `agency_agents_delegate` 四个工具，Hermes 启动时加载，可用自然语言让 Hermes 检索并加载所需专家。
 - **CLI-only**：plugin 类型的构建产物无法被任何 GUI 应用渲染，只能通过 CLI 安装。
 - **安装命令**：`./scripts/convert.sh --tool hermes && ./scripts/install.sh --tool hermes`，安装后重启 Hermes。
-- 详见 [integrations/hermes/README.md](../../../../../../.chaos/libs/agency-agents/integrations/hermes/README.md)。
+- 详见 [integrations/hermes/README.md](../../../../../.chaos/libs/agency-agents/integrations/hermes/README.md)。
 
 ### 4.15 Mistral Vibe
 
@@ -234,7 +236,7 @@ graph TB
 - **是否需转换**：**是**。`convert_vibe` 生成 TOML 配置（`agent_type`、`system_prompt_id`）与提示文件。
 - **激活方式**：按系统提示 ID（即文件名 slug）引用，如"Use the Code Reviewer agent to analyze this pull request."。
 - **安装命令**：`./scripts/convert.sh --tool vibe && ./scripts/install.sh --tool vibe`
-- 详见 [integrations/vibe/README.md](../../../../../../.chaos/libs/agency-agents/integrations/vibe/README.md)。
+- 详见 [integrations/vibe/README.md](../../../../../.chaos/libs/agency-agents/integrations/vibe/README.md)。
 
 ### 4.16 ZCode
 
@@ -243,7 +245,7 @@ graph TB
 - **是否需转换**：**是**。`convert_zcode` 生成 Markdown 文件，与 Qwen 的 `qwen-md` 逐字节一致，可被桌面应用原生渲染。
 - **激活方式**：ZCode 从其 agents 目录自动发现这些文件，按名称引用。
 - **安装命令**：`./scripts/convert.sh --tool zcode && ./scripts/install.sh --tool zcode`
-- 详见 [integrations/zcode/README.md](../../../../../../.chaos/libs/agency-agents/integrations/zcode/README.md)。
+- 详见 [integrations/zcode/README.md](../../../../../.chaos/libs/agency-agents/integrations/zcode/README.md)。
 
 ---
 

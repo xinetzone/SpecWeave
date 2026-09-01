@@ -376,5 +376,18 @@ LLM/Agent/RAG 相关概念不是必需的，教程中会解释 OKF 相关术语�
 
 concepts/index
 references/index
+00-overview
+01-installation
+02-cli-reference
+03-okf-format
+04-core-architecture
+05-sync-mechanism
+06-chat-system
+07-mcp-serve
+08-registry-visualize
+09-extension-development
+10-faq-troubleshooting
+11-summary-resources
 log
+seven-concepts-report
 ```

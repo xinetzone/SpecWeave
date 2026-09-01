@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "向日葵智能插座C1Pro/C2/C4完整学习教程：远程开机、电量统计、4G户外三款产品对比与深度洞察"
 source: "https://sunlogin.oray.com/hardware/socket-c1pro-ble、https://sunlogin.oray.com/hardware/socket-c2-ble、https://sunlogin.oray.com/hardware/c4"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.toml"

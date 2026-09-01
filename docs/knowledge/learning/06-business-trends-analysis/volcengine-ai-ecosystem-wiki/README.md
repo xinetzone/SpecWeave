@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-06-business-trends-analysis-volcengine-ai-ecosystem-wiki-index"
 title: "火山引擎AI产品生态深度学习笔记"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/volcengine-ai-ecosystem-wiki/README.toml"
@@ -54,4 +56,4 @@ date: "2026-07-07"
 ## 🔗 相关资源
 
 - [🏠 返回上级：商业趋势分析](../README.md)
-- [📚 文档首页](../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../index.md)

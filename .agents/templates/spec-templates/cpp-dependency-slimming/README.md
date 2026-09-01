@@ -96,7 +96,7 @@ checklist.md 包含 **13个验证维度**：
 
 - **Caffe C++ 核心瘦身优化**（tvm-ffi 替换 glog/boost）
   - Spec: `external/chaos/caffe/.trae/specs/caffe-cpp-slim-tvm-ffi/`
-  - 复盘报告: `.agents/docs/retrospective/reports/code-optimization/retrospective-caffe-slim-tvm-ffi-20260723/`
+  - 复盘报告: `docs/retrospective/reports/code-optimization/retrospective-caffe-slim-tvm-ffi-20260723/`
   - 关键数据：130文件/11310行代码/42层迁移/38层成功注册/链接依赖从15个降至3个
 
 ## 模板演进

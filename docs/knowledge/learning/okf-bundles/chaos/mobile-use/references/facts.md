@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "mobile-use 事实清单"
+---
+
 # mobile-use 事实清单
 
 > R阶段事实采集。源码路径：d:\AI\.chaos\libs\mobile-use\

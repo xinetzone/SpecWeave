@@ -1,0 +1,5 @@
+id = "cpp-iife-assertion-macro"
+title = "C++ IIFE+AssertHelper 流式断言宏封装最佳实践"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

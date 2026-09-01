@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: custom-tool
 title: 自定义工具开发完整指南
 source: veadk-python codebase analysis

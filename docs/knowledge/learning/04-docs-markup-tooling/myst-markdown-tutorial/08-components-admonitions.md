@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "myst-tutorial-admonitions"
 title: "第8章：扩展组件 - 提示框（Admonitions）"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/myst-markdown-tutorial/08-components-admonitions.toml"

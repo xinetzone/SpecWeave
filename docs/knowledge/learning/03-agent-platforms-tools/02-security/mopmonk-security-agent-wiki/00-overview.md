@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "mopmonk-security-agent-wiki-00"
 title: "教程概述与学习目标"
 source: "../mopmonk-security-agent-wiki.md#一教程概述与学习目标"

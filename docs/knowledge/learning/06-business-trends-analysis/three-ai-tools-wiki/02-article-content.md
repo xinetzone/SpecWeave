@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "three-ai-tools-wiki-02"
 title: "文章原文存档：三个热门AI工具"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/06-business-trends-analysis/three-ai-tools-wiki/02-article-content.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "task2-copilot-analysis"
 title: "Copilot发展历程与成本困境深度分析"
 source: "cleaned-article.md"

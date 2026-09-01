@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 version: "1.0"
 source: "../agent-communication-protocols-wiki.md#06-交互流程与协作模式"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/06-flows.toml"

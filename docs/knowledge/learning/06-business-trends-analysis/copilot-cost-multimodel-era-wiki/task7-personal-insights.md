@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "task7-personal-insights"
 title: "个人理解与批判性思考"
 source: "cleaned-article.md, task2-copilot-analysis.md, task3-deepseek-analysis.md, task4-multimodel-comparison.md, task5-industry-trends.md, task6-quality-assessment.md"

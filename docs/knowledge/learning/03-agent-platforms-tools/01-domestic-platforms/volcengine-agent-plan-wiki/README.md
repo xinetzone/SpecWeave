@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-volcengine-agent-plan-wiki-index"
 title: "火山引擎方舟Agent Plan共创计划参与指南"
 x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/volcengine-agent-plan-wiki/README.toml"
@@ -45,7 +47,7 @@ tags: ["volcengine", "agent-plan", "方舟", "多模态", "共创计划", "索�
 ## 🔗 相关资源
 
 - [🏠 返回上级：Agent平台与工具](../../README.md)
-- [📚 文档首页](../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../index.md)
 - [🔗 Harness七大组件Wiki](../../../02-agent-engineering-methodology/01-paradigms/harness-seven-components-wiki/00-overview.md)（Harness工程方法论）
 - [🚀 立即订阅Agent Plan](https://www.volcengine.com/activity/agentplan)
 - [🖥️ 方舟控制台](https://console.volcengine.com/ark/region:cn-beijing/subscription/agent-plan)

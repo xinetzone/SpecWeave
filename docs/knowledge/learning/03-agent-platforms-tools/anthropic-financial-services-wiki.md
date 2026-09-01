@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 title: "Anthropic Financial Services 完整教程：华尔街的AI金融Agent工具箱"
 source: "external: 不存在-微信公众号文章《Anthropic金融服务Agent仓库解析》（极客之家）+ GitHub官方仓库 anthropics/financial-services"
 x-toml-ref: "../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/anthropic-financial-services-wiki.toml"

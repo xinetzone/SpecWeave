@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 source: "https://mystmd.org/guide, 官方文档及使用经验总结"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/04-docs-markup-tooling/executablebooks-myst-guide/05-best-practices.toml"
 id: "executablebooks-myst-guide-best-practices"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "github-cli-wiki-00"
 title: "GitHub CLI (gh) 完全指南 — 概述"
 source: "https://github.com/cli/cli"

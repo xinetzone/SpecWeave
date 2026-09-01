@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: i-have-adhd-wiki-custom
 title: 八、自定义开发与故障排查
 source: external/libs/i-have-adhd/INSTALL.md 自定义与排障整理

@@ -1,7 +1,9 @@
 ---
+type: Wiki Tutorial
+
 id: "docs-knowledge-learning-03-agent-platforms-tools-minitest-mobile-use-wiki-mobile-use-sdk-docs-01-introduction-installation-index"
 title: "介绍与安装"
-x-toml-ref: "../../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/README.toml"
+x-toml-ref: "../../../../../../../../.meta/toml/docs/knowledge/learning/03-agent-platforms-tools/05-mobile-testing/minitest-mobile-use-wiki/mobile-use-sdk-docs/01-introduction-installation/README.toml"
 category: "knowledge"
 date: "2026-07-09"
 ---
@@ -22,7 +24,7 @@ date: "2026-07-09"
 
 ## 🔗 相关资源
 
-- [📚 文档首页](../../../../../../../../.agents/docs/README.md)
+- [📚 文档首页](../../../../../../../index.md)
 
 ---
 

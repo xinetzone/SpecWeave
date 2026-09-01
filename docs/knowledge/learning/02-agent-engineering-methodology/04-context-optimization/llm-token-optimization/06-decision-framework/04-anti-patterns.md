@@ -333,7 +333,7 @@ reuse_count: 0
 
 | 反模式集 | 覆盖反模式 | 验证案例数 | 模式库链接 |
 |---------|-----------|-----------|-----------|
-| LLM Token优化反模式集 | AP-001~AP-007（全部7个反模式） | 9个踩坑案例 | [llm-token-optimization-anti-patterns.md](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/llm-token-optimization-anti-patterns.md) |
+| LLM Token优化反模式集 | AP-001~AP-007（全部7个反模式） | 9个踩坑案例 | [llm-token-optimization-anti-patterns.md](../../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/llm-token-optimization-anti-patterns.md) |
 
 **反模式集包含**：
 - 结构化问题-根因-症状-解决方案模板
@@ -349,7 +349,7 @@ reuse_count: 0
 - [⬅️ 返回：最佳实践模式](03-patterns.md)
 - [➡️ 下一篇：快速启动Checklist](05-quick-checklist.md)
 - [⚠️ 模式与反模式配对参考](03-patterns.md)
-- [📚 方法论模式库索引](../../../../retrospective/patterns/methodology-patterns/ai-collaboration/README.md)
+- [📚 方法论模式库索引](../../../../../../retrospective/patterns/methodology-patterns/ai-collaboration/README.md)
 
 ---
 

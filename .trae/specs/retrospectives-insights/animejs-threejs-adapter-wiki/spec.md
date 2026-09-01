@@ -22,8 +22,8 @@
 
 ## Background & Context
 - 已有学习分析文档：[animejs-threejs-adapter-analysis.md](../../../../docs/knowledge/learning/05-ai-multimodal-content/animejs-threejs-adapter-analysis.md)（570行，包含核心分析）
-- 已有七概念复盘报告：[2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md](../../../../.agents/docs/retrospective/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
-- 已沉淀LAV模式：[external-tech-article-learning-closed-loop.md](../../../../.agents/docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-tech-article-learning-closed-loop.md)
+- 已有七概念复盘报告：[2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md](../../../../docs/retrospective/reports/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
+- 已沉淀LAV模式：[external-tech-article-learning-closed-loop.md](../../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/external-tech-article-learning-closed-loop.md)
 - 项目Wiki教程标准结构参考：[ffi-wiki](../../../../docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki)（00-overview + 分章节 + README格式）
 - 教程分类：属于前端3D动画/多媒体内容，应放置在 `05-ai-multimodal-content/` 目录下
 

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: "tuya-ipc-minimal-closed-loop"
 title: "Tuya IPC 最小闭环跑通路径"
 x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/tuya-ipc-minimal-closed-loop.toml"

@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-triples"
 title: "四、勾股数"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"

@@ -1,4 +1,6 @@
 ---
+type: Guide
+
 id: p1-11-daomind-deployment-guide
 title: DaoMind 部署上线指南摘要
 source: d:\spaces\chaos\daoApps\DaoMind\DEPLOYMENT-GUIDE.md

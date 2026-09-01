@@ -10,7 +10,7 @@ x-toml-ref: "../../../.meta/toml/.agents/rules/cmd-log-specification/01-overview
 
 CMD-LOG 是 SpecWeave 命令集（Skill门面）的结构化执行日志规范，是项目日志体系的第三类日志（继 SG-LOG 阶段守卫日志、PDR-LOG 前置文档读取日志之后），用于追踪6大命令集执行过程中的关键节点，支持故障排查、断点续传、执行审计和事后复盘。
 
-本规范与项目已有的 [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md) 模式保持一致，采用统一前缀+键值对+JSON上下文的单行格式，零依赖、grep友好、机器可解析。
+本规范与项目已有的 [结构化轻量日志格式](../../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md) 模式保持一致，采用统一前缀+键值对+JSON上下文的单行格式，零依赖、grep友好、机器可解析。
 
 
 ## 2. 适用范围
@@ -36,6 +36,6 @@ CMD-LOG 是 SpecWeave 命令集（Skill门面）的结构化执行日志规范�
 
 - - [阶段守卫规范](../stage-guardrails.md)
 - - [PDR前置文档读取协议](../../protocols/pre-document-reading.md)
-- - [结构化轻量日志格式](../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
+- - [结构化轻量日志格式](../../../docs/retrospective/patterns/code-patterns/structured-lightweight-logging.md)
 
 **[返回索引](../cmd-log-specification.md)** | 下一章 → [日志格式与级别约定](02-format-levels.md)

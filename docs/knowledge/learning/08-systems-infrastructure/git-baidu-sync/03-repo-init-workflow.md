@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: git-baidu-sync-repo-init-workflow
 title: Git 网盘仓库初始化与新设备加入工作流
 source: original

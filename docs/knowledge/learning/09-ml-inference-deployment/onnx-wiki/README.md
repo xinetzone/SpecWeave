@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: onnx-wiki-readme
 title: ONNX Wiki - 入口导航
 date: 2026-08-09
@@ -8,8 +10,8 @@ tags:
   - navigation
   - index
 source:
-x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/README.toml"
   - https://onnx.ai
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/09-ml-inference-deployment/onnx-wiki/README.toml"
 category: knowledge/learning/09-ml-inference-deployment
 maturity: L1-draft
 ---

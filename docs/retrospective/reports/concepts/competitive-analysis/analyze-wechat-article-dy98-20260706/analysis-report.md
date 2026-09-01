@@ -7,7 +7,7 @@ description: "Orca 多代理协作 IDE 系统性学习与深度洞察分析报�
 status: "stable"
 source: ".trae/specs/retrospectives-insights/analyze-wechat-article-dy98/"
 version: "1.0"
-x-toml-ref: "../../../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-wechat-article-dy98/analysis-report.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/concepts/competitive-analysis/analyze-wechat-article-dy98-20260706/analysis-report.toml"
 generated:
   by: "process:docs-to-okf-conversion"
   at: "2026-08-22T00:00:00Z"
@@ -16,7 +16,6 @@ verified:
   at: "2026-08-22T00:00:00Z"
 stale_after: "2027-08-22"
 ---
-
 # Orca 多代理协作 IDE 系统性学习与深度洞察分析报告
 
 > **分析对象**：微信公众号"开源日记"发布的 Orca 多代理协作 IDE 介绍文章

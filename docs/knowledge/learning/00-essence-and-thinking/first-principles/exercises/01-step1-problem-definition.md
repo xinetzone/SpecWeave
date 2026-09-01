@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: first-principles-exercises-step1
 title: Step 1 专项练习——问题定义与边界澄清
 source: "12-exercises.md#chapter-2"
-x-toml-ref: "../../../../../../../.meta/toml/docs/knowledge/learning/first-principles/exercises/01-step1-problem-definition.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/exercises/01-step1-problem-definition.toml"
 created_at: "2026-07-09"
 last_updated: "2026-07-09"
 status: completed

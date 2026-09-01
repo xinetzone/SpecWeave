@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ffi-wiki-comparison"
 title: "FFI 与相关概念对比"
 x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/01-agent-protocols-interfaces/ffi-wiki/06-comparison.toml"

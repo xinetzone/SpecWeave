@@ -1,3 +1,8 @@
+---
+type: Facts
+title: "Home Assistant Components 集成模式事实清单"
+---
+
 # Home Assistant Components 集成模式事实清单
 
 > 源码根路径：`homeassistant/components/`

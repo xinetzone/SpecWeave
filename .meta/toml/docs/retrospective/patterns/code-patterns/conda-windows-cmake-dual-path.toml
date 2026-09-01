@@ -1,0 +1,5 @@
+id = "conda-windows-cmake-dual-path"
+title = "Windows Conda CMake 双路径搜索模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

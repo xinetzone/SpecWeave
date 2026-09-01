@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "volcengine-agentkit-wiki-01"
 title: "产品介绍与核心概念"
 source: "seven-concepts: volcengine-agentkit-wiki"

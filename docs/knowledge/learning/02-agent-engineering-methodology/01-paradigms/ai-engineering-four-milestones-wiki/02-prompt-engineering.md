@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "ai-engineering-four-milestones-wiki-02"
 title: "第一站：Prompt Engineering"
 source: "https://mp.weixin.qq.com/s/eeB14yOtDU6akQUp0Mkauw"

@@ -1,8 +1,10 @@
 ---
+type: Wiki Tutorial
+
 id: cognitive-science-foundations
 title: 第一性原理思维的认知科学基础
 source: first-principles-future-research Task 2
-x-toml-ref: "../../../../../../.meta/toml/docs/knowledge/learning/first-principles/13-cognitive-science-foundations.toml"
+x-toml-ref: "../../../../../.meta/toml/docs/knowledge/learning/00-essence-and-thinking/first-principles/13-cognitive-science-foundations.toml"
 created_at: "2026-07-09"
 status: completed
 version: "1.0"

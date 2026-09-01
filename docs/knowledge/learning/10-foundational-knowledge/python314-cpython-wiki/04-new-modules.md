@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "python314-cpython-wiki-04"
 title: "Python 3.14 新模块详解"
 source: "https://docs.python.org/zh-cn/3.14/whatsnew/3.14.html#new-modules"

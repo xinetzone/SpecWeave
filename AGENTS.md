@@ -106,11 +106,11 @@
 
 ## 开发规范
 
-完整开发规范（代码风格、提交规范、Mermaid编码、路径引用、原子化操作等）见 [.agents/docs/development-standards.md](.agents/docs/development-standards.md)。
+完整开发规范（代码风格、提交规范、Mermaid编码、路径引用、原子化操作等）见 [development-standards.md](docs/tech/references/development-standards.md)。
 
 - **代码风格**：遵循现有代码风格，新增 `.agents/scripts/` 脚本前先查阅 [lib/README.md](.agents/scripts/lib/README.md) 共享库，禁止重复实现已有功能
 - **提交规范**：遵循 Conventional Commits（`type(scope): subject`），主体使用中文描述；修复类提交须标注预防措施类型
-- **文档边界**：`AGENTS.md`/`.agents/` 面向 AI 智能体（Core 规范层 + Tools 执行层），`.agents/docs/` 是唯一有效的文档容器，同时承载人类可读文档与智能体专属文档。根目录 `docs/` 已废弃为空壳，所有文档引用均解析为 `.agents/docs/`，详见 [全局核心规则](.agents/global-core-rules.md) 中的路径解析规则
+- **文档边界**：根目录 `docs/` 为唯一文档中心（OKF v0.2，Sphinx 构建，面向人类读者与外部消费），承载 Wiki 教程、知识包、复盘报告、模式库与最佳实践；`AGENTS.md`/`.agents/` 面向 AI 智能体，承载角色、规则、协议、工作流、脚本与模板等规范与执行资产（不再包含 `docs/` 子树）。边界规则：①新增对外可读文档一律入 `docs/`；②`.agents/` 规范引用 `docs/` 知识源时使用 `../docs/...` 相对路径；③路径引用一律以文件实际位置为准，禁止沿用"docs/ 自动解析为 .agents/docs/"的历史隐式规则，详见 [全局核心规则](.agents/global-core-rules.md) 中的路径解析规则
 - **派生产物溯源**：派生产物须在 YAML/TOML frontmatter 携带 `source` 字段标注来源
 - **路径引用**：Markdown 文档交叉引用使用相对路径，禁止 `file:///` 绝对路径；格式为 `[可读名称](相对路径#L起始行-L结束行)`
 - **修复即闭环**：Bug 修复遵循「修复→预防→闭环」三阶段 SOP，禁止纯点修复（平凡修复可豁免）
@@ -123,12 +123,13 @@
 | 资源 | 入口 |
 |---|---|
 | 🏆 最高可信度知识库（OKF 知识包） | [projects/awesome-okf-xs/doc/bundles/](projects/awesome-okf-xs/doc/bundles/index.md)（10 技术域/28 分组/248 知识包；所有相关概念、术语、技术事实的冲突裁决依据，只读引用） |
-| 技术知识库 | [docs/knowledge/](docs/knowledge/README.md) |
-| 复盘体系与可复用模式 | [docs/retrospective/](.agents/docs/retrospective/README.md) |
-| 可复用模式库（架构/代码/方法论） | [docs/retrospective/patterns/](.agents/docs/retrospective/patterns/README.md) |
-| 资产清单与复用指南 | [docs/retrospective/assets/asset-inventory.md](.agents/docs/retrospective/assets/asset-inventory.md) |
+| 技术知识库 | [docs/knowledge/](docs/knowledge/index.md)（OKF v0.2 文档中心） |
+| 复盘体系与可复用模式 | [docs/retrospective/](docs/retrospective/index.md)（OKF v0.2 复盘报告与模式库唯一入口） |
+| 可复用模式库（方法论） | [方法论模式库](docs/retrospective/patterns/methodology-patterns/index.md)（OKF v0.2）；[架构/代码模式库](docs/retrospective/patterns/index.md) |
+| 资产清单与复用指南 | [资产清单](docs/retrospective/assets/asset-inventory.md) |
+| 双体系引用收敛台账（已结项） | [cross-reference-ledger.md](docs/retrospective/cross-reference-ledger.md)（ACT-5 历史台账：随 2026-08-31 `.agents/docs/` 整体迁入 `docs/`，跨区引用已自然消解，台账保留作治理记录） |
 | vendor 子模块协同规范 | [.agents/VENDOR-INTEGRATION.md](.agents/VENDOR-INTEGRATION.md) |
 
 ## 历史归档
 
-所有历史变更记录已归档至 [AGENTS Manifest 历史变更归档](.agents/docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)。
+所有历史变更记录已归档至 [AGENTS Manifest 历史变更归档](docs/retrospective/reports/project-governance/documentation-governance/agents-manifest-changelog-archive.md)。

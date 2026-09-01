@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "i-have-adhd-wiki-rules"
 title: "三、核心规则"
 source: "external/libs/i-have-adhd/skills/i-have-adhd/SKILL.md 规则详解"

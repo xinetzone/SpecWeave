@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "sunlogin-offline-hardware-wiki-02"
 title: "控控2产品详解"
 source: "../sunlogin-offline-hardware-wiki.md#控控2产品详解"

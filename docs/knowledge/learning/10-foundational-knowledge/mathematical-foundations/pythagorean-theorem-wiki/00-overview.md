@@ -1,4 +1,6 @@
 ---
+type: Wiki Tutorial
+
 id: "pythagorean-theorem-overview"
 title: "一、概述"
 source: "勾股定理知识沉淀（七概念方法论知识沉淀场景）"
