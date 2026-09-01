@@ -12,4 +12,5 @@
 05-limitations-open-problems
 06-paradigm-shift-insights
 07-summary-faq-resources
+log
 ```

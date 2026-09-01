@@ -15,4 +15,5 @@
 08-insights-patterns
 09-faq-resources
 10-summary
+log
 ```

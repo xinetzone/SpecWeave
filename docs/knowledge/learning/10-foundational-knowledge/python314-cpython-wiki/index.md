@@ -21,4 +21,5 @@
 learning-path
 python314-learning-path
 seven-concepts-report
+log
 ```

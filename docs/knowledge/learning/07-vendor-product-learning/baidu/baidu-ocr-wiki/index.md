@@ -13,4 +13,5 @@
 06-transferable-patterns
 07-specweave-implications
 08-summary-faq
+log
 ```

@@ -14,4 +14,5 @@
 07-extending-development
 08-transferable-patterns
 09-summary-faq
+log
 ```
