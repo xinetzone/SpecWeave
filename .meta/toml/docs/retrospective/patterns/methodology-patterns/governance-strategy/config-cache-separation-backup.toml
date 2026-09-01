@@ -1,0 +1,13 @@
+id = "config-cache-separation-backup"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "playground/reports/trae-env-retrospective-20260901/backup-policy.md（Trae 主目录二分类）+ 2026-07-22-windows-disk-cleanup-wsl-optimization.md（cleanup-trae-cache.ps1 双清单策略）"
+
+[bindings]
+rules = []
+references = ["credential-copy-minimization", "dual-env-drift-reconciliation", "destruction-protection-isolation"]
+skills = []

@@ -25,6 +25,7 @@ command-knowledge-link
 command-vs-skill-boundary
 commit-quality-gate-staging-inspection
 compliance-driven-rule-building
+config-cache-separation-backup
 config-persistence-full-chain-coverage
 convention-driven-creation
 credential-copy-minimization

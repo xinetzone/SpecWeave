@@ -43,6 +43,7 @@ date: "2026-07-09"
 | [指令集与Skill边界判断（Command vs Skill Boundary）](./command-vs-skill-boundary.md) | 指令集与Skill边界判断（Command vs Skill Boundary） | L1 | `command-set` `skill` `boundary-judgment` |
 | [提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection）](./commit-quality-gate-staging-inspection.md) | 提交质量门——三查暂存法（Commit Quality Gate: Three-Check Staging Inspection） | L2 |  |
 | [合规驱动规则建设五步法](./compliance-driven-rule-building.md) | 合规驱动规则建设五步法 | L1 |  |
+| [配置缓存分离：环境目录备份迁移的二分类法](./config-cache-separation-backup.md) | 配置缓存分离：环境目录备份迁移的二分类法 | L2 | `backup` `config-assets` `runtime-cache` |
 | [配置持久化全链路覆盖模式](./config-persistence-full-chain-coverage.md) | 配置持久化全链路覆盖模式 | L1 实验性 | `config` `persistence` `cmake` |
 | [约定驱动创建模型：范例即模板](./convention-driven-creation.md) | 约定驱动创建模型：范例即模板 | L2 |  |
 | [凭证副本最小化：目录镜像/备份/同步中的凭证防护法](./credential-copy-minimization.md) | 凭证副本最小化：目录镜像/备份/同步中的凭证防护法 | L2 | `credential` `backup-safety` `mirror` |
