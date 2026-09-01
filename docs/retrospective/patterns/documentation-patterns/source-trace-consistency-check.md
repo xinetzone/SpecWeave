@@ -1,4 +1,5 @@
 ---
+type: Pattern
 id: pattern-source-trace-consistency-check
 title: 溯源一致性三查
 date: 2026-08-31

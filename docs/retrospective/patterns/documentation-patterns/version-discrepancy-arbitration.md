@@ -1,4 +1,5 @@
 ---
+type: Pattern
 id: pattern-version-discrepancy-arbitration
 title: 版本差异判别
 date: 2026-08-31

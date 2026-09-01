@@ -1,3 +1,10 @@
+---
+id: "retrospective-daoyi-okf-wiki-20260831"
+title: "道医（Daoyi）OKF 知识包创建与总索引注册 · 任务执行总结报告"
+date: "2026-08-31"
+type: Report
+tags: ["OKF", "知识包", "道医", "任务总结", "子模块交付"]
+---
 # 道医（Daoyi）OKF 知识包创建与总索引注册 · 任务执行总结报告
 
 - **报告日期**：2026-08-31

@@ -74,6 +74,7 @@ retrospective-boshu-laozi-pdf-to-myst-wiki-20260821
 retrospective-caffe-docker-local-20260724
 retrospective-caffe-ffi-conv-v4-milestone-20260805
 retrospective-chaos-epub-books-classification-20260819
+retrospective-daoyi-okf-wiki-20260831
 retrospective-docker-template-upgrade-20260722
 retrospective-first-principles-knowledge-link-20260709
 retrospective-hermes-conda-setup-20260812

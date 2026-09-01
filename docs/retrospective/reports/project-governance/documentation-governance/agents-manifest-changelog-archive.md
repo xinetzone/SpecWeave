@@ -20,7 +20,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/project-govern
 ## 归档记录
 
 <!-- changelog -->
-- 2026-09-01 | docs | 核心数据自动更新：提交数3173+、模式861+、脚本419+、Skill28个、规则133+、指令集15个、核心规范入口22项、GitCode Stars6、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
+- 2026-09-01 | docs | 核心数据自动更新：提交数3229+、模式865+、脚本419+、Skill28个、规则133+、指令集15个、核心规范入口22项、GitCode Stars6、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-08-17 | docs | 核心数据自动更新：提交数2727+、模式710+、脚本412+、Skill23个、规则133+、指令集15个、核心规范入口22项、GitCode Stars7、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-08-09 | docs | 核心数据自动更新：提交数2522+、模式692+、脚本401+、Skill22个、规则133+、指令集15个、核心规范入口22项、GitCode Stars7、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计
 - 2026-08-01 | docs | 核心数据自动更新：提交数1891+、模式597+、脚本395+、Skill18个、规则133+、指令集14个、核心规范入口22项、GitCode Stars1340068、Forks2、Issues0、PRs0。来源：docgen.py stats 自动统计

@@ -145,7 +145,7 @@ think/index.md 与 bundles/index.md 的更新 SHALL 保持计数、表格行、t
 
 ## 实施后记录（Post-Delivery Log）
 
-- **2026-08-30 交付闭环**：双仓提交推送（子模块 `16d6a514` + 主仓库 `bd8e45528`），V 阶段独立评审 6 项问题全部修复（见 [review.md](review.md)），质量门 toctrees/utf8 通过。全量事实与提交记录见复盘报告 [retrospective-sexology-classics-wiki-20260830.md](../../../../.agents/docs/retrospective/reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md)。
+- **2026-08-30 交付闭环**：双仓提交推送（子模块 `16d6a514` + 主仓库 `bd8e45528`），V 阶段独立评审 6 项问题全部修复（见 [review.md](review.md)），质量门 toctrees/utf8 通过。全量事实与提交记录见复盘报告 [retrospective-sexology-classics-wiki-20260830.md](../../../../docs/retrospective/reports/concepts/milestone/retrospective-sexology-classics-wiki-20260830.md)。
 - **2026-08-31 知识沉淀**：复盘模式 1/2 沉淀为 `documentation-patterns/source-trace-consistency-check.md`、`documentation-patterns/version-discrepancy-arbitration.md`（L1）；洞察 I-3 沉淀为 `code-patterns/submodule-detached-head-ff-only-landing.md`（L2，validation_count=3，主仓库提交 `83c9a58e0`）。
 - **2026-08-31 规划记录回写**：tasks.md（T1-T8 勾选 + Task 9 沉淀登记）、checklist.md（按复盘事实勾选，`invoke build` 附解析阶段边界注）。
 
