@@ -1,0 +1,13 @@
+id = "security-baseline-cross-instance-alignment"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L1"
+validation_count = 1
+reuse_count = 0
+documentation_level = "standard"
+source = "playground/reports/trae-env-retrospective-20260901/p0-fix-plan.md（Trae .trae/.trae-cn 双版本安全姿态对齐，sandbox.json deny+白名单移植）"
+
+[bindings]
+rules = []
+references = ["dual-env-drift-reconciliation", "fine-grained-least-privilege", "credential-copy-minimization"]
+skills = []

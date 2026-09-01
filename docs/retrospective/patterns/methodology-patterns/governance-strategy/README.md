@@ -121,6 +121,7 @@ date: "2026-07-09"
 | [风险转移非意图后果模型](./risk-transfer-unintended-consequences.md) | 风险转移非意图后果模型 | L1 | `风险管理` `供应链` `决策陷阱` |
 | [角色最小化原则（RACI扩展优先于角色新增）](./role-minimization-principle.md) | 角色最小化原则（RACI扩展优先于角色新增） | L1 |  |
 | [根因诊断模式](./root-cause-diagnosis.md) | 根因诊断模式 | L2 |  |
+| [安全基线跨实例统一：多实例默认姿态的对齐拉平法](./security-baseline-cross-instance-alignment.md) | 安全基线跨实例统一：多实例默认姿态的对齐拉平法 | L1-draft（单案例待验证） | `security-baseline` `default-deny` `multi-instance` |
 | [自指性规范体系（Self-Referential Specification System）](./self-referential-spec-system.md) | 自指性规范体系（Self-Referential Specification System） | L1 |  |
 | [原子提交会话边界原则（Session-Boundary-Commit）](./session-boundary-commit.md) | 原子提交会话边界原则（Session-Boundary-Commit） | L1 |  |
 | [七概念方法论自举对抗性审查报告](./seven-concepts-adversarial-review.md) | 七概念方法论自举对抗性审查报告 | L2 | `方法论` `七概念` `治理策略` |
