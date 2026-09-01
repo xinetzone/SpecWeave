@@ -103,5 +103,5 @@ stale_after: "2027-08-22"
 
 ## 关联模式
 
-- [不确定性探索+确定性校验双引擎架构模式](dual-engine-uncertainty-certainty.md)：责任转移的前提是平台方有可靠的自动化系统
-- [评测驱动的自进化闭环模式](evaluation-driven-self-evolution.md)：责任转移的内在驱动力触发自进化体系
+- [不确定性探索+确定性校验双引擎架构模式](../ai-collaboration/dual-engine-uncertainty-certainty.md)：责任转移的前提是平台方有可靠的自动化系统
+- [评测驱动的自进化闭环模式](../ai-collaboration/evaluation-driven-self-evolution.md)：责任转移的内在驱动力触发自进化体系

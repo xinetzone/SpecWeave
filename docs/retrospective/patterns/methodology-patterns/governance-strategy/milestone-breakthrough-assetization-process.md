@@ -13,6 +13,10 @@ tags: ["methodology", "process", "assetization", "knowledge-management", "milest
 
 # 专项突破资产化标准流程
 
+## 模式类型
+
+治理策略/流程类模式（专项突破后的资产化标准流程，属执行流程类）
+
 > 对应模式：MILESTONE-KNOWLEDGE-CLOOP-001 里程碑级知识沉淀闭环模式
 > 
 > **适用场景**：完成一个专项领域的深度研究/工程攻坚后，需要将零散经验转化为可复用组织资产时。
@@ -56,7 +60,7 @@ tags: ["methodology", "process", "assetization", "knowledge-management", "milest
 | KB-007 | 所有交叉引用链接有效，无断链 | 必须 |
 
 **参考案例**：
-- [LLM Token优化知识库](../../learning/llm-token-optimization/README.md)（29个文档，10个模块）
+- [LLM Token优化知识库](../../../../knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/README.md)（29个文档，10个模块）
 
 ---
 

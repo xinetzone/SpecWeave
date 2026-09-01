@@ -1,0 +1,13 @@
+id = "dual-env-drift-reconciliation"
+domain = "methodology"
+layer = "governance-strategy"
+maturity = "L2"
+validation_count = 2
+reuse_count = 0
+documentation_level = "standard"
+source = "playground/reports/trae-env-retrospective-20260901/README.md（Trae .trae/.trae-cn 双版本环境复盘）+ Podman rootless/rootful 双存储漂移案例（2026-08-29）"
+
+[bindings]
+rules = []
+references = ["dual-track-metadata-consistency", "data-validation-four-checks", "three-state-decision"]
+skills = []
