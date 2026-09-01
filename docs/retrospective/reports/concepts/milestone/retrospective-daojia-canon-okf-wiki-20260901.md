@@ -149,7 +149,7 @@ stale_after: "2027-09-01"
 - **子模块（awesome-okf-xs）**：`3a52c2f4` `feat(daojia): 道家段P2九束建成并统一frontmatter`（132 文件 +7668/−15）
 - **主仓（SpecWeave）**：`d788c50de` `chore(submodules): bump awesome-okf-xs 至道家段P2九束建成(3a52c2f4)`（gitlink 1 文件）
 - 提交前预检：`invoke gates.all` 全绿 + frontmatter 兜底扫描 fm_check 0 问题；add 与 commit 分次调用、暂存集精确核验零夹带
-- 本复盘报告独立归档至 `.agents/docs/retrospective/reports/concepts/milestone/`（单文件、单一职责）
+- 本复盘报告独立归档至 `docs/retrospective/reports/concepts/milestone/`（单文件、单一职责）
 
 ---
 
