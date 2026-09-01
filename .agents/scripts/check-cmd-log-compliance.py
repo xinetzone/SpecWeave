@@ -46,7 +46,7 @@ from lib.cli import print_pass, print_warn, print_error, print_header, print_sum
 
 PROJECT_ROOT = resolve_project_root(__file__)
 SKILLS_DIR = PROJECT_ROOT / ".agents" / "skills"
-RETROS_DIR = PROJECT_ROOT / ".agents" / "docs" / "retrospective" / "reports" / "task-reports"
+RETROS_DIR = PROJECT_ROOT / "docs" / "retrospective" / "reports" / "task-reports"
 CMD_LOG_SPEC = PROJECT_ROOT / ".agents" / "rules" / "cmd-log-specification" / "03-events-steps.md"
 
 CMD_LOG_COMMANDS = {
