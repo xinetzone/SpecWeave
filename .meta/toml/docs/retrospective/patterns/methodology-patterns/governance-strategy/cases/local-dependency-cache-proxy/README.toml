@@ -1,0 +1,5 @@
+id = "local-dependency-cache-proxy-readme"
+title = "案例：TVM 构建环境 - 五层缓存代理体系"
+category = "retrospective/patterns/methodology-patterns/governance-strategy/cases/local-dependency-cache-proxy"
+date = "2026-07-02"
+version = "1.0"

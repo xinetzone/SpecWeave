@@ -1,0 +1,5 @@
+id = "python-package-version-standard-api"
+title = "Python包版本验证：importlib.metadata 标准API"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

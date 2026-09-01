@@ -1,0 +1,5 @@
+id = "pip-dual-index-mirror-fallback"
+title = "镜像依赖「主索引+备用源」双通道下载（extra-index mirror fallback）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

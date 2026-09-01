@@ -1,0 +1,5 @@
+id = "skill"
+title = "知识图谱生成器 Skill"
+category = "skills/knowledge-graph-generator"
+date = "2026-07-02"
+version = "1.0"

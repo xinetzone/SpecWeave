@@ -1,0 +1,5 @@
+id = "adversarial-perspective-weighting"
+title = "V阶段对抗审查「用户视角优先」权重分配模式"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

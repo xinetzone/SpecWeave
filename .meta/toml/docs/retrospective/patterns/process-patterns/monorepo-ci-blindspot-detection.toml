@@ -1,0 +1,5 @@
+id = "monorepo-ci-blindspot-detection"
+title = "Monorepo子项目CI盲区检测"
+category = "retrospective/patterns/process-patterns"
+date = "2026-07-02"
+version = "1.0"

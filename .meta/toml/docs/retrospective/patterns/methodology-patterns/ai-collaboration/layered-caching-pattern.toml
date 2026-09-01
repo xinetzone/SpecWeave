@@ -1,0 +1,5 @@
+id = "layered-caching-pattern"
+title = "分层缓存模式（Layered Caching Pattern）"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

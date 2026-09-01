@@ -1,0 +1,5 @@
+id = "llm-token-optimization-anti-patterns"
+title = "Token优化反模式与常见误区"
+category = "knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework"
+date = "2026-07-02"
+version = "1.0"

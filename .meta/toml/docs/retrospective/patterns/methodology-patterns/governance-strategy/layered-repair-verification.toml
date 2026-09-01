@@ -1,0 +1,5 @@
+id = "layered-repair-verification"
+title = "分层修复验证法（Layered Repair Verification）"
+category = "retrospective/patterns/methodology-patterns/governance-strategy"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "single-pass-perf-instrumentation"
+title = "单次遍历性能统计日志埋点"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "retrospective-caffe-ffi-win32-dll-assert-helper-module-20260801-readme"
+title = "里程碑复盘：WIN32 IMPORTED DLL 修复 + AssertHelper 流式断言宏独立模块提取"
+category = "retrospective/reports/code-optimization/retrospective-caffe-ffi-win32-dll-assert-helper-module-20260801"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "09-caffe-slim-full-architecture-and-compat-zero-intrusion"
+title = "Caffe-Slim 全面架构分析与compat层零侵入替换机制"
+category = "knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki"
+date = "2026-07-02"
+version = "1.0"

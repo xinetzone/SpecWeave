@@ -1,0 +1,5 @@
+id = "execution-retrospective"
+title = "执行复盘：docker commit ENTRYPOINT 泄漏问题修复"
+category = "retrospective/reports/bugfix/retrospective-docker-commit-entrypoint-fix-20260718"
+date = "2026-07-02"
+version = "1.0"

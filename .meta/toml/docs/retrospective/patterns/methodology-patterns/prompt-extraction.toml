@@ -1,0 +1,5 @@
+id = "prompt-extraction"
+title = "提示词工程 — 可迁移模式、模板与方法论萃取"
+category = "retrospective/patterns/methodology-patterns"
+date = "2026-07-02"
+version = "1.0"

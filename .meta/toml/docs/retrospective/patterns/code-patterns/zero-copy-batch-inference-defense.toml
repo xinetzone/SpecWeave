@@ -1,0 +1,5 @@
+id = "zero-copy-batch-inference-defense"
+title = "深度学习零拷贝分批推理防御模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

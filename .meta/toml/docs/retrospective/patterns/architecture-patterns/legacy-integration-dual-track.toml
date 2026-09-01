@@ -1,0 +1,5 @@
+id = "legacy-integration-dual-track"
+title = "存量系统双轨接入两阶段法（Legacy System Dual-Track Integration: Quick-Win First, Optimize Later）"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

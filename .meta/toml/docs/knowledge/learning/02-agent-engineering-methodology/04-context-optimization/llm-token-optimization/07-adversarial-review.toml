@@ -1,0 +1,5 @@
+id = "llm-token-optimization-adversarial-review"
+title = "LLM Token节省机制研究文档 V阶段对抗审查记录"
+category = "knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization"
+date = "2026-07-02"
+version = "1.0"

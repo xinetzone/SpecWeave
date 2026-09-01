@@ -1,0 +1,5 @@
+id = "skill"
+title = "Docker Cache 镜像本地缓存管理 Skill"
+category = "skills/docker-cache-cmd"
+date = "2026-07-02"
+version = "1.0"

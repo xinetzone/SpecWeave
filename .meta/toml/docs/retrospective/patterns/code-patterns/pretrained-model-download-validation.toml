@@ -1,0 +1,5 @@
+id = "pretrained-model-download-validation"
+title = "预训练模型多源下载与多级验证模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

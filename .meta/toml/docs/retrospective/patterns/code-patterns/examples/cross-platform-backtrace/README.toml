@@ -1,0 +1,5 @@
+id = "cross-platform-backtrace-readme"
+title = "跨平台堆栈回溯泄漏检测示例包"
+category = "retrospective/patterns/code-patterns/examples/cross-platform-backtrace"
+date = "2026-07-02"
+version = "1.0"

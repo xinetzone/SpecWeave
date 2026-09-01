@@ -1,0 +1,5 @@
+id = "llm-token-optimization-03-fine-tuning-distillation"
+title = "模型微调与蒸馏"
+category = "knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods"
+date = "2026-07-02"
+version = "1.0"

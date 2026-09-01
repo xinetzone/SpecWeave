@@ -1,0 +1,5 @@
+id = "three-layer-logging-readme"
+title = "跨语言三层协调日志架构 — 可复用示例包"
+category = "retrospective/patterns/code-patterns/examples/three-layer-logging"
+date = "2026-07-02"
+version = "1.0"

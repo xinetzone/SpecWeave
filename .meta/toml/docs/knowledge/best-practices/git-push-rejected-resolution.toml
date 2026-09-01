@@ -1,0 +1,5 @@
+id = "git-push-rejected-resolution"
+title = "Git推送被拒绝（fetch first）问题解决指南"
+category = "knowledge/best-practices"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "conda-custom-channels-mirror"
+title = "Conda镜像源精确映射：custom_channels 替代 channel_alias"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

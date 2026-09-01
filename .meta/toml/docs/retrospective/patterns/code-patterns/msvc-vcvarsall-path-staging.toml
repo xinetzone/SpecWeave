@@ -1,0 +1,5 @@
+id = "msvc-vcvarsall-path-staging"
+title = "MSVC vcvarsall PATH 分阶段初始化模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

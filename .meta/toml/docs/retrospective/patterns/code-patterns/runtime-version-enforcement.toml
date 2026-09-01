@@ -1,0 +1,5 @@
+id = "runtime-version-enforcement"
+title = "运行时版本强制规范：统一开发工具版本的可执行治理模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "mapreduce-divide-conquer"
+title = "分层分治MapReduce模式（Divide and Conquer MapReduce Pattern）"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

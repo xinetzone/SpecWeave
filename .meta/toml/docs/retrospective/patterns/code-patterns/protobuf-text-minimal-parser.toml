@@ -1,0 +1,5 @@
+id = "protobuf-text-minimal-parser"
+title = "Protobuf文本格式最小解析器：5种Token+嵌套跳过模式"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "jupyter-kernel-zmq-channels"
+title = "内核通信 ZMQ 多通道协议：职责分离的会话通道"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"

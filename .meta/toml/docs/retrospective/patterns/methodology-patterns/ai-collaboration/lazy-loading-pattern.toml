@@ -1,0 +1,5 @@
+id = "lazy-loading-pattern"
+title = "按需加载懒加载模式（Lazy Loading / On-Demand Loading Pattern）"
+category = "retrospective/patterns/methodology-patterns/ai-collaboration"
+date = "2026-07-02"
+version = "1.0"

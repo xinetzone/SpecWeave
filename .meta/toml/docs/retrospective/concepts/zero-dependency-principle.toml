@@ -1,0 +1,5 @@
+id = "zero-dependency-principle"
+title = "零依赖原则（Zero-Dependency Principle）"
+category = "retrospective/concepts"
+date = "2026-07-02"
+version = "1.0"

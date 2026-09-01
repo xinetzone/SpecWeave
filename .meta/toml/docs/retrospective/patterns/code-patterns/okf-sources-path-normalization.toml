@@ -1,0 +1,5 @@
+id = "okf-sources-path-normalization"
+title = "OKF sources 路径规范化：5级前缀 + 映射表 + 正则字符类陷阱"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

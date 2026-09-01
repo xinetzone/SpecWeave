@@ -1,0 +1,5 @@
+id = "ps5-compat-preflight"
+title = "PS5兼容性预检Checklist模式（PS5-Compat-Preflight）"
+category = "retrospective/patterns/code-patterns"
+date = "2026-07-02"
+version = "1.0"

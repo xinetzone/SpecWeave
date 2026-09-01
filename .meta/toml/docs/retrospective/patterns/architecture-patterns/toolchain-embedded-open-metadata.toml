@@ -1,0 +1,5 @@
+id = "toolchain-embedded-open-metadata"
+title = "工具链嵌入开放元数据：可追溯开放文档的生产级保障"
+category = "retrospective/patterns/architecture-patterns"
+date = "2026-07-02"
+version = "1.0"
