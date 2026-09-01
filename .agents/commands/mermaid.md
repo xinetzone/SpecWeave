@@ -178,4 +178,4 @@ x-toml-ref: "../../.meta/toml/.agents/commands/mermaid.toml"
 
 ### 知识库资料档案
 
-- [Mermaid图表操作指南](../docs/knowledge/best-practices/mermaid-guide.md) — 一站式操作手册，涵盖起步模板、安全编码六规则详解、自动化检查工具、渲染问题排查流程、不同图表类型注意事项。指令集定义"做什么"（执行流程），操作指南提供"怎么做"（操作细节）
+- [Mermaid图表操作指南](../../docs/knowledge/best-practices/mermaid-guide.md) — 一站式操作手册，涵盖起步模板、安全编码六规则详解、自动化检查工具、渲染问题排查流程、不同图表类型注意事项。指令集定义"做什么"（执行流程），操作指南提供"怎么做"（操作细节）

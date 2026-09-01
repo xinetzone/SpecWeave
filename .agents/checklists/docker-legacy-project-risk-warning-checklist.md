@@ -36,7 +36,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🟡 中 |
-| **来源洞察** | [洞察 1](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-1参考成熟项目结构可以大幅加速-docker-构建系统搭建)：参考成熟项目结构可以大幅加速 Docker 构建系统搭建 |
+| **来源洞察** | [洞察 1](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-1参考成熟项目结构可以大幅加速-docker-构建系统搭建)：参考成熟项目结构可以大幅加速 Docker 构建系统搭建 |
 | **触发条件** | 目标项目无现有 Docker 构建系统；团队不熟悉 Docker 多阶段构建最佳实践；未事先寻找同类项目参考 |
 | **早期预警信号** | 开始编写 Dockerfile 时频繁纠结目录组织方式；脚本文件散落在不同目录无统一规范；超过 30 分钟仍在设计目录结构 |
 | **发生概率** | 高（无参考模板时几乎必然发生） |
@@ -50,7 +50,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🔴 高 |
-| **来源洞察** | [洞察 2](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-2sandbox-环境对-docker-输出的过滤导致调试效率严重下降)：sandbox 环境对 docker 输出的过滤导致调试效率严重下降 |
+| **来源洞察** | [洞察 2](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-2sandbox-环境对-docker-输出的过滤导致调试效率严重下降)：sandbox 环境对 docker 输出的过滤导致调试效率严重下降 |
 | **触发条件** | 在 trae-sandbox 或类似受限环境中执行 docker 命令；CI/CD 环境对子进程输出有限制；使用远程执行代理 |
 | **早期预警信号** | `docker run` 执行后无任何输出；`docker logs` 返回空；即使重定向到文件也捕获不到内容 |
 | **发生概率** | 高（受限环境中几乎必然发生） |
@@ -64,7 +64,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🟡 中 |
-| **来源洞察** | [洞察 3](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-3多层嵌套引号是-shell-脚本中最常见的错误来源)：多层嵌套引号是 shell 脚本中最常见的错误来源 |
+| **来源洞察** | [洞察 3](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-3多层嵌套引号是-shell-脚本中最常见的错误来源)：多层嵌套引号是 shell 脚本中最常见的错误来源 |
 | **触发条件** | 命令跨越 3 层以上执行环境（如 PowerShell → WSL → docker → bash -c → python -c）；使用 heredoc 在混合环境中；在 CI pipeline 中拼接动态命令 |
 | **早期预警信号** | 命令中出现 3 层以上嵌套引号；在不同 shell 间切换时出现语法错误；heredoc 边界不匹配 |
 | **发生概率** | 中（跨环境操作时较常见） |
@@ -78,7 +78,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🔴 高 |
-| **来源洞察** | [洞察 4](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-4多阶段-dockerfile-的缓存策略决定了开发迭代效率)：多阶段 Dockerfile 的缓存策略决定了开发迭代效率 |
+| **来源洞察** | [洞察 4](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-4多阶段-dockerfile-的缓存策略决定了开发迭代效率)：多阶段 Dockerfile 的缓存策略决定了开发迭代效率 |
 | **触发条件** | Dockerfile 中 `COPY . .` 放在 apt/pip 安装之前；未按变更频率排序层；未使用多阶段构建 |
 | **早期预警信号** | 每次代码变更后所有层都重建；构建时间稳定在 15-40 分钟无缩短；`docker build` 输出中大量"Cache miss" |
 | **发生概率** | 高（未刻意优化时几乎必然发生） |
@@ -92,7 +92,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🔴 高 |
-| **来源洞察** | [洞察 5](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-5caffe-这种老旧框架的编译兼容性处理需要系统化方法)：老旧框架的编译兼容性处理需要系统化方法 |
+| **来源洞察** | [洞察 5](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-5caffe-这种老旧框架的编译兼容性处理需要系统化方法)：老旧框架的编译兼容性处理需要系统化方法 |
 | **触发条件** | 目标项目发布超过 5 年；目标 OS/编译器/Python 版本与原始开发环境差异大；使用 Makefile 而非 CMake 构建 |
 | **早期预警信号** | 编译时出现头文件找不到；链接时 undefined reference；Python 绑定导入失败；setuptools 废弃函数警告 |
 | **发生概率** | 极高（5 年以上 C++ 项目在新环境编译几乎必然遇到兼容性问题） |
@@ -106,7 +106,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🟡 中 |
-| **来源洞察** | [洞察 6](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-6操作-sop-文档化是知识闭环的最后一步)：操作 SOP 文档化是知识闭环的最后一步 |
+| **来源洞察** | [洞察 6](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-6操作-sop-文档化是知识闭环的最后一步)：操作 SOP 文档化是知识闭环的最后一步 |
 | **触发条件** | 项目完成后仅做口头总结或简单记录；没有将操作步骤整理为可执行文档；团队成员变动 |
 | **早期预警信号** | 复盘报告只有"分析"没有"操作步骤"；项目文档中无"快速开始"章节；3 个月后无人能复现构建流程 |
 | **发生概率** | 中（时间压力下容易跳过文档化步骤） |
@@ -120,7 +120,7 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 | 属性 | 内容 |
 |------|------|
 | **风险等级** | 🟡 中 |
-| **来源洞察** | [洞察 7](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/#洞察-7知识库索引更新是文档可发现性的关键)：知识库索引更新是文档可发现性的关键 |
+| **来源洞察** | [洞察 7](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md#洞察-7知识库索引更新是文档可发现性的关键)：知识库索引更新是文档可发现性的关键 |
 | **触发条件** | 创建新文档后未更新索引（README.md）；文档存放在非标准路径；知识库规模增长但索引未同步 |
 | **早期预警信号** | 新增文档后无法从导航树找到；目录 README 中分类计数与实际文件数不一致；快速参考表中缺少新条目 |
 | **发生概率** | 高（创建文档后容易忘记更新索引） |
@@ -155,10 +155,10 @@ tags: [docker, risk-warning, checklist, legacy-project, cpp, build-system, knowl
 
 | 资源 | 路径 |
 |------|------|
-| 来源复盘报告 | [retrospective-caffe-docker-runtime-20260722/README.md](../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/) |
+| 来源复盘报告 | [retrospective-caffe-docker-runtime-20260722/README.md](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-caffe-docker-runtime-20260722/README.md) |
 | 模式 1：参考模板复制法 | [docker-build-reference-template-copy.md](../../docs/retrospective/patterns/process-patterns/docker-build-reference-template-copy.md) |
 | 模式 2：文件化策略 | [shell-nested-quote-file-based-strategy.md](../../docs/retrospective/patterns/code-patterns/shell-nested-quote-file-based-strategy.md) |
 | 模式 3：编译兼容性预检 | [legacy-cpp-compilation-compatibility-checklist.md](../../docs/retrospective/patterns/process-patterns/legacy-cpp-compilation-compatibility-checklist.md) |
 | 模式 4：SOP 标准化模板 | [ops-sop-standard-template.md](../../docs/retrospective/patterns/process-patterns/ops-sop-standard-template.md) |
-| Caffe Docker SOP | [caffe-docker-sop.md](../docs/knowledge/operations/caffe-docker-sop.md) |
+| Caffe Docker SOP | [caffe-docker-sop.md](../../docs/knowledge/operations/caffe-docker-sop.md) |
 | 可参考项目索引 | [reference-project-index.md](../../docs/retrospective/assets/reference-project-index.md) |

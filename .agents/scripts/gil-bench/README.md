@@ -63,4 +63,4 @@ python gil_bench.py compare \
 
 ## 关联
 
-对应技术分析：[Python 3.14 Free-Threading 适用场景分析](../../docs/knowledge/tech/python-314-free-threading-scenario-analysis.md)
+对应技术分析：[Python 3.14 Free-Threading 适用场景分析](../../../docs/knowledge/tech/python-314-free-threading-scenario-analysis.md)

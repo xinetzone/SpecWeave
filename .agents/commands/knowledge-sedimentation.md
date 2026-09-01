@@ -369,5 +369,5 @@ README.md（入口索引 + 快速回顾 + 学习路径）
 - 七概念方法论编排：[seven-concepts.md](seven-concepts.md)
 - 萃取指令集：[extraction.md](extraction.md)
 - 对抗性审查指令集：[adversarial-review.md](adversarial-review.md)
-- 知识库目录：[../docs/knowledge/README.md](../docs/knowledge/README.md)
+- 知识库目录：[../docs/knowledge/README.md](../../docs/knowledge/README.md)
 - 内容敏感度预检规范：[../rules/content-sensitivity-precheck.md](../rules/content-sensitivity-precheck.md)

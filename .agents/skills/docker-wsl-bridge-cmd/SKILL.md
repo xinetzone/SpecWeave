@@ -15,7 +15,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/docker-wsl-bridge-cmd/SKILL.toml
 > ⚠️ **本Skill是跨Shell编排门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<400行，触发词+决策树+核心步骤+安全清单）
-> - L2：操作指南 [docker-cache-wsl-migration-guide.md](../../docs/knowledge/operations/docker-cache-wsl-migration-guide.md) + 模式库 [oci-image-wsl-rootfs-bridge.md](../../../docs/retrospective/patterns/code-patterns/oci-image-wsl-rootfs-bridge.md) + Python备用脚本 [docker-save-to-wsl-rootfs.py](../../scripts/docker-save-to-wsl-rootfs.py)
+> - L2：操作指南 [docker-cache-wsl-migration-guide.md](../../../docs/knowledge/operations/docker-cache-wsl-migration-guide.md) + 模式库 [oci-image-wsl-rootfs-bridge.md](../../../docs/retrospective/patterns/code-patterns/oci-image-wsl-rootfs-bridge.md) + Python备用脚本 [docker-save-to-wsl-rootfs.py](../../scripts/docker-save-to-wsl-rootfs.py)
 
 ## 1. Skill ID
 `docker-wsl-bridge-cmd`
@@ -328,7 +328,7 @@ docker-cache-cmd save/build  →  .docker-cache/images/<name>_<tag>.tar.gz
 
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
-| **操作指南（完整SOP）** | L2 | [docker-cache-wsl-migration-guide.md](../../docs/knowledge/operations/docker-cache-wsl-migration-guide.md) | 查看完整分步说明、深度验证脚本、Free-Threading测试 |
+| **操作指南（完整SOP）** | L2 | [docker-cache-wsl-migration-guide.md](../../../docs/knowledge/operations/docker-cache-wsl-migration-guide.md) | 查看完整分步说明、深度验证脚本、Free-Threading测试 |
 | **模式库（原理）** | L2 | [oci-image-wsl-rootfs-bridge.md](../../../docs/retrospective/patterns/code-patterns/oci-image-wsl-rootfs-bridge.md) | 理解OCI分层→flat rootfs的原理、反模式、迁移示例 |
 | **Python备用脚本** | L2 | [docker-save-to-wsl-rootfs.py](../../scripts/docker-save-to-wsl-rootfs.py) | 无WSL环境时的纯Python离线转换方案 |
 | **镜像缓存Skill** | L1 | [docker-cache-cmd](../docker-cache-cmd/SKILL.md) | 管理Docker镜像tar.gz缓存（save/load/build） |

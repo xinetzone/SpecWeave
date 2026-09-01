@@ -163,4 +163,4 @@ print('TVM compute OK!')
 | 包版本标准API | [python-package-version-standard-api.md](../../docs/retrospective/patterns/code-patterns/python-package-version-standard-api.md) |
 | 隐式依赖检测 | [python-implicit-dependency-detection.md](../../docs/retrospective/patterns/code-patterns/python-implicit-dependency-detection.md) |
 | Conda镜像源配置 | [conda-custom-channels-mirror.md](../../docs/retrospective/patterns/code-patterns/conda-custom-channels-mirror.md) |
-| 复盘原始报告 | [retrospective-xmnn-nuitka-docker-runtime-20260722](../docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/) |
+| 复盘原始报告 | [retrospective-xmnn-nuitka-docker-runtime-20260722](../../docs/retrospective/reports/bug-fix/docker-build/retrospective-xmnn-nuitka-docker-runtime-20260722/README.md) |

@@ -259,7 +259,7 @@ sources:
 | **信源稳定性门模式** | **L2** | [source-stability-gate.md](../../../docs/retrospective/patterns/methodology-patterns/ai-collaboration/source-stability-gate.md) | 步骤0预检的完整方法论（5步法+反模式+双案例验证） |
 | **Prompt模板集** | **L2** | [references/prompt-templates.md](references/prompt-templates.md) | 每阶段执行时复制对应Prompt |
 | **GATE-SPS 扫描脚本** | **L1 工具** | `.agents/scripts/check-source-path-stability.py` | 步骤0d/0e：清理前扫描（--target）与持久性 audit |
-| **批量文档转换模式** | **L2** | [batch-docs-to-okf-bundle-conversion.md](../../docs/retrospective/patterns/methodology-patterns/concepts/batch-docs-to-okf-bundle-conversion.md) | 非源码文档（Wiki/报告/笔记）批量转换为OKF Bundle时参考，含9个反模式 |
+| **批量文档转换模式** | **L2** | [batch-docs-to-okf-bundle-conversion.md](../../../docs/retrospective/patterns/methodology-patterns/concepts/batch-docs-to-okf-bundle-conversion.md) | 非源码文档（Wiki/报告/笔记）批量转换为OKF Bundle时参考，含9个反模式 |
 | 七概念方法论编排 | L1 | [seven-concepts-cmd](../seven-concepts-cmd/SKILL.md) | 本模式是七概念在知识沉淀场景的具体化 |
 | 原子提交 | L1 | [atomic-commit-cmd](../atomic-commit-cmd/SKILL.md) | C阶段模式入库时使用 |
 | 链接检查 | L1 | [link-check-cmd](../link-check-cmd/SKILL.md) | V阶段链接验证时使用 |

@@ -1,6 +1,6 @@
 # Git+百度网盘同步脚本集
 
-配合 [完整文档目录](../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/README.md) 使用。
+配合 [完整文档目录](../../../docs/knowledge/learning/08-systems-infrastructure/git-baidu-sync/README.md) 使用。
 
 ## 脚本清单
 
