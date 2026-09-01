@@ -180,7 +180,7 @@
 
 ## Task 11: Review——fresh context 独立审查与修复闭环
 
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 10
 - **Description**:
@@ -191,3 +191,4 @@
 - **Test Requirements**:
   - `rule` TR-11.1：review.md 在 Review 阶段创建，覆盖全部 AC 检查点且每个 rule AC 有独立证据；证据：review.md。
   - `rubric` TR-11.2：独立审查结论；scale 1-5；anchors 1=存在阻断性问题（断链/门禁失败/内容丢失）、3=无阻断但有多个应修项、5=全部 AC 通过无 actionable finding；threshold >= 4 且 Review 结果为 pass；证据：review.md Review History。
+- **Completion Evidence**（2026-09-01）：TR-11.1——review.md 已创建于本 spec 目录，覆盖 AC-1~AC-11 全部检查点，每个 rule AC 附独立复跑命令证据（非转述实施方声明）；TR-11.2——审查结论 **pass，4/5 分**（Review History 表）。审查性质披露：原计划 fresh-context 委托被用户中止，改为主会话 self-review 独立取证。关键发现：合并提交 `ccd04b6b9`（合并远端 49 提交，发生于迁移收尾 C11 之后）引入 6 处门禁阻断回归 + 1 处统计漂移——2 处 toctree 缺条目、2 处模式文档缺 type、1 处报告无 FM、1 处 sexology spec 旧路径断链、1 处 docgen 统计漂移；经 `git cat-file -e` 对两个合并父提交取证确证非迁移工程回归，全部当场修复并复验（check-toctrees exit=0、check-frontmatter exit=0/5813 合规）。迁移工程本身验收口径"迁移回归 = 0"成立。
