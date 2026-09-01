@@ -67,6 +67,7 @@ layered-chained-spec
 layered-priority-dimension-reduction
 layered-repair-verification
 learn-validate-adopt
+ledger-stock-consistency-audit
 local-dependency-cache-proxy
 meta-bootstrap-action-plan
 meta-methodology-bootstrap
