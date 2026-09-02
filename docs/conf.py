@@ -149,13 +149,31 @@ _FRONTMATTER_DELIM = _re.compile(r"^(?:---|\+\+\+|\.\.\.)\s*$", _re.MULTILINE)
 
 
 def _quote_frontmatter_dates(app, docname, source):
-    """source-read 钩子：为 frontmatter 块内无引号的裸日期/时间戳补上双引号。"""
+    """source-read 钩子：为 frontmatter 块内无引号的裸日期/时间戳补上双引号。
+
+    仅当日期/时间戳本身构成完整值时才加引号：值尾允许行尾、行内空白后直接
+    换行，或 flow map/list 的闭合标点（``}``/``]``/``,``）。必须避免误伤
+    以日期开头的长纯标量（如 ``description: 2026-08-28对博文……``）——
+    早期版本无条件替换会在中文值中间插入孤立引号，导致 myst 报
+    ``Malformed YAML [myst.topmatter]``。
+    """
     text = source[0]
     delims = list(_FRONTMATTER_DELIM.finditer(text))
-    if len(delims) < 2:
+    # 仅处理真正的 frontmatter：首条定界符必须位于文件起始；否则正文中的
+    # 水平线（``---`` transition）会被误当作 frontmatter 栅栏，导致正文被
+    # 注入引号。
+    if len(delims) < 2 or delims[0].start() != 0:
         return
     fm = text[delims[0].end(): delims[1].start()]
-    quoted = _ISO_DATETIME_RE.sub(r'\1"\2"', fm)
+
+    def _repl(match: _re.Match) -> str:
+        # 同一行日期之后的剩余内容（跨行的 key: 值 中日期总在值首行）。
+        line_tail = fm[match.end():].split("\n", 1)[0].strip()
+        if line_tail == "" or line_tail[-1] in "}]," or line_tail.startswith("#"):
+            return match.expand(r'\1"\2"')
+        return match.group(0)
+
+    quoted = _ISO_DATETIME_RE.sub(_repl, fm)
     if quoted != fm:
         source[0] = text[: delims[0].end()] + quoted + text[delims[1].start():]
 

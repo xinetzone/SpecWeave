@@ -12,6 +12,7 @@ retrospective-mermaid-governance-closure-20260629/index
 retrospective-mermaid-rendering-fix-20260626/index
 retrospective-mermaid-rendering-regression-20260629/index
 retrospective-meta-atomization-batch-p0-p2-20260705/index
+retrospective-okf-conf-py-build-config-20260902
 retrospective-readme-sync-and-brand-naming-20260624/index
 retrospective-report-document-dedup-insights-20260626/index
 retrospective-report-four-topic-structure-optimization-20260624/index
