@@ -97,9 +97,10 @@ title: "awesome-okf-xs/doc/conf.py 全面复盘：复盘+洞察+萃取报告"
 ```yaml
 id: pattern-failure-annotation-config
 name: 故障注释固化
-category: methodology-patterns/build-engineering
+category: methodology-patterns/retrospective-knowledge  # 入库时归属判定修正（原拟 build-engineering，见 §8）
 maturity: L2（双案例支撑）
 trigger: 构建/工具链配置因外部组件组合行为反复出错
+status: 已入库（2026-09-02，commit a606a0c65，质量分 100/100）
 ```
 
 - **触发场景**
@@ -150,8 +151,43 @@ trigger: 构建/工具链配置因外部组件组合行为反复出错
 
 > 本次复盘为只读分析，未修改子模块任何文件（子模块只读约束）；A-1 涉及主仓库文件变更，留待用户确认后单独原子提交。
 
-## 8. CMD-LOG 摘要
+## 8. 模式入库闭环记录（2026-09-02 沉淀会话回写）
+
+> 本节为模式入库执行结果的回写记录（report-as-tracking：报告即追踪载体）。
+
+### 8.1 入库结果
+
+| 项 | 值 |
+|---|---|
+| 模式文档 | [failure-annotation-config.md](../../../patterns/methodology-patterns/retrospective-knowledge/failure-annotation-config.md) |
+| 归属目录 | `methodology-patterns/retrospective-knowledge/`（归属判定：tools-automation 与 governance-strategy 的边界说明均排除知识萃取方法论，复盘与知识生命周期为正确归属；原拟 `build-engineering` 修正） |
+| 质量门禁 | check-pattern-quality 100/100（27 项全通过）；check-links 全绿 |
+| 索引登记 | 主索引表 / 子目录 toctree / CATEGORIES（35→36）/ 子目录 README 四处 |
+| 提交 | `a606a0c65`（docs(patterns)，6 文件，+175/-2） |
+
+### 8.2 三洞察沉淀去向（全部合并，零新建）
+
+三条洞察经萃取前置查重（check-atomization-coverage + 三维重叠度判定，阈值 >70% 合并，见 pattern-merge-boundary）均判定与本模式高度重叠，按"禁止创建重复模式"约束合并入既有模式：
+
+| 洞察 | 重叠度 | 增量去向 | 沉淀会话 |
+|---|---|---|---|
+| 洞察 1（角色演化） | >70% | 模式概述「角色演化特征」+ 适用场景「识别信号」 | sc-20260902-sediment-insight1 |
+| 洞察 2（症状驱动认知） | ~93% | 问题背景「配置即实验的认知重构」 | sc-20260902-sediment-insight2 |
+| 洞察 3（跨仓库滞后缺口） | ~88% | 反模式 2「触发面随时间扩大的定时机制」 | sc-20260902-sediment-insight3 |
+
+> 洞察 3 沉淀时 coverage 脚本建议"新建"，经人工语义比对不采信（索引粒度粗，无法识别既有模式核心规则 5 + 反模式 2 + 反例的语义级覆盖），判定过程已在模式文档合并记录中留痕。
+
+### 8.3 遗留事项
+
+- 反向交叉引用（`immutable-constraint-documentation.md` → 本模式）因该文件存量债务（frontmatter `source: "external: 已迁移-..."` 含"迁移"关键词被模式质量检查兜底逻辑误判为创新类）被预提交钩子拦截，已撤出提交；模式文档中指向它的单向链接仍有效，待存量债务修复后补回。
+
+## 9. CMD-LOG 摘要
 
 ```
 [CMD-LOG] | cmd=seven-concepts | session=sc-20260902-okf-conf-py | S0 CMD_START → S1 SCENARIO_DETECTED(milestone) → S2 CHAIN_SELECTED(R→I→E→V→Export) → R1 CONCEPT_COMPLETED(30事实) → G1 GATE_PASSED → I1 CONCEPT_COMPLETED(3洞察) → G2 GATE_PASSED → E1 CONCEPT_COMPLETED(1模式L2) → G3 GATE_PASSED → V1 CONCEPT_COMPLETED(5意见4采纳) → S99 CHAIN_COMPLETED
+[CMD-LOG] | cmd=seven-concepts | session=sc-20260902-sediment-failure-annotation | E1 模式入库(retrospective-knowledge) → G3 GATE_PASSED(95→100) → V1 增量审查(4视角3采纳) → S99 CHAIN_COMPLETED
+[CMD-LOG] | cmd=seven-concepts | session=sc-20260902-sediment-insight1 | E0 前置查重 → E1 判定:合并(>70%) → V1(4视角2采纳) → G3 GATE_PASSED(100) → S99 CHAIN_COMPLETED
+[CMD-LOG] | cmd=seven-concepts | session=sc-20260902-sediment-insight2 | E0 前置查重 → E1 判定:合并(~93%) → V1(4视角2采纳) → G3 GATE_PASSED(100) → S99 CHAIN_COMPLETED
+[CMD-LOG] | cmd=seven-concepts | session=sc-20260902-sediment-insight3 | E0 前置查重(脚本建议新建,人工不采信) → E1 判定:合并(~88%) → V1(4视角2采纳) → G3 GATE_PASSED(100) → S99 CHAIN_COMPLETED
+[CMD-LOG] | cmd=atomic-commit | session=cmt-20260902-failure-annotation | S1 SCOPE_CHECK(7文件) → S2 CHECK_FAIL(存量文件V2误判拦截) → S3 撤出被拦截文件 → S4 COMMIT_EXECUTED(a606a0c65,6文件) → S5 VERIFIED → S6 重扫描(残留属他会话)
 ```
