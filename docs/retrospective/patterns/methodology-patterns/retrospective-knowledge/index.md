@@ -14,6 +14,7 @@ experience-transfer-mapping
 export-four-channel-progressive
 export-suggestions-pattern-catalog
 extraction-four-layer-funnel
+failure-annotation-config
 five-category-asset-coverage
 immediate-retrospective-sedimentation
 information-source-tiered-collection

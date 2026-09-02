@@ -95,7 +95,7 @@ title: "awesome-okf-xs/doc/conf.py 全面复盘：复盘+洞察+萃取报告"
 ### 模式：故障注释固化（Failure-Annotation Config）
 
 ```yaml
-id: bp-failure-annotation-config
+id: pattern-failure-annotation-config
 name: 故障注释固化
 category: methodology-patterns/build-engineering
 maturity: L2（双案例支撑）

@@ -26,6 +26,7 @@ date: "2026-07-09"
 | [导出四渠道递进模型（Export Four-Channel Progressive Model）](./export-four-channel-progressive.md) | 导出四渠道递进模型（Export Four-Channel Progressive Model） | L1 |  |
 | [导出建议通用模式目录（Export Suggestions Pattern Catalog）](./export-suggestions-pattern-catalog.md) | 导出建议通用模式目录（Export Suggestions Pattern Catalog） | L1 |  |
 | [萃取四层漏斗模型（Extraction Four-Layer Funnel）](./extraction-four-layer-funnel.md) | 萃取四层漏斗模型（Extraction Four-Layer Funnel） | L1 |  |
+| [故障注释固化（Failure-Annotation Config）](./failure-annotation-config.md) | 故障注释固化（Failure-Annotation Config） | L2 | `build-config` `failure-knowledge` `comments` |
 | [五类资产覆盖原则（Five-Category Asset Coverage）](./five-category-asset-coverage.md) | 五类资产覆盖原则（Five-Category Asset Coverage） | L2 |  |
 | [即时复盘沉淀模式](./immediate-retrospective-sedimentation.md) | 即时复盘沉淀模式 | L2 |  |
 | [信息源分层采集策略](./information-source-tiered-collection.md) | 信息源分层采集策略 | L2 |  |

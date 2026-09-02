@@ -15,7 +15,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 
 | 主题目录 | 中文名称 | 模式数量 | 核心关注点 |
 |---------|---------|---------|-----------|
-| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 35 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
+| [retrospective-knowledge](#retrospective-knowledge--复盘与知识生命周期) | 复盘与知识生命周期 | 36 | 项目复盘流程、知识萃取、洞察沉淀、经验迁移 |
 | [research-knowledge](#research-knowledge--外部研究与知识融合) | 外部研究与知识融合 | 36 | 外部网站分析、Vendor仓库高层文档优先研究、跨Vendor/跨领域知识融合、信息源分层兜底、访问障碍应对、多源验证、外部文章深度分析端到端工作流、语义漂移防御、知识系统五维根基、B2B AI产品定位、外部产品学习模板 |
 | [document-architecture](#document-architecture--文档架构与原子化) | 文档架构与原子化 | 52 | 文档体系重构、原子化拆分、文档治理、结构设计 |
 | [tools-automation](#tools-automation--工具工程与自动化) | 工具工程与自动化 | 49 | 工具决策、工具故障降级、自动化实施、工具链建设、批量操作安全 |
@@ -44,6 +44,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/methodology-patt
 | [export-four-channel-progressive.md](retrospective-knowledge/export-four-channel-progressive.md) | 导出四渠道递进：文档化→模板化→工具化→制度化，含渐进式策略与决策准则速查 | L1 |
 | [export-suggestions-pattern-catalog.md](retrospective-knowledge/export-suggestions-pattern-catalog.md) | 导出建议通用模式目录（Export Suggestions Pattern Catalog） | L1 |
 | [extraction-four-layer-funnel.md](retrospective-knowledge/extraction-four-layer-funnel.md) | 萃取四层漏斗：去噪→结构化→标准化→可操作化，含"四可"质量标准 | L1 |
+| [failure-annotation-config.md](retrospective-knowledge/failure-annotation-config.md) | 故障注释固化：构建/工具链配置因外部组件组合行为反复出错时，将故障因果链就地固化于防御性配置值旁的注释与钩子 docstring，禁止裸值/只留提交信息/只搬代码 | L2 |
 | [five-category-asset-coverage.md](retrospective-knowledge/five-category-asset-coverage.md) | 五类资产覆盖原则：概念/模式/脚本/报告/索引五类互补覆盖 | L2 |
 | [immediate-retrospective-sedimentation.md](retrospective-knowledge/immediate-retrospective-sedimentation.md) | 即时复盘沉淀模式 | L2 |
 | [information-source-tiered-collection.md](retrospective-knowledge/information-source-tiered-collection.md) | 信息源分层采集策略 | L2 |
