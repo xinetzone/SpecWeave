@@ -2,7 +2,7 @@
 
 本主题包含项目核心基础设施、系统架构、核心功能模块的创建与配置类规格文档。所有从零构建的基础性目录结构、核心系统、管理体系均归入此主题。
 
-**主题状态**：✅ 已完成（7/7）
+**主题状态**：✅ 已完成（8/8）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[core-foundation-task-template.md](../../../.agents/templates/theme-templates/core-foundation-task-template.md)
 
@@ -19,6 +19,7 @@
 | [prompt-extraction-system](prompt-extraction-system/spec.md) | ✅ 完成 | 100% | [apps/prompt_extraction/](../../../apps/prompt_extraction/README.md), [.agents/systems/prompt-extraction.md](../../../.agents/systems/prompt-extraction.md) | 提示词萃取全流程自动化系统，支持从对话中提取可复用提示词模式 |
 | [create-first-principles-exercises](create-first-principles-exercises/spec.md) | ✅ 完成 | 100% | [12-exercises.md](../../../docs/knowledge/learning/00-essence-and-thinking/first-principles/12-exercises.md) | 第一性原理思维训练题库：基于六步方法论框架设计分层级练习题、误区识别、综合案例分析，帮助读者刻意练习 |
 | [create-sphinx-docs](create-sphinx-docs/spec.md) | ✅ 完成 | 100% | [docs/](../../../docs/README.md) | 基于 Sphinx 创建面向人类读者的文档站点：参考 vendor/flexloop/docs 模板，建立三轨文档结构（tech/general/topics）+ 配置文件 + 静态资源，HTML 构建验证通过 |
+| [create-monetization-essence-okf-bundle-platform](create-monetization-essence-okf-bundle-platform/spec.md) | ✅ 完成 | 100% | [monetization-essence 束](../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/monetization-essence/index.md), [apps/agent-monetize/](../../../apps/agent-monetize/README.md) | 变现本质公理体系（A1-A7）+ 道家对齐框架 + 133 种可行性方案 OKF 束 + tvm-ffi 智能体自动变现平台（自主循环+道家门控+沙箱闭环） |
 
 ---
 
@@ -41,6 +42,9 @@ flowchart LR
     subgraph S4 ["第四阶段：文档站点"]
         CSD["create-sphinx-docs<br>✅ 完成"]
     end
+    subgraph S5 ["第五阶段：知识包与平台"]
+        ME["create-monetization-essence-okf-bundle-platform<br>✅ 完成"]
+    end
     CA --> CW
     CA --> CAD
     CA --> KMS
@@ -48,6 +52,7 @@ flowchart LR
     KMS --> PES
     PES --> CFE
     KMS --> CSD
+    KMS --> ME
     style CA fill:#d4edda,stroke:#28a745
     style CW fill:#d4edda,stroke:#28a745
     style CAD fill:#d4edda,stroke:#28a745
@@ -55,6 +60,7 @@ flowchart LR
     style PES fill:#d4edda,stroke:#28a745
     style CFE fill:#d4edda,stroke:#28a745
     style CSD fill:#d4edda,stroke:#28a745
+    style ME fill:#d4edda,stroke:#28a745
 ```
 
 ### 执行顺序说明

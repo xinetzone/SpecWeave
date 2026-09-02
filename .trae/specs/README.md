@@ -8,14 +8,14 @@
 
 | 主题目录 | Spec 数 | 已完成 | 进行中 | 待启动 | 完成率 | 看板 |
 |---|---|---|---|---|---|---|
-| [core-foundation/](core-foundation/README.md) | 7 | 7 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
+| [core-foundation/](core-foundation/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](core-foundation/README.md) |
 | [roles-governance/](roles-governance/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](roles-governance/README.md) |
 | [standards-tools/](standards-tools/README.md) | 24 | 14 | 3 | 7 | 58% | [查看](standards-tools/README.md) |
 | [readme-branding/](readme-branding/README.md) | 4 | 4 | 0 | 0 | 100% | [查看](readme-branding/README.md) |
 | [docs-restructure/](docs-restructure/README.md) | 8 | 8 | 0 | 0 | 100% | [查看](docs-restructure/README.md) |
 | [retrospectives-insights/](retrospectives-insights/README.md) | 10 | 10 | 0 | 0 | 100% | [查看](retrospectives-insights/README.md) |
 | [migration-archival/](migration-archival/README.md) | 3 | 3 | 0 | 0 | 100% | [查看](migration-archival/README.md) |
-| **合计** | **64** | **54** | **3** | **7** | **84%** | — |
+| **合计** | **65** | **55** | **3** | **7** | **85%** | — |
 
 **状态图例**：✅ 已完成 | 🔧 进行中 | 📋 待启动
 
