@@ -40,8 +40,8 @@ PREFIX_RULES: list[tuple[str, str]] = [
     ("retrospective/reports", "Report"),
     ("retrospective/patterns", "Pattern"),
     ("retrospective/", "Reference"),
-    ("knowledge/learning/okf-bundles", "Wiki Document"),
-    ("knowledge/learning/", "Wiki Tutorial"),
+    # 注：原 knowledge/learning/ 前缀规则已随 learning 板块于 2026-09 迁移至
+    # projects/awesome-okf-xs/doc/bundles/（git submodule，只读）而移除。
     ("knowledge/best-practices", "best-practice"),
     ("knowledge/docs-separation-guide", "Guide"),
     ("knowledge/troubleshooting", "Guide"),

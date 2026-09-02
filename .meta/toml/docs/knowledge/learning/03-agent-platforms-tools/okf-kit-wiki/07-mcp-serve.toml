@@ -1,7 +1,0 @@
-id = "okf-kit-wiki-07"
-title = "okf-kit 完全指南 — MCP 与 HTTP 服务"
-category = "knowledge/learning/03-agent-platforms-tools/okf-kit-wiki"
-date = "2026-08-23"
-version = "1.0"
-status = "stable"
-tags = ["okf-kit", "okf", "knowledge-bundle", "cli-tool", "tutorial", "mcp", "http-api", "serve", "fastapi", "sse", "claude-code"]

@@ -21,12 +21,12 @@ LLM Token使用优化专家，负责Token优化方案设计、评审与最佳实
 - 评估指标体系建立
 - 渐进式优化路线图规划
 - 质量-成本动态平衡指导
-- 优化时查阅 [知识库 - LLM Token优化](../docs/knowledge/learning/llm-token-optimization/README.md) 了解完整方法论
-- 技术选型参考 [决策树](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.md) 和 [选型矩阵](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.md)
-- 优化前查阅 [快速参考卡](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md) 和 [禁令清单](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.md) 做P0检查
-- 模式落地参考 [最佳实践模式](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.md)
-- 效果预期参考 [跨行业案例](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.md)
-- 术语定义查阅 [术语表](../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/glossary.md)
+- 优化时查阅 [知识库 - LLM Token优化](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/index.md) 了解完整方法论
+- 技术选型参考 [决策树](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/01-decision-tree.md) 和 [选型矩阵](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/02-selection-matrix.md)
+- 优化前查阅 [快速参考卡](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/10-quick-reference.md) 和 [禁令清单](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/09-constraints.md) 做P0检查
+- 模式落地参考 [最佳实践模式](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/03-patterns.md)
+- 效果预期参考 [跨行业案例](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/04-cases/01-case-studies.md)
+- 术语定义查阅 [术语表](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/glossary.md)
 
 ## 跨领域迁移验证案例
 

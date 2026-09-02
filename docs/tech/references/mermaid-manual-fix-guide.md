@@ -72,7 +72,9 @@ OUTPUT --> END("结束")
 
 ---
 
-### 2. [docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md](../../../docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md)
+### 2. [jishu/comm/interface-api-abi/concepts/05-comparison.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/interface-api-abi/concepts/05-comparison.md)
+
+> 原 `docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/05-comparison.md`，learning 板块已于 2026-09 迁移至 projects/awesome-okf-xs/doc/bundles/。
 
 #### subgraph 裸中文ID（6 处）
 
@@ -120,7 +122,7 @@ OUTPUT --> END("结束")
 
 ---
 
-### 3. [docs/knowledge/learning/02-agent-engineering-methodology/harness-loop-engineering-article-analysis.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/01-paradigms/harness-loop-engineering-article-analysis.md)
+### 3. [jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-loop-engineering-article-analysis.md)
 
 #### subgraph 裸中文ID（2 处）
 
@@ -140,7 +142,9 @@ OUTPUT --> END("结束")
 
 ---
 
-### 4. [docs/knowledge/learning/03-agent-platforms-tools/fable5-cost-optimization-wiki/04-selection-guide.md](../../../docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/fable5-cost-optimization-wiki/04-selection-guide.md)
+### 4. fable5-cost-optimization-wiki/04-selection-guide.md
+
+> 原 `docs/knowledge/learning/03-agent-platforms-tools/03-code-devtools/fable5-cost-optimization-wiki/04-selection-guide.md`，源文件已随 learning 板块迁移/移除，未在 bundles 中定位到对应文件。
 
 #### end 作节点ID（1 处）
 
@@ -156,7 +160,7 @@ Emergency --> End["结束"]
 
 ---
 
-### 5. [docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md](../../../docs/knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md)
+### 5. [jishu/ai/mobile-use/](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/mobile-use/index.md)
 
 #### end 作节点ID（1 处）
 
@@ -172,7 +176,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 6. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+### 6. [jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
 
 #### subgraph 裸中文ID（12 处）
 
@@ -262,7 +266,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 7. [docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md](../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/volcengine-eip-analysis.md)
+### 7. [jishu/ai/volcengine/concepts/volcengine-eip-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-eip-analysis.md)
 
 #### subgraph 裸中文ID（6 处）
 
@@ -310,7 +314,9 @@ CONV -->|end| END([END])
 
 ---
 
-### 8. [docs/knowledge/learning/CATEGORIES.md](../../../docs/knowledge/learning/CATEGORIES.md)
+### 8. learning/CATEGORIES.md
+
+> 原 `docs/knowledge/learning/CATEGORIES.md`，源文件已随 learning 板块迁移/移除。
 
 #### subgraph 裸中文ID（2 处）
 
@@ -330,7 +336,7 @@ CONV -->|end| END([END])
 
 ---
 
-### 9. [docs/knowledge/learning/douyin-vibecoding-guide-analysis.md](../../../docs/knowledge/learning/06-business-trends-analysis/douyin-vibecoding-wiki/douyin-vibecoding-guide-analysis.md)
+### 9. [sheke/industry/douyin-vibecoding/concepts/00-guide-analysis.md](../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/douyin-vibecoding/concepts/00-guide-analysis.md)
 
 #### subgraph 裸中文ID（3 处）
 

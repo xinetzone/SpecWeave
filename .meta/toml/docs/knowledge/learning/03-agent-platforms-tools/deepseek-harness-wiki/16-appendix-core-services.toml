@@ -1,7 +1,0 @@
-id = "deepseek-harness-wiki-16"
-title = "DeepSeek Harness 完全指南 — 附录：核心服务速查表"
-category = "knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki"
-date = "2026-08-17"
-version = "1.0"
-status = "stable"
-tags = ["deepseek", "agent", "harness", "reference", "services", "ctx-api", "appendix"]

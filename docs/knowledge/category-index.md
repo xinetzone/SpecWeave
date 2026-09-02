@@ -18,7 +18,6 @@ title: "分类总索引"
 
 | 顶层分类 | 子分类数 | 条目数 | 入口 |
 |----------|----------|--------|------|
-| learning | 2 | 493 | [learning](categories/learning/README.md) |
 | unknown | 1 | 354 | [unknown](categories/unknown.md) |
 | knowledge | 34 | 293 | [knowledge](categories/knowledge.md) |
 | best-practices | 1 | 47 | [best-practices](categories/best-practices.md) |

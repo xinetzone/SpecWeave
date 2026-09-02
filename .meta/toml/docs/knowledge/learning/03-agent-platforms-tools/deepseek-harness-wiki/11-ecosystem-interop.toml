@@ -1,7 +1,0 @@
-id = "deepseek-harness-wiki-11"
-title = "DeepSeek Harness 完全指南 — 与 Claude Code/Codex/MCP 生态互操作"
-category = "knowledge/learning/03-agent-platforms-tools/deepseek-harness-wiki"
-date = "2026-08-16"
-version = "1.0"
-status = "stable"
-tags = ["deepseek", "agent", "harness", "claude-code", "codex", "mcp", "hooks", "interop"]

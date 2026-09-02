@@ -18,7 +18,6 @@ categories/index
 decisions/index
 docs-separation-guide/index
 engineering/index
-learning/index
 mdi/index
 mdi-research/index
 myst-unified-ecosystem/index
@@ -45,16 +44,16 @@ VENDOR-INTEGRATION
 
 | 分类 | 说明 | 入门推荐 |
 |------|------|---------|
-| **[Agent 平台与工具学习 Wiki](learning/03-agent-platforms-tools/README.md)** | 主流 AI Agent 开发平台与工具的系统学习教程（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个 Wiki） | [DeepSeek Harness 完全指南](learning/03-agent-platforms-tools/deepseek-harness-wiki/index.md) |
-| **[OKF（开放知识格式）主题导航](learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.md)** | OKF 格式规范 + OKF 工具链的统一主题索引（横跨协议接口与工具平台，含 okf-wiki / okf-kit-wiki / 自研 okf 工具） | [OKF 主题导航](learning/01-agent-protocols-interfaces/okf-wiki/okf-topic-index.md) |
-| **[Python 3.14 标准库教程](learning/python314-stdlib-wiki/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](learning/python314-stdlib-wiki/index.md) |
+| **[Agent 平台与工具知识包（bundles）](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md)** | 主流 AI Agent 开发平台与工具的系统学习知识包（DeepSeek Harness、The Agency、Open Code Review 等 10+ 个包） | [DeepSeek Harness 完全指南](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/deepseek-harness/index.md) |
+| **[OKF（开放知识格式）主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md)** | OKF 格式规范 + OKF 工具链的统一主题索引（横跨协议接口与工具平台） | [OKF 主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md) |
+| **[Python 3.14 标准库知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md) |
 | **[AI Engineering](ai-engineering/index.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/concepts/loop-engineering-knowledge-base.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 
 ## 🎯 如何使用
 
-- **刚接触 AI Agent 开发？** 从 [Agent 平台与工具 Wiki](learning/03-agent-platforms-tools/README.md) 开始，选择一个感兴趣的框架系统学习
+- **刚接触 AI Agent 开发？** 从 [Agent 平台与工具知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) 开始，选择一个感兴趣的框架系统学习
 - **想了解 AI 工程化方法论？** 阅读 [AI Engineering](ai-engineering/index.md) 下的 Loop Engineering 等知识库
 - **想寻找可复用模式？** 前往 [复盘与模式库](../retrospective/index.md) 获取项目自身沉淀的最佳实践与反模式
 
@@ -62,6 +61,6 @@ VENDOR-INTEGRATION
 
 > 新增知识库文档时：
 >
-> 1. 按分类放入对应子目录（learning/ai-engineering/algorithmic-art/engineering）；
+> 1. 按分类放入对应子目录（ai-engineering/algorithmic-art/engineering 等）；系统化学习 Wiki 一律沉淀至 [projects/awesome-okf-xs/doc/bundles/](../../projects/awesome-okf-xs/doc/bundles/index.md)（原 learning/ 板块已于 2026-09 迁移至此）；
 > 2. 新增分类或重要 Wiki 时，在本页表格中追加条目；
 > 3. 学习 Wiki 遵循"每个工具一个独立原子目录"的规范，使用 `NN-topic.md` 编号命名。

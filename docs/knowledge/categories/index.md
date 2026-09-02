@@ -4,7 +4,6 @@
 :maxdepth: 2
 :hidden:
 
-learning/index
 architecture
 best-practices
 case-study

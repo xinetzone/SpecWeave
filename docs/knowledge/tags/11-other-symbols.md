@@ -12,19 +12,19 @@ title: "标签索引：符号与其他"
 
 ## --bare
 
-- [git clone 高级参数详解（--no-local --bare 重点）](../learning/08-systems-infrastructure/git-advanced-wiki/01-git-clone-advanced.md)
+- [git clone 高级参数详解（--no-local --bare 重点）](../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/git-advanced/concepts/01-git-clone-advanced.md)
 
 ## --mirror
 
-- [git clone 高级参数详解（--no-local --bare 重点）](../learning/08-systems-infrastructure/git-advanced-wiki/01-git-clone-advanced.md)
+- [git clone 高级参数详解（--no-local --bare 重点）](../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/git-advanced/concepts/01-git-clone-advanced.md)
 
 ## --no-local
 
-- [git clone 高级参数详解（--no-local --bare 重点）](../learning/08-systems-infrastructure/git-advanced-wiki/01-git-clone-advanced.md)
+- [git clone 高级参数详解（--no-local --bare 重点）](../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/git-advanced/concepts/01-git-clone-advanced.md)
 
 ## .wslconfig
 
-- [网络、配置管理与systemd](../learning/08-systems-infrastructure/wsl-wiki/07-network-config-systemd.md)
+- [网络、配置管理与systemd](../../../projects/awesome-okf-xs/doc/bundles/jishu/systems/wsl/concepts/07-network-config-systemd.md)
 
 ## @file
 
@@ -33,7 +33,7 @@ title: "标签索引：符号与其他"
 
 ## @page
 
-- [CSS 分页与打印特性](../learning/04-docs-markup-tooling/weasyprint-wiki/06-css-paged-media.md)
+- [CSS 分页与打印特性](../../../projects/awesome-okf-xs/doc/bundles/jishu/document/weasyprint/concepts/06-css-paged-media.md)
 
 ---
 

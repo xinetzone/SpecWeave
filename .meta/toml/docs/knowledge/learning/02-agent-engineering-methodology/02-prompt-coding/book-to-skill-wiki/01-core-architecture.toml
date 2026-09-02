@@ -1,7 +1,0 @@
-id = "book-to-skill-wiki-01"
-title = "book-to-skill 完全指南 — 核心架构"
-category = "knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/book-to-skill-wiki"
-date = "2026-08-22"
-version = "1.0"
-status = "stable"
-tags = ["book-to-skill", "architecture", "extractor", "generator", "skill-md", "dual-layer", "data-flow", "design-principles"]

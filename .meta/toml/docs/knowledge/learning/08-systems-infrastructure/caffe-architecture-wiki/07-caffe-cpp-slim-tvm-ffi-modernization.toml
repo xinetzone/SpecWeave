@@ -1,5 +1,0 @@
-id = "07-caffe-cpp-slim-tvm-ffi-modernization"
-title = "Caffe 现代化改造：caffe-cpp-slim 无依赖核心与 TVM FFI 绑定层分析"
-category = "knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki"
-date = "2026-07-02"
-version = "1.0"

@@ -22,7 +22,6 @@ title: "项目知识库"
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
 | knowledge | 293 | [knowledge](categories/knowledge.md) |
-| learning | 493 | [learning](learning/README.md) |
 | methods | 6 | [methods](categories/methods.md) |
 | operations | 21 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
@@ -42,16 +41,8 @@ title: "项目知识库"
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
-| [Learning Wiki 主题分类体系](learning/CATEGORIES.md) | 2026-08-22 | learning |
 | [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | 2026-08-21 | best-practices |
 | [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | 2026-08-21 | best-practices |
-| [Collection 与命名空间](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/collection.md) | 2026-08-21 | unknown |
-| [Config 配置系统](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/config.md) | 2026-08-21 | unknown |
-| [Context 执行上下文](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/context.md) | 2026-08-21 | unknown |
-| [Executor 执行器](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/executor.md) | 2026-08-21 | unknown |
-| [Loader 任务加载](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/loader.md) | 2026-08-21 | unknown |
-| [Parser 参数解析](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/parser.md) | 2026-08-21 | unknown |
-| [Program CLI 入口](learning/04-docs-markup-tooling/pyinvoke-wiki/core-concepts/program.md) | 2026-08-21 | unknown |
 
 ## 相关资源
 
@@ -94,7 +85,7 @@ title: "项目知识库"
 
 ### 如何添加知识条目
 
-1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`learning/` 等）
+1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`ai-engineering/` 等）；系统化学习 Wiki 一律沉淀至 `projects/awesome-okf-xs/doc/bundles/`（原 `learning/` 板块已于 2026-09 迁移至此）
 2. 复制 `template.md` 作为模板，创建新的 `.md` 文件
 3. 填写 YAML frontmatter 元数据（标题、分类、标签、日期、摘要等）
 4. 在正文中按照模板结构编写内容

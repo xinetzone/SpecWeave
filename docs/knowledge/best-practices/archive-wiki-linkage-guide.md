@@ -14,6 +14,8 @@ summary: "SpecWeave项目中归档（retrospective）与Wiki（learning wiki）�
 # 归档搭配Wiki联动机制指南
 
 > 本指南定义外部学习资料从「归档（过程记录）」到「Wiki（系统化知识库）」的升级路径与双向关联规范，确保知识沉淀既有完整的过程审计能力，又有面向复用的系统化导航结构。
+>
+> **⚠️ 归宿变更（2026-09）**：原 `docs/knowledge/learning/` 板块已全量迁移至 [projects/awesome-okf-xs/doc/bundles/](../../../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包库）。本指南中提到的 Wiki 产出物，其新归宿为 bundles 下对应技术域目录（如 jishu/ai/、jishu/comm/、sheke/industry/ 等），Wiki 结构遵循 OKF 规范（index.md + concepts/examples/references 三层）。
 
 ## 一、核心定位：归档与Wiki的本质区别
 
@@ -22,7 +24,7 @@ summary: "SpecWeave项目中归档（retrospective）与Wiki（learning wiki）�
 | 维度 | 归档（Archive） | Wiki（系统化知识库） |
 |------|----------------|---------------------|
 | **定位** | 单任务过程记录与原始资料仓库 | 面向复用的主题化知识体系 |
-| **目录位置** | `docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `docs/knowledge/learning/NN-<theme>/<topic>-wiki/`（原子化）或 `docs/knowledge/learning/NN-<theme>/<topic>-wiki.md`（单文件） |
+| **目录位置** | `docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/` | `projects/awesome-okf-xs/doc/bundles/<域>/<分组>/<topic>/`（OKF 知识包；原 `docs/knowledge/learning/` 已于 2026-09 迁移至此） |
 | **命名规则** | `retrospective-<topic>-<YYYYMMDD>/`（带日期后缀，体现任务时效性） | `<topic>-wiki/` 或 `<topic>-wiki.md`（无日期，主题持久化） |
 | **核心读者** | 复盘审计者、未来执行类似任务的智能体 | 系统学习者、知识检索者 |
 | **内容结构** | 保留执行上下文：原文→分析报告→执行过程→深度洞察 | 面向认知的章节结构：总览→核心概念→分主题讲解→对比→术语→资源 |
@@ -91,7 +93,7 @@ flowchart LR
 
 本归档内容已系统化升级为Learning Wiki：
 
-- **Wiki入口**：[<Wiki名称>](../../../../knowledge/learning/NN-<theme>/<topic>-wiki/00-overview.md)
+- **Wiki入口**：[<Wiki名称>](../../../projects/awesome-okf-xs/doc/bundles/<域>/<分组>/<topic>/index.md)（bundles 新位置）
 - **升级日期**：YYYY-MM-DD
 - **升级说明**：简要说明Wiki在归档基础上做了哪些结构化重组（如"拆分为7章系统化教程，新增术语表和交叉引用"）
 
@@ -117,11 +119,11 @@ flowchart LR
 ### 3.3 链接路径规范
 
 - 归档位于：`docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/`
-- Wiki位于：`docs/knowledge/learning/NN-<theme>/<topic>-wiki/`
-- 归档→Wiki相对路径：从归档README出发，需向上5级到达 `docs/` 再进入 knowledge/learning/
-  - 路径示例：`../../../../../knowledge/learning/NN-<theme>/<topic>-wiki/00-overview.md`
-- Wiki→归档相对路径：从Wiki 00-overview.md出发，需向上4级到达 `docs/` 再进入 retrospective/
-  - 路径示例：`../../../../retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/README.md`
+- Wiki（知识包）位于：`projects/awesome-okf-xs/doc/bundles/<域>/<分组>/<topic>/`（入口为 `index.md`）
+- 归档→Wiki相对路径：从归档 README 出发，向上到主仓库根再进入 `projects/awesome-okf-xs/doc/bundles/`
+  - 路径示例：`../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/<topic>/index.md`
+- Wiki→归档相对路径：从 bundles 内文件出发，向上到主仓库根再进入 `docs/retrospective/`
+  - 路径示例：`../../../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-<topic>-<YYYYMMDD>/README.md`
 
 > ⚠️ **重要**：路径计算完成后必须运行链接检查验证：`python .agents/scripts/check-links.py --fix`
 
@@ -146,7 +148,7 @@ flowchart TB
 
 ### 第1步：判定归类
 
-1. 阅读 [CATEGORIES.md](../learning/CATEGORIES.md) 的「新增Wiki归类决策树」
+1. 阅读归类决策树说明（原 learning/CATEGORIES.md 已随板块迁移移除；新归类以 bundles 的技术域划分 `jishu/`、`sheke/`、`zhexue/`、`wenxue/` 等为准）
 2. 确定目标主题目录（01-08或跨领域专题）
 3. 确定Wiki形式：
    - **单文件Wiki**：内容<300行、结构相对简单、无需多章节导航 → 使用单文件模板
@@ -220,8 +222,8 @@ python .agents/scripts/check-links.py --fix
 # 参考：.agents/scripts/generate-readme.py 的使用方式
 # 或手动编写README.md确保索引完整
 
-# 4. 确认Wiki在主题目录中可被发现
-# 检查主题目录的README.md是否需要添加入口（如learning/03-*/README.md）
+# 4. 确认Wiki在 bundles 对应技术域目录中可被发现
+# 检查 bundles 下对应域目录的 index.md 是否需要添加入口（如 jishu/ai/index.md）
 ```
 
 ---
@@ -363,7 +365,7 @@ Wiki化完成后，逐项检查：
 | ▢ 同主题目录下已有Wiki的交叉引用已添加 | ☐ |
 | ▢ 运行`check-links.py --fix`无错误 | ☐ |
 | ▢ 运行`check-filename-convention.py`无错误 | ☐ |
-| ▢ 主题目录README.md（如learning/03-*/README.md）已添加入口链接 | ☐ |
+| ▢ bundles 对应技术域目录的入口链接已添加 | ☐ |
 
 ---
 
@@ -377,11 +379,11 @@ Wiki化完成后，逐项检查：
 
 ### 标准Wiki范例
 
-以下原子化Wiki可作为结构参考：
-- [FFI外部函数接口Wiki](../learning/01-agent-protocols-interfaces/ffi-wiki/00-overview.md) — 7章标准原子化结构
-- [IDL接口定义语言Wiki](../learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md) — 9章教程结构
-- [Harness Engineering Wiki](../learning/02-agent-engineering-methodology/01-paradigms/harness-engineering-wiki/00-overview.md) — 方法论类Wiki范例
-- [向日葵无网远控硬件Wiki](../learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) — 厂商产品类Wiki范例
+以下原子化Wiki可作为结构参考（已随 learning 板块迁移至 bundles）：
+- [FFI外部函数接口Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/ffi/index.md) — 7章标准原子化结构
+- [IDL接口定义语言Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/idl/index.md) — 9章教程结构
+- [Harness Engineering Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/paradigms/harness-engineering-wiki/index.md) — 方法论类Wiki范例
+- [向日葵无网远控硬件Wiki](../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-offline-hardware-wiki.md) — 厂商产品类Wiki范例
 
 ---
 

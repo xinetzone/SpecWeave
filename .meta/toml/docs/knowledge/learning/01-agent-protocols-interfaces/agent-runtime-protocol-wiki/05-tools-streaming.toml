@@ -1,7 +1,0 @@
-id = "agent-runtime-protocol-wiki-05"
-title = "工具协议与流式输出"
-category = "knowledge/learning/01-agent-protocols-interfaces/agent-runtime-protocol-wiki"
-date = "2026-08-22"
-version = "1.0"
-status = "stable"
-tags = ["agent-runtime-protocol", "agent-protocol", "ai-agent", "runtime", "wiki", "tutorial", "tools", "mcp", "streaming", "sse", "control-plane"]

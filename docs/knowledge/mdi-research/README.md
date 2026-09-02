@@ -85,6 +85,6 @@ date: "2026-07-09"
 ## 🔗 相关资源
 
 - [🏠 知识库首页](../README.md) - 返回知识库总入口
-- [📁 MyST 规范学习](../learning/04-docs-markup-tooling/executablebooks-myst-guide/README.md) - ExecutableBooks MyST 指南
-- [📁 MyST 教程](../learning/04-docs-markup-tooling/myst-markdown-tutorial/README.md) - MyST Markdown 系统教程
+- [📁 MyST 规范学习](../../../projects/awesome-okf-xs/doc/bundles/jishu/document/myst/index.md) - ExecutableBooks MyST 指南
+- [📁 MyST 教程](../../../projects/awesome-okf-xs/doc/bundles/jishu/document/myst/myst-tutorial/index.md) - MyST Markdown 系统教程
 - [📁 团队最佳实践库](../best-practices/README.md) - 文档规范最佳实践

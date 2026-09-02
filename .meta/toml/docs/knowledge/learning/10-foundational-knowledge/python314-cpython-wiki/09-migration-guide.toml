@@ -1,7 +1,0 @@
-id = "python314-cpython-wiki-09"
-title = "Python 3.14 迁移指南"
-category = "knowledge/learning/10-foundational-knowledge/python314-cpython-wiki"
-date = "2026-08-22"
-version = "1.0"
-status = "stable"
-tags = ["python314", "migration", "deprecation", "porting"]

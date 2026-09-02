@@ -1,7 +1,0 @@
-id = "okf-kit-wiki-04"
-title = "okf-kit 完全指南 — 核心架构"
-category = "knowledge/learning/03-agent-platforms-tools/okf-kit-wiki"
-date = "2026-08-23"
-version = "1.0"
-status = "stable"
-tags = ["okf-kit", "okf", "knowledge-bundle", "cli-tool", "tutorial", "architecture", "bfs", "crawler", "fetcher", "mapper", "writer"]

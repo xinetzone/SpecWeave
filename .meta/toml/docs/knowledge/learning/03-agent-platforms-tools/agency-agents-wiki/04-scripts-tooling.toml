@@ -1,7 +1,0 @@
-id = "agency-agents-wiki-04"
-title = "The Agency 完全指南 — 脚本体系"
-category = "knowledge/learning/03-agent-platforms-tools/agency-agents-wiki"
-date = "2026-08-05"
-version = "1.0"
-status = "stable"
-tags = ["agency-agents", "the-agency", "scripts", "convert", "install", "lint", "tutorial", "bash", "ci", "tooling"]

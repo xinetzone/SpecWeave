@@ -19,7 +19,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/token-optimize-cmd/SKILL.toml"
 > ⚠️ **本Skill是命令入口门面（L1索引层）**，遵循[渐进式披露三层架构](../../capabilities/ARCHITECTURE.md)：
 > - L0：[.agents/ONBOARDING.md](../../ONBOARDING.md)（入口速查）
 > - L1：本文件（<500行，触发词+决策树+核心步骤+安全清单）
-> - L2：[commands/token-optimize.md](../../commands/token-optimize.md)（完整流程）+ [llm-token-optimization知识库](../../docs/knowledge/learning/llm-token-optimization/README.md)（方法论）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
+> - L2：[commands/token-optimize.md](../../commands/token-optimize.md)（完整流程）+ [llm-token-optimization知识库](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/index.md)（方法论）+ [cmd-log-specification.md](../../rules/cmd-log-specification.md)（日志规范）
 
 ## 1. Skill ID
 `token-optimize-cmd`
@@ -130,7 +130,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/token-optimize-cmd/SKILL.toml"
 步骤7：交付方案时提醒持续监控防"优化反弹"（C-019/C-027）
 ```
 
-> 完整RACI矩阵、输入参数规范、27条禁令清单、5个模式详解、四阶段路线图见L2文档 [commands/token-optimize.md](../../commands/token-optimize.md) 和 [llm-token-optimization知识库](../../docs/knowledge/learning/llm-token-optimization/README.md)。
+> 完整RACI矩阵、输入参数规范、27条禁令清单、5个模式详解、四阶段路线图见L2文档 [commands/token-optimize.md](../../commands/token-optimize.md) 和 [llm-token-optimization知识库](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/index.md)。
 
 ## 6. P0禁令检查清单（优化前必过）
 
@@ -199,15 +199,15 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/token-optimize-cmd/SKILL.toml"
 | 参考 | 层级 | 路径 | 何时查阅 |
 |------|------|------|---------|
 | 完整命令文档（RACI/参数/步骤/日志） | L2 | [commands/token-optimize.md](../../commands/token-optimize.md) | 每次使用必读 |
-| LLM Token优化知识库首页 | L2 | [llm-token-optimization/README.md](../../docs/knowledge/learning/llm-token-optimization/README.md) | 了解知识体系 |
-| 快速参考卡（3分钟速查） | L2 | [10-quick-reference.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/10-quick-reference.md) | P0速赢+核心数据 |
-| 27条禁令清单 | L2 | [09-constraints.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/09-constraints.md) | review时逐条检查 |
-| 决策树 | L2 | [01-decision-tree.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/01-decision-tree.md) | 技术选型 |
-| 选型矩阵 | L2 | [02-selection-matrix.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/02-selection-matrix.md) | 技术组合选择 |
-| 最佳实践模式P-001~P-005 | L2 | [03-patterns.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/03-patterns.md) | design模式选择 |
-| 反模式与常见陷阱 | L2 | [04-anti-patterns.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/06-decision-framework/04-anti-patterns.md) | review时风险识别 |
-| 跨行业案例 | L2 | [01-case-studies.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/04-cases/01-case-studies.md) | 设定期望值 |
-| 评估指标体系 | L2 | [01-metrics-framework.md](../../../docs/knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/05-evaluation/01-metrics-framework.md) | evaluate效果评估 |
+| LLM Token优化知识库首页 | L2 | [llm-token-optimization/README.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/index.md) | 了解知识体系 |
+| 快速参考卡（3分钟速查） | L2 | [10-quick-reference.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/10-quick-reference.md) | P0速赢+核心数据 |
+| 27条禁令清单 | L2 | [09-constraints.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/09-constraints.md) | review时逐条检查 |
+| 决策树 | L2 | [01-decision-tree.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/01-decision-tree.md) | 技术选型 |
+| 选型矩阵 | L2 | [02-selection-matrix.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/02-selection-matrix.md) | 技术组合选择 |
+| 最佳实践模式P-001~P-005 | L2 | [03-patterns.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/03-patterns.md) | design模式选择 |
+| 反模式与常见陷阱 | L2 | [04-anti-patterns.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/06-decision-framework/04-anti-patterns.md) | review时风险识别 |
+| 跨行业案例 | L2 | [01-case-studies.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/04-cases/01-case-studies.md) | 设定期望值 |
+| 评估指标体系 | L2 | [01-metrics-framework.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/05-evaluation/01-metrics-framework.md) | evaluate效果评估 |
 | P0预检辅助脚本 | L1工具 | [scripts/check_token_p0.py](scripts/check_token_p0.py) | S0预检自动化 |
 | CMD-LOG日志规范 | L2 | [cmd-log-specification.md](../../rules/cmd-log-specification.md) | 日志格式规范 |
 | 阶段守卫规则 | L2 | [stage-guardrails.md](../../rules/stage-guardrails.md) | 判断当前阶段约束 |

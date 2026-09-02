@@ -11,7 +11,7 @@ title: "Docx-Template-Report 模板驱动报告生成 Skill"
 # Docx-Template-Report 模板驱动报告生成 Skill
 
 > 本 Skill 从「Word 模板 + 结构化数据」确定性生成统一格式的 .docx 报告。
-> 设计依据见 [docx-template-report-skill-design.md](../../../docs/knowledge/learning/docx-template-report-skill-design.md)（v1.1.0）。
+> 设计依据见 [docx-template-report-skill-design.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/docx-report-skill/concepts/docx-template-report-skill-design.md)（v1.1.0）。
 
 ## 1. Skill ID
 
@@ -204,7 +204,7 @@ context = {"rows": [{"col1": "x", "col2": "y"}]}
 
 | 参考               | 层级 | 路径                                                                                                         | 何时查阅                    |
 | ---------------- | -- | ---------------------------------------------------------------------------------------------------------- | ----------------------- |
-| 方案设计文档           | 设计 | [docx-template-report-skill-design.md](../../../docs/knowledge/learning/docx-template-report-skill-design.md) | 理解设计背景与第一性原理推导          |
+| 方案设计文档           | 设计 | [docx-template-report-skill-design.md](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/docx-report-skill/concepts/docx-template-report-skill-design.md) | 理解设计背景与第一性原理推导          |
 | Jinja2 模板编写指南    | L2 | [references/template-guide.md](references/template-guide.md)                                               | 编写模板占位符时（A-2 行动项）       |
 | 技术文档模板契约        | L2 | [references/tech-guide-template.md](references/tech-guide-template.md)                                     | 使用 `tech-guide-template.docx` 时（数据契约/边界/反模式） |
 | 技术文档渲染示例        | L2 | [examples/tech-guide-render-example.py](examples/tech-guide-render-example.py)                             | 复制即用的完整渲染脚本，覆盖 2/3/4/5 列全部表格类型 |

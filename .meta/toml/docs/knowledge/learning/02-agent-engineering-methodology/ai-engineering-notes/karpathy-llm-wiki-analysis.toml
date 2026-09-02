@@ -1,7 +1,0 @@
-id = "karpathy-llm-wiki-analysis-20260707"
-title = "Karpathy LLM Wiki 知识库方案文章深度洞察分析报告"
-category = "knowledge/learning/02-agent-engineering-methodology/ai-engineering-notes"
-date = "2026-07-07"
-version = "1.0"
-status = "stable"
-tags = ["karpathy", "llm-wiki", "rag", "knowledge-management", "analysis"]

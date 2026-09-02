@@ -1,9 +1,0 @@
-id = "mainecoon-wiki"
-title = "MaineCoon 实时音视频基础模型与 Social World Model"
-category = "learning"
-date = "2026-08-22"
-version = "1.0"
-status = "published"
-source = "https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"
-description = "catnip.ai 发布的 22B 参数实时音视频基础模型深度分析，涵盖成本/速度/时长三角困境突破、Agentic Streaming Inference 架构与 Social World Model 范式"
-tags = ["mainecoon", "social-world-model", "real-time-video", "ai-multimodal", "catnip-ai", "agentic-streaming", "video-generation"]

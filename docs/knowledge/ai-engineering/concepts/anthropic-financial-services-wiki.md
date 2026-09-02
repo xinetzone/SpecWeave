@@ -861,6 +861,6 @@ Skill的本质是什么？是把**资深员工脑子里的隐性经验**，变�
 
 ### 11.2 本项目相关Wiki
 
-- [Agent Skills 开放标准完整指南](../../learning/01-agent-protocols-interfaces/agent-skills-open-standard-wiki.md) - 深入了解Skill的标准规范、设计原则和最佳实践，理解为什么Skill是企业知识沉淀的关键
-- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP](../../learning/01-agent-protocols-interfaces/agent-communication-protocols-wiki.md) - 了解MCP（Model Context Protocol）协议的技术细节，看懂数据连接器是怎么工作的
+- [Agent Skills 开放标准完整指南](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/agent-skills-spec/index.md) - 深入了解Skill的标准规范、设计原则和最佳实践，理解为什么Skill是企业知识沉淀的关键（原 learning 板块已于 2026-09 迁移至 bundles）
+- [Agent 通信协议完整教程：MCP/ACP/A2A/ANP](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/agent-communication-protocols/index.md) - 了解MCP（Model Context Protocol）协议的技术细节，看懂数据连接器是怎么工作的
 - [明略科技Octo平台学习Wiki](/concepts/octo-platform-wiki.md) - 另一个多Agent协作平台的参考，对比不同Agent架构设计的思路

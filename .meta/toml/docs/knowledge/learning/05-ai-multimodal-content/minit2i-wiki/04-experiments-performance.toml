@@ -1,7 +1,0 @@
-id = "minit2i-wiki-04"
-title = "实验结果与性能分析"
-category = "knowledge/learning/05-ai-multimodal-content/minit2i-wiki"
-date = "2026-08-22"
-version = "1.0"
-status = "stable"
-tags = ["minit2i", "实验结果", "GenEval", "DPG-Bench", "PRISM-Bench", "FID", "训练成本"]

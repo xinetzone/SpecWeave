@@ -1,5 +1,0 @@
-id = "llm-token-optimization-04-inference-caching"
-title = "增量推理与缓存"
-category = "knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/02-methods"
-date = "2026-07-02"
-version = "1.0"

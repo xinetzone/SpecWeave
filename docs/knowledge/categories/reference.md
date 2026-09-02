@@ -15,9 +15,9 @@ title: "分类索引：reference"
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
-| [11、术语表](../learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/11-glossary.md) |  | 2026-07-13 | - |
-| [12、常见问题与资源索引](../learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/12-faq-resources.md) |  | 2026-07-13 | - |
-| [13、快速参考速查表（一页纸）](../learning/02-agent-engineering-methodology/02-prompt-coding/seven-concepts-prompt-wiki/13-quick-reference.md) |  | 2026-07-13 | - |
+| [11、术语表](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/seven-concepts-prompt-wiki/11-glossary.md) |  | 2026-07-13 | - |
+| [12、常见问题与资源索引](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/seven-concepts-prompt-wiki/12-faq-resources.md) |  | 2026-07-13 | - |
+| [13、快速参考速查表（一页纸）](../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/seven-concepts-prompt-wiki/13-quick-reference.md) |  | 2026-07-13 | - |
 
 ---
 
