@@ -1,0 +1,74 @@
+[project]
+name = "agent-monetize"
+version = "0.1.0"
+description = "Python 3.14+ 智能体自动变现平台（自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接）"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { text = "Apache-2.0" }
+authors = [{ name = "SpecWeave" }]
+keywords = ["agent", "monetization", "tao", "tvm-ffi", "sandbox"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov", "ruff>=0.8"]
+
+[project.scripts]
+agent-monetize = "agent_monetize.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["agent_monetize"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle errors
+  "W",   # pycodestyle warnings
+  "F",   # pyflakes
+  "I",   # isort
+  "UP",  # pyupgrade
+  "B",   # flake8-bugbear
+  "S",   # flake8-bandit (security)
+]
+ignore = [
+  "E501",  # line length handled by formatter
+  "S101",  # assert allowed in this project
+  "B008",  # function calls in default args
+]
+unfixable = ["S"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S105", "S106"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

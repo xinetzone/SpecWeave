@@ -1,0 +1,51 @@
+# agent-monetize 沙箱配置
+# 本平台为沙箱虚拟货币演示，不接入任何真实资金流转。
+app:
+  name: agent-monetize
+  version: 0.1.0
+  seed: 42
+  verbose: true
+
+loop:
+  rounds: 12                # 自主循环轮数
+  interval_seconds: 0.0     # 事件/定时驱动间隔（0 = 立即连续执行）
+  event_driven: false       # 事件驱动模式开关（true 时按 interval 定时驱动）
+  persist_every: 1          # 每 N 轮持久化一次状态
+  state_path: state.json    # 状态持久化路径（JSON）
+
+tao:
+  wuyou:                    # 无为门（动善时：低确定性/低预期收益则不行动，待时）
+    min_certainty: 0.55            # 机会确定性低于该阈值 → 不行动
+    min_expected_return: 1.5       # 预期收益低于该阈值 → 不行动（虚拟货币）
+  zhizhi:                   # 知止门（知足不辱，知止不殆：设收益上限与亏损红线）
+    per_channel_revenue_cap: 200.0 # 单通道累计收益上限
+    total_loss_redline: -100.0     # 总累计亏损红线（低于则整体停摆）
+
+compliance:
+  enable_red_zone: true     # 红区禁行清单开关
+  require_confirmation: true # 真实通道需用户显式合规确认
+  confirmed_behaviors: []   # 用户显式确认允许的行为清单（如 ["sandbox-report"]）
+
+channels:
+  content_pricing:          # 沙箱通道 1：内容计价模拟（按阅读/采纳计价）
+    enabled: true
+    read_price: 0.5         # 每次阅读计价（虚拟货币）
+    adoption_bonus: 5.0     # 采纳加成
+    click_floor: 3
+    click_ceiling: 12
+  data_service:             # 沙箱通道 2：数据服务计价模拟（按调用次数/按量计价）
+    enabled: true
+    per_call_price: 0.8     # 每次调用计价（虚拟货币）
+    volume_discount_threshold: 50  # 达到该调用量后享受折扣
+    volume_discount_rate: 0.9      # 折扣率
+    call_floor: 1
+    call_ceiling: 20
+  rest_report:              # 真实 API 适配器示例（默认关闭）
+    enabled: false          # 通道开关（默认关闭）
+    enable_real: false      # 真实模式开关：需配置为 true 且提供合规确认才启用
+    endpoint: "https://sandbox.example.invalid/report"
+    per_report_price: 1.0
+
+ffi:
+  native_lib: "native/build/score_opportunity.dll"  # 原生 C++ FFI 模块（编译产物）
+  fallback_to_reference: true  # 原生不可用时降级到纯 Python 参考实现
