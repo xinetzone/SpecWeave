@@ -2,7 +2,7 @@
 
 本主题包含文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关的规格文档。质量保障工具、规范执行工具、开发环境适配均归入此主题。
 
-**主题状态**：🔧 进行中（17/26 完成）
+**主题状态**：🔧 进行中（18/27 完成）
 **上级看板**：[返回全局执行看板](../README.md)
 **任务模板**：[standards-tools-task-template.md](../../../.agents/templates/theme-templates/standards-tools-task-template.md)
 
@@ -38,6 +38,7 @@
 | [create-sexology-classics-wiki](create-sexology-classics-wiki/spec.md) | ✅ 完成 | 100% | [think/sexology/classics-reading/](../../../projects/awesome-okf-xs/doc/bundles/think/sexology/classics-reading/index.md) | 性学经典著作 OKF Wiki 教程：六大板块著作提要与阅读路径（七概念 R→I→E→V→C 链路，104 条带信源事实，9 概念+3 示例+5 信源），独立评审修复后质量门全部通过 |
 | [create-fangzhong-bajia-wiki](create-fangzhong-bajia-wiki/spec.md) | ✅ 完成 | 100% | [think/sexology/fangzhong-bajia-reading/](../../../projects/awesome-okf-xs/doc/bundles/think/sexology/fangzhong-bajia-reading/index.md) | 《汉书·艺文志》房中八家 OKF Wiki 教程：著录/辑佚/出土/解读四线组织（七概念 R→I→E→V→C 链路，58 条带信源事实，8 概念+3 示例+4 信源），独立评审 R-01/R-02 修复后质量门通过（build 按用户指示跳过） |
 | [create-mawangdui-fangzhong-wiki](create-mawangdui-fangzhong-wiki/spec.md) | ✅ 完成 | 100% | [think/sexology/mawangdui-fangzhong-reading/](../../../projects/awesome-okf-xs/doc/bundles/think/sexology/mawangdui-fangzhong-reading/index.md) | 马王堆房中简帛 OKF Wiki 教程：出土文本·整理史·研究史专题深化（七概念 R→I→E→V→C 链路，127 条带信源事实，8 概念+3 示例+4 信源），独立评审 0 fail/0 warn，质量门全部通过（build 读取阶段零警告） |
+| [add-tcm-bundle-visual-assets](add-tcm-bundle-visual-assets/spec.md) | ✅ 完成 | 100% | [yixue/tcm/](../../../projects/awesome-okf-xs/doc/bundles/yixue/tcm/index.md) | tcm（中医经典与理论）域视觉资产增强：Seedream 意象配图 8 张（水墨淡彩/无文字/无医学图解硬边界）+ Mermaid 事实图表 17 张（谱系/时序/分层/框架），七概念 R→F→生产→V→C 链路，独立对抗审查 A/B/C 全通过，Sphinx 构建 tcm 域零错误零告警，纯视觉增量知识内容零改动 |
 
 ---
 
