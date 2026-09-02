@@ -251,14 +251,14 @@ tags: ["github-cli", "wiki-tutorial", "knowledge-base", "retrospective", "seven-
 
 | 文件 | 说明 |
 |------|------|
-| [00-overview.md](../../../../../knowledge/learning/08-systems-infrastructure/github-cli-wiki/00-overview.md) | GitHub CLI 概述与教程导航 |
-| [01-installation.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/01-installation.md) | 安装指南（Windows/macOS/Linux） |
-| [02-basic-commands.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/02-basic-commands.md) | 基础命令（auth/repo/issue/gist/api） |
-| [03-pr-workflow.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/03-pr-workflow.md) | PR 工作流（create/review/merge/checkout） |
-| [04-actions-cicd.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/04-actions-cicd.md) | Actions CI/CD 集成（run/workflow/secret/variable） |
-| [05-advanced-usage.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/05-advanced-usage.md) | 高级用法（alias/config/extension/search） |
-| [06-faq-troubleshooting.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/06-faq-troubleshooting.md) | 常见问题与排错 |
-| [07-cheatsheet.md](../../../../../../../docs/knowledge/learning/github-cli-wiki/07-cheatsheet.md) | 命令速查表 |
+| [00-overview.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/index.md) | GitHub CLI 概述与教程导航 |
+| [01-installation.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/01-installation.md) | 安装指南（Windows/macOS/Linux） |
+| [02-basic-commands.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/02-basic-commands.md) | 基础命令（auth/repo/issue/gist/api） |
+| [03-pr-workflow.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/03-pr-workflow.md) | PR 工作流（create/review/merge/checkout） |
+| [04-actions-cicd.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/04-actions-cicd.md) | Actions CI/CD 集成（run/workflow/secret/variable） |
+| [05-advanced-usage.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/05-advanced-usage.md) | 高级用法（alias/config/extension/search） |
+| [06-faq-troubleshooting.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/06-faq-troubleshooting.md) | 常见问题与排错 |
+| [07-cheatsheet.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/dev/github/github-cli/07-cheatsheet.md) | 命令速查表 |
 
 ### 模式成熟度更新
 

@@ -39,7 +39,7 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 ### 交付物成果
 - 完整执行 [standards-tools主题Spec](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md) PRD（127行）
 - 7个任务计划，通过web-extraction-report深度提取5个URL内容
-- 生成 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) 技术实现指南（917行）
+- 生成 [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobileuse-agent-skill-api-guide.md) 技术实现指南（917行）
 - 产出包含14个常见问题排查表、10条开发实践最佳实践、7个应用场景
 - 深度覆盖ClawHub Skill（@volcengine-skills/byted-ai-mobileuse-agent v1.1.0）、RunAgentTaskOneStep API完整参数、JSONL流式输出格式、OpenClaw部署、双模式鉴权
 - 形成"产品概览→技术实现指南"的双层文档结构（前置434行产品概览+本次917行技术指南）
@@ -100,9 +100,9 @@ retrospective-volcengine-mua-skill-api-guide-20260707/
 - ClawHub Skill页面（byted-ai-mobileuse-agent）
 
 ### 前置与关联产出
-- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
-- 本次技术指南：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md)（917行）
-- 同系列CUA分析：[volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)（1331行）
+- 前置产品概览：[volcengine-mobile-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobile-use-agent-analysis.md)（434行，commit 998120c7）
+- 本次技术指南：[volcengine-mobileuse-agent-skill-api-guide.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobileuse-agent-skill-api-guide.md)（917行）
+- 同系列CUA分析：[volcengine-computer-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md)（1331行）
 
 ### Spec与看板
 - Spec PRD：[spec.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/spec.md)

@@ -14,7 +14,7 @@ source_author: "丸美小沐"
 > **分析对象**：微信公众号文章《丸美小沐：国产AI模型对比与使用场景推荐》
 > **萃取日期**：2026-07-06
 > **报告类型**：外部内容洞察萃取（standalone）
-> **源学习笔记**：[domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)（321 行）
+> **源学习笔记**：[domestic-llm-comparison-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/domestic-llm-comparison/index.md)（321 行）
 
 ## 一、核心洞察
 
@@ -395,7 +395,7 @@ MiniMax M3 的原生多模态能力（图、PDF、视频都能处理）+ 1M 长�
 
 ## 五、关联资源
 
-- **源学习笔记**：[domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md)（321 行）
+- **源学习笔记**：[domestic-llm-comparison-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/domestic-llm-comparison/index.md)（321 行）
 - **源文章**：[微信公众号 - 国产AI模型对比与使用场景推荐](https://mp.weixin.qq.com/s/WM3bIS42FPoiQgDw_SVrTA)
 - **同类洞察报告**：[insight-analyze-wechat-article-3dnk-20260706.md](insight-analyze-wechat-article-3dnk-20260706.md) —— 同类外部内容洞察萃取
 - **方法论参考**：

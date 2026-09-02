@@ -125,7 +125,7 @@ tags:
 
 ### 案例1：okf-kit v0.3.3 Fetcher 抽象层（2026-08-18，主验证案例）
 
-**来源**：[okf-kit Wiki 七概念执行报告 · 洞察5](../../../knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L78-L82)
+**来源**：[okf-kit Wiki 七概念执行报告 · 洞察5](../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md#L78-L82)
 
 okf-kit 源码研读确认了「IO 边界抽象隔离 + 核心纯函数化」的真实落地：
 

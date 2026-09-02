@@ -97,8 +97,8 @@ date: "2026-08-15"
 
 | 资源 | 路径 | 说明 |
 |------|------|------|
-| Wiki入口 | [knowledge-catalog-wiki/README.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md) | 学习教程入口 |
+| Wiki入口 | [knowledge-catalog-wiki/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | 学习教程入口 |
 | OKF规范原文 | [vendor/knowledge-catalog/okf/SPEC.md](../../../../../vendor/knowledge-catalog/okf/SPEC.md) | 官方英文规范v0.2 |
 | Reference Agent配置 | [vendor/knowledge-catalog/okf/pyproject.toml](../../../../../vendor/knowledge-catalog/okf/pyproject.toml) | Python依赖定义 |
 | GA4示例可视化 | file:///d:/AI/vendor/knowledge-catalog/okf/bundles/ga4/viz.html | 直接浏览器打开体验 |
-| 同类Wiki参考 | [onnx-wiki/README.md](../../../../knowledge/learning/09-ml-inference-deployment/onnx-wiki/README.md) | 同目录下其他wiki结构参考 |
+| 同类Wiki参考 | [onnx-wiki/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ml/onnx/index.md) | 同目录下其他wiki结构参考 |

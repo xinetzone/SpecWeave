@@ -35,8 +35,8 @@ retrospective-volcengine-mobile-use-agent-learning-20260707/
 
 ### 复盘成果
 - 完整执行 [wiki-spec-template.md](../../../../../../.agents/templates/wiki-spec-template.md) 的 L1-L5 四层漏斗模型
-- 生成 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md) 单文件 wiki（434 行，10 章节）
-- 同步更新 [CATEGORIES.md](../../../../../../docs/knowledge/learning/CATEGORIES.md) 与 [README.md](../../../../../../docs/knowledge/learning/README.md) 两份索引
+- 生成 [volcengine-mobile-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobile-use-agent-analysis.md) 单文件 wiki（434 行，10 章节）
+- 同步更新 CATEGORIES.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） 与 README.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） 两份索引
 
 ### 洞察成果
 - 洞察 1：Web 内容提取工具降级链（defuddle→WebFetch→agent-browser）
@@ -62,7 +62,7 @@ retrospective-volcengine-mobile-use-agent-learning-20260707/
 ## 关联资源
 
 - 学习对象：[火山引擎 Mobile Use Agent 解决方案介绍](https://www.volcengine.com/docs/6394/1583515?lang=zh)
-- 产出 wiki：[volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)
+- 产出 wiki：[volcengine-mobile-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobile-use-agent-analysis.md)
 - 工作流模板：[wiki-spec-template.md](../../../../../../.agents/templates/wiki-spec-template.md)
 - 短指令模式：[short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md)
 - 关联复盘：[retrospective-agency-deep-learning-analysis-20260706](../retrospective-agency-deep-learning-analysis-20260706/README.md)（同类外部学习复盘）

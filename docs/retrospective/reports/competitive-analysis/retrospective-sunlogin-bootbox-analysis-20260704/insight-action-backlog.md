@@ -58,7 +58,7 @@ ssot:
 
 ## 已完成核心产出物
 
-- ✅ 原子化Wiki结构：[sunlogin-bootbox-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-bootbox-analysis.md)（索引页62行）+ 10个原子文件（2431行）+ 11个TOML元数据文件
+- ✅ 原子化Wiki结构：[sunlogin-bootbox-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-bootbox-analysis.md)（索引页62行）+ 10个原子文件（2431行）+ 11个TOML元数据文件
 - ✅ 6个可复用模式入库/验证：
   - P-DOC-BOOTBOX-001 Spec前置规划+增量子代理委托（L2已验证）
   - P-DOC-BOOTBOX-002 硬件产品分析10章标准结构（L2已入库）

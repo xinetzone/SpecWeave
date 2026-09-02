@@ -60,7 +60,7 @@ tags: ["methodology", "process", "assetization", "knowledge-management", "milest
 | KB-007 | 所有交叉引用链接有效，无断链 | 必须 |
 
 **参考案例**：
-- [LLM Token优化知识库](../../../../knowledge/learning/02-agent-engineering-methodology/04-context-optimization/llm-token-optimization/README.md)（29个文档，10个模块）
+- [LLM Token优化知识库](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/context-optimization/concepts/llm-token-optimization/README.md)（29个文档，10个模块）
 
 ---
 

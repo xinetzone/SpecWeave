@@ -116,7 +116,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 主文档 | [dspark-paper-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | 455 行，约 4500 字，覆盖 10 个核心概念 |
+| 主文档 | [dspark-paper-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/performance/dspark-paper-wiki.md) | 455 行，约 4500 字，覆盖 10 个核心概念 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | learning 类目下追加索引条目，含完整摘要和 10 个标签 |
 
 ### 复盘报告产出物（本次闭环）

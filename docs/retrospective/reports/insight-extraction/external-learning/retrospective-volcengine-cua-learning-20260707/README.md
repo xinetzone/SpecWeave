@@ -39,7 +39,7 @@ retrospective-volcengine-cua-learning-20260707/
 ### 交付物成果
 - 完整执行 [spec模式](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) PRD（161行）
 - 11个子任务通过general_purpose_task委托子代理深度分析各模块
-- 生成 [volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md) 学习笔记（1331行）
+- 生成 [volcengine-computer-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md) 学习笔记（1331行）
 - 产出包含2张Mermaid图表（五层技术架构图、API调用时序图）、15+结构化对比表格
 - 深度对比Anthropic Computer Use、传统RPA、Playwright
 
@@ -88,7 +88,7 @@ retrospective-volcengine-cua-learning-20260707/
 ## 关联资源
 
 - 学习对象：[火山引擎Computer Use Agent](https://www.volcengine.com/docs/6394/2556112?lang=zh)
-- 产出学习笔记：[volcengine-computer-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- 产出学习笔记：[volcengine-computer-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
 - Spec PRD：[spec.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md)
 - Spec任务计划：[tasks.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md)
 - Spec验收清单：[checklist.md](../../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md)

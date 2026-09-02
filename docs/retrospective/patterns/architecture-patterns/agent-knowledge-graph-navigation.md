@@ -328,7 +328,7 @@ OKF的Enrichment Agent在消费Bundle时严格遵循该导航策略，相比全�
 
 ### 案例4：okf-kit v0.3.3 源码实现（2026-08-18，第二次独立验证）
 
-**来源**：[okf-kit Wiki 七概念执行报告 · 洞察1](../../../knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L52-L56)
+**来源**：[okf-kit Wiki 七概念执行报告 · 洞察1](../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md#L52-L56)
 
 okf-kit（OKF 的 Python 实现，v0.3.3）的源码研读确认了「子目录 index.md 局部路由」机制在真实实现中的落地：面向 Agent 的知识 bundle 为每个目录生成 `index.md`，列出该目录下的子目录与文件清单，使独立 LLM 无需专用 SDK 即可可靠地逐级导航定位内容，从而降低集成门槛。
 

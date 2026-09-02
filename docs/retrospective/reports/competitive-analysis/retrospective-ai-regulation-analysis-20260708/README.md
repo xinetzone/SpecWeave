@@ -24,7 +24,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 指标 | 数值 |
 |------|------|
 | 分析对象 | 《人工智能拟人化互动服务管理暂行办法》（五部门联合发布）+ 涂鸦智能平台合规公告 |
-| 核心分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)（808行/25634字符） |
+| 核心分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md)（808行/25634字符） |
 | Spec 文件数 | 3个（spec.md / tasks.md / checklist.md） |
 | 任务完成率 | 11/11（100%） |
 | 检查点通过率 | 60/60（100%） |
@@ -60,7 +60,7 @@ template_upgrade: "2026-07-06 v1.2"
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 10个功能需求、6个验收标准 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 11个任务（全部标记[x]完成） |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 60项检查点（全部通过） |
-| 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 808行/25634字符（核心产出） |
+| 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) | 808行/25634字符（核心产出） |
 
 **复盘报告**：
 
@@ -114,4 +114,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [retrospective-volcengine-acep-learning-20260707](../retrospective-volcengine-acep-learning-20260707/README.md) — 同类业务趋势分析任务复盘
 - [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/README.md) — 同类优化类复盘，沉淀了文件创建预检、Spec可发现性保障等模式
 - 源任务spec目录：[analyze-ai-anthropomorphic-interim-measures](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) — 本次任务的Spec三件套
-- 核心分析报告：[2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) — 808行深度合规分析报告
+- 核心分析报告：[2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) — 808行深度合规分析报告

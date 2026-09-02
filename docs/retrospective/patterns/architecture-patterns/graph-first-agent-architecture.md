@@ -18,7 +18,7 @@ validations:
     date: "2026-07-07"
     context: "AndroidWorld 基准测试 100% 准确率的 LangGraph 多智能体状态图设计（与 multi-agent-closed-loop-execution 同源案例）"
 ---
-> **提炼自**：[2026 AI Agent 系统全景调研报告 · 模式 1](../../../../docs/knowledge/learning/03-agent-platforms-tools/2026-08-25-best-agent-systems-research.md#pattern-graph-first) —— 基于 279 条事实数据的行业调研萃取，经 mobile-use AndroidWorld 100% 准确率案例交叉验证
+> **提炼自**：2026 AI Agent 系统全景调研报告 · 模式 1（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） —— 基于 279 条事实数据的行业调研萃取，经 mobile-use AndroidWorld 100% 准确率案例交叉验证
 
 # 图优先 Agent 架构（Graph-First Agent Architecture）
 

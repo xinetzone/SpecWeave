@@ -13,9 +13,9 @@ completed_date: "2026-07-06"
 
 - [x] 复盘报告目录已创建：[retrospective-papi-jiang-wiki-20260706/](./README.md)
 - [x] 四个标准复盘文件已生成：README.md、execution-retrospective.md、insight-extraction.md、export-suggestions.md
-- [x] 核心产出物已归档至知识库：[papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
+- [x] 核心产出物已归档至知识库：[papi-jiang-solo-ip-trend-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md)
 - [x] TOML元数据文件已创建：10个（索引页+9原子章节）
-- [x] Spec文档已归档：[.trae/specs/.../papi-jiang-solo-ip-trend-wiki/](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)
+- [x] Spec文档已归档：[.trae/specs/.../papi-jiang-solo-ip-trend-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md)
 - [x] 更新复盘报告索引README.md：competitive-analysis分类从31份增至32份，添加日期索引
 - [x] 原子提交复盘报告：commit `7f7917fa`，9文件+446行，文件名规范验证通过
 
@@ -92,11 +92,11 @@ completed_date: "2026-07-06"
 - **分析深度**：十年时间线+5大核心观点+15维度模式对比+4个行业案例+四步决策框架，形成完整的商业分析闭环
 - **实用价值**：小而美创业5条实践要点+混合模式建议+风险控制策略，对内容创业者、个人IP从业者、小型企业主有直接指导意义
 - **知识关联**：与知识库中以下主题形成关联网络，构建商业趋势知识体系：
-  - **同分类关联（06-business-trends-analysis）**：与[AI变现完整指南](../../../../knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md)形成"个人IP变现→AI变现"的变现方法论互补——Papi酱Wiki提供内容创业者视角的"超级个体"路径，AI变现Wiki提供技术创业者视角的规模化路径
+  - **同分类关联（06-business-trends-analysis）**：与[AI变现完整指南](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-monetization/concepts/00-overview.md)形成"个人IP变现→AI变现"的变现方法论互补——Papi酱Wiki提供内容创业者视角的"超级个体"路径，AI变现Wiki提供技术创业者视角的规模化路径
   - **主题互补**：个人IP内容创业 vs AI应用变现，共同覆盖了2026年两大独立创业赛道
   - **模式对比**：Papi酱Wiki的15维度个人IP vs 平台机构对比表，与AI变现Wiki的ToB/ToC/垂直行业三类变现路径形成创业路径选择矩阵
   - **决策框架**：Papi酱Wiki的四步决策框架（优势盘点→目标排序→团队实验→风险底线）可与AI变现Wiki的六阶段实施路径结合使用
-  - **跨领域关联**：与[向日葵远程控制系列](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/README.md)等产品分析Wiki形成对照——前者分析"人"的IP化，后者分析"产品"的商业化，共同构成商业分析方法论实践
+  - **跨领域关联**：与[向日葵远程控制系列](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/index.md)等产品分析Wiki形成对照——前者分析"人"的IP化，后者分析"产品"的商业化，共同构成商业分析方法论实践
 
 ---
 

@@ -85,7 +85,7 @@ retrospective-first-principles-analogy-error-20260709/
 
 ## 关联资源
 
-- 相关学习报告:[vibe-coding-prompts-learning-analysis.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md)
+- 相关学习报告:[vibe-coding-prompts-learning-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/vibe-coding-prompts-learning-analysis.md)
 - 相关复盘目录:[retrospective-vibe-coding-prompts-learning-analysis-20260704/](../../insight-extraction/external-learning/retrospective-vibe-coding-prompts-learning-analysis-20260704/README.md)
 - 开发规范（链接格式章节）:[development-standards.md](../../../../tech/references/development-standards.md)
 - 第一性原理Prompt模式:[first-principles-prompt-pattern.md](../../../patterns/methodology-patterns/ai-collaboration/first-principles-prompt-pattern.md)

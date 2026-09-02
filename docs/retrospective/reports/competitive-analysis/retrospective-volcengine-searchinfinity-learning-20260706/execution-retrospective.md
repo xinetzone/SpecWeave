@@ -14,7 +14,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 1. **任务接收**：用户通过 `/spec` 命令触发 Spec 模式，要求对火山引擎豆包搜索（SearchInfinity）产品页进行系统性学习与深度洞察分析
 2. **上下文恢复**：本会话是先前对话的延续（context compression 丢失了部分历史），通过会话摘要恢复之前的执行状态
 3. **状态确认**：确认 Task 1（网页内容提取）已完成，Task 2-11 由 Sub-Agent 一次性完成，Task 12（结构化学习笔记）已生成约 950 行文档
-4. **产出物验证**：验证学习笔记文件 [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) 已存在，包含 YAML frontmatter、10 大章节、4 个 Mermaid 图表
+4. **产出物验证**：验证学习笔记文件 [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) 已存在，包含 YAML frontmatter、10 大章节、4 个 Mermaid 图表
 
 ### 阶段二：Spec 规划阶段（前序会话）
 
@@ -135,7 +135,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | ~275 行 | 12 个任务含完整字段 |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | ~50 个检查点 | 全流程质量验证 |
 | Task1 结构化数据 | [task1-output.json](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/task1-output.json) | JSON 格式 | 网页内容结构化提取结果 |
-| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | ~950 行 | 10 大章节 + 4 个 Mermaid 图表 |
+| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) | ~950 行 | 10 大章节 + 4 个 Mermaid 图表 |
 
 ### 复盘报告产出物（本次闭环）
 

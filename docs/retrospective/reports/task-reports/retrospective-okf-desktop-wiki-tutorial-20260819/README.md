@@ -17,7 +17,7 @@ summary: "学习 okf-desktop 桌面客户端源码并生成 8 篇 wiki 教程的
 > **复盘类型**：任务完成复盘（里程碑复盘）
 > **复盘日期**：2026-08-19
 > **任务名称**：学习 okf-desktop 桌面客户端并生成 wiki 教程
-> **产出物位置**：[okf-desktop-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/README.md)
+> **产出物位置**：[okf-desktop-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-desktop/index.md)
 
 ## 📋 复盘文档
 
@@ -52,6 +52,6 @@ summary: "学习 okf-desktop 桌面客户端源码并生成 8 篇 wiki 教程的
 
 ## 🔗 关联产出物
 
-- **教程目录**：[okf-desktop-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/okf-desktop-wiki/README.md)
+- **教程目录**：[okf-desktop-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-desktop/index.md)
 - **Git 提交**：`7cb0aecf`（docs(okf-desktop-wiki): 学习 okf-desktop 源码沉淀桌面客户端完整 wiki 教程）
-- **相关教程**：[okf-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md)、[knowledge-catalog-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/knowledge-catalog-wiki/README.md)
+- **相关教程**：[okf-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md)、[knowledge-catalog-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md)

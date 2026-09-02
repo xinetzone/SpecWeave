@@ -15,7 +15,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 | 任务主题 | WeasyPrint 第一性原理学习与wiki教程生成 |
 | 执行时间 | 2026-07-13 |
 | 输入源 | https://weasyprint.org/、https://weasyprint.com/、d:\spaces\SpecWeave\external\WeasyPrint 源码（v69.0） |
-| 核心产出 | [weasyprint-wiki](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/README.md)（14章节，原子化wiki结构） |
+| 核心产出 | [weasyprint-wiki](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/weasyprint/index.md)（14章节，原子化wiki结构） |
 | 任务类型 | 技术学习+文档生成 |
 
 ## 二、事实还原（时间线与产出）
@@ -31,8 +31,8 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retr
 ### 产出物清单
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| WeasyPrint完整教程 | [weasyprint-wiki/README.md](../../../knowledge/learning/04-docs-markup-tooling/weasyprint-wiki/README.md) | 含第一性原理分析、架构解析、API指南、CSS特性、源码导览、方案对比、最佳实践、洞察共14章原子化wiki |
-| 更新后的目录索引 | [README.md](../../../knowledge/learning/04-docs-markup-tooling/README.md) | 自动生成的文档索引已包含WeasyPrint教程 |
+| WeasyPrint完整教程 | [weasyprint-wiki/README.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/document/weasyprint/index.md) | 含第一性原理分析、架构解析、API指南、CSS特性、源码导览、方案对比、最佳实践、洞察共14章原子化wiki |
+| 更新后的目录索引 | README.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | 自动生成的文档索引已包含WeasyPrint教程 |
 | 管线穿透法模式 | [source-pipeline-penetration-method.md](../../patterns/methodology-patterns/research-knowledge/source-pipeline-penetration-method.md) | 开源项目源码学习方法论，顺着数据流动管线逐层穿透 |
 | 本质矛盾三步法模式 | [essential-contradiction-three-step.md](../../patterns/methodology-patterns/research-knowledge/essential-contradiction-three-step.md) | 技术方案第一性原理分析框架：拆矛盾→列痛点→看取舍 |
 | wiki四层需求结构模式 | [tech-wiki-four-layer-need-structure.md](../../patterns/methodology-patterns/document-architecture/tech-wiki-four-layer-need-structure.md) | 技术教程写作结构框架：动机→上手→问题→原理，含14章标准模板 |

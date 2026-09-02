@@ -161,7 +161,7 @@ A: 回答。
 
 ### 案例：Knowledge Catalog OKF最佳实践（本次验证）
 
-来源：[05-best-practices.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/05-best-practices.md)
+来源：[05-best-practices.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/viz/animejs-threejs-adapter/concepts/05-best-practices.md)
 
 **产出结构**：
 - 5个反模式（frontmatter缺失/巨型Bundle/信任元数据造假/认证计算缺失/链接混乱）

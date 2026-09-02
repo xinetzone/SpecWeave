@@ -24,7 +24,7 @@ template_upgrade: "2026-07-06 v1.2"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号MopMonk安全Agent介绍文章（https://mp.weixin.qq.com/s/Y_8DYQGuxgHdiw-a74ZN0w） |
-| 产出物主文档 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) |
+| 产出物主文档 | mopmonk-security-agent-wiki.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） |
 | 原子化文件 | 7个原子文件（00-overview.md ~ 06-resources.md，共581行） |
 | TOML元数据 | 8个TOML元数据文件 |
 | 首次提交 | e343cd4f: docs(knowledge): 创建MopMonk安全Agent系统Wiki教程（5文件，868行） |
@@ -52,14 +52,14 @@ template_upgrade: "2026-07-06 v1.2"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | - |
-| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| MiniMax M3 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 索引页 | mopmonk-security-agent-wiki.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 概述 | 00-overview.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 核心概念 | 01-core-concepts.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| MiniMax M3 | 02-minimax-m3.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 核心技术 | 03-core-technologies.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 学习指南 | 04-learning-guide.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| FAQ | 05-faq.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 资源 | 06-resources.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/migration-archival/create-mopmonk-wiki-tutorial/tasks.md) | - |
@@ -73,4 +73,4 @@ template_upgrade: "2026-07-06 v1.2"
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 紧邻的wiki教程制作复盘，同样遇到frontmatter格式问题
 - [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 前一天的同类开源项目学习wiki任务
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式
-- [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) — 本次任务的核心产出物wiki教程索引页
+- mopmonk-security-agent-wiki.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） — 本次任务的核心产出物wiki教程索引页

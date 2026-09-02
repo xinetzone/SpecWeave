@@ -91,18 +91,18 @@ report_type: retrospective
 | 文件 | 类型 | 说明 |
 |------|------|------|
 | **知识档案核心文件** | | |
-| [00-adversarial-review-protocol.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) | 新增 | 对抗性审查协议：来源分级、可信度评分、五维验证、偏差识别 |
-| [01-philosophy-origins.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/01-philosophy-origins.md) | 新增 | 哲学起源：亚里士多德→笛卡尔→康德发展脉络 |
-| [02-physics-applications.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/02-physics-applications.md) | 新增 | 物理学应用：经典物理、费曼方法论、DFT |
-| [03-business-innovation-cases.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/03-business-innovation-cases.md) | 新增 | 商业案例：SpaceX/Tesla、芒格、贝索斯等 |
-| [04-key-thinkers-quotes.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/04-key-thinkers-quotes.md) | 新增 | 学者论述：7位学者24条原文引述 |
-| [05-academic-resources.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/05-academic-resources.md) | 新增 | 学术资源：期刊、著作、课程索引 |
-| [06-concepts-glossary.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/06-concepts-glossary.md) | 新增 | 术语表：12个核心概念跨领域统一定义 |
-| [07-timeline.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/07-timeline.md) | 新增 | 时间线：2300年发展时间轴 |
-| [08-methodology-framework.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md) | 新增 | 方法论框架：6步实操流程+28项检查清单 |
-| [09-further-reading.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/09-further-reading.md) | 新增 | 延伸阅读：分级阅读推荐 |
-| [10-source-validation-log.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) | 新增 | 来源验证日志：完整审查过程记录 |
-| [README.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md) | 新增 | 档案首页：导航入口+阅读路径 |
+| [00-adversarial-review-protocol.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/00-adversarial-review-protocol.md) | 新增 | 对抗性审查协议：来源分级、可信度评分、五维验证、偏差识别 |
+| [01-philosophy-origins.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/01-philosophy-origins.md) | 新增 | 哲学起源：亚里士多德→笛卡尔→康德发展脉络 |
+| [02-physics-applications.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/02-physics-applications.md) | 新增 | 物理学应用：经典物理、费曼方法论、DFT |
+| [03-business-innovation-cases.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/03-business-innovation-cases.md) | 新增 | 商业案例：SpaceX/Tesla、芒格、贝索斯等 |
+| [04-key-thinkers-quotes.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/04-key-thinkers-quotes.md) | 新增 | 学者论述：7位学者24条原文引述 |
+| [05-academic-resources.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/05-academic-resources.md) | 新增 | 学术资源：期刊、著作、课程索引 |
+| [06-concepts-glossary.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/06-concepts-glossary.md) | 新增 | 术语表：12个核心概念跨领域统一定义 |
+| [07-timeline.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/07-timeline.md) | 新增 | 时间线：2300年发展时间轴 |
+| [08-methodology-framework.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md) | 新增 | 方法论框架：6步实操流程+28项检查清单 |
+| [09-further-reading.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/09-further-reading.md) | 新增 | 延伸阅读：分级阅读推荐 |
+| [10-source-validation-log.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) | 新增 | 来源验证日志：完整审查过程记录 |
+| [README.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) | 新增 | 档案首页：导航入口+阅读路径 |
 | **Spec与复盘文件** | | |
 | [spec.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/spec.md) | 新增 | PRD文档 |
 | [tasks.md](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/tasks.md) | 新增 | 任务分解（10任务） |
@@ -329,10 +329,10 @@ report_type: retrospective
 
 ### 8.1 关键文件清单
 
-- 知识档案首页：[first-principles/README.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
-- 对抗性审查协议：[00-adversarial-review-protocol.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
-- 方法论框架：[08-methodology-framework.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md)
-- 来源验证日志：[10-source-validation-log.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md)
+- 知识档案首页：[first-principles/README.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
+- 对抗性审查协议：[00-adversarial-review-protocol.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/00-adversarial-review-protocol.md)
+- 方法论框架：[08-methodology-framework.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md)
+- 来源验证日志：[10-source-validation-log.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md)
 - 第一性原理指令集：[first-principles.md](../../../../../../../.agents/commands/first-principles.md)
 - Spec文档：[first-principles-comprehensive-research/](../../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/spec.md)
 - 复盘目录：[README.md](../README.md)

@@ -45,5 +45,5 @@ template_upgrade: "2026-07-06 v1.2"
 
 ## 关联资源
 
-- [tuyaopen-dev-skills-learning.md](../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) — 源学习笔记（结构化知识条目）
+- [tuyaopen-dev-skills-learning.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/tuya-iot/learning-reports/tuyaopen-dev-skills-learning.md) — 源学习笔记（结构化知识条目）
 - [TuyaOpen-dev-skills/README_zh.md](https://github.com/tuya/TuyaOpen-dev-skills/blob/main/README_zh.md) — 上游仓库说明

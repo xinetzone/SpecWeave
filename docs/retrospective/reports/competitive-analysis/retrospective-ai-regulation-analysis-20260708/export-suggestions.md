@@ -29,7 +29,7 @@ export_date: "2026-07-08"
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | PRD格式，10个功能需求、6个验收标准 |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 11个任务，已全部标记为[x]完成 |
 | Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 60项检查点，全部通过 |
-| 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 808行/25634字符，68个标题，309行表格，核心产出 |
+| 结构化分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) | 808行/25634字符，68个标题，309行表格，核心产出 |
 | 法规对象 | 《人工智能拟人化互动服务管理暂行办法》 | 五部门联合发布的部门规章 |
 | 对比对象 | 涂鸦智能平台合规公告 | 平台合规指引，仅覆盖约30%法规义务 |
 
@@ -118,4 +118,4 @@ export_date: "2026-07-08"
 - [retrospective-tuyaopen-learning-report-optimization-20260630](../retrospective-tuyaopen-learning-report-optimization-20260630/README.md) — 同类优化类复盘，沉淀了文件创建预检、Spec可发现性保障、双维度文档治理等模式，本任务的归档规范观察SOP是该类规范的延续和补充
 - [retrospective-minitest-ecosystem-learning-20260707](../retrospective-minitest-ecosystem-learning-20260707/README.md) — 同日其他分析任务复盘
 - 源任务spec目录：[analyze-ai-anthropomorphic-interim-measures](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) — 本次任务的Spec三件套（spec.md/tasks.md/checklist.md）
-- 核心分析报告：[2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) — 808行深度合规分析报告
+- 核心分析报告：[2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) — 808行深度合规分析报告

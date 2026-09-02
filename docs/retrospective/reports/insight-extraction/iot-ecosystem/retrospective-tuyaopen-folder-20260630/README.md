@@ -37,5 +37,5 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 
 ## 关联资产
 
-- [TuyaOpen 全面学习报告](../../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
+- [TuyaOpen 全面学习报告](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/tuya-iot/learning-reports/tuya-open-learning-report.md)
 - [复盘-洞察-导出闭环模式](../../../../patterns/methodology-patterns/retrospective-knowledge/review-insight-export-loop.md)

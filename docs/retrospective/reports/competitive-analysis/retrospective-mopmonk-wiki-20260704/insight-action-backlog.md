@@ -154,7 +154,7 @@ ssot:
 
 ## 已完成核心产出物
 
-- ✅ Wiki教程：[mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) 及7个原子章节（commit e343cd4f, 3bea7b68）
+- ✅ Wiki教程：mopmonk-security-agent-wiki.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） 及7个原子章节（commit e343cd4f, 3bea7b68）
 - ✅ 子代理验收清单模板
 - ✅ Wiki标准DoD完成定义
 - ✅ Wiki原子化结构模板目录

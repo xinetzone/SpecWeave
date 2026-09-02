@@ -46,7 +46,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 阶段五：Wiki内容创作（S4）
 1. **同类文档参考**：主动参考两个已有同类文档结构：
-   - [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) - wiki结构模板
+   - [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md) - wiki结构模板
    - [sunlogin-pdu-hardware-learning spec](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) - 向日葵产品分析参考
 2. **主文件创建**：创建`docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md`
    - 添加正确的YAML frontmatter（---分隔，title/source/date/tags）
@@ -155,7 +155,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主Wiki教程 | [sunlogin-smart-socket-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-smart-socket-wiki.md) | 958行 | 核心产出，16章完整教程 |
+| 主Wiki教程 | [sunlogin-smart-socket-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-smart-socket-wiki.md) | 958行 | 核心产出，16章完整教程 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - | learning分类新增条目 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个任务拆解 |

@@ -157,7 +157,7 @@ category: documentation
 
 - 完整方案：[spec.md](../../../../.trae/specs/deepseek-vision-blog-okf-wiki/spec.md)
 - 事实集：[facts.md](../../../../.trae/specs/deepseek-vision-blog-okf-wiki/facts.md)
-- 产出物：[vision-model-selection/index.md](../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/index.md)
+- 产出物：[vision-model-selection/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/deepseek/vision-model-selection/index.md)
 
 ### 逐步对照（案例1：技术选型类）
 
@@ -183,7 +183,7 @@ category: documentation
 | GLM-4.6V-Flash 免费 + FlashX 定价 | 智谱官方文档 + z.ai 定价页 | ✅ 通过，价格与博文完全一致 |
 | Doubao-Seed-2.0-mini 模态与价格 | 火山引擎官方价格文档 | ✅ 通过，含阶梯定价细节 F-036 |
 
-Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相关声明标注"仅博文单源"。核验详情见 [references/verification.md](../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/references/verification.md)。
+Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相关声明标注"仅博文单源"。核验详情见 [references/verification.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/deepseek/vision-model-selection/references/verification.md)。
 
 **步骤5 对照**（三层映射）：
 
@@ -203,7 +203,7 @@ Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相�
 3. 溯源补全：`concepts/01`、`concepts/02`、`examples/cost-scenario-walkthrough` 引用核验事实的子文档 frontmatter `sources` 补充官方核验信源
 4. 根 `index.md` 的 `verified` 升级为列表，追加本次审查事件
 
-修复后 `invoke gates.toctrees` 复核通过（无孤立文档、无断链）。完整审查记录见 [log.md](../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/log.md)。
+修复后 `invoke gates.toctrees` 复核通过（无孤立文档、无断链）。完整审查记录见 [log.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/deepseek/vision-model-selection/log.md)。
 
 ### 逐步对照（案例2：商业分析类，L2 验证）
 
@@ -211,7 +211,7 @@ Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相�
 
 - 完整方案：[spec.md](../../../../.trae/specs/bytedance-ai-consolidation-blog-okf-wiki/spec.md)
 - 事实集：[facts.md](../../../../.trae/specs/bytedance-ai-consolidation-blog-okf-wiki/facts.md)
-- 产出物：[bytedance-ai-consolidation/index.md](../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/index.md)
+- 产出物：[bytedance-ai-consolidation/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/trae/bytedance-ai-consolidation/index.md)
 
 **步骤1 对照**：公开博文 → 标准工作流。
 

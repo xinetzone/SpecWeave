@@ -80,7 +80,7 @@ stale_after: "2027-08-31"
 |------|------|
 | F-015 | 根 [index.md](../../../../index.md) toctree 收录 6 板块 + log；快速开始链接 `tech/concepts/intro.md`、`quickstart.md`、`features.md` 均实测存在 |
 | F-016 | [knowledge/index.md](../../../../knowledge/index.md) toctree 仅收录 5 项（ai-engineering/algorithmic-art/engineering/learning/log）；[knowledge/README.md](../../../../knowledge/README.md) 快速导航表列出 17 个顶层分类、总条目 1,288、标签 2,514，其中 unknown 分类 354 条（占 27.5%） |
-| F-017 | [learning/index.md](../../../../knowledge/learning/index.md) toctree 收录 19 项；`00-essence-and-thinking` 至 `10-foundational-knowledge` 共 10 个编号目录均不在 toctree 中（Select-String 逐项验证均为 False） |
+| F-017 | learning/index.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） toctree 收录 19 项；`00-essence-and-thinking` 至 `10-foundational-knowledge` 共 10 个编号目录均不在 toctree 中（Select-String 逐项验证均为 False） |
 | F-018 | [retrospective/index.md](../../../index.md) 引用的 4 个路径实测不存在（Test-Path=False）：`patterns/methodology-patterns/README.md`、`reports/milestone`、`reports/adversarial-review`、`reports/competitive-analysis`；实际结构为 `reports/concepts/<分类>/` 与 `patterns/methodology-patterns/index.md` |
 | F-019 | retrospective/index.md 引用的 `patterns/methodology-patterns/knowledge-compilation.md` 不存在；实际路径为 `patterns/methodology-patterns/concepts/knowledge-compilation.md` |
 | F-020 | 里程碑索引 [index.md](index.md) 报告列表表格 17 行，目录实际 21 份报告（toctree 21 条目，两者一致）；harness-engineering、octo-platform、agency-deep-learning、loop-engineering-patterns 4 份报告未登记于表格 |

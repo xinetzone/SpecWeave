@@ -42,7 +42,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 | [generate-knowledge-graph.py](../../../../../.agents/scripts/generate-knowledge-graph.py) | 修改 | 主生成脚本（含编辑功能+推荐算法，第一性原理专用） |
 | [knowledge_graph_core.py](../../../../../.agents/scripts/lib/knowledge_graph_core.py) | 修改 | 通用核心库（TOML配置驱动+推荐算法+编辑模板） |
 | [knowledge-graph-generic.html](../../../../../.agents/scripts/templates/knowledge-graph-generic.html) | 新增 | 通用HTML模板（含编辑模式UI） |
-| [12-knowledge-graph.html](../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html) | 生成 | 最终交付：77节点自包含可视化页面（127KB） |
+| [12-knowledge-graph.html](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) | 生成 | 最终交付：77节点自包含可视化页面（127KB） |
 | [knowledge-graph-config.toml](../../../../knowledge/best-practices/knowledge-graph-config.toml) | 新增 | 推广案例：best-practices知识图谱配置 |
 | [knowledge-graph.html](../../../../knowledge/best-practices/knowledge-graph.html) | 生成 | 推广案例：32节点最佳实践导航图谱（60KB，0孤立节点） |
 | tests/ | 测试 | 29个单元测试，全部通过 |

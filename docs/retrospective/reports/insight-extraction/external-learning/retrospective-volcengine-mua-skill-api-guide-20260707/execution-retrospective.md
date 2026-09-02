@@ -20,7 +20,7 @@ commit: 51901700
 
 ### 1.1 项目背景
 
-本次任务是在前置产出 [volcengine-mobile-use-agent-analysis.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobile-use-agent-analysis.md)（434行产品概览，commit 998120c7）的基础上，对火山引擎Mobile Use Agent进行**技术实现深度补充**。产品概览阶段解决了"MUA是什么、能做什么"的问题，本次任务聚焦"MUA的Skill包怎么用、API怎么调、如何部署、如何排障"的技术实现问题，形成"产品概览→技术实现指南"的双层文档结构。
+本次任务是在前置产出 [volcengine-mobile-use-agent-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobile-use-agent-analysis.md)（434行产品概览，commit 998120c7）的基础上，对火山引擎Mobile Use Agent进行**技术实现深度补充**。产品概览阶段解决了"MUA是什么、能做什么"的问题，本次任务聚焦"MUA的Skill包怎么用、API怎么调、如何部署、如何排障"的技术实现问题，形成"产品概览→技术实现指南"的双层文档结构。
 
 学习对象覆盖5个URL：ACEP指南、火山引擎文档中心总览、API文档2227834（RunAgentTaskOneStep）、MUA产品页、ClawHub Skill页面（byted-ai-mobileuse-agent）。
 
@@ -42,7 +42,7 @@ commit: 51901700
 | 验收清单 | [checklist.md](../../../../../../.trae/specs/standards-tools/establish-mermaid-management-system/checklist.md) | 已完成 | 47行（全部通过） |
 | 分析结果 | [analysis-result.md](../../../../../../.trae/specs/standards-tools/learn-volcengine-mobileuse-agent/analysis-result.md) | 已完成 | 578行 |
 | URL提取内容1-5 | extracted-content-1~5.md | 已完成 | 合计634行 |
-| 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-mobileuse-agent-skill-api-guide.md) | 已完成 | 917行 |
+| 技术实现指南 | [volcengine-mobileuse-agent-skill-api-guide.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-mobileuse-agent-skill-api-guide.md) | 已完成 | 917行 |
 | standards-tools看板更新 | [README.md](../../../../../../.trae/specs/standards-tools/README.md) | 已完成 | 12/16完成 |
 | 短指令模式更新 | [short-command-patterns.md](../../../../patterns/methodology-patterns/governance-strategy/short-command-patterns.md) | 已完成 | 验证轮次4→5 |
 | 复盘报告四件套 | 本目录 | 已完成 | 4个文件 |

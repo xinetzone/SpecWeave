@@ -165,19 +165,19 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| Wiki索引文件 | [sunlogin-offline-hardware-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 原子化Wiki入口，导航到11个章节文件 |
-| 章节00-产品概述 | [00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) | 产品线概览、品牌背景、学习目标 |
-| 章节01-核心技术 | [01-core-technology.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) | IPKVM、HDMI采集、USB-HID、多模网络技术解析 |
-| 章节02-控控2旗舰 | [02-product-kongkong2.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) | 控控2旗舰IPKVM产品详解 |
-| 章节03-Q1入门 | [03-product-q1.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) | Q1消费级入门（298元）产品详解 |
-| 章节04-Q2Pro工业 | [04-product-q2pro-ble.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) | Q2Pro工业级4G（1599元）产品详解 |
-| 章节05-Q0.5口袋 | [05-product-q0.5.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) | Q0.5口袋近场（158元）产品详解 |
-| 章节06-Q5Pro专业 | [06-product-q5pro.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) | Q5Pro专业级5G产品详解 |
-| 章节07-对比分析 | [07-comparison.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) | 33维度横向对比表、选型指南 |
-| 章节08-应用场景 | [08-scenarios.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) | 典型应用场景分析 |
-| 章节09-FAQ | [09-faq.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) | 常见问题解答 |
-| 章节10-资源 | [10-resources.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) | 相关资源链接 |
-| TOML元数据目录 | [sunlogin-offline-hardware-wiki/](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki.md) | 12个TOML元数据文件 |
+| Wiki索引文件 | [sunlogin-offline-hardware-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-offline-hardware-wiki.md) | 原子化Wiki入口，导航到11个章节文件 |
+| 章节00-产品概述 | [00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md) | 产品线概览、品牌背景、学习目标 |
+| 章节01-核心技术 | [01-core-technology.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/01-core-technology.md) | IPKVM、HDMI采集、USB-HID、多模网络技术解析 |
+| 章节02-控控2旗舰 | [02-product-kongkong2.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/02-product-kongkong2.md) | 控控2旗舰IPKVM产品详解 |
+| 章节03-Q1入门 | [03-product-q1.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/03-product-q1.md) | Q1消费级入门（298元）产品详解 |
+| 章节04-Q2Pro工业 | [04-product-q2pro-ble.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/04-product-q2pro-ble.md) | Q2Pro工业级4G（1599元）产品详解 |
+| 章节05-Q0.5口袋 | [05-product-q0.5.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/05-product-q0.5.md) | Q0.5口袋近场（158元）产品详解 |
+| 章节06-Q5Pro专业 | [06-product-q5pro.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/06-product-q5pro.md) | Q5Pro专业级5G产品详解 |
+| 章节07-对比分析 | [07-comparison.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md) | 33维度横向对比表、选型指南 |
+| 章节08-应用场景 | [08-scenarios.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/08-scenarios.md) | 典型应用场景分析 |
+| 章节09-FAQ | [09-faq.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/09-faq.md) | 常见问题解答 |
+| 章节10-资源 | [10-resources.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/10-resources.md) | 相关资源链接 |
+| TOML元数据目录 | [sunlogin-offline-hardware-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-offline-hardware-wiki.md) | 12个TOML元数据文件 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | learning分类新增条目（第103行） |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 8个原子任务（全部[x]完成） |
@@ -223,7 +223,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 - **Defuddle预检查流程**：defuddle-web-extraction-preferred已更新加入四步预检查法（URL可达→标题验证→重定向检测→完整度评估，commit bb1db001）
 
 ### 7.3 Wiki内容修订（P2）
-- **价格时效性标注**：[00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
+- **价格时效性标注**：[00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/00-overview.md)和[07-comparison.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/sunlogin-offline-hardware-wiki/07-comparison.md)所有价格标注"(2026-07-04采集)"日期，添加价格变动提示（commit d2b70097）
 - **模板索引更新**：[.agents/templates/README.md](../../../../templates/README.md)更新，新增multi-product-wiki-template和mdi-document-template条目（commit bb1db001）
 
 ### 7.4 问题预防措施落地

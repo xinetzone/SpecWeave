@@ -110,7 +110,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主教程文档 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 | 8个章节的完整wiki教程 |
+| 主教程文档 | [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md) | 308行 | 8个章节的完整wiki教程 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - | 更新索引，新增9行删除9行 |
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 任务目标与范围定义 |
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 任务步骤拆解 |

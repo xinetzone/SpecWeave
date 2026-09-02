@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "skill-knowledge-operation-separation"
-source: "../../../../../../docs/knowledge/learning/okf-bundles/chaos/ai-agent-skills/concepts/08-jira-skill-engineering.md#双技能拆分：操作与知识分离"
+source: "../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/ai-agent-skills/concepts/08-jira-skill-engineering.md#双技能拆分：操作与知识分离"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/skill-knowledge-operation-separation.toml"
 maturity: "L2"
 validation_count: 2

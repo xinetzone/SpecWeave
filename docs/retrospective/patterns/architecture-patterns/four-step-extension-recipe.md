@@ -4,7 +4,7 @@ id: "four-step-extension-recipe"
 source: "../../../knowledge/learning/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/four-step-extension-recipe.toml"
 ---
-> **提炼自**：[07-caffe-cpp-slim-tvm-ffi-modernization.md](../../../knowledge/learning/08-systems-infrastructure/caffe-architecture-wiki/07-caffe-cpp-slim-tvm-ffi-modernization.md) —— daoflows/caffe新算子扩展四步法
+> **提炼自**：[07-caffe-cpp-slim-tvm-ffi-modernization.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ml/caffe/concepts/07-caffe-cpp-slim-tvm-ffi-modernization.md) —— daoflows/caffe新算子扩展四步法
 
 # 扩展四步法模式（Four-Step Extension Recipe）
 

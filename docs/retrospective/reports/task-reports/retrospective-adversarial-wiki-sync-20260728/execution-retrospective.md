@@ -259,7 +259,7 @@ commits: ["20d79b8c", "a37a9a2f"]
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | 扫描脚本 | [scan-adversarial-wiki.py](../../../../../.agents/scripts/scan-adversarial-wiki.py) | 可复用wiki扫描工具 |
-| 更新后wiki | [adversarial-review-wiki/00-overview.md](../../../../knowledge/learning/02-agent-engineering-methodology/03-methodology/adversarial-review-wiki/README.md) | 五大角色体系 |
+| 更新后wiki | [adversarial-review-wiki/00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/methodology/adversarial-review-wiki/README.md) | 五大角色体系 |
 | L2模式 | [version-ripple-grep-sweep.md](../../../patterns/methodology-patterns/governance-strategy/version-ripple-grep-sweep.md) | 升级后的Grep清扫模式 |
 | Bugfix闭环记录 | [adversarial-attacker-roles-sync-fix.md](../../project-governance/documentation-governance/adversarial-attacker-roles-sync-fix.md) | 问题发现→修复→沉淀完整记录 |
 | 本执行复盘 | [execution-retrospective.md](execution-retrospective.md) | CMD-LOG补全+事实/分析/经验 |

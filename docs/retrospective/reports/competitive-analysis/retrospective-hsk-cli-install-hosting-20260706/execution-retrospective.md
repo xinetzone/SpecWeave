@@ -34,7 +34,7 @@ date: "2026-07-06"
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | 本文件 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | 5大核心洞察 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 行动项与知识库更新 |
-| HSK CLI Wiki | [hsk-cli-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/hsk-cli-wiki.md) | 待创建 |
+| HSK CLI Wiki | [hsk-cli-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/hsk-cli-wiki.md) | 待创建 |
 
 ## 三、成功因素
 

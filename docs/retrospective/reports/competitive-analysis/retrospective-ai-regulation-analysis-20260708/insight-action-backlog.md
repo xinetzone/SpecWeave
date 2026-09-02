@@ -221,7 +221,7 @@ ssot:
 
 ## 关联文档
 
-- [核心分析报告](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md)
+- [核心分析报告](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md)
 - **[极端情绪干预机制技术实施方案](../../../../knowledge/best-practices/ai-anthropomorphic-crisis-intervention-implementation.md)**（CMP-001行动项交付物）
 - [复盘入口README.md](README.md)
 - [执行过程复盘](execution-retrospective.md)

@@ -13,7 +13,7 @@ session: "sc-20260803-audiox-turbo-wiki"
 |------|------|------|
 | 复盘归档目录 | ✅ 已完成 | `.agents/docs/retrospective/reports/competitive-analysis/retrospective-audiox-turbo-wiki-20260803/` |
 | 目录结构 | ✅ 已完成 | README.md + execution-retrospective.md + insight-extraction.md + export-suggestions.md 标准四文件结构 |
-| Wiki主文档 | ✅ 已交付 | [audiox-turbo-audio-generation-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)（514行，11章节） |
+| Wiki主文档 | ✅ 已交付 | [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/audiox-turbo/index.md)（514行，11章节） |
 | TOML元数据 | ✅ 已存在 | 路径正确，字段一致 |
 | Spec三要素 | ✅ 合规 | `.trae/specs/`目录仅保留spec.md/tasks.md/checklist.md |
 | 错误位置文件清理 | ✅ 已完成 | 已删除spec目录下的seven-concepts-report.md和retrospective.md |

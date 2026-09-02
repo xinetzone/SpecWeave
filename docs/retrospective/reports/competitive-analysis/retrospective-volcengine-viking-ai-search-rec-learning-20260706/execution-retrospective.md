@@ -60,7 +60,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
    - 差异化特点与市场定位分析
    - 商业逻辑分析（低门槛获客、SaaS模式、中小企业友好）
    - 行业启示与趋势洞察
-4. **产出物保存**：将完整分析结果保存为 [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md)，共340行，12大章节
+4. **产出物保存**：将完整分析结果保存为 [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md)，共340行，12大章节
 
 ### 阶段六：验证与勾选
 
@@ -118,7 +118,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13 个任务 | 覆盖从提取到笔记整合全流程 |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20 个检查点 | 覆盖内容完整性、分析深度、格式规范 |
 | 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | - | WebFetch提取的原始网页内容 |
-| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340 行 | 12大章节完整产品分析笔记 |
+| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340 行 | 12大章节完整产品分析笔记 |
 
 ### 复盘报告产出物（本次闭环）
 

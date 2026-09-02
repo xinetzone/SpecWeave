@@ -16,7 +16,7 @@ summary: "技术接口概念Wiki教程创建任务复盘入口，包含事实-�
 > **复盘类型**：任务完成复盘
 > **复盘日期**：2026-07-03
 > **任务名称**：技术接口概念Wiki教程（Interface/API/ABI/Protocol）
-> **产出物位置**：[interface-api-abi-protocol-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.md)
+> **产出物位置**：[interface-api-abi-protocol-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/interface-api-abi/index.md)
 
 ## 📋 复盘文档
 
@@ -49,4 +49,4 @@ summary: "技术接口概念Wiki教程创建任务复盘入口，包含事实-�
 ## 🔗 关联产出物
 
 - **Spec目录**：[.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/](../../../../../.trae/specs/core-foundation/create-tech-interface-wiki-tutorial/spec.md)
-- **教程目录**：[docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.md)
+- **教程目录**：[docs/knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/interface-api-abi/index.md)

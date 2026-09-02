@@ -65,7 +65,7 @@ scenario: "B-single-day-medium"
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 11 章节结构 + 5 个 ADDED Requirements |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 12 个任务（含子任务） |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 8 类别约 30 个检查点 |
-| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行，11 章节完整 |
+| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/domestic-llm-comparison/index.md) | 321 行，11 章节完整 |
 | 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | 148 → 153 条目（自动生成） |
 
 **复盘报告**：

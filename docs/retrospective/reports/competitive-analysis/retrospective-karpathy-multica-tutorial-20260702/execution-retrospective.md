@@ -81,14 +81,14 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
-| 00-概述 | [00-overview.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~100 |
-| 01-四原则 | [01-four-principles.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~200 |
-| 02-代码示例 | [02-code-examples.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~250 |
-| 03-快速开始 | [03-quickstart.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~300 |
-| 04-SpecWeave整合 | [04-specweave-integration.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~120 |
-| 05-资源 | [05-resources.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~180 |
-| 06-Multica平台🆕 | [06-multica-platform.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~500 |
+| 主入口教程 | [karpathy-llm-coding-guidelines-tutorial.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines-tutorial.md) | ~80 |
+| 00-概述 | [00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~100 |
+| 01-四原则 | [01-four-principles.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~200 |
+| 02-代码示例 | [02-code-examples.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~250 |
+| 03-快速开始 | [03-quickstart.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~300 |
+| 04-SpecWeave整合 | [04-specweave-integration.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~120 |
+| 05-资源 | [05-resources.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~180 |
+| 06-Multica平台🆕 | [06-multica-platform.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~500 |
 | 规则整合文件 | [ai-coding-guidelines.md](../../../../../.agents/rules/ai-coding-guidelines.md) | ~150 |
 | **阶段一二小计** | **9个文件** | **~1880行** |
 
@@ -96,7 +96,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数约 |
 |--------|------|--------|
-| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~553（重构后） |
+| 07-multica-cli Skill（六层重构）🔄 | [07-multica-cli-skill.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/karpathy-llm-coding-guidelines/README.md) | ~553（重构后） |
 | Git UTF-8提交工具🆕 | [git-commit-utf8.py](../../../../../.agents/scripts/git-commit-utf8.py) | ~220 |
 | scripts/README更新🔄 | [scripts/README.md](README.md) | +30行 |
 | 教程认知阶梯模板🆕 | [tutorial-cognitive-ladder-template.md](../../../../../.agents/templates/tutorial-cognitive-ladder-template.md) | ~283 |

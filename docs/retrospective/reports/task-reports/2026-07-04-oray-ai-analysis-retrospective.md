@@ -34,7 +34,7 @@ tags: ["贝锐", "Oray", "AI产品矩阵", "项目复盘", "Spec Mode", "403问�
 | 任务规范文档 | [spec.md](../../../../.trae/specs/retrospectives-insights/oray-ai-product-matrix-analysis/spec.md) | 167行 | PRD格式需求文档，含Goals/FR/NFR/AC等完整章节 |
 | 实施计划文档 | [tasks.md](../../../../.trae/specs/retrospectives-insights/oray-ai-product-matrix-analysis/tasks.md) | 225行 | 14个任务，每个含Priority/Depends On/AC/Test Requirements |
 | 验证检查清单 | [checklist.md](../../../../.trae/specs/retrospectives-insights/oray-ai-product-matrix-analysis/checklist.md) | 30个检查点 | 覆盖文档完整性、内容质量、规范合规三类检查 |
-| 深度分析报告 | [oray-ai-product-matrix-analysis.md](../../../knowledge/learning/07-vendor-product-learning/sunlogin/oray-ai-product-matrix-analysis.md) | 1309行 | 15章完整分析报告，含Mermaid架构图 |
+| 深度分析报告 | [oray-ai-product-matrix-analysis.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/oray-ai-product-matrix-analysis.md) | 1309行 | 15章完整分析报告，含Mermaid架构图 |
 | 知识库索引更新 | [README.md](../../../knowledge/README.md) | - | learning分类新增条目，总条目231，learning分类129 |
 | 项目复盘报告 | 本文件 | - | 本次复盘产出，记录完整执行过程与经验沉淀 |
 

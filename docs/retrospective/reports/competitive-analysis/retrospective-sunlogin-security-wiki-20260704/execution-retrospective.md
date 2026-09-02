@@ -63,10 +63,10 @@ flowchart LR
 
 | 文件 | 路径 | 行数 | 说明 |
 |------|------|------|------|
-| 主Wiki教程 | [sunlogin-security-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-security-wiki.md) | 2249 | 10章完整教程 |
+| 主Wiki教程 | [sunlogin-security-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-security-wiki.md) | 2249 | 10章完整教程 |
 | TOML元数据 | `sunlogin-security-wiki.toml` | 7 | MDI规范配套元数据 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | 更新 | 条目230→231，learning 128→129 |
-| 向日葵聚合索引 | [sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | - | 8篇向日葵产品Wiki聚合页（行动项4） |
+| 向日葵聚合索引 | [sunlogin-product-series-index.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-product-series-index.md) | - | 8篇向日葵产品Wiki聚合页（行动项4） |
 
 ### 3.2 模式库产出（元复盘阶段）
 

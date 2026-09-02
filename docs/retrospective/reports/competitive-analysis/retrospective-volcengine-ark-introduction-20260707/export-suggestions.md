@@ -192,9 +192,9 @@ maturity: "L1-p0-p2-completed"
 
 | 资产类型 | 路径 | 规模 | 状态 |
 |---------|------|------|------|
-| 提取内容 | [volcengine-ark-introduction-extracted-content.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md) | 213行 | ✅ 已归档 |
-| 深度分析报告 | [volcengine-ark-introduction-analysis-report.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 1038行 | ✅ 已归档 |
-| 核心笔记 | [volcengine-ark-introduction-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md) | 281行 | ✅ 已归档 |
+| 提取内容 | [volcengine-ark-introduction-extracted-content.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-extracted-content.md) | 213行 | ✅ 已归档 |
+| 深度分析报告 | [volcengine-ark-introduction-analysis-report.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-analysis-report.md) | 1038行 | ✅ 已归档 |
+| 核心笔记 | [volcengine-ark-introduction-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-core-notes.md) | 281行 | ✅ 已归档 |
 | 执行复盘 | [execution-retrospective.md](execution-retrospective.md) | ~155行 | ✅ 已完成 |
 | 洞察萃取 | [insight-extraction.md](insight-extraction.md) | ~248行 | ✅ 已完成 |
 | 导出建议 | [export-suggestions.md](export-suggestions.md) | 本文件 | ✅ 已完成 |

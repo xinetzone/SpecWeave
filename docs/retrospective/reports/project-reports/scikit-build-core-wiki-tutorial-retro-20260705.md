@@ -177,7 +177,7 @@ Spec 模式 + 契约文档 + 并行 sub-agent 已成为本项目处理大型文�
 
 | 上一份报告 | 报告目录 | 相关文档 |
 |-----------|---------|---------|
-| [idl-wiki-tutorial-retro-20260704.md](idl-wiki-tutorial-retro-20260704.md) | [README.md](README.md) | [scikit-build-core Wiki 教程](../../../knowledge/learning/04-docs-markup-tooling/scikit-build-core-wiki/00-overview.md) |
+| [idl-wiki-tutorial-retro-20260704.md](idl-wiki-tutorial-retro-20260704.md) | [README.md](README.md) | [scikit-build-core Wiki 教程](../../../../projects/awesome-okf-xs/doc/bundles/jishu/build/scikit-build/index.md) |
 
 ## Changelog
 

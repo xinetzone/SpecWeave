@@ -57,7 +57,7 @@ ssot:
 ### IMP-004: SU1 Wiki frontmatter修复
 - **优先级**: -
 - **执行结果**: 移除sunlogin-camera-su1-wiki.md中不符合单文件wiki惯例的author/version字段，保持4字段标准（title/source/date/tags）
-- **产出物**: [sunlogin-camera-su1-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-camera-su1-wiki.md)
+- **产出物**: [sunlogin-camera-su1-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-camera-su1-wiki.md)
 
 ---
 

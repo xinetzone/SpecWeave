@@ -30,7 +30,7 @@ export_date: "2026-07-06"
 | Spec任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/tasks.md) | 13个任务覆盖全流程 |
 | Spec检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/checklist.md) | 20个检查点全部通过 |
 | 网页提取内容 | [web-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ai-search-rec/web-content.md) | WebFetch提取的原始网页内容 |
-| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../docs/knowledge/learning/07-vendor-product-learning/volcengine/viking-ai-search-rec-core-notes.md) | 340行，12大章节完整产品分析笔记 |
+| 结构化学习笔记 | [viking-ai-search-rec-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/viking-ai-search-rec-core-notes.md) | 340行，12大章节完整产品分析笔记 |
 | 源产品URL | https://www.volcengine.com/product/AI-Search-Rec | 火山引擎Viking AI搜索推荐产品官网 |
 
 ## 是否需要正式导出
@@ -91,7 +91,7 @@ export_date: "2026-07-06"
 - [retrospective-claude-code-context-injection-learning-20260704](../retrospective-claude-code-context-injection-learning-20260704/README.md) — 近期同类厂商产品学习任务
 - [retrospective-domestic-llm-comparison-learning-20260704](../retrospective-domestic-llm-comparison-learning-20260704/README.md) — 近期同类竞争分析学习任务
 - 源任务spec目录：`analyze-volcengine-ai-search-rec` — 本次任务的Spec三件套
-- 同系列学习笔记目录：[volcengine](../../../../knowledge/learning/07-vendor-product-learning/volcengine/README.md) — 火山引擎产品学习笔记目录
+- 同系列学习笔记目录：[volcengine](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/index.md) — 火山引擎产品学习笔记目录
 
 ## 知识沉淀闭环验证
 

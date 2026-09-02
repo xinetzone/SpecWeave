@@ -25,7 +25,7 @@ template_upgrade: "2026-07-06 v1.4（行业趋势模式提取：2个L1新建+1�
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 火山引擎豆包搜索（SearchInfinity）官方产品页 |
-| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) |
+| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) |
 | 文档规模 | ~1110 行，10 大章节，6+ 个 Mermaid 图表（v1.2 行业趋势模式沉淀） |
 | Spec 文件数 | 3 个（spec.md / tasks.md / checklist.md） |
 | Spec 任务数 | 12 个任务（全部分解完成） |
@@ -59,7 +59,7 @@ template_upgrade: "2026-07-06 v1.4（行业趋势模式提取：2个L1新建+1�
 
 | 文件 | 路径 | 行数/数量 |
 |------|------|-----------|
-| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-searchinfinity-analysis.md) | ~1094 行，10章 + 6 Mermaid + 六大模式 + 六大趋势（v1.1） |
+| 学习笔记终稿 | [volcengine-searchinfinity-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-searchinfinity-analysis.md) | ~1094 行，10章 + 6 Mermaid + 六大模式 + 六大趋势（v1.1） |
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/spec.md) | ~150 行，14个验收准则 |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/tasks.md) | ~275 行，12个任务 |
 | Spec 清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-searchinfinity/checklist.md) | ~50 个检查点 |

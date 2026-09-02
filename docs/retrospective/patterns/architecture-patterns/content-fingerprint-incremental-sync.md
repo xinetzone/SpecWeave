@@ -118,7 +118,7 @@ tags:
 
 ### 案例1：okf-kit v0.3.3 Markdown 内容 SHA256 增量同步（2026-08-18，主验证案例）
 
-**来源**：[okf-kit Wiki 七概念执行报告 · 洞察4](../../../knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L72-L76)
+**来源**：[okf-kit Wiki 七概念执行报告 · 洞察4](../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md#L72-L76)
 
 okf-kit 源码研读确认了「内容指纹增量同步」在真实爬虫同步场景中的落地：
 

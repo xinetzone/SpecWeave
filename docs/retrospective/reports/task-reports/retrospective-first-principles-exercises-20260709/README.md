@@ -13,7 +13,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 > **复盘日期**：2026-07-09
 > **任务类型**：task（知识内容创作）
 > **任务状态**：✅ 已完成
-> **核心交付**：[12-exercises.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-exercises.md)（2108行，43道分层练习题+3个综合案例）
+> **核心交付**：[12-exercises.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/12-exercises.md)（2108行，43道分层练习题+3个综合案例）
 > **核心发现**：内容创作型任务在spec阶段需明确"审慎边界"而非仅"数量指标"，批判性视角和审慎态度是知识型产出物的核心质量门
 
 ## 目录结构
@@ -32,7 +32,7 @@ retrospective-first-principles-exercises-20260709/
 
 ### 任务概述
 
-根据外部学习复盘的ACT-012建议，为第一性原理知识库创建思维训练题库。基于已有的 [08-methodology-framework.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md) 六步框架（问题定义→假设列举→拆解要素→质疑验证→重新构建→验证迭代），设计分层级练习题帮助读者刻意练习。
+根据外部学习复盘的ACT-012建议，为第一性原理知识库创建思维训练题库。基于已有的 [08-methodology-framework.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md) 六步框架（问题定义→假设列举→拆解要素→质疑验证→重新构建→验证迭代），设计分层级练习题帮助读者刻意练习。
 
 任务经历完整的 spec → 实施 → 验证 流程：
 
@@ -82,9 +82,9 @@ retrospective-first-principles-exercises-20260709/
 
 ## 关联资源
 
-- 主交付物：[12-exercises.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-exercises.md)
-- 方法论框架：[08-methodology-framework.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md)
-- 知识库导航：[first-principles/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+- 主交付物：[12-exercises.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/12-exercises.md)
+- 方法论框架：[08-methodology-framework.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md)
+- 知识库导航：[first-principles/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 - Spec文档：[create-first-principles-exercises/](../../../../../.trae/specs/core-foundation/create-first-principles-exercises/spec.md)
 - 任务来源：[export-suggestions.md](../../insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/export-suggestions.md)
 

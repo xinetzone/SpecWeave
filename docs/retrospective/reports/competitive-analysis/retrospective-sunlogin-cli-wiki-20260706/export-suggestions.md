@@ -36,9 +36,9 @@ date: "2026-07-06"
 ## 四、全量文件清单
 
 ### 4.1 Wiki文档
-- [sunlogin-cli-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-cli-wiki.md) — 新建，10章完整CLI教程
-- [sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) — 更新，补充8.2.2节
-- [sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) — 更新，Wiki总数+1
+- [sunlogin-cli-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-cli-wiki.md) — 新建，10章完整CLI教程
+- [sunlogin-comprehensive-analysis-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-comprehensive-analysis-wiki.md) — 更新，补充8.2.2节
+- [sunlogin-product-series-index.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-product-series-index.md) — 更新，Wiki总数+1
 
 ### 4.2 Spec文档
 - [spec.md](../../../../../.trae/specs/migration-archival/add-sunlogin-cli-wiki/spec.md) — PRD产品需求文档

@@ -106,7 +106,7 @@ ssot:
 | [exports/tuyaopen-dev-skills-report.md](exports/tuyaopen-dev-skills-report.md) | 可转发精简版报告（Markdown） |
 | [exports/tuyaopen-dev-skills-report.json](exports/tuyaopen-dev-skills-report.json) | 结构化摘要（JSON） |
 | [exports/manifest.txt](exports/manifest.txt) | 导出清单 |
-| [tuyaopen-dev-skills-learning.md](../../../../knowledge/learning/07-vendor-product-learning/tuya/tuyaopen-dev-skills-learning.md) | 源学习笔记 |
+| [tuyaopen-dev-skills-learning.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/tuya-iot/learning-reports/tuyaopen-dev-skills-learning.md) | 源学习笔记 |
 
 ## 执行记录
 

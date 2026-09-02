@@ -73,7 +73,7 @@ commit: 9231967f
 **洞察内容**：火山引擎CUA采用清晰的五层架构设计（用户接入层→控制面→多模态AI层→执行层→基础设施层），各层职责明确、解耦清晰，这种分层架构为高可用、可扩展、多模式接入提供了良好基础。五层架构中的"控制面"作为"大脑"协调各层，是区别于简单API封装的关键设计。
 
 **证据支撑**：
-- 本次分析产出了[五层技术架构图](../../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-computer-use-agent-analysis.md)
+- 本次分析产出了[五层技术架构图](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-computer-use-agent-analysis.md)
 - 各层职责明确，接口清晰，符合"关注点分离"的架构原则
 
 **五层架构详解**：

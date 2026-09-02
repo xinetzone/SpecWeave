@@ -37,7 +37,7 @@ x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-ext
 | PRD 文档 | [spec.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/spec.md) | ✅ 已完成 | 93 行 | 2026-07-04 |
 | 任务计划 | [tasks.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/tasks.md) | ✅ 已完成 | 33 行,4 个任务 + 12 个子任务 | 2026-07-04 |
 | 验收清单 | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/vibe-coding-prompts-learning-analysis/checklist.md) | ✅ 已完成 | 20 项检查点 | 2026-07-04 |
-| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | ~530 行(v1.2),11 章节 | 2026-07-10 |
+| 学习分析文档 | [vibe-coding-prompts-learning-analysis.md](../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/vibe-coding-prompts-learning-analysis.md) | ✅ 已完成 | ~530 行(v1.2),11 章节 | 2026-07-10 |
 | 知识库索引 | [README.md](../../../../../knowledge/README.md) | ✅ 已完成 | 自动更新(generate_index.py) | 2026-07-04 |
 | 复盘报告五件套 | 本目录 | ✅ 已完成 | 5 个文件 | 2026-07-08 |
 | 洞察原子文件 | [insights/](insights/README.md) | ✅ 已完成 | **11 个洞察原子文件**(4类) | 2026-07-13 |

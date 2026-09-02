@@ -70,7 +70,7 @@ timeline
 | Spec需求文档 | [.trae/specs/retrospectives-insights/analyze-volcengine-acep/spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-acep/spec.md) | 169行 | 12项功能需求、12项验收标准、Non-Goals/Constraints/Assumptions完整 |
 | 任务计划 | [.trae/specs/retrospectives-insights/analyze-volcengine-acep/tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-acep/tasks.md) | - | 10个优先级任务分解 |
 | 验证清单 | [.trae/specs/retrospectives-insights/analyze-volcengine-acep/checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-acep/checklist.md) | - | 9个维度验证要点 |
-| 结构化学习笔记 | [docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-acep-cloudphone-analysis.md) | 1076行/12章 | 产品概述、四大能力、四大优势、五大场景、架构、案例、UX分析、设计模式、行业启示、术语表 |
+| 结构化学习笔记 | [docs/knowledge/learning/07-vendor-product-learning/volcengine-acep-cloudphone-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-acep-cloudphone-analysis.md) | 1076行/12章 | 产品概述、四大能力、四大优势、五大场景、架构、案例、UX分析、设计模式、行业启示、术语表 |
 
 ### 2.4 量化结果数据
 

@@ -140,7 +140,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/project-reports/i
 
 | 上一份报告 | 报告目录 | 相关文档 |
 |-----------|---------|---------|
-| [dockerfile-optimization-retro-20260703.md](dockerfile-optimization-retro-20260703.md) | [README.md](README.md) | [IDL Wiki 教程](../../../knowledge/learning/01-agent-protocols-interfaces/idl-wiki/00-overview.md) |
+| [dockerfile-optimization-retro-20260703.md](dockerfile-optimization-retro-20260703.md) | [README.md](README.md) | [IDL Wiki 教程](../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/idl/concepts/00-overview.md) |
 
 ## Changelog
 

@@ -25,7 +25,7 @@ session_id: "sc-20260815-knowledge-catalog-wiki"
 | 指标 | 数值/说明 |
 |------|----------|
 | 学习对象 | vendor/knowledge-catalog（Google Cloud开源仓库，Apache 2.0许可） |
-| 产出物主目录 | [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md) |
+| 产出物主目录 | [knowledge-catalog-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) |
 | 文档数量 | 7个文件（1个入口README + 6篇章节教程） |
 | 总字数 | ~15,000字（中文） |
 | 核心概念覆盖 | OKF开放知识格式、Attested Computation、Reference Agent、mdcode/kcmd、Discovery/Enrichment Agent |
@@ -70,17 +70,17 @@ C（原子化提交/归档交付）
 
 ## 二、产出物文件清单
 
-Wiki教程已存放于学习目录 [knowledge-catalog-wiki/](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md)：
+Wiki教程已存放于学习目录 [knowledge-catalog-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md)：
 
 | 文件 | 路径 | 内容摘要 | 行数(约) |
 |------|------|----------|---------|
-| 入口导航 | [README.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md) | 学前准备、术语快速入门、7个关键结论、30分钟快速路径、2小时深度路径 | 150 |
-| 00 总览 | [00-overview.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/00-overview.md) | 产品定位、三层架构解析、OKF九大设计原则、仓库结构可视化、一页纸速查表、快速体验 | 220 |
-| 01 OKF规范 | [01-okf-spec.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/01-okf-spec.md) | Bundle结构、Frontmatter字段详解、来源信任生命周期、Trust Tier三层模型、Attested Computation完整机制、代码示例 | 380 |
-| 02 参考智能体 | [02-reference-agent.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/02-reference-agent.md) | Python实现架构、BQ/Web两阶段运行、CLI命令详解、可视化器功能、源码模块解析 | 240 |
-| 03 元数据即代码 | [03-metadata-as-code.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/03-metadata-as-code.md) | mdcode工具链、kcmd git式工作流（init/pull/push/status）、TypeScript库架构、MCP服务器、OKF-vs-mdcode对比 | 280 |
-| 04 示例智能体 | [04-samples.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/04-samples.md) | Discovery Agent语义搜索、Enrichment Agent元数据丰富管道、环境配置、端到端工作流、集成场景 | 230 |
-| 05 最佳实践 | [05-best-practices.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/05-best-practices.md) | 5大反模式、OKF编写检查清单（24项）、4种Agent集成模式、格式对比表、FAQ、术语速查表 | 370 |
+| 入口导航 | [README.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | 学前准备、术语快速入门、7个关键结论、30分钟快速路径、2小时深度路径 | 150 |
+| 00 总览 | [00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | 产品定位、三层架构解析、OKF九大设计原则、仓库结构可视化、一页纸速查表、快速体验 | 220 |
+| 01 OKF规范 | [01-okf-spec.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/references/okf-spec.md) | Bundle结构、Frontmatter字段详解、来源信任生命周期、Trust Tier三层模型、Attested Computation完整机制、代码示例 | 380 |
+| 02 参考智能体 | [02-reference-agent.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | Python实现架构、BQ/Web两阶段运行、CLI命令详解、可视化器功能、源码模块解析 | 240 |
+| 03 元数据即代码 | [03-metadata-as-code.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | mdcode工具链、kcmd git式工作流（init/pull/push/status）、TypeScript库架构、MCP服务器、OKF-vs-mdcode对比 | 280 |
+| 04 示例智能体 | [04-samples.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) | Discovery Agent语义搜索、Enrichment Agent元数据丰富管道、环境配置、端到端工作流、集成场景 | 230 |
+| 05 最佳实践 | [05-best-practices.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/viz/animejs-threejs-adapter/concepts/05-best-practices.md) | 5大反模式、OKF编写检查清单（24项）、4种Agent集成模式、格式对比表、FAQ、术语速查表 | 370 |
 
 ## 三、核心洞察与结论
 
@@ -114,4 +114,4 @@ Wiki教程已存放于学习目录 [knowledge-catalog-wiki/](../../../../knowled
 - [retrospective-audiox-turbo-wiki-20260803](../retrospective-audiox-turbo-wiki-20260803/README.md) — 单文件Wiki制作复盘
 - [retrospective-dspark-wiki-20260704](../retrospective-dspark-wiki-20260704/README.md) — 同类Wiki教程制作复盘
 - [retrospective-headroom-wiki-20260704](../retrospective-headroom-wiki-20260704/README.md) — 多文件原子化Wiki结构参考
-- [knowledge-catalog-wiki/README.md](../../../../knowledge/learning/07-vendor-product-learning/google-cloud/knowledge-catalog-wiki/README.md) — 本次任务核心产出物Wiki入口
+- [knowledge-catalog-wiki/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-spec/index.md) — 本次任务核心产出物Wiki入口

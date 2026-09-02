@@ -45,9 +45,9 @@ maturity: "L2-verified"
 | spec.md | - | [.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/spec.md) | PRD风格规范文档 |
 | tasks.md | - | [.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/tasks.md) | 9项任务清单 |
 | checklist.md | - | [.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-volcengine-ark-introduction/checklist.md) | 35项检查点 |
-| extracted-content.md | 213行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md) | 入门文档提取内容 |
-| analysis-report.md | 1038行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md) | 深度分析报告 |
-| core-notes.md | 281行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md) | 核心学习笔记 |
+| extracted-content.md | 213行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-extracted-content.md) | 入门文档提取内容 |
+| analysis-report.md | 1038行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-analysis-report.md) | 深度分析报告 |
+| core-notes.md | 281行 | [../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-core-notes.md) | 核心学习笔记 |
 | execution-retrospective.md | ~180行 | 本文件 | 执行复盘 |
 | insight-extraction.md | ~280行 | [insight-extraction.md](insight-extraction.md) | 洞察萃取 |
 | export-suggestions.md | ~140行 | [export-suggestions.md](export-suggestions.md) | 导出建议 |

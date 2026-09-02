@@ -177,9 +177,9 @@ report_type: retrospective
 
 ## 6. 关联资源
 
-- 主交付物：[12-exercises.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-exercises.md)
-- 方法论框架：[08-methodology-framework.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md)
-- 知识库导航：[first-principles/README.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+- 主交付物：[12-exercises.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/12-exercises.md)
+- 方法论框架：[08-methodology-framework.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md)
+- 知识库导航：[first-principles/README.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 - Spec文档：[create-first-principles-exercises/](../../../../../../.trae/specs/core-foundation/create-first-principles-exercises/spec.md)
 - 任务来源：[export-suggestions.md](../../../insight-extraction/external-learning/retrospective-first-principles-comprehensive-research-20260709/export-suggestions.md)
 - 复盘目录：[README.md](../README.md)

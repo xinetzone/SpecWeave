@@ -77,7 +77,7 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 ## 关联产出
 
 - 学习对象：[Vibe Coding 两大神级 Prompt（卡兹克）](https://mp.weixin.qq.com/s/umPqTD_-IubbhXIgiS47eQ?from=industrynews&color_scheme=light#rd)
-- 学习分析文档：[vibe-coding-prompts-learning-analysis.md](../../../../../../knowledge/learning/02-agent-engineering-methodology/02-prompt-coding/vibe-coding-prompts-learning-analysis.md)（416行，11章节）
+- 学习分析文档：[vibe-coding-prompts-learning-analysis.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/prompt-coding/vibe-coding-prompts-learning-analysis.md)（416行，11章节）
 - 执行复盘：[execution-retrospective.md](../execution-retrospective.md)
 - 导出建议：[export-suggestions.md](../export-suggestions.md)
 - 报告目录：[README.md](../README.md)

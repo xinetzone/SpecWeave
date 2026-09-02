@@ -118,7 +118,7 @@ tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 
 | 文档类型 | 路径 | 说明 |
 |---------|------|------|
-| **主分析Wiki** | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md) | 贝锐五大产品线综合分析，约32932字，12章节 |
+| **主分析Wiki** | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/oray/concepts/oray-comprehensive-analysis-wiki.md) | 贝锐五大产品线综合分析，约32932字，12章节 |
 | **本次复盘README** | [README.md](README.md) | 本复盘目录索引，基本信息和量化指标 |
 | **执行过程复盘** | [execution-retrospective.md](execution-retrospective.md) | 时间线、成功因素、问题分析、流程评估 |
 | **洞察萃取报告** | [insight-extraction.md](insight-extraction.md) | 四层漏斗萃取结果、11条洞察分类、3个检查清单 |
@@ -128,8 +128,8 @@ tags: ["改进建议", "行动计划", "知识复用", "模式更新"]
 
 | 文档 | 路径 | 说明 |
 |------|------|------|
-| 向日葵综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 向日葵单产品深度分析（约23000字），本次分析的基础 |
-| 向日葵产品系列索引 | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
+| 向日葵综合分析Wiki | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-comprehensive-analysis-wiki.md) | 向日葵单产品深度分析（约23000字），本次分析的基础 |
+| 向日葵产品系列索引 | [file:///d:/AI/docs/knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-product-series-index.md) | 向日葵全部分析文档导航 |
 | 向日葵综合分析复盘 | [file:///d:/AI/docs/retrospective/reports/competitive-analysis/retrospective-sunlogin-comprehensive-analysis-20260706/README.md](../retrospective-sunlogin-comprehensive-analysis-20260706/README.md) | 向日葵复盘，含6个模式入库记录 |
 
 ### 5.4 关联模式库文档

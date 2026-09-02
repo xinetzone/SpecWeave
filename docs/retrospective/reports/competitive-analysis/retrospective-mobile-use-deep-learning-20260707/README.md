@@ -22,7 +22,7 @@ maturity: "L1"
 | 产品需求文档 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 9项验收标准，8项功能需求 |
 | 实施计划 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 8个分解任务，全部完成 |
 | 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 80+验证点 |
-| 最终分析报告 | [mobile-use-deep-learning-analysis.md](../../../../knowledge/learning/03-agent-platforms-tools/mobile-use-deep-learning-analysis.md) | 13章节，12个架构洞察 |
+| 最终分析报告 | [mobile-use-deep-learning-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/mobile-use/index.md) | 13章节，12个架构洞察 |
 
 ### 核心发现
 

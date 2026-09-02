@@ -38,7 +38,7 @@ export_date: "2026-07-06"
 | Spec 定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/spec.md) | 11 章节结构 + 5 个 ADDED Requirements |
 | Spec 任务拆解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/tasks.md) | 12 个任务（含子任务）全部完成 |
 | Spec 检查清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/domestic-llm-comparison-learning-analysis/checklist.md) | 8 类别约 30 个检查点全部通过 |
-| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../../docs/knowledge/learning/06-business-trends-analysis/domestic-llm-comparison-notes.md) | 321 行，11 章节完整，含推荐矩阵、价格对比、术语表等 |
+| 学习笔记 | [domestic-llm-comparison-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/domestic-llm-comparison/index.md) | 321 行，11 章节完整，含推荐矩阵、价格对比、术语表等 |
 | 知识库索引 | [README.md](../../../../../docs/knowledge/README.md) | 148 → 153 条目（自动生成） |
 | 源文章 URL | https://mp.weixin.qq.com/s/WM3bIS42FPoiQgDw_SVrTA | 《丸美小沐：国产AI模型对比与使用场景推荐》 |
 

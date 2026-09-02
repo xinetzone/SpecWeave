@@ -12,7 +12,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 
 > **任务**：ACT-011 可视化知识图谱
 > **状态**：✅ 全部行动项已完成（IMP-001/002/003/004）
-> **核心交付**：[12-knowledge-graph.html](../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html)（77节点交互式知识图谱，支持关系编辑+孤立节点推荐）
+> **核心交付**：[12-knowledge-graph.html](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)（77节点交互式知识图谱，支持关系编辑+孤立节点推荐）
 > **推广成果**：[best-practices/knowledge-graph.html](../../../../knowledge/best-practices/knowledge-graph.html)（32节点最佳实践导航图谱，0孤立节点）
 > **核心成果**：沉淀5项可复用L2模式至模式库
 
@@ -28,7 +28,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 ## 关联资源
 
 - 生成脚本：[generate-knowledge-graph.py](../../../../../.agents/scripts/generate-knowledge-graph.py) / [knowledge_graph_core.py](../../../../../.agents/scripts/lib/knowledge_graph_core.py)
-- 知识库导航：[first-principles/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+- 知识库导航：[first-principles/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 - 推广案例：[best-practices/knowledge-graph-config.toml](../../../../knowledge/best-practices/knowledge-graph-config.toml) / [best-practices/knowledge-graph.html](../../../../knowledge/best-practices/knowledge-graph.html)
 - Spec文档：[generate-first-principles-knowledge-graph/](../../../../../.trae/specs/standards-tools/generate-first-principles-knowledge-graph/spec.md)
 

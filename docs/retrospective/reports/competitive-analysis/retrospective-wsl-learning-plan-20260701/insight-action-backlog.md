@@ -34,7 +34,7 @@ ssot:
 ### ACT-001: 提交整合后的WSL学习计划报告
 - **优先级**: 高
 - **执行结果**: WSL学习计划通过整合wsl.dev开发者文档与learn.microsoft.com用户文档完成升级，提交哈希d34d8f4
-- **产出物**: [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md)
+- **产出物**: [wsl-learning-plan.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/systems/wsl/concepts/wsl-learning-plan.md)
 - **提交**: commit d34d8f4
 
 ---
@@ -90,7 +90,7 @@ ssot:
 ### ACT-008: 补充抓取wsl.dev的C#/C++ API子页面
 - **优先级**: 低
 - **执行结果**: 待执行
-- **产出物**: [wsl-learning-plan.md](../../../../knowledge/learning/08-systems-infrastructure/wsl-learning-plan.md)（补充更新）
+- **产出物**: [wsl-learning-plan.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/systems/wsl/concepts/wsl-learning-plan.md)（补充更新）
 - **具体措施**: 下次学习WSL时补充抓取C#/C++ API子页面，补全完整API清单
 
 ---

@@ -25,7 +25,7 @@ completed_date: "2026-07-06"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号卢松松博客文章《Papi酱把公司全关了，只留七个人》 |
-| 产出物主文档 | [papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md)（39行索引+9原子文件633行=672行） |
+| 产出物主文档 | [papi-jiang-solo-ip-trend-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md)（39行索引+9原子文件633行=672行） |
 | 原子章节数 | 9个（00-overview ~ 08-resources） |
 | TOML元数据文件 | 10个（索引页+9原子文件） |
 | Spec文件数 | 3个（spec.md 129行 / tasks.md 227行 / checklist.md 54行 = 410行） |
@@ -53,18 +53,18 @@ completed_date: "2026-07-06"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 主教程索引 | [papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | 39行 |
-| 00-概述 | [00-overview.md](../../../../knowledge/learning/06-business-trends-analysis/ai-monetization-wiki/00-overview.md) | 62行 |
-| 01-案例全景 | [01-case-timeline.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/01-case-timeline.md) | 62行 |
-| 02-核心观点 | [02-core-viewpoints.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/02-core-viewpoints.md) | 65行 |
-| 03-行业观察 | [03-industry-trend.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/03-industry-trend.md) | 80行 |
-| 04-模式对比 | [04-model-comparison.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/04-model-comparison.md) | 104行 |
-| 05-创业启示 | [05-entrepreneurship-insights.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/05-entrepreneurship-insights.md) | 94行 |
-| 06-总结 | [06-summary.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/06-summary.md) | 46行 |
-| 07-FAQ | [07-faq.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/07-faq.md) | 64行 |
-| 08-资源链接 | [08-resources.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki/08-resources.md) | 56行 |
+| 主教程索引 | [papi-jiang-solo-ip-trend-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md) | 39行 |
+| 00-概述 | [00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-monetization/concepts/00-overview.md) | 62行 |
+| 01-案例全景 | [01-case-timeline.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/01-case-timeline.md) | 62行 |
+| 02-核心观点 | [02-core-viewpoints.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/02-core-viewpoints.md) | 65行 |
+| 03-行业观察 | [03-industry-trend.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/03-industry-trend.md) | 80行 |
+| 04-模式对比 | [04-model-comparison.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/04-model-comparison.md) | 104行 |
+| 05-创业启示 | [05-entrepreneurship-insights.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/05-entrepreneurship-insights.md) | 94行 |
+| 06-总结 | [06-summary.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/06-summary.md) | 46行 |
+| 07-FAQ | [07-faq.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/07-faq.md) | 64行 |
+| 08-资源链接 | [08-resources.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/concepts/08-resources.md) | 56行 |
 | 知识库索引 | [README.md](../../insight-extraction/iot-ecosystem/retrospective-tuyaopen-analysis-20260630/knowledge/README.md) | 更新分类 |
-| TOML元数据（10个） | [.meta/toml/.../papi-jiang-solo-ip-trend-wiki/](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) | - |
+| TOML元数据（10个） | [.meta/toml/.../papi-jiang-solo-ip-trend-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md) | - |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | 129行 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | 227行 |
 | Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | 54行 |
@@ -83,4 +83,4 @@ completed_date: "2026-07-06"
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 沉淀wiki-spec-template和四层漏斗模式的基准复盘
 - [retrospective-claude-tag-article-learning-20260629](../retrospective-claude-tag-article-learning-20260629/README.md) — 早期微信公众号文章学习wiki先例
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 教程认知阶梯六层模式
-- [papi-jiang-solo-ip-trend-wiki.md](../../../../knowledge/learning/06-business-trends-analysis/papi-jiang-solo-ip-trend-wiki.md) — 本次任务的核心产出物wiki教程
+- [papi-jiang-solo-ip-trend-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/papi-jiang-solo-ip/index.md) — 本次任务的核心产出物wiki教程

@@ -39,7 +39,7 @@ export_date: "2026-07-28"
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/i-have-adhd-wiki-tutorial/spec.md) | Wiki教程PRD |
-| Wiki教程目录 | [i-have-adhd-wiki/README.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/i-have-adhd-wiki/README.md) | 11章节/2982行/72KB完整中文Wiki |
+| Wiki教程目录 | [i-have-adhd-wiki/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 11章节/2982行/72KB完整中文Wiki |
 | 领域模式 | Wiki内Pattern-COG/CPA/ABT章节 | 认知原理驱动/跨平台适配/A/B测试验证3个领域模式 |
 | 委派模式增强 | [medium-task-merged-delegation-strategy.md](../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | 主题簇合并委派（L2，3次验证） |
 | 导航模式升级 | [navigation-hub-filename-contract.md](../../../patterns/methodology-patterns/ai-collaboration/navigation-hub-filename-contract.md) | 两阶段索引维护（L1→L2升级） |

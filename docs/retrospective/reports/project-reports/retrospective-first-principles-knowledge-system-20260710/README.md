@@ -213,14 +213,14 @@ retrospective-first-principles-knowledge-system-20260710/
 
 ### 知识体系本体
 
-- 📚 **第一性原理知识体系README** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
-- 🧪 **对抗性审查协议** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md)
-- 🧠 **认知科学基础** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md)
-- 🤖 **AI时代应用** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.md)
-- 🔬 **跨学科案例库** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/README.md)
-- ⚠️ **边界条件研究** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/16-boundary-conditions.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/16-boundary-conditions.md)
-- 🕸️ **交互式知识图谱** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html](../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html)
-- 📝 **思维训练题库** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/exercises/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/exercises/README.md)
+- 📚 **第一性原理知识体系README** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
+- 🧪 **对抗性审查协议** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/00-adversarial-review-protocol.md)
+- 🧠 **认知科学基础** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/13-cognitive-science-foundations.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/13-cognitive-science-foundations.md)
+- 🤖 **AI时代应用** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/14-first-principles-in-ai-era.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/14-first-principles-in-ai-era.md)
+- 🔬 **跨学科案例库** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/15-cross-domain-cases/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
+- ⚠️ **边界条件研究** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/16-boundary-conditions.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/16-boundary-conditions.md)
+- 🕸️ **交互式知识图谱** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/12-knowledge-graph.html](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
+- 📝 **思维训练题库** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/exercises/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 
 ### 阶段性复盘报告
 
@@ -251,7 +251,7 @@ retrospective-first-principles-knowledge-system-20260710/
 
 - 📊 **想看完整执行过程、时间线和问题分析** → [execution-retrospective.md](execution-retrospective.md)
 - 💡 **想看10条关键洞察、改进建议和模式沉淀建议** → [insight-extraction.md](insight-extraction.md)
-- 📚 **回到第一性原理知识体系本体** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md](../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+- 📚 **回到第一性原理知识体系本体** → [../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 - 🧬 **想看递归践行定律（L3成熟模式）** → [../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md](../../../patterns/methodology-patterns/governance-strategy/practice-gap-recursive-practice.md)
 
 ---

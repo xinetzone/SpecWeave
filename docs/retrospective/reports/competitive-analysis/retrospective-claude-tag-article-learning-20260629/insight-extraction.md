@@ -150,7 +150,7 @@ flowchart TD
 
 ## 关联资源
 
-- [学习笔记](../../../../knowledge/learning/03-agent-platforms-tools/claude-tag-article.md) — 源知识条目
+- [学习笔记](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/anthropic/claude-tag/index.md) — 源知识条目
 - [执行复盘](execution-retrospective.md) — 任务执行过程与时间线
 - [导出建议](export-suggestions.md) — 改进项与可萃取模式
 - [方法论模式库](../../../patterns/methodology-patterns/README.md) — 可复用模式总索引

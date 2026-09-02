@@ -213,7 +213,7 @@ date: "2026-07-08"
 
 | 文件 | 路径 | 规模 |
 |------|------|------|
-| 结构化合规分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../knowledge/learning/06-business-trends-analysis/2026-07-08-ai-anthropomorphic-interim-measures-analysis.md) | 808行/25634字符，68个标题，309行表格 |
+| 结构化合规分析报告 | [2026-07-08-ai-anthropomorphic-interim-measures-analysis.md](../../../../../projects/awesome-okf-xs/doc/bundles/sheke/industry/ai-anthropomorphic-analysis/index.md) | 808行/25634字符，68个标题，309行表格 |
 
 **报告核心模块**：
 - 五部门职责分工表

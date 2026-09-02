@@ -136,7 +136,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 | 说明 |
 |--------|------|------|------|
-| 主Wiki教程 | [sunlogin-pdu-hardware-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-pdu-hardware-wiki.md) | 1001行 | 核心产出，13章48子章节完整教程+深度洞察 |
+| 主Wiki教程 | [sunlogin-pdu-hardware-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-pdu-hardware-wiki.md) | 1001行 | 核心产出，13章48子章节完整教程+深度洞察 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | - | 总条目228→229，learning分类127→128 |
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - | 产品需求文档 |
 | Spec任务清单 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - | 15个原子任务拆解 |

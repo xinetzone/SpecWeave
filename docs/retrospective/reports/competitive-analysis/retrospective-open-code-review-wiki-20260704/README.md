@@ -24,7 +24,7 @@ retro_type: "task"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号文章《阿里开源 AI 代码评审工具 Open Code Review》（https://mp.weixin.qq.com/s/WSicyyMEIXnNVDoWuz0jrw） |
-| 产出物主文档 | [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) |
+| 产出物主文档 | [open-code-review-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/open-code-review/index.md) |
 | 原子化文件 | 11个原子文件（00-overview.md ~ 10-resources.md，共1001行） |
 | 索引页 | 34行（含完整目录导航表） |
 | TOML元数据 | 11个TOML元数据文件 |
@@ -51,18 +51,18 @@ retro_type: "task"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 索引页 | [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) | 34 |
-| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 45 |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 66 |
-| 安装配置 | [02-installation.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 54 |
-| 使用流程 | [03-usage.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 103 |
-| 关键优化 | [04-optimizations.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 133 |
-| 集成用法 | [05-integrations.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 95 |
-| 效果验证 | [06-effectiveness.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 97 |
-| 局限性 | [07-limitations.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 98 |
-| 总结 | [08-summary.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 89 |
-| FAQ | [09-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 148 |
-| 资源 | [10-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/03-code-devtools/open-code-review-wiki/README.md) | 73 |
+| 索引页 | [open-code-review-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/open-code-review/index.md) | 34 |
+| 概述 | [00-overview.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 45 |
+| 核心概念 | [01-core-concepts.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 66 |
+| 安装配置 | [02-installation.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 54 |
+| 使用流程 | [03-usage.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 103 |
+| 关键优化 | [04-optimizations.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 133 |
+| 集成用法 | [05-integrations.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 95 |
+| 效果验证 | [06-effectiveness.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 97 |
+| 局限性 | [07-limitations.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 98 |
+| 总结 | [08-summary.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 89 |
+| FAQ | [09-faq.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 148 |
+| 资源 | [10-resources.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 73 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/tasks.md) | - |
 | Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-ai-anthropomorphic-interim-measures/checklist.md) | - |
@@ -75,4 +75,4 @@ retro_type: "task"
 - [retrospective-mopmonk-wiki-20260704](../retrospective-mopmonk-wiki-20260704/README.md) — 同日早些时候的同类 wiki 教程制作复盘，本次任务应用了其沉淀的"Spec阶段前置原子化决策"改进建议
 - [retrospective-text-to-cad-learning-20260704](../retrospective-text-to-cad-learning-20260704/README.md) — 同类 wiki 教程制作复盘
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
-- [open-code-review-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/open-code-review-wiki.md) — 本次任务的核心产出物 wiki 教程索引页
+- [open-code-review-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/open-code-review/index.md) — 本次任务的核心产出物 wiki 教程索引页

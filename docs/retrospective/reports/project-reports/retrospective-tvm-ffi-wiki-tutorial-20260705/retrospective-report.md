@@ -151,6 +151,6 @@ spec 说"至少 10 个原子化章节"，实际交付 16 个章节 + README。�
 ## 五、关联资源
 
 - [spec:create-tvm-ffi-wiki-tutorial](../../../../../.trae/specs/standards-tools/create-tvm-ffi-wiki-tutorial/spec.md)
-- [TVM FFI Wiki 教程](../../../../../docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/README.md)
+- [TVM FFI Wiki 教程](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/tvm-ffi/index.md)
 - [cross-wiki-reference-directory-first 模式](../../../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/cross-wiki-reference-directory-first.md)
 - [ffi-wiki 复盘报告](../retrospective-ffi-wiki-tutorial-20260705/retrospective-report.md)

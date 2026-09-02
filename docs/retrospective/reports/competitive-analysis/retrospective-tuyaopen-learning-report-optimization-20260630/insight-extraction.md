@@ -37,7 +37,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联资源
 
-- [学习笔记](../../../../knowledge/learning/07-vendor-product-learning/tuya/tuya-open-learning-report.md)
+- [学习笔记](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/tuya-iot/learning-reports/tuya-open-learning-report.md)
 - [执行复盘](execution-retrospective.md)
 - [导出建议](export-suggestions.md)
 - [方法论模式库](../../../patterns/methodology-patterns/README.md)

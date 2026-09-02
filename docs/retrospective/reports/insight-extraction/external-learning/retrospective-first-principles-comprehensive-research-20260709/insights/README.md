@@ -57,10 +57,10 @@ x-toml-ref: "../../../../../../../.meta/toml/docs/retrospective/reports/insight-
 | 洞察 | 支撑数据 | 数据来源文件 |
 |------|---------|-------------|
 | 质量内建 | 0返工（同类项目15-30%返工率） | 执行过程记录 |
-| 来源分级 | 77.3%一级来源，80%审查时间集中在20%内容 | [10-source-validation-log.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |
-| 偏差防御 | 主动识别并补充马斯克争议案例 | [03-business-innovation-cases.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/03-business-innovation-cases.md) |
-| 语义漂移 | 术语表含12个核心概念跨领域定义，占15%总时间 | [06-concepts-glossary.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/06-concepts-glossary.md) |
-| 可审计性 | 12项关键事实完整记录验证过程 | [10-source-validation-log.md](../../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |
+| 来源分级 | 77.3%一级来源，80%审查时间集中在20%内容 | [10-source-validation-log.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) |
+| 偏差防御 | 主动识别并补充马斯克争议案例 | [03-business-innovation-cases.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/03-business-innovation-cases.md) |
+| 语义漂移 | 术语表含12个核心概念跨领域定义，占15%总时间 | [06-concepts-glossary.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/06-concepts-glossary.md) |
+| 可审计性 | 12项关键事实完整记录验证过程 | [10-source-validation-log.md](../../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) |
 
 ---
 *数据来源：第一性原理知识档案（12文件/4869行/87来源，77.3%一级来源/78.5% A级可信度）*

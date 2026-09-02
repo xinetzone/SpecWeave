@@ -16,7 +16,7 @@ summary: "TVM FFI跨语言FFI框架Wiki教程创建任务复盘，在基础设�
 > **复盘类型**：任务完成复盘
 > **复盘日期**：2026-07-05
 > **任务名称**：Apache TVM FFI 跨语言FFI框架Wiki教程
-> **产出物位置**：[tvm-ffi-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/README.md)
+> **产出物位置**：[tvm-ffi-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/tvm-ffi/index.md)
 
 ## 📋 复盘文档
 
@@ -52,5 +52,5 @@ summary: "TVM FFI跨语言FFI框架Wiki教程创建任务复盘，在基础设�
 ## 🔗 关联产出物
 
 - **Spec目录**：[.trae/specs/standards-tools/create-tvm-ffi-wiki-tutorial/](../../../../../.trae/specs/standards-tools/create-tvm-ffi-wiki-tutorial/spec.md)
-- **教程目录**：[docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/README.md)
-- **相关教程**：[interface-api-abi-protocol-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/interface-api-abi-protocol-wiki/README.md)、[idl-wiki/](../../../../knowledge/learning/01-agent-protocols-interfaces/idl-wiki/README.md)
+- **教程目录**：[docs/knowledge/learning/01-agent-protocols-interfaces/tvm-ffi-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/tvm-ffi/index.md)
+- **相关教程**：[interface-api-abi-protocol-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/interface-api-abi/index.md)、[idl-wiki/](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/comm/idl/index.md)

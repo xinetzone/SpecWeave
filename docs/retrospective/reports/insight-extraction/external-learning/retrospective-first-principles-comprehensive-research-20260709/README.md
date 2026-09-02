@@ -51,11 +51,11 @@ retrospective-first-principles-comprehensive-research-20260709/
 |------|------|---------|
 | 知识档案核心文件 | 12个 | `Get-ChildItem` 统计（00-10系列+README） |
 | Spec管理文档 | 3个 | `Get-ChildItem` 统计（初版） |
-| 引用来源总数 | 87个 | [first-principles/README.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md) |
+| 引用来源总数 | 87个 | [first-principles/README.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) |
 | 代码/文档行数 | 4869行 | `Get-Content | Measure-Object -Line` |
 | Git里程碑提交 | 4个关键提交 | `git log --oneline` |
-| 一级来源占比 | 77.3% | [10-source-validation-log.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |
-| A级可信度占比 | 78.5% | [10-source-validation-log.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) |
+| 一级来源占比 | 77.3% | [10-source-validation-log.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) |
+| A级可信度占比 | 78.5% | [10-source-validation-log.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) |
 | 跨验证关键事实 | 12项 | 来源验证日志 |
 | 识别认知偏差 | 5类 | 对抗性审查协议 |
 | 检查点通过率 | 100% (76/76) | [checklist.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/checklist.md) |
@@ -82,18 +82,18 @@ retrospective-first-principles-comprehensive-research-20260709/
 
 | 类别 | 文件 | 说明 |
 |------|------|------|
-| 对抗性审查协议 | [00-adversarial-review-protocol.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/00-adversarial-review-protocol.md) | 来源分级、可信度评分、五维验证、偏差识别标准 |
-| 哲学起源 | [01-philosophy-origins.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/01-philosophy-origins.md) | 亚里士多德→笛卡尔→康德的发展脉络 |
-| 物理学应用 | [02-physics-applications.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/02-physics-applications.md) | 经典物理、费曼方法论、密度泛函理论 |
-| 商业案例 | [03-business-innovation-cases.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/03-business-innovation-cases.md) | SpaceX/Tesla、芒格、贝索斯等案例 |
-| 学者论述 | [04-key-thinkers-quotes.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/04-key-thinkers-quotes.md) | 7位学者24条原文引述 |
-| 学术资源 | [05-academic-resources.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/05-academic-resources.md) | 期刊、著作、课程索引 |
-| 术语表 | [06-concepts-glossary.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/06-concepts-glossary.md) | 统一跨领域术语定义 |
-| 时间线 | [07-timeline.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/07-timeline.md) | 2300年发展时间轴 |
-| 方法论框架 | [08-methodology-framework.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/08-methodology-framework.md) | 6步实操流程+28项检查清单 |
-| 延伸阅读 | [09-further-reading.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/09-further-reading.md) | 分级阅读推荐 |
-| 来源验证日志 | [10-source-validation-log.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/10-source-validation-log.md) | 完整审查过程记录 |
-| 档案首页 | [README.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md) | 导航入口+阅读路径 |
+| 对抗性审查协议 | [00-adversarial-review-protocol.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/00-adversarial-review-protocol.md) | 来源分级、可信度评分、五维验证、偏差识别标准 |
+| 哲学起源 | [01-philosophy-origins.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/01-philosophy-origins.md) | 亚里士多德→笛卡尔→康德的发展脉络 |
+| 物理学应用 | [02-physics-applications.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/02-physics-applications.md) | 经典物理、费曼方法论、密度泛函理论 |
+| 商业案例 | [03-business-innovation-cases.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/03-business-innovation-cases.md) | SpaceX/Tesla、芒格、贝索斯等案例 |
+| 学者论述 | [04-key-thinkers-quotes.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/04-key-thinkers-quotes.md) | 7位学者24条原文引述 |
+| 学术资源 | [05-academic-resources.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/05-academic-resources.md) | 期刊、著作、课程索引 |
+| 术语表 | [06-concepts-glossary.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/06-concepts-glossary.md) | 统一跨领域术语定义 |
+| 时间线 | [07-timeline.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/07-timeline.md) | 2300年发展时间轴 |
+| 方法论框架 | [08-methodology-framework.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/08-methodology-framework.md) | 6步实操流程+28项检查清单 |
+| 延伸阅读 | [09-further-reading.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/09-further-reading.md) | 分级阅读推荐 |
+| 来源验证日志 | [10-source-validation-log.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/concepts/10-source-validation-log.md) | 完整审查过程记录 |
+| 档案首页 | [README.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md) | 导航入口+阅读路径 |
 
 ## 报告概览
 
@@ -106,7 +106,7 @@ retrospective-first-principles-comprehensive-research-20260709/
 
 ## 关联资源
 
-- 知识档案首页: [first-principles/README.md](../../../../../knowledge/learning/00-essence-and-thinking/first-principles/README.md)
+- 知识档案首页: [first-principles/README.md](../../../../../../projects/awesome-okf-xs/doc/bundles/zhexue/methodology/first-principles/index.md)
 - 第一性原理指令集: [first-principles.md](../../../../../../.agents/commands/first-principles.md)（6步执行流程+RACI矩阵+知识库关联）
 - 项目Spec文档: [spec.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/spec.md)
 - 任务分解: [tasks.md](../../../../../../.trae/specs/retrospectives-insights/first-principles-comprehensive-research/tasks.md)

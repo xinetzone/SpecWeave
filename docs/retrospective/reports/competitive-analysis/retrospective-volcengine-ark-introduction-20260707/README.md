@@ -18,7 +18,7 @@ maturity: "L2-verified"
 | **复盘时间** | 2026-07-07 |
 | **复盘类型** | task（单任务复盘） |
 | **任务入口** | `/spec https://console.volcengine.com/ark/region:cn-beijing/docs/82379/1099455?lang=zh` |
-| **最终产出** | [volcengine-ark-introduction-analysis-report.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-analysis-report.md)（1038行深度分析报告）、[volcengine-ark-introduction-extracted-content.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-extracted-content.md)（213行原始内容提取）、[volcengine-ark-introduction-core-notes.md](../../../../knowledge/learning/07-vendor-product-learning/volcengine/volcengine-ark-introduction-core-notes.md)（281行核心笔记） |
+| **最终产出** | [volcengine-ark-introduction-analysis-report.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-analysis-report.md)（1038行深度分析报告）、[volcengine-ark-introduction-extracted-content.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-extracted-content.md)（213行原始内容提取）、[volcengine-ark-introduction-core-notes.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/volcengine/concepts/volcengine-ark-introduction-core-notes.md)（281行核心笔记） |
 
 ## 文件索引
 

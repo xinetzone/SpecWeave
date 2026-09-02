@@ -23,7 +23,7 @@ scenario: "knowledge-precipitation"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号文章《4步出结果！AudioX-Turbo：极速音频生成》（https://mp.weixin.qq.com/s/AO5lEK9AV5r-ePVqAlK61w） |
-| 产出物主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md)（514行，11章节） |
+| 产出物主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/audiox-turbo/index.md)（514行，11章节） |
 | TOML元数据 | 存在且内容正确 |
 | Spec文件数 | 3个（spec.md / tasks.md / checklist.md） |
 | 工作流模式 | Spec Mode（规划→实施→验证）+ 七概念知识沉淀 |
@@ -46,8 +46,8 @@ scenario: "knowledge-precipitation"
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) | 514行，11章节完整学习教程 |
-| TOML元数据 | [audiox-turbo-audio-generation-wiki.toml](../../../../../../docs/knowledge/learning/audiox-turbo-audio-generation-wiki.toml) | 元数据文件 |
+| 主文档 | [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/audiox-turbo/index.md) | 514行，11章节完整学习教程 |
+| TOML元数据 | audiox-turbo-audio-generation-wiki.toml | 元数据文件（原 learning 目录 toml 已随板块迁移移除） |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/spec.md) | 需求规格文档 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/tasks.md) | 任务分解 |
 | Spec清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/audiox-turbo-learning-analysis/checklist.md) | 验收清单（30项） |
@@ -59,4 +59,4 @@ scenario: "knowledge-precipitation"
 
 - [retrospective-dspark-wiki-20260704](../retrospective-dspark-wiki-20260704/README.md) — 同类Wiki教程制作复盘，沉淀了工具降级策略、子代理格式质量门等经验
 - [retrospective-headroom-wiki-20260704](../retrospective-headroom-wiki-20260704/README.md) — 同类Wiki教程制作复盘，采用原子化分文件组织方式
-- [audiox-turbo-audio-generation-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/audiox-turbo-audio-generation-wiki.md) — 本次任务的核心产出物Wiki文档
+- [audiox-turbo-audio-generation-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/audiox-turbo/index.md) — 本次任务的核心产出物Wiki文档

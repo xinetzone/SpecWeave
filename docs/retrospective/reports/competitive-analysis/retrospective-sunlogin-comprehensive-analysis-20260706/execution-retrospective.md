@@ -89,8 +89,8 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 字数/规模 | 状态 |
 |--------|------|-----------|------|
-| 向日葵全面分析Wiki | [sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 约23000字，12章节 | ✅ 完成 |
-| 产品系列索引更新 | [sunlogin-product-series-index.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-product-series-index.md) | 新增综合分析导航 | ✅ 完成 |
+| 向日葵全面分析Wiki | [sunlogin-comprehensive-analysis-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-comprehensive-analysis-wiki.md) | 约23000字，12章节 | ✅ 完成 |
+| 产品系列索引更新 | [sunlogin-product-series-index.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-product-series-index.md) | 新增综合分析导航 | ✅ 完成 |
 
 ### 5.2 复盘文档
 

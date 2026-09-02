@@ -110,7 +110,7 @@ stale_after: "2027-08-22"
 | `Bundle` 实例内存 | 344 字节（含 `__dict__`） | 64 字节 | −280 字节（−81.4%） |
 | 拓扑排序队列弹出（N=50000） | `list.pop(0)` 约 0.24s | `deque.popleft` 约 0.004s | 约 60×（O(n)→O(1)） |
 
-> 内存与微基准的采集方法、适用边界详见学习笔记 [13-okf-optimization-report](../../../../knowledge/learning/python314-stdlib-wiki/13-okf-optimization-report.md)。
+> 内存与微基准的采集方法、适用边界详见学习笔记 [13-okf-optimization-report](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/concepts/13-okf-optimization-report.md)。
 
 ---
 

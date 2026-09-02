@@ -37,7 +37,7 @@ version: "1.0"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 综合分析Wiki | [sunlogin-comprehensive-analysis-wiki.md](../../../../knowledge/learning/07-vendor-product-learning/sunlogin/sunlogin-comprehensive-analysis-wiki.md) | 12章节全面分析，约23000字 |
+| 综合分析Wiki | [sunlogin-comprehensive-analysis-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/sunlogin/concepts/sunlogin-comprehensive-analysis-wiki.md) | 12章节全面分析，约23000字 |
 | 复盘报告 | 本目录 | 执行回顾、洞察萃取、改进建议（4个文档） |
 | 模式更新 | 模式库 | ✅ 1个模式升级L3+5个新模式入库L2，详见export-suggestions.md |
 

@@ -45,7 +45,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ## 关联资源
 
-- [学习笔记](../../../../knowledge/learning/05-ai-multimodal-content/ian-xiaohei-illustrations.md)
+- [学习笔记](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ian-xiaohei-illustrations/index.md)
 - [执行复盘](execution-retrospective.md)
 - [导出建议](export-suggestions.md)
 - [方法论模式库](../../../patterns/methodology-patterns/README.md)

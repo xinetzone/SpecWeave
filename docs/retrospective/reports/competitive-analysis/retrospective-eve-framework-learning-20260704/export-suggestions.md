@@ -58,7 +58,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 ### 关联知识更新
 
-1. **Eve框架学习笔记**：本次分析输出已整理为 **eve-wiki 结构化教程**（10章 + README，11个文件），存入 [`docs/knowledge/learning/03-agent-platforms-tools/eve-wiki/`](../../../../knowledge/learning/03-agent-platforms-tools/00-agent-frameworks/eve-wiki/README.md)，并已结合本地源码校准 API 细节（v1.1）
+1. **Eve框架学习笔记**：本次分析输出已整理为 **eve-wiki 结构化教程**（10章 + README，11个文件），存入 [`docs/knowledge/learning/03-agent-platforms-tools/eve-wiki/`](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md)，并已结合本地源码校准 API 细节（v1.1）
 2. **前端开发者AI转型路径**：洞察1和洞察3可作为前端开发者学习AI Agent开发的参考框架
 
 ## 后续行动项

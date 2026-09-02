@@ -23,7 +23,7 @@ version: "1.1"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号text-to-cad开源项目介绍文章 |
-| 产出物主文档 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md)（308行，8章节） |
+| 产出物主文档 | [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md)（308行，8章节） |
 | 全流程Commit数 | 15个原子提交 |
 | 全流程产出物 | 16+个文件，约1800+行新增 |
 | Spec文件数 | 3个（spec.md/tasks.md/checklist.md） |
@@ -53,7 +53,7 @@ version: "1.1"
 
 | 文件 | 路径 | 行数 |
 |------|------|------|
-| 主教程 | [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) | 308行 |
+| 主教程 | [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md) | 308行 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | +9/-9行 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | - |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | - |
@@ -86,4 +86,4 @@ version: "1.1"
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类wiki教程制作复盘，沉淀了教程认知阶梯六层模式（L2）和UTF-8提交工具
 - [retrospective-viitorvoice-tts-learning-20260703](../retrospective-viitorvoice-tts-learning-20260703/README.md) — 前一天的同类开源项目学习wiki任务
 - [retrospective-tuyaopen-dev-skills-learning-20260630](../retrospective-tuyaopen-dev-skills-learning-20260630/README.md) — 外部Skill学习与知识库归档先例
-- [text-to-cad-wiki.md](../../../../knowledge/learning/05-ai-multimodal-content/text-to-cad-wiki.md) — 本次任务的核心产出物wiki教程
+- [text-to-cad-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/text-to-cad/index.md) — 本次任务的核心产出物wiki教程

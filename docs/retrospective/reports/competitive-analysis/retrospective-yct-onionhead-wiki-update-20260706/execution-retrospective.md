@@ -99,7 +99,7 @@ Spec质量亮点：
 | Spec PRD | [spec.md](../../../../../.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/spec.md) | 约180行 |
 | 任务分解 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/tasks.md) | 约180行，11个任务 |
 | 验证清单 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/checklist.md) | 54个检查点 |
-| Wiki更新 | [oray-comprehensive-analysis-wiki.md 3.5节](../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md#L357-L469) | 从约40行→113行 |
+| Wiki更新 | [oray-comprehensive-analysis-wiki.md 3.5节](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/oray/concepts/oray-comprehensive-analysis-wiki.md#L357-L469) | 从约40行→113行 |
 | 复盘报告 | 本目录 | 4个文档 |
 
 ## 六、量化成果

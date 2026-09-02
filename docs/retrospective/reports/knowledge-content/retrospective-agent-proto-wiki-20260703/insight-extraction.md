@@ -184,7 +184,7 @@ Spec Mode将"写什么"和"怎么写"完全分离——PRD阶段确定内容范�
 当前代码示例标注为"伪代码/概念示例"，未来可补充实际可运行的最小示例，提升教程实用性。
 
 **落地状态**：✅ 已落地（部分）
-- 产物：[07-implementation.md](../../../../knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/07-implementation.md)
+- 产物：[07-implementation.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/agent-communication-protocols/concepts/07-implementation.md)
 - 已为 MCP Python/TypeScript SDK 和 A2A Python SDK 示例补充安装命令与版本标注：
   - `pip install mcp>=1.26.0`
   - `npm install @modelcontextprotocol/sdk`
@@ -196,7 +196,7 @@ Spec Mode将"写什么"和"怎么写"完全分离——PRD阶段确定内容范�
 当前教程的混合场景（06-flows中流程4）展示了MCP+ACP+A2A协同，但未包含ANP（因ANP尚在早期）。未来ANP规范成熟后可补充五层协议协同示例。
 
 **落地状态**：✅ 已落地
-- 产物：[04-anp.md](../../../../knowledge/learning/01-agent-protocols-interfaces/agent-communication-protocols/04-anp.md)
+- 产物：[04-anp.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/agent-communication-protocols/concepts/04-anp.md)
 - 已补充：ANP三层协议架构（身份层/元协议层/应用层）、did:wba DID方法、Agent Description Protocol (ADP) JSON-LD示例、Agent发现机制、IETF Draft状态
 - 五层协议协同示例（MCP+ACP+A2A+ANP）仍未补充，因ANP规范尚在早期，待规范成熟后扩展
 

@@ -38,7 +38,7 @@ date: "2026-07-06"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| Wiki章节更新 | [oray-comprehensive-analysis-wiki.md 3.5节](../../../../knowledge/learning/07-vendor-product-learning/oray/oray-comprehensive-analysis-wiki.md#L357-L469) | 从40行扩充至113行，新增8个子章节 |
+| Wiki章节更新 | [oray-comprehensive-analysis-wiki.md 3.5节](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/iot/oray/concepts/oray-comprehensive-analysis-wiki.md#L357-L469) | 从40行扩充至113行，新增8个子章节 |
 | 复盘报告 | 本目录 | 执行回顾、洞察萃取、改进建议（4个文档） |
 | Spec规划文档 | [.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/](../../../../../.trae/specs/retrospectives-insights/update-yct-onionhead-wiki/spec.md) | spec.md + tasks.md + checklist.md（11个任务，54个检查点） |
 

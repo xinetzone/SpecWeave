@@ -93,7 +93,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| 主教程索引页 | [mopmonk-security-agent-wiki.md](../../../../knowledge/learning/03-agent-platforms-tools/mopmonk-security-agent-wiki.md) | Wiki导航入口 |
+| 主教程索引页 | mopmonk-security-agent-wiki.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | Wiki导航入口 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | 更新索引条目 |
 | Spec定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/spec.md) | 任务目标与范围 |
 | Spec任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-mainecoon-social-world-model-article/tasks.md) | 执行步骤拆解 |
@@ -104,13 +104,13 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/competitive-an
 
 | 产出物 | 路径 | 行数 |
 |--------|------|------|
-| 概述 | [00-overview.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 核心概念 | [01-core-concepts.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| MiniMax M3模型 | [02-minimax-m3.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 核心技术 | [03-core-technologies.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 学习指南 | [04-learning-guide.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| FAQ | [05-faq.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
-| 资源 | [06-resources.md](../../../../knowledge/learning/03-agent-platforms-tools/02-security/mopmonk-security-agent-wiki/README.md) | - |
+| 概述 | 00-overview.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 核心概念 | 01-core-concepts.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| MiniMax M3模型 | 02-minimax-m3.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 核心技术 | 03-core-technologies.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 学习指南 | 04-learning-guide.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| FAQ | 05-faq.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
+| 资源 | 06-resources.md（源文件已随 learning 板块迁移/移除，新归宿见 projects/awesome-okf-xs/doc/bundles/） | - |
 | 7个原子文件TOML元数据 | 对应目录下*.toml | - |
 | 索引页TOML元数据 | mopmonk-security-agent-wiki.toml | - |
 | **小计** | **16个文件** | **662行新增，560行删除** | Commit: 3bea7b68 |

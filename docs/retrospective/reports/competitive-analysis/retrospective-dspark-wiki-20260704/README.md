@@ -23,7 +23,7 @@ scenario: "B-single-day-medium"
 | 指标 | 数值 |
 |------|------|
 | 源内容 | 微信公众号 DSpark 论文拆解文章（https://mp.weixin.qq.com/s/BVlgO1e6StBGIaxGPTQIXQ） |
-| 产出物主文档 | [dspark-paper-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md)（455 行，约 4500 字） |
+| 产出物主文档 | [dspark-paper-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/performance/dspark-paper-wiki.md)（455 行，约 4500 字） |
 | 知识库索引 | [README.md](../../../../knowledge/README.md)（learning 类目下追加索引条目，含完整摘要和 10 个标签） |
 | Spec 文件数 | 3 个（spec.md / tasks.md / checklist.md） |
 | Spec 规模 | 10 个 ADDED Requirements、10 个 Acceptance Criteria、9 个主任务、35 个子任务、30+ 检查点 |
@@ -47,7 +47,7 @@ scenario: "B-single-day-medium"
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 主文档 | [dspark-paper-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) | 455 行，约 4500 字，覆盖 10 个核心概念 |
+| 主文档 | [dspark-paper-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/performance/dspark-paper-wiki.md) | 455 行，约 4500 字，覆盖 10 个核心概念 |
 | 知识库索引 | [README.md](../../../../knowledge/README.md) | learning 类目下追加索引条目 |
 | Spec 定义 | [spec.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/spec.md) | 191 行，10 个 Requirements，10 个 AC |
 | Spec 任务 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/create-dspark-learning-wiki/tasks.md) | 9 个主任务，35 个子任务 |
@@ -62,4 +62,4 @@ scenario: "B-single-day-medium"
 - [retrospective-karpathy-multica-tutorial-20260702](../retrospective-karpathy-multica-tutorial-20260702/README.md) — 同类 Wiki 教程制作复盘，沉淀了教程认知阶梯六层模式
 - [retrospective-headroom-wiki-20260704](../retrospective-headroom-wiki-20260704/README.md) — 同一天的 Wiki 教程制作复盘，可对照参考
 - [retrospective-longcat-agent-learning-20260704](../retrospective-longcat-agent-learning-20260704/README.md) — 同一天的外部内容学习复盘
-- [dspark-paper-wiki.md](../../../../knowledge/learning/02-agent-engineering-methodology/06-performance/dspark-paper-wiki.md) — 本次任务的核心产出物 Wiki 文档
+- [dspark-paper-wiki.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-engineering-methodology/concepts/performance/dspark-paper-wiki.md) — 本次任务的核心产出物 Wiki 文档

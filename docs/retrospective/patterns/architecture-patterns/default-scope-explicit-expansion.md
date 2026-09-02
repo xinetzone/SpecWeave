@@ -117,7 +117,7 @@ tags:
 
 ### 案例1：okf-kit v0.3.3 爬取 scope（2026-08-18，主验证案例）
 
-**来源**：[okf-kit Wiki 七概念执行报告 · 洞察3](../../../knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/seven-concepts-report.md#L66-L70)
+**来源**：[okf-kit Wiki 七概念执行报告 · 洞察3](../../../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md#L66-L70)
 
 okf-kit（OKF 的 Python 实现，v0.3.3）的源码研读确认了「默认 scope 收敛」在真实爬虫中的落地：
 
