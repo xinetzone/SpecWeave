@@ -6,7 +6,7 @@ argument-hint: "[复杂变更：需求|规划|实施|审查|恢复]"
 user-invocable: true
 paths:
   - ".agents/skills/TRAE-spec-mode/**"
-source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-spec-mode/SKILL.md（Trae 内置 doutops 原始路径，仅作溯源；本文件为独立适配版，以本地为准）"
+source: "镜像自 Trae IDE builtin/trae/doutops（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-spec-mode/SKILL.md；本文件为独立适配版，以本地为准）"
 title: Spec Mode — 复杂变更端到端规范工作流
 x-toml-ref: "../../../.meta/toml/.agents/skills/TRAE-spec-mode/SKILL.toml"
 ---

@@ -6,7 +6,7 @@ argument-hint: "[有界变更：调研|规划|批准|执行]"
 user-invocable: true
 paths:
   - ".agents/skills/TRAE-plan-mode/**"
-source: "../../../external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-plan-mode/SKILL.md（Trae 内置 doutops 原始路径，仅作溯源；本文件为独立适配版，以本地为准）"
+source: "镜像自 Trae IDE builtin/trae/doutops（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills/TRAE-plan-mode/SKILL.md；本文件为独立适配版，以本地为准）"
 title: Plan Mode — 有界变更规划与执行
 x-toml-ref: "../../../.meta/toml/.agents/skills/TRAE-plan-mode/SKILL.toml"
 ---
