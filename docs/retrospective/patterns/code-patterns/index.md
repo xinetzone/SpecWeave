@@ -190,6 +190,7 @@ shell-nested-quote-file-based-strategy
 single-pass-perf-instrumentation
 skill-three-part-structure
 sphinx-conf-probe-fallback
+preset-setup-closure-generator
 static-registration-compile-config
 structured-doc-diff-semver
 structured-lightweight-logging
