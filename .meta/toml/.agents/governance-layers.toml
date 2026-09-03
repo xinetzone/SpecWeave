@@ -1,0 +1,5 @@
+id = "agents-governance-layers"
+version = "1.0.0"
+last_updated = "2026-09-03"
+category = "governance"
+source = "README.md#规范分层治理（Core vs Tools）"
