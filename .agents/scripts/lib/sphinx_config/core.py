@@ -78,7 +78,7 @@ DEFAULT_HTML_CONFIG: dict[str, Any] = {
 }
 
 
-def _resolve_html_baseurl(params: dict) -> str | None:
+def _resolve_html_baseurl(params: dict[str, Any]) -> str | None:
     """从环境变量 / 项目参数中推断 ``html_baseurl``（sitemap + ogp 需要）。"""
     if os.environ.get("GITHUB_ACTIONS"):
         return os.environ.get("SITEMAP_URL_BASE", params.get("site_url"))

@@ -8,7 +8,7 @@ from ._utils import has_module
 def resolve_extensions(
     required: Sequence[str] = ("myst_parser",),
     optional: Sequence[str] = (),
-    conditional: Sequence[tuple[str, Callable]] = (),
+    conditional: Sequence[tuple[str, Callable[[], bool]]] = (),
 ) -> list[str]:
     """解析三类扩展列表（公理 A3 实现）。
 
@@ -74,7 +74,7 @@ def _sitemap_conditional() -> bool:
     return False
 
 
-DEFAULT_CONDITIONAL: tuple[tuple[str, Callable], ...] = (
+DEFAULT_CONDITIONAL: tuple[tuple[str, Callable[[], bool]], ...] = (
     # 设计取舍（2026-09-03 V 阶段对抗审查确认）：
     #   「conditional 扩展是否启用」的判断逻辑，和「该扩展对应的 Sphinx 配置键」
     #   是两套独立机制。当 CI 环境触发 _sitemap_conditional() 但实际未安装

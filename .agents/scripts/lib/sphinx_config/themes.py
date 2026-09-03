@@ -40,7 +40,7 @@ def resolve_theme(
     return "alabaster"
 
 
-DEFAULT_BOOK_THEME_OPTIONS: dict = {
+DEFAULT_BOOK_THEME_OPTIONS: dict[str, object] = {
     "use_repository_button": True,
     "repository_branch": "main",
     "use_source_button": True,
@@ -60,16 +60,16 @@ DEFAULT_BOOK_THEME_OPTIONS: dict = {
 
 def resolve_theme_options(
     theme: str,
-    override: dict | None = None,
+    override: dict[str, object] | None = None,
     *,
-    book_defaults: dict = DEFAULT_BOOK_THEME_OPTIONS,
-) -> dict:
+    book_defaults: dict[str, object] = DEFAULT_BOOK_THEME_OPTIONS,
+) -> dict[str, object]:
     """根据选定主题合并默认 theme_options。
 
     目前对 ``sphinx_book_theme`` / ``mystx`` 提供完整默认字典；
     其他主题返回空字典或 override 原样。
     """
-    base: dict = {}
+    base: dict[str, object] = {}
     if theme in ("sphinx_book_theme", "mystx"):
         base = dict(book_defaults)
     return deep_merge(base, override or {})
