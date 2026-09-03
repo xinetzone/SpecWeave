@@ -62,6 +62,7 @@ retrospective-xmnn-dual-image-accuracy-20260812/index
 retrospective-xmnn-export-entrypoint-fix-20260718/index
 retrospective-xmnn-nuitka-docker-deployment-20260722/index
 retrospective-xmnn-runtime-repackaging-20260718/index
+retrospective-xmnn-sdk-docs-closed-loop-20260903/retrospective-report
 retrospective-xmtools-20260803/index
 retrospective-zhihu-637007780-analysis-20260706/index
 2026-07-04-knowledge-sedimentation-workflow-retrospective

@@ -24,6 +24,7 @@ pdf-book-to-okf-wiki
 python-wheel-dependency-audit-wda4
 release-gate-automated-verification
 submodule-ssh-stall-recovery-sop
+sphinx-rst2pdf-image-handling
 svf-compiler-migration
 vhdx-two-phase-recovery-sop
 ```
