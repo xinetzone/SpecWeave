@@ -18,8 +18,6 @@ Hello World（任意项目 ``doc/conf.py`` 只需 5 行）::
 模块对外公开的函数/变量均在本文件显式导出，其他子模块视为私有。
 """
 
-from __future__ import annotations
-
 import sys
 from pathlib import Path
 
