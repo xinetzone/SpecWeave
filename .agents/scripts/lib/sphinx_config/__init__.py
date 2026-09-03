@@ -21,7 +21,7 @@ Hello World（任意项目 ``doc/conf.py`` 只需 5 行）::
 import sys
 from pathlib import Path
 
-from ._utils import deep_merge, has_module
+from ._utils import deep_merge, ensure_mystx_on_syspath, has_module
 from .core import (
     DEFAULT_BUILD_CONFIG,
     DEFAULT_EXT_CONFIG,
@@ -49,11 +49,14 @@ from .presets import build_minimal_myst_config, build_okf_config
 
 
 def ensure_lib_on_syspath(anchor: str | None = None) -> Path:
-    """把 ``.agents/scripts/`` 绝对路径插入 ``sys.path``（自举辅助）。
+    """把 ``.agents/scripts/`` + mystx src 目录绝对路径插入 ``sys.path``（自举辅助）。
 
     典型场景：子项目的 ``doc/conf.py``（在 projects/<name>/doc/）想复用本模块，
     但 Sphinx 启动时 ``sys.path`` 不包含 SpecWeave 主仓的共享脚本目录。
     调用本函数后即可正常 ``from lib.sphinx_config import ...``。
+
+    同时注入 mystx submodule 路径（``projects/xuanspace/libs/mystx/src``），
+    确保 sphinx_config re-export 的 mystx API 能正常导入；若找不到则跳过。
 
     参数 ``anchor`` 默认为本模块的 ``__file__``，用于反向推导
     ``<repo_root>/.agents/scripts/`` 的位置——调用方传入自定义 anchor
@@ -72,6 +75,7 @@ def ensure_lib_on_syspath(anchor: str | None = None) -> Path:
     scripts_str = str(scripts_dir)
     if scripts_str not in sys.path:
         sys.path.insert(0, scripts_str)
+    ensure_mystx_on_syspath(anchor)
     return scripts_dir
 
 
@@ -79,6 +83,7 @@ __all__ = [
     "deep_merge",
     "has_module",
     "ensure_lib_on_syspath",
+    "ensure_mystx_on_syspath",
     "DEFAULT_BUILD_CONFIG",
     "DEFAULT_EXT_CONFIG",
     "DEFAULT_HTML_CONFIG",

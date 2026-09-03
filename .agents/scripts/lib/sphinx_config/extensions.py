@@ -1,85 +1,57 @@
-import os
+"""Sphinx 扩展弹性加载（来自 mystx.extensions，D3 维度增量叠加 mermaid）。
+
+- ``resolve_extensions`` / ``DEFAULT_CONDITIONAL``：来自 mystx.extensions 完全相同
+  实现（F-003 事实）。
+- ``DEFAULT_OPTIONAL_EXTENSIONS``：mystx 中已移除 ``sphinxcontrib.mermaid``
+  （不在 mystx 的 optional-dependencies），但 sphinx_config 场景保留该项
+  （D3 维度，A2 公理：增量叠加不覆盖）。
+"""
+
 from collections.abc import Callable
 from typing import Sequence
 
-from ._utils import has_module
+from ._utils import ensure_mystx_on_syspath, has_module as _sc_has_module
+
+ensure_mystx_on_syspath(__file__)
+
+import mystx.extensions as _mystx_ext_mod
+from mystx.extensions import (
+    DEFAULT_CONDITIONAL as _MYSTX_CONDITIONAL,
+    DEFAULT_OPTIONAL_EXTENSIONS as _MYSTX_OPTIONAL,
+    resolve_extensions as _mystx_resolve_extensions,
+)
+
+DEFAULT_OPTIONAL_EXTENSIONS: tuple[str, ...] = tuple(_MYSTX_OPTIONAL) + (
+    "sphinxcontrib.mermaid",
+)
+DEFAULT_CONDITIONAL = _MYSTX_CONDITIONAL
+
+has_module = _sc_has_module
 
 
 def resolve_extensions(
-    required: Sequence[str] = ("myst_parser",),
+    required: Sequence[str] = (),
     optional: Sequence[str] = (),
     conditional: Sequence[tuple[str, Callable[[], bool]]] = (),
 ) -> list[str]:
-    """解析三类扩展列表（公理 A3 实现）。
+    """调用 mystx 前，把 sphinx_config 子模块的 has_module 注入到 mystx.extensions。
 
-    参数：
-        required: 必须加载的扩展，缺失直接抛 :class:`ImportError`。
-        optional: 可选扩展，不存在则静默跳过。
-        conditional: ``(ext_name, predicate)`` 列表——predicate 返回真值才加载；
-            典型 predicate 如检查 :envvar:`GITHUB_ACTIONS` / :envvar:`READTHEDOCS`。
-
-    返回合并去重后的 extensions 列表（保持首次出现的顺序）。
+    这样 monkeypatch ``sphinx_config.extensions.has_module`` 即可影响 mystx 内部。
     """
-    result: list[str] = []
-    seen: set[str] = set()
-
-    def _add(ext: str) -> None:
-        if ext not in seen:
-            seen.add(ext)
-            result.append(ext)
-
-    for ext in required:
-        if not has_module(ext):
-            raise ImportError(
-                f"[sphinx_config] required extension missing: {ext!r}. "
-                f"Install it or remove it from the `required` list."
-            )
-        _add(ext)
-
-    for ext in optional:
-        if has_module(ext):
-            _add(ext)
-
-    for ext, predicate in conditional:
-        try:
-            ok = bool(predicate())
-        except Exception:
-            ok = False
-        if ok and has_module(ext):
-            _add(ext)
-
-    return result
+    _orig = _mystx_ext_mod.__dict__.get("has_module")
+    _mystx_ext_mod.has_module = has_module
+    try:
+        return _mystx_resolve_extensions(required, optional, conditional)
+    finally:
+        if _orig is None:
+            _mystx_ext_mod.__dict__.pop("has_module", None)
+        else:
+            _mystx_ext_mod.has_module = _orig
 
 
-DEFAULT_OPTIONAL_EXTENSIONS: tuple[str, ...] = (
-    "sphinx_design",
-    "sphinx_copybutton",
-    "sphinx_tippy",
-    "sphinx_sitemap",
-    "sphinx.ext.intersphinx",
-    "sphinx.ext.extlinks",
-    "sphinx.ext.graphviz",
-    "sphinx_contributors",
-    "sphinxext.opengraph",
-    "sphinxcontrib.mermaid",
-)
-
-
-def _sitemap_conditional() -> bool:
-    """sitemap 扩展启用条件：非 RTD 环境且有本地/CI 可用的 baseurl。"""
-    if os.environ.get("GITHUB_ACTIONS"):
-        return True
-    if not os.environ.get("READTHEDOCS"):
-        return True
-    return False
-
-
-DEFAULT_CONDITIONAL: tuple[tuple[str, Callable[[], bool]], ...] = (
-    # 设计取舍（2026-09-03 V 阶段对抗审查确认）：
-    #   「conditional 扩展是否启用」的判断逻辑，和「该扩展对应的 Sphinx 配置键」
-    #   是两套独立机制。当 CI 环境触发 _sitemap_conditional() 但实际未安装
-    #   sphinx_sitemap 包时，resolve_extensions() 内部 has_module() 会静默跳过注册，
-    #   而 core.py 已注入的 html_baseurl/sitemap_url_scheme 等配置键会被 Sphinx
-    #   作为「未知配置」安全忽略，不影响构建。因此此处不强制绑定配置键与扩展存在性。
-    ("sphinx_sitemap", _sitemap_conditional),
-)
+__all__ = [
+    "resolve_extensions",
+    "DEFAULT_OPTIONAL_EXTENSIONS",
+    "DEFAULT_CONDITIONAL",
+    "has_module",
+]

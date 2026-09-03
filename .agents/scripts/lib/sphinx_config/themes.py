@@ -1,75 +1,56 @@
+"""主题管理模块（直接 re-export mystx.themes，F-010 事实）。
+
+本模块所有 API 均来自 :mod:`mystx.themes` 原封不动 re-export，
+仅在模块导入时通过 :func:`ensure_mystx_on_syspath` 自举 git submodule 路径。
+
+为了兼容 monkeypatch，``has_module`` 绑定到本模块命名空间，并在
+调用 mystx 函数前替换 ``mystx.themes`` 子模块命名空间中的 has_module。
+"""
+
 from typing import Sequence
 
-from ._utils import deep_merge, has_module
+from ._utils import ensure_mystx_on_syspath, has_module as _sc_has_module
 
-DEFAULT_THEME_PRIORITY: tuple[str, ...] = (
-    "mystx",
-    "sphinx_book_theme",
-    "alabaster",
+ensure_mystx_on_syspath(__file__)
+
+import mystx.themes as _mystx_theme_mod
+from mystx.themes import (
+    DEFAULT_BOOK_THEME_OPTIONS,
+    DEFAULT_THEME_PRIORITY,
+    resolve_theme as _mystx_resolve_theme,
+    resolve_theme_options,
 )
+
+has_module = _sc_has_module
 
 
 def resolve_theme(
     priority: Sequence[str] = DEFAULT_THEME_PRIORITY,
-    *,
     extra_before: Sequence[str] = (),
     extra_after: Sequence[str] = (),
 ) -> str:
-    """按优先级队列选择第一个已安装的主题（公理 A4 实现）。
+    """包装 mystx.resolve_theme：调用前替换子模块命名空间的 has_module。
 
-    默认回退链：``mystx → sphinx_book_theme → alabaster``；
-    其中 ``alabaster`` 是 Sphinx 内置主题，保证永不缺失。
-
-    参数 ``extra_before`` / ``extra_after`` 允许在默认队列前后插入自定义主题：
-    ``extra_before`` 的项目**优先于**默认主题；``extra_after`` 的项目排在默认
-    主题之后、**alabaster 之前**——保证回退到 alabaster 始终是最后一条。
+    这样 monkeypatch ``sphinx_config.themes.has_module`` 即可影响 mystx 内部。
+    mystx 中 ``extra_before`` / ``extra_after`` 是关键字参数（`*` 之后）。
     """
-    full: list[str] = []
-    full.extend(extra_before)
-    for t in priority:
-        if t == "alabaster":
-            continue
-        full.append(t)
-    full.extend(extra_after)
-    full.append("alabaster")
-    for theme in full:
-        if theme == "alabaster":
-            return "alabaster"
-        if has_module(theme):
-            return theme
-    return "alabaster"
+    _orig = _mystx_theme_mod.__dict__.get("has_module")
+    _mystx_theme_mod.has_module = has_module
+    try:
+        return _mystx_resolve_theme(
+            priority, extra_before=tuple(extra_before), extra_after=tuple(extra_after)
+        )
+    finally:
+        if _orig is None:
+            _mystx_theme_mod.__dict__.pop("has_module", None)
+        else:
+            _mystx_theme_mod.has_module = _orig
 
 
-DEFAULT_BOOK_THEME_OPTIONS: dict[str, object] = {
-    "use_repository_button": True,
-    "repository_branch": "main",
-    "use_source_button": True,
-    "use_edit_page_button": False,
-    "use_issues_button": True,
-    "path_to_docs": "doc",
-    "toc_title": "目录",
-    "show_navbar_depth": 10,
-    "max_navbar_depth": 4,
-    "collapse_navbar": False,
-    "use_download_button": True,
-    "use_fullscreen_button": True,
-    "footer_content_items": "author.html, copyright.html, last-updated.html, extra-footer.html",
-    "navbar_persistent": [],
-}
-
-
-def resolve_theme_options(
-    theme: str,
-    override: dict[str, object] | None = None,
-    *,
-    book_defaults: dict[str, object] = DEFAULT_BOOK_THEME_OPTIONS,
-) -> dict[str, object]:
-    """根据选定主题合并默认 theme_options。
-
-    目前对 ``sphinx_book_theme`` / ``mystx`` 提供完整默认字典；
-    其他主题返回空字典或 override 原样。
-    """
-    base: dict[str, object] = {}
-    if theme in ("sphinx_book_theme", "mystx"):
-        base = dict(book_defaults)
-    return deep_merge(base, override or {})
+__all__ = [
+    "DEFAULT_THEME_PRIORITY",
+    "DEFAULT_BOOK_THEME_OPTIONS",
+    "resolve_theme",
+    "resolve_theme_options",
+    "has_module",
+]

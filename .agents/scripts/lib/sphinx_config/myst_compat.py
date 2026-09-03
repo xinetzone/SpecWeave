@@ -1,89 +1,92 @@
-import os
-import re as _re
+"""MyST 兼容钩子（直接 re-export mystx.myst_compat，F-004 事实）。
 
-_ISO_DATETIME_RE = _re.compile(
-    r"([A-Za-z_][A-Za-z0-9_-]*\s*:\s*)"
-    r"(\d{4}-\d{2}-\d{2}(?:[Tt]\d{2}:\d{2}:\d{2}(?:[+-]\d{2}:\d{2}|Z)?)?)"
-)
-_FM_DELIM = _re.compile(r"^(?:---|\+\+\+|\.\.\.)\s*$", _re.MULTILINE)
+mystx 已内置 ``MYSTX_MYST_COMPAT_*`` 规范前缀，并保留了
+``SW_MYST_COMPAT_*`` 的兼容处理（日志 INFO 警告）。详见
+:func:`mystx.myst_compat._reload_env_settings`。
+"""
 
+from ._utils import ensure_mystx_on_syspath
 
-# === 兼容性开关：未来 myst-parser 修复日期 bug 后可通过环境变量关闭 ===
-# 环境变量 SW_MYST_COMPAT_QUOTE_DATES=0 全局禁用 frontmatter 日期加引号
-# 环境变量 SW_MYST_COMPAT_DEDUPE_H1=0 全局禁用重复 H1 去重
-_ENV_QUOTE_DATES = os.environ.get("SW_MYST_COMPAT_QUOTE_DATES", "1") not in {"0", "false", "off"}
-_ENV_DEDUPE_H1 = os.environ.get("SW_MYST_COMPAT_DEDUPE_H1", "1") not in {"0", "false", "off"}
+ensure_mystx_on_syspath(__file__)
 
+from mystx import myst_compat as _mystx_mc
 
-def quote_frontmatter_dates(app: "Sphinx", docname: str, source: list[str]) -> None:
-    """``source-read`` 钩子：为 **YAML frontmatter** 内无引号的裸日期/时间戳补双引号。
-
-    解决的问题（对应原 awesome-okf-xs/doc/conf.py L183-L226）：
-      myst_parser 会把无引号的 YAML 日期解析为 :class:`datetime.date`，
-      进而在 ``dict_to_fm_field_list`` 中 ``json.dumps`` 时抛
-      ``Object of type date is not JSON serializable``。
-
-    **仅对 YAML 格式（首行 ``---`` 定界符）生效：**
-    TOML frontmatter 的日期是原生 ISO8601 类型，不需要也不应加引号——
-    盲目加引号会让 TOML 解析器把日期当字符串，导致类型改变。
-
-    只在「日期/时间戳本身构成完整值」时加引号——值尾允许行尾、行内空白换行，
-    或 flow map/list 的闭合标点（``}`` / ``]`` / ``,``）。避免误伤以
-    日期开头的长纯标量，例如 ``description: 2026-08-28对博文……``（早期版本
-    无条件替换会在中文值中间插入孤立引号，导致 ``Malformed YAML [myst.topmatter]``）。
-
-    可通过环境变量 ``SW_MYST_COMPAT_QUOTE_DATES=0`` 关闭本钩子。
-    """
-    if not _ENV_QUOTE_DATES:
-        return
-    text = source[0]
-    delims = list(_FM_DELIM.finditer(text))
-    if len(delims) < 2 or delims[0].start() != 0:
-        return
-    first_line = text[: delims[0].end()].splitlines()[0].strip()
-    if first_line != "---":
-        return
-    fm = text[delims[0].end(): delims[1].start()]
-
-    def _repl(match: _re.Match) -> str:
-        line_tail = fm[match.end():].split("\n", 1)[0].strip()
-        if line_tail == "" or line_tail[-1] in "}]," or line_tail.startswith("#"):
-            return match.expand(r'\1"\2"')
-        return match.group(0)
-
-    quoted = _ISO_DATETIME_RE.sub(_repl, fm)
-    if quoted != fm:
-        source[0] = text[: delims[0].end()] + quoted + text[delims[1].start():]
+quote_frontmatter_dates = _mystx_mc.quote_frontmatter_dates
+dedupe_injected_h1 = _mystx_mc.dedupe_injected_h1
+register_hooks = _mystx_mc.register_hooks
+_reload_env_settings = _mystx_mc._reload_env_settings
+_ENV_QUOTE_DATES = _mystx_mc._ENV_QUOTE_DATES
+_ENV_DEDUPE_H1 = _mystx_mc._ENV_DEDUPE_H1
+_FM_DELIM = _mystx_mc._FM_DELIM
 
 
-def dedupe_injected_h1(app: "Sphinx", doctree: "nodes.document") -> None:
-    """``doctree-read`` 钩子：去除 ``myst_title_to_header`` 注入的重复 H1。
-
-    解决的问题（对应原 awesome-okf-xs/doc/conf.py L229-L250）：
-      ``myst_title_to_header = True`` 会把 frontmatter ``title`` 注入为文档首个 H1；
-      若正文自带 H1，doctree 会有两个顶级 section。注入项仅含标题、无正文内容，
-      Sphinx ``TocTreeCollector`` 为其生成带 ``#anchor`` 链接的 TOC 条目；
-      ``pydata/sphinx_book_theme`` 侧边栏整体删除含 ``#anchor`` 的 ``li``
-      （连同嵌套子 ``ul`` 一起 ``decompose``），导致侧边栏只剩一级导航。
-
-    必须以 ``priority<500`` 注册（小于 TocTreeCollector 默认的 500），
-    确保在 ``process_doc`` 构建 ``env.tocs`` 之前清理 doctree。
-
-    可通过环境变量 ``SW_MYST_COMPAT_DEDUPE_H1=0`` 关闭本钩子。
-    """
-    if not _ENV_DEDUPE_H1:
-        return
-    from docutils import nodes
-
-    sections = [n for n in doctree.children if isinstance(n, nodes.section)]
-    if len(sections) < 2:
-        return
-    first = sections[0]
-    if len(first.children) <= 1:
-        doctree.remove(first)
+def _sync_env_to_mystx() -> tuple[bool, bool]:
+    """把本模块的 _ENV_* 状态写入 mystx 命名空间，返回原值。"""
+    _oq = _mystx_mc._ENV_QUOTE_DATES
+    _ood = _mystx_mc._ENV_DEDUPE_H1
+    _mystx_mc._ENV_QUOTE_DATES = _ENV_QUOTE_DATES
+    _mystx_mc._ENV_DEDUPE_H1 = _ENV_DEDUPE_H1
+    return _oq, _ood
 
 
-def register_hooks(app: "Sphinx") -> None:
-    """在 Sphinx app 上统一注册本模块的两个兼容性钩子。"""
-    app.connect("source-read", quote_frontmatter_dates)
-    app.connect("doctree-read", dedupe_injected_h1, priority=400)
+def _restore_env_to_mystx(orig_quote: bool, orig_dedupe: bool) -> None:
+    """恢复 mystx 命名空间的 _ENV_* 原值。"""
+    _mystx_mc._ENV_QUOTE_DATES = orig_quote
+    _mystx_mc._ENV_DEDUPE_H1 = orig_dedupe
+
+
+# —— 包装公共函数：调用前后同步 ENV 状态 ——
+
+_original_quote_frontmatter_dates = quote_frontmatter_dates
+
+
+def quote_frontmatter_dates(app, docname: str, source: list[str]) -> None:  # type: ignore[no-redef]
+    _oq, _od = _sync_env_to_mystx()
+    try:
+        return _original_quote_frontmatter_dates(app, docname, source)
+    finally:
+        _restore_env_to_mystx(_oq, _od)
+
+
+_original_dedupe_injected_h1 = dedupe_injected_h1
+
+
+def dedupe_injected_h1(app, doctree) -> None:  # type: ignore[no-redef]
+    _oq, _od = _sync_env_to_mystx()
+    try:
+        return _original_dedupe_injected_h1(app, doctree)
+    finally:
+        _restore_env_to_mystx(_oq, _od)
+
+
+_original_register_hooks = register_hooks
+
+
+def register_hooks(app) -> None:  # type: ignore[no-redef]
+    _oq, _od = _sync_env_to_mystx()
+    try:
+        return _original_register_hooks(app)
+    finally:
+        _restore_env_to_mystx(_oq, _od)
+
+
+_original_reload = _reload_env_settings
+
+
+def _reload_env_settings() -> None:  # type: ignore[no-redef]
+    """先让 mystx 从环境变量重新加载，再把结果同步回本模块。"""
+    _original_reload()
+    global _ENV_QUOTE_DATES, _ENV_DEDUPE_H1  # noqa: PLW0603
+    _ENV_QUOTE_DATES = _mystx_mc._ENV_QUOTE_DATES
+    _ENV_DEDUPE_H1 = _mystx_mc._ENV_DEDUPE_H1
+
+
+__all__ = [
+    "quote_frontmatter_dates",
+    "dedupe_injected_h1",
+    "register_hooks",
+    "_ENV_QUOTE_DATES",
+    "_ENV_DEDUPE_H1",
+    "_FM_DELIM",
+    "_reload_env_settings",
+]

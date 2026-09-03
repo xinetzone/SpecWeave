@@ -1,8 +1,19 @@
-import os
+"""OKF（开源知识格式）文档项目预设——D2 维度 sphinx_config 独有增量叠加。
+
+A3 公理：差异包裹，不嵌入。在 :mod:`mystx.presets.minimal_myst` 的
+基础之上，通过 :func:`deep_merge` 叠加以下 OKF 专属逻辑：
+    1. ``_detect_release``：从 PyPI importlib.metadata 自动取版本
+    2. ``_DEFAULT_INTERSPHINX``：Python/Sphinx/MyST 三个交叉引用默认值
+    3. GitHub URL → site_url 自动推断
+    4. ``_OKF_KEY_DEFAULTS``：中文默认 language/默认 project 名
+    5. book_overrides：repository_url/path_to_docs 注入 book theme options + extlinks
+"""
+
 import importlib.metadata
 from typing import Any
 
-from .._utils import deep_merge
+from ._shared import build_project_meta, build_setup_closure
+from .._utils import deep_merge, ensure_mystx_on_syspath
 from ..core import build_base_config
 from ..extensions import (
     DEFAULT_CONDITIONAL,
@@ -11,10 +22,12 @@ from ..extensions import (
 )
 from ..myst_compat import register_hooks
 from ..themes import resolve_theme, resolve_theme_options
-from ._shared import build_project_meta, build_setup_closure
 
-_DEFAULT_REPO = "https://github.com/example/repo"
-_DEFAULT_INTERSPHINX = {
+ensure_mystx_on_syspath(__file__)
+
+from mystx.presets.minimal_myst import build_config as _base_minimal_build_config  # noqa: E402
+
+_DEFAULT_INTERSPHINX: dict[str, tuple[str, None]] = {
     "python": ("https://docs.python.org/3.14", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master", None),
     "myst-parser": ("https://myst-parser.readthedocs.io/en/latest", None),
@@ -28,6 +41,7 @@ _OKF_KEY_DEFAULTS: dict[str, Any] = {
 
 
 def _detect_release(package_name: str | None, fallback: str = "0.1.0") -> str:
+    """从已安装的包元数据中读取版本号，未安装则回退 fallback。"""
     if not package_name:
         return fallback
     try:
@@ -37,7 +51,7 @@ def _detect_release(package_name: str | None, fallback: str = "0.1.0") -> str:
 
 
 def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
-    """OKF（开源知识格式）文档项目预设——还原 awesome-okf-xs 的全量配置。
+    """OKF 文档项目预设——还原 awesome-okf-xs 的全量配置。
 
     典型用法（任意项目 ``doc/conf.py`` 只需 5-8 行）::
 
@@ -106,7 +120,9 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
     params["html_theme"] = theme
     params["html_theme_options"] = theme_options
     params["extensions"] = extensions
-    params["html_title"] = params.get("html_title", params.get("project", "Untitled OKF Project"))
+    params["html_title"] = params.get(
+        "html_title", params.get("project", "Untitled OKF Project")
+    )
 
     base = build_base_config(params)
     if params.get("extlinks"):
@@ -123,3 +139,6 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
         user_setup=params.get("setup"),
     )
     return merged
+
+
+__all__ = ["build_config"]

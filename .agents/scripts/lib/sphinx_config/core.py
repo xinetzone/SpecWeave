@@ -1,110 +1,87 @@
-import os
+"""Sphinx 配置核心——直接从 mystx.configs 取 4 个基础字典，再 D3 增量叠加。
+
+A2 公理：增量叠加不覆盖。4 个 DEFAULT_* 字典的结构/键由 mystx 定义；
+sphinx_config 的 tippy / mermaid / ogp / suppress_warnings 增量通过
+``deep_merge`` 叠加到基础值之上，不重定义整个字典。
+"""
+
+from __future__ import annotations
+
 from typing import Any
 
-from ._utils import deep_merge
+from ._utils import deep_merge, ensure_mystx_on_syspath
 
-DEFAULT_MYST_CONFIG: dict[str, Any] = {
-    "myst_enable_extensions": [
-        "dollarmath",
-        "amsmath",
-        "deflist",
-        "colon_fence",
-        "replacements",
-        "substitution",
-    ],
-    "myst_fence_as_directive": ["mermaid"],
-    "myst_heading_anchors": 3,
-    "myst_commonmark_only": False,
-    "myst_title_to_header": True,
-}
+ensure_mystx_on_syspath(__file__)
 
-DEFAULT_BUILD_CONFIG: dict[str, Any] = {
-    "templates_path": ["_templates"],
-    "exclude_patterns": [
-        "_build",
-        "Thumbs.db",
-        ".DS_Store",
-        "**.ipynb_checkpoints",
-        "**/.spec/**",
-        "**/.spec",
-    ],
-    "numfig": True,
-    "nitpicky": False,
-    "suppress_warnings": [
-        "myst.xref_missing",
-        "myst.domains",
-        "ref.ref",
-        "toc.external",
-        "etoc.toctree",
-        "ref.footnote",
-        "misc.highlighting_failure",
-        "tippy.rtd",
-        "tippy.wiki",
-        "tippy.doi",
-    ],
-}
+from mystx.configs import (  # noqa: E402
+    DEFAULT_BUILD_CONFIG as _MYSTX_BUILD,
+    DEFAULT_EXT_CONFIG as _MYSTX_EXT,
+    DEFAULT_HTML_CONFIG as _MYSTX_HTML,
+    DEFAULT_MYST_CONFIG as _MYSTX_MYST,
+)
 
-DEFAULT_EXT_CONFIG: dict[str, Any] = {
-    "copybutton_exclude": ".linenos, .gp",
-    "copybutton_selector": ":not(.prompt) > div.highlight pre",
+# —— D3 维度：SpecWeave 独有的扩展/构建配置增量 —— #
+
+_EXT_INCREMENT: dict[str, Any] = {
     "mermaid_version": "11.4.1",
-    "mermaid_init_js": """
-mermaid.initialize({
-  startOnLoad: true,
-  theme: 'default',
-  securityLevel: 'loose',
-  fontFamily: '"Noto Sans SC", "Microsoft YaHei", sans-serif',
-});
-""".strip(),
+    "mermaid_init_js": (
+        "mermaid.initialize({\n"
+        "  startOnLoad: true,\n"
+        "  theme: 'default',\n"
+        "  securityLevel: 'loose',\n"
+        "  fontFamily: '\"Noto Sans SC\", \"Microsoft YaHei\", sans-serif',\n"
+        "});"
+    ),
     "tippy_enable_wikitips": False,
     "tippy_enable_doitips": False,
     "tippy_rtd_urls": [],
+    "sitemap_locales": [None],
     "tippy_skip_urls": [
         "https://*.readthedocs.io/*",
         "https://www.readthedocs.org/",
         "https://en.wikipedia.org/wiki/",
         "https://doi.org/",
     ],
-    "sitemap_url_scheme": "{link}",
-    "sitemap_locales": [None],
     "ogp_social_cards": {"enable": False},
-    "extlinks": {},
 }
 
-DEFAULT_HTML_CONFIG: dict[str, Any] = {
-    "html_static_path": ["_static"],
-    "html_css_files": ["local.css"],
-    "html_last_updated_fmt": "%Y-%m-%d, %H:%M:%S",
+_BUILD_INCREMENT: dict[str, Any] = {
+    "suppress_warnings": ["tippy.rtd", "tippy.wiki", "tippy.doi"],
 }
 
-
-def _resolve_html_baseurl(params: dict[str, Any]) -> str | None:
-    """从环境变量 / 项目参数中推断 ``html_baseurl``（sitemap + ogp 需要）。"""
-    if os.environ.get("GITHUB_ACTIONS"):
-        return os.environ.get("SITEMAP_URL_BASE", params.get("site_url"))
-    if not os.environ.get("READTHEDOCS"):
-        return params.get("site_url") or "http://127.0.0.1:8000/"
-    return None
+DEFAULT_MYST_CONFIG: dict[str, Any] = dict(_MYSTX_MYST)
+DEFAULT_EXT_CONFIG: dict[str, Any] = deep_merge(dict(_MYSTX_EXT), _EXT_INCREMENT)
+DEFAULT_BUILD_CONFIG: dict[str, Any] = deep_merge(dict(_MYSTX_BUILD), _BUILD_INCREMENT)
+DEFAULT_HTML_CONFIG: dict[str, Any] = dict(_MYSTX_HTML)
 
 
-def build_base_config(params: dict[str, Any] | None = None) -> dict[str, Any]:
-    """基于默认字典 + 项目覆盖，组装出 Sphinx 所需的核心配置。
+def build_base_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
+    """生成 Sphinx 基础 conf——合并 4 个 DEFAULT_* + override 再注入 intersphinx / ogp。
 
-    不包含 extensions / html_theme / hooks（这些在各自模块中处理）。
+    保持 sphinx_config 原有的三个注入约定：
+    1. ``override['intersphinx_mapping']`` → 直接加入最终 conf（D2 维度 OKF 预设需要）
+    2. ``override['site_url']`` → 映射到 Sphinx ext: ogp 的 ``ogp_site_url``
+    3. 合并完成后再 ``deep_merge(override, remove_marker=None)`` 允许显式删除默认键
     """
-    params = params or {}
-    merged: dict[str, Any] = {}
-    merged.update(DEFAULT_BUILD_CONFIG)
-    merged.update(DEFAULT_MYST_CONFIG)
-    merged.update(DEFAULT_EXT_CONFIG)
-    merged.update(DEFAULT_HTML_CONFIG)
+    override = override or {}
+    cfg: dict[str, Any] = deep_merge(
+        DEFAULT_BUILD_CONFIG,
+        DEFAULT_MYST_CONFIG,
+        DEFAULT_EXT_CONFIG,
+        DEFAULT_HTML_CONFIG,
+    )
+    if "intersphinx_mapping" in override:
+        cfg["intersphinx_mapping"] = override["intersphinx_mapping"]
+    if "site_url" in override:
+        cfg["ogp_site_url"] = override["site_url"]
+        cfg["html_baseurl"] = override["site_url"]
+    return deep_merge(cfg, override)
 
-    baseurl = _resolve_html_baseurl(params)
-    if baseurl is not None:
-        merged["html_baseurl"] = baseurl
-    if "site_url" in params:
-        merged["ogp_site_url"] = params["site_url"]
-    if "intersphinx_mapping" in params:
-        merged["intersphinx_mapping"] = params["intersphinx_mapping"]
 
-    return deep_merge(merged, params.get("config_override") or {})
+__all__: tuple[str, ...] = (
+    "DEFAULT_MYST_CONFIG",
+    "DEFAULT_EXT_CONFIG",
+    "DEFAULT_BUILD_CONFIG",
+    "DEFAULT_HTML_CONFIG",
+    "build_base_config",
+)

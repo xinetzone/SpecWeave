@@ -1,56 +1,32 @@
-from collections.abc import Callable, Mapping
-from typing import Any
+"""预设共享工具（build_* 从 mystx.presets._shared 直接 re-export）。
+
+历史注解：
+    曾有 ``merge_html_theme`` 辅助函数通过 ``html_theme_options`` 深度合并
+    包装 resolve_theme_options。该语义已由
+    ``resolve_theme_options(theme, override_dict)`` 的第二参数 +
+    ``_utils.deep_merge`` 显式实现，不在此处提供单函数封装。
+"""
+
+from .._utils import ensure_mystx_on_syspath, deep_merge
+from ..themes import resolve_theme_options
+
+ensure_mystx_on_syspath(__file__)
+
+from mystx.presets._shared import (  # noqa: E402
+    build_project_meta,
+    build_setup_closure,
+)
 
 
-_COMMON_KEY_DEFAULTS: dict[str, Any] = {
-    "project": "Untitled Project",
-    "author": "Unknown Author",
-    "release": "0.1.0",
-    "version": "0.1.0",
-    "language": "en",
-    "html_title": None,
-    "html_theme": "alabaster",
-    "html_theme_options": None,
-    "extensions": (),
-}
+def merge_html_theme(
+    base_options: dict, custom_options: dict | None = None
+) -> dict:
+    """显式合并两组 ``html_theme_options``——保留历史 API 以防外部调用。
 
-
-def build_project_meta(
-    params: Mapping[str, Any],
-    key_defaults: Mapping[str, Any] | None = None,
-) -> dict[str, Any]:
-    """构建 preset 的标准 project_meta 字典（按 key_defaults 填默认 + params 白名单覆盖）。
-
-    遵循 PRESET-SETUP 模式：白名单机制只覆盖已知键，防止 params 拼错字段时静默丢失——
-    例如误写为 ``projecT`` 时不会出现在返回字典中，在类型检查或 Sphinx 配置层能暴露错误。
+    等效于 ``deep_merge(base_options, custom_options)``，
+    内部最终结果交由 ``resolve_theme_options`` 判断使用。
     """
-    d = dict(_COMMON_KEY_DEFAULTS)
-    if key_defaults:
-        d.update(key_defaults)
-    for key, value in params.items():
-        if key in d:
-            d[key] = value
-    if d["html_title"] is None:
-        d["html_title"] = d["project"]
-    if d["html_theme_options"] is None:
-        d["html_theme_options"] = {}
-    return d
+    return deep_merge(base_options, custom_options or {})
 
 
-def build_setup_closure(
-    register_fns: list[Callable[[Any], None]] | tuple[Callable[[Any], None], ...],
-    user_setup: Callable[[Any], None] | None = None,
-) -> Callable[[Any], None]:
-    """生成标准执行顺序的 setup 闭包：``for fn in register_fns: fn(app) → user_setup(app)``。
-
-    所有 preset 的 ``merged["setup"]`` 必须通过本函数生成，保证执行顺序是单一可信源
-    （PRESET-SETUP 模式核心：避免 N 处 copy 导致顺序改漏）。
-    """
-
-    def _setup(app: Any) -> None:
-        for fn in register_fns:
-            fn(app)
-        if callable(user_setup):
-            user_setup(app)
-
-    return _setup
+__all__ = ["build_project_meta", "build_setup_closure", "merge_html_theme"]
