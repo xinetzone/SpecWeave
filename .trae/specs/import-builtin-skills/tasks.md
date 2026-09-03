@@ -45,9 +45,9 @@
   - [x] 7.5 暂存核对：`git add .agents/skills .trae/specs/import-builtin-skills` 后 staged 集合 = A 754（750 技能文件 + 4 spec 文件）+ M 1（README.md），无 D、无对既有技能文件的 M；将不属于本次范围的未跟踪 `trae-computer-use-ptc/` 移出暂存（磁盘保留不动）
   - [x] 7.6 frontmatter 解析级兜底：53 个含 SKILL.md 目录全扫，真实解析失败 = 0
 
-- [ ] Task 8: 原子提交（依赖 Task 7 全绿）
-  - [ ] 8.1 经 atomic-commit-cmd 执行单一职责提交（`chore(.agents): 导入 21 个 Trae 内置技能并登记索引`，主体中文），add 与 commit 分两次调用并核对暂存集
-  - [ ] 8.2 提交后核对暂存区与工作树状态（残留的未跟踪 trae-computer-use-ptc/ 属既有现状，非本次引入，不入提交）
+- [x] Task 8: 原子提交（依赖 Task 7 全绿）
+  - [x] 8.1 经 atomic-commit-cmd 执行单一职责提交（`chore(.agents): 导入 21 个 Trae 内置技能并登记索引`，主体中文），add 与 commit 分两次调用并核对暂存集（提交哈希 4c7f6798e，755 文件）
+  - [x] 8.2 提交后核对暂存区与工作树状态（残留的未跟踪 trae-computer-use-ptc/ 属既有现状，非本次引入，不入提交）
 
 # Task Dependencies
 
