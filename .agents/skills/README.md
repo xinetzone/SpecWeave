@@ -34,13 +34,14 @@ title: ".agents/skills/ 目录索引"
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
 | ~~pattern-extraction-cmd~~ | ~~命令门面~~ | ~~模式萃取（已废弃，由extraction-cmd替代）~~ | ~~模式沉淀、萃取模式~~ | ~~[pattern-extraction-cmd/SKILL.md](pattern-extraction-cmd/SKILL.md)~~ |
 
-### 完整Skill（3个）
+### 完整Skill（4个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
 | forum-posting | 完整Skill | Discourse论坛自动化操作（发帖、编辑、回复、清理草稿等），支持双方案（MCP+Playwright脚本） | 发帖、编辑帖子、回复帖子、forum.trae.cn、forum-bot | [forum-posting/SKILL.md](forum-posting/SKILL.md) |
 | home-assistant | 完整Skill | Home Assistant智能家居系统集成（设备控制、状态查询、服务调用），REST API交互 | 智能家居、控制设备、查询状态、home assistant、ha_api | [home-assistant/SKILL.md](home-assistant/SKILL.md) |
 | git-commit-helper | 完整Skill | Git原子化提交规范执行（三查暂存法→预提交验证→构建提交信息→执行提交→验证结果），含validate_commit.py | 提交、commit、原子提交、代码提交、提交变更、git commit、保存更改 | [git-commit-helper/SKILL.md](git-commit-helper/SKILL.md) |
+| trae-computer-use-ptc | 完整Skill | Computer Use Windows 桌面应用 UI 自动化指南（本地 MCP）：list_apps/get_app_state/click/scroll/type_text 等操作，Electron/桌面应用场景，高风险操作前须确认；import-builtin-skills 时既有同名保留未覆盖的本地 v1.2.0 | Computer Use、电脑操作、UI自动化、桌面交互、操作应用 | [trae-computer-use-ptc/SKILL.md](trae-computer-use-ptc/SKILL.md) |
 
 ### 工作流门面（2个）
 
@@ -198,6 +199,7 @@ flowchart LR
 
 ## Changelog
 
+- **v1.17** (2026-09-03): 源镜像清理收尾——external/dao/xinzo（Trae IDE 配置镜像，约 232MB）已完成历史使命整目录移除（git-ignored 未入库，无提交记录）；16 个设计库镜像 SKILL.md 的 frontmatter `source` 由活路径改写为「镜像自 Trae IDE design_libraries（源镜像已清理，原路径 …）」文字形态保溯源（循 21 内置镜像先例）。完整Skill 分类 3→4：补登记既有本地 skill trae-computer-use-ptc（Computer Use Windows 桌面 UI 自动化指南 v1.2.0，import-builtin-skills 时既有同名保留未覆盖），并补建 .meta/toml/.agents/skills/trae-computer-use-ptc/SKILL.toml 镜像元数据。
 - **v1.16** (2026-09-03): 新增「设计库镜像 Skill」分类（16个，Skill 分类从五类扩展为六类），自 external/dao/xinzo/.trae-cn/design_libraries 完整归档 16 个 Trae 内置设计系统库（21th/Barbie/Claude/Doubao/Golden Time/Google/Minimal Dashboard/MotionFit/Nerv/Nimbus Core/Pinguo/TikTok/TraeWork/Vercel/Yuanli/Vibecamp）至 .agents/skills/；每库整目录自包含（token CSS/组件 JSON/预览 HTML/UI Kit），SKILL.md frontmatter 增补 source 溯源，排除 __MACOSX/ 与 .DS_Store，golden-time-design 内部绝对路径修复为相对路径。归档清单见 .trae/specs/design-library-archive/migration-manifest.md。
 - **v1.15** (2026-09-03): 新增「内置镜像 Skill」分类（21个：work 办公文档 8 / global 通用 6 / design 设计 4 / code 基建 3），自 external/dao/xinzo/.trae-cn/builtin 扁平去重取最全版导入并登记索引；每个 SKILL.md 增补 source 溯源；TRAE-plan-mode/TRAE-spec-mode/TRAE-computer-use-ptc 既有同名保留不覆盖。导入清单见 .trae/specs/import-builtin-skills/migration-manifest.md。
 - **v1.14** (2026-09-01): TRAE-plan-mode/TRAE-spec-mode 目录名回归大写——实测 Trae 内置 doutops 同步会以 TRAE-* 大写路径回写 .agents/skills/ 并覆盖为英文原版（3 文件被还原），为终止命名拉锯，以同步路径为权威位置；内容恢复为中文独立适配版并在 SKILL.md 顶部固化"同步覆盖后按 git 历史恢复"指引。质量分 90/100（大写 name 触发开放标准 name.format/compliance 2 项 WARN，主动接受并文档化）。
