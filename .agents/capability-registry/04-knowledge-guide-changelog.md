@@ -39,7 +39,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/04-knowledge-guide-cha
 ├─ 控制智能家居设备 → home-assistant Skill
 ├─ 做项目复盘 → retrospective-cmd Skill
 ├─ 从执行中萃取洞察 → insight-cmd Skill
-├─ 从洞察/复盘中沉淀可复用模式 → pattern-extraction-cmd Skill
+├─ 从洞察/复盘中沉淀可复用模式 → extraction-cmd Skill
 ├─ 导出正式报告 → export-report-cmd Skill
 ├─ 原子化Git提交 → atomic-commit-cmd Skill
 ├─ 创建/检查/修复Mermaid图表 → mermaid-cmd Skill → mermaid命令集

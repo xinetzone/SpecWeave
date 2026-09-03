@@ -56,7 +56,6 @@ CMD_LOG_COMMANDS = {
     "atomization-cmd": {"cmd": "atomization", "session_prefix": "atom-", "steps": 7, "name": "原子化"},
     "atomic-commit-cmd": {"cmd": "atomic-commit", "session_prefix": "cmt-", "steps": 7, "name": "原子提交"},
     "mermaid-cmd": {"cmd": "mermaid", "session_prefix": "merm-", "steps": 7, "name": "Mermaid图表"},
-    "pattern-extraction-cmd": {"cmd": "pattern-extraction", "session_prefix": "ptrn-", "steps": 6, "name": "模式萃取"},
 }
 
 CMD_LOG_LINE_RE = re.compile(

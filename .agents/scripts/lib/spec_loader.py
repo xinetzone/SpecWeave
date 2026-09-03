@@ -243,13 +243,6 @@ TASK_ROUTING = {
         ],
         "description": "重复代码检查任务",
     },
-    "pattern_extraction": {
-        "keywords": ["模式沉淀", "萃取模式", "模式入库", "可复用模式", "pattern extraction"],
-        "l2_specs": [
-            "skills/pattern-extraction-cmd/SKILL.md",
-        ],
-        "description": "模式萃取任务",
-    },
     "forum": {
         "keywords": ["发帖", "编辑帖子", "回复帖子", "forum", "论坛"],
         "l2_specs": [

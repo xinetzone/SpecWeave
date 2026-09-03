@@ -46,7 +46,6 @@ A_CLASS_TARGETS = [
     ".agents/skills/atomization-cmd/SKILL.md",
     ".agents/skills/atomic-commit-cmd/SKILL.md",
     ".agents/skills/mermaid-cmd/SKILL.md",
-    ".agents/skills/pattern-extraction-cmd/SKILL/04-cmd-log-quality.md",
 ]
 
 B_CLASS_TARGETS = [
