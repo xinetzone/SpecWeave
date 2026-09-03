@@ -1,7 +1,7 @@
 ---
 name: "yuanli-design-system"
 description: "Use this skill to generate well-branded interfaces and assets for Volcengine / Yuanli — a PRD-driven Chinese design system. Contains tokens, component specs, and UI kit references."
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_volcengine"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_volcengine）"
 user-invocable: true
 ---
 

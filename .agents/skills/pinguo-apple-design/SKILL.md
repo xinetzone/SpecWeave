@@ -2,7 +2,7 @@
 name: pinguo-apple-design
 description: Use this skill to generate well-branded interfaces and assets for Pinguo — a consumer imaging product ecosystem. Contains essential design guidelines, colors, type, fonts, component references, and UI kit patterns for prototyping app UIs.
 user-invocable: true
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_apple"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_apple）"
 ---
 
 # Pinguo Design Skill

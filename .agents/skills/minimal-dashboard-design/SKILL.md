@@ -2,7 +2,7 @@
 name: minimal-dashboard-design
 description: Use this skill to generate well-branded interfaces for Minimal Dashboard. Contains colors, type, tokens, component references, previews, and a dashboard UI kit for prototyping dashboard UIs.
 user-invocable: true
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_minimalist"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_minimalist）"
 ---
 # Minimal Dashboard Design Skill
 

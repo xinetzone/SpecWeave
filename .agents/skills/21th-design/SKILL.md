@@ -2,7 +2,7 @@
 name: 21th-design
 description: Use this skill to generate well-branded interfaces and assets for 21th — an analytics dashboard system with light/dark themes, mono-led typography, square geometry, offset shadows, and restrained electric-blue accents. Contains token CSS, parsed token JSON, component specs, and preview HTML for dashboard UI work.
 user-invocable: true
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_21th"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_21th）"
 ---
 
 # 21th Design Skill

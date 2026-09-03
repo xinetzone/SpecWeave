@@ -1,7 +1,7 @@
 ---
 name: vercel-design-library-design
 description: Use this skill to generate well-branded interfaces for Vercel. Contains colors, type, fonts, assets, and UI kit for prototyping dashboard UIs.
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_vercel"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_vercel）"
 user-invocable: true
 ---
 # Vercel Design Skill

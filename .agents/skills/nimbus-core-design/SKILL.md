@@ -1,7 +1,7 @@
 ---
 name: "nimbus-core-design"
 description: "Use this skill to generate well-branded interfaces and assets for TraeCode / Nimbus Core — a dark-first product design system with 23 components, 2 UI kits, and 115 SVG icons. Contains tokens, component specs, previews, and architecture documentation."
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_trae"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_trae）"
 user-invocable: true
 ---
 

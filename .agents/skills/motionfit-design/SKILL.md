@@ -1,7 +1,7 @@
 ---
 name: motionfit-design
 description: Use this skill to generate well-branded interfaces for MotionFit. Contains colors, type, fonts, component references, and a UI kit for prototyping dashboard UIs.
-source: "../../external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_motion_fit"
+source: "镜像自 Trae IDE design_libraries（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/design_libraries/dl_builtin_motion_fit）"
 user-invocable: true
 ---
 # MotionFit Design Skill
