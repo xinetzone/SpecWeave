@@ -8,13 +8,14 @@ title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引
 
-本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为五类：
+本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为六类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
 - **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
 - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
 - **内置镜像 Skill**：Trae IDE 内置技能的镜像入库（原貌保留，frontmatter source 溯源），用于项目自托管与统一发现
+- **设计库镜像 Skill**：Trae IDE 内置设计系统库的完整归档（token CSS/组件 JSON/预览 HTML/UI Kit 全量自包含，frontmatter source 溯源），不依赖外部源目录
 
 ## Skill 列表
 
@@ -109,6 +110,29 @@ Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 
 | skill-creator | code（基建） | 创建 SKILL 的强制工具：用户想创建/新增任何技能时必须立即调用 | [SKILL.md](skill-creator/SKILL.md) |
 | TRAE-product-knowledge | code（基建） | TRAE 品牌与官方产品知识问答：产品差异、TraeCode/TraeWork/CLI/Plugin 入口、能力、MCP、Skills、官方文档链接；不用于普通编码问题 | [SKILL.md](TRAE-product-knowledge/SKILL.md) |
 
+### 设计库镜像 Skill（16个，来自 Trae IDE design_libraries 镜像）
+
+Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录 external/dao/xinzo/.trae-cn/design_libraries（只读）。每个库整目录自包含（token CSS/组件 JSON/预览 HTML/UI Kit 全量内嵌），SKILL.md frontmatter `source` 字段标注原始路径；`__MACOSX/` 元数据与 `.DS_Store` 已排除。归档清单见 .trae/specs/design-library-archive/migration-manifest.md。
+
+| 技能名 | 品牌/系统 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| 21th-design | 21th | 21th 分析仪表盘设计系统（明/暗双主题、mono 排版、方形几何、偏移阴影、电光蓝点缀）：生成仪表盘界面与资产的品牌化 UI | [SKILL.md](21th-design/SKILL.md) |
+| barbie-design | Barbie | Barbie 俏皮光泽仪表盘设计系统：品牌化界面生成（色彩/字体/阴影/间距/组件规格） | [SKILL.md](barbie-design/SKILL.md) |
+| claude-design-system-design | Claude | Claude 设计系统（Anthropic 美学，暖调编辑风、对话优先 UI）：完整主题 token、组件规格、预览与 UIKit 引用 | [SKILL.md](claude-design-system-design/SKILL.md) |
+| doubao-design | Doubao | 豆包极简冷调 AI 仪表盘设计系统：token/组件规格/预览/UI kit 引用 | [SKILL.md](doubao-design/SKILL.md) |
+| golden-time-design | Golden Time | Golden Time 暖调编辑风高端仪表盘设计系统：完整 token/组件/预览/UI kit，已修复为自包含相对路径 | [SKILL.md](golden-time-design/SKILL.md) |
+| google-design | Google | Google 简洁分析型仪表盘设计系统：设计准则/色彩/字体/组件参考 | [SKILL.md](google-design/SKILL.md) |
+| minimal-dashboard-design | Minimal Dashboard | 极简仪表盘设计系统：色彩/字体/token/组件参考/预览/dashboard UI kit | [SKILL.md](minimal-dashboard-design/SKILL.md) |
+| motionfit-design | MotionFit | MotionFit 设计系统：色彩/字体/字体族/组件参考/UI kit（dashboard 原型） | [SKILL.md](motionfit-design/SKILL.md) |
+| nerv-design | Nerv | Nerv 未来感高对比运维仪表盘品牌：设计准则/色彩/字体/组件参考/UI kit | [SKILL.md](nerv-design/SKILL.md) |
+| nimbus-core-design | Nimbus Core（TraeCode） | TraeCode/Nimbus Core 暗色优先产品设计系统（23 组件/2 UI Kit/115 SVG 图标）：token、组件契约、预览与架构文档 | [SKILL.md](nimbus-core-design/SKILL.md) |
+| pinguo-apple-design | Pinguo（苹果） | Pinguo 消费影像产品生态（Apple 启发克制美学）：设计准则/色彩/字体/组件参考/UI kit 模式 | [SKILL.md](pinguo-apple-design/SKILL.md) |
+| tiktok-design | TikTok | 抖音社交视频平台设计：按场景（移动 feed/网页/编辑）或复用内置 UI kit/组件，token-first & icon-first | [SKILL.md](tiktok-design/SKILL.md) |
+| trae-work-design | TraeWork | TraeWork 专业工作台设计系统：完整 token/组件/UI kit（scaffold/组件 CSS/图标渲染器） | [SKILL.md](trae-work-design/SKILL.md) |
+| vercel-design-library-design | Vercel | Vercel 设计系统：色彩/字体/资产/UI kit（dashboard 原型） | [SKILL.md](vercel-design-library-design/SKILL.md) |
+| yuanli-design-system | Yuanli（源力） | 源力设计系统（Volcengine，PRD 驱动中文生成）：PRD→页面生成规则 + 完整 token/组件/UI kit | [SKILL.md](yuanli-design-system/SKILL.md) |
+| vibecamp-design | Vibecamp | Vibecamp 大胆编辑风 dashboard 产品：设计准则/色彩/字体/组件参考/UI kit | [SKILL.md](vibecamp-design/SKILL.md) |
+
 ### 脚本命令门面（10个）
 
 | Skill名称 | 类型 | 对应脚本 | 核心触发词 | SKILL.md路径 |
@@ -174,6 +198,7 @@ flowchart LR
 
 ## Changelog
 
+- **v1.16** (2026-09-03): 新增「设计库镜像 Skill」分类（16个，Skill 分类从五类扩展为六类），自 external/dao/xinzo/.trae-cn/design_libraries 完整归档 16 个 Trae 内置设计系统库（21th/Barbie/Claude/Doubao/Golden Time/Google/Minimal Dashboard/MotionFit/Nerv/Nimbus Core/Pinguo/TikTok/TraeWork/Vercel/Yuanli/Vibecamp）至 .agents/skills/；每库整目录自包含（token CSS/组件 JSON/预览 HTML/UI Kit），SKILL.md frontmatter 增补 source 溯源，排除 __MACOSX/ 与 .DS_Store，golden-time-design 内部绝对路径修复为相对路径。归档清单见 .trae/specs/design-library-archive/migration-manifest.md。
 - **v1.15** (2026-09-03): 新增「内置镜像 Skill」分类（21个：work 办公文档 8 / global 通用 6 / design 设计 4 / code 基建 3），自 external/dao/xinzo/.trae-cn/builtin 扁平去重取最全版导入并登记索引；每个 SKILL.md 增补 source 溯源；TRAE-plan-mode/TRAE-spec-mode/TRAE-computer-use-ptc 既有同名保留不覆盖。导入清单见 .trae/specs/import-builtin-skills/migration-manifest.md。
 - **v1.14** (2026-09-01): TRAE-plan-mode/TRAE-spec-mode 目录名回归大写——实测 Trae 内置 doutops 同步会以 TRAE-* 大写路径回写 .agents/skills/ 并覆盖为英文原版（3 文件被还原），为终止命名拉锯，以同步路径为权威位置；内容恢复为中文独立适配版并在 SKILL.md 顶部固化"同步覆盖后按 git 历史恢复"指引。质量分 90/100（大写 name 触发开放标准 name.format/compliance 2 项 WARN，主动接受并文档化）。
 - **v1.13** (2026-09-01): 新增「Trae 内置工作流 Skill」分类（2个：TRAE-plan-mode/TRAE-spec-mode），自 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills 集成并适配为中文五要素版（保留原始工作流语义与产物模板骨架，frontmatter 补全 version/paths/source 溯源，description 改单行单引号触发式标量）。TRAE-plan-mode 承载有界变更"规划→批准→执行"（计划落盘 .trae/documents/，批准前禁写）；TRAE-spec-mode 承载复杂变更五阶段规范工作流（spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收词汇+独立 Review 门，支持中断恢复）。两者互为选型路由（有界→plan，复杂→spec）。同步注册 .agents/capability-registry/02-skills.md 与 .meta/toml 镜像。

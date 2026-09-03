@@ -1,0 +1,18 @@
+- [x] 16 个设计库目录全部存在于 `.agents/skills/`，目录名与命名映射表一致
+- [x] 每个设计库目录含 SKILL.md（YAML frontmatter 可解析）
+- [x] 每个 SKILL.md frontmatter 含 `source` 字段，值指向原始设计库路径
+- [x] `__MACOSX/` 目录未出现在 `.agents/skills/` 任一设计库目录中
+- [x] golden-time-design/SKILL.md 中无 `/workspace/.design_library/goldentime/` 绝对路径残留
+- [x] doubao-design/SKILL.md 有 YAML frontmatter（含 name/description/source/user-invocable）
+- [x] golden-time-design/SKILL.md 有 YAML frontmatter
+- [x] nimbus-core-design/SKILL.md 有 YAML frontmatter
+- [x] trae-work-design/SKILL.md 有 YAML frontmatter
+- [x] yuanli-design-system/SKILL.md 有 YAML frontmatter
+- [x] `.agents/skills/README.md` 含「设计库镜像 Skill」分类小节（16 行）
+- [x] `.agents/skills/README.md` 顶部引言更新为六类
+- [x] `.agents/skills/README.md` 有新增 Changelog 条目
+- [x] 16 个设计库 README 中相对链接全部存在，无断链
+- [x] 既有技能目录零改动：`git status --porcelain` 对已有技能无 M/D
+- [x] `git status --porcelain .agents/skills` 仅含新增（无对既有文件的修改）
+- [x] migration-manifest.md 已生成且与归档结果一致
+- [ ] 原子提交完成：conventional commit 主体中文，单一职责
