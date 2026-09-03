@@ -27,6 +27,7 @@ x-toml-ref: "../../../.meta/toml/.agents/scripts/lib/README.toml"
 | [docs/13-quality-report.md](docs/13-quality-report.md) | `lib.quality_report` | 质量报告聚合与输出 |
 | [docs/14-constants.md](docs/14-constants.md) | `constants.py` | 全局常量（scripts/ 根目录） |
 | [docs/15-testing.md](docs/15-testing.md) | `lib.testing` | 测试辅助工具库（多智能体边界场景模板） |
+| [docs/16-sphinx-config.md](docs/16-sphinx-config.md) | `lib.sphinx_config` | Sphinx + MyST 文档构建可复用配置层（2预设/弹性扩展/MyST兼容钩子/主题降级队列） |
 
 ## 文档生成
 
