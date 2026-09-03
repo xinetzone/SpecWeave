@@ -1,4 +1,4 @@
-***
+---
 
 name: docx-template-report
 version: 1.3.4
@@ -6,7 +6,7 @@ description: "当用户提到'模板驱动报告'、'生成报告'、'批量报�
 argument-hint: "<模板.docx路径> <数据(JSON/YAML/dict)> <输出.docx路径>"
 user-invocable: true
 title: "Docx-Template-Report 模板驱动报告生成 Skill"
---------------------------------------------
+---
 
 # Docx-Template-Report 模板驱动报告生成 Skill
 
