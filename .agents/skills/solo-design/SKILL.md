@@ -1,7 +1,7 @@
 ---
 name: solo-design
 description: Design website pages, UI screens, prototypes, page-level visual systems, and existing `.design` project mutations. Use for websites, landing pages, UI prototypes, redesigns, theme changes, 1:1 restoration, editable static layouts, and complex canvas projects. Route bitmap image edits to solo-image-edit, bitmap-first poster/banner/KV/cover generation to solo-graphic-generation, and reusable Design Library / Design System / token architecture creation to design-library-creator.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/design/default/skills/solo-design/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/design/default/skills/solo-design/SKILL.md）"
 ---
 
 # Solo Design

@@ -1,7 +1,7 @@
 ---
 name: TRAE-computer-use
 description: Control local apps through Computer Use. Use for tasks that require reading or operating app UI by clicking, typing, scrolling, dragging, pressing keys, or setting values.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-computer-use/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-computer-use/SKILL.md）"
 ---
 
 # Computer Use

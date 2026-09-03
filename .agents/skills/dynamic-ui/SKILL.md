@@ -5,7 +5,7 @@ description_zh: "在文字回答旁边内联展示可视化内容 — 图表、�
 description_ja: "テキスト応答にインラインで視覚コンテンツを表示 — 図表、アーキテクチャ図、インタラクティブデモ、比較。コンパクトな視覚化が回答を明確にする場合のみ使用。Web サイト、アプリ、レポート、ダッシュボード、スライドには使用しない。"
 user-invocable: true
 disable-model-invocation: false
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/dynamic-ui/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/dynamic-ui/SKILL.md）"
 ---
 
 # dynamic-ui — Inline Visualization

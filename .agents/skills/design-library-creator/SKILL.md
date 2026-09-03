@@ -1,7 +1,7 @@
 ---
 name: "design-library-creator"
 description: "Create, expand, and refine professional Design Libraries / Design Systems with structured token architecture. ONLY invoke when user EXPLICITLY mentions design-system terminology: 'Design Library', 'Design System', '设计系统', '设计库', 'token system', 'design tokens', '组件库规范', or provides a parsed design-spec bundle (ZIP/Figma export). Also covers creating a new theme / color theme as a design-system deliverable (创建主题/新建暖色主题/深色主题等 — tokens + palette + component styling). Do NOT route here for: '素材库', '全套素材', '素材合集', '物料库', '生成素材', '做一套设计', '做几张图', '设计一套页面', '帮我出图', page/poster/landing-page creation, or any visual-asset generation intent where the user does not demonstrate knowledge of design-system concepts. Those belong to solo-design."
-source: "../../../external/dao/xinzo/.trae-cn/builtin/design/default/skills/design-library-creator/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/design/default/skills/design-library-creator/SKILL.md）"
 ---
 
 # Design Library Creator

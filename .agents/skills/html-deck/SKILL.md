@@ -1,7 +1,7 @@
 ---
 name: html-deck
 description: Create stunning, animation-rich HTML slide decks from scratch. Outputs a self-contained HTML file that opens in any browser, agent-friendly, visually impressive and pixel-perfect across all platforms. Use when the user says "演示文稿", "presentation", "slides", or "deck" WITHOUT explicitly mentioning "PPT" or "ppt" — if the user says "PPT"/"ppt", route to the `pptx` skill instead. Covers building a brand-new presentation from a topic, outline, document, or Markdown — i.e. no existing .pptx file is involved. The deliverable is always HTML.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/work/default/skills/html-deck/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/default/skills/html-deck/SKILL.md）"
 ---
 
 ## Workflow — 5 steps

@@ -2,7 +2,7 @@
 name: "skill-creator"
 description: "MANDATORY tool for creating SKILLs - MUST be invoked IMMEDIATELY when user wants to create/add any skill"
 user-invocable: true
-source: "../../../external/dao/xinzo/.trae-cn/builtin/code/default/skills/skill-creator/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/code/default/skills/skill-creator/SKILL.md）"
 ---
 
 # Skill Creator

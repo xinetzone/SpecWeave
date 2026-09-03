@@ -1,7 +1,7 @@
 ---
 name: solo-image-edit
 description: Edit existing bitmap images with image-to-image generation and place every kept result on a `.design` canvas. Use for structured Design image comments or explicit pixel-level edits with an original image.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/design/default/skills/solo-image-edit/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/design/default/skills/solo-image-edit/SKILL.md）"
 ---
 
 # Solo Image Edit

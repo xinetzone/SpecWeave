@@ -2,7 +2,7 @@
 name: "TRAE-browseruse-external"
 description: "Automate tasks in the user's own browser (Chrome on their machine). Invoke when the user says things like 'use my browser', 'open in my Chrome', 'use the browser on my computer', or wants to browse/interact/test web pages in their local Chrome."
 user-invocable: false
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-browseruse-external/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-browseruse-external/SKILL.md）"
 ---
 
 # External Browser Use Guide

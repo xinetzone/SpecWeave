@@ -1,7 +1,7 @@
 ---
 name: TRAE-product-knowledge
 description: "Use this skill for TRAE brand identity and official product knowledge questions, including: who you are, what TRAE is, product differences, TraeCode / TraeWork / TraeCode CLI / TraeCode Plugin entry points, supported capabilities, MCP, Skills, official documentation, and official product links. Do not use it for ordinary coding questions or repository-specific implementation work."
-source: "../../../external/dao/xinzo/.trae-cn/builtin/code/default/skills/TRAE-product-knowledge/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/code/default/skills/TRAE-product-knowledge/SKILL.md）"
 ---
 
 # TRAE Product Knowledge

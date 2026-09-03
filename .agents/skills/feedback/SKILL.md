@@ -3,7 +3,7 @@ name: feedback
 description: "Use only for explicit TRAE feedback submission intent: when the user explicitly invokes /feedback, the host injects Use Skill: feedback, or the user clearly asks to submit/send/record/report their own current TRAE issue as feedback. Do not activate merely because the user mentions feedback, bug, complaint, feedback page, feedback API, or user feedback data. If uncertain, do not activate."
 user-invocable: true
 disable-model-invocation: false
-source: "../../../external/dao/xinzo/.trae-cn/builtin/code/default/skills/feedback/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/code/default/skills/feedback/SKILL.md）"
 ---
 
 # Feedback

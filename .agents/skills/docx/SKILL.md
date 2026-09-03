@@ -4,7 +4,7 @@ description: "Comprehensive document creation, editing, and analysis with suppor
 license: Proprietary. LICENSE.txt has complete terms
 supported_os:
   - windows
-source: "../../../external/dao/xinzo/.trae-cn/builtin/work/iphigenia/skills/docx/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/iphigenia/skills/docx/SKILL.md）"
 ---
 
 # DOCX creation, editing, and analysis

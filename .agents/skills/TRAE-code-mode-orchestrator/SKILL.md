@@ -1,7 +1,7 @@
 ---
 name: TRAE-code-mode-orchestrator
 description: "Code Mode (Exec) usage patterns and applicable scenarios. Covers parallel fan-out, pipeline with JS transforms, conditional branching, loop-until-condition, and multi-source aggregation. Trigger when the task benefits from orchestrating multiple tool calls in a single JavaScript script rather than sequential direct calls."
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-code-mode-orchestrator/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-code-mode-orchestrator/SKILL.md）"
 ---
 
 # TRAE Code Mode Orchestrator

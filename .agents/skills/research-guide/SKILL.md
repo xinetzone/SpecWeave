@@ -7,7 +7,7 @@ description: >
   producing any evidence-based deliverable. Provides source-hierarchy rules,
   cross-validation methodology, search paradigms, and
   sub-scenario routing. For deliverable generation (research reports, competitive analyses), routes to specialized references in the references/ directory.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/work/default/skills/research-guide/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/default/skills/research-guide/SKILL.md）"
 ---
 
 ## 1. Role Definition

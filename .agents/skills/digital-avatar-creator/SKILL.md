@@ -1,7 +1,7 @@
 ---
 name: "digital-avatar-creator"
 description: "MANDATORY tool for creating digital avatar skills that run as autonomous SubAgents. MUST be invoked IMMEDIATELY when user wants to create a digital avatar, persona, virtual role, or specialized AI assistant."
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/digital-avatar-creator/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/digital-avatar-creator/SKILL.md）"
 ---
 
 # Digital Avatar Creator

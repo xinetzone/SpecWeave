@@ -2,7 +2,7 @@
 name: "TRAE-browseruse"
 description: "Browser automation guide. Invoke when user wants to browse websites, access URLs, scrape web content, test frontend UI, perform any browser interaction, or navigate to a specific URL and perform multi-step actions on it (click, verify elements, fill forms)."
 user-invocable: false
-source: "../../../external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-browseruse/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/global/skills/TRAE-browseruse/SKILL.md）"
 ---
 
 

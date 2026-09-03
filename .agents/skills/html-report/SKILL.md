@@ -1,7 +1,7 @@
 ---
 name: html-report
 description: Create any self-contained HTML deliverable except slides — research reports, whitepapers, PRDs, dashboards, portfolios, resumes, email templates, data visualizations, and more. Use when the user wants to produce a polished, visually designed HTML page or multi-page site for any purpose. The final deliverable is a self-contained directory (<name>.html + assets + _shared) deployed to the user's workspace with zero external dependencies.
-source: "../../../external/dao/xinzo/.trae-cn/builtin/work/default/skills/html-report/SKILL.md"
+source: "镜像自 Trae IDE builtin（源镜像已清理，原路径 external/dao/xinzo/.trae-cn/builtin/work/default/skills/html-report/SKILL.md）"
 ---
 
 ## Step 1: Plan
