@@ -8,12 +8,13 @@ title: ".agents/skills/ 目录索引"
 ---
 # .agents/skills/ 目录索引
 
-本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为四类：
+本目录存放 SpecWeave 项目中所有 Skill 定义。Skill 分为五类：
 
 - **完整Skill**：包含完整的自动化操作能力（脚本、MCP工具调用等），可独立完成任务
 - **工作流门面**：对 `docs/retrospective/patterns/` 方法论模式的触发封装（L1 门面 + L2 模式文档），提供触发词、阶段流程、质量门与安全清单
 - **命令集门面**：对 `.agents/commands/` 命令集的轻量封装，提供触发词、决策树、快速开始和安全检查
 - **脚本命令门面**：对 `.agents/scripts/` 高频自动化脚本的封装，提供参数说明、dry-run安全机制和错误处理
+- **内置镜像 Skill**：Trae IDE 内置技能的镜像入库（原貌保留，frontmatter source 溯源），用于项目自托管与统一发现
 
 ## Skill 列表
 
@@ -62,6 +63,51 @@ title: ".agents/skills/ 目录索引"
 | TRAE-spec-mode | 内置工作流 | 复杂变更端到端规范工作流（Specify→Plan→Approve→Implement→Review 五阶段，spec/tasks/review 三产物落盘 `.trae/specs/`，rule/rubric 验收词汇+独立 Review 门，支持中断恢复） | 规范模式、spec mode、需求澄清、验收标准、任务队列、独立审查、恢复中断工作流 | [TRAE-spec-mode/SKILL.md](TRAE-spec-mode/SKILL.md) |
 
 > 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（`external/` 非 git 目录），已适配为中文五要素版，source 字段记录原始路径；Trae 同步覆盖后以本仓库版本为准。
+
+### 内置镜像 Skill（21个，来自 Trae IDE builtin 镜像）
+
+Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 导入）。来源目录 external/dao/xinzo/.trae-cn/builtin/{work,global,design,code}，每个 SKILL.md 的 frontmatter `source` 字段标注原始路径；镜像保留技能包原貌（含 LICENSE/scripts/assets），不随 Trae 同步改写。导入清单见 .trae/specs/import-builtin-skills/migration-manifest.md。
+
+**work 家族：办公文档（8个）**
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| doc-writing-guide | work（办公文档） | 文档/内容写作主技能（PRD、技术提案、研究报告、竞品分析、手册等），管理意图解读、体裁格式选择、写作风格校准、内容结构编排与子场景路由 | [SKILL.md](doc-writing-guide/SKILL.md) |
+| docx | work（办公文档） | .docx 专业文档创建/编辑/分析：修订追踪（tracked changes）、批注、格式保留与文本提取 | [SKILL.md](docx/SKILL.md) |
+| html-deck | work（办公文档） | 从零创建动画丰富的 HTML 演示文稿（自包含单 HTML 文件、多端像素级一致）；用户说 PPT/ppt 时路由至 pptx，交付物恒为 HTML | [SKILL.md](html-deck/SKILL.md) |
+| html-report | work（办公文档） | 创建除幻灯片外的任意自包含 HTML 交付物：研究报告、白皮书、PRD、仪表盘、作品集、简历、邮件模板、数据可视化等，零外部依赖 | [SKILL.md](html-report/SKILL.md) |
+| pdf | work（办公文档） | PDF 综合处理工具包：提取文本与表格、创建新 PDF、合并/拆分文档、表单处理，支撑规模化程序化处理与分析 | [SKILL.md](pdf/SKILL.md) |
+| pptx | work（办公文档） | .pptx 演示文稿创建、编辑与分析：新建、内容修改、版式调整、批注与演讲者备注等 | [SKILL.md](pptx/SKILL.md) |
+| research-guide | work（办公文档） | 研究/分析场景主技能：检索查证、技术/产品对比、竞品分析、研究报告撰写，提供信源分级、交叉验证方法论、搜索范式与子场景路由 | [SKILL.md](research-guide/SKILL.md) |
+| xlsx | work（办公文档） | 电子表格为主输入/输出时的技能：读写/编辑/修复 .xlsx/.xlsm/.csv/.tsv、新建表格、格式转换、清洗杂乱数据；交付物必须为表格文件 | [SKILL.md](xlsx/SKILL.md) |
+
+**global 家族：通用（6个）**
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| digital-avatar-creator | global（通用） | 创建数字分身（Avatar）技能的强制工具：生成以自主 SubAgent 运行、按专长独立处理用户请求的虚拟角色/助手 | [SKILL.md](digital-avatar-creator/SKILL.md) |
+| dynamic-ui | global（通用） | 在文字回答旁内联展示可视化内容（图表、架构图、交互 demo、对比分析），仅当紧凑可视化使回答更清晰时使用；不用于网站/应用/报告/看板/幻灯片 | [SKILL.md](dynamic-ui/SKILL.md) |
+| TRAE-browseruse | global（通用） | 浏览器自动化指南：浏览网站、访问 URL、抓取网页内容、测试前端 UI 及多步交互（点击、验证元素、填写表单） | [SKILL.md](TRAE-browseruse/SKILL.md) |
+| TRAE-browseruse-external | global（通用） | 在用户本机 Chrome（外部浏览器）中自动化任务（经 TRAE Chrome 扩展路由 native 模式），响应「用我的浏览器打开」类请求 | [SKILL.md](TRAE-browseruse-external/SKILL.md) |
+| TRAE-code-mode-orchestrator | global（通用） | Code Mode（Exec）使用模式：并行扇出、JS 变换流水线、条件分支、循环直到条件、多源聚合等单脚本多工具编排场景 | [SKILL.md](TRAE-code-mode-orchestrator/SKILL.md) |
+| TRAE-computer-use | global（通用） | 通过 Computer Use 控制本地应用 UI：读取屏幕并点击、输入、滚动、拖拽、按键、设置值，高风险操作前需用户确认 | [SKILL.md](TRAE-computer-use/SKILL.md) |
+
+**design 家族：设计（4个）**
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| design-library-creator | design（设计） | 创建/扩展/精炼专业设计库与设计系统（结构化 token 架构、主题创建）；仅显式提及设计系统术语或提供 design-spec bundle 时触发，素材/页面类意图路由至 solo-design | [SKILL.md](design-library-creator/SKILL.md) |
+| solo-design | design（设计） | 设计网站页面、UI 界面、原型、页面级视觉系统及既有 .design 项目改版；位图编辑/海报生成/设计库分别路由至三姊妹技能 | [SKILL.md](solo-design/SKILL.md) |
+| solo-graphic-generation | design（设计） | 位图优先静态视觉资产生成（海报、横幅、KV、封面、插画、产品图、图片批次，无需 HTML）；生成前须确认输出尺寸 | [SKILL.md](solo-graphic-generation/SKILL.md) |
+| solo-image-edit | design（设计） | 以图生图（image-to-image）编辑既有位图，所有保留结果写回所属 .design 画布 | [SKILL.md](solo-image-edit/SKILL.md) |
+
+**code 家族：基建（3个）**
+
+| 技能名 | 来源家族 | 功能描述 | SKILL.md路径 |
+|--------|---------|---------|-------------|
+| feedback | code（基建） | 仅用于显式 TRAE 反馈提交意图（/feedback 或宿主注入 Use Skill: feedback），将反馈转化为最小 feedback JSON；仅提及 feedback/bug 不触发 | [SKILL.md](feedback/SKILL.md) |
+| skill-creator | code（基建） | 创建 SKILL 的强制工具：用户想创建/新增任何技能时必须立即调用 | [SKILL.md](skill-creator/SKILL.md) |
+| TRAE-product-knowledge | code（基建） | TRAE 品牌与官方产品知识问答：产品差异、TraeCode/TraeWork/CLI/Plugin 入口、能力、MCP、Skills、官方文档链接；不用于普通编码问题 | [SKILL.md](TRAE-product-knowledge/SKILL.md) |
 
 ### 脚本命令门面（10个）
 
@@ -128,6 +174,7 @@ flowchart LR
 
 ## Changelog
 
+- **v1.15** (2026-09-03): 新增「内置镜像 Skill」分类（21个：work 办公文档 8 / global 通用 6 / design 设计 4 / code 基建 3），自 external/dao/xinzo/.trae-cn/builtin 扁平去重取最全版导入并登记索引；每个 SKILL.md 增补 source 溯源；TRAE-plan-mode/TRAE-spec-mode/TRAE-computer-use-ptc 既有同名保留不覆盖。导入清单见 .trae/specs/import-builtin-skills/migration-manifest.md。
 - **v1.14** (2026-09-01): TRAE-plan-mode/TRAE-spec-mode 目录名回归大写——实测 Trae 内置 doutops 同步会以 TRAE-* 大写路径回写 .agents/skills/ 并覆盖为英文原版（3 文件被还原），为终止命名拉锯，以同步路径为权威位置；内容恢复为中文独立适配版并在 SKILL.md 顶部固化"同步覆盖后按 git 历史恢复"指引。质量分 90/100（大写 name 触发开放标准 name.format/compliance 2 项 WARN，主动接受并文档化）。
 - **v1.13** (2026-09-01): 新增「Trae 内置工作流 Skill」分类（2个：TRAE-plan-mode/TRAE-spec-mode），自 external/dao/xinzo/.trae-cn/builtin/trae/doutops/skills 集成并适配为中文五要素版（保留原始工作流语义与产物模板骨架，frontmatter 补全 version/paths/source 溯源，description 改单行单引号触发式标量）。TRAE-plan-mode 承载有界变更"规划→批准→执行"（计划落盘 .trae/documents/，批准前禁写）；TRAE-spec-mode 承载复杂变更五阶段规范工作流（spec/tasks/review 三产物落盘 .trae/specs/，rule/rubric 验收词汇+独立 Review 门，支持中断恢复）。两者互为选型路由（有界→plan，复杂→spec）。同步注册 .agents/capability-registry/02-skills.md 与 .meta/toml 镜像。
 - **v1.12** (2026-08-29): 新增 wsl-ops-cmd 脚本命令门面（脚本门面从9个→10个），封装 WSL2 主机层运维四大 SOP：Docker GPU 三层分诊修复（Restart-WslDockerGpu.ps1 四层验证 + setup-wsl-docker-gpu.sh 幂等配置，L1/L2/L3 失败层路由）、Docker 存储清理五步法（L2-validated 模式：快照预检→三层保护带→按序清理→三重存活验证→VHDX 压缩收尾）、VHDX 物理压缩（compress-wsl-vhdx.ps1，fstrim→shutdown→Hyper-V/diskpart 双路径）、Trae 五变体缓存安全清理（cleanup-trae-cache.ps1，含"AI 会话在 Trae 内不可自清理"操作悖论警示）。核心铁律：三层 Shell 跨界禁止 PowerShell 展开 `$()`、daemon 不可达必须 ABORT、setsid 而非 nohup 持久化 dockerd。含 9 项安全清单、11 行错误表、15 条 Gotchas、5 处 Why 解释；基于 44 条事实与 4 条洞察、4 视角对抗审查（3 条意见采纳），质量分 100/100。与 jpman-podman-ops/docker-cache-cmd/docker-wsl-bridge-cmd 形成 WSL/容器运维家族边界路由。

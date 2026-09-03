@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "name": "design-library-creator",
+  "version": "2026.07.22.00.00.00",
+  "release": "prompt-base-cloud-ssot-migration",
+  "version_source": "skill-release-manifest.json"
+}

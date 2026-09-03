@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "name": "solo-design",
+  "version": "2026.08.06.19.15.08",
+  "release": "prompt-base-cloud-ssot-migration",
+  "version_source": "skill-release-manifest.json"
+}
