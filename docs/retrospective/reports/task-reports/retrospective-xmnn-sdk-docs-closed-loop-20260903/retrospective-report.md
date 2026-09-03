@@ -160,7 +160,7 @@ xmnn-sdk-docs/
 
 已从本次迭代萃取模式：「**Sphinx RST→PDF 图片处理标准流程**」（DPI 元数据覆盖 + figure 指令控宽）。
 
-- 模式文件：[`docs/retrospective/patterns/process-patterns/sphinx-rst2pdf-image-handling.md`](../../patterns/process-patterns/sphinx-rst2pdf-image-handling.md)
+- 模式文件：[`docs/retrospective/patterns/process-patterns/sphinx-rst2pdf-image-handling.md`](../../../patterns/process-patterns/sphinx-rst2pdf-image-handling.md)
 - 成熟度：L1（单案例验证）
 - 标签：`sphinx` `rst2pdf` `pdf` `image` `dpi` `figure` `docx2rst`
 
