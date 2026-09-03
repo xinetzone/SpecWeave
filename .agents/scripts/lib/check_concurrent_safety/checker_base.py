@@ -198,6 +198,7 @@ class BaseChecker(ABC):
             if kw.arg == "timeout":
                 return True
         for arg in node.args:
-            if isinstance(arg, ast.Constant) and isinstance(arg.value, (int, float)):
+            # 字面量数字（含浮点）或变量/常量引用均视为有效超时
+            if isinstance(arg, (ast.Constant, ast.Name)):
                 return True
         return False

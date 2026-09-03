@@ -561,7 +561,7 @@ def _send_generate_with_cpu_watch(request: dict, log_path: Path | None):
         else:
             sustained = 0.0
 
-    worker.join()
+    worker.join(timeout=SERVER_BOOT_TIMEOUT)
     return result.get("reply"), False
 
 

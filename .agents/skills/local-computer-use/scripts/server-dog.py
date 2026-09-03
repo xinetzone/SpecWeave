@@ -536,7 +536,7 @@ def _serve(listener: Listener, state: DogState) -> None:
         )
         keepalive_thread.start()
 
-    state.shutdown_event.wait()
+    state.shutdown_event.wait(SHUTDOWN_GRACE_S)
     log.info("shutdown_event set, closing listener")
     try:
         listener.close()
