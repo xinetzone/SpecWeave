@@ -5,6 +5,15 @@ from ..core import build_base_config
 from ..extensions import resolve_extensions
 from ..myst_compat import register_hooks
 from ..themes import resolve_theme, resolve_theme_options
+from ._shared import build_project_meta, build_setup_closure
+
+_MINIMAL_KEY_DEFAULTS: dict[str, Any] = {
+    "project": "Untitled Project",
+    "author": "Unknown Author",
+    "release": "0.1.0",
+    "version": "0.1.0",
+    "language": "en",
+}
 
 
 def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -31,25 +40,19 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
         theme, params.get("html_theme_options")
     )
 
+    params["html_theme"] = theme
+    params["html_theme_options"] = theme_options
+    params["extensions"] = extensions
+    project_meta = build_project_meta(params, _MINIMAL_KEY_DEFAULTS)
+    project_meta["extensions"] = extensions
+    project_meta["html_theme"] = theme
+    project_meta["html_theme_options"] = theme_options
+
     base = build_base_config(params)
-    project_meta = {
-        "project": params.get("project", "Untitled Project"),
-        "author": params.get("author", "Unknown Author"),
-        "release": params.get("release", "0.1.0"),
-        "version": params.get("version", params.get("release", "0.1.0")),
-        "language": params.get("language", "en"),
-        "html_title": params.get("html_title", params.get("project", "Untitled Project")),
-        "html_theme": theme,
-        "html_theme_options": theme_options,
-        "extensions": extensions,
-    }
     merged = deep_merge(base, project_meta)
 
-    def _setup(app) -> None:
-        register_hooks(app)
-        user_setup = params.get("setup")
-        if callable(user_setup):
-            user_setup(app)
-
-    merged["setup"] = _setup
+    merged["setup"] = build_setup_closure(
+        register_fns=[register_hooks],
+        user_setup=params.get("setup"),
+    )
     return merged

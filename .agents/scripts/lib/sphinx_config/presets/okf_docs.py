@@ -11,12 +11,19 @@ from ..extensions import (
 )
 from ..myst_compat import register_hooks
 from ..themes import resolve_theme, resolve_theme_options
+from ._shared import build_project_meta, build_setup_closure
 
 _DEFAULT_REPO = "https://github.com/example/repo"
 _DEFAULT_INTERSPHINX = {
     "python": ("https://docs.python.org/3.14", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master", None),
     "myst-parser": ("https://myst-parser.readthedocs.io/en/latest", None),
+}
+
+_OKF_KEY_DEFAULTS: dict[str, Any] = {
+    "project": "Untitled OKF Project",
+    "author": "Unknown Author",
+    "language": "zh_CN",
 }
 
 
@@ -39,7 +46,7 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
         globals().update(build_config({
             "project": "my-project",
             "author": "my-org",
-            "package_name": "my-project",     # 可选：用于从 importlib 探测 release
+            "package_name": "my-project",
             "language": "zh_CN",
             "html_title": "My Project Docs",
             "repository_url": "https://github.com/my-org/my-project",
@@ -72,7 +79,7 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
     )
 
     theme = params.get("html_theme") or resolve_theme()
-    book_overrides = {}
+    book_overrides: dict[str, Any] = {}
     if params.get("repository_url"):
         book_overrides["repository_url"] = params["repository_url"]
     if params.get("repository_branch"):
@@ -96,28 +103,23 @@ def build_config(override: dict[str, Any] | None = None) -> dict[str, Any]:
                 org = parts[-2]
                 params["site_url"] = f"https://{org}.github.io/{name}/"
 
+    params["html_theme"] = theme
+    params["html_theme_options"] = theme_options
+    params["extensions"] = extensions
+    params["html_title"] = params.get("html_title", params.get("project", "Untitled OKF Project"))
+
     base = build_base_config(params)
     if params.get("extlinks"):
         base["extlinks"] = dict(params["extlinks"])
 
-    project_meta = {
-        "project": params.get("project", "Untitled OKF Project"),
-        "author": params.get("author", "Unknown Author"),
-        "release": params["release"],
-        "version": params["version"],
-        "language": params.get("language", "zh_CN"),
-        "html_title": params.get("html_title", params["project"]),
-        "html_theme": theme,
-        "html_theme_options": theme_options,
-        "extensions": extensions,
-    }
+    project_meta = build_project_meta(params, _OKF_KEY_DEFAULTS)
+    project_meta["extensions"] = extensions
+    project_meta["html_theme"] = theme
+    project_meta["html_theme_options"] = theme_options
     merged = deep_merge(base, project_meta)
 
-    def _setup(app) -> None:
-        register_hooks(app)
-        user_setup = params.get("setup")
-        if callable(user_setup):
-            user_setup(app)
-
-    merged["setup"] = _setup
+    merged["setup"] = build_setup_closure(
+        register_fns=[register_hooks],
+        user_setup=params.get("setup"),
+    )
     return merged
