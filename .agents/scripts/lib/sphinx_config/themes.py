@@ -1,4 +1,4 @@
-from __future__ import annotations
+from typing import Sequence
 
 from ._utils import deep_merge, has_module
 
