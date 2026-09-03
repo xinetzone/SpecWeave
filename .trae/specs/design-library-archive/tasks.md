@@ -36,9 +36,9 @@
   - [x] 5.5 断言 golden_time SKILL.md 无 `/workspace/.design_library/` 绝对路径残留
   - [x] 5.6 前端 matter 解析级兜底：16 个 SKILL.md 全扫，真实解析失败 = 0
 
-- [ ] Task 6: 原子提交（依赖 Task 5 全绿）
-  - [ ] 6.1 经 atomic-commit-cmd 执行单一职责提交（`chore(.agents): 归档 16 个 Trae 设计库并登记索引`，主体中文）
-  - [ ] 6.2 提交后核对暂存区与工作树状态
+- [x] Task 6: 原子提交（依赖 Task 5 全绿）
+  - [x] 6.1 经 atomic-commit-cmd 执行单一职责提交（`chore(.agents): 归档 16 个 Trae 设计库并登记索引`，主体中文）
+  - [x] 6.2 提交后核对暂存区与工作树状态
 
 # Task Dependencies
 

@@ -15,4 +15,4 @@
 - [x] 既有技能目录零改动：`git status --porcelain` 对已有技能无 M/D
 - [x] `git status --porcelain .agents/skills` 仅含新增（无对既有文件的修改）
 - [x] migration-manifest.md 已生成且与归档结果一致
-- [ ] 原子提交完成：conventional commit 主体中文，单一职责
+- [x] 原子提交完成：conventional commit 主体中文，单一职责
