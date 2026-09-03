@@ -62,7 +62,7 @@ target: projects/awesome-okf-xs/doc/bundles/yixue/tcm/
 
 - **Mermaid 先例与支持**：`doc/conf.py` 已启用 `sphinxcontrib.mermaid`（mermaid 11.4.1 CDN 运行时渲染，`myst_fence_as_directive = ["mermaid"]`），全库 bundles 已有 127 处 mermaid 代码块先例。
 
-- **Mermaid 安全编码六规则**（development-standards.md §Mermaid 编码规范）：①代码块内禁空行；②非纯英文标签双引号包裹；③禁 Markdown 列表触发格式（`数字. `   、`- `    开头）；④换行用 `<br/>` 禁 `\n`；⑤subgraph 用 `subgraph ID ["标题"]` 格式；⑥边标签用 `-->|"标签"|` 格式。根目录 `check_mermaid.py` 可自动检测。
+- **Mermaid 安全编码六规则**（development-standards.md §Mermaid 编码规范）：①代码块内禁空行；②非纯英文标签双引号包裹；③禁 Markdown 列表触发格式（`数字. `     、`- `      开头）；④换行用 `<br/>` 禁 `\n`；⑤subgraph 用 `subgraph ID ["标题"]` 格式；⑥边标签用 `-->|"标签"|` 格式。根目录 `check_mermaid.py` 可自动检测。
 
 - **七概念方法论映射**：R（逐束勘察视觉缺口与事实依据）→ F（第一性原理推导视觉分工，见下）→ 生产（生图 + Mermaid 编写）→ V（对抗审查：事实一致性/医疗边界/构建验证）→ C（changelog/log 收尾 + 提交建议）。
 

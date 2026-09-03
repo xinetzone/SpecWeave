@@ -1,6 +1,6 @@
 # 《医心方》研读束配图与 Mermaid 视觉增强 — 验证清单
 
-- [x] C1: `doc/_static/bundles/yixue/medicine/ishinpo-reading/images/` 下存在 9 个图片文件，文件名与 visual-design.md 清单一致（Get-ChildItem 实测 9 个 PNG，逐名核对通过）
+- [x] C1: `doc/_static/bundles/yixue/medicine/ishinpo-reading/images/` 下存在 9 个图片文件，逐名核对一致（Get-ChildItem 实测 9 个 PNG）
 - [x] C2: index.md、concepts/00-05（6 篇）、examples/01-02（2 篇）共 9 个文档各含 1 行图片引用，路径为 `/_static/bundles/yixue/medicine/ishinpo-reading/images/<file>` 且与实际文件同名（grep 实测 14 行匹配中 9 行为 `![` 引用，分布于 9 文档）
 - [x] C3: references/ 3 篇、facts.md、insights.md、log.md 无 AI 配图引用（grep `!\[` 仅命中 9 个目标文档；log.md 仅文字登记文件名）
 - [x] C4: 9 张图人工目检通过：暖纸底水墨淡彩风格统一、图内无文字/水印/印章、无露骨内容、无现代穿帮、与文档主题及 alt 语义相关（3 张首轮问题图经强化 blank/no-text 约束重生成，edo 图第 3 次重构场景消除墙上伪书法挂轴后定稿）
