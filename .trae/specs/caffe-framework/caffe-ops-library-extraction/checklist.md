@@ -1,0 +1,16 @@
+- [x] Checkpoint 1: 目标目录 `tests/ops/` 已创建，包含 __init__.py 和 conftest.py
+- [x] Checkpoint 2: utils.py 包含所有必需的辅助函数（_create_dir, _list_to_str, _gen_filename_str, _save_prototxt, _save_solver, _save_caffemodel, _gen_model_files, _siso_op, _miso_op, _simo_op, _run_caffe, _test_op）
+- [x] Checkpoint 3: _test_op 函数已重构，不调用 _run_tvm 和 _compare_caffe_tvm，仅执行 Caffe 推理并返回结果
+- [x] Checkpoint 4: 所有文件均无 TVM 相关导入（tvm, relay, graph_executor, download_testdata, tvm.testing）
+- [x] Checkpoint 5: 激活函数类算子测试文件已创建（test_relu.py, test_sigmoid.py, test_tanh.py, test_prelu.py, test_dropout.py）
+- [x] Checkpoint 6: 归一化/线性代数类算子测试文件已创建（test_batchnorm.py, test_lrn.py, test_scale.py, test_power.py, test_flatten.py, test_inner_product.py）
+- [x] Checkpoint 7: 卷积/池化类算子测试文件已创建（test_convolution.py, test_deconvolution.py, test_pooling.py）
+- [x] Checkpoint 8: 数据操作类算子测试文件已创建（test_concat.py, test_crop.py, test_slice.py, test_reshape.py, test_permute.py）
+- [x] Checkpoint 9: 逐元素/归约/嵌入类算子测试文件已创建（test_eltwise.py, test_softmax.py, test_reduction.py, test_embed.py）
+- [x] Checkpoint 10: 所有 23 个算子测试文件的参数组合与源文件 test_forward.py 完全一致
+- [x] Checkpoint 11: 每个 .py 文件头部均包含 Apache License 2.0 声明
+- [x] Checkpoint 12: 目录下共 26 个 .py 文件（__init__.py + conftest.py + utils.py + 23个算子测试文件）
+- [x] Checkpoint 13: 导入顺序符合标准库→第三方库→本地模块规范
+- [x] Checkpoint 14: 所有测试函数命名保持 test_forward_<OpName> 格式
+- [x] Checkpoint 15: 网络级测试（Mobilenetv2, Alexnet, Resnet50, Inceptionv1）未被包含（符合 Non-Goals）
+- [x] Checkpoint 16: 未修改 vendor/caffe/caffex/ 目录下的任何原始 Caffe 源码

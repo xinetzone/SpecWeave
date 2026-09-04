@@ -1,0 +1,22 @@
+# Checklist
+
+- [x] 学习笔记已形成，含至少六条「stdlib 能力 → okf 落点 → 优化动作」映射，并引用对应 wiki 章节事实
+- [x] 优化前基线已采集：测试通过数（187）、覆盖率（约 91%）、`ruff check` 告警数、数据类实例内存占用
+- [x] 所有 `@dataclass(frozen=True)` 类已启用 `slots=True`
+- [x] 实例化数据类后 `hasattr(instance, "__dict__")` 为 `False`，内存占用低于基线
+- [x] 关键字段通过 `dataclasses.fields(cls)` 可读到非空 `Field.doc`
+- [x] `Context` 的事件分发作法（on/emit/bail/parallel/serial/waterfall）已由类正式声明，无 `Context.on = _on` 式 monkey-patch
+- [x] 仅 `import okf.context` 即可使用事件方法（无 import-order 脆弱性）
+- [x] `_topological_sort` 已用 `collections.deque`，不再调用 `list.pop(0)`
+- [x] `Fiber` 已缓存 `inject` 服务名集合，`notify` 不重复计算
+- [x] 插件加载失败可输出含类型/消息/定位的完整回溯
+- [x] `_parallel` 在运行中的事件循环内不抛 `RuntimeError`
+- [x] `parse_attested_computation` 对缺失 `runtime` 抛清晰 `ValueError`（非 `KeyError`）
+- [x] 已新增覆盖 `_parallel` 与 `runtime` 校验的回归测试
+- [x] 学习笔记已覆盖六模块，`contextvars`（命名澄清 + 显式 DI 取舍）、`annotationlib`（3.14 惰性求值 + future import 评估）均有诚实落点记录
+- [x] `Context` 与 `Harness` 已实现 `__enter__`/`__exit__`，`with Context() as ctx:` / `with Harness.from_config(...) as h:` 退出时自动回收
+- [x] `Harness` 提供公开 `dispose()`，且对已释放实例重复调用幂等安全
+- [x] `from __future__ import annotations` 已评估（移除或记录保留原因），结论写入学习笔记
+- [x] 优化前后对比记录已生成，逐项含「优化前 / 优化后 / 变化量」
+- [x] 全量 `pytest` 通过（187 项无回归）
+- [x] `ruff check src tests` 无新增告警

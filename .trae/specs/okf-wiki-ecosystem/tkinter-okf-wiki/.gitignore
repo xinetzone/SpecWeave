@@ -1,0 +1,7 @@
+# 生成产物（可从 raw/ + 脚本重建）
+dist/
+raw/
+
+# 构建中间文件
+*.tmp
+*.write-test

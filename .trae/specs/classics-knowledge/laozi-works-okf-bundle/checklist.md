@@ -1,0 +1,21 @@
+# Checklist
+
+- [x] bundle 根目录存在 `index.md`（含 `okf_version: "0.2"`）与 `log.md`
+- [x] 四个子目录 `concepts/`、`text/`、`commentaries/`、`references/` 均存在且含 `index.md`
+- [x] 每个非保留 `.md` 文件含可解析 YAML frontmatter 与非空 `type` 字段（20 个内容文件全部通过，5 个保留文件 index.md/log.md 无 frontmatter 属 OKF 合规）
+- [x] 根 `index.md` toctree 引用全部子目录 index 及 facts/insights/patterns/log，无孤立文档
+- [x] `think/laozi/index.md` 知识包列表已追加 laozi-works 行
+- [x] `think/laozi/index.md` toctree 已追加 `laozi-works/index`
+- [x] 著作范围覆盖《道德经》+ 相关道家著作（《文子》《关尹子》《阴符经》）
+- [x] `text/` 覆盖帛书甲本、帛书乙本、郭店楚简本、北大汉简本，释文溯源至权威整理本
+- [x] `commentaries/` 覆盖出土文献校注、历代注本、现代学者注本三线
+- [x] 每条事实性论断以 `[^source-id]` 脚注溯源，`references/` 信源可核查（出版社/年份）
+- [x] 有争议断代/释文/诠释显式记录为「争议与不确定性」小节
+- [x] `facts.md` 通过 G1（零因果推断词，纯客观陈述，42 条）
+- [x] `insights.md` 含至少 3 条四元组洞察（通过 G2，共 4 条）
+- [x] `patterns.md` 含至少 2 个可复用模式，含触发场景/核心步骤/反模式/迁移验证（通过 G3，共 3 个）
+- [x] 对抗审查（V 阶段）结果已记录
+- [x] `invoke gates.toctrees` laozi 相关零报错（其余报错来自并行任务 bundle，非本任务引入）
+- [x] frontmatter YAML 可解析性与 UTF-8 编码验证通过
+- [x] `sphinx-build -b dummy -E doc _build/dummy` 构建通过（exit 0；修复 core-concepts.md 的 3 条 dangling footnote 后，laozi-works 相关零警告）
+- [x] 变更已按 Conventional Commits 规范原子提交（C 阶段）

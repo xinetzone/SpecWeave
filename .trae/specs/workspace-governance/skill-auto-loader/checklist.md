@@ -1,0 +1,18 @@
+- [x] Checkpoint 1: 技能目录结构正确创建（`.agents/skills/load-flexloop-skills/` 下有 SKILL.md、scripts/、tests/、reports/）
+- [x] Checkpoint 2: 数据模型（SkillMetadata、ScanError、ScanResult、SkillStatus）使用 dataclass 定义，to_dict() 可 JSON 序列化
+- [x] Checkpoint 3: 默认扫描路径包含 vendor/flexloop/apps/chaos/.agents/skills/ 和 .agents/skills/ 两个目录
+- [x] Checkpoint 4: 递归 rglob 发现 SKILL.md 文件，排除包含 SKILL-TEMPLATE 的文件
+- [x] Checkpoint 5: 使用 lib/frontmatter.py 的 parse_frontmatter_unified() 解析 frontmatter
+- [x] Checkpoint 6: 单个文件解析失败不中断整体流程，错误被记录到 ScanResult.errors（异常隔离）
+- [x] Checkpoint 7: strict 模式检查推荐章节（输入/参数、依赖、部署/安装、错误、版本记录），relaxed 模式仅检查 name
+- [x] Checkpoint 8: 重复技能 name 冲突被检测并报告到 ScanResult.conflicts
+- [x] Checkpoint 9: 增量缓存机制正常工作（.scan-cache.json 生成、mtime/size对比命中、--force/--no-cache 全量重扫）
+- [x] Checkpoint 10: JSON 注册表输出格式正确，包含 scan_time/scan_dirs/stats/skills/errors/conflicts，可被 json.load 解析
+- [x] Checkpoint 11: Markdown 报告格式清晰，包含统计摘要、按来源分组的技能列表、错误表格、冲突清单
+- [x] Checkpoint 12: CLI 使用 typer 实现，--help 输出完整帮助信息，--version 输出版本号
+- [x] Checkpoint 13: CLI 参数（--project-root/-r、--extra-dir/-d、--mode/-m、--no-cache、--force/-f、--output/-o、--format/-fmt、--verbose/-v）均可正常工作
+- [x] Checkpoint 14: SKILL.md 门面包含完整触发词、功能描述、快速开始、参数说明、错误处理、Changelog，strict 模式验证通过（status=ok）
+- [x] Checkpoint 15: 20 个单元测试覆盖 models/discovery/parser/cache/report/cli 六大模块，全部通过（pytest -v，1.25s）
+- [x] Checkpoint 16: 实际扫描真实目录成功，扫描到 31 个技能（9 vendor + 22 local），0 errors，0 conflicts
+- [x] Checkpoint 17: 只读安全保证：所有写入均在主权区（.agents/skills/load-flexloop-skills/ 下），未修改 vendor/ 目录任何文件
+- [x] Checkpoint 18: 所有输出文件（脚本、报告、缓存、测试）均位于主权区（.agents/skills/load-flexloop-skills/），未写入 vendor/

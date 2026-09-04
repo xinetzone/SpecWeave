@@ -1,0 +1,57 @@
+{
+  "summary": {
+    "root_directory": "D:\\spaces\\SpecWeave\\.trae\\specs\\caffe-comprehensive-comparison-test\\test-assets\\models",
+    "target_format": "caffe-ffi",
+    "total_models": 2,
+    "converted": 0,
+    "already_compatible": 2,
+    "skipped": 0,
+    "errors": 0,
+    "scanned_only": 0,
+    "total_input_size": 107067508,
+    "total_output_size": 0,
+    "total_time_ms": 66.7
+  },
+  "models": [
+    {
+      "source": "D:\\spaces\\SpecWeave\\.trae\\specs\\caffe-comprehensive-comparison-test\\test-assets\\models\\inceptionv1.caffe-ffi.caffemodel",
+      "source_size": 53533754,
+      "source_hash": "6f7101e3a2183738",
+      "format": "V1",
+      "v1_layers": 169,
+      "v2_layers": 0,
+      "model_name": "GoogleNet",
+      "status": "already_compatible",
+      "output": null,
+      "output_size": null,
+      "output_hash": null,
+      "roundtrip_ok": null,
+      "convert_time_ms": 33.7,
+      "error": null,
+      "caffe_ffi_load_ok": null,
+      "notes": [
+        "V1格式已通过V1LayerParameter解析器原生支持"
+      ]
+    },
+    {
+      "source": "D:\\spaces\\SpecWeave\\.trae\\specs\\caffe-comprehensive-comparison-test\\test-assets\\models\\inceptionv1.caffemodel",
+      "source_size": 53533754,
+      "source_hash": "6f7101e3a2183738",
+      "format": "V1",
+      "v1_layers": 169,
+      "v2_layers": 0,
+      "model_name": "GoogleNet",
+      "status": "already_compatible",
+      "output": null,
+      "output_size": null,
+      "output_hash": null,
+      "roundtrip_ok": null,
+      "convert_time_ms": 33.0,
+      "error": null,
+      "caffe_ffi_load_ok": null,
+      "notes": [
+        "V1格式已通过V1LayerParameter解析器原生支持"
+      ]
+    }
+  ]
+}

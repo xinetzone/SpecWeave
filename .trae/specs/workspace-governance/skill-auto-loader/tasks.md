@@ -1,0 +1,172 @@
+# Skill Auto Loader - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 创建技能目录结构与数据模型
+- **Priority**: high
+- **Depends On**: None
+- **Description**: 
+  - 创建技能根目录 `.agents/skills/load-flexloop-skills/`
+  - 创建 `scripts/`、`tests/` 子目录
+  - 在 `scripts/models.py` 中定义 dataclass 数据模型：
+    - `SkillMetadata`: 单个技能的元数据（name, description, version, path, source_dir, status, issues 等）
+    - `ScanError`: 扫描错误记录（file_path, error_type, message, suggestion）
+    - `ScanResult`: 整体扫描结果（scan_time, scan_dirs, skills[], errors[], stats, conflicts[]）
+- **Acceptance Criteria Addressed**: AC-2, AC-3, AC-6
+- **Test Requirements**:
+  - `programmatic` TR-1.1: dataclass 可以被正确实例化，字段有合理默认值
+  - `programmatic` TR-1.2: 模型可以序列化为 JSON 字典
+- **Notes**: 使用项目现有 dataclass 风格，参考 lib/check_skill_quality/models.py
+
+## [x] Task 2: 实现技能发现模块（复用现有 discovery 逻辑）
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**: 
+  - 在 `scripts/discovery.py` 中实现多目录扫描逻辑
+  - 默认扫描目录列表：`vendor/flexloop/apps/chaos/.agents/skills/`、`.agents/skills/`
+  - 支持通过参数追加额外目录
+  - 递归发现 SKILL.md 文件，排除 SKILL-TEMPLATE.md
+  - 读取 .validate-skip 文件（如果存在）跳过指定技能
+  - 返回发现的所有 SKILL.md 路径列表
+- **Acceptance Criteria Addressed**: AC-1
+- **Test Requirements**:
+  - `programmatic` TR-2.1: 默认扫描发现的文件数量 > 20（当前约 29 个）
+  - `programmatic` TR-2.2: 排除 SKILL-TEMPLATE.md（不包含在结果中）
+  - `programmatic` TR-2.3: 追加目录参数生效，能发现指定额外目录下的 SKILL.md
+- **Notes**: 参考并复用 `lib/check_skill_quality/discovery.py` 的逻辑，但扩展支持多目录
+
+## [x] Task 3: 实现 Frontmatter 解析与验证模块
+- **Priority**: high
+- **Depends On**: Task 1, Task 2
+- **Description**: 
+  - 在 `scripts/parser.py` 中实现技能解析逻辑
+  - 使用现有 `lib/frontmatter.py` 的 `parse_frontmatter_unified()` 解析 YAML/TOML frontmatter
+  - 处理解析异常（编码错误、YAML 语法错误等），返回 ScanError 而非抛出
+  - 提取关键字段：name（必填）、description（必填）、version、paths、argument-hint、user-invocable 等
+  - 实现两种验证模式：
+    - `strict`: 检查推荐章节（I/O, Dependencies, Deployment, Error Handling, Changelog）在正文中是否存在
+    - `relaxed`: 仅检查 name/description 必填
+  - 检测重复 name 冲突
+  - 返回 SkillMetadata 对象列表和错误列表
+- **Acceptance Criteria Addressed**: AC-2, AC-3, AC-4, AC-5
+- **Test Requirements**:
+  - `programmatic` TR-3.1: 有效 SKILL.md 能正确解析出 name、description 字段
+  - `programmatic` TR-3.2: 损坏的 SKILL.md 产生 ScanError 但不抛出异常
+  - `programmatic` TR-3.3: 同名技能产生冲突警告
+  - `programmatic` TR-3.4: strict 模式对缺少推荐章节的技能产生警告，relaxed 模式不警告
+- **Notes**: 参考 lib/check_skill_quality/checks_frontmatter.py
+
+## [x] Task 4: 实现增量扫描缓存
+- **Priority**: medium
+- **Depends On**: Task 3
+- **Description**: 
+  - 在 `scripts/cache.py` 中实现缓存逻辑
+  - 缓存文件：`.agents/cache/skill-registry-cache.json`
+  - 缓存内容：每个 SKILL.md 的 mtime、size、解析结果（SkillMetadata）
+  - 扫描时比较文件 mtime/size：未变更则使用缓存结果，变更则重新解析
+  - 支持 `--force` 参数强制全量重扫，忽略缓存
+  - 新文件自动加入缓存
+- **Acceptance Criteria Addressed**: AC-8
+- **Test Requirements**:
+  - `programmatic` TR-4.1: 第一次扫描生成缓存文件
+  - `programmatic` TR-4.2: 第二次扫描（无变更）命中缓存
+  - `programmatic` TR-4.3: --force 参数忽略缓存重新扫描
+  - `programmatic` TR-4.4: 修改文件后该文件被重新解析
+- **Notes**: 参考 lib/cache.py 现有缓存实现模式
+
+## [x] Task 5: 实现输出生成（JSON + Markdown）
+- **Priority**: high
+- **Depends On**: Task 3
+- **Description**: 
+  - 在 `scripts/reporter.py` 中实现两种格式的报告生成
+  - JSON 输出：
+    - 顶层字段：scan_time（ISO 格式）、scan_dirs、skills（数组）、errors（数组）、conflicts（数组）、stats（total/loaded/failed 计数）
+    - 每个 skill 包含：name、description、version、path（相对路径）、source（vendor/local）、status（ok/warning/error）、issues
+  - Markdown 输出：
+    - 标题：技能注册表
+    - 统计摘要（总数/成功/警告/失败）
+    - 技能汇总表（Markdown table：名称、版本、状态、源目录、描述截断）
+    - 错误清单（如有）
+    - 冲突警告（如有）
+  - 默认输出路径：JSON → `.agents/cache/skill-registry.json`，Markdown → `.agents/skills/load-flexloop-skills/REGISTRY.md`
+  - 支持通过参数自定义输出路径
+  - 支持 `--json-only`/`--md-only` 只输出一种格式
+- **Acceptance Criteria Addressed**: AC-6, AC-7
+- **Test Requirements**:
+  - `programmatic` TR-5.1: 生成的 JSON 可以被 json.load() 正常解析，结构符合定义
+  - `human-judgment` TR-5.2: Markdown 报告格式清晰、表格对齐、信息完整
+  - `programmatic` TR-5.3: --json-only/--md-only 参数正确生效
+- **Notes**: 确保 Markdown 表格在窄屏下也可读，description 截断到 80 字符
+
+## [x] Task 6: 实现 CLI 入口（typer）
+- **Priority**: high
+- **Depends On**: Task 2, Task 3, Task 4, Task 5
+- **Description**: 
+  - 在 `scripts/load_skills.py` 创建 typer CLI 应用
+  - 命令参数：
+    - `--path` / `-p`: 追加扫描目录（可多次指定）
+    - `--mode` / `-m`: 验证模式（strict/relaxed，默认 strict）
+    - `--force` / `-f`: 强制全量重扫，忽略缓存
+    - `--output-dir` / `-o`: 输出目录（默认自动选择）
+    - `--json-only`: 只输出 JSON
+    - `--md-only`: 只输出 Markdown
+    - `--verbose` / `-v`: 详细日志输出
+  - 主流程：解析参数 → 发现文件 → 增量检查缓存 → 解析验证 → 生成报告 → 输出统计摘要
+  - 异常兜底：最外层 catch-all 防止意外崩溃
+- **Acceptance Criteria Addressed**: AC-11
+- **Test Requirements**:
+  - `programmatic` TR-6.1: `--help` 输出完整帮助信息
+  - `programmatic` TR-6.2: 默认参数运行成功，退出码 0
+  - `programmatic` TR-6.3: 无效参数（如不存在的路径）给出友好错误提示
+- **Notes**: 参考 lib/cli.py 公共 CLI 参数模式，项目已有 typer 使用惯例
+
+## [x] Task 7: 编写 SKILL.md 技能门面
+- **Priority**: high
+- **Depends On**: Task 6
+- **Description**: 
+  - 创建 `.agents/skills/load-flexloop-skills/SKILL.md`
+  - 遵循项目技能规范（strict 模式）
+  - Frontmatter 包含：
+    - name: load-flexloop-skills
+    - description: 包含触发词（装载flexloop技能、扫描技能目录、加载技能、skill auto loader、skill registry等）+ 功能描述
+    - argument-hint: "[--path DIR]... [--mode strict|relaxed] [--force] [--verbose]"
+    - user-invocable: true
+    - paths: 指向 scripts/load_skills.py
+  - 正文包含：
+    - Skill ID、功能描述
+    - 何时使用（触发条件列表）
+    - 快速开始（代码示例）
+    - 参数说明
+    - 输出格式说明
+    - 错误处理
+    - Changelog
+- **Acceptance Criteria Addressed**: AC-10
+- **Test Requirements**:
+  - `human-judgment` TR-7.1: 触发词清晰全面，覆盖用户可能的说法
+  - `human-judgment` TR-7.2: 快速开始示例可以直接复制运行
+  - `programmatic` TR-7.3: strict 模式验证通过（name/description 存在，推荐章节齐全）
+- **Notes**: 参考现有成熟技能如 link-check-cmd 的 SKILL.md 风格
+
+## [x] Task 8: 编写单元测试并验证
+- **Priority**: medium
+- **Depends On**: Task 1-7
+- **Description**: 
+  - 创建 `tests/__init__.py`、`tests/conftest.py`（测试配置）
+  - 编写测试文件：
+    - `test_models.py`: 数据模型序列化/反序列化测试
+    - `test_discovery.py`: 技能发现测试（用临时目录创建测试 SKILL.md）
+    - `test_parser.py`: 解析与验证测试（含损坏文件、重复名称等场景）
+    - `test_reporter.py`: 输出格式测试（JSON 结构、Markdown 表格）
+    - `test_cli.py`: CLI 参数测试（使用 typer.testing.CliRunner）
+  - 在临时目录创建测试夹具（fixtures）：
+    - 有效 SKILL.md
+    - 缺少 name 的损坏文件
+    - 无 frontmatter 的文件
+    - 两个同名技能
+  - 运行所有测试确保通过
+  - 实际运行一次 CLI 验证能扫描真实技能目录
+  - 运行 `git status vendor/flexloop/` 验证 vendor 目录无变更（只读安全保证）
+- **Acceptance Criteria Addressed**: AC-1 至 AC-11（全部验证）
+- **Test Requirements**:
+  - `programmatic` TR-8.1: 所有单元测试通过
+  - `programmatic` TR-8.2: 实际运行扫描真实目录成功，结果中技能数与 LS 计数一致
+  - `programmatic` TR-8.3: vendor/flexloop/ 目录在扫描前后 git status 无变更（AC-9）
+- **Notes**: 使用 pytest + tmp_path fixture，参考项目现有测试风格（如 tests/test_validate_commit.py）

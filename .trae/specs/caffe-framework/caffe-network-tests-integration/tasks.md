@@ -1,0 +1,153 @@
+# Caffe网络级端到端测试集成 - The Implementation Plan (Decomposed and Prioritized Task List)
+
+## [x] Task 1: 创建 networks/ 目录结构和包初始化文件
+- **Priority**: high
+- **Depends On**: None
+- **Description**:
+  - 创建 `d:\spaces\SpecWeave\projects\xuanspace\vendor\caffe\tests\networks\` 目录
+  - 创建 `__init__.py` 文件（包含 Apache License 头部）
+  - 创建 `conftest.py`，定义 `caffe_model_dir` fixture（session级别，默认 ~/.caffe_test_data/models/）
+- **Acceptance Criteria Addressed**: AC-1, AC-7
+- **Test Requirements**:
+  - `programmatic` TR-1.1: 目录存在且包含 __init__.py
+  - `programmatic` TR-1.2: __init__.py 包含 Apache License 2.0 声明
+  - `programmatic` TR-1.3: conftest.py 定义 caffe_model_dir fixture，返回模型缓存目录路径
+  - `human-judgement` TR-1.4: 缓存目录自动创建，不存在时mkdir
+- **Notes**: 参考 ops/conftest.py 的结构；使用 pathlib 或 os.path.expanduser 处理 home 目录
+
+## [x] Task 2: 创建 networks/utils.py 工具模块
+- **Priority**: high
+- **Depends On**: Task 1
+- **Description**:
+  - 创建 utils.py，包含 Apache License 头部
+  - 导入必要的标准库：os, logging, urllib.request, numpy as np, caffe
+  - 实现 `_download_model(url, filename, cache_dir)` 函数：检查本地缓存→已存在则返回路径→否则下载→返回本地路径
+  - 实现 `_preprocess_imagenet(data, mean_val=[103.939,116.779,123.68], scale=1.0)` 函数：mean reshape/tile→subtract→除以scale→astype float32
+  - 实现 `_test_network(data, proto_file, blob_file)` 函数：加载caffe.Net→设置输入blob→forward→返回输出（仅Caffe推理，无TVM）
+  - 设置 GLOG_minloglevel=2 抑制Caffe日志
+- **Acceptance Criteria Addressed**: AC-2, AC-3, AC-7, AC-8
+- **Test Requirements**:
+  - `programmatic` TR-2.1: utils.py 包含上述3个函数
+  - `programmatic` TR-2.2: 无任何 tvm/relay/graph_executor/download_testdata 导入
+  - `programmatic` TR-2.3: _download_model 幂等：文件存在时直接返回路径不重复下载
+  - `programmatic` TR-2.4: _test_network 调用 caffe.Net 并返回 forward() 结果（list of ndarray）
+  - `programmatic` TR-2.5: 文件头部包含 Apache License
+  - `human-judgement` TR-2.6: 导入顺序：标准库(os/logging/urllib)→第三方(numpy)→本地(caffe)
+
+## [x] Task 3: 创建 MobileNetV2 网络测试
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - 创建 test_mobilenetv2.py，包含 Apache License 头部
+  - 导入 numpy, pytest, caffe，从 utils 导入 _download_model, _preprocess_imagenet, _test_network
+  - 实现 `_test_mobilenetv2(data, model_dir)` 辅助函数：
+    - 调用 _preprocess_imagenet(data, scale=58.8)
+    - 下载 prototxt：URL = "https://github.com/shicai/MobileNet-Caffe/raw/master/mobilenet_v2_deploy.prototxt"，文件名 "mobilenetv2.prototxt"
+    - 下载 caffemodel：URL = "https://github.com/shicai/MobileNet-Caffe/blob/master/mobilenet_v2.caffemodel?raw=true"，文件名 "mobilenetv2.caffemodel"
+    - 调用 _test_network(data_process, proto_file, blob_file)
+    - 验证输出非空、无NaN/Inf
+  - 实现 `@pytest.mark.slow def test_forward_Mobilenetv2(caffe_model_dir)`：
+    - data = np.random.randint(0, 256, size=(1,3,224,224)).astype(np.float32)
+    - 调用 _test_mobilenetv2(data, caffe_model_dir)
+- **Acceptance Criteria Addressed**: AC-4, AC-5, AC-7, AC-8, AC-9
+- **Test Requirements**:
+  - `programmatic` TR-3.1: 文件存在，函数名 test_forward_Mobilenetv2
+  - `programmatic` TR-3.2: 有 @pytest.mark.slow 标记
+  - `programmatic` TR-3.3: scale=58.8，mean为默认ImageNet mean
+  - `programmatic` TR-3.4: 模型URL与源文件一致
+  - `programmatic` TR-3.5: 输入形状 (1,3,224,224)
+  - `programmatic` TR-3.6: 无TVM导入
+  - `human-judgement` TR-3.7: 文件不超过120行
+
+## [x] Task 4: 创建 AlexNet 网络测试
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - 创建 test_alexnet.py，包含 Apache License 头部
+  - 导入 numpy, pytest, caffe，从 utils 导入所需函数
+  - 实现 `_test_alexnet(data, model_dir)` 辅助函数：
+    - 调用 _preprocess_imagenet(data)（scale默认1.0，仅mean减法）
+    - 下载 prototxt：URL = "https://github.com/BVLC/caffe/raw/master/models/bvlc_alexnet/deploy.prototxt"，文件名 "alexnet.prototxt"
+    - 下载 caffemodel：URL = "http://dl.caffe.berkeleyvision.org/bvlc_alexnet.caffemodel"，文件名 "alexnet.caffemodel"
+    - 调用 _test_network，验证输出有效性
+  - 实现 `@pytest.mark.slow def test_forward_Alexnet(caffe_model_dir)`：
+    - data = np.random.randint(0, 256, size=(1,3,227,227)).astype(np.float32)
+    - 注意：AlexNet输入是227x227而非224x224
+    - 注意：无 @pytest.mark.skip（源文件skip是TVM bug导致）
+- **Acceptance Criteria Addressed**: AC-4, AC-5, AC-6, AC-7, AC-8, AC-9
+- **Test Requirements**:
+  - `programmatic` TR-4.1: 文件存在，函数名 test_forward_Alexnet
+  - `programmatic` TR-4.2: 有 @pytest.mark.slow 标记
+  - `programmatic` TR-4.3: 无 @pytest.mark.skip 标记
+  - `programmatic` TR-4.4: scale=1.0（默认），无额外缩放
+  - `programmatic` TR-4.5: 模型URL与源文件一致
+  - `programmatic` TR-4.6: 输入形状 (1,3,227,227)
+  - `programmatic` TR-4.7: 无TVM导入
+  - `human-judgement` TR-4.8: 文件不超过120行
+
+## [x] Task 5: 创建 ResNet50 网络测试
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - 创建 test_resnet50.py，包含 Apache License 头部
+  - 实现 `_test_resnet50(data, model_dir)` 辅助函数：
+    - 调用 _preprocess_imagenet(data)（scale=1.0）
+    - prototxt URL: "https://github.com/fernchen/CaffeModels/raw/master/resnet/ResNet-50-deploy.prototxt"，文件名 "resnet50.prototxt"
+    - caffemodel URL: "https://github.com/fernchen/CaffeModels/raw/master/resnet/ResNet-50-model.caffemodel"，文件名 "resnet50.caffemodel"
+  - 实现 `@pytest.mark.slow def test_forward_Resnet50(caffe_model_dir)`：
+    - data = np.random.randint(0, 256, size=(1,3,224,224)).astype(np.float32)
+- **Acceptance Criteria Addressed**: AC-4, AC-5, AC-7, AC-8, AC-9
+- **Test Requirements**:
+  - `programmatic` TR-5.1: 文件存在，函数名 test_forward_Resnet50
+  - `programmatic` TR-5.2: 有 @pytest.mark.slow 标记
+  - `programmatic` TR-5.3: scale=1.0
+  - `programmatic` TR-5.4: 模型URL与源文件一致（fernchen/CaffeModels仓库）
+  - `programmatic` TR-5.5: 输入形状 (1,3,224,224)
+  - `programmatic` TR-5.6: 无TVM导入
+  - `human-judgement` TR-5.7: 文件不超过120行
+
+## [x] Task 6: 创建 InceptionV1 (GoogLeNet) 网络测试
+- **Priority**: high
+- **Depends On**: Task 2
+- **Description**:
+  - 创建 test_inceptionv1.py（注意：源文件注释写Inceptionv4但实际是Inceptionv1/GoogLeNet），包含 Apache License 头部
+  - 实现 `_test_inceptionv1(data, model_dir)` 辅助函数：
+    - 调用 _preprocess_imagenet(data, scale=58.8)
+    - prototxt URL: "https://github.com/BVLC/caffe/raw/master/models/bvlc_googlenet/deploy.prototxt"，文件名 "inceptionv1.prototxt"
+    - caffemodel URL: "http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel"，文件名 "inceptionv1.caffemodel"
+  - 实现 `@pytest.mark.slow def test_forward_Inceptionv1(caffe_model_dir)`：
+    - data = np.random.randint(0, 256, size=(1,3,224,224)).astype(np.float32)
+    - 注意：无 @pytest.mark.skip（源文件skip是TVM bug导致）
+- **Acceptance Criteria Addressed**: AC-4, AC-5, AC-6, AC-7, AC-8, AC-9
+- **Test Requirements**:
+  - `programmatic` TR-6.1: 文件存在（test_inceptionv1.py，非test_inceptionv4.py），函数名 test_forward_Inceptionv1
+  - `programmatic` TR-6.2: 有 @pytest.mark.slow 标记
+  - `programmatic` TR-6.3: 无 @pytest.mark.skip 标记
+  - `programmatic` TR-6.4: scale=58.8
+  - `programmatic` TR-6.5: 模型URL与源文件一致（BVLC googlenet）
+  - `programmatic` TR-6.6: 输入形状 (1,3,224,224)
+  - `programmatic` TR-6.7: 无TVM导入
+  - `human-judgement` TR-6.8: 文件注释说明这是GoogLeNet(Inceptionv1)而非Inceptionv4（源文件注释笔误）
+
+## [x] Task 7: 全局验证
+- **Priority**: high
+- **Depends On**: Task 1, Task 2, Task 3, Task 4, Task 5, Task 6
+- **Description**:
+  - 全局搜索所有 networks/ 下文件，确认零TVM依赖
+  - 统计文件数量：共7个（__init__ + conftest + utils + 4个测试）
+  - 检查所有文件License头部
+  - Python语法验证所有文件
+  - 检查 @pytest.mark.slow 标记覆盖
+  - 检查 AlexNet/InceptionV1 无 skip 标记
+  - 验证 caffex/ 目录未被修改
+  - 检查 conftest.py 的 caffe_model_dir fixture 正确创建缓存目录
+- **Acceptance Criteria Addressed**: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9, AC-10
+- **Test Requirements**:
+  - `programmatic` TR-7.1: grep "import tvm\|from tvm\|relay\|graph_executor\|download_testdata" 在networks/下返回零结果
+  - `programmatic` TR-7.2: networks/下.py文件共7个
+  - `programmatic` TR-7.3: 每个.py文件包含Apache License头部
+  - `programmatic` TR-7.4: py_compile所有7个文件无语法错误
+  - `programmatic` TR-7.5: 4个test_*函数都有@pytest.mark.slow
+  - `programmatic` TR-7.6: test_alexnet.py和test_inceptionv1.py中无@pytest.mark.skip
+  - `programmatic` TR-7.7: caffex/ git working tree clean
+  - `human-judgement` TR-7.8: 抽查文件代码风格、导入顺序、命名规范

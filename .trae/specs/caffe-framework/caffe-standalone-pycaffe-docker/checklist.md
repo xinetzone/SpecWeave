@@ -1,0 +1,22 @@
+# Checklist
+
+- [x] 目录结构 `docker/standalone/pycaffe/` 存在，包含 `scripts/` 子目录
+- [x] Dockerfile 基于 `FROM ubuntu:26.04`，不依赖任何内部基础镜像
+- [x] Dockerfile 包含 5 个阶段：base-system / base-builder / caffe-builder / pycaffe-builder / runtime
+- [x] base-system 阶段使用阿里云镜像源
+- [x] base-builder 阶段安装完整的 C++ 编译工具链和 Caffe 系统依赖
+- [x] base-builder 阶段安装 Python 科学计算包（numpy/scipy/matplotlib 等）
+- [x] caffe-builder 阶段内联生成 Makefile.config（CPU_ONLY=1, BLAS=open, C++14）
+- [x] caffe-builder 阶段执行 `make all && make pycaffe && make tools && make distribute`
+- [x] pycaffe-builder 阶段从 caffe-builder 复制编译产物（build/include/distribute）
+- [x] pycaffe-builder 阶段创建 `libcaffe.so` 符号链接
+- [x] pycaffe-builder 阶段使用 `python -m build --wheel --no-isolation` 构建 wheel
+- [x] pycaffe-builder 阶段传递 `cmake.define.CONDA_PREFIX/CAFFE_INCLUDE_DIR/CAFFE_LIBRARY` 参数
+- [x] runtime 阶段合并 Caffe 产物 + pycaffe wheel 安装
+- [x] runtime 阶段执行 `verify-pycaffe.sh` 验证
+- [x] runtime 阶段设置 HEALTHCHECK
+- [x] Dockerfile 中无任何 `python-module` 引用（仅注释中说明已移除）
+- [x] Dockerfile 中无任何外部脚本依赖（仅 COPY 自身 `scripts/` 目录下的脚本）
+- [x] 验证脚本 `verify-pycaffe.sh` 和 `verify-parity.sh` 已复制到新目录
+- [x] Makefile 支持 all / caffe-builder / clean 三个目标
+- [x] Makefile 中 Dockerfile 路径和构建上下文正确

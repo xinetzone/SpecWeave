@@ -1,0 +1,16 @@
+- [x] Checkpoint 1: networks/ 目录已创建，包含 __init__.py 和 conftest.py
+- [x] Checkpoint 2: conftest.py 定义了 caffe_model_dir fixture（session级别），提供模型缓存目录
+- [x] Checkpoint 3: networks/utils.py 包含 _download_model, _preprocess_imagenet, _test_network 三个函数
+- [x] Checkpoint 4: _download_model 使用urllib标准库，支持本地缓存（幂等）
+- [x] Checkpoint 5: _test_network 仅执行Caffe推理，无TVM比较逻辑
+- [x] Checkpoint 6: 所有文件均无TVM相关导入（tvm, relay, graph_executor, download_testdata）
+- [x] Checkpoint 7: test_mobilenetv2.py 已创建，参数与源文件一致（scale=58.8, 224x224输入）
+- [x] Checkpoint 8: test_alexnet.py 已创建，参数正确（227x227输入，无skip标记）
+- [x] Checkpoint 9: test_resnet50.py 已创建，参数正确（224x224，fernchen/CaffeModels URL）
+- [x] Checkpoint 10: test_inceptionv1.py 已创建，参数正确（scale=58.8, 224x224, 无skip标记, 文件名正确）
+- [x] Checkpoint 11: 4个测试函数均有 @pytest.mark.slow 标记
+- [x] Checkpoint 12: 所有7个.py文件头部包含Apache License 2.0声明
+- [x] Checkpoint 13: networks/目录下共7个.py文件
+- [x] Checkpoint 14: 所有7个.py文件通过Python语法检查（py_compile）
+- [x] Checkpoint 15: 网络测试验证输出非空、无NaN、无Inf
+- [x] Checkpoint 16: 未修改 caffex/ 目录下的任何原始Caffe源码

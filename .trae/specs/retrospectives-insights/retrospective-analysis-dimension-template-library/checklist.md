@@ -1,0 +1,12 @@
+- [x] Checkpoint 1: 产出物数量验证 - 至少包含3个核心模板（CLI/Tool、CI/Integration、Infrastructure/Config）
+- [x] Checkpoint 2: 产出物内容验证 - 每个模板包含核心分析维度、关键实体标记、质量检查清单
+- [x] Checkpoint 3: 链接验证 - 所有本地引用和x-toml-ref路径有效
+- [x] Checkpoint 4: 任务目标达成率评估 - 目标达成率 >= 100%（超出预期）
+- [x] Checkpoint 5: 关键节点执行效果分析 - 各节点执行记录完整，产出质量符合标准
+- [x] Checkpoint 6: 问题识别完整性 - 所有问题已记录并解决，无遗留问题
+- [x] Checkpoint 7: 成功经验提炼 - 至少提炼3条可复用经验
+- [x] Checkpoint 8: 可改进之处识别 - 至少识别3个改进方向
+- [ ] Checkpoint 9: 复盘报告结构完整性 - 包含任务成果、存在问题、原因分析、改进措施、后续行动计划
+- [x] Checkpoint 10: 行动项可操作性 - 每个行动项有明确的验收标准和时间计划
+- [x] Checkpoint 11: 报告格式规范 - 符合项目文档标准，frontmatter完整
+- [x] Checkpoint 12: 报告归档完成 - TOML元数据生成，知识资产索引更新

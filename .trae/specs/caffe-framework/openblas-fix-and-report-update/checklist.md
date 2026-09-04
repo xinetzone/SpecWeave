@@ -1,0 +1,15 @@
+- [x] Checkpoint 1: 容器运行状态确认，OpenBLAS 当前变体和版本已记录（pthreads 0.3.34）
+- [x] Checkpoint 2: 修复前 ResNet50 baseline 性能数据已获取（mean=326.55ms, std=85.72ms）
+- [x] Checkpoint 3: 容器网络连通性已测试，清华源 HTTP 200，使用方案A
+- [x] Checkpoint 4: OpenBLAS openmp 变体替换成功（conda安装），退出码为0
+- [x] Checkpoint 5: `conda list libopenblas` 确认 openmp 变体（openmp_hd680484_0）
+- [x] Checkpoint 6: `python -c "import caffe_ffi; import numpy"` 无报错，功能不退化
+- [x] Checkpoint 7: GEMM 大矩阵乘法测试 stderr 无 OpenBLAS Warning ✅
+- [x] Checkpoint 8: ResNet50 前向推理 stderr 无 OpenBLAS Warning（默认线程+固定线程均无警告）✅
+- [x] Checkpoint 9: ResNet50 Top-5 预测类别与修复前一致（783/644/812/418/21）
+- [x] Checkpoint 10: 修复后 ResNet50 性能基准数据已记录（OPENBLAS=1,OMP=4: mean=405.09ms; 默认线程: mean=1637ms）
+- [x] Checkpoint 11: 性能变化已标注（核心成果：警告完全消除；固定线程配置下延迟从327ms→405ms，需进一步GEMM优化）
+- [x] Checkpoint 12: gap_analysis_report.md 新增「十、Hub模型实测验证」章节，包含5个关键信息
+- [x] Checkpoint 13: 报告日期已更新为2026-08-06
+- [x] Checkpoint 14: 原有报告内容未被意外修改或删除
+- [x] Checkpoint 15: 方案A conda替换成功，无需方案B源码编译；源码编译备用命令已记录在报告中
