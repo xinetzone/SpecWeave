@@ -19,6 +19,7 @@ date: "2026-07-15"
 
 | 报告目录 | 简要说明 | 日期 |
 |---|---|---|
+| [retrospective-tts-engine-selection-20260904/README.md](retrospective-tts-engine-selection-20260904/) | 本地/在线 TTS 引擎选型深度报告（七概念F→V→I）：sherpa-onnx+Matcha（中文本地首选，RTF 0.04）/ Edge TTS（逆向端点 2026-08 已大面积 403）/ Gemini TTS / KittenTTS / Piper，含 30 条可追溯事实、9 维决策矩阵与 5 分钟上手命令 | 2026-09-04 |
 | [retrospective-copywriting-ai-tools-gemini-analysis-20260901/README.md](retrospective-copywriting-ai-tools-gemini-analysis-20260901/) | Cherry Studio vs TraeCode vs TraeWork × Gemini三模型（2.5 Pro/3.1 Pro/3.7 Flash）写文案选型分析（七概念R→F→V→I→C），产出工具×模型可用性矩阵、成本测算与4条四元组洞察 | 2026-09-01 |
 | [retrospective-knowledge-catalog-wiki-20260815/README.md](retrospective-knowledge-catalog-wiki-20260815/) | Google Cloud Knowledge Catalog学习Wiki（OKF开放知识格式v0.2），产出7篇结构化教程，萃取5条核心洞察、3个可复用模式，包含完整环境配置指南与反模式检查清单 | 2026-08-15 |
 | [retrospective-action-first-command-bootstrap-20260728/README.md](retrospective-action-first-command-bootstrap-20260728/) | action-first范式commands注册与自举验证元复盘（二次沉淀），提炼"格式类范式自举验证"L1模式，发现范式入库螺旋深化链 | 2026-07-28 |
