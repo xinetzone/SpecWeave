@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: awesome-okf-vendor-migration
 ---
 # awesome-okf 迁移到 vendor/ 作为 Git 子模块 - Product Requirement Document

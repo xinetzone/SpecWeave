@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "okf-open-knowledge-format-wiki-spec"
 title: "OKF开放知识格式Wiki教程产品需求文档"
 source: "seven-concepts knowledge-scenario: okf.md + 知乎系列文章"

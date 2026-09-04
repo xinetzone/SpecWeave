@@ -1,7 +1,7 @@
 ---
 id: "caffe-ffi-rnn-lstm-phase1"
 title: "Caffe-FFI: RNN/LSTM 层 Python 前向推理（Phase 1）"
-status: "complete"
+status: "completed"
 progress: "100% - Phase 1 完成（纯 Python 前向推理，16 测试通过）"
 last_updated: "2026-08-04"
 source: "caffe-ffi-tvm-integration/tasks.md#Task 30"

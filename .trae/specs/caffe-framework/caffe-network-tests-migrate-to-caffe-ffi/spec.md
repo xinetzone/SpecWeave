@@ -1,3 +1,8 @@
+---
+title: "Caffe 网络级测试迁移到 caffe-ffi"
+status: "draft"
+---
+
 # Caffe 网络级测试迁移到 caffe-ffi Spec
 
 ## Why

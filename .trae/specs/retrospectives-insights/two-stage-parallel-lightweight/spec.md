@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "spec-two-stage-lightweight-20260708"
 title: "两阶段并行机制轻量化实现方案"
 source: "export-suggestions.md#长期任务"

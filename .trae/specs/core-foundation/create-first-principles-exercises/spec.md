@@ -1,3 +1,8 @@
+---
+title: "第一性原理思维训练题库"
+status: "draft"
+---
+
 # 第一性原理思维训练题库 - Product Requirement Document
 
 ## Overview

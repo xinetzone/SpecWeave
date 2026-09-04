@@ -1,3 +1,8 @@
+---
+title: "Pickle 序列化源码层修复知识沉淀"
+status: "draft"
+---
+
 # Pickle 序列化源码层修复知识沉淀 Spec
 
 > **方法论编排**：场景4 知识沉淀（R→I→E 链路）

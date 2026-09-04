@@ -1,3 +1,8 @@
+---
+title: "Docker 跨 UID 权限问题修复 - 需求规格"
+status: "draft"
+---
+
 # Docker 跨 UID 权限问题修复 - 需求规格
 
 ## 问题描述

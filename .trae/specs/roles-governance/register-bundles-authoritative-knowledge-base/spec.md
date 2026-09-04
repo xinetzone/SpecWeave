@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "register-bundles-authoritative-knowledge-base-spec"
 source: "projects/awesome-okf-xs/doc/bundles/index.md"
 ---

@@ -1,3 +1,8 @@
+---
+title: "AI变现完整指南Wiki创建"
+status: "draft"
+---
+
 # AI变现完整指南Wiki创建 Spec
 
 ## Why

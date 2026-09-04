@@ -1,3 +1,8 @@
+---
+title: "Caffe tvm-ffi 依赖统一迁移"
+status: "draft"
+---
+
 # Caffe tvm-ffi 依赖统一迁移 Spec
 
 > **方法论**: 场景3：重构优化（I→F→A→C）

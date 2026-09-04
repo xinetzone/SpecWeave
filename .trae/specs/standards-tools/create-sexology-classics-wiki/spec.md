@@ -1,3 +1,8 @@
+---
+title: "性学经典著作 OKF Wiki 教程"
+status: "draft"
+---
+
 # 性学经典著作 OKF Wiki 教程 Spec
 
 > **change-id**: `create-sexology-classics-wiki`

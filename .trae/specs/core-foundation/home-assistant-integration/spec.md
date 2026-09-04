@@ -1,3 +1,8 @@
+---
+title: "Home Assistant 智能家居系统集成 - 产品需求文档"
+status: "draft"
+---
+
 # Home Assistant 智能家居系统集成 - 产品需求文档
 
 ## Overview

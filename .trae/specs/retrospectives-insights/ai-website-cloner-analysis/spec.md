@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 source: "用户请求分析微信公众号文章 https://mp.weixin.qq.com/s/vLSG0ArIjCxR-wIfwZ2ylQ"
 ---

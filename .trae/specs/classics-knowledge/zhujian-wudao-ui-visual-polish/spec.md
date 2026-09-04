@@ -1,3 +1,8 @@
+---
+title: "竹简悟道 UI 视觉精修"
+status: "draft"
+---
+
 # 竹简悟道 UI 视觉精修 Spec
 
 ## Why

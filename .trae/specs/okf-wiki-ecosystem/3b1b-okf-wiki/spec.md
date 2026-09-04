@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "3b1b-okf-wiki"
 title: "3Blue1Brown 生态 OKF Wiki 教程生成"
 source: "User Request"

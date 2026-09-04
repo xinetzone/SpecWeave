@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: variant-framework-enhancement
 title: "Variant Framework 通用组件提取与增强"
 source: "portable.Dockerfile 可复用组件提取 + 现有 variant-framework 增强"

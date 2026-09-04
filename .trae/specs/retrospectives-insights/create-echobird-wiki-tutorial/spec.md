@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "EchoBird 百灵鸟项目学习与 Wiki 教程文档"
 source: "微信公众号文章《一款让 AI Agent 跑起来的桌面工具，安装配置不再劝退》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-echobird-wiki-tutorial/spec.toml"

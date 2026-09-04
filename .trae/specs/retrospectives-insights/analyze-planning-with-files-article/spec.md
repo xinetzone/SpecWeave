@@ -1,3 +1,8 @@
+---
+title: "planning-with-files 文章深度洞察分析"
+status: "draft"
+---
+
 # planning-with-files 文章深度洞察分析 Spec
 
 ## Why

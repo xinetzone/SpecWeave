@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "i-have-adhd-wiki-tutorial"
 title: "i-have-adhd ADHD友好输出技能 - Wiki教程"
 source: "external/libs/i-have-adhd 源码分析与七概念方法论知识沉淀"

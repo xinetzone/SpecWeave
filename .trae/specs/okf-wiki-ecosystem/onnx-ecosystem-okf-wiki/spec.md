@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: onnx-ecosystem-okf-wiki-spec
 title: ONNX 生态系统 OKF Wiki 教程生成 - PRD
 date: 2026-08-22

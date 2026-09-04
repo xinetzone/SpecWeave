@@ -1,3 +1,8 @@
+---
+title: "Caffe Normalize→RMSNorm 代码优化"
+status: "draft"
+---
+
 # Caffe Normalize→RMSNorm 代码优化 - Product Requirement Document
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "向日葵三个服务页面系统性学习与深度洞察分析"
 source: "https://service.oray.com/question/47622.html, https://activity.sunlogin.oray.com/cli, https://service.oray.com/question/50091.html"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-sunlogin-service-pages/spec.toml"

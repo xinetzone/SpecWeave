@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-deep-code-article-spec"
 title: "Deep Code 开源编程助手文章深度洞察分析"
 source: "用户请求 /spec"

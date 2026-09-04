@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: pocketflow-okf-wiki-spec
 title: PocketFlow 极简 LLM Agent 框架 OKF Wiki 教程生成 - PRD
 date: 2026-08-23

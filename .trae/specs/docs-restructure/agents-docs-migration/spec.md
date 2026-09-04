@@ -1,3 +1,8 @@
+---
+title: ".agents/docs 统一迁移至 docs/ 文档中心"
+status: "draft"
+---
+
 # .agents/docs 统一迁移至 docs/ 文档中心 Spec
 
 ## 方法论声明

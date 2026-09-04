@@ -1,3 +1,8 @@
+---
+title: "Skill Auto Loader - 技能自动装载器"
+status: "draft"
+---
+
 # Skill Auto Loader - 技能自动装载器 - Product Requirement Document
 
 ## Overview

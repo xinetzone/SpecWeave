@@ -1,3 +1,8 @@
+---
+title: "devcontainer-base 变体 Dockerfile 重构优化"
+status: "draft"
+---
+
 # devcontainer-base 变体 Dockerfile 重构优化 - Product Requirement Document
 
 > **Spec状态**：v2.1（阶段一完成！10模块共享框架全部就绪，等待阶段二向后兼容+模板更新）

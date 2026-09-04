@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 last_updated: "2026-06-30"
 theme: "standards-tools"

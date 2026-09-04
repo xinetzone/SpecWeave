@@ -1,3 +1,8 @@
+---
+title: "Spec：Qwen-UI-Agent 技术评测 → OKF 知识包"
+status: "draft"
+---
+
 # Spec：Qwen-UI-Agent 技术评测 → OKF 知识包
 
 ## 目标

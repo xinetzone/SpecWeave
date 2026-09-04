@@ -1,4 +1,5 @@
 ---
+status: "draft"
 name: math-east-west-dialogue-okf-wiki-spec
 version: 1.0.0
 created: 2026-09-01

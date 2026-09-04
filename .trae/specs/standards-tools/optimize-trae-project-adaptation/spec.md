@@ -1,3 +1,8 @@
+---
+title: "Trae 项目适配优化方案"
+status: "draft"
+---
+
 # Trae 项目适配优化方案 Spec
 
 ## Why

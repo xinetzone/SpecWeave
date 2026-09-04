@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: caffex-ops-test-execution-report
 title: Caffex算子库Docker环境全面测试与标准化报告生成
 source: 用户指令 /spec

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "integrate-specweave-into-hermes-agent-spec"
 title: "将 SpecWeave 工作区集成到 Hermes Agent 的技术指导文档"
 source: "seven-concepts knowledge-scenario: Hermes Agent 插件体系（NousResearch/hermes-agent）+ hermes-okf（EliaszDev/hermes-okf v0.5.9）+ SpecWeave 现状（AGENTS.md / .agents/ 能力体系）"

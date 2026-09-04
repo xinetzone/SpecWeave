@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: create-codewhale-wiki-tutorial
 title: CodeWhale Wiki 教程生成 Spec
 source: "https://codewhale.net/zh + d:\\AI\\external\\tools\\CodeWhale"

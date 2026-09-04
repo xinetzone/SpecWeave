@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "spec-docs-to-knowledge-okf-migration"
 title: "docs/ 到 docs/knowledge/ OKF Wiki 教程迁移"
 source: "用户请求 + 代码库现状分析"

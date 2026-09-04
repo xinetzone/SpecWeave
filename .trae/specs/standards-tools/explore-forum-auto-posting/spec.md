@@ -1,3 +1,8 @@
+---
+title: "TRAE 论坛自动编辑与发布功能探索与集成"
+status: "draft"
+---
+
 # TRAE 论坛自动编辑与发布功能探索与集成 - Product Requirement Document
 
 ## Overview

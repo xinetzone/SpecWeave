@@ -1,3 +1,8 @@
+---
+title: "GraphQL 完整 Wiki 教程"
+status: "draft"
+---
+
 # GraphQL 完整 Wiki 教程 - Product Requirement Document
 
 ## Overview

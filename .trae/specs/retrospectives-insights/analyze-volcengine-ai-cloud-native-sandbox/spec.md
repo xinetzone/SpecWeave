@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/solutions/ai-cloud-native-sandbox?_vtm_=a441938.b793911.0_0.d104272_3.0.80_7658588047705441842"

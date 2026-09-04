@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 created: 2026-07-04
 source: "https://www.volcengine.com/product/kickart?_vtm_=a441938.b105393.0_0.0_0.0.33_7658588047705441842"

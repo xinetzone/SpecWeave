@@ -1,3 +1,8 @@
+---
+title: "devcontainer-base 镜像瘦身 - Product Requirements Document"
+status: "draft"
+---
+
 # devcontainer-base 镜像瘦身 - Product Requirements Document
 
 > **本文件已于 2026-08-14 更新同步**：反映 v2.2/v2.2.1/v2.3 已完成成果与当前实际架构。原始 5 镜像分层目标已被单镜像（Miniforge3 + Python 3.14.6 free-threading）架构取代；v2.3 起 conda 变体下线、变体链简化为 base → conda-llvm → onnx-*，见下方「架构演进记录」。

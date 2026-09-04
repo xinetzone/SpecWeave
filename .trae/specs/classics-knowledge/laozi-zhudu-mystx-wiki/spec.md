@@ -1,3 +1,8 @@
+---
+title: "《帛书老子注读》MyST Wiki 教程"
+status: "draft"
+---
+
 # 《帛书老子注读》MyST Wiki 教程 - Product Requirement Document
 
 ## Overview

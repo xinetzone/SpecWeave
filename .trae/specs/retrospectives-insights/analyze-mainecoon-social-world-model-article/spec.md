@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-mainecoon-social-world-model-article"
 title: "MaineCoon 实时音视频模型文章深度洞察分析"
 source: "微信公众号文章 https://mp.weixin.qq.com/s/ff4S2ZTYZ5cEbSLEJ_gMFA"

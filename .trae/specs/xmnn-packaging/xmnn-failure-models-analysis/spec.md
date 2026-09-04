@@ -1,3 +1,8 @@
+---
+title: "xmnn 未完成模型失败原因分析报告"
+status: "draft"
+---
+
 # xmnn 未完成模型失败原因分析报告 Spec
 
 ## Why

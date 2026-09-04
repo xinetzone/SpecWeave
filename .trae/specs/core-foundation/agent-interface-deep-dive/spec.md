@@ -1,3 +1,8 @@
+---
+title: "Agent系统中Interface/API/ABI/Protocol深度解析"
+status: "draft"
+---
+
 # Agent系统中Interface/API/ABI/Protocol深度解析 - Product Requirement Document
 
 ## Overview

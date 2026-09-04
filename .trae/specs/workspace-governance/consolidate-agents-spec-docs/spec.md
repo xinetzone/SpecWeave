@@ -1,3 +1,8 @@
+---
+title: ".agents 规范文档复盘洞察与合并去冗余"
+status: "draft"
+---
+
 # .agents 规范文档复盘洞察与合并去冗余 Spec
 
 ## 方法论声明

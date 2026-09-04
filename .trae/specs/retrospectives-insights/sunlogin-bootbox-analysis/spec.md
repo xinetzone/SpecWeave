@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "向日葵开机盒子产品页面系统性学习与深度洞察分析报告"
 source: "https://sunlogin.oray.com/hardware/bootbox"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-bootbox-analysis/spec.toml"

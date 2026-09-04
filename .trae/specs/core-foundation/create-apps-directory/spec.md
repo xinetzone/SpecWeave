@@ -1,3 +1,8 @@
+---
+title: "创建 apps/ 新应用开发工作空间"
+status: "draft"
+---
+
 # 创建 apps/ 新应用开发工作空间 Spec
 
 ## Why

@@ -1,3 +1,8 @@
+---
+title: "双镜像模型精度测试 Spec（xmnn-whl-builder / xmnn-runtime）"
+status: "draft"
+---
+
 # 双镜像模型精度测试 Spec（xmnn-whl-builder / xmnn-runtime）
 
 ## Why

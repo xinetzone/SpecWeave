@@ -1,3 +1,8 @@
+---
+title: "QuantDinger 开源AI量化交易平台学习与深度洞察分析"
+status: "draft"
+---
+
 # QuantDinger 开源AI量化交易平台学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "seven-concepts-india-manufacturing-wiki"
 title: "基于七概念理论的印度制造业供应链风险分析Wiki教程"
 source: "微信文章 https://mp.weixin.qq.com/s/TI1PhbO1xm455-WEOBGi2Q"

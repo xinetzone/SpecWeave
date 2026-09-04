@@ -1,3 +1,8 @@
+---
+title: "Trae 双版本环境目录全面复盘（.trae vs .trae-cn）Spec"
+status: "draft"
+---
+
 # Trae 双版本环境目录全面复盘（.trae vs .trae-cn）Spec
 
 ## Why

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 type: spec
 title: 手势×声乐教学 OKF wiki 教程束 - 产品需求文档
 project: awesome-okf-xs / yishu / vocal

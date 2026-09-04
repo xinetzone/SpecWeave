@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "BrowserAct 官网完整学习教程：Cloud+Local双模式Agent浏览器平台"
 source: "BrowserAct官方网站 https://www.browseract.com/?co-from=QD"
 date: "2026-08-03"

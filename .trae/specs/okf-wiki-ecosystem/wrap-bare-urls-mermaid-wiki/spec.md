@@ -1,3 +1,8 @@
+---
+title: "mermaid-wiki 裸 URL 包裹规范统一"
+status: "draft"
+---
+
 # mermaid-wiki 裸 URL 包裹规范统一 Spec
 
 ## Why

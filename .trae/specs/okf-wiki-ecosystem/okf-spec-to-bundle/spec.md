@@ -1,3 +1,8 @@
+---
+title: "OKF 规范本体知识包（`bundles/okf-spec/`）- 产品需求文档（PRD）"
+status: "draft"
+---
+
 # OKF 规范本体知识包（`bundles/okf-spec/`）- 产品需求文档（PRD）
 
 ## Overview

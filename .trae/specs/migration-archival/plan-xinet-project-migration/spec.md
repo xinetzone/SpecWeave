@@ -1,3 +1,8 @@
+---
+title: "xinet 沙箱多项目迁移计划"
+status: "draft"
+---
+
 # xinet 沙箱多项目迁移计划 Spec
 
 ## Why

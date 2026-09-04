@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Claude Code 上下文注入机制深度分析与洞察报告"
 source: "微信公众号文章《如何让各种 Coding Agent 更好的干活？》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/claude-code-context-injection-deep-analysis/spec.toml"

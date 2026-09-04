@@ -1,3 +1,8 @@
+---
+title: "P2-B 阶段：Split层三阶段零拷贝实现 + 性能日志CSV导出 + 极端边界测试"
+status: "draft"
+---
+
 # P2-B 阶段：Split层三阶段零拷贝实现 + 性能日志CSV导出 + 极端边界测试 - Product Requirement Document
 
 > **文档状态**: ✅ Phase 3.0/3.1 验证完成 — Split层三阶段零拷贝、COW机制、CSV性能日志、极端边界测试、SetShapeOnly懒分配均已编码并在Docker中验证通过（2026-07-31）

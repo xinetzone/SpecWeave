@@ -1,3 +1,8 @@
+---
+title: "xmtools 全面复盘 + whl 打包 + Docker 镜像导出"
+status: "draft"
+---
+
 # xmtools 全面复盘 + whl 打包 + Docker 镜像导出 Spec
 
 ## Why

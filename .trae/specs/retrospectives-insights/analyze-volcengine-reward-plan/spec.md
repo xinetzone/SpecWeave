@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 created: 2026-07-07
 source: "https://console.volcengine.com/ark/region:cn-beijing/openManagement/rewardPlan"

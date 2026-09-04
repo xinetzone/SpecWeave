@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "physics-classics-okf-wiki"
 title: "国外物理学经典原著阅读 OKF Wiki 教程生成"
 source: "User Request"

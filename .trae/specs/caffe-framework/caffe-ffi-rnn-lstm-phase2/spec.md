@@ -1,7 +1,7 @@
 ---
 id: "caffe-ffi-rnn-lstm-phase2"
 title: "Caffe-FFI: RNN/LSTM 层 C++ 实现与 Backward 梯度验证（Phase 2）"
-status: "complete"
+status: "completed"
 progress: "100% - 全部完成（Tasks 1-6；全量回归 1692 passed / 1 skipped）"
 last_updated: "2026-08-04"
 source: "caffe-ffi-tvm-integration/tasks.md#Task 30 (Phase 2)"

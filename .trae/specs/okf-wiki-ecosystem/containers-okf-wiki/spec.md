@@ -1,4 +1,5 @@
 ---
+status: "draft"
 type: Playbook
 title: Containers 生态 OKF Wiki 生成 PRD
 sources:

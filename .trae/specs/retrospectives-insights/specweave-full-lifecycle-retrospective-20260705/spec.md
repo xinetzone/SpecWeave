@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "specweave-full-lifecycle-retrospective-20260705"
 title: "SpecWeave 项目全生命周期复盘分析"
 source: "用户/spec 指令"

@@ -1,3 +1,8 @@
+---
+title: "mystx 主题基于 Python 3.14 标准库的系统性优化"
+status: "draft"
+---
+
 # mystx 主题基于 Python 3.14 标准库的系统性优化 Spec
 
 ## Why

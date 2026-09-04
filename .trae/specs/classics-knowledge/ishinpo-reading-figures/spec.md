@@ -1,4 +1,5 @@
 ---
+status: "draft"
 type: Spec
 title: 《医心方》研读束配图与 Mermaid 视觉增强 PRD
 source: 用户 /goal 指令（2026-09-02，seven-concepts-cmd 场景4 知识沉淀链路 R→I→V→C）

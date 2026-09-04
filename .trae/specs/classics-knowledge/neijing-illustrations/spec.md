@@ -1,3 +1,8 @@
+---
+title: "《黄帝内经》阅读教程束配图与 Mermaid 图表增强"
+status: "draft"
+---
+
 # 《黄帝内经》阅读教程束配图与 Mermaid 图表增强 - Product Requirement Document
 
 ## Overview

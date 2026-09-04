@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: onnx-wiki-tutorial-spec
 title: ONNX Wiki教程生成 - PRD
 date: 2026-08-09

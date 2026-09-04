@@ -1,3 +1,8 @@
+---
+title: "Knowledge Catalog Wiki 教程"
+status: "draft"
+---
+
 # Knowledge Catalog Wiki 教程 - Product Requirement Document
 
 ## Overview

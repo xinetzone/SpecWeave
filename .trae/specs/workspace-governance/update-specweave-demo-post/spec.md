@@ -1,3 +1,8 @@
+---
+title: "创建 SpecWeave 最新版 Demo 帖（daoyi 账号）"
+status: "draft"
+---
+
 # 创建 SpecWeave 最新版 Demo 帖（daoyi 账号） Spec
 
 ## Why

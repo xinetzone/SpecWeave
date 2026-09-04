@@ -1,3 +1,8 @@
+---
+title: "导入 Trae 内置技能至 .agents/skills（import-builtin-skills）Spec"
+status: "draft"
+---
+
 # 导入 Trae 内置技能至 .agents/skills（import-builtin-skills）Spec
 
 ## Why

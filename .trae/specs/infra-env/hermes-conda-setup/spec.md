@@ -1,3 +1,8 @@
+---
+title: "Hermes Conda 环境创建与源码安装"
+status: "draft"
+---
+
 # Hermes Conda 环境创建与源码安装 - Product Requirement Document
 
 ## Overview

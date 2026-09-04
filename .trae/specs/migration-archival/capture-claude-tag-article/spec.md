@@ -1,3 +1,8 @@
+---
+title: "捕获 Claude Tag 文章知识"
+status: "draft"
+---
+
 # 捕获 Claude Tag 文章知识 Spec
 
 ## Why

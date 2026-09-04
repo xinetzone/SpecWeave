@@ -1,3 +1,8 @@
+---
+title: "角色自动组队协作场景 README 集成"
+status: "draft"
+---
+
 # 角色自动组队协作场景 README 集成 Spec
 
 ## Why

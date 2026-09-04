@@ -1,3 +1,8 @@
+---
+title: "第一性原理指令集创建"
+status: "draft"
+---
+
 # 第一性原理指令集创建 Spec
 
 ## Why

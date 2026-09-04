@@ -1,3 +1,8 @@
+---
+title: "xmnn-package - 自洽独立用户分发包"
+status: "draft"
+---
+
 # xmnn-package - 自洽独立用户分发包 - Product Requirement Document
 
 ## Overview

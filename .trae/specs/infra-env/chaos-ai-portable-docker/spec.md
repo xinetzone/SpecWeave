@@ -1,3 +1,8 @@
+---
+title: "Chaos AI 可移植Docker镜像优化"
+status: "draft"
+---
+
 # Chaos AI 可移植Docker镜像优化 - Product Requirement Document
 
 > **实现现状同步（2026-08-11）**：本文档已按 `external/chaos/ai/portable.Dockerfile`（v3.0 多阶段瘦身版）的实际实现状态同步。与最初设想相比，实现发生了若干方向性演进（基础镜像保留 devcontainer-base 依赖链、默认 conda 环境从 py314 改为 base、构建阶段从 8 阶段简化为 3 阶段、ai 用户默认 UID/GID 从 1000 改为 1001、conda 属主从 ai:ai 改为 root:root）。以下各章节均已改为反映实际实现。

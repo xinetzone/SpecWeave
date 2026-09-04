@@ -1,3 +1,8 @@
+---
+title: "worlds/ 协作与环境管理子目录"
+status: "draft"
+---
+
 # worlds/ 协作与环境管理子目录 Spec
 
 ## Why

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 ---
 # 《为什么Facebook和Google都"抛弃"了Git？》微信公众号文章系统性学习与深度洞察分析 - Product Requirement Document

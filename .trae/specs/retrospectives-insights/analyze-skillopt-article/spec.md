@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 source: "用户输入 + 微信公众号文章提取"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-skillopt-article/spec.toml"

@@ -1,3 +1,8 @@
+---
+title: "道医束配图与 Mermaid 图表增强"
+status: "draft"
+---
+
 ***
 
 type: Spec

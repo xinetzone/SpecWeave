@@ -1,3 +1,8 @@
+---
+title: "创建 Windows 下 Python 3.14.6t(free-threading) Conda 环境 —"
+status: "draft"
+---
+
 # 创建 Windows 下 Python 3.14.6t(free-threading) Conda 环境 — Spec
 
 ## Why

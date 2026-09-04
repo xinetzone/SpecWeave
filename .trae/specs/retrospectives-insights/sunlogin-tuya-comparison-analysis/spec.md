@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "sunlogin-tuya-comparison-analysis"
 title: "向日葵远程控制与涂鸦智能对比分析"
 source: "用户需求：深入学习分析os.oray.com并与Tuya全面对比"

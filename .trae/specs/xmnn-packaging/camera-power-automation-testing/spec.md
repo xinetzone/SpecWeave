@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "camera-power-automation-testing-spec"
 title: "摄像头通断电自动化测试系统 PRD"
 x-toml-ref: "../../../.meta/toml/.trae/specs/xmnn-packaging/camera-power-automation-testing/spec.toml"

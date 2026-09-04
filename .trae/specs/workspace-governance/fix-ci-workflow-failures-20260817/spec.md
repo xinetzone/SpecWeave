@@ -1,3 +1,8 @@
+---
+title: "CI工作流失败修复Spec"
+status: "draft"
+---
+
 # CI工作流失败修复Spec
 
 ## 背景

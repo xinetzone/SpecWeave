@@ -1,3 +1,8 @@
+---
+title: "scrapli 全子文件夹覆盖 OKF Wiki 扩展"
+status: "draft"
+---
+
 # scrapli 全子文件夹覆盖 OKF Wiki 扩展 Spec
 
 ## Why

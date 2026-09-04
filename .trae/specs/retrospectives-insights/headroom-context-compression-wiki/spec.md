@@ -1,3 +1,8 @@
+---
+title: "Headroom AI Agent上下文压缩中间件"
+status: "draft"
+---
+
 # Headroom AI Agent上下文压缩中间件 - Product Requirement Document
 
 ## 项目状态：✅ 已完成

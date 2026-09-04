@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "nat-penetration-tools-comparison"
 title: "神卓互联、cpolar、花生壳三款内网穿透工具对比分析"
 source: "用户需求：对三款内网穿透工具进行功能、性能、易用性、安全性、价格、技术支持全面对比分析"

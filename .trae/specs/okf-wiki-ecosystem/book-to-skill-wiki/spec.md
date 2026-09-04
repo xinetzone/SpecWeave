@@ -1,4 +1,5 @@
 ---
+status: "draft"
 name: book-to-skill-wiki-spec
 version: 1.0.0
 created: 2026-08-03

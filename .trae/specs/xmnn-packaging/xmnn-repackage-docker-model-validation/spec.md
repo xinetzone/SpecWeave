@@ -1,3 +1,8 @@
+---
+title: "xmnn 重新打包 + Docker 镜像构建 + 模型编译与精度验证"
+status: "draft"
+---
+
 # xmnn 重新打包 + Docker 镜像构建 + 模型编译与精度验证 Spec
 
 ## Why

@@ -1,3 +1,8 @@
+---
+title: "Spec：Tushare AI Office OKF Bundle"
+status: "draft"
+---
+
 # Spec：Tushare AI Office OKF Bundle
 
 ## 基本信息

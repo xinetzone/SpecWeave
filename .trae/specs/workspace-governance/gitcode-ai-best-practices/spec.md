@@ -1,3 +1,8 @@
+---
+title: "AtomGit AI社区平台最佳实践学习笔记"
+status: "draft"
+---
+
 # AtomGit AI社区平台最佳实践学习笔记 - Product Requirement Document
 
 ## Overview

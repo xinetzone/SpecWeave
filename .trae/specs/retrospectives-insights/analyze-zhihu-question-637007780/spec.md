@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "知乎问题 637007780 系统性学习与知识萃取 Spec"
 source: "https://www.zhihu.com/question/637007780"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-zhihu-question-637007780/spec.toml"

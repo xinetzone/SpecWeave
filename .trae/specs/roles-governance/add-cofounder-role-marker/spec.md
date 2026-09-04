@@ -1,3 +1,8 @@
+---
+title: "联合创始角色特殊标记"
+status: "draft"
+---
+
 # 联合创始角色特殊标记 Spec
 
 ## Why

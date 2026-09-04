@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-github-speckit-article/spec.toml"
 ---

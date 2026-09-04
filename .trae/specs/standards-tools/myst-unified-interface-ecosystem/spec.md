@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 id: myst-unified-interface-ecosystem
 title: "MyST Markdown 统一化接口生态体系 Spec"

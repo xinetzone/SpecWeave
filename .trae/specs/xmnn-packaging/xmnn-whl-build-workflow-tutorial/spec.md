@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "xmnn-whl-build-workflow-tutorial-spec"
 title: "XMNN Wheel 从零构建打包流程学习教程（AI 规范文档）"
 source: "seven-concepts knowledge-scenario: external/chaos/xmtools（本地构建打包系统源码）"

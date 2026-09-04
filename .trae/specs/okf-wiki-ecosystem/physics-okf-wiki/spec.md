@@ -1,3 +1,8 @@
+---
+title: "Spec: 国外物理著作原文与解读 OKF Wiki 全面系统重建"
+status: "draft"
+---
+
 # Spec: 国外物理著作原文与解读 OKF Wiki 全面系统重建
 
 ## 问题

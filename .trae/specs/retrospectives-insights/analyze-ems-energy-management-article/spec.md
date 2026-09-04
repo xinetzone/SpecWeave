@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-ems-energy-management-article"
 title: "开源EMS能源管理系统文章深度洞察分析"
 date: "2026-07-09"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "consolidate-xuanspace-governance-spec"
 source: "../../.agents/docs/retrospective/2026-08-25-xuanspace-milestone-retro.md"
 ---

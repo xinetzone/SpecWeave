@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: archive-okf-spec-bundle
 title: OKF 规范知识包归档（bundles/okf-spec → awesome-okf-xs）
 type: Spec

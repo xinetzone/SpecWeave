@@ -1,3 +1,8 @@
+---
+title: "《医心方》阅读教程 OKF Wiki"
+status: "draft"
+---
+
 # 《医心方》阅读教程 OKF Wiki Spec
 
 ## Why

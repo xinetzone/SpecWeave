@@ -1,3 +1,8 @@
+---
+title: "王阳明心学 OKF Wiki 知识包 - 需求规格（spec.md）"
+status: "draft"
+---
+
 # 王阳明心学 OKF Wiki 知识包 - 需求规格（spec.md）
 
 ## Overview

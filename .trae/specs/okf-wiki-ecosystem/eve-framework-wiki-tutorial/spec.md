@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "eve-framework-wiki-tutorial-spec"
 title: "Vercel Eve 开源 Agent 框架 Wiki 教程"
 source: "multi-source: nixapi博客 + 知乎两篇 + 掘金 + vercel.com/eve"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "向日葵USB远程摄像头SU1产品系统性学习与深度洞察 Wiki 教程"
 source: "https://sunlogin.oray.com/hardware/camera-su1"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-camera-su1-learning/spec.toml"

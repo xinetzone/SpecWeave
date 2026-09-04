@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "sphinx-config-mystx-extraction"
 title: "Sphinx Config → mystx 模块萃取与整合"
 source: "d:/spaces/SpecWeave/.agents/scripts/lib/sphinx_config"

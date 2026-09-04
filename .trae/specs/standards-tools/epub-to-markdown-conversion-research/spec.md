@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "epub-to-markdown-conversion-research"
 title: "EPUB 转 Markdown 转换方案系统性调研"
 source: "user request"

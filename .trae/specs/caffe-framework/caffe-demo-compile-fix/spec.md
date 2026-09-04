@@ -1,3 +1,8 @@
+---
+title: "Caffe Demo 模型编译修复"
+status: "draft"
+---
+
 # Caffe Demo 模型编译修复 - Product Requirement Document
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 okf_version: "0.2"
 type: spec
 title: "Coze 开发平台生态 OKF Wiki 教程生成"

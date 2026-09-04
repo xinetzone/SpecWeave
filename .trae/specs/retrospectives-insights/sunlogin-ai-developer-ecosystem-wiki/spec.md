@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "sunlogin-ai-developer-ecosystem-wiki"
 title: "向日葵AI开发者生态（MCP+Skill+CLI+UI Locator）系统性学习与Wiki更新"
 source: "https://activity.sunlogin.oray.com/mcp, https://activity.sunlogin.oray.com/cli, https://service.oray.com/question/50091.html, d:\\AI\\.chaos\\libs\\awesun-*"

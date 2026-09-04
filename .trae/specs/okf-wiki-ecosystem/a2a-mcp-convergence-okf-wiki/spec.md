@@ -1,3 +1,8 @@
+---
+title: "Spec：A2A与MCP协议合流 → OKF 知识包"
+status: "draft"
+---
+
 # Spec：A2A与MCP协议合流 → OKF 知识包
 
 ## 目标

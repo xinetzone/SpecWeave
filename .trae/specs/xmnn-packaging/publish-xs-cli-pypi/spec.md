@@ -1,3 +1,8 @@
+---
+title: "发布 xs-cli 到 PyPI"
+status: "draft"
+---
+
 # 发布 xs-cli 到 PyPI Spec
 
 ## Why

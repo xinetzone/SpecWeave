@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 source: "https://mp.weixin.qq.com/s/32_9_2AjjC4GscIVhf73BA?from=industrynews&color_scheme=light#rd"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-tutti-multiagent-workspace-article/spec.toml"

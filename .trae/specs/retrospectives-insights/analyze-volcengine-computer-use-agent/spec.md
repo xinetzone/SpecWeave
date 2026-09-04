@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 created: 2026-07-07
 source: "https://www.volcengine.com/docs/6394/2556112?lang=zh"

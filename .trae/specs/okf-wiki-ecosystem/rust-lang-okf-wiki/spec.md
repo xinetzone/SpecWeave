@@ -1,3 +1,8 @@
+---
+title: "rust-lang 全量子项目 OKF Wiki 教程生成"
+status: "draft"
+---
+
 # rust-lang 全量子项目 OKF Wiki 教程生成 Spec
 
 > 方法论：seven-concepts-cmd（场景 4：知识沉淀，链路 R→I→E→V→C）+ source-code-to-okf-wiki 五阶段工作流（G1-G5 质量门）。

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 source: "https://mp.weixin.qq.com/s/J6YC2K4PDavJ_4j_KN0D3g"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/analyze-linus-fireside-chat/spec.toml"

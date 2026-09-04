@@ -1,3 +1,8 @@
+---
+title: "awesome-okf-xs 文档系统 - 产品需求文档（PRD）"
+status: "draft"
+---
+
 # awesome-okf-xs 文档系统 - 产品需求文档（PRD）
 
 ## Overview

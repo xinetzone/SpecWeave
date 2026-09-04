@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "AI 四大工程概念演进学习与 Wiki 教程文档"
 source: "微信公众号文章《Prompt → Context → Harness → Loop：AI 圈这四个新词，一次性讲清楚》 by AllenTang"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-four-engineering-concepts-wiki/spec.toml"

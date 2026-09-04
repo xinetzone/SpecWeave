@@ -1,3 +1,8 @@
+---
+title: "将 knowledge-catalog 移动到 vendor 作为 git 子模块 - 产品需求文档"
+status: "draft"
+---
+
 # 将 knowledge-catalog 移动到 vendor 作为 git 子模块 - 产品需求文档
 
 ## Overview

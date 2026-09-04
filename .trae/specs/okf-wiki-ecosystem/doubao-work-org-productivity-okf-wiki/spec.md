@@ -1,3 +1,8 @@
+---
+title: "Spec：豆包工作组织生产力 OKF Bundle"
+status: "draft"
+---
+
 # Spec：豆包工作组织生产力 OKF Bundle
 
 ## 来源

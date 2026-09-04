@@ -6,7 +6,7 @@ method: seven-concepts-cmd（场景4 知识沉淀，链路 R→F→I→E→V→C
 session: sc-20260830-daoyi-okf
 content_sensitivity: Public（公版古籍 + 公开出版物信息）
 created: 2026-08-30
-status: awaiting-approval
+status: "pending-approval"
 ---
 
 # 道医著作权威调研 OKF wiki 教程 — 需求规格

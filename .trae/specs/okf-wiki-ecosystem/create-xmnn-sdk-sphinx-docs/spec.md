@@ -1,3 +1,8 @@
+---
+title: "XMNN SDK 使用指南 docx→Sphinx 项目转换与双向导出 规格文档"
+status: "draft"
+---
+
 # XMNN SDK 使用指南 docx→Sphinx 项目转换与双向导出 规格文档
 
 ## Why

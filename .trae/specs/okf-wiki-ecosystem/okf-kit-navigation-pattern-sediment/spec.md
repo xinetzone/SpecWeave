@@ -1,3 +1,8 @@
+---
+title: "沉淀 okf-kit 洞察1「渐进式导航」到已有模式"
+status: "draft"
+---
+
 # 沉淀 okf-kit 洞察1「渐进式导航」到已有模式 Spec
 
 ## Why

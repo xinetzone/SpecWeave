@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 x-toml-ref: "../../../.meta/toml/.trae/specs/okf-wiki-ecosystem/create-conda-dev-github-wiki-tutorial/spec.toml"
 ---

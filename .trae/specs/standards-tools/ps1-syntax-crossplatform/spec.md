@@ -1,3 +1,8 @@
+---
+title: "PS1 Syntax 跨平台增强"
+status: "draft"
+---
+
 # PS1 Syntax 跨平台增强 - Product Requirement Document
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-oray-five-product-sites"
 title: "贝锐五大产品线官网系统性学习与深度洞察"
 source: "/spec"

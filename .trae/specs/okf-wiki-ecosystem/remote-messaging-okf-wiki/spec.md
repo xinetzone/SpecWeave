@@ -1,3 +1,8 @@
+---
+title: "remote 消息通信生态 OKF Wiki - 产品需求文档"
+status: "draft"
+---
+
 # remote 消息通信生态 OKF Wiki - 产品需求文档
 
 ## Overview

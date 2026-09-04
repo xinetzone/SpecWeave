@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "三个热门AI工具学习与Wiki教程文档"
 source: "微信公众号文章（逛逛GitHub）"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/three-ai-tools-learning-wiki/spec.toml"

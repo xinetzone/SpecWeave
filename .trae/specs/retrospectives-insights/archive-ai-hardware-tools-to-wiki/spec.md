@@ -1,3 +1,8 @@
+---
+title: "AI硬件设计工具分析报告归档到Wiki"
+status: "draft"
+---
+
 # AI硬件设计工具分析报告归档到Wiki - Product Requirement Document
 
 ## Overview

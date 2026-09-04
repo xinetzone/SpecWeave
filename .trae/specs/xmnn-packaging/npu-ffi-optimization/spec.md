@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "npu-ffi-optimization"
 title: "VTA FFI实现全面优化"
 source: "基于TVM FFI最佳实践研究与代码质量分析"

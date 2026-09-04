@@ -5,7 +5,7 @@ type: Spec
 timestamp: 2026-08-06
 updated: 2026-08-06
 author: AI Assistant
-status: proposed
+status: "draft"
 ---
 
 # OKF 生态基建系统学习与知识补充 Spec

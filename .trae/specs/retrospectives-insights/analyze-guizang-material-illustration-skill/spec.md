@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-guizang-material-illustration-skill"
 title: "歸藏材质插画 Skill 开源文章深度洞察分析"
 date: "2026-07-09"

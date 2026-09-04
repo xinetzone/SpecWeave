@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: SpecWeave复赛作品技术支持资源指南 - PRD
 date: 2026-07-22
 content_sensitivity: private

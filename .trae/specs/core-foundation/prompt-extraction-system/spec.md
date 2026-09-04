@@ -1,3 +1,8 @@
+---
+title: "提示词萃取系统"
+status: "draft"
+---
+
 # 提示词萃取系统 Spec
 
 ## Why

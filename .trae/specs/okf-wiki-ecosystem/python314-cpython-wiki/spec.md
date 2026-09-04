@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: python314-cpython-wiki-spec
 title: "Python 3.14 + CPython 源码深度 Wiki 教程 — 产品需求文档"
 date: "2026-08-19"

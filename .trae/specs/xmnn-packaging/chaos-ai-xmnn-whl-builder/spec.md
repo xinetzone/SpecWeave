@@ -1,3 +1,8 @@
+---
+title: "Chaos AI XMNN Wheel 打包器"
+status: "draft"
+---
+
 # Chaos AI XMNN Wheel 打包器 Spec
 
 ## Why

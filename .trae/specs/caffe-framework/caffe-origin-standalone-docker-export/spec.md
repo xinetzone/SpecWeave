@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 date: 2026-07-27
 source: "用户请求: docker/origin 独立 Docker 镜像构建与导出"

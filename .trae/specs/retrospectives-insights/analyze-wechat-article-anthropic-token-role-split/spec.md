@@ -1,3 +1,8 @@
+---
+title: "「同样的token,换个分法」Anthropic多智能体角色分工文章系统性学习与深度洞察分析"
+status: "draft"
+---
+
 # 「同样的token,换个分法」Anthropic多智能体角色分工文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

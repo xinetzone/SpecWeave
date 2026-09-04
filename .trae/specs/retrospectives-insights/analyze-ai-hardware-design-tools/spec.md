@@ -1,3 +1,8 @@
+---
+title: "10个AI硬件设计常用网站文章深度分析"
+status: "draft"
+---
+
 # 10个AI硬件设计常用网站文章深度分析 - Product Requirement Document
 
 ## Overview

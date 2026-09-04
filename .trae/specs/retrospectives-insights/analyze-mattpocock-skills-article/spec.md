@@ -1,3 +1,8 @@
+---
+title: "mattpocock/skills 文章深度洞察分析"
+status: "draft"
+---
+
 # mattpocock/skills 文章深度洞察分析 Spec
 
 ## Why

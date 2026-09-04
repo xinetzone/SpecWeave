@@ -1,3 +1,8 @@
+---
+title: "Textualize 生态源码学习 → OKF Wiki 教程"
+status: "draft"
+---
+
 # Textualize 生态源码学习 → OKF Wiki 教程 Spec
 
 ## Why

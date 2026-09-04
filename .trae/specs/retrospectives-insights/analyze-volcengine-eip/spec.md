@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 created: 2026-07-06
 source: "https://www.volcengine.com/product/eip?_vtm_=a441938.b105878.0_0.0_0.0.76_7658588047705441842"

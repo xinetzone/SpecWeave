@@ -1,3 +1,8 @@
+---
+title: "Datawhale 社区项目 OKF Wiki 教程"
+status: "draft"
+---
+
 # Datawhale 社区项目 OKF Wiki 教程 Spec
 
 ## Why

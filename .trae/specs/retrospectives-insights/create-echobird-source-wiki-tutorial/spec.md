@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "EchoBird 源码级深度学习与 Wiki 教程文档"
 source: "https://echobird.ai/# 官网 + d:\AI\external\tools\EchoBird 本地源码"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-echobird-source-wiki-tutorial/spec.toml"

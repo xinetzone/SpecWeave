@@ -1,3 +1,8 @@
+---
+title: "Home Assistant Core 与 Tuya OpenClaw Skills 关系分析"
+status: "draft"
+---
+
 # Home Assistant Core 与 Tuya OpenClaw Skills 关系分析 Spec
 
 ## Why

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-bonsai-canvas-agent-article"
 title: "BonsAI 可视化画布 Agent 文章深度洞察分析"
 date: "2026-07-07"

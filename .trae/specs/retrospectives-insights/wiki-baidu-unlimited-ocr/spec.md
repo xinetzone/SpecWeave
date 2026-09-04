@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "wiki-baidu-unlimited-ocr-spec"
 title: "百度 Unlimited-OCR Wiki 教程生成 PRD"
 date: "2026-08-03"

@@ -1,3 +1,8 @@
+---
+title: "Trae 边界情况处理团队模块"
+status: "draft"
+---
+
 # Trae 边界情况处理团队模块 Spec
 
 ## Why

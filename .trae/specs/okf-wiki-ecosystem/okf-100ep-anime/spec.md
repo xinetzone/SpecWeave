@@ -1,4 +1,5 @@
 ---
+status: "draft"
 spec_version: "1.0"
 project: okf-100ep-anime
 created: 2026-08-20

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "knowledge-agentrys-ai-chip-design"
 title: "Agentrys AI多智能体芯片设计工作流知识沉淀"
 date: "2026-07-28"

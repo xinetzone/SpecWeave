@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-huaqiu-sigmastar-partnership"
 title: "华秋智联与星宸科技战略合作文章系统性学习与深度洞察分析"
 source: "微信公众号文章分析任务"

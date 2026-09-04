@@ -6,7 +6,7 @@ method: seven-concepts-cmd（场景4 知识沉淀，链路 R→F→I→E→V→C
 session: sc-20260830-fangzhong-okf
 content_sensitivity: Public（公版古籍 + 公开出版物信息；学术与文献学定位，不生产色情露骨内容）
 created: 2026-08-30
-status: awaiting-approval
+status: "pending-approval"
 ---
 
 # 房中（中国古代性文化）典籍权威调研 OKF wiki 教程 — 需求规格

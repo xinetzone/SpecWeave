@@ -1,3 +1,8 @@
+---
+title: "Spec：Claude 系统提示词发布史 OKF Wiki"
+status: "draft"
+---
+
 # Spec：Claude 系统提示词发布史 OKF Wiki
 
 > **change-id**: `create-claude-system-prompts-wiki`

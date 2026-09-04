@@ -1,3 +1,8 @@
+---
+title: "毕业论文写作指导角色（Thesis Advisor）Spec"
+status: "draft"
+---
+
 # 毕业论文写作指导角色（Thesis Advisor）Spec
 
 ## Why

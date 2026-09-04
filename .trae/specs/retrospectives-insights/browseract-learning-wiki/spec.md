@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "BrowserAct 项目学习与 Wiki 教程文档"
 source: "微信公众号文章《Agent刚进网页就翻车？这个刚刚拿下Product Hunt日榜第一的开源工具，让Agent真正能操作浏览器》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/browseract-learning-wiki/spec.toml"

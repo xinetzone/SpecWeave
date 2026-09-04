@@ -1,3 +1,8 @@
+---
+title: "SSH/远程控制 Python 包 OKF Wiki 教程 - 产品需求文档"
+status: "draft"
+---
+
 # SSH/远程控制 Python 包 OKF Wiki 教程 - 产品需求文档
 
 ## Overview

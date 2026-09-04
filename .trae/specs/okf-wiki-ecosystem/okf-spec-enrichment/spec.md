@@ -1,3 +1,8 @@
+---
+title: "OKF Spec Bundle 内容补充 - 产品需求文档"
+status: "draft"
+---
+
 # OKF Spec Bundle 内容补充 - 产品需求文档
 
 ## Overview

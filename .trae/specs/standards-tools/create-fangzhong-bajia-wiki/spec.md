@@ -1,3 +1,8 @@
+---
+title: "《汉书·艺文志》房中八家 OKF Wiki 教程"
+status: "draft"
+---
+
 # 《汉书·艺文志》房中八家 OKF Wiki 教程 Spec
 
 > **change-id**: `create-fangzhong-bajia-wiki`

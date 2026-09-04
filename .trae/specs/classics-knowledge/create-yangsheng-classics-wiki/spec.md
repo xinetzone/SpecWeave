@@ -1,3 +1,8 @@
+---
+title: "养生经典 OKF Wiki 教程"
+status: "draft"
+---
+
 # 养生经典 OKF Wiki 教程 Spec
 
 ## Why

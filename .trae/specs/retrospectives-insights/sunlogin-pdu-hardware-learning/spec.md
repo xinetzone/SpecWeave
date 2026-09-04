@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "向日葵智能PDU硬件产品页面学习与深度洞察 Wiki 教程"
 source: "https://sunlogin.oray.com/hardware/pdu/"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-pdu-hardware-learning/spec.toml"

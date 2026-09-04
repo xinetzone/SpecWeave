@@ -1,3 +1,8 @@
+---
+title: "xmnn-client 面向工具链使用者的分发目录"
+status: "draft"
+---
+
 # xmnn-client 面向工具链使用者的分发目录 - Product Requirement Document
 
 ## Overview

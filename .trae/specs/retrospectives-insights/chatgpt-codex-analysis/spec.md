@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.1
 created: 2026-07-08
 updated: 2026-07-08

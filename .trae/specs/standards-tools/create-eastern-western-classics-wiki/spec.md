@@ -1,3 +1,8 @@
+---
+title: "《欲经》与《爱经》双经典阅读教程 OKF Wiki"
+status: "draft"
+---
+
 # 《欲经》与《爱经》双经典阅读教程 OKF Wiki Spec
 
 > **change-id**: `create-eastern-western-classics-wiki`

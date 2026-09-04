@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: caffe-ops-library-extraction
 version: "1.0.0"
 created: 2026-07-27

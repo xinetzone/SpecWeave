@@ -1,3 +1,8 @@
+---
+title: "Spec：siemens-industrial-agent OKF 知识包"
+status: "draft"
+---
+
 # Spec：siemens-industrial-agent OKF 知识包
 
 > 来源：量子位/田晏林《工业Agent不是"套壳"大模型！西门子百年经验灌进工业AI》（2026-08-27）

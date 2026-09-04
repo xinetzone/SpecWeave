@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: caffe-comprehensive-comparison-test
 title: Caffe 三实现综合对比测试与标准化报告生成
 source: 用户指令 /spec "/spec" 七概念编排

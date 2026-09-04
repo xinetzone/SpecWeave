@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Rainman Translate Book 项目学习与 Wiki 教程文档"
 source: "微信公众号文章《整书翻译神器！GitHub 爆火 NPM 包，一键将整本书翻译成中文》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-rainman-translate-book-wiki/spec.toml"

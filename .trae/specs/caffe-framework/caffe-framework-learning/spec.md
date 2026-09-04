@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 ---
 # Caffe 深度学习框架全面学习 - 产品需求文档

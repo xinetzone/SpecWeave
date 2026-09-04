@@ -1,3 +1,8 @@
+---
+title: "Hermes Agent 完整安装方案 - 产品需求文档"
+status: "draft"
+---
+
 # Hermes Agent 完整安装方案 - 产品需求文档
 
 ## Overview

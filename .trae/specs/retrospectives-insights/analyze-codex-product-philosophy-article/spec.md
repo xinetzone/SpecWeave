@@ -1,3 +1,8 @@
+---
+title: "Codex 产品哲学文章深度洞察分析"
+status: "draft"
+---
+
 # Codex 产品哲学文章深度洞察分析 Spec
 
 ## Why

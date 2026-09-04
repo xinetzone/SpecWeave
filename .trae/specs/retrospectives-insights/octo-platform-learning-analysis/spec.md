@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "明略科技 Octo 平台学习与 Wiki 教程文档"
 source: "微信公众号文章《Octo：当 Agent 不再只活在对话框里》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/octo-platform-learning-analysis/spec.toml"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 theme: roles-governance
 x-toml-ref: "../../../../.meta/toml/.trae/specs/roles-governance/establish-ai-agent-data-security-governance/spec.toml"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-wechat-article-eve-spec"
 title: "Vercel Eve前端Agent框架文章系统性学习与深度洞察分析"
 source: "wechat-article:https://mp.weixin.qq.com/s/8o8g4fNWhlAIRfCLV7Ze0w"

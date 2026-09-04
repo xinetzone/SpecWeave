@@ -1,3 +1,8 @@
+---
+title: "AReaL 官方完整实战教程 Wiki"
+status: "draft"
+---
+
 # AReaL 官方完整实战教程 Wiki - Product Requirement Document
 
 ## Overview

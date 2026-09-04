@@ -1,3 +1,8 @@
+---
+title: "项目硬编码问题系统性复盘"
+status: "draft"
+---
+
 # 项目硬编码问题系统性复盘 Spec
 
 <!-- meta_type: retrospective -->

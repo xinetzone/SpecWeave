@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "向日葵智能插线板P4与P1Pro对比学习与深度洞察分析"
 source: "https://sunlogin.oray.com/hardware/p4, https://sunlogin.oray.com/hardware/p1pro"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/sunlogin-p4-p1pro-comparison-analysis/spec.toml"

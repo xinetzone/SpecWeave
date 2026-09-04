@@ -1,3 +1,8 @@
+---
+title: "AGENTS.md、README.md 与 .agents 文件夹一致性同步"
+status: "draft"
+---
+
 # AGENTS.md、README.md 与 .agents 文件夹一致性同步 Spec
 
 ## Why

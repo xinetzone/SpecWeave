@@ -1,3 +1,8 @@
+---
+title: "Anime.js 4.5 + Three.js Adapter 学习分析"
+status: "draft"
+---
+
 # Anime.js 4.5 + Three.js Adapter 学习分析 Spec
 
 ## Why

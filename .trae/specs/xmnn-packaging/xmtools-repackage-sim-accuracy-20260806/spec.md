@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 source: "seven-concepts-cmd | sc-20260806-xmtools-repackage-sim-test"
 change-id: "xmtools-repackage-sim-accuracy-20260806"

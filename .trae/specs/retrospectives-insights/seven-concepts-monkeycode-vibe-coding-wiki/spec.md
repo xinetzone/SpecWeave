@@ -1,3 +1,8 @@
+---
+title: "七概念方法论解析MonkeyCode开源Vibe Coding平台"
+status: "draft"
+---
+
 # 七概念方法论解析MonkeyCode开源Vibe Coding平台 - Product Requirement Document
 
 ## Overview

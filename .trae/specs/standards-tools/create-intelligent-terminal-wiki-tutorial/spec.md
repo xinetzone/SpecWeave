@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "create-intelligent-terminal-wiki-tutorial"
 title: "Intelligent Terminal 完整 Wiki 教程"
 source: "spec:create-intelligent-terminal-wiki-tutorial"

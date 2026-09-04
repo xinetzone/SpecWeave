@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 source: "微信公众号文章 - 开源日记: 数据库也能像 Git 一样进行 fork、branch 和 merge 吗？"
 ---

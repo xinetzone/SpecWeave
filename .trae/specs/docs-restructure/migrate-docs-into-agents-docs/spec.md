@@ -1,3 +1,8 @@
+---
+title: "docs → .agents/docs 迁移"
+status: "draft"
+---
+
 # docs → .agents/docs 迁移 Spec
 
 ## Why

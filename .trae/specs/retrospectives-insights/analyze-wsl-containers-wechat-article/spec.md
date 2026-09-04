@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 id: analyze-wsl-containers-wechat-article-spec
 title: 基于七概念框架的WSL Containers微信公众号文章系统性分析

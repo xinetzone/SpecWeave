@@ -1,3 +1,8 @@
+---
+title: "硬编码治理规则体系"
+status: "draft"
+---
+
 # 硬编码治理规则体系 Spec
 
 ## Why

@@ -1,3 +1,8 @@
+---
+title: "Spec：wigolo 博文 → OKF 知识包"
+status: "draft"
+---
+
 # Spec：wigolo 博文 → OKF 知识包
 
 ## 目标

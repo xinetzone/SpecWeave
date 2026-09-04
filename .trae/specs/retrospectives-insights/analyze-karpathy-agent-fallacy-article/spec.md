@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-karpathy-agent-fallacy-article"
 title: "Karpathy Agent谬误论文章深度洞察分析"
 date: 2026-07-07

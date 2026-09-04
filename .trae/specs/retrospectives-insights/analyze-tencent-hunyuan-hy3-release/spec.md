@@ -1,3 +1,8 @@
+---
+title: "腾讯混元 Hy3 大模型正式发布文章系统性学习与深度洞察分析"
+status: "draft"
+---
+
 # 腾讯混元 Hy3 大模型正式发布文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

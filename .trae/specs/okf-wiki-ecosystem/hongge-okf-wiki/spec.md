@@ -1,3 +1,8 @@
+---
+title: "红歌教学知识包（OKF wiki 教程）- Product Requirement Document"
+status: "draft"
+---
+
 ***
 
 title: 红歌教学知识包 OKF wiki 教程 PRD

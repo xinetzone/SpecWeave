@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "spec-preflight-practice-20260708"
 title: "Pre-flight预探索模式实践任务"
 source: "retrospective-minitest-ecosystem-learning-20260707"

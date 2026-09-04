@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "贝锐（Oray）AI产品矩阵系统性学习与深度洞察分析报告"
 source: "https://gf-oray.com.cn/#ai, https://m.sohu.com/a/1013902693_99990263/"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/oray-ai-product-matrix-analysis/spec.toml"

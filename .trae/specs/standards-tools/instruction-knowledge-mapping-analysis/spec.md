@@ -1,3 +1,8 @@
+---
+title: "指令集-知识库映射关系的第一性原理分析"
+status: "draft"
+---
+
 # 指令集-知识库映射关系的第一性原理分析 - Product Requirement Document
 
 ## Overview

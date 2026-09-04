@@ -1,3 +1,8 @@
+---
+title: "CodeWhale 开源 AI 编程助手文章系统性学习与深度洞察分析"
+status: "draft"
+---
+
 # CodeWhale 开源 AI 编程助手文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

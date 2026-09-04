@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 id: create-seven-concepts-deeptutor-wiki-tutorial
 title: 七概念理论与DeepTutor实践案例Wiki教程

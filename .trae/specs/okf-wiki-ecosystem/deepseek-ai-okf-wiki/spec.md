@@ -1,3 +1,8 @@
+---
+title: "DeepSeek-AI 开源项目 OKF Wiki 教程生成 - Product Requirements Document"
+status: "draft"
+---
+
 # DeepSeek-AI 开源项目 OKF Wiki 教程生成 - Product Requirements Document
 
 ## Overview

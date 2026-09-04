@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Open Code Review 项目学习与 Wiki 教程文档"
 source: "微信公众号文章《阿里开源 AI 代码评审工具 Open Code Review》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/open-code-review-learning-wiki/spec.toml"

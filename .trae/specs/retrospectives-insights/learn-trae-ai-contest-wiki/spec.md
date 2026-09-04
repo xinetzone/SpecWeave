@@ -1,3 +1,8 @@
+---
+title: "TRAE AI 创造力大赛公示 Wiki 学习"
+status: "draft"
+---
+
 # TRAE AI 创造力大赛公示 Wiki 学习 Spec
 
 ## Why

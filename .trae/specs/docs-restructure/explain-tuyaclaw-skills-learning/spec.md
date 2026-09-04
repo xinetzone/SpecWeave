@@ -1,3 +1,8 @@
+---
+title: "编写 TuyaClaw Skills 学习掌握指南"
+status: "draft"
+---
+
 # 编写 TuyaClaw Skills 学习掌握指南 Spec
 
 ## Why

@@ -1,3 +1,8 @@
+---
+title: ".agents/docs 与 docs 分离方案 — 产品需求文档"
+status: "draft"
+---
+
 # .agents/docs 与 docs 分离方案 — 产品需求文档
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-baidu-unlimited-ocr-article"
 title: "百度 Unlimited-OCR 开源项目深度洞察分析"
 date: "2026-07-09"

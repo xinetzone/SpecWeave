@@ -1,3 +1,8 @@
+---
+title: "养生经典阅读束配图与 Mermaid 图表增强"
+status: "draft"
+---
+
 # 养生经典阅读束配图与 Mermaid 图表增强 - Product Requirement Document
 
 ## Overview

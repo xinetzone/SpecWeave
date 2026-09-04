@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 source: "https://cloud.tencent.com/developer/article/2658842"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/agent-skills-deep-analysis/spec.toml"

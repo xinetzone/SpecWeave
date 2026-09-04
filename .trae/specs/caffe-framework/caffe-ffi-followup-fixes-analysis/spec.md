@@ -1,3 +1,8 @@
+---
+title: "caffe-ffi 后续修复与分析"
+status: "draft"
+---
+
 # caffe-ffi 后续修复与分析 Spec
 
 ## Why

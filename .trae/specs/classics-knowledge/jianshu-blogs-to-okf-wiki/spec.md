@@ -1,3 +1,8 @@
+---
+title: "简书博文集 → OKF Wiki 教程"
+status: "draft"
+---
+
 # 简书博文集 → OKF Wiki 教程 Spec
 
 ## Why

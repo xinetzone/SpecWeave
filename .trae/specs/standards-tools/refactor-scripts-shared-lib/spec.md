@@ -1,3 +1,8 @@
+---
+title: "脚本共享代码库重构"
+status: "draft"
+---
+
 # 脚本共享代码库重构 Spec
 
 ## Why

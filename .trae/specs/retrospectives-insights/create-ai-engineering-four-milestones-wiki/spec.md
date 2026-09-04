@@ -1,3 +1,8 @@
+---
+title: "AI工程四个路标 Wiki教程"
+status: "draft"
+---
+
 # AI工程四个路标 Wiki教程 Spec
 
 ## 1. 资源来源

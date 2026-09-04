@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: create-okf-kit-wiki-tutorial-spec
 title: "okf-kit 完整 Wiki 教程 — 规格说明"
 date: "2026-08-18"

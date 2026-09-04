@@ -1,3 +1,8 @@
+---
+title: "docs 目录 OKF Wiki 教程规范化改造 - 产品需求文档"
+status: "draft"
+---
+
 # docs 目录 OKF Wiki 教程规范化改造 - 产品需求文档
 
 ## Overview

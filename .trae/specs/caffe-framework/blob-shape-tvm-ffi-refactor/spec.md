@@ -1,3 +1,8 @@
+---
+title: "Caffe-Slim Blob Shape 容器迁移至 tvm::ffi::Shape"
+status: "draft"
+---
+
 # Caffe-Slim Blob Shape 容器迁移至 tvm::ffi::Shape - PRD
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+title: "devcontainer-base 镜像变体目录结构"
+status: "draft"
+---
+
 # devcontainer-base 镜像变体目录结构 - Product Requirement Document
 
 ## Overview

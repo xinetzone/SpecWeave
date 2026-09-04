@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: sympy-okf-wiki-spec
 title: SymPy 符号计算库 OKF Wiki 教程生成 - PRD
 date: 2026-08-23

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Declarative Partial Updates 学习与 Wiki 教程文档"
 source: "微信公众号文章《HTML 最值得关注的一次升级：声明式局部更新》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/create-declarative-partial-updates-wiki/spec.toml"

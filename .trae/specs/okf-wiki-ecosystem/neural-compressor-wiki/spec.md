@@ -1,3 +1,8 @@
+---
+title: "Intel Neural Compressor Wiki 教程"
+status: "draft"
+---
+
 # Intel Neural Compressor Wiki 教程 - Product Requirement Document
 
 ## Overview

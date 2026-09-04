@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: 优秀作品结构化归档与目录索引系统 - PRD
 date: 2026-07-22
 content_sensitivity: private

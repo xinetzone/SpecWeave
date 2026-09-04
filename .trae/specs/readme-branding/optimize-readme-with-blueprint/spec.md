@@ -1,3 +1,8 @@
+---
+title: "README 内容补充与项目蓝图规划"
+status: "draft"
+---
+
 # README 内容补充与项目蓝图规划 Spec
 
 ## Why

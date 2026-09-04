@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Agent Runtime Protocol 学习与 Wiki 教程文档"
 source: "微信公众号文章《Agent Protocol：一个生产级的 Agent Runtime 应该包含什么？》（阿里云开发者）"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/agent-runtime-protocol-learning-wiki/spec.toml"

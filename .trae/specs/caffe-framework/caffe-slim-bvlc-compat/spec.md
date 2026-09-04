@@ -1,3 +1,8 @@
+---
+title: "caffe-slim BVLC PyCaffe API 兼容层"
+status: "draft"
+---
+
 # caffe-slim BVLC PyCaffe API 兼容层 - Product Requirement Document
 
 ## Overview

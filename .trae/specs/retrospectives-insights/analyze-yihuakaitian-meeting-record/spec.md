@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "analyze-yihuakaitian-meeting-record"
 title: "一画开天商业模式会议记录深度分析"
 source: ".temp/record.md"

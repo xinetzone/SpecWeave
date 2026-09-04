@@ -1,3 +1,8 @@
+---
+title: "xmnn-whl-builder 迁移 jupyter 容器重建并编译 demo 模型"
+status: "draft"
+---
+
 # xmnn-whl-builder 迁移 jupyter 容器重建并编译 demo 模型 Spec
 
 ## Why

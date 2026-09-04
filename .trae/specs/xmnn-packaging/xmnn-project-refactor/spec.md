@@ -1,3 +1,8 @@
+---
+title: "XMNN 项目结构优化"
+status: "draft"
+---
+
 # XMNN 项目结构优化 - Product Requirement Document
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+title: "bundles 学科分类重构（全库物理重组）Spec"
+status: "draft"
+---
+
 # bundles 学科分类重构（全库物理重组）Spec
 
 > 方法论：七概念场景3（重构优化）I→F→A→V→C；session `sc-20260901-bundles-discipline-reclassify`

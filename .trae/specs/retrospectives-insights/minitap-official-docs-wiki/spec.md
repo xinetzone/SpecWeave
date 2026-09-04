@@ -1,3 +1,8 @@
+---
+title: "Minitap官方文档完整Wiki教程"
+status: "draft"
+---
+
 # Minitap官方文档完整Wiki教程 - Product Requirement Document
 
 ## Overview

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "establish-four-region-routing-system"
 version: "1.0"
 source: "I→F→V 七概念方法论分析"

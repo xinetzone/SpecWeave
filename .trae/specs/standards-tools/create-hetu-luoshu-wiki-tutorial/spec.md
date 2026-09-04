@@ -1,3 +1,8 @@
+---
+title: "河图洛书与宋代图书学 OKF Wiki 教程"
+status: "draft"
+---
+
 # 河图洛书与宋代图书学 OKF Wiki 教程 Spec
 
 > **change-id**: `create-hetu-luoshu-wiki-tutorial`

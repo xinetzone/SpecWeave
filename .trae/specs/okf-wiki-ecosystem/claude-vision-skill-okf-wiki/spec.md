@@ -1,3 +1,8 @@
+---
+title: "Spec：claude-vision-skill OKF 知识包"
+status: "draft"
+---
+
 # Spec：claude-vision-skill OKF 知识包
 
 > 来源：macrozheng《DeepSeek V4 Pro 也能看图了！》（2026-08-21）

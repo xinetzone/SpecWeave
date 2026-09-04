@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: okf-libs-vendor-migration
 ---
 # 将 .chaos/libs 下三个 OKF 目录迁移为 vendor git 子模块 - Product Requirement Document

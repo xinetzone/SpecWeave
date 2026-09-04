@@ -1,3 +1,8 @@
+---
+title: "onnx-adaround 库位置迁移（external/chaos → apps/tests）Spec"
+status: "draft"
+---
+
 # onnx-adaround 库位置迁移（external/chaos → apps/tests）Spec
 
 ## Why

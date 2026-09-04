@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 source: "seven-concepts: knowledge-scenario"
 category: "learning"

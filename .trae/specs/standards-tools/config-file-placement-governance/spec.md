@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "config-file-placement-governance"
 source: "用户需求：验证sitecustomize.py迁移后自动加载，并制定文件错误放置预防方案"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/config-file-placement-governance/spec.toml"

@@ -1,3 +1,8 @@
+---
+title: "马王堆房中简帛阅读教程 OKF Wiki"
+status: "draft"
+---
+
 # 马王堆房中简帛阅读教程 OKF Wiki Spec
 
 > **change-id**: `create-mawangdui-fangzhong-wiki`

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "standardize-file-naming-convention"
 source: "用户需求：解决中英文混合命名问题"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/standardize-file-naming-convention/spec.toml"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 spec: create-ai-security-okf-wiki
 created: 2026-09-02
 methodology: seven-concepts-cmd（场景4 知识沉淀，链路 R→I→E→V→C，depth=deep）

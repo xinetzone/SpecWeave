@@ -1,3 +1,8 @@
+---
+title: "LibTV AI 短剧创作工具学习 Wiki 教程"
+status: "draft"
+---
+
 # LibTV AI 短剧创作工具学习 Wiki 教程 Spec
 
 ## Why

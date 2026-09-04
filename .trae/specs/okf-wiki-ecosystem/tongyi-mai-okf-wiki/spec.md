@@ -1,3 +1,8 @@
+---
+title: "Tongyi-MAI 源码学习 OKF Wiki 教程"
+status: "draft"
+---
+
 # Tongyi-MAI 源码学习 OKF Wiki 教程 Spec
 
 ## Why

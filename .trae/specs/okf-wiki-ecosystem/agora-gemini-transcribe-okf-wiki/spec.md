@@ -1,3 +1,8 @@
+---
+title: "Spec：agora-gemini-transcribe OKF 知识包"
+status: "draft"
+---
+
 # Spec：agora-gemini-transcribe OKF 知识包
 
 > 来源：微信公众号"声网"（Agora 官方中文品牌）《Agora 携手 Google Gemini 3.5 Transcribe，共同加速对话式 AI 应用落地》（2026-08-27 17:35）

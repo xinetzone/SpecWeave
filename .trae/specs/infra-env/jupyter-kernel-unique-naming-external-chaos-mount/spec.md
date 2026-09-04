@@ -1,3 +1,8 @@
+---
+title: "Jupyter 内核唯一命名与 external/chaos 统一挂载"
+status: "draft"
+---
+
 # Jupyter 内核唯一命名与 external/chaos 统一挂载 Spec
 
 ## Why

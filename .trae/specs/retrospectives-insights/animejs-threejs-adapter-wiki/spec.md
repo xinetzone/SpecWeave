@@ -1,3 +1,8 @@
+---
+title: "Anime.js 4.5+Three.js 适配器 Wiki 教程"
+status: "draft"
+---
+
 # Anime.js 4.5+Three.js 适配器 Wiki 教程 - Product Requirement Document
 
 ## Overview

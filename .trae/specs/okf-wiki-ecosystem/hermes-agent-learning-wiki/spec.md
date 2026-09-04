@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "hermes-agent-learning-wiki-spec"
 title: "Hermes Agent 学习 Wiki 教程产品需求文档"
 source: "seven-concepts knowledge-scenario: https://hermes-agent.nousresearch.com/docs/zh-Hans/（官方中文文档）+ external/libs/hermes-agent（NousResearch/hermes-agent 本地源码）"

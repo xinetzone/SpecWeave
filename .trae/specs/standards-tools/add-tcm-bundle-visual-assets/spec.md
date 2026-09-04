@@ -1,3 +1,8 @@
+---
+title: "为 tcm 域生成配图与 Mermaid 图表 — 产品需求文档"
+status: "draft"
+---
+
 ***
 
 type: Spec

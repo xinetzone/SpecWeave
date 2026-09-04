@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: jupyter-book-okf-wiki-spec
 title: Jupyter Book v2 / MySTmd 生态系统 OKF Wiki 教程生成 - PRD
 date: 2026-08-23

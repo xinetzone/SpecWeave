@@ -1,3 +1,8 @@
+---
+title: "设计库归档到 .agents/skills（design-library-archive）Spec"
+status: "draft"
+---
+
 # 设计库归档到 .agents/skills（design-library-archive）Spec
 
 ## Why

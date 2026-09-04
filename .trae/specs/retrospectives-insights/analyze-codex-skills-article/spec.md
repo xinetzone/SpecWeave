@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 source: "https://mp.weixin.qq.com/s/ib6J-9Pph3ybVD0rVGvnYQ?from=industrynews&color_scheme=light#rd"
 ---

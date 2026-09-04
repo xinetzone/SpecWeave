@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "minitap-ai-wiki-update-spec"
 title: "Minitap.ai官网系统学习与wiki更新PRD"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitap-ai-wiki-update/spec.toml"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "spec-ai-powershell5-hell-wiki"
 title: "AI大模型×PowerShell 5 地狱难度场景 Wiki 教程 - PRD"
 date: "2026-07-31"

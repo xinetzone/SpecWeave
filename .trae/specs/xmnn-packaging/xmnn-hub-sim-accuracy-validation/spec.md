@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 source: "seven-concepts-cmd | sc-20260806-xmnn-hub-sim-accuracy"
 change-id: "xmnn-hub-sim-accuracy-validation"

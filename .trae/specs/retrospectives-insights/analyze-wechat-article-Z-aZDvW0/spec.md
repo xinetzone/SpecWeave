@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: 1.0
 ---
 # 《AI为什么涌现出唯心主义》微信公众号文章系统性学习与深度洞察分析 - Product Requirement Document

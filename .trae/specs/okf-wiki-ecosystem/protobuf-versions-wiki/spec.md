@@ -1,4 +1,5 @@
 ---
+status: "draft"
 version: "1.0"
 ---
 # Protocol Buffers 版本演进知识库 - Product Requirement Document

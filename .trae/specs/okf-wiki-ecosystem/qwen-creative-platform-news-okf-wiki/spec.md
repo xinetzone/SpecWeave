@@ -1,3 +1,8 @@
+---
+title: "Spec：千问创作平台多Agent协同资讯速报 → OKF 知识包"
+status: "draft"
+---
+
 # Spec：千问创作平台多Agent协同资讯速报 → OKF 知识包
 
 ## 目标

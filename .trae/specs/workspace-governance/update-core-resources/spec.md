@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "update-core-resources"
 version: "1.0"
 source: "方法论编排（I→F→A→C）场景3：重构优化"

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "update-sunlogin-wiki-mobile-control"
 title: "更新向日葵Wiki：电脑远程控制手机功能"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/standards-tools/update-sunlogin-wiki-mobile-control/spec.toml"

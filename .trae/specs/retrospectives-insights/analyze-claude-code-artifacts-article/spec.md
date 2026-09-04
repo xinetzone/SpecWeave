@@ -1,3 +1,8 @@
+---
+title: "Claude Code Artifacts 功能文章深度洞察分析"
+status: "draft"
+---
+
 # Claude Code Artifacts 功能文章深度洞察分析 Spec
 
 ## Why

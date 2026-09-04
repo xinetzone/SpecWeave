@@ -1,3 +1,8 @@
+---
+title: "Chaos AI Portable 镜像多阶段构建瘦身"
+status: "draft"
+---
+
 # Chaos AI Portable 镜像多阶段构建瘦身 Spec
 
 ## Why

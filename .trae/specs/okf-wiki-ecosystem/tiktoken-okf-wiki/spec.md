@@ -1,3 +1,8 @@
+---
+title: "tiktoken 源码学习 OKF Wiki 教程生成 -"
+status: "draft"
+---
+
 # tiktoken 源码学习 OKF Wiki 教程生成 - Spec
 
 ## Why

@@ -1,3 +1,8 @@
+---
+title: "2025年7月初中国AI行业动态文章系统性学习与深度洞察分析"
+status: "draft"
+---
+
 # 2025年7月初中国AI行业动态文章系统性学习与深度洞察分析 - Product Requirement Document
 
 ## Overview

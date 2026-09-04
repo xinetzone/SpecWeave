@@ -1,3 +1,8 @@
+---
+title: "Bundles 自包含自洽化重构"
+status: "draft"
+---
+
 # Bundles 自包含自洽化重构 - Product Requirement Document
 
 ## Overview

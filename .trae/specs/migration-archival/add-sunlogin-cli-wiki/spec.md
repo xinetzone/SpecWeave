@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "add-sunlogin-cli-wiki"
 title: "向日葵企业CLI帮助指南Wiki文档创建与更新"
 source: "https://service.oray.com/question/51527.html"

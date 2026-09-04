@@ -1,3 +1,8 @@
+---
+title: "中国古代物理典籍 OKF wiki 教程 - 产品需求文档（spec.md）"
+status: "draft"
+---
+
 # 中国古代物理典籍 OKF wiki 教程 - 产品需求文档（spec.md）
 
 ## Overview

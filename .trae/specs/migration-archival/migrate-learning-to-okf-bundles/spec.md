@@ -1,3 +1,8 @@
+---
+title: "docs/knowledge/learning 全量迁移至 OKF 知识包库"
+status: "draft"
+---
+
 # docs/knowledge/learning 全量迁移至 OKF 知识包库 Spec
 
 ## Why

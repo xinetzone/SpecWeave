@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "create-hermes-okf-wiki-tutorial-spec"
 title: "Hermes OKF（基于OKF的Agent持久记忆）Wiki教程产品需求文档"
 source: "seven-concepts knowledge-scenario: hermes-okf 官方 README（GitHub EliaszDev/hermes-okf v0.5.9）+ vendor/awesome-okf 中文索引"

@@ -1,3 +1,8 @@
+---
+title: "xinet 目录系统性内容萃取与归档方案"
+status: "draft"
+---
+
 # xinet 目录系统性内容萃取与归档方案 Spec
 
 ## Why

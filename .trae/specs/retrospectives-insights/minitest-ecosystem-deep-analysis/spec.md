@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "minitest-ecosystem-deep-analysis-spec"
 title: "Minitest AI QA 测试平台生态系统深度研究与洞察报告"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/minitest-ecosystem-deep-analysis/spec.toml"

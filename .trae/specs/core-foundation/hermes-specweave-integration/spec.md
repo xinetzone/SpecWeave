@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "hermes-specweave-integration-spec"
 title: "Hermes 深度集成 SpecWeave 工作区规范"
 source: "用户需求：功能调研 hermes-agent + 探索+洞察进化路径 + 集成 .agents/AGENTS.md"

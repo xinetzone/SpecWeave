@@ -1,3 +1,8 @@
+---
+title: "Caffe 客户分发 Docker 镜像"
+status: "draft"
+---
+
 # Caffe 客户分发 Docker 镜像 - Product Requirement Document
 
 ## Overview

@@ -1,3 +1,8 @@
+---
+title: "Spec：豆包工作连上飞书 → OKF 知识包"
+status: "draft"
+---
+
 # Spec：豆包工作连上飞书 → OKF 知识包
 
 ## 基本信息

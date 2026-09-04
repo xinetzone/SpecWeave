@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "Agent评测体系化建设方法论 Wiki 教程"
 source: "deep-research:agent-evaluation-industry-best-practices"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/core-foundation/agent-evaluation-methodology-wiki/spec.toml"

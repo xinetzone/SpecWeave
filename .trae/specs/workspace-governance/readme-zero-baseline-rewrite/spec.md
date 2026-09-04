@@ -1,3 +1,8 @@
+---
+title: "README 零基础用户友好全面重写"
+status: "draft"
+---
+
 # README 零基础用户友好全面重写 Spec
 
 ## Why

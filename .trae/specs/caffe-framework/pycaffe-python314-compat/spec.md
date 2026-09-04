@@ -1,3 +1,8 @@
+---
+title: "PyCaffe pyproject.toml Python 3.14+ 兼容性更新"
+status: "draft"
+---
+
 # PyCaffe pyproject.toml Python 3.14+ 兼容性更新 - Product Requirement Document
 
 ## Overview

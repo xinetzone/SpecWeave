@@ -1,3 +1,8 @@
+---
+title: "艺术疗愈六束视觉资产增补（配图 + Mermaid）"
+status: "draft"
+---
+
 ***
 
 type: Spec

@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "establish-pwsh7-windows-standard"
 title: "建立Windows pwsh7脚本统一规范"
 source: "用户需求 + 七概念方法论(F→V→I)分析"

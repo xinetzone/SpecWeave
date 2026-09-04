@@ -1,3 +1,8 @@
+---
+title: "xmtools 客户分发文档集"
+status: "draft"
+---
+
 # xmtools 客户分发文档集 Spec
 
 ## Why

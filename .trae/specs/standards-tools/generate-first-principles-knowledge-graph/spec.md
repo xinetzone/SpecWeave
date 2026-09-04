@@ -1,3 +1,8 @@
+---
+title: "第一性原理交互式知识图谱"
+status: "draft"
+---
+
 # 第一性原理交互式知识图谱 - Product Requirement Document
 
 ## Overview

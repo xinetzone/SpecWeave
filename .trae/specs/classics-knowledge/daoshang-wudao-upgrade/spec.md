@@ -1,3 +1,8 @@
+---
+title: "以道入商·竹简悟道视角升级"
+status: "draft"
+---
+
 # 以道入商·竹简悟道视角升级 - Product Requirement Document
 
 ## Overview

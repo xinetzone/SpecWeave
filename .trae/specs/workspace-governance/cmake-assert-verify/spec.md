@@ -1,3 +1,8 @@
+---
+title: "WIN32 IMPORTED DLL 修复与 AssertHelper 断言验证"
+status: "draft"
+---
+
 # WIN32 IMPORTED DLL 修复与 AssertHelper 断言验证 - Product Requirement Document
 
 ## Overview

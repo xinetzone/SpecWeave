@@ -1,3 +1,8 @@
+---
+title: "LongCat-2.0 Agent 能力实测 Wiki"
+status: "draft"
+---
+
 # LongCat-2.0 Agent 能力实测 Wiki Spec
 
 ## 1. 资源来源

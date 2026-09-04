@@ -1,3 +1,8 @@
+---
+title: "Karpathy LLM Wiki 知识库方案文章深度洞察分析"
+status: "draft"
+---
+
 # Karpathy LLM Wiki 知识库方案文章深度洞察分析 Spec
 
 ## Why

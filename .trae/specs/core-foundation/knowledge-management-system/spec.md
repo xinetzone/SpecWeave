@@ -1,3 +1,8 @@
+---
+title: "项目知识管理系统"
+status: "draft"
+---
+
 # 项目知识管理系统 Spec
 
 ## Why

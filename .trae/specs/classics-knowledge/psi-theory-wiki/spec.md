@@ -1,3 +1,8 @@
+---
+title: "Ψhē 理论体系 OKF Wiki 教程 - 产品需求文档"
+status: "draft"
+---
+
 # Ψhē 理论体系 OKF Wiki 教程 - 产品需求文档
 
 ## Overview

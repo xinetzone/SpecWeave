@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: "trae-solo-meoo-contest-plan"
 title: "Trae Solo智能体参与秒悟产品启航赛完整方案"
 date: "2026-07-14"

@@ -1,3 +1,8 @@
+---
+title: "Vibe Coding 两大神级 Prompt 学习分析"
+status: "draft"
+---
+
 # Vibe Coding 两大神级 Prompt 学习分析 Spec
 
 ## Why

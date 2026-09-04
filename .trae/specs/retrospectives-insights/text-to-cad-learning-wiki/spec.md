@@ -1,4 +1,5 @@
 ---
+status: "draft"
 title: "text-to-cad 项目学习与 Wiki 教程文档"
 source: "微信公众号文章《机械设计又又又卡住了？这个开源项目让 AI 直接生成可编辑的 CAD 源代码》"
 x-toml-ref: "../../../../.meta/toml/.trae/specs/retrospectives-insights/text-to-cad-learning-wiki/spec.toml"

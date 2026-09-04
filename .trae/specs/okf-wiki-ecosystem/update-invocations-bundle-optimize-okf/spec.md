@@ -1,3 +1,8 @@
+---
+title: "更新 Invocations OKF bundle 并对 awesome-okf-xs 项目优化"
+status: "draft"
+---
+
 # 更新 Invocations OKF bundle 并对 awesome-okf-xs 项目优化 Spec
 
 ## Why

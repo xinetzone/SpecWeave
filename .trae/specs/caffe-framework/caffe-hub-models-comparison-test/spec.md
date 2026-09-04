@@ -1,4 +1,5 @@
 ---
+status: "draft"
 id: caffe-hub-models-comparison-test
 title: Caffe 两实现（caffe-ffi / caffex）在 hub 真实模型库上的网络级综合对比测试
 source: 用户指令 /spec "caffe-comprehensive-comparison-test" 重启任务 七概念编排

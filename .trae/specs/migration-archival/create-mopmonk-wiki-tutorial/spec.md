@@ -1,3 +1,8 @@
+---
+title: "MopMonk 安全 Agent 系统 Wiki 教程"
+status: "draft"
+---
+
 # MopMonk 安全 Agent 系统 Wiki 教程 - Product Requirement Document
 
 ## Overview

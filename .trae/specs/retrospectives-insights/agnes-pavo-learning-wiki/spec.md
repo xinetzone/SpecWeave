@@ -1,3 +1,8 @@
+---
+title: "Agnes AI 与 Pavo 创作平台学习 Wiki 教程"
+status: "draft"
+---
+
 # Agnes AI 与 Pavo 创作平台学习 Wiki 教程 Spec
 
 ## Why
