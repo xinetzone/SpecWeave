@@ -206,6 +206,14 @@ jobs:
 **后果**：入口文件的语法错反馈链路 = push → GitHub runner 调度 → 解析 workflow → 报错，实际耗时 30s-2min。更糟糕的是错误信息**只有行号 + 一句"yaml syntax error"**，没有列号、没有上下文、没有建议修复，debug 时需要自己打开文件一行行数列号或者本地跑 safe_load 才能定位，总耗时从本地 lint 的 2 秒变到线上 3-15 分钟。且如果是多人同时提 PR，一个人的低级错会阻塞后面所有人。
 **纠正法**：三层防线把错误拉回本地秒级。时间成本：本地 2s × 100 次提交 = 200s；线上 10min × 1 次踩坑 = 600s。明显前者更省。
 
+### 反模式-4：「bash 的 $d 只是循环变量，写在 ${{ steps.*.outputs.$d }} 里挺方便的」
+**后果**：本次 awesome-okf-xs 的连续第二个坑（VC-11，Run 47 `Unexpected symbol: '$d'`）。GitHub Actions 的执行时序是：**先整体做 GHA expression 解析（处理所有 `${{ ... }}`），再把结果送 bash/sh 执行**。因此 `${{ }}` 内的所有字符都必须是合法的 GHA 字面量/标识符，**绝对不能出现 bash 层的动态变量语法（`$d` / `$VAR` / `${VAR}`）**——GHA parser 遇到 `$d` 根本不认识它，直接报 "Unexpected symbol"。哪怕你在 shell 层面 `eval` 包装也绕不过，因为 shell 还没来得及跑，expression 层已经挂了。
+**纠正法**：① 先用 **字面量键名展开** 把所有可能用到的 `${{ steps.*.outputs.<literal> }}` 一次赋值给独立 bash 变量（`OUT_meta=...`、`OUT_guoxue=...` 九条），② 再在 bash 循环里用**间接引用**取到值（`_v="OUT_$d"; CHANGED="${!_v}"`），彻底把 expression 层和 shell 层切断，绝不让跨层嵌套发生。
+
+### 反模式-5：「我只是把 ${{ }} 写在 bash 注释里，GHA 不会处理注释的吧」
+**后果**：本次 awesome-okf-xs 的连续第三个坑（Run 48 `An expression was expected`，Line 141 Col 14）。**GHA expression parser 工作在 YAML 字符串层面，根本不理解 bash 注释语法**——它只做字符串级别的模式匹配，只要在 run 块里扫到 `${{` 就会尝试解析成 expression，无论你这一行前缀有没有 `#`。所以即使是在 bash `# 注释` 里写的 `${{ }}`，GHA parser 也会真实去求值；如果里面没有合法 expression 内容（空的 `}}` 截断或乱码），就会报 "An expression was expected"。IDE 的 shell 语法高亮永远不会在这里提示你有问题。
+**纠正法**：在整个 `run: |` 块内（包括注释行），把 **"GHA 表达式"这五个汉字** 当作字面量 `${{ }}` 的替代表述；如果你一定要写标记示例（比如说明文档），必须把 `${` 中间断开（`$ { {`、`\${{` 或者先在表达式外拼接），让 GHA 模式匹配器匹配不到。经验法则：**run 块内的任何位置出现 `${{`，GHA 都会解析，不区分 code / comment / heredoc**。
+
 ---
 
 ## 明确检验标准（做完怎么知道做对了）
