@@ -50,7 +50,7 @@
 1. **选择主题**：判断归属 13 大主题之一；跨主题的优先归入最相关主题。
 2. **查重**：在对应主题目录下检索是否已有相近 spec，避免近名重复（见 C-5 查重脚本）。
 3. **命名**：kebab-case，语义化描述，参考现有命名（如 create-*-wiki-tutorial）。
-4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + checklist.md。
+4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + review.md（独立审查清单，仅 Review 阶段写入）。产物命名与结构以 [TRAE-spec-mode Skill](../.agents/skills/TRAE-spec-mode/SKILL.md) 为唯一权威依据，禁止使用 checklist.md 等非规范命名。
 5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。
 
 *本看板由 docgen（C-6）于 2026-09-04 生成，后续自动维护。*

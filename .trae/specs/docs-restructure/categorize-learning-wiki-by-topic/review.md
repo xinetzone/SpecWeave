@@ -45,7 +45,7 @@
 ## 上层文档同步验证
 - [x] docs/knowledge/README.md 中的 learning 部分链接路径已全部更新（共266个文件1943处替换）
 - [x] docs/retrospective/、.agents/templates/ 等引用 learning 路径的文件均已同步更新
-- [x] .trae/specs/docs-restructure/ 下 tasks.md 和 checklist.md 已更新任务完成状态
+- [x] .trae/specs/docs-restructure/ 下 tasks.md 和 review.md 已更新任务完成状态
 
 ## 收尾验证
 - [x] 迁移过程中产生的空目录已全部清理

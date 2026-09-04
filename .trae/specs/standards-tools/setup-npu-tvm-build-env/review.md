@@ -126,4 +126,4 @@
 - [x] xmnn 仓库所有配置项验证通过（分支 main/develop、.gitignore、commit-msg hook、README、initial-commit tag）
 - [x] 所有创建的文件路径正确，无遗漏
 - [x] tasks.md 中所有任务标记为已完成
-- [x] checklist.md 中所有检查项标记为已完成
+- [x] review.md 中所有检查项标记为已完成

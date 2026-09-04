@@ -121,7 +121,7 @@
 - [x] 主文档：[anthropic-agent-roadmap-wiki.md](../../../../docs/knowledge/learning/03-agent-platforms-tools/anthropic-agent-roadmap-wiki.md)
 - [x] Spec文档：[spec.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/spec.md)
 - [x] 任务计划：[tasks.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/tasks.md)
-- [x] 验证清单：[checklist.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/checklist.md)
+- [x] 验证清单：[review.md](file:///d:/AI/.trae/specs/retrospectives-insights/anthropic-agent-roadmap-learning-wiki/review.md)
 - [x] 索引更新：[README.md](../../../../docs/knowledge/README.md)
 
 ## 七概念复盘检查

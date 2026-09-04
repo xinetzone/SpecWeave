@@ -52,5 +52,5 @@
 ## 交付物检查
 - [ ] spec.md 产品需求文档完整
 - [ ] tasks.md 实施计划完整，任务分解合理
-- [ ] checklist.md 验证清单完整
+- [ ] review.md 验证清单完整
 - [ ] analysis-report.md 最终分析报告完整

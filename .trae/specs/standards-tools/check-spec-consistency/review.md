@@ -10,7 +10,7 @@
 ## tasks.md 解析器
 - [x] `parse_tasks()` 正确提取 Task/SubTask、统计数量
 
-## checklist.md 解析器
+## review.md 解析器
 - [x] `parse_checklist()` 正确提取检查类别、检查点、统计数量
 
 ## 一致性检查引擎

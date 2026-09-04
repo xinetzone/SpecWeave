@@ -51,4 +51,4 @@
 - [x] **Checkpoint T8.2**：`tests/unit/test_entrypoints.py` 2 条入口 import + schema 断言 PASS（`MySTX / ConfigManager / config_inited_handler / version_switcher_setup.sphinx_setup` 全部可 import + setup 返回 schema 对）
 - [x] **Checkpoint T8.3**：`pytest tests/unit -q` 最终二刷全部通过，passed 数量 ≥ 15（T8 验证不被 T7 后整合破坏）
 - [x] **Checkpoint T8.4**：doc 构建 smoke（如 T0 成功过可复用）：sphinx-build 对 mystx/doc/ 执行（非 -W 模式 exit 0；-W 警告来自 AutoAPI 历史 docstring 非本次迁移引入）验证主题与钩子实际生效
-- [x] **Checkpoint T8.5**：所有 `tasks.md` 方框已 [x] 化，所有 `checklist.md` 方框已 [x] 化——100% 完工
+- [x] **Checkpoint T8.5**：所有 `tasks.md` 方框已 [x] 化，所有 `review.md` 方框已 [x] 化——100% 完工

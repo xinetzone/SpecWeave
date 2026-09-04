@@ -8,5 +8,5 @@
 - [x] Checkpoint 6: 所有代码示例准确、可运行，符合框架最佳实践
 - [x] Checkpoint 7: 更新内容与现有项目风格保持一致
 - [x] Checkpoint 8: 文档已保存到 agency-agents 项目中
-- [x] Checkpoint 9: tasks.md 和 checklist.md 状态已更新
+- [x] Checkpoint 9: tasks.md 和 review.md 状态已更新
 - [x] Checkpoint 10: Open Questions 中已解决的问题有明确答案

@@ -4,7 +4,7 @@
 - [ ] article-content.md 原始内容完整保存，无遗漏段落
 - [ ] spec.md PRD 文档结构完整，包含 Overview/Goals/Non-Goals/Background/FR/NFR/Constraints/Assumptions/AC/Open Questions
 - [ ] tasks.md 任务分解清晰，每个任务有 Priority/Depends On/Description/AC Addressed/Test Requirements/Notes
-- [ ] checklist.md 验证清单覆盖所有关键检查点
+- [ ] review.md 验证清单覆盖所有关键检查点
 
 ## Task 1 验证点（元信息与背景）
 - [ ] 文章标题、公众号"叶小钗"准确记录

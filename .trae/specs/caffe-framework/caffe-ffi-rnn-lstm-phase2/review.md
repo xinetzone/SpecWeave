@@ -46,4 +46,4 @@
 - [x] `tests/python/test_recurrent_backward.py` 存在，测试类带 `@require_cpp_extension`
 - [x] 全量测试通过（新增不影响既有 1646 passed；实际 1692 passed / 1 skipped）
 - [x] `caffe-ffi-tvm-integration/tasks.md` Task 30 标注 Phase 2 完成
-- [x] `caffe-ffi-tvm-integration/spec.md`/`checklist.md` RNN/LSTM 进度更新
+- [x] `caffe-ffi-tvm-integration/spec.md`/`review.md` RNN/LSTM 进度更新

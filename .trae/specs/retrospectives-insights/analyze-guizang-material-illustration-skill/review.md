@@ -54,7 +54,7 @@
 ## 文件结构验证
 - [x] spec.md 存在且内容完整
 - [x] tasks.md 存在且所有10个任务状态已更新为完成
-- [x] checklist.md 存在且所有检查项已标记
+- [x] review.md 存在且所有检查项已标记
 - [x] article-content.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
 - [x] analysis-report.md 已归档至 .agents/docs/retrospective/reports/insight-extraction/external-learning/retrospective-guizang-material-illustration-skill-20260709/
 - [x] 归档目录存在 README.md（含任务背景、核心指标、文件索引、changelog）

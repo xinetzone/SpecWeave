@@ -26,5 +26,5 @@
 
 ## 文档一致性检查
 - [x] `caffe-ffi-tvm-integration/tasks.md` Task 30 标注 Phase 1 完成、Phase 2 待启动
-- [x] `caffe-ffi-tvm-integration/spec.md`/`checklist.md` RNN/LSTM 进度更新
+- [x] `caffe-ffi-tvm-integration/spec.md`/`review.md` RNN/LSTM 进度更新
 - [x] 未引入 Backward/C++ RecurrentLayer 相关改动（Phase 2 范围外）

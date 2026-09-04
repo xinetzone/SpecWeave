@@ -104,4 +104,4 @@
 
 - [x] Checkpoint 62: spec.md 的 3 个 Open Questions 均有初步分析结论（OQ-1/OQ-2/OQ-3）
 - [x] Checkpoint 63: 每个 Open Question 有明确的决策状态（待确认/另立 spec/建议暂不处理）
-- [x] Checkpoint 64: Open Questions 跟踪机制已建立（tasks.md Task 13 + checklist.md Checkpoint 62-64）
+- [x] Checkpoint 64: Open Questions 跟踪机制已建立（tasks.md Task 13 + review.md Checkpoint 62-64）
