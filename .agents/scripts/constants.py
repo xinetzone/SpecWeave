@@ -69,7 +69,7 @@ LINK_CHECK_EXCLUDE_DIRS = [
     # 模板示例目录：含占位符链接（prev-chapter.md、next-chapter.md 等），
     # 这些链接是模板示例，非真实链接，不应校验。
     ".agents/templates/multi-product-wiki-template/example-wiki",
-    ".trae/specs/knowledge-base-wiki-template/template",
+    ".trae/specs/okf-wiki-ecosystem/knowledge-base-wiki-template/template",
 ]  # 默认排除目录
 LINK_CHECK_USER_AGENT = "Mozilla/5.0 (compatible; LinkChecker/1.0)"
 

@@ -9,14 +9,14 @@ date: "2026-07-30"
 status: "stable"
 author: "SpecWeave"
 summary: "conda-forge 交叉编译配置完整调研报告，覆盖从 linux-64 构建 osx-64/osx-arm64/win-64 平台包的完整方案：平台三元组、工具链包名清单、conda_build_config.yaml模板、meta.yaml依赖分离、build.sh交叉编译检测、CMAKE_ARGS变量传递、scikit-build-core适配、Wine运行时测试、常见陷阱与解决方案。"
-source: ".trae/specs/docker-cross-platform-test/research-report.md"
+source: ".trae/specs/infra-env/docker-cross-platform-test/research-report.md"
 ---
 
 # conda-forge 交叉编译配置完整指南
 
 > **调研日期**：2026-07-30
 > **目标**：从 linux-64 构建 osx-64/osx-arm64/win-64 平台包的完整配置方案
-> **来源**：Docker跨平台构建测试任务调研产出（[spec.md](../../../.trae/specs/docker-cross-platform-test/spec.md)）
+> **来源**：Docker跨平台构建测试任务调研产出（[spec.md](../../../.trae/specs/infra-env/docker-cross-platform-test/spec.md)）
 
 ---
 

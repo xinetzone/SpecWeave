@@ -26,7 +26,7 @@ summary: caffe-ffi Conv 层 OpenMP 并行优化（v4）的技术总结，覆盖�
 >
 > **配套材料**：
 > - 里程碑复盘：[Conv v4 OpenMP 并行优化里程碑复盘](../../retrospective/reports/task-reports/retrospective-caffe-ffi-conv-v4-milestone-20260805.md)
-> - 部署配置指南：`.trae/specs/caffe-ffi-conv-v4-milestone/deployment_config_guide.md`（生产配置完整版）
+> - 部署配置指南：`.trae/specs/caffe-framework/caffe-ffi-conv-v4-milestone/deployment_config_guide.md`（生产配置完整版）
 
 ## 1. 背景与目标
 

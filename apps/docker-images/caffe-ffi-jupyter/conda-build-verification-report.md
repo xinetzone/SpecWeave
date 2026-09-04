@@ -8,7 +8,7 @@ source:
   - apps/docker-images/caffe-ffi-jupyter/scripts/full-clean-rebuild.sh
 tags: [conda-build, caffe-ffi, tvm-ffi, ABI, pip-install, scikit-build-core, RPATH, OpenBLAS, BLAS, prefix-replacement, patchelf, editable-finder]
 status: "✅ 全部验证通过 — Native模式正常，ABI兼容性问题已解决，OpenBLAS加速已启用，RPATH全部使用相对路径，editable残留彻底清理"
-spec: .trae/specs/conda-pip-editable-tvm-ffi/
+spec: .trae/specs/caffe-framework/conda-pip-editable-tvm-ffi/
 ---
 
 # caffe-ffi Conda 包构建验证报告（build 5）

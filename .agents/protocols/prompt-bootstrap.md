@@ -1,7 +1,7 @@
 ---
 id: "protocols-prompt-bootstrap"
 title: "提示词自举协议（Prompt Bootstrap Protocol）"
-source: "specs/agent-app-marketplace/spec.md#一句话提示词自举协议"
+source: "specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md#一句话提示词自举协议"
 x-toml-ref: "../../.meta/toml/.agents/protocols/prompt-bootstrap.toml"
 ---
 # 提示词自举协议（Prompt Bootstrap Protocol）
