@@ -39,7 +39,7 @@ echo -e "${GRAY}LC_ALL: $LC_ALL${NC}"
 echo -e "${GRAY}PYTHONIOENCODING: $PYTHONIOENCODING${NC}"
 echo ""
 
-TOTAL=19
+TOTAL=20
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 echo -e "${YELLOW}[1/$TOTAL] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)...${NC}"
@@ -212,6 +212,15 @@ if ! python3 "$ROOT/.agents/scripts/check-cmd-log-compliance.py"; then
     exit 1
 fi
 echo -e "  ${GREEN}PASS (all mandatory log chains closed)${NC}"
+echo ""
+
+# 20. Check spec near-name duplication (C-5 门禁：防增量近名并存，存量 warn-only)
+echo -e "${YELLOW}[20/$TOTAL] Check spec near-name duplication (C-5 gateway)...${NC}"
+if python3 "$ROOT/.agents/scripts/check-spec-duplication.py" --json > /dev/null 2>&1; then
+    echo -e "  ${GREEN}PASS (no new near-name conflicts)${NC}"
+else
+    echo -e "  ${YELLOW}WARN: spec near-name duplication found (historical debt, C-5 blocks new additions only)${NC}"
+fi
 echo ""
 
 echo -e "${CYAN}========================================${NC}"

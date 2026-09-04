@@ -2,15 +2,19 @@
 """文档索引与看板生成统一工具。
 
 聚合以下文档生成功能：
-  nav        - 自动生成 README.md / docs/README.md / docs/index.md 文档导航表
-  dashboard  - 自动生成 .trae/specs/ 执行进度看板
-  apps       - 自动生成 apps/README.md 应用清单索引表
-  stats      - 自动统计并更新 README.md / AGENTS.md / .agents/README.md 核心数据指标
-  all        - 依次执行 nav + dashboard + apps + stats
+  nav                    - 自动生成 README.md / docs/README.md / docs/index.md 文档导航表
+  dashboard              - 自动生成 .trae/specs/ 执行进度看板（根 README.md）
+  theme-dashboards       - 为所有主题生成/刷新主题级看板（.trae/specs/<theme>/README.md）
+  update-spec-readme     - 将 .trae/specs/README.md 压缩为轻索引（全局总览表 + 主题行数摘要）
+  apps                   - 自动生成 apps/README.md 应用清单索引表
+  stats                  - 自动统计并更新 README.md / AGENTS.md / .agents/README.md 核心数据指标
+  all                    - 依次执行 nav + dashboard + theme-dashboards + update-spec-readme + apps + stats
 
 用法：
   python docgen.py nav
   python docgen.py dashboard
+  python docgen.py theme-dashboards
+  python docgen.py update-spec-readme
   python docgen.py apps
   python docgen.py stats
   python docgen.py all
@@ -61,6 +65,7 @@ UNCHECKED_HEADING_RE = re.compile(r"^##+ \[ \]", re.MULTILINE)
 CHECKED_HEADING_RE = re.compile(r"^##+ \[x\]", re.MULTILINE | re.IGNORECASE)
 YAML_FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*$", re.MULTILINE | re.DOTALL)
 COMPLETED_STATUSES = {"completed", "done", "finished", "complete"}
+# 全部 13 个主题，保持既有 7 主题 + 新扩 6 主题的顺序
 THEME_ORDER = [
     "core-foundation",
     "roles-governance",
@@ -69,7 +74,37 @@ THEME_ORDER = [
     "docs-restructure",
     "retrospectives-insights",
     "migration-archival",
+    "okf-wiki-ecosystem",
+    "classics-knowledge",
+    "caffe-framework",
+    "xmnn-packaging",
+    "workspace-governance",
+    "infra-env",
 ]
+
+# 各主题的描述文本（用于主题 README 和全局总览表）
+THEME_DESCRIPTIONS: dict[str, str] = {
+    "core-foundation": "核心体系基础：项目核心基础设施、系统架构、核心功能模块的创建与配置类 spec",
+    "roles-governance": "角色与治理体系：智能体角色定义扩展、权限标记、治理规则体系、索引同步相关 spec",
+    "standards-tools": "规范标准与工具链：文档编写标准、命名规范、自动化检查/验证工具、IDE 适配优化相关 spec",
+    "readme-branding": "README 与品牌定位：对外展示窗口演进、品牌定位词选型、蓝图与场景展示相关 spec",
+    "docs-restructure": "文档体系重组：已有文档原子化拆分、主题分类、目录重构、重复消除、命名统一等结构性整理 spec",
+    "retrospectives-insights": "复盘与洞察萃取：已完成任务/项目系统性复盘、问题诊断、经验萃取、方法论分析的 spec",
+    "migration-archival": "迁移与归档：外部内容引入、沙箱治理、历史项目迁移、归档体系建立相关 spec",
+    "okf-wiki-ecosystem": "OKF/Wiki 知识生态：外部源码、官方文档、博客文章的知识化转译（OKF 知识包/Wiki 教程）spec",
+    "classics-knowledge": "典籍与人文知识：中西方典籍、道家/中医/数理经典的知识化工程 spec",
+    "caffe-framework": "Caffe/CaffEx 框架：Caffe FFI、pycaffe、算子实现、Docker 镜像与性能优化 spec",
+    "xmnn-packaging": "XMNN 打包与量化：wheel 构建、Nuitka 打包、运行时镜像、模型精度验证 spec",
+    "workspace-governance": "工作区治理：目录重组、规范整合、子项目管理、工作区模板萃取 spec",
+    "infra-env": "基础设施与环境：Docker/devcontainer/conda/Jupyter 环境搭建与运维 spec",
+}
+
+# 状态图标映射
+_STATUS_ICONS = {
+    "done": "✓", "completed": "✓", "完成": "✓",
+    "in-progress": "!", "in_progress": "!", "ongoing": "!", "进行中": "!",
+    "planned": "?", "pending": "?", "todo": "?", "待启动": "?", "规划": "?",
+}
 
 
 # ============================================================
@@ -158,6 +193,270 @@ def cmd_nav(args) -> int:
         return 1
     print(f"\n完成: 已更新 {updated} 个文件")
     return 0
+
+
+def _dash_get_spec_status(spec_md: Path) -> str:
+    """从 spec.md 的 YAML frontmatter 中提取 status 字段的图标表示。"""
+    if not spec_md.exists():
+        return "—"
+    try:
+        text = spec_md.read_text(encoding="utf-8")
+    except Exception:
+        return "—"
+    match = YAML_FRONTMATTER_RE.match(text)
+    if not match:
+        return "—"
+    fm = match.group(1)
+    sm = re.search(r"^status\s*:\s*[\"']?([^\"'\n]+)", fm, re.M)
+    if not sm:
+        return "—"
+    val = sm.group(1).strip().lower()
+    return _STATUS_ICONS.get(val, "—")
+
+
+def _dash_scan_all_specs(specs_root: Path) -> list[ThemeStatus]:
+    """扫描全部 13 主题，收集每个主题下所有子目录（不论是否有 tasks.md）。
+
+    用于主题看板生成和全局 README 压缩。返回 ThemeStatus 列表，其中 specs 包含
+    name / has_tasks / has_checklist / status_icon 字段（不依赖 tasks.md 存在）。
+    """
+    themes = []
+    theme_dirs = sorted(
+        [d for d in specs_root.iterdir() if d.is_dir() and d.name not in EXCLUDED_DIRS]
+    )
+    ordered = []
+    for name in THEME_ORDER:
+        p = specs_root / name
+        if p.exists() and p.is_dir():
+            ordered.append(p)
+    for td in theme_dirs:
+        if td not in ordered:
+            ordered.append(td)
+
+    for theme_dir in ordered:
+        sub_dirs = sorted([
+            d for d in theme_dir.iterdir()
+            if d.is_dir() and d.name not in EXCLUDED_DIRS
+        ])
+        specs = []
+        for d in sub_dirs:
+            spec_md = d / "spec.md"
+            fm = parse_frontmatter_unified(spec_md) if spec_md.exists() else None
+            status_val = str(fm.get("status", "")).lower().strip() if fm else ""
+            if status_val in COMPLETED_STATUSES:
+                completed = True
+                total_tasks = 0
+                done_tasks = 0
+            elif (d / "tasks.md").exists():
+                tasks_content = (d / "tasks.md").read_text(encoding="utf-8")
+                in_code = False
+                flt = []
+                for line in tasks_content.split("\n"):
+                    if line.strip().startswith("```"):
+                        in_code = not in_code
+                        continue
+                    if not in_code:
+                        flt.append(line)
+                filtered = "\n".join(flt)
+                unchecked = len(UNCHECKED_LIST_RE.findall(filtered)) + len(UNCHECKED_HEADING_RE.findall(filtered))
+                checked = len(CHECKED_LIST_RE.findall(filtered)) + len(CHECKED_HEADING_RE.findall(filtered))
+                total_tasks = unchecked + checked
+                done_tasks = checked
+                completed = unchecked == 0 and total_tasks > 0
+            else:
+                completed = False
+                total_tasks = 0
+                done_tasks = 0
+            specs.append(SpecStatus(
+                name=d.name,
+                completed=completed,
+                total_tasks=total_tasks,
+                done_tasks=done_tasks,
+            ))
+        # 如果主题目录本身是 spec（无子目录但有 tasks.md）
+        if not specs and (theme_dir / "tasks.md").exists():
+            specs = [_dash_scan_spec(theme_dir)]
+        themes.append(ThemeStatus(name=theme_dir.name, specs=specs))
+    return themes
+
+
+def _build_theme_dashboard_table(specs: list[SpecStatus]) -> str:
+    """生成主题看板表格（4 列：# | Spec 名称 | 状态 | 三件套）。"""
+    lines = ["| # | Spec 名称 | 状态 | 三件套 |"]
+    lines.append("|---|---|---|---|")
+    ck, cx = "✓", "✗"
+    for j, s in enumerate(specs, 1):
+        has_tasks = s.total_tasks > 0 or (s.done_tasks > 0)
+        has_checklist = False  # 暂不检测，用 ? 占位
+        if s.completed:
+            status = "✓ 完成"
+        elif s.done_tasks > 0:
+            status = "! 进行中"
+        else:
+            status = "? 待启动"
+        trio = f"{ck}{'/' if has_tasks else cx}{'/' if has_checklist else cx}"
+        lines.append(f"| {j} | [{s.name}]({s.name}/spec.md) | {status} | {trio} |")
+    return "\n".join(lines)
+
+
+def cmd_theme_dashboards(args) -> int:
+    """为所有主题生成/刷新主题级执行看板（.trae/specs/<theme>/README.md）。
+
+    策略：
+    - 精简型主题（已有 <!-- THEME_DASHBOARD_START/END --> marker）：marker 区域替换
+    - 其他主题：在文档末尾追加 "## 📊 主题执行看板（docgen 自动生成）" 区域
+    """
+    root = args.path or resolve_project_root(__file__)
+    specs_root = root / ".trae" / "specs"
+    if not specs_root.exists():
+        print(f"错误: Specs 目录不存在: {specs_root}", file=sys.stderr)
+        return 1
+
+    print("扫描所有主题 Spec...")
+    themes = _dash_scan_all_specs(specs_root)
+    total_specs = sum(t.total for t in themes)
+    print(f"  共 {len(themes)} 个主题，{total_specs} 个 Spec")
+
+    updated = 0
+    skipped = 0
+    for theme in themes:
+        readme = specs_root / theme.name / "README.md"
+        if not readme.exists():
+            print(f"  跳过（无 README）: {theme.name}")
+            skipped += 1
+            continue
+
+        table = _build_theme_dashboard_table(theme.specs)
+        content = readme.read_text(encoding="utf-8")
+
+        ms, me = "<!-- THEME_DASHBOARD_START -->", "<!-- THEME_DASHBOARD_END -->"
+        try:
+            update_marker_region(readme, ms, me, table)
+            print(f"  更新（marker 替换）: {theme.name}（{theme.total} spec）")
+            updated += 1
+        except ValueError:
+            # fallback：在文档末尾追加新区域
+            append_content = (
+                "\n\n"
+                "<!-- THEME_DASHBOARD_START -->\n"
+                "## 📊 主题执行看板（docgen 自动生成）\n\n"
+                f"> 最后刷新：{date.today().isoformat()} ｜ Spec 总数：{theme.total}\n\n"
+                + table + "\n\n"
+                "<!-- THEME_DASHBOARD_END -->"
+            )
+            atomic_write_text(readme, content.rstrip() + append_content + "\n", encoding="utf-8")
+            print(f"  更新（末尾追加）: {theme.name}（{theme.total} spec）")
+            updated += 1
+
+    print(f"\n完成：已更新 {updated} 个主题看板，跳过 {skipped} 个")
+    return 0
+
+
+def cmd_update_spec_readme(args) -> int:
+    """将 .trae/specs/README.md 压缩为轻索引：
+    保留全局状态总览表 + 每主题一行摘要，移除全量 spec 索引大表。
+    目标：< 50KB（C-4 F 类文件瘦身）。
+    """
+    root = args.path or resolve_project_root(__file__)
+    specs_root = root / ".trae" / "specs"
+    target = specs_root / "README.md"
+    if not target.exists():
+        print(f"错误: {target} 不存在", file=sys.stderr)
+        return 1
+
+    print("扫描所有主题 Spec...")
+    themes = _dash_scan_all_specs(specs_root)
+    total_specs = sum(t.total for t in themes)
+
+    # 读取原文，提取全局总览表
+    content = target.read_text(encoding="utf-8")
+
+    # 找到 "## 全局状态总览" 到下一个 "---" 或 "## spec 全量索引" 的区域
+    overview_start = content.find("## \U0001f4da 全局状态总览")
+    if overview_start == -1:
+        overview_start = content.find("## 📊 全局状态总览")
+    if overview_start == -1:
+        # 找不到，从头开始重建
+        overview_start = 0
+
+    # 找第一个 "---" 后面的 "## spec 全量索引"
+    after_overview = content[overview_start:]
+    hr_idx = after_overview.find("\n---\n")
+    if hr_idx == -1:
+        hr_idx = after_overview.find("\n---\n")
+    index_marker = after_overview.find("## \U0001f451; spec 全量索引")
+    if index_marker == -1:
+        index_marker = after_overview.find("## 📑 spec 全量索引")
+
+    if index_marker == -1:
+        # 没有全量索引，直接写入轻版本
+        light_content = _build_light_spec_readme(themes, total_specs)
+    else:
+        # 保留 overview 部分（包括标题、描述、总览表和图例），截断后续内容
+        overview_end = overview_start + index_marker + hr_idx
+        prefix = content[:overview_end]
+        light_content = prefix + "\n\n" + _build_light_spec_readme(themes, total_specs)
+
+    atomic_write_text(target, light_content, encoding="utf-8")
+
+    new_size = len(light_content.encode("utf-8"))
+    print(f"完成：已压缩 .trae/specs/README.md（{new_size // 1024} KB，{total_specs} 个 Spec）")
+    return 0
+
+
+def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str:
+    """生成轻索引版全局看板（仅总览表 + 主题摘要，不含全量 spec 列表）。"""
+    today = date.today().isoformat()
+    lines = [
+        f"# Specs 全局执行看板",
+        "",
+        f"> 本目录是 SpecWeave 项目所有规格文档（spec）的指挥中心，按 13 大主题分类组织。"
+        f"本文档由 docgen（C-6）于 **{today}** 自动生成；详细 spec 列表见各主题 README。",
+        "",
+        "---",
+        "",
+        "## \U0001f4ca 全局状态总览",
+        "",
+        "| 分区 | Spec 数 | 已完成 | 进行中 | 待启动 | 看板 |",
+        "|---|---|---|---|---|---|",
+    ]
+    for theme in themes:
+        c = theme.completed_count
+        ip = theme.in_progress_count
+        p = theme.pending_count
+        tlink = f"./{theme.name}/README.md"
+        icon = "✅" if theme.progress == 100 else ("🔧" if theme.progress > 0 else "📋")
+        lines.append(f"| [{theme.name}]({tlink}) | {theme.total} | {c} | {ip} | {p} | {icon} [查看]({tlink}) |")
+    lines += [
+        f"| **合计** | **{total_specs}** | **{sum(t.completed_count for t in themes)}** | **{sum(t.in_progress_count for t in themes)}** | **{sum(t.pending_count for t in themes)}** | &mdash; |",
+        "",
+        "**状态**：✓ 已完成 ｜ ! 进行中 ｜ ? 待启动 ｜ — 无 metadata",
+        "",
+        "---",
+        "",
+        "## \U0001f4c1 主题索引",
+        "",
+        "> 各主题执行看板详见对应 README，按编号进入查看完整 spec 列表。",
+        "",
+    ]
+    for i, theme in enumerate(themes, 1):
+        desc = THEME_DESCRIPTIONS.get(theme.name, "")
+        short = desc.split("：", 1)[1] if "：" in desc else desc
+        lines.append(f"{i}. [{theme.name}](./{theme.name}/README.md) — {theme.total} spec：{short}")
+    lines += [
+        "",
+        "## \U0001f4c6 新增 Spec 指南",
+        "",
+        "1. **选择主题**：判断归属 13 大主题之一；跨主题的优先归入最相关主题。",
+        "2. **查重**：在对应主题目录下检索是否已有相近 spec，避免近名重复（见 C-5 查重脚本）。",
+        "3. **命名**：kebab-case，语义化描述，参考现有命名（如 create-*-wiki-tutorial）。",
+        "4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + checklist.md。",
+        "5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，"
+        "运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。",
+        "",
+        f"*本看板由 docgen（C-6）于 {today} 生成，后续自动维护。*",
+    ]
+    return "\n".join(lines) + "\n"
 
 
 # ============================================================
@@ -1080,6 +1379,18 @@ def cmd_all(args) -> int:
         return rc
 
     print()
+    rc = cmd_theme_dashboards(args)
+    if rc != 0:
+        print(f"\n[theme-dashboards 失败 (exit={rc})，中止后续任务]", file=sys.stderr)
+        return rc
+
+    print()
+    rc = cmd_update_spec_readme(args)
+    if rc != 0:
+        print(f"\n[update-spec-readme 失败 (exit={rc})，中止后续任务]", file=sys.stderr)
+        return rc
+
+    print()
     rc = cmd_apps(args)
     if rc != 0:
         print(f"\n[apps 失败 (exit={rc})，中止后续任务]", file=sys.stderr)
@@ -1115,6 +1426,12 @@ def main():
     p_dash = subparsers.add_parser('dashboard', help='生成 Spec 执行进度看板（根 README.md）')
     add_common_args(p_dash)
 
+    p_theme = subparsers.add_parser('theme-dashboards', help='为所有 13 个主题生成/刷新主题级执行看板')
+    add_common_args(p_theme)
+
+    p_update = subparsers.add_parser('update-spec-readme', help='将 .trae/specs/README.md 压缩为轻索引（< 50KB）')
+    add_common_args(p_update)
+
     p_apps = subparsers.add_parser('apps', help='生成 apps/README.md 应用清单索引表')
     add_common_args(p_apps)
 
@@ -1123,7 +1440,7 @@ def main():
     p_stats.add_argument('--strict-anomaly', action='store_true', dest='strict_anomaly',
                          help='严格模式：环比异常（关键指标降幅>50%%）时返回退出码2，不阻断文件更新')
 
-    p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + apps + stats')
+    p_all = subparsers.add_parser('all', help='依次执行 nav + dashboard + theme-dashboards + update-spec-readme + apps + stats')
     add_common_args(p_all)
 
     p_weekly = subparsers.add_parser('weekly', help='生成本周数据快照，辅助周复盘')
@@ -1135,6 +1452,8 @@ def main():
     cmd_map = {
         'nav': cmd_nav,
         'dashboard': cmd_dashboard,
+        'theme-dashboards': cmd_theme_dashboards,
+        'update-spec-readme': cmd_update_spec_readme,
         'apps': cmd_apps,
         'stats': cmd_stats,
         'all': cmd_all,

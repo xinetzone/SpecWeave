@@ -107,7 +107,7 @@ Write-Host "PowerShell version: $($PSVersionTable.PSVersion)" -ForegroundColor G
 Write-Host "Console encoding: $([Console]::OutputEncoding.WebName)" -ForegroundColor Gray
 Write-Host ""
 
-$totalSteps = 20
+$totalSteps = 21
 
 # 1. Repo compliance checks (gitignore + vendor + mermaid + filename + roles)
 Write-Host "[1/$totalSteps] Repo compliance checks (gitignore+vendor+mermaid+filename+roles)..." -ForegroundColor Yellow
@@ -349,6 +349,18 @@ else {
     else {
         Write-Host "  PASS" -ForegroundColor Green
     }
+}
+Write-Host ""
+
+# 21. Check spec near-name duplication (C-5 门禁：防增量近名并存，存量 warn-only)
+Write-Host "[21/$totalSteps] Check spec near-name duplication (C-5 gateway)..." -ForegroundColor Yellow
+$dupCheck = python "$root\.agents\scripts\check-spec-duplication.py" --json 2>&1
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "  PASS (no new near-name conflicts)" -ForegroundColor Green
+}
+else {
+    Write-Host "  WARN: spec near-name duplication found (historical debt, C-5 blocks new additions only)" -ForegroundColor Yellow
+    Write-Host $dupCheck -ForegroundColor DarkYellow
 }
 Write-Host ""
 
