@@ -42,9 +42,9 @@ tags: ["milestone", "camera-power", "iot", "hardware-selection"]
 | 产出物 | 位置 | 状态 |
 |-------|------|------|
 | 方案说明书 | [SOLUTION.md](file:///d:/AI/apps/camera-power-controller/SOLUTION.md) | ✅ 完成 |
-| PRD规格说明 | [spec.md](file:///d:/AI/.trae/specs/camera-power-automation-testing/spec.md) | ✅ 完成（待用户确认是否实现） |
-| 实现任务分解 | [tasks.md](file:///d:/AI/.trae/specs/camera-power-automation-testing/tasks.md) | ✅ 完成（10项任务） |
-| 验证检查清单 | [checklist.md](file:///d:/AI/.trae/specs/camera-power-automation-testing/checklist.md) | ✅ 完成（约60项） |
+| PRD规格说明 | [spec.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/spec.md) | ✅ 完成（待用户确认是否实现） |
+| 实现任务分解 | [tasks.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/tasks.md) | ✅ 完成（10项任务） |
+| 验证检查清单 | [checklist.md](file:///d:/AI/.trae/specs/xmnn-packaging/camera-power-automation-testing/checklist.md) | ✅ 完成（约60项） |
 | 基础控制代码 | [camera_power.py](file:///d:/AI/apps/camera-power-controller/camera_power.py) | ✅ 已有70%基础 |
 
 ### 1.3 关键决策
@@ -74,7 +74,7 @@ tags: ["milestone", "camera-power", "iot", "hardware-selection"]
 | F-008 | 用户询问"awesun-cli能否控制手机实现P1Pro开关机"，评估结论：awesun-cli/MCP不支持手机桌面控制，7种连接类型全部面向电脑 |
 | F-009 | 用户询问"P1Pro支持向日葵MCP/CLI远程控制吗"，分析结论：当前22个MCP工具仅针对已安装向日葵被控端的电脑，无硬件电源控制接口 |
 | F-010 | 确认使用涂鸦智能插座方案，开始Spec模式规划 |
-| F-011 | 在 `.trae/specs/camera-power-automation-testing/` 下生成了三份规划文档：spec.md（PRD）、tasks.md（任务分解10项）、checklist.md（验证清单约60项） |
+| F-011 | 在 `.trae/specs/xmnn-packaging/camera-power-automation-testing/` 下生成了三份规划文档：spec.md（PRD）、tasks.md（任务分解10项）、checklist.md（验证清单约60项） |
 | F-012 | 用户表示"不需要具体实现，先给我一个可行的方案即可"，退出Spec模式 |
 | F-013 | 输出了方案架构概览，包含5层架构图、核心模块、可靠性保障、测试场景等 |
 | F-014 | 用户要求"先出一份方案说明书"，编写了方案说明书，最初文件名为中文"方案说明书.md" |

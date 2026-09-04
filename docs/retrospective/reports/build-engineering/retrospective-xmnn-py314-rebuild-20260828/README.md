@@ -3,7 +3,7 @@ id: "retrospective-xmnn-py314-rebuild-20260828"
 title: "XMNN Python 3.14 Wheel & Docker 镜像重构里程碑复盘"
 date: 2026-08-28
 type: "retrospective"
-source: ".trae/specs/xmnn-py314-rebuild/ (Spec Mode 五阶段工作流)"
+source: ".trae/specs/xmnn-packaging/xmnn-py314-rebuild/ (Spec Mode 五阶段工作流)"
 session: sc-20260828-xmnn-py314-milestone-retro
 scenario: milestone-retrospective
 methodology: seven-concepts R→I→E→V
@@ -111,7 +111,7 @@ tokens_used: 27590131
 | F-045 | 审查发现 0 个 actionable finding，7 个 advisory finding（文档/注释同步问题） |
 | F-046 | Spec 三文档：spec.md（10 项 AC）、tasks.md（8 个任务）、review.md（11 检查点） |
 | F-047 | `external/` 目录在 `.gitignore` 中，代码变更不被主仓库追踪 |
-| F-048 | `.trae/specs/xmnn-py314-rebuild/` 目录为 untracked |
+| F-048 | `.trae/specs/xmnn-packaging/xmnn-py314-rebuild/` 目录为 untracked |
 | F-049 | 截至复盘时，Podman 中无 xmnn-whl-builder:latest 镜像（镜像已不存在） |
 | F-050 | WSL 中 `~/build/chaos/` 构建上下文目录不存在 |
 | F-051 | 代码文件修改时间：Dockerfile 2026-08-28 05:51，build.sh 05:47，build-wheel.sh 03:31 |
@@ -329,7 +329,7 @@ tags: [conda, docker, cross-compile, toolchain, dual-env]
 
 ## 七、关联资源
 
-- Spec 文档：[spec.md](../../../../../.trae/specs/xmnn-py314-rebuild/spec.md)、[tasks.md](../../../../../.trae/specs/xmnn-py314-rebuild/tasks.md)、[review.md](../../../../../.trae/specs/xmnn-py314-rebuild/review.md)
+- Spec 文档：[spec.md](../../../../../.trae/specs/xmnn-packaging/xmnn-py314-rebuild/spec.md)、[tasks.md](../../../../../.trae/specs/xmnn-packaging/xmnn-py314-rebuild/tasks.md)、[review.md](../../../../../.trae/specs/xmnn-packaging/xmnn-py314-rebuild/review.md)
 - 代码变更：
   - [Dockerfile](../../../../../../external/chaos/ai/xmnn-whl-builder/Dockerfile)
   - [build.sh](../../../../../../external/chaos/ai/xmnn-whl-builder/build.sh)

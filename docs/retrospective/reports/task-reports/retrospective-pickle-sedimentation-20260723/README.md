@@ -29,7 +29,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 | 诊断 SOP | [dataloader-pickle-diagnosis-sop.md](../../../../knowledge/best-practices/dataloader-pickle-diagnosis-sop.md) | 5 步流程 + 6 种模式 + 3 种修复方案 + 验证矩阵 |
 | 索引更新 | [code-patterns/README.md](../../../patterns/code-patterns/README.md) | 新增条目 + 双向 related_patterns 声明 |
 | 索引更新 | [best-practices/README.md](../../../../knowledge/best-practices/README.md) | 新增条目 + 快速导航「序列化诊断」分组 |
-| 规范文档 | [spec.md](../../../../../.trae/specs/pickle-serialization-knowledge-sediment/spec.md) | Spec 三件套（spec.md / tasks.md / checklist.md） |
+| 规范文档 | [spec.md](../../../../../.trae/specs/okf-wiki-ecosystem/pickle-serialization-knowledge-sediment/spec.md) | Spec 三件套（spec.md / tasks.md / checklist.md） |
 
 ## 子模块导航
 
@@ -66,4 +66,4 @@ python-314-multiprocessing  pickle-serialization    python-version-upgrade  data
 - 源材料：[npuusertools/doc/DEBUG_PICKLE.md](../../../../../external/xmhub/npuusertools/doc/DEBUG_PICKLE.md)
 - 源材料：[npuusertools/doc/PICKLE_CHECKLIST.md](../../../../../external/xmhub/npuusertools/doc/PICKLE_CHECKLIST.md)
 - 源材料：[task-summary-20260723.md](../../../../../external/xmhub/npuusertools/.trae/specs/python314-dataloader-forkserver-compat/task-summary-20260723.md)
-- Spec：[spec.md](../../../../../.trae/specs/pickle-serialization-knowledge-sediment/spec.md)
+- Spec：[spec.md](../../../../../.trae/specs/okf-wiki-ecosystem/pickle-serialization-knowledge-sediment/spec.md)

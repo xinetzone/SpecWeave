@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "benchmark-unification-cross-validation"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察5（mai-ui）"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察5（mai-ui）"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

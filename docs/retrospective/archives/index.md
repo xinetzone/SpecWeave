@@ -5,4 +5,5 @@
 :hidden:
 
 xinet/index
+spec-working-notes/README
 ```

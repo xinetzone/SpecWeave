@@ -188,8 +188,8 @@ OKF 生态建设是跨 15 天、38 个提交、12 个 spec 的系统性工程，
 | OKF 权威规范（OKF v0.2） | `vendor/knowledge-catalog/okf/SPEC.md` |
 | OKF 参考实现 | `projects/awesome-okf-xs/` |
 | OKF 工具链源码 | `projects/xuanspace/tools/okf/src/okf/`（17 源文件） |
-| 工具链实现 spec | `.trae/specs/okf-toolchain-implementation/` |
-| 标准库优化 spec | `.trae/specs/optimize-okf-python314-stdlib/` |
+| 工具链实现 spec | `.trae/specs/okf-wiki-ecosystem/okf-toolchain-implementation/` |
+| 标准库优化 spec | `.trae/specs/okf-wiki-ecosystem/optimize-okf-python314-stdlib/` |
 | 统一导航入口 | `docs/knowledge/learning/okf-topic-index.md` |
 | OKF 格式规范教程 | `.agents/docs/knowledge/learning/01-agent-protocols-interfaces/okf-wiki/README.md` |
 | OKF 工具链教程（okf-kit） | `docs/knowledge/learning/03-agent-platforms-tools/okf-kit-wiki/00-overview.md` |

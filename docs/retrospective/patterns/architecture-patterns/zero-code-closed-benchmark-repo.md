@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "zero-code-closed-benchmark-repo"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察1（mobilepa-bench）"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察1（mobilepa-bench）"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

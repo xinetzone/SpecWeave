@@ -83,7 +83,7 @@ patterns_applied: ["retrospective-four-step-method", "extraction-four-layer-funn
 
 | 文件 | 说明 |
 |------|------|
-| [retrospective-analysis-dimension-template-library/](../../../../../.trae/specs/retrospective-analysis-dimension-template-library/spec.md) | 复盘分析Spec（3个文件） |
+| [retrospective-analysis-dimension-template-library/](../../../../../.trae/specs/retrospectives-insights/retrospective-analysis-dimension-template-library/spec.md) | 复盘分析Spec（3个文件） |
 | [preflight-exploration-practice/](../../../../../.trae/specs/retrospectives-insights/preflight-exploration-practice/spec.md) | Pre-flight预探索实践Spec |
 
 ---

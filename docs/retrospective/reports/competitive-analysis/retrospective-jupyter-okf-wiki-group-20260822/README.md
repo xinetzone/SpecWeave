@@ -2,7 +2,7 @@
 type: Report
 id: "retrospective-jupyter-okf-wiki-group-20260822-readme"
 title: "Jupyter 生态分组 OKF Wiki 批量生成复盘"
-source: "../../../../../../.trae/specs/jupyter-okf-wiki-group/progress.md + ../../../../../patterns/architecture-patterns/jupyter-extension-registration.md + ../../../../../patterns/architecture-patterns/jupyter-kernel-zmq-channels.md + ../../../../../patterns/code-patterns/okf-sources-path-normalization.md"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/jupyter-okf-wiki-group/progress.md + ../../../../../patterns/architecture-patterns/jupyter-extension-registration.md + ../../../../../patterns/architecture-patterns/jupyter-kernel-zmq-channels.md + ../../../../../patterns/code-patterns/okf-sources-path-normalization.md"
 version: "1.0"
 date: "2026-08-22"
 scenario: "knowledge-precipitation"
@@ -101,9 +101,9 @@ xeus-lite-demo 无独立本地源码仓库，sources 字段无法指向真实文
 
 | 文件 | 路径 | 说明 |
 |------|------|------|
-| 任务规格 | [spec.md](../../../../../.trae/specs/jupyter-okf-wiki-group/spec.md) | 任务需求规格 |
-| 任务分解 | [tasks.md](../../../../../.trae/specs/jupyter-okf-wiki-group/tasks.md) | 任务分解与批量分组 |
-| 进度记录 | [progress.md](../../../../../.trae/specs/jupyter-okf-wiki-group/progress.md) | 进度文档（T11.4 最终化，含 5 条问题经验） |
+| 任务规格 | [spec.md](../../../../../.trae/specs/okf-wiki-ecosystem/jupyter-okf-wiki-group/spec.md) | 任务需求规格 |
+| 任务分解 | [tasks.md](../../../../../.trae/specs/okf-wiki-ecosystem/jupyter-okf-wiki-group/tasks.md) | 任务分解与批量分组 |
+| 进度记录 | [progress.md](../../../../../.trae/specs/okf-wiki-ecosystem/jupyter-okf-wiki-group/progress.md) | 进度文档（T11.4 最终化，含 5 条问题经验） |
 | Bundle 索引 | [bundles](../../../../../projects/awesome-okf-xs/doc/bundles/document/jupyter) | 65 个 OKF bundle 目录 |
 | 源码仓库 | [external/libs/jupyter](../../../../../../external/libs/jupyter) | Jupyter 生态源码（事实来源） |
 

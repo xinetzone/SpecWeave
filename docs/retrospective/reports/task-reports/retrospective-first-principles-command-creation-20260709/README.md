@@ -93,7 +93,7 @@ retrospective-first-principles-command-creation-20260709/
 - 萃取模式：
   - [spec-reference-validation-pattern.md](../../../patterns/methodology-patterns/spec-workflow/spec-reference-validation-pattern.md)（spec工作流版本，L1）
   - [spec-reference-validation.md](../../../patterns/methodology-patterns/governance-strategy/spec-reference-validation.md)（治理策略版本，L2已验证）
-- Spec 文档：[.trae/specs/create-first-principles-command/](../../../../../.trae/specs/create-first-principles-command/spec.md)
+- Spec 文档：[.trae/specs/workspace-governance/create-first-principles-command/](../../../../../.trae/specs/workspace-governance/create-first-principles-command/spec.md)
 
 ---
 

@@ -155,3 +155,14 @@ readme-branding/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [add-system-planning-to-readme](add-system-planning-to-readme/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [add-team-collaboration-scenario-to-readme](add-team-collaboration-scenario-to-readme/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [optimize-readme-with-blueprint](optimize-readme-with-blueprint/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [select-readme-positioning-word](select-readme-positioning-word/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

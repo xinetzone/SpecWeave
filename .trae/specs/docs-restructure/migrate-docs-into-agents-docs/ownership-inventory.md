@@ -97,5 +97,5 @@
 
 - 目录归属决策：本文件
 - 基线与备份：见 [migration-baseline.md](migration-baseline.md)
-- 基线明细：见 [artifacts/docs-baseline-summary.json](artifacts/docs-baseline-summary.json)、[artifacts/docs-baseline-manifest.json](artifacts/docs-baseline-manifest.json)
-- `docs/` 根路径引用清单：见 [artifacts/docs-root-reference-files-outside-docs-clean.json](artifacts/docs-root-reference-files-outside-docs-clean.json)
+- 基线明细：见 [artifacts/docs-baseline-summary.json](artifacts/docs-baseline-summary.json)、[artifacts/docs-baseline-manifest.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-baseline-manifest.json)
+- `docs/` 根路径引用清单：见 [artifacts/docs-root-reference-files-outside-docs-clean.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-root-reference-files-outside-docs-clean.json)

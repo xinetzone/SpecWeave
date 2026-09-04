@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "okf-sources-path-normalization"
-source: "../../../../../.trae/specs/jupyter-okf-wiki-group/progress.md + fix_jupyter_frontmatter.py 修复实践"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/jupyter-okf-wiki-group/progress.md + fix_jupyter_frontmatter.py 修复实践"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/okf-sources-path-normalization.toml"
 ---
 # OKF sources 路径规范化：5级前缀 + 映射表 + 正则字符类陷阱

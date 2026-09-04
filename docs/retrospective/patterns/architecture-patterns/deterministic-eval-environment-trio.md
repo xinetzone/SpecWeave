@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "deterministic-eval-environment-trio"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察2（mobile-world）"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察2（mobile-world）"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

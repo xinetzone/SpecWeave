@@ -19,9 +19,9 @@ type: export-summary
 | Python 兼容层入口 | compat.py | import自动启用（31行） |
 | Mock 单元测试 | [test_compat_basic.py](../../../../../projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/test_compat_basic.py) | 38个测试用例，不依赖C++编译（691行） |
 | 端到端测试 | test_bvlc_compat.py | 12项测试，基于fgvsirfeature模型（232行） |
-| PRD 规格文档 | [spec.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/spec.md) | 功能需求+验收标准 |
-| 任务分解 | [tasks.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/tasks.md) | 7个任务，6个已完成 |
-| 验证清单 | [checklist.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/checklist.md) | 6大类40+验证点 |
+| PRD 规格文档 | [spec.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/spec.md) | 功能需求+验收标准 |
+| 任务分解 | [tasks.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/tasks.md) | 7个任务，6个已完成 |
+| 验证清单 | [checklist.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/checklist.md) | 6大类40+验证点 |
 
 ## 模式萃取清单
 

@@ -6,7 +6,7 @@ completion_date: "2026-08-28"
 type: "Report"
 description: "基于 vendor/jira-skill v3.29.0 正式子模块同步更新 OKF Wiki 教程的里程碑复盘，覆盖初次转换、子模块引入、供应商同步三次提交的完整过程"
 status: "stable"
-source: ".trae/specs/jira-skill-wiki-vendor-sync/"
+source: ".trae/specs/migration-archival/jira-skill-wiki-vendor-sync/"
 milestone-name: "Jira Skill Wiki 供应商源码同步"
 time-range: "2026-08-28 16:17 — 17:09（约52分钟，3次提交）"
 methodology: "七概念方法论（R→I→E→V→C链路，standard深度，含4视角对抗审查）"
@@ -59,7 +59,7 @@ stale_after: "2027-08-28"
 | F-010 | api-reference.md 的 changelog.py 部分列出 3 个函数：extract_status_transitions、compute_time_in_status、classify_transition |
 | F-011 | 初次转换的 Review R1 审查结果为 pass |
 | F-012 | 初次转换使用 source-code-to-okf-wiki 技能的 R→I→E→V→C 五阶段工作流 |
-| F-013 | 初次转换规格目录为 `.trae/specs/jira-skill-okf-wiki/`，含 spec.md、tasks.md、review.md、facts.md、insights.md |
+| F-013 | 初次转换规格目录为 `.trae/specs/okf-wiki-ecosystem/jira-skill-okf-wiki/`，含 spec.md、tasks.md、review.md、facts.md、insights.md |
 
 ### 1.3 子模块引入（Commit edda3939）
 
@@ -75,7 +75,7 @@ stale_after: "2027-08-28"
 
 | 编号 | 事实 |
 |------|------|
-| F-019 | 同步更新规格目录为 `.trae/specs/jira-skill-wiki-vendor-sync/`，含 spec.md（9条AC）、tasks.md（8个任务）、review.md |
+| F-019 | 同步更新规格目录为 `.trae/specs/migration-archival/jira-skill-wiki-vendor-sync/`，含 spec.md（9条AC）、tasks.md（8个任务）、review.md |
 | F-020 | 7 处 `file:///` URL 从 `.chaos` 路径更新为 `file:///d:/AI/vendor/jira-skill/`（source-code.md 3处、api-reference.md 4处） |
 | F-021 | log.md 中 1 处 Windows 路径从 `d:\AI\.chaos\libs\tests\jira-skill` 更新为 `d:\AI\vendor\jira-skill` |
 | F-022 | 17 个文件的 frontmatter 从块格式 `date:` 转换为 OKF v0.2 inline flow `at:` 格式 |

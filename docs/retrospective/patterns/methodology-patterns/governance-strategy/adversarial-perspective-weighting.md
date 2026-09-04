@@ -2,7 +2,7 @@
 type: Pattern
 id: adversarial-perspective-weighting
 title: V阶段对抗审查「用户视角优先」权重分配模式
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-2"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-2"
 domain: methodology
 layer: governance
 maturity: L1
@@ -11,7 +11,7 @@ reuse_count: 0
 documentation_level: complete
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/adversarial-perspective-weighting.toml"
 ---
-> **提炼自**：[milestone-insights.md#洞察3](../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-insights.md#洞察-3)（I阶段洞察）→ [milestone-patterns.md#模式2](../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-2)（E阶段模式）—— 火山引擎AgentKit里程碑复盘萃取（对抗审查视角权重）
+> **提炼自**：[milestone-insights.md#洞察3](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-insights.md#洞察-3)（I阶段洞察）→ [milestone-patterns.md#模式2](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-2)（E阶段模式）—— 火山引擎AgentKit里程碑复盘萃取（对抗审查视角权重）
 
 # V阶段对抗审查「用户视角优先」权重分配模式
 

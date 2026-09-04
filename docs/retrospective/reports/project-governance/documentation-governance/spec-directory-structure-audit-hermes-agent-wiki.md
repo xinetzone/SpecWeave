@@ -3,7 +3,7 @@ id: "spec-directory-structure-audit-hermes-agent-wiki"
 title: "spec 目录结构对比审计报告：hermes-agent-learning-wiki"
 source: "check-spec-output-archive.py 校验结果 + git 提交历史（7b4a4629 → e58938c0）"
 type: "Governance Audit Report"
-description: "记录 .trae/specs/hermes-agent-learning-wiki 目录在 check-spec-output-archive 白名单校验下，从违规（FAIL）到修正（通过）的前后结构对比，供后续审计追溯"
+description: "记录 .trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki 目录在 check-spec-output-archive 白名单校验下，从违规（FAIL）到修正（通过）的前后结构对比，供后续审计追溯"
 date: "2026-08-10"
 tags: ["spec治理", "spec-output-archive", "原子提交", "文档治理", "审计"]
 status: "stable"
@@ -15,7 +15,7 @@ last_verified: "2026-08-10"
 
 ## 1. 审计背景
 
-本次审计针对 `check-spec-output-archive.py`（[atomic-commit 规范](../../../../../.agents/skills/atomic-commit-cmd/SKILL.md) 的 spec 白名单校验）对 `.trae/specs/hermes-agent-learning-wiki/` 目录的校验结果。该脚本规定：**spec 规划目录仅允许保留 `spec.md / tasks.md / checklist.md / README.md / .gitkeep`**，其余分析报告、任务输出、文章内容等产出物必须归档至 `docs/` 对应目录。
+本次审计针对 `check-spec-output-archive.py`（[atomic-commit 规范](../../../../../.agents/skills/atomic-commit-cmd/SKILL.md) 的 spec 白名单校验）对 `.trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki/` 目录的校验结果。该脚本规定：**spec 规划目录仅允许保留 `spec.md / tasks.md / checklist.md / README.md / .gitkeep`**，其余分析报告、任务输出、文章内容等产出物必须归档至 `docs/` 对应目录。
 
 初始提交（`7b4a4629`）将 `adversarial-review.md` 放入 spec 目录，触发校验 FAIL。本次审计记录该目录从违规到修正的全过程与前后结构对比，供后续审计追溯。
 
@@ -32,7 +32,7 @@ last_verified: "2026-08-10"
 ### 3.1 修正前（BEFORE）— 提交 `7b4a4629`
 
 ```
-.trae/specs/hermes-agent-learning-wiki/
+.trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki/
 ├── spec.md              ✅ 白名单文件
 ├── tasks.md             ✅ 白名单文件
 ├── checklist.md         ✅ 白名单文件
@@ -41,14 +41,14 @@ last_verified: "2026-08-10"
 
 **校验结果**：
 ```
-[FAIL] .trae\specs\hermes-agent-learning-wiki (✅已完成)
+[FAIL] .trae\specs/okf-wiki-ecosystem/hermes-agent-learning-wiki (✅已完成)
   产出物文件: adversarial-review.md
 ```
 
 ### 3.2 修正后（AFTER）— 提交 `e58938c0`
 
 ```
-.trae/specs/hermes-agent-learning-wiki/
+.trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki/
 ├── spec.md              ✅ 白名单文件
 ├── tasks.md             ✅ 白名单文件
 └── checklist.md         ✅ 白名单文件
@@ -69,7 +69,7 @@ last_verified: "2026-08-10"
 
 | 字段 | 内容 |
 |------|------|
-| 原路径 | `.trae/specs/hermes-agent-learning-wiki/adversarial-review.md` |
+| 原路径 | `.trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki/adversarial-review.md` |
 | 归档路径 | `.agents/docs/retrospective/reports/adversarial-reviews/adversarial-review-20260810T000044Z.md` |
 | 归档方式 | `git mv`（保留重命名追踪，`R100`） |
 | 命名约定 | `adversarial-review-<UTC时间戳>Z.md`，与 `reports/adversarial-reviews/` 既有文件一致 |
@@ -107,4 +107,4 @@ last_verified: "2026-08-10"
 
 - [atomic-commit 规范（spec 白名单）](../../../../../.agents/skills/atomic-commit-cmd/SKILL.md)
 - [归档后的对抗审查报告](../../adversarial-reviews/adversarial-review-20260810T000044Z.md)
-- [spec 规划文档](../../../../../.trae/specs/hermes-agent-learning-wiki/spec.md)
+- [spec 规划文档](../../../../../.trae/specs/okf-wiki-ecosystem/hermes-agent-learning-wiki/spec.md)

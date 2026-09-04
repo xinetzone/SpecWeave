@@ -69,9 +69,9 @@ author: "AI 复盘智能体"
 
 - `.agents/commands/first-principles.md`（新增，160行）
 - `.agents/commands/README.md`（修改，表格新增1行）
-- `.trae/specs/create-first-principles-command/spec.md`（6条 ADDED Requirements）
-- `.trae/specs/create-first-principles-command/tasks.md`（3主任务+10子任务）
-- `.trae/specs/create-first-principles-command/checklist.md`（21项检查点）
+- `.trae/specs/workspace-governance/create-first-principles-command/spec.md`（6条 ADDED Requirements）
+- `.trae/specs/workspace-governance/create-first-principles-command/tasks.md`（3主任务+10子任务）
+- `.trae/specs/workspace-governance/create-first-principles-command/checklist.md`（21项检查点）
 
 #### 关键决策
 

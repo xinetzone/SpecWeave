@@ -85,9 +85,9 @@ source: "竹简悟道项目UI美化工作"
 ## 三、产出物清单
 
 ### Spec文档（3个）
-- `.trae/specs/zhujian-wudao-ui-visual-polish/spec.md`
-- `.trae/specs/zhujian-wudao-ui-visual-polish/tasks.md`
-- `.trae/specs/zhujian-wudao-ui-visual-polish/checklist.md`
+- `.trae/specs/classics-knowledge/zhujian-wudao-ui-visual-polish/spec.md`
+- `.trae/specs/classics-knowledge/zhujian-wudao-ui-visual-polish/tasks.md`
+- `.trae/specs/classics-knowledge/zhujian-wudao-ui-visual-polish/checklist.md`
 
 ### 代码变更（9个文件）
 1. `index.html` — 移除Google Fonts引用

@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "legacy-integration-dual-track"
-source: "../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察5"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/insights.md#洞察5"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/legacy-integration-dual-track.toml"
 maturity: "L1"
 validation_count: 1
@@ -13,7 +13,7 @@ related_patterns:
   - "two-phase-development"
   - "phased-rollout-validation"
 ---
-> **提炼自**：[insights.md#洞察5](../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察5) —— 火山引擎AgentKit核心洞察（Gateway双轨接入与存量系统改造路径）
+> **提炼自**：[insights.md#洞察5](../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/insights.md#洞察5) —— 火山引擎AgentKit核心洞察（Gateway双轨接入与存量系统改造路径）
 
 # 存量系统双轨接入两阶段法（Legacy System Dual-Track Integration: Quick-Win First, Optimize Later）
 

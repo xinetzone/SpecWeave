@@ -182,3 +182,26 @@ docs-restructure/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [agents-docs-migration](agents-docs-migration/spec.md) | ? 待启动 | ✓✗✗ |
+| 2 | [best-practices-readme-link-fix](best-practices-readme-link-fix/spec.md) | ! 进行中 | ✓/✗ |
+| 3 | [categorize-learning-wiki-by-topic](categorize-learning-wiki-by-topic/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [create-executablebooks-learning-hub](create-executablebooks-learning-hub/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [docs-restructure-zhujian-wudao](docs-restructure-zhujian-wudao/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [docs-separation-agent-human](docs-separation-agent-human/spec.md) | ! 进行中 | ✓/✗ |
+| 7 | [explain-tuyaclaw-skills-learning](explain-tuyaclaw-skills-learning/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [full-lifecycle-retrospective-dedup-reorg](full-lifecycle-retrospective-dedup-reorg/spec.md) | ? 待启动 | ✓/✗ |
+| 9 | [insights-reorganization](insights-reorganization/spec.md) | ✓ 完成 | ✓/✗ |
+| 10 | [methodology-patterns-categorization](methodology-patterns-categorization/spec.md) | ✓ 完成 | ✓/✗ |
+| 11 | [migrate-docs-into-agents-docs](migrate-docs-into-agents-docs/spec.md) | ! 进行中 | ✓/✗ |
+| 12 | [project-governance-reports-reorg](project-governance-reports-reorg/spec.md) | ! 进行中 | ✓/✗ |
+| 13 | [readme-completion-plan](readme-completion-plan/spec.md) | ? 待启动 | ✓✗✗ |
+| 14 | [refactor-retrospective-docs](refactor-retrospective-docs/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [reports-duplication-optimization](reports-duplication-optimization/spec.md) | ✓ 完成 | ✓/✗ |
+| 16 | [restructure-retrospective-reports-by-topic](restructure-retrospective-reports-by-topic/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

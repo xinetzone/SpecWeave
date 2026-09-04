@@ -67,7 +67,7 @@ title: ".agents/skills/ 目录索引"
 
 ### 内置镜像 Skill（21个，来自 Trae IDE builtin 镜像）
 
-Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 导入）。来源目录 external/dao/xinzo/.trae-cn/builtin/{work,global,design,code}，每个 SKILL.md 的 frontmatter `source` 字段标注原始路径；镜像保留技能包原貌（含 LICENSE/scripts/assets），不随 Trae 同步改写。导入清单见 .trae/specs/import-builtin-skills/migration-manifest.md。
+Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 导入）。来源目录 external/dao/xinzo/.trae-cn/builtin/{work,global,design,code}，每个 SKILL.md 的 frontmatter `source` 字段标注原始路径；镜像保留技能包原貌（含 LICENSE/scripts/assets），不随 Trae 同步改写。导入清单见 .trae/specs/workspace-governance/import-builtin-skills/migration-manifest.md。
 
 **work 家族：办公文档（8个）**
 
@@ -112,7 +112,7 @@ Trae IDE 内置通用技能镜像入库（扁平去重取最全版，2026-09-03 
 
 ### 设计库镜像 Skill（16个，来自 Trae IDE design_libraries 镜像）
 
-Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录 external/dao/xinzo/.trae-cn/design_libraries（只读）。每个库整目录自包含（token CSS/组件 JSON/预览 HTML/UI Kit 全量内嵌），SKILL.md frontmatter `source` 字段标注原始路径；`__MACOSX/` 元数据与 `.DS_Store` 已排除。归档清单见 .trae/specs/design-library-archive/migration-manifest.md。
+Trae IDE 内置设计系统库完整归档（2026-09-03 导入），来源目录 external/dao/xinzo/.trae-cn/design_libraries（只读）。每个库整目录自包含（token CSS/组件 JSON/预览 HTML/UI Kit 全量内嵌），SKILL.md frontmatter `source` 字段标注原始路径；`__MACOSX/` 元数据与 `.DS_Store` 已排除。归档清单见 .trae/specs/workspace-governance/design-library-archive/migration-manifest.md。
 
 | 技能名 | 品牌/系统 | 功能描述 | SKILL.md路径 |
 |--------|---------|---------|-------------|

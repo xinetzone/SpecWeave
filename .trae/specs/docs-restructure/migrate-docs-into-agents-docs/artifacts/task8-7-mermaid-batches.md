@@ -117,7 +117,7 @@ type: "mermaid-governance-batches"
 
 | 批次 | 范围 | 文件数 | 主要文件 | 主要问题 | 建议动作 |
 |---|---|---:|---|---|---|
-| S1 | `spec.md` / `tasks.md` / 非输出型分析文档 | 6 | `.trae/specs/agent-app-marketplace/spec.md`、`analyze-ems-energy-management-article/tasks.md`、`analyze-yihuakaitian-meeting-record/tasks.md`、`first-principles-learning-mode-analysis/tasks.md` | 裸节点、边标签、空行 | 先判断是否仍作为活跃参考资产；若是则修，否则转入豁免候选 |
+| S1 | `spec.md` / `tasks.md` / 非输出型分析文档 | 6 | `.trae/specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md`、`analyze-ems-energy-management-article/tasks.md`、`analyze-yihuakaitian-meeting-record/tasks.md`、`first-principles-learning-mode-analysis/tasks.md` | 裸节点、边标签、空行 | 先判断是否仍作为活跃参考资产；若是则修，否则转入豁免候选 |
 
 ### 批次 S2：专题分析类 spec 文档簇
 

@@ -15,7 +15,7 @@ CodeWhale 是一个 MIT 开源的终端 AI 编程调度系统（39k+ Star），�
 ## What Changes
 
 - 新增 `docs/knowledge/learning/codewhale/` 目录，包含完整的 Wiki 教程页面
-- Wiki 教程遵循知识库模板规范（[knowledge-base-wiki-template](../../knowledge-base-wiki-template/template/)），包含 tech/、general/、topics/ 三大模块
+- Wiki 教程遵循知识库模板规范（[knowledge-base-wiki-template](../../../okf-wiki-ecosystem/knowledge-base-wiki-template/template/)），包含 tech/、general/、topics/ 三大模块
 - 覆盖内容：项目概述、安装指南、核心概念（模型路由/嵌套宪法/三种模式）、架构设计、提供商配置、Fleet 工作流、TUI 使用指南、源码导读
 - 更新知识库索引文件，注册新教程
 

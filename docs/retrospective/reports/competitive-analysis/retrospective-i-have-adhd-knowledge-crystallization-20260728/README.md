@@ -10,7 +10,7 @@ theme: retrospectives-insights
 phase: archived-with-second-validation
 methodology: seven-concepts-r-i-e-v-plus-spec-mode-plus-second-validation-sop
 task_session: "sc-20260728-meta-retro-i-have-adhd, sc-20260728-i-have-adhd-postmortem, sc-20260728-second-validation"
-work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/, ../../../../../../.trae/specs/i-have-adhd-wiki-tutorial/, ../../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/"
+work_spec: "../../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/, ../../../../../../.trae/specs/okf-wiki-ecosystem/i-have-adhd-wiki-tutorial/, ../../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/"
 output_files: 31
 reusable_patterns_new: 9
 execution_patterns_extracted: 6
@@ -32,7 +32,7 @@ second_validation_report: "../../../../../../.trae/specs/retrospectives-insights
 | [execution-retrospective.md](execution-retrospective.md) | Wiki教程生成+二次验证两轮执行复盘（产出物清单、时间线、质量门、委派效率分析，问题已闭环） |
 | [insight-extraction.md](insight-extraction.md) | Wiki教程洞察+二次验证4条新洞察与模式萃取（共8条洞察+7条模式，全部闭环归档） |
 | [export-suggestions.md](export-suggestions.md) | 🆕 导出建议：归档状态、三轮产出物总览、模式沉淀成果汇总、后续行动项（6项待实践验证） |
-| [validation-report.md](../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md) | 🆕 二次验证完整报告（880行/7章，含3条执行模式审计、2个L2模式V2对抗审查、9项P0问题修复、3个系统性根因分析、4个新模式入库） |
+| [validation-report.md](../../../archives/spec-working-notes/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md) | 🆕 二次验证完整报告（880行/7章，含3条执行模式审计、2个L2模式V2对抗审查、9项P0问题修复、3个系统性根因分析、4个新模式入库） |
 | 本README | 三轮沉淀总览：第一轮文章分析复盘（5条洞察+3条执行经验）+二轮Wiki闭环+三轮二次验证总结，见下文 |
 
 ---
@@ -59,7 +59,7 @@ second_validation_report: "../../../../../../.trae/specs/retrospectives-insights
 | [tasks.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/tasks.md) | 166 | 10个原子任务分解与状态追踪 |
 | [checklist.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/checklist.md) | 60 | 验证检查清单（全部通过） |
 | [article-content.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/article-content.md) | 50 | 原文内容提取（含source溯源） |
-| [analysis-report.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 946 | 完整分析报告（7章+执行摘要+Changelog，v1.2） |
+| [analysis-report.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 946 | 完整分析报告（7章+执行摘要+Changelog，v1.2） |
 | [action-first-output-paradigm.md](../../../patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 164 | 🆕 行动优先输出范式（L2模式入库） |
 | [reverse-adaptation-innovation.md](../../../patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) | ~193 | 🆕 逆向适配创新模式（L2模式入库） |
 
@@ -244,7 +244,7 @@ Wiki教程生成任务的洞察萃取与模式入库已全部完成闭环：
 
 同时更新配套产出物：
 - [action-first-output-paradigm-addendum.md](../../../../../.agents/prompts/action-first-output-paradigm-addendum.md)：提示词模板升级v2.0，同步4个边界场景+8个破规场景
-- [analysis-report.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md)：升级v1.4，新增"V2审查建议后续落地状态"章节
+- [analysis-report.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md)：升级v1.4，新增"V2审查建议后续落地状态"章节
 - governance-strategy/README.md索引已同步更新
 
 #### 5. 方法论改进建议（8条）

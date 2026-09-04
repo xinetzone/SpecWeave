@@ -3,7 +3,7 @@ id: "retrospective-hermes-conda-setup-20260812"
 title: "Hermes Conda 环境创建与源码安装复盘"
 date: 2026-08-12
 type: task-retrospective
-source: "session:sc-20260811-hermes-conda-setup;spec:.trae/specs/hermes-conda-setup/"
+source: "session:sc-20260811-hermes-conda-setup;spec:.trae/specs/infra-env/hermes-conda-setup/"
 status: completed
 tags: [conda, hermes, python-environment, windows, source-install, seven-concepts]
 ---
@@ -46,7 +46,7 @@ tags: [conda, hermes, python-environment, windows, source-install, seven-concept
 | F-020 | `python -c "from hermes_cli.main import main"` 输出 "import ok" |
 | F-021 | `hermes doctor` 启动后无输出挂起超过15秒，已手动终止进程 |
 | F-022 | 安装 extras 为 [web,mcp]，未安装 voice/wake/matrix/dev 等可选扩展 |
-| F-023 | 规划文档位于 .trae/specs/hermes-conda-setup/ 目录，含 spec.md、tasks.md、checklist.md |
+| F-023 | 规划文档位于 .trae/specs/infra-env/hermes-conda-setup/ 目录，含 spec.md、tasks.md、checklist.md |
 | F-024 | checklist.md 共15个检查点，全部标记为通过 |
 | F-025 | Windows 特有依赖 pywinpty、pywin32、tzdata、concurrent-log-handler、psutil 均已随核心依赖自动安装 |
 

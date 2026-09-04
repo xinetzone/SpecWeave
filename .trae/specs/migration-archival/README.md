@@ -137,3 +137,25 @@ migration-archival/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [add-sunlogin-cli-wiki](add-sunlogin-cli-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [archive-okf-spec-bundle](archive-okf-spec-bundle/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [ark-cli-git-submodule](ark-cli-git-submodule/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [awesome-okf-vendor-migration](awesome-okf-vendor-migration/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [capture-claude-tag-article](capture-claude-tag-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [create-mopmonk-wiki-tutorial](create-mopmonk-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 7 | [dingtalk-okr-wiki-migration](dingtalk-okr-wiki-migration/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [docs-to-knowledge-okf-migration](docs-to-knowledge-okf-migration/spec.md) | ! 进行中 | ✓/✗ |
+| 9 | [fable5-cost-optimization-analysis](fable5-cost-optimization-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 10 | [jira-skill-wiki-vendor-sync](jira-skill-wiki-vendor-sync/spec.md) | ? 待启动 | ✓✗✗ |
+| 11 | [migrate-learning-to-okf-bundles](migrate-learning-to-okf-bundles/spec.md) | ✓ 完成 | ✓/✗ |
+| 12 | [move-knowledge-catalog-to-vendor](move-knowledge-catalog-to-vendor/spec.md) | ✓ 完成 | ✓/✗ |
+| 13 | [okf-libs-vendor-migration](okf-libs-vendor-migration/spec.md) | ✓ 完成 | ✓/✗ |
+| 14 | [plan-xinet-project-migration](plan-xinet-project-migration/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [xinet-content-extraction-and-archiving](xinet-content-extraction-and-archiving/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

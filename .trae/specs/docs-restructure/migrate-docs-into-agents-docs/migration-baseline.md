@@ -19,10 +19,10 @@
 | 文件 | 用途 |
 |---|---|
 | [artifacts/docs-baseline-summary.json](artifacts/docs-baseline-summary.json) | 基线摘要：时间、文件数、体积、顶层入口 |
-| [artifacts/docs-baseline-manifest.json](artifacts/docs-baseline-manifest.json) | 全量文件清单：相对路径、大小、SHA256 |
-| [artifacts/docs-root-reference-files-all.json](artifacts/docs-root-reference-files-all.json) | 仓库内所有命中 `docs/` 根路径的文件清单（原始版） |
-| [artifacts/docs-root-reference-files-outside-docs.json](artifacts/docs-root-reference-files-outside-docs.json) | 仓库内 `docs/` 之外命中 `docs/` 根路径的文件清单（原始版） |
-| [artifacts/docs-root-reference-files-outside-docs-clean.json](artifacts/docs-root-reference-files-outside-docs-clean.json) | 去噪后的外部引用清单，排除 `__pycache__`、`.meta/backup`、备份副本等噪音 |
+| [artifacts/docs-baseline-manifest.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-baseline-manifest.json) | 全量文件清单：相对路径、大小、SHA256 |
+| [artifacts/docs-root-reference-files-all.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-root-reference-files-all.json) | 仓库内所有命中 `docs/` 根路径的文件清单（原始版） |
+| [artifacts/docs-root-reference-files-outside-docs.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-root-reference-files-outside-docs.json) | 仓库内 `docs/` 之外命中 `docs/` 根路径的文件清单（原始版） |
+| [artifacts/docs-root-reference-files-outside-docs-clean.json](../../../../docs/retrospective/reports/project-governance/docs-restructure-migration/artifacts/docs-root-reference-files-outside-docs-clean.json) | 去噪后的外部引用清单，排除 `__pycache__`、`.meta/backup`、备份副本等噪音 |
 | [artifacts/key-entry-reference-baseline.json](artifacts/key-entry-reference-baseline.json) | 关键入口文件引用关系（原始版） |
 | [artifacts/key-entry-reference-baseline-clean.json](artifacts/key-entry-reference-baseline-clean.json) | 关键入口文件引用关系（去噪版） |
 

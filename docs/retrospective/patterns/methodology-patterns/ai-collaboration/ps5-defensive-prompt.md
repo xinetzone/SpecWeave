@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "ps5-defensive-prompt"
-source: "../../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式1ps5-defensive-prompt防御性prompt模板模式"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式1ps5-defensive-prompt防御性prompt模板模式"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/ai-collaboration/ps5-defensive-prompt.toml"
 maturity: "L1"
 validation_count: 1
@@ -16,7 +16,7 @@ related_patterns:
   - "ps7-to-ps5-translation"
   - "bilingual-prompt-engineering"
 ---
-> **提炼自**：[05-patterns.md#模式1](../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式1ps5-defensive-prompt防御性prompt模板模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
+> **提炼自**：[05-patterns.md#模式1](../../../archives/spec-working-notes/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式1ps5-defensive-prompt防御性prompt模板模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
 
 # PS5防御性Prompt模板模式（PS5-Defensive-Prompt）
 

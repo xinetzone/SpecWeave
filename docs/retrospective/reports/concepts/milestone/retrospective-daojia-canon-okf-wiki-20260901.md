@@ -7,7 +7,7 @@ type: "Report"
 description: "以七概念方法论 R→I→E→V→C 对道家著作全谱系 OKF 知识包从调研到 P0/P1/P2 三批次十九束全部建成流程复盘：P2 九束 126 文件、frontmatter 统一 60 处、V 阶段修正断链/编号/计数、gates.all 五面一致 347/69/15、双仓原子提交。萃取两条可迁移模式（谱系计数口径与两仓门控重建/共享索引原子提交竞态防护）。"
 status: "stable"
 source:
-  - ".trae/specs/daojia-canon-okf-wiki/"
+  - ".trae/specs/classics-knowledge/daojia-canon-okf-wiki/"
   - "projects/awesome-okf-xs/doc/bundles/think/daojia/"
 milestone-name: "daojia-canon-okf-wiki（道家著作全谱系 OKF 知识包）"
 time-range: "2026-08-30 ~ 2026-09-01"
@@ -33,7 +33,7 @@ stale_after: "2027-09-01"
 # 道家著作全谱系 OKF Wiki（daojia-canon-okf-wiki）里程碑复盘
 
 > **方法论编排**：七概念 R→I→E→V→C 链路（里程碑复盘场景）
-> **复盘对象**：`.trae/specs/daojia-canon-okf-wiki/` → `projects/awesome-okf-xs/doc/bundles/think/daojia/`
+> **复盘对象**：`.trae/specs/classics-knowledge/daojia-canon-okf-wiki/` → `projects/awesome-okf-xs/doc/bundles/think/daojia/`
 > **session**：sc-20260831-daojia-p2
 > **拖动日期**：2026-09-01（P2 九束子模块提交 3a52c2f4、主仓 gitlink d788c50de，未推送）
 
@@ -43,7 +43,7 @@ stale_after: "2027-09-01"
 
 | 维度 | 值 |
 |------|----|
-| 规格目录 | `.trae/specs/daojia-canon-okf-wiki/`（spec/tasks/checklist/insights/patterns/structure-proposal/facts） |
+| 规格目录 | `.trae/specs/classics-knowledge/daojia-canon-okf-wiki/`（spec/tasks/checklist/insights/patterns/structure-proposal/facts） |
 | Bundle 根目录 | `projects/awesome-okf-xs/doc/bundles/think/daojia/` |
 | 归属 | think 域 · daojia 分组（四段谱系伞形导航） |
 | 四段结构 | zhuzi（先秦诸子）/ huanglao（黄老之学）/ xuanxue（魏晋玄学注疏）/ daojiao（道教经典） |
@@ -133,7 +133,7 @@ stale_after: "2027-09-01"
 
 ## 五、V 阶段：对抗审查记录
 
-（审查意见全文见 `.trae/specs/daojia-canon-okf-wiki/` V 记录；以下为本复盘产出自身的四视角审查）
+（审查意见全文见 `.trae/specs/classics-knowledge/daojia-canon-okf-wiki/` V 记录；以下为本复盘产出自身的四视角审查）
 
 | 视角 | 攻击点 | 处置 |
 |------|--------|------|

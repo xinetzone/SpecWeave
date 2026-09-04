@@ -18,7 +18,7 @@
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
-VERIFY_SCRIPT="/SpecWeave/.trae/specs/caffe-ffi-followup-fixes-analysis/a001_verify_fix.py"
+VERIFY_SCRIPT="/SpecWeave/.trae/specs/caffe-framework/caffe-ffi-followup-fixes-analysis/a001_verify_fix.py"
 MODEL_DIR="/SpecWeave/external/chaos/xmtools/models/hub/caffe/resnet50_caffe"
 
 echo "=========================================================="

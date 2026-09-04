@@ -29,9 +29,9 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 |---------|------|------|
 | `.agents/commands/first-principles.md` | 新增 | 160行，10个章节，9行RACI活动，6个执行步骤 |
 | `.agents/commands/README.md` | 修改 | 指令集清单表格新增1行，9行数据行 |
-| `.trae/specs/create-first-principles-command/spec.md` | 新增 | 6条 ADDED Requirements |
-| `.trae/specs/create-first-principles-command/tasks.md` | 新增 | 3个主任务+10个子任务 |
-| `.trae/specs/create-first-principles-command/checklist.md` | 新增 | 21项检查点 |
+| `.trae/specs/workspace-governance/create-first-principles-command/spec.md` | 新增 | 6条 ADDED Requirements |
+| `.trae/specs/workspace-governance/create-first-principles-command/tasks.md` | 新增 | 3个主任务+10个子任务 |
+| `.trae/specs/workspace-governance/create-first-principles-command/checklist.md` | 新增 | 21项检查点 |
 
 ### first-principles.md 内容结构
 

@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "ps5-compat-preflight"
-source: "../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式2ps5-compat-preflight兼容性预检checklist模式"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式2ps5-compat-preflight兼容性预检checklist模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ps5-compat-preflight.toml"
 maturity: "L1"
 validation_count: 1
@@ -17,7 +17,7 @@ related_patterns:
   - "runtime-version-enforcement"
   - "preflight-checks-script"
 ---
-> **提炼自**：[05-patterns.md#模式2](../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式2ps5-compat-preflight兼容性预检checklist模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
+> **提炼自**：[05-patterns.md#模式2](../../archives/spec-working-notes/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式2ps5-compat-preflight兼容性预检checklist模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
 
 # PS5兼容性预检Checklist模式（PS5-Compat-Preflight）
 

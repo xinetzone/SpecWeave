@@ -88,7 +88,7 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
   - D盘：总计552GB，可用64GB（使用率89%）
   - 旧文件：caffe-cpu-jupyter_20260727.tar（754MB）
 - 用户确认：gzip压缩、保留旧文件
-- Spec文档目录：`.trae/specs/docker-image-save-20260727/`（spec.md + tasks.md + checklist.md）
+- Spec文档目录：`.trae/specs/infra-env/docker-image-save-20260727/`（spec.md + tasks.md + checklist.md）
 - 4个Task：前置检查 → docker save|gzip → 完整性验证 → 结果汇总
 - 导出命令：`docker save caffe-cpu:standalone-jupyter-test | gzip > /mnt/d/BaiduSyncdisk/docker/caffe-cpu-standalone-jupyter_20260727.tar.gz`
 - 执行耗时：约3分钟（timeout 600000ms）
@@ -106,9 +106,9 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 |------|------|------|------|
 | [caffex-removal README.md](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md) | 新建 | ~8KB | caffex移除复盘报告 |
 | [REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md) | 新建 | ~16KB | 回归测试流程文档 |
-| [spec.md](../../../../../.trae/specs/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
-| [tasks.md](../../../../../.trae/specs/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
-| [checklist.md](../../../../../.trae/specs/docker-image-save-20260727/checklist.md) | 新建 | ~1KB | 验证清单 |
+| [spec.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/spec.md) | 新建 | ~4KB | Docker导出PRD |
+| [tasks.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/tasks.md) | 新建+更新 | ~3KB | 实现计划（4/4完成） |
+| [checklist.md](../../../../../.trae/specs/infra-env/docker-image-save-20260727/checklist.md) | 新建 | ~1KB | 验证清单 |
 | caffe-cpu-standalone-jupyter_20260727.tar.gz | 新建 | 490MB | 镜像归档（D:\BaiduSyncdisk\docker\） |
 
 ---
@@ -199,5 +199,5 @@ caffex 依赖移除和镜像构建验证完成后，本阶段完成了三项收�
 
 - 前序复盘报告：[retrospective-caffe-standalone-caffex-removal-20260727](file:///d:/spaces/SpecWeave/.agents/docs/retrospective/reports/build-engineering/retrospective-caffe-standalone-caffex-removal-20260727/README.md)
 - 回归测试文档：[REGRESSION-TEST.md](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/docker/standalone/REGRESSION-TEST.md)
-- Docker导出Spec：[docker-image-save-20260727](../../../../../.trae/specs/docker-image-save-20260727)
+- Docker导出Spec：[docker-image-save-20260727](../../../../../.trae/specs/infra-env/docker-image-save-20260727)
 - 镜像归档：`D:\BaiduSyncdisk\docker\caffe-cpu-standalone-jupyter_20260727.tar.gz`（490MB）

@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "legacy-ai-upgrade-sop"
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-2"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-LEGACY-AI-UPGRADE-002-legacy-ai-upgrade-sop.toml"
 maturity: "L1"
 validation_count: 1
@@ -10,7 +10,7 @@ documentation_level: "standard"
 pattern_id: "P-LEGACY-AI-UPGRADE-002"
 related_patterns: ["P-AGENT-SELECT-001", "P-DEMO-TO-PROD-003"]
 ---
-> **提炼自**：[patterns.md#模式2](../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-2) —— 火山引擎AgentKit E阶段萃取（存量改造SOP）
+> **提炼自**：[patterns.md#模式2](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-2) —— 火山引擎AgentKit E阶段萃取（存量改造SOP）
 
 # 存量业务系统智能化改造5步SOP
 

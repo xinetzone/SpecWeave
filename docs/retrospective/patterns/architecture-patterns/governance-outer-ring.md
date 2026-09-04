@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "governance-outer-ring"
-source: "../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察2"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/insights.md#洞察2"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/governance-outer-ring.toml"
 maturity: "L1"
 validation_count: 1
@@ -12,7 +12,7 @@ related_patterns:
   - "full-process-defense-depth"
   - "multi-agent-closed-loop-execution"
 ---
-> **提炼自**：[insights.md#洞察2](../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察2) —— 火山引擎AgentKit核心洞察（治理外环vs业务内环架构设计原则）
+> **提炼自**：[insights.md#洞察2](../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/insights.md#洞察2) —— 火山引擎AgentKit核心洞察（治理外环vs业务内环架构设计原则）
 
 # 治理外环包裹业务内环架构（Governance Outer Ring Encircles Business Inner Ring）
 

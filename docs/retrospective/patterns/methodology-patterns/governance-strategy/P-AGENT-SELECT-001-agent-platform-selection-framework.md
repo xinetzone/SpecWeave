@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "agent-platform-selection-framework"
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-1"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-AGENT-SELECT-001-agent-platform-selection-framework.toml"
 maturity: "L1"
 validation_count: 1
@@ -10,7 +10,7 @@ documentation_level: "standard"
 pattern_id: "P-AGENT-SELECT-001-v2"
 related_patterns: ["P-LEGACY-AI-UPGRADE-002", "P-DEMO-TO-PROD-003"]
 ---
-> **提炼自**：[patterns.md#模式1](../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-1) —— 火山引擎AgentKit E阶段萃取（选型框架）
+> **提炼自**：[patterns.md#模式1](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-1) —— 火山引擎AgentKit E阶段萃取（选型框架）
 
 # 企业级AI Agent平台9维度选型评估框架
 

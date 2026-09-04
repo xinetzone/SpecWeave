@@ -155,13 +155,13 @@ category: documentation
 
 **案例**：微信公众号"湖北"博文《DeepSeek 多模态视觉实验模型发布！》（2026-08-21）→ `ai/deepseek/vision-model-selection/` bundle（2026-08-28 完成）
 
-- 完整方案：[spec.md](../../../../.trae/specs/deepseek-vision-blog-okf-wiki/spec.md)
-- 事实集：[facts.md](../../../../.trae/specs/deepseek-vision-blog-okf-wiki/facts.md)
+- 完整方案：[spec.md](../../../../.trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/spec.md)
+- 事实集：[facts.md](../../../../.trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/facts.md)
 - 产出物：[vision-model-selection/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/deepseek/vision-model-selection/index.md)
 
 ### 逐步对照（案例1：技术选型类）
 
-**步骤1 对照**：微信公开博文 URL（`mp.weixin.qq.com`，无访问控制参数）→ 公开内容 → 标准工作流（spec 位于 `.trae/specs/deepseek-vision-blog-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/`）。
+**步骤1 对照**：微信公开博文 URL（`mp.weixin.qq.com`，无访问控制参数）→ 公开内容 → 标准工作流（spec 位于 `.trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/`，产出物位于 `projects/awesome-okf-xs/doc/bundles/`）。
 
 **步骤2 对照（性质分流）**：博文含 API、模型参数、价格表、可演练选型决策 → 判定为**技术教程/选型类** → 骨架含 `examples/`。
 
@@ -209,8 +209,8 @@ Gemini 2.5 Flash-Lite、GPT-5 nano、MiniCPM-V 4.6、DeepSeek-OCR-2/GLM-OCR 相�
 
 **案例**：微信公众号"窥见比特"博文《字节把TRAE、扣子都并进豆包，图什么？》（作者"比特一哥"，2026-08-27）→ `ai/trae/bytedance-ai-consolidation/` bundle（2026-08-28 完成）。
 
-- 完整方案：[spec.md](../../../../.trae/specs/bytedance-ai-consolidation-blog-okf-wiki/spec.md)
-- 事实集：[facts.md](../../../../.trae/specs/bytedance-ai-consolidation-blog-okf-wiki/facts.md)
+- 完整方案：[spec.md](../../../../.trae/specs/okf-wiki-ecosystem/bytedance-ai-consolidation-blog-okf-wiki/spec.md)
+- 事实集：[facts.md](../../../../.trae/specs/okf-wiki-ecosystem/bytedance-ai-consolidation-blog-okf-wiki/facts.md)
 - 产出物：[bytedance-ai-consolidation/index.md](../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/trae/bytedance-ai-consolidation/index.md)
 
 **步骤1 对照**：公开博文 → 标准工作流。

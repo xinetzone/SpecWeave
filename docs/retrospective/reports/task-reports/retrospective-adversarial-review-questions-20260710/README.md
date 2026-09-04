@@ -65,7 +65,7 @@ retro_type: "task"
 
 | 文件 | 路径 | 用途 |
 |------|------|------|
-| spec.md | `.trae/specs/adversarial-review-knowledge-base/spec.md` | 功能需求锚定（FR/NFR/AC） |
+| spec.md | `.trae/specs/okf-wiki-ecosystem/adversarial-review-knowledge-base/spec.md` | 功能需求锚定（FR/NFR/AC） |
 | 概述 | `adversarial-review-wiki/00-overview.md` | 知识库全景理解 |
 | 思想源头 | `adversarial-review-wiki/02-philosophy-origins.md` | 六大思想源头追溯 |
 | 方法论框架 | `adversarial-review-wiki/03-methodology-framework.md` | 七模块协议+五步法 |

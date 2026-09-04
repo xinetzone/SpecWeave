@@ -441,7 +441,7 @@ BENCHMARK_RANGE=200000 python /examples/free_threading_demo.py
 - [../scripts/verify-cext.sh](../scripts/verify-cext.sh) - C扩展ABI兼容性验证脚本（Dockerfile内置+容器诊断）
 - [../scripts/ft-benchmark.sh](../scripts/ft-benchmark.sh) - Free-Threading自动性能基准测试脚本（JSONL日志+阈值校验）
 - [scripts/deep-verify.py](scripts/deep-verify.py) - 深度验证脚本
-- [.trae/specs/devcontainer-base-image-slim/spec.md](../../../../.trae/specs/devcontainer-base-image-slim/spec.md) - 瘦身项目Spec
+- [.trae/specs/infra-env/devcontainer-base-image-slim/spec.md](../../../../.trae/specs/infra-env/devcontainer-base-image-slim/spec.md) - 瘦身项目Spec
 - [../examples/free_threading_demo.py](../examples/free_threading_demo.py) - Free-threading并发性能演示脚本
 
 ---

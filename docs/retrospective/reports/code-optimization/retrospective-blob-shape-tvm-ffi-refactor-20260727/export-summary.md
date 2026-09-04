@@ -61,9 +61,9 @@ date: 2026-07-27
 
 | 文件 | 操作 |
 |------|------|
-| [.trae/specs/blob-shape-tvm-ffi-refactor/spec.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/spec.md) | 创建 |
-| [.trae/specs/blob-shape-tvm-ffi-refactor/tasks.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/tasks.md) | 创建 |
-| [.trae/specs/blob-shape-tvm-ffi-refactor/checklist.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/checklist.md) | 创建 |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/spec.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/spec.md) | 创建 |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/tasks.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/tasks.md) | 创建 |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/checklist.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/checklist.md) | 创建 |
 
 ### 2.4 复盘报告（本次生成）
 

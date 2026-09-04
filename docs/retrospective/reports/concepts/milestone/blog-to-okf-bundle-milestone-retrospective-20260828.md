@@ -7,8 +7,8 @@ type: "Report"
 description: "两篇微信博文转化为 OKF 知识包并沉淀可复用模式的里程碑复盘——R→I→E→V→A 链路，模式从 L1 单案例升级为 L2 双案例验证"
 status: "stable"
 source:
-  - ".trae/specs/deepseek-vision-blog-okf-wiki/"
-  - ".trae/specs/bytedance-ai-consolidation-blog-okf-wiki/"
+  - ".trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/"
+  - ".trae/specs/okf-wiki-ecosystem/bytedance-ai-consolidation-blog-okf-wiki/"
   - ".agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md"
 milestone-name: "博文类文章→OKF知识包转化"
 time-range: "2026-08-28（同一会话连续两个案例）"
@@ -209,6 +209,6 @@ C 阶段说明：用户本次要求为"复盘+导出报告"，未要求 git 提�
 - 案例1 bundle：[vision-model-selection/](../../../../../projects/awesome-okf-xs/doc/bundles/ai/deepseek/vision-model-selection/index.md)（14 文件）
 - 案例2 bundle：[bytedance-ai-consolidation/](../../../../../projects/awesome-okf-xs/doc/bundles/ai/trae/bytedance-ai-consolidation/index.md)（9 文件）
 - 升级版模式：[blog-article-to-okf-bundle.md](../../../patterns/documentation-patterns/blog-article-to-okf-bundle.md)（L2）
-- 案例1 spec：`.trae/specs/deepseek-vision-blog-okf-wiki/`
-- 案例2 spec：`.trae/specs/bytedance-ai-consolidation-blog-okf-wiki/`
+- 案例1 spec：`.trae/specs/okf-wiki-ecosystem/deepseek-vision-blog-okf-wiki/`
+- 案例2 spec：`.trae/specs/okf-wiki-ecosystem/bytedance-ai-consolidation-blog-okf-wiki/`
 - 本报告：`.agents/docs/retrospective/reports/concepts/milestone/blog-to-okf-bundle-milestone-retrospective-20260828.md`

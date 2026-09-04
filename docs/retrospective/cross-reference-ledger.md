@@ -13,7 +13,7 @@ source: "docs/retrospective/reports/concepts/milestone/docs-full-retrospective-2
 >
 > 决策记录：2026-08-31 经用户确认——①方向：冻结 + 台账 + 声明修订；②复盘目录归属：以 `docs/retrospective/` 为准，`.agents/docs/retrospective/` 为历史归档、冻结新增。
 >
-> **结项公告（2026-09-01）**：本台账随 `.agents/docs/` 整体迁入 `docs/` 文档中心而自然结项——2657 个文件经 git rename 迁入 `docs/` 对应板块、41 个与 docs 原生落地页重复的文件删除，git 追踪的 `.agents/docs/` 文件数为 0；B1-B5 批次全部消解/完成，**迁移引入断链 = 0**。下文规则、基线、批次与复验方法作为治理历史保留，结项状态见各章标注；迁移全过程档案见 `.trae/specs/agents-docs-migration/`（spec.md / tasks.md / mapping.md）。
+> **结项公告（2026-09-01）**：本台账随 `.agents/docs/` 整体迁入 `docs/` 文档中心而自然结项——2657 个文件经 git rename 迁入 `docs/` 对应板块、41 个与 docs 原生落地页重复的文件删除，git 追踪的 `.agents/docs/` 文件数为 0；B1-B5 批次全部消解/完成，**迁移引入断链 = 0**。下文规则、基线、批次与复验方法作为治理历史保留，结项状态见各章标注；迁移全过程档案见 `.trae/specs/docs-restructure/agents-docs-migration/`（spec.md / tasks.md / mapping.md）。
 
 ## 一、边界规则（2026-08-31 生效）
 
@@ -64,7 +64,7 @@ source: "docs/retrospective/reports/concepts/milestone/docs-full-retrospective-2
 - **2.1 节 675 处/227 文件**：指向 `.agents/docs/` 的 404 处随迁移目标整体迁入 `docs/` 而消解，源链接经全仓改写收敛——主改写 593 链接/245 文件、`.agents` 裸顶级目录补漏 19 链接/4 文件、`docs/knowledge` 策展修复 256 本地链接/55 文件（另含 249 文件 frontmatter 的 x-toml-ref 深度校正）；指向 `.agents/scripts|skills|commands|rules|templates` 等执行层的约 240 处按 R6 保留，迁移后经 check-links 全量校验路径有效。
 - **2.2 节 164 处/82 文件**：反向引用的源文件已全部迁入 `docs/`（`.agents/docs/` 实体消亡，git 追踪数=0），迁移文件内部链接按新位置重写，反向跨区引用不复存在。
 - **2.3 节双份目录**：retrospective 旧侧（archives/assets/concepts/frameworks/guides/patterns + 根级日期复盘）整体迁入 `docs/retrospective/`；asset-inventory 等资产随迁；41 个与 docs 原生落地页重复的文件（README 等）作为重复件删除（git D=41）。
-- **收口证据**：迁移后 `docs/knowledge` 复跑 check-links，本地断链 137 条与迁移前既存缺口登记**逐元组相等（0 新增、0 遗漏）**，迁移引入断链 = 0。既存缺口（外部 `file:///d:/spaces/chaos` 引用 56 条、gitignored `.chaos/` 本地引用 15 条、pyinvoke/conda 等内容缺页群、okf 上游仓库结构引用群等）与 1044 条 TOML 元数据镜像既存悬空，统一登记于迁移 spec backlog（`.trae/specs/agents-docs-migration/mapping.md`），均非本次迁移引入。
+- **收口证据**：迁移后 `docs/knowledge` 复跑 check-links，本地断链 137 条与迁移前既存缺口登记**逐元组相等（0 新增、0 遗漏）**，迁移引入断链 = 0。既存缺口（外部 `file:///d:/spaces/chaos` 引用 56 条、gitignored `.chaos/` 本地引用 15 条、pyinvoke/conda 等内容缺页群、okf 上游仓库结构引用群等）与 1044 条 TOML 元数据镜像既存悬空，统一登记于迁移 spec backlog（`.trae/specs/docs-restructure/agents-docs-migration/mapping.md`），均非本次迁移引入。
 
 ## 三、分批台账
 
@@ -95,7 +95,7 @@ git grep -n '\.agents[\\/]docs[\\/]' -- '*.md' |
   Select-String -NotMatch '\.trae[\\/]specs|reports[\\/]|cross-reference-ledger'
 
 # 3. 链接有效性回归：迁移引入断链必须为 0
-#    （输出中既存缺口的定性与清单见 .trae/specs/agents-docs-migration/mapping.md backlog）
+#    （输出中既存缺口的定性与清单见 .trae/specs/docs-restructure/agents-docs-migration/mapping.md backlog）
 python .agents\scripts\check-links.py --path docs --check-frontmatter-paths
 python .agents\scripts\check-links.py --path .agents
 
@@ -109,4 +109,4 @@ cd d:\AI\docs; python scripts/check-toctrees.py; python scripts/check-frontmatte
 |------|------|----------|------|------|
 | 2026-08-31 | 台账建立 | — | 声明修订完成（根 AGENTS.md 文档边界条款 + global-core-rules 路径解析规则/敏感度分流/知识库链接共 5 处）；R2 冻结生效；存量基线登记 | docs/log.md |
 | 2026-08-31 | 基线附注（ACT-4 遗留） | 5 处 | ACT-4 索引修复中将 5 处断链改指 `.agents/docs/` 归档副本（methodology-patterns 清单表 2 行：plugin-bridge-standard-integration、automation-idempotent-four-elements；3 个根级模式文件 source_report/溯源行：awesome-okf-xs-ci-integration 报告）。冻结前已计入 2.1 基线（404 处内），R2 生效后不再新增；对应内容在 `docs/` 树无副本，B1/B5 批次迁移时优先处置 | 本台账 |
-| 2026-09-01 | B1-B5 整体结项（`.agents/docs/` → `docs/` 统一迁移） | 2657 文件 rename / 41 重复件删除 / 593+19+256 链接改写 / 249 文件 frontmatter 深度校正 | `.agents/docs/` 整体迁入 `docs/` 文档中心（git 追踪 `.agents/docs/`=0）；B1/B2/B4/B5 随实体迁移自然消解，B3 按 R6 保留并经 check-links 全量校验；迁移引入断链=0（修复后 137 条本地断链与迁移前既存登记逐元组相等，0 新增 0 遗漏）；既存缺口与 1044 条 TOML 镜像悬空登记 spec backlog；R2/R3 使命终结、R1/R5/R6 继续有效、R4 部分保留；台账状态 active→completed | docs/log.md、`.trae/specs/agents-docs-migration/`（spec/tasks/mapping） |
+| 2026-09-01 | B1-B5 整体结项（`.agents/docs/` → `docs/` 统一迁移） | 2657 文件 rename / 41 重复件删除 / 593+19+256 链接改写 / 249 文件 frontmatter 深度校正 | `.agents/docs/` 整体迁入 `docs/` 文档中心（git 追踪 `.agents/docs/`=0）；B1/B2/B4/B5 随实体迁移自然消解，B3 按 R6 保留并经 check-links 全量校验；迁移引入断链=0（修复后 137 条本地断链与迁移前既存登记逐元组相等，0 新增 0 遗漏）；既存缺口与 1044 条 TOML 镜像悬空登记 spec backlog；R2/R3 使命终结、R1/R5/R6 继续有效、R4 部分保留；台账状态 active→completed | docs/log.md、`.trae/specs/docs-restructure/agents-docs-migration/`（spec/tasks/mapping） |

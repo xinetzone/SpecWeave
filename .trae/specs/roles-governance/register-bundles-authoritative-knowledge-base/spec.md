@@ -20,7 +20,7 @@ source: "projects/awesome-okf-xs/doc/bundles/index.md"
 
 ## Impact
 
-- Affected specs: 无既有 spec 冲突；与 [awesome-okf-xs-doc](../../../../.trae/specs/awesome-okf-xs-doc/spec.md)（Sphinx 文档系统）互补——本 spec 只做路由注册，不涉及构建
+- Affected specs: 无既有 spec 冲突；与 [awesome-okf-xs-doc](../../../../.trae/specs/okf-wiki-ecosystem/awesome-okf-xs-doc/spec.md)（Sphinx 文档系统）互补——本 spec 只做路由注册，不涉及构建
 - Affected code:
   - `AGENTS.md`（知识库与复盘表新增条目）
   - `.agents/global-core-rules.md`（新增知识可信度分级规则）

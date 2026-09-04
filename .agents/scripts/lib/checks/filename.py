@@ -25,7 +25,7 @@ ALLOWED_EXTENSIONS = {
     ".sh", ".bat", ".ps1", ".gitignore", ".gitattributes",
     ".txt", ".csv", ".pdf", ".docx", ".png", ".jpg", ".jpeg", ".gif", ".svg",
     ".tag", ".example", ".template",
-    ".ini", ".log", ".lock", ".env.example",
+    ".ini", ".conf", ".cfg", ".log", ".lock", ".env.example",
     ".ttf",
 }
 ALLOWED_CHARS = re.compile(r'^[a-zA-Z0-9._\-/\\]+$')

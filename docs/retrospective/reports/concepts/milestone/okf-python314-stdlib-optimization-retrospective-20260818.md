@@ -6,7 +6,7 @@ completion_date: "2026-08-18"
 type: "Report"
 description: "OKF 工具链基于 Python 3.14 标准库优化里程碑复盘报告"
 status: "stable"
-source: ".trae/specs/optimize-okf-python314-stdlib/"
+source: ".trae/specs/okf-wiki-ecosystem/optimize-okf-python314-stdlib/"
 milestone-name: "OKF 工具链基于 Python 3.14 标准库优化"
 time-range: "2026-08-17 ~ 2026-08-18"
 methodology: "七概念方法论（R→I→E→C 链路，里程碑复盘场景）"
@@ -121,7 +121,7 @@ stale_after: "2027-08-22"
 | 编号 | 事实 |
 |------|------|
 | F01 | 优化对象为 `d:\AI\projects\xuanspace\tools\okf`（零运行时依赖的 OKF 工具链） |
-| F02 | 任务 spec 位于 `.trae/specs/optimize-okf-python314-stdlib/`，要求充分利用 `contextlib`/`contextvars`/`annotationlib` 等模块并保证覆盖率 100% |
+| F02 | 任务 spec 位于 `.trae/specs/okf-wiki-ecosystem/optimize-okf-python314-stdlib/`，要求充分利用 `contextlib`/`contextvars`/`annotationlib` 等模块并保证覆盖率 100% |
 | F03 | 优化前基线采集方式：`git stash` 恢复至提交 `8aa6d8b` 后运行 `pytest --cov`/`ruff check`/内存与微基准脚本，采集完成后 `git stash pop` |
 | F04 | 优化前单元测试 `pytest -q` 输出 `187 passed`，覆盖率 `TOTAL 1404 语句，126 未覆盖，91%` |
 | F05 | 优化后单元测试 `pytest -q` 输出 `259 passed`，覆盖率 `TOTAL 1419 语句，0 未覆盖，100%` |

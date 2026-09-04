@@ -21,9 +21,9 @@ commit: "d1a4a34"
 
 | 输入项 | 路径 |
 |---|---|
-| 任务 Spec | `.trae/specs/ark-cli-git-submodule/spec.md` |
-| 任务清单 | `.trae/specs/ark-cli-git-submodule/tasks.md` |
-| 检查清单 | `.trae/specs/ark-cli-git-submodule/checklist.md` |
+| 任务 Spec | `.trae/specs/migration-archival/ark-cli-git-submodule/spec.md` |
+| 任务清单 | `.trae/specs/migration-archival/ark-cli-git-submodule/tasks.md` |
+| 检查清单 | `.trae/specs/migration-archival/ark-cli-git-submodule/checklist.md` |
 | 最终提交 | `d1a4a34 feat(vendor): 集成 ark-cli 子模块并调整 vendor .gitignore 策略` |
 
 ## S1 事实收集
@@ -246,7 +246,7 @@ vendor/AGENTS.md 的子模块路由表中,flexloop 有子条目(apps/chaos)。�
 ### 归档位置
 
 - **复盘报告**: `docs/retrospective/reports/task-reports/retrospective-ark-cli-submodule-integration-20260707/README.md`
-- **任务产出**: `.trae/specs/ark-cli-git-submodule/` (spec.md + tasks.md + checklist.md)
+- **任务产出**: `.trae/specs/migration-archival/ark-cli-git-submodule/` (spec.md + tasks.md + checklist.md)
 - **代码提交**: `d1a4a34 feat(vendor): 集成 ark-cli 子模块并调整 vendor .gitignore 策略`
 
 ### 知识沉淀

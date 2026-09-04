@@ -242,9 +242,9 @@ bash .agents/scripts/docker-cache clean --all -y
 |------|------|------|---------|
 | 使用文档（架构原理/工作流） | L2 | [docker-cache.md](../../../docs/tech/references/docker-cache.md) | 理解架构、典型工作流、原子写入机制 |
 | 脚本源码（完整实现） | L2 | [docker-cache](../../scripts/docker-cache) | 调试问题、查看完整参数、理解锁机制 |
-| 产品需求规格 | Spec | [spec.md](../../../.trae/specs/docker-image-local-cache-management/spec.md) | 需求背景、验收标准 |
-| 任务分解 | Spec | [tasks.md](../../../.trae/specs/docker-image-local-cache-management/tasks.md) | 实现任务清单 |
-| 验证检查清单 | Spec | [checklist.md](../../../.trae/specs/docker-image-local-cache-management/checklist.md) | 38项验证点 |
+| 产品需求规格 | Spec | [spec.md](../../../.trae/specs/infra-env/docker-image-local-cache-management/spec.md) | 需求背景、验收标准 |
+| 任务分解 | Spec | [tasks.md](../../../.trae/specs/infra-env/docker-image-local-cache-management/tasks.md) | 实现任务清单 |
+| 验证检查清单 | Spec | [checklist.md](../../../.trae/specs/infra-env/docker-image-local-cache-management/checklist.md) | 38项验证点 |
 
 ## 11. 典型工作流
 
