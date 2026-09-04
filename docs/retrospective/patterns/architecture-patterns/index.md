@@ -59,6 +59,7 @@ meta-capability-inversion
 metadata-layering
 multi-agent-closed-loop-execution
 multi-agent-parallel-execution
+multidomain-inv-warmup-pr-cache-pipeline
 multi-mode-network-redundancy
 normalization-convention-duality
 normalized-coordinate-abstraction
