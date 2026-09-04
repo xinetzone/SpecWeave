@@ -3,9 +3,12 @@
 Spec Sanity Check - 规划文档主题健全性检查脚本
 
 检测长上下文会话中可能发生的"spec内容污染"问题：
-1. spec/tasks/checklist三件套标题主题一致性
+1. spec/tasks/review三件套标题主题一致性
 2. 目录名与文档标题主题匹配度
 3. 快速发现上下文压缩/会话恢复导致的文件内容错位问题
+
+规范依据：.agents/skills/TRAE-spec-mode/SKILL.md
+三件套标准命名：spec.md + tasks.md + review.md（checklist.md 为历史遗留命名，已废止）
 
 用法：
   python spec-sanity-check.py                     # 检查所有spec目录
@@ -53,7 +56,7 @@ class SanityReport:
     results: list[CheckResult] = field(default_factory=list)
     spec_title: str = ""
     tasks_title: str = ""
-    checklist_title: str = ""
+    review_title: str = ""
     dir_name: str = ""
     dir_keywords: list[str] = field(default_factory=list)
     error_count: int = 0
@@ -126,11 +129,11 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
 
     spec_file = spec_dir / "spec.md"
     tasks_file = spec_dir / "tasks.md"
-    checklist_file = spec_dir / "checklist.md"
+    review_file = spec_dir / "review.md"
 
     # 检查文件存在
     missing = []
-    for f, name in [(spec_file, "spec.md"), (tasks_file, "tasks.md"), (checklist_file, "checklist.md")]:
+    for f, name in [(spec_file, "spec.md"), (tasks_file, "tasks.md"), (review_file, "review.md")]:
         if not f.exists():
             missing.append(name)
 
@@ -138,7 +141,7 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
         report.add(CheckResult(
             name="文件存在性",
             passed=False,
-            message=f"缺少必需文件: {', '.join(missing)}",
+            message=f"缺少必需文件: {', '.join(missing)}（规范：spec.md + tasks.md + review.md）",
             severity="error"
         ))
         return report
@@ -146,7 +149,7 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
     report.add(CheckResult(
         name="文件存在性",
         passed=True,
-        message="spec.md/tasks.md/checklist.md三件套文件齐全",
+        message="spec.md/tasks.md/review.md三件套文件齐全",
         severity="info"
     ))
 
@@ -154,7 +157,7 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
     try:
         spec_content = spec_file.read_text(encoding="utf-8")
         tasks_content = tasks_file.read_text(encoding="utf-8")
-        checklist_content = checklist_file.read_text(encoding="utf-8")
+        review_content = review_file.read_text(encoding="utf-8")
     except Exception as e:
         report.add(CheckResult(
             name="文件可读性",
@@ -168,7 +171,7 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
     report.spec_title = extract_title_from_markdown(spec_content)
     spec_fm_title = extract_frontmatter_title(spec_content)
     report.tasks_title = extract_title_from_markdown(tasks_content)
-    report.checklist_title = extract_title_from_markdown(checklist_content)
+    report.review_title = extract_title_from_markdown(review_content)
 
     # 检查1: spec.md有H1标题
     if not report.spec_title:
@@ -202,24 +205,24 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
             severity="info"
         ))
 
-    # 检查3: checklist.md有H1标题
-    if not report.checklist_title:
+    # 检查3: review.md有H1标题
+    if not report.review_title:
         report.add(CheckResult(
-            name="checklist.md标题",
+            name="review.md标题",
             passed=False,
-            message="checklist.md缺少H1一级标题",
+            message="review.md缺少H1一级标题",
             severity="error"
         ))
     else:
         report.add(CheckResult(
-            name="checklist.md标题",
+            name="review.md标题",
             passed=True,
-            message=f"标题: {report.checklist_title[:60]}...",
+            message=f"标题: {report.review_title[:60]}...",
             severity="info"
         ))
 
     # 如果没有标题，无法进行后续主题检查
-    if not report.spec_title or not report.tasks_title or not report.checklist_title:
+    if not report.spec_title or not report.tasks_title or not report.review_title:
         return report
 
     # 检查4: 三件套标题主题一致性（核心检查！）
@@ -269,33 +272,33 @@ def check_single_spec(spec_dir: Path, strict: bool = False) -> SanityReport:
 
     spec_norm = normalize_title(report.spec_title)
     tasks_norm = normalize_title(report.tasks_title)
-    checklist_norm = normalize_title(report.checklist_title)
+    review_norm = normalize_title(report.review_title)
 
     st_ratio = title_similarity(spec_norm, tasks_norm)
-    sc_ratio = title_similarity(spec_norm, checklist_norm)
-    tc_ratio = title_similarity(tasks_norm, checklist_norm)
+    sr_ratio = title_similarity(spec_norm, review_norm)
+    tr_ratio = title_similarity(tasks_norm, review_norm)
 
     # 阈值：0.4，且三者都要通过
-    titles_consistent = st_ratio > 0.4 and sc_ratio > 0.4 and tc_ratio > 0.4
+    titles_consistent = st_ratio > 0.4 and sr_ratio > 0.4 and tr_ratio > 0.4
 
     if not titles_consistent:
         report.add(CheckResult(
             name="三件套主题一致性",
             passed=False,
-            message=f"检测到主题不一致！spec/tasks/checklist标题可能属于不同项目（重叠率: spec-tasks={st_ratio:.0%}, spec-checklist={sc_ratio:.0%}, tasks-checklist={tc_ratio:.0%}）。这通常是长上下文会话中文件内容被污染的信号！",
+            message=f"检测到主题不一致！spec/tasks/review标题可能属于不同项目（重叠率: spec-tasks={st_ratio:.0%}, spec-review={sr_ratio:.0%}, tasks-review={tr_ratio:.0%}）。这通常是长上下文会话中文件内容被污染的信号！",
             severity="error",
             details={
                 "spec_title": report.spec_title,
                 "tasks_title": report.tasks_title,
-                "checklist_title": report.checklist_title,
-                "overlap_ratios": {"spec_tasks": st_ratio, "spec_checklist": sc_ratio, "tasks_checklist": tc_ratio}
+                "review_title": report.review_title,
+                "overlap_ratios": {"spec_tasks": st_ratio, "spec_review": sr_ratio, "tasks_review": tr_ratio}
             }
         ))
     else:
         report.add(CheckResult(
             name="三件套主题一致性",
             passed=True,
-            message=f"spec/tasks/checklist三件套标题主题一致（重叠率: {min(st_ratio, sc_ratio, tc_ratio):.0%}+）",
+            message=f"spec/tasks/review三件套标题主题一致（重叠率: {min(st_ratio, sr_ratio, tr_ratio):.0%}+）",
             severity="info"
         ))
 
@@ -395,7 +398,7 @@ def generate_json_report(reports: list[SanityReport]) -> str:
             "dir_name": r.dir_name,
             "spec_title": r.spec_title,
             "tasks_title": r.tasks_title,
-            "checklist_title": r.checklist_title,
+            "review_title": r.review_title,
             "summary": {
                 "pass": r.pass_count,
                 "warning": r.warn_count,

@@ -1,4 +1,13 @@
-"""Spec 元数据扫描 — status 值域校验 + 三件套完整性校验"""
+"""Spec 元数据扫描 — 薄包装脚本（向后兼容）
+
+已整合进 spec_tool 工具链，本脚本仅作为兼容入口保留。
+推荐用法：
+  python -m lib.spec_tool check --meta-only
+  python -m lib.spec_tool check --meta-only --json
+
+新增非法 status 的归一化映射请到 lib/spec_tool/constants.py 的
+STATUS_NORMALIZATION_MAP 中添加。
+"""
 
 # 版本校验：导入共享库
 import sys as _sys
@@ -6,149 +15,45 @@ from pathlib import Path as _Path
 _sys.path.insert(0, str(_Path(__file__).resolve().parent / "lib"))
 
 from python310_version_check import enforce_python310
-
 enforce_python310()
 
-import collections
+import argparse
 import json
-import sys
-
 from pathlib import Path
-from lib.frontmatter import parse_frontmatter_unified
 
-PROJ_ROOT = _Path(__file__).resolve().parent.parent.parent  # scripts → .agents → root
-SPEC_ROOT = PROJ_ROOT / '.trae' / 'specs'
+from lib.spec_tool.metadata_checker import scan_spec_metadata, format_terminal_report
+from lib.spec_tool.constants import VALID_STATUSES
 
-VALID_STATUSES = {
-    'draft', 'planning', 'in-progress', 'approved', 'implemented', 'completed',
-    'pending-approval', 'review', 'deprecated', 'archived',
-}
+PROJ_ROOT = Path(__file__).resolve().parent.parent.parent
+SPEC_ROOT = PROJ_ROOT / ".trae" / "specs"
 
 
 def main():
-    violations = []
-    status_dist = collections.Counter()
-    total_specs = 0
-    no_frontmatter = 0
+    parser = argparse.ArgumentParser(description="Spec 元数据扫描（兼容入口，推荐使用 spec_tool check --meta-only）")
+    parser.add_argument("--path", type=Path, default=None, help="spec 根目录（默认: .trae/specs）")
+    parser.add_argument("--json", action="store_true", help="JSON 格式输出到终端")
+    parser.add_argument("--output", type=Path, default=None, help="JSON 报告输出路径（默认: .temp/spec-metadata-violations.json）")
+    args = parser.parse_args()
 
-    for spec_dir in sorted(SPEC_ROOT.rglob('spec.md')):
-        if not spec_dir.parent.is_dir():
-            continue
-        total_specs += 1
-        parent = spec_dir.parent
-        rel = spec_dir.relative_to(PROJ_ROOT).as_posix()
+    spec_root = args.path or SPEC_ROOT
+    report = scan_spec_metadata(spec_root, PROJ_ROOT)
 
-        # Check three-piece set
-        tasks_md = parent / 'tasks.md'
-        checklist_md = parent / 'checklist.md'
-        missing = []
-        if not tasks_md.exists():
-            missing.append('tasks.md')
-        if not checklist_md.exists():
-            missing.append('checklist.md')
-        if missing:
-            violations.append({
-                'type': 'missing_triad',
-                'file': rel,
-                'message': f"缺三件套: {', '.join(missing)}",
-                'severity': 'error',
-            })
-
-        # Parse frontmatter
-        try:
-            fm = parse_frontmatter_unified(spec_dir)
-        except Exception as e:
-            violations.append({
-                'type': 'fm_parse_error',
-                'file': rel,
-                'message': f"frontmatter 解析失败: {e}",
-                'severity': 'error',
-            })
-            no_frontmatter += 1
-            continue
-
-        if not fm:
-            violations.append({
-                'type': 'no_frontmatter',
-                'file': rel,
-                'message': "无 frontmatter（缺失 --- ... --- 或 +++ ... +++ 块）",
-                'severity': 'error',
-            })
-            no_frontmatter += 1
-            continue
-
-        status = fm.get('status')
-        if status is None:
-            violations.append({
-                'type': 'missing_status',
-                'file': rel,
-                'message': "frontmatter 中缺少 status 字段",
-                'severity': 'warning',
-            })
-            status_dist['(none)'] += 1
-        else:
-            status_str = str(status).strip().lower()
-            status_dist[status_str] += 1
-            if status_str not in {s.lower() for s in VALID_STATUSES}:
-                violations.append({
-                    'type': 'invalid_status',
-                    'file': rel,
-                    'message': f"status 值 '{status}' 不在合法值域内（合法值域: {sorted(VALID_STATUSES)}）",
-                    'severity': 'error',
-                })
-
-    # Print summary
-    sep = '=' * 60
-    print(sep)
-    print("Spec 元数据扫描报告")
-    print(sep)
-    print(f"扫描根: {SPEC_ROOT}")
-    print(f"总计 spec.md 数: {total_specs}")
-    print(f"无 frontmatter:  {no_frontmatter}")
-    print()
-    print("-- status 值域分布 --")
-    illegal_set = {s.lower() for s in VALID_STATUSES}
-    for k, v in sorted(status_dist.items(), key=lambda x: -x[1]):
-        flag = " [非法]" if k not in illegal_set and k != '(none)' else ""
-        print(f"  {k:25s}: {v}{flag}")
-    print()
-
-    error_count = sum(1 for v in violations if v['severity'] == 'error')
-    warn_count = sum(1 for v in violations if v['severity'] == 'warning')
-    print(f"-- 违规清单 ({error_count} 错误, {warn_count} 警告) --")
-    by_cat = collections.defaultdict(list)
-    for v in violations:
-        by_cat[v['type']].append(v)
-    for cat, items in sorted(by_cat.items()):
-        print(f"\n  [{cat}] ({len(items)}个)")
-        for item in items[:20]:
-            mark = "[E]" if item['severity'] == 'error' else "[W]"
-            print(f"    {mark} {item['file']}")
-            print(f"        {item['message']}")
-        if len(items) > 20:
-            print(f"    ... 还有 {len(items) - 20} 个，已截断")
-    print()
-    print(sep)
-    if error_count == 0:
-        print(f"扫描通过（{warn_count} 个警告）")
+    # 终端输出
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
     else:
-        print(f"发现 {error_count} 个错误，{warn_count} 个警告")
-    print(sep)
+        print(format_terminal_report(report, spec_root))
 
-    # Also output JSON for CI integration
-    out_path = PROJ_ROOT / '.temp' / 'spec-metadata-violations.json'
+    # 写入 JSON 文件（CI 集成用）
+    out_path = args.output or (PROJ_ROOT / ".temp" / "spec-metadata-violations.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump({
-            'total': total_specs,
-            'no_frontmatter': no_frontmatter,
-            'error_count': error_count,
-            'warning_count': warn_count,
-            'violations': violations,
-            'status_dist': dict(status_dist),
-        }, f, ensure_ascii=False, indent=2)
-    print(f"\nJSON 报告已写入: {out_path}")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+    if not args.json:
+        print(f"\nJSON 报告已写入: {out_path}")
+
+    return 1 if report["error_count"] > 0 else 0
 
 
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    raise SystemExit(main())

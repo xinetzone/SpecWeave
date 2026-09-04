@@ -218,7 +218,7 @@ def _dash_scan_all_specs(specs_root: Path) -> list[ThemeStatus]:
     """扫描全部 13 主题，收集每个主题下所有子目录（不论是否有 tasks.md）。
 
     用于主题看板生成和全局 README 压缩。返回 ThemeStatus 列表，其中 specs 包含
-    name / has_tasks / has_checklist / status_icon 字段（不依赖 tasks.md 存在）。
+    name / has_tasks / has_review / status_icon 字段（不依赖 tasks.md 存在）。
     """
     themes = []
     theme_dirs = sorted(
@@ -287,14 +287,14 @@ def _build_theme_dashboard_table(specs: list[SpecStatus]) -> str:
     ck, cx = "✓", "✗"
     for j, s in enumerate(specs, 1):
         has_tasks = s.total_tasks > 0 or (s.done_tasks > 0)
-        has_checklist = False  # 暂不检测，用 ? 占位
+        has_review = False  # 暂不检测，用 ? 占位
         if s.completed:
             status = "✓ 完成"
         elif s.done_tasks > 0:
             status = "! 进行中"
         else:
             status = "? 待启动"
-        trio = f"{ck}{'/' if has_tasks else cx}{'/' if has_checklist else cx}"
+        trio = f"{ck}{'/' if has_tasks else cx}{'/' if has_review else cx}"
         lines.append(f"| {j} | [{s.name}]({s.name}/spec.md) | {status} | {trio} |")
     return "\n".join(lines)
 
@@ -450,7 +450,8 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
         "1. **选择主题**：判断归属 13 大主题之一；跨主题的优先归入最相关主题。",
         "2. **查重**：在对应主题目录下检索是否已有相近 spec，避免近名重复（见 C-5 查重脚本）。",
         "3. **命名**：kebab-case，语义化描述，参考现有命名（如 create-*-wiki-tutorial）。",
-        "4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + checklist.md。",
+        "4. **创建三件套**：spec.md（YAML frontmatter 含 status/title）+ tasks.md + review.md（独立审查清单）。"
+        "产物命名与结构以 .agents/skills/TRAE-spec-mode/SKILL.md 为唯一权威依据，禁止使用 checklist.md 等非规范命名。",
         "5. **更新看板**：运行 `python .agents/scripts/docgen.py theme-dashboards` 刷新主题看板，"
         "运行 `python .agents/scripts/docgen.py update-spec-readme` 刷新全局总览。",
         "",

@@ -3,11 +3,15 @@ from ..python310_version_check import enforce_python310
 
 enforce_python310()
 
+# ⚠️ 规范说明：本工具使用旧版 spec 三件套命名（spec.md + tasks.md + checklist.md）
+# 当前官方规范以 TRAE-spec-mode Skill 为准：spec.md + tasks.md + review.md
+# 本工具待逐步迁移，新 spec 请使用 review.md 命名
+
 import json
 from pathlib import Path
 from typing import Any
 
-from lib.cli import print_warn, print_error
+from lib.cli import print_warn, print_error, print_pass
 from lib.project import resolve_project_root
 from lib.spec import discover_spec_dirs
 from lib.spec.parsers import parse_spec, parse_tasks, parse_checklist
@@ -25,6 +29,7 @@ from lib.spec.reporters import (
     generate_consistency_terminal_report,
     generate_consistency_json_report,
 )
+from .metadata_checker import scan_spec_metadata, format_terminal_report, check_spec_metadata
 
 
 def _run_spec_checks(spec_dir: Path, project_root: Path, match_threshold: int = 1) -> dict[str, Any]:
@@ -129,7 +134,13 @@ def _check_single(spec_dir: Path, project_root: Path, json_output: bool, match_t
 
 def cmd_check(args) -> int:
     root = args.path or resolve_project_root(__file__)
+    meta_only = getattr(args, "meta_only", False)
 
+    # === 模式 1：只检查元数据 ===
+    if meta_only:
+        return _cmd_meta_only(args, root)
+
+    # === 模式 2：原有一致性检查（未来可加上元数据检查作为前置）===
     if args.spec_dir:
         spec_dir = Path(args.spec_dir)
         if not spec_dir.is_absolute():
@@ -175,4 +186,43 @@ def cmd_check(args) -> int:
                 exit_code = 1
             print()
     return exit_code
+
+
+def _cmd_meta_only(args, root: Path) -> int:
+    """--meta-only 模式：仅检查元数据（frontmatter/status/三件套）。"""
+    import json as _json  # 避免与外层 json 导入歧义
+    from pathlib import Path as _Path
+
+    # 优先使用用户指定的 spec 目录，否则默认 .trae/specs
+    if args.spec_dir:
+        spec_path = _Path(args.spec_dir)
+        if not spec_path.is_absolute():
+            spec_path = root / args.spec_dir
+    else:
+        spec_path = root / ".trae" / "specs"
+
+    if not spec_path.exists():
+        print_error(f"spec 目录不存在: {spec_path}")
+        return 1
+
+    # 如果指向单个 spec.md 文件，只检查它
+    if spec_path.is_file() and spec_path.name == "spec.md":
+        r = check_spec_metadata(spec_path, root)
+        report = {
+            "total": 1,
+            "no_frontmatter": 0 if r["has_frontmatter"] else 1,
+            "error_count": sum(1 for v in r["violations"] if v["severity"] == "error"),
+            "warning_count": sum(1 for v in r["violations"] if v["severity"] == "warning"),
+            "violations": r["violations"],
+            "status_dist": {r["status"] or "(none)": 1},
+        }
+    else:
+        report = scan_spec_metadata(spec_path, root)
+
+    if args.json:
+        print(_json.dumps(report, ensure_ascii=False, indent=2))
+    else:
+        print(format_terminal_report(report, spec_path))
+
+    return 1 if report["error_count"] > 0 else 0
 

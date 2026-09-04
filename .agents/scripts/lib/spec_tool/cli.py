@@ -24,18 +24,24 @@ def main():
     parser = argparse.ArgumentParser(description='Spec 文档工具集')
     subparsers = parser.add_subparsers(dest='command', help='可用子命令')
 
-    p_check = subparsers.add_parser('check', help='规格文档一致性检查')
+    p_check = subparsers.add_parser('check', help='规格文档一致性与元数据检查')
     add_common_args(p_check)
     p_check.add_argument('--spec-dir', type=str, default=None, help='指定要检查的 spec 目录')
     p_check.add_argument('--all', action='store_true', default=False, help='扫描所有 spec 目录（默认行为）')
     p_check.add_argument('--match-threshold', type=int, default=SPEC_MATCH_THRESHOLD, help='语义匹配最少共同关键词数')
+    p_check.add_argument('--meta-only', action='store_true', default=False, help='只检查元数据（frontmatter/status/三件套），跳过内容一致性检查')
 
-    p_fmt = subparsers.add_parser('format', help='Spec 文档标准化格式检查')
+    p_fmt = subparsers.add_parser('format', help='Spec 文档格式检查与自动修复')
     add_common_args(p_fmt)
     p_fmt.add_argument('--spec-dir', type=str, default='.trae/specs/', help='spec 基目录（默认: .trae/specs/）')
     p_fmt.add_argument('--check-all', action='store_true', help='递归检查所有子目录')
     p_fmt.add_argument('--format', choices=['text', 'json', 'yaml'], default='text', help='输出格式（默认: text）')
     p_fmt.add_argument('--verbose', '-v', action='store_true', help='显示详细输出')
+    # 自动修复选项
+    p_fmt.add_argument('--fix-frontmatter', action='store_true', help='自动修复 frontmatter 问题（补全缺失字段、归一化 status）')
+    p_fmt.add_argument('--default-status', default='draft', help='补全 status 时的默认值（默认: draft）')
+    p_fmt.add_argument('--add-date', action='store_true', help='新增 frontmatter 时同时添加 date 字段')
+    p_fmt.add_argument('--dry-run', action='store_true', help='修复模式下仅预览，不写入文件')
 
     p_gt = subparsers.add_parser('gen-tests', help='从 spec.md 生成 pytest 测试骨架')
     add_common_args(p_gt)
