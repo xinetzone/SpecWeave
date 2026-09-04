@@ -133,7 +133,7 @@ define_docker_target(pycaffe-jupyter
 )
 ```
 
-**验证脚本设计**（[verify-jupyter.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/pycaffe-jupyter/scripts/verify-jupyter.sh)）：
+**验证脚本设计**（[verify-jupyter.sh](../../../../external/chaos/caffe/docker/modules/pycaffe-jupyter/scripts/verify-jupyter.sh)）：
 - 10 项检查：pycaffe 导入、supervisord 进程、sshd 进程/端口、Jupyter 进程/端口、SSH 配置、Jupyter 配置、/workspace 权限、脚本完整性
 - PASS/FAIL/SKIP 计数 + 彩色输出
 - 非零退出码表示验证失败
@@ -168,7 +168,7 @@ define_docker_target(pycaffe-jupyter
 | `rebuild` | 清理 + 无缓存重建 | 依赖更新后 |
 | `info` | 显示访问信息 | 查看 URL/密码 |
 
-**关键设计决策**（[run-jupyter.sh](file:///d:/spaces/SpecWeave/external/chaos/caffe/docker/modules/scripts/run-jupyter.sh)）：
+**关键设计决策**（[run-jupyter.sh](../../../../external/chaos/caffe/docker/modules/scripts/run-jupyter.sh)）：
 - 密码优先级：`--password` > `JUPYTER_PASSWORD` 环境变量 > 默认 `caffe`
 - SSH 公钥自动检测：`~/.ssh/id_rsa.pub` → `~/.ssh/id_ed25519.pub`，支持 `--no-ssh-key` 禁用
 - 彩色输出：GREEN=[OK], RED=[ERROR], YELLOW=[WARN], CYAN=步骤, MAGENTA=INFO

@@ -278,14 +278,14 @@ R0: Initial commit: Containerfile+SDK+compose+ML模型+文档+构建系统
 
 | 模式 | 关系 |
 |------|------|
-| [capability-stack-progressive-building](methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | 方法论基础：本模式定义「做什么（七层架构）」，七层渐进构建定义「按什么顺序做」 |
+| [capability-stack-progressive-building](../methodology-patterns/governance-strategy/capability-stack-progressive-building.md) | 方法论基础：本模式定义「做什么（七层架构）」，七层渐进构建定义「按什么顺序做」 |
 | [meta-capability-inversion](meta-capability-inversion.md) | 架构原则：先实现原子能力（L0-L3）再构建上层编排，避免框架先行 |
 | [zero-config-core-enhancement](zero-config-core-enhancement.md) | L0 CLI兜底是零配置核心：最小安装无需SDK/compose即可工作 |
 | [docker-modular-build-orchestration](docker-modular-build-orchestration.md) | 配套模式：L7构建系统的Docker镜像模块化构建实现 |
 
 ## 来源
 
-- 复盘报告：[retrospective-jupyter-podman-rootless-seven-rounds-20260827](../reports/build-engineering/retrospective-jupyter-podman-rootless-seven-rounds-20260827/README.md)
+- 复盘报告：[retrospective-jupyter-podman-rootless-seven-rounds-20260827](../../reports/build-engineering/retrospective-jupyter-podman-rootless-seven-rounds-20260827/)
 - 项目源码：`apps/containers/jupyter-podman-rootless/`（tasks/client.py, tasks/compose_backend.py, pyproject.toml）
 - 相关洞察：I2「三层后端降级架构是容器工具集成的有效模式」
 
