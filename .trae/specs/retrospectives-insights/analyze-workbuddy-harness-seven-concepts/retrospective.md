@@ -27,7 +27,7 @@ tags: ["复盘", "七概念", "Agent工程", "SpecMode", "外部文章分析", "
 | [spec.md](spec.md) | 126 | PRD产品需求文档 |
 | [tasks.md](tasks.md) | 192 | 12项任务分解 |
 | [checklist.md](checklist.md) | 43 | 35项验证清单 |
-| [article-content.md](article-content.md) | 681 | 清洗后文章全文（唯一事实源SSOT） |
+| [article-content.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-workbuddy-harness-seven-concepts/article-content.md) | 681 | 清洗后文章全文（唯一事实源SSOT） |
 | [retrospective.md](retrospective.md) | 185 | 本复盘报告（含幻觉事件完整记录） |
 | [team-briefing.md](team-briefing.md) | ~200 | 团队分享简报 |
 

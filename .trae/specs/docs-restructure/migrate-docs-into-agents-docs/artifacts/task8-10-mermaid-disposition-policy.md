@@ -58,7 +58,7 @@ status: "completed"
 
 | 文件 | 错误 | 原因 | 结论 |
 |---|---:|---|---|
-| `.trae/specs/agent-app-marketplace/spec.md` | 6 | 该 spec 已作为 `.agents/protocols/workspace-discovery.md` 与 `.agents/protocols/prompt-bootstrap.md` 的 `source` 来源，仍属活跃 canonical source | 修复 |
+| `.trae/specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md` | 6 | 该 spec 已作为 `.agents/protocols/workspace-discovery.md` 与 `.agents/protocols/prompt-bootstrap.md` 的 `source` 来源，仍属活跃 canonical source | 修复 |
 | `.trae/specs/standards-tools/analyze-script-merging/report.md` | 2 | 仅有两个 `end` 保留字冲突，修复成本极低，且位于 `standards-tools` 活跃主题下 | 修复 |
 
 ### 修复口径
@@ -170,7 +170,7 @@ status: "completed"
 ## 对 `SubTask 8.11` 的执行建议
 
 1. 先把 `修复` 队列作为下一轮最小补丁收掉：
-   - `.trae/specs/agent-app-marketplace/spec.md`
+   - `.trae/specs/okf-wiki-ecosystem/agent-app-marketplace/spec.md`
    - `.trae/specs/standards-tools/analyze-script-merging/report.md`
 2. 将 `排除` 队列整理为明确目录/文件族清单，作为 `repo-check mermaid` 的默认排除基线。
 3. 将 `重生成` 队列拆成独立治理主题，不与迁移收尾混做：

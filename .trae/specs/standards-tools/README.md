@@ -317,3 +317,58 @@ standards-tools/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [add-tcm-bundle-visual-assets](add-tcm-bundle-visual-assets/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [add-tuya-ipc-minimal-closed-loop-guide](add-tuya-ipc-minimal-closed-loop-guide/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [adjust-vendor-flexloop-governance](adjust-vendor-flexloop-governance/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [agent-communication-protocols-wiki](agent-communication-protocols-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [analyze-script-merging](analyze-script-merging/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [build-tvm-runtime-docker-image](build-tvm-runtime-docker-image/spec.md) | ! 进行中 | ✓/✗ |
+| 7 | [check-academic-sources](check-academic-sources/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [check-spec-consistency](check-spec-consistency/spec.md) | ✓ 完成 | ✓/✗ |
+| 9 | [config-file-placement-governance](config-file-placement-governance/spec.md) | ✓ 完成 | ✓/✗ |
+| 10 | [create-agent-eval-methodology-wiki](create-agent-eval-methodology-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 11 | [create-docker-ssh-containerfile](create-docker-ssh-containerfile/spec.md) | ! 进行中 | ✓/✗ |
+| 12 | [create-eastern-western-classics-wiki](create-eastern-western-classics-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 13 | [create-fangzhong-bajia-wiki](create-fangzhong-bajia-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 14 | [create-graphql-wiki-tutorial](create-graphql-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [create-hetu-luoshu-wiki-tutorial](create-hetu-luoshu-wiki-tutorial/spec.md) | ? 待启动 | ✓✗✗ |
+| 16 | [create-intelligent-terminal-wiki-tutorial](create-intelligent-terminal-wiki-tutorial/spec.md) | ? 待启动 | ✓/✗ |
+| 17 | [create-mawangdui-fangzhong-wiki](create-mawangdui-fangzhong-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 18 | [create-myst-markdown-tutorial](create-myst-markdown-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 19 | [create-okf-kit-wiki-tutorial](create-okf-kit-wiki-tutorial/spec.md) | ? 待启动 | ✓✗✗ |
+| 20 | [create-scikit-build-core-wiki-tutorial](create-scikit-build-core-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 21 | [create-seven-concepts-deeptutor-wiki-tutorial](create-seven-concepts-deeptutor-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 22 | [create-sexology-classics-wiki](create-sexology-classics-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 23 | [create-tvm-ffi-wiki-tutorial](create-tvm-ffi-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 24 | [create-vocal-pedagogy-okf-bundle](create-vocal-pedagogy-okf-bundle/spec.md) | ? 待启动 | ✓✗✗ |
+| 25 | [create-wsl-wiki-tutorial](create-wsl-wiki-tutorial/spec.md) | ? 待启动 | ✓✗✗ |
+| 26 | [epub-to-markdown-conversion-research](epub-to-markdown-conversion-research/spec.md) | ✓ 完成 | ✓/✗ |
+| 27 | [establish-mermaid-management-system](establish-mermaid-management-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 28 | [establish-pwsh7-windows-standard](establish-pwsh7-windows-standard/spec.md) | ✓ 完成 | ✓/✗ |
+| 29 | [establish-vendor-collaboration-framework](establish-vendor-collaboration-framework/spec.md) | ✓ 完成 | ✓/✗ |
+| 30 | [explore-forum-auto-posting](explore-forum-auto-posting/spec.md) | ! 进行中 | ✓/✗ |
+| 31 | [fix-windows-terminal-chinese-encoding](fix-windows-terminal-chinese-encoding/spec.md) | ✓ 完成 | ✓/✗ |
+| 32 | [generate-first-principles-knowledge-graph](generate-first-principles-knowledge-graph/spec.md) | ✓ 完成 | ✓/✗ |
+| 33 | [instruction-knowledge-mapping-analysis](instruction-knowledge-mapping-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 34 | [learn-volcengine-mobileuse-agent](learn-volcengine-mobileuse-agent/spec.md) | ✓ 完成 | ✓/✗ |
+| 35 | [markdown-as-interface-research](markdown-as-interface-research/spec.md) | ✓ 完成 | ✓/✗ |
+| 36 | [migrate-toml-frontmatter-to-yaml](migrate-toml-frontmatter-to-yaml/spec.md) | ✓ 完成 | ✓/✗ |
+| 37 | [myst-to-agentspec-migration-analysis](myst-to-agentspec-migration-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 38 | [myst-unified-interface-ecosystem](myst-unified-interface-ecosystem/spec.md) | ✓ 完成 | ✓/✗ |
+| 39 | [optimize-trae-project-adaptation](optimize-trae-project-adaptation/spec.md) | ✓ 完成 | ✓/✗ |
+| 40 | [ps1-syntax-crossplatform](ps1-syntax-crossplatform/spec.md) | ✓ 完成 | ✓/✗ |
+| 41 | [refactor-scripts-shared-lib](refactor-scripts-shared-lib/spec.md) | ✓ 完成 | ✓/✗ |
+| 42 | [sensitive-info-sanitization-audit](sensitive-info-sanitization-audit/spec.md) | ✓ 完成 | ✓/✗ |
+| 43 | [setup-npu-tvm-build-env](setup-npu-tvm-build-env/spec.md) | ✓ 完成 | ✓/✗ |
+| 44 | [spec-standards-enhancement](spec-standards-enhancement/spec.md) | ✓ 完成 | ✓/✗ |
+| 45 | [sphinx-config-mystx-extraction](sphinx-config-mystx-extraction/spec.md) | ✓ 完成 | ✓/✗ |
+| 46 | [standardize-file-naming-convention](standardize-file-naming-convention/spec.md) | ✓ 完成 | ✓/✗ |
+| 47 | [update-frontmatter-scripts-compat](update-frontmatter-scripts-compat/spec.md) | ? 待启动 | ✓/✗ |
+| 48 | [update-sunlogin-wiki-mobile-control](update-sunlogin-wiki-mobile-control/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

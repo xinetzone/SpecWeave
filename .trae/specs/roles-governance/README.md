@@ -169,3 +169,19 @@ roles-governance/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [add-cofounder-role-marker](add-cofounder-role-marker/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [add-development-stage-guardrails](add-development-stage-guardrails/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [add-hardcode-governance-rules](add-hardcode-governance-rules/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [add-philosopher-role](add-philosopher-role/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [add-trae-edge-case-team-module](add-trae-edge-case-team-module/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [establish-ai-agent-data-security-governance](establish-ai-agent-data-security-governance/spec.md) | ✓ 完成 | ✓/✗ |
+| 7 | [fix-cross-system-folder-permissions](fix-cross-system-folder-permissions/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [register-bundles-authoritative-knowledge-base](register-bundles-authoritative-knowledge-base/spec.md) | ✓ 完成 | ✓/✗ |
+| 9 | [sync-agents-md-with-agents-folder](sync-agents-md-with-agents-folder/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

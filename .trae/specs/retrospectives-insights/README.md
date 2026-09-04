@@ -56,7 +56,7 @@
 | [harness-engineering-seven-concepts-analysis](harness-engineering-seven-concepts-analysis/spec.md) | ✅ 完成 | 100% | [复盘报告](../../../docs/retrospective/reports/competitive-analysis/harness-engineering-analysis/retrospective-report.md) | 使用七概念方法论对《新ClaudeCode和Codex变得越来越强的5个Harness设计》进行系统性分析：59条事实清单、3条核心洞察、2个方法论模式（Harness架构分层/子代理职责分层）、6条对抗审查意见，所有质量门(G1-G3+V)均通过 |
 | [analyze-cursor-cloud-agents-article](analyze-cursor-cloud-agents-article/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-cursor-cloud-agents-analysis-20260713/README.md)（spec/tasks/checklist保留在本目录） | Cursor Cloud Agents微信公众号文章深度洞察：视频化开发、代码审查瓶颈转移、多模型并行化（管道变宽）、Agent自我意识、定价三阶段跃迁五大核心观点，7个关键概念定义，16个关键数据点，权威性/准确性/时效性三维质量评估，四类角色行动建议 |
 | [analyze-meoo-contest-page](analyze-meoo-contest-page/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-meoo-contest-page-analysis-20260714/README.md)（spec/tasks/checklist保留在本目录） | 秒悟（Meoo）产品启航赛活动落地页七维度全面分析：内容呈现、用户体验、信息架构、视觉设计、交互功能、技术实现、商业价值七个维度的优势/不足评估与24项优化建议，三阶段优化路线图（P0快速修复2-4h/P1短期1-3d/P2长期迭代），识别4项P0级转化漏斗断点（无h1/CTA语义错误/评审标准缺失/无倒计时），沉淀活动落地页时间敏感度分析与转化漏斗断点优先原则 |
-| [analyze-i-have-adhd-article](analyze-i-have-adhd-article/spec.md) | ✅ 完成 | 100% | [分析报告](analyze-i-have-adhd-article/analysis-report.md) | 2026-07-28 · AI交互设计/逆向适配创新 · 《I Have ADHD》ADHD患者辅助技术文章深度分析，从特殊群体辅助方法反向推导通用AI输出优化，沉淀行动优先输出范式和逆向适配创新两个方法论模式 |
+| [analyze-i-have-adhd-article](analyze-i-have-adhd-article/spec.md) | ✅ 完成 | 100% | [分析报告](../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 2026-07-28 · AI交互设计/逆向适配创新 · 《I Have ADHD》ADHD患者辅助技术文章深度分析，从特殊群体辅助方法反向推导通用AI输出优化，沉淀行动优先输出范式和逆向适配创新两个方法论模式 |
 | [retrospective-i-have-adhd-second-round-validation](retrospective-i-have-adhd-second-round-validation/spec.md) | ✅ 完成 | 100% | [4个L1新模式+4个TOML+V2模式更新](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/README.md) | 2026-07-28 · 元复盘/模式验证 · i-have-adhd知识沉淀二次验证复盘：R→I→V→E全链路，审计3条执行模式遵循度、V2对抗审查暴露4个边界盲区+4个失败案例、9项P0修复+3个5-Whys根因、萃取知识沉淀二次验证SOP入库，4个L1模式独立文档化 |
 | [analyze-wechat-article-causal-ai](analyze-wechat-article-causal-ai/spec.md) | ✅ 完成 | 100% | [分析报告+七概念报告](../../../docs/knowledge/learning/analyze-wechat-article-causal-ai/) | 2026-07-07 · 因果AI/世界模型 · 新智元"因果AI与世界模型"文章七概念方法论分析：109条事实清单、5条核心洞察（因果是世界模型底层密码/社会行为系统世界模型扩展/因果驱动闭环将可解释内嵌/干预载体重新定义工程组件角色/文章软文倾向识别）、4视角10条对抗审查意见采纳6条，所有质量门(G1/G2/V)均通过 |
 | [analyze-tencent-hunyuan-hy3-release](analyze-tencent-hunyuan-hy3-release/spec.md) | ✅ 完成 | 100% | [分析报告归档](../../../docs/retrospective/reports/insight-extraction/external-learning/retrospective-tencent-hunyuan-hy3-analysis-20260801/README.md)（spec/tasks/checklist保留在本目录） | 2026-08-01 · 大模型行业/产品发布 · 腾讯混元Hy3正式发布文章深度洞察：以小参数比肩2-5倍旗舰模型、三大生产级体验改进（幻觉率12.5%→5.4%/MRCR 42.9%→75.1%）、8个内部产品反馈验证、Apache 2.0开源+1/4/0.25元低价API，提炼五大行业趋势判断和五个可复用认知模型 |
@@ -256,3 +256,181 @@ retrospectives-insights/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [agency-agents-library-wiki](agency-agents-library-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [agency-deep-learning-analysis](agency-deep-learning-analysis/spec.md) | ! 进行中 | ✓/✗ |
+| 3 | [agency-project-learning-wiki](agency-project-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [agent-runtime-protocol-learning-wiki](agent-runtime-protocol-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [agent-skills-deep-analysis](agent-skills-deep-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [agnes-pavo-learning-wiki](agnes-pavo-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 7 | [ai-website-cloner-analysis](ai-website-cloner-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [analyze-agent-reach-wechat-article](analyze-agent-reach-wechat-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 9 | [analyze-ai-anthropomorphic-interim-measures](analyze-ai-anthropomorphic-interim-measures/spec.md) | ✓ 完成 | ✓✗✗ |
+| 10 | [analyze-ai-hardware-design-tools](analyze-ai-hardware-design-tools/spec.md) | ✓ 完成 | ✓/✗ |
+| 11 | [analyze-alipay-aipay-incentive](analyze-alipay-aipay-incentive/spec.md) | ✓ 完成 | ✓/✗ |
+| 12 | [analyze-baidu-unlimited-ocr-article](analyze-baidu-unlimited-ocr-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 13 | [analyze-bonsai-canvas-agent-article](analyze-bonsai-canvas-agent-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 14 | [analyze-claude-code-artifacts-article](analyze-claude-code-artifacts-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [analyze-codex-product-philosophy-article](analyze-codex-product-philosophy-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 16 | [analyze-codex-skills-article](analyze-codex-skills-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 17 | [analyze-cursor-cloud-agents-article](analyze-cursor-cloud-agents-article/spec.md) | ✓ 完成 | ✓✗✗ |
+| 18 | [analyze-deep-code-article](analyze-deep-code-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 19 | [analyze-deepseek-chip-article](analyze-deepseek-chip-article/spec.md) | ! 进行中 | ✓/✗ |
+| 20 | [analyze-douyin-vibecoding-guide](analyze-douyin-vibecoding-guide/spec.md) | ✓ 完成 | ✓/✗ |
+| 21 | [analyze-ems-energy-management-article](analyze-ems-energy-management-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 22 | [analyze-github-speckit-article](analyze-github-speckit-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 23 | [analyze-guizang-material-illustration-skill](analyze-guizang-material-illustration-skill/spec.md) | ✓ 完成 | ✓/✗ |
+| 24 | [analyze-ha-core-tuya-openclaw-relationships](analyze-ha-core-tuya-openclaw-relationships/spec.md) | ✓ 完成 | ✓/✗ |
+| 25 | [analyze-huaqiu-sigmastar-partnership](analyze-huaqiu-sigmastar-partnership/spec.md) | ✓ 完成 | ✓/✗ |
+| 26 | [analyze-i-have-adhd-article](analyze-i-have-adhd-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 27 | [analyze-karpathy-agent-fallacy-article](analyze-karpathy-agent-fallacy-article/spec.md) | ! 进行中 | ✓/✗ |
+| 28 | [analyze-karpathy-llm-wiki-article](analyze-karpathy-llm-wiki-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 29 | [analyze-linus-fireside-chat](analyze-linus-fireside-chat/spec.md) | ? 待启动 | ✓/✗ |
+| 30 | [analyze-mainecoon-social-world-model-article](analyze-mainecoon-social-world-model-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 31 | [analyze-mattpocock-skills-article](analyze-mattpocock-skills-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 32 | [analyze-md2card-wechat-article](analyze-md2card-wechat-article/spec.md) | ! 进行中 | ✓/✗ |
+| 33 | [analyze-mem0-agent-memory-framework](analyze-mem0-agent-memory-framework/spec.md) | ✓ 完成 | ✓/✗ |
+| 34 | [analyze-meoo-contest-page](analyze-meoo-contest-page/spec.md) | ✓ 完成 | ✓✗✗ |
+| 35 | [analyze-minit2i-wechat-article](analyze-minit2i-wechat-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 36 | [analyze-omniroute-ai-gateway](analyze-omniroute-ai-gateway/spec.md) | ✓ 完成 | ✓/✗ |
+| 37 | [analyze-oray-five-product-sites](analyze-oray-five-product-sites/spec.md) | ! 进行中 | ✓/✗ |
+| 38 | [analyze-planning-with-files-article](analyze-planning-with-files-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 39 | [analyze-skillopt-article](analyze-skillopt-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 40 | [analyze-sunlogin-service-pages](analyze-sunlogin-service-pages/spec.md) | ✓ 完成 | ✓/✗ |
+| 41 | [analyze-superpowers-6-article](analyze-superpowers-6-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 42 | [analyze-tencent-hunyuan-hy3-release](analyze-tencent-hunyuan-hy3-release/spec.md) | ✓ 完成 | ✓/✗ |
+| 43 | [analyze-terminalworld-benchmark](analyze-terminalworld-benchmark/spec.md) | ✓ 完成 | ✓/✗ |
+| 44 | [analyze-tutti-multiagent-workspace-article](analyze-tutti-multiagent-workspace-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 45 | [analyze-vcs-evolution-facebook-google](analyze-vcs-evolution-facebook-google/spec.md) | ✓ 完成 | ✓/✗ |
+| 46 | [analyze-volcengine-acep](analyze-volcengine-acep/spec.md) | ? 待启动 | ✓/✗ |
+| 47 | [analyze-volcengine-agentkit](analyze-volcengine-agentkit/spec.md) | ✓ 完成 | ✓/✗ |
+| 48 | [analyze-volcengine-ai-cloud-native-sandbox](analyze-volcengine-ai-cloud-native-sandbox/spec.md) | ✓ 完成 | ✓/✗ |
+| 49 | [analyze-volcengine-ai-search-rec](analyze-volcengine-ai-search-rec/spec.md) | ✓ 完成 | ✓/✗ |
+| 50 | [analyze-volcengine-ark-introduction](analyze-volcengine-ark-introduction/spec.md) | ✓ 完成 | ✓/✗ |
+| 51 | [analyze-volcengine-arkcli](analyze-volcengine-arkcli/spec.md) | ✓ 完成 | ✓/✗ |
+| 52 | [analyze-volcengine-computer-use-agent](analyze-volcengine-computer-use-agent/spec.md) | ✓ 完成 | ✓/✗ |
+| 53 | [analyze-volcengine-eip](analyze-volcengine-eip/spec.md) | ✓ 完成 | ✓/✗ |
+| 54 | [analyze-volcengine-hiagent](analyze-volcengine-hiagent/spec.md) | ✓ 完成 | ✓/✗ |
+| 55 | [analyze-volcengine-ml-platform](analyze-volcengine-ml-platform/spec.md) | ✓ 完成 | ✓/✗ |
+| 56 | [analyze-volcengine-reward-plan](analyze-volcengine-reward-plan/spec.md) | ✓ 完成 | ✓/✗ |
+| 57 | [analyze-volcengine-searchinfinity](analyze-volcengine-searchinfinity/spec.md) | ✓ 完成 | ✓/✗ |
+| 58 | [analyze-wechat-article-1nNIr](analyze-wechat-article-1nNIr/spec.md) | ✓ 完成 | ✓/✗ |
+| 59 | [analyze-wechat-article-3dnk](analyze-wechat-article-3dnk/spec.md) | ✓ 完成 | ✓/✗ |
+| 60 | [analyze-wechat-article-7a2l](analyze-wechat-article-7a2l/spec.md) | ✓ 完成 | ✓/✗ |
+| 61 | [analyze-wechat-article-agent-browser](analyze-wechat-article-agent-browser/spec.md) | ✓ 完成 | ✓/✗ |
+| 62 | [analyze-wechat-article-agent-harness](analyze-wechat-article-agent-harness/spec.md) | ✓ 完成 | ✓✗✗ |
+| 63 | [analyze-wechat-article-agnes-free-api](analyze-wechat-article-agnes-free-api/spec.md) | ✓ 完成 | ✓/✗ |
+| 64 | [analyze-wechat-article-ai-switch-governance](analyze-wechat-article-ai-switch-governance/spec.md) | ✓ 完成 | ✓/✗ |
+| 65 | [analyze-wechat-article-anthropic-token-role-split](analyze-wechat-article-anthropic-token-role-split/spec.md) | ✓ 完成 | ✓/✗ |
+| 66 | [analyze-wechat-article-causal-ai](analyze-wechat-article-causal-ai/spec.md) | ✓ 完成 | ✓/✗ |
+| 67 | [analyze-wechat-article-dy98](analyze-wechat-article-dy98/spec.md) | ✓ 完成 | ✓/✗ |
+| 68 | [analyze-wechat-article-E2FXmFb](analyze-wechat-article-E2FXmFb/spec.md) | ✓ 完成 | ✓/✗ |
+| 69 | [analyze-wechat-article-eeb14](analyze-wechat-article-eeb14/spec.md) | ✓ 完成 | ✓/✗ |
+| 70 | [analyze-wechat-article-eve](analyze-wechat-article-eve/spec.md) | ✓ 完成 | ✓/✗ |
+| 71 | [analyze-wechat-article-kicrd](analyze-wechat-article-kicrd/spec.md) | ✓ 完成 | ✓/✗ |
+| 72 | [analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg](analyze-wechat-article-nglw6zYVjFEzM6boqn6uyg/spec.md) | ✓ 完成 | ✓/✗ |
+| 73 | [analyze-wechat-article-rqndd](analyze-wechat-article-rqndd/spec.md) | ✓ 完成 | ✓/✗ |
+| 74 | [analyze-wechat-article-Vykbw](analyze-wechat-article-Vykbw/spec.md) | ✓ 完成 | ✓/✗ |
+| 75 | [analyze-wechat-article-wps-comate](analyze-wechat-article-wps-comate/spec.md) | ✓ 完成 | ✓/✗ |
+| 76 | [analyze-wechat-article-Z-aZDvW0](analyze-wechat-article-Z-aZDvW0/spec.md) | ✓ 完成 | ✓/✗ |
+| 77 | [analyze-wechat-copilot-deepseek-multimodel](analyze-wechat-copilot-deepseek-multimodel/spec.md) | ✓ 完成 | ✓/✗ |
+| 78 | [analyze-workbuddy-harness-seven-concepts](analyze-workbuddy-harness-seven-concepts/spec.md) | ✓ 完成 | ✓/✗ |
+| 79 | [analyze-wsl-containers-wechat-article](analyze-wsl-containers-wechat-article/spec.md) | ✓ 完成 | ✓/✗ |
+| 80 | [analyze-yihuakaitian-meeting-record](analyze-yihuakaitian-meeting-record/spec.md) | ✓ 完成 | ✓/✗ |
+| 81 | [analyze-zhihu-question-637007780](analyze-zhihu-question-637007780/spec.md) | ✓ 完成 | ✓/✗ |
+| 82 | [animejs-threejs-adapter-analysis](animejs-threejs-adapter-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 83 | [animejs-threejs-adapter-wiki](animejs-threejs-adapter-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 84 | [anthropic-agent-roadmap-learning-wiki](anthropic-agent-roadmap-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 85 | [anthropic-financial-services-wiki](anthropic-financial-services-wiki/spec.md) | ! 进行中 | ✓/✗ |
+| 86 | [archive-ai-hardware-tools-to-wiki](archive-ai-hardware-tools-to-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 87 | [areal-agent-rl-learning-wiki](areal-agent-rl-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 88 | [areal-official-practical-wiki](areal-official-practical-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 89 | [audiox-turbo-learning-analysis](audiox-turbo-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 90 | [browseract-learning-wiki](browseract-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 91 | [browseract-official-wiki](browseract-official-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 92 | [business-trends-analysis](business-trends-analysis/spec.md) | ? 待启动 | ✓✗✗ |
+| 93 | [caffe-comprehensive-retrospective-export](caffe-comprehensive-retrospective-export/spec.md) | ✓ 完成 | ✓/✗ |
+| 94 | [caffe-ffi-zerocopy-phase1-retrospective](caffe-ffi-zerocopy-phase1-retrospective/spec.md) | ✓ 完成 | ✓/✗ |
+| 95 | [chatgpt-codex-analysis](chatgpt-codex-analysis/spec.md) | ? 待启动 | ✓/✗ |
+| 96 | [claude-code-context-injection-deep-analysis](claude-code-context-injection-deep-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 97 | [commit-retrospective-insights-reorg](commit-retrospective-insights-reorg/spec.md) | ✓ 完成 | ✓/✗ |
+| 98 | [create-ai-engineering-four-milestones-wiki](create-ai-engineering-four-milestones-wiki/spec.md) | ! 进行中 | ✓/✗ |
+| 99 | [create-codewhale-wiki-tutorial](create-codewhale-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 100 | [create-declarative-partial-updates-wiki](create-declarative-partial-updates-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 101 | [create-dspark-learning-wiki](create-dspark-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 102 | [create-echobird-source-wiki-tutorial](create-echobird-source-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 103 | [create-echobird-wiki-tutorial](create-echobird-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 104 | [create-four-engineering-concepts-wiki](create-four-engineering-concepts-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 105 | [create-libtv-learning-wiki](create-libtv-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 106 | [create-minit2i-wiki-tutorial](create-minit2i-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 107 | [create-orca-wiki-tutorial](create-orca-wiki-tutorial/spec.md) | ! 进行中 | ✓/✗ |
+| 108 | [create-rainman-translate-book-wiki](create-rainman-translate-book-wiki/spec.md) | ! 进行中 | ✓/✗ |
+| 109 | [create-zleap-workspace-first-prototype](create-zleap-workspace-first-prototype/spec.md) | ✓ 完成 | ✓/✗ |
+| 110 | [cross-cultural-first-principles-comparison](cross-cultural-first-principles-comparison/spec.md) | ? 待启动 | ✓/✗ |
+| 111 | [domestic-llm-comparison-learning-analysis](domestic-llm-comparison-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 112 | [domestic-skill-mcp-ecosystem-wiki](domestic-skill-mcp-ecosystem-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 113 | [explore-llm-token-saving-mechanisms](explore-llm-token-saving-mechanisms/spec.md) | ✓ 完成 | ✓✗✗ |
+| 114 | [first-principles-comprehensive-research](first-principles-comprehensive-research/spec.md) | ✓ 完成 | ✓✗✗ |
+| 115 | [first-principles-knowledge-system-retrospective](first-principles-knowledge-system-retrospective/spec.md) | ✓ 完成 | ✓✗✗ |
+| 116 | [first-principles-learning-mode-analysis](first-principles-learning-mode-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 117 | [hardcode-retrospective-system](hardcode-retrospective-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 118 | [harness-engineering-seven-concepts-analysis](harness-engineering-seven-concepts-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 119 | [harness-engineering-wiki](harness-engineering-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 120 | [headroom-context-compression-wiki](headroom-context-compression-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 121 | [images-first-principles-analysis](images-first-principles-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 122 | [improve-retrospective-action-items](improve-retrospective-action-items/spec.md) | ✓ 完成 | ✓/✗ |
+| 123 | [knowledge-quality-review-system](knowledge-quality-review-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 124 | [learn-trae-ai-contest-wiki](learn-trae-ai-contest-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 125 | [longcat-agent-learning-wiki](longcat-agent-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 126 | [loop-engineering-knowledge-milestone](loop-engineering-knowledge-milestone/spec.md) | ✓ 完成 | ✓✗✗ |
+| 127 | [methodology-analysis-report](methodology-analysis-report/spec.md) | ✓ 完成 | ✓/✗ |
+| 128 | [minitap-ai-wiki-update](minitap-ai-wiki-update/spec.md) | ✓ 完成 | ✓/✗ |
+| 129 | [minitap-official-docs-wiki](minitap-official-docs-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 130 | [minitest-ecosystem-deep-analysis](minitest-ecosystem-deep-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 131 | [mobile-use-deep-learning-analysis](mobile-use-deep-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 132 | [nat-penetration-tools-comparison](nat-penetration-tools-comparison/spec.md) | ✓ 完成 | ✓/✗ |
+| 133 | [octo-platform-learning-analysis](octo-platform-learning-analysis/spec.md) | ! 进行中 | ✓/✗ |
+| 134 | [open-code-review-learning-wiki](open-code-review-learning-wiki/spec.md) | ! 进行中 | ✓/✗ |
+| 135 | [oray-ai-product-matrix-analysis](oray-ai-product-matrix-analysis/spec.md) | ? 待启动 | ✓/✗ |
+| 136 | [papi-jiang-solo-ip-trend-wiki](papi-jiang-solo-ip-trend-wiki/spec.md) | ✓ 完成 | ✓✗✗ |
+| 137 | [preflight-exploration-practice](preflight-exploration-practice/spec.md) | ? 待启动 | ✓/✗ |
+| 138 | [quantdinger-learning-insights](quantdinger-learning-insights/spec.md) | ? 待启动 | ✓/✗ |
+| 139 | [retrospect-mainecoon-analysis-insights](retrospect-mainecoon-analysis-insights/spec.md) | ✓ 完成 | ✓/✗ |
+| 140 | [retrospect-trae-env-dirs](retrospect-trae-env-dirs/spec.md) | ✓ 完成 | ✓/✗ |
+| 141 | [retrospective-agents-spec-system](retrospective-agents-spec-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 142 | [retrospective-analysis-dimension-template-library](retrospective-analysis-dimension-template-library/spec.md) | ✓ 完成 | ✓/✗ |
+| 143 | [retrospective-i-have-adhd-second-round-validation](retrospective-i-have-adhd-second-round-validation/spec.md) | ✓ 完成 | ✓/✗ |
+| 144 | [retrospective-system-planning-task](retrospective-system-planning-task/spec.md) | ✓ 完成 | ✓/✗ |
+| 145 | [retrospective-zhihu-637007780-analysis](retrospective-zhihu-637007780-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 146 | [seven-concepts-methodology-integration](seven-concepts-methodology-integration/spec.md) | ✓ 完成 | ✓/✗ |
+| 147 | [seven-concepts-monkeycode-vibe-coding-wiki](seven-concepts-monkeycode-vibe-coding-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 148 | [seven-concepts-prompt-engineering-wiki](seven-concepts-prompt-engineering-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 149 | [specweave-full-lifecycle-retrospective-20260705](specweave-full-lifecycle-retrospective-20260705/spec.md) | ✓ 完成 | ✓/✗ |
+| 150 | [sunlogin-ai-developer-ecosystem-wiki](sunlogin-ai-developer-ecosystem-wiki/spec.md) | ! 进行中 | ✓/✗ |
+| 151 | [sunlogin-bootbox-analysis](sunlogin-bootbox-analysis/spec.md) | ! 进行中 | ✓/✗ |
+| 152 | [sunlogin-camera-su1-learning](sunlogin-camera-su1-learning/spec.md) | ✓ 完成 | ✓/✗ |
+| 153 | [sunlogin-mouse-bm110-mm110-analysis](sunlogin-mouse-bm110-mm110-analysis/spec.md) | ! 进行中 | ✓/✗ |
+| 154 | [sunlogin-offline-hardware-deep-learning](sunlogin-offline-hardware-deep-learning/spec.md) | ✓ 完成 | ✓/✗ |
+| 155 | [sunlogin-p4-p1pro-comparison-analysis](sunlogin-p4-p1pro-comparison-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 156 | [sunlogin-pdu-hardware-learning](sunlogin-pdu-hardware-learning/spec.md) | ✓ 完成 | ✓/✗ |
+| 157 | [sunlogin-security-product-learning](sunlogin-security-product-learning/spec.md) | ✓ 完成 | ✓/✗ |
+| 158 | [sunlogin-smart-socket-learning](sunlogin-smart-socket-learning/spec.md) | ! 进行中 | ✓/✗ |
+| 159 | [sunlogin-tuya-comparison-analysis](sunlogin-tuya-comparison-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 160 | [text-to-cad-learning-wiki](text-to-cad-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 161 | [three-ai-tools-learning-wiki](three-ai-tools-learning-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 162 | [trae-solo-meoo-contest-plan](trae-solo-meoo-contest-plan/spec.md) | ? 待启动 | ✓✗✗ |
+| 163 | [two-stage-parallel-lightweight](two-stage-parallel-lightweight/spec.md) | ? 待启动 | ✓✗✗ |
+| 164 | [update-yct-onionhead-wiki](update-yct-onionhead-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 165 | [vibe-coding-prompts-learning-analysis](vibe-coding-prompts-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 166 | [viitorvoice-tts-learning-analysis](viitorvoice-tts-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 167 | [volcengine-kickart-product-analysis](volcengine-kickart-product-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+| 168 | [web-content-analysis](web-content-analysis/spec.md) | ? 待启动 | ✓/✗ |
+| 169 | [wiki-baidu-unlimited-ocr](wiki-baidu-unlimited-ocr/spec.md) | ✓ 完成 | ✓/✗ |
+| 170 | [xmtools-comprehensive-retrospective-export](xmtools-comprehensive-retrospective-export/spec.md) | ✓ 完成 | ✓/✗ |
+| 171 | [zleap-agent-harness-learning-analysis](zleap-agent-harness-learning-analysis/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->

@@ -5,7 +5,7 @@ version: "1.0"
 
 # 百度Unlimited OCR开源深度分析：小模型逆袭、R-SWA范式突破与长程智能的未来
 
-> 本文为多维度综合分析报告，整合了元数据梳理、R-SWA技术解析、性能数据验证、技术演进脉络、人才线索考证、关键概念辨析、信息质量评估、产业深度洞察等8个子任务的分析成果（详见 [task1-metadata-structure.md](task1-metadata-structure.md)、[task2-rswa-tech-analysis.md](task2-rswa-tech-analysis.md)、[task3-performance-data.md](task3-performance-data.md)、[task4-tech-evolution.md](task4-tech-evolution.md)、[task5-author-talent-analysis.md](task5-author-talent-analysis.md)、[task6-key-concepts.md](task6-key-concepts.md)、[task7-quality-assessment.md](task7-quality-assessment.md)、[task8-industry-insights.md](task8-industry-insights.md)）。
+> 本文为多维度综合分析报告，整合了元数据梳理、R-SWA技术解析、性能数据验证、技术演进脉络、人才线索考证、关键概念辨析、信息质量评估、产业深度洞察等8个子任务的分析成果（详见 [task1-metadata-structure.md](task1-metadata-structure.md)、[task2-rswa-tech-analysis.md](task2-rswa-tech-analysis.md)、[task3-performance-data.md](task3-performance-data.md)、[task4-tech-evolution.md](task4-tech-evolution.md)、[task5-author-talent-analysis.md](task5-author-talent-analysis.md)、[task6-key-concepts.md](task6-key-concepts.md)、[task7-quality-assessment.md](task7-quality-assessment.md)、[task8-industry-insights.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-E2FXmFb/task8-industry-insights.md)）。
 
 ---
 
@@ -560,7 +560,7 @@ Unlimited OCR和R-SWA的真正价值，不在于OCR准确率提升了几个百�
 - R-SWA思路可迁移到ASR、机器翻译、Agent记忆、长视频理解等所有长序列任务——OCR只是第一站
 - 对Agent领域尤其有启发：Agent可以设计"参考信息全局可见+工作记忆滑动窗口+重要信息升级"的分层记忆系统，解决当前Agent对话越长越慢、越长越"失忆"的痛点
 
-> 产业影响与深度洞察详见 [task8-industry-insights.md](task8-industry-insights.md)。
+> 产业影响与深度洞察详见 [task8-industry-insights.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-E2FXmFb/task8-industry-insights.md)。
 
 ---
 
@@ -632,7 +632,7 @@ R-SWA只是一个开始。正如论文末尾所言，OCR只是第一站。当"�
 - [task5-author-talent-analysis.md](task5-author-talent-analysis.md) - 作者身份线索与人才流动分析
 - [task6-key-concepts.md](task6-key-concepts.md) - 关键概念辨析与知识要点提炼
 - [task7-quality-assessment.md](task7-quality-assessment.md) - 信息质量与可信度评估
-- [task8-industry-insights.md](task8-industry-insights.md) - 产业影响与深度洞察
+- [task8-industry-insights.md](../../../../docs/retrospective/archives/spec-working-notes/retrospectives-insights/analyze-wechat-article-E2FXmFb/task8-industry-insights.md) - 产业影响与深度洞察
 
 ### 相关技术背景
 - GOT-OCR2.0：端到端OCR开源标杆

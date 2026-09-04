@@ -174,3 +174,30 @@ core-foundation/
     ├── tasks.md
     └── checklist.md
 ```
+
+<!-- THEME_DASHBOARD_START -->
+
+| # | Spec 名称 | 状态 | 三件套 |
+|---|---|---|---|
+| 1 | [agent-evaluation-methodology-wiki](agent-evaluation-methodology-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 2 | [agent-interface-deep-dive](agent-interface-deep-dive/spec.md) | ✓ 完成 | ✓/✗ |
+| 3 | [build-adversarial-robust-knowledge-base](build-adversarial-robust-knowledge-base/spec.md) | ! 进行中 | ✓/✗ |
+| 4 | [create-agents-md-and-config](create-agents-md-and-config/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [create-ai-monetization-wiki](create-ai-monetization-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 6 | [create-apps-directory](create-apps-directory/spec.md) | ✓ 完成 | ✓/✗ |
+| 7 | [create-ffi-wiki-tutorial](create-ffi-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [create-first-principles-exercises](create-first-principles-exercises/spec.md) | ✓ 完成 | ✓/✗ |
+| 9 | [create-github-cli-wiki-tutorial](create-github-cli-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 10 | [create-idl-wiki-tutorial](create-idl-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 11 | [create-monetization-essence-okf-bundle-platform](create-monetization-essence-okf-bundle-platform/spec.md) | ✓ 完成 | ✓/✗ |
+| 12 | [create-sphinx-docs](create-sphinx-docs/spec.md) | ✓ 完成 | ✓/✗ |
+| 13 | [create-tech-interface-wiki-tutorial](create-tech-interface-wiki-tutorial/spec.md) | ✓ 完成 | ✓/✗ |
+| 14 | [create-worlds-collaboration-environment](create-worlds-collaboration-environment/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [establish-four-region-routing-system](establish-four-region-routing-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 16 | [first-principles-future-research](first-principles-future-research/spec.md) | ✓ 完成 | ✓/✗ |
+| 17 | [hermes-specweave-integration](hermes-specweave-integration/spec.md) | ? 待启动 | ✓/✗ |
+| 18 | [home-assistant-integration](home-assistant-integration/spec.md) | ✓ 完成 | ✓/✗ |
+| 19 | [knowledge-management-system](knowledge-management-system/spec.md) | ✓ 完成 | ✓/✗ |
+| 20 | [prompt-extraction-system](prompt-extraction-system/spec.md) | ✓ 完成 | ✓/✗ |
+
+<!-- THEME_DASHBOARD_END -->
