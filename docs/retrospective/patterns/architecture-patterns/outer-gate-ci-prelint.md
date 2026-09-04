@@ -214,6 +214,17 @@ jobs:
 **后果**：本次 awesome-okf-xs 的连续第三个坑（Run 48 `An expression was expected`，Line 141 Col 14）。**GHA expression parser 工作在 YAML 字符串层面，根本不理解 bash 注释语法**——它只做字符串级别的模式匹配，只要在 run 块里扫到 `${{` 就会尝试解析成 expression，无论你这一行前缀有没有 `#`。所以即使是在 bash `# 注释` 里写的 `${{ }}`，GHA parser 也会真实去求值；如果里面没有合法 expression 内容（空的 `}}` 截断或乱码），就会报 "An expression was expected"。IDE 的 shell 语法高亮永远不会在这里提示你有问题。
 **纠正法**：在整个 `run: |` 块内（包括注释行），把 **"GHA 表达式"这五个汉字** 当作字面量 `${{ }}` 的替代表述；如果你一定要写标记示例（比如说明文档），必须把 `${` 中间断开（`$ { {`、`\${{` 或者先在表达式外拼接），让 GHA 模式匹配器匹配不到。经验法则：**run 块内的任何位置出现 `${{`，GHA 都会解析，不区分 code / comment / heredoc**。
 
+### 反模式-6：「我用的 action 是 Docker 类型的，跟 Composite/Node 一样可以自定义 with 键吧」
+**后果**：本次 awesome-okf-xs 的连续第五个坑（Run 49 gates job L41-L45，"Unexpected input(s) 'files', 'fail-on-error', valid inputs are ['entryPoint', 'args']"）。**Docker Container Action（`runs.using: docker`）的 `with:` 块只允许 2 个合法键：`entryPoint`（覆盖容器入口点）和 `args`（传给 CLI 的参数字符串）**——它没有 `inputs:` 声明机制，任何你自定义的键（如 `files`/`fail-on-error`/`verbose` 等）GHA 都会报 WARNING，并在严格模式下直接让 setup 阶段失败。本次把 `rhysd/actionlint@v1.7.12` 当成 Composite Action 写了两个自定义键，导致 gates job 的后续 4 个 step（setup-python / install deps / UTF-8 gate / toctrees gate / bundles gate）全部被跳过，完整质量门一次都没运行，整次 run 因 setup 类 WARNING 被标记 Failure。
+**纠正法**：
+1. **三问 uses**：`uses:` 任何第三方 action 前先打开它的 `action.yml` 看 `runs.using` 字段：
+   - `using: docker` → with 块**仅**允许 `entryPoint` / `args`，想传 flag 和路径全部塞到 `args: '-flag1 -flag2 path/to/scan'` 一个字符串里
+   - `using: composite` → with 键由顶层 `inputs:` 声明决定，只能用声明过的 key 名
+   - `using: node16/node20` → with 键同样由顶层 `inputs:` 声明决定
+2. **fail-on-error 无需额外键**：Docker Action 的 CLI 默认非零退出码就会让 step 失败，这正是你想要的 "lint 出错误就拦构建"；如果想只收集不拦截，在 `args:` 里传 `-no-fail` 类参数，不要在 with 块里发明自定义键。
+3. **路径参数放到 args**：原来写 `files: .github/workflows` 等价于 `args: '<其它flag> .github/workflows'`，容器会把 args 整条字符串拼接在入口点命令后面。
+4. **pytest 静态加固**：在 `test_prelint_actions_with_keys.py` 里加一条 T 级规则：当 `uses:` 匹配 `*/actionlint@*` / 其他已知 Docker Action 名单时，白名单仅允许 `{entryPoint, args}` 两键，CI 本地拦截而不等到 push 到 GitHub 才 WARNING。
+
 ---
 
 ## 明确检验标准（做完怎么知道做对了）
