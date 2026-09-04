@@ -88,9 +88,9 @@ date: 2026-07-27
 
 | 文件路径 | 说明 |
 |----------|------|
-| [.trae/specs/blob-shape-tvm-ffi-refactor/spec.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/spec.md) | PRD需求文档 |
-| [.trae/specs/blob-shape-tvm-ffi-refactor/tasks.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/tasks.md) | 9任务分解（全部[x]完成） |
-| [.trae/specs/blob-shape-tvm-ffi-refactor/checklist.md](../../../../../.trae/specs/blob-shape-tvm-ffi-refactor/checklist.md) | 47项验证清单（全部[x]通过） |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/spec.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/spec.md) | PRD需求文档 |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/tasks.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/tasks.md) | 9任务分解（全部[x]完成） |
+| [.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/checklist.md](../../../../../.trae/specs/caffe-framework/blob-shape-tvm-ffi-refactor/checklist.md) | 47项验证清单（全部[x]通过） |
 
 ---
 

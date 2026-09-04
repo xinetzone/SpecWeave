@@ -81,9 +81,9 @@ commit: "6fb994c3"
 | [cli.py](../../../../.agents/skills/load-flexloop-skills/scripts/cli.py) | 新增 | Typer CLI入口 |
 | [conftest.py](../../../../.agents/skills/load-flexloop-skills/tests/conftest.py) | 新增 | 测试配置（解决sys.path模块名冲突） |
 | [test_skill_loader.py](../../../../.agents/skills/load-flexloop-skills/tests/test_skill_loader.py) | 新增 | 20个单元测试 |
-| [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/spec.md) | 新增 | PRD产品需求文档 |
-| [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/tasks.md) | 新增 | 实施计划（8个任务） |
-| [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/skill-auto-loader/checklist.md) | 新增 | 验证检查清单（18个检查点） |
+| [spec.md](file:///d:/spaces/SpecWeave/.trae/specs/workspace-governance/skill-auto-loader/spec.md) | 新增 | PRD产品需求文档 |
+| [tasks.md](file:///d:/spaces/SpecWeave/.trae/specs/workspace-governance/skill-auto-loader/tasks.md) | 新增 | 实施计划（8个任务） |
+| [checklist.md](file:///d:/spaces/SpecWeave/.trae/specs/workspace-governance/skill-auto-loader/checklist.md) | 新增 | 验证检查清单（18个检查点） |
 
 ---
 

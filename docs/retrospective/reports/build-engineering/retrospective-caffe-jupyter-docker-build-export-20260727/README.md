@@ -42,7 +42,7 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 - 读取路径：SpecWeave 根 AGENTS.md → projects/AGENTS.md → xuanspace/AGENTS.md → vendor/AGENTS.md → caffe/AGENTS.md
 - 内容敏感度判定：Caffe是BSD 2-Clause开源项目，属于公开内容
 - 工作模式：Spec模式（先生成PRD/tasks/checklist，审核通过后执行）
-- Spec文档目录：`.trae/specs/caffe-jupyter-docker-build/`
+- Spec文档目录：`.trae/specs/caffe-framework/caffe-jupyter-docker-build/`
 
 ### F03. 环境检查结果
 
@@ -58,9 +58,9 @@ tags: ["docker", "caffe", "multi-stage-build", "jupyter", "image-export", "wsl",
 
 ### F04. Spec规划产出
 
-- [spec.md](../../../../../.trae/specs/caffe-jupyter-docker-build/spec.md)：6个验收标准（AC-1~AC-6）
-- [tasks.md](../../../../../.trae/specs/caffe-jupyter-docker-build/tasks.md)：7个有序任务
-- [checklist.md](../../../../../.trae/specs/caffe-jupyter-docker-build/checklist.md)：6大类28个检查点
+- [spec.md](../../../../../.trae/specs/caffe-framework/caffe-jupyter-docker-build/spec.md)：6个验收标准（AC-1~AC-6）
+- [tasks.md](../../../../../.trae/specs/caffe-framework/caffe-jupyter-docker-build/tasks.md)：7个有序任务
+- [checklist.md](../../../../../.trae/specs/caffe-framework/caffe-jupyter-docker-build/checklist.md)：6大类28个检查点
 - Open Questions：3个（文件命名格式、是否删除旧镜像、是否--no-cache）
 
 ### F05. 旧容器清理操作

@@ -2,7 +2,7 @@
 type: Pattern
 id: "provenance-driven-trust"
 title: "溯源驱动信任：无人值守系统的机器可验证信任基础设施"
-source: "../../../../../.trae/specs/knowledge-consolidation/agentrys-ai-chip-design/insights.md#洞察3机器可验证溯源清单是无人值守系统的信任基础设施"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/knowledge-consolidation/agentrys-ai-chip-design/insights.md#洞察3机器可验证溯源清单是无人值守系统的信任基础设施"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/provenance-driven-trust.toml"
 maturity: "L1-draft"
 validation_count: 1

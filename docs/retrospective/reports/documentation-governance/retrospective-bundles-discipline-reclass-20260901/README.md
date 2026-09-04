@@ -6,13 +6,13 @@ tags: [retrospective, okf, awesome-okf-xs, classification, migration, milestone]
 generated: { by: "process:seven-concepts", at: "2026-09-01" }
 verified: { by: "process:seven-concepts", at: "2026-09-01" }
 status: stable
-source: "projects/awesome-okf-xs 知识包库学科分类重构任务（.trae/specs/reclassify-bundles-by-discipline）"
+source: "projects/awesome-okf-xs 知识包库学科分类重构任务（.trae/specs/workspace-governance/reclassify-bundles-by-discipline）"
 ---
 
 # awesome-okf-xs 知识包库学科分类重构里程碑复盘
 
 > 场景：重构优化。链路：I（洞察）→ F（第一性原理设计）→ A（原子化迁移）→ V（等价性验证）→ C（原子提交）。
-> 产出物关联：`.trae/specs/reclassify-bundles-by-discipline/`（spec/tasks/checklist）、子模块提交 `abff22de`/`452016f0`/`5d72953e`、主仓库指针提交 `2bee21e23`、本报告。
+> 产出物关联：`.trae/specs/workspace-governance/reclassify-bundles-by-discipline/`（spec/tasks/checklist）、子模块提交 `abff22de`/`452016f0`/`5d72953e`、主仓库指针提交 `2bee21e23`、本报告。
 
 ## 1. R 事实采集（G1 通过：无因果词、可溯源）
 

@@ -29,7 +29,7 @@ export_date: "2026-07-28"
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/spec.md) | 文章分析PRD |
-| 深度分析报告 | [analysis-report.md](../../../../../.trae/specs/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 89KB分析报告（v1.4，含V2审查建议落地状态） |
+| 深度分析报告 | [analysis-report.md](../../../archives/spec-working-notes/retrospectives-insights/analyze-i-have-adhd-article/analysis-report.md) | 89KB分析报告（v1.4，含V2审查建议落地状态） |
 | L2模式v2.0 | [action-first-output-paradigm.md](../../../patterns/methodology-patterns/ai-collaboration/action-first-output-paradigm.md) | 行动优先输出范式（含4边界场景+8破规场景+失败案例） |
 | L2模式v2.0 | [reverse-adaptation-innovation.md](../../../patterns/methodology-patterns/creative-design/reverse-adaptation-innovation.md) | 逆向适配创新法（含4失败案例+3前提+7预警信号） |
 | 提示词模板v2.0 | [action-first-output-paradigm-addendum.md](../../../../../.agents/prompts/action-first-output-paradigm-addendum.md) | 6步切换逻辑+进度梯度+高风险输出模板 |
@@ -38,7 +38,7 @@ export_date: "2026-07-28"
 
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
-| Spec定义文件 | [spec.md](../../../../../.trae/specs/i-have-adhd-wiki-tutorial/spec.md) | Wiki教程PRD |
+| Spec定义文件 | [spec.md](../../../../../.trae/specs/okf-wiki-ecosystem/i-have-adhd-wiki-tutorial/spec.md) | Wiki教程PRD |
 | Wiki教程目录 | [i-have-adhd-wiki/README.md](../../../../../projects/awesome-okf-xs/doc/bundles/jishu/ai/ai-agent/index.md) | 11章节/2982行/72KB完整中文Wiki |
 | 领域模式 | Wiki内Pattern-COG/CPA/ABT章节 | 认知原理驱动/跨平台适配/A/B测试验证3个领域模式 |
 | 委派模式增强 | [medium-task-merged-delegation-strategy.md](../../../patterns/methodology-patterns/ai-collaboration/medium-task-merged-delegation-strategy.md) | 主题簇合并委派（L2，3次验证） |
@@ -49,7 +49,7 @@ export_date: "2026-07-28"
 | 产出物 | 路径 | 说明 |
 |--------|------|------|
 | Spec定义文件 | [spec.md](../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/spec.md) | 二次验证PRD |
-| 验证报告 | [validation-report.md](../../../../../.trae/specs/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md) | 880行/7章完整验证报告 |
+| 验证报告 | [validation-report.md](../../../archives/spec-working-notes/retrospectives-insights/retrospective-i-have-adhd-second-round-validation/validation-report.md) | 880行/7章完整验证报告 |
 | 🆕L1模式 | [orchestration-execution-layering.md](../../../patterns/methodology-patterns/governance-strategy/orchestration-execution-layering.md) | 编排-执行分层法（含G4检查清单6项） |
 | 🆕L1模式 | [style-anchoring-consistency.md](../../../patterns/methodology-patterns/governance-strategy/style-anchoring-consistency.md) | 风格锚定一致性法（含同目录锚定铁律+5维checklist） |
 | 🆕L1模式 | [strong-constraint-self-check.md](../../../patterns/methodology-patterns/governance-strategy/strong-constraint-self-check.md) | 强约束自检法（含3个强制检查点CP1/CP2/CP3） |

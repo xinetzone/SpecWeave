@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "normalization-convention-duality"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察4"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察4"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

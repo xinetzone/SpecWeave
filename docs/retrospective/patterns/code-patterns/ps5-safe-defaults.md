@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "ps5-safe-defaults"
-source: "../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式4ps5-safe-defaults安全默认值防护模式"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式4ps5-safe-defaults安全默认值防护模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ps5-safe-defaults.toml"
 maturity: "L1"
 validation_count: 1
@@ -17,7 +17,7 @@ related_patterns:
   - "cross-platform-encoding-enforcement"
   - "idempotent-shell-config"
 ---
-> **提炼自**：[05-patterns.md#模式4](../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式4ps5-safe-defaults安全默认值防护模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
+> **提炼自**：[05-patterns.md#模式4](../../archives/spec-working-notes/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式4ps5-safe-defaults安全默认值防护模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
 
 # PS5安全默认值防护模式（PS5-Safe-Defaults）
 

@@ -197,8 +197,8 @@ seven-concepts-cmd 萃取出的模式应用到了 seven-concepts-cmd 自身的�
 
 ## 关联资源
 
-- 📋 **重构Spec规划** → [.trae/specs/seven-concepts-lib-refactor/spec.md](../../../../../.trae/specs/seven-concepts-lib-refactor/spec.md)
-- 📋 **重构任务清单** → [.trae/specs/seven-concepts-lib-refactor/tasks.md](../../../../../.trae/specs/seven-concepts-lib-refactor/tasks.md)
+- 📋 **重构Spec规划** → [.trae/specs/workspace-governance/seven-concepts-lib-refactor/spec.md](../../../../../.trae/specs/workspace-governance/seven-concepts-lib-refactor/spec.md)
+- 📋 **重构任务清单** → [.trae/specs/workspace-governance/seven-concepts-lib-refactor/tasks.md](../../../../../.trae/specs/workspace-governance/seven-concepts-lib-refactor/tasks.md)
 - 🧬 **三层分离模式文档** → [../../../patterns/methodology-patterns/tools-automation/three-layer-separation-progressive-migration.md](../../../patterns/methodology-patterns/tools-automation/three-layer-separation-progressive-migration.md)
 - 🔧 **重构后代码** → `lib/seven_concepts/`（6模块）+ `seven-concepts-trigger.py`（76行薄壳）
 - 🧪 **测试文件** → `tests/test_seven_concepts_lib.py`（白盒26个）+ `test-seven-concepts-trigger.py`（黑盒19个）

@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "bare-url-autolink-wrap"
-source: "../../../../../../.trae/specs/wrap-bare-urls-mermaid-wiki/spec.md"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/wrap-bare-urls-mermaid-wiki/spec.md"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/document-architecture/bare-url-autolink-wrap.toml"
 ---
 # 裸URL自动链接包裹（Bare URL Autolink Wrap）

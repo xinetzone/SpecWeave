@@ -5,7 +5,7 @@ date: 2026-08-05
 session: sc-20260805-conv-v4-milestone
 scenario: milestone-retrospective
 chain: R→I→V→E→C
-source: ".trae/specs/caffe-ffi-conv-v4-milestone/milestone_retrospective.md"
+source: ".trae/specs/caffe-framework/caffe-ffi-conv-v4-milestone/milestone_retrospective.md"
 ---
 
 # Conv v4 OpenMP并行优化里程碑复盘

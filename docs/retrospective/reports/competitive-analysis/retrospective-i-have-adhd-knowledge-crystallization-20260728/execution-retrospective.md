@@ -46,7 +46,7 @@ parent_report: ./README.md
 | 09-faq-and-resources.md | 326 | 11,503 | 十、FAQ与资源：10个FAQ+快速参考卡+参考资源 |
 | **合计** | **2,982** | **71,852** | **11个文件** |
 
-### 2.2 Spec规划文档（.trae/specs/i-have-adhd-wiki-tutorial/）
+### 2.2 Spec规划文档（.trae/specs/okf-wiki-ecosystem/i-have-adhd-wiki-tutorial/）
 
 | 文件 | 说明 |
 |------|------|

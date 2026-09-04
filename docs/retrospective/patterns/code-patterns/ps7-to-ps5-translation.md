@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "ps7-to-ps5-translation"
-source: "../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式5ps7-to-ps5-translationps7语法降级转换模式"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式5ps7-to-ps5-translationps7语法降级转换模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ps7-to-ps5-translation.toml"
 maturity: "L1"
 validation_count: 1
@@ -16,7 +16,7 @@ related_patterns:
   - "runtime-version-enforcement"
   - "bulk-replace-zero-omission-verify"
 ---
-> **提炼自**：[05-patterns.md#模式5](../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式5ps7-to-ps5-translationps7语法降级转换模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
+> **提炼自**：[05-patterns.md#模式5](../../archives/spec-working-notes/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式5ps7-to-ps5-translationps7语法降级转换模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
 
 # PS7→PS5语法降级转换模式（PS7-to-PS5-Translation）
 

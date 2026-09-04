@@ -49,9 +49,9 @@ related: [retrospective-caffe-slim-inference-notebook-20260727, dependency-shimm
 | compat.py | 31 行 | 新建 | 兼容层入口模块，`import caffe.compat` 自动调用 enable_bvlc_compat() |
 | [test_compat_basic.py](file:///d:/spaces/SpecWeave/projects/xuanspace/vendor/caffe/caffe-slim/python/caffe/test_compat_basic.py) | 691 行 | 新建 | 38个Mock单元测试（不依赖真实模型和编译后的C++扩展） |
 | test_bvlc_compat.py | 232 行 | 新建 | 12项端到端测试（基于fgvsirfeature模型，需Docker中运行） |
-| [spec.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/spec.md) | - | 新建 | PRD：功能需求、非功能需求、验收标准、不支持功能 |
-| [tasks.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/tasks.md) | - | 新建 | 7个任务分解（C++扩展→BlobProxy→blobs→forward→layers/params→加载机制→端到端验证） |
-| [checklist.md](../../../../../.trae/specs/caffe-slim-bvlc-compat/checklist.md) | - | 新建 | 6大类40+验证点，代码层面已全部通过Mock测试 |
+| [spec.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/spec.md) | - | 新建 | PRD：功能需求、非功能需求、验收标准、不支持功能 |
+| [tasks.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/tasks.md) | - | 新建 | 7个任务分解（C++扩展→BlobProxy→blobs→forward→layers/params→加载机制→端到端验证） |
+| [checklist.md](../../../../../.trae/specs/caffe-framework/caffe-slim-bvlc-compat/checklist.md) | - | 新建 | 6大类40+验证点，代码层面已全部通过Mock测试 |
 
 **总计**：新增约 1655 行代码（C++ 104 + Python 653 + 测试 923 + 文档），修改 1 个文件，新建 7 个文件。
 

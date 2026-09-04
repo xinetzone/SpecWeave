@@ -41,7 +41,7 @@ retro_type: "task"
 | `.agents/commands/adversarial-review.md` | 新建 | 283 |
 | `.meta/toml/.agents/commands/adversarial-review.toml` | 新建 | 3 |
 | `.agents/commands/README.md` | 修改 | +1 |
-| `.trae/specs/adversarial-review-knowledge-base/spec.md` | 修改 | ~3 |
+| `.trae/specs/okf-wiki-ecosystem/adversarial-review-knowledge-base/spec.md` | 修改 | ~3 |
 
 ### 1.3 关键决策
 

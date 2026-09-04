@@ -6,7 +6,7 @@ completion_date: "2026-08-24"
 type: "Report"
 description: "TVM FFI（Apache TVM 跨语言外部函数接口）200 视角深度解读项目的详细复盘，覆盖 R→I→E→C 全链路"
 status: "stable"
-source: ".trae/specs/tvm-ffi-200-perspectives/"
+source: ".trae/specs/okf-wiki-ecosystem/tvm-ffi-200-perspectives/"
 milestone-name: "TVM FFI 200 视角深度解读"
 time-range: "2026-08-23 ~ 2026-08-24"
 methodology: "七概念方法论（R→I→E→C 链路，知识沉淀+里程碑复盘场景）"
@@ -104,9 +104,9 @@ stale_after: "2027-08-24"
 | F23 | 初版链接校验脚本将代码内 `Foo[i](...)`、`operator[](type_index)`、lambda `[func](...)` 等内联代码误判为断裂链接（6 处疑似） |
 | F24 | 链接校验脚本修正为先剥离围栏代码块与内联代码跨度再解析链接 |
 | F25 | E 阶段生成过程中交叉核对 API 符号，修复 90+ 处虚构 API 引用 |
-| F26 | 验证脚本 4 个位于 `d:\AI\.trae\specs\tvm-ffi-200-perspectives\supporting-analysis\` |
+| F26 | 验证脚本 4 个位于 `d:\AI\.trae\specs/okf-wiki-ecosystem/tvm-ffi-200-perspectives\supporting-analysis\` |
 | F27 | verification-report.md 结论"V 阶段质量门 Checkpoint 89-93 全通过" |
-| F28 | 规划文件 spec.md/tasks.md/checklist.md 存放于 `.trae\specs\tvm-ffi-200-perspectives\` |
+| F28 | 规划文件 spec.md/tasks.md/checklist.md 存放于 `.trae\specs/okf-wiki-ecosystem/tvm-ffi-200-perspectives\` |
 | F29 | supporting-analysis 子目录包含 facts.md、insights.md、knowledge-map.md、verification-report.md、verify2.py |
 | F30 | 产出按"16 字节 Any""三层金字塔""DLPack 零拷贝"等架构主题组织为结构化知识体系 |
 
@@ -230,8 +230,8 @@ stale_after: "2027-08-24"
 | 交付物 | 位置 |
 |---|---|
 | 200 视角 OKF 文档（15 分类） | `projects/tvm-ffi/` |
-| 规划三件套（spec/tasks/checklist） | `.trae/specs/tvm-ffi-200-perspectives/` |
-| 源码事实库 facts.md | `.trae/specs/tvm-ffi-200-perspectives/supporting-analysis/facts.md` |
+| 规划三件套（spec/tasks/checklist） | `.trae/specs/okf-wiki-ecosystem/tvm-ffi-200-perspectives/` |
+| 源码事实库 facts.md | `.trae/specs/okf-wiki-ecosystem/tvm-ffi-200-perspectives/supporting-analysis/facts.md` |
 | 架构洞察 insights.md | `.../supporting-analysis/insights.md` |
 | 视角映射 knowledge-map.md | `.../supporting-analysis/knowledge-map.md` |
 | V 阶段验证报告 verification-report.md | `.../supporting-analysis/verification-report.md` |

@@ -2,7 +2,7 @@
 type: Pattern
 id: knowledge-dual-layer-architecture
 title: 知识沉淀「中间产物→质量门→最终产出」双层架构模式
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-1"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-1"
 domain: methodology
 layer: governance
 maturity: L1
@@ -11,7 +11,7 @@ reuse_count: 0
 documentation_level: complete
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-dual-layer-architecture.toml"
 ---
-> **提炼自**：[milestone-insights.md#洞察1](../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-insights.md#洞察-1)（I阶段洞察）→ [milestone-patterns.md#模式1](../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-patterns.md#模式-1)（E阶段模式）—— 火山引擎AgentKit里程碑复盘萃取（知识沉淀双层架构）
+> **提炼自**：[milestone-insights.md#洞察1](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-insights.md#洞察-1)（I阶段洞察）→ [milestone-patterns.md#模式1](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-patterns.md#模式-1)（E阶段模式）—— 火山引擎AgentKit里程碑复盘萃取（知识沉淀双层架构）
 
 # 知识沉淀「中间产物→质量门→最终产出」双层架构模式
 

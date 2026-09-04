@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "spec-hard-soft-ac-dual-track"
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-insights.md#洞察-2"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-insights.md#洞察-2"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-SPEC-AC-DUAL-TRACK-004-spec-hard-soft-ac-dual-track-acceptance.toml"
 maturity: "L1"
 validation_count: 1
@@ -10,7 +10,7 @@ documentation_level: "standard"
 pattern_id: "P-SPEC-AC-DUAL-TRACK-004"
 related_patterns: ["P-KNOWLEDGE-DUAL-LAYER-001"]
 ---
-> **提炼自**：[milestone-insights.md#洞察2](../../../../../.trae/specs/volcengine-agentkit-wiki/milestone-insights.md#洞察-2) —— 火山引擎AgentKit里程碑复盘I阶段提炼（Spec弹性偏差率）
+> **提炼自**：[milestone-insights.md#洞察2](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/milestone-insights.md#洞察-2) —— 火山引擎AgentKit里程碑复盘I阶段提炼（Spec弹性偏差率）
 
 # 知识类项目Spec「硬软AC双轨验收」模式
 

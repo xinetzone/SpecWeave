@@ -2,7 +2,7 @@
 type: Report
 id: "retrospective-llvm-dev-mount-permission-fix-20260702-export"
 title: "导出清单"
-source: "../../../../../../../.trae/specs/ai-website-cloner-analysis/spec.md"
+source: "../../../../../../../.trae/specs/retrospectives-insights/ai-website-cloner-analysis/spec.md"
 x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/insight-extraction/toolchain-dev/retrospective-llvm-dev-mount-permission-fix-20260702/export-suggestions.toml"
 ---
 # 导出清单

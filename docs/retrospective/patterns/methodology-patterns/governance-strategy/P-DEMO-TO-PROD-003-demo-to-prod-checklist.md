@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "demo-to-prod-checklist"
-source: "../../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-3"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-3"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/P-DEMO-TO-PROD-003-demo-to-prod-checklist.toml"
 maturity: "L1"
 validation_count: 1
@@ -10,7 +10,7 @@ documentation_level: "standard"
 pattern_id: "P-DEMO-TO-PROD-003"
 related_patterns: ["P-AGENT-SELECT-001", "P-LEGACY-AI-UPGRADE-002"]
 ---
-> **提炼自**：[patterns.md#模式3](../../../../../.trae/specs/volcengine-agentkit-wiki/patterns.md#模式-3) —— 火山引擎AgentKit E阶段萃取（Demo→生产检查清单）
+> **提炼自**：[patterns.md#模式3](../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/patterns.md#模式-3) —— 火山引擎AgentKit E阶段萃取（Demo→生产检查清单）
 
 # 智能体从Demo到生产的12项检查清单
 

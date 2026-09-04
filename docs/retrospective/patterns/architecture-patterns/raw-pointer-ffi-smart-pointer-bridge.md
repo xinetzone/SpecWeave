@@ -238,7 +238,7 @@ void QueryExecutor::Execute(const std::vector<Connection*>& pool) {
 - [blob.cpp ShareData 实现](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/blob.cpp#L143-L171)
 - [split_layer.cpp N=1 零拷贝路径](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/split_layer.cpp#L88-L111)
 - [_caffe_ffi.cc FFI 绑定](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/_caffe_ffi.cc)
-- Spec 源：[patterns.md (PAT-002)](file:///d:/spaces/SpecWeave/.trae/specs/caffe-ffi-zerocopy-phase1-retrospective/patterns.md#L60-L107)
+- Spec 源：[patterns.md (PAT-002)](file:///d:/spaces/SpecWeave/.trae/specs/retrospectives-insights/caffe-ffi-zerocopy-phase1-retrospective/patterns.md#L60-L107)
 
 > **关联模式**：
 > - [ffi-intrusive-refcount-zerocopy](../code-patterns/ffi-intrusive-refcount-zerocopy.md) — FFI 侵入式引用计数零拷贝别名模式（本模式的 API 设计配套）

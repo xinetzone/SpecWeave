@@ -1,0 +1,672 @@
+---
+source: "tasks.md#Task-1-33（全部已完成）"
+---
+
+# Caffe-FFI 已完成任务归档（Task 1-33）
+
+> 本文档由 tasks.md 拆分归档（2026-09-04，C-4 大文件治理）。原 tasks.md 现仅保留头部状态、任务索引、依赖关系图与里程碑。
+
+## [x] Task 1: 项目目录骨架与构建系统初始化
+- **Priority**: high
+- **Depends On**: None
+- **Status**: ✅ 已完成
+- **Description**:
+  - 创建 caffe-ffi 目录结构：include/caffe_ffi/, src/caffe_ffi/, python/caffe_ffi/, proto/, tests/, examples/
+  - 编写顶层 CMakeLists.txt，配置 C++17、tvm-ffi（本地开发add_subdirectory fallback，生产环境find_package）、Protobuf 7.0+、BLAS条件编译、DLL复制
+  - 编写 pyproject.toml（scikit-build-core，Python >= 3.14，protobuf >= 7.0.0，numpy >= 2.3，apache-tvm-ffi > 0.1.12）
+  - 配置 protobuf 代码生成（C++ + Python），Windows DLL 自动复制
+  - 预生成 caffe_pb2.py 提交仓库
+- **Acceptance Criteria Addressed**: AC-1, AC-6
+- **Deliverables**: CMakeLists.txt, pyproject.toml
+- **Post-optimization notes**: CMake已原子化为9个模块(cmake/*.cmake)，默认find_package(tvm_ffi CONFIG REQUIRED)
+
+## [x] Task 2: Proto 定义与代码生成集成
+- **Priority**: high
+- **Depends On**: Task 1
+- **Status**: ✅ 已完成
+- **Description**:
+  - 复用 caffe-slim 精简版 caffe.proto（保留所有25个Layer所需的Parameter消息，新增Crop/Deconv/LRN/Slice/Split参数）
+  - CMake protoc 自定义命令生成 .pb.cc/.pb.h 和 caffe_pb2.py
+  - 生成目录 build/caffe_proto_gen/，Python 文件复制到 python/caffe_ffi/
+  - 预生成 caffe_pb2.py 提交仓库，开箱即用
+- **Acceptance Criteria Addressed**: AC-1, AC-6
+- **Deliverables**: caffe.proto, caffe_pb2.py
+
+## [x] Task 3: 核心类型定义与 TVM FFI 对象系统集成（双类模式+COW）
+- **Priority**: high
+- **Depends On**: Task 1
+- **Status**: ✅ 已完成
+- **Description**:
+  - common.hpp：typedef（BlobArray/LayerArray）、using namespace tvm::ffi仅在caffe_ffi命名空间内
+  - fill.hpp：caffe_set_fp32/caffe_copy_fp32/caffe_cpu_axpby_fp32 纯 C++ 实现
+  - log.hpp：三层日志架构C++核心层（RAII Logger + 编译期门控 + 6级日志 + 组件标签）+ [ACTIVATION-PERF] Backward性能日志
+  - math_utils.hpp：CPU BLAS条件编译（有BLAS用cblas，无BLAS纯C++ fallback）
+  - perf_monitor.hpp：性能监控基础设施
+  - blob.hpp/cpp：**BlobObj+Blob双类模式**，Tensor(DLPack)存储data/diff，**COW零拷贝共享机制**，CPUMemAlloc，data_tensor()/diff_tensor()/mutable_*()，Reshape/SetShapeOnly/FromProto/ToProto/Update/ShareData/ShareDiff/Unshare/IsShared/RefCount，完整生命周期日志
+  - layer.hpp/cpp：**LayerObj+Layer双类模式**，NVI接口（SetUp→LayerSetUp→Reshape→Forward→Backward），Array<Blob> blobs_容器，name()方法
+  - net.hpp/cpp：**NetObj+Net双类模式**，Map<String,int64_t>名称索引，Array<Layer>/Array<Blob>容器，CopyTrainedLayersFrom权重加载，InsertSplits自动图变换，Forward/Backward顺序/逆序执行
+  - layer_factory.hpp/cpp：LayerRegistry工厂，REGISTER_LAYER_CLASS宏，Windows DLL单例修复
+  - _caffe_ffi.cc：反射系统注册+COW/内存/Backward相关FFI函数导出
+- **Acceptance Criteria Addressed**: AC-2, AC-8, AC-12, AC-24, AC-29
+- **Deliverables**: blob.hpp/cpp, layer.hpp/cpp, net.hpp/cpp, log.hpp, perf_monitor.hpp, common.hpp, fill.hpp, math_utils.hpp, layer_factory.hpp, _caffe_ffi.cc
+
+## [x] Task 4: Layer 基类与注册工厂
+- **Priority**: high
+- **Depends On**: Task 3
+- **Status**: ✅ 已完成
+- **Description**:
+  - LayerObj继承Object，TVM_FFI_DECLARE_OBJECT_INFO（_type_child_slots=25，支持25个子类）
+  - Layer继承ObjectRef，TVM_FFI_DEFINE_OBJECT_REF_METHODS
+  - LayerRegistry工厂（std::unordered_map），REGISTER_LAYER_CLASS宏通过TVM_FFI_STATIC_INIT_BLOCK注册
+  - Layer使用caffe::LayerParameter protobuf配置
+  - param.hpp/param.cpp：LayerParameter处理
+  - 全部25个Layer子类正确继承LayerObj，均添加三层日志
+- **Acceptance Criteria Addressed**: AC-3, AC-7
+- **Deliverables**: layer.hpp, layer_factory.hpp
+
+## [x] Task 5: Net 计算图实现（双类模式+InsertSplits+Backward）
+- **Priority**: high
+- **Depends On**: Task 4
+- **Status**: ✅ 已完成
+- **Description**:
+  - NetObj+Net双类模式
+  - 内部容器统一为TVM FFI类型：layers_(Array<Layer>)、blobs_(Array<Blob>)、blobs_names_index_(Map<String,int64_t>)
+  - DAG拓扑构建：AppendTop/AppendBottom管理available_blobs和blob_back_pointer
+  - **InsertSplits自动图变换Pass**：多消费方Blob自动插入Split层，命名与原生Caffe对齐
+  - 顺序Forward执行：reshape→Forward_cpu→loss计算
+  - **逆序Backward执行**：Backward_cpu逆序传播梯度
+  - blobs_array/layers_array/input_blobs_array/output_blobs_array返回Array FFI桥接
+  - blob_by_name/layer_by_name/has_blob/has_layer查询接口
+  - CopyTrainedLayersFrom：按层名匹配加载blobs权重
+  - ShareData自动共享机制
+- **Acceptance Criteria Addressed**: AC-4, AC-8, AC-25, AC-26
+- **Deliverables**: net.hpp, net.cpp
+
+## [x] Task 6: 第一批基础 Layer（Input/ReLU/InnerProduct/Softmax/Flatten）
+- **Priority**: high
+- **Depends On**: Task 4
+- **Status**: ✅ 已完成
+- **Description**:
+  - InputLayer：设置输入Blob形状，支持多top、多shape
+  - ReLULayer：max(0,x)激活，支持negative_slope和in-place，Backward实现+C¹拐点防护
+  - InnerProductLayer：全连接层，bias_term/transpose/axis参数，Forward+Backward（梯度解析验证通过，23个测试）
+  - SoftmaxLayer：softmax归一化
+  - FlattenLayer：展平张量（axis/end_axis参数）
+- **Acceptance Criteria Addressed**: AC-7a, AC-26
+- **Deliverables**: input_layer.cpp, relu_layer.cpp, inner_product_layer.cpp, softmax_layer.cpp, flatten_layer.cpp
+
+## [x] Task 7: 第二批计算密集 Layer（Convolution/Pooling/BatchNorm/Scale/Bias/Accuracy/SoftmaxWithLoss）
+- **Priority**: high
+- **Depends On**: Task 15 (BLAS 集成)
+- **Status**: ✅ 已完成（Forward已验证；Backward待完整数值验证）
+- **Description**:
+  - BLAS条件编译：caffe_cpu_gemm/cblas_sgemm、caffe_cpu_gemv
+  - im2col/col2im float版本已实现
+  - ConvolutionLayer：im2col + gemm卷积，Forward+Backward代码已有
+  - PoolingLayer：Max和Average池化，Forward+Backward代码已有
+  - BatchNormLayer：均值/方差归一化，Forward+Backward实现+测试
+  - ScaleLayer：scale + bias，Forward+Backward代码已有
+  - BiasLayer：广播偏置加法
+  - SoftmaxWithLossLayer：推理模式前向+Backward测试完成
+  - AccuracyLayer：top-k精度计算
+- **Acceptance Criteria Addressed**: AC-7b, AC-26
+- **Deliverables**: conv_layer.cpp, pooling_layer.cpp, batch_norm_layer.cpp, scale_layer.cpp, bias_layer.cpp, accuracy_layer.cpp, softmax_loss_layer.cpp
+
+## [x] Task 8: 第三批常用 Layer（激活/拼接/形状变换）
+- **Priority**: medium
+- **Depends On**: Task 6
+- **Status**: ✅ 已完成
+- **Description**:
+  - SigmoidLayer：1/(1+exp(-x))，Forward+Backward+C¹饱和精度修复
+  - TanHLayer：tanh激活，Forward+Backward
+  - PReLULayer：参数化ReLU，Forward+Backward+C¹拐点防护
+  - ELULayer：指数线性单元，Forward+Backward+C¹拐点防护+稳定性专项测试
+  - DropoutLayer：推理模式恒等映射
+  - ConcatLayer：沿指定维度拼接
+  - EltwiseLayer：逐元素操作（PROD/SUM/MAX + coeff）
+  - ReshapeLayer：形状变换
+- **Acceptance Criteria Addressed**: AC-7c, AC-26, AC-27
+- **Deliverables**: sigmoid_layer.cpp, tanh_layer.cpp, prelu_layer.cpp, elu_layer.cpp, dropout_layer.cpp, concat_layer.cpp, eltwise_layer.cpp, reshape_layer.cpp
+
+## [x] Task 8b: 第四批扩展 Layer（Crop/Deconv/LRN/Slice/Split）
+- **Priority**: medium
+- **Depends On**: Task 7, Task 8
+- **Status**: ✅ 已完成（v1.2.0/M8）
+- **Description**:
+  - CropLayer：裁剪层（Forward+Backward）
+  - DeconvolutionLayer：反卷积层（Forward+Backward）
+  - LRNLayer：局部响应归一化（Forward+Backward）
+  - SliceLayer：切片层（Forward+Backward）
+  - SplitLayer：拆分层（Forward+Backward，COW ShareData零拷贝共享）
+  - 所有层均添加三层日志
+  - C++测试覆盖DeconvLayer
+- **Acceptance Criteria Addressed**: AC-7d, AC-24, AC-26
+- **Deliverables**: crop_layer.cpp, deconv_layer.cpp, lrn_layer.cpp, slice_layer.cpp, split_layer.cpp
+
+## [x] Task 9: TVM FFI Python 绑定与 numpy 互操作（@register_object+COW感知）
+- **Priority**: high
+- **Depends On**: Task 5, Task 6
+- **Status**: ✅ 已完成
+- **Description**:
+  - _core.py：@register_object装饰器定义Blob/Layer/Net类，COW感知mutable_*方法，backward()方法
+  - blob.py/layer.py/net.py：简化重新导出
+  - 利用DLPack实现numpy零拷贝互操作（from_dlpack/to_dlpack）
+  - COW：mutable_data()/mutable_diff()触发自动COW克隆
+  - caffe_ffi.tools.memory：BlobRef/tracked_blob/blob_snapshot/mem_check内存追踪工具
+- **Acceptance Criteria Addressed**: AC-5, AC-8, AC-24
+- **Deliverables**: _caffe_ffi.cc, _ffi_api.py, _core.py, blob.py, layer.py, net.py, io.py, classifier.py, tools/memory.py
+
+## [x] Task 10: caffemodel 权重加载与端到端验证
+- **Priority**: high
+- **Depends On**: Task 9
+- **Status**: ✅ 已完成（Forward；训练端到端待完成）
+- **Description**:
+  - prototxt文本解析、caffemodel二进制加载
+  - Net::CopyTrainedLayersFrom：按层名称匹配加载blobs权重
+  - Python net.copy_from()：FFI模式调用C++
+- **Acceptance Criteria Addressed**: AC-4
+- **Deliverables**: 更新的net.hpp, net.cpp, net.py, blob.cpp
+
+## [x] Task 11: Python 测试框架与测试套件（含Backward+性能优化）
+- **Priority**: high
+- **Depends On**: Task 9
+- **Status**: ✅ 已完成（561/562 passed；测试基础设施16.2x加速）
+- **Description**:
+  - conftest.py：require_cpp_extension marker、fixtures、内存泄漏检测、**分层GC策略(quick/full/off)**
+  - test_blob.py：Blob单元测试
+  - test_layers.py：Layer Forward单元测试
+  - test_net.py：Net单元测试
+  - test_cow.py：COW机制21个测试
+  - test_insert_splits.py：InsertSplits 18个边界测试
+  - test_inner_product_backward.py：InnerProduct Backward 23个测试（解析梯度+数值检查）
+  - test_batch_norm_backward.py：BatchNorm Backward测试
+  - test_activation_backward.py：激活函数Backward测试（C¹拐点防护）
+  - test_elu_kink_stability.py：ELU拐点稳定性专项测试
+  - test_complex_topologies.py/test_split_topologies.py：复杂拓扑测试
+  - test_p3a_conv_pool_bn.py/test_p3b_eltwise_scale.py/test_p3c_activations_ip.py/test_p3c_transformer.py/test_p3d_slice_crop_deconv_lrn.py：P3阶段测试套件
+  - test_phase3_*.py：Phase 3特性测试
+  - test_extreme_boundaries.py/test_extreme_inputs.py：边界情况测试
+  - **测试基础设施性能优化**：分层GC、CSV 20行批量flush、perf_trace采样调整、C++日志抑制 — P3-B 134s→8.27s（16.2x）
+- **Acceptance Criteria Addressed**: AC-7, AC-10, AC-27, AC-31
+- **Test Results**: Docker Linux 561/562 passed (1 skipped), 0 failures
+
+## [x] Task 12: C++ 单元测试框架
+- **Priority**: medium
+- **Depends On**: Task 7
+- **Status**: ✅ 已完成（扩展覆盖多个模块）
+- **Description**:
+  - header-only轻量C++测试框架（test_harness.hpp），高精度耗时统计、Per-suite汇总、Top 5 slowest报告
+  - test_blob.cpp/test_blob_zerocopy.cpp：Blob测试+零拷贝测试
+  - test_net.cpp：Net测试
+  - test_neuron_layers.cpp：神经元层测试
+  - test_insert_splits.cpp：InsertSplits测试
+  - test_deconv_layer.cpp：反卷积层测试
+  - test_objectptr_migration.cpp：ObjectPtr迁移测试
+  - test_symbol_export.cpp：符号导出测试
+  - CMake配置caffe_ffi_tests可执行目标
+- **Acceptance Criteria Addressed**: AC-11
+- **Deliverables**: test_harness.hpp + 8个测试文件
+
+## [x] Task 13: Conda 环境配置完善
+- **Priority**: medium
+- **Depends On**: Task 8
+- **Status**: ✅ 已完成
+- **Description**:
+  - environment.yml：Python 3.14、cmake、ninja、protobuf、libopenblas、pytest、ruff、pip依赖
+  - conda_build.bat/sh：三阶段构建脚本
+  - Docker环境作为黄金标准验证环境
+- **Acceptance Criteria Addressed**: AC-15
+- **Deliverables**: environment.yml, conda_build.bat, conda_build.sh
+
+## [x] Task 14: 基础文档与使用说明
+- **Priority**: medium
+- **Depends On**: Task 9
+- **Status**: ✅ 已完成（大量扩展）
+- **Description**:
+  - README.md：项目介绍、Docker快速开始、本地安装、Windows开发指南、构建失败L0→L1→L2分层排查
+  - docs/performance/：P0/P1/P2B/Phase2性能报告
+  - docs/design/：COW设计、InsertSplits算法、SetShapeOnly API、零拷贝模式萃取
+  - docs/plans/：激活性能监控规格、Backward日志计划、InsertSplits图变换
+  - docs/retrospectives/：6份回溯报告（COW迁移、构建修复、SoftmaxLoss Backward、Split COW Phase3、零拷贝Phase1、内存日志）
+  - docs/setup/：构建验证报告、跨机器构建设置、Protobuf兼容、WSL2设置
+  - docs/summaries/：构建修复总结、产品简报、任务执行总结、团队分享
+  - docs/testing/：TESTING_GUIDELINES.md测试指南
+  - docs/checklists/：COW边界清单、零拷贝重构清单、零拷贝入门清单
+  - test-infra-performance-optimization.md：测试基础设施性能优化最佳实践（已入知识库）
+- **Acceptance Criteria Addressed**: AC-9
+- **Deliverables**: README.md + 20+份技术文档
+
+## [x] Task 15: BLAS 集成与性能优化
+- **Priority**: high
+- **Depends On**: None
+- **Status**: ✅ 已完成（条件编译+im2col/col2im；BLAS路径性能待基准）
+- **Description**:
+  - math_utils.hpp：BLAS条件编译（CAFFE_USE_BLAS宏）
+  - caffe_cpu_gemm/gemv/strided_dot/axpy/scal/axpby已实现
+  - im2col_cpu/col2im_cpu float版本已实现
+  - CMakeLists.txt：find_package(BLAS)逻辑，DetectBLAS.cmake/DetectOpenBLAS.cmake模块
+- **Acceptance Criteria Addressed**: NFR-1, AC-13
+- **Remaining**: BLAS路径性能基准对比（需完整BLAS环境）
+
+## [x] Task 16: tvm-ffi 依赖方式迁移（add_subdirectory → find_package）
+- **Priority**: medium
+- **Depends On**: None
+- **Status**: ✅ 已完成
+- **Description**:
+  - Dependencies.cmake默认find_package(tvm_ffi CONFIG REQUIRED)，CAFFE_FFI_TVM_FFI_DIR选项指定本地路径
+  - tvm_ffi_configure_target()调用
+  - 禁止使用Find<Name>.cmake命名（使用Detect<Name>.cmake）
+- **Acceptance Criteria Addressed**: AC-12
+
+## [x] Task 17: 内存管理与COW机制（M7）
+- **Priority**: high
+- **Depends On**: Task 3, Task 11
+- **Status**: ✅ 已完成（v1.1.0, 2026-07-30）
+- **Description**:
+  - COW核心API：ShareData/ShareDiff/UnshareData/UnshareDiff/IsDataShared/IsDiffShared/DataRefCount/DiffRefCount
+  - mutable_data_tensor()/mutable_diff_tensor()：写时自动COW克隆
+  - data_shared_/diff_shared_标志位精确追踪共享状态
+  - CAFFE_FFI_ENABLE_COW/CAFFE_FFI_ENABLE_COW_PHASE3环境变量
+  - Reshape() COW失效修复（仅shape变化时清除共享标记）
+  - _tensor_to_numpy引用循环泄漏修复（_blob_ref挂载到numpy ctypes数组）
+  - 内存生命周期追踪工具：caffe_ffi.tools.memory（BlobRef/tracked_blob/blob_snapshot/mem_check）
+  - 内存压力测试：500次create/fill/destroy循环零泄漏
+  - 21个COW测试用例（API/拓扑/snapshot/refcount/forward场景）
+- **Acceptance Criteria Addressed**: AC-24
+- **Test Results**: 21/21 COW tests passed, 500-cycle stress test zero leak
+
+## [x] Task 17b: ASan内存管理验证
+- **Priority**: medium
+- **Depends On**: Task 17
+- **Status**: ✅ 已完成（2026-08-04）
+- **Description**:
+  - total_allocated_bytes()/live_blob_count()内存计数器已实现
+  - 新增 `CAFFE_FFI_ENABLE_ASAN` CMake 选项（默认 OFF）与 GCC/Clang/MSVC 编译/链接标志（`-fsanitize=address -fno-omit-frame-pointer`）
+  - 新增 ASan 演示用例：`examples/asan_demo.cpp`（leak_demo/heap_overflow_demo）、`tests/cpp/test_asan_demo.cpp`（受宏守卫）
+  - 新增 `docs/setup/ASAN_REPORT_READING_GUIDE.md` 报告解读指南
+  - 使用 AddressSanitizer 编译运行测试，验证 ObjectPtr 引用计数在 Net 销毁时正确释放、COW 引用计数正确性
+- **Acceptance Criteria Addressed**: AC-14
+- **Test Results**: ASan 构建验证 1647 passed / 1 skipped / 0 ASan 内存安全错误；内存泄漏专项 test_memory_leak.py 16 passed（零泄漏）；COW 21 passed；非 ASan 默认构建回归 1647 passed / 1 skipped
+- **Report**: ASan 完整验证报告已归档至 [ASAN_VERIFICATION_REPORT_20260804.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/setup/ASAN_VERIFICATION_REPORT_20260804.md)；in-place 内存安全规范见 [INPLACE_MEMORY_SAFETY_STANDARD.md](../../../../../../projects/xuanspace/libs/caffe-ffi/docs/design/INPLACE_MEMORY_SAFETY_STANDARD.md)
+- **Notes**:
+  - ASan 构建需用 `-O1`（ASan 推荐优化级别）并清空 conda 默认 CFLAGS/CXXFLAGS，规避 GNU ld 在 `-O3+ASan+--gc-sections` 下的 `bad reloc symbol index` 链接 bug（与代码无关）
+  - Python 解释器退出时其分配器缓存会触发 ASan 泄漏误报，故 `ASAN_OPTIONS=detect_leaks=0`，泄漏检测由项目 `total_allocated_bytes()` 计数器承担；ASan 核心价值是检测内存安全错误（溢出/UAF/双重释放）
+  - **发现并修复真实堆越界读**：`test_inplace_chain_forward` 中 in-place InnerProduct（`ip3` 层 num_output 4→2 改变尺寸）在 `InnerProductLayer::Forward_cpu` 触发 heap-buffer-overflow——in-place Reshape 截断共享缓冲区后按旧尺寸读取数据。根因修复：`InnerProductLayer::Reshape` 增加 in-place 安全守卫，当 bottom==top 且输出 count≠输入 count 时抛错拒绝；同步修正测试 prototxt（ip3 改为非 in-place）并新增负向测试 `test_inplace_inner_product_shape_change_rejected` 锁定守卫
+
+## [x] Task 18: M6-独立项目萃取迁移（vendor→libs）
+- **Priority**: high
+- **Depends On**: Task 12, Task 16
+- **Status**: ✅ 已完成 (2026-07-30)
+- **Description**:
+  - 完整迁移vendor/caffe/caffe-ffi到projects/xuanspace/libs/caffe-ffi
+  - 标准项目结构对齐libs/npu-ffi
+  - CMake原子化重构（10个模块化.cmake文件）
+  - CMakePresets.json、scripts/dev.sh/dev.ps1、conda.recipe/
+  - AGENTS.md、LICENSE(BSD-2-Clause)、CHANGELOG.md
+- **Acceptance Criteria Addressed**: AC-17
+- **Post-optimization notes**: 2026-08-04 在 WSL docker 镜像（caffe-ffi-jupyter，conda env caffe-ffi，Python 3.14.6，cmake 4.4.1/ninja 1.13.2/gcc 14.3.0）下验证 CMake原子化重构构建通过：10个模块化 cmake 文件齐全，scikit-build-core 构建 `_caffe_ffi.so` 成功，`import caffe_ffi` 正常（version 0.1.0）
+  - **完整 P3 回归验证**（2026-08-04 10:20）：COW + Phase3 宏启用（`CAFFE_FFI_ENABLE_COW=1 CAFFE_FFI_ENABLE_COW_PHASE3=1`）下运行 `pytest tests/python -q`，**1646 passed, 1 skipped, 0 failures（10.52s）**，确认 CMake 重构后所有 P3 用例在 WSL 环境通过
+  - **关键步骤**：① 验证 COW_PHASE3 宏已编译进 `_caffe_ffi.so`（`strings` 检查 `lazy_reshape=` 符号）；② 修复 editable install 路径下 stale `.so` 问题——将 `build/python/caffe_ffi/_caffe_ffi.so` 复制到源码树 `python/caffe_ffi/`，解决加载旧库（缺 COW_PHASE3 符号）导致 lazy allocation 测试失败；③ 确认 lazy allocation 触发（N≥16 时 Split 层使用 `SetShapeOnly`，`test_n16_boundary`/`test_split_n64_lazy_reshape`/`test_large_n_triggers_lazy_allocation` 通过）
+  - **注意**：`import caffe_ffi._caffe_ffi`（显式子模块导入）会触发 protobuf descriptor 重复注册崩溃（`File already exists in database: caffe/proto/caffe.proto`），回归脚本须避免该诊断用法
+
+## [x] Task 19: M6-Docker开发环境创建（apps/caffe-ffi-jupyter）
+- **Priority**: high
+- **Depends On**: Task 18
+- **Status**: ✅ 已完成
+- **Description**:
+  - apps/caffe-ffi-jupyter基于jupyter-ssh-base，双阶段builder+runtime
+  - SSH+Jupyter双服务保留
+  - RPATH+ldconfig+LD_LIBRARY_PATH三重共享库路径保障
+  - scripts/build.sh（支持--cn国内源）、docker-compose.yml、README.md
+- **Acceptance Criteria Addressed**: AC-18
+
+## [x] Task 20: M6-工程化工具链
+- **Priority**: high
+- **Depends On**: Task 19
+- **Status**: ✅ 已完成
+- **Description**:
+  - 统一结构化日志库（Bash+PowerShell双版本）
+  - WSL一键部署脚本wsl-deploy.sh/deploy.ps1
+  - 环境诊断脚本diagnose.sh/diagnose.ps1
+  - WSL-DEPLOY-GUIDE.md部署指南
+  - 跨项目可复用模式沉淀
+- **Acceptance Criteria Addressed**: AC-18
+
+## [x] Task 21: M6-测试脚本增强与Docker环境验证
+- **Priority**: high
+- **Depends On**: Task 19, Task 20
+- **Status**: ✅ 已完成
+- **Description**:
+  - C++测试框架增强：高精度耗时统计、Per-suite汇总、Top 5 slowest
+  - Python TimingTestResult/TimingTextTestRunner耗时统计
+  - test-cpp-tests.sh集成C++/Python测试
+  - CAFFE_FFI_DISABLE_BACKTRACE环境变量
+  - Docker Linux Python 3.14.6验证：C++40/40+Python65/65通过（当时数据；现已扩展到561/562）
+- **Acceptance Criteria Addressed**: AC-19
+
+## [x] Task 22: M8-InsertSplits自动图变换（v1.2.0）
+- **Priority**: high
+- **Depends On**: Task 5
+- **Status**: ✅ 已完成 (2026-07-31)
+- **Description**:
+  - InsertSplits Pass实现：多消费方Blob自动插入Split层
+  - 命名约定与原生Caffe完全对齐（split named after last producer）
+  - 18个边界情况测试（零消费死端、单消费不拆分、in-place ReLU多消费、级联拆分、幂等性、Split→Concat→Split Inception嵌套、多外部输入顺序、空网络、3+消费者、loss_weight隐式消费、混合Input+param.input()）
+  - 外部输入split顺序修复：先收集所有外部输入split，在position 0批量插入
+  - viz_insert_splits.py：DAG仿真+可视化+--verify交叉验证（零依赖Python参考实现）
+  - tests/protos/：9个真实网络拓扑fixture（mlp_basic/mlp_branch/triple_inplace/cascading_splits/deep_supervision/multi_head/multi_input_splits/inception_like/resnet_skip）
+  - Pass 2b详细日志（外部输入split移动前后层顺序）
+  - 文档：INSERT_SPLITS_GRAPH_TRANSFORM.md算法参考（passes/命名/边界/调试）
+- **Acceptance Criteria Addressed**: AC-25
+- **Test Results**: 18/18 edge case tests passed, 9 fixture networks verified, DAG simulation cross-validated
+
+## [x] Task 23: M9-C¹拐点防护与数值稳定性
+- **Priority**: high
+- **Depends On**: Task 8
+- **Status**: ✅ 已完成
+- **Description**:
+  - avoid_c1_discontinuity helper函数：将|x-kink|<margin*h的点推离拐点margin*h距离
+  - 支持多拐点、幂等安全
+  - CI静态检查脚本check_c1_kink_protection.py：正则检测ELU(α≠1)/PReLU/LeakyReLU(negative_slope>0)三类C¹不连续激活
+  - 正则修复：`(?<![a-zA-Z0-9])`替代`\b`以支持下划线前缀辅助函数
+  - 检测要求：数值梯度测试必须调用avoid_c1_discontinuity或添加`# c1-kink-ok`豁免注释
+  - ELU拐点稳定性专项测试test_elu_kink_stability.py
+  - Sigmoid饱和精度修复：subnormal处理（sigmoid(-88)≈6e-39非精确0、x≥17精确1.0）、NaN/Inf防护
+  - 饱和区精确相等断言模式（float32-saturation-exact-equality）
+  - ULP饱和阈值表：tanh|x|≥9.010914、sigmoid正饱和x≥16.635532、负饱和x≤-88.72284
+  - piecewise-c1-kink-numerical-gradient模式沉淀：类型A(C¹连续C²不连续)rtol=5e-3，类型B(C¹不连续)必须推离拐点
+- **Acceptance Criteria Addressed**: AC-27, NFR-11
+- **Deliverables**: avoid_c1_discontinuity helper, check_c1_kink_protection.py, test_elu_kink_stability.py
+
+## [x] Task 24: M9-GitHub Actions CI流水线
+- **Priority**: high
+- **Depends On**: Task 12, Task 23
+- **Status**: ✅ 已完成
+- **Description**:
+  - 三平台矩阵：Linux(Ubuntu)/macOS/Windows
+  - 双构建类型：Release/Debug
+  - C++测试(Linux only)：ctest执行
+  - Python全量测试：pytest tests/python/
+  - 激活Backward专项测试：test_activation_backward.py
+  - [ACTIVATION-PERF]日志验证（Debug build only）：验证ReLU/TanH/ELU/Sigmoid的diff_in/diff_out/time结构化输出
+  - wheel构建与上传（Linux Release）
+  - ruff lint + format检查
+  - C¹拐点防护静态检查
+  - InsertSplits DAG仿真交叉验证（built-in cases + real-network fixtures，零依赖运行在build前）
+  - ccache编译加速（Linux/macOS）
+  - CAFFE_USE_BLAS=OFF（纯C++ fallback，避免OpenBLAS依赖）
+  - KMP_DUPLICATE_LIB_OK=TRUE（Windows OpenMP兼容）
+- **Acceptance Criteria Addressed**: AC-28, NFR-10
+- **Deliverables**: .github/workflows/ci.yml
+
+## [x] Task 25: M9-测试基础设施性能优化
+- **Priority**: medium
+- **Depends On**: Task 11
+- **Status**: ✅ 已完成（P3-B 134s→8.27s，16.2x加速）
+- **Description**:
+  - **分层GC策略**：quick/full/off三档，默认quick仅gc.collect(0)，避免3轮full gen0+1+2（~150ms/次）
+  - **perf_trace优化**：采样间隔调整、RSS内存采样线程可选、减少GC调用频率
+  - **CSV缓冲**：20行批量flush，减少I/O syscall
+  - **C++日志抑制**：Release模式下InsertSplits等冗余日志抑制
+  - **性能根因发现**：微基准测试揭示瓶颈不在业务逻辑（Net创建0.5ms），而在观测基础设施（GC/线程/IO）
+  - 最佳实践文档test-infra-performance-optimization.md入知识库
+- **Acceptance Criteria Addressed**: AC-31, NFR-1
+- **Deliverables**: 优化后的conftest.py、test-infra-performance-optimization.md
+- **Performance Results**: P3-B test suite 134s → 8.27s (16.2x speedup)
+
+## [x] Task 26: M9-SetShapeOnly API与perf_monitor
+- **Priority**: medium
+- **Depends On**: Task 3
+- **Status**: ✅ 已完成
+- **Description**:
+  - SetShapeOnly API：零拷贝形状修改（不重新分配内存），适用于shape已知不变仅调整元数据的场景
+  - test_ffi_set_shape_only.py：SetShapeOnly测试
+  - test_phase3_set_shape_only.py：Phase 3 SetShapeOnly验证
+  - perf_monitor.hpp：性能监控基础设施
+  - SETSHAPEONLY_API_DESIGN.md设计文档
+- **Acceptance Criteria Addressed**: AC-29, AC-30
+- **Deliverables**: SetShapeOnly API, perf_monitor.hpp, SETSHAPEONLY_API_DESIGN.md
+
+## [x] Task 27: M9-numpy参考实现
+- **Priority**: medium
+- **Depends On**: Task 6, Task 7
+- **Status**: ✅ 已完成
+- **Description**:
+  - _numpy_bn_reference.py：BatchNorm numpy参考实现（用于Backward梯度验证）
+  - _numpy_rnn_reference.py：RNN/LSTM numpy前向参考实现（rnn_forward/lstm_forward/权重打包解包工具函数），8个自测试通过
+  - caffe_test_helpers.py：测试辅助函数
+- **Acceptance Criteria Addressed**: AC-26
+- **Deliverables**: _numpy_bn_reference.py, _numpy_rnn_reference.py, caffe_test_helpers.py
+
+## [x] Task 28: M9-Backward梯度完整验证（P3核心）
+- **Priority**: high
+- **Depends On**: Task 5, Task 6, Task 7, Task 8, Task 8b, Task 23, Task 27
+- **Status**: ✅ 已完成（2026-08-04，19类层892个测试通过）
+- **Description**:
+  - P0已完成：激活函数(ReLU/Sigmoid/TanH/PReLU/ELU)梯度+C¹拐点防护、InnerProduct梯度解析验证(23测试)、BatchNorm梯度测试、SoftmaxWithLoss梯度测试
+  - P0已完成：Convolution Backward、Pooling Backward（数值验证完成）
+  - P1已完成：Split Backward、Slice/Crop/Deconv/LRN/Scale/Bias Backward（完整验证）
+  - P2已完成：Concat/Eltwise/Reshape/Flatten Backward（完整验证）
+  - numpy参考对比：中心有限差分+解析梯度验证
+  - [ACTIVATION-PERF]日志结构验证
+  - 31个失败测试修复（28个Blob对象协议 + 3个构建缺宏）
+- **Acceptance Criteria Addressed**: AC-26
+- **Deliverables**: test_*_backward.py系列测试文件（19个）
+- **Test Results**: 19类层Backward全部验证通过，892个测试，0失败
+
+## [x] Task 29: M9-端到端训练最小可用
+- **Priority**: high
+- **Depends On**: Task 28
+- **Status**: ✅ 已完成（2026-08-04，LeNet on MNIST test acc 97.95%）
+- **Description**:
+  - 简单SGD更新（权重data -= lr * diff）
+  - LeNet/MNIST端到端训练验证（examples/lenet_mnist_train.py）
+  - 训练精度目标：>95% → 实测97.95%
+  - 可选：Solver框架基础接口（P4规划）
+- **Acceptance Criteria Addressed**: AC-33, AC-16
+- **Test Results**: LeNet on MNIST test acc 97.95%，loss 2.32→0.04（-98.3%），无NaN
+
+## [x] Task 30: RNN/LSTM层实现（分阶段：Phase 1 纯Python前向已完成）
+- **Priority**: low
+- **Depends On**: Task 28
+- **Status**: ✅ Phase 1（纯Python前向推理）与 Phase 2（C++实现+Backward）均已完成
+- **Description**:
+  - **Phase 1（已完成，2026-08-04）**：纯 Python 前向推理方案，详见 [caffe-ffi-rnn-lstm-phase1 规范](../../../../../../.trae/specs/caffe-framework/caffe-ffi-rnn-lstm-phase1/spec.md)
+    - 新增 `caffe_ffi.sequence` 子模块：`RNN`/`LSTM` 类（vanilla RNN tanh/relu、LSTM 4门、双向、初始状态、batch_first）
+    - Caffe 风格打包权重加载：`load_weights(W, b, fmt="caffe")`（`(4*H, D+H)` + `(4*H,)` 经 `pack/unpack_lstm_weights_caffe` 解包）
+    - `_numpy_rnn_reference.py` 从 tests 提升为 `caffe_ffi.sequence._numpy_rnn_reference` 内部实现（函数签名/行为兼容，8个自测试通过）
+    - 测试 `tests/python/test_sequence_forward.py` 16 用例通过（已知值/布局/形状/双向/Caffe打包/末态/numpy自洽）
+    - 示例 `examples/rnn_forward.py` 可独立运行
+  - **Phase 2（已完成，2026-08-04）**：C++ 实现 + Backward/BPTT 梯度，详见 [caffe-ffi-rnn-lstm-phase2 规范](../../../../../../.trae/specs/caffe-framework/caffe-ffi-rnn-lstm-phase2/spec.md)
+    - caffe.proto 扩展 `RecurrentParameter`（`num_steps`/`expose_hidden`/`recurrent_param`）
+    - `RecurrentLayer` 基类（时间步展开）+ `RNNLayer`（vanilla RNN，relu 激活 C¹ 拐点防护）
+    - `LSTMUnit`/`LSTMLayer`（4 门，复用基类时间步展开，前向 + BPTT Backward）
+    - numpy backward 参考（`rnn_backward`/`lstm_backward`，基于 BPTT 公式独立编写）
+    - 测试 `tests/python/test_recurrent_backward.py` 29 用例通过（L0-L1-L2-L3 全梯度验证）
+    - 全量回归 1692 passed / 1 skipped（无回归）
+    - 关键修复：LSTM `c_prev` batch 索引步长；权重梯度 `BackwardEnd()` 一次性 scatter
+  - 注：Phase 1 仅前向推理，不含 Backward 梯度；Phase 2 以 Phase 1 数值结果作为基准，并补齐 Backward 梯度
+- **Acceptance Criteria Addressed**: AC-RNN
+
+## [x] Task 31: P4-性能优化（BLAS后端/多线程/COW推广）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ✅ 已完成（TS31-B1 OpenMP + TS31-B2 分层 benchmark + TS31-B3 BLAS 后端 + TS31-B4 COW 推广全部完成并实测）
+- **Description**:
+  - BLAS后端：复用/接通OpenBLAS路径，完成Conv/InnerProduct gemm性能基准对比
+  - 多线程：OpenMP并行化卷积/池化/全连接等计算密集层
+  - COW推广：将COW零拷贝共享推广到更多层与场景（如Split/Concat后端）
+  - 性能基准体系：建立P0/P1/P2分层benchmark，量化优化收益
+- **Acceptance Criteria Addressed**: NFR-1, AC-13
+
+#### Task 31 子任务拆分（共 4 个原子子任务，按优化收益递减排序）
+
+> 构建采用 `file(GLOB layers/*.cpp)` 自动收集 + CMake 选项（`CAFFE_USE_OPENMP`/`CAFFE_USE_BLAS`）开关，每子任务独立可验证。性能优化须先测量再优化，因此先建立 benchmark 基线再优化。
+
+**S1 多线程 OpenMP 集成（TS31-B1）✅ 已完成**
+- 新增构建选项 `CAFFE_USE_OPENMP`（默认 ON，OFF 时强制串行执行），见 [Options.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Options.cmake)
+- OpenMP 检测与回退：`find_package(OpenMP)`，编译器不支持时自动回退串行，见 [Dependencies.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/Dependencies.cmake#L114-L127)
+- 编译/链接接入：`/openmp`(MSVC) / `${OpenMP_CXX_FLAGS}`(GCC/Clang) + `OpenMP::OpenMP_CXX` + `CAFFE_USE_OPENMP` 宏，见 [CompilerConfig.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/CompilerConfig.cmake)
+- 并行化点（无跨线程写竞争）：
+  - 纯 C++ GEMM/GEMV fallback：并行化 M（行）维，见 [math_utils.hpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/include/caffe_ffi/math_utils.hpp#L99-L162)
+  - Pooling：并行化 batch（n）维；**注意**：MSVC 默认 `/openmp` 不支持 min/max reduction 子句（需 `/openmp:llvm`），`in_min/in_max` 改为独立串行统计，见 [pooling_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/pooling_layer.cpp#L166-L233)
+  - Eltwise：并行化 count 维（PROD/SUM/MAX），见 [eltwise_layer.cpp](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/src/caffe_ffi/layers/eltwise_layer.cpp#L181-L246)
+- **DoD**：`.temp/_benchmark_openmp.sh`（OpenMP 重建+benchmark）与 `.temp/_benchmark_serial.sh`（OpenMP OFF 基线）双脚本，Docker 内验证通过
+
+**S2 分层 benchmark 体系（TS31-B2）✅ 已完成**
+- 新增 [benchmark_compute.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/benchmark_compute.py)，三层量化：
+  - **P0 microbenchmark**：GEMM（InnerProduct）FLOPs/s 原始吞吐
+  - **P1 layer benchmark**：单层 Forward 平均耗时（Pooling / Eltwise）
+  - **P2 network benchmark**：端到端 MLP Forward 耗时
+- 关键修复：benchmark 输入须匹配层维度（InnerProduct 2-D `[batch, in_d]`、Pooling/Eltwise 4-D `[n,c,h,w]`），原来传 1-D 腌平列表导致 `axis 1 out of range` 报错
+- 关键设计：batch 取较大值（16/8）使 OpenMP 并行维（GEMM 的 M、Pooling 的 n）足够大，否则 batch=1 无并行收益、仅剩线程开销，无法体现优化
+- **Docker 实测（`OMP_NUM_THREADS=4`，GEMM 为纯 C++ fallback）**：
+
+> **注**：此处为 OpenMP benchmark 原始数据；后续接通 OpenBLAS 后，GEMM 行已用 OpenBLAS 列补齐（见下表），完整 GEMM 对比见 S3 BLAS 后端。
+
+| Benchmark | Serial C++ | OpenMP C++ | OpenBLAS | OpenMP 加速比 | BLAS 加速比 |
+|---|---|---|---|---|---|
+| IP 16x512x512 | 2.035ms / 4.12 GFLOPS | 1.001ms / 8.38 GFLOPS | 0.661ms / **12.69 GFLOPS** | **2.03x** | **3.08x** |
+| IP 16x1024x1024 | 9.205ms / 3.65 GFLOPS | 4.037ms / 8.31 GFLOPS | 2.522ms / **13.30 GFLOPS** | **2.28x** | **3.65x** |
+| IP 8x2048x1024 | 11.582ms / 2.90 GFLOPS | 6.545ms / 5.13 GFLOPS | 5.021ms / 6.68 GFLOPS | **1.77x** | 2.30x |
+| IP 8x4096x1024 | 25.169ms / 2.67 GFLOPS | 13.344ms / 5.03 GFLOPS | 10.384ms / 6.46 GFLOPS | **1.89x** | 2.42x |
+| Pooling 8x64x56x56 | 7.673ms | 6.409ms | — | 1.20x | — |
+| Pooling 8x128x28x28 | 3.796ms | 2.964ms | — | 1.28x | — |
+| Pooling 16x256x14x14 | 3.722ms | 2.863ms | — | 1.30x | — |
+| Eltwise 8x64x56x56 | 5.723ms | 5.296ms | — | 1.08x | — |
+| Eltwise 16x512x14x14 | 5.623ms | 5.285ms | — | 1.06x | — |
+| MLP Forward(bs=1) | 0.569ms | 0.565ms | — | ~1.0x | — |
+
+- **结论**：GEMM（InnerProduct）收益最显著——OpenMP 1.77–2.28x（GFLOPS 最高 8.38），接通 OpenBLAS 后进一步提升至 12.69–13.30 GFLOPS（较 Serial 3.08–3.65x）；Pooling 1.20–1.30x；Eltwise 受内存带宽限制仅 +6–8%；MLP(bs=1) 无并行工作、无收益。整体收益排序：**OpenBLAS > OpenMP 纯 C++ > Serial**。Eltwise 后续可考虑 SIMD/vectorization 而非线程并行。
+- **DoD**：`.temp/_benchmark_openmp.sh` + `.temp/_benchmark_serial.sh` 双脚本可复现对比
+
+**S3 BLAS 后端（TS31-B3）✅ 已完成**
+- 复用/接通 OpenBLAS 路径（`CAFFE_USE_BLAS` 已存在），完成 InnerProduct GEMM 性能基准对比（OpenBLAS vs 纯 C++ fallback vs OpenMP）
+- **关键修复**：`DetectOpenBLAS.cmake` 的 libopenblas-dev 多架构头文件检测 bug——Debian/Ubuntu 系统包把 `cblas.h` 放在 `/usr/include/<triplet>/`（如 `x86_64-linux-gnu/cblas.h`），原搜索后缀仅 `include`/`include/openblas` 导致 `find_path` 无法命中，误判 BLAS 未找到而回退纯 C++ fallback。已补充 `x86_64-linux-gnu` 及 `openblas-pthread` 后缀，见 [DetectOpenBLAS.cmake](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/cmake/DetectOpenBLAS.cmake#L113-L127)
+- **Docker 实测（`OMP_NUM_THREADS=4`, `OPENBLAS_NUM_THREADS=4`，GEMM 为 InnerProduct）**：
+
+| Benchmark | Serial C++ | OpenMP C++ | OpenBLAS | BLAS vs OM | BLAS vs Serial |
+|---|---|---|---|---|---|
+| IP 16x512x512 | 2.035ms / 4.12 GFLOPS | 1.001ms / 8.38 GFLOPS | 0.661ms / **12.69 GFLOPS** | 1.51x | **3.08x** |
+| IP 16x1024x1024 | 9.205ms / 3.65 GFLOPS | 4.037ms / 8.31 GFLOPS | 2.522ms / **13.30 GFLOPS** | 1.60x | **3.65x** |
+| IP 8x2048x1024 | 11.582ms / 2.90 GFLOPS | 6.545ms / 5.13 GFLOPS | 5.021ms / 6.68 GFLOPS | 1.30x | 2.30x |
+| IP 8x4096x1024 | 25.169ms / 2.67 GFLOPS | 13.344ms / 5.03 GFLOPS | 10.384ms / 6.46 GFLOPS | 1.28x | 2.42x |
+
+- **结论**：OpenBLAS 为 GEMM 最优方案——16 行 batch 场景 12.69–13.30 GFLOPS，较纯 C++ OpenMP（8.38）再提升 1.51–1.60x，较 Serial 提升 3.08–3.65x；8 行 batch（K 更大）场景提升 1.28–1.30x。整体收益排序：**OpenBLAS > OpenMP 纯 C++ > Serial**。注意：multiarch 头文件检测 bug 未修复前，OpenBLAS 实际未链接、回退到纯 C++ OpenMP，结果与 OpenMP 列一致（8.38 GFLOPS 假象），修复后 GFLOPS 才跳升至 12.69+。
+- **DoD**：`.temp/_benchmark_blas.sh`（BLAS+OpenMP 重建+benchmark）可复现；`ldd` 确认 `libopenblas.so.0` 已链接
+
+**S4 COW 推广（TS31-B4）✅ 已完成**
+- 将 COW 零拷贝共享（`ShareData`/`ShareDiff`）推广到**恒等退化层**：Scale(scale=1,bias=0)、Bias(bias=0)、单输入 Eltwise(coeff=1) 均退化为恒等 `y=x`，其 Forward 用 `ShareData`（O(1)）替换原 O(n) memcpy，Backward 用 `ShareDiff`（O(1)）替换 O(n) dx 拷贝
+- **实现**：各层新增 `cow_identity_` 成员，Forward 中在 `cpu_mutable_data()` 之前检测恒等条件（避免触发 COW 克隆）并 `ShareData`；Backward 中分叉——dx 为恒等直通（`buffer_identity` 共享零拷贝），而 d_scale/d_bias 在恒等时**非零**（广播求和），仍须正常计算，不能像早期实现那样整体跳过
+- **关键修复 #1（恒等 Backward 梯度错误）**：早期实现 `if (cow_identity_ && need_dx && !need_dscale && !need_dbias) return;` 把 d_scale/d_bias 一并跳过——但恒等 scale 的 d_scale=Σdy·x、dbias=Σdy 均非零，导致梯度错误。改为仅 dx 走 `ShareDiff`，d_scale/d_bias 照常累加
+- **关键修复 #2（filler 未生效）**：Scale/Bias 的 `LayerSetUp` 原先硬编码 scale=1.0/bias=0.0，非恒等测试（scale=2/bias=2）参数不生效。改为读取 prototxt 中 `scale_param.filler()`/`bias_param.filler()` 动态初始化 blob
+- **调试日志**：COW 核心分支加详细 `logger.info` 打印——`blob.cpp` 的 `ShareData`/`ShareDiff`/COW 克隆（`[COW]` 含 old/new_ptr、refcount、nbytes）、各层 `[SCALE-COW]`/`[BIAS-COW]`/`[ELTWISE-COW]`（含恒等条件、count、shared_ptr）；通过 `CAFFE_FFI_CPP_LOG_LEVEL=2` 开启 INFO 可见
+- **新增测试**：`test_cow.py::TestIdentityLayerCOWBehavior` 共 12 个用例——恒等 Forward 零拷贝（data 指针相等）、恒等 Backward diff 共享、非恒等不共享（保留 memcpy 路径）、下游 in-place ReLU 触发 COW 隔离
+- **验证**：`test_cow.py` 38 passed；回归 `test_cow+test_blob+test_scale_backward+test_bias_backward+test_eltwise_backward+test_split_backward+test_p3b_eltwise_scale` **298 passed（5.36s）**
+- **DoD**：COW 覆盖层清单（Scale/Bias/Eltwise 恒等 + Split/Concat 已有）+ 回归测试通过 ✅
+- **补充：FFI 基础设施单元测试**：新增 [test_ffi_api.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/tests/python/test_ffi_api.py) 覆盖 `_ffi_api.py`（库路径发现/平台库名/诊断记录/严格模式/FFI 注册表缓存/顶层 API 契约），**30 passed / 1 skipped**（纯 Python，不依赖 C++ 扩展，双模式可运行）
+- **补充：模式归档**：沉淀「恒等层 COW 零拷贝分离原则」至 [caffe-identity-layer-cow-separation.md](../../../../../knowledge/best-practices/caffe-identity-layer-cow-separation.md)，并更新 best-practices 索引与深度学习/FFI 快速导航
+
+## [x] Task 32: P4-能力扩展（更多激活/归一化/损失层）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ✅ 已完成（S1 激活层四层、S2 归一化层两层、S3 损失层两层、S4 Dropout 训练模式、S5 Dropout 推理 COW 优化全部完成）
+- **Description**:
+  - 更多激活层：LeakyReLU/Softplus/Softsign/AbsValue（S1 全部完成）
+  - 更多归一化层：L2Norm/InstanceNorm（S2 完成）
+  - 更多损失层：MarginRanking/Hinge（S3 完成）
+  - 训练模式Dropout：训练/测试双模式行为（S4 完成）
+  - Dropout 推理 COW 零拷贝优化（S5 完成）
+  - 目标：向40+层（v0.2.0 Beta）演进
+- **Acceptance Criteria Addressed**: AC-7d
+
+#### Task 32 子任务拆分（共 10 个原子子任务，按层族分组）
+
+> 构建采用 `file(GLOB layers/*.cpp)` 自动收集，新增层无需改 CMakeLists；每层独立可验证。激活/归一化/损失层族之间相互独立可并行；Dropout 训练模式涉及既有层，须保持 inference 默认行为。
+
+**S1 激活层（NeuronLayer 子类，4 个独立子任务，按推荐实现顺序分组）**
+> 顺序按「平滑度」分组：先做平滑无拐点层（Softsign/Softplus，复用普通梯度校验模板），再相邻做 C¹ 拐点层（LeakyReLU/AbsValue，复用 `avoid_c1_discontinuity` 路径），减少上下文切换。4 个均无硬依赖，可并行。
+- `TS32-A3` Softsign：`x/(1+|x|)`（平滑，无拐点，最简单）✅ 已完成（feat+test，15 测试通过）
+- `TS32-A2` Softplus：`log(1+e^x)`，数值稳定分支（x 大时避免溢出）（平滑，无拐点）✅ 已完成（feat+test，15 测试通过）
+- `TS32-A1` LeakyReLU：`negative_slope` 参数，**C¹ 拐点防护**（x=0 尖点，须用 `avoid_c1_discontinuity`）✅ 已完成（feat+test，14 测试通过）
+- `TS32-A4` AbsValue：`|x|`（x=0 拐点，与 LeakyReLU 相邻，共享 C¹ 防护模板）✅ 已完成（feat+test，13 测试通过）
+
+**S2 归一化层（2 个独立子任务）✅ 已完成**
+- `TS32-N1` L2Norm：按通道/空间维 L2 归一化，axes 参数 ✅ 已完成（feat+test，含 Forward/Backward 解析+数值梯度验证）
+- `TS32-N2` InstanceNorm：per-instance 均值/方差，无 affine 或可选用 affine ✅ 已完成（feat+test，含 dX/dgamma/dbeta 解析+数值梯度验证）
+
+**S3 损失层（2 个独立子任务）✅ 已完成**
+- `TS32-L1` MarginRanking：pairwise margin 排序损失 ✅ 已完成（feat+test，含 sign/margin/loss_weight 配置，label 无梯度）
+- `TS32-L2` Hinge：hinge 损失（可选 inner_product 交互）✅ 已完成（feat+test，含 L1/L2 norm、axis 配置、label 无梯度）
+
+**S4 训练模式 Dropout（1 个子任务）**
+- `TS32-D1` inverted dropout + mask 缓存 + 训练/测试模式切换（默认 inference 行为不变）✅ 已完成（feat+test，34 测试通过，含 `test_dropout_backward.py` 训练模式类）
+
+**S5 Dropout 推理模式 COW 零拷贝优化（1 个子任务）**
+- `TS32-D2` 推理模式（`!train`）非 inplace 场景用 COW 零拷贝共享替换 O(n) memcpy：
+  - Forward：`top[0]->ShareData(bottom[0])`（O(1) 引用计数共享，拷贝延迟到首个下游可变访问，保留 memcpy 的隔离语义）
+  - Backward：`bottom[0]->ShareDiff(top[0])`（同理，逆拓扑序保证 top[0].diff 已就绪）
+  - 参考 SplitLayer COW 模式（`ShareData`/`ShareDiff`），训练模式与 inplace 路径行为不变
+  - 新增 6 个 COW 测试（`test_cow.py::TestDropoutCOWBehavior`）：零拷贝共享/恒等保持/下游 in-place ReLU COW 隔离/backward diff 共享/训练模式不共享/inplace 不共享
+  - 全量回归通过（1814 passed, 1 skipped）
+- **DoD**：`_s5_dropout_cow_rebuild.sh` 重建脚本 + 全量回归通过
+
+**每个子任务 DoD（复用 P3 三层验证方法论）**
+- proto 字段（如需，沿用 `LayerParameter` 内嵌 message 模式）
+- C++ 头文件 + 源文件（`Forward_cpu`/`Backward_cpu`/`LayerSetUp`，`REGISTER_LAYER_CLASS` 注册）
+- 测试文件 `tests/python/test_<layer>_backward.py`：L0-L3 梯度验证（复用 `_grad_check_utils`；分段层用 `avoid_c1_discontinuity`）
+- 全量回归通过（无回归）
+- 全部完成后向 40+ 层（v0.2.0 Beta）演进
+
+## [x] Task 33: P4-训练工程化（训练API封装/模型序列化/应用示例）
+- **Priority**: medium
+- **Depends On**: Task 29
+- **Status**: ✅ 已完成（2026-08-04，TS33-1~7 全部完成）
+- **Description**:
+  - Solver优化器框架：SGD/Adam等，封装训练循环
+  - 训练API封装：fit/step/learning rate调度
+  - 模型序列化：训练后权重保存/加载（caffemodel格式）
+  - 应用示例：分类器训练示例
+  - 文档完善：训练指南、API参考
+- **Acceptance Criteria Addressed**: AC-33, AC-16, AC-Solver
+
+#### Task 33 子任务拆分（共 7 个原子子任务）
+
+> 训练工程化围绕「优化器 + 调度器 + 训练循环 + 序列化 + 示例 + 文档」六层抽象，全部为纯 Python 实现（复用 C++ 已实现的 Backward/Forward），无构建改动，可独立验证。
+
+**TS33-1 优化器框架（SGD/Adam）✅ 已完成**
+- 新增 [solver.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/solver.py)：`Optimizer` 基类（`lr`/`weight_decay`/`step`/`zero_grad`/`_grad`）
+- `SGD`：动量（`momentum`）、Nesterov 加速、L2 weight decay；`state_dict`/`load_state_dict` 断点续训
+- `Adam`：Kingma & Ba (2015) 偏差校正、`beta1`/`beta2`/`eps`；`state_dict`/`load_state_dict`
+- 权重更新走 `mutable_data_tensor()` **COW 感知**写入；每参数以 `(layer_name, blob_index)` 为稳定 key
+- 测试：`test_solver.py::TestSGD`/`TestAdam`（对独立 numpy 参考逐迭代断言）
+
+**TS33-2 学习率调度器 ✅ 已完成**
+- `LRScheduler` 基类（`get_lr`/`step` 写回 `optimizer.lr`）
+- `StepLR`/`MultiStepLR`/`ExponentialLR`/`CosineAnnealingLR` 四种调度
+- 测试：`test_solver.py::TestLRScheduler`（各调度数学与 `optimizer.lr` 写回契约）
+
+**TS33-3 训练循环（Solver）✅ 已完成**
+- `Solver` 类：`train`/`step`/`fit`/`validate`，`history`（loss/metric/lr）
+- loss 契约与原生 loss 层一致：前向产生标量 loss blob，反向用 `[1.0]` 播种梯度
+- `fit` 支持可迭代或可调用 `train_batches`（每 epoch 重调）、每 epoch 自动 `scheduler.step()`、train/val 模式切换
+- 测试：`test_solver.py::TestSolver`（端到端 fit 损失下降、step 更新权重、调度器逐 epoch、validate 返回指标）
+
+**TS33-4 模型序列化 ✅ 已完成**
+- 新增 [serialization.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/serialization.py)：`save_net`/`load_net`/`net_parameter_to_file`/`weights_to_dict`/`dict_to_weights`
+- caffemodel 格式（`NetParameter` protobuf），按层名匹配加载（`Net.CopyTrainedLayersFrom`）
+- 测试：`test_serialization.py`（权重 dict round-trip、caffemodel save/load、protobuf 有效性、额外层忽略缺失）
+
+**TS33-5 顶层 API 集成 ✅ 已完成**
+- 更新 [__init__.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/python/caffe_ffi/__init__.py)：导出 `solver`/`serialization` 模块及全部类/函数至 `caffe_ffi` 顶层
+
+**TS33-6 应用示例 ✅ 已完成**
+- 新增 [examples/mlp_classifier_train.py](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/examples/mlp_classifier_train.py)：MLP+SoftmaxWithLoss 端到端训练（Solver+SGD+StepLR）→ save_net → load_net → 评估
+
+**TS33-7 文档完善 + 更新 tasks.md/checklist.md ✅ 已完成**
+- 新增 [docs/training/TRAINING_GUIDE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/TRAINING_GUIDE.md)：训练指南（快速开始/优化器/调度器/Solver/序列化/模式切换）
+- 新增 [docs/training/API_REFERENCE.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/training/API_REFERENCE.md)：训练 API 参考
+- 更新 [docs/README.md](file:///d:/spaces/SpecWeave/projects/xuanspace/libs/caffe-ffi/docs/README.md)：文档索引登记 training/ 目录
+- 更新 spec.md（P4 完成、FR-34/35、AC-Solver）、tasks.md（本任务）、checklist.md（Task 33 验证项）
+
+---

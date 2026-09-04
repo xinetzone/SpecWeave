@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "verification-policy-checker-spectrum"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察3（mobilepa-bench）"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察3（mobilepa-bench）"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

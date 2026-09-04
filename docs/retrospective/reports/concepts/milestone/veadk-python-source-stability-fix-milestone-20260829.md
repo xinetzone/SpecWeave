@@ -6,7 +6,7 @@ completion_date: "2026-08-29"
 type: "Report"
 description: "信源稳定性门模式（source-stability-gate）第二个独立案例的前瞻性验证与同日修复闭环：veadk-python Wiki 800处临时克隆引用迁移至 vendor 子模块（tag 1.0.10），模式成熟度 L1→L2 并沉淀反模式5"
 status: "stable"
-source: ".trae/specs/veadk-python-wiki/"
+source: ".trae/specs/okf-wiki-ecosystem/veadk-python-wiki/"
 milestone-name: "veadk-python Wiki 信源稳定性修复与模式 L2 验证"
 time-range: "2026-08-29（第二案例验证、修复闭环、复盘提交同日完成）"
 methodology: "七概念方法论（R→I→E→V→C链路，standard深度，4视角对抗审查）"
@@ -47,7 +47,7 @@ stale_after: "2027-08-29"
 | F-002 | 模式 Changelog 含 4 条记录：v1.0（2026-08-28 create，源自案例1复盘 E-1）、v2.0（2026-08-29 validate，第二案例验证 L1→L2）、v2.1（2026-08-29 fix，修复闭环）、v2.2（2026-08-29 docs，本复盘反模式5入库） |
 | F-003 | 案例1（jira-skill，2026-08-28）：8 处断裂引用（7 个 `file:///` URL + 1 个 Windows 路径），信源升级为 `vendor/jira-skill` v3.29.0@b0dba28，Wiki 含 22 个文件 |
 | F-004 | 案例2（veadk-python）Wiki 位于 `docs/knowledge/learning/03-agent-platforms-tools/01-domestic-platforms/veadk-python/`，含 64 个 Markdown 文件、8 个子目录 |
-| F-005 | 案例2 Wiki 生成于源码学习任务（规格目录 `.trae/specs/veadk-python-wiki/`），信源为任务期临时克隆；模式 v1.0 萃取于 2026-08-28 晚，Wiki 生成时点早于模式独立文档化 |
+| F-005 | 案例2 Wiki 生成于源码学习任务（规格目录 `.trae/specs/okf-wiki-ecosystem/veadk-python-wiki/`），信源为任务期临时克隆；模式 v1.0 萃取于 2026-08-28 晚，Wiki 生成时点早于模式独立文档化 |
 
 ### 1.2 检出阶段（模式第一、四步扫描）
 
@@ -83,7 +83,7 @@ stale_after: "2027-08-29"
 | F-023 | 227 个唯一路径中信源类链接（veadk/examples/docs/frontend/config/tests/pyproject/README）缺失数 0；12 处 frontmatter 反斜杠 vendor 路径 Test-Path 全部存在 |
 | F-024 | 宽松正则 `file:///([^)\s#"]+)` 曾报告 36 个 MISSING；甄别分类为：21 个表格行相邻链接跨括号捕获的正则假象（对应目录 Test-Path 均存在）、2 个中文散文提及（"file:///格式的源码位置链接"）、10 个真实缺失（9 个内部导航断链 + 1 个 webui 链接）、3 个目录链接 |
 | F-025 | 9 处内部导航断链指向 `d:/AI/docs/knowledge/learning/veadk-python/...`（缺少 `03-agent-platforms-tools/01-domestic-platforms/` 路径段），均不含 .chaos，分布于 9 个文件。**A-3 执行核验更正（2026-08-29）**：逐链接复验实测为 **33 个链接、32 行、4 个文件**（`supporting-analysis/14-adversarial-review.md` 12 处/11 行、`faq/best-practices.md` 11 处、`extensions/cloud-integration.md` 6 处、`extensions/custom-run-processor.md` 4 处）；F-024 的"9 个内部导航断链"为早期宽松正则漏计数，断链前缀路径 Test-Path=False、9 个断链目标文件在正确 Wiki 路径下全部存在 |
-| F-026 | 全工作区 Grep `\.chaos[\\/]libs[\\/]veadk-python` 命中 5 个文件：模式文档（历史记录章节）、`bundles/chaos/veadk-python/` 3 个文件（verification-report.md:6、references/veadk-source.md:64、references/facts.md:3，均为反引号包裹的散文式元数据声明）、`.trae/specs/veadk-python-wiki/spec.md`（2 处历史记录） |
+| F-026 | 全工作区 Grep `\.chaos[\\/]libs[\\/]veadk-python` 命中 5 个文件：模式文档（历史记录章节）、`bundles/chaos/veadk-python/` 3 个文件（verification-report.md:6、references/veadk-source.md:64、references/facts.md:3，均为反引号包裹的散文式元数据声明）、`.trae/specs/okf-wiki-ecosystem/veadk-python-wiki/spec.md`（2 处历史记录） |
 | F-027 | `bundles/chaos/veadk-python/` 含 22 个 md 文件，`file:///` 链接数 0、vendor 引用数 0，被 git 跟踪 |
 | F-028 | `.chaos/libs/veadk-python` 临时克隆修复后仍存在于磁盘，未删除 |
 

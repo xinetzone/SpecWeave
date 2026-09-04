@@ -10,7 +10,7 @@ depth: standard
 session: sc-20260821-boshu-laozi-milestone
 source:
   - "playground/books/notebook/boshu-laozi-zhudu/（项目输出）"
-  - ".trae/specs/laozi-zhudu-mystx-wiki/（Spec文档）"
+  - ".trae/specs/classics-knowledge/laozi-zhudu-mystx-wiki/（Spec文档）"
 tags:
   - pdf-conversion
   - okf
@@ -36,7 +36,7 @@ gates_passed:
 | 模板 | `playground/books/libs/mystx/`（Sphinx+mystx主题，Python 3.14） |
 | 规范 | `vendor/knowledge-catalog/okf/SPEC.md` |
 | 产出规模 | 93个Markdown文件、97个HTML页面、约14.8万正文字 |
-| Spec文档 | `.trae/specs/laozi-zhudu-mystx-wiki/`（spec.md/tasks.md/checklist.md） |
+| Spec文档 | `.trae/specs/classics-knowledge/laozi-zhudu-mystx-wiki/`（spec.md/tasks.md/checklist.md） |
 
 ### 交付内容
 

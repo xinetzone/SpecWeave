@@ -1,7 +1,7 @@
 ---
 title: Caffe 两实现（caffe-ffi / caffex）综合对比测试报告
 date: 2026-08-05
-source: .trae/specs/caffe-comprehensive-comparison-test
+source: .trae/specs/caffe-framework/caffe-comprehensive-comparison-test
 type: insight-extraction/external-learning
 ---
 

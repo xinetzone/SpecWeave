@@ -4,7 +4,7 @@ title: "Blob COW写时复制语义修复报告"
 date: "2026-08-01"
 type: "bug-fix"
 status: "completed"
-source: ".trae/specs/cow-blob-fix/"
+source: ".trae/specs/caffe-framework/cow-blob-fix/"
 commit: "807823771904209e2179d8458b840fc4acb451db"
 tags: ["cow", "blob", "zero-copy", "identity-share", "filler", "performance"]
 author: "Trae Agent (seven-concepts methodology)"

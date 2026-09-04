@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "inference-shell-model-base-decoupling"
-source: "../../specs/tongyi-mai-okf-wiki/insights.md#洞察1"
+source: "../../archives/spec-working-notes/okf-wiki-ecosystem/tongyi-mai-okf-wiki/insights.md#洞察1"
 maturity: "L1"
 validation_count: 1
 reuse_count: 0

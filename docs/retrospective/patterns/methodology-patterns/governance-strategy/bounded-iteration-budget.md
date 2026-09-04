@@ -2,7 +2,7 @@
 type: Pattern
 id: "bounded-iteration-budget"
 title: "有界迭代预算：长时程自主系统的强制收敛契约"
-source: "../../../../../../.trae/specs/knowledge-consolidation/agentrys-ai-chip-design/insights.md#洞察1有界迭代预算而非无限优化是长时程自主收敛的第一前提"
+source: "../../../../../../.trae/specs/okf-wiki-ecosystem/knowledge-consolidation/agentrys-ai-chip-design/insights.md#洞察1有界迭代预算而非无限优化是长时程自主收敛的第一前提"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/bounded-iteration-budget.toml"
 maturity: "L1-draft"
 validation_count: 1

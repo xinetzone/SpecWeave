@@ -2,7 +2,7 @@
 type: Pattern
 id: "data-lifecycle-economic-stratification"
 source:
-  - "../../../../../.trae/specs/volcengine-agentkit-wiki/insights.md#洞察3"
+  - "../../../../../.trae/specs/okf-wiki-ecosystem/volcengine-agentkit-wiki/insights.md#洞察3"
   - "../../../reports/competitive-analysis/retrospective-headroom-wiki-20260803/insight-extraction.md"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/architecture-patterns/data-lifecycle-economic-stratification.toml"
 maturity: "L2"

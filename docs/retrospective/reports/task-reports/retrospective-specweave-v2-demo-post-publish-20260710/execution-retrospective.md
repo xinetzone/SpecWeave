@@ -33,7 +33,7 @@ x-toml-ref: "../../../../../.meta/toml/docs/retrospective/reports/task-reports/r
 
 | 产出物 | 路径 | 状态 |
 |--------|------|------|
-| Spec三件套 | .trae/specs/update-specweave-demo-post/ | ✅ 已提交（abc7009f） |
+| Spec三件套 | .trae/specs/workspace-governance/update-specweave-demo-post/ | ✅ 已提交（abc7009f） |
 | v2 Demo草稿 | docs/retrospective/reports/competitive-analysis/.../specweave-demo-post-v2.md | ✅ 已提交（abc7009f） |
 | 临时脚本（5个） | temp_create_post.py等 | ✅ 已清理（任务结束删除） |
 | 论坛新帖 | 待审核队列（pending_post.id=131531） | ✅ 已提交，等待审核 |

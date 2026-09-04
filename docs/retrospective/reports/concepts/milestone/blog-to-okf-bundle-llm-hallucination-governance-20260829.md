@@ -7,7 +7,7 @@ type: "Report"
 description: "法学学术论文（精简版）单篇转化为 OKF v0.2 知识包（llm-hallucination-governance）——R→I→E→V→C 七阶段工作流复盘，40条事实登记、8项P0核验（5✅3⚠️0❌）、5处勘误（学术转述性错误），学术综述类骨架 '无 examples/' 判定的又一次验证"
 status: "stable"
 source:
-  - ".trae/specs/llm-hallucination-governance-okf-wiki/"
+  - ".trae/specs/okf-wiki-ecosystem/llm-hallucination-governance-okf-wiki/"
   - "projects/awesome-okf-xs/doc/bundles/ai/ai-agent/llm-hallucination-governance/"
   - ".agents/docs/retrospective/patterns/documentation-patterns/blog-article-to-okf-bundle.md"
 milestone-name: "第14篇 博文→OKF知识包单篇转化（llm-hallucination-governance）"

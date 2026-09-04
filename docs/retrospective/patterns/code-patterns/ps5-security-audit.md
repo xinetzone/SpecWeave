@@ -1,7 +1,7 @@
 ---
 type: Pattern
 id: "ps5-security-audit"
-source: "../../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式3ps5-security-audit安全代码审查checklist模式"
+source: "../../../../../.trae/specs/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式3ps5-security-audit安全代码审查checklist模式"
 x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/ps5-security-audit.toml"
 maturity: "L1"
 validation_count: 1
@@ -16,7 +16,7 @@ related_patterns:
   - "command-injection-prevention"
   - "path-traversal-guard"
 ---
-> **提炼自**：[05-patterns.md#模式3](../../../../.trae/specs/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式3ps5-security-audit安全代码审查checklist模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
+> **提炼自**：[05-patterns.md#模式3](../../archives/spec-working-notes/okf-wiki-ecosystem/ai-powershell5-hell-wiki/supporting-analysis/05-patterns.md#模式3ps5-security-audit安全代码审查checklist模式) —— AI大模型×PowerShell 5兼容安全研究E阶段萃取
 
 # PS5安全代码审查Checklist模式（PS5-Security-Audit）
 
