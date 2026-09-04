@@ -63,6 +63,7 @@ multidomain-inv-warmup-pr-cache-pipeline
 multi-mode-network-redundancy
 normalization-convention-duality
 normalized-coordinate-abstraction
+outer-gate-ci-prelint
 perception-check-report-model
 prompt-defense-in-depth
 provenance-driven-trust
