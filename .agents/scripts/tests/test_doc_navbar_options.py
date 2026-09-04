@@ -25,6 +25,8 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 _OKF_CONF_PY = _PROJECT_ROOT / "projects" / "awesome-okf-xs" / "doc" / "conf.py"
 _MYSTX_DOCS = _PROJECT_ROOT / "projects" / "xuanspace" / "libs" / "mystx" / "src" / "mystx" / "tasks" / "docs.py"
 _OKF_TASKS_DOCS = _PROJECT_ROOT / "projects" / "awesome-okf-xs" / "tasks" / "docs.py"
+_OKF_TASKS_INIT = _PROJECT_ROOT / "projects" / "awesome-okf-xs" / "tasks" / "__init__.py"
+_OKF_INV_EXT = _PROJECT_ROOT / "projects" / "awesome-okf-xs" / "doc" / "_ext" / "okf_inventory_builder.py"
 _OKF_PAGES_YML = _PROJECT_ROOT / "projects" / "awesome-okf-xs" / ".github" / "workflows" / "pages.yml"
 
 
@@ -456,11 +458,13 @@ def test_t6b_build_invs_scratch_and_output_paths(monkeypatch):
            "shutil.rmtree(_INV_OUTPUT_DIR, ignore_errors=True)" in text, (
         "VC-17 前置清理：生成前应删 scratch+output 目录，防止 Ctrl+C 残留 partial inv"
     )
-    # VC-17 第二部分：size > 8192
-    assert "8192" in text and (
-        "size > 8192" in text or "> 8192" in text or "size > 8_192" in text or "8192," in text
+    # VC-17 第二部分：size > 1024（最小 meta 域 90 文档约=3033 bytes；
+    #   旧阈值 8192 对 wenxue/meta 等小域过严，下调到 1024=Sphinx inv
+    #   4 行 header(≈200B) + zlib 最小压缩体≈800B 的安全下限）
+    assert "1024" in text and (
+        "size > 1024" in text or "> 1024" in text or "1024," in text
     ), (
-        "VC-17：move 完成后应 assert dst_inv size > 8192 bytes，防 partial/空 inv 进入 cache"
+        "VC-17：move 完成后应 assert dst_inv size > 1024 bytes，防 partial/空 inv 进入 cache"
     )
 
 
@@ -601,5 +605,84 @@ def test_t7_conf_intersphinx_mapping_vc3_vc5_three_regimes(monkeypatch, tmp_path
         )
     # 0 → 1 → 8 线性梯度全命中 ✓（三工况分别走完 VC-5→部分→VC-3 全量）
 
+
+# ---------------------------------------------------------------------------
+# T8 — 修复 Sphinx 9 inventory builder KeyError：自定义 ext + ns 注册
+# ---------------------------------------------------------------------------
+
+def test_t8_inventory_builder_custom_extension_and_ns_registration():
+    """T8: Sphinx 9 不再注册 inventory builder 入口点。
+    修复三件套（source 级断言避免真跑 sphinx-build）：
+
+    1) conf.py extensions 列表显式引用 `_ext.okf_inventory_builder`（使
+       Sphinx setup_extension(L298) 在 preload_builder(L302) 之前注册该
+       Builder 到 registry.builders；conf.py `def setup(app)` 在 L309 才
+       执行，太晚，会 SphinxError Builder 未注册。
+    2) doc/_ext/okf_inventory_builder.py 定义 class OKFInventoryBuilder：
+       name="inventory"、format="inventory"（≠"html"→绕过 validate_math_renderer
+       中针对 html format 的 math_renderer_name 属性存在性校验）、
+       get_target_uri=docname.html、finish() 调 InventoryFile.dump
+       写 objects.inv。
+    3) tasks/__init__.py ns.add_task(build_invs) 暴露 invoke build-invs
+       根命令（否则 CLI 报 No idea what 'build-invs' is!）。
+    """
+    # --- 断言 1：conf.py extensions 字符串含自定义 ext ---
+    conf_text = _OKF_CONF_PY.read_text(encoding="utf-8")
+    assert "_ext.okf_inventory_builder" in conf_text, (
+        "conf.py extensions 必须显式包含 `_ext.okf_inventory_builder` 字符串引用"
+        "（setup_extension 在 preload_builder 之前注册 Builder 到 registry）"
+    )
+
+    # --- 断言 2：自定义 Builder ext 存在 ---
+    assert _OKF_INV_EXT.is_file(), (
+        "自定义 inventory builder ext 文件不存在：doc/_ext/okf_inventory_builder.py"
+    )
+    ext_mod = _load_module(_OKF_INV_EXT, "_t8_inv_ext")
+    assert hasattr(ext_mod, "OKFInventoryBuilder"), (
+        "ext 应定义 class OKFInventoryBuilder(Builder)"
+    )
+    BuilderClass = ext_mod.OKFInventoryBuilder
+    assert getattr(BuilderClass, "name", None) == "inventory", (
+        "自定义 Builder 必须 name='inventory' 才能匹配 -b inventory CLI"
+    )
+    # format != "html"：绕过 sphinx.builders.html.validate_math_renderer
+    # 对 format=="html" builders 强制 math_renderer_name 属性存在
+    assert getattr(BuilderClass, "format", None) != "html", (
+        "format 不能='html'，否则 Sphinx 9 validate_math_renderer 在"
+        " builder-inited 事件里强制访问 .math_renderer_name 不存在会 AttributeError"
+    )
+    assert getattr(BuilderClass, "allow_parallel", False) is True, (
+        "allow_parallel=True 与其他域分片 -j 并行构建一致"
+    )
+
+    # get_target_uri 行为：docname -> docname.html（与 StandaloneHTMLBuilder
+    # 完全对齐，保证 intersphinx_mapping 加载后 xref 跳转到正确.html锚点）
+    inst_dummy = None
+    try:
+        inst_dummy = BuilderClass.__new__(BuilderClass)
+        uri = BuilderClass.get_target_uri(inst_dummy, "bundles/meta/okf-spec/index")
+        assert uri == "bundles/meta/okf-spec/index.html", (
+            f"get_target_uri 应返回 docname.html，实={uri!r}"
+        )
+    finally:
+        del inst_dummy
+
+    # finish() 代码路径里含 InventoryFile.dump(...) 调写出 objects.inv
+    ext_src = _OKF_INV_EXT.read_text(encoding="utf-8")
+    assert "InventoryFile.dump" in ext_src and "objects.inv" in ext_src, (
+        "finish() 必须 InventoryFile.dump(self.outdir/objects.inv) 写出"
+    )
+    # setup(app) 含 add_builder(OKFInventoryBuilder, override=True) override=True
+    # 防止未来 Sphinx 又内置 inventory builder 时冲突 ExtensionError
+    assert "app.add_builder(OKFInventoryBuilder, override=True)" in ext_src, (
+        "setup(app) 必须 override=True 注册，兼容未来 Sphinx 恢复内置 inventory"
+    )
+
+    # --- 断言 3：tasks/__init__.py ns 注册 build-invs 根任务 ---
+    ns_text = _OKF_TASKS_INIT.read_text(encoding="utf-8")
+    assert "ns.add_task(docs.build_invs)" in ns_text, (
+        "tasks/__init__.py 必须 ns.add_task(docs.build_invs) 使"
+        " `invoke build-invs` CLI 可用（否则报 No idea what 'build-invs' is!）"
+    )
 
 
