@@ -2,14 +2,20 @@
 """Spec 文档工具集。
 
 聚合以下 Spec 相关功能：
-  check      - 规格文档一致性检查（需求→任务覆盖、场景→检查点覆盖等）
-  format     - Spec 文档标准化格式检查（章节完整性、验收标准、版本规范）
+  check      - 规格文档一致性与元数据检查
+                 --meta-only: 只检查元数据（三件套/frontmatter/status）
+                 默认: 内容一致性检查（需求→任务、场景→检查点等）
+  format     - Spec 文档格式检查与自动修复
+                 --fix-frontmatter: 自动修复 frontmatter（补全/归一化 status）
+                 默认: 格式标准化检查
   gen-tests  - 从 spec.md 生成 pytest 测试骨架
 
 用法：
-  python spec-tool.py check [--spec-dir DIR] [--match-threshold N]
-  python spec-tool.py format [--spec-dir DIR] [--check-all] [--format text|json|yaml] [-v]
-  python spec-tool.py gen-tests [--spec DIR | --all] [--output FILE] [--output-dir DIR] [--dry-run]
+  python spec-tool.py check [--meta-only] [--spec-dir DIR] [--json]
+  python spec-tool.py format [--fix-frontmatter] [--dry-run] [--spec-dir DIR] [--json]
+  python spec-tool.py gen-tests [--spec DIR | --all] [--output FILE] [--dry-run]
+
+详细文档见 lib/spec_tool/README.md
 """
 
 # 版本校验：导入共享库
