@@ -1,5 +1,5 @@
 ---
-status: "in-progress"
+status: "completed"
 title: "Spec：GPT-5.6 大素数空隙突破资讯 → OKF 知识包"
 ---
 
