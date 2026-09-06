@@ -7,16 +7,22 @@
 ## 目录
 
 - 鉴权
+
 - 全网搜索 API
+
 - 知乎搜索 API
+
 - 知乎热榜 API
+
 - 知乎直答 API
+
 - 用户数据 API（独立文档）
+
 - OAuth 应用集成（独立文档）
 
 用户创作、关注、收藏夹与收藏接口见 [用户数据 API](user-api.md)。第三方应用授权登录与用户 token 获取见 [OAuth 应用集成](oauth.md)。这些用户接口在不传 `X-OAuth-Token` 时查询 Access Secret 所属账号本人；`zhihu-cli` 只使用这一模式。
 
----
+***
 
 # Bearer 鉴权说明
 
@@ -33,16 +39,18 @@
 说明：
 
 - 调用方需要将 Access Secret 作为 Bearer 凭证放入请求头。
+
 - 服务端会校验 `Authorization` 与 `X-Request-Timestamp`。
+
 - `X-Request-Timestamp` 需要传秒级 Unix 时间戳。
 
 ## 请求头示例
 
-| 名称 | 示例值 | 说明 |
-| - | - | - |
-| Authorization | `Bearer <your_access_secret>` | Bearer 鉴权头 |
-| X-Request-Timestamp | `1742822400` | 秒级 Unix 时间戳 |
-| Content-Type | `application/json` | JSON 接口固定值 |
+| 名称                  | 示例值                           | 说明          |
+| ------------------- | ----------------------------- | ----------- |
+| Authorization       | `Bearer <your_access_secret>` | Bearer 鉴权头  |
+| X-Request-Timestamp | `1742822400`                  | 秒级 Unix 时间戳 |
+| Content-Type        | `application/json`            | JSON 接口固定值  |
 
 ## Curl 示例
 
@@ -54,42 +62,47 @@ curl -G 'https://developer.zhihu.com/api/v1/content/zhihu_search' \
   -H 'Content-Type: application/json'
 ```
 
-
----
+***
 
 # 全网搜索 API
 
 ## 接口说明
+
 该接口用于全网内容搜索。
 
 ## 接口信息
 
-| 说明 | 值                                                        |
-| :- |:---------------------------------------------------------|
-| HTTP URL | https://developer.zhihu.com/api/v1/content/global_search |
-| HTTP Method | GET                                                      |
+| 说明          | 值                                                          |
+| :---------- | :--------------------------------------------------------- |
+| HTTP URL    | <https://developer.zhihu.com/api/v1/content/global_search> |
+| HTTP Method | GET                                                        |
 
 ## 请求参数
+
 ### Header
+
 - Authorization：`Bearer <your_access_secret>`
+
 - X-Request-Timestamp：秒级 Unix 时间戳
+
 - Content-Type：固定值 `application/json`
+
 ### Query
 
-|名称|类型|必填|说明|
-| :- | :- | :- | :- |
-| Query | String | 是 | 查询关键词 |
-| Count | Int32 | 否 | 请求数量，默认 10，最大 20 |
-| Filter | String | 否 | 高级语法筛选表达式。作为 URL Query 参数传入时需进行 URL 编码，推荐使用 `--data-urlencode` 或 SDK 参数编码能力 |
-| SearchDB | String | 否 | 索引库选择，默认 `all` |
+| 名称       | 类型     | 必填 | 说明                                                                          |
+| :------- | :----- | :- | :-------------------------------------------------------------------------- |
+| Query    | String | 是  | 查询关键词                                                                       |
+| Count    | Int32  | 否  | 请求数量，默认 10，最大 20                                                            |
+| Filter   | String | 否  | 高级语法筛选表达式。作为 URL Query 参数传入时需进行 URL 编码，推荐使用 `--data-urlencode` 或 SDK 参数编码能力 |
+| SearchDB | String | 否  | 索引库选择，默认 `all`                                                              |
 
 ### SearchDB 索引库选择
 
-| 值 | 说明 |
-| :- | :- |
-| `all` | 全部索引库，默认值 |
-| `realtime` | 仅搜索实时库 |
-| `static` | 仅搜索静态库 |
+| 值          | 说明        |
+| :--------- | :-------- |
+| `all`      | 全部索引库，默认值 |
+| `realtime` | 仅搜索实时库    |
+| `static`   | 仅搜索静态库    |
 
 ### Filter 高级语法
 
@@ -97,22 +110,23 @@ curl -G 'https://developer.zhihu.com/api/v1/content/zhihu_search' \
 
 支持字段：
 
-| 字段 | 含义 | 类型 | 示例 |
-| :- | :- | :- | :- |
-| host | 站点域名 | String | `host=="example.com"` |
-| publish_time | 发布时间，秒级时间戳 | Int64 | `publish_time>=1778494631` |
+| 字段            | 含义         | 类型     | 示例                         |
+| :------------ | :--------- | :----- | :------------------------- |
+| host          | 站点域名       | String | `host=="example.com"`      |
+| publish\_time | 发布时间，秒级时间戳 | Int64  | `publish_time>=1778494631` |
 
 支持操作符：
 
 - `host` 支持 `==`、`!=`，字符串值必须使用双引号。`host=="zhihu.com"` 及其子域名不支持，如需搜索仅知乎站内内容，请直接使用 `zhihu_search` 接口。
+
 - `publish_time` 支持 `==`、`!=`、`>`、`>=`、`<`、`<=`，数字值不使用引号。
-
-
 
 支持逻辑符：
 
 - `AND`、`OR` 必须大写。
+
 - `AND` 优先级高于 `OR`。
+
 - 可以使用括号 `()` 明确控制优先级。
 
 示例：
@@ -127,38 +141,39 @@ host=="example.com" AND publish_time>=1778494631
 
 Data：
 
-|参数名|类型|是否必返|描述|
-| :- | :- | :- | :- |
-| HasMore | Bool | 是 | 是否有下一页数据 |
-| Items | Array[Item] | 是 | 内容数据列表 |
+| 参数名     | 类型           | 是否必返 | 描述       |
+| :------ | :----------- | :--- | :------- |
+| HasMore | Bool         | 是    | 是否有下一页数据 |
+| Items   | Array\[Item] | 是    | 内容数据列表   |
 
 Item：
 
-|参数名|类型|是否必返| 描述                             |
-| :- | :- | :- |:-------------------------------|
-| Title | String | 是 | 内容标题                           |
-| ContentType | String | 是 | 内容类型，如回答、文章                    |
-| ContentID | String | 是 | 内容 Token                       |
-| ContentText | String | 是 | 内容摘要，高亮部分用 <em> 标签表示           |
-| Url | String | 是 | 内容链接（带溯源 utm 参数）               |
-| CommentCount | Int32 | 是 | 评论数                            |
-| VoteUpCount | Int32 | 是 | 赞同数                            |
-| AuthorName | String | 是 | 作者昵称，匿名时，展示为：知乎用户              |
-| AuthorAvatar | String | 是 | 作者头像                           |
-| AuthorBadge | String | 是 | 认证标图片 Url                      |
-| AuthorBadgeText | String | 是 | 认证文案                           |
-| EditTime | Int64 | 是 | 最后编辑时间戳，如 1745486539           |
-| CommentInfoList | Array[CommentInfo] | 否 | 精选评论                           |
-| AuthorityLevel  | String             | 是 | 权威等级（1 低权威，2 中权威，3 高权威，4 超高权威） |
+| 参数名             | 类型                  | 是否必返 | 描述                             |
+| :-------------- | :------------------ | :--- | :----------------------------- |
+| Title           | String              | 是    | 内容标题                           |
+| ContentType     | String              | 是    | 内容类型，如回答、文章                    |
+| ContentID       | String              | 是    | 内容 Token                       |
+| ContentText     | String              | 是    | 内容摘要，高亮部分用 <em> 标签表示           |
+| Url             | String              | 是    | 内容链接（带溯源 utm 参数）               |
+| CommentCount    | Int32               | 是    | 评论数                            |
+| VoteUpCount     | Int32               | 是    | 赞同数                            |
+| AuthorName      | String              | 是    | 作者昵称，匿名时，展示为：知乎用户              |
+| AuthorAvatar    | String              | 是    | 作者头像                           |
+| AuthorBadge     | String              | 是    | 认证标图片 Url                      |
+| AuthorBadgeText | String              | 是    | 认证文案                           |
+| EditTime        | Int64               | 是    | 最后编辑时间戳，如 1745486539           |
+| CommentInfoList | Array\[CommentInfo] | 否    | 精选评论                           |
+| AuthorityLevel  | String              | 是    | 权威等级（1 低权威，2 中权威，3 高权威，4 超高权威） |
 
 CommentInfo:
 
-|参数名|类型|是否必选|描述|
-| :- | :- | :- | :- |
-| Content | String | 是 | 评论内容 |
+| 参数名     | 类型     | 是否必选 | 描述   |
+| :------ | :----- | :--- | :--- |
+| Content | String | 是    | 评论内容 |
 
 ### 响应示例
-``` json
+
+```json
 {
     "Code": 0,
     "Message": "success",
@@ -207,10 +222,11 @@ CommentInfo:
 }
 ```
 
-
 ## 代码示例
+
 Curl 请求示例:
-``` shell
+
+```shell
 curl -G 'https://developer.zhihu.com/api/v1/content/global_search' \
   --data-urlencode 'Query=怎么理解rave文化' \
   --data-urlencode 'Filter=host=="example.com" AND publish_time>=1778494631' \
@@ -221,7 +237,8 @@ curl -G 'https://developer.zhihu.com/api/v1/content/global_search' \
 ```
 
 Go 语言请求示例:
-``` go
+
+```go
 package main
 
 import (
@@ -294,79 +311,86 @@ func RequestGlobalSearch(accessSecret string, query string, count int, filter st
 }
 ```
 
-
----
+***
 
 # 知乎搜索 API
 
 ## 接口说明
+
 该接口用于知乎站内内容搜索，返回与查询相关的问题、回答或文章结果。
 
 ## 接口信息
 
-| 说明 | 值 |
-| :- | :- |
-| HTTP URL | https://developer.zhihu.com/api/v1/content/zhihu_search |
-| HTTP Method | GET |
+| 说明          | 值                                                         |
+| :---------- | :-------------------------------------------------------- |
+| HTTP URL    | <https://developer.zhihu.com/api/v1/content/zhihu_search> |
+| HTTP Method | GET                                                       |
 
 ## 请求参数
+
 ### Header
+
 - Authorization：`Bearer <your_access_secret>`
+
 - X-Request-Timestamp：秒级 Unix 时间戳
+
 - Content-Type：固定值 `application/json`
 
 ### Query
 
-| 名称 | 类型 | 必填 | 说明 |
-| :- | :- | :- | :- |
-| Query | String | 是 | 查询关键词 |
-| Count | Int32 | 否 | 请求数量，默认 10，最大 10 |
+| 名称    | 类型     | 必填 | 说明               |
+| :---- | :----- | :- | :--------------- |
+| Query | String | 是  | 查询关键词            |
+| Count | Int32  | 否  | 请求数量，默认 10，最大 10 |
 
 说明：
 
 - `Query` 不能为空。
+
 - 当 `Count <= 0` 时，服务端默认回退为 `10`。
+
 - 当 `Count > 10` 时，服务端会自动截断为 `10`。
 
 ## 响应参数
 
 Data：
 
-| 参数名 | 类型 | 是否必返 | 描述 |
-| :- | :- | :- | :- |
-| HasMore | Bool | 是 | 当前实现固定返回 `false` |
-| SearchHashId | String | 是 | 搜索请求标识 |
-| Items | Array[Item] | 是 | 搜索结果列表 |
-| EmptyReason | String | 否 | 无结果时的原因说明 |
+| 参数名          | 类型           | 是否必返 | 描述               |
+| :----------- | :----------- | :--- | :--------------- |
+| HasMore      | Bool         | 是    | 当前实现固定返回 `false` |
+| SearchHashId | String       | 是    | 搜索请求标识           |
+| Items        | Array\[Item] | 是    | 搜索结果列表           |
+| EmptyReason  | String       | 否    | 无结果时的原因说明        |
 
 Item：
 
-| 参数名 | 类型 | 是否必返 | 描述 |
-| :- | :- | :- | :- |
-| Title | String | 是 | 内容标题 |
-| ContentType | String | 是 | 内容类型 |
-| ContentID | String | 是 | 内容标识 |
-| ContentText | String | 是 | 内容摘要 |
-| Url | String | 是 | 内容链接（带溯源 utm 参数） |
-| CommentCount | Int32 | 是 | 评论数 |
-| VoteUpCount | Int32 | 是 | 赞同数 |
-| AuthorName | String | 是 | 作者昵称 |
-| AuthorAvatar | String | 是 | 作者头像 |
-| AuthorBadge | String | 是 | 作者认证图标 |
-| AuthorBadgeText | String | 是 | 作者认证文案 |
-| EditTime | Int32 | 是 | 发布时间或更新时间戳 |
-| CommentInfoList | Array[CommentInfo] | 否 | 精选评论 |
-| AuthorityLevel | String | 是 | 权威等级 |
-| RankingScore | Float32 | 是 | 排序分数 |
+| 参数名             | 类型                  | 是否必返 | 描述               |
+| :-------------- | :------------------ | :--- | :--------------- |
+| Title           | String              | 是    | 内容标题             |
+| ContentType     | String              | 是    | 内容类型             |
+| ContentID       | String              | 是    | 内容标识             |
+| ContentText     | String              | 是    | 内容摘要             |
+| Url             | String              | 是    | 内容链接（带溯源 utm 参数） |
+| CommentCount    | Int32               | 是    | 评论数              |
+| VoteUpCount     | Int32               | 是    | 赞同数              |
+| AuthorName      | String              | 是    | 作者昵称             |
+| AuthorAvatar    | String              | 是    | 作者头像             |
+| AuthorBadge     | String              | 是    | 作者认证图标           |
+| AuthorBadgeText | String              | 是    | 作者认证文案           |
+| EditTime        | Int32               | 是    | 发布时间或更新时间戳       |
+| CommentInfoList | Array\[CommentInfo] | 否    | 精选评论             |
+| AuthorityLevel  | String              | 是    | 权威等级             |
+| RankingScore    | Float32             | 是    | 排序分数             |
 
 CommentInfo：
 
-| 参数名 | 类型 | 是否必返 | 描述 |
-| :- | :- | :- | :- |
-| Content | String | 是 | 评论内容 |
+| 参数名     | 类型     | 是否必返 | 描述   |
+| :------ | :----- | :--- | :--- |
+| Content | String | 是    | 评论内容 |
 
 响应示例：
-``` json
+
+```json
 {
     "Code": 0,
     "Message": "success",
@@ -398,17 +422,19 @@ CommentInfo：
 
 ## 错误码说明
 
-| 错误码 | 说明 |
-| - | - |
-| 0 | 成功 |
+| 错误码   | 说明   |
+| ----- | ---- |
+| 0     | 成功   |
 | 10001 | 参数错误 |
 | 20001 | 鉴权失败 |
 | 30001 | 频率限制 |
 | 90001 | 内部错误 |
 
 ## 代码示例
+
 Curl 请求示例:
-``` shell
+
+```shell
 curl -G 'https://developer.zhihu.com/api/v1/content/zhihu_search' \
   --data-urlencode 'Query=怎么理解rave文化' \
   -d 'Count=5' \
@@ -416,32 +442,36 @@ curl -G 'https://developer.zhihu.com/api/v1/content/zhihu_search' \
   -H "X-Request-Timestamp: $(date +%s)"
 ```
 
-
----
+***
 
 # 知乎热榜 API
 
 ## 接口说明
+
 获取当前知乎热榜内容，返回结构化的标题、链接、缩略图与摘要列表。
 
 ## 接口信息
 
-| 说明 | 值 |
-| - | - |
-| HTTP URL | https://developer.zhihu.com/api/v1/content/hot_list |
-| HTTP Method | GET |
+| 说明          | 值                                                     |
+| ----------- | ----------------------------------------------------- |
+| HTTP URL    | <https://developer.zhihu.com/api/v1/content/hot_list> |
+| HTTP Method | GET                                                   |
 
 ## 请求参数
+
 ### Header
+
 - Authorization：`Bearer <your_access_secret>`
+
 - X-Request-Timestamp：秒级 Unix 时间戳
+
 - Content-Type：固定值 `application/json`
 
 ### Query
 
-| 名称 | 类型 | 必填 | 说明 |
-| :- | :- | :- | :- |
-| Limit | Int32 | 否 | 返回数量，默认 30，最大 30 |
+| 名称    | 类型    | 必填 | 说明               |
+| :---- | :---- | :- | :--------------- |
+| Limit | Int32 | 否  | 返回数量，默认 30，最大 30 |
 
 说明：
 
@@ -451,27 +481,29 @@ curl -G 'https://developer.zhihu.com/api/v1/content/zhihu_search' \
 
 Data：
 
-| 参数名 | 类型 | 是否必返 | 描述 |
-| :- | :- | :- | :- |
-| Total | Int64 | 是 | 实际返回的热榜条数 |
-| Items | Array[Item] | 是 | 热榜内容列表 |
+| 参数名   | 类型           | 是否必返 | 描述        |
+| :---- | :----------- | :--- | :-------- |
+| Total | Int64        | 是    | 实际返回的热榜条数 |
+| Items | Array\[Item] | 是    | 热榜内容列表    |
 
 Item：
 
-| 参数名 | 类型 | 是否必返 | 描述 |
-| :- | :- | :- | :- |
-| Title | String | 是 | 热榜标题 |
-| Url | String | 是 | 热榜对应的知乎链接 |
-| ThumbnailUrl | String | 是 | 缩略图 URL，无封面图时为空字符串 |
-| Summary | String | 是 | 内容摘要，无摘要时为空字符串 |
+| 参数名          | 类型     | 是否必返 | 描述                 |
+| :----------- | :----- | :--- | :----------------- |
+| Title        | String | 是    | 热榜标题               |
+| Url          | String | 是    | 热榜对应的知乎链接          |
+| ThumbnailUrl | String | 是    | 缩略图 URL，无封面图时为空字符串 |
+| Summary      | String | 是    | 内容摘要，无摘要时为空字符串     |
 
 说明：
 
 - 当前仅返回问题和文章两类热榜内容。
+
 - `ThumbnailUrl` 和 `Summary` 始终返回，无数据时值为 `""`。
 
 响应示例：
-``` json
+
+```json
 {
     "Code": 0,
     "Message": "success",
@@ -497,23 +529,24 @@ Item：
 
 ## 错误码说明
 
-| 错误码 | 说明 |
-| - | - |
-| 0 | 成功 |
+| 错误码   | 说明   |
+| ----- | ---- |
+| 0     | 成功   |
 | 20001 | 鉴权失败 |
 | 30001 | 频率限制 |
 | 90001 | 内部错误 |
 
 ## 代码示例
+
 Curl 请求示例:
-``` shell
+
+```shell
 curl 'https://developer.zhihu.com/api/v1/content/hot_list?Limit=10' \
   -H 'Authorization: Bearer <your_access_secret>' \
   -H "X-Request-Timestamp: $(date +%s)"
 ```
 
-
----
+***
 
 # 直答 API
 
@@ -524,45 +557,49 @@ curl 'https://developer.zhihu.com/api/v1/content/hot_list?Limit=10' \
 当前支持 3 个请求字段：
 
 - `model`
+
 - `messages`
+
 - `stream`
 
 ## 接口信息
 
-| 说明 | 值 |
-| :- | :- |
-| HTTP URL | `https://developer.zhihu.com/v1/chat/completions` |
-| HTTP Method | `POST` |
-| 请求类型 | `application/json` |
-| 响应类型 | `application/json`（`stream=false`） / `text/event-stream`（`stream=true`） |
+| 说明          | 值                                                                       |
+| :---------- | :---------------------------------------------------------------------- |
+| HTTP URL    | `https://developer.zhihu.com/v1/chat/completions`                       |
+| HTTP Method | `POST`                                                                  |
+| 请求类型        | `application/json`                                                      |
+| 响应类型        | `application/json`（`stream=false`） / `text/event-stream`（`stream=true`） |
 
 ## 鉴权
 
 Header：
 
 - `Authorization: Bearer <your_access_secret>`
+
 - `X-Request-Timestamp: <unix_seconds>`
 
 说明：
 
 - 当前统一使用 Access Secret 的 Bearer 鉴权语义。
+
 - `X-Request-Timestamp` 为秒级 Unix 时间戳。
 
 ## 请求参数
 
 ### Body
 
-| 名称 | 类型 | 必填 | 说明 |
-| :- | :- | :- | :- |
-| `model` | String | 是 | 模型档位，支持 `zhida-fast-1p5`、`zhida-thinking-1p5`、`zhida-agent` |
-| `messages` | Array[Message] | 是 | 对话消息列表 |
-| `stream` | Bool | 否 | 是否流式返回，默认 `false` |
+| 名称         | 类型              | 必填 | 说明                                                          |
+| :--------- | :-------------- | :- | :---------------------------------------------------------- |
+| `model`    | String          | 是  | 模型档位，支持 `zhida-fast-1p5`、`zhida-thinking-1p5`、`zhida-agent` |
+| `messages` | Array\[Message] | 是  | 对话消息列表                                                      |
+| `stream`   | Bool            | 否  | 是否流式返回，默认 `false`                                           |
 
 Message：
 
-| 名称 | 类型 | 必填 | 说明   |
-| :- | :- |:---|:-----|
-| `role` | String | 是  | 消息角色 |
+| 名称        | 类型     | 必填 | 说明   |
+| :-------- | :----- | :- | :--- |
+| `role`    | String | 是  | 消息角色 |
 | `content` | String | 是  | 问题内容 |
 
 ## 响应说明
@@ -643,21 +680,22 @@ data: [DONE]
 
 ## 接口信息
 
-| 说明 | 值 |
-|---|---|
-| HTTP URL | `https://developer.zhihu.com/api/v1/quota` |
-| HTTP Method | `GET` |
+| 说明          | 值                                          |
+| ----------- | ------------------------------------------ |
+| HTTP URL    | `https://developer.zhihu.com/api/v1/quota` |
+| HTTP Method | `GET`                                      |
 
 Header：
 
 - `Authorization: Bearer <your_access_secret>`
+
 - `X-Request-Timestamp: <unix_seconds>`
 
 Query：
 
-| 名称 | 类型 | 必填 | 说明 |
-|---|---|---:|---|
-| `APIIDs` | String | 否 | 逗号分隔的公开 APIID；省略时返回全部 7 项 |
+| 名称       | 类型     | 必填 | 说明                        |
+| -------- | ------ | -: | ------------------------- |
+| `APIIDs` | String |  否 | 逗号分隔的公开 APIID；省略时返回全部 7 项 |
 
 `APIIDs` 支持 `global_search`、`zhihu_search`、`hot_list`、`user_data`、`zhida_openai`、`knowledge`、`tools`。知识库和小工具分别使用 `knowledge`、`tools` 统一额度。
 
@@ -669,13 +707,13 @@ GET /api/v1/quota?APIIDs=knowledge,tools
 
 响应 `Data` 是额度项数组：
 
-| 字段 | 类型 | 说明 |
-|---|---|---|
-| `APIID` | String | 公开统一 APIID |
-| `APIName` | String | 展示名称 |
-| `TotalQuota` | Int64 | 当前自然日总额度 |
-| `TotalUsed` | Int64 | 当前自然日已用额度 |
-| `RemainingQuota` | Int64 | 当前自然日剩余额度 |
+| 字段               | 类型     | 说明         |
+| ---------------- | ------ | ---------- |
+| `APIID`          | String | 公开统一 APIID |
+| `APIName`        | String | 展示名称       |
+| `TotalQuota`     | Int64  | 当前自然日总额度   |
+| `TotalUsed`      | Int64  | 当前自然日已用额度  |
+| `RemainingQuota` | Int64  | 当前自然日剩余额度  |
 
 ```json
 {
@@ -695,12 +733,12 @@ GET /api/v1/quota?APIIDs=knowledge,tools
 
 错误码：
 
-| Code | 说明 |
-|---:|---|
+|    Code | 说明           |
+| ------: | ------------ |
 | `10001` | 参数或 APIID 非法 |
-| `20001` | 鉴权失败 |
-| `30001` | 触发频率限制 |
-| `90001` | 请求失败 |
+| `20001` | 鉴权失败         |
+| `30001` | 触发频率限制       |
+| `90001` | 请求失败         |
 
 # 知识库 API
 
@@ -731,10 +769,10 @@ Content-Type: multipart/form-data
 
 multipart part：
 
-| 字段 | 必填 | 说明 |
-|---|---:|---|
-| `File` | 是 | 单个非空文件，最大 100 MiB |
-| `KnowledgeBaseID` | 否 | 省略时使用当前用户默认知识库 |
+| 字段                | 必填 | 说明                |
+| ----------------- | -: | ----------------- |
+| `File`            |  是 | 单个非空文件，最大 100 MiB |
+| `KnowledgeBaseID` |  否 | 省略时使用当前用户默认知识库    |
 
 上传是同步、有副作用的 POST，不应自动重试。成功 `Data` 必返 `KnowledgeBaseID`、`RecallContentID`、`FileName`、`FileSize`，并可能返回 `Title`、`Abstract`、`OriginUrl`。
 
@@ -758,13 +796,14 @@ Content-Type: application/json
 
 ## 知识库错误
 
-| Code | Message | 语义 |
-|---:|---|---|
-| `10001` | `invalid request` | 参数、ID、文件或枚举非法 |
-| `20001` | `permission denied` | 无权访问目标资源 |
-| `30001` | `rate limit exceeded` | 调用频率或额度受限 |
-| `40004` | `knowledge base not found` | 知识库不存在 |
-| `40005` | `file is being processed` | 相同文件仍在处理 |
-| `40006` | `file parsing failed` | 文件解析失败 |
-| `50002` | `search failed, please try again later` | RAG 检索失败 |
-| `90001` | `request failed` | 其他安全收敛后的内部失败 |
+|    Code | Message                                 | 语义            |
+| ------: | --------------------------------------- | ------------- |
+| `10001` | `invalid request`                       | 参数、ID、文件或枚举非法 |
+| `20001` | `permission denied`                     | 无权访问目标资源      |
+| `30001` | `rate limit exceeded`                   | 调用频率或额度受限     |
+| `40004` | `knowledge base not found`              | 知识库不存在        |
+| `40005` | `file is being processed`               | 相同文件仍在处理      |
+| `40006` | `file parsing failed`                   | 文件解析失败        |
+| `50002` | `search failed, please try again later` | RAG 检索失败      |
+| `90001` | `request failed`                        | 其他安全收敛后的内部失败  |
+
