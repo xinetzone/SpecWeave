@@ -21,7 +21,8 @@ full = ["podman>=5.0.0", "podman-compose>=1.0.0"]
 model = ["omlmd>=0.2.0", "olot[oras-py]>=0.2.0"]
 
 [tool.scikit-build]
-wheel.packages = ["tasks"]
+wheel.packages = ["src/jpman_builder"]
+wheel.cmake = false
 build.verbose = false
 build-dir = "build/{wheel_tag}"
 minimum-version = "0.9"
@@ -31,4 +32,4 @@ build-type = "Release"
 args = ["-G", "Ninja"]
 
 [tool.invoke]
-package = "tasks"
+package = "jpman_builder.tasks"

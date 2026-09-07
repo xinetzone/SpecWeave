@@ -67,3 +67,4 @@ if platform.system() == "Windows":
         config["run"] = {"shell": pwsh}
 
 ns.configure(config)
+
