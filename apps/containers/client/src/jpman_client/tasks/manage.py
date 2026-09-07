@@ -76,7 +76,22 @@ def _load_env_overrides(project_root: Path) -> dict:
 
 
 def _project_root() -> Path:
-    return Path(__file__).parent.parent.resolve()
+    """定位应用根目录（含 .env 和 pyproject.toml 的目录）。
+
+    以 pyproject.toml 为锚点向上查找（比硬编码 parent 层数更稳健：
+    无论 src/ 布局如何调整、子包嵌套多深，锚点不变）。
+    找不到锚点（如 pip install 后 site-packages 场景）退回 Path.cwd()，
+    保证 ``.env`` 读取逻辑不会抛错。
+    """
+    cur = Path(__file__).resolve().parent
+    # 安全上限：避免在极深层嵌套结构下退化成 O(n)
+    for _ in range(12):
+        if (cur / "pyproject.toml").exists():
+            return cur.resolve()
+        if cur.parent == cur:  # 文件系统根 / Windows 盘符根
+            break
+        cur = cur.parent
+    return Path.cwd().resolve()
 
 
 def _merge_config(
@@ -107,7 +122,7 @@ def _merge_config(
         ssh_port=int(pick(ssh_port, "SSH_PORT", ContainerConfig.ssh_port)),
         jupyter_port=int(pick(jupyter_port, "JUPYTER_PORT", ContainerConfig.jupyter_port)),
         workspace=str(
-            normalize_path_str(str(pick(workspace, "WORKSPACE", ContainerConfig.workspace)))
+            pick(workspace, "WORKSPACE", ContainerConfig.workspace)
         ),
         user_password=str(pick(user_password, "USER_PASSWORD", "")),
         jupyter_token=str(pick(jupyter_token, "JUPYTER_TOKEN", "")),

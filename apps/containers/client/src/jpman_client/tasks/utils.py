@@ -76,8 +76,33 @@ class ContainerConfig:
     detach: bool = True
 
     def resolved_workspace(self) -> Path:
-        """将 workspace 解析为绝对路径（基于当前 cwd）。"""
-        ws = Path(self.workspace)
+        """将 workspace 解析为**宿主系统**下的绝对路径（用于卷挂载源路径）。
+
+        三语义识别（避免 Windows Python 把 POSIX 绝对路径误判为相对再拼到 cwd 下
+        导致 ``/mnt/d/spaces/SpecWeave`` → ``D:\\mnt\\d\\spaces\\SpecWeave`` 这种
+        错目录挂载，表现为容器内 ``/workspace`` 下只剩 apps/Untitled.ipynb 这种
+        少文件现象）：
+
+        ① 宿主 Windows，输入形如 ``/mnt/<drive>/...`` → 先还原成 ``D:\\...`` 再 resolve
+        ② 宿主 Windows，输入形如 ``D:/...`` / ``D:\\...``（带盘符冒号）→ 直接 resolve
+        ③ 宿主 Windows，输入以 ``/`` 开头但不是 WSL ``/mnt/<drive>`` 格式
+           （如 Unix 绝对路径 ``/workspace``）→ 按原样返回 Path，不要相对拼接
+        ④ 宿主 Windows / 非 Windows，输入相对路径（``./workspace`` / ``workspace``）
+           → 基于 ``Path.cwd()`` 拼接后 resolve
+        ⑤ 非 Windows，输入 POSIX 绝对路径 → Path(...).resolve() 原生处理
+        """
+        raw = str(self.workspace).strip()
+        is_win = platform.system() == "Windows"
+
+        if is_win and raw.startswith("/"):
+            m = re.match(r"^/mnt/([a-z])(?:/(.*))?$", raw)
+            if m:
+                drive = m.group(1).upper()
+                rest = (m.group(2) or "").replace("/", "\\")
+                return Path(f"{drive}:\\{rest}").resolve()
+            return Path(raw)
+
+        ws = Path(raw)
         if not ws.is_absolute():
             ws = Path.cwd() / ws
         return ws.resolve()
