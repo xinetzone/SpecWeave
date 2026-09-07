@@ -65,10 +65,15 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 
 # ------------------------------------------------------------
 # 运行时默认值（用户可通过 -e 覆盖）
+# PYTHONIOENCODING / PYTHONUTF8：容器内 invoke 输出强制 UTF-8，防止被
+#   宿主 Windows chcp 936(GBK) 解读时产生中文乱码；同时对齐宿主
+#   utils.py::_ensure_win32_console_utf8 的修复策略（两端一致）。
 # ------------------------------------------------------------
 ENV PODMAN_CLIENT_SDK_STRATEGY=legacy \
     IMAGE_CACHE_DIR=/workspace/.image-cache \
-    WORKSPACE=/workspace
+    WORKSPACE=/workspace \
+    PYTHONIOENCODING=UTF-8 \
+    PYTHONUTF8=1
 
 WORKDIR /workspace
 

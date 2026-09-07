@@ -306,6 +306,18 @@ invoke env.shell
 (in-container) $ inv run --workspace /workspace
 ```
 
+> **🛟 中文乱码排查（仅 Windows / Trae Sandbox 默认 chcp 936 时）**
+>
+> 症状：`invoke env.*` / `inv --list` 等命令的中文任务描述出现 `娓呯悊瀹瑰櫒` 之类的错位字符。
+> 根因：**三层字符集错配**：容器/Podman 管道输出 bytes 永远 = UTF-8，而 Windows PowerShell 5 / Trae Sandbox 默认 chcp 936 (GBK) 在解码这些 bytes。
+> 修复：`jpman_client/tasks/utils.py::_ensure_win32_stdout_transcode()` 已在 `run_cmd()` 入口自动执行以下双端修复（模块级单例只初始化一次）：
+>
+> 1. **B 端捕获修复（源头不乱码）：`invoke c.run(..., encoding='utf-8')` 强制 UTF-8 解码子进程 stdout bytes → `Result.stdout` 里的 str 就是正确中文。
+> 2. **A 端打印修复：用 `kernel32.GetConsoleOutputCP()` 获取宿主真实代码页（通常 936），通过 `io.TextIOWrapper` 把 `sys.stdout` / `sys.stderr` 换壳编码成宿主实际解码端一致的 bytes（trae-sandbox 收到 cp936 解码 → 中文正确显示。
+> 3. **逃生舱（如仍出现个别 `?` 字符）：这些字符大概率不在 GBK 字符集中（如某些异体字 / Unicode 私人区的 挙 ），属于文档 / 代码源文件中的字符串中使用全角标点；可改用 GB2312/GBK 可直接表示的常见简体中文即可。
+> 4. 容器层加固：Containerfile.client ENV 追加 `PYTHONIOENCODING=UTF-8` + `PYTHONUTF8=1`，保证容器内 invoke 也永远输出 UTF-8 bytes。
+>
+
 ### 10.4 叠加镜像内约定（由 Containerfile.client 保证）
 
 | 约定 | 值 | 说明 |
