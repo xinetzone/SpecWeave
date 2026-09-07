@@ -1,0 +1,25 @@
+[build-system]
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "jupyter-podman-client"
+version = "0.1.0"
+description = "jupyter-podman-rootless 镜像消费端：基于 podman-py 从本地加载镜像并管理容器生命周期"
+readme = "README.md"
+requires-python = ">=3.14"
+license = { text = "MIT" }
+dependencies = [
+    "invoke>=2.0",
+    "podman>=5.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[tool.scikit-build]
+wheel.packages = ["tasks"]
+build.verbose = false
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.9"
+
+[tool.invoke]
+package = "tasks"

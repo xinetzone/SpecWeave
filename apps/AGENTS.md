@@ -41,6 +41,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | 分组 | 应用 | AGENTS.md 入口 | .agents/ | 说明 |
 |------|------|---------------|:---:|------|
 | containers/ | jupyter-podman-rootless | [containers/jupyter-podman-rootless/AGENTS.md](containers/jupyter-podman-rootless/AGENTS.md) | ✅ 有 | 基于Podman rootless的Jupyter开发容器（Python 3.14t + Miniforge3 + SSH + rootless Podman + OMLMD/OLOT + Toolbx透传，invoke管理，三层后端自动降级） |
+| containers/ | client | —（遵循根规范） | ❌ 无 | jupyter-podman-rootless 镜像消费端：基于 podman-py 从本地 tar.gz 加载镜像并管理容器生命周期，供脚本化集成/嵌入调用 |
 | docker-images/ | devcontainer-base | [docker-images/devcontainer-base/AGENTS.md](docker-images/devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（Ubuntu 26.04，SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理，Python 3.14 cp314t free-threading） |
 | docker-images/ | devcontainer-win11 | [docker-images/devcontainer-win11/AGENTS.md](docker-images/devcontainer-win11/AGENTS.md) | ✅ 有 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell管理，Python 3.14 cp314t free-threading） |
 | docker-images/ | docker-ssh-dind | [docker-images/docker-ssh-dind/AGENTS.md](docker-images/docker-ssh-dind/AGENTS.md) | ✅ 有 | Docker SSH DinD（Docker-in-Docker）环境 |
@@ -67,9 +68,10 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 SpecWeave 根 AGENTS.md
   └─ apps/AGENTS.md（本文件，apps 区域入口）
        ├─ containers/（Podman容器镜像类分组）
-       │    └─ jupyter-podman-rootless/AGENTS.md（jupyter-podman-rootless 应用入口 · 嵌套优先 · rootless Podman + conda + invoke + OMLMD/OLOT + Toolbx）
-       │         └─ .agents/rules/（containerfile/entrypoint/services/compose/invoke-tasks/ml-models/build-test 7个规范文件）
-       │         └─ docs/（14个人类可读文档）
+       │    ├─ jupyter-podman-rootless/AGENTS.md（jupyter-podman-rootless 应用入口 · 嵌套优先 · rootless Podman + conda + invoke + OMLMD/OLOT + Toolbx）
+       │    │    └─ .agents/rules/（containerfile/entrypoint/services/compose/invoke-tasks/ml-models/build-test 7个规范文件）
+       │    │    └─ docs/（14个人类可读文档）
+       │    └─ client（jupyter-podman-rootless 镜像消费端 · podman-py SDK 优先 · invoke load/run/stop/status/clean）
        └─ docker-images/（Docker容器镜像类分组）
             ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）
             ├─ devcontainer-win11/AGENTS.md（devcontainer-win11 应用入口 · 嵌套优先 · Windows+free-threading）
@@ -209,6 +211,7 @@ apps 区域内有 `.agents/` 目录的应用，其规范资产可被跨应用调
 | apps/containers/jupyter-podman-rootless/AGENTS.md | 应用自治 | ✅ 是 | jupyter-podman-rootless 入口 |
 | apps/containers/jupyter-podman-rootless/.agents/ | 应用自治 | ✅ 是 | jupyter-podman-rootless 规范体系（7个rules文件：containerfile/entrypoint/services/compose/invoke-tasks/ml-models/build-test） |
 | apps/containers/jupyter-podman-rootless/docs/ | 应用自治 | ✅ 是 | jupyter-podman-rootless 人类可读文档（14个原子化文档+索引） |
+| apps/containers/client/ | 应用自治（遵循根规范） | ✅ 是 | jupyter-podman-rootless 镜像消费端：podman-py 加载 tar.gz、invoke load/run/stop/status/clean 命令、SDK 优先 CLI fallback、rootless 三必需参数内置 |
 | apps/docker-images/devcontainer-base/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | 全功能开发容器（Ubuntu，SSH+Docker+Podman+Jupyter，supervisord管理） |
 | apps/docker-images/devcontainer-base/AGENTS.md | 应用自治 | ✅ 是 | devcontainer-base 入口 |
 | apps/docker-images/devcontainer-win11/ | 应用自治（有自身 AGENTS.md） | ✅ 是 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell管理，Python 3.14 cp314t free-threading） |
