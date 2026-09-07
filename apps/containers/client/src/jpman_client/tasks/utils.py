@@ -746,3 +746,70 @@ def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
         reverse=True,
     )
     return candidates[0] if candidates else None
+
+
+def ensure_known_hosts(cfg: ContainerConfig) -> None:
+    """确保 ~/.ssh/known_hosts 中 [localhost]:{ssh_port} 条目是最新的。
+
+    JPMan 容器每次重建（podman container restart/recreate）会重新生成 SSH
+    host key（``/etc/ssh/ssh_host_*_key``），导致本地 known_hosts 记录的旧 key
+    与远程新 key 不匹配，触发 ``Offending key in .../known_hosts:N`` 错误。
+
+    本函数在容器启动前自动处理：
+      1. 读取 ``~/.ssh/known_hosts``
+      2. 移除所有 ``[localhost]:{ssh_port}`` 和 ``[127.0.0.1]:{ssh_port}`` 条目
+      3. 使用 ``ssh-keyscan`` 获取最新 key 并写入 known_hosts（若可用）
+      4. 若 ssh-keyscan 不可用，仅清理旧条目（SSH 首次连接时会提示接受新 key）
+
+    调用方：在 ``run_container()`` 之前、``image_exists`` 检查通过后调用。
+    """
+    import os as _os
+
+    known_hosts_path = Path(_os.environ.get("HOME", "~")) / ".ssh" / "known_hosts"
+    port = str(cfg.ssh_port)
+
+    # 匹配 [localhost]:PORT 或 [127.0.0.1]:PORT 的完整行（包括注释行）
+    pattern_host = re.compile(
+        r"^(\[[^\]]+\]:" + re.escape(port) + r"\s+)"
+    )
+
+    if not known_hosts_path.exists():
+        return
+
+    try:
+        lines = known_hosts_path.read_text(encoding="utf-8").splitlines()
+    except Exception:
+        try:
+            lines = known_hosts_path.read_text(encoding="utf-8-sig").splitlines()
+        except Exception:
+            return
+
+    original_count = len(lines)
+    filtered = [line for line in lines if not pattern_host.match(line)]
+
+    if len(filtered) == original_count:
+        return  # 无需更新
+
+    # 尝试用 ssh-keyscan 获取最新 key
+    try:
+        result = subprocess.run(
+            ["ssh-keyscan", "-T", "5", "-p", str(cfg.ssh_port), "localhost"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            # 过滤掉错误行和空行，保留有效 key 行
+            key_lines = [
+                l for l in result.stdout.splitlines()
+                if l and not l.startswith("#") and ":" in l
+            ]
+            if key_lines:
+                filtered.extend(key_lines)
+
+        known_hosts_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
+        print(f"[Run] ✓ known_hosts 已更新：移除 {original_count - len(filtered)} 条过期条目")
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        # ssh-keyscan 不可用（如 Windows 原生环境），仅清理旧条目
+        known_hosts_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
+        print(f"[Run] ✓ known_hosts 已清理 {original_count - len(filtered)} 条过期条目（ssh-keyscan 不可用，SSH 首次连接时将提示接受新 key）")

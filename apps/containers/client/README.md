@@ -90,6 +90,8 @@ invoke images        # 列出本地所有镜像
 
 配置合并优先级：`命令行参数 > .env 环境变量 > ContainerConfig 默认值`。
 
+**SSH known_hosts 自动维护**：每次执行 `invoke run` 时，启动流程会自动扫描并清理 `~/.ssh/known_hosts` 中与当前 `SSH_PORT`（默认 2222）匹配的 `[localhost]:PORT` / `[127.0.0.1]:PORT` 过期条目，然后尝试用 `ssh-keyscan` 写入最新 key。JPMan 容器重建后 host key 必然变更，此逻辑消除了手动干预需求。
+
 ## 5. Windows 11 × WSL2 支持
 
 本项目显式支持 **Windows 11 原生 CPython 调用 podman-py SDK 连到 WSL2 内 / Podman Machine 的 Podman daemon**，无需用户手写 `base_url`，默认零配置即可运行。

@@ -51,6 +51,7 @@ from .client_core import (
 from .utils import (
     ContainerConfig,
     default_build_cache_dir,
+    ensure_known_hosts,
     find_latest_image_tar,
     normalize_path_str,
 )
@@ -231,6 +232,7 @@ def run(
         print("[Run]   或执行: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
         raise Exit(1)
 
+    ensure_known_hosts(cfg)
     run_container(c, cfg)
 
 
