@@ -1,0 +1,440 @@
+# TRAE 生态特性监测 —— 状态快照
+# 用途：每周例行任务比对官方更新日志条目与本地插件/skills/MCP 清单，检测增量
+# 维护：trae-feature-watch 例行任务自动覆写；人工勿手改计数（以官方页与本地盘点重算为准）
+# 首次运行：2026-09-07（baseline，仅建基线，不生成特性报告）
+schema_version: 1
+first_run_at: "2026-09-07"
+last_check_at: "2026-09-07"
+run_kind: baseline  # baseline=首次基线；diff=常规比对（有更新出报告 / 无更新仅刷新时间戳）
+
+# ─────────────────────────────────────────────
+# 官方信息源（公开内容；每条均附 URL，版本号照录官方原文）
+# ─────────────────────────────────────────────
+official_sources:
+  - id: trae-enterprise-release-notes
+    url: https://docs.trae.cn/enterprise_release-notes
+    product: TRAE 企业版（控制台/管理 API）
+    latest_entry_date: "2026-09-02"
+    latest_entry_summary: 支持将飞书文档添加为企业文档集
+    recent_entries:
+      - date: "2026-09-02"
+        items:
+          - 支持将飞书文档添加为企业文档集
+      - date: "2026-08-31"
+        items:
+          - 新增系统内置模型 Kimi-K3
+      - date: "2026-08-28"
+        items:
+          - 新增系统内置模型 GLM-5.3-Flash
+          - TraeCode 中内置智能体 "Agent" 与 "SOLO Agent" 合并为 "Agent"
+          - 企业版控制台支持查看企业自定义模型用量明细
+          - 人员管理/部门管理/用量管理/数据分析四类开放平台 API 批量新增与更新（含部门 CRUD、部门用量、部门 MCP 使用排行等）
+      - date: "2026-08-11"
+        items:
+          - 新增"部门管理"功能（部门 CRUD、人员部门信息、批量导入、部门数据分析/用量统计/模型开放范围管理）
+    pending_verification:
+      - 企业版日志检索摘要另见"企业级 Hook（生命周期钩子，适用 TraeCode、TraeCode CLI）"与"Fork Chat（从会话流任一节点创建会话副本）"条目，位于 08-28～09-02 间被截断段落，下次运行需抓取全文核验日期与细节
+
+  - id: traecode-intl-changelog
+    url: https://docs.trae.ai/ide/changelog
+    product: TraeCode（国际版 IDE，docs.trae.ai）
+    latest_entry_date: "2026-08-19"
+    latest_version: "v3.5.89 ~ v3.5.91（Hotfix）"
+    recent_entries:
+      - date: "2026-08-19"
+        version: "v3.5.89 ~ v3.5.91"
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-08-12"
+        version: v3.5.88
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-08-10"
+        version: v3.5.87
+        kind: Hotfix
+        items: [修复已知问题]
+      - date: "2026-08-07"
+        version: "v3.5.84 ~ v3.5.86"
+        kind: 功能发布
+        items:
+          - 支持跳转至对话流中的任一 Query（对话面板左侧对话缩略导航）
+      - date: "2026-07-21"
+        version: v3.5.79
+        kind: 功能优化
+        items: [修复安全相关问题并优化安全能力]
+      - date: "2026-07-08"
+        version: v3.5.74
+        kind: 功能发布
+        items:
+          - 【仅个人版】设置中新增"浏览器"配置页（浏览器控制/Browser Use）
+          - 【仅个人版】Windows 接入 MSSDK
+      - date: "2026-06-29"
+        version: v3.5.71
+        kind: 功能发布
+        items: [Browser Use 部分卡片增加截图展示]
+      - date: "2026-06-23"
+        version: "v3.5.69 ~ v3.5.70"
+        kind: 功能发布
+        items:
+          - 整合内置智能体：仅保留 Chat、Agent
+          - 修复 Write 工具流式编辑已有文件时的 Diff 问题
+      - date: "2026-06-17"
+        version: v3.5.67
+        kind: 功能发布
+        items:
+          - 开放 TRAE 企业版
+          - 支持加载 .trae/agents 目录下的 Subagents 定义文件（需在 Beta 功能设置页开启"启用 Subagents 目录"开关）
+          - -1/3003 等可重试错误端上自动重试，并撤回未执行的工具卡片
+      - date: "2026-06-10"
+        version: v3.5.66
+        kind: 功能发布
+        items:
+          - 支持钩子（Hook）功能：智能体执行特定事件节点运行自定义 Shell 命令
+          - 逐步灰度 Agent 删除工具自动执行，被删文件可在系统回收站/废纸篓找回
+
+  - id: trae-cn-ide-changelog
+    url: https://docs.trae.cn/ide/changelog
+    product: TRAE CN（国内版 IDE，docs.trae.cn）
+    latest_entry_date: "2026-06-09"
+    latest_version: "v3.3.64 ~ v3.6.65（原文照录；3.6.65 疑为 3.3.65 笔误，待核验）"
+    note: 国内站 IDE 更新日志最新条目停留在 2026-06-09，国际站已更新至 2026-08-19；监测时两站并查，国内站停滞本身列为观察项
+    recent_entries:
+      - date: "2026-06-09"
+        version: "v3.3.64 ~ v3.6.65"
+        kind: 功能发布
+        items:
+          - 【仅企业版】支持在客户端中一键上传日志
+      - date: "2026-06-04"
+        version: v3.3.63
+        kind: 功能发布
+        items:
+          - 【仅个人版】TRAE CN 与 TRAE 国际版的全局技能目录相互兼容
+          - 修复 Subagent 卡片展开/折叠问题
+      - date: "2026-05-08"
+        version: v3.3.56
+        kind: 功能发布
+        items:
+          - Builder 与 Builder with MCP 智能体合并为 Agent；SOLO Coder 更名为 SOLO Agent
+          - .trae/commands/ 项目命令文件支持最多 3 层目录嵌套
+      - date: "2026-04-28"
+        version: v3.3.54
+        kind: 功能发布
+        items:
+          - 新增斜杠命令（自定义命令）功能
+          - 设置面板归类为"索引与文档""技能与命令""规则"
+      - date: "2026-04-14"
+        version: v3.3.51
+        kind: 功能发布
+        items:
+          - 规则嵌套（.trae/rules/ 子文件夹，递归最多 3 层）与子目录规则
+          - Git Commit Message 生成规则配置入口
+          - MCP Server 支持完整 OAuth 授权流程（授权/运行/调用/解除）
+          - 自定义模型支持自定义请求地址
+      - date: "2026-04-02"
+        version: v3.3.44
+        kind: 功能发布
+        items:
+          - 支持从 .agents/skills 目录自动加载技能
+          - 支持为 AI 生成的 Git Commit Message 设置规则
+
+  - id: traework-changelog
+    url: https://docs.trae.cn/work_changelog
+    product: TraeWork（桌面版/网页版/移动端 App）
+    latest_entry_date: "2026-08-21"
+    latest_version: "桌面版 v0.1.49 ~ v0.1.52（网页版同步）"
+    recent_entries:
+      - date: "2026-08-21"
+        version: "桌面版 v0.1.49 ~ v0.1.52"
+        items:
+          - 支持"电脑控制"功能（Computer Use）
+          - 支持编辑 Design 模式中生成的图片（画布中预览并管理设计成果）
+          - 支持将对话框最小化为悬浮窗小标
+      - date: "2026-08-11"
+        version: "桌面版 v0.1.47 ~ v0.1.48"
+        items:
+          - 上线"我的文件"功能（产物空间）
+      - date: "2026-08-07"
+        version: "桌面版 v0.1.44 ~ v0.1.46；移动端 App v0.0.16"
+        items:
+          - 支持对话分享
+          - 灰度上线插件自动推荐
+          - 输入框 / 与附件上传按钮整合进「+」按钮
+          - 上线办公助理功能
+          - 移动端支持对话流内直接预览视频产物
+      - date: "2026-07-31"
+        version: "桌面版 v0.1.40 ~ v0.1.43"
+        items:
+          - 上线以积分为核心的计费模式
+          - 上线模板库
+      - date: "2026-07-27"
+        version: "移动端 App v0.0.15"
+        items: [对话输入框中可选择插件调用]
+      - date: "2026-07-21"
+        version: "桌面版 v0.1.35 ~ v0.1.39"
+        items:
+          - 上线插件市场
+          - 支持视频生成能力
+      - date: "2026-07-14"
+        version: "桌面版 v0.1.24 ~ v0.1.34；移动端 v0.0.12 ~ v0.0.13"
+        items:
+          - 支持分享 HTML 格式产物
+          - 任务搜索与置顶优化
+          - 新增站内信消息通知
+      - date: "2026-06-24"
+        version: "桌面版 v0.1.21 ~ v0.1.23"
+        items:
+          - 发布 Design 模式（输入设计需求/上传参考图/选择设计系统，生成页面原型或高保真设计）
+          - 语音讨论支持联网搜索、读取项目级记忆
+          - 支持记忆（偏好与规则保存为记忆）
+      - date: "2026-06-09"
+        version: "v0.1.18"
+        items:
+          - TRAE SOLO 升级为 TraeWork
+          - TraeWork 支持企业版账号登录
+
+  - id: traework-design-system-doc
+    url: https://docs.trae.cn/solo_design-system
+    product: TraeWork 设计系统 / Design Library（Design 模式配套文档）
+    latest_known_state: "Design 模式 2026-06-24 发布；Design Library 三种添加方式：解析 Figma 文件自动提取主题色/字体层级/组件样式、导入设计规范、风格探索（对话生成设计系统）；内置 TRAE Work/豆包/Apple/Claude/Google/Vercel 等预设品牌设计系统；支持 UI 截图设计还原"
+    related_docs:
+      - https://docs.trae.cn/work_use-the-design-mode
+      - https://docs.trae.cn/work_plugins
+    note: 设计库无独立 changelog，增量通过 TraeWork 更新日志与文档页变更监测
+
+# ─────────────────────────────────────────────
+# 本地清单盘点（2026-09-07，本机 c:\Users\xinzo\.trae-cn）
+# ─────────────────────────────────────────────
+local_inventory:
+  plugins_dir: c:\Users\xinzo\.trae-cn\plugins
+  plugins:
+    - {name: browser-bridge, version: "0.2.0", kind: standalone, has_connector: false}
+    - {name: trae-remote-official/browser, version: "1.0.3", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/chrome, version: "1.0.5", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/computer-use, version: "0.0.5", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/dingtalk, version: "0.0.4", kind: official-plugin, has_connector: true}
+    - {name: trae-remote-official/frontend-design, version: "0.0.0", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/gitee, version: "0.0.3", kind: official-plugin, has_connector: true}
+    - {name: trae-remote-official/github, version: "0.1.2", kind: official-plugin, has_connector: true}
+    - {name: trae-remote-official/lark, version: "1.0.4", kind: official-plugin, has_connector: true}
+    - {name: trae-remote-official/seedance, version: "1.0.1", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/seedream, version: "1.0.1", kind: official-plugin, has_connector: false}
+    - {name: trae-remote-official/web-app-development, version: "0.1.1", kind: official-plugin, has_connector: false}
+  plugins_total: 12
+  connectors: [dingtalk, gitee, github, lark]
+  mcps_dir: c:\Users\xinzo\.trae-cn\mcps
+  active_mcp_servers:  # 以本会话 mcp_file_system 声明为准（工作区 s_SpecWeave-01b8097d / solo_agent_lite）
+    - {server: integrated_code_mode, tools: [Exec], note: 隔离 JS 运行时编排工具}
+    - {server: mcp_plugin_Gitee_gitee, tools_count: 23, note: Gitee 平台 MCP（仓库/Issue/PR/Release/评论）}
+  mcp_cache_note: mcps 目录按工作区会话缓存（s_<workspace> 前缀）；另见 mcp_Computer_Use 工具缓存（click/drag/launch_app 等 13 工具），当前会话未在 mcp_file_system 声明为活跃
+  session_skills_count: 188
+  session_skills:
+    # 内置/平台与用户级 skills（155 个）
+    - 21th-design
+    - Dashboard Page
+    - Doc Page
+    - PPT Page
+    - TRAE-browseruse
+    - TRAE-code-review
+    - TRAE-computer-use-ptc
+    - TRAE-debugger
+    - TRAE-generate-mini-app
+    - TRAE-plan-mode
+    - TRAE-product-knowledge
+    - TRAE-security-review
+    - TRAE-spec-mode
+    - agent-browser
+    - aily-pdm
+    - algorithmic-art
+    - alipay-aipay
+    - alipay-payment-integration
+    - arxiv-watcher
+    - asr
+    - atomic-commit-cmd
+    - atomization-cmd
+    - atomization-finalize-cmd
+    - barbie-design
+    - blog-article-to-okf-wiki
+    - brainstorming
+    - brand-guidelines
+    - byted-bp-cdn-pagesdeploy
+    - byted-mediakit-shared
+    - byted-seedance-video-generate
+    - byted-seedream-image-generate
+    - canvas-design
+    - chart-visualization
+    - check-duplication-cmd
+    - ci-check-cmd
+    - claude-design-system-design
+    - consulting-analysis
+    - content-parser
+    - data-analysis
+    - defuddle
+    - design-library-creator
+    - doc-coauthoring
+    - doc-writing-guide
+    - docgen-cmd
+    - docker-cache-cmd
+    - docker-wsl-bridge-cmd
+    - docx
+    - docx-template-report
+    - dogfood
+    - doubao-design
+    - douyin-interact-creation
+    - douyinpay-payment-integration
+    - dynamic-ui
+    - electron
+    - elite-longterm-memory
+    - executing-plans
+    - explainer
+    - export-report-cmd
+    - extraction-cmd
+    - feedback
+    - figma
+    - find-skills
+    - forum-posting
+    - frontend-design
+    - frontend-skill
+    - gh-cli
+    - git-commit
+    - git-commit-helper
+    - github-search
+    - golden-time-design
+    - google-design
+    - gsap
+    - home-assistant
+    - hook-analyzer
+    - html-deck
+    - html-report
+    - hyperframes
+    - hyperframes-cli
+    - hyperframes-media
+    - hyperframes-registry
+    - iga-pages
+    - image-gen
+    - insight-cmd
+    - internal-comms
+    - jpman-podman-ops
+    - kimi-webbridge
+    - knowledge-graph-generator
+    - link-check-cmd
+    - load-flexloop-skills
+    - load-specweave
+    - local-asr
+    - local-computer-use
+    - local-img2img
+    - local-mineru
+    - local-ocr-npu
+    - local-realtime-translator
+    - local-screenshot-qa
+    - local-tts
+    - local-txt2img
+    - local-vram
+    - loop-engineering-cmd
+    - mcp-builder
+    - mermaid-cmd
+    - minimal-dashboard-design
+    - motionfit-design
+    - multi-search-engine
+    - nerv-design
+    - nimbus-core-design
+    - notion-spec-to-implementation
+    - pdf
+    - pdf-to-feishu
+    - pinguo-apple-design
+    - podcast
+    - pptx
+    - redis-development
+    - report-generator
+    - report-page
+    - research-guide
+    - retrospective-cmd
+    - screenshot
+    - secondme
+    - secondme-init
+    - secondme-nextjs
+    - secondme-prd
+    - secondme-reference
+    - security-best-practices
+    - seven-concepts-cmd
+    - shadcn
+    - skill-creator
+    - slides
+    - solo-design
+    - solo-graphic-generation
+    - solo-image-edit
+    - source-code-to-okf-wiki
+    - task-execution-summary
+    - test-driven-development
+    - theme-factory
+    - tiktok-design
+    - token-optimize-cmd
+    - trae-computer-use-ptc
+    - trae-work-design
+    - tts
+    - vercel-composition-patterns
+    - vercel-design-library-design
+    - vercel-react-best-practices
+    - vercel-react-native-skills
+    - vibecamp-design
+    - web-artifacts-builder
+    - web-design-guidelines
+    - webapp-testing
+    - writing-plans
+    - wsl-ops-cmd
+    - xlsx
+    - yuanli-design-system
+    - 天眼一下
+    # 插件贡献 skills（33 个）
+    - trae-remote-official:dingtalk:dws
+    - trae-remote-official:frontend-design:frontend-design
+    - trae-remote-official:github:gh-address-comments
+    - trae-remote-official:github:gh-fix-ci
+    - trae-remote-official:github:github
+    - trae-remote-official:github:yeet
+    - trae-remote-official:lark:lark-approval
+    - trae-remote-official:lark:lark-attendance
+    - trae-remote-official:lark:lark-base
+    - trae-remote-official:lark:lark-calendar
+    - trae-remote-official:lark:lark-contact
+    - trae-remote-official:lark:lark-doc
+    - trae-remote-official:lark:lark-drive
+    - trae-remote-official:lark:lark-event
+    - trae-remote-official:lark:lark-im
+    - trae-remote-official:lark:lark-mail
+    - trae-remote-official:lark:lark-markdown
+    - trae-remote-official:lark:lark-minutes
+    - trae-remote-official:lark:lark-note
+    - trae-remote-official:lark:lark-okr
+    - trae-remote-official:lark:lark-openapi-explorer
+    - trae-remote-official:lark:lark-shared
+    - trae-remote-official:lark:lark-sheets
+    - trae-remote-official:lark:lark-skill-maker
+    - trae-remote-official:lark:lark-slides
+    - trae-remote-official:lark:lark-task
+    - trae-remote-official:lark:lark-vc
+    - trae-remote-official:lark:lark-vc-agent
+    - trae-remote-official:lark:lark-whiteboard
+    - trae-remote-official:lark:lark-wiki
+    - trae-remote-official:lark:lark-workflow-meeting-summary
+    - trae-remote-official:lark:lark-workflow-standup-report
+    - trae-remote-official:web-app-development:uicraft
+
+# ─────────────────────────────────────────────
+# 采集失败记录（重试后仍失败者登记于此，禁止编造）
+# ─────────────────────────────────────────────
+fetch_failures:
+  - source: WebSearch「TraeCode CLI 更新日志 / trae cli changelog」
+    attempts: 3
+    error: "搜索服务两次返回 system error 10000000（Failed to call search service）；第三次换词成功但未返回 CLI 专项 changelog 页"
+    fallback: 改由 docs.trae.ai/ide/changelog 直连获取（TraeCode 条目）；企业版日志提及 TraeCode CLI 适用企业级 Hook。CLI 独立 changelog 页面 URL 待下次核验
+    resolved: partial
+
+# ─────────────────────────────────────────────
+# 下次运行注意事项
+# ─────────────────────────────────────────────
+next_run_notes:
+  - 首篇特性报告生成时：创建 docs/knowledge/trae-feature-watch/index.md（含 toctree 收录报告），并在 docs/knowledge/index.md 的 toctree 与分类表中登记 trae-feature-watch/index，避免 Sphinx 断链
+  - 报告命名：YYYY-MM-DD-trae-feature-watch.md（运行日日期，kebab-case），frontmatter 必含 source 字段
+  - 国内站 IDE changelog 停滞观察：复查 https://docs.trae.cn/ide/changelog 是否更新（基线时停在 2026-06-09）
+  - 待核验项：企业版"企业级 Hook / Fork Chat"条目日期；v3.6.65 版本号笔误；TraeCode CLI 独立更新日志页
+  - diff 比对维度：官方源 latest_entry_date/latest_version/recent_entries 增项；本地 plugins 版本增减；connectors 增减；active MCP 增减；session_skills 名单增减
