@@ -28,7 +28,7 @@
 ## 项目概述
 
 - **项目类型**：容器镜像消费端（Invoke 任务包 + podman-py SDK 强依赖）
-- **目标镜像**：`localhost/jupyter-podman-rootless:latest`（来自同组构建端 `save` 产出的 tar 缓存）
+- **目标镜像**：`localhost/jupyter-podman-client:latest`（基于 rootless 叠加的通用镜像管理枢纽，可在其中运行/管理任意本地镜像）
 - **编排架构**：两层后端自动降级——podman-py SDK（优先）→ CLI fallback（`podman.exe` 子进程）；**无 podman-compose 层**
 - **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，wheel package=`tasks`
 - **跨平台**：WSL2 / Linux（原生 unix socket）+ macOS + **Windows 11 原生 CPython（WSL9P/Machine/tcp 多候选）**

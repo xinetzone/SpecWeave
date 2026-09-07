@@ -145,7 +145,7 @@ def _merge_config(
     }
 )
 def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> None:
-    """从本地 tar.gz 加载 jupyter-podman-rootless 镜像。"""
+    """从本地 tar.gz 加载镜像（SDK 优先，CLI fallback）。"""
     # 先读取 cwd/.env → 把 IMAGE_CACHE_DIR 同步到 os.environ，utils.default_build_cache_dir 才能感知
     _load_env_overrides(_project_root())
     cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
@@ -188,7 +188,7 @@ def images(c: Context) -> None:
 @task(
     help={
         "name": "容器名（默认 jupyter-podman）",
-        "tag": "镜像标签（默认 localhost/jupyter-podman-rootless:latest）",
+        "tag": "镜像标签（默认 localhost/jupyter-podman-client:latest，可指定任意本地镜像）",
         "ssh-port": "SSH 端口",
         "jupyter-port": "Jupyter 端口",
         "workspace": "工作区路径，支持 Windows/WSL 自动转换",
@@ -212,7 +212,7 @@ def run(
     grant_sudo: bool = True,
     no_detach: bool = False,
 ) -> None:
-    """启动 jupyter-podman-rootless 容器（SDK 优先，CLI fallback）。"""
+    """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。"""
     cfg = _merge_config(
         name=name,
         tag=tag,

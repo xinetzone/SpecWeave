@@ -229,7 +229,7 @@ class ContainerConfig:
       - cgroupns = "host"
     """
 
-    image: str = "localhost/jupyter-podman-rootless:latest"
+    image: str = "localhost/jupyter-podman-client:latest"
     name: str = "jupyter-podman"
     ssh_port: int = 2222
     jupyter_port: int = 8888

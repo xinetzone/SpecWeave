@@ -51,7 +51,7 @@ ns.add_collection(env_ns)
 ns.configure(
     {
         "container": {
-            "image_tag": "localhost/jupyter-podman-rootless:latest",
+            "image_tag": "localhost/jupyter-podman-client:latest",
             "container_name": "jupyter-podman",
             "ssh_port": 2222,
             "jupyter_port": 8888,
