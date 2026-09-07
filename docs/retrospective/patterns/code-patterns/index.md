@@ -60,6 +60,7 @@ credential-multi-source-priority
 cross-conda-toolchain
 cross-language-three-layer-logging
 cross-platform-backtrace-leak-diagnosis
+cross-platform-cli-triple-stack
 cross-platform-encoding-enforcement
 css-grid-visualization-zero-dimension
 cxx-build-regression-verification

@@ -11,6 +11,7 @@ agent-workspace-template
 android-mvvm-livedata-fragment
 android-single-activity-navigation
 asymmetric-multimodal-history-windowing
+backend-graceful-degradation-orchestration
 benchmark-unification-cross-validation
 c-abi-dynamic-binding
 cascade-update-prerequisite-check
