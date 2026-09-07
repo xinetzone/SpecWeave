@@ -309,20 +309,6 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
             )
         )
 
-    # ── P3: TCP 回环兜底（仅 auto，非强制避免误导） ──────────────────────
-    if strategy == "auto":
-        candidates.append(
-            BaseUrlCandidate(
-                source="P3-tcp-loopback",
-                base_url="tcp://127.0.0.1:8888",
-                hint=(
-                    "TCP 127.0.0.1:8888。此端口需要用户在 WSL2/Machine 内手动执行：\n"
-                    "  podman system service tcp://0.0.0.0:8888 --time=0\n"
-                    "生产环境务必追加双向 TLS，不要裸监听。"
-                ),
-            )
-        )
-
     # ── legacy 逃生舱：回到旧的纯 from_env() 行为 ────────────────────────
     if strategy == "legacy" or not candidates:
         candidates.append(
@@ -331,7 +317,9 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
                 base_url=None,
                 hint=(
                     "（legacy 策略）直接 from_env()。若在 Windows 原生失败，"
-                    f"请尝试取消设置 {SDK_STRATEGY_ENV}=legacy 改回 auto。"
+                    f"请尝试取消设置 {SDK_STRATEGY_ENV}=legacy 改回 auto，"
+                    "或显式设置 CONTAINER_HOST=tcp://127.0.0.1:<port>（仅当手动执行过"
+                    " podman system service tcp://... --time=0 才有效）。"
                 ),
             )
         )
@@ -509,14 +497,23 @@ def container_running(c: Context, runtime: str, name: str) -> bool:
 
 
 def default_build_cache_dir() -> Path:
-    """获取构建端默认的镜像缓存目录（供 load 命令默认搜索）。
+    """默认镜像缓存目录。
 
-    返回相对本 client 应用目录的：
-        ../jupyter-podman-rootless/.image-cache
+    优先级（同整个 invoke 客户端体系约定）：
+      1. 显式 CLI 参数 ``--cache-dir``（调用方在 manage.load 层传入）
+      2. 环境变量 ``IMAGE_CACHE_DIR``（来自 shell export 或 cwd/.env）
+      3. 当前执行目录 ``Path.cwd() / ".image-cache"``（用户把缓存放 cwd 的默认行为）
+
+    调用方未传 CLI 参数时，可直接调用本函数拿到正确默认值。
+    注意：不再默认跳回兄弟目录 ``../jupyter-podman-rootless/.image-cache``，
+    避免 ``inv load`` 扫到预期外的路径。
     """
-    here = Path(__file__).parent.parent.resolve()
-    cache = here / ".." / "jupyter-podman-rootless" / ".image-cache"
-    return cache.resolve()
+    import os as _os
+
+    env_val = _os.environ.get("IMAGE_CACHE_DIR")
+    if env_val:
+        return Path(env_val).expanduser().resolve()
+    return (Path.cwd() / ".image-cache").resolve()
 
 
 def find_latest_image_tar(search_dir: Path) -> Optional[Path]:

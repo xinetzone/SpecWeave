@@ -8,6 +8,7 @@ rootless 三必需参数（/dev/fuse、label=disable、cgroupns=host）
 由 utils.ContainerConfig 默认值内置，调用方无需显式传入。
 """
 from contextlib import contextmanager
+import os
 from pathlib import Path
 from typing import Optional
 
@@ -97,7 +98,16 @@ def get_client():
                     this_client = _podman_sdk.from_env()
                 else:
                     this_client = _podman_sdk.PodmanClient(base_url=cand.base_url)
-                this_client.ping()
+                ping_result = this_client.ping()
+                # podman-py 5.x ``system.ping()`` 返回 bool（HTTP response.text == "OK"）。
+                # 严格 True 才当选：防止 ping 返回 False（如打到 Jupyter/其他 HTTP 服务，
+                # 200 OK 但 body 不是 "OK"）时错误选中假 client。
+                ping_ok = ping_result is True
+                if not ping_ok:
+                    raise RuntimeError(
+                        f"ping()={ping_result!r}，未返回 True"
+                        f"（可能连接到非 Podman daemon，如其他监听该端口的服务）"
+                    )
                 # 成功：把这个 client 作为最终 yield 的，跳出循环
                 client = this_client
                 this_client = None
@@ -121,26 +131,35 @@ def get_client():
             yield client
             return
 
-        # 所有候选全部失败 → 输出汇总诊断，然后 yield None 走 CLI fallback
-        print("[SDK] 全部连接候选失败，降级到 CLI。诊断清单：")
-        print(f"       strategy = {strategy} (通过环境变量 {SDK_STRATEGY_ENV} 修改)")
-        for i, att in enumerate(attempts, 1):
-            src = att["source"]
-            url = att["base_url"] or "(让 SDK 自行读 from_env/containers.conf)"
-            print(f"  [{i}/{len(attempts)}] source={src}")
-            print(f"        base_url = {url}")
-            print(f"        错误     = {att['exc_type']}: {att['exc_msg']}")
-            if att["hint"]:
-                for line in att["hint"].splitlines():
-                    print(f"        提示     = {line}")
-
-        # 再做一次 W-I1~W-I3 的聚合速查表命中，给出最直接的 30 秒修复
-        last = attempts[-1] if attempts else {"exc_type": "", "exc_msg": ""}
-        hint = windows_diagnose_hint(last["exc_type"], last["exc_msg"])
-        if hint:
-            print("[SDK] Windows 专属匹配:")
-            for line in hint.splitlines():
-                print(f"       {line}")
+        # 所有候选全部失败：
+        #   - LOG_LEVEL=DEBUG 才打印完整候选诊断（每轮10+行，避免每次调用打印噪音）
+        #   - 普通 INFO 级仅 1 行「[INFO][降级]」统一前缀，用户一眼懂：不是失败=降级
+        log_level = (os.environ.get("PODMAN_CLIENT_LOG_LEVEL") or "INFO").upper()
+        is_debug = log_level in {"DEBUG", "TRACE"}
+        first_err = attempts[0] if attempts else {"exc_type": "Unknown", "source": "-"}
+        print(
+            "[INFO][降级] SDK路径不可用（首候选="
+            f"{first_err['source']} {first_err['exc_type']}）→ 走CLI fallback"
+            f"（PODMAN_CLIENT_LOG_LEVEL=DEBUG 打印完整诊断）"
+        )
+        if is_debug:
+            print("[SDK-DEBUG] 全部连接候选失败，降级到 CLI。诊断清单：")
+            print(f"           strategy = {strategy} (通过 {SDK_STRATEGY_ENV} 修改)")
+            for i, att in enumerate(attempts, 1):
+                src = att["source"]
+                url = att["base_url"] or "(SDK 自行读 from_env/containers.conf)"
+                print(f"    [{i}/{len(attempts)}] source={src}")
+                print(f"          base_url = {url}")
+                print(f"          错误     = {att['exc_type']}: {att['exc_msg']}")
+                if att["hint"]:
+                    for line in att["hint"].splitlines():
+                        print(f"          提示     = {line}")
+            last = attempts[-1] if attempts else {"exc_type": "", "exc_msg": ""}
+            hint = windows_diagnose_hint(last["exc_type"], last["exc_msg"])
+            if hint:
+                print("[SDK-DEBUG] Windows 专属匹配:")
+                for line in hint.splitlines():
+                    print(f"           {line}")
         yield None
     finally:
         _close_safe(client)
@@ -152,25 +171,38 @@ def get_client():
 
 
 def _load_via_sdk(client, tar_path: Path) -> LoadImageResult:
-    """通过 podman-py SDK 加载镜像 tar。"""
+    """通过 podman-py SDK 加载镜像 tar。
+
+    podman-py 5.x 的 ``ImagesManager.load`` 支持两种互斥参数：
+      * ``file_path`` (:class:`os.PathLike`) — SDK 内部自行 open 读取，零内存拷贝，推荐。
+      * ``data`` (:class:`bytes`) — SDK 内部 ``io.BytesIO(data)`` 包装，**不能传 file-like**
+        （否则 ``io.BytesIO`` 抛 ``a bytes-like object is required, not BufferedReader``）。
+    """
     try:
-        with tar_path.open("rb") as fh:
-            loaded = client.images.load(data=fh)
+        loaded = client.images.load(file_path=tar_path)
         tags: list[str] = []
         img_id = ""
         if isinstance(loaded, list) and loaded:
-            # podman-py 5.x: 返回 Image 对象列表
+            # podman-py 5.x: 返回 Image 对象列表（签名是 Generator 但实际调用端可能是 list）
             first = loaded[0]
             img_id = getattr(first, "short_id", "") or getattr(first, "id", "")
             tags = list(getattr(first, "tags", []) or [])
+        elif hasattr(loaded, "__iter__") and not isinstance(loaded, (str, bytes, list)):
+            # Generator 情况（严格按 podman-py 签名）
+            items = list(loaded)
+            if items:
+                first = items[0]
+                img_id = getattr(first, "short_id", "") or getattr(first, "id", "")
+                tags = list(getattr(first, "tags", []) or [])
         return LoadImageResult(
             loaded=True,
             tags=tags,
             id=img_id,
-            message=f"[SDK] 已加载 {len(loaded)} 个镜像",
+            message=f"[SDK] 已加载镜像（file_path={tar_path}）",
         )
     except Exception as e:
         return LoadImageResult(loaded=False, message=f"[SDK] 加载失败: {e}")
+
 
 
 def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
@@ -213,7 +245,8 @@ def load_image(c: Context, tar_path: Path) -> LoadImageResult:
                 if sdk_result.tags:
                     print(f"[Load] Tags: {', '.join(sdk_result.tags)}")
                 return sdk_result
-            print(f"[SDK] fallback to CLI: {sdk_result.message}")
+            # SDK 成功连接到 daemon，但加载本身失败（非连接失败）→ 仍降级 CLI，统一 [INFO][降级] 前缀
+            print(f"[INFO][降级] SDK加载失败 → 走CLI fallback: {sdk_result.message}")
 
     cli_result = _load_via_cli(c, tar_path)
     if cli_result.loaded:

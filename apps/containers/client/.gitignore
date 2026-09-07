@@ -1,0 +1,41 @@
+# Environment files (contains secrets)
+.env
+
+# Workspace directory (mounted into container)
+/workspace/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary workspace (not tracked, for ad-hoc testing)
+.temp/
+
+# Image cache (podman save archives for backup/recovery)
+.image-cache/
+
+# WSL distro cache (VHDX files and rootfs exports)
+.wsl-cache/

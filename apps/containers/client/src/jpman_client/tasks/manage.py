@@ -124,12 +124,14 @@ def _merge_config(
 
 @task(
     help={
-        "path": "镜像 tar.gz 路径。未指定时自动从构建端 .image-cache 找最新文件",
-        "cache-dir": "构建端缓存目录，默认 ../jupyter-podman-rootless/.image-cache",
+        "path": "镜像 tar.gz 路径。未指定时自动从 --cache-dir / .env 的 IMAGE_CACHE_DIR / cwd/.image-cache 里找最新文件",
+        "cache-dir": "镜像缓存目录，默认：命令行 > IMAGE_CACHE_DIR (.env / export) > ./ .image-cache（当前执行目录）",
     }
 )
 def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> None:
     """从本地 tar.gz 加载 jupyter-podman-rootless 镜像。"""
+    # 先读取 cwd/.env → 把 IMAGE_CACHE_DIR 同步到 os.environ，utils.default_build_cache_dir 才能感知
+    _load_env_overrides(_project_root())
     cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
 
     if path:
