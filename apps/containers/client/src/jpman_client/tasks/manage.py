@@ -9,10 +9,33 @@
   clean   - 清理容器/卷/镜像
 
 配置优先级：命令行参数 > .env 环境变量 > ContainerConfig 默认值。
+
+Windows WSL 支持（OKF v0.2 podman-py §8 三路径）：
+  本模块在读取 .env 时会 **同步写入 os.environ**（dotenv ``load_dotenv``，
+  默认不覆盖 shell 已有变量），因此以下 SDK 专属变量既可以写在终端
+  ``export`` / ``$env:``，也可以直接放到本应用根目录 ``.env`` 里：
+
+  .. code-block:: bash
+
+     # ---- 写到 apps/containers/client/.env 即可，不需要手动 export ----
+
+     # [可选·逃生舱] 连接候选策略  auto|legacy|wsl|machine  （默认 auto）
+     PODMAN_CLIENT_SDK_STRATEGY=auto
+
+     # [可选·策略=wsl 或 auto 时] 显式指定 WSL2 发行版名
+     # 不设时自动探测（默认发行版 → Running 首个）
+     WSL_DISTRO_NAME=Ubuntu
+
+     # [可选·最高优先级] 直接指定 podman-py base_url（6 scheme 合法）
+     # 未设时按 P0→P3 自动探测。例：
+     #   unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock
+     #   tcp://127.0.0.1:8888
+     CONTAINER_HOST=unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock
+     # DOCKER_HOST=...  # docker 兼容兜底，优先级低于 CONTAINER_HOST
 """
 from pathlib import Path
 
-from dotenv import dotenv_values
+from dotenv import dotenv_values, load_dotenv
 from invoke import Context, task
 from invoke.exceptions import Exit
 
@@ -34,11 +57,22 @@ from .utils import (
 
 
 def _load_env_overrides(project_root: Path) -> dict:
-    """读取 .env（若存在），覆盖 ContainerConfig 默认值。"""
+    """读取 .env（若存在），覆盖 ContainerConfig 默认值。
+
+    关键副作用（Windows WSL 支持必须）：
+      用 ``load_dotenv(override=False)`` 把 .env 中的键值同步到 ``os.environ``，
+      保证 utils 层读取 ``os.environ`` 的逻辑（SDK 策略、WSL 发行版名、
+      CONTAINER_HOST 显式 URL 等）也能拿到 .env 里写的值。
+      ``override=False`` 表示：shell 中用户已 ``export`` / ``$env:`` 的变量
+      **优先级更高**，不会被 .env 覆盖，符合"命令行 > .env > 默认"约定。
+    """
     env_path = project_root / ".env"
-    if not env_path.exists():
-        return {}
-    return {k: v for k, v in dict(dotenv_values(str(env_path))).items() if v}
+    if env_path.exists():
+        # 先同步到 os.environ（SDK 策略层需要读环境变量）
+        load_dotenv(dotenv_path=str(env_path), override=False, verbose=False)
+        # 再拿 dict 供 _merge_config 合并 ContainerConfig 专用字段
+        return {k: v for k, v in dict(dotenv_values(str(env_path))).items() if v}
+    return {}
 
 
 def _project_root() -> Path:

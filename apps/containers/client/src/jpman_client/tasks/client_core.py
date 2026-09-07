@@ -16,13 +16,17 @@ from invoke import Context
 from .utils import (
     ContainerConfig,
     LoadImageResult,
+    SDK_STRATEGY_ENV,
     check_runtime_ready,
     container_exists as cli_container_exists,
     container_running as cli_container_running,
     detect_runtime,
     generate_random_string,
     run_cmd,
+    sdk_base_url_candidates,
+    sdk_strategy_from_env,
     to_posix_path,
+    windows_diagnose_hint,
 )
 
 # ---------------------------------------------------------------------------
@@ -49,6 +53,14 @@ def sdk_available() -> bool:
 def get_client():
     """获取 PodmanClient 的上下文管理器（SDK 不可达时 yield None）。
 
+    Windows 11 原生支持策略（对齐 OKF v0.2 §8 Windows 三路径）：
+      按 ``PODMAN_CLIENT_SDK_STRATEGY`` 环境变量（默认 ``auto``）依次
+      尝试：P0 环境变量显式 URL → P1 WSL2 9P 互通 socket →
+      P2 Podman Machine 命名连接 → P3 TCP 回环 → 全部失败时
+      输出每轮尝试的诊断信息 + W-I1~W-I3 速查表命中项，然后 yield None
+      进入 CLI fallback。**行为承诺**：所有候选都失败时才返回 ``None``，
+      与旧版本 API 语义一致，调用方 ``if client is not None:`` 判断无需修改。
+
     使用方式::
 
         with get_client() as client:
@@ -61,24 +73,77 @@ def get_client():
         yield None
         return
 
+    strategy = sdk_strategy_from_env()
+    candidates = sdk_base_url_candidates(strategy)
+
+    attempts: list[dict] = []
     client = None
+
+    def _close_safe(c):
+        if c is None:
+            return
+        try:
+            c.close()
+        except Exception:
+            pass
+
     try:
-        client = _podman_sdk.from_env()
-        client.ping()
-        yield client
-    except Exception:
-        if client is not None:
+        for cand in candidates:
+            this_client = None
             try:
-                client.close()
-            except Exception:
-                pass
+                if cand.base_url is None:
+                    # None → 走 SDK 默认分支：from_env() / 无参 PodmanClient()，
+                    # 让其自身读取 containers.conf active_service（含 PM-1 PM-2 Machine）
+                    this_client = _podman_sdk.from_env()
+                else:
+                    this_client = _podman_sdk.PodmanClient(base_url=cand.base_url)
+                this_client.ping()
+                # 成功：把这个 client 作为最终 yield 的，跳出循环
+                client = this_client
+                this_client = None
+                break
+            except Exception as exc:  # noqa: BLE001 - 失败需要记录信息，不能吞
+                exc_type_name = type(exc).__name__
+                exc_msg = str(exc)
+                attempts.append(
+                    {
+                        "source": cand.source,
+                        "base_url": cand.base_url,
+                        "hint": cand.hint,
+                        "exc_type": exc_type_name,
+                        "exc_msg": exc_msg,
+                    }
+                )
+            finally:
+                _close_safe(this_client)
+
+        if client is not None:
+            yield client
+            return
+
+        # 所有候选全部失败 → 输出汇总诊断，然后 yield None 走 CLI fallback
+        print("[SDK] 全部连接候选失败，降级到 CLI。诊断清单：")
+        print(f"       strategy = {strategy} (通过环境变量 {SDK_STRATEGY_ENV} 修改)")
+        for i, att in enumerate(attempts, 1):
+            src = att["source"]
+            url = att["base_url"] or "(让 SDK 自行读 from_env/containers.conf)"
+            print(f"  [{i}/{len(attempts)}] source={src}")
+            print(f"        base_url = {url}")
+            print(f"        错误     = {att['exc_type']}: {att['exc_msg']}")
+            if att["hint"]:
+                for line in att["hint"].splitlines():
+                    print(f"        提示     = {line}")
+
+        # 再做一次 W-I1~W-I3 的聚合速查表命中，给出最直接的 30 秒修复
+        last = attempts[-1] if attempts else {"exc_type": "", "exc_msg": ""}
+        hint = windows_diagnose_hint(last["exc_type"], last["exc_msg"])
+        if hint:
+            print("[SDK] Windows 专属匹配:")
+            for line in hint.splitlines():
+                print(f"       {line}")
         yield None
     finally:
-        if client is not None:
-            try:
-                client.close()
-            except Exception:
-                pass
+        _close_safe(client)
 
 
 # ===========================================================================

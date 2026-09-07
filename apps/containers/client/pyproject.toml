@@ -16,10 +16,11 @@ dependencies = [
 ]
 
 [tool.scikit-build]
-wheel.packages = ["tasks"]
+wheel.packages = ["src/jpman_client"]
+wheel.cmake = false
 build.verbose = false
 build-dir = "build/{wheel_tag}"
 minimum-version = "0.9"
 
 [tool.invoke]
-package = "tasks"
+package = "jpman_client.tasks"
