@@ -107,7 +107,7 @@ pip install -e ".[model]"     # +OMLMD/OLOT（宿主机直接使用ML命令）
 ### client.py核心接口
 
 ```python
-from tasks.client import get_client
+from jpman_builder.tasks.client import get_client
 
 client = get_client()  # 自动检测最优后端
 

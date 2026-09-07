@@ -1,0 +1,100 @@
+---
+id: "jupyter-podman-client-agents-readme"
+title: "jupyter-podman-client AI 资产容器"
+source: "AGENTS.md#嵌套路由关系"
+---
+# jupyter-podman-client - .agents 目录
+
+本目录是 `apps/containers/client`（jupyter-podman 镜像消费端）的 AI 协作者资产容器，
+存放项目特有的规则、角色、技能、脚本、工作流和模板。
+
+本项目的定位与构建端（`apps/containers/jupyter-podman-rootless`）不同：
+- 本项目是 **消费端**：没有构建流程、没有 Compose 编排、没有 ML 模型管理能力
+- 本项目的核心差异能力是 **Windows 11 × WSL2 跨平台 SDK 连接** + **rootless 三必需硬编码** + **两层后端自动降级（SDK → CLI fallback）**
+- 因此本目录下的 `rules/` 只保留消费端独有的 3 个主题文件；其余构建端主题（Containerfile/entrypoint/compose/ml-models 等）一律不重复，相关需求回退到父级工作区
+
+## 目录结构
+
+```
+.agents/
+├── README.md              ← 本文件（资产容器索引）
+├── CHANGELOG.md           ← 项目变更日志（原子提交汇总，七概念链路归档）
+├── rules/                 ← 项目特有规则（单一职责，按主题拆分；3 个实文件 = 消费端独有）
+│   ├── invoke-tasks.md    ← invoke 任务开发规范（两层后端架构、命名空间、CLI fallback 承诺）
+│   ├── sdk-connection.md  ← podman-py SDK 连接硬约束（6 scheme 白名单、四策略逃生舱、Windows base_url 必显式）
+│   └── windows-wsl.md     ← Windows 11 × WSL2 支持规范（3 级发行版探测、UTF-16 LE、W-I1~W-I3）
+├── roles/                 ← （预留占位；未定义 → 回退 SpecWeave 根 7 角色）
+├── skills/                ← （预留占位；未定义 → 回退 SpecWeave 根 skills/）
+├── scripts/               ← （预留占位；未定义 → 回退 SpecWeave 根 .agents/scripts/）
+├── workflows/             ← （预留占位；未定义 → 回退 SpecWeave 根 workflows/）
+├── templates/             ← （预留占位；未定义 → 回退 SpecWeave 根 templates/）
+└── docs/                  ← （预留占位；⚠️ 不写任何产出物；人类文档在 ../README.md，公开知识在根 docs/）
+```
+
+**关于 `docs/` 占位目录的特别说明**：`apps/containers/client/.agents/docs/` 是保留的占位目录（gitkeep 空），
+遵循 SpecWeave 根 AGENTS 文档边界声明——对外可读文档一律入根 `docs/` 或应用根 `README.md`，
+**禁止** 在本 `.agents/docs/` 下写入任何报告/复盘/Wiki。
+
+## 项目核心资产（AI 协作者必读）
+
+除 `.agents/rules/` 下的 3 个规则文件外，AI 协作者还必须同步了解以下源代码真源，
+**文档与代码冲突时一律以源代码为准**：
+
+| 资产 | 路径 | 说明 |
+|------|------|------|
+| Invoke 命名空间入口 | [../tasks/__init__.py](../tasks/__init__.py) | ns configure：根命名空间 + `container.*` 聚合别名 |
+| 工具函数 + Windows 探测层 | [../tasks/utils.py](../tasks/utils.py) | ContainerConfig / sdk_strategy_from_env / sdk_base_url_candidates / wsl_distro_name / windows_diagnose_hint / to_posix_path |
+| 连接主入口 + 多候选循环 | [../tasks/client_core.py](../tasks/client_core.py) | `@contextmanager get_client()`（两层后端、`yield None` 行为承诺、失败汇总表） |
+| 人类 CLI 入口 + .env 加载 | [../tasks/manage.py](../tasks/manage.py) | `load/run/stop/status/clean/images` 6 个根任务 + 容器级 `container.*` 命名空间 |
+| Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；wheel.packages = ["jpman_client"] |
+| 环境变量模板（两清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项完整带注释 |
+| 人类可读文档入口 | [../README.md](../README.md) | 安装/快速开始/§5 Windows WSL/§8 .env 完整清单 |
+
+## 人类文档 ↔ AI 规则对应关系表
+
+`README.md`（人类用户视角）与 `.agents/rules/`（AI 协作者硬约束）双向锚定，
+修改一方必须同步更新另一方：
+
+| 人类文档章节 | 对应 AI 规则文件 | 同步锚点（修改时必须一一核对） |
+|------------|----------------|------------------------------|
+| [README §5 Windows 11 × WSL2 支持](../README.md#5-windows-11--wsl2-支持) | [windows-wsl.md](rules/windows-wsl.md) | §5.1 三路径矩阵、§5.2 四级优先级、§5.3 四策略值、§5.4 W-I1~W-I3 速查表 3 条 |
+| [README §5.5 A/B 维度分离表](../README.md#55-挂载路径-vs-连接-urlab-维度分离避免混淆) | [windows-wsl.md](rules/windows-wsl.md) §2 + [sdk-connection.md](rules/sdk-connection.md) §1 | Dimension A / B 两张表的函数名、功能描述、所在行号 |
+| [README §7 内置纪律 rootless 三必需](../README.md#7-内置纪律rootless-三必需参数) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
+| [README §8 .env 完整清单](../README.md#8-env-配置完整清单) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |
+| [README §6 作为 SDK 使用](../README.md#6-作为-sdk-使用python-import) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
+| [README §9 与 jpman 分工表](../README.md#9-与-jpman-cli-的分工) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `tasks/` 实际实现为准 |
+
+## 父级继承（所有未定义一律回退）
+
+所有未在本目录定义的规则、角色、技能、脚本、工作流、模板，
+**一律逐级回退**，不做任何本地重写：
+
+| 层级 | 入口路径 | 提供的资产 |
+|------|---------|-----------|
+| L1 apps 容器组 | [../../.agents/](../../.agents/)（若存在；不存在则跳 L2） | apps/containers 组级共享规则（预留） |
+| L2 apps 应用区 | [../../../apps/AGENTS.md](../../../apps/AGENTS.md) | apps 总入口、应用路由表 |
+| L3 SpecWeave 根（最上层） | [../../../AGENTS.md](../../../AGENTS.md) | 全局启动协议、沟通语言、提交规范、修复闭环三阶段、路径引用规则 |
+| （根规则） | [../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 全局核心规则（内容敏感度预检、嵌套路由回退链） |
+| （根 Skill） | [../../../.agents/skills/](../../../.agents/skills/) | seven-concepts-cmd / jpman-podman-ops / atomic-commit-cmd / check-duplication-cmd / ci-check-cmd 等 L1 门面 |
+| （根命令） | [../../../.agents/commands/](../../../.agents/commands/) | seven-concepts / retrospective / insight / extraction / first-principles / adversarial-review / atomic-commit / atomization |
+| （根脚本共享库） | [../../../.agents/scripts/lib/](../../../.agents/scripts/lib/) | Python 共享函数（禁止重复实现，新增脚本前必先 lib/README.md 查重） |
+
+## 新增规则的标准流程
+
+需要在 `.agents/rules/` 下**新增**主题文件时（不允许修改现有 3 文件的职责边界；
+新增只能加，不能把现有文件中的规则抽出来拆分）：
+
+1. 走七概念方法论（至少 I→F→V→C）：
+   - **I（洞察）**：明确现有 3 文件为什么覆盖不了，给出具体反例（如"X 场景下改了 Y 文件但 3 份规则都没提"）
+   - **F（第一性原理）**：单文件 = 单一职责；新文件标题必须能被一句话概括（如"镜像缓存策略规范"）
+   - **V（对抗审查）**：回退到父级是否已有同名规则？会不会和 README 某章产生双写漂移？
+2. 在本文件 `rules/` 目录结构段与上方「人类文档 ↔ AI 规则对应关系表」同步新增条目
+3. 在 AGENTS.md「上下文路由表」+「核心规范入口」+「项目约束速览 C#」三处同步新增索引
+4. 在 README.md 对应章节的末尾加一句「对应 AI 硬约束详见 .agents/rules/xxx.md」双向锚点
+
+## 变更日志
+
+完整条目见 [CHANGELOG.md](CHANGELOG.md)。
+
+- 2026-09-07 | feat | 初始化 client 端 AI 资产容器：AGENTS.md + .agents/README + 3 rules（invoke-tasks / sdk-connection / windows-wsl）+ CHANGELOG；对齐 README.md §5 WSL 支持与 .env.example 双文档
+- 2026-08-31 | init | 消费端首次拆分；目录结构预留（本 changelog 条目倒推补录）
