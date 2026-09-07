@@ -121,3 +121,7 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # Docker 缓存目录
 .docker-cache/
+.Trash-*/
+
+# 测试覆盖率报告
+.coverage

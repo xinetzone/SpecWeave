@@ -240,3 +240,82 @@ stop_container(ctx, cfg.name)
 | podman-compose 后端 | ✅ Tier 1 | ❌ 仅 SDK + CLI fallback |
 | podman-py SDK 作为一等公民 | 可选依赖 `.[full]` | **强制核心依赖** |
 | 面向用户 | 人类驾驶员（日常操作） | 自动化集成 / 其他应用嵌入调用 |
+
+## 10. 在容器中使用客户端自举（env.* 命令）
+
+如果宿主没有 Python ≥ 3.14 / podman-py SDK / invoke，或希望在**隔离环境**
+中使用消费端（例如 CI、临时排障、给不希望安装本地依赖的同事），
+可直接基于 `localhost/jupyter-podman-rootless:latest` 构建一个叠加层镜像，
+镜像内已经装好 conda `main`（即 Python 3.14t cp314t free-threading，
+`/opt/conda/envs/main/bin` 位于 PATH 顶端）+ editable 版本的
+`jupyter-podman-client`，进入后可直接 `inv load/run/stop/status`。
+
+> **注意**：基础镜像的 conda 环境名是 **`main`**（不是 `py314`），登录
+> shell（bash -l）会通过 `~/.bashrc` + `/etc/profile.d/conda-init.sh`
+> 自动激活；非交互 RUN 阶段直接用 PATH 上的 `python -m pip` 即可，
+> 不要 `conda activate py314`（不存在）。
+
+### 10.1 首次/源码修改后：构建叠加层
+
+```bash
+cd apps/containers/client
+
+# 构建叠加层（单层 COPY + pip install -e，层缓存复用率极高，<1 分钟）
+invoke env.build-layer
+# 等价：invoke env.build-layer --tag localhost/jupyter-podman-client:latest \
+#                        --base-image localhost/jupyter-podman-rootless:latest
+```
+
+产出镜像：`localhost/jupyter-podman-client:latest`。
+
+### 10.2 单条命令执行（脚本化）
+
+```bash
+# 在容器内跑 inv --list，验证环境 OK
+invoke env.run-cmd --cmd "inv --list"
+
+# 在容器内加载宿主缓存的镜像（宿主 ./.image-cache 会自动挂载到容器 /workspace/.image-cache）
+invoke env.run-cmd --cmd "inv load"
+
+# 启动 jupyter-podman-rootless 容器（与在宿主本地直接 inv run 行为一致）
+invoke env.run-cmd --cmd "inv run --workspace /workspace"
+```
+
+默认挂载（宿主路径 → 容器路径）：
+- `$IMAGE_CACHE_DIR`（或 `./.image-cache`）→ `/workspace/.image-cache`
+- `workspace`（或 `IMAGE_CACHE_DIR` 的父目录）→ `/workspace`
+
+额外挂载：
+```bash
+invoke env.run-cmd \
+  --cmd "ls /extra" \
+  --extra-mount "D:/data:/extra" \
+  --extra-mount "D:/models:/models"
+```
+
+### 10.3 交互式 shell（人类排障）
+
+```bash
+invoke env.shell
+# 进入后会自动激活 conda main + cd /workspace + 打印欢迎语
+#   === jupyter-podman-client 自举环境 ===
+#   [可用命令]  inv --list   inv load   inv run   inv stop   inv status
+#   [退出]      exit
+(in-container) $ inv --list
+(in-container) $ inv load
+(in-container) $ inv run --workspace /workspace
+```
+
+### 10.4 叠加镜像内约定（由 Containerfile.client 保证）
+
+| 约定 | 值 | 说明 |
+|------|---|---|
+| 默认用户 | `devuser`（UID 动态分配，常见 1000/1001） | 与基础镜像一致，non-root，不硬编码 UID |
+| Python 环境 | `conda main`（cp314t free-threading，`/opt/conda/envs/main/bin`） | 登录 shell 自动激活；PATH 顶端已生效 |
+| 客户端安装路径 | `/opt/apps/containers/client/`（editable） | `_project_root()` 锚点完整 |
+| WORKDIR | `/workspace` | `Path.cwd()` 与宿主期望一致 |
+| SDK 策略 | `PODMAN_CLIENT_SDK_STRATEGY=legacy` | 容器内 pure-Linux，不走 Windows 多候选 |
+| 默认缓存目录 | `IMAGE_CACHE_DIR=/workspace/.image-cache` | 可被宿主挂载覆盖 |
+| 自举容器 rootless | `/dev/fuse + label=disable + cgroupns=host` | 与 `ContainerConfig` 硬编码对齐，**不使用 `--privileged`** |
+| 容器名（默认） | `jpman-client-env`（用完自动 `--rm` 删除） | 可通过 `--name` 覆盖 |
+

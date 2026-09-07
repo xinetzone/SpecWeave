@@ -1,0 +1,79 @@
+
+# Containerfile.client
+# ------------------------------------------------------------
+# 用途：在 localhost/jupyter-podman-rootless:latest 镜像之上
+#       叠加 jupyter-podman-client（镜像消费端）SDK 运行环境。
+# 产出：localhost/jupyter-podman-client:latest
+#
+# 注意（V 阶段对抗审查·经验教训）：
+#   1. conda 环境名是 main（不是 py314），且 login shell 才会
+#      `conda activate main`；非交互 RUN 阶段 conda env list 看不到
+#      main，但 PATH 顶端是 /opt/conda/envs/main/bin，直接用
+#      `python -m pip` 就是对的，不要依赖 activate。
+#   2. OCI image format 会忽略 SHELL 指令，显式用
+#      `/bin/bash -lc '...'` 包裹 RUN 才稳定。
+#   3. USER devuser 时 UID 不一定是 1000（基础镜像 1000 已被占用时
+#      自动分配，如实际是 1001），COPY --chown 用用户名不硬编码 UID。
+#
+# 特性（对齐 F 阶段第一性原理设计）：
+#   1. 单层叠加（COPY + pip install -e），增量缓存复用率高
+#   2. /opt/apps/containers/client/ 为 editable 安装真实目录，
+#      保证 _project_root() 向上能命中 pyproject.toml 锚点
+#   3. WORKDIR=/workspace，IMAGE_CACHE_DIR 默认 /workspace/.image-cache
+#   4. PODMAN_CLIENT_SDK_STRATEGY=legacy（容器内 pure-Linux，
+#      直接 PodmanClient.from_env()，跳过 Windows 多候选探测）
+#   5. 用户仍为 devuser，遵循构建端 non-root 约定
+# ------------------------------------------------------------
+
+ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
+FROM ${BASE_IMAGE}
+
+LABEL org.specweave.component="jupyter-podman-client" \
+      org.specweave.layer="podman-py-sdk-runtime" \
+      org.specweave.python-version="3.14t" \
+      org.specweave.conda-env="main"
+
+# ------------------------------------------------------------
+# Layer 1（单层叠加）：拷贝 client 源码并 editable 安装
+#   - build context = apps/containers/client/；COPY . 拷贝整个 client 目录
+#   - USER root 创建目录 + 改属主 → USER devuser 做 pip install
+#   - 不使用 SHELL 指令（OCI 忽略），显式 /bin/bash -lc 包裹
+#   - 不 conda activate：PATH 顶端已是 /opt/conda/envs/main/bin
+# ------------------------------------------------------------
+USER root
+
+ARG APP_SRC_DIR=/opt/apps/containers/client
+RUN mkdir -p ${APP_SRC_DIR} \
+ && chown -R devuser:devuser /opt
+
+# build context = apps/containers/client/；COPY . 拷贝整个 client 目录内容
+COPY --chown=devuser:devuser . ${APP_SRC_DIR}/
+
+USER devuser
+
+# 直接用 PATH 上的 /opt/conda/envs/main/bin/python（无需 conda activate）
+# --no-build-isolation 需要预先装好 build backend（scikit-build-core），
+# 因为 pyproject.toml 用它；editable 还会把运行时依赖（invoke podman python-dotenv）拉齐。
+# 注意：用 set -euo pipefail；invoke --list 必须在 client 根目录（tasks.py 转发层在那）。
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    python --version ; \
+    python -m pip --version ; \
+    python -m pip install --no-cache-dir "scikit-build-core>=0.9" ; \
+    python -m pip install --no-cache-dir --no-build-isolation -e /opt/apps/containers/client/ ; \
+    python -c "import jpman_client; print(\"jpman_client import OK:\", jpman_client.__file__)" ; \
+    cd /opt/apps/containers/client && invoke --list 2>&1 | head -n 40'
+
+# ------------------------------------------------------------
+# 运行时默认值（用户可通过 -e 覆盖）
+# ------------------------------------------------------------
+ENV PODMAN_CLIENT_SDK_STRATEGY=legacy \
+    IMAGE_CACHE_DIR=/workspace/.image-cache \
+    WORKSPACE=/workspace
+
+WORKDIR /workspace
+
+# CMD 继承自基础镜像（supervisord + entrypoint.sh），不覆盖。
+# 要单独跑客户端命令：
+#   podman run --rm localhost/jupyter-podman-client:latest \
+#     bash -lc "inv --list"
+# login shell 下 bashrc 会自动 `conda activate main`（实际 PATH 已生效）
