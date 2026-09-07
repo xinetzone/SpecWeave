@@ -1,0 +1,511 @@
+"""镜像消费端 PodmanClient 封装。
+
+后端优先级：
+  Tier 1: podman-py SDK（声明式 API，pyproject 已强制依赖）
+  Tier 2: CLI subprocess（保底路径，当 SDK 连接失败 / 版本不兼容时）
+
+rootless 三必需参数（/dev/fuse、label=disable、cgroupns=host）
+由 utils.ContainerConfig 默认值内置，调用方无需显式传入。
+"""
+from contextlib import contextmanager
+from pathlib import Path
+from typing import Optional
+
+from invoke import Context
+
+from .utils import (
+    ContainerConfig,
+    LoadImageResult,
+    check_runtime_ready,
+    container_exists as cli_container_exists,
+    container_running as cli_container_running,
+    detect_runtime,
+    generate_random_string,
+    run_cmd,
+    to_posix_path,
+)
+
+# ---------------------------------------------------------------------------
+# podman-py SDK 探测（核心依赖，失败时走 CLI fallback）
+# ---------------------------------------------------------------------------
+try:
+    import podman as _podman_sdk
+    from podman.errors import APIError, NotFound as PodmanNotFound
+
+    _SDK_AVAILABLE = True
+except ImportError:  # pragma: no cover - 仅当安装被破坏时发生
+    _podman_sdk = None
+    APIError = Exception
+    PodmanNotFound = Exception
+    _SDK_AVAILABLE = False
+
+
+def sdk_available() -> bool:
+    """podman-py 模块是否已安装。"""
+    return _SDK_AVAILABLE
+
+
+@contextmanager
+def get_client():
+    """获取 PodmanClient 的上下文管理器（SDK 不可达时 yield None）。
+
+    使用方式::
+
+        with get_client() as client:
+            if client is not None:
+                client.images.list()
+            else:
+                # CLI fallback
+    """
+    if not _SDK_AVAILABLE:
+        yield None
+        return
+
+    client = None
+    try:
+        client = _podman_sdk.from_env()
+        client.ping()
+        yield client
+    except Exception:
+        if client is not None:
+            try:
+                client.close()
+            except Exception:
+                pass
+        yield None
+    finally:
+        if client is not None:
+            try:
+                client.close()
+            except Exception:
+                pass
+
+
+# ===========================================================================
+# 镜像管理：加载 + 查询
+# ===========================================================================
+
+
+def _load_via_sdk(client, tar_path: Path) -> LoadImageResult:
+    """通过 podman-py SDK 加载镜像 tar。"""
+    try:
+        with tar_path.open("rb") as fh:
+            loaded = client.images.load(data=fh)
+        tags: list[str] = []
+        img_id = ""
+        if isinstance(loaded, list) and loaded:
+            # podman-py 5.x: 返回 Image 对象列表
+            first = loaded[0]
+            img_id = getattr(first, "short_id", "") or getattr(first, "id", "")
+            tags = list(getattr(first, "tags", []) or [])
+        return LoadImageResult(
+            loaded=True,
+            tags=tags,
+            id=img_id,
+            message=f"[SDK] 已加载 {len(loaded)} 个镜像",
+        )
+    except Exception as e:
+        return LoadImageResult(loaded=False, message=f"[SDK] 加载失败: {e}")
+
+
+def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
+    """通过 podman load 命令加载镜像 tar。"""
+    runtime = detect_runtime()
+    result = run_cmd(
+        c,
+        f'{runtime} load -i "{tar_path}"',
+        pty=False,
+        echo=True,
+    )
+    if result is None or result.exited != 0:
+        return LoadImageResult(loaded=False, message="[CLI] load 命令执行失败")
+    stdout = getattr(result, "stdout", "") or ""
+    tags: list[str] = []
+    for line in stdout.splitlines():
+        if "Loaded image" in line:
+            name = line.split(":", 1)[1].strip()
+            tags.append(name)
+    return LoadImageResult(
+        loaded=True,
+        tags=tags,
+        message="[CLI] 镜像加载完成",
+    )
+
+
+def load_image(c: Context, tar_path: Path) -> LoadImageResult:
+    """从本地 tar.gz 加载镜像，SDK 优先失败则走 CLI。"""
+    if not tar_path.exists():
+        return LoadImageResult(loaded=False, message=f"镜像文件不存在: {tar_path}")
+
+    print(f"[Load] 从 {tar_path} 加载镜像...")
+
+    sdk_result: Optional[LoadImageResult] = None
+    with get_client() as client:
+        if client is not None:
+            sdk_result = _load_via_sdk(client, tar_path)
+            if sdk_result.loaded:
+                print(sdk_result.message)
+                if sdk_result.tags:
+                    print(f"[Load] Tags: {', '.join(sdk_result.tags)}")
+                return sdk_result
+            print(f"[SDK] fallback to CLI: {sdk_result.message}")
+
+    cli_result = _load_via_cli(c, tar_path)
+    if cli_result.loaded:
+        print(cli_result.message)
+        if cli_result.tags:
+            print(f"[Load] Tags: {', '.join(cli_result.tags)}")
+    else:
+        print(cli_result.message)
+    return cli_result
+
+
+def _list_images_sdk(client) -> list[dict]:
+    """SDK 列出本地镜像。"""
+    out: list[dict] = []
+    try:
+        for img in client.images.list():
+            tags = list(getattr(img, "tags", []) or [])
+            out.append(
+                {
+                    "id": getattr(img, "short_id", "") or getattr(img, "id", "")[:12],
+                    "tags": tags,
+                    "size": getattr(img, "attrs", {}).get("Size", 0),
+                    "created": getattr(img, "attrs", {}).get("Created", ""),
+                }
+            )
+    except Exception:
+        return []
+    return out
+
+
+def _list_images_cli(c: Context) -> list[dict]:
+    """CLI 列出本地镜像。"""
+    runtime = detect_runtime()
+    out: list[dict] = []
+    go_fmt = "{{.ID}}|{{.Repository}}:{{.Tag}}|{{.Size}}"
+    result = run_cmd(
+        c,
+        runtime + ' images --format "' + go_fmt + '"',
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    if result is None:
+        return out
+    for line in (getattr(result, "stdout", "") or "").splitlines():
+        line = line.strip()
+        if not line or "|" not in line:
+            continue
+        parts = line.split("|", 2)
+        if len(parts) < 3:
+            continue
+        img_id, tag, size = parts
+        tag = tag if "<none>" not in tag else ""
+        out.append(
+            {
+                "id": img_id[:12],
+                "tags": [tag] if tag else [],
+                "size": size,
+                "created": "",
+            }
+        )
+    return out
+
+
+def list_images(c: Context) -> list[dict]:
+    """列出本地所有镜像（SDK 优先）。"""
+    with get_client() as client:
+        if client is not None:
+            return _list_images_sdk(client)
+    return _list_images_cli(c)
+
+
+def image_exists(c: Context, tag: str) -> bool:
+    """判断本地是否存在指定标签的镜像。"""
+    images = list_images(c)
+    for img in images:
+        if tag in img["tags"]:
+            return True
+    return False
+
+
+# ===========================================================================
+# 容器生命周期：run / stop / status / clean
+# ===========================================================================
+
+
+def _ensure_secrets(cfg: ContainerConfig) -> None:
+    """自动填充缺失的密码/token（与构建端生成规则一致）。"""
+    if not cfg.user_password:
+        cfg.user_password = generate_random_string(16)
+        print(f"[Config] 自动生成密码: {cfg.user_password}")
+    if not cfg.jupyter_token:
+        cfg.jupyter_token = generate_random_string(32)
+        print(f"[Config] 自动生成 token: {cfg.jupyter_token}")
+
+
+def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
+    """构造 podman-py containers.run 的 kwargs。"""
+    ports = {
+        "22/tcp": cfg.ssh_port,
+        "8888/tcp": cfg.jupyter_port,
+    }
+    volumes = {
+        workspace_posix: {"bind": "/workspace", "mode": "rw"},
+    }
+    environment: dict[str, str] = {
+        "USER_PASSWORD": cfg.user_password,
+        "JUPYTER_TOKEN": cfg.jupyter_token,
+    }
+    if cfg.ssh_public_key:
+        environment["SSH_PUBLIC_KEY"] = cfg.ssh_public_key
+    if cfg.grant_sudo:
+        environment["GRANT_SUDO"] = "yes"
+
+    kwargs = {
+        "image": cfg.image,
+        "name": cfg.name,
+        "ports": ports,
+        "volumes": volumes,
+        "environment": environment,
+        "detach": cfg.detach,
+        "devices": cfg.devices,
+        "security_opt": cfg.security_opt,
+        "cgroupns": cfg.cgroupns,
+    }
+    return kwargs
+
+
+def _run_via_sdk(client, cfg: ContainerConfig, workspace_posix: str) -> bool:
+    """SDK 启动容器。"""
+    try:
+        try:
+            old = client.containers.get(cfg.name)
+            print(f"[SDK] 清理旧容器: {cfg.name}")
+            old.remove(force=True)
+        except PodmanNotFound:
+            pass
+
+        kwargs = _sdk_run_kwargs(cfg, workspace_posix)
+        print(f"[SDK] 启动容器: {cfg.name} ({cfg.image})")
+        container = client.containers.run(**kwargs)
+        if cfg.detach:
+            container.reload()
+            print(f"[SDK] 容器已启动 (detached): {container.short_id}")
+        else:
+            print("[SDK] 容器前台运行")
+        return True
+    except Exception as e:
+        print(f"[SDK] 启动失败 fallback to CLI: {e}")
+        return False
+
+
+def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None:
+    """CLI 启动容器（与 jpman create 参数一致）。"""
+    runtime = detect_runtime()
+
+    if cli_container_exists(c, runtime, cfg.name):
+        print(f"[CLI] 容器 {cfg.name} 已存在，先清理...")
+        _stop_via_cli(c, cfg.name)
+
+    cmd_parts = [
+        runtime,
+        "run",
+        "--name",
+        cfg.name,
+        "-p",
+        f"{cfg.ssh_port}:22",
+        "-p",
+        f"{cfg.jupyter_port}:8888",
+        "-v",
+        f"{workspace_posix}:/workspace",
+        "--device /dev/fuse",
+        "--security-opt label=disable",
+        "--cgroupns=host",
+    ]
+    if cfg.detach:
+        cmd_parts.append("-d")
+    cmd_parts.extend(["-e", f"USER_PASSWORD={cfg.user_password}"])
+    cmd_parts.extend(["-e", f"JUPYTER_TOKEN={cfg.jupyter_token}"])
+    if cfg.ssh_public_key:
+        cmd_parts.extend(["-e", f'SSH_PUBLIC_KEY="{cfg.ssh_public_key}"'])
+    if cfg.grant_sudo:
+        cmd_parts.extend(["-e", "GRANT_SUDO=yes"])
+    cmd_parts.append(cfg.image)
+    run_cmd(c, " ".join(cmd_parts), pty=not cfg.detach)
+    if cfg.detach:
+        print("[CLI] 容器已启动 (detached)")
+
+
+def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
+    """启动容器，SDK 优先失败走 CLI。返回最终使用的配置（含自动填充的密码/token）。"""
+    ready, hint = check_runtime_ready()
+    if not ready:
+        raise RuntimeError(f"运行时未就绪: {hint}")
+
+    _ensure_secrets(cfg)
+    workspace_path = cfg.resolved_workspace()
+    if not workspace_path.exists():
+        print(f"[Workspace] 创建工作目录: {workspace_path}")
+        workspace_path.mkdir(parents=True, exist_ok=True)
+    workspace_posix = to_posix_path(workspace_path)
+
+    print(f"[Run] 容器: {cfg.name}  镜像: {cfg.image}")
+    print(f"[Run] 挂载 {workspace_posix} -> /workspace")
+    print(f"[Run] 端口映射: SSH={cfg.ssh_port}  Jupyter={cfg.jupyter_port}")
+
+    sdk_ok = False
+    with get_client() as client:
+        if client is not None:
+            sdk_ok = _run_via_sdk(client, cfg, workspace_posix)
+    if not sdk_ok:
+        _run_via_cli(c, cfg, workspace_posix)
+
+    print("\n" + "=" * 60)
+    print("访问信息:")
+    print(f"  SSH:         ssh -p {cfg.ssh_port} devuser@localhost")
+    print(f"  SSH 密码:    {cfg.user_password}")
+    print(f"  Jupyter Lab: http://localhost:{cfg.jupyter_port}/lab?token={cfg.jupyter_token}")
+    print(f"  工作区:      {workspace_path}")
+    print("=" * 60)
+    return cfg
+
+
+def _stop_via_sdk(client, name: str) -> bool:
+    try:
+        container = client.containers.get(name)
+        if container.status == "running":
+            print(f"[SDK] 停止容器: {name}")
+            container.stop(timeout=10)
+        print(f"[SDK] 删除容器: {name}")
+        container.remove(force=True)
+        return True
+    except PodmanNotFound:
+        print(f"[SDK] 容器 {name} 不存在")
+        return True
+    except Exception as e:
+        print(f"[SDK] 停止失败 fallback: {e}")
+        return False
+
+
+def _stop_via_cli(c: Context, name: str) -> None:
+    runtime = detect_runtime()
+    if not cli_container_exists(c, runtime, name):
+        print(f"[CLI] 容器 {name} 不存在")
+        return
+    print(f"[CLI] 停止容器: {name}")
+    run_cmd(c, f"{runtime} stop {name}", warn=True, hide=True, echo=False)
+    run_cmd(c, f"{runtime} rm {name}", warn=True, hide=True, echo=False)
+    print("[CLI] 容器已停止并删除")
+
+
+def stop_container(c: Context, name: str) -> None:
+    """停止并删除容器（SDK 优先）。"""
+    print(f"[Stop] 目标容器: {name}")
+    sdk_ok = False
+    with get_client() as client:
+        if client is not None:
+            sdk_ok = _stop_via_sdk(client, name)
+    if not sdk_ok:
+        _stop_via_cli(c, name)
+
+
+def _status_via_sdk(client, name: str) -> bool:
+    try:
+        target = None
+        for ct in client.containers.list(all=True):
+            if ct.name == name:
+                target = ct
+                break
+        print(f"容器状态: {name}")
+        print("-" * 60)
+        if target is None:
+            print(f"容器 {name} 不存在")
+            return True
+        target.reload()
+        ports_str = ", ".join(
+            f"{p.get('HostPort', '?')}->{container_port}"
+            for container_port, port_bindings in target.ports.items()
+            if port_bindings
+            for p in port_bindings or []
+        )
+        status = target.status
+        print(f"  Name:      {target.name}")
+        print(f"  Status:    {status}")
+        print(f"  Image:     {target.image.tags[0] if target.image.tags else target.short_id}")
+        print(f"  Ports:     {ports_str or 'none'}")
+        started = target.attrs.get("State", {}).get("StartedAt")
+        exited = target.attrs.get("State", {}).get("ExitCode")
+        if status == "running" and started:
+            print(f"  Started:   {started}")
+        if status == "exited" and exited is not None:
+            print(f"  ExitCode:  {exited}")
+        return True
+    except Exception as e:
+        print(f"[SDK] status 失败 fallback: {e}")
+        return False
+
+
+def _status_via_cli(c: Context, name: str) -> None:
+    runtime = detect_runtime()
+    print(f"容器状态: {name}")
+    print("-" * 60)
+    if not cli_container_exists(c, runtime, name):
+        print(f"容器 {name} 不存在")
+        return
+    go_fmt = "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+    result = run_cmd(
+        c,
+        runtime + ' ps -a --filter name=^' + name + '$ --format "' + go_fmt + '"',
+        pty=False,
+        echo=False,
+    )
+    if result:
+        print(result.stdout)
+
+
+def status_container(c: Context, name: str) -> None:
+    """查询容器状态（SDK 优先）。"""
+    sdk_ok = False
+    with get_client() as client:
+        if client is not None:
+            sdk_ok = _status_via_sdk(client, name)
+    if not sdk_ok:
+        _status_via_cli(c, name)
+
+
+def clean_container(c: Context, name: str, tag: str, volume: bool = False, image: bool = False) -> None:
+    """清理容器/卷/镜像（SDK 优先）。"""
+    print(f"[Clean] 容器={name}  卷={volume}  镜像={image}")
+    sdk_ok = False
+    with get_client() as client:
+        if client is not None:
+            try:
+                _stop_via_sdk(client, name)
+                if volume:
+                    print("[SDK] 清理未使用卷...")
+                    try:
+                        client.volumes.prune()
+                    except Exception:
+                        pass
+                if image:
+                    print(f"[SDK] 删除镜像: {tag}")
+                    try:
+                        img = client.images.get(tag)
+                        img.remove(force=True)
+                    except Exception:
+                        pass
+                sdk_ok = True
+            except Exception as e:
+                print(f"[SDK] clean 失败 fallback: {e}")
+    if not sdk_ok:
+        runtime = detect_runtime()
+        _stop_via_cli(c, name)
+        if volume:
+            print("[CLI] 清理未使用卷...")
+            run_cmd(c, f"{runtime} volume prune -f", warn=True)
+        if image:
+            print(f"[CLI] 删除镜像: {tag}")
+            run_cmd(c, f"{runtime} rmi {tag}", warn=True)
+    print("[Clean] 完成")
