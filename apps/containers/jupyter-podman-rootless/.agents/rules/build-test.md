@@ -14,10 +14,22 @@ source: "README.md#快速开始 + README.md#常见问题"
 - **Python**：≥3.14（用于运行invoke任务）
 - **Linux宿主机**：需要FUSE支持（fuse-overlayfs需要）
 - **WSL2**：自动路径转换支持
-- **可选依赖**：
+- **可选依赖（宿主机 invoke 三层后端用，pip 安装）**：
   - `podman-compose`（推荐，声明式编排）：`pip install podman-compose`
   - `podman-py`（SDK后端）：`pip install podman`
   - `omlmd` + `olot[oras-py]`（宿主机ML命令）：`pip install omlmd 'olot[oras-py]'`
+  - 注：这三个工具与镜像内嵌的同名工具相互独立、版本各自固定（内嵌见 [17-upstream-tools.md](../../docs/17-upstream-tools.md)），互不影响
+
+### 上游源树要求（构建内嵌编排工具的前提）
+
+- Containerfile 在构建时引用 `upstream/{podman-compose,podman-py,toolbox}` 源树（conda-builder 本地 pip 安装、toolbox-builder go build），它们来自 SpecWeave 根工作区 `vendor/` 下的三个 third_party git submodule（固定 pin commit）
+- **构建前必须先初始化并 pin 这三个 submodule**（在 SpecWeave 根目录执行）：
+
+```bash
+git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbox
+```
+
+- 未初始化时构建前置 stage 会报错并提示该命令；submodule 请保持 gitlink pin（勿随意切分支/改 commit）
 
 ## 构建镜像
 
@@ -39,6 +51,8 @@ invoke build --no-cache
 # 自定义标签
 invoke build --tag my-jupyter:v1
 ```
+
+> **构建前自动 stage 上游源树**：`invoke build`（src/jpman_builder/tasks/build.py）与 `jpman rebuild`/`jpman rebuild-all`（bin/jpman）在真正构建前都会先执行 stage 机制（`stage_upstream_sources`），把 SpecWeave 根 `vendor/` 下 podman-compose/podman-py/toolbox 三个 submodule 源树复制到 `<应用根>/upstream/<name>`（git-ignored 的构建上下文临时目录，机制详见 [17-upstream-tools.md](../../docs/17-upstream-tools.md)）。源树缺失（submodule 未 init）时构建会报错并给出修复命令，不会静默构建出缺工具的镜像。
 
 build参数：
 
@@ -67,6 +81,8 @@ docker build -t jupyter-podman-rootless \
   --build-arg PIP_MIRROR=tuna \
   .
 ```
+
+> ⚠️ 直接 `podman build`/`docker build` **不会**自动 stage 上游源树：若 `<应用根>/upstream/` 尚不存在或已过期，`COPY upstream/...` 会失败或装入旧源。请先运行一次 `invoke build`（或 `jpman rebuild`/`rebuild-all`）生成/刷新 `upstream/`，再直接构建；否则请优先使用上述会自动 stage 的构建入口。
 
 构建时环境变量（--build-arg）：
 
@@ -252,6 +268,11 @@ ssh -p 2222 devuser@localhost "echo SSH OK"
 podman --version
 podman info
 podman run --rm docker.io/library/hello-world
+
+# 容器内验证内嵌编排工具（镜像内置，版本固定自 vendor/ 子模块，详见 docs/17-upstream-tools.md）
+podman-compose --version                      # podman-compose（main env，本地源 pip 安装）
+python -c "import podman; print('[OK] podman SDK importable')"   # podman-py SDK（main env）
+toolbox --help                                # toolbox（/usr/local/bin，golang aux 阶段构建）
 ```
 
 ### 6. ML工具验证
@@ -339,11 +360,29 @@ pip install -e ".[model]"
 
 所有透传均为opt-in（默认不启用）。SSH keys和gitconfig以只读方式挂载，/run/host逃生口默认关闭。
 
+### Q: 构建报错"上游源树缺失或为空"或找不到 upstream/？
+
+说明 SpecWeave 根 `vendor/` 下三个 submodule 未初始化或未 pin。在 SpecWeave 根目录执行：
+
+```bash
+git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbox
+```
+
+然后重新 `invoke build`（或 `jpman rebuild`/`rebuild-all`）；构建前置 stage 会自动重建 `<应用根>/upstream/`。
+
+### Q: 容器内 podman-compose / podman SDK / toolbox 不可用或版本不对？
+
+- `upstream/` 是构建前由 stage 机制临时生成的构建上下文目录，**已被 `.gitignore` 忽略**，且每次构建前清空重建——不要手动向其中添加文件、也不要将其提交入库
+- `.containerignore` 的 `*.md` 规则对 `upstream/` 内层的根 README.md 做了**反白放行**（`!upstream/podman-compose/README.md`、`!upstream/podman-py/README.md`）——本地 pip 构建需要其作为 long_description 元数据，**不要删除这两条放行规则**
+- 若镜像仍是旧版本，先确认三 submodule 已 pin 到目标 commit（`git submodule status vendor/podman-compose vendor/podman-py vendor/toolbox`），再 `jpman rebuild-all` 全量重建并重跑三项内嵌工具检查（`podman-compose --version` / `python -c "import podman"` / `toolbox --help`）
+
 ## 验证清单
 
 构建测试完成后必须确认：
 
-- [ ] `invoke build`构建成功，7层构建日志清晰
+- [ ] `invoke build`构建成功，构建日志清晰（3 阶段 + toolbox-builder aux 阶段，final 内 5 层运行时分层）
+- [ ] 构建前 `upstream/` 已被 stage 到 `<应用根>/upstream/`（含 podman-compose/podman-py/toolbox 三个源树）
+- [ ] 容器内三项内嵌工具检查通过：`podman-compose --version`、`python -c "import podman"`、`toolbox --help`
 - [ ] `invoke run`启动成功，打印SSH/Jupyter访问信息
 - [ ] SSH可连接（密码或公钥认证）
 - [ ] Jupyter Lab可在浏览器访问

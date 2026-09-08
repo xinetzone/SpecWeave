@@ -22,10 +22,10 @@
 - **Python 环境**：Python 3.14t (free-threading, cp314t, 无GIL) + Miniforge3 + libmamba
 - **中文环境**：zh_CN.UTF-8 / Asia/Shanghai
 - **非root用户**：devuser (UID 1000)，sudo 默认关闭（`--grant-sudo`/`GRANT_SUDO=yes` 开启）
-- **任务管理**：使用 invoke 作为任务管理工具（tasks/ 目录）
-- **编排架构**：三层后端自动降级——podman-compose 声明式（优先）→ podman-py SDK → CLI fallback
+- **任务管理**：使用 invoke 作为任务管理工具（任务定义在 `src/jpman_builder/tasks/`，经根 `tasks.py` 暴露）
+- **编排架构**：宿主机 invoke 三层后端自动降级——podman-compose 声明式（优先）→ podman-py SDK → CLI fallback（宿主机 pip 安装）；镜像内另内嵌同源 podman-compose / podman-py / toolbox（经 SpecWeave 根 `vendor/` 三个 third_party 子模块固定 commit 引入、构建前置 stage 装入，见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)）
 - **ML 模型管理**：容器内预装 omlmd + olot[oras-py]，支持 OCI artifact 分发和 KServe ModelCar 打包
-- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter
+- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter；镜像内另内嵌 toolbox 二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，/usr/local/bin/toolbox）
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
@@ -44,7 +44,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
   └─ apps/containers/jupyter-podman-rootless/AGENTS.md（本文件，项目路由入口）
        ├─ .agents/README.md          ← AI资产容器索引
        │   └─ rules/
-       │       ├─ containerfile.md   ← Containerfile 编写规范（7层架构/Toolbx兼容/free-threading）
+       │       ├─ containerfile.md   ← Containerfile 编写规范（构建架构/内嵌编排工具/Toolbx兼容/free-threading）
        │       ├─ entrypoint.md      ← Entrypoint 启动脚本规范（7步启动流程）
        │       ├─ services.md        ← supervisord/SSH/Jupyter/Podman服务配置规范
        │       ├─ compose.md         ← compose编排/profiles/透传配置规范
@@ -55,15 +55,17 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │   ├─ jpman                  ← WSL/Linux/macOS bash版本
        │   ├─ jpman.cmd              ← Windows cmd版本
        │   └─ jpman.ps1              ← Windows PowerShell版本
-       ├─ docs/                       ← 人类可读文档（原子化拆分，17个文档+索引）
+       ├─ docs/                       ← 人类可读文档（原子化拆分，18个文档+索引）
        │   └─ README.md              ← 文档索引
        ├─ pyproject.toml             ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras，scikit-build-core）
        ├─ CMakeLists.txt             ← scikit-build-core CMake配置
-       ├─ tasks/                     ← invoke任务定义目录
+       ├─ tasks.py                   ← invoke 入口（转发到 jpman_builder.tasks 命名空间）
+       ├─ src/jpman_builder/tasks/   ← invoke 任务定义目录（含 stage_upstream.py 构建前置 stage）
        ├─ config/                    ← 配置文件目录
        ├─ scripts/                   ← 辅助脚本
        ├─ conda-lock/                ← conda环境定义（environment.yml，含omlmd+olot）
-       ├─ Containerfile              ← Podman构建定义（7层架构，含Toolbx兼容标记）
+       ├─ upstream/                  ← 构建上下文临时目录（stage 机制生成，git-ignored）
+       ├─ Containerfile              ← Podman构建定义（3 阶段 + toolbox-builder aux + final 5 层运行时分层，含 Toolbx 兼容标记与内嵌编排工具）
        ├─ entrypoint.sh              ← 容器启动脚本（7步启动流程）
        ├─ compose.yaml               ← podman-compose 声明式编排（jupyter + model-registry服务）
        ├─ compose.dev.yaml           ← 开发透传覆盖文件（SSH/git/X11/pip cache，opt-in）
@@ -80,11 +82,11 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 
 | 任务类型 | 必读入口 | 说明 |
 |---------|---------|------|
-| Containerfile修改/构建优化 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 7层架构、Toolbx兼容、free-threading、层缓存策略、安全规范 |
+| Containerfile修改/构建优化 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 构建架构（阶段+运行时层）、内嵌编排工具、Toolbx兼容、free-threading、层缓存策略、安全规范 |
 | entrypoint.sh启动脚本 | [.agents/rules/entrypoint.md](.agents/rules/entrypoint.md) | 7步启动流程、日志规范、信号处理、Podman初始化、Jupyter配置 |
 | supervisord/SSH/Jupyter/Podman服务配置 | [.agents/rules/services.md](.agents/rules/services.md) | 多服务管理、权限配置、存储驱动 |
 | compose编排/profiles/透传配置 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml服务定义、compose.dev.yaml透传、安全设计 |
-| invoke任务开发 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端架构、client.py封装、任务编写规范、路径自动转换 |
+| invoke任务开发 | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 三层后端架构、client.py封装、任务编写规范、路径自动转换、构建前置 stage（stage_upstream.py） |
 | ML模型管理（OMLMD/OLOT） | [.agents/rules/ml-models.md](.agents/rules/ml-models.md) | OCI artifact分发、ModelCar打包、本地model-registry |
 | jpman CLI脚本修改 | [bin/jpman](bin/jpman) | 零依赖CLI脚本，bash实现，需保持跨平台兼容 |
 | 镜像构建与测试 | [.agents/rules/build-test.md](.agents/rules/build-test.md) | build/run命令、7步验证流程、常见问题排查 |
@@ -101,7 +103,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 父级全局规则 | [../../../AGENTS.md](../../../AGENTS.md) | SpecWeave根工作区入口（启动协议必经之路） |
 | 本文件入口 | AGENTS.md（本文件） | jupyter-podman-rootless子项目路由入口 |
 | AI资产容器 | [.agents/README.md](.agents/README.md) | .agents/目录索引与父级继承关系 |
-| Containerfile规范 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 7层架构/Toolbx兼容/free-threading/层缓存/安全 |
+| Containerfile规范 | [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | 构建架构/内嵌编排工具/Toolbx兼容/free-threading/层缓存/安全 |
 | 入口点脚本规范 | [.agents/rules/entrypoint.md](.agents/rules/entrypoint.md) | 7步启动流程/日志/信号/Podman初始化 |
 | 服务配置规范 | [.agents/rules/services.md](.agents/rules/services.md) | supervisord/SSH/Jupyter/Podman配置 |
 | Compose编排规范 | [.agents/rules/compose.md](.agents/rules/compose.md) | compose.yaml/dev.yaml/profiles/透传/安全 |
@@ -118,7 +120,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
 | 约束主题 | 所在文件 |
 |---------|---------|
 | 中文环境（locale/timezone）、基础镜像锁定 | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
-| 7层构建架构、层缓存优化、Toolbx兼容标记 | [containerfile.md](.agents/rules/containerfile.md#7层构建设计) |
+| 构建架构（多阶段+aux+运行时分层）、层缓存优化、Toolbx兼容标记、内嵌编排工具 | [containerfile.md](.agents/rules/containerfile.md#构建架构与运行时层) |
 | Python 3.14 cp314t free-threading配置 | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
 | 非root用户（devuser/UID1000/docker组/sudo） | [containerfile.md](.agents/rules/containerfile.md#基础约定) |
 | Rootless Podman配置（fuse-overlayfs/crun/subuid） | [containerfile.md](.agents/rules/containerfile.md#rootless-podman配置) |

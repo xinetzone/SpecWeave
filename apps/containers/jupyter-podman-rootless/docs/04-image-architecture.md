@@ -5,21 +5,31 @@ source: "README.md#镜像架构"
 ---
 # 镜像架构
 
-## 7层构建设计（Containerfile）
+## 构建架构与运行时层（Containerfile）
 
-镜像按变化频率从低到高分为7层，最大化构建缓存复用：
+镜像采用「3 阶段运行时链 + toolbox-builder aux 阶段」的多阶段构建；final 阶段按变化频率从低到高组织 5 层运行时分层，最大化构建缓存复用：
 
 ```mermaid
 flowchart BT
-    L7["Layer 7/7: 运行时声明（元数据）<br/>WORKDIR /workspace | EXPOSE 22 8888<br/>HEALTHCHECK | CMD"]
-    L6["Layer 6/7: 最终元数据 + 清理 + 验证（变化频率：最低）<br/>build-info写入 | apt清理 | /tmp清理<br/>15项二进制验证 | Toolbx markers检查<br/>Free-threading二次确认<br/>构建耗时汇总表"]
-    L5["Layer 5/7: 配置文件COPY + 权限 + 语法验证（变化频率：高）<br/>sshd_config | supervisord | jupyter_config | entrypoint<br/>CRLF→LF转换 | sshd -t | bash -n<br/>4项语法检查"]
-    L4["Layer 4/7: 用户创建 + subuid/subgid + Podman配置 + Toolbx markers<br/>devuser(UID1000) | docker组<br/>subuid:100000:65536<br/>fuse-overlayfs storage.conf<br/>sudo NOPASSWD | /run/host目录<br/>/.toolboxenv+/.containerenv markers"]
-    L3["Layer 3/7: main conda环境 + ML工具（变化频率：中）<br/>Python 3.14 cp314t | JupyterLab<br/>ipykernel | ipywidgets | omlmd | olot<br/>mamba单次solve | tk/tcl清理<br/>free-threading验证"]
-    L2["Layer 2/7: Miniforge3安装 + .condarc（变化频率：低）<br/>架构自动检测(x86_64/aarch64)<br/>镜像源回退 | libmamba<br/>二进制strip | anaconda-anon-usage移除<br/>权限设置"]
-    L1["Layer 1/7: 系统包 + locale + Podman + Toolbx依赖（变化频率：最低）<br/>ubuntu:26.04 | openssh-server<br/>supervisor | podman/crun | libcap2-bin(capsh)<br/>fuse-overlayfs | slirp4netns<br/>tini | zh_CN.UTF-8<br/>Toolbx LABELs | Podman二进制strip | APT清理"]
-    L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
+    BR["Stage 1/3: base-runtime<br/>系统包 + locale/tz + Podman strip"]
+    TB["Stage (aux): toolbox-builder<br/>golang:1.26-bookworm + libsubid-dev<br/>go build → /out/toolbox"]
+    CB["Stage 2/3: conda-builder<br/>Miniforge3 + main env（cp314t）<br/>omlmd / olot<br/>podman-py + podman-compose 本地源安装<br/>深度清理"]
+    L1["final Layer 1/5: 继承 base-runtime（系统层）"]
+    L2["final Layer 2/5: COPY /opt/conda<br/>+ COPY /out/toolbox → /usr/local/bin/toolbox"]
+    L3["final Layer 3/5: devuser + subuid/subgid<br/>rootless Podman 配置 + Toolbx markers"]
+    L4["final Layer 4/5: 配置 COPY + 语法验证"]
+    L5["final Layer 5/5: 元数据 + 清理 + 最终验证<br/>23 项 [OK]（含三项内嵌工具检查）"]
+    L1 --> L2 --> L3 --> L4 --> L5
+    BR -. "FROM base-runtime" .-> L1
+    CB -. "COPY --from=conda-builder /opt/conda" .-> L2
+    TB -. "COPY --from=toolbox-builder /out/toolbox" .-> L2
 ```
+
+阶段与分层要点：
+
+- **构建阶段不进 final**：conda-builder 与 toolbox-builder 为构建态，仅产物经 `COPY --from` 进入 final（`/opt/conda`、`/usr/local/bin/toolbox`），构建工具链与源树均不进入最终镜像；
+- **内嵌编排工具**：podman-py/podman-compose 在 conda-builder 阶段以本地源 pip 装入 `main` env；toolbox 由 toolbox-builder（golang:1.26-bookworm）`go build` 产出；三者源树经构建前 stage 机制来自 SpecWeave 根 `vendor/` 子模块（详见 [17-upstream-tools.md](17-upstream-tools.md)）；
+- **最终验证**：Layer 5/5 共 **23 项 [OK] 检查**，含新增三项内嵌工具检查（`podman-compose --version`、`python -c "import podman"`、`toolbox --help`）。
 
 Containerfile编写规范详见 [.agents/rules/containerfile.md](../.agents/rules/containerfile.md)。
 

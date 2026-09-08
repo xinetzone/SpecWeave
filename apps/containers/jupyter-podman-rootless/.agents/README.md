@@ -14,7 +14,7 @@ source: "AGENTS.md"
 ├── README.md              ← 本文件（目录索引）
 ├── CHANGELOG.md           ← 项目变更日志
 ├── rules/                 ← 项目特有规则（单一职责，按主题拆分）
-│   ├── containerfile.md   ← Containerfile 编写规范（7层架构/Toolbx兼容/free-threading）
+│   ├── containerfile.md   ← Containerfile 编写规范（构建架构/内嵌编排工具/Toolbx兼容/free-threading）
 │   ├── entrypoint.md      ← Entrypoint 启动脚本规范（7步启动流程）
 │   ├── services.md        ← supervisord/SSH/Jupyter/Podman服务配置规范
 │   ├── compose.md         ← compose编排/profiles/透传配置规范
@@ -36,7 +36,8 @@ source: "AGENTS.md"
 | 资产 | 路径 | 说明 |
 |------|------|------|
 | jpman CLI | [../bin/jpman](../bin/jpman) | 零依赖CLI，纯bash实现，跨平台（bash/cmd/ps1） |
-| Containerfile | [../Containerfile](../Containerfile) | 多阶段构建定义（Layer 4/5 支持缓存增量重建） |
+| Containerfile | [../Containerfile](../Containerfile) | 多阶段构建定义（3 阶段 + toolbox-builder aux + final 5 层运行时分层，Layer 4/5 支持缓存增量重建，内嵌 podman-compose/podman-py/toolbox） |
+| 上游源树（vendor/） | SpecWeave 根 [../../../../vendor/AGENTS.md](../../../../vendor/AGENTS.md) | podman-compose / podman-py / toolbox 三个 third_party 子模块（gitlink pin commit，见 [../docs/17-upstream-tools.md](../docs/17-upstream-tools.md)），构建前 stage 至 `../upstream/` |
 | pyproject.toml | [../pyproject.toml](../pyproject.toml) | Python项目配置（scikit-build-core + invoke） |
 | CMakeLists.txt | [../CMakeLists.txt](../CMakeLists.txt) | scikit-build-core CMake配置 |
 | .env.example | [../.env.example](../.env.example) | 环境变量模板（含jpman和invoke两种配置方式） |
@@ -48,7 +49,7 @@ source: "AGENTS.md"
 
 | 规则文件 | 对应人类文档 |
 |----------|-------------|
-| containerfile.md | [04-image-architecture.md](../docs/04-image-architecture.md) |
+| containerfile.md | [04-image-architecture.md](../docs/04-image-architecture.md), [17-upstream-tools.md](../docs/17-upstream-tools.md) |
 | entrypoint.md | [04-image-architecture.md](../docs/04-image-architecture.md) |
 | services.md | [04-image-architecture.md](../docs/04-image-architecture.md) |
 | compose.md | [07-toolbx-passthrough.md](../docs/07-toolbx-passthrough.md) |
@@ -69,6 +70,7 @@ source: "AGENTS.md"
 
 详见 [CHANGELOG.md](CHANGELOG.md)。
 
+- 2026-09-08 | feat | vendor/ 注册 podman-compose/podman-py/toolbox 三上游子模块并内嵌进镜像（toolbox-builder aux 阶段 + conda-builder 本地源 pip 安装）；构建前置 stage 机制（upstream/ 临时目录）；新增 docs/17-upstream-tools.md
 - 2026-08-27 | feat | jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建；文档从14个增至17个
 - 2026-08-27 | refactor | AGENTS.md精简为路由入口，约束迁移至.agents/rules/（7个主题文件）；README.md原子化至docs/（14个文档）
 - 2026-08-27 | feat | 初始化AGENTS.md + 完整功能实现

@@ -15,6 +15,8 @@ source: "README.md#快速开始"
 - **可选**：`podman-py`（SDK 后端，比 CLI 更高效）
 - **可选**：`omlmd` + `olot[oras-py]`（ML 模型 OCI artifact 管理，容器内预装）
 
+> 注：上面的 podman-compose / podman-py 是**宿主机 invoke 三层后端**所需（`pip install`）；镜像内已另行内嵌同源工具（含 toolbox），版本经 vendor/ 子模块固定、与宿主 pip 版本相互独立，详见 [17-upstream-tools.md](17-upstream-tools.md)。
+
 ## 安装 invoke
 
 ```bash

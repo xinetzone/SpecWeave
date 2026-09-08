@@ -6,6 +6,16 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-09-08
+
+| 类型 | 变更 |
+|------|------|
+| feat | vendor/ 登记三个容器编排上游 third_party 子模块并 pin commit（github.com/containers/*）：podman-compose `e3df10472`、podman-py `5dd81b49`、toolbox `81401f64`（gitlink 固定，禁止本地修改） |
+| feat | 镜像内嵌三容器编排工具：新增 toolbox-builder aux 阶段（golang:1.26-bookworm + libsubid-dev，go build `/out/toolbox`，仅二进制 COPY 进 final 的 /usr/local/bin/toolbox）；conda-builder 内以本地源 pip 安装 podman-py/podman-compose 进 main env（cp314t 直装失败降级 mamba deps + pip --no-deps）；最终验证块新增三项内嵌工具 [OK] 检查（共 23 项） |
+| feat | 构建前置 stage 机制：src/jpman_builder/tasks/stage_upstream.py 将 SpecWeave 根 vendor/ 三子模块源树复制到 `<app>/upstream/<name>`（git-ignored 临时目录；.containerignore 反白放行其根 README.md），Containerfile 据此 COPY 本地安装/构建 |
+| feat | invoke build 与 jpman rebuild/rebuild-all 构建前自动 stage 上游源树；invoke build 构建上下文根改为向上查找含 Containerfile 的应用根（修复任意 cwd 下上下文与 upstream/ 定位错误） |
+| docs | 新增 docs/17-upstream-tools.md（上游工具引入/升级流程/stage 机制/容器内用法）；同步 .agents/rules/containerfile.md、build-test.md、docs/04、08、README.md、AGENTS.md、.agents/README.md 等（构建架构章节由 7 层改述为 3 阶段 + aux + final 运行时分层） |
+
 ## 2026-08-29
 
 | 类型 | 变更 |

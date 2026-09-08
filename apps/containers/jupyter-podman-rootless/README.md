@@ -1,6 +1,6 @@
 # jupyter-podman-rootless
 
-> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
+> 基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，镜像内嵌容器编排上游工具（podman-compose / podman-py / toolbox，经 SpecWeave 根 vendor/ 子模块固定 commit 引入），配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
 
 ---
 
@@ -56,7 +56,7 @@ Password:  <自动生成或配置的密码>
 | [docs/01-getting-started.md](docs/01-getting-started.md) | 快速开始：前置条件、四种使用方式 |
 | [docs/02-invoke-reference.md](docs/02-invoke-reference.md) | Invoke命令参考：核心命令、ML命令、参数说明 |
 | [docs/03-environment-variables.md](docs/03-environment-variables.md) | 环境变量参考 |
-| [docs/04-image-architecture.md](docs/04-image-architecture.md) | 镜像架构：7层构建、7步启动、服务管理 |
+| [docs/04-image-architecture.md](docs/04-image-architecture.md) | 镜像架构：多阶段构建与运行时分层、7步启动、服务管理 |
 | [docs/05-rootless-podman.md](docs/05-rootless-podman.md) | Rootless Podman使用说明 |
 | [docs/06-ml-model-management.md](docs/06-ml-model-management.md) | ML模型管理：OMLMD+OLOT、ModelCar打包 |
 | [docs/07-toolbx-passthrough.md](docs/07-toolbx-passthrough.md) | Toolbx透传开发模式 |
@@ -69,6 +69,7 @@ Password:  <自动生成或配置的密码>
 | [docs/14-jpman-cli.md](docs/14-jpman-cli.md) | jpman 零依赖CLI参考 |
 | [docs/15-wsl-export.md](docs/15-wsl-export.md) | WSL2发行版导出与使用 |
 | [docs/16-image-cache.md](docs/16-image-cache.md) | 镜像缓存与增量重建 |
+| [docs/17-upstream-tools.md](docs/17-upstream-tools.md) | 容器编排上游工具内嵌：vendor/ 子模块引入、upstream/ stage 机制 |
 
 ### 🤖 AI协作者规范
 
@@ -77,7 +78,7 @@ Password:  <自动生成或配置的密码>
 | 规范 | 说明 |
 |------|------|
 | [.agents/README.md](.agents/README.md) | AI资产容器索引 |
-| [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | Containerfile编写规范（7层架构、Toolbx兼容） |
+| [.agents/rules/containerfile.md](.agents/rules/containerfile.md) | Containerfile编写规范（构建架构、内嵌编排工具、Toolbx兼容） |
 | [.agents/rules/entrypoint.md](.agents/rules/entrypoint.md) | Entrypoint启动脚本规范（7步启动流程） |
 | [.agents/rules/services.md](.agents/rules/services.md) | 服务配置规范（supervisord/SSH/Jupyter/Podman） |
 | [.agents/rules/compose.md](.agents/rules/compose.md) | Compose编排与透传规范 |
@@ -98,9 +99,10 @@ Password:  <自动生成或配置的密码>
 | **非root用户** | devuser (UID 1000)，sudo 默认关闭（`--grant-sudo`/`GRANT_SUDO=yes` 开启） |
 | **中文环境** | zh_CN.UTF-8 locale + Asia/Shanghai 时区 |
 | **镜像源** | APT/Conda/PIP 均支持 official / tuna / aliyun |
-| **三层后端** | podman-compose（优先）→ podman-py SDK → CLI fallback |
+| **三层后端** | 宿主机 invoke：podman-compose（优先）→ podman-py SDK → CLI fallback（pip 安装，与镜像内嵌版本独立） |
+| **内嵌编排工具** | 镜像内置 podman-compose / podman-py SDK / toolbox（经 vendor/ 子模块固定 commit 引入，详见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)） |
 | **ML 模型** | OMLMD OCI artifact分发 + OLOT KServe ModelCar打包 + 本地model-registry |
-| **Toolbx 兼容** | 可直接 `toolbox create/enter`，自动透传HOME/cwd/X11 |
+| **Toolbx 兼容** | 可直接 `toolbox create/enter`，自动透传HOME/cwd/X11；镜像内另内嵌 toolbox CLI |
 | **开发透传** | compose.dev.yaml：SSH agent/git/X11/pip cache（opt-in） |
 | **零依赖CLI** | `jpman`：纯bash脚本，无需Python依赖，提供快速管理 |
 | **镜像缓存** | `.image-cache/`：podman save/load 快速备份恢复，pigz多线程压缩 |
@@ -114,20 +116,22 @@ Password:  <自动生成或配置的密码>
 jupyter-podman-rootless/
 ├── AGENTS.md              # AI协作者入口（SpecWeave路由）
 ├── README.md              # 本文件（项目入口）
-├── Containerfile          # 多阶段构建定义（passt 已固化，Layer 4/5 支持缓存增量重建）
+├── Containerfile          # 多阶段构建定义（3 阶段 + toolbox-builder aux；passt 已固化，Layer 4/5 支持缓存增量重建，内嵌编排工具）
 ├── entrypoint.sh          # 7步启动脚本
 ├── compose.yaml           # podman-compose编排（jupyter + model-registry）
 ├── compose.dev.yaml       # 开发透传覆盖（opt-in）
 ├── pyproject.toml         # Python项目配置（invoke + scikit-build-core）
 ├── CMakeLists.txt         # scikit-build-core CMake配置
+├── tasks.py               # invoke 入口（转发到 jpman_builder.tasks）
 ├── .env.example           # 环境变量模板
-├── .containerignore       # Podman构建忽略规则
-├── .gitignore             # Git忽略规则
+├── .containerignore       # Podman构建忽略规则（upstream/*/README.md 反白放行）
+├── .gitignore             # Git忽略规则（upstream/ 等）
 ├── bin/                   # jpman零依赖CLI
 │   ├── jpman              # WSL/Linux/macOS bash版本
 │   ├── jpman.cmd          # Windows cmd版本
 │   └── jpman.ps1          # Windows PowerShell版本
-├── tasks/                 # invoke任务定义（三层后端架构）
+├── src/jpman_builder/tasks/  # invoke任务定义（三层后端 + stage_upstream 构建前置 stage）
+├── upstream/              # 构建上下文临时目录（stage 机制生成，git忽略）
 ├── config/                # 配置文件（sshd/supervisord/jupyter/podman）
 ├── scripts/               # 辅助脚本（healthcheck/olot_car）
 ├── conda-lock/            # Conda环境定义（含omlmd+olot）

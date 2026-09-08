@@ -5,7 +5,7 @@ source: "README.md"
 ---
 # jupyter-podman-rootless 文档
 
-基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
+基于 Podman rootless 模式的 Jupyter 开发容器：Python 3.14t (free-threading) + Miniforge3 + SSH + rootless Podman，通过 supervisord 管理多服务。三层后端编排（podman-compose 声明式 → podman-py SDK → CLI fallback），内置 OMLMD 模型 artifact 分发、OLOT KServe ModelCar 打包、Toolbx 透传兼容，镜像内嵌容器编排上游工具（podman-compose / podman-py / toolbox，经 vendor/ 子模块固定 commit 引入），配套 `jpman` 零依赖 CLI 提供镜像缓存、WSL2 发行版一键导出、增量重建等功能。
 
 ## 文档目录
 
@@ -30,7 +30,7 @@ source: "README.md"
 
 | 文档 | 说明 |
 |------|------|
-| [04-image-architecture.md](04-image-architecture.md) | 镜像架构：7层构建、7步启动、服务管理、Compose架构 |
+| [04-image-architecture.md](04-image-architecture.md) | 镜像架构：多阶段构建（3-Stage + aux）与运行时分层、7步启动、服务管理、Compose架构 |
 | [05-rootless-podman.md](05-rootless-podman.md) | Rootless Podman说明：容器内运行容器 |
 | [06-ml-model-management.md](06-ml-model-management.md) | ML模型管理：OMLMD+OLOT、ModelCar打包 |
 | [07-toolbx-passthrough.md](07-toolbx-passthrough.md) | Toolbx透传开发模式：透传配置、安全设计 |
@@ -40,6 +40,7 @@ source: "README.md"
 | [11-free-threading.md](11-free-threading.md) | Python Free-Threading（无GIL）说明 |
 | [12-healthcheck.md](12-healthcheck.md) | 健康检查机制 |
 | [13-faq.md](13-faq.md) | 常见问题解答 |
+| [17-upstream-tools.md](17-upstream-tools.md) | 容器编排上游工具内嵌：vendor/ 子模块引入、upstream/ stage 机制、容器内用法 |
 
 ## AI协作者规范
 
