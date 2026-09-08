@@ -1,0 +1,60 @@
+# .containerignore / .dockerignore（Podman build context 过滤，不读 .gitignore）
+# 作用：Containerfile.client 中 `COPY . ${APP_SRC_DIR}/` 时剔除这些路径，避免
+# 把工作目录下的镜像缓存/环境变量/工作区临时文件等一同打包进叠加层。
+#
+# 注意（V 阶段·经验教训）：Podman 不读取上级目录的 .gitignore；只在
+# build context 根目录查找 .containerignore（或回退到 .dockerignore）。
+# 本文件须与 Containerfile.client 同层，位于 apps/containers/client/ 下。
+
+# -------- 1. 敏感 / 临时 / 大文件（第一优先级） --------
+.image-cache/
+.wsl-cache/
+.temp/
+error.log
+
+# -------- 2. 环境与工作区 --------
+.env
+.workspace/
+workspace/
+
+# -------- 3. Python 构建产物 / 缓存 --------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# -------- 4. 虚拟环境 --------
+.venv/
+venv/
+env/
+
+# -------- 5. IDE / OS 杂项 --------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# -------- 6. AI 规范容器（AI 读写，但运行时无需打包进镜像） --------
+.agents/docs/
+.agents/scripts/tests/
+
+# 反向保留：build context 最小化 — 只允许源码 + 配置 + AI 治理规则 + README
+!src/
+!.agents/rules/
+!.agents/AGENTS.md
+!.agents/README.md
+!.agents/CHANGELOG.md
+!AGENTS.md
+!README.md
+!Containerfile.client
+!pyproject.toml
+!tasks.py
+!.env.example
+!.gitignore

@@ -55,13 +55,26 @@ USER devuser
 # --no-build-isolation 需要预先装好 build backend（scikit-build-core），
 # 因为 pyproject.toml 用它；editable 还会把运行时依赖（invoke podman python-dotenv）拉齐。
 # 注意：用 set -euo pipefail；invoke --list 必须在 client 根目录（tasks.py 转发层在那）。
+# ---- 优化（F 阶段·第一性原理）：单 RUN 结束前清理 ----
+#   1. scikit-build-core 的 build-dir（pyproject.toml 为 build/{wheel_tag}）
+#      仅 build 阶段用，运行时不需要；rm -rf ${APP_SRC_DIR}/build/
+#   2. 历史缓存：~/.cache/pip、conda cache（/opt/conda/pkgs/*.tar.bz2）
+#      （--no-cache-dir 其实已不下载 wheel cache，但保留保险）
+#   3. *.pyc / __pycache__：字节码编译到 site-packages 之外的源码树内
+#      （python3.14t free-threaded 模式下 __pycache__ 命名变，统一 find 清理）
 RUN /bin/bash -lc 'set -euo pipefail ; \
     python --version ; \
     python -m pip --version ; \
     python -m pip install --no-cache-dir "scikit-build-core>=0.9" ; \
     python -m pip install --no-cache-dir --no-build-isolation -e /opt/apps/containers/client/ ; \
     python -c "import jpman_client; print(\"jpman_client import OK:\", jpman_client.__file__)" ; \
-    cd /opt/apps/containers/client && invoke --list 2>&1 | head -n 40'
+    cd /opt/apps/containers/client && invoke --list 2>&1 | head -n 40 ; \
+    echo "[BUILD-CLEAN] removing build artifacts & caches (single-run optimization)" ; \
+    rm -rf /opt/apps/containers/client/build ; \
+    find /opt/apps -type d -name "__pycache__" -prune -exec rm -rf {} + ; \
+    python -m pip cache purge >/dev/null 2>&1 || true ; \
+    rm -rf /home/devuser/.cache/pip ; \
+    echo "[BUILD-CLEAN] done"'
 
 # ------------------------------------------------------------
 # 运行时默认值（用户可通过 -e 覆盖）
