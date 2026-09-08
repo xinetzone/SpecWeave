@@ -2,10 +2,10 @@ id = "ledger-stock-consistency-audit"
 domain = "methodology"
 layer = "governance-strategy"
 maturity = "L2"
-validation_count = 2
+validation_count = 3
 reuse_count = 1
 documentation_level = "standard"
-source = "playground/reports/trae-env-retrospective-20260901/skill-ledger-audit.md（Trae 技能台账审计）+ OKF bundles 索引漏登事件（2026-08-31）"
+source = "playground/reports/trae-env-retrospective-20260901/skill-ledger-audit.md（Trae 技能台账审计）+ OKF bundles 索引漏登事件（2026-08-31）+ OKF bundles 计数漂移事件（2026-09-08）"
 
 [bindings]
 rules = []

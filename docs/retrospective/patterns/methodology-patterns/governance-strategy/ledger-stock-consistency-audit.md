@@ -1,10 +1,10 @@
 ---
 type: Pattern
 id: "ledger-stock-consistency-audit"
-source: "retro-20260901-trae-env（Trae 技能台账审计：managedSkills vs 磁盘 skills）+ OKF bundles 索引漏登事件（2026-08-31）"
+source: "retro-20260901-trae-env（Trae 技能台账审计：managedSkills vs 磁盘 skills）+ OKF bundles 索引漏登事件（2026-08-31）+ OKF bundles 计数漂移事件（2026-09-08）"
 x-toml-ref: "../../../../../.meta/toml/docs/retrospective/patterns/methodology-patterns/governance-strategy/ledger-stock-consistency-audit.toml"
 maturity: "L2"
-validation_count: 2
+validation_count: 3
 reuse_count: 1
 related_patterns:
   - "dual-env-drift-reconciliation"
@@ -20,7 +20,7 @@ tags: ["ledger", "inventory-audit", "shadow-assets", "governance", "consistency"
 
 ## 成熟度
 
-L2-validated（2 次验证：①Trae 技能台账审计 2026-09-01；②OKF bundles 索引漏登事件 2026-08-31）；已在 ①中复用 1 次（skill-ledger-audit 执行）
+L2-validated（3 次验证：①Trae 技能台账审计 2026-09-01；②OKF bundles 索引漏登事件 2026-08-31；③OKF bundles 计数漂移事件 2026-09-08）；已在 ①中复用 1 次（skill-ledger-audit 执行）
 
 ## 触发场景
 
@@ -66,3 +66,4 @@ L2-validated（2 次验证：①Trae 技能台账审计 2026-09-01；②OKF bund
 |---|---|---|---|
 | Trae 技能台账审计 | 2026-09-01 | managedSkills / skills 目录 | 国际版失配率 94.5%（52/55）、国内版 20.7%（17/82）；影子技能来源四分类后全部保留，无误删 |
 | OKF bundles 索引漏登 | 2026-08-31 | index.md 登记表 / bundles 目录 | 台账漏登 think/math、suanxue、relationships 3 束；frontmatter(61) 与正文(63) 自相矛盾；以门控重算收敛 |
+| OKF bundles 计数漂移 | 2026-09-08 | index.md 登记表 / bundles 目录 | jishu/data 漏登 dolt 束：节标题 381 vs 实 382、分组表列 9 vs 实 10；以 check-bundles-index.py 门控重算收敛 |
