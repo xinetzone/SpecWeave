@@ -68,6 +68,14 @@ invoke run --user-password mypass --jupyter-token mytoken32charsxxxxxxxx
 
 启动成功后会打印 SSH/Jupyter URL 与挂载信息。
 
+> **🛟 排障：JupyterLab 看不到 `.temp` / `.env` / `.gitignore` 等隐藏项**
+>
+> 症状：项目目录里的 `.temp`、`.env`、`.image-cache` 等以 `.` 开头的项在 JupyterLab 文件树里不显示。
+> 根因：JupyterLab 前端默认**隐藏以 `.` 开头的文件/目录**——与服务端无关（服务端
+> `ContentsManager/FileContentsManager.allow_hidden=True` 已内置）；挂载与容器内文件均正常，仅展示层隐藏。
+> 修复：JupyterLab 顶部菜单 **View → Show Hidden Files** 勾选后即显示
+> （`.temp` 为空目录时勾选后可见但为空，写入内容并刷新后即可看到文件）。
+
 ### 步骤 3：状态/停止/清理
 
 ```bash
@@ -199,6 +207,13 @@ stop_container(ctx, cfg.name)
 对应 `jpman-podman-ops` Skill 中 rootless 容器三必需纪律。
 默认不使用 `--privileged`。
 
+> **运行身份（user=root 覆盖本镜像的 USER=devuser）**：`client` 镜像是构建端叠加的消费端镜像，
+> `Containerfile` 固化 `USER=devuser`（non-root）。但镜像的 `entrypoint.sh` 需以 **root** 执行初始化
+> （`setup_passwords` 的 `chpasswd` 写 `/etc/shadow`、写 `/root/.jupyter`、启动 supervisord），
+> 若以 devuser 运行会触发 PAM `chpasswd` 失败，容器在 `set -euo pipefail` 下立即退出（`Exited (1)`）。
+> 因此 `ContainerConfig` 内置 `user="root"`，`invoke run` 以 root 启动 entrypoint，
+> **supervisord 内部再降权给 devuser 跑 jupyter/sshd**——对用户完全透明，无需感知。
+
 ## 8. .env 配置完整清单
 
 复制 `.env.example` 为 `.env`，按需修改（与构建端容器级变量名保持一致；新增 **Windows WSL SDK 级变量** 三个）。
@@ -209,7 +224,7 @@ stop_container(ctx, cfg.name)
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
 | `CONTAINER_NAME` | `jupyter-podman` | 容器名，`--name` 参数覆盖 |
-| `IMAGE_TAG` | `localhost/jupyter-podman-rootless:latest` | 加载镜像后运行的 tag |
+| `IMAGE_TAG` | `localhost/jupyter-podman-client:latest` | 加载镜像后运行的 tag |
 | `SSH_PORT` | `2222` | 宿主 → 容器的 SSH `-p 2222:22` 映射 |
 | `JUPYTER_PORT` | `8888` | 宿主 → 容器的 Jupyter `-p 8888:8888` 映射 |
 | `WORKSPACE` | `./workspace` | 挂载到容器 `/home/devuser/workspace` 的宿主工作区 |
@@ -266,7 +281,12 @@ cd apps/containers/client
 invoke env.build-layer
 # 等价：invoke env.build-layer --tag localhost/jupyter-podman-client:latest \
 #                        --base-image localhost/jupyter-podman-rootless:latest
+
+# 强制全量重建（忽略所有 Docker 层缓存，适用于基础镜像或 Containerfile 改动后）
+invoke env.build-layer --no-cache
 ```
+
+> **构建上下文说明**：`podman build` 以 client 根目录为 build context，`COPY .` 会把整个目录打包，但受 `.containerignore` 过滤（`.image-cache/`、`workspace/`、`.env`、`__pycache__/` 等已剔除），实际打包内容最小化。
 
 产出镜像：`localhost/jupyter-podman-client:latest`。
 
