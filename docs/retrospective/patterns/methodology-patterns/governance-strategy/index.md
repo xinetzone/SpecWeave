@@ -8,6 +8,7 @@ cases/index
 exercises/index
 adversarial-perspective-weighting
 amphibious-positioning-model
+appx-alias-rebirth
 architecture-over-algorithm
 asset-reuse-last-mile-integration-guide
 automated-stats-three-defense-lines
