@@ -39,3 +39,12 @@
 [submodule "vendor/veadk-python"]
 	path = vendor/veadk-python
 	url = git@github.com:volcengine/veadk-python.git
+[submodule "vendor/podman-compose"]
+	path = vendor/podman-compose
+	url = git@github.com:containers/podman-compose.git
+[submodule "vendor/podman-py"]
+	path = vendor/podman-py
+	url = git@github.com:containers/podman-py.git
+[submodule "vendor/toolbox"]
+	path = vendor/toolbox
+	url = git@github.com:containers/toolbox.git

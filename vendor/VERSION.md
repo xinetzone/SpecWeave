@@ -15,8 +15,13 @@
 | knowledge-catalog | main | git@github.com:GoogleCloudPlatform/knowledge-catalog.git | 2026-08-06 | Apache-2.0 | third_party | — | Google Cloud Knowledge Catalog 元数据管理平台 |
 | jira-skill | v3.29.0@b0dba28 | git@github.com:netresearch/jira-skill.git | 2026-08-28 | MIT AND CC-BY-SA-4.0 | third_party | — | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills） |
 | veadk-python | 1.0.10@ffbf295 | git@github.com:volcengine/veadk-python.git | 2026-08-29 | Apache-2.0 | third_party | — | 火山引擎 Agent 开发框架（Volcengine Agent Development Kit），veadk-python Wiki 信源 |
+| podman-compose | main@e3df1047 | git@github.com:containers/podman-compose.git | 2026-09-08 | GPL-2.0-only | third_party | — | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit e3df10472e194ab6d547b5ad25542c5c79e1a5fb） |
+| podman-py | main@5dd81b49 | git@github.com:containers/podman-py.git | 2026-09-08 | Apache-2.0 | third_party | — | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit 5dd81b49f35733a27b8051c47e23d3b4c85ea716） |
+| toolbox | main@81401f64 | git@github.com:containers/toolbox.git | 2026-09-08 | Apache-2.0 | third_party | — | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit 81401f64b3865129ea66f2a5e02a7eb40edd4fb8） |
 
 ## 更新记录
+
+- 2026-09-08 | 引入 containers 上游三仓库 third_party 子模块：podman-compose（main@e3df1047，GPL-2.0-only）、podman-py（main@5dd81b49，Apache-2.0）、toolbox（main@81401f64，Apache-2.0），容器编排工具链只读依赖，gitlink pin commit
 
 - 2026-08-29 | 引入 veadk-python 子模块（1.0.10@ffbf295，third_party，Apache-2.0，火山引擎 Agent 开发框架；信源稳定性门修复：Wiki 41个文件800处引用从 .chaos 临时克隆迁移至 vendor）
 - 2026-08-28 | 引入 jira-skill 子模块（v3.29.0，third_party，MIT AND CC-BY-SA-4.0，Netresearch Jira MCP Skill 工具集）

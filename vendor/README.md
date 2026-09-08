@@ -25,6 +25,9 @@
 | knowledge-catalog | (子模块) | third_party | 2026-08-06 | Google Cloud Knowledge Catalog 元数据管理平台（第三方只读依赖） |
 | jira-skill | v3.29.0@b0dba28 (子模块) | third_party | 2026-08-28 | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills，第三方只读依赖） |
 | veadk-python | 1.0.10@ffbf295 (子模块) | third_party | 2026-08-29 | 火山引擎 Agent 开发框架（Volcengine Agent Development Kit，veadk-python Wiki 信源，第三方只读依赖） |
+| podman-compose | main@e3df1047 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit） |
+| podman-py | main@5dd81b49 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit） |
+| toolbox | main@81401f64 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit） |
 
 ## 使用说明
 

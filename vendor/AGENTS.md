@@ -38,6 +38,9 @@ vendor/AGENTS.md 与 vendor/.agents/ 由 SpecWeave 主权区维护,直接纳入�
 | knowledge-catalog | third_party | 无（第三方项目） | Google Cloud Knowledge Catalog 元数据管理平台（第三方只读依赖） |
 | jira-skill | third_party | 无（第三方项目） | Netresearch Jira MCP Skill 工具集（Jira CLI 与 Agent Skills，第三方只读依赖） |
 | veadk-python | third_party | 无（第三方项目） | 火山引擎 Agent 开发框架 Volcengine Agent Development Kit（veadk-python Wiki 信源，固定 1.0.10 tag，第三方只读依赖） |
+| podman-compose | third_party | 无（第三方项目） | containers 官方容器编排工具链：podman-compose 声明式编排（第三方只读依赖，gitlink pin commit） |
+| podman-py | third_party | 无（第三方项目） | containers 官方容器编排工具链：podman-py SDK（第三方只读依赖，gitlink pin commit） |
+| toolbox | third_party | 无（第三方项目） | containers 官方容器编排工具链：toolbox 工具（第三方只读依赖，gitlink pin commit） |
 
 ### 嵌套优先级
 
@@ -190,6 +193,9 @@ flexloop 的验证与检查脚本存放在 [vendor/flexloop/apps/chaos/.agents/s
 | vendor/knowledge-catalog/ | third_party 子模块 | ❌ 否 | Google Cloud Knowledge Catalog 第三方只读依赖,禁止本地修改 |
 | vendor/jira-skill/ | third_party 子模块 | ❌ 否 | Netresearch Jira MCP Skill 第三方只读依赖（MIT AND CC-BY-SA-4.0），禁止本地修改 |
 | vendor/veadk-python/ | third_party 子模块 | ❌ 否 | 火山引擎 veadk-python Agent 开发框架第三方只读依赖（Apache-2.0，固定 1.0.10@ffbf295），禁止本地修改 |
+| vendor/podman-compose/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit），禁止本地修改 |
+| vendor/podman-py/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit），禁止本地修改 |
+| vendor/toolbox/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit），禁止本地修改 |
 
 ## 跨边界调用规范
 
