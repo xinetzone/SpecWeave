@@ -1,4 +1,6 @@
 # Git版本控制
+# generic .git/ 模式无前导斜杠，匹配任意层级目录，同样覆盖 upstream/<name>/.git，
+# 无需为 upstream 内层 .git 追加规则
 .git/
 .gitignore
 .gitattributes
@@ -24,6 +26,12 @@ workspace/
 *.md
 !README.md
 
+# 上游源树 README 反白：generic 的 *.md 规则会排除任意层级 Markdown，但本地 pip
+# 构建（podman-compose/podman-py）需要其根 README.md 作为 long_description 元数据，
+# 因此显式反白恢复这两个文件（构建前由 stage 机制生成，见 bin/jpman stage_upstream_sources）。
+!upstream/podman-compose/README.md
+!upstream/podman-py/README.md
+
 # 构建输出与临时文件
 dist/
 build/
@@ -45,3 +53,9 @@ htmlcov/
 *.swp
 *.swo
 *~
+
+# ─────────────────────────────────────────────────────────────────────────
+# 注意：upstream/ 由构建前 stage 机制生成（src/jpman_builder/tasks/stage_upstream.py
+# 或 bin/jpman stage_upstream_sources），必须参与构建上下文供 Containerfile COPY，
+# 禁止在本文件新增 upstream/ 忽略规则。
+# ─────────────────────────────────────────────────────────────────────────

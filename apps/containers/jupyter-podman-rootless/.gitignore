@@ -39,3 +39,7 @@ Thumbs.db
 
 # WSL distro cache (VHDX files and rootfs exports)
 .wsl-cache/
+
+# Build-context upstream trees (copied from vendor/ git submodules before build by
+# the stage_upstream mechanism in src/jpman_builder/tasks/stage_upstream.py)
+upstream/

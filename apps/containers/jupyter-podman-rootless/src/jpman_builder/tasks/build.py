@@ -13,12 +13,28 @@ from invoke.exceptions import Exit
 
 from .client import compose_available, get_client, sdk_build_kwargs, sdk_available
 from .compose_backend import compose_build, is_compose_ready
+from .stage_upstream import stage_upstream_sources
 from .utils import MIRROR_CHOICES, detect_runtime, run_cmd
 
 
-def _should_use_compose():
+def _find_app_root() -> Path:
+    """定位应用根目录（含 Containerfile 的镜像构建上下文根，与 bin/jpman 的 PROJECT_ROOT 一致）。
+
+    模块文件位于 ``<app>/src/jpman_builder/tasks/``，向上查找含 ``Containerfile``
+    的祖先目录即为应用根。podman build 需在此目录执行（``-f Containerfile .``），
+    ``upstream/`` 也将被 stage 到该目录下。
+    """
+    current = Path(__file__).resolve().parent
+    while current != current.parent:
+        if (current / "Containerfile").is_file():
+            return current
+        current = current.parent
+    raise Exit("无法定位应用根目录：从模块路径向上未找到含 Containerfile 的目录")
+
+
+def _should_use_compose(project_root: Path):
     """Check if we should use podman-compose backend."""
-    return compose_available() and is_compose_ready()
+    return compose_available() and is_compose_ready(project_root=project_root)
 
 
 def _build_via_sdk(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache):
@@ -118,13 +134,20 @@ def build(
         if mirror_val not in MIRROR_CHOICES:
             raise Exit(f"{mirror_name} must be one of {MIRROR_CHOICES}, got: {mirror_val}")
 
-    project_root = Path(__file__).parent.parent.resolve()
+    project_root = _find_app_root()
     print(f"Building image: {tag}")
     print(f"Build context: {project_root}")
     print(f"Mirror config: APT={apt_mirror}, Conda={conda_mirror}, PIP={pip_mirror}")
 
+    # 构建前自动 stage 上游源树（vendor/ git submodule -> <project_root>/upstream/<name>），
+    # 使 Containerfile 可在构建上下文中 COPY；失败则友好报错并以非 0 退出。
+    try:
+        stage_upstream_sources(project_root)
+    except Exception as e:
+        raise Exit(f"[stage] 构建前 stage 上游源树失败: {e}")
+
     # Tier 1: podman-compose build
-    if _should_use_compose():
+    if _should_use_compose(project_root):
         print("[Backend] Using podman-compose (Tier 1)")
         build_args = {
             "APT_MIRROR": apt_mirror,

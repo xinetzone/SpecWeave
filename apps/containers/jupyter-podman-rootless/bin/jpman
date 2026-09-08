@@ -290,6 +290,55 @@ check_rootful_podman() {
 }
 
 # ---------------------------------------------------------------------------
+# stage_upstream: 构建前把工作区 vendor/ 下上游 git submodule 源树复制到构建上下文
+#   upstream/<name>（Containerfile 构建依赖，目录已被 .gitignore 忽略）。
+#   用法与 python 侧 stage_upstream.py 保持一致，重复执行幂等。
+# ---------------------------------------------------------------------------
+UPSTREAM_NAMES="podman-compose podman-py toolbox"
+
+# 从 PROJECT_ROOT 逐级向上查找含 .gitmodules 的工作区根目录（SpecWeave root）。
+# PROJECT_ROOT 已由脚本自身位置解析为本地（WSL /mnt/... 或 /...）绝对路径，
+# 因此对 vendor/ 的定位不依赖任何硬编码盘符。
+find_workspace_root() {
+    local dir
+    dir="$(cd "$PROJECT_ROOT" && pwd)"
+    while true; do
+        if [[ -f "$dir/.gitmodules" ]]; then
+            echo "$dir"
+            return 0
+        fi
+        [[ "$dir" == "/" ]] && return 1
+        dir="$(dirname "$dir")"
+    done
+}
+
+# 幂等 stage：清空旧副本后重新复制（跳过 .git 与 Python 缓存）。源缺失/为空时
+# stderr 打印修复提示并返回非 0。
+stage_upstream_sources() {
+    local ws_root src dst name
+    ws_root="$(find_workspace_root)" || die "Cannot locate workspace root (.gitmodules) from $PROJECT_ROOT"
+    info "Staging upstream source trees into $PROJECT_ROOT/upstream/"
+    for name in $UPSTREAM_NAMES; do
+        src="$ws_root/vendor/$name"
+        dst="$PROJECT_ROOT/upstream/$name"
+        if [[ ! -d "$src" ]] || [[ -z "$(ls -A "$src" 2>/dev/null)" ]]; then
+            error "Upstream source tree missing or empty: $src (submodule not initialized?)"
+            error "Fix: run 'git submodule update --init vendor/$name' at the SpecWeave root"
+            return 1
+        fi
+        rm -rf "$dst"
+        mkdir -p "$dst"
+        if ! tar --exclude='*/.git' --exclude='*/__pycache__' --exclude='*.pyc' \
+            -C "$src" -cf - . | tar -C "$dst" -xf -; then
+            error "Failed to copy upstream source tree: $src -> $dst"
+            return 1
+        fi
+        info "  staged $name"
+    done
+    info "Upstream source trees staged."
+}
+
+# ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
 cmd_help() {
@@ -555,6 +604,7 @@ cmd_load() {
 
 cmd_rebuild() {
     check_podman
+    stage_upstream_sources || die "Staging upstream sources failed; aborting rebuild."
     info "Cached incremental rebuild from Containerfile (config-only changes hit Layer 4/5 cache, seconds)..."
     if container_running; then
         info "Stopping running container for rebuild..."
@@ -574,6 +624,7 @@ cmd_rebuild() {
 
 cmd_rebuild_all() {
     check_podman
+    stage_upstream_sources || die "Staging upstream sources failed; aborting rebuild-all."
     info "Full rebuild from Containerfile (this may take a while)..."
     # Build from project root for correct context
     (cd "$PROJECT_ROOT" && podman build \
