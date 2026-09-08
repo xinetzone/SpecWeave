@@ -241,6 +241,11 @@ class ContainerConfig:
     devices: list[str] = field(default_factory=lambda: ["/dev/fuse"])
     security_opt: list[str] = field(default_factory=lambda: ["label=disable"])
     cgroupns: str = "host"
+    # entrypoint.sh 需以 root 运行（chpasswd 写 /etc/shadow、写 /root/.jupyter、
+    # supervisord 均要求 root；supervisord 内部再降权给 devuser 跑 jupyter/sshd）。
+    # client 镜像固化 USER=devuser，运行时必须以 user=root 覆盖，否则 setup_passwords
+    # 触发 PAM chpasswd 失败，容器在 set -euo pipefail 下立即退出。
+    user: str = "root"
     detach: bool = True
 
     def resolved_workspace(self) -> Path:

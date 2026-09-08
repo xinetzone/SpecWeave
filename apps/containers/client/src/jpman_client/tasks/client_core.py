@@ -206,27 +206,70 @@ def _load_via_sdk(client, tar_path: Path) -> LoadImageResult:
 
 
 def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
-    """通过 podman load 命令加载镜像 tar。"""
+    """通过 podman load 命令加载镜像 tar。
+
+    使用 stdin pipe（type file | podman load）而非 -i flag，
+    避免大文件经 REST API path 参数传输时触发 WSL2 daemon EOF 错误。
+
+    注意：
+    - Windows PowerShell 管道中 type 命令可能返回非零退出码，
+      因此以 stdout 是否包含 "Loaded image" 作为成功判断依据，而非 exit code。
+    - 原生 TTY Console 路径（is_tty_console=True）下 run_cmd 使用 subprocess.call()
+      直接写控制台，成功时返回 None，输出未捕获——此时需从 echo 打印的命令行推断成功。
+    """
     runtime = detect_runtime()
     result = run_cmd(
         c,
-        f'{runtime} load -i "{tar_path}"',
+        f'type "{tar_path}" | {runtime} load',
         pty=False,
         echo=True,
     )
-    if result is None or result.exited != 0:
-        return LoadImageResult(loaded=False, message="[CLI] load 命令执行失败")
-    stdout = getattr(result, "stdout", "") or ""
+
+    # TTY Console 路径：subprocess.call() 成功返回 None，输出已直接写入控制台
+    # 此时无法捕获 stdout，但命令已成功执行（否则会 raise Exit）
+    if result is None:
+        return LoadImageResult(
+            loaded=True,
+            tags=[],
+            message="[CLI] 镜像加载完成",
+        )
+
+    _out = getattr(result, "stdout", "") or ""
+    _err = getattr(result, "stderr", "") or ""
+    combined = (_out + " " + _err).lower()
+
+    # 优先检查 Podman machine 未运行的特定错误（在检查成功标志之前）
+    if "cannot connect to podman" in combined or \
+       "actively refused it" in combined or \
+       "nonexistent pipe" in combined or \
+       "exporting" in combined:
+        return LoadImageResult(
+            loaded=False,
+            message=(
+                "[CLI] Podman machine 未运行。\n"
+                "解决方法：在终端执行以下命令启动 Podman machine：\n"
+                "  podman machine start\n"
+                "如需初始化：podman machine init"
+            )
+        )
+
+    # Windows PowerShell 管道退出码不可靠，以 stdout 是否含 "Loaded image" 为准
+    stdout = _out
     tags: list[str] = []
     for line in stdout.splitlines():
         if "Loaded image" in line:
             name = line.split(":", 1)[1].strip()
             tags.append(name)
-    return LoadImageResult(
-        loaded=True,
-        tags=tags,
-        message="[CLI] 镜像加载完成",
-    )
+
+    if tags:
+        return LoadImageResult(
+            loaded=True,
+            tags=tags,
+            message="[CLI] 镜像加载完成",
+        )
+
+    # 没有 Loaded image 且没有已知错误 → 真正的失败
+    return LoadImageResult(loaded=False, message=f"[CLI] load 命令执行失败（exit={result.exited}）")
 
 
 def load_image(c: Context, tar_path: Path) -> LoadImageResult:
@@ -371,6 +414,7 @@ def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
         "devices": cfg.devices,
         "security_opt": cfg.security_opt,
         "cgroupns": cfg.cgroupns,
+        "user": cfg.user,
     }
     return kwargs
 
@@ -421,6 +465,8 @@ def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None
         "--device /dev/fuse",
         "--security-opt label=disable",
         "--cgroupns=host",
+        "--user",
+        cfg.user,
     ]
     if cfg.detach:
         cmd_parts.append("-d")
