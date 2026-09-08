@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7-labs
 # =============================================================================
-# Jupyter Podman Rootless - Containerfile (3-stage multistage build)
+# Jupyter Podman Rootless - Containerfile (multistage build: 3-stage runtime chain + toolbox-builder aux stage)
 # Project: SpecWeave Jupyter + Podman(rootless) Development Container
 # Base: ubuntu:26.04 | OpenSSH Server + Jupyter Lab/Notebook + Podman(rootless)
 # Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14 cp314t free-threading, libmamba solver)
@@ -9,9 +9,10 @@
 # Services: sshd(22) + jupyter(8888), managed by supervisord; podman(rootless) for user
 #
 # Build stages:
-#   Stage 1/3: base-runtime  - 系统运行时基础（Ubuntu + APT包 + locale/tz + Podman）
-#   Stage 2/3: conda-builder - Miniforge下载 + main环境创建 + 深度清理（隔离构建环境）
-#   Stage 3/3: final         - COPY --from=conda-builder /opt/conda + 用户/配置/验证
+#   Stage 1/3: base-runtime     - 系统运行时基础（Ubuntu + APT包 + locale/tz + Podman）
+#   Stage 2/3: conda-builder    - Miniforge下载 + main环境创建 + podman-py/podman-compose本地源安装 + 深度清理（隔离构建环境）
+#   Stage 3/3: final            - COPY --from=conda-builder /opt/conda + COPY --from=toolbox-builder toolbox + 用户/配置/验证
+#   Stage (aux): toolbox-builder - 独立Go构建阶段（golang:1.26-bookworm），仅构建toolbox二进制供final COPY，不进final
 #
 # Build: podman build -t jupyter-podman-rootless .
 # CN:    podman build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t jupyter-podman-rootless .
@@ -21,7 +22,7 @@
 #
 # Runtime Stage Layering (final stage, dockerfile-runtime-logical-layering pattern v1.4):
 #   Layer 1/5: 从base-runtime继承（系统包+locale+tz+Podman） (变化频率: 最低)
-#   Layer 2/5: COPY --from=conda-builder /opt/conda (Miniforge+main env) (变化频率: 低)
+#   Layer 2/5: COPY --from=conda-builder /opt/conda + COPY --from=toolbox-builder /out/toolbox (变化频率: 低)
 #   Layer 3/5: 用户创建 + subuid/subgid + 目录权限 + Podman配置 (变化频率: 中)
 #   Layer 4/5: 配置文件COPY + 权限设置 + 语法验证 (变化频率: 高)
 #   Layer 5/5: 最终元数据 + 清理 + 最终验证 (变化频率: 最低)
@@ -141,6 +142,53 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
     echo "[TIMER] Stage 1/3 base-runtime took ${_ELAPSED}s"
 
 # ═══════════════════════════════════════════════════════════════════
+# Stage (aux): toolbox-builder — 构建 /usr/local/bin/toolbox 二进制（隔离 Go 构建阶段）
+# 变化频率：低（仅当 pinned upstream/toolbox 源树变更时重建）
+# 产物：/out/toolbox，仅供 final 阶段 COPY --from；源树与 Go 工具链均不进 final
+# 原则：golang 官方镜像基于 Debian bookworm（glibc 2.36 <= final ubuntu:26.04，二进制向下兼容）；
+#       官方镜像自带 gcc/libc6-dev/make（cgo 就绪），额外仅需 libsubid-dev（shadow/subid.h 头文件，
+#       供 toolbox cgo subid wrapper 编译；libsubid 运行时经 dlopen 懒加载，不静态链接）；
+#       go.mod 声明 go 1.22.0 且官方镜像 GOTOOLCHAIN=local，故选当前稳定版 golang:1.26 以覆盖
+#       依赖图中所有 module 的 go 指令（向上取稳定 tag，不自动升级工具链）
+# ═══════════════════════════════════════════════════════════════════
+FROM golang:1.26-bookworm AS toolbox-builder
+
+ARG GO_PROXY=https://proxy.golang.org,direct
+
+# 仅限本阶段新增 ENV（构建态），不进 final
+ENV GOPROXY=${GO_PROXY} \
+    CGO_ENABLED=1
+
+SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+RUN echo "=== Stage (aux): toolbox-builder — Install cgo build deps (libsubid-dev headers) ===" && \
+    _STAGE_START=$(date +%s) && \
+    echo "[TIMER] toolbox-builder stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
+    echo "[INFO] go toolchain: $(go version)" && \
+    apt-get update -qq && \
+    echo "[INFO] Installing libsubid-dev (provides shadow/subid.h for toolbox cgo subid wrapper)..." && \
+    apt-get install -y --no-install-recommends -qq libsubid-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    echo "[OK] toolbox-builder cgo build deps installed"
+
+COPY upstream/toolbox/src /toolbox-src
+
+RUN echo "=== Stage (aux): toolbox-builder — go build toolbox (module root: /toolbox-src) ===" && \
+    _STAGE_START=$(date +%s) && \
+    cd /toolbox-src && \
+    echo "[INFO] Resolving Go modules via GOPROXY (versions pinned by go.sum)..." && \
+    go build -trimpath -buildvcs=false \
+        -ldflags "-s -w -X github.com/containers/toolbox/pkg/version.currentVersion=0.3" \
+        -o /out/toolbox . && \
+    echo "[OK] /out/toolbox built (stripped -s -w): $(ls -lh /out/toolbox | awk '{print $5}')" && \
+    /out/toolbox --help >/dev/null 2>&1 && echo "[OK] /out/toolbox --help works" && \
+    echo "[CLEAN] Removing Go module/build cache and source tree from toolbox-builder layer..." && \
+    rm -rf /go/pkg/mod /root/.cache/go-build /toolbox-src && \
+    _NOW=$(date +%s) && \
+    _ELAPSED=$((_NOW - _STAGE_START)) && \
+    echo "[TIMER] Stage (aux) toolbox-builder took ${_ELAPSED}s"
+
+# ═══════════════════════════════════════════════════════════════════
 # Stage 2/3: conda-builder — Miniforge + conda环境构建（隔离构建阶段）
 # 变化频率：低
 # 原则：此阶段包含curl/wget等下载工具和binutils（strip），仅用于构建/opt/conda；
@@ -160,6 +208,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONDONTWRITEBYTECODE=1
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
+
+# podman-py + podman-compose: pinned upstream source trees（由构建前置 stage 机制放入 <context>/upstream/<name>，
+# .containerignore 已放行其 README.md）。仅在本阶段装入 main env；源目录在下方 RUN 内安装完成后即删除，
+# 源树与 pip 缓存均不进 final 镜像
+COPY upstream/podman-py ./upstream-podman-py
+COPY upstream/podman-compose ./upstream-podman-compose
 
 RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + create main env ===" && \
     _STAGE_START=$(date +%s) && \
@@ -323,6 +377,21 @@ RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + cr
     /opt/conda/envs/main/bin/pip install --no-cache-dir "olot[oras-py]" || \
     /opt/conda/envs/main/bin/pip install --no-cache-dir --ignore-requires-python "olot[oras-py]" && \
     echo "[OK] olot installed: $(/opt/conda/envs/main/bin/python -c 'import importlib.metadata; print(importlib.metadata.version("olot"))' 2>&1)" && \
+    echo "[INFO] Installing podman-py + podman-compose from pinned local source trees (./upstream-podman-*, into main env)..." && \
+    if /opt/conda/envs/main/bin/pip install --no-cache-dir ./upstream-podman-py ./upstream-podman-compose >/tmp/podman-tools-pip.log 2>&1; then \
+        echo "[OK] podman-py + podman-compose installed (runtime deps resolved via pip, PIP_MIRROR=${PIP_MIRROR:-official})"; \
+    else \
+        echo "[WARN] Direct pip install failed under cp314t (log: /tmp/podman-tools-pip.log) — retrying with conda-forge deps + pip --no-deps"; \
+        mamba install -y -n main -c conda-forge --override-channels -q pyyaml python-dotenv requests urllib3 \
+            || { echo "[ERROR] mamba fallback for podman-tools runtime deps failed"; tail -n 30 /tmp/podman-tools-pip.log; exit 1; }; \
+        /opt/conda/envs/main/bin/pip install --no-cache-dir --no-deps ./upstream-podman-py ./upstream-podman-compose \
+            || { echo "[ERROR] pip --no-deps install of podman-py/podman-compose failed"; tail -n 30 /tmp/podman-tools-pip.log; exit 1; }; \
+        echo "[OK] podman-py + podman-compose installed via fallback (conda-forge deps + pip --no-deps)"; \
+    fi && \
+    rm -rf ./upstream-podman-py ./upstream-podman-compose /tmp/podman-tools-pip.log && \
+    echo "[CLEAN] Removed podman-py/podman-compose source trees + pip log" && \
+    echo "[OK] podman-compose version: $(/opt/conda/envs/main/bin/podman-compose --version 2>&1 | head -1)" && \
+    echo "[OK] podman SDK (podman-py) version: $(/opt/conda/envs/main/bin/python -c 'import importlib.metadata; print(importlib.metadata.version("podman"))' 2>&1)" && \
     echo "[CLEAN] === DEEP CLEAN of /opt/conda (before COPY to final stage) ===" && \
     echo "[CLEAN] Removing tk/tcl from base and main env..." && \
     for env_dir in "${CONDA_DIR}" "${CONDA_DIR}/envs/main"; do \
@@ -412,9 +481,9 @@ ARG PYTHON_BUILD
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
 # ═══════════════════════════════════════════════════════════════════
-# Layer 2/5 (final): COPY --from=conda-builder 成品/opt/conda
-# 变化频率：低（conda环境变更时）
-# 原则：COPY整个/opt/conda目录（已在builder阶段完成清理和strip）
+# Layer 2/5 (final): COPY builder 产物 — /opt/conda（conda-builder）+ toolbox（toolbox-builder）
+# 变化频率：低（builder 产物变更时；toolbox 为独立 Go 剥离(-s -w)二进制，变化频率最低）
+# 原则：COPY整个/opt/conda目录（已在builder阶段完成清理和strip）；toolbox 仅一个可执行文件，chmod 755
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "=== Stage 3/3: final runtime — Starting final assembly ===" && \
     _FINAL_START=$(date +%s) && \
@@ -422,10 +491,15 @@ RUN echo "=== Stage 3/3: final runtime — Starting final assembly ===" && \
     echo ""
 
 COPY --from=conda-builder /opt/conda /opt/conda
+COPY --from=toolbox-builder /out/toolbox /usr/local/bin/toolbox
 
-RUN echo "=== Layer 2/5: COPY --from=conda-builder /opt/conda ===" && \
+RUN echo "=== Layer 2/5: COPY conda (/opt/conda) + toolbox (/usr/local/bin/toolbox) ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[OK] /opt/conda copied from conda-builder stage" && \
+    chmod 755 /usr/local/bin/toolbox && \
+    test -x /usr/local/bin/toolbox && echo "[OK] /usr/local/bin/toolbox copied from toolbox-builder (chmod 755)" && \
+    echo "[INFO] toolbox binary size: $(du -h /usr/local/bin/toolbox 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "[INFO] /usr/local/bin already on PATH (inherited ubuntu PATH, reaffirmed in /etc/environment): $(command -v toolbox)" && \
     echo "[INFO] Copied /opt/conda size: $(du -sh /opt/conda 2>/dev/null | cut -f1 || echo 'N/A')" && \
     echo "[INFO] conda version: $(conda --version 2>&1)" && \
     echo "[INFO] Python version: $(python --version 2>&1)" && \
@@ -434,7 +508,7 @@ RUN echo "=== Layer 2/5: COPY --from=conda-builder /opt/conda ===" && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
     _TOTAL=$((_NOW - _START)) && \
     echo "L2=$_NOW" >> /tmp/.build-timer && \
-    echo "[TIMER] Layer 2/5 (COPY conda) took ${_ELAPSED}s | base-runtime+L2 cumulative: ${_TOTAL}s"
+    echo "[TIMER] Layer 2/5 (COPY conda + toolbox) took ${_ELAPSED}s | base-runtime+L2 cumulative: ${_TOTAL}s"
 
 # ═══════════════════════════════════════════════════════════════════
 # Layer 3/5: 用户创建 + subuid/subgid + 目录权限 + Podman配置
@@ -646,6 +720,9 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     podman --version && echo "[OK] podman available" && \
     crun --version >/dev/null 2>&1 && echo "[OK] crun available" && \
     command -v pasta >/dev/null 2>&1 && echo "[OK] pasta available (rootless netns)" && \
+    podman-compose --version && echo "[OK] podman-compose available (main env)" && \
+    python -c "import podman; print('[OK] podman SDK (podman-py) importable (main env)')" && \
+    toolbox --help >/dev/null 2>&1 && echo "[OK] toolbox available (/usr/local/bin)" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1 and not sys._is_gil_enabled(); print('[OK] Python free-threading verified at final checkpoint (cp314t, GIL disabled)')" && \
@@ -665,7 +742,7 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     echo "║      BUILD TIMING SUMMARY (3-Stage Multistage Build)        ║" && \
     echo "╠══════════════════════════════════════════════════════════════╣" && \
     printf "║  Final Stage (inherited from base-runtime)   (cached)      ║\n" && \
-    printf "║  Layer 2/5  COPY --from=conda-builder /opt/conda  %4ds     ║\n" $_T2 && \
+    printf "║  Layer 2/5  COPY conda + toolbox                    %4ds     ║\n" $_T2 && \
     printf "║  Layer 3/5  user+subuid+podman-config             %4ds     ║\n" $_T3 && \
     printf "║  Layer 4/5  configs+syntax validation             %4ds     ║\n" $_T4 && \
     printf "║  Layer 5/5  metadata+final verify                 %4ds     ║\n" $_T5 && \
@@ -673,10 +750,11 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     printf "║  FINAL STAGE TOTAL                               %4ds     ║\n" $_TOTAL && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
-    echo "[INFO] Build stages: base-runtime (system) → conda-builder (build /opt/conda) → final (runtime assembly)" && \
-    echo "[INFO] Build tools (curl/wget/binutils) are NOT in final image (isolated in conda-builder stage)" && \
+    echo "[INFO] Runtime chain: base-runtime (system) → conda-builder (build /opt/conda + podman-py/podman-compose) → final (runtime assembly)" && \
+    echo "[INFO] Aux stage: toolbox-builder (golang:1.26-bookworm) → /usr/local/bin/toolbox via COPY --from (not in final)" && \
+    echo "[INFO] Build tools (curl/wget/binutils/Go toolchain) are NOT in final image (isolated in conda-builder / toolbox-builder stages)" && \
     rm -f /tmp/.build-timer && \
-    echo "[BUILD] ========== BUILD COMPLETE (multistage-3stage) ==========" && \
+    echo "[BUILD] ========== BUILD COMPLETE (multistage: 3-stage chain + toolbox-builder aux stage) ==========" && \
     echo ""
 
 # ═══════════════════════════════════════════════════════════════════
