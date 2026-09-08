@@ -1,0 +1,5 @@
+id = "spec-creation-precheck"
+title = "Spec 创建前预检：位置与格式双重核查"
+category = "rules"
+date = "2026-09-08"
+version = "1.0"

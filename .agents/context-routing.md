@@ -53,6 +53,7 @@ x-toml-ref: "../.meta/toml/.agents/context-routing.toml"
 | Spec 全局看板与7主题分类体系 | [.trae/specs/README.md](../.trae/specs/README.md)（创建新 spec 前必读：归类决策树、主题边界定义、命名规范；**三件套为 spec.md + tasks.md + review.md，禁止使用 checklist.md**） |
 | Spec 主题目录看板 | [.trae/specs/](../.trae/specs/README.md)（core-foundation/roles-governance/standards-tools/readme-branding/docs-restructure/retrospectives-insights/migration-archival 各主题 README.md） |
 | Spec Mode 规范工作流（复杂变更端到端） | [skills/TRAE-spec-mode/SKILL.md](skills/TRAE-spec-mode/SKILL.md)（五阶段：Specify→Plan→Approve→Implement→Review；产物：spec.md + tasks.md + review.md；验收词汇：rule/rubric；此为 Spec Mode 唯一权威规范） |
+| Spec 创建前预检（位置+格式） | [rules/spec-creation-precheck.md](rules/spec-creation-precheck.md)（创建任何 spec 前必读：读主题 README 确认位置 → 读 SKILL.md + 参照已有 spec 确认格式，阻断位置错误与格式漂移） |
 | 文档索引与看板生成（导航/看板/应用清单） | [skills/docgen-cmd/](skills/docgen-cmd/SKILL.md) → [scripts/docgen.py](scripts/docgen.py)（nav/dashboard/apps/all 子命令，标记区域幂等覆盖；旧脚本 generate-nav.py/generate-dashboard.py/generate-apps-index.py 均为向后兼容包装） |
 | 原子化操作一键收尾 | [skills/atomization-finalize-cmd/](skills/atomization-finalize-cmd/SKILL.md) → [scripts/finalize-atomization.py](scripts/finalize-atomization.py)（原子化/文件移动后自动断链修复、导航更新、看板刷新，支持dry-run） |
 | 文件引用反向索引 | [scripts/build-ref-index.py](scripts/build-ref-index.py)（构建 `{目标:[引用方]}` 索引，移动/删除文件前查询受影响范围） |

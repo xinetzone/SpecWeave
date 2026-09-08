@@ -68,6 +68,7 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/03-commands-workflows-
 | 硬编码替代方案指南 | 7种替代方案实施指南 | developer | [rules/alternatives-guide.md](../rules/alternatives-guide.md) |
 | 检测与报告机制 | 三层检测体系 | developer, reviewer, orchestrator | [rules/detection-and-reporting.md](../rules/detection-and-reporting.md) |
 | 执行与验证规则 | 6条可执行治理规则 | 全部角色 | [rules/enforcement-guidelines.md](../rules/enforcement-guidelines.md) |
+| Spec创建前预检（spec-creation-precheck） | 创建 spec 前必读：位置核查（读主题 README）+ 格式核查（读 SKILL.md + 参照已有 spec），阻断位置错误与格式漂移 | 全部角色 | [rules/spec-creation-precheck.md](../rules/spec-creation-precheck.md) |
 
 完整规则体系见 [rules/README.md](../rules/README.md)。
 
