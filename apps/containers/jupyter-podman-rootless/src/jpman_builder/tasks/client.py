@@ -27,6 +27,21 @@ except ImportError:
 _COMPOSE_AVAILABLE = shutil.which("podman-compose") is not None
 
 
+# ── B-scheme: host podman rootless socket pass-through ──────────
+# 背景：容器内自建 daemon（Model A）在 WSL 三层 userns 嵌套下触发
+# `newuidmap Operation not permitted`，不可行。改为直连宿主 rootless daemon：
+# 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
+# 并设置 `XDG_RUNTIME_DIR=/run/user/<uid>`，让容器内 podman SDK/CLI 复用宿主
+# daemon。默认 uid=1000（WSL2 常见），可用 PODMAN_RUNTIME_UID 环境变量覆盖。
+def _podman_runtime_uid():
+    return os.environ.get("PODMAN_RUNTIME_UID", "1000")
+
+
+def podman_sock_path():
+    """Host rootless daemon socket path (also used as container mount target)."""
+    return f"/run/user/{_podman_runtime_uid()}/podman/podman.sock"
+
+
 def sdk_available():
     """Check if podman-py SDK is available."""
     return _SDK_AVAILABLE
@@ -88,11 +103,18 @@ def sdk_run_kwargs(
 
     volumes = {
         workspace_posix: {"bind": "/workspace", "mode": "rw"},
+        # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
+        # 宿主 socket bind-mount 到容器同一路径，SDK from_env() 即可连通。
+        podman_sock_path(): {"bind": podman_sock_path(), "mode": "rw"},
     }
 
     environment = {
         "USER_PASSWORD": user_password,
         "JUPYTER_TOKEN": jupyter_token,
+        # B-scheme: 告知 entrypoint 宿主 daemon socket 已经 bind-mount 到容器内
+        # 的哪个路径，由它在 devuser 可控目录内建立符号链接并设置 CONTAINER_HOST，
+        # 从而使容器内 podman SDK/CLI 复用宿主 daemon（绕过嵌套 userns）。
+        "HOST_PODMAN_SOCK": podman_sock_path(),
     }
 
     if ssh_public_key:
@@ -148,6 +170,7 @@ __all__ = [
     "PodmanNotFound",
     "compose_available",
     "get_client",
+    "podman_sock_path",
     "sdk_available",
     "sdk_build_kwargs",
     "sdk_run_kwargs",

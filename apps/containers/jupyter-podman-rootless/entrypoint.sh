@@ -180,7 +180,44 @@ setup_podman() {
     chmod 700 "${podman_run_dir}" 2>/dev/null || true
     log_info "Podman run dir ready: ${podman_run_dir}"
 
+    # rootless podman 需把管理进程 pause.pid 写入 ${XDG_RUNTIME_DIR}/libpod/tmp，
+    # 目录缺失会触发 `open .../libpod/tmp/pause.pid: no such file or directory`
+    # 与 `error creating temporary file: Permission denied`（见 README §5.4 C-I1 扩展）。
+    # 属主必须与运行时用户一致（devuser UID 动态分配，禁止硬编码 1000）。
+    local podman_libpod="${podman_run_dir}/libpod"
+    local podman_libpod_tmp="${podman_libpod}/tmp"
+    mkdir -p "${podman_libpod_tmp}"
+    # libpod 父目录同样必须属于运行时用户；否则 rootless podman 对 /run/user/<uid>/libpod
+    # 设置 sticky bit 时会被拒绝（`set sticky bit on: chmod .../libpod: operation not permitted`）。
+    # 必须先 chown 父目录再 chmod，避免 devuser UID 动态分配下仍残留 root 属主。
+    chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_libpod}" 2>/dev/null || true
+    chmod 700 "${podman_libpod}" 2>/dev/null || true
+    chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_libpod_tmp}" 2>/dev/null || true
+    chmod 700 "${podman_libpod_tmp}" 2>/dev/null || true
+    log_info "Podman libpod tmp dir ready: ${podman_libpod_tmp}"
+
     export XDG_RUNTIME_DIR="${podman_run_dir}"
+
+    # ── B-scheme: 宿主 rootless daemon socket 直连（绕过嵌套 userns）──
+    # 若启动时已注入 HOST_PODMAN_SOCK（宿主 socket 已在同一绝对路径 bind-mount 进
+    # 容器），则在 devuser 可控目录内为其建立符号链接，并显式设置 CONTAINER_HOST，
+    # 使容器内 podman SDK/CLI 直接复用宿主 daemon。此后绝不再尝试容器内自建 daemon
+    # （自建 daemon 在 WSL 三层 userns 嵌套下会触发 newuidmap Operation not permitted）。
+    local host_sock="${HOST_PODMAN_SOCK:-}"
+    if [ -n "${host_sock}" ] && [ -S "${host_sock}" ]; then
+        local run_sock_dir="${podman_run_dir}/podman"
+        mkdir -p "${run_sock_dir}"
+        chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${run_sock_dir}" 2>/dev/null || true
+        chmod 700 "${run_sock_dir}" 2>/dev/null || true
+        ln -sf "${host_sock}" "${run_sock_dir}/podman.sock"
+        export CONTAINER_HOST="unix://${run_sock_dir}/podman.sock"
+        log_info "[B-scheme] Host podman socket linked: ${run_sock_dir}/podman.sock -> ${host_sock}"
+        log_info "[B-scheme] CONTAINER_HOST=${CONTAINER_HOST} (XDG_RUNTIME_DIR=${podman_run_dir})"
+        log_info "Podman rootless setup complete (host socket pass-through)"
+        return 0
+    fi
+
+    log_info "No host socket detected (HOST_PODMAN_SOCK unset/absent), falling back to in-container rootless daemon..."
 
     log_info "Triggering Podman rootless initialization (podman info)..."
     if su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; podman info >/dev/null 2>&1"; then
@@ -191,7 +228,27 @@ setup_podman() {
         su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; podman system migrate 2>/dev/null" || true
     fi
 
-    log_info "Podman rootless setup complete (no services started)"
+    log_info "Starting rootless podman system service (background)..."
+    local podman_sock="${podman_run_dir}/podman/podman.sock"
+    if su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; test -S ${podman_sock}" 2>/dev/null; then
+        log_info "[OK] rootless podman system service already online: ${podman_sock}"
+    else
+        su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; nohup podman system service --time=0 >/tmp/podman-service.log 2>&1 </dev/null &" || true
+        for _i in $(seq 1 30); do
+            if su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; test -S ${podman_sock}" 2>/dev/null; then
+                break
+            fi
+            sleep 1
+        done
+        if su - "${NON_ROOT_USER}" -c "export XDG_RUNTIME_DIR=${podman_run_dir}; test -S ${podman_sock}" 2>/dev/null; then
+            log_info "[OK] rootless podman system service online: ${podman_sock}"
+        else
+            log_warn "podman system service failed to start within 30s, last log lines:"
+            tail -n 20 /tmp/podman-service.log 2>/dev/null || true
+        fi
+    fi
+
+    log_info "Podman rootless setup complete"
 }
 
 setup_ssh_keys() {
@@ -216,10 +273,11 @@ setup_ssh_keys() {
 
 setup_jupyter() {
     log_info "[Step 6/7] Configuring Jupyter..."
-    local jupyter_config_dir="/root/.jupyter"
+    local jupyter_config_dir="${NON_ROOT_HOME}/.jupyter"
     local jupyter_runtime_config="${jupyter_config_dir}/jupyter_server_config.d/runtime.py"
 
     mkdir -p "${jupyter_config_dir}/jupyter_server_config.d"
+    chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${jupyter_config_dir}" 2>/dev/null || true
     chmod 700 /root/.ssh 2>/dev/null || true
 
     cat > "$jupyter_runtime_config" << 'JUPYTER_RUNTIME_EOF'

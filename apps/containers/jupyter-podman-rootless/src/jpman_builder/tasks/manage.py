@@ -13,7 +13,14 @@ from dotenv import dotenv_values
 from invoke import Context, task
 from invoke.exceptions import Exit
 
-from .client import PodmanNotFound, compose_available, get_client, sdk_available, sdk_run_kwargs
+from .client import (
+    PodmanNotFound,
+    compose_available,
+    get_client,
+    podman_sock_path,
+    sdk_available,
+    sdk_run_kwargs,
+)
 from .compose_backend import compose_down, compose_ps, compose_up, is_compose_ready
 from .utils import (
     check_runtime_ready,
@@ -184,6 +191,9 @@ def _run_via_cli(c, name, tag, ssh_port, jupyter_port, workspace_posix,
         "-p", f"{ssh_port}:22",
         "-p", f"{jupyter_port}:8888",
         "-v", f"{workspace_posix}:/workspace",
+        # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
+        # 宿主 socket bind-mount 到容器同一路径，容器内 podman CLI 即可连通。
+        "-v", f"{podman_sock_path()}:{podman_sock_path()}",
         "--device /dev/fuse",
         "--security-opt label=disable",
         "--cgroupns=host",
@@ -194,6 +204,9 @@ def _run_via_cli(c, name, tag, ssh_port, jupyter_port, workspace_posix,
 
     cmd_parts.extend(["-e", f"USER_PASSWORD={user_password}"])
     cmd_parts.extend(["-e", f"JUPYTER_TOKEN={jupyter_token}"])
+    # B-scheme: 告知 entrypoint 宿主 daemon socket 已 bind-mount 到容器内路径，
+    # 由它建立 devuser 可控符号链接并设置 CONTAINER_HOST（绕过嵌套 userns）。
+    cmd_parts.extend(["-e", f"HOST_PODMAN_SOCK={podman_sock_path()}"])
 
     if ssh_public_key:
         cmd_parts.extend(["-e", f'SSH_PUBLIC_KEY="{ssh_public_key}"'])

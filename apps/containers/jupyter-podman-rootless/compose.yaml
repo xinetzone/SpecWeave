@@ -35,6 +35,12 @@ services:
     # network_mode: host
     volumes:
       - ${WORKSPACE:-./workspace}:/workspace
+      # ── B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）──
+      # 宿主 socket 在同一绝对路径上 bind-mount 进容器（host 与 container 路径
+      # 均取自 HOST_PODMAN_SOCK），entrypoint 据此在 devuser 可控目录内建立
+      # 符号链接并设置 CONTAINER_HOST，使容器内 podman SDK/CLI 复用宿主 daemon。
+      # 默认 uid=1000（WSL2 常见），非 1000 宿主 UID 时覆盖 HOST_PODMAN_SOCK。
+      - ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}:/run/user/1000/podman/podman.sock
       # ── Dev pass-through mounts (uncomment to enable) ──
       # SSH agent for git operations inside container (Toolbx-style):
       # - ${SSH_AUTH_SOCK:-/dev/null}:/tmp/ssh-auth.sock:ro
@@ -73,6 +79,8 @@ services:
       JUPYTER_TOKEN: ${JUPYTER_TOKEN:-changeme}
       SSH_PUBLIC_KEY: ${SSH_PUBLIC_KEY:-}
       GRANT_SUDO: ${GRANT_SUDO:-no}
+      # ── B-scheme: 容器内 podman SDK/CLI 复用宿主 daemon（见 volumes 注释）──
+      HOST_PODMAN_SOCK: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
       # ── Dev pass-through env vars (uncomment to enable) ──
       # SSH agent socket path (must match volume mount above):
       # SSH_AUTH_SOCK: /tmp/ssh-auth.sock
