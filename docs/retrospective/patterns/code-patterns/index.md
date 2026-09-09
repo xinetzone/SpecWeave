@@ -120,6 +120,7 @@ framework-parameter-semantics-verification
 git-bundle-offline-clone
 gitignore-validation
 governance-layer-immediate-establishment
+host-channel-pass-through
 idempotent-shell-config
 invocations-collection-sphinx-build-wrapping
 invoke-layered-namespace-tasks
