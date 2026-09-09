@@ -48,3 +48,21 @@
 [submodule "vendor/toolbox"]
 	path = vendor/toolbox
 	url = git@github.com:containers/toolbox.git
+[submodule "vendor/netease-youdao/BCEmbedding"]
+	path = vendor/netease-youdao/BCEmbedding
+	url = git@github.com:netease-youdao/BCEmbedding.git
+[submodule "vendor/netease-youdao/Confucius4-TTS"]
+	path = vendor/netease-youdao/Confucius4-TTS
+	url = git@github.com:netease-youdao/Confucius4-TTS.git
+[submodule "vendor/netease-youdao/EmotiVoice"]
+	path = vendor/netease-youdao/EmotiVoice
+	url = git@github.com:netease-youdao/EmotiVoice.git
+[submodule "vendor/netease-youdao/LobsterAI"]
+	path = vendor/netease-youdao/LobsterAI
+	url = git@github.com:netease-youdao/LobsterAI.git
+[submodule "vendor/netease-youdao/QAnything"]
+	path = vendor/netease-youdao/QAnything
+	url = git@github.com:netease-youdao/QAnything.git
+[submodule "vendor/netease-youdao/ScholarClaw"]
+	path = vendor/netease-youdao/ScholarClaw
+	url = git@github.com:netease-youdao/ScholarClaw.git
