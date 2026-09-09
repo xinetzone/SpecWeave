@@ -223,6 +223,15 @@ setup_podman() {
         chmod 777 "${root_sock_dir}/podman" 2>/dev/null || true
         ln -sf "${host_sock}" "${root_sock_dir}/podman/podman.sock"
 
+        # ── SDK fallback 路径（容错）──
+        # podman-py SDK 在 root 用户 + XDG_RUNTIME_DIR 为空时，自动回落到：
+        # /tmp/podmanpy-runtime-dir-fallback-root/podman/podman.sock
+        # 在此也建立符号链接，确保 from_env() 无论走哪条路径都能命中宿主 socket。
+        local sdk_fallback_dir="/tmp/podmanpy-runtime-dir-fallback-root/podman"
+        mkdir -p "${sdk_fallback_dir}"
+        chmod 700 "${sdk_fallback_dir}" 2>/dev/null || true
+        ln -sf "${host_sock}" "${sdk_fallback_dir}/podman.sock"
+
         # 显式覆盖两个关键 env：无论谁调用 from_env() 都命中宿主 socket
         export CONTAINER_HOST="unix://${run_sock_dir}/podman.sock"
         export XDG_RUNTIME_DIR="${podman_run_dir}"
