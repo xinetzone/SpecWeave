@@ -899,10 +899,10 @@ def clean_stale_host_keys(cfg: ContainerConfig) -> bool:
 def refresh_host_keys(cfg: ContainerConfig) -> None:
     """容器启动后获取新容器的 host key 并追加到 known_hosts（尽力而为）。
 
-    调用时机：detach 方式启动容器之后（旧容器已删除，新容器 sshd 可能仍在
-    初始化，故做短轮询，最多约 6 秒）。ssh-keyscan 缺失或 sshd 未就绪时跳过，
-    首次 SSH 连接会提示输入 ``yes`` 接受新 host key（因清理先行，不会误报
-    ``HAS CHANGED``）。
+    调用时机：detach 方式启动容器之后（旧容器已删除，新容器 sshd 需经
+    entrypoint 7 步启动才就绪，故先 TCP 探测等待，最长约 20 秒）。ssh-keyscan
+    缺失或 sshd 超时未就绪时跳过，首次 SSH 连接会提示输入 ``yes`` 接受新
+    host key（因清理先行，不会误报 ``HAS CHANGED``）。
 
     只追加不重建：避免丢失 known_hosts 中其他主机的既有条目。
     调用方：``invoke run`` 的 ``run_container()`` 之后调用。
@@ -923,7 +923,24 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
         except Exception:
             tail_lines = []
 
-    for _ in range(4):
+    # Phase 1: TCP 探测等待 sshd 就绪。entrypoint 需完成 7 步（含重新生成
+    # host key、supervisord 拉起 sshd）才监听 2222；容器刚 detached 时直接
+    # keyscan 必然扑空（实测 5 秒窗口远短于实际启动耗时）。
+    import socket as _socket
+
+    deadline = _time.monotonic() + 20.0
+    while _time.monotonic() < deadline:
+        try:
+            with _socket.create_connection(("localhost", int(port)), timeout=1):
+                break  # sshd 已就绪
+        except OSError:
+            _time.sleep(0.75)
+    else:
+        print(f"[Run] ⚠ sshd 在 20 秒内未就绪（port {port}），首次 SSH 连接请输入 yes 接受新 host key")
+        return
+
+    # Phase 2: sshd 就绪后 keyscan 获取 host key（重试至多 3 次）
+    for _ in range(3):
         try:
             result = subprocess.run(
                 ["ssh-keyscan", "-T", "3", "-p", port, "localhost"],
@@ -931,8 +948,12 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
                 text=True,
                 timeout=5,
             )
-        except (FileNotFoundError, subprocess.TimeoutExpired):
-            break  # ssh-keyscan 不可用（如 Windows 缺 OpenSSH 客户端）
+        except FileNotFoundError:
+            print("[Run] ⚠ 未找到 ssh-keyscan，首次 SSH 连接请输入 yes 接受新 host key")
+            return
+        except subprocess.TimeoutExpired:
+            _time.sleep(1)
+            continue
         if result.returncode == 0:
             key_lines = [
                 l.strip() for l in result.stdout.splitlines()
@@ -952,6 +973,6 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
                     known_hosts_path.write_text("\n".join(merged) + "\n", encoding="utf-8")
                     print(f"[Run] ✓ known_hosts 已更新为新容器 host key ({port})")
                 return
-        _time.sleep(1.5)
+        _time.sleep(1)
 
-    print(f"[Run] ⚠ sshd 未就绪或 ssh-keyscan 不可用，首次 SSH 连接请输入 yes 接受新 host key")
+    print("[Run] ⚠ 未能从 sshd 获取 host key，首次 SSH 连接请输入 yes 接受新 host key")
