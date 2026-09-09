@@ -785,31 +785,32 @@ def validate_manifest_integrity(search_dir: Path, tar_path: Path) -> Optional[st
     except Exception:
         return None
 
-    # 解析当前 tar_path 对应的块
+    # 解析 manifest：按 "## " 分段，找到 IMAGE_FILE 与当前 tar 文件同名的段。
+    # 注意：manifest 首行注释之后紧跟第一个 "## "，split 产生的头部片段需跳过；
+    # 段内标题行（## xxx）不含 "="，解析字段时自然被忽略。
     filename = tar_path.name
-    block_start = f"## {tar_path.stem.split('-')[0]}"  # e.g. "jupyter-podman-client"
     blocks = content.split("## ")
-    current_block = None
+    current_fields: dict[str, str] | None = None
     for block in blocks:
         block = block.strip()
         if not block:
             continue
-        first_line = block.split("\n")[0].strip()
-        # Match either "jupyter-podman-client" or the full filename
-        if filename in block or first_line in ("jupyter-podman-client", "jupyter-podman-rootless"):
-            current_block = block
+        fields: dict[str, str] = {}
+        for line in block.split("\n"):
+            line = line.strip()
+            if "=" in line and not line.startswith("#"):
+                key, _, val = line.partition("=")
+                fields[key.strip()] = val.strip()
+        # 关键：IMAGE_FILE 必须与当前 tar 文件名完全一致，
+        # 否则首个块会被白名单标题行命中，导致永远匹配错镜像。
+        if fields.get("IMAGE_FILE") == filename:
+            current_fields = fields
             break
 
-    if current_block is None:
+    if current_fields is None:
         return None  # 文件不在 manifest 中，跳过校验
 
-    # 解析 manifest 字段
-    manifest_fields: dict[str, str] = {}
-    for line in current_block.split("\n"):
-        line = line.strip()
-        if "=" in line and not line.startswith("#"):
-            key, _, val = line.partition("=")
-            manifest_fields[key.strip()] = val.strip()
+    manifest_fields = current_fields
 
     expected_size_str = manifest_fields.get("SIZE")
     expected_sha256 = manifest_fields.get("SHA256", "").upper()
