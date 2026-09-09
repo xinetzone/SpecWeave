@@ -54,6 +54,7 @@ from .utils import (
     ensure_known_hosts,
     find_latest_image_tar,
     normalize_path_str,
+    validate_manifest_integrity,
 )
 
 
@@ -159,6 +160,12 @@ def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> N
             print("[Load] 请先在构建端执行: cd ../jupyter-podman-rootless && bash bin/jpman save")
             raise Exit(1)
         print(f"[Load] 自动选择最新缓存: {tar_path}")
+
+    # 镜像缓存完整性校验（防止 Compress-Archive ZIP 误标 .tar.gz 等问题）
+    integrity_err = validate_manifest_integrity(cache_path, tar_path)
+    if integrity_err:
+        print(f"[Load] ⚠ {integrity_err}")
+        raise Exit(1, f"镜像文件校验失败，请重新执行 save 后再次 load。")
 
     result = load_image(c, tar_path)
     if not result.loaded:

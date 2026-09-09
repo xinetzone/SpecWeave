@@ -768,6 +768,87 @@ def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
     return candidates[0] if candidates else None
 
 
+def validate_manifest_integrity(search_dir: Path, tar_path: Path) -> Optional[str]:
+    """校验 .image-cache/manifest.txt 中对应文件的 SIZE 和 SHA256。
+
+    返回：无问题返回 None；发现问题返回描述字符串（用于报错）。
+    如果 manifest.txt 不存在或文件不在 manifest 中，跳过校验返回 None。
+    """
+    import hashlib
+
+    manifest_path = search_dir / "manifest.txt"
+    if not manifest_path.exists():
+        return None
+
+    try:
+        content = manifest_path.read_text(encoding="utf-8")
+    except Exception:
+        return None
+
+    # 解析当前 tar_path 对应的块
+    filename = tar_path.name
+    block_start = f"## {tar_path.stem.split('-')[0]}"  # e.g. "jupyter-podman-client"
+    blocks = content.split("## ")
+    current_block = None
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        first_line = block.split("\n")[0].strip()
+        # Match either "jupyter-podman-client" or the full filename
+        if filename in block or first_line in ("jupyter-podman-client", "jupyter-podman-rootless"):
+            current_block = block
+            break
+
+    if current_block is None:
+        return None  # 文件不在 manifest 中，跳过校验
+
+    # 解析 manifest 字段
+    manifest_fields: dict[str, str] = {}
+    for line in current_block.split("\n"):
+        line = line.strip()
+        if "=" in line and not line.startswith("#"):
+            key, _, val = line.partition("=")
+            manifest_fields[key.strip()] = val.strip()
+
+    expected_size_str = manifest_fields.get("SIZE")
+    expected_sha256 = manifest_fields.get("SHA256", "").upper()
+
+    if not expected_size_str and not expected_sha256:
+        return None
+
+    # 校验 SIZE
+    if expected_size_str:
+        try:
+            num = int(expected_size_str.rstrip("MG"))
+            unit = expected_size_str[-1].upper()
+            expected_bytes = num * (1024 ** (3 if unit == "G" else 2))
+            actual_bytes = tar_path.stat().st_size
+            # 允许 10% 浮动（压缩比差异）
+            if abs(actual_bytes - expected_bytes) > expected_bytes * 0.10:
+                return (
+                    f"[Integrity] SIZE 校验失败: manifest={expected_size_str}, "
+                    f"实际={actual_bytes / (1024**2):.0f}MB"
+                )
+        except (ValueError, IndexError):
+            pass  # SIZE 格式异常则跳过
+
+    # 校验 SHA256
+    if expected_sha256:
+        h = hashlib.sha256()
+        with open(tar_path, "rb") as f:
+            for chunk in iter(lambda: f.read(8192), b""):
+                h.update(chunk)
+        actual_sha256 = h.hexdigest().upper()
+        if actual_sha256 != expected_sha256:
+            return (
+                f"[Integrity] SHA256 不匹配! manifest={expected_sha256[:16]}..., "
+                f"实际={actual_sha256[:16]}... — 文件可能已损坏，建议重新保存镜像。"
+            )
+
+    return None
+
+
 def ensure_known_hosts(cfg: ContainerConfig) -> None:
     """确保 ~/.ssh/known_hosts 中 [localhost]:{ssh_port} 条目是最新的。
 

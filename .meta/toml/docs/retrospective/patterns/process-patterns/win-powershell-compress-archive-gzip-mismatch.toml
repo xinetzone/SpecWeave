@@ -1,0 +1,5 @@
+id = "win-powershell-compress-archive-gzip-mismatch"
+title = "Windows PowerShell Compress-Archive 生成无效 .tar.gz 的规避"
+category = "docs/retrospective/patterns/process-patterns"
+date = "2026-09-09"
+version = "1.0"

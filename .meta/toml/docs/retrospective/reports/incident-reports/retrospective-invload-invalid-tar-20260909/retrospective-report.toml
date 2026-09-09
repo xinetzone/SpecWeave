@@ -1,0 +1,5 @@
+id = "retrospective-invload-invalid-tar-20260909"
+title = "inv load 镜像缓存损坏复盘"
+category = "retrospective/reports/incident-reports/retrospective-invload-invalid-tar-20260909"
+date = "2026-09-09"
+version = "1.0"
