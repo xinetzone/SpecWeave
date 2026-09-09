@@ -18,8 +18,16 @@
 | podman-compose | main@e3df1047 | git@github.com:containers/podman-compose.git | 2026-09-08 | GPL-2.0-only | third_party | — | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit e3df10472e194ab6d547b5ad25542c5c79e1a5fb） |
 | podman-py | main@5dd81b49 | git@github.com:containers/podman-py.git | 2026-09-08 | Apache-2.0 | third_party | — | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit 5dd81b49f35733a27b8051c47e23d3b4c85ea716） |
 | toolbox | main@81401f64 | git@github.com:containers/toolbox.git | 2026-09-08 | Apache-2.0 | third_party | — | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit 81401f64b3865129ea66f2a5e02a7eb40edd4fb8） |
+| netease-youdao/BCEmbedding | N/A@1aa07ea | git@github.com:netease-youdao/BCEmbedding.git | 2026-09-09 | Apache-2.0 | third_party | — | 网易有道 BCEmbedding（Embedding/RAG，无 tag 版本基线，gitlink pin commit 1aa07ea64f94523965c8672e93da47c3faf4d2cd） |
+| netease-youdao/Confucius4-TTS | N/A@4fb32c4 | git@github.com:netease-youdao/Confucius4-TTS.git | 2026-09-09 | Apache-2.0 | third_party | — | 网易有道 Confucius4-TTS（语音合成，无 tag 版本基线，gitlink pin commit 4fb32c481302d8858c3aec6a1c2a8b4cea8894c0） |
+| netease-youdao/EmotiVoice | v0.3-17-g59f0f36 | git@github.com:netease-youdao/EmotiVoice.git | 2026-09-09 | Apache-2.0 | third_party | — | 网易有道 EmotiVoice（情感语音合成，HEAD 超前 tag v0.3 共 17 commits，pin commit 59f0f36de4db12825f4705dd4e0780d79dd6bb01） |
+| netease-youdao/LobsterAI | 2026.9.4@7592cd0 | git@github.com:netease-youdao/LobsterAI.git | 2026-09-09 | MIT | third_party | — | 网易有道 LobsterAI（AI Agent 桌面应用，固定 tag 2026.9.4 = commit 7592cd034a7cb458a8650df0325b4980dd1bc162） |
+| netease-youdao/QAnything | v2.0.0-69-g615417a | git@github.com:netease-youdao/QAnything.git | 2026-09-09 | AGPL-3.0 | third_party | — | 网易有道 QAnything（企业级 RAG 问答，HEAD 超前 tag v2.0.0 共 69 commits，pin commit 615417a92420d77a2606392a74f5771ca2f31a4b） |
+| netease-youdao/ScholarClaw | N/A@97bdb5e | git@github.com:netease-youdao/ScholarClaw.git | 2026-09-09 | MIT | third_party | — | 网易有道 ScholarClaw（学术搜索 Agent，无 tag 版本基线，gitlink pin commit 97bdb5e4a763d4f98d4603f5be876587c0871e0f） |
 
 ## 更新记录
+
+- 2026-09-09 | 引入 netease-youdao 6 仓库 third_party 子模块：BCEmbedding（N/A@1aa07ea，Apache-2.0）、Confucius4-TTS（N/A@4fb32c4，Apache-2.0）、EmotiVoice（v0.3-17-g59f0f36，Apache-2.0）、LobsterAI（2026.9.4@7592cd0，MIT）、QAnything（v2.0.0-69-g615417a，AGPL-3.0）、ScholarClaw（N/A@97bdb5e，MIT）；G0 信源稳定性门：从 .chaos 临时克隆迁移至 vendor/（基线见 .trae/specs/okf-wiki-ecosystem/netease-youdao-okf-wiki/migration-baseline.md）
 
 - 2026-09-08 | 引入 containers 上游三仓库 third_party 子模块：podman-compose（main@e3df1047，GPL-2.0-only）、podman-py（main@5dd81b49，Apache-2.0）、toolbox（main@81401f64，Apache-2.0），容器编排工具链只读依赖，gitlink pin commit
 
