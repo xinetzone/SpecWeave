@@ -27,10 +27,10 @@ related_patterns:
 | F1 | entrypoint.sh `generate_host_keys()` 每次容器启动 `rm -f /etc/ssh/ssh_host_*_key` 后 `ssh-keygen -A` 重新生成 host key（镜像不携带预生成密钥的安全设计） |
 | F2 | `apps/containers/client` `inv load` 成功加载 `localhost/jupyter-podman-rootless:latest` |
 | F3 | 用户执行 `inv run` 重建容器（`_run_via_sdk`/`_run_via_cli` 先 `remove(force=True)` 旧容器再创建新容器） |
-| F4 | 用户手动执行 `ssh -p 2222 devuser@localhost` 报 `REMOTE HOST IDENTIFICATION HAS CHANGED`，`Offending RSA key in C:\Users\xinzo/.ssh/known_hosts:20` |
-| F5 | 检查 `C:\Users\xinzo\.ssh\known_hosts`：第 19 行 ed25519、第 20 行 rsa 均为 `[localhost]:2222` 旧 key |
+| F4 | 用户手动执行 `ssh -p 2222 devuser@localhost` 报 `REMOTE HOST IDENTIFICATION HAS CHANGED`，`Offending RSA key in C:\Users\<user>/.ssh/known_hosts:20` |
+| F5 | 检查 `C:\Users\<user>\.ssh\known_hosts`：第 19 行 ed25519、第 20 行 rsa 均为 `[localhost]:2222` 旧 key |
 | F6 | 检查 `clean`（原 `ensure_known_hosts`）代码：`known_hosts_path = Path(os.environ.get("HOME", "~")) / ".ssh" / "known_hosts"` |
-| F7 | 实测（Windows PowerShell 环境）：`os.environ.get("HOME")` 返回 `None`；`Path("~")` 得到 `WindowsPath('~')`（字面量目录）；`.exists()` 返回 `False`；`Path.home()` 返回 `C:\Users\xinzo` |
+| F7 | 实测（Windows PowerShell 环境）：`os.environ.get("HOME")` 返回 `None`；`Path("~")` 得到 `WindowsPath('~')`（字面量目录）；`.exists()` 返回 `False`；`Path.home()` 返回 `C:\Users\<user>` |
 | F8 | 定位到函数在 `if not known_hosts_path.exists(): return` 处静默返回，known_hosts 清理从未执行 |
 | F9 | 识别次生时序缺陷：即使路径正确，原函数在容器启动前用 ssh-keyscan 预写 key；同名旧容器若仍在运行，keyscan 抓到的是旧容器 key，新容器启动后冲突依旧 |
 | F10 | 修复后真实调用 `clean_stale_host_keys()`：成功清理 known_hosts 中 2 条过期条目，`cleaned: True` |
