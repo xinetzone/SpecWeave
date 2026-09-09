@@ -171,6 +171,42 @@
 
 ---
 
+## 十二、源码事实（2026-09-09 基于 DoltHub 源码采集）
+
+> 用户克隆 `dolthub` 组织源码至本地，含 12 个仓库。以下事实均经本地源码（README/代码/doc.go）核验，信源距离为 **① 官方源码**（第一手，可信度高于博文 ③ 第三方综述）。
+
+### 产品矩阵（源码验证）
+
+| 编号 | 事实 | 信源距离 | P0? |
+|------|------|----------|-----|
+| F-073 | Dolt 官方生态含 12 个仓库：dolt（核心）/cli（DoltHub CLI）/dolt-mcp/dolt-workbench/doltgresql/doltlite/doltlite-android/doltlite-python/driver/dumbodb/go-mysql-server/vitess | ① | — |
+| F-074 | Doltgres 为 Postgres 兼容版，2025-04-16 转 Beta，Go 实现，共享 Dolt 的 SQL 引擎与存储格式 | ① | P0 |
+| F-075 | DoltLite 为 SQLite fork，在单文件内实现 Dolt 版本控制（分支/提交/差异/合并/远程） | ① | — |
+| F-076 | DumboDB 为 MongoDB 8.0 兼容的版本化文档数据库，wire protocol 源自 FerretDB v1.24.2，存储引擎用 Dolt 的 Prolly Tree | ① | — |
+| F-077 | driver 提供 Go `database/sql` 兼容驱动，支持在 Go 应用内嵌入 Dolt（无需 server 进程，类似 SQLite） | ① | — |
+
+### 存储引擎架构（源码验证）
+
+| 编号 | 事实 | 信源距离 | P0? |
+|------|------|----------|-----|
+| F-078 | 存储引擎基于 Prolly Tree（内容哈希寻址的 BTree 变体），用 NodeStore 抽象构建树，节点类型含 AddressMap/ProllyTreeNode/CommitClosure | ① | P0 |
+| F-079 | NBS（Noms Block Store）提供内容寻址 DAG 存储：20 字节哈希寻址，无 update/delete（仅 insert/update root/gc），支持本地磁盘与 AWS S3/DynamoDB 后端 | ① | — |
+| F-080 | Commit 用 flatbuffer 序列化（file identifier "DCMT"），字段含 root/height/parent_addrs/parent_closure/signature/committer | ① | — |
+| F-081 | Dolt 存储引擎源自 Noms 项目（Attic Labs，Apache-2.0） | ① | — |
+
+### 机制澄清（源码纠正博文口径）
+
+| 编号 | 事实 | 信源距离 | P0? |
+|------|------|----------|-----|
+| F-082 | Dolt 的 MySQL 兼容基于 Vitess（服务端版本显示 "5.7.9-Vitess"）+ go-mysql-server SQL 引擎，非原生 MySQL 实现 | ① | P0 |
+| F-083 | MySQL 客户端支持到 8.4 版本（LTS）；9.0 需配置 caching_sha2_password 认证 | ① | — |
+| F-084 | MCP Server 提供 40+ 工具，支持 Dolt/Doltgres/DoltLite 三方言，HTTP/stdio 双模式，DoltLite 可嵌入单文件 | ① | — |
+| F-085 | Workbench 支持 Agent Mode（自然语言交互数据库，含变更预览与提交确认） | ① | — |
+
+> **P0 说明**：F-074（Doltgres Beta 日期）、F-078（Prolly Tree 架构）、F-082（MySQL 兼容机制）为源码核心声明，已由本地源码直接核验；F-073/F-075/F-076/F-077/F-079/F-080/F-081/F-083/F-084/F-085 为源码结构/能力事实，无需外部核验。
+
+---
+
 ## 骨架判定（I 阶段）
 
 ### 操作可复现性两问
