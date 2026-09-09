@@ -16,6 +16,13 @@
 #
 # Build: podman build -t jupyter-podman-rootless .
 # CN:    podman build --build-arg APT_MIRROR=aliyun --build-arg PIP_MIRROR=aliyun --build-arg CONDA_MIRROR=tuna -t jupyter-podman-rootless .
+# JPMan: jpman build / jpman rebuild（内部自动附加 --format docker + tuna 镜像）
+#
+# ⚠ SHELL 指令兼容性约束：
+#   OCI 格式下 SHELL 指令被 Podman 忽略，RUN 步骤以 /bin/sh 执行。
+#   因此所有 RUN 步骤必须兼容 POSIX sh（禁止使用 <<<、read -ra、数组语法等 bash 特有特性）。
+#   若需使用 bash 高级语法，构建命令须显式加 --format docker 使 SHELL 指令生效。
+#   jpman 已内置 --format docker，无需手动指定。
 # Run:   podman run -d --device /dev/fuse --security-opt label=disable -p 2222:22 -p 8888:8888 \
 #          -e USER_PASSWORD=pass -e JUPYTER_TOKEN=mysecret -v $(pwd)/workspace:/workspace jupyter-podman-rootless
 # Debug: podman run -it --rm --device /dev/fuse --security-opt label=disable jupyter-podman-rootless bash
@@ -153,7 +160,7 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
 # ═══════════════════════════════════════════════════════════════════
 FROM golang:1.26-bookworm AS toolbox-builder
 
-ARG GO_PROXY=https://proxy.golang.org,direct
+ARG GO_PROXY=https://goproxy.cn,direct
 
 # 仅限本阶段新增 ENV（构建态），不进 final
 ENV GOPROXY=${GO_PROXY} \
@@ -237,26 +244,19 @@ RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + cr
     esac && \
     echo "[OK] Architecture: $ARCH ($CONDA_ARCH)" && \
     echo "[INFO] Downloading Miniforge3 installer (conda-forge official)..." && \
+    DL_OK=0 && \
+    _DL_URL1="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
     if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        DL_URLS=( \
-            "https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" \
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
-        ); \
+        _DL_URLS="${_DL_URL1} https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"; \
         echo "[BUILD] Using Tsinghua TUNA mirror for Miniforge"; \
     elif [ "${CONDA_MIRROR}" = "aliyun" ]; then \
-        DL_URLS=( \
-            "https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" \
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
-        ); \
+        _DL_URLS="${_DL_URL1} https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"; \
         echo "[BUILD] Using Aliyun mirror for Miniforge"; \
     else \
-        DL_URLS=( \
-            "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" \
-        ); \
+        _DL_URLS="${_DL_URL1}"; \
         echo "[BUILD] Using official GitHub for Miniforge"; \
     fi && \
-    DL_OK=0 && \
-    for dl_url in "${DL_URLS[@]}"; do \
+    for dl_url in ${_DL_URLS}; do \
         echo "[INFO] Trying: $dl_url"; \
         if curl -fsSL --connect-timeout 30 --max-time 900 --retry 3 --retry-delay 5 \
             -L -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then \
