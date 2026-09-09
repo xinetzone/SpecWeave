@@ -1,0 +1,5 @@
+id = "python-pathlib-tilde-no-expansion"
+title = "用户家目录路径必须用 Path.home()（pathlib 不展开波浪号）"
+category = "docs/retrospective/patterns/code-patterns"
+date = "2026-09-09"
+version = "1.0"

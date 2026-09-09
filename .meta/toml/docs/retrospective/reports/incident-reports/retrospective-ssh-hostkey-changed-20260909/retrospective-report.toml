@@ -1,0 +1,5 @@
+id = "retrospective-ssh-hostkey-changed-20260909"
+title = "inv run 后 SSH host key changed 复盘"
+category = "retrospective/reports/incident-reports/retrospective-ssh-hostkey-changed-20260909"
+date = "2026-09-09"
+version = "1.0"

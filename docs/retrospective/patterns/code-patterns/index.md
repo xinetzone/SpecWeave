@@ -176,6 +176,7 @@ python-free-threading-package-exclusion-shim
 python-implicit-dependency-detection
 python-native-extension-self-contained-wheel
 python-package-version-standard-api
+python-pathlib-tilde-no-expansion
 python-script-three-layer-arch
 regex-markdown-parsing
 relative-depth-adjustment
