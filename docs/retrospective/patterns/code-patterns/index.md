@@ -46,6 +46,7 @@ config-source-priority-explicitness
 configurable-by-default-principle
 const-cow-trigger
 container-healthcheck-minimal-probe
+container-copy-context-whitelist
 container-warning-verify-first
 content-hash-build-cache
 context-aware-path-resolution
@@ -122,6 +123,7 @@ governance-layer-immediate-establishment
 idempotent-shell-config
 invocations-collection-sphinx-build-wrapping
 invoke-layered-namespace-tasks
+invoke-task-dual-backend-load
 layer-override-patch-drift
 lightweight-multi-dimensional-recommender
 markdown-nested-fence-escalation
@@ -132,6 +134,7 @@ module-level-snapshot-side-effect-defense
 msvc-vcvarsall-path-staging
 multi-entrypoint-config-unification
 multi-strategy-auto-discovery
+multi-variant-isomorphic-defect-fix
 ngram-mixed-language-matching
 nuitka-compile-flags-dynamic-injection
 numpy-reference-first
@@ -177,6 +180,7 @@ relative-depth-adjustment
 relative-path-systematic-construction
 resource-counter-primitive-binding
 ring-buffer-streaming-output
+runtime-numerics-golden-binary
 runtime-version-enforcement
 safe-table-edit
 scikit-build-core-pure-python-minimal
@@ -205,6 +209,7 @@ try-prepare-merge
 tuyaopen-tos-cli-command-registry
 tvm-ffi-python-wrapper-dual-mode
 unit-test-driven-bug-fix-loop
+user-switch-cleanup-partitioning
 version-priority-sorting
 wsl-distro-install-migration-guide
 wsl-docker-command-safety
