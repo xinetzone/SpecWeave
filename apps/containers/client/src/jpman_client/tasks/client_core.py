@@ -23,6 +23,7 @@ from .utils import (
     container_running as cli_container_running,
     detect_runtime,
     generate_random_string,
+    podman_sock_path,
     run_cmd,
     sdk_base_url_candidates,
     sdk_strategy_from_env,
@@ -394,10 +395,17 @@ def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
     }
     volumes = {
         workspace_posix: {"bind": "/workspace", "mode": "rw"},
+        # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
+        # 宿主 socket bind-mount 到容器同一路径，容器内 entrypoint 的 B-scheme
+        # 分支据此建立符号链接并设置 CONTAINER_HOST，SDK from_env() 即可连通。
+        podman_sock_path(): {"bind": podman_sock_path(), "mode": "rw"},
     }
     environment: dict[str, str] = {
         "USER_PASSWORD": cfg.user_password,
         "JUPYTER_TOKEN": cfg.jupyter_token,
+        # B-scheme: 告知容器内 entrypoint 宿主 daemon socket 已 bind-mount 到
+        # 容器内的哪个路径（与构建端语义一致）。
+        "HOST_PODMAN_SOCK": podman_sock_path(),
     }
     if cfg.ssh_public_key:
         environment["SSH_PUBLIC_KEY"] = cfg.ssh_public_key
@@ -462,6 +470,11 @@ def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None
         f"{cfg.jupyter_port}:8888",
         "-v",
         f"{workspace_posix}:/workspace",
+        # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
+        # 宿主 socket bind-mount 到容器同一路径，容器内 entrypoint 的 B-scheme
+        # 分支据此建立符号链接并设置 CONTAINER_HOST，容器内 podman SDK/CLI 可连通。
+        "-v",
+        f"{podman_sock_path()}:{podman_sock_path()}",
         "--device /dev/fuse",
         "--security-opt label=disable",
         "--cgroupns=host",
@@ -472,6 +485,7 @@ def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None
         cmd_parts.append("-d")
     cmd_parts.extend(["-e", f"USER_PASSWORD={cfg.user_password}"])
     cmd_parts.extend(["-e", f"JUPYTER_TOKEN={cfg.jupyter_token}"])
+    cmd_parts.extend(["-e", f"HOST_PODMAN_SOCK={podman_sock_path()}"])
     if cfg.ssh_public_key:
         cmd_parts.extend(["-e", f'SSH_PUBLIC_KEY="{cfg.ssh_public_key}"'])
     if cfg.grant_sudo:

@@ -210,6 +210,21 @@ SDK_STRATEGY_ENV = "PODMAN_CLIENT_SDK_STRATEGY"
 WSL_DISTRO_ENV = "WSL_DISTRO_NAME"
 CONTAINER_HOST_ENVS = ("CONTAINER_HOST", "DOCKER_HOST")  # 原生优先兼容兜底
 
+
+# ── B-scheme: host podman rootless socket pass-through ──────────
+# 与构建端 jpman_builder/tasks/client.py 保持一致（避免消费端独立 import 构建端）。
+# 背景：容器内自建 daemon（Model A）在 WSL 三层 userns 嵌套下触发
+# `newuidmap Operation not permitted`，不可行。改为直连宿主 rootless daemon：
+# 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
+# 并设置 `HOST_PODMAN_SOCK`，让容器内 entrypoint 的 B-scheme 分支建立符号链接、
+# 设置 `CONTAINER_HOST`，从而令容器内 podman SDK/CLI 复用宿主 daemon。
+# 默认 uid=1000（WSL2 常见），可用 PODMAN_RUNTIME_UID 环境变量覆盖。
+def podman_sock_path() -> str:
+    """Host rootless daemon socket path (also used as container mount target)."""
+    uid = os.environ.get("PODMAN_RUNTIME_UID", "1000")
+    return f"/run/user/{uid}/podman/podman.sock"
+
+
 _VALID_STRATEGIES = {"auto", "legacy", "wsl", "machine"}
 
 

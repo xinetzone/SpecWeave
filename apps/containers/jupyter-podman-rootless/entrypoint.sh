@@ -205,13 +205,29 @@ setup_podman() {
     # （自建 daemon 在 WSL 三层 userns 嵌套下会触发 newuidmap Operation not permitted）。
     local host_sock="${HOST_PODMAN_SOCK:-}"
     if [ -n "${host_sock}" ] && [ -S "${host_sock}" ]; then
+        # ── devuser 路径（默认 XDG_RUNTIME_DIR）──
         local run_sock_dir="${podman_run_dir}/podman"
         mkdir -p "${run_sock_dir}"
         chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${run_sock_dir}" 2>/dev/null || true
         chmod 700 "${run_sock_dir}" 2>/dev/null || true
         ln -sf "${host_sock}" "${run_sock_dir}/podman.sock"
+
+        # ── root 路径（容错）──
+        # root 用户下 XDG_RUNTIME_DIR 通常为 /run/user/0（不存在）或空，
+        # podman-py SDK 会回落到 /tmp/podmanpy-runtime-dir-fallback-root/...。
+        # 为避免 Notebook 以 root 身份启动时 from_env() 找不到 socket，
+        # 在这里也建立一份根可写的链接（同宿 socket，不影响权限）。
+        local root_sock_dir="/tmp/podman-runtime-dir"
+        mkdir -p "${root_sock_dir}/podman"
+        chmod 777 "${root_sock_dir}" 2>/dev/null || true
+        chmod 777 "${root_sock_dir}/podman" 2>/dev/null || true
+        ln -sf "${host_sock}" "${root_sock_dir}/podman/podman.sock"
+
+        # 显式覆盖两个关键 env：无论谁调用 from_env() 都命中宿主 socket
         export CONTAINER_HOST="unix://${run_sock_dir}/podman.sock"
+        export XDG_RUNTIME_DIR="${podman_run_dir}"
         log_info "[B-scheme] Host podman socket linked: ${run_sock_dir}/podman.sock -> ${host_sock}"
+        log_info "[B-scheme] root fallback socket: ${root_sock_dir}/podman/podman.sock -> ${host_sock}"
         log_info "[B-scheme] CONTAINER_HOST=${CONTAINER_HOST} (XDG_RUNTIME_DIR=${podman_run_dir})"
         log_info "Podman rootless setup complete (host socket pass-through)"
         return 0

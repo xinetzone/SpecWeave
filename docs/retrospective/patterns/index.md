@@ -13,6 +13,7 @@ methodology-patterns/index
 process-patterns/index
 docker-template-pattern-extraction-20260722
 pattern-comparison-implement-review-harden-vs-configurable-by-default
+win32-tty-pipe-charset-strategy
 ```
 
 ## 模式对比与快速参考

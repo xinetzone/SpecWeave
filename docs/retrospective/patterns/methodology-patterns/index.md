@@ -29,6 +29,7 @@
 | bp-nav-co-registration | [生成-登记同步法](concepts/nav-co-registration.md) | L1.5 | 2 | 0 | 批量生成结构化内容（知识包/Wiki/报告）需通过导航层（toctree/索引表/注册表）被消费时。案例：docs全量审计2,245处导航债务+OKF v0.2转换双案例（同谱系，待跨项目正向验证升级L2） |
 | bp-tech-article-to-wiki-batch | [技术文章Wiki化批量生成模式](concepts/tech-article-to-wiki-batch-generation.md) | L2-validated | 6 | 6 | 将长技术文章/教程（800行以上、多章节需独立引用）转化为原子化Wiki结构时：Spec约束下子代理批量生成原子文件、自动化工具链修复元数据/索引、链接检查为必经门禁（8步标准化流程；短篇<500行用单文件轻量变体）。案例：Harness Engineering Wiki 2小时10原子文件 |
 | batch-docs-to-okf-bundle-conversion | [批量Markdown文档到OKF Bundle转换模式](concepts/batch-docs-to-okf-bundle-conversion.md) | stable | — | — | 大量散乱Markdown文档（20+）需批量转换为结构化OKF v0.2 Bundle时：R→I→E→V→C五阶段分批工作流，覆盖frontmatter统一补全、index导航建立、跨文档链接修复与正文保真验证 |
+| bp-classical-commentary-dual-layer-bundle | [古典文本-现代阐释双层Bundle构建模式](concepts/classical-commentary-dual-layer-bundle.md) | L1-draft | 1 | 0 | 同一主题存在古典原文+现代阐释双层结构时，需构建两个独立OKF Bundle并通过F编号隔离避免交叉冲突。案例：《了凡四训》+《了凡生意经》双层Bundle |
 
 ## 成熟度等级说明
 
