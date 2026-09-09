@@ -21,7 +21,11 @@
 #      保证 _project_root() 向上能命中 pyproject.toml 锚点
 #   3. WORKDIR=/workspace，IMAGE_CACHE_DIR 默认 /workspace/.image-cache
 #   4. PODMAN_CLIENT_SDK_STRATEGY=legacy（容器内 pure-Linux，
-#      直接 PodmanClient.from_env()，跳过 Windows 多候选探测）
+#      直接 PodmanClient.from_env()，跳过 Windows 多候选探测）。
+#      R1 修复（2026-09-08·方法论 C3）：容器内 SDK 依赖 bootstrap 前置启动的
+#      podman system service（见 env_in_container.py::PODMAN_SERVICE_BOOT），
+#      否则 from_env() 会连 /run/user/<UID>/podman/podman.sock 报 FileNotFoundError
+#      （被 urllib3 包装成 APIError）。本镜像仅固化 ENV，服务启动由消费端注入。
 #   5. 用户仍为 devuser，遵循构建端 non-root 约定
 # ------------------------------------------------------------
 
@@ -75,6 +79,17 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     python -m pip cache purge >/dev/null 2>&1 || true ; \
     rm -rf /home/devuser/.cache/pip ; \
     echo "[BUILD-CLEAN] done"'
+
+# ------------------------------------------------------------
+# R2 修复（2026-09-08·方法论 C·根因）：必须在构建期 pip install 之后
+# 重置回 root。基础镜像以 root 为主进程（ENTRYPOINT tini->entrypoint.sh ->
+# supervisord），由 supervisord 再按 jupyter.conf 将服务降权到 devuser。
+# 若保持在 USER devuser，则继承的 entrypoint.sh 以非 root 运行，导致
+# setup_passwords 的 chpasswd（pam_chauthtok）、generate_host_keys 的
+# ssh-keygen、以及 exec supervisord 全部失败，容器启动即退出（exit 1）。
+# USER devuser 仅用于构建期 editable 安装，运行期必须回到 root。
+# ------------------------------------------------------------
+USER root
 
 # ------------------------------------------------------------
 # 运行时默认值（用户可通过 -e 覆盖）

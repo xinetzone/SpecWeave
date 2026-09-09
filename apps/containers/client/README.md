@@ -140,15 +140,16 @@ invoke images
 
 四种合法值：`auto | legacy | wsl | machine`。非合法值会被归一化回 `auto`。
 
-### 5.4 30 秒修复速查表（Windows 专属坑 W-I1~W-I3）
+### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I3 + 容器内坑 C-I1）
 
-`invoke` 失败时终端会自动匹配以下三条，每个条目末尾附一行命令级修复：
+`invoke` 失败时终端会自动匹配以下条目（前三条为 Windows 原生坑，末条为容器内坑），每个条目末尾附一行命令级修复：
 
 | ID | 触发异常 | 根因 | 修复（30秒） |
 |----|---------|------|------------|
 | **W-I1** | `FileNotFoundError: .../run/user/.../podman/podman.sock No such file` | podman-py 无参构造回退是纯 Linux 路径，Windows 原生不存在该目录 | 三选一：a) 脚本改在 WSL2 内跑  b) 打开 Podman Desktop 初始化 Machine  c) `$env:CONTAINER_HOST="unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock"` |
 | **W-I2** | `ValueError: Unsupported URL scheme 'npipe'` | docker-py 老用户粘贴 `npipe:////./pipe/docker_engine`；podman-py 合法 scheme 中不含 npipe | 改成：`unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock` / `ssh://...` / `tcp://127.0.0.1:8888` |
 | **W-I3** | `Timeout: Waiting on podman-forward-*.sock`（SSH Machine） | SSH 首次 StrictHostKeyChecking 交互阻塞在 stdin yes/no，SDK SSHSocket shell-out 的 `ssh -N -L` 子进程永不返回 | PowerShell 先跑一次：`podman machine ssh true`，提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时敲 **yes** 回车，把 Machine HostKey 写入 `~/.ssh/known_hosts` |
+| **C-I1** | 同一 `FileNotFoundError: .../run/user/.../podman/podman.sock No such file`，但出现在**容器内** SDK 调用（bootstrap `env.run-cmd`/`env.shell` 或常驻容器 JupyterLab Web Terminal）；容器内 CLI `podman images` 同时报 `open ${XDG_RUNTIME_DIR}/libpod/tmp/pause.pid: no such file or directory` 与 `error creating temporary file: Permission denied` | 容器内两个根因叠加：① 从无运行中的 podman daemon（bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，或常驻容器旧版从不拉起 service），`from_env()` 回退到纯 Linux 默认路径连不存在的 rootless UDS socket → `APIError`；② rootless podman 初始化时未预建 `${XDG_RUNTIME_DIR}/libpod/tmp/`（`pause.pid` 落盘目录），缺目录触发 ENOENT / `Permission denied`。注意 devuser UID 动态分配（此处为 1001） | bootstrap 由 `PODMAN_SERVICE_BOOT` 自动拉起 `podman system service --time=0` 并预建 `libpod/tmp`（见 `tasks/env_in_container.py`）；常驻容器由方案 A 保证：`entrypoint.sh::setup_podman()` 默认拉起 service + 预建 `${XDG_RUNTIME_DIR}/libpod/tmp` + `jupyter.conf` 改 `user=devuser` 补 `XDG_RUNTIME_DIR`；详见 `summary-jpman-client-podman-sdk-file-not-found-20260908.md` |
 
 ### 5.5 挂载路径 vs 连接 URL（A/B 维度分离，避免混淆）
 
@@ -348,7 +349,8 @@ invoke env.shell
 | Python 环境 | `conda main`（cp314t free-threading，`/opt/conda/envs/main/bin`） | 登录 shell 自动激活；PATH 顶端已生效 |
 | 客户端安装路径 | `/opt/apps/containers/client/`（editable） | `_project_root()` 锚点完整 |
 | WORKDIR | `/workspace` | `Path.cwd()` 与宿主期望一致 |
-| SDK 策略 | `PODMAN_CLIENT_SDK_STRATEGY=legacy` | 容器内 pure-Linux，不走 Windows 多候选 |
+| SDK 策略 | `PODMAN_CLIENT_SDK_STRATEGY=legacy` | 容器内 pure-Linux，直接 `from_env()`，不走 Windows 多候选 |
+| 容器内 SDK 前置条件 | `env.run-cmd` / `env.shell` 会先启动 `podman system service --time=0` | R1 修复：bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 entrypoint、supervisord 只监督 Jupyter，容器内从无运行中 daemon；若未提前拉起 service，`from_env()` 会连不存在的默认 UDS socket `/run/user/<UID>/podman/podman.sock` 报 `FileNotFoundError`（被 urllib3 包装成 `APIError`） |
 | 默认缓存目录 | `IMAGE_CACHE_DIR=/workspace/.image-cache` | 可被宿主挂载覆盖 |
 | 自举容器 rootless | `/dev/fuse + label=disable + cgroupns=host` | 与 `ContainerConfig` 硬编码对齐，**不使用 `--privileged`** |
 | 容器名（默认） | `jpman-client-env`（用完自动 `--rm` 删除） | 可通过 `--name` 覆盖 |

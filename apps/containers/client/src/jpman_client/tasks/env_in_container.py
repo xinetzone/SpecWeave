@@ -47,6 +47,67 @@ def _quote_bash_script(s: str) -> str:
 DEFAULT_CLIENT_IMAGE = "localhost/jupyter-podman-client:latest"
 DEFAULT_CLIENT_CONTAINER = "jpman-client-env"
 
+# ---------------------------------------------------------------------------
+# R1 修复（C 阶段·原子行动项 C3）：容器内前置启动 podman system service
+#
+# 背景与根因：bootstrap 用 `--entrypoint /usr/bin/tini` 跳过基础镜像
+# entrypoint.sh 的 setup_podman()，而 supervisord 只监督 Jupyter，因此容器内
+# 从无运行中的 podman daemon。当 SDK 以 PODMAN_CLIENT_SDK_STRATEGY=legacy 走
+# `PodmanClient.from_env()` 时，会连默认 Linux UDS socket
+# `/run/user/<UID>/podman/podman.sock`，该文件不存在 → podman/api/uds.py:41
+# `super().connect(netloc)` 抛 FileNotFoundError，随后被 urllib3 包装成
+# APIError（即截图中"红色报错"的真实形态，注意 netloc 是 UDS socket 路径参数名，
+# 不是"缺少 URL netloc"）。
+#
+# 方案（保留 DinP 自包含语义）：在真正执行 SDK 用到的命令前，先以当前用户
+# 启动 rootless `podman system service` 并等待默认 UDS socket 就绪，使
+# from_env() 直接连通，同时避免 CLI fallback 的隐式降级。
+# 幂等：socket 已存在则跳过（同容器内多次调用只启动一次）。
+# 注意：`--time=0` 常驻（不是仅 `podman info` 惰性拉起，后者 socket 命太短）。
+# 容器内仍为 devuser 运行，XDG_RUNTIME_DIR 按 $(id -u) 而非硬编码 1000，防 UID 漂移。
+# 权限子修复（C3 收边）：bootstrap 跳过 setup_podman() 后容器内无 systemd-logind
+# 保证 /run/user/<uid> 属主正确 → devuser 在 root 属主目录下 mkdir 会 Permission denied。
+# 利用构建期无条件写入的 NOPASSWD sudo，先 sudo 创建/授权 `${XDG_RUNTIME_DIR}[/podman]`
+# 给 devuser，再以普通 mkdir 兜底；整段 `|| true` 确保目录不可写也不中断命令链。
+# 启动超时子修复（C3 收边，对应 `podman service 启动超时` 根因）：
+#   ① `/dev/fuse` 未 chmod 666：storage driver=overlay→fuse-overlayfs，非 root 需
+#      能 open /dev/fuse，否则存储引擎初始化失败，服务进程直接退出、socket 永不创建。
+#      与 entrypoint.sh setup_podman() 的 `chmod 666 /dev/fuse` 对齐（bootstrap 跳过它）。
+#   ② `podman info` 初始化未运行：setup_podman() 用它触发存储目录创建与配置验证，
+#      也是 system service 能正常拉起的前置；此处补齐并与 service 启动对齐。
+#   ③ 失败可诊断：服务日志落 /tmp/podman-service.log，超时后 tail 真实错误，
+#      替代原先笼统的「SDK 或将降级到 CLI」模糊警告；`timeout 60` 兜底防 fuse 挂载卡死拖垮整个 bootstrap。
+# ---------------------------------------------------------------------------
+PODMAN_SERVICE_BOOT = (
+    "export XDG_RUNTIME_DIR=/run/user/$(id -u); "
+    "[ -c /dev/fuse ] && chmod 666 /dev/fuse 2>/dev/null || true; "
+    "if ! [ -w \"${XDG_RUNTIME_DIR}/podman\" ]; then "
+    "  sudo -n mkdir -p \"${XDG_RUNTIME_DIR}/podman\" 2>/dev/null "
+    "    && sudo -n chown -R \"$(id -u):$(id -g)\" \"${XDG_RUNTIME_DIR}\" 2>/dev/null "
+    "    || true; "
+    "fi; "
+    "mkdir -p \"${XDG_RUNTIME_DIR}/podman\" 2>/dev/null || true; "
+    "chmod 700 \"${XDG_RUNTIME_DIR}\" 2>/dev/null || true; "
+    "# rootless podman 需把 pause.pid 写入 libpod/tmp，目录缺失会报 no such file / Permission denied; "
+    "mkdir -p \"${XDG_RUNTIME_DIR}/libpod/tmp\" 2>/dev/null || true; "
+    "chmod 700 \"${XDG_RUNTIME_DIR}/libpod/tmp\" 2>/dev/null || true; "
+    "echo '[env][SDK就绪] 初始化 rootless podman storage (podman info)...'; "
+    "timeout 60 podman info >/dev/null 2>&1 || timeout 60 podman system migrate >/dev/null 2>&1 || true; "
+    "if ! [ -S \"${XDG_RUNTIME_DIR}/podman/podman.sock\" ]; then "
+    "  nohup podman system service --time=0 >/tmp/podman-service.log 2>&1 </dev/null & "
+    "  for _i in $(seq 1 30); do "
+    "    [ -S \"${XDG_RUNTIME_DIR}/podman/podman.sock\" ] && break; "
+    "    sleep 1; "
+    "  done; "
+    "  if [ -S \"${XDG_RUNTIME_DIR}/podman/podman.sock\" ]; then "
+    "    echo '[env][SDK就绪] podman system service 在线: ${XDG_RUNTIME_DIR}/podman/podman.sock'; "
+    "  else "
+    "    echo '[env][SDK就绪] ⚠ podman service 启动超时，日志见 /tmp/podman-service.log'; "
+    "    tail -n 20 /tmp/podman-service.log 2>/dev/null || true; "
+    "  fi; "
+    "fi; "
+)
+
 
 def _client_root() -> Path:
     """定位 client 应用根目录（Containerfile.client、pyproject.toml 所在）。"""
@@ -162,6 +223,7 @@ def run_cmd_(
     cache_posix = to_posix_path(cache_path)
 
     inner_bash = (
+        f"{PODMAN_SERVICE_BOOT}"
         f". /opt/conda/etc/profile.d/conda.sh && conda activate main && {cmd}"
     )
 
@@ -262,6 +324,7 @@ def shell(
     # 登录式 bash（激活 conda main + 进入 /workspace + 友好提示）。
     # Windows 下用双引号分组，POSIX 下 shlex.quote，用 _quote_bash_script()。
     shell_script = (
+        f"{PODMAN_SERVICE_BOOT}"
         ". /opt/conda/etc/profile.d/conda.sh"
         " && conda activate main"
         " && cd /workspace"
