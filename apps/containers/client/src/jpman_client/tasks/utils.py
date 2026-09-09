@@ -850,33 +850,32 @@ def validate_manifest_integrity(search_dir: Path, tar_path: Path) -> Optional[st
     return None
 
 
-def ensure_known_hosts(cfg: ContainerConfig) -> None:
-    """确保 ~/.ssh/known_hosts 中 [localhost]:{ssh_port} 条目是最新的。
+def clean_stale_host_keys(cfg: ContainerConfig) -> bool:
+    """清理 known_hosts 中本机容器映射端口的过期 host key 条目。
 
-    JPMan 容器每次重建（podman container restart/recreate）会重新生成 SSH
-    host key（``/etc/ssh/ssh_host_*_key``），导致本地 known_hosts 记录的旧 key
-    与远程新 key 不匹配，触发 ``Offending key in .../known_hosts:N`` 错误。
+    JPMan 容器每次重建会重新生成 SSH host key（``/etc/ssh/ssh_host_*_key``，
+    entrypoint 安全设计：镜像内不携带预生成密钥），导致宿主机 known_hosts
+    保留的旧 key 与新容器不匹配，触发 ``REMOTE HOST IDENTIFICATION HAS CHANGED``
+    拒绝连接。
 
-    本函数在容器启动前自动处理：
-      1. 读取 ``~/.ssh/known_hosts``
-      2. 移除所有 ``[localhost]:{ssh_port}`` 和 ``[127.0.0.1]:{ssh_port}`` 条目
-      3. 使用 ``ssh-keyscan`` 获取最新 key 并写入 known_hosts（若可用）
-      4. 若 ssh-keyscan 不可用，仅清理旧条目（SSH 首次连接时会提示接受新 key）
+    本函数在容器启动前移除 ``[localhost]:{port}`` / ``[127.0.0.1]:{port}``
+    的旧条目，消除冲突报错。
 
-    调用方：在 ``run_container()`` 之前、``image_exists`` 检查通过后调用。
+    ⚠️ 不得在本函数内用 ssh-keyscan 预写新 key：容器尚未启动、或同名旧容器
+    仍在运行时，keyscan 抓取到的是过期 key；新 key 获取须由
+    :func:`refresh_host_keys` 在容器真正启动后完成。
+
+    返回 True 表示清理了条目；False 表示无需清理或 known_hosts 不存在。
+    调用方：``invoke run`` 的 ``run_container()`` 之前调用。
     """
-    import os as _os
-
-    known_hosts_path = Path(_os.environ.get("HOME", "~")) / ".ssh" / "known_hosts"
-    port = str(cfg.ssh_port)
-
-    # 匹配 [localhost]:PORT 或 [127.0.0.1]:PORT 的完整行（包括注释行）
-    pattern_host = re.compile(
-        r"^(\[[^\]]+\]:" + re.escape(port) + r"\s+)"
-    )
-
+    known_hosts_path = Path.home() / ".ssh" / "known_hosts"
     if not known_hosts_path.exists():
-        return
+        return False
+    port = str(cfg.ssh_port)
+    # 仅匹配本机地址（localhost/127.0.0.1），避免误删其他主机同名端口条目
+    pattern_host = re.compile(
+        r"^\[(localhost|127\.0\.0\.1)\]:" + re.escape(port) + r"\s+"
+    )
 
     try:
         lines = known_hosts_path.read_text(encoding="utf-8").splitlines()
@@ -884,34 +883,75 @@ def ensure_known_hosts(cfg: ContainerConfig) -> None:
         try:
             lines = known_hosts_path.read_text(encoding="utf-8-sig").splitlines()
         except Exception:
-            return
+            return False
 
     original_count = len(lines)
     filtered = [line for line in lines if not pattern_host.match(line)]
 
     if len(filtered) == original_count:
-        return  # 无需更新
+        return False  # 无需更新
 
-    # 尝试用 ssh-keyscan 获取最新 key
-    try:
-        result = subprocess.run(
-            ["ssh-keyscan", "-T", "5", "-p", str(cfg.ssh_port), "localhost"],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-        if result.returncode == 0 and result.stdout.strip():
-            # 过滤掉错误行和空行，保留有效 key 行
+    known_hosts_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
+    print(f"[Run] ✓ known_hosts 已清理 {original_count - len(filtered)} 条过期 host key")
+    return True
+
+
+def refresh_host_keys(cfg: ContainerConfig) -> None:
+    """容器启动后获取新容器的 host key 并追加到 known_hosts（尽力而为）。
+
+    调用时机：detach 方式启动容器之后（旧容器已删除，新容器 sshd 可能仍在
+    初始化，故做短轮询，最多约 6 秒）。ssh-keyscan 缺失或 sshd 未就绪时跳过，
+    首次 SSH 连接会提示输入 ``yes`` 接受新 host key（因清理先行，不会误报
+    ``HAS CHANGED``）。
+
+    只追加不重建：避免丢失 known_hosts 中其他主机的既有条目。
+    调用方：``invoke run`` 的 ``run_container()`` 之后调用。
+    """
+    import time as _time
+
+    known_hosts_path = Path.home() / ".ssh" / "known_hosts"
+    port = str(cfg.ssh_port)
+    key_prefixes = (f"[localhost]:{port} ", f"[127.0.0.1]:{port} ")
+
+    # 载入已有条目（去重基准）
+    existing: set[str] = set()
+    tail_lines: list[str] = []
+    if known_hosts_path.exists():
+        try:
+            tail_lines = known_hosts_path.read_text(encoding="utf-8").splitlines()
+            existing = {line for line in tail_lines if line}
+        except Exception:
+            tail_lines = []
+
+    for _ in range(4):
+        try:
+            result = subprocess.run(
+                ["ssh-keyscan", "-T", "3", "-p", port, "localhost"],
+                capture_output=True,
+                text=True,
+                timeout=5,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            break  # ssh-keyscan 不可用（如 Windows 缺 OpenSSH 客户端）
+        if result.returncode == 0:
             key_lines = [
-                l for l in result.stdout.splitlines()
-                if l and not l.startswith("#") and ":" in l
+                l.strip() for l in result.stdout.splitlines()
+                if l and not l.startswith("#") and l.startswith(key_prefixes)
             ]
             if key_lines:
-                filtered.extend(key_lines)
+                added = False
+                merged = tail_lines[:]
+                seen = set(existing)
+                for kl in key_lines:
+                    if kl not in seen:
+                        merged.append(kl)
+                        seen.add(kl)
+                        added = True
+                if added:
+                    known_hosts_path.parent.mkdir(parents=True, exist_ok=True)
+                    known_hosts_path.write_text("\n".join(merged) + "\n", encoding="utf-8")
+                    print(f"[Run] ✓ known_hosts 已更新为新容器 host key ({port})")
+                return
+        _time.sleep(1.5)
 
-        known_hosts_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
-        print(f"[Run] ✓ known_hosts 已更新：移除 {original_count - len(filtered)} 条过期条目")
-    except (FileNotFoundError, subprocess.TimeoutExpired):
-        # ssh-keyscan 不可用（如 Windows 原生环境），仅清理旧条目
-        known_hosts_path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
-        print(f"[Run] ✓ known_hosts 已清理 {original_count - len(filtered)} 条过期条目（ssh-keyscan 不可用，SSH 首次连接时将提示接受新 key）")
+    print(f"[Run] ⚠ sshd 未就绪或 ssh-keyscan 不可用，首次 SSH 连接请输入 yes 接受新 host key")

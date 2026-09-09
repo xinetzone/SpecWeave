@@ -51,9 +51,10 @@ from .client_core import (
 from .utils import (
     ContainerConfig,
     default_build_cache_dir,
-    ensure_known_hosts,
+    clean_stale_host_keys,
     find_latest_image_tar,
     normalize_path_str,
+    refresh_host_keys,
     validate_manifest_integrity,
 )
 
@@ -239,8 +240,13 @@ def run(
         print("[Run]   或执行: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
         raise Exit(1)
 
-    ensure_known_hosts(cfg)
-    run_container(c, cfg)
+    # 启动前清理 known_hosts 过期 host key（防 HAS CHANGED 报错）；
+    # 新容器的 host key 须在启动后由 refresh_host_keys 获取，避免抓取到
+    # 仍在运行的旧容器 key（时序陷阱）。
+    clean_stale_host_keys(cfg)
+    cfg = run_container(c, cfg)
+    if cfg.detach:
+        refresh_host_keys(cfg)
 
 
 @task(help={"name": "容器名（默认 jupyter-podman）"})
