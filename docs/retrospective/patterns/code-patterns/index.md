@@ -153,6 +153,7 @@ periodic-check-caching
 pickle-serialization-source-fix
 pip-dual-index-mirror-fallback
 platform-aware-dependency-detect
+platform-capability-matrix-upfront-validation
 playbook-onboarding-guide
 powershell-wsl-cross-shell-wrapper
 pre-kill-identity-verification
