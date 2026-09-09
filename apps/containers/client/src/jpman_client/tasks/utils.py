@@ -872,9 +872,9 @@ def clean_stale_host_keys(cfg: ContainerConfig) -> bool:
     if not known_hosts_path.exists():
         return False
     port = str(cfg.ssh_port)
-    # 仅匹配本机地址（localhost/127.0.0.1），避免误删其他主机同名端口条目
+    # 仅匹配本机地址（localhost/127.0.0.1/::1），避免误删其他主机同名端口条目
     pattern_host = re.compile(
-        r"^\[(localhost|127\.0\.0\.1)\]:" + re.escape(port) + r"\s+"
+        r"^\[(localhost|127\.0\.0\.1|::1)\]:" + re.escape(port) + r"\s+"
     )
 
     try:
@@ -911,7 +911,6 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
 
     known_hosts_path = Path.home() / ".ssh" / "known_hosts"
     port = str(cfg.ssh_port)
-    key_prefixes = (f"[localhost]:{port} ", f"[127.0.0.1]:{port} ")
 
     # 载入已有条目（去重基准）
     existing: set[str] = set()
@@ -923,41 +922,83 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
         except Exception:
             tail_lines = []
 
-    # Phase 1: TCP 探测等待 sshd 就绪。entrypoint 需完成 7 步（含重新生成
-    # host key、supervisord 拉起 sshd）才监听 2222；容器刚 detached 时直接
-    # keyscan 必然扑空（实测 5 秒窗口远短于实际启动耗时）。
+    # Phase 1: 逐个探测本机地址，等待 sshd 就绪。entrypoint 需完成 7 步
+    # （含重新生成 host key、supervisord 拉起 sshd）才监听 {port}；容器刚
+    # detached 时 keyscan 必扑空。注意 localhost 可能优先解析到未监听的 ::1
+    # 而端口转发只绑定 127.0.0.1，故显式尝试两个地址并记录命中的那个。
     import socket as _socket
 
+    probe_addrs = ("127.0.0.1", "::1")
+    live_addr: str | None = None
     deadline = _time.monotonic() + 20.0
     while _time.monotonic() < deadline:
-        try:
-            with _socket.create_connection(("localhost", int(port)), timeout=1):
-                break  # sshd 已就绪
-        except OSError:
-            _time.sleep(0.75)
-    else:
+        for addr in probe_addrs:
+            try:
+                with _socket.create_connection((addr, int(port)), timeout=1):
+                    live_addr = addr
+                    break
+            except OSError:
+                continue
+        if live_addr is not None:
+            break
+        _time.sleep(0.75)
+    if live_addr is None:
         print(f"[Run] ⚠ sshd 在 20 秒内未就绪（port {port}），首次 SSH 连接请输入 yes 接受新 host key")
         return
 
-    # Phase 2: sshd 就绪后 keyscan 获取 host key（重试至多 3 次）
+    # Phase 2: sshd 就绪后 keyscan 获取 host key。用命中地址的 IP 直连以
+    # 规避 localhost 双栈解析差异。注意：Windows System32\OpenSSH 的
+    # ssh-keyscan KEX 构建集可能无法与 OpenSSH 10 服务器协商
+    # （choose_kex: unsupported KEX method sntrup761x25519-sha512），
+    # Git 附带的 MSYS ssh-keyscan 兼容性更好，故按序尝试多个候选。
+    import shutil as _shutil
+
+    host_keys_pats = (
+        f"[{live_addr}]:{port} ",
+        f"[localhost]:{port} ",
+        f"[127.0.0.1]:{port} ",
+        f"[::1]:{port} ",
+    )
+    keyscan_cands: list[str] = []
+    for git_path in (
+        r"C:\Program Files\Git\usr\bin\ssh-keyscan.exe",
+        r"C:\Program Files\Git\bin\ssh-keyscan.exe",
+    ):
+        if Path(git_path).exists():
+            keyscan_cands.append(git_path)
+    which_ks = _shutil.which("ssh-keyscan")
+    if which_ks and which_ks not in keyscan_cands:
+        keyscan_cands.append(which_ks)
+
+    def _as_localhost(line: str) -> str:
+        """将 keyscan 输出行的 host 段规范化为 [localhost]:{port}。
+
+        keyscan 以 IP 为连接目标时输出 ``[127.0.0.1]:2222 ...``，而用户 ssh
+        使用 ``devuser@localhost``，known_hosts 按主机名字符串匹配，须改写为
+        ``[localhost]:2222 ...``（host key 与连接地址无关）。
+        """
+        return re.sub(
+            r"^(\[[^\]]+\]|[^:\s]+):\d+\s+",
+            f"[localhost]:{port} ",
+            line,
+        )
+
     for _ in range(3):
-        try:
-            result = subprocess.run(
-                ["ssh-keyscan", "-T", "3", "-p", port, "localhost"],
-                capture_output=True,
-                text=True,
-                timeout=5,
-            )
-        except FileNotFoundError:
-            print("[Run] ⚠ 未找到 ssh-keyscan，首次 SSH 连接请输入 yes 接受新 host key")
-            return
-        except subprocess.TimeoutExpired:
-            _time.sleep(1)
-            continue
-        if result.returncode == 0:
+        for exe in keyscan_cands:
+            try:
+                result = subprocess.run(
+                    [exe, "-T", "3", "-p", port, live_addr],
+                    capture_output=True,
+                    text=True,
+                    timeout=5,
+                )
+            except (FileNotFoundError, subprocess.TimeoutExpired):
+                continue
             key_lines = [
-                l.strip() for l in result.stdout.splitlines()
-                if l and not l.startswith("#") and l.startswith(key_prefixes)
+                _as_localhost(l.strip())
+                for l in (result.stdout or "").splitlines()
+                if l and not l.startswith("#")
+                and l.startswith(host_keys_pats)
             ]
             if key_lines:
                 added = False
@@ -975,4 +1016,4 @@ def refresh_host_keys(cfg: ContainerConfig) -> None:
                 return
         _time.sleep(1)
 
-    print("[Run] ⚠ 未能从 sshd 获取 host key，首次 SSH 连接请输入 yes 接受新 host key")
+    print("[Run] ⚠ 未能从 sshd 获取 host key（keyscan 与服务器 KEX 不兼容或 sshd 异常），首次 SSH 连接请输入 yes 接受新 host key")
