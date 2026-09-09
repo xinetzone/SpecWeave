@@ -154,8 +154,8 @@ flowchart LR
 | 2 | 清理 build*.log 临时文件 | Agent | ✅ 完成 | 目录无遗留 log |
 | 3 | 模式文档入库 | Agent | ✅ 完成 | `docs/retrospective/patterns/process-patterns/oci-shell-compatibility.md` 已创建 |
 | 4 | 复盘报告导出 | Agent | ✅ 完成 | 本报告已写入 `docs/retrospective/reports/task-reports/` |
-| 5 | 保存镜像到本地 tar | Agent | ⏳ 待执行 | `podman save` 输出 .tar 文件 |
-| 6 | 提交变更到 git | Agent | ⏳ 待执行 | 原子提交 Containerfile + 模式文档 + 报告 |
+| 5 | 保存镜像到本地 tar | Agent | ✅ 完成 | `jupyter-podman-rootless-latest.tar` 已生成 |
+| 6 | 提交变更到 git | Agent | ✅ 完成 | 两次原子提交：`9cc88c71f`（代码+文档）+ `9460e49ae`（toml元数据） |
 
 ---
 
