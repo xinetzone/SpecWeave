@@ -2,7 +2,7 @@
 title: "jpman 容器构建修复复盘"
 date: 2026-09-09
 source: "task:jpman-build-fix-20260909"
-x-toml-ref: "../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-jpman-build-fix-20260909.toml"
+x-toml-ref: "../../../../../../.meta/toml/docs/retrospective/reports/task-reports/retrospective-jpman-build-fix-20260909/retrospective-report.toml"
 type: "retrospective-report"
 template: "four-file-atomic-retrospective-v2"
 template_version: "2.1"

@@ -1,0 +1,5 @@
+id = "oci-shell-compatibility"
+title = "OCI格式Shell兼容性约束"
+category = "docs/retrospective/patterns/process-patterns"
+date = "2026-09-09"
+version = "1.0"
