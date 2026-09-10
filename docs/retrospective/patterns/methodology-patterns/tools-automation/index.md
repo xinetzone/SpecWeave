@@ -9,6 +9,7 @@ automation-idempotent-four-elements
 batch-docs-to-okf-bundle-conversion
 best-practice-hidden-cost
 capability-matrix
+capability-precondition-pairing
 defuddle-web-extraction-preferred
 depth-reference-table
 derived-file-auto-generation
@@ -57,5 +58,6 @@ tool-fix-triple-protection
 tool-self-validation
 tool-workflow-composition
 toolchain-maturity
+validation-probe-semantics-convergence
 validation-semantic-gap
 ```

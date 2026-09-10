@@ -27,6 +27,7 @@ Toolbx 是一个用于 Linux 容器化开发环境的工具，让容器像在主
 | /run/host 挂载点 | 预创建目录，用于 bind-mount 主机根文件系统 |
 | Marker 文件 | `/run/.toolboxenv` + `/run/.containerenv` |
 | capsh 工具 | libcap2-bin 包提供能力边界工具 |
+| flatpak-spawn | `flatpak-xdg-utils` 包 + `/usr/bin/flatpak-spawn` symlink（容器内二进制经 `flatpak-spawn --host` 转发回宿主执行的前提，官方镜像同款安装） |
 | sudo NOPASSWD | devuser 无密码 sudo（`GRANT_SUDO=yes` 时启用） |
 | UID 匹配 | devuser 固定 UID 1000（与 Linux 主机默认用户 UID 一致） |
 

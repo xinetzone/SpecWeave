@@ -42,11 +42,13 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| Invoke 命名空间入口 | [../tasks/__init__.py](../tasks/__init__.py) | ns configure：根命名空间 + `container.*` 聚合别名 |
-| 工具函数 + Windows 探测层 | [../tasks/utils.py](../tasks/utils.py) | ContainerConfig / sdk_strategy_from_env / sdk_base_url_candidates / wsl_distro_name / windows_diagnose_hint / to_posix_path |
-| 连接主入口 + 多候选循环 | [../tasks/client_core.py](../tasks/client_core.py) | `@contextmanager get_client()`（两层后端、`yield None` 行为承诺、失败汇总表） |
-| 人类 CLI 入口 + .env 加载 | [../tasks/manage.py](../tasks/manage.py) | `load/run/stop/status/clean/images` 6 个根任务 + 容器级 `container.*` 命名空间 |
-| Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；wheel.packages = ["jpman_client"] |
+| Invoke 命名空间入口 | [../src/jpman_client/tasks/__init__.py](../src/jpman_client/tasks/__init__.py) | ns configure：根命名空间 + `container.*` 聚合别名 + `env.*` 自举命名空间 |
+| 工具函数 + Windows 探测层 | [../src/jpman_client/tasks/utils.py](../src/jpman_client/tasks/utils.py) | ContainerConfig / sdk_strategy_from_env / sdk_base_url_candidates / wsl_distro_name / windows_diagnose_hint / to_posix_path |
+| 连接主入口 + 多候选循环 | [../src/jpman_client/tasks/client_core.py](../src/jpman_client/tasks/client_core.py) | `@contextmanager get_client()`（两层后端、`yield None` 行为承诺、失败汇总表） |
+| 人类 CLI 入口 + .env 加载 | [../src/jpman_client/tasks/manage.py](../src/jpman_client/tasks/manage.py) | `load/run/stop/status/clean/images` 6 个根任务 + 容器级 `container.*` 命名空间 |
+| 容器内自举任务 | [../src/jpman_client/tasks/env_in_container.py](../src/jpman_client/tasks/env_in_container.py) | `env.*` 三任务（build-layer / run-cmd / shell）+ `PODMAN_SERVICE_BOOT`（容器内 podman service 自举） |
+| invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
+| Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；wheel.packages = ["src/jpman_client"] |
 | 环境变量模板（两清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项完整带注释 |
 | 人类可读文档入口 | [../README.md](../README.md) | 安装/快速开始/§5 Windows WSL/§8 .env 完整清单 |
 
@@ -62,7 +64,7 @@ source: "AGENTS.md#嵌套路由关系"
 | [README §7 内置纪律 rootless 三必需](../README.md#7-内置纪律rootless-三必需参数) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
 | [README §8 .env 完整清单](../README.md#8-env-配置完整清单) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |
 | [README §6 作为 SDK 使用](../README.md#6-作为-sdk-使用python-import) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
-| [README §9 与 jpman 分工表](../README.md#9-与-jpman-cli-的分工) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `tasks/` 实际实现为准 |
+| [README §9 与 jpman 分工表](../README.md#9-与-jpman-cli-的分工) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `src/jpman_client/tasks/` 实际实现为准 |
 
 ## 父级继承（所有未定义一律回退）
 
@@ -71,13 +73,13 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 层级 | 入口路径 | 提供的资产 |
 |------|---------|-----------|
-| L1 apps 容器组 | [../../.agents/](../../.agents/)（若存在；不存在则跳 L2） | apps/containers 组级共享规则（预留） |
-| L2 apps 应用区 | [../../../apps/AGENTS.md](../../../apps/AGENTS.md) | apps 总入口、应用路由表 |
-| L3 SpecWeave 根（最上层） | [../../../AGENTS.md](../../../AGENTS.md) | 全局启动协议、沟通语言、提交规范、修复闭环三阶段、路径引用规则 |
-| （根规则） | [../../../.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 全局核心规则（内容敏感度预检、嵌套路由回退链） |
-| （根 Skill） | [../../../.agents/skills/](../../../.agents/skills/) | seven-concepts-cmd / jpman-podman-ops / atomic-commit-cmd / check-duplication-cmd / ci-check-cmd 等 L1 门面 |
-| （根命令） | [../../../.agents/commands/](../../../.agents/commands/) | seven-concepts / retrospective / insight / extraction / first-principles / adversarial-review / atomic-commit / atomization |
-| （根脚本共享库） | [../../../.agents/scripts/lib/](../../../.agents/scripts/lib/) | Python 共享函数（禁止重复实现，新增脚本前必先 lib/README.md 查重） |
+| L1 apps 容器组 | `apps/containers/.agents/`（预留；当前不存在，直接跳 L2） | apps/containers 组级共享规则（预留） |
+| L2 apps 应用区 | [../../../AGENTS.md](../../../AGENTS.md) | apps 总入口、应用路由表 |
+| L3 SpecWeave 根（最上层） | [../../../../AGENTS.md](../../../../AGENTS.md) | 全局启动协议、沟通语言、提交规范、修复闭环三阶段、路径引用规则 |
+| （根规则） | [../../../../.agents/global-core-rules.md](../../../../.agents/global-core-rules.md) | 全局核心规则（内容敏感度预检、嵌套路由回退链） |
+| （根 Skill） | [../../../../.agents/skills/](../../../../.agents/skills/) | seven-concepts-cmd / jpman-podman-ops / atomic-commit-cmd / check-duplication-cmd / ci-check-cmd 等 L1 门面 |
+| （根命令） | [../../../../.agents/commands/](../../../../.agents/commands/) | seven-concepts / retrospective / insight / extraction / first-principles / adversarial-review / atomic-commit / atomization |
+| （根脚本共享库） | [../../../../.agents/scripts/lib/](../../../../.agents/scripts/lib/) | Python 共享函数（禁止重复实现，新增脚本前必先 lib/README.md 查重） |
 
 ## 新增规则的标准流程
 
@@ -96,5 +98,8 @@ source: "AGENTS.md#嵌套路由关系"
 
 完整条目见 [CHANGELOG.md](CHANGELOG.md)。
 
-- 2026-09-07 | feat | 初始化 client 端 AI 资产容器：AGENTS.md + .agents/README + 3 rules（invoke-tasks / sdk-connection / windows-wsl）+ CHANGELOG；对齐 README.md §5 WSL 支持与 .env.example 双文档
+- 2026-09-10 | fix | 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
+- 2026-09-09 | fix | B-scheme 宿主 socket 直通端到端连通；`inv load` 镜像缓存完整性校验；`ensure_known_hosts` / `refresh_host_keys` 修复
+- 2026-09-08 | feat/fix | 默认目标镜像泛化为 `jupyter-podman-client` 管理枢纽（2.82 GB → 1.80 GB）；修复非 root entrypoint 致 `chpasswd` 失败退出；修复容器内 SDK socket ENOENT（C-I1）
+- 2026-09-07 | feat | 初始化 client 端 AI 资产容器：AGENTS.md + .agents/README + 3 rules（invoke-tasks / sdk-connection / windows-wsl）+ CHANGELOG；对齐 README.md §5 WSL 支持与 .env.example 双文档；同时完成 `tasks/` → `src/jpman_client/tasks/` 布局迁移与 `env.*` 自举命名空间新增
 - 2026-08-31 | init | 消费端首次拆分；目录结构预留（本 changelog 条目倒推补录）

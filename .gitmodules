@@ -16,7 +16,6 @@
 	path = vendor/awesome-okf
 	url = git@github.com:yzfly/awesome-okf.git
 	branch = main
-	shallow = true
 [submodule "vendor/awesome-okf-bundle"]
 	path = vendor/awesome-okf-bundle
 	url = git@github.com:linyiru/awesome-okf.git

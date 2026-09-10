@@ -129,7 +129,7 @@ rm -rf .image-cache/ .wsl-cache/
 
 ## 与 docker-cache-cmd Skill 的关系
 
-本项目的镜像缓存机制与 SpecWeave 全局的 [docker-cache-cmd](../../../.agents/skills/) Skill 设计理念一致：
+本项目的镜像缓存机制与 SpecWeave 全局的 [docker-cache-cmd](../../../../.agents/skills/docker-cache-cmd/SKILL.md) Skill 设计理念一致：
 - 镜像归档到 Windows 文件系统（持久化）
 - WSL 重置后快速恢复
 - 智能构建（基于 checksum 判断缓存命中）

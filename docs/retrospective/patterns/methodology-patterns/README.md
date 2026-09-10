@@ -97,6 +97,7 @@ flowchart LR
 15. **模式萃取质量**：评估洞察是否值得归档为全局模式时，使用 [retrospective-knowledge/experience-transfer-mapping.md](retrospective-knowledge/experience-transfer-mapping.md) 做跨领域迁移映射验证通用性。
 16. **批量文档治理**：需要将新方法论/模板批量推广到≥5个对象时，使用 [governance-strategy/phased-rollout-validation.md](governance-strategy/phased-rollout-validation.md) 三阶段渐进验证。
 17. **原子化前置分类**：批量原子化前，使用 [document-architecture/classification-disposition-decision-tree.md](document-architecture/classification-disposition-decision-tree.md) 四类决策树避免过度拆分和重复工作。
+18. **验证探针审查**：编写或审查构建/CI/健康检查中的验证行时，使用 [tools-automation/validation-probe-semantics-convergence.md](tools-automation/validation-probe-semantics-convergence.md) 收敛"探针声明"到"探针证据"范围，防止恒真探针与声明过宽。
 
 > **关联模块**：
 > - `../../code-patterns/` — 代码模式

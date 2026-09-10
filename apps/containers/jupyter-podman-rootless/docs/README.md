@@ -92,8 +92,12 @@ invoke run
 
 ## 变更日志
 
+- 2026-09-10 | fix | toolbox 验证探针假阳性修正（`--version` 无重定向活性探针，能力标签改为 "binary present (liveness only)"）；toolbox 运行时错误优雅降级（指引包装器 + 补装 `flatpak-spawn`，真二进制移位 `/usr/local/libexec/toolbox`）；同步 04-image-architecture.md、07-toolbx-passthrough.md、17-upstream-tools.md
+- 2026-09-08 | docs | 新增 17-upstream-tools.md（文档总数增至18个）；同步 00-overview.md、01-getting-started.md、04-image-architecture.md、08-directory-structure.md、README.md
+- 2026-08-29 | fix | passt 固化进 Containerfile（DinP 场景 rootless 网络命名空间）；Containerfile.hidden 合并至主 Containerfile；同步 14-jpman-cli.md、16-image-cache.md
+- 2026-08-27 | docs | 新增 14-jpman-cli.md、15-wsl-export.md、16-image-cache.md（文档总数增至17个）
 - 2026-08-27 | feat | jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建
-- 2026-08-27 | refactor | README.md原子化至docs/目录（17个文档），AGENTS.md精简为路由入口并迁移至.agents/
+- 2026-08-27 | refactor | README.md原子化至docs/目录（14个文档），AGENTS.md精简为路由入口并迁移至.agents/
 - 2026-08-27 | feat | R5/Toolbx集成：Toolbx兼容标记、compose.dev.yaml透传
 - 2026-08-27 | feat | R4/OLOT集成：KServe ModelCar打包
 - 2026-08-27 | feat | R3/OMLMD集成：ML模型OCI artifact分发

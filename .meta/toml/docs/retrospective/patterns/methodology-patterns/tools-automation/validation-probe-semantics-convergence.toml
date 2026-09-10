@@ -1,0 +1,21 @@
+id = "validation-probe-semantics-convergence"
+title = "验证探针语义收敛"
+domain = "methodology"
+layer = "tools"
+category = "retrospective/patterns/methodology-patterns"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念方法论编排·问题解决(sc-20260910-toolbox-path-not-set)——jupyter-podman-rootless 镜像 toolbox 探针假阳性修复"
+date = "2026-09-10"
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "bp-destructive-probe-gate",
+  "validation-semantic-gap",
+  "tool-self-validation",
+  "fact-statement-consistency-loop",
+]

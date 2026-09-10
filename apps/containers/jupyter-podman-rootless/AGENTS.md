@@ -25,7 +25,7 @@
 - **任务管理**：使用 invoke 作为任务管理工具（任务定义在 `src/jpman_builder/tasks/`，经根 `tasks.py` 暴露）
 - **编排架构**：宿主机 invoke 三层后端自动降级——podman-compose 声明式（优先）→ podman-py SDK → CLI fallback（宿主机 pip 安装）；镜像内另内嵌同源 podman-compose / podman-py / toolbox（经 SpecWeave 根 `vendor/` 三个 third_party 子模块固定 commit 引入、构建前置 stage 装入，见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)）
 - **ML 模型管理**：容器内预装 omlmd + olot[oras-py]，支持 OCI artifact 分发和 KServe ModelCar 打包
-- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter；镜像内另内嵌 toolbox 二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，/usr/local/bin/toolbox）
+- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh + `flatpak-spawn`），可直接 toolbox create/enter（由宿主侧 Toolbx 启动器发起，注入 `TOOLBOX_PATH`）；镜像内另内嵌 toolbox 真二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，落 `/usr/local/libexec/toolbox`），`/usr/local/bin/toolbox` 为指引包装器——真实 Toolbx 会话中转发给真二进制，普通 podman 会话中裸跑则输出中文可执行指引并保持退出码 1（不再暴露上游裸错误）
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
@@ -175,6 +175,11 @@ invoke --list
 
 完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-10** | fix: toolbox 验证探针假阳性修正（无重定向 `--version` 活性探针，能力标签改为 "binary present (liveness only)"）、toolbox 运行时错误优雅降级（新增 `scripts/toolbox-wrapper.sh` 指引包装器 + 对齐官方镜像补装 `flatpak-spawn`，真二进制移位 `/usr/local/libexec/toolbox`）、容器内 devuser 访问宿主直通 socket 属组修复（entrypoint `usermod -aG` 叠加，C-I2）
+- **2026-09-09** | fix: jpman rebuild/rebuild-all 补 `--format docker`（OCI 忽略 SHELL 致 Stage 2 bash 数组语法在 dash 下报错）、宿主 socket 直通 B-scheme 属组叠加、Jupyter devuser 与 libpod/tmp 目录准备、vendor 三子模块 pin 更新
+- **2026-09-08** | feat: vendor/ 登记三容器编排上游子模块并内嵌进镜像（toolbox-builder aux 阶段 + conda-builder 本地源 pip 安装 podman-compose/podman-py）、构建前置 stage 机制（stage 上游源树至 `upstream/`）、新增 docs/17-upstream-tools.md
+- **2026-08-29** | fix: passt 固化进 Containerfile（DinP 场景 rootless 网络命名空间 pasta 缺失）、Miniforge 下载超时上限 300s→900s；refactor: 合并 Containerfile.hidden 至主 Containerfile
+- **2026-08-28** | feat: 任务系统 Windows 环境适配（pwsh shell、环境变量传递、Windows 路径转换与运行时检测）
 - **2026-08-27** | feat: jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建
 - **2026-08-27** | refactor: 文档原子化拆分（AGENTS.md→.agents/rules/，README.md→docs/）
 - **2026-08-27** | feat: R1-R5（三层后端架构+OMLMD+OLOT+Toolbx透传）

@@ -70,7 +70,9 @@ source: "AGENTS.md"
 
 详见 [CHANGELOG.md](CHANGELOG.md)。
 
-- 2026-09-08 | feat | vendor/ 注册 podman-compose/podman-py/toolbox 三上游子模块并内嵌进镜像（toolbox-builder aux 阶段 + conda-builder 本地源 pip 安装）；构建前置 stage 机制（upstream/ 临时目录）；新增 docs/17-upstream-tools.md
+- 2026-09-10 | fix | toolbox 验证探针假阳性修正（`--version` 无重定向活性探针，能力标签改为 "binary present (liveness only)"）；toolbox 运行时错误优雅降级（`scripts/toolbox-wrapper.sh` 指引包装器 + 补装 `flatpak-spawn`，真二进制移位 `/usr/local/libexec/toolbox`）；容器内 devuser 访问宿主直通 socket 属组修复（entrypoint `usermod -aG` 叠加，C-I2）
+- 2026-09-09 | fix | jpman rebuild/rebuild-all 补 `--format docker`（OCI 忽略 SHELL 致 Stage 2 bash 数组语法在 dash 下报错）；宿主 socket 直通 B-scheme 属组叠加；Jupyter devuser 与 libpod/tmp 目录准备
+- 2026-09-08 | feat | vendor/ 注册 podman-compose/podman-py/toolbox 三上游子模块并内嵌进镜像（toolbox-builder aux 阶段 + conda-builder 本地源 pip 安装）；构建前置 stage 机制（upstream/ 临时目录）；新增 docs/17-upstream-tools.md（文档总数增至18个）
 - 2026-08-27 | feat | jpman零依赖CLI（跨平台bash/cmd/ps1）、镜像缓存、WSL2一键导出、增量重建；文档从14个增至17个
 - 2026-08-27 | refactor | AGENTS.md精简为路由入口，约束迁移至.agents/rules/（7个主题文件）；README.md原子化至docs/（14个文档）
 - 2026-08-27 | feat | 初始化AGENTS.md + 完整功能实现

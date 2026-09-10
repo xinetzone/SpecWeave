@@ -31,7 +31,7 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 - 基础镜像 `golang:1.26-bookworm`：glibc 2.36 ≤ final ubuntu:26.04（二进制向下兼容）；官方镜像自带 gcc/libc6-dev/make（cgo 就绪）
 - 额外安装 `libsubid-dev`：提供 shadow/subid.h 头文件，供 toolbox 的 cgo subid wrapper 编译（libsubid 运行时 dlopen 懒加载，不静态链接）
 - `COPY upstream/toolbox/src` 后执行 `go build -trimpath -buildvcs=false -ldflags "-s -w"`，产物 `/out/toolbox`（`-X` 注入版本 0.3），随后清理 Go module/构建缓存与源树
-- 产物仅由 final 阶段 `COPY --from=toolbox-builder /out/toolbox /usr/local/bin/toolbox`（chmod 755）；Go 工具链、源树、libsubid-dev 均不进入最终镜像
+- 产物仅由 final 阶段 `COPY --from=toolbox-builder /out/toolbox /usr/local/libexec/toolbox`（chmod 755）安装到 `/usr/local/libexec/`，`/usr/local/bin/toolbox` 留给 Layer 4/5 安装的「裸跑指引包装器」（wrapper 负责在有 `TOOLBOX_PATH` 时 exec 真二进制）；Go 工具链、源树、libsubid-dev 均不进入最终镜像
 
 ### Stage 2/3: conda-builder（构建 /opt/conda，含 podman-py/podman-compose 本地源安装）
 - Miniforge3 下载安装 + `.condarc`（official/tuna/aliyun）+ libmamba solver + anaconda-anon-usage 移除
@@ -51,7 +51,7 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 
 #### Layer 2/5: COPY builder 产物（变化频率：低）
 - `COPY --from=conda-builder /opt/conda /opt/conda`
-- `COPY --from=toolbox-builder /out/toolbox /usr/local/bin/toolbox`（chmod 755 + `command -v toolbox` 确认在 PATH）
+- `COPY --from=toolbox-builder /out/toolbox /usr/local/libexec/toolbox`（chmod 755 + `test -x` 断言）
 
 #### Layer 3/5: 用户 + subuid/subgid + Podman 配置 + Toolbx markers（变化频率：中）
 - devuser(UID 1000) 创建 + docker 组；subuid/subgid：`devuser:100000:65536`
@@ -60,16 +60,17 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 - Toolbx markers：/run/host 预创建 + /run/.toolboxenv + /run/.containerenv；capsh 验证
 
 #### Layer 4/5: 配置文件 COPY + 权限 + 语法验证（变化频率：高）
-- sshd_config、supervisord.conf、supervisor/conf.d/、jupyter_notebook_config.py（root+devuser）、containers/storage.conf、entrypoint.sh、healthcheck.sh、olot_car.py
+- sshd_config、supervisord.conf、supervisor/conf.d/、jupyter_notebook_config.py（root+devuser）、containers/storage.conf、entrypoint.sh、healthcheck.sh、olot_car.py、scripts/toolbox-wrapper.sh（安装为 `/usr/local/bin/toolbox`）
 - CRLF→LF 转换（跨平台兼容）+ 执行权限
-- 6 项 [VALIDATE] 检查：`sshd -t`、`bash -n entrypoint.sh`、`bash -n healthcheck.sh`、`py_compile olot_car.py`、supervisord.conf 存在性、jupyter allow_hidden 配置
+- 7 项 [VALIDATE] 检查：`sshd -t`、`bash -n entrypoint.sh`、`bash -n healthcheck.sh`、`py_compile olot_car.py`、`bash -n toolbox`（wrapper）、supervisord.conf 存在性、jupyter allow_hidden 配置
 
 #### Layer 5/5: 最终元数据 + 清理 + 验证（变化频率：最低）
 - build-info 写入（/etc/jupyter-podman-build-info）+ apt//tmp 清理
-- **最终验证块共 23 项 [OK] 检查**（tini/supervisord/sshd/python/pip/conda/jupyter/omlmd/olot/olot_car.py/Toolbx markers/capsh/podman/crun/pasta/entrypoint.sh/healthcheck.sh/free-threading 等），其中**新增三项内嵌工具检查**：
+- **最终验证块共 25 项 [OK] 检查**（tini/supervisord/sshd/python/pip/conda/jupyter/omlmd/olot/olot_car.py/Toolbx markers/capsh/podman/crun/pasta/flatpak-spawn/entrypoint.sh/healthcheck.sh/free-threading 等），其中**含三项内嵌工具检查**：
   - `podman-compose --version`（main env）
   - `python -c "import podman"`（podman SDK / podman-py 可导入）
-  - `toolbox --help`（/usr/local/bin/toolbox）
+  - `toolbox --version`（经 wrapper 透传至 `/usr/local/libexec/toolbox`；cobra 短路型 flag，不需 `TOOLBOX_PATH`）
+  - 另有 Toolbx 运行前提与优雅降级断言：`test -x /usr/bin/flatpak-spawn`（宿主回调前提）+ 裸跑 `toolbox` 断言 **退出码 1 且 stderr 含 wrapper 独有指引文案**（验证不再暴露上游裸错误）
 - Free-threading 二次确认 + 构建耗时汇总表输出
 
 #### 运行时声明（元数据，不产生镜像层）
@@ -95,6 +96,7 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 | /run/host挂载点 | 预创建空目录 |
 | Marker文件 | `/run/.toolboxenv` + `/run/.containerenv` |
 | capsh工具 | libcap2-bin包提供 |
+| flatpak-spawn | `flatpak-xdg-utils`包 + `/usr/bin/flatpak-spawn` symlink（`ForwardToHost` 宿主回调前提；官方镜像同款安装） |
 | sudo NOPASSWD | devuser无密码sudo（GRANT_SUDO=yes时启用） |
 | UID匹配 | devuser固定UID 1000（与Linux主机默认用户UID一致） |
 
@@ -151,5 +153,5 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 - [ ] Podman在devuser下可运行：`su - devuser -c "podman info"`
 - [ ] Toolbx markers存在：`test -f /run/.toolboxenv && test -f /run/.containerenv`
 - [ ] capsh可用：`capsh --print`
-- [ ] 最终验证 23 项 [OK] 检查全部通过（含三项内嵌工具检查：`podman-compose --version`、`python -c "import podman"`、`toolbox --help`）
+- [ ] 最终验证 25 项 [OK] 检查全部通过（含三项内嵌工具检查：`podman-compose --version`、`python -c "import podman"`、`toolbox --version`；另含 `flatpak-spawn` 存在性与裸跑 `toolbox` 优雅降级断言）
 - [ ] 构建上下文 `upstream/` 已由 stage 机制生成（git-ignored，.containerignore 放行其根 README.md），避免误删/误提交
