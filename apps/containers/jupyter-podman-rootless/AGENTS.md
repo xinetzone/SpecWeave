@@ -175,10 +175,11 @@ invoke --list
 
 完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
-- **2026-09-10** | fix: `invoke build` 的 Miniforge3 安装包解析改为「本地缓存优先 + 镜像优先多源回退」（新增 `local-cache/miniforge/` 与 `Mirror-first` 顺序、USTC 端点、`--retry-all-errors`、可执行 `[HINT]`），消除 GitHub 限速/连接重置导致的 Stage 2 构建失败
-- **2026-09-10** | fix: `.containerignore` 显式排除宿主缓存目录（`.wsl-cache`/`.temp`/`.image-cache`/`.ipynb_checkpoints`）——podman 构建上下文不读 `.gitignore`，否则约 15.3G 缓存会被全量上传（现约 121M）
+- **2026-09-10** | fix: `olot_car.py` 构建期探针假阳性修正——原 `--help >/dev/null 2>&1` 恒真（该脚本在函数体内延迟导入 `olot`/`oras-py`，`--help` 走完 argparse 即退出，从未触达真实依赖）；改为断言 `olot` + `oras_py.is_oras_py()` 可导入并校验 `--help` 声明 `pack`/`extract` 子命令
 - **2026-09-10** | fix: 新增 `SSHD_PORT` 环境变量支持（entrypoint 重写 `sshd_config` 的 Port，默认 22）——host 网络模式下 rootless Podman 无法绑定特权端口 22（sshd `Permission denied` 后 FATAL 退出），主层透传覆盖改用非特权端口 2222
 - **2026-09-10** | feat: 运行时透传分层覆盖（`compose.passthrough.yaml` 主层 Host 网络+D-Bus / `.gui.yaml` Wayland / `.gpu.yaml` GPU / `.usb.yaml` USB）与专用镜像 tag `jupyter-podman-rootless:passthrough`；分层因 podman 对缺失挂载源硬失败（退出码 125）而必需
+- **2026-09-10** | fix: `invoke build` 的 Miniforge3 安装包解析改为「本地缓存优先 + 镜像优先多源回退」（新增 `local-cache/miniforge/` 与 `Mirror-first` 顺序、USTC 端点、`--retry-all-errors`、可执行 `[HINT]`），消除 GitHub 限速/连接重置导致的 Stage 2 构建失败
+- **2026-09-10** | fix: `.containerignore` 显式排除宿主缓存目录（`.wsl-cache`/`.temp`/`.image-cache`/`.ipynb_checkpoints`）——podman 构建上下文不读 `.gitignore`，否则约 15.3G 缓存会被全量上传（现约 121M）
 - **2026-09-10** | fix: toolbox 验证探针假阳性修正（无重定向 `--version` 活性探针，能力标签改为 "binary present (liveness only)"）、toolbox 运行时错误优雅降级（新增 `scripts/toolbox-wrapper.sh` 指引包装器 + 对齐官方镜像补装 `flatpak-spawn`，真二进制移位 `/usr/local/libexec/toolbox`）、容器内 devuser 访问宿主直通 socket 属组修复（entrypoint `usermod -aG` 叠加，C-I2）
 - **2026-09-09** | fix: jpman rebuild/rebuild-all 补 `--format docker`（OCI 忽略 SHELL 致 Stage 2 bash 数组语法在 dash 下报错）、宿主 socket 直通 B-scheme 属组叠加、Jupyter devuser 与 libpod/tmp 目录准备、vendor 三子模块 pin 更新
 - **2026-09-08** | feat: vendor/ 登记三容器编排上游子模块并内嵌进镜像（toolbox-builder aux 阶段 + conda-builder 本地源 pip 安装 podman-compose/podman-py）、构建前置 stage 机制（stage 上游源树至 `upstream/`）、新增 docs/17-upstream-tools.md
