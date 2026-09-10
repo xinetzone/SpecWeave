@@ -1,0 +1,5 @@
+id = "retrospective-win32-charset-fix-20260907"
+title = "Windows Console 中文乱码修复复盘报告"
+category = "retrospective/reports/task-reports"
+date = "2026-09-07"
+version = "1.0"
