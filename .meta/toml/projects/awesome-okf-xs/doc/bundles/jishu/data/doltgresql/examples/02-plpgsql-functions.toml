@@ -1,0 +1,5 @@
+id = "examples-plpgsql-functions"
+title = "plpgsql 函数编写与调用"
+category = "other"
+date = "2026-07-02"
+version = "1.0"

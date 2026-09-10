@@ -1,0 +1,5 @@
+id = "doltgresql-index"
+title = "DoltgreSQL — PostgreSQL 兼容的版本化 SQL 数据库"
+category = "other"
+date = "2026-07-02"
+version = "1.0"

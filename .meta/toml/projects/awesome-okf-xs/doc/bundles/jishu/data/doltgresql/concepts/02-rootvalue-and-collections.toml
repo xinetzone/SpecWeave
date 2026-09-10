@@ -1,0 +1,6 @@
+id = "concepts-rootvalue-and-collections"
+title = "RootValue 架构与 Root Object Collections"
+category = "other"
+date = "2026-07-02"
+version = "1.0"
+tags = ["doltgresql", "rootvalue", "collections"]

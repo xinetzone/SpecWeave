@@ -1,0 +1,5 @@
+id = "examples-pgcatalog-queries"
+title = "pg_catalog 虚拟表查询"
+category = "other"
+date = "2026-07-02"
+version = "1.0"
