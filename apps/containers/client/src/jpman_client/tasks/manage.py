@@ -50,8 +50,9 @@ from .client_core import (
 )
 from .utils import (
     ContainerConfig,
-    default_build_cache_dir,
+    check_runtime_ready,
     clean_stale_host_keys,
+    default_build_cache_dir,
     find_latest_image_tar,
     normalize_path_str,
     refresh_host_keys,
@@ -233,6 +234,13 @@ def run(
         grant_sudo=grant_sudo,
     )
     cfg.detach = not no_detach
+
+    # 运行时就绪预检须先于 image_exists：Podman machine 未运行时，镜像查询同样
+    # 失败，若先查镜像会误报「本地未找到镜像」并误导用户去 load 镜像。
+    ready, hint = check_runtime_ready()
+    if not ready:
+        print(f"[Run] ⚠ {hint}")
+        raise Exit(1)
 
     if not image_exists(c, cfg.image):
         print(f"[Run] ⚠ 本地未找到镜像: {cfg.image}")

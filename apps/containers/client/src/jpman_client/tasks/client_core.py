@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Optional
 
 from invoke import Context
+from invoke.exceptions import Exit
 
 from .utils import (
     ContainerConfig,
@@ -215,8 +216,9 @@ def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
     注意：
     - Windows PowerShell 管道中 type 命令可能返回非零退出码，
       因此以 stdout 是否包含 "Loaded image" 作为成功判断依据，而非 exit code。
-    - 原生 TTY Console 路径（is_tty_console=True）下 run_cmd 使用 subprocess.call()
-      直接写控制台，成功时返回 None，输出未捕获——此时需从 echo 打印的命令行推断成功。
+    - 以 ``warn=True`` 调用 run_cmd：命令失败时返回 Result 而不抛异常，使下方
+      「Podman machine 未运行」检测分支可达（此前失败即 raise Exit，友好提示被
+      原生英文报错与 ``exit=125`` 掩盖）。
     """
     runtime = detect_runtime()
     result = run_cmd(
@@ -224,6 +226,7 @@ def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
         f'type "{tar_path}" | {runtime} load',
         pty=False,
         echo=True,
+        warn=True,
     )
 
     # TTY Console 路径：subprocess.call() 成功返回 None，输出已直接写入控制台
@@ -277,6 +280,12 @@ def load_image(c: Context, tar_path: Path) -> LoadImageResult:
     """从本地 tar.gz 加载镜像，SDK 优先失败则走 CLI。"""
     if not tar_path.exists():
         return LoadImageResult(loaded=False, message=f"镜像文件不存在: {tar_path}")
+
+    # 就绪预检：Podman machine 未运行时直接给出中文指引，避免执行注定失败的
+    # `type <大文件> | podman load`（既浪费 IO 又只会得到英文原生报错）。
+    ready, hint = check_runtime_ready()
+    if not ready:
+        return LoadImageResult(loaded=False, message=f"[Load] {hint}")
 
     print(f"[Load] 从 {tar_path} 加载镜像...")
 
@@ -500,7 +509,8 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
     """启动容器，SDK 优先失败走 CLI。返回最终使用的配置（含自动填充的密码/token）。"""
     ready, hint = check_runtime_ready()
     if not ready:
-        raise RuntimeError(f"运行时未就绪: {hint}")
+        # 用 Exit 而非 RuntimeError：invoke 下前者打印简洁中文提示，后者会抛出完整 traceback
+        raise Exit(1, f"运行时未就绪: {hint}")
 
     _ensure_secrets(cfg)
     workspace_path = cfg.resolved_workspace()
