@@ -95,6 +95,9 @@ invoke images        # 列出本地所有镜像
 | `invoke stop [--name N]` | `invoke container.stop` | 停止并删除容器 |
 | `invoke status [--name N]` | `invoke container.status` | 查看状态 |
 | `invoke clean [--name N] [--tag T] [--volume] [--image]` | `invoke container.clean` | 清理资源 |
+| `invoke env.build-layer [--tag T] [--base-image I] [--no-cache]` | —（无别名） | 构建容器内自举叠加层镜像（见 §10） |
+| `invoke env.run-cmd --cmd CMD [--tag T] [--keep] [--extra-mount M]` | —（无别名） | 在自举容器内执行单条命令（rootless 三必需 + workspace/.image-cache 双挂载） |
+| `invoke env.shell [--tag T] [--workspace W] [--cache-dir D]` | —（无别名） | 进入自举容器的交互式 bash shell |
 
 配置合并优先级：`命令行参数 > .env 环境变量 > ContainerConfig 默认值`。
 
@@ -149,7 +152,7 @@ invoke images
 | **W-I1** | `FileNotFoundError: .../run/user/.../podman/podman.sock No such file` | podman-py 无参构造回退是纯 Linux 路径，Windows 原生不存在该目录 | 三选一：a) 脚本改在 WSL2 内跑  b) 打开 Podman Desktop 初始化 Machine  c) `$env:CONTAINER_HOST="unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock"` |
 | **W-I2** | `ValueError: Unsupported URL scheme 'npipe'` | docker-py 老用户粘贴 `npipe:////./pipe/docker_engine`；podman-py 合法 scheme 中不含 npipe | 改成：`unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock` / `ssh://...` / `tcp://127.0.0.1:8888` |
 | **W-I3** | `Timeout: Waiting on podman-forward-*.sock`（SSH Machine） | SSH 首次 StrictHostKeyChecking 交互阻塞在 stdin yes/no，SDK SSHSocket shell-out 的 `ssh -N -L` 子进程永不返回 | PowerShell 先跑一次：`podman machine ssh true`，提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时敲 **yes** 回车，把 Machine HostKey 写入 `~/.ssh/known_hosts` |
-| **C-I1** | 同一 `FileNotFoundError: .../run/user/.../podman/podman.sock No such file`，但出现在**容器内** SDK 调用（bootstrap `env.run-cmd`/`env.shell` 或常驻容器 JupyterLab Web Terminal）；容器内 CLI `podman images` 同时报 `open ${XDG_RUNTIME_DIR}/libpod/tmp/pause.pid: no such file or directory` 与 `error creating temporary file: Permission denied` | 容器内两个根因叠加：① 从无运行中的 podman daemon（bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，或常驻容器旧版从不拉起 service），`from_env()` 回退到纯 Linux 默认路径连不存在的 rootless UDS socket → `APIError`；② rootless podman 初始化时未预建 `${XDG_RUNTIME_DIR}/libpod/tmp/`（`pause.pid` 落盘目录），缺目录触发 ENOENT / `Permission denied`。注意 devuser UID 动态分配（此处为 1001） | bootstrap 由 `PODMAN_SERVICE_BOOT` 自动拉起 `podman system service --time=0` 并预建 `libpod/tmp`（见 `tasks/env_in_container.py`）；常驻容器由方案 A 保证：`entrypoint.sh::setup_podman()` 默认拉起 service + 预建 `${XDG_RUNTIME_DIR}/libpod/tmp` + `jupyter.conf` 改 `user=devuser` 并以 `%(ENV_CONTAINER_HOST)s` / `%(ENV_XDG_RUNTIME_DIR)s` 继承 entrypoint 导出的动态路径（**禁止硬编码 `/run/user/<uid>`**，devuser UID 由 `useradd` 动态分配）；详见 `summary-jpman-client-podman-sdk-file-not-found-20260908.md` |
+| **C-I1** | 同一 `FileNotFoundError: .../run/user/.../podman/podman.sock No such file`，但出现在**容器内** SDK 调用（bootstrap `env.run-cmd`/`env.shell` 或常驻容器 JupyterLab Web Terminal）；容器内 CLI `podman images` 同时报 `open ${XDG_RUNTIME_DIR}/libpod/tmp/pause.pid: no such file or directory` 与 `error creating temporary file: Permission denied` | 容器内两个根因叠加：① 从无运行中的 podman daemon（bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，或常驻容器旧版从不拉起 service），`from_env()` 回退到纯 Linux 默认路径连不存在的 rootless UDS socket → `APIError`；② rootless podman 初始化时未预建 `${XDG_RUNTIME_DIR}/libpod/tmp/`（`pause.pid` 落盘目录），缺目录触发 ENOENT / `Permission denied`。注意 devuser UID 动态分配（此处为 1001） | bootstrap 由 `PODMAN_SERVICE_BOOT` 自动拉起 `podman system service --time=0` 并预建 `libpod/tmp`（见 `src/jpman_client/tasks/env_in_container.py`）；常驻容器由方案 A 保证：`entrypoint.sh::setup_podman()` 默认拉起 service + 预建 `${XDG_RUNTIME_DIR}/libpod/tmp` + `jupyter.conf` 改 `user=devuser` 并以 `%(ENV_CONTAINER_HOST)s` / `%(ENV_XDG_RUNTIME_DIR)s` 继承 entrypoint 导出的动态路径（**禁止硬编码 `/run/user/<uid>`**，devuser UID 由 `useradd` 动态分配）；详见 `summary-jpman-client-podman-sdk-file-not-found-20260908.md` |
 | **C-I2** | 同上 `PermissionError` 类，但为 **`[Errno 13] Permission denied` / EACCES**（非 ENOENT）：SDK 报 `podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied`；CLI 报 `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied` | **容器内 devuser 无权访问宿主直通 socket**：宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，而 devuser 是动态 UID（≠0）且镜像基线未将其加入 socket 属组（`/etc/group` 的 `root:x:0:` 无成员）→ `socket.connect()` 直接 EACCES。**与 C-I1 的语义差异**：C-I1 是 socket/目录不存在（ENOENT），C-I2 是存在但无权限（EACCES）。**代价与红线**：让 devuser 入 socket 属组会扩大其组权限；**严禁 `chmod 666`/`chown` 宿主 socket**（会改到宿主 socket 本体、破坏宿主侧权限） | `entrypoint.sh::setup_podman()` 的 **B-scheme** 分支自动 `stat -Lc '%G' <host_sock>` 解析属组并 `usermod -aG <socket组> ${NON_ROOT_USER}`，随后以 devuser 身份实测 socket 可读写（`su - devuser -c "test -r/-w ..."`，失败仅告警不阻断）。**时机关键**：该步骤必须早于 `exec /usr/bin/supervisord`——supervisord 的 `drop_privileges()` 在 spawn 子进程时才用 `grp.getgrall()` 派生补充组，已在运行的 jupyter 进程不受后续 usermod 影响，故须重建镜像/重启容器生效。自检：容器内 `supervisorctl status jupyter` 取 PID 后 `/proc/<pid>/status` 的 `Groups` 应含 socket 属组 |
 
 ### 5.5 挂载路径 vs 连接 URL（A/B 维度分离，避免混淆）
@@ -158,8 +161,8 @@ invoke images
 
 | 维度 | 说明 | 所在模块/函数 |
 |------|------|-------------|
-| **Dimension A · 容器卷挂载路径** | 启动容器时 `-v "D:\spaces:/mnt/d/spaces"` 的源路径转译：`D:\` → `/mnt/d/`，供容器内读工作区 | `tasks/utils.py::to_posix_path` |
-| **Dimension B · SDK daemon 连接 URL** | `PodmanClient(base_url=...)` 所使用的 Podman daemon 监听地址，Windows 原生下必须显式给出 | `tasks/utils.py::sdk_base_url_candidates` + `tasks/client_core.py::get_client` |
+| **Dimension A · 容器卷挂载路径** | 启动容器时 `-v "D:\spaces:/mnt/d/spaces"` 的源路径转译：`D:\` → `/mnt/d/`，供容器内读工作区 | `src/jpman_client/tasks/utils.py::to_posix_path` |
+| **Dimension B · SDK daemon 连接 URL** | `PodmanClient(base_url=...)` 所使用的 Podman daemon 监听地址，Windows 原生下必须显式给出 | `src/jpman_client/tasks/utils.py::sdk_base_url_candidates` + `src/jpman_client/tasks/client_core.py::get_client` |
 
 两个维度彼此无依赖，可以单独配置：
 
@@ -218,7 +221,7 @@ stop_container(ctx, cfg.name)
 
 ## 8. .env 配置完整清单
 
-复制 `.env.example` 为 `.env`，按需修改（与构建端容器级变量名保持一致；新增 **Windows WSL SDK 级变量** 三个）。
+复制 `.env.example` 为 `.env`，按需修改（与构建端容器级变量名保持一致；新增 **Windows WSL SDK 级变量** 四个）。
 配置合并优先级：**命令行参数 > shell export 的环境变量 > .env 文件 > ContainerConfig 默认值**。
 
 ### 8.1 容器级（两端通用，与构建端一致）
@@ -244,7 +247,7 @@ stop_container(ctx, cfg.name)
 | `CONTAINER_HOST` | 合法 podman-py scheme | **最高优先级**显式 daemon URL，用于 P0 覆盖；常见值见速查表 |
 | `DOCKER_HOST` | 同上 | 兼容兜底，优先级低于 `CONTAINER_HOST` |
 
-> `.env` 文件中的 SDK 级变量由 `tasks/manage.py::_load_env_overrides` 中的 `load_dotenv(override=False)` 同步到 `os.environ`，
+> `.env` 文件中的 SDK 级变量由 `src/jpman_client/tasks/manage.py::_load_env_overrides` 中的 `load_dotenv(override=False)` 同步到 `os.environ`，
 > 因此 shell 里已显式 `export` / `$env:` 的值不会被 `.env` 覆盖，符合"命令行 > .env > 默认"约定。
 
 ## 9. 与 jpman CLI 的分工
@@ -334,7 +337,7 @@ invoke env.shell
 >
 > 症状：`invoke env.*` / `inv --list` 等命令的中文任务描述出现 `娓呯悊瀹瑰櫒` 之类的错位字符。
 > 根因：**三层字符集错配**：容器/Podman 管道输出 bytes 永远 = UTF-8，而 Windows PowerShell 5 / Trae Sandbox 默认 chcp 936 (GBK) 在解码这些 bytes。
-> 修复：`jpman_client/tasks/utils.py::_ensure_win32_stdout_transcode()` 已在 `run_cmd()` 入口自动执行以下双端修复（模块级单例只初始化一次）：
+> 修复：`src/jpman_client/tasks/utils.py::_ensure_win32_stdout_transcode()` 已在 `run_cmd()` 入口自动执行以下双端修复（模块级单例只初始化一次）：
 >
 > 1. **B 端捕获修复（源头不乱码）：`invoke c.run(..., encoding='utf-8')` 强制 UTF-8 解码子进程 stdout bytes → `Result.stdout` 里的 str 就是正确中文。
 > 2. **A 端打印修复：用 `kernel32.GetConsoleOutputCP()` 获取宿主真实代码页（通常 936），通过 `io.TextIOWrapper` 把 `sys.stdout` / `sys.stderr` 换壳编码成宿主实际解码端一致的 bytes（trae-sandbox 收到 cp936 解码 → 中文正确显示。

@@ -30,9 +30,9 @@
 - **项目类型**：容器镜像消费端（Invoke 任务包 + podman-py SDK 强依赖）
 - **目标镜像**：`localhost/jupyter-podman-client:latest`（基于 rootless 叠加的通用镜像管理枢纽，可在其中运行/管理任意本地镜像）
 - **编排架构**：两层后端自动降级——podman-py SDK（优先）→ CLI fallback（`podman.exe` 子进程）；**无 podman-compose 层**
-- **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，wheel package=`tasks`
+- **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，src 布局，wheel package=`["src/jpman_client"]`
 - **跨平台**：WSL2 / Linux（原生 unix socket）+ macOS + **Windows 11 原生 CPython（WSL9P/Machine/tcp 多候选）**
-- **任务管理**：invoke（`tasks/` 目录），入口命名空间 `container.*` + 根命名空间（`load`/`images`/`run`/`stop`/`status`/`clean`）
+- **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），三命名空间——根（`load`/`images`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）
 - **Windows WSL 核心能力**：SDK 连接四级优先级（P0 env → P1 WSL9P → P2 Machine → P3 tcp），三变量逃生舱（`PODMAN_CLIENT_SDK_STRATEGY` / `WSL_DISTRO_NAME` / `CONTAINER_HOST`），W-I1~W-I3 30秒速查表
 - **rootless 三必需**（所有启动路径硬编码，调用方不可覆盖）：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，**严禁 `--privileged`**
 - **挂载/连接 A/B 维度分离**：Dimension A=容器卷挂载路径（D:\→/mnt/d/，`to_posix_path`）；Dimension B=SDK daemon URL（Windows 原生必须显式 `base_url`，`sdk_base_url_candidates`）
@@ -50,10 +50,11 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             ├─ .agents/README.md               ← AI 资产容器索引
             │   ├─ CHANGELOG.md                ← 项目变更日志（原子提交汇总）
             │   └─ rules/                      ← 单一职责原子化硬约束
-            │       ├─ invoke-tasks.md         ← tasks/ 目录结构 / 命名空间 / CLI fallback 行为承诺
+            │       ├─ invoke-tasks.md         ← src/jpman_client/tasks/ 包结构 / 命名空间 / CLI fallback 行为承诺
             │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 限制、逃逸舱四策略
             │       └─ windows-wsl.md          ← Windows 11 × WSL2 三级探测 + W-I1~W-I3 速查
-            ├─ tasks/                          ← invoke 任务定义（4 个模块 + __init__）
+            ├─ tasks.py                        ← invoke 入口转发器（转发至 jpman_client.tasks）
+            ├─ src/jpman_client/tasks/         ← invoke 任务定义（5 个模块：__init__ / client_core / env_in_container / manage / utils）
             ├─ pyproject.toml                  ← Python 配置（podman>=5 + python-dotenv>=1 + scikit-build-core）
             ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项）
             └─ .gitignore                      ← git 忽略（.env / __pycache__ / .temp / workspace / 等）
@@ -68,7 +69,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | invoke 任务新增/修改（load/run/stop/status/clean） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 两层后端架构、`get_client() yield None` 零回归承诺、命名空间别名一致性 |
 | podman-py SDK 连接行为修改 / 新增 scheme | [.agents/rules/sdk-connection.md](.agents/rules/sdk-connection.md) | 6 合法 scheme 白名单、无 npipe、`base_url` 在 Windows 必须显式、策略归一化 |
 | Windows 11 WSL2 探测逻辑修改 / 新增发行版兼容 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版回退、UID 不硬编码 1000、UTF-16 LE 解析中文 Windows、W-I1~W-I3 修复 |
-| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `tasks/utils.py::ContainerConfig`（源代码真源） + [README.md §7](README.md#7-内置纪律rootless-三必需参数) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
+| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [README.md §7](README.md#7-内置纪律rootless-三必需参数) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
 | 人类可读文档更新（快速开始、WSL 落地、.env 清单） | [README.md](README.md) + [.env.example](.env.example) | README 中 5.4 速查表与 utils.py `windows_diagnose_hint` 必须保持一一对应 |
 | AI 资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/ 目录结构、父级继承关系、预留占位目录说明 |
 | 全局规则（提交/代码风格/沟通/修复闭环） | [../../../AGENTS.md](../../../AGENTS.md) → [.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 中文 commit、Conventional Commits、修复即闭环三阶段 |
@@ -89,7 +90,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | Windows WSL 规则 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版探测 / UTF-16 LE / W-I1~W-I3 速查 |
 | 人类操作文档 | [README.md](README.md) | 安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表 |
 | 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项完整带注释模板 |
-| 源代码真源 | `tasks/`（`utils.py` / `client_core.py` / `manage.py` / `__init__.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
+| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
 
 ## 项目约束速览（P0 硬约束，违反 = PR 打回）
 
@@ -121,7 +122,7 @@ wsl -d Ubuntu -- bash -lc "sudo loginctl enable-linger \$USER && systemctl --use
 # 3. 安装消费端 + 验证 invoke 命名空间
 cd apps/containers/client
 pip install -e .
-invoke --list   # 应看到：load / images / run / stop / status / clean + container.* 别名
+invoke --list   # 应看到：load / images / run / stop / status / clean + container.* 别名 + env.* 自举（build-layer / run-cmd / shell）
 
 # 4. 加载构建端最新缓存镜像 + 启动容器
 invoke load      # 自动从 ../jupyter-podman-rootless/.image-cache/ 拿最新 tar
@@ -144,5 +145,8 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
-- **2026-09-07** | feat: Windows 11 WSL2 SDK 支持（四策略逃生舱、3 级发行版探测、W-I1~W-I3 诊断速查）；同步新增 `AGENTS.md` + `.agents/` AI 自治规范容器
+- **2026-09-10** | fix: 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）并续接 `windows_diagnose_hint()` C-I2 分支；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
+- **2026-09-09** | fix: B-scheme 宿主 socket 直通端到端连通；`inv load` 增加镜像缓存完整性校验；`ensure_known_hosts` / `refresh_host_keys` 修复 Windows 路径失效与 sshd 就绪等待
+- **2026-09-08** | feat/fix: 默认目标镜像泛化为 `jupyter-podman-client` 管理枢纽（叠加镜像 2.82 GB → 1.80 GB）；修复非 root 运行 entrypoint 致 `chpasswd` 失败容器退出；修复容器内 SDK socket ENOENT（C-I1，bootstrap 预建 `libpod/tmp` + `PODMAN_SERVICE_BOOT` 自举）
+- **2026-09-07** | feat: Windows 11 WSL2 SDK 支持（四策略逃生舱、3 级发行版探测、W-I1~W-I3 诊断速查）；`tasks/` 迁移至 `src/jpman_client/tasks/`（5 模块）并保留根 `tasks.py` 转发层；新增 `env.*` 自举命名空间（`build-layer` / `run-cmd` / `shell`）；同步新增 `AGENTS.md` + `.agents/` AI 自治规范容器
 - **2026-08-31** | refactor: 消费端首次拆分自构建端；初始版本发布（ContainerConfig + podman-py 两层后端 + rootless 三必需）
