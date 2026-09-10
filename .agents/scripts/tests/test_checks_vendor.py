@@ -912,3 +912,207 @@ class TestTiming:
         assert "步骤完成:" in err
         assert "总耗时:" in err
 
+
+
+class TestSubmoduleZombieDetection:
+    """submodule_checkout_incomplete（僵尸子模块检出）测试。
+
+    僵尸态：gitdir/对象/HEAD 就绪但 index 文件缺失（克隆后 checkout 未完成）。
+    事故背景：2026-09-10 SpecWeave 8 个 vendor 子模块克隆完成、检出未执行，
+    `git submodule update --init` 幂等跳过、`git submodule status` 无前缀，
+    导致验收门假性通过。
+    """
+
+    @staticmethod
+    def _fake_run(stdout: str = "", returncode: int = 0, raises: Exception | None = None):
+        """构造伪造的 subprocess.run。"""
+        def _run(cmd, **kwargs):
+            if raises is not None:
+                raise raises
+            class _R:
+                pass
+            r = _R()
+            r.returncode = returncode
+            r.stdout = stdout
+            r.stderr = ""
+            return r
+        return _run
+
+    def test_missing_index_detected_as_zombie(self, tmp_path, monkeypatch):
+        """rev-parse 报告 index 路径但文件不存在 → 僵尸态 True。"""
+        idx_missing = tmp_path / ".git" / "modules" / "vendor" / "x" / "index"
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(stdout=str(idx_missing) + "\n"),
+        )
+        assert vd.submodule_checkout_incomplete(tmp_path) is True
+
+    def test_existing_index_is_healthy(self, tmp_path, monkeypatch):
+        """index 文件存在 → 正常仓库 False（零误报）。"""
+        git_dir = tmp_path / ".git"
+        git_dir.mkdir()
+        idx = git_dir / "index"
+        idx.write_bytes(b"fake-index")
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(stdout=str(idx) + "\n"),
+        )
+        assert vd.submodule_checkout_incomplete(tmp_path) is False
+
+    def test_relative_index_path_resolved(self, tmp_path, monkeypatch):
+        """rev-parse 返回相对路径时按子模块目录解析，缺失仍判僵尸。"""
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(stdout=".git/index\n"),
+        )
+        # tmp_path/.git/index 不存在 → 僵尸
+        assert vd.submodule_checkout_incomplete(tmp_path) is True
+        (tmp_path / ".git").mkdir()
+        (tmp_path / ".git" / "index").write_bytes(b"x")
+        assert vd.submodule_checkout_incomplete(tmp_path) is False
+
+    def test_git_failure_does_not_false_positive(self, tmp_path, monkeypatch):
+        """git 命令失败/不可用时不报错（无法判定不误报）。"""
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(returncode=128),
+        )
+        assert vd.submodule_checkout_incomplete(tmp_path) is False
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(raises=FileNotFoundError("git not found")),
+        )
+        assert vd.submodule_checkout_incomplete(tmp_path) is False
+
+    def test_empty_stdout_does_not_false_positive(self, tmp_path, monkeypatch):
+        """rev-parse 空输出时不报错。"""
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            self._fake_run(stdout=""),
+        )
+        assert vd.submodule_checkout_incomplete(tmp_path) is False
+
+
+class TestSubmoduleRecursiveEnumeration:
+    """list_submodules_recursive / get_expected_gitlink 递归检测测试。
+
+    背景：嵌套子模块（如 xuanspace/vendor/tvm-ffi/3rdparty/dlpack 深达两层）
+    只登记在父仓库 .gitmodules 与父仓库树的 gitlink 中，非递归枚举会整批漏检。
+    """
+
+    SAMPLE_STATUS = (
+        " 7754e53fcace vendor/flexloop (v0.7.1-274-g7754e53)\n"
+        " 5afe8c46500f vendor/flexloop/rebirth/.github (heads/main)\n"
+        " a9f7817284e5 vendor/flexloop/rebirth/spec (heads/main)\n"
+        "-0fd50f67edf4 projects/xuanspace/libs/mystx (v0.3.7-6-g0fd50f6)\n"
+        " 620fece9f8d8 projects/xuanspace/vendor/tvm-ffi (v0.1.13-12-g620fece)\n"
+        " 84d107bf416c projects/xuanspace/vendor/tvm-ffi/3rdparty/dlpack (v1.3)\n"
+    )
+
+    @staticmethod
+    def _fake_run(stdout: str = "", returncode: int = 0):
+        def _run(cmd, **kwargs):
+            class _R:
+                pass
+            r = _R()
+            r.returncode = returncode
+            r.stdout = stdout
+            r.stderr = ""
+            return r
+        return _run
+
+    def test_recursive_parse_includes_nested_and_flags(self, tmp_path, monkeypatch):
+        """递归输出解析：嵌套路径齐全，flag 正确识别（- 未初始化 / 空格一致）。"""
+        monkeypatch.setattr(vd.subprocess, "run", self._fake_run(stdout=self.SAMPLE_STATUS))
+        subs = vd.list_submodules_recursive(tmp_path)
+        paths = {m["path"]: m for m in subs}
+        assert len(subs) == 6
+        # 两层嵌套路径必须被枚举
+        assert "projects/xuanspace/vendor/tvm-ffi/3rdparty/dlpack" in paths
+        assert "vendor/flexloop/rebirth/spec" in paths
+        # flag 解析
+        assert paths["projects/xuanspace/libs/mystx"]["flag"] == "-"
+        assert paths["vendor/flexloop/rebirth/spec"]["flag"] == ""
+        assert paths["vendor/flexloop/rebirth/spec"]["sha"].startswith("a9f7817")
+
+    def test_recursive_enumeration_failure_returns_empty(self, tmp_path, monkeypatch):
+        """git 失败/异常时返回空列表（调用方回退顶层清单，不得误报全清）。"""
+        monkeypatch.setattr(vd.subprocess, "run", self._fake_run(returncode=1))
+        assert vd.list_submodules_recursive(tmp_path) == []
+        monkeypatch.setattr(
+            vd.subprocess, "run",
+            lambda *a, **k: (_ for _ in ()).throw(FileNotFoundError("no git")),
+        )
+        assert vd.list_submodules_recursive(tmp_path) == []
+
+    def test_gitlink_top_level_uses_superproject_tree(self, tmp_path, monkeypatch):
+        """顶层子模块：直接查超级项目树。"""
+        calls = []
+
+        def _fake_ls(cwd, path):
+            calls.append((str(cwd), path))
+            return "aaa111"
+
+        monkeypatch.setattr(vd, "_get_gitlink_commit", _fake_ls)
+        all_paths = {"vendor/flexloop", "vendor/flexloop/rebirth/spec"}
+        sha = vd.get_expected_gitlink(tmp_path, "vendor/flexloop", all_paths)
+        assert sha == "aaa111"
+        assert calls == [(str(tmp_path), "vendor/flexloop")]
+
+    def test_gitlink_one_level_nested_uses_parent_tree(self, tmp_path, monkeypatch):
+        """一层嵌套：父仓库为最长前缀，ls-tree 用仓内相对路径。"""
+        calls = []
+
+        def _fake_ls(cwd, path):
+            calls.append((Path(cwd).name, path))
+            return "bbb222"
+
+        monkeypatch.setattr(vd, "_get_gitlink_commit", _fake_ls)
+        all_paths = {"vendor/flexloop", "vendor/flexloop/rebirth/spec",
+                     "vendor/flexloop/rebirth/worldsprout"}
+        sha = vd.get_expected_gitlink(tmp_path, "vendor/flexloop/rebirth/spec", all_paths)
+        assert sha == "bbb222"
+        # 父仓库锚点是 flexloop（rebirth 不是子模块，不在路径集合中）
+        assert calls == [("flexloop", "rebirth/spec")]
+
+    def test_gitlink_two_level_nested_uses_nearest_parent(self, tmp_path, monkeypatch):
+        """两层嵌套：必须选「最长」前缀作为最近一级父仓库，而非顶层祖先。"""
+        calls = []
+
+        def _fake_ls(cwd, path):
+            rel_cwd = Path(cwd)
+            # 记录相对 tmp_path 的仓库路径
+            try:
+                repo = rel_cwd.relative_to(tmp_path).as_posix()
+            except ValueError:
+                repo = str(rel_cwd)
+            calls.append((repo, path))
+            return "ccc333"
+
+        monkeypatch.setattr(vd, "_get_gitlink_commit", _fake_ls)
+        all_paths = {
+            "projects/xuanspace",
+            "projects/xuanspace/vendor/tvm-ffi",
+            "projects/xuanspace/vendor/tvm-ffi/3rdparty/dlpack",
+            "projects/xuanspace/vendor/caffe",
+        }
+        sha = vd.get_expected_gitlink(
+            tmp_path, "projects/xuanspace/vendor/tvm-ffi/3rdparty/dlpack", all_paths)
+        assert sha == "ccc333"
+        # 最近一级父仓库是 tvm-ffi（不是 xuanspace），树内路径 3rdparty/dlpack
+        assert calls == [("projects/xuanspace/vendor/tvm-ffi", "3rdparty/dlpack")]
+
+    def test_gitlink_backslash_normalized(self, tmp_path, monkeypatch):
+        """Windows 反斜杠路径归一化后仍能正确定位父仓库。"""
+        calls = []
+
+        def _fake_ls(cwd, path):
+            calls.append((Path(cwd).name, path))
+            return "ddd444"
+
+        monkeypatch.setattr(vd, "_get_gitlink_commit", _fake_ls)
+        all_paths = {"vendor/toolbox", "vendor/toolbox/test/system/libs/bats-assert"}
+        sha = vd.get_expected_gitlink(
+            tmp_path, r"vendor\toolbox\test\system\libs\bats-assert", all_paths)
+        assert sha == "ddd444"
+        assert calls == [("toolbox", "test/system/libs/bats-assert")]

@@ -195,6 +195,118 @@ def _get_gitlink_commit(project_root: Path, submodule_path: str) -> str:
     return ""
 
 
+def _submodule_index_path(sm_dir: Path) -> Path | None:
+    """解析子模块 index 文件的绝对路径；git 不可用/解析失败时返回 None。"""
+    try:
+        result = subprocess.run(
+            ["git", "--no-optional-locks", "rev-parse", "--git-path", "index"],
+            capture_output=True, text=True, cwd=str(sm_dir),
+            timeout=60,
+        )
+        if result.returncode != 0:
+            return None
+        raw = result.stdout.strip()
+        if not raw:
+            return None
+        idx = Path(raw)
+        return idx if idx.is_absolute() else (sm_dir / idx)
+    except (subprocess.SubprocessError, OSError):
+        return None
+
+
+def submodule_checkout_incomplete(sm_dir: Path) -> bool:
+    """检测「僵尸子模块」：克隆完成但检出（checkout/read-tree）从未完成。
+
+    判据：gitdir/对象/HEAD 均就绪（HEAD 与 gitlink 一致、status 无前缀），
+    但 index 文件不存在——任何成功检出的仓库都必然写出 index。
+
+    成因与危害（2026-09-10 SpecWeave 实测事故）：
+    - 克隆（fetch + detach HEAD）完成后、checkout 写 index/工作区前更新过程中断；
+    - 重跑 `git submodule update --init` 因 HEAD==pin 幂等跳过，
+      `git submodule status` 无 +/-/U 前缀，验收门假性通过；
+    - 工作区 0 个跟踪文件，子模块内容完全不可用，仅超级项目 `git status`
+      以 ` m` 弱信号提示，极易被当作子模块脏内容噪声忽略。
+
+    修复：`git -C <path> reset --hard HEAD`（对象已在本地，离线恢复）；
+    对象缺失时双删工作区残骸与 .git/modules/<name> 后重新克隆。
+    """
+    idx = _submodule_index_path(sm_dir)
+    if idx is None:
+        return False  # 无法判定（git 不可用等），不误报
+    return not idx.exists()
+
+
+def list_submodules_recursive(project_root: Path, timeout: int = 300) -> list[dict]:
+    """枚举全量子模块（含多层嵌套），路径均相对于超级项目根。
+
+    基于 `git submodule status --recursive` 权威输出，返回：
+        [{"path": "vendor/flexloop/rebirth/spec", "flag": "", "sha": "a9f7..."}, ...]
+    flag 含义：""(空格/一致)、"-"(未初始化)、"+"(HEAD≠gitlink)、"U"(合并冲突)。
+
+    与 _load_submodule_paths（仅读超级项目 .gitmodules 的顶层清单）互补：
+    嵌套子模块（如 xuanspace/vendor/tvm-ffi/3rdparty/dlpack 深达两层）
+    只登记在各自父仓库的 .gitmodules 中，必须递归枚举才能覆盖。
+    git 不可用/命令失败时返回 []（调用方应回退到顶层清单，不得误报全清）。
+    """
+    try:
+        result = subprocess.run(
+            ["git", "--no-optional-locks", "submodule", "status", "--recursive"],
+            capture_output=True, text=True, cwd=str(project_root),
+            timeout=timeout,
+        )
+        if result.returncode != 0:
+            _debug("submodule-recursive", f"git submodule status --recursive 失败: {result.stderr.strip()[:120]}")
+            return []
+    except (subprocess.SubprocessError, OSError) as e:
+        _debug("submodule-recursive", f"递归枚举异常: {e}")
+        return []
+    out: list[dict] = []
+    for line in result.stdout.splitlines():
+        if not line.strip():
+            continue
+        flag = line[0]
+        parts = line[1:].split()
+        if len(parts) < 2:
+            continue
+        out.append({
+            "path": parts[1].replace("\\", "/"),
+            "flag": flag if flag in "-+U" else "",
+            "sha": parts[0],
+        })
+    _debug("submodule-recursive", f"递归枚举到 {len(out)} 个子模块")
+    return out
+
+
+def get_expected_gitlink(project_root: Path, full_sm_path: str,
+                         all_sm_paths: set[str] | None = None) -> str:
+    """读取任意层级子模块在其「最近一级父仓库」gitlink 中记录的 commit SHA。
+
+    嵌套子模块的 gitlink 不登记在超级项目树中，而登记在最近一级父仓库
+    （父仓库本身也是子模块）的树里。定位规则：在全量子模块路径集合中
+    取目标路径的「最长真前缀」作为父仓库锚点，再以目标路径相对父仓库的
+    相对路径执行 `git ls-tree HEAD <rel>`；无父级前缀则为顶层子模块，
+    直接查超级项目树。
+
+    锚点必须来自递归枚举的稳定路径集合，禁止用瞬时目录遍历推断父仓库
+    （中间态目录/未初始化残骸会导致定位漂移）。
+    """
+    target = full_sm_path.replace("\\", "/").rstrip("/")
+    if all_sm_paths is None:
+        all_sm_paths = {m["path"] for m in list_submodules_recursive(project_root)}
+
+    parent = ""
+    for q in all_sm_paths:
+        qn = q.rstrip("/")
+        if target != qn and target.startswith(qn + "/") and len(qn) > len(parent):
+            parent = qn
+
+    if parent:
+        rel = target[len(parent) + 1:]
+        _debug("gitlink", f"嵌套子模块 {target}：父仓库={parent}，树内路径={rel}")
+        return _get_gitlink_commit(project_root / parent, rel)
+    return _get_gitlink_commit(project_root, target)
+
+
 def _get_libs(vendor_dir: Path) -> list[Path]:
     """获取 vendor 下的非子模块库目录（排除点目录、文件、子模块）。"""
     _debug("libs", f"扫描手动管理依赖目录: {vendor_dir}")
@@ -703,6 +815,12 @@ def run(project_root: Path, args) -> int:
             print("6. 子模块深度集成验证...")
             _debug("run", "--deep 模式：并行执行子模块深度集成验证")
 
+        # 递归枚举全量子模块（含多层嵌套）；与顶层结构清单取并集——
+        # git 递归枚举失败时回退到 .gitmodules 顶层清单，不得因枚举失败而漏检
+        recursive_subs = list_submodules_recursive(project_root)
+        all_sm_paths: set[str] = {m["path"] for m in recursive_subs} | set(submodules)
+        _debug("deep", f"深检清单: 顶层 {len(submodules)} 个 + 递归补全 = 共 {len(all_sm_paths)} 个")
+
         def _check_one_submodule(sm: str) -> dict:
             sm_dir = project_root / sm
             _debug("deep", f"  → 开始检查子模块: {sm}")
@@ -712,6 +830,14 @@ def run(project_root: Path, args) -> int:
             if not (sm_dir / ".git").exists():
                 _debug("deep", f"  ← {sm} 未初始化（.git 文件不存在），跳过")
                 return {"sm": sm, "status": "error", "msg": "未初始化（.git 文件不存在）", "err": True, "elapsed_ms": 0.0}
+            # 僵尸态硬判：index 缺失 = 克隆后检出未完成（update 幂等跳过、status 无前缀的假性通过）
+            if submodule_checkout_incomplete(sm_dir):
+                _debug("deep", f"  ✗ {sm} 僵尸态：index 缺失、工作区空")
+                return {"sm": sm, "status": "error",
+                        "msg": "僵尸态：克隆完成但检出未完成（index 缺失、工作区空），"
+                               "git submodule update 会幂等跳过无法修复；"
+                               "离线修复: git -C <path> reset --hard HEAD；对象缺失则双删残骸后重新克隆",
+                        "err": True, "elapsed_ms": 0.0}
             try:
                 t0 = time.perf_counter()
                 _debug("deep", f"  ↻ {sm} 执行 git status --porcelain -uno")
@@ -739,7 +865,7 @@ def run(project_root: Path, args) -> int:
                     capture_output=True, text=True, cwd=str(sm_dir),
                     timeout=60,
                 )
-                expected = _get_gitlink_commit(project_root, sm)
+                expected = get_expected_gitlink(project_root, sm, all_sm_paths)
                 head_sha = head_result.stdout.strip() if head_result.returncode == 0 else ""
                 if expected and head_sha and head_sha != expected:
                     _debug("deep", f"  ⚠ {sm} 指针漂移: HEAD={head_sha[:12]} ≠ gitlink={expected[:12]}")
@@ -760,7 +886,7 @@ def run(project_root: Path, args) -> int:
                 _debug("deep", f"  ✗ {sm} 检查异常: {e}")
                 return {"sm": sm, "status": "error", "msg": f"检查异常: {e}", "err": True, "elapsed_ms": 0.0}
 
-        sm_list = sorted(submodules)
+        sm_list = sorted(all_sm_paths)
         results_parallel: list[dict] = []
         if sm_list:
             max_workers = min(len(sm_list), 8)
