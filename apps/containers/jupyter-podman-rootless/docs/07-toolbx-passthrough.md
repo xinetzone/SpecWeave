@@ -170,6 +170,8 @@ podman-compose -f compose.yaml \
                -f compose.passthrough.gpu.yaml up -d
 ```
 
+> ⚠️ **执行环境**：`podman-compose` 必须在 WSL / podman machine 内执行。Windows 原生 shell 下它会把 Linux 绝对挂载源（如 `/run/user/1000/bus`）按当前盘符解析为 `D:\run\...` 并对本地文件做操作，命令直接失败（实测报 `Not allow operate files: D:\run`）。
+
 > ⚠️ **Host 网络模式的前置条件**：容器将直接绑定宿主 `22`/`8888` 端口，与端口映射模式的容器互斥。启用前请先 `podman-compose down` 停掉占用这些端口的栈；覆盖文件已通过 `ports: !reset []` 清除基座的端口发布，否则与 host 网络冲突。
 
 > ⚠️ **GPU 的 NVIDIA 场景**：`/dev/dri` 只覆盖 Intel/AMD Mesa。NVIDIA 需先在宿主配置 CDI（`nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`），再用 `GPU_DEVICE` 指向生成的设备节点。
