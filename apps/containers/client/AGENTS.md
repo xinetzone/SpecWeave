@@ -35,6 +35,7 @@
 - **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），三命名空间——根（`load`/`images`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）
 - **Windows WSL 核心能力**：SDK 连接四级优先级（P0 env → P1 WSL9P → P2 Machine → P3 tcp），三变量逃生舱（`PODMAN_CLIENT_SDK_STRATEGY` / `WSL_DISTRO_NAME` / `CONTAINER_HOST`），W-I1~W-I3 30秒速查表
 - **rootless 三必需**（所有启动路径硬编码，调用方不可覆盖）：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，**严禁 `--privileged`**
+- **运行时透传**（对齐构建端 `docs/07-toolbx-passthrough.md`）：`invoke run` 提供 5 个独立开关 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`，**默认全关 = 默认隔离**；参数由 `utils.py::build_passthrough_spec` 统一产出（SDK 与 CLI 共用同一份，禁止各自拼接）；资源在 daemon 宿主侧解析，缺失时按 **C-I3** 诊断翻译为可执行指引
 - **挂载/连接 A/B 维度分离**：Dimension A=容器卷挂载路径（D:\→/mnt/d/，`to_posix_path`）；Dimension B=SDK daemon URL（Windows 原生必须显式 `base_url`，`sdk_base_url_candidates`）
 - **父级工作区**：SpecWeave 根目录（`../../../AGENTS.md`） → apps 入口（`../../AGENTS.md`）— 全局规则、Skill、角色、七概念指令均以父级为准
 - **AI 资产容器**：`.agents/` 目录（本项目特有规则，按单一职责原子化拆分；其余子目录预留占位，未定义即回退父级）
@@ -145,6 +146,7 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-10** | feat: 同步构建端 `docs/07-toolbx-passthrough.md` 的 5 项运行时透传——`invoke run` 新增 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`（默认全关）；新增 `utils.build_passthrough_spec` 统一 SDK/CLI 两条路径参数；新增 **C-I3** 诊断（透传资源缺失的原生报错翻译，含缺失路径 + 覆盖变量 + daemon 侧自检）；修复 `GRANT_SUDO=no` 因 `bool("no")` 判真而失效的既有缺陷
 - **2026-09-10** | fix: 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）并续接 `windows_diagnose_hint()` C-I2 分支；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
 - **2026-09-09** | fix: B-scheme 宿主 socket 直通端到端连通；`inv load` 增加镜像缓存完整性校验；`ensure_known_hosts` / `refresh_host_keys` 修复 Windows 路径失效与 sshd 就绪等待
 - **2026-09-08** | feat/fix: 默认目标镜像泛化为 `jupyter-podman-client` 管理枢纽（叠加镜像 2.82 GB → 1.80 GB）；修复非 root 运行 entrypoint 致 `chpasswd` 失败容器退出；修复容器内 SDK socket ENOENT（C-I1，bootstrap 预建 `libpod/tmp` + `PODMAN_SERVICE_BOOT` 自举）

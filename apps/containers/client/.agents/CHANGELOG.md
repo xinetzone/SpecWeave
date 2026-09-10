@@ -6,6 +6,34 @@
 
 ## [Unreleased]
 
+### 2026-09-10 · `feat:` 同步构建端运行时透传（5 个开关 + C-I3 诊断）
+
+**关联七概念场景**：场景5「创新突破」（F→V→I→C 链路）；F 阶段确认执行模型不同（构建端 compose 分层覆盖 → 消费端 SDK/CLI 编程式），V 阶段对抗审查产出下述关键约束
+
+**F 阶段公理（V 已逐条验证）**：
+
+1. 透传均为运行期参数 → 只能落在 SDK kwargs / CLI 参数，无法进镜像
+2. **挂载源与设备节点由 daemon 宿主（WSL2 / Podman Machine）解析** → 客户端本机 `Path.exists()` 必然为假，**禁止本机预检**（否则误判拒绝正确请求）
+3. podman 对缺失源**硬失败**（退出码 125、不自动创建）→ 只能事后把原生报错翻译为 C-I3 指引
+4. `--network host` 与端口发布互斥 → 不传 `-p`；rootless 无法绑特权 22 → 自动设 `SSHD_PORT=--ssh-port`
+5. 既有 P0 不可破坏：C3 rootless 三必需保留、C8 A/B 维度分离、S1~S5
+
+**验收点**（原子提交单一职责，可独立验证）：
+
+A. **参数构造层（新增单一事实源）**
+   - `utils.py`：新增 `PassthroughSpec` + `build_passthrough_spec(cfg)` + `passthrough_paths()`（路径变量与构建端 `compose.passthrough*.yaml` 同名）+ `CONTAINER_RUNTIME_DIR`
+   - `ContainerConfig` 新增 5 个布尔字段（默认全关 = 默认隔离）
+
+B. **两条路径等价消费**：`client_core.py::_sdk_run_kwargs`（`network_mode` / `volumes` / `devices` 追加）与 `_run_via_cli`（`--network host` / `-v` / `--device`）均由同一份 spec 驱动，禁止各自拼接
+
+C. **C-I3 诊断**：`utils.py::passthrough_diagnose_hint()` 匹配 `statfs` / `stat ... no such file or directory`，给出缺失路径 + 可覆盖变量 + daemon 侧自检命令；在 `_run_via_sdk` 与 `run_container`（CLI 异常捕获）两处挂载
+
+D. **CLI 面**：`manage.py::run` 新增 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`；新增 `_env_bool()` 修复 `bool("no")` 判真导致 `GRANT_SUDO=no` 失效的既有缺陷
+
+E. **文档同步**：`README.md` §4 / §5.4 / §8.3 / §11、`.agents/rules/invoke-tasks.md`（§3.2 统一 spec 约束 + §4.4 命令面）、`.agents/rules/windows-wsl.md` §5（C-I3 行）
+
+**验证证据**：单元级 5 组组合参数全部正确（默认组与旧版本零差异）；实跑 `--dbus` 容器内落到 `srw-rw-rw- /tmp/runtime-user/bus` 且两个环境变量就位；实跑 `--gpu` 触发 `Error: stat /dev/dri`（退出码 125）并打印 C-I3 指引
+
 ### 2026-09-10 · `fix:` 容器内 Podman socket EACCES（C-I2）根因修复与诊断闭环
 
 **关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E 链路）；F 根因分析后经**强制 V 对抗审查**（采纳 5 条意见：自验证 / `%G` 空回退 `%g` / 代价与红线声明 / `stat` 失败必 warn / C-I2 分支先于平台守卫）

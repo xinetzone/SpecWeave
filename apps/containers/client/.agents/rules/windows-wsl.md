@@ -102,10 +102,12 @@ uid = int(out) if out.isdigit() else 1000   # 仅当探测彻底失败时 1000 �
 - 必须 `@functools.lru_cache(maxsize=None)` 缓存：同一 distro 进程生命周期内只调一次
 - ⚠️ **调用方平台守卫**：sdk_base_url_candidates 中调 `_wsl_user_uid(distro)` 之前必须先检查 `is_host_windows` 且 distro 非 None；_wsl_user_uid 自身不带平台守卫（因为被调时一定是 Windows 路径），**调用方必须保证前置条件成立**
 
-## 5. W-I1~W-I3 速查表（30 秒修复）+ 容器内坑 C-I2
+## 5. W-I1~W-I3 速查表（30 秒修复）+ 容器/运行时坑 C-I1~C-I3
 
-`windows_diagnose_hint(exc_type, exc_msg)` 正则匹配的条目（W-I1~W-I3 为 Windows 专属坑；C-I2 为**容器内坑，与平台无关**，故其分支必须置于 `platform.system() != "Windows"` 守卫**之前**）；
-每条必须能在 README §5.4 和 utils.py 代码注释中找到完全一致的描述；改任何一处必须同步更新三处：
+`windows_diagnose_hint(exc_type, exc_msg)` 正则匹配的条目（W-I1~W-I3 为 Windows 专属坑；C-I1/C-I2 为**容器内坑，与平台无关**，故其分支必须置于 `platform.system() != "Windows"` 守卫**之前**）。
+C-I3（运行时透传资源缺失）由独立函数 `utils.py::passthrough_diagnose_hint(exc_msg)` 提供——它处理的是
+**容器启动期 podman 原生报错**而非 SDK 连接异常，故不并入 `windows_diagnose_hint`，但同属 C-Ix 家族。
+每条必须能在 README §5.4 和 utils.py 代码注释中找到完全一致的描述；改任何一处必须同步更新对应处：
 
 | ID | 触发异常匹配 | 根因（一句话） | 30 秒修复（必须是一行命令） |
 |----|------------|--------------|--------------------------|
@@ -113,6 +115,8 @@ uid = int(out) if out.isdigit() else 1000   # 仅当探测彻底失败时 1000 �
 | **W-I2** | `Unsupported URL scheme` + 异常里有子串 `npipe` | docker-py 老用户粘 `npipe:////./pipe/docker_engine`；podman-py 没有 npipe Adapter | 把 base_url 改成以下 6 种合法之一：<br>`unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock`<br>或 `ssh://user@127.0.0.1:<MachinePort>`<br>或 `tcp://127.0.0.1:8888` |
 | **W-I3** | `TimeoutError` 或 `Timeout` + 异常里有子串 `podman-forward` | SSH 模式下 SDK shell-out `ssh -N -L` 转发，但首次 SSH StrictHostKeyChecking 会在 stdin 阻塞问 `Are you sure you want to continue connecting?`，SDK 轮询等待不到本地 socket 文件最终超时 | **一次性**：PowerShell 里先跑 `podman machine ssh true`<br>然后当终端提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时，手工敲 `yes` 回车<br>Machine 的 HostKey 被写入 `~/.ssh/known_hosts`，之后 SDK 调 SSH 永不阻塞 |
 | **C-I2** | `PermissionError` / `errno 13` / `permission denied`（EACCES，**非** ENOENT）+ 异常里有子串 `/run/user/` 与 `podman`；典型：SDK `podman/api/uds.py::UDSSocket.connect()` → `PermissionError: [Errno 13] Permission denied`；CLI `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied`。**排除条件**：异常含 `libpod/tmp` 或 `temporary file`（那是 C-I1） | 宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，devuser 为动态 UID（≠0）且未加入 socket 属组 → `connect()` EACCES。**红线**：严禁 `chmod 666`/`chown` 宿主 socket（会破坏宿主侧权限） | **重建镜像 + 重启容器**（一次生效）：`entrypoint.sh::setup_podman()` B-scheme 自动 `usermod -aG <socket组> ${NON_ROOT_USER}` + `su - devuser` 读写自验证<br>**必须早于 `exec /usr/bin/supervisord`**（supervisord `drop_privileges()` 在 spawn 时才派生补充组，已运行进程不被后续 usermod 影响）<br>自检：`/proc/<jupyter-pid>/status` 的 `Groups` 含 socket 属组 |
+
+| **C-I3** | `Error: statfs <路径>: no such file or directory`（卷缺失）或 `Error: stat <路径>: no such file or directory`（设备缺失），退出码 125（由 `passthrough_diagnose_hint()` 匹配） | **运行时透传资源在 daemon 宿主上不存在**：`--wayland`/`--gpu`/`--usb`/`--dbus` 的挂载源是 WSL2 / Podman Machine 内的路径，podman 对缺失路径**硬失败且不自动创建**（`:ro`/`:rw`/裸挂载一致）；客户端可能跑在 Windows 原生 CPython，本机 `Path.exists()` 对这些路径必然为假，**禁止本机预检** | 确认资源在 daemon 宿主存在：`podman machine ssh "test -e <路径>"`（Machine）或 `wsl -d <Distro> -- test -e <路径>`（WSL2）；路径不同则覆盖 `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `DBUS_SESSION_BUS_PATH` / `GPU_DEVICE` / `USB_DEVICE`；宿主无该资源则去掉对应开关 |
 
 ## 6. .env 与环境变量的加载语义（C9）
 

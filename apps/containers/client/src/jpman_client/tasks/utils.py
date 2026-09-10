@@ -225,6 +225,129 @@ def podman_sock_path() -> str:
     return f"/run/user/{uid}/podman/podman.sock"
 
 
+# ── 运行时透传（对齐构建端 docs/07-toolbx-passthrough.md 的 5 项 opt-in）────────
+# 关键认知（F 阶段公理②）：透传挂载源（Wayland socket / D-Bus bus）与设备节点
+# （/dev/dri、/dev/bus/usb）是 **daemon 宿主（WSL2 / Podman Machine）内的路径**，
+# 客户端可能跑在 Windows 原生 CPython 上——本机 Path.exists() 对这些路径必然返回
+# False。因此**禁止**用本机存在性做前置校验（会误判拒绝正确的透传请求），
+# 资源缺失只能在 podman 硬失败后翻译为可执行指引（见 passthrough_diagnose_hint）。
+CONTAINER_RUNTIME_DIR = "/tmp/runtime-user"
+
+
+def host_runtime_dir() -> str:
+    """daemon 宿主的用户运行时目录 ``/run/user/<uid>``（UID 约定同 podman_sock_path）。"""
+    uid = os.environ.get("PODMAN_RUNTIME_UID", "1000")
+    return f"/run/user/{uid}"
+
+
+def passthrough_paths() -> dict:
+    """解析 5 项透传在 **daemon 宿主** 上的资源路径（可用环境变量逐个覆盖）。
+
+    变量命名与构建端 ``compose.passthrough*.yaml`` 保持一致，便于两端迁移复用：
+      ``HOST_XDG_RUNTIME_DIR`` / ``HOST_WAYLAND_DISPLAY`` / ``DBUS_SESSION_BUS_PATH``
+      / ``GPU_DEVICE`` / ``USB_DEVICE``。
+    """
+    xdg = os.environ.get("HOST_XDG_RUNTIME_DIR") or host_runtime_dir()
+    wayland_display = os.environ.get("HOST_WAYLAND_DISPLAY") or "wayland-0"
+    return {
+        "xdg_runtime_dir": xdg,
+        "wayland_display": wayland_display,
+        "wayland_socket": f"{xdg}/{wayland_display}",
+        "dbus_bus": os.environ.get("DBUS_SESSION_BUS_PATH") or f"{xdg}/bus",
+        "gpu_device": os.environ.get("GPU_DEVICE") or "/dev/dri",
+        "usb_device": os.environ.get("USB_DEVICE") or "/dev/bus/usb",
+    }
+
+
+@dataclass
+class PassthroughSpec:
+    """透传运行参数集合（SDK 与 CLI 两条路径共用同一份解析结果 → 参数天然一致）。"""
+
+    network_mode: Optional[str] = None
+    publish_ports: bool = True
+    volumes: list[tuple[str, str, str]] = field(default_factory=list)
+    devices: list[str] = field(default_factory=list)
+    environment: dict[str, str] = field(default_factory=dict)
+
+
+def build_passthrough_spec(cfg: "ContainerConfig") -> PassthroughSpec:
+    """把 5 个透传开关解析为统一的运行参数集合。
+
+    与构建端 ``compose.passthrough*.yaml`` 的语义逐项对齐：
+      ① Host 网络：``--network=host`` + **不再发布端口**（二者互斥）；rootless 无法
+         绑定特权端口 22，故同时把 ``SSHD_PORT`` 设为 ``cfg.ssh_port``（默认 2222，
+         非特权端口），令 host 网络下的 SSH 访问端口与端口映射模式保持一致。
+      ② Wayland / ④ D-Bus：挂载到容器内 ``/tmp/runtime-user`` 并注入对应环境变量。
+      ③ GPU / ⑤ USB：追加设备节点（rootless 三必需的 ``/dev/fuse`` 仍由
+         ``ContainerConfig.devices`` 硬编码保留，见 C3）。
+    """
+    spec = PassthroughSpec()
+    paths = passthrough_paths()
+
+    if cfg.host_network:
+        spec.network_mode = "host"
+        spec.publish_ports = False
+        spec.environment["SSHD_PORT"] = str(cfg.ssh_port)
+
+    if cfg.wayland:
+        spec.volumes.append(
+            (
+                paths["wayland_socket"],
+                f"{CONTAINER_RUNTIME_DIR}/{paths['wayland_display']}",
+                "rw",
+            )
+        )
+        spec.environment["XDG_RUNTIME_DIR"] = CONTAINER_RUNTIME_DIR
+        spec.environment["WAYLAND_DISPLAY"] = paths["wayland_display"]
+
+    if cfg.dbus:
+        spec.volumes.append((paths["dbus_bus"], f"{CONTAINER_RUNTIME_DIR}/bus", "ro"))
+        spec.environment.setdefault("XDG_RUNTIME_DIR", CONTAINER_RUNTIME_DIR)
+        spec.environment["DBUS_SESSION_BUS_ADDRESS"] = (
+            f"unix:path={CONTAINER_RUNTIME_DIR}/bus"
+        )
+
+    if cfg.gpu:
+        spec.devices.append(f"{paths['gpu_device']}:/dev/dri")
+
+    if cfg.usb:
+        spec.devices.append(f"{paths['usb_device']}:/dev/bus/usb")
+
+    return spec
+
+
+def passthrough_diagnose_hint(exc_msg: str) -> str:
+    """把 podman 对透传资源缺失的**硬失败**翻译为可执行中文指引（诊断条目 C-I3）。
+
+    实测行为（podman 5.7 rootless）：挂载源或设备节点不存在时直接失败，退出码 125，
+    且**不会自动创建**该路径，三种写法表现一致：
+      - 卷缺失：``Error: statfs /run/user/1000/wayland-0: no such file or directory``
+      - 设备缺失：``Error: stat /dev/dri: no such file or directory``
+
+    这些路径由 daemon 宿主解析，客户端本机不可见（见模块头部说明），故只能事后翻译。
+    与 windows_diagnose_hint 的 C-I1/C-I2 同属「容器侧坑」诊断家族，编号顺延为 C-I3。
+    """
+    msg = exc_msg or ""
+    if "no such file or directory" not in msg.lower():
+        return ""
+    if not re.search(r"\b(statfs|stat)\b", msg):
+        return ""
+
+    matched = re.search(r"(?:statfs|stat)\s+(\S+?):", msg)
+    missing = matched.group(1) if matched else "(见上方原生报错)"
+
+    return (
+        "[C-I3] 透传资源在 daemon 宿主上不存在（podman 硬失败，退出码 125，且不会自动创建路径）。\n"
+        f"     → 缺失路径：{missing}\n"
+        "     → 修复（30 秒）：确认该资源在 WSL2 / Podman Machine 内真实存在；"
+        "路径不同则用 HOST_XDG_RUNTIME_DIR / HOST_WAYLAND_DISPLAY / DBUS_SESSION_BUS_PATH / "
+        "GPU_DEVICE / USB_DEVICE 覆盖；宿主本就不具备该资源时，去掉对应的 --wayland / "
+        "--gpu / --usb / --dbus 开关即可。\n"
+        "     → 自检：`podman machine ssh \"test -e <路径>\"`（Machine）"
+        "或 `wsl -d <Distro> -- test -e <路径>`（WSL2）"
+    )
+
+
 _VALID_STRATEGIES = {"auto", "legacy", "wsl", "machine"}
 
 
@@ -262,6 +385,17 @@ class ContainerConfig:
     # 触发 PAM chpasswd 失败，容器在 set -euo pipefail 下立即退出。
     user: str = "root"
     detach: bool = True
+
+    # ── 运行时透传开关（对齐 docs/07-toolbx-passthrough.md 的 5 项 opt-in）──
+    # 全部默认关闭：``compose.yaml`` 的「默认隔离」原则在消费端等价为「默认不传任何
+    # 透传参数」。资源路径不进入本 dataclass（否则按 invoke-tasks 规范须各配一个 CLI
+    # 旗标），统一由 passthrough_paths() 从环境变量读取。
+    # ⚠️ 资源均在 daemon 宿主侧解析，缺失时 podman 硬失败 → 见 C-I3 诊断。
+    host_network: bool = False
+    wayland: bool = False
+    gpu: bool = False
+    usb: bool = False
+    dbus: bool = False
 
     def resolved_workspace(self) -> Path:
         """将 workspace 解析为**宿主系统**下的绝对路径（用于卷挂载源路径）。

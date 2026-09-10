@@ -91,7 +91,7 @@ invoke images        # 列出本地所有镜像
 |---|---|---|
 | `invoke load [--path TAR] [--cache-dir DIR]` | `invoke container.load` | 从 tar.gz 加载镜像 |
 | `invoke images` | `invoke container.images` | 列出本地镜像 |
-| `invoke run [--name N] [--tag T] [--ssh-port P] [--jupyter-port P] [--workspace W] [--user-password PW] [--jupyter-token TK] [--ssh-public-key KEY] [--grant-sudo/--no-grant-sudo] [--no-detach]` | `invoke container.run` | 启动容器 |
+| `invoke run [--name N] [--tag T] [--ssh-port P] [--jupyter-port P] [--workspace W] [--user-password PW] [--jupyter-token TK] [--ssh-public-key KEY] [--grant-sudo/--no-grant-sudo] [--no-detach] [--host-network] [--wayland] [--gpu] [--usb] [--dbus]` | `invoke container.run` | 启动容器（后 5 个为运行时透传开关，见 §11） |
 | `invoke stop [--name N]` | `invoke container.stop` | 停止并删除容器 |
 | `invoke status [--name N]` | `invoke container.status` | 查看状态 |
 | `invoke clean [--name N] [--tag T] [--volume] [--image]` | `invoke container.clean` | 清理资源 |
@@ -143,9 +143,9 @@ invoke images
 
 四种合法值：`auto | legacy | wsl | machine`。非合法值会被归一化回 `auto`。
 
-### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I3 + 容器内坑 C-I1/C-I2）
+### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I3 + 容器/运行时坑 C-I1~C-I3）
 
-`invoke` 失败时终端会自动匹配以下条目（前三条为 Windows 原生坑，后两条为容器内坑且**与平台无关**），每个条目末尾附一行命令级修复：
+`invoke` 失败时终端会自动匹配以下条目（前三条为 Windows 原生坑；C-I1~C-I3 为容器/运行时坑且**与平台无关**），每个条目末尾附一行命令级修复：
 
 | ID | 触发异常 | 根因 | 修复（30秒） |
 |----|---------|------|------------|
@@ -154,6 +154,8 @@ invoke images
 | **W-I3** | `Timeout: Waiting on podman-forward-*.sock`（SSH Machine） | SSH 首次 StrictHostKeyChecking 交互阻塞在 stdin yes/no，SDK SSHSocket shell-out 的 `ssh -N -L` 子进程永不返回 | PowerShell 先跑一次：`podman machine ssh true`，提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时敲 **yes** 回车，把 Machine HostKey 写入 `~/.ssh/known_hosts` |
 | **C-I1** | 同一 `FileNotFoundError: .../run/user/.../podman/podman.sock No such file`，但出现在**容器内** SDK 调用（bootstrap `env.run-cmd`/`env.shell` 或常驻容器 JupyterLab Web Terminal）；容器内 CLI `podman images` 同时报 `open ${XDG_RUNTIME_DIR}/libpod/tmp/pause.pid: no such file or directory` 与 `error creating temporary file: Permission denied` | 容器内两个根因叠加：① 从无运行中的 podman daemon（bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，或常驻容器旧版从不拉起 service），`from_env()` 回退到纯 Linux 默认路径连不存在的 rootless UDS socket → `APIError`；② rootless podman 初始化时未预建 `${XDG_RUNTIME_DIR}/libpod/tmp/`（`pause.pid` 落盘目录），缺目录触发 ENOENT / `Permission denied`。注意 devuser UID 动态分配（此处为 1001） | bootstrap 由 `PODMAN_SERVICE_BOOT` 自动拉起 `podman system service --time=0` 并预建 `libpod/tmp`（见 `src/jpman_client/tasks/env_in_container.py`）；常驻容器由方案 A 保证：`entrypoint.sh::setup_podman()` 默认拉起 service + 预建 `${XDG_RUNTIME_DIR}/libpod/tmp` + `jupyter.conf` 改 `user=devuser` 并以 `%(ENV_CONTAINER_HOST)s` / `%(ENV_XDG_RUNTIME_DIR)s` 继承 entrypoint 导出的动态路径（**禁止硬编码 `/run/user/<uid>`**，devuser UID 由 `useradd` 动态分配）；详见 `summary-jpman-client-podman-sdk-file-not-found-20260908.md` |
 | **C-I2** | 同上 `PermissionError` 类，但为 **`[Errno 13] Permission denied` / EACCES**（非 ENOENT）：SDK 报 `podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied`；CLI 报 `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied` | **容器内 devuser 无权访问宿主直通 socket**：宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，而 devuser 是动态 UID（≠0）且镜像基线未将其加入 socket 属组（`/etc/group` 的 `root:x:0:` 无成员）→ `socket.connect()` 直接 EACCES。**与 C-I1 的语义差异**：C-I1 是 socket/目录不存在（ENOENT），C-I2 是存在但无权限（EACCES）。**代价与红线**：让 devuser 入 socket 属组会扩大其组权限；**严禁 `chmod 666`/`chown` 宿主 socket**（会改到宿主 socket 本体、破坏宿主侧权限） | `entrypoint.sh::setup_podman()` 的 **B-scheme** 分支自动 `stat -Lc '%G' <host_sock>` 解析属组并 `usermod -aG <socket组> ${NON_ROOT_USER}`，随后以 devuser 身份实测 socket 可读写（`su - devuser -c "test -r/-w ..."`，失败仅告警不阻断）。**时机关键**：该步骤必须早于 `exec /usr/bin/supervisord`——supervisord 的 `drop_privileges()` 在 spawn 子进程时才用 `grp.getgrall()` 派生补充组，已在运行的 jupyter 进程不受后续 usermod 影响，故须重建镜像/重启容器生效。自检：容器内 `supervisorctl status jupyter` 取 PID 后 `/proc/<pid>/status` 的 `Groups` 应含 socket 属组 |
+
+| **C-I3** | podman 原生报错 `Error: statfs <路径>: no such file or directory`（卷缺失）或 `Error: stat <路径>: no such file or directory`（设备缺失），退出码 125 | **运行时透传资源在 daemon 宿主上不存在**：`--wayland` / `--gpu` / `--usb` / `--dbus` 挂载的 socket 或设备节点是 **WSL2 / Podman Machine 内**的路径，而 podman 对缺失路径**硬失败且不会自动创建**（`:ro`/`:rw`/裸挂载表现一致）；客户端可能跑在 Windows 原生 CPython 上，本机 `Path.exists()` 对这些路径必然为假，**故不做本机预检**（否则会误判并拒绝正确的透传请求） | 先确认资源在 daemon 宿主真实存在：`podman machine ssh "test -e <路径>"`（Machine）或 `wsl -d <Distro> -- test -e <路径>`（WSL2）；路径不同则用 `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `DBUS_SESSION_BUS_PATH` / `GPU_DEVICE` / `USB_DEVICE` 覆盖；宿主本就不具备该资源时**去掉对应开关**（详见 §11） |
 
 ### 5.5 挂载路径 vs 连接 URL（A/B 维度分离，避免混淆）
 
@@ -249,6 +251,25 @@ stop_container(ctx, cfg.name)
 
 > `.env` 文件中的 SDK 级变量由 `src/jpman_client/tasks/manage.py::_load_env_overrides` 中的 `load_dotenv(override=False)` 同步到 `os.environ`，
 > 因此 shell 里已显式 `export` / `$env:` 的值不会被 `.env` 覆盖，符合"命令行 > .env > 默认"约定。
+
+### 8.3 运行时透传（消费端新增；与构建端 `docs/07-toolbx-passthrough.md` 的分层覆盖逐项对应）
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `PASSTHROUGH_HOST_NETWORK` | `no` | ① Host 网络模式（不发布端口；SSH=`localhost:<SSH_PORT>`，Jupyter=`localhost:8888`） |
+| `PASSTHROUGH_WAYLAND` | `no` | ② Wayland 套接字透传 |
+| `PASSTHROUGH_GPU` | `no` | ③ GPU 透传 |
+| `PASSTHROUGH_DBUS` | `no` | ④ D-Bus 会话总线透传 |
+| `PASSTHROUGH_USB` | `no` | ⑤ USB 透传 |
+| `HOST_XDG_RUNTIME_DIR` | `/run/user/<PODMAN_RUNTIME_UID>`（默认 1000） | daemon 宿主运行时目录（②④ 的基准路径） |
+| `HOST_WAYLAND_DISPLAY` | `wayland-0` | ② Wayland socket 名（**daemon 宿主**侧的实例名，不是客户端环境变量） |
+| `DBUS_SESSION_BUS_PATH` | `<HOST_XDG_RUNTIME_DIR>/bus` | ④ 会话总线 socket 路径 |
+| `GPU_DEVICE` | `/dev/dri` | ③ GPU 设备节点 |
+| `USB_DEVICE` | `/dev/bus/usb` | ⑤ USB 设备路径 |
+
+> 布尔项写法：`yes/true/1/on` 为真，`no/false/0/off` 为假（同时修复了 `bool("no")` 被误判为真、
+> 导致 `GRANT_SUDO=no` 失效的既有缺陷）。命令行开关优先级高于 `.env`。
+> 资源路径全部在 **daemon 宿主** 侧解析，缺失时表现为 C-I3（见 §5.4 与 §11.2）。
 
 ## 9. 与 jpman CLI 的分工
 
@@ -358,4 +379,43 @@ invoke env.shell
 | 默认缓存目录 | `IMAGE_CACHE_DIR=/workspace/.image-cache` | 可被宿主挂载覆盖 |
 | 自举容器 rootless | `/dev/fuse + label=disable + cgroupns=host` | 与 `ContainerConfig` 硬编码对齐，**不使用 `--privileged`** |
 | 容器名（默认） | `jpman-client-env`（用完自动 `--rm` 删除） | 可通过 `--name` 覆盖 |
+
+## 11. 运行时透传（对齐构建端 `docs/07-toolbx-passthrough.md`）
+
+构建端把 5 项运行时透传以 **compose 分层覆盖文件**交付；消费端没有 compose 层（SDK/CLI 编程式启动），
+等价形态是 `invoke run` 的 **5 个独立布尔开关**，语义逐项对齐：
+
+| # | 开关 | 等价覆盖文件 | 宿主前置条件 |
+|---|------|-------------|-------------|
+| ① | `--host-network` | `compose.passthrough.yaml`（Host 网络） | 宿主 `22`/`8888`（或 `<SSH_PORT>`/`8888`）未被占用 |
+| ② | `--wayland` | `compose.passthrough.gui.yaml` | daemon 宿主存在 Wayland socket |
+| ③ | `--gpu` | `compose.passthrough.gpu.yaml` | daemon 宿主存在 `GPU_DEVICE`（默认 `/dev/dri`） |
+| ④ | `--dbus` | `compose.passthrough.yaml`（D-Bus） | daemon 宿主存在会话总线 socket |
+| ⑤ | `--usb` | `compose.passthrough.usb.yaml` | daemon 宿主存在 `USB_DEVICE`（默认 `/dev/bus/usb`） |
+
+**默认全关（默认隔离）**：不带任何开关时生成的运行参数与旧版本完全一致（输出零变化），
+rootless 三必需 `/dev/fuse + label=disable + cgroupns=host` 始终硬编码保留，**任何路径都不使用 `--privileged`**。
+
+```bash
+# 主层等价：Host 网络 + D-Bus
+invoke run --host-network --dbus
+
+# 按宿主能力叠加（示例：图形会话 + GPU）
+invoke run --host-network --dbus --wayland --gpu
+```
+
+### 11.1 Host 网络模式的端口语义
+
+* 不发布端口映射（`--network host` 与 `-p` 互斥）
+* SSH 走 `--ssh-port`（默认 2222）：rootless Podman 无法绑定特权端口 22，消费端会自动把
+  `SSHD_PORT` 设为该值——基础镜像的 `entrypoint.sh` 支持该变量，而 `Containerfile.client`
+  `FROM localhost/jupyter-podman-rootless:latest` 并继承其 ENTRYPOINT/CMD，故开箱可用
+* Jupyter 固定为容器内 `8888`；此时 `--jupyter-port` 不生效，运行时会打印告警
+
+### 11.2 缺资源时的行为（C-I3）
+
+消费端**不做本机存在性预检**：透传资源由 daemon 宿主（WSL2 / Podman Machine）解析，而客户端
+可能跑在 Windows 原生 CPython 上，本机 `Path.exists()` 对这些路径必然为假。podman 对缺失源
+硬失败（退出码 125、不自动创建）后，消费端会把原生报错翻译为 **C-I3** 指引（见 §5.4）：
+给出缺失路径、可覆盖的变量名，以及 daemon 侧自检命令。
 

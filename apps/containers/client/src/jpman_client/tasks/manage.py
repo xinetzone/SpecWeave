@@ -98,6 +98,23 @@ def _project_root() -> Path:
     return Path.cwd().resolve()
 
 
+def _env_bool(env: dict, key: str, default: bool) -> bool:
+    """把 .env 中的布尔文本解析为 ``bool``。
+
+    修复既有缺陷：原实现用 ``bool(env_val)``，非空字符串恒为真，导致
+    ``GRANT_SUDO=no`` 被判为 True（.env 模板中「opt-out 写 no」的承诺失效）。
+    此处显式识别 yes/no 系写法，未识别的值回退 ``default``。
+    """
+    if key not in env:
+        return default
+    raw = str(env[key]).strip().lower()
+    if raw in {"yes", "true", "1", "on", "y"}:
+        return True
+    if raw in {"no", "false", "0", "off", "n"}:
+        return False
+    return default
+
+
 def _merge_config(
     name,
     tag,
@@ -108,6 +125,11 @@ def _merge_config(
     jupyter_token,
     ssh_public_key,
     grant_sudo,
+    host_network=None,
+    wayland=None,
+    gpu=None,
+    usb=None,
+    dbus=None,
 ) -> ContainerConfig:
     """根据 args > .env > 默认 的优先级合并配置。"""
     project_root = _project_root()
@@ -120,6 +142,12 @@ def _merge_config(
             return env[env_key]
         return default
 
+    def pick_bool(arg_val, env_key, default):
+        """布尔项：命令行 True 最高优先；未显式开启时看 .env，最后回落默认值。"""
+        if arg_val is not None and arg_val is not False:
+            return bool(arg_val)
+        return _env_bool(env, env_key, default)
+
     cfg = ContainerConfig(
         image=str(pick(tag, "IMAGE_TAG", ContainerConfig.image)),
         name=str(pick(name, "CONTAINER_NAME", ContainerConfig.name)),
@@ -131,7 +159,14 @@ def _merge_config(
         user_password=str(pick(user_password, "USER_PASSWORD", "")),
         jupyter_token=str(pick(jupyter_token, "JUPYTER_TOKEN", "")),
         ssh_public_key=str(pick(ssh_public_key, "SSH_PUBLIC_KEY", "")),
-        grant_sudo=bool(pick(grant_sudo, "GRANT_SUDO", ContainerConfig.grant_sudo)),
+        grant_sudo=pick_bool(grant_sudo, "GRANT_SUDO", ContainerConfig.grant_sudo),
+        # 运行时透传开关（.env 键统一加 PASSTHROUGH_ 前缀，避免与通用变量名冲突；
+        # 默认 False = 默认隔离，资源路径由 utils.passthrough_paths() 从环境变量读取）
+        host_network=pick_bool(host_network, "PASSTHROUGH_HOST_NETWORK", False),
+        wayland=pick_bool(wayland, "PASSTHROUGH_WAYLAND", False),
+        gpu=pick_bool(gpu, "PASSTHROUGH_GPU", False),
+        usb=pick_bool(usb, "PASSTHROUGH_USB", False),
+        dbus=pick_bool(dbus, "PASSTHROUGH_DBUS", False),
     )
     return cfg
 
@@ -198,14 +233,19 @@ def images(c: Context) -> None:
     help={
         "name": "容器名（默认 jupyter-podman）",
         "tag": "镜像标签（默认 localhost/jupyter-podman-client:latest，可指定任意本地镜像）",
-        "ssh-port": "SSH 端口",
-        "jupyter-port": "Jupyter 端口",
+        "ssh-port": "SSH 端口（host 网络模式下同时作为容器内 sshd 的 SSHD_PORT）",
+        "jupyter-port": "Jupyter 端口（host 网络模式下不生效，Jupyter 固定 8888）",
         "workspace": "工作区路径，支持 Windows/WSL 自动转换",
         "user-password": "devuser 登录密码（未指定自动生成 16 位）",
         "jupyter-token": "Jupyter token（未指定自动生成 32 位）",
         "ssh-public-key": "注入的 SSH 公钥字符串",
         "grant-sudo": "是否开启容器内 sudo（默认 True）",
         "no-detach": "前台运行而非后台",
+        "host-network": "① Host 网络模式：共享宿主网络栈且不发布端口（SSH=localhost:<ssh-port>，Jupyter=localhost:8888）",
+        "wayland": "② Wayland 套接字透传（需 daemon 宿主存在该 socket，缺失时按 C-I3 指引处理）",
+        "gpu": "③ GPU 透传 /dev/dri（可用 GPU_DEVICE 覆盖路径，缺失时按 C-I3 指引处理）",
+        "usb": "⑤ USB 透传 /dev/bus/usb（可用 USB_DEVICE 覆盖路径，缺失时按 C-I3 指引处理）",
+        "dbus": "④ D-Bus 会话总线透传（需 daemon 宿主存在会话总线，缺失时按 C-I3 指引处理）",
     }
 )
 def run(
@@ -220,8 +260,17 @@ def run(
     ssh_public_key: str | None = None,
     grant_sudo: bool = True,
     no_detach: bool = False,
+    host_network: bool = False,
+    wayland: bool = False,
+    gpu: bool = False,
+    usb: bool = False,
+    dbus: bool = False,
 ) -> None:
-    """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。"""
+    """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。
+
+    运行时透传默认全关（默认隔离）；5 个开关与构建端 docs/07-toolbx-passthrough.md
+    的分层覆盖逐项对应，可任意组合。
+    """
     cfg = _merge_config(
         name=name,
         tag=tag,
@@ -232,6 +281,11 @@ def run(
         jupyter_token=jupyter_token,
         ssh_public_key=ssh_public_key,
         grant_sudo=grant_sudo,
+        host_network=host_network,
+        wayland=wayland,
+        gpu=gpu,
+        usb=usb,
+        dbus=dbus,
     )
     cfg.detach = not no_detach
 

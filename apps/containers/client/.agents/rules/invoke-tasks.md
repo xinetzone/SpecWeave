@@ -74,6 +74,10 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 ⚠️ CLI fallback 中 `[runtime, ...]` 的 runtime 必须来自 `utils.py::detect_runtime()`（优先 podman，回退 docker）；
 **禁止** 任何地方硬编码 `"podman"`。
 
+⚠️ **运行时透传参数必须由 `utils.py::build_passthrough_spec(cfg)` 统一产出**，SDK（`_sdk_run_kwargs`）
+与 CLI（`_run_via_cli`）只允许消费同一份 spec，**禁止两条路径各自拼接**——否则极易出现
+「SDK 支持某开关、CLI 不支持」的不一致（C8 A/B 维度分离之外的第三条隐式约束）。
+
 ## 4. 命名空间规范（`__init__.py`）
 
 `src/jpman_client/tasks/__init__.py` 必须同时提供三套入口（人类用户习惯短命令；集成调用习惯容器前缀；容器内自举习惯 env.* 前缀）：
@@ -133,7 +137,7 @@ ns.add_collection(env_ns)
 |-------|-----------------|----------------------|
 | `invoke load` | `invoke container.load` | `--path *tar` / `--cache-dir *dir` |
 | `invoke images` | `invoke container.images` | （无参数） |
-| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach` |
+| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network --wayland --gpu --usb --dbus` |
 | `invoke stop` | `invoke container.stop` | `--name N` |
 | `invoke status` | `invoke container.status` | `--name N` |
 | `invoke clean` | `invoke container.clean` | `--name N --tag T --volume --image` |

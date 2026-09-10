@@ -19,11 +19,13 @@ from .utils import (
     ContainerConfig,
     LoadImageResult,
     SDK_STRATEGY_ENV,
+    build_passthrough_spec,
     check_runtime_ready,
     container_exists as cli_container_exists,
     container_running as cli_container_running,
     detect_runtime,
     generate_random_string,
+    passthrough_diagnose_hint,
     podman_sock_path,
     run_cmd,
     sdk_base_url_candidates,
@@ -397,7 +399,12 @@ def _ensure_secrets(cfg: ContainerConfig) -> None:
 
 
 def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
-    """构造 podman-py containers.run 的 kwargs。"""
+    """构造 podman-py containers.run 的 kwargs。
+
+    透传部分由 ``utils.build_passthrough_spec`` 统一解析，与 CLI fallback 共用同一份
+    结果，确保两条路径的运行参数完全一致（见 invoke-tasks 规则 §3.2）。
+    """
+    spec = build_passthrough_spec(cfg)
     ports = {
         "22/tcp": cfg.ssh_port,
         "8888/tcp": cfg.jupyter_port,
@@ -409,6 +416,10 @@ def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
         # 分支据此建立符号链接并设置 CONTAINER_HOST，SDK from_env() 即可连通。
         podman_sock_path(): {"bind": podman_sock_path(), "mode": "rw"},
     }
+    # Wayland / D-Bus 透传挂载
+    for src, dst, mode in spec.volumes:
+        volumes[src] = {"bind": dst, "mode": mode}
+
     environment: dict[str, str] = {
         "USER_PASSWORD": cfg.user_password,
         "JUPYTER_TOKEN": cfg.jupyter_token,
@@ -420,19 +431,27 @@ def _sdk_run_kwargs(cfg: ContainerConfig, workspace_posix: str) -> dict:
         environment["SSH_PUBLIC_KEY"] = cfg.ssh_public_key
     if cfg.grant_sudo:
         environment["GRANT_SUDO"] = "yes"
+    # 透传注入的环境变量（XDG_RUNTIME_DIR / WAYLAND_DISPLAY / DBUS_SESSION_BUS_ADDRESS
+    # / SSHD_PORT）
+    environment.update(spec.environment)
 
     kwargs = {
         "image": cfg.image,
         "name": cfg.name,
-        "ports": ports,
         "volumes": volumes,
         "environment": environment,
         "detach": cfg.detach,
-        "devices": cfg.devices,
+        # C3：rootless 三必需的 /dev/fuse 硬编码保留，开启 GPU/USB 时在其后追加
+        "devices": list(cfg.devices) + spec.devices,
         "security_opt": cfg.security_opt,
         "cgroupns": cfg.cgroupns,
         "user": cfg.user,
     }
+    # Host 网络与端口发布互斥：host 网络下不传 ports
+    if spec.publish_ports:
+        kwargs["ports"] = ports
+    if spec.network_mode:
+        kwargs["network_mode"] = spec.network_mode
     return kwargs
 
 
@@ -456,13 +475,24 @@ def _run_via_sdk(client, cfg: ContainerConfig, workspace_posix: str) -> bool:
             print("[SDK] 容器前台运行")
         return True
     except Exception as e:
+        # 透传资源缺失（C-I3）：podman 硬失败，且 Windows 原生 TTY 控制台下 CLI 路径
+        # 走 subprocess.call 不捕获 stderr，故 SDK 层是 C-I3 指引的主要提示来源。
+        hint = passthrough_diagnose_hint(str(e))
+        if hint:
+            print(hint)
         print(f"[SDK] 启动失败 fallback to CLI: {e}")
         return False
 
 
 def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None:
-    """CLI 启动容器（与 jpman create 参数一致）。"""
+    """CLI 启动容器（与 jpman create 参数一致）。
+
+    透传参数与 SDK 路径同为 ``utils.build_passthrough_spec`` 的产物，逐项等价：
+      ``--network host``（且不带 ``-p``）/ ``-v``（Wayland、D-Bus）/ ``--device``（GPU、USB）
+      / ``-e``（XDG_RUNTIME_DIR、WAYLAND_DISPLAY、DBUS_SESSION_BUS_ADDRESS、SSHD_PORT）。
+    """
     runtime = detect_runtime()
+    spec = build_passthrough_spec(cfg)
 
     if cli_container_exists(c, runtime, cfg.name):
         print(f"[CLI] 容器 {cfg.name} 已存在，先清理...")
@@ -473,23 +503,39 @@ def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None
         "run",
         "--name",
         cfg.name,
-        "-p",
-        f"{cfg.ssh_port}:22",
-        "-p",
-        f"{cfg.jupyter_port}:8888",
-        "-v",
-        f"{workspace_posix}:/workspace",
-        # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
-        # 宿主 socket bind-mount 到容器同一路径，容器内 entrypoint 的 B-scheme
-        # 分支据此建立符号链接并设置 CONTAINER_HOST，容器内 podman SDK/CLI 可连通。
-        "-v",
-        f"{podman_sock_path()}:{podman_sock_path()}",
-        "--device /dev/fuse",
-        "--security-opt label=disable",
-        "--cgroupns=host",
-        "--user",
-        cfg.user,
     ]
+    # ① Host 网络模式：与端口发布互斥，改传 --network host
+    if spec.publish_ports:
+        cmd_parts.extend(["-p", f"{cfg.ssh_port}:22", "-p", f"{cfg.jupyter_port}:8888"])
+    else:
+        cmd_parts.extend(["--network", spec.network_mode or "host"])
+    cmd_parts.extend(
+        [
+            "-v",
+            f"{workspace_posix}:/workspace",
+            # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
+            # 宿主 socket bind-mount 到容器同一路径，容器内 entrypoint 的 B-scheme
+            # 分支据此建立符号链接并设置 CONTAINER_HOST，容器内 podman SDK/CLI 可连通。
+            "-v",
+            f"{podman_sock_path()}:{podman_sock_path()}",
+        ]
+    )
+    # ② Wayland / ④ D-Bus 透传挂载
+    for src, dst, mode in spec.volumes:
+        cmd_parts.extend(["-v", f"{src}:{dst}:{mode}"])
+    cmd_parts.extend(
+        [
+            # C3：rootless 三必需硬编码，先于可选的 GPU/USB 设备
+            "--device /dev/fuse",
+            "--security-opt label=disable",
+            "--cgroupns=host",
+            "--user",
+            cfg.user,
+        ]
+    )
+    # ③ GPU / ⑤ USB 透传设备
+    for dev in spec.devices:
+        cmd_parts.extend(["--device", dev])
     if cfg.detach:
         cmd_parts.append("-d")
     cmd_parts.extend(["-e", f"USER_PASSWORD={cfg.user_password}"])
@@ -499,10 +545,44 @@ def _run_via_cli(c: Context, cfg: ContainerConfig, workspace_posix: str) -> None
         cmd_parts.extend(["-e", f'SSH_PUBLIC_KEY="{cfg.ssh_public_key}"'])
     if cfg.grant_sudo:
         cmd_parts.extend(["-e", "GRANT_SUDO=yes"])
+    for key, val in spec.environment.items():
+        cmd_parts.extend(["-e", f"{key}={val}"])
     cmd_parts.append(cfg.image)
     run_cmd(c, " ".join(cmd_parts), pty=not cfg.detach)
     if cfg.detach:
         print("[CLI] 容器已启动 (detached)")
+
+
+def _exception_text(exc: BaseException) -> str:
+    """拼接异常消息与 invoke 结果对象的 stderr/stdout。
+
+    透传诊断（C-I3）需要 podman 的原始报错（``Error: statfs ...``），而该内容在
+    ``UnexpectedExit.result.stderr`` 里，不在异常消息本身。
+    """
+    parts = [str(exc)]
+    result = getattr(exc, "result", None)
+    for attr in ("stderr", "stdout"):
+        val = getattr(result, attr, "") or ""
+        if val:
+            parts.append(val)
+    return "\n".join(parts)
+
+
+def _print_passthrough_summary(cfg: ContainerConfig) -> None:
+    """打印已启用的运行时透传项（全部关闭时零输出，保持默认隔离的输出不变）。"""
+    enabled = [
+        label
+        for label, on in (
+            ("host-network", cfg.host_network),
+            ("wayland", cfg.wayland),
+            ("gpu", cfg.gpu),
+            ("usb", cfg.usb),
+            ("dbus", cfg.dbus),
+        )
+        if on
+    ]
+    if enabled:
+        print(f"[Run] 透传: {', '.join(enabled)}")
 
 
 def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
@@ -521,20 +601,42 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
 
     print(f"[Run] 容器: {cfg.name}  镜像: {cfg.image}")
     print(f"[Run] 挂载 {workspace_posix} -> /workspace")
-    print(f"[Run] 端口映射: SSH={cfg.ssh_port}  Jupyter={cfg.jupyter_port}")
+    if cfg.host_network:
+        # host 网络下容器直接占用宿主端口：SSH 走 SSHD_PORT（= --ssh-port，非特权端口），
+        # Jupyter 固定为容器内 8888（不由 --jupyter-port 控制）。
+        print(
+            f"[Run] 网络: host（不发布端口；SSH=localhost:{cfg.ssh_port}，"
+            "Jupyter=localhost:8888）"
+        )
+    else:
+        print(f"[Run] 端口映射: SSH={cfg.ssh_port}  Jupyter={cfg.jupyter_port}")
+    _print_passthrough_summary(cfg)
 
     sdk_ok = False
     with get_client() as client:
         if client is not None:
             sdk_ok = _run_via_sdk(client, cfg, workspace_posix)
     if not sdk_ok:
-        _run_via_cli(c, cfg, workspace_posix)
+        try:
+            _run_via_cli(c, cfg, workspace_posix)
+        except Exception as exc:  # noqa: BLE001 - 需把 podman 原生报错翻译成 C-I3 指引
+            pt_hint = passthrough_diagnose_hint(_exception_text(exc))
+            if pt_hint:
+                print(pt_hint)
+            raise
+
+    if cfg.host_network and cfg.jupyter_port != 8888:
+        print(
+            f"[Run] ⚠ host 网络模式下 Jupyter 固定监听容器内 8888，"
+            f"--jupyter-port={cfg.jupyter_port} 不生效"
+        )
+    jupyter_port = 8888 if cfg.host_network else cfg.jupyter_port
 
     print("\n" + "=" * 60)
     print("访问信息:")
     print(f"  SSH:         ssh -p {cfg.ssh_port} devuser@localhost")
     print(f"  SSH 密码:    {cfg.user_password}")
-    print(f"  Jupyter Lab: http://localhost:{cfg.jupyter_port}/lab?token={cfg.jupyter_token}")
+    print(f"  Jupyter Lab: http://localhost:{jupyter_port}/lab?token={cfg.jupyter_token}")
     print(f"  工作区:      {workspace_path}")
     print("=" * 60)
     return cfg
