@@ -746,7 +746,7 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     python -c "import omlmd; print('[OK] omlmd available (ML model OCI artifact)')" && \
     python -c "import olot; print('[OK] olot available (KServe ModelCar packager)')" && \
     test -x /usr/local/bin/olot_car.py && echo "[OK] olot_car.py helper script available" && \
-    python /usr/local/bin/olot_car.py --help >/dev/null 2>&1 && echo "[OK] olot_car.py CLI functional" && \
+    python -c "import subprocess, sys; from olot.backend.oras_py import is_oras_py; assert is_oras_py(), 'oras-py backend not available'; r = subprocess.run([sys.executable, '/usr/local/bin/olot_car.py', '--help'], capture_output=True, text=True); assert r.returncode == 0, r.stderr; assert 'pack' in r.stdout and 'extract' in r.stdout, 'pack/extract subcommands missing'; print('[OK] olot_car.py functional (olot + oras-py importable, pack/extract subcommands declared)')" && \
     test -d /run/host && echo "[OK] /run/host mount point exists (Toolbx compatibility)" && \
     test -f /run/.toolboxenv && echo "[OK] /run/.toolboxenv marker exists (Toolbx compatibility)" && \
     capsh --print >/dev/null 2>&1 && echo "[OK] capsh available (Toolbx capability boundary)" && \
