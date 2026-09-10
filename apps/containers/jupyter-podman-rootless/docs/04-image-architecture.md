@@ -15,10 +15,10 @@ flowchart BT
     TB["Stage (aux): toolbox-builder<br/>golang:1.26-bookworm + libsubid-dev<br/>go build → /out/toolbox"]
     CB["Stage 2/3: conda-builder<br/>Miniforge3 + main env（cp314t）<br/>omlmd / olot<br/>podman-py + podman-compose 本地源安装<br/>深度清理"]
     L1["final Layer 1/5: 继承 base-runtime（系统层）"]
-    L2["final Layer 2/5: COPY /opt/conda<br/>+ COPY /out/toolbox → /usr/local/bin/toolbox"]
+    L2["final Layer 2/5: COPY /opt/conda<br/>+ COPY /out/toolbox → /usr/local/libexec/toolbox"]
     L3["final Layer 3/5: devuser + subuid/subgid<br/>rootless Podman 配置 + Toolbx markers"]
-    L4["final Layer 4/5: 配置 COPY + 语法验证"]
-    L5["final Layer 5/5: 元数据 + 清理 + 最终验证<br/>23 项 [OK]（含三项内嵌工具检查）"]
+    L4["final Layer 4/5: 配置 COPY + 语法验证<br/>含 toolbox 指引包装器"]
+    L5["final Layer 5/5: 元数据 + 清理 + 最终验证<br/>25 项 [OK]（含三项内嵌工具检查）"]
     L1 --> L2 --> L3 --> L4 --> L5
     BR -. "FROM base-runtime" .-> L1
     CB -. "COPY --from=conda-builder /opt/conda" .-> L2
@@ -27,9 +27,9 @@ flowchart BT
 
 阶段与分层要点：
 
-- **构建阶段不进 final**：conda-builder 与 toolbox-builder 为构建态，仅产物经 `COPY --from` 进入 final（`/opt/conda`、`/usr/local/bin/toolbox`），构建工具链与源树均不进入最终镜像；
-- **内嵌编排工具**：podman-py/podman-compose 在 conda-builder 阶段以本地源 pip 装入 `main` env；toolbox 由 toolbox-builder（golang:1.26-bookworm）`go build` 产出；三者源树经构建前 stage 机制来自 SpecWeave 根 `vendor/` 子模块（详见 [17-upstream-tools.md](17-upstream-tools.md)）；
-- **最终验证**：Layer 5/5 共 **23 项 [OK] 检查**，含新增三项内嵌工具检查（`podman-compose --version`、`python -c "import podman"`、`toolbox --version`）。
+- **构建阶段不进 final**：conda-builder 与 toolbox-builder 为构建态，仅产物经 `COPY --from` 进入 final（`/opt/conda`、`/usr/local/libexec/toolbox`），构建工具链与源树均不进入最终镜像；
+- **内嵌编排工具**：podman-py/podman-compose 在 conda-builder 阶段以本地源 pip 装入 `main` env；toolbox 由 toolbox-builder（golang:1.26-bookworm）`go build` 产出真二进制落入 `/usr/local/libexec/toolbox`，`/usr/local/bin/toolbox` 为 Layer 4/5 安装的指引包装器（无 `TOOLBOX_PATH` 时输出可执行指引）；三者源树经构建前 stage 机制来自 SpecWeave 根 `vendor/` 子模块（详见 [17-upstream-tools.md](17-upstream-tools.md)）；
+- **最终验证**：Layer 5/5 共 **25 项 [OK] 检查**，含三项内嵌工具检查（`podman-compose --version`、`python -c "import podman"`、`toolbox --version`）与 Toolbx 运行前提/优雅降级断言（`flatpak-spawn` 存在性、裸跑 `toolbox` 退出码 1 且含包装器指引）。
 
 Containerfile编写规范详见 [.agents/rules/containerfile.md](../.agents/rules/containerfile.md)。
 

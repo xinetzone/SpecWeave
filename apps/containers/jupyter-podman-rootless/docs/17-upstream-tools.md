@@ -10,7 +10,7 @@ source: "Containerfile#构建阶段 + src/jpman_builder/tasks/stage_upstream.py 
 自 2026-09 起，本镜像将三个容器编排上游工具**直接内嵌进镜像**：
 
 - `podman-compose`（声明式编排 CLI）与 `podman-py`（podman SDK）装入 `main` conda 环境（`/opt/conda/envs/main/bin`）；
-- `toolbox`（Toolbx 容器管理 CLI）以 Go（cgo，glibc）编译的剥离二进制装入 `/usr/local/bin/toolbox`。
+- `toolbox`（Toolbx 容器管理 CLI）以 Go（cgo，glibc）编译的剥离二进制装入 `/usr/local/libexec/toolbox`；`/usr/local/bin/toolbox` 则是镜像自带的**指引包装器**（wrapper），在真实 Toolbx 会话中转发给真二进制，在普通容器会话中输出可执行指引。
 
 三者的源树都以 **git submodule（third_party，固定 commit）** 形式注册在 SpecWeave 根工作区的 `vendor/` 下，随镜像构建以「本地源」方式安装/编译，而非在容器内联网 `pip install`/`go install` 最新版——保证镜像内工具版本**可复现、可审计**，且与网络波动解耦。
 
@@ -20,7 +20,7 @@ source: "Containerfile#构建阶段 + src/jpman_builder/tasks/stage_upstream.py 
 |------|---------|-----------|---------|-----------|
 | podman-compose | github.com/containers/podman-compose | `/opt/conda/envs/main/bin/podman-compose` | conda-builder 阶段本地源 `pip install ./upstream-podman-compose` | `e3df10472` |
 | podman-py | github.com/containers/podman-py | `main` env site-packages（`import podman`） | conda-builder 阶段本地源 `pip install ./upstream-podman-py` | `5dd81b49` |
-| toolbox | github.com/containers/toolbox | `/usr/local/bin/toolbox` | toolbox-builder aux 阶段 `go build`（golang:1.26-bookworm） | `81401f64` |
+| toolbox | github.com/containers/toolbox | 真二进制 `/usr/local/libexec/toolbox` + 指引包装器 `/usr/local/bin/toolbox` | toolbox-builder aux 阶段 `go build`（golang:1.26-bookworm）；包装器为本仓库 `scripts/toolbox-wrapper.sh` | `81401f64` |
 
 三个子模块已在根工作区 [vendor/AGENTS.md](../../../../vendor/AGENTS.md) 登记为 third_party 只读依赖（gitlink pin commit，禁止本地修改），与 [.gitmodules](../../../../.gitmodules) 中的 `vendor/podman-compose`、`vendor/podman-py`、`vendor/toolbox` 条目对应。
 
@@ -67,7 +67,7 @@ source: "Containerfile#构建阶段 + src/jpman_builder/tasks/stage_upstream.py 
 
 ## 容器内用法
 
-进入容器（`jpman shell` / `invoke shell` / `ssh -p 2222 devuser@localhost`）后，devuser 可在容器内直接使用下列工具（conda `main` env 与 `/usr/local/bin` 均已在 PATH）；其中 `toolbox` 例外——其容器创建/进入能力属宿主侧，容器内仅可验证二进制活性（见下方注意块）：
+进入容器（`jpman shell` / `invoke shell` / `ssh -p 2222 devuser@localhost`）后，devuser 可在容器内直接使用下列工具（conda `main` env 与 `/usr/local/bin` 均已在 PATH）；其中 `toolbox` 例外——其容器创建/进入能力属宿主侧，容器内仅可验证二进制活性，裸跑时由包装器给出可执行指引（见下方注意块）：
 
 ```bash
 # podman-compose：容器内声明式编排（示例：/workspace 下使用 Compose 文件）
@@ -77,14 +77,16 @@ podman-compose -f compose.yaml up -d
 # podman SDK（podman-py）：以 Python 方式驱动容器内 rootless Podman
 python -c "import podman; print('[OK] podman SDK importable')"
 
-# toolbox：仅二进制随镜像内嵌（/usr/local/bin/toolbox）；容器的创建/进入由宿主侧发起
-toolbox --version                                    # 活性检查：确认二进制可执行
+# toolbox：真二进制在 /usr/local/libexec/toolbox，/usr/local/bin/toolbox 为指引包装器
+toolbox --version                                    # cobra 短路型 flag，不需 TOOLBOX_PATH（包装器透传）
 # 宿主侧（非容器内）创建/进入 Toolbx 容器：
 #   toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
 #   toolbox enter jupyter-dev
 ```
 
-> **注意（toolbox 的能力边界）**：`toolbox` 二进制虽内嵌于镜像，但其**容器创建/进入能力由宿主侧 Toolbx 启动器提供**——启动器注入 `TOOLBOX_PATH`，容器内二进制再经 `flatpak-spawn --host` 转发回宿主执行。本镜像内嵌的 marker（`/run/.toolboxenv`、`/run/.containerenv`）使镜像**可被**宿主 Toolbx 识别与进入；但在**普通 `podman run` / `podman-compose` 会话**中并无宿主启动器，裸跑 `toolbox`（及任何子命令）会按上游设计报 `Error: TOOLBOX_PATH not set`（退出码 1），而 `toolbox --version` 等 cobra 短路型 flag 不受影响。故镜像内对 toolbox 的验证仅声明为**二进制活性（liveness）**，不声明为「容器内可用」。
+> **注意（toolbox 的能力边界与优雅降级）**：`toolbox` 真二进制虽内嵌于镜像（`/usr/local/libexec/toolbox`），但其**容器创建/进入能力由宿主侧 Toolbx 启动器提供**——启动器注入 `TOOLBOX_PATH`，容器内二进制再经 `flatpak-spawn --host` 转发回宿主执行。本镜像内嵌的 marker（`/run/.toolboxenv`、`/run/.containerenv`）使镜像**可被**宿主 Toolbx 识别与进入；为此镜像还按官方 `images/ubuntu/26.04/Containerfile` 装齐了 `flatpak-spawn`（`flatpak-xdg-utils` 包 + `/usr/bin/flatpak-spawn` symlink），保证宿主回调链路完整。
+>
+> 在**普通 `podman run` / `podman-compose` 会话**中并无宿主启动器。此时 `/usr/local/bin/toolbox`（包装器）不再暴露上游裸错误，而是输出中文可执行指引（改用 `toolbox --version`/`--help`、或直接用容器内 `podman`、或回到宿主执行 `toolbox create/enter`）并保持与上游一致的**退出码 1**；`toolbox --version`、`toolbox --help` 等 cobra 短路型 flag 由包装器透传，不受影响。镜像内构建断言据此双向校验：真二进制活性（`toolbox --version` 退出 0）+ 裸跑降级（退出码 1 且 stderr 含包装器指引）。
 
 容器内 Podman 本身为 rootless 模式（fuse-overlayfs + crun，见 [05-rootless-podman.md](05-rootless-podman.md)），这些内嵌工具面向在容器内继续做嵌套容器/编排的开发场景；在 WSL2 导出场景（[15-wsl-export.md](15-wsl-export.md)）下，导出的发行版也天然自带以上编排能力。
 
@@ -96,12 +98,14 @@ toolbox --version                                    # 活性检查：确认二�
 
 ## 验证
 
-容器内执行三项内嵌工具检查（容器外亦对应镜像构建最终验证块的 23 项 [OK] 检查）：
+容器内执行三项内嵌工具检查（容器外亦对应镜像构建最终验证块的 25 项 [OK] 检查）：
 
 ```bash
 podman-compose --version                                   # [OK] podman-compose available (main env)
 python -c "import podman; print('[OK] podman SDK importable')"
-toolbox --version                                          # [OK] toolbox binary present (/usr/local/bin; 活性检查)
+toolbox --version                                          # [OK] 包装器透传至 /usr/local/libexec/toolbox
+test -x /usr/bin/flatpak-spawn                             # [OK] Toolbx 宿主回调前提
+toolbox; echo "exit=$?"                                    # [OK] 裸跑优雅降级：exit=1 且 stderr 含中文指引
 ```
 
 排障与 `upstream/`/子模块相关问题见 [.agents/rules/build-test.md](../.agents/rules/build-test.md) 的常见问题排查。

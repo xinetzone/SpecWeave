@@ -272,7 +272,9 @@ podman run --rm docker.io/library/hello-world
 # 容器内验证内嵌编排工具（镜像内置，版本固定自 vendor/ 子模块，详见 docs/17-upstream-tools.md）
 podman-compose --version                      # podman-compose（main env，本地源 pip 安装）
 python -c "import podman; print('[OK] podman SDK importable')"   # podman-py SDK（main env）
-toolbox --version                             # toolbox 二进制活性（/usr/local/bin，golang aux 阶段构建；容器内裸跑需宿主 Toolbx 启动器）
+toolbox --version                             # toolbox 真二进制活性（经 /usr/local/bin 包装器透传至 /usr/local/libexec/toolbox）
+test -x /usr/bin/flatpak-spawn                # Toolbx 宿主回调前提（ForwardToHost 依赖）
+toolbox; echo "exit=$?"                       # 裸跑优雅降级：exit=1 且 stderr 输出中文可执行指引
 ```
 
 ### 6. ML工具验证
@@ -382,7 +384,7 @@ git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbo
 
 - [ ] `invoke build`构建成功，构建日志清晰（3 阶段 + toolbox-builder aux 阶段，final 内 5 层运行时分层）
 - [ ] 构建前 `upstream/` 已被 stage 到 `<应用根>/upstream/`（含 podman-compose/podman-py/toolbox 三个源树）
-- [ ] 容器内三项内嵌工具检查通过：`podman-compose --version`、`python -c "import podman"`、`toolbox --version`（toolbox 仅验二进制活性，容器内裸跑需宿主 Toolbx 启动器）
+- [ ] 容器内三项内嵌工具检查通过：`podman-compose --version`、`python -c "import podman"`、`toolbox --version`；另确认 `test -x /usr/bin/flatpak-spawn` 通过、裸跑 `toolbox` 退出码为 1 且 stderr 输出包装器中文指引（真二进制位于 `/usr/local/libexec/toolbox`）
 - [ ] `invoke run`启动成功，打印SSH/Jupyter访问信息
 - [ ] SSH可连接（密码或公钥认证）
 - [ ] Jupyter Lab可在浏览器访问

@@ -11,6 +11,17 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 | 类型 | 变更 |
 |------|------|
 | fix | 修正 toolbox 验证探针假阳性与能力声明过宽：Containerfile aux 阶段与 Layer 5 两处探针由 `toolbox --help >/dev/null 2>&1`（cobra 在 `PersistentPreRunE` 前短路 `--help`，且重定向吞掉 stderr，致使容器内裸跑 `toolbox` 报 `Error: TOOLBOX_PATH not set` 时仍打印 [OK]）改为**无重定向**的 `toolbox --version` 活性探针，标签由 "available" 改为 "binary present (liveness only)"；同步 docs/17-upstream-tools.md、docs/04-image-architecture.md、.agents/rules/containerfile.md、.agents/rules/build-test.md，明确 toolbox 的容器创建/进入能力由宿主侧 Toolbx 启动器提供，普通 podman 会话中裸跑 `toolbox` 按上游设计报错，镜像内仅声明二进制活性（预防措施：验证探针类型=假阳性探针 + 声明-事实不一致） |
+| fix | toolbox 运行时错误优雅降级 + 对齐官方镜像：补装 `flatpak-xdg-utils` 并提供 `/usr/bin/flatpak-spawn` symlink（`ForwardToHost` 宿主回调前提，对齐官方 `images/ubuntu/26.04/Containerfile`）；真二进制移位至 `/usr/local/libexec/toolbox`，`/usr/local/bin/toolbox` 改由新增的 `scripts/toolbox-wrapper.sh` 承担——有 `TOOLBOX_PATH` 时 `exec` 真二进制、`-h/--help/--version` 短路透传（注意 `-v` 是上游 verbose 计数标志，不属短路型，故不透传），其余情况输出中文可执行指引并保持退出码 1（不再暴露上游裸错误 `Error: TOOLBOX_PATH not set`）；Layer 4/5 [VALIDATE] 6→7 项，Layer 5/5 [OK] 23→25 项（新增 `flatpak-spawn` 存在性与裸跑降级双向断言）；同步 AGENTS.md、docs/04-image-architecture.md、docs/07-toolbx-passthrough.md、docs/17-upstream-tools.md、.agents/rules/containerfile.md、.agents/rules/build-test.md（预防措施：能力声明的运行前提未随资产一并搬运 + 裸错误无可执行指引） |
+
+## 2026-09-09
+
+| 类型 | 变更 |
+|------|------|
+| fix | jpman `rebuild`/`rebuild-all` 补 `--format docker`：OCI 格式忽略 SHELL 指令，导致 Stage 2 的 bash 数组语法在 dash 下报 Syntax error |
+| fix | 宿主 socket 直通 B-scheme：entrypoint `setup_podman()` 用 `stat -Lc '%G'` 读取宿主直通 socket 属组并以 `usermod -aG` 叠加（须早于 `exec /usr/bin/supervisord`），解决容器内 devuser 访问宿主 socket 报 EACCES（C-I2）；严禁 `chmod 666`/`chown` 宿主 socket |
+| fix | Jupyter devuser 与 libpod/tmp 目录准备：容器内 podman 运行所需运行时目录在启动阶段创建 |
+| fix | 宿主直连 socket 挂载绕开嵌套 userns 映射带来的权限错位 |
+| chore | vendor/ 三上游子模块 pin commit 更新 |
 
 ## 2026-09-08
 
@@ -30,6 +41,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 | fix | jpman rebuild-all/rebuild 补 `--format docker`：OCI 格式忽略 SHELL 指令导致 Stage 2 bash 数组语法在 dash 下报 Syntax error |
 | fix | Containerfile Miniforge 下载 `--max-time` 300s→900s：慢速链路（~200KB/s）拉取 124MB 安装包双源 4 次尝试全部超时 |
 | refactor | 合并 Containerfile.hidden 至主 Containerfile 并删除：Layer 4 吸收 root 配置权限与 allow_hidden 校验（VALIDATE 5/5→6/6）；jpman rebuild 改为主 Containerfile 层缓存构建（配置变更仅重建 Layer 4/5）；同步 AGENTS/README/docs/14/16、.agents/README、jpman-podman-ops SKILL.md 共 8 处引用 |
+
+## 2026-08-28
+
+| 类型 | 变更 |
+|------|------|
+| feat | jupyter-podman-rootless 任务系统 Windows 环境适配：任务定义适配 pwsh shell、构建与容器任务补充环境变量传递、manage 任务兼容 Windows 路径、build/container 增加运行时检测；xmnn 四模型组验证 |
 
 ## 2026-08-27
 

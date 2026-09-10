@@ -29,7 +29,7 @@
 #
 # Runtime Stage Layering (final stage, dockerfile-runtime-logical-layering pattern v1.4):
 #   Layer 1/5: 从base-runtime继承（系统包+locale+tz+Podman） (变化频率: 最低)
-#   Layer 2/5: COPY --from=conda-builder /opt/conda + COPY --from=toolbox-builder /out/toolbox (变化频率: 低)
+#   Layer 2/5: COPY --from=conda-builder /opt/conda + COPY --from=toolbox-builder /out/toolbox → /usr/local/libexec/toolbox (变化频率: 低)
 #   Layer 3/5: 用户创建 + subuid/subgid + 目录权限 + Podman配置 (变化频率: 中)
 #   Layer 4/5: 配置文件COPY + 权限设置 + 语法验证 (变化频率: 高)
 #   Layer 5/5: 最终元数据 + 清理 + 最终验证 (变化频率: 最低)
@@ -117,7 +117,11 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
         slirp4netns \
         passt \
         libcap2-bin \
+        flatpak-xdg-utils \
     && echo "[OK] Runtime system packages installed" && \
+    echo "[BUILD] Linking flatpak-spawn for Toolbx host callback (mirrors upstream images/ubuntu/26.04/Containerfile)..." && \
+    ln -sf /usr/libexec/flatpak-xdg-utils/flatpak-spawn /usr/bin/flatpak-spawn && \
+    test -x /usr/bin/flatpak-spawn && echo "[OK] flatpak-spawn available (/usr/bin/flatpak-spawn)" && \
     echo "[INFO] Verifying key runtime package versions:" && \
     echo "  - git: $(git --version 2>/dev/null | awk '{print $3}')" && \
     echo "  - openssh-server: $(dpkg-query -W -f='${Version}' openssh-server 2>/dev/null || echo 'N/A')" && \
@@ -126,6 +130,7 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
     echo "  - fuse-overlayfs: $(fuse-overlayfs --version 2>/dev/null | head -1 | awk '{print $2}')" && \
     echo "  - slirp4netns: $(slirp4netns --version 2>/dev/null | head -1 | awk '{print $3}')" && \
     echo "  - pasta: $(pasta --version 2>/dev/null | head -1 | awk '{print $NF}')" && \
+    echo "  - flatpak-xdg-utils: $(dpkg-query -W -f='${Version}' flatpak-xdg-utils 2>/dev/null || echo 'N/A')" && \
     echo "[BUILD] Generating zh_CN.UTF-8 locale..." && \
     sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen zh_CN.UTF-8 && \
@@ -149,7 +154,7 @@ RUN echo "=== Stage 1/3: base-runtime — Install system packages + Chinese loca
     echo "[TIMER] Stage 1/3 base-runtime took ${_ELAPSED}s"
 
 # ═══════════════════════════════════════════════════════════════════
-# Stage (aux): toolbox-builder — 构建 /usr/local/bin/toolbox 二进制（隔离 Go 构建阶段）
+# Stage (aux): toolbox-builder — 构建 toolbox 真二进制（final 安装至 /usr/local/libexec/toolbox）
 # 变化频率：低（仅当 pinned upstream/toolbox 源树变更时重建）
 # 产物：/out/toolbox，仅供 final 阶段 COPY --from；源树与 Go 工具链均不进 final
 # 原则：golang 官方镜像基于 Debian bookworm（glibc 2.36 <= final ubuntu:26.04，二进制向下兼容）；
@@ -484,6 +489,8 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 # Layer 2/5 (final): COPY builder 产物 — /opt/conda（conda-builder）+ toolbox（toolbox-builder）
 # 变化频率：低（builder 产物变更时；toolbox 为独立 Go 剥离(-s -w)二进制，变化频率最低）
 # 原则：COPY整个/opt/conda目录（已在builder阶段完成清理和strip）；toolbox 仅一个可执行文件，chmod 755
+#       真二进制落 /usr/local/libexec/toolbox 而非 /usr/local/bin：/usr/local/bin/toolbox 留给 Layer 4/5
+#       安装的「裸跑指引包装器」（容器内无宿主 Toolbx 启动器时优雅降级），避免真二进制被 wrapper 遮蔽
 # ═══════════════════════════════════════════════════════════════════
 RUN echo "=== Stage 3/3: final runtime — Starting final assembly ===" && \
     _FINAL_START=$(date +%s) && \
@@ -491,15 +498,15 @@ RUN echo "=== Stage 3/3: final runtime — Starting final assembly ===" && \
     echo ""
 
 COPY --from=conda-builder /opt/conda /opt/conda
-COPY --from=toolbox-builder /out/toolbox /usr/local/bin/toolbox
+COPY --from=toolbox-builder /out/toolbox /usr/local/libexec/toolbox
 
-RUN echo "=== Layer 2/5: COPY conda (/opt/conda) + toolbox (/usr/local/bin/toolbox) ===" && \
+RUN echo "=== Layer 2/5: COPY conda (/opt/conda) + toolbox (/usr/local/libexec/toolbox) ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[OK] /opt/conda copied from conda-builder stage" && \
-    chmod 755 /usr/local/bin/toolbox && \
-    test -x /usr/local/bin/toolbox && echo "[OK] /usr/local/bin/toolbox copied from toolbox-builder (chmod 755)" && \
-    echo "[INFO] toolbox binary size: $(du -h /usr/local/bin/toolbox 2>/dev/null | cut -f1 || echo 'N/A')" && \
-    echo "[INFO] /usr/local/bin already on PATH (inherited ubuntu PATH, reaffirmed in /etc/environment): $(command -v toolbox)" && \
+    chmod 755 /usr/local/libexec/toolbox && \
+    test -x /usr/local/libexec/toolbox && echo "[OK] /usr/local/libexec/toolbox copied from toolbox-builder (real binary, chmod 755)" && \
+    echo "[INFO] toolbox binary size: $(du -h /usr/local/libexec/toolbox 2>/dev/null | cut -f1 || echo 'N/A')" && \
+    echo "[INFO] /usr/local/bin/toolbox (guidance wrapper, Layer 4/5) execs /usr/local/libexec/toolbox when TOOLBOX_PATH is set" && \
     echo "[INFO] Copied /opt/conda size: $(du -sh /opt/conda 2>/dev/null | cut -f1 || echo 'N/A')" && \
     echo "[INFO] conda version: $(conda --version 2>&1)" && \
     echo "[INFO] Python version: $(python --version 2>&1)" && \
@@ -621,6 +628,7 @@ COPY config/containers/storage.conf /etc/containers/storage.conf
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY --chmod=755 scripts/healthcheck.sh /usr/local/bin/healthcheck.sh
 COPY --chmod=755 scripts/olot_car.py /usr/local/bin/olot_car.py
+COPY --chmod=755 scripts/toolbox-wrapper.sh /usr/local/bin/toolbox
 
 RUN echo "=== Layer 4/5: Install configs, fix permissions, validate syntax ===" && \
     _STAGE_START=$(date +%s) && \
@@ -630,34 +638,36 @@ RUN echo "=== Layer 4/5: Install configs, fix permissions, validate syntax ===" 
     chown root:root /root/.jupyter/jupyter_notebook_config.py && \
     chmod 644 /root/.jupyter/jupyter_notebook_config.py && \
     echo "[BUILD] Converting CRLF to LF for all scripts and configs..." && \
-    for f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/olot_car.py; do \
+    for f in /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/olot_car.py /usr/local/bin/toolbox; do \
         if [ -f "$f" ]; then \
             sed -i 's/\r$//' "$f"; \
             echo "[OK] CRLF stripped: $f"; \
         fi; \
     done && \
-    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/olot_car.py && \
+    chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/healthcheck.sh /usr/local/bin/olot_car.py /usr/local/bin/toolbox && \
     echo "" && \
     echo "┌─────────────────────────────────────────────────┐" && \
     echo "│  [VALIDATION CHECKPOINT - Layer 4/5]            │" && \
     echo "│  Running syntax validation for all configs      │" && \
     echo "└─────────────────────────────────────────────────┘" && \
-    echo "[VALIDATE 1/6] sshd -t (SSH daemon config syntax)..." && \
+    echo "[VALIDATE 1/7] sshd -t (SSH daemon config syntax)..." && \
     sshd -t && echo "[OK] sshd_config syntax valid" && \
-    echo "[VALIDATE 2/6] bash -n entrypoint.sh (shell syntax)..." && \
+    echo "[VALIDATE 2/7] bash -n entrypoint.sh (shell syntax)..." && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh bash syntax valid" && \
-    echo "[VALIDATE 3/6] bash -n healthcheck.sh (shell syntax)..." && \
+    echo "[VALIDATE 3/7] bash -n healthcheck.sh (shell syntax)..." && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh bash syntax valid" && \
-    echo "[VALIDATE 4/6] python py_compile olot_car.py (Python syntax)..." && \
+    echo "[VALIDATE 4/7] python py_compile olot_car.py (Python syntax)..." && \
     python -c "import py_compile; py_compile.compile('/usr/local/bin/olot_car.py', doraise=True)" && echo "[OK] olot_car.py Python syntax valid" && \
-    echo "[VALIDATE 5/6] Checking supervisord config..." && \
+    echo "[VALIDATE 5/7] bash -n toolbox wrapper (shell syntax)..." && \
+    bash -n /usr/local/bin/toolbox && echo "[OK] toolbox wrapper bash syntax valid" && \
+    echo "[VALIDATE 6/7] Checking supervisord config..." && \
     test -f /etc/supervisor/supervisord.conf && echo "[OK] supervisord.conf exists" && \
-    echo "[VALIDATE 6/6] Checking allow_hidden config (root + devuser)..." && \
+    echo "[VALIDATE 7/7] Checking allow_hidden config (root + devuser)..." && \
     grep -q 'allow_hidden.*True' /root/.jupyter/jupyter_notebook_config.py && \
     grep -q 'allow_hidden.*True' /home/devuser/.jupyter/jupyter_notebook_config.py && \
     echo "[OK] allow_hidden enabled in both jupyter configs" && \
     echo "" && \
-    echo "[OK] All 6 validation checks passed" && \
+    echo "[OK] All 7 validation checks passed" && \
     _NOW=$(date +%s) && \
     _ELAPSED=$((_NOW - _STAGE_START)) && \
     _START=$(grep '^START=' /tmp/.build-timer | cut -d= -f2) && \
@@ -722,7 +732,12 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     command -v pasta >/dev/null 2>&1 && echo "[OK] pasta available (rootless netns)" && \
     podman-compose --version && echo "[OK] podman-compose available (main env)" && \
     python -c "import podman; print('[OK] podman SDK (podman-py) importable (main env)')" && \
-    toolbox --version && echo "[OK] toolbox binary present (/usr/local/bin; liveness only — bare 'toolbox' needs Toolbx host launcher)" && \
+    toolbox --version && echo "[OK] toolbox available (guidance wrapper -> /usr/local/libexec/toolbox; version flag exits 0 without TOOLBOX_PATH)" && \
+    test -x /usr/bin/flatpak-spawn && echo "[OK] flatpak-spawn available (Toolbx host callback prerequisite; mirrors upstream images/ubuntu/26.04/Containerfile)" && \
+    sh -c 'toolbox >/dev/null 2>/tmp/.toolbox-bare.err; test "$?" -eq 1' && \
+    grep -q 'TOOLBOX_PATH is not set in this session' /tmp/.toolbox-bare.err && \
+    rm -f /tmp/.toolbox-bare.err && \
+    echo "[OK] bare 'toolbox' degrades gracefully (exit 1 + guidance text instead of raw upstream error)" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1 and not sys._is_gil_enabled(); print('[OK] Python free-threading verified at final checkpoint (cp314t, GIL disabled)')" && \
@@ -751,7 +766,8 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     echo "╚══════════════════════════════════════════════════════════════╝" && \
     echo "" && \
     echo "[INFO] Runtime chain: base-runtime (system) → conda-builder (build /opt/conda + podman-py/podman-compose) → final (runtime assembly)" && \
-    echo "[INFO] Aux stage: toolbox-builder (golang:1.26-bookworm) → /usr/local/bin/toolbox via COPY --from (not in final)" && \
+    echo "[INFO] Aux stage: toolbox-builder (golang:1.26-bookworm) → /usr/local/libexec/toolbox via COPY --from (not in final)" && \
+    echo "[INFO] /usr/local/bin/toolbox is the guidance wrapper (Layer 4/5); it execs the real binary when TOOLBOX_PATH is set" && \
     echo "[INFO] Build tools (curl/wget/binutils/Go toolchain) are NOT in final image (isolated in conda-builder / toolbox-builder stages)" && \
     rm -f /tmp/.build-timer && \
     echo "[BUILD] ========== BUILD COMPLETE (multistage: 3-stage chain + toolbox-builder aux stage) ==========" && \
