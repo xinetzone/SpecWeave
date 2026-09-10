@@ -130,7 +130,9 @@ services:
 - 各覆盖文件头部必须写明该项的前置检查命令（`test -S` / `test -e`）
 - `network_mode: host` 与端口发布互斥：覆盖文件须用 `ports: !reset []` 清除基座端口映射（`!reset`/`!override` 由 podman-compose 原生支持）
 - `network_mode: host` 下**不能沿用容器内 22 端口**：rootless Podman 容器 root 映射为宿主非特权 UID，绑定特权端口（<1024）被拒绝，sshd 会 FATAL 退出（实测 `Bind to port 22 on 0.0.0.0 failed: Permission denied`）。覆盖文件须设 `SSHD_PORT` 为非特权端口（默认 2222），Jupyter 的 8888 不受影响
-- **执行环境硬约束**：`podman-compose` 命令必须在 WSL / podman machine 内执行。Windows 原生 shell 下它会把 Linux 绝对挂载源（如 `/run/user/1000/bus`）按当前盘符解析为 `D:\run\...` 并操作本地文件，命令直接失败（实测报 `Not allow operate files: D:\run`；仅基座 + `compose.dev.yaml` 即已复现，非分层覆盖引入）
+- **执行环境硬约束（已下沉为工具层门禁）**：`podman-compose` 在 **Windows 原生宿主上是无效组合**，原因不是「未安装」而是「路径语义错配」——它是宿主进程内的路径处理器，会用 `ntpath` 预处理 compose 中的挂载源：`/run/user/1000/bus` 被按「当前盘符根」解析为 `D:\run\user\1000\bus`，随后 compose 内部 `assert_volume()` 见该路径不存在便 `os.makedirs()` 试图在宿主创建目录（实测 `PermissionError [WinError 5]` + 沙箱 `Not allow operate files: D:\run`；失败被 `except OSError: pass` 吞掉后 podman 仍收到被篡改的挂载源）。
+  - **工具层已拦截**：`tasks/client.py::compose_available()` 在 Windows 原生宿主恒返回 `False`，三层降级自动落到 Tier 2 SDK / Tier 3 CLI——它们把 Linux 绝对路径原样交给 podman（Windows 上是远程客户端，路径由 machine 内 daemon 解析），因此路径语义一致
+  - 仍需在 WSL / `podman machine ssh` 内执行的场景：**绕过 invoke 手敲 `podman-compose up`**（此时工具层门禁不生效，且会在宿主留下 `D:\run`、`D:\dev`、`D:\home` 等错误目录，请勿使用）
 - 覆盖文件覆盖 `image` 时**不得复用 `${IMAGE_TAG}`**：应用会自动生成 `.env` 并写入 `IMAGE_TAG`，复用会导致覆盖静默失效（改用独立变量如 `PASSTHROUGH_IMAGE_TAG`）
 
 ## 环境变量配置

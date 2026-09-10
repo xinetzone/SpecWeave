@@ -11,7 +11,7 @@ from pathlib import Path
 from invoke import Context, task
 from invoke.exceptions import Exit
 
-from .client import compose_available, get_client, sdk_build_kwargs, sdk_available
+from .client import compose_available, compose_unavailable_reason, get_client, sdk_build_kwargs, sdk_available
 from .compose_backend import compose_build, is_compose_ready
 from .stage_upstream import stage_upstream_sources
 from .utils import MIRROR_CHOICES, detect_runtime, run_cmd
@@ -157,6 +157,10 @@ def build(
         if compose_build(project_root=project_root, no_cache=no_cache, build_args=build_args):
             return
         print("[Compose] Build failed, falling back to SDK/CLI...")
+    else:
+        reason = compose_unavailable_reason()
+        if reason:
+            print(f"[Backend] 跳过 Tier 1（podman-compose）：{reason}")
 
     # Tier 2 + 3: SDK then CLI
     if not _build_via_sdk(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache):

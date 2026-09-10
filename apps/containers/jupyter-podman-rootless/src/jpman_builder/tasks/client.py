@@ -24,7 +24,22 @@ except ImportError:
     _SDK_AVAILABLE = False
 
 # Check for podman-compose (daemon-less declarative backend)
-_COMPOSE_AVAILABLE = shutil.which("podman-compose") is not None
+#
+# ⚠️ Windows 原生宿主上恒不可用，原因不是「未安装」而是「路径语义错配」：
+# podman-compose 是运行在宿主进程内的路径处理器——它先用宿主路径语义预处理
+# compose 中的挂载源，再把结果交给 podman。Windows 下 ntpath 把以 `/` 开头的
+# 组件当作「驱动器根」，于是 `/run/user/1000/bus` 被解析为当前盘符下的
+# `D:\run\user\1000\bus`；随后 compose 内部 assert_volume()（1.6.0 第 591 行
+# 做 os.path.join/abspath，第 600 行 os.makedirs）见该路径不存在，便试图在宿主
+# 创建目录，实测触发 PermissionError [WinError 5] 与沙箱拦截
+# `Not allow operate files: D:\run`；失败被 `except OSError: pass` 吞掉后
+# podman 仍会收到被篡改的挂载源。
+# 而 podman 本身（Windows 上是远程客户端）会把 Linux 绝对路径原样转发给
+# machine 内 daemon 解析——即「路径语义一致」只在 SDK/CLI 层成立。
+# 因此 Windows 上必须跳过 Tier 1，自动降级到 Tier 2 SDK / Tier 3 CLI。
+_COMPOSE_BINARY_PRESENT = shutil.which("podman-compose") is not None
+_COMPOSE_HOST_SUPPORTED = os.name != "nt"
+_COMPOSE_AVAILABLE = _COMPOSE_BINARY_PRESENT and _COMPOSE_HOST_SUPPORTED
 
 
 # ── B-scheme: host podman rootless socket pass-through ──────────
@@ -48,8 +63,27 @@ def sdk_available():
 
 
 def compose_available():
-    """Check if podman-compose command is available."""
+    """Check if podman-compose backend is usable on this host.
+
+    Windows 原生宿主恒为 False（见模块顶部说明）：podman-compose 会用 ntpath
+    语义解析 compose 中的 Linux 绝对挂载源，并试图在宿主创建错误目录。
+    此时应改走 Tier 2 SDK / Tier 3 CLI——它们把路径原样交给 podman 远程客户端。
+    """
     return _COMPOSE_AVAILABLE
+
+
+def compose_unavailable_reason():
+    """Return why the podman-compose backend is unusable; None when it is usable."""
+    if not _COMPOSE_BINARY_PRESENT:
+        return "podman-compose 未安装（pip install -e \".[compose]\"）"
+    if not _COMPOSE_HOST_SUPPORTED:
+        return (
+            "Windows 原生宿主不支持 podman-compose：它会把 compose 中的 Linux 绝对挂载源"
+            "按当前盘符解析（/run/... → D:\\run\\...）并试图在宿主创建该目录"
+            "（报 Not allow operate files: D:\\run）。请在 WSL / `podman machine ssh` 内执行，"
+            "或改用 invoke（自动降级到 SDK/CLI 后端，路径由远端 daemon 解析）"
+        )
+    return None
 
 
 @contextmanager
@@ -169,6 +203,7 @@ __all__ = [
     "APIError",
     "PodmanNotFound",
     "compose_available",
+    "compose_unavailable_reason",
     "get_client",
     "podman_sock_path",
     "sdk_available",

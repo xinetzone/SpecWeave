@@ -41,7 +41,7 @@ source: "README.md#三层后端编排架构"
 
 ## Tier 1: podman-compose 后端（优先）
 
-**触发条件**：`podman-compose` Python包已安装
+**触发条件**：`podman-compose` Python包已安装 **且宿主非 Windows 原生**（见下方「宿主兼容性」）
 
 **实现文件**：`tasks/compose_backend.py`
 
@@ -62,6 +62,16 @@ source: "README.md#三层后端编排架构"
 # 通过subprocess调用podman-compose命令
 subprocess.run(["podman-compose", "-f", "compose.yaml", "up", "-d", "--build"])
 ```
+
+**宿主兼容性（Windows 原生不可用）**：
+
+`podman-compose` 是**运行在宿主进程内的路径处理器**——它先用宿主路径语义预处理 compose 中的挂载源，再交给 podman。Windows 下 `ntpath` 把以 `/` 开头的组件当作「驱动器根」，`/run/user/1000/bus` 因此被解析成当前盘符下的 `D:\run\user\1000\bus`；随后 compose 内部 `assert_volume()`（1.6.0 第 591/600 行）见该路径不存在，便调用 `os.makedirs()` 试图在宿主创建目录，实测报 `PermissionError [WinError 5]` 并触发沙箱 `Not allow operate files: D:\run`；该失败被 `except OSError: pass` 吞掉后，podman 仍会收到被篡改的挂载源。
+
+而 **podman 本身不会这样**：Windows 上它是远程客户端，会把 Linux 绝对路径**原样转发**给 machine 内 daemon 解析。即路径语义只在 SDK/CLI 层才一致。
+
+因此 `tasks/client.py::compose_available()` 在 Windows 原生宿主**恒返回 `False`**，三层降级自动落到 Tier 2/3，并在 `invoke build` 输出一行跳过原因（`compose_unavailable_reason()`）。
+
+> 仅在**绕过 invoke 手敲 `podman-compose up`** 时该门禁不生效——此时会在宿主留下 `D:\run`、`D:\dev`、`D:\home` 等错误目录，请勿使用；需要标准 Compose 体验请在 WSL / `podman machine ssh` 内执行。
 
 ## Tier 2: podman-py SDK 后端
 
