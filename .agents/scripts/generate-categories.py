@@ -52,9 +52,9 @@ THEME_DIRS = [
 
 
 def get_categories_path(root: Path) -> Path:
+    # 模式库已随 .agents/docs/ 统一迁移至 docs/ 文档中心（OKF v0.2）
     return (
         root
-        / ".agents"
         / "docs"
         / "retrospective"
         / "patterns"
