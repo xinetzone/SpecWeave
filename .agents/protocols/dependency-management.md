@@ -158,10 +158,30 @@ Git 子模块（git submodule）是管理外部完整代码仓库的推荐方式
 2. 添加子模块：
    - third_party：`git submodule add <repo-url> vendor/<name>`
    - owned_collab：`git submodule add -b <branch> <repo-url> vendor/<name>`（如 `-b main`）
+   - 分组引入（同组织多仓）：`git submodule add <repo-url> vendor/<group>/<name>`（如 `vendor/netease-youdao/BCEmbedding`，详见下文「分组子模块」）
 3. 配置 .gitignore：手动管理依赖若包含源码/二进制，须在 vendor/<name>/ 下配置 .gitignore 或在根 .gitignore 添加忽略规则（git 子模块无需此步骤）
 4. 更新元数据：在 vendor/VERSION.md 中添加条目，记录类型、commit 哈希/跟踪分支、版本标签、来源、许可证、用途
 5. 更新 vendor/README.md：在依赖清单表中添加条目
 6. 提交：`.gitmodules`、`vendor/<name>` gitlink、`vendor/README.md`、`vendor/VERSION.md` 一并提交
+
+### 分组子模块（嵌套布局）
+
+当同一组织/生态的多个仓库需要一并引入时（如一次学习某厂商 6 个开源仓），允许使用两级嵌套布局 `vendor/<group>/<repo>`：
+
+```
+vendor/
+├── README.md / VERSION.md / AGENTS.md   # vendor 根级元数据
+└── netease-youdao/                       # 分组目录（非子模块，普通目录）
+    ├── README.md                          # 分组级元数据（必须）
+    ├── BCEmbedding/                       # 子模块 gitlink
+    └── ...
+```
+
+规则：
+- 分组目录本身**不是**子模块，仅承载分组级元数据；允许提交 `vendor/<group>/{README,AGENTS,VERSION}.md`
+- 分组下的仓库仍以 gitlink（mode=160000）跟踪，禁止提交子模块内部任何文件
+- pre-commit vendor 守卫对任意深度的 gitlink 放行（2026-09-09 起，原为仅一级）；两级非 gitlink、非分组元数据的文件仍被阻止
+- 元数据登记方式不变：所有子模块统一在 vendor/VERSION.md 与 vendor/README.md 清单中记录（按分组归类）
 
 ### 元数据要求
 

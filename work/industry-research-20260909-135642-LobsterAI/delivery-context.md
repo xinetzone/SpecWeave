@@ -1,0 +1,112 @@
+# 最终交付上下文
+
+> 仅使用下列已组装或已核查内容，不回读完整报告，不新增事实、计算或来源。
+
+## 报告元信息
+- 报告标题：LobsterAI与桌面级AI Agent市场研究报告
+研究范围：地域为中国市场为主，兼顾全球桌面 Agent 生态；资料截至2026-09-09。
+- Markdown 文件：lobsterai-desktop-ai-agent-market-research.md
+- HTML 文件：lobsterai-desktop-ai-agent-market-research.html
+
+## 核心结论
+1. **桌面级 AI Agent 市场处于规模化落地早期，增速超 110%**。2026 年国内 AI Agent 市场规模约 449 亿元，较 2025 年的 212 亿元同比增长超 110%[1]；AI PC 2025 年 Q1 已占中国大陆 PC 出货量 36%，硬件渗透为桌面 Agent 提供终端基础[2]。这意味着桌面 Agent 正从概念验证进入规模放量阶段，是值得布局的增量市场。
+
+2. **LobsterAI 差异化定位为国内大厂首个 100% 开源桌面 Agent**。其开源仓库累计 3,882 次提交、71 个 Release、最新版本 2026.9.4，8—9 月保持每周发版节奏[23][24]，采用「个人端开源免费 + 企业端私有化交付」双轨路径[21][22]。开源可审计与本地优先架构使其在数据安全敏感的企业客户中具备信任优势，区别于豆包、WorkBuddy、QoderWork 等闭源绑定生态的竞品。
+
+## 行业概览
+本报告研究范围为可连接本地文件、终端、浏览器与项目的桌面级 AI Agent 市场，地域以中国为主、兼顾全球桌面 Agent 生态，资料截至 2026-09-09。该市场处于从"聊天辅助"向"替你干活"的行动 AI 转型期，核心结构为"上游模型—中游框架/运行时—工具连接器—下游桌面应用"四层产业链。
+
+最近的关键变化是 OpenClaw 开源生态爆发式增长与国内大厂集中入局：海外开源项目定义了"桌面上的 AI 同事"技术标准，国内腾讯、阿里、字节、网易形成办公 Agent"四强格局"。LobsterAI 位于产业链下游桌面应用层，其关键价值在于把 OpenClaw 框架封装成可直接操作本地环境的 GUI 产品，瓶颈在于对上游模型成本与 OpenClaw 社区版本稳定性的硬依赖。企业主要靠三条路径拉开差距：一是开源可审计建立的数据安全信任（LobsterAI），二是闭源生态绑定的模型与办公协同（豆包、WorkBuddy、QoderWork），三是通用 Agent 的云端沙箱执行能力（Manus、ChatGPT Agent）。
+
+## 市场规模
+中国桌面级 AI Agent / AI 办公智能体市场处于规模化落地早期。据多家机构联合白皮书测算，2026 年国内 AI Agent 市场规模约 449 亿元，较 2025 年的约 212 亿元同比增长超 110%[1]。硬件侧，Canalys 数据显示 2025 年第一季度中国大陆 AI PC 占 PC 出货量比重已达 36%[2]；IDC 预测 GenAI PC 至 2029 年将占整体 PC 市场 36.5%[3]。
+
+### 市场规模口径
+
+## 产业链与关键瓶颈
+AI Agent 产业链在桌面场景下呈现"上游模型—中游框架/运行时—工具连接器—下游桌面应用"四层结构；LobsterAI 处于下游桌面应用层并向中游延伸，其关键价值在于把 OpenClaw 框架封装成可直接操作本地文件、终端与浏览器的桌面产品，但对上游大模型提供商与 OpenClaw 运行时存在硬依赖，模型成本与框架稳定性直接决定用户体验与商用化节奏 [8][9][10]。
+
+### 产业链四层结构
+
+## 竞争格局
+桌面级 AI Agent 市场已形成"海外开源定义技术标准、国内大厂推动产品化落地"的基本格局，竞争沿开源/闭源、国内/海外、本地执行/云端执行三条主线展开；LobsterAI 凭借国内大厂首个 100% 开源桌面 Agent、GUI 产品化与本地优先架构，在国内办公 Agent"四强格局"中占据差异化位置，但面临社区生态成熟度不足与大厂战略绑定的双重约束。
+
+### 一、竞争范围与市场分层
+
+## 重点企业
+网易有道以 LobsterAI 切入桌面级 Agent 赛道，定位为"国内大厂首个开源桌面级 Agent"，采用「个人端开源免费 + 企业端私有化交付」的双轨商业化路径 [21][22]。截至 2026-09-09，LobsterAI 开源仓库累计 3,882 次提交、71 个发布版本、422 个 Issue，最新版本 2026.9.4，8—9 月保持几乎每周发版的高频迭代节奏 [23][24]。其技术底座明确基于 OpenClaw 框架生态：Cowork 为产品会话层，OpenClaw 为底层运行时与网关，仓库内专设 `openclaw-extensions` 目录并在 `package.json` 中锁定 OpenClaw 版本 [23]。有道正从教育科技公司向 AI 科技企业转型，CEO 周枫将 AI 产品划分为"聊天 AI—思考 AI—行动 AI"三代际，全力布局第三代"行动的 AI"；2025 年有道 AI 订阅销售额接近 4 亿元，验证了"能力 + 订阅"模式的付费意愿 [25]。
+
+桌面级 Agent 竞争格局已形成"大厂闭源生态绑定 + 开源框架生态"双线并行结构。国内闭源阵营以豆包专业版（字节）、WorkBuddy（腾讯）、QoderWork（阿里）为代表，均绑定自有模型与办公生态、采用积分或订阅计费 [26]；海外闭源阵营以 Manus、ChatGPT Agent 为代表，走通用 Agent 路线。LobsterAI 的差异化在于 100% 代码开源、支持 10+ 主流模型与本地 Ollama 部署、深度适配 Windows 生态，并依托有道 OCR、翻译、子曰大模型等能力底座 [21][22]。
+
+## 宏观与政策环境
+2026年5月国家网信办等三部门发布《智能体规范应用与创新发展实施意见》，是中国首部面向 AI 智能体的系统性政策文件，明确将"日常办公"列为低风险领域实行合规自测与行业自律，并把"终端应用"（电脑、手机等终端设备协同）列为重点场景[27]。叠加《网络数据安全管理条例》对境内收集产生的重要数据和个人信息的本地化与出境评估要求[29][30]，以及 OpenClaw 为代表的开源本地优先 Agent 框架在 2025 年底至 2026 年初的爆发式增长[31]，桌面级 Agent（如 LobsterAI）面临的政策环境总体方向是"鼓励创新、合规托底"：办公场景获低风险治理便利，数据本地化与供应链安全构成实质合规门槛，开源生态获政策明确支持。
+
+### 一、AI 智能体专项政策
+
+## 趋势、机会与风险
+桌面级 AI Agent 正从"聊天辅助"加速迈入"替你干活"的行动 AI 阶段，LobsterAI 凭借开源可审计与本地优先架构，在政策友好窗口与 AI PC 渗透红利中占据差异化位置；这一判断依赖 OpenClaw 生态持续繁荣与企业对数据主权需求的上升，可通过 LobsterAI 企业版签约数、OpenClaw 版本迭代频率与国产模型成本下降幅度持续跟踪。
+
+### 技术趋势：本地优先 + 多模型可插拔成为桌面 Agent 标准架构
+
+## 结论与展望
+桌面级 AI Agent 正加速迈入"替你干活"的行动 AI 阶段，LobsterAI 凭借开源可审计与本地优先架构，在政策友好窗口与 AI PC 渗透红利中占据差异化位置。这一判断依赖 OpenClaw 生态持续繁荣与企业对数据主权需求的上升，可通过 LobsterAI 企业版签约数、OpenClaw 版本迭代频率与国产模型成本下降幅度持续跟踪。
+
+未来 12—18 个月需重点关注：一是国产模型推理成本下降是否足以支撑桌面 Agent 的高频调用；二是 LobsterAI 第三方 Skills 生态能否缩小与闭源大厂产品的功能差距；三是强监管行业（金融、政务）对开源私有化部署 Agent 的采购节奏。若 OpenClaw 生态出现重大分裂或网易调整 AI 战略优先级，LobsterAI 的差异化优势可能被削弱。
+
+## 可复用视觉数据
+
+```visual
+type: snapshot
+title: 桌面级 AI Agent 市场关键事实
+source: [1][2][23][25][27]
+item: 市场规模 | 2026年约449亿元（同比+110%） | 桌面Agent进入规模放量早期 [1]
+item: AI PC渗透 | 2025Q1占出货36%，2029年GenAI PC占36.5% | 硬件终端基础正在形成 [2]
+item: LobsterAI迭代 | 3882次提交、71个Release、2026.9.4 | 高频迭代验证产品活力 [23]
+item: 有道AI订阅 | 2025年接近4亿元 | "能力+订阅"付费意愿已验证 [25]
+item: 政策窗口 | 日常办公列为低风险领域 | 桌面Agent获合规治理便利 [27]
+```
+
+```chart
+title: 中国AI智能体市场规模及预测
+purpose: trend
+type: line
+unit: 亿元
+period: 2025-2030
+geography: 中国
+property: 混合
+source: [4]
+item: 2025 | 804 | 804 | 实际
+item: 2030 | 6968 | 6968 | 预测
+```
+
+```chart
+title: AI办公智能体使用者付费意愿分布
+purpose: composition
+type: bar
+unit: %
+period: 2026
+geography: 中国
+property: 跟踪统计
+source: [4]
+item: 愿意付费 | 59.1 | 59.1 | 跟踪统计
+item: 观望 | 35.6 | 35.6 | 跟踪统计
+```
+
+## 上述内容引用的参考资料
+1. [大厂All in AI办公：从"聊天框"到"替你干活"的入口战争](https://m.sohu.com/a/1065817249_121804985/) — 闪闻深读（搜狐），2026-08-21（转引多家机构联合白皮书、易观分析）
+2. [联想不相信AI PC泡沫](https://m.36kr.com/p/3655983654679047) — 市象（36氪），2026-01-26（转引Canalys）
+3. [IDC：2026年中国PC市场预计同比下降0.8% GenAI PC逆势爆发同比增长146.5%](https://finance.sina.com.cn/stock/hkstock/ggscyd/2025-11-27/doc-infyvnye0147883.shtml) — 智通财经网（新浪财经转载），2025-11-27（转引IDC）
+4. [艾媒咨询 | 2026年中国AI办公智能体产业发展白皮书](https://www.iimedia.cn/c400/113198.html) — 艾媒网，2026-07-20
+8. [netease-youdao/LobsterAI — GitHub](https://github.com/netease-youdao/LobsterAI) — 网易有道，仓库 README 原文，2026 年 9 月（最近提交 Sep 4, 2026）
+9. [OpenClaw 2.0 Releases with Simplified Setup and Collaborative Agents — InfoQ](https://www.infoq.com/news/2026/09/openclaw-2-release/) — Daniel Dominguez / InfoQ，2026-09-01
+10. [OpenClaw Documentation — Overview](https://docs.openclaw.ai/) — OpenClaw Foundation，日期不详
+21. [LobsterAI 有道龙虾官网](https://lobsterai.youdao.com/) — 网易有道，日期不详
+22. [LobsterAI 企业版](https://ai.youdao.com/new/lobsterai) — 网易有道智云，日期不详
+23. [netease-youdao/LobsterAI GitHub 仓库](https://github.com/netease-youdao/LobsterAI/) — NetEase Youdao，2026-09-04（最新提交）
+24. [LobsterAI Releases](https://github.com/netease-youdao/LobsterAI/releases) — NetEase Youdao，2026-09-04（最新版本）
+25. [「OpenClaw之父点赞」终结百虾大战？一场升级版的AI原生革命上演](https://post.m.smzdm.com/p/a035rqdr/) — 新智元（引自知乎），2026-04-07
+26. [豆包、WorkBuddy、QoderWork怎么选？我用8个真实办公任务把三家桌面Agent测明白了](https://m.huxiu.com/article/4875072.html?type=text) — 夕小瑶科技说（虎嗅转载），2026-07-14
+27. [智能体规范应用与创新发展实施意见](https://www.cac.gov.cn/2026-05/08/c_1779979789523320.htm) — 中国网信网，2026年5月8日
+29. [网络数据安全管理条例](https://xzfg.moj.gov.cn/front/law/detail?LawID=1734) — 司法部（国务院令第790号），2024年9月24日公布，2025年1月1日施行
+30. [《促进和规范数据跨境流动规定》实施两周年 数据出境安全管理工作再上新台阶](https://www.cac.gov.cn/2026-03/23/c_1775999628849905.htm) — 中国网信网，2026年3月23日
+31. [重构与崛起：OpenClaw时代的中国Agent产业生态报告](https://hulianhutongshequ.cn/upload/tank/report/2026/202605/1/052f47521f244da5b094c1ce334a933d.pdf) — 易观分析，2026年4月

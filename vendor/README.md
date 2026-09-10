@@ -28,6 +28,12 @@
 | podman-compose | main@e3df1047 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit） |
 | podman-py | main@5dd81b49 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit） |
 | toolbox | main@81401f64 (子模块) | third_party | 2026-09-08 | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit） |
+| netease-youdao/BCEmbedding | N/A@1aa07ea (子模块) | third_party | 2026-09-09 | 网易有道 BCEmbedding 语义 Embedding/RAG 工具链（只读依赖，gitlink pin commit） |
+| netease-youdao/Confucius4-TTS | N/A@4fb32c4 (子模块) | third_party | 2026-09-09 | 网易有道 Confucius4-TTS 语音合成（只读依赖，gitlink pin commit） |
+| netease-youdao/EmotiVoice | v0.3-17-g59f0f36 (子模块) | third_party | 2026-09-09 | 网易有道 EmotiVoice 情感语音合成（只读依赖，pin commit，HEAD 超前 v0.3 17 commits） |
+| netease-youdao/LobsterAI | 2026.9.4@7592cd0 (子模块) | third_party | 2026-09-09 | 网易有道 LobsterAI AI Agent 桌面应用（只读依赖，固定 tag 2026.9.4） |
+| netease-youdao/QAnything | v2.0.0-69-g615417a (子模块) | third_party | 2026-09-09 | 网易有道 QAnything 企业级 RAG 问答（只读依赖，pin commit，HEAD 超前 v2.0.0 69 commits） |
+| netease-youdao/ScholarClaw | N/A@97bdb5e (子模块) | third_party | 2026-09-09 | 网易有道 ScholarClaw 学术搜索 Agent（只读依赖，gitlink pin commit） |
 
 ## 使用说明
 

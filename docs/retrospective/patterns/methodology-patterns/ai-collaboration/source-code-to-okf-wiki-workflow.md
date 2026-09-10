@@ -3,7 +3,7 @@ type: Pattern
 id: "source-code-to-okf-wiki-workflow"
 source: "spec:pyinvoke-okf-wiki"
 maturity: "L1"
-validation_count: 4
+validation_count: 5
 ---
 # 源码阅读→OKF Wiki生成工作流
 
@@ -13,7 +13,7 @@ validation_count: 4
 
 ## 成熟度
 
-L1 已验证（4次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki；2026-08-28 Protocol Buffers v37.0 超大规模 monorepo 双束；2026-08-29 Tongyi-MAI 多子项目生态归并三束）
+L1 已验证（5次验证：2026-08-21 PyInvoke v3.0.3 源码Wiki；2026-08-25 tiktoken v0.14.0 双层库源码Wiki；2026-08-28 Protocol Buffers v37.0 超大规模 monorepo 双束；2026-08-29 Tongyi-MAI 多子项目生态归并三束；2026-09-09 网易有道开源生态 6 异质仓六束）
 
 ## 模式概述
 
@@ -276,6 +276,27 @@ sources:
 
 复用反模式 2/3/4/5/7/10/11（信源先行、分批、index 最后写、Grep 验证 33 项符号、重读计数、toctree 块），新增反模式 14"Grep 匹配行数当成员计数，无统计口径"（见下文）。
 
+### 迁移验证案例：网易有道开源生态 6 仓（2026-09-09）
+
+第 5 次跨场景迁移验证，规模从"一个目录下 5 个子项目"扩展到"厂商生态 6 个异质仓库"——Python 模型库（BCEmbedding）、TTS×2（Confucius4-TTS/EmotiVoice）、Electron 桌面 Agent（LobsterAI）、RAG 内核（QAnything）、学术搜索 Agent（ScholarClaw），产出 `jishu/ai/netease-youdao/` 分组下 6 束共 60 篇内容文档 + 25 个各级 index（toctree 95 条目）。
+
+#### 案例代表性
+
+- **异质技术栈生态六束并行**：6 仓语言与形态各异（纯 Python 库 / 语音推理链 / Electron 主+渲染进程 / RAG 服务端 / Agent 服务脚本），R 阶段按仓并行采集（大仓 QAnything/LobsterAI 按子系统拆分），E 阶段大束分两批 ≤7 执行；信源全部经阶段0升级为 `vendor/netease-youdao/` 子模块并按 commit/tag 固定。
+- **V 阶段内容级错误占比高**：五束 PASS 中带发现、一束首验 FAIL，累计修复 30+ 处——断链 1 处、frontmatter 缺字段若干，以及大量计数/命名/编号类事实错误（agents 表 20 列误记 21、slice 目录 21 个 .ts 误记 20、测试文件 38 顶层/43 递归口径混淆、IM 连通性测试方法短名缺 `OpenClaw` 中缀、frontend-design order=100 误记分段上界 90）。同构于反模式 14，再次实证"计数必须带口径并可分解验证"。
+- **父级 toctree 挂载遗漏的放大效应**：6 束 25 个 index 全部合规、束内零断链，但父级 `jishu/ai/index.md` 未收录 `netease-youdao/index`，`check-toctrees.py` 一次性报出 111 处"未收录(不可达)"——束级合规不等于生态级可达（见反模式 15）。
+
+#### 经验教训
+
+1. **新建分组必须同步挂载父级 toctree 与导航表**：束/分组内的 index 写得再完整，父级 index 漏一个条目，整棵子树在导航 BFS 中不可达。分组 index 定稿后应立即在父级 index 补 `{toctree}` 条目与导航表行，并复跑 `check-toctrees.py` 至 rc=0。
+2. **验证类子代理的指令应设计为幂等可重跑**：长会话中子代理验证报告可能因上下文压缩丢失。正确恢复方式是以相同五验证项指令幂等重跑回收 PASS 结论，而不是凭会话摘要假设"已完成"就勾选检查点。
+3. **内容级修复的两级裁决：白名单内代理修、白名单外主流程修**：验证代理的修复白名单限三类（断链/frontmatter 缺字段/编号笔误）；语义与源码矛盾、计数错误等内容级错误由主流程对照 vendor 源码复核后直接修复（本案例 10 文件 18 处），比重开修复代理回合成本低、且无代理间传话失真。
+4. **任务书信源路径漂移时以实际稳定信源为准并注明**：任务书引用 `d:\AI\.chaos\libs\` 临时路径，阶段0已将信源升级为 `vendor/` 子模块，修复代理发现路径不存在后以实际 vendor 源码为准修正，并在报告中显式注明——延续反模式 12 的阶段0纪律。
+
+#### 反模式（本案例新增反模式 15/16/17）
+
+复用反模式 2/3/4/5/7/11/12/14（信源先行、分批 ≤7、index 最后写、Grep 验证、bundle-relative 路径、toctree 块、vendor 固定、计数口径），新增反模式 15（父级 toctree 挂载遗漏）、16（子代理结果丢失凭摘要续做）、17（内容级修复一律再开代理回合）。
+
 ## 失败案例
 
 ### 案例：虚构的Response类混入文档（PyInvoke实践）
@@ -373,6 +394,18 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 ### 反模式14："Grep匹配行数当成员计数，无统计口径"（Tongyi-MAI 新增）
 
 统计"类有多少方法/仓库有多少任务文件"时，直接把 `Grep "def "` 或目录列举的输出行数当作成员数量。后果：嵌套函数、继承成员、注释示例被计入（实测 AndroidController Grep 35 行，class 级实际实例方法 32 个，且文档自身分组清单求和 32 与标题 35 自相矛盾才暴露）；同类偏差在 V 阶段共发现 17 处。**正确做法**：计数类事实必须写明统计口径（"class 级 def，含 __init__，不含嵌套函数/不含 __init__.py"），V 阶段用文档内部分解式清单（分组求和）交叉验证总数。多子项目生态的归并决策、编号前缀、信源红线等生态级机制见专项模式 [multi-repo-ecosystem-okf-bundle-generation.md](./multi-repo-ecosystem-okf-bundle-generation.md)。
+
+### 反模式15："束/分组建成后未挂载父级 toctree"（netease-youdao 新增）
+
+新建分组的束内 index 全部合规、束内链接零断裂，但父级分组 index（如 `jishu/ai/index.md`）的 `{toctree}` 与导航表漏收新分组根 index。后果：`check-toctrees.py` 从文档根做 BFS 时整棵新子树被判"未收录(不可达)"——本案例 6 束 25 个 index 合规却一次性报出 111 处不可达；缺陷在束级验证中完全不可见，只有生态级导航检查能暴露。**正确做法**：分组 index 定稿后必须同步父级 index 的 toctree 条目与导航表行（两者缺一不可——toctree 供机器 BFS，导航表供人类阅读），并复跑 `check-toctrees.py` 至 rc=0；E 阶段"index 最后写"的范围应包含父级挂载这一步。
+
+### 反模式16："子代理验证结果丢失后凭摘要假设完成"（netease-youdao 新增）
+
+长会话中子代理的验证报告因上下文压缩丢失，主流程凭会话摘要中"已委派"的字样假设验证已完成并准备勾选检查点。后果：V 阶段结论无实证支撑，检查点虚勾，虚构/断链可能漏网。**正确做法**：验证类子代理的委派指令设计为幂等可重跑（固定验证项清单 + 固定输出格式），结果丢失后以相同指令重跑回收结论；凡无代理返回的 PASS/FAIL 报告，一律视为未执行，禁止凭记忆勾选。
+
+### 反模式17："内容级修复一律再开修复代理回合"（netease-youdao 新增）
+
+验证代理上报内容级错误（语义与源码矛盾、计数错误）后，机械地再开一个修复代理回合传话修复。后果：代理间传话失真、新代理需重新建立源码上下文，小而确定的修复（本案例 lobsterai 束 10 文件 18 处计数/命名错误）成本高且易引入二次偏差。**正确做法**：建立两级裁决——验证代理修复白名单限"断链/frontmatter 缺字段/编号笔误"三类机械错误；内容级错误上报主流程，由主流程对照 vendor 源码复核证据链后直接修复（此时主流程的源码上下文是最完整的）；仅当修复面跨多束/超白名单量级时才升级为新代理回合。
 
 ## 通用Prompt模板
 
@@ -486,6 +519,7 @@ mock = MockContext({Response(status=200, body='ok'): 'result'})
 | spec-driven-subagent-execution | 工具模式 | E阶段分批并行委派使用subagent执行模式 |
 
 <!-- changelog -->
+- 2026-09-09 | pattern | 新增"迁移验证案例：网易有道开源生态 6 仓"（第5次验证，validation_count 4→5）：6 异质仓（Python 库/TTS×2/Electron 桌面/RAG 内核/学术 Agent）6 束 60 内容文档 + 25 index；沉淀 4 条经验教训（父级 toctree 同步挂载、验证子代理幂等重跑、内容级修复两级裁决、信源路径漂移以实际为准），新增反模式 15（未挂载父级 toctree）/16（子代理结果丢失凭摘要续做）/17（内容级修复一律再开代理回合）
 - 2026-08-29 | pattern | 同步 source-code-to-okf-wiki SKILL v1.3.0：新增"阶段0（Pre-flight）：信源稳定性门预检"小节（信源分类→临时信源升级为 vendor submodule 固定 release tag+commit hash→路径只指 stable→清理前 GATE-SPS `--target` 扫描→持久性 audit，G0 质量门），由 veadk-python 案例实证（41 文件 800 处临时引用迁移）；V 阶段检查清单增第 8 项计数断言验证、第 9 项信源路径稳定性；新增反模式12"临时克隆直接开读，不固定版本"、反模式13"信源漂移——固定 main/master 或只记 tag 名不记 hash"；早期预警表与检验标准表同步增行；内嵌 V 阶段 Prompt 模板增第 7/8 项
 - 2026-08-29 | pattern | 新增"迁移验证案例：Tongyi-MAI 多子项目生态"（第4次验证，validation_count 1→4）：5 子项目（2 实现仓+基准官网+技术报告站+博客 stub）归并 3 束 45 文件；沉淀 3 条经验教训（先归并决策再采集、网站型子项目负向声明、计数带口径可分解验证），新增反模式 14"Grep匹配行数当成员计数"；反向传播新专项模式 multi-repo-ecosystem-okf-bundle-generation（L1）
 - 2026-08-25 | pattern | 新增"迁移验证案例：tiktoken v0.14.0"（Python门面+Rust核心双层库第2次验证，validation_count 1→2）：沉淀4条经验教训（按层拆分R阶段事实采集、PyO3绑定名以源码实际模块名为准、对"常见API名"虚构做负向Grep验证、Rust导出模块以py.rs pymodule名为准），复用≥5条既有反模式，新增反模式8"双层语言库按惯例命名而非按源码命名导出模块"

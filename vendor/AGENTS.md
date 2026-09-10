@@ -196,6 +196,12 @@ flexloop 的验证与检查脚本存放在 [vendor/flexloop/apps/chaos/.agents/s
 | vendor/podman-compose/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：podman-compose 声明式编排（只读依赖，gitlink pin commit），禁止本地修改 |
 | vendor/podman-py/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：podman-py SDK（只读依赖，gitlink pin commit），禁止本地修改 |
 | vendor/toolbox/ | third_party 子模块 | ❌ 否 | containers 官方容器编排工具链：toolbox 工具（只读依赖，gitlink pin commit），禁止本地修改 |
+| vendor/netease-youdao/BCEmbedding/ | third_party 子模块 | ❌ 否 | 网易有道 BCEmbedding 第三方只读依赖（Apache-2.0，pin commit），禁止本地修改 |
+| vendor/netease-youdao/Confucius4-TTS/ | third_party 子模块 | ❌ 否 | 网易有道 Confucius4-TTS 第三方只读依赖（Apache-2.0，pin commit），禁止本地修改 |
+| vendor/netease-youdao/EmotiVoice/ | third_party 子模块 | ❌ 否 | 网易有道 EmotiVoice 第三方只读依赖（Apache-2.0，pin commit），禁止本地修改 |
+| vendor/netease-youdao/LobsterAI/ | third_party 子模块 | ❌ 否 | 网易有道 LobsterAI 第三方只读依赖（MIT，固定 tag 2026.9.4），禁止本地修改 |
+| vendor/netease-youdao/QAnything/ | third_party 子模块 | ❌ 否 | 网易有道 QAnything 第三方只读依赖（AGPL-3.0，pin commit），禁止本地修改 |
+| vendor/netease-youdao/ScholarClaw/ | third_party 子模块 | ❌ 否 | 网易有道 ScholarClaw 第三方只读依赖（MIT，pin commit），禁止本地修改 |
 
 ## 跨边界调用规范
 
