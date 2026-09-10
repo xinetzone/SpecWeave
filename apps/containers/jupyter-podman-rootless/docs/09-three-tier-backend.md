@@ -71,7 +71,7 @@ subprocess.run(["podman-compose", "-f", "compose.yaml", "up", "-d", "--build"])
 
 因此 `tasks/client.py::compose_available()` 在 Windows 原生宿主**恒返回 `False`**，三层降级自动落到 Tier 2/3，并在 `invoke build` 输出一行跳过原因（`compose_unavailable_reason()`）。
 
-> 仅在**绕过 invoke 手敲 `podman-compose up`** 时该门禁不生效——此时会在宿主留下 `D:\run`、`D:\dev`、`D:\home` 等错误目录，请勿使用；需要标准 Compose 体验请在 WSL / `podman machine ssh` 内执行。
+> 绕过 invoke 手敲 `podman-compose` 时该门禁不生效，需自行在 WSL / `podman machine ssh` 内执行。宿主侧另有一道 **compose 文件级防线**：所有宿主绝对路径挂载源都写了 long syntax + `bind: {create_host_path: false}`，源缺失时以 `ValueError: ... bind source path does not exist: <path>` 显式失败，**不会**在宿主创建 `D:\run`、`D:\dev`、`D:\home` 之类的错误目录（实测：加固前手敲 `up` 会创建，加固后宿主零残留）。
 
 ## Tier 2: podman-py SDK 后端
 

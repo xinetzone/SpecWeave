@@ -172,6 +172,7 @@ podman-compose -f compose.yaml \
 
 > ⚠️ **执行环境**：`podman-compose` 在 **Windows 原生宿主上是无效组合**（路径语义错配，非未安装）——它用 `ntpath` 预处理挂载源，把 `/run/user/1000/bus` 按当前盘符解析为 `D:\run\user\1000\bus`，并在 `assert_volume()` 中试图在宿主创建该目录，实测报 `PermissionError [WinError 5]` 与沙箱 `Not allow operate files: D:\run`。
 > **工具层已拦截**：`compose_available()` 在 Windows 原生宿主恒返回 `False`，`invoke` 会自动降级到 SDK/CLI 后端（路径由远端 daemon 解析）；上述命令请在 WSL / `podman machine ssh` 内执行。详见 [09-three-tier-backend.md](09-three-tier-backend.md) 的「宿主兼容性」。
+> **宿主源禁止自动创建**：所有宿主绝对路径挂载源均为 long syntax + `bind: {create_host_path: false}`，源缺失时显式报 `ValueError: ... bind source path does not exist: <path>`，而非在宿主 `mkdir` 出 `D:\run`、`D:\dev`、`D:\home` 之类的错误目录。因此首次使用 `compose.dev.yaml` 前请确认 `~/.gitconfig`、`~/.ssh`、`/tmp/.X11-unix` 存在，并 `mkdir -p ~/.cache/pip`（该缓存原先是自动创建的，现须宿主预先具备）。
 
 > ⚠️ **Host 网络模式的前置条件**：容器将直接绑定宿主 `22`/`8888` 端口，与端口映射模式的容器互斥。启用前请先 `podman-compose down` 停掉占用这些端口的栈；覆盖文件已通过 `ports: !reset []` 清除基座的端口发布，否则与 host 网络冲突。
 

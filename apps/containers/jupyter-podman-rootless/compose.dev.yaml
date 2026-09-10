@@ -18,6 +18,15 @@
 # Security note: All mounts are read-only where possible. SSH agent socket gives
 # the container access to your SSH keys — only use with trusted images.
 #
+# Mount sources are NOT auto-created (bind.create_host_path: false): every source
+# above is a host resource that must not be fabricated. A missing source now fails
+# fast with `... bind source path does not exist: <path>` instead of silently
+# creating a bogus directory on the host (on Windows /run/... would resolve to
+# D:\run\...). Check before `up`:
+#   test -S "${SSH_AUTH_SOCK:-/dev/null}"   # SSH agent (falls back to /dev/null)
+#   test -e "$HOME/.gitconfig" ; test -d "$HOME/.ssh" ; test -d /tmp/.X11-unix
+#   mkdir -p "$HOME/.cache/pip"             # the only one users commonly lack
+#
 # Optional GPU support: also add compose.gpu.yaml (if created):
 #   podman-compose -f compose.yaml -f compose.dev.yaml -f compose.gpu.yaml up -d
 #
@@ -26,17 +35,47 @@
 
 services:
   jupyter:
+    # 透传源统一 long syntax + create_host_path: false——这些资源都位于宿主，绝不该被
+    # 自动创建（socket / 设备节点 / 配置文件 / 宿主缓存）。short syntax 缺少该通道，
+    # podman-compose 在源缺失时会于宿主 mkdir 出错误目录（Windows 下 /run/... 被按盘符
+    # 解析为 D:\run\...，见 docs/09「宿主兼容性」）。源缺失时改为**显式报错**：
+    #   ValueError: invalid mount config for type 'bind': bind source path does not exist
     volumes:
       # SSH agent socket (git operations use host SSH keys)
-      - ${SSH_AUTH_SOCK:-/dev/null}:/tmp/ssh-auth.sock:ro
+      - type: bind
+        source: ${SSH_AUTH_SOCK:-/dev/null}
+        target: /tmp/ssh-auth.sock
+        read_only: true
+        bind:
+          create_host_path: false
       # Git user config (name/email/aliases — no reconfiguration needed)
-      - ${HOME:-/home/user}/.gitconfig:/home/devuser/.gitconfig:ro
+      - type: bind
+        source: ${HOME:-/home/user}/.gitconfig
+        target: /home/devuser/.gitconfig
+        read_only: true
+        bind:
+          create_host_path: false
       # SSH keys read-only (for git+ssh clone/push)
-      - ${HOME:-/home/user}/.ssh:/home/devuser/.ssh:ro
+      - type: bind
+        source: ${HOME:-/home/user}/.ssh
+        target: /home/devuser/.ssh
+        read_only: true
+        bind:
+          create_host_path: false
       # X11 socket for GUI apps
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+        bind:
+          create_host_path: false
       # Pip cache (faster package installs, shares host cache)
-      - ${HOME:-/home/user}/.cache/pip:/home/devuser/.cache/pip
+      # NOTE: 不再自动创建——首次使用前宿主须已存在，否则上面那条报错会直接命中它
+      #       mkdir -p ~/.cache/pip
+      - type: bind
+        source: ${HOME:-/home/user}/.cache/pip
+        target: /home/devuser/.cache/pip
+        bind:
+          create_host_path: false
       # Wayland socket (uncomment if using Wayland)
       # - ${XDG_RUNTIME_DIR:-/run/user/1000}/${WAYLAND_DISPLAY:-wayland-0}:/tmp/wayland-0:ro
       # /run/host escape hatch (access host filesystem — powerful, use with care)

@@ -14,6 +14,7 @@ source: "README.md#compose服务架构 + README.md#Toolbx透传开发模式"
 - 环境变量：`.env`文件（从`.env.example`复制）
 - 三层后端自动降级：podman-compose → podman-py SDK → CLI fallback
 - 默认隔离优先，所有透传均为opt-in
+- 宿主绝对路径挂载源一律写 long syntax 并带 `bind: {create_host_path: false}`（禁止在宿主自动创建目录，缺失即显式报错；详见「分层硬约束」）
 
 ## compose.yaml服务定义
 
@@ -132,7 +133,12 @@ services:
 - `network_mode: host` 下**不能沿用容器内 22 端口**：rootless Podman 容器 root 映射为宿主非特权 UID，绑定特权端口（<1024）被拒绝，sshd 会 FATAL 退出（实测 `Bind to port 22 on 0.0.0.0 failed: Permission denied`）。覆盖文件须设 `SSHD_PORT` 为非特权端口（默认 2222），Jupyter 的 8888 不受影响
 - **执行环境硬约束（已下沉为工具层门禁）**：`podman-compose` 在 **Windows 原生宿主上是无效组合**，原因不是「未安装」而是「路径语义错配」——它是宿主进程内的路径处理器，会用 `ntpath` 预处理 compose 中的挂载源：`/run/user/1000/bus` 被按「当前盘符根」解析为 `D:\run\user\1000\bus`，随后 compose 内部 `assert_volume()` 见该路径不存在便 `os.makedirs()` 试图在宿主创建目录（实测 `PermissionError [WinError 5]` + 沙箱 `Not allow operate files: D:\run`；失败被 `except OSError: pass` 吞掉后 podman 仍收到被篡改的挂载源）。
   - **工具层已拦截**：`tasks/client.py::compose_available()` 在 Windows 原生宿主恒返回 `False`，三层降级自动落到 Tier 2 SDK / Tier 3 CLI——它们把 Linux 绝对路径原样交给 podman（Windows 上是远程客户端，路径由 machine 内 daemon 解析），因此路径语义一致
-  - 仍需在 WSL / `podman machine ssh` 内执行的场景：**绕过 invoke 手敲 `podman-compose up`**（此时工具层门禁不生效，且会在宿主留下 `D:\run`、`D:\dev`、`D:\home` 等错误目录，请勿使用）
+  - **宿主透传源禁止自动创建**：所有宿主绝对路径挂载源必须写 long syntax 并带 `bind: {create_host_path: false}`（该字段无法用 short syntax 表达——short syntax 下 podman-compose 只会填 `bind.propagation`，故必走 long syntax）。这样源缺失时是**显式报错**而非在宿主 `mkdir` 出错误目录：
+    ```
+    ValueError: invalid mount config for type 'bind': bind source path does not exist: <path>
+    ```
+    实测：加固前手敲 `podman-compose -f compose.yaml -f compose.dev.yaml up` 会在宿主留下 `D:\run`、`D:\dev`、`D:\home` 等错误目录；加固后同一命令直接抛上述 `ValueError`，宿主零残留。**代价**：原先依赖自动创建的源（尤指 `~/.cache/pip`）须由宿主预先具备，否则该报错会命中它
+  - 手敲 `podman-compose` 仍须在 WSL / `podman machine ssh` 内执行：工具层门禁对绕过 invoke 的命令不生效，且 long syntax 只能防「污染宿主」，不能修正被 `ntpath` 篡改的挂载源
 - 覆盖文件覆盖 `image` 时**不得复用 `${IMAGE_TAG}`**：应用会自动生成 `.env` 并写入 `IMAGE_TAG`，复用会导致覆盖静默失效（改用独立变量如 `PASSTHROUGH_IMAGE_TAG`）
 
 ## 环境变量配置
@@ -226,6 +232,8 @@ compose配置修改后必须验证：
 - [ ] `podman-compose -f compose.yaml -f compose.passthrough.yaml config`叠加校验通过：`network_mode: host` 生效、`ports` 已被 `!reset` 清除、D-Bus 卷与 `DBUS_SESSION_BUS_ADDRESS`/`XDG_RUNTIME_DIR` 就位、`/dev/fuse` 未被覆盖、`image` 切换为 `PASSTHROUGH_IMAGE_TAG` 默认值
 - [ ] 继续叠加设备层后 `devices` 为**追加**而非替换：`podman-compose -f compose.yaml -f compose.passthrough.yaml -f compose.passthrough.gpu.yaml config` 中同时包含 `/dev/fuse` 与 `${GPU_DEVICE:-/dev/dri}`
 - [ ] 各分层覆盖文件头部的前置检查命令在宿主上实测结果与文档一致；缺资源的层不得叠加（podman 对缺失源硬失败，退出码 125）
+- [ ] 每个宿主绝对路径挂载源都带 `bind: {create_host_path: false}`，且在 `config` 合并结果中**逐层保留**（含叠加设备层后）：`podman-compose -f compose.yaml -f compose.dev.yaml config` 等组合的每个 `type: bind` 条目下均有 `create_host_path: false`
+- [ ] 源缺失时**零宿主残留**：`podman-compose --dry-run -f compose.yaml -f compose.dev.yaml up -d` 应以 `ValueError: ... bind source path does not exist: <path>` 退出（而非在宿主 mkdir 出 `D:\run`、`D:\dev`、`D:\home` 等错误目录）
 - [ ] 默认模式启动后容器可正常运行，SSH/Jupyter可访问
 - [ ] 透传模式下git push/pull可复用SSH agent（无需输入密码）
 - [ ] 透传模式下xclock等GUI应用可显示

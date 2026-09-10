@@ -40,7 +40,14 @@ services:
       # 均取自 HOST_PODMAN_SOCK），entrypoint 据此在 devuser 可控目录内建立
       # 符号链接并设置 CONTAINER_HOST，使容器内 podman SDK/CLI 复用宿主 daemon。
       # 默认 uid=1000（WSL2 常见），非 1000 宿主 UID 时覆盖 HOST_PODMAN_SOCK。
-      - ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}:/run/user/1000/podman/podman.sock
+      # create_host_path: false —— socket 类挂载源绝不该被自动创建（缺失即报错）。
+      # short syntax 无此通道，podman-compose 会在宿主 mkdir 出错误目录
+      # （Windows 下 /run/... 被按盘符解析为 D:\run\...，见 docs/09「宿主兼容性」）。
+      - type: bind
+        source: ${HOST_PODMAN_SOCK:-/run/user/1000/podman/podman.sock}
+        target: /run/user/1000/podman/podman.sock
+        bind:
+          create_host_path: false
       # ── Dev pass-through mounts (uncomment to enable) ──
       # SSH agent for git operations inside container (Toolbx-style):
       # - ${SSH_AUTH_SOCK:-/dev/null}:/tmp/ssh-auth.sock:ro

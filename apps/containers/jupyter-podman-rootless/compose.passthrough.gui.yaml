@@ -15,7 +15,14 @@
 services:
   jupyter:
     volumes:
-      - ${HOST_XDG_RUNTIME_DIR:-/run/user/1000}/${HOST_WAYLAND_DISPLAY:-wayland-0}:/tmp/runtime-user/${HOST_WAYLAND_DISPLAY:-wayland-0}:rw
+      # create_host_path: false —— socket 类源绝不该被自动创建；short syntax 无此通道，
+      # podman-compose 会在源缺失时于宿主 mkdir 出错误目录（Windows 下 /run/... 被按
+      # 盘符解析为 D:\run\...，见 docs/09「宿主兼容性」）
+      - type: bind
+        source: ${HOST_XDG_RUNTIME_DIR:-/run/user/1000}/${HOST_WAYLAND_DISPLAY:-wayland-0}
+        target: /tmp/runtime-user/${HOST_WAYLAND_DISPLAY:-wayland-0}
+        bind:
+          create_host_path: false
     environment:
       XDG_RUNTIME_DIR: /tmp/runtime-user
       WAYLAND_DISPLAY: ${HOST_WAYLAND_DISPLAY:-wayland-0}

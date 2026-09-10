@@ -36,7 +36,15 @@ services:
     ports: !reset []
     volumes:
       # [4] D-Bus session bus socket (read-only)
-      - ${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}:/tmp/runtime-user/bus:ro
+      # create_host_path: false —— socket 类源绝不该被自动创建；short syntax 无此通道，
+      # podman-compose 会在源缺失时于宿主 mkdir 出错误目录（Windows 下 /run/... 被按
+      # 盘符解析为 D:\run\...，见 docs/09「宿主兼容性」）
+      - type: bind
+        source: ${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}
+        target: /tmp/runtime-user/bus
+        read_only: true
+        bind:
+          create_host_path: false
     environment:
       XDG_RUNTIME_DIR: /tmp/runtime-user
       DBUS_SESSION_BUS_ADDRESS: unix:path=/tmp/runtime-user/bus
