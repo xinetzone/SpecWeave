@@ -184,6 +184,7 @@ relative-depth-adjustment
 relative-path-systematic-construction
 resource-counter-primitive-binding
 ring-buffer-streaming-output
+rootless-socket-group-membership-adaptation
 runtime-numerics-golden-binary
 runtime-version-enforcement
 safe-table-edit

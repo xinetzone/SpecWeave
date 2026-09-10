@@ -1,0 +1,5 @@
+id = "retrospective-c-i2-eacces-20260910"
+title = "容器内 Podman socket EACCES（C-I2）根因修复复盘"
+category = "retrospective/reports/incident-reports/retrospective-c-i2-eacces-20260910"
+date = "2026-09-10"
+version = "1.0"

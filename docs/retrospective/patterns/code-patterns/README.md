@@ -190,6 +190,7 @@ x-toml-ref: "../../../../.meta/toml/docs/retrospective/patterns/code-patterns/RE
 | [okf-sources-path-normalization.md](okf-sources-path-normalization.md) | OKF sources 路径规范化：提取→映射表→拼5级../前缀→存在性过滤四步修复，正则字符类禁含`.`防吞点，无源码仓库标注豁免 | L1 实验性 | OKF/带sources字段的批量文档修复、bundle与源码目录命名差异映射、正则提取路径 |
 | [conda-shell-hook-activation-noop.md](conda-shell-hook-activation-noop.md) | Conda Shell Hook 静默失效激活检测模式：conda activate rc=0 但 `$env:CONDA_DEFAULT_ENV` 不变 → hook 未加载；补齐 conda-hook.ps1 + profile 幂等激活 + 绝对路径兜底三方案，以事后环境变量/解释器路径为唯一可信判据 | L1 实验性 | 沙箱/包装/non-interactive shell 中 conda activate 不生效、期望默认 Python 环境(如 py314)却落到 base、CI runner 环境切换 |
 | [cross-conda-toolchain.md](cross-conda-toolchain.md) | 跨Conda环境工具链引用模式：环境盘点→PATH分层→CC/CXX显式指向→LD_LIBRARY_PATH共享库→构建期断言→kernel双环境处理六步，实现"解释器在A环境、编译器在B环境"的跨环境原生编译，避免重建GB级工具链 | L1 实验性 | 双/多conda环境镜像原生编译、基础镜像不可控的下游构建镜像、GPU镜像CUDA toolkit跨环境引用 |
+| [rootless-socket-group-membership-adaptation.md](rootless-socket-group-membership-adaptation.md) | 跨边界 socket 属组自适应授权模式：调用方视角 stat 解析属组(`%G` 空回退 `%g`)→`exec` 前 `usermod -aG` 幂等加组→进程级反查 + 生产上下文复测，解决跨 userns 透传 socket/设备的 EACCES | L1 实验性 | rootless 容器访问宿主 socket、Docker/Podman socket 透传、GPU/串口设备节点属组授权 |
 
 ## Android 模式命名规范
 

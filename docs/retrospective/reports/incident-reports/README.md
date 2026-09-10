@@ -22,6 +22,9 @@ date: "2026-07-15"
 |---|---|---|---|
 | [retrospective-first-principles-analogy-error-20260709/README.md](retrospective-first-principles-analogy-error-20260709/README.md) | 决策错误 / 方法论践行失败 | `medium` | 将 Markdown 内链错误类比为 `file:///` 绝对路径问题，13 个文件被误改后回滚并沉淀“决策前三查”教训 |
 | [retrospective-ui-beautification-failure-20260714/README.md](retrospective-ui-beautification-failure-20260714/README.md) | 目标未达成 / 方法论与任务错配 | `high` | 两轮 UI 美化均未达到用户预期，暴露“优化不等于美化”“文本 AI 缺少视觉反馈闭环”等问题 |
+| [retrospective-ssh-hostkey-changed-20260909/retrospective-report.md](retrospective-ssh-hostkey-changed-20260909/retrospective-report.md) | 编码缺陷 / 设计时序缺陷 | `medium` | `inv run` 后 SSH host key changed：Windows 无 `HOME` + pathlib 不展开 `~` 致 known_hosts 清理静默失效 |
+| [retrospective-invload-invalid-tar-20260909/retrospective-report.md](retrospective-invload-invalid-tar-20260909/retrospective-report.md) | 工具误用 | `medium` | `inv load` 报 `invalid tar header`：PowerShell `Compress-Archive` 生成 ZIP 却以 `.tar.gz` 命名 |
+| [retrospective-c-i2-eacces-20260910/retrospective-report.md](retrospective-c-i2-eacces-20260910/retrospective-report.md) | 通道实现缺陷 / 验证方法缺陷 | `medium` | 容器内 podman socket `EACCES`（C-I2）：B-scheme 通道只覆盖可达性未覆盖权限位；`su -` 剥环境变量伪造失败信号 |
 
 ## 结构约定
 
