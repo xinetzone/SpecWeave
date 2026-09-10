@@ -48,6 +48,7 @@ VENDOR-INTEGRATION
 | **[OKF（开放知识格式）主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md)** | OKF 格式规范 + OKF 工具链的统一主题索引（横跨协议接口与工具平台） | [OKF 主题导航](../../projects/awesome-okf-xs/doc/bundles/meta/okf-ecosystem/index.md) |
 | **[Python 3.14 标准库知识包](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md)** | Python 3.14 标准库系统学习（contextlib / contextvars / sys.monitoring / annotationlib / dataclasses / traceback） | [概述](../../projects/awesome-okf-xs/doc/bundles/jishu/python/stdlib/index.md) |
 | **[AI Engineering](ai-engineering/index.md)** | AI Agent 工程化领域知识库（Loop Engineering、Karpathy LLM Wiki 分析等） | [Loop Engineering 知识库](ai-engineering/concepts/loop-engineering-knowledge-base.md) |
+| **AI 教育** | AI 教育智能体与教育科技学习成果（OpenMAIC 知识包等） | [OpenMAIC 知识包](ai-education/openmaic/index.md) |
 | **算法艺术** | 生成式艺术与算法创意探索（Atomic Emergence 等） | [Atomic Emergence 哲学](algorithmic-art/atomic-emergence/concepts/philosophy.md) |
 | **工程化研究** | 深度学习原子化设计等工程方法论研究 | [AI Agent 原子化设计分析](engineering/deep-learning-atomic-design/concepts/ai-agent-atomic-design-analysis.md) |
 
