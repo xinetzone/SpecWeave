@@ -6,6 +6,30 @@
 
 ## [Unreleased]
 
+### 2026-09-10 · `fix:` 布尔参数三态化 + `run` 任务关闭自动短选项（含对上一提交声明的更正）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C 链路）；I 阶段读 invoke 3.0.3 源码定位根因，F 阶段确立可行解，V 阶段以「单元级 6 场景 + CLI 实跑」逐条证伪
+
+**I 阶段根因（源码 + 实测）**：
+
+1. `invoke/tasks.py:223-231`：`Argument.kind` **仅由 `type(default)` 推断** → 默认写 `None` 会让 kind 退化为 `str`，旗标变成「需取值」而非开关 → **三态哨兵不可行**
+2. `invoke/parser/argument.py:127`：`value` 在未赋值时回落 `default` → **「未指定」与「显式 False」不可区分**
+3. `invoke/parser/context.py:150`：反向旗标 `--no-<flag>` **仅在 `default is True`** 时自动生成
+4. `invoke/tasks.py:215-220`：短名生成 = 「逐字符取首个未被占用字符」，**与参数顺序耦合** → 实测 `-h` 被 `ssh_public_key` 抢走（`invoke run -h` 报 `needed value`）、`host_network` 退化到短名 `-`、`--gpu` 无可用字符
+
+**更正声明**：上一提交（同步运行时透传）中「修复 `GRANT_SUDO=no` 因 `bool("no")` 判真而失效」**实际未生效**——`_env_bool()` 只修正了文本解析，但 `grant_sudo` 的 invoke 默认值为 `True`，未指定时 `Argument.value` 直接回落 `True`，`.env` 根本不被读取。本次才真正闭环。
+
+**验收点**（原子提交单一职责，可独立验证）：
+
+A. **三态解析**：新增 `manage.py::_resolve_bool(on_val, off_val, env, env_key, default, flag)`；每个布尔项配对 `--x` / `--no-x`（`grant-sudo` 的 CLI 面保持 `--grant-sudo` / `--no-grant-sudo` 不变）；同开同关报「参数冲突」
+B. **短选项契约**：`run` 任务 `@task(..., auto_shortflags=False)` → `invoke run -h` 恢复输出帮助，自动短名全部取消，长选项成为唯一公开契约
+C. **规则固化**：`.agents/rules/invoke-tasks.md` 新增「布尔项三态规则」与「短选项规则」两条**违反打回**约束
+
+**验证证据**：
+
+- 单元级 6 场景全对：未指定取 `.env`（`grant_sudo=False` / `gpu=True`）、`--gpu` 开、**`--no-gpu` 覆盖 `.env` 的 yes**、`--grant-sudo` 覆盖 `.env` 的 no、`--no-grant-sudo` 关、`--gpu --no-gpu` 被拦截
+- CLI 实测：`invoke run -h` 输出 Usage（不再报错）；`^\s{2}-[a-z],` 无匹配 = 自动短名已全部消除；`--no-{dbus,gpu,grant-sudo,host-network,usb,wayland}` 六个配对旗标均已注册
+
 ### 2026-09-10 · `feat:` 同步构建端运行时透传（5 个开关 + C-I3 诊断）
 
 **关联七概念场景**：场景5「创新突破」（F→V→I→C 链路）；F 阶段确认执行模型不同（构建端 compose 分层覆盖 → 消费端 SDK/CLI 编程式），V 阶段对抗审查产出下述关键约束

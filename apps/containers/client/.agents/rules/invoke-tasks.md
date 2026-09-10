@@ -137,10 +137,20 @@ ns.add_collection(env_ns)
 |-------|-----------------|----------------------|
 | `invoke load` | `invoke container.load` | `--path *tar` / `--cache-dir *dir` |
 | `invoke images` | `invoke container.images` | （无参数） |
-| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network --wayland --gpu --usb --dbus` |
+| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network/--no-host-network --wayland/--no-wayland --gpu/--no-gpu --usb/--no-usb --dbus/--no-dbus` |
 | `invoke stop` | `invoke container.stop` | `--name N` |
 | `invoke status` | `invoke container.status` | `--name N` |
 | `invoke clean` | `invoke container.clean` | `--name N --tag T --volume --image` |
+
+**布尔项三态规则（新增约束，违反打回）**：所有布尔参数必须拆成 `--x` / `--no-x` 一对并交由
+`manage.py::_resolve_bool()` 解析（优先级：显式开 > 显式关 > `.env` > 默认；同开同关报错）。
+原因（invoke 3.0.3 实测）：① `Argument.kind` 仅由 `type(default)` 推断，默认写 `None` 会退化为 `str`
+（旗标变成"需取值"）；② `value` 在未赋值时回落 `default`，**无法区分「未指定」与「显式 False」**；
+③ 反向旗标仅在 `default is True` 时自动生成。因此单参数写法无法表达"CLI 关闭 .env 开启项"。
+
+**短选项规则（新增约束）**：参数较多的任务（如 `run`）必须显式 `auto_shortflags=False`。
+invoke 的短名生成是「逐字符取首个未被占用字符」且与参数顺序耦合——实测 `ssh_public_key` 抢走 `-h`
+致 `invoke run -h` 报错、`--host-network` 退化到短名 `-`。**长选项是唯一公开契约，短名不得作为 API**。
 
 **新增参数规则**：任何在 `ContainerConfig` 中出现的字段，`invoke run` 必须有对应的长参数 `--kebab-case`（下划线→中划线）；
 命令行参数的优先级最高，必须覆盖 `.env` 和 ContainerConfig 默认值（`_merge_config` 已实现优先级链，修改时不得重写）。

@@ -146,6 +146,7 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-10** | fix: 布尔参数改为三态 + `run` 任务关闭自动短选项——① 新增 `_resolve_bool()`（显式开 > 显式关 > `.env` > 默认；同开同关报参数冲突）并为每个布尔项配对 `--no-x`；**更正上一条**：`GRANT_SUDO=no` 与「CLI 关闭 .env 开启项」在单参数写法下实为无效（invoke 的 True/False 与「未指定」不可区分、反向旗标仅在 `default is True` 时自动生成），本次才真正生效；② `@task(auto_shortflags=False)` 修复 `-h` 被 `--ssh-public-key` 劫持（`invoke run -h` 直接报错）与 `--host-network` 退化到短名 `-`
 - **2026-09-10** | feat: 同步构建端 `docs/07-toolbx-passthrough.md` 的 5 项运行时透传——`invoke run` 新增 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`（默认全关）；新增 `utils.build_passthrough_spec` 统一 SDK/CLI 两条路径参数；新增 **C-I3** 诊断（透传资源缺失的原生报错翻译，含缺失路径 + 覆盖变量 + daemon 侧自检）；修复 `GRANT_SUDO=no` 因 `bool("no")` 判真而失效的既有缺陷
 - **2026-09-10** | fix: 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）并续接 `windows_diagnose_hint()` C-I2 分支；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
 - **2026-09-09** | fix: B-scheme 宿主 socket 直通端到端连通；`inv load` 增加镜像缓存完整性校验；`ensure_known_hosts` / `refresh_host_keys` 修复 Windows 路径失效与 sshd 就绪等待

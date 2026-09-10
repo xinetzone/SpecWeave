@@ -115,6 +115,35 @@ def _env_bool(env: dict, key: str, default: bool) -> bool:
     return default
 
 
+def _resolve_bool(
+    on_val: bool,
+    off_val: bool,
+    env: dict,
+    env_key: str,
+    default: bool,
+    flag: str,
+) -> bool:
+    """三态布尔解析：显式开 > 显式关 > .env > 默认；同开同关视为参数冲突。
+
+    为什么不能用单个 bool 参数（invoke 3.0.3 实测约束）：
+      1. ``Argument`` 的 ``kind`` 仅由 ``type(default)`` 推断（tasks.py:223-231），
+         把默认值写成 ``None`` 会让 kind 退化为 ``str``，旗标变成「需要取值」而非开关；
+      2. ``value`` 属性在未赋值时回落 ``default``，**无法区分「未指定」与「显式 False」**；
+      3. 反向旗标 ``--no-<flag>`` 仅在 ``default is True`` 时才自动生成（context.py:150）。
+
+    因此每个布尔项拆成 ``--<flag>`` 与 ``--no-<flag>`` 一对：两者皆为 False 表示"未指定"，
+    此时才回落到 ``.env``；这样 ``--no-gpu`` 才能真正覆盖 ``.env`` 中已开启的
+    ``PASSTHROUGH_GPU=yes``（此前 False 与未指定不可区分，CMD 无法关闭 .env 开启项）。
+    """
+    if on_val and off_val:
+        raise Exit(f"参数冲突：--{flag} 与 --no-{flag} 不能同时使用")
+    if off_val:
+        return False
+    if on_val:
+        return True
+    return _env_bool(env, env_key, default)
+
+
 def _merge_config(
     name,
     tag,
@@ -125,11 +154,17 @@ def _merge_config(
     jupyter_token,
     ssh_public_key,
     grant_sudo,
-    host_network=None,
-    wayland=None,
-    gpu=None,
-    usb=None,
-    dbus=None,
+    no_grant_sudo,
+    host_network=False,
+    no_host_network=False,
+    wayland=False,
+    no_wayland=False,
+    gpu=False,
+    no_gpu=False,
+    usb=False,
+    no_usb=False,
+    dbus=False,
+    no_dbus=False,
 ) -> ContainerConfig:
     """根据 args > .env > 默认 的优先级合并配置。"""
     project_root = _project_root()
@@ -142,12 +177,6 @@ def _merge_config(
             return env[env_key]
         return default
 
-    def pick_bool(arg_val, env_key, default):
-        """布尔项：命令行 True 最高优先；未显式开启时看 .env，最后回落默认值。"""
-        if arg_val is not None and arg_val is not False:
-            return bool(arg_val)
-        return _env_bool(env, env_key, default)
-
     cfg = ContainerConfig(
         image=str(pick(tag, "IMAGE_TAG", ContainerConfig.image)),
         name=str(pick(name, "CONTAINER_NAME", ContainerConfig.name)),
@@ -159,14 +188,22 @@ def _merge_config(
         user_password=str(pick(user_password, "USER_PASSWORD", "")),
         jupyter_token=str(pick(jupyter_token, "JUPYTER_TOKEN", "")),
         ssh_public_key=str(pick(ssh_public_key, "SSH_PUBLIC_KEY", "")),
-        grant_sudo=pick_bool(grant_sudo, "GRANT_SUDO", ContainerConfig.grant_sudo),
+        # 布尔项一律走三态解析（--x / --no-x / .env / 默认）
+        grant_sudo=_resolve_bool(
+            grant_sudo, no_grant_sudo, env, "GRANT_SUDO",
+            ContainerConfig.grant_sudo, "grant-sudo",
+        ),
         # 运行时透传开关（.env 键统一加 PASSTHROUGH_ 前缀，避免与通用变量名冲突；
         # 默认 False = 默认隔离，资源路径由 utils.passthrough_paths() 从环境变量读取）
-        host_network=pick_bool(host_network, "PASSTHROUGH_HOST_NETWORK", False),
-        wayland=pick_bool(wayland, "PASSTHROUGH_WAYLAND", False),
-        gpu=pick_bool(gpu, "PASSTHROUGH_GPU", False),
-        usb=pick_bool(usb, "PASSTHROUGH_USB", False),
-        dbus=pick_bool(dbus, "PASSTHROUGH_DBUS", False),
+        host_network=_resolve_bool(
+            host_network, no_host_network, env, "PASSTHROUGH_HOST_NETWORK", False, "host-network"
+        ),
+        wayland=_resolve_bool(
+            wayland, no_wayland, env, "PASSTHROUGH_WAYLAND", False, "wayland"
+        ),
+        gpu=_resolve_bool(gpu, no_gpu, env, "PASSTHROUGH_GPU", False, "gpu"),
+        usb=_resolve_bool(usb, no_usb, env, "PASSTHROUGH_USB", False, "usb"),
+        dbus=_resolve_bool(dbus, no_dbus, env, "PASSTHROUGH_DBUS", False, "dbus"),
     )
     return cfg
 
@@ -239,14 +276,24 @@ def images(c: Context) -> None:
         "user-password": "devuser 登录密码（未指定自动生成 16 位）",
         "jupyter-token": "Jupyter token（未指定自动生成 32 位）",
         "ssh-public-key": "注入的 SSH 公钥字符串",
-        "grant-sudo": "是否开启容器内 sudo（默认 True）",
+        "grant-sudo": "显式开启容器内 NOPASSWD sudo（未指定时看 .env GRANT_SUDO，默认开启）",
+        "no-grant-sudo": "显式关闭容器内 sudo（覆盖 .env 的 GRANT_SUDO=yes）",
         "no-detach": "前台运行而非后台",
         "host-network": "① Host 网络模式：共享宿主网络栈且不发布端口（SSH=localhost:<ssh-port>，Jupyter=localhost:8888）",
+        "no-host-network": "显式关闭 Host 网络模式（覆盖 .env 的 PASSTHROUGH_HOST_NETWORK）",
         "wayland": "② Wayland 套接字透传（需 daemon 宿主存在该 socket，缺失时按 C-I3 指引处理）",
+        "no-wayland": "显式关闭 Wayland 透传（覆盖 .env 的 PASSTHROUGH_WAYLAND）",
         "gpu": "③ GPU 透传 /dev/dri（可用 GPU_DEVICE 覆盖路径，缺失时按 C-I3 指引处理）",
+        "no-gpu": "显式关闭 GPU 透传（覆盖 .env 的 PASSTHROUGH_GPU）",
         "usb": "⑤ USB 透传 /dev/bus/usb（可用 USB_DEVICE 覆盖路径，缺失时按 C-I3 指引处理）",
+        "no-usb": "显式关闭 USB 透传（覆盖 .env 的 PASSTHROUGH_USB）",
         "dbus": "④ D-Bus 会话总线透传（需 daemon 宿主存在会话总线，缺失时按 C-I3 指引处理）",
-    }
+        "no-dbus": "显式关闭 D-Bus 透传（覆盖 .env 的 PASSTHROUGH_DBUS）",
+    },
+    # 关闭自动短选项：invoke 的短名是「逐字符取首个未被占用字符」，对参数多的任务会产生
+    # 顺序敏感且误导的短名（实测 ssh_public_key 抢走 -h 致 `invoke run -h` 报错；
+    # host_network 退化到短名 `-`）。本任务只承诺长选项契约，短名不再作为公开 API。
+    auto_shortflags=False,
 )
 def run(
     c: Context,
@@ -258,18 +305,27 @@ def run(
     user_password: str | None = None,
     jupyter_token: str | None = None,
     ssh_public_key: str | None = None,
-    grant_sudo: bool = True,
+    grant_sudo: bool = False,
+    no_grant_sudo: bool = False,
     no_detach: bool = False,
     host_network: bool = False,
+    no_host_network: bool = False,
     wayland: bool = False,
+    no_wayland: bool = False,
     gpu: bool = False,
+    no_gpu: bool = False,
     usb: bool = False,
+    no_usb: bool = False,
     dbus: bool = False,
+    no_dbus: bool = False,
 ) -> None:
     """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。
 
     运行时透传默认全关（默认隔离）；5 个开关与构建端 docs/07-toolbx-passthrough.md
     的分层覆盖逐项对应，可任意组合。
+
+    所有布尔项均为 `--x` / `--no-x` 三态：两者都不给 = 未指定（看 .env），
+    因此 `--no-gpu` 可覆盖 .env 中已开启的 `PASSTHROUGH_GPU=yes`。
     """
     cfg = _merge_config(
         name=name,
@@ -281,11 +337,17 @@ def run(
         jupyter_token=jupyter_token,
         ssh_public_key=ssh_public_key,
         grant_sudo=grant_sudo,
+        no_grant_sudo=no_grant_sudo,
         host_network=host_network,
+        no_host_network=no_host_network,
         wayland=wayland,
+        no_wayland=no_wayland,
         gpu=gpu,
+        no_gpu=no_gpu,
         usb=usb,
+        no_usb=no_usb,
         dbus=dbus,
+        no_dbus=no_dbus,
     )
     cfg.detach = not no_detach
 
