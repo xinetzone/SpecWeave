@@ -40,6 +40,13 @@ requirements*.txt text eol=lf
 *.cmd      text eol=crlf
 # Git hooks (extensionless POSIX shell scripts)
 .githooks/* text eol=lf
+# Extensionless POSIX shell CLIs (e.g. apps/containers/jupyter-podman-rootless/bin/jpman).
+# Without an explicit rule these fall back to `text=auto` + core.eol=native, so a Windows
+# checkout writes CRLF and `bash bin/jpman ...` fails in WSL/Linux with
+# "set: pipefail: invalid option name". Windows-native siblings (*.cmd/*.ps1) keep CRLF
+# via the rules above. NOTE: unlike .gitignore, a pattern containing a slash is anchored
+# to this file's directory, so a leading `**/` is required to match nested paths.
+**/bin/jpman  text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi
