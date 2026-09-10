@@ -1,0 +1,5 @@
+id = "external-cli-version-drift-fallback"
+title = "外部 CLI 版本漂移的候选回退与能力探测"
+category = "docs/retrospective/patterns/code-patterns"
+date = "2026-09-10"
+version = "1.0"

@@ -1,0 +1,5 @@
+id = "retrospective-jpman-client-stability-milestone-20260910"
+title = "jpman-client 消费端可用性加固里程碑复盘（构建瘦身→加载校验→SSH 接入→运行时就绪）"
+category = "docs/retrospective/reports/concepts/milestone"
+date = "2026-09-10"
+version = "1.0"

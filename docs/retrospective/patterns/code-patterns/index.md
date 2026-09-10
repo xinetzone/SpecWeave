@@ -106,6 +106,7 @@ env-var-five-layer-protection
 example-driven-test-generation
 exception-precision-guards
 explicit-split-multi-consumer
+external-cli-version-drift-fallback
 ffi-fallback-diagnostics
 ffi-intrusive-refcount-zerocopy
 ffi-memory-leak-autouse-fixture

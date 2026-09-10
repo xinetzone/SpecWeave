@@ -36,6 +36,7 @@
 | milestone-sphinx-config-modularization-20260903 | sphinx_config 模块化里程碑复盘 + 八维优化洞察（两条可复用模式SIGIL-5 / PRESET-SETUP） | 2026-09-03 | ✅ 已完成 | 七概念R→I→E→V精简链路（里程碑复盘+知识沉淀） | 9模块×684 LOC规模审计、G1×96事实+跨模块×6事实、I8四元组（P0×2/P1×4/P2×1/REJECTED×1）、E2跨模块可复用模式（SIGIL-S 共享库5道门命中率75% / PRESET-SETUP 多预设注册链统一生成器）、V四视角×8矩阵加权采纳、4批次共5.7人小时落地路线图，G1/G2/G3/V门全部通过 | [sphinx-config-modularization-retrospective-insights-20260903.md](sphinx-config-modularization-retrospective-insights-20260903.md) |
 | milestone-zhihu-okf-insights-report-20260903 | 知乎洞察报告：做完500个AI知识包最想分享的5条反常识（开发者第一人称） | 2026-09-03 | ✅ 已完成 | 七概念I外化 | 5条反常识洞察(规范自举/可信度=流程属性/低风险练兵/换目录自由/度量human-out-of-loop)，与知乎长文构成系列，独立可发布版，链接均经Public核验 | [zhihu-okf-bundles-insights-report-20260903.md](zhihu-okf-bundles-insights-report-20260903.md) |
 | milestone-zhihu-okf-analysis-lens-20260903 | 知乎分析报告：别学我的做法拿走我的分析镜（四系统解剖镜+反模式诊断+适用边界） | 2026-09-03 | ✅ 已完成 | 七概念E外化 | 出版物/工厂视角转换、四系统解剖镜(规范/生产/门禁/调度)与红灯信号、质量经济学(机器先审确定性缺陷/人做高杠杆判断)、4反模式诊断清单、3条适用边界+30秒自测，与长文/洞察构成三部曲 | [zhihu-okf-bundles-analysis-lens-20260903.md](zhihu-okf-bundles-analysis-lens-20260903.md) |
+| milestone-jpman-client-stability-20260910 | jpman-client 消费端可用性加固（构建瘦身→加载校验→SSH 接入→运行时就绪） | 2026-09-10 | ✅ 已完成 | 七概念R→I→E→C | 27条客观事实（16提交：镜像2.82→1.80GB、inv load 完整性校验、known_hosts 管理、OpenSSH 10 KEX 兼容、podman 就绪预检）、3条核心洞察（防御代码可达性/依赖状态先于资源生命周期/工具存在≠能力兼容）、1个新模式(external-cli-version-drift-fallback L1)+复用2模式、4项原子行动项，G1-G4质量门全部通过 | [retrospective-jpman-client-stability-milestone-20260910.md](retrospective-jpman-client-stability-milestone-20260910.md) |
 
 ## 知识沉淀里程碑模式库
 
