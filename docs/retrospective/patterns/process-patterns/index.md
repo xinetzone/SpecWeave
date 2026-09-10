@@ -4,6 +4,7 @@
 :maxdepth: 2
 :hidden:
 
+app-execution-alias-file-not-found-repair-sop
 container-build-env-optimization
 container-verify-script-permission-model
 cross-migration-link-fix-sop
