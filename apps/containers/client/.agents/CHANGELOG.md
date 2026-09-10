@@ -38,4 +38,37 @@ D. **治理承诺（七概念 G1~G4 质量门）**
    - G3（模式可迁移）：从 bundles 萃取 2 个模式已落地——「Windows Podman 连接多候选自动降级」+「WSL2 发行版名 3 级回退」
    - G4（行动项原子化）：本次变更拆 A/B/C 三大原子块，可单独 revert 任意一块不影响其他块
 
-**根仓库 git commit**（执行原子提交后回填此处 commit hash）：`[<TBD>](#)`
+**根仓库 git commit**：`[91c29c240](#)`
+
+### 2026-09-10 · `fix:` 容器内 Podman socket EACCES（C-I2）根因修复与诊断闭环
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E 链路）；F 根因分析后经**强制 V 对抗审查**（采纳 5 条意见：自验证 / `%G` 空回退 `%g` / 代价与红线声明 / `stat` 失败必 warn / C-I2 分支先于平台守卫）
+
+**验收点**（原子提交单一职责，可独立验证）：
+
+A. **消费端代码改动（SDK 侧诊断能力）**
+   - `src/jpman_client/tasks/utils.py`：`podman_sock_path()` 默认 `PODMAN_RUNTIME_UID=1000` 且支持环境变量覆盖（**严禁硬编码容器内 UID**）；`windows_diagnose_hint()` 新增 **C-I2 匹配**（`permission denied` 且 socket 路径存在 → 属组修复引导），与 C-I1（`ENOENT`，socket/目录不存在）语义分离
+   - `src/jpman_client/tasks/client_core.py`：异常汇总表叠加 C-I2 诊断文案，`get_client()` 失败路径不回归
+
+B. **消费端文档对齐（三处同步）**
+   - `README.md` §5.4：新增 **C-I2**「socket 存在但无权限（EACCES）」条目，与 W-I1/W-I2/W-I3/C-I1 并列（共 5 条口径）
+   - `.agents/rules/windows-wsl.md` §5：C-I2 速查表（30 秒修复须为一行命令）
+   - `AGENTS.md` + `.agents/README.md`：坑位索引与双向锚点同步
+
+C. **联动修复（构建端 `jupyter-podman-rootless`，跨端引用登记以保证可追溯）**
+   - `entrypoint.sh`：B-scheme 分支新增 **socket 属组自适应**——`stat` 宿主 socket 取属组名 → `usermod -aG` 加入非 root 用户 → 复验可读写；`stat` 失败必 `log_warn`（不静默）；UID 动态推导，不硬编码 1000/1001
+   - `config/supervisor/conf.d/jupyter.conf`：移除硬编码 UID 1001 漂移，改 `%(ENV_CONTAINER_HOST)s` / `%(ENV_XDG_RUNTIME_DIR)s` 继承 entrypoint 动态导出值
+   - `.agents/rules/entrypoint.md`：规则同步
+
+D. **验收证据（verify 全部通过）**
+   - `bash -n entrypoint.sh` ✅
+   - base 镜像重建 → `701c2e509fd8`（`socket group` 关键字命中 5，旧镜像基线 0）✅
+   - client 层重建 → `5ed156783148`（`User=root`；`jpman_client` editable 安装 OK）✅
+   - 容器重建 → `41d46c351352` ✅
+   - entrypoint 日志：`[B-scheme] Added devuser to socket group 'root' (gid 0)` + `[B-scheme] [OK] devuser can read/write host podman socket` ✅
+   - 容器内 `/proc/<jupyter>/status`：`Groups: 0 27 997 1001`（gid 0 已注入）✅
+   - `PodmanClient.from_env()` 成功：`podman 5.7.1`、3 容器、**无 PermissionError** ✅
+   - devuser 侧 `podman images`（11 镜像）/ `podman info`（`rootless=true`、`RemoteSocket=unix:///run/user/1000/podman/podman.sock`）在显式 `CONTAINER_HOST` 下成功 ✅
+   - 反证：无 `CONTAINER_HOST` 时触发 `newuidmap: write to uid_map failed`（WSL 三层 userns 限制），证明 `su -` 登录 shell 丢环境变量是历史误判来源、非 C-I2 修复失败 ✅
+
+**根仓库 git commit**：`[52084da68](#)`
