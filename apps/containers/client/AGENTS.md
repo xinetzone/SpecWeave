@@ -106,7 +106,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | C7 | **逃生舱策略四值白名单**：`{auto, legacy, wsl, machine}`；非白名单值必须归一化为 `auto`，不得抛错；`legacy` 必须严格等价于旧行为（单次 `from_env()`，不走多候选） | [sdk-connection.md](.agents/rules/sdk-connection.md) + `utils.py::sdk_strategy_from_env` |
 | C8 | **A/B 维度分离，禁止混淆**：容器卷挂载路径（`--workspace D:\...`）和 SDK 连接 URL（`PodmanClient(base_url=...)`）是两个彼此独立的维度，修改其中一个不能顺带改另一个的代码路径 | [windows-wsl.md](.agents/rules/windows-wsl.md) 维度表 + README §5.5 |
 | C9 | **.env → os.environ 同步必须使用 `load_dotenv(override=False)`**；shell 中已显式 `export` / `$env:` 的同名变量优先级必须高于 `.env`，不得用 `override=True` 覆盖用户显式设置 | `manage.py::_load_env_overrides` |
-| C10 | **修复即闭环三阶段**：任何 Bug 修复必须走 `修复点 → 预防（为什么下次不会再出现？如加白名单/加断言） → 闭环（诊断文案对齐 W-I1~W-I3，README 同步更新）`；严禁只做纯点修复不改对应 README/诊断文案 | 根 AGENTS 开发规范 + 本文件 §约束速览 |
+| C10 | **修复即闭环三阶段**：任何 Bug 修复必须走 `修复点 → 预防（为什么下次不会再出现？如加白名单/加断言） → 闭环（诊断文案对齐速查表 W-I1~W-I3 / C-I1~C-I2，README 同步更新）`；严禁只做纯点修复不改对应 README/诊断文案。**容器内坑（C-Ix）与平台无关，其在 `windows_diagnose_hint()` 中的分支必须置于 `platform.system() != "Windows"` 守卫之前**，否则容器内（Linux）永远匹配不到 | 根 AGENTS 开发规范 + 本文件 §约束速览 |
 
 ## 快速开始（人类 & AI 共用最小验证路径）
 

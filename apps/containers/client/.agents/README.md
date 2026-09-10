@@ -57,7 +57,7 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 人类文档章节 | 对应 AI 规则文件 | 同步锚点（修改时必须一一核对） |
 |------------|----------------|------------------------------|
-| [README §5 Windows 11 × WSL2 支持](../README.md#5-windows-11--wsl2-支持) | [windows-wsl.md](rules/windows-wsl.md) | §5.1 三路径矩阵、§5.2 四级优先级、§5.3 四策略值、§5.4 W-I1~W-I3 速查表 3 条 |
+| [README §5 Windows 11 × WSL2 支持](../README.md#5-windows-11--wsl2-支持) | [windows-wsl.md](rules/windows-wsl.md) | §5.1 三路径矩阵、§5.2 四级优先级、§5.3 四策略值、§5.4 速查表（Windows 原生坑 W-I1~W-I3 + 容器内坑 C-I1/C-I2，共 5 条） |
 | [README §5.5 A/B 维度分离表](../README.md#55-挂载路径-vs-连接-urlab-维度分离避免混淆) | [windows-wsl.md](rules/windows-wsl.md) §2 + [sdk-connection.md](rules/sdk-connection.md) §1 | Dimension A / B 两张表的函数名、功能描述、所在行号 |
 | [README §7 内置纪律 rootless 三必需](../README.md#7-内置纪律rootless-三必需参数) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
 | [README §8 .env 完整清单](../README.md#8-env-配置完整清单) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |

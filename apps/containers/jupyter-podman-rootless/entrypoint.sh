@@ -238,6 +238,42 @@ setup_podman() {
         log_info "[B-scheme] Host podman socket linked: ${run_sock_dir}/podman.sock -> ${host_sock}"
         log_info "[B-scheme] root fallback socket: ${root_sock_dir}/podman/podman.sock -> ${host_sock}"
         log_info "[B-scheme] CONTAINER_HOST=${CONTAINER_HOST} (XDG_RUNTIME_DIR=${podman_run_dir})"
+
+        # ── socket 属组衔接（EACCES 修复 · 见 client/README.md §5.4 C-I2）──
+        # 宿主 socket（宿主 <uid>:<gid> 0660）经 bind-mount 进入 rootless 容器 userns 后，
+        # 数值属主/属组被映射为容器 0，故容器内呈现为 root:root 0660。devuser 是动态 UID
+        # （≠0）且镜像基线未把它加入 root 组 → connect() 抛 EACCES(13)：SDK 表现为
+        # podman/api/uds.py `PermissionError: [Errno 13]`，CLI 表现为 `_ping ... permission denied`。
+        # 属主/属组不可 chown/chmod（那会改到宿主 socket 本体，造成宿主侧权限回归，
+        # 禁止 chmod 666 这类"捷径"）；唯一安全手段是让 devuser 与 socket 属组建立成员关系。
+        # 时机要求：supervisord 的 drop_privileges() 在 spawn 子进程时用 grp.getgrall() 派生
+        # 补充组，jupyter 子进程只能继承"exec supervisord 之前"已生效的组成员关系——
+        # 本函数正是在 exec supervisord 之前被调用（见文件末尾主流程）。
+        local sock_gid="" sock_group=""
+        sock_gid="$(stat -Lc '%g' "${host_sock}" 2>/dev/null || true)"
+        sock_group="$(stat -Lc '%G' "${host_sock}" 2>/dev/null || true)"
+        if [ -z "${sock_group}" ] || [ "${sock_group}" = "UNKNOWN" ]; then
+            sock_group="${sock_gid}"
+        fi
+        if [ -z "${sock_group}" ]; then
+            log_warn "[B-scheme] Cannot resolve host socket group (stat failed on ${host_sock}); ${NON_ROOT_USER} may hit EACCES"
+        elif id -nG "${NON_ROOT_USER}" 2>/dev/null | tr ' ' '\n' | grep -qx "${sock_group}"; then
+            log_info "[B-scheme] ${NON_ROOT_USER} already in socket group '${sock_group}' (gid ${sock_gid})"
+        elif usermod -aG "${sock_group}" "${NON_ROOT_USER}" 2>/dev/null; then
+            log_info "[B-scheme] Added ${NON_ROOT_USER} to socket group '${sock_group}' (gid ${sock_gid})"
+        else
+            log_warn "[B-scheme] Failed to add ${NON_ROOT_USER} to socket group '${sock_group}' (gid ${sock_gid}); container-side podman may hit EACCES"
+        fi
+
+        # ── 自验证：以 devuser 身份实测 socket 可读写 ──
+        # 仅告警不阻断：宿主 socket 属组若非"宿主主组→容器 gid 0"映射，加入 root 组仍会 EACCES，
+        # 此时必须让用户看到明确的可操作提示，而不是等到 Notebook 里才报错。
+        if su - "${NON_ROOT_USER}" -c "test -r '${run_sock_dir}/podman.sock' && test -w '${run_sock_dir}/podman.sock'"; then
+            log_info "[B-scheme] [OK] ${NON_ROOT_USER} can read/write host podman socket"
+        else
+            log_warn "[B-scheme] ${NON_ROOT_USER} still cannot access ${run_sock_dir}/podman.sock (EACCES risk); expected socket group '${sock_group}' (gid ${sock_gid})"
+        fi
+
         log_info "Podman rootless setup complete (host socket pass-through)"
         return 0
     fi
@@ -273,7 +309,12 @@ setup_podman() {
         fi
     fi
 
-    log_info "Podman rootless setup complete"
+    # 与 B-scheme 分支保持同一契约：CONTAINER_HOST / XDG_RUNTIME_DIR 必须无条件导出。
+    # 理由有二：① 让 jupyter.conf 可用 %(ENV_CONTAINER_HOST)s 继承动态路径（禁止硬编码 UID）；
+    # ② supervisord 的 %(ENV_x)s 展开在变量缺失时会直接报错拒绝启动 jupyter 子进程。
+    export CONTAINER_HOST="unix://${podman_run_dir}/podman/podman.sock"
+    export XDG_RUNTIME_DIR="${podman_run_dir}"
+    log_info "Podman rootless setup complete (in-container daemon, CONTAINER_HOST=${CONTAINER_HOST})"
 }
 
 setup_ssh_keys() {

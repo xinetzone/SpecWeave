@@ -159,7 +159,7 @@ def get_client():
             last = attempts[-1] if attempts else {"exc_type": "", "exc_msg": ""}
             hint = windows_diagnose_hint(last["exc_type"], last["exc_msg"])
             if hint:
-                print("[SDK-DEBUG] Windows 专属匹配:")
+                print("[SDK-DEBUG] 已知坑匹配（W-I1~W-I3 / C-I1~C-I2）:")
                 for line in hint.splitlines():
                     print(f"           {line}")
         yield None

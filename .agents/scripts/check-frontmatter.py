@@ -110,7 +110,7 @@ def check_file(md_path: Path, project_root: Path, strict: bool = False, fix_toml
         if not toml_abs.exists():
             result['warnings'].append(f'x-toml-ref指向的TOML文件不存在: {toml_path_candidate}')
 
-    has_source = 'source' in fields
+    has_source = 'source' in fields or bool(re.search(r'^source\s*:', fm_text, re.MULTILINE))
     is_in_mdi = 'mdi-research/' in rel_path
     is_in_retrospective = 'retrospective/reports/' in rel_path
     is_chapter_file = bool(re.search(r'/\d{2}-', rel_path))
@@ -131,8 +131,13 @@ def check_file(md_path: Path, project_root: Path, strict: bool = False, fix_toml
 
     lines = fm_text.split('\n')
     indented_lines = []
+    # 块列表结构（- url:、  path:）是合法YAML，不视为违规缩进
+    _VALID_BLOCK_ITEM = re.compile(r'^\s{2,4}-\s+\S')   # 2-4空格后的列表项
+    _VALID_BLOCK_VAL  = re.compile(r'^\s{4,6}\w+\s*:') # 4-6空格后的键值（嵌套值）
     for i, line in enumerate(lines, 1):
         if INDENTED_BLOCK_RE.match(line) and not line.strip().startswith('#'):
+            if _VALID_BLOCK_ITEM.match(line) or _VALID_BLOCK_VAL.match(line):
+                continue
             indented_lines.append(i)
     if indented_lines:
         result['warnings'].append(f'frontmatter疑似包含多行缩进嵌套（第{indented_lines[:3]}行），违反扁平结构规则')

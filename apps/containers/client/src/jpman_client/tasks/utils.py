@@ -541,14 +541,40 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
 
 
 def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
-    """根据捕获到的异常类型+消息，匹配 OKF v0.2 §8.4 W-I1~W-I3 速查表。
+    """根据捕获到的异常类型+消息，匹配 OKF v0.2 §8.4 W-I1~W-I3 + 容器内坑 C-I1/C-I2 速查表。
 
-    返回空串表示没有匹配到 Windows 专属坑。
+    返回空串表示没有匹配到已知坑。
+    注意：C-I2 是**容器内坑（平台无关）**，其分支必须置于 Windows 平台守卫之前，
+    否则容器内（Linux）的 EACCES 永远匹配不到。与 README §5.4、rules/windows-wsl.md §5
+    保持逐字一致（三处同步）。
     """
-    if platform.system() != "Windows":
-        return ""
     et = exc_type.lower() if exc_type else ""
     em = (exc_msg or "").lower()
+
+    # C-I2：容器内 devuser 访问宿主直通 podman socket 被拒（EACCES，平台无关 → 先于平台守卫）
+    #   - SDK：podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied
+    #   - CLI：dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied
+    #   - 与 C-I1 区分：C-I1 的 "Permission denied" 伴随 libpod/tmp 临时文件创建失败，此处排除。
+    _is_eacces = (
+        "permissionerror" in et
+        or "errno 13" in em
+        or "permission denied" in em
+        or "eacces" in em
+    )
+    _is_c1_like = "libpod/tmp" in em or "temporary file" in em
+    if _is_eacces and not _is_c1_like and "/run/user/" in em and "podman" in em:
+        return (
+            "[C-I2] 容器内 devuser 无权访问宿主直通 podman socket（Errno 13 / EACCES，容器内坑，与平台无关）。\n"
+            "     → 根因：宿主 rootless socket（宿主 <uid>:<gid> 0660）经 userns 映射进容器后呈现为 root:root 0660，\n"
+            "        而 devuser 是动态 UID（≠0）且未加入 socket 属组，socket.connect() 直接 EACCES。\n"
+            "     → 修复（30 秒）：重建镜像并重启容器——entrypoint.sh::setup_podman() 的 B-scheme 分支会自动\n"
+            "        执行 usermod -aG <socket组> ${NON_ROOT_USER}（必须早于 exec supervisord，jupyter 子进程才能继承补充组）\n"
+            "        并以 devuser 身份实测 socket 可读写；严禁 chmod 666 / chown 宿主 socket（会破坏宿主侧权限）。\n"
+            "     → 自检：容器内 `supervisorctl status jupyter` 取 PID 后看 /proc/<pid>/status 的 Groups 应含 socket 属组。"
+        )
+
+    if platform.system() != "Windows":
+        return ""
 
     # W-I1：无参构造回退 /run/user/$UID 不存在
     if (

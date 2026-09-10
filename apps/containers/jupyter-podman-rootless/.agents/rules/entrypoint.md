@@ -41,13 +41,22 @@ source: "README.md#7步启动流程"
 
 ### [4/7] setup_podman() — 初始化rootless Podman环境
 
-仅当devuser首次启动容器时执行：
+仅当devuser首次启动容器时执行，分两条分支：
+
+**B-scheme（宿主 socket 直通，优先）**：当宿主 `/run/user/<host-uid>/podman/podman.sock` 已 bind-mount 进容器同路径时，复用宿主 daemon，绕过 WSL 三层 userns 嵌套（自建 daemon 会触发 `newuidmap: write to uid_map failed: Operation not permitted`）：
+
+- 在 devuser 可控目录建符号链接指向宿主 socket，导出 `CONTAINER_HOST` / `XDG_RUNTIME_DIR`
+- **socket 属组衔接（EACCES 修复 · 见 `apps/containers/client/README.md §5.4 C-I2`）**：宿主 socket（宿主 `<uid>:<gid>` 0660）经 userns 映射进容器后呈现为 `root:root 0660`，devuser 是动态 UID（≠0）且未入组 → `socket.connect()` 直接 EACCES。故用 `stat -Lc %G`（空/UNKNOWN 回退 `%g`）解析 socket 属组并 `usermod -aG <组> ${NON_ROOT_USER}`；`stat` 失败必须 `log_warn`，禁止静默
+- **时机关键**：`usermod` 必须在 `exec supervisord` **之前**完成——supervisord 4.3.0 `drop_privileges()` 在 spawn 子进程时按该时刻 `/etc/group` 成员关系 `os.setgroups()`；已在运行的 jupyter 进程补充组已固定，不受影响
+- **自验证**：以 devuser 身份实测 socket 可读写（`su - ${NON_ROOT_USER} -c "test -r ... && test -w ..."`），失败仅 `log_warn` 不阻断启动
+- **红线**：严禁 `chmod 666` / `chown` 宿主 socket（会破坏宿主侧权限）；入组会扩大 devuser 组权限，属可接受代价
+
+**回退分支（无宿主 socket）**：容器内自建 rootless daemon：
 
 - 确保`/dev/fuse`设备权限正确（需要宿主机传`--device /dev/fuse`）
 - 创建devuser的Podman配置目录：`~/.config/containers/`
 - 写入storage.conf（fuse-overlayfs存储驱动配置）
-- 设置XDG_RUNTIME_DIR环境变量：`/run/user/1000`
-- 创建XDG_RUNTIME_DIR并设置正确权限
+- 设置 XDG_RUNTIME_DIR 为 `id -u ${NON_ROOT_USER}` 动态派生的 `/run/user/<uid>`（**严禁硬编码 1000/1001**，devuser UID 由镜像 `useradd` 动态分配），并创建目录、设置正确权限，同时导出 `CONTAINER_HOST` / `XDG_RUNTIME_DIR` 供 supervisord 子进程经 `%(ENV_x)s` 继承
 - 执行`podman info`触发Podman首次初始化（拉取pause镜像等）
 - 验证Podman可在rootless模式下运行
 
@@ -87,7 +96,7 @@ supervisord配置在`config/supervisord.conf`，管理以下服务：
 | 服务 | 用户 | 优先级 | 端口 | 说明 |
 |------|------|--------|------|------|
 | sshd | root | 100 | 22 | SSH守护进程 |
-| jupyter | root | 200 | 8888 | Jupyter Lab（通过su切换到devuser运行） |
+| jupyter | devuser | 200 | 8888 | Jupyter Lab（`jupyter.conf` 的 `user=devuser`；`CONTAINER_HOST`/`XDG_RUNTIME_DIR` 经 `%(ENV_x)s` 继承 entrypoint 动态导出值） |
 
 - 服务异常自动重启：`autorestart=true`，`startretries=3`
 - 日志输出到stdout/stderr（nodaemon模式）
