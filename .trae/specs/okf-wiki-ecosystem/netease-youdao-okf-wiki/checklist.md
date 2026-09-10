@@ -40,5 +40,5 @@
 
 ## C 阶段（G5）
 
-- [ ] 工作流回顾完成，新反模式/改进点已回写 source-code-to-okf-wiki 模式文档（如有）
-- [ ] 全部变更按 Conventional Commits 原子提交（中文主体、单一职责）
+- [x] 工作流回顾完成，新反模式/改进点已回写 source-code-to-okf-wiki 模式文档（如有）
+- [x] 全部变更按 Conventional Commits 原子提交（中文主体、单一职责）
