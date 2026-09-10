@@ -1,3 +1,6 @@
+# Note: this value is the default only. entrypoint.sh rewrites it at container start
+# from the SSHD_PORT environment variable (needed for host networking on rootless
+# Podman, where binding the privileged port 22 is denied — see compose.passthrough.yaml).
 Port 22
 AddressFamily any
 ListenAddress 0.0.0.0

@@ -40,3 +40,9 @@ services:
     environment:
       XDG_RUNTIME_DIR: /tmp/runtime-user
       DBUS_SESSION_BUS_ADDRESS: unix:path=/tmp/runtime-user/bus
+      # Host networking binds ports directly on the host. Under rootless Podman the
+      # container root maps to an unprivileged host UID and CANNOT bind the privileged
+      # port 22 (<1024) — sshd would die with "Bind to port 22 ... Permission denied".
+      # Verified on this host: Jupyter works on localhost:8888, sshd needs a
+      # non-privileged port, hence SSHD_PORT here (entrypoint.sh applies it at start).
+      SSHD_PORT: ${HOST_NET_SSHD_PORT:-2222}

@@ -35,6 +35,7 @@ source: "README.md#7步启动流程"
 ### [3/7] configure_sshd() — 配置sshd
 
 - 根据`ALLOW_ROOT_SSH`环境变量设置`PermitRootLogin`（yes/no）
+- 根据`SSHD_PORT`环境变量设置监听端口（默认`22`，非法值直接报错退出）：`config/sshd_config` 中的 `Port` 仅为默认值，启动时由 entrypoint 重写。**host 网络模式下必须设 >=1024**——rootless Podman 中容器 root 映射为宿主非特权 UID，绑定特权端口 22 会被拒绝（`Bind to port 22 ... Permission denied`，sshd 随即 FATAL）
 - 确保PasswordAuthentication启用（支持密码登录，公钥登录优先）
 - 配置AuthorizedKeysFile路径
 - 执行`sshd -t`验证配置语法正确性
@@ -95,7 +96,7 @@ supervisord配置在`config/supervisord.conf`，管理以下服务：
 
 | 服务 | 用户 | 优先级 | 端口 | 说明 |
 |------|------|--------|------|------|
-| sshd | root | 100 | 22 | SSH守护进程 |
+| sshd | root | 100 | 22（由`SSHD_PORT`覆盖） | SSH守护进程 |
 | jupyter | devuser | 200 | 8888 | Jupyter Lab（`jupyter.conf` 的 `user=devuser`；`CONTAINER_HOST`/`XDG_RUNTIME_DIR` 经 `%(ENV_x)s` 继承 entrypoint 动态导出值） |
 
 - 服务异常自动重启：`autorestart=true`，`startretries=3`

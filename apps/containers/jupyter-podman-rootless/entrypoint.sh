@@ -115,7 +115,7 @@ setup_passwords() {
             echo "    * [IMPORTANT] Root password:      ${ROOT_PASSWORD}"
         fi
         echo "    * [IMPORTANT] ${NON_ROOT_USER} password: ${USER_PASSWORD}"
-        echo "    * SSH login: ssh ${NON_ROOT_USER}@<host> -p <port>"
+        echo "    * SSH login: ssh ${NON_ROOT_USER}@<host> -p ${SSHD_PORT:-22}"
         echo "    ************************************************"
         echo ""
     fi
@@ -136,6 +136,21 @@ generate_host_keys() {
 configure_sshd() {
     log_info "[Step 3/7] Configuring SSH daemon..."
     mkdir -p /run/sshd && chmod 755 /run/sshd
+    # SSHD_PORT：覆盖 sshd 监听端口。host 网络模式下必需——rootless Podman 中容器 root
+    # 映射为宿主非特权 UID，无法绑定特权端口 22（<1024），此时须改用 >=1024 的端口。
+    local sshd_port="${SSHD_PORT:-22}"
+    case "${sshd_port}" in
+        '' | *[!0-9]*)
+            log_error "Invalid SSHD_PORT: '${sshd_port}' (expect an integer in 1-65535)"
+            exit 1
+            ;;
+    esac
+    if [ "${sshd_port}" -lt 1 ] || [ "${sshd_port}" -gt 65535 ]; then
+        log_error "Invalid SSHD_PORT: ${sshd_port} (expect an integer in 1-65535)"
+        exit 1
+    fi
+    sed -i "s/^#*Port .*/Port ${sshd_port}/" /etc/ssh/sshd_config
+    log_info "SSH daemon listening port: ${sshd_port}"
     if [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
         sed -i "s/^#*PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config
         log_info "Root SSH login enabled (ALLOW_ROOT_SSH=yes)"

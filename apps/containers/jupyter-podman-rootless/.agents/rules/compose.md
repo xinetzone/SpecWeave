@@ -129,6 +129,7 @@ services:
 
 - 各覆盖文件头部必须写明该项的前置检查命令（`test -S` / `test -e`）
 - `network_mode: host` 与端口发布互斥：覆盖文件须用 `ports: !reset []` 清除基座端口映射（`!reset`/`!override` 由 podman-compose 原生支持）
+- `network_mode: host` 下**不能沿用容器内 22 端口**：rootless Podman 容器 root 映射为宿主非特权 UID，绑定特权端口（<1024）被拒绝，sshd 会 FATAL 退出（实测 `Bind to port 22 on 0.0.0.0 failed: Permission denied`）。覆盖文件须设 `SSHD_PORT` 为非特权端口（默认 2222），Jupyter 的 8888 不受影响
 - 覆盖文件覆盖 `image` 时**不得复用 `${IMAGE_TAG}`**：应用会自动生成 `.env` 并写入 `IMAGE_TAG`，复用会导致覆盖静默失效（改用独立变量如 `PASSTHROUGH_IMAGE_TAG`）
 
 ## 环境变量配置

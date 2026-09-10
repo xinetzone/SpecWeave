@@ -108,7 +108,9 @@ Wayland原生GUI应用支持：
 ```yaml
 # network_mode: host
 ```
-使用后可直接通过`localhost:22`、`localhost:8888`访问，无需端口映射。
+启用后 Jupyter 可直接通过 `localhost:8888` 访问，无需端口映射。
+
+> ⚠️ **rootless Podman 下 SSH 不能走 22 端口**：容器 root 映射为宿主非特权 UID，绑定特权端口 22（<1024）会被拒绝（`Bind to port 22 on 0.0.0.0 failed: Permission denied`，sshd 随即退出）。因此主层覆盖文件把 sshd 端口改为非特权端口（`SSHD_PORT`，默认 `2222`），访问方式为 `localhost:2222`。
 
 ### GPU 透传
 
@@ -155,8 +157,11 @@ Wayland原生GUI应用支持：
 ```bash
 # 主层：Host 网络 + D-Bus（先确认前置条件）
 test -S "${XDG_RUNTIME_DIR:-/run/user/1000}/bus" && echo "D-Bus OK"
-ss -lnt | grep -E ':(22|8888) '   # 应为空：host 网络下容器直接占用这两个端口
+ss -lnt | grep -E ':(2222|8888) '   # 应为空：host 网络下容器直接占用这两个端口
+                                    # 2222 = SSHD_PORT（rootless 下不能绑特权端口 22）
 podman-compose -f compose.yaml -f compose.passthrough.yaml up -d
+
+# 访问方式：ssh devuser@localhost -p 2222   /   http://localhost:8888
 
 # 按宿主能力继续叠加（示例：图形会话 + GPU）
 podman-compose -f compose.yaml \
