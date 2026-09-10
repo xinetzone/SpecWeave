@@ -54,6 +54,15 @@ htmlcov/
 *.swo
 *~
 
+# 宿主侧缓存与临时目录（均已被 .gitignore 忽略，不参与镜像构建）
+# 注意：podman 构建上下文【不读取 .gitignore】，必须在此显式排除；否则会把
+# .wsl-cache(≈11.7G)/.temp(≈3.2G)/.image-cache(≈355M) 全量上传为构建上下文，
+# 导致 invoke build 极慢甚至不可用。
+.wsl-cache/
+.temp/
+.image-cache/
+.ipynb_checkpoints/
+
 # ─────────────────────────────────────────────────────────────────────────
 # 注意：upstream/ 由构建前 stage 机制生成（src/jpman_builder/tasks/stage_upstream.py
 # 或 bin/jpman stage_upstream_sources），必须参与构建上下文供 Containerfile COPY，
