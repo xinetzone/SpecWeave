@@ -125,3 +125,6 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # 测试覆盖率报告
 .coverage
+
+# codearts 目录
+.codeartsdoer/
