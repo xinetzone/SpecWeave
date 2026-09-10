@@ -23,8 +23,11 @@ enforce_python310()
 # .temp/ 与 .chaos/ 为 .gitignore 覆盖的本地临时/工作区目录，非版本控制资产，
 # 不纳入主仓检查（.chaos 为 flexloop chaos 本地工作区，可能含权限受限文件）。
 # .claude/ 为本地 AI 工具配置目录（未纳入版本控制），与仓库内容无关，同样不扫描。
+# upstream/ 为容器镜像应用的构建上下文快照目录（apps/containers/<app>/upstream/，
+# 由 stage 机制从 vendor/ 子模块复制生成、已被 .gitignore 忽略）：内容为第三方源树
+# 原文，不属主仓文档资产，扫描其内部链接只会产生无法修复的假断链。
 # ============================================================================
-EXCLUDED_DIRS = {".git", "vendor", "projects", ".venv", "__pycache__", "node_modules", ".temp", ".chaos", ".claude"}
+EXCLUDED_DIRS = {".git", "vendor", "projects", "upstream", ".venv", "__pycache__", "node_modules", ".temp", ".chaos", ".claude"}
 NON_WORKTREE_PATH_PREFIXES = {
     ".meta/backup",
     ".backups",
