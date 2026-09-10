@@ -1,0 +1,21 @@
+---
+# compose.passthrough.gui.yaml — [2] Wayland socket pass-through (opt-in)
+#
+# Stack on top of the primary overlay when the host runs a Wayland session:
+#   podman-compose -f compose.yaml -f compose.passthrough.yaml \
+#                  -f compose.passthrough.gui.yaml up -d
+#
+# Prerequisites — podman FAILS HARD (exit 125) when the socket path does not exist:
+#   test -S "${XDG_RUNTIME_DIR:-/run/user/1000}/${WAYLAND_DISPLAY:-wayland-0}" \
+#     && echo "Wayland OK"
+#
+# Override HOST_XDG_RUNTIME_DIR / HOST_WAYLAND_DISPLAY when the host session differs
+# (nested ${A:-${B:-c}} defaults are not supported by compose substitution).
+
+services:
+  jupyter:
+    volumes:
+      - ${HOST_XDG_RUNTIME_DIR:-/run/user/1000}/${HOST_WAYLAND_DISPLAY:-wayland-0}:/tmp/runtime-user/${HOST_WAYLAND_DISPLAY:-wayland-0}:rw
+    environment:
+      XDG_RUNTIME_DIR: /tmp/runtime-user
+      WAYLAND_DISPLAY: ${HOST_WAYLAND_DISPLAY:-wayland-0}

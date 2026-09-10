@@ -1,0 +1,42 @@
+---
+# compose.passthrough.yaml — Runtime pass-through overlay (primary layer)
+#
+# Usage:
+#   podman-compose -f compose.yaml -f compose.passthrough.yaml up -d
+#
+# Enables (see docs/07-toolbx-passthrough.md):
+#   [1] Host network mode  — share the host network stack; no port mapping, the container
+#                            is reachable as localhost:22 / localhost:8888
+#   [4] D-Bus session bus  — desktop integration (notifications, system settings)
+#
+# Companion opt-in overlays — stack only when the host actually has the resource:
+#   compose.passthrough.gui.yaml  [2] Wayland socket    (needs a host GUI session)
+#   compose.passthrough.gpu.yaml  [3] GPU /dev/dri      (needs /dev/dri on the host)
+#   compose.passthrough.usb.yaml  [5] USB /dev/bus/usb  (needs /dev/bus/usb on the host)
+#
+# Prerequisites — podman FAILS HARD (exit 125) on a missing mount source and does NOT
+# create it, so verify before `up`:
+#   test -S "${XDG_RUNTIME_DIR:-/run/user/1000}/bus" && echo "D-Bus OK"     # [4]
+#   ss -lnt | grep -E ':(22|8888) '                                        # [1] must be empty
+#
+# Security — host networking removes network isolation and the D-Bus session bus lets
+# container processes talk to the host desktop session. Use only with trusted images.
+
+services:
+  jupyter:
+    # Dedicated artifact tag for the pass-through stack. Same Containerfile, distinct
+    # identity, so the default isolated stack keeps using jupyter-podman-rootless:latest.
+    # NOTE: deliberately NOT ${IMAGE_TAG} — the app auto-generates a .env that sets
+    # IMAGE_TAG=jupyter-podman-rootless:latest, which would make this override a silent
+    # no-op (both files would substitute to the same value).
+    image: ${PASSTHROUGH_IMAGE_TAG:-jupyter-podman-rootless:passthrough}
+    # [1] Host network mode: the container binds host ports directly
+    network_mode: host
+    # Port publishing is mutually exclusive with host networking — drop the base mappings
+    ports: !reset []
+    volumes:
+      # [4] D-Bus session bus socket (read-only)
+      - ${DBUS_SESSION_BUS_PATH:-/run/user/1000/bus}:/tmp/runtime-user/bus:ro
+    environment:
+      XDG_RUNTIME_DIR: /tmp/runtime-user
+      DBUS_SESSION_BUS_ADDRESS: unix:path=/tmp/runtime-user/bus

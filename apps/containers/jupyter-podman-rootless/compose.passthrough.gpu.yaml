@@ -1,0 +1,21 @@
+---
+# compose.passthrough.gpu.yaml — [3] GPU pass-through (opt-in)
+#
+# Intel/AMD (Mesa) GPU via /dev/dri, typically stacked with the primary overlay:
+#   podman-compose -f compose.yaml -f compose.passthrough.yaml \
+#                  -f compose.passthrough.gpu.yaml up -d
+#
+# Prerequisites — podman FAILS HARD (exit 125) when the device node is missing:
+#   test -e "${GPU_DEVICE:-/dev/dri}" && echo "GPU OK"
+#
+# NVIDIA is not covered by /dev/dri alone: configure CDI on the host first
+#   nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+# then point GPU_DEVICE at the generated node, or pass the CDI device by hand
+#   podman run --device nvidia.com/gpu=all ...
+#
+# devices is merged by appending, so the base /dev/fuse entry is preserved.
+
+services:
+  jupyter:
+    devices:
+      - ${GPU_DEVICE:-/dev/dri}:/dev/dri

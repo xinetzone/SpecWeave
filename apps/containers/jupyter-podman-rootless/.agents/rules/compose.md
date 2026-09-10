@@ -10,6 +10,7 @@ source: "README.md#compose服务架构 + README.md#Toolbx透传开发模式"
 - 编排文件使用Podman Compose规范（兼容Docker Compose Spec）
 - 主文件：`compose.yaml`（默认隔离配置）
 - 开发透传覆盖：`compose.dev.yaml`（opt-in，叠加使用）
+- 运行时透传覆盖（分层 opt-in，按宿主资源能力逐层叠加）：`compose.passthrough.yaml`（Host 网络 + D-Bus）、`compose.passthrough.gui.yaml`（Wayland）、`compose.passthrough.gpu.yaml`（GPU）、`compose.passthrough.usb.yaml`（USB）
 - 环境变量：`.env`文件（从`.env.example`复制）
 - 三层后端自动降级：podman-compose → podman-py SDK → CLI fallback
 - 默认隔离优先，所有透传均为opt-in
@@ -111,16 +112,24 @@ services:
 | DISPLAY环境变量 | `${DISPLAY:-:0}` | X11显示 | 配合X11套接字 |
 | XDG_RUNTIME_DIR | `/tmp/runtime-user` | Wayland/系统运行时 | 配合Wayland透传 |
 
-### 可选透传（注释式opt-in）
+### 可选透传（分层覆盖文件 opt-in）
 
-`compose.yaml`中还以注释形式提供了更多可选透传配置，取消注释即可启用：
+`compose.yaml` 中以注释形式列出、并由独立覆盖文件承载的可选透传：
 
-- **Wayland套接字**：`$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY`
-- **/run/host逃生口**：`/:/run/host:rslave`（挂载主机完整根文件系统，高风险）
-- **Host网络模式**：`network_mode: host`（共享主机网络栈，免端口映射）
-- **GPU透传**：`/dev/dri`（Intel/AMD Mesa GPU）、NVIDIA CDI设备
-- **USB透传**：`/dev/bus/usb`
-- **D-Bus会话总线**：系统集成
+- **Wayland套接字**：`$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY` → `compose.passthrough.gui.yaml`
+- **/run/host逃生口**：`/:/run/host:rslave`（挂载主机完整根文件系统，高风险；保持注释式 opt-in）
+- **Host网络模式**：`network_mode: host`（共享主机网络栈，免端口映射）→ `compose.passthrough.yaml`
+- **GPU透传**：`/dev/dri`（Intel/AMD Mesa GPU）、NVIDIA CDI设备 → `compose.passthrough.gpu.yaml`
+- **USB透传**：`/dev/bus/usb` → `compose.passthrough.usb.yaml`
+- **D-Bus会话总线**：系统集成 → `compose.passthrough.yaml`
+
+#### 分层硬约束（不可合并为单文件）
+
+**podman 对缺失的挂载源/设备节点硬失败**（退出码 125），且不会自动创建该路径（`:ro`/`:rw`/裸挂载表现一致）。因此这 5 项必须按宿主资源能力分层叠加——合并为单文件时，缺少任一资源的宿主将无法 `up`。
+
+- 各覆盖文件头部必须写明该项的前置检查命令（`test -S` / `test -e`）
+- `network_mode: host` 与端口发布互斥：覆盖文件须用 `ports: !reset []` 清除基座端口映射（`!reset`/`!override` 由 podman-compose 原生支持）
+- 覆盖文件覆盖 `image` 时**不得复用 `${IMAGE_TAG}`**：应用会自动生成 `.env` 并写入 `IMAGE_TAG`，复用会导致覆盖静默失效（改用独立变量如 `PASSTHROUGH_IMAGE_TAG`）
 
 ## 环境变量配置
 
@@ -210,6 +219,9 @@ toolbox enter jupyter-dev
 compose配置修改后必须验证：
 - [ ] `podman-compose -f compose.yaml config`语法验证通过
 - [ ] `podman-compose -f compose.yaml -f compose.dev.yaml config`透传配置验证通过
+- [ ] `podman-compose -f compose.yaml -f compose.passthrough.yaml config`叠加校验通过：`network_mode: host` 生效、`ports` 已被 `!reset` 清除、D-Bus 卷与 `DBUS_SESSION_BUS_ADDRESS`/`XDG_RUNTIME_DIR` 就位、`/dev/fuse` 未被覆盖、`image` 切换为 `PASSTHROUGH_IMAGE_TAG` 默认值
+- [ ] 继续叠加设备层后 `devices` 为**追加**而非替换：`podman-compose -f compose.yaml -f compose.passthrough.yaml -f compose.passthrough.gpu.yaml config` 中同时包含 `/dev/fuse` 与 `${GPU_DEVICE:-/dev/dri}`
+- [ ] 各分层覆盖文件头部的前置检查命令在宿主上实测结果与文档一致；缺资源的层不得叠加（podman 对缺失源硬失败，退出码 125）
 - [ ] 默认模式启动后容器可正常运行，SSH/Jupyter可访问
 - [ ] 透传模式下git push/pull可复用SSH agent（无需输入密码）
 - [ ] 透传模式下xclock等GUI应用可显示

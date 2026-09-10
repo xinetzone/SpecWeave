@@ -133,6 +133,44 @@ Wayland原生GUI应用支持：
 ```
 可发送桌面通知、访问系统设置等。
 
+## 运行时透传叠加（compose.passthrough*.yaml）
+
+上述注释式 opt-in 中有 5 项属于**运行时**透传（网络模式 / 设备节点 / 套接字挂载），无法烘焙进镜像内容。它们以**分层覆盖文件**的形式提供，按宿主实际具备的资源逐层叠加：
+
+| 层 | 覆盖文件 | 开启项 | 宿主前置条件 |
+|---|---------|-------|-------------|
+| 主层 | `compose.passthrough.yaml` | ① Host 网络模式　④ D-Bus 会话总线 | 会话总线 socket 存在（systemd 用户会话下默认具备） |
+| GUI | `compose.passthrough.gui.yaml` | ② Wayland 套接字 | 宿主运行 Wayland 会话 |
+| GPU | `compose.passthrough.gpu.yaml` | ③ GPU `/dev/dri` | 宿主存在 `GPU_DEVICE`（默认 `/dev/dri`） |
+| USB | `compose.passthrough.usb.yaml` | ⑤ USB `/dev/bus/usb` | 宿主存在 `USB_DEVICE`（默认 `/dev/bus/usb`） |
+
+主层会把镜像切换为专用 tag `jupyter-podman-rootless:passthrough`（可用 `PASSTHROUGH_IMAGE_TAG` 覆盖），默认隔离栈继续使用 `:latest`。
+
+### 为什么必须分层？
+
+**podman 对缺失的挂载源/设备节点直接硬失败**（退出码 125），且**不会自动创建**该路径——`:ro`、`:rw`、裸挂载三种写法表现一致。若把 5 项写进同一个覆盖文件，在缺少任一资源的宿主（例如无 `/dev/dri` 的 WSL2 环境）上 `podman-compose up` 会直接启动失败。分层后每个开关都能独立启用与验证。
+
+### 使用方式
+
+```bash
+# 主层：Host 网络 + D-Bus（先确认前置条件）
+test -S "${XDG_RUNTIME_DIR:-/run/user/1000}/bus" && echo "D-Bus OK"
+ss -lnt | grep -E ':(22|8888) '   # 应为空：host 网络下容器直接占用这两个端口
+podman-compose -f compose.yaml -f compose.passthrough.yaml up -d
+
+# 按宿主能力继续叠加（示例：图形会话 + GPU）
+podman-compose -f compose.yaml \
+               -f compose.passthrough.yaml \
+               -f compose.passthrough.gui.yaml \
+               -f compose.passthrough.gpu.yaml up -d
+```
+
+> ⚠️ **Host 网络模式的前置条件**：容器将直接绑定宿主 `22`/`8888` 端口，与端口映射模式的容器互斥。启用前请先 `podman-compose down` 停掉占用这些端口的栈；覆盖文件已通过 `ports: !reset []` 清除基座的端口发布，否则与 host 网络冲突。
+
+> ⚠️ **GPU 的 NVIDIA 场景**：`/dev/dri` 只覆盖 Intel/AMD Mesa。NVIDIA 需先在宿主配置 CDI（`nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`），再用 `GPU_DEVICE` 指向生成的设备节点。
+
+各项变量（`DBUS_SESSION_BUS_PATH` / `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `GPU_DEVICE` / `USB_DEVICE` / `PASSTHROUGH_IMAGE_TAG`）见 [.env.example](../.env.example)。
+
 ## 安全设计
 
 透传功能遵循严格的安全原则：

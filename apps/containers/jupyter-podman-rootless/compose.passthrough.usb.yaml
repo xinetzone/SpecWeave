@@ -1,0 +1,18 @@
+---
+# compose.passthrough.usb.yaml — [5] USB pass-through (opt-in)
+#
+#   podman-compose -f compose.yaml -f compose.passthrough.yaml \
+#                  -f compose.passthrough.usb.yaml up -d
+#
+# Prerequisites — podman FAILS HARD (exit 125) when the device path is missing:
+#   test -e "${USB_DEVICE:-/dev/bus/usb}" && echo "USB OK"
+#
+# Security — raw USB access lets the container reach keyboards, storage and debug
+# probes attached to the host. Use only with trusted images.
+#
+# devices is merged by appending, so the base /dev/fuse entry is preserved.
+
+services:
+  jupyter:
+    devices:
+      - ${USB_DEVICE:-/dev/bus/usb}:/dev/bus/usb

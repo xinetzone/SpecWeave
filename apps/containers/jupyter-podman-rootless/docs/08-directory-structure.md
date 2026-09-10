@@ -11,7 +11,11 @@ jupyter-podman-rootless/
 ├── entrypoint.sh              # 7步启动脚本
 ├── compose.yaml               # podman-compose 声明式编排（jupyter + model-registry服务）
 ├── compose.dev.yaml           # 开发透传覆盖文件（SSH/git/X11/pip cache）
-├── .env.example               # 环境变量模板（含REGISTRY/DEV透传配置说明）
+├── compose.passthrough.yaml   # 运行时透传主层（Host 网络 + D-Bus，专用 tag :passthrough）
+├── compose.passthrough.gui.yaml  # 运行时透传分层：Wayland 套接字
+├── compose.passthrough.gpu.yaml  # 运行时透传分层：GPU（/dev/dri）
+├── compose.passthrough.usb.yaml  # 运行时透传分层：USB（/dev/bus/usb）
+├── .env.example               # 环境变量模板（含REGISTRY/DEV/透传分层配置说明）
 ├── pyproject.toml             # Python 项目配置（invoke 依赖，scikit-build-core，含[compose]/[full]/[model] extras）
 ├── CMakeLists.txt             # scikit-build-core CMake配置
 ├── tasks.py                   # invoke 入口（src/ 加入 sys.path 并转发到 jpman_builder.tasks）
