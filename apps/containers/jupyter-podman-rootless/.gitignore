@@ -43,3 +43,9 @@ Thumbs.db
 # Build-context upstream trees (copied from vendor/ git submodules before build by
 # the stage_upstream mechanism in src/jpman_builder/tasks/stage_upstream.py)
 upstream/
+
+# Local installer cache (pre-downloaded Miniforge3 installers, consumed by Containerfile
+# Stage 2 before any network source; keeps builds working offline / behind throttling).
+# The directory itself is tracked via local-cache/miniforge/.gitkeep so the Containerfile
+# `COPY local-cache/ ...` stays valid when the cache is empty.
+local-cache/miniforge/*.sh

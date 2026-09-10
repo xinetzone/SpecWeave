@@ -44,6 +44,9 @@ jupyter-podman-rootless/
 │   ├── podman-py/             #   上游源树快照（conda-builder 本地 pip 安装用）
 │   └── toolbox/               #   上游源树快照（toolbox-builder go build 用）
 │
+├── local-cache/               # 本地安装包缓存（构建上下文内，网络源之前优先使用）
+│   └── miniforge/             #   预下载的 Miniforge3-Linux-<arch>.sh（*.sh 被 git-ignored，.gitkeep 保证 COPY 有效）
+│
 ├── config/                    # 配置文件
 │   ├── supervisord.conf       # supervisord 主配置
 │   ├── sshd_config            # SSH 服务配置
@@ -84,8 +87,9 @@ jupyter-podman-rootless/
 ### 构建相关
 - **Containerfile**：多阶段构建定义（3 阶段运行时链 + toolbox-builder aux 阶段 + final 内 5 层运行时分层），内嵌 podman-compose/podman-py/toolbox 三个编排工具，遵循 BuildKit 最佳实践，包含 Toolbx 兼容标记
 - **upstream/**：构建上下文临时目录，构建前由 stage 机制从 SpecWeave 根 `vendor/` 三个 submodule 复制源树生成（git-ignored，不提交；详见 [17-upstream-tools.md](17-upstream-tools.md)）
+- **local-cache/miniforge/**：本地安装包缓存。把预下载的 `Miniforge3-Linux-<arch>.sh` 放入该目录，Containerfile Stage 2 会在**任何网络源之前**优先使用它，从而规避 GitHub 限速/重置并支持离线构建；缓存为空时自动回退到镜像源（详见 [build-test.md](../.agents/rules/build-test.md) 构建 FAQ）
 - **.containerignore**：构建时排除文件（.git、.trae、.agents、workspace、`*.md` 等），并对 `upstream/podman-compose/README.md`、`upstream/podman-py/README.md` 反白放行（本地 pip 构建需其作为 long_description）
-- **.gitignore**：忽略 `.env`、`/workspace/`、`upstream/`、`.image-cache/`、`.wsl-cache/` 等
+- **.gitignore**：忽略 `.env`、`/workspace/`、`upstream/`、`local-cache/miniforge/*.sh`、`.image-cache/`、`.wsl-cache/` 等
 
 ### 启动相关
 - **entrypoint.sh**：7步启动流程（密码→SSH keys→Podman→Jupyter→supervisord）

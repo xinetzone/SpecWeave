@@ -227,6 +227,16 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 COPY upstream/podman-py ./upstream-podman-py
 COPY upstream/podman-compose ./upstream-podman-compose
 
+# Local installer cache: pre-downloaded Miniforge3 installers placed by the operator
+# at <context>/local-cache/miniforge/Miniforge3-Linux-<arch>.sh. Consulted BEFORE any
+# network source so offline/air-gapped builds work and GitHub throttling cannot break
+# the build (see the resolver in the conda-builder RUN below, which reads
+# /tmp/local-cache/miniforge/Miniforge3-Linux-<arch>.sh).
+# COPY <src>/ <dst>/ copies the *contents* of src, so /tmp/local-cache/miniforge/ keeps
+# the miniforge/ level. Tracked placeholder .gitkeep keeps this COPY valid when the
+# cache is empty.
+COPY local-cache/ /tmp/local-cache/
+
 RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + create main env ===" && \
     _STAGE_START=$(date +%s) && \
     echo "[TIMER] conda-builder stage started at $(date -u +%Y-%m-%dT%H:%M:%SZ)" && \
@@ -248,32 +258,45 @@ RUN echo "=== Stage 2/3: conda-builder — Install build tools + Miniforge3 + cr
         *) echo "[ERROR] Unsupported architecture: $ARCH"; exit 1 ;; \
     esac && \
     echo "[OK] Architecture: $ARCH ($CONDA_ARCH)" && \
-    echo "[INFO] Downloading Miniforge3 installer (conda-forge official)..." && \
+    echo "[INFO] Resolving Miniforge3 installer (local cache -> mirrors -> official)..." && \
     DL_OK=0 && \
-    _DL_URL1="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
-    if [ "${CONDA_MIRROR}" = "tuna" ]; then \
-        _DL_URLS="${_DL_URL1} https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"; \
-        echo "[BUILD] Using Tsinghua TUNA mirror for Miniforge"; \
-    elif [ "${CONDA_MIRROR}" = "aliyun" ]; then \
-        _DL_URLS="${_DL_URL1} https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh"; \
-        echo "[BUILD] Using Aliyun mirror for Miniforge"; \
-    else \
-        _DL_URLS="${_DL_URL1}"; \
-        echo "[BUILD] Using official GitHub for Miniforge"; \
+    _LOCAL_INSTALLER="/tmp/local-cache/miniforge/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
+    _DL_GH="https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
+    _DL_TUNA="https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
+    _DL_ALIYUN="https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
+    _DL_USTC="https://mirrors.ustc.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-${CONDA_ARCH}.sh" && \
+    if [ -s "${_LOCAL_INSTALLER}" ]; then \
+        echo "[OK] Local installer cache hit: ${_LOCAL_INSTALLER} ($(stat -c%s "${_LOCAL_INSTALLER}") bytes) - skipping network download"; \
+        cp "${_LOCAL_INSTALLER}" /tmp/miniforge.sh; \
+        DL_OK=1; \
     fi && \
-    for dl_url in ${_DL_URLS}; do \
-        echo "[INFO] Trying: $dl_url"; \
-        if curl -fsSL --connect-timeout 30 --max-time 900 --retry 3 --retry-delay 5 \
-            -L -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then \
-            echo "[OK] Downloaded from: $dl_url"; \
-            DL_OK=1; \
-            break; \
-        else \
-            echo "[WARN] Failed, trying next source..."; \
-        fi; \
-    done && \
     if [ "$DL_OK" = "0" ]; then \
-        echo "[ERROR] Failed to download Miniforge3 from all sources"; \
+        case "${CONDA_MIRROR}" in \
+            tuna)   _DL_URLS="${_DL_TUNA} ${_DL_ALIYUN} ${_DL_USTC} ${_DL_GH}"; \
+                    echo "[BUILD] Mirror-first order (GitHub throttling avoidance): TUNA -> Aliyun -> USTC -> GitHub" ;; \
+            aliyun) _DL_URLS="${_DL_ALIYUN} ${_DL_TUNA} ${_DL_USTC} ${_DL_GH}"; \
+                    echo "[BUILD] Mirror-first order (GitHub throttling avoidance): Aliyun -> TUNA -> USTC -> GitHub" ;; \
+            *)      _DL_URLS="${_DL_GH}"; \
+                    echo "[BUILD] Using official GitHub for Miniforge" ;; \
+        esac; \
+    fi && \
+    if [ "$DL_OK" = "0" ]; then \
+        for dl_url in ${_DL_URLS}; do \
+            echo "[INFO] Trying: $dl_url"; \
+            if curl -fsSL --connect-timeout 30 --max-time 600 --retry 4 --retry-delay 5 --retry-all-errors \
+                -o /tmp/miniforge.sh "$dl_url" 2>/tmp/conda_dl_err.log; then \
+                echo "[OK] Downloaded from: $dl_url ($(stat -c%s /tmp/miniforge.sh) bytes)"; \
+                DL_OK=1; \
+                break; \
+            else \
+                _rc=$?; \
+                echo "[WARN] Failed (curl exit ${_rc}), trying next source..."; \
+            fi; \
+        done; \
+    fi && \
+    if [ "$DL_OK" = "0" ]; then \
+        echo "[ERROR] Failed to resolve Miniforge3 installer from local cache and all network sources"; \
+        echo "[HINT] Pre-download Miniforge3-Linux-${CONDA_ARCH}.sh and place it at local-cache/miniforge/ in the build context to build offline"; \
         cat /tmp/conda_dl_err.log; \
         exit 1; \
     fi && \

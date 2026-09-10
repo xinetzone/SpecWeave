@@ -306,6 +306,28 @@ podman healthcheck run jupyter-podman
 invoke build --conda-mirror tuna --apt-mirror tuna --pip-mirror tuna
 ```
 
+指定 `tuna`/`aliyun` 时，Stage 2 采用**镜像优先**顺序（TUNA → Aliyun → USTC → GitHub），避免先白等 GitHub 限速。
+
+### Q: 构建在 Stage 2 报 `Failed to resolve Miniforge3 installer`（curl 56/28 连接重置/超时）？
+
+国内直连 GitHub 下载 124MB 安装包常被限速或重置，即使指定镜像源也可能遭遇瞬时抖动。使用**本地安装包缓存**离线构建：
+
+```bash
+# 1) 从任一镜像下载安装包（x86_64 或 aarch64 按目标架构选择）
+#    国内镜像示例：
+#    https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
+#    https://mirrors.aliyun.com/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
+
+# 2) 放入构建上下文缓存目录（文件名固定，需与目标架构一致）
+mkdir -p local-cache/miniforge
+cp Miniforge3-Linux-x86_64.sh local-cache/miniforge/
+
+# 3) 正常构建；Stage 2 会打印 "Local installer cache hit" 并跳过全部网络下载
+invoke build --conda-mirror tuna --apt-mirror tuna --pip-mirror tuna
+```
+
+缓存目录 `local-cache/miniforge/`（[目录结构](../../docs/08-directory-structure.md)）位于构建上下文内，`invoke build` 与 `jpman rebuild-all` 两条路径均自动生效；缓存为空时回退到网络镜像源，不改变既有行为。
+
 ### Q: Podman报错"fuse: device not found"？
 
 运行容器时必须添加`--device /dev/fuse`参数。invoke的`run`命令已自动添加。直接使用podman run时需要手动添加。
@@ -398,5 +420,6 @@ git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbo
 - [ ] `invoke clean --image`可清理资源
 - [ ] 健康检查通过
 - [ ] 国内镜像源构建正常（tuna/aliyun）
+- [ ] Miniforge3 安装包解析顺序符合预期：Stage 2 日志出现 `Resolving Miniforge3 installer (local cache -> mirrors -> official)`；命中本地缓存时打印 `Local installer cache hit` 并跳过全部网络源，未命中时按镜像优先顺序（`Mirror-first order`）回退；两者均以 `[OK] Miniforge3 installed` 结束
 - [ ] WSL2路径自动转换工作正常
 
