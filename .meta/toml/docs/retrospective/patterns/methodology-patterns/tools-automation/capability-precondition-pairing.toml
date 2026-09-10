@@ -1,0 +1,22 @@
+id = "capability-precondition-pairing"
+title = "能力前提配对搬运"
+domain = "methodology"
+layer = "tools"
+category = "retrospective/patterns/methodology-patterns"
+maturity = "L1-draft"
+validation_count = 1
+reuse_count = 0
+documentation_level = "complete"
+abstract_level = "domain-general"
+source = "七概念方法论编排·问题解决(sc-20260910-toolbox-runtime-fix)——jupyter-podman-rootless 镜像 toolbox 运行前提缺失与入口降级修复"
+date = "2026-09-10"
+version = "1.0"
+
+[bindings]
+related_patterns = [
+  "host-channel-pass-through",
+  "validation-probe-semantics-convergence",
+  "capability-replication-boundary",
+  "tool-failure-three-tier-degradation",
+  "implicit-contract-pitfalls",
+]

@@ -30,6 +30,8 @@
 | bp-tech-article-to-wiki-batch | [技术文章Wiki化批量生成模式](concepts/tech-article-to-wiki-batch-generation.md) | L2-validated | 6 | 6 | 将长技术文章/教程（800行以上、多章节需独立引用）转化为原子化Wiki结构时：Spec约束下子代理批量生成原子文件、自动化工具链修复元数据/索引、链接检查为必经门禁（8步标准化流程；短篇<500行用单文件轻量变体）。案例：Harness Engineering Wiki 2小时10原子文件 |
 | batch-docs-to-okf-bundle-conversion | [批量Markdown文档到OKF Bundle转换模式](concepts/batch-docs-to-okf-bundle-conversion.md) | stable | — | — | 大量散乱Markdown文档（20+）需批量转换为结构化OKF v0.2 Bundle时：R→I→E→V→C五阶段分批工作流，覆盖frontmatter统一补全、index导航建立、跨文档链接修复与正文保真验证 |
 | bp-classical-commentary-dual-layer-bundle | [古典文本-现代阐释双层Bundle构建模式](concepts/classical-commentary-dual-layer-bundle.md) | L1-draft | 1 | 0 | 同一主题存在古典原文+现代阐释双层结构时，需构建两个独立OKF Bundle并通过F编号隔离避免交叉冲突。案例：《了凡四训》+《了凡生意经》双层Bundle |
+| capability-precondition-pairing | [能力前提配对搬运](tools-automation/capability-precondition-pairing.md) | L1-draft | 1 | 0 | 搬运/复制某项能力资产（二进制/工具/服务）时，其运行前提（宿主侧启动器路径、环境变量、外部回调二进制）未随资产一并搬运，导致目标环境报裸错误而非可执行指引时。案例：jupyter-podman-rootless 镜像 toolbox 缺 `TOOLBOX_PATH` 与 `flatpak-spawn` 前提 |
+| validation-probe-semantics-convergence | [验证探针语义收敛](tools-automation/validation-probe-semantics-convergence.md) | L1-draft | 1 | 0 | 构建/CI/健康检查中的验证探针因短路型 flag + 输出重定向 + `&&` 链而恒真，且声明（available/可用）超出自证范围（存在性/活性）时。案例：jupyter-podman-rootless 镜像工具箱探针假阳性（Containerfile:191/725，`toolbox --help >/dev/null 2>&1` 恒真） |
 
 ## 成熟度等级说明
 

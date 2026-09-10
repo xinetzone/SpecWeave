@@ -18,8 +18,10 @@ date: "2026-07-09"
 |------|------|--------|------|
 | [自动化阈值判断（auto-generate-threshold）](./auto-generate-threshold.md) | 自动化阈值判断（auto-generate-threshold） | L2 |  |
 | [自动化幂等四要素](./automation-idempotent-four-elements.md) | 自动化幂等四要素 | L1 | `automation` `idempotency` `devops` |
+| [批量Markdown文档到OKF Bundle转换模式](./batch-docs-to-okf-bundle-conversion.md) | 批量Markdown文档到OKF Bundle转换模式 | stable | `okf` `wiki` `conversion` |
 | [最佳实践隐性成本模式（Best Practice Hidden Cost）](./best-practice-hidden-cost.md) | 最佳实践隐性成本模式（Best Practice Hidden Cost） | L1 |  |
 | [能力清单/功能矩阵（Capability Matrix）](./capability-matrix.md) | 能力清单/功能矩阵（Capability Matrix） | L1 |  |
+| [能力前提配对搬运](./capability-precondition-pairing.md) | 能力前提配对搬运 | L1-draft | `能力搬运` `运行前提` `前置条件` |
 | [defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction）](./defuddle-web-extraction-preferred.md) | defuddle网页内容提取首选模式（Defuddle Preferred for Web Content Extraction） | L3 |  |
 | [深度参考表模式：预计算路径层级消除跨目录引用错误](./depth-reference-table.md) | 预先计算项目中常见目录深度的相对路径前缀参考表，将易错的心算层级转化为简单查表操作，可降低80%以上的跨目录路径引用错误，适用于x-toml-ref、Markdown链接、图片引用等场景 | L3 | `相对路径` `深度计算` `查表法` |
 | [衍生文件全自动原则（禁手编辑原则）](./derived-file-auto-generation.md) | 衍生文件全自动原则（禁手编辑原则） | L2 | `tools-automation` `index` `auto-generation` |
@@ -34,8 +36,10 @@ date: "2026-07-09"
 | [Git钩子三层信任模型：L1/L2/L3分层防御策略](./git-hooks-three-tier-trust.md) | Git钩子三层信任模型：L1/L2/L3分层防御策略 | L2 | `git-hooks` `pre-commit` `CI` |
 | [本地路径 Git 克隆异常的最小破坏处置协议](./git-local-clone-safety-protocol.md) | 本地路径 Git 克隆异常的最小破坏处置协议 | L1 |  |
 | [隐式契约陷阱：语言隐藏行为导致的Bug](./implicit-contract-pitfalls.md) | 编程语言/框架中存在未明确文档化的隐式契约（如Python中bool是int的子类，isinstance(True, int)返回True），违反这些契约会导致隐蔽Bug。原则：更具体的类型检查放前面，通用类型放后面；对语言边角料知识保持警惕。 | L1 | `隐式契约` `类型系统` `Python` |
+| [Tools Automation](./index.md) | Tools Automation | - |  |
 | [新检测规则存量暴露效应：落地前先扫描历史问题](./legacy-exposure-effect.md) | 新检测规则存量暴露效应：落地前先扫描历史问题 | L2 |  |
 | [链接检查双覆盖原则](./link-check-dual-coverage.md) | 链接检查双覆盖原则 | L2 | `tools-automation` `link-check` `frontmatter` |
+| [声明-回收鸿沟模式（Logical Delete ≠ Physical Reclaim）](./logical-delete-physical-reclaim-gap.md) | 声明-回收鸿沟模式（Logical Delete ≠ Physical Reclaim） | L1-实验性 | `logical-delete` `physical-reclaim` `gc` |
 | [度量工具排除机制与配置画像（metric-tool-exclusion-profiling）](./metric-tool-exclusion-profiling.md) | 度量工具排除机制与配置画像（metric-tool-exclusion-profiling） | L1 |  |
 | [理论模型→测试矩阵转化模式（Model-to-Test-Matrix）](./model-to-test-matrix.md) | 理论模型→测试矩阵转化模式（Model-to-Test-Matrix） | L1 |  |
 | [多信号组合检测模式](./multi-signal-detection.md) | 多信号组合检测模式 | L2 |  |
@@ -47,7 +51,6 @@ date: "2026-07-09"
 | [精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则](./precision-over-recall.md) | 精度优先于召回率（Precision Over Recall）—— 破坏性工具的零误报原则 | L1 |  |
 | [先强后弱两级匹配分类](./progressive-two-level-matching-classification.md) | 高置信度精确匹配先行分类，遗留项用更丰富特征（正则+作者库+N-gram高频词）再回捞，两轮即可大幅提升分类率；挑战「规则一次写全就能分好」的默认假设，避免一次性穷尽规则的过度工程 | L1 | `分类分拣` `递进匹配` `规则迭代` |
 | [引号/包裹机制作用边界定律（Quoting Scope Limits）](./quoting-scope-limits.md) | 引号/包裹机制作用边界定律（Quoting Scope Limits） | L2 | `引号边界` `两阶段解析` `分层架构` |
-| [声明-回收鸿沟（Logical Delete ≠ Physical Reclaim）](./logical-delete-physical-reclaim-gap.md) | 声明-回收鸿沟：删除是元数据记账、物理回收需显式触发且记账一次性；运维三问（删除是记账吗/何时兑现/兑现代价），适用于TRIM/VACUUM/GC/git gc全家族 | L1 | `逻辑删除` `物理回收` `gc` `vacuum` |
 | [重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery）](./refactoring-hidden-bug-discovery.md) | 重构中隐藏 Bug 发现（refactoring-hidden-bug-discovery） | L1 |  |
 | [相对路径三类特殊踩坑案例](./relative-path-pitfalls.md) | 相对路径三类特殊踩坑案例 | L3 |  |
 | [企业SaaS云文档DOM提取适配方案（草案）](./saas-doc-extraction-adaptation-draft.md) | 企业SaaS云文档DOM提取适配方案（草案） | - |  |
@@ -56,6 +59,7 @@ date: "2026-07-09"
 | [共享库引力定律：覆盖面越大复用率越高的正反馈循环](./shared-lib-gravity.md) | 共享库覆盖域≥5个概念域时触发引力效应正反馈循环：覆盖面越大→复用率越高→更多功能被提取→覆盖面进一步增大；指导多脚本项目推进代码复用 | L2 | `共享库` `代码复用` `lib` |
 | [信号识别四步法：人工Checklist→自动化工具转化](./signal-identification-four-step.md) | 信号识别四步法：人工Checklist→自动化工具转化 | L2 | `static-analysis` `checklist-automation` `tool-development` |
 | [规范即代码自动化门禁模式（Spec-as-Code Automated Gates）](./spec-as-code-automated-gates.md) | 规范即代码自动化门禁模式（Spec-as-Code Automated Gates） | L1 |  |
+| [Sphinx 大文档构建加速与计量（分相测速 + builder 同源性）](./sphinx-build-acceleration-metering.md) | Sphinx 大文档构建加速与计量（分相测速 + builder 同源性） | L1 | `sphinx` `myst` `build` |
 | [TDD驱动静态分析开发：测试五件套方法论](./tdd-static-analysis-five-test-suites.md) | TDD驱动静态分析开发：测试五件套方法论 | L2 | `TDD` `static-analysis` `testing` |
 | [三层分离·渐进迁移](./three-layer-separation-progressive-migration.md) | 三层分离·渐进迁移 | L2-validated | `refactoring` `architecture` `progressive-migration` |
 | [网页内容提取三级回退链（Three-Tier Web Content Extraction Fallback Chain）](./three-tier-tool-fallback.md) | 网页内容提取三级回退链（Three-Tier Web Content Extraction Fallback Chain） | L1 |  |
@@ -67,6 +71,7 @@ date: "2026-07-09"
 | [工具自生验证模式（tool-self-validation）](./tool-self-validation.md) | 工具自生验证模式（tool-self-validation） | L2 |  |
 | [工具工作流组合效应（Tool Workflow Composition）](./tool-workflow-composition.md) | 工具工作流组合效应（Tool Workflow Composition） | L1 |  |
 | [工具链演进的五阶段成熟度模型（toolchain-maturity）](./toolchain-maturity.md) | 工具链演进的五阶段成熟度模型（toolchain-maturity） | L1 |  |
+| [验证探针语义收敛](./validation-probe-semantics-convergence.md) | 验证探针语义收敛 | L1-draft | `验证探针` `假阳性` `能力边界` |
 | [验证层级语义缺口模式（Validation Semantic Gap）](./validation-semantic-gap.md) | 验证层级语义缺口模式（Validation Semantic Gap） | L2 | `验证缺口` `语义验证` `三层验证` |
 
 
@@ -79,4 +84,4 @@ date: "2026-07-09"
 
 ---
 
-<!-- generated by generate-readme.py on 2026-08-24 -->
+<!-- generated by generate-readme.py on 2026-09-10 -->
