@@ -188,7 +188,7 @@ RUN echo "=== Stage (aux): toolbox-builder — go build toolbox (module root: /t
         -ldflags "-s -w -X github.com/containers/toolbox/pkg/version.currentVersion=0.3" \
         -o /out/toolbox . && \
     echo "[OK] /out/toolbox built (stripped -s -w): $(ls -lh /out/toolbox | awk '{print $5}')" && \
-    /out/toolbox --help >/dev/null 2>&1 && echo "[OK] /out/toolbox --help works" && \
+    /out/toolbox --version && echo "[OK] /out/toolbox --version works (binary liveness only; host forwarding needs Toolbx launcher)" && \
     echo "[CLEAN] Removing Go module/build cache and source tree from toolbox-builder layer..." && \
     rm -rf /go/pkg/mod /root/.cache/go-build /toolbox-src && \
     _NOW=$(date +%s) && \
@@ -722,7 +722,7 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     command -v pasta >/dev/null 2>&1 && echo "[OK] pasta available (rootless netns)" && \
     podman-compose --version && echo "[OK] podman-compose available (main env)" && \
     python -c "import podman; print('[OK] podman SDK (podman-py) importable (main env)')" && \
-    toolbox --help >/dev/null 2>&1 && echo "[OK] toolbox available (/usr/local/bin)" && \
+    toolbox --version && echo "[OK] toolbox binary present (/usr/local/bin; liveness only — bare 'toolbox' needs Toolbx host launcher)" && \
     bash -n /usr/local/bin/entrypoint.sh && echo "[OK] entrypoint.sh syntax valid" && \
     bash -n /usr/local/bin/healthcheck.sh && echo "[OK] healthcheck.sh syntax valid" && \
     python -c "import sys, sysconfig; assert sysconfig.get_config_var('Py_GIL_DISABLED') == 1 and not sys._is_gil_enabled(); print('[OK] Python free-threading verified at final checkpoint (cp314t, GIL disabled)')" && \

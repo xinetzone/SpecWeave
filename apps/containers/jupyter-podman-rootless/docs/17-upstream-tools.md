@@ -67,7 +67,7 @@ source: "Containerfile#构建阶段 + src/jpman_builder/tasks/stage_upstream.py 
 
 ## 容器内用法
 
-进入容器（`jpman shell` / `invoke shell` / `ssh -p 2222 devuser@localhost`）后，devuser 可直接使用（conda `main` env 与 `/usr/local/bin` 均已在 PATH）：
+进入容器（`jpman shell` / `invoke shell` / `ssh -p 2222 devuser@localhost`）后，devuser 可在容器内直接使用下列工具（conda `main` env 与 `/usr/local/bin` 均已在 PATH）；其中 `toolbox` 例外——其容器创建/进入能力属宿主侧，容器内仅可验证二进制活性（见下方注意块）：
 
 ```bash
 # podman-compose：容器内声明式编排（示例：/workspace 下使用 Compose 文件）
@@ -77,9 +77,14 @@ podman-compose -f compose.yaml up -d
 # podman SDK（podman-py）：以 Python 方式驱动容器内 rootless Podman
 python -c "import podman; print('[OK] podman SDK importable')"
 
-# toolbox：以本镜像（或其它 Toolbx 兼容镜像）创建/进入 Toolbx 容器
-toolbox --help
+# toolbox：仅二进制随镜像内嵌（/usr/local/bin/toolbox）；容器的创建/进入由宿主侧发起
+toolbox --version                                    # 活性检查：确认二进制可执行
+# 宿主侧（非容器内）创建/进入 Toolbx 容器：
+#   toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
+#   toolbox enter jupyter-dev
 ```
+
+> **注意（toolbox 的能力边界）**：`toolbox` 二进制虽内嵌于镜像，但其**容器创建/进入能力由宿主侧 Toolbx 启动器提供**——启动器注入 `TOOLBOX_PATH`，容器内二进制再经 `flatpak-spawn --host` 转发回宿主执行。本镜像内嵌的 marker（`/run/.toolboxenv`、`/run/.containerenv`）使镜像**可被**宿主 Toolbx 识别与进入；但在**普通 `podman run` / `podman-compose` 会话**中并无宿主启动器，裸跑 `toolbox`（及任何子命令）会按上游设计报 `Error: TOOLBOX_PATH not set`（退出码 1），而 `toolbox --version` 等 cobra 短路型 flag 不受影响。故镜像内对 toolbox 的验证仅声明为**二进制活性（liveness）**，不声明为「容器内可用」。
 
 容器内 Podman 本身为 rootless 模式（fuse-overlayfs + crun，见 [05-rootless-podman.md](05-rootless-podman.md)），这些内嵌工具面向在容器内继续做嵌套容器/编排的开发场景；在 WSL2 导出场景（[15-wsl-export.md](15-wsl-export.md)）下，导出的发行版也天然自带以上编排能力。
 
@@ -96,7 +101,7 @@ toolbox --help
 ```bash
 podman-compose --version                                   # [OK] podman-compose available (main env)
 python -c "import podman; print('[OK] podman SDK importable')"
-toolbox --help                                             # [OK] toolbox available (/usr/local/bin)
+toolbox --version                                          # [OK] toolbox binary present (/usr/local/bin; 活性检查)
 ```
 
 排障与 `upstream/`/子模块相关问题见 [.agents/rules/build-test.md](../.agents/rules/build-test.md) 的常见问题排查。

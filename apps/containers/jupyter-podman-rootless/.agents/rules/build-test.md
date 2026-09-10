@@ -272,7 +272,7 @@ podman run --rm docker.io/library/hello-world
 # 容器内验证内嵌编排工具（镜像内置，版本固定自 vendor/ 子模块，详见 docs/17-upstream-tools.md）
 podman-compose --version                      # podman-compose（main env，本地源 pip 安装）
 python -c "import podman; print('[OK] podman SDK importable')"   # podman-py SDK（main env）
-toolbox --help                                # toolbox（/usr/local/bin，golang aux 阶段构建）
+toolbox --version                             # toolbox 二进制活性（/usr/local/bin，golang aux 阶段构建；容器内裸跑需宿主 Toolbx 启动器）
 ```
 
 ### 6. ML工具验证
@@ -374,7 +374,7 @@ git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbo
 
 - `upstream/` 是构建前由 stage 机制临时生成的构建上下文目录，**已被 `.gitignore` 忽略**，且每次构建前清空重建——不要手动向其中添加文件、也不要将其提交入库
 - `.containerignore` 的 `*.md` 规则对 `upstream/` 内层的根 README.md 做了**反白放行**（`!upstream/podman-compose/README.md`、`!upstream/podman-py/README.md`）——本地 pip 构建需要其作为 long_description 元数据，**不要删除这两条放行规则**
-- 若镜像仍是旧版本，先确认三 submodule 已 pin 到目标 commit（`git submodule status vendor/podman-compose vendor/podman-py vendor/toolbox`），再 `jpman rebuild-all` 全量重建并重跑三项内嵌工具检查（`podman-compose --version` / `python -c "import podman"` / `toolbox --help`）
+- 若镜像仍是旧版本，先确认三 submodule 已 pin 到目标 commit（`git submodule status vendor/podman-compose vendor/podman-py vendor/toolbox`），再 `jpman rebuild-all` 全量重建并重跑三项内嵌工具检查（`podman-compose --version` / `python -c "import podman"` / `toolbox --version`）
 
 ## 验证清单
 
@@ -382,7 +382,7 @@ git submodule update --init vendor/podman-compose vendor/podman-py vendor/toolbo
 
 - [ ] `invoke build`构建成功，构建日志清晰（3 阶段 + toolbox-builder aux 阶段，final 内 5 层运行时分层）
 - [ ] 构建前 `upstream/` 已被 stage 到 `<应用根>/upstream/`（含 podman-compose/podman-py/toolbox 三个源树）
-- [ ] 容器内三项内嵌工具检查通过：`podman-compose --version`、`python -c "import podman"`、`toolbox --help`
+- [ ] 容器内三项内嵌工具检查通过：`podman-compose --version`、`python -c "import podman"`、`toolbox --version`（toolbox 仅验二进制活性，容器内裸跑需宿主 Toolbx 启动器）
 - [ ] `invoke run`启动成功，打印SSH/Jupyter访问信息
 - [ ] SSH可连接（密码或公钥认证）
 - [ ] Jupyter Lab可在浏览器访问

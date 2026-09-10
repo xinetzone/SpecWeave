@@ -29,7 +29,7 @@ flowchart BT
 
 - **构建阶段不进 final**：conda-builder 与 toolbox-builder 为构建态，仅产物经 `COPY --from` 进入 final（`/opt/conda`、`/usr/local/bin/toolbox`），构建工具链与源树均不进入最终镜像；
 - **内嵌编排工具**：podman-py/podman-compose 在 conda-builder 阶段以本地源 pip 装入 `main` env；toolbox 由 toolbox-builder（golang:1.26-bookworm）`go build` 产出；三者源树经构建前 stage 机制来自 SpecWeave 根 `vendor/` 子模块（详见 [17-upstream-tools.md](17-upstream-tools.md)）；
-- **最终验证**：Layer 5/5 共 **23 项 [OK] 检查**，含新增三项内嵌工具检查（`podman-compose --version`、`python -c "import podman"`、`toolbox --help`）。
+- **最终验证**：Layer 5/5 共 **23 项 [OK] 检查**，含新增三项内嵌工具检查（`podman-compose --version`、`python -c "import podman"`、`toolbox --version`）。
 
 Containerfile编写规范详见 [.agents/rules/containerfile.md](../.agents/rules/containerfile.md)。
 

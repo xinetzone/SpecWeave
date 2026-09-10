@@ -6,6 +6,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-09-10
+
+| 类型 | 变更 |
+|------|------|
+| fix | 修正 toolbox 验证探针假阳性与能力声明过宽：Containerfile aux 阶段与 Layer 5 两处探针由 `toolbox --help >/dev/null 2>&1`（cobra 在 `PersistentPreRunE` 前短路 `--help`，且重定向吞掉 stderr，致使容器内裸跑 `toolbox` 报 `Error: TOOLBOX_PATH not set` 时仍打印 [OK]）改为**无重定向**的 `toolbox --version` 活性探针，标签由 "available" 改为 "binary present (liveness only)"；同步 docs/17-upstream-tools.md、docs/04-image-architecture.md、.agents/rules/containerfile.md、.agents/rules/build-test.md，明确 toolbox 的容器创建/进入能力由宿主侧 Toolbx 启动器提供，普通 podman 会话中裸跑 `toolbox` 按上游设计报错，镜像内仅声明二进制活性（预防措施：验证探针类型=假阳性探针 + 声明-事实不一致） |
+
 ## 2026-09-08
 
 | 类型 | 变更 |

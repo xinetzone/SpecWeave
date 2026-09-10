@@ -25,7 +25,7 @@
 - **任务管理**：使用 invoke 作为任务管理工具（任务定义在 `src/jpman_builder/tasks/`，经根 `tasks.py` 暴露）
 - **编排架构**：宿主机 invoke 三层后端自动降级——podman-compose 声明式（优先）→ podman-py SDK → CLI fallback（宿主机 pip 安装）；镜像内另内嵌同源 podman-compose / podman-py / toolbox（经 SpecWeave 根 `vendor/` 三个 third_party 子模块固定 commit 引入、构建前置 stage 装入，见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)）
 - **ML 模型管理**：容器内预装 omlmd + olot[oras-py]，支持 OCI artifact 分发和 KServe ModelCar 打包
-- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter；镜像内另内嵌 toolbox 二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，/usr/local/bin/toolbox）
+- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh），可直接 toolbox create/enter（由宿主侧 Toolbx 启动器发起，注入 `TOOLBOX_PATH`；普通 podman 会话中裸跑 `toolbox` 按上游设计报 `TOOLBOX_PATH not set`）；镜像内另内嵌 toolbox 二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，/usr/local/bin/toolbox）
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能

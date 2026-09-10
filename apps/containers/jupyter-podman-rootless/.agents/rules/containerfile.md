@@ -69,7 +69,7 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 - **最终验证块共 23 项 [OK] 检查**（tini/supervisord/sshd/python/pip/conda/jupyter/omlmd/olot/olot_car.py/Toolbx markers/capsh/podman/crun/pasta/entrypoint.sh/healthcheck.sh/free-threading 等），其中**新增三项内嵌工具检查**：
   - `podman-compose --version`（main env）
   - `python -c "import podman"`（podman SDK / podman-py 可导入）
-  - `toolbox --help`（/usr/local/bin/toolbox）
+  - `toolbox --version`（/usr/local/bin/toolbox，仅二进制活性；容器内裸跑 `toolbox` 需宿主 Toolbx 启动器注入 `TOOLBOX_PATH`）
 - Free-threading 二次确认 + 构建耗时汇总表输出
 
 #### 运行时声明（元数据，不产生镜像层）
@@ -151,5 +151,5 @@ RUN sed -i 's/^# *zh_CN.UTF-8 UTF-8/zh_CN.UTF-8 UTF-8/' /etc/locale.gen && \
 - [ ] Podman在devuser下可运行：`su - devuser -c "podman info"`
 - [ ] Toolbx markers存在：`test -f /run/.toolboxenv && test -f /run/.containerenv`
 - [ ] capsh可用：`capsh --print`
-- [ ] 最终验证 23 项 [OK] 检查全部通过（含三项内嵌工具检查：`podman-compose --version`、`python -c "import podman"`、`toolbox --help`）
+- [ ] 最终验证 23 项 [OK] 检查全部通过（含三项内嵌工具检查：`podman-compose --version`、`python -c "import podman"`、`toolbox --version`）
 - [ ] 构建上下文 `upstream/` 已由 stage 机制生成（git-ignored，.containerignore 放行其根 README.md），避免误删/误提交
