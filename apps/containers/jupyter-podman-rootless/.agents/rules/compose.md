@@ -57,20 +57,27 @@ services:
 
 ```yaml
   model-registry:
+    image: registry:2
     profiles: ["registry"]
-    image: ghcr.io/project-zot/zot-linux-amd64:latest
-    container_name: model-registry
+    container_name: ${CONTAINER_NAME:-jupyter-podman}-registry
     ports:
       - "${REGISTRY_PORT:-5000}:5000"
     volumes:
       - registry-data:/var/lib/registry
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+      REGISTRY_HTTP_ADDR: "0.0.0.0:5000"
     restart: unless-stopped
 
 volumes:
   registry-data:
 ```
 
-仅当使用`--profile registry`时启动，默认不启动。
+仅当使用`--profile registry`时启动，默认不启动（且该命令仅 WSL / podman machine 内可用，见「分层硬约束」）。
+
+**跨平台等价替代**：`invoke registry.up` / `invoke registry.down`（`tasks/registry.py`）以 SDK→CLI 两层实现同一服务，不依赖 podman-compose，Windows 原生宿主同样可用。其容器名、数据卷名（`<project>_registry-data`，即 podman-compose 的 `<project>_<volume>` 生成规则）、端口、环境变量、重启策略均与本服务对齐，**两种启动方式共享同一份数据卷**。
+
+> ⚠️ 修改本服务定义（镜像 / 卷名 / 端口 / 环境变量 / 重启策略）时必须同步 `tasks/registry.py` 顶部的「与 compose.yaml 保持同步的常量」，否则两条路径会各自启动一个互不相干的服务。
 
 ## compose.dev.yaml透传配置（Toolbx风格）
 

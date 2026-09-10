@@ -101,6 +101,9 @@ podman-compose -f compose.yaml -f compose.dev.yaml up -d
 # 同时启动本地模型仓库（用于OMLMD开发测试）
 podman-compose -f compose.yaml -f compose.dev.yaml --profile registry up -d
 
+# 跨平台等价替代（Windows 原生宿主亦可）：容器与 registry 分开启动
+#   invoke run && invoke registry.up
+
 # 容器内可直接使用主机SSH密钥push/pull代码
 podman-compose exec jupyter git clone git@github.com:your/repo.git
 

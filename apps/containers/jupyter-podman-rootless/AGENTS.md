@@ -27,7 +27,7 @@
 - **ML 模型管理**：容器内预装 omlmd + olot[oras-py]，支持 OCI artifact 分发和 KServe ModelCar 打包
 - **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh + `flatpak-spawn`），可直接 toolbox create/enter（由宿主侧 Toolbx 启动器发起，注入 `TOOLBOX_PATH`）；镜像内另内嵌 toolbox 真二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，落 `/usr/local/libexec/toolbox`），`/usr/local/bin/toolbox` 为指引包装器——真实 Toolbx 会话中转发给真二进制，普通 podman 会话中裸跑则输出中文可执行指引并保持退出码 1（不再暴露上游裸错误）
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
-- **模型仓库**：内置 model-registry 服务（profile: `registry`），本地 OCI registry 用于开发测试
+- **模型仓库**：内置 model-registry 服务（profile: `registry`，镜像 `registry:2`），本地 OCI registry 用于开发测试；跨平台替代 `invoke registry.up/down`（SDK→CLI 两层，不依赖 podman-compose，Windows 原生宿主亦可，与 compose 服务共享同一数据卷）
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
 - **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复，pigz 多线程压缩
 - **WSL2 集成**：一键导出为 WSL2 发行版，自动配置 wsl.conf 和 Conda 激活，含环境验证脚本
@@ -155,7 +155,7 @@ invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna
 # 启动容器（自动生成密码和token）
 invoke run
 
-# 查看可用任务（应列出13个：8核心+5model）
+# 查看可用任务（应列出15个：8核心+5model+2registry）
 invoke --list
 ```
 
@@ -175,6 +175,10 @@ invoke --list
 
 完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-10** | feat: 新增 `invoke registry.up/down`（`tasks/registry.py`）——本地 OCI registry 的 SDK→CLI 两层实现，替代此前唯一的 `podman-compose --profile registry`（Windows 原生宿主不可用）。容器名/数据卷名（`jupyter-podman-rootless_registry-data`）/端口/环境变量/重启策略与 compose 服务对齐，两路径共享数据；顺带修正文档中「zot 镜像」的失实描述（实为 `registry:2`）
+- **2026-09-10** | fix: invoke 的 Windows shell 配置修正——原 `config["run"]["shell"] = shutil.which("pwsh")` 返回含空格的 `C:\Program Files\WindowsApps\...\pwsh.EXE`，而 invoke 以 `Popen(cmd, shell=True, executable=shell)` 启动、路径无法转义，致**所有** `c.run` 命令失败（被 `warn=True` 静默吞掉，表现为整条 CLI 兜底层不可用、容器永远报「不存在」）；改为取无空格的 App Execution Alias 路径（`_resolve_space_free_pwsh()`）
+- **2026-09-10** | fix: 宿主透传挂载源禁止自动创建（8 处改 long syntax + `bind: {create_host_path: false}`）——short syntax 下 podman-compose 必走 `os.makedirs()`，Windows 上会把 `/run/...` 按盘符解析为 `D:\run\...` 并在宿主建错误目录；加固后改为显式 `ValueError ... bind source path does not exist`，宿主零残留
+- **2026-09-10** | fix: `podman-compose` 后端在 Windows 原生宿主改为工具层门禁（`compose_available()` 恒 False + `compose_unavailable_reason()` 输出可执行原因），三层降级到 SDK/CLI 后路径由远端 daemon 解析
 - **2026-09-10** | fix: `olot_car.py` 构建期探针假阳性修正——原 `--help >/dev/null 2>&1` 恒真（该脚本在函数体内延迟导入 `olot`/`oras-py`，`--help` 走完 argparse 即退出，从未触达真实依赖）；改为断言 `olot` + `oras_py.is_oras_py()` 可导入并校验 `--help` 声明 `pack`/`extract` 子命令
 - **2026-09-10** | fix: 新增 `SSHD_PORT` 环境变量支持（entrypoint 重写 `sshd_config` 的 Port，默认 22）——host 网络模式下 rootless Podman 无法绑定特权端口 22（sshd `Permission denied` 后 FATAL 退出），主层透传覆盖改用非特权端口 2222
 - **2026-09-10** | feat: 运行时透传分层覆盖（`compose.passthrough.yaml` 主层 Host 网络+D-Bus / `.gui.yaml` Wayland / `.gpu.yaml` GPU / `.usb.yaml` USB）与专用镜像 tag `jupyter-podman-rootless:passthrough`；分层因 podman 对缺失挂载源硬失败（退出码 125）而必需

@@ -21,14 +21,20 @@ source: "README.md#ML模型管理OMLMD--OLOT"
 ML模型开发测试需要本地OCI registry：
 
 ```bash
-# 启动本地model-registry服务（zot镜像）
+# 启动本地model-registry服务（registry:2 镜像）
+invoke registry.up                       # 推荐：跨平台（Windows 原生宿主亦可）
+
+# 等价替代（仅 WSL / podman machine 内可用）
 podman-compose --profile registry up -d
 
 # 验证registry运行
 curl http://localhost:5000/v2/_catalog
 ```
 
-registry服务监听在5000端口（可通过`REGISTRY_PORT`环境变量修改），使用HTTP协议（本地开发用）。
+registry服务监听在5000端口（可通过`REGISTRY_PORT`环境变量或`invoke registry.up --port`修改），使用HTTP协议（本地开发用）。
+
+> `invoke registry.up` 与 compose 的 `model-registry` 服务参数对齐（容器名、数据卷
+> `jupyter-podman-rootless_registry-data`、环境变量、重启策略），两种方式共享同一份数据。
 
 ## OMLMD — ML 模型 OCI Artifact 分发
 

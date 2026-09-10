@@ -11,7 +11,7 @@ source: "README.md#ML模型管理 + AGENTS.md#核心约束"
 - OCI Artifact工具：OMLMD（OCIFactory AI Model Management）
 - ModelCar工具：OLOT（OCI Layers On Top）
 - 容器内预装：omlmd + olot[oras-py]（通过conda安装）
-- 本地模型仓库：zot镜像（compose profile: registry）
+- 本地模型仓库：`registry:2` 镜像（compose profile: registry；等价替代 `invoke registry.up/down`）
 - Python兼容性：omlmd/olot官方支持Python ≤3.12，已通过`--ignore-requires-python`兼容cp314t（free-threading）
 - 三层后端架构同样适用于ML命令（compose → SDK → CLI）
 
@@ -142,17 +142,21 @@ invoke model.extract \
 ### 启动本地仓库
 
 ```bash
-# 使用podman-compose启动（需要profile: registry）
-podman-compose --profile registry up -d
+# 推荐：invoke registry.up（SDK→CLI 两层，不依赖 podman-compose，Windows 原生宿主亦可）
+invoke registry.up
+invoke registry.down            # 停止；--volumes 连数据卷一起删
 
-# 或通过invoke启动（透传compose参数）
+# 等价替代（仅 WSL / podman machine 内可用）
+podman-compose --profile registry up -d
 ```
 
-服务配置：
-- 镜像：`ghcr.io/project-zot/zot-linux-amd64:latest`
-- 端口：5000（可通过REGISTRY_PORT环境变量修改）
+服务配置（两条路径共用，故必须与 `compose.yaml` 及 `tasks/registry.py` 保持同步）：
+- 镜像：`registry:2`
+- 容器名：`${CONTAINER_NAME:-jupyter-podman}-registry`
+- 端口：5000（可通过 `REGISTRY_PORT` 环境变量或 `invoke registry.up --port` 修改）
 - 协议：HTTP（本地开发用，REGISTRY_PLAIN_HTTP=true）
-- 数据持久化：Docker volume `registry-data`
+- 数据持久化：命名卷 `jupyter-podman-rootless_registry-data`
+  （podman-compose 生成规则 `<project>_<volume>`；`invoke registry.up` 直接用同一名字，故两种启动方式共享数据）
 
 ### 环境变量
 
@@ -212,7 +216,10 @@ dependencies:
 invoke build --apt-mirror tuna
 
 # 2. 启动容器+本地模型仓库
-podman-compose -f compose.yaml -f compose.dev.yaml --profile registry up -d
+invoke run
+invoke registry.up
+# 等价替代（仅 WSL / podman machine 内可用）：
+#   podman-compose -f compose.yaml -f compose.dev.yaml --profile registry up -d
 
 # 3. 推送测试模型
 mkdir -p ./workspace/test-model
@@ -240,7 +247,8 @@ invoke model.extract --ref localhost:5000/models/test-car:v1 \
 ML模型功能修改后必须验证：
 - [ ] 容器内omlmd命令可执行：`omlmd --version`
 - [ ] 容器内olot命令可执行：`olot --version`
-- [ ] model-registry服务可启动（--profile registry）
+- [ ] model-registry服务可启动（`invoke registry.up`；compose 替代为 `--profile registry`）
+- [ ] `invoke registry.up` 后 `curl http://localhost:5000/v2/_catalog` 返回 200
 - [ ] model.push可推送模型到本地registry
 - [ ] model.config可查询元数据
 - [ ] model.pull可拉取模型

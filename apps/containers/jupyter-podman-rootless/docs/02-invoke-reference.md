@@ -33,9 +33,40 @@ source: "README.md#invoke-任务参考"
 | `invoke model.extract` | 从 ModelCar 镜像提取模型目录 | `invoke model.extract --ref localhost:5000/models/car:v1 --output ./models` |
 
 > ML 模型命令需要容器内预装 omlmd/olot（默认已包含），或宿主机安装 `pip install omlmd 'olot[oras-py]'`。
-> 使用本地模型仓库时先启动：`podman-compose --profile registry up -d`。
+> 使用本地模型仓库时先启动：`invoke registry.up`（推荐，跨平台）或 `podman-compose --profile registry up -d`（仅 WSL / podman machine 内可用）。
 
 ML模型功能详情见 [06-ml-model-management.md](06-ml-model-management.md)。
+
+## registry 命令（本地 OCI registry）
+
+`model.*` 命令推送/拉取的默认目标 `localhost:5000` 由本组命令提供。它是 compose
+`model-registry` 服务（`profile: registry`）的等价替代，**不依赖 podman-compose**，
+故在 Windows 原生宿主上同样可用；容器名、数据卷名、端口、环境变量与 compose 服务对齐，
+两种启动方式共享同一份数据卷。
+
+| 命令 | 说明 | 示例 |
+|------|------|------|
+| `invoke registry.up` | 启动本地 OCI registry（`registry:2`） | `invoke registry.up --port 5001` |
+| `invoke registry.down` | 停止并删除 registry 容器（保留数据卷） | `invoke registry.down --volumes` |
+
+| registry.up 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `--port` | `5000` | 宿主映射端口（优先级：参数 > `REGISTRY_PORT` 环境变量 > `.env` > 默认值） |
+
+| registry.down 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `--volumes` | `false` | 同时删除数据卷 `jupyter-podman-rootless_registry-data`（不可恢复） |
+
+```bash
+invoke registry.up
+curl http://localhost:5000/v2/_catalog     # {"repositories":[]}
+invoke model.push ./my-model --ref localhost:5000/models/llm:v1
+invoke registry.down
+```
+
+> 容器内访问名 `http://model-registry:5000` 仅在 compose 项目网络
+> （`jupyter-podman-rootless_default`）存在时可用——该网络由 compose 栈创建；
+> 网络不存在时命令会打印提示并改用默认网络。
 
 ## build 参数
 

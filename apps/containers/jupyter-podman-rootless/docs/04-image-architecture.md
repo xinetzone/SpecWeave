@@ -83,7 +83,7 @@ podman-compose定义两个服务：
 | 服务 | Profile | 端口 | 说明 |
 |------|---------|------|------|
 | `jupyter` | 默认 | 2222:22, 8888:8888 | JupyterLab + SSHd + Podman 主服务 |
-| `model-registry` | `registry` | 5000:5000 | 本地 OCI registry（zot 镜像），用于 OMLMD/OLOT 开发测试 |
+| `model-registry` | `registry` | 5000:5000 | 本地 OCI registry（`registry:2` 镜像），用于 OMLMD/OLOT 开发测试 |
 
 使用profile控制服务启动：
 ```bash
@@ -91,7 +91,10 @@ podman-compose定义两个服务：
 podman-compose up -d
 
 # 启动jupyter + model-registry
-podman-compose --profile registry up -d
+podman-compose --profile registry up -d     # 仅 WSL / podman machine 内可用
+
+# 跨平台等价替代（不依赖 podman-compose，Windows 原生宿主亦可）
+invoke registry.up
 ```
 
 Compose编排规范详见 [.agents/rules/compose.md](../.agents/rules/compose.md)。

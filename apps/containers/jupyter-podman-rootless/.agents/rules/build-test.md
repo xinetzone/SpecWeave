@@ -365,7 +365,11 @@ podman-compose -f compose.yaml -f compose.dev.yaml up -d
 ### Q: 如何启动本地模型仓库？
 
 ```bash
-podman-compose --profile registry up -d
+invoke registry.up        # 推荐：跨平台（Windows 原生宿主亦可），等价于下面的 compose profile
+```
+
+```bash
+podman-compose --profile registry up -d   # 仅 WSL / podman machine 内可用
 ```
 
 然后使用`localhost:5000`作为OMLMD/OLOT的registry地址。

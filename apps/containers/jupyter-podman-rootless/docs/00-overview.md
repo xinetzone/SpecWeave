@@ -23,6 +23,6 @@ source: "README.md#特性一览"
 | **配置管理** | `.env` 环境变量文件 + `compose.yaml` 标准声明式配置，自动生成密码/token |
 | **ML 模型分发** | OMLMD 集成：`model.push`/`model.pull`/`model.config` 实现 OCI artifact 版本化模型管理 |
 | **ModelCar 打包** | OLOT 集成：`model.pack`/`model.extract` 遵循 KServe ModelCar 标准，模型作为 OCI 镜像层分发 |
-| **模型仓库** | 内置 `model-registry` 服务（compose profile: `registry`），本地 OCI 仓库用于开发测试 |
+| **模型仓库** | 内置 `model-registry` 服务（compose profile: `registry`；跨平台替代 `invoke registry.up`），本地 OCI 仓库用于开发测试 |
 | **Toolbx 兼容** | 镜像满足 Toolbx 规范（LABEL + /run/host + markers + capsh），可直接 `toolbox create/enter` |
 | **开发透传** | `compose.dev.yaml` 覆盖文件：一键透传 SSH agent、git config、SSH keys、X11 GUI、pip cache（opt-in） |

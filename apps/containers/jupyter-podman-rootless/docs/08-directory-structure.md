@@ -41,6 +41,7 @@ jupyter-podman-rootless/
 │   ├── manage.py              # 容器生命周期管理（run/stop/status/clean）
 │   ├── interact.py            # 容器交互（shell/logs/exec）
 │   ├── model.py               # ML模型管理任务（push/pull/config/pack/extract）
+│   ├── registry.py            # 本地OCI registry生命周期（up/down；compose profile的等价替代）
 │   └── container.py           # 向后兼容聚合模块（re-export所有子模块任务）
 │
 ├── upstream/                  # 构建上下文临时目录（构建前 stage 生成、git-ignored，源来自 SpecWeave 根 vendor/ 子模块）

@@ -19,7 +19,7 @@ source: "AGENTS.md#嵌套路由关系 + README.md#三层后端编排架构"
 
 ```
 tasks/
-├── __init__.py        ← 任务入口与命名空间配置（核心命令+model.*命令）
+├── __init__.py        ← 任务入口与命名空间配置（核心命令+model.*+registry.*命令）
 ├── utils.py           ← 工具函数（运行时检测/路径转换/随机字符串/日志）
 ├── client.py          ← Podman/Docker client wrapper（三层后端优先级检测）
 ├── compose_backend.py ← podman-compose后端封装
@@ -27,6 +27,7 @@ tasks/
 ├── manage.py          ← 容器生命周期管理（run/stop/status/clean）
 ├── interact.py        ← 容器交互（shell/logs/exec）
 ├── model.py           ← ML模型管理任务（push/pull/config/pack/extract）
+├── registry.py        ← 本地OCI registry生命周期（up/down；compose profile的等价替代）
 └── container.py       ← 向后兼容聚合模块（re-export所有子模块任务）
 ```
 
@@ -89,6 +90,20 @@ pip install -e ".[model]"     # +OMLMD/OLOT（宿主机直接使用ML命令）
 | `model.config` | 查询OCI模型元数据配置 | model.py |
 | `model.pack` | 打包模型为KServe ModelCar镜像 | model.py |
 | `model.extract` | 从ModelCar镜像提取模型目录 | model.py |
+
+### registry.*命名空间（本地OCI registry）
+
+| 命令 | 功能 | 所在文件 |
+|------|------|---------|
+| `registry.up` | 启动本地OCI registry（`registry:2`） | registry.py |
+| `registry.down` | 停止并删除registry容器（`--volumes` 连数据卷一起删） | registry.py |
+
+**为什么必须有这一组命令**：该服务原只能由 compose 的 `--profile registry` 启动，而
+podman-compose 在 Windows 原生宿主上不可用（见 `client.py::compose_available()`），
+导致 Windows 上没有启动路径。`registry.py` 以 SDK→CLI 两层实现同一服务，
+其容器名、数据卷名、端口、环境变量、重启策略均与 `compose.yaml` 的 `model-registry`
+服务**对齐**（卷名同为 `<project>_registry-data`），故两种启动方式共享同一份数据。
+改动这些常量时必须两处同步——见其文件头「与 compose.yaml 保持同步的常量」。
 
 ## 三层后端架构（client.py）
 
@@ -213,14 +228,26 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 - **输出格式稳定**：密码/token/URL的输出位置和格式保持一致，便于脚本解析
 - **三层后端透明**：用户无需关心使用哪个后端，同一命令参数和输出格式一致
 
+## Windows shell 配置（硬约束）
+
+`__init__.py` 在 Windows 上把 `config["run"]["shell"]` 设为 **PowerShell 7（pwsh）**，两个条件都必须满足：
+
+1. **必须是 PowerShell 7，不能用 cmd.exe**：`run_cmd` 构造的命令是 POSIX 风格——单引号包裹参数（`--format '{{.Names}}'`、`bash -c '{cmd}'`）与 `&&` 串联（`cd X && olt_car.py pack ...`）。cmd.exe 把单引号当普通字符、把 `&&` 当命令分隔符，会静默破坏这些命令。
+2. **shell 路径不得含空格**：invoke 以 `Popen(cmd, shell=True, executable=shell)` 启动，Windows 下 Python 会拼成 `f'{shell} /c "{cmd}"'`，而 `executable` **不能被引号包裹**（加了会 `OSError [WinError 123]`）。Store 版 PowerShell 的 `shutil.which("pwsh")` 返回 `C:\Program Files\WindowsApps\...\pwsh.EXE`（含空格），被拆断后**所有** `c.run` 命令都失败；而 `warn=True` 会把它静默吞掉，症状表现为「整条 CLI 兜底层不可用、容器永远报不存在」。
+
+因此必须用 `_resolve_space_free_pwsh()` 取 **App Execution Alias** 路径（`%LOCALAPPDATA%\Microsoft\WindowsApps\pwsh.exe`，无空格）。
+
+**排查方法**：若怀疑 shell 失效，直接跑 `python -c "from invoke import Context; r=Context().run('podman --version', hide=True, warn=True); print(r.ok, r.stdout, r.stderr)"`——`ok=False` 且 stderr 出现 pwsh 用法帮助即为本问题。
+
 ## 验证清单
 
 新增/修改invoke任务后必须验证：
-- [ ] `invoke --list`正确列出所有命令（13个：8核心+5model）
+- [ ] `invoke --list`正确列出所有命令（15个：8核心+5model+2registry）
 - [ ] `invoke <command> --help`参数说明完整
 - [ ] podman-compose可用时使用compose后端
 - [ ] 未安装podman-compose时自动降级到podman-py
 - [ ] 未安装podman-py时自动降级到CLI
+- [ ] **CLI兜底层真能执行**：`Context().run('podman --version', hide=True, warn=True).ok` 为 `True`（Windows 上 shell 配置错误会让它静默失效，见「Windows shell 配置」）
 - [ ] WSL2环境下Windows路径自动转换为/mnt/路径
 - [ ] 随机密码/token生成正确（密码16位，token32位）
 - [ ] `invoke build`构建成功
@@ -229,3 +256,5 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 - [ ] `invoke shell`可进入容器
 - [ ] `invoke stop`可停止并删除容器
 - [ ] `invoke clean --image`可清理容器和镜像
+- [ ] `invoke registry.up`启动后 `curl http://localhost:5000/v2/_catalog` 返回 200，且卷名为 `<project>_registry-data`（与 compose 对齐）
+- [ ] `invoke registry.down` 删除容器但保留卷；`--volumes` 连卷一起删
