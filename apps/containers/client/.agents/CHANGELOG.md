@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `fix:` inv load 支持 .tar 未压缩产物（save 降级契约同步）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv load` 报「缓存目录中未找到 tar.gz」，但上轮 `invoke save` 在 Windows 原生（无 gzip）已降级产出 `.tar`——**save 三档降级新增但 load 搜索未同步**，构成 save/load 扩展名契约断裂。
+
+**F 阶段根因**：`find_latest_image_tar()` 仅 glob `*.tar.gz`（构建端 jpman save 时代的单一产物形态）；save 增加 `.tar` 降级后搜索模式未随之扩展 → 缓存中存在有效备份但 load 找不到。
+
+**修复点**：`utils.py::find_latest_image_tar` 改为双扩展名 `("*.tar.gz", "*.tar")` 搜索（跳过 symlink 逻辑保留）；`_load_via_cli` 的 `type <file> | podman load` 管道天然兼容未压缩 tar，无需改动。
+
+**预防**：save 新增产物形态时必须同步 load 搜索契约（save/load 扩展名白名单一致）；README §4.1 已声明双扩展名产物。
+
+**验收点**：① `inv load` 在仅含 `.tar` 缓存时成功加载（实测 `Loaded image: localhost/jupyter-podman-client:latest`）；② py_compile 零告警；③ 双扩展名产物并存时按 mtime 取最新。
+
 ### 2026-09-11 · `feat:` 新增 invoke save 导出镜像到缓存（备份/恢复闭环）
 
 **关联七概念场景**：场景3「重构优化」（F→A→V→C）；client 已有 load/run/stop/status/clean 但缺 save（只消费不产出），镜像备份需绕道构建端 jpman。
