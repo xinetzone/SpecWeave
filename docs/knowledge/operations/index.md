@@ -14,6 +14,8 @@ epub-to-markdown-conversion-research
 forum-automation
 frontmatter-link-batch-repair-guide
 html-body-extraction
+knowledge-review-log
+knowledge-review-mechanism
 knowledge-retrospective-cross-reference-spec
 p0-02-knowledge-archive-rules
 p0-05-task-classification-skeleton

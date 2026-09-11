@@ -21,7 +21,8 @@ summary: ""
 > | `category` | string | 分类（如 operations/learning/platform/troubleshooting/best-practices/decisions） | 归入 unknown 分类 |
 > | `tags` | list | 标签列表（如 `["powershell", "html"]`） | 无标签索引 |
 > | `date` | string | 创建或更新日期（YYYY-MM-DD） | 不出现在最近更新列表 |
-> | `status` | string | 状态（draft/stable/deprecated） | 默认 draft |
+> | `status` | string | 状态枚举：`draft`（草稿）/ `stable`（稳定有效）/ `needs-update`（待更新，90 天复核过期）/ `deprecated`（已退役） | 默认 draft |
+> | `last_verified` | string | 最近一次人工验证日期（YYYY-MM-DD）；复核机制下**新入库条目必填**，详见 [operations/knowledge-review-mechanism.md](operations/knowledge-review-mechanism.md) | 巡检报告记为 MISSING（未建基线） |
 > | `author` | string | 作者 | 无作者信息 |
 > | `summary` | string | 一句话摘要 | 无摘要展示 |
 >
@@ -33,6 +34,7 @@ summary: ""
 > category: "operations"
 > tags: ["tag1", "tag2"]
 > date: "2026-07-03"
+> last_verified: "2026-07-03"
 > status: "stable"
 > author: "SpecWeave"
 > summary: "一句话摘要，用于索引展示"

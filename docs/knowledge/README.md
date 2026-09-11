@@ -7,9 +7,9 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：248
+- **总条目数**：251
 - **分类数**：18
-- **标签数**：527
+- **标签数**：535
 
 ## 快速导航
 
@@ -21,7 +21,7 @@ title: "项目知识库"
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
 | knowledge | 20 | [knowledge](categories/knowledge.md) |
-| operations | 22 | [operations](operations/README.md) |
+| operations | 25 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
 | research | 1 | [research](categories/research.md) |
 | standards | 1 | [standards](categories/standards.md) |
@@ -40,14 +40,14 @@ title: "项目知识库"
 |------|------|------|
 | [书籍转 Web 教程的原创重写与适当引用编写规范](best-practices/book-to-web-tutorial-citation-guide.md) | 2026-09-11 | best-practices |
 | [文档自动化工具链索引：从写文档到过门禁的统一入口](operations/doc-automation-toolchain.md) | 2026-09-11 | operations |
+| [知识库与复盘体系双向引用规范](operations/knowledge-retrospective-cross-reference-spec.md) | 2026-09-11 | operations |
+| [知识库复核日志](operations/knowledge-review-log.md) | 2026-09-11 | operations |
+| [知识库定期复核机制](operations/knowledge-review-mechanism.md) | 2026-09-11 | operations |
 | [free-llm-api-summary](tech/free-llm-api-summary.md) | 2026-09-10 | unknown |
 | [贡献指南](best-practices/contributing.md) | 2026-08-22 | knowledge/best-practices |
 | [自动化脚本四层日志增强模式](best-practices/four-layer-logging-pattern.md) | 2026-08-22 | knowledge/best-practices |
 | [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | 2026-08-21 | best-practices |
 | [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | 2026-08-21 | best-practices |
-| [ADR: torch-dev 双索引下载与 CUDA 硬断言决策](decisions/torch-dev-extra-index-cuda-assertion.md) | 2026-08-20 | decisions |
-| [EPUB 转 Markdown 转换方案系统性调研报告](operations/epub-to-markdown-conversion-research.md) | 2026-08-19 | operations |
-| [Python 3.14 Free-Threading 适用场景分析](tech/python-314-free-threading-scenario-analysis.md) | 2026-08-19 | tech |
 
 ## 相关资源
 
@@ -84,4 +84,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-09-11 16:02:00*
+*索引自动生成于 2026-09-11 16:52:20*

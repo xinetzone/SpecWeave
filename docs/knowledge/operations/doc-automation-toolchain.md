@@ -8,6 +8,7 @@ x-toml-ref: "../../../.meta/toml/docs/knowledge/operations/doc-automation-toolch
 category: "operations"
 tags: ["文档自动化", "工具链", "generate-readme", "check-links", "generate_index", "docgen", "ci-check", "质量门", "索引维护"]
 date: "2026-09-11"
+last_verified: "2026-09-11"
 status: "reviewed"
 author: "SpecWeave"
 summary: "智能文档系统自动化工具链的任务路由型索引：3分钟上手五步路径、两条流水线（知识库索引/仓库文档工程）全景、15个核心工具最小命令与深入入口、5个可复制任务配方、7条实战陷阱。工具详细参数不复制，深链至原始用法文档与 Skill 门面。"
@@ -122,7 +123,7 @@ pwsh .agents/scripts/ci-check.ps1 --quick
 | `check-move.py` | 移动 md 时自动改写内部链接 | `python .agents/scripts/check-move.py --dry-run <src> <dst>` | [检查类脚本说明](../../../.agents/scripts/docs/usage/01-check-scripts.md#check-movepy) |
 | `build-ref-index.py` | 文件反向引用索引（移动/删除前查影响面） | `python .agents/scripts/build-ref-index.py --query <file>` | [生成与构建脚本说明](../../../.agents/scripts/docs/usage/02-generate-build-scripts.md#build-ref-indexpy) |
 | `finalize-atomization.py` | 原子化收尾：修链+导航+看板一键完成 | `python .agents/scripts/finalize-atomization.py --dry-run` | Skill：atomization-finalize-cmd |
-| `check-wiki-staleness.py` | 按 last_verified 扫描过期条目（季度体检） | `python .agents/scripts/check-wiki-staleness.py --path <wiki绝对路径> --threshold 90` | 脚本 `--help` |
+| `check-wiki-staleness.py` | 按 last_verified 递归扫描知识库过期条目（季度体检，可标注 needs-update） | `python .agents/scripts/check-wiki-staleness.py --knowledge` | [定期复核机制](knowledge-review-mechanism.md)；脚本 `--help` |
 
 **ci-check 10 步流水线**（🔴 = 失败阻断）：
 
@@ -177,9 +178,12 @@ python .agents/scripts/check-links.py --check-external --no-cache   # 强制全�
 python .agents/scripts/check-links.py --clear-cache                # 需要时清缓存
 ```
 
-**配方 5：知识库新鲜度体检**（`--path` 接受绝对路径或相对仓库根的路径；`--wiki` 名称搜索指向旧 `learning/` 根，迁移后不建议使用）
+**配方 5：知识库新鲜度体检**（`--knowledge` 为仓库知识库预设，递归扫描并自动排除机器生成目录与入口页；不带 `--mark-*` 只读；完整 SOP 见[定期复核机制](knowledge-review-mechanism.md)）
 ```bash
-python .agents/scripts/check-wiki-staleness.py --path D:/AI/docs/knowledge --threshold 90
+# 只读巡检（退出码 0 全新鲜 / 1 有过期或缺失 / 2 参数错误）
+python .agents/scripts/check-wiki-staleness.py --knowledge
+# 过期条目标注 status: needs-update（deprecated 跳过，写后须人工复核并登记日志）
+python .agents/scripts/check-wiki-staleness.py --knowledge --mark-stale
 ```
 
 ---

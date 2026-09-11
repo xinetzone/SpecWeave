@@ -12,7 +12,7 @@ title: "分类总索引"
 
 ## 统计摘要
 
-- **总条目数**：248
+- **总条目数**：251
 - **分类路径数**：18
 - **顶层分类数**：13
 
@@ -21,7 +21,7 @@ title: "分类总索引"
 | unknown | 1 | 90 | [unknown](categories/unknown.md) |
 | best-practices | 1 | 48 | [best-practices](categories/best-practices.md) |
 | tech | 1 | 38 | [tech](categories/tech.md) |
-| operations | 1 | 22 | [operations](categories/operations.md) |
+| operations | 1 | 25 | [operations](categories/operations.md) |
 | knowledge | 4 | 20 | [knowledge](categories/knowledge.md) |
 | docs | 3 | 10 | [docs](categories/docs.md) |
 | decisions | 1 | 6 | [decisions](categories/decisions.md) |
@@ -34,4 +34,4 @@ title: "分类总索引"
 
 ---
 
-*索引自动生成于 2026-09-11 16:02:00*
+*索引自动生成于 2026-09-11 16:52:20*

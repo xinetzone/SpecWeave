@@ -9,7 +9,7 @@ title: "分类索引：operations"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **22** 条条目。
+> 本分片收录 **1** 个子分类，共 **25** 条条目。
 
 ## operations
 
@@ -21,6 +21,9 @@ title: "分类索引：operations"
 | [Discourse论坛（forum.trae.cn）自动化操作指南](../operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
 | [Frontmatter 路径与链接批量修复流程指南](../operations/frontmatter-link-batch-repair-guide.md) | 大规模 frontmatter 路径与 Markdown 链接批量修复的完整流程指南：问题分类诊断、8 阶段分层修复策略、external 标记约定、LF 行尾保留、TOML source 覆盖问题处理，附 8 个自动化脚本的使用参考 | 2026-07-10 | frontmatter、链接修复、批量修复、check-links、路径规范化、external标记 |
 | [HTML 正文提取操作指南](../operations/html-body-extraction.md) | HTML 正文提取双方案：正则提取（首选）与边界标记索引截取法（兜底），含 HTML 清洗六步流程，适用于复杂嵌套 HTML 容器 | 2026-06-29 | html、正文提取、正则、索引截取、边界标记、html清洗、降级策略 |
+| [知识库与复盘体系双向引用规范](../operations/knowledge-retrospective-cross-reference-spec.md) | 界定 docs/knowledge 与 docs/retrospective 双区引用契约：沉淀路径（复盘→模式→知识库）与验证回路（知识库→复盘→修正）的触发时机、必选回链点、相对路径层级表与提交前检查清单。 | 2026-09-11 | knowledge-management、cross-reference、retrospective、governance、知识治理、双向引用 |
+| [知识库复核日志](../operations/knowledge-review-log.md) | docs/knowledge 条目定期复核的集中登记日志：日期、条目、复核结论（保持/修订/置待更新/退役）、复核人与关联复盘，配合 git 历史构成双轨可追溯证据。 | 2026-09-11 | knowledge-management、review、audit-log、知识治理、复核日志 |
+| [知识库定期复核机制](../operations/knowledge-review-mechanism.md) | docs/knowledge 条目的 90 天定期复核机制：last_verified 语义、status 状态机（含 needs-update 待更新）、季度巡检 SOP、复核日志追溯，以及 249 条存量条目的过渡策略。 | 2026-09-11 | knowledge-management、review、staleness、governance、知识治理、定期复核 |
 | [临时知识库归档规则正文](../operations/p0-02-knowledge-archive-rules.md) | 定义临时知识库与正式知识库的分层关系、分类规则、状态与优先级字段、最小元数据、自动归档触发条件、正式目录映射、保留与回退策略、索引结构、一致性校验项和异常修复闭环。 |  | - |
 | [任务分类与追踪骨架说明](../operations/p0-05-task-classification-skeleton.md) | 定义 tasks/ 目录的三维正式分类骨架（task-types / business-domains / project-stages）、使用原则、临时历史目录定位和查找入口。 |  | - |
 | [Docker 镜像构建与运行手册摘要](../operations/p1-06-docker-image-build-run.md) | Conda/Podman 镜像构建与运行手册，覆盖 Dockerfile 片段、构建命令、交互运行与挂载工作目录的标准操作。 |  | - |
@@ -40,4 +43,4 @@ title: "分类索引：operations"
 
 ---
 
-*索引自动生成于 2026-09-11 16:02:00*
+*索引自动生成于 2026-09-11 16:52:20*
