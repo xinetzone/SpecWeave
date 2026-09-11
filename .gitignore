@@ -18,6 +18,9 @@ __pycache__/
 *.pyd
 .pytest_cache/
 .coverage
+
+# Jupyter Notebook 自动 checkpoint（与 __pycache__ 同类的临时产物，勿提交）
+.ipynb_checkpoints/
 htmlcov/
 
 # 工具脚本缓存（链接检查结果等）
