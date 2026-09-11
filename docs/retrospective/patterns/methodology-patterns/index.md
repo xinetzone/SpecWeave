@@ -32,6 +32,8 @@
 | bp-classical-commentary-dual-layer-bundle | [古典文本-现代阐释双层Bundle构建模式](concepts/classical-commentary-dual-layer-bundle.md) | L1-draft | 1 | 0 | 同一主题存在古典原文+现代阐释双层结构时，需构建两个独立OKF Bundle并通过F编号隔离避免交叉冲突。案例：《了凡四训》+《了凡生意经》双层Bundle |
 | capability-precondition-pairing | [能力前提配对搬运](tools-automation/capability-precondition-pairing.md) | L1-draft | 1 | 0 | 搬运/复制某项能力资产（二进制/工具/服务）时，其运行前提（宿主侧启动器路径、环境变量、外部回调二进制）未随资产一并搬运，导致目标环境报裸错误而非可执行指引时。案例：jupyter-podman-rootless 镜像 toolbox 缺 `TOOLBOX_PATH` 与 `flatpak-spawn` 前提 |
 | validation-probe-semantics-convergence | [验证探针语义收敛](tools-automation/validation-probe-semantics-convergence.md) | L1-draft | 1 | 0 | 构建/CI/健康检查中的验证探针因短路型 flag + 输出重定向 + `&&` 链而恒真，且声明（available/可用）超出自证范围（存在性/活性）时。案例：jupyter-podman-rootless 镜像工具箱探针假阳性（Containerfile:191/725，`toolbox --help >/dev/null 2>&1` 恒真） |
+| pattern-summary-over-transcription | [摘要替代转录](summary-over-transcription.md) | L2-validated | 2 | 0 | 扫描版版权书籍（纯图像或图像+噪声OCR混合型）转教程/知识包时：route 决策前置、多模态通读、深度摘要+原创改写替代逐字转录。案例1《管道的故事》、案例2《魔力》（混合型PDF+练习册体裁） |
+| pattern-compliance-contracting | [合规契约化](compliance-contracting.md) | L2-validated | 2 | 0 | 版权引用/数据脱敏等合规红线需经他人审查时：态度式约束翻译为可度量契约（数字/正则/清单+计数口径），三段式声明、按契约打勾；含"作者主张—客观事实"分层第二契约轴。案例1《管道的故事》、案例2《魔力》 |
 
 ## 成熟度等级说明
 
@@ -74,9 +76,11 @@ retrospective-knowledge/index
 spec-workflow/index
 tools-automation/index
 CATEGORIES
+compliance-contracting
 destructive-probe-gate
 history-based-doc-repair
 log
 preflight-integrity-gate
 prompt-extraction
+summary-over-transcription
 ```
