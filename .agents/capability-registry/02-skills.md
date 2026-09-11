@@ -22,13 +22,6 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | source-code-to-okf-wiki | "源码学习"、"读源码"、"源码阅读"、"生成Wiki"、"OKF Wiki"、"源码转文档"、"深度学一个库" | 1（R→I→E→V→C五阶段工作流，L2为源码转化模式文档+prompt模板） | v1.2.0 | [skills/source-code-to-okf-wiki/SKILL.md](../skills/source-code-to-okf-wiki/SKILL.md) |
 | blog-article-to-okf-wiki | "博文转化"、"公众号文章"、"微信文章"、"转知识包"、"OKF bundle"、"OKF wiki"、"文章转文档"、"资讯转知识库" | 1（七阶段工作流，L2为博文转化L3模式文档；13篇实战验证） | v1.0.0 | [skills/blog-article-to-okf-wiki/SKILL.md](../skills/blog-article-to-okf-wiki/SKILL.md) |
 
-### 应用内置完整Skill（2个，来自 apps/zhujian-wudao）
-
-| Skill名 | 触发词 | 方案数 | 版本 | 路径 |
-|---------|--------|-------|------|------|
-| zhujian-insight-writer | "撰写洞察"、"生成洞察"、"分析概念"、"补充洞察库"、"体道四法" | 1（帛书《老子》哲学洞察撰写，三不铁律） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](../../apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) |
-| dao-scholar-illustrations | "配图"、"文章插图"、"道德经学者"、"手绘"、"shot list"、"道家哲学配图" | 1（道德经学者风格生图，九种构图模式） | v1.0.0 | [apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](../../apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) |
-
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |

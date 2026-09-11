@@ -50,13 +50,6 @@ title: ".agents/skills/ 目录索引"
 | source-code-to-okf-wiki | 工作流门面 | 源码阅读→OKF Wiki 生成（R→I→E→V→C 五阶段，信源先行、分批生成、Grep级API验证，杜绝虚构API） | 源码学习、读源码、源码阅读、生成Wiki、OKF Wiki、源码转文档、深度学一个库 | [source-code-to-okf-wiki/SKILL.md](source-code-to-okf-wiki/SKILL.md) |
 | blog-article-to-okf-wiki | 工作流门面 | 博文/资讯文章→OKF 知识包转化（七阶段：敏感度预检→骨架两问→归属决策树→F编号事实+P0核验勘误四清单→三层拆分→信源先生成→对抗审查），13篇实战验证 | 博文转化、公众号文章、微信文章、转知识包、OKF bundle、OKF wiki、文章转文档、资讯转知识库 | [blog-article-to-okf-wiki/SKILL.md](blog-article-to-okf-wiki/SKILL.md) |
 
-### 应用内置完整Skill（2个，来自 apps/zhujian-wudao）
-
-| Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
-|-----------|------|---------|-----------|-------------|
-| zhujian-insight-writer | 应用完整Skill | 为竹简悟道撰写基于帛书《老子》的哲学洞察（编号递增、结构规范、交叉引用完整），遵循三不铁律 | 撰写洞察、生成洞察、分析概念、补充洞察库、体道四法 | [apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md](../../apps/zhujian-wudao/.agents/skills/zhujian-insight-writer/SKILL.md) |
-| dao-scholar-illustrations | 应用完整Skill | 生成道德经学者风格的中文哲学正文配图（极简手绘、墨色线条、留白美学），含九种构图模式 | 配图、文章插图、道德经学者、手绘、shot list、道家哲学配图 | [apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md](../../apps/zhujian-wudao/.agents/skills/dao-scholar-illustrations/SKILL.md) |
-
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
