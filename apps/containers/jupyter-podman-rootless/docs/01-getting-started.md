@@ -126,13 +126,17 @@ invoke shell
 invoke exec --command "python --version"
 ```
 
-## 作为 Toolbx 容器使用
+## 作为 Toolbx 容器使用（宿主机侧，:toolbx 变体）
 
-镜像满足 Toolbx 兼容规范，可直接被 `toolbox` 命令使用，获得更深度的主机集成：
+主镜像满足 Toolbx 兼容标记，但宿主 `toolbox create` 须使用专用薄变体 **`:toolbx`**
+（`:latest` 的 ENTRYPOINT/HEALTHCHECK 与 Toolbx 不兼容；完整前置条件与 WSL 说明见
+[07-toolbx-passthrough.md](07-toolbx-passthrough.md)）：
 
 ```bash
-# 使用已构建的镜像创建Toolbx容器
-toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
+invoke build-toolbx    # 先产出 :toolbx（须已 invoke build）
+
+# 在 Linux 宿主机（或 wsl -d podman-machine-default）执行
+toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
 
 # 进入Toolbx容器（自动透传HOME/cwd/Wayland/X11/SSH agent等）
 toolbox enter jupyter-dev

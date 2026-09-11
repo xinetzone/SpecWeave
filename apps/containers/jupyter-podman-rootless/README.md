@@ -102,7 +102,7 @@ Password:  <自动生成或配置的密码>
 | **三层后端** | 宿主机 invoke：podman-compose（优先）→ podman-py SDK → CLI fallback（pip 安装，与镜像内嵌版本独立） |
 | **内嵌编排工具** | 镜像内置 podman-compose / podman-py SDK / toolbox（经 vendor/ 子模块固定 commit 引入，详见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)） |
 | **ML 模型** | OMLMD OCI artifact分发 + OLOT KServe ModelCar打包 + 本地model-registry |
-| **Toolbx 兼容** | 可直接 `toolbox create/enter`，自动透传HOME/cwd/X11；镜像内另内嵌 toolbox CLI |
+| **Toolbx 兼容** | 宿主 `toolbox create/enter` 经专用 `:toolbx` 变体支持（`invoke build-toolbx`），自动透传HOME/cwd/X11；镜像内另内嵌 toolbox CLI |
 | **开发透传** | compose.dev.yaml：SSH agent/git/X11/pip cache（opt-in） |
 | **零依赖CLI** | `jpman`：纯bash脚本，无需Python依赖，提供快速管理 |
 | **镜像缓存** | `.image-cache/`：podman save/load 快速备份恢复，pigz多线程压缩 |
@@ -200,7 +200,7 @@ invoke model.pack ./model --base jupyter-podman-rootless:latest --ref localhost:
 1. **jpman零依赖CLI（推荐快速上手）**：纯bash实现，无需Python依赖，提供镜像缓存、WSL导出、增量重建等实用功能
 2. **invoke封装（推荐日常开发）**：自动密码生成、路径转换、三层后端选择、ML模型管理完整功能
 3. **podman-compose直接使用**：标准Compose Spec，支持多文件覆盖和profiles
-4. **Toolbx模式**：`toolbox create/enter`，深度主机集成，透传HOME/cwd/X11
+4. **Toolbx模式**（宿主机侧）：`invoke build-toolbx` 后 `toolbox create/enter -i ...:toolbx`，深度主机集成，透传HOME/cwd/X11（见 docs/07）
 
 详见 [docs/01-getting-started.md](docs/01-getting-started.md)。
 

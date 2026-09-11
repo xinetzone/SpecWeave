@@ -13,7 +13,7 @@ source: "AGENTS.md#核心约束 + README.md#镜像架构"
 - Python发行版：Miniforge3 (conda-forge)，使用libmamba solver
 - 构建注释/日志使用**英文**（避免编码问题）
 - 启用 `SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]`，管道中任何命令失败立即终止
-- 非root用户：`devuser` (UID 1000)，sudo默认关闭（GRANT_SUDO=yes启用）
+- 非root用户：`devuser`（**固定 UID/GID 1000**；Layer 3 先 `userdel --remove ubuntu` 释放基础镜像自带的 ubuntu(1000) 账号，对齐上游 toolbox `images/ubuntu/26.04/Containerfile`），sudo默认关闭（GRANT_SUDO=yes启用）
 - 中文环境：`zh_CN.UTF-8` locale + `Asia/Shanghai` 时区
 
 ## 构建架构与运行时层
@@ -54,7 +54,8 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 - `COPY --from=toolbox-builder /out/toolbox /usr/local/libexec/toolbox`（chmod 755 + `test -x` 断言）
 
 #### Layer 3/5: 用户 + subuid/subgid + Podman 配置 + Toolbx markers（变化频率：中）
-- devuser(UID 1000) 创建 + docker 组；subuid/subgid：`devuser:100000:65536`
+- 先 `userdel --remove ubuntu`（基础镜像 ubuntu:26.04 自带 ubuntu 占 UID/GID 1000；残留 GID 1000 组再 groupdel），随后 `useradd -u 1000 -U` 固定创建 devuser + docker 组；**禁止保留"UID 被占自动分配"分支**（会让 devuser 漂移到 1001，与 Toolbx 宿主用户 UID 同步冲突）；subuid/subgid：`devuser:100000:65536`
+- Layer 5 硬断言：`id -u/g devuser`=1000、`getent passwd 1000`=devuser、`getent passwd ubuntu` 不存在
 - /workspace 等目录与权限；/etc/profile.d/conda-init.sh + devuser .bashrc；/etc/environment PATH
 - containers.conf.d/rootless.conf + user storage.conf（fuse-overlayfs）；sudo NOPASSWD
 - Toolbx markers：/run/host 预创建 + /run/.toolboxenv + /run/.containerenv；capsh 验证
@@ -98,7 +99,17 @@ Containerfile 采用「3 阶段运行时链 + toolbox-builder aux 阶段」的�
 | capsh工具 | libcap2-bin包提供 |
 | flatpak-spawn | `flatpak-xdg-utils`包 + `/usr/bin/flatpak-spawn` symlink（`ForwardToHost` 宿主回调前提；官方镜像同款安装） |
 | sudo NOPASSWD | devuser无密码sudo（GRANT_SUDO=yes时启用） |
-| UID匹配 | devuser固定UID 1000（与Linux主机默认用户UID一致） |
+| UID匹配 | devuser固定UID 1000（先 userdel ubuntu；与Linux主机默认用户UID一致） |
+
+### Toolbx 宿主变体 `Containerfile.toolbx`（tag `:toolbx`）
+
+主镜像同时满足「普通容器（supervisord 服务栈）」与 Toolbx 兼容标记，但**不能直接被宿主 `toolbox create` 使用**——Toolbx 只覆盖 Cmd（`toolbox init-container`，PATH 解析）不清 ENTRYPOINT，且精简 VM 无法注册 HEALTHCHECK 定时器。宿主 Toolbx 场景必须用薄覆盖变体（`invoke build-toolbx` 构建，FROM 主镜像，仅 3 条差异指令）：
+
+1. `RUN userdel devuser`（**不 -r、不 chown**）：释放用户名/UID 1000，供 init-container 按宿主同名用户重建；`/opt/conda` 等 1000:1000 数字属主文件由新用户天然承接；sudoers 改 `%sudo ALL=(ALL) NOPASSWD:ALL`（组级，与宿主用户名解耦）
+2. `HEALTHCHECK NONE`
+3. `ENTRYPOINT []`
+
+wrapper 影子裁决（实测）：Toolbx 挂载的 `/usr/bin/toolbox` 在 PATH 中劣后于 `/usr/local/bin/toolbox` wrapper，但 wrapper 检测 `TOOLBOX_PATH` 非空即 exec 容器内 `/usr/local/libexec/toolbox`，init-container 透传正常——**保留 wrapper，禁止删除**。详见 `Containerfile.toolbx` 头注释与 [07-toolbx-passthrough.md](../../docs/07-toolbx-passthrough.md)。
 
 ## Rootless Podman配置
 

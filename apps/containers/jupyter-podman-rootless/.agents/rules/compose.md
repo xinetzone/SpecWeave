@@ -213,13 +213,15 @@ podman-compose -f compose.yaml -f compose.dev.yaml up -d
 podman-compose -f compose.yaml -f compose.dev.yaml --profile registry up -d
 ```
 
-### Toolbx模式
+### Toolbx模式（宿主机侧，专用 :toolbx 变体）
 
 ```bash
-# 使用已构建的镜像创建Toolbx容器
-toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
+# 先构建变体：invoke build-toolbx；再在 Linux 宿主/podman machine 内：
+toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
 # 进入容器（自动透传HOME/cwd/Wayland/X11/SSH agent等）
 toolbox enter jupyter-dev
+# 注意：:latest 不能直接 toolbox create（ENTRYPOINT/HEALTHCHECK 不兼容），
+# 宿主前置与 WSL 限制见 docs/07-toolbx-passthrough.md
 ```
 
 ## 安全设计原则
