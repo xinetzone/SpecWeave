@@ -1015,7 +1015,10 @@ def default_build_cache_dir() -> Path:
 
 
 def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
-    """在缓存目录中搜索最新（按 mtime 排序）的镜像 tar.gz。
+    """在缓存目录中搜索最新（按 mtime 排序）的镜像 tar/tar.gz。
+
+    同时覆盖 ``*.tar.gz``（构建端 ``jpman save`` 产物）与 ``*.tar``（save 在
+    Windows 原生无 gzip/pigz 时的未压缩降级产物），任一扩展名都可能是最新备份。
 
     跳过符号链接（``*-latest.tar.gz`` 等）：缓存目录里的 latest 链接由
     WSL/9p 侧 ``ln -sf`` 创建，Windows 原生 Python 的 ``os.stat`` 无法解析
@@ -1026,14 +1029,15 @@ def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
     if not search_dir.exists():
         return None
     candidates = []
-    for p in search_dir.glob("*.tar.gz"):
-        try:
-            if p.is_symlink():
+    for pattern in ("*.tar.gz", "*.tar"):
+        for p in search_dir.glob(pattern):
+            try:
+                if p.is_symlink():
+                    continue
+                candidates.append((p.stat().st_mtime, p))
+            except OSError:
+                # 单个坏文件（损坏链接/权限异常）不阻断整体搜索
                 continue
-            candidates.append((p.stat().st_mtime, p))
-        except OSError:
-            # 单个坏文件（损坏链接/权限异常）不阻断整体搜索
-            continue
     if not candidates:
         return None
     candidates.sort(key=lambda t: t[0], reverse=True)

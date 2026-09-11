@@ -47,6 +47,7 @@ from .client_core import (
     list_images,
     load_image,
     run_container,
+    save_image,
     status_container,
     stop_container,
 )
@@ -328,6 +329,23 @@ def images(c: Context) -> None:
         tags = ", ".join(r["tags"]) if r["tags"] else "<none>"
         size = r.get("size") or ""
         print(f"{r['id']:<14} {str(size):<12} {tags}")
+
+
+@task(
+    help={
+        "tag": "要保存的镜像 tag（默认 .env 的 IMAGE_TAG / client 叠加层）",
+        "cache-dir": "镜像缓存目录，默认：命令行 > IMAGE_CACHE_DIR (.env / export) > ./ .image-cache（当前执行目录）",
+    }
+)
+def save(c: Context, tag: str | None = None, cache_dir: str | None = None) -> None:
+    """导出镜像到缓存目录（备份 / VM 崩溃恢复用；产物含 manifest+SHA256+gzip 完整性校验）。"""
+    env = _load_env_overrides(_project_root())
+    target = tag or env.get("IMAGE_TAG", ContainerConfig.image)
+    cache_path = Path(cache_dir) if cache_dir else default_build_cache_dir()
+    print(f"[Save] 保存镜像: {target}")
+    ok = save_image(c, str(target), cache_path)
+    if not ok:
+        raise Exit(1, "镜像保存失败")
 
 
 # ---------------------------------------------------------------------------
