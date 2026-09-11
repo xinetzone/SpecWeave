@@ -43,12 +43,13 @@ title: ".agents/skills/ 目录索引"
 | git-commit-helper | 完整Skill | Git原子化提交规范执行（三查暂存法→预提交验证→构建提交信息→执行提交→验证结果），含validate_commit.py | 提交、commit、原子提交、代码提交、提交变更、git commit、保存更改 | [git-commit-helper/SKILL.md](git-commit-helper/SKILL.md) |
 | trae-computer-use-ptc | 完整Skill | Computer Use Windows 桌面应用 UI 自动化指南（本地 MCP）：list_apps/get_app_state/click/scroll/type_text 等操作，Electron/桌面应用场景，高风险操作前须确认；import-builtin-skills 时既有同名保留未覆盖的本地 v1.2.0 | Computer Use、电脑操作、UI自动化、桌面交互、操作应用 | [trae-computer-use-ptc/SKILL.md](trae-computer-use-ptc/SKILL.md) |
 
-### 工作流门面（2个）
+### 工作流门面（3个）
 
 | Skill名称 | 类型 | 功能描述 | 核心触发词 | SKILL.md路径 |
 |-----------|------|---------|-----------|-------------|
 | source-code-to-okf-wiki | 工作流门面 | 源码阅读→OKF Wiki 生成（R→I→E→V→C 五阶段，信源先行、分批生成、Grep级API验证，杜绝虚构API） | 源码学习、读源码、源码阅读、生成Wiki、OKF Wiki、源码转文档、深度学一个库 | [source-code-to-okf-wiki/SKILL.md](source-code-to-okf-wiki/SKILL.md) |
 | blog-article-to-okf-wiki | 工作流门面 | 博文/资讯文章→OKF 知识包转化（七阶段：敏感度预检→骨架两问→归属决策树→F编号事实+P0核验勘误四清单→三层拆分→信源先生成→对抗审查），13篇实战验证 | 博文转化、公众号文章、微信文章、转知识包、OKF bundle、OKF wiki、文章转文档、资讯转知识库 | [blog-article-to-okf-wiki/SKILL.md](blog-article-to-okf-wiki/SKILL.md) |
+| scanned-book-to-okf-wiki | 工作流门面（v2.0.0，L2 双案例验证） | 扫描版版权书籍→OKF Wiki 教程转化（六工序：route决策前置→文本层可信度判定（覆盖纯图像与扫描图+噪声OCR混合型）+逐章通读页码映射→深度摘要→原创改写（含主张分层）→合规声明契约化（含计数口径）→V审查实证对账（含中间摘要回图核验））；案例1财商寓言、案例2《魔力》练习册 | 扫描版书籍转教程、书转Wiki、摘要替代转录、扫描版版权材料、书转知识包、混合型PDF | [scanned-book-to-okf-wiki/SKILL.md](scanned-book-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 

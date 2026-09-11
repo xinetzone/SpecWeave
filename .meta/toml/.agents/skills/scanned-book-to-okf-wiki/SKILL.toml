@@ -1,0 +1,7 @@
+id = "skill"
+title = "Scanned-Book-to-OKF-Wiki 扫描版书籍转教程工作流门面 Skill"
+category = "skills/scanned-book-to-okf-wiki"
+date = "2026-09-11"
+version = "2.0"
+maturity = "L2"
+validation_count = 2

@@ -15,12 +15,13 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | home-assistant | "智能家居"、"控制设备"、"查询状态"、"home assistant"、"ha_api" | 1（REST API，零第三方依赖） | v1.2.0 | [skills/home-assistant/SKILL.md](../skills/home-assistant/SKILL.md) |
 | git-commit-helper | "提交"、"commit"、"原子提交"、"代码提交"、"提交变更"、"git commit"、"保存更改" | 1（内置validate_commit.py脚本，三查暂存法） | v1.1.0 | [skills/git-commit-helper/SKILL.md](../skills/git-commit-helper/SKILL.md) |
 
-### 工作流门面（2个）
+### 工作流门面（3个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
 | source-code-to-okf-wiki | "源码学习"、"读源码"、"源码阅读"、"生成Wiki"、"OKF Wiki"、"源码转文档"、"深度学一个库" | 1（R→I→E→V→C五阶段工作流，L2为源码转化模式文档+prompt模板） | v1.2.0 | [skills/source-code-to-okf-wiki/SKILL.md](../skills/source-code-to-okf-wiki/SKILL.md) |
 | blog-article-to-okf-wiki | "博文转化"、"公众号文章"、"微信文章"、"转知识包"、"OKF bundle"、"OKF wiki"、"文章转文档"、"资讯转知识库" | 1（七阶段工作流，L2为博文转化L3模式文档；13篇实战验证） | v1.0.0 | [skills/blog-article-to-okf-wiki/SKILL.md](../skills/blog-article-to-okf-wiki/SKILL.md) |
+| scanned-book-to-okf-wiki | "扫描版书籍转教程"、"书转Wiki"、"摘要替代转录"、"扫描版版权材料"、"书转知识包"、"混合型PDF" | 1（六工序工作流：route决策前置→文本层可信度判定+逐章通读→深度摘要→原创改写→合规声明契约化（含计数口径）→V实证对账；L2 双案例验证：案例1财商寓言/纯图像、案例2练习册/噪声OCR混合型；两配套模式已入 docs 模式库） | v2.0.0 | [skills/scanned-book-to-okf-wiki/SKILL.md](../skills/scanned-book-to-okf-wiki/SKILL.md) |
 
 ### Trae 内置工作流 Skill（2个，来自 external/doutops）
 
