@@ -34,6 +34,7 @@
 | validation-probe-semantics-convergence | [验证探针语义收敛](tools-automation/validation-probe-semantics-convergence.md) | L1-draft | 1 | 0 | 构建/CI/健康检查中的验证探针因短路型 flag + 输出重定向 + `&&` 链而恒真，且声明（available/可用）超出自证范围（存在性/活性）时。案例：jupyter-podman-rootless 镜像工具箱探针假阳性（Containerfile:191/725，`toolbox --help >/dev/null 2>&1` 恒真） |
 | pattern-summary-over-transcription | [摘要替代转录](summary-over-transcription.md) | L2-validated | 2 | 0 | 扫描版版权书籍（纯图像或图像+噪声OCR混合型）转教程/知识包时：route 决策前置、多模态通读、深度摘要+原创改写替代逐字转录。案例1《管道的故事》、案例2《魔力》（混合型PDF+练习册体裁） |
 | pattern-compliance-contracting | [合规契约化](compliance-contracting.md) | L2-validated | 2 | 0 | 版权引用/数据脱敏等合规红线需经他人审查时：态度式约束翻译为可度量契约（数字/正则/清单+计数口径），三段式声明、按契约打勾；含"作者主张—客观事实"分层第二契约轴。案例1《管道的故事》、案例2《魔力》 |
+| bp-doc-automation-pipeline | [文档自动化生成与验证流水线模式](concepts/doc-automation-pipeline.md) | L1-draft | 1 | 0 | 文档规模规模化后（≥500 条目），以统一元数据规范+自动化脚本（模板生成/链接验证/索引生成）+质量门禁构成生成-验证流水线，突破人工维护索引的规模瓶颈。案例：SpecWeave 智能文档系统 1288 条目 |
 
 ## 成熟度等级说明
 

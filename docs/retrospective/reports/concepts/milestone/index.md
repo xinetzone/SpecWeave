@@ -37,6 +37,7 @@
 | milestone-zhihu-okf-insights-report-20260903 | 知乎洞察报告：做完500个AI知识包最想分享的5条反常识（开发者第一人称） | 2026-09-03 | ✅ 已完成 | 七概念I外化 | 5条反常识洞察(规范自举/可信度=流程属性/低风险练兵/换目录自由/度量human-out-of-loop)，与知乎长文构成系列，独立可发布版，链接均经Public核验 | [zhihu-okf-bundles-insights-report-20260903.md](zhihu-okf-bundles-insights-report-20260903.md) |
 | milestone-zhihu-okf-analysis-lens-20260903 | 知乎分析报告：别学我的做法拿走我的分析镜（四系统解剖镜+反模式诊断+适用边界） | 2026-09-03 | ✅ 已完成 | 七概念E外化 | 出版物/工厂视角转换、四系统解剖镜(规范/生产/门禁/调度)与红灯信号、质量经济学(机器先审确定性缺陷/人做高杠杆判断)、4反模式诊断清单、3条适用边界+30秒自测，与长文/洞察构成三部曲 | [zhihu-okf-bundles-analysis-lens-20260903.md](zhihu-okf-bundles-analysis-lens-20260903.md) |
 | milestone-jpman-client-stability-20260910 | jpman-client 消费端可用性加固（构建瘦身→加载校验→SSH 接入→运行时就绪） | 2026-09-10 | ✅ 已完成 | 七概念R→I→E→C | 27条客观事实（16提交：镜像2.82→1.80GB、inv load 完整性校验、known_hosts 管理、OpenSSH 10 KEX 兼容、podman 就绪预检）、3条核心洞察（防御代码可达性/依赖状态先于资源生命周期/工具存在≠能力兼容）、1个新模式(external-cli-version-drift-fallback L1)+复用2模式、4项原子行动项，G1-G4质量门全部通过 | [retrospective-jpman-client-stability-milestone-20260910.md](retrospective-jpman-client-stability-milestone-20260910.md) |
+| milestone-intelligent-doc-system-20260910 | 智能文档系统里程碑（文档/知识库/复盘体系，2026-07-01~08-31） | 2026-09-10 | ✅ 已完成 | 七概念R→I→E→V→C | 56条客观事实、3条核心洞察（生成→验证→沉淀闭环/自动化工具链支撑规模化/知识库与复盘体系双轮驱动）、1个L1候选模式（文档自动化生成与验证流水线）、V四视角6条意见全部采纳（含F38口径修正）、4项原子行动项，G1-G4+V门全部通过 | [retrospective-intelligent-doc-system-milestone-20260910.md](retrospective-intelligent-doc-system-milestone-20260910.md) |
 
 ## 知识沉淀里程碑模式库
 
@@ -64,6 +65,7 @@ doc-governance-program-retrospective-20260831
 docs-full-retrospective-20260831
 four-engineering-concepts-wiki-retrospective-20260704
 harness-engineering-wiki-retrospective-20260803
+retrospective-intelligent-doc-system-milestone-20260910
 jira-skill-wiki-vendor-sync-milestone-20260828
 karpathy-llm-wiki-analysis-retrospective-20260707
 libtv-wiki-retrospective-20260704

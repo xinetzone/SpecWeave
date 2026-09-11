@@ -1,6 +1,6 @@
 # Concepts
 
-本目录包含经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式，共 16 个。
+本目录包含经过七概念方法论编排（R→I→E→V）萃取的可复用方法论模式，共 17 个。
 
 ## 模式清单
 
@@ -8,6 +8,7 @@
 |------|--------|------|
 | [内容漏斗分析模式](content-funnel-analysis.md) | L1-draft | Pattern |
 | [跨框架原子化设计分析模式](cross-framework-atomic-analysis.md) | L1-draft | Pattern |
+| [文档自动化生成与验证流水线模式](doc-automation-pipeline.md) | L1-draft | Pattern |
 | [不确定性探索+确定性校验双引擎架构模式](dual-engine-uncertainty-certainty.md) | L2-validated | Pattern |
 | [双层分析报告结构](dual-layer-analysis-report.md) | L2-validated | Pattern |
 | [错误黑名单单调进化模式](error-blacklist-monotonic-evolution.md) | L2-validated | Pattern |
@@ -29,6 +30,7 @@
 batch-docs-to-okf-bundle-conversion
 content-funnel-analysis
 cross-framework-atomic-analysis
+doc-automation-pipeline
 dual-engine-uncertainty-certainty
 dual-layer-analysis-report
 error-blacklist-monotonic-evolution
