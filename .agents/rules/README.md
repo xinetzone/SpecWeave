@@ -116,6 +116,7 @@ flowchart TD
 | 资源有限时先优化入口还是先写深度内容？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md)（元文档优先原则） |
 | 入口文档写太长了怎么办？ | [meta-document-priority-principle.md](./meta-document-priority-principle.md) + [entry-container-separation.md](../../docs/retrospective/patterns/methodology-patterns/document-architecture/entry-container-separation.md)（入口精简流程） |
 | 分析的网页/内容是私域/内部/需要权限访问的？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（内容敏感度预检，私域内容直接到playground/） |
+| 我要处理扫描版版权书籍/材料（OCR 转录还是摘要）？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（route 决策前置条款：默认摘要路线，frontmatter 显式记录 `route` 字段，禁止隐式执行） |
 | 不确定内容是公开还是私域怎么办？ | [content-sensitivity-precheck.md](./content-sensitivity-precheck.md)（就高不就低原则，默认私域或询问用户） |
 
 ### 按角色导航
