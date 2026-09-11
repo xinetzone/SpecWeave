@@ -13,6 +13,7 @@ api-long-text-file-parameter
 archive-wiki-linkage-guide
 ast-static-analysis-disambiguation
 b2b-product-info-collection-sop
+book-to-web-tutorial-citation-guide
 caffe-ffi-param-propagate-down-initialization
 caffe-identity-layer-cow-separation
 caffe-layer-backward-validation-workflow
