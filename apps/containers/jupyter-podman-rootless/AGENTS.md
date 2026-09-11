@@ -25,7 +25,7 @@
 - **任务管理**：使用 invoke 作为任务管理工具（任务定义在 `src/jpman_builder/tasks/`，经根 `tasks.py` 暴露）
 - **编排架构**：宿主机 invoke 三层后端自动降级——podman-compose 声明式（优先）→ podman-py SDK → CLI fallback（宿主机 pip 安装）；镜像内另内嵌同源 podman-compose / podman-py / toolbox（经 SpecWeave 根 `vendor/` 三个 third_party 子模块固定 commit 引入、构建前置 stage 装入，见 [docs/17-upstream-tools.md](docs/17-upstream-tools.md)）
 - **ML 模型管理**：容器内预装 omlmd + olot[oras-py]，支持 OCI artifact 分发和 KServe ModelCar 打包
-- **Toolbx 兼容**：镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh + `flatpak-spawn`），可直接 toolbox create/enter（由宿主侧 Toolbx 启动器发起，注入 `TOOLBOX_PATH`）；镜像内另内嵌 toolbox 真二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，落 `/usr/local/libexec/toolbox`），`/usr/local/bin/toolbox` 为指引包装器——真实 Toolbx 会话中转发给真二进制，普通 podman 会话中裸跑则输出中文可执行指引并保持退出码 1（不再暴露上游裸错误）
+- **Toolbx 兼容**：主镜像满足 Toolbx 自定义镜像规范（LABEL + /run/host + markers + capsh + `flatpak-spawn`，devuser 固定 UID 1000）；**宿主侧 `toolbox create/enter` 须用专用变体 `:toolbx`**（`Containerfile.toolbx` + `invoke build-toolbx`：`ENTRYPOINT []` + `HEALTHCHECK NONE` + 释放 devuser 供宿主同名用户同步，详见 [docs/07-toolbx-passthrough.md](docs/07-toolbx-passthrough.md)）；镜像内另内嵌 toolbox 真二进制（toolbox-builder aux 阶段 golang:1.26-bookworm 构建，落 `/usr/local/libexec/toolbox`），`/usr/local/bin/toolbox` 为指引包装器——真实 Toolbx 会话中转发给真二进制，普通 podman 会话中裸跑则输出中文可执行指引并保持退出码 1（不再暴露上游裸错误）
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`，镜像 `registry:2`），本地 OCI registry 用于开发测试；跨平台替代 `invoke registry.up/down`（SDK→CLI 两层，不依赖 podman-compose，Windows 原生宿主亦可，与 compose 服务共享同一数据卷）
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
@@ -175,6 +175,8 @@ invoke --list
 
 完整变更历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-11** | fix: devuser 固定 UID/GID 1000（Layer 3 对齐上游 `userdel --remove ubuntu`，删除"自动分配 1001"分支，Layer 5 加 3 条硬断言）；entrypoint 修复 B-scheme 宿主 socket 被 `chown -R` 穿透改属主的潜伏事故（挂载点禁递归 chown + ln 同一性幂等）
+- **2026-09-11** | feat: 新增 Toolbx 宿主变体 `Containerfile.toolbx`（tag `:toolbx`）与 `invoke build-toolbx`——`ENTRYPOINT []` + `HEALTHCHECK NONE` + `userdel devuser` 释放 UID1000 给宿主同名用户；podman machine Fedora 43 端到端实测通过，docs/07 增补宿主流程章节
 - **2026-09-10** | feat: 新增 `invoke registry.up/down`（`tasks/registry.py`）——本地 OCI registry 的 SDK→CLI 两层实现，替代此前唯一的 `podman-compose --profile registry`（Windows 原生宿主不可用）。容器名/数据卷名（`jupyter-podman-rootless_registry-data`）/端口/环境变量/重启策略与 compose 服务对齐，两路径共享数据；顺带修正文档中「zot 镜像」的失实描述（实为 `registry:2`）
 - **2026-09-10** | fix: invoke 的 Windows shell 配置修正——原 `config["run"]["shell"] = shutil.which("pwsh")` 返回含空格的 `C:\Program Files\WindowsApps\...\pwsh.EXE`，而 invoke 以 `Popen(cmd, shell=True, executable=shell)` 启动、路径无法转义，致**所有** `c.run` 命令失败（被 `warn=True` 静默吞掉，表现为整条 CLI 兜底层不可用、容器永远报「不存在」）；改为取无空格的 App Execution Alias 路径（`_resolve_space_free_pwsh()`）
 - **2026-09-10** | fix: 宿主透传挂载源禁止自动创建（8 处改 long syntax + `bind: {create_host_path: false}`）——short syntax 下 podman-compose 必走 `os.makedirs()`，Windows 上会把 `/run/...` 按盘符解析为 `D:\run\...` 并在宿主建错误目录；加固后改为显式 `ValueError ... bind source path does not exist`，宿主零残留

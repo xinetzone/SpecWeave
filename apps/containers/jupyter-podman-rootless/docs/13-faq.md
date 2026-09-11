@@ -237,12 +237,13 @@ pip install -e ".[model]"
 ### Q: toolbox create 报错？
 
 确保：
-1. 镜像已构建：`invoke build`
-2. 使用正确的镜像名：`jupyter-podman-rootless:latest`
-3. Toolbx版本支持自定义镜像（Toolbx ≥0.0.99）
+1. 已构建主镜像与 Toolbx 变体：`invoke build` + `invoke build-toolbx`
+2. 使用 **:toolbx** 变体（:latest 带 ENTRYPOINT/HEALTHCHECK，不能直接 create；见 [07-toolbx-passthrough.md](07-toolbx-passthrough.md)）
+3. 在 Linux 宿主（或 `wsl -d podman-machine-default`）内执行，而非容器内或 Windows 原生
+4. Toolbx版本支持自定义镜像（Toolbx ≥0.0.99）
 
 ```bash
-toolbox create -i localhost/jupyter-podman-rootless:latest -c jupyter-dev
+toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
 ```
 
 ### Q: toolbox enter 后找不到conda/python？
@@ -250,5 +251,5 @@ toolbox create -i localhost/jupyter-podman-rootless:latest -c jupyter-dev
 Toolbx可能未正确初始化PATH。手动source conda：
 ```bash
 source /opt/conda/etc/profile.d/conda.sh
-conda activate base
+conda activate main
 ```

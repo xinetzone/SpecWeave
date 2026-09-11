@@ -12,8 +12,8 @@
 #      `python -m pip` 就是对的，不要依赖 activate。
 #   2. OCI image format 会忽略 SHELL 指令，显式用
 #      `/bin/bash -lc '...'` 包裹 RUN 才稳定。
-#   3. USER devuser 时 UID 不一定是 1000（基础镜像 1000 已被占用时
-#      自动分配，如实际是 1001），COPY --chown 用用户名不硬编码 UID。
+#   3. devuser 固定 UID/GID 1000（2026-09-11 起主镜像已删除基础镜像自带的
+#      ubuntu 账号；COPY --chown 仍用用户名不硬编码 UID，保持可移植）。
 #
 # 特性（对齐 F 阶段第一性原理设计）：
 #   1. 单层叠加（COPY + pip install -e），增量缓存复用率高
@@ -104,6 +104,20 @@ ENV PODMAN_CLIENT_SDK_STRATEGY=legacy \
     PYTHONUTF8=1
 
 WORKDIR /workspace
+
+# ------------------------------------------------------------
+# 基底指纹（2026-09-11 预防闭环）：env.build-layer 构建时把基底镜像
+# ref/digest 经 --build-arg 写入以下 label；invoke run 启动前读取 label
+# 并与本地基底当前 digest 比对，不一致即中文警告「叠加层陈旧」并指引重建。
+# 根因背景：rootless 基底更新后 tag 移动不会传导给已固化的 overlay
+# （2026-09-11 toolbox wrapper 缺席事故即此——client 容器仍跑 5 小时前
+# 的旧基底，裸报 Error: TOOLBOX_PATH not set）。LABEL 置于文件末尾，
+# 仅新增薄层，不使前置 COPY/RUN 缓存失效。
+# ------------------------------------------------------------
+ARG BASE_IMAGE
+ARG BASE_DIGEST=""
+LABEL org.specweave.base-image="${BASE_IMAGE}" \
+      org.specweave.base-digest="${BASE_DIGEST}"
 
 # CMD 继承自基础镜像（supervisord + entrypoint.sh），不覆盖。
 # 要单独跑客户端命令：

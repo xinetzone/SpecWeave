@@ -165,3 +165,65 @@ def build(
     # Tier 2 + 3: SDK then CLI
     if not _build_via_sdk(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache):
         _build_via_cli(c, project_root, tag, apt_mirror, conda_mirror, pip_mirror, no_cache)
+
+
+@task(
+    help={
+        "tag": "产出镜像标签，默认 localhost/jupyter-podman-rootless:toolbx",
+        "base-image": "基底镜像（ARG BASE_IMAGE），默认 localhost/jupyter-podman-rootless:latest",
+    }
+)
+def build_toolbx(
+    c: Context,
+    tag: str | None = None,
+    base_image: str = "localhost/jupyter-podman-rootless:latest",
+):
+    """构建 Toolbx 宿主变体薄覆盖层（Containerfile.toolbx → :toolbx）。
+
+    与主 build 的区别：薄层（仅 LABEL + HEALTHCHECK NONE + ENTRYPOINT []），
+    秒级；不走三后端/compose/stage，CLI 直构。前置依赖已构建的 :latest 基底。
+    """
+    if tag is None:
+        tag = "localhost/jupyter-podman-rootless:toolbx"
+
+    project_root = _find_app_root()
+    containerfile = project_root / "Containerfile.toolbx"
+    if not containerfile.is_file():
+        raise Exit(f"[build-toolbx] 未找到 {containerfile}")
+
+    runtime = detect_runtime()
+
+    # 基底存在性预检（不静默吞错；缺失时给出单一可执行动作）
+    check = run_cmd(
+        c,
+        f"{runtime} image inspect {base_image}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    if check is None or not getattr(check, "ok", False):
+        raise Exit(
+            f"[build-toolbx] 基底镜像不存在: {base_image}\n"
+            "请先构建主镜像: invoke build"
+        )
+
+    print(f"[build-toolbx] Building Toolbx flavor: {tag} (base: {base_image})")
+    cmd = " ".join(
+        [
+            runtime,
+            "build",
+            "--format docker",
+            "-f",
+            "Containerfile.toolbx",
+            "-t",
+            tag,
+            f"--build-arg BASE_IMAGE={base_image}",
+            ".",
+        ]
+    )
+    with c.cd(str(project_root)):
+        run_cmd(c, cmd, pty=platform.system() != "Windows")
+
+    print(f"[build-toolbx] Build complete: {tag}")
+    print("[build-toolbx] 使用: toolbox create -i "
+          f"{tag} -c jupyter-dev && toolbox enter jupyter-dev")

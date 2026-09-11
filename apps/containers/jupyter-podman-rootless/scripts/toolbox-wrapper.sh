@@ -37,8 +37,9 @@ cat >&2 <<'EOF'
        toolbox --help
   2) 在本镜像内直接使用 Podman（无需 Toolbx）：
        podman info
-  3) 若确实需要 Toolbx 会话，请在宿主机执行：
-       toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
+  3) 若确实需要 Toolbx 会话，请在【宿主机】用专用 :toolbx 变体执行
+     （:latest 带 ENTRYPOINT/HEALTHCHECK，不能直接被 toolbox create 使用）：
+       toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
        toolbox enter jupyter-dev
 
 详见 docs/07-toolbx-passthrough.md（Toolbx 透传）与 docs/17-upstream-tools.md（上游工具）。

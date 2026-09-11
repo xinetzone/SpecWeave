@@ -47,7 +47,7 @@ source: "README.md#7步启动流程"
 **B-scheme（宿主 socket 直通，优先）**：当宿主 `/run/user/<host-uid>/podman/podman.sock` 已 bind-mount 进容器同路径时，复用宿主 daemon，绕过 WSL 三层 userns 嵌套（自建 daemon 会触发 `newuidmap: write to uid_map failed: Operation not permitted`）：
 
 - 在 devuser 可控目录建符号链接指向宿主 socket，导出 `CONTAINER_HOST` / `XDG_RUNTIME_DIR`
-- **socket 属组衔接（EACCES 修复 · 见 `apps/containers/client/README.md §5.4 C-I2`）**：宿主 socket（宿主 `<uid>:<gid>` 0660）经 userns 映射进容器后呈现为 `root:root 0660`，devuser 是动态 UID（≠0）且未入组 → `socket.connect()` 直接 EACCES。故用 `stat -Lc %G`（空/UNKNOWN 回退 `%g`）解析 socket 属组并 `usermod -aG <组> ${NON_ROOT_USER}`；`stat` 失败必须 `log_warn`，禁止静默
+- **socket 属组衔接（EACCES 修复 · 见 `apps/containers/client/README.md §5.4 C-I2`）**：宿主 socket（宿主 `<uid>:<gid>` 0660）经 userns 映射进容器后呈现为 `root:root 0660`，devuser 是非 root UID（固定 1000，≠0）且未入组 → `socket.connect()` 直接 EACCES。故用 `stat -Lc %G`（空/UNKNOWN 回退 `%g`）解析 socket 属组并 `usermod -aG <组> ${NON_ROOT_USER}`；`stat` 失败必须 `log_warn`，禁止静默
 - **时机关键**：`usermod` 必须在 `exec supervisord` **之前**完成——supervisord 4.3.0 `drop_privileges()` 在 spawn 子进程时按该时刻 `/etc/group` 成员关系 `os.setgroups()`；已在运行的 jupyter 进程补充组已固定，不受影响
 - **自验证**：以 devuser 身份实测 socket 可读写（`su - ${NON_ROOT_USER} -c "test -r ... && test -w ..."`），失败仅 `log_warn` 不阻断启动
 - **红线**：严禁 `chmod 666` / `chown` 宿主 socket（会破坏宿主侧权限）；入组会扩大 devuser 组权限，属可接受代价
@@ -57,7 +57,8 @@ source: "README.md#7步启动流程"
 - 确保`/dev/fuse`设备权限正确（需要宿主机传`--device /dev/fuse`）
 - 创建devuser的Podman配置目录：`~/.config/containers/`
 - 写入storage.conf（fuse-overlayfs存储驱动配置）
-- 设置 XDG_RUNTIME_DIR 为 `id -u ${NON_ROOT_USER}` 动态派生的 `/run/user/<uid>`（**严禁硬编码 1000/1001**，devuser UID 由镜像 `useradd` 动态分配），并创建目录、设置正确权限，同时导出 `CONTAINER_HOST` / `XDG_RUNTIME_DIR` 供 supervisord 子进程经 `%(ENV_x)s` 继承
+- 设置 XDG_RUNTIME_DIR 为 `id -u ${NON_ROOT_USER}` 派生的 `/run/user/<uid>`（devuser 固定 UID 1000，但脚本仍以用户名动态计算、**不写死数值**），并创建目录、设置正确权限，同时导出 `CONTAINER_HOST` / `XDG_RUNTIME_DIR` 供 supervisord 子进程经 `%(ENV_x)s` 继承
+- **socket 挂载点 chown 禁令**（2026-09-11 事故）：B-scheme 单文件 bind-mount 的宿主 `podman.sock` 位于 `${XDG_RUNTIME_DIR}/podman/` 下，对 `${podman_run_dir}` 或该 podman 目录执行 `chown -R` 会穿透挂载点把**宿主 socket inode** 改成 subuid 映射属主（实测 525287:525287），sshd 转发随即拒连、Windows podman CLI 全断。只能 chown/chmod 目录本身，子树白名单仅 `libpod/` 可递归；ln 链接须先判 source==target 幂等跳过
 - 执行`podman info`触发Podman首次初始化（拉取pause镜像等）
 - 验证Podman可在rootless模式下运行
 

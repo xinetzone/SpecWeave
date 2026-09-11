@@ -36,6 +36,7 @@ htmlcov/
 
 # Claude Code 技能 junction 桥接（本地产物不入库；规范源在 .agents/skills/，跨平台需用脚本重新生成）
 .claude/skills/
+.claude/commands/
 
 # 虚拟环境
 .venv/
@@ -126,5 +127,6 @@ apps/devcontainer-base/benchmark-results-ci/
 # 测试覆盖率报告
 .coverage
 
-# codearts 目录
+# CodeArts
+.arts/
 .codeartsdoer/

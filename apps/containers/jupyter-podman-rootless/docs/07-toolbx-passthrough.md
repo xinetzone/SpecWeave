@@ -19,7 +19,7 @@ Toolbx 是一个用于 Linux 容器化开发环境的工具，让容器像在主
 
 ## 镜像兼容标记
 
-镜像内置以下 Toolbx 兼容特性，使其可直接被 `toolbox create/enter` 命令识别和使用：
+镜像内置以下 Toolbx 兼容特性，使其可被宿主 Toolbx 识别（实际 create/enter 请用下文 `:toolbx` 变体）：
 
 | 兼容项 | 实现 |
 |--------|------|
@@ -29,26 +29,84 @@ Toolbx 是一个用于 Linux 容器化开发环境的工具，让容器像在主
 | capsh 工具 | libcap2-bin 包提供能力边界工具 |
 | flatpak-spawn | `flatpak-xdg-utils` 包 + `/usr/bin/flatpak-spawn` symlink（容器内二进制经 `flatpak-spawn --host` 转发回宿主执行的前提，官方镜像同款安装） |
 | sudo NOPASSWD | devuser 无密码 sudo（`GRANT_SUDO=yes` 时启用） |
-| UID 匹配 | devuser 固定 UID 1000（与 Linux 主机默认用户 UID 一致） |
+| UID 匹配 | devuser 固定 UID 1000（先删除基础镜像自带 ubuntu 账号；与 Linux 主机默认用户 UID 一致） |
 
-### 使用 Toolbx 管理容器
+## 宿主机 Toolbx 流程（`:toolbx` 变体，2026-09-11 实测）
+
+> ⚠️ **普通 `:latest` 镜像不能直接 `toolbox create`**。Toolbx 只覆盖容器 Cmd
+> （`toolbox init-container`，PATH 解析）而**不清镜像 ENTRYPOINT**，`:latest` 的
+> tini+entrypoint.sh 启动链会抢先执行；其 HEALTHCHECK 在无 systemd 用户实例的
+> podman machine 里也无法注册。宿主 Toolbx 必须使用专用薄变体 **`:toolbx`**
+> （`Containerfile.toolbx`：`userdel devuser` 释放 UID1000 给宿主同名用户 +
+> `HEALTHCHECK NONE` + `ENTRYPOINT []`，构建依据见该文件头注释）。
+
+### 1. 构建两个镜像
 
 ```bash
-# 使用已构建的镜像创建Toolbx容器
-toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
-
-# 进入Toolbx容器（自动透传HOME/cwd/Wayland/X11/SSH agent等）
-toolbox enter jupyter-dev
-
-# 退出
-exit
+cd apps/containers/jupyter-podman-rootless
+invoke build          # 主镜像 :latest
+invoke build-toolbx   # Toolbx 宿主薄变体 :toolbx（秒级；基底缺失会中文报错）
 ```
 
-进入Toolbx容器后，你会发现：
-- 当前工作目录与主机相同
-- 主目录文件可直接访问
-- 可运行GUI应用（xclock、firefox等）
-- git push/pull复用SSH agent，无需输入密码
+### 2. 宿主机前置：安装 toolbox
+
+| 宿主 | 安装方式 |
+|------|---------|
+| Fedora（含 podman machine 默认 VM，Fedora 43） | `sudo dnf install toolbox p11-kit-server`（推荐；p11-kit-server 提供 CA 证书转发，缺失时仅警告不影响使用） |
+| Ubuntu/Debian 物理机 | `sudo apt install toolbox` |
+| 不想装系统包 | 从镜像提取已内嵌的同版本二进制：`podman create --name t localhost/jupyter-podman-rootless:latest cat && podman cp t:/usr/local/libexec/toolbox ~/.local/bin/toolbox && podman rm t && chmod +x ~/.local/bin/toolbox`。该二进制在 Debian 上构建，运行时 dlopen `libsubid.so.4.0.0`；Fedora 只有 `libsubid.so.5`（ABI 实测兼容），需补软链：`mkdir -p ~/.local/compat-lib && ln -s /lib64/libsubid.so.5 ~/.local/compat-lib/libsubid.so.4.0.0` |
+
+### 3. 在 podman machine / WSL2 内执行（Windows 用户）
+
+`toolbox create` 必须在 **podman 的 Linux 宿主**上发起（Windows 原生不支持）：
+
+```powershell
+wsl -d podman-machine-default
+```
+
+```bash
+# WSL/podman machine 会话必需的环境修正（物理 Linux 终端通常无需）：
+export HOME=/home/user
+export XDG_RUNTIME_DIR=/run/user/1000
+export CONTAINER_HOST=unix:///run/user/1000/podman/podman.sock   # 经 socket 服务通道，避开 VM 无 systemd 用户实例导致的 HEALTHCHECK 失败
+export LD_LIBRARY_PATH=$HOME/.local/compat-lib:$LD_LIBRARY_PATH   # 仅"提取二进制"安装方式需要
+
+toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
+toolbox enter jupyter-dev
+```
+
+> ⚠️ **首次运行会执行 `podman system migrate`**（toolbox 版本迁移戳记，每台机器一次），
+> 它会**停掉该用户下所有运行中容器**。请先 `podman ps` 确认并在事后重启业务容器；
+> 迁移完成后写入 `~/.config/toolbox/podman-system-migrate`，后续不再触发。
+
+### 4. 实测行为（podman machine Fedora 43，宿主 user UID 1000）
+
+| 验证项 | 结果 |
+|--------|------|
+| `toolbox create` | Created container: jupyter-dev（退出码 0） |
+| `toolbox run -c jupyter-dev id` | `uid=1000(user) gid=1000(user) groups=1000(user),27(sudo)` |
+| HOME / cwd | 透传宿主 `/home/user`（Toolbx bind-mount 宿主家目录） |
+| `/run/host` | 宿主完整根文件系统（afs/bin/boot/...） |
+| `/opt/conda/bin/python --version` | Python 3.14.7（1000:1000 数字属主自动承接） |
+| `sudo -n true` | 通过（变体 sudoers 按 `%sudo` 组 NOPASSWD） |
+| 容器内 `podman --version` | 5.7.0 可用（toolbox `--privileged` 模式） |
+| 幂等 | 二次 `toolbox create` 报 already exists（exit 1），容器与数据无损 |
+| 组说明 | init-container 只加入 sudo 组（上游 `GetGroupForSudo` 语义）；不加入 docker 组属正常，DinP 非 toolbx 模式目标 |
+
+### 5. 已知限制（WSL 精简 VM 环境天花板，非镜像缺陷）
+
+- **`flatpak-spawn --host` 不可用**：报 `Portal call failed: The name is not activatable`——该命令走 Flatpak D-Bus 门户，podman machine 精简系统没有该门户。镜像中 flatpak-spawn 的装法与[上游 Ubuntu 26.04 官方镜像](../../../vendor/toolbox/images/ubuntu/26.04/Containerfile)完全一致（symlink 到 flatpak-xdg-utils），物理 Fedora Silverblue/Ubuntu Desktop 上正常。
+- `sudo` 可能提示 `unable to resolve host toolbx`（不影响退出码）：上游镜像额外安装 `libnss-myhostname` 消除该提示，后续可评估引入。
+- toolbx 容器以 `--privileged --network host --pid host --ipc host` 运行，透传优先、隔离弱化，仅用于可信开发场景。
+
+### 6. 常用命令
+
+```bash
+toolbox list                    # 查看 toolbox 容器/镜像
+toolbox run -c jupyter-dev <cmd> # 非交互执行（自动化/验证用）
+toolbox enter jupyter-dev       # 交互式进入（exit 退出）
+toolbox rm -f jupyter-dev       # 删除（需先 exit）
+```
 
 ## 透传配置（compose.dev.yaml）
 

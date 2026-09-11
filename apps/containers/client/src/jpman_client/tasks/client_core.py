@@ -8,6 +8,7 @@ rootless 三必需参数（/dev/fuse、label=disable、cgroupns=host）
 由 utils.ContainerConfig 默认值内置，调用方无需显式传入。
 """
 from contextlib import contextmanager
+import json
 import os
 from pathlib import Path
 from typing import Optional
@@ -381,6 +382,38 @@ def image_exists(c: Context, tag: str) -> bool:
         if tag in img["tags"]:
             return True
     return False
+
+
+def image_inspect_info(c: Context, tag: str) -> dict:
+    """读取单镜像 inspect 摘要（CLI 路径，供 run 前基底指纹检测等轻量场景）。
+
+    走 ``podman image inspect`` 原始 JSON（而非 --format 模板），规避
+    Windows cmd / Linux bash 双 shell 下模板引号与 ``$`` 变量展开差异。
+    返回 ``{"digest": str, "labels": dict}``；镜像不存在或解析失败返回空 dict，
+    调用方按「无指纹」降级，不得抛异常阻断主流程。
+    """
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        f"{runtime} image inspect {tag}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    if r is None or not getattr(r, "ok", False) or not (r.stdout or "").strip():
+        return {}
+    try:
+        data = json.loads(r.stdout)
+        info = data[0] if isinstance(data, list) and data else {}
+    except (json.JSONDecodeError, IndexError, TypeError):
+        return {}
+    if not isinstance(info, dict):
+        return {}
+    labels = info.get("Labels") or {}
+    return {
+        "digest": str(info.get("Digest") or "").strip(),
+        "labels": labels if isinstance(labels, dict) else {},
+    }
 
 
 # ===========================================================================

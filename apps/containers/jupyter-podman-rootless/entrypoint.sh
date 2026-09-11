@@ -191,20 +191,26 @@ setup_podman() {
 
     local podman_run_dir="/run/user/$(id -u ${NON_ROOT_USER})"
     mkdir -p "${podman_run_dir}"
-    chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_run_dir}" 2>/dev/null || true
+    # ⚠ 禁止对 ${podman_run_dir} 整体 chown -R：B-scheme 下宿主 podman.sock 以
+    # 单文件 bind-mount 挂在 ${podman_run_dir}/podman/podman.sock，递归 chown 会穿透
+    # 挂载点改写宿主 socket inode 属主（2026-09-11 事故：被改成 subuid 映射值
+    # 525287:525287，宿主 sshd 转发连接即被拒，Windows podman CLI 全断）。
+    # 只处理目录本身；子树（libpod）在下方按白名单显式 chown -R。
+    chown "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_run_dir}" 2>/dev/null || true
     chmod 700 "${podman_run_dir}" 2>/dev/null || true
     log_info "Podman run dir ready: ${podman_run_dir}"
 
     # rootless podman 需把管理进程 pause.pid 写入 ${XDG_RUNTIME_DIR}/libpod/tmp，
     # 目录缺失会触发 `open .../libpod/tmp/pause.pid: no such file or directory`
     # 与 `error creating temporary file: Permission denied`（见 README §5.4 C-I1 扩展）。
-    # 属主必须与运行时用户一致（devuser UID 动态分配，禁止硬编码 1000）。
+    # 属主必须与运行时用户一致（devuser 固定 UID 1000，但仍以用户名派生路径/属主，
+    # 不在脚本中写死数值——路径统一由 id -u ${NON_ROOT_USER} 计算）。
     local podman_libpod="${podman_run_dir}/libpod"
     local podman_libpod_tmp="${podman_libpod}/tmp"
     mkdir -p "${podman_libpod_tmp}"
     # libpod 父目录同样必须属于运行时用户；否则 rootless podman 对 /run/user/<uid>/libpod
     # 设置 sticky bit 时会被拒绝（`set sticky bit on: chmod .../libpod: operation not permitted`）。
-    # 必须先 chown 父目录再 chmod，避免 devuser UID 动态分配下仍残留 root 属主。
+    # 必须先 chown 父目录再 chmod，避免镜像层或挂载导致目录残留非 devuser 属主。
     chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_libpod}" 2>/dev/null || true
     chmod 700 "${podman_libpod}" 2>/dev/null || true
     chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${podman_libpod_tmp}" 2>/dev/null || true
@@ -223,9 +229,23 @@ setup_podman() {
         # ── devuser 路径（默认 XDG_RUNTIME_DIR）──
         local run_sock_dir="${podman_run_dir}/podman"
         mkdir -p "${run_sock_dir}"
-        chown -R "${NON_ROOT_USER}:${NON_ROOT_USER}" "${run_sock_dir}" 2>/dev/null || true
+        # ⚠ 禁止 chown -R：该目录内含【单文件 bind-mount 的宿主 socket】（podman.sock），
+        # chown -R 会跟随挂载点穿透改宿主 inode 属主——2026-09-11 事故实证：宿主 socket
+        # 被改成 subuid 映射值 525287:525287，sshd 转发以 user(1000) 连接即被拒
+        # （"ssh: rejected: connect failed (open failed)"，Windows podman CLI 全断）。
+        # 只 chown/chmod 目录本身（700 目录 + 挂载 socket 保持宿主 user:user 0660）。
+        chown "${NON_ROOT_USER}:${NON_ROOT_USER}" "${run_sock_dir}" 2>/dev/null || true
         chmod 700 "${run_sock_dir}" 2>/dev/null || true
-        ln -sf "${host_sock}" "${run_sock_dir}/podman.sock"
+        # devuser 固定 UID 1000 后，宿主 socket 默认就挂载在 /run/user/1000/podman/，
+        # 与运行时路径完全相同——GNU ln 对 source==target 即使 -f 也报
+        # "are the same file" 并以非 0 退出（set -e 下会中止启动）。同一性幂等跳过。
+        local run_sock="${run_sock_dir}/podman.sock"
+        if [ "${run_sock}" = "${host_sock}" ] \
+            || [ "$(readlink -f "${run_sock}" 2>/dev/null || true)" = "$(readlink -f "${host_sock}" 2>/dev/null || true)" ]; then
+            log_info "[B-scheme] socket already at runtime path (UID-aligned mount), skip symlink: ${run_sock}"
+        else
+            ln -sf "${host_sock}" "${run_sock}"
+        fi
 
         # ── root 路径（容错）──
         # root 用户下 XDG_RUNTIME_DIR 通常为 /run/user/0（不存在）或空，
@@ -256,8 +276,8 @@ setup_podman() {
 
         # ── socket 属组衔接（EACCES 修复 · 见 client/README.md §5.4 C-I2）──
         # 宿主 socket（宿主 <uid>:<gid> 0660）经 bind-mount 进入 rootless 容器 userns 后，
-        # 数值属主/属组被映射为容器 0，故容器内呈现为 root:root 0660。devuser 是动态 UID
-        # （≠0）且镜像基线未把它加入 root 组 → connect() 抛 EACCES(13)：SDK 表现为
+        # 数值属主/属组被映射为容器 0，故容器内呈现为 root:root 0660。devuser 固定 UID 1000
+        #（≠0）且镜像基线未把它加入 root 组 → connect() 抛 EACCES(13)：SDK 表现为
         # podman/api/uds.py `PermissionError: [Errno 13]`，CLI 表现为 `_ping ... permission denied`。
         # 属主/属组不可 chown/chmod（那会改到宿主 socket 本体，造成宿主侧权限回归，
         # 禁止 chmod 666 这类"捷径"）；唯一安全手段是让 devuser 与 socket 属组建立成员关系。

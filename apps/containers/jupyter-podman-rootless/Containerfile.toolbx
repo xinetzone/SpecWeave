@@ -1,0 +1,54 @@
+# syntax=docker/dockerfile:1.7-labs
+# =============================================================================
+# Jupyter Podman Rootless - Toolbx 宿主变体（thin overlay）
+# =============================================================================
+# 用途：让镜像可被宿主机 Toolbx 直接使用：
+#     toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
+#     toolbox enter jupyter-dev
+#
+# 为什么需要变体（与主镜像的差异依据，2026-09-11 实测 + 上游源码裁决）：
+#   1) Toolbx create 只覆盖容器 Cmd（["toolbox","init-container",...]，PATH 解析），
+#      不清镜像 ENTRYPOINT（vendor/toolbox/src/cmd/create.go L412-L480）。
+#      主镜像 ENTRYPOINT 是 tini -- entrypoint.sh（7 步启动 + 58s DinP 初始化），
+#      会抢先于 init-container 执行并把 toolbox 参数链打乱（实测：
+#      "toolbox: line 1: exec: --: invalid option"）→ 变体必须 ENTRYPOINT []。
+#   2) podman machine（无 systemd 用户实例的精简 VM）无法注册 HEALTHCHECK 定时器，
+#      容器 start 直接报 "create healthcheck: unable to get systemd connection"
+#      → 变体 HEALTHCHECK NONE（须配合 podman build --format docker，OCI 忽略该指令）。
+#   3) toolbox wrapper 影子裁决：Toolbx 把宿主二进制 bind mount 到 /usr/bin/toolbox，
+#      但 PATH 中 /usr/local/bin 优先，实际命中 /usr/local/bin/toolbox wrapper。
+#      wrapper 检测 TOOLBOX_PATH 非空即 exec /usr/local/libexec/toolbox（镜像内原生
+#      Ubuntu 二进制），init-container 参数原样透传——【裁决一：保留 wrapper，不删除】
+#      （2026-09-11 实测：init-container 经 wrapper 正常启动，入口参数无错乱）。
+#   4) 用户名/UID 模型裁决（实测补）：Toolbx init-container 按【宿主用户名+UID】
+#      在容器内同步账号（initContainer.go configureUsers：同名则 usermod，否则
+#      useradd -u <宿主uid>）。主镜像 devuser 固定占用 UID 1000 后，宿主用户若不叫
+#      devuser（podman machine 为 user、物理机常为个人用户名），useradd 1000 必报
+#      "UID 1000 is not unique"。【裁决二：变体删除 devuser 账号释放用户名/UID 1000，
+#      不删文件】——/opt/conda 等以数字属主 1000:1000 留存，init-container 新建的宿主
+#      同名用户（UID 1000）天然承接全部属主；HOME 由 Toolbx bind-mount 宿主家目录。
+#      sudoers 同步改为按 %sudo 组 NOPASSWD（init-container 会把新用户加入 sudo 组），
+#      与任意宿主用户名解耦。
+#
+# 构建：invoke build-toolbx（薄覆盖层，秒级；须先 invoke build 产出 :latest 基底）
+# =============================================================================
+
+ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
+FROM ${BASE_IMAGE}
+
+LABEL org.specweave.flavor="toolbx" \
+      usage="Toolbx host flavor: toolbox create -i <this-image> -c <name> && toolbox enter <name>"
+
+# 释放 UID/GID 1000 与 devuser 用户名，供 Toolbx init-container 以宿主同名用户重建
+# （保留 /home/devuser 与全部 1000:1000 数字属主文件，不做 userdel -r / chown）
+RUN userdel devuser 2>/dev/null || true; \
+    rm -f /etc/sudoers.d/devuser; \
+    printf '%s\n' '%sudo ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/toolbx-nopasswd; \
+    chmod 0440 /etc/sudoers.d/toolbx-nopasswd
+
+# 禁用主镜像 HEALTHCHECK（精简 VM / 无 systemd 用户实例环境无法注册定时器）
+HEALTHCHECK NONE
+
+# 清空 tini+entrypoint.sh 入口链：Toolbx 以 root:root 启动容器并直接执行
+# Cmd = toolbox init-container（容器自我配置用户/挂载），不需要 supervisord 启动链
+ENTRYPOINT []

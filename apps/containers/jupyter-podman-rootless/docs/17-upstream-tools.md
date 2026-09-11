@@ -79,12 +79,13 @@ python -c "import podman; print('[OK] podman SDK importable')"
 
 # toolbox：真二进制在 /usr/local/libexec/toolbox，/usr/local/bin/toolbox 为指引包装器
 toolbox --version                                    # cobra 短路型 flag，不需 TOOLBOX_PATH（包装器透传）
-# 宿主侧（非容器内）创建/进入 Toolbx 容器：
-#   toolbox create -i jupyter-podman-rootless:latest -c jupyter-dev
+# 宿主侧（非容器内）创建/进入 Toolbx 容器——须用 :toolbx 变体（invoke build-toolbx）：
+#   toolbox create -i localhost/jupyter-podman-rootless:toolbx -c jupyter-dev
 #   toolbox enter jupyter-dev
+# :latest 不能直接 create（ENTRYPOINT/HEALTHCHECK），详见 docs/07-toolbx-passthrough.md
 ```
 
-> **注意（toolbox 的能力边界与优雅降级）**：`toolbox` 真二进制虽内嵌于镜像（`/usr/local/libexec/toolbox`），但其**容器创建/进入能力由宿主侧 Toolbx 启动器提供**——启动器注入 `TOOLBOX_PATH`，容器内二进制再经 `flatpak-spawn --host` 转发回宿主执行。本镜像内嵌的 marker（`/run/.toolboxenv`、`/run/.containerenv`）使镜像**可被**宿主 Toolbx 识别与进入；为此镜像还按官方 `images/ubuntu/26.04/Containerfile` 装齐了 `flatpak-spawn`（`flatpak-xdg-utils` 包 + `/usr/bin/flatpak-spawn` symlink），保证宿主回调链路完整。
+> **注意（toolbox 的能力边界与优雅降级）**：`toolbox` 真二进制虽内嵌于镜像（`/usr/local/libexec/toolbox`），但其**容器创建/进入能力由宿主侧 Toolbx 启动器提供**——启动器注入 `TOOLBOX_PATH`，容器内二进制再经 `flatpak-spawn --host` 转发回宿主执行。本镜像内嵌的 marker（`/run/.toolboxenv`、`/run/.containerenv`）使镜像**可被**宿主 Toolbx 识别；为此镜像还按官方 `images/ubuntu/26.04/Containerfile` 装齐了 `flatpak-spawn`（`flatpak-xdg-utils` 包 + `/usr/bin/flatpak-spawn` symlink），保证宿主回调链路完整。宿主实际创建/进入须用专用 `:toolbx` 变体（`invoke build-toolbx`；清 ENTRYPOINT/HEALTHCHECK + 释放 UID1000），见 [07-toolbx-passthrough.md](07-toolbx-passthrough.md)。
 >
 > 在**普通 `podman run` / `podman-compose` 会话**中并无宿主启动器。此时 `/usr/local/bin/toolbox`（包装器）不再暴露上游裸错误，而是输出中文可执行指引（改用 `toolbox --version`/`--help`、或直接用容器内 `podman`、或回到宿主执行 `toolbox create/enter`）并保持与上游一致的**退出码 1**；`toolbox --version`、`toolbox --help` 等 cobra 短路型 flag 由包装器透传，不受影响。镜像内构建断言据此双向校验：真二进制活性（`toolbox --version` 退出 0）+ 裸跑降级（退出码 1 且 stderr 含包装器指引）。
 

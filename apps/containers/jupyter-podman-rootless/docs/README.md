@@ -88,7 +88,7 @@ invoke run
 1. **jpman零依赖CLI（推荐快速上手）**：纯bash实现，无需Python依赖，提供镜像缓存、WSL导出、增量重建等实用功能
 2. **invoke封装（推荐日常开发）**：自动密码生成、路径转换、三层后端选择、ML模型管理完整功能
 3. **podman-compose直接使用**：标准Compose Spec，支持多文件覆盖和profiles
-4. **Toolbx模式**：`toolbox create/enter`，深度主机集成，透传HOME/cwd/X11
+4. **Toolbx模式**（宿主机侧）：`invoke build-toolbx` 产出 `:toolbx` 变体后 `toolbox create/enter`，深度主机集成，透传HOME/cwd/X11（见 07-toolbx-passthrough.md）
 
 ## 变更日志
 
