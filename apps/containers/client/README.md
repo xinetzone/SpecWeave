@@ -385,6 +385,31 @@ invoke env.shell
 | 自举容器 rootless | `/dev/fuse + label=disable + cgroupns=host` | 与 `ContainerConfig` 硬编码对齐，**不使用 `--privileged`** |
 | 容器名（默认） | `jpman-client-env`（用完自动 `--rm` 删除） | 可通过 `--name` 覆盖 |
 
+### 10.5 叠加层基底指纹防陈旧机制（`base-digest` 检测，2026-09-11）
+
+**问题本质：镜像 tag 是移动指针，叠加层固化的是 digest（不可变指纹）。**
+
+`localhost/jupyter-podman-client:latest` 是一个「叠加镜像」——基于 `localhost/jupyter-podman-rootless:latest`（基底）加一层 `COPY + pip install -e` 构建。**`invoke run` 使用的不是基底 tag，而是叠加镜像构建那一刻固化的基底内容**。基底 tag 之后被更新（重建 / `invoke load`）不会传导给已构建的叠加层，导致「容器跑的还是旧基底」。
+
+**解决机制闭环（三环节）**：
+
+1. **构建时固化**（`invoke env.build-layer`）：构建前取基底当前 digest，经 `--build-arg BASE_DIGEST` 烤进叠加镜像 LABEL（`org.specweave.base-image` / `org.specweave.base-digest`，见 [Containerfile.client](Containerfile.client) 末尾）。指纹保存在**构建时快照**，运行时不重算。
+2. **启动前比对**（`invoke run` → [manage.py::_warn_if_layer_stale](src/jpman_client/tasks/manage.py)）：读叠加层 LABEL 的固化 digest，与本地基底当前 digest 比较；不一致打印中文警告并给出重建指引。**只警告不阻断**（旧基底可能是有意选择）。
+3. **一键恢复**（`invoke run --rebuild-layer`，B 档 2026-09-11 新增）：检测到陈旧时自动执行 `env.build-layer` 重建叠加层，随后继续正常启动；**重建失败自动回退旧基底启动**（不因重建失败而让容器起不来）。
+
+```bash
+# 启动前检测到「叠加层基底陈旧」警告时，两条路径任选：
+invoke run --rebuild-layer          # 推荐：自动重建+重启（失败回退旧基底）
+invoke run                          # 继续用旧基底（有意保持；警告仅提示）
+
+# 手动重建（等价）
+invoke env.build-layer && invoke stop && invoke run
+# 确定有意使用旧基底 / 不想每次看到警告
+# （.env 或 export）JPUMAN_SKIP_BASE_CHECK=1
+```
+
+**层级不变式**：LABEL 放在 Containerfile **末尾**（仅新增薄层），前置 COPY/pip 层缓存不受基底变化影响——重建叠加层通常 <1 分钟（见 §10.1）。
+
 ## 11. 运行时透传（对齐构建端 `docs/07-toolbx-passthrough.md`）
 
 构建端把 5 项运行时透传以 **compose 分层覆盖文件**交付；消费端没有 compose 层（SDK/CLI 编程式启动），
