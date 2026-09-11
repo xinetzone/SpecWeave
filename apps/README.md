@@ -64,13 +64,13 @@ apps/<group>/<app-name>/
 
 | 应用 | 说明 | 入口 |
 |---|---|---|
+| `agent-monetize/` | **Python 3.14+ 智能体自动变现平台** —— 自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接。 | [README.md](agent-monetize/README.md) |
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
 | `containers/` | containers 应用 | `containers/`（暂无 README） |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
-| `zleap-workspace-first-prototype/` | zleap-workspace-first-prototype 应用 | `zleap-workspace-first-prototype/`（暂无 README） |
 
 <!-- APPS_TABLE_END -->
 
