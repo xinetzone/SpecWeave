@@ -23,6 +23,7 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [declaration-reconciliation-reproduction-report-template.md](declaration-reconciliation-reproduction-report-template.md) | 声明对账模式复现报告模板（A-004） | 第 2 个独立任务完成后记录声明对账模式 5 步骤复现证据与升 L2 判定（7 节结构），配套复现检查清单；防"案例 1 充数"声明入首条提示 |
 | [summary-over-transcription-reproduction-report-template.md](summary-over-transcription-reproduction-report-template.md) | 摘要替代转录模式复现报告模板（A-005） | 第 2 个独立扫描版版权材料任务完成后记录模式 6 步骤复现证据与升 L2 判定（7 节结构：案例信息→复现记录→验收→反模式自查→偏差教训→判定结论→收尾），配套复现检查清单 |
 | [compliance-contracting-reproduction-report-template.md](compliance-contracting-reproduction-report-template.md) | 合规契约化模式复现报告模板（A-006） | 第 2 个独立案例（合规红线产出物，跨场景迁移类优先）完成后记录模式 4 步骤复现证据与升 L2 判定（7 节结构），配套复现检查清单；含"契约伪造确定性"专属反模式 |
+| [path-naming-preflight-checklist-template.md](path-naming-preflight-checklist-template.md) | 路径与命名前置约束检查单 | 新建学习/文档类项目或任务链启动时一次性锚定三类约束：持久区落位（脚本判定非临时区）、英文 kebab-case 命名、相对路径基线；把事后重构的矫正成本前置为预防成本（源自 pipeline-parable 三轮重构复盘） |
 | [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理8点验收检查 |
 | [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的P0级检查清单，含：(1) 输出纯净性约束（防止工具标签污染）；(2) 输出完整性强制约束（禁止摘要/提前收尾）；(3) 任务粒度原则（禁止多任务合并）；(4) 子代理自检项；(5) 主代理8项验收检查；(6) 失败重试与"事不过二"兜底策略流程图。v1.1.0重大更新，覆盖文档+分析双场景。 |
 | [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |
