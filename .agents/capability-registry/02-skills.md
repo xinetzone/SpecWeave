@@ -38,10 +38,11 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 
 > 两者互为选型路由：有界变更→plan，复杂/高影响/跨会话→spec。派生自 Trae 内置 doutops skill（external/ 非 git 目录），中文五要素适配版；Trae 同步覆盖后以本仓库版本为准（大写路径为权威位置）。
 
-### 命令集门面（9个）
+### 命令集门面（10个）
 
 | Skill名 | 触发词 | 方案数 | 版本 | 路径 |
 |---------|--------|-------|------|------|
+| sovereign-rollout-cmd | "提案"、"批准落盘"、"主权区变更"、"治理资产落盘"、"先提案后批准" | 1（四阶段闭环：提案草案零写入→批准门→落盘执行→执行报告+check-links 验证） | v1.0.0 | [skills/sovereign-rollout-cmd/SKILL.md](../skills/sovereign-rollout-cmd/SKILL.md) |
 | ⭐ seven-concepts-cmd | "方法论编排"、"用方法论"、"系统性分析"、"完整流程"、"七概念"（别名） | 5（里程碑复盘/问题解决/重构优化/知识沉淀/创新突破） | v1.1.0 | [skills/seven-concepts-cmd/SKILL.md](../skills/seven-concepts-cmd/SKILL.md) |
 | retrospective-cmd | "复盘"、"retrospective"、"回顾"、"总结经验"、"项目总结"、"阶段回顾" | 3（标准/轻量/故障复盘） | v1.5.0 | [skills/retrospective-cmd/SKILL.md](../skills/retrospective-cmd/SKILL.md) |
 | insight-cmd | "洞察"、"insight"、"分析问题"、"萃取洞察"、"根因分析"、"问题诊断"、"为什么" | 3（数据驱动/根因诊断/萃取洞察） | v1.2.1 | [skills/insight-cmd/SKILL.md](../skills/insight-cmd/SKILL.md) |

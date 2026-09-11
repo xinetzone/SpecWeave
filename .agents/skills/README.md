@@ -32,6 +32,7 @@ title: ".agents/skills/ 目录索引"
 | atomic-commit-cmd | 命令门面 | 原子提交 | 提交、commit、原子提交、提交代码、保存更改 | [atomic-commit-cmd/SKILL.md](atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | 命令门面 | Mermaid图表管理 | mermaid、流程图、时序图、状态图、画个图、图表、架构图、思维导图 | [mermaid-cmd/SKILL.md](mermaid-cmd/SKILL.md) |
 | token-optimize-cmd | 命令门面 | Token优化 | Token优化、降本、成本优化、缓存命中率、上下文压缩、Prompt优化、LLM成本 | [token-optimize-cmd/SKILL.md](token-optimize-cmd/SKILL.md) |
+| sovereign-rollout-cmd | 命令门面 | 主权区治理资产落盘 | 提案、批准落盘、主权区变更、治理资产落盘、先提案后批准 | [sovereign-rollout-cmd/SKILL.md](sovereign-rollout-cmd/SKILL.md) |
 
 ### 完整Skill（4个）
 

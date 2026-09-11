@@ -71,6 +71,7 @@ Windows 必需：
 | 导出报告 | export-report-cmd | CI全量检查 | ci-check-cmd |
 | 原子化文档 | atomization-cmd | 链接检查/修复 | link-check-cmd |
 | 原子化收尾 | atomization-finalize-cmd | 导航/看板更新 | docgen-cmd |
+| 主权区治理落盘 | sovereign-rollout-cmd | | |
 
 > 完整能力索引见 [capability-registry.md](capability-registry.md)（含脚本/协议/工作流/规则/知识库入口）
 
