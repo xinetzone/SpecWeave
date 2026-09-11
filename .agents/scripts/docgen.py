@@ -214,6 +214,42 @@ def _dash_get_spec_status(spec_md: Path) -> str:
     return _STATUS_ICONS.get(val, "—")
 
 
+@dataclass
+class SpecStatus:
+    name: str
+    completed: bool
+    total_tasks: int
+    done_tasks: int
+
+
+@dataclass
+class ThemeStatus:
+    name: str
+    specs: list[SpecStatus]
+
+    @property
+    def total(self) -> int:
+        return len(self.specs)
+
+    @property
+    def completed_count(self) -> int:
+        return sum(1 for s in self.specs if s.completed)
+
+    @property
+    def in_progress_count(self) -> int:
+        return sum(1 for s in self.specs if not s.completed and s.done_tasks > 0)
+
+    @property
+    def pending_count(self) -> int:
+        return sum(1 for s in self.specs if not s.completed and s.done_tasks == 0)
+
+    @property
+    def progress(self) -> int:
+        if self.total == 0:
+            return 100
+        return int(self.completed_count / self.total * 100)
+
+
 def _dash_scan_all_specs(specs_root: Path) -> list[ThemeStatus]:
     """扫描全部 13 主题，收集每个主题下所有子目录（不论是否有 tasks.md）。
 
@@ -463,41 +499,6 @@ def _build_light_spec_readme(themes: list[ThemeStatus], total_specs: int) -> str
 # ============================================================
 # dashboard 子命令：Spec 执行进度看板
 # ============================================================
-
-@dataclass
-class SpecStatus:
-    name: str
-    completed: bool
-    total_tasks: int
-    done_tasks: int
-
-
-@dataclass
-class ThemeStatus:
-    name: str
-    specs: list[SpecStatus]
-
-    @property
-    def total(self) -> int:
-        return len(self.specs)
-
-    @property
-    def completed_count(self) -> int:
-        return sum(1 for s in self.specs if s.completed)
-
-    @property
-    def in_progress_count(self) -> int:
-        return sum(1 for s in self.specs if not s.completed and s.done_tasks > 0)
-
-    @property
-    def pending_count(self) -> int:
-        return sum(1 for s in self.specs if not s.completed and s.done_tasks == 0)
-
-    @property
-    def progress(self) -> int:
-        if self.total == 0:
-            return 100
-        return int(self.completed_count / self.total * 100)
 
 
 def _dash_parse_yaml_simple(content: str) -> dict[str, str]:

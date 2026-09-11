@@ -58,19 +58,71 @@ apps/<group>/<app-name>/
   scripts/           -- 构建与部署脚本（可选）
 ```
 
-### 2.3 应用清单
+### 2.3 分组内应用列表
+
+按应用类型分组的实际应用明细（与下方「应用清单」自动表互补；人工维护，新增/移动应用后同步）：
+
+#### containers/ —— 容器编排类（Podman 生态）
+
+| 应用 | 说明 |
+|------|------|
+| [jupyter-podman-rootless](containers/jupyter-podman-rootless/README.md) | 基于 Podman rootless 的 Jupyter 开发容器（Python 3.14t + Miniforge3 + SSH + OMLMD/OLOT + Toolbx 透传） |
+| [client](containers/client/README.md) | jupyter-podman-rootless 镜像消费端：podman-py load/run/stop + 镜像备份（invoke save/load） |
+
+#### docker-images/ —— 容器镜像类（Docker 生态）
+
+| 应用 | 说明 |
+|------|------|
+| [devcontainer-base](docker-images/devcontainer-base/README.md) | 全功能开发容器（Ubuntu 26.04，SSH+Docker DinD/DooD+Podman+Jupyter，supervisord 管理，Python 3.14 cp314t） |
+| devcontainer-win11 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell 管理，暂缺 README） |
+| [docker-ssh-dind](docker-images/docker-ssh-dind/README.md) | Docker SSH DinD（Docker-in-Docker）环境 |
+| [jupyter-ssh-base](docker-images/jupyter-ssh-base/README.md) | Jupyter Notebook SSH 基础镜像（docker-ssh-dind 与 eva 生态共用的底层底座） |
+| [pytorch-base](docker-images/pytorch-base/README.md) | PyTorch 基础环境镜像 |
+| [caffe-ffi-jupyter](docker-images/caffe-ffi-jupyter/README.md) | Caffe-FFI Jupyter 开发环境（基于 jupyter-ssh-base） |
+| caffe-ffi-cross | Caffe-FFI 交叉编译（macOS/Windows 交叉构建镜像，暂缺 README） |
+| xmnn-runtime | XMNN 运行时环境（暂缺 README） |
+
+#### ai-agents/ —— AI 应用类
+
+| 应用 | 说明 |
+|------|------|
+| [zhujian-wudao](ai-agents/zhujian-wudao/README.md) | 竹简悟道——道家哲学 AI 洞察项目 |
+| [ai-code-assistant](ai-agents/ai-code-assistant/README.md) | AI 代码助手 Web 应用 |
+| [eve-minimal-agent](ai-agents/eve-minimal-agent/README.md) | Vercel Eve 最小可运行 Agent 示例 |
+
+#### dev-tools/ —— 开发者工具类
+
+| 应用 | 说明 |
+|------|------|
+| [prompt_extraction](dev-tools/prompt_extraction/README.md) | 提示词质量评估与提取工具 |
+| [okf-zhihu-publisher](dev-tools/okf-zhihu-publisher/README.md) | OKF 知乎发布器（内容同步发布工具） |
+| camera-power-controller | 摄像头电源控制工具（暂缺 README） |
+
+#### samples/ —— 示例/原型类
+
+| 应用 | 说明 |
+|------|------|
+| [cow-demo](samples/cow-demo/README.md) | 零拷贝 COW 读写分离模式 C++ 示例框架 |
+| [short-video-site](samples/short-video-site/README.md) | ReelVibe 短视频网站（AI 全流程开发 Demo） |
+| [serial-camera-controller](samples/serial-camera-controller/README.md) | 串口控制 USB 摄像头抓图/录像（CH340+OpenCV+pyserial） |
+| [samples-retrospective](samples/samples-retrospective/README.md) | samples 区复盘与经验沉淀 |
+| zleap-workspace-first-prototype | 工作区首个原型（多模型路由，暂缺 README） |
+
+> **维护约定**：`agent-monetize/` 为根级独立应用（不属上述分组，见下方自动应用清单）；新增/移动应用时同步本小节与下方自动清单（运行 `python .agents/scripts/docgen.py apps` 刷新）。
+
+### 2.4 应用清单
 
 <!-- APPS_TABLE_START -->
 
 | 应用 | 说明 | 入口 |
 |---|---|---|
+| `agent-monetize/` | **Python 3.14+ 智能体自动变现平台** —— 自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接。 | [README.md](agent-monetize/README.md) |
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
 | `containers/` | containers 应用 | `containers/`（暂无 README） |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |
 | `tests/` | tests 应用 | `tests/`（暂无 README） |
-| `zleap-workspace-first-prototype/` | zleap-workspace-first-prototype 应用 | `zleap-workspace-first-prototype/`（暂无 README） |
 
 <!-- APPS_TABLE_END -->
 
