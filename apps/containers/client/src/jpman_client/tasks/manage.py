@@ -230,10 +230,13 @@ _BASE_DIGEST_LABEL = "org.specweave.base-digest"
 _DEFAULT_BASE_IMAGE = "localhost/jupyter-podman-rootless:latest"
 
 
-def _warn_if_layer_stale(c: Context, image: str) -> None:
+def _warn_if_layer_stale(c: Context, image: str) -> bool:
     """启动前检测 client 叠加镜像的基底是否陈旧（详见上方注释）。
 
-    任何 inspect 失败都静默降级，不得影响 run 主流程；
+    返回 True = 检测到基底陈旧/无指纹（建议重建叠加层）；
+    返回 False = 基底新鲜 / 非叠加镜像 / 已通过 JPUMAN_SKIP_BASE_CHECK 跳过。
+
+    任何 inspect 失败都静默降级（返回 False），不得影响 run 主流程；
     ``JPUMAN_SKIP_BASE_CHECK=1``（或 yes/true/on）可静默警告。
     """
     if os.getenv("JPUMAN_SKIP_BASE_CHECK", "").strip().lower() in (
@@ -242,21 +245,21 @@ def _warn_if_layer_stale(c: Context, image: str) -> None:
         "true",
         "on",
     ):
-        return
+        return False
     info = image_inspect_info(c, image)
     if not info:
-        return
+        return False
     labels = info.get("labels") or {}
     if labels.get(_CLIENT_COMPONENT_LABEL) != _CLIENT_COMPONENT_VALUE:
         # --tag 指定的非叠加镜像不做基底检测
-        return
+        return False
     base_ref = labels.get(_BASE_IMAGE_LABEL) or _DEFAULT_BASE_IMAGE
     baked = (labels.get(_BASE_DIGEST_LABEL) or "").strip()
     if not baked:
         print(f"[Run] ⚠ 叠加镜像 {image} 未携带基底指纹（构建于指纹机制上线前），")
         print(f"[Run]   无法确认基底 {base_ref} 是否最新；如刚 load 过新基底镜像，")
         print("[Run]   请重建叠加层: invoke env.build-layer")
-        return
+        return True
     base_info = image_inspect_info(c, base_ref)
     current = (base_info.get("digest") or "").strip()
     if current and current != baked:
@@ -265,7 +268,9 @@ def _warn_if_layer_stale(c: Context, image: str) -> None:
         print(f"[Run]   但本地 {base_ref} 当前为")
         print(f"[Run]     {current}")
         print("[Run]   本次仍以旧基底启动；要获得基底更新（如 toolbox wrapper 修复），")
-        print("[Run]   请重建后重启: invoke env.build-layer && invoke stop && invoke run")
+        print("[Run]   可自动重建: invoke run --rebuild-layer")
+        return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -355,6 +360,7 @@ def images(c: Context) -> None:
         "no-dbus": "显式关闭 D-Bus 透传（覆盖 .env 的 PASSTHROUGH_DBUS）",
         "video": "⑥ UVC 摄像头字符设备透传（默认 /dev/video0-3，可用 VIDEO_DEVICES 指定，摄像头采集需 v4l2/OpenCV）",
         "no-video": "显式关闭 Video 透传（覆盖 .env 的 PASSTHROUGH_VIDEO）",
+        "rebuild-layer": "检测到 client 叠加层基底陈旧时，自动重建叠加层（invoke env.build-layer 复用）后继续启动；重建失败回退旧基底启动（不因构建失败阻断容器）",
     },
     # 关闭自动短选项：invoke 的短名是「逐字符取首个未被占用字符」，对参数多的任务会产生
     # 顺序敏感且误导的短名（实测 ssh_public_key 抢走 -h 致 `invoke run -h` 报错；
@@ -386,6 +392,7 @@ def run(
     no_dbus: bool = False,
     video: bool = False,
     no_video: bool = False,
+    rebuild_layer: bool = False,
 ) -> None:
     """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。
 
@@ -434,8 +441,21 @@ def run(
         print("[Run]   或执行: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
         raise Exit(1)
 
-    # 基底指纹陈旧检测（只警告不阻断；JPUMAN_SKIP_BASE_CHECK=1 静默）
-    _warn_if_layer_stale(c, cfg.image)
+    # 基底指纹陈旧检测（返回 True=陈旧/无指纹；JPUMAN_SKIP_BASE_CHECK=1 静默）
+    stale = _warn_if_layer_stale(c, cfg.image)
+
+    # B 档：--rebuild-layer 自动重建叠加层（复用 env.build-layer 核心逻辑）。
+    # 构建失败不阻断：回退旧基底继续启动（可能有意使用旧基底 / 网络失败），
+    # 且重建仅对「client 叠加镜像」有意义（非叠加镜像 _warn 已返回 False）。
+    if stale and rebuild_layer:
+        from .env_in_container import rebuild_client_layer
+
+        print("[Run] --rebuild-layer：自动重建叠加层以跟随基底更新...")
+        rebuilt = rebuild_client_layer(c, tag=cfg.image)
+        if rebuilt:
+            print("[Run] ✅ 叠加层已重建；现在基于新基底启动容器")
+        else:
+            print("[Run] ⚠ 叠加层重建失败，回退使用旧基底启动（可稍后重试 invoke env.build-layer）")
 
     # 启动前清理 known_hosts 过期 host key（防 HAS CHANGED 报错）；
     # 新容器的 host key 须在启动后由 refresh_host_keys 获取，避免抓取到

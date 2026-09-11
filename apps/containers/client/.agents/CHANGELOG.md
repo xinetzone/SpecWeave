@@ -6,6 +6,23 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `feat:` run 新增 --rebuild-layer 自动重建叠加层（基底陈旧一键恢复）
+
+**关联七概念场景**：场景4「知识沉淀」（R→I→E→V→C）+ 场景3「重构优化」混合；上一轮修复了「叠加层基底陈旧」警告的根因（重建镜像消除），本次沉淀机制文档并落地 B 档预防方案。
+
+**F 阶段机制：基底先固定后更新**——镜像 tag 是移动指针，叠加层固化的是 digest（不可变指纹）：`env.build-layer` 构建时经 `--build-arg BASE_DIGEST` 把基底 digest 烤进 LABEL；run 前 `_warn_if_layer_stale` 比对 LABEL 固化值 vs 基底当前值，不一致即中文警告。只警告不阻断（旧基底可能是有意选择）。
+
+**修复点**（B 档半自动）：
+- `env_in_container.py`：把 `build_layer` 核心逻辑提取为 `rebuild_client_layer()`（返回 bool，不吞异常）；`build_layer` 任务改为其薄包装（失败仍 Exit）
+- `manage.py::_warn_if_layer_stale`：返回值从 None 改为 bool（True=陈旧/无指纹），供调用方决策
+- `manage.py::run`：新增 `--rebuild-layer` 标志——检测到陈旧时自动重建叠加层，**重建失败回退旧基底启动**（不因构建失败阻断容器）
+- README §10.5：新增「叠加层基底指纹防陈旧机制」文档（三环节闭环 + 一键恢复命令 + JPUMAN_SKIP_BASE_CHECK 静默）
+- rules/invoke-tasks.md：run 参数契约表补 `--rebuild-layer`
+
+**V 对抗审查要点**：拒绝 C 档（构建端 post-build 自动重链叠加层）——破坏构建端/消费端解耦、引入构建风暴；B 档保留「检测不阻断、修复可执行」哲学；`run_cmd warn=True` 使重建失败返回 Result 可判，确保回退分支可达。
+
+**验收点**：① `invoke run --help` 出现 `--rebuild-layer`；② `_warn_if_layer_stale` 5 分支单测全过（SKIP=1/陈旧/非叠加/无指纹/新鲜）；③ py_compile 两文件零告警；④ README §10.5 与 rules 参数表同步。
+
 ### 2026-09-11 · `fix:` SDK 在 Windows 原生结构性不可用诊断为 W-I4 + P2 显式 Machine SSH URI
 
 **关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E）；`inv run`/`inv images` 在 Windows 11 原生 CPython（py314t）持续打印「SDK路径不可用（首候选=P1-wsl-9p AttributeError）」且降级原因不明。
