@@ -9,9 +9,9 @@ title: "分类索引：best-practices"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **47** 条条目。
+> 本分片收录 **1** 个子分类，共 **48** 条条目。
 
-### best-practices
+## best-practices
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -23,13 +23,14 @@ title: "分类索引：best-practices"
 | [用 @file 传长文本请求体](../best-practices/api-long-text-file-parameter.md) | 当请求体文本过长（如整篇文章）时，用 curl 的 -d @file 从临时文件读取请求体，绕过 shell 命令行参数长度限制。含何时使用、临时文件写法与用后清理。 | 2026-08-07 | API、curl、长文本、@file、临时文件、shell参数限制 |
 | [归档搭配Wiki联动机制指南](../best-practices/archive-wiki-linkage-guide.md) | SpecWeave项目中归档（retrospective）与Wiki（learning wiki）联动的标准化操作指南，明确定位区别、升级判定标准、双向关联机制、Wiki化SOP与模板结构，实现从过程记录到系统化知识的价值升华。 | 2026-07-31 | archive、wiki、knowledge-management、retrospective、learning-wiki、知识沉淀、归档升级、联动机制 |
 | [Python AST静态分析实践：五类消歧法降低误报](../best-practices/ast-static-analysis-disambiguation.md) | 基于并发安全检查器（六维检查法）开发实战，总结Python AST静态分析中降低误报的五类消歧策略，帮助开发者编写准确的代码检查工具。核心原则：宁可漏报，不可误报。 | 2026-07-08 | AST、static-analysis、python、false-positive、code-quality、automation |
+| [书籍转 Web 教程的原创重写与适当引用编写规范](../best-practices/book-to-web-tutorial-citation-guide.md) | 将受版权保护的书籍（PDF/EPUB）制作为公开 Web 教程时，走'原创重写 + 适当引用'合规路线的可执行编写规范：法律基础速查、文件级溯源模板、五条内容硬规则、六类引用格式示例、禁止写法对照与发布前自查清单。 | 2026-09-11 | 著作权、合理使用、适当引用、markdown、web教程、原创重写、引用规范、合规 |
 | [Caffe-FFI Layer开发必查：param_propagate_down_初始化陷阱](../best-practices/caffe-ffi-param-propagate-down-initialization.md) |  | 2026-08-03 | caffe-ffi、layer、backward、bug-pattern、c++、initialization、segfault、access-violation |
 | [恒等层 COW 零拷贝分离原则（输入梯度与参数梯度分离）](../best-practices/caffe-identity-layer-cow-separation.md) |  | 2026-08-04 | caffe-ffi、cow、zerocopy、scale、bias、eltwise、backward、grad、bug-pattern、c++、identity-layer |
 | [Caffe层Backward验证标准工作流（L1-L2-L3三层法）](../best-practices/caffe-layer-backward-validation-workflow.md) |  | 2026-08-03 | caffe-ffi、backward、testing、workflow、three-layer-validation、gradient-check、c++、numpy、numerical-gradient |
 | [Caffe AVE Pooling梯度路由：均匀分配模式](../best-practices/caffe-pooling-ave-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、ave-pooling、c++、numpy、test-pattern |
 | [Caffe MAX Pooling梯度路由：Winner-Takes-All模式](../best-practices/caffe-pooling-max-gradient-routing.md) |  | 2026-08-03 | caffe-ffi、pooling、backward、gradient-routing、max-pooling、c++、numpy、test-pattern |
 | [IDE Agent 环境下 CLI 工具配置操作手册](../best-practices/cli-setup-in-agent-environment.md) | 针对团队新人的 IDE Agent（Trae/Claude Code 等）环境下 CLI 工具配置操作手册：基于 arkcli 安装配置实战，提炼通用方法论——安装验证→沙箱权限预判→非交互式认证→配置验证四步法，涵盖常见坑点、排错 Checklist 和决策矩阵。 | 2026-07-07 | cli、setup、agent-environment、sandbox、sso、non-interactive、arkcli、newbie-guide、npm |
-| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](../best-practices/cli-task-vs-user-interface-invoke-typer.md) | invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。本文沉淀"任务编排 vs 用户接口"二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。 | 2026-08-21 | - |
+| [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](../best-practices/cli-task-vs-user-interface-invoke-typer.md) | invoke 与 typer 并非同类竞争工具——invoke 是任务执行器（对标 Make/Rake），typer 是 CLI 解析框架（对标 Click/argparse）。本文沉淀“任务编排 vs 用户接口”二分选型法：按使用对象拆分需求、按层级映射工具、Windows 平台冒烟测试三件套（编码/子进程/颜色输出），含 4 个反模式与跨领域迁移示例。 | 2026-08-21 | - |
 | [CMake项目模块化重构最佳实践](../best-practices/cmake-modularization-best-practices.md) |  | 2026-07-29 | CMake、modularization、build-system、refactoring、cross-platform、best-practice |
 | [编译型Python包数据文件生命周期管理](../best-practices/compiled-package-data-file-lifecycle.md) | 基于TVM .rly数据文件缺失修复实战复盘，提炼编译型Python包数据文件的完整生命周期管理方法：编译阶段显式复制、打包阶段完整性验证、运行阶段环境变量设置与文件校验。 | 2026-07-23 | Python、Nuitka、Cython、wheel、data-files、packaging、TVM、relay |
 | [并发代码安全审查与Bug修复闭环指南](../best-practices/concurrent-code-safety-review.md) | 基于多智能体冲突解决机制实现与死锁修复实战复盘，提炼并发模块安全审查六维检查法、调度类模块N-scaling测试矩阵、Bug修复1+N+1闭环公式等5个可复用洞察，提供原子提交前的完整Checklist模板。 | 2026-07-08 | concurrency、deadlock-prevention、code-review、defensive-programming、bug-fix、checklist、tdd |
@@ -65,4 +66,4 @@ title: "分类索引：best-practices"
 
 ---
 
-*索引自动生成于 2026-08-21 15:32:36*
+*索引自动生成于 2026-09-11 16:02:00*

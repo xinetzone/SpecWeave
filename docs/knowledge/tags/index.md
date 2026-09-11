@@ -1,3 +1,10 @@
+---
+type: Reference
+title: "Tags"
+---
+
+<!-- 本文件由 scripts/generate_index.py 自动生成，请勿手工编辑；
+     16 个分片由脚本中的 TAG_BUCKETS 固定声明，toctree 与之同源。 -->
 # Tags
 
 ```{toctree}

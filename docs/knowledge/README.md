@@ -7,30 +7,27 @@ title: "项目知识库"
 
 项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。
 
-- **总条目数**：1288
-- **分类数**：53
-- **标签数**：2514
+- **总条目数**：248
+- **分类数**：18
+- **标签数**：527
 
 ## 快速导航
 
 | 顶层分类 | 条目数 | 入口 |
 |----------|--------|------|
 | architecture | 1 | [architecture](categories/architecture.md) |
-| best-practices | 47 | [best-practices](best-practices/README.md) |
-| case-study | 5 | [case-study](categories/case-study.md) |
+| best-practices | 48 | [best-practices](best-practices/README.md) |
 | decisions | 6 | [decisions](decisions/README.md) |
 | docs | 10 | [docs](categories/docs.md) |
 | examples | 6 | [examples](categories/examples.md) |
-| knowledge | 293 | [knowledge](categories/knowledge.md) |
-| methods | 6 | [methods](categories/methods.md) |
-| operations | 21 | [operations](operations/README.md) |
+| knowledge | 20 | [knowledge](categories/knowledge.md) |
+| operations | 22 | [operations](operations/README.md) |
 | platform | 1 | [platform](categories/platform.md) |
-| reference | 3 | [reference](categories/reference.md) |
 | research | 1 | [research](categories/research.md) |
 | standards | 1 | [standards](categories/standards.md) |
-| tech | 36 | [tech](tech/README.md) |
+| tech | 38 | [tech](tech/README.md) |
 | troubleshooting | 4 | [troubleshooting](troubleshooting/README.md) |
-| unknown | 354 | [unknown](categories/unknown.md) |
+| unknown | 90 | [unknown](categories/unknown.md) |
 
 ## 辅助索引
 
@@ -41,51 +38,30 @@ title: "项目知识库"
 
 | 标题 | 日期 | 分类 |
 |------|------|------|
+| [书籍转 Web 教程的原创重写与适当引用编写规范](best-practices/book-to-web-tutorial-citation-guide.md) | 2026-09-11 | best-practices |
+| [文档自动化工具链索引：从写文档到过门禁的统一入口](operations/doc-automation-toolchain.md) | 2026-09-11 | operations |
+| [free-llm-api-summary](tech/free-llm-api-summary.md) | 2026-09-10 | unknown |
+| [贡献指南](best-practices/contributing.md) | 2026-08-22 | knowledge/best-practices |
+| [自动化脚本四层日志增强模式](best-practices/four-layer-logging-pattern.md) | 2026-08-22 | knowledge/best-practices |
 | [CLI 工具选型二分法：任务编排（invoke）vs 用户接口（typer）](best-practices/cli-task-vs-user-interface-invoke-typer.md) | 2026-08-21 | best-practices |
 | [Git 提交中文乱码排查：显示层 vs 存储层分离验证法](best-practices/git-commit-mojibake-diagnosis.md) | 2026-08-21 | best-practices |
+| [ADR: torch-dev 双索引下载与 CUDA 硬断言决策](decisions/torch-dev-extra-index-cuda-assertion.md) | 2026-08-20 | decisions |
+| [EPUB 转 Markdown 转换方案系统性调研报告](operations/epub-to-markdown-conversion-research.md) | 2026-08-19 | operations |
+| [Python 3.14 Free-Threading 适用场景分析](tech/python-314-free-threading-scenario-analysis.md) | 2026-08-19 | tech |
 
 ## 相关资源
 
-### 最高可信度知识库
-
-概念、术语与技术事实的冲突裁决依据为 [projects/awesome-okf-xs/doc/bundles/](../../projects/awesome-okf-xs/doc/bundles/index.md)（OKF 知识包库，10 技术域/28 分组/248 包，只读引用）。本知识库为二级知识源：与 bundles 描述不一致时以 bundles 为准；bundles 未覆盖的概念由本库与其他二级知识源补充。
-
 ### 回溯报告
 
-- [GitHub Spec Kit 文章知识沉淀七概念方法论编排](../retrospective/reports/2026-07-06-github-speckit-sdd-seven-concepts.md)
-- [七概念方法论体系整合任务复盘](../retrospective/reports/2026-07-10-seven-concepts-methodology-integration.md)
-- [元方法论自举验证复盘——seven-concepts-trigger CLI工具](../retrospective/reports/2026-07-11-meta-bootstrap-seven-concepts-trigger.md)
-- [原子写入重构性能对比报告](../retrospective/reports/2026-07-12-atomic-write-refactoring.md)
-- [文件I/O并发安全统一库架构演进报告](../retrospective/reports/2026-07-12-io-safety-architecture-evolution.md)
-- [跨文化第一性原理比较研究 v2.0 — 里程碑复盘报告](../retrospective/reports/2026-07-13-cross-cultural-first-principles.md)
-- [七概念视角：《微软Copilot成本困境与多模型时代》深度透视报告](../retrospective/reports/2026-07-13-seven-concepts-copilot-multimodel-analysis.md)
-- [Agent App Marketplace Task 0 — 工作区发现协议与提示词自举协议复盘报告](../retrospective/reports/2026-07-13-task0-workspace-protocols.md)
-- [竹简悟道·秒悟竞赛冲刺复盘报告——Trae Solo+七概念方法论实战](../retrospective/reports/2026-07-14-meoo-contest-sprint-retro.md)
-- [SpecWeave / external/xmhub/npu_tvm 七概念正式复盘报告](../retrospective/reports/2026-07-17-npu-tvm-seven-concepts-retro.md)
-- [Windows磁盘空间诊断与WSL虚拟磁盘优化实践复盘](../retrospective/reports/2026-07-22-windows-disk-cleanup-wsl-optimization.md)
-- [caffe-ffi Backward日志规划与性能监控规范里程碑复盘](../retrospective/reports/2026-07-31-caffe-ffi-backward-logging-milestone-retro.md)
-- [Anime.js 4.5+Three.js适配器学习分析任务七概念复盘报告](../retrospective/reports/2026-08-03-animejs-threejs-adapter-learning-seven-concepts.md)
-- [SpecWeave / external/chaos/ai/xmnn-runtime Kernelspec 路径不一致复盘报告](../retrospective/reports/2026-08-11-xmnn-runtime-kernelspec-path-retro.md)
-- [ReelVibe 短视频网站开发复盘报告](../retrospective/reports/2026-08-12-short-video-site-ai-fullstack-retro.md)
-- [Docker devcontainer-base 镜像深度压缩里程碑复盘](../retrospective/reports/2026-08-18-docker-image-deep-slim-milestone.md)
-- [项目硬编码问题系统性复盘报告](../retrospective/reports/hardcode-retrospective-report.md)
-- [元方法论自举执行日志](../retrospective/reports/meta-bootstrap-execution-log.md)
-- [提示词工程 — 可迁移模式、模板与方法论萃取](../retrospective/patterns/methodology-patterns/prompt-extraction.md)
-- [复盘文档体系](../retrospective/index.md)
-- [TerminalWorld深度洞察：首个基于真实人类终端轨迹的Agent评测基准](../retrospective/reports/terminalworld-benchmark-analysis.md)
-
-### 任务总结
-
-- [任务总结报告库](../retrospective/reports/task-reports/README.md)
-- [任务执行总结报告](../retrospective/reports/task-reports/task-summary-atomic-commit-20260706.md)
-- [任务执行总结报告](../retrospective/reports/task-reports/task-summary-git-local-clone-bug-20260701.md)
-- [任务执行总结报告](../retrospective/reports/task-reports/task-summary-readme-creation-20260623.md)
+- [双体系引用收敛台账（ACT-5）](../retrospective/cross-reference-ledger.md)
+- [🔄 复盘与模式库](../retrospective/index.md)
+- [变更日志](../retrospective/log.md)
 
 ## 使用指南
 
 ### 如何添加知识条目
 
-1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`ai-engineering/` 等）；系统化学习 Wiki 一律沉淀至 `projects/awesome-okf-xs/doc/bundles/`（原 `learning/` 板块已于 2026-09 迁移至此）
+1. 在 `docs/knowledge/` 下选择对应的分类目录（如 `operations/`、`learning/` 等）
 2. 复制 `template.md` 作为模板，创建新的 `.md` 文件
 3. 填写 YAML frontmatter 元数据（标题、分类、标签、日期、摘要等）
 4. 在正文中按照模板结构编写内容
@@ -108,4 +84,4 @@ title: "项目知识库"
 
 ---
 
-*索引自动生成于 2026-08-21 15:32:36*
+*索引自动生成于 2026-09-11 16:02:00*

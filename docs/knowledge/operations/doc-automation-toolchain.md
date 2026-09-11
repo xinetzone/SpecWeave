@@ -59,7 +59,7 @@ pwsh .agents/scripts/ci-check.ps1 --quick
 
 > frontmatter 缺字段时 `generate_index.py` 仅输出告警并将条目**静默降级**（归入 unknown 分类、无标签），不会失败退出——入库后务必检查脚本输出的"告警统计"段。
 >
-> ⚠️ **已知漂移（2026-09-11 实测）**：知识库索引流水线在目录迁移后曾长期无法运行（路径缺陷已修复），现存机器生成索引为旧快照。当前全量重生成会重写 `README.md`/`category-index.md`/`categories/`/`tags/` 大量内容，并删除仍被 [知识库 toctree](../index.md) 引用的 `categories/index.md`、`tags/index.md` 等旧分片。运行前先用 `git stash` 或临时提交保护现场，检查 diff 后再决定保留范围；全量索引契约对齐为独立后续工作，不在本文范围。
+> ✅ **契约已对齐（2026-09-11）**：`categories/index.md`、`tags/index.md` 两个 Sphinx toctree Hub 已改由 `generate_index.py` **同源派生**——无条目的分类不产生分片、也不进入 toctree，全量重生成不再制造悬空引用；全部生成文件统一恢复 `type/title` frontmatter，文件头含自动生成标记，禁止手工编辑。重生成后 diff 中的计数变化（如总条目数 1288→248）是迁移后扫描结果的真实更新；审查要点是"无预期之外的删除"，而非计数不变。
 
 ---
 
@@ -188,7 +188,7 @@ python .agents/scripts/check-wiki-staleness.py --path D:/AI/docs/knowledge --thr
 
 1. ❌ **手改标记区**：`README_INDEX_START/END`、`nav-start/nav-end` 等标记内的表格会被脚本整段覆盖。自定义说明写在标记区**外**。
 2. ❌ **写 `file:///` 绝对路径**：仓库规范只允许相对路径；历史批次曾修复 26 个文件的绝对路径，交给 `check-links.py --fix` 转换。
-3. ❌ **不了解两条流水线边界就跑 `generate_index.py`**：该脚本只重建 `docs/knowledge/` 的索引（全仓导航用 `docgen.py nav`，目录 README 用 `generate-readme.py --update`）；且其当前输出与周边 toctree 存在已知漂移，全量重生成前先保护现场（见第一章警示）。
+3. ❌ **不了解两条流水线边界就跑 `generate_index.py`**：该脚本只重建 `docs/knowledge/` 的索引（全仓导航用 `docgen.py nav`，目录 README 用 `generate-readme.py --update`）；重生成会覆盖 `README.md`/`category-index.md`/`categories/`/`tags/` 全部机器索引（含两个同源派生的 toctree Hub），这些文件禁止手工编辑。运行后必须审 diff（重点看分片删除是否对应分类清空），并留意 stderr 的 frontmatter 降级告警。
 4. ❌ **`--fix` 不预览直接写**：所有修复类操作先 `--dry-run` 看 diff，确认后再实际执行。
 5. ❌ **frontmatter 字段缺失未察觉**：索引脚本以告警+降级处理，不报错退出；入库后必看"告警统计"输出，必填七字段缺一不可。
 6. ❌ **外链检查误判**：401/403/405 默认视为可达（反爬/不支持 HEAD）；结果有 7 天缓存，复检加 `--no-cache`。

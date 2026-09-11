@@ -403,6 +403,22 @@ def _write_markdown(file_path: Path, lines: list[str]) -> None:
         f.write("\n".join(lines))
 
 
+def _generated_frontmatter(title: str) -> list[str]:
+    """机器生成索引文件统一使用的最小 YAML frontmatter（type/title）。
+
+    约定：生成文件只携带定位类元数据；category/date/tags 等条目元数据
+    属于知识条目本身，禁止出现在生成文件中。
+    """
+    safe_title = title.replace('"', "'")
+    return [
+        "---",
+        "type: Reference",
+        f'title: "{safe_title}"',
+        "---",
+        "",
+    ]
+
+
 def _append_related_resources(lines: list[str]) -> None:
     """追加知识库的相关资源区块。"""
     lines.append("## 相关资源")
@@ -458,6 +474,7 @@ def _generate_root_readme(entries: list, groups: dict, tag_index: dict, sorted_b
         top_level_counts[_top_level_category(category)] += len(items)
 
     lines = [
+        *_generated_frontmatter("项目知识库"),
         "# 项目知识库",
         "",
         "项目知识库的统一入口页。详细分类条目与标签检索已拆分到独立索引，避免根 README 持续膨胀。",
@@ -563,6 +580,7 @@ def _generate_category_shard_file(
     """
     prefix = Path(link_prefix)
     lines = [
+        *_generated_frontmatter(title),
         f"# {title}",
         "",
         f"- [返回分类总索引]({link_prefix}/category-index.md)",
@@ -577,9 +595,14 @@ def _generate_category_shard_file(
     lines.append(f"> 本分片收录 **{len(cat_entries)}** 个子分类，共 **{total}** 条条目。")
     lines.append("")
 
+    prev_level = 1
     for cat, items in cat_entries:
         depth = cat.count("/")
-        heading = "#" * (3 + depth)
+        # 分类元数据可能深度跳跃（如 "docs" 与 "docs/a/b/c/d" 并存且中间层并非
+        # 真实分类）；标题最多比上一条深一级，杜绝 MyST 标题跳级警告。
+        level = min(2 + depth, prev_level + 1)
+        heading = "#" * level
+        prev_level = level
         lines.append(f"{heading} {cat}")
         lines.append("")
         lines.append("| 标题 | 摘要 | 日期 | 标签 |")
@@ -632,6 +655,7 @@ def _generate_category_shard(top_level: str, categories: dict) -> None:
 
     # 生成子分片Hub页 (README.md) — Hub在子目录中，link_prefix="../.."
     hub_lines = [
+        *_generated_frontmatter(f"分类索引：{top_level}"),
         f"# 分类索引：{top_level}",
         "",
         "- [返回分类总索引](../category-index.md)",
@@ -693,6 +717,7 @@ def _generate_category_index(entries: list, groups: dict) -> None:
 
     # ── Hub页 ──
     lines = [
+        *_generated_frontmatter("分类总索引"),
         "# 分类总索引",
         "",
         "- [返回知识库首页](README.md)",
@@ -743,6 +768,32 @@ def _generate_category_index(entries: list, groups: dict) -> None:
     for top_level in top_level_counts:
         _generate_category_shard(top_level, groups)
 
+    # ── Sphinx toctree Hub（categories/index.md）──
+    # 与上面写出的分片集合同源派生：条目为空的分类不产生分片，也不进入 toctree，
+    # 从契约上消除"toctree 引用已被清理的空分片"问题。
+    toctree_entries = []
+    for top_level in sorted(top_level_counts):
+        if top_level in CATEGORY_SUBSHARDS:
+            toctree_entries.append(f"{top_level}/README")
+        else:
+            toctree_entries.append(top_level)
+    _write_markdown(
+        CATEGORY_INDEX_DIR / "index.md",
+        [
+            *_generated_frontmatter("Categories"),
+            "<!-- 本文件由 scripts/generate_index.py 自动生成，请勿手工编辑；",
+            "     分类集合变化后重新运行脚本，本 toctree 与分片集合同源派生。 -->",
+            "# Categories",
+            "",
+            "```{toctree}",
+            ":maxdepth: 2",
+            ":hidden:",
+            "",
+            *toctree_entries,
+            "```",
+        ],
+    )
+
 
 def _generate_tag_indexes(tag_index: dict) -> None:
     """生成标签索引总览及分片页面。"""
@@ -754,6 +805,7 @@ def _generate_tag_indexes(tag_index: dict) -> None:
             existing.unlink()
 
     readme_lines = [
+        *_generated_frontmatter("标签索引"),
         "# 标签索引",
         "",
         "- [返回知识库首页](../README.md)",
@@ -780,6 +832,7 @@ def _generate_tag_indexes(tag_index: dict) -> None:
     for filename, label in TAG_BUCKETS:
         bucket_items = buckets[filename]
         lines = [
+            *_generated_frontmatter(f"标签索引：{label}"),
             f"# 标签索引：{label}",
             "",
             "- [返回标签索引总览](README.md)",
@@ -801,6 +854,25 @@ def _generate_tag_indexes(tag_index: dict) -> None:
         _append_footer(lines)
         _write_markdown(TAG_INDEX_DIR / filename, lines)
 
+    # ── Sphinx toctree Hub（tags/index.md）──
+    # 16 个分片文件名由 TAG_BUCKETS 固定声明，toctree 与之同源，杜绝手工漂移。
+    _write_markdown(
+        TAG_INDEX_DIR / "index.md",
+        [
+            *_generated_frontmatter("Tags"),
+            "<!-- 本文件由 scripts/generate_index.py 自动生成，请勿手工编辑；",
+            "     16 个分片由脚本中的 TAG_BUCKETS 固定声明，toctree 与之同源。 -->",
+            "# Tags",
+            "",
+            "```{toctree}",
+            ":maxdepth: 2",
+            ":hidden:",
+            "",
+            *[filename.removesuffix(".md") for filename, _ in TAG_BUCKETS],
+            "```",
+        ],
+    )
+
 
 def generate_readme(entries: list):
     """
@@ -808,9 +880,12 @@ def generate_readme(entries: list):
 
     产出物：
       1. docs/knowledge/README.md：轻量入口页
-      2. docs/knowledge/category-index.md：完整分类索引
-      3. docs/knowledge/tags/README.md：标签索引总览
-      4. docs/knowledge/tags/*.md：标签索引分片
+      2. docs/knowledge/category-index.md：完整分类索引（人类入口）
+      3. docs/knowledge/categories/index.md：Sphinx toctree Hub（与分片集合同源派生）
+      4. docs/knowledge/categories/*.md：分类分片
+      5. docs/knowledge/tags/README.md：标签索引总览（人类入口）
+      6. docs/knowledge/tags/index.md：Sphinx toctree Hub（与 16 个固定分片同源）
+      7. docs/knowledge/tags/*.md：标签索引分片
     """
     if not entries:
         _generate_empty_readme()
@@ -843,6 +918,7 @@ def generate_readme(entries: list):
 def _generate_empty_readme():
     """生成空知识库的占位 README 与最小索引页。"""
     lines = [
+        *_generated_frontmatter("项目知识库"),
         "# 项目知识库",
         "",
         "> 当前知识库中暂无条目。",
@@ -864,6 +940,7 @@ def _generate_empty_readme():
     _write_markdown(
         CATEGORY_INDEX_FILE,
         [
+            *_generated_frontmatter("分类总索引"),
             "# 分类总索引",
             "",
             "- [返回知识库首页](README.md)",
@@ -875,12 +952,39 @@ def _generate_empty_readme():
     _write_markdown(
         TAG_INDEX_DIR / "README.md",
         [
+            *_generated_frontmatter("标签索引"),
             "# 标签索引",
             "",
             "- [返回知识库首页](../README.md)",
             "",
             "> 当前暂无可展示的标签条目。",
             "",
+        ],
+    )
+
+    # 空知识库同样落盘空 toctree Hub，保证 knowledge/index.md 的 toctree 引用始终可解析
+    _write_markdown(
+        CATEGORY_INDEX_DIR / "index.md",
+        [
+            *_generated_frontmatter("Categories"),
+            "# Categories",
+            "",
+            "```{toctree}",
+            ":maxdepth: 2",
+            ":hidden:",
+            "```",
+        ],
+    )
+    _write_markdown(
+        TAG_INDEX_DIR / "index.md",
+        [
+            *_generated_frontmatter("Tags"),
+            "# Tags",
+            "",
+            "```{toctree}",
+            ":maxdepth: 2",
+            ":hidden:",
+            "```",
         ],
     )
 

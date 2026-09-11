@@ -11,7 +11,7 @@ title: "分类索引：docs"
 
 > 本分片收录 **3** 个子分类，共 **10** 条条目。
 
-### docs
+## docs
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -24,13 +24,13 @@ title: "分类索引：docs"
 | [MDI研究报告 - 未来演进方向](../mdi-research/06-future-evolution.md) |  | 2026-07-02 | - |
 | [MDI研究报告 - 结论](../mdi-research/07-conclusion.md) |  | 2026-07-02 | - |
 
-####### docs/knowledge/mdi/generated/case1
+### docs/knowledge/mdi/generated/case1
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
 | [用户管理 API](../mdi/generated/case1/user-management-api.md) |  | 2026-07-02 | - |
 
-####### docs/knowledge/mdi/generated/case3
+#### docs/knowledge/mdi/generated/case3
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -38,4 +38,4 @@ title: "分类索引：docs"
 
 ---
 
-*索引自动生成于 2026-08-21 15:32:36*
+*索引自动生成于 2026-09-11 16:02:00*

@@ -9,12 +9,13 @@ title: "分类索引：operations"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **21** 条条目。
+> 本分片收录 **1** 个子分类，共 **22** 条条目。
 
-### operations
+## operations
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
+| [文档自动化工具链索引：从写文档到过门禁的统一入口](../operations/doc-automation-toolchain.md) | 智能文档系统自动化工具链的任务路由型索引：3分钟上手五步路径、两条流水线（知识库索引/仓库文档工程）全景、15个核心工具最小命令与深入入口、5个可复制任务配方、7条实战陷阱。工具详细参数不复制，深链至原始用法文档与 Skill 门面。 | 2026-09-11 | 文档自动化、工具链、generate-readme、check-links、generate_index、docgen、ci-check、质量门、索引维护 |
 | [Docker镜像缓存→WSL2发行版迁移操作指南](../operations/docker-cache-wsl-migration-guide.md) |  | 2026-08-18 | docker-cache、wsl2、podman、wsl-import、rootfs、image-migration、offline-environment |
 | [EPUB 转 Markdown 转换方案系统性调研报告](../operations/epub-to-markdown-conversion-research.md) |  | 2026-08-19 | epub、markdown、pandoc、calibre、ebooklib、转换方案 |
 | [Discourse论坛（forum.trae.cn）自动化操作指南](../operations/forum-automation.md) | 基于Trae IDE集成浏览器（integrated_browser MCP）和Playwright Python脚本操作forum.trae.cn论坛的完整指南，包含DOM选择器参考、Ember框架感知操作方法、操作序列模板、JavaScript代码片段、独立Python脚本使用、故障排查和长期方案（@discourse/mcp）接入指南。v2.1更新：精确化DOM选择器、新增diagnoseButtons诊断函数、补充MCP参数陷阱警告、补全误操作恢复方法、新增MCP vs Playwright操作区别对照表。 | 2026-06-30 | discourse、论坛、自动化、browser、mcp、playwright、发布 |
@@ -39,4 +40,4 @@ title: "分类索引：operations"
 
 ---
 
-*索引自动生成于 2026-08-21 15:32:36*
+*索引自动生成于 2026-09-11 16:02:00*

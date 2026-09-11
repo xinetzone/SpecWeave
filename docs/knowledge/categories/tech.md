@@ -9,9 +9,9 @@ title: "分类索引：tech"
 - [返回知识库首页](../README.md)
 - [按标签检索](../tags/README.md)
 
-> 本分片收录 **1** 个子分类，共 **36** 条条目。
+> 本分片收录 **1** 个子分类，共 **38** 条条目。
 
-### tech
+## tech
 
 | 标题 | 摘要 | 日期 | 标签 |
 |------|------|------|------|
@@ -31,6 +31,8 @@ title: "分类索引：tech"
 | [Reasonix 架构：Python AI Agent 分层设计模式](../tech/p1-18-reasonix-architecture.md) | DeepSeek-Reasonix 是一个配置驱动、多模型协作的 AI Coding Agent，采用清晰的分层架构（组装器+Provider+Agent+Controller），是 Python AI Agent 项目的优秀架构参考 |  | - |
 | [TVM Relax 前端 MLP 实验记录](../tech/p2-13-tvm-relax-mlp-experiment.md) | TVM Relax 前端 nn.Module API 的最小 MLP 实验，展示从模型定义到 export 导出链路的验证样例，可作为 Relax 前端学习与回归参考。 |  | - |
 | [Python 3.14 Free-Threading 适用场景分析](../tech/python-314-free-threading-scenario-analysis.md) |  | 2026-08-19 | python、free-threading、no-gil、concurrency、performance |
+| [onnx-pytorch v1.1.0 发布说明](../tech/release-onnx-pytorch-v1-1.md) |  | 2026-08-15 | - |
+| [onnx-quantized v2.0.0 发布说明](../tech/release-onnx-quantized-v2.md) |  | 2026-08-14 | - |
 | [Python 与 Rust 技术对比分析报告 Wiki · 总览](../tech/python-rust-comparison/00-overview.md) | 基于最新标准（Python 3.14 / Rust 1.97.1）从零创作的 Python 与 Rust 技术对比分析 Wiki，覆盖语言机制、性能、工程化、生态、应用场景、决策矩阵与迁移路径。 | 2026-08-07 | python、rust、技术选型、性能、混合架构 |
 | [Python 与 Rust 技术对比 · 语言与运行时基础](../tech/python-rust-comparison/01-language-runtime.md) | 从最新标准对比 Python 与 Rust 在语法、类型、内存、并发与运行时上的机制差异。 | 2026-08-07 | python、rust、类型系统、内存、并发、异步 |
 | [Python 与 Rust 技术对比 · 性能与工程化](../tech/python-rust-comparison/02-performance-engineering.md) | 对比 Python 与 Rust 在运行时性能、资源占用与工程化工具链上的差异。 | 2026-08-07 | python、rust、性能、工具链、工程化 |
@@ -54,4 +56,4 @@ title: "分类索引：tech"
 
 ---
 
-*索引自动生成于 2026-08-21 15:32:36*
+*索引自动生成于 2026-09-11 16:02:00*
