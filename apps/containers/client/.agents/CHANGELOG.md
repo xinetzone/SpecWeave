@@ -6,6 +6,78 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `feat:` run 新增 --rebuild-layer 自动重建叠加层（基底陈旧一键恢复）
+
+**关联七概念场景**：场景4「知识沉淀」（R→I→E→V→C）+ 场景3「重构优化」混合；上一轮修复了「叠加层基底陈旧」警告的根因（重建镜像消除），本次沉淀机制文档并落地 B 档预防方案。
+
+**F 阶段机制：基底先固定后更新**——镜像 tag 是移动指针，叠加层固化的是 digest（不可变指纹）：`env.build-layer` 构建时经 `--build-arg BASE_DIGEST` 把基底 digest 烤进 LABEL；run 前 `_warn_if_layer_stale` 比对 LABEL 固化值 vs 基底当前值，不一致即中文警告。只警告不阻断（旧基底可能是有意选择）。
+
+**修复点**（B 档半自动）：
+- `env_in_container.py`：把 `build_layer` 核心逻辑提取为 `rebuild_client_layer()`（返回 bool，不吞异常）；`build_layer` 任务改为其薄包装（失败仍 Exit）
+- `manage.py::_warn_if_layer_stale`：返回值从 None 改为 bool（True=陈旧/无指纹），供调用方决策
+- `manage.py::run`：新增 `--rebuild-layer` 标志——检测到陈旧时自动重建叠加层，**重建失败回退旧基底启动**（不因构建失败阻断容器）
+- README §10.5：新增「叠加层基底指纹防陈旧机制」文档（三环节闭环 + 一键恢复命令 + JPUMAN_SKIP_BASE_CHECK 静默）
+- rules/invoke-tasks.md：run 参数契约表补 `--rebuild-layer`
+
+**V 对抗审查要点**：拒绝 C 档（构建端 post-build 自动重链叠加层）——破坏构建端/消费端解耦、引入构建风暴；B 档保留「检测不阻断、修复可执行」哲学；`run_cmd warn=True` 使重建失败返回 Result 可判，确保回退分支可达。
+
+**验收点**：① `invoke run --help` 出现 `--rebuild-layer`；② `_warn_if_layer_stale` 5 分支单测全过（SKIP=1/陈旧/非叠加/无指纹/新鲜）；③ py_compile 两文件零告警；④ README §10.5 与 rules 参数表同步。
+
+### 2026-09-11 · `fix:` SDK 在 Windows 原生结构性不可用诊断为 W-I4 + P2 显式 Machine SSH URI
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E）；`inv run`/`inv images` 在 Windows 11 原生 CPython（py314t）持续打印「SDK路径不可用（首候选=P1-wsl-9p AttributeError）」且降级原因不明。
+
+**F 阶段根因链（5-Why）**：
+1. 现象：首候选 P1-wsl-9p AttributeError → 但实际 `os` 无 `getuid`（`AttributeError: module 'os' has no attribute 'getuid'`）
+2. 为什么 from_env 被调用？→ P1/P2 候选 `base_url=None` 时 `get_client` 走 `_podman_sdk.from_env()`
+3. 为什么 from_env 崩？→ podman-py `podman/api/path_utils.py::get_runtime_dir()` L20 调 `os.getuid()`（POSIX 专属，Windows 无此属性）
+4. 为什么即使显式 ssh:// 仍崩？→ podman-py `podman/api/uds.py::UDSSocket.__init__` L34 调 `socket.socket(socket.AF_UNIX, ...)`（py314t 实测无 `AF_UNIX`）——Windows 原生下 unix/ssh 适配**皆不可用**（结构性，非配置问题）
+5. 为什么 P2-machine 也没救？→ 原实现 base_url=None → from_env，撞同一 AttributeError；日志仅笼统显示「首候选=P1-wsl-9p AttributeError」未归因
+
+**修复点**（C 阶段原子拆分）：
+- `utils.py`：新增 `machine_connection_uri()`（`podman system connection list --format json` → Default=true 连接 URI，lru_cache）；`sdk_base_url_candidates` 的 P2-machine 候选在 Windows 原生改用显式 ssh://（实测返回 `ssh://user@127.0.0.1:63851/run/user/1000/podman/podman.sock`），规避 from_env 崩溃
+- `utils.py::windows_diagnose_hint`：新增 **W-I4** 分支（`AttributeError` + `getuid`/`AF_UNIX`）——明确「结构性不可用、与配置无关、已自动降级 CLI fallback」
+- `.env` / `.env.example`：`WSL_DISTRO_NAME=Ubuntu` → `podman-machine-default`（本机 `wsl.exe --list --quiet` 实测发行版名；原值不存在导致 P1 探测失败前置误导）
+- README §5.4 / rules/windows-wsl.md §5：W-I1~W-I3 → W-I1~W-I4（三处同步）
+
+**V 对抗审查要点**：改 vendor/podman-py（third_party 只读子模块）被否——即使修复 `os.getuid()`，`AF_UNIX` 依旧缺失，SDK 在任何 scheme 下都不可用，治标不治本；正确闭环是「识别 + 显式提示 + 自动 CLI fallback」。
+
+**验收点**：① `inv images` 在 py314t 正常输出镜像表（降级一行提示，非错误）；② `PODMAN_CLIENT_LOG_LEVEL=DEBUG inv images` 打印 W-I4 全量根因与 30 秒修复；③ `machine_connection_uri()` 返回非空 ssh://；④ README §5.4 / windows-wsl.md §5 / utils.py 三处 W-I4 描述一致；⑤ `py_compile` 两文件零告警。
+
+### 2026-09-11 · `feat:` 新增 --video 透传（UVC 摄像头字符设备）
+
+**关联七概念场景**：场景3「重构优化」（I→F→A→C）；USB 透传仅总线级（容器内 lsusb 可见但无 /dev/video*），摄像头采集（v4l2/OpenCV）需字符设备。
+
+**I 阶段根因**：`--usb` 透传 `/dev/bus/usb`（总线级），UVC 摄像头需 `/dev/video<n>` 字符设备。
+
+**修复点**（A 阶段原子拆分）：
+- `utils.py`：`passthrough_paths()` 增 `video_devices`（`VIDEO_DEVICES` env，逗号分隔，默认 `/dev/video0-3`）；`build_passthrough_spec` 增 video 分支（每设备 `--device <d>:<d>` 同名映射）；`ContainerConfig` 增 `video=False`
+- `manage.py`：run 增 `--video/--no-video` 三态 + `.env` 键 `PASSTHROUGH_VIDEO` + help
+- `client_core.py`：透传摘要打印补 video
+- 文档：`.env`/`.env.example` 增 PASSTHROUGH_VIDEO 与 VIDEO_DEVICES 说明；README §11 表格补 ⑥ 行 + §11.3 增 Video 段落（回写原"已知边界"为已支持）
+
+**验收点**：① `inv run --help` 出现 `--video/--no-video`；② 重启后 run 命令含 `--device /dev/video0-3` 四项；③ 容器内 `/dev/video0-3` 字符设备存在，`head -c1` 打开成功（EINVAL 为非协商格式预期行为）；④ 容器内 `fcntl.ioctl(QUERYCAP)` 返回 `driver=uvcvideo card=Integrated RGB Camera`（uvcvideo 驱动探活成功）；⑤ 透传摘要显示 `video`。
+
+### 2026-09-11 · `docs:` 透传部署文档固化（WSLg Wayland / CDI GPU / usbipd USB 前置）
+
+**关联七概念场景**：场景4「知识沉淀」（R→I→E）；三项透传（Wayland/GPU/USB）在 NVIDIA WSL2 podman machine 实测跑通后，把宿主侧前置固化为文档，避免操作者凭记忆重试。
+
+**沉淀内容**：
+- README 新增 §11.3「三大透传的宿主侧前置」：WSLg Wayland（`HOST_XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir` 关键路径）、NVIDIA GPU（CDI `nvidia-ctk cdi generate` + `GPU_DEVICE=nvidia.com/gpu=all`）、USB（usbipd-win bind/attach + VM 内确认/排障）
+- `.env.example` 同步：WSLg Wayland 注释、GPU 双形态、USB 前提步骤
+
+**验收点**：文档命令与实测路径一致（`/mnt/wslg/runtime-dir/wayland-0`、`/etc/cdi/nvidia.yaml`、`usbipd attach --wsl podman-machine-default`）；container 内验证命令可用（printenv/nvidia-smi/lsusb）。
+
+### 2026-09-11 · `feat:` GPU 透传支持 CDI 设备引用（NVIDIA）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv run --gpu` 在 NVIDIA WSL2 podman machine 上失败 `stat /dev/dri: no such file or directory`（VM 无 `/dev/dri`，GPU 走 `/dev/dxg` DXCore）。
+
+**I 阶段根因**：client 侧 GPU 透传固定拼 `GPU_DEVICE:/dev/dri`（设备节点路径）。NVIDIA WSL2 下不存在 `/dev/dri`，需走 **CDI**（`nvidia-ctk cdi generate` → `/etc/cdi/nvidia.yaml` → `--device nvidia.com/gpu=all`，自动挂载 `/dev/dxg` + `/usr/lib/wsl/lib/libcuda*`）。
+
+**修复点**：`utils.py::build_passthrough_spec` GPU 分支按形态分派——`GPU_DEVICE` 以 `/` 开头（设备路径，默认 `/dev/dri`）→ 映射容器内 `/dev/dri`；否则视为 CDI 引用（如 `nvidia.com/gpu=all`）→ 原样透传。
+
+**验收点**：① `GPU_DEVICE=nvidia.com/gpu=all inv run --gpu` 启动成功（`--device nvidia.com/gpu=all` 出现在 run 命令）；② 容器内 `nvidia-smi` 输出 `NVIDIA-SMI 580.102.01 / Driver 581.57 / CUDA 13.0`；③ 端口映射模式 jupyter/sshd RUNNING、HTTP 200；④ `/dev/dri` 路径形态分支保持兼容（startswith("/") 判据）。
+
 ### 2026-09-11 · `chore:` 基底联动重建（devuser UID 固定 1000 + B-scheme socket 修复 + :toolbx 变体）
 
 **关联七概念场景**：场景2 后置联动（构建端 spec：`.trae/specs/toolbx-host-image/`）。

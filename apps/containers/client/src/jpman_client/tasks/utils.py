@@ -15,6 +15,7 @@ Windows WSL 支持说明（对齐 podman-py OKF v0.2 §8 Windows 三路径）：
 """
 import ctypes
 import functools
+import json
 import os
 import platform
 import re
@@ -249,6 +250,14 @@ def passthrough_paths() -> dict:
     """
     xdg = os.environ.get("HOST_XDG_RUNTIME_DIR") or host_runtime_dir()
     wayland_display = os.environ.get("HOST_WAYLAND_DISPLAY") or "wayland-0"
+    # VIDEO_DEVICES：逗号分隔的 UVC 字符设备列表（摄像头采集）。默认 /dev/video0-3
+    # （典型 4 个 V4L2 节点，含 IR 摄像头）。宿主无 video* 时 podman 硬失败（exit 125），
+    # 走 C-I3 诊断；用 VIDEO_DEVICES 精确指定所需节点。
+    video_devices = [
+        d.strip()
+        for d in os.environ.get("VIDEO_DEVICES", "/dev/video0,/dev/video1,/dev/video2,/dev/video3").split(",")
+        if d.strip()
+    ]
     return {
         "xdg_runtime_dir": xdg,
         "wayland_display": wayland_display,
@@ -256,6 +265,7 @@ def passthrough_paths() -> dict:
         "dbus_bus": os.environ.get("DBUS_SESSION_BUS_PATH") or f"{xdg}/bus",
         "gpu_device": os.environ.get("GPU_DEVICE") or "/dev/dri",
         "usb_device": os.environ.get("USB_DEVICE") or "/dev/bus/usb",
+        "video_devices": video_devices,
     }
 
 
@@ -308,10 +318,25 @@ def build_passthrough_spec(cfg: "ContainerConfig") -> PassthroughSpec:
         )
 
     if cfg.gpu:
-        spec.devices.append(f"{paths['gpu_device']}:/dev/dri")
+        gpu = paths["gpu_device"]
+        if gpu.startswith("/"):
+            # 主机设备节点路径（如 /dev/dri，默认）：映射到容器内 /dev/dri
+            spec.devices.append(f"{gpu}:/dev/dri")
+        else:
+            # CDI 设备引用（如 nvidia.com/gpu=all）：原样透传，由 podman 解析 CDI 规范。
+            # NVIDIA WSL2 透传即走此形态——daemon 宿主需已生成 CDI 规范
+            # （nvidia-ctk cdi generate → /etc/cdi/nvidia.yaml），见 docs/07 C-I3。
+            spec.devices.append(gpu)
 
     if cfg.usb:
         spec.devices.append(f"{paths['usb_device']}:/dev/bus/usb")
+
+    if cfg.video:
+        # UVC 字符设备透传（摄像头采集）：--device <host>:/dev/video<n>（同名映射）。
+        # 默认 VIDEO_DEVICES 为 /dev/video0-3，可通过 VIDEO_DEVICES 环境变量精确指定；
+        # 宿主无对应节点时 podman 硬失败（exit 125），由 passthrough_diagnose_hint 翻译。
+        for dev in paths["video_devices"]:
+            spec.devices.append(f"{dev}:{dev}")
 
     return spec
 
@@ -396,6 +421,7 @@ class ContainerConfig:
     gpu: bool = False
     usb: bool = False
     dbus: bool = False
+    video: bool = False
 
     def resolved_workspace(self) -> Path:
         """将 workspace 解析为**宿主系统**下的绝对路径（用于卷挂载源路径）。
@@ -641,12 +667,16 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
 
     # ── P2: Podman Machine（auto / machine 强制） ────────────────────────
     if strategy in {"auto", "machine"}:
-        # base_url=None 表示：直接 PodmanClient() / from_env()，让 SDK 自己
-        # 读 containers.conf active_service.is_machine 走 PM-1 / PM-2 命名连接
+        # Windows 原生：from_env()/无参构造依赖 os.getuid（podman.api.path_utils）
+        # 与 unix 适配需要 socket.AF_UNIX，Windows 原生 CPython 两者皆缺 → 必然 AttributeError。
+        # 绕开 crash：直接探测宿主 `podman system connection list` 的默认连接
+        # （Podman Desktop 初始化时自动写入 containers.conf），拿到 ssh:// 显式 base_url。
+        # Linux 原生无此问题，保持 base_url=None 走 SDK 自身的 active_service 解析。
+        fallback_url = machine_connection_uri() if is_host_windows else None
         candidates.append(
             BaseUrlCandidate(
                 source="P2-machine",
-                base_url=None,
+                base_url=fallback_url,
                 hint=(
                     "Podman Machine（Podman Desktop）。请确保：\n"
                     "  1) 打开 Podman Desktop 并点击「Initialize Podman Machine」\n"
@@ -672,6 +702,53 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
         )
 
     return candidates
+
+
+@functools.lru_cache(maxsize=1)
+def machine_connection_uri() -> Optional[str]:
+    """Windows 原生下探测 Podman Machine 默认连接的显式 base_url。
+
+    通过 ``podman system connection list --format json`` 读取 Default=true 的连接
+    （Podman Desktop 初始化时会把 Machine 的 ssh:// URI 写入 containers.conf 的
+    [engine].active_service，CLI fallback 正是借此连接的）。
+
+    返回 ssh:// URI（如 ``ssh://user@127.0.0.1:63851/run/user/1000/podman/podman.sock``）
+    或 None（探测失败：podman CLI 不在 PATH / 无 Machine / 非 Windows）。
+
+    Windows 原生下必须绕开 ``from_env()``（其回退链调用 ``podman.api.path_utils.get_runtime_dir()``
+    依赖 ``os.getuid()``，Windows 无此属性 → AttributeError），故 P2 候选在 Windows 用
+    本函数的返回值作显式 base_url；Linux 原生 ``from_env()`` 正常，无需此探测。
+    """
+    if platform.system() != "Windows":
+        return None
+    runtime = shutil.which("podman")
+    if not runtime:
+        return None
+    try:
+        cp = subprocess.run(
+            [runtime, "system", "connection", "list", "--format", "json"],
+            capture_output=True,
+            text=True,
+            timeout=8,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if cp.returncode != 0 or not (cp.stdout or "").strip():
+        return None
+    try:
+        conns = json.loads(cp.stdout)
+    except (json.JSONDecodeError, TypeError):
+        return None
+    if not isinstance(conns, list):
+        return None
+    for conn in conns:
+        if isinstance(conn, dict) and conn.get("Default") and conn.get("URI"):
+            uri = str(conn["URI"]).strip()
+            if uri.startswith(("ssh://", "unix://", "tcp://")):
+                return uri
+    return None
 
 
 def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
@@ -738,6 +815,27 @@ def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
             "[W-I3] SSH 隧道子进程卡在首次 host key 交互（std 阻塞在 yes/no 提问）。\n"
             "     → 修复（30 秒）：命令行先手动执行一次 `podman machine ssh true`\n"
             "        在 Are you sure ...? 提示后敲 yes 回车，把 machine key 写进 known_hosts。"
+        )
+
+    # W-I4：Windows 原生 CPython 缺少 POSIX 专属属性（os.getuid / socket.AF_UNIX）。
+    #   podman.api.path_utils.get_runtime_dir() 调用 os.getuid()（from_env 回退链）
+    #   uds.py::UDSSocket.__init__ 调用 socket.socket(socket.AF_UNIX, ...)（unix:///ssh:// 适配）
+    #   Windows 原生 Python 两者皆缺 → AttributeError。SDK 在 Windows 原生结构性不可用，
+    #   修复 = 走 CLI fallback（自动）或显式 CONTAINER_HOST（ssh:// Machine）由 machine_connection_uri() 探测。
+    if (
+        "attributeerror" in et
+        and ("getuid" in em or "af_unix" in em)
+    ) or (
+        "has no attribute" in em and ("getuid" in em or "af_unix" in em)
+    ):
+        return (
+            "[W-I4] podman-py 在 Windows 原生 CPython 结构性不可用（依赖 POSIX 专属属性）。\n"
+            "     → 根因：from_env() 回退链调用 os.getuid()；unix/ssh 适配调用 socket.AF_UNIX，\n"
+            "        Windows 原生 Python 两者皆无 → AttributeError。与配置无关，SDK 无法在此平台直连。\n"
+            "     → 修复（30 秒）：本工具已自动降级 CLI fallback（podman.exe 子进程，可用）；\n"
+            "        如需 SDK 路径，a) 改在 WSL2 内跑本脚本（100% Linux 行为），\n"
+            "        b) 或显式设 CONTAINER_HOST=ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock\n"
+            "        （端口可用 `podman system connection list --format json` 查询）"
         )
     return ""
 
@@ -917,15 +1015,29 @@ def default_build_cache_dir() -> Path:
 
 
 def find_latest_image_tar(search_dir: Path) -> Optional[Path]:
-    """在缓存目录中搜索最新（按文件名/时间排序）的镜像 tar.gz。"""
+    """在缓存目录中搜索最新（按 mtime 排序）的镜像 tar.gz。
+
+    跳过符号链接（``*-latest.tar.gz`` 等）：缓存目录里的 latest 链接由
+    WSL/9p 侧 ``ln -sf`` 创建，Windows 原生 Python 的 ``os.stat`` 无法解析
+    其目标（9p 挂载的符号链接），抛 ``OSError: [WinError 1920]``——修复前
+    ``inv load`` 在 Windows 原生下即因此崩溃。真实镜像文件会被正常 glob
+    匹配，latest 链接只是冗余别名，跳过不影响"取最新"语义。
+    """
     if not search_dir.exists():
         return None
-    candidates = sorted(
-        search_dir.glob("*.tar.gz"),
-        key=lambda p: p.stat().st_mtime,
-        reverse=True,
-    )
-    return candidates[0] if candidates else None
+    candidates = []
+    for p in search_dir.glob("*.tar.gz"):
+        try:
+            if p.is_symlink():
+                continue
+            candidates.append((p.stat().st_mtime, p))
+        except OSError:
+            # 单个坏文件（损坏链接/权限异常）不阻断整体搜索
+            continue
+    if not candidates:
+        return None
+    candidates.sort(key=lambda t: t[0], reverse=True)
+    return candidates[0][1]
 
 
 def validate_manifest_integrity(search_dir: Path, tar_path: Path) -> Optional[str]:

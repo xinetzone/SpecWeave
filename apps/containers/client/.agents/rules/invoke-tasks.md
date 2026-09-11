@@ -137,7 +137,7 @@ ns.add_collection(env_ns)
 |-------|-----------------|----------------------|
 | `invoke load` | `invoke container.load` | `--path *tar` / `--cache-dir *dir` |
 | `invoke images` | `invoke container.images` | （无参数） |
-| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network/--no-host-network --wayland/--no-wayland --gpu/--no-gpu --usb/--no-usb --dbus/--no-dbus` |
+| `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network/--no-host-network --wayland/--no-wayland --gpu/--no-gpu --usb/--no-usb --dbus/--no-dbus --video/--no-video --rebuild-layer` |
 | `invoke stop` | `invoke container.stop` | `--name N` |
 | `invoke status` | `invoke container.status` | `--name N` |
 | `invoke clean` | `invoke container.clean` | `--name N --tag T --volume --image` |

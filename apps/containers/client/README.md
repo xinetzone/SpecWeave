@@ -147,7 +147,7 @@ invoke images
 
 四种合法值：`auto | legacy | wsl | machine`。非合法值会被归一化回 `auto`。
 
-### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I3 + 容器/运行时坑 C-I1~C-I3）
+### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I4 + 容器/运行时坑 C-I1~C-I3）
 
 `invoke` 失败时终端会自动匹配以下条目（前三条为 Windows 原生坑；C-I1~C-I3 为容器/运行时坑且**与平台无关**），每个条目末尾附一行命令级修复：
 
@@ -156,6 +156,7 @@ invoke images
 | **W-I1** | `FileNotFoundError: .../run/user/.../podman/podman.sock No such file` | podman-py 无参构造回退是纯 Linux 路径，Windows 原生不存在该目录 | 三选一：a) 脚本改在 WSL2 内跑  b) 打开 Podman Desktop 初始化 Machine  c) `$env:CONTAINER_HOST="unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock"` |
 | **W-I2** | `ValueError: Unsupported URL scheme 'npipe'` | docker-py 老用户粘贴 `npipe:////./pipe/docker_engine`；podman-py 合法 scheme 中不含 npipe | 改成：`unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock` / `ssh://...` / `tcp://127.0.0.1:8888` |
 | **W-I3** | `Timeout: Waiting on podman-forward-*.sock`（SSH Machine） | SSH 首次 StrictHostKeyChecking 交互阻塞在 stdin yes/no，SDK SSHSocket shell-out 的 `ssh -N -L` 子进程永不返回 | PowerShell 先跑一次：`podman machine ssh true`，提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时敲 **yes** 回车，把 Machine HostKey 写入 `~/.ssh/known_hosts` |
+| **W-I4** | `AttributeError: module 'os' has no attribute 'getuid'` 或 `module 'socket' has no attribute 'AF_UNIX'` | **podman-py 在 Windows 原生 CPython 结构性不可用**：`from_env()` 回退链调用 `os.getuid()`（[path_utils.py](https://github.com/containers/podman-py/blob/main/podman/api/path_utils.py)），unix/ssh 适配调用 `socket.AF_UNIX`（[uds.py](https://github.com/containers/podman-py/blob/main/podman/api/uds.py)），Windows 原生 Python 两者皆无 → 任一候选必然 AttributeError，与配置无关 | 本工具已**自动降级 CLI fallback**（`podman.exe` 子进程，正常可用）；确认可用后无需操作。如需**强制 SDK**：a) 改在 WSL2 内跑本脚本（100% Linux 行为）b) 显式设 `CONTAINER_HOST=ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock`（端口用 `podman system connection list --format json` 查询）。P2-machine 候选在 Windows 原生已由 `machine_connection_uri()` 自动填充该 ssh:// 值 |
 | **C-I1** | 同一 `FileNotFoundError: .../run/user/.../podman/podman.sock No such file`，但出现在**容器内** SDK 调用（bootstrap `env.run-cmd`/`env.shell` 或常驻容器 JupyterLab Web Terminal）；容器内 CLI `podman images` 同时报 `open ${XDG_RUNTIME_DIR}/libpod/tmp/pause.pid: no such file or directory` 与 `error creating temporary file: Permission denied` | 容器内两个根因叠加：① 从无运行中的 podman daemon（bootstrap 用 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，或常驻容器旧版从不拉起 service），`from_env()` 回退到纯 Linux 默认路径连不存在的 rootless UDS socket → `APIError`；② rootless podman 初始化时未预建 `${XDG_RUNTIME_DIR}/libpod/tmp/`（`pause.pid` 落盘目录），缺目录触发 ENOENT / `Permission denied`（devuser 自 2026-09-11 起固定 UID 1000） | bootstrap 由 `PODMAN_SERVICE_BOOT` 自动拉起 `podman system service --time=0` 并预建 `libpod/tmp`（见 `src/jpman_client/tasks/env_in_container.py`）；常驻容器由方案 A 保证：`entrypoint.sh::setup_podman()` 默认拉起 service + 预建 `${XDG_RUNTIME_DIR}/libpod/tmp` + `jupyter.conf` 改 `user=devuser` 并以 `%(ENV_CONTAINER_HOST)s` / `%(ENV_XDG_RUNTIME_DIR)s` 继承 entrypoint 导出的运行时路径（路径以 `id -u` 动态派生，**不在配置里写死 `/run/user/<uid>`**）；详见 `summary-jpman-client-podman-sdk-file-not-found-20260908.md` |
 | **C-I2** | 同上 `PermissionError` 类，但为 **`[Errno 13] Permission denied` / EACCES**（非 ENOENT）：SDK 报 `podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied`；CLI 报 `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied` | **容器内 devuser 无权访问宿主直通 socket**：宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，而 devuser 是非 root UID（固定 1000，≠0）且镜像基线未将其加入 socket 属组（`/etc/group` 的 `root:x:0:` 无成员）→ `socket.connect()` 直接 EACCES。**与 C-I1 的语义差异**：C-I1 是 socket/目录不存在（ENOENT），C-I2 是存在但无权限（EACCES）。**代价与红线**：让 devuser 入 socket 属组会扩大其组权限；**严禁 `chmod 666`/`chown` 宿主 socket**（会改到宿主 socket 本体、破坏宿主侧权限） | `entrypoint.sh::setup_podman()` 的 **B-scheme** 分支自动 `stat -Lc '%G' <host_sock>` 解析属组并 `usermod -aG <socket组> ${NON_ROOT_USER}`，随后以 devuser 身份实测 socket 可读写（`su - devuser -c "test -r/-w ..."`，失败仅告警不阻断）。**时机关键**：该步骤必须早于 `exec /usr/bin/supervisord`——supervisord 的 `drop_privileges()` 在 spawn 子进程时才用 `grp.getgrall()` 派生补充组，已在运行的 jupyter 进程不受后续 usermod 影响，故须重建镜像/重启容器生效。自检：容器内 `supervisorctl status jupyter` 取 PID 后 `/proc/<pid>/status` 的 `Groups` 应含 socket 属组 |
 
@@ -384,6 +385,31 @@ invoke env.shell
 | 自举容器 rootless | `/dev/fuse + label=disable + cgroupns=host` | 与 `ContainerConfig` 硬编码对齐，**不使用 `--privileged`** |
 | 容器名（默认） | `jpman-client-env`（用完自动 `--rm` 删除） | 可通过 `--name` 覆盖 |
 
+### 10.5 叠加层基底指纹防陈旧机制（`base-digest` 检测，2026-09-11）
+
+**问题本质：镜像 tag 是移动指针，叠加层固化的是 digest（不可变指纹）。**
+
+`localhost/jupyter-podman-client:latest` 是一个「叠加镜像」——基于 `localhost/jupyter-podman-rootless:latest`（基底）加一层 `COPY + pip install -e` 构建。**`invoke run` 使用的不是基底 tag，而是叠加镜像构建那一刻固化的基底内容**。基底 tag 之后被更新（重建 / `invoke load`）不会传导给已构建的叠加层，导致「容器跑的还是旧基底」。
+
+**解决机制闭环（三环节）**：
+
+1. **构建时固化**（`invoke env.build-layer`）：构建前取基底当前 digest，经 `--build-arg BASE_DIGEST` 烤进叠加镜像 LABEL（`org.specweave.base-image` / `org.specweave.base-digest`，见 [Containerfile.client](Containerfile.client) 末尾）。指纹保存在**构建时快照**，运行时不重算。
+2. **启动前比对**（`invoke run` → [manage.py::_warn_if_layer_stale](src/jpman_client/tasks/manage.py)）：读叠加层 LABEL 的固化 digest，与本地基底当前 digest 比较；不一致打印中文警告并给出重建指引。**只警告不阻断**（旧基底可能是有意选择）。
+3. **一键恢复**（`invoke run --rebuild-layer`，B 档 2026-09-11 新增）：检测到陈旧时自动执行 `env.build-layer` 重建叠加层，随后继续正常启动；**重建失败自动回退旧基底启动**（不因重建失败而让容器起不来）。
+
+```bash
+# 启动前检测到「叠加层基底陈旧」警告时，两条路径任选：
+invoke run --rebuild-layer          # 推荐：自动重建+重启（失败回退旧基底）
+invoke run                          # 继续用旧基底（有意保持；警告仅提示）
+
+# 手动重建（等价）
+invoke env.build-layer && invoke stop && invoke run
+# 确定有意使用旧基底 / 不想每次看到警告
+# （.env 或 export）JPUMAN_SKIP_BASE_CHECK=1
+```
+
+**层级不变式**：LABEL 放在 Containerfile **末尾**（仅新增薄层），前置 COPY/pip 层缓存不受基底变化影响——重建叠加层通常 <1 分钟（见 §10.1）。
+
 ## 11. 运行时透传（对齐构建端 `docs/07-toolbx-passthrough.md`）
 
 构建端把 5 项运行时透传以 **compose 分层覆盖文件**交付；消费端没有 compose 层（SDK/CLI 编程式启动），
@@ -396,6 +422,7 @@ invoke env.shell
 | ③ | `--gpu` | `compose.passthrough.gpu.yaml` | daemon 宿主存在 `GPU_DEVICE`（默认 `/dev/dri`） |
 | ④ | `--dbus` | `compose.passthrough.yaml`（D-Bus） | daemon 宿主存在会话总线 socket |
 | ⑤ | `--usb` | `compose.passthrough.usb.yaml` | daemon 宿主存在 `USB_DEVICE`（默认 `/dev/bus/usb`） |
+| ⑥ | `--video` | —（client 扩展，usbipd 挂载后 UVC 字符设备） | daemon 宿主存在 `/dev/video0-3`（可用 `VIDEO_DEVICES` 指定） |
 
 **默认全关（默认隔离）**：不带任何开关时生成的运行参数与旧版本完全一致（输出零变化），
 rootless 三必需 `/dev/fuse + label=disable + cgroupns=host` 始终硬编码保留，**任何路径都不使用 `--privileged`**。
@@ -431,4 +458,72 @@ invoke run --no-gpu
 可能跑在 Windows 原生 CPython 上，本机 `Path.exists()` 对这些路径必然为假。podman 对缺失源
 硬失败（退出码 125、不自动创建）后，消费端会把原生报错翻译为 **C-I3** 指引（见 §5.4）：
 给出缺失路径、可覆盖的变量名，以及 daemon 侧自检命令。
+
+### 11.3 三大透传的宿主侧前置（2026-09-11 实测）
+
+三项透传（Wayland / GPU / USB）的资源**都在 daemon 宿主**（podman machine / WSL2）侧，
+消费端 `.env` 只负责把开关与路径转成 `invoke run` 参数。以下为各资源的宿主就绪方法。
+
+**② Wayland（WSLg）**
+
+```bash
+# 关键：podman machine 的 Wayland socket 在 /mnt/wslg（WSLg），不在 /run/user/1000
+# 必须把 HOST_XDG_RUNTIME_DIR 设为 /mnt/wslg/runtime-dir，client 才能拼出
+# {xdg}/wayland-0 命中该 socket
+ls /mnt/wslg/runtime-dir/wayland-0     # 应存在 srwxrwxrwx
+
+# .env：
+#   PASSTHROUGH_WAYLAND=yes
+#   HOST_XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+```
+
+容器内验证：`printenv WAYLAND_DISPLAY`=wayland-0，`/tmp/runtime-user/wayland-0` 为可写 socket。
+
+**③ GPU（NVIDIA → CDI）**
+
+```bash
+# NVIDIA 下 /dev/dri 不存在（那是 Intel/AMD Mesa 路径）；WSL2 NVIDIA 走
+# /dev/dxg（DXCore）+ /usr/lib/wsl/lib/libcuda*，必须用 CDI 设备引用
+sudo dnf install -y golang-github-nvidia-container-toolkit    # Fedora（VM 内）
+sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+
+# .env：
+#   PASSTHROUGH_GPU=yes
+#   GPU_DEVICE=nvidia.com/gpu=all            # CDI 引用（原样透传）
+#   # GPU_DEVICE=/dev/dri                    # Intel/AMD 时（映射容器内 /dev/dri）
+```
+
+容器内验证：`nvidia-smi` 显示真实 GPU（Driver/CUDA 版本）。
+
+**⑤ USB（usbipd-win）**
+
+```powershell
+# Windows：安装 + 绑定（需管理员；绑定的设备在 attach 期间由 WSL 独占）
+winget install --id Dorssel.usbipd-win
+& "C:\Program Files\usbipd-win\usbipd.exe" bind --busid <BUSID>        # 一次
+# Windows：挂载到目标 WSL 发行版（每次会话）
+& "C:\Program Files\usbipd-win\usbipd.exe" attach --wsl podman-machine-default --busid <BUSID>
+# 用毕归还 Windows
+& "C:\Program Files\usbipd-win\usbipd.exe" detach --busid <BUSID>
+```
+
+```bash
+# VM 内确认 + 安装排障工具（摄像头采集需 v4l2）
+sudo dnf install -y v4l-utils usbutils
+lsusb                                   # 应列出绑定的设备（如 Bison Integrated RGB Camera）
+ls /dev/video*                          # 摄像头 → /dev/video0/1/2
+
+# .env：
+#   PASSTHROUGH_USB=yes
+```
+
+`usbipd list` 中设备 STATE 由 `Not shared` → `Shared` 即绑定成功；attach 后 VM 内
+`/dev/bus/usb` 出现 001/002 目录。**注意**：attach 是一次性会话操作，VM/podman
+machine 重启后需重新 attach。
+
+> ✅ **Video 透传（2026-09-11 新增）**：`--video`（或 `.env` `PASSTHROUGH_VIDEO=yes`）把
+> UVC 摄像头字符设备透传给容器——默认 `/dev/video0-3`，可用 `VIDEO_DEVICES=/dev/video0,/dev/video1`
+> 精确指定。配合 `--usb`（USB 总线级）即可在容器内用 v4l2/OpenCV 直接采集摄像头。
+> 前置：先完成上方 usbipd bind/attach 使摄像头在 daemon 宿主出现 `/dev/video*`；
+> 缺失时 podman 硬失败（exit 125），走 C-I3 诊断。
 

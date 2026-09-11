@@ -140,29 +140,30 @@ def _ensure_image_built(c: Context, tag: str) -> None:
 # ---------------------------------------------------------------------------
 
 
-@task(
-    help={
-        "tag": "产出镜像标签，默认 localhost/jupyter-podman-client:latest",
-        "base-image": "基础镜像（ARG BASE_IMAGE），默认 localhost/jupyter-podman-rootless:latest",
-        "no-cache": "等价 podman build --no-cache（强制全量重建）",
-    }
-)
-def build_layer(
+def rebuild_client_layer(
     c: Context,
     tag: str = DEFAULT_CLIENT_IMAGE,
     base_image: str = "localhost/jupyter-podman-rootless:latest",
     no_cache: bool = False,
-) -> None:
-    """基于 jupyter-podman-rootless:latest 构建 podman-py SDK 自举叠加层。"""
+) -> bool:
+    """重建 client 叠加层镜像（供 invoke run --rebuild-layer 复用）。
+
+    与 ``build_layer`` 任务共用同一份核心逻辑（基底指纹烤入 LABEL + podman build），
+    但**不吞异常**：构建失败时返回 False 而非 Exit，让调用方（manage.py run 任务）
+    决定是回退旧基底启动还是报错。调用方须保证 ``tag`` / ``base_image`` 已 shell 安全
+    校验（S2 约束），本函数不再重复校验。
+
+    Returns:
+        True = 重建成功；False = 构建失败（调用方自行决定后续动作）。
+    """
     runtime = detect_runtime()
     root = _client_root()
     containerfile = root / "Containerfile.client"
     if not containerfile.exists():
-        raise Exit(1, f"未找到 Containerfile.client: {containerfile}")
+        print(f"[Rebuild] ✗ 未找到 Containerfile.client: {containerfile}")
+        return False
 
-    # 基底指纹（预防闭环）：构建前取基底当前 digest，经 --build-arg 写入镜像
-    # LABEL（org.specweave.base-digest），invoke run 启动前据此检测叠加层陈旧。
-    # 取不到不阻断构建（指纹留空，run 侧按「无指纹」降级提示）。
+    # 基底指纹（对齐 build_layer 任务的预防闭环）：构建前取基底当前 digest
     base_digest = ""
     dr = run_cmd(
         c,
@@ -174,9 +175,9 @@ def build_layer(
     if dr is not None and getattr(dr, "ok", False):
         base_digest = (dr.stdout or "").strip()
     if base_digest:
-        print(f"[env] 基底指纹: {base_image} -> {base_digest}")
+        print(f"[Rebuild] 基底指纹: {base_image} -> {base_digest}")
     else:
-        print(f"[env] ⚠ 未能获取基底 digest（{base_image}），本次构建不写入基底指纹")
+        print(f"[Rebuild] ⚠ 未能获取基底 digest（{base_image}），本次构建不写入基底指纹")
 
     parts = [
         runtime,
@@ -191,8 +192,33 @@ def build_layer(
     # build context = client 根目录（Containerfile 中 COPY . 依赖此目录）
     parts.append(str(root))
 
-    run_cmd(c, " ".join(parts), pty=True)
-    print(f"\n[env] ✅ 叠加镜像构建完成: {tag}")
+    # warn=True：失败不抛异常，返回 Result 便于下方区分成功/失败
+    r = run_cmd(c, " ".join(parts), pty=True, warn=True)
+    ok = r is not None and getattr(r, "ok", False)
+    if ok:
+        print(f"\n[Rebuild] ✅ 叠加镜像重建完成: {tag}")
+    else:
+        print(f"\n[Rebuild] ✗ 叠加镜像重建失败: {tag}（保留旧镜像，将回退旧基底启动）")
+    return ok
+
+
+@task(
+    help={
+        "tag": "产出镜像标签，默认 localhost/jupyter-podman-client:latest",
+        "base-image": "基础镜像（ARG BASE_IMAGE），默认 localhost/jupyter-podman-rootless:latest",
+        "no-cache": "等价 podman build --no-cache（强制全量重建）",
+    }
+)
+def build_layer(
+    c: Context,
+    tag: str = DEFAULT_CLIENT_IMAGE,
+    base_image: str = "localhost/jupyter-podman-rootless:latest",
+    no_cache: bool = False,
+) -> None:
+    """基于 jupyter-podman-rootless:latest 构建 podman-py SDK 自举叠加层。"""
+    ok = rebuild_client_layer(c, tag=tag, base_image=base_image, no_cache=no_cache)
+    if not ok:
+        raise Exit(1, "叠加镜像构建失败")
     print("[env]   快速验证：  invoke env.run-cmd --cmd \"inv --list\"")
 
 
