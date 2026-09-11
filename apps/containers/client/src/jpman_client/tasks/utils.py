@@ -308,7 +308,15 @@ def build_passthrough_spec(cfg: "ContainerConfig") -> PassthroughSpec:
         )
 
     if cfg.gpu:
-        spec.devices.append(f"{paths['gpu_device']}:/dev/dri")
+        gpu = paths["gpu_device"]
+        if gpu.startswith("/"):
+            # 主机设备节点路径（如 /dev/dri，默认）：映射到容器内 /dev/dri
+            spec.devices.append(f"{gpu}:/dev/dri")
+        else:
+            # CDI 设备引用（如 nvidia.com/gpu=all）：原样透传，由 podman 解析 CDI 规范。
+            # NVIDIA WSL2 透传即走此形态——daemon 宿主需已生成 CDI 规范
+            # （nvidia-ctk cdi generate → /etc/cdi/nvidia.yaml），见 docs/07 C-I3。
+            spec.devices.append(gpu)
 
     if cfg.usb:
         spec.devices.append(f"{paths['usb_device']}:/dev/bus/usb")

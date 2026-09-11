@@ -234,7 +234,7 @@ podman-compose -f compose.yaml \
 
 > ⚠️ **Host 网络模式的前置条件**：容器将直接绑定宿主 `22`/`8888` 端口，与端口映射模式的容器互斥。启用前请先 `podman-compose down` 停掉占用这些端口的栈；覆盖文件已通过 `ports: !reset []` 清除基座的端口发布，否则与 host 网络冲突。
 
-> ⚠️ **GPU 的 NVIDIA 场景**：`/dev/dri` 只覆盖 Intel/AMD Mesa。NVIDIA 需先在宿主配置 CDI（`nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`），再用 `GPU_DEVICE` 指向生成的设备节点。
+> ⚠️ **GPU 的 NVIDIA 场景**：`/dev/dri` 只覆盖 Intel/AMD Mesa。NVIDIA 走 **CDI**——宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`，client 侧 `GPU_DEVICE=nvidia.com/gpu=all`（CDI 引用，原样透传，无需设备节点路径）。WSL2 下 CDI 自动选用 `/dev/dxg`（DXCore）与 `/usr/lib/wsl/lib/libcuda*`（实测容器内 `nvidia-smi` 输出 581.57/CUDA 13.0）。compose 模式仍用 `GPU_DEVICE` 指向 CDI 设备名（同 `--gpu` 语义，见 [.env.example](../.env.example)）。
 
 各项变量（`DBUS_SESSION_BUS_PATH` / `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `GPU_DEVICE` / `USB_DEVICE` / `PASSTHROUGH_IMAGE_TAG`）见 [.env.example](../.env.example)。
 

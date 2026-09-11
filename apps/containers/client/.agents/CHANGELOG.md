@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `feat:` GPU 透传支持 CDI 设备引用（NVIDIA）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv run --gpu` 在 NVIDIA WSL2 podman machine 上失败 `stat /dev/dri: no such file or directory`（VM 无 `/dev/dri`，GPU 走 `/dev/dxg` DXCore）。
+
+**I 阶段根因**：client 侧 GPU 透传固定拼 `GPU_DEVICE:/dev/dri`（设备节点路径）。NVIDIA WSL2 下不存在 `/dev/dri`，需走 **CDI**（`nvidia-ctk cdi generate` → `/etc/cdi/nvidia.yaml` → `--device nvidia.com/gpu=all`，自动挂载 `/dev/dxg` + `/usr/lib/wsl/lib/libcuda*`）。
+
+**修复点**：`utils.py::build_passthrough_spec` GPU 分支按形态分派——`GPU_DEVICE` 以 `/` 开头（设备路径，默认 `/dev/dri`）→ 映射容器内 `/dev/dri`；否则视为 CDI 引用（如 `nvidia.com/gpu=all`）→ 原样透传。
+
+**验收点**：① `GPU_DEVICE=nvidia.com/gpu=all inv run --gpu` 启动成功（`--device nvidia.com/gpu=all` 出现在 run 命令）；② 容器内 `nvidia-smi` 输出 `NVIDIA-SMI 580.102.01 / Driver 581.57 / CUDA 13.0`；③ 端口映射模式 jupyter/sshd RUNNING、HTTP 200；④ `/dev/dri` 路径形态分支保持兼容（startswith("/") 判据）。
+
 ### 2026-09-11 · `chore:` 基底联动重建（devuser UID 固定 1000 + B-scheme socket 修复 + :toolbx 变体）
 
 **关联七概念场景**：场景2 后置联动（构建端 spec：`.trae/specs/toolbx-host-image/`）。
