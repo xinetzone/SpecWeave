@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `chore:` 基底联动重建（devuser UID 固定 1000 + B-scheme socket 修复 + :toolbx 变体）
+
+**关联七概念场景**：场景2 后置联动（构建端 spec：`.trae/specs/toolbx-host-image/`）。
+
+构建端当日交付三项变更（devuser 固定 UID 1000、entrypoint socket 属主穿透修复、`:toolbx` 变体），client 侧经**基底指纹机制**（同日早些时候上线）自然驱动联动：`inv env.build-layer` 重建叠加层，烤入新基底 digest `sha256:2826166e…`（与 rootless:latest 逐字符一致）；`inv stop && inv run` 重启 jupyter-podman（沿用既有 JUPYTER_TOKEN/USER_PASSWORD，浏览器/SSH 零感知）。
+
+**本侧代码改动**：仅文档/注释——`README.md` §10.4「默认用户」改为"固定 UID/GID 1000"；`Containerfile.client` V 阶段注释中"UID 自动分配（如 1001）"改写。无任务代码改动（指纹检测首次实战即正确触发，无陈旧误报/漏报）。
+
+**验收点**：容器内 `id -u devuser`=1000；supervisorctl jupyter/sshd RUNNING；Jupyter HTTP 200；容器内 `toolbox create` 仍为 wrapper 中文指引；`invoke run` 无陈旧告警；base-digest label == 基底 Digest（DIGEST_MATCH）。
+
 ### 2026-09-11 · `fix:` 叠加层基底指纹与陈旧检测（toolbox wrapper 缺席事故闭环）
 
 **关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E 链路）；用户在 client 容器（8eddb24390eb）内执行 `toolbox create` 仍裸报 `Error: TOOLBOX_PATH not set`，而构建端前一日已交付 wrapper 优雅降级。

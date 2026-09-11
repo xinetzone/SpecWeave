@@ -700,7 +700,7 @@ def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
         return (
             "[C-I2] 容器内 devuser 无权访问宿主直通 podman socket（Errno 13 / EACCES，容器内坑，与平台无关）。\n"
             "     → 根因：宿主 rootless socket（宿主 <uid>:<gid> 0660）经 userns 映射进容器后呈现为 root:root 0660，\n"
-            "        而 devuser 是动态 UID（≠0）且未加入 socket 属组，socket.connect() 直接 EACCES。\n"
+            "        而 devuser 是非 root UID（固定 1000，≠0）且未加入 socket 属组，socket.connect() 直接 EACCES。\n"
             "     → 修复（30 秒）：重建镜像并重启容器——entrypoint.sh::setup_podman() 的 B-scheme 分支会自动\n"
             "        执行 usermod -aG <socket组> ${NON_ROOT_USER}（必须早于 exec supervisord，jupyter 子进程才能继承补充组）\n"
             "        并以 devuser 身份实测 socket 可读写；严禁 chmod 666 / chown 宿主 socket（会破坏宿主侧权限）。\n"

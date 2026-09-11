@@ -12,8 +12,8 @@
 #      `python -m pip` 就是对的，不要依赖 activate。
 #   2. OCI image format 会忽略 SHELL 指令，显式用
 #      `/bin/bash -lc '...'` 包裹 RUN 才稳定。
-#   3. USER devuser 时 UID 不一定是 1000（基础镜像 1000 已被占用时
-#      自动分配，如实际是 1001），COPY --chown 用用户名不硬编码 UID。
+#   3. devuser 固定 UID/GID 1000（2026-09-11 起主镜像已删除基础镜像自带的
+#      ubuntu 账号；COPY --chown 仍用用户名不硬编码 UID，保持可移植）。
 #
 # 特性（对齐 F 阶段第一性原理设计）：
 #   1. 单层叠加（COPY + pip install -e），增量缓存复用率高
