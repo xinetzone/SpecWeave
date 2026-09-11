@@ -6,6 +6,25 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `feat:` 新增 invoke save 导出镜像到缓存（备份/恢复闭环）
+
+**关联七概念场景**：场景3「重构优化」（F→A→V→C）；client 已有 load/run/stop/status/clean 但缺 save（只消费不产出），镜像备份需绕道构建端 jpman。
+
+**F 阶段设计（对齐构建端 `bin/jpman cmd_save` 规范）**：
+- 产物命名 `<镜像名>-<short_id>-<YYYYMMDD-HHMMSS>.tar.gz`；无 gzip/pigz 时降级 `.tar` 未压缩（Windows 原生 cmd/PowerShell 无 gzip 命令，`| gzip` 管道 exit 255）
+- 写 `manifest.txt` 段（IMAGE_FILE/SIZE/SHA256/SAVED），与 `validate_manifest_integrity` 解析格式互操作
+- `gzip -t` 完整性校验 + SHA256 摘要 + `*-latest` 软链接
+
+**修复点**（A 阶段原子拆分）：
+- `client_core.py`：`save_image()` + `_save_via_cli()`（pigz>gzip>未压缩三档降级）+ `_image_exists_fast()` + `_check_gzip_integrity()` + `_append_manifest()`
+- `manage.py`：`save` 任务（`--tag`/`--cache-dir`，默认 .env IMAGE_TAG）
+- `__init__.py`：根命名空间与 `container.*` 别名注册（7 命令）
+- README §4 命令表 + §4.1 备份/恢复小节
+
+**V 对抗审查发现的陷阱（均已修复）**：① digest 形如 `sha256:xxx` 含冒号 → 进入文件名/命令在 Windows shell 破坏 → 去前缀取前 12 位；② `Path.with_suffix` 在 `.tar.gz` 上产生 `.tar.tar` 双后缀 → 统一由 save_image 决定扩展名；③ `run_cmd` 文本捕获会损坏二进制 → 压缩走 shell 管道落文件、未压缩走 `podman save -o` 直接落盘。
+
+**验收点**：① `invoke --list` 出现 `save` 与 `container.save`；② `invoke save` 成功落盘 1872MB tar + manifest + SHA256；③ 无 gzip 环境降级 `.tar` 成功；④ 与 `invoke load`/`bin/jpman load` 格式互兼容。
+
 ### 2026-09-11 · `feat:` run 新增 --rebuild-layer 自动重建叠加层（基底陈旧一键恢复）
 
 **关联七概念场景**：场景4「知识沉淀」（R→I→E→V→C）+ 场景3「重构优化」混合；上一轮修复了「叠加层基底陈旧」警告的根因（重建镜像消除），本次沉淀机制文档并落地 B 档预防方案。

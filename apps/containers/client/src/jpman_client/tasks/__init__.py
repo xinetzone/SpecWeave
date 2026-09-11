@@ -1,15 +1,16 @@
 """jupyter-podman-client invoke 任务入口。
 
-根命名空间（6 个镜像消费端命令）：
+根命名空间（7 个镜像消费端命令）：
   invoke load       从本地 tar 加载镜像
   invoke images     列出本地镜像
+  invoke save       导出镜像到缓存目录（备份）
   invoke run        启动容器
   invoke stop       停止并删除容器
   invoke status     查看容器状态
   invoke clean      清理资源
 
 container.* 别名命名空间：
-  invoke container.load / container.images / container.run ...
+  invoke container.load / container.images / container.save / container.run ...
 
 env.* 自举环境命名空间（3 个命令）：
   invoke env.build-layer   基于 Containerfile.client 构建叠加镜像
@@ -22,9 +23,10 @@ from . import env_in_container, manage
 
 ns = Collection()
 
-# ---- 根命名空间（镜像消费端 6 命令） ----
+# ---- 根命名空间（镜像消费端 7 命令） ----
 ns.add_task(manage.load)
 ns.add_task(manage.images)
+ns.add_task(manage.save)
 ns.add_task(manage.run)
 ns.add_task(manage.stop)
 ns.add_task(manage.status)
@@ -34,6 +36,7 @@ ns.add_task(manage.clean)
 container_ns = Collection("container")
 container_ns.add_task(manage.load, "load")
 container_ns.add_task(manage.images, "images")
+container_ns.add_task(manage.save, "save")
 container_ns.add_task(manage.run, "run")
 container_ns.add_task(manage.stop, "stop")
 container_ns.add_task(manage.status, "status")

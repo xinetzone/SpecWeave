@@ -11,6 +11,8 @@ from contextlib import contextmanager
 import json
 import os
 from pathlib import Path
+import shutil
+import subprocess
 from typing import Optional
 
 from invoke import Context
@@ -406,7 +408,7 @@ def image_inspect_info(c: Context, tag: str) -> dict:
         data = json.loads(r.stdout)
         info = data[0] if isinstance(data, list) and data else {}
     except (json.JSONDecodeError, IndexError, TypeError):
-        return {}
+        info = {}
     if not isinstance(info, dict):
         return {}
     labels = info.get("Labels") or {}
@@ -414,6 +416,176 @@ def image_inspect_info(c: Context, tag: str) -> dict:
         "digest": str(info.get("Digest") or "").strip(),
         "labels": labels if isinstance(labels, dict) else {},
     }
+
+
+def _save_via_cli(c: Context, image: str, outfile: Path) -> bool:
+    """通过 CLI 流式导出镜像为 gzip tar（podman save | gzip/pigz）。
+
+    与构建端 ``bin/jpman cmd_save`` 的产物格式逐项对齐（docker-archive → gzip），
+    保证产物可被 ``invoke load`` / ``jpman load`` 交叉消费。pigz 存在时多线程压缩。
+
+    兼容降级：Windows 原生 PowerShell/cmd 下 ``gzip``/``pigz`` 命令通常不存在，
+    shell 管道 ``| gzip`` 会 exit 255；此时回退为 ``podman save -o`` 直接落盘
+    未压缩 tar（扩展名由调用方确定为 ``.tar``，本函数直接使用 ``outfile``）。
+    优先级：pigz > gzip > 未压缩。落盘路径与 ``outfile`` 完全一致。
+    """
+    runtime = detect_runtime()
+    if shutil.which("pigz"):
+        cmd = (
+            f'{runtime} save "{image}" --format docker-archive'
+            " | pigz -p 4 > "
+            f'"{outfile}"'
+        )
+    elif shutil.which("gzip"):
+        cmd = f'{runtime} save "{image}" --format docker-archive | gzip > "{outfile}"'
+    else:
+        # Windows 原生无 gzip：直接导出 tar（不压缩），outfile 应为 .tar 路径
+        cmd = f'{runtime} save "{image}" --format docker-archive -o "{outfile}"'
+    try:
+        run_cmd(c, cmd, hide=True, pty=False, echo=False)
+    except Exception as e:
+        print(f"[Save] ✗ 镜像导出失败: {image}: {e}")
+        return False
+    if not outfile.exists() or outfile.stat().st_size == 0:
+        print("[Save] ✗ 产物为空（0 字节），导出失败")
+        return False
+    return True
+
+
+def save_image(c: Context, image: str, cache_dir: Path) -> bool:
+    """导出镜像到缓存目录（供备份 / VM 崩溃恢复），返回是否成功。
+
+    产物与 manifest 规范对齐构建端 ``jpman save``：
+      - 文件名：``<repo>-<short_id>-<YYYYMMDD-HHMMSS>.tar.gz``
+      - 同步 ``*-latest.tar.gz`` 软链接（供 load 直接取最新）
+      - 写 ``manifest.txt`` 段（IMAGE_FILE/SIZE/SHA256/SAVED），与
+        ``validate_manifest_integrity`` 的解析格式互操作
+      - ``gzip -t`` 完整性校验
+    """
+    import datetime as _dt
+    import hashlib as _hl
+    import shutil as _sh
+    import time as _tm
+
+    if not image:
+        print("[Save] ✗ 未指定镜像 tag")
+        return False
+
+    # 镜像存在性预检（S5：失败原因需明确是「镜像不存在」而非 daemon 问题）
+    if not _image_exists_fast(c, image):
+        print(f"[Save] ✗ 本地未找到镜像: {image}")
+        print("[Save]   先构建: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
+        print("[Save]   或加载: invoke load")
+        return False
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    # short_id 取 digest 去前缀后的前 12 位（避免 `sha256:` 冒号进入文件名/命令，
+    # 否则在 Windows shell 管道中破坏命令合法性）
+    short_id = (image_inspect_info(c, image).get("digest") or "").strip()
+    if ":" in short_id:
+        short_id = short_id.split(":", 1)[1]
+    short_id = short_id[:12] or "unknown"
+    ts = _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+    safe_name = image.replace("/", "-").replace(":", "-")
+    # 扩展名由「可用压缩工具」决定：pigz/gzip → .tar.gz；否则 → .tar（未压缩）
+    use_gzip = bool(shutil.which("pigz") or shutil.which("gzip"))
+    ext = ".tar.gz" if use_gzip else ".tar"
+    outfile = cache_dir / f"{safe_name}-{short_id}-{ts}{ext}"
+    latest_link = cache_dir / f"{safe_name}-latest{ext}"
+
+    if not _save_via_cli(c, image, outfile):
+        return False
+    saved = outfile
+
+    # 完整性校验（压缩产物 gzip -t；未压缩仅核大小）
+    file_size = saved.stat().st_size
+    if ext == ".tar.gz" and not _check_gzip_integrity(saved):
+        print("[Save] ✗ gzip -t 校验失败，产物不可信")
+        return False
+
+    # SHA256 摘要（供 manifest / load 前完整性比对）
+    sha = _hl.sha256()
+    with open(saved, "rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            sha.update(chunk)
+    digest = sha.hexdigest()
+
+    # latest 软链接（Windows 上 os.symlink 可能需要权限：失败静默，不影响主流程）
+    try:
+        if latest_link.exists() or latest_link.is_symlink():
+            latest_link.unlink()
+        latest_link.symlink_to(saved.name)
+    except OSError:
+        pass
+
+    _append_manifest(cache_dir, image, saved.name, file_size, digest)
+    print(f"[Save] ✅ 已保存: {saved.name} ({file_size / 1024 / 1024:.1f} MB)")
+    print(f"[Save]   SHA256: {digest}")
+    print(f"[Save]   恢复:  invoke load --path {saved}   或   bash bin/jpman load")
+    return True
+
+
+def _image_exists_fast(c: Context, image: str) -> bool:
+    """轻量镜像存在性检查（避免走 list_images 全量解析）。"""
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        f'{runtime} image exists {image}',
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    return r is not None and getattr(r, "ok", False)
+
+
+def _check_gzip_integrity(path: Path) -> bool:
+    """gzip -t 校验（Windows 无 gzip 时回退简单非零检查）。"""
+    if shutil.which("gzip"):
+        try:
+            subprocess.run(
+                ["gzip", "-t", str(path)],
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            return Path(path).exists()
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+    return Path(path).exists() and path.stat().st_size > 0
+
+
+def _append_manifest(
+    cache_dir: Path,
+    image: str,
+    filename: str,
+    size_bytes: int,
+    sha256_hex: str,
+) -> None:
+    """向 manifest.txt 追加一段（对齐构建端 jpman save 的 manifest 格式）。
+
+    保证 ``validate_manifest_integrity``（按 IMAGE_FILE 精确匹配段）能读到本段。
+    """
+    from datetime import datetime as _dt
+
+    manifest = cache_dir / "manifest.txt"
+    header = "# Jupyter Podman Image Cache"
+    lines = [
+        header,
+        f"IMAGE_NAME={image}",
+        f"IMAGE_FILE={filename}",
+        f"SIZE={size_bytes / 1024 / 1024:.0f}MB",
+        f"SHA256={sha256_hex.upper()}",
+        f"SAVED={_dt.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')}",
+        "",
+    ]
+    body = "\n".join(lines)
+    if manifest.exists():
+        file_body = manifest.read_text(encoding="utf-8")
+        # 若表头已存在则只追加段；否则整体替换（表头保留最新一段语义）
+        if header in file_body:
+            manifest.write_text(file_body.rstrip("\n") + "\n" + body, encoding="utf-8")
+            return
+    manifest.write_text(body, encoding="utf-8")
 
 
 # ===========================================================================

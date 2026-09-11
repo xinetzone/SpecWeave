@@ -89,15 +89,33 @@ invoke images        # 列出本地所有镜像
 
 | 命令 | 等价 container.* 别名 | 说明 |
 |---|---|---|
-| `invoke load [--path TAR] [--cache-dir DIR]` | `invoke container.load` | 从 tar.gz 加载镜像 |
+| `invoke load [--path TAR] [--cache-dir DIR]` | `invoke container.load` | 从 tar/tar.gz 加载镜像 |
 | `invoke images` | `invoke container.images` | 列出本地镜像 |
-| `invoke run [--name N] [--tag T] [--ssh-port P] [--jupyter-port P] [--workspace W] [--user-password PW] [--jupyter-token TK] [--ssh-public-key KEY] [--grant-sudo/--no-grant-sudo] [--no-detach] [--host-network/--no-host-network] [--wayland/--no-wayland] [--gpu/--no-gpu] [--usb/--no-usb] [--dbus/--no-dbus]` | `invoke container.run` | 启动容器（后 5 组为运行时透传三态开关，见 §11） |
+| `invoke save [--tag T] [--cache-dir DIR]` | `invoke container.save` | 导出镜像到缓存目录（备份/恢复；产物含 manifest+SHA256，见 §4.1） |
+| `invoke run [--name N] [--tag T] [--ssh-port P] [--jupyter-port P] [--workspace W] [--user-password PW] [--jupyter-token TK] [--ssh-public-key KEY] [--grant-sudo/--no-grant-sudo] [--no-detach] [--host-network/--no-host-network] [--wayland/--no-wayland] [--gpu/--no-gpu] [--usb/--no-usb] [--dbus/--no-dbus] [--rebuild-layer]` | `invoke container.run` | 启动容器（透传三态开关见 §11；`--rebuild-layer` 基底陈旧时自动重建叠加层，见 §10.5） |
 | `invoke stop [--name N]` | `invoke container.stop` | 停止并删除容器 |
 | `invoke status [--name N]` | `invoke container.status` | 查看状态 |
 | `invoke clean [--name N] [--tag T] [--volume] [--image]` | `invoke container.clean` | 清理资源 |
 | `invoke env.build-layer [--tag T] [--base-image I] [--no-cache]` | —（无别名） | 构建容器内自举叠加层镜像（见 §10） |
 | `invoke env.run-cmd --cmd CMD [--tag T] [--keep] [--extra-mount M]` | —（无别名） | 在自举容器内执行单条命令（rootless 三必需 + workspace/.image-cache 双挂载） |
 | `invoke env.shell [--tag T] [--workspace W] [--cache-dir D]` | —（无别名） | 进入自举容器的交互式 bash shell |
+
+### 4.1 镜像备份与恢复（`invoke save` / `invoke load`）
+
+```bash
+# 备份（导出当前镜像到 .image-cache/，产物含 manifest + SHA256 + gzip 完整性校验）
+invoke save                              # 默认保存 .env 的 IMAGE_TAG（client 叠加层）
+invoke save --tag localhost/jupyter-podman-rootless:latest   # 指定镜像
+# 保存 rootless 基底亦可走构建端: cd ../jupyter-podman-rootless && bash bin/jpman save
+
+# 恢复
+invoke load                              # 自动取 .image-cache/ 最新 tar
+invoke load --path <具体 tar 路径>        # 指定文件恢复
+```
+
+- **产物命名**：`<镜像名>-<short_id>-<YYYYMMDD-HHMMSS>.tar.gz`（无 gzip 时降级为 `.tar` 未压缩，Windows 原生环境常见）
+- **完整性**：写 `manifest.txt` 段（`IMAGE_FILE/SIZE/SHA256/SAVED`），`invoke load` 读取前按 manifest 校验（与构建端 `jpman save/load` 格式互操作）
+- **用途**：VM 崩溃 / WSL 重置后 2-5 分钟恢复（对比重建 20-40 分钟），见构建端 [docs/16-image-cache.md](../jupyter-podman-rootless/docs/16-image-cache.md)
 
 > **布尔项统一为三态**：`--x` 显式开启 / `--no-x` 显式关闭（可覆盖 `.env` 开启项）/ 两者都不给才回落 `.env` → 默认。
 > `run` 任务已关闭 invoke 自动短选项（`auto_shortflags=False`），**只承诺长选项契约**——此前自动短名顺序敏感且误导
