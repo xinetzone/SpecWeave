@@ -55,7 +55,7 @@ status: active
 | F12 | .agents/ 为 AI 智能体规范容器（角色/规则/协议/脚本） |
 | F13 | 文档架构采用三层渐进式披露：L0（入门）→ L1（索引）→ L2（详细规范） |
 | F14 | AGENTS.md 为 AI 智能体最高优先级入口路由（139行） |
-| F15 | .agents/ONBOARDING.md 为 L0 入口层（100行以内） |
+| F15 | .agents/ONBOARDING.md 为 L0 入口层（101行） |
 | F16 | .agents/capability-registry.md 为 L1 能力注册中心 |
 
 ### 1.3 里程碑变更（来自 CHANGELOG）
@@ -65,7 +65,7 @@ status: active
 | F17 | 2026-08-06 提交记录：将 .chaos/libs 下三个 OKF 目录迁移为 vendor Git 子模块 |
 | F18 | 2026-07-28 提交记录：C++ 层堆栈回溯 + 内存泄漏检测体系 + Layer/Net 集成测试修复 |
 | F19 | 2026-07-28 提交记录：风险拦截器 Windows CMD/PowerShell 全兼容性修复（7项） |
-| F20 | 2026-07-09 提交记录：完成 docs 目录全量 README 补全覆盖，新增 generate-readme.py 自动化脚本（521行） |
+| F20 | 2026-07-09 提交记录：完成 docs 目录全量 README 补全覆盖，新增 generate-readme.py 自动化脚本 |
 | F21 | 2026-07-09 提交记录：P0 阶段核心入口 README 补全（13个核心目录） |
 | F22 | 2026-07-07 提交记录：修复复盘报告 481 个断链，恢复链接体系完整性 |
 | F23 | 2026-07-07 提交记录：批量修复复盘报告中 file:/// 绝对路径为相对路径（26个文件） |
@@ -79,7 +79,7 @@ status: active
 | F26 | TOML 元数据文件数量为 200+ |
 | F27 | 测试文件数量为 200+ |
 | F28 | 脚本数量为 419+ |
-| F29 | Skills 数量为 28 |
+| F29 | Skills 数量为 30（里程碑时点 .agents/skills 目录数，git ls-tree 实测） |
 | F30 | 规则数量为 133+ |
 | F31 | 指令集数量为 15 |
 | F32 | 知识库条目与 bundles 冲突裁决依据为 projects/awesome-okf-xs/doc/bundles/（10技术域/28分组/248包） |
@@ -88,12 +88,12 @@ status: active
 
 | # | 事实 |
 |---|---|
-| F33 | generate-readme.py 脚本（521行）支持 Strategy B（模板生成）和 Strategy C（自动索引）两种模式 |
-| F34 | 中文标题映射表含 106 个目录映射 |
+| F33 | generate-readme.py 脚本（690行，截至 2026-08-12 最后变更）支持 Strategy B（模板生成）和 Strategy C（自动索引）两种模式 |
+| F34 | 中文标题映射表含 104 个目录映射 |
 | F35 | P0 阶段 13 个核心入口 README 补全完成 |
 | F36 | P1 阶段 48 个内容聚合目录 README 补全完成 |
 | F37 | P2 阶段 45 个叶子目录 README 补全完成 |
-| F38 | 0 个目录缺失 README，实现 docs/ 目录全覆盖 |
+| F38 | 截至 2026-09-11 全量复核，137 个目录缺失 README，未实现全覆盖（原声称"0 缺失"与事实不符，已勘误） |
 | F39 | 全量扫描 311 个 Markdown 文件 1338 个本地链接，新 README 引入 0 断链 |
 
 ### 1.6 复盘报告索引
@@ -128,7 +128,7 @@ status: active
 
 **证据**：F17、F20、F22、F23、F40-F56
 
-**反常识**：传统文档系统"写完即发布"的默认流程在该系统中被"生成→验证→沉淀"三阶段闭环取代——每份产出必须经过质量门（G1-G4）检验，不合格则返工；代价是单份文档产出时间增加 40%，但返工率下降 60%+。
+**反常识**：传统文档系统"写完即发布"的默认流程在该系统中被"生成→验证→沉淀"三阶段闭环取代——每份产出必须经过质量门（G1-G4）检验，不合格则返工；代价是单份文档产出时间增加约 40%，但返工率下降约 60%（注：两组数字均为经验估计值，无测量数据支撑，2026-09-11 声明对账已标注）。
 
 **下次行动**：将"生成→验证→沉淀"闭环机制文档化为可复用模式，推广到所有文档产出场景。
 
@@ -189,12 +189,29 @@ status: active
 | 文件 | 说明 |
 |---|---|
 | 本复盘报告 | R→I→E→C 全链路产出，含 56 条事实、3 条洞察、1 个候选模式、4 个行动项 |
-| [知识库入口](../../../docs/knowledge/README.md) | 1288 条目知识库入口 |
-| [复盘体系入口](../../../docs/retrospective/README.md) | 复盘报告与模式库入口 |
-| [模式库入口](../../../docs/retrospective/patterns/index.md) | 380+ 可复用模式索引 |
-| [七概念方法论定位模型](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md) | 五层层级定位图谱 |
-| [知识沉淀双层架构模式](../../../docs/retrospective/patterns/methodology-patterns/governance-strategy/knowledge-dual-layer-architecture.md) | 中间产物→质量门→最终产出模式 |
+| [知识库入口](../../../../knowledge/README.md) | 1288 条目知识库入口 |
+| [复盘体系入口](../../../../index.md) | 复盘报告与模式库入口 |
+| [模式库入口](../../../../retrospective/patterns/index.md) | 380+ 可复用模式索引 |
+| [七概念方法论定位模型](../../../../retrospective/patterns/methodology-patterns/governance-strategy/seven-concepts-positioning-model.md) | 五层层级定位图谱 |
+| [知识沉淀双层架构模式](../../../../retrospective/patterns/methodology-patterns/governance-strategy/knowledge-dual-layer-architecture.md) | 中间产物→质量门→最终产出模式 |
 
 ---
 
-*复盘完成于 2026-09-10 | 方法论：七概念 R→I→E→C | 质量门：G1 ✅ G2 ✅ G3 ✅*
+## 6. 勘误记录（2026-09-11 声明对账）
+
+依据 [declaration-reconciliation-checklist](../../../../../.agents/checklists/declaration-reconciliation-checklist.md) 对本报告执行声明对账，发现以下声明-事实不符，均已按"先收敛事实"原则更正：
+
+| # | 位置 | 原声明 | 更正 | 核验依据 |
+|---|---|---|---|---|
+| 1 | F15 | ONBOARDING.md "100行以内" | 101行 | 实测行数 |
+| 2 | F20/F33 | 脚本"521行" | 创建时 1221 行、里程碑时点 690 行，"521"不可考 | git show 历史版本实测 |
+| 3 | F29 | Skills 数量为 28 | 30 | git ls-tree 里程碑时点实测 |
+| 4 | F34 | 106 个目录映射 | 104 | 脚本映射表实测 |
+| 5 | F38 | 0 个目录缺失 README、全覆盖 | 137 个缺失（2026-09-11 全量扫描） | Get-ChildItem 递归扫描 |
+| 6 | 洞察 1 | 产出时间 +40%、返工率 -60%+ | 标注为经验估计值，无测量来源 | 声明对账标注 |
+
+注：F31（指令集 15）经复核属实（16 个文件中含 README.md，实际指令 15 个），不予更正。
+
+---
+
+*复盘完成于 2026-09-10 | 方法论：七概念 R→I→E→C | 质量门：G1 ✅ G2 ✅ G3 ✅ | 2026-09-11 声明对账勘误*
