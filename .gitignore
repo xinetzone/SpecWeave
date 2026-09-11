@@ -129,3 +129,4 @@ apps/devcontainer-base/benchmark-results-ci/
 
 # CodeArts
 .arts/
+.codeartsdoer/

@@ -19,6 +19,10 @@ x-toml-ref: "../../.meta/toml/.agents/templates/README.toml"
 | [spec-release-checklist-template.md](spec-release-checklist-template.md) | 规范发布检查 | 新规范发布时遵循三同步原则的检查清单 |
 | [document-governance-checklist-template.md](document-governance-checklist-template.md) | 文档治理检查 | 新建文档/原子化拆分/批量迁移时的质量门禁（frontmatter合规+工具清单+原则速查） |
 | [wiki-spec-template.md](wiki-spec-template.md) | Wiki教程制作模板 | 外部资源学习类wiki教程创建，含四层信息加工漏斗、8章节标准结构、DoD完成定义 |
+| [citation-redline-declaration-template.md](citation-redline-declaration-template.md) | 引用红线声明模板 | 版权书籍/课程衍生的知识包、教程类产出的 index"版权与使用说明"三段式声明（引用标准+溯源方式+使用边界），配套声明对账清单实证核验 |
+| [declaration-reconciliation-reproduction-report-template.md](declaration-reconciliation-reproduction-report-template.md) | 声明对账模式复现报告模板（A-004） | 第 2 个独立任务完成后记录声明对账模式 5 步骤复现证据与升 L2 判定（7 节结构），配套复现检查清单；防"案例 1 充数"声明入首条提示 |
+| [summary-over-transcription-reproduction-report-template.md](summary-over-transcription-reproduction-report-template.md) | 摘要替代转录模式复现报告模板（A-005） | 第 2 个独立扫描版版权材料任务完成后记录模式 6 步骤复现证据与升 L2 判定（7 节结构：案例信息→复现记录→验收→反模式自查→偏差教训→判定结论→收尾），配套复现检查清单 |
+| [compliance-contracting-reproduction-report-template.md](compliance-contracting-reproduction-report-template.md) | 合规契约化模式复现报告模板（A-006） | 第 2 个独立案例（合规红线产出物，跨场景迁移类优先）完成后记录模式 4 步骤复现证据与升 L2 判定（7 节结构），配套复现检查清单；含"契约伪造确定性"专属反模式 |
 | [subagent-wiki-delivery-checklist.md](subagent-wiki-delivery-checklist.md) | Wiki子代理验收清单 | 委派wiki创作任务时的前置检查、子代理自检、主代理8点验收检查 |
 | [subagent-output-quality-checklist.md](subagent-output-quality-checklist.md) | 通用子代理输出质量清单 | 所有general_purpose_task委托的P0级检查清单，含：(1) 输出纯净性约束（防止工具标签污染）；(2) 输出完整性强制约束（禁止摘要/提前收尾）；(3) 任务粒度原则（禁止多任务合并）；(4) 子代理自检项；(5) 主代理8项验收检查；(6) 失败重试与"事不过二"兜底策略流程图。v1.1.0重大更新，覆盖文档+分析双场景。 |
 | [tutorial-cognitive-ladder-template.md](tutorial-cognitive-ladder-template.md) | 教程认知阶梯模板 | 设计分层学习路径（入门/进阶/深入）时参考 |

@@ -34,6 +34,7 @@ retrospective-mobile-use-deep-learning-20260707/index
 retrospective-mopmonk-wiki-20260704/index
 retrospective-npu-tvm-docker-local-analysis-20260721/index
 retrospective-open-code-review-wiki-20260704/index
+retrospective-openpangu-pro-vs-deepseek-flash-20260910/index
 retrospective-oray-comprehensive-analysis-20260706/index
 retrospective-orca-ide-analysis-20260706/index
 retrospective-papi-jiang-wiki-20260706/index
