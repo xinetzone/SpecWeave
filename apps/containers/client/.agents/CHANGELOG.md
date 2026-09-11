@@ -6,6 +6,26 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `fix:` 叠加层基底指纹与陈旧检测（toolbox wrapper 缺席事故闭环）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E 链路）；用户在 client 容器（8eddb24390eb）内执行 `toolbox create` 仍裸报 `Error: TOOLBOX_PATH not set`，而构建端前一日已交付 wrapper 优雅降级。
+
+**F 阶段根因（5-Why 终局）**：client 叠加镜像在构建时刻固化基底（`FROM localhost/jupyter-podman-rootless:latest`）；rootless 基底重建（含 toolbox-wrapper.sh 与 flatpak-spawn 补装）后 tag 移动**不传导**给已存在的 overlay——当日 client:latest（CST 11:29 构建）比新基底（CST 16:22）早 5 小时，容器内 `/usr/local/bin/toolbox` 仍是 11.2 MB 裸 ELF、`/usr/local/libexec/toolbox` 不存在。系统性根因：base→overlay 镜像谱系无基底指纹，「重建基底后必须重建叠加层」只存在于操作者脑中，`run` 只验镜像「存在」不验「新鲜」。
+
+**上游事实（vendor/toolbox/src/cmd/root.go:160-173）**：容器内（`/run/.containerenv` 存在）`TOOLBOX_PATH` 为空即硬错误；该变量由宿主 Toolbx 启动器注入，用于把宿主二进制挂入新容器并经 `flatpak-spawn --host` 回调宿主。**普通 podman 会话内 `toolbox create` 架构上不可用**，wrapper 退出码 1 + 中文指引是正确行为而非失败。
+
+**修复点**：基于新 rootless:latest 重建 client 叠加层并 stop/run 替换容器（保留原 JUPYTER_TOKEN/USER_PASSWORD，浏览器访问与 SSH 凭据不变）；验证 `toolbox --version` 透传输出 `toolbox version 0.3`、`toolbox create` 输出中文指引。
+
+**预防（C10 闭环）**：
+
+1. `Containerfile.client` 末尾新增薄层 `LABEL org.specweave.base-image/base-digest`（置于末尾不使前置 COPY/RUN 缓存失效）
+2. `env_in_container.py::build_layer` 构建前自动采集基底 digest 经 `--build-arg BASE_DIGEST` 烤入标签
+3. `client_core.py` 新增 `image_inspect_info()`（走原始 JSON 而非 --format 模板，规避 Windows cmd / Linux bash 双 shell 引号与 `$` 展开差异）
+4. `manage.py::run` 启动前新增 `_warn_if_layer_stale()`：仅对 `org.specweave.component=jupyter-podman-client` 镜像比对烤入 digest 与基底当前 digest，陈旧/无指纹时中文告警并给出 `invoke env.build-layer && invoke stop && invoke run` 完整命令，**只警告不阻断**；`JPUMAN_SKIP_BASE_CHECK=1` 逃生（`.env.example` 已登记）；`load` 成功后同步一次性提示
+5. 任何 inspect 异常静默降级，不影响 run 主流程
+
+**验收点**：① 新镜像 label 中 base-digest 与 rootless 当前 digest 逐字符一致；② 四分支实测：指纹一致静默 / monkeypatch 陈旧正确告警 / skip 静默 / 非 client 镜像静默；③ 重建容器内 wrapper + flatpak-spawn 齐备；④ `py_compile` 三文件全过。
+
 ### 2026-09-10 · `fix:` 布尔参数三态化 + `run` 任务关闭自动短选项（含对上一提交声明的更正）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C 链路）；I 阶段读 invoke 3.0.3 源码定位根因，F 阶段确立可行解，V 阶段以「单元级 6 场景 + CLI 实跑」逐条证伪

@@ -33,6 +33,7 @@ Windows WSL 支持（OKF v0.2 podman-py §8 三路径）：
      CONTAINER_HOST=unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock
      # DOCKER_HOST=...  # docker 兼容兜底，优先级低于 CONTAINER_HOST
 """
+import os
 from pathlib import Path
 
 from dotenv import dotenv_values, load_dotenv
@@ -42,6 +43,7 @@ from invoke.exceptions import Exit
 from .client_core import (
     clean_container,
     image_exists,
+    image_inspect_info,
     list_images,
     load_image,
     run_container,
@@ -209,6 +211,61 @@ def _merge_config(
 
 
 # ---------------------------------------------------------------------------
+# 基底指纹陈旧检测（预防闭环，2026-09-11）
+#
+# 根因事故：inv load 更新 rootless 基底 tag 后，已构建的 client 叠加层不会
+# 随之移动（FROM 在构建时固化），run 启动的容器仍跑旧基底——当日 rootless
+# 已修复 toolbox wrapper，client 容器里仍裸报 "Error: TOOLBOX_PATH not set"。
+# 机制：env.build-layer 把构建时刻基底 digest 烤进 LABEL，run 前与本地基底
+# 当前 digest 比对，不一致即警告。只警告不阻断（可能有意使用旧基底）。
+# ---------------------------------------------------------------------------
+
+_CLIENT_COMPONENT_LABEL = "org.specweave.component"
+_CLIENT_COMPONENT_VALUE = "jupyter-podman-client"
+_BASE_IMAGE_LABEL = "org.specweave.base-image"
+_BASE_DIGEST_LABEL = "org.specweave.base-digest"
+_DEFAULT_BASE_IMAGE = "localhost/jupyter-podman-rootless:latest"
+
+
+def _warn_if_layer_stale(c: Context, image: str) -> None:
+    """启动前检测 client 叠加镜像的基底是否陈旧（详见上方注释）。
+
+    任何 inspect 失败都静默降级，不得影响 run 主流程；
+    ``JPUMAN_SKIP_BASE_CHECK=1``（或 yes/true/on）可静默警告。
+    """
+    if os.getenv("JPUMAN_SKIP_BASE_CHECK", "").strip().lower() in (
+        "1",
+        "yes",
+        "true",
+        "on",
+    ):
+        return
+    info = image_inspect_info(c, image)
+    if not info:
+        return
+    labels = info.get("labels") or {}
+    if labels.get(_CLIENT_COMPONENT_LABEL) != _CLIENT_COMPONENT_VALUE:
+        # --tag 指定的非叠加镜像不做基底检测
+        return
+    base_ref = labels.get(_BASE_IMAGE_LABEL) or _DEFAULT_BASE_IMAGE
+    baked = (labels.get(_BASE_DIGEST_LABEL) or "").strip()
+    if not baked:
+        print(f"[Run] ⚠ 叠加镜像 {image} 未携带基底指纹（构建于指纹机制上线前），")
+        print(f"[Run]   无法确认基底 {base_ref} 是否最新；如刚 load 过新基底镜像，")
+        print("[Run]   请重建叠加层: invoke env.build-layer")
+        return
+    base_info = image_inspect_info(c, base_ref)
+    current = (base_info.get("digest") or "").strip()
+    if current and current != baked:
+        print(f"[Run] ⚠ 叠加层基底陈旧：{image} 固化的基底 digest 为")
+        print(f"[Run]     {baked}")
+        print(f"[Run]   但本地 {base_ref} 当前为")
+        print(f"[Run]     {current}")
+        print("[Run]   本次仍以旧基底启动；要获得基底更新（如 toolbox wrapper 修复），")
+        print("[Run]   请重建后重启: invoke env.build-layer && invoke stop && invoke run")
+
+
+# ---------------------------------------------------------------------------
 # 镜像命令
 # ---------------------------------------------------------------------------
 
@@ -244,6 +301,10 @@ def load(c: Context, path: str | None = None, cache_dir: str | None = None) -> N
     result = load_image(c, tar_path)
     if not result.loaded:
         raise Exit(1, result.message)
+
+    # 基底更新事件：tag 移动不传导给已固化的 client 叠加层（run 前还有
+    # digest 级陈旧检测兜底，这里提前给出一次性动作提示）。
+    print("[Load] 提示：基底已更新；如使用 jupyter-podman-client 叠加层，请重建: invoke env.build-layer")
 
 
 @task
@@ -363,6 +424,9 @@ def run(
         print("[Run]   先执行: invoke load    （从构建端缓存加载）")
         print("[Run]   或执行: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
         raise Exit(1)
+
+    # 基底指纹陈旧检测（只警告不阻断；JPUMAN_SKIP_BASE_CHECK=1 静默）
+    _warn_if_layer_stale(c, cfg.image)
 
     # 启动前清理 known_hosts 过期 host key（防 HAS CHANGED 报错）；
     # 新容器的 host key 须在启动后由 refresh_host_keys 获取，避免抓取到

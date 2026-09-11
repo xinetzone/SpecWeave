@@ -160,11 +160,30 @@ def build_layer(
     if not containerfile.exists():
         raise Exit(1, f"未找到 Containerfile.client: {containerfile}")
 
+    # 基底指纹（预防闭环）：构建前取基底当前 digest，经 --build-arg 写入镜像
+    # LABEL（org.specweave.base-digest），invoke run 启动前据此检测叠加层陈旧。
+    # 取不到不阻断构建（指纹留空，run 侧按「无指纹」降级提示）。
+    base_digest = ""
+    dr = run_cmd(
+        c,
+        f'{runtime} image inspect --format "{{{{.Digest}}}}" {base_image}',
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    if dr is not None and getattr(dr, "ok", False):
+        base_digest = (dr.stdout or "").strip()
+    if base_digest:
+        print(f"[env] 基底指纹: {base_image} -> {base_digest}")
+    else:
+        print(f"[env] ⚠ 未能获取基底 digest（{base_image}），本次构建不写入基底指纹")
+
     parts = [
         runtime,
         "build",
         f"-f {containerfile}",
         f"--build-arg BASE_IMAGE={base_image}",
+        f"--build-arg BASE_DIGEST={base_digest}",
         f"-t {tag}",
     ]
     if no_cache:
