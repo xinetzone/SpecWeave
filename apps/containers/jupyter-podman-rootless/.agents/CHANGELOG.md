@@ -6,6 +6,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-09-11
+
+| 类型 | 变更 |
+|------|------|
+| fix | **devuser 固定 UID/GID 1000**（对齐上游 toolbox `images/ubuntu/26.04/Containerfile` 的 `userdel --remove ubuntu`）：基础镜像 ubuntu:26.04 自带 `ubuntu(1000)`，原 Layer 3「UID 被占则自动分配」分支使 devuser 实际漂移到 **1001**（与 AGENTS/docs 长期声称的 1000 不符，且 Toolbx init-container 按宿主 UID 1000 同步用户时连续撞 useradd/usermod）。修复：Layer 3 先 userdel ubuntu + 兜底 groupdel 1000，再 `useradd -u 1000 -U` 固定创建（保留 devuser 已存在时的 UID 断言分支）；Layer 5 新增 3 条硬断言（id/getent）；头部注释、`.agents/rules/containerfile.md`、`entrypoint.md`、docs/07、client README/Containerfile.client 注释同步。实测：新镜像 `id -u devuser`=1000、`getent passwd 1000`=devuser、ubuntu 不存在 |
+
 ## 2026-09-10
 
 | 类型 | 变更 |

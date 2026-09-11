@@ -5,7 +5,8 @@
 # Base: ubuntu:26.04 | OpenSSH Server + Jupyter Lab/Notebook + Podman(rootless)
 # Python: Miniforge3 (conda-forge) at /opt/conda (Python 3.14 cp314t free-threading, libmamba solver)
 # Locale: zh_CN.UTF-8 / Timezone: Asia/Shanghai
-# Non-root user: devuser (UID 1000 if available, auto-assigned otherwise)
+# Non-root user: devuser (fixed UID/GID 1000; stock ubuntu account removed first,
+#                mirrors upstream toolbox images/ubuntu/26.04/Containerfile userdel)
 # Services: sshd(22) + jupyter(8888), managed by supervisord; podman(rootless) for user
 #
 # Build stages:
@@ -553,17 +554,24 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     else \
         echo "[INFO] docker group already exists: GID=$(getent group docker | cut -d: -f3)"; \
     fi && \
-    echo "[BUILD] Creating devuser..." && \
-    if getent passwd devuser >/dev/null 2>&1; then \
-        echo "[INFO] User devuser already exists (UID=$(id -u devuser)), ensuring group membership..."; \
-        usermod -aG sudo,docker devuser; \
-    elif ! getent passwd 1000 >/dev/null 2>&1; then \
-        echo "[INFO] UID 1000 is free, creating devuser with UID 1000"; \
-        useradd -m -s /bin/bash -u 1000 -G sudo,docker devuser; \
+    echo "[BUILD] Removing stock 'ubuntu' account (it ships with UID/GID 1000 in ubuntu:26.04)..." && \
+    echo "[INFO] Mirrors upstream toolbox images/ubuntu/26.04/Containerfile: 'userdel --remove ubuntu'" && \
+    if getent passwd ubuntu >/dev/null 2>&1; then \
+        userdel --remove ubuntu 2>/dev/null || userdel ubuntu 2>/dev/null || true; \
+        echo "[OK] stock ubuntu user removed (frees UID/GID 1000)"; \
     else \
-        EXISTING_USER=$(getent passwd 1000 | cut -d: -f1); \
-        echo "[INFO] UID 1000 occupied by '${EXISTING_USER}', auto-assigning UID for devuser"; \
-        useradd -m -s /bin/bash -G sudo,docker devuser; \
+        echo "[INFO] stock ubuntu user absent, skip userdel"; \
+    fi && \
+    if getent group 1000 >/dev/null 2>&1; then \
+        groupdel "$(getent group 1000 | cut -d: -f1)" 2>/dev/null || true; \
+    fi && \
+    echo "[BUILD] Creating devuser with FIXED UID/GID 1000..." && \
+    if getent passwd devuser >/dev/null 2>&1; then \
+        echo "[INFO] User devuser already exists, asserting UID/GID 1000..."; \
+        test "$(id -u devuser)" = "1000" && test "$(id -g devuser)" = "1000"; \
+        usermod -aG sudo,docker devuser; \
+    else \
+        useradd -m -s /bin/bash -u 1000 -U -G sudo,docker devuser; \
     fi && \
     echo "[OK] User devuser created: UID=$(id -u devuser) GID=$(id -g devuser) groups=$(groups devuser)" && \
     echo "[BUILD] Configuring /etc/subuid and /etc/subgid for rootless Podman..." && \
@@ -757,6 +765,9 @@ RUN echo "=== Layer 5/5: Final metadata, cleanup, and verification ===" && \
     python -c "import podman; print('[OK] podman SDK (podman-py) importable (main env)')" && \
     toolbox --version && echo "[OK] toolbox available (guidance wrapper -> /usr/local/libexec/toolbox; version flag exits 0 without TOOLBOX_PATH)" && \
     test -x /usr/bin/flatpak-spawn && echo "[OK] flatpak-spawn available (Toolbx host callback prerequisite; mirrors upstream images/ubuntu/26.04/Containerfile)" && \
+    test "$(id -u devuser)" = "1000" && test "$(id -g devuser)" = "1000" && echo "[OK] devuser fixed at UID/GID 1000 (Toolbx host user alignment)" && \
+    test "$(getent passwd 1000 | cut -d: -f1)" = "devuser" && echo "[OK] passwd entry for UID 1000 is devuser" && \
+    ! getent passwd ubuntu >/dev/null 2>&1 && echo "[OK] stock ubuntu account absent (UID 1000 no longer ambiguous)" && \
     sh -c 'toolbox >/dev/null 2>/tmp/.toolbox-bare.err; test "$?" -eq 1' && \
     grep -q 'TOOLBOX_PATH is not set in this session' /tmp/.toolbox-bare.err && \
     rm -f /tmp/.toolbox-bare.err && \
