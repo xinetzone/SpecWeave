@@ -432,3 +432,71 @@ invoke run --no-gpu
 硬失败（退出码 125、不自动创建）后，消费端会把原生报错翻译为 **C-I3** 指引（见 §5.4）：
 给出缺失路径、可覆盖的变量名，以及 daemon 侧自检命令。
 
+### 11.3 三大透传的宿主侧前置（2026-09-11 实测）
+
+三项透传（Wayland / GPU / USB）的资源**都在 daemon 宿主**（podman machine / WSL2）侧，
+消费端 `.env` 只负责把开关与路径转成 `invoke run` 参数。以下为各资源的宿主就绪方法。
+
+**② Wayland（WSLg）**
+
+```bash
+# 关键：podman machine 的 Wayland socket 在 /mnt/wslg（WSLg），不在 /run/user/1000
+# 必须把 HOST_XDG_RUNTIME_DIR 设为 /mnt/wslg/runtime-dir，client 才能拼出
+# {xdg}/wayland-0 命中该 socket
+ls /mnt/wslg/runtime-dir/wayland-0     # 应存在 srwxrwxrwx
+
+# .env：
+#   PASSTHROUGH_WAYLAND=yes
+#   HOST_XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+```
+
+容器内验证：`printenv WAYLAND_DISPLAY`=wayland-0，`/tmp/runtime-user/wayland-0` 为可写 socket。
+
+**③ GPU（NVIDIA → CDI）**
+
+```bash
+# NVIDIA 下 /dev/dri 不存在（那是 Intel/AMD Mesa 路径）；WSL2 NVIDIA 走
+# /dev/dxg（DXCore）+ /usr/lib/wsl/lib/libcuda*，必须用 CDI 设备引用
+sudo dnf install -y golang-github-nvidia-container-toolkit    # Fedora（VM 内）
+sudo nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml
+
+# .env：
+#   PASSTHROUGH_GPU=yes
+#   GPU_DEVICE=nvidia.com/gpu=all            # CDI 引用（原样透传）
+#   # GPU_DEVICE=/dev/dri                    # Intel/AMD 时（映射容器内 /dev/dri）
+```
+
+容器内验证：`nvidia-smi` 显示真实 GPU（Driver/CUDA 版本）。
+
+**⑤ USB（usbipd-win）**
+
+```powershell
+# Windows：安装 + 绑定（需管理员；绑定的设备在 attach 期间由 WSL 独占）
+winget install --id Dorssel.usbipd-win
+& "C:\Program Files\usbipd-win\usbipd.exe" bind --busid <BUSID>        # 一次
+# Windows：挂载到目标 WSL 发行版（每次会话）
+& "C:\Program Files\usbipd-win\usbipd.exe" attach --wsl podman-machine-default --busid <BUSID>
+# 用毕归还 Windows
+& "C:\Program Files\usbipd-win\usbipd.exe" detach --busid <BUSID>
+```
+
+```bash
+# VM 内确认 + 安装排障工具（摄像头采集需 v4l2）
+sudo dnf install -y v4l-utils usbutils
+lsusb                                   # 应列出绑定的设备（如 Bison Integrated RGB Camera）
+ls /dev/video*                          # 摄像头 → /dev/video0/1/2
+
+# .env：
+#   PASSTHROUGH_USB=yes
+```
+
+`usbipd list` 中设备 STATE 由 `Not shared` → `Shared` 即绑定成功；attach 后 VM 内
+`/dev/bus/usb` 出现 001/002 目录。**注意**：attach 是一次性会话操作，VM/podman
+machine 重启后需重新 attach。
+
+> ⚠️ **已知边界（2026-09-11 实测）**：`--usb` 透传的是 **USB 总线级**设备节点
+> （`--device /dev/bus/usb:/dev/bus/usb`），容器内能用 `lsusb` 看到摄像头，但**无
+> `/dev/video*` 字符设备**（UVC 采集不可直接用 v4l2/OpenCV）。容器内直接用视频采集
+> 需把字符设备也注入，可用 `--extra-mount`/CLI 手动加 `--device /dev/video0:/dev/video0`
+> 等（或后续在 client 侧扩展 video 自动透传）。当前 `invoke run` 仅保证总线级可见。
+

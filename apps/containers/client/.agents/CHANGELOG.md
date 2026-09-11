@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `docs:` 透传部署文档固化（WSLg Wayland / CDI GPU / usbipd USB 前置）
+
+**关联七概念场景**：场景4「知识沉淀」（R→I→E）；三项透传（Wayland/GPU/USB）在 NVIDIA WSL2 podman machine 实测跑通后，把宿主侧前置固化为文档，避免操作者凭记忆重试。
+
+**沉淀内容**：
+- README 新增 §11.3「三大透传的宿主侧前置」：WSLg Wayland（`HOST_XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir` 关键路径）、NVIDIA GPU（CDI `nvidia-ctk cdi generate` + `GPU_DEVICE=nvidia.com/gpu=all`）、USB（usbipd-win bind/attach + VM 内确认/排障）
+- `.env.example` 同步：WSLg Wayland 注释、GPU 双形态、USB 前提步骤
+
+**验收点**：文档命令与实测路径一致（`/mnt/wslg/runtime-dir/wayland-0`、`/etc/cdi/nvidia.yaml`、`usbipd attach --wsl podman-machine-default`）；container 内验证命令可用（printenv/nvidia-smi/lsusb）。
+
 ### 2026-09-11 · `feat:` GPU 透传支持 CDI 设备引用（NVIDIA）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv run --gpu` 在 NVIDIA WSL2 podman machine 上失败 `stat /dev/dri: no such file or directory`（VM 无 `/dev/dri`，GPU 走 `/dev/dxg` DXCore）。
