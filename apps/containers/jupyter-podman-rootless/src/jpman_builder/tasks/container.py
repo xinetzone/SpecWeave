@@ -8,7 +8,7 @@
 - manage.py: 容器生命周期管理（run/stop/status/clean）
 - interact.py: 容器交互任务（shell/logs/exec）
 """
-from .build import build
+from .build import build, build_toolbx
 from .client import (
     APIError,
     PodmanNotFound,
@@ -47,6 +47,7 @@ __all__ = [
     "MIRROR_CHOICES",
     "PodmanNotFound",
     "build",
+    "build_toolbx",
     "check_runtime_ready",
     "clean",
     "compose_available",
