@@ -11,6 +11,7 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 | 类型 | 变更 |
 |------|------|
 | fix | **devuser 固定 UID/GID 1000**（对齐上游 toolbox `images/ubuntu/26.04/Containerfile` 的 `userdel --remove ubuntu`）：基础镜像 ubuntu:26.04 自带 `ubuntu(1000)`，原 Layer 3「UID 被占则自动分配」分支使 devuser 实际漂移到 **1001**（与 AGENTS/docs 长期声称的 1000 不符，且 Toolbx init-container 按宿主 UID 1000 同步用户时连续撞 useradd/usermod）。修复：Layer 3 先 userdel ubuntu + 兜底 groupdel 1000，再 `useradd -u 1000 -U` 固定创建（保留 devuser 已存在时的 UID 断言分支）；Layer 5 新增 3 条硬断言（id/getent）；头部注释、`.agents/rules/containerfile.md`、`entrypoint.md`、docs/07、client README/Containerfile.client 注释同步。实测：新镜像 `id -u devuser`=1000、`getent passwd 1000`=devuser、ubuntu 不存在 |
+| fix | **B-scheme socket 属主穿透事故修复**（UID 修复联调中暴露的潜伏缺陷）：entrypoint.sh 对 `/run/user/1000` 整体及 `podman/` 目录的 `chown -R` 会跟随**单文件 bind-mount 的宿主 podman.sock** 穿透修改宿主 inode 属主——实测宿主 socket 被改成 subuid 映射值 `525287:525287`，sshd 以 user(1000) 转发 unix socket 即被拒（`ssh: rejected: connect failed (open failed)`，Windows podman CLI/API 全断）。修复：两处 `chown -R` 降级为只 chown 目录本身，递归白名单仅保留 `libpod/`；并补 `ln source==target` 同一性幂等判断（UID 固定 1000 后挂载点与运行时路径天然相同，GNU ln 对同文件即使 -f 也报错致 set -e 中止启动）。修复后实测容器重启宿主 socket 保持 `user:user 0660`、remote API 5.7.1 连通、Jupyter HTTP 200。规范固化到 `.agents/rules/entrypoint.md`（预防措施：挂载点路径与宿主文件 inode 不隔离时，递归 chown 等价于直接改宿主） |
 
 ## 2026-09-10
 
