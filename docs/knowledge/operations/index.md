@@ -6,6 +6,7 @@
 
 caffe-docker-sop
 devcontainer-ci-build-manual
+doc-automation-toolchain
 discourse-api-research
 docker-cache-wsl-migration-guide
 docker-cache-wsl-sop

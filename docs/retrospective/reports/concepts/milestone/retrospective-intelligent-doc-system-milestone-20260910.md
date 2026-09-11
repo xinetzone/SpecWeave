@@ -201,7 +201,7 @@ gates:
 | # | 行动项 | 优先级 | Owner | 验收标准 |
 |---|---|---|---|---|
 | A1 | 将"生成→验证→沉淀"闭环机制文档化为可复用模式并落盘入库（衔接 E 阶段模式1候选） | P2 | 已完成（2026-09-11） | ✅ 模式文档已入库：[文档自动化生成与验证流水线模式](../../../patterns/methodology-patterns/concepts/doc-automation-pipeline.md)，含触发场景/步骤/反模式/迁移验证，并登记至 methodology-patterns 索引与 concepts 索引 |
-| A2 | 建立文档自动化工具链索引，降低使用门槛 | P1 | 待定 | 工具索引入库（docs/knowledge/operations/），含 generate-readme.py/check-links.py/generate_index.py 等工具说明与使用示例 |
+| A2 | 建立文档自动化工具链索引，降低使用门槛 | P1 | 已完成（2026-09-11） | ✅ [文档自动化工具链索引](../../../../knowledge/operations/doc-automation-toolchain.md) 已入库：3 分钟上手五步路径、两条流水线全景、15 个工具最小命令与深链、5 个任务配方、7 条实战陷阱；已登记 operations toctree 与分类索引。执行中经 V 阶段对抗审查发现并修复 generate_index.py 目录迁移后路径缺陷（独立提交）；知识库机器生成索引全量重生成的契约漂移（条目口径 1288 旧快照 vs 248 现状、旧分片被 toctree 引用）另立为后续治理项，未纳入本行动项 |
 | A3 | 建立知识库与复盘体系的双向引用规范 | P2 | 待定 | 引用规范文档入库，明确"复盘→模式→知识库"和"知识库→复盘→修正"两条路径 |
 | A4 | 为知识库条目建立定期复核机制 | P3 | 待定 | 复核周期 ≤3 个月，复核记录可追溯，过期条目标注"待更新" |
 
