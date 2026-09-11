@@ -14,6 +14,7 @@ epub-to-markdown-conversion-research
 forum-automation
 frontmatter-link-batch-repair-guide
 html-body-extraction
+knowledge-retrospective-cross-reference-spec
 p0-02-knowledge-archive-rules
 p0-05-task-classification-skeleton
 p1-06-docker-image-build-run

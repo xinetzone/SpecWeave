@@ -27,7 +27,7 @@ date: "2026-07-09"
 
 ## 📚 分类索引
 
-共 16 篇操作指南，按主题分为 9 大类：
+共 28 篇操作指南，按主题分为 10 大类：
 
 ### 💬 Discourse / 论坛自动化
 
@@ -71,6 +71,12 @@ date: "2026-07-09"
 |------|-----------|------|
 | [doc-automation-toolchain.md](doc-automation-toolchain.md) | 文档自动化工具链任务路由索引：3分钟上手五步路径、知识库索引/仓库文档工程两条流水线全景、15个工具最小命令与深链、5个复制即用任务配方、7条实战陷阱 | 🔍 reviewed |
 
+### 🧭 知识治理
+
+| 文档 | 一句话摘要 | 状态 |
+|------|-----------|------|
+| [knowledge-retrospective-cross-reference-spec.md](knowledge-retrospective-cross-reference-spec.md) | 知识库与复盘体系双向引用契约：沉淀（复盘→模式→知识库）与验证回路（知识库→复盘→修正）两条路径的触发时机、必选回链点、相对路径层级表与提交前清单 | ✅ stable |
+
 ### 📦 Vendor 集成
 
 | 文档 | 一句话摘要 | 状态 |
@@ -105,6 +111,7 @@ date: "2026-07-09"
 | 🔧 工具调用失败怎么办 | [tool-failure-degradation-matrix.md](tool-failure-degradation-matrix.md) | L1首选→L2降级→L3兜底，按矩阵查表 |
 | 🔗 frontmatter路径/链接批量修复 | [frontmatter-link-batch-repair-guide.md](frontmatter-link-batch-repair-guide.md) | 先诊断分类，再按8阶段分层修复，每层验证后进入下一层 |
 | 📚 不知道文档维护该用哪个脚本 | [doc-automation-toolchain.md](doc-automation-toolchain.md) | 从3分钟上手五步路径开始，按任务查速查表与配方，参数细节深链原始用法 |
+| 🧭 复盘产出的知识该怎么互链 | [knowledge-retrospective-cross-reference-spec.md](knowledge-retrospective-cross-reference-spec.md) | 按沉淀/验证两条路径建成对回链，source 与正文链接分工不同 |
 | 📦 想使用flexloop功能 | [vendor-flexloop-integration-guide.md](vendor-flexloop-integration-guide.md) | 严禁直接修改vendor/flexloop/，按决策树选合规路径 |
 | 📋 PowerShell多行字符串 | [windows-powershell-heredoc.md](windows-powershell-heredoc.md) | 用 `@'...'@` Here-String 替代 `<<'EOF'` |
 | 🐳 构建 Caffe Docker 镜像 | [caffe-docker-sop.md](caffe-docker-sop.md) | 一键构建：`./build/build-multistage.sh --target runtime --verify` |
