@@ -249,6 +249,14 @@ def passthrough_paths() -> dict:
     """
     xdg = os.environ.get("HOST_XDG_RUNTIME_DIR") or host_runtime_dir()
     wayland_display = os.environ.get("HOST_WAYLAND_DISPLAY") or "wayland-0"
+    # VIDEO_DEVICES：逗号分隔的 UVC 字符设备列表（摄像头采集）。默认 /dev/video0-3
+    # （典型 4 个 V4L2 节点，含 IR 摄像头）。宿主无 video* 时 podman 硬失败（exit 125），
+    # 走 C-I3 诊断；用 VIDEO_DEVICES 精确指定所需节点。
+    video_devices = [
+        d.strip()
+        for d in os.environ.get("VIDEO_DEVICES", "/dev/video0,/dev/video1,/dev/video2,/dev/video3").split(",")
+        if d.strip()
+    ]
     return {
         "xdg_runtime_dir": xdg,
         "wayland_display": wayland_display,
@@ -256,6 +264,7 @@ def passthrough_paths() -> dict:
         "dbus_bus": os.environ.get("DBUS_SESSION_BUS_PATH") or f"{xdg}/bus",
         "gpu_device": os.environ.get("GPU_DEVICE") or "/dev/dri",
         "usb_device": os.environ.get("USB_DEVICE") or "/dev/bus/usb",
+        "video_devices": video_devices,
     }
 
 
@@ -320,6 +329,13 @@ def build_passthrough_spec(cfg: "ContainerConfig") -> PassthroughSpec:
 
     if cfg.usb:
         spec.devices.append(f"{paths['usb_device']}:/dev/bus/usb")
+
+    if cfg.video:
+        # UVC 字符设备透传（摄像头采集）：--device <host>:/dev/video<n>（同名映射）。
+        # 默认 VIDEO_DEVICES 为 /dev/video0-3，可通过 VIDEO_DEVICES 环境变量精确指定；
+        # 宿主无对应节点时 podman 硬失败（exit 125），由 passthrough_diagnose_hint 翻译。
+        for dev in paths["video_devices"]:
+            spec.devices.append(f"{dev}:{dev}")
 
     return spec
 
@@ -404,6 +420,7 @@ class ContainerConfig:
     gpu: bool = False
     usb: bool = False
     dbus: bool = False
+    video: bool = False
 
     def resolved_workspace(self) -> Path:
         """将 workspace 解析为**宿主系统**下的绝对路径（用于卷挂载源路径）。

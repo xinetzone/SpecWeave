@@ -167,6 +167,8 @@ def _merge_config(
     no_usb=False,
     dbus=False,
     no_dbus=False,
+    video=False,
+    no_video=False,
 ) -> ContainerConfig:
     """根据 args > .env > 默认 的优先级合并配置。"""
     project_root = _project_root()
@@ -206,6 +208,7 @@ def _merge_config(
         gpu=_resolve_bool(gpu, no_gpu, env, "PASSTHROUGH_GPU", False, "gpu"),
         usb=_resolve_bool(usb, no_usb, env, "PASSTHROUGH_USB", False, "usb"),
         dbus=_resolve_bool(dbus, no_dbus, env, "PASSTHROUGH_DBUS", False, "dbus"),
+        video=_resolve_bool(video, no_video, env, "PASSTHROUGH_VIDEO", False, "video"),
     )
     return cfg
 
@@ -350,6 +353,8 @@ def images(c: Context) -> None:
         "no-usb": "显式关闭 USB 透传（覆盖 .env 的 PASSTHROUGH_USB）",
         "dbus": "④ D-Bus 会话总线透传（需 daemon 宿主存在会话总线，缺失时按 C-I3 指引处理）",
         "no-dbus": "显式关闭 D-Bus 透传（覆盖 .env 的 PASSTHROUGH_DBUS）",
+        "video": "⑥ UVC 摄像头字符设备透传（默认 /dev/video0-3，可用 VIDEO_DEVICES 指定，摄像头采集需 v4l2/OpenCV）",
+        "no-video": "显式关闭 Video 透传（覆盖 .env 的 PASSTHROUGH_VIDEO）",
     },
     # 关闭自动短选项：invoke 的短名是「逐字符取首个未被占用字符」，对参数多的任务会产生
     # 顺序敏感且误导的短名（实测 ssh_public_key 抢走 -h 致 `invoke run -h` 报错；
@@ -379,10 +384,12 @@ def run(
     no_usb: bool = False,
     dbus: bool = False,
     no_dbus: bool = False,
+    video: bool = False,
+    no_video: bool = False,
 ) -> None:
     """启动容器（SDK 优先，CLI fallback）。默认镜像 localhost/jupyter-podman-client:latest，可通过 --tag 指定其他镜像。
 
-    运行时透传默认全关（默认隔离）；5 个开关与构建端 docs/07-toolbx-passthrough.md
+    运行时透传默认全关（默认隔离）；6 个开关与构建端 docs/07-toolbx-passthrough.md
     的分层覆盖逐项对应，可任意组合。
 
     所有布尔项均为 `--x` / `--no-x` 三态：两者都不给 = 未指定（看 .env），
@@ -409,6 +416,8 @@ def run(
         no_usb=no_usb,
         dbus=dbus,
         no_dbus=no_dbus,
+        video=video,
+        no_video=no_video,
     )
     cfg.detach = not no_detach
 

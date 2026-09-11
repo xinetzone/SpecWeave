@@ -611,6 +611,7 @@ def _print_passthrough_summary(cfg: ContainerConfig) -> None:
             ("gpu", cfg.gpu),
             ("usb", cfg.usb),
             ("dbus", cfg.dbus),
+            ("video", cfg.video),
         )
         if on
     ]

@@ -6,6 +6,20 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `feat:` 新增 --video 透传（UVC 摄像头字符设备）
+
+**关联七概念场景**：场景3「重构优化」（I→F→A→C）；USB 透传仅总线级（容器内 lsusb 可见但无 /dev/video*），摄像头采集（v4l2/OpenCV）需字符设备。
+
+**I 阶段根因**：`--usb` 透传 `/dev/bus/usb`（总线级），UVC 摄像头需 `/dev/video<n>` 字符设备。
+
+**修复点**（A 阶段原子拆分）：
+- `utils.py`：`passthrough_paths()` 增 `video_devices`（`VIDEO_DEVICES` env，逗号分隔，默认 `/dev/video0-3`）；`build_passthrough_spec` 增 video 分支（每设备 `--device <d>:<d>` 同名映射）；`ContainerConfig` 增 `video=False`
+- `manage.py`：run 增 `--video/--no-video` 三态 + `.env` 键 `PASSTHROUGH_VIDEO` + help
+- `client_core.py`：透传摘要打印补 video
+- 文档：`.env`/`.env.example` 增 PASSTHROUGH_VIDEO 与 VIDEO_DEVICES 说明；README §11 表格补 ⑥ 行 + §11.3 增 Video 段落（回写原"已知边界"为已支持）
+
+**验收点**：① `inv run --help` 出现 `--video/--no-video`；② 重启后 run 命令含 `--device /dev/video0-3` 四项；③ 容器内 `/dev/video0-3` 字符设备存在，`head -c1` 打开成功（EINVAL 为非协商格式预期行为）；④ 容器内 `fcntl.ioctl(QUERYCAP)` 返回 `driver=uvcvideo card=Integrated RGB Camera`（uvcvideo 驱动探活成功）；⑤ 透传摘要显示 `video`。
+
 ### 2026-09-11 · `docs:` 透传部署文档固化（WSLg Wayland / CDI GPU / usbipd USB 前置）
 
 **关联七概念场景**：场景4「知识沉淀」（R→I→E）；三项透传（Wayland/GPU/USB）在 NVIDIA WSL2 podman machine 实测跑通后，把宿主侧前置固化为文档，避免操作者凭记忆重试。

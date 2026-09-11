@@ -396,6 +396,7 @@ invoke env.shell
 | ③ | `--gpu` | `compose.passthrough.gpu.yaml` | daemon 宿主存在 `GPU_DEVICE`（默认 `/dev/dri`） |
 | ④ | `--dbus` | `compose.passthrough.yaml`（D-Bus） | daemon 宿主存在会话总线 socket |
 | ⑤ | `--usb` | `compose.passthrough.usb.yaml` | daemon 宿主存在 `USB_DEVICE`（默认 `/dev/bus/usb`） |
+| ⑥ | `--video` | —（client 扩展，usbipd 挂载后 UVC 字符设备） | daemon 宿主存在 `/dev/video0-3`（可用 `VIDEO_DEVICES` 指定） |
 
 **默认全关（默认隔离）**：不带任何开关时生成的运行参数与旧版本完全一致（输出零变化），
 rootless 三必需 `/dev/fuse + label=disable + cgroupns=host` 始终硬编码保留，**任何路径都不使用 `--privileged`**。
@@ -494,9 +495,9 @@ ls /dev/video*                          # 摄像头 → /dev/video0/1/2
 `/dev/bus/usb` 出现 001/002 目录。**注意**：attach 是一次性会话操作，VM/podman
 machine 重启后需重新 attach。
 
-> ⚠️ **已知边界（2026-09-11 实测）**：`--usb` 透传的是 **USB 总线级**设备节点
-> （`--device /dev/bus/usb:/dev/bus/usb`），容器内能用 `lsusb` 看到摄像头，但**无
-> `/dev/video*` 字符设备**（UVC 采集不可直接用 v4l2/OpenCV）。容器内直接用视频采集
-> 需把字符设备也注入，可用 `--extra-mount`/CLI 手动加 `--device /dev/video0:/dev/video0`
-> 等（或后续在 client 侧扩展 video 自动透传）。当前 `invoke run` 仅保证总线级可见。
+> ✅ **Video 透传（2026-09-11 新增）**：`--video`（或 `.env` `PASSTHROUGH_VIDEO=yes`）把
+> UVC 摄像头字符设备透传给容器——默认 `/dev/video0-3`，可用 `VIDEO_DEVICES=/dev/video0,/dev/video1`
+> 精确指定。配合 `--usb`（USB 总线级）即可在容器内用 v4l2/OpenCV 直接采集摄像头。
+> 前置：先完成上方 usbipd bind/attach 使摄像头在 daemon 宿主出现 `/dev/video*`；
+> 缺失时 podman 硬失败（exit 125），走 C-I3 诊断。
 
