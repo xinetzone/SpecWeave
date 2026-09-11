@@ -6,6 +6,27 @@
 
 ## [Unreleased]
 
+### 2026-09-11 · `fix:` SDK 在 Windows 原生结构性不可用诊断为 W-I4 + P2 显式 Machine SSH URI
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E）；`inv run`/`inv images` 在 Windows 11 原生 CPython（py314t）持续打印「SDK路径不可用（首候选=P1-wsl-9p AttributeError）」且降级原因不明。
+
+**F 阶段根因链（5-Why）**：
+1. 现象：首候选 P1-wsl-9p AttributeError → 但实际 `os` 无 `getuid`（`AttributeError: module 'os' has no attribute 'getuid'`）
+2. 为什么 from_env 被调用？→ P1/P2 候选 `base_url=None` 时 `get_client` 走 `_podman_sdk.from_env()`
+3. 为什么 from_env 崩？→ podman-py `podman/api/path_utils.py::get_runtime_dir()` L20 调 `os.getuid()`（POSIX 专属，Windows 无此属性）
+4. 为什么即使显式 ssh:// 仍崩？→ podman-py `podman/api/uds.py::UDSSocket.__init__` L34 调 `socket.socket(socket.AF_UNIX, ...)`（py314t 实测无 `AF_UNIX`）——Windows 原生下 unix/ssh 适配**皆不可用**（结构性，非配置问题）
+5. 为什么 P2-machine 也没救？→ 原实现 base_url=None → from_env，撞同一 AttributeError；日志仅笼统显示「首候选=P1-wsl-9p AttributeError」未归因
+
+**修复点**（C 阶段原子拆分）：
+- `utils.py`：新增 `machine_connection_uri()`（`podman system connection list --format json` → Default=true 连接 URI，lru_cache）；`sdk_base_url_candidates` 的 P2-machine 候选在 Windows 原生改用显式 ssh://（实测返回 `ssh://user@127.0.0.1:63851/run/user/1000/podman/podman.sock`），规避 from_env 崩溃
+- `utils.py::windows_diagnose_hint`：新增 **W-I4** 分支（`AttributeError` + `getuid`/`AF_UNIX`）——明确「结构性不可用、与配置无关、已自动降级 CLI fallback」
+- `.env` / `.env.example`：`WSL_DISTRO_NAME=Ubuntu` → `podman-machine-default`（本机 `wsl.exe --list --quiet` 实测发行版名；原值不存在导致 P1 探测失败前置误导）
+- README §5.4 / rules/windows-wsl.md §5：W-I1~W-I3 → W-I1~W-I4（三处同步）
+
+**V 对抗审查要点**：改 vendor/podman-py（third_party 只读子模块）被否——即使修复 `os.getuid()`，`AF_UNIX` 依旧缺失，SDK 在任何 scheme 下都不可用，治标不治本；正确闭环是「识别 + 显式提示 + 自动 CLI fallback」。
+
+**验收点**：① `inv images` 在 py314t 正常输出镜像表（降级一行提示，非错误）；② `PODMAN_CLIENT_LOG_LEVEL=DEBUG inv images` 打印 W-I4 全量根因与 30 秒修复；③ `machine_connection_uri()` 返回非空 ssh://；④ README §5.4 / windows-wsl.md §5 / utils.py 三处 W-I4 描述一致；⑤ `py_compile` 两文件零告警。
+
 ### 2026-09-11 · `feat:` 新增 --video 透传（UVC 摄像头字符设备）
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→C）；USB 透传仅总线级（容器内 lsusb 可见但无 /dev/video*），摄像头采集（v4l2/OpenCV）需字符设备。

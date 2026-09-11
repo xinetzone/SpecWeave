@@ -15,6 +15,7 @@ Windows WSL 支持说明（对齐 podman-py OKF v0.2 §8 Windows 三路径）：
 """
 import ctypes
 import functools
+import json
 import os
 import platform
 import re
@@ -666,12 +667,16 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
 
     # ── P2: Podman Machine（auto / machine 强制） ────────────────────────
     if strategy in {"auto", "machine"}:
-        # base_url=None 表示：直接 PodmanClient() / from_env()，让 SDK 自己
-        # 读 containers.conf active_service.is_machine 走 PM-1 / PM-2 命名连接
+        # Windows 原生：from_env()/无参构造依赖 os.getuid（podman.api.path_utils）
+        # 与 unix 适配需要 socket.AF_UNIX，Windows 原生 CPython 两者皆缺 → 必然 AttributeError。
+        # 绕开 crash：直接探测宿主 `podman system connection list` 的默认连接
+        # （Podman Desktop 初始化时自动写入 containers.conf），拿到 ssh:// 显式 base_url。
+        # Linux 原生无此问题，保持 base_url=None 走 SDK 自身的 active_service 解析。
+        fallback_url = machine_connection_uri() if is_host_windows else None
         candidates.append(
             BaseUrlCandidate(
                 source="P2-machine",
-                base_url=None,
+                base_url=fallback_url,
                 hint=(
                     "Podman Machine（Podman Desktop）。请确保：\n"
                     "  1) 打开 Podman Desktop 并点击「Initialize Podman Machine」\n"
@@ -697,6 +702,53 @@ def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandi
         )
 
     return candidates
+
+
+@functools.lru_cache(maxsize=1)
+def machine_connection_uri() -> Optional[str]:
+    """Windows 原生下探测 Podman Machine 默认连接的显式 base_url。
+
+    通过 ``podman system connection list --format json`` 读取 Default=true 的连接
+    （Podman Desktop 初始化时会把 Machine 的 ssh:// URI 写入 containers.conf 的
+    [engine].active_service，CLI fallback 正是借此连接的）。
+
+    返回 ssh:// URI（如 ``ssh://user@127.0.0.1:63851/run/user/1000/podman/podman.sock``）
+    或 None（探测失败：podman CLI 不在 PATH / 无 Machine / 非 Windows）。
+
+    Windows 原生下必须绕开 ``from_env()``（其回退链调用 ``podman.api.path_utils.get_runtime_dir()``
+    依赖 ``os.getuid()``，Windows 无此属性 → AttributeError），故 P2 候选在 Windows 用
+    本函数的返回值作显式 base_url；Linux 原生 ``from_env()`` 正常，无需此探测。
+    """
+    if platform.system() != "Windows":
+        return None
+    runtime = shutil.which("podman")
+    if not runtime:
+        return None
+    try:
+        cp = subprocess.run(
+            [runtime, "system", "connection", "list", "--format", "json"],
+            capture_output=True,
+            text=True,
+            timeout=8,
+            encoding="utf-8",
+            errors="replace",
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if cp.returncode != 0 or not (cp.stdout or "").strip():
+        return None
+    try:
+        conns = json.loads(cp.stdout)
+    except (json.JSONDecodeError, TypeError):
+        return None
+    if not isinstance(conns, list):
+        return None
+    for conn in conns:
+        if isinstance(conn, dict) and conn.get("Default") and conn.get("URI"):
+            uri = str(conn["URI"]).strip()
+            if uri.startswith(("ssh://", "unix://", "tcp://")):
+                return uri
+    return None
 
 
 def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
@@ -763,6 +815,27 @@ def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
             "[W-I3] SSH 隧道子进程卡在首次 host key 交互（std 阻塞在 yes/no 提问）。\n"
             "     → 修复（30 秒）：命令行先手动执行一次 `podman machine ssh true`\n"
             "        在 Are you sure ...? 提示后敲 yes 回车，把 machine key 写进 known_hosts。"
+        )
+
+    # W-I4：Windows 原生 CPython 缺少 POSIX 专属属性（os.getuid / socket.AF_UNIX）。
+    #   podman.api.path_utils.get_runtime_dir() 调用 os.getuid()（from_env 回退链）
+    #   uds.py::UDSSocket.__init__ 调用 socket.socket(socket.AF_UNIX, ...)（unix:///ssh:// 适配）
+    #   Windows 原生 Python 两者皆缺 → AttributeError。SDK 在 Windows 原生结构性不可用，
+    #   修复 = 走 CLI fallback（自动）或显式 CONTAINER_HOST（ssh:// Machine）由 machine_connection_uri() 探测。
+    if (
+        "attributeerror" in et
+        and ("getuid" in em or "af_unix" in em)
+    ) or (
+        "has no attribute" in em and ("getuid" in em or "af_unix" in em)
+    ):
+        return (
+            "[W-I4] podman-py 在 Windows 原生 CPython 结构性不可用（依赖 POSIX 专属属性）。\n"
+            "     → 根因：from_env() 回退链调用 os.getuid()；unix/ssh 适配调用 socket.AF_UNIX，\n"
+            "        Windows 原生 Python 两者皆无 → AttributeError。与配置无关，SDK 无法在此平台直连。\n"
+            "     → 修复（30 秒）：本工具已自动降级 CLI fallback（podman.exe 子进程，可用）；\n"
+            "        如需 SDK 路径，a) 改在 WSL2 内跑本脚本（100% Linux 行为），\n"
+            "        b) 或显式设 CONTAINER_HOST=ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock\n"
+            "        （端口可用 `podman system connection list --format json` 查询）"
         )
     return ""
 
