@@ -86,6 +86,15 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 与 CLI（`_run_via_cli`）只允许消费同一份 spec，**禁止两条路径各自拼接**——否则极易出现
 「SDK 支持某开关、CLI 不支持」的不一致（C8 A/B 维度分离之外的第三条隐式约束）。
 
+⚠️ **B-scheme socket 路径必须来自 `utils.host_runtime_uid()` 单一事实源**（`podman_sock_path()` /
+`host_runtime_dir()` 均消费它，禁止任何调用方重新拼 `/run/user/<uid>` 或硬编码 1000）。
+推导优先级：`PODMAN_RUNTIME_UID` 显式覆盖 → POSIX `$XDG_RUNTIME_DIR` 末段 → `os.getuid()` →
+Windows 原生回落 1000。`invoke run` 在 `check_runtime_ready()` 之后必须调用
+`ensure_host_podman_socket()`：原生 Linux 上 socket 缺失时自动 `systemctl --user start podman.socket`
+（10s 超时、best-effort、容器内/非 podman/非 Linux 一律放行），失败 fail-fast 抛 **C-I5** 指引。
+C-I5（必选核心 socket）与 C-I3（opt-in 透传资源）的诊断分流：异常文本含 `podman.sock` → C-I5；
+`passthrough_diagnose_hint()` 对 `podman.sock` 路径必须返回空串，严禁误报"去掉 --wayland/--gpu 开关"。
+
 ### 3.3 load 专项契约（`manage.load` → `client_core.load_image`）
 
 `invoke load` 的完整调用链与判定语义（任何重构必须逐项保持等价）：
@@ -206,13 +215,15 @@ invoke 的短名生成是「逐字符取首个未被占用字符」且与参数�
 | S3 | 挂载卷源路径必须先 `Path(...).expanduser().resolve()` 再转 POSIX；不能接相对路径直接拼 `-v` |
 | S4 | 自动生成的 `USER_PASSWORD`/`JUPYTER_TOKEN` 必须使用 `secrets.token_urlsafe(16)` / `secrets.token_hex(32)`（强加密随机），不能用 `random.choices` 或 uuid4（可预测） |
 | S5 | load 的 tar_path 必须在调用子进程**之前**完成存在性校验（`load_image` 内 `tar_path.exists()` 不通过即返回 `LoadImageResult(loaded=False)`，由 `manage.load` 任务层 `raise Exit(1)`）；POSIX 命令为 `podman load -i`、Windows 原生为 `type \| podman load`（均经 `image_load_cli_command()` 构造）。不能让 podman 子进程自己报 "file not found"，导致用户分不清是 tar 不存在还是 daemon 连不上 |
+| S6 | B-scheme socket 路径 UID 禁止硬编码：只允许经 `host_runtime_uid()` 推导（显式 `PODMAN_RUNTIME_UID` → POSIX `$XDG_RUNTIME_DIR` 末段 → `os.getuid()` → Windows 1000）。`invoke run` 必须先 `ensure_host_podman_socket()` 预检/自愈再拼 `podman run`；诊断分流上 `podman.sock` 缺失归 **C-I5**，opt-in 透传资源缺失归 C-I3，二者关键字不得交叉误报 |
 
 ## 6. 测试与验证
 
 - 静态语法：`python -m py_compile src/jpman_client/tasks/*.py`（无 SyntaxError，全部通过）
 - Lint/类型：VS Code GetDiagnostics（五文件零告警）
-- 功能冒烟（任何任务修改后必跑 4 条）：
+- 功能冒烟（任何任务修改后必跑 5 条）：
   1. `invoke --list`：命名空间加载无 ImportError，且 7 个根命令 + `container.*`（7 个）+ `env.*`（3 个）齐全
   2. `invoke images`：SDK 可用→显示表格；SDK 不可用→自动 CLI fallback 同样显示表格（不能直接崩，哪怕是空表）
   3. `PODMAN_CLIENT_SDK_STRATEGY=legacy invoke images`：逃生舱 legacy 等价行为确认（调用路径不同但输出格式一致）
   4. **load 平台分流回归（改动 load 链路时必跑）**：POSIX 上 `invoke load`（有缓存时幂等执行）回显必须是 `podman load -i "..."` 且解析出 Tags；无缓存/无 daemon 环境至少静态断言 `image_load_cli_command("podman", p)` 在 Linux 输出 `load -i`、在模拟 `platform.system()=="Windows"` 下输出 `type "..." | podman load`——两条分支字符串错配即判失败（2026-09-12 exit=125 事故回归门）
+  5. **B-scheme socket 回归（改动 run 链路时必跑）**：`host_runtime_uid()` 静态断言四优先级（显式覆盖 / XDG 末段 / `os.getuid()` / 模拟 Windows→1000）；原生 Linux 上构造 socket 缺失（`systemctl --user stop podman.socket` 后文件不在）调用 `ensure_host_podman_socket()` 必须返回第三元 `True`（已自愈）；`passthrough_diagnose_hint("Error: statfs .../podman/podman.sock: no such file...")` 必须返回空串（防 C-I5/C-I3 交叉误报，2026-09-12 UID 1006 事故回归门）

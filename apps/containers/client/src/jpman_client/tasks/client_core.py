@@ -22,11 +22,13 @@ from .utils import (
     ContainerConfig,
     LoadImageResult,
     SDK_STRATEGY_ENV,
+    bsock_missing_guidance,
     build_passthrough_spec,
     check_runtime_ready,
     container_exists as cli_container_exists,
     container_running as cli_container_running,
     detect_runtime,
+    ensure_host_podman_socket,
     generate_random_string,
     image_load_cli_command,
     passthrough_diagnose_hint,
@@ -710,11 +712,15 @@ def _run_via_sdk(client, cfg: ContainerConfig, workspace_posix: str) -> bool:
             print("[SDK] 容器前台运行")
         return True
     except Exception as e:
-        # 透传资源缺失（C-I3）：podman 硬失败，且 Windows 原生 TTY 控制台下 CLI 路径
-        # 走 subprocess.call 不捕获 stderr，故 SDK 层是 C-I3 指引的主要提示来源。
-        hint = passthrough_diagnose_hint(str(e))
-        if hint:
-            print(hint)
+        # B-scheme 核心 socket 缺失（C-I5）优先于 opt-in 透传诊断（C-I3）；
+        # Windows 原生 TTY 控制台下 CLI 路径走 subprocess.call 不捕获 stderr，
+        # 故 SDK 层是 C-I5/C-I3 指引的主要提示来源。
+        if "podman.sock" in str(e):
+            print(bsock_missing_guidance())
+        else:
+            hint = passthrough_diagnose_hint(str(e))
+            if hint:
+                print(hint)
         print(f"[SDK] 启动失败 fallback to CLI: {e}")
         return False
 
@@ -828,6 +834,15 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
         # 用 Exit 而非 RuntimeError：invoke 下前者打印简洁中文提示，后者会抛出完整 traceback
         raise Exit(1, f"运行时未就绪: {hint}")
 
+    # B-scheme 预检（仅原生 Linux 本机生效）：socket 挂载源不存在则 podman run 必然
+    # statfs 硬失败 exit=125；先尝试自动拉起用户级 podman.socket，失败即 fail-fast
+    # 给出 C-I5 指引，避免注定失败的 run 与 C-I3 误报（2026-09-12，UID 1006 事故）。
+    sock_ready, sock_detail, sock_started = ensure_host_podman_socket()
+    if not sock_ready:
+        raise Exit(1, bsock_missing_guidance(sock_detail))
+    if sock_started:
+        print(f"[Run][B-scheme] 已自动启动用户级 podman.socket: {podman_sock_path()}")
+
     _ensure_secrets(cfg)
     workspace_path = cfg.resolved_workspace()
     if not workspace_path.exists():
@@ -855,10 +870,15 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
     if not sdk_ok:
         try:
             _run_via_cli(c, cfg, workspace_posix)
-        except Exception as exc:  # noqa: BLE001 - 需把 podman 原生报错翻译成 C-I3 指引
-            pt_hint = passthrough_diagnose_hint(_exception_text(exc))
-            if pt_hint:
-                print(pt_hint)
+        except Exception as exc:  # noqa: BLE001 - 需把 podman 原生报错翻译成 C-I5/C-I3 指引
+            exc_text = _exception_text(exc)
+            # B-scheme 核心 socket（C-I5）优先于 opt-in 透传（C-I3）
+            if "podman.sock" in exc_text:
+                print(bsock_missing_guidance())
+            else:
+                pt_hint = passthrough_diagnose_hint(exc_text)
+                if pt_hint:
+                    print(pt_hint)
             raise
 
     if cfg.host_network and cfg.jupyter_port != 8888:
