@@ -21,9 +21,11 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 | 学习总结 | "做个学习总结" | 学习成长场景 |
 
 **最快生成**（仅提供 task_name）→ 标准版 10 章报告 (~3分钟)
-**完整配置选项** → 见 [api-reference.md](references/api-reference.md)
-**错误排查指南** → 见 [error-codes.md](references/error-codes.md)
-**内部原理详解** → 见 [execution-flow.md](references/execution-flow.md)
+**完整配置选项** → 见 [api-reference.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/api-reference.md)
+**错误排查指南** → 见 [error-codes.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/error-codes.md)
+**内部原理详解** → 见 [execution-flow.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/execution-flow.md)
+
+> 📎 本文是批量迁移的 SKILL.md 单文件副本；references/ 深度文档保留在 flexloop vendor 子模块（只读），以上链接指向 vendor 完整资产，勿改回本地相对路径。
 
 ---
 
@@ -88,7 +90,7 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 
 ### 3️⃣ 命令式调用
 
-支持参数化调用以定制输出（详见 [api-reference.md](references/api-reference.md)）：
+支持参数化调用以定制输出（详见 [api-reference.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/api-reference.md)）：
 
 ```bash
 # 基础调用
@@ -112,7 +114,7 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 
 # 🔄 执行流程
 
-本技能遵循 **7 步标准执行流程**（详见 [execution-flow.md](references/execution-flow.md)）：
+本技能遵循 **7 步标准执行流程**（详见 [execution-flow.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/execution-flow.md)）：
 
 ## 流程概览
 
@@ -152,7 +154,7 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 5. **协作效果分析**：（如适用）评估沟通效率和分工合理性
 
 ### Step 5: 报告生成
-基于 **10 章标准模板**动态填充内容（详见 [templates.md](references/templates.md)）：
+基于 **10 章标准模板**动态填充内容（详见 [templates.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/templates.md)）：
 - 执行概览 → 目标背景 → 执行过程 → 关键决策 → 问题解决
 - 资源使用 → 团队协作 → 多维分析 → 经验方法 → 改进行动
 
@@ -258,7 +260,7 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 - **E042**: 文件系统写入失败
 - **E043**: 未预期的系统异常
 
-完整错误码定义、详细说明和处理建议见 [error-codes.md](references/error-codes.md)
+完整错误码定义、详细说明和处理建议见 [error-codes.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/error-codes.md)
 
 ---
 
@@ -268,18 +270,18 @@ description: "系统性总结任务从启动到完成的整个执行过程，生
 
 | 文档 | 用途 | 主要内容 | 何时阅读 |
 |------|------|---------|---------|
-| [api-reference.md](references/api-reference.md) | 完整 API 参数规范 | 所有输入参数、输出格式、调用示例 | 集成调用时、需要精确控制输出时 |
-| [error-codes.md](references/error-codes.md) | 所有错误码定义 | 完整错误码列表、原因分析、修复建议 | 排查问题时、调试报错时 |
-| [execution-flow.md](references/execution-flow.md) | 7步流程详解 | 每一步的详细说明、输入输出、边界情况 | 调试流程问题时、理解内部原理时 |
-| [examples.md](examples.md) | 4 场景使用示例 | 软件开发/Sprint/故障/学习的真实示例 | 学习用法时、首次使用时 |
-| [examples-v2.md](examples-v2.md) | V2 完整请求/响应示例 | 标准化的请求响应格式、字段说明 | 开发集成时、测试对接时 |
-| [terminology.md](references/terminology.md) | 86 个专业术语 | 术语定义、使用场景、相关概念 | 遇到术语困惑时、撰写报告时 |
-| [templates.md](references/templates.md) | 4 种模板变体 | 模板结构、章节细节、填写指南 | 选择模板时、自定义输出时 |
-| [v3-roadmap.md](references/v3-roadmap.md) | V3 未来增强路线图 | 5大功能模块规划（自定义模板/多语言/外部集成/历史管理/团队协作）| 了解未来方向、参与功能规划时 |
+| [api-reference.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/api-reference.md) | 完整 API 参数规范 | 所有输入参数、输出格式、调用示例 | 集成调用时、需要精确控制输出时 |
+| [error-codes.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/error-codes.md) | 所有错误码定义 | 完整错误码列表、原因分析、修复建议 | 排查问题时、调试报错时 |
+| [execution-flow.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/execution-flow.md) | 7步流程详解 | 每一步的详细说明、输入输出、边界情况 | 调试流程问题时、理解内部原理时 |
+| [examples.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/examples.md) | 4 场景使用示例 | 软件开发/Sprint/故障/学习的真实示例 | 学习用法时、首次使用时 |
+| [examples-v2.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/examples-v2.md) | V2 完整请求/响应示例 | 标准化的请求响应格式、字段说明 | 开发集成时、测试对接时 |
+| [terminology.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/terminology.md) | 86 个专业术语 | 术语定义、使用场景、相关概念 | 遇到术语困惑时、撰写报告时 |
+| [templates.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/templates.md) | 4 种模板变体 | 模板结构、章节细节、填写指南 | 选择模板时、自定义输出时 |
+| [v3-roadmap.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/v3-roadmap.md) | V3 未来增强路线图 | 5大功能模块规划（自定义模板/多语言/外部集成/历史管理/团队协作）| 了解未来方向、参与功能规划时 |
 
 ## 文档使用建议
 
-- **首次使用**：先读本文档（SKILL.md）+ [examples.md](examples.md)
+- **首次使用**：先读本文档（SKILL.md）+ [examples.md](../../../vendor/flexloop/apps/chaos/.agents/skills/task-execution-summary/references/examples.md)
 - **日常使用**：本文档足够，需要时查阅其他文档
 - **集成开发**：重点阅读 api-reference.md + examples-v2.md
 - **问题排查**：重点阅读 error-codes.md + execution-flow.md

@@ -154,8 +154,8 @@ description: 仅当用户明确要求对 MR/PR、commit、分支或代码差异�
 - If issues are found, present the review results in a **table** with the following columns:
   | No. | Issue Title | Suggestion | Code Link |
   |-----|-------------|------------|-----------|
-  | 1   | Title       | Suggestion | [file:line](file:///path/to/file#L123-L145) |
-- The code link should use the standard markdown link format pointing to the file URI with line numbers.
+  | 1   | Title       | Suggestion | `[file:line](file:///path/to/file#L123-L145)` |
+- The code link should use the standard markdown link format pointing to the file URI with line numbers (the cell above shows the literal syntax to emit).
 
 **Step 7: Ask User for Fix Selection**
 - After presenting the review table, ask the user which issues they want to fix.
