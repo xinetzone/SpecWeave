@@ -19,11 +19,11 @@
 
 ```
 src/jpman_client/tasks/
-├── __init__.py            ← 命名空间配置：根命令（load/images/run/stop/status/clean）+ container.* 别名 + env.* 自举命名空间
+├── __init__.py            ← 命名空间配置：根命令（load/images/save/run/stop/status/clean 共 7 个）+ container.* 别名 + env.* 自举命名空间
 ├── utils.py               ← 无状态工具函数：ContainerConfig、路径转换（A 维）、SDK 探测（B 维）、WSL 探测、Windows 诊断
-├── client_core.py         ← 两层后端核心：get_client()（SDK + CLI fallback）、load_image、list_images、image_exists
+├── client_core.py         ← 两层后端核心：get_client()（SDK + CLI fallback）、load_image/save_image、list_images、image_exists
 ├── env_in_container.py    ← env.* 自举任务：build-layer / run-cmd / shell；PODMAN_SERVICE_BOOT 常量（容器内 podman service 自举）
-└── manage.py              ← 对外 invoke 任务：6 个根命令 + container.* 别名；_load_env_overrides(.env → os.environ)
+└── manage.py              ← 对外 invoke 任务：7 个根命令（load/images/save/run/stop/status/clean）+ container.* 别名；_load_env_overrides(.env → os.environ)
 ```
 
 ### 2.1 模块职责边界（禁止跨层调用）
@@ -85,7 +85,7 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 ### 4.1 根命名空间（人类驾驶员）
 
 ```python
-from .manage import (load as image_load, images as list_images,
+from .manage import (load as image_load, images as list_images, save as image_save,
                      run as container_run, stop as container_stop,
                      status as container_status, clean as container_clean)
 from invoke import Collection
@@ -93,11 +93,15 @@ from invoke import Collection
 ns = Collection()
 ns.add_task(image_load, "load")
 ns.add_task(list_images, "images")
+ns.add_task(image_save, "save")
 ns.add_task(container_run, "run")
 ns.add_task(container_stop, "stop")
 ns.add_task(container_status, "status")
 ns.add_task(container_clean, "clean")
 ```
+
+> 实际实现（`__init__.py`）直接以 `ns.add_task(manage.load)` 形式注册（invoke 取函数名作为任务名），
+> 上表 import 别名仅示意语义；新增根命令时 §2 目录树、§4.4 兼容表、`__init__.py` 三处必须同步。
 
 ### 4.2 container.* 聚合命名空间（自动化集成）
 
@@ -105,6 +109,7 @@ ns.add_task(container_clean, "clean")
 container_ns = Collection("container")
 container_ns.add_task(image_load, "load")
 container_ns.add_task(list_images, "images")
+container_ns.add_task(image_save, "save")
 container_ns.add_task(container_run, "run")
 container_ns.add_task(container_stop, "stop")
 container_ns.add_task(container_status, "status")
@@ -135,8 +140,9 @@ ns.add_collection(env_ns)
 
 | 根命令 | container.* 别名 | 参数签名（`*` 表示可选） |
 |-------|-----------------|----------------------|
-| `invoke load` | `invoke container.load` | `--path *tar` / `--cache-dir *dir` |
+| `invoke load` | `invoke container.load` | `--path *tar(.gz)` / `--cache-dir *dir`（不传 `--path` 时自动取缓存目录中最新的 `.tar.gz`/`.tar`） |
 | `invoke images` | `invoke container.images` | （无参数） |
+| `invoke save` | `invoke container.save` | `--tag *T` / `--cache-dir *dir`（pigz→gzip→未压缩三档降级，产物扩展名随之 `.tar.gz`/`.tar`，与 load 双扩展名契约对齐） |
 | `invoke run` | `invoke container.run` | `--name N --tag T --ssh-port P --jupyter-port P --workspace W --user-password PW --jupyter-token TK --ssh-public-key KEY --grant-sudo/--no-grant-sudo --no-detach --host-network/--no-host-network --wayland/--no-wayland --gpu/--no-gpu --usb/--no-usb --dbus/--no-dbus --video/--no-video --rebuild-layer` |
 | `invoke stop` | `invoke container.stop` | `--name N` |
 | `invoke status` | `invoke container.status` | `--name N` |
@@ -172,6 +178,6 @@ invoke 的短名生成是「逐字符取首个未被占用字符」且与参数�
 - 静态语法：`python -m py_compile src/jpman_client/tasks/*.py`（无 SyntaxError，全部通过）
 - Lint/类型：VS Code GetDiagnostics（五文件零告警）
 - 功能冒烟（任何任务修改后必跑 3 条）：
-  1. `invoke --list`：命名空间加载无 ImportError
+  1. `invoke --list`：命名空间加载无 ImportError，且 7 个根命令 + `container.*`（7 个）+ `env.*`（3 个）齐全
   2. `invoke images`：SDK 可用→显示表格；SDK 不可用→自动 CLI fallback 同样显示表格（不能直接崩，哪怕是空表）
   3. `PODMAN_CLIENT_SDK_STRATEGY=legacy invoke images`：逃生舱 legacy 等价行为确认（调用路径不同但输出格式一致）
