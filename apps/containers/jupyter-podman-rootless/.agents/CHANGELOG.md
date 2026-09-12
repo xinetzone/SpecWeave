@@ -6,6 +6,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-09-12
+
+| 类型 | 变更 |
+|------|------|
+| feat | **B-scheme 桥接扩展至独立 shell（修复终端内 podman/podman-compose 的 newuidmap EPERM）**：根因经七概念 F→V 链路实证——entrypoint.sh 的 `CONTAINER_HOST` 导出只存活于 supervisord→jupyter 进程子树，SSH/`podman exec`/Jupyter·IDE 终端等独立 shell 仅继承容器配置 env 的 `HOST_PODMAN_SOCK`，落回容器内 rootless 后在三层 userns 嵌套下结构性失败（中间 ns root 能力集 `0x800405fb` 无 CAP_SYS_ADMIN，setuid newuidmap 写多行 uid_map 必被拒；改 /etc/subuid 区间 100000→524288 的假设已被对照实验证伪）。修复双层：① Containerfile Layer 3 烘焙 `/etc/profile.d/80-podman-host-socket.sh`（条件式 `HOST_PODMAN_SOCK`→`CONTAINER_HOST` 桥接，含构建期 `bash -n` 校验）并让 devuser `~/.bashrc` source 同一文件以覆盖非登录交互 shell，并以 `ENV BASH_ENV` 覆盖非交互非登录 bash（`podman exec ... bash -c`/cron，V7 矩阵实测的第三类缺口）；② entrypoint.sh 在导出 XDG 前对 GUI 透传注入的 inherited `XDG_RUNTIME_DIR`（/tmp/runtime-user，podman 自动建为 root:0755）只 chown 目录本身（禁 -R，wayland-0 单文件挂载红线），消除独立 shell 的二级失败 `mkdir .../libpod: permission denied`。守卫语义：显式 CONTAINER_HOST 优先（远程 daemon 逃生舱）、`HOST_PODMAN_SOCK= <cmd>` 强制本地、socket 缺失 no-op（回退分支零影响）。对照实验另证：podman remote 流式上传构建上下文，宿主无需 /workspace 同名软链。`.agents/rules/entrypoint.md` §[4/7] 同步两条契约 |
+
 ## 2026-09-11
 
 | 类型 | 变更 |

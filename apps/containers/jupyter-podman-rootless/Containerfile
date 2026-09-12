@@ -595,11 +595,29 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     echo "conda activate main" >> /etc/profile.d/conda-init.sh && \
     chmod +x /etc/profile.d/conda-init.sh && \
     echo "[OK] /etc/profile.d/conda-init.sh created" && \
+    echo "[BUILD] Creating B-scheme host socket bridge for independent shells..." && \
+    printf '%s\n' \
+        '# B-scheme: bridge HOST_PODMAN_SOCK -> CONTAINER_HOST for shells OUTSIDE the' \
+        '# entrypoint process subtree (SSH login / podman exec / Jupyter/IDE terminals).' \
+        '# entrypoint.sh exports CONTAINER_HOST only into supervisord->jupyter; without' \
+        '# this bridge independent shells fall back to in-container rootless podman,' \
+        '# which is structurally unavailable in the nested userns (newuidmap EPERM).' \
+        '# Guards: explicit CONTAINER_HOST wins (tcp/remote daemon escape hatch);' \
+        '# "HOST_PODMAN_SOCK= <cmd>" forces the local fallback path; no-op when absent.' \
+        'if [ -z "${CONTAINER_HOST:-}" ] && [ -n "${HOST_PODMAN_SOCK:-}" ] && [ -S "${HOST_PODMAN_SOCK}" ]; then' \
+        '    export CONTAINER_HOST="unix://${HOST_PODMAN_SOCK}"' \
+        'fi' \
+        > /etc/profile.d/80-podman-host-socket.sh && \
+    chmod 644 /etc/profile.d/80-podman-host-socket.sh && \
+    bash -n /etc/profile.d/80-podman-host-socket.sh && \
+    echo "[OK] /etc/profile.d/80-podman-host-socket.sh created" && \
     echo "[BUILD] Configuring devuser .bashrc..." && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> /home/devuser/.bashrc && \
     echo "conda activate main" >> /home/devuser/.bashrc && \
+    echo "# B-scheme bridge for non-login interactive shells (Jupyter/IDE terminals)" >> /home/devuser/.bashrc && \
+    echo "[ -r /etc/profile.d/80-podman-host-socket.sh ] && . /etc/profile.d/80-podman-host-socket.sh" >> /home/devuser/.bashrc && \
     chown devuser:devuser /home/devuser/.bashrc && \
-    echo "[OK] devuser .bashrc configured" && \
+    echo "[OK] devuser .bashrc configured (conda + B-scheme bridge)" && \
     echo "[BUILD] Configuring /etc/environment PATH..." && \
     echo "PATH=/opt/conda/envs/main/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
     echo "[OK] /etc/environment PATH updated" && \
@@ -635,6 +653,7 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     chown devuser:devuser /home/devuser/.config/containers/storage.conf && \
     chmod 644 /home/devuser/.config/containers/storage.conf && \
     echo "[OK] User-level storage.conf configured for fuse-overlayfs" && \
+    echo "[OK] BASH_ENV bridge prepared (activated via ENV for non-interactive shells)" && \
     echo "[BUILD] Configuring sudo for devuser (NOPASSWD)..." && \
     echo "devuser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/devuser && \
     chmod 0440 /etc/sudoers.d/devuser && \
@@ -645,6 +664,10 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     _TOTAL=$((_NOW - _START)) && \
     echo "L3=$_NOW" >> /tmp/.build-timer && \
     echo "[TIMER] Layer 3/5 (user+subuid+perms+podman-config) took ${_ELAPSED}s | Cumulative: ${_TOTAL}s"
+
+# 非交互 bash（podman exec ... bash -c / cron / 脚本）不读 profile.d 也不读
+# .bashrc；BASH_ENV 令其 source 同一桥接脚本。脚本内含守卫，socket 缺失时 no-op。
+ENV BASH_ENV=/etc/profile.d/80-podman-host-socket.sh
 
 # ═══════════════════════════════════════════════════════════════════
 # Layer 4/5: 配置文件COPY + 权限设置 + 语法验证

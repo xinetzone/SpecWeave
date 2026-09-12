@@ -217,6 +217,23 @@ setup_podman() {
     chmod 700 "${podman_libpod_tmp}" 2>/dev/null || true
     log_info "Podman libpod tmp dir ready: ${podman_libpod_tmp}"
 
+    # ── 独立 shell 的注入式 XDG_RUNTIME_DIR 属主修复 ──
+    # SSH / podman exec / Jupyter 终端等独立 shell 不继承下方导出的
+    # XDG_RUNTIME_DIR=${podman_run_dir}，保留容器配置注入值（GUI 透传时为
+    # /tmp/runtime-user）。该挂载点父目录由 podman 自动创建为 root:0755，
+    # devuser 在其中 `mkdir libpod` 会被拒（实测：
+    # "Failed to obtain podman configuration: mkdir /tmp/runtime-user/libpod:
+    # permission denied"）。这里只 chown 目录本身：
+    # 严禁 -R——内部含 wayland-0 单文件 bind-mount，与上文 podman.sock 穿透
+    # 改宿主 inode 属主是同一条红线（2026-09-11 事故）。
+    local inherited_xdg="${XDG_RUNTIME_DIR:-}"
+    if [ -n "${inherited_xdg}" ] \
+        && [ "${inherited_xdg}" != "${podman_run_dir}" ] \
+        && [ -d "${inherited_xdg}" ]; then
+        chown "${NON_ROOT_USER}:${NON_ROOT_USER}" "${inherited_xdg}" 2>/dev/null || true
+        log_info "Inherited XDG_RUNTIME_DIR ownership aligned: ${inherited_xdg} -> ${NON_ROOT_USER}"
+    fi
+
     export XDG_RUNTIME_DIR="${podman_run_dir}"
 
     # ── B-scheme: 宿主 rootless daemon socket 直连（绕过嵌套 userns）──
