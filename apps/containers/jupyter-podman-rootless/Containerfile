@@ -597,15 +597,32 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     echo "[OK] /etc/profile.d/conda-init.sh created" && \
     echo "[BUILD] Creating B-scheme host socket bridge for independent shells..." && \
     printf '%s\n' \
-        '# B-scheme: bridge HOST_PODMAN_SOCK -> CONTAINER_HOST for shells OUTSIDE the' \
-        '# entrypoint process subtree (SSH login / podman exec / Jupyter/IDE terminals).' \
-        '# entrypoint.sh exports CONTAINER_HOST only into supervisord->jupyter; without' \
-        '# this bridge independent shells fall back to in-container rootless podman,' \
-        '# which is structurally unavailable in the nested userns (newuidmap EPERM).' \
-        '# Guards: explicit CONTAINER_HOST wins (tcp/remote daemon escape hatch);' \
-        '# "HOST_PODMAN_SOCK= <cmd>" forces the local fallback path; no-op when absent.' \
-        'if [ -z "${CONTAINER_HOST:-}" ] && [ -n "${HOST_PODMAN_SOCK:-}" ] && [ -S "${HOST_PODMAN_SOCK}" ]; then' \
-        '    export CONTAINER_HOST="unix://${HOST_PODMAN_SOCK}"' \
+        '# B-scheme: bridge independent shells (SSH login / podman exec / Jupyter/IDE' \
+        '# terminals / cron) to the host rootless podman socket. SSH sessions are' \
+        '# spawned by sshd+PAM and do NOT inherit container-config env vars, so the' \
+        '# bridge must not rely solely on HOST_PODMAN_SOCK being present.' \
+        '# Resolution order:' \
+        '#   1. explicit CONTAINER_HOST wins (tcp/remote/local daemon escape hatch)' \
+        '#   2. HOST_PODMAN_SOCK env (container config; visible in podman exec and the' \
+        '#      entrypoint -> supervisord -> jupyter process subtree)' \
+        '#   3. /etc/podman-host-sock.path (resolved path written by entrypoint.sh;' \
+        '#      survives sshd/PAM environment scrubbing; covers non-standard mounts)' \
+        '#   4. standard runtime socket /run/user/<uid>/podman/podman.sock' \
+        '# No-op when no socket exists (in-container rootless fallback unaffected).' \
+        'if [ -z "${CONTAINER_HOST:-}" ]; then' \
+        '    _hps_sock="${HOST_PODMAN_SOCK:-}"' \
+        '    if [ -z "${_hps_sock}" ] && [ -r /etc/podman-host-sock.path ]; then' \
+        '        _hps_sock="$(cat /etc/podman-host-sock.path 2>/dev/null)"' \
+        '    fi' \
+        '    if [ -z "${_hps_sock}" ]; then' \
+        '        _hps_cand="/run/user/$(id -u)/podman/podman.sock"' \
+        '        [ -S "${_hps_cand}" ] && _hps_sock="${_hps_cand}"' \
+        '        unset _hps_cand' \
+        '    fi' \
+        '    if [ -n "${_hps_sock}" ] && [ -S "${_hps_sock}" ]; then' \
+        '        export CONTAINER_HOST="unix://${_hps_sock}"' \
+        '    fi' \
+        '    unset _hps_sock' \
         'fi' \
         > /etc/profile.d/80-podman-host-socket.sh && \
     chmod 644 /etc/profile.d/80-podman-host-socket.sh && \
@@ -620,7 +637,8 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     echo "[OK] devuser .bashrc configured (conda + B-scheme bridge)" && \
     echo "[BUILD] Configuring /etc/environment PATH..." && \
     echo "PATH=/opt/conda/envs/main/bin:/opt/conda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >> /etc/environment && \
-    echo "[OK] /etc/environment PATH updated" && \
+    echo "BASH_ENV=/etc/profile.d/80-podman-host-socket.sh" >> /etc/environment && \
+    echo "[OK] /etc/environment updated (PATH + BASH_ENV for PAM-scrubbed SSH shells)" && \
     echo "[BUILD] Creating Podman rootless configuration..." && \
     printf '%s\n' \
         '[containers]' \

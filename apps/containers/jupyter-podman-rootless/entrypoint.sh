@@ -243,6 +243,29 @@ setup_podman() {
     # （自建 daemon 在 WSL 三层 userns 嵌套下会触发 newuidmap Operation not permitted）。
     local host_sock="${HOST_PODMAN_SOCK:-}"
     if [ -n "${host_sock}" ] && [ -S "${host_sock}" ]; then
+        # ── 独立 shell 事实文件（SSH 会话不继承容器 config env）──
+        # sshd+PAM 派生的 SSH 会话拿不到 HOST_PODMAN_SOCK；镜像内桥接脚本
+        # /etc/profile.d/80-podman-host-socket.sh 的第 3 级解析读此文件定位挂载路径，
+        # 覆盖非标准挂载（宿主 UID≠1000 时容器内挂载点不是 /run/user/1000/...）。
+        echo "${host_sock}" > /etc/podman-host-sock.path
+        chmod 644 /etc/podman-host-sock.path 2>/dev/null || true
+
+        # ── sshd SetEnv：覆盖 `ssh host "cmd"` 最外层非交互 bash ──
+        # 该形态 bash -c 既不读 profile.d/.bashrc，也不读 BASH_ENV（实测 bash 仅在
+        # 执行脚本文件时读 BASH_ENV，-c 命令字符串不读）。SetEnv 是唯一不经任何
+        # shell 启动文件的注入点：sshd 直接把变量放进会话进程环境，podman/
+        # podman-compose 子进程原样继承。运行时按解析路径写入（非标准挂载同样覆盖），
+        # 回退分支无 socket 时不写，避免指向死路径。
+        if ! grep -q '^SetEnv CONTAINER_HOST=' /etc/ssh/sshd_config 2>/dev/null; then
+            echo "SetEnv CONTAINER_HOST=unix://${host_sock}" >> /etc/ssh/sshd_config
+            if /usr/sbin/sshd -t 2>/dev/null; then
+                log_info "[B-scheme] sshd SetEnv CONTAINER_HOST written (ssh cmd-form coverage)"
+            else
+                sed -i '/^SetEnv CONTAINER_HOST=/d' /etc/ssh/sshd_config
+                log_warn "[B-scheme] sshd_config invalid after SetEnv, reverted"
+            fi
+        fi
+
         # ── devuser 路径（默认 XDG_RUNTIME_DIR）──
         local run_sock_dir="${podman_run_dir}/podman"
         mkdir -p "${run_sock_dir}"
@@ -329,6 +352,11 @@ setup_podman() {
         log_info "Podman rootless setup complete (host socket pass-through)"
         return 0
     fi
+
+    # 回退模式不留 B-scheme 痕迹：事实文件与 sshd SetEnv 都移除（防御同一容器
+    # 先 B-scheme 启动、后无 socket 重启的陈旧指向）。
+    rm -f /etc/podman-host-sock.path 2>/dev/null || true
+    sed -i '/^SetEnv CONTAINER_HOST=/d' /etc/ssh/sshd_config 2>/dev/null || true
 
     log_info "No host socket detected (HOST_PODMAN_SOCK unset/absent), falling back to in-container rootless daemon..."
 
