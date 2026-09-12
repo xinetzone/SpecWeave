@@ -109,6 +109,10 @@ stale_after: "2027-09-11"
 |------|------|------|
 | 案例 1：SpecWeave 智能文档系统里程碑（2026-07-01~08-31） | [retrospective-intelligent-doc-system-milestone-20260910.md](../../../reports/concepts/milestone/retrospective-intelligent-doc-system-milestone-20260910.md) 洞察 2"自动化工具链是文档规模化的关键支撑" | 首次识别：1288 条目文档系统核心支撑为 generate-readme.py 等脚本而非人工维护 |
 
+## L2 升级路径
+
+第 2 个案例**强制跨领域、跨组织独立**（优先非软件域，如企业受控文档体系），复现协议与判定线见 [A-007 跨领域复现检查清单](../../../../../.agents/checklists/doc-automation-pipeline-reproduction-checklist.md)：含启用条件、候选案例评分、基线审计（步骤 0）、5 步留证、V 修正点专项实证（门禁分层/单一事实源幂等/脚本护栏/阈值实测）、适应三级分类（参数级/组件级/内核级）；无内核级修改且判定线全过方可升 L2-validated。
+
 ## 对抗审查记录
 
 ### 第一轮 V（2026-09-11，报告级）
