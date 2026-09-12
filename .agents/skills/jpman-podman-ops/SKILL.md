@@ -1,7 +1,7 @@
 ---
 name: jpman-podman-ops
-version: 1.1.0
-description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、jupyter 容器起不来、podman machine、podman 机器未运行、工作区挂载(-w)、挂载目录不对、容器警告/WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活(keepalive)、镜像构建慢/构建卡住/miniforge 下载慢/GitHub 限速/镜像源加速 等场景时，必须使用此技能。封装日常驾驶 SOP（machine 就绪预检→幂等 start→Mounting 行核对→healthcheck 验证→WARN 警告先验分诊）、rootless 三必需参数、容器内 root 运行模型、.env 与工作区路径优先级、rebuild 增量/全量构建选择、invoke 全量构建加速分诊（tuna 三镜像源+本地安装包预灌+9p 规避），并与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）形成边界路由。不要手动拼接 podman 命令或套用 Docker 经验排障——本 Skill 已封装 podman machine ssh 纪律、禁止 systemd=true、hello-world 最小验证等实战教训。"
+version: 1.2.0
+description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、jupyter 容器起不来、podman machine、podman 机器未运行、工作区挂载(-w)、挂载目录不对、容器警告/WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活(keepalive)、镜像构建慢/构建卡住/miniforge 下载慢/GitHub 限速/镜像源加速、容器内 podman/podman-compose 报错/newuidmap write to uid_map failed/Operation not permitted/嵌套容器起容器/SSH 终端与 podman exec 行为不一致 等场景时，必须使用此技能。封装日常驾驶 SOP（machine 就绪预检→幂等 start→Mounting 行核对→healthcheck 验证→WARN 警告先验分诊）、rootless 三必需参数、容器内 root 运行模型、.env 与工作区路径优先级、rebuild 增量/全量构建选择、invoke 全量构建加速分诊（tuna 三镜像源+本地安装包预灌+9p 规避）、容器内嵌套 Podman 分诊（newuidmap EPERM 结构性根因 + B-scheme 宿主 socket 五通道桥接 + SSH/podman exec 环境模型差异），并与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）形成边界路由。不要手动拼接 podman 命令或套用 Docker 经验排障——本 Skill 已封装 podman machine ssh 纪律、禁止 systemd=true、hello-world 最小验证、禁止在嵌套容器内自建 rootless daemon 等实战教训。"
 argument-hint: "<日常操作> [start|stop|restart|status|info|logs|shell|rebuild...] [选项]"
 disable-model-invocation: false
 user-invocable: true
@@ -53,6 +53,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 - "rootless podman"、"WSL 保活"、"keepalive"、"WSL 自动关闭"
 - "rebuild"、"增量重建"、"改了配置怎么生效"
 - "构建慢"、"镜像构建卡住"、"构建一直不动"、"miniforge 下载慢/超时"、"GitHub 限速"、"镜像源加速"、"tuna 镜像构建"
+- "容器里跑 podman 报错"、"podman-compose up 失败"、"newuidmap"、"write to uid_map failed"、"Operation not permitted"、"嵌套容器/DinP 起不来"、"SSH 连进去 podman 不能用"、"podman exec 可以但 SSH 不行"
 
 > **关于触发**：即使没有明确说"用 skill"，只要涉及 jupyter-podman-rootless 容器的日常操作与排障，就应使用本技能，不要手动拼接 `podman create` 参数或凭 Docker 经验操作——rootless/WSL2 的约束与 Docker Desktop 完全不同。
 
@@ -64,6 +65,8 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 ├─ podman machine 连不上/报连接错误/启动有 WARN？ → §7 machine 就绪与警告分诊
 ├─ 改了配置/装了包要固化进镜像？               → §8 构建场景（rebuild 增量 vs rebuild-all 全量）
 ├─ invoke build 很慢/卡在下载/疑似构建挂起？   → §8.5 构建加速分诊速查
+├─ 容器内 podman/podman-compose 报 newuidmap EPERM？
+│   （SSH/终端里起容器失败，podman exec 却正常）→ §9.1 嵌套 Podman 分诊
 ├─ 镜像打包灾备 / 换机 / WSL 重置后恢复？
 │   ├─ 应用内快速缓存（.image-cache/）        → jpman save/load（§8.3）
 │   └─ .agents 体系灾备（.docker-cache/）     → docker-cache-cmd
@@ -299,6 +302,87 @@ bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h�
 >
 > **勘误警示**：`JUPYTER_ROOT_CHOWN`（auto/yes/no/named-only）属于 **apps/docker-images/devcontainer-base**（Docker 变体），jupyter-podman-rootless **没有这个机制**。排障时不要把 Docker 变体的经验张冠李戴。
 
+### 9.1 嵌套 Podman 分诊：容器内 podman/podman-compose 报 newuidmap EPERM
+
+**典型症状**（devuser 在容器终端/SSH/Jupyter Terminal 内）：
+
+```
+$ podman-compose up
+ERRO running `/usr/bin/newuidmap 472 0 1000 1 1 100000 65536`: newuidmap: write to uid_map failed: Operation not permitted
+Error: cannot set up namespace using "/usr/bin/newuidmap": exit status 1
+ERROR:podman_compose:Prepare images failed
+```
+
+伴生 `WARN "/" is not a shared mount` 是无害降级提示（§7.2），**不是**阻断点。
+
+**根因是结构性的，不是配置问题**：外层是非特权 rootless 容器，中间 user namespace 内 root 的能力集（实测 `0x800405fb`）**不含 CAP_SYS_ADMIN(21)**；setuid 的 newuidmap 在中间 ns 内只是"被映射的 root"，内核拒绝它写多行 uid_map → 非 root 用户的容器内 rootless podman 在此环境**必然失败**，容器内调参无法修复。唯一正解是 **B-scheme：让容器内 podman 直连宿主 rootless daemon**（宿主 socket bind-mount 在 `/run/user/1000/podman/podman.sock`），构建/运行全部发生在宿主侧。
+
+> **已被对照实验证伪的方向（不要再试）**：① 改 `/etc/subuid` 区间（100000→524288 对齐外层委托区间，仍 EPERM）；② 容器内 root 跑 podman（single-map 模式连撞 lchown EINVAL `requested 0:42`、devpts EINVAL、cgroup 只读三堵墙，需 `ignore_chown_errors` 等侵入配置且子容器仍跑不起来）；③ `--privileged`（违反 rootless 三必需红线，且不在非特权外层容器能力授予范围内）。
+
+**分诊第 1 步：先确认"报错的容器是不是旧容器"**
+
+镜像修复只对修复后**新建**的容器生效；重建镜像不改变已运行容器。`podman ps` 对比容器 Created 时间与镜像构建时间，并核对镜像内桥接资产：
+
+```bash
+podman ps --format "{{.ID}} {{.Names}} {{.CreatedAt}}"
+podman exec -u root <容器> ls -l /etc/profile.d/80-podman-host-socket.sh   # 2026-09-12 后镜像才有
+```
+
+基底 entrypoint/Containerfile 变更后的完整生效链路：构建端 `invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna`（§8.5）→ 消费端重建 client 叠加层并重建容器（client 目录 `invoke run --rebuild-layer`）→ **用户重新登录 SSH**（旧会话保留旧环境，不会补注入变量）。
+
+**分诊第 2 步：按真实通道验证（podman exec ≠ SSH，这是最高频误诊点）**
+
+容器 config 注入的 env（`HOST_PODMAN_SOCK` 等）只被 entrypoint 进程子树和 `podman exec` 继承；**sshd+PAM 派生的 SSH 会话会清洗这些变量**（`env -i` 可在 exec 侧复现干净环境）。因此"exec 里 podman 正常"完全不能证明"SSH 里正常"。验证必须走真实通道：
+
+```bash
+# VM 内真实 SSH（或用户自己 ssh -p 2222 devuser@localhost 后手动确认）
+ssh -p 2222 devuser@<host> 'printenv CONTAINER_HOST'      # ssh host "cmd"：非交互最外层
+ssh -tt -p 2222 devuser@<host>                            # 交互登录终端（Jupyter Terminal 同形态）
+```
+
+> **测量纪律**：读远程会话变量用 `printenv VAR`，不要在双引号命令里写 `$VAR`——会被 SSH 外层 shell 提前展开为空，制造"变量没注入"的假象。
+
+**五通道桥接矩阵**（镜像自 2026-09-12 起内置，排障时按形态对号入座；权威契约见构建端 [.agents/rules/entrypoint.md](../../../apps/containers/jupyter-podman-rootless/.agents/rules/entrypoint.md) §[4/7]）：
+
+| shell 形态 | 典型入口 | 生效通道 | 失败表现 |
+|---|---|---|---|
+| 登录 shell | `ssh host`（交互）、`bash -lc` | `/etc/profile.d/80-podman-host-socket.sh` | 交互终端 newuidmap |
+| 非登录交互 | Jupyter/IDE Terminal、`bash -ic` | devuser `~/.bashrc` source 同文件 | 同上（最常见报障现场） |
+| 非交互脚本文件 | `podman exec … bash x.sh`、cron | 容器 `ENV BASH_ENV` + pam_env 版 `/etc/environment` | 脚本内 newuidmap |
+| 非交互命令字符串 | **`ssh host "cmd"`、sshd 最外层** | **sshd_config `SetEnv CONTAINER_HOST`**（entrypoint 运行时写入） | `ssh host podman ps` newuidmap |
+
+> **反直觉点（F1/F2/F3 实证）**：bash **只在执行脚本文件时读 `BASH_ENV`**，对 `bash -c "命令字符串"` 完全不读（profile/.bashrc 也不读）。所以 `ssh host "cmd"` 形态只能靠 sshd `SetEnv`——它不经任何 shell 启动文件，由 sshd 直接把变量放进会话进程环境。
+
+桥接脚本内部为**四级解析**，任一级是真 socket（`-S`）才导出，全缺失则 no-op（无 socket 的回退部署零影响）：
+
+```
+显式 CONTAINER_HOST（最高优先；tcp/远程/强制本地 daemon 的唯一逃生手段）
+  > HOST_PODMAN_SOCK 环境变量
+  > /etc/podman-host-sock.path 事实文件（entrypoint B-scheme 分支写入，覆盖 SSH 环境丢失与非标准挂载点）
+  > /run/user/$(id -u)/podman/podman.sock 标准路径自探测
+```
+
+**分诊第 3 步：取证命令（需要向他人描述问题时一并附上）**
+
+```bash
+cat /proc/self/uid_map                                   # 中间 ns 映射，形如 0 1000 1 / 1 524288 65536
+grep CapBnd /proc/self/status                            # 0x...05fb 无 bit21(CAP_SYS_ADMIN) 即结构性死路
+ls -l /run/user/$(id -u)/podman/podman.sock              # B-scheme socket 是否挂载
+id                                                       # 须在 root 组（entrypoint usermod -aG 处理 EACCES）
+cat /etc/podman-host-sock.path 2>/dev/null               # 事实文件
+grep -E 'SetEnv CONTAINER_HOST' /etc/ssh/sshd_config     # ssh cmd 形态通道
+```
+
+**二级失败（B-scheme 已桥接但报 libpod mkdir 拒绝）**：GUI 透传容器注入 `XDG_RUNTIME_DIR=/tmp/runtime-user`，该挂载点父目录由 podman 自动建为 root:0755，devuser 无法在其中 `mkdir libpod`（`Failed to obtain podman configuration: ... permission denied`）。entrypoint 已在 B-scheme 分支**只 chown 目录本身**对齐属主——手工救急同此操作，**严禁 `chown -R`**（目录内含 wayland-0 单文件 bind-mount，与 podman.sock 穿透改宿主 inode 属主同红线，2026-09-11 事故实证）。
+
+**反模式（均有实战实证）**
+
+- ❌ 在容器内折腾 newuidmap/subuid/userns 试图救活本地 rootless：能力边界是外层容器授予方式决定的，容器内无解
+- ❌ 用 `podman exec` 验证后宣称"SSH 已修复"：两者环境模型不同，必须真实 SSH/`env -i` 复核
+- ❌ 重建镜像后不重建 client 叠加层、不重建容器，或让用户在旧 SSH 会话里重试：三类"修复没生效"假象
+- ❌ 在双引号 SSH 命令里用 `$VAR` 判断注入是否成功：外层 shell 提前展开，用 `printenv`
+- ❌ 为消 newuidmap 给容器加 `--privileged`：违反 rootless 三必需（§7.2），且不解决能力缺失
+
 ## 10. 安全检查清单（逐项确认）
 
 日常驾驶与排障完成前逐项确认：
@@ -311,6 +395,7 @@ bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h�
 - [ ] 已确认未给 podman-machine-default 设置 systemd=true、未给容器加 --privileged
 - [ ] rebuild / wsl-export 等写操作前，已确认工作区数据与镜像缓存状态
 - [ ] 排查权限问题时，已确认未误用 Docker 变体的 JUPYTER_ROOT_CHOWN 经验
+- [ ] 容器内 podman 报 newuidmap EPERM 时，未尝试 subuid/特权修复，已按 §9.1 走 B-scheme，并经真实 SSH（非 podman exec）验证、确认容器为修复后新建
 - [ ] 已优先使用 jpman 命令，未手动拼接 podman create/run 参数
 
 ## 11. 常见错误处理
@@ -329,6 +414,10 @@ bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h�
 | bash 脚本语法错误 | CRLF 行尾 | 转 LF 后在 WSL 执行 |
 | wsl-export 报 distro exists | 重名 | 加 `--force` 或 `--distro-name` 换名 |
 | 容器内 apt 装的包重启后消失 | 容器无状态 | 固化到镜像（改 Containerfile + rebuild-all） |
+| 容器内 `newuidmap ... write to uid_map failed: Operation not permitted` | 嵌套 rootless 结构性不可用（中间 ns 无 CAP_SYS_ADMIN） | 按 §9.1：B-scheme 宿主 socket 桥接，勿改 subuid/勿加特权；核对容器是否修复后新建 |
+| `podman exec` 里 podman 正常、SSH/Jupyter 终端报 newuidmap | SSH 经 sshd+PAM 清洗容器 env，五通道缺注入 | 按 §9.1 第 2 步真实 SSH 复核；查 profile.d/.bashrc/BASH_ENV/SetEnv 四通道（§9.1 矩阵） |
+| `set sticky bit` / `mkdir .../libpod: permission denied`（GUI 透传容器内） | /tmp/runtime-user 挂载点父目录 root:0755 | entrypoint B-scheme 已只 chown 目录本身；手工救急同操作，禁 -R（wayland-0 挂载红线，§9.1） |
+| 重建镜像后终端报错依旧 | 旧容器/旧 SSH 会话仍在跑 | 重建 client 叠加层+重建容器（invoke run --rebuild-layer），用户重新登录 SSH（§9.1 第 1 步） |
 
 > 更多 FAQ 见 [13-faq.md](../../../apps/containers/jupyter-podman-rootless/docs/13-faq.md)（SSH 排查 5 步、registry HTTP insecure 配置、toolbox conda 激活等）。
 
@@ -353,6 +442,11 @@ bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h�
 
 ### 12.3 机制边界陷阱
 
+- **嵌套容器内非 root rootless 是结构性死路**：中间 userns root 无 CAP_SYS_ADMIN（能力集 `0x800405fb` 实证），newuidmap 写多行 uid_map 必被内核拒绝；改 /etc/subuid 区间、容器内 root single-map 均已被对照实验证伪。正解只有 B-scheme 直连宿主 daemon（§9.1）
+- **podman exec ≠ SSH 会话（环境模型不同）**：`podman exec` 继承容器 config env（HOST_PODMAN_SOCK 等可见）；SSH 经 sshd+PAM 重建环境，这些变量全空。"exec 验证通过"不能证明 SSH 正常，独立 shell 必须真实 SSH 或 `env -i` 复核
+- **bash 读 BASH_ENV 挑执行形态**：只在执行**脚本文件**时读，`bash -c "字符串"`（`ssh host "cmd"`）不读任何启动文件；该形态唯一通道是 sshd `SetEnv`（§9.1 五通道矩阵）
+- **镜像修复不溯及已运行容器，也不溯及旧 SSH 会话**：需重建 client 叠加层 + 重建容器 + 用户重新登录；三者缺一都会表现为"修复没生效"
+- **远程会话读环境变量用 printenv，不要在双引号里写 `$VAR`**：SSH 外层 shell 会提前展开为空，制造"变量没注入"的测量假象
 - **裸 `invoke build` 与 jpman rebuild 的源策略不同**：rebuild 内置 tuna 三镜像源；裸 invoke build 默认只有 GitHub 单源，必须显式 `--apt-mirror/--conda-mirror/--pip-mirror tuna`（§8.5）
 - **PowerShell `Select-Object -Last N` 会伪装构建"卡死"**：它必须等上游进程结束才输出最后 N 行，长时间构建期间日志文件为 0 字节属观察方式问题而非挂起；用 `Tee-Object` 流式落盘（§8.5）
 - **两套镜像缓存互不相通**：应用内 `.image-cache/`（jpman save/load）与 .agents 体系 `.docker-cache/`（docker-cache-cmd）是独立机制，不要互相找文件
@@ -373,5 +467,6 @@ bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h�
 
 ## 14. Changelog
 
+- **v1.2.0** (2026-09-12): 新增 §9.1 嵌套 Podman 分诊。源于两轮"SSH 终端 podman-compose up 报 newuidmap EPERM"实战（七概念 F→V→C 链路）：① 根因实证为结构性能力缺失（中间 userns root 能力集 `0x800405fb` 无 CAP_SYS_ADMIN，setuid newuidmap 写多行 uid_map 必被拒），改 /etc/subuid 区间（100000→524288）、容器内 root single-map（lchown/devpts/cgroup 三墙）两个假设均被对照实验证伪，正解为 B-scheme 宿主 socket 直连；② 沉淀 SSH 五通道桥接矩阵（profile.d/.bashrc/ENV BASH_ENV/pam_env 版 /etc/environment/sshd SetEnv），关键反直觉点：sshd+PAM 清洗容器 config env（podman exec 与 SSH 环境模型不同）、bash 仅脚本文件形态读 BASH_ENV；③ 桥接脚本四级解析顺序（显式 CONTAINER_HOST＞env＞事实文件＞标准路径自探测）；④ 三条验证纪律（真实 SSH/env -i 复核、printenv 读变量防引号展开假象、修复需重建叠加层+容器+重新登录）。决策树、触发词、§10 安全清单、§11 错误表（4 行）、§12.3 Gotchas（5 条）、frontmatter description 同步。
 - **v1.1.0** (2026-09-12): 新增 §8.5 构建加速分诊速查。源于一次"构建疑似卡死"排障的实证：裸 `invoke build` 默认只走 GitHub 单源（实测 Miniforge 下载 221 KB/s、ETA ~11 分钟），取证后确认非挂起；tuna 三镜像源参数 + 本地安装包预灌（`local-cache/miniforge/`，解析顺序本地→镜像源→官方）使 Stage 2 conda-builder 降至 148 秒、全镜像约 5 分钟。同步沉淀 4 条反模式（裸 build 不带镜像参数、无输出即杀进程、`Select-Object -Last` 缓冲伪装卡死、安装包 `--help` 自检假阳性须用 `-h`）；决策树、触发词、§11 错误表、§12.3 Gotchas 同步；顺带修复 §2/§6/§13 共 7 条既有断链（apps 相对路径少一层 `../`）。
 - **v1.0.0** (2026-08-29): 初始版本。基于 jupyter-podman-rootless 日常运维实践与 2026-08-27 podman/WSL rootless 警告复盘萃取（42 条事实、4 条跨案例洞察、4 视角对抗审查）。覆盖 machine 就绪纪律、jpman 幂等驾驶 SOP、警告先验法分诊、rootless 运行模型、构建/缓存/导出路由；含 15 条反模式、9 项安全检查清单、12 条 Gotchas；与 docker-cache-cmd、docker-wsl-bridge-cmd 建立边界路由。
