@@ -6,6 +6,48 @@
 
 ## [Unreleased]
 
+### 2026-09-12 · `fix:` inv run 在 UID≠1000 的原生 Linux 必现 exit=125（B-scheme UID 动态推导 + socket 预检自愈 + C-I5）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）；原生 Linux（宿主 uid=1006，podman 3.4.4）执行 `python -m invoke run`，CLI 拼出 `-v /run/user/1000/podman/podman.sock:...`，podman 报 `Error: statfs /run/user/1000/podman/podman.sock: no such file or directory` exit=125；随后被 C-I3 透传诊断误分类，提示用户"去掉 --wayland/--gpu 开关"（本次未启用任何透传，指引完全无关）。
+
+**F 阶段根因（三层，逐层实测）**：
+1. **UID 硬编码**：`podman_sock_path()`/`host_runtime_dir()` 默认 `PODMAN_RUNTIME_UID=1000`（WSL2 惯例），但本机 `id -u=1006`、`XDG_RUNTIME_DIR=/run/user/1006`；挂载源路径直接不存在。
+2. **socket 服务未运行**：即便路径改为 1006，`podman.socket` 用户单元状态为 enabled-but-inactive，socket 文件不存在（本机 podman CLI 直连 daemon 不需要它，但 B-scheme 容器经 REST socket 复用宿主 daemon，必需）。实测 `systemctl --user start podman.socket` 后文件生成（0660）、`_ping` HTTP 200。
+3. **诊断误分类**：B-scheme socket 是**必选核心挂载**，却与 wayland/gpu 等 opt-in 透传共用 C-I3 匹配（关键字仅为 statfs+ENOENT），输出无关修复动作。
+
+**V 对抗门（4 视角）关键裁决**：① Windows 原生默认必须保留 1000（本机 UID 无意义，daemon 在 WSL2/Machine 远端），POSIX 才取运行时事实；② 自愈仅限用户级 systemd 单元（免提权、可逆、10s 超时），容器内（`HOST_PODMAN_SOCK` 已注入）、非 Linux、非 podman runtime 一律放行不动作；③ 容器内 entrypoint B-scheme 分支经核实**路径无关**（消费 HOST_PODMAN_SOCK 变量 + userns 属组映射 + devuser 读写自检），UID 1006 实测通过，无需重建镜像；④ C-I3 对 `podman.sock` 路径必须静默，SDK/CLI 两处异常分流先判 C-I5。
+
+**修复点（C 原子交付）**：
+- `utils.py`：新增 `host_runtime_uid()`（优先级：显式 `PODMAN_RUNTIME_UID` → POSIX `$XDG_RUNTIME_DIR` 末段 → `os.getuid()` → Windows 1000）作为唯一事实源，`podman_sock_path()`/`host_runtime_dir()` 改为消费它；新增 `ensure_host_podman_socket()`（缺失时自动 `systemctl --user start podman.socket`，返回 `(就绪, 明细, 是否自愈)`）与 `bsock_missing_guidance()`（C-I5 三步指引）；`passthrough_diagnose_hint()` 对 podman.sock 返回空串。
+- `client_core.py`：`run_container()` 在 runtime 就绪检查后接入预检（失败 fail-fast，自愈成功打印 `[Run][B-scheme]` 日志）；`_run_via_sdk` 与 CLI except 两处先 C-I5 后 C-I3。
+
+**预防**：规则 `invoke-tasks.md` 新增 S6 硬约束与 §6 第 5 条 B-scheme 回归门（UID 四优先级断言 + 自愈第三元为 True + C-I3 对 podman.sock 必须静默）；`.env.example` 补 `PODMAN_RUNTIME_UID` 文档；README §5.4 新增 C-I5 行。
+
+**验收点**：① 制造 socket 缺失后 `ensure_host_podman_socket()` 返回 `(True, '', True)`；② `invoke run` 端到端 exit=0，挂载 `-v /run/user/1006/podman/podman.sock:...`；③ 容器 entrypoint 日志 `[B-scheme] [OK] devuser can read/write host podman socket`；④ 容器内 devuser 经 socket `_ping` HTTP 200、REST `GET /images/json` 列出宿主 8 个镜像；⑤ C-I3 对 podman.sock 报错返回空串、C-I5 正常输出；⑥ py_compile 与 GetDiagnostics 零告警。
+
+**遗留观察（不在本次范围）**：宿主 podman 3.4.4 的 REST 服务仅响应 Docker 兼容端点（`/images/json` 200），`/libpod/*` 返回 404——这是宿主端 podman-py SDK 恒降级 CLI 的根因；容器内 v5 podman 经 B-scheme 调 libpod 端点可能同样受限，升级宿主 podman ≥4 可解，属环境升级决策（L2）。
+
+### 2026-09-12 · `fix:` inv load 在 POSIX 平台必现 exit=125（CLI 喂入方式平台分流 + C-I4 诊断）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）；Linux 原生（podman 3.4.4）执行 `python -m invoke load`，SDK 按设计降级 CLI 后，CLI 报 `Error: payload does not match any of the supported image formats (oci, oci-archive, dir, docker-archive)`，exit=125。
+
+**F 阶段根因（两层独立故障，G1 事实门 24 条）**：
+1. **跨平台命令漂移（主因）**：`_load_via_cli` 无条件拼接 `type "<tar>" | podman load`。`type` 是 Windows cmd.exe 的读文件命令；在 POSIX shell 中是"显示命令类型"内建——zsh 向 stdout 回显路径文本（实测 243B）、bash 向 stderr 报 not found，送给 podman 的根本不是 tar 字节流。该写法违反 `invoke-tasks.md §3.2` 自身契约（规定 `load -i`）。
+2. **podman 3.4.x stdin 路径缺陷（次因，排除"把 type 换成 cat 即可"的想当然修复）**：实测同机同归档 `cat <tar> | podman load` 仍在 Copying 4 个 blob 后报同样错误，而 `podman load -i <tar>` 成功（`Loaded image(s)`，1.96GB 归档完好：23 层 + manifest.json docker-archive，外层 tar 遍历无错）。
+3. 诊断盲区：失败兜底只输出 `[CLI] load 命令执行失败（exit=125）`，丢弃 podman 原生 stderr，排查者零信息增量。
+
+**V 对抗门（4 视角）关键裁决**：① Windows 原生**不得**跟随改 `-i`——有 Windows→WSL2 远距 daemon 大文件 EOF 历史实测，保留 `type |` 管道；② WSL2 **内部** platform=Linux 走 `-i` 正确（EOF 问题仅限 Windows 原生 CPython）；③ 成功判定子串 "Loaded image" 同时兼容 podman 3.x（"Loaded image(s):"）与 4/5.x（"Loaded image:"）；④ 不触碰 SDK 候选链（C8 A/B 维度分离），SDK 在本机不可用（podman 3.4.4 无 active socket）属设计内降级，CLI 是 C4 承诺的保底路径。
+
+**修复点（C 原子交付）**：
+- `utils.py`：新增 `image_load_cli_command(runtime, tar_path)` 作为跨平台 load 命令唯一事实源（Windows=`type |`，POSIX=`load -i`），docstring 固化双向硬约束。
+- `client_core.py::_load_via_cli`：改调 helper（消除硬编码 `type`）；新增 **C-I4** "payload does not match" 中文诊断分支（tar tf 自检 → 手动 `-i` 复核 → 升级/重存 三步指引）；最终失败消息携带 podman 原生 stderr 末行，消除诊断盲区。
+
+**预防（为什么下次不会再出现）**：① 平台分流收敛到单一 helper，规则 `invoke-tasks.md §3.2 调用链表 / §3.3 load 专项契约（6 条）/ §5-S5 / §6 第 4 条平台分流回归门` 同步为强制契约并记录"严禁 POSIX 用 type/cat 管道"的实测依据，review 时可直接对照；② 同类错误（归档/喂入/版本三因素同表象）已有 C-I4 自动翻译，不再退回裸 exit=125。
+
+**闭环**：README §5.4 速查表新增 C-I4 行（标题更新为 C-I1~C-I4）；AGENTS.md 变更日志追加摘要。
+
+**验收点**：① `python -m invoke load` 在 Linux + podman 3.4.4 端到端成功（`Loaded image(s): localhost/jupyter-podman-client:latest`）；② `invoke images` CLI 降级表格正常；③ `python -m py_compile` 零告警；④ Windows 路径命令字符串保持 `type ... | podman.exe load` 不变（静态核对）。
+
 ### 2026-09-11 · `fix:` inv load 支持 .tar 未压缩产物（save 降级契约同步）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv load` 报「缓存目录中未找到 tar.gz」，但上轮 `invoke save` 在 Windows 原生（无 gzip）已降级产出 `.tar`——**save 三档降级新增但 load 搜索未同步**，构成 save/load 扩展名契约断裂。
@@ -17,6 +59,8 @@
 **预防**：save 新增产物形态时必须同步 load 搜索契约（save/load 扩展名白名单一致）；README §4.1 已声明双扩展名产物。
 
 **验收点**：① `inv load` 在仅含 `.tar` 缓存时成功加载（实测 `Loaded image: localhost/jupyter-podman-client:latest`）；② py_compile 零告警；③ 双扩展名产物并存时按 mtime 取最新。
+
+> **2026-09-12 更正**：本条「`type <file> | podman load` 管道天然兼容未压缩 tar，无需改动」的判断仅在 Windows 原生成立，在 POSIX 被证伪（`type` 非读文件命令 + podman 3.4.x stdin 缺陷），详见 2026-09-12 C-I4 条目。
 
 ### 2026-09-11 · `feat:` 新增 invoke save 导出镜像到缓存（备份/恢复闭环）
 

@@ -22,12 +22,15 @@ from .utils import (
     ContainerConfig,
     LoadImageResult,
     SDK_STRATEGY_ENV,
+    bsock_missing_guidance,
     build_passthrough_spec,
     check_runtime_ready,
     container_exists as cli_container_exists,
     container_running as cli_container_running,
     detect_runtime,
+    ensure_host_podman_socket,
     generate_random_string,
+    image_load_cli_command,
     passthrough_diagnose_hint,
     podman_sock_path,
     run_cmd,
@@ -215,20 +218,26 @@ def _load_via_sdk(client, tar_path: Path) -> LoadImageResult:
 def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
     """通过 podman load 命令加载镜像 tar。
 
-    使用 stdin pipe（type file | podman load）而非 -i flag，
-    避免大文件经 REST API path 参数传输时触发 WSL2 daemon EOF 错误。
+    命令构造按平台分流（唯一事实源 ``utils.image_load_cli_command``）：
+      - Windows 原生：``type "<file>" | <runtime> load``（stdin 管道，规避
+        Windows→WSL2 远距 daemon 大文件传输 EOF 的历史实测问题）；
+      - POSIX（Linux/WSL2 内/macOS/容器内）：``<runtime> load -i "<file>"``。
+        禁止 POSIX 走管道：``type`` 在 POSIX shell 是"命令类型"内建而非读文件；
+        且 podman 3.4.x 的 stdin 路径对未压缩 docker-archive 会误报
+        "payload does not match ..."（同文件 ``-i`` 正常，2026-09-12 实测）。
 
     注意：
-    - Windows PowerShell 管道中 type 命令可能返回非零退出码，
-      因此以 stdout 是否包含 "Loaded image" 作为成功判断依据，而非 exit code。
+    - Windows PowerShell/cmd 管道退出码不可靠，因此以 stdout 是否包含
+      "Loaded image" 作为成功判断依据，而非 exit code（podman 3.x 输出
+      "Loaded image(s):"、4/5.x 输出 "Loaded image:"，均含该子串）。
     - 以 ``warn=True`` 调用 run_cmd：命令失败时返回 Result 而不抛异常，使下方
-      「Podman machine 未运行」检测分支可达（此前失败即 raise Exit，友好提示被
-      原生英文报错与 ``exit=125`` 掩盖）。
+      「Podman machine 未运行」与「归档格式不识别」检测分支可达（此前失败即
+      raise Exit，友好提示被原生英文报错与 ``exit=125`` 掩盖）。
     """
     runtime = detect_runtime()
     result = run_cmd(
         c,
-        f'type "{tar_path}" | {runtime} load',
+        image_load_cli_command(runtime, tar_path),
         pty=False,
         echo=True,
         warn=True,
@@ -262,6 +271,22 @@ def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
             )
         )
 
+    # 归档格式不识别（C-I4）：POSIX 已走 `load -i`，仍命中本错误说明不是
+    # shell 管道问题，而是「运行时版本 × 归档特性」不兼容或文件损坏。
+    # 必须把原生报错翻译为可执行指引，否则用户只看到 exit=125 无法分流
+    # （2026-09-12 事故：tar 完好但管道喂入方式错误，现象与本错误相同）。
+    if "payload does not match" in combined or "supported image formats" in combined:
+        return LoadImageResult(
+            loaded=False,
+            message=(
+                "[CLI] podman 无法识别该镜像归档（payload does not match）。排查顺序：\n"
+                f"  1) 手动复核归档结构: tar tf {tar_path} | head（应能列出 manifest.json）\n"
+                f"  2) 手动加载复核: {runtime} load -i \"{tar_path}\"\n"
+                "  3) 若手动加载同样报错：多为 podman 版本过旧（如 3.4.x）无法解析"
+                "新归档特性，或归档传输损坏——请升级 podman（≥4）或在构建端重新 save"
+            )
+        )
+
     # Windows PowerShell 管道退出码不可靠，以 stdout 是否含 "Loaded image" 为准
     stdout = _out
     tags: list[str] = []
@@ -277,8 +302,14 @@ def _load_via_cli(c: Context, tar_path: Path) -> LoadImageResult:
             message="[CLI] 镜像加载完成",
         )
 
-    # 没有 Loaded image 且没有已知错误 → 真正的失败
-    return LoadImageResult(loaded=False, message=f"[CLI] load 命令执行失败（exit={result.exited}）")
+    # 没有 Loaded image 且没有已知错误 → 真正的失败。
+    # 携带 podman 原生 stderr 末行（此前只报 exit 码，排查者拿不到任何线索）。
+    err_lines = [ln.strip() for ln in (_err or "").splitlines() if ln.strip()]
+    detail = f": {err_lines[-1]}" if err_lines else ""
+    return LoadImageResult(
+        loaded=False,
+        message=f"[CLI] load 命令执行失败（exit={result.exited}）{detail}",
+    )
 
 
 def load_image(c: Context, tar_path: Path) -> LoadImageResult:
@@ -287,7 +318,8 @@ def load_image(c: Context, tar_path: Path) -> LoadImageResult:
         return LoadImageResult(loaded=False, message=f"镜像文件不存在: {tar_path}")
 
     # 就绪预检：Podman machine 未运行时直接给出中文指引，避免执行注定失败的
-    # `type <大文件> | podman load`（既浪费 IO 又只会得到英文原生报错）。
+    # 大文件加载（Windows `type <大文件> | podman load` / POSIX `load -i`，
+    # 既浪费 IO 又只会得到英文原生报错）。
     ready, hint = check_runtime_ready()
     if not ready:
         return LoadImageResult(loaded=False, message=f"[Load] {hint}")
@@ -680,11 +712,15 @@ def _run_via_sdk(client, cfg: ContainerConfig, workspace_posix: str) -> bool:
             print("[SDK] 容器前台运行")
         return True
     except Exception as e:
-        # 透传资源缺失（C-I3）：podman 硬失败，且 Windows 原生 TTY 控制台下 CLI 路径
-        # 走 subprocess.call 不捕获 stderr，故 SDK 层是 C-I3 指引的主要提示来源。
-        hint = passthrough_diagnose_hint(str(e))
-        if hint:
-            print(hint)
+        # B-scheme 核心 socket 缺失（C-I5）优先于 opt-in 透传诊断（C-I3）；
+        # Windows 原生 TTY 控制台下 CLI 路径走 subprocess.call 不捕获 stderr，
+        # 故 SDK 层是 C-I5/C-I3 指引的主要提示来源。
+        if "podman.sock" in str(e):
+            print(bsock_missing_guidance())
+        else:
+            hint = passthrough_diagnose_hint(str(e))
+            if hint:
+                print(hint)
         print(f"[SDK] 启动失败 fallback to CLI: {e}")
         return False
 
@@ -798,6 +834,15 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
         # 用 Exit 而非 RuntimeError：invoke 下前者打印简洁中文提示，后者会抛出完整 traceback
         raise Exit(1, f"运行时未就绪: {hint}")
 
+    # B-scheme 预检（仅原生 Linux 本机生效）：socket 挂载源不存在则 podman run 必然
+    # statfs 硬失败 exit=125；先尝试自动拉起用户级 podman.socket，失败即 fail-fast
+    # 给出 C-I5 指引，避免注定失败的 run 与 C-I3 误报（2026-09-12，UID 1006 事故）。
+    sock_ready, sock_detail, sock_started = ensure_host_podman_socket()
+    if not sock_ready:
+        raise Exit(1, bsock_missing_guidance(sock_detail))
+    if sock_started:
+        print(f"[Run][B-scheme] 已自动启动用户级 podman.socket: {podman_sock_path()}")
+
     _ensure_secrets(cfg)
     workspace_path = cfg.resolved_workspace()
     if not workspace_path.exists():
@@ -825,10 +870,15 @@ def run_container(c: Context, cfg: ContainerConfig) -> ContainerConfig:
     if not sdk_ok:
         try:
             _run_via_cli(c, cfg, workspace_posix)
-        except Exception as exc:  # noqa: BLE001 - 需把 podman 原生报错翻译成 C-I3 指引
-            pt_hint = passthrough_diagnose_hint(_exception_text(exc))
-            if pt_hint:
-                print(pt_hint)
+        except Exception as exc:  # noqa: BLE001 - 需把 podman 原生报错翻译成 C-I5/C-I3 指引
+            exc_text = _exception_text(exc)
+            # B-scheme 核心 socket（C-I5）优先于 opt-in 透传（C-I3）
+            if "podman.sock" in exc_text:
+                print(bsock_missing_guidance())
+            else:
+                pt_hint = passthrough_diagnose_hint(exc_text)
+                if pt_hint:
+                    print(pt_hint)
             raise
 
     if cfg.host_network and cfg.jupyter_port != 8888:

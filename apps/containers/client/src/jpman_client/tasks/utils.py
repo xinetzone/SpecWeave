@@ -219,11 +219,35 @@ CONTAINER_HOST_ENVS = ("CONTAINER_HOST", "DOCKER_HOST")  # 原生优先兼容兜
 # 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
 # 并设置 `HOST_PODMAN_SOCK`，让容器内 entrypoint 的 B-scheme 分支建立符号链接、
 # 设置 `CONTAINER_HOST`，从而令容器内 podman SDK/CLI 复用宿主 daemon。
-# 默认 uid=1000（WSL2 常见），可用 PODMAN_RUNTIME_UID 环境变量覆盖。
+def host_runtime_uid() -> str:
+    """daemon 宿主运行时 UID（B-scheme socket/透传路径推导的**唯一事实源**）。
+
+    推导优先级：
+      1. 显式 ``PODMAN_RUNTIME_UID``（跨主机场景：客户端在 Windows 原生、
+         daemon 在 WSL2/Machine，或 daemon 宿主 UID 与客户端不同）；
+      2. POSIX 本机 ``$XDG_RUNTIME_DIR`` 末段（形如 ``/run/user/1006`` → 1006）；
+      3. POSIX 本机 ``os.getuid()``；
+      4. Windows 原生回落 ``"1000"``（WSL2 默认用户惯例；本机 UID 无意义）。
+
+    历史教训（2026-09-12，C-I5）：曾无条件默认 "1000"，在 UID=1006 的原生
+    Linux 宿主上生成不存在的 ``/run/user/1000/...`` 挂载源，podman run 硬失败
+    exit=125（statfs no such file）。UID 必须来自运行时事实而非发行版惯例。
+    """
+    explicit = os.environ.get("PODMAN_RUNTIME_UID", "").strip()
+    if explicit:
+        return explicit
+    if platform.system() != "Windows":
+        xdg = os.environ.get("XDG_RUNTIME_DIR", "")
+        m = re.search(r"/run/user/(\d+)$", xdg)
+        if m:
+            return m.group(1)
+        return str(os.getuid())
+    return "1000"
+
+
 def podman_sock_path() -> str:
     """Host rootless daemon socket path (also used as container mount target)."""
-    uid = os.environ.get("PODMAN_RUNTIME_UID", "1000")
-    return f"/run/user/{uid}/podman/podman.sock"
+    return f"/run/user/{host_runtime_uid()}/podman/podman.sock"
 
 
 # ── 运行时透传（对齐构建端 docs/07-toolbx-passthrough.md 的 5 项 opt-in）────────
@@ -236,9 +260,8 @@ CONTAINER_RUNTIME_DIR = "/tmp/runtime-user"
 
 
 def host_runtime_dir() -> str:
-    """daemon 宿主的用户运行时目录 ``/run/user/<uid>``（UID 约定同 podman_sock_path）。"""
-    uid = os.environ.get("PODMAN_RUNTIME_UID", "1000")
-    return f"/run/user/{uid}"
+    """daemon 宿主的用户运行时目录 ``/run/user/<uid>``（UID 约定同 host_runtime_uid）。"""
+    return f"/run/user/{host_runtime_uid()}"
 
 
 def passthrough_paths() -> dict:
@@ -361,6 +384,12 @@ def passthrough_diagnose_hint(exc_msg: str) -> str:
     matched = re.search(r"(?:statfs|stat)\s+(\S+?):", msg)
     missing = matched.group(1) if matched else "(见上方原生报错)"
 
+    # B-scheme 宿主 rootless socket 是**必选核心挂载**（与 opt-in 的 wayland/gpu/usb/dbus
+    # 不同），其缺失有专门的 C-I5 诊断（UID 漂移 / socket 服务未启动），禁止在此误报
+    # 「去掉 --wayland/--gpu 开关」——那会把用户引向完全无关的操作（2026-09-12 实测）。
+    if missing.rstrip("/").endswith("podman.sock") or "podman.sock" in msg:
+        return ""
+
     return (
         "[C-I3] 透传资源在 daemon 宿主上不存在（podman 硬失败，退出码 125，且不会自动创建路径）。\n"
         f"     → 缺失路径：{missing}\n"
@@ -371,6 +400,77 @@ def passthrough_diagnose_hint(exc_msg: str) -> str:
         "     → 自检：`podman machine ssh \"test -e <路径>\"`（Machine）"
         "或 `wsl -d <Distro> -- test -e <路径>`（WSL2）"
     )
+
+
+def bsock_missing_guidance(detail: str = "") -> str:
+    """C-I5：B-scheme 宿主 rootless socket 缺失的可执行中文指引。
+
+    与 C-I3（opt-in 透传资源）区分：该 socket 是 ``invoke run`` 的**必选核心挂载**，
+    缺失只有两类根因——UID 漂移（推导路径错误）或 socket 服务未启动。
+    """
+    uid = host_runtime_uid()
+    sock = podman_sock_path()
+    lines = [
+        "[C-I5] B-scheme 宿主 rootless socket 挂载源不存在（podman run 必然 statfs 硬失败，exit=125）。",
+        f"     → 目标路径：{sock}（推导 UID={uid}）",
+        "     → 修复（按顺序）：",
+        "       1) 核对 UID：本机执行 `id -u`；若与上方 UID 不符，导出 "
+        "`PODMAN_RUNTIME_UID=<id -u 的值>`（或写入客户端 .env）后重试",
+        "       2) 启动用户级 API socket：`systemctl --user start podman.socket`"
+        "（本工具在原生 Linux 上会尝试自动执行此步；无 systemd 的环境改手工运行 "
+        "`podman system service --time=0 unix:///run/user/$(id -u)/podman/podman.sock`）",
+        "       3) 重启后仍丢失则开启 lingering：`sudo loginctl enable-linger $USER`",
+    ]
+    if detail:
+        lines.append(f"     → 自动启动失败详情：{detail}")
+    return "\n".join(lines)
+
+
+def ensure_host_podman_socket() -> Tuple[bool, str, bool]:
+    """原生 Linux 上预检并尽力自愈 B-scheme 宿主 socket。
+
+    返回 ``(就绪, 诊断明细, 是否本次自动拉起)``。以下场景**直接放行**
+    （本机文件系统无法代表 daemon 宿主判断，交给远端 C-I1/C-I3 体系）：
+      - 非 Linux（Windows/macOS 的 daemon 在 WSL2/Podman Machine 远端）；
+      - 已在 B-scheme 容器内（``HOST_PODMAN_SOCK`` 已注入，socket 是 bind-mount 产物，
+        绝不能在容器内去 systemctl 宿主单元）；
+      - 运行时不是 podman；
+      - socket 文件已存在。
+
+    自愈仅限用户级 systemd 单元（``systemctl --user start podman.socket``）：
+    无需提权、可逆、带 10s 超时；任何异常都降级为 C-I5 指引，绝不阻断在非预期环境。
+    """
+    if platform.system() != "Linux" or os.environ.get("HOST_PODMAN_SOCK"):
+        return True, "", False
+    try:
+        if detect_runtime() != "podman":
+            return True, "", False
+    except Exit:
+        return True, "", False
+
+    sock = podman_sock_path()
+    if Path(sock).exists():
+        return True, "", False
+
+    systemctl = shutil.which("systemctl")
+    if not systemctl:
+        return False, "本机无 systemctl（非 systemd 环境），需手工启动 podman system service", False
+    try:
+        result = subprocess.run(
+            [systemctl, "--user", "start", "podman.socket"],
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except subprocess.TimeoutExpired:
+        return False, "systemctl --user start podman.socket 超时（>10s）", False
+    except OSError as exc:
+        return False, f"systemctl 调用失败：{exc}", False
+
+    if Path(sock).exists():
+        return True, "", True
+    detail = (result.stderr or result.stdout or "systemctl 返回成功但 socket 文件仍不存在").strip()
+    return False, detail, False
 
 
 _VALID_STRATEGIES = {"auto", "legacy", "wsl", "machine"}
@@ -847,6 +947,33 @@ def detect_runtime() -> str:
     if shutil.which("docker"):
         return "docker"
     raise Exit("未找到 podman 或 docker，请先安装其中之一")
+
+
+def image_load_cli_command(runtime: str, tar_path: Path | str) -> str:
+    """构造跨平台 ``<runtime> load`` 命令（CLI fallback 唯一事实源）。
+
+    平台矩阵（两条路径不可互相"统一"，各有硬约束）：
+
+    - **Windows 原生 CPython**：``type "<file>" | <runtime> load``。
+      ``type`` 是 cmd.exe 的读文件内建命令；保留 stdin 管道是历史实测结论——
+      ``-i`` / REST path 方式经 Windows→WSL2 远距 daemon 传输超大镜像时
+      会触发 daemon EOF。invoke 在 Windows 的 runner 走 COMSPEC（cmd.exe），
+      ``type`` 语义成立。
+    - **POSIX（Linux 原生 / WSL2 内 / macOS / 容器内 B-scheme）**：
+      ``<runtime> load -i "<file>"``。此处**严禁**使用
+      ``type file | ...``（POSIX shell 的 ``type`` 是"显示命令类型"内建，
+      zsh 向 stdout 回显路径文本、bash 向 stderr 报 not found，送给 daemon 的
+      根本不是 tar 字节流），也不要用 ``cat file | ...``：podman 3.4.x
+      （RHEL8/Ubuntu22.04 自带版本）的 stdin 路径对未压缩 docker-archive
+      会在 Copying 数个 blob 后误报
+      "payload does not match any of the supported image formats"，
+      同一文件 ``-i`` 加载正常（2026-09-12 实测）。``-i`` 同时免去对
+      cat/type 的依赖与大文件管道的 SIGPIPE 风险。
+    """
+    path_str = os.fspath(tar_path)
+    if platform.system() == "Windows":
+        return f'type "{path_str}" | {runtime} load'
+    return f'{runtime} load -i "{path_str}"'
 
 
 def to_posix_path(path: Path | str) -> str:

@@ -165,9 +165,9 @@ invoke images
 
 四种合法值：`auto | legacy | wsl | machine`。非合法值会被归一化回 `auto`。
 
-### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I4 + 容器/运行时坑 C-I1~C-I3）
+### 5.4 30 秒修复速查表（Windows 原生坑 W-I1~W-I4 + 容器/运行时坑 C-I1~C-I5）
 
-`invoke` 失败时终端会自动匹配以下条目（前三条为 Windows 原生坑；C-I1~C-I3 为容器/运行时坑且**与平台无关**），每个条目末尾附一行命令级修复：
+`invoke` 失败时终端会自动匹配以下条目（W-Ix 为 Windows 原生坑；C-I1~C-I5 为容器/运行时坑且**与平台无关**），每个条目末尾附一行命令级修复：
 
 | ID | 触发异常 | 根因 | 修复（30秒） |
 |----|---------|------|------------|
@@ -179,6 +179,8 @@ invoke images
 | **C-I2** | 同上 `PermissionError` 类，但为 **`[Errno 13] Permission denied` / EACCES**（非 ENOENT）：SDK 报 `podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied`；CLI 报 `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied` | **容器内 devuser 无权访问宿主直通 socket**：宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，而 devuser 是非 root UID（固定 1000，≠0）且镜像基线未将其加入 socket 属组（`/etc/group` 的 `root:x:0:` 无成员）→ `socket.connect()` 直接 EACCES。**与 C-I1 的语义差异**：C-I1 是 socket/目录不存在（ENOENT），C-I2 是存在但无权限（EACCES）。**代价与红线**：让 devuser 入 socket 属组会扩大其组权限；**严禁 `chmod 666`/`chown` 宿主 socket**（会改到宿主 socket 本体、破坏宿主侧权限） | `entrypoint.sh::setup_podman()` 的 **B-scheme** 分支自动 `stat -Lc '%G' <host_sock>` 解析属组并 `usermod -aG <socket组> ${NON_ROOT_USER}`，随后以 devuser 身份实测 socket 可读写（`su - devuser -c "test -r/-w ..."`，失败仅告警不阻断）。**时机关键**：该步骤必须早于 `exec /usr/bin/supervisord`——supervisord 的 `drop_privileges()` 在 spawn 子进程时才用 `grp.getgrall()` 派生补充组，已在运行的 jupyter 进程不受后续 usermod 影响，故须重建镜像/重启容器生效。自检：容器内 `supervisorctl status jupyter` 取 PID 后 `/proc/<pid>/status` 的 `Groups` 应含 socket 属组 |
 
 | **C-I3** | podman 原生报错 `Error: statfs <路径>: no such file or directory`（卷缺失）或 `Error: stat <路径>: no such file or directory`（设备缺失），退出码 125 | **运行时透传资源在 daemon 宿主上不存在**：`--wayland` / `--gpu` / `--usb` / `--dbus` 挂载的 socket 或设备节点是 **WSL2 / Podman Machine 内**的路径，而 podman 对缺失路径**硬失败且不会自动创建**（`:ro`/`:rw`/裸挂载表现一致）；客户端可能跑在 Windows 原生 CPython 上，本机 `Path.exists()` 对这些路径必然为假，**故不做本机预检**（否则会误判并拒绝正确的透传请求） | 先确认资源在 daemon 宿主真实存在：`podman machine ssh "test -e <路径>"`（Machine）或 `wsl -d <Distro> -- test -e <路径>`（WSL2）；路径不同则用 `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `DBUS_SESSION_BUS_PATH` / `GPU_DEVICE` / `USB_DEVICE` 覆盖；宿主本就不具备该资源时**去掉对应开关**（详见 §11） |
+| **C-I4** | `Error: payload does not match any of the supported image formats (oci, oci-archive, dir, docker-archive)`，退出码 125（`invoke load`） | 三种成因按概率排序：① POSIX shell 误用 `type <tar> \| podman load`——`type` 在 bash/zsh/dash 是"显示命令类型"内建而非 Windows cmd 的读文件命令，喂给 podman 的是文本/空流（本工具 2026-09-12 前的跨平台回归，已修复）；② `cat <tar> \| podman load` 在 **podman 3.4.x**（RHEL8/Ubuntu22.04 自带）stdin 路径对未压缩 docker-archive 误报本错误，同一文件 `podman load -i` 正常；③ 归档真的损坏或被新版 podman 特性写入而旧版无法解析 | 本工具在 POSIX 已自动改用 `podman load -i <tar>`（Windows 原生保留 `type \|` 管道）。仍报错时依次执行：`tar tf <tar> \| head`（应列出 `manifest.json`）→ `podman load -i <tar>` → 升级 podman（建议 ≥4）或在构建端重新 `invoke save` |
+| **C-I5** | `invoke run` 报 `Error: statfs /run/user/<uid>/podman/podman.sock: no such file or directory`，退出码 125 | B-scheme **必选核心挂载**源缺失（与 C-I3 的 opt-in 透传不同），两类根因：① UID 漂移——socket 路径 UID 默认取**本机事实**（`$XDG_RUNTIME_DIR` 末段 → `id -u`，可用 `PODMAN_RUNTIME_UID` 显式覆盖），daemon 宿主 UID 不同即路径错；② 宿主用户级 API socket 单元未启动（`podman.socket` inactive；本机 podman CLI 直连不需要它，但容器 B-scheme 经 REST socket 复用宿主 daemon，必需） | 原生 Linux 上工具会自动执行 `systemctl --user start podman.socket` 后重试；自动修复失败时：①`id -u` 核对并 `export PODMAN_RUNTIME_UID=<值>`；②手工 `systemctl --user start podman.socket`；③重启丢失则 `sudo loginctl enable-linger $USER`。无 systemd 环境手工运行 `podman system service --time=0 unix:///run/user/$(id -u)/podman/podman.sock` |
 
 ### 5.5 挂载路径 vs 连接 URL（A/B 维度分离，避免混淆）
 
@@ -284,7 +286,7 @@ stop_container(ctx, cfg.name)
 | `PASSTHROUGH_GPU` | `no` | ③ GPU 透传 |
 | `PASSTHROUGH_DBUS` | `no` | ④ D-Bus 会话总线透传 |
 | `PASSTHROUGH_USB` | `no` | ⑤ USB 透传 |
-| `HOST_XDG_RUNTIME_DIR` | `/run/user/<PODMAN_RUNTIME_UID>`（默认 1000） | daemon 宿主运行时目录（②④ 的基准路径） |
+| `HOST_XDG_RUNTIME_DIR` | `/run/user/<运行时 UID>`（Linux 默认取 `$XDG_RUNTIME_DIR` 末段/`id -u`，Windows 原生默认 1000；均可由 `PODMAN_RUNTIME_UID` 覆盖，见 C-I5） | daemon 宿主运行时目录（②④ 的基准路径） |
 | `HOST_WAYLAND_DISPLAY` | `wayland-0` | ② Wayland socket 名（**daemon 宿主**侧的实例名，不是客户端环境变量） |
 | `DBUS_SESSION_BUS_PATH` | `<HOST_XDG_RUNTIME_DIR>/bus` | ④ 会话总线 socket 路径 |
 | `GPU_DEVICE` | `/dev/dri` | ③ GPU 设备节点 |
