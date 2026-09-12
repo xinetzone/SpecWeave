@@ -1,7 +1,7 @@
 ---
 name: jpman-podman-ops
-version: 1.0.0
-description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、jupyter 容器起不来、podman machine、podman 机器未运行、工作区挂载(-w)、挂载目录不对、容器警告/WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活(keepalive) 等场景时，必须使用此技能。封装日常驾驶 SOP（machine 就绪预检→幂等 start→Mounting 行核对→healthcheck 验证→WARN 警告先验分诊）、rootless 三必需参数、容器内 root 运行模型、.env 与工作区路径优先级、rebuild 增量/全量构建选择，并与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）形成边界路由。不要手动拼接 podman 命令或套用 Docker 经验排障——本 Skill 已封装 podman machine ssh 纪律、禁止 systemd=true、hello-world 最小验证等实战教训。"
+version: 1.1.0
+description: "jupyter-podman-rootless（jpman）容器日常运维与 Podman on WSL2 驾驶纪律。当用户提到 jpman、启动/重启/停止 Jupyter 容器、jupyter 容器起不来、podman machine、podman 机器未运行、工作区挂载(-w)、挂载目录不对、容器警告/WARN 分诊、fuse device not found、Jupyter 隐藏文件不显示、rootless podman 排障、jpman start/restart/status/logs/shell、WSL 保活(keepalive)、镜像构建慢/构建卡住/miniforge 下载慢/GitHub 限速/镜像源加速 等场景时，必须使用此技能。封装日常驾驶 SOP（machine 就绪预检→幂等 start→Mounting 行核对→healthcheck 验证→WARN 警告先验分诊）、rootless 三必需参数、容器内 root 运行模型、.env 与工作区路径优先级、rebuild 增量/全量构建选择、invoke 全量构建加速分诊（tuna 三镜像源+本地安装包预灌+9p 规避），并与 docker-cache-cmd（镜像灾备缓存）、docker-wsl-bridge-cmd（镜像转 WSL 发行版）形成边界路由。不要手动拼接 podman 命令或套用 Docker 经验排障——本 Skill 已封装 podman machine ssh 纪律、禁止 systemd=true、hello-world 最小验证等实战教训。"
 argument-hint: "<日常操作> [start|stop|restart|status|info|logs|shell|rebuild...] [选项]"
 disable-model-invocation: false
 user-invocable: true
@@ -38,7 +38,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 | 日常启停/进入/日志/挂载/警告分诊 | **本 Skill** |
 | 镜像 tar.gz 灾备缓存（.agents 体系，`.docker-cache/`） | [docker-cache-cmd](../docker-cache-cmd/SKILL.md) |
 | 镜像转 WSL 发行版（通用桥接） | [docker-wsl-bridge-cmd](../docker-wsl-bridge-cmd/SKILL.md) |
-| ML 模型管理 / invoke 任务 / 首次构建镜像 | 应用内 invoke，见 [01-getting-started.md](../../apps/containers/jupyter-podman-rootless/docs/01-getting-started.md) |
+| ML 模型管理 / invoke 任务 / 首次构建镜像 | 应用内 invoke，见 [01-getting-started.md](../../../apps/containers/jupyter-podman-rootless/docs/01-getting-started.md) |
 
 ## 3. 何时使用本技能
 
@@ -52,6 +52,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 - "隐藏文件不显示"、"allow_hidden"、".temp 看不到"
 - "rootless podman"、"WSL 保活"、"keepalive"、"WSL 自动关闭"
 - "rebuild"、"增量重建"、"改了配置怎么生效"
+- "构建慢"、"镜像构建卡住"、"构建一直不动"、"miniforge 下载慢/超时"、"GitHub 限速"、"镜像源加速"、"tuna 镜像构建"
 
 > **关于触发**：即使没有明确说"用 skill"，只要涉及 jupyter-podman-rootless 容器的日常操作与排障，就应使用本技能，不要手动拼接 `podman create` 参数或凭 Docker 经验操作——rootless/WSL2 的约束与 Docker Desktop 完全不同。
 
@@ -62,6 +63,7 @@ x-toml-ref: "../../../.meta/toml/.agents/skills/jpman-podman-ops/SKILL.toml"
 ├─ 日常启停/进入/日志/查访问地址？            → §6 日常驾驶 SOP
 ├─ podman machine 连不上/报连接错误/启动有 WARN？ → §7 machine 就绪与警告分诊
 ├─ 改了配置/装了包要固化进镜像？               → §8 构建场景（rebuild 增量 vs rebuild-all 全量）
+├─ invoke build 很慢/卡在下载/疑似构建挂起？   → §8.5 构建加速分诊速查
 ├─ 镜像打包灾备 / 换机 / WSL 重置后恢复？
 │   ├─ 应用内快速缓存（.image-cache/）        → jpman save/load（§8.3）
 │   └─ .agents 体系灾备（.docker-cache/）     → docker-cache-cmd
@@ -168,7 +170,7 @@ bash bin/jpman restart -w /path/to/proj   # restart 透传全部参数（含 -w�
 | WSL | `wsl-export` / `wsl-verify` / `keepalive` | 发行版导出与保活 |
 | 安装 | `install [DIR]` / `help` | 软链安装、帮助 |
 
-> 完整参数表以 [14-jpman-cli.md](../../apps/containers/jupyter-podman-rootless/docs/14-jpman-cli.md) 与 `jpman help` 为准（命令可能随版本演进）。
+> 完整参数表以 [14-jpman-cli.md](../../../apps/containers/jupyter-podman-rootless/docs/14-jpman-cli.md) 与 `jpman help` 为准（命令可能随版本演进）。
 
 ## 7. Podman machine 就绪与 WARN 分诊
 
@@ -238,6 +240,53 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 
 导出流程五步（rootful load 缓存→export rootfs→`wsl --import`→写 wsl.conf + conda 激活→terminate 重启+冒烟）。导出的 wsl.conf 明确 `systemd=false`。通用桥接/无 Podman 场景用 [docker-wsl-bridge-cmd](../docker-wsl-bridge-cmd/SKILL.md)。
 
+### 8.5 构建加速分诊速查（invoke build 慢/疑似卡住）
+
+适用：`invoke build`（全量/缓存失效）或 client 侧 `invoke env.build-layer` 长时间停在 **Stage 2 conda-builder（STEP 11/11）**。jpman `rebuild`（§8.1）内置 tuna 三源且上下文在 /tmp，不适用本节。
+
+**第 1 步：先取证再决定是否杀进程（最长 30 秒）**
+
+进入 `podman machine ssh` 会话后执行：
+
+```bash
+# 当前构建进程：curl=在下安装包 / apt|dpkg=装系统包 / mamba=conda 求解（收尾阶段）
+ps -eo etime,pcpu,comm,args | grep -Ei 'buildah|curl|apt|dpkg|mamba' | grep -v grep
+
+# 5 秒采样网络收包速率（KB/s）
+R1=$(awk '/eth0/{print $2}' /proc/net/dev); sleep 5; R2=$(awk '/eth0/{print $2}' /proc/net/dev)
+echo "$(( (R2-R1)/1024 )) KB/s"
+```
+
+判读：有 `curl ... miniforge.sh` = 安装包下载中（裸 build 的头号瓶颈）；有 apt/dpkg = 系统包阶段；有 mamba = conda 求解中（最慢的下载已过）；流量≈0 但 buildah 在跑 = 9p IO 瓶颈（§8.2）。
+
+**第 2 步：按瓶颈选加速手段（成本从低到高）**
+
+| # | 手段 | 命令/位置 | 适用 |
+|---|------|----------|------|
+| 1 | **tuna 三镜像源参数**（首选，零副作用） | `invoke build --apt-mirror tuna --conda-mirror tuna --pip-mirror tuna` | 裸 `invoke build` 默认走 Containerfile `*) ` 分支只列 GitHub 单源；实测 GitHub **221 KB/s**（150MB ETA ~11 分钟）→ tuna **7.5 MB/s** |
+| 2 | **本地预灌 Miniforge 安装包** | 下载到 `local-cache/miniforge/Miniforge3-Linux-x86_64.sh`（见下） | 断网/反复全量重建；解析顺序为本地缓存（判据 `-s` 非空）→镜像源→GitHub，命中即零下载 |
+| 3 | **上下文移出 9p** | 拷到 WSL 原生 fs（如 `~/build/`）再构建（§8.2） | 流量≈0、buildah CPU 低、构建目录在 /mnt/d |
+
+预灌命令（在 podman machine 内，tuna 实测 16 秒/119MB）：
+
+```bash
+cd /mnt/d/spaces/SpecWeave/apps/containers/jupyter-podman-rootless
+curl -fSL --retry 3 -o local-cache/miniforge/Miniforge3-Linux-x86_64.sh \
+  https://mirrors.tuna.tsinghua.edu.cn/github-release/conda-forge/miniforge/LatestRelease/Miniforge3-Linux-x86_64.sh
+bash local-cache/miniforge/Miniforge3-Linux-x86_64.sh -h   # 自检必须用 -h（见反模式）
+```
+
+- 安装包被 `.gitignore` 忽略（~119MB，仅本机加速，不入库）；架构不同换 `aarch64`
+- 灌入后 `COPY local-cache/` 层 hash 变化、Stage 2 重跑一次属预期；之后重跑全缓存
+- **实测基线**（2026-09-12，WSL2/podman machine）：本地安装包 + tuna 三源 → Stage 2 conda-builder **148 秒**、全镜像约 5 分钟
+
+**反模式（均有实战实证）**
+
+- ❌ 裸 `invoke build` 不带镜像参数，再把慢归因于"网络/机器卡"——默认分支只有 GitHub 一个源
+- ❌ 看到终端长时间无输出就杀构建：先 `ps` 取证，curl 活着就是在下载
+- ❌ Windows 用 `... | Select-Object -Last N` 观察构建：该 cmdlet 缓冲到进程结束才输出，伪装成"卡死"；改用 `... 2>&1 | Tee-Object build.log` 流式落盘，另开终端 `Get-Content build.log -Tail 20`
+- ❌ 用 `bash Miniforge3-*.sh --help` 自检：安装包不支持 `--help`（退出非 0 被误判 CORRUPT），用 `-h`，或 `od -c` 看头部 `#!/bin/sh`
+
 ## 9. 容器内运行模型（排障前必读）
 
 - **Jupyter 以 root 运行**：supervisor 配置 `user=root`，Jupyter 配置在 `/root/.jupyter/`。rootless podman 中容器内 root 映射为宿主机普通用户（subuid 范围），并不拥有宿主机 root 权限
@@ -275,12 +324,13 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 | Jupyter 看不到 .temp/.gitignore | 隐藏文件 | 服务端已配 allow_hidden；UI 勾选 View → Show Hidden Files |
 | 忘记 token / 密码 | 访问 | `jpman info` 或 `jpman logs`；默认见 §5 |
 | start 后长时间 dots | 健康等待 | 正常，最长 120 秒；超时用 `jpman logs` 查失败原因 |
-| 全量构建极慢 | 9p 文件系统 | 拷上下文到 WSL 原生 fs（~/build/）；日常改配置用 rebuild |
+| invoke build 极慢/卡在 Stage 2 | GitHub 单源/9p | 按 §8.5 两步分诊：tuna 三镜像源参数 + 本地安装包预灌；9p 瓶颈拷 ~/build/ |
+| 构建终端长时间无输出 | 观察方式/真下载 | 先 ps 取证（curl 活着=在下载）；勿用 `Select-Object -Last` 观察（§8.5 反模式） |
 | bash 脚本语法错误 | CRLF 行尾 | 转 LF 后在 WSL 执行 |
 | wsl-export 报 distro exists | 重名 | 加 `--force` 或 `--distro-name` 换名 |
 | 容器内 apt 装的包重启后消失 | 容器无状态 | 固化到镜像（改 Containerfile + rebuild-all） |
 
-> 更多 FAQ 见 [13-faq.md](../../apps/containers/jupyter-podman-rootless/docs/13-faq.md)（SSH 排查 5 步、registry HTTP insecure 配置、toolbox conda 激活等）。
+> 更多 FAQ 见 [13-faq.md](../../../apps/containers/jupyter-podman-rootless/docs/13-faq.md)（SSH 排查 5 步、registry HTTP insecure 配置、toolbox conda 激活等）。
 
 ## 12. Gotchas（陷阱与反直觉行为）
 
@@ -303,6 +353,8 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 
 ### 12.3 机制边界陷阱
 
+- **裸 `invoke build` 与 jpman rebuild 的源策略不同**：rebuild 内置 tuna 三镜像源；裸 invoke build 默认只有 GitHub 单源，必须显式 `--apt-mirror/--conda-mirror/--pip-mirror tuna`（§8.5）
+- **PowerShell `Select-Object -Last N` 会伪装构建"卡死"**：它必须等上游进程结束才输出最后 N 行，长时间构建期间日志文件为 0 字节属观察方式问题而非挂起；用 `Tee-Object` 流式落盘（§8.5）
 - **两套镜像缓存互不相通**：应用内 `.image-cache/`（jpman save/load）与 .agents 体系 `.docker-cache/`（docker-cache-cmd）是独立机制，不要互相找文件
 - **jpman vs invoke 分工**：jpman 零 Python 依赖、管日常驾驶/缓存/导出；invoke 管 ML 模型、三层后端（podman-compose→podman-py→CLI）、13 个任务。日常驾驶不要绕去 invoke
 
@@ -310,10 +362,10 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 
 | 目标 | 参考 |
 |------|------|
-| jpman 命令与环境变量全表 | [14-jpman-cli.md](../../apps/containers/jupyter-podman-rootless/docs/14-jpman-cli.md) |
-| 首次构建 / invoke 入门 | [01-getting-started.md](../../apps/containers/jupyter-podman-rootless/docs/01-getting-started.md) |
-| FAQ（SSH/registry/toolbox 等） | [13-faq.md](../../apps/containers/jupyter-podman-rootless/docs/13-faq.md) |
-| 构建与 7 步验证规范 | [build-test.md](../../apps/containers/jupyter-podman-rootless/.agents/rules/build-test.md) |
+| jpman 命令与环境变量全表 | [14-jpman-cli.md](../../../apps/containers/jupyter-podman-rootless/docs/14-jpman-cli.md) |
+| 首次构建 / invoke 入门 | [01-getting-started.md](../../../apps/containers/jupyter-podman-rootless/docs/01-getting-started.md) |
+| FAQ（SSH/registry/toolbox 等） | [13-faq.md](../../../apps/containers/jupyter-podman-rootless/docs/13-faq.md) |
+| 构建与 7 步验证规范 | [build-test.md](../../../apps/containers/jupyter-podman-rootless/.agents/rules/build-test.md) |
 | 2026-08-27 警告复盘（21 事实/5-Why/警告先验法） | [retrospective-podman-wsl-rootless-warnings-20260827.md](../../../docs/retrospective/reports/task-reports/retrospective-podman-wsl-rootless-warnings-20260827.md) |
 | 镜像灾备缓存 | [docker-cache-cmd/SKILL.md](../docker-cache-cmd/SKILL.md) |
 | 镜像转 WSL 发行版（通用桥接） | [docker-wsl-bridge-cmd/SKILL.md](../docker-wsl-bridge-cmd/SKILL.md) |
@@ -321,4 +373,5 @@ bash bin/jpman wsl-verify [发行版名]   # 14 项冒烟检查（含 Python 3.1
 
 ## 14. Changelog
 
+- **v1.1.0** (2026-09-12): 新增 §8.5 构建加速分诊速查。源于一次"构建疑似卡死"排障的实证：裸 `invoke build` 默认只走 GitHub 单源（实测 Miniforge 下载 221 KB/s、ETA ~11 分钟），取证后确认非挂起；tuna 三镜像源参数 + 本地安装包预灌（`local-cache/miniforge/`，解析顺序本地→镜像源→官方）使 Stage 2 conda-builder 降至 148 秒、全镜像约 5 分钟。同步沉淀 4 条反模式（裸 build 不带镜像参数、无输出即杀进程、`Select-Object -Last` 缓冲伪装卡死、安装包 `--help` 自检假阳性须用 `-h`）；决策树、触发词、§11 错误表、§12.3 Gotchas 同步；顺带修复 §2/§6/§13 共 7 条既有断链（apps 相对路径少一层 `../`）。
 - **v1.0.0** (2026-08-29): 初始版本。基于 jupyter-podman-rootless 日常运维实践与 2026-08-27 podman/WSL rootless 警告复盘萃取（42 条事实、4 条跨案例洞察、4 视角对抗审查）。覆盖 machine 就绪纪律、jpman 幂等驾驶 SOP、警告先验法分诊、rootless 运行模型、构建/缓存/导出路由；含 15 条反模式、9 项安全检查清单、12 条 Gotchas；与 docker-cache-cmd、docker-wsl-bridge-cmd 建立边界路由。
