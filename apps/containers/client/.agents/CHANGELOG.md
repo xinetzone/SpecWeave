@@ -6,6 +6,27 @@
 
 ## [Unreleased]
 
+### 2026-09-12 · `fix:` inv load 在 POSIX 平台必现 exit=125（CLI 喂入方式平台分流 + C-I4 诊断）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）；Linux 原生（podman 3.4.4）执行 `python -m invoke load`，SDK 按设计降级 CLI 后，CLI 报 `Error: payload does not match any of the supported image formats (oci, oci-archive, dir, docker-archive)`，exit=125。
+
+**F 阶段根因（两层独立故障，G1 事实门 24 条）**：
+1. **跨平台命令漂移（主因）**：`_load_via_cli` 无条件拼接 `type "<tar>" | podman load`。`type` 是 Windows cmd.exe 的读文件命令；在 POSIX shell 中是"显示命令类型"内建——zsh 向 stdout 回显路径文本（实测 243B）、bash 向 stderr 报 not found，送给 podman 的根本不是 tar 字节流。该写法违反 `invoke-tasks.md §3.2` 自身契约（规定 `load -i`）。
+2. **podman 3.4.x stdin 路径缺陷（次因，排除"把 type 换成 cat 即可"的想当然修复）**：实测同机同归档 `cat <tar> | podman load` 仍在 Copying 4 个 blob 后报同样错误，而 `podman load -i <tar>` 成功（`Loaded image(s)`，1.96GB 归档完好：23 层 + manifest.json docker-archive，外层 tar 遍历无错）。
+3. 诊断盲区：失败兜底只输出 `[CLI] load 命令执行失败（exit=125）`，丢弃 podman 原生 stderr，排查者零信息增量。
+
+**V 对抗门（4 视角）关键裁决**：① Windows 原生**不得**跟随改 `-i`——有 Windows→WSL2 远距 daemon 大文件 EOF 历史实测，保留 `type |` 管道；② WSL2 **内部** platform=Linux 走 `-i` 正确（EOF 问题仅限 Windows 原生 CPython）；③ 成功判定子串 "Loaded image" 同时兼容 podman 3.x（"Loaded image(s):"）与 4/5.x（"Loaded image:"）；④ 不触碰 SDK 候选链（C8 A/B 维度分离），SDK 在本机不可用（podman 3.4.4 无 active socket）属设计内降级，CLI 是 C4 承诺的保底路径。
+
+**修复点（C 原子交付）**：
+- `utils.py`：新增 `image_load_cli_command(runtime, tar_path)` 作为跨平台 load 命令唯一事实源（Windows=`type |`，POSIX=`load -i`），docstring 固化双向硬约束。
+- `client_core.py::_load_via_cli`：改调 helper（消除硬编码 `type`）；新增 **C-I4** "payload does not match" 中文诊断分支（tar tf 自检 → 手动 `-i` 复核 → 升级/重存 三步指引）；最终失败消息携带 podman 原生 stderr 末行，消除诊断盲区。
+
+**预防（为什么下次不会再出现）**：① 平台分流收敛到单一 helper，规则 `invoke-tasks.md §3.2 调用链表 / §3.3 load 专项契约（6 条）/ §5-S5 / §6 第 4 条平台分流回归门` 同步为强制契约并记录"严禁 POSIX 用 type/cat 管道"的实测依据，review 时可直接对照；② 同类错误（归档/喂入/版本三因素同表象）已有 C-I4 自动翻译，不再退回裸 exit=125。
+
+**闭环**：README §5.4 速查表新增 C-I4 行（标题更新为 C-I1~C-I4）；AGENTS.md 变更日志追加摘要。
+
+**验收点**：① `python -m invoke load` 在 Linux + podman 3.4.4 端到端成功（`Loaded image(s): localhost/jupyter-podman-client:latest`）；② `invoke images` CLI 降级表格正常；③ `python -m py_compile` 零告警；④ Windows 路径命令字符串保持 `type ... | podman.exe load` 不变（静态核对）。
+
 ### 2026-09-11 · `fix:` inv load 支持 .tar 未压缩产物（save 降级契约同步）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C）；`inv load` 报「缓存目录中未找到 tar.gz」，但上轮 `invoke save` 在 Windows 原生（无 gzip）已降级产出 `.tar`——**save 三档降级新增但 load 搜索未同步**，构成 save/load 扩展名契约断裂。
@@ -17,6 +38,8 @@
 **预防**：save 新增产物形态时必须同步 load 搜索契约（save/load 扩展名白名单一致）；README §4.1 已声明双扩展名产物。
 
 **验收点**：① `inv load` 在仅含 `.tar` 缓存时成功加载（实测 `Loaded image: localhost/jupyter-podman-client:latest`）；② py_compile 零告警；③ 双扩展名产物并存时按 mtime 取最新。
+
+> **2026-09-12 更正**：本条「`type <file> | podman load` 管道天然兼容未压缩 tar，无需改动」的判断仅在 Windows 原生成立，在 POSIX 被证伪（`type` 非读文件命令 + podman 3.4.x stdin 缺陷），详见 2026-09-12 C-I4 条目。
 
 ### 2026-09-11 · `feat:` 新增 invoke save 导出镜像到缓存（备份/恢复闭环）
 

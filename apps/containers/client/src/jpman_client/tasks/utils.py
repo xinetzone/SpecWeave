@@ -849,6 +849,33 @@ def detect_runtime() -> str:
     raise Exit("未找到 podman 或 docker，请先安装其中之一")
 
 
+def image_load_cli_command(runtime: str, tar_path: Path | str) -> str:
+    """构造跨平台 ``<runtime> load`` 命令（CLI fallback 唯一事实源）。
+
+    平台矩阵（两条路径不可互相"统一"，各有硬约束）：
+
+    - **Windows 原生 CPython**：``type "<file>" | <runtime> load``。
+      ``type`` 是 cmd.exe 的读文件内建命令；保留 stdin 管道是历史实测结论——
+      ``-i`` / REST path 方式经 Windows→WSL2 远距 daemon 传输超大镜像时
+      会触发 daemon EOF。invoke 在 Windows 的 runner 走 COMSPEC（cmd.exe），
+      ``type`` 语义成立。
+    - **POSIX（Linux 原生 / WSL2 内 / macOS / 容器内 B-scheme）**：
+      ``<runtime> load -i "<file>"``。此处**严禁**使用
+      ``type file | ...``（POSIX shell 的 ``type`` 是"显示命令类型"内建，
+      zsh 向 stdout 回显路径文本、bash 向 stderr 报 not found，送给 daemon 的
+      根本不是 tar 字节流），也不要用 ``cat file | ...``：podman 3.4.x
+      （RHEL8/Ubuntu22.04 自带版本）的 stdin 路径对未压缩 docker-archive
+      会在 Copying 数个 blob 后误报
+      "payload does not match any of the supported image formats"，
+      同一文件 ``-i`` 加载正常（2026-09-12 实测）。``-i`` 同时免去对
+      cat/type 的依赖与大文件管道的 SIGPIPE 风险。
+    """
+    path_str = os.fspath(tar_path)
+    if platform.system() == "Windows":
+        return f'type "{path_str}" | {runtime} load'
+    return f'{runtime} load -i "{path_str}"'
+
+
 def to_posix_path(path: Path | str) -> str:
     """将路径转换为 POSIX 风格（适配 WSL2/远程 podman）。"""
     p = Path(path)

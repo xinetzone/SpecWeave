@@ -146,6 +146,7 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
+- **2026-09-12** | fix: `inv load` POSIX 平台 exit=125 修复（CLI 喂入方式平台分流）——新增 `utils.image_load_cli_command()` 单一事实源：POSIX 改 `podman load -i`（旧实现误用 Windows cmd 的 `type file |` 管道，且 podman 3.4.x 的 stdin 路径对未压缩 docker-archive 会误报 payload does not match；同文件 `-i` 实测正常），Windows 原生保留 `type |` 管道（WSL2 远距 daemon EOF 历史约束）；新增 C-I4 诊断并让失败消息携带原生 stderr；同步 invoke-tasks.md §3.2/S5、README §5.4 速查表
 - **2026-09-10** | fix: 布尔参数改为三态 + `run` 任务关闭自动短选项——① 新增 `_resolve_bool()`（显式开 > 显式关 > `.env` > 默认；同开同关报参数冲突）并为每个布尔项配对 `--no-x`；**更正上一条**：`GRANT_SUDO=no` 与「CLI 关闭 .env 开启项」在单参数写法下实为无效（invoke 的 True/False 与「未指定」不可区分、反向旗标仅在 `default is True` 时自动生成），本次才真正生效；② `@task(auto_shortflags=False)` 修复 `-h` 被 `--ssh-public-key` 劫持（`invoke run -h` 直接报错）与 `--host-network` 退化到短名 `-`
 - **2026-09-10** | feat: 同步构建端 `docs/07-toolbx-passthrough.md` 的 5 项运行时透传——`invoke run` 新增 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`（默认全关）；新增 `utils.build_passthrough_spec` 统一 SDK/CLI 两条路径参数；新增 **C-I3** 诊断（透传资源缺失的原生报错翻译，含缺失路径 + 覆盖变量 + daemon 侧自检）；修复 `GRANT_SUDO=no` 因 `bool("no")` 判真而失效的既有缺陷
 - **2026-09-10** | fix: 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）并续接 `windows_diagnose_hint()` C-I2 分支；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
