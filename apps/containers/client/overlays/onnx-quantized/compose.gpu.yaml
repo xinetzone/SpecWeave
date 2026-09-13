@@ -1,0 +1,21 @@
+---
+# GPU opt-in 覆盖层（默认隔离：不 -f 本文件时 GPU 不透传）
+#
+# 深合并语义依据：知识包 concepts/06-config-pipeline.md——
+# 多文件 list 字段为「追加」合并，故此处只需写【新增】设备，
+# 不重复 /dev/fuse（devices 无去重，重复会导致映射两次）。
+#
+# 用法：
+#   invoke quant.up --gpu
+#   podman-compose -f compose.yaml -f compose.gpu.yaml up -d
+#
+# ① Intel/AMD Mesa（默认）：透传 /dev/dri 渲染节点
+# ② NVIDIA CDI（daemon 宿主先 `nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml`）：
+#    podman run 等价 --device nvidia.com/gpu=all；compose 长语法写法取消下方注释
+#    并注释掉 /dev/dri 行（CDI 引用不是宿主机字符设备，两种形态互斥）。
+
+services:
+  quant:
+    devices:
+      - /dev/dri:/dev/dri
+      # - nvidia.com/gpu=all:nvidia.com/gpu=all

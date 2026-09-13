@@ -98,7 +98,10 @@ invoke images        # 列出本地所有镜像
 | `invoke clean [--name N] [--tag T] [--volume] [--image]` | `invoke container.clean` | 清理资源 |
 | `invoke env.build-layer [--tag T] [--base-image I] [--no-cache]` | —（无别名） | 构建容器内自举叠加层镜像（见 §10） |
 | `invoke env.run-cmd --cmd CMD [--tag T] [--keep] [--extra-mount M]` | —（无别名） | 在自举容器内执行单条命令（rootless 三必需 + workspace/.image-cache 双挂载） |
-| `invoke env.shell [--tag T] [--workspace W] [--cache-dir D]` | —（无别名） | 进入自举容器的交互式 bash shell |
+| `invoke env.shell [--tag T] [--workspace W] [--cache-dir DIR]` | —（无别名） | 进入自举容器的交互式 bash shell |
+| `invoke quant.build [--pip-mirror M] [--base-image I] [--no-cache]` | —（opt-in，需 `[compose]` extra） | 构建 ONNX 量化叠加镜像（见 §12） |
+| `invoke quant.up [--gpu] [--skip-build]` | — | podman-compose 启动量化栈 |
+| `invoke quant.down [--volumes]` / `quant.ps` / `quant.logs` / `quant.smoke` | — | 栈生命周期与 3 个纯 ONNX 冒烟 |
 
 ### 4.1 镜像备份与恢复（`invoke save` / `invoke load`）
 
@@ -546,4 +549,32 @@ machine 重启后需重新 attach。
 > 精确指定。配合 `--usb`（USB 总线级）即可在容器内用 v4l2/OpenCV 直接采集摄像头。
 > 前置：先完成上方 usbipd bind/attach 使摄像头在 daemon 宿主出现 `/dev/video*`；
 > 缺失时 podman 硬失败（exit 125），走 C-I3 诊断。
+
+## 12. 工作负载叠加层：onnx-quantized（quant.* 命令，opt-in）
+
+除了用 `invoke run --tag` 跑任意镜像，client 还内置一个**声明式工作负载栈**：
+ONNX 量化工具链叠加层（INT8/FP16/QDQ，纯 ONNX 无 PyTorch，cp314t free-threading）。
+它由 podman-compose 子进程驱动，与 SDK→CLI 两层平行、互不影响。
+
+```bash
+pip install -e ".[compose]"          # 一次性安装可选依赖 podman-compose（WSL2/Linux/macOS）
+invoke quant.build --pip-mirror tuna # 构建 localhost/onnx-quantized:latest（构建期含守卫+冒烟）
+invoke quant.up                      # 启动栈：SSH 2222 / Jupyter 8888
+invoke quant.smoke                   # 动态 INT8 / FP16 / 静态 QDQ 三个固定种子冒烟
+invoke quant.up --gpu                # 需要 GPU 推理时（叠加 compose.gpu.yaml，透传 /dev/dri）
+invoke quant.down                    # 停止并清理
+```
+
+- **Windows 原生门禁**：podman-compose 子进程层不在 Windows 原生 CPython 运行
+  （已知路径解析缺陷）；请在 WSL2 发行版内运行，或 `invoke env.run-cmd`
+  进入自举容器（基底已内嵌 podman-compose）。门禁会输出这两条中文指引并退出。
+- **配置**：`QUANT_IMAGE_TAG` / `QUANT_SSH_PORT` / `QUANT_JUPYTER_PORT` /
+  `QUANT_WORKSPACE` / `USER_PASSWORD` / `JUPYTER_TOKEN` 等写入本目录 `.env`
+  即可（模板见 `.env.example` 与 [overlays/onnx-quantized/.env.example](overlays/onnx-quantized/.env.example)）。
+- **裸 compose**：不加装任何 Python 包也可在 `overlays/onnx-quantized/`
+  直接 `podman-compose up -d`。
+
+完整说明（版本矩阵、冒烟含义、与 Docker 谱系源变体的差异、深度量化指南）：
+[overlays/onnx-quantized/README.md](overlays/onnx-quantized/README.md)。
+对应 AI 硬约束：[.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md)（C11）。
 

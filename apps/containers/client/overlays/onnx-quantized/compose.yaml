@@ -1,0 +1,62 @@
+---
+# onnx-quantized 叠加栈 - Compose Specification（podman-compose / rootless）
+#
+# 设计依据：OKF podman-compose 知识包
+#   concepts/03-compose-patterns.md（服务/端口/绑定/环境变量模式）
+#   concepts/02-rootless.md（rootless 设备与安全字段）
+#   concepts/06-config-pipeline.md（插值与多文件深合并：list 追加语义）
+#   concepts/08-x-podman-extensions.md（标准字段优先，不滥用 x-podman）
+#
+# 两种驱动方式：
+#   ① invoke quant.up / down / ps / logs / smoke（apps/containers/client 下）
+#   ② 裸 podman-compose（本目录）：
+#        cp .env.example .env
+#        podman-compose up -d                 # 含构建
+#        podman-compose -f compose.yaml -f compose.gpu.yaml up -d   # 启用 GPU
+#
+# rootless 三必需与 client SDK 路径同源（utils.ContainerConfig）：
+#   devices /dev/fuse + security_opt label=disable + cgroupns host；严禁 privileged。
+
+name: onnx-quantized
+
+services:
+  quant:
+    container_name: ${QUANT_CONTAINER_NAME:-onnx-quantized}
+    image: ${QUANT_IMAGE_TAG:-localhost/onnx-quantized:latest}
+    build:
+      context: .
+      dockerfile: Containerfile.quantized
+      args:
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+    ports:
+      - "${QUANT_SSH_PORT:-2222}:22"
+      - "${QUANT_JUPYTER_PORT:-8888}:8888"
+    volumes:
+      # workspace 一律长语法 bind：短语法在 podman-compose 下会 os.makedirs
+      # 自动创建源路径（Windows 宿主曾把 /run 误解析为盘符路径，构建端已踩坑）。
+      # 默认相对本文件（../../workspace = apps/containers/client/workspace）；
+      # invoke 路径下任务注入绝对 POSIX 路径，daemon（WSL2）侧直接解析。
+      - type: bind
+        source: ${QUANT_WORKSPACE:-../../workspace}
+        target: /workspace
+        bind:
+          create_host_path: true
+    # ── rootless 三必需（与 client ContainerConfig 硬编码同源，禁止删改）──
+    devices:
+      - /dev/fuse:/dev/fuse
+    security_opt:
+      - label=disable
+    cgroupns: host
+    environment:
+      # 留空串 → 基底 entrypoint 启动时自动生成并打印（-z 判定）
+      USER_PASSWORD: "${USER_PASSWORD:-}"
+      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
+      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
+      GRANT_SUDO: ${GRANT_SUDO:-yes}
+      # 量化推理线程调优（镜像 ENV 默认 4，此处可运行时覆盖）
+      OMP_NUM_THREADS: ${OMP_NUM_THREADS:-4}
+      OPENBLAS_NUM_THREADS: ${OPENBLAS_NUM_THREADS:-1}
+    labels:
+      org.specweave.component: "onnx-quantized"
+      org.specweave.managed-by: "jupyter-podman-client"
+    restart: unless-stopped

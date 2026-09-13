@@ -1,0 +1,102 @@
+# Containerfile.quantized
+# ------------------------------------------------------------
+# ONNX 量化工具链叠加层（Podman rootless 谱系）
+#
+# 对应 Docker 谱系的 apps/docker-images/devcontainer-base/variants/onnx-quantized，
+# 但不再走 base→conda-llvm→onnx-dev→onnx-quantized 四层 Docker 继承链——
+# rootless 基底与 onnx-dev 目标环境同构（Ubuntu 26.04 + conda main 环境
+# cp314t free-threading + PATH 顶端 /opt/conda/envs/main/bin），本文件只做
+# 「五包安装 + 守卫 + 冒烟」薄叠加。
+#
+# 产出：localhost/onnx-quantized:latest
+# 构建（经 invoke）：
+#   invoke quant.build [--pip-mirror tuna]
+# 构建（裸 podman）：
+#   podman build -f Containerfile.quantized \
+#       --build-arg PIP_MIRROR=aliyun -t localhost/onnx-quantized:latest .
+#
+# 版本真源：源 variants/onnx-dev/Dockerfile 实为浮动 pip（无 pin），固定版本取自
+# 其 RELEASE.md v2.0.0 实测矩阵（2026-08-14，cp314t 24 项测试通过）并经 PyPI 索引实证：
+#   onnx 1.22.0 / onnxruntime 1.28.0 / onnxscript 0.7.1 / onnxconverter-common 1.16.0
+#   onnx-simplifier 0.5.0 —— PyPI 发行版最高即 0.5.0（2026-09-13 实测索引）；
+#     其依赖解析拉取 onnxsim-0.7.3 wheel（pip 输出实证），即 RELEASE 表
+#     “onnxsim v0.7.3”的真实来源（包发行版号≠模块版本串）
+#
+# 教训沿用（Containerfile.client V 阶段 + 本期构建实证）：
+#   1. OCI image format 忽略 SHELL 指令——所有 RUN 显式 /bin/bash -lc 包裹
+#   2. PATH 顶端已是 main/bin，直接 python -m pip，不 conda activate
+#   3. 不覆盖 ENTRYPOINT/CMD/WORKDIR（沿用基底 tini→entrypoint→supervisord）
+#   4. 守卫固化为 smoke/_quant_guards.py——buildah 二次分词会切断内联
+#      python -c 的嵌套转义引号，RUN 内不写带内层双引号的 -c 片段
+# ------------------------------------------------------------
+
+ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
+FROM ${BASE_IMAGE}
+
+ARG BASE_IMAGE
+ARG PIP_MIRROR=official
+
+LABEL org.specweave.component="onnx-quantized" \
+      org.specweave.layer="quantization-toolkit" \
+      org.specweave.python-version="3.14t" \
+      org.specweave.conda-env="main" \
+      org.specweave.base-image="${BASE_IMAGE}" \
+      org.specweave.quantization="onnxruntime,int8,fp16,qdq"
+
+# OMP 线程调优（与源 onnx-quantized 变体一致：防推理线程过度订阅）
+ENV OMP_NUM_THREADS=4 \
+    OPENBLAS_NUM_THREADS=1 \
+    OMP_WAIT_POLICY=PASSIVE \
+    KMP_DUPLICATE_LIB_OK=TRUE
+
+# ------------------------------------------------------------
+# Layer 1：五包安装（守卫在 Layer 3 随 smoke/ 一起执行，见 COPY 顺序）
+#   - 构建以 root 运行（基底无 USER 指令，默认 root），对 /opt/conda 可写
+#   - PIP_MIRROR 与构建端同一约定（official/aliyun/tuna）；基底已配 pip.conf，
+#     此处仅在显式传入 build-arg 时幂等重设
+# ------------------------------------------------------------
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    echo "[quant] python: $(/opt/conda/envs/main/bin/python --version 2>&1)" ; \
+    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
+      python -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ ; \
+      python -m pip config set global.trusted-host mirrors.aliyun.com ; \
+      echo "[quant] pip mirror: aliyun" ; \
+    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
+      python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ ; \
+      python -m pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn ; \
+      echo "[quant] pip mirror: tuna" ; \
+    else \
+      echo "[quant] pip mirror: official (inherited)" ; \
+    fi ; \
+    python -m pip install --no-cache-dir \
+      onnx==1.22.0 \
+      onnxruntime==1.28.0 \
+      onnx-simplifier==0.5.0 \
+      onnxscript==0.7.1 \
+      onnxconverter-common==1.16.0 ; \
+    rm -rf /root/.cache/pip ; \
+    find /opt/conda/envs/main -type d -name "__pycache__" -prune -exec rm -rf {} + 2>/dev/null || true'
+
+# ------------------------------------------------------------
+# Layer 2：守卫 + 三个纯 ONNX 冒烟脚本（提取自源 Dockerfile Stage 3，行为等价）
+# 先于构建期验证 COPY，使 Layer 3 无嵌套引号即可执行；devuser 同样可读可运行
+# ------------------------------------------------------------
+COPY smoke/ /opt/onnx-quantized-smoke/
+RUN chmod -R a+rX /opt/onnx-quantized-smoke
+
+# ------------------------------------------------------------
+# Layer 3：构建期守卫 + 冒烟（动态 INT8 / FP16 / 静态 QDQ，阈值 max_diff<5.0）
+# 另含 devuser 访问验证（对齐源变体 Stage 3 的 devuser quantization access）
+# ------------------------------------------------------------
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    cd /opt/onnx-quantized-smoke ; \
+    python _quant_guards.py ; \
+    python smoke_dynamic_int8.py ; \
+    python smoke_fp16.py ; \
+    python smoke_static_qdq.py ; \
+    su -s /bin/bash devuser -c "cd /opt/onnx-quantized-smoke && python smoke_dynamic_int8.py" >/dev/null && \
+      echo "[OK] devuser quantization access" ; \
+    echo "########################################################################" ; \
+    echo "# ONNX-QUANTIZED OVERLAY BUILD COMPLETE - INT8/FP16/QDQ, pure ONNX, GIL off" ; \
+    echo "# Quick: from onnxruntime.quantization import quantize_dynamic, QuantType" ; \
+    echo "########################################################################"'

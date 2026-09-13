@@ -15,6 +15,11 @@ dependencies = [
     "python-dotenv>=1.0.0",
 ]
 
+[project.optional-dependencies]
+# quant.* 工作负载栈命名空间需要（podman-compose 声明式编排器）；
+# 仅使用 load/run/stop 等 SDK→CLI 命令的核心用户无需安装。
+compose = ["podman-compose>=1.0.0"]
+
 [tool.scikit-build]
 wheel.packages = ["src/jpman_client"]
 wheel.cmake = false

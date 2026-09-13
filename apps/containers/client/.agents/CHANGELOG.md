@@ -6,6 +6,23 @@
 
 ## [Unreleased]
 
+### 2026-09-13 · `feat/refactor:` onnx-quantized 迁移至 client（Podman rootless 薄叠加 + podman-compose 声明式栈 + quant.* 命名空间）
+
+**关联七概念场景**：场景3「重构优化」（I→F→A→V→C，Spec Mode 全流程）；用户输入「迁移 apps/docker-images/devcontainer-base/variants/onnx-quantized 到 apps/containers/client，使用 podman-compose 知识包」。四项架构歧义经用户裁决：完整迁移 / FROM rootless:latest / opt-in 独立命名空间 / 源目录保留原样。
+
+**I 阶段洞察（迁移本质）**：源变体的可迁移内容是 ① conda main 环境五包（onnx/onnxruntime/onnx-simplifier/onnxscript/onnxconverter-common）② 3 段纯 ONNX 构建期冒烟 ③ 2 份深度量化文档；Docker 4 层继承链与 variant-framework 是载体不是能力。rootless 基底与 onnx-dev 目标环境**同构**（Ubuntu 26.04 + /opt/conda/envs/main cp314t free-threading + PATH 优先 + SSH/Jupyter/supervisord），薄叠加可行。
+
+**F 阶段设计（知识包裁决）**：以 OKF podman-compose 束（concepts/02/03/06/08/10）为 G1 依据——三必需 1:1 映射标准字段；多文件 list **追加**合并（devices 不去重）决定 GPU 覆盖只写新增设备；compose 写标签/SDK CLI 读标签为接缝；选型「栈生命周期用 compose、单资源命令式留 SDK」，compose 层 opt-in 不回流根 run。
+
+**A 原子交付**：
+- `overlays/onnx-quantized/`：Containerfile.quantized（3 层：五包安装 / COPY 守卫与冒烟 / 构建期执行）、compose.yaml（单服务 quant、长语法 bind、三必需、org.specweave 标签）、compose.gpu.yaml（仅追加 /dev/dri，CDI 注释）、.env.example（12 键）、smoke/（_quant_guards.py + 3 逐行等价脚本）
+- `src/jpman_client/tasks/quant.py`：build/up/down/ps/logs/smoke 六任务，纯子进程（禁 import podman），复用 _project_root/_load_env_overrides/to_posix_path/detect_runtime/run_cmd/check_runtime_ready；双门禁（Windows 原生 / 缺 podman-compose）
+- `__init__.py` 注册 quant 命名空间；pyproject `[compose]` extra；新规则 `.agents/rules/quant-overlay.md`（C11）；AGENTS/README/.agents 索引/.env.example/CHANGELOG 同步
+
+**V 对抗门（实测暴露并修复）**：① RELEASE 写 onnx-simplifier「v0.7.3」但 PyPI 最高发行版 0.5.0——构建实证 0.5.0 sdist 拉取 onnxsim-0.7.3 wheel（包版本≠模块版本串），按索引实证改 pin 并留注释；② buildah 对 shell-form RUN `bash -lc '<body>'` 二次分词切断内联 `python -c "…\"…\""` 嵌套引号（宿主 bash 同写法通过、构建器内失败）——守卫固化为 smoke/_quant_guards.py，RUN 不写内层双引号。
+
+**验收点（podman machine Fedora43 / podman 5.7.1 实测）**：① 构建 exit=0，五包版本打印 + 三守卫 PASS + 构建期 3 冒烟 PASS（INT8 max_diff=0.001914 / FP16 0.000211 / QDQ 节点=10 diff=0.014510）+ devuser 访问 PASS；② 真实 podman-compose config 双文件渲染：默认含 cgroupns/label=disable//dev/fuse，叠加后 devices=[/dev/fuse,/dev/dri] 无重复；③ `inv quant.up` 后 2222 SSH banner / 8888 HTTP 302 可达；④ compose exec 路径冒烟 3/3；down 后容器与网络零残留；栈未运行时 `podman run --rm` 兜底路径 3/3；⑤ 标签接缝 `podman ps --filter label=io.podman.compose.project=onnx-quantized` 命中；⑥ 原 17 任务零回归（总数 23）；Windows 门禁/缺二进制门禁均 Exit(1) 且文案可执行；⑦ 源 variants/onnx-quantized/ 目录零改动。
+
 ### 2026-09-12 · `fix:` inv run 在 UID≠1000 的原生 Linux 必现 exit=125（B-scheme UID 动态推导 + socket 预检自愈 + C-I5）
 
 **关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）；原生 Linux（宿主 uid=1006，podman 3.4.4）执行 `python -m invoke run`，CLI 拼出 `-v /run/user/1000/podman/podman.sock:...`，podman 报 `Error: statfs /run/user/1000/podman/podman.sock: no such file or directory` exit=125；随后被 C-I3 透传诊断误分类，提示用户"去掉 --wayland/--gpu 开关"（本次未启用任何透传，指引完全无关）。

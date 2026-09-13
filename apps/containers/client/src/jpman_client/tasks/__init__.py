@@ -16,10 +16,14 @@ env.* 自举环境命名空间（3 个命令）：
   invoke env.build-layer   基于 Containerfile.client 构建叠加镜像
   invoke env.run-cmd       在自举容器内执行单条命令
   invoke env.shell         启动交互式 bash shell（可直接 inv 命令）
+
+quant.* 工作负载栈命名空间（6 个命令，opt-in，podman-compose 子进程）：
+  invoke quant.build / up / down / ps / logs / smoke
+  驱动 overlays/onnx-quantized 量化叠加栈；Windows 原生门禁，详见 quant.py
 """
 from invoke import Collection
 
-from . import env_in_container, manage
+from . import env_in_container, manage, quant
 
 ns = Collection()
 
@@ -50,6 +54,16 @@ env_ns.add_task(env_in_container.run_cmd_, "run-cmd")
 env_ns.add_task(env_in_container.shell, "shell")
 ns.add_collection(env_ns)
 
+# ---- quant.* ONNX 量化工作负载栈命名空间（podman-compose，opt-in） ----
+quant_ns = Collection("quant")
+quant_ns.add_task(quant.build, "build")
+quant_ns.add_task(quant.up, "up")
+quant_ns.add_task(quant.down, "down")
+quant_ns.add_task(quant.ps, "ps")
+quant_ns.add_task(quant.logs, "logs")
+quant_ns.add_task(quant.smoke, "smoke")
+ns.add_collection(quant_ns)
+
 # configure 全局默认（与 ContainerConfig 对齐）
 ns.configure(
     {
@@ -63,6 +77,13 @@ ns.configure(
         "env": {
             "client_image": "localhost/jupyter-podman-client:latest",
             "client_container": "jpman-client-env",
+        },
+        "quant": {
+            "image_tag": "localhost/onnx-quantized:latest",
+            "base_image": "localhost/jupyter-podman-rootless:latest",
+            "container_name": "onnx-quantized",
+            "ssh_port": 2222,
+            "jupyter_port": 8888,
         },
     }
 )
