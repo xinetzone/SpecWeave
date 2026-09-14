@@ -46,8 +46,8 @@ apps/agent-monetize 源码，Windows 原生门禁
 - **编排架构**：根运行路径为两层后端自动降级——podman-py SDK（优先）→ CLI fallback（`podman.exe` 子进程）；**另有 opt-in 的 `quant.*` podman-compose 子进程层**（仅工作负载栈，不回流根 run）
 - **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，src 布局，wheel package=`["src/jpman_client"]`
 - **跨平台**：WSL2 / Linux（原生 unix socket）+ macOS + **Windows 11 原生 CPython（WSL9P/Machine/tcp 多候选）**
-- **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），五命名空间——根（`load`/`images`/`save`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）+ `quant.*` 量化栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`）+ `xmnn.*` 开发/打包栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`/`build-tvm`/`wheel`）；后两者为 podman-compose 子进程层，Windows 原生门禁
-- **工作负载叠加层**：`overlays/onnx-quantized/`（ONNX 量化工具链，FROM `localhost/jupyter-podman-rootless:latest`，main 环境 cp314t 五包 + 构建期守卫 + 3 冒烟；compose.yaml 单服务 quant 栈 + compose.gpu.yaml opt-in 覆盖）；`overlays/xmnn-dev/`（XMNN 源码调试+Nuitka 打包，双 ABI：base cp314 GIL 打包/main cp314t 服务 + main env LLVM 22.1.8 工具链；运行时 bind npu_tvm/npuusertools/models；compose.yaml xmnn 栈，端口 2223/8890）
+- **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），六命名空间——根（`load`/`images`/`save`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）+ `quant.*` 量化栈（6 任务）+ `xmnn.*` 开发/打包栈（8 任务，LLVM/Nuitka 双 ABI）+ `monetize.*` 开发/tvm-ffi 原生编译打包栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`/`build-native`/`wheel`，apt clang+apache-tvm-ffi 轻量栈）；后三者为 podman-compose 子进程层，Windows 原生门禁
+- **工作负载叠加层**：`overlays/onnx-quantized/`（ONNX 量化，cp314t 五包+3 冒烟，2222/8888）；`overlays/xmnn-dev/`（XMNN 源码调试+Nuitka 打包，双 ABI+LLVM 22，2223/8890，bind npu 源码）；`overlays/agent-monetize-dev/`（agent-monetize 源码调试 + apt clang/apache-tvm-ffi 编译单 tvm-ffi .so + 纯 Python wheel，单一 cp314 GIL，2224/8892，bind apps/agent-monetize）
 - **Windows WSL 核心能力**：SDK 连接四级优先级（P0 env → P1 WSL9P → P2 Machine → P3 tcp），三变量逃生舱（`PODMAN_CLIENT_SDK_STRATEGY` / `WSL_DISTRO_NAME` / `CONTAINER_HOST`），W-I1~W-I3 30秒速查表
 - **rootless 三必需**（所有启动路径硬编码，调用方不可覆盖）：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，**严禁 `--privileged`**
 - **运行时透传**（对齐构建端 `docs/07-toolbx-passthrough.md`）：`invoke run` 提供 5 个独立开关 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`，**默认全关 = 默认隔离**；参数由 `utils.py::build_passthrough_spec` 统一产出（SDK 与 CLI 共用同一份，禁止各自拼接）；资源在 daemon 宿主侧解析，缺失时按 **C-I3** 诊断翻译为可执行指引
@@ -70,14 +70,16 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 白名单、逃逸舱四策略
             │       ├─ windows-wsl.md          ← Windows 11 × WSL2 三级探测 + W-I1~W-I3 速查
             │       ├─ quant-overlay.md        ← quant.* podman-compose 工作负载栈（门禁/三必需映射/深合并/镜像契约）
-            │       └─ xmnn-overlay.md         ← xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/AST 还原/SONAME 守卫）
+            │       ├─ xmnn-overlay.md         ← xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/AST 还原/SONAME 守卫）
+            │       └─ monetize-overlay.md     ← monetize.* tvm-ffi 原生编译栈（apt clang/单一 GIL/3 处源码适配/.so 不入 wheel）
             ├─ overlays/                      ← 工作负载叠加层（opt-in，镜像与 compose 栈自包含）
             │   ├─ onnx-quantized/            ← ONNX 量化工具链（Containerfile.quantized + compose*.yaml + smoke/ + docs/）
-            │   └─ xmnn-dev/                  ← XMNN 源码调试+Nuitka 打包（Containerfile.xmnn-dev + compose.yaml + builder/ + smoke/）
+            │   ├─ xmnn-dev/                  ← XMNN 源码调试+Nuitka 打包（Containerfile.xmnn-dev + compose.yaml + builder/ + smoke/）
+            │   └─ agent-monetize-dev/        ← agent-monetize 调试+tvm-ffi 原生编译/纯 Python wheel（Containerfile.agent-monetize + compose.yaml + builder/ + smoke/）
             ├─ tasks.py                        ← invoke 入口转发器（转发至 jpman_client.tasks）
-            ├─ src/jpman_client/tasks/         ← invoke 任务定义（7 个模块：__init__ / client_core / env_in_container / manage / quant / xmnn / utils）
+            ├─ src/jpman_client/tasks/         ← invoke 任务定义（8 个模块：__init__ / client_core / env_in_container / manage / monetize / quant / xmnn / utils）
             ├─ pyproject.toml                  ← Python 配置（podman>=5 + python-dotenv>=1 + scikit-build-core；[compose] extra = podman-compose）
-            ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 17 键[16 生效+注释态 BASE_IMAGE]）
+            ├─ .env.example                    ← 环境变量模板（容器级 9 + SDK 4 + quant 12 + xmnn 17 + monetize 键）
             └─ .gitignore                      ← git 忽略（.env / __pycache__ / .temp / workspace / 等）
 ```
 
@@ -117,14 +119,16 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | quant 工作负载栈规则 | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | quant.\* 六任务 / podman-compose 子进程层 / 双门禁 / 三必需映射 / GPU 覆盖深合并 / 镜像守卫契约 |
 | 量化叠加层（人类文档） | [overlays/onnx-quantized/README.md](overlays/onnx-quantized/README.md) | 快速开始、compose/inv 两路径、与 Docker 源变体差异表 |
 | xmnn 开发/打包栈规则 | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | xmnn.\* 八任务 / 双 ABI 工具链 / 源码运行时挂载 / Nuitka 打包契约 / AST 还原 / SONAME 守卫 |
-| xmnn-dev 叠加层（人类文档） | [overlays/xmnn-dev/README.md](overlays/xmnn-dev/README.md) | 开发调试/打包手册、双 ABI 说明、invoke/裸 compose 两路径、参数表、性能与排障 |
+| xmnn-dev 叠加层（人类文档） | [overlays/xmnn-dev/README.md](overlays/xmnn-dev/README.md) | 开发调试/打包手册、双 ABI、invoke/裸 compose、参数表、性能与排障 |
+| monetize tvm-ffi 栈规则 | [.agents/rules/monetize-overlay.md](.agents/rules/monetize-overlay.md) | monetize.\* 八任务 / apt clang / 单一 cp314 GIL / tvm-ffi rpath / 3 处源码适配 / .so 不入 wheel |
+| agent-monetize-dev 叠加层（人类文档） | [overlays/agent-monetize-dev/README.md](overlays/agent-monetize-dev/README.md) | tvm-ffi 原生编译/纯 Python wheel、invoke/裸 compose、与 xmnn-dev 轻量对比、排障 |
 | 人类操作文档 | [README.md](README.md) | 安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表 |
-| 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项完整带注释模板 |
-| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py` / `xmnn.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
+| 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项 + 三栈插值键完整带注释模板 |
+| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py` / `xmnn.py` / `monetize.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
 
 ## 项目约束速览（P0 硬约束，违反 = PR 打回）
 
-详细约束已按主题拆分到 `.agents/rules/` 下 5 个文件；以下是违反即打回的 P0 清单：
+详细约束已按主题拆分到 `.agents/rules/` 下 6 个文件；以下是违反即打回的 P0 清单：
 
 | # | P0 约束 | 所在文件 |
 |---|--------|---------|
@@ -140,6 +144,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | C10 | **修复即闭环三阶段**：任何 Bug 修复必须走 `修复点 → 预防（为什么下次不会再出现？如加白名单/加断言） → 闭环（诊断文案对齐速查表 W-I1~W-I3 / C-I1~C-I2，README 同步更新）`；严禁只做纯点修复不改对应 README/诊断文案。**容器内坑（C-Ix）与平台无关，其在 `windows_diagnose_hint()` 中的分支必须置于 `platform.system() != "Windows"` 守卫之前**，否则容器内（Linux）永远匹配不到 | 根 AGENTS 开发规范 + 本文件 §约束速览 |
 | C11 | **quant.\* 是 podman-compose 子进程层**：quant.py 禁止 `import podman`；Windows 原生一律门禁 Exit(1)（双路径指引），POSIX 缺二进制提示 `[compose]` extra；rootless 三必需只允许用 compose 标准字段（devices/security_opt/cgroupns）表达，严禁 privileged，GPU 覆盖遵循 list 追加语义只写新增设备；compose 层禁止回流根 `invoke run` | [quant-overlay.md](.agents/rules/quant-overlay.md) + `quant.py` |
 | C12 | **xmnn.\* 同为 podman-compose 子进程层**：xmnn.py 禁止 `import podman`，沿用 C11 双门禁/三必需标准字段、严禁 privileged、不回流根 run；**双 ABI 不可互换**——Nuitka 打包/内核固定 base env `/opt/conda/bin/python`（cp314 GIL，nuitka==4.1.3），main env 保持 cp314t，conda 装 LLVM 22.1.8 必须 pin `python=*=*cp314t`；**源码仅运行时 bind 挂载**（构建期零接触 external/chaos，禁引 ai/ 与 BuildKit bind）；打包内核自包含于 `/opt/xmnn-builder`，AST PREAMBLE 注入必须 trap 还原（外部源码树零修改），SONAME glob 守卫不得降级为 WARNING | [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) + `xmnn.py` |
+| C13 | **monetize.\* 同族子进程 + 单一 GIL/源码适配边界**：monetize.py 沿用 C11 双门禁/三必需/禁 privileged/不回流；编译/内核固定 base cp314 GIL（apache-tvm-ffi wheel 仅 cp314 GIL），apt clang + pip tvm-ffi 头库；agent-monetize 源码改动**仅限 3 处跨平台适配**（config.py/config.yaml/test_ffi.py，.dll→平台选择），不改打分业务与 build.ps1；.so 不打入 wheel | [monetize-overlay.md](.agents/rules/monetize-overlay.md) + `monetize.py` |
 
 ## 快速开始（人类 & AI 共用最小验证路径）
 
@@ -174,6 +179,9 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 - 人类可读文档以根 `README.md` 为唯一入口，不新增 `.agents/docs/` 冲突路径
 
 ## 变更日志
+
+- **2026-09-14 | feat: agent-monetize-dev 叠加层 + monetize.\* 八任务**：client-overlay-scaffold 技能首次实战（形态 B 轻量变体）；apt clang + pip apache-tvm-ffi 0.1.13 编译单 tvm-ffi .so、单一 cp314 GIL、纯 Python wheel、3 处源码跨平台适配；端口 2224/8892，规则 C13；规格 `.trae/specs/agent-monetize-dev-overlay/`。
+- **2026-09-14 | feat: xmnn-dev 叠加层 + xmnn.\* 八任务**（经两轮独立审查 R2 pass）。
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 

@@ -1,0 +1,79 @@
+# Containerfile.agent-monetize — agent-monetize 源码调试 + tvm-ffi 原生
+# 编译/打包叠加层（Podman rootless 谱系）
+#
+# 与 xmnn-dev 的差异（形态 B 轻量变体）：
+#   - 工具链用 apt clang（单 .cc 编译，对 LLVM 版本不敏感），不装 conda LLVM 22
+#   - tvm-ffi 头/库全部来自 pip wheel apache-tvm-ffi（自带 libtvm_ffi.so）
+#   - 单一 cp314 GIL ABI（base env），无 Nuitka/free-threading 双 ABI
+#
+# 产出：localhost/agent-monetize-dev:latest
+# 构建（经 invoke）：
+#   invoke monetize.build [--pip-mirror tuna]
+# 裸：podman build -f Containerfile.agent-monetize -t localhost/agent-monetize-dev:latest .
+
+ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
+FROM ${BASE_IMAGE}
+
+ARG BASE_IMAGE
+ARG PIP_MIRROR=official
+LABEL org.specweave.component="agent-monetize-dev" \
+      org.specweave.layer="tvmffi-native-build" \
+      org.specweave.python-versions="cp314-gil" \
+      org.specweave.toolchain="apt-clang+apache-tvm-ffi-0.1.13" \
+      org.specweave.base-image="${BASE_IMAGE}"
+
+# Layer 1：系统工具——clang++（编译 .cc）、patchelf（rpath）、gdb（调试）
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    apt-get update ; \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      clang patchelf gdb ; \
+    rm -rf /var/lib/apt/lists/* ; \
+    echo "[monetize] patchelf: $(patchelf --version 2>&1) ; gdb: $(gdb --version | head -1)" ; \
+    clang++ --version | head -1'
+
+# Layer 2：base env（cp314 GIL）装 tvm-ffi 与 agent-monetize 打包/调试栈
+COPY builder/ /opt/monetize-builder/
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    chmod -R a+rX /opt/monetize-builder ; \
+    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
+      /opt/conda/bin/python -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ ; \
+      /opt/conda/bin/python -m pip config set global.trusted-host mirrors.aliyun.com ; \
+      echo "[monetize] pip mirror: aliyun" ; \
+    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
+      /opt/conda/bin/python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ ; \
+      /opt/conda/bin/python -m pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn ; \
+      echo "[monetize] pip mirror: tuna" ; \
+    else echo "[monetize] pip mirror: inherited" ; fi ; \
+    /opt/conda/bin/python -m pip install --no-cache-dir \
+      apache-tvm-ffi==0.1.13.post3 \
+      "PyYAML>=6.0" \
+      build wheel "setuptools>=68" \
+      ipykernel \
+      pytest pytest-cov ruff ; \
+    rm -rf /root/.cache/pip ; \
+    find /opt/conda -type d -name "__pycache__" -prune -exec rm -rf {} + 2>/dev/null || true'
+# tvm_ffi 可导入 + libtvm_ffi.so + 头文件由 Layer 5 的 _toolchain_guards.py
+# 硬断言（含引号逻辑固化在脚本文件，不在 RUN 行内联 python -c——OCI 引号纪律）
+
+# Layer 3：内核注册脚本 + 守卫/冒烟脚本
+COPY smoke/ /opt/agent-monetize-dev-smoke/
+COPY scripts/ /opt/agent-monetize-scripts/
+RUN chmod -R a+rX /opt/agent-monetize-dev-smoke /opt/agent-monetize-scripts
+
+# Layer 4：注册内核（base GIL）+ 构建期守卫（root + devuser）；末层兜底清 pyc
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    bash /opt/agent-monetize-scripts/register-kernel.sh ; \
+    cd /opt/agent-monetize-dev-smoke ; \
+    /opt/conda/bin/python _toolchain_guards.py ; \
+    su -s /bin/bash devuser -c "cd /opt/agent-monetize-dev-smoke && /opt/conda/bin/python _toolchain_guards.py" >/dev/null && \
+      echo "[OK] devuser toolchain guard access" ; \
+    find /opt/monetize-builder /opt/agent-monetize-dev-smoke /opt/agent-monetize-scripts \
+      -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null ; \
+    find /opt/monetize-builder /opt/agent-monetize-dev-smoke /opt/agent-monetize-scripts \
+      -type f -name "*.pyc" -delete 2>/dev/null ; \
+    echo "########################################################################" ; \
+    echo "# AGENT-MONETIZE-DEV OVERLAY BUILD COMPLETE" ; \
+    echo "# toolchain : apt clang + apache-tvm-ffi 0.1.13 (cp314 GIL base)" ; \
+    echo "# sources   : /workspace/agent-monetize (runtime bind)" ; \
+    echo "# compile   : inv monetize.build-native ; wheel: inv monetize.wheel" ; \
+    echo "########################################################################"'

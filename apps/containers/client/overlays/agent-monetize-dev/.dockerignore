@@ -1,0 +1,21 @@
+# agent-monetize-dev 叠加层构建上下文卫生
+# 嵌套目录必须用 **/ 前缀（裸 __pycache__/ 只锚定上下文根——实测教训）。
+
+# Python 字节码缓存（避免宿主 cpython-313 等错误版本 pyc 烤入）
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# 构建产物/临时文件
+**/*.so
+**/*.o
+**/*.bak_*
+**/*.tmp.*
+
+# 本地点 Compose 环境文件
+.env
+
+# Python 工具缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

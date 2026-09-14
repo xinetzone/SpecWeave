@@ -28,7 +28,7 @@ xmnn.* 开发/打包栈命名空间（8 个命令，opt-in，podman-compose 子�
 """
 from invoke import Collection
 
-from . import env_in_container, manage, quant, xmnn
+from . import env_in_container, manage, monetize, quant, xmnn
 
 ns = Collection()
 
@@ -81,6 +81,18 @@ xmnn_ns.add_task(xmnn.build_tvm, "build-tvm")
 xmnn_ns.add_task(xmnn.wheel, "wheel")
 ns.add_collection(xmnn_ns)
 
+# ---- monetize.* agent-monetize 开发/tvm-ffi 原生编译打包栈（podman-compose，opt-in） ----
+monetize_ns = Collection("monetize")
+monetize_ns.add_task(monetize.build, "build")
+monetize_ns.add_task(monetize.up, "up")
+monetize_ns.add_task(monetize.down, "down")
+monetize_ns.add_task(monetize.ps, "ps")
+monetize_ns.add_task(monetize.logs, "logs")
+monetize_ns.add_task(monetize.smoke, "smoke")
+monetize_ns.add_task(monetize.build_native, "build-native")
+monetize_ns.add_task(monetize.wheel, "wheel")
+ns.add_collection(monetize_ns)
+
 # configure 全局默认（与 ContainerConfig 对齐）
 ns.configure(
     {
@@ -108,6 +120,13 @@ ns.configure(
             "container_name": "xmnn-dev",
             "ssh_port": 2223,
             "jupyter_port": 8890,
+        },
+        "monetize": {
+            "image_tag": "localhost/agent-monetize-dev:latest",
+            "base_image": "localhost/jupyter-podman-rootless:latest",
+            "container_name": "agent-monetize-dev",
+            "ssh_port": 2224,
+            "jupyter_port": 8892,
         },
     }
 )

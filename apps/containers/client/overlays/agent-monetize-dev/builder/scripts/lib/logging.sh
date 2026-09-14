@@ -76,11 +76,12 @@ on_error() {
     else
         cat <<'HELP' | tee -a "$LOG_FILE"
   1. 查看上方输出最后报错位置，定位失败阶段：
-     - conda/pip 安装失败 → 镜像源/依赖冲突（尝试 --pip-mirror tuna|aliyun）
-     - C/C++ 编译失败     → Nuitka/LLVM 错误，查看编译日志
-     - cmake 打包失败     → 检查 NUITKA_OUTPUT_DIR / libtvm.so / LLVM_LIB_DIR
-  2. 资源不足（Killed / out of memory）：降低 NUITKA_JOBS（如 4），建议 ≥8GB 内存
-  3. 前置缺失：libtvm.so 不存在 → 先运行 scripts/build-tvm.sh（inv xmnn.build-tvm）
+     - pip 安装失败     → 镜像源/依赖冲突（尝试 --pip-mirror tuna|aliyun）
+     - clang++ 编译失败 → tvm-ffi 头/库缺失？查 -I/-L 与 apache-tvm-ffi 安装
+     - wheel 打包失败   → 检查 pyproject.toml 与 build 模块（python -m build）
+  2. 资源不足（Killed / out of memory）：暂停其他 WSL 负载后重试（单 .cc 编译开销很小）
+  3. 前置缺失：score_opportunity.cc 不存在 → 确认 MONETIZE_SRC_PATH 挂载；
+     原生 .so 尚未编译不影响 wheel（.so 不入 wheel），需要原生打分再 inv monetize.build-native
 HELP
     fi
 
