@@ -47,5 +47,7 @@ channels:
     per_report_price: 1.0
 
 ffi:
-  native_lib: "native/build/score_opportunity.dll"  # 原生 C++ FFI 模块（编译产物）
+  # native_lib 留空/缺省：按平台自动选择（Windows .dll / Linux .so / macOS .dylib，
+  # 见 config.py FfiConfig）；如需强制指定路径再取消注释：
+  # native_lib: "native/build/score_opportunity.so"
   fallback_to_reference: true  # 原生不可用时降级到纯 Python 参考实现

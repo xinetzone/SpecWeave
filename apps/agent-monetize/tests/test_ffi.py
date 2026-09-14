@@ -1,15 +1,18 @@
-"""tvm-ffi 桥接测试：参考实现公式 + 原生 DLL 加载（可用时）。"""
+"""tvm-ffi 桥接测试：参考实现公式 + 原生模块加载（可用时，.dll/.so/.dylib）。"""
 
 from __future__ import annotations
 
 import math
 import os
+import sys
 
 from agent_monetize.core.ffi_bridge import FfiBridge, _reference_score_opportunity, default_bridge
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(HERE)
-NATIVE_LIB = os.path.join(PROJECT_ROOT, "native", "build", "score_opportunity.dll")
+# 平台相关原生产物：Windows=build.ps1 出 .dll；Linux=overlay build-native 出 .so
+_NATIVE_EXT = "dll" if sys.platform.startswith("win") else ("dylib" if sys.platform == "darwin" else "so")
+NATIVE_LIB = os.path.join(PROJECT_ROOT, "native", "build", f"score_opportunity.{_NATIVE_EXT}")
 
 
 class TestReferenceImpl:
@@ -67,5 +70,5 @@ class TestFfiBridgeNative:
             assert math.isclose(native, ref, rel_tol=1e-6)
 
     def test_missing_dll_falls_back(self) -> None:
-        bridge = default_bridge(native_lib_paths=["native/build/does-not-exist.dll"])
+        bridge = default_bridge(native_lib_paths=[f"native/build/does-not-exist.{_NATIVE_EXT}"])
         assert bridge.backend == "reference"

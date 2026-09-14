@@ -7,10 +7,27 @@
 from __future__ import annotations
 
 import os
+import sys
 from dataclasses import dataclass, field
 from typing import Any
 
 from .models import ChannelState, LoopState
+
+
+def _default_native_lib_name() -> str:
+    """原生 tvm-ffi 模块的平台相关文件名（与 native/build 构建产物对应）。
+
+    Windows=MSVC 构建产物 .dll（native/build.ps1）；Linux=.so
+    （容器内 clang++，见 client overlay agent-monetize-dev）；
+    macOS=.dylib。仅扩展名按平台选择，目录与前缀固定。
+    """
+    if sys.platform.startswith("win"):
+        ext = "dll"
+    elif sys.platform == "darwin":
+        ext = "dylib"
+    else:
+        ext = "so"
+    return f"native/build/score_opportunity.{ext}"
 
 try:  # pragma: no cover - 环境探测分支
     import yaml as _yaml
@@ -70,7 +87,8 @@ class LoopConfig:
 
 @dataclass(slots=True)
 class FfiConfig:
-    native_lib: str = "native/build/score_opportunity.dll"
+    # 默认按平台选择扩展名（.dll/.so/.dylib）；config.yaml 显式值仍优先
+    native_lib: str = field(default_factory=_default_native_lib_name)
     fallback_to_reference: bool = True
 
 
@@ -140,9 +158,13 @@ class Config:
 
         ffi = data.get("ffi", {})
         if isinstance(ffi, dict):
-            cfg.ffi = FfiConfig(
-                **{k: v for k, v in ffi.items() if k in FfiConfig.__dataclass_fields__}
-            )
+            ffi_fields = {
+                k: v for k, v in ffi.items()
+                if k in FfiConfig.__dataclass_fields__
+                # 空/None 的 native_lib 不覆盖：回退平台默认（.dll/.so/.dylib）
+                and not (k == "native_lib" and not v)
+            }
+            cfg.ffi = FfiConfig(**ffi_fields)
         return cfg
 
 
