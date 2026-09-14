@@ -16,13 +16,20 @@
 import os
 import platform
 import shlex
+import shutil
 from pathlib import Path
 
 from invoke import Context, task
 from invoke.exceptions import Exit
 
 from .manage import _load_env_overrides, _project_root
-from .utils import check_runtime_ready, detect_runtime, run_cmd, to_posix_path
+from .utils import (
+    check_runtime_ready,
+    detect_runtime,
+    ensure_workspace_checkpoint_writable,
+    run_cmd,
+    to_posix_path,
+)
 
 # 常量（compose 栈单一事实源；改目录/服务名时 compose.yaml 同步）
 PROJECT_NAME = "agent-monetize-dev"
@@ -33,9 +40,11 @@ DEFAULT_BASE_IMAGE = "localhost/jupyter-podman-rootless:latest"
 PROJECT_LABEL = "io.podman.compose.project"
 SERVICE_LABEL = "io.podman.compose.service"
 
-# 运行时存在性硬校验的宿主源码路径（client 根上两级 = apps/agent-monetize）
+# 运行时存在性硬校验的宿主源码路径。
+# 默认值锚定**仓库根**（_project_root().parents[2]，即 client→containers→
+# apps→根），不是 client 目录；与 xmnn.py _SOURCE_MOUNTS 同型（G：路径层级）。
 _SOURCE_MOUNTS = {
-    "MONETIZE_SRC_PATH": ("../../apps/agent-monetize", "agent-monetize 源码树"),
+    "MONETIZE_SRC_PATH": ("apps/agent-monetize", "agent-monetize 源码树"),
 }
 
 
@@ -93,6 +102,9 @@ def _prepare_env() -> dict:
     形态 B 的源码路径在 _SOURCE_MOUNTS 存在时做存在性硬校验。"""
     env = _load_env_overrides(_project_root())
     root = _project_root()
+    # 仓库根 = client 上三级（client → containers → apps → 根）；
+    # apps/agent-monetize 默认值锚定仓库根，不是 client 目录。
+    repo_root = root.parents[2]
 
     ws = os.environ.get("MONETIZE_WORKSPACE") or env.get("MONETIZE_WORKSPACE")
     if not ws:
@@ -101,10 +113,13 @@ def _prepare_env() -> dict:
     if not ws_path.is_absolute():
         ws_path = (Path.cwd() / ws_path).resolve()
     ws_path.mkdir(parents=True, exist_ok=True)
+    # 同 xmnn/quant 栈：rootless+9p/drvfs 下保证 Jupyter(devuser) 可写
+    # checkpoint 目录（三栈共享 client/workspace，幂等且只作用该单一目录）
+    ensure_workspace_checkpoint_writable(ws_path)
     os.environ["MONETIZE_WORKSPACE"] = to_posix_path(ws_path)
 
     for var, (default_rel, label) in list(globals().get("_SOURCE_MOUNTS", {}).items()):
-        raw = os.environ.get(var) or env.get(var) or str((root / default_rel).resolve())
+        raw = os.environ.get(var) or env.get(var) or str((repo_root / default_rel).resolve())
         p = Path(raw).expanduser()
         if not p.is_absolute():
             p = (Path.cwd() / p).resolve()
