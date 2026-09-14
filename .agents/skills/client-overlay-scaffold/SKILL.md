@@ -215,6 +215,20 @@ cp ../../../.agents/skills/client-overlay-scaffold/templates/namespace.py.skelet
   `-h` 被吞与布尔三态歧义（同族 invoke-tasks 规则）。
 - **G11 重型构建在 9p**：宿主 /mnt/d 上全量编译极慢，文档给出
   WSL 原生克隆替代路径；Nuitka jobs 与内存近线性，给 `--jobs` 降档。
+- **G12 源码默认路径锚仓库根，不锚 client**：`_project_root()`=
+  `apps/containers/client`；`_SOURCE_MOUNTS` 默认值锚
+  `root.parents[2]`（仓库根），仓库内应用写 `"apps/<dir>"`、
+  external 写 `"external/..."`。锚成 client 又带 `apps/` 前缀会拼成
+  `apps/apps/<dir>`（2026-09-14 monetize 实战）。注意三套锚点不同：
+  invoke 默认值锚仓库根；compose.yaml 裸 compose 插值相对 compose.yaml
+  所在 overlay 目录（通常 `../../../<dir>` / `../../../../<dir>`，按层级数）。
+- **G13 Windows 平台门禁会遮蔽 Linux-only 分支的 NameError**：任务入口
+  `_gate_platform()` 在 Windows 直接 Exit(1)，其后的
+  `shutil.which(...)` 等 Linux/WSL 分支在 Windows 永不执行——
+  `py_compile` 不查未定义名，漏 import（如 shutil）只能在 WSL 内复现。
+  静态门禁必须包含：① `ruff check`（F821 undefined name）或 pyflakes
+  对生成的任务模块；② WSL 发行版内 `invoke <ns>.build` 真实跑过门
+  （不能只在 Windows 侧验证门禁 Exit 1）。
 
 ## 11. 验证链（门禁顺序，不可跳真实构建）
 

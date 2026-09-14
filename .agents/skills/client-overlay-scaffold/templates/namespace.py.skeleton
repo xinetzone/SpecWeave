@@ -16,6 +16,7 @@
 import os
 import platform
 import shlex
+import shutil
 from pathlib import Path
 
 from invoke import Context, task
@@ -33,9 +34,12 @@ DEFAULT_BASE_IMAGE = "localhost/jupyter-podman-rootless:latest"
 PROJECT_LABEL = "io.podman.compose.project"
 SERVICE_LABEL = "io.podman.compose.service"
 
-# 【形态 B：运行时存在性硬校验的宿主源码路径 {ENV: (默认相对 client 的路径, 说明)}】
+# 【形态 B：运行时存在性硬校验的宿主源码路径】
+# 默认相对路径锚定**仓库根**（_project_root().parents[2]），不是 client 目录：
+#   client = apps/containers/client；parents[2] = 仓库根。
+# 例：apps/foo → ("apps/foo", ...)；external/chaos/bar → ("external/chaos/bar", ...)
 # _SOURCE_MOUNTS = {
-#     "__ENV_PREFIX___SRC_PATH": ("external/<path>", "<说明>"),
+#     "__ENV_PREFIX___SRC_PATH": ("apps/<app-dir>", "<说明>"),
 # }
 
 
@@ -93,6 +97,9 @@ def _prepare_env() -> dict:
     形态 B 的源码路径在 _SOURCE_MOUNTS 存在时做存在性硬校验。"""
     env = _load_env_overrides(_project_root())
     root = _project_root()
+    # 仓库根 = client 上三级（client → containers → apps → 根）；
+    # _SOURCE_MOUNTS 的默认值一律锚定仓库根（锚成 client 会多拼一层 apps/）。
+    repo_root = root.parents[2]
 
     ws = os.environ.get("__ENV_PREFIX___WORKSPACE") or env.get("__ENV_PREFIX___WORKSPACE")
     if not ws:
@@ -104,7 +111,7 @@ def _prepare_env() -> dict:
     os.environ["__ENV_PREFIX___WORKSPACE"] = to_posix_path(ws_path)
 
     for var, (default_rel, label) in list(globals().get("_SOURCE_MOUNTS", {}).items()):
-        raw = os.environ.get(var) or env.get(var) or str((root / default_rel).resolve())
+        raw = os.environ.get(var) or env.get(var) or str((repo_root / default_rel).resolve())
         p = Path(raw).expanduser()
         if not p.is_absolute():
             p = (Path.cwd() / p).resolve()
