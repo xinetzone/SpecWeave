@@ -1,6 +1,6 @@
 ---
 name: compose-overlay-ops
-version: 1.0.0
+version: 1.0.1
 description: "apps/containers/client 下 podman-compose 工作负载叠加栈（quant.* / xmnn.* / monetize.* 三命名空间，overlays/onnx-quantized、overlays/xmnn-dev、overlays/agent-monetize-dev）的启动/停止/重建/冒烟验证运维编排。当用户提到启动/重启/重新构建/重建 xmnn-dev、onnx-quantized、agent-monetize-dev 叠加栈或镜像，xmnn.up/xmnn.build/xmnn.smoke、quant.up、monetize.up，栈起不来、容器 Exited (0)、Jupyter 8890/8888/8892 打不开、netavark nft 报错、nftables、保存 notebook Errno 13、checkpoint 权限、WSL 发行版回收容器、发行版里跑 podman-compose、基底镜像缺失、tuna 构建 xmnn 镜像 等场景时，必须使用此技能。封装经实证的标准 SOP（保活锚→四维修复预检→build→up→浸泡→官方 smoke→双端端口/保存验证）、执行发行版选择（jupyter-podman-rootless 而非 flapping machine）、普通重建与 --no-cache 的裁决、8 个本机实证陷阱。与 jpman-podman-ops（单容器日常驾驶/构建端/嵌套 Podman）、client-overlay-scaffold（新建叠加栈）形成边界路由；不要手动拼 podman-compose 参数或套用 Docker Desktop 经验。"
 argument-hint: "<栈名> <up|down|build|rebuild|smoke|ps|logs> [选项]"
 disable-model-invocation: false
@@ -187,6 +187,8 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | `npu_tvm 源码树宿主路径不存在`（指向 client/external） | 默认路径锚错层级；仓库根=client.parents[2] | xmnn.py 已修；自定义栈注意同级锚定 |
 | aardvark-dns / user scope bus 报错 | machine 无 systemd user bus | compose 已声明 `network_mode: bridge`（带证据偏差，勿删） |
 | 裸 compose 后 workspace 下出现 npu_tvm 等空目录 | podman-compose 1.6 相对 source+create_host_path 预创建副产物 | 不影响真挂载；down 后 `rmdir`；用 invoke 绝对路径注入不产生 |
+| 裸 `podman-compose up -d` exit 0 但 Jupyter 根目录出现 `.git`/`apps`/`docs`，容器里 `/workspace` 竟是整个仓库根 | overlay 目录私有 `.env` 的 `<NS>_WORKSPACE` 误按 client 基准写层级：overlay 文件比 client 深两级，`../../../../..`（五级）相对 overlay 子目录正好解析到仓库根；模板正确值是 `../../workspace`（上两级=client/workspace） | 把 `.env` 改回 `XMNN_WORKSPACE=../../workspace`（quant/monetize 同理）→ `down && up -d`；仓库根已被入口 chmod 777 的副作用要 `chmod 755 <仓库根>` 还原。`.env` 被 gitignore 属本地私有，排查时务必实读该文件而非只看 compose.yaml |
+| up 后 55~60 秒 Jupyter 端口 curl 返回 000，容器却是 Up | entrypoint Step 4 容器内 podman 初始化偶发等 ~70 秒（平时约 30s），浸泡不足误判 | 等满 70~90s 再判活；日志走到 `Step 5/7` 后 supervisord 约 5s 内起 Jupyter（非故障） |
 | 容器内 podman/podman-compose 报 newuidmap EPERM | 嵌套 rootless 结构性死路 | 不在本 Skill 处理，转 jpman-podman-ops §9.1（B-scheme） |
 | PowerShell 内联 wsl bash 命令报 `syntax error near (` | `$()`/`$VAR` 被 PowerShell 插值展开 | 把 bash 逻辑写成脚本文件，`wsl -d <d> -- bash /mnt/d/.../x.sh` |
 
@@ -204,9 +206,20 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 6. **编排层修复不重建镜像也会生效**：invoke 代码 editable 安装，up 时
    `_prepare_env()` 即时执行；但**必须 down→up 新建容器**才会重新走入口。
 7. **观察长构建**：后台任务 + 读 output.log 尾部；勿用会缓冲的 cmdlet。
+8. **overlay `.env` 的相对路径基准比 client 深两级**：裸 compose 的相对
+   路径相对 `overlays/<stack>/compose.yaml`，而 invoke 相对 client cwd。
+   `<NS>_WORKSPACE` 正确裸值是 `../../workspace`（client/workspace），
+   误抄 client `.env` 的 `../../..`（仓库根）会让 `/workspace` 挂成整个
+   仓库根——exit 0、端口正常，工作区隔离却已失效（Jupyter 里能看到 `.git`）。
+   排查裸 compose 异常必须实读 overlay 目录的**私有 `.env`**（被 gitignore，
+   与 `.env.example` 可能已漂移），不能只看 compose.yaml 默认值。
 
 ## 11. Changelog
 
+- **v1.0.1** (2026-09-14): 错误表新增"裸 up exit 0 但 /workspace 挂成仓库根"
+  （overlay `.env` 的 `<NS>_WORKSPACE` 相对基准比 client 深两级，误填五级
+  路径致工作区隔离失效，附仓库根 chmod 777 副作用还原）与"浸泡不足误判
+  Jupyter 000"（Step4 偶发 ~70s）两行；Gotchas 新增第 8 条。
 - **v1.0.0** (2026-09-14): 初版。源自 xmnn-dev 栈三次实战（首次启动 →
   checkpoint EACCES 修复 → 镜像/栈重建）：固化发行版选择（jupyter 发行版
   优先 + 保活锚）、四维修复预检、build/up/浸泡/smoke SOP、tuna 普通重建
