@@ -20,10 +20,15 @@ env.* 自举环境命名空间（3 个命令）：
 quant.* 工作负载栈命名空间（6 个命令，opt-in，podman-compose 子进程）：
   invoke quant.build / up / down / ps / logs / smoke
   驱动 overlays/onnx-quantized 量化叠加栈；Windows 原生门禁，详见 quant.py
+
+xmnn.* 开发/打包栈命名空间（8 个命令，opt-in，podman-compose 子进程）：
+  invoke xmnn.build / up / down / ps / logs / smoke / build-tvm / wheel
+  驱动 overlays/xmnn-dev 开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
+  LLVM 22 + Nuitka 4.1.3 工具链）；Windows 原生门禁，详见 xmnn.py
 """
 from invoke import Collection
 
-from . import env_in_container, manage, quant
+from . import env_in_container, manage, quant, xmnn
 
 ns = Collection()
 
@@ -64,6 +69,18 @@ quant_ns.add_task(quant.logs, "logs")
 quant_ns.add_task(quant.smoke, "smoke")
 ns.add_collection(quant_ns)
 
+# ---- xmnn.* XMNN 开发/打包栈命名空间（podman-compose，opt-in） ----
+xmnn_ns = Collection("xmnn")
+xmnn_ns.add_task(xmnn.build, "build")
+xmnn_ns.add_task(xmnn.up, "up")
+xmnn_ns.add_task(xmnn.down, "down")
+xmnn_ns.add_task(xmnn.ps, "ps")
+xmnn_ns.add_task(xmnn.logs, "logs")
+xmnn_ns.add_task(xmnn.smoke, "smoke")
+xmnn_ns.add_task(xmnn.build_tvm, "build-tvm")
+xmnn_ns.add_task(xmnn.wheel, "wheel")
+ns.add_collection(xmnn_ns)
+
 # configure 全局默认（与 ContainerConfig 对齐）
 ns.configure(
     {
@@ -84,6 +101,13 @@ ns.configure(
             "container_name": "onnx-quantized",
             "ssh_port": 2222,
             "jupyter_port": 8888,
+        },
+        "xmnn": {
+            "image_tag": "localhost/xmnn-dev:latest",
+            "base_image": "localhost/jupyter-podman-rootless:latest",
+            "container_name": "xmnn-dev",
+            "ssh_port": 2223,
+            "jupyter_port": 8890,
         },
     }
 )

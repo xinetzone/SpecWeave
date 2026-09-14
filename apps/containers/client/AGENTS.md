@@ -24,6 +24,11 @@
 自 2026-09-13 起新增 **opt-in 的 `quant.*` 工作负载栈命名空间**（podman-compose 子进程层，
 驱动 `overlays/onnx-quantized` 量化叠加镜像）；该层与根运行路径平行、互不回流，
 Windows 原生门禁（详见 [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md)）。
+自 2026-09-14 起新增第二个 opt-in 工作负载栈 **`xmnn.*` 命名空间**（同样
+podman-compose 子进程层），驱动 `overlays/xmnn-dev` 开发/打包叠加镜像：
+运行时 bind 挂载 npu_tvm/npuusertools/models 源码，容器内 LLVM 22 + Nuitka 4.1.3
+工具链支撑源码调试与 xmnn whl 打包，Windows 原生门禁
+（详见 [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md)）。
 >
 > 所有全局规则（沟通语言、提交规范、上下文节省、路径引用）继承自 SpecWeave 根工作区；
 > 本文件仅定义本项目特有的上下文路由与约束入口。
@@ -35,8 +40,8 @@ Windows 原生门禁（详见 [.agents/rules/quant-overlay.md](.agents/rules/qua
 - **编排架构**：根运行路径为两层后端自动降级——podman-py SDK（优先）→ CLI fallback（`podman.exe` 子进程）；**另有 opt-in 的 `quant.*` podman-compose 子进程层**（仅工作负载栈，不回流根 run）
 - **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，src 布局，wheel package=`["src/jpman_client"]`
 - **跨平台**：WSL2 / Linux（原生 unix socket）+ macOS + **Windows 11 原生 CPython（WSL9P/Machine/tcp 多候选）**
-- **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），四命名空间——根（`load`/`images`/`save`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）+ `quant.*` 工作负载栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`，podman-compose 层，Windows 原生门禁）
-- **工作负载叠加层**：`overlays/onnx-quantized/`（ONNX 量化工具链，FROM `localhost/jupyter-podman-rootless:latest`，main 环境 cp314t 五包 + 构建期守卫 + 3 冒烟；compose.yaml 单服务 quant 栈 + compose.gpu.yaml opt-in 覆盖）
+- **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），五命名空间——根（`load`/`images`/`save`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）+ `quant.*` 量化栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`）+ `xmnn.*` 开发/打包栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`/`build-tvm`/`wheel`）；后两者为 podman-compose 子进程层，Windows 原生门禁
+- **工作负载叠加层**：`overlays/onnx-quantized/`（ONNX 量化工具链，FROM `localhost/jupyter-podman-rootless:latest`，main 环境 cp314t 五包 + 构建期守卫 + 3 冒烟；compose.yaml 单服务 quant 栈 + compose.gpu.yaml opt-in 覆盖）；`overlays/xmnn-dev/`（XMNN 源码调试+Nuitka 打包，双 ABI：base cp314 GIL 打包/main cp314t 服务 + main env LLVM 22.1.8 工具链；运行时 bind npu_tvm/npuusertools/models；compose.yaml xmnn 栈，端口 2223/8890）
 - **Windows WSL 核心能力**：SDK 连接四级优先级（P0 env → P1 WSL9P → P2 Machine → P3 tcp），三变量逃生舱（`PODMAN_CLIENT_SDK_STRATEGY` / `WSL_DISTRO_NAME` / `CONTAINER_HOST`），W-I1~W-I3 30秒速查表
 - **rootless 三必需**（所有启动路径硬编码，调用方不可覆盖）：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，**严禁 `--privileged`**
 - **运行时透传**（对齐构建端 `docs/07-toolbx-passthrough.md`）：`invoke run` 提供 5 个独立开关 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`，**默认全关 = 默认隔离**；参数由 `utils.py::build_passthrough_spec` 统一产出（SDK 与 CLI 共用同一份，禁止各自拼接）；资源在 daemon 宿主侧解析，缺失时按 **C-I3** 诊断翻译为可执行指引
@@ -56,15 +61,17 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             │   ├─ CHANGELOG.md                ← 项目变更日志（原子提交汇总）
             │   └─ rules/                      ← 单一职责原子化硬约束
             │       ├─ invoke-tasks.md         ← src/jpman_client/tasks/ 包结构 / 命名空间 / CLI fallback 行为承诺
-            │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 限制、逃逸舱四策略
+            │       ├─ sdk-connection.md       ← podman-py 连接策略、6 scheme 白名单、逃逸舱四策略
             │       ├─ windows-wsl.md          ← Windows 11 × WSL2 三级探测 + W-I1~W-I3 速查
-            │       └─ quant-overlay.md        ← quant.* podman-compose 工作负载栈（门禁/三必需映射/深合并/镜像契约）
+            │       ├─ quant-overlay.md        ← quant.* podman-compose 工作负载栈（门禁/三必需映射/深合并/镜像契约）
+            │       └─ xmnn-overlay.md         ← xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/AST 还原/SONAME 守卫）
             ├─ overlays/                      ← 工作负载叠加层（opt-in，镜像与 compose 栈自包含）
-            │   └─ onnx-quantized/            ← ONNX 量化工具链（Containerfile.quantized + compose*.yaml + smoke/ + docs/）
+            │   ├─ onnx-quantized/            ← ONNX 量化工具链（Containerfile.quantized + compose*.yaml + smoke/ + docs/）
+            │   └─ xmnn-dev/                  ← XMNN 源码调试+Nuitka 打包（Containerfile.xmnn-dev + compose.yaml + builder/ + smoke/）
             ├─ tasks.py                        ← invoke 入口转发器（转发至 jpman_client.tasks）
-            ├─ src/jpman_client/tasks/         ← invoke 任务定义（6 个模块：__init__ / client_core / env_in_container / manage / quant / utils）
+            ├─ src/jpman_client/tasks/         ← invoke 任务定义（7 个模块：__init__ / client_core / env_in_container / manage / quant / xmnn / utils）
             ├─ pyproject.toml                  ← Python 配置（podman>=5 + python-dotenv>=1 + scikit-build-core；[compose] extra = podman-compose）
-            ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项 + quant 栈 12 项）
+            ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 16 项）
             └─ .gitignore                      ← git 忽略（.env / __pycache__ / .temp / workspace / 等）
 ```
 
@@ -80,6 +87,8 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [README.md §7](README.md#7-内置纪律rootless-三必需参数) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
 | quant.\* 工作负载栈（量化叠加镜像/compose up-down/冒烟/GPU opt-in） | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | 子进程边界（禁 import podman）、Windows 原生门禁、三必需 compose 映射、list 追加深合并、镜像守卫契约 |
 | 叠加镜像 Containerfile.quantized 修改 / 量化包版本 / 冒烟脚本 | [overlays/onnx-quantized/](overlays/onnx-quantized/README.md) + [quant-overlay.md](.agents/rules/quant-overlay.md) §6 | FROM rootless、main cp314t、版本三重实证、OCI 引号教训、守卫不可删 |
+| xmnn.\* 开发/打包栈（源码挂载/TVM 编译/Nuitka wheel/双 ABI） | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | 子进程边界（禁 import podman）、Windows 门禁、双 ABI 不互换、源码仅运行时挂载、AST 注入还原、SONAME glob 守卫、ccache 卷 |
+| xmnn-dev 叠加镜像/工具链/打包脚本/内核修改 | [overlays/xmnn-dev/](overlays/xmnn-dev/README.md) + [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | base cp314 GIL 打包/main cp314t 服务、LLVM 22.1.8 装 main、builder 资产自包含禁引 ai/、OCI 引号教训 |
 | podman-compose 行为冲突裁决（G1 可信源，只读） | `../../../projects/awesome-okf-xs/doc/bundles/jishu/containers/podman-compose/`（concepts/02、03、06、08、10） | 深合并/插值/x-podman/选型以 OKF 知识包为准 |
 | 人类可读文档更新（快速开始、WSL 落地、.env 清单） | [README.md](README.md) + [.env.example](.env.example) | README 中 5.4 速查表与 utils.py `windows_diagnose_hint` 必须保持一一对应 |
 | AI 资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/ 目录结构、父级继承关系、预留占位目录说明 |
@@ -101,13 +110,15 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | Windows WSL 规则 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版探测 / UTF-16 LE / W-I1~W-I3 速查 |
 | quant 工作负载栈规则 | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | quant.\* 六任务 / podman-compose 子进程层 / 双门禁 / 三必需映射 / GPU 覆盖深合并 / 镜像守卫契约 |
 | 量化叠加层（人类文档） | [overlays/onnx-quantized/README.md](overlays/onnx-quantized/README.md) | 快速开始、compose/inv 两路径、与 Docker 源变体差异表 |
+| xmnn 开发/打包栈规则 | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | xmnn.\* 八任务 / 双 ABI 工具链 / 源码运行时挂载 / Nuitka 打包契约 / AST 还原 / SONAME 守卫 |
+| xmnn-dev 叠加层（人类文档） | [overlays/xmnn-dev/README.md](overlays/xmnn-dev/README.md) | 开发调试/打包手册、双 ABI 说明、invoke/裸 compose 两路径、参数表、性能与排障 |
 | 人类操作文档 | [README.md](README.md) | 安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表 |
 | 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项完整带注释模板 |
-| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
+| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py` / `xmnn.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
 
 ## 项目约束速览（P0 硬约束，违反 = PR 打回）
 
-详细约束已按主题拆分到 `.agents/rules/` 下 4 个文件；以下是违反即打回的 P0 清单：
+详细约束已按主题拆分到 `.agents/rules/` 下 5 个文件；以下是违反即打回的 P0 清单：
 
 | # | P0 约束 | 所在文件 |
 |---|--------|---------|
@@ -122,6 +133,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | C9 | **.env → os.environ 同步必须使用 `load_dotenv(override=False)`**；shell 中已显式 `export` / `$env:` 的同名变量优先级必须高于 `.env`，不得用 `override=True` 覆盖用户显式设置 | `manage.py::_load_env_overrides` |
 | C10 | **修复即闭环三阶段**：任何 Bug 修复必须走 `修复点 → 预防（为什么下次不会再出现？如加白名单/加断言） → 闭环（诊断文案对齐速查表 W-I1~W-I3 / C-I1~C-I2，README 同步更新）`；严禁只做纯点修复不改对应 README/诊断文案。**容器内坑（C-Ix）与平台无关，其在 `windows_diagnose_hint()` 中的分支必须置于 `platform.system() != "Windows"` 守卫之前**，否则容器内（Linux）永远匹配不到 | 根 AGENTS 开发规范 + 本文件 §约束速览 |
 | C11 | **quant.\* 是 podman-compose 子进程层**：quant.py 禁止 `import podman`；Windows 原生一律门禁 Exit(1)（双路径指引），POSIX 缺二进制提示 `[compose]` extra；rootless 三必需只允许用 compose 标准字段（devices/security_opt/cgroupns）表达，严禁 privileged，GPU 覆盖遵循 list 追加语义只写新增设备；compose 层禁止回流根 `invoke run` | [quant-overlay.md](.agents/rules/quant-overlay.md) + `quant.py` |
+| C12 | **xmnn.\* 同为 podman-compose 子进程层**：xmnn.py 禁止 `import podman`，沿用 C11 双门禁/三必需标准字段、严禁 privileged、不回流根 run；**双 ABI 不可互换**——Nuitka 打包/内核固定 base env `/opt/conda/bin/python`（cp314 GIL，nuitka==4.1.3），main env 保持 cp314t，conda 装 LLVM 22.1.8 必须 pin `python=*=*cp314t`；**源码仅运行时 bind 挂载**（构建期零接触 external/chaos，禁引 ai/ 与 BuildKit bind）；打包内核自包含于 `/opt/xmnn-builder`，AST PREAMBLE 注入必须 trap 还原（外部源码树零修改），SONAME glob 守卫不得降级为 WARNING | [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) + `xmnn.py` |
 
 ## 快速开始（人类 & AI 共用最小验证路径）
 
@@ -159,7 +171,8 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 完整原子提交历史见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)。
 
-- **2026-09-13** | feat/refactor: onnx-quantized 从 docker-images Docker 谱系迁移至 client（Podman rootless + podman-compose）——新增 `overlays/onnx-quantized/`（Containerfile.quantized 薄叠加层 FROM rootless:latest，main cp314t 五包 onnx 1.22.0/onnxruntime 1.28.0/onnx-simplifier 0.5.0(wheel onnxsim 0.7.3)/onnxscript 0.7.1/onnxconverter-common 1.16.0 + `_quant_guards.py` 三守卫 + 3 纯 ONNX 冒烟脚本）与 compose.yaml/compose.gpu.yaml（三必需标准字段、GPU list 追加覆盖、长语法 bind）；新增 opt-in `quant.*` 命名空间（build/up/down/ps/logs/smoke，podman-compose 子进程，Windows 原生门禁+缺二进制门禁，C11）；pyproject 新增 `[compose]` extra；machine 端 E2E 实测：构建守卫/冒烟全 PASS（INT8 diff=0.0019/FP16=0.0002/QDQ 10 节点 0.0145）、up 端口 2222/8888 可达、标签接缝可用、down 零残留、run --rm 兜底路径通过；源 Docker 变体目录零改动
+- **2026-09-14** | feat: 新增 `overlays/xmnn-dev/` XMNN 源码调试+Nuitka 打包叠加层与 `xmnn.*` 八任务命名空间（build/up/down/ps/logs/smoke/build-tvm/wheel）——FROM rootless 薄叠加；双 ABI（base `/opt/conda` cp314 GIL 用 nuitka==4.1.3 打包/main 保持 cp314t 跑 Jupyter；LLVM/Clang 22.1.8 经 mamba pin `python=*=*cp314t` 装入 main）；运行时 bind 挂载 npu_tvm/npuusertools/models（四路径 invoke 侧绝对 POSIX 解析+存在性硬校验）；打包内核 `/opt/xmnn-builder` 自包含（移植 chaos/ai 能力但对 ai 目录零依赖：AST trap 还原、LLVM 库 SONAME glob+硬守卫、verify 临时 venv 零污染、ccache 命名卷）；compose 2223/8890 + bridge 实证 + 三必需；新增规则 xmnn-overlay.md（C12），规格见 `.trae/specs/xmnn-dev-overlay/`
+- **2026-09-13** | feat/refactor: onnx-quantized 从 docker-images 迁移至 client（Podman rootless + podman-compose）——新增 `overlays/onnx-quantized/`（Containerfile.quantized 薄叠加层 FROM rootless:latest，main cp314t 五包 onnx 1.22.0/onnxruntime 1.28.0/onnx-simplifier 0.5.0(wheel onnxsim 0.7.3)/onnxscript 0.7.1/onnxconverter-common 1.16.0 + `_quant_guards.py` 三守卫 + 3 纯 ONNX 冒烟脚本）与 compose.yaml/compose.gpu.yaml（三必需标准字段、GPU list 追加覆盖、长语法 bind）；新增 opt-in `quant.*` 命名空间（build/up/down/ps/logs/smoke，podman-compose 子进程，Windows 原生门禁+缺二进制门禁，C11）；pyproject 新增 `[compose]` extra；machine 端 E2E 实测：构建守卫/冒烟全 PASS（INT8 diff=0.0019/FP16=0.0002/QDQ 10 节点 0.0145）、up 端口 2222/8888 可达、标签接缝可用、down 零残留、run --rm 兜底路径通过；源 Docker 变体目录零改动
 
 - **2026-09-12** | fix: `inv run` 在 UID≠1000 的原生 Linux exit=125 修复（B-scheme）——新增 `host_runtime_uid()` 单一事实源（`PODMAN_RUNTIME_UID`→`$XDG_RUNTIME_DIR` 末段→`os.getuid()`→Windows 回落 1000），`podman_sock_path()`/`host_runtime_dir()` 不再硬编码；新增 `ensure_host_podman_socket()` 预检+自愈（socket 缺失自动 `systemctl --user start podman.socket`，容器内/非 Linux 放行）；新增 C-I5 诊断并与 C-I3 分流（podman.sock 缺失不再误报"去掉 --wayland/--gpu"）；实测 UID 1006 宿主容器启动成功、devuser 可读写宿主 socket；同步 invoke-tasks S6/§6、README §5.4、.env.example
 - **2026-09-12** | fix: `inv load` POSIX 平台 exit=125 修复（CLI 喂入方式平台分流）——新增 `utils.image_load_cli_command()` 单一事实源：POSIX 改 `podman load -i`（旧实现误用 Windows cmd 的 `type file |` 管道，且 podman 3.4.x 的 stdin 路径对未压缩 docker-archive 会误报 payload does not match；同文件 `-i` 实测正常），Windows 原生保留 `type |` 管道（WSL2 远距 daemon EOF 历史约束）；新增 C-I4 诊断并让失败消息携带原生 stderr；同步 invoke-tasks.md §3.2/S5、README §5.4 速查表
