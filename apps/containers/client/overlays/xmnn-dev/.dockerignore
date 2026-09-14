@@ -1,0 +1,23 @@
+# xmnn-dev 叠加层构建上下文卫生（R1 F-7）
+# 构建期只需要脚本/元数据；禁止宿主解释器缓存与临时注入态进入镜像。
+
+# Python 字节码缓存（避免宿主其他版本 pyc 烤入，如 Windows 侧 cpython-313）。
+# 注意：.dockerignore 的单段模式只锚定上下文根，嵌套目录必须用 **/ 前缀
+# （builder/scripts/__pycache__ 不会被裸 __pycache__/ 匹配——实测教训）。
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# AST 注入备份/原子临时文件（正常流程不会留在源码树，双保险）
+*.bak_tvm
+*.bak_vta
+*.bak_xmnn
+*.tmp.*
+
+# 本地点 Compose 环境文件
+.env
+
+# Python 测试/工具缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

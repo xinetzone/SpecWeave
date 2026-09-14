@@ -276,6 +276,16 @@
 
 ## Review History
 
+### Review R2
+- **Scope**: 复审 I-1~I-7 是否真实闭环（重点 I-1 自愈四场景实测、I-2 _libs 8 项与 cp 硬失败、I-3 pyc=0、I-4 check 式不中止）+ 修复回归抽查（AC-1 脱钩 grep、AC-7 wheel 内容、AC-8 零污染、AC-9 hash、AC-11 8 任务/键集合、AC-12 白名单）。
+- **Result**: **pass**
+- **Date**: 2026-09-14
+- **Reviewer**: fresh-context 独立审查员（全程只读；证据全部来自 podman run --rm 一次性验证，未 build/up/down/push、未改任何文件）
+- **逐项裁决**：I-1 闭环（TR-I-1.4 评 4/5；A/B/C/D 27/27 + 子 shell 不执行 EXIT trap 的竞态排除 + kill -9 子进程 rc=137 后父 EXIT trap 还原实证）；I-2 闭环（wheel _libs 恰 8 项 NEEDED 短名、cmake -P 故障注入实证 cp RESULT_VARIABLE→FATAL、REMOVE_DUPLICATES 全复数、独立 verify 10/10）；I-3 闭环（.dockerignore、镜像 pyc=0）；I-4 闭环（check 式强制失败探针证明不中止、4b 硬 assert）；I-5/6/7 闭环（help 口径、17 键三方一致、-f shlex）；全量回归抽查 PASS（AC-1/2/3/7/8/9/11/12 + 镜像无构建中间产物 + 镜像-宿主文件 md5 一致）。
+- **Findings（无 actionable）**：F-R2-1（advisory low，AST 注入器毫秒截断窗口：marker 缺席+bak 在会被无条件 cp 覆盖）、F-R2-2（advisory trivial，规则/README 三处修复前措辞）。实施方已在 R2 后顺手闭环：F-R2-1 由 ast_inject 四态自愈矩阵吸收（marker 缺席+bak 在→用干净 bak 自愈，场景 E 实测 PASS）；F-R2-2 四处文档同步。收尾构建另实证一条构建卫生教训并修复：.dockerignore 裸 `__pycache__/` 不匹配嵌套目录，改 `**/__pycache__/` 并在 Layer 5 末尾兜底清理。
+- **最终交付物**: 镜像 `localhost/xmnn-dev:latest` = **4b31eebdc525**（4.43GB；root/devuser 双跑守卫 PASS；pyc/bak 计数 0）；wheel `xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl` 177,764,212B（_libs 8 项；verify 10/10）。
+- **一句话结论**：R1 唯一 actionable 的 OOM/SIGKILL 污染与重跑毁备份路径已被实测证明闭环，I-2~I-7 全部独立复核成立，无回归、无遗留 actionable，rubric 维持 ≥4，R2 = pass，Spec Mode 结束条件满足。
+
 ### Review R1
 - **Result**: **fail**
 - **Date**: 2026-09-14

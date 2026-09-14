@@ -148,7 +148,7 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 | `USER_PASSWORD` / `JUPYTER_TOKEN` | 空（自动生成） | 登录凭证 |
 | `SSH_PUBLIC_KEY` / `GRANT_SUDO` | 空 / `yes` | SSH 公钥 / devuser sudo |
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
-| `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna） |
+| `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。`.env` 值在 `xmnn.up` 的 compose 内联 build 时插值生效；独立 `invoke xmnn.build` 只认 `--pip-mirror/--conda-mirror` 参数 |
 | `BASE_IMAGE`（仅 build args） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖 |
 
 ## 与相关栈/目录的关系
@@ -172,5 +172,5 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 | wheel CMake FATAL：LLVM dependency glob 空 | 守卫会打印 libdir 实际 SONAME；按提示核对 CMakeLists 7 个 glob（conda 库版本漂移） |
 | up 后 aardvark-dns / user scope bus 报错 | 已用 `network_mode: bridge` 规避；若复现检查该行未被删除 |
 | 裸 compose 后 `client/workspace/` 出现 npu_tvm/npuusertools/models 空目录 | podman-compose 1.6 对相对 source + create_host_path 的 host 端预创建副产物，**真实挂载不受影响**（冒烟以 `/workspace/...` 路径前缀断言）；down 后 `rmdir` 即可。用 `invoke xmnn.up`（注入绝对路径）不会产生 |
-| 打包后外部源码出现 `.bak_tvm/.bak_vta/.bak_xmnn` | 异常中断遗留：脚本 trap 应已还原；手工 `mv <f>.bak_<tag> <f>` 还原并反馈 |
+| 打包后外部源码出现 `.bak_tvm/.bak_vta/.bak_xmnn` | 直接重跑 `build-wheel.sh` 即可：注入器有四态自愈（残留注入态/截断态配干净 `.bak` 会自动还原）；仅当报「已含 PREAMBLE 但备份缺失」（Exit 2）时才需按提示 `git checkout -- <file>` 人工还原 |
 | conda 求解慢/失败 | `--conda-mirror tuna`（或 aliyun）；pip 侧 `--pip-mirror tuna` |

@@ -1,5 +1,9 @@
 # xmnn-dev 开发与打包叠加层 - Implementation Plan
 
+> Review R1（fresh-context）裁决 **fail**：13 CP 中 12 pass，1 个 actionable
+> （F-1/CP-R8）+ 若干 advisory。修复项见文末「Review Issues」区（I-1~I-7），
+> 修复后进入 Review R2。
+
 > 方法链路：F（双 ABI/运行时挂载/自包含打包内核，见 spec Background）→ V（Review R1 fresh-context 对抗审查）
 > → I（本文件文件级任务）→ C（按任务原子收尾，不自动 git commit）。
 > 所有容器/构建命令在 WSL2 `podman-machine-default` 内执行；宿主工作区 `d:\spaces\SpecWeave`。
@@ -198,3 +202,90 @@
   - `rule` TR-13.1: down/卷/两轮幂等计数断言全过
   - `rule` TR-13.2: git status 改动文件全部在 NFR-6 白名单；external/chaos 与 onnx overlay clean；quant 零回归
   - `rubric` TR-13.3: 证据完整性；scale 1-5；anchors 1=关键 AC 缺运行证据/证据不可复查；3=证据齐但分散；5=每 AC 可按证据独立复查且命令可重放；threshold >= 4
+
+---
+
+# Review Issues（R1 fail 后物化，修复后请 Review R2 复审）
+
+## Issue I-1: AST 注入的 SIGKILL/OOM 路径缺口与重跑污染（R1 F-1，actionable）
+- **Status**: `completed`
+- **Completion Evidence**: 新增 `builder/scripts/lib/ast_inject.sh`（原子备份 tmp.$$+mv；注入前状态机：含 PREAMBLE 且 bak 在→自愈还原、含 PREAMBLE 无 bak→Exit 2 要求 git checkout 绝不覆盖；ast_restore 信息走 stderr 保护 `$(ast_inject)` stdout 契约——该 stdout 污染是自测 B 场景实测发现的次生 bug）；build-wheel.sh 全程 `_restore_all` EXIT trap（确定性 .bak 路径覆盖三对）+ 子 shell 注入失败写 exit 2；容器内四场景故障注入实测 A/B/C/D 全 PASS（正常 md5 一致/残留自愈/无 bak 拒动/幂等 no-op）；R3 真实打包后三 __init__.py md5 仍与基线逐字一致
+- **Priority**: high
+- **Depends On**: None
+- **Discovered By**: Review R1（CP-R8 fail）
+- **Description**:
+  - build-wheel.sh 的 vta/xmnn 并行子 shell 被 SIGKILL（OOM，jobs=8 约 15GB 峰值，README 自己标注的场景）时 bash trap 不触发；父 shell 的 EXIT trap 在 tvm 段后已 `trap - EXIT`，无统一还原兜底。
+  - `inject_ast_preamble()` 无条件 `cp init backup` 先于 marker 检查：上次若残留「init 已注入 + .bak 干净」（注入完成后被杀），重跑会用污染版覆盖干净备份，restore 后工作树被静默持续污染（只能 git checkout 恢复），反证 spec「零修改」承诺。
+- **Acceptance Criteria Addressed**: AC-9
+- **Test Requirements**:
+  - `rule` TR-I-1.1: AST 注入/还原函数提取到 `builder/scripts/lib/ast_inject.sh` 可 source；注入前做状态机检查（init 含 marker 且 .bak 在 → 先自愈还原再继续；含 marker 但 .bak 缺失 → Exit 2 明确报 `git checkout` 路径，禁止覆盖任何文件）；备份写临时文件后原子 mv。
+  - `rule` TR-I-1.2: build-wheel.sh 注册**全程统一**的 `_restore_all` EXIT trap（tvm/vta/xmnn 三对 init/backup 幂等还原，正常路径还原后清空）；子 shell 局部 trap 保留，父 wait 后任一退出码非零也能在 EXIT 统一兜底。
+  - `rule` TR-I-1.3: 在 /tmp 构造假包目录做自愈故障注入实测：①注入态+.bak 在→重跑自动还原并成功；②注入态无 .bak→Exit 2 不覆盖；③正常路径备份/注入/还原后文件与原始逐字一致（md5）。
+  - `rubric` TR-I-1.4: 外部源码保护强度；scale 1-5；anchors 1=可被 SIGKILL+重演变成持续污染；3=有 trap 但重跑不安全；5=KILL 不可捕获的物理边界外全部路径幂等自愈且明确报错；threshold >= 4。
+
+## Issue I-2: CMake 把 SONAME 软链解引用复制为重复常规文件（R1 F-2，advisory 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: install_llvm_deps 重写为「软链 dest 去引用 cp -L 为短名单副本 + 被指向的长名真实文件跳过 + 无链真实文件原名装」单副本算法；修复过程实证两个真问题：① CMake 4.4 仅认 `REMOVE_DUPLICATES`（复数，3.x 接受单数，移植源旧拼写 FATAL）；② dest 为同名绝对路径时漏取 basename 致 cp 目标非法且 execute_process 静默吞错（加 RESULT_VARIABLE FATAL）。最终 wheel `_libs` 8 项（libLLVM.so.22.1 187MB 原名装 + libtvm.so + 6 个短名单副本），无重复长名；wheel 177,764,212B（原 193,456,300B，-8%；libLLVM 占大头压缩后差异有限）；verify 10 项 PASS（8 entries、7 other libs RPATH 全 $ORIGIN、干净环境 ctypes 加载、tvm.build 数值断言）
+- **Priority**: medium
+- **Depends On**: None
+- **Discovered By**: Review R1（CP-R6，附 finding）
+- **Description**: wheel `_libs` 14 项实际 0 软链：install(FILES) 对 glob 命中的 SONAME 软链解引用复制为常规文件，install(CODE) 的 `ln` 因逻辑名已存在而跳过——功能可用但 6 库各冗余一份（约 40MB，ICU 占大头），且未来 libLLVM glob 命中双版本会膨胀约 197MB；与「真实文件+逻辑名软链」设计语义不符，文档/证据表述漂移。
+- **Acceptance Criteria Addressed**: AC-7, AC-14
+- **Test Requirements**:
+  - `rule` TR-I-2.1: CMakeLists 改为只对 REALPATH 去重后的真实文件 install(FILES)；所有「逻辑名≠真实名」一律 install(CODE) `ln -sfn <real> <logical>`（无条件，覆盖误装同名常规文件）；重打 wheel 后 _libs 中 SONAME 条目为符号链接（unzip 无法表达链接？改用 `python zipfile + ZipInfo.external_attr` 或 `bsdtar/unzip -l` 无法验证；以构建日志 `Created symlink` + 容器安装后 `ls -l _libs` 实测为证据）。
+  - `rule` TR-I-2.2: 重打 wheel 的 verify 10 项仍全 PASS（重点 test 5 干净环境 ctypes 加载，证明软链语义可被动态加载器解析）；whl 体积较 193,456,300B 明显下降（记录新值）。
+
+## Issue I-3: 交付镜像烤入宿主 cpython-313 pyc（R1 F-7，advisory 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: 新增 overlay `.dockerignore`（__pycache__/、*.py[cod]、*.bak_*、*.tmp.*、.env、pytest/mypy/ruff cache）；清除宿主树 3 个 __pycache__；最终镜像 5cab67f04104 `find /opt/xmnn-builder /opt/xmnn-dev-smoke -name '*.pyc' -o -name __pycache__` 计数 0
+- **Priority**: medium
+- **Depends On**: None
+- **Discovered By**: Review R1
+- **Description**: 宿主 Windows Python 3.13 py_compile/T9 静态检查在 overlay 树内生成 `__pycache__/*.cpython-313.pyc`，被 `COPY builder/ smoke/ scripts/` 带入交付镜像（4 个，777），属错误 ABI 的构建卫生问题。
+- **Acceptance Criteria Addressed**: AC-3, AC-13
+- **Test Requirements**:
+  - `rule` TR-I-3.1: overlay 新增 `.dockerignore`（`__pycache__/`、`*.pyc/*.pyo`、`.bak_*`、`.env`、`.pytest_cache`）；清掉宿主树内现存 __pycache__；重建镜像后 `podman run --rm --entrypoint find <img> /opt/xmnn-builder /opt/xmnn-dev-smoke -name '*.pyc' -o -name __pycache__` 输出为空。
+
+## Issue I-4: verify-wheel.sh set -e 中止与 4b 不 assert（R1 F-3/F-4，advisory 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: tests 4-9 全部改走 check()（失败计 FAIL 不中止，结尾必出 SUMMARY）；4b 对 libtvm.so 自身 RPATH 非 $ORIGIN 直接 assert FAIL（其他库保留 informational 统计）；实测 10 passed/0 failed（4b：libtvm RPATH $ORIGIN + 7 other libs 全 $ORIGIN/0 without）
+- **Priority**: low
+- **Depends On**: None
+- **Discovered By**: Review R1
+- **Description**: tests 4-9 裸 python 调用在 `set -e` 下失败即整脚本退出，SUMMARY/计数失效；test 4b 对缺失 RPATH 仅 WARN 不计数失败。
+- **Acceptance Criteria Addressed**: AC-8
+- **Test Requirements**:
+  - `rule` TR-I-4.1: tests 4-9 改为 check() 式捕获（失败计入 FAIL 不中止），结尾始终输出 SUMMARY；4b 对「libtvm 自身 RPATH 非 $ORIGIN」直接判 FAIL（其余第三方库保留 WARN 计数展示）；bash -n 通过并在容器内重跑 10 项全 PASS。
+
+## Issue I-5: build 任务的镜像源 env 口径注释（R1 F-5，advisory 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: xmnn.py build 的 --pip-mirror/--conda-mirror help 注明「独立 build 只认参数；.env 经 xmnn.up 内联 build 插值生效」；overlay README 参数表 PIP_MIRROR/CONDA_MIRROR 行同步该口径
+- **Priority**: low
+- **Depends On**: None
+- **Discovered By**: Review R1
+- **Description**: `invoke xmnn.build` 独立运行不读 .env 的 PIP_MIRROR/CONDA_MIRROR（与 quant 同族；.env 值只在 `xmnn.up` 的 compose 内联 build 插值时生效），缺显式说明易误用。
+- **Acceptance Criteria Addressed**: AC-14
+- **Test Requirements**:
+  - `rule` TR-I-5.1: xmnn.py build/up help 与 overlay README 参数表注明该口径（独立 build 用命令行参数；.env 经 up 内联 build 生效）。
+
+## Issue I-6: 键数口径 16/17 不一致（R1 F-6，trivial 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: spec FR-7 改写为「17 键=16 生效+注释态 BASE_IMAGE」；client AGENTS 嵌套树、.agents/README 资产表统一 17 键表述；grep 无「xmnn 栈 16」残留
+- **Priority**: low
+- **Depends On**: None
+- **Discovered By**: Review R1
+- **Description**: spec FR-7 与部分文档写「16 键」，实际含注释态 BASE_IMAGE 为 17 键。
+- **Acceptance Criteria Addressed**: AC-11, AC-14
+- **Test Requirements**:
+  - `rule` TR-I-6.1: spec/规则/README 中键数表述统一为 17（16 生效 + 1 注释态 BASE_IMAGE），grep 不到「16 键/16 项」矛盾表述。
+
+## Issue I-7: build 命令 -f 路径未 shlex（R1 F-8，trivial 采纳）
+- **Status**: `completed`
+- **Completion Evidence**: xmnn.py build 的 `-f` 改 `shlex.quote(str(containerfile))`；py_compile 通过
+- **Priority**: low
+- **Depends On**: None
+- **Discovered By**: Review R1
+- **Description**: xmnn.py build 的 `-f {containerfile}` 未走 shlex.quote（路径含空格时会断）。
+- **Acceptance Criteria Addressed**: AC-11
+- **Test Requirements**:
+  - `rule` TR-I-7.1: `-f` 与 context 路径均经 shlex.quote；py_compile 通过。

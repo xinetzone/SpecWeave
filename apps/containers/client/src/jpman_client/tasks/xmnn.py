@@ -180,8 +180,8 @@ def _run_compose(c: Context, *tail: str, pty: bool = True) -> None:
     help={
         "tag": "产出镜像标签，默认 localhost/xmnn-dev:latest",
         "base-image": "基底镜像，默认 localhost/jupyter-podman-rootless:latest",
-        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna（默认 official）",
-        "conda-mirror": "构建期 conda 镜像源：official|aliyun|tuna（默认 official）",
+        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna。注意：独立 xmnn.build 只认本参数；.env 的 PIP_MIRROR 仅在 xmnn.up 的 compose 内联 build 时插值生效",
+        "conda-mirror": "构建期 conda 镜像源：official|aliyun|tuna；口径同 --pip-mirror（.env 经 xmnn.up 生效）",
         "no-cache": "等价 podman build --no-cache（强制全量重建）",
     },
     auto_shortflags=False,
@@ -217,7 +217,7 @@ def build(
 
     parts = [
         runtime, "build",
-        f"-f {containerfile}",
+        f"-f {shlex.quote(str(containerfile))}",
         f"--build-arg BASE_IMAGE={shlex.quote(base_image)}",
         f"--build-arg PIP_MIRROR={shlex.quote(pip_mirror)}",
         f"--build-arg CONDA_MIRROR={shlex.quote(conda_mirror)}",

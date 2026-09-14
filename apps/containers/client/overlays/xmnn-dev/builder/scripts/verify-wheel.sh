@@ -13,13 +13,13 @@
 # 检查项：
 #   1-3. import tvm / vta / xmnn
 #   4.   _libs 目录（libtvm.so + libLLVM + 依赖库清单）
-#   4b.  RPATH $ORIGIN
+#   4b.  RPATH $ORIGIN（libtvm 自身必须带，其余库统计展示）
 #   5.   干净环境 ctypes RTLD_GLOBAL 加载 libtvm.so
 #   6.   tvm.build('llvm') 向量数值断言
 #   7.   relay/std/prelude.rly 数据
 #   8.   xmnn_bootstrap.pth 生效
 #   9.   xmnn 数据三目录（autolibs/tools_cpp/fonts）
-# FAIL>0 → exit 1
+# 任一检查失败都计入 FAIL 并继续跑完全部项（不被 set -e 中止）；FAIL>0 → exit 1。
 # ==============================================================================
 set -e
 
@@ -75,12 +75,10 @@ echo "=== Install wheel into isolated venv (--no-deps, deps from base env) ==="
 "$VENV_PY" -m pip install --no-deps --force-reinstall "$WHL" 2>&1 | tail -5
 echo ""
 
-# 子进程同样不继承源码/库路径
-unset LD_LIBRARY_PATH PYTHONPATH TVM_LIBRARY_PATH 2>/dev/null || true
-
 PASS=0
 FAIL=0
 
+# check <name> <command...>：捕获输出，失败计入 FAIL 但不中止脚本
 check() {
     local name="$1"
     shift
@@ -104,9 +102,7 @@ import xmnn
 mods = [x for x in dir(xmnn) if not x.startswith('_')]
 print('  xmnn modules:', mods[:15])
 "
-
-echo "─── Test: 4. _libs directory check"
-"$VENV_PY" -c "
+check "4. _libs directory check" "$VENV_PY" -c "
 import os, tvm
 libs_dir = os.path.normpath(os.path.join(os.path.dirname(tvm.__file__), '../_libs'))
 print('  _libs dir:', libs_dir)
@@ -120,13 +116,9 @@ for f in files:
     print(f'    {f} ({sz/1024/1024:.1f} MB){\" [symlink]\" if is_link else \"\"}')
 assert 'libtvm.so' in files, 'libtvm.so missing!'
 assert any('libLLVM' in f for f in files), 'libLLVM missing!'
-print('  _libs directory OK')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 4. _libs directory"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 4. _libs directory"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 4b. RPATH validation (libs should use \$ORIGIN)"
-"$VENV_PY" -c "
+print('  _libs directory OK; entries:', len(files))
+"
+check "4b. RPATH validation (libs use \$ORIGIN)" "$VENV_PY" -c "
 import os, subprocess, tvm, glob
 libs_dir = os.path.normpath(os.path.join(os.path.dirname(tvm.__file__), '../_libs'))
 print('  Checking RPATH for libs in:', libs_dir)
@@ -143,49 +135,39 @@ def get_rpath(path):
     except Exception as e:
         return f'error: {e}'
 
+# libtvm.so 自身必须带 \$ORIGIN（自包含硬要求）
 libtvm = os.path.join(libs_dir, 'libtvm.so')
-if os.path.exists(libtvm):
-    rpath = get_rpath(libtvm)
-    print(f'    libtvm.so RPATH: {rpath}')
-    if rpath and '\$ORIGIN' in rpath:
-        print('    libtvm.so RPATH OK (\$ORIGIN)')
-    elif rpath is None:
-        print('    WARNING: No RPATH set (bootstrap will handle loading)')
-    else:
-        print(f'    WARNING: RPATH is {rpath}, not \$ORIGIN (bootstrap fallback required)')
+assert os.path.exists(libtvm), 'libtvm.so missing'
+rpath = get_rpath(libtvm)
+print(f'    libtvm.so RPATH: {rpath}')
+assert rpath and '\$ORIGIN' in rpath, f'libtvm.so RPATH not \$ORIGIN: {rpath}'
+print('    libtvm.so RPATH OK (\$ORIGIN)')
 
+# 其余库统计展示（cp -L 单副本安装，patchelf 已统一设置）
 rpath_ok = 0
 rpath_warn = 0
 for lib in sorted(glob.glob(os.path.join(libs_dir, '*.so*'))):
     if os.path.islink(lib) or os.path.basename(lib) == 'libtvm.so':
         continue
-    rpath = get_rpath(lib)
-    if rpath and '\$ORIGIN' in rpath:
+    r = get_rpath(lib)
+    if r and '\$ORIGIN' in r:
         rpath_ok += 1
     else:
         rpath_warn += 1
         if rpath_warn <= 3:
-            print(f'    WARNING: {os.path.basename(lib)} RPATH={rpath}')
-print(f'  RPATH summary: {rpath_ok} libs with \$ORIGIN, {rpath_warn} without')
+            print(f'    WARNING: {os.path.basename(lib)} RPATH={r}')
+print(f'  RPATH summary: {rpath_ok} other libs with \$ORIGIN, {rpath_warn} without (informational)')
 print('  RPATH validation complete')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 4b. RPATH validation"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 4b. RPATH validation"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 5. libtvm.so loading (clean environment, no LD_LIBRARY_PATH)"
-"$VENV_PY" -c "
+"
+check "5. libtvm.so loading (clean environment, no LD_LIBRARY_PATH)" "$VENV_PY" -c "
 import ctypes, os, tvm
 libs_dir = os.path.normpath(os.path.join(os.path.dirname(tvm.__file__), '../_libs'))
 libtvm = os.path.join(libs_dir, 'libtvm.so')
 print('  Loading:', libtvm)
 ctypes.CDLL(libtvm, mode=ctypes.RTLD_GLOBAL)
 print('  libtvm.so loaded OK')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 5. libtvm load"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 5. libtvm load"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 6. tvm.build(llvm) compute"
-"$VENV_PY" -c "
+"
+check "6. tvm.build(llvm) compute" "$VENV_PY" -c "
 import tvm
 from tvm import te
 import numpy as np
@@ -202,12 +184,8 @@ b = tvm.nd.array(np.zeros(n, dtype='float32'), ctx)
 f(a, b)
 np.testing.assert_allclose(b.asnumpy(), a.asnumpy() * 2.0, rtol=1e-5)
 print('  Compute verification passed (A[i]*2 == B[i])')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 6. tvm.build(llvm)"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 6. tvm.build(llvm)"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 7. relay/std data files"
-"$VENV_PY" -c "
+"
+check "7. relay/std data files" "$VENV_PY" -c "
 import os, tvm
 std_dir = os.path.join(os.path.dirname(tvm.__file__), 'relay', 'std')
 print('  relay/std:', std_dir)
@@ -217,12 +195,8 @@ for f in sorted(files):
     print('   ', f)
 assert 'prelude.rly' in files, 'prelude.rly missing!'
 print('  relay/std data OK')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 7. relay/std data"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 7. relay/std data"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 8. bootstrap .pth file"
-"$VENV_PY" -c "
+"
+check "8. bootstrap .pth file" "$VENV_PY" -c "
 import os, site, sys
 pth_found = False
 for sp in site.getsitepackages():
@@ -239,12 +213,8 @@ for sp in sys.path:
         break
 assert pth_found, 'xmnn_bootstrap.pth not found!'
 print('  .pth bootstrap OK')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 8. bootstrap .pth"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 8. bootstrap .pth"; FAIL=$((FAIL+1)); fi
-echo ""
-
-echo "─── Test: 9. xmnn data directories (autolibs/tools_cpp/fonts)"
-"$VENV_PY" -c "
+"
+check "9. xmnn data directories (autolibs/tools_cpp/fonts)" "$VENV_PY" -c "
 import os, xmnn
 if hasattr(xmnn, '__path__'):
     xmnn_dir = xmnn.__path__[0]
@@ -264,9 +234,7 @@ for name in required:
 
 assert not missing, f'Missing directories: {missing}'
 print('  xmnn data directories OK')
-" 2>&1
-if [ $? -eq 0 ]; then echo -e "${_GRN}${_PASS}: 9. xmnn data dirs"; PASS=$((PASS+1)); else echo -e "${_RED}${_FAIL}: 9. xmnn data dirs"; FAIL=$((FAIL+1)); fi
-echo ""
+"
 
 echo "=========================================="
 echo "  SUMMARY: $PASS passed, $FAIL failed"

@@ -29,6 +29,12 @@ podman-compose 子进程层），驱动 `overlays/xmnn-dev` 开发/打包叠加�
 运行时 bind 挂载 npu_tvm/npuusertools/models 源码，容器内 LLVM 22 + Nuitka 4.1.3
 工具链支撑源码调试与 xmnn whl 打包，Windows 原生门禁
 （详见 [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md)）。
+同日新增第三个 opt-in 工作负载栈 **`monetize.*` 命名空间**（podman-compose
+子进程层），驱动 `overlays/agent-monetize-dev`：client-overlay-scaffold
+形态 B 轻量变体，apt clang + pip apache-tvm-ffi 编译单 C++ tvm-ffi 模块、
+单一 cp314 GIL ABI、setuptools 纯 Python wheel，运行时挂载
+apps/agent-monetize 源码，Windows 原生门禁
+（详见 [.agents/rules/monetize-overlay.md](.agents/rules/monetize-overlay.md)）。
 >
 > 所有全局规则（沟通语言、提交规范、上下文节省、路径引用）继承自 SpecWeave 根工作区；
 > 本文件仅定义本项目特有的上下文路由与约束入口。
@@ -71,7 +77,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             ├─ tasks.py                        ← invoke 入口转发器（转发至 jpman_client.tasks）
             ├─ src/jpman_client/tasks/         ← invoke 任务定义（7 个模块：__init__ / client_core / env_in_container / manage / quant / xmnn / utils）
             ├─ pyproject.toml                  ← Python 配置（podman>=5 + python-dotenv>=1 + scikit-build-core；[compose] extra = podman-compose）
-            ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 16 项）
+            ├─ .env.example                    ← 环境变量模板（容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 17 键[16 生效+注释态 BASE_IMAGE]）
             └─ .gitignore                      ← git 忽略（.env / __pycache__ / .temp / workspace / 等）
 ```
 

@@ -58,56 +58,81 @@ else()
 endif()
 
 # ------------------------------------------------------------------------------
-# LLVM 依赖库收集（SONAME 漂移防护）：
-# 移植源按 2026-08 conda 求解快照硬编码 7 个文件名（libxml2.so.16 /
+# LLVM 依赖库收集（SONAME 漂移防护 + 单副本）：
+# 移植源按 2026-08 conda 快照硬编码 7 个文件名（libxml2.so.16 /
 # libicuuc.so.78 等），conda 重新求解可能升级小版本导致静默缺库（旧实现缺失仅
-# WARNING）。这里改为 glob 模式：收集匹配的真实文件，并在 wheel _libs/ 内重建
-# "SONAME 软链 -> 真实文件"（libtvm.so 的 NEEDED 条目写的是 SONAME）。
+# WARNING）。这里按 glob 收集，并遵循「wheel 运行时只需要 NEEDED 的 SONAME
+# 短名」原则，每个依赖只落一份：
+#   - 软链条目（SONAME 短名，如 libz.so.1 → libz.so.1.3.2）：cp -L 去引用
+#     真实文件、以短名装入 _libs（wheel ZIP 经 scikit-build 打包会解引用软链，
+#     建软链无意义；短名才是动态加载器 NEEDED 解析所用名字）；
+#   - 被短链指向的长名真实文件（.so.1.3.2）跳过，避免内容重复（R1 F-2）；
+#   - 本身即真实文件且无软链指向（如 conda 直接发布 libLLVM.so.22.1）：原名装。
 # 任一模式收集为空即 FATAL_ERROR，并打印 libdir 候选供定位实际 SONAME。
 # ------------------------------------------------------------------------------
 function(install_llvm_deps GLOB_PATTERN LIB_LABEL)
     file(GLOB _matches LIST_DIRECTORIES false "${LLVM_LIB_DIR}/${GLOB_PATTERN}")
-    set(_real_files "")
-    set(_link_pairs "")
+    set(_short_pairs "")
+    set(_linked_targets "")
+    set(_real_originals "")
     foreach(_m IN LISTS _matches)
         if(EXISTS "${_m}" AND NOT IS_DIRECTORY "${_m}")
             get_filename_component(_m_name "${_m}" NAME)
             get_filename_component(_m_real "${_m}" REALPATH)
-            get_filename_component(_real_name "${_m_real}" NAME)
-            list(APPEND _real_files "${_m_real}")
-            if(NOT _real_name STREQUAL _m_name)
-                list(APPEND _link_pairs "${_m_name}=>${_real_name}")
+            if(IS_SYMLINK "${_m}")
+                list(APPEND _short_pairs "${_m_name}=>${_m_real}")
+                list(APPEND _linked_targets "${_m_real}")
+            else()
+                list(APPEND _real_originals "${_m}")
             endif()
         endif()
     endforeach()
-    list(REMOVE_DUPLICATES _real_files)
-    list(REMOVE_DUPLICATES _link_pairs)
-    if(NOT _real_files)
+    # 注：CMake 4.x 仅识别复数拼写 REMOVE_DUPLICATES（3.x 曾接受单数
+    # REMOVE_DUPLICATE，移植源的旧拼写在 cmake 4.4 报「does not recognize」）。
+    list(REMOVE_DUPLICATES _short_pairs)
+    list(REMOVE_DUPLICATES _linked_targets)
+    list(REMOVE_DUPLICATES _real_originals)
+
+    set(_install_pairs "${_short_pairs}")
+    foreach(_orig IN LISTS _real_originals)
+        if(NOT _orig IN_LIST _linked_targets)
+            list(APPEND _install_pairs "${_orig}=>${_orig}")
+        endif()
+    endforeach()
+    list(REMOVE_DUPLICATES _install_pairs)
+
+    if(NOT _install_pairs)
         file(GLOB _all_libs LIST_DIRECTORIES false "${LLVM_LIB_DIR}/lib*.so*")
         message(FATAL_ERROR
             "LLVM dependency '${LIB_LABEL}' (${GLOB_PATTERN}) not found under ${LLVM_LIB_DIR}. "
             "SONAME may have drifted; inspect candidates under that libdir "
             "(available: ${_all_libs}) and update the GLOB_PATTERN / smoke guard.")
     endif()
-    foreach(_r IN LISTS _real_files)
-        install(FILES "${_r}" DESTINATION "${INSTALL_LIBDIR}")
-    endforeach()
-    foreach(_pair IN LISTS _link_pairs)
+
+    foreach(_pair IN LISTS _install_pairs)
         string(REPLACE "=>" ";" _pair_parts "${_pair}")
-        list(GET _pair_parts 0 _ln)
-        list(GET _pair_parts 1 _rn)
-        message(STATUS "  Will install dependency symlink: ${_ln} -> ${_rn}")
-        install(CODE "
-            execute_process(COMMAND bash -c \"
-                cd '\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${INSTALL_LIBDIR}'
-                if [ -e '${_rn}' ] && [ ! -e '${_ln}' ]; then
-                    ln -sf '${_rn}' '${_ln}'
-                    echo '  Created symlink: ${_ln} -> ${_rn}'
-                fi
-            \")
-        ")
+        list(GET _pair_parts 0 _dest_raw)
+        list(GET _pair_parts 1 _src_path)
+        # dest 可能是短链短名（libz.so.1）或同名绝对路径，统一取 basename
+        get_filename_component(_dest_name "${_dest_raw}" NAME)
+        get_filename_component(_src_name "${_src_path}" NAME)
+        if(_src_name STREQUAL _dest_name)
+            install(FILES "${_src_path}" DESTINATION "${INSTALL_LIBDIR}")
+            message(STATUS "  Will install dependency ${LIB_LABEL}: ${_dest_name}")
+        else()
+            # 去引用真实文件、以 SONAME 短名落盘（单副本）；cp 失败必须硬报错
+            # （execute_process 默认不检查返回码，静默缺库不可接受）。
+            install(CODE "
+                execute_process(COMMAND bash -c \"
+                    cp -L '${_src_path}' '\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${INSTALL_LIBDIR}/${_dest_name}'
+                \" RESULT_VARIABLE _cp_rc)
+                if(NOT _cp_rc EQUAL 0)
+                    message(FATAL_ERROR \"cp -L ${_src_path} -> ${_dest_name} failed: \${_cp_rc}\")
+                endif()
+                message(STATUS \"  Installed ${LIB_LABEL} SONAME: ${_dest_name} (from ${_src_name})\")
+            ")
+        endif()
     endforeach()
-    message(STATUS "  Will install dependency ${LIB_LABEL}: ${_real_files}")
 endfunction()
 
 install_llvm_deps("libLLVM.so.22*" "LLVM runtime")

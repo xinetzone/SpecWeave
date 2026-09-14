@@ -57,7 +57,7 @@ source: "AGENTS.md#嵌套路由关系"
 | xmnn-dev 叠加层资产 | [../overlays/xmnn-dev/](../overlays/xmnn-dev/README.md) | Containerfile.xmnn-dev + compose.yaml + builder/（自包含打包内核）+ smoke/ + scripts/ + .env.example |
 | invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
 | Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（quant.* 专用） |
-| 环境变量模板（四清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 16 项完整带注释 |
+| 环境变量模板（四清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项 + quant 栈 12 项 + xmnn 栈 17 键（16 生效 + 注释态 BASE_IMAGE）完整带注释 |
 | 人类可读文档入口 | [../README.md](../README.md) | 安装/快速开始/§5 Windows WSL/§8 .env 完整清单 |
 
 ## 人类文档 ↔ AI 规则对应关系表

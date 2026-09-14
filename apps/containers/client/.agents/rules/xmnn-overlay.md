@@ -69,20 +69,30 @@
 
 - 资产：pyproject.toml（wheel 元数据单一事实源，19 依赖）、CMakeLists.txt、
   _xmnn_bootstrap.py、xmnn_bootstrap.pth、scripts/{build-wheel.sh,
-  build-tvm.sh,verify-wheel.sh,install-build-deps.py,lib/logging.sh}。
-  **禁止**从 external/chaos/ai 跨目录 COPY 或 source（logging.sh 必须 vendor）。
-- **AST 注入/还原纪律**：build-wheel.sh 临时向 tvm/vta/xmnn 的
-  `__init__.py` 注入 6 个 Python 3.14 已删 AST 类的兼容 PREAMBLE，备份为
-  `.bak_<tag>`；正常路径编译后立即还原，父 shell 与两个并行子 shell 各自
-  注册 EXIT/ERR trap 兜底；外部源码工作树零修改是硬验收（AC-9）。
+  build-tvm.sh,verify-wheel.sh,install-build-deps.py,lib/logging.sh,
+  lib/ast_inject.sh}。
+  **禁止**从 external/chaos/ai 跨目录 COPY 或 source（两个 lib 必须 vendor）。
+- **AST 注入/还原纪律**：注入/还原逻辑在可 source 的
+  `builder/scripts/lib/ast_inject.sh`，build-wheel.sh 临时向 tvm/vta/xmnn
+  的 `__init__.py` 注入 6 个 Python 3.14 已删 AST 类的兼容 PREAMBLE，备份
+  为 `.bak_<tag>`（临时文件+mv 原子备份）；父 shell 注册**全程统一**的
+  `_restore_all` EXIT trap（三对确定性 .bak 路径，子 shell 被 SIGKILL 时
+  由父退出兜底），正常路径编译后立即还原；`ast_inject` 自带四态自愈矩阵
+  （marker/bak 组合：注入态+bak 在→自愈、注入态无 bak→Exit 2 要求
+  git checkout 不覆盖、截断残留+bak 在→用干净 bak 自愈、正常态→备份注入）；
+  ast_restore 信息走 stderr（stdout 只输出 backup 路径）。外部源码工作树
+  零修改是硬验收（AC-9）。
 - Nuitka 语义不可裁剪：tvm 串行先行 → vta/xmnn 后台并行；三次调用差异
   （交叉 nofollow、dill-compat、vta include-data-dir、jobs、--module、
   --quiet、--no-pyi-file）保持；退出码经 `.vta_exit/.xmnn_exit` 回传。
 - **SONAME 漂移防护**：CMake 对 7 个 LLVM 依赖库（libLLVM.so.22*、
-  libz/libzstd/libxml2/libiconv/libicuuc/libicudata）按 glob 收集真实文件
-  并重建 SONAME 软链，glob 空 FATAL_ERROR；构建期守卫对 llvm-config
-  --libdir 做同款 glob 硬检查并打印实际 SONAME。patchelf 缺失/数据目录
-  缺失同为 FATAL（不允许 WARNING 静默出残 wheel）。
+  libz/libzstd/libxml2/libiconv/libicuuc/libicudata）按 glob 收集，并按
+  「NEEDED 只认 SONAME 短名」单副本安装（软链去引用 `cp -L` 为短名常规
+  文件——wheel ZIP 经 scikit-build 打包会解引用软链；被指向的长名真实文件
+  跳过；无链真实文件原名装），glob 空或 cp 返回码非 0 均 FATAL_ERROR；
+  CMake 4.x 只用复数 `REMOVE_DUPLICATES`（3.x 接受的单数拼写在 4.4 FATAL）。
+  构建期守卫对 llvm-config --libdir 做同款 glob 硬检查并打印实际 SONAME。
+  patchelf 缺失/数据目录缺失同为 FATAL（不允许 WARNING 静默出残 wheel）。
 - wheel 产物落 `$DIST_DIR`（默认 /workspace/dist，宿主可见）；Nuitka
   中间产物在容器内 /opt/xmnn-builder/build；ccache 走命名卷
   `xmnn-ccache`（挂 /root/.ccache，down 默认保留，--volumes 删除）。
