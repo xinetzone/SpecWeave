@@ -7,7 +7,7 @@
 > 目标源码 apps/agent-monetize（只读挂载，仅 3 处跨平台适配）。
 
 ## Task 1: 脚手架骨架渲染与 overlay 目录
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
@@ -31,7 +31,7 @@
   - `rule` TR-1.3: .env 键集合与 compose 插值键 diff 空。
 
 ## Task 2: vendor logging.sh + 构建脚本（build-native / build-wheel）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -52,7 +52,7 @@
   - `rule` TR-2.3: 真实运行后 .so 生成且 readelf -d 含 tvm_ffi/lib rpath。
 
 ## Task 3: smoke 双脚本 + 内核注册
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -72,7 +72,7 @@
   - `rule` TR-3.3: native 分支断言 backend==native 且数值容差通过。
 
 ## Task 4: Containerfile.agent-monetize
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 2, Task 3
 - **Description**:
@@ -89,7 +89,7 @@
   - `rule` TR-4.2: 镜像内 pyc/__pycache__=0；apache-tvm-ffi pin 正确。
 
 ## Task 5: invoke monetize.* 八任务 + 注册
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 4
 - **Description**: 用 namespace 骨架渲染 `tasks/monetize.py`：
@@ -104,7 +104,7 @@
   - `rule` TR-5.2: Windows 原生 Exit 1；SRC 不存在 Exit 1 指引。
 
 ## Task 6: agent-monetize 源码 3 处跨平台适配
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 1
 - **Description**:
@@ -120,7 +120,7 @@
     Linux 下默认 native_lib 解析为 .so。
 
 ## Task 7: 规则/README/路由登记
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 5
 - **Description**: 新建 .agents/rules/monetize-overlay.md（技能红线 +
@@ -135,7 +135,7 @@
   - `rule` TR-7.2: 白名单外 0 改动；onnx/xmnn/quant 零改。
 
 ## Task 8: 静态门禁汇总
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 6, Task 7
 - **Description**: py_compile/bash -n、AC-1 grep、config 断言、
@@ -145,7 +145,7 @@
   - `rule` TR-8.1: 全部静态检查退出 0 并归档输出。
 
 ## Task 9: 真实镜像构建取证
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 8
 - **Description**: machine 内 podman build（aliyun pip）；观察 apt clang
@@ -155,7 +155,7 @@
   - `rule` TR-9.1: 构建退出 0，AC-3/4 断言逐项日志佐证。
 
 ## Task 10: build-native + 原生编译取证（AC-6）
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 9
 - **Description**: up（端口/挂载/kernel AC-5）→ exec build-native.sh
@@ -166,7 +166,7 @@
     2224/8892、挂载、kernel 双可见取证。
 
 ## Task 11: native backend 冒烟（AC-7）+ wheel（AC-8）+ 源码零改
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: high
 - **Depends On**: Task 10
 - **Description**: smoke_native root/devuser（backend=native + 数值
@@ -179,7 +179,7 @@
     diff 白名单。
 
 ## Task 12: 清理幂等、零侵入、收尾证据
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 11
 - **Description**: down 保卷/两轮幂等/--volumes；bind/wheel 保留；
@@ -189,10 +189,25 @@
   - `rule` TR-12.1: 计数断言全过；证据可复查。
 
 ## Task 13: fresh-context 独立审查
-- **Status**: `pending`
+- **Status**: `completed`
 - **Priority**: medium
 - **Depends On**: Task 12
 - **Description**: review.md 覆盖 AC-1~14 的 rule/rubric checkpoint；
   委托 fresh context；actionable 修复后复审。
 - **Test Requirements**:
   - `rule` TR-13.1: 每 AC 有独立证据；rule 全 pass、rubric ≥4 才 finish。
+
+---
+
+# 完成证据汇总（2026-09-14）
+
+- **静态（AC-1/2/11）**：py_compile/bash -n 全过；功能性文件禁项 grep 0；podman-compose config rc=0（2 bind 长语法+三必需+bridge+2224/8892）；invoke --list 8 任务；Windows monetize.ps Exit 1 双路径；镜像渲染自脚手架模板（dogfood，占位符 0 残留）。
+- **镜像（AC-3/4）**：基底曾因 machine 存储重置丢失，从 `jupyter-podman-rootless/.image-cache/latest.tar.gz` load 恢复；构建 `localhost/agent-monetize-dev:latest`=**666b60ac2e88（1.67GB，xmnn-dev 4.43GB 的 38%，验证轻量变体）**，root+devuser 守卫 PASS；pyc=0；base 3.14.7 GIL=True + tvm_ffi 0.1.13，main 3.14.7 Py_GIL_DISABLED=1。
+- **AC-5**：栈 Up 后 /workspace/agent-monetize/src/agent_monetize 可见、kernelspec agent-monetize-dev 双可见、lab HTTP 302（60s 窗口取证）。
+- **AC-6**：build-native.sh clang++ 一次编译成功，score_opportunity.so 88K，NEEDED libtvm_ffi.so，RUNPATH=/opt/conda/lib/python3.14/site-packages/tvm_ffi/lib（Q2 绝对 rpath 成立）。
+- **AC-7（核心）**：单次 exec 串行（规避环境窗口），backend=native、load_error=None、native_lib_path=挂载 .so；固定输入 native=6.068041758 与 reference **diff=0.000e+00**；root 与 devuser 双 PASS；test_ffi.py pytest **9/9**。
+- **AC-8**：setuptools 出 `agent_monetize-0.1.0-py3-none-any.whl`（40K，30 项，无 .so）；run --rm 隔离 venv（--system-site-packages，剥 PYTHONPATH）装 wheel 后 import + reference score=6.068042 通过，venv 随容器清理。
+- **AC-9**：git status agent-monetize 恰好 3 文件 M（config.py/config.yaml/test_ffi.py）；build.ps1 零改动且保留 2 处 .dll；config.py 平台函数 win/darwin/linux 三分支 + from_dict 空值回退。
+- **AC-10**：down 后项目容器计数 0；wheel/源码 bind 保留。
+- **AC-12**：monetize 全部改动在白名单；onnx overlay/quant.py 零改；xmnn.py 的 M 属上会话 dcbf03fbb 之前遗留（本任务未触碰）。
+- **环境限制（非栈缺陷，已在取证中规避）**：machine 当前 runRoot=/mnt/wslg/runtime-dir（tmpfs），detached 容器约 40-60s 后被会话回收（FinishedAt 零值/OOM=false/前台 run 常驻稳定）；运行态取证改用「up 后单次 exec 串行」与「run --rm 前台」完成，镜像/脚本/产物正确性不受影响。建议后续单独排查 machine linger/runroot 持久化。

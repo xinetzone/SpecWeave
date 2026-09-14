@@ -93,6 +93,12 @@
 - **NFR-2 对 agent-monetize 零非预期改动**：仅允许 3 处跨平台适配
   （config.py/config.yaml/test_ffi.py）+ 可选 Linux 文档；构建/打包/
   运行不改动其业务代码；不产生未跟踪残留（native/build 已 gitignore）。
+  附：client 共享模块 `tasks/manage.py` 的工作树存在一处**非本栈引入**
+  的既有未提交改动（`_load_env_overrides` 空占位键不注入 os.environ，
+  属 SDK/quant 域通用改进，67812663d 提交未含、本栈 monetize.py 不依赖
+  其空值过滤——SRC/workspace 均显式解析）；本栈**不还原**该通用改进，
+  在此显式登记，并以 quant/xmnn/monetize 三命名空间 Windows 门禁 +
+  包导入回归确认其不破坏既有行为。
 - **NFR-3 rootless 安全/真实可执行**：无 privileged/socket/host 网络。
 - **Dependencies**: PyPI（apache-tvm-ffi/PyYAML/build 等，经镜像源）、
   apt（clang/patchelf/gdb）。
