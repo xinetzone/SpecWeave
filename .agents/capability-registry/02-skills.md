@@ -47,11 +47,12 @@ x-toml-ref: "../../.meta/toml/.agents/capability-registry/02-skills.toml"
 | atomic-commit-cmd | "提交"、"commit"、"原子提交"、"代码提交"、"git commit" | 3（标准/快速/CI检查） | v1.2.1 | [skills/atomic-commit-cmd/SKILL.md](../skills/atomic-commit-cmd/SKILL.md) |
 | mermaid-cmd | "mermaid"、"流程图"、"时序图"、"状态图"、"画个图"、"图表"、"架构图"、"思维导图"、"画流程图" | 3（快速生成/检查修复/复杂协作） | v1.1.0 | [skills/mermaid-cmd/SKILL.md](../skills/mermaid-cmd/SKILL.md) |
 
-### 脚本命令门面（10个）
+### 脚本命令门面（11个）
 
 | Skill名 | 触发词 | 对应脚本 | 版本 | 路径 |
 |---------|--------|---------|------|------|
-| jpman-podman-ops | "jpman"、"启动jupyter容器"、"podman machine"、"工作区挂载"、"容器WARN分诊"、"fuse device"、"rootless排障"、"WSL保活"、"rebuild" | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | v1.0.0 | [skills/jpman-podman-ops/SKILL.md](../skills/jpman-podman-ops/SKILL.md) |
+| compose-overlay-ops | "启动/重建 xmnn-dev/onnx-quantized/agent-monetize 栈"、"xmnn.up/build/smoke"、"quant.up"、"容器 Exited(0)"、"netavark nft"、"Jupyter 保存 Errno 13"、"checkpoint 权限"、"WSL 发行版回收容器"、"tuna 构建叠加镜像" | invoke quant.*/xmnn.*/monetize.*（apps/containers/client，podman-compose 子进程层；保活锚→预检→build→up→浸泡→smoke SOP） | v1.0.0 | [skills/compose-overlay-ops/SKILL.md](../skills/compose-overlay-ops/SKILL.md) |
+| jpman-podman-ops | "jpman"、"启动jupyter容器"、"podman machine"、"工作区挂载"、"容器WARN分诊"、"fuse device"、"rootless排障"、"WSL保活"、"rebuild" | jpman（apps/containers/jupyter-podman-rootless/bin，bash/cmd/ps1 三版本） | v1.2.0 | [skills/jpman-podman-ops/SKILL.md](../skills/jpman-podman-ops/SKILL.md) |
 | docker-cache-cmd | "保存镜像"、"缓存Docker镜像"、"docker缓存"、"镜像缓存"、"加载镜像"、"封存镜像"、"docker save/load"、"WSL重置恢复"、"镜像本地缓存" | docker-cache（bash脚本） | v1.0.0 | [skills/docker-cache-cmd/SKILL.md](../skills/docker-cache-cmd/SKILL.md) |
 | docker-wsl-bridge-cmd | "镜像转WSL"、"docker镜像导入WSL"、"镜像转rootfs"、"podman export转wsl"、"WSL重置后恢复开发环境"、"docker-wsl-bridge"、"没有Docker Desktop怎么启动镜像" | wsl+podman跨Shell编排 | v1.0.0 | [skills/docker-wsl-bridge-cmd/SKILL.md](../skills/docker-wsl-bridge-cmd/SKILL.md) |
 | wsl-ops-cmd | "WSL磁盘清理"、"vhdx压缩"、"盘爆红"、"Docker GPU不可用"、"--gpus报错"、"nvidia-container-toolkit"、"wsl --shutdown后Docker不自启"、"wsl.conf boot"、"setsid dockerd"、"Trae缓存清理"、"fstrim"、"孤儿卷/build cache清理" | compress-wsl-vhdx.ps1、Restart-WslDockerGpu.ps1、setup-wsl-docker-gpu.sh、cleanup-trae-cache.ps1（4脚本+存储清理五步法/GPU三层分诊两模式） | v1.0.0 | [skills/wsl-ops-cmd/SKILL.md](../skills/wsl-ops-cmd/SKILL.md) |
