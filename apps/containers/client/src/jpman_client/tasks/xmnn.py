@@ -36,6 +36,7 @@ from .manage import _load_env_overrides, _project_root
 from .utils import (
     check_runtime_ready,
     detect_runtime,
+    ensure_workspace_checkpoint_writable,
     run_cmd,
     to_posix_path,
 )
@@ -56,7 +57,8 @@ BUILDER_SCRIPTS = "/opt/xmnn-builder/scripts"
 PROJECT_LABEL = "io.podman.compose.project"
 SERVICE_LABEL = "io.podman.compose.service"
 
-# 运行时 bind 挂载的三个源码目录（invoke cwd 为 client/，仓库根即其上两级）
+# 运行时 bind 挂载的三个源码目录；默认值相对**仓库根**（client 上三级：
+# client → containers → apps → 仓库根；external/chaos 在仓库根而非 client 下）
 _SOURCE_MOUNTS = {
     "NPU_TVM_PATH": ("external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
     "NPUUSERTOOLS_PATH": ("external/chaos/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
@@ -135,6 +137,9 @@ def _prepare_env() -> dict:
     绝对 POSIX 路径注入子进程环境（与 quant.py 同一 Dimension A 复用）。"""
     env = _load_env_overrides(_project_root())
     root = _project_root()
+    # 仓库根 = client 上三级（client → containers → apps → 根）；
+    # external/chaos 三个源码默认值锚定仓库根，不是 client 目录。
+    repo_root = root.parents[2]
 
     ws = os.environ.get("XMNN_WORKSPACE") or env.get("XMNN_WORKSPACE")
     if not ws:
@@ -143,10 +148,13 @@ def _prepare_env() -> dict:
     if not ws_path.is_absolute():
         ws_path = (Path.cwd() / ws_path).resolve()
     ws_path.mkdir(parents=True, exist_ok=True)
+    # rootless+9p/drvfs 下 root 预建的 checkpoint 目录对容器内 devuser 不可写，
+    # Jupyter 保存会 Errno 13；编排层幂等放宽该单一目录（详见 utils docstring）
+    ensure_workspace_checkpoint_writable(ws_path)
     os.environ["XMNN_WORKSPACE"] = to_posix_path(ws_path)
 
     for var, (default_rel, label) in _SOURCE_MOUNTS.items():
-        raw = os.environ.get(var) or env.get(var) or str((root / default_rel).resolve())
+        raw = os.environ.get(var) or env.get(var) or str((repo_root / default_rel).resolve())
         os.environ[var] = _resolve_path(raw, must_exist=True, label=label)
 
     return env

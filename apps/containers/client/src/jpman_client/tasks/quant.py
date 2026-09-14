@@ -37,6 +37,7 @@ from .manage import _load_env_overrides, _project_root
 from .utils import (
     check_runtime_ready,
     detect_runtime,
+    ensure_workspace_checkpoint_writable,
     run_cmd,
     to_posix_path,
 )
@@ -132,6 +133,8 @@ def _prepare_env() -> dict:
         # 任务路径以用户 cwd 为基准更符合直觉）
         ws_path = (Path.cwd() / ws_path).resolve()
     ws_path.mkdir(parents=True, exist_ok=True)
+    # 同 xmnn 栈：rootless+9p/drvfs 下保证 Jupyter(devuser) 可写 checkpoint 目录
+    ensure_workspace_checkpoint_writable(ws_path)
     os.environ["QUANT_WORKSPACE"] = to_posix_path(ws_path)
     return env
 

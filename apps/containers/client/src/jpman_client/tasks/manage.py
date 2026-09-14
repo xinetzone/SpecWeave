@@ -11,8 +11,8 @@
 配置优先级：命令行参数 > .env 环境变量 > ContainerConfig 默认值。
 
 Windows WSL 支持（OKF v0.2 podman-py §8 三路径）：
-  本模块在读取 .env 时会 **同步写入 os.environ**（dotenv ``load_dotenv``，
-  默认不覆盖 shell 已有变量），因此以下 SDK 专属变量既可以写在终端
+  本模块在读取 .env 时会把**非空值同步写入 os.environ**（默认不覆盖
+  shell 已有变量；空占位键不注入），因此以下 SDK 专属变量既可以写在终端
   ``export`` / ``$env:``，也可以直接放到本应用根目录 ``.env`` 里：
 
   .. code-block:: bash
@@ -36,7 +36,7 @@ Windows WSL 支持（OKF v0.2 podman-py §8 三路径）：
 import os
 from pathlib import Path
 
-from dotenv import dotenv_values, load_dotenv
+from dotenv import dotenv_values
 from invoke import Context, task
 from invoke.exceptions import Exit
 
@@ -67,18 +67,26 @@ def _load_env_overrides(project_root: Path) -> dict:
     """读取 .env（若存在），覆盖 ContainerConfig 默认值。
 
     关键副作用（Windows WSL 支持必须）：
-      用 ``load_dotenv(override=False)`` 把 .env 中的键值同步到 ``os.environ``，
-      保证 utils 层读取 ``os.environ`` 的逻辑（SDK 策略、WSL 发行版名、
-      CONTAINER_HOST 显式 URL 等）也能拿到 .env 里写的值。
-      ``override=False`` 表示：shell 中用户已 ``export`` / ``$env:`` 的变量
-      **优先级更高**，不会被 .env 覆盖，符合"命令行 > .env > 默认"约定。
+      用真值过滤后的逐键写入（等价 load_dotenv(override=False) 但跳过空值）
+      把 .env 中的键值同步到 ``os.environ``，保证 utils 层读取 ``os.environ``
+      的逻辑（SDK 策略、WSL 发行版名、CONTAINER_HOST 显式 URL 等）也能拿到
+      .env 里写的值。shell 中用户已 ``export`` / ``$env:`` 的变量优先级更高，
+      不会被 .env 覆盖，符合"命令行 > .env > 默认"约定；空值按"未设置"处理。
     """
     env_path = project_root / ".env"
     if env_path.exists():
-        # 先同步到 os.environ（SDK 策略层需要读环境变量）
-        load_dotenv(dotenv_path=str(env_path), override=False, verbose=False)
+        vals = dict(dotenv_values(str(env_path)))
+        # 仅把**非空**值同步到 os.environ（shell 已设置的键不覆盖，等同
+        # load_dotenv(override=False) 的优先级）。空占位键（如模板里的
+        # CONTAINER_HOST=）不得注入：podman CLI 5.7 看到空串会从本地 fork
+        # 模式误入 REST 模式（连接 XDG 下不存在的 socket，exit 125）——
+        # 无 systemd/无 REST socket 的 WSL 发行版内 compose 子进程层会因此
+        # 把"镜像存在"误判为缺失；未设置键则正确回退本地模式（2026-09-14 实证）。
+        for k, v in vals.items():
+            if v and k not in os.environ:
+                os.environ[k] = v
         # 再拿 dict 供 _merge_config 合并 ContainerConfig 专用字段
-        return {k: v for k, v in dict(dotenv_values(str(env_path))).items() if v}
+        return {k: v for k, v in vals.items() if v}
     return {}
 
 

@@ -989,6 +989,34 @@ def to_posix_path(path: Path | str) -> str:
     return path_str
 
 
+def ensure_workspace_checkpoint_writable(workspace: Path | str) -> None:
+    """确保工作区根的 Jupyter checkpoint 目录对容器内非 root 服务可写。
+
+    背景（2026-09-14 xmnn-dev 栈实测）：基底 entrypoint 仅对 ``/workspace`` 根
+    本身 chmod 777（非递归，保护宿主文件属主），而 Jupyter 经 supervisord 以
+    devuser（容器内 uid 1000）运行。rootless podman 经 9p/drvfs 挂载宿主工作区
+    时，容器内 root 预建的 ``.ipynb_checkpoints`` 在容器视角属主为 0:0、模式
+    755，devuser 无 w 位，保存 notebook 时报
+    ``[Errno 13] Permission denied: /workspace/.ipynb_checkpoints/<nb>-checkpoint.ipynb``。
+
+    本函数幂等：目录不存在则创建、存在则放宽到 0777。**只改权限位、不改属主**
+    （与 entrypoint 对工作区根的处理同级），且**只作用于这一个固定子目录、不
+    递归**——bind 进来的 npu_tvm/npuusertools/models 等源码树是宿主侧独立路径，
+    物理上不在作用域内。在宿主侧（WSL uid 即 drvfs 挂载 uid）执行即可透传到
+    容器视图（drvfs metadata 模式实测即时生效）。
+
+    失败只警告不抛错：栈启动不应被边缘文件系统语义阻断；工作区根本身可写时，
+    Jupyter 首次自建 checkpoint 目录的场景本就不受影响。
+    """
+    cp = Path(workspace) / ".ipynb_checkpoints"
+    try:
+        cp.mkdir(parents=True, exist_ok=True)
+        cp.chmod(0o777)
+    except OSError as exc:
+        print(f"[compose] ⚠ 未能放宽 checkpoint 目录权限（Jupyter 保存可能报 Errno 13）：{exc}")
+        print(f'        可在宿主侧手动修正：chmod 777 "{cp}"')
+
+
 def normalize_path_str(path_str: str) -> str:
     """规范化路径字符串（保持 podman-compose 卷挂载解析兼容）。
 

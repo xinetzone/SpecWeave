@@ -172,5 +172,6 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 | wheel CMake FATAL：LLVM dependency glob 空 | 守卫会打印 libdir 实际 SONAME；按提示核对 CMakeLists 7 个 glob（conda 库版本漂移） |
 | up 后 aardvark-dns / user scope bus 报错 | 已用 `network_mode: bridge` 规避；若复现检查该行未被删除 |
 | 裸 compose 后 `client/workspace/` 出现 npu_tvm/npuusertools/models 空目录 | podman-compose 1.6 对相对 source + create_host_path 的 host 端预创建副产物，**真实挂载不受影响**（冒烟以 `/workspace/...` 路径前缀断言）；down 后 `rmdir` 即可。用 `invoke xmnn.up`（注入绝对路径）不会产生 |
+| Jupyter 保存 notebook 报 `[Errno 13] Permission denied: '/workspace/.ipynb_checkpoints/...'` | rootless + 9p/drvfs 下容器内 root 预建的 checkpoint 目录在容器视角为 0:0 755，而 Jupyter 以 devuser(1000) 运行无 w 位。`invoke xmnn.up`/`xmnn.build` 经编排层 `ensure_workspace_checkpoint_writable` 幂等 `chmod 777` 该**单一目录**（不改属主、不递归、不碰源码树）；手工救急：宿主侧 `chmod 777 apps/containers/client/workspace/.ipynb_checkpoints` |
 | 打包后外部源码出现 `.bak_tvm/.bak_vta/.bak_xmnn` | 直接重跑 `build-wheel.sh` 即可：注入器有四态自愈（残留注入态/截断态配干净 `.bak` 会自动还原）；仅当报「已含 PREAMBLE 但备份缺失」（Exit 2）时才需按提示 `git checkout -- <file>` 人工还原 |
 | conda 求解慢/失败 | `--conda-mirror tuna`（或 aliyun）；pip 侧 `--pip-mirror tuna` |

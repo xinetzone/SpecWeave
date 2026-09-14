@@ -64,6 +64,13 @@
 - TVM 构建产物默认就在挂载源码树 `npu_tvm/build/`（复用宿主既有
   libtvm.so，调试直观）；9p 全量编译慢时把 NPU_TVM_PATH 指向 WSL 原生
   克隆（README 必须给出该性能提示）。
+- **checkpoint 可写性契约**：Jupyter 以 devuser(1000) 运行，而
+  rootless+9p/drvfs 下容器内 root 预建的 `$XMNN_WORKSPACE/.ipynb_checkpoints`
+  在容器视角为 0:0 755，devuser 保存 notebook 必报 Errno 13。invoke 侧
+  `_prepare_env()` 在 mkdir 工作区后**必须**调用
+  `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
+  幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
+  bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
 
 ## 5. 打包内核契约（/opt/xmnn-builder 自包含）
 
