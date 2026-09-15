@@ -18,26 +18,33 @@
 
 | # | Spec 名称 | 状态 | 三件套 |
 |---|---|---|---|
-| 1 | [chaos-ai-npu-devcontainer](chaos-ai-npu-devcontainer/spec.md) | ? 待启动 | ✓/✗ |
-| 2 | [chaos-ai-portable-docker](chaos-ai-portable-docker/spec.md) | ✓ 完成 | ✓/✗ |
-| 3 | [chaos-ai-portable-image-slim](chaos-ai-portable-image-slim/spec.md) | ✓ 完成 | ✓/✗ |
-| 4 | [conda-llvm22-docker](conda-llvm22-docker/spec.md) | ! 进行中 | ✓/✗ |
-| 5 | [create-python314t-conda-env](create-python314t-conda-env/spec.md) | ? 待启动 | ✓✗✗ |
-| 6 | [devcontainer-base](devcontainer-base/spec.md) | ✓ 完成 | ✓/✗ |
-| 7 | [devcontainer-base-image-slim](devcontainer-base-image-slim/spec.md) | ? 待启动 | ✓✗✗ |
-| 8 | [devcontainer-base-variants](devcontainer-base-variants/spec.md) | ✓ 完成 | ✓/✗ |
-| 9 | [devcontainer-base-variants-refactor](devcontainer-base-variants-refactor/spec.md) | ? 待启动 | ✓✗✗ |
-| 10 | [devcontainer-win11](devcontainer-win11/spec.md) | ? 待启动 | ✓✗✗ |
-| 11 | [docker-cross-platform-test](docker-cross-platform-test/spec.md) | ✓ 完成 | ✓/✗ |
-| 12 | [docker-image-local-cache-management](docker-image-local-cache-management/spec.md) | ! 进行中 | ✓/✗ |
-| 13 | [docker-image-save-20260727](docker-image-save-20260727/spec.md) | ✓ 完成 | ✓/✗ |
-| 14 | [docker-uid-permission-fix](docker-uid-permission-fix/spec.md) | ? 待启动 | ✓✗✗ |
-| 15 | [hermes-conda-setup](hermes-conda-setup/spec.md) | ✓ 完成 | ✓/✗ |
-| 16 | [jupyter-kernel-unique-naming-external-chaos-mount](jupyter-kernel-unique-naming-external-chaos-mount/spec.md) | ✓ 完成 | ✓/✗ |
-| 17 | [jupyter-podman-rootless](jupyter-podman-rootless/spec.md) | ✓ 完成 | ✓/✗ |
-| 18 | [jupyter-podman-wsl-bridge](jupyter-podman-wsl-bridge/spec.md) | ✓ 完成 | ✓/✗ |
-| 19 | [jupyter-ssh-base](jupyter-ssh-base/spec.md) | ✓ 完成 | ✓✗✗ |
-| 20 | [pip-user-default](pip-user-default/spec.md) | ✓ 完成 | ✓/✗ |
-| 21 | [pytorch-docker-base](pytorch-docker-base/spec.md) | ? 待启动 | ✓/✗ |
+| 1 | [agent-monetize-dev-overlay](agent-monetize-dev-overlay/spec.md) | ? 待启动 | ✓✗✗ |
+| 2 | [chaos-ai-npu-devcontainer](chaos-ai-npu-devcontainer/spec.md) | ? 待启动 | ✓/✗ |
+| 3 | [chaos-ai-portable-docker](chaos-ai-portable-docker/spec.md) | ✓ 完成 | ✓/✗ |
+| 4 | [chaos-ai-portable-image-slim](chaos-ai-portable-image-slim/spec.md) | ✓ 完成 | ✓/✗ |
+| 5 | [conda-llvm22-docker](conda-llvm22-docker/spec.md) | ! 进行中 | ✓/✗ |
+| 6 | [create-python314t-conda-env](create-python314t-conda-env/spec.md) | ? 待启动 | ✓✗✗ |
+| 7 | [devcontainer-base](devcontainer-base/spec.md) | ✓ 完成 | ✓/✗ |
+| 8 | [devcontainer-base-image-slim](devcontainer-base-image-slim/spec.md) | ? 待启动 | ✓✗✗ |
+| 9 | [devcontainer-base-variants](devcontainer-base-variants/spec.md) | ✓ 完成 | ✓/✗ |
+| 10 | [devcontainer-base-variants-refactor](devcontainer-base-variants-refactor/spec.md) | ? 待启动 | ✓✗✗ |
+| 11 | [devcontainer-win11](devcontainer-win11/spec.md) | ? 待启动 | ✓✗✗ |
+| 12 | [docker-cross-platform-test](docker-cross-platform-test/spec.md) | ✓ 完成 | ✓/✗ |
+| 13 | [docker-image-local-cache-management](docker-image-local-cache-management/spec.md) | ! 进行中 | ✓/✗ |
+| 14 | [docker-image-save-20260727](docker-image-save-20260727/spec.md) | ✓ 完成 | ✓/✗ |
+| 15 | [docker-uid-permission-fix](docker-uid-permission-fix/spec.md) | ? 待启动 | ✓✗✗ |
+| 16 | [hermes-conda-setup](hermes-conda-setup/spec.md) | ✓ 完成 | ✓/✗ |
+| 17 | [jupyter-kernel-unique-naming-external-chaos-mount](jupyter-kernel-unique-naming-external-chaos-mount/spec.md) | ✓ 完成 | ✓/✗ |
+| 18 | [jupyter-podman-rootless](jupyter-podman-rootless/spec.md) | ✓ 完成 | ✓/✗ |
+| 19 | [jupyter-podman-rootless-embed-upstream-tools](jupyter-podman-rootless-embed-upstream-tools/spec.md) | ✓ 完成 | ✓/✗ |
+| 20 | [jupyter-podman-wsl-bridge](jupyter-podman-wsl-bridge/spec.md) | ✓ 完成 | ✓/✗ |
+| 21 | [jupyter-ssh-base](jupyter-ssh-base/spec.md) | ✓ 完成 | ✓✗✗ |
+| 22 | [migrate-onnx-quantized-client](migrate-onnx-quantized-client/spec.md) | ? 待启动 | ✓✗✗ |
+| 23 | [pip-user-default](pip-user-default/spec.md) | ✓ 完成 | ✓/✗ |
+| 24 | [pytorch-docker-base](pytorch-docker-base/spec.md) | ? 待启动 | ✓/✗ |
+| 25 | [toolbx-host-image](toolbx-host-image/spec.md) | ? 待启动 | ✓✗✗ |
+| 26 | [xmnn-dev-overlay](xmnn-dev-overlay/spec.md) | ? 待启动 | ✓✗✗ |
+| 27 | [xmnn-notebook-compose](xmnn-notebook-compose/spec.md) | ? 待启动 | ✓✗✗ |
+| 28 | [xmnn-overlay-rebuild](xmnn-overlay-rebuild/spec.md) | ? 待启动 | ✓✗✗ |
 
 <!-- THEME_DASHBOARD_END -->

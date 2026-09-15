@@ -50,18 +50,19 @@
 | 30 | [laozi-lineage-okf-bundle](laozi-lineage-okf-bundle/spec.md) | ✓ 完成 | ✓/✗ |
 | 31 | [laozi-works-okf-bundle](laozi-works-okf-bundle/spec.md) | ✓ 完成 | ✓/✗ |
 | 32 | [laozi-zhudu-mystx-wiki](laozi-zhudu-mystx-wiki/spec.md) | ✓ 完成 | ✓/✗ |
-| 33 | [math-classics-okf-wiki](math-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
-| 34 | [math-east-west-dialogue-okf-wiki](math-east-west-dialogue-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
-| 35 | [neijing-illustrations](neijing-illustrations/spec.md) | ✓ 完成 | ✓/✗ |
-| 36 | [optimize-zhujianwudao-reference-layout](optimize-zhujianwudao-reference-layout/spec.md) | ? 待启动 | ✓/✗ |
-| 37 | [physics-classics-okf-wiki](physics-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
-| 38 | [psi-theory-wiki](psi-theory-wiki/spec.md) | ✓ 完成 | ✓/✗ |
-| 39 | [relationships-classics-okf-wiki](relationships-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
-| 40 | [waijing-weiyan-okf-wiki](waijing-weiyan-okf-wiki/spec.md) | ? 待启动 | ✓/✗ |
-| 41 | [yangsheng-bundle-visuals](yangsheng-bundle-visuals/spec.md) | ✓ 完成 | ✓/✗ |
-| 42 | [zhouyi-works-okf-bundle](zhouyi-works-okf-bundle/spec.md) | ? 待启动 | ✓✗✗ |
-| 43 | [zhujian-wudao-first-principles-review](zhujian-wudao-first-principles-review/spec.md) | ✓ 完成 | ✓/✗ |
-| 44 | [zhujian-wudao-ui-visual-polish](zhujian-wudao-ui-visual-polish/spec.md) | ✓ 完成 | ✓/✗ |
-| 45 | [zhujianwudao-atomic-commit-refactor](zhujianwudao-atomic-commit-refactor/spec.md) | ✓ 完成 | ✓/✗ |
+| 33 | [liaofan-shengyi-jing-okf-wiki](liaofan-shengyi-jing-okf-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 34 | [math-classics-okf-wiki](math-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
+| 35 | [math-east-west-dialogue-okf-wiki](math-east-west-dialogue-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
+| 36 | [neijing-illustrations](neijing-illustrations/spec.md) | ✓ 完成 | ✓/✗ |
+| 37 | [optimize-zhujianwudao-reference-layout](optimize-zhujianwudao-reference-layout/spec.md) | ? 待启动 | ✓/✗ |
+| 38 | [physics-classics-okf-wiki](physics-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
+| 39 | [psi-theory-wiki](psi-theory-wiki/spec.md) | ✓ 完成 | ✓/✗ |
+| 40 | [relationships-classics-okf-wiki](relationships-classics-okf-wiki/spec.md) | ? 待启动 | ✓✗✗ |
+| 41 | [waijing-weiyan-okf-wiki](waijing-weiyan-okf-wiki/spec.md) | ? 待启动 | ✓/✗ |
+| 42 | [yangsheng-bundle-visuals](yangsheng-bundle-visuals/spec.md) | ✓ 完成 | ✓/✗ |
+| 43 | [zhouyi-works-okf-bundle](zhouyi-works-okf-bundle/spec.md) | ? 待启动 | ✓✗✗ |
+| 44 | [zhujian-wudao-first-principles-review](zhujian-wudao-first-principles-review/spec.md) | ✓ 完成 | ✓/✗ |
+| 45 | [zhujian-wudao-ui-visual-polish](zhujian-wudao-ui-visual-polish/spec.md) | ✓ 完成 | ✓/✗ |
+| 46 | [zhujianwudao-atomic-commit-refactor](zhujianwudao-atomic-commit-refactor/spec.md) | ✓ 完成 | ✓/✗ |
 
 <!-- THEME_DASHBOARD_END -->
