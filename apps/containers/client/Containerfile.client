@@ -16,7 +16,8 @@
 #      ubuntu 账号；COPY --chown 仍用用户名不硬编码 UID，保持可移植）。
 #
 # 特性（对齐 F 阶段第一性原理设计）：
-#   1. 单层叠加（COPY + pip install -e），增量缓存复用率高
+#   1. 单层叠加（client + named-context shared 双 COPY + 先 shared 后 client
+#      两个 pip install -e，2026-09-15 起），增量缓存复用率高
 #   2. /opt/apps/containers/client/ 为 editable 安装真实目录，
 #      保证 _project_root() 向上能命中 pyproject.toml 锚点
 #   3. WORKDIR=/workspace，IMAGE_CACHE_DIR 默认 /workspace/.image-cache
@@ -38,8 +39,12 @@ LABEL org.specweave.component="jupyter-podman-client" \
       org.specweave.conda-env="main"
 
 # ------------------------------------------------------------
-# Layer 1（单层叠加）：拷贝 client 源码并 editable 安装
-#   - build context = apps/containers/client/；COPY . 拷贝整个 client 目录
+# Layer 1（单层叠加）：拷贝 client + shared 源码并 editable 安装
+#   - 主 build context = apps/containers/client/；COPY . 拷贝整个 client 目录
+#   - 命名 build context "shared" = apps/containers/shared/，由构建命令以
+#     --build-context shared=<abs path> 注入（invoke env.build-layer 自动注入；
+#     手动 podman build 必须自行追加该参数）。背景：2026-09-15 jpman-common
+#     重构后 client 运行时依赖 shared 包（PyPI 无发布），必须随叠加层装入。
 #   - USER root 创建目录 + 改属主 → USER devuser 做 pip install
 #   - 不使用 SHELL 指令（OCI 忽略），显式 /bin/bash -lc 包裹
 #   - 不 conda activate：PATH 顶端已是 /opt/conda/envs/main/bin
@@ -47,21 +52,27 @@ LABEL org.specweave.component="jupyter-podman-client" \
 USER root
 
 ARG APP_SRC_DIR=/opt/apps/containers/client
-RUN mkdir -p ${APP_SRC_DIR} \
+ARG SHARED_SRC_DIR=/opt/apps/containers/shared
+RUN mkdir -p ${APP_SRC_DIR} ${SHARED_SRC_DIR} \
  && chown -R devuser:devuser /opt
 
-# build context = apps/containers/client/；COPY . 拷贝整个 client 目录内容
+# 主 context = apps/containers/client/；COPY . 拷贝整个 client 目录内容
 COPY --chown=devuser:devuser . ${APP_SRC_DIR}/
+# 命名 context "shared"（--build-context shared=apps/containers/shared）
+COPY --chown=devuser:devuser --from=shared . ${SHARED_SRC_DIR}/
 
 USER devuser
 
 # 直接用 PATH 上的 /opt/conda/envs/main/bin/python（无需 conda activate）
 # --no-build-isolation 需要预先装好 build backend（scikit-build-core），
 # 因为 pyproject.toml 用它；editable 还会把运行时依赖（invoke podman python-dotenv）拉齐。
+# 安装顺序硬约束（2026-09-15）：先 shared（jpman-common）后 client——与宿主 editable
+# 安装纪律一致，否则 client 依赖解析时 jpman-common 无 PyPI 来源必报
+# "No matching distribution found for jpman-common"。
 # 注意：用 set -euo pipefail；invoke --list 必须在 client 根目录（tasks.py 转发层在那）。
 # ---- 优化（F 阶段·第一性原理）：单 RUN 结束前清理 ----
 #   1. scikit-build-core 的 build-dir（pyproject.toml 为 build/{wheel_tag}）
-#      仅 build 阶段用，运行时不需要；rm -rf ${APP_SRC_DIR}/build/
+#      仅 build 阶段用，运行时不需要；rm -rf client/build + shared/build
 #   2. 历史缓存：~/.cache/pip、conda cache（/opt/conda/pkgs/*.tar.bz2）
 #      （--no-cache-dir 其实已不下载 wheel cache，但保留保险）
 #   3. *.pyc / __pycache__：字节码编译到 site-packages 之外的源码树内
@@ -70,11 +81,12 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     python --version ; \
     python -m pip --version ; \
     python -m pip install --no-cache-dir "scikit-build-core>=0.9" ; \
+    python -m pip install --no-cache-dir --no-build-isolation -e /opt/apps/containers/shared/ ; \
     python -m pip install --no-cache-dir --no-build-isolation -e /opt/apps/containers/client/ ; \
-    python -c "import jpman_client; print(\"jpman_client import OK:\", jpman_client.__file__)" ; \
+    python -c "import jpman_common, jpman_client; print(\"imports OK:\", jpman_common.__file__, jpman_client.__file__)" ; \
     cd /opt/apps/containers/client && invoke --list 2>&1 | head -n 40 ; \
     echo "[BUILD-CLEAN] removing build artifacts & caches (single-run optimization)" ; \
-    rm -rf /opt/apps/containers/client/build ; \
+    rm -rf /opt/apps/containers/client/build /opt/apps/containers/shared/build ; \
     find /opt/apps -type d -name "__pycache__" -prune -exec rm -rf {} + ; \
     python -m pip cache purge >/dev/null 2>&1 || true ; \
     rm -rf /home/devuser/.cache/pip ; \

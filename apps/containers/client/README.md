@@ -18,6 +18,11 @@ pip install -e .
 invoke --list        # 应看到 load / images / run / stop / status / clean + container.* / env.* + quant/xmnn/monetize 三栈
 invoke load          # 自动从 ../jupyter-podman-rootless/.image-cache/ 拿最新 tar
 invoke run --workspace D:/spaces/SpecWeave   # 启动成功打印 SSH/Jupyter URL
+
+# 可选：构建容器内自举叠加镜像（env.shell / env.run-cmd 使用）
+invoke env.build-layer
+# 任务自动注入命名构建上下文 shared=../shared（Containerfile.client 的
+# COPY --from=shared 依赖它）；手动 podman build 必须自行追加该参数，否则失败
 ```
 
 Windows 11 原生 CPython 零配置即可运行（自动探测 WSL9P / Podman Machine / tcp）。

@@ -163,6 +163,18 @@ def rebuild_client_layer(
         print(f"[Rebuild] ✗ 未找到 Containerfile.client: {containerfile}")
         return False
 
+    # 命名构建上下文 shared（2026-09-15 jpman-common 重构后必需）：
+    # Containerfile.client 中 `COPY --from=shared . ...` 依赖此注入，
+    # 否则镜像内 pip 解析 client 依赖 jpman-common 时无本地源码、PyPI 也无发布。
+    shared_root = (root.parent / "shared").resolve()
+    if not (shared_root / "pyproject.toml").exists():
+        print(
+            f"[Rebuild] ✗ 未找到组内共享包源码: {shared_root}\n"
+            "         client 构建依赖 jpman-common（apps/containers/shared），"
+            "请确认 shared 目录与 client 同级且完整。"
+        )
+        return False
+
     # 基底指纹（对齐 build_layer 任务的预防闭环）：构建前取基底当前 digest
     base_digest = ""
     dr = run_cmd(
@@ -185,11 +197,14 @@ def rebuild_client_layer(
         f"-f {containerfile}",
         f"--build-arg BASE_IMAGE={base_image}",
         f"--build-arg BASE_DIGEST={base_digest}",
+        # 命名上下文：供 Containerfile.client 的 COPY --from=shared 使用
+        f"--build-context shared={shared_root}",
         f"-t {tag}",
     ]
     if no_cache:
         parts.append("--no-cache")
-    # build context = client 根目录（Containerfile 中 COPY . 依赖此目录）
+    # 主 build context = client 根目录（Containerfile 中 COPY . 依赖此目录）；
+    # 命名 context shared = 兄弟目录 apps/containers/shared（见上方注入）。
     parts.append(str(root))
 
     # warn=True：失败不抛异常，返回 Result 便于下方区分成功/失败

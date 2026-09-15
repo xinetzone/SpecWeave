@@ -209,11 +209,13 @@ ns.add_collection(env_ns)
 
 | env.* 命令 | 参数签名（`*` 表示可选） | 说明 |
 |-----------|----------------------|------|
-| `invoke env.build-layer` | `--tag *T` / `--base-image *I` / `--no-cache` | 基于 client 根目录 Containerfile.client 构建容器内自举叠加层镜像 |
+| `invoke env.build-layer` | `--tag *T` / `--base-image *I` / `--no-cache` | 基于 client 根目录 Containerfile.client 构建容器内自举叠加层镜像；**自动注入命名构建上下文 `shared`（2026-09-15 起，硬约束）** |
 | `invoke env.run-cmd` | `--cmd CMD` / `--tag *T` / `--name *N` / `--workspace *W` / `--cache-dir *D` / `--keep` / `--extra-mount *M` | 在自举容器内执行单条命令（rootless 三必需 + `/workspace` 与 `/workspace/.image-cache` 双挂载） |
 | `invoke env.shell` | `--tag *T` / `--name *N` / `--workspace *W` / `--cache-dir *D` | 进入自举容器交互式 bash shell |
 
 ⚠️ `env.*` 三个任务**只走 CLI 子进程**（`utils.detect_runtime()` + `run_cmd()`），**禁止调用 podman-py SDK**；`PODMAN_SERVICE_BOOT` 常量在容器内自举 podman service（bootstrap 以 `--entrypoint /usr/bin/tini` 跳过 `entrypoint.sh::setup_podman()`，故 daemon 需自行拉起）。
+
+⚠️ **build-layer 双构建上下文契约（2026-09-15·修复 jpman-common 缺失事故）**：Containerfile.client 含 `COPY --from=shared`，故 `rebuild_client_layer()` 必须传 `--build-context shared=<root.parent>/shared`（main context 仍为 client 根目录），并在构建前对 `shared/pyproject.toml` 做存在性预检（缺失 → 中文报错 + return False，不裸跑 build）。镜像内 pip 安装顺序硬约束：**先 `/opt/apps/containers/shared/`（jpman-common）后 client**，否则 `No matching distribution found for jpman-common`（该包 PyPI 无发布）。手动 `podman build` 同样必须追加该参数；新增兄弟包依赖时先问「构建上下文里有没有它」。已实证 Windows 远程客户端（podman 5.7.0）对命名上下文的宿主绝对路径解析正确，无需改父目录为 context（父目录含 builder .image-cache 等 GB 级内容，禁用）。
 
 ### 4.4 命令兼容性保证
 

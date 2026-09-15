@@ -22,7 +22,7 @@ source: "README.md#10-在容器中使用客户端自举env-命令"
 ```bash
 cd apps/containers/client
 
-# 构建叠加层（单层 COPY + pip install -e，层缓存复用率极高，<1 分钟）
+# 构建叠加层（client/shared 双 COPY + 先 shared 后 client 两个 pip install -e，<1 分钟）
 invoke env.build-layer
 # 等价：invoke env.build-layer --tag localhost/jupyter-podman-client:latest \
 #                        --base-image localhost/jupyter-podman-rootless:latest
@@ -31,7 +31,14 @@ invoke env.build-layer
 invoke env.build-layer --no-cache
 ```
 
-> **构建上下文说明**：`podman build` 以 client 根目录为 build context，`COPY .` 会把整个目录打包，但受 `.containerignore` 过滤（`.image-cache/`、`workspace/`、`.env`、`__pycache__/` 等已剔除），实际打包内容最小化。
+> **构建上下文说明（双上下文，2026-09-15 起）**：
+> - 主 context = client 根目录，`COPY .` 受 `.containerignore` 过滤（`.image-cache/`、`workspace/`、`.env`、`__pycache__/` 等已剔除）；
+> - **命名 context `shared`** = 兄弟目录 `apps/containers/shared/`，由任务自动以
+>   `--build-context shared=<abs path>` 注入，供 `COPY --from=shared` 装入
+>   jpman-common（client 运行时依赖的组内共享包，PyPI 无发布；镜像内按
+>   「先 shared 后 client」顺序 editable 安装）。
+> - **手动 `podman build` 必须自行追加同一参数**，否则构建在 `COPY --from=shared`
+>   处直接失败；正常使用请始终走 `invoke env.build-layer`。
 
 产出镜像：`localhost/jupyter-podman-client:latest`。
 
@@ -102,7 +109,7 @@ invoke env.shell
 
 **问题本质：镜像 tag 是移动指针，叠加层固化的是 digest（不可变指纹）。**
 
-`localhost/jupyter-podman-client:latest` 是一个「叠加镜像」——基于 `localhost/jupyter-podman-rootless:latest`（基底）加一层 `COPY + pip install -e` 构建。**`invoke run` 使用的不是基底 tag，而是叠加镜像构建那一刻固化的基底内容**。基底 tag 之后被更新（重建 / `invoke load`）不会传导给已构建的叠加层，导致「容器跑的还是旧基底」。
+`localhost/jupyter-podman-client:latest` 是一个「叠加镜像」——基于 `localhost/jupyter-podman-rootless:latest`（基底）叠加 client 与 shared（命名构建上下文）两个源码树、按先 shared 后 client 顺序 `pip install -e` 构建。**`invoke run` 使用的不是基底 tag，而是叠加镜像构建那一刻固化的基底内容**。基底 tag 之后被更新（重建 / `invoke load`）不会传导给已构建的叠加层，导致「容器跑的还是旧基底」。
 
 **解决机制闭环（三环节）**：
 

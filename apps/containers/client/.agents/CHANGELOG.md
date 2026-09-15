@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+### 2026-09-15 · `fix:` `invoke env.build-layer` 叠加镜像构建失败：镜像内缺 jpman-common（No matching distribution found）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260915-env-buildlayer-common）。
+
+**根因**：同日 jpman-common 重构（见下方 refactor 条）把 client 的平台/连接层依赖上移到兄弟包 `apps/containers/shared`（纯本地包，PyPI 无发布），client `pyproject.toml` 已声明 `dependencies=["jpman-common"]`，但镜像构建链路未同步——`Containerfile.client` 的 build context 只有 client 根目录，STEP 8 `pip install -e /opt/apps/containers/client/` 在镜像内解析依赖时无本地源码可装，必报 `ERROR: No matching distribution found for jpman-common`（重构验收当时只覆盖宿主 editable + daemon-free 单测，未重跑镜像构建）。连锁影响：env.shell / env.run-cmd / `invoke run --rebuild-layer` 全断（重建失败后仅回退旧镜像）。
+
+**修复（第一性原理裁决：构建期本质需求 = 两个本地源码树 + 安装顺序）**：采用 podman **命名构建上下文**——① `Containerfile.client` 新增 `COPY --chown=devuser:devuser --from=shared . /opt/apps/containers/shared/`，RUN 内安装顺序改为先 shared 后 client 两个 `pip install -e --no-build-isolation`，构建期自检改为同时 `import jpman_common, jpman_client`，清理段追加 `shared/build`；② `env_in_container.py::rebuild_client_layer()` 自动注入 `--build-context shared=<root.parent>/shared`（main context 仍为 client 根），构建前对 `shared/pyproject.toml` 做存在性中文预检（缺失 return False 不裸跑）。否决方案：父目录 `apps/containers` 作 context（含 builder `.image-cache/` 等 GB 级内容，ignore 脆弱）、task 临时复制源码树（临时目录生命周期）、宿主预构建 wheel（多余构建步骤）。
+
+**V 真机验收（podman 5.7.0-rc3 Windows 远程客户端）**：V-1 `invoke env.build-layer` 全 16 步构建成功并打 tag（命名上下文的宿主绝对路径在客户端侧正确解析打包）；V-2 运行容器内 `pip show jpman-common`=0.1.0、`import jpman_common` 命中 editable 真实目录 `/opt/apps/containers/shared/src/jpman_common/`，jpman_client 同验；V-3 二次构建幂等成功、基底指纹 LABEL 保留；V-4 shared+client 单测 **160 passed / 1 skipped** 零回归。同步：docs/08-env-bootstrap.md（双上下文说明 + 手动 build 必须追加参数）、.agents/rules/invoke-tasks.md §4.3（双构建上下文契约与「新增兄弟包依赖先问构建上下文」预防条款）、Containerfile.client 头注与层注（预防措施：重构移动依赖归属时，必须穷举该依赖的所有安装现场——宿主 editable、镜像构建、CI；只验宿主会漏掉容器链路）。
+
 ### 2026-09-15 · `docs:` 固化 Windows shell 引用契约（cmd.exe 通道双引号为正确写法，推翻「3 处双引号遗留」误判）
 
 **关联七概念场景**：场景2「问题解决」（builder `inv run` 修复的 V/C 延伸实证，session sc-20260915-inv-run-stale-container）。
