@@ -5,6 +5,7 @@
 :hidden:
 
 python-rust-comparison/index
+fedora-coreos/index
 tvm-ffi-wiki/index
 caffe-ffi-conv-v4-optimization-summary
 glm-model-call-example
