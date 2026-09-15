@@ -243,7 +243,33 @@ T1 shared 基座包（平台/进程/容器工具）─┬─→ T3 overlay_core 
 
 ---
 
+## T8：独立对抗审查（V 强制）与修复闭环（2026-09-15 完成）
+
+**R1 审查**：fresh general_purpose_task 子代理，四视角（魔鬼代言人/新人/老板/未来），以仓库内 [vendor/podman-compose/podman_compose.py](../../../vendor/podman-compose/podman_compose.py)（1.6.0 只读 submodule，用户中途补充权威源路径）逐行核对 + 真实管线运行探针。结论 **CONDITIONAL PASS**：0 blocker / 2 major / 2 minor / 5 nit，报告见 [review.md](review.md) §0-§5。
+
+**修复（实施方）与 R2 复核（独立子代理）**：
+
+| 项 | 级别 | 问题 | 处置 | R2 复核 |
+|---|---|---|---|---|
+| M1 | major | 合并模拟器 volumes 两处与 vendor 真实语义反向：短语法被写成「先到先得基方胜」（真实 L2289-L2297 为覆盖方胜+移尾）、长语法 dict 被模拟成按 target 去重（真实**不去重**，且 scaffold 恰强制长语法 bind） | 重写 [test_compose_merge.py](../../apps/containers/client/tests/test_compose_merge.py) merge_one volumes 分支；删除锁错语义的旧自证，换 4 条新自证；新增 `_real_podman_compose()`（已安装包→vendor 回退→skip）与真实 rec_merge 探针 2 条；render_stack 括号改真实管线顺序（先 -f 后 extends，N2） | 逐行同构核对 + 探针通过；假绿四方向攻击（误导入/误 skip/版本断言/输入污染）被防住 |
+| M2 | major | 「volumes 按 target 去重」失实表述扩散 | 更正 8 处：base-rootless.yaml 文件头、quant-overlay.md §4/§4.1、xmnn/monetize-overlay.md、scaffold SKILL §7.6/G15/Changelog、compose.yaml.skeleton、client CHANGELOG | 全仓 grep 零残留、check-links 0 断链、行号再核精确 |
+| M3 | minor | 模拟器静默宽容类型冲突、保真范围未声明 | docstring 声明保真边界（!reset/!override 不支持、normalize 子集、插值仅 ${N:-}）；实现 None+dict 特判与跨类型 ValueError | 通过 |
+| M4 | minor | tasks/__init__.py 三栈 ns.configure 死配置（零消费，误导新人） | 删除三段、加防回填注释（唯一事实源 StackSpec） | src 全量 grep 无间接消费；39 任务/栈 22 正常 |
+| N1 | nit | 行号漂移 L2845-2847→L2844-L2849、resolve_extends L2329→L2364 | 6 处更正（基文件/quant 规则/xmnn/monetize/overlay_core docstring/CHANGELOG/SKILL）；test_overlay_core L139 单点 L2845 落在真实区间内保留 | 通过 |
+| N2 | nit | 模拟器合并括号与真实管线相反 | 随 M1 改为「文件循环先合并、resolve_extends 最后」 | 通过 |
+| N4 | nit | standalone 裸 `podman run` 不带三必需（既有等价行为） | overlay_core smoke_stack 加未来守卫注释（设备依赖出现前必须先补三必需/转 compose） | 通过 |
+| N6 | nit（R2 新发现） | 模拟器对 depends_on list+dict 会误抛 ValueError（真实 L2276-L2281 merge 内归一化） | 实现 list↔dict 归一化 + 1 自证 + 2 条真实 rec_merge 探针 | merge 文件 24 用例全过、真实探针一致 |
+| N3/N5/N7 | nit | 插值子集已 docstring 声明（N3）；spec F-13 措辞混淆已加 R2 勘误注（N5）；历史表面（skills CHANGELOG/期点证据/外部 OKF 束）旧行号不改写（N7） | 登记 | 不阻塞 |
+
+**最终证据**：
+- client `pytest -q`：**63 passed, 1 skipped**（test_compose_merge 24 用例含真实 1.6.0 对照探针）；shared **92 passed**（97%）；`invoke --list` 栈任务 22 / 总 39 不变；两端 compileall + builder 垫片 import 冒烟通过；check-links apps/containers 与 scaffold **0 断链**。
+- vendor/podman-compose 全程只读，`git status` 零改动；未 git commit。
+- R2 最终结论：**PASS**（review.md §6）；残留风险仅 P1 真机 E2E 六项后置（用户预裁决，清单在 client CHANGELOG）、P2 根套件基线失败（与本次无关）、N3/N5/N7 nit 登记。
+
+---
+
 ## 后续（Review 阶段，不在实施任务内）
 
-- R1：委托 fresh 独立只读子代理按 4 视角（魔鬼代言人/新人/老板/未来）对抗审查，重点攻击：任务工厂 invoke 行为、extends 合并边界、共享包打包依赖、双 ABI 契约、等价性测试充分性。
-- R2：审查结果物化为 `review.md`；fail/pending 项必须可追踪；pass 后方可收尾。
+- ~~R1：委托 fresh 独立只读子代理按 4 视角对抗审查~~ → 已完成（CONDITIONAL PASS，见上）。
+- ~~R2：审查结果物化为 review.md，修复后复核~~ → 已完成并升级 **PASS**。
+- 待办（不阻塞交付）：① 环境恢复后执行 client CHANGELOG 2026-09-15 条目真机 E2E 六项清单并回链；② 根套件基线失败（openpyxl/MDI vendor 技能/py314 API 差异）另开规格；③ 用户决定 C 阶段（Conventional Commits，中文主体）提交时机。

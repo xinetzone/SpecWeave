@@ -27,6 +27,7 @@
 - **F-11 utils.py 上帝文件**：1355 行/43 个 def，混合 Windows 转码、SDK 连接、透传 spec、WSL 桥接、镜像 tar 校验、host key、路径工具七类职责。
 - **F-12 client 零单测**：仅有镜像内 smoke shell；builder 有 3 个测试。与 F-5 原则及全局规则（单测覆盖率 ≥80%）不符。
 - **F-13 构建系统小违规**：builder `pyproject.toml` 为纯 Python 包却保留 `[tool.scikit-build.cmake]` 段（`wheel.cmake=false`），违反根 AGENTS.md "纯 Python 包不写 cmake 段"。
+  > **R2 勘误（2026-09-15，review.md N5）**：上文表述有概念混淆——`wheel.cmake = false` 是 `[tool.scikit-build]` 表下的**标量键**，并非 `[tool.scikit-build.cmake]` **子表**；根规范禁止的是后者（CMake 扩展构建段），该标量键恰是 scikit-build-core 纯 Python 包的正确开关。三端（shared/client/builder）交付物均无 `[tool.scikit-build.cmake]` 子表且保留 `wheel.cmake = false` 标量键，AC-6 实质满足。
 - **F-14 compose YAML 公共段三份重复**：三栈 compose.yaml 重复 rootless 三必需、`network_mode: bridge`、凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）、labels/restart。既有 `compose.gpu.yaml` 已实证 list 追加合并语义（按 F-3）。
 - **F-15 文档腐烂**：三栈 `_gate_platform` docstring 仍叙述"定制发行版由 jupyter-podman-rootless 改名顶替"，而该 17.4GB 实体 2026-09-15 傍晚已灭失，当前同名 machine 为官方精简版。
 - **F-16 预留位**：`apps/shared/` 仅有 .gitkeep（根级跨组共享预留）；本重构共享包服务于 containers 组内两应用，落在 `apps/containers/shared/`（组内聚更合适）。

@@ -161,3 +161,80 @@ date: 2026-09-15
 - **AC-7**：主体落地；M2 所列 rec_merge 表述簇为本审查发现的唯一文档失实，修完即闭环。
 - **AC-10**：E2E 后置清单已登记且用户预裁决不阻塞；quant bridge 变更记录合规。
 - 完成 M1-M4（M3/M4 强烈建议同 PR）后可将本结论升级为 **PASS**；nit 登记跟踪不阻塞。
+
+---
+
+## 6. R2 修复复核（2026-09-15）
+
+- **复核人**：R1 同一独立审查子代理（fresh 执行，沿用 R1 全部 vendor 事实与探针方法）；只读复核，除本节外未修改任何文件；vendor 目录复核前后 `git status --porcelain` 均为空（submodule 指针 `e3df104`，v1.6.0-97）。
+- **环境事实更正**：py314 解释器（D:\Users\xinzo\anaconda3\envs\py314\python.exe，Python 3.14.3 / pytest 9.1.1）中**并未安装** podman_compose（`importlib.util.find_spec` → None），故两条真实对照测试实际走的是测试内 **vendor 回退分支**（`parents[4]/vendor/podman-compose`，[test_compose_merge.py#L353-L363](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L353-L363)），导入实体测为 [vendor/podman_compose.py](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py) 1.6.0。这恰好实证了回退路径不假 skip；tasks.md L162「本机装有 podman-compose」属历史表述不精确（见 N7）。
+
+### 6.1 必修项逐项核验
+
+**M1 — 修复正确，PASS。** 四类改动逐条对 vendor 源码复核：
+
+1. volumes 分支（[test_compose_merge.py#L146-L162](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L146-L162)）：pts 只收覆盖方 b 的含冒号字符串 target、删基方 a 碰撞短语法项（dict/匿名卷保留）、整体 extend b——与 vendor [podman_compose.py#L2289-L2297](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2289-L2297) 逐行同构（含 `split(":", 2)[1]` 细节与 `":" in dict` 键判断）。
+2. command/entrypoint 无条件替换已前移到类型检查之前（[#L137-L138](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L137-L138)，对 vendor [L2263-L2265](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2263-L2265)）；None+dict 特判 [#L139-L140](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L139-L140)（对 [L2272-L2273](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2272-L2273)）；其余跨类型 ValueError [#L163-L166](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L163-L166)（对 [L2283-L2286](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2283-L2286)，错误消息结构一致）。
+3. render_stack 括号顺序改为真实管线（[#L195-L202](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L195-L202)）：先 `merge(svc, gpu_override)`（文件循环 [L2851](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2851)）后 `merge({}, base, stacked)`（resolve_extends [L2364](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2364)/调用点 [L2919](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2919)）。
+4. 旧自证用例已删除，替换 4 用例：短语法覆盖方胜+移尾 [#L313-L319](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L313-L319)、长语法 dict 不去重 [#L322-L333](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L322-L333)、匿名卷混合 [#L336-L340](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L336-L340)、类型冲突+None/dict 特判 [#L343-L348](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L343-L348)；新增 2 条真实 rec_merge 对照 [#L386-L401](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L386-L401)。文件 23 用例（parametrize 展开后），数量与 CHANGELOG 声称一致（57+5=62）。
+
+**M2 — 失实簇全部更正，PASS。** 声称的 8 个位置逐一核实且语义准确：[base-rootless.yaml#L17-L28](file:///d:/spaces/SpecWeave/apps/containers/client/overlays/_shared/base-rootless.yaml#L17-L28)（L2364/L2289-L2297/L2844-L2849）、[quant-overlay.md#L84-L103](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/rules/quant-overlay.md#L84-L103)（§4 与 §4.1）、[xmnn-overlay.md#L163-L166](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/rules/xmnn-overlay.md#L163-L166)、[monetize-overlay.md#L49-L53](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/rules/monetize-overlay.md#L49-L53)、[SKILL.md#L184-L197](file:///d:/spaces/SpecWeave/.agents/skills/client-overlay-scaffold/SKILL.md#L184-L197)（§7.6）+[#L320-L325](file:///d:/spaces/SpecWeave/.agents/skills/client-overlay-scaffold/SKILL.md#L320-L325)（G15）+[#L363-L374](file:///d:/spaces/SpecWeave/.agents/skills/client-overlay-scaffold/SKILL.md#L363-L374)（v1.1.0 changelog）、[compose.yaml.skeleton#L18-L25](file:///d:/spaces/SpecWeave/.agents/skills/client-overlay-scaffold/templates/compose.yaml.skeleton#L18-L25)、[client CHANGELOG#L20-L29](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/CHANGELOG.md#L20-L29)（F 阶段实证 + R 段）。审查者独立全仓 grep（「按 target 去重」「target 去重」「dedup」「先到先得」及 volumes 邻近）：交付面**零残留失实簇**，全部幸存表述均为更正后的正确语义；docs/10-12 只做继承叙事、无去重承诺。行号 L2364、L2844-L2849、L2289-L2297 再次对 vendor 源码逐行核实无误（resolve_extends 内真正执行 rec_merge 的行确为 L2364）。
+
+**M3 — 保真边界已声明，PASS（残留 1 条 doc nit，见 N6）。** docstring [#L17-L24](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L17-L24) 明确排除 !reset/!override、normalize_service 预处理、插值子集，并声明类型冲突同样抛 ValueError、真实 rec_merge 对照防漂移。
+
+**M4 — 删除安全，PASS。** [__init__.py#L85-L103](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/__init__.py#L85-L103) 仅剩 container/env 两段 configure 且带防回填注释（L99-L102）。审查者独立 grep 全 src：`.config`/`ctx[`/`c.get`/`c.quant`/`c.xmnn`/`c.monetize` 零消费方；quant/xmnn/monetize 字样仅存在于各 SPEC 字面量与 docstring。`invoke --list` 39 任务（根 7 + container 7 + env 3 + 栈 22）完整列出，间接证明运行时无配置回退依赖。
+
+**N1 — 交付面 PASS。** overlay_core docstring [L331](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/overlay_core.py#L331)、基文件头、两份规则、SKILL、骨架、测试 L188 均为 L2844-L2849 / L2364；apps/containers 交付面 grep 无 L2845-2847/L2329 残留（仅 [test_overlay_core.py#L139](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_overlay_core.py#L139) 单行「L2845」——该行落在真实区间内部（walrus 取 file 行），不构成事实错误，归入 N7 一致性 nit）。
+
+**N2 — PASS。** 括号顺序修正见 M1.3；四组真实管线端到端比对（下节）在新顺序下零字段差异。
+
+**N4 — PASS。** [overlay_core.py#L541-L544](file:///d:/spaces/SpecWeave/apps/containers/client/src/jpman_client/tasks/overlay_core.py#L541-L544) 已加四行未来守卫注释（裸 run 不带三必需、设备依赖出现前必须先改或转 compose、禁直接 --device、回指 AGENTS C3），代码行为保持逐字节等价。
+
+### 6.2 假绿/回归专项攻击（审查者独立探针，脚本置 TEMP，仓库零改动）
+
+- **导入正确性**：对照测试实际导入 vendor 1.6.0（打印 `__file__` 实证），非其他同名包；测试首行 `__version__ == "1.6.0"` 断言会拦截任何错版本（探针以伪造 9.9.9 模块实证断言失败）。
+- **skip 逻辑**：vendor 在场时 23 用例全跑、0 skip；屏蔽导入并伪造 vendor 缺失时正确 `pytest.skip`（两种情形均实测），不存在「有 vendor 仍误 skip」。
+- **深拷贝/变异污染**：真实 rec_merge 原地 mutate target；测试与探针均双侧 deepcopy。按测试循环写法跑完后逐对象比对模块级 `_REC_MERGE_PROBES` 夹具——**零变异**；另跑 12 组扩展边界（跨形态卷碰撞 dict↔短语法互克、`:ro/:rw` 三段、多 target 部分碰撞、command str/list 互代、entrypoint 覆盖为 None、None+None、bool/int、嵌套 services.volumes、空 list 覆盖等），11 组与真实输出完全一致且输入零污染；唯一分叉是 depends_on list+dict（真实在 [L2276-L2281](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2276-L2281) merge 内归一化、模拟器 ValueError，三栈 YAML grep 确认零使用）→ N6。
+- **断言区分力（变异测试）**：以 R1 旧错误语义（先到先得/基方胜、dict 按 target 去重）实现变体喂入：3 条真实对照 volumes 探针 **3/3 全部抓出分叉**；新短语法自证用例对旧实现产出 `['/h1:/workspace','/h3:/data']` 与期望相反——新用例确能抓住旧 bug，非摆设。
+- **ValueError 改动的真实渲染影响**：真实 1.6.0 管线（单例 _parse_args + 新实例 _parse_compose_file，TEMP 任意 cwd、绝对 -f）渲染 quant/quant+GPU/xmnn/monetize 四组，与修复后 `render_stack` **逐键比对零异常、零差异**（除既有已知键 build/extends/_config_hash/_deps）；即 ValueError 收紧不影响三栈任何现存合并。模拟器仅测试文件使用（src grep 无 import），运行时走真实 podman-compose 子进程，产品代码零影响。
+- **断链**：check-links 复跑 client 目录 **0 断链**（7 条均为既存「链接到目录」风格警告，与本次措辞改动无关）、scaffold 技能目录全部有效；规则中知识包 03/06/10 相对链接目标实测存在。
+
+### 6.3 复跑记录（py314，审查者亲自执行）
+
+| 验证 | 命令 | 结果 |
+|---|---|---|
+| merge 测试 | `python -m pytest tests/test_compose_merge.py -v`（cwd=client） | **23 passed in 0.16s**（含 2 条真实对照，未 skip） |
+| client 全量 | `python -m pytest -q` | **62 passed, 1 skipped in 1.74s**（复现实施方声称） |
+| shared 基线 | `python -m pytest`（cwd=shared） | **92 passed in 2.32s**（与 R1 基线一致，R2 未触碰 shared） |
+| 任务表面 | `invoke --list` | 39 任务；栈任务 22（6+8+8）计数精确匹配 |
+| vendor 只读 | 根仓/submodule `git status --porcelain` | 复核前后均空 |
+| 端到端 | 独立探针 4 组真实管线 vs 模拟器全键 diff | known-keys 之外 **0 差异**；volumes 终态 quant 1 / xmnn 5（含 1 短语法命名卷）/ monetize 2，dict 键集合逐一键相等 |
+
+### 6.4 R2 新发现（仅 2 条 nit，无 major/minor/blocker）
+
+| ID | 级别 | 发现 | 证据 | 建议 |
+|---|---|---|---|---|
+| N6 | nit/中 | docstring「类型冲突真实抛 ValueError、模拟器同样抛出」对 depends_on 不成立：真实在 rec_merge_one 内部先把 list/dict 归一化再合并（不抛），模拟器抛 | vendor [L2276-L2281](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py#L2276-L2281)；探针实测；[test_compose_merge.py#L22](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L22)；三栈/基文件 grep 无 depends_on | docstring 边界清单补一句「depends_on list/dict 归一化不模拟」即可，零行为风险 |
+| N7 | nit/低 | 三处历史/外部表面保留旧行号或旧表述：① test_overlay_core.py 单行 L2845（落在真实区间内，不算错）；② skills/CHANGELOG v1.20 与 spec tasks.md L163/L165 保留 L2845-2847/L2329/「先到先得」/57 passed 等期点证据（append-only 历史记录，本 review 已取代之）；③ OKF 知识包 concepts/06 L102 的 L2329（外部束，不可改） | [test_overlay_core.py#L139](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_overlay_core.py#L139)、[.agents/skills/CHANGELOG.md#L10](file:///d:/spaces/SpecWeave/.agents/skills/CHANGELOG.md#L10)、[tasks.md#L163-L165](file:///d:/spaces/SpecWeave/.trae/specs/infra-env/containers-okf-refactor/tasks.md#L163-L165) | ① 顺手可改 L2844-L2849；②③ 保持历史不改或加「以 review.md R2 为准」指针，不阻塞 |
+
+### 6.5 最终结论：**CONDITIONAL PASS → 升级 PASS**
+
+M1/M2 两条 major 修复经源码逐行核对、真实 1.6.0 端到端复跑、变异/假绿/skip/污染四方向攻击后确认正确且无新引入缺陷；M3/M4 minor 关闭；N1/N2/N4 处置到位。新增发现仅 N6/N7 两条 nit（doc 边界措辞与历史/外部表面行号），登记跟踪不阻塞。
+
+残留风险（承接 R1，均不阻塞）：
+- **P1 真机 E2E 后置**：六项真机验证（三栈 up/smoke/down、quant GPU、bridge 出网、builder 垫片）仍待 podman machine/WSL 环境恢复，清单见 [client CHANGELOG#L31-L39](file:///d:/spaces/SpecWeave/apps/containers/client/.agents/CHANGELOG.md#L31-L39)；
+- **P2 根套件基线**：本次仅复跑 client/shared（92 passed）；jupyter-podman-rootless 测试属手工/真机性质，维持 R1 基线结论；
+- **N3/N5**（插值子集、spec cmake 措辞）+ 本次 **N6/N7** 登记后处理。
+
+---
+
+## 7. R2 后收尾处置（实施方追加，2026-09-15）
+
+R2 升级 PASS 后，实施方对剩余 nit 未止步于登记，追加两项零风险收紧（证据可复验）：
+
+- **N6 关闭（超出 R2「补一句 docstring」建议，直接实现保真）**：merge_one 增加 depends_on list↔dict 归一化分支（对齐 vendor L2276-L2281：list 视为 `{项: {}}`，归一后 dict 深合并不抛 ValueError）；新增 1 条自证 `test_simulator_depends_on_list_dict_normalized` 与 2 条真实 rec_merge 对照探针（list+dict / dict+list 两个方向）。复跑：test_compose_merge.py **24 passed**（含真实 1.6.0 对照），client 全量 **63 passed, 1 skipped**；真实探针输出与模拟器逐键一致。
+- **N5 关闭**：spec.md F-13 追加 R2 勘误注（`wheel.cmake = false` 是 `[tool.scikit-build]` 标量键而非 `[tool.scikit-build.cmake]` 子表；三端均无子表且保留标量键，AC-6 实质满足），原文保留以存历史裁决。
+- **N7 维持不改**：skills CHANGELOG / tasks.md T5-T7 期点证据为 append-only 历史记录（T8 节已统一勘误并指向本 review）；OKF 束属外部只读；test_overlay_core.py L139 单点 L2845 落在真实区间 L2844-L2849 内，非错误。
+- **N3 维持登记**：插值仅模拟 `${NAME:-default}` 子集，已在测试 docstring 保真边界声明（三栈只用 `:-`）。
+
+最终交付状态：**PASS 维持**；全部 blocker/major/minor 关闭，nit 仅余 N3/N7 两条登记项；P1（真机 E2E 六项）/P2（根套件基线）为环境性后置，均不阻塞。
