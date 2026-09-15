@@ -45,6 +45,15 @@
 | Jupyter 服务 | `/opt/conda/envs/main` | 3.14.x **cp314t**（GIL off） | 基底 jupyterlab（supervisord，devuser） |
 | 编译/打包/内核 | `/opt/conda`（base） | 3.14.x **cp314 GIL enabled** | nuitka==4.1.3、scikit-build-core、build、invoke、ipykernel、wheel 19 依赖 |
 | 原生工具链 | main env | — | llvmdev/clangdev/clang/lld **22.1.8**、cmake、ninja、make、ccache、libgcc、libstdcxx-ng |
+| **编译前端（npu_tvm）** | 系统层（apt） | — | **gcc/g++**（系统包；2026-09-15 起作默认 CC/CXX） |
+
+- **编译前端裁决（2026-09-15）**：npu_tvm 构建默认用系统 `gcc/g++`
+  （build-tvm.sh `CC=${CC:-gcc}`/`CXX=${CXX:-g++}`，env 可覆盖回退 clang）。
+  原因：VTA FSIM 仿真驱动（`vta/vta_hw/src/sim_*`）的「VLA+初始化器」是
+  Clang 22 hard error（`variable-sized object may not be initialized`）、
+  GCC 允许的扩展。LLVM/Clang 22 工具链**仍必须安装**（llvm-config 供 CMake
+  `USE_LLVM`、lld 供链接、构建期守卫断言 SONAME）；只把编译前端切 gcc，
+  不改变工具链契约。Nuitka 4.x 打包后端同样默认找 gcc（更标准）。
 
 - **Nuitka 4.1.3 在 cp314t 编译失败、cp314 GIL 成功**（allocator.h:606
   Spike 结论）：所有打包/验证脚本的解释器固定 `/opt/conda/bin/python`；
@@ -52,7 +61,7 @@
   PATH/LD_LIBRARY_PATH 导出只在脚本进程内生效，不反转全局 PATH。
 - conda 装工具链必须 pin `python=*=*cp314t`，构建期
   `_toolchain_guards.py` 对双 ABI 做双向断言（main 被求解互换即构建失败）。
-- 系统层仅 apt 装 patchelf（CMake RPATH 阶段）与 gdb（调试诉求）。
+- 系统层仅 apt 装 patchelf（CMake RPATH 阶段）、gdb（调试诉求）、gcc/g++（npu_tvm 编译前端，见上）。
 
 ## 4. 源码仅运行时挂载（构建期零接触）
 

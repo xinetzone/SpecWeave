@@ -29,12 +29,15 @@ BASE_PREFIX=/opt/conda
 MAIN_PREFIX=/opt/conda/envs/main
 BASE_PYTHON="$BASE_PREFIX/bin/python"
 
-# ── 跨 env：base cp314 跑 invoke，main env 提供 clang/LLVM/cmake/ninja ──────
+# ── 跨 env：base cp314 跑 invoke，main env 提供 LLVM/cmake/ninja ──────────
 export PATH="$MAIN_PREFIX/bin:$BASE_PREFIX/bin:${PATH:-}"
 export LD_LIBRARY_PATH="$MAIN_PREFIX/lib:$BASE_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 export LLVM_CONFIG="${LLVM_CONFIG:-$MAIN_PREFIX/bin/llvm-config}"
-export CC="${CC:-$MAIN_PREFIX/bin/clang}"
-export CXX="${CXX:-$MAIN_PREFIX/bin/clang++}"
+# 编译前端默认 gcc/g++（2026-09-15：VTA FSIM 的 VLA+初始化器 Clang 22 报
+# hard error、GCC 允许；LLVM 22 工具链仍用于 llvm-config/链接/守卫）。
+# 可用环境变量覆盖回退 clang：CC=/opt/conda/envs/main/bin/clang CXX=.../clang++
+export CC="${CC:-gcc}"
+export CXX="${CXX:-g++}"
 
 log_section "TVM build preflight"
 [ -d "$TVM_ROOT" ] || {
@@ -88,8 +91,20 @@ else
 fi
 
 echo ""
-log_step "3/3 inv make（Ninja + ccache 编译 libtvm.so，首次耗时较长）"
-"$BASE_PYTHON" -m invoke make
+log_step "3/3 构建 libtvm.so（inv make 配置 + ninja 主目标）"
+# npu_tvm tasks.py 的 make 在 ninja 失败时吞掉非零 rc 并打印"成功"（假象），
+# 只靠本脚本尾部 libtvm.so 存在性兜底；且 VTA FSIM 仿真驱动
+# （vta/vta_hw/src/sim_*）是 GCC 允许、Clang 22 拒绝的「VLA + 初始化器」
+# hard error（variable-sized object may not be initialized），无法 -W 降级。
+# libtvm.so 是主库目标，不依赖 vta_fsim_* 独立 targets——这里保留 inv make
+# 完成 cmake 配置，再用 ninja 直连主目标产出 libtvm.so（外部树零修改，
+# wheel 打包亦只依赖 libtvm.so；VTA 硬件仿真库降级不在产物范围）。
+"$BASE_PYTHON" -m invoke make || true
+[ -f "$TVM_ROOT/build/build.ninja" ] || {
+    log_error "build.ninja 未生成于 $TVM_ROOT/build（inv make 配置失败）"
+    exit 1
+}
+ninja -C "$TVM_ROOT/build" libtvm.so
 
 TVM_LIB="$TVM_ROOT/build/libtvm.so"
 if [ -f "$TVM_LIB" ]; then

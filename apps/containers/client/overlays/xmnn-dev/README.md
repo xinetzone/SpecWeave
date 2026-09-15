@@ -171,6 +171,7 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 | `invoke xmnn.*` Windows 原生报门禁 Exit(1) | 自动桥接不可用时回退（无 wsl.exe/发行版缺失/`COMPOSE_WSL_DISTRO=none`）；正常路径自动桥接 `podman-machine-default`，无需手动操作 |
 | `invoke xmnn.up` 报 `address already in use`（exit 125，端口 2223/8890） | **已自动自愈**：up 前 `_reconcile_stale_containers` 探测 Created/Exited 残留（其 rootlessport 端口分配仍被持有）并先 compose down；若仍失败多为宿主其他进程占用——`netstat -ano \| findstr 2223` 排查或改 `.env` 的 `XMNN_SSH_PORT`/`XMNN_JUPYTER_PORT` |
 | build-tvm 报 dmlc-core 缺失 | 宿主 npu_tvm 树执行 `git submodule update --init` 后重试 |
+| build-tvm 之前报 `variable-sized object may not be initialized`（VTA FSIM 的 VLA） | 已由 2026-09-15 引入系统 gcc/g++ 作编译前端修复（Clang 22 拒 VLA+初始化器、GCC 允许）；env `CC`/`CXX` 可覆盖回退 clang |
 | build-wheel 开头报 libtvm.so 缺失（exit 2） | 先 `invoke xmnn.build-tvm`，或把含 build/ 的完整 npu_tvm 挂到 NPU_TVM_PATH |
 | Nuitka Killed / OOM | `invoke xmnn.wheel --jobs 4`，machine 分配 ≥8 GB 内存 |
 | wheel CMake FATAL：LLVM dependency glob 空 | 守卫会打印 libdir 实际 SONAME；按提示核对 CMakeLists 7 个 glob（conda 库版本漂移） |

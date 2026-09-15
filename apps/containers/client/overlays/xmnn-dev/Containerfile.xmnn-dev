@@ -44,12 +44,17 @@ LABEL org.specweave.component="xmnn-dev" \
 # Layer 1：系统层小工具（apt 源继承基底构建期配置，不重复改写）
 #   - patchelf：wheel 内 _libs/*.so 设 $ORIGIN RPATH（CMake 阶段调用）
 #   - gdb：源码调试开发（用户显式诉求之一）
+#   - gcc/g++：npu_tvm 编译前端——VTA FSIM 仿真驱动（vta/vta_hw/src/sim_*）
+#     的「VLA + 初始化器」是 Clang 22 hard error（variable-sized object may
+#     not be initialized）、GCC 允许的扩展；LLVM/Clang 22 工具链仍装 main
+#     env（llvm-config 供 CMake、lld 供链接、守卫断言）。
+#   - Nuitka 4.x 打包后端同样默认找 gcc（更标准，优于 clang）。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
     apt-get update ; \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends patchelf gdb ; \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends patchelf gdb gcc g++ ; \
     rm -rf /var/lib/apt/lists/* ; \
-    echo "[xmnn] patchelf: $(patchelf --version 2>&1) ; gdb: $(gdb --version | head -1)"'
+    echo "[xmnn] patchelf: $(patchelf --version 2>&1) ; gdb: $(gdb --version | head -1) ; gcc: $(gcc --version | head -1)"'
 
 # ------------------------------------------------------------
 # Layer 2：main env 装入 LLVM/Clang 22.1.8 原生工具链
