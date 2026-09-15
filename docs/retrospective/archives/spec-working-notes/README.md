@@ -43,3 +43,6 @@ source: .trae/specs/（C-4 大文件归档，2026-09-04）
 | `standards-tools/create-graphql-wiki-tutorial/source-python-tools.md` | `docs/retrospective/archives/spec-working-notes/standards-tools/create-graphql-wiki-tutorial/source-python-tools.md` | 129.0 KB |
 | `standards-tools/create-scikit-build-core-wiki-tutorial/.research/wiki-structure-design.md` | `docs/retrospective/archives/spec-working-notes/standards-tools/create-scikit-build-core-wiki-tutorial/.research/wiki-structure-design.md` | 61.0 KB |
 | `caffe-framework/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md` | `docs/retrospective/archives/spec-working-notes/caffe-framework/caffex-vs-caffe-ffi-gap-analysis/gap_analysis_report.md` | 67.6 KB |
+| `okf-wiki-ecosystem/male-charm-eq/research/a-masculinity-charm.md` | `docs/retrospective/archives/spec-working-notes/okf-wiki-ecosystem/male-charm-eq/a-masculinity-charm.md` | 8.3 KB |
+| `okf-wiki-ecosystem/male-charm-eq/research/b-eq-theory.md` | `docs/retrospective/archives/spec-working-notes/okf-wiki-ecosystem/male-charm-eq/b-eq-theory.md` | 9.3 KB |
+| `okf-wiki-ecosystem/male-charm-eq/research/c-practice-critique.md` | `docs/retrospective/archives/spec-working-notes/okf-wiki-ecosystem/male-charm-eq/c-practice-critique.md` | 10.4 KB |
