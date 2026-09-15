@@ -1,17 +1,28 @@
 ---
 # __STACK__ 叠加栈 - Compose Specification（podman-compose / rootless）
 #
-# 本文件由 client-overlay-scaffold 骨架生成。替换全部 __X__ 占位符后使用：
-#   __STACK__ 栈目录名 / __NS__ 命名空间 / __SVC__ 服务名 /
+# 本文件由 client-overlay-scaffold v1.1 骨架生成。替换全部 __X__ 占位符：
+#   __STACK__ 栈目录名/name / __NS__ 命名空间 / __SVC__ 服务名 /
 #   __IMAGE__ 镜像标签 / __SSH_PORT__ __JUPYTER_PORT__ 端口 /
-#   __CONTAINERFILE__ Containerfile 文件名 / __ENV_PREFIX__ env 前缀
+#   __CONTAINERFILE__ Containerfile 文件名 / __NSU__ env 前缀
 #
 # 设计依据（不可变，详见技能 SKILL.md §7）：
-#   rootless 三必需：devices /dev/fuse + security_opt label=disable
-#   + cgroupns host；严禁 privileged。
+#   顶部 extends ../_shared/base-rootless.yaml（rootless-base 服务）。
+#   rootless 三必需（devices /dev/fuse + security_opt label=disable
+#   + cgroupns host）、凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/
+#   SSH_PUBLIC_KEY/GRANT_SUDO）、network_mode bridge、
+#   org.specweave.managed-by label、restart 均在基段单一事实源，
+#   本文件【严禁重复声明】；严禁 privileged。
 #   bind 一律长语法 + create_host_path（G1）。
-#   network_mode bridge：machine 无 systemd user bus 时默认项目网络
-#   aardvark-dns 失败的规避（G2，新增栈若本机环境已变可复核后调整并注释）。
+#
+# extends 合并语义（podman-compose 1.6.0 vendor 源码实证）：
+#   rec_merge({}, base, current)——dict 深合并（environment/labels 取键并集）
+#   /普通 list 追加/command、entrypoint 无条件替换；volumes 特例：仅短语法
+#   字符串按 target 去重且覆盖方获胜，【长语法 dict bind 不去重】——本栈
+#   bind 全用长语法，override 中切勿重声明同一 target（会重复挂载）；
+#   extends.file 在解析阶段（_parse_compose_file L2844-L2849）按引用文件
+#   目录重写，invoke 绝对 --file + 任意 cwd、裸 podman-compose 在栈目录
+#   执行均可解析。
 #
 # 两种驱动：① invoke __NS__.*（apps/containers/client 下）；
 #           ② 裸 podman-compose（本目录 cp .env.example .env）。
@@ -20,54 +31,49 @@ name: __STACK__
 
 services:
   __SVC__:
-    container_name: ${__ENV_PREFIX___CONTAINER_NAME:-__STACK__}
-    image: ${__ENV_PREFIX___IMAGE_TAG:-__IMAGE__}
+    extends:
+      file: ../_shared/base-rootless.yaml
+      service: rootless-base
+    container_name: ${__NSU___CONTAINER_NAME:-__STACK__}
+    image: ${__NSU___IMAGE_TAG:-__IMAGE__}
     build:
       context: .
       dockerfile: __CONTAINERFILE__
       args:
         BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
         PIP_MIRROR: ${PIP_MIRROR:-official}
-        # 不需要 conda 镜像源的栈删除本行与对应 .env 键
+        # 不需要 conda 镜像源的栈删除本行（同时删 .env 键与 StackSpec
+        # conda_mirror 保持 False；需要时 StackSpec conda_mirror=True）
         CONDA_MIRROR: ${CONDA_MIRROR:-official}
-    network_mode: bridge
     ports:
-      - "${__ENV_PREFIX___SSH_PORT:-__SSH_PORT__}:22"
-      - "${__ENV_PREFIX___JUPYTER_PORT:-__JUPYTER_PORT__}:8888"
+      - "${__NSU___SSH_PORT:-__SSH_PORT__}:22"
+      - "${__NSU___JUPYTER_PORT:-__JUPYTER_PORT__}:8888"
     volumes:
       # 通用工作区（invoke 路径解析为绝对 POSIX 并自动 mkdir；
       # 裸 compose 的相对路径相对本文件，../../workspace = client/workspace）
       - type: bind
-        source: ${__ENV_PREFIX___WORKSPACE:-../../workspace}
+        source: ${__NSU___WORKSPACE:-../../workspace}
         target: /workspace
         bind:
           create_host_path: true
-      # 【形态 B 按需复制：源码/数据 bind，每个都用长语法】
+      # 【形态 B 按需复制：源码/数据 bind，每个都用长语法；裸 compose 的
+      # 相对路径按本文件所在 overlays/<stack>/ 的层级数算（apps/ 下资源
+      # 通常 ../../../../<dir>，external/ 下 ../../../../../<dir>）；
+      # 同时在 StackSpec.source_mounts 与两处 .env.example 登记同名键】
       # - type: bind
-      #   source: ${__ENV_PREFIX___SRC_PATH:-../../../../../external/<path>}
+      #   source: ${__NSU___SRC_PATH:-../../../../apps/<dir>}
       #   target: /workspace/<name>
       #   bind:
       #     create_host_path: true
       # 【命名卷示例：构建缓存等（短语法对 named volume 安全）】
       # - __STACK__-cache:/root/.cache/<tool>
-    # ── rootless 三必需（与 client ContainerConfig 同源，禁止删改/特权化）──
-    devices:
-      - /dev/fuse:/dev/fuse
-    security_opt:
-      - label=disable
-    # podman-compose 1.6.0 无 cgroupns 翻译器（空操作），保留声明语义
-    cgroupns: host
     environment:
-      # 基底 entrypoint 凭证契约（留空串 → 启动时自动生成并打印）
-      USER_PASSWORD: "${USER_PASSWORD:-}"
-      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
-      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
-      GRANT_SUDO: ${GRANT_SUDO:-yes}
-      # 【栈业务环境变量在此追加；四凭证全局共用，不要改名】
+      # 凭证四变量与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
+      # 【仅放栈业务环境变量；四凭证全局共用，不要改名】
+      # PYTHONPATH: /workspace/<name>/src
     labels:
+      # managed-by 由基段继承（labels 深合并取并集），这里只写组件标签
       org.specweave.component: "__SVC__"
-      org.specweave.managed-by: "jupyter-podman-client"
-    restart: unless-stopped
 
 # 【使用命名卷时在此声明】
 # volumes:

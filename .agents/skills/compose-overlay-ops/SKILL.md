@@ -61,18 +61,21 @@ title: "Compose 叠加栈运维 (compose-overlay-ops)"
 ```
 要在 Windows 宿主上操作叠加栈？
 ├─ 在哪个发行版跑 invoke？
-│   ├─ 首选 jupyter-podman-rootless 发行版
+│   ├─ 首选 podman-machine-default 发行版（唯一执行环境）
 │   │    实证：自带 podman 5.7.0、/mnt/d 直通、sudo 免密、Python 3.14、
 │   │    历史上已 load 全部 localhost 镜像；无 systemd
-│   └─ 不要用 podman-machine-default
-│        实证：本机 gvproxy 不驻留，start 报告成功后空闲即退（ssh 竞态），
-│        且其镜像存储与 jupyter 发行版不互通
+│   │    （2026-09-15 改名顶替：注销 flapping 的 Podman Desktop machine 后，
+│   │    把 jupyter-podman-rootless 经 export/unregister/import 改名为
+│   │    podman-machine-default 并设默认；compose 桥接默认名随之变更）
+│   └─ 历史教训（原 Podman Desktop machine 已删除）：gvproxy 不驻留、
+│       start 成功后空闲即退（ssh 竞态）、镜像存储与 jupyter 发行版不互通
 ├─ 发行版存活纪律
 │   ├─ 每个 wsl.exe 命令结束后发行版可能被回收（vmIdleTimeout=-1 只保 VM）
 │   │   → 长任务/长驻栈前先开保活锚（§6 步骤 0）
 │   └─ 无 systemd：XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir（WSLg），
 │       禁止改成 /run/user/<uid>（会 lstat 失败）
-└─ Windows 原生 CPython？ → 任务自身门禁 Exit(1)，必须进 WSL 发行版执行
+└─ Windows 原生 CPython？ → 默认自动桥接到上述发行版（COMPOSE_WSL_DISTRO
+   可覆盖、none 回退门禁）；亦可手动进 WSL 发行版执行
 ```
 
 ## 6. 标准 SOP
@@ -80,7 +83,7 @@ title: "Compose 叠加栈运维 (compose-overlay-ops)"
 ### 步骤 0：保活锚（后台，整个会话持有）
 
 ```powershell
-wsl -d jupyter-podman-rootless -- sleep infinity   # 后台运行，勿关
+wsl -d podman-machine-default -- sleep infinity   # 后台运行，勿关
 ```
 
 > **为什么必须先开？** 无锚时最后一个 wsl 客户端退出 → 发行版回收 →
@@ -91,7 +94,7 @@ wsl -d jupyter-podman-rootless -- sleep infinity   # 后台运行，勿关
 ### 步骤 1：四维修复预检（只读，先取证再动手）
 
 ```bash
-wsl -d jupyter-podman-rootless -- bash -lc '
+wsl -d podman-machine-default -- bash -lc '
   podman ps -a --format "{{.Names}} | {{.Status}}" ;
   podman images --format "{{.Repository}}:{{.Tag}}" | grep -E "xmnn|quant|monetize|jupyter-podman-rootless" ;
   ls -d /mnt/d/spaces/SpecWeave/external/chaos/{npu_tvm,npuusertools,models} 2>/dev/null'
@@ -112,7 +115,7 @@ wsl -d jupyter-podman-rootless -- bash -lc '
 # 推荐固化一个执行器脚本（避免 PowerShell→wsl 的 $ 插值问题，见 §9 陷阱 7）：
 #   export PATH="$HOME/.local/bin:$PATH"
 #   cd /mnt/d/spaces/SpecWeave/apps/containers/client && exec invoke "$@"
-wsl -d jupyter-podman-rootless -- bash <run-inv.sh> xmnn.build --pip-mirror tuna --conda-mirror tuna
+wsl -d podman-machine-default -- bash <run-inv.sh> xmnn.build --pip-mirror tuna --conda-mirror tuna
 ```
 
 - 普通重建命中层缓存，**镜像 ID 不变是正常结论**（修复若只在宿主侧
@@ -164,7 +167,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 
 ## 8. 安全检查清单
 
-- [ ] 已开保活锚，且整条命令链在同一发行版（jupyter-podman-rootless）
+- [ ] 已开保活锚，且整条命令链在同一发行版（podman-machine-default）
 - [ ] 未覆盖 XDG_RUNTIME_DIR；未给 machine 发行版设 systemd=true
 - [ ] compose 栈未出现 `--privileged`；三必需只用标准字段（devices/
       security_opt/cgroupns），与各 `*-overlay.md` 一致
@@ -179,7 +182,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | 现象 | 实证根因 | 处理 |
 |---|---|---|
 | 容器 `Exited (0)`、日志停在中段 | 发行版空闲被回收（非应用崩溃） | 开保活锚 → `xmnn.down && xmnn.up --skip-build` |
-| `podman machine ssh` 报 not running（start 刚成功） | machine gvproxy 不驻留、空闲回收 | 换 jupyter-podman-rootless 发行版 |
+| `podman machine ssh` 报 not running（start 刚成功） | machine gvproxy 不驻留、空闲回收 | 原 flapping machine 已删除（由 jupyter-podman-rootless 改名顶替） |
 | 守卫误报"本地缺少基底镜像"（镜像明明在） | `.env` 空 `CONTAINER_HOST=` 被注入致 podman CLI 误入 REST 模式 exit 125 | 已修为仅注入非空值（manage._load_env_overrides）；勿在 shell 里 export 空串 |
 | `netavark: unable to execute "nft"` | 发行版缺 nftables | `sudo apt-get install -y nftables` |
 | `lstat /run/user/1001: no such file` | 错误覆盖 XDG_RUNTIME_DIR | 删除覆盖，沿用 /mnt/wslg/runtime-dir |
