@@ -23,9 +23,9 @@
 
 ## Background & Context
 
-- 上游权威实现 [vendor/toolbox/images/ubuntu/26.04/Containerfile](../../../vendor/toolbox/images/ubuntu/26.04/Containerfile) 第 41 行显式 `userdel --remove ubuntu`（注释：uid 1000 会与宿主用户冲突），第 37 行 flatpak-spawn symlink 装法与我方一致。
-- Toolbx create 机制（[vendor/toolbox/src/cmd/create.go](../../../vendor/toolbox/src/cmd/create.go) L412-L480）：入口为 PATH 解析的 `toolbox init-container ...`；挂载宿主 toolbox 到 `/usr/bin/toolbox` 并注入 `TOOLBOX_PATH`；`--privileged --network host --pid host --ipc host` + `/:/run/host`；只设 Cmd 不清镜像 ENTRYPOINT。
-- 当前 Containerfile Layer 3（[Containerfile L560-L567](../../../apps/containers/jupyter-podman-rootless/Containerfile)）在 UID 1000 被占时走"自动分配"分支 → devuser=1001。
+- 上游权威实现 [vendor/toolbox/images/ubuntu/26.04/Containerfile](../../../../vendor/toolbox/images/ubuntu/26.04/Containerfile) 第 41 行显式 `userdel --remove ubuntu`（注释：uid 1000 会与宿主用户冲突），第 37 行 flatpak-spawn symlink 装法与我方一致。
+- Toolbx create 机制（[vendor/toolbox/src/cmd/create.go](../../../../vendor/toolbox/src/cmd/create.go) L412-L480）：入口为 PATH 解析的 `toolbox init-container ...`；挂载宿主 toolbox 到 `/usr/bin/toolbox` 并注入 `TOOLBOX_PATH`；`--privileged --network host --pid host --ipc host` + `/:/run/host`；只设 Cmd 不清镜像 ENTRYPOINT。
+- 当前 Containerfile Layer 3（[Containerfile L560-L567](../../../../apps/containers/jupyter-podman-rootless/Containerfile)）在 UID 1000 被占时走"自动分配"分支 → devuser=1001。
 - 实测证据（2026-09-11，session sc-20260911-host-toolbox-create-verify）：VM 内用临时派生镜像（userdel ubuntu+用户收编 1000+`ENTRYPOINT []`+`HEALTHCHECK NONE`）成功 `toolbox create/run`，容器内 `uid=1000(user) groups=sudo,docker`、HOME/cwd 透传、`/run/host` 完整、Python 3.14.7 可用。
 - entrypoint.sh 全部以 `${NON_ROOT_USER}` 名字操作属主（无硬编码 UID），UID 固定 1000 与其兼容。
 - 既有预防机制：client 叠加层基底指纹（2026-09-11 早些时候交付）会在基底更新后提示重建，本变更须联动重建 client:latest。

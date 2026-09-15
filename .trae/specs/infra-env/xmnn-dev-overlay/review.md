@@ -304,7 +304,7 @@
 #### 无父级还原兜底，且重跑会用污染版覆盖干净 .bak（违反 AC-9 硬承诺
 #### 与 spec 增强点②）
 - **位置**：
-  [build-wheel.sh](../../../apps/containers/client/overlays/xmnn-dev/builder/scripts/build-wheel.sh)
+  [build-wheel.sh](../../../../apps/containers/client/overlays/xmnn-dev/builder/scripts/build-wheel.sh)
   L175-202（inject/restore）、L211/L233（父 trap 注册与清除）、
   L249-296（两个并行子 shell）。
 - **复现（静态可证，无需真 OOM）**：
@@ -344,7 +344,7 @@
 
 #### F-2（advisory，severity low-medium）wheel _libs 实际为常规文件
 #### 副本而非软链，tasks 证据与"软链兜底"表述失真
-- **位置**：[CMakeLists.txt](../../../apps/containers/client/overlays/xmnn-dev/builder/CMakeLists.txt)
+- **位置**：[CMakeLists.txt](../../../../apps/containers/client/overlays/xmnn-dev/builder/CMakeLists.txt)
   L95-109（install(CODE) ln -sf）；tasks.md T12②；spec FR-2/G6。
 - **复现**：`python3 -c zipfile` 读 wheel：14 个 _libs 条目的
   external_attr 无 S_IFLNK，6 对 SONAME/全名文件逐对同尺寸；
@@ -360,7 +360,7 @@
 
 #### F-3（advisory，severity low）verify-wheel.sh 在 set -e 下 tests
 #### 4-9 失败即中止，FAIL 计数与 SUMMARY 失效
-- **位置**：[verify-wheel.sh](../../../apps/containers/client/overlays/xmnn-dev/builder/scripts/verify-wheel.sh)
+- **位置**：[verify-wheel.sh](../../../../apps/containers/client/overlays/xmnn-dev/builder/scripts/verify-wheel.sh)
   L109-125 等七处 `"$VENV_PY" -c ...; if [ $? -eq 0 ]`。
 - **复现**：任一检查 python 退出非零 → `set -e`（L24）在 if 之前
   直接终止脚本；PASS/FAIL 汇总不打印。
@@ -380,7 +380,7 @@
 
 #### F-5（advisory，severity low）inv xmnn.build/up 不读 .env 中的
 #### PIP_MIRROR/CONDA_MIRROR/BASE_IMAGE，与 .env 模板措辞略有出入
-- **位置**：[xmnn.py](../../../apps/containers/client/src/jpman_client/tasks/xmnn.py)
+- **位置**：[xmnn.py](../../../../apps/containers/client/src/jpman_client/tasks/xmnn.py)
   L189-229（build 仅取 CLI 参数）；overlay .env.example L49、
   client .env.example L193-197。
 - **复现**：在 client .env 置 PIP_MIRROR=tuna 后 `inv xmnn.build`

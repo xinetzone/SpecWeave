@@ -11,7 +11,7 @@
 - **Priority**: high
 - **Depends On**: None
 - **Description**:
-  - 修改 [Containerfile](../../../apps/containers/jupyter-podman-rootless/Containerfile) Layer 3（约 L547-L568）：创建 devuser 前先 `userdel --remove ubuntu`（对齐上游 images/ubuntu/26.04/Containerfile L41，忽略 mail spool 缺失），随后固定 `useradd -m -s /bin/bash -u 1000 -G sudo,docker devuser`；删除"UID 1000 被占→自动分配"分支与 `NON_ROOT_USER ... auto-assigned` 类注释。
+  - 修改 [Containerfile](../../../../apps/containers/jupyter-podman-rootless/Containerfile) Layer 3（约 L547-L568）：创建 devuser 前先 `userdel --remove ubuntu`（对齐上游 images/ubuntu/26.04/Containerfile L41，忽略 mail spool 缺失），随后固定 `useradd -m -s /bin/bash -u 1000 -G sudo,docker devuser`；删除"UID 1000 被占→自动分配"分支与 `NON_ROOT_USER ... auto-assigned` 类注释。
   - 同步修正 Containerfile 头部 L8 注释（"UID 1000 if available, auto-assigned otherwise" → 固定 1000）。
   - Layer 3/5 构建期校验追加：`test "$(id -u devuser)" = 1000`、`getent passwd 1000 | cut -d: -f1` 必须为 devuser、`! getent passwd ubuntu`。
   - 同步同文件内 build-info echo（DEVUSER_UID 实际值仍动态采集，保留）。
@@ -32,7 +32,7 @@
 - **Depends On**: Task 1
 - **Description**:
   - 新增 `apps/containers/jupyter-podman-rootless/Containerfile.toolbx`：`ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest` + `FROM ${BASE_IMAGE}`；`LABEL org.specweave.flavor=toolbx`；`HEALTHCHECK NONE`；`ENTRYPOINT []`。文件头注释写明：①与上游 toolbox 机制依据（create.go 只覆盖 Cmd）；②wrapper 影子裁决结论（实测优先保留 wrapper：TOOLBOX_PATH 非空时 exec 容器内 /usr/local/libexec/toolbox；实测不通则追加 `RUN rm -f /usr/local/bin/toolbox` 并记录原因）；③适用命令 `toolbox create -i ...:toolbx`。
-  - [build.py](../../../apps/containers/jupyter-podman-rootless/src/jpman_builder/tasks/build.py) 新增任务函数 `build_toolbx(c, tag=None, base_image=None)` 并在任务命名空间暴露为 `build.toolbx`：默认 tag `localhost/jupyter-podman-rootless:toolbx`；前置检查 base 镜像存在（不存在报中文错误指引先 `invoke build`）；固定 `podman build --format docker -f Containerfile.toolbx -t <tag> --build-arg BASE_IMAGE=<base> .`（CLI 直构，秒级薄层，不走三后端/compose/stage）。
+  - [build.py](../../../../apps/containers/jupyter-podman-rootless/src/jpman_builder/tasks/build.py) 新增任务函数 `build_toolbx(c, tag=None, base_image=None)` 并在任务命名空间暴露为 `build.toolbx`：默认 tag `localhost/jupyter-podman-rootless:toolbx`；前置检查 base 镜像存在（不存在报中文错误指引先 `invoke build`）；固定 `podman build --format docker -f Containerfile.toolbx -t <tag> --build-arg BASE_IMAGE=<base> .`（CLI 直构，秒级薄层，不走三后端/compose/stage）。
   - tasks 命名空间注册处（tasks.py 或包 __init__）登记新任务。
 - **Acceptance Criteria Addressed**: AC-2, AC-6
 - **Test Requirements**:
@@ -114,7 +114,7 @@
 - **Priority**: medium
 - **Depends On**: Task 4, Task 5
 - **Description**:
-  - [docs/07-toolbx-passthrough.md](../../../apps/containers/jupyter-podman-rootless/docs/07-toolbx-passthrough.md) 新增"宿主机 Toolbx 流程（:toolbx 变体）"章节：构建（invoke build + build.toolbx）、宿主前置（Fedora: `sudo dnf install toolbox p11-kit-server`；Debian 系 libsubid soname 注意；零安装路径=从容器提取二进制+compat-lib）、首次 create 的 system migrate 停容器警告、WSL socket 通道与无 systemd/HEALTHCHECK 说明、flatpak-spawn --host 限制（与上游装法一致性说明）、完整命令清单（create/enter/list/rm）。
+  - [docs/07-toolbx-passthrough.md](../../../../apps/containers/jupyter-podman-rootless/docs/07-toolbx-passthrough.md) 新增"宿主机 Toolbx 流程（:toolbx 变体）"章节：构建（invoke build + build.toolbx）、宿主前置（Fedora: `sudo dnf install toolbox p11-kit-server`；Debian 系 libsubid soname 注意；零安装路径=从容器提取二进制+compat-lib）、首次 create 的 system migrate 停容器警告、WSL socket 通道与无 systemd/HEALTHCHECK 说明、flatpak-spawn --host 限制（与上游装法一致性说明）、完整命令清单（create/enter/list/rm）。
   - UID 表述对齐：docs/00-overview.md、README.md、AGENTS.md（已是 1000 表述，核对即可）、.agents/rules/containerfile.md（L16/L57/L101 增补"固定 1000，userdel ubuntu"）、.agents/rules/entrypoint.md L60（动态分配注释改写）、docs/07 L32（补充上游 userdel 依据）；client 侧 README L377 与 Containerfile.client L14-L16 注释、client AGENTS.md 如涉 UID 表述一并改为"devuser 固定 UID 1000"。
   - 应用 CHANGELOG（jupyter-podman-rootless .agents/CHANGELOG.md）追加本次 fix+feat 条；client CHANGELOG 追加联动重建条（基底指纹首次实战触发记录）。
   - docs README 索引/07 标题如需要同步。
