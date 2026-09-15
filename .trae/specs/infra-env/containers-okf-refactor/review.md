@@ -167,7 +167,7 @@ date: 2026-09-15
 ## 6. R2 修复复核（2026-09-15）
 
 - **复核人**：R1 同一独立审查子代理（fresh 执行，沿用 R1 全部 vendor 事实与探针方法）；只读复核，除本节外未修改任何文件；vendor 目录复核前后 `git status --porcelain` 均为空（submodule 指针 `e3df104`，v1.6.0-97）。
-- **环境事实更正**：py314 解释器（D:\Users\xinzo\anaconda3\envs\py314\python.exe，Python 3.14.3 / pytest 9.1.1）中**并未安装** podman_compose（`importlib.util.find_spec` → None），故两条真实对照测试实际走的是测试内 **vendor 回退分支**（`parents[4]/vendor/podman-compose`，[test_compose_merge.py#L353-L363](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L353-L363)），导入实体测为 [vendor/podman_compose.py](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py) 1.6.0。这恰好实证了回退路径不假 skip；tasks.md L162「本机装有 podman-compose」属历史表述不精确（见 N7）。
+- **环境事实更正**：py314 解释器（本机 conda `py314` 环境的 `python.exe`，Python 3.14.3 / pytest 9.1.1；具体绝对路径不入库）中**并未安装** podman_compose（`importlib.util.find_spec` → None），故两条真实对照测试实际走的是测试内 **vendor 回退分支**（`parents[4]/vendor/podman-compose`，[test_compose_merge.py#L353-L363](file:///d:/spaces/SpecWeave/apps/containers/client/tests/test_compose_merge.py#L353-L363)），导入实体测为 [vendor/podman_compose.py](file:///d:/spaces/SpecWeave/vendor/podman-compose/podman_compose.py) 1.6.0。这恰好实证了回退路径不假 skip；tasks.md L162「本机装有 podman-compose」属历史表述不精确（见 N7）。
 
 ### 6.1 必修项逐项核验
 
