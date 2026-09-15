@@ -246,9 +246,18 @@
 
 ## Task 9: 全量对等门禁——argparse 对等测试 / 覆盖率 / lint 总门
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 8
+- **完成记录**：
+  - WSL py3.14 权威门禁：**940 passed / 0 skip / 74 subtests**（T8 基线 607 + T9 新增 333）；Windows py314 原生 **906 passed / 34 failed**（T8 基线 32 + T9 新增 2，新增两例为已登记类别的 POSIX 路径语义：bind 短挂载源 `/h` 在 Windows 被 abspath 加盘符、`os.path.join("sub","")` 末段空串尾分隔符，与上游 Windows 同构、非逻辑差异）。
+  - **TR-9.1 argparse 对等零差异**：采用"快照文件"方案（不依赖 vendor 路径跑测试）——①`tests/parity_lib.py`：vendor 无关的 argparse parser 树序列化器（option_strings/dest/action/nargs/const/default/choices/required/metavar/type/help 十一维，prog 明确不采集——AC-4 允许差异）；②`tests/generate_parity_snapshots.py`：importlib 加载 `vendor/podman-compose`（锚定 commit `e3df104`，支持 `PODMAN_COMPOSE_SRC` 覆盖，docstring 含重新生成规程与"禁止为变绿无判据刷新快照"纪律），复刻上游 `_parse_args` 构造序（单例 commands→_init_global_parser→title="command" subparsers→help 伪命令→逐 `cmd._parse_args`）生成 `tests/snapshots/cli_parity.json`（25 命令含 help 伪命令，69 KB，含 meta 溯源）；③`test_cli_parity.py`（4 例）读快照对新库 `build_parser()` 深度对比，含逐 action 字段级 diff 报告——**首跑零差异一次通过**；④`test_command_surface.py`（5 例）对拍命令集合/注册顺序/每命令 help 与 systemd 多行 description（50 个 subtests 覆盖 25 命令的全 action）。
+  - **TR-9.2 上游 27 文件全量移植**（`vendor tests/unit` 26 个 test_*.py + `__init__.py`）：逐文件 `--collect-only` 对账——25 个文件用例数与上游**逐一相等**；两处守恒/增加：`test_normalize_final_build` 上游 42 = 新库 18（纯函数）+ `test_parse_compose_file_build` 24（引擎方法，T3 登记拆分）= 42 完全守恒；`test_pull_image` 上游 10 → 15（T6 prepare_images 追加 5）；`test_main` 上游 1 → 2（T9 追加 `python -m` 入口 1 例）。同名对应用例合计 **484 ≥ 上游 478**，skip=0；新库总 940 例中另 456 例为分层架构自建行为测试。
+  - **TR-9.3 覆盖率**（WSL `pytest --cov --cov-report=term-missing`，branch 覆盖）：**包整体 91%**（T8 基线 75%）；AC-8 点名核心模块全部 ≥90%——interpolation 98%、normalize 97%、merge 99%、engine 96%、translate 包 8 文件 92-100%（networks 92 最低，ports/secrets 100）；非核心 runner 经 fake-subprocess 补测由 48%→**96%**、dependencies 80→99%、cli/main 83→100%、systemd 43→93%。豁免登记：`commands/updown.py` 45%（172 stmts miss）为 up/down 深层容器生命周期编排（SIGINT 监督循环、镜像变更重建判定、健康依赖等待），其正确性依赖真实 podman 守护——上游亦无单元测试（在 integration/ 覆盖），T7 已有 28 例行为测试覆盖关键分支；剩余为 I/O 编排路径，不为凑数编写脆弱 mock，T11 V 阶段以人工/集成验证补充。interpolation 48/104 两行为函数内局部类/不可达防御分支（上游同构）、build.py 49 字符串 build 分支（normalize 阶段已转 dict，且对 str 调用 ulimit 辅助必崩，同构死路径）保持未覆盖并登记。
+  - **TR-9.4 lint**：Windows py314 `ruff check src tests` 0（修复 2 处 I001 导入排序——`from tests.parity_lib` 首方分组）、清缓存后 `mypy src` 0 issue（39 源文件）；WSL gate venv 未装 ruff/mypy（沿用 T2 起惯例：类型/lint 以 Windows py314 为权威，pytest 以 WSL 为权威）。
+  - 新增 18 个测试文件（333 例，全部零真实 podman）：对等 2（cli_parity/command_surface）+ 基础层 4（discovery/core_utils_extra/merge_extra/normalize_extra/interpolation_extra）+ 引擎 2（engine_extra 纯函数方法 30 例、engine_parse_paths 流程分支 20 例）+ 翻译层 7（mounts/run_args/resources/secrets/build_args/container_args extra + 已含 discovery 外）+ 执行层 runner_extra（15 例，fake subprocess 覆盖 output 成功/非零、run dry-run/普通/suppress/log-formatter/Cancelled/terminate-kill、exec argv、network/volume_ls、existing_containers JSON、wait_with_timeout）+ dependencies_extra（13 例，环剪枝/links 别名/extends 短路/validate 轮询四分支）+ systemd_extra（4 例，register/unregister/create-unit 落盘，expanduser 直接 patch 保证双平台）；另追加 test_cli +4（podman_path 三分支/CalledProcessError 带 output）、test_main +1。
+  - 测试翻译再次验证多处上游真实怪癖并逐字固化（非生产缺陷，零生产改动）：norm_as_list 对 None 值输出裸键、卷/环境文件 sub_dir 重写**不剥离 "./"**（仅 build.context 剥离）、`--service-ports=False` 先删 ports 再由 `--publish` 重建、`1m:30s` 非法（合法为 `1:30`/`1m30s`）、is_list 对 bytes 真、service 自身 extends 声明合并后保留、urllib quote 编码镜像 tag 冒号、rec_deps 自依赖/未知依赖"保留边但不展开"、OverrideTag 的 YAML scalar 无隐式类型解析等。
+  - **vendor 预存状态发现（非 T9 引入）**：`vendor/podman-compose` 工作树 481 文件显示 M，经证实为整树 CRLF 行尾翻转（25948 删/25948 增完全对称，`git diff --ignore-cr-at-eol` 零差异，HEAD 仍 pinned e3df104 未移动）；T9 快照生成只读不写 vendor。恢复只读状态需 `git -C vendor/podman-compose restore .`（丢弃纯行尾翻转），因 vendor 为只读子模块未擅自动作，留待用户决定/T11 TR-11.1 前处理。
 - **Description**:
   - 新增 `tests/test_cli_parity.py`：程序化枚举新旧 parser（通过 importlib 从 vendor 路径加载上游仅用于对比，或手工快照上游参数表——优先不依赖 vendor 路径的快照方案，快照生成脚本入 tests/ 并附生成说明），断言 option strings/action/default/nargs/required 完全一致（prog 除外）。
   - 新增 `tests/test_command_surface.py`：命令集合与 help 快照对等。
@@ -263,9 +272,17 @@
 
 ## Task 10: 对等审计与文档收尾——符号映射表 / 差异登记 / README / CHANGELOG
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 9
+- **完成记录**：
+  - **TR-10.1 映射表 100%**：固化可复现统计脚本 `scripts/symbol_inventory.py`（AST 只读，支持 `PODMAN_COMPOSE_SRC`），实测上游 pinned `e3df104` 顶层公开符号 **142 = 函数/类 138（distinct，@overload 重复定义计 1）+ 常量 4**，与 spec "约 145" 一致；逐条映射写入子项目内 `docs/parity.md`——139 同名迁入、1 重命名（`PodmanCompose`→`ComposeEngine`，engine.py）、2 删除（`cmd_run` L3280/`cmd_parse` L3305，装饰器副作用由显式注册表替代），另单列 AC-3 点名的 2 项结构性移除（模块级 `script=realpath(argv[0])` L56、全局单例 `podman_compose=PodmanCompose()` L3270）与新库新增边界符号（CalledProcessError 再导出、XPodmanSettingKey 提层、configure_logging、注册表门面）。
+  - **TR-10.2 SPDX/署名**：96 个 `.py`（src/tests/scripts）100% 携带 `SPDX-License-Identifier: GPL-2.0-only` 头（0 缺失）；README 署名三要素齐（上游 URL + pinned commit 全文 hash + GPL-2.0-only 与 LICENSE 链接）；文档全部相对链接、无 file:///。
+  - **TR-10.3 行为等价**：`docs/parity.md` §5 差异登记分三类——M1-M7 py3.14 语法/类型现代化、D1-D13 结构性重构（每条含上游行号/新落点/等价理由/证据指针）、§5.3 逐行保留的上游怪癖清单（退出码 -1、str_to_seconds 正则、sub_dir 不剥 ./、PullPolicyAction 静默、rec_deps 边保留、quote 编码 tag 冒号、handler 非标准输出等）。
+  - **T10 发现并修复 1 处 T7 重复实现（V 阶段前自纠）**：`check_dep_conditions`/`_validate_completed_successfully` 上游位于 up 辅助区，T4 已按 test_depends_on.py 归属迁入 `dependencies.py`，T7 又在 `commands/updown.py` 逐字节重译一份（符号盘点脚本首次暴露同名跨模块重复）。处置：删除 updown.py 重复块（110 行）与随之失用的 json/ServiceDependencyCondition 导入，改为 `from ..dependencies import check_dep_conditions` 再导出（保持 `__all__` 符号面与测试导入路径不变，登记为 D13）；去重后 940 测试全绿、ruff/mypy 0、整体覆盖率 91%→**92%**（语句数 3392→3339）。
+  - **TR-10.4 文档完备**：README 完稿——安装（editable + 可选依赖 + console script 说明）、库 API 快速开始（显式构造/parse_args/async_main/纯翻译函数，首段示例实跑验证输出 `config ['compose.yaml']`）、CLI（console script 与 python -m）、**Mermaid 架构分层图**（七层单向边 + runner 子进程边界）、上游关系/GPL、测试方法（双平台门禁命令与覆盖数字）、真实 podman 手工集成验证（可直接照做的 nginx compose.yaml 四命令）；CHANGELOG 0.1.0 按 T1-T10 切片完稿。
+  - 门禁：WSL py3.14 **940 passed / 0 skip / 74 subtests**、覆盖率整体 **92%**；Windows py314 ruff（src+tests+**scripts**）0、mypy src 0 issue（39 源文件）；`python scripts/symbol_inventory.py` 输出 142/3 差异，与 parity.md 一致。
+  - 新增/修改文件：`docs/parity.md`（新）、`scripts/symbol_inventory.py`（新，含 SPDX 头）、`README.md`（重写）、`CHANGELOG.md`（完稿）、`src/xuan_compose/commands/updown.py`（去重）。
 - **Description**:
   - 产出符号映射表（README 附录或 `docs/parity.md`，位于子项目内）：上游约 145 个公开符号 → 新模块/新名；标注删除项（仅限模块级 `script` 副作用与单例本身）与重命名项（如 PodmanCompose→ComposeEngine）。
   - 差异登记表：每条 Python 3.14 兼容修复/机械现代化记录上游行号、变更内容、行为等价理由。
