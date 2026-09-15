@@ -60,35 +60,24 @@ env_ns.add_task(env_in_container.shell, "shell")
 ns.add_collection(env_ns)
 
 # ---- quant.* ONNX 量化工作负载栈命名空间（podman-compose，opt-in） ----
+# 六任务消费 overlay_core.make_stack_tasks 工厂产物
 quant_ns = Collection("quant")
-quant_ns.add_task(quant.build, "build")
-quant_ns.add_task(quant.up, "up")
-quant_ns.add_task(quant.down, "down")
-quant_ns.add_task(quant.ps, "ps")
-quant_ns.add_task(quant.logs, "logs")
-quant_ns.add_task(quant.smoke, "smoke")
+for _name, _task in quant.TASKS.items():
+    quant_ns.add_task(_task, _name)
 ns.add_collection(quant_ns)
 
 # ---- xmnn.* XMNN 开发/打包栈命名空间（podman-compose，opt-in） ----
 xmnn_ns = Collection("xmnn")
-xmnn_ns.add_task(xmnn.build, "build")
-xmnn_ns.add_task(xmnn.up, "up")
-xmnn_ns.add_task(xmnn.down, "down")
-xmnn_ns.add_task(xmnn.ps, "ps")
-xmnn_ns.add_task(xmnn.logs, "logs")
-xmnn_ns.add_task(xmnn.smoke, "smoke")
+for _name, _task in xmnn.TASKS.items():
+    xmnn_ns.add_task(_task, _name)
 xmnn_ns.add_task(xmnn.build_tvm, "build-tvm")
 xmnn_ns.add_task(xmnn.wheel, "wheel")
 ns.add_collection(xmnn_ns)
 
 # ---- monetize.* agent-monetize 开发/tvm-ffi 原生编译打包栈（podman-compose，opt-in） ----
 monetize_ns = Collection("monetize")
-monetize_ns.add_task(monetize.build, "build")
-monetize_ns.add_task(monetize.up, "up")
-monetize_ns.add_task(monetize.down, "down")
-monetize_ns.add_task(monetize.ps, "ps")
-monetize_ns.add_task(monetize.logs, "logs")
-monetize_ns.add_task(monetize.smoke, "smoke")
+for _name, _task in monetize.TASKS.items():
+    monetize_ns.add_task(_task, _name)
 monetize_ns.add_task(monetize.build_native, "build-native")
 monetize_ns.add_task(monetize.wheel, "wheel")
 ns.add_collection(monetize_ns)
@@ -107,27 +96,10 @@ ns.configure(
             "client_image": "localhost/jupyter-podman-client:latest",
             "client_container": "jpman-client-env",
         },
-        "quant": {
-            "image_tag": "localhost/onnx-quantized:latest",
-            "base_image": "localhost/jupyter-podman-rootless:latest",
-            "container_name": "onnx-quantized",
-            "ssh_port": 2222,
-            "jupyter_port": 8888,
-        },
-        "xmnn": {
-            "image_tag": "localhost/xmnn-dev:latest",
-            "base_image": "localhost/jupyter-podman-rootless:latest",
-            "container_name": "xmnn-dev",
-            "ssh_port": 2223,
-            "jupyter_port": 8890,
-        },
-        "monetize": {
-            "image_tag": "localhost/agent-monetize-dev:latest",
-            "base_image": "localhost/jupyter-podman-rootless:latest",
-            "container_name": "agent-monetize-dev",
-            "ssh_port": 2224,
-            "jupyter_port": 8892,
-        },
+        # 注：quant/xmnn/monetize 三栈的镜像/端口/容器名等配置在 2026-09-15
+        # 声明式重构后唯一事实源是各栈模块的 StackSpec（经任务闭包消费），
+        # 不再经 invoke Collection.configure 注入；勿在此重新登记，以免形成
+        # 无人消费却误导维护者的第二事实源。
     }
 )
 

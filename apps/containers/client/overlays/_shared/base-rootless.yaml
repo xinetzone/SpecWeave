@@ -1,0 +1,57 @@
+---
+# rootless-base —— onnx-quantized / xmnn-dev / agent-monetize-dev 三栈共享的
+# rootless 服务基段（compose extends 的单一事实源）。
+#
+# 被 ../<stack>/compose.yaml 以如下方式继承：
+#   services:
+#     <service>:
+#       extends:
+#         file: ../_shared/base-rootless.yaml
+#         service: rootless-base
+#
+# 收录原则：仅放三栈【逐字相同】且不含宿主路径/构建上下文的字段；
+# image/container_name/build/ports/volumes/env_file/栈专属 environment
+# 一律留在各栈 compose.yaml（ports/volumes 留栈文件以保直观与就近注释）。
+#
+# 合并语义（OKF podman-compose 知识包 concepts/06-config-pipeline.md，
+# podman-compose 1.6.0 resolve_extends L2364 实证）：
+#   外部基文件先插值+归一化，再 rec_merge({}, 基服务, 当前服务)：
+#   dict 深合并（environment/labels 取键并集）；普通 list 追加（devices/
+#   security_opt 不会重复，因为栈文件不再声明）；command/entrypoint 整体替换；
+#   volumes 特殊（L2289-L2297）：仅【短语法字符串】按 target 去重且覆盖方
+#   （栈文件）获胜并移至尾部；【长语法 dict bind 不去重】——override 文件
+#   重声明同一 target 会下发重复挂载。本文件无 volumes，三栈当前无碰撞。
+#
+# ⚠️ 路径解析（1.6.0 源码实证）：extends.file 写相对路径时，解析阶段
+#   （_parse_compose_file L2844-L2849）会按【引用它的 compose 文件目录】
+#   重写为绝对路径再交 resolve_extends 的 open()，故 invoke 的绝对 --file
+#   与任意 cwd、裸 podman-compose 在栈目录内执行两种方式均可解析本文件。
+#
+# rootless 三必需（与 jpman_common ContainerConfig 同源，禁止删改/特权化）：
+#   devices /dev/fuse + security_opt label=disable + cgroupns host；
+#   严禁 privileged（client/tests/test_compose_merge.py 有正向断言）。
+#
+# network_mode: bridge —— 2026-09-14 同机实证：podman-machine-default 无
+# systemd user bus，默认项目网络启 aardvark-dns 必现
+# 「Failed to connect to user scope bus」（未改动的 onnx 栈同机复现，
+# 见 xmnn-dev/compose.yaml 文件头注释），显式 bridge 绕过。三栈统一继承。
+
+services:
+  rootless-base:
+    network_mode: bridge
+    # ── rootless 三必需（禁止删改；podman-compose 1.6.0 无 cgroupns
+    #    翻译器，该字段为空操作，保留以声明语义并向前兼容）──
+    devices:
+      - /dev/fuse:/dev/fuse
+    security_opt:
+      - label=disable
+    cgroupns: host
+    environment:
+      # 基底 entrypoint 凭证契约：留空串 → 启动时自动生成并打印（-z 判定）
+      USER_PASSWORD: "${USER_PASSWORD:-}"
+      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
+      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
+      GRANT_SUDO: ${GRANT_SUDO:-yes}
+    labels:
+      org.specweave.managed-by: "jupyter-podman-client"
+    restart: unless-stopped

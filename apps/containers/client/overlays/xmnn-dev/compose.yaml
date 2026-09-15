@@ -4,26 +4,31 @@
 # 设计依据：OKF podman-compose 知识包
 #   concepts/03-compose-patterns.md（服务/端口/绑定/环境变量模式）
 #   concepts/02-rootless.md（rootless 设备与安全字段）
-#   concepts/06-config-pipeline.md（插值与多文件深合并）
+#   concepts/06-config-pipeline.md（深合并与 extends 服务级继承）
 #   concepts/08-x-podman-extensions.md（标准字段优先，不滥用 x-podman）
 # 硬约束：../../.agents/rules/xmnn-overlay.md
 #
 # 两种驱动方式：
-#   ① invoke xmnn.*（apps/containers/client 下，WSL2/Linux/macOS）
-#   ② 裸 podman-compose（本目录）：cp .env.example .env && podman-compose up -d
+#   ① invoke xmnn.*（apps/containers/client 下，WSL2/Linux/macOS；
+#     extends.file 由 podman-compose 按本文件目录重写解析，任意 cwd 均可）
+#   ② 裸 podman-compose（须在本目录内执行）：cp .env.example .env && podman-compose up -d
 #
-# rootless 三必需与 client SDK 路径同源：devices /dev/fuse +
-# security_opt label=disable + cgroupns host；严禁 privileged。
+# rootless 三必需、凭证四变量、公共 labels/restart/network_mode 上移
+# ../_shared/base-rootless.yaml（extends 单一事实源），本文件只保留
+# xmnn 栈专属：image/build/ports/volumes/栈 env/组件 label。严禁 privileged。
 #
-# network_mode: bridge —— 2026-09-14 同机实证：podman-machine-default 无
-# systemd user bus，默认项目网络启 aardvark-dns 必现
-# 「Failed to connect to user scope bus」（未改动的 onnx 栈同机复现），
-# 显式 bridge 绕过；与镜像谱系无关。
+# network_mode: bridge 现已由基文件统一提供（2026-09-14 同机实证：
+# podman-machine-default 无 systemd user bus，默认项目网络启 aardvark-dns
+# 必现「Failed to connect to user scope bus」，未改动的 onnx 栈同机复现；
+# 与镜像谱系无关，详见 ../_shared/base-rootless.yaml 文件头）。
 
 name: xmnn-dev
 
 services:
   xmnn:
+    extends:
+      file: ../_shared/base-rootless.yaml
+      service: rootless-base
     container_name: ${XMNN_CONTAINER_NAME:-xmnn-dev}
     image: ${XMNN_IMAGE_TAG:-localhost/xmnn-dev:latest}
     build:
@@ -33,8 +38,6 @@ services:
         BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
         PIP_MIRROR: ${PIP_MIRROR:-official}
         CONDA_MIRROR: ${CONDA_MIRROR:-official}
-    # 见文件头实证注释：默认项目网络在本机 aardvark-dns 失败
-    network_mode: bridge
     ports:
       - "${XMNN_SSH_PORT:-2223}:22"
       - "${XMNN_JUPYTER_PORT:-8890}:8888"
@@ -65,20 +68,9 @@ services:
       # ccache 命名卷持久化（Nuitka C 编译缓存）；down 默认保留，--volumes 删除。
       # named volume 短语法安全（不触发短语法 bind 的 os.makedirs 问题）。
       - xmnn-ccache:/root/.ccache
-    # ── rootless 三必需（与 client ContainerConfig 同源，禁止删改/特权化）──
-    devices:
-      - /dev/fuse:/dev/fuse
-    security_opt:
-      - label=disable
-    # 注：podman-compose 1.6.0 无 cgroupns 翻译器，该字段为空操作，
-    # 保留以声明语义并向前兼容（quant 栈同一声明）。
-    cgroupns: host
     environment:
-      # 基底 entrypoint 凭证契约（留空串 → 启动时自动生成并打印）
-      USER_PASSWORD: "${USER_PASSWORD:-}"
-      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
-      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
-      GRANT_SUDO: ${GRANT_SUDO:-yes}
+      # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
+      # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
       # ── 源码调试链路：tvm/vta/xmnn 经 PYTHONPATH 直接从挂载树导入 ──
       PYTHONPATH: /workspace/npu_tvm/python:/workspace/npu_tvm/vta/python:/workspace/npuusertools
       TVM_LIBRARY_PATH: /workspace/npu_tvm/build
@@ -92,8 +84,6 @@ services:
       NUITKA_JOBS: ${NUITKA_JOBS:-8}
     labels:
       org.specweave.component: "xmnn-dev"
-      org.specweave.managed-by: "jupyter-podman-client"
-    restart: unless-stopped
 
 volumes:
   xmnn-ccache: {}

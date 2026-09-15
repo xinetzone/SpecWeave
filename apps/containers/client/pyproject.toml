@@ -30,3 +30,8 @@ minimum-version = "0.9"
 
 [tool.invoke]
 package = "jpman_client.tasks"
+
+[tool.pytest.ini_options]
+# client 包内自测（argv 黄金快照/门控/声明式规格）；与根 pytest.ini 锁定的
+# .agents/scripts 套件互不干扰，根目录跑 pytest 不会误收本目录。
+testpaths = ["tests"]

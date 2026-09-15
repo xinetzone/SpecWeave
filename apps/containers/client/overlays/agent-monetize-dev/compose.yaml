@@ -1,25 +1,25 @@
 ---
 # agent-monetize-dev 叠加栈 - Compose Specification（podman-compose / rootless）
 #
-# 本文件由 client-overlay-scaffold 骨架生成。替换全部 __X__ 占位符后使用：
-#   agent-monetize-dev 栈目录名 / monetize 命名空间 / monetize 服务名 /
-#   localhost/agent-monetize-dev:latest 镜像标签 / 2224 8892 端口 /
-#   Containerfile.agent-monetize Containerfile 文件名 / MONETIZE env 前缀
+# 本文件由 client-overlay-scaffold 骨架生成（第四栈复制本文件模式时，
+# 同样继承 ../_shared/base-rootless.yaml，替换栈专属字段即可）。
 #
 # 设计依据（不可变，详见技能 SKILL.md §7）：
-#   rootless 三必需：devices /dev/fuse + security_opt label=disable
-#   + cgroupns host；严禁 privileged。
+#   rootless 三必需、凭证四变量、network_mode bridge 已上移
+#   ../_shared/base-rootless.yaml（extends 单一事实源）；严禁 privileged。
 #   bind 一律长语法 + create_host_path（G1）。
-#   network_mode bridge：machine 无 systemd user bus 时默认项目网络
-#   aardvark-dns 失败的规避（G2，新增栈若本机环境已变可复核后调整并注释）。
 #
-# 两种驱动：① invoke monetize.*（apps/containers/client 下）；
-#           ② 裸 podman-compose（本目录 cp .env.example .env）。
+# 两种驱动：① invoke monetize.*（apps/containers/client 下；extends.file
+#             由 podman-compose 按本文件目录重写解析，任意 cwd 均可）；
+#           ② 裸 podman-compose（须在本目录内执行，cp .env.example .env）。
 
 name: agent-monetize-dev
 
 services:
   monetize:
+    extends:
+      file: ../_shared/base-rootless.yaml
+      service: rootless-base
     container_name: ${MONETIZE_CONTAINER_NAME:-agent-monetize-dev}
     image: ${MONETIZE_IMAGE_TAG:-localhost/agent-monetize-dev:latest}
     build:
@@ -28,7 +28,6 @@ services:
       args:
         BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
         PIP_MIRROR: ${PIP_MIRROR:-official}
-    network_mode: bridge
     ports:
       - "${MONETIZE_SSH_PORT:-2224}:22"
       - "${MONETIZE_JUPYTER_PORT:-8892}:8888"
@@ -48,19 +47,9 @@ services:
         target: /workspace/agent-monetize
         bind:
           create_host_path: true
-    # ── rootless 三必需（与 client ContainerConfig 同源，禁止删改/特权化）──
-    devices:
-      - /dev/fuse:/dev/fuse
-    security_opt:
-      - label=disable
-    # podman-compose 1.6.0 无 cgroupns 翻译器（空操作），保留声明语义
-    cgroupns: host
     environment:
-      # 基底 entrypoint 凭证契约（留空串 → 启动时自动生成并打印）
-      USER_PASSWORD: "${USER_PASSWORD:-}"
-      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
-      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
-      GRANT_SUDO: ${GRANT_SUDO:-yes}
+      # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
+      # 与 rootless 三必需由 rootless-base 继承，勿在此重复声明。
       # 源码调试：src 布局包经 PYTHONPATH 直导（改源码即时生效）
       PYTHONPATH: /workspace/agent-monetize/src
       # ctypes 加载 score_opportunity.so 时解析其依赖 libtvm_ffi.so；
@@ -68,5 +57,3 @@ services:
       LD_LIBRARY_PATH: /opt/conda/lib/python3.14/site-packages/tvm_ffi/lib
     labels:
       org.specweave.component: "monetize"
-      org.specweave.managed-by: "jupyter-podman-client"
-    restart: unless-stopped

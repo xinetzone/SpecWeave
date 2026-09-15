@@ -4,23 +4,28 @@
 # 设计依据：OKF podman-compose 知识包
 #   concepts/03-compose-patterns.md（服务/端口/绑定/环境变量模式）
 #   concepts/02-rootless.md（rootless 设备与安全字段）
-#   concepts/06-config-pipeline.md（插值与多文件深合并：list 追加语义）
+#   concepts/06-config-pipeline.md（插值与多文件深合并：list 追加语义、extends）
 #   concepts/08-x-podman-extensions.md（标准字段优先，不滥用 x-podman）
 #
 # 两种驱动方式：
-#   ① invoke quant.up / down / ps / logs / smoke（apps/containers/client 下）
-#   ② 裸 podman-compose（本目录）：
+#   ① invoke quant.up / down / ps / logs / smoke（apps/containers/client 下；
+#     extends.file 由 podman-compose 按本文件目录重写解析，任意 cwd 均可）
+#   ② 裸 podman-compose（须在本目录内执行）：
 #        cp .env.example .env
 #        podman-compose up -d                 # 含构建
 #        podman-compose -f compose.yaml -f compose.gpu.yaml up -d   # 启用 GPU
 #
-# rootless 三必需与 client SDK 路径同源（utils.ContainerConfig）：
-#   devices /dev/fuse + security_opt label=disable + cgroupns host；严禁 privileged。
+# rootless 三必需、凭证四变量、公共 labels/restart/network_mode 已上移
+# ../_shared/base-rootless.yaml（extends 单一事实源），本文件只保留
+# quant 栈专属：image/build/ports/volumes/栈 env/组件 label。严禁 privileged。
 
 name: onnx-quantized
 
 services:
   quant:
+    extends:
+      file: ../_shared/base-rootless.yaml
+      service: rootless-base
     container_name: ${QUANT_CONTAINER_NAME:-onnx-quantized}
     image: ${QUANT_IMAGE_TAG:-localhost/onnx-quantized:latest}
     build:
@@ -41,22 +46,11 @@ services:
         target: /workspace
         bind:
           create_host_path: true
-    # ── rootless 三必需（与 client ContainerConfig 硬编码同源，禁止删改）──
-    devices:
-      - /dev/fuse:/dev/fuse
-    security_opt:
-      - label=disable
-    cgroupns: host
     environment:
-      # 留空串 → 基底 entrypoint 启动时自动生成并打印（-z 判定）
-      USER_PASSWORD: "${USER_PASSWORD:-}"
-      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
-      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
-      GRANT_SUDO: ${GRANT_SUDO:-yes}
+      # 凭证四变量（USER_PASSWORD/JUPYTER_TOKEN/SSH_PUBLIC_KEY/GRANT_SUDO）
+      # 与 network_mode bridge 由 rootless-base 继承，勿在此重复声明。
       # 量化推理线程调优（镜像 ENV 默认 4，此处可运行时覆盖）
       OMP_NUM_THREADS: ${OMP_NUM_THREADS:-4}
       OPENBLAS_NUM_THREADS: ${OPENBLAS_NUM_THREADS:-1}
     labels:
       org.specweave.component: "onnx-quantized"
-      org.specweave.managed-by: "jupyter-podman-client"
-    restart: unless-stopped

@@ -1,368 +1,110 @@
 """xmnn-dev 开发/打包叠加栈的 podman-compose 编排任务（opt-in 命名空间）。
 
-定位（与 quant.py 同族，与 manage.py 边界一致）：
-  - 本模块**禁止 import podman**，只通过子进程驱动 ``podman-compose``；
-  - 驱动 ``overlays/xmnn-dev`` 叠加栈：运行时 bind 挂载 npu_tvm /
-    npuusertools / models 源码，容器内具备 LLVM 22 + Nuitka 4.1.3 工具链，
-    支持源码调试与 xmnn wheel 打包。
+声明式栈：唯一事实源 ``XMNN_SPEC``；六任务由
+overlay_core.make_stack_tasks 工厂生成，栈内 exec 长任务（build-tvm/wheel）
+用内核 helper 在本模块薄封装（形态 B）。
+
+驱动 ``overlays/xmnn-dev`` 叠加栈：运行时 bind 挂载 npu_tvm / npuusertools /
+models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.1.3
+工具链，支持源码调试与 xmnn wheel 打包。
+
+双 cp314 ABI 契约（C13，禁止互换）：
+  - base env /opt/conda = cp314 GIL：工具链守卫、内核、apache-tvm-ffi 类依赖；
+  - main env /opt/conda/envs/main = cp314t（free-threaded）：量化/运行时；
+  - 本栈工具链/打包解释器为 BASE_PYTHON=/opt/conda/bin/python（见 compose/
+    Containerfile），build-tvm/wheel 经 bash 脚本在栈内执行。
 
 提供 8 个命令：
-  invoke xmnn.build       构建叠加镜像（工具链 + 构建期守卫）
-  invoke xmnn.up          渲染并启动栈（默认随带构建）
-  invoke xmnn.down        停止并清理栈（--volumes 连 ccache 卷一起删）
-  invoke xmnn.ps          查看栈服务状态
-  invoke xmnn.logs        跟踪服务日志
-  invoke xmnn.smoke       工具链守卫 + 源码挂载冒烟（双路径）
-  invoke xmnn.build-tvm   栈内编译 TVM C++ 库（libtvm.so，长任务）
+  invoke xmnn.build / up / down / ps / logs / smoke
+  invoke xmnn.build-tvm   栈内编译 TVM C++ 原生库（libtvm.so，长任务）
   invoke xmnn.wheel       栈内 Nuitka 打包 xmnn whl（长任务，产物落 workspace/dist）
 
-平台姿态（同 quant.*）：Windows 原生 CPython 一律 Exit(1)；WSL2 发行版内或
-``invoke env.run-cmd`` 自举容器内放行；POSIX 缺 podman-compose 提示装
-``pip install -e ".[compose]"``。
+平台姿态（内核统一）：Windows 原生优先透明桥接 WSL，不可桥接再门禁；POSIX
+缺 podman-compose 提示装 ``pip install -e ".[compose]"``。
 
 环境变量优先级：shell 显式 export > root client .env（load_dotenv
 override=False）> compose.yaml 内 ${VAR:-default}。
 """
-import os
-import platform
-import shlex
-import shutil
-from pathlib import Path
+from __future__ import annotations
 
 from invoke import Context, task
-from invoke.exceptions import Exit
 
-from .manage import _load_env_overrides, _project_root
-from .utils import (
-    check_runtime_ready,
-    detect_runtime,
-    ensure_workspace_checkpoint_writable,
-    run_cmd,
-    run_in_wsl_bridge,
-    to_posix_path,
+from .overlay_core import (
+    SmokeSpec,
+    SourceMount,
+    StackSpec,
+    TaskDocs,
+    ensure_runtime_ready,
+    gates,
+    make_stack_tasks,
+    require_running,
+    run_compose,
 )
 
-# ---------------------------------------------------------------------------
-# 常量（compose 栈单一事实源；改目录/服务名时 compose.yaml 同步修改）
-# ---------------------------------------------------------------------------
-PROJECT_NAME = "xmnn-dev"
-SERVICE_NAME = "xmnn"
-DEFAULT_IMAGE_TAG = "localhost/xmnn-dev:latest"
-DEFAULT_BASE_IMAGE = "localhost/jupyter-podman-rootless:latest"
-BASE_PYTHON = "/opt/conda/bin/python"
-SMOKE_DIR = "/opt/xmnn-dev-smoke"
-GUARD_SCRIPT = "_toolchain_guards.py"
-MOUNTS_SCRIPT = "smoke_mounts.py"
 BUILDER_SCRIPTS = "/opt/xmnn-builder/scripts"
-# podman-compose 项目标签（知识包 05：标签即数据库）
-PROJECT_LABEL = "io.podman.compose.project"
-SERVICE_LABEL = "io.podman.compose.service"
 
-# 运行时 bind 挂载的三个源码目录；默认值相对**仓库根**（client 上三级：
-# client → containers → apps → 仓库根；external/chaos 在仓库根而非 client 下）
-_SOURCE_MOUNTS = {
-    "NPU_TVM_PATH": ("external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
-    "NPUUSERTOOLS_PATH": ("external/chaos/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
-    "MODELS_PATH": ("external/chaos/models", "模型目录"),
-}
-
-
-def _overlay_dir() -> Path:
-    """xmnn-dev 叠加层目录（compose.yaml / Containerfile.xmnn-dev 所在）。"""
-    return _project_root() / "overlays" / "xmnn-dev"
-
-
-# ---------------------------------------------------------------------------
-# 平台 / 依赖门禁（任何 xmnn.* 任务入口先过门）
-# ---------------------------------------------------------------------------
-
-
-def _gate_platform() -> None:
-    """Windows 原生：优先透明桥接到 WSL 发行版执行；不可桥接再门禁。
-
-    2026-09-15 起桥接优先（本质目标 = Windows 原生输入 inv xmnn.build 即可正确
-    构建，而非被动门禁）。run_in_wsl_bridge 成功即已把本任务在
-    podman-machine-default（或 COMPOSE_WSL_DISTRO 指定发行版；该发行版由
-    jupyter-podman-rootless 改名顶替）内完整执行，
-    本进程 Exit(0) 收尾（WSL2 内 Python 报 Linux 自然放行，不进入本分支）。
-    """
-    if platform.system() != "Windows":
-        return
-    distro = run_in_wsl_bridge()
-    if distro is not None:
-        print(f"[xmnn] ✅ 已经 WSL 发行版 {distro} 桥接执行；如需栈长驻请保持会话：")
-        print(f"        wsl -d {distro} -- sleep infinity")
-        raise Exit(0)
-    client_posix = to_posix_path(_project_root())
-    print("[xmnn] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径（其短语法")
-    print("        挂载/路径解析在 Windows 原生存在已知缺陷），且未能自动桥接至")
-    print("        WSL 发行版。请检查：")
-    print("          · WSL 发行版可启动（wsl --list --verbose），或设置")
-    print("            COMPOSE_WSL_DISTRO=<发行版> 指定桥接目标（none=关闭桥接）")
-    print("          · 发行版内已安装 client 与 compose 依赖：")
-    print(f"            cd {client_posix} && pip install -e \".[compose]\"")
-    print("        放行方式二选一：")
-    print("        ① 在 WSL2 发行版内手动执行（推荐）：")
-    print("           wsl -d <发行版>")
-    print(f"           cd {client_posix}")
-    print('           pip install -e ".[compose]" && invoke xmnn.up')
-    print("        ② 或进入 client 自举容器后执行（基底已内嵌 podman-compose）：")
-    print("           invoke env.run-cmd --cmd 'inv xmnn.up'")
-    raise Exit(1)
-
-
-def _gate_compose_binary() -> None:
-    """POSIX 宿主缺 podman-compose 时给可执行安装指引。"""
-    if shutil.which("podman-compose") is not None:
-        return
-    print('[xmnn] ⚠ 未找到 podman-compose；本命名空间为声明式编排层，请先安装：')
-    print('         pip install -e ".[compose]"')
-    print("        （rootless 基底镜像内已内置；亦可 `invoke env.run-cmd` 在容器内执行）")
-    raise Exit(1)
-
-
-def _gate_all() -> None:
-    _gate_platform()
-    _gate_compose_binary()
-
-
-def _ensure_runtime_ready() -> None:
-    """daemon 预检（machine 未运行时的提示先于镜像/构建误报）。"""
-    ready, hint = check_runtime_ready()
-    if not ready:
-        print(f"[xmnn] ⚠ {hint}")
-        raise Exit(1)
-
-
-# ---------------------------------------------------------------------------
-# 配置解析
-# ---------------------------------------------------------------------------
-
-
-def _resolve_path(raw: str, *, must_exist: bool, label: str) -> str:
-    """相对路径相对 invoke cwd 解析；转绝对 POSIX；可选存在性硬校验。"""
-    p = Path(raw).expanduser()
-    if not p.is_absolute():
-        p = (Path.cwd() / p).resolve()
-    if must_exist and not p.exists():
-        print(f"[xmnn] ⚠ {label}宿主路径不存在：{p}")
-        print(f"        请在 .env / 环境变量中设置对应变量指向有效目录后重试。")
-        raise Exit(1)
-    return to_posix_path(p)
-
-
-def _prepare_env() -> dict:
-    """加载 root .env（override=False），把 workspace 与三源码路径解析为
-    绝对 POSIX 路径注入子进程环境（与 quant.py 同一 Dimension A 复用）。"""
-    env = _load_env_overrides(_project_root())
-    root = _project_root()
-    # 仓库根 = client 上三级（client → containers → apps → 根）；
-    # external/chaos 三个源码默认值锚定仓库根，不是 client 目录。
-    repo_root = root.parents[2]
-
-    ws = os.environ.get("XMNN_WORKSPACE") or env.get("XMNN_WORKSPACE")
-    if not ws:
-        ws = str((root / "workspace").resolve())
-    ws_path = Path(ws).expanduser()
-    if not ws_path.is_absolute():
-        ws_path = (Path.cwd() / ws_path).resolve()
-    ws_path.mkdir(parents=True, exist_ok=True)
-    # rootless+9p/drvfs 下 root 预建的 checkpoint 目录对容器内 devuser 不可写，
-    # Jupyter 保存会 Errno 13；编排层幂等放宽该单一目录（详见 utils docstring）
-    ensure_workspace_checkpoint_writable(ws_path)
-    os.environ["XMNN_WORKSPACE"] = to_posix_path(ws_path)
-
-    for var, (default_rel, label) in _SOURCE_MOUNTS.items():
-        raw = os.environ.get(var) or env.get(var) or str((repo_root / default_rel).resolve())
-        os.environ[var] = _resolve_path(raw, must_exist=True, label=label)
-
-    return env
-
-
-def _image_tag(env: dict) -> str:
-    return str(os.environ.get("XMNN_IMAGE_TAG") or env.get("XMNN_IMAGE_TAG") or DEFAULT_IMAGE_TAG)
-
-
-def _compose_argv(*tail: str) -> list[str]:
-    """组装 podman-compose 公共 argv（固定 project name，-f 绝对路径）。"""
-    overlay = _overlay_dir()
-    argv = [
-        "podman-compose", "--project-name", PROJECT_NAME,
-        "--file", str(overlay / "compose.yaml"),
-    ]
-    argv.extend(tail)
-    return argv
-
-
-def _run_compose(c: Context, *tail: str, pty: bool = True) -> None:
-    run_cmd(c, " ".join(shlex.quote(a) for a in _compose_argv(*tail)), pty=pty)
-
-
-# ---------------------------------------------------------------------------
-# 任务：镜像构建
-# ---------------------------------------------------------------------------
-
-
-@task(
-    help={
-        "tag": "产出镜像标签，默认 localhost/xmnn-dev:latest",
-        "base-image": "基底镜像，默认 localhost/jupyter-podman-rootless:latest",
-        "pip-mirror": "构建期 pip 镜像源：official|aliyun|tuna。注意：独立 xmnn.build 只认本参数；.env 的 PIP_MIRROR 仅在 xmnn.up 的 compose 内联 build 时插值生效",
-        "conda-mirror": "构建期 conda 镜像源：official|aliyun|tuna；口径同 --pip-mirror（.env 经 xmnn.up 生效）",
-        "no-cache": "等价 podman build --no-cache（强制全量重建）",
-    },
+XMNN_SPEC = StackSpec(
+    namespace="xmnn",
+    project="xmnn-dev",
+    service="xmnn",
+    overlay_subdir="xmnn-dev",
+    containerfile="Containerfile.xmnn-dev",
+    default_image_tag="localhost/xmnn-dev:latest",
+    default_base_image="localhost/jupyter-podman-rootless:latest",
+    env_prefix="XMNN",
+    docs=TaskDocs(
+        build="构建 xmnn-dev 叠加镜像（main env LLVM 22 工具链 + base env Nuitka 打包栈）。",
+        up="渲染并启动 xmnn-dev 栈（podman-compose up -d，默认随带构建）。",
+        down="停止并删除 xmnn-dev 栈容器与网络（源码/workspace 绑定不受影响）。",
+        ps="查看 xmnn-dev 栈服务状态。",
+        logs="跟踪 xmnn-dev 栈服务日志（Ctrl+C 退出，不影响容器运行）。",
+        smoke="运行 xmnn-dev 冒烟：工具链守卫（始终）+ 源码挂载检查（栈运行时）。",
+    ),
+    down_volumes_help="同时删除 xmnn-ccache 命名卷（默认保留以加速重复打包）",
+    ssh_default="2223",
+    jupyter_default="8890",
+    jupyter_banner_note="（内核：Python 3.14 (xmnn dev)）",
+    up_footer=(
+        "[xmnn]   状态: invoke xmnn.ps    日志: invoke xmnn.logs",
+        "[xmnn]   冒烟: invoke xmnn.smoke",
+        "[xmnn]   编译 TVM: invoke xmnn.build-tvm    打包 wheel: invoke xmnn.wheel",
+    ),
+    gpu_override=False,
+    conda_mirror=True,
     auto_shortflags=False,
+    source_mounts=(
+        SourceMount("NPU_TVM_PATH", "external/chaos/npu_tvm", "npu_tvm 源码树（含 python/tvm）"),
+        SourceMount("NPUUSERTOOLS_PATH", "external/chaos/npuusertools", "npuusertools 源码树（含 xmnn 包）"),
+        SourceMount("MODELS_PATH", "external/chaos/models", "模型目录"),
+    ),
+    smoke=SmokeSpec(
+        python="/opt/conda/bin/python",
+        smoke_dir="/opt/xmnn-dev-smoke",
+        exec_scripts=("_toolchain_guards.py", "smoke_mounts.py"),
+        standalone_scripts=("_toolchain_guards.py",),
+        running_note="检测到运行中的栈，经 compose exec 执行守卫与挂载冒烟：",
+        standalone_note="栈未运行，使用一次性容器仅执行工具链守卫（挂载冒烟需先 up）：",
+        done_message="冒烟通过",
+    ),
+    bridge_env_keys=(
+        "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
+        "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT",
+        "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
+    ),
 )
-def build(
-    c: Context,
-    tag: str | None = None,
-    base_image: str = DEFAULT_BASE_IMAGE,
-    pip_mirror: str = "official",
-    conda_mirror: str = "official",
-    no_cache: bool = False,
-) -> None:
-    """构建 xmnn-dev 叠加镜像（main env LLVM 22 工具链 + base env Nuitka 打包栈）。"""
-    _gate_all()
-    _ensure_runtime_ready()
-    env = _prepare_env()
-    runtime = detect_runtime()
-    image_tag = tag or _image_tag(env)
-    overlay = _overlay_dir()
-    containerfile = overlay / "Containerfile.xmnn-dev"
-    if not containerfile.exists():
-        raise Exit(1, f"未找到 {containerfile}")
 
-    chk = run_cmd(
-        c,
-        f"{runtime} image exists {base_image}",
-        hide=True, warn=True, echo=False,
-    )
-    if chk is None or not getattr(chk, "ok", False):
-        print(f"[xmnn] ⚠ 本地缺少基底镜像 {base_image}")
-        print("[xmnn]   先执行: invoke load   （从构建端缓存加载 rootless 基底）")
-        raise Exit(1)
-
-    parts = [
-        runtime, "build",
-        f"-f {shlex.quote(str(containerfile))}",
-        f"--build-arg BASE_IMAGE={shlex.quote(base_image)}",
-        f"--build-arg PIP_MIRROR={shlex.quote(pip_mirror)}",
-        f"--build-arg CONDA_MIRROR={shlex.quote(conda_mirror)}",
-        f"-t {shlex.quote(image_tag)}",
-    ]
-    if no_cache:
-        parts.append("--no-cache")
-    parts.append(shlex.quote(str(overlay)))
-    run_cmd(c, " ".join(parts), pty=True)
-    print(f"[xmnn] ✅ 叠加镜像构建完成: {image_tag}")
-    print("[xmnn]   下一步: invoke xmnn.up")
+TASKS = make_stack_tasks(XMNN_SPEC)
+build = TASKS["build"]
+up = TASKS["up"]
+down = TASKS["down"]
+ps = TASKS["ps"]
+logs = TASKS["logs"]
+smoke = TASKS["smoke"]
 
 
 # ---------------------------------------------------------------------------
-# 任务：栈生命周期
+# 栈内 exec 长任务（build-tvm / wheel；产物落 /workspace，源码/workspace 绑定）
 # ---------------------------------------------------------------------------
-
-
-@task(help={"skip-build": "跳过启动前的镜像构建（默认每次 up 随带构建跟随层更新）"},
-      auto_shortflags=False)
-def up(c: Context, skip_build: bool = False) -> None:
-    """渲染并启动 xmnn-dev 栈（podman-compose up -d，默认随带构建）。"""
-    _gate_all()
-    _ensure_runtime_ready()
-    env = _prepare_env()
-    if not skip_build:
-        build(c)
-    # up 前自愈：Created/Exited 残留容器持有 2223/8890 端口分配会令 up 失败
-    # （rootlessport address already in use，exit 125），先 reconcile 再 up。
-    _reconcile_stale_containers(c)
-    _run_compose(c, "up", "-d")
-    ssh_port = os.environ.get("XMNN_SSH_PORT", env.get("XMNN_SSH_PORT", "2223"))
-    jupyter_port = os.environ.get("XMNN_JUPYTER_PORT", env.get("XMNN_JUPYTER_PORT", "8890"))
-    print("[xmnn] ✅ 栈已启动：")
-    print(f"        SSH     localhost:{ssh_port}")
-    print(f"        Jupyter localhost:{jupyter_port}（内核：Python 3.14 (xmnn dev)）")
-    print("[xmnn]   状态: invoke xmnn.ps    日志: invoke xmnn.logs")
-    print("[xmnn]   冒烟: invoke xmnn.smoke")
-    print("[xmnn]   编译 TVM: invoke xmnn.build-tvm    打包 wheel: invoke xmnn.wheel")
-
-
-@task(help={"volumes": "同时删除 xmnn-ccache 命名卷（默认保留以加速重复打包）"},
-      auto_shortflags=False)
-def down(c: Context, volumes: bool = False) -> None:
-    """停止并删除 xmnn-dev 栈容器与网络（源码/workspace 绑定不受影响）。"""
-    _gate_all()
-    tail = ["down"]
-    if volumes:
-        tail.append("--volumes")
-    _run_compose(c, *tail)
-    print("[xmnn] ✅ 栈已停止并清理（ccache 卷默认保留）")
-
-
-@task
-def ps(c: Context) -> None:
-    """查看 xmnn-dev 栈服务状态。"""
-    _gate_all()
-    _run_compose(c, "ps", pty=False)
-
-
-@task(help={"tail": "显示最近 N 行后持续跟踪（默认 100）"}, auto_shortflags=False)
-def logs(c: Context, tail: int = 100) -> None:
-    """跟踪 xmnn-dev 栈服务日志（Ctrl+C 退出，不影响容器运行）。"""
-    _gate_all()
-    _run_compose(c, "logs", "--follow", f"--tail={tail}")
-
-
-# ---------------------------------------------------------------------------
-# 任务：栈内开发/打包操作
-# ---------------------------------------------------------------------------
-
-
-def _xmnn_container_running(c: Context) -> bool:
-    """通过 compose 项目标签判断 xmnn 服务容器是否在运行。"""
-    runtime = detect_runtime()
-    r = run_cmd(
-        c,
-        (
-            f"{runtime} ps -q "
-            f"--filter label={PROJECT_LABEL}={PROJECT_NAME} "
-            f"--filter label={SERVICE_LABEL}={SERVICE_NAME}"
-        ),
-        hide=True, warn=True, echo=False,
-    )
-    return bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
-
-
-def _reconcile_stale_containers(c: Context) -> None:
-    """up 前清理 compose 项目残留的非 running 容器（Created/Exited）。
-
-    背景（2026-09-15 实证）：podman-compose up 意外中断/旧栈遗留会留下
-    ``Created``/``Exited`` 状态的容器，其 **rootlessport 端口分配仍被持有**
-    （``podman ps -a`` 显示 ``0.0.0.0:2223->22/tcp`` 占用），后续 ``up -d``
-    创建的新容器 bind 2223 报 ``address already in use``（exit 125）。
-    ``podman-compose up`` 不自清理该残留，需 reconcile 后再 up。
-
-    本函数用 ``--filter status=created --filter status=exited``（多 status 为
-    OR 语义）探测本项目容器；命中即 ``compose down``（**不**加 --volumes，
-    保留 ccache 命名卷；镜像/workspace/源码 bind 本就不受影响）。全部
-    running 时不动（up 复用语义），无残留时探测开销为一次 ``ps -q``。
-    """
-    runtime = detect_runtime()
-    r = run_cmd(
-        c,
-        (
-            f"{runtime} ps -a -q "
-            f"--filter label={PROJECT_LABEL}={PROJECT_NAME} "
-            "--filter status=created --filter status=exited"
-        ),
-        hide=True, warn=True, echo=False,
-    )
-    stale = bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
-    if not stale:
-        return
-    print("[xmnn] ⚠ 检测到项目残留容器（Created/Exited 仍持有 2223/8890 端口分配），")
-    print("[xmnn]   先 compose down 清理（保留 ccache 卷/镜像/源码 bind）后重新 up …")
-    _run_compose(c, "down")
-    print("[xmnn] ✅ 残留已清理，继续 up")
 
 
 @task(
@@ -384,11 +126,9 @@ def wheel(
     产物落 /workspace/dist（宿主 workspace/dist）。前置：
     栈在运行且 /workspace/npu_tvm/build/libtvm.so 已就位（否则先 build-tvm）。
     """
-    _gate_all()
-    _ensure_runtime_ready()
-    if not _xmnn_container_running(c):
-        print("[xmnn] ⚠ xmnn-dev 栈未运行，请先：invoke xmnn.up")
-        raise Exit(1)
+    gates(XMNN_SPEC)
+    ensure_runtime_ready(XMNN_SPEC)
+    require_running(c, XMNN_SPEC)
     extra: list[str] = []
     if jobs is not None:
         extra += ["-e", f"NUITKA_JOBS={int(jobs)}"]
@@ -396,10 +136,9 @@ def wheel(
         extra += ["-e", "CLEAN_REBUILD=1"]
     if tvm_flags:
         extra += ["-e", f"TVM_COMPILE_FLAGS={tvm_flags}"]
-    _run_compose(
-        c, "exec", *extra, "-T", SERVICE_NAME,
-        "bash", f"{BUILDER_SCRIPTS}/build-wheel.sh",
-        pty=True,
+    run_compose(
+        c, XMNN_SPEC, "exec", *extra, "-T", XMNN_SPEC.service,
+        "bash", f"{BUILDER_SCRIPTS}/build-wheel.sh", pty=True,
     )
     print("[xmnn] ✅ wheel 打包流程结束；产物目录：容器 /workspace/dist（宿主 workspace/dist）")
     print("[xmnn]   10 项隔离验证（临时 venv，不污染源码环境）：")
@@ -409,55 +148,11 @@ def wheel(
 @task(auto_shortflags=False)
 def build_tvm(c: Context) -> None:
     """栈内编译 TVM C++ 原生库（inv config -f + USE_EXAMPLE_TARGET_HOOKS + inv make）。"""
-    _gate_all()
-    _ensure_runtime_ready()
-    if not _xmnn_container_running(c):
-        print("[xmnn] ⚠ xmnn-dev 栈未运行，请先：invoke xmnn.up")
-        raise Exit(1)
+    gates(XMNN_SPEC)
+    ensure_runtime_ready(XMNN_SPEC)
+    require_running(c, XMNN_SPEC)
     print("[xmnn] 首次全量编译耗时较长（ccache 命中后增量很快）；Ctrl+C 不影响容器。")
-    _run_compose(
-        c, "exec", "-T", SERVICE_NAME,
-        "bash", f"{BUILDER_SCRIPTS}/build-tvm.sh",
-        pty=True,
+    run_compose(
+        c, XMNN_SPEC, "exec", "-T", XMNN_SPEC.service,
+        "bash", f"{BUILDER_SCRIPTS}/build-tvm.sh", pty=True,
     )
-
-
-# ---------------------------------------------------------------------------
-# 任务：冒烟（栈运行→compose exec 双脚本；未运行→run --rm 仅工具链守卫）
-# ---------------------------------------------------------------------------
-
-
-@task(auto_shortflags=False)
-def smoke(c: Context) -> None:
-    """运行 xmnn-dev 冒烟：工具链守卫（始终）+ 源码挂载检查（栈运行时）。"""
-    _gate_all()
-    _ensure_runtime_ready()
-    env = _prepare_env()
-    image_tag = _image_tag(env)
-    runtime = detect_runtime()
-
-    if _xmnn_container_running(c):
-        print("[xmnn] 检测到运行中的栈，经 compose exec 执行守卫与挂载冒烟：")
-        _run_compose(
-            c, "exec", "-T", SERVICE_NAME,
-            BASE_PYTHON, f"{SMOKE_DIR}/{GUARD_SCRIPT}",
-            pty=False,
-        )
-        _run_compose(
-            c, "exec", "-T", SERVICE_NAME,
-            BASE_PYTHON, f"{SMOKE_DIR}/{MOUNTS_SCRIPT}",
-            pty=False,
-        )
-    else:
-        print("[xmnn] 栈未运行，使用一次性容器仅执行工具链守卫（挂载冒烟需先 up）：")
-        run_cmd(
-            c,
-            " ".join([
-                runtime, "run", "--rm",
-                "--entrypoint", BASE_PYTHON,
-                shlex.quote(image_tag),
-                f"{SMOKE_DIR}/{GUARD_SCRIPT}",
-            ]),
-            pty=True,
-        )
-    print("[xmnn] ✅ 冒烟通过")
