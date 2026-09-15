@@ -88,9 +88,40 @@
 
 ## Task 5: 翻译层——translate 子包
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 3, Task 4
+- **完成记录**：
+  - WSL py3.14 权威门禁：**401 passed / 0 skip**（T4 基线 145 + T5 新增 256）；Windows 原生 374 passed / 27 failed，27 例全部是已登记的 POSIX 路径分隔符/HOME 语义平台差异（见下条），无逻辑回归。
+  - TR-5.1 逐文件用例数对照（`pytest --collect-only` 实测，11 个交付文件共 256 例，与上游同文件用例数逐一相等）：
+
+    | 移植测试文件 | 用例数 | 覆盖生产符号 |
+    |---|---:|---|
+    | test_volumes.py | 1 | mounts.parse_short_mount |
+    | test_get_network_create_args.py | 11 | networks.get_network_create_args |
+    | test_get_net_args.py | 31 | networks.get_net_args 全分支 |
+    | test_container_to_args.py | 78 | container_args.container_to_args（最大函数 L1344-1622） |
+    | test_container_to_args_secrets.py | 25 | secrets.get_secret_args（env/file/external 三分支） |
+    | test_container_to_build_args.py | 20 | build.container_to_build_args/adjust_build_ssh_key_paths |
+    | test_compose_cp_args.py | 3 | run_args.compose_cp_args |
+    | test_compose_exec_args.py | 2 | run_args.compose_exec_args |
+    | test_compose_run_update_container_from_args.py | 6 | run_args.compose_run_update_container_from_args |
+    | test_compose_run_log_format.py | 11 | runner.Podman._format_stream（生产实现 T4 已落地，测试随 T5 交付） |
+    | test_is_context_git_url.py | 68 | build.is_context_git_url（从 normalize 再导出） |
+
+  - **3 个上游测试文件延期，不落地 tests/（故不计入收集、不产生 skip）**：
+    - `test_can_merge_build.py`（38 例）→ **延 T6**：上游不存在 `can_merge_build` 符号，实际测引擎 `_parse_compose_file`/`original_configuration` 的 merge 行为；
+    - `test_build_deps.py`（4 例）→ **延 T6**：测引擎 `_resolve_context_dependencies(services)`；
+    - `test_compose_up_args.py`（2 例）→ **延 T7**：测 CLI `_parse_args`。
+    - 三文件合计 44 例，延期理由为被测符号属引擎/CLI 层（沿用 T3 延 test_include.py 的登记先例）；TR-5.1 口径相应由"14 文件"调整为"11 文件 + 3 文件显式延期"。
+  - 生产模块：`ports.py`（port_dict_to_str/norm_ports）、`resources.py`（ulimit 三函数 + res/gpu/cpu，pids_limit 一致性检查原样）、`mounts.py`（模块级 dir_re/propagation_re + 9 个符号）、`networks.py`（6 个符号，invalid network_mode 保留 `log.fatal`+`sys.exit(1)`）、`secrets.py`（get_secret_args）、`build.py`（container_to_build_args/adjust_build_ssh_key_paths，并从 normalize 再导出 is_context_git_url）、`container_args.py`（container_to_args 逐行翻译，约 280 行）、`run_args.py`（is_local T4 已落地，T5 追加 get_excluded/deps_from_container/get_service_info/get_volume_names/compose_run_update_container_from_args/compose_cp_args/compose_exec_args 共 7 函数）。
+  - 上游符号勘误：`_add_build` 是 `compose_build` handler 内依赖局部 `pending_builds` 的闭包（属 T7 命令层），`can_merge_build` 在上游不存在——两者均未翻译，与延期测试归属一致。
+  - **测试翻译发现并纠正 1 处生产翻译偏差**：初译把 `cnt["environment"] = env` 误移出 `if args.env:` 块（上游 L4610 在块内），run_update 4 例即时失败暴露，已按上游缩进修正后全绿。
+  - 测试夹具策略变更（相对摘要计划的微调）：未新建 `tests/fixtures/` 数据文件；test_container_to_args.py 在模块导入时于系统临时目录构建等价 `REPO_ROOT`（含 project-1.env/project-2.env 的逐字节副本），`compose.dirname` 取绝对路径复现上游"仓根+test_dirname"的 realpath 拼接语义；build ssh 测试保留上游本地 mock 的相对 `dirname="test_dirname"`（该路径只 join 不 realpath）。test_compose_run_update 按 tasks.md 许可以 MinimalCompose 最小 stub 替代真实 PodmanCompose（仅需 project_name/format_name）。
+  - TR-5.2 证据：对 translate/ 执行 `grep -E '^\s*(from|import)\s+.*\b(engine|commands|cli|subprocess)\b'` 命中 0（另有 2 条仅注释文本命中）；实际依赖仅 compat/types/normalize/merge/model/errors/envfile/logging_utils/runner（再导出的 CalledProcessError，不在 translate 直接 import subprocess）及同包子模块。
+  - TR-5.3：`ruff check src tests` 全过（含修复 2 处 I001 导入排序）、`mypy src` 0 issue（23 源文件）。
+  - Windows 27 例失败构成：T3/T4 既有 12 例（normalize 路径拼接）+ T5 新增 15 例——bind mount HOME 展开 1、file secret realpath 7、build ssh 路径拼接/HOME 5、containerfile 探测 join 1、parse_short_mount POSIX 绝对路径 1；均为 `\`/`/`、盘符根或 Windows expanduser 不读 HOME 的平台语义（README"测试"节已声明该类别，上游在 Windows 同构）。
+  - py3.14 现代化（记 T10 差异表）：①上游 `PodmanCompose` 嵌套 `Enum`（XPodmanSettingKey，6 键）提层为 model.py 的模块级 `StrEnum`，测试改从 xuan_compose.model 导入；②build.py cleanup_callbacks 注解 `list[Callable[[], object]]`、测试 `Union[...]`→`... | None`；③translate 层 compose/cnt 句柄统一 `Any` 鸭子类型，为 T6 引擎装配留解耦面。
 - **Description**:
   - `translate/mounts.py`：`parse_short_mount/fix_mount_dict/mount_desc_to_mount_args/mount_desc_to_volume_args/get_mnt_dict`。
   - `translate/networks.py`：`default_network_name_for_project/get_network_create_args/get_net_args_from_network_mode/get_net_args/get_net_args_from_networks`。
