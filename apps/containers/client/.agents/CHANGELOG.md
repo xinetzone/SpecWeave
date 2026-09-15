@@ -6,6 +6,28 @@
 
 ## [Unreleased]
 
+### 2026-09-15 · `docs:` README.md 原子化为 docs/（00-12 文档集 + 索引 + 根入口精简）
+
+**关联七概念场景**：场景3「重构优化」单独 A 子类（A→V→C，等价性验证强制）；用户输入「README.md 原子化为 doc」。
+
+**A 阶段拆分方案**：对齐构建端 jupyter-podman-rootless/docs/ 先例（两位数字序号 + docs/README.md 索引 + 根 README 精简为入口）。642 行 README 的 14 章节按 topic 策略拆为 13 个原子文件：
+- `docs/00-overview.md`（定位/构建端关系/jpman 分工/核心能力）
+- `docs/01-getting-started.md`（安装/快速开始/镜像备份恢复）
+- `docs/02-invoke-reference.md`（命令速查/布尔三态/known_hosts 维护）
+- `docs/03-windows-wsl.md`（三路径/连接优先级/逃生舱/A-B 维度分离）
+- `docs/04-troubleshooting-guide.md`（W-I1~W-I4 + C-I1~C-I5 速查表，源 §5.4）
+- `docs/05-sdk-usage.md`（Python import）/ `docs/06-run-discipline.md`（rootless 三必需）
+- `docs/07-environment-variables.md`（容器级/SDK级/透传三表）
+- `docs/08-env-bootstrap.md`（env.* 自举/base-digest 防陈旧）
+- `docs/09-passthrough.md`（5+1 透传开关/端口语义/宿主前置）
+- `docs/10~12-*-overlay.md`（quant/xmnn/monetize 三工作负载栈）
+
+**外部引用同步**：AGENTS.md 三处锚点（§7→docs/06、README→docs/README、5.4→docs/04）；.agents/README.md 人类文档↔AI 规则对应表 5 行锚点全覆盖；构建端 entrypoint.md C-I2 交叉引用；docs/retrospective/patterns/win32-tty-pipe-charset-strategy.md 活模式引用。
+
+**V 等价门**：check-links（30 文件 179 内联链接 0 断链）；check-atomization-duplication（源↔13 模式文件 0 重复）；finalize-atomization.py（断链/导航/看板 PASS）；12 原子文档全部满足单一职责，04/08 因表格与流程语义完整性略超 5000 字符（6182/5467）判定不拆。
+
+**验收点**：根 README 精简为 4 章入口（定位/快速开始/文档导航/AI 规范）；docs/README.md 索引按入门/使用参考/架构高级三组导航；全部原子文件 frontmatter 携带 source 溯源；2026-09-15 未提交的「Windows 原生自动桥接」改动（git diff 9 insertions）已完整保留至 docs/10-12。
+
 ### 2026-09-13 · `feat/refactor:` onnx-quantized 迁移至 client（Podman rootless 薄叠加 + podman-compose 声明式栈 + quant.* 命名空间）
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→V→C，Spec Mode 全流程）；用户输入「迁移 apps/docker-images/devcontainer-base/variants/onnx-quantized 到 apps/containers/client，使用 podman-compose 知识包」。四项架构歧义经用户裁决：完整迁移 / FROM rootless:latest / opt-in 独立命名空间 / 源目录保留原样。

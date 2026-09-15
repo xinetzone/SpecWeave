@@ -6,8 +6,7 @@
 > 步骤 1：读取本文件全文（含首部「启动协议」四个字）
 > 步骤 2：确认父级工作区 — 本项目是 SpecWeave apps/containers/ 下的消费端子应用，
 >         全局规则继承自 SpecWeave 根 AGENTS.md 与 apps/AGENTS.md（应用区入口路由）
-> 步骤 3：按「文档边界」声明：本项目对外的人类可读文档以根 README.md 为唯一入口；
->         AI 级硬约束以本文件路由表指向的 .agents/rules/*.md 为唯一权威
+> 步骤 3：按「文档边界」声明：本项目对外的人类可读文档已原子化拆分至 `docs/` 目录（`docs/README.md` 为唯一索引入口）；AI 级硬约束以本文件路由表指向的 .agents/rules/*.md 为唯一权威
 > 步骤 3.5：自检 — 逐项勾选：
 >   □ 已完成内容敏感度预检（本项目=公开开源代码，产出物一律放 client 根目录
 >     或 docs/ 对应子目录，禁止向 apps/containers/client/.agents/docs/ 写入）
@@ -62,7 +61,8 @@ apps/agent-monetize 源码，Windows 原生门禁
 SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指令）
   └─ apps/AGENTS.md（应用区入口路由，containers/client 条目回退到本文件）
        └─ apps/containers/client/AGENTS.md（本文件 = 消费端子应用路由入口）
-            ├─ README.md                       ← 人类可读文档（Windows WSL 落地说明 + SDK 速查）
+            ├─ README.md                       ← 人类可读文档入口（项目定位 + 文档导航）
+            ├─ docs/                           ← 人类可读文档集（00-12 原子文档 + 索引，对齐构建端 docs/ 先例）
             ├─ .agents/README.md               ← AI 资产容器索引
             │   ├─ CHANGELOG.md                ← 项目变更日志（原子提交汇总）
             │   └─ rules/                      ← 单一职责原子化硬约束
@@ -92,13 +92,13 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | invoke 任务新增/修改（load/run/stop/status/clean） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 两层后端架构、`get_client() yield None` 零回归承诺、命名空间别名一致性 |
 | podman-py SDK 连接行为修改 / 新增 scheme | [.agents/rules/sdk-connection.md](.agents/rules/sdk-connection.md) | 6 合法 scheme 白名单、无 npipe、`base_url` 在 Windows 必须显式、策略归一化 |
 | Windows 11 WSL2 探测逻辑修改 / 新增发行版兼容 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版回退、UID 不硬编码 1000、UTF-16 LE 解析中文 Windows、W-I1~W-I3 修复 |
-| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [README.md §7](README.md#7-内置纪律rootless-三必需参数) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
+| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [docs/06-run-discipline.md](docs/06-run-discipline.md) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
 | quant.\* 工作负载栈（量化叠加镜像/compose up-down/冒烟/GPU opt-in） | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | 子进程边界（禁 import podman）、Windows 原生门禁、三必需 compose 映射、list 追加深合并、镜像守卫契约 |
 | 叠加镜像 Containerfile.quantized 修改 / 量化包版本 / 冒烟脚本 | [overlays/onnx-quantized/](overlays/onnx-quantized/README.md) + [quant-overlay.md](.agents/rules/quant-overlay.md) §6 | FROM rootless、main cp314t、版本三重实证、OCI 引号教训、守卫不可删 |
 | xmnn.\* 开发/打包栈（源码挂载/TVM 编译/Nuitka wheel/双 ABI） | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | 子进程边界（禁 import podman）、Windows 门禁、双 ABI 不互换、源码仅运行时挂载、AST 注入还原、SONAME glob 守卫、ccache 卷 |
 | xmnn-dev 叠加镜像/工具链/打包脚本/内核修改 | [overlays/xmnn-dev/](overlays/xmnn-dev/README.md) + [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | base cp314 GIL 打包/main cp314t 服务、LLVM 22.1.8 装 main、builder 资产自包含禁引 ai/、OCI 引号教训 |
 | podman-compose 行为冲突裁决（G1 可信源，只读） | `../../../projects/awesome-okf-xs/doc/bundles/jishu/containers/podman-compose/`（concepts/02、03、06、08、10） | 深合并/插值/x-podman/选型以 OKF 知识包为准 |
-| 人类可读文档更新（快速开始、WSL 落地、.env 清单） | [README.md](README.md) + [.env.example](.env.example) | README 中 5.4 速查表与 utils.py `windows_diagnose_hint` 必须保持一一对应 |
+| 人类可读文档更新（快速开始、WSL 落地、.env 清单） | [docs/README.md](docs/README.md) + [.env.example](.env.example) | 排障速查表（docs/04-troubleshooting-guide.md）与 utils.py `windows_diagnose_hint` 必须保持一一对应 |
 | AI 资产容器索引 | [.agents/README.md](.agents/README.md) | .agents/ 目录结构、父级继承关系、预留占位目录说明 |
 | 全局规则（提交/代码风格/沟通/修复闭环） | [../../../AGENTS.md](../../../AGENTS.md) → [.agents/global-core-rules.md](../../../.agents/global-core-rules.md) | 中文 commit、Conventional Commits、修复即闭环三阶段 |
 | Skill 使用 | [../../../.agents/skills/](../../../.agents/skills/) | 优先 seven-concepts-cmd / jpman-podman-ops / atomic-commit-cmd / check-duplication-cmd |
@@ -122,7 +122,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | xmnn-dev 叠加层（人类文档） | [overlays/xmnn-dev/README.md](overlays/xmnn-dev/README.md) | 开发调试/打包手册、双 ABI、invoke/裸 compose、参数表、性能与排障 |
 | monetize tvm-ffi 栈规则 | [.agents/rules/monetize-overlay.md](.agents/rules/monetize-overlay.md) | monetize.\* 八任务 / apt clang / 单一 cp314 GIL / tvm-ffi rpath / 3 处源码适配 / .so 不入 wheel |
 | agent-monetize-dev 叠加层（人类文档） | [overlays/agent-monetize-dev/README.md](overlays/agent-monetize-dev/README.md) | tvm-ffi 原生编译/纯 Python wheel、invoke/裸 compose、与 xmnn-dev 轻量对比、排障 |
-| 人类操作文档 | [README.md](README.md) | 安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表 |
+| 人类操作文档 | [docs/README.md](docs/README.md) | 文档导航索引：入门 / 使用参考 / 架构与高级主题（安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表） |
 | 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项 + 三栈插值键完整带注释模板 |
 | 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py` / `xmnn.py` / `monetize.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
 
@@ -176,10 +176,11 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 - 遵循嵌套优先原则，未覆盖规则逐级回退，不重复父级已定义规则
 - AI 资产已原子化拆分至 `.agents/rules/` 目录（3 个主题文件 = 单一职责单一事实源）
 - 预留占位目录（roles / skills / scripts / workflows / templates / docs）各有 `.gitkeep`，未来扩展可直接填充
-- 人类可读文档以根 `README.md` 为唯一入口，不新增 `.agents/docs/` 冲突路径
+- 人类可读文档以 `docs/` 为唯一文档中心（`docs/README.md` 索引），不新增 `.agents/docs/` 冲突路径
 
 ## 变更日志
 
+- **2026-09-15 | docs: README.md 原子化为 docs/（00-12）+ 根入口精简**：对齐构建端 docs/ 先例；人类可读文档中心从根 README 迁至 `docs/README.md` 索引，AGENTS/.agents/README/构建端 entrypoint 锚点同步（详见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)）。
 - **2026-09-14 | feat: agent-monetize-dev 叠加层 + monetize.\* 八任务**：client-overlay-scaffold 技能首次实战（形态 B 轻量变体）；apt clang + pip apache-tvm-ffi 0.1.13 编译单 tvm-ffi .so、单一 cp314 GIL、纯 Python wheel、3 处源码跨平台适配；端口 2224/8892，规则 C13；规格 `.trae/specs/agent-monetize-dev-overlay/`。
 - **2026-09-14 | feat: xmnn-dev 叠加层 + xmnn.\* 八任务**（经两轮独立审查 R2 pass）。
 

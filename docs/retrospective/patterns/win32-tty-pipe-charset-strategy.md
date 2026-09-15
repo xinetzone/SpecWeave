@@ -165,4 +165,4 @@ invoke env.run-cmd --cmd "inv -l"
 ## 相关文件
 
 - [apps/containers/client/src/jpman_client/tasks/utils.py](../../../apps/containers/client/src/jpman_client/tasks/utils.py) — 实际实现
-- [apps/containers/client/README.md](../../../apps/containers/client/README.md#L296-L320) — §10.3 中文乱码排障
+- [apps/containers/client/docs/08-env-bootstrap.md](../../../apps/containers/client/docs/08-env-bootstrap.md) — 交互式 shell 章节的中文乱码排障

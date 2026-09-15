@@ -34,11 +34,11 @@ source: "AGENTS.md#嵌套路由关系"
 ├── scripts/               ← （预留占位；未定义 → 回退 SpecWeave 根 .agents/scripts/）
 ├── workflows/             ← （预留占位；未定义 → 回退 SpecWeave 根 workflows/）
 ├── templates/             ← （预留占位；未定义 → 回退 SpecWeave 根 templates/）
-└── docs/                  ← （预留占位；⚠️ 不写任何产出物；人类文档在 ../README.md，公开知识在根 docs/）
+└── docs/                  ← （预留占位；⚠️ 不写任何产出物；人类文档在 ../docs/，公开知识在根 docs/）
 ```
 
 **关于 `docs/` 占位目录的特别说明**：`apps/containers/client/.agents/docs/` 是保留的占位目录（gitkeep 空），
-遵循 SpecWeave 根 AGENTS 文档边界声明——对外可读文档一律入根 `docs/` 或应用根 `README.md`，
+遵循 SpecWeave 根 AGENTS 文档边界声明——对外可读文档一律入 `docs/`（本应用 **`../docs/`** 原子文档集）或根 `docs/`，
 **禁止** 在本 `.agents/docs/` 下写入任何报告/复盘/Wiki。
 
 ## 项目核心资产（AI 协作者必读）
@@ -61,21 +61,20 @@ source: "AGENTS.md#嵌套路由关系"
 | invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
 | Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（quant.* 专用） |
 | 环境变量模板（多清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项 + quant 12 项 + xmnn 17 键 + monetize 栈键完整带注释 |
-| 人类可读文档入口 | [../README.md](../README.md) | 安装/快速开始/§5 Windows WSL/§8 .env 完整清单 |
+| 人类可读文档入口 | [../docs/README.md](../docs/README.md) | 文档索引：安装/快速开始/§5 Windows WSL/§8 .env 完整清单（原子化 00-12） |
 
 ## 人类文档 ↔ AI 规则对应关系表
 
-`README.md`（人类用户视角）与 `.agents/rules/`（AI 协作者硬约束）双向锚定，
+`docs/`（人类用户视角）与 `.agents/rules/`（AI 协作者硬约束）双向锚定，
 修改一方必须同步更新另一方：
 
 | 人类文档章节 | 对应 AI 规则文件 | 同步锚点（修改时必须一一核对） |
 |------------|----------------|------------------------------|
-| [README §5 Windows 11 × WSL2 支持](../README.md#5-windows-11--wsl2-支持) | [windows-wsl.md](rules/windows-wsl.md) | §5.1 三路径矩阵、§5.2 四级优先级、§5.3 四策略值、§5.4 速查表（Windows 原生坑 W-I1~W-I3 + 容器内坑 C-I1/C-I2，共 5 条） |
-| [README §5.5 A/B 维度分离表](../README.md#55-挂载路径-vs-连接-urlab-维度分离避免混淆) | [windows-wsl.md](rules/windows-wsl.md) §2 + [sdk-connection.md](rules/sdk-connection.md) §1 | Dimension A / B 两张表的函数名、功能描述、所在行号 |
-| [README §7 内置纪律 rootless 三必需](../README.md#7-内置纪律rootless-三必需参数) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
-| [README §8 .env 完整清单](../README.md#8-env-配置完整清单) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |
-| [README §6 作为 SDK 使用](../README.md#6-作为-sdk-使用python-import) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
-| [README §9 与 jpman 分工表](../README.md#9-与-jpman-cli-的分工) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `src/jpman_client/tasks/` 实际实现为准 |
+| [docs/03 Windows 11 × WSL2 支持](../docs/03-windows-wsl.md) | [windows-wsl.md](rules/windows-wsl.md) | 三落地路径、四级优先级、四策略值、A/B 维度分离（Windows 原生坑 W-I1~W-I4 + 容器内坑 C-I1~C-I5 速查表见 [docs/04-troubleshooting-guide.md](../docs/04-troubleshooting-guide.md)） |
+| [docs/06 内置纪律 rootless 三必需](../docs/06-run-discipline.md) | [invoke-tasks.md](rules/invoke-tasks.md) §3 + AGENTS §约束速览 C3 | 三必需参数值、禁止 --privileged |
+| [docs/07 .env 完整清单](../docs/07-environment-variables.md) | [sdk-connection.md](rules/sdk-connection.md) §3 | 容器级 9 项 + SDK 级 4 项变量名、默认值、优先级顺序 |
+| [docs/05 作为 SDK 使用](../docs/05-sdk-usage.md) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
+| [docs/00 与 jpman 分工表](../docs/00-overview.md) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `src/jpman_client/tasks/` 实际实现为准 |
 | [overlays/onnx-quantized/README.md](../overlays/onnx-quantized/README.md)（量化工作负载栈） | [quant-overlay.md](rules/quant-overlay.md) | quant.* 六任务、双门禁、三必需 compose 映射、GPU 覆盖 list 追加、镜像守卫五包版本、smoke 双路径 |
 | [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 八任务、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、AST 还原、SONAME 守卫、双冒烟 |
 | [overlays/agent-monetize-dev/README.md](../overlays/agent-monetize-dev/README.md)（tvm-ffi 原生栈） | [monetize-overlay.md](rules/monetize-overlay.md) | monetize.* 八任务、apt clang+apache-tvm-ffi、build-native/wheel、单一 GIL、3 处源码适配 |
