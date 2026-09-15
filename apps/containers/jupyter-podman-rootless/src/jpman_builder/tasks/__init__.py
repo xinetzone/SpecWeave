@@ -3,6 +3,7 @@
 常用命令：
     invoke build      - 构建镜像
     invoke build-toolbx - 构建 Toolbx 宿主变体薄覆盖层（:toolbx，须先有 :latest）
+    invoke save       - 保存镜像到 .image-cache/（podman save 归档，Windows 原生可用）
     invoke run        - 启动容器
     invoke stop       - 停止并删除容器
     invoke clean      - 清理资源
@@ -26,7 +27,7 @@ from pathlib import Path
 
 from invoke import Collection
 
-from . import container, model, registry
+from . import container, image_cache, model, registry
 
 
 def _resolve_space_free_pwsh():
@@ -52,6 +53,7 @@ ns = Collection()
 # 核心容器任务提升到根命名空间
 ns.add_task(container.build, default=True)
 ns.add_task(container.build_toolbx, "build-toolbx")
+ns.add_task(image_cache.save)
 ns.add_task(container.run)
 ns.add_task(container.stop)
 ns.add_task(container.clean)

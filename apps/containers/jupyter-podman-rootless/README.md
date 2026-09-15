@@ -164,7 +164,7 @@ bash bin/jpman root CMD    # 以root执行命令
 # 构建与缓存
 bash bin/jpman rebuild     # 增量重建（仅配置变更，<10秒）
 bash bin/jpman rebuild-all # 全量重建（需要网络，较慢）
-bash bin/jpman save        # 保存镜像到.image-cache/（备份）
+bash bin/jpman save        # 保存镜像到.image-cache/（备份，仅WSL/Linux bash；Windows原生用 invoke save）
 bash bin/jpman load        # 从.image-cache/加载镜像
 
 # WSL2集成
@@ -182,6 +182,7 @@ invoke --list
 
 # 构建与运行
 invoke build --apt-mirror tuna    # 构建镜像（清华源）
+invoke save                       # 保存镜像到.image-cache/（Windows原生可用，podman load -i 恢复）
 invoke run                        # 启动容器
 invoke status                     # 查看状态
 invoke logs                       # 查看日志

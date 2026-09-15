@@ -29,7 +29,7 @@
 - **透传模式**：`compose.dev.yaml` 提供 opt-in 开发透传（SSH agent/git/X11/pip cache）
 - **模型仓库**：内置 model-registry 服务（profile: `registry`，镜像 `registry:2`），本地 OCI registry 用于开发测试；跨平台替代 `invoke registry.up/down`（SDK→CLI 两层，不依赖 podman-compose，Windows 原生宿主亦可，与 compose 服务共享同一数据卷）
 - **零依赖 CLI**：`bin/jpman` 纯bash脚本，无需Python依赖，提供快速容器管理、镜像缓存、WSL2导出等功能
-- **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复，pigz 多线程压缩
+- **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复；`invoke save`（`tasks/image_cache.py`，SDK→CLI 两层，**Windows 原生可用**，Python gzip 流式压缩 + 空间预检 + CRC 自证 + latest 硬链接）与 `bash bin/jpman save`（pigz/gzip 软链接）产物同构，详见 [docs/16-image-cache.md](docs/16-image-cache.md)
 - **WSL2 集成**：一键导出为 WSL2 发行版，自动配置 wsl.conf 和 Conda 激活，含环境验证脚本
 - **增量重建**：`jpman rebuild` 基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5（<10秒）
 - **构建系统**：使用 scikit-build-core 构建**纯 Python wheel**（`wheel.cmake = false`，无 CMakeLists.txt、无 `[tool.scikit-build.cmake]` 段）

@@ -12,6 +12,7 @@ source: "README.md#invoke-任务参考"
 | 命令 | 说明 | 示例 |
 |------|------|------|
 | `invoke build` | 构建镜像 | `invoke build --apt-mirror aliyun --no-cache` |
+| `invoke save` | 保存镜像到 `.image-cache/`（podman save 归档，**Windows 原生可用**） | `invoke save` / `invoke save --no-compress -o D:\backup\img.tar` |
 | `invoke run` | 启动容器（幂等：运行中 no-op 并回显现存凭证，停止态自动重建；`--force` 强制重建） | `invoke run --grant-sudo --ssh-port 2222` |
 | `invoke stop` | 停止并删除容器 | `invoke stop` |
 | `invoke status` | 查看容器状态 | `invoke status` |
@@ -77,6 +78,19 @@ invoke registry.down
 | `--conda-mirror` | `official` | Conda 镜像源：`official` / `tuna` / `aliyun` |
 | `--pip-mirror` | `official` | PIP 镜像源：`official` / `tuna` / `aliyun` |
 | `--no-cache` | `false` | 不使用构建缓存 |
+
+## save 参数
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `-t` / `--tag` | `.env`/配置中的 `IMAGE_TAG` | 要保存的镜像标签 |
+| `-o` / `--output` | `.image-cache/` 自动命名 | 输出文件（给目录则自动命名）；自定义路径不写 manifest/latest |
+| `-n` / `--no-compress` | `false`（gzip） | 导出未压缩 tar（更快、约 3 倍体积） |
+| `-f` / `--force` | `false` | 目标文件已存在时覆盖 |
+
+默认归档 `jupyter-podman-rootless-<image-id12>-<YYYYMMDD-HHMMSS>.tar.gz`，并维护
+`*-latest.tar.gz` 硬链接指针与 `manifest.txt`（与 `bash bin/jpman save` 产物同构）。
+恢复：`podman load -i <归档>`（gzip 归档自动解包）。详见 [16-image-cache.md](16-image-cache.md)。
 
 ## run 参数
 

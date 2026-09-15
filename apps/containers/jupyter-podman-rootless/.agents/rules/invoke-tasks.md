@@ -28,6 +28,7 @@ tasks/
 ├── interact.py        ← 容器交互（shell/logs/exec）
 ├── model.py           ← ML模型管理任务（push/pull/config/pack/extract）
 ├── registry.py        ← 本地OCI registry生命周期（up/down；compose profile的等价替代）
+├── image_cache.py     ← 镜像归档任务（save；SDK流式/CLI -o 两层，.image-cache/，与 bin/jpman 同构）
 └── container.py       ← 向后兼容聚合模块（re-export所有子模块任务）
 ```
 
@@ -79,6 +80,7 @@ pip install -e ".[model]"     # +OMLMD/OLOT（宿主机直接使用ML命令）
 | 命令 | 功能 | 所在文件 |
 |------|------|---------|
 | `build` | 构建镜像 | build.py |
+| `save` | 保存镜像归档到 `.image-cache/`（不经 container.py 聚合，无 `container.save` 别名） | image_cache.py |
 | `run` | 启动容器 | manage.py |
 | `stop` | 停止并删除容器 | manage.py |
 | `status` | 查看容器状态 | manage.py |
@@ -286,7 +288,7 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 ## 验证清单
 
 新增/修改invoke任务后必须验证：
-- [ ] `invoke --list`正确列出所有命令（15个：8核心+5model+2registry）
+- [ ] `invoke --list`正确列出所有命令（16个：9核心含save +5model+2registry；另 build-toolbx 提升到根）
 - [ ] `invoke <command> --help`参数说明完整
 - [ ] podman-compose可用时使用compose后端
 - [ ] 未安装podman-compose时自动降级到podman-py
@@ -304,3 +306,4 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 - [ ] `invoke clean --image`可清理容器和镜像
 - [ ] `invoke registry.up`启动后 `curl http://localhost:5000/v2/_catalog` 返回 200，且卷名为 `<project>_registry-data`（与 compose 对齐）
 - [ ] `invoke registry.down` 删除容器但保留卷；`--volumes` 连卷一起删
+- [ ] **`invoke save` 归档闭环**（2026-09-15）：默认产物 `<id12>-<时间戳>.tar.gz` + latest 硬链接指针 + manifest.txt 七字段；`podman load -i <归档>` 回环后仓库标签与镜像 ID 与源一致（SDK 路径必须 `image.save(named=tag)`，否则 load 成 `<none>:<none>`）；缺镜像秒回中文报错；`.tmp-*` 半成品不落正式名；自定义 `-o` 不写 manifest/latest。**Windows 硬约束**：禁止 `podman save |` 管道（pwsh 对象管道损坏二进制），CLI 兜底只用 `podman save -o <相对项目根路径>`（远程客户端落本机 cwd，已实证），压缩在 Python 侧；latest 用 `os.link`（普通用户无 symlink 权限）并对 Defender 短暂锁做退避重试
