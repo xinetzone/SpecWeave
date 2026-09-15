@@ -140,9 +140,30 @@
 
 ## Task 6: 引擎层——engine / pull / logs
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 5
+- **完成记录**：
+  - WSL py3.14 权威门禁：**490 passed / 0 skip**（T5 基线 401 + T6 新增 89）；ruff check src tests 全过、mypy src 0 issue（25 源文件，清缓存实测）；TR-6.2/TR-6.4 三条 grep 均 0 命中。
+  - TR-6.1/5.1 逐文件用例数对照（`pytest --collect-only` 实测 490，7 个新增/追加测试落点共 89 例；其中 3 个文件兑现 T3/T5 显式延期登记）：
+
+    | 测试文件 | 用例数 | 来源 / 覆盖生产符号 |
+    |---|---:|---|
+    | test_build_deps.py（新建） | 4 | 兑现 T5 延期；`_resolve_context_dependencies` |
+    | test_include.py（新建） | 8 | 兑现 T3 延期（4 成功 + 4 错误路径）；`_parse_compose_file` include 解析 |
+    | test_can_merge_build.py（新建） | 38 | 兑现 T5 延期（20 merge + 1 map-merge-into-none + 16 command/entrypoint + 1 yaml 卫生）；`_parse_compose_file`/`original_configuration` |
+    | test_parse_compose_file_build.py（新建） | 24 | T3 延期的引擎部分：9 单文件 + 14 多文件 + 1 卫生用例 |
+    | test_engine_smoke.py（新建） | 4 | TR-6.1：零子进程实例化/runner 注入/双实例状态隔离/不读 sys.argv 不 import subprocess |
+    | test_logs.py（新建） | 6 | create_format_logs_task 4 分支 + _task_cancelled 2 分支 |
+    | test_pull_image.py（追加） | +5 | prepare_images：版本门控（None/<5.6/≥5.6）、excluded 过滤、pull 失败短路、no_build |
+
+  - T5 登记的 3 个延期文件处置：test_can_merge_build（38）、test_build_deps（4）、test_include（T3 即延期，8）本批全部交付；仅剩 test_compose_up_args（2 例）仍按登记延 T7。
+  - 生产模块：`engine.py`（新建，约 600 行）——`ComposeEngine` 逐行翻译上游 `PodmanCompose` L2419-3147：状态字段 + `__init__/assert_services/get_podman_args/config_hash/original_configuration/resolve_pod_name/resolve_pod_args/join_name_parts/format_name/_parse_x_podman_settings/_parse_compose_file/_resolve_profiles/_resolve_context_dependencies`，模块级 `norm_re` 与 `COMPOSE_DEFAULT_LS`（14 文件名）随迁；`run()/_parse_args()` 不迁（随 T8 CLI 层）。`logs.py`（新建）：`create_format_logs_task`（L3959-3988）+ `_task_cancelled`（提模块级）。`pull.py`（修改）：追加 `prepare_images`（L4076-4106，compose 句柄 Any 鸭子类型），原 pull_images 等符号不动。
+  - py3.14 现代化/结构差异（9 条，汇入 T10 差异表）：①类名 `PodmanCompose→ComposeEngine`；②构造器显式注入 `podman: Podman | None = None`，实例化零子进程、零 argv 读取（TR-6.1）；③run/_parse_args 随 T8；④`commands` 保持空字段，T7 显式注册表填充；⑤compose_up 内闭包 `_task_cancelled`（无自由变量）提为 logs.py 模块级；⑥XPodmanSettingKey 已在 model.py 为 StrEnum（T4 已记，本批消费）；⑦容器标签版本用 `xuan_compose.__version__`（"1.6.0+xuan.1"）非上游裸 "1.6.0"；⑧上游 `map(...)`/zip 惰性对改列表推导（`missing = [fn for fn in files if ...]`），行为等价；⑨移植测试夹具从"写 pytest CWD"改为临时目录 chdir + 环境变量快照还原（_ENV_KEYS 五键），模块导入期建临时根、卫生用例 rmtree，杜绝工作区污染与用例串状态。
+  - 测试翻译发现的环境问题 2 起（均非生产代码缺陷）：①mypy 门禁暴露 T1 lint 组声明的 `types-PyYAML` 未装入 py314 环境——T5 的"mypy 0"受 .mypy_cache 掩盖（清缓存后 merge.py 同样报 import-untyped），已按 pyproject 声明安装 types-PyYAML 6.0.12.20260906，清缓存复测 0 issue；②py314 环境存在 T1 期 inplace editable 陈旧快照（site-packages 仅 14 模块，遮蔽 src 导致新模块收集失败），已 `pip install -e . --no-deps --no-build-isolation` 刷新。
+  - TR-6.2 证据：engine.py/logs.py/pull.py 执行 `grep -E '^\s*(from|import)\s+.*\b(cli|commands)\b'` 0 命中；三文件 grep `import subprocess` 0 命中（runner 仍是包内唯一子进程入口）。
+  - TR-6.4 证据：全包 grep `^[a-zA-Z_].*=\s*(ComposeEngine|PodmanCompose)\(` 0 命中，无模块级活引擎单例；commands 空表待 T7。评分 5/5（全部装配显式、无残留全局可变单例）。
+  - Windows 原生 458 passed / 32 failed：新增 5 例全部在 test_parse_compose_file_build（single_4、multiple_03/04/09/10），均为 `/workspace/absolute`→`C:\workspace\absolute` 的 os.path.abspath 盘符语义，与 T1 登记的 27 例同类同质，累计 Windows 平台差异 32 例，无逻辑回归。
 - **Description**:
   - `engine.py`：以 `PodmanCompose` 为蓝本实现 `ComposeEngine`——状态字段、`assert_services/get_podman_args/config_hash/original_configuration/resolve_pod_name/resolve_pod_args/join_name_parts/format_name/_parse_x_podman_settings/_parse_compose_file/_resolve_profiles/_resolve_context_dependencies`；`_parse_args/run` 的命令分发职责移交 cli（保留引擎所需的纯解析辅助）。
   - `pull.py`：拉取策略编排与 `settings_to_pull_args` 相关异步流程。
