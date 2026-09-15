@@ -77,7 +77,8 @@ def _gate_platform() -> None:
 
     2026-09-15 起桥接优先（本质目标 = Windows 原生输入 inv quant.build 即可正确
     构建，而非被动门禁）。run_in_wsl_bridge 成功即已把本任务在
-    jupyter-podman-rootless（或 COMPOSE_WSL_DISTRO 指定发行版）内完整执行，
+    podman-machine-default（或 COMPOSE_WSL_DISTRO 指定发行版；该发行版由
+    jupyter-podman-rootless 改名顶替）内完整执行，
     本进程 Exit(0) 收尾（WSL2 内 Python 报 Linux 自然放行，不进入本分支）。
     """
     if platform.system() != "Windows":

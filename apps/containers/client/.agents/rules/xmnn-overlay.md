@@ -25,8 +25,9 @@
 与 quant 栈完全同族：
 1. Windows 原生 CPython 一律先过 `_gate_platform()`——**自动桥接优先**
    （2026-09-15 起）：经 `utils.run_in_wsl_bridge` 把本任务原样转发到 WSL
-   发行版（默认 `jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 可覆盖，
-   `none` 显式关闭）内执行，实时透传，返回码原样上抛；桥接成功即
+   发行版（默认 `podman-machine-default`，`COMPOSE_WSL_DISTRO` 可覆盖，
+   `none` 显式关闭；该发行版由 jupyter-podman-rootless 改名顶替 flapping
+   machine）内执行，实时透传，返回码原样上抛；桥接成功即
    `Exit(0)` 收尾，不再走 Windows 侧后续逻辑；
 2. 桥接不可用（无 wsl.exe / 发行版缺失 / none 哨兵）才回退门禁
    `Exit(1)`（动态推导的 /mnt 路径 + 发行版检查 + WSL2 发行版 /

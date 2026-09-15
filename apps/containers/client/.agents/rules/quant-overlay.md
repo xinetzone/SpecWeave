@@ -22,8 +22,9 @@
 
 1. **Windows 原生 CPython 自动桥接优先**（2026-09-15 起）：任何 quant 任务
    入口先过 `_gate_platform()`，经 `utils.run_in_wsl_bridge` 把任务原样转发
-   到 WSL 发行版（默认 `jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 可
-   覆盖，`none` 显式关闭）内执行，实时透传、返回码原样上抛、成功即
+   到 WSL 发行版（默认 `podman-machine-default`，`COMPOSE_WSL_DISTRO` 可
+   覆盖，`none` 显式关闭；该发行版由 jupyter-podman-rootless 改名顶替
+   flapping machine）内执行，实时透传、返回码原样上抛、成功即
    `Exit(0)`。podman-compose 子进程与其挂载路径处理在 Windows 原生有已知
    缺陷（短语法 `os.makedirs` 误建盘符目录），桥接放行到 POSIX 环境规避。
 2. **桥接不可用才回退 Exit(1) 门禁**：无 wsl.exe / 发行版缺失 /

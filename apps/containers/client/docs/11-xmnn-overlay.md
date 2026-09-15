@@ -26,7 +26,7 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径
   指向 WSL 原生克隆。
-- **Windows 原生自动桥接**：同 quant.*（默认桥接 `jupyter-podman-rootless`；
+- **Windows 原生自动桥接**：同 quant.*（默认桥接 `podman-machine-default`；
   `COMPOSE_WSL_DISTRO` 可指其他发行版，`none` 关闭并回退门禁）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。

@@ -19,8 +19,8 @@ invoke quant.down                    # 停止并清理
 ```
 
 - **Windows 原生自动桥接**：`quant.*`/`xmnn.*`/`monetize.*` 在 Windows 原生
-  CPython 默认**自动桥接**到 WSL 发行版 `jupyter-podman-rootless`（或
-  `COMPOSE_WSL_DISTRO` 指定目标）内执行（2026-09-15 起替代硬门禁，见
+  CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`（或
+  `COMPOSE_WSL_DISTRO` 指定目标；该发行版由 jupyter-podman-rootless 改名顶替）内执行（2026-09-15 起替代硬门禁，见
   [utils.py::run_in_wsl_bridge](../src/jpman_client/tasks/utils.py)）；发行版
   不可用或设为 `COMPOSE_WSL_DISTRO=none` 时才回退门禁提示（WSL2 内运行或
   `invoke env.run-cmd` 进入自举容器，基底已内嵌 podman-compose）。

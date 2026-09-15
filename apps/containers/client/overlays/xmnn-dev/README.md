@@ -42,8 +42,9 @@
    - `external/chaos/npuusertools`（xmnn 包 + tools_cpp/autolibs/fonts 数据）
    - `external/chaos/models`（模型目录）
 4. **Windows 原生自动桥接**：与 quant.* 相同，Windows 原生 CPython 执行时
-   自动桥接到 WSL 发行版（默认 `jupyter-podman-rootless`，
-   `COMPOSE_WSL_DISTRO` 可指定、`none` 关闭回退门禁）。也可手动二选一：
+   自动桥接到 WSL 发行版（默认 `podman-machine-default`，
+   `COMPOSE_WSL_DISTRO` 可指定、`none` 关闭回退门禁；该发行版由
+   jupyter-podman-rootless 改名顶替）。也可手动二选一：
    - WSL2 发行版内（推荐）：
      ```bash
      wsl -d <发行版>
@@ -167,7 +168,7 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 
 | 现象 | 处理 |
 |---|---|
-| `invoke xmnn.*` Windows 原生报门禁 Exit(1) | 自动桥接不可用时回退（无 wsl.exe/发行版缺失/`COMPOSE_WSL_DISTRO=none`）；正常路径自动桥接 `jupyter-podman-rootless`，无需手动操作 |
+| `invoke xmnn.*` Windows 原生报门禁 Exit(1) | 自动桥接不可用时回退（无 wsl.exe/发行版缺失/`COMPOSE_WSL_DISTRO=none`）；正常路径自动桥接 `podman-machine-default`，无需手动操作 |
 | `invoke xmnn.up` 报 `address already in use`（exit 125，端口 2223/8890） | **已自动自愈**：up 前 `_reconcile_stale_containers` 探测 Created/Exited 残留（其 rootlessport 端口分配仍被持有）并先 compose down；若仍失败多为宿主其他进程占用——`netstat -ano \| findstr 2223` 排查或改 `.env` 的 `XMNN_SSH_PORT`/`XMNN_JUPYTER_PORT` |
 | build-tvm 报 dmlc-core 缺失 | 宿主 npu_tvm 树执行 `git submodule update --init` 后重试 |
 | build-wheel 开头报 libtvm.so 缺失（exit 2） | 先 `invoke xmnn.build-tvm`，或把含 build/ 的完整 npu_tvm 挂到 NPU_TVM_PATH |

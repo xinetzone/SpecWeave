@@ -23,8 +23,8 @@
    `localhost/jupyter-podman-rootless:latest`，没有则 `invoke load`。
 2. 本地存在 `apps/agent-monetize`（仓库内置应用）。
 3. **Windows 原生自动桥接**：Windows 原生 CPython 自动桥接到 WSL 发行版
-   （默认 `jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 可指定、`none`
-   关闭回退门禁）；也可手动在 WSL2 发行版内运行，或进入 client 自举容器。
+   （默认 `podman-machine-default`，`COMPOSE_WSL_DISTRO` 可指定、`none`
+   关闭回退门禁；该发行版由 jupyter-podman-rootless 改名顶替）；也可手动在 WSL2 发行版内运行，或进入 client 自举容器。
 
 ## 路径一：invoke monetize.*（推荐）
 

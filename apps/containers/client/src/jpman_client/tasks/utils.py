@@ -1043,18 +1043,20 @@ def normalize_path_str(path_str: str) -> str:
 #   存在已知缺陷（os.makedirs 误建源路径等），原设计一律 _gate_platform() 门禁
 #   Exit(1)。但"门禁"是保护手段而非目标——本质目标 = Windows 原生输入
 #   ``invoke <stack>.build`` 能正确构建。已实证的 POSIX 执行环境
-#   （jupyter-podman-rootless 发行版：自带 podman 5.7 + podman-compose +
-#   /mnt/d 直通 + client editable 安装）可作为透明桥接目标：
+#   （podman-machine-default 发行版：自带 podman 5.7 + podman-compose +
+#   /mnt/d 直通 + client editable 安装；2026-09-15 由 jupyter-podman-rootless
+#   改名顶替 flapping 的 Podman Desktop machine）可作为透明桥接目标：
 #   把当前 invoke 任务原样转发到发行版内 ``bash -lc`` 执行，stdout/stderr
 #   继承透传，返回码原样上抛。桥接不可用（无 wsl.exe / 发行版不存在 /
 #   COMPOSE_WSL_DISTRO=none 哨兵）才回退门禁提示。
 #
-#   为什么不用 WSL_DISTRO_NAME？该键是 SDK 连接（Dimension B）专用，.env 默认
-#   podman-machine-default（flapping 且镜像存储与 jupyter 发行版不互通）；
-#   桥接目标需独立键 COMPOSE_WSL_DISTRO（默认 jupyter-podman-rootless）。
+#   为什么不用 WSL_DISTRO_NAME？该键是 SDK 连接（Dimension B）专用；桥接目标
+#   用独立键 COMPOSE_WSL_DISTRO。2026-09-15 起默认发行版由
+#   jupyter-podman-rootless 改名为标准名 podman-machine-default（注销 flapping
+#   的 Podman Desktop machine 后以可靠发行版顶替；同一实体，镜像/容器随备份保留）。
 # ---------------------------------------------------------------------------
 COMPOSE_WSL_DISTRO_ENV = "COMPOSE_WSL_DISTRO"
-_DEFAULT_COMPOSE_DISTRO = "jupyter-podman-rootless"
+_DEFAULT_COMPOSE_DISTRO = "podman-machine-default"
 # 桥接时透传到 WSL 的键集：.env 会被 WSL 内 invoke 再次读取（override=False），
 # 这里只补「shell 显式 export 的覆盖值」（保持 shell export > .env 优先级）。
 # 显式不含 CONTAINER_HOST：不把 Windows SDK URL 带进 compose 子进程层（禁 REST 模式）。
@@ -1093,7 +1095,8 @@ def _wsl_bridge_distro() -> Optional[str]:
 
     ``COMPOSE_WSL_DISTRO`` 环境变量（Windows 原生进程，含 .env 同步值）：
       - 设为 ``none`` → 显式关闭桥接（回退门禁；上游修复 Windows 原生后逃生舱）；
-      - 未设 → 默认 ``jupyter-podman-rootless``（已实证 compose 执行环境）。
+      - 未设 → 默认 ``podman-machine-default``（2026-09-15 起的可靠 compose
+        执行环境；原为 jupyter-podman-rootless，已改名顶替 flapping machine）。
     发行版不可启动返回 None（调用方回退门禁）。
     """
     raw = os.environ.get(COMPOSE_WSL_DISTRO_ENV, "").strip()

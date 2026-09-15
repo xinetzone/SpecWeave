@@ -21,7 +21,8 @@
 
 Windows 原生 CPython 先过 `_gate_platform()`——**自动桥接优先**
 （2026-09-15 起）：经 `utils.run_in_wsl_bridge` 转发到 WSL 发行版（默认
-`jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 覆盖 / `none` 关闭）内
+`podman-machine-default`，`COMPOSE_WSL_DISTRO` 覆盖 / `none` 关闭；该
+发行版由 jupyter-podman-rootless 改名顶替 flapping machine）内
 执行，实时透传、返回码原样上抛、成功即 Exit(0)；桥接不可用才回退
 Exit(1)（WSL2/自举容器双路径动态指引）；POSIX 缺 podman-compose
 `_gate_compose_binary()` Exit(1)；build/up/smoke/build-native/wheel 过
