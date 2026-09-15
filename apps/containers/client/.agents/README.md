@@ -111,8 +111,8 @@ source: "AGENTS.md#嵌套路由关系"
 
 完整条目见 [CHANGELOG.md](CHANGELOG.md)。
 
-- 2026-09-14 | feat | 新增第 6 个规则文件 monetize-overlay.md（monetize.* tvm-ffi 原生编译栈，C13）；overlays/agent-monetize-dev 落盘（apt clang + apache-tvm-ffi 轻量工具链、单一 cp314 GIL、纯 Python wheel + 8 任务），规格见 .trae/specs/agent-monetize-dev-overlay/
-- 2026-09-14 | feat | 新增第 5 个规则文件 xmnn-overlay.md（xmnn.* 开发/打包栈，C12）；overlays/xmnn-dev 落盘（双 ABI 工具链镜像 + 自包含打包内核 + 8 任务），规格见 .trae/specs/xmnn-dev-overlay/
+- 2026-09-14 | feat | 新增第 6 个规则文件 monetize-overlay.md（monetize.* tvm-ffi 原生编译栈，C13）；overlays/agent-monetize-dev 落盘（apt clang + apache-tvm-ffi 轻量工具链、单一 cp314 GIL、纯 Python wheel + 8 任务），规格见 .trae/specs/infra-env/agent-monetize-dev-overlay/
+- 2026-09-14 | feat | 新增第 5 个规则文件 xmnn-overlay.md（xmnn.* 开发/打包栈，C12）；overlays/xmnn-dev 落盘（双 ABI 工具链镜像 + 自包含打包内核 + 8 任务），规格见 .trae/specs/infra-env/xmnn-dev-overlay/
 - 2026-09-13 | feat/refactor | 新增第 4 个规则文件 quant-overlay.md（quant.* podman-compose 工作负载栈，C11）；onnx-quantized 完整迁移至 overlays/onnx-quantized（薄叠加镜像+compose 栈+6 任务），machine E2E 全通过
 - 2026-09-10 | fix | 补全容器内 EACCES（C-I2）诊断与修复闭环（socket 属组自适应）；`inv load` / `inv run` 增加 podman 就绪预检与中文提示
 - 2026-09-09 | fix | B-scheme 宿主 socket 直通端到端连通；`inv load` 镜像缓存完整性校验；`ensure_known_hosts` / `refresh_host_keys` 修复

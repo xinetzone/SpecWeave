@@ -194,7 +194,7 @@
 
 ### 2026-09-11 · `chore:` 基底联动重建（devuser UID 固定 1000 + B-scheme socket 修复 + :toolbx 变体）
 
-**关联七概念场景**：场景2 后置联动（构建端 spec：`.trae/specs/toolbx-host-image/`）。
+**关联七概念场景**：场景2 后置联动（构建端 spec：`.trae/specs/infra-env/toolbx-host-image/`）。
 
 构建端当日交付三项变更（devuser 固定 UID 1000、entrypoint socket 属主穿透修复、`:toolbx` 变体），client 侧经**基底指纹机制**（同日早些时候上线）自然驱动联动：`inv env.build-layer` 重建叠加层，烤入新基底 digest `sha256:2826166e…`（与 rootless:latest 逐字符一致）；`inv stop && inv run` 重启 jupyter-podman（沿用既有 JUPYTER_TOKEN/USER_PASSWORD，浏览器/SSH 零感知）。
 
