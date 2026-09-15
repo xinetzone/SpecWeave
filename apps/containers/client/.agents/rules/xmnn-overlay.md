@@ -20,14 +20,22 @@
 - 8 个任务：`build / up / down / ps / logs / smoke / build-tvm / wheel`。
   `build-tvm` 与 `wheel` 是对运行中容器的 `podman-compose exec` 长任务。
 
-## 2. 平台门禁（硬约束）
+## 2. 平台门禁 / WSL 桥接（硬约束）
 
 与 quant 栈完全同族：
-1. Windows 原生 CPython 一律 `_gate_platform()` Exit(1)（双路径中文指引：
-   WSL2 发行版 / `invoke env.run-cmd`）；
-2. POSIX 缺 podman-compose 二进制 `_gate_compose_binary()` Exit(1)，
+1. Windows 原生 CPython 一律先过 `_gate_platform()`——**自动桥接优先**
+   （2026-09-15 起）：经 `utils.run_in_wsl_bridge` 把本任务原样转发到 WSL
+   发行版（默认 `jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 可覆盖，
+   `none` 显式关闭）内执行，实时透传，返回码原样上抛；桥接成功即
+   `Exit(0)` 收尾，不再走 Windows 侧后续逻辑；
+2. 桥接不可用（无 wsl.exe / 发行版缺失 / none 哨兵）才回退门禁
+   `Exit(1)`（动态推导的 /mnt 路径 + 发行版检查 + WSL2 发行版 /
+   `invoke env.run-cmd` 双路径中文指引）；
+3. POSIX 缺 podman-compose 二进制 `_gate_compose_binary()` Exit(1)，
    提示 `pip install -e ".[compose]"`（复用既有 optional extra，不新增依赖）；
-3. 顺序固定：先平台后二进制；build/up/smoke/build-tvm/wheel 另过 daemon 预检。
+4. 顺序固定：先平台后二进制；build/up/smoke/build-tvm/wheel 另过 daemon 预检。
+   WSL 桥接目标**禁止复用 `WSL_DISTRO_NAME`**（SDK 连接专用，默认
+   podman-machine-default flapping 且镜像存储不互通）。
 
 ## 3. 双 ABI 工具链契约（不可互换）
 
@@ -71,6 +79,16 @@
   `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
   幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
   bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
+- **up 残留自愈契约（2026-09-15 实证）**：`up` 在 `up -d` 前必须调用
+  `_reconcile_stale_containers()`——用 `podman ps -a -q --filter
+  label=<project> --filter status=created --filter status=exited`（多
+  status 为 OR 语义）探测本项目非 running 容器；命中即先 `compose down`
+  （**不**加 --volumes，保留 ccache 卷/镜像/workspace/源码 bind）再 up。
+  根因：突然中断/旧栈遗留的 `Created`/`Exited` 容器仍持有 rootlessport
+  端口分配（`podman ps -a` 显示 `0.0.0.0:2223->22/tcp` 占用），后续 up
+  的新容器 bind 2223 报 `address already in use`（exit 125），且 compose
+  不自清理。全部 running 时不动（复用语义），无残留时开销为一次
+  `ps -q`。quant/monetize 同族接线。
 
 ## 5. 打包内核契约（/opt/xmnn-builder 自包含）
 

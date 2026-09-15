@@ -18,17 +18,24 @@
 - 禁止把 compose 提升为 `invoke run` 的第三层后端（用户 2026-09-13 裁决）：
   opt-in 独立命名空间即最终形态，不要向根 run 路径回流。
 
-## 2. 平台门禁（硬约束）
+## 2. 平台门禁 / WSL 桥接（硬约束）
 
-1. **Windows 原生 CPython 一律 Exit(1)**：任何 quant 任务入口先过 `_gate_platform()`。
-   podman-compose 子进程与其挂载路径处理在 Windows 原生有已知缺陷
-   （短语法 `os.makedirs` 误建盘符目录；构建端已实测门禁）。放行路径仅两条：
-   WSL2 发行版内运行 / `invoke env.run-cmd` 自举容器内运行（rootless 基底已内嵌
-   podman-compose）。
-2. **POSIX 缺 podman-compose 二进制 Exit(1)**：`_gate_compose_binary()` 输出
+1. **Windows 原生 CPython 自动桥接优先**（2026-09-15 起）：任何 quant 任务
+   入口先过 `_gate_platform()`，经 `utils.run_in_wsl_bridge` 把任务原样转发
+   到 WSL 发行版（默认 `jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 可
+   覆盖，`none` 显式关闭）内执行，实时透传、返回码原样上抛、成功即
+   `Exit(0)`。podman-compose 子进程与其挂载路径处理在 Windows 原生有已知
+   缺陷（短语法 `os.makedirs` 误建盘符目录），桥接放行到 POSIX 环境规避。
+2. **桥接不可用才回退 Exit(1) 门禁**：无 wsl.exe / 发行版缺失 /
+   `COMPOSE_WSL_DISTRO=none` → 动态门禁（推导 /mnt 路径 + 发行版检查 +
+   双放行路径：WSL2 发行版内运行 / `invoke env.run-cmd` 自举容器内运行
+   （rootless 基底已内嵌 podman-compose）。
+3. **POSIX 缺 podman-compose 二进制 Exit(1)**：`_gate_compose_binary()` 输出
    `pip install -e ".[compose]"`。pyproject 中 compose 为 optional extra，
    核心 dependencies 永不拉入。
-3. 门禁顺序固定：先平台后二进制；两道门都必须输出**可执行中文指引**。
+4. 门禁顺序固定：先平台后二进制；两头都输出**可执行中文指引**；桥接
+   目标禁止复用 `WSL_DISTRO_NAME`（SDK 连接专用，默认 machine 发行版
+   flapping 且镜像存储不互通）。
 
 ## 3. compose.yaml ↔ rootless 三必需映射
 

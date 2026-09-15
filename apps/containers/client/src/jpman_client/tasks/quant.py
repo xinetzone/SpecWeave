@@ -39,6 +39,7 @@ from .utils import (
     detect_runtime,
     ensure_workspace_checkpoint_writable,
     run_cmd,
+    run_in_wsl_bridge,
     to_posix_path,
 )
 
@@ -72,15 +73,32 @@ def _overlay_dir() -> Path:
 
 
 def _gate_platform() -> None:
-    """Windows 原生直接门禁（WSL2 内 Python 报 Linux，自然放行）。"""
+    """Windows 原生：优先透明桥接到 WSL 发行版执行；不可桥接再门禁。
+
+    2026-09-15 起桥接优先（本质目标 = Windows 原生输入 inv quant.build 即可正确
+    构建，而非被动门禁）。run_in_wsl_bridge 成功即已把本任务在
+    jupyter-podman-rootless（或 COMPOSE_WSL_DISTRO 指定发行版）内完整执行，
+    本进程 Exit(0) 收尾（WSL2 内 Python 报 Linux 自然放行，不进入本分支）。
+    """
     if platform.system() != "Windows":
         return
-    print("[quant] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径：")
-    print("        podman-compose 以子进程方式工作，其短语法挂载/路径解析在")
-    print("        Windows 原生存在已知缺陷（构建端已门禁）。请改用：")
-    print("        ① 在 WSL2 发行版内执行（推荐）：")
+    distro = run_in_wsl_bridge()
+    if distro is not None:
+        print(f"[quant] ✅ 已经 WSL 发行版 {distro} 桥接执行；如需栈长驻请保持会话：")
+        print(f"        wsl -d {distro} -- sleep infinity")
+        raise Exit(0)
+    client_posix = to_posix_path(_project_root())
+    print("[quant] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径（其短语法")
+    print("        挂载/路径解析在 Windows 原生存在已知缺陷），且未能自动桥接至")
+    print("        WSL 发行版。请检查：")
+    print("          · WSL 发行版可启动（wsl --list --verbose），或设置")
+    print("            COMPOSE_WSL_DISTRO=<发行版> 指定桥接目标（none=关闭桥接）")
+    print("          · 发行版内已安装 client 与 compose 依赖：")
+    print(f"            cd {client_posix} && pip install -e \".[compose]\"")
+    print("        放行方式二选一：")
+    print("        ① 在 WSL2 发行版内手动执行（推荐）：")
     print("           wsl -d <发行版>")
-    print("           cd /mnt/d/spaces/SpecWeave/apps/containers/client")
+    print(f"           cd {client_posix}")
     print('           pip install -e ".[compose]" && invoke quant.up')
     print("        ② 或进入 client 自举容器后执行（基底已内嵌 podman-compose）：")
     print("           invoke env.run-cmd --cmd 'inv quant.up'")
@@ -244,6 +262,8 @@ def up(c: Context, gpu: bool = False, skip_build: bool = False) -> None:
     if not skip_build:
         # invoke task 对象可直接以 Context 调用；复用 build 的全部预检与门禁
         build(c)
+    # up 前自愈：Created/Exited 残留容器持有 2222/8888 端口分配致 up 失败
+    _reconcile_stale_containers(c)
     tail = ["up", "-d"]
     _run_compose(c, gpu, *tail)
     print("[quant] ✅ 栈已启动：")
@@ -299,6 +319,29 @@ def _quant_container_running(c: Context) -> bool:
         echo=False,
     )
     return bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+
+
+def _reconcile_stale_containers(c: Context) -> None:
+    """up 前清理 compose 项目残留的非 running 容器（Created/Exited 持有
+    rootlessport 端口分配致 up bind 2222/8888 报 address already in use，
+    2026-09-15 实证同 xmnn 栈）。down 不删镜像/ccache 卷/workspace/源码 bind。"""
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        (
+            f"{runtime} ps -a -q "
+            f"--filter label={PROJECT_LABEL}={PROJECT_NAME} "
+            "--filter status=created --filter status=exited"
+        ),
+        hide=True, warn=True, echo=False,
+    )
+    stale = bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+    if not stale:
+        return
+    print("[quant] ⚠ 检测到项目残留容器（Created/Exited 持有 2222/8888 端口分配），")
+    print("[quant]   先 compose down 清理（保留 ccache 卷/workspace/源码）后重新 up …")
+    _run_compose(c, False, "down")
+    print("[quant] ✅ 残留已清理，继续 up")
 
 
 @task(help={"gpu": "运行栈经 compose 启动时是否带 GPU 覆盖（仅影响 exec 寻址，不影响冒烟本身）"})

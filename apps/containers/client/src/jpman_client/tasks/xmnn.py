@@ -38,6 +38,7 @@ from .utils import (
     detect_runtime,
     ensure_workspace_checkpoint_writable,
     run_cmd,
+    run_in_wsl_bridge,
     to_posix_path,
 )
 
@@ -77,15 +78,32 @@ def _overlay_dir() -> Path:
 
 
 def _gate_platform() -> None:
-    """Windows 原生直接门禁（WSL2 内 Python 报 Linux，自然放行）。"""
+    """Windows 原生：优先透明桥接到 WSL 发行版执行；不可桥接再门禁。
+
+    2026-09-15 起桥接优先（本质目标 = Windows 原生输入 inv xmnn.build 即可正确
+    构建，而非被动门禁）。run_in_wsl_bridge 成功即已把本任务在
+    jupyter-podman-rootless（或 COMPOSE_WSL_DISTRO 指定发行版）内完整执行，
+    本进程 Exit(0) 收尾（WSL2 内 Python 报 Linux 自然放行，不进入本分支）。
+    """
     if platform.system() != "Windows":
         return
-    print("[xmnn] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径：")
-    print("        podman-compose 以子进程方式工作，其短语法挂载/路径解析在")
-    print("        Windows 原生存在已知缺陷。请改用：")
-    print("        ① 在 WSL2 发行版内执行（推荐）：")
+    distro = run_in_wsl_bridge()
+    if distro is not None:
+        print(f"[xmnn] ✅ 已经 WSL 发行版 {distro} 桥接执行；如需栈长驻请保持会话：")
+        print(f"        wsl -d {distro} -- sleep infinity")
+        raise Exit(0)
+    client_posix = to_posix_path(_project_root())
+    print("[xmnn] ⚠ Windows 原生 CPython 不支持 podman-compose 编排路径（其短语法")
+    print("        挂载/路径解析在 Windows 原生存在已知缺陷），且未能自动桥接至")
+    print("        WSL 发行版。请检查：")
+    print("          · WSL 发行版可启动（wsl --list --verbose），或设置")
+    print("            COMPOSE_WSL_DISTRO=<发行版> 指定桥接目标（none=关闭桥接）")
+    print("          · 发行版内已安装 client 与 compose 依赖：")
+    print(f"            cd {client_posix} && pip install -e \".[compose]\"")
+    print("        放行方式二选一：")
+    print("        ① 在 WSL2 发行版内手动执行（推荐）：")
     print("           wsl -d <发行版>")
-    print("           cd /mnt/d/spaces/SpecWeave/apps/containers/client")
+    print(f"           cd {client_posix}")
     print('           pip install -e ".[compose]" && invoke xmnn.up')
     print("        ② 或进入 client 自举容器后执行（基底已内嵌 podman-compose）：")
     print("           invoke env.run-cmd --cmd 'inv xmnn.up'")
@@ -253,6 +271,9 @@ def up(c: Context, skip_build: bool = False) -> None:
     env = _prepare_env()
     if not skip_build:
         build(c)
+    # up 前自愈：Created/Exited 残留容器持有 2223/8890 端口分配会令 up 失败
+    # （rootlessport address already in use，exit 125），先 reconcile 再 up。
+    _reconcile_stale_containers(c)
     _run_compose(c, "up", "-d")
     ssh_port = os.environ.get("XMNN_SSH_PORT", env.get("XMNN_SSH_PORT", "2223"))
     jupyter_port = os.environ.get("XMNN_JUPYTER_PORT", env.get("XMNN_JUPYTER_PORT", "8890"))
@@ -308,6 +329,39 @@ def _xmnn_container_running(c: Context) -> bool:
         hide=True, warn=True, echo=False,
     )
     return bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+
+
+def _reconcile_stale_containers(c: Context) -> None:
+    """up 前清理 compose 项目残留的非 running 容器（Created/Exited）。
+
+    背景（2026-09-15 实证）：podman-compose up 意外中断/旧栈遗留会留下
+    ``Created``/``Exited`` 状态的容器，其 **rootlessport 端口分配仍被持有**
+    （``podman ps -a`` 显示 ``0.0.0.0:2223->22/tcp`` 占用），后续 ``up -d``
+    创建的新容器 bind 2223 报 ``address already in use``（exit 125）。
+    ``podman-compose up`` 不自清理该残留，需 reconcile 后再 up。
+
+    本函数用 ``--filter status=created --filter status=exited``（多 status 为
+    OR 语义）探测本项目容器；命中即 ``compose down``（**不**加 --volumes，
+    保留 ccache 命名卷；镜像/workspace/源码 bind 本就不受影响）。全部
+    running 时不动（up 复用语义），无残留时探测开销为一次 ``ps -q``。
+    """
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        (
+            f"{runtime} ps -a -q "
+            f"--filter label={PROJECT_LABEL}={PROJECT_NAME} "
+            "--filter status=created --filter status=exited"
+        ),
+        hide=True, warn=True, echo=False,
+    )
+    stale = bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+    if not stale:
+        return
+    print("[xmnn] ⚠ 检测到项目残留容器（Created/Exited 仍持有 2223/8890 端口分配），")
+    print("[xmnn]   先 compose down 清理（保留 ccache 卷/镜像/源码 bind）后重新 up …")
+    _run_compose(c, "down")
+    print("[xmnn] ✅ 残留已清理，继续 up")
 
 
 @task(

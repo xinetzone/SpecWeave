@@ -17,11 +17,15 @@
 - `monetize.py` **禁止 `import podman`**；禁回流根 `invoke run`。
 - 复用 `[compose]` extra，不新增 Python 依赖。
 
-## 2. 双门禁（同 C11/C12）
+## 2. 双门禁 / WSL 桥接（同 C11/C12）
 
-Windows 原生 CPython 一律 `_gate_platform()` Exit(1)（WSL2/自举容器
-双路径）；POSIX 缺 podman-compose `_gate_compose_binary()` Exit(1)；
-build/up/smoke/build-native/wheel 过 daemon 预检。
+Windows 原生 CPython 先过 `_gate_platform()`——**自动桥接优先**
+（2026-09-15 起）：经 `utils.run_in_wsl_bridge` 转发到 WSL 发行版（默认
+`jupyter-podman-rootless`，`COMPOSE_WSL_DISTRO` 覆盖 / `none` 关闭）内
+执行，实时透传、返回码原样上抛、成功即 Exit(0)；桥接不可用才回退
+Exit(1)（WSL2/自举容器双路径动态指引）；POSIX 缺 podman-compose
+`_gate_compose_binary()` Exit(1)；build/up/smoke/build-native/wheel 过
+daemon 预检。
 
 ## 3. compose 三必需 / bridge / 标签
 

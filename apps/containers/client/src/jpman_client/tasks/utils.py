@@ -20,6 +20,7 @@ import os
 import platform
 import re
 import secrets
+import shlex
 import shutil
 import string
 import subprocess
@@ -1032,6 +1033,121 @@ def normalize_path_str(path_str: str) -> str:
         rest = path_str[2:].replace("\\", "/")
         return f"/mnt/{drive}{rest}"
     return path_str.replace("\\", "/")
+
+
+# ---------------------------------------------------------------------------
+# Windows 原生 → WSL 发行版透明桥接（compose 子进程层的平台门禁平替）
+#
+# 背景（F/V 阶段 2026-09-15 设计）：
+#   quant/xmnn/monetize 三栈的 podman-compose 短语法挂载在 Windows 原生 CPython
+#   存在已知缺陷（os.makedirs 误建源路径等），原设计一律 _gate_platform() 门禁
+#   Exit(1)。但"门禁"是保护手段而非目标——本质目标 = Windows 原生输入
+#   ``invoke <stack>.build`` 能正确构建。已实证的 POSIX 执行环境
+#   （jupyter-podman-rootless 发行版：自带 podman 5.7 + podman-compose +
+#   /mnt/d 直通 + client editable 安装）可作为透明桥接目标：
+#   把当前 invoke 任务原样转发到发行版内 ``bash -lc`` 执行，stdout/stderr
+#   继承透传，返回码原样上抛。桥接不可用（无 wsl.exe / 发行版不存在 /
+#   COMPOSE_WSL_DISTRO=none 哨兵）才回退门禁提示。
+#
+#   为什么不用 WSL_DISTRO_NAME？该键是 SDK 连接（Dimension B）专用，.env 默认
+#   podman-machine-default（flapping 且镜像存储与 jupyter 发行版不互通）；
+#   桥接目标需独立键 COMPOSE_WSL_DISTRO（默认 jupyter-podman-rootless）。
+# ---------------------------------------------------------------------------
+COMPOSE_WSL_DISTRO_ENV = "COMPOSE_WSL_DISTRO"
+_DEFAULT_COMPOSE_DISTRO = "jupyter-podman-rootless"
+# 桥接时透传到 WSL 的键集：.env 会被 WSL 内 invoke 再次读取（override=False），
+# 这里只补「shell 显式 export 的覆盖值」（保持 shell export > .env 优先级）。
+# 显式不含 CONTAINER_HOST：不把 Windows SDK URL 带进 compose 子进程层（禁 REST 模式）。
+_BRIDGE_ENV_KEYS = (
+    COMPOSE_WSL_DISTRO_ENV,
+    "WSL_DISTRO_NAME",
+    "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
+    "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT",
+    "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
+    "QUANT_IMAGE_TAG", "QUANT_CONTAINER_NAME", "QUANT_WORKSPACE",
+    "QUANT_SSH_PORT", "QUANT_JUPYTER_PORT",
+    "MONETIZE_IMAGE_TAG", "MONETIZE_CONTAINER_NAME", "MONETIZE_WORKSPACE",
+    "MONETIZE_SSH_PORT", "MONETIZE_JUPYTER_PORT",
+    "PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE",
+    "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
+    "OMP_NUM_THREADS", "NUITKA_JOBS",
+)
+
+
+@functools.lru_cache(maxsize=4)
+def _wsl_distro_available(distro: str) -> bool:
+    """探测 WSL 发行版是否可启动（10-15s 超时，结果缓存）。"""
+    try:
+        cp = subprocess.run(
+            ["wsl.exe", "-d", distro, "--", "true"],
+            capture_output=True,
+            timeout=15,
+        )
+        return cp.returncode == 0
+    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
+        return False
+
+
+def _wsl_bridge_distro() -> Optional[str]:
+    """解析桥接目标发行版。
+
+    ``COMPOSE_WSL_DISTRO`` 环境变量（Windows 原生进程，含 .env 同步值）：
+      - 设为 ``none`` → 显式关闭桥接（回退门禁；上游修复 Windows 原生后逃生舱）；
+      - 未设 → 默认 ``jupyter-podman-rootless``（已实证 compose 执行环境）。
+    发行版不可启动返回 None（调用方回退门禁）。
+    """
+    raw = os.environ.get(COMPOSE_WSL_DISTRO_ENV, "").strip()
+    if raw.lower() == "none":
+        return None
+    candidate = raw or _DEFAULT_COMPOSE_DISTRO
+    if platform.system() != "Windows":
+        return None
+    if _wsl_distro_available(candidate):
+        return candidate
+    return None
+
+
+def run_in_wsl_bridge(argv: list[str] | None = None) -> Optional[str]:
+    """Windows 原生把当前 compose 任务透明桥接到 WSL 发行版内执行。
+
+    - 成功：子进程继承 stdio 实时透传（构建日志/中文原样渲染），返回发行版名
+      （**调用方必须立即终止本进程继续执行**，桥接子进程已完整跑完任务）；
+      子进程非 0 返回码 → ``Exit(rc)`` 原样上抛（防"假成功"）。
+    - 不可桥接（非 Windows / 发行版缺失 / none 哨兵 / wsl.exe 无法启动）：
+      返回 None，调用方回退门禁提示。
+    """
+    if platform.system() != "Windows":
+        return None
+    distro = _wsl_bridge_distro()
+    if not distro:
+        return None
+    task_cmd = [str(a) for a in (argv or sys.argv[1:])]
+    if not task_cmd:
+        return None
+    # 当前 cwd → WSL POSIX（任务内相对路径解析与 Windows 侧一致）
+    workdir = to_posix_path(Path.cwd())
+    exports = " ".join(
+        f"{k}={shlex.quote(v)}"
+        for k, v in os.environ.items()
+        if k in _BRIDGE_ENV_KEYS and v
+    )
+    # PATH 前缀双保险（bash -lc 通常已 source profile；找不到 invoke 时仍可命中
+    # ~/.local/bin），cwd 先于任务；env 覆盖前缀保持 shell export > .env。
+    bash = (
+        f"cd {shlex.quote(workdir)} "
+        f'&& export PATH="$HOME/.local/bin:$PATH" '
+        f"&& {exports} invoke {shlex.join(task_cmd)}"
+    )
+    try:
+        cp = subprocess.run(
+            ["wsl.exe", "-d", distro, "--", "bash", "-lc", bash],
+        )
+    except (FileNotFoundError, OSError) as exc:
+        print(f"[compose] ⚠ WSL 桥接启动失败：{exc}")
+        return None
+    if cp.returncode != 0:
+        raise Exit(cp.returncode, f"WSL 桥接命令失败 (exit={cp.returncode})，详见上方输出")
+    return distro
 
 
 def check_runtime_ready() -> Tuple[bool, Optional[str]]:
