@@ -1,0 +1,28 @@
+[build-system]
+requires = ["scikit-build-core>=0.9"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "jpman-common"
+version = "0.1.0"
+description = "apps/containers 组内共享运行时工具（平台路径/进程执行/容器只读探测/SDK 连接），jupyter-podman-client 与 jupyter-podman-rootless 共同依赖"
+requires-python = ">=3.14"
+license = { text = "MIT" }
+dependencies = [
+    "invoke>=2.0",
+]
+
+[project.optional-dependencies]
+# podman-py 为可选依赖：缺失时 connection.get_client() 走 yield None 降级语义
+sdk = ["podman>=5.0.0"]
+
+[tool.scikit-build]
+wheel.packages = ["src/jpman_common"]
+wheel.cmake = false
+build.verbose = false
+build-dir = "build/{wheel_tag}"
+minimum-version = "0.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

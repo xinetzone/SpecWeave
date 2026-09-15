@@ -11,6 +11,7 @@ requires-python = ">=3.14"
 license = { text = "MIT" }
 dependencies = [
     "invoke>=2.0",
+    "jpman-common",
     "podman>=5.0.0",
     "python-dotenv>=1.0.0",
 ]

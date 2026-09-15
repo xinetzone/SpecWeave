@@ -7,7 +7,6 @@
 rootless 三必需参数（/dev/fuse、label=disable、cgroupns=host）
 由 utils.ContainerConfig 默认值内置，调用方无需显式传入。
 """
-from contextlib import contextmanager
 import json
 import os
 from pathlib import Path
@@ -18,161 +17,33 @@ from typing import Optional
 from invoke import Context
 from invoke.exceptions import Exit
 
+# SDK 连接统一层（get_client 全候选探测 / APIError / B-scheme socket / W-I*诊断）
+# 的唯一实现位于组内共享包 jpman_common.connection，client 不再私有副本。
+from jpman_common.connection import (
+    APIError,
+    PodmanNotFound,
+    bsock_missing_guidance,
+    ensure_host_podman_socket,
+    get_client,
+    podman_sock_path,
+    sdk_available,
+    windows_diagnose_hint,
+)
+
 from .utils import (
     ContainerConfig,
     LoadImageResult,
-    SDK_STRATEGY_ENV,
-    bsock_missing_guidance,
     build_passthrough_spec,
     check_runtime_ready,
     container_exists as cli_container_exists,
     container_running as cli_container_running,
     detect_runtime,
-    ensure_host_podman_socket,
     generate_random_string,
     image_load_cli_command,
     passthrough_diagnose_hint,
-    podman_sock_path,
     run_cmd,
-    sdk_base_url_candidates,
-    sdk_strategy_from_env,
     to_posix_path,
-    windows_diagnose_hint,
 )
-
-# ---------------------------------------------------------------------------
-# podman-py SDK 探测（核心依赖，失败时走 CLI fallback）
-# ---------------------------------------------------------------------------
-try:
-    import podman as _podman_sdk
-    from podman.errors import APIError, NotFound as PodmanNotFound
-
-    _SDK_AVAILABLE = True
-except ImportError:  # pragma: no cover - 仅当安装被破坏时发生
-    _podman_sdk = None
-    APIError = Exception
-    PodmanNotFound = Exception
-    _SDK_AVAILABLE = False
-
-
-def sdk_available() -> bool:
-    """podman-py 模块是否已安装。"""
-    return _SDK_AVAILABLE
-
-
-@contextmanager
-def get_client():
-    """获取 PodmanClient 的上下文管理器（SDK 不可达时 yield None）。
-
-    Windows 11 原生支持策略（对齐 OKF v0.2 §8 Windows 三路径）：
-      按 ``PODMAN_CLIENT_SDK_STRATEGY`` 环境变量（默认 ``auto``）依次
-      尝试：P0 环境变量显式 URL → P1 WSL2 9P 互通 socket →
-      P2 Podman Machine 命名连接 → P3 TCP 回环 → 全部失败时
-      输出每轮尝试的诊断信息 + W-I1~W-I3 速查表命中项，然后 yield None
-      进入 CLI fallback。**行为承诺**：所有候选都失败时才返回 ``None``，
-      与旧版本 API 语义一致，调用方 ``if client is not None:`` 判断无需修改。
-
-    使用方式::
-
-        with get_client() as client:
-            if client is not None:
-                client.images.list()
-            else:
-                # CLI fallback
-    """
-    if not _SDK_AVAILABLE:
-        yield None
-        return
-
-    strategy = sdk_strategy_from_env()
-    candidates = sdk_base_url_candidates(strategy)
-
-    attempts: list[dict] = []
-    client = None
-
-    def _close_safe(c):
-        if c is None:
-            return
-        try:
-            c.close()
-        except Exception:
-            pass
-
-    try:
-        for cand in candidates:
-            this_client = None
-            try:
-                if cand.base_url is None:
-                    # None → 走 SDK 默认分支：from_env() / 无参 PodmanClient()，
-                    # 让其自身读取 containers.conf active_service（含 PM-1 PM-2 Machine）
-                    this_client = _podman_sdk.from_env()
-                else:
-                    this_client = _podman_sdk.PodmanClient(base_url=cand.base_url)
-                ping_result = this_client.ping()
-                # podman-py 5.x ``system.ping()`` 返回 bool（HTTP response.text == "OK"）。
-                # 严格 True 才当选：防止 ping 返回 False（如打到 Jupyter/其他 HTTP 服务，
-                # 200 OK 但 body 不是 "OK"）时错误选中假 client。
-                ping_ok = ping_result is True
-                if not ping_ok:
-                    raise RuntimeError(
-                        f"ping()={ping_result!r}，未返回 True"
-                        f"（可能连接到非 Podman daemon，如其他监听该端口的服务）"
-                    )
-                # 成功：把这个 client 作为最终 yield 的，跳出循环
-                client = this_client
-                this_client = None
-                break
-            except Exception as exc:  # noqa: BLE001 - 失败需要记录信息，不能吞
-                exc_type_name = type(exc).__name__
-                exc_msg = str(exc)
-                attempts.append(
-                    {
-                        "source": cand.source,
-                        "base_url": cand.base_url,
-                        "hint": cand.hint,
-                        "exc_type": exc_type_name,
-                        "exc_msg": exc_msg,
-                    }
-                )
-            finally:
-                _close_safe(this_client)
-
-        if client is not None:
-            yield client
-            return
-
-        # 所有候选全部失败：
-        #   - LOG_LEVEL=DEBUG 才打印完整候选诊断（每轮10+行，避免每次调用打印噪音）
-        #   - 普通 INFO 级仅 1 行「[INFO][降级]」统一前缀，用户一眼懂：不是失败=降级
-        log_level = (os.environ.get("PODMAN_CLIENT_LOG_LEVEL") or "INFO").upper()
-        is_debug = log_level in {"DEBUG", "TRACE"}
-        first_err = attempts[0] if attempts else {"exc_type": "Unknown", "source": "-"}
-        print(
-            "[INFO][降级] SDK路径不可用（首候选="
-            f"{first_err['source']} {first_err['exc_type']}）→ 走CLI fallback"
-            f"（PODMAN_CLIENT_LOG_LEVEL=DEBUG 打印完整诊断）"
-        )
-        if is_debug:
-            print("[SDK-DEBUG] 全部连接候选失败，降级到 CLI。诊断清单：")
-            print(f"           strategy = {strategy} (通过 {SDK_STRATEGY_ENV} 修改)")
-            for i, att in enumerate(attempts, 1):
-                src = att["source"]
-                url = att["base_url"] or "(SDK 自行读 from_env/containers.conf)"
-                print(f"    [{i}/{len(attempts)}] source={src}")
-                print(f"          base_url = {url}")
-                print(f"          错误     = {att['exc_type']}: {att['exc_msg']}")
-                if att["hint"]:
-                    for line in att["hint"].splitlines():
-                        print(f"          提示     = {line}")
-            last = attempts[-1] if attempts else {"exc_type": "", "exc_msg": ""}
-            hint = windows_diagnose_hint(last["exc_type"], last["exc_msg"])
-            if hint:
-                print("[SDK-DEBUG] 已知坑匹配（W-I1~W-I3 / C-I1~C-I2）:")
-                for line in hint.splitlines():
-                    print(f"           {line}")
-        yield None
-    finally:
-        _close_safe(client)
 
 
 # ===========================================================================

@@ -1,254 +1,49 @@
-"""镜像消费端工具函数。
+"""镜像消费端工具函数（client 专属层）。
 
-提供容器运行时检测、路径转换、命令执行、随机字符串生成、
-以及基于 dataclass 的配置对象。与构建端保持接口一致，
-但避免跨应用 import，保持消费端的独立性与可移植性。
+职责边界（2026-09 重构后）：
+  - **组内共享能力**（运行时检测、路径转换、命令执行、随机串、容器只读探测）
+    唯一实现位于 ``jpman_common``（apps/containers/shared），本模块再导出，
+    保持 ``from .utils import ...`` 既有路径稳定；
+  - **client 专属能力**保留在本文件：透传 spec（PassthroughSpec）、
+    ContainerConfig/LoadImageResult、镜像 tar 加载命令与缓存校验、
+    WSL compose 透明桥接、host key 维护、checkpoint 权限。
 
 Windows WSL 支持说明（对齐 podman-py OKF v0.2 §8 Windows 三路径）：
   - **挂载路径转换** (Dimension A)：Windows ``D:\\ws`` → POSIX ``/mnt/d/ws``
-    （容器内的 ``/workspace`` 卷挂载源路径，由 :func:`to_posix_path` /
+    （容器内的 ``/workspace`` 卷挂载源路径，由 ``jpman_common.to_posix_path`` /
     :func:`normalize_path_str` 负责）
   - **Daemon 连接 URL** (Dimension B)：podman-py SDK 需要的
     ``unix://`` / ``ssh://`` / ``tcp://`` 6 种合法 scheme 之一，
-    由本文件新增的 :func:`sdk_base_url_candidates` / :func:`wsl_distro_name`
-    负责（与挂载路径解耦，不要混淆）。
+    由共享层 ``jpman_common.connection`` 的 ``sdk_base_url_candidates`` /
+    ``wsl_distro_name`` 负责（与挂载路径解耦，不要混淆）。
 """
-import ctypes
 import functools
-import json
 import os
 import platform
 import re
-import secrets
 import shlex
-import shutil
-import string
 import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
-from invoke import Context, Result
-from invoke.exceptions import Exit, UnexpectedExit
+from invoke.exceptions import Exit
 
-
-# ---------------------------------------------------------------------------
-# Windows 双端字符集修复（模块级单例，防止 run_cmd 被重复调用 100+ 次时重复执行）。
-#
-# 乱码根因（三层模型，V 阶段对抗验证得出）：
-#   ① 容器/Linux 输出的 bytes 永远 = UTF-8。
-#   ② Trae Sandbox 把整个 Python 进程树的 stdout/stderr 以 PIPE 方式重定向，
-#      并按宿主 Windows 默认 cp936(GBK) 解码 PIPE bytes → 经典错位乱码
-#      （``清理`` → UTF-8 bytes → GBK 解读 → ``娓呯悊``）。
-#   ③ invoke c.run() 内部 subprocess.Popen(stdout=PIPE) 同样按
-#      locale.getpreferredencoding() = cp936 decode，在 Python 内部 Result.stdout
-#      阶段就已经乱码，后续写入即使是 Console Handle 也无法救回。
-#
-# 双端修复策略（两端同时生效才闭环，缺一不可）：
-#   A. 宿主打印端：sys.stdout/stderr.reconfigure(encoding=<宿主编码>, errors='replace')
-#      → 宿主 print("执行：...") 写成 cp936 bytes，Sandbox 按 cp936 解码 → 中文正确。
-#   B. 子进程捕获端：c.run(..., encoding='utf-8') 强制按 UTF-8 解码子进程 stdout
-#      → Result.stdout 里的 str 就是正确中文，再走 A 路径编码成宿主 bytes。
-#   辅助：SetConsoleOutputCP(65001)（非 Sandbox 原生 Console 的情况下生效，
-#      做 defense-in-depth，失败静默）。
-# ---------------------------------------------------------------------------
-_WIN32_STDOUT_TRANSCODE_READY = False
-
-
-def _ensure_win32_stdout_transcode() -> tuple[str, bool]:
-    """Windows 双端字符集初始化（TTY / PIPE 分路径策略）。
-
-    返回值 ``(subproc_encoding, is_tty_console)``：
-        - ``subproc_encoding``：传给 invoke ``c.run(encoding=...)`` 的值；空串表示走默认。
-        - ``is_tty_console``：True = 原生 TTY Console，可 bypass invoke PIPE 捕获层
-                                用 ``subprocess.call(shell=True, stdout=None)`` 直接继承 Console Handle；
-                              False = 被外层 Sandbox/PIPE 重定向，必须走 invoke c.run + Python stdout 重编码。
-
-    只 Windows 执行，其他平台直接返回 ``("", False)``。初始化完成后单例标记不再重复执行。
-
-    分路径策略（V阶段对抗验证出的双环境分裂）：
-      1. 原生 TTY Console（用户在自己的 PowerShell / cmd / IDE Terminal 直接跑 invoke）
-         → 子进程（podman/docker/...）直接继承 Console Handle 写入，
-            只要把 SetConsoleOutputCP/SetConsoleCP 切到 65001，并把 PowerShell
-            Console::OutputEncoding/InputEncoding 改成 UTF8，
-            再加 sys.stdout/stderr 的 TextIOWrapper encoding=utf-8，中文就能 100% 正确渲染。
-      2. 外层 PIPE 捕获（Trae Sandbox / CI 重定向 stdout）
-         → Python 进程树 stdout 是 PIPE 而非 Console Handle，
-            SetConsoleOutputCP 对 PIPE 解码端无效；必须把 sys.stdout/stderr
-            的 TextIOWrapper encoding 改成 GetConsoleOutputCP() 的宿主原生编码（通常 cp936），
-            保证 write 端 bytes 与外层 capture 端的解码编码匹配，才能把正确中文传出去。
-    """
-    global _WIN32_STDOUT_TRANSCODE_READY
-    if platform.system() != "Windows":
-        return "", False
-    if _WIN32_STDOUT_TRANSCODE_READY:
-        # 注意：第一次初始化时已把 (subproc_encoding, is_tty_console) 缓存在闭包外
-        return _WIN32_TRANSCODE_CACHED_RESULT
-
-    kernel32 = None
-    console_cp = 0
-    try:
-        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
-        # ⚠ 先 Get 再 Set：启动时的真实 Console CP 才是宿主/PIPE 捕获端的解码编码；
-        # SetConsoleOutputCP(65001) 会让后续 GetConsoleOutputCP() 返回 65001，影响判断。
-        console_cp = kernel32.GetConsoleOutputCP()
-        CP_UTF8 = 65001
-        # 原生 TTY Console 时才需要 Set*CP：PIPE 场景下此调用无副作用也无效
-        kernel32.SetConsoleOutputCP(ctypes.c_uint(CP_UTF8))
-        kernel32.SetConsoleCP(ctypes.c_uint(CP_UTF8))
-    except Exception:
-        console_cp = 0
-
-    # ── TTY vs PIPE 判别 ──
-    is_tty = False
-    try:
-        is_tty = os.isatty(sys.stdout.fileno())
-    except Exception:
-        is_tty = False  # 典型：sys.stdout 被重定向成 StringIO
-
-    subproc_encoding = ""
-    if is_tty:
-        # 路径 1：原生 TTY Console
-        #   SetConsoleOutputCP 已切到 65001；现在把 PowerShell [Console]::OutputEncoding 也
-        #   改到 UTF8（影响用 PowerShell CreateProcess 启动的子进程在父 PS 里的编码行为）。
-        try:
-            import io as _io
-
-            try:
-                from System import Console as _NETConsole  # type: ignore
-                from System.Text import Encoding as _NETEncoding  # type: ignore
-                _utf8 = _NETEncoding.UTF8
-                _NETConsole.OutputEncoding = _utf8
-                _NETConsole.InputEncoding = _utf8
-            except Exception:
-                # .NET interop 不可用时回退到 chcp.com（外部命令，副作用大）
-                try:
-                    import subprocess as _sp
-                    _sp.run(
-                        ["chcp.com", "65001"],
-                        stdout=_sp.DEVNULL, stderr=_sp.DEVNULL, check=False,
-                    )
-                except Exception:
-                    pass
-        except Exception:
-            pass
-        # A 端：sys.stdout / stderr 写 UTF-8 bytes → Console 按 CP65001 渲染 → 中文正确
-        _wrap_stdio_encoding("utf-8")
-        # B 端：invoke c.run 捕获子进程 bytes → 源头按 UTF-8 解码才会得到正确 str
-        subproc_encoding = "utf-8"
-    else:
-        # 路径 2：外层 PIPE 捕获（Trae Sandbox / CI）
-        #   宿主捕获端通常按启动时 console_cp 解码（一般是 cp936）。
-        #   A 端必须：Python print str → encode 成宿主端一致的 bytes → 捕获端 decode 后得回正确中文。
-        host_encoding = ""
-        if console_cp and console_cp != 65001:
-            host_encoding = f"cp{console_cp}"
-        else:
-            try:
-                import locale
-                pref = locale.getpreferredencoding(False) or ""
-                if pref and pref.lower() not in ("utf-8", "utf8", "cp65001"):
-                    host_encoding = pref
-            except Exception:
-                pass
-        if host_encoding:
-            _wrap_stdio_encoding(host_encoding)
-        # B 端：invoke c.run 仍然强制 UTF-8 解码子进程 stdout bytes（容器/Podman 永远输出 UTF-8）
-        subproc_encoding = "utf-8"
-
-    _WIN32_STDOUT_TRANSCODE_READY = True
-    cached = (subproc_encoding, is_tty)
-    globals()["_WIN32_TRANSCODE_CACHED_RESULT"] = cached
-    return cached
-
-
-def _wrap_stdio_encoding(encoding_name: str) -> None:
-    """把 sys.stdout/sys.stderr 的 TextIOWrapper 换壳为指定 encoding；失败静默跳过。"""
-    import io
-    for _io_name in ("stdout", "stderr"):
-        _io = getattr(sys, _io_name)
-        try:
-            old_buf = _io.buffer
-            line_buffering = getattr(_io, "line_buffering", True)
-            write_through = getattr(_io, "write_through", False)
-            try:
-                _io.flush()
-            except Exception:
-                pass
-            new_wrap = io.TextIOWrapper(
-                old_buf,
-                encoding=encoding_name,
-                errors="replace",
-                line_buffering=line_buffering,
-                write_through=write_through,
-            )
-            setattr(sys, _io_name, new_wrap)
-        except Exception:
-            # 典型：被重定向成 StringIO / BytesIO 无 buffer 的对象 —— 不影响主流程
-            pass
-
-
-# 运行期单例结果缓存（避免每次 run_cmd 重新判别；但第一次必须真正初始化完毕后才写入）
-_WIN32_TRANSCODE_CACHED_RESULT: tuple[str, bool] = ("", False)
-
-
-# 兼容老命名（给任何可能存在的历史直接调用点留别名）
-def _ensure_win32_console_utf8() -> None:
-    _ensure_win32_stdout_transcode()
-    return None
-
-
-# ---------------------------------------------------------------------------
-# SDK 连接策略（逃生舱 · 对抗审查 V 阶段产物）
-# PODMAN_CLIENT_SDK_STRATEGY 可选值：
-#   auto   - 默认，按 P0 环境变量 → P1 WSL9P → P2 Podman Machine → P3 tcp 自动探测
-#   legacy - 纯旧行为：直接 from_env()，无任何 Windows 特判
-#   wsl    - 强制走 WSL2 9P 互通 socket（要求 wsl.exe 在 PATH + 发行版可探测）
-#   machine- 强制走 Podman Machine 命名连接（active_service.is_machine=True）
-# ---------------------------------------------------------------------------
-
-SDK_STRATEGY_ENV = "PODMAN_CLIENT_SDK_STRATEGY"
-WSL_DISTRO_ENV = "WSL_DISTRO_NAME"
-CONTAINER_HOST_ENVS = ("CONTAINER_HOST", "DOCKER_HOST")  # 原生优先兼容兜底
-
-
-# ── B-scheme: host podman rootless socket pass-through ──────────
-# 与构建端 jpman_builder/tasks/client.py 保持一致（避免消费端独立 import 构建端）。
-# 背景：容器内自建 daemon（Model A）在 WSL 三层 userns 嵌套下触发
-# `newuidmap Operation not permitted`，不可行。改为直连宿主 rootless daemon：
-# 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
-# 并设置 `HOST_PODMAN_SOCK`，让容器内 entrypoint 的 B-scheme 分支建立符号链接、
-# 设置 `CONTAINER_HOST`，从而令容器内 podman SDK/CLI 复用宿主 daemon。
-def host_runtime_uid() -> str:
-    """daemon 宿主运行时 UID（B-scheme socket/透传路径推导的**唯一事实源**）。
-
-    推导优先级：
-      1. 显式 ``PODMAN_RUNTIME_UID``（跨主机场景：客户端在 Windows 原生、
-         daemon 在 WSL2/Machine，或 daemon 宿主 UID 与客户端不同）；
-      2. POSIX 本机 ``$XDG_RUNTIME_DIR`` 末段（形如 ``/run/user/1006`` → 1006）；
-      3. POSIX 本机 ``os.getuid()``；
-      4. Windows 原生回落 ``"1000"``（WSL2 默认用户惯例；本机 UID 无意义）。
-
-    历史教训（2026-09-12，C-I5）：曾无条件默认 "1000"，在 UID=1006 的原生
-    Linux 宿主上生成不存在的 ``/run/user/1000/...`` 挂载源，podman run 硬失败
-    exit=125（statfs no such file）。UID 必须来自运行时事实而非发行版惯例。
-    """
-    explicit = os.environ.get("PODMAN_RUNTIME_UID", "").strip()
-    if explicit:
-        return explicit
-    if platform.system() != "Windows":
-        xdg = os.environ.get("XDG_RUNTIME_DIR", "")
-        m = re.search(r"/run/user/(\d+)$", xdg)
-        if m:
-            return m.group(1)
-        return str(os.getuid())
-    return "1000"
-
-
-def podman_sock_path() -> str:
-    """Host rootless daemon socket path (also used as container mount target)."""
-    return f"/run/user/{host_runtime_uid()}/podman/podman.sock"
+# 组内共享层（jpman-common）：进程/平台/容器只读工具的唯一实现位于共享包，
+# 此处再导出以保持 client 内部 ``from .utils import ...`` 既有路径稳定。
+from jpman_common import (
+    check_runtime_ready,
+    container_exists,
+    container_running,
+    detect_runtime,
+    generate_random_string,
+    normalize_path_str,
+    run_cmd,
+    to_posix_path,
+)
+# B-scheme daemon 连接层（UID/socket 推导唯一事实源）统一位于共享包。
+from jpman_common.connection import host_runtime_dir
 
 
 # ── 运行时透传（对齐构建端 docs/07-toolbx-passthrough.md 的 5 项 opt-in）────────
@@ -258,11 +53,6 @@ def podman_sock_path() -> str:
 # False。因此**禁止**用本机存在性做前置校验（会误判拒绝正确的透传请求），
 # 资源缺失只能在 podman 硬失败后翻译为可执行指引（见 passthrough_diagnose_hint）。
 CONTAINER_RUNTIME_DIR = "/tmp/runtime-user"
-
-
-def host_runtime_dir() -> str:
-    """daemon 宿主的用户运行时目录 ``/run/user/<uid>``（UID 约定同 host_runtime_uid）。"""
-    return f"/run/user/{host_runtime_uid()}"
 
 
 def passthrough_paths() -> dict:
@@ -403,86 +193,6 @@ def passthrough_diagnose_hint(exc_msg: str) -> str:
     )
 
 
-def bsock_missing_guidance(detail: str = "") -> str:
-    """C-I5：B-scheme 宿主 rootless socket 缺失的可执行中文指引。
-
-    与 C-I3（opt-in 透传资源）区分：该 socket 是 ``invoke run`` 的**必选核心挂载**，
-    缺失只有两类根因——UID 漂移（推导路径错误）或 socket 服务未启动。
-    """
-    uid = host_runtime_uid()
-    sock = podman_sock_path()
-    lines = [
-        "[C-I5] B-scheme 宿主 rootless socket 挂载源不存在（podman run 必然 statfs 硬失败，exit=125）。",
-        f"     → 目标路径：{sock}（推导 UID={uid}）",
-        "     → 修复（按顺序）：",
-        "       1) 核对 UID：本机执行 `id -u`；若与上方 UID 不符，导出 "
-        "`PODMAN_RUNTIME_UID=<id -u 的值>`（或写入客户端 .env）后重试",
-        "       2) 启动用户级 API socket：`systemctl --user start podman.socket`"
-        "（本工具在原生 Linux 上会尝试自动执行此步；无 systemd 的环境改手工运行 "
-        "`podman system service --time=0 unix:///run/user/$(id -u)/podman/podman.sock`）",
-        "       3) 重启后仍丢失则开启 lingering：`sudo loginctl enable-linger $USER`",
-    ]
-    if detail:
-        lines.append(f"     → 自动启动失败详情：{detail}")
-    return "\n".join(lines)
-
-
-def ensure_host_podman_socket() -> Tuple[bool, str, bool]:
-    """原生 Linux 上预检并尽力自愈 B-scheme 宿主 socket。
-
-    返回 ``(就绪, 诊断明细, 是否本次自动拉起)``。以下场景**直接放行**
-    （本机文件系统无法代表 daemon 宿主判断，交给远端 C-I1/C-I3 体系）：
-      - 非 Linux（Windows/macOS 的 daemon 在 WSL2/Podman Machine 远端）；
-      - 已在 B-scheme 容器内（``HOST_PODMAN_SOCK`` 已注入，socket 是 bind-mount 产物，
-        绝不能在容器内去 systemctl 宿主单元）；
-      - 运行时不是 podman；
-      - socket 文件已存在。
-
-    自愈仅限用户级 systemd 单元（``systemctl --user start podman.socket``）：
-    无需提权、可逆、带 10s 超时；任何异常都降级为 C-I5 指引，绝不阻断在非预期环境。
-    """
-    if platform.system() != "Linux" or os.environ.get("HOST_PODMAN_SOCK"):
-        return True, "", False
-    try:
-        if detect_runtime() != "podman":
-            return True, "", False
-    except Exit:
-        return True, "", False
-
-    sock = podman_sock_path()
-    if Path(sock).exists():
-        return True, "", False
-
-    systemctl = shutil.which("systemctl")
-    if not systemctl:
-        return False, "本机无 systemctl（非 systemd 环境），需手工启动 podman system service", False
-    try:
-        result = subprocess.run(
-            [systemctl, "--user", "start", "podman.socket"],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-    except subprocess.TimeoutExpired:
-        return False, "systemctl --user start podman.socket 超时（>10s）", False
-    except OSError as exc:
-        return False, f"systemctl 调用失败：{exc}", False
-
-    if Path(sock).exists():
-        return True, "", True
-    detail = (result.stderr or result.stdout or "systemctl 返回成功但 socket 文件仍不存在").strip()
-    return False, detail, False
-
-
-_VALID_STRATEGIES = {"auto", "legacy", "wsl", "machine"}
-
-
-def sdk_strategy_from_env() -> str:
-    """读取逃生舱策略环境变量，非法值回退为 ``auto``。"""
-    raw = os.environ.get(SDK_STRATEGY_ENV, "auto").strip().lower()
-    return raw if raw in _VALID_STRATEGIES else "auto"
-
-
 @dataclass
 class ContainerConfig:
     """容器运行配置（rootless 三必需参数已内置默认）。
@@ -565,391 +275,6 @@ class LoadImageResult:
     message: str = ""
 
 
-# ---------------------------------------------------------------------------
-# Windows WSL 平台探测（Dimension B：Daemon 连接 URL）
-# 区分两种"跑在 Windows 上"的场景（边界声明，避免维护者踩坑）：
-#   HOST Windows: platform.system() == "Windows"，Python 宿主原生 CPython
-#       → 需要 wsl.exe 与 /mnt/wsl/ 9P 互通路径
-#   WSL内部 Linux: platform.system() == "Linux" 且 WSL_DISTRO_NAME 非空
-#       → 直接默认 unix:///run/user/$UID/podman/podman.sock，不走本模块分支
-# ---------------------------------------------------------------------------
-
-
-def _has_wsl_host_support() -> bool:
-    """宿主 Windows 侧是否具备 WSL2 互操作基本条件。
-
-    双门卫：① ``wsl.exe`` 在 PATH 可见  ② ``/mnt/wsl/`` 9P 互通挂载点存在。
-    任一不满足直接返回 ``False``，避免后续候选尝试抛 IO 拖慢启动。
-    """
-    if platform.system() != "Windows":
-        return False
-    if shutil.which("wsl.exe") is None:
-        return False
-    try:
-        return Path("/mnt/wsl/").exists()
-    except OSError:
-        return False
-
-
-@functools.lru_cache(maxsize=1)
-def wsl_distro_name() -> Optional[str]:
-    """WSL2 发行版名三级回退探测（结果全局缓存）。
-
-    回退顺序（对应 G3 模式「WSL2 发行版名 3 级回退」）：
-      ① 环境变量 ``WSL_DISTRO_NAME``（宿主进程被 wsl.exe -d 启动时会带）
-      ② ``wsl.exe --list --quiet`` 第一行 = 默认发行版
-      ③ ``wsl.exe --list --verbose`` 中 ``State == Running`` 的首个
-    都取不到返回 ``None``，上层候选会跳过 WSL9P 分支。
-    """
-    env_val = os.environ.get(WSL_DISTRO_ENV)
-    if env_val:
-        return env_val.strip() or None
-
-    if not _has_wsl_host_support():
-        return None
-
-    def _run_wsl(*args: str) -> str:
-        try:
-            cp = subprocess.run(
-                ["wsl.exe", *args],
-                capture_output=True,
-                text=True,
-                timeout=5,
-                encoding="utf-16-le",  # wsl.exe 默认在中文 Windows 输出 UTF-16 LE
-                errors="replace",
-            )
-        except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-            return ""
-        out = cp.stdout or ""
-        # 去 BOM / 空行 / 不可见控制符
-        return "\n".join(
-            line.rstrip("\r").strip("\ufeff")
-            for line in out.splitlines()
-            if line.strip()
-        )
-
-    default_raw = _run_wsl("--list", "--quiet")
-    if default_raw:
-        first = default_raw.splitlines()[0].strip()
-        if first:
-            return first
-
-    verbose = _run_wsl("--list", "--verbose")
-    if verbose:
-        # 表头形如 "  NAME            STATE           VERSION"
-        lines = verbose.splitlines()[1:]
-        for line in lines:
-            parts = re.split(r"\s{2,}", line.strip())
-            if len(parts) >= 3 and parts[1].lower() == "running":
-                return parts[0]
-    return None
-
-
-@functools.lru_cache(maxsize=8)
-def _wsl_user_uid(distro: str) -> Optional[int]:
-    """探测给定发行版内默认用户的 UID（结果缓存）。
-
-    不硬编码 1000（对抗审查 V 视角2 加固）：有些发行版默认用户改了 UID，
-    硬编码会导致 ``/run/user/1000/podman/podman.sock`` 不存在但真实 socket 在
-    其他 UID 下的"看似连不上其实路径拼错"伪故障。
-    """
-    if not distro:
-        return None
-    try:
-        cp = subprocess.run(
-            ["wsl.exe", "-d", distro, "id", "-u"],
-            capture_output=True,
-            text=True,
-            timeout=5,
-            encoding="utf-16-le",
-            errors="replace",
-        )
-    except (subprocess.TimeoutExpired, FileNotFoundError, OSError):
-        return None
-    out = (cp.stdout or "").strip().strip("\ufeff\r\n")
-    try:
-        return int(out)
-    except ValueError:
-        return None
-
-
-# ---------------------------------------------------------------------------
-# SDK base_url 候选生成（对齐 OKF v0.2 §8 Windows 三路径 + P0 环境变量）
-# ---------------------------------------------------------------------------
-
-
-@dataclass
-class BaseUrlCandidate:
-    """一个连接候选及其来源说明，失败时附带诊断可给用户。"""
-
-    source: str  # P0-env / P1-wsl-9p / P2-machine / P3-tcp-loopback / legacy
-    base_url: Optional[str]  # None 表示"不拼 URL，直接用 PodmanClient() 无参 or from_env()"
-    hint: str = ""  # 失败时对用户的提示
-
-
-def sdk_base_url_candidates(strategy: Optional[str] = None) -> list[BaseUrlCandidate]:
-    """按逃生舱 ``strategy`` 生成 podman-py SDK 连接候选列表。
-
-    ``auto`` 策略候选顺序（P0→P1→P2→P3，前一个 ping 成功就停）：
-      0. CONTAINER_HOST / DOCKER_HOST 环境变量显式指定
-      1. WSL2 9P 互通 socket：``unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock``
-      2. Podman Machine 命名连接（不传 base_url，PodmanClient() 走 active_service）
-      3. TCP 本机回环 ``tcp://127.0.0.1:8888``（用户手动起过 podman system service 才有用）
-
-    其他策略：强制只保留对应分支，便于用户紧急逃生。
-    """
-    if strategy is None:
-        strategy = sdk_strategy_from_env()
-
-    candidates: list[BaseUrlCandidate] = []
-
-    # ── P0: 用户显式环境变量（所有策略除 legacy 外都先看一眼） ────────────
-    if strategy != "legacy":
-        for env_key in CONTAINER_HOST_ENVS:
-            val = os.environ.get(env_key)
-            if val:
-                candidates.append(
-                    BaseUrlCandidate(
-                        source="P0-env",
-                        base_url=val,
-                        hint=f"环境变量 {env_key}={val}（若连不上请检查值是否合法，"
-                        f"scheme 仅支持 unix/http+unix/ssh/http+ssh/tcp/http）",
-                    )
-                )
-                break  # 原生优先兜底：CONTAINER_HOST 读到就不再读 DOCKER_HOST
-
-    is_host_windows = platform.system() == "Windows"
-
-    # ── P1: WSL2 9P 互通 socket（auto / wsl 强制） ────────────────────────
-    if strategy in {"auto", "wsl"} and is_host_windows:
-        distro = wsl_distro_name()
-        if distro:
-            uid = _wsl_user_uid(distro)
-            if uid is not None:
-                socket_path = f"/mnt/wsl/{distro}/run/user/{uid}/podman/podman.sock"
-                candidates.append(
-                    BaseUrlCandidate(
-                        source="P1-wsl-9p",
-                        base_url=f"unix://{socket_path}",
-                        hint=(
-                            f"WSL2 发行版={distro} UID={uid}。"
-                            f"请在 WSL2 内执行：\n"
-                            f"  sudo loginctl enable-linger $USER\n"
-                            f"  systemctl --user enable --now podman.socket\n"
-                            f"  ls -l {socket_path}  # 确认 socket 存在"
-                        ),
-                    )
-                )
-            else:
-                # 发行版探测到了但拿不到 UID，给个带说明的空候选，失败时用户知道为什么
-                candidates.append(
-                    BaseUrlCandidate(
-                        source="P1-wsl-9p",
-                        base_url=None,
-                        hint=(
-                            f"WSL2 发行版={distro} 但无法通过 `wsl.exe -d {distro} id -u` 拿到 UID。"
-                            "请确认该发行版已启动并能正常进入 shell。"
-                        ),
-                    )
-                )
-        elif strategy == "wsl":
-            # 用户强制 wsl 策略但发行版探不到 → 失败时要明确告诉怎么设 env
-            candidates.append(
-                BaseUrlCandidate(
-                    source="P1-wsl-9p",
-                    base_url=None,
-                    hint=(
-                        "SDK_STRATEGY=wsl 但未探测到 WSL2 发行版。请在当前终端先设：\n"
-                        "  $env:WSL_DISTRO_NAME=\"Ubuntu\"   # PowerShell\n"
-                        "  export WSL_DISTRO_NAME=Ubuntu     # bash（如果是在 WSL 内部 shell）"
-                    ),
-                )
-            )
-
-    # ── P2: Podman Machine（auto / machine 强制） ────────────────────────
-    if strategy in {"auto", "machine"}:
-        # Windows 原生：from_env()/无参构造依赖 os.getuid（podman.api.path_utils）
-        # 与 unix 适配需要 socket.AF_UNIX，Windows 原生 CPython 两者皆缺 → 必然 AttributeError。
-        # 绕开 crash：直接探测宿主 `podman system connection list` 的默认连接
-        # （Podman Desktop 初始化时自动写入 containers.conf），拿到 ssh:// 显式 base_url。
-        # Linux 原生无此问题，保持 base_url=None 走 SDK 自身的 active_service 解析。
-        fallback_url = machine_connection_uri() if is_host_windows else None
-        candidates.append(
-            BaseUrlCandidate(
-                source="P2-machine",
-                base_url=fallback_url,
-                hint=(
-                    "Podman Machine（Podman Desktop）。请确保：\n"
-                    "  1) 打开 Podman Desktop 并点击「Initialize Podman Machine」\n"
-                    "  2) 命令行执行一次 `podman machine ssh true` 并在首次交互敲 yes\n"
-                    "     （防止 SSH host key 验证卡子进程 stdin → W-I3 Timeout）"
-                ),
-            )
-        )
-
-    # ── legacy 逃生舱：回到旧的纯 from_env() 行为 ────────────────────────
-    if strategy == "legacy" or not candidates:
-        candidates.append(
-            BaseUrlCandidate(
-                source="legacy",
-                base_url=None,
-                hint=(
-                    "（legacy 策略）直接 from_env()。若在 Windows 原生失败，"
-                    f"请尝试取消设置 {SDK_STRATEGY_ENV}=legacy 改回 auto，"
-                    "或显式设置 CONTAINER_HOST=tcp://127.0.0.1:<port>（仅当手动执行过"
-                    " podman system service tcp://... --time=0 才有效）。"
-                ),
-            )
-        )
-
-    return candidates
-
-
-@functools.lru_cache(maxsize=1)
-def machine_connection_uri() -> Optional[str]:
-    """Windows 原生下探测 Podman Machine 默认连接的显式 base_url。
-
-    通过 ``podman system connection list --format json`` 读取 Default=true 的连接
-    （Podman Desktop 初始化时会把 Machine 的 ssh:// URI 写入 containers.conf 的
-    [engine].active_service，CLI fallback 正是借此连接的）。
-
-    返回 ssh:// URI（如 ``ssh://user@127.0.0.1:63851/run/user/1000/podman/podman.sock``）
-    或 None（探测失败：podman CLI 不在 PATH / 无 Machine / 非 Windows）。
-
-    Windows 原生下必须绕开 ``from_env()``（其回退链调用 ``podman.api.path_utils.get_runtime_dir()``
-    依赖 ``os.getuid()``，Windows 无此属性 → AttributeError），故 P2 候选在 Windows 用
-    本函数的返回值作显式 base_url；Linux 原生 ``from_env()`` 正常，无需此探测。
-    """
-    if platform.system() != "Windows":
-        return None
-    runtime = shutil.which("podman")
-    if not runtime:
-        return None
-    try:
-        cp = subprocess.run(
-            [runtime, "system", "connection", "list", "--format", "json"],
-            capture_output=True,
-            text=True,
-            timeout=8,
-            encoding="utf-8",
-            errors="replace",
-        )
-    except (OSError, subprocess.TimeoutExpired):
-        return None
-    if cp.returncode != 0 or not (cp.stdout or "").strip():
-        return None
-    try:
-        conns = json.loads(cp.stdout)
-    except (json.JSONDecodeError, TypeError):
-        return None
-    if not isinstance(conns, list):
-        return None
-    for conn in conns:
-        if isinstance(conn, dict) and conn.get("Default") and conn.get("URI"):
-            uri = str(conn["URI"]).strip()
-            if uri.startswith(("ssh://", "unix://", "tcp://")):
-                return uri
-    return None
-
-
-def windows_diagnose_hint(exc_type: str, exc_msg: str) -> str:
-    """根据捕获到的异常类型+消息，匹配 OKF v0.2 §8.4 W-I1~W-I3 + 容器内坑 C-I1/C-I2 速查表。
-
-    返回空串表示没有匹配到已知坑。
-    注意：C-I2 是**容器内坑（平台无关）**，其分支必须置于 Windows 平台守卫之前，
-    否则容器内（Linux）的 EACCES 永远匹配不到。与 README §5.4、rules/windows-wsl.md §5
-    保持逐字一致（三处同步）。
-    """
-    et = exc_type.lower() if exc_type else ""
-    em = (exc_msg or "").lower()
-
-    # C-I2：容器内 devuser 访问宿主直通 podman socket 被拒（EACCES，平台无关 → 先于平台守卫）
-    #   - SDK：podman/api/uds.py::UDSSocket.connect() → PermissionError: [Errno 13] Permission denied
-    #   - CLI：dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied
-    #   - 与 C-I1 区分：C-I1 的 "Permission denied" 伴随 libpod/tmp 临时文件创建失败，此处排除。
-    _is_eacces = (
-        "permissionerror" in et
-        or "errno 13" in em
-        or "permission denied" in em
-        or "eacces" in em
-    )
-    _is_c1_like = "libpod/tmp" in em or "temporary file" in em
-    if _is_eacces and not _is_c1_like and "/run/user/" in em and "podman" in em:
-        return (
-            "[C-I2] 容器内 devuser 无权访问宿主直通 podman socket（Errno 13 / EACCES，容器内坑，与平台无关）。\n"
-            "     → 根因：宿主 rootless socket（宿主 <uid>:<gid> 0660）经 userns 映射进容器后呈现为 root:root 0660，\n"
-            "        而 devuser 是非 root UID（固定 1000，≠0）且未加入 socket 属组，socket.connect() 直接 EACCES。\n"
-            "     → 修复（30 秒）：重建镜像并重启容器——entrypoint.sh::setup_podman() 的 B-scheme 分支会自动\n"
-            "        执行 usermod -aG <socket组> ${NON_ROOT_USER}（必须早于 exec supervisord，jupyter 子进程才能继承补充组）\n"
-            "        并以 devuser 身份实测 socket 可读写；严禁 chmod 666 / chown 宿主 socket（会破坏宿主侧权限）。\n"
-            "     → 自检：容器内 `supervisorctl status jupyter` 取 PID 后看 /proc/<pid>/status 的 Groups 应含 socket 属组。"
-        )
-
-    if platform.system() != "Windows":
-        return ""
-
-    # W-I1：无参构造回退 /run/user/$UID 不存在
-    if (
-        "filenotfounderror" in et
-        or "no such file or directory" in em
-    ) and "/run/user/" in em:
-        return (
-            "[W-I1] podman-py 默认 socket 路径是纯 Linux 语义，在 Windows 原生不存在。\n"
-            "     → 修复（30 秒）：三种方式任选其一：\n"
-            "        a) 改在 WSL2 里跑本脚本（100% Linux 行为）\n"
-            "        b) 打开 Podman Desktop 初始化 Podman Machine（推荐零配置）\n"
-            "        c) 显式设 CONTAINER_HOST=unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock"
-        )
-
-    # W-I2：docker-py 老用户写 npipe://
-    if "unsupported url scheme" in em and "npipe" in em:
-        return (
-            "[W-I2] podman-py 不支持 Windows 命名管道 npipe://（docker-py 专有）。\n"
-            "     → 修复（30 秒）：把 base_url 改成：\n"
-            "        unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock  或\n"
-            "        ssh://user@127.0.0.1:<MachinePort>  或 tcp://127.0.0.1:8888"
-        )
-
-    # W-I3：SSH 模式 Waiting on podman-forward-*.sock 超时
-    if ("timeout" in et or "timeoutexpired" in et) and "podman-forward" in em:
-        return (
-            "[W-I3] SSH 隧道子进程卡在首次 host key 交互（std 阻塞在 yes/no 提问）。\n"
-            "     → 修复（30 秒）：命令行先手动执行一次 `podman machine ssh true`\n"
-            "        在 Are you sure ...? 提示后敲 yes 回车，把 machine key 写进 known_hosts。"
-        )
-
-    # W-I4：Windows 原生 CPython 缺少 POSIX 专属属性（os.getuid / socket.AF_UNIX）。
-    #   podman.api.path_utils.get_runtime_dir() 调用 os.getuid()（from_env 回退链）
-    #   uds.py::UDSSocket.__init__ 调用 socket.socket(socket.AF_UNIX, ...)（unix:///ssh:// 适配）
-    #   Windows 原生 Python 两者皆缺 → AttributeError。SDK 在 Windows 原生结构性不可用，
-    #   修复 = 走 CLI fallback（自动）或显式 CONTAINER_HOST（ssh:// Machine）由 machine_connection_uri() 探测。
-    if (
-        "attributeerror" in et
-        and ("getuid" in em or "af_unix" in em)
-    ) or (
-        "has no attribute" in em and ("getuid" in em or "af_unix" in em)
-    ):
-        return (
-            "[W-I4] podman-py 在 Windows 原生 CPython 结构性不可用（依赖 POSIX 专属属性）。\n"
-            "     → 根因：from_env() 回退链调用 os.getuid()；unix/ssh 适配调用 socket.AF_UNIX，\n"
-            "        Windows 原生 Python 两者皆无 → AttributeError。与配置无关，SDK 无法在此平台直连。\n"
-            "     → 修复（30 秒）：本工具已自动降级 CLI fallback（podman.exe 子进程，可用）；\n"
-            "        如需 SDK 路径，a) 改在 WSL2 内跑本脚本（100% Linux 行为），\n"
-            "        b) 或显式设 CONTAINER_HOST=ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock\n"
-            "        （端口可用 `podman system connection list --format json` 查询）"
-        )
-    return ""
-
-
-def detect_runtime() -> str:
-    """检测容器运行时，优先 podman。"""
-    if shutil.which("podman"):
-        return "podman"
-    if shutil.which("docker"):
-        return "docker"
-    raise Exit("未找到 podman 或 docker，请先安装其中之一")
-
-
 def image_load_cli_command(runtime: str, tar_path: Path | str) -> str:
     """构造跨平台 ``<runtime> load`` 命令（CLI fallback 唯一事实源）。
 
@@ -975,19 +300,6 @@ def image_load_cli_command(runtime: str, tar_path: Path | str) -> str:
     if platform.system() == "Windows":
         return f'type "{path_str}" | {runtime} load'
     return f'{runtime} load -i "{path_str}"'
-
-
-def to_posix_path(path: Path | str) -> str:
-    """将路径转换为 POSIX 风格（适配 WSL2/远程 podman）。"""
-    p = Path(path)
-    path_str = str(p.resolve())
-    if platform.system() == "Windows":
-        if len(path_str) >= 2 and path_str[1] == ":":
-            drive = path_str[0].lower()
-            rest = path_str[2:].replace("\\", "/")
-            return f"/mnt/{drive}{rest}"
-        return path_str.replace("\\", "/")
-    return path_str
 
 
 def ensure_workspace_checkpoint_writable(workspace: Path | str) -> None:
@@ -1018,23 +330,6 @@ def ensure_workspace_checkpoint_writable(workspace: Path | str) -> None:
         print(f'        可在宿主侧手动修正：chmod 777 "{cp}"')
 
 
-def normalize_path_str(path_str: str) -> str:
-    """规范化路径字符串（保持 podman-compose 卷挂载解析兼容）。
-
-    Windows 路径（``D:\\...``）转 POSIX（``/mnt/d/...``），
-    已经是 POSIX（以 ``/`` 开头）或非 Windows 原样返回。
-    """
-    if platform.system() != "Windows":
-        return path_str
-    if path_str.startswith("/"):
-        return path_str
-    if len(path_str) >= 2 and path_str[1] == ":":
-        drive = path_str[0].lower()
-        rest = path_str[2:].replace("\\", "/")
-        return f"/mnt/{drive}{rest}"
-    return path_str.replace("\\", "/")
-
-
 # ---------------------------------------------------------------------------
 # Windows 原生 → WSL 发行版透明桥接（compose 子进程层的平台门禁平替）
 #
@@ -1043,33 +338,29 @@ def normalize_path_str(path_str: str) -> str:
 #   存在已知缺陷（os.makedirs 误建源路径等），原设计一律 _gate_platform() 门禁
 #   Exit(1)。但"门禁"是保护手段而非目标——本质目标 = Windows 原生输入
 #   ``invoke <stack>.build`` 能正确构建。已实证的 POSIX 执行环境
-#   （podman-machine-default 发行版：自带 podman 5.7 + podman-compose +
-#   /mnt/d 直通 + client editable 安装；2026-09-15 由 jupyter-podman-rootless
-#   改名顶替 flapping 的 Podman Desktop machine）可作为透明桥接目标：
+#   （podman-machine-default：client 专用 rootless 发行版，与 flapping 的
+#   Podman Desktop 默认 machine 相互独立、镜像存储不互通；自带 podman 5.7 +
+#   podman-compose + /mnt/d 直通 + client editable 安装）可作为透明桥接目标：
 #   把当前 invoke 任务原样转发到发行版内 ``bash -lc`` 执行，stdout/stderr
 #   继承透传，返回码原样上抛。桥接不可用（无 wsl.exe / 发行版不存在 /
 #   COMPOSE_WSL_DISTRO=none 哨兵）才回退门禁提示。
 #
 #   为什么不用 WSL_DISTRO_NAME？该键是 SDK 连接（Dimension B）专用；桥接目标
-#   用独立键 COMPOSE_WSL_DISTRO。2026-09-15 起默认发行版由
-#   jupyter-podman-rootless 改名为标准名 podman-machine-default（注销 flapping
-#   的 Podman Desktop machine 后以可靠发行版顶替；同一实体，镜像/容器随备份保留）。
+#   用独立键 COMPOSE_WSL_DISTRO。默认 podman-machine-default 为 client 专用
+#   rootless 发行版，与 flapping 的 Podman Desktop 默认 machine 相互独立、
+#   镜像存储不互通；COMPOSE_WSL_DISTRO 可覆盖目标，none 显式关闭。
 # ---------------------------------------------------------------------------
 COMPOSE_WSL_DISTRO_ENV = "COMPOSE_WSL_DISTRO"
 _DEFAULT_COMPOSE_DISTRO = "podman-machine-default"
-# 桥接时透传到 WSL 的键集：.env 会被 WSL 内 invoke 再次读取（override=False），
-# 这里只补「shell 显式 export 的覆盖值」（保持 shell export > .env 优先级）。
+# 桥接时透传到 WSL 的**通用**键集（三栈无关）：.env 会被 WSL 内 invoke 再次
+# 读取（override=False），这里只补「shell 显式 export 的覆盖值」（保持 shell
+# export > .env 优先级）。栈专属键（<PREFIX>_* / 源码路径）不再在此枚举
+# （F-10：utils 零栈知识），由 overlay_core.gate_platform 按
+# StackSpec.bridge_env_keys 经 extra_env_keys 传入。
 # 显式不含 CONTAINER_HOST：不把 Windows SDK URL 带进 compose 子进程层（禁 REST 模式）。
-_BRIDGE_ENV_KEYS = (
+_BRIDGE_COMMON_ENV_KEYS = (
     COMPOSE_WSL_DISTRO_ENV,
     "WSL_DISTRO_NAME",
-    "XMNN_IMAGE_TAG", "XMNN_CONTAINER_NAME", "XMNN_WORKSPACE",
-    "XMNN_SSH_PORT", "XMNN_JUPYTER_PORT",
-    "NPU_TVM_PATH", "NPUUSERTOOLS_PATH", "MODELS_PATH",
-    "QUANT_IMAGE_TAG", "QUANT_CONTAINER_NAME", "QUANT_WORKSPACE",
-    "QUANT_SSH_PORT", "QUANT_JUPYTER_PORT",
-    "MONETIZE_IMAGE_TAG", "MONETIZE_CONTAINER_NAME", "MONETIZE_WORKSPACE",
-    "MONETIZE_SSH_PORT", "MONETIZE_JUPYTER_PORT",
     "PIP_MIRROR", "CONDA_MIRROR", "BASE_IMAGE",
     "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
     "OMP_NUM_THREADS", "NUITKA_JOBS",
@@ -1095,8 +386,9 @@ def _wsl_bridge_distro() -> Optional[str]:
 
     ``COMPOSE_WSL_DISTRO`` 环境变量（Windows 原生进程，含 .env 同步值）：
       - 设为 ``none`` → 显式关闭桥接（回退门禁；上游修复 Windows 原生后逃生舱）；
-      - 未设 → 默认 ``podman-machine-default``（2026-09-15 起的可靠 compose
-        执行环境；原为 jupyter-podman-rootless，已改名顶替 flapping machine）。
+      - 未设 → 默认 ``podman-machine-default``（client 专用 rootless 发行版，
+        与 flapping 的 Podman Desktop 默认 machine 相互独立、镜像存储不互通；
+        2026-09-15 起的可靠 compose 执行环境）。
     发行版不可启动返回 None（调用方回退门禁）。
     """
     raw = os.environ.get(COMPOSE_WSL_DISTRO_ENV, "").strip()
@@ -1110,7 +402,10 @@ def _wsl_bridge_distro() -> Optional[str]:
     return None
 
 
-def run_in_wsl_bridge(argv: list[str] | None = None) -> Optional[str]:
+def run_in_wsl_bridge(
+    argv: list[str] | None = None,
+    extra_env_keys: tuple[str, ...] | list[str] = (),
+) -> Optional[str]:
     """Windows 原生把当前 compose 任务透明桥接到 WSL 发行版内执行。
 
     - 成功：子进程继承 stdio 实时透传（构建日志/中文原样渲染），返回发行版名
@@ -1118,6 +413,8 @@ def run_in_wsl_bridge(argv: list[str] | None = None) -> Optional[str]:
       子进程非 0 返回码 → ``Exit(rc)`` 原样上抛（防"假成功"）。
     - 不可桥接（非 Windows / 发行版缺失 / none 哨兵 / wsl.exe 无法启动）：
       返回 None，调用方回退门禁提示。
+    - extra_env_keys：本栈专属透传键（来自 StackSpec.bridge_env_keys），与
+      三栈无关的通用键集合并；utils 自身不再枚举任何具体栈（F-10）。
     """
     if platform.system() != "Windows":
         return None
@@ -1129,10 +426,11 @@ def run_in_wsl_bridge(argv: list[str] | None = None) -> Optional[str]:
         return None
     # 当前 cwd → WSL POSIX（任务内相对路径解析与 Windows 侧一致）
     workdir = to_posix_path(Path.cwd())
+    keys = set(_BRIDGE_COMMON_ENV_KEYS) | set(extra_env_keys)
     exports = " ".join(
         f"{k}={shlex.quote(v)}"
         for k, v in os.environ.items()
-        if k in _BRIDGE_ENV_KEYS and v
+        if k in keys and v
     )
     # PATH 前缀双保险（bash -lc 通常已 source profile；找不到 invoke 时仍可命中
     # ~/.local/bin），cwd 先于任务；env 覆盖前缀保持 shell export > .env。
@@ -1151,121 +449,6 @@ def run_in_wsl_bridge(argv: list[str] | None = None) -> Optional[str]:
     if cp.returncode != 0:
         raise Exit(cp.returncode, f"WSL 桥接命令失败 (exit={cp.returncode})，详见上方输出")
     return distro
-
-
-def check_runtime_ready() -> Tuple[bool, Optional[str]]:
-    """检查容器运行时服务端是否可达（ping 测试）。"""
-    try:
-        runtime = detect_runtime()
-    except Exit:
-        return False, "未找到 podman 或 docker，请先安装其中之一"
-
-    result = subprocess.run(
-        [runtime, "version", "--format", "{{.Server.Version}}"],
-        capture_output=True,
-        text=True,
-        timeout=10,
-    )
-    if result.returncode == 0 and result.stdout.strip():
-        return True, None
-
-    if platform.system() == "Windows":
-        hint = (
-            f"无法连接到 {runtime} 服务。请确保 Podman machine 正在运行：\n"
-            f"  podman machine start\n"
-            f"如尚未初始化：podman machine init"
-        )
-    elif platform.system() == "Darwin":
-        hint = (
-            f"无法连接到 {runtime} 服务。请确保 Podman machine 正在运行：\n"
-            f"  podman machine start"
-        )
-    else:
-        hint = (
-            f"无法连接到 {runtime} 服务。请检查 Podman 服务状态：\n"
-            f"  systemctl --user status podman\n"
-            f"  sudo systemctl status podman"
-        )
-    return False, hint
-
-
-def run_cmd(
-    c: Context,
-    cmd: str,
-    pty: bool = False,
-    hide: bool = False,
-    warn: bool = False,
-    echo: bool = True,
-) -> Optional[Result]:
-    """命令执行包装（Windows UTF-8 / 宿主编码双路径，防止乱码/沙箱清空 PATH）。"""
-    subproc_encoding, is_tty_console = _ensure_win32_stdout_transcode()
-    if echo and not hide:
-        print(f"执行: {cmd}")
-    use_pty = pty and platform.system() != "Windows"
-    # 强制统一 Python stdout/stderr 编码为 UTF-8（防止容器内 invoke 输出时被 locale 覆盖）
-    env = os.environ.copy()
-    env.setdefault("PYTHONIOENCODING", "utf-8")
-    env.setdefault("PYTHONUTF8", "1")
-
-    # ── 原生 TTY Console（非 hide / 非 warn）：绕过 invoke c.run PIPE 捕获层
-    #   invoke c.run(pty=False) 内部 subprocess.Popen(stdout=PIPE) → 按 locale cp936 decode
-    #   即便是我们在 B 端加了 encoding='utf-8'，对某些版本的 invoke 仍可能被忽略；
-    #   而 subprocess.call(shell=True, stdout=None, stderr=None) 直接继承父进程
-    #   Console Handle → SetConsoleOutputCP(65001) 已改好，子进程自己写 UTF-8 bytes 就能 100% 渲染对。
-    if (
-        platform.system() == "Windows"
-        and is_tty_console
-        and not hide
-        and not warn
-    ):
-        rc = subprocess.call(cmd, shell=True, env=env)
-        if rc != 0:
-            raise Exit(f"命令执行失败 (exit={rc}): {cmd}")
-        return None
-
-    kwargs: dict = dict(
-        pty=use_pty, hide=hide, warn=warn, echo=False, env=env,
-    )
-    if subproc_encoding:
-        kwargs["encoding"] = subproc_encoding
-    try:
-        return c.run(cmd, **kwargs)
-    except UnexpectedExit as e:
-        if not warn:
-            raise
-        return e.result
-
-
-def generate_random_string(length: int = 12) -> str:
-    """密码安全的随机字符串（密码 16 位 / token 32 位）。"""
-    chars = string.ascii_letters + string.digits
-    return "".join(secrets.choice(chars) for _ in range(length))
-
-
-def container_exists(c: Context, runtime: str, name: str) -> bool:
-    """检查容器是否存在（包括停止态）。"""
-    go_fmt = "{{.Names}}"
-    result = run_cmd(
-        c,
-        runtime + ' ps -a --filter name=^' + name + '$ --format "' + go_fmt + '"',
-        hide=True,
-        warn=True,
-        echo=False,
-    )
-    return result is not None and result.stdout.strip() == name
-
-
-def container_running(c: Context, runtime: str, name: str) -> bool:
-    """检查容器是否正在运行。"""
-    go_fmt = "{{.Names}}"
-    result = run_cmd(
-        c,
-        runtime + ' ps --filter name=^' + name + '$ --format "' + go_fmt + '"',
-        hide=True,
-        warn=True,
-        echo=False,
-    )
-    return result is not None and result.stdout.strip() == name
 
 
 def default_build_cache_dir() -> Path:

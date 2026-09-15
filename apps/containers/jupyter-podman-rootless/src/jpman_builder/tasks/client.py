@@ -10,18 +10,19 @@ from __future__ import annotations
 
 import os
 import shutil
-from contextlib import contextmanager
 
-# Try importing podman-py SDK (optional dependency)
-try:
-    import podman as _podman_sdk
-    from podman.errors import APIError, NotFound as PodmanNotFound
-    _SDK_AVAILABLE = True
-except ImportError:
-    _podman_sdk = None
-    APIError = Exception
-    PodmanNotFound = Exception
-    _SDK_AVAILABLE = False
+# SDK 连接统一层（get_client / sdk_available / podman_sock_path / APIError）
+# 的唯一实现位于组内共享包 jpman_common.connection：
+#   - UID 推导走 env→XDG→getuid→Windows1000 多源事实（C-I5），不再无条件默认 1000；
+#   - get_client 在 builder（多为 Linux 原生）等价于旧 from_env()+ping，
+#     在 Windows 原生额外获得 P0/P1/P2 候选能力，行为承诺（全失败 yield None）不变。
+from jpman_common.connection import (
+    APIError,
+    PodmanNotFound,
+    get_client,
+    podman_sock_path,
+    sdk_available,
+)
 
 # Check for podman-compose (daemon-less declarative backend)
 #
@@ -47,19 +48,8 @@ _COMPOSE_AVAILABLE = _COMPOSE_BINARY_PRESENT and _COMPOSE_HOST_SUPPORTED
 # `newuidmap Operation not permitted`，不可行。改为直连宿主 rootless daemon：
 # 把宿主 `/run/user/<uid>/podman/podman.sock` bind-mount 进容器同一路径，
 # 并设置 `XDG_RUNTIME_DIR=/run/user/<uid>`，让容器内 podman SDK/CLI 复用宿主
-# daemon。默认 uid=1000（WSL2 常见），可用 PODMAN_RUNTIME_UID 环境变量覆盖。
-def _podman_runtime_uid():
-    return os.environ.get("PODMAN_RUNTIME_UID", "1000")
-
-
-def podman_sock_path():
-    """Host rootless daemon socket path (also used as container mount target)."""
-    return f"/run/user/{_podman_runtime_uid()}/podman/podman.sock"
-
-
-def sdk_available():
-    """Check if podman-py SDK is available."""
-    return _SDK_AVAILABLE
+# daemon。UID 推导（env→XDG→getuid→Windows1000）与 socket 路径统一由
+# jpman_common.connection.podman_sock_path 承载（C-I5，禁硬编码 1000）。
 
 
 def compose_available():
@@ -84,37 +74,6 @@ def compose_unavailable_reason():
             "或改用 invoke（自动降级到 SDK/CLI 后端，路径由远端 daemon 解析）"
         )
     return None
-
-
-@contextmanager
-def get_client():
-    """Get container runtime client as context manager.
-
-    Yields PodmanClient instance in SDK mode; yields None when SDK unavailable,
-    caller should check for None and fall back to CLI.
-    """
-    if not _SDK_AVAILABLE:
-        yield None
-        return
-
-    client = None
-    try:
-        client = _podman_sdk.from_env()
-        client.ping()
-        yield client
-    except Exception:
-        if client is not None:
-            try:
-                client.close()
-            except Exception:
-                pass
-        yield None
-    finally:
-        if client is not None:
-            try:
-                client.close()
-            except Exception:
-                pass
 
 
 def sdk_run_kwargs(

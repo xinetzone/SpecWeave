@@ -11,6 +11,7 @@ requires-python = ">=3.14"
 license = {text = "MIT"}
 dependencies = [
     "invoke>=2.0",
+    "jpman-common",
     "python-dotenv>=1.0.0",
 ]
 
@@ -26,10 +27,6 @@ wheel.cmake = false
 build.verbose = false
 build-dir = "build/{wheel_tag}"
 minimum-version = "0.9"
-
-[tool.scikit-build.cmake]
-build-type = "Release"
-args = ["-G", "Ninja"]
 
 [tool.invoke]
 package = "jpman_builder.tasks"
