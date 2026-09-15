@@ -11,7 +11,7 @@ from pathlib import Path
 
 from dotenv import dotenv_values
 from invoke import Context, task
-from invoke.exceptions import Exit
+from invoke.exceptions import Exit, UnexpectedExit
 
 from .client import (
     PodmanNotFound,
@@ -23,8 +23,13 @@ from .client import (
 )
 from .compose_backend import compose_down, compose_ps, compose_up, is_compose_ready
 from .utils import (
+    PHASE_ABSENT,
+    PHASE_RUNNING,
+    PHASE_STOPPED,
+    PHASE_UNKNOWN,
     check_runtime_ready,
     container_exists as cli_container_exists,
+    container_phase,
     detect_runtime,
     generate_random_string,
     normalize_path_str,
@@ -223,6 +228,151 @@ def _run_via_cli(c, name, tag, ssh_port, jupyter_port, workspace_posix,
         print("Container started in foreground")
 
 
+def _read_container_env(c, name):
+    """从现存容器读回启动时注入的 USER_PASSWORD / JUPYTER_TOKEN。
+
+    幂等分支（同名容器已在运行）需要展示**真实**访问凭证而非新生成一组；
+    探测失败返回空 dict，调用方降级为不显示凭证。
+    """
+    runtime = detect_runtime()
+    # 单引号而非双引号：invoke 在 Windows 把命令包装为 pwsh /c "<cmd>"，内嵌双引号
+    # 会截断外层引用（见 shared containers.py 模块注释的实证）。
+    result = run_cmd(
+        c,
+        runtime + ' inspect ' + name
+        + " --format '{{range .Config.Env}}{{println .}}{{end}}'",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    env: dict[str, str] = {}
+    if result is None or not getattr(result, "ok", False):
+        return env
+    wanted = ("USER_PASSWORD", "JUPYTER_TOKEN")
+    for line in (result.stdout or "").splitlines():
+        for key in wanted:
+            prefix = key + "="
+            if line.startswith(prefix):
+                env[key] = line[len(prefix):].strip()
+    return env
+
+
+def reconcile_before_run(c, name, force=False):
+    """``run`` 前同名容器对账（幂等状态机核心）。
+
+    返回调用方应采取的动作：
+      - ``PHASE_RUNNING``：容器运行中且未指定 force → 幂等 no-op，调用方直接展示访问信息
+      - ``PHASE_ABSENT`` ：不存在 / 残留已清理 / 运行中但 force → 调用方继续新建
+      - ``PHASE_UNKNOWN``：探测命令失败 → 调用方继续尝试，由 run 冲突兜底裁决
+
+    2026-09-15 实证：旧实现用布尔 ``container_exists`` 单点探测，命令失败被
+    ``warn=True`` 吞成 False，残留容器存在时裸跑 ``podman run`` 必撞
+    name already in use（exit 125）。四态相位把「不存在」与「探测失败」分开。
+    """
+    runtime = detect_runtime()
+    phase = container_phase(c, runtime, name)
+
+    if phase == PHASE_STOPPED:
+        print(f"[Reconcile] 检测到残留容器 {name}（Created/Exited 等非运行态），强制删除后重建…")
+        run_cmd(c, f"{runtime} rm -f {name}", warn=True, hide=True, echo=False)
+        return PHASE_ABSENT
+
+    if phase == PHASE_RUNNING:
+        if force:
+            print(f"[Reconcile] 容器 {name} 正在运行，--force：删除旧容器后重建…")
+            _stop_via_cli(c, name)
+            return PHASE_ABSENT
+        return PHASE_RUNNING
+
+    if phase == PHASE_UNKNOWN:
+        print(
+            "[Reconcile] 容器状态探测失败（daemon 瞬断/预热？），继续尝试启动；"
+            "若名称冲突将自动对账并重试一次"
+        )
+        return PHASE_UNKNOWN
+
+    return PHASE_ABSENT
+
+
+def _print_already_running_access(c, name, ssh_port, jupyter_port, workspace_path):
+    """幂等分支：展示现存容器的真实访问信息（凭证从容器 env 回读）。"""
+    env = _read_container_env(c, name)
+    print("\n" + "=" * 60)
+    print(f"容器 {name} 已在运行 —— inv run 幂等返回，未重复创建。")
+    print("如需应用新配置重建：invoke stop 后再 invoke run，或 invoke run --force")
+    print(f"  SSH:         ssh -p {ssh_port} devuser@localhost")
+    if env.get("USER_PASSWORD"):
+        print(f"  SSH password: {env['USER_PASSWORD']}")
+    if env.get("JUPYTER_TOKEN"):
+        print(f"  Jupyter Lab: http://localhost:{jupyter_port}/lab?token={env['JUPYTER_TOKEN']}")
+    else:
+        print(f"  Jupyter Lab: http://localhost:{jupyter_port}/lab（token 见容器启动时输出）")
+    print(f"  Workspace:   {workspace_path}")
+    print("=" * 60)
+
+
+def _print_host_key_rotation_hint(ssh_port):
+    """新建容器后的 SSH 主机密钥轮换提示（host key 在容器可写层，重建必轮换）。"""
+    print(
+        "  SSH host key: 容器为新建，主机密钥已轮换。若连接报\n"
+        "                REMOTE HOST IDENTIFICATION HAS CHANGED，请先执行：\n"
+        f'                ssh-keygen -R "[localhost]:{ssh_port}"\n'
+        "                然后重连（首次会提示是否信任新指纹）"
+    )
+
+
+def _is_name_in_use_error(exc):
+    """判断异常是否为 podman 的容器名占用。"""
+    result = getattr(exc, "result", None)
+    text = " ".join(
+        part
+        for part in (
+            str(exc),
+            getattr(result, "stderr", "") or "",
+            getattr(result, "stdout", "") or "",
+        )
+        if part
+    )
+    return "already in use" in text
+
+
+def _run_via_cli_self_heal(
+    c, name, tag, ssh_port, jupyter_port, workspace_posix,
+    user_password, jupyter_token, ssh_public_key, grant_sudo, detach,
+):
+    """CLI 启动 + name-already-in-use 单次自愈（重试上限 1 次）。
+
+    - PIPE 路径：直接读 stderr 中的 ``already in use``；
+    - TTY 控制台路径（Windows）：``run_cmd`` 走 subprocess.call 拿不到 stderr，
+      用失败后相位裁决——同名容器已存在即判定为名称冲突。
+    第二次启动再失败则原样抛出，避免无限重试。
+    """
+    kwargs = dict(
+        tag=tag,
+        ssh_port=ssh_port,
+        jupyter_port=jupyter_port,
+        workspace_posix=workspace_posix,
+        user_password=user_password,
+        jupyter_token=jupyter_token,
+        ssh_public_key=ssh_public_key,
+        grant_sudo=grant_sudo,
+        detach=detach,
+    )
+    try:
+        _run_via_cli(c, name, **kwargs)
+        return
+    except (UnexpectedExit, Exit) as exc:
+        runtime = detect_runtime()
+        conflict = _is_name_in_use_error(exc) or container_phase(
+            c, runtime, name
+        ) in (PHASE_RUNNING, PHASE_STOPPED)
+        if not conflict:
+            raise
+        print(f"[Reconcile] podman 报告容器名 {name} 已占用，强制清理后重试（仅 1 次）…")
+        run_cmd(c, f"{runtime} rm -f {name}", warn=True, hide=True, echo=False)
+        _run_via_cli(c, name, **kwargs)
+
+
 def _status_via_sdk(client, name):
     """Check container status via SDK. Returns True on success."""
     try:
@@ -269,14 +419,17 @@ def _status_via_cli(c, name):
     if not cli_container_exists(c, runtime, name):
         print(f"Container {name} does not exist")
         return
+    # 单引号模板：双引号会被 Windows invoke 的 pwsh /c "..." 包装截断（同 run 探针事故）。
+    # hide=True 捕获后单次打印；否则非 hide 路径在 Windows 会先流式输出再被 print 一遍。
     result = run_cmd(
         c,
-        f'{runtime} ps -a --filter name=^{name}$ --format "table {{{{.Names}}}}\t{{{{.Status}}}}\t{{{{.Ports}}}}"',
-        pty=False,
+        f"{runtime} ps -a --filter name=^{name}$ --format 'table {{{{.Names}}}}\t{{{{.Status}}}}\t{{{{.Ports}}}}'",
+        hide=True,
+        warn=True,
         echo=False,
     )
-    if result:
-        print(result.stdout)
+    if result is not None and getattr(result, "ok", False):
+        print(result.stdout, end="" if result.stdout.endswith("\n") else "\n")
 
 
 def _clean_via_sdk(client, name, tag, volume, image):
@@ -360,11 +513,19 @@ def run(
     ssh_public_key=None,
     grant_sudo=False,
     detach=True,
+    force=False,
     apt_mirror=None,
     conda_mirror=None,
     pip_mirror=None,
 ):
-    """Start Jupyter container.
+    """Start Jupyter container（幂等）。
+
+    同名容器对账（SDK/CLI 路径，compose 路径由 podman-compose 自身保证幂等）：
+      - 已在运行：直接回显真实访问信息后成功返回，不重复创建；
+      - Created/Exited 残留：自动删除后重建；
+      - 状态探测失败：尝试启动，若撞 name already in use（exit 125）自动
+        清理并重试一次；
+      - --force：即使运行中也删除旧容器后重建。
 
     Three-tier backend priority:
       1. podman-compose (declarative YAML, daemon-less, rootless-first)
@@ -414,11 +575,19 @@ def run(
             print(f"  SSH password: {env['USER_PASSWORD']}")
             print(f"  Jupyter Lab: http://localhost:{env['JUPYTER_PORT']}/lab?token={env['JUPYTER_TOKEN']}")
             print(f"  Workspace:   {workspace_path}")
+            _print_host_key_rotation_hint(env["SSH_PORT"])
             print(f"\n[Compose] You can also manage with: podman-compose ps/logs/exec/down")
             print("=" * 60)
             return
         print("[Compose] Start failed, falling back to SDK/CLI...")
     else:
+        # SDK/CLI 路径专属的同名容器对账（Tier1 compose 的幂等性由其自身保证）。
+        # 对账先于密钥生成：幂等命中时展示容器内现存凭证，不打印用不上的新密钥。
+        action = reconcile_before_run(c, name, force=force)
+        if action == PHASE_RUNNING:
+            _print_already_running_access(c, name, ssh_port, jupyter_port, workspace_path)
+            return
+
         if user_password is None:
             user_password = generate_random_string(16)
             print(f"Auto-generated user password: {user_password}")
@@ -440,7 +609,7 @@ def run(
                     user_password, jupyter_token, ssh_public_key, grant_sudo, detach,
                 )
     if not sdk_ok:
-        _run_via_cli(
+        _run_via_cli_self_heal(
             c, name, tag, ssh_port, jupyter_port, workspace_posix,
             user_password, jupyter_token, ssh_public_key, grant_sudo, detach,
         )
@@ -451,6 +620,7 @@ def run(
     print(f"  SSH password: {user_password}")
     print(f"  Jupyter Lab: http://localhost:{jupyter_port}/lab?token={jupyter_token}")
     print(f"  Workspace:   {workspace_path}")
+    _print_host_key_rotation_hint(ssh_port)
     print("=" * 60)
 
 

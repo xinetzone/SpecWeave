@@ -271,6 +271,18 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 
 **排查方法**：若怀疑 shell 失效，直接跑 `python -c "from invoke import Context; r=Context().run('podman --version', hide=True, warn=True); print(r.ok, r.stdout, r.stderr)"`——`ok=False` 且 stderr 出现 pwsh 用法帮助即为本问题。
 
+### 探测/隐藏命令零双引号（2026-09-15 实证追加）
+
+即使 shell 路径正确，`f'{shell} /c "{cmd}"'` 的外层双引号包装仍在：**命令字符串内嵌的任何双引号都会提前截断外层引用**，残片被 pwsh 当自身参数解析（实证：`--format "{{.Names}}"` 报 `unknown shorthand flag: 'i' in -inputFormat`、`'e' in -encodedarguments`）。这类命令在 `warn=True` 下**必然 rc=1 且被静默吞掉**，比 shell 配置失效更隐蔽——普通命令正常、只有含引号的探针坏。
+
+硬约束：
+
+- **存在性/状态探针禁止用双引号 Go 模板**。用零引号的 `-q` ID 探测：`podman ps -q --filter name=^NAME$`（非空 ID=命中）、加 `--filter status=running` 判运行态；name regex 必须 `^...$` 锚定。参考实现：`jpman_common.containers.container_phase()`（四态 running/stopped/absent/unknown）。
+- 确需 Go 模板（如 inspect 回读 env、status 表格）时用**单引号**：`--format '{{...}}'`（pwsh 与 POSIX shell 均保留字面量；cmd.exe 不支持，但组内 Windows shell 已锁定 pwsh）。
+- **探测结论必须三态化**：成功命中 / 成功未命中 / 探测失败（None/unknown）。禁止把「命令失败」降级为布尔 False——那会把 unknown 误判成 absent，进而盲删/重建用户正在运行的容器。
+- 新增含 podman/docker 子命令字符串的代码，自查字符串中是否出现 `"`；评审项：探针能否在 `pwsh /c "..."` 包装下存活。
+- **通道边界（2026-09-15 实证）**：本规则仅适用于 builder（shell 锁定 pwsh）。client 包**不覆盖** shell，Windows 走 COMSPEC（cmd.exe）——其 `--format "..."` 双引号在该通道是**正确**写法（单引号反而成为字面量），勿跨包「修复」，详见 client `.agents/rules/invoke-tasks.md` §3.4。
+
 ## 验证清单
 
 新增/修改invoke任务后必须验证：
@@ -284,6 +296,8 @@ def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
 - [ ] 随机密码/token生成正确（密码16位，token32位）
 - [ ] `invoke build`构建成功
 - [ ] `invoke run`启动成功并打印访问信息
+- [ ] **`invoke run` 四态对账**：运行中再跑一次幂等 no-op（容器 ID 不变、回显现存凭证）；Exited 残留自动重建；`--force` 强制重建（见「探测/隐藏命令零双引号」）
+- [ ] **探针/隐藏命令字符串不含双引号**（grep 自查 `--format "`；必须用模板时改单引号）
 - [ ] `invoke status`正确显示容器状态
 - [ ] `invoke shell`可进入容器
 - [ ] `invoke stop`可停止并删除容器

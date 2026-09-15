@@ -5,8 +5,13 @@
 ``MIRROR_CHOICES`` 为构建端镜像源专属常量，仍定义于此。
 """
 from jpman_common import (
+    PHASE_ABSENT,
+    PHASE_RUNNING,
+    PHASE_STOPPED,
+    PHASE_UNKNOWN,
     check_runtime_ready,
     container_exists,
+    container_phase,
     container_running,
     detect_runtime,
     generate_random_string,
@@ -19,8 +24,13 @@ MIRROR_CHOICES: list[str] = ["official", "tuna", "aliyun"]
 
 __all__ = [
     "MIRROR_CHOICES",
+    "PHASE_ABSENT",
+    "PHASE_RUNNING",
+    "PHASE_STOPPED",
+    "PHASE_UNKNOWN",
     "check_runtime_ready",
     "container_exists",
+    "container_phase",
     "container_running",
     "detect_runtime",
     "generate_random_string",

@@ -12,7 +12,7 @@ source: "README.md#invoke-任务参考"
 | 命令 | 说明 | 示例 |
 |------|------|------|
 | `invoke build` | 构建镜像 | `invoke build --apt-mirror aliyun --no-cache` |
-| `invoke run` | 启动容器 | `invoke run --grant-sudo --ssh-port 2222` |
+| `invoke run` | 启动容器（幂等：运行中 no-op 并回显现存凭证，停止态自动重建；`--force` 强制重建） | `invoke run --grant-sudo --ssh-port 2222` |
 | `invoke stop` | 停止并删除容器 | `invoke stop` |
 | `invoke status` | 查看容器状态 | `invoke status` |
 | `invoke shell` | 进入容器Shell | `invoke shell --user root` |

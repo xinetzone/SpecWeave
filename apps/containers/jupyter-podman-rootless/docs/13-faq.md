@@ -38,6 +38,35 @@ podman build -t jupyter-podman-rootless:cp314 \
 
 ## 运行问题
 
+### Q: 重复执行 `invoke run` 会不会重建容器？
+
+不会（2026-09-15 起）。`invoke run` 启动前先对同名容器做四态对账：
+
+| 容器状态 | 行为 |
+|---|---|
+| running（运行中） | **幂等 no-op**：不重建、不重启，直接回显访问信息；密码/token 从现存容器 `inspect` 回读（即创建时那一组），不会再打印一组用不上的新密钥 |
+| stopped/exited（残留） | 自动 `rm -f` 旧容器后重建 |
+| absent（不存在） | 正常创建 |
+| unknown（探测命令失败） | 放行尝试创建；若仍撞名则单次自愈重试，**绝不盲删运行中的容器** |
+
+需要让运行中的容器也应用新配置：
+
+```bash
+invoke run --force        # 等价于删除旧容器后重建
+# 或
+invoke stop && invoke run
+```
+
+### Q: `invoke run` 报 `container name "jupyter-podman" is already in use`（exit 125）？
+
+存在同名残留容器（常见于上次创建后容器 Exited，或手动 `podman stop` 过）。现代版本的 `invoke run` 已在启动前自动对账清理；若仍遇到该报错：
+
+1. 查看残留：`podman ps -a --filter name=^jupyter-podman$`
+2. 直接重跑 `invoke run`（停止态残留会被自动删除重建）；确认不要保留时可手动 `podman rm -f jupyter-podman`
+3. 若排查信息显示探测异常（相位 unknown），先确认 Podman machine 正在运行：`podman --version` 与 `podman ps` 能正常返回
+
+> 历史根因（Windows）：invoke 以 `pwsh /c "<命令>"` 包装执行，探针命令里的双引号 Go 模板（`--format "{{.Names}}"`）会截断外层引用导致探测必然失败，失败又被静默当成「容器不存在」。2026-09-15 起探针改为零引号的 `ps -q --filter name=^NAME$`（输出容器 ID，非空即命中），并区分「不存在」与「探测失败」。
+
 ### Q: Podman 报错 "fuse: device not found"？
 
 运行容器时必须添加 `--device /dev/fuse` 参数：
@@ -68,6 +97,21 @@ invoke的`utils.to_posix_path()`会自动将Windows路径转换为WSL2路径：
 3. 查看启动日志获取密码：`podman logs jupyter-podman | grep -A2 -B2 "SSH:"`
 4. 确认使用正确的端口（默认2222）：`ssh -p 2222 devuser@localhost`
 5. 检查防火墙设置
+
+### Q: SSH 报 `REMOTE HOST IDENTIFICATION HAS CHANGED` / `Host key verification failed`？
+
+容器被**重建**后的预期现象（不是攻击）：SSH 主机密钥在容器首次启动时生成、存于容器可写层，`invoke run` 的停止态自动重建、`invoke run --force`、`invoke stop && invoke run` 或手动 `podman rm` 后都会轮换；本机 `~/.ssh/known_hosts` 仍记着旧容器的指纹，strict checking 因此拒绝连接。
+
+处理一条命令（Windows PowerShell / Linux / macOS 相同）：
+
+```bash
+ssh-keygen -R "[localhost]:2222"
+ssh -p 2222 devuser@localhost   # 重新信任新指纹后输入密码
+```
+
+> 安全提示：在网络可信的本机端口转发场景可直接接受；若在共享网络或非本机环境看到此警告，应先核对指纹（容器内执行 `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key`）再接受。
+>
+> 自 2026-09-15 起，`invoke run` 在**新建**容器的 Access info 中会直接打印上述命令；幂等命中（容器未重建）不会轮换密钥、也无此提示。注意 `podman restart`/单纯停启不轮换，只有删除重建才轮换。
 
 ### Q: 忘记密码/token怎么办？
 

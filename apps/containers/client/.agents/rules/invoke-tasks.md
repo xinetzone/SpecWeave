@@ -148,6 +148,15 @@ C-I5（必选核心 socket）与 C-I3（opt-in 透传资源）的诊断分流：
 6. **返回值契约**：统一返回 `LoadImageResult(loaded: bool, tags: list[str], id: str, message: str)`；
    任务层仅在 `loaded=False` 时 `raise Exit(1, message)`，**禁止**在 client_core 层直接 raise Exit。
 
+### 3.4 Windows shell 引用契约（cmd.exe 通道，勿与 builder 的 pwsh 规则混用）
+
+client 的 invoke **不覆盖** `run.shell`——Windows 原生 CPython 下 runner 走 `COMSPEC`（`C:\WINDOWS\system32\cmd.exe`，2026-09-15 实证）；POSIX 环境（Linux/WSL/容器内 B-scheme/macOS）走 `/bin/sh`。
+
+- **CLI 命令中的 Go 模板必须用双引号**：`--format "{{.ID}}|..."`、`image inspect --format "{{.Digest}}"` 在 cmd.exe 与 POSIX shell 下都能正确展开；cmd.exe 下双引号还能保证模板内的 `|` 保持字面量（不被当成管道符）。
+- **严禁把这些双引号改成单引号**：cmd.exe 不识别单引号引用，`'{{.Digest}}'` 的单引号会作为**字面量字符**传给 podman（实证输出 `'sha256:...'`），直接污染 tag 成员判定（`_ensure_image_built`）、digest 指纹比对（`rebuild_client_layer`）与 `|` 分隔解析（`_list_images_cli`）。
+- **对照**：builder（jupyter-podman-rootless）显式把 shell 锁成 pwsh 7，其通道是 `pwsh /c "<cmd>"` 包装、内嵌双引号会截断外层引用，故 builder 探针要求零引号/单引号——两条通道规则**相反，禁止跨包照搬**。
+- 现状清单（双引号即正确，评审勿当缺陷）：`client_core.py` 的 `_list_images_cli` / `_status_via_cli` / `_save_via_cli`、`env_in_container.py` 的 `_ensure_image_built` / `rebuild_client_layer` digest 探测。
+
 ## 4. 命名空间规范（`__init__.py`）
 
 `src/jpman_client/tasks/__init__.py` 必须同时提供三套入口（人类用户习惯短命令；集成调用习惯容器前缀；容器内自举习惯 env.* 前缀）：

@@ -6,6 +6,12 @@
 
 ## [Unreleased]
 
+### 2026-09-15 · `docs:` 固化 Windows shell 引用契约（cmd.exe 通道双引号为正确写法，推翻「3 处双引号遗留」误判）
+
+**关联七概念场景**：场景2「问题解决」（builder `inv run` 修复的 V/C 延伸实证，session sc-20260915-inv-run-stale-container）。
+
+builder 侧 `inv run` 修复后初稿把 client 的 4 处 `--format "..."`（`env_in_container.py` images/digest 2 处、`client_core.py` images/ps 2 处）登记为同款遗留。补验推翻：client 的 invoke **不覆盖** `run.shell`，Windows runner 实测为 `C:\WINDOWS\system32\cmd.exe`（COMSPEC），与 builder 显式锁定的 pwsh 7 是两条相反规则的通道——双引号命令在 cmd.exe 下全部 rc=0 且模板正确展开（含 `|` 分隔模板，Python 解析出 5 行镜像）；单引号会被当字面量传入（实证输出 `'sha256:...'`），将污染 tag 成员判定/digest 指纹比对。故**零代码改动**，仅在 `.agents/rules/invoke-tasks.md` 新增 §3.4「Windows shell 引用契约」固化正反两面规则与现状清单，并同步修正 builder CHANGELOG/规则中的错误遗留描述。验收：诊断脚本 5 用例（images 双/单引号对照、ps table、inspect digest 双/单引号对照）+ 复合模板解析实证，脚本用后即删。
+
 ### 2026-09-15 · `refactor:` 学习 OKF 容器知识包重构 apps/containers（jpman-common 共享包 + overlay_core 声明式内核 + compose extends）
 
 **关联七概念场景**：场景3「重构优化」（I→F→A→V→C，V 强制）；用户输入「学习 projects/awesome-okf-xs/doc/bundles/jishu/containers 优化 apps/containers」。规格 `.trae/specs/infra-env/containers-okf-refactor/`（用户已批准）。三项架构裁决：①两端共享包 `apps/containers/shared`，包名 **jpman-common**；②compose 公共段用 **extends 服务级继承**抽 `overlays/_shared/base-rootless.yaml`；③静态等价 + daemon-free 单测验收，真机 E2E 用户环境恢复后后补。

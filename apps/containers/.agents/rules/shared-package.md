@@ -31,7 +31,7 @@ source: "../../shared/pyproject.toml + ../../shared/src/jpman_common/ + ../../cl
 | `connection.py` | **podman SDK 连接层唯一事实源**：`get_client()` 上下文管理器、`sdk_base_url_candidates`、`host_runtime_uid`、`podman_sock_path`、`ensure_host_podman_socket`、`sdk_available`、`APIError`/`PodmanNotFound` 再导出等 | **全组唯一允许 `import podman` 的模块**（经 `[sdk]` extra 可选安装） |
 | `platform_paths.py` | 跨平台路径：`to_posix_path` / `normalize_path_str` | Dimension A（卷挂载路径） |
 | `proc.py` | 进程执行与运行时探测：`run_cmd` / `detect_runtime` / `check_runtime_ready` / `generate_random_string` | |
-| `containers.py` | **只读**容器状态探测（CLI 路径）：`container_exists` / `container_running` | 仅 `ps --filter`，无任何写操作 |
+| `containers.py` | **只读**容器状态探测（CLI 路径）：`container_phase()` 四态（`PHASE_RUNNING/STOPPED/ABSENT/UNKNOWN`）+ 布尔兼容垫片 `container_exists` / `container_running` | 仅 `ps -q --filter`（零双引号，Windows invoke 安全），无任何写操作 |
 | `_win32_transcode.py` | Windows 输出转码（UTF-16 LE 等） | |
 
 **准入判据（全部满足才可放入 shared）**：
@@ -45,7 +45,7 @@ source: "../../shared/pyproject.toml + ../../shared/src/jpman_common/ + ../../cl
 
 - `ContainerConfig`（rootless 三必需的数据载体）定义在消费端
   [client/src/jpman_client/tasks/utils.py](../../client/src/jpman_client/tasks/utils.py)，
-  **不在** `jpman_common/containers.py`——后者只有只读探测两个函数。引用时不得张冠李戴。
+  **不在** `jpman_common/containers.py`——后者只有只读探测函数（`container_phase` 四态 + 两个布尔垫片）。引用时不得张冠李戴。
 - 工作负载栈编排内核 `overlay_core.py`、`StackSpec` 属 client 任务层（栈消费者仅 client 一端）。
 - rootless 三必需的**代码事实源**有三处（构建端 manage.py、消费端 ContainerConfig、三栈公共
   base-rootless.yaml），shared 不持有该配置；G3 契约的索引在组级 AGENTS.md。
