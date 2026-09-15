@@ -138,6 +138,13 @@ def merge_one(a, b, key=None):
         return copy.deepcopy(b)
     if a is None and isinstance(b, dict):
         a = {}
+    # depends_on 在真实实现中先做 list↔dict 归一化再合并（L2276-L2281）：
+    # list 形态等价于 {项: {}}，故 list+dict 不抛类型冲突
+    if key == "depends_on":
+        if isinstance(a, list) and isinstance(b, dict):
+            a = {x: {} for x in a}
+        elif isinstance(a, dict) and isinstance(b, list):
+            b = {x: {} for x in b}
     if isinstance(a, dict) and isinstance(b, dict):
         out = copy.deepcopy(a)
         for k, v in b.items():
@@ -348,6 +355,16 @@ def test_simulator_type_conflict_raises_value_error():
     assert merge_one(None, {"k": "v"}, key="labels") == {"k": "v"}
 
 
+def test_simulator_depends_on_list_dict_normalized():
+    # vendor L2276-L2281：depends_on 的 list 等价 {项: {}}，list+dict 不抛冲突
+    assert merge_one(["a", "b"], {"b": {"condition": "ok"}, "c": {}},
+                     key="depends_on") == {
+        "a": {}, "b": {"condition": "ok"}, "c": {},
+    }
+    assert merge_one({"a": {"restart": True}}, ["b"],
+                     key="depends_on") == {"a": {"restart": True}, "b": {}}
+
+
 # ── 与真实 podman-compose 1.6.0 rec_merge 直接对照（防模拟器漂移）─────────────
 
 def _real_podman_compose():
@@ -380,6 +397,10 @@ _REC_MERGE_PROBES = [
      {"volumes": [{"type": "bind", "source": "s2", "target": "/w"}]}),
     # 匿名卷 + 短语法混合
     ({"volumes": ["anon", "/h1:/w"]}, {"volumes": ["/h2:/w"]}),
+    # depends_on list↔dict 归一化后取并集（vendor L2276-L2281）
+    ({"depends_on": ["a", "b"]},
+     {"depends_on": {"b": {"condition": "ok"}, "c": {}}}),
+    ({"depends_on": {"a": {"restart": True}}}, {"depends_on": ["b"]}),
 ]
 
 
