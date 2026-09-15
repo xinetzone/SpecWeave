@@ -32,9 +32,9 @@
    ```
 3. **Windows 原生自动桥接**：`invoke quant.*` 走 podman-compose 子进程，
    Windows 原生 CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`
-   （或 `COMPOSE_WSL_DISTRO` 指定目标；该发行版由 jupyter-podman-rootless
-   改名顶替）执行；发行版不可用/`none` 才回退
-   门禁。也可手动二选一：
+   （client 专用 rootless 发行版，与 flapping 的 Podman Desktop 默认 machine
+   相互独立、镜像存储不互通；或 `COMPOSE_WSL_DISTRO` 指定目标）执行；
+   发行版不可用/`none` 才回退门禁。也可手动二选一：
    - 在 WSL2 发行版内执行（推荐）：
      ```bash
      wsl -d <发行版>

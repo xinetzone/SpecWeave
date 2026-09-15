@@ -46,7 +46,9 @@ apps/agent-monetize 源码，Windows 原生门禁
 - **Python 环境**：Python ≥ 3.14，构建后端 scikit-build-core，src 布局，wheel package=`["src/jpman_client"]`
 - **跨平台**：WSL2 / Linux（原生 unix socket）+ macOS + **Windows 11 原生 CPython（WSL9P/Machine/tcp 多候选）**
 - **任务管理**：invoke（`src/jpman_client/tasks/` 包，根 `tasks.py` 仅转发入口），六命名空间——根（`load`/`images`/`save`/`run`/`stop`/`status`/`clean`）+ `container.*` 别名 + `env.*` 自举（`build-layer`/`run-cmd`/`shell`）+ `quant.*` 量化栈（6 任务）+ `xmnn.*` 开发/打包栈（8 任务，LLVM/Nuitka 双 ABI）+ `monetize.*` 开发/tvm-ffi 原生编译打包栈（`build`/`up`/`down`/`ps`/`logs`/`smoke`/`build-native`/`wheel`，apt clang+apache-tvm-ffi 轻量栈）；后三者为 podman-compose 子进程层，Windows 原生门禁
-- **工作负载叠加层**：`overlays/onnx-quantized/`（ONNX 量化，cp314t 五包+3 冒烟，2222/8888）；`overlays/xmnn-dev/`（XMNN 源码调试+Nuitka 打包，双 ABI+LLVM 22，2223/8890，bind npu 源码）；`overlays/agent-monetize-dev/`（agent-monetize 源码调试 + apt clang/apache-tvm-ffi 编译单 tvm-ffi .so + 纯 Python wheel，单一 cp314 GIL，2224/8892，bind apps/agent-monetize）
+- **编排内核（2026-09-15 重构后）**：三栈共享数据驱动内核 `tasks/overlay_core.py`（`StackSpec`/`SourceMount`/`SmokeSpec`/`TaskDocs` frozen dataclass + gates/prepare_env/compose_argv/run_compose/reconcile/build/up/down/ps/logs/smoke 内核 + `make_stack_tasks()` 六任务工厂）；`quant.py`/`xmnn.py`/`monetize.py` 已瘦身为纯声明模块（`<NAME>_SPEC` + `TASKS` 字典 + 六别名，长任务例外），同构编排函数唯一定义在内核（详见 C14）
+- **组内共享包**：平台/进程/容器只读工具与 SDK 连接层唯一实现在兄弟目录 [../shared](../shared)（包名 `jpman_common`，发行名 jpman-common 0.1.0，scikit-build-core 纯 Python 包）；本包 `utils.py`/`client_core.py` 仅再导出垫片，pyproject 依赖 `jpman-common`；安装顺序先 shared 后 client（见 [docs/01-getting-started.md](docs/01-getting-started.md)）
+- **工作负载叠加层**：`overlays/_shared/base-rootless.yaml`（rootless 基服务 `rootless-base`：三必需+凭证四变量+network_mode bridge+公共 label/restart，extends 单一事实源）；`overlays/onnx-quantized/`（ONNX 量化，cp314t 五包+3 冒烟，2222/8888）；`overlays/xmnn-dev/`（XMNN 源码调试+Nuitka 打包，双 ABI+LLVM 22，2223/8890，bind npu 源码）；`overlays/agent-monetize-dev/`（agent-monetize 源码调试 + apt clang/apache-tvm-ffi 编译单 tvm-ffi .so + 纯 Python wheel，单一 cp314 GIL，2224/8892，bind apps/agent-monetize）。三栈 compose.yaml 以 `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}` 继承基段
 - **Windows WSL 核心能力**：SDK 连接四级优先级（P0 env → P1 WSL9P → P2 Machine → P3 tcp），三变量逃生舱（`PODMAN_CLIENT_SDK_STRATEGY` / `WSL_DISTRO_NAME` / `CONTAINER_HOST`），W-I1~W-I3 30秒速查表
 - **rootless 三必需**（所有启动路径硬编码，调用方不可覆盖）：`--device /dev/fuse` + `--security-opt label=disable` + `--cgroupns=host`，**严禁 `--privileged`**
 - **运行时透传**（对齐构建端 `docs/07-toolbx-passthrough.md`）：`invoke run` 提供 5 个独立开关 `--host-network` / `--wayland` / `--gpu` / `--usb` / `--dbus`，**默认全关 = 默认隔离**；参数由 `utils.py::build_passthrough_spec` 统一产出（SDK 与 CLI 共用同一份，禁止各自拼接）；资源在 daemon 宿主侧解析，缺失时按 **C-I3** 诊断翻译为可执行指引
@@ -73,12 +75,15 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
             │       ├─ xmnn-overlay.md         ← xmnn.* 开发/打包栈（双 ABI/LLVM 22/源码运行时挂载/AST 还原/SONAME 守卫）
             │       └─ monetize-overlay.md     ← monetize.* tvm-ffi 原生编译栈（apt clang/单一 GIL/3 处源码适配/.so 不入 wheel）
             ├─ overlays/                      ← 工作负载叠加层（opt-in，镜像与 compose 栈自包含）
+            │   ├─ _shared/base-rootless.yaml ← rootless 基服务（extends 单一事实源：三必需/凭证四变量/bridge/labels/restart）
             │   ├─ onnx-quantized/            ← ONNX 量化工具链（Containerfile.quantized + compose*.yaml + smoke/ + docs/）
             │   ├─ xmnn-dev/                  ← XMNN 源码调试+Nuitka 打包（Containerfile.xmnn-dev + compose.yaml + builder/ + smoke/）
             │   └─ agent-monetize-dev/        ← agent-monetize 调试+tvm-ffi 原生编译/纯 Python wheel（Containerfile.agent-monetize + compose.yaml + builder/ + smoke/）
+            ├─ ../shared/                     ← 组内共享包 apps/containers/shared（jpman_common：connection 连接层 + proc/platform_paths/containers 只读工具；先安装）
             ├─ tasks.py                        ← invoke 入口转发器（转发至 jpman_client.tasks）
-            ├─ src/jpman_client/tasks/         ← invoke 任务定义（8 个模块：__init__ / client_core / env_in_container / manage / monetize / quant / xmnn / utils）
-            ├─ pyproject.toml                  ← Python 配置（podman>=5 + python-dotenv>=1 + scikit-build-core；[compose] extra = podman-compose）
+            ├─ src/jpman_client/tasks/         ← invoke 任务定义（9 个模块：__init__ / client_core / env_in_container / manage / overlay_core 内核 / quant / xmnn / monetize 声明栈 / utils 垫片）
+            ├─ tests/                          ← daemon-free 单测：test_overlay_core.py（内核黄金快照）+ test_tasks_surface.py（命名空间表面黄金清单）+ test_compose_merge.py（extends 合并 AC-3）
+            ├─ pyproject.toml                  ← Python 配置（jpman-common + podman + python-dotenv + scikit-build-core；[compose] extra = podman-compose）
             ├─ .env.example                    ← 环境变量模板（容器级 9 + SDK 4 + quant 12 + xmnn 17 + monetize 键）
             └─ .gitignore                      ← git 忽略（.env / __pycache__ / .temp / workspace / 等）
 ```
@@ -93,6 +98,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | podman-py SDK 连接行为修改 / 新增 scheme | [.agents/rules/sdk-connection.md](.agents/rules/sdk-connection.md) | 6 合法 scheme 白名单、无 npipe、`base_url` 在 Windows 必须显式、策略归一化 |
 | Windows 11 WSL2 探测逻辑修改 / 新增发行版兼容 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版回退、UID 不硬编码 1000、UTF-16 LE 解析中文 Windows、W-I1~W-I3 修复 |
 | 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [docs/06-run-discipline.md](docs/06-run-discipline.md) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
+| 新增第四工作负载栈（声明 StackSpec） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) §声明式栈 + [../../../.agents/skills/client-overlay-scaffold/SKILL.md](../../../.agents/skills/client-overlay-scaffold/SKILL.md) | 2026-09-15 后新栈只能写声明模块：`<NAME>_SPEC` StackSpec + `TASKS` + 六别名；compose 用 extends `_shared/base-rootless.yaml`；禁止复制编排同构函数（C14） |
 | quant.\* 工作负载栈（量化叠加镜像/compose up-down/冒烟/GPU opt-in） | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | 子进程边界（禁 import podman）、Windows 原生门禁、三必需 compose 映射、list 追加深合并、镜像守卫契约 |
 | 叠加镜像 Containerfile.quantized 修改 / 量化包版本 / 冒烟脚本 | [overlays/onnx-quantized/](overlays/onnx-quantized/README.md) + [quant-overlay.md](.agents/rules/quant-overlay.md) §6 | FROM rootless、main cp314t、版本三重实证、OCI 引号教训、守卫不可删 |
 | xmnn.\* 开发/打包栈（源码挂载/TVM 编译/Nuitka wheel/双 ABI） | [.agents/rules/xmnn-overlay.md](.agents/rules/xmnn-overlay.md) | 子进程边界（禁 import podman）、Windows 门禁、双 ABI 不互换、源码仅运行时挂载、AST 注入还原、SONAME glob 守卫、ccache 卷 |
@@ -124,7 +130,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | agent-monetize-dev 叠加层（人类文档） | [overlays/agent-monetize-dev/README.md](overlays/agent-monetize-dev/README.md) | tvm-ffi 原生编译/纯 Python wheel、invoke/裸 compose、与 xmnn-dev 轻量对比、排障 |
 | 人类操作文档 | [docs/README.md](docs/README.md) | 文档导航索引：入门 / 使用参考 / 架构与高级主题（安装 / 快速开始 / WSL 说明 / .env 完整清单 / 分工表） |
 | 环境变量模板 | [.env.example](.env.example) | 容器级 9 项 + SDK 级 4 项 + 三栈插值键完整带注释模板 |
-| 源代码真源 | `src/jpman_client/tasks/`（`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py` / `quant.py` / `xmnn.py` / `monetize.py`） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
+| 源代码真源 | 编排内核 `src/jpman_client/tasks/overlay_core.py`；声明栈 `quant.py` / `xmnn.py` / `monetize.py`；共享只读层与连接层 [../shared/src/jpman_common/](../shared/src/jpman_common/)（`utils.py`/`client_core.py` 仅再导出垫片） | 行为与文档冲突时以源代码为准，README/AGENTS 同步后通过对抗审查更新 |
 
 ## 项目约束速览（P0 硬约束，违反 = PR 打回）
 
@@ -144,7 +150,12 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | C10 | **修复即闭环三阶段**：任何 Bug 修复必须走 `修复点 → 预防（为什么下次不会再出现？如加白名单/加断言） → 闭环（诊断文案对齐速查表 W-I1~W-I3 / C-I1~C-I2，README 同步更新）`；严禁只做纯点修复不改对应 README/诊断文案。**容器内坑（C-Ix）与平台无关，其在 `windows_diagnose_hint()` 中的分支必须置于 `platform.system() != "Windows"` 守卫之前**，否则容器内（Linux）永远匹配不到 | 根 AGENTS 开发规范 + 本文件 §约束速览 |
 | C11 | **quant.\* 是 podman-compose 子进程层**：quant.py 禁止 `import podman`；Windows 原生一律门禁 Exit(1)（双路径指引），POSIX 缺二进制提示 `[compose]` extra；rootless 三必需只允许用 compose 标准字段（devices/security_opt/cgroupns）表达，严禁 privileged，GPU 覆盖遵循 list 追加语义只写新增设备；compose 层禁止回流根 `invoke run` | [quant-overlay.md](.agents/rules/quant-overlay.md) + `quant.py` |
 | C12 | **xmnn.\* 同为 podman-compose 子进程层**：xmnn.py 禁止 `import podman`，沿用 C11 双门禁/三必需标准字段、严禁 privileged、不回流根 run；**双 ABI 不可互换**——Nuitka 打包/内核固定 base env `/opt/conda/bin/python`（cp314 GIL，nuitka==4.1.3），main env 保持 cp314t，conda 装 LLVM 22.1.8 必须 pin `python=*=*cp314t`；**源码仅运行时 bind 挂载**（构建期零接触 external/chaos，禁引 ai/ 与 BuildKit bind）；打包内核自包含于 `/opt/xmnn-builder`，AST PREAMBLE 注入必须 trap 还原（外部源码树零修改），SONAME glob 守卫不得降级为 WARNING | [xmnn-overlay.md](.agents/rules/xmnn-overlay.md) + `xmnn.py` |
-| C13 | **monetize.\* 同族子进程 + 单一 GIL/源码适配边界**：monetize.py 沿用 C11 双门禁/三必需/禁 privileged/不回流；编译/内核固定 base cp314 GIL（apache-tvm-ffi wheel 仅 cp314 GIL），apt clang + pip tvm-ffi 头库；agent-monetize 源码改动**仅限 3 处跨平台适配**（config.py/config.yaml/test_ffi.py，.dll→平台选择），不改打分业务与 build.ps1；.so 不打入 wheel | [monetize-overlay.md](.agents/rules/monetize-overlay.md) + `monetize.py` |
+| C13 | **monetize.\* 同族子进程 + 单一 GIL/源码适配边界**：monetize.py 沿用 C11 双门禁/三必需/禁 privileged/不回流；编译/内核固定 base cp314 GIL（apache-tvm-ffi wheel 仅 cp314 GIL），apt clang + pip tvm-ffi 头库；agent-monetize 源码改动**仅限 3 处跨平台适配**（config.py/config.yaml/test_ffi.py，.dll→平台选择），不改打分业务与 build.ps1；.so 不打入 wheel | [monetize-overlay.md](.agents/rules/monetize-overlay.md) + `overlay_core.py` + `monetize.py` |
+| C14 | **声明式栈分层红线（2026-09-15 重构后）**：① `jpman_common`（../shared）与 `overlay_core.py` **零栈知识**——内核只允许 import 标准库/`.manage`/`.utils`/`jpman_common`，**禁止 import quant/xmnn/monetize 或 podman**；所有栈差异经 `StackSpec` 字段表达；② `quant.py`/`xmnn.py`/`monetize.py` 及未来栈模块**只写声明**（`<NAME>_SPEC` + `TASKS` + 别名，长任务例外），**禁止内嵌与内核同构的编排函数**，模块 ≤160 行；③ compose 三必需/凭证/bridge 公共段**唯一事实源**为 `overlays/_shared/base-rootless.yaml`，栈 compose.yaml 只保留差异段并 `extends` 服务级继承，禁止重复三必需字段；④ podman SDK 只允许出现在 `jpman_common.connection`（optional `[sdk]` extra），栈模块禁 `import podman`（沿用 C11-C13） | [invoke-tasks.md](.agents/rules/invoke-tasks.md) §声明式栈 + [quant-overlay.md](.agents/rules/quant-overlay.md) §1 + `overlay_core.py` |
+
+### 新增第四栈的唯一正确路径（2026-09-15 后）
+
+禁止再复制 quant/xmnn/monetize 任一模块起手。标准路径：① 装载 [client-overlay-scaffold](../../../.agents/skills/client-overlay-scaffold/SKILL.md) 技能生成 12 件套；② Python 侧只写 `tasks/<name>.py` 声明模块（`StackSpec(...)` 经 `make_stack_tasks(spec)` 产六任务，按形态 B 追加长任务并在 `TASKS` 注册）；③ compose 侧以 `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}` 继承基段，只写 image/build/ports/volumes/栈专属 env；④ 在 `tests/test_tasks_surface.py` 黄金清单与 `tests/test_compose_merge.py` 渲染断言中登记新栈；⑤ 静态等价 + daemon-free 单测验收，真机 E2E 后补（清单见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md) 2026-09-15 条目）。
 
 ## 快速开始（人类 & AI 共用最小验证路径）
 
@@ -156,10 +167,11 @@ wsl -d Ubuntu -- bash -lc "sudo loginctl enable-linger \$USER && systemctl --use
 # 2. 首次使用 Podman Machine 顺手把 known_hosts 写了（防 W-I3，没装可跳过）
 # podman machine ssh true  # yes 回车
 
-# 3. 安装消费端 + 验证 invoke 命名空间
-cd apps/containers/client
-pip install -e .
-invoke --list   # 应看到：load / images / run / stop / status / clean + container.* 别名 + env.* 自举（build-layer / run-cmd / shell）
+# 3. 先装组内共享包，再装消费端，验证 invoke 命名空间
+cd apps/containers
+pip install -e shared -e client
+cd client
+invoke --list   # 应看到：load / images / run / stop / status / clean + container.* 别名 + env.* 自举 + quant.*(6) + xmnn.*(8) + monetize.*(8)
 
 # 4. 加载构建端最新缓存镜像 + 启动容器
 invoke load      # 自动从 ../jupyter-podman-rootless/.image-cache/ 拿最新 tar
@@ -180,6 +192,7 @@ Linux/WSL2 内原生跑消费端的步骤完全相同，Windows 特有分支零�
 
 ## 变更日志
 
+- **2026-09-15 | refactor: 学习 OKF 容器知识包（projects/awesome-okf-xs/doc/bundles/jishu/containers）重构 apps/containers**：新增组内共享包 `apps/containers/shared`（jpman-common：平台/进程/容器只读层 + connection 连接层唯一事实源，client 与 builder 共同依赖）；新增数据驱动内核 `tasks/overlay_core.py`（StackSpec + 六任务工厂），quant/xmnn/monetize 三栈瘦身为声明模块（88/158/121 行，同构编排函数零复制）；compose 公共段抽 `overlays/_shared/base-rootless.yaml` 经 extends 服务级继承（podman-compose 1.6.0 rec_merge 语义双证）；新增约束 C14；**已知行为变更**：quant 栈随基文件获得 `network_mode: bridge`（对齐 2026-09-14 xmnn aardvark-dns 实证）；真机 E2E 后置清单见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)；规格 `.trae/specs/infra-env/containers-okf-refactor/`。
 - **2026-09-15 | docs: README.md 原子化为 docs/（00-12）+ 根入口精简**：对齐构建端 docs/ 先例；人类可读文档中心从根 README 迁至 `docs/README.md` 索引，AGENTS/.agents/README/构建端 entrypoint 锚点同步（详见 [.agents/CHANGELOG.md](.agents/CHANGELOG.md)）。
 - **2026-09-14 | feat: agent-monetize-dev 叠加层 + monetize.\* 八任务**：client-overlay-scaffold 技能首次实战（形态 B 轻量变体）；apt clang + pip apache-tvm-ffi 0.1.13 编译单 tvm-ffi .so、单一 cp314 GIL、纯 Python wheel、3 处源码跨平台适配；端口 2224/8892，规则 C13；规格 `.trae/specs/infra-env/agent-monetize-dev-overlay/`。
 - **2026-09-14 | feat: xmnn-dev 叠加层 + xmnn.\* 八任务**（经两轮独立审查 R2 pass）。

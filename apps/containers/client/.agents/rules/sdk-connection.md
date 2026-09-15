@@ -3,6 +3,16 @@
 > **规范来源**：本规范以 `projects/awesome-okf-xs/doc/bundles/jishu/containers/podman-py/concepts/01-connection.md §8`
 > 和 `05-advanced.md §6`（OKF v0.2 podman-py 知识包）为最高可信度裁决源。
 > 所有与 podman-py 行为相关的冲突一律以知识包 bundles 为准，不凭经验修改。
+>
+> **实现位置（2026-09 重构后）**：本文件涉及的全部连接层符号——
+> `sdk_base_url_candidates` / `get_client` / `sdk_strategy_from_env` /
+> `wsl_distro_name` / `_wsl_user_uid` / `machine_connection_uri` /
+> `host_runtime_uid` / `podman_sock_path` / `host_runtime_dir` /
+> `ensure_host_podman_socket` / `windows_diagnose_hint`——**单一事实源**
+> 在组内共享包 `apps/containers/shared` 的 `jpman_common.connection`
+> （消费端与构建端共享，`import podman` 只允许出现在该包）。client 侧
+> `utils.py` / `client_core.py` 仅保留再导出垫片，旧导入路径仍可用；
+> 修改连接行为必须改共享包，不得在 client 复制私有副本。
 
 ## 1. 合法 scheme 白名单（6 个 = 全集）
 

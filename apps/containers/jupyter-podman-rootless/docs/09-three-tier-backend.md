@@ -77,7 +77,7 @@ subprocess.run(["podman-compose", "-f", "compose.yaml", "up", "-d", "--build"])
 
 **触发条件**：`podman` Python包（podman-py SDK）已安装，且podman-compose未安装
 
-**实现文件**：通过client.py封装podman SDK调用
+**实现文件**：连接层（get_client/sdk_available/podman_sock_path 等）唯一实现位于组内共享包 `jpman_common.connection`（apps/containers/shared），tasks/client.py 仅再导出并保留 builder 专属的 compose 探测与 sdk_*_kwargs
 
 **优势**：
 - 直接通过Unix socket调用Podman API，比CLI更高效
@@ -122,7 +122,7 @@ subprocess.run(["podman", "run", "-d", "--name", name, "-p", "2222:22", tag])
 
 ## 后端自动检测逻辑
 
-client.py中的检测逻辑：
+后端选择的概念示意（伪代码；真实实现：compose 探测 `tasks/client.py::compose_available()`，SDK/CLI 连接 `jpman_common.connection.get_client()` 上下文管理器，经 tasks/client.py 再导出）：
 
 ```python
 def get_client():

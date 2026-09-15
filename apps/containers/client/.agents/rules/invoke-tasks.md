@@ -1,6 +1,15 @@
 # Invoke 任务开发规范（jupyter-podman-client 消费端）
 
-> 适用范围：`src/jpman_client/tasks/` 目录下 5 个模块的新增/修改：`__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` / `manage.py`。
+> 适用范围：`src/jpman_client/tasks/` 目录下现有 9 个模块的新增/修改：
+> `__init__.py` / `utils.py` / `client_core.py` / `env_in_container.py` /
+> `manage.py`（根命名空间五模块）+ `overlay_core.py`（数据驱动栈编排内核）
+> + `quant.py` / `xmnn.py` / `monetize.py`（三个声明式栈模块）。
+> **组内共享层**：连接层 / 进程 / 平台路径 / 容器只读工具已迁至
+> `apps/containers/shared` 的 `jpman_common` 包（消费端与构建端两端共享；
+> 连接层单一事实源 = `jpman_common.connection`，`import podman` 只允许
+> 出现在该包）；client 侧 `utils.py` / `client_core.py` 只做再导出垫片与
+> client 专属逻辑（透传 spec、ContainerConfig、镜像加载、WSL compose
+> 桥接、host key 等），修改连接行为一律改共享包。
 > 本规则是 **消费端** 版本；构建端（jupyter-podman-rootless）有自己独立的 invoke-tasks.md，两者不混用。
 
 ## 1. 基础约定
@@ -19,12 +28,20 @@
 
 ```
 src/jpman_client/tasks/
-├── __init__.py            ← 命名空间配置：根命令（load/images/save/run/stop/status/clean 共 7 个）+ container.* 别名 + env.* 自举命名空间
-├── utils.py               ← 无状态工具函数：ContainerConfig、路径转换（A 维）、SDK 探测（B 维）、WSL 探测、Windows 诊断、跨平台 load 命令构造（image_load_cli_command）
-├── client_core.py         ← 两层后端核心：get_client()（SDK + CLI fallback）、load_image/save_image、list_images、image_exists
+├── __init__.py            ← 命名空间配置：根命令（load/images/save/run/stop/status/clean 共 7 个）+ container.* 别名 + env.* 自举 + quant/xmnn/monetize 三栈命名空间
+├── utils.py               ← client 专属层：ContainerConfig、透传 spec、跨平台 load 命令（image_load_cli_command）、WSL compose 桥接（run_in_wsl_bridge）、host key；jpman_common 通用工具再导出垫片
+├── client_core.py         ← 两层后端核心：load_image/save_image、list_images、image_exists；get_client 等连接能力自 jpman_common.connection 再导出
 ├── env_in_container.py    ← env.* 自举任务：build-layer / run-cmd / shell；PODMAN_SERVICE_BOOT 常量（容器内 podman service 自举）
-└── manage.py              ← 对外 invoke 任务：7 个根命令（load/images/save/run/stop/status/clean）+ container.* 别名；_load_env_overrides(.env → os.environ)
+├── manage.py              ← 对外 invoke 任务：7 个根命令（load/images/save/run/stop/status/clean）+ container.* 别名；_load_env_overrides(.env → os.environ)
+├── overlay_core.py        ← 数据驱动栈编排内核：StackSpec/SourceMount/SmokeSpec/TaskDocs + gates/prepare_env/compose_argv/run_compose/残留自愈/smoke_stack + make_stack_tasks 六任务工厂（零栈知识、禁 import podman）
+├── quant.py               ← 声明式栈模块：QUANT_SPEC + TASKS=make_stack_tasks(...) + 6 任务别名（88 行，无编排函数）
+├── xmnn.py                ← 声明式栈模块：XMNN_SPEC + 6 工厂任务 + build_tvm/wheel 两个栈内 exec 长任务（双 cp314 ABI 契约）
+└── monetize.py            ← 声明式栈模块：MONETIZE_SPEC + 6 工厂任务 + build_native/wheel 两个栈内 exec 长任务（单一 cp314 GIL）
 ```
+
+> 共享实现不在本目录：`apps/containers/shared/src/jpman_common/`
+> （platform_paths / proc / containers / connection / _win32_transcode），
+> 本目录通过 `jpman_common` 与 `jpman_common.connection` 消费，不得复制私有副本。
 
 ### 2.1 模块职责边界（禁止跨层调用）
 
@@ -32,9 +49,11 @@ src/jpman_client/tasks/
 |------|------------|------------|
 | `__init__.py` | 从 `manage.py` / `env_in_container.py` import 任务函数，再 ns(`container`, ...) / ns(`env`, ...) 聚合 | 禁止直接从 `client_core.py`/`utils.py` import 内部实现 |
 | `manage.py` | 从 `client_core.py` import 对外 API（load_image / run_container / stop_container ...）；从 `utils.py` import ContainerConfig / 纯工具函数 | 禁止从 `__init__.py` 回环 import；禁止直接调 `PodmanClient` |
-| `client_core.py` | 从 `utils.py` import 连接策略、诊断、路径工具；直接 `import podman`（SDK 探测 ImportError 时降级） | 禁止依赖 `manage.py` 或 `__init__.py` |
-| `env_in_container.py` | 从 `utils.py` import `detect_runtime` / `run_cmd` / 路径工具；只走 CLI 子进程 | 禁止 import `manage.py`/`client_core.py`/`__init__.py`；**禁止调用 podman-py SDK**（避免循环依赖） |
-| `utils.py` | Python 标准库 + 三方库（podman/dotenv/invoke.exceptions）；无本地模块依赖 | 禁止 import 同目录下的其他 4 个模块，避免循环依赖 |
+| `client_core.py` | 从 `jpman_common.connection` import 连接层（get_client / APIError / podman_sock_path / 诊断等，client 侧只做再导出与消费）；从 `utils.py` import client 专属工具 | 禁止直接 `import podman`（连接层 import 只允许在 jpman_common）；禁止依赖 `manage.py` 或 `__init__.py` |
+| `env_in_container.py` | 从 `utils.py` import `detect_runtime` / `run_cmd` / 路径工具（再导出自 jpman_common）；只走 CLI 子进程 | 禁止 import `manage.py`/`client_core.py`/`__init__.py`；**禁止调用 podman-py SDK**（避免循环依赖） |
+| `utils.py` | Python 标准库 + invoke.exceptions + `jpman_common` / `jpman_common.connection`（平台/进程/容器只读/连接层再导出垫片）；client 专属逻辑保留本文件 | 禁止 import 同目录下的其他实现模块，避免循环依赖；禁止复制连接层私有副本 |
+| `overlay_core.py` | `.manage` 的私有函数（`_load_env_overrides` / `_project_root`）、`.utils`（run_cmd/run_in_wsl_bridge/to_posix_path/check_runtime_ready 等）、`jpman_common` | **禁止 import quant/xmnn/monetize 具体栈模块、禁止出现具体栈名/栈路径；禁止 `import podman`** |
+| `quant.py` / `xmnn.py` / `monetize.py` | 仅从 `.overlay_core` import StackSpec 与内核 helper（xmnn/monetize 另用 invoke 的 Context/task） | **禁止 `import podman`；禁止跨栈 import 另两个栈模块**；同构编排逻辑一律走内核，不在栈模块复制 |
 
 ## 3. 两层后端架构（SDK → CLI fallback）
 
@@ -46,6 +65,14 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
     ...
 ```
 
+> 实现位置（2026-09 重构后）：`get_client` / `sdk_base_url_candidates` /
+> `host_runtime_uid` / `podman_sock_path` / `host_runtime_dir` /
+> `ensure_host_podman_socket` / `sdk_strategy_from_env` /
+> `windows_diagnose_hint` 等连接层符号的**单一事实源**在
+> `apps/containers/shared` 的 `jpman_common.connection`；client 侧
+> `client_core.py` 仅做再导出垫片（既有 `from .client_core import get_client`
+> 路径仍可用）。下列 8 条行为承诺原文有效，改动需同时改共享包与其测试。
+
 **100% 不可变的行为契约**（修改任何一点 = C4 违反打回）：
 
 1. **返回类型**：`Optional[PodmanClient]`；不是 `PodmanClient`，不是 `None` 抛异常
@@ -54,7 +81,7 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 4. **每条候选失败后必须 `_close_safe(client)`**；尤其是 SSH 分支，防止 `ssh -N -L` 子进程僵尸
 5. **每轮失败必须结构化记录 `attempts` 列表**（source / base_url / hint / exc_type / exc_msg）；不能裸 raise 吞信息
 6. **最终必须调用 `windows_diagnose_hint(exc_type, exc_msg)`** 叠加匹配 **W-I1~W-I3**（宿主 Windows）+ **C-I1/C-I2**（容器内坑，平台无关）；输出格式固定：`[i/N] source=...  base_url=...  错误=...  提示=...`。⚠️ C-I2 分支（EACCES，容器内 devuser 无权访问宿主直通 socket）**必须置于 `platform.system() != "Windows"` 平台守卫之前**，否则容器内（Linux）场景永不命中
-7. **候选顺序严格 P0→P1→P2→P3**（见 `utils.py::sdk_base_url_candidates`）；不能私自调换顺序导致 Linux 场景先尝试 WSL 路径拖慢
+7. **候选顺序严格 P0→P1→P2→P3**（见 `jpman_common.connection.sdk_base_url_candidates`）；不能私自调换顺序导致 Linux 场景先尝试 WSL 路径拖慢
 8. **sdk_strategy_from_env() 返回值严格白名单归一化**：`{auto, legacy, wsl, machine}`；策略=`legacy` 时**必须**走「只调一次 from_env，失败即 None」等价于 v0.0.x 旧行为，方便生产热回滚
 
 ### 3.2 CLI fallback 调用链
@@ -71,7 +98,7 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 | `status_container(ctx, name)` | `client.containers.get(name).status + ports` | `podman inspect <name> + json.loads(parse)` 或 `podman ps -a --filter name=...` |
 | `clean_container(ctx, name/tag/image/volume)` | `containers.prune()` + 条件删镜像/卷 | `podman rm -f -v` + `podman rmi` + `podman volume rm` |
 
-⚠️ CLI fallback 中 `[runtime, ...]` 的 runtime 必须来自 `utils.py::detect_runtime()`（优先 podman，回退 docker）；
+⚠️ CLI fallback 中 `[runtime, ...]` 的 runtime 必须来自 `jpman_common.detect_runtime()`（utils 再导出；优先 podman，回退 docker）；
 **禁止** 任何地方硬编码 `"podman"`。
 
 ⚠️ **`load` 的喂入方式必须平台分流（2026-09-12 事故固化，违反=复现 exit=125）**：命令只能由
@@ -86,7 +113,7 @@ def get_client() -> Iterator[Optional[PodmanClient]]:
 与 CLI（`_run_via_cli`）只允许消费同一份 spec，**禁止两条路径各自拼接**——否则极易出现
 「SDK 支持某开关、CLI 不支持」的不一致（C8 A/B 维度分离之外的第三条隐式约束）。
 
-⚠️ **B-scheme socket 路径必须来自 `utils.host_runtime_uid()` 单一事实源**（`podman_sock_path()` /
+⚠️ **B-scheme socket 路径必须来自 `jpman_common.connection.host_runtime_uid()` 单一事实源**（`podman_sock_path()` /
 `host_runtime_dir()` 均消费它，禁止任何调用方重新拼 `/run/user/<uid>` 或硬编码 1000）。
 推导优先级：`PODMAN_RUNTIME_UID` 显式覆盖 → POSIX `$XDG_RUNTIME_DIR` 末段 → `os.getuid()` →
 Windows 原生回落 1000。`invoke run` 在 `check_runtime_ready()` 之后必须调用
@@ -220,10 +247,11 @@ invoke 的短名生成是「逐字符取首个未被占用字符」且与参数�
 ## 6. 测试与验证
 
 - 静态语法：`python -m py_compile src/jpman_client/tasks/*.py`（无 SyntaxError，全部通过）
-- Lint/类型：VS Code GetDiagnostics（五文件零告警）
+- Lint/类型：VS Code GetDiagnostics（tasks 目录九模块零告警）
 - 功能冒烟（任何任务修改后必跑 5 条）：
-  1. `invoke --list`：命名空间加载无 ImportError，且 7 个根命令 + `container.*`（7 个）+ `env.*`（3 个）齐全
+  1. `invoke --list`：命名空间加载无 ImportError，且 7 个根命令 + `container.*`（7 个）+ `env.*`（3 个）+ 三栈任务齐全：`quant.*` 6 个（build/up/down/ps/logs/smoke）、`xmnn.*` 8 个（六任务 + build-tvm/wheel）、`monetize.*` 8 个（六任务 + build-native/wheel）
   2. `invoke images`：SDK 可用→显示表格；SDK 不可用→自动 CLI fallback 同样显示表格（不能直接崩，哪怕是空表）
   3. `PODMAN_CLIENT_SDK_STRATEGY=legacy invoke images`：逃生舱 legacy 等价行为确认（调用路径不同但输出格式一致）
   4. **load 平台分流回归（改动 load 链路时必跑）**：POSIX 上 `invoke load`（有缓存时幂等执行）回显必须是 `podman load -i "..."` 且解析出 Tags；无缓存/无 daemon 环境至少静态断言 `image_load_cli_command("podman", p)` 在 Linux 输出 `load -i`、在模拟 `platform.system()=="Windows"` 下输出 `type "..." | podman load`——两条分支字符串错配即判失败（2026-09-12 exit=125 事故回归门）
   5. **B-scheme socket 回归（改动 run 链路时必跑）**：`host_runtime_uid()` 静态断言四优先级（显式覆盖 / XDG 末段 / `os.getuid()` / 模拟 Windows→1000）；原生 Linux 上构造 socket 缺失（`systemctl --user stop podman.socket` 后文件不在）调用 `ensure_host_podman_socket()` 必须返回第三元 `True`（已自愈）；`passthrough_diagnose_hint("Error: statfs .../podman/podman.sock: no such file...")` 必须返回空串（防 C-I5/C-I3 交叉误报，2026-09-12 UID 1006 事故回归门）
+- 单元测试（client 包内，`python -m pytest tests -q`）：现状 **57 passed, 1 skipped**；三个测试文件——`tests/test_overlay_core.py`（数据驱动内核 39 用例体系）、`tests/test_tasks_surface.py`（三命名空间任务表面黄金清单）、`tests/test_compose_merge.py`（extends 合并 18 用例）。共享包测试在 `apps/containers/shared/tests/`（jpman_common 覆盖率 97%），两端改动须分别跑绿。

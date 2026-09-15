@@ -42,9 +42,9 @@
    - `external/chaos/npuusertools`（xmnn 包 + tools_cpp/autolibs/fonts 数据）
    - `external/chaos/models`（模型目录）
 4. **Windows 原生自动桥接**：与 quant.* 相同，Windows 原生 CPython 执行时
-   自动桥接到 WSL 发行版（默认 `podman-machine-default`，
-   `COMPOSE_WSL_DISTRO` 可指定、`none` 关闭回退门禁；该发行版由
-   jupyter-podman-rootless 改名顶替）。也可手动二选一：
+   自动桥接到 WSL 发行版（默认 `podman-machine-default`——client 专用
+   rootless 发行版，与 flapping 的 Podman Desktop 默认 machine 相互独立、
+   镜像存储不互通；`COMPOSE_WSL_DISTRO` 可指定、`none` 关闭回退门禁）。也可手动二选一：
    - WSL2 发行版内（推荐）：
      ```bash
      wsl -d <发行版>

@@ -6,6 +6,38 @@
 
 ## [Unreleased]
 
+### 2026-09-15 · `refactor:` 学习 OKF 容器知识包重构 apps/containers（jpman-common 共享包 + overlay_core 声明式内核 + compose extends）
+
+**关联七概念场景**：场景3「重构优化」（I→F→A→V→C，V 强制）；用户输入「学习 projects/awesome-okf-xs/doc/bundles/jishu/containers 优化 apps/containers」。规格 `.trae/specs/infra-env/containers-okf-refactor/`（用户已批准）。三项架构裁决：①两端共享包 `apps/containers/shared`，包名 **jpman-common**；②compose 公共段用 **extends 服务级继承**抽 `overlays/_shared/base-rootless.yaml`；③静态等价 + daemon-free 单测验收，真机 E2E 用户环境恢复后后补。
+
+**A 阶段原子交付**：
+1. **jpman-common 共享只读层 + 连接层**：新建 `apps/containers/shared/`（scikit-build-core 纯 Python 包）：`proc.py`/`platform_paths.py`/`containers.py` 承载平台/进程/容器只读工具，`connection.py`（653 行，17 导出）承载 SDK 连接层唯一事实源（四级候选/base_url 显式/UTF-16 LE/host_runtime_uid 不硬编码 1000）；client 的 `utils.py`/`client_core.py` 与 builder 的 `tasks/utils.py`/`tasks/client.py` 瘦身为再导出垫片（builder 保留 compose 探测与 sdk_*_kwargs）；两端 pyproject 声明依赖 `jpman-common`，安装顺序先 shared 后两端（`pip install -e shared -e client` / `-e jupyter-podman-rootless`，editable 必须 `--no-build-isolation`）。
+2. **overlay_core 数据驱动内核**：`src/jpman_client/tasks/overlay_core.py`（~715 行）：`SourceMount`/`SmokeSpec`/`TaskDocs`/`StackSpec` frozen dataclass + gates/prepare_env/compose_argv/run_compose/reconcile/build/up/down/ps/logs/smoke 内核函数 + `make_stack_tasks()` 六任务工厂；内核零栈知识，只 import 标准库/`.manage`/`.utils`/`jpman_common`。
+3. **三栈声明化**：`quant.py` 88 行 / `xmnn.py` 158 行 / `monetize.py` 121 行（均 ≤160），仅 `<NAME>_SPEC` + `TASKS` + 六别名（xmnn/monetize 长任务 build-tvm/wheel、build-native/wheel 例外）；桥接键下沉 `utils._BRIDGE_COMMON_ENV_KEYS`；Grep 三查：同构编排函数与栈名硬编码零命中。
+4. **compose extends 公共段**：新建 `overlays/_shared/base-rootless.yaml`（服务 `rootless-base`：network_mode bridge + /dev/fuse + label=disable + cgroupns host + 凭证四变量 + org.specweave.managed-by label + restart unless-stopped；无 volumes/build/env_file/ports/image/container_name）；三栈 compose.yaml 改 `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}` 只保留差异段。
+5. **文档/规则/技能同步**：client `.agents/rules/` 6 文件（quant/xmnn/monetize/invoke-tasks/sdk-connection/windows-wsl）+ docs/10-12 extends 条目 + docs/01 两步安装 + AGENTS.md（9 模块/C14/第四栈路径/文件地图）；builder AGENTS/README/docs 08/09/rules 同步 shared 接线；client-overlay-scaffold 技能升 v1.1.0（SKILL §12/§13、namespace.py.skeleton 声明式重写、compose skeleton extends 形态、delivery-checklist 黄金表门）。
+
+**F 阶段关键实证（知识包 ↔ 本机源码双证）**：
+- podman-compose 1.6.0 `_parse_compose_file`（vendor 源码 L2844-L2849）先把 extends.file 按引用文件目录 join 重写绝对路径，`resolve_extends`（L2364）执行 `rec_merge({}, base, current)`——故 run_compose **无需 cd 前缀**；合并语义 dict 递归/普通 list 追加/command、entrypoint 无条件替换；volumes 特例（L2289-L2297）：仅短语法字符串按 target 去重且覆盖方获胜，**长语法 dict bind 不去重**；另有 `!override`/`!reset` 标签（三栈未使用）。
+- `podman-compose config` 打印的是 resolve_extends **之前**的 merged_yaml（不含继承字段，勿据此误判失败）；真实继承结果须驱动 `_parse_args(['-f',...,'up','--no-start'])` 后读 `self.containers`。
+- 真实渲染黄金结果：quant devices=[/dev/fuse] env 6 键；quant GPU devices=[/dev/fuse,/dev/dri]；xmnn env 11 键 volumes 5 target；monetize env 6 键 volumes 2 target ports 2224/8892；三栈 network_mode=bridge、labels 并集、privileged 缺省。
+
+**⚠️ 已知行为变更（用户可见）**：quant 栈迁移前 compose.yaml **无 network_mode**，现随基文件获得 `network_mode: bridge`。依据：xmnn 旧文件头 2026-09-14 aardvark-dns user scope bus 实证（rootless 下 bridge 是可用配置）；回归风险低，但属语义变化，真机 up 时须确认 quant 服务名解析/出网正常。
+
+**V 等价门（静态，已过）**：shared 92 passed（覆盖 97%）；client 全量 62 passed 1 skipped（含 test_overlay_core 内核黄金快照、test_tasks_surface 命名空间黄金清单、test_compose_merge 23 用例：rec_merge 模拟器 + 真实文件渲染 + **与真实 podman-compose 1.6.0 rec_merge 的对照探针**）；`invoke --list` 与迁移前逐行一致（根 7 + container/env 别名 + quant 6 + xmnn 8 + monetize 8）；红线 Grep（内核 import 栈、栈 import podman、同构函数、_BRIDGE_ENV_KEYS 旧名）零命中。
+
+**R 独立对抗审查（CONDITIONAL PASS → 修复后 PASS，见规格 review.md）**：fresh 子代理以 vendor/podman-compose 1.6.0 源码（只读 submodule）+ 运行探针核对，0 blocker；修复 2 major + 2 minor：① **M1** 合并模拟器 volumes 两处反向语义更正——短语法实为「覆盖方按 target 获胜并移尾部」（vendor L2289-L2297）、长语法 dict bind 真实**不去重**；反转错误自证用例，新增长语法/匿名卷/类型冲突用例与 2 条真实 rec_merge 对照测试（环境无 podman-compose 时 skip）；② **M2** 5+ 处「volumes 按 target 去重」失实表述更正（基文件头/quant 规则 §4 §4.1/xmnn/monetize 规则/SKILL §7.6+G15/compose 骨架/本条 F 阶段实证）；③ M3 模拟器 docstring 声明保真边界（标签/归一化/插值子集/类型冲突 ValueError）；④ M4 删除 tasks/__init__.py 三栈零消费 ns.configure 死配置块（唯一事实源已是 StackSpec）。另处置 N1（行号 L2845-2847→L2844-L2849、resolve_extends L2329→L2364，共 6 处）、N2（模拟器渲染括号改为真实管线「先 -f 合并后 extends」顺序）、N4（standalone 裸 run 加三必需未来守卫注释）；N3/N5 登记。
+
+**V 真机 E2E 后置清单（环境恢复后由用户/值班代理执行，daemon 可用时逐项打勾）**：
+前置：恢复定制 WSL 发行版 + rootless podman（`systemctl --user enable --now podman.socket`、`loginctl enable-linger`）；在 apps/containers 下 `pip install --no-build-isolation -e shared -e client -e jupyter-podman-rootless`。
+1. [ ] **xmnn 栈**：`inv xmnn.build`（构建成功，AST PREAMBLE trap 还原无残留）→ `inv xmnn.up`（2223/8890 端口可达）→ `inv xmnn.smoke`（双 ABI/SONAME 守卫 PASS）→ `inv xmnn.down`（零残留：容器/网络/匿名卷）。
+2. [ ] **quant 栈**：`inv quant.build` → `inv quant.up`（2222/8888 可达；**重点确认 bridge 行为变更后服务名解析与出网正常**）→ `inv quant.smoke`（INT8/FP16/QDQ 三守卫 PASS）→ `inv quant.down`。
+3. [ ] **quant GPU 覆盖**：`inv quant.up --gpu`（真实渲染 devices=[/dev/fuse,/dev/dri]；NPU/GPU 透传视硬件）→ smoke → down。
+4. [ ] **monetize 栈**：`inv monetize.build`（apt clang + apache-tvm-ffi 0.1.13）→ `inv monetize.up`（2224/8892）→ `inv monetize.smoke` → `inv monetize.build-native`（单 .so，3 处源码适配生效）→ `inv monetize.wheel`（纯 Python wheel 不含 .so）→ down。
+5. [ ] **builder 端垫片**：`invoke --list` 正常（已在静态门验证，真机复跑确认环境一致）+ `python -c "from jpman_builder.tasks import client as c, utils as u; print(c.get_client.__module__, u.run_cmd.__module__)"` 应打印 `jpman_common.connection jpman_common.proc`（证明连接/工具符号确实来自共享包，垫片无断链）。
+6. [ ] 任一项失败：按「修复即闭环」三阶段处理，更新本清单与对应规则文件。
+成功判据：以上全部 PASS 且 `podman ps -a`/`podman network ls` 无栈残留；通过后将本段勾选结果回链至本条与规格 tasks.md T6。
+
 ### 2026-09-15 · `docs:` README.md 原子化为 docs/（00-12 文档集 + 索引 + 根入口精简）
 
 **关联七概念场景**：场景3「重构优化」单独 A 子类（A→V→C，等价性验证强制）；用户输入「README.md 原子化为 doc」。

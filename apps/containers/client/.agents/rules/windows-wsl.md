@@ -22,8 +22,8 @@
 
 | 维度 | 全称 | 功能 | 所在函数 | 典型输入 | 典型输出 |
 |------|------|------|---------|---------|---------|
-| **Dimension A · 容器卷挂载路径** | Container Volume Mount Path | 把宿主机的**工作区目录**（如 D 盘某个 repo）挂到容器内，供 devuser 在容器里写代码 | `utils.py::to_posix_path` | `D:\spaces\SpecWeave` 或 `D:/spaces/SpecWeave` | `/mnt/d/spaces/SpecWeave`（传给 `podman -v` 或 SDK `mounts=[{source: /mnt/d/...}]`） |
-| **Dimension B · SDK daemon 连接 URL** | SDK Daemon Connection URL | 告诉 `PodmanClient(base_url=...)` 去哪里找 Podman daemon（在 WSL2 里？还是 Machine？还是 127.0.0.1？） | `utils.py::sdk_base_url_candidates` + `client_core.py::get_client` | 无参数（纯探测）或 `.env` 中 `WSL_DISTRO_NAME=Ubuntu` | `unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock`（拼出 base_url） |
+| **Dimension A · 容器卷挂载路径** | Container Volume Mount Path | 把宿主机的**工作区目录**（如 D 盘某个 repo）挂到容器内，供 devuser 在容器里写代码 | `jpman_common.to_posix_path`（共享包 platform_paths；client utils 再导出垫片） | `D:\spaces\SpecWeave` 或 `D:/spaces/SpecWeave` | `/mnt/d/spaces/SpecWeave`（传给 `podman -v` 或 SDK `mounts=[{source: /mnt/d/...}]`） |
+| **Dimension B · SDK daemon 连接 URL** | SDK Daemon Connection URL | 告诉 `PodmanClient(base_url=...)` 去哪里找 Podman daemon（在 WSL2 里？还是 Machine？还是 127.0.0.1？） | `jpman_common.connection.sdk_base_url_candidates` + `jpman_common.connection.get_client`（client utils/client_core 仅再导出） | 无参数（纯探测）或 `.env` 中 `WSL_DISTRO_NAME=Ubuntu` | `unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock`（拼出 base_url） |
 
 ### 2.1 为什么混淆是灾难级 Bug
 
@@ -107,14 +107,15 @@ uid = int(out) if out.isdigit() else 1000   # 仅当探测彻底失败时 1000 �
 `windows_diagnose_hint(exc_type, exc_msg)` 正则匹配的条目（W-I1~W-I3 为 Windows 专属坑；C-I1/C-I2 为**容器内坑，与平台无关**，故其分支必须置于 `platform.system() != "Windows"` 守卫**之前**）。
 C-I3（运行时透传资源缺失）由独立函数 `utils.py::passthrough_diagnose_hint(exc_msg)` 提供——它处理的是
 **容器启动期 podman 原生报错**而非 SDK 连接异常，故不并入 `windows_diagnose_hint`，但同属 C-Ix 家族。
-每条必须能在 README §5.4 和 utils.py 代码注释中找到完全一致的描述；改任何一处必须同步更新对应处：
+每条必须能在 README §5.4 与代码注释中找到完全一致的描述（W-I*/C-I1/C-I2/C-I5
+在 `jpman_common.connection`，C-I3 仍在 client `utils.py`）；改任何一处必须同步更新对应处：
 
 | ID | 触发异常匹配 | 根因（一句话） | 30 秒修复（必须是一行命令） |
 |----|------------|--------------|--------------------------|
 | **W-I1** | `FileNotFoundError` 或 `No such file or directory` + 异常里包含子串 `/run/user/` | podman-py from_env() 回退是 Linux `/run/user/$UID` 路径，Windows 原生不存在 | **三选一**：<br>a) 把 invoke 改在 WSL2 终端里跑（完全 Linux 行为）<br>b) 打开 **Podman Desktop** 初始化默认 Machine<br>c) PowerShell：`$env:CONTAINER_HOST="unix:///mnt/wsl/Ubuntu/run/user/1000/podman/podman.sock"` |
 | **W-I2** | `Unsupported URL scheme` + 异常里有子串 `npipe` | docker-py 老用户粘 `npipe:////./pipe/docker_engine`；podman-py 没有 npipe Adapter | 把 base_url 改成以下 6 种合法之一：<br>`unix:///mnt/wsl/<Distro>/run/user/<UID>/podman/podman.sock`<br>或 `ssh://user@127.0.0.1:<MachinePort>`<br>或 `tcp://127.0.0.1:8888` |
 | **W-I3** | `TimeoutError` 或 `Timeout` + 异常里有子串 `podman-forward` | SSH 模式下 SDK shell-out `ssh -N -L` 转发，但首次 SSH StrictHostKeyChecking 会在 stdin 阻塞问 `Are you sure you want to continue connecting?`，SDK 轮询等待不到本地 socket 文件最终超时 | **一次性**：PowerShell 里先跑 `podman machine ssh true`<br>然后当终端提示 `Are you sure you want to continue connecting (yes/no/[fingerprint])?` 时，手工敲 `yes` 回车<br>Machine 的 HostKey 被写入 `~/.ssh/known_hosts`，之后 SDK 调 SSH 永不阻塞 |
-| **W-I4** | `AttributeError: module 'os' has no attribute 'getuid'` 或 `module 'socket' has no attribute 'AF_UNIX'` | **podman-py 在 Windows 原生 CPython 结构性不可用（与配置无关）**：`from_env()` 回退链调 `os.getuid()`（podman/api/path_utils.py）、unix/ssh 适配调 `socket.AF_UNIX`（podman/api/uds.py），Windows 原生 Python 两者皆无 → 任一候选必然 AttributeError | 本工具已自动降级 CLI fallback（`podman.exe` 子进程）；如需 SDK：<br>a) 改在 WSL2 内跑（100% Linux 行为）<br>b) `$env:CONTAINER_HOST="ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock"`（端口用 `podman system connection list --format json` 查）<br>⚠ P2-machine 候选在 Windows 已由 `utils.machine_connection_uri()` 自动填充该 ssh:// 值 |
+| **W-I4** | `AttributeError: module 'os' has no attribute 'getuid'` 或 `module 'socket' has no attribute 'AF_UNIX'` | **podman-py 在 Windows 原生 CPython 结构性不可用（与配置无关）**：`from_env()` 回退链调 `os.getuid()`（podman/api/path_utils.py）、unix/ssh 适配调 `socket.AF_UNIX`（podman/api/uds.py），Windows 原生 Python 两者皆无 → 任一候选必然 AttributeError | 本工具已自动降级 CLI fallback（`podman.exe` 子进程）；如需 SDK：<br>a) 改在 WSL2 内跑（100% Linux 行为）<br>b) `$env:CONTAINER_HOST="ssh://user@127.0.0.1:<MachinePort>/run/user/1000/podman/podman.sock"`（端口用 `podman system connection list --format json` 查）<br>⚠ P2-machine 候选在 Windows 已由 `jpman_common.connection.machine_connection_uri()` 自动填充该 ssh:// 值（client 侧经垫片可用） |
 | **C-I2** | `PermissionError` / `errno 13` / `permission denied`（EACCES，**非** ENOENT）+ 异常里有子串 `/run/user/` 与 `podman`；典型：SDK `podman/api/uds.py::UDSSocket.connect()` → `PermissionError: [Errno 13] Permission denied`；CLI `dial unix /run/user/<uid>/podman/podman.sock: connect: permission denied`。**排除条件**：异常含 `libpod/tmp` 或 `temporary file`（那是 C-I1） | 宿主 rootless socket（宿主 `<uid>:<gid>` 0660）经 bind-mount + userns 映射进容器后呈现为 `root:root 0660`，devuser 为非 root UID（固定 1000，≠0）且未加入 socket 属组 → `connect()` EACCES。**红线**：严禁 `chmod 666`/`chown` 宿主 socket（会破坏宿主侧权限） | **重建镜像 + 重启容器**（一次生效）：`entrypoint.sh::setup_podman()` B-scheme 自动 `usermod -aG <socket组> ${NON_ROOT_USER}` + `su - devuser` 读写自验证<br>**必须早于 `exec /usr/bin/supervisord`**（supervisord `drop_privileges()` 在 spawn 时才派生补充组，已运行进程不被后续 usermod 影响）<br>自检：`/proc/<jupyter-pid>/status` 的 `Groups` 含 socket 属组 |
 
 | **C-I3** | `Error: statfs <路径>: no such file or directory`（卷缺失）或 `Error: stat <路径>: no such file or directory`（设备缺失），退出码 125（由 `passthrough_diagnose_hint()` 匹配） | **运行时透传资源在 daemon 宿主上不存在**：`--wayland`/`--gpu`/`--usb`/`--dbus` 的挂载源是 WSL2 / Podman Machine 内的路径，podman 对缺失路径**硬失败且不自动创建**（`:ro`/`:rw`/裸挂载一致）；客户端可能跑在 Windows 原生 CPython，本机 `Path.exists()` 对这些路径必然为假，**禁止本机预检** | 确认资源在 daemon 宿主存在：`podman machine ssh "test -e <路径>"`（Machine）或 `wsl -d <Distro> -- test -e <路径>`（WSL2）；路径不同则覆盖 `HOST_XDG_RUNTIME_DIR` / `HOST_WAYLAND_DISPLAY` / `DBUS_SESSION_BUS_PATH` / `GPU_DEVICE` / `USB_DEVICE`；宿主无该资源则去掉对应开关 |
@@ -142,18 +143,17 @@ return {}
 在 Windows 11 PowerShell 下：
 
 ```powershell
+# 前置：client 与共享包均已 editable 安装（先 pip install -e ../shared 再 pip install -e .）
+
 # V1：诊断双门卫是否认为本系统有 WSL 能力（纯工具函数，无副作用）
-python -c "import sys; sys.path.insert(0,'apps/containers/client/tasks');
-from utils import _has_wsl_host_support; print('has_wsl=', _has_wsl_host_support())"
+python -c "from jpman_common.connection import _has_wsl_host_support; print('has_wsl=', _has_wsl_host_support())"
 
 # V2：发行版名三级回退结果（必须看到非 None，才会生成 P1 候选）
-python -c "import sys; sys.path.insert(0,'apps/containers/client/tasks');
-from utils import wsl_distro_name; print('distro=', wsl_distro_name())"
+python -c "from jpman_common.connection import wsl_distro_name; print('distro=', wsl_distro_name())"
 
 # V3：sdk_base_url_candidates 完整序列（auto 策略下应当看到 4 条候选；legacy 只有 1 条）
 $env:PODMAN_CLIENT_SDK_STRATEGY="auto"
-python -c "import sys; sys.path.insert(0,'apps/containers/client/tasks');
-from utils import sdk_base_url_candidates;
+python -c "from jpman_common.connection import sdk_base_url_candidates;
 [print(f'{i+1}. source={c.source}  url={c.base_url}') for i,c in enumerate(sdk_base_url_candidates())]"
 
 # V4：最终 invoke images 真的能通（生产冒烟）

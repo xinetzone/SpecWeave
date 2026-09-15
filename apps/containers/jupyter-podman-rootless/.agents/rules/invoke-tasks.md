@@ -20,8 +20,8 @@ source: "AGENTS.md#嵌套路由关系 + README.md#三层后端编排架构"
 ```
 tasks/
 ├── __init__.py        ← 任务入口与命名空间配置（核心命令+model.*+registry.*命令）
-├── utils.py           ← 工具函数（运行时检测/路径转换/随机字符串/日志）
-├── client.py          ← Podman/Docker client wrapper（三层后端优先级检测）
+├── utils.py           ← 构建端垫片：平台/进程/容器工具唯一实现位于 jpman_common，本文件仅再导出（另保留 MIRROR_CHOICES）
+├── client.py          ← Podman/Docker client wrapper：连接层符号从 jpman_common.connection 再导出；本文件保留 builder 专属 compose 探测与 sdk_*_kwargs
 ├── compose_backend.py ← podman-compose后端封装
 ├── build.py           ← 镜像构建任务
 ├── manage.py          ← 容器生命周期管理（run/stop/status/clean）
@@ -41,13 +41,28 @@ name = "jupyter-podman-rootless"
 version = "0.1.0"
 dependencies = [
     "invoke>=2.0",
+    "jpman-common",
+    "python-dotenv>=1.0.0",
 ]
 
 [project.optional-dependencies]
+sdk = ["podman>=5.0.0"]
 compose = ["podman-compose>=1.0"]
 full = ["podman-compose>=1.0", "podman>=5.0"]
 model = ["omlmd", "olot[oras-py]"]
 ```
+
+> **构建后端**：scikit-build-core 构建**纯 Python wheel**（`wheel.packages=["src/jpman_builder"]`、
+> `wheel.cmake=false`），无 CMakeLists.txt、无 `[tool.scikit-build.cmake]` 段。
+>
+> **连接层位置（2026-09 重构后）**：`get_client`/`sdk_available`/`podman_sock_path`/
+> `APIError`/`PodmanNotFound` 的唯一实现位于组内共享包 `jpman_common.connection`
+> （apps/containers/shared）；`tasks/client.py` 只做再导出，六个调用点
+> （build/container/interact/manage/model/registry）仍经 `tasks/client.py`
+> 导入，路径不变。builder 专属逻辑保留在 `tasks/client.py`：
+> `compose_available()`/`compose_unavailable_reason()`（`shutil.which("podman-compose")`
+> 与 `os.name != "nt"` 双条件）与 `sdk_run_kwargs()`/`sdk_build_kwargs()`。
+> `tasks/utils.py` 同理为 `jpman_common`（proc/platform_paths/containers）的再导出垫片。
 
 安装方式：
 ```bash
@@ -121,25 +136,40 @@ podman-compose 在 Windows 原生宿主上不可用（见 `client.py::compose_av
 
 ### client.py核心接口
 
+连接层符号由 `jpman_common.connection` 实现、`tasks/client.py` 再导出；
+`get_client` 是**上下文管理器**（`@contextmanager`），全部连接候选失败时
+yield `None`（调用方降级 CLI），不是返回统一后端对象的工厂：
+
 ```python
-from jpman_builder.tasks.client import get_client
+from jpman_builder.tasks.client import get_client, sdk_available
 
-client = get_client()  # 自动检测最优后端
-
-# 统一接口（所有后端实现相同方法）
-client.build(...)      # 构建镜像
-client.run(...)        # 运行容器
-client.stop(...)       # 停止容器
-client.status(...)     # 查看状态
-client.exec(...)       # 执行命令
-client.logs(...)       # 查看日志
+with get_client() as client:
+    if client is None:
+        ...  # 降级到 CLI（run_cmd 调 podman/docker）
+    else:
+        ...  # podman-py SDK 调用（client.containers / client.images ...）
 ```
 
 后端选择逻辑：
-1. 首先检查`podman-compose`是否可用（尝试import podman_compose）
-2. 其次检查`podman`模块是否可用（podman-py SDK）
-3. 最后fallback到CLI（检查podman/docker命令是否在PATH中）
-4. 都不可用时抛出友好错误提示安装依赖
+1. podman-compose 可用性由 builder 专属 `compose_available()` 探测：
+   `shutil.which("podman-compose")` 二进制存在 **且** `os.name != "nt"`
+   （Windows 原生 ntpath 路径语义错配恒不可用，原因见函数 docstring 与
+   `compose_unavailable_reason()`；不是「尝试 import podman_compose」）
+2. SDK 可用性由 `jpman_common.connection.sdk_available` 给出（try-import
+   podman 发生在共享包内，任务模块不得各自 try-import）
+3. 最后 fallback 到 CLI（`run_cmd` 子进程调 podman/docker）
+4. SDK 连接候选（P0 环境变量 → P1 WSL 9P → P2 Podman Machine → P3 tcp）
+   全失败时 `get_client()` yield None，由调用给友好降级，不抛异常
+
+> **UID 推导历史教训（C-I5，连接层旧坑）**：旧本地实现曾把宿主运行时 UID
+> **硬编码为 1000**（`_podman_runtime_uid` 无条件默认），在 UID=1006 的原生
+> Linux 宿主上生成不存在的 `/run/user/1000/podman/podman.sock` 挂载源，
+> podman run 硬失败 exit=125（statfs no such file）。该实现已删除，改由
+> `jpman_common.connection.host_runtime_uid()` 四级链推导：
+> ① 显式 `PODMAN_RUNTIME_UID` → ② POSIX `$XDG_RUNTIME_DIR` 末段 →
+> ③ `os.getuid()` → ④ Windows 原生回落 `"1000"`。新增代码一律调用共享层，
+> 禁止再次硬编码 UID；`podman_sock_path()`/`ensure_host_podman_socket()`
+> 同样只认共享层这一份事实源。
 
 ### compose_backend.py封装
 
@@ -151,29 +181,35 @@ podman-compose后端提供声明式编排能力：
 
 ## 工具函数规范（utils.py）
 
-### 必须提供的工具函数
+> **实现位置（2026-09 重构后）**：下列工具的唯一实现位于组内共享包
+> `jpman_common`（proc.py / platform_paths.py / containers.py），
+> `tasks/utils.py` 仅 `from jpman_common import ...` 再导出，保持
+> `from .utils import ...` 路径稳定；builder 专属常量仅有 `MIRROR_CHOICES`。
+> 修改实现须改共享包并同步 shared/tests，禁止在 builder 本地复制分叉。
 
-1. **路径转换**：`to_posix_path(path: str) -> str`
-   - Windows路径（`D:\project`）→ WSL2路径（`/mnt/d/project`）
+### 经垫片提供的工具函数（实际导出名以 tasks/utils.py 为准）
+
+1. **路径转换**：`to_posix_path(path)` / `normalize_path_str(path)`
+   - Windows路径（`D:\project`）→ POSIX（`/mnt/d/project`）
    - 已在POSIX环境下直接返回
    - 自动检测是否在WSL2环境
 
-2. **随机字符串**：`random_string(length: int = 16) -> str`
+2. **随机字符串**：`generate_random_string(length: int = 16)`
    - 生成密码安全的随机字符串
    - 默认16位用于密码，32位用于token
    - 使用secrets模块（非random模块）
 
-3. **运行时检测**：
-   - `detect_runtime() -> Literal["podman", "docker"]`：检测容器运行时
-   - `is_wsl2() -> bool`：检测是否在WSL2环境
-   - `is_podman_compose_available() -> bool`：检测podman-compose是否安装
-   - `is_podman_py_available() -> bool`：检测podman-py是否安装
+3. **运行时检测/命令执行/容器只读探测**：
+   - `detect_runtime()`：检测容器运行时（podman/docker）
+   - `run_cmd(c, cmd, ...)`：统一子进程执行（Windows 走无空格 pwsh 7 路径，见下）
+   - `check_runtime_ready()`：daemon 预检
+   - `container_exists()` / `container_running()`：只读状态探测
+   - podman-compose 是否可用：`tasks/client.py::compose_available()`（builder 专属）；
+     podman-py 是否可导入：`jpman_common.connection.sdk_available`
 
-4. **日志输出**：彩色日志（使用colorama或ANSI转义码）
-   - `info(msg)`：蓝色[INFO]
-   - `ok(msg)`：绿色[OK]
-   - `warn(msg)`：黄色[WARN]
-   - `error(msg)`：红色[ERROR]
+4. **日志输出**：任务层直接 `print` 中文状态行（历史上曾规划
+   info/ok/warn/error 彩色助手，现代码库以 `[OK]/[WARN]` 前缀 print 为准；
+   shell 脚本侧日志库见 `scripts/lib/logging.sh`）
 
 ## 任务编写规范
 
@@ -181,7 +217,7 @@ podman-compose后端提供声明式编排能力：
 
 ```python
 from invoke import task
-from .utils import info, ok, error, to_posix_path
+from .utils import run_cmd, detect_runtime
 from .client import get_client
 
 @task(help={
@@ -191,18 +227,14 @@ from .client import get_client
 def build(ctx, tag="jupyter-podman-rootless:latest", apt_mirror="official",
           conda_mirror="official", pip_mirror="official", no_cache=False):
     """构建镜像"""
-    client = get_client()
-    info(f"Building image {tag}...")
-    client.build(
-        tag=tag,
-        build_args={
-            "APT_MIRROR": apt_mirror,
-            "CONDA_MIRROR": conda_mirror,
-            "PIP_MIRROR": pip_mirror,
-        },
-        no_cache=no_cache,
-    )
-    ok(f"Image {tag} built successfully!")
+    print(f"[Build] Building image {tag}...")
+    # 优先 SDK；get_client 为上下文管理器，全候选失败 yield None → CLI 降级
+    with get_client() as client:
+        if client is not None:
+            client.images.build(...)  # podman-py SDK
+        else:
+            run_cmd(ctx, f"{detect_runtime()} build ...")  # CLI fallback
+    print(f"[OK] Image {tag} built successfully!")
 ```
 
 ### 参数规范

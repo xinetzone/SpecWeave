@@ -32,7 +32,8 @@
 - **镜像缓存**：`.image-cache/` 目录支持 podman save/load 快速备份恢复，pigz 多线程压缩
 - **WSL2 集成**：一键导出为 WSL2 发行版，自动配置 wsl.conf 和 Conda 激活，含环境验证脚本
 - **增量重建**：`jpman rebuild` 基于主 Containerfile 层缓存，配置变更仅重建 Layer 4/5（<10秒）
-- **构建系统**：使用 scikit-build-core + CMake 进行 Python 包构建
+- **构建系统**：使用 scikit-build-core 构建**纯 Python wheel**（`wheel.cmake = false`，无 CMakeLists.txt、无 `[tool.scikit-build.cmake]` 段）
+- **组内共享包**：平台/进程/容器只读探测与 SDK 连接层的唯一实现位于兄弟目录 [../shared](../shared)（包名 `jpman_common`，发行名 jpman-common 0.1.0，同为 scikit-build-core 纯 Python 包）；本包与 client 共同依赖，pyproject 声明 `jpman-common`（连接层见 `jpman_common.connection`）
 - **跨平台**：支持 WSL/Linux/macOS（bash）+ Windows（cmd/ps1）
 - **父级工作区**：SpecWeave 根目录（`../../../AGENTS.md`）— 全局规则、Skill、角色均以父级为准
 - **AI资产容器**：`.agents/` 目录（本项目特有规则，已按单一职责原子化拆分）
@@ -57,10 +58,10 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队）
        │   └─ jpman.ps1              ← Windows PowerShell版本
        ├─ docs/                       ← 人类可读文档（原子化拆分，18个文档+索引）
        │   └─ README.md              ← 文档索引
-       ├─ pyproject.toml             ← Python项目配置（invoke依赖声明，含[compose]/[full]/[model] extras，scikit-build-core）
-       ├─ CMakeLists.txt             ← scikit-build-core CMake配置
+       ├─ pyproject.toml             ← Python项目配置（scikit-build-core 纯 Python wheel；依赖 invoke/jpman-common/python-dotenv，含[sdk]/[compose]/[full]/[model] extras）
+       ├─ ../shared/                 ← 组内共享包 apps/containers/shared（jpman_common 0.1.0；connection.py 连接层唯一事实源 + proc/platform_paths/containers，builder 与 client 共同依赖）
        ├─ tasks.py                   ← invoke 入口（转发到 jpman_builder.tasks 命名空间）
-       ├─ src/jpman_builder/tasks/   ← invoke 任务定义目录（含 stage_upstream.py 构建前置 stage）
+       ├─ src/jpman_builder/tasks/   ← invoke 任务定义目录（含 stage_upstream.py 构建前置 stage；client.py 仅再导出 jpman_common.connection 的 get_client/sdk_available/podman_sock_path/APIError/PodmanNotFound，并保留 builder 专属 compose 探测与 sdk_*_kwargs）
        ├─ config/                    ← 配置文件目录
        ├─ scripts/                   ← 辅助脚本
        ├─ conda-lock/                ← conda环境定义（environment.yml，含omlmd+olot）

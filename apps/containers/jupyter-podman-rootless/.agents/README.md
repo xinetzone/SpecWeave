@@ -38,8 +38,8 @@ source: "AGENTS.md"
 | jpman CLI | [../bin/jpman](../bin/jpman) | 零依赖CLI，纯bash实现，跨平台（bash/cmd/ps1） |
 | Containerfile | [../Containerfile](../Containerfile) | 多阶段构建定义（3 阶段 + toolbox-builder aux + final 5 层运行时分层，Layer 4/5 支持缓存增量重建，内嵌 podman-compose/podman-py/toolbox） |
 | 上游源树（vendor/） | SpecWeave 根 [../../../../vendor/AGENTS.md](../../../../vendor/AGENTS.md) | podman-compose / podman-py / toolbox 三个 third_party 子模块（gitlink pin commit，见 [../docs/17-upstream-tools.md](../docs/17-upstream-tools.md)），构建前 stage 至 `../upstream/` |
-| pyproject.toml | [../pyproject.toml](../pyproject.toml) | Python项目配置（scikit-build-core + invoke） |
-| CMakeLists.txt | [../CMakeLists.txt](../CMakeLists.txt) | scikit-build-core CMake配置 |
+| pyproject.toml | [../pyproject.toml](../pyproject.toml) | Python项目配置（scikit-build-core 纯 Python wheel，`wheel.cmake=false` 无 cmake 段；依赖 invoke/jpman-common/python-dotenv，含 [sdk]/[compose]/[full]/[model] extras） |
+| 组内共享包 jpman_common | [../../shared/pyproject.toml](../../shared/pyproject.toml) | apps/containers/shared（jpman-common 0.1.0，scikit-build-core 纯 Python）：`connection.py` 是 SDK 连接层唯一事实源（host_runtime_uid/podman_sock_path/ensure_host_podman_socket/sdk_base_url_candidates/get_client/APIError/PodmanNotFound/sdk_available 等），另有 proc/platform_paths/containers；builder 与 client 共同依赖，两端 `tasks/utils.py` 仅作再导出垫片。本项目 `tasks/client.py` 再导出连接层符号，并保留 builder 专属 compose_available/compose_unavailable_reason（ntpath 特判）与 sdk_run_kwargs/sdk_build_kwargs |
 | .env.example | [../.env.example](../.env.example) | 环境变量模板（含jpman和invoke两种配置方式） |
 | jupyter配置 | [../config/jupyter_notebook_config.py](../config/jupyter_notebook_config.py) | Jupyter配置（allow_hidden=True，allow_root=True） |
 

@@ -22,6 +22,12 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
 ```
 
 - **端口默认 2223/8890**：与 quant 栈错开，两个栈可并行运行。
+- **compose 公共段继承（extends）**：rootless 三必需、凭证四变量、公共
+  labels/restart 与 `network_mode: bridge` 统一在
+  [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
+  （三栈共享单一事实源），栈 compose.yaml 以 extends 继承，只保留栈专属
+  image/build/ports/四个 bind/调试 env/组件 label；`xmnn-ccache` 命名卷
+  等栈专属卷仍在栈文件声明。
 - **源码路径**：默认挂载仓库根 `external/chaos/{npu_tvm,npuusertools,models}`；
   可在 `.env` 用 `NPU_TVM_PATH` / `NPUUSERTOOLS_PATH` / `MODELS_PATH`
   覆盖（invoke 路径做存在性硬校验）。TVM 全量编译在 9p 上较慢，可把路径

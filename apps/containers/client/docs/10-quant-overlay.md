@@ -19,16 +19,27 @@ invoke quant.down                    # 停止并清理
 ```
 
 - **Windows 原生自动桥接**：`quant.*`/`xmnn.*`/`monetize.*` 在 Windows 原生
-  CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`（或
-  `COMPOSE_WSL_DISTRO` 指定目标；该发行版由 jupyter-podman-rootless 改名顶替）内执行（2026-09-15 起替代硬门禁，见
+  CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`（client
+  专用 rootless 发行版，与 flapping 的默认 machine 相互独立、镜像存储
+  不互通；`COMPOSE_WSL_DISTRO` 可覆盖，`none` 显式关闭）内执行（2026-09-15
+  起替代硬门禁，见
   [utils.py::run_in_wsl_bridge](../src/jpman_client/tasks/utils.py)）；发行版
   不可用或设为 `COMPOSE_WSL_DISTRO=none` 时才回退门禁提示（WSL2 内运行或
   `invoke env.run-cmd` 进入自举容器，基底已内嵌 podman-compose）。
+- **compose 公共段继承（extends）**：rootless 三必需（`/dev/fuse` 设备、
+  `label=disable`、`cgroupns: host`）、凭证四变量（`USER_PASSWORD` /
+  `JUPYTER_TOKEN` / `SSH_PUBLIC_KEY` / `GRANT_SUDO`）、公共 labels/restart
+  与 `network_mode: bridge` 统一定义在
+  [overlays/_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)，
+  栈 compose.yaml 以 `extends` 继承、只写 quant 栈专属字段（image/build/
+  ports/volumes/栈 env/组件 label）。**行为变更（2026-09-15）**：quant 栈
+  compose.yaml 此前未声明 network_mode，现随基文件统一获得 `bridge`
+  （依据 2026-09-14 aardvark-dns user scope bus 同机实证）。
 - **配置**：`QUANT_IMAGE_TAG` / `QUANT_SSH_PORT` / `QUANT_JUPYTER_PORT` /
   `QUANT_WORKSPACE` / `USER_PASSWORD` / `JUPYTER_TOKEN` 等写入本目录 `.env`
   即可（模板见 `.env.example` 与 [overlays/onnx-quantized/.env.example](../overlays/onnx-quantized/.env.example)）。
 - **裸 compose**：不加装任何 Python 包也可在 `overlays/onnx-quantized/`
-  直接 `podman-compose up -d`。
+  直接 `podman-compose up -d`（基文件经 extends 相对路径自动解析，无需额外参数）。
 
 完整说明（版本矩阵、冒烟含义、与 Docker 谱系源变体的差异、深度量化指南）：
 [overlays/onnx-quantized/README.md](../overlays/onnx-quantized/README.md)。

@@ -120,8 +120,8 @@ jupyter-podman-rootless/
 ├── entrypoint.sh          # 7步启动脚本
 ├── compose.yaml           # podman-compose编排（jupyter + model-registry）
 ├── compose.dev.yaml       # 开发透传覆盖（opt-in）
-├── pyproject.toml         # Python项目配置（invoke + scikit-build-core）
-├── CMakeLists.txt         # scikit-build-core CMake配置
+├── pyproject.toml         # Python项目配置（scikit-build-core 纯 Python wheel；invoke + jpman-common + python-dotenv）
+├── ../shared/             # 组内共享包 apps/containers/shared（jpman_common：连接层/进程/平台/容器只读工具，先于本包安装）
 ├── tasks.py               # invoke 入口（转发到 jpman_builder.tasks）
 ├── .env.example           # 环境变量模板
 ├── .containerignore       # Podman构建忽略规则（upstream/*/README.md 反白放行）

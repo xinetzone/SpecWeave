@@ -11,9 +11,11 @@
 ## 快速开始
 
 ```bash
-cd apps/containers/client
+cd apps/containers
+pip install -e shared    # 先装两端共享包 jpman-common（连接层/平台工具单一事实源）
+cd client
 pip install -e .
-invoke --list        # 应看到 load / images / run / stop / status / clean + container.* / env.*
+invoke --list        # 应看到 load / images / run / stop / status / clean + container.* / env.* + quant/xmnn/monetize 三栈
 invoke load          # 自动从 ../jupyter-podman-rootless/.image-cache/ 拿最新 tar
 invoke run --workspace D:/spaces/SpecWeave   # 启动成功打印 SSH/Jupyter URL
 ```

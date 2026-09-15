@@ -17,24 +17,38 @@
 
 - xmnn.py 内**禁止** `import podman` / `from podman`；禁止把本层提升为
   `invoke run` 的后端或向根路径回流（同 C11 裁决）。
+- xmnn.py 现为 **StackSpec 声明 + 长任务薄封装**：唯一事实源 `XMNN_SPEC`，
+  六任务（build/up/down/ps/logs/smoke）由
+  `overlay_core.make_stack_tasks(XMNN_SPEC)` 工厂生成；`build-tvm` /
+  `wheel` 两个栈内 exec 长任务保留在 xmnn.py，调内核 helper（gates /
+  ensure_runtime_ready / require_running / run_compose）。同构编排函数
+  （门禁/prepare_env/compose_argv/残留自愈等）唯一定义在 overlay_core。
+  红线：overlay_core 与 jpman_common 零栈知识（不得 import 具体栈模块、
+  不出现栈名/路径），栈模块零 podman。
 - 8 个任务：`build / up / down / ps / logs / smoke / build-tvm / wheel`。
   `build-tvm` 与 `wheel` 是对运行中容器的 `podman-compose exec` 长任务。
 
 ## 2. 平台门禁 / WSL 桥接（硬约束）
 
 与 quant 栈完全同族：
-1. Windows 原生 CPython 一律先过 `_gate_platform()`——**自动桥接优先**
-   （2026-09-15 起）：经 `utils.run_in_wsl_bridge` 把本任务原样转发到 WSL
-   发行版（默认 `podman-machine-default`，`COMPOSE_WSL_DISTRO` 可覆盖，
-   `none` 显式关闭；该发行版由 jupyter-podman-rootless 改名顶替 flapping
-   machine）内执行，实时透传，返回码原样上抛；桥接成功即
-   `Exit(0)` 收尾，不再走 Windows 侧后续逻辑；
+1. Windows 原生 CPython 一律先过 `overlay_core.gate_platform(XMNN_SPEC)`
+   ——**自动桥接优先**（2026-09-15 起）：经
+   `utils.run_in_wsl_bridge(extra_env_keys=XMNN_SPEC.bridge_env_keys)`
+   把本任务原样转发到 WSL 发行版（默认 `podman-machine-default`（client
+   专用 rootless 发行版，与 flapping 的默认 machine 相互独立、镜像存储
+   不互通；`COMPOSE_WSL_DISTRO` 可覆盖，`none` 显式关闭））内执行，
+   实时透传，返回码原样上抛；桥接成功即 `Exit(0)` 收尾，不再走
+   Windows 侧后续逻辑。栈专属透传键（5 个 XMNN_* 键 + NPU_TVM_PATH /
+   NPUUSERTOOLS_PATH / MODELS_PATH）由 `XMNN_SPEC.bridge_env_keys`
+   声明，utils 只内置 `_BRIDGE_COMMON_ENV_KEYS` 通用键集；
 2. 桥接不可用（无 wsl.exe / 发行版缺失 / none 哨兵）才回退门禁
    `Exit(1)`（动态推导的 /mnt 路径 + 发行版检查 + WSL2 发行版 /
    `invoke env.run-cmd` 双路径中文指引）；
-3. POSIX 缺 podman-compose 二进制 `_gate_compose_binary()` Exit(1)，
+3. POSIX 缺 podman-compose 二进制
+   `overlay_core.gate_compose_binary(XMNN_SPEC)` Exit(1)，
    提示 `pip install -e ".[compose]"`（复用既有 optional extra，不新增依赖）；
-4. 顺序固定：先平台后二进制；build/up/smoke/build-tvm/wheel 另过 daemon 预检。
+4. 顺序固定：先平台后二进制；build/up/smoke/build-tvm/wheel 另过 daemon 预检
+   （`overlay_core.ensure_runtime_ready`）。
    WSL 桥接目标**禁止复用 `WSL_DISTRO_NAME`**（SDK 连接专用，默认
    podman-machine-default flapping 且镜像存储不互通）。
 
@@ -83,14 +97,15 @@
   libtvm.so，调试直观）；9p 全量编译慢时把 NPU_TVM_PATH 指向 WSL 原生
   克隆（README 必须给出该性能提示）。
 - **checkpoint 可写性契约**：Jupyter 以 devuser(1000) 运行，而
-  rootless+9p/drvfs 下容器内 root 预建的 `$XMNN_WORKSPACE/.ipynb_checkpoints`
+  rootless+9p/drvfs 下容器内 root 预建的
+  `$XMNN_WORKSPACE/.ipynb_checkpoints`
   在容器视角为 0:0 755，devuser 保存 notebook 必报 Errno 13。invoke 侧
-  `_prepare_env()` 在 mkdir 工作区后**必须**调用
+  `overlay_core.prepare_env(XMNN_SPEC)` 在 mkdir 工作区后**必须**调用
   `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
   幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
   bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
 - **up 残留自愈契约（2026-09-15 实证）**：`up` 在 `up -d` 前必须调用
-  `_reconcile_stale_containers()`——用 `podman ps -a -q --filter
+  `overlay_core.reconcile_stale_containers(c, XMNN_SPEC)`——用 `podman ps -a -q --filter
   label=<project> --filter status=created --filter status=exited`（多
   status 为 OR 语义）探测本项目非 running 容器；命中即先 `compose down`
   （**不**加 --volumes，保留 ccache 卷/镜像/workspace/源码 bind）再 up。
@@ -136,12 +151,19 @@
 
 ## 6. compose ↔ rootless 三必需 / bridge / 环境注入
 
-- 三必需只用标准字段：`devices: [/dev/fuse:/dev/fuse]`、
-  `security_opt: [label=disable]`、`cgroupns: host`（1.6.0 空操作须注释
-  声明）；严禁 privileged、docker.sock、host 网络。
+- 三必需（`devices: [/dev/fuse:/dev/fuse]`、`security_opt: [label=disable]`、
+  `cgroupns: host`，1.6.0 空操作须注释声明）、凭证四变量与
+  `network_mode: bridge` 已**上移 `../_shared/base-rootless.yaml`**
+  （extends 单一事实源），xmnn 栈 compose.yaml 以
+  `extends: {file: ../_shared/base-rootless.yaml, service: rootless-base}`
+  继承，**禁止在栈文件重复声明**；严禁 privileged、docker.sock、host 网络。
 - `network_mode: bridge` 是**带证据的偏差**：2026-09-14 同机实证 machine
-  无 systemd user bus 时默认项目网络 aardvark-dns 必失败；注释必须保留
-  该实证，不得擅自删改。
+  无 systemd user bus 时默认项目网络 aardvark-dns 必失败；实证注释保留在
+  基文件与 xmnn compose.yaml 文件头，不得擅自删改。
+- 栈文件只保留栈专属字段：image/build/ports/四个 bind volumes、调试
+  environment、`labels.component`；`xmnn-ccache` 命名卷等栈专属卷保持
+  栈内声明（基文件无 volumes/build/env_file/ports）。extends 合并语义
+  （rec_merge / L2844-L2849 路径解析）见 [quant-overlay.md](quant-overlay.md) §4.1。
 - 调试环境变量（PYTHONPATH/TVM_LIBRARY_PATH/LD_LIBRARY_PATH/NPU_TOOLS_ROOT/
   XMNN_TOOLS_ROOT）经 compose environment 注入；LD_LIBRARY_PATH 必须含
   npu_tvm/build、build/vta 与 /opt/conda/envs/main/lib（非登录 exec 不读

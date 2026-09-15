@@ -48,18 +48,23 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 资产 | 路径 | 说明 |
 |------|------|------|
-| Invoke 命名空间入口 | [../src/jpman_client/tasks/__init__.py](../src/jpman_client/tasks/__init__.py) | ns configure：根命名空间 + `container.*` 聚合别名 + `env.*` 自举命名空间 |
-| 工具函数 + Windows 探测层 | [../src/jpman_client/tasks/utils.py](../src/jpman_client/tasks/utils.py) | ContainerConfig / sdk_strategy_from_env / sdk_base_url_candidates / wsl_distro_name / windows_diagnose_hint / to_posix_path |
-| 连接主入口 + 多候选循环 | [../src/jpman_client/tasks/client_core.py](../src/jpman_client/tasks/client_core.py) | `@contextmanager get_client()`（两层后端、`yield None` 行为承诺、失败汇总表） |
+| **组内共享包（两端共享）** | [../../shared/src/jpman_common/](../../shared/src/jpman_common/) | `jpman_common` 0.1.0：platform_paths（to_posix_path 等）/ proc（run_cmd/detect_runtime）/ containers（只读探测）/ connection（连接层单一事实源：get_client/sdk_base_url_candidates/host_runtime_uid/podman_sock_path/ensure_host_podman_socket 等 17 个导出，**podman import 只允许在此包**）/ _win32_transcode；测试在 ../../shared/tests/ |
+| Invoke 命名空间入口 | [../src/jpman_client/tasks/__init__.py](../src/jpman_client/tasks/__init__.py) | ns configure：根命名空间 + `container.*` 聚合别名 + `env.*` 自举命名空间 + quant/xmnn/monetize 三栈命名空间 |
+| client 专属工具层 | [../src/jpman_client/tasks/utils.py](../src/jpman_client/tasks/utils.py) | ContainerConfig / 透传 spec / image_load_cli_command / run_in_wsl_bridge（_BRIDGE_COMMON_ENV_KEYS + spec.bridge_env_keys）/ host key / checkpoint；jpman_common 通用能力再导出垫片 |
+| 两层后端核心 | [../src/jpman_client/tasks/client_core.py](../src/jpman_client/tasks/client_core.py) | load_image/list_images 等；get_client/APIError/诊断等连接能力自 jpman_common.connection 再导出（垫片，单一事实源在共享包） |
+| 数据驱动栈编排内核 | [../src/jpman_client/tasks/overlay_core.py](../src/jpman_client/tasks/overlay_core.py) | frozen StackSpec/SourceMount/SmokeSpec/TaskDocs + gates/prepare_env/compose_argv/run_compose/残留自愈/smoke_stack + make_stack_tasks 六任务工厂；零栈知识、禁 import podman |
 | 人类 CLI 入口 + .env 加载 | [../src/jpman_client/tasks/manage.py](../src/jpman_client/tasks/manage.py) | `load/run/stop/status/clean/images` 6 个根任务 + 容器级 `container.*` 命名空间 |
 | 容器内自举任务 | [../src/jpman_client/tasks/env_in_container.py](../src/jpman_client/tasks/env_in_container.py) | `env.*` 三任务（build-layer / run-cmd / shell）+ `PODMAN_SERVICE_BOOT`（容器内 podman service 自举） |
-| quant 工作负载栈任务 | [../src/jpman_client/tasks/quant.py](../src/jpman_client/tasks/quant.py) | `quant.*` 六任务（build/up/down/ps/logs/smoke），podman-compose 子进程层，双门禁，禁 import podman |
-| xmnn 开发/打包栈任务 | [../src/jpman_client/tasks/xmnn.py](../src/jpman_client/tasks/xmnn.py) | `xmnn.*` 八任务（build/up/down/ps/logs/smoke/build-tvm/wheel），同族双门禁，源码路径硬校验，禁 import podman |
+| quant 工作负载栈任务 | [../src/jpman_client/tasks/quant.py](../src/jpman_client/tasks/quant.py) | 纯声明模块：`QUANT_SPEC` + `TASKS=make_stack_tasks(...)` + 6 别名（build/up/down/ps/logs/smoke），禁 import podman |
+| xmnn 开发/打包栈任务 | [../src/jpman_client/tasks/xmnn.py](../src/jpman_client/tasks/xmnn.py) | `XMNN_SPEC` 声明 + 6 工厂任务 + build_tvm/wheel 长任务（共 8 任务），双 cp314 ABI，禁 import podman |
+| monetize 原生编译栈任务 | [../src/jpman_client/tasks/monetize.py](../src/jpman_client/tasks/monetize.py) | `MONETIZE_SPEC` 声明 + 6 工厂任务 + build_native/wheel 长任务（共 8 任务），单一 cp314 GIL，禁 import podman |
 | 量化叠加层资产 | [../overlays/onnx-quantized/](../overlays/onnx-quantized/README.md) | Containerfile.quantized + compose.yaml/compose.gpu.yaml + smoke/（守卫+3 冒烟）+ .env.example + docs/ |
 | xmnn-dev 叠加层资产 | [../overlays/xmnn-dev/](../overlays/xmnn-dev/README.md) | Containerfile.xmnn-dev + compose.yaml + builder/（自包含打包内核）+ smoke/ + scripts/ + .env.example |
 | agent-monetize-dev 叠加层资产 | [../overlays/agent-monetize-dev/](../overlays/agent-monetize-dev/README.md) | Containerfile.agent-monetize + compose.yaml + builder/（build-native/build-wheel）+ smoke/ + scripts/ + .env.example |
+| 三栈 compose 公共基段 | [../overlays/_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml) | rootless-base 服务：三必需 + 凭证四变量 + network_mode bridge + 公共 label/restart（extends 单一事实源，三栈禁止重复声明） |
 | invoke 入口转发器 | [../tasks.py](../tasks.py) | 根 `tasks.py` 仅转发至 `jpman_client.tasks`（src 布局下 invoke 的入口发现锚点） |
-| Python 依赖声明 | [../pyproject.toml](../pyproject.toml) | invoke>=2 / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（quant.* 专用） |
+| Python 依赖声明（client） | [../pyproject.toml](../pyproject.toml) | invoke>=2 / **jpman-common（../shared 须先安装）** / podman>=5 / python-dotenv>=1；scikit-build-core；`[compose]` extra = podman-compose（三栈专用） |
+| Python 依赖声明（共享包） | [../../shared/pyproject.toml](../../shared/pyproject.toml) | jpman-common 0.1.0，scikit-build-core 纯 Python；dependencies=invoke>=2.0；optional `[sdk]` extra=podman>=5.0.0 |
 | 环境变量模板（多清单） | [../.env.example](../.env.example) | 容器级 9 项 + SDK 级 4 项 + quant 12 项 + xmnn 17 键 + monetize 栈键完整带注释 |
 | 人类可读文档入口 | [../docs/README.md](../docs/README.md) | 文档索引：安装/快速开始/§5 Windows WSL/§8 .env 完整清单（原子化 00-12） |
 

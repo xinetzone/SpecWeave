@@ -95,7 +95,7 @@ toolbox enter jupyter-dev
 
 ### 5. 已知限制（WSL 精简 VM 环境天花板，非镜像缺陷）
 
-- **`flatpak-spawn --host` 不可用**：报 `Portal call failed: The name is not activatable`——该命令走 Flatpak D-Bus 门户，podman machine 精简系统没有该门户。镜像中 flatpak-spawn 的装法与[上游 Ubuntu 26.04 官方镜像](../../../vendor/toolbox/images/ubuntu/26.04/Containerfile)完全一致（symlink 到 flatpak-xdg-utils），物理 Fedora Silverblue/Ubuntu Desktop 上正常。
+- **`flatpak-spawn --host` 不可用**：报 `Portal call failed: The name is not activatable`——该命令走 Flatpak D-Bus 门户，podman machine 精简系统没有该门户。镜像中 flatpak-spawn 的装法与[上游 Ubuntu 26.04 官方镜像](../../../../vendor/toolbox/images/ubuntu/26.04/Containerfile)完全一致（symlink 到 flatpak-xdg-utils），物理 Fedora Silverblue/Ubuntu Desktop 上正常。
 - `sudo` 可能提示 `unable to resolve host toolbx`（不影响退出码）：上游镜像额外安装 `libnss-myhostname` 消除该提示，后续可评估引入。
 - toolbx 容器以 `--privileged --network host --pid host --ipc host` 运行，透传优先、隔离弱化，仅用于可信开发场景。
 

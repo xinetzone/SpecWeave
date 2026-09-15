@@ -6,6 +6,12 @@ source: 从 apps/containers/jupyter-podman-rootless/AGENTS.md 拆分归档
 
 # 变更日志
 
+## 2026-09-15
+
+| 类型 | 变更 |
+|------|------|
+| refactor | **组内共享包 jpman-common 接线（apps/containers OKF 容器知识包重构的 builder 侧）**：平台/进程/容器只读工具与 SDK 连接层的唯一实现上移至兄弟包 `apps/containers/shared`（jpman_common 0.1.0：`proc.py`/`platform_paths.py`/`containers.py` + `connection.py`）；`tasks/utils.py` 改为 `jpman_common` 再导出垫片（仅保留 builder 专属 `MIRROR_CHOICES`），`tasks/client.py` 再导出 `get_client`/`sdk_available`/`podman_sock_path`/`APIError`/`PodmanNotFound`（保留 builder 专属 compose 探测 `compose_available`/`compose_unavailable_reason` 与 `sdk_run_kwargs`/`sdk_build_kwargs`）；pyproject 新增依赖 `jpman-common`，安装顺序先 shared 后本包（editable 必须 `--no-build-isolation`）。同步：AGENTS.md 组内共享包条与文件地图、.agents/README.md、.agents/rules/invoke-tasks.md 与 entrypoint.md 符号定位、docs/08-directory-structure.md 共享包章节、docs/09-three-tier-backend.md 实现位置、README 项目结构（移除已不存在的 CMakeLists.txt 行）。验收：daemon-free 静态等价（连接行为零变化，垫片保持原导入路径）；真机 E2E 后置清单项见 client `.agents/CHANGELOG.md` 2026-09-15 条目第 5 项（`invoke --list` + 垫片符号来源 import 冒烟）。规格 `.trae/specs/infra-env/containers-okf-refactor/` |
+
 ## 2026-09-12
 
 | 类型 | 变更 |

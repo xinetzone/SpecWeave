@@ -10,7 +10,9 @@ source: "README.md#2-安装"
 > 需要 Python ≥ 3.14（与构建端 `py314` 环境对齐）。
 
 ```bash
-cd apps/containers/client
+cd apps/containers
+pip install -e shared     # 先装两端共享包 jpman-common（连接层/平台工具，client 依赖它）
+cd client
 pip install -e .
 # 验证
 invoke --list

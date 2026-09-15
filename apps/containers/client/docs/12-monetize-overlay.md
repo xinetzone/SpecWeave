@@ -22,6 +22,11 @@ invoke monetize.down
 ```
 
 - 端口默认 **2224/8892**（与 quant 2222/8888、xmnn 2223/8890 错开）。
+- compose 公共段（rootless 三必需、凭证四变量、公共 labels/restart、
+  `network_mode: bridge`）由三栈共享的
+  [../_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
+  经 extends 单一提供，栈 compose.yaml 只写 agent-monetize 专属字段
+  （image/build/ports/两个 bind/PYTHONPATH 与 LD_LIBRARY_PATH/组件 label）。
 - 对 agent-monetize 仅 3 处跨平台适配（.dll→按平台选 .so/.dylib），
   Windows build.ps1 不回归；.so 不打入 wheel。
 - Windows 原生自动桥接同 quant/xmnn（`COMPOSE_WSL_DISTRO` 可指定发行版 / `none` 关闭回退门禁）。
