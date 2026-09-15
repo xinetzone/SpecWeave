@@ -177,11 +177,29 @@
   - `rule` TR-6.3：ruff/mypy 退出码 0；证据=命令输出。
   - `rubric` TR-6.4：单例解耦彻底度；1-5；1=仍存在模块级活引擎；3=主路径显式但残留全局状态；5=全部装配显式、无残留全局可变单例；阈值 ≥4；证据=代码审查 + grep。
 
-## Task 7: 命令层——22 个 handler 与显式注册表
+## Task 7: 命令层——24 个 handler 与显式注册表
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 6
+- **完成记录**：
+  - WSL py3.14 权威门禁：**560 passed / 0 skip**（T6 基线 490 + T7 新增 70）；`ruff check src tests` 全过；清缓存后 `mypy src` 0 issue（35 源文件）；TR-7.2 grep（`ComposeEngine\(|import subprocess|subprocess\.` 扫 `src/xuan_compose/commands/*.py`）**GREP_CLEAN 0 命中**。
+  - **计数勘误（以代码为准）**：spec F-005/FR-3/TR-7.1 文字作"22 个"为计数笔误——T7 R 阶段双重取证：①grep 实证上游 `@cmd_run` 装饰器共 **24** 处（podman_compose.py L3324-4902），且 24 个注册名**两两不同、零别名/零共享装饰器**（F-005 括注"含别名/共享装饰器展开"同样不成立）；②全包 grep `aliases=` **0 命中**，parser 层也不存在任何命令别名。真相即 **24 个独立命令**。TR-7.1 验收口径明文"与上游 `@cmd_run` 清单集合相等"，故注册表按 **24 名**交付，未删减。24 名：ls/version/wait/systemd/pull/push/build/up/down/ps/run/cp/exec/start/stop/restart/logs/config/port/pause/unpause/kill/stats/images。
+  - TR-7.1/7.2 用例落点（4 个新测试文件 70 例，全部 fake podman + mock compose、零真实子进程）：
+
+    | 测试文件 | 用例数 | 覆盖 |
+    |---|---:|---|
+    | test_command_registry.py（新建） | 5 | TR-7.1：24 名硬快照集合对等、全 async、统一两参签名；install_handlers 查表装配与幂等 |
+    | test_commands_smoke.py（新建） | 4 | TR-7.2：导入不构造 Podman、源码零 `import subprocess`/零 `subprocess.`、零引擎实例化/反向 import engine |
+    | test_commands_simple.py（新建） | 33 | version(3)/pull+push(6)/ps(3)/config(3)/port(1)/pause+unpause(2)/kill(3)/stats(2)/images(2)/wait(1)/logs(2)/ls(3)/systemd(2) |
+    | test_commands_build_updown.py（新建） | 28 | build_one(3)/compose_build 拓扑(3)/create_pods(1)/环境密钥(3)/依赖条件版本门控(3)/down 逆序停止+rmi local+卷网(2)/up detach 四分支(4)/run+cp+exec(5)/start+stop+restart(4) |
+
+  - 生产代码：`src/xuan_compose/commands/` 新建 **10 个文件**——`__init__.py`（`Handler` 类型别名 + `COMMAND_HANDLERS` 显式注册表 + `install_handlers()`）、`version.py`（L3378-3388）、`systemd.py`（L3411-3513）、`pullpush.py`（L3516-3546）、`build.py`（build_one L3688-3708 + compose_build L3712-3764，`_add_build` 按上游保持为 handler 内闭包）、`updown.py`（L802-835、L3767-3942、L4109-4526：pod_exists/create_pods/create_secrets_from_environment/_validate_completed_successfully/check_dep_conditions（内闭包 wait_one）/run_container/wait_for_container_running_healthy（内闭包 run_podman_wait）/compose_up/compose_down）、`lifecycle.py`（L3400-3408、L4708-4868：wait/transfer_service_status/start/stop/restart/pause/unpause/kill）、`runexec.py`（L4549-4681）、`inspect.py`（L3324-3375、L4530-4541、L4795-4935）、`logs.py`（L4759-4792）；另在 `engine.py` 追加唯一字段 `self.executable: str | None`。
+  - 复用已迁符号零重复实现：is_local/get_excluded/deps_from_container/get_volume_names/compose_run_update_container_from_args/compose_cp_args/compose_exec_args（translate.run_args）、container_to_args（translate.container_args）、container_to_build_args（translate.build）、prepare_images（pull.py）、create_format_logs_task（logs.py）、wait_with_timeout/CalledProcessError（runner.py 边界再导出）、STOP_GRACE_PERIOD/str_to_seconds/strverscmp_lt（compat）、ServiceDependencyCondition（model）、DependField（types）。
+  - py3.14 现代化/结构差异（汇入 T10 差异表）：①`@cmd_run` 类装饰器的构造期副作用注册 → 模块级显式 `COMMAND_HANDLERS: dict[str, Handler]` 字典 + `install_handlers(compose)` 装配函数（T8 CLI dispatch 前调用），导入包零引擎触碰；②help/desc 文本与 argparse 装配不随注册表，归属 T8 parser 层；③`compose` 形参统一 `Any` 鸭子类型（沿用 T5/T6 测试可 stub 的惯例），`Handler = Callable[[Any, argparse.Namespace], Awaitable[Any]]`；④systemd unit 的可执行路径：上游模块级 L56 导入期读解释器启动参数取 `script` → 改为 `engine.executable` 显式字段（默认 None），由 T8 注入，命令层/引擎层导入期均不读 argv（FR-5/TR-8.3）；⑤handler 间互调（up→down、run→up/build）保持上游 `compose.commands[name]` 查表语义，由 install_handlers 填充（T6 prepare_images 已建立该模式，其测试 mock compose.commands["build"] 不变）；⑥`CalledProcessError` 一律从 runner 边界模块再导入，commands 不 import subprocess；⑦逐行保留的上游怪癖（未顺手重写）：build 拓扑 as_completed 调度、up 的镜像变更/config_hash 重建判定与 SIGINT 监督循环、kill 的 all/services 重复分支、logs `max()` 空序列 ValueError、ls `except Exception: break` 与 json 分支 `print(list)`（非标准 JSON）、`--rmi local` 删除的恰是 is_local 镜像（L4514）、wait 走同步 `podman.exec`（os.execlp 不返回，故无 await）、create_secrets 报错串第二个片段上游漏 f 前缀（原样保留）。
+  - **test_compose_up_args（2 例）改登记延 T8**：T5 曾登记延 T7；通读上游 tests/unit/test_compose_up_args.py 实证两例均调 `podman_compose._parse_args(["up", ...])` 测 argparse（--no-attach append/默认 []），被测符号是 parser 而非 handler，T7 不含 parser，硬造夹具会失真，故改随 T8 parser 层落地。上游 unit/ 目录除此 2 例外无任何 handler 隔离单测（其余全在 integration/ 需 podman 守护），T7 的 70 例均为自建行为测试。
+  - T8 装配注意事项（交接）：a) dispatch 前必须调 `install_handlers(engine)`，否则 up/run 的 compose.commands 查表 KeyError；b) 必须注入 `engine.executable` 供 systemd create-unit；c) `compose_run` 内 `Namespace(services=..., if_not_exists=..., build_arg=[], **args.__dict__)` 要求 run 子命令 parser **不得**定义 `--build-arg`（上游 compose_run_parse L5091-5150 实证无此项），否则重复关键字 TypeError；d) up handler 读取的 wait/wait_timeout/no_attach/no_hosts/force_recreate/no_recreate/always_recreate_deps 等属性须由 T8 parser 齐备。
+  - 测试期环境处置（非生产缺陷）：Windows 全量一度出现 33 failed（基线 32 + engine smoke 1），定位为 py314 site-packages 存在 inplace editable 的**陈旧包拷贝**遮蔽 src（engine.py 为加注 executable 前版本、且新增 commands 子包未收录）；`pip uninstall -y` + 删除残留 `site-packages/xuan_compose` + `pip install -e . --no-build-isolation` 后副本刷新为最新 src。复跑 Windows 原生 **528 passed / 32 failed**，32 例全部为 T1 起登记的路径分隔符/盘符语义平台差异，与基线同质同数、零新增。
 - **Description**:
   - 按 `commands/` 蓝图搬迁全部 handler：version、wait、systemd、pull/push、build（含 build_one）、up、down、ps、run、cp、exec、start/stop/restart、logs、config、port、pause/unpause、kill、stats、images、ls。
   - 用显式 `COMMAND_HANDLERS: dict[str, Handler]` 替代 `@cmd_run` 对全局单例的副作用注册；装饰器可保留为注册该表的薄语法糖，但禁止模块导入时触碰引擎实例。
@@ -194,9 +212,26 @@
 
 ## Task 8: CLI 层——parser / main / __main__
 
-- **Status**: `pending`
+- **Status**: `done`（2026-09-15 验收，未提交，等用户原子提交指令）
 - **Priority**: high
 - **Depends On**: Task 7
+- **完成记录**：
+  - WSL py3.14 权威门禁：**607 passed / 0 skip / 24 subtests**（T7 基线 560 + T8 新增 47，计数精确吻合）；Windows py314 原生 **575 passed / 32 failed**（528+47，32 例仍为 T1 起登记的路径/盘符平台差异，同质同数零新增）；`ruff check src tests` 全过；清 `.mypy_cache` 后 `mypy src` 0 issue（39 源文件，T7 为 35 → +4：cli/__init__/parser/main + 包根 __main__）。
+  - TR-8.1 真实入口证据（WSL `python -m xuan_compose`，PYTHONPATH=src）：**24 子命令 + help 伪命令逐一 `<cmd> --help` 全部退出码 0**（批量 shell 循环零 FAIL，含 wait 空 parser）；`--version` 真实探测到 WSL podman 5.7.1 后输出 `podman-compose version 1.6.0+xuan.1` 退出 0；无参退出码 255（即上游 `sys.exit(-1)` 的 Linux 呈现）。另在 tests/test_cli.py 内有同等程序化批量（24 subtests）。**沿用 T7 计数勘误**：TR 文字"22 命令"为笔误，实际按 24 个 `@cmd_run`/subparser 全验。
+  - TR-8.3 grep（`grep -rn 'sys\.argv' src --include='*.py'`）：**仅命中 `src/xuan_compose/cli/main.py:50` 一处真实读取**（`engine.executable = os.path.realpath(sys.argv[0])`，注释/docstring 提及均在 cli/ 内）；engine.py/commands/translate/runner/包根 __init__ 零字面量——T7 时 engine.py 注释已改用"解释器启动参数"措辞，T8 同法清理了 commands/systemd.py 与包根 __init__.py docstring 的字面量残留。
+  - 生产代码（4 个新文件 + pyproject 1 处）：
+    - `cli/parser.py`（约 750 行，翻译上游 L119-129/L3149-3267/L4943-5525）：`PODMAN_CMDS` 9 元组、`PullPolicyAction`（逐行：`--pull-always` 仅 None/"true" 设 always，"false" 直接 return；`--pull` 无值 → "newer"）、`init_global_parser`（全部全局参数逐字保留：-v/--in-pod/--pod-args/--env-file/-f/--profile/-p/--podman-path 默认 "podman"/--podman-args + 9 个 --podman-<cmd>-args/--no-ansi/--no-cleanup/--dry-run/--parallel 默认读 `COMPOSE_PARALLEL_LIMIT` 否则 `sys.maxsize`/--verbose）、**23 个 parser 函数**（函数名与上游完全一致，含共享函数 compose_parse_timeout/compose_build_up_parse/compose_build_parse/compose_up_start_parse/compose_pause_unpause_parse/compose_format_parse；cp 函数名沿用上游笔误 `compose_parse_cp`）、`COMMAND_PARSERS: dict[str, tuple[ParserFn, ...]]` **24 键显式注册表**（wait=() 空元组——上游 wait 无任何 @cmd_parse；挂载顺序精确复刻 append 序：up=(up, build_up, build, up_start)、build=(build_up, build)、down=(down, timeout, build)、start=(build, up_start)、stop/restart=(timeout, build)、pause=unpause=(pause_unpause,)、ps/stats 各带 format）；`COMMAND_HELP` 24 个单行 help 文本 + systemd 经 `_help_desc_from_docstring()` 运行时从 `commands.systemd.compose_systemd.__doc__` 派生（复刻 cmd_run 装饰器 `re.sub(r"^\s+", "", doc)` 无 MULTILINE + 首行切分算法，systemd 是唯一不传 cmd_desc 的命令）；`build_parser(command_descriptions=None)` 零副作用纯函数（先 add "help" 伪 subparser 再遍历注册表）；`parse_args(engine, argv=None)`：解析 → COMPOSE_ENV_FILES 回填（仅当 --env-file 为空）→ --version 改道 → 无 command/help 时 print_help + `sys.exit(-1)` → `configure_logging` → 回写 `engine.global_args`。
+    - `cli/main.py`（翻译 L2480-2523/L5528-5537）：`async_main(argv=None)` 显式装配链——构造 ComposeEngine → install_handlers → parse_args → podman_path 可执行校验（非默认路径 isfile+X_OK→realpath，否则非 dry-run fatal+exit 1）→ `Podman(engine, podman_path, dry_run, Semaphore(parallel))` → **engine.executable 注入（全库唯一 argv 读取点）** → 非 dry_run 版本探测（`output(["--version"])` decode/split 取末段；`CalledProcessError`/`FileNotFoundError` 时拼 `e.output` 记 error 置 None，空版本 fatal+exit 1）→ compose 加载条件 `cmd != "version" and (cmd != "systemd" or args.action != "create-unit")` → `engine.commands[cmd]` 查表分发 → int 返回码转 `sys.exit`；`main(argv=None)` = 模块级 `asyncio.run`（可被 `patch("xuan_compose.cli.main.asyncio.run")` 替身）+ except PodmanComposeError → stderr `Error: {e}` + exit 1。
+    - `cli/__init__.py`：门面导出（async_main/main/parse_args/build_parser/COMMAND_PARSERS/COMMAND_HELP/PODMAN_CMDS/PullPolicyAction）+ 边界 docstring。
+    - 包根 `__main__.py`：`from .cli.main import main; main()`（`python -m xuan_compose`，注意是包根而非 cli/ 下）。
+    - `pyproject.toml` 加 `[project.scripts] xuan-compose = "xuan_compose.cli.main:main"`（对等上游 `podman-compose = "podman_compose:main"`；沙箱拦截 console exe 落地不影响声明与 python -m）。
+  - 测试（3 移植文件 + 1 新建，47 例全 fake 零真实 podman）：
+    - `test_parse_args.py`（移植上游 2 例，适配 `parse_args(ComposeEngine(), argv)`）：COMPOSE_ENV_FILES 逗号列表回填、CLI `--env-file` 覆盖环境变量。
+    - `test_main.py`（移植上游 1 例）：patch `xuan_compose.cli.main.asyncio.run`，fake 关 coroutine 后抛 `PodmanComposeError("External network [missing-net] does not exist")` → SystemExit(1) + stderr `Error: ...`。
+    - `test_compose_up_args.py`（**T5/T7 两度延期、T8 兑现**，2 例）：`up --no-attach db --no-attach cache` → ["db","cache"]；`up` → no_attach==[]。
+    - `test_cli.py`（新建 42 例）：注册表覆盖矩阵（COMMAND_PARSERS≡COMMAND_HANDLERS 24 键、wait 空元组、25 subparser 含 help、up/build/down/start/stop/ps/stats 挂载顺序、systemd help 派生）；24 命令 --help 退出 0（TR-8.1 程序化）；全局 parser（无参/help 退出 -1、-v 改道 version、默认值全集、parallel 的 sys.maxsize/env 覆盖、engine.global_args 回写）；PullPolicyAction 6 分支（含 `--pull-always false` 保持 argparse 预置 None——非"属性不存在"，已纠正一次断言直觉错误）；子命令参数表（build/run 无 build-arg/exec/cp/kill/rmi nargs?/logs/port/systemd choices/ps/stats/ls/config）；async_main 装配 8 例（dry-run version --short 零 mock 端到端、version/systemd create-unit 豁免 compose 加载、ps 加载、非 dry-run 版本探测置 5.2.3、podman 缺失 fatal exit 1、pull 空集 int 0→SystemExit、executable 注入、handlers 24 名安装齐）。
+  - py3.14 现代化/结构差异（汇入 T10 差异表）：①`@cmd_parse` 装饰器副作用 → `COMMAND_PARSERS` 显式注册表 + `build_parser()` 纯构造，parser 层导入零引擎触碰；②`_parse_args` 引擎方法 → CLI 纯函数式 `parse_args(engine, argv)`（engine 仅作 global_args 回写宿主，FR-5/NFR-3）；③help/desc 由 cmd_run 装饰器闭包计算 → COMMAND_HELP 表 + systemd 运行时从 handler docstring 派生（唯一例外显式标注，re.sub 无 MULTILINE 细节保留）；④上游模块级 L56 `script = realpath(argv[0])` 导入期副作用 → 装配期单点注入 `engine.executable`（T7 字段的唯一写入点）；⑤run() 方法操作 self 单例 → `async_main(argv)` 显式构造 engine，main 同步入口接受可选 argv（上游 main() 无参，测试便利差异，console script 零参调用等价）；⑥prog 由 `os.path.basename(sys.argv[0])` 默认（python.exe -m 呈现，FR-4 允许，T9 argparse 快照对拍时 prog 除外）；⑦逐行保留未顺手重写：--parallel 的 sys.maxsize/env 读取、退出码 -1、PullPolicyAction 的 false 静默 return、fatal 文案与"podman version command failed"原文。
+  - 环境处置（非生产缺陷）：刷新 editable 时沙箱拦截 `Scripts/xuan-compose.exe` 写入（console script 安装期生成），包本体与 `python -m` 不受影响；TR 验收以 PYTHONPATH=src/python -m 为准。
 - **Description**:
   - `cli/parser.py`：全局 parser、`_init_global_parser` 与全部 `compose_*_parse`（24 处注册，含共享 parser 的 down/stop/restart、build/up 等组合）；显式 parser 注册表替代 `@cmd_parse` 单例副作用。
   - `cli/main.py`：装配 runner/engine、podman 版本探测、compose 文件加载条件（version/systemd 例外）、handler 分发、退出码处理。
