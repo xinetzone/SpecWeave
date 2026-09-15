@@ -67,7 +67,8 @@ apps/<group>/<app-name>/
 | 应用 | 说明 |
 |------|------|
 | [jupyter-podman-rootless](containers/jupyter-podman-rootless/README.md) | 基于 Podman rootless 的 Jupyter 开发容器（Python 3.14t + Miniforge3 + SSH + OMLMD/OLOT + Toolbx 透传） |
-| [client](containers/client/README.md) | jupyter-podman-rootless 镜像消费端：podman-py load/run/stop + 镜像备份（invoke save/load） |
+| [client](containers/client/README.md) | jupyter-podman-rootless 镜像消费端：podman-py load/run/stop + 镜像备份（invoke save/load）+ quant/xmnn/monetize 工作负载栈 |
+| [shared](containers/README.md)（[pyproject](containers/shared/pyproject.toml)） | 组内共享包 jpman-common：podman SDK 连接层唯一事实源 + 只读工具，两端共同依赖（组层 [AGENTS](containers/AGENTS.md) 代管） |
 
 #### docker-images/ —— 容器镜像类（Docker 生态）
 
@@ -118,7 +119,7 @@ apps/<group>/<app-name>/
 |---|---|---|
 | `agent-monetize/` | **Python 3.14+ 智能体自动变现平台** —— 自主循环 + 道家门控 + 沙箱通道 + tvm-ffi 桥接。 | [README.md](agent-monetize/README.md) |
 | `ai-agents/` | ai-agents 应用 | `ai-agents/`（暂无 README） |
-| `containers/` | containers 应用 | `containers/`（暂无 README） |
+| `containers/` | containers/ — Podman rootless 容器工作区分组 | [README.md](containers/README.md) |
 | `dev-tools/` | dev-tools 应用 | `dev-tools/`（暂无 README） |
 | `docker-images/` | docker-images 应用 | `docker-images/`（暂无 README） |
 | `samples/` | samples 应用 | `samples/`（暂无 README） |

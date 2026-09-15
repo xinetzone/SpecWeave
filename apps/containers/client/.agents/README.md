@@ -91,7 +91,7 @@ source: "AGENTS.md#嵌套路由关系"
 
 | 层级 | 入口路径 | 提供的资产 |
 |------|---------|-----------|
-| L1 apps 容器组 | `apps/containers/.agents/`（预留；当前不存在，直接跳 L2） | apps/containers 组级共享规则（预留） |
+| L1 apps 容器组 | [../../.agents/](../../.agents/README.md) | apps/containers 组级资产容器：shared-package 组级规则（G1/G2）+ G3/G4 契约索引 + 回退路由（2026-09-15 起落地） |
 | L2 apps 应用区 | [../../../AGENTS.md](../../../AGENTS.md) | apps 总入口、应用路由表 |
 | L3 SpecWeave 根（最上层） | [../../../../AGENTS.md](../../../../AGENTS.md) | 全局启动协议、沟通语言、提交规范、修复闭环三阶段、路径引用规则 |
 | （根规则） | [../../../../.agents/global-core-rules.md](../../../../.agents/global-core-rules.md) | 全局核心规则（内容敏感度预检、嵌套路由回退链） |

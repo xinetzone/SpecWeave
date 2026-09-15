@@ -97,7 +97,7 @@ SpecWeave 根 AGENTS.md（全局规则、Skill、角色、团队、七概念指�
 | invoke 任务新增/修改（load/run/stop/status/clean） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) | 两层后端架构、`get_client() yield None` 零回归承诺、命名空间别名一致性 |
 | podman-py SDK 连接行为修改 / 新增 scheme | [.agents/rules/sdk-connection.md](.agents/rules/sdk-connection.md) | 6 合法 scheme 白名单、无 npipe、`base_url` 在 Windows 必须显式、策略归一化 |
 | Windows 11 WSL2 探测逻辑修改 / 新增发行版兼容 | [.agents/rules/windows-wsl.md](.agents/rules/windows-wsl.md) | 3 级发行版回退、UID 不硬编码 1000、UTF-16 LE 解析中文 Windows、W-I1~W-I3 修复 |
-| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源） + [docs/06-run-discipline.md](docs/06-run-discipline.md) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
+| 容器配置（rootless 三必需 / 卷挂载 / 端口映射） | `src/jpman_client/tasks/utils.py::ContainerConfig`（源代码真源，定义于 utils.py:197；注意 `../shared` 的 `containers.py` 仅有只读探测两函数） + [docs/06-run-discipline.md](docs/06-run-discipline.md) | 严禁 `--privileged`；挂载路径走 `to_posix_path` |
 | 新增第四工作负载栈（声明 StackSpec） | [.agents/rules/invoke-tasks.md](.agents/rules/invoke-tasks.md) §声明式栈 + [../../../.agents/skills/client-overlay-scaffold/SKILL.md](../../../.agents/skills/client-overlay-scaffold/SKILL.md) | 2026-09-15 后新栈只能写声明模块：`<NAME>_SPEC` StackSpec + `TASKS` + 六别名；compose 用 extends `_shared/base-rootless.yaml`；禁止复制编排同构函数（C14） |
 | quant.\* 工作负载栈（量化叠加镜像/compose up-down/冒烟/GPU opt-in） | [.agents/rules/quant-overlay.md](.agents/rules/quant-overlay.md) | 子进程边界（禁 import podman）、Windows 原生门禁、三必需 compose 映射、list 追加深合并、镜像守卫契约 |
 | 叠加镜像 Containerfile.quantized 修改 / 量化包版本 / 冒烟脚本 | [overlays/onnx-quantized/](overlays/onnx-quantized/README.md) + [quant-overlay.md](.agents/rules/quant-overlay.md) §6 | FROM rootless、main cp314t、版本三重实证、OCI 引号教训、守卫不可删 |
