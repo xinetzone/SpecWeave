@@ -33,11 +33,21 @@ ALL_SPECS = (_QUANT, _XMNN, _MONETIZE)
 class FakeRunner:
     """记录 run_cmd 调用；按命令内容返回可控结果。"""
 
-    def __init__(self, *, running: bool = False, stale: str = "", image_exists: bool = True):
+    def __init__(
+        self,
+        *,
+        running: bool = False,
+        stale: str = "",
+        image_exists: bool = True,
+        ss_output: str = "",
+        config_files: str = "",
+    ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
         self.stale = stale
         self.image_exists = image_exists
+        self.ss_output = ss_output
+        self.config_files = config_files
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -47,6 +57,13 @@ class FakeRunner:
             return SimpleNamespace(ok=True, stdout="cid" if self.running else "", return_code=0)
         if "image exists" in cmd:
             return SimpleNamespace(ok=self.image_exists, stdout="", return_code=0 if self.image_exists else 1)
+        if "ss -ltnp" in cmd:
+            return SimpleNamespace(ok=True, stdout=self.ss_output, return_code=0)
+        if "inspect" in cmd:
+            return SimpleNamespace(ok=True, stdout=self.config_files, return_code=0)
+        if cmd.startswith("kill ") and "-9" not in cmd:
+            # 模拟 TERM 后孤儿 rootlessport 退出（真机实测行为）
+            self.ss_output = ""
         return SimpleNamespace(ok=True, stdout="", return_code=0)
 
     @property
@@ -77,6 +94,7 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.setattr(oc, "platform", SimpleNamespace(system=lambda: "Linux"))
     monkeypatch.setattr(oc.shutil, "which", lambda name: "/usr/bin/podman-compose")
     monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
+    monkeypatch.setattr(oc.time, "sleep", lambda *_a, **_k: None)
     # 清掉三栈 env，避免宿主环境污染
     for spec in ALL_SPECS:
         for key in (spec.workspace_env, spec.image_tag_env, spec.ssh_port_env, spec.jupyter_port_env):
@@ -255,6 +273,80 @@ def test_reconcile_stale_triggers_compose_down(harness):
     cmd = harness.runner.commands[-1]
     assert "podman-compose" in cmd and " down" in cmd
     assert "--project-name onnx-quantized" in cmd
+
+
+# ---- up_preflight：ss 解析 / 路径归一 / 孤儿回收 / 跨控制平面 ----
+
+_SS_LINES = (
+    "LISTEN 0 4096          0.0.0.0:2223       0.0.0.0:*  "
+    ' users:(("rootlessport",pid=92823,fd=10))',
+    "LISTEN 0 4096          [::]:2223          [::]:*     "
+    ' users:(("rootlessport",pid=92823,fd=11))',
+    "LISTEN 0 4096          0.0.0.0:8890       0.0.0.0:*  "
+    ' users:(("rootlessport",pid=92823,fd=12))',
+    "LISTEN 0 128          0.0.0.0:2222       0.0.0.0:*  "
+    ' users:(("pasta.avx2",pid=27066,fd=6))',
+)
+
+
+def test_parse_ss_port_holders_realworld():
+    port, holders = oc.parse_ss_port_holders(_SS_LINES[0])
+    assert port == "2223" and holders == [("rootlessport", 92823)]
+    port, holders = oc.parse_ss_port_holders(_SS_LINES[3])
+    assert port == "2222" and holders == [("pasta.avx2", 27066)]
+    assert oc.parse_ss_port_holders("State Recv-Q Send-Q") == (None, [])
+    port, holders = oc.parse_ss_port_holders("LISTEN 0 0 0.0.0.0:80 0.0.0.0:*")
+    assert port == "80" and holders == []
+
+
+def test_config_paths_diverge_is_raw_string_compare():
+    # compose config-hash 按原文计算：指向同一文件的 D:\ 与 /mnt/d 仍算分歧
+    win = r"D:\spaces\SpecWeave\apps\containers\client\overlays\xmnn-dev\compose.yaml"
+    wsl = "/mnt/d/spaces/SpecWeave/apps/containers/client/overlays/xmnn-dev/compose.yaml"
+    assert oc.config_paths_diverge(win, wsl) is True
+    assert oc.config_paths_diverge(wsl, wsl) is False
+    # inspect 失败（actual 为空）时不动作：未知不判分歧
+    assert oc.config_paths_diverge("", wsl) is False
+
+
+def test_up_preflight_reaps_orphan_rootlessport(harness):
+    # 无活体项目容器（裸 compose 失败现场），孤儿 rootlessport 占着 2223/8890
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    oc.up_preflight(None, _XMNN, env={})
+    kills = [c for c in harness.runner.commands if c.startswith("kill")]
+    assert kills == ["kill 92823"]  # TERM 即生效，不应升级 kill -9
+    assert not any(" down" in c for c in harness.runner.commands)
+
+
+def test_up_preflight_never_kills_other_holders(harness):
+    # pasta（jupyter 栈转发器）即使监听端口也绝不回收
+    harness.runner.ss_output = _SS_LINES[3]
+    oc.up_preflight(None, _XMNN, env={})
+    assert not any(c.startswith("kill") for c in harness.runner.commands)
+
+
+def test_up_preflight_cross_plane_running_container_triggers_down(harness):
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = (
+        r"D:\spaces\SpecWeave\apps\containers\client"
+        r"\overlays\xmnn-dev\compose.yaml"
+    )
+    oc.up_preflight(None, _XMNN, env={})
+    downs = [c for c in harness.runner.commands if " down" in c]
+    assert len(downs) == 1 and "--project-name xmnn-dev" in downs[0]
+    # 优雅 down 后无活体容器，剩余孤儿同样被回收
+    assert any(c.startswith("kill ") and "-9" not in c for c in harness.runner.commands)
+
+
+def test_up_preflight_same_plane_running_is_noop(harness):
+    harness.runner.running = True
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.config_files = str(
+        harness.root / "overlays" / _XMNN.overlay_subdir / "compose.yaml"
+    )
+    oc.up_preflight(None, _XMNN, env={})
+    assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
 
 
 # ---------------------------------------------------------------------------

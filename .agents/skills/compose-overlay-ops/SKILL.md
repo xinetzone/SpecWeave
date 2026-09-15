@@ -103,9 +103,17 @@ wsl -d podman-machine-default -- bash -lc '
 - **栈容器**：Exited 多为发行版回收（步骤 0 后重新 up 即可）
 - **基底镜像缺失**：从构建端缓存载入（31 秒实测）：
   `podman load -i /mnt/d/spaces/SpecWeave/apps/containers/jupyter-podman-rootless/.image-cache/jupyter-podman-rootless-latest.tar.gz`
-- **compose 工具缺失**（首次）：
-  `cd /mnt/d/spaces/SpecWeave/apps/containers/client && /opt/conda/bin/python -m pip install -e ".[compose]" -i https://pypi.tuna.tsinghua.edu.cn/simple`
-  （invoke/podman-compose 落在 `~/.local/bin`，调用用绝对路径或 export PATH）
+- **compose 工具缺失**（首次，2026-09-15 实证于 Fedora 43 Container Image
+  发行版：自带 python3 3.14 但**无 pip**，且 jpman-common 是 PyPI 不发布的
+  本地兄弟包，直接装 client 必报 `No matching distribution found for
+  jpman-common`）。正确安装序三步（均 `--user`，产物落 `~/.local/bin`，
+  桥接器已自动把该目录前置到 PATH）：
+  ```bash
+  python3 -m ensurepip --user
+  cd /mnt/d/spaces/SpecWeave/apps/containers/client
+  python3 -m pip install --user -e ../shared -i https://pypi.tuna.tsinghua.edu.cn/simple
+  python3 -m pip install --user -e '.[compose]' -i https://pypi.tuna.tsinghua.edu.cn/simple
+  ```
 - **nft 缺失**（bridge 网络）：`sudo apt-get install -y nftables`
   （报错 `netavark: unable to execute "nft"` 时）
 
@@ -182,6 +190,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | 现象 | 实证根因 | 处理 |
 |---|---|---|
 | 容器 `Exited (0)`、日志停在中段 | 发行版空闲被回收（非应用崩溃） | 开保活锚 → `xmnn.down && xmnn.up --skip-build` |
+| **假 Up**：`podman ps` 显示 Up、`inspect .State.Pid` 有值且 status=running、Jupyter 端口甚至仍 302，但任何 `exec` 报 `crun: container <id> does not exist: open $XDG_RUNTIME_DIR/crun/<id>/status: No such file or directory`；该 PID 在宿主 `ps -p` 已不存在，`crun/` 目录下只剩 `.cache`/`.empty-directory` | conmon/容器进程在发行版回收循环中被杀，但 libpod sqlite 仍记 running；stale conmon 与 rootlessport 作为孤儿进程存活（端口/HTTP 因此假象正常）。**ps 与端口都不可信，`podman exec <name> echo ok` 是唯一活体判据** | **定向清理（免 `wsl --shutdown`，2026-09-15 实证，不影响同发行版其他栈）**：①`invoke <ns>.down`（容忍 `conmon exited prematurely`/netavark netns ENOENT 告警，记录已删）；②`ss -ltnp \| grep <端口>` 找孤儿 **rootlessport** PID → `kill`；③`ps -ef \| grep <容器ID>` 找 **stale conmon** PID → `kill`；④复查端口 free；⑤`invoke <ns>.up --skip-build` → 浸泡 70~90s → exec+curl 双验证 |
 | `podman machine ssh` 报 not running（start 刚成功） | machine gvproxy 不驻留、空闲回收 | 原 flapping machine 已删除（由 jupyter-podman-rootless 改名顶替） |
 | 守卫误报"本地缺少基底镜像"（镜像明明在） | `.env` 空 `CONTAINER_HOST=` 被注入致 podman CLI 误入 REST 模式 exit 125 | 已修为仅注入非空值（manage._load_env_overrides）；勿在 shell 里 export 空串 |
 | `netavark: unable to execute "nft"` | 发行版缺 nftables | `sudo apt-get install -y nftables` |
@@ -189,7 +198,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | Jupyter 保存 Errno 13（checkpoint） | root 预建目录 0:0 755 | §7（编排层已自动 chmod；手工 chmod 777） |
 | `npu_tvm 源码树宿主路径不存在`（指向 client/external） | 默认路径锚错层级；仓库根=client.parents[2] | xmnn.py 已修；自定义栈注意同级锚定 |
 | aardvark-dns / user scope bus 报错 | machine 无 systemd user bus | compose 已声明 `network_mode: bridge`（带证据偏差，勿删） |
-| `up -d` 报 `rootlessport listen tcp 0.0.0.0:2223: bind: address already in use`（exit 125），换端口却能成功 | **两因**：① Created/Exited 残留容器持有 rootlessport 端口分配（已由 xmnn/quant/monetize 三栈 `up` 前 `_reconcile_stale_containers` 自愈：探测非 running 项目容器→compose down→up）② WSL localhost 转发（wslrelay）粘滞残留：`/proc/net/tcp` uid 1000 有 2223 幽灵 LISTEN socket 但无可见 fd 持有者，`ss/netstat/fuser/lsof` 在 jupyter 发行版**均缺失**（查不到≠没占），Windows 侧 wslrelay 可能已死但仍 hold 转发槽位 | ① 直接重试 `invoke xmnn.up`（自动 reconcile）；② 仍失败=粘滞：最可靠 `wsl --shutdown`（清全部转发状态，需用户授权）或固化换端口 `.env` `XMNN_SSH_PORT=2225`/`XMNN_JUPYTER_PORT=8891`；已实测换端口 2225/8891 全链路 up 成功 |
+| `up -d` 报 `rootlessport listen tcp 0.0.0.0:2223: bind: address already in use`（exit 125），前序常伴 `conmon exited prematurely: conmon process killed`，同一次 up 先打印旧容器 ID 又打印新容器 ID；换端口却能成功 | **四因（① 为 2026-09-15 晚实证的确定性首因，三次复现）**：① **跨控制平面标签分歧**——Windows 原生裸 `podman-compose`（overlay 目录执行）给容器打 `com.docker.compose.project.config_files=D:\...`，Windows `invoke`（透明桥接）/WSL invoke 固定用 `--file /mnt/d/...`；compose config-hash 按标签**原文**计算，两平面交替即判漂移强制 recreate，pod 模式强拆 infra conmon 时 rootlessport 已被 WSL `/init` 收养为孤儿，新 pod bind 必败（**先优雅 down 也可能留同样孤儿**）；同平面连续执行幂等可作鉴别。② Created/Exited 残留容器持有端口分配。③ **假 Up 后容器被 down 但孤儿 rootlessport 存活**：`ss -ltnp` **能**看到 `users:(("rootlessport",pid=NNN))` 显式持有者；同时查杀 stale conmon（见"假 Up"行）。④ WSL localhost 转发（wslrelay）粘滞：幽灵 LISTEN 无可见持有者，`ss/netstat/fuser/lsof` 查不到≠没占 | **首选 `invoke <ns>.up --skip-build`**：up 前 `up_preflight` 三道全自动（v1.0.3）——残留 compose down / 跨平面活体栈先优雅 down / 孤儿 rootlessport 经 `ss -ltnp` 定点 kill（只认 rootlessport 名，不碰他栈 pasta），裸 compose 翻车现场直接重跑即恢复。**纪律：同一栈固定单一控制平面**，勿在 Windows 裸 compose 与 invoke 间来回切。手工兜底：`ss -ltnp \| grep <端口>` 有显式持有者定向 kill；无持有者=wslrelay 粘滞才用 `wsl --shutdown`（需用户授权，波及同发行版全部栈）或 `.env` 固化换端口 2225/8891 |
 | 裸 compose 后 workspace 下出现 npu_tvm 等空目录 | podman-compose 1.6 相对 source+create_host_path 预创建副产物 | 不影响真挂载；down 后 `rmdir`；用 invoke 绝对路径注入不产生 |
 | 裸 `podman-compose up -d` exit 0 但 Jupyter 根目录出现 `.git`/`apps`/`docs`，容器里 `/workspace` 竟是整个仓库根 | overlay 目录私有 `.env` 的 `<NS>_WORKSPACE` 误按 client 基准写层级：overlay 文件比 client 深两级，`../../../../..`（五级）相对 overlay 子目录正好解析到仓库根；模板正确值是 `../../workspace`（上两级=client/workspace） | 把 `.env` 改回 `XMNN_WORKSPACE=../../workspace`（quant/monetize 同理）→ `down && up -d`；仓库根已被入口 chmod 777 的副作用要 `chmod 755 <仓库根>` 还原。`.env` 被 gitignore 属本地私有，排查时务必实读该文件而非只看 compose.yaml |
 | up 后 55~60 秒 Jupyter 端口 curl 返回 000，容器却是 Up | entrypoint Step 4 容器内 podman 初始化偶发等 ~70 秒（平时约 30s），浸泡不足误判 | 等满 70~90s 再判活；日志走到 `Step 5/7` 后 supervisord 约 5s 内起 Jupyter（非故障） |
@@ -217,9 +226,40 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
    仓库根——exit 0、端口正常，工作区隔离却已失效（Jupyter 里能看到 `.git`）。
    排查裸 compose 异常必须实读 overlay 目录的**私有 `.env`**（被 gitignore，
    与 `.env.example` 可能已漂移），不能只看 compose.yaml 默认值。
+9. **`podman ps` 的 Up 与端口可达都不能证明容器可 exec**：发行版回收循环后
+   可留下"libpod 记 running + 孤儿 conmon/rootlessport 续命端口"的假活状态，
+   HTTP 302 也可能是孤儿转发制造的假象。栈内 exec 长任务（build-tvm/wheel）
+   启动前先 `podman exec <name> echo ok` 做活体探针；失败按 §9"假 Up"行
+   定向清理（down→kill 孤儿 rootlessport/conmon→up），可免 `wsl --shutdown`、
+   不影响同发行版其他栈（2026-09-15 wheel 构建前实证）。
+10. **同一栈固定单一控制平面（Windows 裸 compose vs invoke 桥接不可混用）**：
+    裸 Windows `podman-compose` 给容器打 `D:\...` 路径标签，invoke（WSL 桥接/
+    WSL 内）固定 `--file /mnt/d/...`；config-hash 按标签原文计算，交替执行必
+    强制 recreate，在 podman-compose 1.6 pod 模式下高概率留下孤儿 rootlessport
+    致 bind 2223/8890 失败（2026-09-15 三次确定性复现，优雅 down 也不免疫）。
+    同平面重复执行幂等。已用 invoke 管栈就继续用 `invoke <ns>.up/down`；若
+    必须在裸 compose 翻车后切回，直接 `invoke <ns>.up --skip-build`——
+    up_preflight 三道（残留 down / 跨平面优雅 down / 孤儿定点 kill）自动收敛，
+    不要手工先删容器。
 
 ## 11. Changelog
 
+- **v1.0.3** (2026-09-15): 端口占用行三因扩四因，新增**确定性首因「跨控制平面
+  标签分歧」**（Windows 裸 compose `D:\` vs invoke `--file /mnt/d/`，config-hash
+  按原文算 → 强制 recreate → infra 强拆 → rootlessport 被 `/init` 收养为孤儿；
+  三次复现、优雅 down 同样触发）；首选修复改为 `invoke <ns>.up` 的 up_preflight
+  三道自动自愈（编排层 overlay_core，三栈同族）；Gotchas 新增第 10 条「单一
+  控制平面纪律」。实证序列：破损现场自愈 / 裸 compose 干净起栈 / 同平面幂等 /
+  桥接跨平面自愈 / invoke 幂等，jupyter 栈全程零影响（session
+  sc-20260915-xmnn-2223-bind；client 排障 W-I10）。
+- **v1.0.2** (2026-09-15): 错误表新增"假 Up"（ps/HTTP 302 正常但 exec 报
+  `crun ... status: No such file`；libpod 记 running、容器 PID 已死、孤儿
+  conmon/rootlessport 续命）及免 `wsl --shutdown` 的五步定向清理；端口占用行
+  从两因扩为三因（新增 `ss -ltnp` 可见显式 rootlessport 持有者的可定向 kill
+  变体，置于 wslrelay 粘滞裁决之前）；步骤 1 修正 compose 工具安装序
+  （Fedora 43 镜像无 pip → ensurepip；jpman-common 须先于 client 从
+  `../shared` editable 安装，否则 No matching distribution）；Gotchas 新增
+  第 9 条（exec 是唯一活体判据）。实证于 xmnn wheel 构建任务。
 - **v1.0.1** (2026-09-14): 错误表新增"裸 up exit 0 但 /workspace 挂成仓库根"
   （overlay `.env` 的 `<NS>_WORKSPACE` 相对基准比 client 深两级，误填五级
   路径致工作区隔离失效，附仓库根 chmod 777 副作用还原）与"浸泡不足误判

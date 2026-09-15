@@ -100,6 +100,15 @@ podman-compose down
 `network_mode: bridge` 是 2026-09-14 同机实证（machine 无 systemd user bus
 时默认项目网络 aardvark-dns 失败），见 compose 文件头注释。
 
+> ⚠️ **控制平面纪律（2026-09-15 实证）**：选定裸 compose 就长期在本目录用
+> 裸 compose，**不要与 `invoke xmnn.*`（WSL 桥接，下发 `/mnt/d/...`）交替
+> 操作同一栈**——两者给容器打的 `config_files` 标签原文不同（`D:\...` vs
+> `/mnt/d/...`），交替执行会被 podman-compose 强制 recreate，并可能留下孤儿
+> rootlessport 导致 `up -d` 报 2223/8890 `address already in use`。已经
+> 交替翻车时直接 `invoke xmnn.up --skip-build`，编排层 preflight 三道自愈
+> （残留 down / 跨平面优雅 down / 孤儿端口定点回收）自动恢复，详见
+> [30 秒修复速查表 W-I10](../../docs/04-troubleshooting-guide.md)。
+
 ## 开发调试工作流
 
 - **改代码即时生效**：tvm/vta/xmnn 经 `PYTHONPATH` 从 `/workspace` 挂载树
@@ -169,7 +178,7 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 | 现象 | 处理 |
 |---|---|
 | `invoke xmnn.*` Windows 原生报门禁 Exit(1) | 自动桥接不可用时回退（无 wsl.exe/发行版缺失/`COMPOSE_WSL_DISTRO=none`）；正常路径自动桥接 `podman-machine-default`，无需手动操作 |
-| `invoke xmnn.up` 报 `address already in use`（exit 125，端口 2223/8890） | **已自动自愈**：up 前 `_reconcile_stale_containers` 探测 Created/Exited 残留（其 rootlessport 端口分配仍被持有）并先 compose down；若仍失败多为宿主其他进程占用——`netstat -ano \| findstr 2223` 排查或改 `.env` 的 `XMNN_SSH_PORT`/`XMNN_JUPYTER_PORT` |
+| `up -d` 报 `conmon exited prematurely` + `address already in use`（exit 125，2223/8890），常发生在裸 compose 与 invoke 交替后 | **跨控制平面标签分歧 + 孤儿 rootlessport**（详见 W-I10）；`invoke xmnn.up --skip-build` 的 preflight 三道自动恢复（残留 down / 跨平面优雅 down / 孤儿端口定点 kill）；日常纪律是同一栈固定单一控制平面。仍失败才查宿主占用（`netstat -ano \| findstr 2223`）或改 `.env` 端口 |
 | build-tvm 报 dmlc-core 缺失 | 宿主 npu_tvm 树执行 `git submodule update --init` 后重试 |
 | build-tvm 之前报 `variable-sized object may not be initialized`（VTA FSIM 的 VLA） | 已由 2026-09-15 引入系统 gcc/g++ 作编译前端修复（Clang 22 拒 VLA+初始化器、GCC 允许）；env `CC`/`CXX` 可覆盖回退 clang |
 | build-wheel 开头报 libtvm.so 缺失（exit 2） | 先 `invoke xmnn.build-tvm`，或把含 build/ 的完整 npu_tvm 挂到 NPU_TVM_PATH |

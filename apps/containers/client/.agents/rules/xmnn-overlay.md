@@ -96,6 +96,16 @@
 - TVM 构建产物默认就在挂载源码树 `npu_tvm/build/`（复用宿主既有
   libtvm.so，调试直观）；9p 全量编译慢时把 NPU_TVM_PATH 指向 WSL 原生
   克隆（README 必须给出该性能提示）。
+- **9p 无主旧产物清理契约（2026-09-15 实证，排障 W-I7）**：跨环境（WSL
+  发行版/其他容器/本栈）混用同一宿主 build/ 时，旧产物在 9p 视角属主为
+  `65534:65534`、目录 755；当前容器 root 无 DAC 绕过且 chmod EPERM、
+  devuser(1000) 同样不可写 → `inv config -f` 的 `_clear_directory_contents`
+  必在 rmtree 阶段 EACCES。**容器内无解，必须宿主侧清理**
+  （`Remove-Item -Recurse -Force <宿主 NPU_TVM_PATH>\build`，NTFS ACL 允许、
+  9p 即时同步）。已在 npu_tvm `tasks.py` 加 onexc（只读位 chmod 重试 +
+  9p 场景中文指引）；该文件属 external/chaos/npu_tvm 自有 git 仓（origin
+  本地 pu_tvm.git），不入 SpecWeave 提交。脚本头注禁止再写「容器内
+  rm -rf build 可强制全量」——9p 无主文件场景该命令会失败。
 - **checkpoint 可写性契约**：Jupyter 以 devuser(1000) 运行，而
   rootless+9p/drvfs 下容器内 root 预建的
   `$XMNN_WORKSPACE/.ipynb_checkpoints`
@@ -104,16 +114,28 @@
   `utils.ensure_workspace_checkpoint_writable()`（quant 栈同族接线；
   幂等 0777、只改权限位不改属主、只作用该单一目录不递归、不触碰三个源码
   bind）；禁止把该职责退回镜像/entrypoint 层（薄叠加不覆盖基底）。
-- **up 残留自愈契约（2026-09-15 实证）**：`up` 在 `up -d` 前必须调用
-  `overlay_core.reconcile_stale_containers(c, XMNN_SPEC)`——用 `podman ps -a -q --filter
-  label=<project> --filter status=created --filter status=exited`（多
-  status 为 OR 语义）探测本项目非 running 容器；命中即先 `compose down`
-  （**不**加 --volumes，保留 ccache 卷/镜像/workspace/源码 bind）再 up。
-  根因：突然中断/旧栈遗留的 `Created`/`Exited` 容器仍持有 rootlessport
-  端口分配（`podman ps -a` 显示 `0.0.0.0:2223->22/tcp` 占用），后续 up
-  的新容器 bind 2223 报 `address already in use`（exit 125），且 compose
-  不自清理。全部 running 时不动（复用语义），无残留时开销为一次
-  `ps -q`。quant/monetize 同族接线。
+- **up 三道 preflight 自愈契约（2026-09-15 实证，三栈共用
+  `overlay_core.up_preflight`，顺序不可调换）**：
+  ① **残留容器**——`podman ps -a -q --filter label=<project> --filter
+  status=created --filter status=exited`（多 status 为 OR 语义）探测本项目
+  非 running 容器，命中即先 `compose down`（**不**加 --volumes，保留
+  ccache 卷/镜像/workspace/源码 bind）；
+  ② **跨控制平面分歧**——读活体容器标签
+  `com.docker.compose.project.config_files` 原文，与本平面将下发的
+  `--file` 原文比较：Windows 裸 compose 写 `D:\...`、WSL 桥接 invoke 写
+  `/mnt/d/...`，compose config-hash 按原文计算（**禁止路径等价归一**），
+  不一致即判为他平面创建的栈，先优雅 `compose down` 再 up，避免
+  podman-compose 强制 recreate 时强拆 pod infra 留下孤儿 rootlessport；
+  ③ **孤儿 rootlessport 回收**——无活体项目容器时用 `ss -ltnp` 检查本栈
+  端口，只对进程名为 rootlessport 的持有者定点 TERM/KILL（他栈 pasta/
+  conmon 一律不动；ss 缺失则跳过不阻断）。
+  根因链：跨平面交替操作（或异常中断）致 podman-compose 1.6 pod 模式
+  强拆 infra conmon，rootlessport 在 WSL 被 `/init` 收养成为孤儿继续监听，
+  新 pod bind 2223/8890 报 `address already in use`（exit 125，优雅 down
+  同样可能触发，故②后必须接③）；裸 compose 翻车现场直接重跑
+  `invoke xmnn.up --skip-build` 即可恢复。**纪律：同一栈固定单一控制平面**
+  （长期裸 Windows compose 就不切 invoke，反之亦然）。quant/monetize
+  同族接线；排障条目 W-I10。
 
 ## 5. 打包内核契约（/opt/xmnn-builder 自包含）
 

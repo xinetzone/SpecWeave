@@ -6,6 +6,56 @@
 
 ## [Unreleased]
 
+### 2026-09-15 · `fix:` 跨控制平面标签分歧致 `up -d` 强制 recreate + 孤儿 rootlessport 占 2223：`up_preflight` 三道自愈
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260915-xmnn-2223-bind，未提交，commit hash 待补）。
+
+**现象与根因（三次确定性复现）**：在 overlay 目录裸跑 Windows 原生 `podman-compose up -d` 报 `conmon exited prematurely: conmon process killed` 后接 `rootlessport listen tcp4 0.0.0.0:2223: bind: address already in use`（exit 125）。取证链：`podman inspect` 活体容器标签——裸 compose 写 `com.docker.compose.project.config_files=D:\spaces\...\compose.yaml`，WSL 桥接 invoke 固定下发 `--file /mnt/d/.../compose.yaml`；podman-compose 把该标签**原文**纳入 config-hash，两平面交替操作即判配置漂移强制 recreate；podman-compose 1.6「每项目一 pod」模式强拆 infra conmon 时，rootlessport 已被 WSL `/init` 收养成为孤儿继续监听 2223/8890，新 pod bind 必败（**真机实证：先优雅 down 同样可能留下该孤儿**，②③两道都必须存在）。反证：同一平面连续两次 `podman-compose up -d` 幂等无重建。
+
+**修复（编排层，`src/jpman_client/tasks/overlay_core.py`，三栈同族生效）**：`up_stack` 在 `up -d` 前改调新增 `up_preflight`，顺序三道——① Created/Exited 项目残留（旧 `reconcile_stale_containers` 保留）先 `compose down`（不带 --volumes）；② 活体容器 config_files 标签原文与本平面 `--file` 不一致先优雅 down（对抗审查曾误写成 `/mnt/d`↔`D:\` 路径等价归一，被 V 阶段真机探针证伪：compose hash 按原文算，等价归一无效，已改回原文比较 `config_paths_diverge`）；③ 无活体项目容器时 `ss -ltnp` 解析本栈端口持有者，仅对进程名 **rootlessport** 的 PID 定点 TERM→复检→KILL（他栈 pasta/conmon 绝不触碰；ss 缺失静默跳过不阻断）。纯逻辑（`parse_ss_port_holders`/`config_paths_diverge`）抽出做 daemon-free 单测。
+
+**V 真机验收（podman-machine-default，jupyter-podman 2222/8888 全程零影响）**：V-1 破损现场（Created 残留+孤儿 pid=111397）`invoke xmnn.up --skip-build` 自动 down→定点 kill→up 成功；V-2 干净状态 Windows 裸 compose up 成功；V-3 裸 compose 同平面二次执行无重建（幂等）；V-4 Windows py314 `invoke xmnn.up` 桥接触发跨平面分支（打印分歧标签→优雅 down，down 过程如期出现 conmon 竞态→分支③回收孤儿 126644→up 成功）；V-5 invoke 同平面二次执行无警告无重建。终验：浸泡 80s 后 exec OK、Jupyter 302、SSH banner 正常；离线单测 69 passed/1 skipped，ruff 全过。
+
+**C 同步**：docs/04 新增 W-I10；xmnn-overlay.md「up 残留自愈契约」升级为「up 三道 preflight 自愈契约」（含量化根因链与单一控制平面纪律）；compose-overlay-ops 技能错误表新增跨平面根因行与 v1.0.3 changelog；overlays/xmnn-dev/README.md 排障段同步。
+
+### 2026-09-15 · `feat:` xmnn wheel 首次在重建栈内全流程打包成功（170M，10/10 隔离验证）；`fix:` 排除假 Up 容器与桥接发行版缺工具两个阻断
+
+**关联七概念场景**：场景2「问题解决」（I→F→A→V→C，session sc-20260915-xmnn-wheel-build，未提交，commit hash 待补）。
+
+**任务**：`invoke xmnn.wheel`——容器内 Nuitka 串行编译 tvm → 并行 vta/xmnn → scikit-build/CMake 组装 wheel，产物落宿主 `workspace/dist/`。
+
+**阻断①（W-I9）桥接发行版未备 client 环境**：Windows 原生 invoke 透明桥接 podman-machine-default 后报 `bash: line 1: invoke: command not found`（exit 127）。该发行版为 Fedora 43 Container Image，自带 python3 3.14 但**无 pip**（`No module named pip`）；直接装 client 又报 `No matching distribution found for jpman-common`（jpman-common 是 `apps/containers/shared` 纯本地兄弟包，PyPI 无发布）。修复（发行版内，均 `--user`）：`python3 -m ensurepip --user` → `pip install -e ../shared` → `pip install -e '.[compose]'`（tuna 源），invoke/podman-compose 1.6.0 落 `~/.local/bin`（桥接器已自动 PATH 前置）。
+
+**阻断②（W-I8）容器假 Up**：重装环境后 exec 报 `crun: container <id> does not exist: open /mnt/wslg/runtime-dir/crun/<id>/status: No such file`（127），但 `podman ps` 显示 Up、`inspect .State=running`、Jupyter 8890 仍 302。取证：inspect 的 PID 在宿主已不存在、`crun/` 下仅剩 `.cache`/`.empty-directory`，stale conmon(67549) 与孤儿 rootlessport(67532, 持有 2223/8890 LISTEN) 仍存活——libpod sqlite 与内核进程在发行版回收循环后脱节，ps/HTTP 均为假象。修复（**免 `wsl --shutdown` 的定向清理**，不影响同发行版健康的 jupyter-podman 栈）：`invoke xmnn.down`（容忍 conmon prematurely/netavark netns ENOENT 告警）→ `ss -ltnp` 定位并 kill 孤儿 rootlessport → `ps -ef | grep <容器ID>` kill stale conmon → 复查端口 free → `invoke xmnn.up --skip-build`，浸泡 75s 后 exec/Jupyter 302/libtvm.so 三验证通过。
+
+**V 真机验收**：V-1 wheel 全流程 exit 0，tvm 串行 + vta/xmnn 并行 Nuitka 编译（编译期 7 clang 满载 + ccache 活跃实证）→ wheel 组装成功；V-2 产物 `workspace/dist/xmnn-1.2.1.dev0-cp314-cp314-linux_x86_64.whl`（169.6MB，宿主 bind 目录可见）；V-3 `verify-wheel.sh` 隔离 venv **10 passed, 0 failed**（含真实 `tvm.build(llvm)` 向量加、relay/std 数据、bootstrap .pth、autolibs/tools_cpp/fonts 打包，base env 零污染）。
+
+**C 同步**：docs/04 新增 W-I8（假 Up 症状矩阵/五步定向清理/活体探针预防）、W-I9（桥接发行版三步安装序）；compose-overlay-ops 技能升 v1.0.2（错误表新增"假 Up"行、端口占用行两因扩三因——新增 `ss -ltnp` 可见显式 rootlessport 持有者的可定向 kill 变体并置于 wslrelay 粘滞/wsl --shutdown 裁决之前、步骤 1 安装序修正、Gotchas 第 9 条"exec 是唯一活体判据"）。
+
+### 2026-09-15 · `fix:` `build-tvm.sh` 配置阶段 rmtree(build/CMakeFiles) EACCES：9p 跨上下文无主旧产物 + 清理函数零容错
+
+**关联七概念场景**：场景2「问题解决」（I→F→A→V→C，session sc-20260915-tvm-build-rmtree-eacces，未提交）。
+
+**根因（双叠加）**：`podman-compose exec xmnn bash /opt/xmnn-builder/scripts/build-tvm.sh` 在 `inv config -f` 清空 build/ 时 `shutil.rmtree` → `os.unlink` 报 `PermissionError [Errno 13] CMakeFiles`。实证：挂载为 9p drvfs（`D:\ → /workspace/npu_tvm,uid=1000`），build/ 内 10:42 旧产物属主 `65534:65534`、目录 755（其他映射上下文生成），而 build/ 本身 0:0 777；容器内 root 对无主文件 chmod 直接 EPERM（9p 服务端在 Windows 侧判权、root 无 DAC 绕过），devuser(1000) 写 CMakeFiles 同样 denied；root/1000 新建文件恒为 0:0 777 且可互删——只有这批旧文件卡死。npu_tvm `tasks.py::_clear_directory_contents` 旧实现为裸 `shutil.rmtree(child)`，无 onexc 容错与指引。
+
+**修复（F 裁决）**：①一次性解封走宿主 NTFS（ACL 允许、9p 即时同步）：PowerShell `Remove-Item -Recurse -Force <NPU_TVM_PATH>\build`，容器内随即可见目录消失；②`external/chaos/npu_tvm/tasks.py`（**属用户自有 pu_tvm.git 仓，非 SpecWeave 文件，需另行提交到该仓**）`_clear_directory_contents` 加 `onexc`：PermissionError 先 chmod 0777 重试（覆盖只读位场景，含文件 unlink 同构处理），再失败抛带宿主清理命令的中文 PermissionError。否决：容器内 chmod/chown/换 uid1000 执行（实测均被 9p 拒绝/仍非属主）、改 build 目录到 named volume（破坏 build/ 在源码树复用 libtvm.so 的调试设计，属大改）。
+
+**V 真机验收（xmnn-dev，podman 5.7.0-rc3）**：V-1 清理后容器内确认 build/ 消失；V-2 `py_compile tasks.py` OK；V-3 真机重跑 build-tvm.sh：config -f 通过原失败点、ninja -j16 全量成功（ccache 热），产出 `libtvm.so`(78MB)/`libtvm_runtime.so`/VTA 双库，符号隐藏+18462 导出守卫全过，exit 0；V-4 **二次执行**验证重复强制清理闭环：887 目标重建 101.7s 成功、末次 `ninja: no work to do`（证明新建 0:0 777 文件的清空-重建幂等）。
+
+**C 同步**：docs/04 新增 W-I7；.agents/rules/xmnn-overlay.md 新增「9p 无主旧产物清理契约」（容器内无解、必须宿主侧清理、tasks.py 外部仓归属说明）；builder/scripts/build-tvm.sh 头注更正——原「容器内 rm -rf build 强制全量」在该场景会失败，改为宿主 PowerShell 删除指引。
+
+### 2026-09-15 · `fix:` 裸 `podman-compose up -d` 双根因修复：僵尸 editable 安装 + 1.6.0 Windows 盘符误判 git URL 丢失 `-f`
+
+**关联七概念场景**：场景2「问题解决」（I→F→A→V→C，session sc-20260915-podman-compose-broken，本次按用户要求未提交，commit hash 待补）。
+
+**根因（双叠加，均在宿主 Windows 原生 py314）**：① **僵尸 editable**——`pip show podman-compose` 1.6.0 的 `Editable project location` 指向已删除的 `D:\spaces\SpecWeave\external\dao\action\Containers\podman-compose`，finder MAPPING 死路径 → 入口垫片 `podman-compose.exe` 存在但 `import podman_compose` 必失败（`ModuleNotFoundError`），另有 pip 中断残留 `~odman_compose-1.6.0.dist-info`；② **上游盘符误判 bug**——重装后 `up -d` 稳定报 `no Containerfile or Dockerfile specified or found in context directory`，进程内 monkeypatch 抓真实 build argv 证实**缺失 `-f`**：1.6.0 `podman_compose.py::is_context_git_url()` 对 Windows 绝对路径 `D:\...` 经 `urllib.parse.urlparse` 得到 `scheme='d'`，L3245 `r.scheme != "" and r.netloc == "" and r.path != ""` 误判 git URL → L3297 分支跳过自定义 dockerfile 的 `-f` 注入；自定义 `Containerfile.xmnn-dev` 必现，默认名 Containerfile 的栈不受影响。同形态手工 `podman build -f <abs> <abs ctx>` 正常（对照实证排除 podman 本体问题）。
+
+**修复（第一性原理裁决：宿主编排器按宿主约定安装；上游 bug 最小语义补丁）**：①卸载僵尸 editable + 清理 `~odman_compose` 残骸，PyPI 常规安装 `podman-compose>=1.0.0`（1.6.0；**不**用 `jupyter-podman-rootless/upstream/podman-compose` 镜像专用固定 commit 快照）；②站点包一行补丁：`is_context_git_url` 条件改 `len(r.scheme) > 1 and r.netloc == "" and r.path != ""`（盘符单字母 vs 真实 scheme 多字母）。vendored 快照不同步修改——镜像内 Linux 构建无盘符不触发。TRAE 沙箱硬保护 conda `Scripts\`，卸载/重装入口 exe 由用户在自有终端完成，site-packages 补丁由 agent 执行。
+
+**V 真机验收（podman 5.7.0-rc3 Windows 远程客户端，xmnn-dev 栈）**：V-1 `podman-compose version`=1.6.0 且 `pip show` 无 Editable；V-2 `podman-compose config` extends 合并正常；V-3 补丁后抓 argv 含 `-f D:\...\Containerfile.xmnn-dev`，补丁语义 8 用例（D:/C: 盘符、相对路径、https/git/ssh/scp）全过；V-4 真机 `podman-compose up -d` 构建（全缓存）+ 起容器成功，`xmnn-dev` Up、`0.0.0.0:2223->22`/`8890->8888` 监听，应用层 HTTP 8890 `/api`=200、SSH 2223 banner `SSH-2.0-OpenSSH_10.2p1`，supervisord sshd/jupyter 双 RUNNING。诊断探针/临时日志/`:probe` 镜像 tag 用后即清。
+
+**C 同步**：docs/04-troubleshooting-guide.md 新增 W-I5（僵尸 editable 症状/清理/PyPI 重装/预防：禁止从临时目录 editable 装编排器）与 W-I6（盘符误判根因/一行补丁/重装后须重打/argv `-f` 验证法）。
+
 ### 2026-09-15 · `fix:` `invoke env.build-layer` 叠加镜像构建失败：镜像内缺 jpman-common（No matching distribution found）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260915-env-buildlayer-common）。

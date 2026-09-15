@@ -17,14 +17,18 @@
   - 环境优先级：shell 显式 export > root client .env（override=False）
     > compose.yaml 内 ``${VAR:-default}``。
   - argv 日志/拼接统一 ``shlex.quote``（修复旧 quant.py 裸 join 漂移，AC-2）。
-  - up 前 reconcile Created/Exited 残留（rootlessport 端口占用自愈）。
+  - up 前 preflight 三道自愈：① Created/Exited 残留 compose down；
+    ② 跨控制平面标签（Windows 裸 compose 的 ``D:\\`` vs WSL invoke 的
+    ``/mnt/d/``）分歧会令 podman-compose 强制 recreate 并在 pod infra
+    强拆时留下孤儿 rootlessport，检出活体容器路径标签不一致先优雅 down；
+    ③ 无活体项目容器却仍有 rootlessport 监听本栈端口时定点回收孤儿进程。
 """
-from __future__ import annotations
-
 import os
 import platform
+import re
 import shlex
 import shutil
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -45,6 +49,12 @@ from .utils import (
 # podman-compose 给栈资源打的项目标签（知识包 05：标签即数据库；SDK/CLI 接缝）
 PROJECT_LABEL = "io.podman.compose.project"
 SERVICE_LABEL = "io.podman.compose.service"
+# compose 实际使用的 compose.yaml 绝对路径标签：Windows 裸 compose 写 D:\...，
+# WSL 桥接 invoke 写 /mnt/d/...；同一栈跨控制平面该标签必变（2026-09-15 实证）。
+CONFIG_FILES_LABEL = "com.docker.compose.project.config_files"
+
+# ss -ltnp 行内进程持有者：users:(("rootlessport",pid=92823,fd=10))
+_SS_HOLDER_RE = re.compile(r'users:\(\("(?P<comm>[^"]+)",pid=(?P<pid>\d+)')
 
 
 # ---------------------------------------------------------------------------
@@ -339,21 +349,55 @@ def run_compose(c: Context, spec: StackSpec, *tail: str, gpu: bool = False, pty:
 # ---------------------------------------------------------------------------
 
 
+def _project_ps_command(spec: StackSpec, *, all_containers: bool) -> str:
+    runtime = detect_runtime()
+    return (
+        f"{runtime} ps {'-a ' if all_containers else ''}-q "
+        f"--filter label={PROJECT_LABEL}={spec.project} "
+        f"--filter label={SERVICE_LABEL}={spec.service}"
+    )
+
+
+def parse_ss_port_holders(line: str) -> tuple[Optional[str], list[tuple[str, int]]]:
+    """解析单行 ``ss -ltnp`` 输出 → ``(端口, [(进程名, pid), ...])``。
+
+    无端口或无进程持有者的行返回 ``(None, [])``。只做字符串解析（无子进程），
+    供 daemon-free 单测；ss 默认列：State Recv-Q Send-Q Local Peer Process。
+    """
+    port = next(
+        (
+            tok.rsplit(":", 1)[-1]
+            for tok in line.split()
+            if ":" in tok and tok.rsplit(":", 1)[-1].isdigit()
+        ),
+        None,
+    )
+    if port is None:
+        return None, []
+    holders = [(m.group("comm"), int(m.group("pid"))) for m in _SS_HOLDER_RE.finditer(line)]
+    return port, holders
+
+
+def config_paths_diverge(actual: str, expected: str) -> bool:
+    """跨控制平面判据：compose 把 config_files **原文字符串**纳入 config-hash，
+    Windows 裸 compose 写 ``D:\\...``，WSL 桥接 invoke 写 ``/mnt/d/...``，
+    即使指向同一文件，原文不等即会被 podman-compose 强制 recreate
+    （2026-09-15 真机实证）——故此处禁止做路径等价归一。
+    """
+    return bool(actual) and actual.strip() != expected.strip()
+
+
+def _running_project_container(c: Context, spec: StackSpec) -> str:
+    """返回本栈服务的首个运行容器 ID（无则空串）。"""
+    r = run_cmd(c, _project_ps_command(spec, all_containers=False), hide=True, warn=True, echo=False)
+    if r is None or not getattr(r, "ok", False):
+        return ""
+    return (r.stdout or "").strip().split()[0] if (r.stdout or "").strip() else ""
+
+
 def container_running(c: Context, spec: StackSpec) -> bool:
     """通过 compose 项目标签判断本栈服务容器是否在运行。"""
-    runtime = detect_runtime()
-    r = run_cmd(
-        c,
-        (
-            f"{runtime} ps -q "
-            f"--filter label={PROJECT_LABEL}={spec.project} "
-            f"--filter label={SERVICE_LABEL}={spec.service}"
-        ),
-        hide=True,
-        warn=True,
-        echo=False,
-    )
-    return bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+    return bool(_running_project_container(c, spec))
 
 
 def reconcile_stale_containers(c: Context, spec: StackSpec, env: Optional[dict] = None) -> None:
@@ -385,6 +429,115 @@ def reconcile_stale_containers(c: Context, spec: StackSpec, env: Optional[dict] 
     print(f"[{spec.namespace}]   先 compose down 清理（保留命名卷/绑定数据）后重新 up …")
     run_compose(c, spec, "down")
     print(f"[{spec.namespace}] ✅ 残留已清理，继续 up")
+
+
+def _stack_ports(spec: StackSpec, env: dict) -> list[str]:
+    return sorted(
+        {
+            _env_port(spec, env, spec.ssh_port_env, spec.ssh_default),
+            _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default),
+        }
+    )
+
+
+def _listening_rootlessport_pids(c: Context, ports: list[str]) -> list[int]:
+    """查 ``ss -ltnp``：返回正在监听给定端口的 rootlessport PID 集合。
+
+    仅认进程名为 rootlessport 的持有者（其他栈 pasta/conmon 一律不动）；
+    ss 不可用（最小化发行版）时返回空列表，由后续 compose 原生报错兜底，
+    不阻断 up。
+    """
+    r = run_cmd(c, "ss -ltnp", hide=True, warn=True, echo=False)
+    if r is None or not getattr(r, "ok", False):
+        return []
+    wanted = set(ports)
+    pids: set[int] = set()
+    for line in (r.stdout or "").splitlines():
+        port, holders = parse_ss_port_holders(line)
+        if port in wanted:
+            pids.update(pid for comm, pid in holders if comm == "rootlessport")
+    return sorted(pids)
+
+
+def reap_orphan_port_holders(c: Context, spec: StackSpec, ports: list[str]) -> list[int]:
+    """无活体项目容器时，定点回收仍占着本栈端口的孤儿 rootlessport。
+
+    实证场景（2026-09-15）：podman-compose 1.6 跨控制平面/异常重建 pod 时
+    强杀 infra conmon，rootlessport 被 WSL ``/init`` 收养成为孤儿继续监听，
+    新 pod up 报 ``bind: address already in use``（exit 125）。调用方必须
+    先确认无活体项目容器（避免误杀健康栈自己的转发器）。
+    """
+    if platform.system() != "Linux":
+        return []  # 双保险：Windows 原生路径已整体桥接进 WSL，本机不该执行
+    pids = _listening_rootlessport_pids(c, ports)
+    if not pids:
+        return []
+    print(
+        f"[{spec.namespace}] ⚠ 端口 {'/'.join(ports)} 被孤儿 rootlessport 占用"
+        f"（pid={','.join(map(str, pids))}，所属容器已不存在），定点回收 …"
+    )
+    run_cmd(c, "kill " + " ".join(map(str, pids)), hide=True, warn=True, echo=False)
+    time.sleep(1.0)
+    survivors = _listening_rootlessport_pids(c, ports)
+    if survivors:
+        run_cmd(c, "kill -9 " + " ".join(map(str, survivors)), hide=True, warn=True, echo=False)
+        time.sleep(0.5)
+    remaining = _listening_rootlessport_pids(c, ports)
+    if remaining:
+        print(f"[{spec.namespace}] ⚠ 端口仍被占用（pid={','.join(map(str, remaining))}），")
+        print("        请手工排查（或 wsl --shutdown 后重开保活锚，会影响同发行版其他栈）。")
+    else:
+        print(f"[{spec.namespace}] ✅ 孤儿端口已释放，继续 up")
+    return pids
+
+
+def _running_config_files(c: Context, spec: StackSpec, container_id: str) -> str:
+    """读运行容器的 compose.yaml 路径标签（跨控制平面判据）。"""
+    runtime = detect_runtime()
+    template = '{{index .Config.Labels "' + CONFIG_FILES_LABEL + '"}}'
+    r = run_cmd(
+        c,
+        f"{runtime} inspect --format {shlex.quote(template)} {container_id}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    return ((r.stdout or "").strip() if r is not None and getattr(r, "ok", False) else "")
+
+
+def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> None:
+    """up 前三道自愈（顺序不可调换）：
+
+    1. Created/Exited 项目残留 → compose down（保留卷/绑定）；
+    2. 活体容器但 compose.yaml 路径标签原文与本控制平面将使用的 ``--file``
+       不一致（Windows 裸 compose 的 ``D:\\...`` vs WSL 桥接的
+       ``/mnt/d/...``；compose config-hash 按原文计算，路径等价归一无效）
+       → podman-compose 必将强制 recreate，强拆 pod infra 易留孤儿
+       rootlessport，改为先优雅 compose down，把重建变成「干净启动」；
+    3. 无活体项目容器仍有 rootlessport 监听本栈端口 → 定点回收孤儿。
+    """
+    env = env if env is not None else {}
+    ports = _stack_ports(spec, env)
+    reconcile_stale_containers(c, spec, env=env)
+
+    cid = _running_project_container(c, spec)
+    if cid:
+        actual = _running_config_files(c, spec, cid)
+        expected = str(overlay_dir(spec) / "compose.yaml")
+        if config_paths_diverge(actual, expected):
+            print(
+                f"[{spec.namespace}] ⚠ 检测到栈由另一控制平面创建"
+                f"（compose 路径标签 {actual}），"
+            )
+            print(
+                f"[{spec.namespace}]   与当前平面（{expected}）不一致；直接 up 会被"
+                "强制 recreate 并可能残留孤儿端口，先优雅 down …"
+            )
+            run_compose(c, spec, "down")
+            cid = ""
+
+    if not cid:
+        reap_orphan_port_holders(c, spec, ports)
 
 
 def require_running(c: Context, spec: StackSpec) -> None:
@@ -454,7 +607,7 @@ def build_image(
 
 
 def up_stack(c: Context, spec: StackSpec, *, gpu: bool = False, skip_build: bool = False) -> None:
-    """渲染并启动栈（默认随带构建；up 前端口残留自愈）。"""
+    """渲染并启动栈（默认随带构建；up 前过 up_preflight 三道自愈）。"""
     if not skip_build:
         # up 内联构建只按默认参数执行（mirror/tag/base 自定义走显式 build 两步路径）
         build_image(
@@ -467,7 +620,7 @@ def up_stack(c: Context, spec: StackSpec, *, gpu: bool = False, skip_build: bool
             no_cache=False,
         )
     env = dict(os.environ)
-    reconcile_stale_containers(c, spec, env=env)
+    up_preflight(c, spec, env=env)
     run_compose(c, spec, "up", "-d", gpu=gpu)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
