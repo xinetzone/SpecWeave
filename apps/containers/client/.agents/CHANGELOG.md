@@ -6,6 +6,32 @@
 
 ## [Unreleased]
 
+### 2026-09-16 · `feat:` xmnn-runtime 内置 torch 2.14.0+cpu——pytorch 前端工具链固化（稳定版）
+
+**关联七概念场景**：场景3「重构优化」（I→F→V→C，session sc-20260916-runtime-torch-builtin，未提交，commit hash 待补）。
+
+**背景**：torch CPU 此前为容器内手工 `podman exec pip install`（down/重建即丢、默认 PyPI 易拉 CUDA 变体、版本浮动），与"工具链稳定"诉求冲突。
+
+**方案（三层稳定性）**：Containerfile 新增独立 Layer 1（无 COPY 输入、置于 whl 层之前，重打 whl 增量构建复用）：`ARG TORCH_VERSION=2.14.0` 精确 pin + `ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu` 固定官方 CPU 索引（构建日志实证依赖仅 sympy/networkx/fsspec/mpmath/filelock，零 nvidia 包）；只装 torch 不装 torchvision（compile_api 仅 torch.jit.load+relay 前端，四 demo 实测不需要）；builder 镜像与 wheel pyproject 不动（torch 为函数内 lazy import，Nuitka 不 follow）。守卫新增第 10 项硬断言 `torch.version.cuda is None` + jit 可用 + CUDA 不可用 + CPU 张量算子，root/devuser 双身份构建期执行。
+
+**V 验证**：`inv xmnnrt.build --no-cache` 真机构建成功（torch 196 MB 下载层），构建期 10/10 PASS；**全新容器零手装** `xmflow pipeline -n demo.pytorch.resnet18 -t compile,accuracy` 与 `demo.two_inputs` 均 2/2 成功，输出余弦 0.9989583 / 0.9998791，与手装 torch 时逐位一致；独立 `podman run` 守卫复跑 10/10。镜像体积 2.29→3.18 GB（torch CPU 解压约 0.9 GB，仍小于 xmnn-dev 4.69 GB）。daemon-free 95 passed/1 skipped（smoke docstring 黄金断言 9→10 项同步）。
+
+**C 同步**：xmnnrt-overlay.md §4 新增 torch 内置层契约（版本 pin/索引禁令/层序/升级双点）；runtime README「PyTorch 前端说明（torch 已内置）」+ 体积取舍 + torchvision 薄层层叠范式 + 排障（旧镜像/CUDA 变体）；docs/13 改为开箱即用说明；预防措施 `[prevent: build-gate]`——第 10 项守卫使 CUDA 变体/缺失 torch 在构建期即失败。
+
+### 2026-09-16 · `feat:` xmnnrt.\* wheel 消费运行时栈——builder/runtime 镜像分离（第四声明式栈）
+
+**关联七概念场景**：场景3「重构优化」（I→F→A→V→C，session sc-20260916-xmnn-wheel-split，未提交，commit hash 待补）。
+
+**洞察与方案**：`inv xmnn.wheel` 原在重型开发镜像内完成构建后，verify-wheel.sh 仅以同镜像 `--system-site-packages` venv + `--no-deps` 验证（证明"开发镜像里能 import"，从未证明干净客户机从零安装）；且 [xmnn-overlay.md §9](../.agents/rules/xmnn-overlay.md) 早已裁决 wheel 消费型 scratch 栈"不回流 xmnn-dev"但从未落地。第一性原理：wheel 是构建器→运行时唯一制品契约（cp314 GIL、`_libs` RPATH `$ORIGIN` 自包含、内置 `.pth`、19 依赖元数据），两镜像 FROM 同一 rootless 基底即 ABI 同源。新增第四栈 `overlays/xmnn-runtime`（namespace `xmnnrt`，形态 A，2225/8893）：whl 装 base env `/opt/conda` + 补 ipykernel + 注册 `Python 3.14 (xmnn runtime)` 交付内核（env 仅 PATH 白名单）；零 LLVM/Nuitka 工具链、零源码挂载。
+
+**whl 暂存契约**：`xmnnrt.build/up` 调内核构建前把 whl 暂存进 overlay `wheels/`（显式 `--wheel` > workspace/dist 最新 mtime > 已暂存复用 > Exit 1 指引；暂存区同时只留一个 whl；whl 不入 git、.dockerignore 反放行）。build/up 为 ≤160 行声明模块中的薄封装（与 build-tvm/wheel 长任务同性质豁免），不复制任何编排函数（C14）。
+
+**V 验证**：daemon-free 79 passed/1 skipped（surface 黄金清单新增 xmnnrt 任务集/docstring/签名/短选项/模块边界，compose-merge GOLDEN 新增 xmnnrt 渲染断言）；真机 podman-machine-default：`invoke xmnnrt.build --pip-mirror tuna` 桥接构建 COMMIT 成功（169.6 MB whl），构建期 9 项守卫 root+devuser 双身份 9/9 PASS（cp314 GIL ABI、site-packages 路径黑名单 /workspace|/opt/xmnn-builder、_libs/libtvm+libLLVM、干净环境 ctypes 加载、tvm.build llvm 向量乘 2、relay 数据、bootstrap .pth、数据三目录、内核可见）；`podman run --rm --entrypoint /opt/conda/bin/python localhost/xmnn-runtime:latest /opt/xmnnrt-smoke/_runtime_smoke.py` 独立容器复跑 9/9 PASS；真机 E2E：裸 `podman-compose up -d` 起栈（2225/8893 Up，标签 project=xmnn-runtime/service=xmnnrt 正确），HostConfig 与 xmnn-dev 同族一致（SEC label=disable、privileged=false；devices/cgroupns 为 podman-compose 1.6 既有空操作，容器内 /dev/fuse 节点由 crun 默认提供），Jupyter HTTP 302、`xmnn-runtime` kernelspec 对 main env 可见、compose exec 守卫 9/9，`podman-compose down` 后残留计数 0。镜像体积实测 rootless 1.19 GB → runtime 2.29 GB（xmnn-dev 4.69 GB，省 51%；约 170 MB whl COPY 层为单阶段已知冗余）。
+
+**V 对抗审查（四视角）**：① P0 同名 whl 陈旧——dev0 wheel 文件名恒定，旧逻辑只比文件名会在重打包后复用旧暂存 whl，修正为 name+size+mtime_ns 三全等才跳过（copy2 保 mtime 保证二次运行正确复用），新增 tests/test_xmnnrt_stage.py 7 例锁定选择顺序；② 依赖开放区间版本漂移、③ whl COPY 层体积两项记录为已知设计边界（README「已知边界」+ 规则 §4），版本锁定归属 wheel 打包端。
+
+**C 同步**：新增规则 [xmnnrt-overlay.md](../.agents/rules/xmnnrt-overlay.md)（7 节特有契约）；docs/13 + docs 索引、client AGENTS/.agents README/apps AGENTS 路由登记；根 .env.example 加 XMNNRT 段；预防措施 `[prevent: test-case, build-gate]`——黄金两表锁定栈表面与 compose 渲染，9 项守卫构建期硬失败，暂存选择顺序 7 例单测锁定；全量 95 passed/1 skipped。
+
 ### 2026-09-16 · `fix:` `inv xmnn.wheel` 构建成功却 exit 1——invoke 3.0.3 × Python 3.14 stdin 线程 FIONREAD 缓冲溢出（假失败）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnn-wheel-stdin，未提交，commit hash 待补）。

@@ -41,7 +41,7 @@ apps/AGENTS.md 由 SpecWeave 主权区维护，直接纳入版本管理；部分
 | 分组 | 应用 | AGENTS.md 入口 | .agents/ | 说明 |
 |------|------|---------------|:---:|------|
 | containers/ | jupyter-podman-rootless | [containers/jupyter-podman-rootless/AGENTS.md](containers/jupyter-podman-rootless/AGENTS.md) | ✅ 有 | 基于Podman rootless的Jupyter开发容器（Python 3.14t + Miniforge3 + SSH + rootless Podman + OMLMD/OLOT + Toolbx透传，invoke管理，三层后端自动降级） |
-| containers/ | client | [containers/client/AGENTS.md](containers/client/AGENTS.md) | ✅ 有 | jupyter-podman-rootless 镜像消费端：基于 podman-py 从本地 tar.gz 加载镜像并管理容器生命周期，供脚本化集成/嵌入调用；含 `env.*` 容器内自举命名空间；含 opt-in `quant.*` podman-compose 工作负载栈命名空间（overlays/onnx-quantized 量化叠加层：build/up/down/ps/logs/smoke，Windows 原生门禁）；含 opt-in `xmnn.*` 开发/打包栈命名空间（overlays/xmnn-dev：build/up/down/ps/logs/smoke/build-tvm/wheel，运行时挂载 npu_tvm/npuusertools 源码，LLVM 22 + Nuitka 打 xmnn whl，同族 Windows 原生门禁）；含 opt-in `monetize.*` tvm-ffi 原生编译栈命名空间（overlays/agent-monetize-dev：build/up/down/ps/logs/smoke/build-native/wheel，apt clang+apache-tvm-ffi 单一 cp314 GIL，挂载 apps/agent-monetize） |
+| containers/ | client | [containers/client/AGENTS.md](containers/client/AGENTS.md) | ✅ 有 | jupyter-podman-rootless 镜像消费端：基于 podman-py 从本地 tar.gz 加载镜像并管理容器生命周期，供脚本化集成/嵌入调用；含 `env.*` 容器内自举命名空间；含 opt-in `quant.*` podman-compose 工作负载栈命名空间（overlays/onnx-quantized 量化叠加层：build/up/down/ps/logs/smoke，Windows 原生门禁）；含 opt-in `xmnn.*` 开发/打包栈命名空间（overlays/xmnn-dev：build/up/down/ps/logs/smoke/build-tvm/wheel，运行时挂载 npu_tvm/npuusertools 源码，LLVM 22 + Nuitka 打 xmnn whl，同族 Windows 原生门禁）；含 opt-in `monetize.*` tvm-ffi 原生编译栈命名空间（overlays/agent-monetize-dev：build/up/down/ps/logs/smoke/build-native/wheel，apt clang+apache-tvm-ffi 单一 cp314 GIL，挂载 apps/agent-monetize）；含 opt-in `xmnnrt.*` wheel 消费运行时栈命名空间（overlays/xmnn-runtime：build/up/down/ps/logs/smoke，把 xmnn-dev 产出的 whl 装入干净运行时镜像，无工具链零源码挂载，2225/8893，builder/runtime 分离） |
 | containers/ | shared | [containers/AGENTS.md](containers/AGENTS.md)（组层代管） | ❌ 无 | 组内共享包 jpman-common 0.1.0（scikit-build-core 纯 Python；podman SDK 连接层唯一事实源 + 平台/进程/容器只读工具，builder/client 共同依赖须先 editable 安装；G1/G2 治理见组层 [.agents/rules/shared-package.md](containers/.agents/rules/shared-package.md)） |
 | docker-images/ | devcontainer-base | [docker-images/devcontainer-base/AGENTS.md](docker-images/devcontainer-base/AGENTS.md) | ❌ 无 | 全功能开发容器（Ubuntu 26.04，SSH+Docker DinD/DooD+Podman+Jupyter，supervisord管理，Python 3.14 cp314t free-threading） |
 | docker-images/ | devcontainer-win11 | [docker-images/devcontainer-win11/AGENTS.md](docker-images/devcontainer-win11/AGENTS.md) | ✅ 有 | Windows 11 开发容器（Server Core 2022，SSH+Docker DooD+Jupyter，PowerShell管理，Python 3.14 cp314t free-threading） |
@@ -74,7 +74,7 @@ SpecWeave 根 AGENTS.md
        │    ├─ jupyter-podman-rootless/AGENTS.md（jupyter-podman-rootless 构建端入口 · 嵌套优先 · rootless Podman + conda + invoke + OMLMD/OLOT + Toolbx）
        │    │    └─ .agents/rules/（containerfile/entrypoint/services/compose/invoke-tasks/ml-models/build-test 7个规范文件）
        │    │    └─ docs/（18个人类可读文档）
-       │    ├─ client/AGENTS.md（jupyter-podman-rootless 镜像消费端 · podman-py SDK 优先 · invoke load/run/stop/status/clean · env.* 容器内自举 · quant/xmnn/monetize 三栈）
+       │    ├─ client/AGENTS.md（jupyter-podman-rootless 镜像消费端 · podman-py SDK 优先 · invoke load/run/stop/status/clean · env.* 容器内自举 · quant/xmnn/monetize/xmnnrt 四栈）
        │    └─ shared（组内共享包 jpman-common，无独立 AGENTS，由组层 AGENTS + .agents/rules/shared-package.md 代管）
        └─ docker-images/（Docker容器镜像类分组）
             ├─ devcontainer-base/AGENTS.md（devcontainer-base 应用入口 · 嵌套优先）

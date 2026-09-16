@@ -168,6 +168,14 @@
 - wheel 产物落 `$DIST_DIR`（默认 /workspace/dist，宿主可见）；Nuitka
   中间产物在容器内 /opt/xmnn-builder/build；ccache 走命名卷
   `xmnn-ccache`（挂 /root/.ccache，down 默认保留，--volumes 删除）。
+- **wheel 元数据（pyproject.toml 单一事实源，2026-09-16 起）**：
+  `[project.scripts] xmflow = xmnn.cli.xmflow:app` 随 whl 生成 console
+  script `/opt/conda/bin/xmflow`——Nuitka 包不支持 `python -m`
+  （runpy get_code），console script 是交付镜像内 CLI 的唯一入口；
+  `typer>=0.12` 必须在 dependencies（CLI 运行时依赖，不能只放 dev
+  extra）。改 pyproject 后须重打 whl；运行中旧栈容器的
+  /opt/xmnn-builder 是镜像 COPY 副本（非挂载），需 `podman cp` 进容器
+  或重建镜像，打包才读得到新文件。
 - verify-wheel.sh 在 `--system-site-packages` 临时 venv 内装 wheel 跑
   10 项检查，结束删除 venv——base env 的源码调试链路零污染。
 

@@ -15,7 +15,7 @@ cd apps/containers
 pip install -e shared    # 先装两端共享包 jpman-common（连接层/平台工具单一事实源）
 cd client
 pip install -e .
-invoke --list        # 应看到 load / images / run / stop / status / clean + container.* / env.* + quant/xmnn/monetize 三栈
+invoke --list        # 应看到 load / images / run / stop / status / clean + container.* / env.* + quant/xmnn/monetize/xmnnrt 四栈
 invoke load          # 自动从 ../jupyter-podman-rootless/.image-cache/ 拿最新 tar
 invoke run --workspace D:/spaces/SpecWeave   # 启动成功打印 SSH/Jupyter URL
 
@@ -35,11 +35,11 @@ Windows 11 原生 CPython 零配置即可运行（自动探测 WSL9P / Podman Ma
 |------|------|------|
 | 入门 | [docs/00-overview.md](docs/00-overview.md) [docs/01-getting-started.md](docs/01-getting-started.md) | 项目概述、快速开始、镜像备份恢复 |
 | 使用参考 | [docs/02-invoke-reference.md](docs/02-invoke-reference.md) [docs/03-windows-wsl.md](docs/03-windows-wsl.md) [docs/04-troubleshooting-guide.md](docs/04-troubleshooting-guide.md) [docs/05-sdk-usage.md](docs/05-sdk-usage.md) [docs/06-run-discipline.md](docs/06-run-discipline.md) [docs/07-environment-variables.md](docs/07-environment-variables.md) | 命令速查、Windows×WSL2、排障速查、SDK 用法、三必需纪律、.env 清单 |
-| 架构与高级 | [docs/08-env-bootstrap.md](docs/08-env-bootstrap.md) [docs/09-passthrough.md](docs/09-passthrough.md) [docs/10-quant-overlay.md](docs/10-quant-overlay.md) [docs/11-xmnn-overlay.md](docs/11-xmnn-overlay.md) [docs/12-monetize-overlay.md](docs/12-monetize-overlay.md) | env.* 自举、运行时透传、quant/xmnn/monetize 工作负载栈 |
+| 架构与高级 | [docs/08-env-bootstrap.md](docs/08-env-bootstrap.md) [docs/09-passthrough.md](docs/09-passthrough.md) [docs/10-quant-overlay.md](docs/10-quant-overlay.md) [docs/11-xmnn-overlay.md](docs/11-xmnn-overlay.md) [docs/12-monetize-overlay.md](docs/12-monetize-overlay.md) [docs/13-xmnn-runtime-overlay.md](docs/13-xmnn-runtime-overlay.md) | env.* 自举、运行时透传、quant/xmnn/monetize/xmnnrt 工作负载栈 |
 
 ## AI 协作者规范
 
 项目特有的 AI 协作者规范（AI 级硬约束）以 [.agents/](.agents/README.md) 为索引，
 规则文件见 `.agents/rules/`（invoke-tasks / sdk-connection / windows-wsl /
-quant-overlay / xmnn-overlay / monetize-overlay）。复杂任务需走
+quant-overlay / xmnn-overlay / monetize-overlay / xmnnrt-overlay）。复杂任务需走
 SpecWeave 七概念方法论编排（[根指令](../../../.agents/commands/seven-concepts.md)）。
