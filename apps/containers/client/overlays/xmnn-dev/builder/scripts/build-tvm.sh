@@ -13,7 +13,10 @@
 #   3. 正则置 USE_EXAMPLE_TARGET_HOOKS=ON（xmnn 打包的必需目标钩子）；
 #   4. invoke make（Ninja + ccache，产出 build/libtvm.so）。
 #
-# 幂等：已有 build/ 时增量编译；强制全量可在容器内 `rm -rf $TVM_ROOT/build`。
+# 幂等：已有 build/ 时增量编译。强制全量：优先在宿主 PowerShell 执行
+#   Remove-Item -Recurse -Force <NPU_TVM_PATH>\build
+# （9p/drvfs 下跨环境残留的属主 65534 旧文件在容器内 root 也删不掉/
+# chmod 不了，容器内 rm -rf 会 EACCES；见排障 W-I7），再跑本脚本即可。
 # 9p 提示：TVM 全量编译在 Windows 挂载的 9p 路径上很慢，可把 NPU_TVM_PATH
 #          指向 WSL 原生克隆（见 overlay README §性能）。
 # ==============================================================================
