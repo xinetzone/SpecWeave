@@ -25,8 +25,6 @@ models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nu
 环境变量优先级：shell 显式 export > root client .env（load_dotenv
 override=False）> compose.yaml 内 ${VAR:-default}。
 """
-from __future__ import annotations
-
 from invoke import Context, task
 
 from .overlay_core import (

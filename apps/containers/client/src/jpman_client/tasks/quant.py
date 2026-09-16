@@ -26,8 +26,6 @@
 环境变量优先级：shell 显式 export > root client .env（load_dotenv override=False）
 > compose.yaml 内 ${VAR:-default}；overlay 自身 .env 仅供「裸 podman-compose」使用。
 """
-from __future__ import annotations
-
 from .overlay_core import SmokeSpec, StackSpec, TaskDocs, make_stack_tasks
 
 QUANT_SPEC = StackSpec(
