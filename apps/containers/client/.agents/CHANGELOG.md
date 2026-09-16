@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-16 · `fix:` WSL 回收循环假 Up 自动识别：`up_preflight` 新增 init PID 活体判据与 stale conmon 定点回收
+
+**关联七概念场景**：场景2「问题解决」（I→F→A→V→C，session sc-20260915-fake-up-auto-heal，未提交，commit hash 待补）。
+
+**背景与根因**：W-I8 记录的假 Up（WSL 发行版回收循环后 daemon libpod sqlite 仍记 running，但容器 init 进程在宿主已死——`ps`/端口/HTTP 302 均为孤儿 conmon/rootlessport 制造的假象，exec 报 `crun ... status: No such file`）首版只有手工五步定向清理；跨平面反复交替还会累积已删容器的 stale conmon（不持端口、不阻断 up 但是进程垃圾）。daemon 单视角探测必然被假象欺骗。
+
+**修复（编排层 `src/jpman_client/tasks/overlay_core.py`，三栈同族生效）**：① 新增 `_container_init_pid`（`inspect --format {{.State.Pid}}`）+ `_host_process_alive`（宿主 `ps -p <pid> -o pid=`，零双引号探针）+ `_container_truly_alive` 双重活体判据；`up_preflight` 在 reconcile 之后、config_files 标签比对之前检测假 Up，命中先 `compose down` 清除失实记录再进入孤儿回收；② 新增 `parse_conmon_process`/`_list_stale_conmons`/`reap_stale_conmons`——双门判定（进程名 conmon + `-n` 为本栈容器名 + 64 位 ID 不在 `podman ps -aq` 运行集合），TERM→0.5s→复检→KILL，活 conmon 与他栈 conmon 绝不触碰，与 rootlessport 回收同一前置条件；③ `require_running`（build-tvm/wheel/build-native 长任务前置）从 daemon 视角收紧为真活体，假 Up 直接 Exit(1) 并提示重新 up，不自动重建以免破坏长任务现场。
+
+**V 验证**：daemon-free 单测新增 6 例——真实 conmon 命令行解析、双门只收本栈 stale（活/他栈不动）、rootlessport 与 stale conmon 同轮分别精确点名 kill、假 Up 强制 down 后再回收、真活体 no-op、`require_running` 拒绝假 Up；FakeRunner 的 TERM 模拟改为按点名 PID 从各自数据源移除（对齐真机语义）。
+
+**C 同步**：本条为 W-I8（症状矩阵/手工五步清理）与 compose-overlay-ops v1.0.2「exec 是唯一活体判据」的自动化代码落地；预防措施 `[prevent: test-case]`——活体判据、双门回收与拦截路径全部由 daemon-free 单测锁定。
+
 ### 2026-09-15 · `fix:` 跨控制平面标签分歧致 `up -d` 强制 recreate + 孤儿 rootlessport 占 2223：`up_preflight` 三道自愈
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260915-xmnn-2223-bind，未提交，commit hash 待补）。

@@ -41,6 +41,10 @@ class FakeRunner:
         image_exists: bool = True,
         ss_output: str = "",
         config_files: str = "",
+        live_ps: str = "",
+        conmon_ps: str = "",
+        init_pid: int = 1234,
+        host_alive: bool = True,
     ):
         self.calls: list[tuple[str, dict]] = []
         self.running = running
@@ -48,6 +52,12 @@ class FakeRunner:
         self.image_exists = image_exists
         self.ss_output = ss_output
         self.config_files = config_files
+        self.live_ps = live_ps
+        self.conmon_ps = conmon_ps
+        # daemon 报的容器 init PID（inspect State.Pid）与其宿主存活状态；
+        # running=True 时默认真活体，假 Up 用例自行设置 init_pid 但 host_alive=False
+        self.init_pid = init_pid
+        self.host_alive = host_alive
 
     def __call__(self, c, cmd, **kwargs):
         self.calls.append((cmd, kwargs))
@@ -55,15 +65,37 @@ class FakeRunner:
             return SimpleNamespace(ok=True, stdout=self.stale, return_code=0)
         if "ps -q" in cmd:
             return SimpleNamespace(ok=True, stdout="cid" if self.running else "", return_code=0)
+        if "ps -aq" in cmd:
+            return SimpleNamespace(ok=True, stdout=self.live_ps, return_code=0)
+        if "ps -p" in cmd:
+            return SimpleNamespace(
+                ok=self.host_alive,
+                stdout=f"  {self.init_pid}\n" if self.host_alive else "",
+                return_code=0,
+            )
+        if "ps -eo" in cmd:
+            return SimpleNamespace(ok=True, stdout=self.conmon_ps, return_code=0)
         if "image exists" in cmd:
             return SimpleNamespace(ok=self.image_exists, stdout="", return_code=0 if self.image_exists else 1)
         if "ss -ltnp" in cmd:
             return SimpleNamespace(ok=True, stdout=self.ss_output, return_code=0)
         if "inspect" in cmd:
+            if "State.Pid" in cmd:
+                return SimpleNamespace(
+                    ok=True, stdout=str(self.init_pid) if self.init_pid else "0", return_code=0
+                )
             return SimpleNamespace(ok=True, stdout=self.config_files, return_code=0)
         if cmd.startswith("kill ") and "-9" not in cmd:
-            # 模拟 TERM 后孤儿 rootlessport 退出（真机实测行为）
-            self.ss_output = ""
+            # 模拟 TERM 后对应进程退出：只从各自数据源移除点名 PID（真机行为）
+            killed = set(cmd.split()[1:])
+            self.ss_output = "\n".join(
+                line for line in self.ss_output.splitlines()
+                if not any(f"pid={p}" in line for p in killed)
+            )
+            self.conmon_ps = "\n".join(
+                line for line in self.conmon_ps.splitlines()
+                if line.split(None, 1)[0] not in killed
+            )
         return SimpleNamespace(ok=True, stdout="", return_code=0)
 
     @property
@@ -347,6 +379,90 @@ def test_up_preflight_same_plane_running_is_noop(harness):
     )
     oc.up_preflight(None, _XMNN, env={})
     assert not any(" down" in c or c.startswith("kill") for c in harness.runner.commands)
+
+
+# ---- stale conmon 回收（跨平面循环残留，2026-09-15 真机实证） ----
+
+_CID_LIVE = "bc7cc1ada5a16c0d5ccde73f3ea7a67e21f5b483465461bc023ca823edf69b58"
+_CID_STALE_X = "2e3e696f821bc5868ec1efe867f746959466c1b968c22f06a576d407643c8802"
+_CID_STALE_Q = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+
+
+def _conmon_line(pid: int, cid: str, name: str) -> str:
+    return (
+        f" {pid} /usr/bin/conmon --api-version 1 -c {cid} -u {cid} -r /usr/bin/crun "
+        f"-b /home/user/.local/share/containers/storage/overlay-containers/{cid}/userdata "
+        f"-n {name} --exit-dir /run/user/1000/libpod/tmp/exits --syslog"
+    )
+
+
+def test_parse_conmon_process_realworld():
+    pid, cid, name = oc.parse_conmon_process(_conmon_line(111413, _CID_STALE_X, "xmnn-dev"))
+    assert (pid, cid, name) == (111413, _CID_STALE_X, "xmnn-dev")
+    assert oc.parse_conmon_process("  900 /usr/sbin/crun -b /x") is None
+    assert oc.parse_conmon_process("not-a-pid /usr/bin/conmon -c x") is None
+
+
+def test_stale_conmon_detection_double_gate(harness):
+    # live：当前运行 xmnn 容器；ps 含 活xmnn / stale-xmnn / stale-quant 三个 conmon
+    harness.runner.live_ps = _CID_LIVE[:12]
+    harness.runner.conmon_ps = "\n".join([
+        _conmon_line(100, _CID_LIVE, "xmnn-dev"),
+        _conmon_line(111413, _CID_STALE_X, "xmnn-dev"),
+        _conmon_line(200, _CID_STALE_Q, "onnx-quantized"),
+    ])
+    stale = oc._list_stale_conmons(None, _XMNN)
+    # 只回收：本栈名 + 容器已不在 libpod；活 conmon 与他栈 conmon 都不动
+    assert stale == [(111413, _CID_STALE_X[:12])]
+
+
+def test_up_preflight_reaps_stale_conmon_and_rootlessport(harness):
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "xmnn-dev")
+    oc.up_preflight(None, _XMNN, env={})
+    kills = [c for c in harness.runner.commands if c.startswith("kill ") and "-9" not in c]
+    # 一次 rootlessport(92823) + 一次 stale conmon(111413)，分别精确点名
+    assert "kill 92823" in kills
+    assert "kill 111413" in kills
+    # 绝不出现他栈/活容器 PID
+    joined = " ".join(kills)
+    assert "100 " not in joined and "200 " not in joined
+
+
+# ---- 假 Up：daemon 记 running 但 init 进程在宿主已死（WSL 回收循环） ----
+
+def test_container_truly_alive_gate(harness):
+    harness.runner.running = True
+    harness.runner.init_pid = 111845
+    harness.runner.host_alive = False
+    assert oc.container_running(None, _XMNN) is True  # daemon 视角仍撒谎
+    cid = oc._running_project_container(None, _XMNN)
+    assert oc._container_truly_alive(None, _XMNN, cid) is False
+    harness.runner.host_alive = True
+    assert oc._container_truly_alive(None, _XMNN, cid) is True
+
+
+def test_up_preflight_fake_up_forces_clean_rebuild(harness):
+    # daemon 报 running + 报 PID，但 ps -p 宿主查无此进程；端口/孤儿都在
+    harness.runner.running = True
+    harness.runner.init_pid = 111845
+    harness.runner.host_alive = False
+    harness.runner.ss_output = "\n".join(_SS_LINES[:3])
+    harness.runner.conmon_ps = _conmon_line(111413, _CID_STALE_X, "xmnn-dev")
+    oc.up_preflight(None, _XMNN, env={})
+    cmds = harness.runner.commands
+    # 必须先 compose down 清失实状态（不是 no-op），再回收孤儿，再 up 由调用方执行
+    assert any(" down" in c for c in cmds)
+    kills = [c for c in cmds if c.startswith("kill ") and "-9" not in c]
+    assert "kill 92823" in kills and "kill 111413" in kills
+
+
+def test_require_running_rejects_fake_up(harness):
+    harness.runner.running = True
+    harness.runner.init_pid = 111845
+    harness.runner.host_alive = False
+    with pytest.raises(Exit):
+        oc.require_running(None, _XMNN)
 
 
 # ---------------------------------------------------------------------------

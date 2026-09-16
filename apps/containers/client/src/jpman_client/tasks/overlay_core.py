@@ -55,6 +55,9 @@ CONFIG_FILES_LABEL = "com.docker.compose.project.config_files"
 
 # ss -ltnp 行内进程持有者：users:(("rootlessport",pid=92823,fd=10))
 _SS_HOLDER_RE = re.compile(r'users:\(\("(?P<comm>[^"]+)",pid=(?P<pid>\d+)')
+# conmon 命令行：/usr/bin/conmon --api-version 1 -c <64hex> -u <64hex> ... -n <name>
+_CONMON_CID_RE = re.compile(r"(?:\s|^)-c\s+(?P<cid>[0-9a-f]{64})\b")
+_CONMON_NAME_RE = re.compile(r"(?:\s|^)-n\s+(?P<name>\S+)")
 
 
 # ---------------------------------------------------------------------------
@@ -388,11 +391,49 @@ def config_paths_diverge(actual: str, expected: str) -> bool:
 
 
 def _running_project_container(c: Context, spec: StackSpec) -> str:
-    """返回本栈服务的首个运行容器 ID（无则空串）。"""
+    """daemon 视角的首个 running 项目服务容器 ID（无则空串）。
+
+    警告：WSL 发行版回收循环后 daemon 可能「撒谎」——libpod sqlite 仍记
+    running 但容器 init 进程在宿主已死（假 Up，见 _container_truly_alive）。
+    """
     r = run_cmd(c, _project_ps_command(spec, all_containers=False), hide=True, warn=True, echo=False)
     if r is None or not getattr(r, "ok", False):
         return ""
     return (r.stdout or "").strip().split()[0] if (r.stdout or "").strip() else ""
+
+
+def _container_init_pid(c: Context, container_id: str) -> int:
+    """读 daemon 记录的容器 init PID（``.State.Pid``）；查询失败/0 返回 0。"""
+    runtime = detect_runtime()
+    r = run_cmd(
+        c,
+        f"{runtime} inspect --format {shlex.quote('{{.State.Pid}}')} {container_id}",
+        hide=True,
+        warn=True,
+        echo=False,
+    )
+    pid = ((r.stdout or "").strip() if r is not None and getattr(r, "ok", False) else "")
+    return int(pid) if pid.isdigit() else 0
+
+
+def _host_process_alive(c: Context, pid: int) -> bool:
+    """宿主侧校验 PID 是否仍存活（``ps -p <pid> -o pid=``，零双引号探针）。"""
+    if pid <= 0:
+        return False
+    r = run_cmd(c, f"ps -p {pid} -o pid=", hide=True, warn=True, echo=False)
+    return bool(r is not None and getattr(r, "ok", False) and (r.stdout or "").strip())
+
+
+def _container_truly_alive(c: Context, spec: StackSpec, container_id: str) -> bool:
+    """活体最终判据：daemon 记 running **且** init PID 在宿主存活。
+
+    WSL 回收循环可制造「假 Up」：``podman ps``/inspect 均报 running、孤儿
+    conmon/rootlessport 续命端口甚至 HTTP 302，但宿主 ``ps -p`` 查无此
+    PID、crun status 文件已删（2026-09-15 三次实证）。单靠 ps 标签探测
+    会被假象欺骗而跳过自愈。
+    """
+    init_pid = _container_init_pid(c, container_id)
+    return bool(init_pid) and _host_process_alive(c, init_pid)
 
 
 def container_running(c: Context, spec: StackSpec) -> bool:
@@ -491,6 +532,76 @@ def reap_orphan_port_holders(c: Context, spec: StackSpec, ports: list[str]) -> l
     return pids
 
 
+def parse_conmon_process(line: str) -> Optional[tuple[int, str, str]]:
+    """解析 ``ps -eo pid=,args=`` 的一行 → ``(pid, 容器完整ID, 容器名)``。
+
+    非 conmon 行或缺 ``-c``/``-n`` 参数返回 None。纯字符串解析供单测。
+    """
+    parts = line.split(None, 1)
+    if len(parts) < 2 or not parts[0].isdigit():
+        return None
+    pid = int(parts[0])
+    args = parts[1]
+    if "conmon" not in args.split()[0]:
+        return None
+    mc = _CONMON_CID_RE.search(args)
+    mn = _CONMON_NAME_RE.search(args)
+    if not mc or not mn:
+        return None
+    return pid, mc.group("cid"), mn.group("name")
+
+
+def _list_stale_conmons(c: Context, spec: StackSpec) -> list[tuple[int, str]]:
+    """列出本栈的 stale conmon：``-n`` 为本栈容器名但其容器已不在 libpod。
+
+    实证（2026-09-15 跨平面循环）：容器/pod 被强删后 conmon 偶尔不退出
+    （不持端口，故不阻断 up，但跨平面反复交替会累积进程垃圾）。判据双重
+    收紧：进程名 conmon + 名字匹配 + 完整 ID 不在 ``podman ps -aq`` 的
+    运行集合（运行中容器的 conmon 绝不回收；stopped 容器无需 conmon 驻留）。
+    覆盖默认 ``container_name == project`` 的三栈；自定义容器名不覆盖。
+    """
+    runtime = detect_runtime()
+    live = run_cmd(c, f"{runtime} ps -aq", hide=True, warn=True, echo=False)
+    if live is None or not getattr(live, "ok", False):
+        return []
+    live_ids = set((live.stdout or "").split())
+    r = run_cmd(c, "ps -eo pid=,args=", hide=True, warn=True, echo=False)
+    if r is None or not getattr(r, "ok", False):
+        return []
+    stale: list[tuple[int, str]] = []
+    for line in (r.stdout or "").splitlines():
+        parsed = parse_conmon_process(line)
+        if parsed is None:
+            continue
+        pid, cid, name = parsed
+        if name == spec.project and cid[:12] not in live_ids:
+            stale.append((pid, cid[:12]))
+    return stale
+
+
+def reap_stale_conmons(c: Context, spec: StackSpec) -> list[int]:
+    """定点回收本栈 stale conmon（与 reap_orphan_port_holders 同一前置条件）。"""
+    if platform.system() != "Linux":
+        return []
+    stale = _list_stale_conmons(c, spec)
+    if not stale:
+        return []
+    pids = [pid for pid, _ in stale]
+    ids = ",".join(cid for _, cid in stale)
+    print(
+        f"[{spec.namespace}] ⚠ 发现 {len(pids)} 个已删容器遗留的 stale conmon"
+        f"（容器 {ids} 已不在 libpod），定点回收 …"
+    )
+    run_cmd(c, "kill " + " ".join(map(str, pids)), hide=True, warn=True, echo=False)
+    time.sleep(0.5)
+    survivors = [pid for pid, _ in _list_stale_conmons(c, spec)]
+    if survivors:
+        run_cmd(c, "kill -9 " + " ".join(map(str, survivors)), hide=True, warn=True, echo=False)
+        time.sleep(0.5)
+    print(f"[{spec.namespace}] ✅ stale conmon 回收完成（{'全部退出' if not _list_stale_conmons(c, spec) else '仍有残留，请手工排查'}）")
+    return pids
+
+
 def _running_config_files(c: Context, spec: StackSpec, container_id: str) -> str:
     """读运行容器的 compose.yaml 路径标签（跨控制平面判据）。"""
     runtime = detect_runtime()
@@ -506,21 +617,29 @@ def _running_config_files(c: Context, spec: StackSpec, container_id: str) -> str
 
 
 def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> None:
-    """up 前三道自愈（顺序不可调换）：
+    """up 前自愈（顺序不可调换）：
 
     1. Created/Exited 项目残留 → compose down（保留卷/绑定）；
-    2. 活体容器但 compose.yaml 路径标签原文与本控制平面将使用的 ``--file``
-       不一致（Windows 裸 compose 的 ``D:\\...`` vs WSL 桥接的
-       ``/mnt/d/...``；compose config-hash 按原文计算，路径等价归一无效）
-       → podman-compose 必将强制 recreate，强拆 pod infra 易留孤儿
-       rootlessport，改为先优雅 compose down，把重建变成「干净启动」；
-    3. 无活体项目容器仍有 rootlessport 监听本栈端口 → 定点回收孤儿。
+    2. daemon 记 running 但容器 init 进程在宿主已死（**假 Up**：WSL 回收
+       循环后 libpod 状态与内核进程脱节，``ps``/HTTP 302 都可能是孤儿
+       进程制造的假象，exec 报 ``crun ... status: No such file``）→ compose
+       down 清除失实记录；真活体但 compose.yaml 路径标签原文与本平面
+       ``--file`` 不一致（Windows 裸 compose 的 ``D:\\...`` vs WSL 桥接的
+       ``/mnt/d/...``，config-hash 按原文计算）→ 先优雅 compose down；
+    3. 无活体项目容器时回收孤儿进程：rootlessport（持端口，必收）与
+       stale conmon（已删容器遗留，不持端口但跨平面循环会累积）。
     """
     env = env if env is not None else {}
     ports = _stack_ports(spec, env)
     reconcile_stale_containers(c, spec, env=env)
 
     cid = _running_project_container(c, spec)
+    if cid and not _container_truly_alive(c, spec, cid):
+        print(f"[{spec.namespace}] ⚠ 检测到假 Up：daemon 记 running 但容器 init "
+              "进程在宿主已不存在（WSL 回收循环），ps/端口/HTTP 均为假象；")
+        print(f"[{spec.namespace}]   先 compose down 清除失实状态后重建 …")
+        run_compose(c, spec, "down")
+        cid = ""
     if cid:
         actual = _running_config_files(c, spec, cid)
         expected = str(overlay_dir(spec) / "compose.yaml")
@@ -538,12 +657,21 @@ def up_preflight(c: Context, spec: StackSpec, env: Optional[dict] = None) -> Non
 
     if not cid:
         reap_orphan_port_holders(c, spec, ports)
+        reap_stale_conmons(c, spec)
 
 
 def require_running(c: Context, spec: StackSpec) -> None:
-    """长任务（build-tvm/wheel/build-native）前置：栈必须运行。"""
-    if not container_running(c, spec):
+    """长任务（build-tvm/wheel/build-native）前置：栈必须**真活体**。
+
+    daemon 记 running 不足为凭（假 Up 时 exec 必报
+    ``crun ... status: No such file``）；以 init PID 宿主存活为判据。
+    拦截后不自动重建（避免破坏长任务现场），只提示先 up。
+    """
+    cid = _running_project_container(c, spec)
+    if not cid or not _container_truly_alive(c, spec, cid):
         print(f"[{spec.namespace}] ⚠ {spec.stack_not_running_hint}")
+        print(f"[{spec.namespace}]   若 podman ps 显示 Up 但 exec 报 "
+              "crun status 不存在，是假 Up（WSL 回收循环），请先重新 up。")
         raise Exit(1)
 
 
