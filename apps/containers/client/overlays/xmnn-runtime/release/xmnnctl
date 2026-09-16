@@ -1,0 +1,290 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# xmnnctl — XMNN Runtime 客户控制脚本（Linux / macOS / WSL，bash 4+）
+#
+# 用法: ./xmnnctl <命令>
+#   init     创建 .env 并自动生成登录密码与 Jupyter token
+#   load     校验并导入 artifacts/ 内随包镜像 tar.gz，随后自动运行守卫
+#   up       启动服务（缺 .env 时自动 init），就绪后打印访问信息
+#   down     停止并删除容器（workspace 与 SSH host key 卷保留）
+#   ps       查看服务状态
+#   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
+#   smoke    运行 10 项运行时守卫
+#   version  显示版本与交付清单信息
+#
+# 环境变量: XMNN_RUNTIME=podman|docker 强制指定容器运行时
+#           （默认优先探测 podman，其次 docker）
+# ==============================================================================
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+RT=""                 # podman | docker
+COMPOSE=()            # compose 命令数组
+FILES=()              # -f 文件数组
+RUN_FLAGS=()          # rootless run 三必需（docker 下为空）
+
+c_info() { printf '\033[1;34m[xmnn]\033[0m %s\n' "$*"; }
+c_ok()   { printf '\033[1;32m[ OK ]\033[0m %s\n' "$*"; }
+c_warn() { printf '\033[1;33m[WARN]\033[0m %s\n' "$*"; }
+c_err()  { printf '\033[1;31m[ERR ]\033[0m %s\n' "$*" >&2; }
+die()    { c_err "$*"; exit 1; }
+
+usage() {
+    sed -n '3,16p' "$0"
+}
+
+# ── 运行时与 compose 探测 ────────────────────────────────────────────────────
+
+detect_runtime() {
+    case "${XMNN_RUNTIME:-}" in
+        podman|docker) RT="$XMNN_RUNTIME" ;;
+        "")
+            if command -v podman >/dev/null 2>&1; then RT=podman
+            elif command -v docker >/dev/null 2>&1; then RT=docker
+            else die "未找到 podman 或 docker，请先安装容器运行时后重试"; fi ;;
+        *) die "XMNN_RUNTIME 只允许 podman|docker（当前：$XMNN_RUNTIME）" ;;
+    esac
+    case "$RT" in
+        podman)
+            if podman compose version >/dev/null 2>&1; then
+                COMPOSE=(podman compose)
+            elif command -v podman-compose >/dev/null 2>&1; then
+                COMPOSE=(podman-compose)
+            else die "Podman 已安装但缺少 compose 支持：请安装 podman-compose，或使用较新版 Podman"; fi
+            FILES=(-f compose.yaml -f compose.podman.yaml)
+            RUN_FLAGS=(--device /dev/fuse --security-opt label=disable --cgroupns host) ;;
+        docker)
+            if docker compose version >/dev/null 2>&1; then
+                COMPOSE=(docker compose)
+            elif command -v docker-compose >/dev/null 2>&1; then
+                COMPOSE=(docker-compose)
+            else die "Docker 已安装但缺少 compose 插件：请安装 Docker Compose v2"; fi
+            FILES=(-f compose.yaml)
+            RUN_FLAGS=() ;;
+    esac
+}
+
+# ── .env 读取与初始化 ────────────────────────────────────────────────────────
+
+env_value() {
+    [ -f .env ] || { printf ''; return; }
+    local line
+    line="$(grep -E "^$1=" .env | tail -n 1 || true)"
+    # tr 去 CR：容忍 Windows 编辑器/旧版脚本产生的 CRLF 行尾
+    printf '%s' "${line#*=}" | tr -d '\r'
+}
+
+ensure_env() {
+    [ -f .env ] || { c_warn "未发现 .env，先执行初始化"; do_init; }
+}
+
+new_alnum() {
+    # $1 = 长度。字符集仅 [A-Za-z0-9]：凭证中的 shell 元字符会被基底
+    # entrypoint 的 heredoc 展开，导致实际值与 .env 不一致。
+    local n="$1" out
+    out="$(LC_ALL=C tr -dc 'A-Za-z0-9' </dev/urandom | head -c "$n" || true)"
+    [ "${#out}" -eq "$n" ] || die "凭证生成失败（系统随机源不可用）"
+    printf '%s' "$out"
+}
+
+set_env_key() {
+    # -i.bak 同时兼容 GNU sed 与 macOS BSD sed
+    sed -i.bak "s|^$1=.*|$1=$2|" .env
+    rm -f .env.bak
+}
+
+do_init() {
+    if [ -f .env ] && [ "${1:-}" != "--force" ]; then
+        c_info ".env 已存在，跳过初始化（./xmnnctl init --force 可重新生成凭证）"
+        return
+    fi
+    [ -f .env.example ] || die "缺少 .env.example，交付包不完整"
+    cp .env.example .env
+    set_env_key USER_PASSWORD "$(new_alnum 16)"
+    set_env_key JUPYTER_TOKEN "$(new_alnum 32)"
+    chmod 600 .env 2>/dev/null || true
+    c_ok "初始化完成，配置写入 .env"
+    printf '    SSH 登录密码 : %s\n' "$(env_value USER_PASSWORD)"
+    printf '    Jupyter Token: %s\n' "$(env_value JUPYTER_TOKEN)"
+    c_warn "请妥善保存凭证；不要将容器日志直接外发（日志可能含凭证）"
+}
+
+# ── 交付制品定位与完整性校验 ────────────────────────────────────────────────
+
+find_archive() {
+    local ver archive
+    ver="$(env_value XMNN_VERSION)"
+    archive=""
+    if [ -f artifacts/release.json ]; then
+        local f
+        f="$(grep -A6 '"archive"' artifacts/release.json \
+             | grep -o '"file"[[:space:]]*:[[:space:]]*"[^"]*"' | head -n 1 \
+             | sed 's/.*"file"[[:space:]]*:[[:space:]]*"//;s/"$//' || true)"
+        [ -n "$f" ] && [ -f "artifacts/$f" ] && archive="artifacts/$f"
+    fi
+    if [ -z "$archive" ] && [ -n "$ver" ] && [ -f "artifacts/xmnn-runtime-$ver.tar.gz" ]; then
+        archive="artifacts/xmnn-runtime-$ver.tar.gz"
+    fi
+    if [ -z "$archive" ]; then
+        archive="$(ls -t artifacts/xmnn-runtime-*.tar.gz 2>/dev/null | head -n 1 || true)"
+    fi
+    printf '%s' "$archive"
+}
+
+verify_archive() {
+    local archive="$1" expected actual
+    [ -f artifacts/release.json ] || return 0
+    expected="$(grep -o '"sha256"[[:space:]]*:[[:space:]]*"[0-9a-f]*"' artifacts/release.json \
+                | head -n 1 | sed 's/.*"\([0-9a-f]\{64\}\)"/\1/')"
+    [ -n "$expected" ] || return 0
+    if command -v sha256sum >/dev/null 2>&1; then
+        actual="$(sha256sum "$archive" | cut -d' ' -f1)"
+    elif command -v shasum >/dev/null 2>&1; then
+        actual="$(shasum -a 256 "$archive" | cut -d' ' -f1)"
+    else
+        c_warn "未找到 sha256sum/shasum，跳过完整性校验"
+        return 0
+    fi
+    [ "$actual" = "$expected" ] || die "完整性校验失败：$archive 的 sha256 与 release.json 不符（文件可能已损坏）"
+    c_ok "完整性校验通过（sha256 一致）"
+}
+
+do_load() {
+    mkdir -p artifacts
+    local archive ver
+    archive="$(find_archive)"
+    [ -n "$archive" ] && [ -f "$archive" ] || die "artifacts/ 下未找到 xmnn-runtime-*.tar.gz，请确认交付包已完整解压"
+    verify_archive "$archive"
+    c_info "导入镜像：$archive"
+    "$RT" load -i "$archive"
+    ver="$(env_value XMNN_VERSION)"
+    [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION"
+    # podman load 后裸名归一化为 localhost/ 前缀；docker 保留裸名。
+    # load 返回后镜像索引偶发瞬时未就绪，重试 5 次（间隔 2s）。
+    local img_ref="xmnn-runtime:$ver" i
+    [ "$RT" = "podman" ] && img_ref="localhost/$img_ref"
+    for i in 1 2 3 4 5; do
+        "$RT" image inspect "$img_ref" >/dev/null 2>&1 && break
+        [ "$i" = 5 ] && die "导入的镜像中没有 $img_ref；请核对 .env 的 XMNN_VERSION 与交付包版本"
+        sleep 2
+    done
+    c_ok "镜像 xmnn-runtime:$ver 已就绪"
+    c_info "执行交付守卫（10 项）"
+    do_smoke || die "交付守卫失败，请联系交付方"
+}
+
+# ── compose 包装与服务管理 ──────────────────────────────────────────────────
+
+compose() { "${COMPOSE[@]}" "${FILES[@]}" "$@"; }
+
+do_down() { compose down; c_ok "已停止（workspace 与 SSH host key 卷保留）"; }
+do_ps()   { compose ps; }
+do_logs() { compose logs -f --tail 100; }
+
+wait_ready() {
+    # 轮询 Jupyter 直到返回 2xx/3xx（冷启动含基底初始化，约 1-3 分钟）
+    local port="$1" i=0 code
+    while [ "$i" -lt 150 ]; do
+        if command -v curl >/dev/null 2>&1; then
+            code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 3 \
+                    "http://127.0.0.1:$port/lab" || true)"
+        elif (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null; then
+            code=302; exec 3>&- 2>/dev/null || true
+        else
+            code="000"
+        fi
+        case "$code" in 2*|3*) return 0 ;; esac
+        sleep 2
+        i=$((i+1))
+    done
+    return 1
+}
+
+print_banner() {
+    local sport jport ver
+    sport="$(env_value XMNN_SSH_PORT)"; sport="${sport:-2225}"
+    jport="$(env_value XMNN_JUPYTER_PORT)"; jport="${jport:-8893}"
+    ver="$(env_value XMNN_VERSION)"
+    printf '\n============================================================\n'
+    printf ' XMNN Runtime %s 已启动\n' "$ver"
+    printf ' JupyterLab : http://localhost:%s\n' "$jport"
+    printf '              内核选择 Python 3.14 (xmnn runtime)\n'
+    printf ' SSH        : ssh -p %s devuser@localhost\n' "$sport"
+    printf ' 工作区     : ./workspace （容器内 /workspace）\n'
+    printf ' 凭证       : .env（USER_PASSWORD / JUPYTER_TOKEN）\n'
+    printf ' 停止       : ./xmnnctl down\n'
+    printf '============================================================\n\n'
+}
+
+do_up() {
+    mkdir -p workspace
+    local jport
+    c_info "启动 xmnn-runtime（$RT）"
+    compose up -d
+    jport="$(env_value XMNN_JUPYTER_PORT)"; jport="${jport:-8893}"
+    c_info "等待 Jupyter 就绪（冷启动约需 1-3 分钟）"
+    if wait_ready "$jport"; then c_ok "服务已就绪"; else
+        c_warn "限定时间内未检测到 Jupyter 响应，请用 ./xmnnctl logs 查看启动进度"
+    fi
+    print_banner
+}
+
+# ── 运行时守卫 ──────────────────────────────────────────────────────────────
+
+container_running() {
+    "$RT" ps --format '{{.Names}}' 2>/dev/null | grep -Fx "$1" >/dev/null 2>&1
+}
+
+do_smoke() {
+    local cname ver
+    cname="$(env_value XMNN_CONTAINER_NAME)"; cname="${cname:-xmnn-runtime}"
+    ver="$(env_value XMNN_VERSION)"
+    if container_running "$cname"; then
+        c_info "容器运行中，经 exec 执行守卫"
+        "$RT" exec "$cname" /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py
+    else
+        [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION；请先 ./xmnnctl init"
+        c_info "容器未运行，使用一次性容器执行守卫"
+        # 必须显式 --entrypoint：镜像默认 entrypoint 的命令模式会把脚本交给
+        # cp314t 登录环境解析（实测会 9 项失败）。
+        "$RT" run --rm ${RUN_FLAGS[@]+"${RUN_FLAGS[@]}"} \
+            --entrypoint /opt/conda/bin/python "xmnn-runtime:$ver" \
+            /opt/xmnnrt-smoke/_runtime_smoke.py
+    fi
+}
+
+# ── 版本信息 ────────────────────────────────────────────────────────────────
+
+do_version() {
+    local ver
+    ver="$(env_value XMNN_VERSION)"
+    printf 'xmnn-runtime release: %s\n' "${ver:-未知（请先 ./xmnnctl init）}"
+    if [ -f artifacts/release.json ]; then
+        grep -o '"sha256"[[:space:]]*:[[:space:]]*"[0-9a-f]*"' artifacts/release.json \
+            | head -n 1 | sed 's/.*: *"//;s/"$//' | sed 's/^/archive sha256: /'
+    fi
+}
+
+# ── 入口分发 ────────────────────────────────────────────────────────────────
+
+main() {
+    local cmd="${1:-}"
+    [ -n "$cmd" ] || { usage; exit 1; }
+    shift
+    case "$cmd" in
+        init)    detect_runtime; do_init "${1:-}" ;;
+        load)    detect_runtime; ensure_env; do_load ;;
+        up)      detect_runtime; ensure_env; do_up ;;
+        down)    detect_runtime; ensure_env; do_down ;;
+        ps)      detect_runtime; ensure_env; do_ps ;;
+        logs)    detect_runtime; ensure_env; do_logs ;;
+        smoke)   detect_runtime; ensure_env; do_smoke ;;
+        version) do_version ;;
+        -h|--help|help) usage ;;
+        *) die "未知命令：$cmd（支持 init/load/up/down/ps/logs/smoke/version）" ;;
+    esac
+}
+
+main "$@"

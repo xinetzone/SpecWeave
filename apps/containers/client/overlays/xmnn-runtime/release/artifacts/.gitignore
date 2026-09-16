@@ -1,0 +1,4 @@
+# 客户交付制品目录：镜像 tar.gz 与 release.json 由 invoke xmnnrt.pack 生成，
+# 二进制不纳入 git（骨架文件本身需要保留）。
+*
+!.gitignore

@@ -1,0 +1,15 @@
+---
+# Podman rootless 必需项 override（仅 Podman 路径加载）。
+#
+# xmnnctl 检测到 Podman 时以
+#   -f compose.yaml -f compose.podman.yaml
+# 合并启动；Docker 路径不加载本文件。
+# 三必需与镜像构建谱系同源，禁止删改；严禁 privileged。
+
+services:
+  xmnnrt:
+    devices:
+      - /dev/fuse:/dev/fuse
+    security_opt:
+      - label=disable
+    cgroupns: host

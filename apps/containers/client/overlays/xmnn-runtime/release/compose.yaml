@@ -1,0 +1,43 @@
+---
+# xmnn-runtime 客户交付栈 —— 自包含 Compose Specification
+#
+# 本文件不依赖仓库内任何其他文件：无继承片段、无父目录相对路径；
+# Podman 与 Docker 均可直接使用（推荐通过同目录 xmnnctl / xmnnctl.ps1，
+# 它们会按运行时自动叠加 rootless 必需项）。
+#
+# 离线保证：image 必须已由 `xmnnctl load` 从随包 tar.gz 导入；
+# pull_policy: never 禁止启动过程联网拉取镜像。
+# 配置（版本/端口/容器名/凭证）统一来自同目录 .env（xmnnctl init 生成）。
+
+name: xmnn-runtime
+
+services:
+  xmnnrt:
+    image: xmnn-runtime:${XMNN_VERSION}
+    pull_policy: never
+    container_name: ${XMNN_CONTAINER_NAME:-xmnn-runtime}
+    # bridge 在 Docker 下即默认网络；Podman 下规避默认项目网络的
+    # aardvark-dns 用户总线问题（与内部谱系同源决策）。
+    network_mode: bridge
+    ports:
+      - "${XMNN_SSH_PORT:-2225}:22"
+      - "${XMNN_JUPYTER_PORT:-8893}:8888"
+    environment:
+      # 仅显式注入基底 entrypoint 契约的凭证四变量（不用 env_file，
+      # 避免端口/版本等无关变量进入容器环境）。
+      USER_PASSWORD: "${USER_PASSWORD:-}"
+      JUPYTER_TOKEN: "${JUPYTER_TOKEN:-}"
+      SSH_PUBLIC_KEY: "${SSH_PUBLIC_KEY:-}"
+      GRANT_SUDO: ${GRANT_SUDO:-yes}
+    volumes:
+      # notebook / 模型工作区（宿主目录由 xmnnctl 预创建）
+      - ./workspace:/workspace
+      # SSH host key 持久化：容器删除重建不轮换指纹
+      - xmnn-ssh-host-keys:/var/lib/jpman/ssh-host-keys
+    labels:
+      app: "xmnn-runtime"
+      version: "${XMNN_VERSION}"
+    restart: unless-stopped
+
+volumes:
+  xmnn-ssh-host-keys: {}
