@@ -25,7 +25,6 @@ SDK→CLI 两层实现导出，产物约定（`.image-cache/` 目录、归档命
     invoke save -t jupyter-podman-rootless:passthrough
     invoke save -o D:\\backups\\img.tar.gz   # 自定义输出文件
 """
-from __future__ import annotations
 
 import gzip
 import hashlib

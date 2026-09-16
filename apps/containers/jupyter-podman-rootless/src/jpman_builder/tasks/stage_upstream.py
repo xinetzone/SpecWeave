@@ -6,7 +6,6 @@ SpecWeave 根工作区的 ``vendor/`` 下，位于镜像构建上下文之外。
 每次镜像构建前把三份源树的工作树内容复制到 ``<project_root>/upstream/<name>``
 （该目录已被应用的 ``.gitignore`` 忽略，不进入版本控制）。
 """
-from __future__ import annotations
 
 import shutil
 from pathlib import Path

@@ -4,7 +4,6 @@ Provides declarative container orchestration via podman-compose CLI.
 This is Tier 1 backend (highest priority) when compose.yaml exists and
 podman-compose is installed.
 """
-from __future__ import annotations
 
 import os
 import subprocess

@@ -15,7 +15,6 @@
 
 任何断言失败即以非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
-from __future__ import annotations
 
 import glob
 import os

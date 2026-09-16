@@ -19,7 +19,6 @@ wheel；apache-tvm-ffi wheel 为 cp314 GIL，编译/运行/内核解释器统一
   invoke monetize.build-native  栈内 clang++ 编译原生 .so
   invoke monetize.wheel         栈内 setuptools 打纯 Python wheel
 """
-from __future__ import annotations
 
 from invoke import Context, task
 

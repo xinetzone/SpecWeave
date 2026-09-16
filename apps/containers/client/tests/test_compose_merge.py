@@ -26,7 +26,6 @@ diff；本测试按 OKF podman-compose 知识包 concepts/06-config-pipeline.md
 AC-3 正向条款：rootless 三必需不重不漏、env 键并集一致、labels 一致、
 privileged 缺失、栈专属字段（image/build/ports/volumes）原样保留。
 """
-from __future__ import annotations
 
 import copy
 import re

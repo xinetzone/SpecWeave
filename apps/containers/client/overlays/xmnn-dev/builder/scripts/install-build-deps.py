@@ -5,7 +5,6 @@
 [project].dependencies，禁止在 Containerfile 重复维护一份清单。
 在叠加镜像构建期以 /opt/conda/bin/python 调用。
 """
-from __future__ import annotations
 
 import subprocess
 import sys

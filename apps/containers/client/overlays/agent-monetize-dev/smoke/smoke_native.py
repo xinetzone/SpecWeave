@@ -10,7 +10,6 @@
     tvm_ffi_available、固定输入原生结果 == 纯 Python 参考（容差 1e-9）。
   - .so 不存在：跳过原生段并提示先 build-native，整体仍 exit 0。
 """
-from __future__ import annotations
 
 import math
 import os

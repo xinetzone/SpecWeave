@@ -8,7 +8,6 @@ Usage:
   oloot_car.py pack --base BASE_IMAGE --target TARGET_IMAGE [options] FILES...
   oloot_car.py extract --source SOURCE_IMAGE --output OUTPUT_DIR [options]
 """
-from __future__ import annotations
 
 import argparse
 import logging

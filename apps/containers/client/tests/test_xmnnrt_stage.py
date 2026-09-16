@@ -4,7 +4,6 @@
 重定向到 tmp_path（目录形态对齐真实布局 client/overlays/xmnn-runtime 与
 client/workspace/dist）。
 """
-from __future__ import annotations
 
 import os
 from pathlib import Path

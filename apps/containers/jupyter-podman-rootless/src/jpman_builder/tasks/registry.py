@@ -12,7 +12,6 @@
     invoke registry.down                # 停止并删除容器（保留卷）
     invoke registry.down --volumes      # 连同数据卷一起删除
 """
-from __future__ import annotations
 
 import os
 from pathlib import Path

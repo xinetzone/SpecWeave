@@ -3,7 +3,6 @@
 三栈 SPEC 直接从 quant/xmnn/monetize 模块导入（T4 后唯一事实源在模块），
 内核行为以这三份真实声明驱动；任务注册表面另见 test_tasks_surface.py。
 """
-from __future__ import annotations
 
 import inspect
 import os

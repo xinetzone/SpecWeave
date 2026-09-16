@@ -11,7 +11,6 @@
   - libtvm.so 存在时导入 tvm/vta/xmnn，断言模块来自 /workspace 挂载源码
     （而非 site-packages），并跑 tvm.build('llvm') 固定向量加。
 """
-from __future__ import annotations
 
 import os
 import sys

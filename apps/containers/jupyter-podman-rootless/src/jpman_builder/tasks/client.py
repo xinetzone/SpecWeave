@@ -6,7 +6,6 @@ Provides three-tier backend priority for container management:
 - Tier 3: CLI direct calls (fallback when both unavailable)
 Supports with context manager for auto cleanup.
 """
-from __future__ import annotations
 
 import os
 import shutil

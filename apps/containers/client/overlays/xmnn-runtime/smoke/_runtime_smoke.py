@@ -23,7 +23,6 @@
   9. xmnn-runtime Jupyter 内核已注册且 argv 指向 base python
  10. torch 为内置 CPU 构建（version.cuda is None，TorchScript/jit 可用）
 """
-from __future__ import annotations
 
 import ctypes
 import json

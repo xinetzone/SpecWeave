@@ -10,7 +10,6 @@
   4. /opt/monetize-builder 打包脚本资产齐全
 任何断言失败即非零退出（构建期 RUN 失败、run --rm 冒烟失败）。
 """
-from __future__ import annotations
 
 import importlib.util
 import shutil
