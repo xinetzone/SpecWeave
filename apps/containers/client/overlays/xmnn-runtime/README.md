@@ -34,6 +34,15 @@
 | 端口 | 2223 / 8890 | 2225 / 8893 |
 | 变化频率 | 工具链稳定、源码天天变 | 只随 wheel 版本变化，适合交付 |
 
+## 客户独立交付包（release/）
+
+面向客户的**完全独立离线交付物**：`invoke xmnnrt.pack` 把镜像导出为
+`release/artifacts/xmnn-runtime-<版本>.tar.gz` + `release.json`（sha256
+清单），配合自包含 compose（无 extends、无仓库路径）、bash/pwsh7 双端
+`xmnnctl`（init/load/up/down/ps/logs/smoke）与客户向文档；客户侧无需
+Python、无需联网，Podman 与 Docker 双兼容。客户侧使用说明见
+[release/README.md](release/README.md)。
+
 ## 前置条件
 
 1. podman machine（Windows 即 WSL2 后端）已运行；
