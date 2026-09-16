@@ -6,6 +6,20 @@
 
 ## [Unreleased]
 
+### 2026-09-16 · `fix:` `inv <ns>.build` 桥接被 enterns 劫持进交互 shell + VM 回收后 `/run/user/<uid>` 丢失 podman exit 125
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnn-build-shell，未提交，commit hash 待补）。
+
+**现象与根因（双根因同日实证）**：① 用户在 Windows 原生执行 `inv xmnn.build`，任务未运行却进入一个交互 shell（伴随 wslmotd *nested process namespace... exit twice* 文案）。取证：桥接器 `utils.run_in_wsl_bridge` 用 `wsl.exe -d podman-machine-default -- bash -lc <任务>` 启动**登录** shell；Fedora-WSL 系发行版 `/etc/profile.d/enterns.sh` 检测到嵌套 systemd（`/lib/systemd/systemd` 非 PID 1）即无参执行 `/usr/local/bin/enterns`，其对普通用户走 `sudo nsenter -m -p -t <pid> su -l $USER`——一个全新交互登录 shell，原任务命令串在命名空间切换中被丢弃；同目录 `docker-host.sh` 登录时执行 `podman info`，podman 未就绪还会污染 `DOCKER_HOST=unix://`。② VM 被 WSL 回收重启后（容器呈 `Exited (0) 292 years ago`），tmpfs 上的 `/run/user/1000`（正常由 systemd-logind/pam 会话创建）未重建，rootless podman 任意命令报 `creating events dirs: mkdir /run/user/1000: permission denied`（exit 125）；实测仅 `export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir` 不能替代该目录（events dir 硬编码回退 /run/user/<uid>）。
+
+**修复（编排层，`src/jpman_client/tasks/utils.py` + `overlay_core.py`，三栈同族生效）**：① 桥接由登录 `bash -lc` 改为非登录 `bash -c`（与实证可靠的 `.temp/xmnn-launch/run-inv.sh` 同构），PATH 显式前置 `~/.local/bin`、LANG 兜底 `C.UTF-8`，profile 的 enterns/docker-host 两个副作用均不触发；② 新增 `ensure_wsl_rootless_runtime()`（仅 `/proc/version` 含 microsoft 时动作：XDG 空且 `/mnt/wslg/runtime-dir` 可写则兜底；`/run/user/<uid>` 缺失则 `sudo -n` 幂等 mkdir/chown/chmod 700，免密不可用仅警告不阻断），在 `gate_platform` 的 Linux 放行路径调用——Windows 桥接重入与 WSL 内原生 invoke 两个入口同时覆盖；③ 顺带修正桥接失败 `Exit(rc, msg)` 参数反序（invoke 签名 `Exit(message, code=None)`，旧写法退出码恒为 1、rc 被当消息），改为 `Exit(message, code=rc)`。
+
+**V 验证**：daemon-free 新增 `tests/test_wsl_bridge.py` 9 例（非登录 argv 断言、空 argv 不裸开 shell、rc 原样上抛、运行时自愈的平台判定/幂等/sudo 失败不阻断/XDG 兜底），client 全套 84 passed/1 skipped。真机（podman-machine-default）：模拟回收 `sudo rm -rf /run/user/1000` 后 Windows `inv xmnn.ps` 自动自愈且无登录污染 warning；`inv xmnn.build --pip-mirror tuna --conda-mirror tuna` 直接进入 podman build 流并 COMMIT 成功（90s，不再进 shell）；`inv xmnn.up --skip-build` 恢复被回收栈（up_preflight 再次收敛 Exited 残留与孤儿 rootlessport），单会话浸泡 80s 后 exec OK、Jupyter 302、`xmnn.smoke` 全过（双 ABI/LLVM 22.1.8/Nuitka 4.1.3/挂载源码/tvm.build 向量加）。
+
+**独立事件记录（非本项目缺陷）**：验证期间 08:53:04 一个外部 Go-http-client 经 `podman.sock` 发起 `POST /v5.7.0/libpod/system/prune`（all=false），删除了两个 Exited 容器（含跨项目的 jupyter-podman 单容器）、空 pod 与 6 个悬空镜像（journald user journal 取证；Windows 侧无 Podman Desktop/gvproxy 进程，bash/root history 无 prune 记录）。有 tag 镜像与命名卷无损，`inv up` 秒级恢复；预防措施是避免在共享该 socket 的 UI/自动化中执行 system prune。
+
+**C 同步**：docs/04 新增 W-I11/W-I12；windows-wsl.md 新增 §8「透明桥接硬契约：非登录 shell + rootless 运行时自愈」；预防措施 `[prevent: test-case]`（非登录 argv 与自愈分支全部 daemon-free 单测锁定）。
+
 ### 2026-09-16 · `fix:` WSL 回收循环假 Up 自动识别：`up_preflight` 新增 init PID 活体判据与 stale conmon 定点回收
 
 **关联七概念场景**：场景2「问题解决」（I→F→A→V→C，session sc-20260915-fake-up-auto-heal，未提交，commit hash 待补）。

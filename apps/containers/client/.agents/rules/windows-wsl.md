@@ -160,3 +160,14 @@ python -c "from jpman_common.connection import sdk_base_url_candidates;
 cd apps/containers/client
 invoke images
 ```
+
+## 8. 透明桥接硬契约：非登录 shell + rootless 运行时自愈（2026-09-16，W-I11/W-I12）
+
+`utils.run_in_wsl_bridge()` 把 Windows 原生任务桥接进 `podman-machine-default`（Fedora-WSL 系发行版），有两条不可回退的约束：
+
+1. **必须使用非登录 shell `wsl.exe -d <d> -- bash -c <cmd>`，禁止 `bash -lc`/`--login`**。
+   该发行版 `/etc/profile.d/enterns.sh` 在登录会话检测到嵌套 systemd（`/lib/systemd/systemd` 非 PID 1）时无参执行 `/usr/local/bin/enterns`，其对普通用户走 `sudo nsenter -m -p -t <pid> su -l $USER`——**拉起一个交互式登录 shell 并丢弃 `bash -lc` 携带的原任务命令**（现象：`inv xmnn.build`「进入 shell 了」，伴随 wslmotd 的 *exit twice* 提示；session sc-20260916-xmnn-build-shell 实证）。同目录 `docker-host.sh` 还会在每次登录时执行 `podman info`，podman 未就绪时污染 `DOCKER_HOST=unix://`。非登录 shell 两者都不触发；PATH 由命令串显式前置 `~/.local/bin`，LANG 兜底 `C.UTF-8`，不依赖 profile。
+2. **Linux 放行路径必须先调 `ensure_wsl_rootless_runtime()`**（`overlay_core.gate_platform` 已接线）。
+   `/run/user/<uid>` 在 tmpfs 上，由 systemd-logind/pam 登录会话创建；VM 被 WSL 回收重启、会话未经 enterns 进入 systemd 命名空间时该目录不重建，rootless podman 任意命令报 `creating events dirs: mkdir /run/user/<uid>: permission denied`（exit 125）。该函数仅在 `/proc/version` 含 microsoft 时动作：XDG 为空且 `/mnt/wslg/runtime-dir` 可写则兜底（SOP 钦定值，**禁止把 XDG 改成 `/run/user/<uid>`**）；目录缺失则 `sudo -n mkdir/chown/chmod 700` 幂等重建，免密不可用仅警告不阻断（标准 systemd WSL 由 logind 管理，不越权）。
+
+桥接子进程非 0 必须 `Exit(message, code=rc)`——invoke `Exit` 签名是 `(message, code=None)`，位置参数反序会使退出码恒为 1（由 test_wsl_bridge 锁定）。
