@@ -1,0 +1,17 @@
+# xmnn-runtime 叠加层构建上下文卫生
+# 注意：wheels/ 【不】忽略——xmnn-*.whl 是本镜像构建的必需输入
+# （由 invoke xmnnrt.build 从 client/workspace/dist 暂存；whl 不入 git
+# 由 wheels/.gitignore 负责，与 docker 上下文无关）。
+
+# Python 字节码缓存（嵌套目录必须用 **/ 前缀，单段只锚定上下文根）。
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+# 本地点 Compose 环境文件
+.env
+
+# Python 测试/工具缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

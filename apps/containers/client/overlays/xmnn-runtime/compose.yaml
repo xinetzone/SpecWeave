@@ -1,0 +1,52 @@
+---
+# xmnn-runtime 叠加栈 - Compose Specification（podman-compose / rootless）
+#
+# 定位：xmnn wheel【消费型】运行时栈（形态 A，无源码挂载、无容器内编译）。
+#   构建器 overlays/xmnn-dev 产出 whl → invoke xmnnrt.build 暂存 whl 并构建
+#   本镜像 → invoke xmnnrt.up 起干净的 SSH + JupyterLab 交付环境。
+#
+# 设计依据：OKF podman-compose 知识包（concepts/02/03/06/08）
+# 硬约束：../../.agents/rules/xmnnrt-overlay.md
+#
+# 两种驱动方式：
+#   ① invoke xmnnrt.*（apps/containers/client 下，WSL2/Linux/macOS；
+#     extends.file 由 podman-compose 按本文件目录重写解析，任意 cwd 均可）
+#   ② 裸 podman-compose（须在本目录内执行）：cp .env.example .env &&
+#     podman-compose up -d —— 注意裸路径不会自动暂存 whl，需先把
+#     xmnn-*.whl 放进 wheels/（推荐用 invoke xmnnrt.build）。
+#
+# rootless 三必需、凭证四变量、公共 labels/restart/network_mode 上移
+# ../_shared/base-rootless.yaml（extends 单一事实源），本文件只保留
+# xmnn-runtime 栈专属：image/build/ports/workspace bind/组件 label。
+# 与开发栈不同：无 PYTHONPATH/TVM_LIBRARY_PATH/LD_LIBRARY_PATH 注入——
+# wheel 自包含（_libs RPATH=$ORIGIN），交付镜像不依赖任何源码路径。
+# 严禁 privileged。
+
+name: xmnn-runtime
+
+services:
+  xmnnrt:
+    extends:
+      file: ../_shared/base-rootless.yaml
+      service: rootless-base
+    container_name: ${XMNNRT_CONTAINER_NAME:-xmnn-runtime}
+    image: ${XMNNRT_IMAGE_TAG:-localhost/xmnn-runtime:latest}
+    build:
+      context: .
+      dockerfile: Containerfile.xmnn-runtime
+      args:
+        BASE_IMAGE: ${BASE_IMAGE:-localhost/jupyter-podman-rootless:latest}
+        PIP_MIRROR: ${PIP_MIRROR:-official}
+    ports:
+      - "${XMNNRT_SSH_PORT:-2225}:22"
+      - "${XMNNRT_JUPYTER_PORT:-8893}:8888"
+    volumes:
+      # 仅 workspace 一个长语法 bind（notebook/模型工作区）；不挂载
+      # npu_tvm/npuusertools 源码——本镜像从 site-packages 运行 wheel。
+      - type: bind
+        source: ${XMNNRT_WORKSPACE:-../../workspace}
+        target: /workspace
+        bind:
+          create_host_path: true
+    labels:
+      org.specweave.component: "xmnn-runtime"

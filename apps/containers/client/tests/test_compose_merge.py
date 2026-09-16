@@ -88,6 +88,21 @@ GOLDEN = {
             "PYTHONPATH", "LD_LIBRARY_PATH",
         },
     },
+    "xmnnrt": {
+        "dir": "xmnn-runtime", "service": "xmnnrt",
+        "component": "xmnn-runtime",
+        "image": "localhost/xmnn-runtime:latest",
+        "container_name": "xmnn-runtime",
+        "dockerfile": "Containerfile.xmnn-runtime",
+        "ports": ["2225:22", "8893:8888"],
+        # wheel 消费栈：仅 workspace bind，不挂源码；无命名卷
+        "volume_targets": ["/workspace"],
+        # 无栈专属 environment（wheel 自包含，不注入 PYTHONPATH/
+        # TVM_LIBRARY_PATH/LD_LIBRARY_PATH）；只有基段继承的凭证四变量
+        "env": {
+            "USER_PASSWORD", "JUPYTER_TOKEN", "SSH_PUBLIC_KEY", "GRANT_SUDO",
+        },
+    },
 }
 
 # ── 最小合并模拟器（语义对齐 podman-compose 1.6.0 rec_merge_one）──────────────

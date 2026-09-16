@@ -1,0 +1,131 @@
+# Containerfile.xmnn-runtime
+# ------------------------------------------------------------
+# XMNN wheel 消费型运行时叠加层（Podman rootless 谱系）
+#
+# 定位（与 xmnn-dev 的分工，2026-09-16 起）：
+#   xmnn-dev      = 源码调试 + Nuitka 打包【构建器】（LLVM 22/Nuitka/gcc/gdb）
+#   xmnn-runtime  = 安装预构建 whl 的干净【运行时】（无工具链、无源码树）
+# wheel 是两个镜像之间唯一的制品契约：
+#   inv xmnn.wheel        → workspace/dist/xmnn-*.whl（cp314-cp314 GIL）
+#   inv xmnnrt.build      → 暂存 whl 进 wheels/ 后构建本镜像
+#
+# 自包含事实（builder CMakeLists 实证）：
+#   - wheel 已含 tvm/vta/xmnn Nuitka 扩展 + _libs/（libtvm.so + libLLVM 22
+#     等，patchelf 统一 RPATH=$ORIGIN）+ xmnn_bootstrap.pth + 数据目录；
+#   - 运行时无需系统 LLVM/Clang/Nuitka，无需 PYTHONPATH/TVM_LIBRARY_PATH；
+#   - wheel 元数据声明运行时依赖，pip install 自动解析；
+#   - torch CPU 内置（pytorch 前端编译/精度所需，版本 pin 见 Layer 1）。
+#
+# ABI 契约（不可互换）：
+#   /opt/conda            = Python 3.14 cp314 GIL → wheel 安装目标 + Jupyter 内核
+#   /opt/conda/envs/main  = Python 3.14 cp314t    → Jupyter 服务（基底不动）
+#   wheel tag 为 cp314-cp314，只能装入 base env，禁止装 main。
+#
+# 范式对齐 xmnn-dev / onnx-quantized：
+#   - 薄叠加 FROM localhost/jupyter-podman-rootless:latest，不覆盖
+#     ENTRYPOINT/CMD/WORKDIR（沿用 tini -> entrypoint.sh -> supervisord）；
+#   - 全部 RUN 显式 /bin/bash -lc（OCI 镜像格式忽略 SHELL 指令）；
+#   - 含引号的验证逻辑固化为 smoke/scripts 下脚本文件，RUN 行不写
+#     内层双引号 python -c（buildah 二次分词教训）。
+#
+# 产出：localhost/xmnn-runtime:latest
+# 构建：invoke xmnnrt.build [--wheel path] [--pip-mirror tuna]
+#   （裸 podman build 前需手工把 whl 放进 wheels/）
+# ------------------------------------------------------------
+
+ARG BASE_IMAGE=localhost/jupyter-podman-rootless:latest
+FROM ${BASE_IMAGE}
+
+ARG BASE_IMAGE
+ARG PIP_MIRROR=official
+# torch CPU 版本固定（工具链稳定性：不允许浮动；2026-09-16 真机验证版本）。
+# 升级时同步修改本 ARG 与 smoke/_runtime_smoke.py 的 CPU 构建断言。
+ARG TORCH_VERSION=2.14.0
+# 必须走 PyTorch 官方 CPU 索引：默认 PyPI（含 tuna/aliyun 镜像）的 torch 是
+# CUDA 变体，会拉入 nvidia-cuda-*/cudnn/nccl 十余个共数 GB 的包。
+ARG TORCH_INDEX_URL=https://download.pytorch.org/whl/cpu
+
+LABEL org.specweave.component="xmnn-runtime" \
+      org.specweave.layer="xmnn-wheel-runtime" \
+      org.specweave.python-abis="base:cp314-gil" \
+      org.specweave.wheel-contract="xmnn-cp314-self-contained" \
+      org.specweave.torch-cpu="${TORCH_VERSION}" \
+      org.specweave.base-image="${BASE_IMAGE}"
+
+# ------------------------------------------------------------
+# Layer 1：内置 torch CPU（pytorch 前端，cp314 GIL base env）
+#   - 独立成层且无 COPY 输入：torch 稳定而 whl 频繁变化，置于 whl 层之前
+#     可让重打 whl 的增量构建复用本层（不重复下载约 200 MB）；
+#   - 版本精确 pin + 官方 CPU 索引，杜绝 CUDA 包与版本漂移（构建后由
+#     smoke 第 10 项硬断言 torch.version.cuda is None）；
+#   - 不装 torchvision：xmnn compile_api 仅 torch.jit.load + relay 前端，
+#     实测四个 demo 均不需要；需要者按 README 指引在自定义层追加。
+# ------------------------------------------------------------
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    echo "[xmnnrt] installing torch==${TORCH_VERSION} (CPU index: ${TORCH_INDEX_URL})" ; \
+    /opt/conda/bin/python -m pip install --no-cache-dir \
+      "torch==${TORCH_VERSION}" --index-url "${TORCH_INDEX_URL}" ; \
+    /opt/conda/bin/python -c "import torch; assert torch.version.cuda is None, torch.__version__; print(\"[xmnnrt] torch\", torch.__version__, \"CPU-only OK\")" ; \
+    rm -rf /root/.cache/pip'
+
+# ------------------------------------------------------------
+# Layer 2：安装 xmnn wheel 到 base env（cp314 GIL）
+#   - wheels/ 由 invoke xmnnrt.build 从 workspace/dist 暂存（目录同时只留
+#     一个 whl；whl 不入 git，见 wheels/.gitignore）；
+#   - 显式 /opt/conda/bin/python：PATH 顶端是 main（cp314t），裸 pip 会装
+#     错解释器（cp314 wheel 无法装入 cp314t）；
+#   - ipykernel：base env 注册 Jupyter 内核所需（基底 base env 默认未装，
+#     xmnn-dev 由打包工具链带入；运行时镜像在此显式补）；
+#   - wheel 自带运行时依赖声明，pip 自动解析（PIP_MIRROR 可换源）。
+# ------------------------------------------------------------
+COPY wheels/xmnn-*.whl /tmp/xmnn-wheels/
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    if [ "${PIP_MIRROR}" = "aliyun" ]; then \
+      /opt/conda/bin/python -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/ ; \
+      /opt/conda/bin/python -m pip config set global.trusted-host mirrors.aliyun.com ; \
+      echo "[xmnnrt] pip mirror: aliyun" ; \
+    elif [ "${PIP_MIRROR}" = "tuna" ]; then \
+      /opt/conda/bin/python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/ ; \
+      echo "[xmnnrt] pip mirror: tuna" ; \
+    else \
+      echo "[xmnnrt] pip mirror: official (inherited)" ; \
+    fi ; \
+    WHL="$(ls /tmp/xmnn-wheels/xmnn-*.whl | head -1)" ; \
+    echo "[xmnnrt] installing wheel: $WHL" ; \
+    /opt/conda/bin/python -m pip install --no-cache-dir ipykernel "$WHL" ; \
+    /opt/conda/bin/python -m pip show xmnn | grep -E "^(Name|Version|Location)" ; \
+    rm -rf /tmp/xmnn-wheels /root/.cache/pip ; \
+    find /opt/conda -type d -name "__pycache__" -prune -exec rm -rf {} + 2>/dev/null || true'
+
+# ------------------------------------------------------------
+# Layer 3：内核注册脚本 + 运行时守卫；注册 xmnn-runtime 内核
+#   （argv=/opt/conda/bin/python，root/devuser 双可见；内核 env 不含任何
+#   /workspace 源码路径——交付语义是纯 site-packages wheel）。
+# ------------------------------------------------------------
+COPY scripts/ /opt/xmnnrt-scripts/
+COPY smoke/ /opt/xmnnrt-smoke/
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    chmod -R a+rX /opt/xmnnrt-scripts /opt/xmnnrt-smoke ; \
+    bash /opt/xmnnrt-scripts/register-kernel.sh'
+
+# ------------------------------------------------------------
+# Layer 4：构建期硬验证（root + devuser 双身份）
+#   守卫覆盖：cp314 GIL ABI / 三包来自 site-packages（非 /workspace、非
+#   /opt/xmnn-builder）/ _libs 自包含 / 干净环境 ctypes 加载 libtvm.so /
+#   tvm.build(llvm) 向量算例 / relay 数据 / bootstrap .pth / xmnn 数据目录 /
+#   xmnn-runtime 内核可见 / torch CPU 构建（cuda is None + jit 可用）。
+#   任一失败即镜像构建失败（不是 WARNING）。
+# ------------------------------------------------------------
+RUN /bin/bash -lc 'set -euo pipefail ; \
+    /opt/conda/bin/python /opt/xmnnrt-smoke/_runtime_smoke.py ; \
+    su -s /bin/bash devuser -c "cd /opt/xmnnrt-smoke && /opt/conda/bin/python _runtime_smoke.py" >/dev/null && \
+      echo "[OK] devuser runtime smoke access" ; \
+    find /opt/xmnnrt-smoke -type d -name __pycache__ -prune -exec rm -rf {} + 2>/dev/null ; \
+    find /opt/xmnnrt-smoke -type f -name "*.pyc" -delete 2>/dev/null ; \
+    echo "########################################################################" ; \
+    echo "# XMNN-RUNTIME OVERLAY BUILD COMPLETE" ; \
+    echo "# wheel    : xmnn cp314 GIL installed into /opt/conda (site-packages)" ; \
+    echo "# torch    : ${TORCH_VERSION} CPU-only (pytorch frontend built-in)" ; \
+    echo "# kernel   : Python 3.14 (xmnn runtime) in JupyterLab" ; \
+    echo "# services : SSH localhost:2225, Jupyter localhost:8893 (invoke xmnnrt.up)" ; \
+    echo "########################################################################"'

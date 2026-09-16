@@ -1,0 +1,5 @@
+# whl 暂存区：invoke xmnnrt.build 从 client/workspace/dist 拷贝最新
+# xmnn-*.whl 到此目录作为 podman 构建上下文输入。wheel 是构建产物，
+# 不入 git（真实产物在 xmnn-dev 栈的 workspace/dist）；但本目录需要保留。
+*
+!.gitignore
