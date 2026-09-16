@@ -26,10 +26,11 @@ xmnn.* 开发/打包栈命名空间（8 个命令，opt-in，podman-compose 子�
   驱动 overlays/xmnn-dev 开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
   LLVM 22 + Nuitka 4.1.3 工具链）；Windows 原生门禁，详见 xmnn.py
 
-xmnnrt.* wheel 消费运行时栈命名空间（6 个命令，opt-in，podman-compose 子进程）：
-  invoke xmnnrt.build / up / down / ps / logs / smoke
+xmnnrt.* wheel 消费运行时栈命名空间（7 个命令，opt-in）：
+  invoke xmnnrt.build / up / down / ps / logs / smoke / pack
   驱动 overlays/xmnn-runtime 干净运行时镜像（安装预构建 whl，无源码挂载、
-  无编译工具链；build/up 自动从 workspace/dist 暂存最新 whl）；详见 xmnnrt.py
+  无编译工具链；build/up 自动从 workspace/dist 暂存最新 whl）；pack 产出
+  完全独立的客户离线交付包到 overlays/xmnn-runtime/release/；详见 xmnnrt.py
 """
 from invoke import Collection
 

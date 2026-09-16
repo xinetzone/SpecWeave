@@ -1,18 +1,13 @@
 """xmnn-runtime wheel 消费栈的 podman-compose 编排任务（opt-in 命名空间）。
 
-声明式栈：唯一事实源 ``XMNNRT_SPEC``；六任务由 make_stack_tasks 工厂生成。
-唯一形态差异——构建镜像前需把 wheel 暂存进 overlay 构建上下文（wheels/），
-故以与 xmnn.build-tvm/wheel 同性质的"薄封装例外"自定义 build/up：仅在调用
-内核 build_image/up_stack 前增加一步暂存，不复制生命周期编排逻辑（C14）。
+声明式栈：唯一事实源 ``XMNNRT_SPEC``，六任务由 make_stack_tasks 工厂生成；
+唯一形态差异——build/up 在调用内核前把 wheel 暂存进 wheels/（薄封装，不复制
+生命周期编排，C14）。builder/runtime 分离：xmnn.* 构建器产 whl，本栈消费
+whl 装入干净运行时镜像（cp314 GIL base env + 交付内核，零源码、无工具链）。
 
-builder/runtime 分离（2026-09-16）：xmnn.* 是构建器（源码 bind + LLVM 22 +
-Nuitka，inv xmnn.wheel 只产 whl 到 workspace/dist）；本栈是运行时（无源码、
-无工具链，whl 装入 base env /opt/conda cp314 GIL + 注册交付 Jupyter 内核）。
-wheel 是两镜像间唯一制品契约，二者 FROM 同一 rootless 基底保证 ABI 一致。
-
-6 个命令：invoke xmnnrt.build / up / down / ps / logs / smoke。
-平台姿态同三栈（Windows 原生优先桥接 WSL）；栈模块禁止 import podman。"""
-from __future__ import annotations
+命令：build / up / down / ps / logs / smoke + pack（客户离线交付包打包）。
+栈模块禁止 import podman。
+"""
 
 import shutil
 from pathlib import Path
@@ -21,6 +16,7 @@ from typing import Optional
 from invoke import Context, task
 from invoke.exceptions import Exit
 
+from ..relpack import pack_release
 from .overlay_core import (
     SmokeSpec, StackSpec, TaskDocs, build_image, ensure_runtime_ready,
     gates, make_stack_tasks, overlay_dir, prepare_env, up_stack,
@@ -63,9 +59,7 @@ XMNNRT_SPEC = StackSpec(
 TASKS = make_stack_tasks(XMNNRT_SPEC)
 down, ps, logs, smoke = (TASKS[k] for k in ("down", "ps", "logs", "smoke"))
 
-
-# —— wheel 暂存（构建上下文 = overlay 目录，whl 必须先进 wheels/；不入 git）——
-
+# —— wheel 暂存（构建上下文 = overlay 目录，whl 必须先进 wheels/，不入 git）——
 
 def _wheels_dir() -> Path:
     return overlay_dir(XMNNRT_SPEC) / "wheels"
@@ -88,7 +82,6 @@ def _copy_into_stage(src: Path) -> Path:
     for old in _staged_wheels():  # 暂存区同时只留一个 whl（COPY glob 确定性）
         old.unlink()
     return shutil.copy2(src, wheels_dir / src.name)
-
 
 def _ensure_wheel_staged(explicit: Optional[str]) -> Path:
     """返回暂存区 whl；无法定位时 Exit(1) 给出 xmnn.wheel 指引。"""
@@ -119,7 +112,6 @@ def _ensure_wheel_staged(explicit: Optional[str]) -> Path:
     print("        （产物默认落 client/workspace/dist/），或用 --wheel <path> 显式指定。")
     raise Exit(1)
 
-
 @task(
     help={
         "tag": "产出镜像标签，默认 localhost/xmnn-runtime:latest（或 .env XMNNRT_IMAGE_TAG）",
@@ -141,7 +133,6 @@ def build(c: Context, tag: str | None = None,
     build_image(c, XMNNRT_SPEC, tag=tag, base_image=base_image,
                 pip_mirror=pip_mirror, no_cache=no_cache)
 
-
 @task(
     help={"skip-build": "跳过镜像构建（默认随带构建；构建前自动暂存 workspace/dist 最新 whl）"},
     auto_shortflags=False,
@@ -155,6 +146,12 @@ def up(c: Context, skip_build: bool = False) -> None:
         _ensure_wheel_staged(None)
     up_stack(c, XMNNRT_SPEC, skip_build=skip_build)
 
+@task(help={"version": "交付版本号（默认取 wheels/ whl 版本；GA 请显式指定，如 1.2.1）"},
+      auto_shortflags=False)
+def pack(c: Context, version: Optional[str] = None) -> None:
+    """打包完全独立的客户离线交付物到 release/artifacts（tar.gz + release.json）。"""
+    pack_release(release_version=version)
 
-# 用 whl 暂存薄封装替换工厂 build/up（__init__ 循环注册消费 TASKS 字典）
-TASKS["build"], TASKS["up"] = build, up
+
+# 用 whl 暂存薄封装替换工厂 build/up；pack 经 TASKS 暴露为 invoke xmnnrt.pack
+TASKS["build"], TASKS["up"], TASKS["pack"] = build, up, pack

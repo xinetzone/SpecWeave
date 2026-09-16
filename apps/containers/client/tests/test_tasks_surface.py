@@ -3,7 +3,6 @@
 直接验证生产入口 ``jpman_client.tasks.ns``（invoke Collection），等价于
 ``invoke --list`` + ``invoke <task> --help`` 的程序化快照，无需起子进程。
 """
-from __future__ import annotations
 
 import inspect
 
@@ -30,7 +29,7 @@ def test_namespace_task_sets():
     assert set(_col("quant").tasks) == set(SIX)
     assert set(_col("xmnn").tasks) == {*SIX, "build-tvm", "wheel"}
     assert set(_col("monetize").tasks) == {*SIX, "build-native", "wheel"}
-    assert set(_col("xmnnrt").tasks) == set(SIX)
+    assert set(_col("xmnnrt").tasks) == {*SIX, "pack"}
 
 
 def test_root_and_alias_namespaces_intact():
@@ -75,6 +74,8 @@ def test_signatures_golden():
     assert _params(x.tasks["up"]) == ["skip_build"]
     assert _params(m.tasks["up"]) == ["skip_build"]
     assert _params(_col("xmnnrt").tasks["up"]) == ["skip_build"]
+    # pack：客户离线交付包打包（仅 --version）
+    assert _params(_col("xmnnrt").tasks["pack"]) == ["version"]
     assert _params(q.tasks["smoke"]) == ["gpu"]
     assert _params(x.tasks["smoke"]) == []
     assert _params(m.tasks["smoke"]) == []
@@ -97,6 +98,7 @@ def test_auto_shortflags_quant_on_others_off():
         assert _col("xmnn").tasks[name].auto_shortflags is False
         assert _col("monetize").tasks[name].auto_shortflags is False
         assert _col("xmnnrt").tasks[name].auto_shortflags is False
+    assert _col("xmnnrt").tasks["pack"].auto_shortflags is False
     assert _col("xmnn").tasks["wheel"].auto_shortflags is False
     assert _col("monetize").tasks["wheel"].auto_shortflags is False
 
