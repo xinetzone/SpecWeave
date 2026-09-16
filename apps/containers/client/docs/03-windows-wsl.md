@@ -60,4 +60,12 @@ $env:PODMAN_CLIENT_SDK_STRATEGY="wsl"
 invoke run --workspace D:/spaces/SpecWeave
 ```
 
-> **排障速查表（W-I1~W-I4 + C-I1~C-I5）** 见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md)。
+## 透明桥接 stdin 契约（非交互命令零转发）
+
+经桥接（及 WSL 内原生）执行的所有编排命令**不转发父进程 stdin**：`jpman_common.proc.run_cmd` 默认向 invoke 传 `in_stream=False`，不创建 stdin 转发线程。原因：invoke 3.0.3 的 stdin 线程对 TTY 用 2 字节缓冲做 `FIONREAD`，而内核固定写回 4 字节 int，Python 3.14 加固后必抛 `SystemError: buffer overflow`，导致长任务"成功却 exit 1"的假失败（详见速查表 W-I13）。
+
+- 桥接 stdin 是 console 中继 pty 而非管道：重定向 stdout（`> log`）不改变其 TTY 属性，崩溃与是否重定向无关。
+- Ctrl+C 不依赖 stdin 转发：invoke 的 KeyboardInterrupt→send_interrupt 信号路径仍会中断 `logs -f` 与长任务。
+- 唯一例外是真交互式入口（`invoke env.shell`、builder 的 `interact.shell`/exec），以 `forward_stdin=True` 显式 opt-in；其 py3.14 崩溃面由 `apply_invoke_stdin_compat()`（4 字节缓冲，同时替换 `invoke.terminals` 与 `invoke.runners` 绑定）在进程导入 `jpman_common.proc` 时自动兜底。
+
+> **排障速查表（W-I1~W-I13 + C-I1~C-I5）** 见 [04-troubleshooting-guide.md](04-troubleshooting-guide.md)。

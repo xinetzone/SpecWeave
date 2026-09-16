@@ -83,7 +83,8 @@ def _exec_via_cli(c, name, command, user):
     print(f"Executing command in container: {command}")
     escaped_cmd = command.replace('"', '\\"')
     cmd = f'{runtime} exec -it -u {user} {name} bash -c "{escaped_cmd}"'
-    run_cmd(c, cmd, pty=True)
+    # 真交互式 exec：opt-in 转发 stdin（FIONREAD 崩溃面由 jpman_common.proc 兜）
+    run_cmd(c, cmd, pty=True, forward_stdin=True)
 
 
 @task
@@ -108,7 +109,8 @@ def shell(c, name=None, user="devuser"):
         raise Exit(f"Container {name} is not running, please start it first")
     print(f"Entering container shell: {name} (user: {user})")
     cmd = f"{runtime} exec -it -u {user} {name} bash"
-    run_cmd(c, cmd, pty=True, echo=False)
+    # 真交互式 shell：opt-in 转发 stdin（FIONREAD 崩溃面由 jpman_common.proc 兜）
+    run_cmd(c, cmd, pty=True, echo=False, forward_stdin=True)
 
 
 @task

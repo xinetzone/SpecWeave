@@ -1,7 +1,7 @@
 ---
 name: compose-overlay-ops
-version: 1.0.1
-description: "apps/containers/client 下 podman-compose 工作负载叠加栈（quant.* / xmnn.* / monetize.* 三命名空间，overlays/onnx-quantized、overlays/xmnn-dev、overlays/agent-monetize-dev）的启动/停止/重建/冒烟验证运维编排。当用户提到启动/重启/重新构建/重建 xmnn-dev、onnx-quantized、agent-monetize-dev 叠加栈或镜像，xmnn.up/xmnn.build/xmnn.smoke、quant.up、monetize.up，栈起不来、容器 Exited (0)、Jupyter 8890/8888/8892 打不开、netavark nft 报错、nftables、保存 notebook Errno 13、checkpoint 权限、WSL 发行版回收容器、发行版里跑 podman-compose、基底镜像缺失、tuna 构建 xmnn 镜像 等场景时，必须使用此技能。封装经实证的标准 SOP（保活锚→四维修复预检→build→up→浸泡→官方 smoke→双端端口/保存验证）、执行发行版选择（jupyter-podman-rootless 而非 flapping machine）、普通重建与 --no-cache 的裁决、8 个本机实证陷阱。与 jpman-podman-ops（单容器日常驾驶/构建端/嵌套 Podman）、client-overlay-scaffold（新建叠加栈）形成边界路由；不要手动拼 podman-compose 参数或套用 Docker Desktop 经验。"
+version: 1.0.5
+description: "apps/containers/client 下 podman-compose 工作负载叠加栈（quant.* / xmnn.* / monetize.* 三命名空间，overlays/onnx-quantized、overlays/xmnn-dev、overlays/agent-monetize-dev）的启动/停止/重建/冒烟验证运维编排。当用户提到启动/重启/重新构建/重建 xmnn-dev、onnx-quantized、agent-monetize-dev 叠加栈或镜像，xmnn.up/xmnn.build/xmnn.wheel/xmnn.build-tvm/xmnn.smoke、quant.up、monetize.up，栈起不来、容器 Exited (0)、Jupyter 8890/8888/8892 打不开、netavark nft 报错、nftables、保存 notebook Errno 13、checkpoint 权限、WSL 发行版回收容器、发行版里跑 podman-compose、基底镜像缺失、tuna 构建 xmnn 镜像、长任务构建成功却 exit 1（ThreadException/FIONREAD/SystemError buffer overflow 假失败）等场景时，必须使用此技能。封装经实证的标准 SOP（保活锚→四维修复预检→build→up→浸泡→官方 smoke→双端端口/保存验证）、执行发行版选择（jupyter-podman-rootless 而非 flapping machine）、普通重建与 --no-cache 的裁决、12 个本机实证陷阱。与 jpman-podman-ops（单容器日常驾驶/构建端/嵌套 Podman）、client-overlay-scaffold（新建叠加栈）形成边界路由；不要手动拼 podman-compose 参数或套用 Docker Desktop 经验。"
 argument-hint: "<栈名> <up|down|build|rebuild|smoke|ps|logs> [选项]"
 disable-model-invocation: false
 user-invocable: true
@@ -207,6 +207,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | up 后 55~60 秒 Jupyter 端口 curl 返回 000，容器却是 Up | entrypoint Step 4 容器内 podman 初始化偶发等 ~70 秒（平时约 30s），浸泡不足误判 | 等满 70~90s 再判活；日志走到 `Step 5/7` 后 supervisord 约 5s 内起 Jupyter（非故障） |
 | 容器内 podman/podman-compose 报 newuidmap EPERM | 嵌套 rootless 结构性死路 | 不在本 Skill 处理，转 jpman-podman-ops §9.1（B-scheme） |
 | PowerShell 内联 wsl bash 命令报 `syntax error near (` | `$()`/`$VAR` 被 PowerShell 插值展开 | 把 bash 逻辑写成脚本文件，`wsl -d <d> -- bash /mnt/d/.../x.sh` |
+| **长任务（wheel/build-tvm/build）容器内实际成功**（🎉 COMPLETE/产物已生成）却抛 `invoke.exceptions.ThreadException`，栈中 `fcntl.ioctl(input_, termios.FIONREAD, b"  ") → SystemError: buffer overflow`，桥接层报 `WSL 桥接命令失败 (exit=1)`（2026-09-16 实证，client W-I13） | **invoke 3.0.3 × Python 3.14 stdin 线程假失败**：invoke 对 TTY stdin 用 2 字节缓冲做 FIONREAD（signed short），内核固定写回 4 字节 int，py3.14 加固后必崩（queued=0 也崩，与重定向无关）；桥接 stdin 是 console 中继 pty，pty=True 的 stdin 转发线程收尾必触发 | **已自动修复（editable 零操作）**：jpman_common.proc.run_cmd 默认 `in_stream=False`（不创建 stdin 线程，三栈同族），真交互入口（env.shell、interact.shell/exec）显式 forward_stdin=True 且由 apply_invoke_stdin_compat（4 字节缓冲，同时替换 terminals+runners 两处绑定）兜底。**遇此报错先看日志末尾是否已 COMPLETE——成功即产物有效，勿重跑长任务**；手工逃生：发行版内 `pip install --user --upgrade invoke` |
 
 ## 10. Gotchas
 
@@ -256,8 +257,26 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
     podman 全命令 exit 125——invoke 已在 Linux 放行路径自动 `sudo -n` 重建
     （ensure_wsl_rootless_runtime，W-I12）；手工诊断若撞上
     `RunRoot not writable`，先建目录再继续。
+12. **「构建成功却 exit 1」先认栈不认产物失败**（2026-09-16 实证，client
+    W-I13）：invoke 3.0.3 的 stdin 转发线程在 Python 3.14 下对 TTY 做
+    `FIONREAD`（2 字节缓冲 vs 内核写回 4 字节）必抛 `SystemError: buffer
+    overflow`，WSL 桥接 stdin 是中继 pty，长任务收尾必触发——日志末尾有
+    🎉 COMPLETE/whl 已产出即构建本身成功，**不要重跑长任务**。已由
+    jpman_common.proc 双层修复（默认 in_stream=False + 4 字节兼容补丁），
+    editable 即时生效；排查此类问题用三态 pty 探针（原生必崩 /
+    in_stream=False / 兼容补丁），探针文件属 `.temp/` 测完即删。
 
 ## 11. Changelog
+
+- **v1.0.5** (2026-09-16): 错误表新增「长任务成功却 exit 1」行——invoke
+  3.0.3 × Python 3.14 stdin 线程 FIONREAD 2 字节缓冲 `SystemError: buffer
+  overflow`（W-I13，假失败；pty 探针证明 queued=0 也必崩）；修复在共享包
+  jpman_common.proc：run_cmd 默认 `in_stream=False`（非交互命令零转发，
+  三栈+builder 同族）+ apply_invoke_stdin_compat 4 字节补丁（同时替换
+  terminals/runners 两处 from-import 绑定）为 forward_stdin=True 的
+  env.shell/interact 交互入口兜底。Gotchas 新增第 12 条。真机验收：
+  `invoke xmnn.wheel` 退出码 0、无 ThreadException；三态 pty 探针全绿；
+  Windows py314 185 passed、WSL proc/桥接/内核 80 passed（5 个新增用例）。
 
 - **v1.0.4** (2026-09-16): 错误表新增三行——① `inv <ns>.build` 等桥接任务
   误入交互 shell（登录 shell 被 Fedora-WSL enterns `su -l` 劫持，client

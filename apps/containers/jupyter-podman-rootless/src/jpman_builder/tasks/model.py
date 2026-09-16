@@ -123,7 +123,8 @@ def _exec_via_cli(c, name, command, user):
             f"Container {name} is not running, please start it first with 'invoke run'"
         )
     cmd = f'{runtime} exec -it -u {user} -w {_DEFAULT_WORKDIR} {name} bash -c {_quote(command)}'
-    run_cmd(c, cmd, pty=True)
+    # 交互式 exec CLI fallback：opt-in 转发 stdin（FIONREAD 崩溃面由 jpman_common.proc 兜）
+    run_cmd(c, cmd, pty=True, forward_stdin=True)
 
 
 @task(iterable=["metadata"], help={

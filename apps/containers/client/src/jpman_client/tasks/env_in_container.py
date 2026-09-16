@@ -394,4 +394,6 @@ def shell(
         " && exec bash -i"
     )
     parts.extend(["bash", "-lc", _quote_bash_script(shell_script)])
-    run_cmd(c, " ".join(parts), pty=True)
+    # 唯一真交互式入口（podman run -it + bash -i）：显式 opt-in 转发 stdin；
+    # invoke 3.0.3×py3.14 的 FIONREAD 崩溃面由 jpman_common.proc 兼容补丁兜住。
+    run_cmd(c, " ".join(parts), pty=True, forward_stdin=True)

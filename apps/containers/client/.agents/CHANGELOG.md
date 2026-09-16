@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-16 · `fix:` `inv xmnn.wheel` 构建成功却 exit 1——invoke 3.0.3 × Python 3.14 stdin 线程 FIONREAD 缓冲溢出（假失败）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnn-wheel-stdin，未提交，commit hash 待补）。
+
+**现象与根因**：Windows 原生 `inv xmnn.wheel > error.log` 经透明桥接执行，容器内 build-wheel.sh 全流程成功（🎉 WHEEL BUILD COMPLETE，170M whl 已产出），WSL 内 invoke 收尾却抛 `ThreadException(SystemError: buffer overflow)`，桥接层 Exit(1) 报「WSL 桥接命令失败」。取证链：① 崩溃点 `invoke/runners.py::handle_stdin → read_our_stdin → terminals.bytes_to_read → fcntl.ioctl(input_, termios.FIONREAD, b"  ")`；② invoke 3.0.3 对 TTY stdin 用 **2 字节**缓冲做 FIONREAD（按 signed short 解析），而 Linux 内核固定写回 `sizeof(int)`=4 字节；③ Python 3.14 加固 fcntl 后越界写直接 `SystemError: buffer overflow`——pty 真机探针证明**与队列字节数无关（queued=0 也必崩，py3.14.2）**；④ 桥接 stdin 是 console 中继 pty（isatty=真），`pty=True` 默认启动 stdin 转发线程，长任务收尾时中继 fd 半关闭/可读，线程必崩。影响面覆盖全部 `run_cmd(pty=True)` 路径（build/up/down/logs/wheel/build-tvm）及 py3.14 下的真交互命令（首次按键即崩）。
+
+**修复（共享包 `apps/containers/shared/src/jpman_common/proc.py`，builder/client 同族生效）**：① `run_cmd` 新增 `forward_stdin: bool = False`，默认向 `c.run` 注入 invoke 钦定的 `in_stream=False`——invoke 因此根本不创建 stdin 转发线程（`runners.py::create_io_threads` 对 falsy in_stream 直接跳过），编排命令全部非交互、零行为损失，Ctrl+C 仍经 KeyboardInterrupt→send_interrupt 信号路径传播；② 新增 `apply_invoke_stdin_compat()`，用 4 字节缓冲重做 FIONREAD 的兼容函数幂等替换 **两处绑定**（`invoke.terminals.bytes_to_read` 定义点 + `invoke.runners` 顶部 `from .terminals import bytes_to_read` 的名字绑定——三态 pty 探针实证只改定义点无效），进程导入 proc 时自动应用（仅 POSIX，Windows 静默跳过）；③ 仅真交互式入口 `env.shell` 与 builder `interact.shell`/`_exec_via_cli`（`podman run/exec -it … bash`）显式 `forward_stdin=True` opt-in，其 py3.14 键盘输入由兼容补丁兜底。
+
+**V 验证（三态 pty 真机探针 + 双平台单测）**：在 podman-machine-default（invoke 3.0.3 / py3.14.2）以 pty.fork 注入 stdin 事件——原生 invoke 必现 ThreadException（crash 复现）、`in_stream=False` 干净退出、兼容补丁保留转发也干净退出；先证明 2 字节 `fcntl.ioctl(FIONREAD, b"  ")` 在该环境 queued=0 即抛 SystemError，再断言 4 字节实现返回正整数。新增 5 例单测（默认注入断言、opt-in 不注入、非 fileno/非 tty 回退 1、POSIX tty 不溢出、双绑定幂等）：Windows py314 185 passed/2 skipped（POSIX 用例跳过），WSL 全量 205 中 proc/桥接/内核 80 passed/1 skipped（另 6 个失败经 stash 基线对比为改动前既有的 Windows 专属测试 Linux 平台错配，与本修复无关）。真机重跑 `invoke xmnn.wheel` 退出码 0、日志无 ThreadException。
+
+**C 同步**：docs/04 新增 W-I13（成功却 exit 1 的判别要点 + 勿重跑长任务）；docs/03 新增「透明桥接 stdin 契约」节；预防措施 `[prevent: test-case]`——默认 `in_stream=False`、opt-in 边界与 FIONREAD 兼容路径全部由 daemon-free/pty 单测锁定。
+
 ### 2026-09-16 · `fix:` `inv <ns>.build` 桥接被 enterns 劫持进交互 shell + VM 回收后 `/run/user/<uid>` 丢失 podman exit 125
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnn-build-shell，未提交，commit hash 待补）。
