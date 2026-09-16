@@ -297,9 +297,16 @@
 
 ## Task 11: V 对抗审查（独立 reviewer，fresh context）与修复闭环
 
-- **Status**: `pending`
-- **Priority**: high
+- **Status**: `done`（2026-09-16 验收，未提交，等用户原子提交指令）
+- **Priority**: `high`
 - **Depends On**: Task 10
+- **完成记录**（**Review result = pass**，0 blocker / 0 major）：
+  - **TR-11.1 vendor 零改动**：审查前发现 vendor 工作树 481 文件 M（整树 CRLF↔LF 翻转：25948/25948 对称、`--ignore-cr-at-eol` 零语义差异、HEAD 未移动，非重构引入），已 `git -C vendor/podman-compose restore .` 恢复；恢复后 `status --porcelain` 为空、HEAD=`e3df104`，审查全程只读 vendor。
+  - **独立 reviewer 编排（fresh context）**：并行派发 3 个互不相通、未参与 T1-T10 的通用编码子代理——①对等保真性（≥10 符号逐行深读 + 4 移植测试 diff + 快照可信度 + parity 诚实性）；②架构合规（grep/AST 逐条核对 108 条内部 import + GPL hash 比对 + 运行时副作用实测 + py3.14 注解扫描）；③五攻击者（安全/边界/完整/时序/模糊 + 依赖环/70KB 流两个运行时探针）。结论：对等 pass(0B/0M)、架构初评 4/5(0B/0M)、五攻击者 PASS（13 条 minor/nit 全部标注"上游固有，非重构引入"）。实施者只编排/修复/回归，未自审。
+  - **TR-11.3 分层评分修复后 5/5**：修复架构 reviewer 报的规范层惰性环——`resolve_extends` 由 merge.py 下沉 normalize.py（D14：消除 merge↔normalize 函数内惰性 import，变为 normalize→merge 单向），纯代码移动、engine/测试导入同步、940 测试全绿；删 logs.py `_task_cancelled` 的 3.11 版本守卫死分支（AC-11）；校正 README Mermaid 架构图（去幻影边 CMD→ENG、补 engine→translate、model 归数据层、TR→runner 标注"仅再导出异常"）与 SPDX 计数 95→96。
+  - **TR-11.4 对抗实质度 5/5**：多视角具体发现 20+ 条（远超 ≥5）；闭环分类——本轮修复 4 项重构引入项（F1-F4，附回归）；评估保留 3 项重构有意决策（R1 argparse.Namespace 仅作 DTO 无解析/argv/add_argument，parser 机械封在 cli，改中立 Protocol 触及 15 文件收益边际，列 backlog；N1 下划线符号/N2 BASE 缺 __all__ 实证无泄漏；N3 ruff 版本 pin）；13 条 U1-U13 全部经代码比对确认为**上游固有**（日志密钥脱敏、rec_deps 子环、include 无去重、负 scale、config_hash 日期标量、ps JSON 防御、Semaphore(0) 等），按 translate-then-move 纪律不在对等重构中夹带修改，登记为上游回馈候选。
+  - **产物**：`docs/review.md`（审查报告：每 AC 独立证据矩阵、TR-11.1-11.4、修复清单+回归、发现台账、独立性声明）；代码改动 merge.py/normalize.py/engine.py/logs.py/README.md/CHANGELOG.md + parity.md（新增 D14）+ tests/test_merge_extra.py 导入路径。
+  - 回归：WSL py3.14 **940 passed / 0 skip / 74 subtests**、覆盖率 **92%**；Windows py314 ruff(src+tests+scripts) 0、mypy src 0（39 源文件）；`symbol_inventory.py` 仍输出 142/3 与 parity.md 一致。
 - **Description**:
   - 由全新上下文的独立 reviewer 执行只读审查：① 22 命令/145 符号对等抽查深读；② 分层依赖反向边扫描；③ 移植测试保真性 diff 比对；④ 五攻击者视角（安全/边界/完整性/时序/模糊）审查 runner/engine；⑤ GPL 合规；⑥ py314 现代化。
   - 审查结果写入 `review.md`；fail 则每个可执行发现物化为 pending issue 并回到 Implement 修复，修复后重新发起新一轮 V。
@@ -310,11 +317,20 @@
   - `rubric` TR-11.3：分层单向性最终评分；1-5；阈值 ≥4；证据=review.md CP 结论。
   - `rubric` TR-11.4：对抗审查实质度；1-5；1=表演式通过；3=有发现但修复不彻底；5=多视角具体发现 ≥5 条且全部闭环并回归；阈值 ≥4；证据=review.md 发现清单与回归记录。
 
-## Task 12: C 阶段——原子提交建议序列（仅用户批准后执行）
+## Task 12: C 原子提交建议序列（仅建议，不自动执行）
 
-- **Status**: `pending`
-- **Priority**: medium
+- **Status**: `done`（2026-09-16 产出建议序列并完成提交前全量门禁；提交动作待用户"执行原子提交"批准）
+- **Priority**: `medium`
 - **Depends On**: Task 11
+- **建议序列**（4 笔，按单一职责拆分；T1-T10 已在此前批次入库 `aca51fa`…`1c40e44` 及对应主仓提交，T11 工作树为本序列唯一未提交范围）：
+  1. **子模块 refactor（代码）** `refactor(compose): T11 对抗审查修复——下沉 resolve_extends 消除规范层环`
+     文件：`src/xuan_compose/{merge,normalize,engine,logs}.py`、`tests/test_merge_extra.py`、`docs/parity.md`（D14 随代码移动同批登记）。
+  2. **子模块 docs（审查产物）** `docs(compose): T11 独立对抗审查报告与 README 架构图校正`
+     文件：`docs/review.md`（新）、`README.md`（F3 架构图/F4 SPDX 计数）、`CHANGELOG.md`（T11 条目）。
+  3. **主仓 docs(spec)** `docs(spec): 登记 xuan-compose T11 对抗审查与 T12 提交序列`：本 tasks.md。
+  4. **主仓 chore(submodule)** `chore(submodule): 抬升 xuanspace 至 xuan-compose T11 提交`：projects/xuanspace gitlink `1c40e44`→新 HEAD。
+  - 排除项：嵌套子模块 `libs/tvm-book`、`vendor/caffe` 的既有脏标记全程不碰；vendor/podman-compose porcelain 为空。
+- **提交前门禁（2026-09-16 复跑证据）**：WSL py3.14 `940 passed / 0 skip / 74 subtests`、覆盖率 92%；Windows py314 ruff(src+tests+scripts) 0、mypy src 0（39 源文件）；SPDX 96/96；symbol_inventory 142 符号/3 差异与 parity.md 一致；vendor HEAD=e3df104 且 porcelain 空。
 - **Description**:
   - 按切片产出 Conventional Commits 提交建议（中文主体、`feat(xuan-compose): ...` 序列），在 xuanspace 子模块内提交；不自动执行，待用户明确批准。
   - 提交前复跑 T9 全量门禁；提交后 `git show --stat` 验证单一职责。
