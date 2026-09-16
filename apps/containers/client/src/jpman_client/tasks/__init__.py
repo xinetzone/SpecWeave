@@ -25,10 +25,15 @@ xmnn.* 开发/打包栈命名空间（8 个命令，opt-in，podman-compose 子�
   invoke xmnn.build / up / down / ps / logs / smoke / build-tvm / wheel
   驱动 overlays/xmnn-dev 开发打包栈（运行时挂载 npu_tvm/npuusertools 源码，
   LLVM 22 + Nuitka 4.1.3 工具链）；Windows 原生门禁，详见 xmnn.py
+
+xmnnrt.* wheel 消费运行时栈命名空间（6 个命令，opt-in，podman-compose 子进程）：
+  invoke xmnnrt.build / up / down / ps / logs / smoke
+  驱动 overlays/xmnn-runtime 干净运行时镜像（安装预构建 whl，无源码挂载、
+  无编译工具链；build/up 自动从 workspace/dist 暂存最新 whl）；详见 xmnnrt.py
 """
 from invoke import Collection
 
-from . import env_in_container, manage, monetize, quant, xmnn
+from . import env_in_container, manage, monetize, quant, xmnn, xmnnrt
 
 ns = Collection()
 
@@ -81,6 +86,13 @@ for _name, _task in monetize.TASKS.items():
 monetize_ns.add_task(monetize.build_native, "build-native")
 monetize_ns.add_task(monetize.wheel, "wheel")
 ns.add_collection(monetize_ns)
+
+# ---- xmnnrt.* XMNN wheel 消费运行时栈命名空间（podman-compose，opt-in） ----
+# 六任务均为 xmnnrt 模块产物（build/up 为 whl 暂存薄封装，其余四任务走工厂）
+xmnnrt_ns = Collection("xmnnrt")
+for _name, _task in xmnnrt.TASKS.items():
+    xmnnrt_ns.add_task(_task, _name)
+ns.add_collection(xmnnrt_ns)
 
 # configure 全局默认（与 ContainerConfig 对齐）
 ns.configure(
