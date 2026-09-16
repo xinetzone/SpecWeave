@@ -126,6 +126,7 @@ def harness(monkeypatch, tmp_path):
     monkeypatch.setattr(oc, "platform", SimpleNamespace(system=lambda: "Linux"))
     monkeypatch.setattr(oc.shutil, "which", lambda name: "/usr/bin/podman-compose")
     monkeypatch.setattr(oc, "run_in_wsl_bridge", lambda *a, **k: None)
+    monkeypatch.setattr(oc, "ensure_wsl_rootless_runtime", lambda: None)
     monkeypatch.setattr(oc.time, "sleep", lambda *_a, **_k: None)
     # 清掉三栈 env，避免宿主环境污染
     for spec in ALL_SPECS:

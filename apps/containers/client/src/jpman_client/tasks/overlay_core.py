@@ -41,6 +41,7 @@ from .utils import (
     check_runtime_ready,
     detect_runtime,
     ensure_workspace_checkpoint_writable,
+    ensure_wsl_rootless_runtime,
     run_cmd,
     run_in_wsl_bridge,
     to_posix_path,
@@ -193,8 +194,11 @@ def gate_platform(spec: StackSpec) -> None:
 
     桥接成功时 run_in_wsl_bridge 已在发行版内完整执行任务，本进程 Exit(0)
     收尾（WSL2 内 Python 报 Linux 直接放行，不进入 Windows 分支）。
+    Linux 放行路径先做 WSL rootless 运行时目录自愈（VM 回收后
+    /run/user/<uid> 缺失致 podman exit 125；非 WSL 平台零副作用）。
     """
     if platform.system() != "Windows":
+        ensure_wsl_rootless_runtime()
         return
     distro = run_in_wsl_bridge(extra_env_keys=spec.bridge_env_keys)
     if distro is not None:

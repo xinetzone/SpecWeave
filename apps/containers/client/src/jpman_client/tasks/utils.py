@@ -432,23 +432,90 @@ def run_in_wsl_bridge(
         for k, v in os.environ.items()
         if k in keys and v
     )
-    # PATH 前缀双保险（bash -lc 通常已 source profile；找不到 invoke 时仍可命中
-    # ~/.local/bin），cwd 先于任务；env 覆盖前缀保持 shell export > .env。
+    # 必须使用**非登录** shell（bash -c，禁止 -l）——Fedora-WSL 系发行版的
+    # /etc/profile.d/enterns.sh 在登录会话检测到嵌套 systemd 时会无参执行
+    # /usr/local/bin/enterns，其内部对普通用户走 `sudo nsenter ... su -l $USER`
+    # 拉起一个交互式登录 shell，把本任务整条命令丢弃（现象：inv xmnn.build
+    # "进入 shell 了"，并打印 wslmotd 的 exit twice 提示；2026-09-16 实证，
+    # session sc-20260916-xmnn-build-shell）。同目录 docker-host.sh 还会在
+    # podman 未就绪时执行 `podman info` 并污染 DOCKER_HOST=unix://。
+    # PATH 显式前置 ~/.local/bin（pip --user 的 invoke 所在，不依赖 profile），
+    # LANG 兜底 C.UTF-8（非登录 shell 无 lang.sh），cwd 先于任务。
+    exports_part = f"{exports} " if exports else ""
     bash = (
-        f"cd {shlex.quote(workdir)} "
+        f'export LANG="${{LANG:-C.UTF-8}}" '
         f'&& export PATH="$HOME/.local/bin:$PATH" '
-        f"&& {exports} invoke {shlex.join(task_cmd)}"
+        f"&& {exports_part}cd {shlex.quote(workdir)} "
+        f"&& invoke {shlex.join(task_cmd)}"
     )
     try:
         cp = subprocess.run(
-            ["wsl.exe", "-d", distro, "--", "bash", "-lc", bash],
+            ["wsl.exe", "-d", distro, "--", "bash", "-c", bash],
         )
     except (FileNotFoundError, OSError) as exc:
         print(f"[compose] ⚠ WSL 桥接启动失败：{exc}")
         return None
     if cp.returncode != 0:
-        raise Exit(cp.returncode, f"WSL 桥接命令失败 (exit={cp.returncode})，详见上方输出")
+        # invoke.Exit 签名为 Exit(message, code=None)：rc 必须传 code=，
+        # 否则退出码恒为 1 且 rc 被当成消息（2026-09-16 单测拦截）。
+        raise Exit(
+            f"WSL 桥接命令失败 (exit={cp.returncode})，详见上方输出",
+            code=cp.returncode,
+        )
     return distro
+
+
+def ensure_wsl_rootless_runtime() -> None:
+    """WSL2 无 systemd 发行版 rootless 运行时目录幂等自愈。
+
+    背景（2026-09-16 实证，session sc-20260916-xmnn-build-shell）：
+    rootless podman 硬编码使用 ``/run/user/<uid>``（events dirs/runroot），
+    该目录位于 tmpfs，正常由 systemd-logind/pam_systemd 登录会话创建。
+    Fedora-WSL 嵌套 systemd 发行版在 VM 被 WSL 回收重启后，未经过 enterns
+    进入 systemd 命名空间的会话不会重建该目录，podman 任意命令即报
+    ``creating events dirs: mkdir /run/user/<uid>: permission denied``
+    （exit 125）；容器同时呈 ``Exited (0) 292 years ago`` 回收态。
+
+    本函数仅在 WSL2（``/proc/version`` 含 microsoft）下兜底：
+      - ``XDG_RUNTIME_DIR`` 为空且 ``/mnt/wslg/runtime-dir`` 可写 →
+        采用 SOP 钦定值（禁止改成 /run/user/<uid> 的是 XDG 变量本身）；
+      - ``/run/user/<uid>`` 缺失 → ``sudo -n`` 幂等 mkdir/chown/chmod 700；
+        免密 sudo 不可用时仅警告不阻断（标准 systemd WSL 上该目录由
+        logind 正常管理，不应越权重建）。
+    """
+    if platform.system() != "Linux":
+        return
+    try:
+        proc_version = Path("/proc/version").read_text(encoding="utf-8", errors="ignore")
+    except OSError:
+        return
+    if "microsoft" not in proc_version.lower():
+        return
+
+    if not os.environ.get("XDG_RUNTIME_DIR"):
+        wslg_dir = "/mnt/wslg/runtime-dir"
+        if os.path.isdir(wslg_dir) and os.access(wslg_dir, os.W_OK):
+            os.environ["XDG_RUNTIME_DIR"] = wslg_dir
+
+    uid = os.getuid()  # 仅 Linux 分支可达
+    runtime_dir = f"/run/user/{uid}"
+    if os.path.isdir(runtime_dir):
+        return
+    # sudo -n：永不挂起等待密码。失败只警告（非免密/权限模型不同的发行版
+    # 交给 podman 原报错与门禁指引），不得阻断任务入口。
+    setup = (
+        f"sudo -n mkdir -p {runtime_dir} "
+        f"&& sudo -n chown {uid}:{uid} {runtime_dir} "
+        f"&& sudo -n chmod 700 {runtime_dir}"
+    )
+    result = subprocess.run(setup, shell=True, capture_output=True, text=True)
+    if result.returncode != 0:
+        print(
+            f"[compose] ⚠ WSL rootless 运行时目录 {runtime_dir} 缺失且自动重建失败，"
+            f"podman 可能报 mkdir permission denied。手工修复：\n"
+            f"        sudo mkdir -p {runtime_dir} && sudo chown {uid}:{uid} {runtime_dir} "
+            f"&& sudo chmod 700 {runtime_dir}"
+        )
 
 
 def default_build_cache_dir() -> Path:
