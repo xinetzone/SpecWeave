@@ -121,8 +121,43 @@ setup_passwords() {
     fi
 }
 
+# SSH host key 持久化目录（named volume 挂载点；见 compose.yaml 与 invoke run 卷参数）。
+# 卷挂载时 host key 生命周期脱离容器可写层——删除重建容器不轮换，客户端 known_hosts
+# 无需反复清理。未挂载（裸 podman/docker run、Toolbx 变体）时回退 /etc/ssh 旧行为。
+HOST_KEY_DIR="/var/lib/jpman/ssh-host-keys"
+HOST_KEY_PERSISTENT="no"
+
 generate_host_keys() {
     log_info "[Step 2/7] Generating SSH host keys..."
+    if mountpoint -q "${HOST_KEY_DIR}" 2>/dev/null; then
+        # ── 持久模式：key 存 named volume，已存在则原样复用（重建容器指纹不变）──
+        HOST_KEY_PERSISTENT="yes"
+        mkdir -p "${HOST_KEY_DIR}"
+        chmod 700 "${HOST_KEY_DIR}"
+        if [ ! -f "${HOST_KEY_DIR}/ssh_host_ed25519_key" ]; then
+            log_info "Persistent volume mounted but no ED25519 key found, generating..."
+            ssh-keygen -t ed25519 -f "${HOST_KEY_DIR}/ssh_host_ed25519_key" -N "" -q
+        else
+            log_info "[OK] Reusing persisted ED25519 host key (container rebuild does not rotate it)"
+        fi
+        if [ ! -f "${HOST_KEY_DIR}/ssh_host_rsa_key" ]; then
+            log_info "Persistent volume mounted but no RSA key found, generating..."
+            ssh-keygen -t rsa -b 4096 -f "${HOST_KEY_DIR}/ssh_host_rsa_key" -N "" -q
+        else
+            log_info "[OK] Reusing persisted RSA host key"
+        fi
+        chmod 600 "${HOST_KEY_DIR}"/ssh_host_*_key
+        chmod 644 "${HOST_KEY_DIR}"/ssh_host_*_key.pub
+        # 清空 /etc/ssh 默认位置，防止 sshd 按默认路径加载到容器层旧 key
+        rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub 2>/dev/null || true
+        log_info "SSH host keys (persistent volume):"
+        ls -la "${HOST_KEY_DIR}"/ssh_host_*_key.pub 2>/dev/null | while IFS= read -r line; do log_info "  $line"; done || true
+        return
+    fi
+
+    # ── 回退模式：无持久卷，key 生成于容器可写层（旧行为，重建即轮换）──
+    HOST_KEY_PERSISTENT="no"
+    log_warn "Host key volume not mounted at ${HOST_KEY_DIR}; keys live in the container layer and WILL rotate on rebuild"
     rm -f /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub 2>/dev/null || true
     ssh-keygen -A
     log_info "SSH host keys generated:"
@@ -151,6 +186,17 @@ configure_sshd() {
     fi
     sed -i "s/^#*Port .*/Port ${sshd_port}/" /etc/ssh/sshd_config
     log_info "SSH daemon listening port: ${sshd_port}"
+    # HostKey 指向必须与 generate_host_keys 的落盘位置一致（持久卷 vs 容器层）。
+    # 整行替换（非路径子串替换），保证 entrypoint 重入幂等。
+    if [ "${HOST_KEY_PERSISTENT}" = "yes" ]; then
+        sed -i "s|^#*HostKey .*ed25519.*|HostKey ${HOST_KEY_DIR}/ssh_host_ed25519_key|" /etc/ssh/sshd_config
+        sed -i "s|^#*HostKey .*rsa_key.*|HostKey ${HOST_KEY_DIR}/ssh_host_rsa_key|" /etc/ssh/sshd_config
+        log_info "HostKey paths -> persistent volume (${HOST_KEY_DIR})"
+    else
+        sed -i "s|^#*HostKey .*ed25519.*|HostKey /etc/ssh/ssh_host_ed25519_key|" /etc/ssh/sshd_config
+        sed -i "s|^#*HostKey .*rsa_key.*|HostKey /etc/ssh/ssh_host_rsa_key|" /etc/ssh/sshd_config
+        log_info "HostKey paths -> container layer (/etc/ssh)"
+    fi
     if [ "${ALLOW_ROOT_SSH:-no}" = "yes" ]; then
         sed -i "s/^#*PermitRootLogin.*/PermitRootLogin yes/" /etc/ssh/sshd_config
         log_info "Root SSH login enabled (ALLOW_ROOT_SSH=yes)"

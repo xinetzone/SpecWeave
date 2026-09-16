@@ -14,6 +14,8 @@ from invoke import Context, task
 from invoke.exceptions import Exit, UnexpectedExit
 
 from .client import (
+    HOST_KEY_DIR,
+    HOST_KEY_VOLUME,
     PodmanNotFound,
     compose_available,
     get_client,
@@ -199,6 +201,8 @@ def _run_via_cli(c, name, tag, ssh_port, jupyter_port, workspace_posix,
         # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
         # 宿主 socket bind-mount 到容器同一路径，容器内 podman CLI 即可连通。
         "-v", f"{podman_sock_path()}:{podman_sock_path()}",
+        # SSH host key 持久化：容器删除重建不轮换密钥（与 compose.yaml 同名卷对齐）
+        "-v", f"{HOST_KEY_VOLUME}:{HOST_KEY_DIR}",
         "--device /dev/fuse",
         "--security-opt label=disable",
         "--cgroupns=host",
@@ -312,12 +316,16 @@ def _print_already_running_access(c, name, ssh_port, jupyter_port, workspace_pat
 
 
 def _print_host_key_rotation_hint(ssh_port):
-    """新建容器后的 SSH 主机密钥轮换提示（host key 在容器可写层，重建必轮换）。"""
+    """新建容器后的 SSH 主机密钥提示。
+
+    自 2026-09-15 起 host key 存于 named volume（jupyter-podman-rootless_ssh-host-keys），
+    删除重建容器不轮换；仅首次启用持久卷（旧容器层密钥迁入前）或卷被显式删除后才会变。
+    """
     print(
-        "  SSH host key: 容器为新建，主机密钥已轮换。若连接报\n"
-        "                REMOTE HOST IDENTIFICATION HAS CHANGED，请先执行：\n"
-        f'                ssh-keygen -R "[localhost]:{ssh_port}"\n'
-        "                然后重连（首次会提示是否信任新指纹）"
+        "  SSH host key: 密钥持久化于 named volume，重建容器不再轮换。\n"
+        "                若连接报 REMOTE HOST IDENTIFICATION HAS CHANGED\n"
+        "                （首次启用持久卷 / 卷被删除），请先执行：\n"
+        f'                ssh-keygen -R "[localhost]:{ssh_port}"'
     )
 
 

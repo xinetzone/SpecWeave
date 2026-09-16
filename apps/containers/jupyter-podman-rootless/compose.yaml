@@ -35,6 +35,12 @@ services:
     # network_mode: host
     volumes:
       - ${WORKSPACE:-./workspace}:/workspace
+      # ── SSH host key 持久化（named volume）──
+      # host key 脱离容器可写层：podman-compose down/up 或容器删除重建后指纹不变，
+      # 客户端 known_hosts 无需反复清理。entrypoint.sh 检测该挂载点存在即复用/补建。
+      # 卷名由项目名前缀派生为 jupyter-podman-rootless_ssh-host-keys（与 invoke
+      # run 的 CLI/SDK 路径同名，两条启动路径共享同一份密钥）。
+      - ssh-host-keys:/var/lib/jpman/ssh-host-keys
       # ── B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）──
       # 宿主 socket 在同一绝对路径上 bind-mount 进容器（host 与 container 路径
       # 均取自 HOST_PODMAN_SOCK），entrypoint 据此在 devuser 可控目录内建立
@@ -118,3 +124,4 @@ services:
 
 volumes:
   registry-data:
+  ssh-host-keys:

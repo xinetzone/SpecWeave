@@ -100,7 +100,13 @@ invoke的`utils.to_posix_path()`会自动将Windows路径转换为WSL2路径：
 
 ### Q: SSH 报 `REMOTE HOST IDENTIFICATION HAS CHANGED` / `Host key verification failed`？
 
-容器被**重建**后的预期现象（不是攻击）：SSH 主机密钥在容器首次启动时生成、存于容器可写层，`invoke run` 的停止态自动重建、`invoke run --force`、`invoke stop && invoke run` 或手动 `podman rm` 后都会轮换；本机 `~/.ssh/known_hosts` 仍记着旧容器的指纹，strict checking 因此拒绝连接。
+**自 2026-09-15 起已根治**：SSH 主机密钥持久化在 named volume `jupyter-podman-rootless_ssh-host-keys`（容器内 `/var/lib/jpman/ssh-host-keys`），`invoke run --force`、停止态自动重建、`podman rm` 后重建乃至 `podman-compose down/up` 都**不再轮换指纹**（compose / invoke CLI / invoke SDK 三条启动路径挂同一个卷）。
+
+仅以下情况仍会看到该警告（均属预期，不是攻击）：
+
+- **首次升级到持久卷版本**：旧容器层密钥不会自动迁移，空卷首次启动生成一把新密钥，接受这一次即可，之后永久稳定；
+- **主动删除了卷**：`podman volume rm jupyter-podman-rootless_ssh-host-keys`（见下）；
+- **裸跑未挂卷**：直接 `podman run`（不走 compose/invoke）或 Toolbx 变体，entrypoint 回退到容器层旧行为，日志有 `WILL rotate on rebuild` 警告。
 
 处理一条命令（Windows PowerShell / Linux / macOS 相同）：
 
@@ -109,9 +115,9 @@ ssh-keygen -R "[localhost]:2222"
 ssh -p 2222 devuser@localhost   # 重新信任新指纹后输入密码
 ```
 
-> 安全提示：在网络可信的本机端口转发场景可直接接受；若在共享网络或非本机环境看到此警告，应先核对指纹（容器内执行 `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key`）再接受。
+> 安全提示：在网络可信的本机端口转发场景可直接接受；若在共享网络或非本机环境看到此警告，应先核对指纹（容器内执行 `ssh-keygen -lf /var/lib/jpman/ssh-host-keys/ssh_host_ed25519_key`）再接受。
 >
-> 自 2026-09-15 起，`invoke run` 在**新建**容器的 Access info 中会直接打印上述命令；幂等命中（容器未重建）不会轮换密钥、也无此提示。注意 `podman restart`/单纯停启不轮换，只有删除重建才轮换。
+> `podman restart`/单纯停启从不轮换。需要**主动轮换**（如密钥泄露处置）：`invoke stop` → `podman volume rm jupyter-podman-rootless_ssh-host-keys` → `invoke run`。
 
 ### Q: 忘记密码/token怎么办？
 

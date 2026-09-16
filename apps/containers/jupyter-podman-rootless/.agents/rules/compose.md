@@ -50,6 +50,7 @@ services:
 - `security_opt: label=disable`（禁用SELinux标签，避免FUSE权限问题）
 - `cgroupns: host`（rootless Podman需要）
 - 工作目录挂载：`./workspace:/workspace`
+- **SSH host key 持久卷**：`ssh-host-keys:/var/lib/jpman/ssh-host-keys`（short syntax named volume，顶层 `volumes: ssh-host-keys:` 声明，派生名 `<project>_ssh-host-keys` = `jupyter-podman-rootless_ssh-host-keys`）。删除重建容器指纹不轮换；卷名必须与 `tasks/client.py::HOST_KEY_VOLUME` 完全一致（compose / invoke CLI / invoke SDK 三路共享同一份密钥），entrypoint 以挂载点存在性（`mountpoint`）分流持久/回退两模式，详见 entrypoint.md §[2/7]。主动轮换：删卷重建
 
 ### model-registry服务（profile: registry）
 

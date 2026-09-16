@@ -41,8 +41,8 @@ Containerfile编写规范详见 [.agents/rules/containerfile.md](../.agents/rule
 print_banner()
   │
   ├─ [1/7] setup_passwords()     → 配置用户密码（支持环境变量/随机生成）
-  ├─ [2/7] generate_host_keys()  → 生成 SSH host keys（ed25519 + rsa）
-  ├─ [3/7] configure_sshd()      → 配置 sshd（PermitRootLogin 控制）
+  ├─ [2/7] generate_host_keys()  → SSH host keys（ed25519+rsa；持久卷复用，无卷回退容器层）
+  ├─ [3/7] configure_sshd()      → 配置 sshd（PermitRootLogin 控制，HostKey 指向按卷分流）
   ├─ [4/7] setup_podman()        → 初始化 rootless Podman 环境
   │    ├─ /dev/fuse 权限
   │    ├─ ~/.config/containers/ 配置

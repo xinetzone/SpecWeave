@@ -42,6 +42,13 @@ _COMPOSE_BINARY_PRESENT = shutil.which("podman-compose") is not None
 _COMPOSE_HOST_SUPPORTED = os.name != "nt"
 _COMPOSE_AVAILABLE = _COMPOSE_BINARY_PRESENT and _COMPOSE_HOST_SUPPORTED
 
+# ── SSH host key 持久卷（CLI/SDK/compose 三路必须同名同路径）──────────
+# named volume 名称对齐 compose 项目名（jupyter-podman-rootless）+ 卷名
+# （ssh-host-keys），与 registry-data 卷的命名先例一致；改任一处须同步
+# compose.yaml 顶层 volumes 与服务挂载、entrypoint.sh HOST_KEY_DIR。
+HOST_KEY_VOLUME = "jupyter-podman-rootless_ssh-host-keys"
+HOST_KEY_DIR = "/var/lib/jpman/ssh-host-keys"
+
 
 # ── B-scheme: host podman rootless socket pass-through ──────────
 # 背景：容器内自建 daemon（Model A）在 WSL 三层 userns 嵌套下触发
@@ -99,6 +106,8 @@ def sdk_run_kwargs(
         # B-scheme: 直连宿主 rootless daemon（绕过嵌套 userns）。
         # 宿主 socket bind-mount 到容器同一路径，SDK from_env() 即可连通。
         podman_sock_path(): {"bind": podman_sock_path(), "mode": "rw"},
+        # SSH host key 持久化：容器删除重建不轮换密钥（entrypoint 按挂载点分流）
+        HOST_KEY_VOLUME: {"bind": HOST_KEY_DIR, "mode": "rw"},
     }
 
     environment = {

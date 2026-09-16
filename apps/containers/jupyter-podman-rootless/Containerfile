@@ -581,9 +581,10 @@ RUN echo "=== Layer 3/5: Create user devuser + subuid/subgid + directories + Pod
     echo "[BUILD] Creating directories..." && \
     mkdir -p /workspace /root/.jupyter /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config/containers \
         /run/sshd /var/log/supervisor /etc/supervisor/conf.d \
-        /etc/containers/containers.conf.d /run/host && \
+        /etc/containers/containers.conf.d /run/host \
+        /var/lib/jpman/ssh-host-keys && \
     chmod 777 /workspace && \
-    chmod 700 /home/devuser/.ssh /root/.ssh && \
+    chmod 700 /home/devuser/.ssh /root/.ssh /var/lib/jpman/ssh-host-keys && \
     chown -R devuser:devuser /home/devuser/.jupyter /home/devuser/.ssh /home/devuser/.config && \
     echo "[OK] Directories created with proper permissions" && \
     echo "[BUILD] Creating Toolbx compatibility markers..." && \

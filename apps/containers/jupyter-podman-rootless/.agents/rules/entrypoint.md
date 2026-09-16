@@ -22,23 +22,31 @@ source: "README.md#7步启动流程"
 - 密码通过`chpasswd`设置
 - 密码生成后打印到日志（仅首次启动，生产环境建议通过SSH公钥认证）
 
-### [2/7] generate_host_keys() — 生成SSH host keys
+### [2/7] generate_host_keys() — 生成SSH host keys（双模式）
 
-- 清理镜像中预装的SSH主机密钥（安全要求，不使用预生成密钥）
-- 生成ed25519和rsa类型的host key：
-  ```bash
-  ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" -q
-  ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" -q
-  ```
-- 设置正确的权限（600）
+密钥生命周期必须与容器可写层解耦（2026-09-15 起）。常量 `HOST_KEY_DIR=/var/lib/jpman/ssh-host-keys`，以 `mountpoint -q "${HOST_KEY_DIR}"` 为唯一分流判据：
+
+**持久模式（named volume 已挂载；compose / invoke run CLI+SDK 三路默认）**：
+- 设 `HOST_KEY_PERSISTENT=yes`，`mkdir -p` + `chmod 700` 挂载点
+- `ssh_host_ed25519_key` / `ssh_host_rsa_key`（RSA 4096）**缺失才生成，已存在原样复用**——容器删除重建指纹不变；复用/新建分别打 `[OK] Reusing persisted ...` 与 `... no key found, generating...` 日志
+- 私钥 `600`、公钥 `644`
+- 必须 `rm -f /etc/ssh/ssh_host_*`，防止 sshd 按默认路径加载容器层残留旧 key
+- 挂载卷名固定 `jupyter-podman-rootless_ssh-host-keys`（常量见 `tasks/client.py` 的 `HOST_KEY_VOLUME`，compose.yaml 顶层 `volumes` 声明、服务挂载同名，三路任一改动须三处同步）
+
+**回退模式（裸 podman/docker run、Toolbx 变体未挂卷）**：
+- 保留旧行为：`rm -f /etc/ssh/ssh_host_* && ssh-keygen -A`，key 落容器层，重建轮换，并打 `WARN ... WILL rotate on rebuild`
+- 禁止为「顺手修一下」而在回退模式改路径/语义——未挂持久存储时任何卷外目录都在可写层
+
+红线：两条分支都必须先清理镜像预装密钥（不使用预生成密钥）；判据只能是 `mountpoint`（不是目录存在性——Containerfile 已烘焙空挂载点目录）。
 
 ### [3/7] configure_sshd() — 配置sshd
 
 - 根据`ALLOW_ROOT_SSH`环境变量设置`PermitRootLogin`（yes/no）
 - 根据`SSHD_PORT`环境变量设置监听端口（默认`22`，非法值直接报错退出）：`config/sshd_config` 中的 `Port` 仅为默认值，启动时由 entrypoint 重写。**host 网络模式下必须设 >=1024**——rootless Podman 中容器 root 映射为宿主非特权 UID，绑定特权端口 22 会被拒绝（`Bind to port 22 ... Permission denied`，sshd 随即 FATAL）
+- **HostKey 指向必须与 [2/7] 落盘位置一致**：持久模式整行 sed 替换为 `${HOST_KEY_DIR}/ssh_host_{ed25519,rsa}_key`，回退模式替换回 `/etc/ssh/...`；用整行匹配 `^#*HostKey .*ed25519.*`（非路径子串替换），保证 entrypoint 重入幂等。RSA 行匹配 `rsa_key` 不误伤 ed25519 行
 - 确保PasswordAuthentication启用（支持密码登录，公钥登录优先）
 - 配置AuthorizedKeysFile路径
-- 执行`sshd -t`验证配置语法正确性
+- 执行`sshd -t`验证配置语法正确性（HostKey 重写在其之前完成）
 
 ### [4/7] setup_podman() — 初始化rootless Podman环境
 
