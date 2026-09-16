@@ -199,6 +199,9 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
 | `npu_tvm 源码树宿主路径不存在`（指向 client/external） | 默认路径锚错层级；仓库根=client.parents[2] | xmnn.py 已修；自定义栈注意同级锚定 |
 | aardvark-dns / user scope bus 报错 | machine 无 systemd user bus | compose 已声明 `network_mode: bridge`（带证据偏差，勿删） |
 | `up -d` 报 `rootlessport listen tcp 0.0.0.0:2223: bind: address already in use`（exit 125），前序常伴 `conmon exited prematurely: conmon process killed`，同一次 up 先打印旧容器 ID 又打印新容器 ID；换端口却能成功 | **四因（① 为 2026-09-15 晚实证的确定性首因，三次复现）**：① **跨控制平面标签分歧**——Windows 原生裸 `podman-compose`（overlay 目录执行）给容器打 `com.docker.compose.project.config_files=D:\...`，Windows `invoke`（透明桥接）/WSL invoke 固定用 `--file /mnt/d/...`；compose config-hash 按标签**原文**计算，两平面交替即判漂移强制 recreate，pod 模式强拆 infra conmon 时 rootlessport 已被 WSL `/init` 收养为孤儿，新 pod bind 必败（**先优雅 down 也可能留同样孤儿**）；同平面连续执行幂等可作鉴别。② Created/Exited 残留容器持有端口分配。③ **假 Up 后容器被 down 但孤儿 rootlessport 存活**：`ss -ltnp` **能**看到 `users:(("rootlessport",pid=NNN))` 显式持有者；同时查杀 stale conmon（见"假 Up"行）。④ WSL localhost 转发（wslrelay）粘滞：幽灵 LISTEN 无可见持有者，`ss/netstat/fuser/lsof` 查不到≠没占 | **首选 `invoke <ns>.up --skip-build`**：up 前 `up_preflight` 三道全自动（v1.0.3）——残留 compose down / 跨平面活体栈先优雅 down / 孤儿 rootlessport 经 `ss -ltnp` 定点 kill（只认 rootlessport 名，不碰他栈 pasta），裸 compose 翻车现场直接重跑即恢复。**纪律：同一栈固定单一控制平面**，勿在 Windows 裸 compose 与 invoke 间来回切。手工兜底：`ss -ltnp \| grep <端口>` 有显式持有者定向 kill；无持有者=wslrelay 粘滞才用 `wsl --shutdown`（需用户授权，波及同发行版全部栈）或 `.env` 固化换端口 2225/8891 |
+| **Windows 原生 `inv <ns>.build`（或任何桥接任务）不执行任务，终端却进入一个交互 shell**（伴随 *automatically entered into a nested process namespace... to log out you need to exit twice* 的 motd，原 build 命令丢失，2026-09-16 实证） | **桥接登录 shell 被 enterns 劫持**：桥接器曾下发 `wsl -d podman-machine-default -- bash -lc <任务>`；Fedora-WSL 系镜像的 `/etc/profile.d/enterns.sh` 在检测到嵌套 systemd（`/lib/systemd/systemd` 非 PID 1）时无参执行 `/usr/local/bin/enterns`，对普通用户走 `sudo nsenter -m -p -t <pid> su -l $USER`——拉起全新交互登录 shell，`-lc` 任务串在命名空间切换中被丢弃；同目录 `docker-host.sh` 登录即跑 `podman info`，podman 未就绪时还会污染 `DOCKER_HOST=unix://`（client W-I11） | **已自动修复（editable 即时生效，零操作）**：桥接改非登录 `bash -c`（PATH 显式前置 `~/.local/bin`、LANG 兜底 C.UTF-8），profile 两个副作用均不触发。手工纪律：在该发行版跑自动化一律 `wsl -d <d> -- bash <script.sh>`（非登录，与 run-inv.sh 同构），不要用裸 `wsl -d <d>` 登录会话承载任务；已误入嵌套 shell 时连按两次 `exit`/Ctrl-D 退出 |
+| podman 任意命令（含 WSL 内原生 invoke）报 `creating events dirs: mkdir /run/user/1000: permission denied`（exit 125），warning `RunRoot ... not writable`；常伴容器 `Exited (0) 292 years ago` | **VM 回收后 tmpfs 运行时目录未重建**：`/run/user/<uid>` 在 tmpfs 上，由 systemd-logind/pam 会话创建；本发行版无 systemd 于 PID 1，VM 重启后未经 enterns 进 systemd ns 的会话不重建该目录；rootless podman events/runroot 硬编码回退此路径（**仅 export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir 不能替代**，client W-I12） | **已自动修复（零操作）**：`inv <ns>.*` 的 Linux 放行路径调 `ensure_wsl_rootless_runtime()`（仅 WSL2），`sudo -n mkdir/chown/chmod 700` 幂等重建，免密不可用仅警告。手工：`sudo mkdir -p /run/user/$(id -u) && sudo chown $(id -u):$(id -u) /run/user/$(id -u) && sudo chmod 700 /run/user/$(id -u)`，再 `inv <ns>.up --skip-build` 恢复栈 |
+| 外部 Go-http-client 经 `podman.sock` 调 `POST /libpod/system/prune`（journal 可见，2026-09-16 实证一次），跨项目删除全部 Exited 容器（含 jupyter-podman 单容器）与悬空镜像；有 tag 镜像/命名卷无损 | 共享该 socket 的 UI/自动化（容器管理面板等）执行了 system prune（all=false 只删 stopped 容器+dangling 镜像）；本项目编排器从不下发 prune | 恢复栈一条命令：`inv <ns>.up --skip-build`；jupyter-podman 单容器走 jpman 单容器路径启动。预防：不要在共享该发行版 socket 的 UI 里点"清理/Purge"，或操作前先确认栈处于 Up |
 | 裸 compose 后 workspace 下出现 npu_tvm 等空目录 | podman-compose 1.6 相对 source+create_host_path 预创建副产物 | 不影响真挂载；down 后 `rmdir`；用 invoke 绝对路径注入不产生 |
 | 裸 `podman-compose up -d` exit 0 但 Jupyter 根目录出现 `.git`/`apps`/`docs`，容器里 `/workspace` 竟是整个仓库根 | overlay 目录私有 `.env` 的 `<NS>_WORKSPACE` 误按 client 基准写层级：overlay 文件比 client 深两级，`../../../../..`（五级）相对 overlay 子目录正好解析到仓库根；模板正确值是 `../../workspace`（上两级=client/workspace） | 把 `.env` 改回 `XMNN_WORKSPACE=../../workspace`（quant/monetize 同理）→ `down && up -d`；仓库根已被入口 chmod 777 的副作用要 `chmod 755 <仓库根>` 还原。`.env` 被 gitignore 属本地私有，排查时务必实读该文件而非只看 compose.yaml |
 | up 后 55~60 秒 Jupyter 端口 curl 返回 000，容器却是 Up | entrypoint Step 4 容器内 podman 初始化偶发等 ~70 秒（平时约 30s），浸泡不足误判 | 等满 70~90s 再判活；日志走到 `Step 5/7` 后 supervisord 约 5s 内起 Jupyter（非故障） |
@@ -241,8 +244,29 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
     必须在裸 compose 翻车后切回，直接 `invoke <ns>.up --skip-build`——
     up_preflight 三道（残留 down / 跨平面优雅 down / 孤儿定点 kill）自动收敛，
     不要手工先删容器。
+11. **桥接/自动化必须走非登录 shell（`bash -c`/`bash script.sh`），禁止 `bash -lc`**
+    （2026-09-16 实证，client W-I11）：podman-machine-default 是 Fedora-WSL
+    系镜像，登录会话的 `/etc/profile.d/enterns.sh` 在嵌套 systemd 存活时无参
+    执行 enterns → `sudo nsenter ... su -l $USER`，把命令劫持成交互 shell
+    （`inv xmnn.build` “进入 shell”的真相）；同目录 docker-host.sh 还会在
+    podman 未就绪时污染 `DOCKER_HOST=unix://`。client 桥接器已固定非登录
+    （PATH 显式前置 + LANG 兜底）；手工诊断/脚本一律
+    `wsl -d <d> -- bash /mnt/d/.../*.sh`，不要用裸 `wsl -d <d>` 登录会话承载
+    自动化。同次实证的姊妹坑：VM 回收后 `/run/user/<uid>`（tmpfs）不重建，
+    podman 全命令 exit 125——invoke 已在 Linux 放行路径自动 `sudo -n` 重建
+    （ensure_wsl_rootless_runtime，W-I12）；手工诊断若撞上
+    `RunRoot not writable`，先建目录再继续。
 
 ## 11. Changelog
+
+- **v1.0.4** (2026-09-16): 错误表新增三行——① `inv <ns>.build` 等桥接任务
+  误入交互 shell（登录 shell 被 Fedora-WSL enterns `su -l` 劫持，client
+  W-I11）；② VM 回收后 `/run/user/<uid>` tmpfs 不重建致 podman exit 125
+  （W-I12，编排层 ensure_wsl_rootless_runtime 已自动 sudo -n 重建）；
+  ③ 外部客户端经 podman.sock `system/prune` 跨项目误删 Exited 容器的识别与
+  恢复。Gotchas 新增第 11 条「桥接必须非登录 shell」。实证 session
+  sc-20260916-xmnn-build-shell：build 90s 正常完成、模拟回收自愈、up/smoke
+  全过；client 侧配套 test_wsl_bridge 9 例（84 passed）。
 
 - **v1.0.3** (2026-09-15): 端口占用行三因扩四因，新增**确定性首因「跨控制平面
   标签分歧」**（Windows 裸 compose `D:\` vs invoke `--file /mnt/d/`，config-hash
@@ -251,7 +275,7 @@ drvfs metadata 模式宿主 chmod 即时透传容器视图）。手工救急：
   三道自动自愈（编排层 overlay_core，三栈同族）；Gotchas 新增第 10 条「单一
   控制平面纪律」。实证序列：破损现场自愈 / 裸 compose 干净起栈 / 同平面幂等 /
   桥接跨平面自愈 / invoke 幂等，jupyter 栈全程零影响（session
-  sc-20260915-xmnn-2223-bind；client 排障 W-I10）。
+    sc-20260915-xmnn-2223-bind；client 排障 W-I10）。
 - **v1.0.2** (2026-09-15): 错误表新增"假 Up"（ps/HTTP 302 正常但 exec 报
   `crun ... status: No such file`；libpod 记 running、容器 PID 已死、孤儿
   conmon/rootlessport 续命）及免 `wsl --shutdown` 的五步定向清理；端口占用行

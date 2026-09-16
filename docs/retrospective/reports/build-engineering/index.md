@@ -45,4 +45,5 @@ summary-palmdet-compile-fix-20260812
 troubleshooting-devcontainer-jupyter-gil-20260819
 summary-jpman-client-creation-future-cleanup-20260907
 summary-jpman-client-podman-sdk-file-not-found-20260908
+summary-jpman-client-wsl-bridge-retro-20260916
 ```
