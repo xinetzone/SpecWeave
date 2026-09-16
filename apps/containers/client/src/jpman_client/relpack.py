@@ -27,6 +27,9 @@ ARTIFACTS_DIR = RELEASE_DIR / "artifacts"
 
 _WHEEL_RE = re.compile(r"xmnn-(?P<ver>.+)-cp314-cp314-linux")
 _DEFAULT_DISTRO = "podman-machine-default"
+# Windows 原生脚本的规范行尾即 CRLF，shebang-LF 扫描须跳过；
+# artifacts/ 存放 GB 级镜像归档，不做全文本扫描。
+_WINDOWS_NATIVE_SUFFIXES = {".ps1", ".psm1", ".bat", ".cmd"}
 
 
 @dataclass(frozen=True)
@@ -105,6 +108,28 @@ def source_commit() -> str:
         return "unknown"
 
 
+def find_crlf_shebang_scripts(root: Path | None = None) -> list[Path]:
+    """列出交付骨架中"shebang 开头却含 CR"的 POSIX 脚本（CRLF 行尾）。
+
+    shebang 由内核在解释器启动前按字节解析：CRLF 会把解释器名变成
+    ``bash\\r``，客户首跑即报 ``/usr/bin/env: 'bash\\r'``，脚本内部的去
+    CR 防护无法自救。Windows 原生脚本（.ps1/.bat/.cmd，规范行尾为 CRLF）
+    与 artifacts/ 内的镜像归档不参与扫描。
+    """
+    root = root or RELEASE_DIR
+    broken: list[Path] = []
+    for path in sorted(root.rglob("*")):
+        if not path.is_file() or path.suffix.lower() in _WINDOWS_NATIVE_SUFFIXES:
+            continue
+        rel_parts = path.relative_to(root).parts
+        if rel_parts and rel_parts[0] == "artifacts":
+            continue
+        data = path.read_bytes()
+        if data.startswith(b"#!") and b"\r" in data:
+            broken.append(path)
+    return broken
+
+
 def _run_wsl_script(script_path: Path, args: list[str], timeout: int) -> str:
     """经 wsl.exe 执行脚本文件（避免 -c 多行内联脚本被 wsl 参数层转义破坏）。
 
@@ -155,6 +180,17 @@ def pack_release(release_version: str | None = None) -> ReleaseManifest:
 
     RELEASE_DIR.mkdir(parents=True, exist_ok=True)
     ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 交付 choke point：骨架脚本 CRLF 会让客户首跑死在 shebang（bash\r），
+    # 打包前 fail-fast，不把坏字节带出厂商环境。
+    crlf_scripts = find_crlf_shebang_scripts()
+    if crlf_scripts:
+        names = ", ".join(str(p.relative_to(RELEASE_DIR)) for p in crlf_scripts)
+        raise RuntimeError(
+            f"交付骨架存在 CRLF shebang 脚本：{names}；客户首跑会报 "
+            "/usr/bin/env: 'bash\\r'。请在仓库根执行 "
+            "`git add --renormalize .` 修复行尾后重新打包"
+        )
 
     archive_name = f"xmnn-runtime-{version}.tar.gz"
     # 脚本写到 artifacts/（位于交付目录树内但被 .gitignore 忽略），执行后删除；

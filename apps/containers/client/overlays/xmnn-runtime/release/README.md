@@ -104,6 +104,7 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 | 忘记密码 / Token | 查看 `.env`；或 `init --force` 后 `down`、`up` |
 | 端口被占用 | 修改 `.env` 的端口后重新 `up` |
 | Podman 提示找不到 compose | 安装 podman-compose，或升级到内置 compose 的 Podman 版本 |
+| Linux/macOS 执行报 `'bash\r': No such file or directory` | 脚本在拷贝中被改成了 Windows 行尾：Linux/WSL 执行 `sed -i 's/\r$//' xmnnctl`（macOS 用 `sed -i '' 's/\r$//' xmnnctl`），重新 `chmod +x xmnnctl` 后再试；或重新获取交付包 |
 | SSH 客户端提示主机指纹不符 | 通常因在其他机器使用过同端口；确认安全后执行 `ssh-keygen -R "[localhost]:2225"` |
 
 ## 8. Windows 使用注意

@@ -121,6 +121,29 @@ def test_scripts_defend_against_crlf_env():
     assert 'WriteAllText' in pwsh and '"`n"' in pwsh
 
 
+def test_release_shebang_scripts_are_lf_only():
+    # shebang 在解释器启动前由内核按字节解析（'bash\r' 无法启动），
+    # 脚本内 tr -d '\r' 救不了自己的 shebang——随包 POSIX 脚本必须全 LF。
+    assert relpack.find_crlf_shebang_scripts(RELEASE) == []
+
+
+def test_find_crlf_shebang_scripts_detects_bad_and_skips(tmp_path):
+    (tmp_path / "ctl").write_bytes(b"#!/usr/bin/env bash\r\necho hi\r\n")
+    (tmp_path / "ok.sh").write_bytes(b"#!/bin/sh\ntrue\n")
+    # .ps1 首行虽有 shebang，但规范行尾就是 CRLF，必须跳过
+    (tmp_path / "ctl.ps1").write_bytes(
+        b"#!/usr/bin/env pwsh\r\nWrite-Host 1\r\n"
+    )
+    # artifacts/ 内为镜像归档（大二进制），即使字节偶然命中也不扫描
+    art = tmp_path / "artifacts"
+    art.mkdir()
+    (art / "image.tar.gz").write_bytes(b"#!/bin/sh\r\njunk\r\n")
+
+    bad = relpack.find_crlf_shebang_scripts(tmp_path)
+
+    assert [p.name for p in bad] == ["ctl"]
+
+
 def test_post_load_inspect_is_runtime_aware():
     # podman load 裸名归一化 localhost/：inspect 引用必须按运行时分流
     bash = (RELEASE / "xmnnctl").read_text(encoding="utf-8")

@@ -40,13 +40,20 @@ requirements*.txt text eol=lf
 *.cmd      text eol=crlf
 # Git hooks (extensionless POSIX shell scripts)
 .githooks/* text eol=lf
-# Extensionless POSIX shell CLIs (e.g. apps/containers/jupyter-podman-rootless/bin/jpman).
-# Without an explicit rule these fall back to `text=auto` + core.eol=native, so a Windows
-# checkout writes CRLF and `bash bin/jpman ...` fails in WSL/Linux with
-# "set: pipefail: invalid option name". Windows-native siblings (*.cmd/*.ps1) keep CRLF
-# via the rules above. NOTE: unlike .gitignore, a pattern containing a slash is anchored
-# to this file's directory, so a leading `**/` is required to match nested paths.
-**/bin/jpman  text eol=lf
+# Extensionless POSIX shell CLIs (no .sh suffix, so the *.sh rule cannot match
+# them): bin/jpman and the customer-facing release/xmnnctl. Without an explicit
+# rule these fall back to `text=auto`, so a Windows checkout with
+# core.autocrlf=true writes CRLF and the first run dies in WSL/Linux with
+# "/usr/bin/env: 'bash\r': No such file or directory" (jpman's variant:
+# "set: pipefail: invalid option name") — the shebang is parsed by the kernel
+# before bash starts, so no in-script guard can fix its own line endings.
+# Windows-native siblings (*.cmd/*.ps1) keep CRLF via the rules above.
+# Add one line per new extensionless CLI; the release-bundle tests
+# (relpack.find_crlf_shebang_scripts) fail loudly if a shebang script ships CRLF.
+# NOTE: unlike .gitignore, a pattern containing a slash is anchored to this
+# file's directory, so a leading `**/` is required to match nested paths.
+**/bin/jpman        text eol=lf
+**/release/xmnnctl  text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi

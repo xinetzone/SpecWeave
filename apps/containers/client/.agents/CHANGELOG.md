@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-16 · `fix:` 客户首跑 `./xmnnctl` 报 `/usr/bin/env: 'bash\r'`——无扩展名 POSIX CLI 漏出 gitattributes LF 保护
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnnctl-crlf，未提交，commit hash 待补）。
+
+**现象与根因**：客户控制台执行随包 `xmnnctl` 即报 `/usr/bin/env: 'bash\r': No such file or directory`。取证：仓库 index/工作区该文件均为 LF（本机 core.autocrlf=false），但 `git ls-files --eol` 显示其属性仅为 `text=auto`——脚本无 `.sh` 扩展名，不匹配根 .gitattributes 的 `*.sh text eol=lf`；在 core.autocrlf=true 的 Windows 检出/打包机上工作区被写成 CRLF，拷贝/压缩通道只搬运字节，交付副本首跑即死。shebang 由内核在解释器启动前按字节解析（`bash\r` ≠ `bash`），脚本内既有的 `tr -d '\r'`（防 .env CRLF）无法自救。同类事故 2026-08 已在 `**/bin/jpman` 发生并加过单点规则，但未泛化——`release/xmnnctl` 作为新无扩展名 CLI 漏网；既有测试锁了 `.env.example` 的 LF 与脚本对 .env 的去 CR，唯独没锁脚本文件自身字节。
+
+**修复（三层防御 + 客户自救）**：① 根 .gitattributes 把 jpman 单点升级为「无扩展名 POSIX CLI 清单」，新增 `**/release/xmnnctl text eol=lf`（任何 autocrlf 配置下 checkout 强制 LF）；② relpack 新增纯函数 `find_crlf_shebang_scripts()`（跳过 .ps1/.bat/.cmd 等规范即 CRLF 的 Windows 原生脚本与 artifacts/ GB 级归档），`pack_release()` 打包前 fail-fast 并提示 `git add --renormalize`；③ test_release_bundle.py 新增两例：交付骨架 shebang 脚本零 CR、纯函数命中 CRLF bash/放过 CRLF ps1 与 artifacts；④ release/README 排障表加客户自助行（Linux/WSL `sed -i 's/\r$//'`、macOS BSD sed 变体）。
+
+**V 对抗审查（四视角）**：① 魔鬼——仓库文件已是 LF 为何仍改：故障副本来自 autocrlf=true 的其他检出/交付通道，jpman 前科实证该路径真实存在，规则不可省；② 边界——xmnnctl.ps1 首行同为 shebang 但规范行尾即 CRLF，扫描必须按后缀排除（测试锁定）；③ 边界——artifacts/ 含 GB 级镜像 tar.gz，全量 read_bytes 会爆，按目录跳过；④ 新人——未来新增无扩展 CLI 漏配规则时骨架测试自动红，不依赖人记住 gitattributes；⑤ 未来——pack 是厂商交付唯一 choke point，守卫挂此使坏字节不出门。自有 overlays/bin 全量扫描确认无第二条漏网 POSIX 脚本。
+
+**C 同步**：预防措施 `[prevent: test-case, build-gate]`——gitattributes 源头强制 LF、relpack 打包 fail-fast、shebang-LF 双测试回归锁；客户侧 README 排障行提供存量坏副本自救。
+
 ### 2026-09-16 · `feat:` xmnn-runtime 内置 torch 2.14.0+cpu——pytorch 前端工具链固化（稳定版）
 
 **关联七概念场景**：场景3「重构优化」（I→F→V→C，session sc-20260916-runtime-torch-builtin，未提交，commit hash 待补）。
