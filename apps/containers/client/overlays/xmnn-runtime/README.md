@@ -43,6 +43,10 @@
 Python、无需联网，Podman 与 Docker 双兼容。客户侧使用说明见
 [release/README.md](release/README.md)。
 
+> 在**开发仓库内演练**随包脚本时须进入 `release/`（叠加层根目录不含
+> `xmnnctl`）：`cd release; .\xmnnctl.ps1 init`，或直接
+> `.\release\xmnnctl.ps1 init`；日常开发态仍使用下文的 `invoke xmnnrt.*`。
+
 ## 前置条件
 
 1. podman machine（Windows 即 WSL2 后端）已运行；

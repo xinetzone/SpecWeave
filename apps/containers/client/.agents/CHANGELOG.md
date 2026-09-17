@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` 叠加层根目录执行 `.\xmnnctl.ps1` 报"不会被识别"——双布局位置接缝补引导
+
+**关联七概念场景**：场景2「问题解决」（F→V→C，session sc-20260917-xmnnctl-ps1-missing，未提交，commit hash 待补）。
+
+**现象与根因**：在 `overlays/xmnn-runtime` 根目录执行 `.\xmnnctl.ps1 init`，PowerShell 报"术语不会被识别为 cmdlet"。取证：脚本物理路径为 `release/xmnnctl.ps1`（客户交付包根），根目录只有开发栈同名文件 `compose.yaml`/`.env.example`。5-Why 系统性根因——开发态栈（根目录，`invoke xmnnrt.*`，extends 仓库 `_shared`）与客户交付态栈（`release/`，自包含、零仓库知识、xmnnctl）两套布局同构、同名文件并列且仅隔一层目录；客户文档 §2 的命令文本隐含"cwd=交付包根"却不携带位置信息，"厂商 pack 后在开发仓库内演练交付脚本"这一高频场景无任一文档覆盖，跨布局执行时错误点零引导。
+
+**修复（文档接缝，零行为变更）**：① release/README.md §2 开头加「执行位置」块（交付包根判别标志：同目录含 `xmnnctl.ps1`+`artifacts/`+`workspace/`；仓库演练给 `cd release` 与 `.\release\xmnnctl.ps1` 两条可复制路径）；② §7 排障表新增行覆盖原始报错关键词"不会被识别"；③ 叠加层根 README §客户独立交付包补厂商演练指引（经 release/，开发态仍走 invoke）。
+
+**V 对抗审查（四视角）**：① 魔鬼——评估"根目录加转发/提示脚本"后否决：双脚本漂移违背单一事实源，且会在 staging 写入 `.env`/`workspace` 并与同名 compose project 的容器/卷互相干扰；② 新人——"交付包根"首次接触不可懂，已给判别标志与可复制命令；③ 老板——改动 2 README + 本条 CHANGELOG，无代码/测试面变更，不破坏 release 契约（零 Python/零仓库知识测试不受影响）；④ 未来——排障行按原始报错词书写，搜索即命中。实测从叠加层根 `.\release\xmnnctl.ps1 version/init` 均成功（脚本 `Set-Location $PSScriptRoot` 自定位，artifacts tar 1.2 GB 与 release.json 完整、git 忽略有效）。
+
+**C 同步**：预防措施 `[prevent: doc-seam]`——双布局边界在客户文档与开发文档两侧显式表达；眼前解困命令 `.\release\xmnnctl.ps1 init` 已实测通过。
+
 ### 2026-09-17 · `fix:` xmnnctl 预检在 WSL 非登录 shell 误报"缺少 compose"——PATH 外用户级 companion 回退探测
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-preflight-companion，未提交，commit hash 待补）。
