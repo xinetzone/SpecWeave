@@ -22,6 +22,7 @@ def test_windows_pipe_branch(reset_transcode_singleton):
     assert is_tty is False
 
 
+@pytest.mark.skipif(not IS_WINDOWS, reason="缓存短路用例需 patch ctypes.WinDLL（该属性仅 Windows 存在）")
 def test_cached_singleton_short_circuit(monkeypatch, reset_transcode_singleton):
     # platform 守卫先于缓存判定：返回 Windows 后，命中缓存不得再触碰 ctypes 等初始化路径
     monkeypatch.setattr(wt.platform, "system", lambda: "Windows")

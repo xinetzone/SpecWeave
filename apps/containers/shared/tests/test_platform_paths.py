@@ -1,9 +1,14 @@
 """platform_paths 的平台分支测试（无 daemon、无网络）。"""
 import platform as _platform
 
+import pytest
+
 from jpman_common import platform_paths as pp
 
+IS_WINDOWS = _platform.system() == "Windows"
 
+
+@pytest.mark.skipif(not IS_WINDOWS, reason="盘符 D:\\ → /mnt/d/ 转换仅在宿主 Windows 生效")
 def test_normalize_windows_drive_path():
     assert pp.normalize_path_str("D:\\foo\\bar") == "/mnt/d/foo/bar"
     assert pp.normalize_path_str("c:\\Users\\x") == "/mnt/c/Users/x"
@@ -15,6 +20,7 @@ def test_normalize_windows_posix_passthrough():
     assert pp.normalize_path_str("/workspace") == "/workspace"
 
 
+@pytest.mark.skipif(not IS_WINDOWS, reason="相对路径反斜杠归一仅在宿主 Windows 生效")
 def test_normalize_windows_relative_backslashes():
     assert pp.normalize_path_str("rel\\path") == "rel/path"
     assert pp.normalize_path_str("plain") == "plain"

@@ -215,6 +215,7 @@ def test_has_wsl_host_support_missing_exe(monkeypatch):
     assert conn._has_wsl_host_support() is False
 
 
+@pytest.mark.skipif(not IS_WINDOWS, reason="wsl.exe + /mnt/wsl 双门卫仅在宿主 Windows 成立")
 def test_has_wsl_host_support_ok(monkeypatch):
     monkeypatch.setattr(conn.shutil, "which", lambda name: r"C:\Windows\System32\wsl.exe")
     monkeypatch.setattr(conn, "Path", lambda p: _FakeMntPath(exists_value=True))
@@ -274,6 +275,7 @@ def test_machine_uri_no_podman_cli(monkeypatch):
     assert conn.machine_connection_uri() is None
 
 
+@pytest.mark.skipif(not IS_WINDOWS, reason="Podman Machine 默认连接探测仅在宿主 Windows 进入")
 def test_machine_uri_picks_default(monkeypatch):
     monkeypatch.setattr(conn.shutil, "which", lambda name: r"C:\bin\podman.exe")
     payload = (
