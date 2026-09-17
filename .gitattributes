@@ -41,7 +41,8 @@ requirements*.txt text eol=lf
 # Git hooks (extensionless POSIX shell scripts)
 .githooks/* text eol=lf
 # Extensionless POSIX shell CLIs (no .sh suffix, so the *.sh rule cannot match
-# them): bin/jpman and the customer-facing release/xmnnctl. Without an explicit
+# them): bin/jpman, the customer-facing release/xmnnctl and the dev-repo
+# convenience shim overlays/xmnn-runtime/xmnnctl. Without an explicit
 # rule these fall back to `text=auto`, so a Windows checkout with
 # core.autocrlf=true writes CRLF and the first run dies in WSL/Linux with
 # "/usr/bin/env: 'bash\r': No such file or directory" (jpman's variant:
@@ -53,7 +54,7 @@ requirements*.txt text eol=lf
 # NOTE: unlike .gitignore, a pattern containing a slash is anchored to this
 # file's directory, so a leading `**/` is required to match nested paths.
 **/bin/jpman        text eol=lf
-**/release/xmnnctl  text eol=lf
+**/xmnnctl          text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi
