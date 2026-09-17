@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `docs:` release/README 小白化——零基线读者的环境准备、第 0 步、预期输出与词典 FAQ
+
+**关联七概念场景**：场景5「知识沉淀」（E→C，session sc-20260917-readme-newbie，未提交，commit hash 待补）。
+
+**背景**：客户交付文档的真实读者是完全不懂技术的终端用户（只会复制粘贴），旧版 README 默认读者已知"终端/PowerShell/容器/localhost/Token"等概念，且从不描述"成功时长什么样"，用户见到红字即恐慌、不知道播放器后台需先启动。
+
+**修复（纯文档，零行为变更）**：① 开头新增"30 秒建立印象"块（软件电脑 + 播放器类比、红字不等于失败的语义）；② §1 增"开始前三样东西"（Podman Desktop/Docker Desktop 官方链接、PowerShell 7 自检命令 `$PSVersionTable.PSVersion`、解压双层同名目录避坑）；③ §2 新增"第 0 步：在正确文件夹打开终端"（Shift+右键/地址栏 pwsh、`dir` 核对、托盘启动检查、终端粘贴常识）；④ init/load/up 预期输出与耗时表（16 位密码/32 位 Token、1.2 GB 约 1-5 分钟、`====` 方框为成功标志、蓝绿黄红四色语义）；⑤ 首次登录 JupyterLab 指引（Token 从 .env 获取、URL 直登法、内核必须选 Python 3.14 (xmnn runtime)）；⑥ 新增 §9 小白词典（9 条）与高频问题（8 条，含重启后只需 up、可关终端、执行策略 Bypass、Linux chmod）；⑦ 顺带修正事实矛盾：`workspace/` 首次 `up` 才创建，不能作为刚解压时的位置判别标志。
+
+**V 对抗审查**：所有耗时/位数/颜色/命令事实逐行对照 xmnnctl 双脚本源码核实；check-links 通过；纯文档无契约面变更。
+
+**C 同步**：预防措施 `[prevent: zero-baseline-docs]`——五件套（类比开场→环境自检→动作级第 0 步→预期输出表→词典/FAQ）作为客户交付文档基线模板。
+
 ### 2026-09-17 · `fix:` 根目录新增 xmnnctl 薄转发壳，`./xmnnctl` 在叠加层根直接可用
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-readme-block-unrunnable，未提交，commit hash 待补）。
