@@ -10,8 +10,10 @@
   - 厂商打包器 relpack 的纯函数（版本解析 / WSL 路径转换）正确。
 """
 
+import os
 import re
 import shutil
+import socket
 import subprocess
 from pathlib import Path
 
@@ -41,7 +43,13 @@ def test_tracked_skeleton_present(rel):
 
 
 def test_release_has_no_python_files():
-    pys = [p for p in RELEASE.rglob("*.py")]
+    # workspace/ 是客户运行时可写的用户数据区（交付时仅含 .gitkeep，客户的
+    # notebook/模型脚本会在使用中落入），artifacts/ 是镜像归档；两者都不属于
+    # "零 Python 控制面"契约的扫描范围。
+    pys = [
+        p for p in RELEASE.rglob("*.py")
+        if p.relative_to(RELEASE).parts[0] not in ("artifacts", "workspace")
+    ]
     assert pys == [], f"客户目录不应包含 Python 文件：{pys}"
 
 
@@ -523,6 +531,191 @@ def test_artifacts_gitignore_keeps_itself():
     assert "*" in text and "!.gitignore" in text
 
 
+# ── up 前宿主端口预检（跨 podman/docker 引擎冲突 fail-fast）─────────────────
+#
+# 背景：两引擎共享宿主网络命名空间却互不可见对方的端口占用；rootless 的转发
+# 表现为宿主用户进程（rootlessport）。不预检时 compose up 在绑定阶段才报
+# "bind: address already in use"，且不指认占用者。预检必须：
+#   1) 直接探测宿主网络栈（不能只查当前引擎 ps）；
+#   2) 本引擎同名容器自持有端口时豁免（幂等 up / 改配置重建）；
+#   3) 被占时给出对侧 down 指引与"并存需端口+容器名+workspace 三隔离"指引。
+
+
+@pytest.mark.parametrize("script", ["xmnnctl", "xmnnctl.ps1"])
+def test_up_preflights_host_ports_before_compose(script):
+    text = (RELEASE / script).read_text(encoding="utf-8")
+    if script == "xmnnctl":
+        body = text.split("do_up() {", 1)[1].split("\n}", 1)[0]
+        assert body.index("preflight_ports") < body.index("compose up -d")
+        assert "port_holder" in text and "self_publishes_port" in text
+    else:
+        body = text.split("function Do-Up {", 1)[1].split("\n}", 1)[0]
+        assert body.index("Assert-HostPorts") < body.index('Invoke-Compose "up -d"')
+        assert "Test-HostPortListening" in text and "Test-SelfPublishesPort" in text
+    # 可操作指引三件套：对侧运行时 down、并存改容器名、workspace 不可共享
+    assert "另一运行时" in text
+    assert "XMNN_CONTAINER_NAME" in text
+    assert "workspace" in text
+
+
+_SS_HEADER = ("State    Recv-Q   Send-Q     Local Address:Port      "
+              "Peer Address:Port   Process")
+_SS_2225 = ('LISTEN   0        4096       0.0.0.0:2225           '
+            '0.0.0.0:*           users:(("rootlessport",pid=1597202,fd=10))')
+
+
+def _bash_port_harness(tmp_path: Path, ss_text: str, docker_ps: str,
+                       ssh_port: str = "2225") -> subprocess.CompletedProcess:
+    # ss/docker 双 shim 经环境变量读取伪造输出（引号定界 heredoc 字面注入，
+    # 内容再含括号/引号也不破译）；PATH 让 shim 优先，绝不触达真实守护进程。
+    harness = f"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+mkdir -p "$T/shim"
+cat > "$T/shim/docker" <<'DOCKEREOF'
+#!/usr/bin/env bash
+if [ "$1" = ps ]; then printf '%s' "$FAKE_DOCKER_PS"; fi
+exit 0
+DOCKEREOF
+cat > "$T/shim/ss" <<'SSEOF'
+#!/usr/bin/env bash
+printf '%s' "$FAKE_SS"
+SSEOF
+chmod +x "$T/shim/docker" "$T/shim/ss"
+cat > "$T/fake_docker_ps" <<'DPEOF'
+{docker_ps}DPEOF
+cat > "$T/fake_ss" <<'SSEOF'
+{ss_text}SSEOF
+export FAKE_DOCKER_PS="$(cat "$T/fake_docker_ps")"
+export FAKE_SS="$(cat "$T/fake_ss")"
+cat > "$T/.env" <<'ENVEOF'
+XMNN_SSH_PORT={ssh_port}
+XMNN_JUPYTER_PORT=8893
+XMNN_CONTAINER_NAME=xmnn-runtime
+ENVEOF
+sed '$d' > "$T/lib.sh"
+export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
+. "$T/lib.sh"
+RT=docker
+preflight_ports
+printf 'PORT_PREFLIGHT_DONE\\n'
+"""
+    return _run_bash_preflight(harness, tmp_path)
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_port_preflight_free_passes(tmp_path):
+    proc = _bash_port_harness(tmp_path, ss_text=_SS_HEADER + "\n", docker_ps="")
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "PORT_PREFLIGHT_DONE" in proc.stdout
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_port_preflight_foreign_holder_fails_fast(tmp_path):
+    # ss 指认 2225 被占、docker ps 查无自有发布（跨引擎占用场景复刻）
+    proc = _bash_port_harness(
+        tmp_path, ss_text=_SS_HEADER + "\n" + _SS_2225 + "\n", docker_ps="")
+    assert proc.returncode == 1
+    merged = proc.stdout + proc.stderr
+    assert "宿主端口 2225 已被占用" in merged
+    assert "另一运行时（podman）" in merged
+    assert "./xmnnctl -r podman down" in merged
+    assert "PORT_PREFLIGHT_DONE" not in merged
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_port_preflight_self_holder_warns_and_passes(tmp_path):
+    # 同一 docker 引擎的同名容器已发布 2225（幂等 up/改配重建）→ 豁免
+    proc = _bash_port_harness(
+        tmp_path, ss_text=_SS_HEADER + "\n" + _SS_2225 + "\n",
+        docker_ps="0.0.0.0:2225->22/tcp\n")
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "原地更新" in proc.stdout
+    assert "PORT_PREFLIGHT_DONE" in proc.stdout
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_port_preflight_bad_port_value(tmp_path):
+    proc = _bash_port_harness(
+        tmp_path, ss_text=_SS_HEADER + "\n", docker_ps="", ssh_port="abc")
+    assert proc.returncode == 1
+    assert "端口配置非法" in proc.stdout + proc.stderr
+
+
+def _closed_local_port() -> int:
+    probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    probe.bind(("127.0.0.1", 0))
+    port = probe.getsockname()[1]
+    probe.close()
+    return port
+
+
+def _listening_local_port() -> tuple[socket.socket, int]:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.listen(1)
+    return sock, port
+
+
+def _pwsh_port_harness(tmp_path: Path, ssh_port: str, self_holds: bool,
+                       jupyter_port: str = "8893"):
+    (tmp_path / ".env").write_text(
+        f"XMNN_SSH_PORT={ssh_port}\nXMNN_JUPYTER_PORT={jupyter_port}\n"
+        "XMNN_CONTAINER_NAME=xmnn-runtime\n",
+        encoding="utf-8", newline="\n")
+    override = "$true" if self_holds else "$false"
+    body = f"""
+. "__LIB__"
+$Script:Rt = "docker"
+function Test-SelfPublishesPort([string]$c, [int]$p) {{ {override} }}
+Assert-HostPorts
+Write-Host "PORT_PREFLIGHT_DONE"
+"""
+    return _run_pwsh_lib_harness(body, tmp_path)
+
+
+@pytest.mark.skipif(shutil.which("pwsh") is None, reason="环境无 pwsh，跳过 ps1 预检行为测试")
+def test_pwsh_port_preflight_free_passes(tmp_path):
+    # 关闭后的临时端口：本机连接立即被拒（避免依赖固定端口空闲）
+    proc = _pwsh_port_harness(
+        tmp_path, str(_closed_local_port()), self_holds=False,
+        jupyter_port=str(_closed_local_port()))
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "PORT_PREFLIGHT_DONE" in proc.stdout
+
+
+@pytest.mark.skipif(shutil.which("pwsh") is None, reason="环境无 pwsh，跳过 ps1 预检行为测试")
+def test_pwsh_port_preflight_foreign_holder_fails_fast(tmp_path):
+    sock, port = _listening_local_port()
+    try:
+        proc = _pwsh_port_harness(
+            tmp_path, str(port), self_holds=False,
+            jupyter_port=str(_closed_local_port()))
+    finally:
+        sock.close()
+    assert proc.returncode == 1
+    merged = proc.stdout + proc.stderr
+    assert f"宿主端口 {port} 已被占用" in merged
+    assert "另一运行时（podman）" in merged
+    assert "PORT_PREFLIGHT_DONE" not in merged
+
+
+@pytest.mark.skipif(shutil.which("pwsh") is None, reason="环境无 pwsh，跳过 ps1 预检行为测试")
+def test_pwsh_port_preflight_self_holder_warns_and_passes(tmp_path):
+    sock, port = _listening_local_port()
+    try:
+        proc = _pwsh_port_harness(
+            tmp_path, str(port), self_holds=True,
+            jupyter_port=str(_closed_local_port()))
+    finally:
+        sock.close()
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "原地更新" in proc.stdout
+    assert "PORT_PREFLIGHT_DONE" in proc.stdout
+
+
 # ── relpack 纯函数 ──────────────────────────────────────────────────────────
 
 
@@ -540,5 +733,8 @@ def test_resolve_wheel_missing_raises(tmp_path):
         relpack.resolve_wheel(tmp_path)
 
 
+@pytest.mark.skipif(
+    os.name != "nt",
+    reason="to_wsl_path 依赖 Windows 盘符路径语义；Linux 下 Path.resolve 会拼入 cwd")
 def test_to_wsl_path():
     assert relpack.to_wsl_path(Path("D:/a/b")) == "/mnt/d/a/b"

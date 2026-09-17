@@ -8,7 +8,8 @@
 #                podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
 #   load     校验并导入 artifacts\ 内随包镜像 tar.gz，随后自动运行守卫
-#   up       启动服务（缺 .env 时自动 init），就绪后打印访问信息
+#   up       启动服务（先预检宿主端口占用，跨运行时冲突 fail-fast；
+#            缺 .env 时自动 init），就绪后打印访问信息
 #   down     停止并删除容器（workspace 与 SSH host key 卷保留）
 #   ps       查看服务状态
 #   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
@@ -340,9 +341,88 @@ function Print-Banner {
     Write-Host ""
 }
 
+# ── 宿主端口预检（up 前 fail-fast）──────────────────────────────────────────
+#
+# podman rootless 与 docker 共享同一个宿主网络命名空间：rootless 的端口转发
+# 表现为宿主上的独立进程，另一引擎的容器列表/元数据完全看不到它。只查当前
+# 引擎的 ps 会漏掉跨引擎占用，直到 compose up 绑定阶段才被系统拒绝
+# （"bind: address already in use"），且报错不指认占用者。预检直接探测宿主
+# 网络栈：TcpClient 本机连接（跨平台零依赖），并用 Get-NetTCPConnection 指认
+# 占用进程（Windows 原生 NetTCPIP）。
+
+function Test-HostPortListening([int]$port) {
+    # 500ms 超时：空闲端口通常立即 RST；localhost 黑洞场景兜底
+    $client = [System.Net.Sockets.TcpClient]::new()
+    try {
+        $iar = $client.BeginConnect("127.0.0.1", $port, $null, $null)
+        if (-not $iar.AsyncWaitHandle.WaitOne(500)) { return $false }
+        $client.EndConnect($iar)
+        return $true
+    } catch {
+        return $false
+    } finally {
+        $client.Close()
+    }
+}
+
+function Get-PortHolder([int]$port) {
+    try {
+        $conn = Get-NetTCPConnection -LocalPort $port -State Listen `
+            -ErrorAction Stop | Select-Object -First 1
+        if ($conn) {
+            $proc = Get-Process -Id $conn.OwningProcess -ErrorAction SilentlyContinue
+            if ($proc) { return "$($proc.ProcessName)（pid=$($proc.Id)）" }
+            return "未知进程（pid=$($conn.OwningProcess)）"
+        }
+    } catch { }
+    return "未知进程（经 TCP 连接探测确认）"
+}
+
+# 本引擎同名容器自身是否已发布该端口。重复 up / 改配置重建时 compose 先停旧
+# 容器再绑定，不会与自己冲突——此情形豁免（仅告警），避免预检误杀幂等重入。
+function Test-SelfPublishesPort([string]$cname, [int]$port) {
+    $ports = @(& $Script:Rt ps --filter "name=^$cname$" --format "{{.Ports}}" 2>$null)
+    return [bool](($ports -join " ") -match ":$port->")
+}
+
+function Assert-HostPorts {
+    $cname = Get-EnvValue XMNN_CONTAINER_NAME; if (-not $cname) { $cname = "xmnn-runtime" }
+    $sport = Get-EnvValue XMNN_SSH_PORT; if (-not $sport) { $sport = "2225" }
+    $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }
+    foreach ($raw in @($sport, $jport)) {
+        $port = 0
+        if (-not [int]::TryParse([string]$raw, [ref]$port) -or $port -lt 1 -or $port -gt 65535) {
+            Die ".env 端口配置非法：$raw（应为 1-65535 的数字）"
+        }
+        if (-not (Test-HostPortListening $port)) { continue }
+        if (Test-SelfPublishesPort $cname $port) {
+            Warn "宿主端口 $port 已由本运行时（$($Script:Rt)）的容器 $cname 发布；up 将原地更新该容器"
+            continue
+        }
+        $other = if ($Script:Rt -eq "podman") { "docker" } else { "podman" }
+        $holder = Get-PortHolder $port
+        Die @"
+宿主端口 $port 已被占用：$holder
+  容器引擎之间互不可见对方的端口占用——这通常是另一运行时（$other）已启动
+  同名容器，或本机其他程序占用了该端口。
+  排查命令：Get-NetTCPConnection -LocalPort $port -State Listen |
+            Select-Object LocalAddress,LocalPort,OwningProcess
+  处理方式（二选一）：
+    1) 切换到 $($Script:Rt)：先停掉另一运行时的实例
+         .\xmnnctl.ps1 -r $other down
+       （down 删除容器但保留 workspace 与 SSH host key 卷；只想停用、保留
+         容器可回退执行 $other stop $cname）
+    2) 两套实例长期并存：复制一份独立交付目录，在其 .env 中同时修改
+       XMNN_SSH_PORT / XMNN_JUPYTER_PORT（换空闲端口）与 XMNN_CONTAINER_NAME，
+       且不要让两个实例映射同一个 workspace 目录
+"@
+    }
+}
+
 function Do-Up {
     New-Item -ItemType Directory -Force workspace | Out-Null
     Assert-RuntimeAlive
+    Assert-HostPorts
     Info "启动 xmnn-runtime（$($Script:Rt)）"
     Invoke-Compose "up -d"
     $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }

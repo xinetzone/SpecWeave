@@ -39,3 +39,6 @@ Thumbs.db
 
 # WSL distro cache (VHDX files and rootfs exports)
 .wsl-cache/
+
+# 本地双运行时并存实例（podman/docker 独立交付目录，含 .env 与运行时数据）
+overlays/xmnn-runtime/release-docker/

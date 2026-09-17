@@ -7,7 +7,8 @@
 #                 podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
 #   load     校验并导入 artifacts/ 内随包镜像 tar.gz，随后自动运行守卫
-#   up       启动服务（缺 .env 时自动 init），就绪后打印访问信息
+#   up       启动服务（先预检宿主端口占用，跨运行时冲突 fail-fast；
+#            缺 .env 时自动 init），就绪后打印访问信息
 #   down     停止并删除容器（workspace 与 SSH host key 卷保留）
 #   ps       查看服务状态
 #   logs     查看服务日志（Ctrl+C 退出，不影响容器运行）
@@ -300,9 +301,86 @@ print_banner() {
     printf '============================================================\n\n'
 }
 
+# ── 宿主端口预检（up 前 fail-fast）──────────────────────────────────────────
+#
+# podman rootless 与 docker 共享同一个宿主网络命名空间：rootless 的端口转发
+# 表现为宿主用户进程（rootlessport），另一引擎的容器列表/元数据完全看不到它。
+# 只查 "$RT ps" 会漏掉跨引擎占用，直到 compose up 绑定阶段才被内核拒绝
+# （"bind: address already in use"），且报错不指认占用者。预检必须直接探测
+# 宿主网络栈：ss（Linux 常规）→ /dev/tcp（bash 内建，macOS/最小环境）→ netstat。
+
+# $1=端口；占用返回 0（占用者描述写全局 PORT_HOLDER），空闲返回 1。
+port_holder() {
+    local port="$1" line pid comm
+    PORT_HOLDER=""
+    if command -v ss >/dev/null 2>&1; then
+        line="$(LC_ALL=C ss -ltnp 2>/dev/null \
+            | awk -v p="$port" 'NR>1 {n=split($4,a,":"); if (a[n]==p) {print; exit}}')"
+        [ -n "$line" ] || return 1
+        pid="$(printf '%s' "$line" | grep -o 'pid=[0-9]*' | head -n1 | cut -d= -f2 || true)"
+        if [ -n "$pid" ] && [ -r "/proc/$pid/comm" ]; then
+            comm="$(tr -d '\n' </proc/$pid/comm 2>/dev/null || true)"
+            PORT_HOLDER="${comm:-未知进程}（pid=$pid）"
+        else
+            PORT_HOLDER="未知进程（属主为其他用户，可用 sudo ss -ltnp 查看）"
+        fi
+        return 0
+    fi
+    # 无 ss（macOS/极简系统）：bash 内建 /dev/tcp 发起本机连接
+    if (exec 3<>"/dev/tcp/127.0.0.1/$port") 2>/dev/null; then
+        exec 3>&- 2>/dev/null || true
+        PORT_HOLDER="未知进程（经 /dev/tcp 探测确认）"
+        return 0
+    fi
+    if command -v netstat >/dev/null 2>&1 \
+       && LC_ALL=C netstat -an 2>/dev/null | grep -Eq "[.:]$port[[:space:]].*LISTEN"; then
+        PORT_HOLDER="未知进程（经 netstat 探测确认）"
+        return 0
+    fi
+    return 1
+}
+
+# 本引擎同名容器自身是否已发布该端口。重复 up / 改配置重建时 compose 先停旧
+# 容器再绑定，不会与自己冲突——此情形豁免（仅告警），避免预检误杀幂等重入。
+# $1=容器名 $2=端口；已发布返回 0。
+self_publishes_port() {
+    local cname="$1" port="$2" ports
+    ports="$("$RT" ps --filter "name=^${cname}$" --format '{{.Ports}}' 2>/dev/null || true)"
+    printf '%s' "$ports" | grep -Eq ":$port->"
+}
+
+preflight_ports() {
+    local cname sport jport p other
+    cname="$(env_value XMNN_CONTAINER_NAME)"; cname="${cname:-xmnn-runtime}"
+    sport="$(env_value XMNN_SSH_PORT)"; sport="${sport:-2225}"
+    jport="$(env_value XMNN_JUPYTER_PORT)"; jport="${jport:-8893}"
+    for p in "$sport" "$jport"; do
+        case "$p" in ''|*[!0-9]*) die ".env 端口配置非法：$p（应为 1-65535 的数字）" ;; esac
+        port_holder "$p" || continue
+        if self_publishes_port "$cname" "$p"; then
+            c_warn "宿主端口 $p 已由本运行时（$RT）的容器 $cname 发布；up 将原地更新该容器"
+            continue
+        fi
+        if [ "$RT" = podman ]; then other=docker; else other=podman; fi
+        die "宿主端口 $p 已被占用：$PORT_HOLDER
+  容器引擎之间互不可见对方的端口占用——这通常是另一运行时（$other）已启动
+  同名容器，或本机其他程序占用了该端口。
+  排查命令：ss -ltnp | grep ':$p'      （或 lsof -iTCP:$p -sTCP:LISTEN）
+  处理方式（二选一）：
+    1) 切换到 $RT：先停掉另一运行时的实例
+         ./xmnnctl -r $other down
+       （down 删除容器但保留 workspace 与 SSH host key 卷；只想停用、保留
+         容器可回退执行 $other stop $cname）
+    2) 两套实例长期并存：复制一份独立交付目录，在其 .env 中同时修改
+       XMNN_SSH_PORT / XMNN_JUPYTER_PORT（换空闲端口）与 XMNN_CONTAINER_NAME，
+       且不要让两个实例映射同一个 workspace 目录"
+    done
+}
+
 do_up() {
     mkdir -p workspace
     assert_runtime_alive
+    preflight_ports
     local jport
     c_info "启动 xmnn-runtime（$RT）"
     compose up -d

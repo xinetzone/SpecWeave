@@ -48,13 +48,19 @@ requirements*.txt text eol=lf
 # "/usr/bin/env: 'bash\r': No such file or directory" (jpman's variant:
 # "set: pipefail: invalid option name") — the shebang is parsed by the kernel
 # before bash starts, so no in-script guard can fix its own line endings.
-# Windows-native siblings (*.cmd/*.ps1) keep CRLF via the rules above.
+# Windows-native siblings (*.cmd) keep CRLF via the rules above.
+# Exception: xmnnctl.ps1 ALSO carries the `#!/usr/bin/env pwsh` shebang and
+# ships inside the customer release bundle — pwsh 7.4+ accepts LF natively,
+# while CRLF kills the shebang on Linux/macOS ("pwsh\r: No such file") and
+# fails release-gate.sh G3 (all bundle text must be zero-CR). Hence the
+# explicit eol=lf override below, despite the generic *.ps1 rule.
 # Add one line per new extensionless CLI; the release-bundle tests
 # (relpack.find_crlf_shebang_scripts) fail loudly if a shebang script ships CRLF.
 # NOTE: unlike .gitignore, a pattern containing a slash is anchored to this
 # file's directory, so a leading `**/` is required to match nested paths.
 **/bin/jpman        text eol=lf
 **/xmnnctl          text eol=lf
+**/xmnnctl.ps1      text eol=lf
 
 # -----------------------------------------------------------------------------
 # Autotools (GNU build system) — critical for C/C++ projects like tvm-ffi

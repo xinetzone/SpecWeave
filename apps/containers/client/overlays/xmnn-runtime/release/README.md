@@ -90,8 +90,11 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 | **JupyterLab** | http://localhost:8893 | `.env` 中的 `JUPYTER_TOKEN`；新建笔记本时内核选择 **Python 3.14 (xmnn runtime)** |
 | **SSH** | `ssh -p 2225 devuser@localhost` | `.env` 中的 `USER_PASSWORD` |
 
-> 如端口 8893/2225 已被占用，可修改 `.env` 中的 `XMNN_JUPYTER_PORT` /
-> `XMNN_SSH_PORT` 后重新 `up`。
+> 如端口 8893/2225 已被占用，`up` 会在启动前直接拦截并指出占用进程，
+> 按报错提示处理即可；也可自行修改 `.env` 中的 `XMNN_JUPYTER_PORT` /
+> `XMNN_SSH_PORT` 后重新 `up`。**特别注意**：Podman 与 Docker 的容器互不
+> 可见，但共享同一组本机端口——若你之前用另一个运行时启动过本服务，
+> 请先到原交付目录执行 `./xmnnctl -r <另一运行时> down` 再切换。
 
 **第一次打开 JupyterLab**：浏览器地址栏输入 `http://localhost:8893`（"localhost"
 就是"本机"，不需要联网）→ 页面要求输入 Token 时，用记事本打开同目录 `.env`
@@ -122,7 +125,7 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 
 ```bash
 ./xmnnctl --runtime docker up     # 强制 Docker
-./xmnn up -r podman               # 强制 Podman（等价写法）
+./xmnnctl -r podman up             # 强制 Podman（等价写法）
 ```
 
 ```powershell
@@ -132,6 +135,14 @@ chmod +x xmnnctl        # 仅首次需要：赋予脚本可执行权限（执行
 也可设置环境变量 `XMNN_RUNTIME=podman|docker|auto`。优先级：命令行参数
 > 环境变量 > `auto` 自动探测。显式指定了未安装的运行时时脚本会直接报错，
 不会静默回退到另一个运行时。
+
+> **切换运行时 ≠ 迁移实例**：两个运行时各自维护容器（互不可见），但共享
+> 同一组本机端口和同一个 `workspace/` 目录。从 A 运行时换到 B 之前，应先在
+> A 侧执行 `down`（或 `<A> stop xmnn-runtime` 仅停用并保留容器）；否则 B 侧
+> `up` 会因端口被占用在预检阶段被拦截。若确实需要两套实例长期并存，请把
+> 交付包**整个解压/复制到另一个目录**，在新目录的 `.env` 中同时更换
+> `XMNN_SSH_PORT`、`XMNN_JUPYTER_PORT` 和 `XMNN_CONTAINER_NAME`，使两套
+> 实例的端口、容器名、`workspace/` 三者完全隔离。
 
 ## 4. 数据与目录
 
@@ -176,7 +187,7 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 | `load` 后提示镜像不存在 | 核对 `.env` 中 `XMNN_VERSION` 与 `artifacts/` 内文件名版本是否一致 |
 | `up` 后 Jupyter 暂时打不开 | 首次启动约需 1 分钟初始化，脚本会自动等待；超时可用 `logs` 查看进度 |
 | 忘记密码 / Token | 查看 `.env`；或 `init --force` 后 `down`、`up` |
-| 端口被占用 | 修改 `.env` 的端口后重新 `up` |
+| 端口被占用（`up` 预检拦截，或报 `bind: address already in use`） | 脚本会指出占用进程并给出处理方式：切换运行时所致 → 先在原运行时 `./xmnnctl -r <另一运行时> down`；其他程序占用或确需并存 → 修改 `.env` 的 `XMNN_SSH_PORT`/`XMNN_JUPYTER_PORT`（并存还需改 `XMNN_CONTAINER_NAME` 并使用独立目录与 `workspace/`）后重新 `up`。手工排查：`ss -ltnp \| grep ':2225'`（Windows：`Get-NetTCPConnection -LocalPort 2225 -State Listen`） |
 | Podman 提示找不到 compose | 脚本会自动尝试 `~/.local/bin`（pipx/pip --user 安装位置）；仍失败时按报错提示安装 `podman-compose`（推荐 `pipx install podman-compose`）。WSL 非登录 shell 可先执行 `export PATH="$HOME/.local/bin:$PATH"` |
 | Linux/macOS 执行报 `'bash\r': No such file or directory` | 脚本在拷贝中被改成了 Windows 行尾：Linux/WSL 执行 `sed -i 's/\r$//' xmnnctl`（macOS 用 `sed -i '' 's/\r$//' xmnnctl`），重新 `chmod +x xmnnctl` 后再试；或重新获取交付包 |
 | SSH 客户端提示主机指纹不符 | 通常因在其他机器使用过同端口；确认安全后执行 `ssh-keygen -R "[localhost]:2225"` |
