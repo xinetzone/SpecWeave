@@ -23,7 +23,7 @@
 |---|---|
 | C/C++ 工具链 | LLVM/Clang/lld 22.1.8、cmake、ninja、make、ccache（main env，conda-forge） |
 | 系统工具 | patchelf（wheel RPATH）、gdb（源码调试） |
-| Nuitka 打包栈（base env） | nuitka==4.1.3、scikit-build-core、build、wheel、invoke、ipykernel + 19 个 xmnn 运行时依赖 |
+| Nuitka 打包栈（base env） | nuitka==4.1.3、scikit-build-core、build、wheel、invoke、ipykernel + pyproject 声明的全部 xmnn 运行时依赖 |
 | 打包内核 | `/opt/xmnn-builder/`：pyproject.toml、CMakeLists.txt、bootstrap、build-wheel/build-tvm/verify-wheel 脚本（**自包含，不依赖 external/chaos/ai**） |
 | Jupyter 内核 | `Python 3.14 (xmnn dev)`（argv=/opt/conda/bin/python，env 内嵌源码 PYTHONPATH） |
 | 构建期守卫 | `/opt/xmnn-dev-smoke/_toolchain_guards.py`（双 ABI + 工具链 + LLVM 库 SONAME 实测 + §7 离线完备性） |
@@ -167,7 +167,7 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 
 ### 过程一：镜像环境构建（有网侧，一次性）
 
-目标是产出**离线自足镜像**：把 numpy/scipy 等 19 个运行时依赖、Nuitka 打包栈、
+目标是产出**离线自足镜像**：把 numpy/scipy 等 `pyproject.toml` 声明的全部运行时依赖、Nuitka 打包栈、
 系统 gcc/g++、LLVM/Clang 22、cmake/ninja/ccache、patchelf 等编译期依赖全部
 烤进镜像，并由**构建期离线完备性守卫**（`smoke/_toolchain_guards.py` §7）逐项
 实测断言。守卫在构建期 fail-fast，把缺口暴露在有网侧，而不是搬到无网机器后才炸。

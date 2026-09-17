@@ -6,6 +6,12 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` 清扫运行时依赖计数的陈旧文案（19 → 动态表述）
+
+**背景**：真机构建期 §7 守卫实测 `[project].dependencies` 为 **20 条**，而仓库内 8 处文案仍写「19 个」；`install-build-deps.py` 实为动态读取该清单、并无 19 的硬编码逻辑，故该数字纯属陈旧漂移（清单增补依赖时无人同步散文）。8 处统一改为「pyproject 声明的全部运行时依赖」，Containerfile Layer 3 注释显式注明"数量随清单变化，勿在此硬编码"。
+
+**C 同步**：预防措施 `[prevent: no-hardcoded-dep-counts]`——易漂移的计数不进散文，改由单一事实源表达（`builder/pyproject.toml` 为唯一清单 + §7 守卫构建期实测并打印实际条数）。
+
 ### 2026-09-17 · `refactor:` xmnn-dev 固化为两个过程——镜像构建（有网）/ 离线开发（无网）+ 构建期离线完备性守卫
 
 **关联七概念场景**：场景3「重构优化」（I→F→V→A→C，session sc-20260917-xmnn-dev-two-phase，commit 26eaa00ca）。

@@ -37,7 +37,7 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
 - **两个过程：镜像构建（有网） → 离线开发（无网）**：过程一在有网侧
   `invoke xmnn.build` + `invoke xmnn.save`（导出 tar.gz + manifest/SHA256 归档）
   ——镜像自足性由**构建期离线完备性守卫**（`smoke/_toolchain_guards.py` §7）实测
-  断言（编译/打包前端可解析 + pyproject 声明的 19 个运行时依赖全部已装），缺口
+  断言（编译/打包前端可解析 + pyproject 声明的全部运行时依赖已装），缺口
   在有网侧 fail-fast；过程二在无网侧 `invoke xmnn.load --path <归档>` 导入 →
   `invoke xmnn.up --offline`（等价 `.env` 里 `XMNN_OFFLINE=1`）→ `build-tvm` /
   `wheel` / `verify-wheel.sh` 全部离线可用（脚本内已无联网点）。离线是

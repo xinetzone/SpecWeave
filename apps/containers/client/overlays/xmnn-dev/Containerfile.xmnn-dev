@@ -84,7 +84,8 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
 
 # ------------------------------------------------------------
 # Layer 3：COPY 打包资产（含 pyproject）后，往 base env 装 Nuitka 打包栈与
-# 19 个运行时依赖。显式 /opt/conda/bin/python：PATH 顶端是 main（cp314t），
+# pyproject 声明的全部运行时依赖（数量随该清单变化，勿在此硬编码）。显式
+# /opt/conda/bin/python：PATH 顶端是 main（cp314t），
 # 裸 pip/python 会装错解释器。PIP_MIRROR 与 onnx 叠加层同构三段。
 # ------------------------------------------------------------
 COPY builder/ /opt/xmnn-builder/

@@ -72,7 +72,7 @@
 - 安装解释器固定 `/opt/conda/bin/python`（cp314 GIL）；wheel tag 为
   cp314-cp314，**禁止装入 main env**（cp314t 不接受该 wheel tag）。
 - 同层显式安装 `ipykernel`（基底 base env 默认无；Jupyter 内核
-  launch 需要）；wheel 的 19 个运行时依赖由 pip 按元数据自动解析，
+  launch 需要）；wheel 的运行时依赖由 pip 按元数据自动解析，
   不在 Containerfile 重复维护清单。
 - **依赖版本漂移边界**：元数据为开放区间（`numpy>=1.26` 等），运行时
   解析的小版本集合可能异于构建器当次环境；可复现交付的版本锁定是
