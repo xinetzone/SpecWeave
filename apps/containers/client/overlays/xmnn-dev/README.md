@@ -26,7 +26,7 @@
 | Nuitka 打包栈（base env） | nuitka==4.1.3、scikit-build-core、build、wheel、invoke、ipykernel + 19 个 xmnn 运行时依赖 |
 | 打包内核 | `/opt/xmnn-builder/`：pyproject.toml、CMakeLists.txt、bootstrap、build-wheel/build-tvm/verify-wheel 脚本（**自包含，不依赖 external/chaos/ai**） |
 | Jupyter 内核 | `Python 3.14 (xmnn dev)`（argv=/opt/conda/bin/python，env 内嵌源码 PYTHONPATH） |
-| 构建期守卫 | `/opt/xmnn-dev-smoke/_toolchain_guards.py`（双 ABI + 工具链 + LLVM 库 SONAME 实测） |
+| 构建期守卫 | `/opt/xmnn-dev-smoke/_toolchain_guards.py`（双 ABI + 工具链 + LLVM 库 SONAME 实测 + §7 离线完备性） |
 
 ## 前置条件
 
@@ -58,9 +58,15 @@
 在 `apps/containers/client` 下（WSL2/Linux/macOS）：
 
 ```bash
-invoke xmnn.build                         # 构建工具链镜像（构建期自动跑双 ABI/SONAME 守卫）
+# ── 过程一：镜像环境构建（有网侧，一次性）─────────────────────────────
+invoke xmnn.build                         # 构建工具链镜像（构建期自动跑双 ABI/SONAME/离线完备性守卫）
                                          #   --pip-mirror/--conda-mirror tuna|aliyun 可加速
-invoke xmnn.up                           # 启动栈（默认随带构建；--skip-build 跳过）
+invoke xmnn.save                         # 导出镜像归档（tar.gz + manifest/SHA256）→ 携带到无网机器
+
+# ── 过程二：启动开发环境并开发（有网/无网通用）────────────────────────
+invoke xmnn.load --path <归档.tar.gz>    # 从归档导入镜像（完整性校验后导入，导入幂等）
+invoke xmnn.up --offline                 # 离线启动：不构建、不起网络请求（参见「两个过程」）
+invoke xmnn.up                           # 有网侧常规启动（默认随带构建；--skip-build 跳过）
 invoke xmnn.ps                           # 服务状态
 invoke xmnn.smoke                        # 工具链守卫 + 源码挂载检查（libtvm 缺席时跳过算例段）
 
@@ -70,10 +76,6 @@ invoke xmnn.wheel                        # Nuitka 打包 xmnn whl（tvm 串行�
                                          #   --tvm-flags "..." 透传额外 Nuitka 参数
 podman-compose -p xmnn-dev exec xmnn \
     bash /opt/xmnn-builder/scripts/verify-wheel.sh   # 10 项隔离验证（临时 venv，不污染源码环境）
-
-invoke xmnn.save                         # 导出本栈镜像为离线归档（tar.gz + manifest/SHA256）
-invoke xmnn.load --path <归档.tar.gz>    # 从归档导入镜像（完整性校验后导入，导入幂等）
-invoke xmnn.up --offline                 # 离线启动：不构建、不起网络请求（详见「离线模式」）
 
 invoke xmnn.logs                         # 跟踪日志（Ctrl+C 退出）
 invoke xmnn.down                         # 停止清理（workspace/源码保留；ccache 卷保留）
@@ -153,29 +155,52 @@ Nuitka 打包内存占用随 `--jobs` 近似线性（jobs=8 约 15GB 峰值）�
 
 | 脚本 | 何时跑 | 内容 |
 |---|---|---|
-| `smoke/_toolchain_guards.py` | 镜像构建期（root+devuser）/ `xmnn.smoke` / `podman run --rm` | 双 ABI（base GIL on、main cp314t）、LLVM 22.1/clang/cmake/ninja/ccache/patchelf/gdb、nuitka 4.1.3、builder 资产、7 个 LLVM 依赖库 SONAME 实测 |
+| `smoke/_toolchain_guards.py` | 镜像构建期（root+devuser）/ `xmnn.smoke` / `podman run --rm` | 双 ABI（base GIL on、main cp314t）、LLVM 22.1/clang/cmake/ninja/ccache/patchelf/gdb、nuitka 4.1.3、builder 资产、7 个 LLVM 依赖库 SONAME 实测、**§7 离线完备性**（编译/打包前端可解析 + pyproject 声明的 19 依赖全部已装，守卫自身不联网） |
 | `smoke/smoke_mounts.py` | 栈运行时（`xmnn.smoke`/compose exec） | 三挂载点可见；libtvm 存在时 import tvm/vta/xmnn 来自 /workspace + tvm.build('llvm') 向量加；缺席时跳过并 exit 0 |
 
-## 离线模式（无网机器）
+## 两个过程：镜像构建（有网）→ 离线开发（无网）
 
-能力边界先说清：**没有网络就无法从零构建镜像**（容器构建期 apt / mamba / pip
-三段都需联网，本栈不解决该场景）；但把镜像当**制品携带**过去后，无网机器可以
-正常运行栈并完成容器内编译、打包。
+本栈的开发流程显式拆为两个过程——**过程一必须有网、过程二完全不需要网**。
+拆分的理由：镜像构建期的 apt / mamba / pip 三段绕不开网络，而日常的
+`build-tvm` / `wheel` / 调试没有任何联网必要；分开建模后，无网机器只要携带
+**一个镜像归档 + 源码目录**，就能完成全部编译与打包。
+
+### 过程一：镜像环境构建（有网侧，一次性）
+
+目标是产出**离线自足镜像**：把 numpy/scipy 等 19 个运行时依赖、Nuitka 打包栈、
+系统 gcc/g++、LLVM/Clang 22、cmake/ninja/ccache、patchelf 等编译期依赖全部
+烤进镜像，并由**构建期离线完备性守卫**（`smoke/_toolchain_guards.py` §7）逐项
+实测断言。守卫在构建期 fail-fast，把缺口暴露在有网侧，而不是搬到无网机器后才炸。
 
 ```bash
-# ── 有网机器：导出镜像归档（复用既有镜像缓存约定：tar.gz + manifest/SHA256）──
-invoke xmnn.save
+invoke xmnn.build        # 构建镜像；Layer 5 自动跑「离线完备性守卫」
+invoke xmnn.save         # 导出归档：tar.gz + manifest/SHA256
 #   产物落在镜像缓存目录（默认 ./.image-cache/），形如
 #   xmnn-dev-<tag>-<时间戳>.tar.gz + 同名 .manifest.json（含 SHA256 与 latest 软链）
+```
 
-# ── 无网机器：拷入归档 → 导入 → 离线启动 ──
+携带到无网机器的是两样东西：① `.image-cache/` 里的镜像归档（tar.gz + manifest）；
+② 源码目录（`npu_tvm` 含 `3rdparty` 子模块、`npuusertools`、`models`）——源码
+不在镜像内，由使用者自备（路径见参数表 `NPU_TVM_PATH` 等）。
+
+### 过程二：启动开发环境并开发（无网侧）
+
+```bash
 invoke xmnn.load --path /path/to/xmnn-dev-*.tar.gz   # manifest 完整性校验后导入
 invoke xmnn.up --offline                             # 不构建、不起任何对外网络请求
 
-# ── 容器内编译/打包同样禁网（同一个开关贯穿）──
-invoke xmnn.build-tvm                                # 纯本地编译
-invoke xmnn.wheel                                    # numpy/scipy 缺失硬失败；Nuitka 不做自动下载
+# —— 以下开发活动全部离线可用（脚本内已无联网点）——
+invoke xmnn.build-tvm      # invoke config + cmake + ninja + gcc，全本地
+invoke xmnn.wheel          # Nuitka 本地编译 + python -m build --no-isolation
+podman-compose -p xmnn-dev exec xmnn \
+    bash /opt/xmnn-builder/scripts/verify-wheel.sh   # 10 项隔离验证，亦无联网点
 ```
+
+无网侧**不补装任何依赖**：缺任何一项都说明过程一的镜像不自足，正确处置是回有网侧
+重跑 `invoke xmnn.build && invoke xmnn.save` 后重新携带归档——这正是把守卫放在
+构建期的意义（两个过程之间只有单向传递，过程二没有回补手段）。
+
+### 离线开关语义
 
 等价开关：**`XMNN_OFFLINE=1`**（写 `.env` 或 shell export 均可，经 WSL 桥接透传
 进容器）。`invoke xmnn.up --offline` 与 `XMNN_OFFLINE=1` 效果相同；`.env` 里开了
@@ -226,7 +251,7 @@ invoke xmnn.wheel                                    # numpy/scipy 缺失硬失�
 |---|---|
 | `invoke xmnn.*` Windows 原生报门禁 Exit(1) | 自动桥接不可用时回退（无 wsl.exe/发行版缺失/`COMPOSE_WSL_DISTRO=none`）；正常路径自动桥接 `podman-machine-default`，无需手动操作 |
 | `up -d` 报 `conmon exited prematurely` + `address already in use`（exit 125，2223/8890），常发生在裸 compose 与 invoke 交替后 | **跨控制平面标签分歧 + 孤儿 rootlessport**（详见 W-I10）；`invoke xmnn.up --skip-build` 的 preflight 三道自动恢复（残留 down / 跨平面优雅 down / 孤儿端口定点 kill）；日常纪律是同一栈固定单一控制平面。仍失败才查宿主占用（`netstat -ano \| findstr 2223`）或改 `.env` 端口 |
-| build-tvm 报 dmlc-core 缺失 | 宿主 npu_tvm 树执行 `git submodule update --init` 后重试 |
+| build-tvm 报 dmlc-core 缺失 | 宿主 npu_tvm 树执行 `git submodule update --init` 后重试；**该步需联网**，属过程一预备（源码随归档一起在联网侧备好），无网侧无法补齐 |
 | build-tvm 之前报 `variable-sized object may not be initialized`（VTA FSIM 的 VLA） | 已由 2026-09-15 引入系统 gcc/g++ 作编译前端修复（Clang 22 拒 VLA+初始化器、GCC 允许）；env `CC`/`CXX` 可覆盖回退 clang |
 | build-wheel 开头报 libtvm.so 缺失（exit 2） | 先 `invoke xmnn.build-tvm`，或把含 build/ 的完整 npu_tvm 挂到 NPU_TVM_PATH |
 | Nuitka Killed / OOM | `invoke xmnn.wheel --jobs 4`，machine 分配 ≥8 GB 内存 |

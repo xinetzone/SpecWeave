@@ -113,8 +113,10 @@ COPY scripts/ /opt/xmnn-scripts/
 RUN chmod -R a+rX /opt/xmnn-dev-smoke /opt/xmnn-scripts
 
 # ------------------------------------------------------------
-# Layer 5：注册 xmnn-dev 内核（root/devuser 双可见）+ 构建期工具链守卫
-#   （root 与 devuser 两身份各跑一次，对齐 onnx 叠加层 devuser 访问验证）。
+# Layer 5：注册 xmnn-dev 内核（root/devuser 双可见）+ 构建期工具链/离线完备性
+#   守卫（root 与 devuser 两身份各跑一次，对齐 onnx 叠加层 devuser 访问验证）。
+#   §7 离线完备性把「阶段二（无网侧）所需的一切」在构建期实测断言：
+#   编译/打包前端 + pyproject [project].dependencies 声明的运行时依赖。
 # ------------------------------------------------------------
 RUN /bin/bash -lc 'set -euo pipefail ; \
     bash /opt/xmnn-scripts/register-kernel.sh ; \
@@ -129,4 +131,5 @@ RUN /bin/bash -lc 'set -euo pipefail ; \
     echo "# toolchain : LLVM/Clang 22.1.8 (main env) + Nuitka 4.1.3 (base cp314 GIL)" ; \
     echo "# sources   : /workspace/npu_tvm + /workspace/npuusertools (runtime bind)" ; \
     echo "# packaging : inv xmnn.build-tvm -> inv xmnn.wheel -> verify-wheel.sh" ; \
+    echo "# offline   : phase-2 全离线（编译/打包依赖已烤入，由 §7 守卫断言）" ; \
     echo "########################################################################"'

@@ -214,6 +214,8 @@
 - `_toolchain_guards.py`（镜像烤入 /opt/xmnn-dev-smoke）：构建期 root +
   devuser 双身份执行；栈未运行时 `podman run --rm --entrypoint
   /opt/conda/bin/python <img> <script>` 也可独立执行（不依赖挂载）。
+  §7「离线完备性」同在该脚本内（契约见 §10），随构建期双身份执行自动获得
+  两个身份的覆盖，**不单独增设第二个守卫入口**。
 - `smoke_mounts.py`：仅栈运行路径（compose exec）；三挂载点断言始终执行；
   libtvm.so 缺席时跳过 import/算例段并 exit 0（首次未编译合法），存在时
   断言 tvm/vta/xmnn 来自 /workspace 源码并跑 tvm.build('llvm') 向量加。
@@ -232,6 +234,35 @@
 
 ## 10. 离线契约
 
+- **两阶段契约（2026-09-17 固化，不新增命令名）**：本栈开发流程显式拆为
+  **阶段一「镜像环境构建」（有网侧，一次性）** = `xmnn.build` + `xmnn.save`，
+  与 **阶段二「启动开发环境并开发」（无网侧）** = `xmnn.load` +
+  `xmnn.up --offline` + `build-tvm` / `wheel` / `verify-wheel.sh`。两阶段是
+  既有任务的**用法契约**而非新入口，命令表面保持 10 个不变。契约要求：
+  ① 阶段二可能触达的每一项外部依赖，都必须在阶段一固化进镜像；
+  ② 阶段间只有单向传递（镜像归档 + 使用者自备源码树），阶段二**没有回补
+  手段**——缺任何一项的正确处置是回阶段一重建，禁止在无网侧 pip/apt 补救；
+  ③ 因此所有完整性校验必须前移到阶段一（见下条守卫）。
+- **离线自足性由构建期守卫实测（阶段一的验收条件）**：
+  `smoke/_toolchain_guards.py` §7「离线完备性」在镜像构建期断言
+  ① `builder/pyproject.toml` `[project].dependencies` 声明的运行时依赖
+  全部已在 base env 安装（**单一事实源**，不在守卫里另立清单；用发行版
+  元数据判定而非 dist→import 名映射）；② 打包工具链
+  （nuitka/scikit-build-core/build/wheel/invoke/ipykernel）已装；
+  ③ gcc/g++/ccache/cmake/ninja/make/patchelf/readelf 在脚本实际建立的
+  PATH 上可解析。PATH 探测必须**显式构造**
+  `/opt/conda/bin:/opt/conda/envs/main/bin:$PATH`，不得依赖调用者继承的
+  PATH（该脚本在 root 与 devuser 两身份各跑一次，须给出一致结论）。
+  守卫自身**禁止联网、禁止装包**——否则守卫成为新的离线缺口。
+- **阶段二无联网点的证据（2026-09-17 逐行核查）**：`build-tvm.sh`
+  （`invoke config` + cmake + ninja + gcc，全本地；唯一外部前提是源码树
+  自带的 3rdparty 子模块，须在联网侧检出）、`build-wheel.sh`
+  （`python -m build --no-isolation`，Nuitka 下载旗标置空）、
+  `verify-wheel.sh`（`venv --system-site-packages` 用 bundled ensurepip +
+  本地 whl `--no-deps` 安装 + 不升级 pip）三者均无对外请求。新增或修改任一
+  阶段二脚本时若引入联网点（`pip download` / `--find-links` / `uv` /
+  `FetchContent` / `--assume-yes-for-downloads` / 依赖解析），必须同步本节
+  并说明阶段一如何覆盖该依赖。
 - **能力边界（不可越界承诺）**：离线只覆盖「运行 + 容器内编译/打包」，
   **不覆盖从零构建镜像**（构建期 apt / mamba / pip 三段均需联网）。无网
   机器必须通过镜像归档获得镜像，任何试图让 `xmnn.build` 在离线可用的
