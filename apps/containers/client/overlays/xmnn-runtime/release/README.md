@@ -62,6 +62,25 @@ chmod +x xmnnctl
 
 重新生成凭证：`init --force`（需随后 `down` 再 `up` 生效）。
 
+### 选择容器运行时（Podman / Docker）
+
+默认 `auto`：自动探测，优先 Podman、其次 Docker。需要强制指定时，用
+`--runtime`（Windows：`-Runtime`，均可用简写 `-r`）参数，取值
+`podman|docker|auto`，参数可放在命令前后：
+
+```bash
+./xmnnctl --runtime docker up     # 强制 Docker
+./xmnn up -r podman               # 强制 Podman（等价写法）
+```
+
+```powershell
+.\xmnnctl.ps1 -Runtime docker up
+```
+
+也可设置环境变量 `XMNN_RUNTIME=podman|docker|auto`。优先级：命令行参数
+> 环境变量 > `auto` 自动探测。显式指定了未安装的运行时时脚本会直接报错，
+不会静默回退到另一个运行时。
+
 ## 4. 数据与目录
 
 | 目录 / 文件 | 说明 |

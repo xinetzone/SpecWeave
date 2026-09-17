@@ -2,7 +2,9 @@
 # ==============================================================================
 # xmnnctl — XMNN Runtime 客户控制脚本（Linux / macOS / WSL，bash 4+）
 #
-# 用法: ./xmnnctl <命令>
+# 用法: ./xmnnctl [--runtime podman|docker|auto] <命令>
+#   --runtime/-r  选择容器运行时（可放在命令前或后；默认 auto：先探测
+#                 podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
 #   load     校验并导入 artifacts/ 内随包镜像 tar.gz，随后自动运行守卫
 #   up       启动服务（缺 .env 时自动 init），就绪后打印访问信息
@@ -12,8 +14,7 @@
 #   smoke    运行 10 项运行时守卫
 #   version  显示版本与交付清单信息
 #
-# 环境变量: XMNN_RUNTIME=podman|docker 强制指定容器运行时
-#           （默认优先探测 podman，其次 docker）
+# 环境变量: XMNN_RUNTIME=podman|docker|auto 选择容器运行时（被 --runtime 覆盖）
 # ==============================================================================
 set -euo pipefail
 
@@ -24,6 +25,8 @@ RT=""                 # podman | docker
 COMPOSE=()            # compose 命令数组
 FILES=()              # -f 文件数组
 RUN_FLAGS=()          # rootless run 三必需（docker 下为空）
+CLI_RUNTIME=""        # 命令行 --runtime 选择（podman|docker|auto）；空=未提供
+REMAIN=()             # 剥离全局参数后剩余的命令与命令参数
 
 c_info() { printf '\033[1;34m[xmnn]\033[0m %s\n' "$*"; }
 c_ok()   { printf '\033[1;32m[ OK ]\033[0m %s\n' "$*"; }
@@ -32,19 +35,48 @@ c_err()  { printf '\033[1;31m[ERR ]\033[0m %s\n' "$*" >&2; }
 die()    { c_err "$*"; exit 1; }
 
 usage() {
-    sed -n '3,16p' "$0"
+    sed -n '3,18p' "$0"
 }
 
 # ── 运行时与 compose 探测 ────────────────────────────────────────────────────
 
+# 扫描全局参数：--runtime/-r（支持 --runtime=x、-rx 粘连）可出现在命令前后，
+# 其余 token 原样保留到 REMAIN（如 init 的 --force）；-- 之后全部按位置参数处理。
+# 结果写全局 CLI_RUNTIME / REMAIN；本函数只解析不校验，合法性由 detect_runtime 判。
+parse_global_args() {
+    CLI_RUNTIME=""
+    REMAIN=()
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            --runtime|-r)
+                [ "$#" -ge 2 ] || die "$1 需要参数：podman|docker|auto"
+                CLI_RUNTIME="$2"; shift 2 ;;
+            --runtime=*)
+                CLI_RUNTIME="${1#--runtime=}"; shift ;;
+            -r?*)
+                CLI_RUNTIME="${1#-r}"; shift ;;
+            --)
+                shift; REMAIN+=("$@"); break ;;
+            *)
+                REMAIN+=("$1"); shift ;;
+        esac
+    done
+}
+
 detect_runtime() {
-    case "${XMNN_RUNTIME:-}" in
-        podman|docker) RT="$XMNN_RUNTIME" ;;
-        "")
+    local choice
+    # 优先级：命令行 --runtime > 环境变量 XMNN_RUNTIME > auto（自动探测）
+    choice="${CLI_RUNTIME:-${XMNN_RUNTIME:-auto}}"
+    case "$choice" in
+        podman|docker)
+            RT="$choice"
+            command -v "$RT" >/dev/null 2>&1 \
+                || die "指定的容器运行时 $RT 未安装或不在 PATH；可改用 auto 自动探测" ;;
+        auto|"")
             if command -v podman >/dev/null 2>&1; then RT=podman
             elif command -v docker >/dev/null 2>&1; then RT=docker
             else die "未找到 podman 或 docker，请先安装容器运行时后重试"; fi ;;
-        *) die "XMNN_RUNTIME 只允许 podman|docker（当前：$XMNN_RUNTIME）" ;;
+        *) die "运行时只允许 podman|docker|auto（当前：$choice）" ;;
     esac
     case "$RT" in
         podman)
@@ -271,6 +303,8 @@ do_version() {
 # ── 入口分发 ────────────────────────────────────────────────────────────────
 
 main() {
+    parse_global_args "$@"
+    set -- ${REMAIN[@]+"${REMAIN[@]}"}
     local cmd="${1:-}"
     [ -n "$cmd" ] || { usage; exit 1; }
     shift

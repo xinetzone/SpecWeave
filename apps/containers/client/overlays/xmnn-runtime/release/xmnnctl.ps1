@@ -3,7 +3,9 @@
 # ==============================================================================
 # xmnnctl.ps1 — XMNN Runtime 客户控制脚本（Windows，PowerShell 7.4+）
 #
-# 用法: ./xmnnctl.ps1 <命令>
+# 用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <命令>
+#   -Runtime/-r  选择容器运行时（可放在命令前或后；默认 auto：先探测
+#                podman 再 docker；命令行优先级高于环境变量 XMNN_RUNTIME）
 #   init     创建 .env 并自动生成登录密码与 Jupyter token
 #   load     校验并导入 artifacts\ 内随包镜像 tar.gz，随后自动运行守卫
 #   up       启动服务（缺 .env 时自动 init），就绪后打印访问信息
@@ -13,7 +15,7 @@
 #   smoke    运行 10 项运行时守卫
 #   version  显示版本与交付清单信息
 #
-# 环境变量: XMNN_RUNTIME=podman|docker 强制指定容器运行时
+# 环境变量: XMNN_RUNTIME=podman|docker|auto 选择容器运行时（被 -Runtime 覆盖）
 # 执行策略: 如被拦截，运行
 #           pwsh -ExecutionPolicy Bypass -File .\xmnnctl.ps1 <命令>
 # 注意: 请始终使用本脚本，不要在 Git Bash 中运行同名 bash 脚本控制
@@ -26,6 +28,8 @@ $Script:Rt = ""
 $Script:Compose = @()
 $Script:Files = @()
 $Script:RunFlags = @()
+$Script:CliRuntime = ""   # 命令行 -Runtime 选择（podman|docker|auto）；空=未提供
+$Script:Remain = @()      # 剥离全局参数后剩余的命令与命令参数
 
 function Info($m) { Write-Host "[xmnn] $m" -ForegroundColor Blue }
 function Ok($m)   { Write-Host "[ OK ] $m" -ForegroundColor Green }
@@ -34,17 +38,54 @@ function Die($m)  { Write-Host "[ERR ] $m" -ForegroundColor Red; exit 1 }
 
 # ── 运行时与 compose 探测 ───────────────────────────────────────────────────
 
+# 扫描全局参数：-Runtime/-r（--runtime 同样接受，支持 -Runtime=x、-rx 粘连）
+# 可出现在命令前后，其余 token 原样保留到 $Script:Remain（如 init 的 --force）；
+# -- 之后全部按位置参数处理。合法性由 Detect-Runtime 判。
+function Parse-GlobalArgs([string[]]$Tokens) {
+    $Script:CliRuntime = ""
+    $Script:Remain = @()
+    for ($i = 0; $i -lt $Tokens.Count; $i++) {
+        $t = $Tokens[$i]
+        switch -Regex ($t) {
+            '^--?runtime=(.+)$' { $Script:CliRuntime = $Matches[1]; break }
+            '^--?runtime$' {
+                if ($i + 1 -ge $Tokens.Count) { Die "$t 需要参数：podman|docker|auto" }
+                $Script:CliRuntime = $Tokens[++$i]; break
+            }
+            '^-r(.+)$' { $Script:CliRuntime = $Matches[1]; break }
+            '^-r$' {
+                if ($i + 1 -ge $Tokens.Count) { Die "$t 需要参数：podman|docker|auto" }
+                $Script:CliRuntime = $Tokens[++$i]; break
+            }
+            '^--$' {
+                for ($i++; $i -lt $Tokens.Count; $i++) { $Script:Remain += $Tokens[$i] }
+                break
+            }
+            default { $Script:Remain += $t }
+        }
+    }
+}
+
 function Detect-Runtime {
-    $forced = $env:XMNN_RUNTIME
-    if ($forced) {
-        if ($forced -notin @("podman", "docker")) { Die "XMNN_RUNTIME 只允许 podman|docker（当前：$forced）" }
-        $Script:Rt = $forced
-    } elseif (Get-Command podman -ErrorAction SilentlyContinue) {
-        $Script:Rt = "podman"
-    } elseif (Get-Command docker -ErrorAction SilentlyContinue) {
-        $Script:Rt = "docker"
+    # 优先级：命令行 -Runtime > 环境变量 XMNN_RUNTIME > auto（自动探测）
+    $choice = if ($Script:CliRuntime) { $Script:CliRuntime }
+              elseif ($env:XMNN_RUNTIME) { $env:XMNN_RUNTIME }
+              else { "auto" }
+    if ($choice -in @("podman", "docker")) {
+        $Script:Rt = $choice
+        if (-not (Get-Command $choice -ErrorAction SilentlyContinue)) {
+            Die "指定的容器运行时 $choice 未安装或不在 PATH；可改用 auto 自动探测"
+        }
+    } elseif ($choice -eq "auto") {
+        if (Get-Command podman -ErrorAction SilentlyContinue) {
+            $Script:Rt = "podman"
+        } elseif (Get-Command docker -ErrorAction SilentlyContinue) {
+            $Script:Rt = "docker"
+        } else {
+            Die "未找到 podman 或 docker，请先安装容器运行时后重试"
+        }
     } else {
-        Die "未找到 podman 或 docker，请先安装容器运行时后重试"
+        Die "运行时只允许 podman|docker|auto（当前：$choice）"
     }
 
     if ($Script:Rt -eq "podman") {
@@ -283,11 +324,12 @@ function Do-Version {
 
 # ── 入口分发 ────────────────────────────────────────────────────────────────
 
-$cmd = if ($args.Count -ge 1) { [string]$args[0] } else { "" }
+Parse-GlobalArgs $args
+$cmd = if ($Script:Remain.Count -ge 1) { [string]$Script:Remain[0] } else { "" }
 switch ($cmd) {
     "init" {
         Detect-Runtime
-        $mode = if ($args.Count -ge 2) { [string]$args[1] } else { "" }
+        $mode = if ($Script:Remain.Count -ge 2) { [string]$Script:Remain[1] } else { "" }
         Do-Init $mode
     }
     "load"    { Detect-Runtime; Ensure-Env; Do-Load }
@@ -298,10 +340,10 @@ switch ($cmd) {
     "smoke"   { Detect-Runtime; Ensure-Env; Do-Smoke }
     "version" { Do-Version }
     { $_ -in @("-h", "--help", "help") } {
-        Write-Host "用法: ./xmnnctl.ps1 <init|load|up|down|ps|logs|smoke|version>"
+        Write-Host "用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <init|load|up|down|ps|logs|smoke|version>"
     }
     default {
-        if (-not $cmd) { Write-Host "用法: ./xmnnctl.ps1 <init|load|up|down|ps|logs|smoke|version>"; exit 1 }
+        if (-not $cmd) { Write-Host "用法: ./xmnnctl.ps1 [-Runtime podman|docker|auto] <init|load|up|down|ps|logs|smoke|version>"; exit 1 }
         Die "未知命令：$cmd（支持 init/load/up/down/ps/logs/smoke/version）"
     }
 }

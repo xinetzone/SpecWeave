@@ -10,6 +10,9 @@
   - 厂商打包器 relpack 的纯函数（版本解析 / WSL 路径转换）正确。
 """
 
+import re
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -169,6 +172,227 @@ def test_bash_uses_urandom_pwsh_uses_crypto_rng():
     assert "/dev/urandom" in bash
     assert "RandomNumberGenerator" in pwsh
     assert "Get-Random" not in pwsh
+
+
+# ── 运行时选择暴露（--runtime / XMNN_RUNTIME / auto）─────────────────────────
+
+
+@pytest.mark.parametrize("script", ["xmnnctl", "xmnnctl.ps1"])
+def test_runtime_selection_exposed_with_auto(script):
+    # 运行时必须可经命令行选择：podman|docker|auto 三值、默认 auto 探测，
+    # 旧的"仅二值"错误文案不得残留（防止回退为 env-only 设计）。
+    text = (RELEASE / script).read_text(encoding="utf-8")
+    assert "podman|docker|auto" in text
+    assert "只允许 podman|docker（当前" not in text
+    assert "auto" in text
+    # 强制指定未安装的运行时时须 fail-fast，不得静默回退到另一个运行时
+    assert "未安装或不在 PATH" in text
+    if script == "xmnnctl":
+        assert "parse_global_args" in text
+        assert "--runtime" in text
+        # 优先级链：CLI --runtime > 环境变量 XMNN_RUNTIME > auto
+        assert '${CLI_RUNTIME:-${XMNN_RUNTIME:-auto}}' in text
+    else:
+        assert "Parse-GlobalArgs" in text
+        assert "--runtime" in text and "$Script:CliRuntime" in text
+        assert "$env:XMNN_RUNTIME" in text and '"auto"' in text
+
+
+_BASH_PARSE_ARGS = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+sed '$d' > "$T/lib.sh"
+. "$T/lib.sh"
+fail() { printf 'FAIL: %s\n' "$1"; exit 1; }
+parse_global_args --runtime docker up
+[ "$CLI_RUNTIME" = docker ] || fail a1
+[ "${REMAIN[*]}" = "up" ] || fail a2
+parse_global_args up -r podman
+[ "$CLI_RUNTIME" = podman ] || fail b1
+[ "${REMAIN[*]}" = "up" ] || fail b2
+parse_global_args init --force
+[ -z "$CLI_RUNTIME" ] || fail c1
+[ "${REMAIN[*]}" = "init --force" ] || fail c2
+parse_global_args --runtime=auto -rdocker up
+[ "$CLI_RUNTIME" = docker ] || fail d1
+[ "${REMAIN[*]}" = "up" ] || fail d2
+parse_global_args -- --runtime docker
+[ -z "$CLI_RUNTIME" ] || fail e1
+[ "${REMAIN[*]}" = "--runtime docker" ] || fail e2
+printf 'PARSE_OK\n'
+"""
+
+_BASH_PARSE_MISSING_VALUE = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+sed '$d' > "$T/lib.sh"
+. "$T/lib.sh"
+parse_global_args up --runtime
+"""
+
+_BASH_RUNTIME_CHOICE = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+mkdir -p "$T/shim"
+# podman shim：任何调用都成功（compose version 探测直接通过），无 companion 依赖
+printf '%s\n' '#!/usr/bin/env bash' 'exit 0' > "$T/shim/podman"
+chmod +x "$T/shim/podman"
+sed '$d' > "$T/lib.sh"
+export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
+. "$T/lib.sh"
+fail() { printf 'FAIL: %s\n' "$1"; exit 1; }
+# CLI=auto 必须覆盖 env=docker：走探测并命中 podman shim
+CLI_RUNTIME=auto XMNN_RUNTIME=docker detect_runtime || fail p1rc
+[ "$RT" = podman ] || fail p1
+# env=auto（无 CLI）：同样探测 podman
+CLI_RUNTIME= XMNN_RUNTIME=auto detect_runtime || fail p2rc
+[ "$RT" = podman ] || fail p2
+# 两者皆未提供：默认即 auto
+unset CLI_RUNTIME XMNN_RUNTIME
+detect_runtime || fail p3rc
+[ "$RT" = podman ] || fail p3
+printf 'CHOICE_OK\n'
+"""
+
+_BASH_RUNTIME_BAD_CHOICE = r"""
+set -u
+T="$(mktemp -d)"
+ORIG_PATH="$PATH"
+trap 'rc=$?; PATH="$ORIG_PATH"; rm -rf "$T"; exit $rc' EXIT
+mkdir -p "$T/empty"
+sed '$d' > "$T/lib.sh"
+unset XMNN_RUNTIME || true
+. "$T/lib.sh"
+export PATH="$T/empty"   # source 后再隔离：任何容器运行时都不可见
+CLI_RUNTIME=__CHOICE__ detect_runtime
+"""
+
+_BASH_EXE = shutil.which("bash")
+# System32/WindowsApps 下的 bash.exe 是 WSL 启动器（挂载点 /mnt/<drive>）；
+# Git for Windows 的 bash 直接吃 D:/... 形式。
+_IS_WSL = bool(_BASH_EXE and re.search(r"system32|windowsapps", _BASH_EXE.lower()))
+
+
+def _bash_native_path(p: Path) -> str:
+    win = str(p)
+    if _IS_WSL and re.match(r"^[A-Za-z]:[\\/]", win):
+        return f"/mnt/{win[0].lower()}/" + win[3:].replace("\\", "/")
+    return p.as_posix()
+
+
+def _run_bash_preflight(harness: str, tmp_path: Path) -> subprocess.CompletedProcess:
+    # 以字节喂 stdin：Windows 文本管道会把 \n 翻成 \r\n，bash 将报
+    # `pipefail\r: invalid option`（CRLF 注入，正是本交付包的头号天敌）。
+    script = (RELEASE / "xmnnctl").read_bytes()
+    harness_file = tmp_path / "preflight-harness.sh"
+    harness_file.write_text(harness, encoding="utf-8", newline="\n")
+    proc = subprocess.run(
+        ["bash", _bash_native_path(harness_file)], input=script,
+        capture_output=True, timeout=60,
+    )
+    proc.stdout = proc.stdout.decode("utf-8", errors="replace")
+    proc.stderr = proc.stderr.decode("utf-8", errors="replace")
+    return proc
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过运行时选择行为测试")
+def test_bash_parse_global_args_matrix(tmp_path):
+    proc = _run_bash_preflight(_BASH_PARSE_ARGS, tmp_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "PARSE_OK" in proc.stdout, proc.stdout + proc.stderr
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过运行时选择行为测试")
+def test_bash_runtime_flag_without_value_fails_fast(tmp_path):
+    proc = _run_bash_preflight(_BASH_PARSE_MISSING_VALUE, tmp_path)
+    assert proc.returncode == 1
+    assert "需要参数" in proc.stdout + proc.stderr
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过运行时选择行为测试")
+def test_bash_runtime_choice_priority_and_auto(tmp_path):
+    proc = _run_bash_preflight(_BASH_RUNTIME_CHOICE, tmp_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "CHOICE_OK" in proc.stdout, proc.stdout + proc.stderr
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过运行时选择行为测试")
+@pytest.mark.parametrize(
+    "choice,expected",
+    [
+        ("docker", "未安装或不在 PATH"),
+        ("podman", "未安装或不在 PATH"),
+        ("lxc", "只允许 podman|docker|auto"),
+        ("", "未找到 podman 或 docker"),
+    ],
+)
+def test_bash_runtime_bad_choice_fails_fast(tmp_path, choice, expected):
+    harness = _BASH_RUNTIME_BAD_CHOICE.replace(
+        "CLI_RUNTIME=__CHOICE__", f"CLI_RUNTIME={choice}")
+    proc = _run_bash_preflight(harness, tmp_path)
+    assert proc.returncode == 1
+    assert expected in proc.stdout + proc.stderr
+
+
+_PWSH_PARSE_HARNESS = r"""
+. "__LIB__"
+function Check($cond, $msg) { if (-not $cond) { Write-Host "FAIL: $msg"; exit 1 } }
+Parse-GlobalArgs @("--runtime", "docker", "up")
+Check ($Script:CliRuntime -eq "docker") "a1"
+Check (($Script:Remain -join ",") -eq "up") "a2"
+Parse-GlobalArgs @("up", "-r", "podman")
+Check ($Script:CliRuntime -eq "podman") "b1"
+Check (($Script:Remain -join ",") -eq "up") "b2"
+Parse-GlobalArgs @("init", "--force")
+Check ($Script:CliRuntime -eq "") "c1"
+Check (($Script:Remain -join "|") -eq "init|--force") "c2"
+Parse-GlobalArgs @("-Runtime=auto", "-rdocker", "up")
+Check ($Script:CliRuntime -eq "docker") "d1"
+Check (($Script:Remain -join ",") -eq "up") "d2"
+Parse-GlobalArgs @("--", "--runtime", "docker")
+Check ($Script:CliRuntime -eq "") "e1"
+Check (($Script:Remain -join "|") -eq "--runtime|docker") "e2"
+Write-Host "PS_PARSE_OK"
+"""
+
+_PWSH_PARSE_MISSING_VALUE = r"""
+. "__LIB__"
+Parse-GlobalArgs @("up", "--runtime")
+"""
+
+
+def _run_pwsh_lib_harness(body: str, tmp_path: Path) -> subprocess.CompletedProcess:
+    # 剥掉入口分发段后 dot-source：仅装载函数与 $Script: 状态，不触发命令分发。
+    src = (RELEASE / "xmnnctl.ps1").read_text(encoding="utf-8")
+    head = src.split("# ── 入口分发", 1)[0]
+    lib = tmp_path / "xmnnctl-lib.ps1"
+    lib.write_text(head, encoding="utf-8", newline="\n")
+    harness = tmp_path / "harness.ps1"
+    harness.write_text(body.replace("__LIB__", str(lib)), encoding="utf-8", newline="\n")
+    proc = subprocess.run(
+        ["pwsh", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(harness)],
+        capture_output=True, timeout=60,
+    )
+    proc.stdout = proc.stdout.decode("utf-8", errors="replace")
+    proc.stderr = proc.stderr.decode("utf-8", errors="replace")
+    return proc
+
+
+@pytest.mark.skipif(shutil.which("pwsh") is None, reason="环境无 pwsh，跳过 ps1 参数解析行为测试")
+def test_pwsh_parse_global_args_matrix(tmp_path):
+    proc = _run_pwsh_lib_harness(_PWSH_PARSE_HARNESS, tmp_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "PS_PARSE_OK" in proc.stdout, proc.stdout + proc.stderr
+
+
+@pytest.mark.skipif(shutil.which("pwsh") is None, reason="环境无 pwsh，跳过 ps1 参数解析行为测试")
+def test_pwsh_runtime_flag_without_value_fails_fast(tmp_path):
+    proc = _run_pwsh_lib_harness(_PWSH_PARSE_MISSING_VALUE, tmp_path)
+    assert proc.returncode == 1
+    assert "需要参数" in proc.stdout + proc.stderr
 
 
 def test_artifacts_gitignore_keeps_itself():
