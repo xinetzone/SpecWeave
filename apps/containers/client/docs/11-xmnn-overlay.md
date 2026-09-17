@@ -34,6 +34,12 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
   指向 WSL 原生克隆。
 - **Windows 原生自动桥接**：同 quant.*（默认桥接 `podman-machine-default`；
   `COMPOSE_WSL_DISTRO` 可指其他发行版，`none` 关闭并回退门禁）。
+- **离线模式（无网机器）**：`invoke xmnn.save` 导出镜像归档（tar.gz +
+  manifest/SHA256）→ 拷到无网机器 `invoke xmnn.load --path <归档>` 导入 →
+  `invoke xmnn.up --offline`（等价 `.env` 里 `XMNN_OFFLINE=1`）。离线是
+  **全链路**语义：不构建（追加 `--no-build`）、镜像缺失 fail-fast 给中文指引、
+  容器内打包禁网硬失败（numpy/scipy 不再 pip 兜底、Nuitka 不自动下载）。
+  无网**从零构建镜像**仍不支持（构建期 apt/mamba/pip 均需联网）。
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
 

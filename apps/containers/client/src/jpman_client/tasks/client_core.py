@@ -355,7 +355,14 @@ def _save_via_cli(c: Context, image: str, outfile: Path) -> bool:
     return True
 
 
-def save_image(c: Context, image: str, cache_dir: Path) -> bool:
+def save_image(
+    c: Context,
+    image: str,
+    cache_dir: Path,
+    *,
+    not_found_hint: str = "",
+    restore_hint: str = "",
+) -> bool:
     """导出镜像到缓存目录（供备份 / VM 崩溃恢复），返回是否成功。
 
     产物与 manifest 规范对齐构建端 ``jpman save``：
@@ -364,6 +371,9 @@ def save_image(c: Context, image: str, cache_dir: Path) -> bool:
       - 写 ``manifest.txt`` 段（IMAGE_FILE/SIZE/SHA256/SAVED），与
         ``validate_manifest_integrity`` 的解析格式互操作
       - ``gzip -t`` 完整性校验
+
+    ``not_found_hint`` / ``restore_hint`` 供调用方（如各叠加栈的离线归档任务）
+    覆盖默认文案，缺省空串即保持 client 叠加层原有提示（零回归）。
     """
     import datetime as _dt
     import hashlib as _hl
@@ -377,8 +387,11 @@ def save_image(c: Context, image: str, cache_dir: Path) -> bool:
     # 镜像存在性预检（S5：失败原因需明确是「镜像不存在」而非 daemon 问题）
     if not _image_exists_fast(c, image):
         print(f"[Save] ✗ 本地未找到镜像: {image}")
-        print("[Save]   先构建: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
-        print("[Save]   或加载: invoke load")
+        if not_found_hint:
+            print(f"[Save]   {not_found_hint}")
+        else:
+            print("[Save]   先构建: cd ../jupyter-podman-rootless && bash bin/jpman rebuild-all")
+            print("[Save]   或加载: invoke load")
         return False
 
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -424,7 +437,8 @@ def save_image(c: Context, image: str, cache_dir: Path) -> bool:
     _append_manifest(cache_dir, image, saved.name, file_size, digest)
     print(f"[Save] ✅ 已保存: {saved.name} ({file_size / 1024 / 1024:.1f} MB)")
     print(f"[Save]   SHA256: {digest}")
-    print(f"[Save]   恢复:  invoke load --path {saved}   或   bash bin/jpman load")
+    hint = restore_hint or f"invoke load --path {saved}   或   bash bin/jpman load"
+    print(f"[Save]   恢复:  {hint}")
     return True
 
 

@@ -19,14 +19,17 @@
   `invoke run` 的后端或向根路径回流（同 C11 裁决）。
 - xmnn.py 现为 **StackSpec 声明 + 长任务薄封装**：唯一事实源 `XMNN_SPEC`，
   六任务（build/up/down/ps/logs/smoke）由
-  `overlay_core.make_stack_tasks(XMNN_SPEC)` 工厂生成；`build-tvm` /
+  `overlay_core.make_stack_tasks(XMNN_SPEC)` 工厂生成（`supports_offline=True`
+  时工厂额外生成 `save` / `load` 两个离线条目）；`build-tvm` /
   `wheel` 两个栈内 exec 长任务保留在 xmnn.py，调内核 helper（gates /
   ensure_runtime_ready / require_running / run_compose）。同构编排函数
   （门禁/prepare_env/compose_argv/残留自愈等）唯一定义在 overlay_core。
   红线：overlay_core 与 jpman_common 零栈知识（不得 import 具体栈模块、
   不出现栈名/路径），栈模块零 podman。
-- 8 个任务：`build / up / down / ps / logs / smoke / build-tvm / wheel`。
-  `build-tvm` 与 `wheel` 是对运行中容器的 `podman-compose exec` 长任务。
+- 10 个任务：`build / up / down / ps / logs / smoke / build-tvm / wheel /
+  save / load`。`build-tvm` 与 `wheel` 是对运行中容器的
+  `podman-compose exec` 长任务；`save` / `load` 是镜像归档出口/入口
+  （离线通道，契约见 §10）。
 
 ## 2. 平台门禁 / WSL 桥接（硬约束）
 
@@ -226,3 +229,35 @@
 - external/chaos/ai 仅为事实参考；npu_tvm/npuusertools/models 是外部
   git 仓库，只读/只挂载，任何任务不得改写其工作树（AST 临时注入除外，
   且必须还原）。
+
+## 10. 离线契约
+
+- **能力边界（不可越界承诺）**：离线只覆盖「运行 + 容器内编译/打包」，
+  **不覆盖从零构建镜像**（构建期 apt / mamba / pip 三段均需联网）。无网
+  机器必须通过镜像归档获得镜像，任何试图让 `xmnn.build` 在离线可用的
+  改动都属于越界，应走独立规格。
+- **单一事实源 `XMNN_OFFLINE`**（`0`/`1`，默认 `0`）：栈侧经
+  `StackSpec.supports_offline=True` 声明后由内核 `resolve_offline()` 解析
+  （显式开 > 显式关 > `.env` > 默认，复用 `_resolve_bool` 三态语义）。
+  ⚠️ **必须解析后立即回写 `os.environ[XMNN_OFFLINE]`，且必须发生在
+  `gates()` 之前**：WSL 桥接只透传 `bridge_env_keys` 中列出的环境变量、
+  **不转发 CLI 参数**，`--offline` 若不固化进环境就会在桥接后丢失。
+  `.env` 键不写入 compose `environment` 段（保住 `test_compose_merge.py`
+  黄金快照），容器内由 `offline_exec_env()` 以 `exec -e` 单点注入。
+- **`up` 的两段禁网**：仅 `--skip-build` 不够——podman-compose 的 `up`
+  默认对含 build 段的服务执行构建，离线必须**同时**追加 `--no-build`
+  （`compose_up_tail(offline=True)` 唯一构造点）。镜像缺失时
+  `_require_local_image()` fail-fast Exit(1)，指引 `xmnn.save` / `xmnn.load`。
+- **`save`/`load` 沿用既有镜像缓存约定**：tar.gz + 时间戳命名 + `latest`
+  软链 + manifest/SHA256 校验（`default_build_cache_dir` /
+  `find_latest_image_tar` / `validate_manifest_integrity`），不新造归档
+  格式；`load` 必须先校验 manifest 再导入（拷贝损坏在 load 步暴露）。
+- **容器内打包禁网 = 硬失败而非降级**：`build-wheel.sh` 读同一
+  `XMNN_OFFLINE`，三处行为——① numpy/scipy 导入失败时不再 pip 兜底而是
+  `exit 2`；② Nuitka 的 `--assume-yes-for-downloads` 改由 `$NUITKA_DL_FLAG`
+  承载（离线为空值，unquoted 展开整体消失）；③ pip 镜像 `case` 整体跳过，
+  且缺系统 gcc（VTA FSIM 的 VLA 依赖）前置断言 `exit 2`。
+- **测试锁行为**：离线语义在 `tests/test_overlay_core.py` 有 10 个用例
+  （声明范围 / 环境回写 / `--no-build` / `exec -e` / `build` 首行 fail-fast
+  且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活 /
+  `save`·`load` 仅离线栈生成），改动离线路径必须同步这组断言。

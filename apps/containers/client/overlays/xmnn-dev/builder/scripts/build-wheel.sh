@@ -94,6 +94,9 @@ trap _restore_all EXIT
 # ── ccache 配置（命名卷 /root/.ccache 由 compose 挂载持久化）──────────────
 export CCACHE_MAXSIZE=5G
 CLEAN_REBUILD="${CLEAN_REBUILD:-0}"
+# 离线模式（invoke xmnn.up --offline / root .env XMNN_OFFLINE=1 经 exec -e 注入）：
+# 禁用一切联网兜底，缺依赖即硬失败，不在无网机器上静默挂起或拉取。
+XMNN_OFFLINE="${XMNN_OFFLINE:-0}"
 mkdir -p "$CCACHE_DIR"
 if command -v ccache >/dev/null 2>&1; then
     export NUITKA_CCACHE_BINARY="$(command -v ccache)"
@@ -113,6 +116,13 @@ NUITKA_JOBS="${NUITKA_JOBS:-8}"
 NUITKA_PLUGINS="${NUITKA_PLUGINS:-dill-compat}"
 NOFOLLOW_IMPORTS="${NOFOLLOW_IMPORTS:-torch,torchvision,onnx2pytorch}"
 TVM_COMPILE_FLAGS="${TVM_COMPILE_FLAGS:-}"
+# Nuitka 辅助工具（ccache/depends 等）的下载确认旗标：离线时置空（不带引号展开 →
+# 零词消失），使 Nuitka 在需要下载时直接失败而非交互式等待或静默联网。
+if [ "$XMNN_OFFLINE" = "1" ]; then
+    NUITKA_DL_FLAG=""
+else
+    NUITKA_DL_FLAG="--assume-yes-for-downloads"
+fi
 
 nofollow_args() {
     local IFS=',' p
@@ -122,6 +132,11 @@ nofollow_args() {
 }
 
 log_section "Environment Check"
+if [ "$XMNN_OFFLINE" = "1" ] && ! command -v gcc >/dev/null 2>&1; then
+    log_error "离线模式（XMNN_OFFLINE=1）：系统 gcc 缺失（镜像层应已 apt 安装 gcc/g++），无法编译"
+    log_error "请在联网机器重建镜像并重新导出归档：invoke xmnn.build && invoke xmnn.save"
+    exit 2
+fi
 "$BASE_PYTHON" --version
 log_kv "cmake" "$(cmake --version | head -1) at $(command -v cmake)"
 log_kv "ninja" "$(ninja --version) at $(command -v ninja)"
@@ -129,23 +144,34 @@ log_kv "clang" "$($CC --version | head -1)"
 log_kv "LLVM" "$($LLVM_CONFIG --version) @ $LLVM_LIB_DIR"
 "$BASE_PYTHON" -m nuitka --version | head -2
 
-case "${PIP_MIRROR:-official}" in
-    tuna)
-        "$BASE_PYTHON" -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-        "$BASE_PYTHON" -m pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
-        ;;
-    aliyun)
-        "$BASE_PYTHON" -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
-        "$BASE_PYTHON" -m pip config set global.trusted-host mirrors.aliyun.com
-        ;;
-    *)
-        log_info "pip mirror: inherited (official/镜像构建期配置)"
-        ;;
-esac
+if [ "$XMNN_OFFLINE" = "1" ]; then
+    log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（$NUITKA_DL_FLAG 置空）"
+else
+    case "${PIP_MIRROR:-official}" in
+        tuna)
+            "$BASE_PYTHON" -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+            "$BASE_PYTHON" -m pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
+            ;;
+        aliyun)
+            "$BASE_PYTHON" -m pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
+            "$BASE_PYTHON" -m pip config set global.trusted-host mirrors.aliyun.com
+            ;;
+        *)
+            log_info "pip mirror: inherited (official/镜像构建期配置)"
+            ;;
+    esac
+fi
 
 log_section "Ensuring numpy/scipy present"
-"$BASE_PYTHON" -c "import numpy, scipy; print(f'  numpy {numpy.__version__}, scipy {scipy.__version__} OK')" \
-    || "$BASE_PYTHON" -m pip install --no-cache-dir "numpy>=1.26" "scipy>=1.11"
+if "$BASE_PYTHON" -c "import numpy, scipy; print(f'  numpy {numpy.__version__}, scipy {scipy.__version__} OK')"; then
+    :
+elif [ "$XMNN_OFFLINE" = "1" ]; then
+    log_error "离线模式（XMNN_OFFLINE=1）：base env 缺少 numpy/scipy，且禁止联网 pip 安装"
+    log_error "镜像层本应已装；请在联网机器重跑 invoke xmnn.build 后重新导出归档"
+    exit 2
+else
+    "$BASE_PYTHON" -m pip install --no-cache-dir "numpy>=1.26" "scipy>=1.11"
+fi
 
 mkdir -p "$NUITKA_OUT" "$VTA_NUITKA_OUT" "$XMNN_NUITKA_OUT" "$DIST_DIR"
 
@@ -166,7 +192,7 @@ PYTHONPATH="$TVM_PYTHON:${PYTHONPATH:-}" \
     $TVM_COMPILE_FLAGS \
     --output-dir="$NUITKA_OUT" \
     --remove-output \
-    --assume-yes-for-downloads \
+    $NUITKA_DL_FLAG \
     --quiet \
     --no-pyi-file \
     --jobs="${NUITKA_JOBS}" \
@@ -204,7 +230,7 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
         $TVM_COMPILE_FLAGS \
         --output-dir="$VTA_NUITKA_OUT" \
         --remove-output \
-        --assume-yes-for-downloads \
+        $NUITKA_DL_FLAG \
         --quiet \
         --no-pyi-file \
         --jobs="${NUITKA_JOBS}" \
@@ -230,7 +256,7 @@ log_step "Nuitka-compiling vta & xmnn packages (parallel)"
         $TVM_COMPILE_FLAGS \
         --output-dir="$XMNN_NUITKA_OUT" \
         --remove-output \
-        --assume-yes-for-downloads \
+        $NUITKA_DL_FLAG \
         --quiet \
         --no-pyi-file \
         --jobs="${NUITKA_JOBS}" \

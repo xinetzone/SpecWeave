@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `feat:` xmnn.\* 离线模式——镜像归档 save/load + `XMNN_OFFLINE` 全链路禁网
+
+**关联七概念场景**：场景5「创新突破」（F→V→I→C，session sc-20260917-xmnn-dev-offline，commit hash 待补）。
+
+**背景与缺口四层**：① 栈侧无任何离线语义——无网机器上 `xmnn.up` 会静默尝试联网并留下难懂的构建报错；② 无 xmnn 自己的镜像归档出口/入口（离线机器拿不到镜像）；③ 容器内打包存在隐藏联网假设——numpy/scipy 走 pip 兜底、Nuitka 三处 `--assume-yes-for-downloads`、`build-wheel.sh` 无条件改写 pip 镜像；④ 从零构建镜像需 apt/mamba/pip 三段联网，**明确不在范围内**（越界承诺会误导使用者）。
+
+**F 第一性原理（四条公理）**：A1 离线 = 栈侧动作不发起对外网络请求；A2 制品必须可由外部载体携带并校验；A3 离线判定须单一事实源且必须透传进容器；A4 离线失败必须 fail-fast + 中文可执行指引，不做静默降级。
+
+**V 对抗审查（两处关键修正）**：**V-1**——WSL 桥接只透传 `bridge_env_keys` 中的环境变量、**不转发 CLI 参数**，若 `--offline` 不先固化为 `os.environ[XMNN_OFFLINE]`，桥接后即丢失（故 `resolve_offline()` 必须在 `gates()` 之前调用并回写，且 `bridge_env_keys` 必须含该键）；**V-2**——podman-compose 源码（`podman_compose.py` L4098 `if not args.no_build:`）表明 **`up` 默认对含 build 段的服务执行构建**，仅 `--skip-build` 不足以禁网，离线必须同时追加 `--no-build`。
+
+**实现（I 落地）**：① 内核 `overlay_core.py` 新增 `StackSpec.supports_offline` / `offline_env_key` 声明、`resolve_offline()`（三态复用 `_resolve_bool`，显式开 > 显式关 > `.env` > 默认）、`offline_exec_env()`、`compose_up_tail()`、`_require_local_image()`；`build_image` 首行 fail-fast；`make_stack_tasks` 对 `supports_offline` 栈条件注入 `save`/`load`（仅该栈表面变化，其余栈黄金快照零改动）。② `xmnn.py` 声明升级为 10 任务（+`save`/`load`，`bridge_env_keys` 加 `XMNN_OFFLINE`），`wheel`/`build-tvm` 经 `offline_exec_env()` 单点注入。③ `build-wheel.sh` 读同一开关：numpy/scipy 缺失 `exit 2` 不再 pip 兜底、`$NUITKA_DL_FLAG`（空值 unquoted 展开整体消失）替换三处 Nuitka 下载旗标、pip 镜像 `case` 整体跳过、缺系统 gcc 前置断言 `exit 2`。④ `save_image` 的 client 专属文案参数化为 `not_found_hint`/`restore_hint` 供栈侧复用。⑤ 不触碰 compose `environment` 段与 `stack spec` 其余字段，保住 `test_compose_merge.py` 黄金快照。
+
+**验收点（测试锁行为）**：`tests/test_overlay_core.py` 新增 10 例（声明范围仅 xmnn / 环境回写 V-1 / `.env` 回退与同开同关冲突 / `--no-build` V-2 / `exec -e` 门控 / `build` 首行 fail-fast 且 `runner.commands == []` / 缺镜像 Exit / `up` 任务体参数存活至 argv / `save`·`load` 仅离线栈生成），`test_tasks_surface.py` 黄金清单同步；`apps/containers/client` 下 `pytest tests -q` → **147 passed, 1 skipped**；`bash -n build-wheel.sh` exit 0。
+
+**C 同步**：预防措施 `[prevent: offline-hard-fail]`——离线路径一律"硬失败 + 中文指引"，禁止静默降级为联网重试（无网环境下静默联网只会把真实原因埋在超时里）；规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10 与 P0 清单 C12，人类文档见 [../overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md) §离线模式，`.env.example`（client 与 overlay 两处键集合）同步登记。
+
 ### 2026-09-17 · `fix:` load 时 Podman 未启动被误报"镜像版本不符"——双脚本新增守护可达性预检与 load 退出码检查
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-load-daemon-down，未提交，commit hash 待补）。

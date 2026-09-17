@@ -85,7 +85,7 @@ source: "AGENTS.md#嵌套路由关系"
 | [docs/05 作为 SDK 使用](../docs/05-sdk-usage.md) | [invoke-tasks.md](rules/invoke-tasks.md) §4 | load_image / run_container / stop_container 三个 API 签名与 ContainerConfig 字段 |
 | [docs/00 与 jpman 分工表](../docs/00-overview.md) | （无对应 AI 规则；仅属于人类产品定位说明） | 不一致时以本项目 `pyproject.toml` 实际依赖 + `src/jpman_client/tasks/` 实际实现为准 |
 | [overlays/onnx-quantized/README.md](../overlays/onnx-quantized/README.md)（量化工作负载栈） | [quant-overlay.md](rules/quant-overlay.md) | quant.* 六任务、双门禁、三必需 compose 映射、GPU 覆盖 list 追加、镜像守卫五包版本、smoke 双路径 |
-| [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 八任务、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、AST 还原、SONAME 守卫、双冒烟 |
+| [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)（开发/打包栈） | [xmnn-overlay.md](rules/xmnn-overlay.md) | xmnn.* 十任务（含离线 save/load）、双 ABI 工具链、四源码 bind、build-tvm/wheel 长任务、AST 还原、SONAME 守卫、双冒烟、§10 离线契约 |
 | [overlays/agent-monetize-dev/README.md](../overlays/agent-monetize-dev/README.md)（tvm-ffi 原生栈） | [monetize-overlay.md](rules/monetize-overlay.md) | monetize.* 八任务、apt clang+apache-tvm-ffi、build-native/wheel、单一 GIL、3 处源码适配 |
 | [overlays/xmnn-runtime/README.md](../overlays/xmnn-runtime/README.md)（wheel 消费运行时栈） | [xmnnrt-overlay.md](rules/xmnnrt-overlay.md) | xmnnrt.* 六任务、builder/runtime 分工、whl 暂存选择顺序、cp314 GIL 安装、交付内核 env 白名单、9 项守卫双身份 |
 
