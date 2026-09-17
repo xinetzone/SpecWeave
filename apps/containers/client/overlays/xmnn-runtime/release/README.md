@@ -20,9 +20,9 @@ SSH），通过随包控制脚本一键管理。
 
 > **执行位置**：以下命令均在**交付包根目录**（本 README 所在目录）执行；
 > 判别标志——该目录同时含 `xmnnctl.ps1`、`artifacts/` 与 `workspace/`。
-> 在 **SpecWeave 开发仓库**内演练时，交付包根是
-> `apps/containers/client/overlays/xmnn-runtime/release/`：先 `cd release`，
-> 或直接在叠加层根执行 `.\release\xmnnctl.ps1 <命令>`（脚本自动定位）。
+> 在 **SpecWeave 开发仓库**内可直接在叠加层根执行 `./xmnnctl <命令>`
+> （便捷壳自动转发到本目录真实脚本，运行时文件仍全部落在 `release/`）；
+> 也可 `cd release` 后按客户方式执行。
 
 ### Windows（PowerShell 7）
 
@@ -123,7 +123,7 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 
 | 现象 | 处理 |
 |---|---|
-| 报"术语 'xmnnctl.ps1' 不会被识别为 cmdlet" | 当前目录不是交付包根：进入含本 README 的目录再执行；在 SpecWeave 开发仓库内改用 `.\release\xmnnctl.ps1 <命令>`（见 §2 执行位置） |
+| 报"术语 'xmnnctl' 不会被识别为 cmdlet" | 当前目录既非交付包根、也无便捷壳：进入含本 README 的目录执行；SpecWeave 开发仓库应在 `overlays/xmnn-runtime` 根目录直接 `./xmnnctl <命令>`（见 §2 执行位置） |
 | `load` 提示 sha256 不符 | 镜像文件损坏，重新拷贝/获取交付包后再试 |
 | `load` 后提示镜像不存在 | 核对 `.env` 中 `XMNN_VERSION` 与 `artifacts/` 内文件名版本是否一致 |
 | `up` 后 Jupyter 暂时打不开 | 首次启动约需 1 分钟初始化，脚本会自动等待；超时可用 `logs` 查看进度 |

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# xmnn-runtime 开发仓库便捷入口（薄转发壳，零业务逻辑）
+#
+# 真实交付脚本位于客户交付包根 release/xmnnctl；真实脚本内部
+# cd 自身目录，故 .env / workspace / 容器操作全部落在 release/ 侧，
+# 本壳所在的叠加层根目录不产生任何运行时文件。
+# exec 替换进程，退出码原样透传。
+exec "$(dirname "$0")/release/xmnnctl" "$@"

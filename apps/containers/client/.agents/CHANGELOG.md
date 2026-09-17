@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` 根目录新增 xmnnctl 薄转发壳，`./xmnnctl` 在叠加层根直接可用
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-readme-block-unrunnable，未提交，commit hash 待补）。
+
+**现象与根因**：文档接缝条目（同日稍早）发布后，同一用户在叠加层根目录执行 `./xmnnctl init` 仍报"术语不会被识别"——文档提醒被实证无效。5-Why 重估的不可削减事实：①IDE 终端 cwd 固定为叠加层根，是用户不可改变的工作习惯；②用户连续三次均在根目录直接敲命令，真实意图是"当前位置直接可用"而非"读文档换目录"；③根目录与 `release/` 同名文件并列，位置语义只能靠主动阅读文档获得。系统性根因：跨布局执行缺一个**在错误位置可见的可执行入口**，文档是被动信息，无法拦截直觉行为。
+
+**修复（薄转发壳，结构性预防）**：①叠加层根新增 `xmnnctl.ps1`（pwsh）与无扩展名 `xmnnctl`（bash）两个零逻辑壳：ps1 壳 `& release\xmnnctl.ps1 @args; exit $LASTEXITCODE`，bash 壳 `exec .../release/xmnnctl "$@"`（退出码透传）；②真实脚本启动即 `Set-Location`/`cd` 自身目录，`.env`、`workspace`、compose project 操作全部落在 `release/` 侧，根目录零写入；③.gitattributes 规则由 `**/release/xmnnctl` 泛化为 `**/xmnnctl`，覆盖新 bash 壳的 LF 行尾；④两 README 执行位置指引改为"根目录直接 `./xmnnctl`"，排障行同步。
+
+**V 对抗审查（推翻同日早先的否决）**：早先魔鬼视角否决"根目录加壳"的三条理由经重新取证均不成立——①"双脚本漂移"：壳零业务逻辑（4 行转发），真实脚本仍是唯一事实源，无漂移面；②"根目录被 .env/workspace 污染、与同名 compose project 冲突"：真实脚本自定位 `release/`，写入全在客户侧；两套 compose 的 project 名/容器名/端口（2225/8893）本就相同，开发栈与交付栈天然互斥，壳不引入任何新冲突；③"壳误入客户包"：relpack 只取 `release/`，壳永远不到达客户。实测 PowerShell 对无扩展名调用自动补 `.ps1`（`./xmnnctl` 可命中 `xmnnctl.ps1`），与用户截图中的敲法完全吻合。
+
+**C 同步**：预防措施 `[prevent: convenience-shim]`——以可见的可执行入口替代被动文档，同类"位置直觉"故障被结构性消除；眼前解困 `./xmnnctl init` 从叠加层根直接执行。
+
 ### 2026-09-17 · `fix:` 叠加层根目录执行 `.\xmnnctl.ps1` 报"不会被识别"——双布局位置接缝补引导
 
 **关联七概念场景**：场景2「问题解决」（F→V→C，session sc-20260917-xmnnctl-ps1-missing，未提交，commit hash 待补）。
