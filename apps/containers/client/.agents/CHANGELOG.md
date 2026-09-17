@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` xmnnctl 预检在 WSL 非登录 shell 误报"缺少 compose"——PATH 外用户级 companion 回退探测
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-preflight-companion，未提交，commit hash 待补）。
+
+**现象与根因**：重打包后真机跑 `./xmnnctl load` 交付链路时，预检 2 秒即死：`[ERR] Podman 已安装但缺少 compose 支持`。取证：`podman compose` 插件在本机确实不可用（5.7.1 未装 provider），但 `podman-compose` 实际已由 pip `--user` 安装在 `~/.local/bin`；登录 shell 经 `~/.profile` 自动包含该目录故一切正常，而 WSL 非登录调用（`wsl -- bash -c`、自动化/最小 PATH 环境）不读 profile，`command -v podman-compose` 失败——"已安装"被误判为"未安装"。原 die 信息只给一句笼统指引，客户无法区分"没装"与"装了但 PATH 没有"。
+
+**修复（双脚本对等 + 测试锁行为）**：① bash `xmnnctl` 新增 `find_companion()`：compose 插件与 PATH 均未命中后，依次回退探测 `$HOME/.local/bin`、`$HOME/bin`（pipx 链接 / pip --user / 旧发行版落点），命中即以绝对路径自动启用并打 WARN 指引加 PATH；彻底缺失时 `compose_missing_die` 输出多行可操作信息（pipx/pip --user 两条安装命令 + WSL 非登录 shell 的 `export PATH` 自救）；docker 分支对 docker-compose 做对等回退。② `xmnnctl.ps1` 对等新增 `Find-UserCompanion`：`%USERPROFILE%\.local\bin`（pipx）+ `%APPDATA%\Python\Python3xx\Scripts`（pip --user，递归深度 2 不穿 site-packages），命中自动启用并 WARN，失败时同样多行可操作报错。③ test_release_bundle.py 新增 3 例：双脚本回退/提示静态对等断言；bash 真实行为测试（隔离 HOME/PATH + stub podman，stdin 喂入脚本源码剥掉末行 main 后 source 调用 detect_runtime），正例断言选中 `~/.local/bin/podman-compose` 并告警、负例断言 exit 1 且报错含安装命令与 PATH 自救；无 bash 环境自动 skip。④ README 排障表同步。
+
+**V 对抗审查（踩坑实证）**：① 行为测试经 WSL 互操作执行连踩三坑并固化为注释：`bash -c` 内联多行/`$()` 被互操作 argv 重组吞掉（须落盘 `bash <file>`）、Windows 路径反斜杠被吞（须传 `/mnt/<drive>` 原生路径）、Windows 文本管道把 `\n` 翻成 `\r\n`（bash 报 `pipefail\r: invalid option`——须以字节喂 stdin，恰与本交付包 CRLF 天敌同源）；② `set -u` 下 `${HOME:-}` 兜底；③ 回退只认 `-x` 可执行文件，不用 PATH 改写全局污染（COMPOSE 数组持绝对路径，作用域仅限本进程）；④ ps1 递归限定 Depth 2，避免每次预检遍历 site-packages；⑤ 行为测试 stub 全部在 WSL 原生 /tmp（exec 位真实），不依赖 9p 元数据。
+
+**C 同步**：预防措施 `[prevent: test-case]`——正/负行为测试使"PATH 外已安装 companion"回归永久锁定；客户侧报错信息从一句话升级为"安装命令 + PATH 自救"自描述。
+
 ### 2026-09-16 · `fix:` 客户首跑 `./xmnnctl` 报 `/usr/bin/env: 'bash\r'`——无扩展名 POSIX CLI 漏出 gitattributes LF 保护
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260916-xmnnctl-crlf，未提交，commit hash 待补）。

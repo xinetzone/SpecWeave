@@ -174,6 +174,107 @@ def test_bash_uses_urandom_pwsh_uses_crypto_rng():
     assert "Get-Random" not in pwsh
 
 
+def test_compose_preflight_user_dir_fallback_parity():
+    # pipx/pip --user 安装的 compose 不在 PATH 时（WSL 非登录 shell / 最小化环境），
+    # 两侧预检都必须回退用户级目录并给出可操作提示，而非直接判"缺少 compose"。
+    bash = (RELEASE / "xmnnctl").read_text(encoding="utf-8")
+    pwsh = (RELEASE / "xmnnctl.ps1").read_text(encoding="utf-8")
+    assert "find_companion" in bash and "$HOME/.local/bin" in bash
+    assert "Find-UserCompanion" in pwsh and ".local\\bin" in pwsh
+    assert "pip install --user podman-compose" in bash
+    assert "pip install --user podman-compose" in pwsh
+    assert 'export PATH=' in bash
+    # 回退命中须显式告知用户（自动启用），失败信息须可操作（安装命令 + PATH 自救）
+    assert "已自动启用" in bash and "已自动启用" in pwsh
+
+
+# 行为测试：xmnnctl 经 stdin 喂入（末行 main 调用用 sed 剥掉），在隔离 HOME/PATH
+# 下 source 后直接调用 detect_runtime，stub podman 的 compose 子命令恒失败。
+# 注意：脚本必须落盘后以 `bash <file>` 调用——WSL 互操作会重组 -c 内联参数，
+# 多行/$()/反斜杠会被吞（本机 wsl.exe 实测），文件路径同样要传 /mnt 原生形式。
+_BASH_POSITIVE = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+mkdir -p "$T/home/.local/bin" "$T/shim"
+printf '%s\n' '#!/usr/bin/env bash' 'if [ "$1" = compose ]; then exit 1; fi' 'exit 0' \
+    > "$T/shim/podman"
+printf '%s\n' '#!/usr/bin/env bash' 'echo fake-podman-compose' \
+    > "$T/home/.local/bin/podman-compose"
+chmod +x "$T/shim/podman" "$T/home/.local/bin/podman-compose"
+sed '$d' > "$T/lib.sh"
+export HOME="$T/home"
+export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
+. "$T/lib.sh"
+detect_runtime
+printf 'RESULT_RT=%s\n' "$RT"
+printf 'RESULT_COMPOSE=%s\n' "${COMPOSE[*]}"
+"""
+
+_BASH_NEGATIVE = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+mkdir -p "$T/home" "$T/shim"
+printf '%s\n' '#!/usr/bin/env bash' 'if [ "$1" = compose ]; then exit 1; fi' 'exit 0' \
+    > "$T/shim/podman"
+chmod +x "$T/shim/podman"
+sed '$d' > "$T/lib.sh"
+export HOME="$T/home"
+export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
+. "$T/lib.sh"
+detect_runtime
+"""
+
+_BASH_EXE = shutil.which("bash")
+# System32/WindowsApps 下的 bash.exe 是 WSL 启动器（挂载点 /mnt/<drive>）；
+# Git for Windows 的 bash 直接吃 D:/... 形式。
+_IS_WSL = bool(_BASH_EXE and re.search(r"system32|windowsapps", _BASH_EXE.lower()))
+
+
+def _bash_native_path(p: Path) -> str:
+    win = str(p)
+    if _IS_WSL and re.match(r"^[A-Za-z]:[\\/]", win):
+        return f"/mnt/{win[0].lower()}/" + win[3:].replace("\\", "/")
+    return p.as_posix()
+
+
+def _run_bash_preflight(harness: str, tmp_path: Path) -> subprocess.CompletedProcess:
+    # 以字节喂 stdin：Windows 文本管道会把 \n 翻成 \r\n，bash 将报
+    # `pipefail\r: invalid option`（CRLF 注入，正是本交付包的头号天敌）。
+    script = (RELEASE / "xmnnctl").read_bytes()
+    harness_file = tmp_path / "preflight-harness.sh"
+    harness_file.write_text(harness, encoding="utf-8", newline="\n")
+    proc = subprocess.run(
+        ["bash", _bash_native_path(harness_file)], input=script,
+        capture_output=True, timeout=60,
+    )
+    proc.stdout = proc.stdout.decode("utf-8", errors="replace")
+    proc.stderr = proc.stderr.decode("utf-8", errors="replace")
+    return proc
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_preflight_uses_user_local_companion(tmp_path):
+    proc = _run_bash_preflight(_BASH_POSITIVE, tmp_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    lines = {l[len("RESULT_"):].split("=", 1)[0]: l.split("=", 1)[1]
+             for l in proc.stdout.splitlines() if l.startswith("RESULT_")}
+    assert lines.get("RT") == "podman"
+    assert lines.get("COMPOSE", "").endswith("/.local/bin/podman-compose")
+    # c_warn 走 stdout（脚本约定：仅 c_err 写 stderr）
+    assert "已自动启用" in proc.stdout
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_preflight_missing_compose_is_actionable(tmp_path):
+    proc = _run_bash_preflight(_BASH_NEGATIVE, tmp_path)
+    assert proc.returncode == 1
+    merged = proc.stdout + proc.stderr
+    assert "pip install --user podman-compose" in merged
+    assert ".local/bin" in merged
+
+
 # ── 运行时选择暴露（--runtime / XMNN_RUNTIME / auto）─────────────────────────
 
 
@@ -236,11 +337,14 @@ _BASH_RUNTIME_CHOICE = r"""
 set -u
 T="$(mktemp -d)"
 trap 'rm -rf "$T"' EXIT
-mkdir -p "$T/shim"
-# podman shim：任何调用都成功（compose version 探测直接通过），无 companion 依赖
-printf '%s\n' '#!/usr/bin/env bash' 'exit 0' > "$T/shim/podman"
-chmod +x "$T/shim/podman"
+mkdir -p "$T/home/.local/bin" "$T/shim"
+printf '%s\n' '#!/usr/bin/env bash' 'if [ "$1" = compose ]; then exit 1; fi' 'exit 0' \
+    > "$T/shim/podman"
+printf '%s\n' '#!/usr/bin/env bash' 'echo fake-podman-compose' \
+    > "$T/home/.local/bin/podman-compose"
+chmod +x "$T/shim/podman" "$T/home/.local/bin/podman-compose"
 sed '$d' > "$T/lib.sh"
+export HOME="$T/home"
 export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
 . "$T/lib.sh"
 fail() { printf 'FAIL: %s\n' "$1"; exit 1; }
@@ -269,33 +373,6 @@ unset XMNN_RUNTIME || true
 export PATH="$T/empty"   # source 后再隔离：任何容器运行时都不可见
 CLI_RUNTIME=__CHOICE__ detect_runtime
 """
-
-_BASH_EXE = shutil.which("bash")
-# System32/WindowsApps 下的 bash.exe 是 WSL 启动器（挂载点 /mnt/<drive>）；
-# Git for Windows 的 bash 直接吃 D:/... 形式。
-_IS_WSL = bool(_BASH_EXE and re.search(r"system32|windowsapps", _BASH_EXE.lower()))
-
-
-def _bash_native_path(p: Path) -> str:
-    win = str(p)
-    if _IS_WSL and re.match(r"^[A-Za-z]:[\\/]", win):
-        return f"/mnt/{win[0].lower()}/" + win[3:].replace("\\", "/")
-    return p.as_posix()
-
-
-def _run_bash_preflight(harness: str, tmp_path: Path) -> subprocess.CompletedProcess:
-    # 以字节喂 stdin：Windows 文本管道会把 \n 翻成 \r\n，bash 将报
-    # `pipefail\r: invalid option`（CRLF 注入，正是本交付包的头号天敌）。
-    script = (RELEASE / "xmnnctl").read_bytes()
-    harness_file = tmp_path / "preflight-harness.sh"
-    harness_file.write_text(harness, encoding="utf-8", newline="\n")
-    proc = subprocess.run(
-        ["bash", _bash_native_path(harness_file)], input=script,
-        capture_output=True, timeout=60,
-    )
-    proc.stdout = proc.stdout.decode("utf-8", errors="replace")
-    proc.stderr = proc.stderr.decode("utf-8", errors="replace")
-    return proc
 
 
 @pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过运行时选择行为测试")

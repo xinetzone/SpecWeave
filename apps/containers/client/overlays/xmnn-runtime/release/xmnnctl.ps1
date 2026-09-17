@@ -66,6 +66,25 @@ function Parse-GlobalArgs([string[]]$Tokens) {
     }
 }
 
+# 用户级 compose 可执行文件的常见落点：pipx 链接在 %USERPROFILE%\.local\bin，
+# pip --user 的 Scripts 在 %APPDATA%\Python\Python3xx\Scripts。
+# 非交互/最小 PATH 环境下 Get-Command 搜不到，会把"已安装"误判成"缺少 compose"。
+function Find-UserCompanion($name) {
+    $candidates = @()
+    if ($env:USERPROFILE) {
+        $candidates += (Join-Path $env:USERPROFILE ".local\bin\$name.exe")
+    }
+    if ($env:APPDATA) {
+        $pyRoot = Join-Path $env:APPDATA "Python"
+        if (Test-Path $pyRoot) {
+            # Scripts 固定在 Python\Python3xx\Scripts（深度 2）；限制深度避免穿入 site-packages
+            $candidates += @(Get-ChildItem -Path $pyRoot -Recurse -Depth 2 -Filter "$name.exe" `
+                -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+        }
+    }
+    return ($candidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1)
+}
+
 function Detect-Runtime {
     # 优先级：命令行 -Runtime > 环境变量 XMNN_RUNTIME > auto（自动探测）
     $choice = if ($Script:CliRuntime) { $Script:CliRuntime }
@@ -95,7 +114,21 @@ function Detect-Runtime {
         } elseif (Get-Command podman-compose -ErrorAction SilentlyContinue) {
             $Script:Compose = @("podman-compose")
         } else {
-            Die "Podman 已安装但缺少 compose 支持：请安装 podman-compose，或使用较新版 Podman"
+            $companion = Find-UserCompanion "podman-compose"
+            if ($companion) {
+                $Script:Compose = @($companion)
+                Warn "podman-compose 不在 PATH，已自动启用：$companion"
+                Warn "建议将其目录加入 PATH（pipx: %USERPROFILE%\.local\bin；pip --user: %APPDATA%\Python\Python3xx\Scripts）"
+            } else {
+                Die @"
+Podman 已安装但缺少 compose 支持：
+  安装（任选其一）:
+    pipx install podman-compose
+    python -m pip install --user podman-compose
+  若已安装仍报此错，确认用户 Scripts 目录（%USERPROFILE%\.local\bin 或
+  %APPDATA%\Python\Python3xx\Scripts）已加入 PATH
+"@
+            }
         }
         $Script:Files = @("-f", "compose.yaml", "-f", "compose.podman.yaml")
         $Script:RunFlags = @("--device", "/dev/fuse", "--security-opt", "label=disable", "--cgroupns", "host")
@@ -106,7 +139,18 @@ function Detect-Runtime {
         } elseif (Get-Command docker-compose -ErrorAction SilentlyContinue) {
             $Script:Compose = @("docker-compose")
         } else {
-            Die "Docker 已安装但缺少 compose 插件：请安装 Docker Compose v2"
+            $companion = Find-UserCompanion "docker-compose"
+            if ($companion) {
+                $Script:Compose = @($companion)
+                Warn "docker-compose 不在 PATH，已自动启用：$companion"
+            } else {
+                Die @"
+Docker 已安装但缺少 compose 插件：
+  安装 Docker Compose v2 插件，或安装独立版:
+    pipx install docker-compose
+  若已安装仍报此错，确认用户 Scripts 目录已加入 PATH
+"@
+            }
         }
         $Script:Files = @("-f", "compose.yaml")
         $Script:RunFlags = @()
