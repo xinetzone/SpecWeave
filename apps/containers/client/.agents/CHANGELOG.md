@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### 2026-09-17 · `fix:` load 时 Podman 未启动被误报"镜像版本不符"——双脚本新增守护可达性预检与 load 退出码检查
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260917-load-daemon-down，未提交，commit hash 待补）。
+
+**现象与根因**：真机执行 `./xmnnctl.ps1 load`，sha256 校验通过后报 `Cannot connect to Podman... dial tcp 127.0.0.1:60432 actively refused`，随即脚本以 `[ERR] 导入的镜像中没有 localhost/xmnn-runtime:...；请核对 XMNN_VERSION` 收场——把客户引向错误的排障方向（改版本号）。取证：`podman machine list` 显示默认机器 LAST UP 为 Never，CLI 已安装但后台虚拟机从未启动。5-Why 系统性根因——脚本把"CLI 在 PATH 中"（Detect-Runtime 只做 Get-Command/command -v）等同于"守护进程可达"，且 `load` 退出码从未检查：load 对 1.2GB 包失败后继续走镜像 inspect 重试（5×2s），最终用"版本不符"这一唯一被预设的失败模式兜底，掩盖 socket 连不上的真实原因。
+
+**修复（双脚本对等 + 测试锁行为）**：① bash 新增 `assert_runtime_alive()`、ps1 新增 `Assert-RuntimeAlive`：以 `podman/docker info` 探测守护，失败即 fail-fast 并按运行时给出可操作指引（podman→`podman machine start`/Podman Desktop；docker→启动 Docker Desktop 等托盘就绪）；② 在 `load`（sha256 之前，避免对 1.2GB 包做无用哈希）、`up`、`smoke` 三处调用，`init` 保持免守护特性（生成凭证不依赖后台）；③ `load` 调用后立即检查退出码，失败时 die"镜像导入失败，请查看上方原始报错（常见磁盘空间不足），导入幂等可重试"，不再落入误导性版本排查；④ README §7 排障表新增连接失败行与"次生误报版本不符"说明行，§9.2 FAQ 新增 `Cannot connect to Podman` 条目；⑤ test_release_bundle.py 新增 2 例：bash 真实行为测试（stub podman 的 info 恒失败，断言 exit 1、输出含 `podman machine start`、不进入后续流程）与双脚本静态对等断言（预检函数定义+三处调用、load 失败文案）。
+
+**V 对抗审查（四视角）**：① 魔鬼——机器处于 starting 中间态时 `info` 也失败，报错同样指向 start，语义正确；预检误杀风险仅限 load/up/smoke，init/down/ps/logs 行为不变；② 新人——错误信息直接给出可复制命令，无需知道"虚拟机/daemon"概念；③ 老板——改动局限 xmnnctl 双脚本/README/测试，无契约面变更；④ 未来——"安装探测 ≠ 可达性探测"作为预检分层原则固化在注释中，新增运行时命令时按此模板加预检。
+
+**C 同步**：预防措施 `[prevent: daemon-preflight]`——可达性预检前置到重操作之前，同类"未启动机器"故障被结构性拦截，且不再产生误导性次生报错；眼前解困：已执行 `podman machine start`（started successfully），用户重跑 `./xmnnctl.ps1 load` 即可。
+
 ### 2026-09-17 · `docs:` release/README 小白化——零基线读者的环境准备、第 0 步、预期输出与词典 FAQ
 
 **关联七概念场景**：场景5「知识沉淀」（E→C，session sc-20260917-readme-newbie，未提交，commit hash 待补）。

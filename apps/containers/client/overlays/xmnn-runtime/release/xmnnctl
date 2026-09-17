@@ -218,14 +218,28 @@ verify_archive() {
     c_ok "完整性校验通过（sha256 一致）"
 }
 
+# 守护进程可达性预检：CLI 已安装（detect_runtime 只查 PATH）不等于后台
+# 虚拟机/daemon 在运行。不预检会让 load 对 1.2GB 包失败后继续重试，
+# 最终误报"镜像中没有/版本不符"，掩盖"socket 连不上"的真实原因。
+assert_runtime_alive() {
+    "$RT" info >/dev/null 2>&1 || {
+        if [ "$RT" = podman ]; then
+            die "无法连接 Podman 后台（Linux 虚拟机未运行）：请先执行 podman machine start（或启动 Podman Desktop 等待托盘就绪）后重试"
+        else
+            die "无法连接 Docker 后台：请先启动 Docker Desktop 并等待托盘图标变为运行状态后重试"
+        fi
+    }
+}
+
 do_load() {
     mkdir -p artifacts
+    assert_runtime_alive
     local archive ver
     archive="$(find_archive)"
     [ -n "$archive" ] && [ -f "$archive" ] || die "artifacts/ 下未找到 xmnn-runtime-*.tar.gz，请确认交付包已完整解压"
     verify_archive "$archive"
     c_info "导入镜像：$archive"
-    "$RT" load -i "$archive"
+    "$RT" load -i "$archive" || die "镜像导入失败：请查看上方 $RT 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等"
     ver="$(env_value XMNN_VERSION)"
     [ -n "$ver" ] || die ".env 缺少 XMNN_VERSION"
     # 镜像 tar 由 podman save 产出：打包机 podman tag 时裸名已归一化，归档内
@@ -288,6 +302,7 @@ print_banner() {
 
 do_up() {
     mkdir -p workspace
+    assert_runtime_alive
     local jport
     c_info "启动 xmnn-runtime（$RT）"
     compose up -d
@@ -306,6 +321,7 @@ container_running() {
 }
 
 do_smoke() {
+    assert_runtime_alive
     local cname ver
     cname="$(env_value XMNN_CONTAINER_NAME)"; cname="${cname:-xmnn-runtime}"
     ver="$(env_value XMNN_VERSION)"

@@ -275,6 +275,52 @@ def test_bash_preflight_missing_compose_is_actionable(tmp_path):
     assert ".local/bin" in merged
 
 
+# 守护进程不可达：stub podman 的 info 子命令恒失败（模拟 machine 未启动），
+# load 不得继续导入再误报"版本不符"，预检必须 fail-fast 并给出启动指引。
+_BASH_DAEMON_DOWN = r"""
+set -u
+T="$(mktemp -d)"
+trap 'rm -rf "$T"' EXIT
+mkdir -p "$T/home/.local/bin" "$T/shim"
+printf '%s\n' '#!/usr/bin/env bash' \
+    'if [ "$1" = info ]; then exit 1; fi' \
+    'if [ "$1" = compose ]; then exit 1; fi' \
+    'exit 0' > "$T/shim/podman"
+printf '%s\n' '#!/usr/bin/env bash' 'echo fake-podman-compose' \
+    > "$T/home/.local/bin/podman-compose"
+chmod +x "$T/shim/podman" "$T/home/.local/bin/podman-compose"
+sed '$d' > "$T/lib.sh"
+export HOME="$T/home"
+export PATH="$T/shim:/usr/local/bin:/usr/bin:/bin"
+. "$T/lib.sh"
+detect_runtime
+assert_runtime_alive
+printf 'SHOULD_NOT_REACH\n'
+"""
+
+
+@pytest.mark.skipif(shutil.which("bash") is None, reason="环境无 bash，跳过预检行为测试")
+def test_bash_daemon_down_fails_fast_with_machine_start_hint(tmp_path):
+    proc = _run_bash_preflight(_BASH_DAEMON_DOWN, tmp_path)
+    assert proc.returncode == 1
+    merged = proc.stdout + proc.stderr
+    assert "podman machine start" in merged
+    assert "SHOULD_NOT_REACH" not in merged
+
+
+@pytest.mark.parametrize("script", ["xmnnctl", "xmnnctl.ps1"])
+def test_daemon_preflight_and_load_exit_guard(script):
+    # CLI 已安装 ≠ 守护可达：load/up/smoke 前必须预检；load 退出码必须检查，
+    # 否则 daemon 中断会被误报为"镜像中没有/版本不符"（2026-09-17 实测踩坑）。
+    text = (RELEASE / script).read_text(encoding="utf-8")
+    assert "podman machine start" in text
+    assert "Docker Desktop" in text
+    assert "镜像导入失败" in text
+    name = "assert_runtime_alive" if script == "xmnnctl" else "Assert-RuntimeAlive"
+    # 1 处定义 + load/up/smoke 三处调用
+    assert text.count(name) >= 4
+
+
 # ── 运行时选择暴露（--runtime / XMNN_RUNTIME / auto）─────────────────────────
 
 

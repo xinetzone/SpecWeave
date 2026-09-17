@@ -157,6 +157,25 @@ Docker 已安装但缺少 compose 插件：
     }
 }
 
+# 守护进程可达性预检：Get-Command 只能证明 CLI 已安装，不能证明后台
+# 虚拟机/daemon 在运行。不预检会让 load 对 1.2GB 包失败后继续重试，
+# 最终误报"镜像中没有/版本不符"，掩盖"socket 连不上"的真实原因。
+function Assert-RuntimeAlive {
+    $null = & $Script:Rt info 2>$null
+    if ($LASTEXITCODE -ne 0) {
+        if ($Script:Rt -eq "podman") {
+            Die @"
+无法连接 Podman 后台（Linux 虚拟机未运行）：
+  请先启动后重试：
+    podman machine start
+  也可启动 Podman Desktop，等待托盘图标显示运行状态。
+"@
+        } else {
+            Die "无法连接 Docker 后台：请先启动 Docker Desktop 并等待托盘图标变为运行状态后重试。"
+        }
+    }
+}
+
 # ── .env 读取与初始化 ───────────────────────────────────────────────────────
 
 function Get-EnvValue($key) {
@@ -242,6 +261,7 @@ function Verify-Archive([string]$archive) {
 
 function Do-Load {
     New-Item -ItemType Directory -Force artifacts | Out-Null
+    Assert-RuntimeAlive
     $archive = Find-Archive
     if (-not $archive -or -not (Test-Path $archive)) {
         Die "artifacts 下未找到 xmnn-runtime-*.tar.gz，请确认交付包已完整解压"
@@ -249,6 +269,9 @@ function Do-Load {
     Verify-Archive $archive
     Info "导入镜像：$archive"
     & $Script:Rt load -i $archive
+    if ($LASTEXITCODE -ne 0) {
+        Die "镜像导入失败：请查看上方 $($Script:Rt) 的原始报错（常见原因：磁盘空间不足）；处理后重新执行 load 即可，导入过程幂等。"
+    }
     $ver = Get-EnvValue XMNN_VERSION
     if (-not $ver) { Die ".env 缺少 XMNN_VERSION" }
     # 镜像 tar 由 podman save 产出：打包机 podman tag 时裸名已归一化，归档内
@@ -319,6 +342,7 @@ function Print-Banner {
 
 function Do-Up {
     New-Item -ItemType Directory -Force workspace | Out-Null
+    Assert-RuntimeAlive
     Info "启动 xmnn-runtime（$($Script:Rt)）"
     Invoke-Compose "up -d"
     $jport = Get-EnvValue XMNN_JUPYTER_PORT; if (-not $jport) { $jport = "8893" }
@@ -339,6 +363,7 @@ function Container-Running([string]$name) {
 }
 
 function Do-Smoke {
+    Assert-RuntimeAlive
     $cname = Get-EnvValue XMNN_CONTAINER_NAME; if (-not $cname) { $cname = "xmnn-runtime" }
     $ver = Get-EnvValue XMNN_VERSION
     if (Container-Running $cname) {

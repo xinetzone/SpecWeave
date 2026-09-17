@@ -170,7 +170,9 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 | 现象 | 处理 |
 |---|---|
 | 报"术语 'xmnnctl' 不会被识别为 cmdlet" | 当前目录既非交付包根、也无便捷壳：进入含本 README 的目录执行；SpecWeave 开发仓库应在 `overlays/xmnn-runtime` 根目录直接 `./xmnnctl <命令>`（见 §2 执行位置） |
+| 报 `Cannot connect to Podman` / `unable to connect to Podman socket` | Podman 后台虚拟机未启动：执行 `podman machine start`（或打开 Podman Desktop 等待托盘就绪）后重试原命令；Docker 则启动 Docker Desktop。新版脚本会在导入前直接拦截并给出同样提示 |
 | `load` 提示 sha256 不符 | 镜像文件损坏，重新拷贝/获取交付包后再试 |
+| 紧连接失败后又提示"导入的镜像中没有/版本不符" | 这是旧版脚本的**误导性次生报错**，真因是后台没连上；先按上一行启动机器并重试，不要改版本号 |
 | `load` 后提示镜像不存在 | 核对 `.env` 中 `XMNN_VERSION` 与 `artifacts/` 内文件名版本是否一致 |
 | `up` 后 Jupyter 暂时打不开 | 首次启动约需 1 分钟初始化，脚本会自动等待；超时可用 `logs` 查看进度 |
 | 忘记密码 / Token | 查看 `.env`；或 `init --force` 后 `down`、`up` |
@@ -212,3 +214,4 @@ sha256sum artifacts/xmnn-runtime-*.tar.gz   # 或 shasum -a 256
 - **密码/Token 没保存怎么办？** 记事本打开 `.env` 即可查到；想换新的执行 `init --force`，随后依次执行 `down`、`up` 生效。
 - **提示"执行策略"被拦截？** 复制代码块上方注释里的替代命令：`pwsh -ExecutionPolicy Bypass -File .\xmnnctl.ps1 <命令>`。这是一次性放行，不修改系统设置。
 - **Linux 提示 Permission denied？** 先执行一次 `chmod +x xmnnctl`（仅需一次），再重新执行原命令。
+- **报 `Cannot connect to Podman` 怎么办？** 后台虚拟机关着：执行 `podman machine start`，等待提示 started 后重新执行原命令；`init` 不需要后台，`load`/`up` 需要。电脑重启后通常也要先做这一步。
