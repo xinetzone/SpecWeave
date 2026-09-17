@@ -166,10 +166,11 @@ function Do-Load {
     & $Script:Rt load -i $archive
     $ver = Get-EnvValue XMNN_VERSION
     if (-not $ver) { Die ".env 缺少 XMNN_VERSION" }
-    # podman load 后裸名归一化为 localhost/ 前缀；docker 保留裸名。
+    # 镜像 tar 由 podman save 产出：打包机 podman tag 时裸名已归一化，归档内
+    # RepoTag 固定为 localhost/xmnn-runtime:<ver>；docker load 原样保留该名，
+    # 故双运行时统一引用 localhost/ 全称（裸名在 docker 下会按 docker.io 远程镜像解析）。
     # load 返回后镜像索引偶发瞬时未就绪，重试 5 次（间隔 2s）。
-    $imgRef = "xmnn-runtime:$ver"
-    if ($Script:Rt -eq "podman") { $imgRef = "localhost/$imgRef" }
+    $imgRef = "localhost/xmnn-runtime:$ver"
     $ready = $false
     for ($i = 0; $i -lt 5; $i++) {
         try {
@@ -181,7 +182,7 @@ function Do-Load {
     if (-not $ready) {
         Die "导入的镜像中没有 $imgRef；请核对 .env 的 XMNN_VERSION 与交付包版本"
     }
-    Ok "镜像 xmnn-runtime:$ver 已就绪"
+    Ok "镜像 $imgRef 已就绪"
     Info "执行交付守卫（10 项）"
     Do-Smoke
 }
@@ -264,7 +265,7 @@ function Do-Smoke {
         # 必须显式 --entrypoint：镜像默认 entrypoint 的命令模式会把脚本交给
         # cp314t 登录环境解析（实测会 9 项失败）。
         & $Script:Rt run --rm @Script:RunFlags --entrypoint /opt/conda/bin/python `
-            "xmnn-runtime:$ver" /opt/xmnnrt-smoke/_runtime_smoke.py
+            "localhost/xmnn-runtime:$ver" /opt/xmnnrt-smoke/_runtime_smoke.py
     }
 }
 

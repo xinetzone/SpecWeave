@@ -7,13 +7,16 @@
 #
 # 离线保证：image 必须已由 `xmnnctl load` 从随包 tar.gz 导入；
 # pull_policy: never 禁止启动过程联网拉取镜像。
+# 镜像名固定 localhost/ 前缀：tar 由 podman save 产出，打包机 tag 裸名已归一化，
+# 归档内 RepoTag 即 localhost/xmnn-runtime:<ver>，podman/docker load 后名称一致；
+# 若写裸名，docker 会按 docker.io/xmnn-runtime 解析并尝试远程拉取（离线必败）。
 # 配置（版本/端口/容器名/凭证）统一来自同目录 .env（xmnnctl init 生成）。
 
 name: xmnn-runtime
 
 services:
   xmnnrt:
-    image: xmnn-runtime:${XMNN_VERSION}
+    image: localhost/xmnn-runtime:${XMNN_VERSION}
     pull_policy: never
     container_name: ${XMNN_CONTAINER_NAME:-xmnn-runtime}
     # bridge 在 Docker 下即默认网络；Podman 下规避默认项目网络的

@@ -3,7 +3,7 @@
 验证随包骨架（compose / 控制脚本 / env 模板）满足"完全独立、面向客户、
 离线、Podman+Docker 双兼容"契约：
   - 零仓库知识：无 extends、无 ../ 路径、release/ 内零 Python；
-  - 离线：pull_policy never，镜像无 registry 前缀；
+  - 离线：pull_policy never，镜像固定 localhost/ 前缀（归档内规范名，双运行时一致）；
   - 凭证最小注入：容器 environment 仅四变量（不使用 env_file）；
   - SSH host key 持久化；
   - 双端控制脚本命令同构，凭证生成加密学安全、字符集仅字母数字；
@@ -52,8 +52,9 @@ def test_no_repo_knowledge_in_compose(main_compose):
 def test_main_compose_contract(main_compose):
     assert main_compose["name"] == "xmnn-runtime"
     svc = main_compose["services"]["xmnnrt"]
-    # 无 registry 前缀 + 版本插值；离线禁止拉取
-    assert svc["image"] == "xmnn-runtime:${XMNN_VERSION}"
+    # localhost/ 规范名：podman 打包时裸名归一化进入归档，docker load 原样保留；
+    # 裸名在 docker 下会被解析为 docker.io/xmnn-runtime 触发远程拉取。离线禁止拉取。
+    assert svc["image"] == "localhost/xmnn-runtime:${XMNN_VERSION}"
     assert svc["pull_policy"] == "never"
     assert svc["network_mode"] == "bridge"
     assert svc["ports"] == [
@@ -144,12 +145,22 @@ def test_find_crlf_shebang_scripts_detects_bad_and_skips(tmp_path):
     assert [p.name for p in bad] == ["ctl"]
 
 
-def test_post_load_inspect_is_runtime_aware():
-    # podman load 裸名归一化 localhost/：inspect 引用必须按运行时分流
+def test_loaded_image_uses_localhost_canonical_name():
+    # 归档由 podman save 产出：打包机 tag 时裸名已归一化，tar 内 RepoTag 固定
+    # localhost/xmnn-runtime:<ver>；docker load 原样保留（podman 会在解析裸名时
+    # 隐式补 localhost/，docker 不会）。双端脚本的 load 后 inspect 与一次性
+    # smoke run 必须统一使用 localhost/ 全称，且不得再按运行时做条件前缀分流。
     bash = (RELEASE / "xmnnctl").read_text(encoding="utf-8")
     pwsh = (RELEASE / "xmnnctl.ps1").read_text(encoding="utf-8")
-    assert 'img_ref="localhost/$img_ref"' in bash
-    assert '$imgRef = "localhost/$imgRef"' in pwsh
+    canonical = 'localhost/xmnn-runtime:$ver'
+    # 每端恰好两处：load 后 inspect 引用 + smoke 一次性容器镜像引用
+    assert bash.count(canonical) == 2
+    assert pwsh.count(canonical) == 2
+    assert f'img_ref="{canonical}"' in bash
+    assert f'$imgRef = "{canonical}"' in pwsh
+    # 禁止回退为按运行时条件加前缀的分流写法
+    assert '[ "$RT" = "podman" ] && img_ref=' not in bash
+    assert 'if ($Script:Rt -eq "podman") { $imgRef' not in pwsh
 
 
 def test_bash_uses_urandom_pwsh_uses_crypto_rng():
