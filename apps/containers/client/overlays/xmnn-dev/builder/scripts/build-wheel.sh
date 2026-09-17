@@ -145,7 +145,7 @@ log_kv "LLVM" "$($LLVM_CONFIG --version) @ $LLVM_LIB_DIR"
 "$BASE_PYTHON" -m nuitka --version | head -2
 
 if [ "$XMNN_OFFLINE" = "1" ]; then
-    log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（$NUITKA_DL_FLAG 置空）"
+    log_info "offline mode: pip 镜像配置跳过 / Nuitka 下载旗标已禁用（NUITKA_DL_FLAG 置空）"
 else
     case "${PIP_MIRROR:-official}" in
         tuna)
