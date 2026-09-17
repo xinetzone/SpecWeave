@@ -32,7 +32,11 @@ import sys
 from pathlib import Path
 
 
-HOOKS_TO_INSTALL = ["pre-commit"]
+HOOK_SPECS = {
+    "pre-commit": "pre_commit.py",
+    "pre-push": "pre_push.py",
+}
+HOOKS_TO_INSTALL = list(HOOK_SPECS)
 
 
 def find_project_root() -> Path:
@@ -44,12 +48,13 @@ def find_project_root() -> Path:
 def install_hook(
     project_root: Path, hook_name: str, templates_dir: Path, force: bool = False
 ) -> bool:
-    py_source = templates_dir / "pre_commit.py"
+    py_name = HOOK_SPECS[hook_name]
+    py_source = templates_dir / py_name
     sh_source = templates_dir / hook_name
     target = project_root / ".git" / "hooks" / hook_name
 
     if not py_source.exists():
-        print(f"  ⚠️  钩子核心脚本 pre_commit.py 不存在，跳过")
+        print(f"  ⚠️  钩子核心脚本 {py_name} 不存在，跳过")
         return False
 
     if target.exists() and not force:
@@ -63,7 +68,7 @@ def install_hook(
 
     if sys.platform == "win32":
         cmd_target = project_root / ".git" / "hooks" / f"{hook_name}.cmd"
-        cmd_content = f'@echo off\r\npython "%~dp0..\\..\\.agents\\scripts\\hooks\\pre_commit.py"\r\nif %errorlevel% neq 0 exit /b %errorlevel%\r\n'
+        cmd_content = f'@echo off\r\npython "%~dp0..\\..\\.agents\\scripts\\hooks\\{py_name}" %*\r\nif %errorlevel% neq 0 exit /b %errorlevel%\r\n'
         cmd_target.write_text(cmd_content, encoding="utf-8")
         print(f"  ✅ {hook_name}.cmd 已安装 (Windows CMD)")
 
@@ -152,11 +157,15 @@ def main():
             print("     ① 敏感信息检测（密码/密钥/Token）— 高风险阻断提交")
             print("     ② 并发模块安全八维检查（超时/幂等/边界/防御/配置/国际化/死锁/泄漏）— 错误阻断提交")
             print("   - 中风险/警告级信息仅警告，不阻断提交")
+            print("   - 现在 git push 时会自动执行 tree 对象规范序预检（Pre-push Hook）：")
+            print("     ③ 非规范序 tree 会被启用 fsck 的远端整包拒绝（treeNotSorted），推送前阻断")
             print("   - 使用 git commit --no-verify 可临时跳过所有钩子（不推荐）")
             print("   - 单独跳过敏感信息: SENSITIVE_CHECK_SKIP=1 git commit")
             print("   - 单独跳过并发检查: CONCURRENT_CHECK_SKIP=1 git commit")
+            print("   - 单独跳过 tree 规范序预检: TREE_ORDER_CHECK_SKIP=1 git push")
             print("   - 自动修复敏感信息: python .agents/scripts/check-sensitive-info.py --fix")
             print("   - 运行并发检查: python .agents/scripts/check-concurrent-safety.py")
+            print("   - 运行 tree 规范序检查: python .agents/scripts/check-tree-order.py")
 
     return 0
 

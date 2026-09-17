@@ -1,0 +1,45 @@
+#!/bin/sh
+# SpecWeave 团队 pre-push 钩子（仓库分发版）
+# 委托到 .agents/scripts/hooks/pre_push.py 执行核心逻辑
+#
+# 用途：推送前校验 Git tree 对象条目是否为规范序。非规范序 tree 会被启用
+# fsck 的远端整包拒绝（treeNotSorted），且 git push -f 无法绕过。
+#
+# 一键启用（clone后执行一次）:
+#   python .githooks/setup-hooks.py
+#
+# 或手动配置:
+#   git config core.hooksPath .githooks
+
+set -e
+
+SCRIPT_DIR="$(dirname "$(readlink -f "$0" 2>/dev/null || echo "$0")")"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PY_HOOK="$PROJECT_ROOT/.agents/scripts/hooks/pre_push.py"
+
+# Find Python 3
+for PY in python3 python py; do
+    if command -v "$PY" >/dev/null 2>&1; then
+        if "$PY" -c "import sys; sys.exit(0 if sys.version_info[0] >= 3 else 1)" 2>/dev/null; then
+            exec "$PY" "$PY_HOOK"
+        fi
+    fi
+done
+
+# Windows Git Bash fallback paths
+if [ -n "$WINDIR" ] || [ -n "$SYSTEMROOT" ]; then
+    for py_path in \
+        "/c/Python312/python.exe" "/c/Python311/python.exe" \
+        "/c/Python310/python.exe" "/c/Python39/python.exe" \
+        "/c/Users/$USER/AppData/Local/Programs/Python/Python312/python.exe" \
+        "/c/Users/$USER/AppData/Local/Programs/Python/Python311/python.exe" \
+        "/c/Users/$USER/AppData/Local/Programs/Python/Python310/python.exe" \
+        "/c/Users/$USER/AppData/Local/Programs/Python/Python39/python.exe"; do
+        if [ -x "$py_path" ] 2>/dev/null; then
+            exec "$py_path" "$PY_HOOK"
+        fi
+    done
+fi
+
+echo "❌ Python 3 not found. Pre-push hook requires Python 3."
+exit 1
