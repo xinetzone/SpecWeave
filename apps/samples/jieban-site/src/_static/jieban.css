@@ -1,0 +1,232 @@
+/* 结伴 · 新宣纸纸感主题
+ * token 权威源：playground/reports/jieban-brand-20260918/jieban-style-tile.html
+ * 纪律：暖灰纸感、米白卡片、深灰褐文字；忌婚恋红、搞钱金、成功学大字报。
+ */
+
+:root {
+  /* —— 新宣纸 token —— */
+  --paper: #f5f1ea;
+  --card: #fcfaf5;
+  --ink: #3a352e;
+  --ink-2: #6e655a;
+  --line: #e2d9c8;
+  --cinnabar: #a8543c;
+  --dai: #46534f;
+
+  /* —— 四频道色 —— */
+  --zhizu: #b08f56;
+  --hengyu: #4f6472;
+  --zhihe: #97707c;
+  --yuduo: #5e7659;
+
+  /* —— 覆盖主题语义色，落到暖灰纸感 —— */
+  --pst-color-background: var(--paper);
+  --pst-color-on-background: var(--ink);
+  --pst-color-surface: var(--card);
+  --pst-color-on-surface: var(--ink);
+  --pst-color-text-base: var(--ink);
+  --pst-color-text-muted: var(--ink-2);
+  --pst-color-border: var(--line);
+  --pst-color-primary: var(--dai);
+  --pst-color-link: var(--cinnabar);
+  --pst-color-link-hover: #8b4128;
+  --pst-color-heading: var(--ink);
+  --pst-color-secondary: var(--ink-2);
+
+  --pst-font-family-base: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+  --pst-font-family-heading: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", Georgia, serif;
+}
+
+/* 强制浅色：本项目明确不要深色模式 */
+html[data-theme="dark"] {
+  --pst-color-background: var(--paper);
+  --pst-color-on-background: var(--ink);
+  --pst-color-surface: var(--card);
+  --pst-color-text-base: var(--ink);
+  --pst-color-text-muted: var(--ink-2);
+  --pst-color-border: var(--line);
+  --pst-color-link: var(--cinnabar);
+  --pst-color-heading: var(--ink);
+}
+
+.theme-switch-button,
+button.theme-switch-button {
+  display: none !important;
+}
+
+body,
+.bd-main,
+.bd-content,
+.bd-article {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* 侧边栏与顶栏：略深一档的纸色，保持层级柔和 */
+.bd-sidebar-primary,
+.bd-sidebar-secondary,
+.navbar,
+.header-article__inner .header-article-items__title {
+  background-color: var(--paper);
+}
+
+.bd-sidebar-primary,
+.bd-sidebar-secondary {
+  border-color: var(--line);
+}
+
+/* —— 首屏标题区 —— */
+
+.jb-hero {
+  margin: 0.6rem 0 0.2rem;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+}
+
+.jb-sub {
+  margin: 0 0 2.2rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+
+/* —— 引文：朱砂细边，纸面留白 —— */
+
+blockquote {
+  margin: 1.6rem 0;
+  padding: 0.9rem 1.3rem;
+  border-left: 3px solid var(--cinnabar);
+  background: var(--card);
+  border-radius: 2px;
+  color: var(--ink);
+}
+
+blockquote p {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+
+/* —— 四频道卡片 —— */
+
+.jb-card {
+  background: var(--card) !important;
+  border: 1px solid var(--line) !important;
+  border-top: 3px solid var(--line) !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+
+.jb-card .jb-card-title,
+.jb-card .sd-card-title {
+  font-size: 1.12rem;
+  letter-spacing: 0.1em;
+}
+
+.jb-zhizu {
+  border-top-color: var(--zhizu) !important;
+}
+
+.jb-hengyu {
+  border-top-color: var(--hengyu) !important;
+}
+
+.jb-zhihe {
+  border-top-color: var(--zhihe) !important;
+}
+
+.jb-yuduo {
+  border-top-color: var(--yuduo) !important;
+}
+
+.jb-card p {
+  color: var(--ink-2);
+  line-height: 1.95;
+}
+
+.jb-card p strong {
+  color: var(--ink);
+}
+
+/* —— 红线条款：朱砂而非警示红，避免高对比 —— */
+
+.admonition.danger {
+  border: 1px solid var(--cinnabar);
+  background: var(--card);
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.admonition.danger > .admonition-title {
+  background: transparent;
+  color: var(--cinnabar);
+  border-bottom: 1px solid var(--line);
+  letter-spacing: 0.06em;
+}
+
+.admonition.danger > .admonition-title::after {
+  color: var(--cinnabar);
+}
+
+/* —— 正文排版 —— */
+
+.bd-article h1,
+.bd-article h2,
+.bd-article h3 {
+  letter-spacing: 0.06em;
+}
+
+.bd-article p,
+.bd-article li {
+  line-height: 2;
+}
+
+.bd-article h2 {
+  margin-top: 3rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.bd-article table {
+  border-color: var(--line);
+}
+
+.bd-article thead th {
+  background: var(--card);
+  border-color: var(--line);
+}
+
+.bd-article td,
+.bd-article th {
+  border-color: var(--line);
+}
+
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+}
+
+/* —— Mermaid 图：收敛到纸感，弱化自动注入的悬浮控件 —— */
+
+pre.mermaid {
+  margin: 1.8rem 0;
+  padding: 1.2rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  text-align: center;
+}
+
+.mermaid-fullscreen-btn {
+  background: var(--card);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+
+.mermaid-fullscreen-btn:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
