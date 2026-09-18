@@ -457,6 +457,93 @@ def run_compose(c: Context, spec: StackSpec, *tail: str, gpu: bool = False, pty:
     run_cmd(c, " ".join(shlex.quote(a) for a in argv), pty=pty)
 
 
+# podman 在 ``pod create`` / ``create`` / ``start`` 后回显的对象 ID（stdout，独占一行）
+_COMPOSE_ECHO_ID_RE = re.compile(r"^[0-9a-f]{64}$")
+# podman rootless netns 的**良性** ERROR（stderr）：宿主无 systemd 用户会话总线
+# （WSL 发行版 / podman machine 内无 user session bus）时无法把 pasta 进程移入
+# user.slice，容器照常创建并运行（与 compose.yaml 文件头记录的 aardvark-dns
+# "Failed to connect to user scope bus" 同族；2026-09-18 实证）。
+_PASTA_DBUS_NOISE_RE = re.compile(
+    r"^ERROR\[\d+\]\s+failed to move the rootless netns pasta process to the "
+    r"systemd user\.slice:\s*dbus: couldn't determine address of session bus"
+)
+
+
+def compose_echo_names(spec: StackSpec) -> tuple[str, ...]:
+    """podman / podman-compose 会原样回显的本项目资源名（容器 / pod / 默认网络）。
+
+    podman-compose 的默认命名为容器名 ``container_name``（本族三栈 == ``project``）、
+    服务名、pod ``pod_<project>``、网络 ``<project>_default``。
+    """
+    return (
+        spec.project,
+        spec.service,
+        f"pod_{spec.project}",
+        f"{spec.project}_default",
+    )
+
+
+def is_benign_compose_noise(line: str, *, names: tuple[str, ...] = ()) -> bool:
+    """判定 podman 透传的原生行是否属**良性噪声**（唯一判定点，纯函数可单测）。
+
+    判据刻意收窄为「绝不可能是错误信息」的三类，凡有疑问一律返回 False（保留）：
+      - 对象 ID 回显：整行恰为 64 位十六进制（pod/容器/网络 create 的 stdout）；
+      - 资源名回显：整行恰为本项目容器名/pod 名/默认网络名（与 names 全等）；
+      - 无会话总线提示：rootless netns 无法把 pasta 移入 user.slice（容器照常运行）。
+    """
+    text = line.strip()
+    if not text:
+        return False
+    if _COMPOSE_ECHO_ID_RE.match(text):
+        return True
+    if text in names:
+        return True
+    return bool(_PASTA_DBUS_NOISE_RE.match(text))
+
+
+def run_compose_up(c: Context, spec: StackSpec, *tail: str, gpu: bool = False) -> None:
+    """执行 ``up`` 并过滤 podman 原生回显噪声（C17）。
+
+    背景：podman-compose 在无 log_formatter 时以 ``close_fds=False`` 让子进程
+    继承 stdio（vendor ``podman_compose.py`` L1907），podman 的 create/start
+    回显（64 位对象 ID、资源名）与 rootless netns 的良性 ERROR 因此直通终端，
+    把编排层逐行中文提示冲散（2026-09-18 用户实证）。
+
+    安全边界（V 对抗审查）：
+      - **失败时零过滤**：非零退出码下 stdout/stderr 全量原样回放后再
+        ``Exit(code=rc)`` 上抛，真实故障信息不因过滤而丢失；
+      - 过滤判据是白名单三式（见 :func:`is_benign_compose_noise`），有疑问保留；
+      - 仅 ``up`` 走本函数——构建/编译等长任务仍逐字实时透传，流式体验不受影响。
+    """
+    argv = compose_argv(spec, *tail, gpu=gpu)
+    cmd = " ".join(shlex.quote(a) for a in argv)
+    print(f"执行: {cmd}")
+    r = run_cmd(c, cmd, pty=False, hide=True, warn=True, echo=False)
+    out = (getattr(r, "stdout", "") or "") if r is not None else ""
+    err = (getattr(r, "stderr", "") or "") if r is not None else ""
+    if r is None or not getattr(r, "ok", False):
+        rc = int(getattr(r, "return_code", 1) or 1)
+        print(f"[{spec.namespace}] ⚠ podman-compose up 失败（exit={rc}），原始输出如下：")
+        for raw in (out, err):
+            if raw:
+                print(raw, end="" if raw.endswith("\n") else "\n")
+        raise Exit(f"podman-compose up 失败 (exit={rc})", code=rc)
+
+    names = compose_echo_names(spec)
+    dropped = 0
+    for raw in (out, err):
+        for line in raw.splitlines():
+            if is_benign_compose_noise(line, names=names):
+                dropped += 1
+            else:
+                print(line)
+    if dropped:
+        print(
+            f"[{spec.namespace}] ℹ 已过滤 {dropped} 行 podman 原生回显噪声"
+            "（对象 ID / 资源名 / 无会话总线提示）"
+        )
+
+
 # ---------------------------------------------------------------------------
 # 容器状态探测 / 残留自愈（CLI 标签接缝，知识包 05：标签即数据库）
 # ---------------------------------------------------------------------------
@@ -916,6 +1003,8 @@ def up_stack(
     ``PIP_MIRROR`` / ``CONDA_MIRROR`` / ``BASE_IMAGE``——与 compose 段插值键同键。
 
     离线模式：强制跳过构建 + 本地镜像存在性预检 + compose ``up --no-build``。
+
+    起容器经 ``run_compose_up``（C17）：过滤 podman 原生回显噪声，失败时零过滤。
     """
     if offline:
         skip_build = True
@@ -927,7 +1016,7 @@ def up_stack(
             c, spec, image_tag(spec, env), action="启动栈", offline=offline
         )
     up_preflight(c, spec, env=env)
-    run_compose(c, spec, *compose_up_tail(), gpu=gpu)
+    run_compose_up(c, spec, *compose_up_tail(), gpu=gpu)
     ssh = _env_port(spec, env, spec.ssh_port_env, spec.ssh_default)
     jupyter = _env_port(spec, env, spec.jupyter_port_env, spec.jupyter_default)
     print(f"[{spec.namespace}] ✅ 栈已启动：")

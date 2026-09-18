@@ -768,3 +768,82 @@ def test_save_load_tasks_only_for_offline_stack(harness):
     x = oc.make_stack_tasks(_XMNN)
     assert _param_names(x["save"]) == ["tag", "cache_dir"]
     assert _param_names(x["load"]) == ["path", "cache_dir"]
+
+
+# ---------------------------------------------------------------------------
+# C17：up 路径过滤 podman 原生回显噪声（失败时零过滤）
+# ---------------------------------------------------------------------------
+
+_HEX_ID = "2096d7b4741154ed6b11724720913345fd086b01221328c93317ac94fabd2c56"
+_HEX_ID2 = "d3f33bf7e541578efb71e6d2c0afa889e12a1adbf3bd525ede151e036d48bf43"
+_PASTA_DBUS_LINE = (
+    "ERROR[0001] failed to move the rootless netns pasta process to the "
+    "systemd user.slice: dbus: couldn't determine address of session bus"
+)
+
+
+def test_is_benign_compose_noise_whitelist_only():
+    """判据为白名单三式；真实错误一律返回 False（宁可多显示，不可吞）。"""
+    names = oc.compose_echo_names(_XMNN)
+    assert oc.is_benign_compose_noise(_HEX_ID, names=names)
+    assert oc.is_benign_compose_noise(f"  {_HEX_ID}  ", names=names)  # 允许两侧空白
+    assert oc.is_benign_compose_noise(_XMNN.project, names=names)
+    assert oc.is_benign_compose_noise(f"pod_{_XMNN.project}", names=names)
+    assert oc.is_benign_compose_noise(f"{_XMNN.project}_default", names=names)
+    assert oc.is_benign_compose_noise(_PASTA_DBUS_LINE, names=names)
+    # —— 反例：真实错误必须可见（含裸 ID / 名字出现在上下文里） ——
+    assert not oc.is_benign_compose_noise(
+        f'Error: unable to start container "{_HEX_ID}": netavark: failed to create '
+        "aardvark-dns directory /run/user/1000/containers/networks/aardvark-dns: "
+        "IO error: No such file or directory (os error 2)",
+        names=names,
+    )
+    assert not oc.is_benign_compose_noise(f"{_XMNN.project} 端口被占用", names=names)
+    assert not oc.is_benign_compose_noise("abc123", names=names)  # 非 64 位十六进制
+    assert not oc.is_benign_compose_noise(
+        "ERROR[0001] failed to move the rootless netns pasta process to the "
+        "systemd user.slice: dbus: some other failure",
+        names=names,
+    )
+
+
+def _stub_run_cmd(monkeypatch, *, stdout: str = "", stderr: str = "", ok: bool = True, rc: int = 0):
+    def fake(c, cmd, **kwargs):
+        return SimpleNamespace(ok=ok, stdout=stdout, stderr=stderr, return_code=rc)
+
+    monkeypatch.setattr(oc, "run_cmd", fake)
+
+
+def test_run_compose_up_filters_echo_noise(harness, monkeypatch, capsys):
+    """up 成功路径：ID/资源名/无会话总线提示被过滤，其余行原样保留。"""
+    _stub_run_cmd(
+        monkeypatch,
+        stdout=f"{_HEX_ID}\n{_HEX_ID2}\n{_XMNN.project}\n",
+        stderr=_PASTA_DBUS_LINE + "\n",
+    )
+    oc.run_compose_up(None, _XMNN, *oc.compose_up_tail())
+    out = capsys.readouterr().out
+    assert _HEX_ID not in out and _HEX_ID2 not in out
+    assert "ERROR[0001]" not in out
+    assert _XMNN.project not in out.splitlines()  # 裸名字行被丢弃（执行行含名字）
+    assert "已过滤 4 行" in out
+
+
+def test_run_compose_up_failure_prints_raw_and_exits(harness, monkeypatch, capsys):
+    """失败路径零过滤：裸 ID 与真实错误全量原样回放，退出码透传。"""
+    err = f'Error: unable to start container "{_HEX_ID}": netavark: IO error'
+    _stub_run_cmd(monkeypatch, stdout=f"{_HEX_ID}\n{_XMNN.project}\n", stderr=err + "\n", ok=False, rc=125)
+    with pytest.raises(Exit) as ei:
+        oc.run_compose_up(None, _XMNN, *oc.compose_up_tail())
+    assert ei.value.code == 125
+    out = capsys.readouterr().out
+    assert _HEX_ID in out and "netavark" in out
+    assert "原始输出如下" in out
+    assert "已过滤" not in out
+
+
+def test_up_stack_captures_compose_up_output(harness):
+    """up 必须走捕获路径（hide=True/echo=False）——否则过滤无从生效。"""
+    oc.up_stack(None, _QUANT, skip_build=True)
+    kw = [k for cmd, k in harness.runner.calls if "up -d --no-build" in cmd][0]
+    assert kw["hide"] is True and kw["echo"] is False and kw["pty"] is False
