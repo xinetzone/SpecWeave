@@ -8,7 +8,7 @@
 
 ### 2026-09-18 · `fix:` 构建执行者唯一——`up` 恒 `--no-build`，消除双构建（C16，方案 B 治本）
 
-**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up；F/V 承 C15 同一会话，本条为残留项收口）。
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up，commit aa47257b2 + fc2df0e27；F/V 承 C15 同一会话，本条为残留项收口）。
 
 **R 事实**：① `compose_up_tail(offline)` 原为 `["up","-d","--no-build"] if offline else ["up","-d"]`——非离线路径无 `--no-build`；② vendor `podman_compose.py` L4098 为 `if not args.no_build:`，即 `up` 默认对含 `build:` 段的服务执行构建；③ 故一次非 `--skip-build` 的 `invoke x.up` 会构建两次（内核 `build_image()` + compose 段）；④ `--skip-build` 只跳过内核那次，compose 段仍构建，语义名不副实；⑤ `up_stack()` 的镜像存在性预检原以 `if offline:` 为条件，非离线路径完全无预检。
 
@@ -26,7 +26,7 @@
 
 ### 2026-09-18 · `fix:` 构建参数单一事实源——`up` 内联构建与 compose 段同键（C15），消除换源后白重建
 
-**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up）。
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up，commit aa47257b2 + fc2df0e27）。
 
 **R 事实**：① `up_stack` 内联构建硬编码 `pip_mirror="official"` / `conda_mirror="official"` / `base_image=spec.default_base_image`，而 `overlays/*/compose.yaml` 的 `build.args` 读**无前缀** `${PIP_MIRROR:-official}` / `${CONDA_MIRROR:-official}` / `${BASE_IMAGE:-...}`（即 root `.env` 同一批键）——两条路径参数源不同；② podman-compose 的 `up` 默认对含 build 段的服务执行构建，故 `up`（非 `--skip-build`）会构建两次；③ `docs/10`、`docs/11` 用裸 `up`，`docs/12`、`docs/13` 用 `up --skip-build`，同一契约两种写法；④ `overlays/xmnn-dev/README.md:234` 与 `agent-monetize-dev/README.md:73` 明写"独立 build 只认 CLI 旗标、.env 只对 compose 生效"——与事实相反。
 
