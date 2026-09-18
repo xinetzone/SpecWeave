@@ -27,7 +27,7 @@
 | 维度 | xmnn-dev（构建器，`xmnn.*`） | xmnn-runtime（本栈，`xmnnrt.*`） |
 |---|---|---|
 | 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:latest` |
-| 工具链 | LLVM/Clang 22、Nuitka 4.1.3、gcc/g++、gdb、ccache | 仅 wheel 运行依赖 |
+| 工具链 | LLVM/Clang 22、Nuitka 4.2.1、gcc/g++、gdb、ccache | 仅 wheel 运行依赖 |
 | 源码 | 运行时 bind npu_tvm/npuusertools/models | **不挂载**（site-packages 运行） |
 | 产物/输入 | 产出 `workspace/dist/xmnn-*.whl` | 消费该 whl（构建前暂存进 `wheels/`） |
 | Jupyter 内核 | Python 3.14 (xmnn dev)，env 带源码 PYTHONPATH | Python 3.14 (xmnn runtime)，无源码路径 |

@@ -41,7 +41,7 @@ title: "Compose 叠加栈运维 (compose-overlay-ops)"
 | 命名空间 | overlay 目录 | 宿主端口（SSH/Jupyter） | 特有内容 |
 |---|---|---|---|
 | `quant.*`（6 任务） | overlays/onnx-quantized | 2222 / 8888 | ONNX 五包，纯 cp314t |
-| `xmnn.*`（8 任务） | overlays/xmnn-dev | 2223 / 8890 | 双 ABI（base cp314 GIL 打包/main cp314t 服务）、LLVM 22.1.8、Nuitka 4.1.3、bind npu_tvm/npuusertools/models |
+| `xmnn.*`（8 任务） | overlays/xmnn-dev | 2223 / 8890 | 双 ABI（base cp314 GIL 打包/main cp314t 服务）、LLVM 22.1.8、Nuitka 4.2.1、bind npu_tvm/npuusertools/models |
 | `monetize.*`（8 任务） | overlays/agent-monetize-dev | 2224 / 8892 | apt clang + apache-tvm-ffi，单一 cp314 GIL |
 
 > 任务清单、环境变量键、守卫契约以 client `AGENTS.md` 路由表与

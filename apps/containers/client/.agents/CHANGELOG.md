@@ -6,6 +6,26 @@
 
 ## [Unreleased]
 
+### 2026-09-18 · `fix:` 终端三项噪声 + Nuitka 升 4.2.1（I→F→V→C，session sc-20260918-terminal）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C）。
+
+**R 事实**：`invoke xmnn.wheel` 终端有四类噪声：① `Exception ignored while flushing sys.stdout: BrokenPipeError: [Errno 32] Broken pipe`；② `4.1.3` / `Commercial: None` 两行裸输出（未走 `log_kv` 排版）；③ `Nuitka-Options:WARNING: Using module mode specific option '--no-pyi-file' has no effect...`；④ `Nuitka:WARNING: The Python version '3.14' is only experimentally supported by Nuitka '4.1.3'`。
+
+**I 洞察（四元组）**：**现象**——打包日志被四类非错误信息污染；**根因**——① `build-wheel.sh` 版本行以 `"$BASE_PYTHON" -m nuitka --version | head -2` 截断 **Python 生产者**的管道，消费者提前退出后 Python 侧 flush 触发 EPIPE；② 同一行原样透传 stdout，未走 `log_kv` 的 `%-22s` 排版；③ Nuitka 4.x 里 `--module` 是遗留别名，只置 `options.module_mode`，而 `_warningModuleModeOnlyOption()` 的判据是 `options.compilation_mode`（仅 `--mode=module` 赋值）；④ 4.1.3 的 `getSupportedPythonVersions()` 止于 `3.13`；**影响**——真实告警被噪声淹没、日志不可扫读、每次打包都刷屏；**建议**——管道改 `awk` 读尽后再格式化、旗标改 `--mode=module`、Nuitka 升 4.2.1。
+
+**F 第一性原理**：① 终端的「版本行」本质是**一条已经是单行的 KV 记录**，其生产者是 Python 进程——任何在中间掐断生产者管道的消费者（`head`）都会让写端 EPIPE，故应让消费者**读尽全流**再决定输出什么（`awk` END 块天然如此）；② 旗标有效性的判定权在**选项解析层**，不在调用者意图——调用者以为 `--module` 就是 module 模式，但解析层用另一个字段做判据，故必须以解析层字段为准。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"升 Nuitka 是不是为了一条 WARNING 冒重建镜像的风险"：本地容器（`podman run --rm localhost/xmnn-dev:latest`）实测 4.2.1 可装、`--version` 首行 `4.2.1`、`getSupportedPythonVersions()` 含 `3.14`，且升级同时消除实验性警告；代价是需在**有网侧**重跑 `inv xmnn.build`（镜像内 `/opt/xmnn-builder` 与 base env 均为烤入层，非 bind）；② **新人**——"为何不直接删 `--no-pyi-file`"：删了会重新产出 `.pyi` 文件，是语义倒退，改旗标是唯一正解；③ **老板**——零命令面变化、零 compose 变化，三处旗标替换 + 一行 pin；④ **未来**——"`--mode=module` 会不会改变产物"：同机对拍 `--module` vs `--mode=module` 编译同一模块，产物文件名与可导入性完全一致（均为 `pkgprobe.cpython-314-x86_64-linux-gnu.so`，`import pkgprobe` 均得 `value=1`），且新增守卫断言 `sys.version_info[:2] in getSupportedPythonVersions()`，未来升解释器时构建期即失败而非运行时刷警告。
+
+**实现（A 原子化）**：① `builder/scripts/build-wheel.sh`：版本行改 `awk 'NR==1{v=$0} /^Commercial:/{c=$0} END{...}'` 走 `log_kv`（同时消解 BrokenPipeError 与排版；只取版本与 `Commercial:` 行，避开 4.2+ 第 2 行的非确定性 `Update status: ... (cached, N seconds old).`）；三处 `--module` → `--mode=module`；文件头注改 4.2.1；② `builder/scripts/install-build-deps.py`：`nuitka==4.2.1`（pin 单一事实源）；③ `Containerfile.xmnn-dev`：LABEL `org.specweave.nuitka="4.2.1"`、Layer 3 末尾去掉 `| head -2`、完成横幅改 4.2.1；④ `smoke/_toolchain_guards.py`：断言改 4.2.1 + **新增**「运行解释器在 `getSupportedPythonVersions()` 内」守卫（§3）+ docstring/结尾消息同步；⑤ 文档同步：client `AGENTS.md` C12、rules/xmnn-overlay.md（ABI 表 + `--mode=module` 新条款）、rules/xmnnrt-overlay.md、docs/11、.env.example、三处 overlay README、`tasks/xmnn.py`、`tasks/__init__.py`、根 `.agents/skills/compose-overlay-ops/SKILL.md`。
+
+**验收点（容器内实测，`localhost/xmnn-dev:latest` + `--entrypoint /bin/bash` 隔离跑）**：① 升级后 `--version` 首行 `4.2.1`，`getSupportedPythonVersions()` = `('2.6'...'3.13','3.14')`，运行解释器 `3.14` 在列 → 实验性警告消除；② 旗标探针：`--module --no-pyi-file` WARNING 2 条（含 `'--no-pyi-file' has no effect`），`--mode=module --no-pyi-file` 1 条（该条消失，剩下的是裸探针未 `--include-package` 的固有提示）；③ 版本行：旧写法 `| head -2` 实测 1 次 `BrokenPipeError`，新写法 0 次，且经 `log_kv` 输出稳定单行 `nuitka                 4.2.1 (Commercial: None)`（连跑三次一致）；④ 补丁后 `_toolchain_guards.py` 全量跑 `exit=0`，新增断言 `[OK] 运行解释器 3.14 在 Nuitka 支持列表内`；⑤ `bash -n build-wheel.sh` 通过。
+
+> **未做**：`build-wheel.sh` 全流程跑（需先 `build-tvm` 产出 libtvm.so，本次宿主 `workspace/npu_tvm/build/` 无该产物，全流程约需 20-40 分钟），故本轮未复现真实端到端打包；改旗标对产物的等价性以「同机同模块对拍产物文件名 + 可导入性一致」佐证。**镜像未重建，改动尚未在 `invoke xmnn.wheel` 路径生效。**
+
+**C 同步**：代码侧提交 `375189b68`（`fix(client)`，4 文件：build-wheel.sh / install-build-deps.py / Containerfile.xmnn-dev / _toolchain_guards.py）——预防措施 `[prevent: pipe-producer-truncation]`（版本行禁 `head` 掐断 Python 生产者）+ `[prevent: nuitka-supported-python]`（构建期守卫拦截解释器不在支持列表）。规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §打包契约新增「模式旗标必须写 `--mode=module`」条款。**待用户在有网侧重跑 `inv xmnn.build` 重建 xmnn-dev 镜像使修复生效**（`/opt/xmnn-builder` 与 base env 均为烤入层）。
+
 ### 2026-09-18 · `fix:` 构建执行者唯一——`up` 恒 `--no-build`，消除双构建（C16，方案 B 治本）
 
 **关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up，commit aa47257b2 + fc2df0e27；F/V 承 C15 同一会话，本条为残留项收口）。

@@ -5,7 +5,7 @@ overlay_core.make_stack_tasks 工厂生成，栈内 exec 长任务（build-tvm/w
 用内核 helper 在本模块薄封装（形态 B）。
 
 驱动 ``overlays/xmnn-dev`` 叠加栈：运行时 bind 挂载 npu_tvm / npuusertools /
-models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.1.3
+models 源码（默认锚定仓库根 external/chaos），容器内 LLVM 22 + Nuitka 4.2.1
 工具链，支持源码调试与 xmnn wheel 打包。
 
 双 cp314 ABI 契约（C13，禁止互换）：

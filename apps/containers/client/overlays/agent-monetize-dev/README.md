@@ -78,7 +78,7 @@ podman-compose down
 | 维度 | 本栈（monetize） | xmnn-dev |
 |---|---|---|
 | 源码 | apps/agent-monetize（单 .cc tvm-ffi） | external/chaos npu_tvm+npuusertools |
-| 工具链 | apt clang + pip apache-tvm-ffi | conda LLVM 22 + Nuitka 4.1.3 |
+| 工具链 | apt clang + pip apache-tvm-ffi | conda LLVM 22 + Nuitka 4.2.1 |
 | 编译产物 | score_opportunity.so（秒级） | libtvm.so（10-30 分钟）+ xmnn whl |
 | wheel | setuptools 纯 Python | Nuitka 原生编译 wheel |
 | ABI | 单一 cp314 GIL | base GIL + main cp314t 双 ABI |

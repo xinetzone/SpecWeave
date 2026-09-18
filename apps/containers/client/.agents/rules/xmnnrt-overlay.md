@@ -12,7 +12,7 @@
 |---|---|---|
 | 角色 | 源码调试 + Nuitka 打 wheel | 安装预构建 wheel 的干净交付运行时 |
 | 镜像 | `localhost/xmnn-dev:latest` | `localhost/xmnn-runtime:latest` |
-| 工具链 | LLVM 22/Nuitka 4.1.3/gcc/gdb/ccache | 无（wheel `_libs` 自包含） |
+| 工具链 | LLVM 22/Nuitka 4.2.1/gcc/gdb/ccache | 无（wheel `_libs` 自包含） |
 | 源码 | 运行时 bind npu_tvm/npuusertools/models | 零源码挂载、零构建期源码接触 |
 | 制品关系 | 产出 `client/workspace/dist/xmnn-*.whl` | 经 `wheels/` 暂存区 COPY 该 whl 安装 |
 | ABI | base `/opt/conda` cp314 GIL 打包；main cp314t 服务 | wheel 装 **base** `/opt/conda`；main 继续只跑 Jupyter |

@@ -60,7 +60,7 @@
 | 角色 | env | Python | 内容 |
 |---|---|---|---|
 | Jupyter 服务 | `/opt/conda/envs/main` | 3.14.x **cp314t**（GIL off） | 基底 jupyterlab（supervisord，devuser） |
-| 编译/打包/内核 | `/opt/conda`（base） | 3.14.x **cp314 GIL enabled** | nuitka==4.1.3、scikit-build-core、build、invoke、ipykernel、wheel 19 依赖 |
+| 编译/打包/内核 | `/opt/conda`（base） | 3.14.x **cp314 GIL enabled** | nuitka==4.2.1、scikit-build-core、build、invoke、ipykernel、wheel 19 依赖 |
 | 原生工具链 | main env | — | llvmdev/clangdev/clang/lld **22.1.8**、cmake、ninja、make、ccache、libgcc、libstdcxx-ng |
 | **编译前端（npu_tvm）** | 系统层（apt） | — | **gcc/g++**（系统包；2026-09-15 起作默认 CC/CXX） |
 
@@ -166,8 +166,12 @@
   路径）。外部源码工作树零修改是硬验收（AC-9：内容、属主、模式、ACL
   四不变）。
 - Nuitka 语义不可裁剪：tvm 串行先行 → vta/xmnn 后台并行；三次调用差异
-  （交叉 nofollow、dill-compat、vta include-data-dir、jobs、--module、
+  （交叉 nofollow、dill-compat、vta include-data-dir、jobs、`--mode=module`、
   --quiet、--no-pyi-file）保持；退出码经 `.vta_exit/.xmnn_exit` 回传。
+- **模式旗标必须写 `--mode=module`**：4.x 里遗留别名 `--module` 只置
+  `module_mode`，而「module 模式专属选项」告警的判据是 `compilation_mode`
+  （仅 `--mode=` 赋值），故 `--module` 配 `--no-pyi-file` 会误报
+  `has no effect`；改旗标是唯一正解（删 `--no-pyi-file` 会重新产出 .pyi）。
 - **SONAME 漂移防护**：CMake 对 7 个 LLVM 依赖库（libLLVM.so.22*、
   libz/libzstd/libxml2/libiconv/libicuuc/libicudata）按 glob 收集，并按
   「NEEDED 只认 SONAME 短名」单副本安装（软链去引用 `cp -L` 为短名常规
