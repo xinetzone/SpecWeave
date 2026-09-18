@@ -33,7 +33,7 @@
 pip install -e ".[compose]"          # 一次性（WSL2/Linux/macOS）
 
 invoke monetize.build --pip-mirror aliyun
-invoke monetize.up --skip-build
+invoke monetize.up --skip-build       # 直接用上一步的镜像（up 恒 --no-build，C16；缺失即 fail-fast）
 invoke monetize.ps
 invoke monetize.build-native         # clang++ → native/build/score_opportunity.so
 invoke monetize.smoke                # 守卫 + backend=native 数值一致性
@@ -70,8 +70,8 @@ podman-compose down
 | MONETIZE_WORKSPACE | ../../workspace | → /workspace |
 | MONETIZE_SRC_PATH | ../../../../agent-monetize | agent-monetize 源码宿主路径（invoke 存在性硬校验） |
 | USER_PASSWORD / JUPYTER_TOKEN / SSH_PUBLIC_KEY / GRANT_SUDO | 空/空/空/yes | 凭证 |
-| PIP_MIRROR | official | pip 源（独立 build 用 --pip-mirror；.env 经 up 内联 build 生效） |
-| BASE_IMAGE（注释态） | rootless latest | 基底覆盖 |
+| PIP_MIRROR | official | pip 源；**无前缀构建参数单一事实源（C15）**，`invoke monetize.build` / `up` 内联 build / compose 段三处同键，`--pip-mirror` 只覆盖单次 build |
+| BASE_IMAGE（注释态） | rootless latest | 基底覆盖（同样被 invoke build/up 读取，C15） |
 
 ## 与相关栈的关系
 

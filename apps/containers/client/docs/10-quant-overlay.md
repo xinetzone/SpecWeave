@@ -11,12 +11,23 @@ ONNX 量化工具链叠加层（INT8/FP16/QDQ，纯 ONNX 无 PyTorch，cp314t fr
 
 ```bash
 pip install -e ".[compose]"          # 一次性安装可选依赖 podman-compose（WSL2/Linux/macOS）
-invoke quant.build --pip-mirror tuna # 构建 localhost/onnx-quantized:latest（构建期含守卫+冒烟）
-invoke quant.up                      # 启动栈：SSH 2222 / Jupyter 8888
+invoke quant.build                   # 构建 localhost/onnx-quantized:latest（构建期含守卫+冒烟）
+invoke quant.up --skip-build         # 启动栈：SSH 2222 / Jupyter 8888
 invoke quant.smoke                   # 动态 INT8 / FP16 / 静态 QDQ 三个固定种子冒烟
 invoke quant.up --gpu                # 需要 GPU 推理时（叠加 compose.gpu.yaml，透传 /dev/dri）
 invoke quant.down                    # 停止并清理
 ```
+
+- **构建参数单一事实源（C15）**：`invoke quant.build` 的 pip 源与基底默认取 `.env`
+  的 `PIP_MIRROR` / `BASE_IMAGE`（无前缀，与 compose 段 `${KEY:-默认}` 同键），
+  `quant.up` 的内联构建也读同一批键——三处同值才不会互相失效层缓存。
+  `--pip-mirror` 旗标只覆盖单次 `build`，`up`/compose 看不到，故**换源请写 `.env`**，
+  再走 `build` → `up --skip-build` 两步（详见 [02-invoke-reference.md](02-invoke-reference.md#参数契约)）。
+
+- **构建执行者唯一（C16）**：`quant.up` 恒 `up -d --no-build`，镜像只由内核构建。
+  默认 `quant.up` 内联构建一次即起容器；`--skip-build` 不做任何构建，故要求本地
+  已有镜像（缺失立即 Exit 1，指引 `quant.up` / `quant.build`）。compose 的
+  `build:` 段仅服务裸 `podman-compose` 路径。
 
 - **Windows 原生自动桥接**：`quant.*`/`xmnn.*`/`monetize.*` 在 Windows 原生
   CPython 默认**自动桥接**到 WSL 发行版 `podman-machine-default`（client

@@ -283,10 +283,14 @@
   **不转发 CLI 参数**，`--offline` 若不固化进环境就会在桥接后丢失。
   `.env` 键不写入 compose `environment` 段（保住 `test_compose_merge.py`
   黄金快照），容器内由 `offline_exec_env()` 以 `exec -e` 单点注入。
-- **`up` 的两段禁网**：仅 `--skip-build` 不够——podman-compose 的 `up`
-  默认对含 build 段的服务执行构建，离线必须**同时**追加 `--no-build`
-  （`compose_up_tail(offline=True)` 唯一构造点）。镜像缺失时
-  `_require_local_image()` fail-fast Exit(1)，指引 `xmnn.save` / `xmnn.load`。
+- **`up` 恒 `--no-build`（C16，2026-09-18 修订）**：podman-compose 的 `up`
+  默认对含 build 段的服务执行构建，故 `compose_up_tail()` **无参无分支**恒返回
+  `["up","-d","--no-build"]`——离线与在线同构（此前 `offline=True` 才追加，属
+  C15 阶段的临时分叉，已随 C16 消除）。镜像存在性只由内核 `build_image()` 负责，
+  compose 的 `build:` 段仅服务裸 `podman-compose` 路径。因此离线**只需**强制
+  `skip_build=True`（`resolve_offline()` 结果）即可禁网，不再依赖额外的 `--no-build`
+  开关；镜像缺失时 `_require_local_image(offline=True)` fail-fast Exit(1)，指引
+  `xmnn.save` / `xmnn.load`。
 - **`save`/`load` 沿用既有镜像缓存约定**：tar.gz + 时间戳命名 + `latest`
   软链 + manifest/SHA256 校验（`default_build_cache_dir` /
   `find_latest_image_tar` / `validate_manifest_integrity`），不新造归档

@@ -60,7 +60,8 @@
   3. dist 无 whl 但暂存区有：复用并打印提示；
   4. 两处都无：Exit 1 + 中文指引（先 `invoke xmnn.wheel`）。
 - `xmnnrt.up` 默认随带构建，构建前自动跑第 2-4 步；`--skip-build`
-  不暂存。
+  既不暂存也不构建，直接消费本地已有镜像——缺失立即 Exit 1 并给中文
+  指引（C16：compose 的 `build:` 段不再兜底构建，`up` 恒 `--no-build`）。
 - 禁止用 BuildKit `--mount=type=bind` 直接挂 dist/ 或宿主 whl
   （构建必须可脱离 9p 源码树复现，与 xmnn-dev §4 同纪律）。
 

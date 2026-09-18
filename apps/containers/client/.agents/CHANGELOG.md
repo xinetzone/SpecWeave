@@ -6,6 +6,42 @@
 
 ## [Unreleased]
 
+### 2026-09-18 · `fix:` 构建执行者唯一——`up` 恒 `--no-build`，消除双构建（C16，方案 B 治本）
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up；F/V 承 C15 同一会话，本条为残留项收口）。
+
+**R 事实**：① `compose_up_tail(offline)` 原为 `["up","-d","--no-build"] if offline else ["up","-d"]`——非离线路径无 `--no-build`；② vendor `podman_compose.py` L4098 为 `if not args.no_build:`，即 `up` 默认对含 `build:` 段的服务执行构建；③ 故一次非 `--skip-build` 的 `invoke x.up` 会构建两次（内核 `build_image()` + compose 段）；④ `--skip-build` 只跳过内核那次，compose 段仍构建，语义名不副实；⑤ `up_stack()` 的镜像存在性预检原以 `if offline:` 为条件，非离线路径完全无预检。
+
+**I 洞察（四元组）**：**现象**——`up` 存在不可见的第二次构建，`--skip-build` 不"跳过构建"；**根因**——`up` 的本质职责是「保证镜像存在」+「启动容器」，而「构建」这一职责被分给了**两个执行者**；C15 只对齐了两者的**参数**（消除白重建），未消除**执行者本身**；**影响**——多一次构建调用与潜在整层缓存失效、compose 那一半看不到 CLI 旗标、时点在内核之后、离线场景破网风险；**建议**——执行者唯一化：镜像存在性只由内核负责，compose 恒 `--no-build`。
+
+**F 第一性原理**：职责正交分解下「谁负责使镜像存在」只能有**一个**答案。两个执行者必然带来三重不可见性——参数不可见（compose 读不到旗标）、时点不可见（compose 在内核之后）、失败不可见（两边都可能构建失败且报错形态不同）。选定 B2 而非 B1（`no_build` 仅在离线为真）：既然要唯一化，就不该保留一条"看情况由 compose 兜底"的隐式分支。
+
+**V 对抗审查（四视角）**：① **魔鬼代言人**——"`--skip-build` 首次使用会 fail-fast 是否过于激进"：是，但 fail-fast 文案给出两条可执行出口（`x.up` 随带构建 / `x.build && x.up --skip-build`），且全仓 grep 证据表明 `--skip-build` 用法**一律与「已有镜像」共现**（`docs/10:15` 两步路径、`docs/04` W-I8/W-I10/W-I12 恢复路径、`overlays/onnx-quantized/README.md:65`「已有镜像 + GPU 推理」），无任何路径依赖 compose 兜底；② **新人**——"compose 的 `build:` 段成了死代码"：确实在 invoke 路径不再被消费，故在 `docs/02` 与 `docs/10`-`13` 明确其「仅服务裸 `podman-compose` 路径」；③ **老板**——收益是每次 `up` 少一次构建调用与潜在的层缓存失效风险，成本仅一处语义变更 + 一处 `not_running_hint` 文案；④ **未来**——四栈全部经 `make_stack_tasks` 工厂或 `up_stack` 收敛，新栈自动继承，无遗漏点。
+
+**实现（A 原子化）**：① `compose_up_tail()` 去 `offline` 形参、无分支恒返 `["up","-d","--no-build"]`；② `up_stack()` 预检条件 `if offline:` → `if skip_build:`（覆盖 `--skip-build` 与离线两条路径）；③ `_require_local_image()` 增必填关键字 `offline` + 双分支文案（离线指 `save`/`load`，非离线指 `up`/`build && up --skip-build`）；④ `monetize.py` 的 `not_running_hint` 改指默认路径（`--skip-build` 现要求镜像已存在，长任务前置提示不保证）；⑤ 四个栈的 `skip-build` help 文案同步；⑥ 测试：新增 `test_up_inline_build_runs_exactly_once`（断言 `build` 恰一次）与 `test_up_skip_build_without_local_image_exits_with_guidance`（断言 Exit 1 + 指引 + 未起容器），`test_compose_up_tail_adds_no_build_offline` 改写为 `test_compose_up_tail_always_no_build`，`test_up_offline_missing_image_exits` 补 capsys 文案断言。
+
+**验收点**：`python -m pytest tests -q --ignore=tests/test_ast_inject.py` → **162 passed / 1 skipped**（较 C15 基线 160 净增 2 例）；安全性依据 `image_tag(spec, env)` 与 compose 的 `${PREFIX}_IMAGE_TAG:-默认}` 同键同默认，tag 不漂移。
+
+**C 同步**：预防措施 `[prevent: single-build-executor]`——`invoke x.up` 恒 `up -d --no-build`，镜像存在性只由内核 `build_image()` 负责；`--skip-build`/`--offline` 必须先过本地镜像存在性预检。规则固化于 [rules/invoke-tasks.md](rules/invoke-tasks.md) §5 新增 **C16**、`AGENTS.md` P0 清单 C16 与 C12 离线条款修订、[docs/02-invoke-reference.md](../docs/02-invoke-reference.md) §参数契约 C16 段、`docs/10`-`13`、[rules/xmnn-overlay.md](rules/xmnn-overlay.md) §10（纠正已失效的 `compose_up_tail(offline=True)` 签名引用）、[rules/xmnnrt-overlay.md](rules/xmnnrt-overlay.md) §3、`.env.example` 与四 overlay README。
+
+### 2026-09-18 · `fix:` 构建参数单一事实源——`up` 内联构建与 compose 段同键（C15），消除换源后白重建
+
+**关联七概念场景**：场景2「问题解决」（I→F→V→C，session sc-20260918-client-build-up）。
+
+**R 事实**：① `up_stack` 内联构建硬编码 `pip_mirror="official"` / `conda_mirror="official"` / `base_image=spec.default_base_image`，而 `overlays/*/compose.yaml` 的 `build.args` 读**无前缀** `${PIP_MIRROR:-official}` / `${CONDA_MIRROR:-official}` / `${BASE_IMAGE:-...}`（即 root `.env` 同一批键）——两条路径参数源不同；② podman-compose 的 `up` 默认对含 build 段的服务执行构建，故 `up`（非 `--skip-build`）会构建两次；③ `docs/10`、`docs/11` 用裸 `up`，`docs/12`、`docs/13` 用 `up --skip-build`，同一契约两种写法；④ `overlays/xmnn-dev/README.md:234` 与 `agent-monetize-dev/README.md:73` 明写"独立 build 只认 CLI 旗标、.env 只对 compose 生效"——与事实相反。
+
+**I 洞察（四元组）**：**现象**——按文档 `invoke x.build --pip-mirror tuna && invoke x.up` 会全量白重建；**根因**——build-arg 有**三个来源**（CLI 旗标 / 内核硬编码 / compose 插值）而**无单一事实源**，任一来源变化即改变 build-arg、使构建层缓存整体失效；**影响**——apt/mamba/pip 重新下载，虚拟机上是分钟到十分钟级空耗，且症状（"改了源反而更慢"）不指向根因；**建议**——把三个 build-arg 收敛到与 compose 段天然同键的无前缀 `.env` 键，内核单点解析。
+
+**F 第一性原理**：构建参数的正交分解只有「**值从哪来**」与「谁消费」两问；消费方有三个（invoke build / invoke up 内联 / compose），故值来源必须唯一且对三方可见——CLI 旗标天然只对第一个可见，**只有 `.env` 同时对三方可见**。
+
+**V 对抗审查（四视角）**：① **魔鬼**——"删掉 `up` 内联构建岂不更彻底"：否，内联构建承担"改了 Containerfile 即时生效"，且 `--skip-build` 只是跳过内核那次、compose 段仍会构建，删除会让语义更混乱；② **新人**——"为何不改 compose 段去读 CLI"：compose 是子进程、看不到旗标，方向不可行；③ **老板**——零命令面变化、零 compose 改动（黄金快照不动），仅内核 + 一个长任务签名；④ **未来**——"CLI 旗标会不会变成陷阱"：会，故在帮助文本、`docs/02`、四个 overlay 文档、两处 `.env` 模板中统一标注「跨三处一致必须写 `.env`，旗标只覆盖单次」。
+
+**实现（A 原子化）**：① 内核新增 `resolve_build_args()`（单点解析，优先级 `CLI 旗标 > shell export > .env > 默认值`）；② `build_image()` 三个 build-arg 参数改 `Optional[str] = None` 并内联解析；③ `up_stack()` 内联构建不再传死值；④ `make_stack_tasks()` 的 `build` 默认值改 `None`、`xmnnrt.build` 长任务同步（去掉 `spec.default_base_image` 硬默认）；⑤ 帮助文本与 `skip-build` 说明改述为"读 .env 同键"；⑥ 测试：harness 增加 `PIP_MIRROR`/`CONDA_MIRROR`/`BASE_IMAGE` 清空（防宿主环境污染黄金断言）+ 4 例新断言（up 内联构建读 env、build 默认跟随 env、无 env 回退默认、CLI 旗标优先）。
+
+**验收点**：`python -m pytest tests -q` → **160 passed / 1 skipped**（非 bash 模块；`test_ast_inject.py` 8 例需 WSL2/Linux 的 bash，Windows 原生失败不构成本次回归）；未设 `.env` 键时 build argv 与旧行为逐字一致（黄金快照零变化）；`docs/10`、`docs/11` 的示例改为 `.env` + `build` + `up --skip-build` 两步路径。
+
+**C 同步**：预防措施 `[prevent: single-source-build-args]`——build-arg 只允许经 `overlay_core.resolve_build_args()` 解析，禁止任何调用点硬编码 `"official"` / `spec.default_base_image`；规则固化于 [rules/invoke-tasks.md](rules/invoke-tasks.md) §5 新增 **C15**、`AGENTS.md` P0 清单 C15、[docs/02-invoke-reference.md](../docs/02-invoke-reference.md) §参数契约，四个 overlay 文档与 `.env` 模板同步（含撤销"独立 build 只认 CLI 旗标"的错误陈述）。
+
 ### 2026-09-18 · `fix:` `inv xmnn.wheel` 在 rootless + 同步树 POSIX ACL 下 EINVAL（字节级备份 / 原 inode 回写 / autolibs `cp -R`）
 
 **关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）。

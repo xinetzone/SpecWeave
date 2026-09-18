@@ -15,13 +15,20 @@ wheel 的 `_libs`（libtvm.so + libLLVM 22，RPATH `$ORIGIN`）自包含。
 # 1) 构建器栈产 whl（产物落 workspace/dist）
 invoke xmnn.wheel
 # 2) 暂存最新 whl + 构建运行时镜像（构建期 9 项硬验证 root+devuser 双跑）
-invoke xmnnrt.build --pip-mirror tuna
+invoke xmnnrt.build                   # pip 源/基底默认读 .env（C15）
 # 3) 起交付环境：SSH 2225 / JupyterLab 8893
 invoke xmnnrt.up --skip-build
 invoke xmnnrt.smoke
 invoke xmnnrt.down
 ```
 
+- **构建参数单一事实源（C15）**：pip 源与基底走 `.env` 的 `PIP_MIRROR` /
+  `BASE_IMAGE`，与 `up` 内联构建、compose 段同键；CLI 旗标只覆盖单次 `build`
+  （见 [02-invoke-reference.md](02-invoke-reference.md#参数契约)）。
+- **构建执行者唯一（C16）**：`xmnnrt.up` 恒 `up -d --no-build`，镜像只由内核构建。
+  默认 `xmnnrt.up` 内联构建一次即起容器；`--skip-build` 不做任何构建，故要求本地
+  已有镜像（缺失立即 Exit 1，指引 `xmnnrt.up` / `xmnnrt.build`）。compose 的
+  `build:` 段仅服务裸 `podman-compose` 路径。
 - 端口默认 **2225/8893**（quant 2222/8888、xmnn 2223/8890、monetize
   2224/8892 之后的下一组）。
 - ABI：wheel 为 cp314-cp314 **GIL**，装入 base env `/opt/conda`；

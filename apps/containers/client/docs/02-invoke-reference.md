@@ -31,6 +31,24 @@ source: "README.md#4-命令速查"
 
 配置合并优先级：`命令行参数 > .env 环境变量 > ContainerConfig 默认值`。
 
+> **构建参数单一事实源（C15，2026-09-18）**：四个工作负载栈的构建 build-arg 只认三个
+> **无前缀** `.env` 键——`PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE`，它们同时就是
+> `overlays/*/compose.yaml` 里 `${KEY:-默认}` 的插值键。`invoke x.build`、`invoke x.up`
+> 的内联构建、compose 内部 build 段三处必须拿到同一组值：任何一处 build-arg 不同，
+> 都会让构建层缓存整体失效（表现为"改了镜像源后每次 up 都全量白重建"）。
+>
+> 因此**换镜像源/节点请写 `.env`**；`--pip-mirror` / `--base-image` / `--conda-mirror`
+> 等 CLI 旗标只覆盖**单次 `build` 调用**，`up` 内联构建与 compose 段看不到旗标，混用
+> 必然不一致。推荐两步路径：写好 `.env` → `invoke x.build` → `invoke x.up --skip-build`。
+> 权限顺序为 `CLI 旗标 > shell export > .env > 默认值`。
+
+> **构建执行者唯一（C16，2026-09-18）**：`invoke x.up` 恒以
+> `podman-compose up -d --no-build` 起容器——**镜像存在性只由内核 `build_image()` 负责**。
+> 默认路径先内联构建再起容器（全程恰好一次构建）；`--skip-build` 与 `--offline` 不做
+> 任何构建，因此先做本地镜像存在性预检，缺失即 Exit 1 并给出可执行出口（不再由
+> compose 的 build 段兜底）。`overlays/*/compose.yaml` 的 `build:` 段自此仅服务
+> **裸 `podman-compose`** 路径。
+
 ## SSH known_hosts 自动维护
 
 每次执行 `invoke run` 时，启动流程会自动扫描并清理 `~/.ssh/known_hosts` 中与当前 `SSH_PORT`（默认 2222）匹配的 `[localhost]:PORT` / `[127.0.0.1]:PORT` 过期条目，然后尝试用 `ssh-keyscan` 写入最新 key。JPMan 容器重建后 host key 必然变更，此逻辑消除了手动干预需求。

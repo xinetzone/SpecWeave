@@ -66,7 +66,7 @@ invoke xmnn.save                         # 导出镜像归档（tar.gz + manifes
 # ── 过程二：启动开发环境并开发（有网/无网通用）────────────────────────
 invoke xmnn.load --path <归档.tar.gz>    # 从归档导入镜像（完整性校验后导入，导入幂等）
 invoke xmnn.up --offline                 # 离线启动：不构建、不起网络请求（参见「两个过程」）
-invoke xmnn.up                           # 有网侧常规启动（默认随带构建；--skip-build 跳过）
+invoke xmnn.up                           # 有网侧常规启动（默认随带构建；--skip-build 直接用本地镜像）
 invoke xmnn.ps                           # 服务状态
 invoke xmnn.smoke                        # 工具链守卫 + 源码挂载检查（libtvm 缺席时跳过算例段）
 
@@ -209,7 +209,7 @@ podman-compose -p xmnn-dev exec xmnn \
 
 | 环节 | 离线下的行为 |
 |---|---|
-| `xmnn.up` | 强制跳过构建，并给 podman-compose 追加 `--no-build`（否则 compose 默认会对含 build 段的服务重新构建）；镜像不存在时 fail-fast Exit(1) |
+| `xmnn.up` | 强制跳过构建（`skip_build=True`）；`--no-build` 现已**恒真**（C16，在线同理），离线禁网不再依赖该分叉；镜像不存在时 fail-fast Exit(1) |
 | `xmnn.build` | 镜像构建在任何情况下都需要网络，离线判定为真时**立即 Exit(1)** 并给出离线三选一指引，不进入构建流程 |
 | `xmnn.wheel` | 容器内不再 pip 兜底 numpy/scipy（缺失即 Exit 2）；Nuitka 去掉 `--assume-yes-for-downloads`；缺系统 gcc 也 Exit 2 |
 | `build-wheel.sh` pip 镜像 | 离线不再改写 pip config（`PIP_MIRROR` 在无网侧无意义） |
@@ -231,9 +231,9 @@ podman-compose -p xmnn-dev exec xmnn \
 | `USER_PASSWORD` / `JUPYTER_TOKEN` | 空（自动生成） | 登录凭证 |
 | `SSH_PUBLIC_KEY` / `GRANT_SUDO` | 空 / `yes` | SSH 公钥 / devuser sudo |
 | `OMP_NUM_THREADS` / `NUITKA_JOBS` | `4` / `8` | 线程与 Nuitka 并发 |
-| `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。`.env` 值在 `xmnn.up` 的 compose 内联 build 时插值生效；独立 `invoke xmnn.build` 只认 `--pip-mirror/--conda-mirror` 参数 |
-| `BASE_IMAGE`（仅 build args） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖 |
-| `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制 `--skip-build` + `--no-build`、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
+| `PIP_MIRROR` / `CONDA_MIRROR` | `official` | 构建期镜像源（official/aliyun/tuna）。**无前缀构建参数单一事实源（C15）**：`invoke xmnn.build`、`xmnn.up` 的 compose 内联 build、裸 `podman-compose build` 三处同键读取；`--pip-mirror/--conda-mirror` 旗标只覆盖单次 `build` |
+| `BASE_IMAGE`（build args + invoke 同键） | `localhost/jupyter-podman-rootless:latest` | 基底镜像覆盖（同样被 `xmnn.build`/`xmnn.up` 读取，C15） |
+| `XMNN_OFFLINE` | `0`（关） | 离线总开关（**非 compose 插值键**，由 invoke 读取并经 `-e` 透传进容器）：开启后 `up` 强制跳过构建（`--no-build` 恒真，非离线亦然，C16）、`build` 直接 Exit(1)、容器内打包禁网兜底；等价 `invoke xmnn.up --offline`，关闭用 `--no-offline` |
 
 ## 与相关栈/目录的关系
 

@@ -51,8 +51,8 @@
 在 `apps/containers/client` 下（WSL2/Linux/macOS）：
 
 ```bash
-invoke quant.build            # 构建叠加镜像（构建期自动跑守卫 + 3 冒烟；--pip-mirror tuna 可加速）
-invoke quant.up               # 渲染并启动栈（默认随带构建；--skip-build 跳过；--gpu 透传 /dev/dri）
+invoke quant.build            # 构建叠加镜像（构建期自动跑守卫 + 3 冒烟；换源写 .env PIP_MIRROR，C15）
+invoke quant.up --skip-build  # 渲染并启动栈（默认随带构建；--skip-build 直接用本地已有镜像，缺失即 fail-fast；--gpu 透传 /dev/dri）
 invoke quant.ps               # 查看服务状态与端口
 invoke quant.smoke            # 3 个量化冒烟（栈在运行→compose exec；未运行→podman run --rm）
 invoke quant.logs             # 跟踪日志（Ctrl+C 退出，不影响容器）

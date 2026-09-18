@@ -68,7 +68,9 @@ Python、无需联网，Podman 与 Docker 双兼容。客户侧使用说明见
 ```bash
 invoke xmnnrt.build                       # 自动暂存 workspace/dist 最新 whl 后构建镜像
                                          #   --wheel <path> 显式指定 whl
-                                         #   --pip-mirror tuna|aliyun 加速依赖安装
+                                         #   换 pip 源请写 .env 的 PIP_MIRROR（C15：
+                                         #   build/up 内联构建/compose 段同键）；
+                                         #   --pip-mirror tuna|aliyun 只覆盖本次 build
                                          #   构建期自动执行 9 项硬验证（root+devuser）
 invoke xmnnrt.up                          # 启动栈（默认随带构建；自动暂存最新 whl）
 invoke xmnnrt.ps
@@ -326,5 +328,5 @@ RUN /opt/conda/bin/python -m pip install --no-cache-dir torchvision \
 | torch 报错带 CUDA/nvidia 字样 | torch 被换成了默认源的 CUDA 变体；内置层固定走 download.pytorch.org/whl/cpu，勿覆盖 |
 | Jupyter 里选不到 xmnn runtime 内核 | 构建日志检查 register-kernel 段；守卫第 9 项会拦截此情况，镜像不会构建成功 |
 | 换了 whl 版本但镜像内容没变 | 重新 `invoke xmnnrt.build`（任务自动按 dist 最新 mtime 暂存）；`--no-cache` 全量重建 |
-| pip 装依赖慢/失败 | `--pip-mirror tuna`（或 aliyun） |
+| pip 装依赖慢/失败 | 在 `.env` 设 `PIP_MIRROR=tuna`（或 `aliyun`）后重跑 `invoke xmnnrt.build`（C15：三处同键，CLI 旗标仅覆盖单次 build） |
 | `invoke xmnnrt.*` Windows 门禁 Exit(1) | 自动桥接不可用的兜底；在 WSL2 发行版内 `pip install -e ".[compose]"` 后执行 |

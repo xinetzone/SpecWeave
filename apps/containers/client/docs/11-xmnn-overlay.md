@@ -13,13 +13,24 @@ SSH/Jupyter（`Python 3.14 (xmnn dev)` 内核，cp314 GIL）即可直接调试�
 
 ```bash
 pip install -e ".[compose]"           # 与 quant.* 同一个可选依赖
-invoke xmnn.build --pip-mirror tuna --conda-mirror tuna
-invoke xmnn.up                        # 启动栈：SSH 2223 / Jupyter 8890
+invoke xmnn.build                     # 构建参数（pip/conda 源、基底）默认读 .env
+invoke xmnn.up --skip-build           # 启动栈：SSH 2223 / Jupyter 8890
 invoke xmnn.smoke                     # 工具链守卫 + 源码挂载检查
 invoke xmnn.build-tvm                 # 可选：栈内编译 build/libtvm.so（已存在则跳过）
 invoke xmnn.wheel                     # Nuitka 全流程打包，wheel 落 workspace/dist
 invoke xmnn.down                       # 停止清理（ccache 卷默认保留）
 ```
+
+- **构建参数单一事实源（C15）**：`invoke xmnn.build` 与 `up` 的内联构建都读 `.env`
+  的 `PIP_MIRROR` / `CONDA_MIRROR` / `BASE_IMAGE`（无前缀，与 compose 段
+  `${KEY:-默认}` 同键）——三处同值才共享层缓存。换镜像源请写 `.env` 而非
+  `--pip-mirror`（CLI 旗标对 `up`/compose 不可见），见
+  [02-invoke-reference.md](02-invoke-reference.md#参数契约)。
+
+- **构建执行者唯一（C16）**：`xmnn.up` 恒 `up -d --no-build`，镜像只由内核构建。
+  默认 `xmnn.up` 内联构建一次即起容器；`--skip-build` 不做任何构建，故要求本地
+  已有镜像（缺失立即 Exit 1，指引 `xmnn.up` / `xmnn.build`）。compose 的
+  `build:` 段仅服务裸 `podman-compose` 路径。
 
 - **端口默认 2223/8890**：与 quant 栈错开，两个栈可并行运行。
 - **compose 公共段继承（extends）**：rootless 三必需、凭证四变量、公共
