@@ -47,8 +47,7 @@ python -m sphinx -b html src build/html -W --keep-going
 python -m http.server -d build/html 8000
 ```
 
-验证环境：`D:\Users\xinzo\anaconda3\envs\py314\python.exe`（Python 3.14.3 + Sphinx 9.1.0），
-实测输出「构建成功」，零警告。
+验证环境：Python 3.14.3 + Sphinx 9.1.0，实测输出「构建成功」，零警告。
 
 契约测试：
 
