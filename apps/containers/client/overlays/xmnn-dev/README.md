@@ -259,7 +259,8 @@ podman-compose -p xmnn-dev exec xmnn \
 | up 后 aardvark-dns / user scope bus 报错 | 已用 `network_mode: bridge` 规避；若复现检查该行未被删除 |
 | 裸 compose 后 `client/workspace/` 出现 npu_tvm/npuusertools/models 空目录 | podman-compose 1.6 对相对 source + create_host_path 的 host 端预创建副产物，**真实挂载不受影响**（冒烟以 `/workspace/...` 路径前缀断言）；down 后 `rmdir` 即可。用 `invoke xmnn.up`（注入绝对路径）不会产生 |
 | Jupyter 保存 notebook 报 `[Errno 13] Permission denied: '/workspace/.ipynb_checkpoints/...'` | rootless + 9p/drvfs 下容器内 root 预建的 checkpoint 目录在容器视角为 0:0 755，而 Jupyter 以 devuser(1000) 运行无 w 位。`invoke xmnn.up`/`xmnn.build` 经编排层 `ensure_workspace_checkpoint_writable` 幂等 `chmod 777` 该**单一目录**（不改属主、不递归、不碰源码树）；手工救急：宿主侧 `chmod 777 apps/containers/client/workspace/.ipynb_checkpoints` |
-| 打包后外部源码出现 `.bak_tvm/.bak_vta/.bak_xmnn` | 直接重跑 `build-wheel.sh` 即可：注入器有四态自愈（残留注入态/截断态配干净 `.bak` 会自动还原）；仅当报「已含 PREAMBLE 但备份缺失」（Exit 2）时才需按提示 `git checkout -- <file>` 人工还原 |
+| 打包后外部源码出现 `.bak_tvm/.bak_vta/.bak_xmnn` | 直接重跑 `build-wheel.sh` 即可：注入器有四态自愈（残留注入态/截断态配干净 `.bak` 会自动还原）；仅当报「已含 PREAMBLE 但备份缺失」（Exit 2）时才需按提示 `git checkout -- <file>` 人工还原。还原为原 inode 内容回写，源码文件属主/模式/ACL 不变；`.bak_tvm.tmp.<pid>` 陈旧暂存文件会在下次注入时自动清扫 |
+| wheel 一启动就报 `cp: preserving permissions for '...bak_tvm.tmp...': Invalid argument`（exit 1） | 旧镜像内的打包脚本用 `cp -p`/`cp -a` 复制了源码树 POSIX ACL——rootless 下 ACL 含未映射宿主 UID（多机 pc/ai）时内核 setxattr 必 EINVAL。2026-09-18 起脚本改为字节备份 + `cp -R`，**重建叠加镜像即可**：`invoke xmnn.build && invoke xmnn.down && invoke xmnn.up --skip-build`（宿主源码树无需改动） |
 | conda 求解慢/失败 | `--conda-mirror tuna`（或 aliyun）；pip 侧 `--pip-mirror tuna` |
 | 离线 `up --offline` 报本地无镜像（Exit 1） | 无网侧确实没有镜像。到**有网侧**先 `invoke xmnn.save`，把 `.image-cache/` 里的归档（tar.gz + manifest）拷过来，再 `invoke xmnn.load --path <归档.tar.gz>`。归档自带 SHA256，拷贝损坏会在 load 步暴露而不是启动后诡异失败 |
 | 离线 `xmnn.wheel` 报 numpy/scipy 缺失或缺 gcc（exit 2） | 离线**不允许** pip 兜底。需回有网侧把依赖补进镜像（基底 env 或 `PIP_MIRROR` 构建期安装）后重新 `xmnn.save`；不要在无网侧改镜像或手工 pip（无网必失败） |

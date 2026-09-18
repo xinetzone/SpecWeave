@@ -188,6 +188,10 @@ endforeach()
 # install(DIRECTORY) 会跳过 0 字节空文件（源 autolibs/ 下 .log 均为空），wheel
 # 打包时也会过滤空文件，导致 xmnn/autolibs 在 wheel 中缺失。这里用 cp 复制整个
 # autolibs 目录，并额外写入一个非空占位文件，确保目录结构完整进入 wheel。
+# 必须用 cp -R 而非 cp -a：源树在 bind 挂载上带含未映射 UID 的 POSIX ACL，
+# cp -a 复制 ACL 时内核 setxattr 返回 EINVAL（rootless userns，与目标 FS 无关）；
+# wheel 本身只存常规模式位、不携带 ACL/属主，cp -R 内容等价（可执行位经
+# source-mode & ~umask 保留）。
 set(AUTOLIBS_SRC "${XMN_PKG_DIR}/autolibs")
 if(EXISTS "${AUTOLIBS_SRC}")
     install(CODE "
@@ -197,13 +201,13 @@ if(EXISTS "${AUTOLIBS_SRC}")
             DST='\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/xmnn/autolibs'
             if [ -d \\\"\\$DST\\\" ]; then rm -rf \\\"\\$DST\\\" ; fi
             mkdir -p \\\"\\$DST\\\"
-            cp -a \\\"\\$SRC/.\\\" \\\"\\$DST/\\\"
+            cp -R \\\"\\$SRC/.\\\" \\\"\\$DST/\\\"
             # 写入非空占位文件，确保目录在 wheel 中非空保留（wheel 会过滤空文件）
             printf 'XMNN autolibs placeholder\\n' > \\\"\\$DST/.xmnn_autolibs_keep\\\"
-            echo '  installed xmnn/autolibs (cp -a + placeholder)'
+            echo '  installed xmnn/autolibs (cp -R + placeholder)'
         \")
     ")
-    message(STATUS "  Will install xmnn/autolibs via cp -a + placeholder")
+    message(STATUS "  Will install xmnn/autolibs via cp -R + placeholder")
 else()
     message(FATAL_ERROR "xmnn/autolibs not found at ${AUTOLIBS_SRC}")
 endif()

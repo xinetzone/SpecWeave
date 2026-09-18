@@ -5,13 +5,21 @@
 # 被 build-wheel.sh source（不单独执行）。调用前需导出：
 #   AST_PYTHON — 用于执行注入小脚本的解释器（固定 /opt/conda/bin/python）
 #
-# 安全模型（R1 F-1 修复）：
-#   - 备份原子化：先复制到 ${backup}.tmp.<pid> 再 mv -f，杜绝半写备份；
+# 安全模型（R1 F-1；2026-09-18 加固 rootless/ACL 兼容性）：
+#   - 备份只复制字节、不复制元数据：**严禁 cp -p/-a/--preserve**（rootless
+#     userns 只映射启动用户单个宿主 UID；外部同步树文件带含未映射 UID 的
+#     POSIX ACL，cp 复制 ACL 的 setxattr 在内核态返回 EINVAL——与目标文件
+#     系统无关，连容器内 overlayfs /tmp 都同样失败）；
+#   - 原子落位：先复制到 ${backup}.tmp.<pid> 再 mv -f，杜绝半写备份；cp
+#     失败立即 rm tmp，ast_inject 入口幂等清扫同 tag 陈旧 tmp；
+#   - 原 inode 还原：ast_restore 以 cat 内容回写覆盖原 inode（不 mv 替换），
+#     外部源码文件的属主/模式/ACL 在注入-还原全程不变；
 #   - 注入前状态机：若文件已含 PREAMBLE（上次被 SIGKILL/OOM 杀掉、trap 无法
 #     运行的残留态）——备份仍在则先自愈还原；备份丢失则 Exit 2 要求人工
 #     `git checkout`，**绝不覆盖任何文件**（避免干净备份被污染版顶替）；
 #   - ast_inject 幂等：残留态重跑可安全收敛；正常态备份/注入只发生一次；
-#   - ast_restore 幂等：备份不存在即为 no-op，供 EXIT trap 反复调用。
+#   - ast_restore 幂等：备份不存在即为 no-op，供 EXIT trap 反复调用；内容
+#     回写失败时保留备份交由重跑收敛，绝不先删备份。
 # ==============================================================================
 
 AST_PREAMBLE_BEGIN='# === XMNN BOOTSTRAP ==='
@@ -63,12 +71,18 @@ ast_has_preamble() {
 ast_restore() {
     local init_file="$1"
     local backup="$2"
-    if [ -n "${init_file:-}" ] && [ -n "${backup:-}" ] && [ -f "$backup" ]; then
-        mv -f "$backup" "$init_file"
-        echo "  [RESTORE] $init_file" >&2
-        return 0
+    if [ -z "${init_file:-}" ] || [ -z "${backup:-}" ] || [ ! -f "$backup" ]; then
+        return 1
     fi
-    return 1
+    # 内容回写到原 inode（不 mv 替换）：保留外部源码文件的属主/模式/ACL。
+    # 回写失败（磁盘满等）时保留 backup，由调用方/重跑自愈矩阵收敛。
+    if ! cat -- "$backup" > "$init_file"; then
+        echo "  [RESTORE-FAIL] 内容回写失败，备份已保留: $backup" >&2
+        return 1
+    fi
+    rm -f -- "$backup"
+    echo "  [RESTORE] $init_file" >&2
+    return 0
 }
 
 # ast_inject <init_file> <tag> —— 成功时 stdout 输出 backup 路径；
@@ -82,11 +96,19 @@ ast_inject() {
     local init_file="$1"
     local tag="$2"
     local backup="${init_file}.bak_${tag}"
+    local tmp_backup="${backup}.tmp.$$"
+    local _stale
 
     if [ ! -f "$init_file" ]; then
         echo "  [FATAL] 待注入文件不存在: $init_file" >&2
         return 2
     fi
+
+    # 清扫同 tag 的陈旧 tmp（历史失败/SIGKILL 泄漏）；同 tag 无并发，
+    # 前缀含完整绝对路径，不会波及其他包的备份。
+    for _stale in "${backup}.tmp."*; do
+        [ -e "$_stale" ] && rm -f -- "$_stale"
+    done
 
     if ast_has_preamble "$init_file"; then
         if [ -f "$backup" ]; then
@@ -103,9 +125,14 @@ ast_inject() {
         ast_restore "$init_file" "$backup" || true
     fi
 
-    # 原子备份（临时文件 + mv），避免半写备份
-    cp -p "$init_file" "${backup}.tmp.$$"
-    mv -f "${backup}.tmp.$$" "$backup"
+    # 字节级原子备份：普通 cp（不带 -p，理由见文件头安全模型）→ 同目录 mv。
+    # cp 失败立即清 tmp 并 return 2，绝不让泄漏文件残留在外部源码树。
+    if ! cp -- "$init_file" "$tmp_backup"; then
+        echo "  [FATAL] 创建字节备份失败: $init_file -> $tmp_backup" >&2
+        rm -f -- "$tmp_backup" 2>/dev/null || true
+        return 2
+    fi
+    mv -f -- "$tmp_backup" "$backup"
 
     "$AST_PYTHON" - "$init_file" <<PYEOF
 import sys

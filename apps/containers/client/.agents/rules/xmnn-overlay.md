@@ -150,13 +150,21 @@
 - **AST 注入/还原纪律**：注入/还原逻辑在可 source 的
   `builder/scripts/lib/ast_inject.sh`，build-wheel.sh 临时向 tvm/vta/xmnn
   的 `__init__.py` 注入 6 个 Python 3.14 已删 AST 类的兼容 PREAMBLE，备份
-  为 `.bak_<tag>`（临时文件+mv 原子备份）；父 shell 注册**全程统一**的
-  `_restore_all` EXIT trap（三对确定性 .bak 路径，子 shell 被 SIGKILL 时
-  由父退出兜底），正常路径编译后立即还原；`ast_inject` 自带四态自愈矩阵
-  （marker/bak 组合：注入态+bak 在→自愈、注入态无 bak→Exit 2 要求
-  git checkout 不覆盖、截断残留+bak 在→用干净 bak 自愈、正常态→备份注入）；
-  ast_restore 信息走 stderr（stdout 只输出 backup 路径）。外部源码工作树
-  零修改是硬验收（AC-9）。
+  为 `.bak_<tag>`（**字节级**临时文件+mv 原子备份）；备份与组装复制一律
+  **禁止 `cp -p`/`cp -a`/`--preserve`**——rootless userns 只映射启动用户
+  单个宿主 UID，外部同步树文件的 POSIX ACL 含未映射 UID（如多机 pc=1000/
+  ai=1006）时，cp 复制 ACL 的内核 setxattr 返回 EINVAL（与目标 FS 无关，
+  容器 overlayfs 同样失败）；还原必须 `cat 备份 > 原文件` 回写**原 inode**
+  （不得 mv 替换，否则源码文件属主/模式/ACL 漂移），cp 失败即清 tmp、
+  ast_inject 入口幂等清扫同 tag 陈旧 `.tmp.*`；CMake 组装侧对应禁令：
+  autolibs 用 `cp -R` 不用 `cp -a`（wheel 不携带 ACL/属主）。父 shell
+  注册**全程统一**的 `_restore_all` EXIT trap（三对确定性 .bak 路径，子
+  shell 被 SIGKILL 时由父退出兜底），正常路径编译后立即还原；`ast_inject`
+  自带四态自愈矩阵（marker/bak 组合：注入态+bak 在→自愈、注入态无 bak→
+  Exit 2 要求 git checkout 不覆盖、截断残留+bak 在→用干净 bak 自愈、
+  正常态→备份注入）；ast_restore 信息走 stderr（stdout 只输出 backup
+  路径）。外部源码工作树零修改是硬验收（AC-9：内容、属主、模式、ACL
+  四不变）。
 - Nuitka 语义不可裁剪：tvm 串行先行 → vta/xmnn 后台并行；三次调用差异
   （交叉 nofollow、dill-compat、vta include-data-dir、jobs、--module、
   --quiet、--no-pyi-file）保持；退出码经 `.vta_exit/.xmnn_exit` 回传。

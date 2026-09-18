@@ -6,6 +6,24 @@
 
 ## [Unreleased]
 
+### 2026-09-18 · `fix:` `inv xmnn.wheel` 在 rootless + 同步树 POSIX ACL 下 EINVAL（字节级备份 / 原 inode 回写 / autolibs `cp -R`）
+
+**关联七概念场景**：场景2「问题解决」（F→V→C→R→I→E，强制 V 门）。
+
+**R 事实（G1 摘录）**：`inv xmnn.wheel` 稳定 exit 1，止于 `cp: preserving permissions for '/workspace/npu_tvm/python/tvm/__init__.py.bak_tvm.tmp.<pid>': Invalid argument`（3 次复现，3 个泄漏 tmp）；宿主 `/media/pc/data` 为 XFS 直接 bind（非 SMB/FUSE）；uid_map 仅 `0→1006`+subuid 段；源码文件属主 codesrc(1001) 容器视角 65534，宿主 ACL 含 `user:1000(pc)`/`user:1006(ai)` 具名条目；容器内 raw `system.posix_acl_access` 出现 id=-1（未映射）条目；**普通 cp 成功、`cp -p` 在 bind 树与容器 overlayfs `/tmp` 双双 EINVAL**，而手工 chown/chmod/utime 全成功；`cat 备份 > 原文件` 保持 inode/属主/777/ACL 不变。
+
+**I 洞察（四元组）**：① **陈述**——失败本质不是「挂载 FS 不支持保留权限」，而是 GNU cp 把源文件含未映射 UID 的 ACL 原样写到任意目标，内核 setxattr 拒 EINVAL；**证据**——同错在容器原生 /tmp 复现、手工元数据系统调用全成功；**反常识**——锅不随目标 FS 走而随源文件元数据走；**行动**——备份去 `-p`。② **陈述**——`mv` 还原用新 inode 替换源码文件，属主 1001→1006、mode 777→775、ACL 全漂移，违背「零修改」；注入本身却是保 inode 的截断写；**反常识**——「原子 mv 更安全」只防半写内容却破坏元数据身份，非原子内容回写反而更忠实且四态矩阵本就覆盖截断残留。③ 自愈状态机漏「tmp 泄漏态」（set -e 下 cp 失败永不清理）。④ 故障随宿主 uid 拓扑偶联（主机用户恰为 uid 1000 的机器上 `-p` 反而成功），构建机难发现。
+
+**F 第一性原理**：备份的唯一本质是「持有原始字节供回写」，位置/属主/ACL 皆无关；注入-还原周期必须保持外部 inode 身份不变；容器内构建对宿主 uid/ACL 拓扑零假设。
+
+**V 对抗审查（四视角）**：① **魔鬼**——攻击「cp -a 只有一处吗」：全 overlay 排查坐实第二故障点 `CMakeLists.txt` autolibs `cp -a`（同源 EINVAL，不修则 Nuitka 编译十余分钟后必在 wheel 组装阶段失败，实测 `cp -R` 内容等价 exit 0）；`install(DIRECTORY USE_SOURCE_PERMISSIONS)` 只 chmod 模式位不复制具名 ACL，保留；② 内容回写非原子→保留「cat 成功才 rm 备份」，失败留 bak 交四态矩阵收敛（与既有 Python in-place 截断写风险同级）；③ stale tmp 清扫 glob 带完整绝对路径+tag 前缀，跨包不误伤；④ **新人**——禁令写进脚本头注/规则/C12，防后人改回 `-p`；⑤ **老板**——零命令面、零 compose 变化，1 shell 库 + 1 CMake 注释级改动 + 10 例 daemon-free 单测；⑥ **未来**——模式固化为「bind 树元数据复制禁令」。
+
+**实现（A 原子化）**：① `builder/scripts/lib/ast_inject.sh`：备份改普通 `cp`（失败即清 tmp 并 return 2）、入口幂等清扫同 tag 陈旧 `.tmp.*`、`ast_restore` 改 `cat backup > init` 原 inode 内容回写（回写失败保留备份）；② `builder/CMakeLists.txt`：autolibs `cp -a`→`cp -R`（注释说明 wheel 不携带 ACL/属主）；③ 新增 `tests/test_ast_inject.py` 10 例（往返字节/inode/mode 一致、四态矩阵、tmp 清扫、失败无残留、tag 隔离、双周期幂等、静态守卫禁 `cp -p/-a`）；④ 闭环文档：规则 xmnn-overlay.md §5（AC-9 扩为内容/属主/模式/ACL 四不变 + CMake 禁令）、AGENTS C12、overlay README 排障双行（旧镜像报 EINVAL 的重建指引 + tmp 自动清扫）。
+
+**验收点**：`pytest tests -q` → 158 passed / 7 skipped（新增 10 例全绿；2 个存量失败与本次无关：`.env.example` CRLF、podman-compose depends_on list/dict 合并，已另行报告）；真机 `inv xmnn.build` 重建镜像后 `inv xmnn.wheel` 端到端产出 whl（含 CMake 组装阶段）；外部源码树 `git status` 干净、无 `.bak*`/`.tmp.*` 残留。
+
+**C 同步**：预防措施 `[prevent: no-metadata-copy-on-bind-tree]`——容器内对宿主 bind 树一律「备份只复制字节、还原写回原 inode、组装用 cp -R」，规则固化于 [rules/xmnn-overlay.md](rules/xmnn-overlay.md) §5 与 P0 清单 C12，daemon-free 静态守卫防回退。
+
 ### 2026-09-17 · `fix:` 清扫运行时依赖计数的陈旧文案（19 → 动态表述）
 
 **背景**：真机构建期 §7 守卫实测 `[project].dependencies` 为 **20 条**，而仓库内 8 处文案仍写「19 个」；`install-build-deps.py` 实为动态读取该清单、并无 19 的硬编码逻辑，故该数字纯属陈旧漂移（清单增补依赖时无人同步散文）。8 处统一改为「pyproject 声明的全部运行时依赖」，Containerfile Layer 3 注释显式注明"数量随清单变化，勿在此硬编码"。
