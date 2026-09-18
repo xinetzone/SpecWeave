@@ -205,7 +205,13 @@ podman-compose -p xmnn-dev exec xmnn \
 等价开关：**`XMNN_OFFLINE=1`**（写 `.env` 或 shell export 均可，经 WSL 桥接透传
 进容器）。`invoke xmnn.up --offline` 与 `XMNN_OFFLINE=1` 效果相同；`.env` 里开了
 想临时关掉用 `invoke xmnn.up --no-offline`。注意 `--offline` 是**全链路**语义，
-不只是跳过构建：
+不只是跳过构建。
+
+**`--skip-build` ≠ `--offline`**：`--skip-build` 只声明「这一次 `up` 不构建」，
+**不注入** `XMNN_OFFLINE`（只影响 `up` 一步，`build` / `wheel` / `build-tvm` 行为
+不变）。在无网机器上 `invoke xmnn.up --skip-build && invoke xmnn.wheel` 能起栈成功，
+但容器内打包仍会尝试联网兜底而失败。**无网环境请一律用 `--offline`**；
+`--skip-build` 只用于有网环境下省一次构建。
 
 | 环节 | 离线下的行为 |
 |---|---|
