@@ -25,12 +25,13 @@ apps/samples/jieban-site/
 ├── requirements.txt     构建依赖
 ├── src/                 站点源目录（唯一事实来源）
 │   ├── conf.py          Sphinx 配置 + 构建期「版本身份证」守卫
-│   ├── index.md         首页：品牌故事 + 四频道概述 + 组织方式
+│   ├── index.md         首页：六屏长卷（印章→主张→四频道→公约→缘起→入群→续读）
 │   ├── origin.md        缘起：四个群，一间客厅（含联邦制 Mermaid 图）
 │   ├── covenant.md      社群公约：六条底线 + 举报处置 + 引文版本说明
 │   ├── channels/        四个频道详情（入口 + 知足/恒与/知和/愈多）
 │   └── _static/
-│       └── jieban.css   新宣纸纸感主题定制
+│       ├── jieban.css   新宣纸纸感表皮（token + 章节语言 + 卡片 + 打印）
+│       └── jieban.js    渐进增强行为层（滚动淡入）
 ├── tests/               契约测试
 └── build/               构建产物（已被根 .gitignore 排除）
 ```
@@ -121,6 +122,75 @@ Mermaid：缘起页的联邦制结构图由 `sphinxcontrib-mermaid` 渲染，**�
 
 - 图表需要浏览器能访问 CDN 才会显示；离线打开 `build/html` 时该位置只显示图表源码。
 - 若后续要离线可用，需把 mermaid 换成本地静态文件——属于二期决定，一期保持 CDN。
+
+## 视觉改造：向品牌落地页对齐
+
+站点原为「主题默认三栏文档风」，与手工落地页（`playground/reports/jieban-brand-20260918/index.html`）
+的纸感气质割裂。本次改造把视觉身份统一到落地页，**只搬样式、不搬内容**。
+
+**骨架维持主题默认三栏**（左文档树 + 正文 + 右本页目录）。中途曾把三栏也拆成单栏，
+以追求与落地页一致的「单栏长卷」——结果撞上硬伤：首页已是六屏长卷，
+拆掉右侧「本页目录」等于**丢掉全部页内锚点导航**，文档树也没有替代品
+（当时用 JS 往空置的 `header.bd-header` 注入顶栏菜单，那只是补救，不是设计）。
+遂回退骨架，只保留表皮改造。教训：**落地页是单页单栏、站点是多页三栏，
+骨架差异由产品形态决定，不该为视觉一致性抹平。**
+
+改造要点（均为表皮，不动布局）：
+
+| 手法 | 落点 | 说明 |
+|---|---|---|
+| 纸感 token | `jieban.css` | 覆盖主题语义色，正文/侧栏/页脚统一暖灰纸面 |
+| 章节语言 | `index.md` + 各页开篇 | 每节前置 `<p class="jb-eyebrow">壹 · 主张</p>`，配 serif 大标题与居中 lead |
+| 仪轨化控件 | `jieban.css` | 朱砂印章、方形菱形点清单、左侧 3px 色条卡片、时间线 |
+| 纸面噪点 + 滚动淡入 | `jieban.css` / `jieban.js` | 噪点由 `body::before` 的 SVG `feTurbulence` 提供；淡入由 `IntersectionObserver` 加 `.jb-in` |
+| 打印样式 | `jieban.css` | A4 `@page` + 卡片/清单/引文 `break-inside: avoid` |
+
+### 刻意不搬的三样东西
+
+落地页里有三处**没有**搬进站点，因为它们与「一期不设表单、不收集信息」的公开承诺冲突，
+也与「群不合并、网站只做客厅」的定位冲突：
+
+1. **入群选择器**（点选频道后收集意向）——一旦有选择，就有数据落点。
+2. **入群弹窗与二维码**——弹窗式引导与落地页的克制动线不符；站点加入途径统一写「微信端向管理员申请邀请」。
+3. **内部群昵称与「变现」措辞**——落地页 5.5 的原始文案含禁用词，站点沿用降敏后的版本。
+
+站点版本的四选一改为**纯静态**呈现（`.jb-choices` 只做栅格与卡片外观，不含任何交互状态）。
+
+### 实现细节（构建产物与浏览器实测，非推测）
+
+- **CSS 变量必须在 `html[data-theme="light"]` 上覆盖，不能只写 `:root`**。
+  pydata-sphinx-theme 把 `--pst-color-*` 定义在 `html[data-theme="light"]` 上，特异性 (0,1,1)
+  高于 `:root` 的 (0,1,0)——只写 `:root` 会被主题整块盖掉。实测症状：侧栏链接仍是主题的
+  冷蓝灰 `rgb(72,86,107)`，而非 token 里的 `--ink-2`。现改用
+  `:root, html[data-theme="light"], html[data-theme="dark"]` 联合声明，同特异性下靠加载顺序取胜。
+- **`header.bd-header` 在 sphinx-book-theme 里是空容器**，品牌与主导航实际挂在左侧栏内，
+  故收起它即可（不会丢导航）。
+- **收起顶栏后真正吸顶的是 `.bd-header-article`**（正文列上方、内含左右侧栏开关）。
+  主题给它白底，会在暖灰纸面上切出一条白带——已改为纸面半透明。
+- **右侧「本页目录」在 1200px 以下退化为抽屉**（`position: fixed` 从右侧滑出），
+  这是 pydata-sphinx-theme 的原生响应式断点（`@media (min-width: 1200px)` 才常驻），
+  非本站 CSS 所致。
+- **MyST `{container}` 会额外带上 Bootstrap 的 `.container` 类**，且 container 包住的是内部的 `<p>`
+  或 `<ul>`，栅格/弹性布局必须落在内层元素上（`.jb-cta p`、`.jb-choices ul`），落在容器自身会失效。
+- **章节中部的 eyebrow 会落在上一节末尾**（`<p class="jb-eyebrow">…</p></section><section>`），
+  相邻选择器匹配不到下节标题。故用 `section:has(> .jb-eyebrow) + section > h2` 配对；
+  `:has()` 不可用时仅表现为间距偏大，属优雅降级。
+
+### CSS 优先级
+
+加载顺序为 `pydata-sphinx-theme.css` → `sphinx-book-theme.css` → **`jieban.css`（最后）**，
+故同特异性下自定义规则必胜；覆盖主题时优先靠顺序而非 `!important`。
+但**顺序救不了低特异性**——上面那条变量覆盖就是反例：`:root` 输给 `html[data-theme="light"]`。
+判断「为什么我的样式没生效」时，先比特异性，再比顺序。
+
+新增 `myst_enable_extensions` 一项 `attrs_inline`，用于给按钮链接挂 class
+（`[文字](页.md){.jb-btn .jb-btn-primary}`）。
+
+本地预览（`file://` 直开可用，但部分浏览器工具禁止该协议，起服务更稳）：
+
+```bash
+python -m http.server -d build/html 8931
+```
 
 ## 一期范围
 

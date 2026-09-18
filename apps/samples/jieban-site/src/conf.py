@@ -38,11 +38,12 @@ extensions = [
 # -- MyST ------------------------------------------------------------------
 
 myst_enable_extensions = [
-    "colon_fence",  # ::: 围栏，sphinx-design 卡片所需
+    "colon_fence",  # ::: 围栏，sphinx-design 卡片与 container 所需
     "deflist",
     "fieldlist",
     "tasklist",
     "substitution",  # 复用品牌名称与引文出处
+    "attrs_inline",  # 行内属性：给按钮链接挂 class（[文字](页.md){.jb-btn}）
 ]
 myst_heading_anchors = 3
 
@@ -66,8 +67,15 @@ html_theme = "sphinx_book_theme"
 html_title = "结伴 · 好好生活的人，终会相逢"
 html_static_path = ["_static"]
 html_css_files = ["jieban.css"]
+html_js_files = ["jieban.js"]
 html_show_sourcelink = False
 html_last_updated_fmt = ""
+
+# 侧栏保留主题默认（左侧文档树 + 右侧本页目录）。
+# 曾试过清空侧栏改单栏纸面，但首页是六屏长卷，没有右侧 TOC 就丢了页内锚点导航；
+# 内容增长后左侧文档树也不可替代。视觉改造因此只做「表皮」——
+# 配色、章节语言、卡片、印章、打印样式，不动骨架。
+# （注：sphinx-book-theme 的品牌与主导航本身就挂在左侧栏内，侧栏就是导航。）
 
 html_theme_options = {
     # 一期为单页展示型站点，隐藏仓库/下载/编辑等与品牌无关的按钮
@@ -79,9 +87,11 @@ html_theme_options = {
     "home_page_in_toc": False,
     "show_navbar_depth": 1,
     "show_toc_level": 3,
+    # 页脚：与落地页同形（印章行由 CSS 生成，此处只给正文两行）
     "extra_footer": (
-        "结伴 · 好好生活的人，终会相逢。"
-        "引文据马王堆帛书本《老子》，详见<a href='covenant.html'>社群公约</a>页的版本说明。"
+        "知足 · 恒与 · 知和 · 愈多 —— 四个微信群共同的客厅<br>"
+        "本站不提供任何婚恋中介或投资理财服务。"
+        "引文据马王堆帛书本《老子》，详见《社群公约》页的版本说明。"
     ),
 }
 
