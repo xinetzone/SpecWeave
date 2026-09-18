@@ -48,6 +48,136 @@ invoke xmnn.down                       # 停止清理（ccache 卷默认保留�
 - **对 external/chaos/ai 零依赖**：打包脚本与元数据自包含于叠加层；
   外部源码树只读挂载，打包中的临时 AST 注入会无条件还原。
 
+## 启动后连接：Jupyter 与 SSH
+
+`invoke xmnn.up` 成功后**只打印地址**（`SSH localhost:2223` /
+`Jupyter localhost:8890`），两个服务由容器内 supervisord 托管；密码/token
+取决于 `.env` 的凭证四变量（随
+[_shared/base-rootless.yaml](../overlays/_shared/base-rootless.yaml)
+统一注入，留空则容器首启自动生成）：
+
+| 服务 | 地址 | 凭证 |
+|---|---|---|
+| JupyterLab | http://localhost:8890 | `JUPYTER_TOKEN`（留空自动生成 32 位） |
+| SSH | `ssh -p 2223 devuser@localhost` | `USER_PASSWORD`（留空自动生成 16 位）；亦可设 `SSH_PUBLIC_KEY` 免密 |
+
+**自动生成的凭证只出现在容器启动日志横幅里，up 命令不回显**：
+
+```bash
+invoke xmnn.logs   # 找「[IMPORTANT] devuser password: ...」与「Token: ...」
+                   # Ctrl+C 仅退出日志跟踪，不影响容器运行
+```
+
+已在 `.env` 预设凭证时，直接用预设值登录（日志不再打印随机值横幅）。
+
+### JupyterLab
+
+1. 浏览器打开 http://localhost:8890，粘贴 token 登录；或直接访问
+   `http://localhost:8890/lab?token=<JUPYTER_TOKEN>`。
+2. 新建/打开 Notebook 时内核务必选 **Python 3.14 (xmnn dev)**——该内核
+   argv 指向 `/opt/conda/bin/python`（cp314 **GIL**），且内核环境已内嵌
+   三源码树的 `PYTHONPATH`，tvm/vta/xmnn 从挂载源码导入；其余内核不具备
+   这条源码调试链路。
+3. 工作根目录即容器内 `/workspace`：源码在 `npu_tvm/`、`npuusertools/`、
+   `models/`，wheel 产物在 `dist/`；宿主侧改代码容器内即时生效，无需重建。
+
+### SSH
+
+**步骤 1：确认栈已启动**
+
+```bash
+invoke xmnn.ps     # 应见 xmnn 服务 Up，端口行含 0.0.0.0:2223->22/tcp
+```
+
+**步骤 2：准备认证凭证（密码 / 公钥二选一）**
+
+方式 A——密码认证（开箱即用）：
+
+- `.env` 的 `USER_PASSWORD` 留空时，容器首启随机生成 16 位密码，从
+  `invoke xmnn.logs` 输出中找 `[IMPORTANT] devuser password: <密码>` 横幅；
+- 已在 `.env` 预设 `USER_PASSWORD` 则直接用预设值登录（此时不打印随机密码横幅）。
+
+方式 B——公钥免密（推荐长期使用）：
+
+```bash
+# 本机还没有密钥对时先生成（已有 ~/.ssh/id_ed25519.pub 可跳过）
+ssh-keygen -t ed25519                       # 提示全程回车即可
+cat ~/.ssh/id_ed25519.pub                   # Windows: type %USERPROFILE%\.ssh\id_ed25519.pub
+```
+
+把 `.pub` 文件的**完整一行**（形如 `ssh-ed25519 AAAAC3... user@host`）填入
+client 目录 `.env` 的 `SSH_PUBLIC_KEY=`，然后重建栈使之生效——公钥由
+entrypoint 在容器**启动时**写入 `~devuser/.ssh/authorized_keys`（权限 600），
+仅 restart 不会重新读取 `.env`：
+
+```bash
+invoke xmnn.down && invoke xmnn.up --skip-build
+```
+
+**步骤 3：发起连接（首次登录确认主机指纹）**
+
+```bash
+ssh -p 2223 devuser@localhost
+```
+
+- 首次连接出现 `Are you sure you want to continue connecting (yes/no)?`
+  时输入 `yes`，主机指纹写入 `~/.ssh/known_hosts`；密码认证随后输入密码，
+  终端中密码无回显属正常现象。
+- Windows 10 1809+/11 在 PowerShell 或 Windows Terminal 中执行**同一命令**
+  即可（系统自带 OpenSSH 客户端）；若提示找不到 `ssh`，于
+  **设置 → 应用 → 可选功能**中添加「OpenSSH 客户端」，或直接在 WSL2
+  终端内连接。
+- 经 Windows 自动桥接启动时栈在 `podman-machine-default` 内，但端口经
+  WSL2 localhost 转发，地址仍是 `localhost:2223`，无需指定 WSL IP。
+
+**步骤 4：验证已进入 xmnn 容器**
+
+```bash
+whoami                          # 输出 devuser
+ls /workspace                   # 应见 npu_tvm  npuusertools  models  dist
+/opt/conda/bin/python -c "import tvm; print(tvm.__file__)"
+# 应输出 /workspace/npu_tvm/python/tvm/... —— 证明走的是挂载源码而非 site-packages
+```
+
+**登录后的环境要点**
+
+- 登录 shell 默认处于 **main env（cp314t）**；编译/打包/源码调试请显式用
+  `/opt/conda/bin/python`（与 Jupyter 的 xmnn dev 内核同源，cp314 GIL），
+  打包脚本则直接 `bash /opt/xmnn-builder/scripts/build-wheel.sh`。
+- `GRANT_SUDO=yes`（默认）时 devuser 具备免密 sudo（`sudo <命令>`）。
+
+**简化日常连接：ssh config 与 VSCode**
+
+在 `~/.ssh/config` 新增以下段落后即可用 `ssh xmnn-dev` 直连；VSCode
+**Remote - SSH** 扩展的远程资源管理器中也会出现该主机，连接后可直接编辑
+`/workspace/npu_tvm` 等挂载源码：
+
+```
+Host xmnn-dev
+    HostName localhost
+    Port 2223
+    User devuser
+```
+
+**常见问题**
+
+| 现象 | 原因与处理 |
+|---|---|
+| `Connection refused` / 连接被拒 | 栈未运行或端口非默认：先 `invoke xmnn.ps` 核对；`.env` 改过 `XMNN_SSH_PORT` 时，`-p` 与 ssh config 的 `Port` 同步替换 |
+| `WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!` | xmnn 栈未挂载 host-key 持久卷，`down`/`up` 重建容器会轮换主机指纹。执行 `ssh-keygen -R '[localhost]:2223'`（改过端口则替换端口号）清除旧记录后重连 |
+| `Permission denied (publickey,password)` | 密码：回 `invoke xmnn.logs` 核对横幅；公钥：确认 `.env` 中是**完整一行**公钥且改后做过 `down && up`；另确认用户名是 `devuser` |
+| Windows 找不到 `ssh` 命令 | 安装可选功能「OpenSSH 客户端」，或改用 WSL2 终端执行连接命令 |
+| 连上后 `import tvm` 失败或指向 site-packages | 误用 main env 的 python；改用 `/opt/conda/bin/python`，或直接用 Jupyter 的 `Python 3.14 (xmnn dev)` 内核 |
+
+### 端口与平台
+
+- 端口可用 `.env` 的 `XMNN_SSH_PORT` / `XMNN_JUPYTER_PORT` 改写；默认
+  2223/8890 与 quant 2222/8888、monetize 2224/8892、xmnnrt 2225/8893
+  错开，多栈可并行运行。
+- Windows 原生 CPython 经自动桥接启动时，栈运行在 `podman-machine-default`
+  内，浏览器与 SSH 客户端仍访问**本机 localhost**（WSL2 localhost 转发）；
+  栈本身在 WSL2 发行版内或 Linux/macOS 上启动时同理。
+
 完整说明（双 ABI 布局、打包流程、参数表、排障）：
 [overlays/xmnn-dev/README.md](../overlays/xmnn-dev/README.md)。
 对应 AI 硬约束：[.agents/rules/xmnn-overlay.md](../.agents/rules/xmnn-overlay.md)（C12）。
